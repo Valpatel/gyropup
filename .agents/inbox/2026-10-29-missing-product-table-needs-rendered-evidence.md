@@ -12,4 +12,10 @@ The fresh session encountered a login gate. Missing markup alone does not identi
 
 ## Limits
 
-This observation applies only to this session and time. It does not establish that the manufacturer model is unavailable, that all sessions require login, or that the historical dimensions changed. The exact manufacturer STEP remains a prerequisite for the private detailed check; download, normalization, and dimensional validation are still outstanding.
+This observation applies only to this session and time. It does not establish that the manufacturer model is unavailable, that all sessions require login, or that the historical dimensions changed. At that checkpoint, exact STEP download, normalization, and dimensional validation were outstanding.
+
+## Later acquisition supersedes the missing-input status
+
+At 2026-10-29T13:04:12Z a single standard cad-agent session successfully downloaded the proposed support's exact 90592A085 nut. That changed access evidence justified one later sequential retry of 91290A113, which downloaded successfully at 13:07:22Z (HTTP 200). Both sessions closed normally; no credentials, account changes or access-control workaround were used. The earlier login observation remains true for its own session.
+
+Offline normalization with the existing project tool produced a 5.5×5.5×11.0 mm screw envelope (8 mm shaft plus 3 mm head) and a 6.3083×5.5×2.4 mm nut envelope (5.5 mm across flats). Sources, full specification tables, prices, private file hashes and topology observations are recorded in `research/carrier-service-connectors/support-hardware-catalog.json`. The raw and normalized models stay private. These observations close the exact-input acquisition gap; they do not establish assembled thread fit, engagement, retention, tool access or physical acceptance. The historical product catalog pending note must be reconciled when this candidate is promoted with regenerated source-bound artifacts.

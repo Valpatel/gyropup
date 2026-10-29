@@ -3,4 +3,10 @@ Files per part: <PN>.step (as downloaded), <PN>.norm.step (moved into the frame 
 
 91290A113 Black-Oxide Alloy Steel Socket Head Screw, US Origin, M3 x 0.5 mm Thread Size, 8 mm Long
 URL: https://www.mcmaster.com/91290A113/
-Downloaded: 2026-10-27
+Downloaded: 2026-10-29
+
+2026-10-29 exact private acquisition receipt:
+  91290A113.step SHA256: ace720d7e71be04d4559f3f5ad6b2ae2275e0fa29ba6bf8577be2c910c24c957
+  91290A113.norm.step SHA256: 4ac68e49d4435961b2295703fb854e8f09176a038d3ee8d63b7ee61010e5d289
+  91290A113.page.json SHA256: 03dc27895645c310dd6796f27b88a199457ff822d0c272afa2354f2dc947e7ab
+  91290A113.norm.json SHA256: 794b5decb60c872d8df9e2d421d9f1c8bd6f96f8de7499411966b92bd72112d9

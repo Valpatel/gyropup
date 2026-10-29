@@ -73,7 +73,28 @@ The supplied housing files close the wire-entry ends and simplify internal termi
 
 There is a source discrepancy: the header detail is marked A2505-WV at 2.5 mm pitch, while the case/older Waveshare callout says 5264/2.54. No exact housing/contact manufacturer identity, supplied lead gauge, insulation OD or minimum bend radius has been established. Waveshare's [SR-Cable-5264-3PIN accessory](https://www.waveshare.com/sr-cable-5264-3pin.htm) is documented as compatible, but its 300/900 mm accessory lengths do not establish what is included with everySKU 22414 shipment.
 
-The official [ST3215 CAD resource](https://docs.waveshare.com/ST3215_Servo/Resources-And-Documents) is retained privately as a conditional case reference. Its STEP root is named`SCS215 v5`; one of its eight solids is invalid, and the PCB model supplies only plain connector blocks, with no detailed cavities, contacts, latch, mating plug or cable. It cannot qualify the pan-servo disconnect. The carrier-side service connection should avoid requiring blind unplugging beneath the installed servo; its exact compatible termination and retained OEM lead must be established before that design is frozen.
+The official [ST3215 CAD resource](https://docs.waveshare.com/ST3215_Servo/Resources-And-Documents) is retained privately as a conditional case reference. Its STEP root is named `SCS215 v5`; one of its eight solids is invalid, and the PCB model supplies only plain connector blocks, with no detailed cavities, contacts, latch, mating plug or cable. It cannot qualify the pan-servo disconnect. The carrier-side service connection should avoid requiring blind unplugging beneath the installed servo; its exact compatible termination and retained OEM lead must be established before that design is frozen.
+
+A concrete conditional option is to retain the OEM servo-end plug and replace only the carrier-end termination with **CJT A2505H-3P plus three A2505-TP contacts**, mating to a **CJT A2505WV-3P** header. [CJT's own family drawing](https://www.cjt.com/upload/A2505.pdf) explicitly identifies that mating set: 2.50 mm pitch, 3 A family rating, 22–28 AWG contacts and maximum 1.90 mm individual insulation OD. The three-way housing is 8.30 mm wide; the header is 10.00 mm wide. This avoids assuming that the OEM housing mates to CJT. It is not selected until the OEM conductor gauge/OD, termination process, current/temperature performance and accessible support are verified. No exact manufacturer STEP was found for these parts. The header also needs its own assigned support/PCB footprint; the current pad-strip envelope does not provide one.
+
+## Termination contract before a physical pad map
+
+This is a wiring-interface proposal, not a checked electrical schematic or soldering instruction. It preserves the existing C2/C3 nets and the protection candidate's three electrical boundaries. The protection author confirmed that its actual external pads, footprints and return-current copper remain unallocated.
+
+| Endpoints | Proposed physical connection | Still unresolved |
+| --- | --- | --- |
+| C2 signal-module 1 → C3 module 5 | One continuous 24 AWG CAN_H wire, male 43031-0001 contacts at both ends | Installed length, free exits, paired route and retention |
+| C2 signal-module 2 → C3 module 6 | One continuous 24 AWG CAN_L wire, same contacts | As above; no invented PCB CAN pads or extra splice |
+| C2 power+ → C3 module 1/2/11 and protection input | External BUS_HEAD_FUSED junction | Exact junction hardware, current sharing, insulation, branch lengths and location |
+| C2 power− → C3 module 3/4/12, C3.8/C3.10 and circuit returns | External common-return junction | Actual terminal count, current paths, copper and location |
+| C2 signal-module 3 | F4-protected 12V_PAN pendant-loop output | Physical F4/harness termination |
+| C2 signal-module 4 | Existing U1 pins 8/4 pendant-loop return node | Actual board pad/jumper map |
+| C3 module 7 | Existing R3 output, after D1 | Actual solder termination and insulated route |
+| C3 module 9 | PAN_TTL bypass toward servo disconnect | Exact disconnect cavity view, lead compatibility and route |
+| Servo VCC | Existing F1-protected 12V_PAN output | Assigned terminal and lead qualification |
+| Servo GND | Common return | Assigned terminal and return-current route |
+
+The protection candidate sees only BUS_HEAD_FUSED, GND and 12V_PAN. Its U2 A4/B4 pads are **PAN_INPUT after the cutoff**, so C3's shared head BUS must not be connected there. U2 A1/B1 are 12V_PAN; A2/A3/B2/B3 are GND. CAN, pulse and TTL routing remain outside that protection sheet. A logical junction in this table is not an existing physical connector, copper area or solder pad.
 
 ## External C3 service-pose candidate
 
