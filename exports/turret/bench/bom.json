@@ -219,14 +219,14 @@
    ]
   },
   {
-   "item": "SunnySky X2216 880KV V3 outrunner, short shaft, with its bolt-on prop adapter and X-mount",
-   "id": "sunnysky-x2216-880kv-v3",
-   "key": "sunnysky-x2216-880kv-v3",
+   "item": "SunnySky X2216 1400KV V3 outrunner, short shaft, with its bolt-on prop adapter and X-mount",
+   "id": "sunnysky-x2216-1400kv-v3",
+   "key": "sunnysky-x2216-1400kv-v3",
    "qty": 1,
    "for": "flywheel_motor_l",
-   "part_number": "X2216 V3 880KV, short shaft (SKU SS-XV3-X2216-S-880-V3)",
+   "part_number": "X2216 V3 1400KV, short shaft (SKU SS-XV3-X2216-S-1400-V3)",
    "vendor": "SunnySky",
-   "url": "https://sunnyskyusa.com/products/sunnysky-x2216?variant=15890897469534",
+   "url": "https://sunnyskyusa.com/products/sunnysky-x2216?variant=27868073427038",
    "price_usd_each": 24.99,
    "mass_g_each": 72.0,
    "note": null,
@@ -234,8 +234,8 @@
    "sellers": [
     {
      "seller": "SunnySky USA",
-     "url": "https://sunnyskyusa.com/products/sunnysky-x2216?variant=15890897469534",
-     "seller_pn": "SS-XV3-X2216-S-880-V3 (variant 15890897469534, '880 Short')",
+     "url": "https://sunnyskyusa.com/products/sunnysky-x2216?variant=27868073427038",
+     "seller_pn": "SS-XV3-X2216-S-1400-V3 (variant 27868073427038, '1400 Short')",
      "price_usd": 24.99,
      "pack_qty": 1,
      "in_stock": true,
@@ -244,79 +244,29 @@
     },
     {
      "seller": "ReadyMadeRC",
-     "url": "https://www.readymaderc.com/products/details/sunny-sky-x2216-brushless-motor-short-shaft-880kv",
-     "seller_pn": "SS-XV3-X2216-S-880-V3 (RMRC 84776, GTIN 680306447725)",
-     "price_usd": 22.99,
+     "url": "https://www.readymaderc.com/products/details/sunnysky-x-series-v3-x2216-brushless-motor-short-shaft-1400kv",
+     "seller_pn": "SS-XV3-X2216-S-1400-V3 (RMRC 84546, GTIN 680306447800)",
+     "price_usd": 24.99,
      "pack_qty": 1,
      "in_stock": true,
      "stock": "In Stock (no quantity shown)",
      "read_on": "2026-10-27"
-    },
-    {
-     "seller": "Amazon",
-     "url": "https://www.amazon.com/dp/B0BR4VV3FG",
-     "seller_pn": "ASIN B0BR4VV3FG",
-     "price_usd": 26.99,
-     "pack_qty": 1,
-     "in_stock": true,
-     "stock": "Only 3 left in stock - order soon",
-     "read_on": "2026-10-27"
     }
    ],
-   "media_key": "sunnysky-x2216-880kv-v3",
+   "media_key": "sunnysky-x2216-1400kv-v3",
    "thumb": null,
    "thumb_from": null,
-   "alternates": [
-    {
-     "supplier": "ReadyMadeRC",
-     "part_number": "SunnySky X2216 V3 short shaft 880KV",
-     "url": "https://www.readymaderc.com/products/details/sunny-sky-x2216-brushless-motor-short-shaft-880kv",
-     "price": "$22.99",
-     "price_usd_each": 22.99,
-     "pack_qty": 1,
-     "stock": "In Stock",
-     "drop_in": true,
-     "changes": null,
-     "checked": "2026-10-27",
-     "evidence": "Page read 2026-10-27: $22.99, In Stock; in the box the motor, an X-mount bracket with screws and a prop adapter; 67.5 g, 89 mOhm, 0.5 A/10 V."
-    },
-    {
-     "supplier": "Amazon (FBA)",
-     "part_number": "B0BR4VV3FG",
-     "url": "https://www.amazon.com/dp/B0BR4VV3FG",
-     "price": "$26.99",
-     "price_usd_each": 26.99,
-     "pack_qty": 1,
-     "stock": "only 3 left (2026-10-27)",
-     "drop_in": true,
-     "changes": null,
-     "checked": "2026-10-27",
-     "evidence": "docs/turret-prototype-plan.md 3.1 (page)."
-    },
-    {
-     "supplier": "RobotShop",
-     "part_number": "T-Motor MN2212 V2 920KV",
-     "url": "https://www.robotshop.com/products/t-motor-navigator-mn2212-v2-920kv-brushless-motor",
-     "price": "$55.90",
-     "price_usd_each": 55.9,
-     "pack_qty": 1,
-     "stock": "In stock",
-     "drop_in": false,
-     "changes": "920 KV: \u00d834 tyres only and at the 66 fps bench limit (the ceiling test decides); a 4 mm shaft and its own stack height: a new hub and cage plate height",
-     "checked": "2026-10-27",
-     "evidence": "docs/turret-prototype-plan.md 3.1 (page)."
-    }
-   ]
+   "alternates": []
   },
   {
-   "item": "SunnySky X2216 880KV V3 outrunner, short shaft, with its bolt-on prop adapter and X-mount",
-   "id": "sunnysky-x2216-880kv-v3",
-   "key": "sunnysky-x2216-880kv-v3",
+   "item": "SunnySky X2216 1400KV V3 outrunner, short shaft, with its bolt-on prop adapter and X-mount",
+   "id": "sunnysky-x2216-1400kv-v3",
+   "key": "sunnysky-x2216-1400kv-v3",
    "qty": 1,
    "for": "flywheel_motor_r",
-   "part_number": "X2216 V3 880KV, short shaft (SKU SS-XV3-X2216-S-880-V3)",
+   "part_number": "X2216 V3 1400KV, short shaft (SKU SS-XV3-X2216-S-1400-V3)",
    "vendor": "SunnySky",
-   "url": "https://sunnyskyusa.com/products/sunnysky-x2216?variant=15890897469534",
+   "url": "https://sunnyskyusa.com/products/sunnysky-x2216?variant=27868073427038",
    "price_usd_each": 24.99,
    "mass_g_each": 72.0,
    "note": null,
@@ -324,8 +274,8 @@
    "sellers": [
     {
      "seller": "SunnySky USA",
-     "url": "https://sunnyskyusa.com/products/sunnysky-x2216?variant=15890897469534",
-     "seller_pn": "SS-XV3-X2216-S-880-V3 (variant 15890897469534, '880 Short')",
+     "url": "https://sunnyskyusa.com/products/sunnysky-x2216?variant=27868073427038",
+     "seller_pn": "SS-XV3-X2216-S-1400-V3 (variant 27868073427038, '1400 Short')",
      "price_usd": 24.99,
      "pack_qty": 1,
      "in_stock": true,
@@ -334,69 +284,19 @@
     },
     {
      "seller": "ReadyMadeRC",
-     "url": "https://www.readymaderc.com/products/details/sunny-sky-x2216-brushless-motor-short-shaft-880kv",
-     "seller_pn": "SS-XV3-X2216-S-880-V3 (RMRC 84776, GTIN 680306447725)",
-     "price_usd": 22.99,
+     "url": "https://www.readymaderc.com/products/details/sunnysky-x-series-v3-x2216-brushless-motor-short-shaft-1400kv",
+     "seller_pn": "SS-XV3-X2216-S-1400-V3 (RMRC 84546, GTIN 680306447800)",
+     "price_usd": 24.99,
      "pack_qty": 1,
      "in_stock": true,
      "stock": "In Stock (no quantity shown)",
      "read_on": "2026-10-27"
-    },
-    {
-     "seller": "Amazon",
-     "url": "https://www.amazon.com/dp/B0BR4VV3FG",
-     "seller_pn": "ASIN B0BR4VV3FG",
-     "price_usd": 26.99,
-     "pack_qty": 1,
-     "in_stock": true,
-     "stock": "Only 3 left in stock - order soon",
-     "read_on": "2026-10-27"
     }
    ],
-   "media_key": "sunnysky-x2216-880kv-v3",
+   "media_key": "sunnysky-x2216-1400kv-v3",
    "thumb": null,
    "thumb_from": null,
-   "alternates": [
-    {
-     "supplier": "ReadyMadeRC",
-     "part_number": "SunnySky X2216 V3 short shaft 880KV",
-     "url": "https://www.readymaderc.com/products/details/sunny-sky-x2216-brushless-motor-short-shaft-880kv",
-     "price": "$22.99",
-     "price_usd_each": 22.99,
-     "pack_qty": 1,
-     "stock": "In Stock",
-     "drop_in": true,
-     "changes": null,
-     "checked": "2026-10-27",
-     "evidence": "Page read 2026-10-27: $22.99, In Stock; in the box the motor, an X-mount bracket with screws and a prop adapter; 67.5 g, 89 mOhm, 0.5 A/10 V."
-    },
-    {
-     "supplier": "Amazon (FBA)",
-     "part_number": "B0BR4VV3FG",
-     "url": "https://www.amazon.com/dp/B0BR4VV3FG",
-     "price": "$26.99",
-     "price_usd_each": 26.99,
-     "pack_qty": 1,
-     "stock": "only 3 left (2026-10-27)",
-     "drop_in": true,
-     "changes": null,
-     "checked": "2026-10-27",
-     "evidence": "docs/turret-prototype-plan.md 3.1 (page)."
-    },
-    {
-     "supplier": "RobotShop",
-     "part_number": "T-Motor MN2212 V2 920KV",
-     "url": "https://www.robotshop.com/products/t-motor-navigator-mn2212-v2-920kv-brushless-motor",
-     "price": "$55.90",
-     "price_usd_each": 55.9,
-     "pack_qty": 1,
-     "stock": "In stock",
-     "drop_in": false,
-     "changes": "920 KV: \u00d834 tyres only and at the 66 fps bench limit (the ceiling test decides); a 4 mm shaft and its own stack height: a new hub and cage plate height",
-     "checked": "2026-10-27",
-     "evidence": "docs/turret-prototype-plan.md 3.1 (page)."
-    }
-   ]
+   "alternates": []
   },
   {
    "item": "AM32 Brushless Drive ESC 35 A (bi-directional)",
@@ -507,6 +407,46 @@
      "evidence": "Shopify .js 3149 cents, SKU 22300; description specifications ('Weight: 3 g (without motor wires)', 'Constant Current: 45 Amps', 'Dimensions: 12x28x5 mm', 'BEC: No BEC, OPTO only', 'Burst Current: 60 Amps', 'Input: 2-6S LiPoly')."
     }
    ]
+  },
+  {
+   "item": "Lumenier Razor Pro F4 45A 2-6S AM32 single ESC (the flywheel ESC's backup)",
+   "id": "lumenier-razor-pro-f4-45a-am32",
+   "key": "lumenier-razor-pro-f4-45a-am32",
+   "qty": 2,
+   "for": "esc_backup_pair",
+   "part_number": "Razor Pro F4 45A 2-6S AM32 ESC (single)",
+   "vendor": "Lumenier",
+   "url": "https://www.racedayquads.com/products/lumenier-razor-pro-f4-45a-2-6s-am32-esc",
+   "price_usd_each": 31.49,
+   "mass_g_each": null,
+   "note": null,
+   "pack_qty": null,
+   "sellers": [
+    {
+     "seller": "RaceDayQuads",
+     "url": "https://www.racedayquads.com/products/lumenier-razor-pro-f4-45a-2-6s-am32-esc",
+     "seller_pn": "22300 (UPC 724376363650)",
+     "price_usd": 31.49,
+     "pack_qty": 1,
+     "in_stock": true,
+     "stock": "available: true (Shopify; no count exposed)",
+     "read_on": "2026-10-27"
+    },
+    {
+     "seller": "GetFPV",
+     "url": "https://www.getfpv.com/lumenier-razor-pro-f4-45a-2-6s-am32-esc.html",
+     "seller_pn": "not read",
+     "price_usd": 31.49,
+     "pack_qty": 1,
+     "in_stock": null,
+     "stock": "unknown (page returns 403 to automated reads)",
+     "read_on": "2026-10-27"
+    }
+   ],
+   "media_key": "lumenier-razor-pro-f4-45a-am32",
+   "thumb": null,
+   "thumb_from": null,
+   "alternates": []
   },
   {
    "item": "STS3215 / ST3215 12 V 30 kg-cm serial bus servo",
@@ -653,7 +593,7 @@
     }
    ],
    "media_key": "proto-board-52x50",
-   "thumb": null,
+   "thumb": "references/vendor/thumbs/proto-board-52x50.jpg",
    "thumb_from": "https://www.taydaelectronics.com/double-side-prototyping-board-50x70mm.html",
    "alternates": []
   },
@@ -765,6 +705,138 @@
      "changes": null,
      "checked": "2026-10-27",
      "evidence": "docs/turret-prototype-plan.md 3.3: Xometry sheet-cut upload (instant price), the same DXF, material and thickness"
+    }
+   ]
+  },
+  {
+   "item": "Cradle cheek plate, +y (the servo's side), laser-cut 6061-T6 aluminium 0.125 in, 90 x 62 mm, 9 holes, 4 countersunk",
+   "id": "sendcutsend-cradle-plate-l",
+   "key": "sendcutsend-cradle-plate-l",
+   "qty": 1,
+   "for": "cradle_plate_l",
+   "part_number": "cradle_plate_l.dxf (6061-T6, 0.125 in)",
+   "vendor": "SendCutSend",
+   "url": "https://sendcutsend.com/materials/6061-t6-aluminum/",
+   "price_usd_each": null,
+   "mass_g_each": 24.6,
+   "note": null,
+   "pack_qty": null,
+   "sellers": [
+    {
+     "seller": "SendCutSend",
+     "url": "https://sendcutsend.com/materials/6061-t6-aluminum/",
+     "seller_pn": null,
+     "price_usd": null,
+     "pack_qty": null,
+     "in_stock": null,
+     "stock": null,
+     "read_on": null
+    }
+   ],
+   "media_key": "sendcutsend-cradle-plate-l",
+   "thumb": null,
+   "thumb_from": null,
+   "alternates": [
+    {
+     "supplier": "Xometry",
+     "part_number": "cradle_plate_l.dxf, 6061-T6 0.125 in, sheet cutting",
+     "url": "https://www.xometry.com/capabilities/sheet-metal-manufacturing/",
+     "price": "instant price on upload",
+     "price_usd_each": null,
+     "pack_qty": 1,
+     "stock": null,
+     "drop_in": true,
+     "changes": null,
+     "checked": "2026-10-27",
+     "evidence": "the same DXF, material and thickness, uploaded for Xometry's instant sheet-cutting price (tapping and countersinks as finishing options), as the pan clamp's backup"
+    }
+   ]
+  },
+  {
+   "item": "Cradle cheek plate, -y (the pivot's side), laser-cut 6061-T6 aluminium 0.125 in, 90 x 62 mm, 7 holes, 1 tapped M5, 2 countersunk",
+   "id": "sendcutsend-cradle-plate-r",
+   "key": "sendcutsend-cradle-plate-r",
+   "qty": 1,
+   "for": "cradle_plate_r",
+   "part_number": "cradle_plate_r.dxf (6061-T6, 0.125 in)",
+   "vendor": "SendCutSend",
+   "url": "https://sendcutsend.com/materials/6061-t6-aluminum/",
+   "price_usd_each": null,
+   "mass_g_each": 25.0,
+   "note": null,
+   "pack_qty": null,
+   "sellers": [
+    {
+     "seller": "SendCutSend",
+     "url": "https://sendcutsend.com/materials/6061-t6-aluminum/",
+     "seller_pn": null,
+     "price_usd": null,
+     "pack_qty": null,
+     "in_stock": null,
+     "stock": null,
+     "read_on": null
+    }
+   ],
+   "media_key": "sendcutsend-cradle-plate-r",
+   "thumb": null,
+   "thumb_from": null,
+   "alternates": [
+    {
+     "supplier": "Xometry",
+     "part_number": "cradle_plate_r.dxf, 6061-T6 0.125 in, sheet cutting",
+     "url": "https://www.xometry.com/capabilities/sheet-metal-manufacturing/",
+     "price": "instant price on upload",
+     "price_usd_each": null,
+     "pack_qty": 1,
+     "stock": null,
+     "drop_in": true,
+     "changes": null,
+     "checked": "2026-10-27",
+     "evidence": "the same DXF, material and thickness, uploaded for Xometry's instant sheet-cutting price (tapping and countersinks as finishing options), as the pan clamp's backup"
+    }
+   ]
+  },
+  {
+   "item": "Tilt hard-stop lug, laser-cut 6061-T6 aluminium 0.100 in, 24 x 23 mm, 2 holes tapped M3",
+   "id": "sendcutsend-stop-lug",
+   "key": "sendcutsend-stop-lug",
+   "qty": 1,
+   "for": "stop_lug",
+   "part_number": "stop_lug.dxf (6061-T6, 0.100 in)",
+   "vendor": "SendCutSend",
+   "url": "https://sendcutsend.com/materials/6061-t6-aluminum/",
+   "price_usd_each": null,
+   "mass_g_each": 2.0,
+   "note": null,
+   "pack_qty": null,
+   "sellers": [
+    {
+     "seller": "SendCutSend",
+     "url": "https://sendcutsend.com/materials/6061-t6-aluminum/",
+     "seller_pn": null,
+     "price_usd": null,
+     "pack_qty": null,
+     "in_stock": null,
+     "stock": null,
+     "read_on": null
+    }
+   ],
+   "media_key": "sendcutsend-stop-lug",
+   "thumb": null,
+   "thumb_from": null,
+   "alternates": [
+    {
+     "supplier": "Xometry",
+     "part_number": "stop_lug.dxf, 6061-T6 0.100 in, sheet cutting",
+     "url": "https://www.xometry.com/capabilities/sheet-metal-manufacturing/",
+     "price": "instant price on upload",
+     "price_usd_each": null,
+     "pack_qty": 1,
+     "stock": null,
+     "drop_in": true,
+     "changes": null,
+     "checked": "2026-10-27",
+     "evidence": "the same DXF, material and thickness, uploaded for Xometry's instant sheet-cutting price (tapping and countersinks as finishing options), as the pan clamp's backup"
     }
    ]
   },
@@ -1345,7 +1417,7 @@
     }
    ],
    "media_key": "sparkfun-rob-13065",
-   "thumb": null,
+   "thumb": "references/vendor/thumbs/sparkfun-rob-13065.jpg",
    "thumb_from": "https://www.sparkfun.com/products/13065",
    "alternates": [
     {
@@ -1389,7 +1461,7 @@
     }
    ],
    "media_key": "sparkfun-rob-13065",
-   "thumb": null,
+   "thumb": "references/vendor/thumbs/sparkfun-rob-13065.jpg",
    "thumb_from": "https://www.sparkfun.com/products/13065",
    "alternates": [
     {
@@ -1433,7 +1505,7 @@
     }
    ],
    "media_key": "sparkfun-rob-13065",
-   "thumb": null,
+   "thumb": "references/vendor/thumbs/sparkfun-rob-13065.jpg",
    "thumb_from": "https://www.sparkfun.com/products/13065",
    "alternates": [
     {
@@ -1452,22 +1524,22 @@
    ]
   },
   {
-   "item": "Continuous-Flex Tpv Rubber Tube for Chemicals, 5/16\" ID, 7/16\" OD",
+   "item": "Continuous-Flex Tpv Rubber Tube for Chemicals, 3/16\" ID, 5/16\" OD",
    "id": "turret_tube_coupling",
    "key": "turret_tube_coupling",
    "qty": 1,
    "for": "ring_coupling",
-   "part_number": "51225K32",
+   "part_number": "51225K24",
    "vendor": "McMaster-Carr",
-   "url": "https://www.mcmaster.com/51225K32/",
-   "price_usd_each": 0.94,
-   "mass_g_each": 2.0,
+   "url": "https://www.mcmaster.com/51225K24/",
+   "price_usd_each": 0.62,
+   "mass_g_each": 1.0,
    "note": null,
    "pack_qty": 1,
    "sellers": [
     {
      "seller": "McMaster-Carr",
-     "url": "https://www.mcmaster.com/51225K32/",
+     "url": "https://www.mcmaster.com/51225K24/",
      "seller_pn": null,
      "price_usd": null,
      "pack_qty": null,
@@ -1477,7 +1549,7 @@
     }
    ],
    "media_key": "turret_tube_coupling",
-   "thumb": null,
+   "thumb": "references/vendor/thumbs/turret_tube_coupling.jpg",
    "thumb_from": "https://www.mcmaster.com/51225K32/",
    "alternates": [
     {
@@ -1521,7 +1593,7 @@
     }
    ],
    "media_key": "turret_magnet_disc",
-   "thumb": null,
+   "thumb": "references/vendor/thumbs/turret_magnet_disc.jpg",
    "thumb_from": "https://www.mcmaster.com/5862K103/",
    "alternates": [
     {
@@ -1575,7 +1647,7 @@
     }
    ],
    "media_key": "allegro-a1120lua-t",
-   "thumb": null,
+   "thumb": "references/vendor/thumbs/allegro-a1120lua-t.jpg",
    "thumb_from": "https://www.cytechsystems.com/fr/product/a1120lua-t",
    "alternates": []
   },
@@ -1605,7 +1677,7 @@
     }
    ],
    "media_key": "turret_thumbscrew_m4x12",
-   "thumb": null,
+   "thumb": "references/vendor/thumbs/turret_thumbscrew_m4x12.jpg",
    "thumb_from": "https://www.mcmaster.com/92581A250/",
    "alternates": [
     {
@@ -1620,6 +1692,505 @@
      "changes": null,
      "checked": "2026-10-27",
      "evidence": "DIN 464 knurled high-head thumb screw, M4x0.7 x 12 mm, A2 stainless (brief allows stainless; McMaster part is steel). $2.46 each; 25-99 $2.07; 100-249 $1.98; 250+ $1.72."
+    }
+   ]
+  },
+  {
+   "item": "reComputer Mini J4012 with Extension: Jetson Orin NX 16 GB on the reComputer Mini carrier, its extension board (RJ-45, CAN, 4 x USB 3), fan and heat sink, 128 GB NVMe",
+   "id": "seeed-recomputer-mini-j4012-ext",
+   "key": "seeed-recomputer-mini-j4012-ext",
+   "qty": 1,
+   "for": "compute",
+   "part_number": "114993553",
+   "vendor": "Seeed Studio",
+   "url": "https://www.seeedstudio.com/reComputer-Mini-J4012-with-Extension-p-6353.html",
+   "price_usd_each": 999.0,
+   "mass_g_each": 462.0,
+   "note": null,
+   "pack_qty": 1,
+   "sellers": [
+    {
+     "seller": "Seeed Studio",
+     "url": "https://www.seeedstudio.com/reComputer-Mini-J4012-with-Extension-p-6353.html",
+     "seller_pn": "114993553",
+     "price_usd": 999.0,
+     "pack_qty": null,
+     "in_stock": null,
+     "stock": null,
+     "read_on": null
+    },
+    {
+     "seller": "Switch Science",
+     "url": "https://www.switch-science.com/products/10478",
+     "seller_pn": null,
+     "price_usd": null,
+     "pack_qty": null,
+     "in_stock": false,
+     "stock": null,
+     "read_on": null
+    }
+   ],
+   "media_key": "seeed-recomputer-mini-j4012-ext",
+   "thumb": null,
+   "thumb_from": null,
+   "alternates": []
+  },
+  {
+   "item": "Panel Mount Ethernet Extension Cable (RJ-45 jack with two 4-40 ears, 25 cm to a plug)",
+   "id": "adafruit-909",
+   "key": "adafruit-909",
+   "qty": 1,
+   "for": "eth_jack",
+   "part_number": "909",
+   "vendor": "Adafruit",
+   "url": "https://www.adafruit.com/product/909",
+   "price_usd_each": 4.95,
+   "mass_g_each": 15.0,
+   "note": null,
+   "pack_qty": 1,
+   "sellers": [
+    {
+     "seller": "Adafruit",
+     "url": "https://www.adafruit.com/product/909",
+     "seller_pn": null,
+     "price_usd": 4.95,
+     "pack_qty": null,
+     "in_stock": true,
+     "stock": null,
+     "read_on": null
+    },
+    {
+     "seller": "Digi-Key",
+     "url": "https://www.digikey.com/en/products/detail/adafruit-industries-llc/909/5844686",
+     "seller_pn": "1528-1572-ND",
+     "price_usd": 4.95,
+     "pack_qty": null,
+     "in_stock": true,
+     "stock": null,
+     "read_on": null
+    }
+   ],
+   "media_key": "adafruit-909",
+   "thumb": null,
+   "thumb_from": null,
+   "alternates": []
+  },
+  {
+   "item": "Amass XT30U female, 8-pack (the robot's live ends: the 24 V and 12 V branch leads; D58)",
+   "id": "xt30_f",
+   "key": "xt30_f",
+   "qty": 1,
+   "for": "xt30_input",
+   "part_number": "XT30U-F 8-pack",
+   "vendor": "Amass",
+   "url": "https://www.pyrodrone.com/products/yellow-xt30u-f-8-pack-female-battery",
+   "price_usd_each": 0.3738,
+   "mass_g_each": 4.0,
+   "note": null,
+   "pack_qty": 8,
+   "sellers": [
+    {
+     "seller": "Pyrodrone",
+     "url": "https://www.pyrodrone.com/products/yellow-xt30u-f-8-pack-female-battery",
+     "seller_pn": null,
+     "price_usd": 2.99,
+     "pack_qty": 8,
+     "in_stock": true,
+     "stock": "available",
+     "read_on": "2026-10-27"
+    },
+    {
+     "seller": "RaceDayQuads",
+     "url": "https://www.racedayquads.com/products/xt30-connector-male-or-female",
+     "seller_pn": null,
+     "price_usd": 0.99,
+     "pack_qty": null,
+     "in_stock": true,
+     "stock": "available (single)",
+     "read_on": "2026-10-27"
+    }
+   ],
+   "media_key": "xt30_f",
+   "thumb": null,
+   "thumb_from": null,
+   "alternates": []
+  },
+  {
+   "item": "Bussmann HHM inline MINI fuse holder, 2-30 A (rated 32 V DC: the 58 V fuse does the interrupting; label it \"58 V fuses only\")",
+   "id": "fuse_holder_mini_inline",
+   "key": "fuse_holder_mini_inline",
+   "qty": 2,
+   "for": "input_fuses",
+   "part_number": "HHM",
+   "vendor": "Eaton Bussmann",
+   "url": "https://www.rockauto.com/en/moreinfo.php?pk=1474944",
+   "price_usd_each": 2.28,
+   "mass_g_each": 20.0,
+   "note": null,
+   "pack_qty": null,
+   "sellers": [
+    {
+     "seller": "RockAuto",
+     "url": "https://www.rockauto.com/en/moreinfo.php?pk=1474944",
+     "seller_pn": null,
+     "price_usd": 2.28,
+     "pack_qty": null,
+     "in_stock": true,
+     "stock": "Add to Cart",
+     "read_on": "2026-10-27"
+    },
+    {
+     "seller": "LCSC",
+     "url": "https://www.lcsc.com/product-detail/C3207515.html",
+     "seller_pn": null,
+     "price_usd": 0.3,
+     "pack_qty": null,
+     "in_stock": true,
+     "stock": "0 (Keystone 3570 PCB holder: the fuse-board upgrade)",
+     "read_on": "2026-10-27"
+    }
+   ],
+   "media_key": "fuse_holder_mini_inline",
+   "thumb": null,
+   "thumb_from": null,
+   "alternates": []
+  },
+  {
+   "item": "Littelfuse MINI 58V blade fuse 20 A (the RS-04 branches)",
+   "id": "fuse_mini58_20a",
+   "key": "fuse_mini58_20a",
+   "qty": 1,
+   "for": "hw_fuse_main",
+   "part_number": "0997020.WXN",
+   "vendor": "Littelfuse",
+   "url": "https://www.lcsc.com/product-detail/C207028.html",
+   "price_usd_each": 0.61,
+   "mass_g_each": null,
+   "note": null,
+   "pack_qty": null,
+   "sellers": [
+    {
+     "seller": "LCSC",
+     "url": "https://www.lcsc.com/product-detail/C207028.html",
+     "seller_pn": "C207028",
+     "price_usd": 0.61,
+     "pack_qty": null,
+     "in_stock": true,
+     "stock": "1,609",
+     "read_on": "2026-10-27"
+    },
+    {
+     "seller": "element14",
+     "url": "https://nz.element14.com/littelfuse/0997020-wxn/auto-blade-fuse-2a-58v/dp/2748837",
+     "seller_pn": null,
+     "price_usd": null,
+     "pack_qty": null,
+     "in_stock": true,
+     "stock": "listed (snippet)",
+     "read_on": "2026-10-27"
+    }
+   ],
+   "media_key": "fuse_mini58_20a",
+   "thumb": null,
+   "thumb_from": null,
+   "alternates": []
+  },
+  {
+   "item": "Littelfuse MINI 58V blade fuse 5 A (DDR-60L-12 input; the 24 V J501 and turret branches)",
+   "id": "fuse_mini58_5a",
+   "key": "fuse_mini58_5a",
+   "qty": 1,
+   "for": "hw_fuse_compute",
+   "part_number": "0997005.WXN",
+   "vendor": "Littelfuse",
+   "url": "https://il.farnell.com/littelfuse/0997005-wxn/auto-blade-fuse-5a-58v/dp/2748834",
+   "price_usd_each": 0.98,
+   "mass_g_each": null,
+   "note": null,
+   "pack_qty": null,
+   "sellers": [
+    {
+     "seller": "Farnell",
+     "url": "https://il.farnell.com/littelfuse/0997005-wxn/auto-blade-fuse-5a-58v/dp/2748834",
+     "seller_pn": null,
+     "price_usd": 0.98,
+     "pack_qty": null,
+     "in_stock": true,
+     "stock": "5,995 in stock, 10-14 business days from US stock (search result, 2026-10-27)",
+     "read_on": "2026-10-27"
+    },
+    {
+     "seller": "Dasenic",
+     "url": "https://www.dasenic.com/product/littelfuse-0997005wxn",
+     "seller_pn": null,
+     "price_usd": 0.39,
+     "pack_qty": null,
+     "in_stock": true,
+     "stock": "17,902 in stock, $0.3878 at 25+ (search result, 2026-10-27)",
+     "read_on": "2026-10-27"
+    }
+   ],
+   "media_key": "fuse_mini58_5a",
+   "thumb": null,
+   "thumb_from": null,
+   "alternates": []
+  },
+  {
+   "item": "Heat-Set Threaded Inserts for Plastic, Standard, Brass, M5 x 0.8 mm Thread Size, 7.9 mm Installed Length",
+   "id": "insert_m5",
+   "key": "insert_m5",
+   "qty": 4,
+   "for": "hw_plinth_inserts_m5",
+   "part_number": "94459A775",
+   "vendor": "McMaster-Carr",
+   "url": "https://www.mcmaster.com/94459A775/",
+   "price_usd_each": 0.2728,
+   "mass_g_each": null,
+   "note": null,
+   "pack_qty": 25,
+   "sellers": [
+    {
+     "seller": "McMaster-Carr",
+     "url": "https://www.mcmaster.com/94459A775/",
+     "seller_pn": null,
+     "price_usd": null,
+     "pack_qty": null,
+     "in_stock": null,
+     "stock": null,
+     "read_on": null
+    }
+   ],
+   "media_key": "insert_m5",
+   "thumb": "references/vendor/thumbs/insert_m5.jpg",
+   "thumb_from": "https://www.mcmaster.com/94459A775/",
+   "alternates": [
+    {
+     "supplier": "ruthex",
+     "part_number": "RX-M5x9.5 (SKU GE-M5x95-001)",
+     "url": "https://www.ruthex.de/products/ruthex-gewindeeinsatz-m5-50-stuck-rx-m5x9-5-messing-gewindebuchsen",
+     "price": null,
+     "price_usd_each": null,
+     "pack_qty": 50,
+     "stock": "InStock (schema.org availability)",
+     "drop_in": false,
+     "changes": "NOT drop-in: 9.5 mm long vs McMaster 7.9 mm (1.6 mm longer). The short version RX-M5Sx5.8 (and CNC Kitchen 'M5 x 5.8 short', also listed) is 2.1 mm shorter. No 7.9 mm M5 at ruthex or CNC Kitchen. EUR 9.99 per 50 (VAT incl.), no USD price.",
+     "checked": "2026-10-27",
+     "evidence": "NOT drop-in: 9.5 mm long vs McMaster 7.9 mm (1.6 mm longer). The short version RX-M5Sx5.8 (and CNC Kitchen 'M5 x 5.8 short', also listed) is 2.1 mm shorter. No 7.9 mm M5 at ruthex or CNC Kitchen. EUR 9.99 per 50 (VAT incl.), no USD price."
+    },
+    {
+     "supplier": "3DJake",
+     "part_number": "CNC-B09FXM8ZMV",
+     "url": "https://www.3djake.com/cnc-kitchen/threaded-inserts-m5-short",
+     "price": "$11.18 ($0.22 / pc), excl. VAT",
+     "price_usd_each": 0.2236,
+     "pack_qty": 50,
+     "stock": "In stock",
+     "drop_in": false,
+     "changes": "5.8 mm long instead of 7.9 mm, so 2.1 mm less thread engagement and pull-out strength. Same 6.4 mm hole per CNC Kitchen's table. It fits the existing 6.4 mm hole without a CAD change and sits flush with spare depth below.",
+     "checked": "2026-10-27",
+     "evidence": "curl of the 3DJake page: 'CNC Kitchen Threaded Inserts M5 Short, M5 x 5.8 (50 pieces)', InStock. The dimension table lists M5 Short: L 5.8, hole D3 6.4, and M5: L 9.5, hole D3 6.4. 3DJake also sells the M5 x 9.5 (CNC-X001FCE5ZB) at $11.18/50, 75 left. Direct from cnckitchen.store: TC-M5x5.8 and TC-M5x9.5, 50 pcs, 9.90 EUR each, InStock. No 7.9 mm-long M5 was found at either."
+    }
+   ]
+  },
+  {
+   "item": "Black-Oxide Alloy Steel Socket Head Screw, US Origin, M5 x 0.8 mm Thread Size, 16 mm Long",
+   "id": "screw_m5x16",
+   "key": "screw_m5x16",
+   "qty": 4,
+   "for": "hw_plinth_screws_m5",
+   "part_number": "91290A232",
+   "vendor": "McMaster-Carr",
+   "url": "https://www.mcmaster.com/91290A232/",
+   "price_usd_each": 0.1727,
+   "mass_g_each": null,
+   "note": null,
+   "pack_qty": 100,
+   "sellers": [
+    {
+     "seller": "McMaster-Carr",
+     "url": "https://www.mcmaster.com/91290A232/",
+     "seller_pn": null,
+     "price_usd": null,
+     "pack_qty": null,
+     "in_stock": null,
+     "stock": null,
+     "read_on": null
+    }
+   ],
+   "media_key": "screw_m5x16",
+   "thumb": "references/vendor/thumbs/screw_m5x16.jpg",
+   "thumb_from": "https://www.mcmaster.com/91290A232/",
+   "alternates": [
+    {
+     "supplier": "Belmetric",
+     "part_number": "BSH5X16",
+     "url": "https://belmetric.com/m5x0-8-socket-head-cap-screw-din-912-class-12-9/",
+     "price": "$0.17",
+     "price_usd_each": 0.17,
+     "pack_qty": 1,
+     "stock": "in stock",
+     "drop_in": true,
+     "changes": null,
+     "checked": "2026-10-27",
+     "evidence": "Same spec: DIN 912, class 12.9, black oxide, M5x0.8 x 16 mm full thread (select Length=16mm). $0.17 each; 25-99 $0.11; 100-999 $0.10; 1000+ $0.08."
+    }
+   ]
+  },
+  {
+   "item": "Dowel Pin, 52100 Alloy Steel, 5 mm Diameter, 16 mm Long",
+   "id": "dowel_5x16",
+   "key": "dowel_5x16",
+   "qty": 2,
+   "for": "hw_plinth_dowels",
+   "part_number": "91595A352",
+   "vendor": "McMaster-Carr",
+   "url": "https://www.mcmaster.com/91595A352/",
+   "price_usd_each": 0.3844,
+   "mass_g_each": null,
+   "note": null,
+   "pack_qty": 50,
+   "sellers": [
+    {
+     "seller": "McMaster-Carr",
+     "url": "https://www.mcmaster.com/91595A352/",
+     "seller_pn": null,
+     "price_usd": null,
+     "pack_qty": null,
+     "in_stock": null,
+     "stock": null,
+     "read_on": null
+    }
+   ],
+   "media_key": "dowel_5x16",
+   "thumb": "references/vendor/thumbs/dowel_5x16.jpg",
+   "thumb_from": "https://www.mcmaster.com/91595A352/",
+   "alternates": [
+    {
+     "supplier": "WDS Components",
+     "part_number": "662-20316",
+     "url": "https://www.wdscomponents.com/en-us/5mm-x-16mm-steel-precision-dowel-pin",
+     "price": "$0.60",
+     "price_usd_each": 0.6,
+     "pack_qty": 1,
+     "stock": "Stock Guaranteed; stock availability < 500",
+     "drop_in": true,
+     "changes": null,
+     "checked": "2026-10-27",
+     "evidence": "5 x 16 mm, steel BS970 230M07, 'hardened and ground' precision dowel; the page names no standard and no tolerance class, so ISO 8734 / DIN 6325 m6 is NOT confirmed (230M07 is a case-hardening free-cutting steel, closer to ISO 8734 type B than through-hardened alloy). $0.60 each; 50+ $0.51; 1000+ $0.48. Belmetric only lists DIN 7 (unhardened) pins; Fastenermart (DIN 6325 5x16) and Ametric are behin"
+    },
+    {
+     "supplier": "Aspen Fasteners",
+     "part_number": "ME397-5X16-00300",
+     "url": "https://www.aspenfasteners.com/m5-x-16mm-din-6325-metric-solid-dowel-pins-steel/",
+     "price": "Now: $180.47 (Box of 300)",
+     "price_usd_each": 0.6016,
+     "pack_qty": 300,
+     "stock": "Contact Support for Availability Info",
+     "drop_in": true,
+     "changes": null,
+     "checked": "2026-10-27",
+     "evidence": "curl of product page: 'M5 X 16mm DIN 6325, Metric, Solid Dowel Pins, Steel', tolerance m6, hardened Rockwell C58-C62, rounded ends, chamfer 1.2 mm. Sold only as a box of 300."
+    },
+    {
+     "supplier": "Aspen Fasteners",
+     "part_number": "UB006-5X16-000400",
+     "url": "https://www.aspenfasteners.com/m5-x-16mm-din-6325-metric-solid-dowel-pins-alloy-steel-plain-unbrako/",
+     "price": "Now: $437.89 (Box of 400)",
+     "price_usd_each": 1.0947,
+     "pack_qty": 400,
+     "stock": "Contact Support for Availability Info",
+     "drop_in": true,
+     "changes": null,
+     "checked": "2026-10-27",
+     "evidence": "curl of product page: 'M5 X 16mm DIN 6325 ... Alloy Steel, Plain, Unbrako', through-hardened, 'Ground Oversize to 0.0002in'. Same supplier, different maker. I found no small-pack source I could read: Misumi, Bolt Depot, Accu and Fastenal block automated reads, and Belmetric's DIN 6325 items are special-order placeholders."
+    }
+   ]
+  },
+  {
+   "item": "Black-Oxide Alloy Steel Socket Head Screw, US Origin, M4 x 0.7 mm Thread Size, 10 mm Long",
+   "id": "turret_screw_m4x10",
+   "key": "turret_screw_m4x10",
+   "qty": 4,
+   "for": "hw_plinth_m4",
+   "part_number": "91290A144",
+   "vendor": "McMaster-Carr",
+   "url": "https://www.mcmaster.com/91290A144/",
+   "price_usd_each": 0.1355,
+   "mass_g_each": null,
+   "note": null,
+   "pack_qty": 100,
+   "sellers": [
+    {
+     "seller": "McMaster-Carr",
+     "url": "https://www.mcmaster.com/91290A144/",
+     "seller_pn": null,
+     "price_usd": null,
+     "pack_qty": null,
+     "in_stock": null,
+     "stock": null,
+     "read_on": null
+    }
+   ],
+   "media_key": "turret_screw_m4x10",
+   "thumb": "references/vendor/thumbs/turret_screw_m4x10.jpg",
+   "thumb_from": "https://www.mcmaster.com/91290A144/",
+   "alternates": [
+    {
+     "supplier": "Belmetric",
+     "part_number": "BSH4X10",
+     "url": "https://belmetric.com/m4x0-7-socket-head-cap-screw-din-912-class-12-9/",
+     "price": "$0.14",
+     "price_usd_each": 0.14,
+     "pack_qty": 1,
+     "stock": "in stock",
+     "drop_in": true,
+     "changes": null,
+     "checked": "2026-10-27",
+     "evidence": "Same spec: DIN 912, class 12.9, black oxide, M4x0.7 x 10 mm full thread (select Length=10mm). $0.14 each; 25-99 $0.10; 100-999 $0.09; 1000+ $0.08."
+    }
+   ]
+  },
+  {
+   "item": "Heat-Set Threaded Inserts for Plastic, Standard, Brass, M4 x 0.7 mm Thread Size, 6.4 mm Installed Length",
+   "id": "turret_insert_m4",
+   "key": "turret_insert_m4",
+   "qty": 4,
+   "for": "hw_plinth_inserts_m4",
+   "part_number": "94459A160",
+   "vendor": "McMaster-Carr",
+   "url": "https://www.mcmaster.com/94459A160/",
+   "price_usd_each": 0.2346,
+   "mass_g_each": null,
+   "note": null,
+   "pack_qty": 50,
+   "sellers": [
+    {
+     "seller": "McMaster-Carr",
+     "url": "https://www.mcmaster.com/94459A160/",
+     "seller_pn": null,
+     "price_usd": null,
+     "pack_qty": null,
+     "in_stock": null,
+     "stock": null,
+     "read_on": null
+    }
+   ],
+   "media_key": "turret_insert_m4",
+   "thumb": "references/vendor/thumbs/turret_insert_m4.jpg",
+   "thumb_from": "https://www.mcmaster.com/94459A160/",
+   "alternates": [
+    {
+     "supplier": "ruthex",
+     "part_number": "RX-M4x8.1 (SKU GE-M4x81-001)",
+     "url": "https://www.ruthex.de/products/ruthex-gewindeeinsatz-m4-50-stuck-rx-m4x8-1-messing-gewindebuchsen",
+     "price": null,
+     "price_usd_each": null,
+     "pack_qty": 50,
+     "stock": "InStock (schema.org availability)",
+     "drop_in": false,
+     "changes": "NOT drop-in: 8.1 mm long vs McMaster 6.4 mm (1.7 mm longer, needs a deeper boss). The other ruthex option, RX-M4Sx4.0 short, is 2.4 mm shorter (page not opened). Neither ruthex nor CNC Kitchen (M4x8.1 / M4x4) sells a 6.4 mm M4. EUR 9.49 per 50 (VAT incl.), no USD price.",
+     "checked": "2026-10-27",
+     "evidence": "NOT drop-in: 8.1 mm long vs McMaster 6.4 mm (1.7 mm longer, needs a deeper boss). The other ruthex option, RX-M4Sx4.0 short, is 2.4 mm shorter (page not opened). Neither ruthex nor CNC Kitchen (M4x8.1 / M4x4) sells a 6.4 mm M4. EUR 9.49 per 50 (VAT incl.), no USD price."
     }
    ]
   },
@@ -1659,7 +2230,7 @@
     }
    ],
    "media_key": "proto-board-52x50",
-   "thumb": null,
+   "thumb": "references/vendor/thumbs/proto-board-52x50.jpg",
    "thumb_from": "https://www.taydaelectronics.com/double-side-prototyping-board-50x70mm.html",
    "alternates": []
   },
@@ -1699,7 +2270,7 @@
     }
    ],
    "media_key": "proto-board-52x50",
-   "thumb": null,
+   "thumb": "references/vendor/thumbs/proto-board-52x50.jpg",
    "thumb_from": "https://www.taydaelectronics.com/double-side-prototyping-board-50x70mm.html",
    "alternates": []
   },
@@ -1729,7 +2300,7 @@
     }
    ],
    "media_key": "screw_m5x16",
-   "thumb": null,
+   "thumb": "references/vendor/thumbs/screw_m5x16.jpg",
    "thumb_from": "https://www.mcmaster.com/91290A232/",
    "alternates": [
     {
@@ -1843,7 +2414,7 @@
     }
    ],
    "media_key": "turret_screw_m2x10",
-   "thumb": null,
+   "thumb": "references/vendor/thumbs/turret_screw_m2x10.jpg",
    "thumb_from": "https://www.mcmaster.com/91290A017/",
    "alternates": [
     {
@@ -1887,7 +2458,7 @@
     }
    ],
    "media_key": "turret_screw_m2x20",
-   "thumb": null,
+   "thumb": "references/vendor/thumbs/turret_screw_m2x20.jpg",
    "thumb_from": "https://www.mcmaster.com/91290A049/",
    "alternates": [
     {
@@ -2019,7 +2590,7 @@
     }
    ],
    "media_key": "turret_screw_m3x8",
-   "thumb": null,
+   "thumb": "references/vendor/thumbs/turret_screw_m3x8.jpg",
    "thumb_from": "https://www.mcmaster.com/91290A113/",
    "alternates": [
     {
@@ -2063,7 +2634,7 @@
     }
    ],
    "media_key": "turret_screw_m3x10",
-   "thumb": null,
+   "thumb": "references/vendor/thumbs/turret_screw_m3x10.jpg",
    "thumb_from": "https://www.mcmaster.com/91290A115/",
    "alternates": [
     {
@@ -2078,50 +2649,6 @@
      "changes": null,
      "checked": "2026-10-27",
      "evidence": "Same spec, 10 mm (select Length=10mm). $0.14 each; 25-99 $0.10; 100-999 $0.09; 1000+ $0.08."
-    }
-   ]
-  },
-  {
-   "item": "Black-Oxide Alloy Steel Socket Head Screw, US Origin, M3 x 0.5 mm Thread Size, 12 mm Long",
-   "id": "turret_screw_m3x12",
-   "key": "turret_screw_m3x12",
-   "qty": 4,
-   "for": "hw_screw_m3x12",
-   "part_number": "91290A117",
-   "vendor": "McMaster-Carr",
-   "url": "https://www.mcmaster.com/91290A117/",
-   "price_usd_each": 0.1203,
-   "mass_g_each": null,
-   "note": null,
-   "pack_qty": 100,
-   "sellers": [
-    {
-     "seller": "McMaster-Carr",
-     "url": "https://www.mcmaster.com/91290A117/",
-     "seller_pn": null,
-     "price_usd": null,
-     "pack_qty": null,
-     "in_stock": null,
-     "stock": null,
-     "read_on": null
-    }
-   ],
-   "media_key": "turret_screw_m3x12",
-   "thumb": null,
-   "thumb_from": "https://www.mcmaster.com/91290A117/",
-   "alternates": [
-    {
-     "supplier": "Belmetric",
-     "part_number": "BSH3X12",
-     "url": "https://belmetric.com/m3x0-5-socket-head-cap-screw-din-912-class-12-9/",
-     "price": "$0.16",
-     "price_usd_each": 0.16,
-     "pack_qty": 1,
-     "stock": "in stock",
-     "drop_in": true,
-     "changes": null,
-     "checked": "2026-10-27",
-     "evidence": "Same spec, 12 mm (select Length=12mm). $0.16 each; 25-99 $0.10; 100-999 $0.09; 1000+ $0.08."
     }
    ]
   },
@@ -2151,7 +2678,7 @@
     }
    ],
    "media_key": "turret_screw_m3x16",
-   "thumb": null,
+   "thumb": "references/vendor/thumbs/turret_screw_m3x16.jpg",
    "thumb_from": "https://www.mcmaster.com/91290A120/",
    "alternates": [
     {
@@ -2166,6 +2693,138 @@
      "changes": null,
      "checked": "2026-10-27",
      "evidence": "Same spec, 16 mm (select Length=16mm). $0.16 each; 25-99 $0.10; 100-999 $0.09; 1000+ $0.08."
+    }
+   ]
+  },
+  {
+   "item": "18-8 Stainless Steel Hex-Drive Flat Head Screw, M3 x 0.5 mm Thread Size, 14 mm Long",
+   "id": "turret_screw_m3x14_flat_ss",
+   "key": "turret_screw_m3x14_flat_ss",
+   "qty": 4,
+   "for": "hw_flat_m3x14",
+   "part_number": "92125A133",
+   "vendor": "McMaster-Carr",
+   "url": "https://www.mcmaster.com/92125A133/",
+   "price_usd_each": 0.1065,
+   "mass_g_each": null,
+   "note": null,
+   "pack_qty": 100,
+   "sellers": [
+    {
+     "seller": "McMaster-Carr",
+     "url": "https://www.mcmaster.com/92125A133/",
+     "seller_pn": null,
+     "price_usd": null,
+     "pack_qty": null,
+     "in_stock": null,
+     "stock": null,
+     "read_on": null
+    }
+   ],
+   "media_key": "turret_screw_m3x14_flat_ss",
+   "thumb": null,
+   "thumb_from": null,
+   "alternates": [
+    {
+     "supplier": "Belmetric",
+     "part_number": "SF3X14CLZ",
+     "url": "https://belmetric.com/m3x0-5-flat-head-cap-screw-steel-10-9-din-7991/",
+     "price": "$0.18",
+     "price_usd_each": 0.18,
+     "pack_qty": 1,
+     "stock": "in stock",
+     "drop_in": true,
+     "changes": null,
+     "checked": "2026-10-27",
+     "evidence": "Same geometry: DIN 7991 / ISO 10642 M3 x 14 (overall length, as McMaster), head \u00d86; class 10.9 steel, zinc plated (14 mm is listed only as SF3X14CLZ); 'Starts At: $0.18' each on the page's Length selector."
+    }
+   ]
+  },
+  {
+   "item": "Class 10.9 Screw, M3 x 0.5 mm Thread Size, 8 mm Long",
+   "id": "turret_screw_m3x8_button",
+   "key": "turret_screw_m3x8_button",
+   "qty": 8,
+   "for": "hw_button_m3x8",
+   "part_number": "91239A113",
+   "vendor": "McMaster-Carr",
+   "url": "https://www.mcmaster.com/91239A113/",
+   "price_usd_each": 0.0982,
+   "mass_g_each": null,
+   "note": null,
+   "pack_qty": 100,
+   "sellers": [
+    {
+     "seller": "McMaster-Carr",
+     "url": "https://www.mcmaster.com/91239A113/",
+     "seller_pn": null,
+     "price_usd": null,
+     "pack_qty": null,
+     "in_stock": null,
+     "stock": null,
+     "read_on": null
+    }
+   ],
+   "media_key": "turret_screw_m3x8_button",
+   "thumb": null,
+   "thumb_from": null,
+   "alternates": [
+    {
+     "supplier": "Fastener Superstore",
+     "part_number": "227258",
+     "url": "https://www.fastenersuperstore.com/products/227258/button-head-socket-cap-screws",
+     "price": "$31.01 / carton of 100",
+     "price_usd_each": 0.31,
+     "pack_qty": 100,
+     "stock": "not shown",
+     "drop_in": true,
+     "changes": null,
+     "checked": "2026-10-27",
+     "evidence": "M3-0.5 x 8 mm button head socket cap screw, alloy steel, black oxide: $31.01 per carton of 100 (1-2 cartons)."
+    }
+   ]
+  },
+  {
+   "item": "Black-Oxide Alloy Steel Hex-Drive Flat Head Screw, 90 Degree Countersink, M3 x 0.5 mm Thread Size, 6 mm Long",
+   "id": "turret_screw_m3x6_flat",
+   "key": "turret_screw_m3x6_flat",
+   "qty": 2,
+   "for": "hw_flat_m3x6",
+   "part_number": "91294A126",
+   "vendor": "McMaster-Carr",
+   "url": "https://www.mcmaster.com/91294A126/",
+   "price_usd_each": 0.0545,
+   "mass_g_each": null,
+   "note": null,
+   "pack_qty": 100,
+   "sellers": [
+    {
+     "seller": "McMaster-Carr",
+     "url": "https://www.mcmaster.com/91294A126/",
+     "seller_pn": null,
+     "price_usd": null,
+     "pack_qty": null,
+     "in_stock": null,
+     "stock": null,
+     "read_on": null
+    }
+   ],
+   "media_key": "turret_screw_m3x6_flat",
+   "thumb": "references/vendor/thumbs/turret_screw_m3x6_flat.jpg",
+   "thumb_from": "https://www.mcmaster.com/91294A126/",
+   "alternates": [
+    {
+     "supplier": "Belmetric",
+     "part_number": "SF3X6",
+     "url": "https://belmetric.com/m3x0-5-flat-head-cap-screw-steel-10-9-din-7991/",
+     "price": "$0.18",
+     "price_usd_each": 0.18,
+     "pack_qty": 1,
+     "stock": "in stock",
+     "drop_in": true,
+     "changes": null,
+     "checked": "2026-10-27",
+     "evidence": "Same spec: DIN 7991 / ISO 10642, class 10.9 steel, black oxide (select Finish=Black Oxide, Length=6mm; a zinc-plated option exists on the same page). Length is overall incl. head, as McMaster. $0.18 each; 25-99 $0.11; 100-999 $0.10; 1000+ $0.08."
     }
    ]
   },
@@ -2195,7 +2854,7 @@
     }
    ],
    "media_key": "turret_screw_m4x10",
-   "thumb": null,
+   "thumb": "references/vendor/thumbs/turret_screw_m4x10.jpg",
    "thumb_from": "https://www.mcmaster.com/91290A144/",
    "alternates": [
     {
@@ -2239,7 +2898,7 @@
     }
    ],
    "media_key": "turret_screw_m3x8_flat",
-   "thumb": null,
+   "thumb": "references/vendor/thumbs/turret_screw_m3x8_flat.jpg",
    "thumb_from": "https://www.mcmaster.com/91294A128/",
    "alternates": [
     {
@@ -2283,7 +2942,7 @@
     }
    ],
    "media_key": "turret_screw_m3x10_flat",
-   "thumb": null,
+   "thumb": "references/vendor/thumbs/turret_screw_m3x10_flat.jpg",
    "thumb_from": "https://www.mcmaster.com/91294A130/",
    "alternates": [
     {
@@ -2327,7 +2986,7 @@
     }
    ],
    "media_key": "turret_setscrew_m3x6_nylon",
-   "thumb": null,
+   "thumb": "references/vendor/thumbs/turret_setscrew_m3x6_nylon.jpg",
    "thumb_from": "https://www.mcmaster.com/93285A115/",
    "alternates": [
     {
@@ -2349,7 +3008,7 @@
    "item": "Heat-Set Threaded Inserts for Plastic, Standard, Brass, M3 x 0.5 mm Thread Size, 5.7 mm Installed Length",
    "id": "insert_m3",
    "key": "insert_m3",
-   "qty": 29,
+   "qty": 37,
    "for": "hw_insert_m3",
    "part_number": "94459A140",
    "vendor": "McMaster-Carr",
@@ -2428,7 +3087,7 @@
     }
    ],
    "media_key": "turret_insert_m4",
-   "thumb": null,
+   "thumb": "references/vendor/thumbs/turret_insert_m4.jpg",
    "thumb_from": "https://www.mcmaster.com/94459A160/",
    "alternates": [
     {
@@ -2443,63 +3102,6 @@
      "changes": "NOT drop-in: 8.1 mm long vs McMaster 6.4 mm (1.7 mm longer, needs a deeper boss). The other ruthex option, RX-M4Sx4.0 short, is 2.4 mm shorter (page not opened). Neither ruthex nor CNC Kitchen (M4x8.1 / M4x4) sells a 6.4 mm M4. EUR 9.49 per 50 (VAT incl.), no USD price.",
      "checked": "2026-10-27",
      "evidence": "NOT drop-in: 8.1 mm long vs McMaster 6.4 mm (1.7 mm longer, needs a deeper boss). The other ruthex option, RX-M4Sx4.0 short, is 2.4 mm shorter (page not opened). Neither ruthex nor CNC Kitchen (M4x8.1 / M4x4) sells a 6.4 mm M4. EUR 9.49 per 50 (VAT incl.), no USD price."
-    }
-   ]
-  },
-  {
-   "item": "Heat-Set Threaded Inserts for Plastic, Standard, Brass, M5 x 0.8 mm Thread Size, 7.9 mm Installed Length",
-   "id": "insert_m5",
-   "key": "insert_m5",
-   "qty": 1,
-   "for": "hw_insert_m5",
-   "part_number": "94459A775",
-   "vendor": "McMaster-Carr",
-   "url": "https://www.mcmaster.com/94459A775/",
-   "price_usd_each": 0.2728,
-   "mass_g_each": null,
-   "note": null,
-   "pack_qty": 25,
-   "sellers": [
-    {
-     "seller": "McMaster-Carr",
-     "url": "https://www.mcmaster.com/94459A775/",
-     "seller_pn": null,
-     "price_usd": null,
-     "pack_qty": null,
-     "in_stock": null,
-     "stock": null,
-     "read_on": null
-    }
-   ],
-   "media_key": "insert_m5",
-   "thumb": "references/vendor/thumbs/insert_m5.jpg",
-   "thumb_from": "https://www.mcmaster.com/94459A775/",
-   "alternates": [
-    {
-     "supplier": "ruthex",
-     "part_number": "RX-M5x9.5 (SKU GE-M5x95-001)",
-     "url": "https://www.ruthex.de/products/ruthex-gewindeeinsatz-m5-50-stuck-rx-m5x9-5-messing-gewindebuchsen",
-     "price": null,
-     "price_usd_each": null,
-     "pack_qty": 50,
-     "stock": "InStock (schema.org availability)",
-     "drop_in": false,
-     "changes": "NOT drop-in: 9.5 mm long vs McMaster 7.9 mm (1.6 mm longer). The short version RX-M5Sx5.8 (and CNC Kitchen 'M5 x 5.8 short', also listed) is 2.1 mm shorter. No 7.9 mm M5 at ruthex or CNC Kitchen. EUR 9.99 per 50 (VAT incl.), no USD price.",
-     "checked": "2026-10-27",
-     "evidence": "NOT drop-in: 9.5 mm long vs McMaster 7.9 mm (1.6 mm longer). The short version RX-M5Sx5.8 (and CNC Kitchen 'M5 x 5.8 short', also listed) is 2.1 mm shorter. No 7.9 mm M5 at ruthex or CNC Kitchen. EUR 9.99 per 50 (VAT incl.), no USD price."
-    },
-    {
-     "supplier": "3DJake",
-     "part_number": "CNC-B09FXM8ZMV",
-     "url": "https://www.3djake.com/cnc-kitchen/threaded-inserts-m5-short",
-     "price": "$11.18 ($0.22 / pc), excl. VAT",
-     "price_usd_each": 0.2236,
-     "pack_qty": 50,
-     "stock": "In stock",
-     "drop_in": false,
-     "changes": "5.8 mm long instead of 7.9 mm, so 2.1 mm less thread engagement and pull-out strength. Same 6.4 mm hole per CNC Kitchen's table. It fits the existing 6.4 mm hole without a CAD change and sits flush with spare depth below.",
-     "checked": "2026-10-27",
-     "evidence": "curl of the 3DJake page: 'CNC Kitchen Threaded Inserts M5 Short, M5 x 5.8 (50 pieces)', InStock. The dimension table lists M5 Short: L 5.8, hole D3 6.4, and M5: L 9.5, hole D3 6.4. 3DJake also sells the M5 x 9.5 (CNC-X001FCE5ZB) at $11.18/50, 75 left. Direct from cnckitchen.store: TC-M5x5.8 and TC-M5x9.5, 50 pcs, 9.90 EUR each, InStock. No 7.9 mm-long M5 was found at either."
     }
    ]
   },
@@ -2584,7 +3186,7 @@
     }
    ],
    "media_key": "turret_dowel_4x8",
-   "thumb": null,
+   "thumb": "references/vendor/thumbs/turret_dowel_4x8.jpg",
    "thumb_from": "https://www.mcmaster.com/91595A150/",
    "alternates": [
     {
@@ -2628,7 +3230,7 @@
     }
    ],
    "media_key": "turret_oring_ct",
-   "thumb": null,
+   "thumb": "references/vendor/thumbs/turret_oring_ct.jpg",
    "thumb_from": "https://www.mcmaster.com/9452K14/",
    "alternates": [
     {
@@ -2672,7 +3274,7 @@
     }
    ],
    "media_key": "turret_standoff_m3x12",
-   "thumb": null,
+   "thumb": "references/vendor/thumbs/turret_standoff_m3x12.jpg",
    "thumb_from": "https://www.mcmaster.com/98952A110/",
    "alternates": [
     {
@@ -2760,7 +3362,7 @@
     }
    ],
    "media_key": "turret_standoff_m3x14",
-   "thumb": null,
+   "thumb": "references/vendor/thumbs/turret_standoff_m3x14.jpg",
    "thumb_from": "https://www.mcmaster.com/98952A112/",
    "alternates": [
     {
@@ -2824,59 +3426,55 @@
     }
    ],
    "media_key": "adafruit-feather-m4-can-4759",
-   "thumb": null,
+   "thumb": "references/vendor/thumbs/adafruit-feather-m4-can-4759.jpg",
    "thumb_from": "https://www.adafruit.com/product/4759",
    "alternates": []
   },
   {
-   "item": "12V, 15A Step-Down Voltage Regulator D24V150F12",
-   "id": "pololu-d24v150f12-2885",
-   "key": "pololu-d24v150f12-2885",
+   "item": "i6A4W 250 W non-isolated buck, 9-53 V in, 3.3-15 V out by one trim resistor, 20 A (1/16 brick, horizontal through-hole)",
+   "id": "tdk-lambda-i6a4w020a033v-001-r",
+   "key": "tdk-lambda-i6a4w020a033v-001-r",
    "qty": 1,
    "for": "el_flywheel_regulator",
-   "part_number": "2885 (D24V150F12)",
-   "vendor": "Pololu",
-   "url": "https://www.pololu.com/product/2885",
-   "price_usd_each": 79.95,
+   "part_number": "i6A4W020A033V-001-R",
+   "vendor": "TDK-Lambda",
+   "url": "https://www.digikey.com/en/ptm/t/tdk-lambda-americas-inc/i6a-series-of-non-isolated-dc-dc-converters",
+   "price_usd_each": 47.46,
    "mass_g_each": null,
    "note": null,
    "pack_qty": null,
    "sellers": [
     {
-     "seller": "Pololu",
-     "url": "https://www.pololu.com/product/2885",
-     "seller_pn": null,
-     "price_usd": null,
-     "pack_qty": null,
+     "seller": "Digi-Key",
+     "url": "https://www.digikey.com/en/ptm/t/tdk-lambda-americas-inc/i6a-series-of-non-isolated-dc-dc-converters",
+     "seller_pn": "I6A4W020A033V-001-R",
+     "price_usd": 47.46,
+     "pack_qty": 1,
+     "in_stock": true,
+     "stock": 1873,
+     "read_on": "2026-10-27"
+    },
+    {
+     "seller": "Newark",
+     "url": "https://www.newark.com/tdk-lambda/i6a4w020a033v-001-r/dc-dc-converter-3-3v-to-40v-20a/dp/81Y1493",
+     "seller_pn": "81Y1493",
+     "price_usd": 40.32,
+     "pack_qty": 1,
      "in_stock": null,
-     "stock": null,
-     "read_on": null
+     "stock": "36 in one snapshot, back-order in another",
+     "read_on": "2026-10-27"
     }
    ],
-   "media_key": "pololu-d24v150f12-2885",
+   "media_key": "tdk-lambda-i6a4w020a033v-001-r",
    "thumb": null,
-   "thumb_from": "https://www.pololu.com/product/2885",
-   "alternates": [
-    {
-     "supplier": "Pololu",
-     "part_number": "5677",
-     "url": "https://www.pololu.com/product/5677",
-     "price": "$69.95",
-     "price_usd_each": 69.95,
-     "pack_qty": 1,
-     "stock": "180",
-     "drop_in": false,
-     "changes": "D42V110F12: 9-10 A at 24 V in against 15 A: enough for the 300 ms ramp and 3/s (the recovery pulses ride the bank); same size and pinout family (Pololu's own replacement for the D24V150Fx)",
-     "checked": "2026-10-27",
-     "evidence": "Page read today: $69.95, 180 available (data-available-stock), 'New!'. 12 V out, 9 A typical max (at 42 V in), 12-60 V input. Only 9 A against the D24V150F12's 15 A: enough only if the flywheel rail's peak stays under ~9 A; Pololu has no other 12 V regulator above 9 A."
-    }
-   ]
+   "thumb_from": null,
+   "alternates": []
   },
   {
    "item": "12V, 4.5A Step-Down Voltage Regulator D36V50F12",
    "id": "pololu-d36v50f12-4095",
    "key": "pololu-d36v50f12-4095",
-   "qty": 1,
+   "qty": 2,
    "for": "el_12v_regulators",
    "part_number": "4095 (D36V50F12)",
    "vendor": "Pololu",
@@ -2898,7 +3496,7 @@
     }
    ],
    "media_key": "pololu-d36v50f12-4095",
-   "thumb": null,
+   "thumb": "references/vendor/thumbs/pololu-d36v50f12-4095.jpg",
    "thumb_from": "https://www.pololu.com/product/4095",
    "alternates": [
     {
@@ -2942,7 +3540,7 @@
     }
    ],
    "media_key": "pololu-d36v28f5-3782",
-   "thumb": null,
+   "thumb": "references/vendor/thumbs/pololu-d36v28f5-3782.jpg",
    "thumb_from": "https://www.pololu.com/product/3782",
    "alternates": [
     {
@@ -2986,7 +3584,7 @@
     }
    ],
    "media_key": "pololu-2815",
-   "thumb": null,
+   "thumb": "references/vendor/thumbs/pololu-2815.jpg",
    "thumb_from": "https://www.pololu.com/product/2815",
    "alternates": [
     {
@@ -3005,41 +3603,41 @@
    ]
   },
   {
-   "item": "Aluminium electrolytic, 1000 uF, 35 V, low ESR (FR)",
-   "id": "panasonic-eeu-fr1v102",
-   "key": "panasonic-eeu-fr1v102",
+   "item": "Aluminium electrolytic, 470 uF, 63 V, low ESR (FR), 12.5 x 25 mm radial",
+   "id": "panasonic-eeu-fr1j471b",
+   "key": "panasonic-eeu-fr1j471b",
    "qty": 2,
    "for": "el_capacitors",
-   "part_number": "EEU-FR1V102",
+   "part_number": "EEU-FR1J471B",
    "vendor": "Panasonic",
-   "url": "https://www.digikey.com/en/products/detail/panasonic-industry/EEU-FR1V102/2433579",
-   "price_usd_each": 1.67,
+   "url": "https://www.digikey.com/en/products/result?keywords=EEU-FR1J471B",
+   "price_usd_each": 1.54,
    "mass_g_each": null,
    "note": null,
    "pack_qty": null,
    "sellers": [
     {
      "seller": "Digi-Key",
-     "url": "https://www.digikey.com/en/products/detail/panasonic-industry/EEU-FR1V102/2433579",
-     "seller_pn": "P14445-ND",
-     "price_usd": 1.67,
+     "url": "https://www.digikey.com/en/products/result?keywords=EEU-FR1J471B",
+     "seller_pn": "P15300CT-ND",
+     "price_usd": 1.54,
      "pack_qty": 1,
-     "in_stock": null,
-     "stock": null,
+     "in_stock": true,
+     "stock": "~20,107 (findchips row, undated)",
      "read_on": "2026-10-27"
     },
     {
-     "seller": "Mouser",
-     "url": "https://www.mouser.com/ProductDetail/667-EEU-FR1V102",
-     "seller_pn": "667-EEU-FR1V102",
-     "price_usd": 1.66,
+     "seller": "Newark",
+     "url": "https://www.newark.com/search?st=EEU-FR1J471B",
+     "seller_pn": "62W8085",
+     "price_usd": 2.13,
      "pack_qty": 1,
      "in_stock": true,
-     "stock": 5834,
+     "stock": 10970,
      "read_on": "2026-10-27"
     }
    ],
-   "media_key": "panasonic-eeu-fr1v102",
+   "media_key": "panasonic-eeu-fr1j471b",
    "thumb": null,
    "thumb_from": null,
    "alternates": []
@@ -3600,7 +4198,7 @@
     }
    ],
    "media_key": "molex-43020-1200",
-   "thumb": null,
+   "thumb": "references/vendor/thumbs/molex-43020-1200.jpg",
    "thumb_from": "https://heilind.com/mol43020-1200.html",
    "alternates": []
   },
@@ -3640,7 +4238,7 @@
     }
    ],
    "media_key": "molex-43025-0600",
-   "thumb": null,
+   "thumb": "references/vendor/thumbs/molex-43025-0600.jpg",
    "thumb_from": "https://heilind.com/mol43025-0600.html",
    "alternates": []
   },
@@ -3680,7 +4278,7 @@
     }
    ],
    "media_key": "molex-43020-0600",
-   "thumb": null,
+   "thumb": "references/vendor/thumbs/molex-43020-0600.jpg",
    "thumb_from": "https://heilind.com/mol43020-0600.html",
    "alternates": []
   },
@@ -3800,7 +4398,7 @@
     }
    ],
    "media_key": "molex-43030-0038",
-   "thumb": null,
+   "thumb": "references/vendor/thumbs/molex-43030-0038.jpg",
    "thumb_from": "https://heilind.com/mol43030-0038.html",
    "alternates": []
   },
@@ -3840,7 +4438,7 @@
     }
    ],
    "media_key": "molex-43031-0021",
-   "thumb": null,
+   "thumb": "references/vendor/thumbs/molex-43031-0021.jpg",
    "thumb_from": "https://heilind.com/mol43031-0021.html",
    "alternates": []
   },
@@ -3880,7 +4478,7 @@
     }
    ],
    "media_key": "molex-43030-0001",
-   "thumb": null,
+   "thumb": "references/vendor/thumbs/molex-43030-0001.jpg",
    "thumb_from": "https://heilind.com/mol43030-0001.html",
    "alternates": []
   },
@@ -3920,7 +4518,7 @@
     }
    ],
    "media_key": "molex-43031-0001",
-   "thumb": null,
+   "thumb": "references/vendor/thumbs/molex-43031-0001.jpg",
    "thumb_from": "https://heilind.com/mol43031-0001.html",
    "alternates": []
   },
@@ -4005,48 +4603,44 @@
    "alternates": []
   },
   {
-   "item": "MINI blade fuse 5 A, 32 V",
-   "id": "littelfuse-0297005-wxnv",
-   "key": "littelfuse-0297005-wxnv",
+   "item": "Littelfuse MINI 58V blade fuse 10 A (DDR-120C-24 input, the charge port)",
+   "id": "fuse_mini58_10a",
+   "key": "fuse_mini58_10a",
    "qty": 2,
    "for": "el_fuse",
-   "part_number": "0297005.WXNV",
+   "part_number": "0997010.WXN",
    "vendor": "Littelfuse",
-   "url": "https://www.mouser.com/ProductDetail/576-0297005.WXNV",
-   "price_usd_each": 0.33,
+   "url": "https://www.lcsc.com/product-detail/C207026.html",
+   "price_usd_each": 0.41,
    "mass_g_each": null,
    "note": null,
    "pack_qty": null,
    "sellers": [
     {
-     "seller": "Mouser",
-     "url": "https://www.mouser.com/ProductDetail/576-0297005.WXNV",
-     "seller_pn": "576-0297005.WXNV",
-     "price_usd": 0.33,
-     "pack_qty": 1,
+     "seller": "LCSC",
+     "url": "https://www.lcsc.com/product-detail/C207026.html",
+     "seller_pn": "C207026",
+     "price_usd": 0.41,
+     "pack_qty": null,
      "in_stock": true,
-     "stock": 48438,
+     "stock": "3,724",
+     "read_on": "2026-10-27"
+    },
+    {
+     "seller": "LCSC",
+     "url": "https://www.lcsc.com/product-detail/C207027.html",
+     "seller_pn": "C207027",
+     "price_usd": 0.66,
+     "pack_qty": null,
+     "in_stock": true,
+     "stock": "2,950 (15 A)",
      "read_on": "2026-10-27"
     }
    ],
-   "media_key": "littelfuse-0297005-wxnv",
+   "media_key": "fuse_mini58_10a",
    "thumb": null,
    "thumb_from": null,
-   "alternates": [
-    {
-     "supplier": "Digi-Key",
-     "part_number": "0297005.WXNV (F990-ND class)",
-     "url": "https://www.digikey.com/en/products/result?keywords=0297005.WXNV",
-     "price": null,
-     "price_usd_each": null,
-     "pack_qty": 1,
-     "stock": null,
-     "drop_in": true,
-     "changes": null,
-     "checked": "2026-10-27",
-     "evidence": "Littelfuse MINI 5 A, the same part; price not readable (Digi-Key blocks automated reads)"
-    }
-   ]
+   "alternates": []
   },
   {
    "item": "N-channel MOSFET 60 V 200 mA, TO-92",
@@ -4489,6 +5083,46 @@
    "alternates": []
   },
   {
+   "item": "Rectifier 3 A 1000 V, DO-201AD (1N5408)",
+   "id": "diode-1n5408g",
+   "key": "diode-1n5408g",
+   "qty": 2,
+   "for": "el_d_1n5408",
+   "part_number": "1N5408G",
+   "vendor": "onsemi",
+   "url": "https://www.mouser.com/ProductDetail/863-1N5408G",
+   "price_usd_each": 0.58,
+   "mass_g_each": null,
+   "note": null,
+   "pack_qty": null,
+   "sellers": [
+    {
+     "seller": "Mouser",
+     "url": "https://www.mouser.com/ProductDetail/863-1N5408G",
+     "seller_pn": "863-1N5408G",
+     "price_usd": 0.58,
+     "pack_qty": 1,
+     "in_stock": true,
+     "stock": 33554,
+     "read_on": "2026-10-27"
+    },
+    {
+     "seller": "Newark",
+     "url": "https://www.newark.com/search?st=1N5408G",
+     "seller_pn": "42K2941",
+     "price_usd": 0.619,
+     "pack_qty": 1,
+     "in_stock": true,
+     "stock": 31895,
+     "read_on": "2026-10-27"
+    }
+   ],
+   "media_key": "diode-1n5408g",
+   "thumb": null,
+   "thumb_from": null,
+   "alternates": []
+  },
+  {
    "item": "Tactile switch 6x6 mm, 4.3 mm, 100 gf (B3F-1000)",
    "id": "omron-b3f-1000",
    "key": "omron-b3f-1000",
@@ -4612,7 +5246,7 @@
    "item": "Schottky rectifier 3 A 40 V, DO-201AD (1N5822)",
    "id": "schottky-1n5822",
    "key": "schottky-1n5822",
-   "qty": 3,
+   "qty": 2,
    "for": "el_d_1n5822",
    "part_number": "1N5822G",
    "vendor": "onsemi",
@@ -4684,6 +5318,46 @@
     }
    ],
    "media_key": "tvs-p6ke15a",
+   "thumb": null,
+   "thumb_from": null,
+   "alternates": []
+  },
+  {
+   "item": "TVS diode 600 W unidirectional, 43.6 V standoff, 70.1 V clamp, DO-15 (P6KE51A)",
+   "id": "tvs-p6ke51a",
+   "key": "tvs-p6ke51a",
+   "qty": 3,
+   "for": "el_d_tvs51",
+   "part_number": "P6KE51A",
+   "vendor": "Taiwan Semiconductor (or Diotec)",
+   "url": "https://www.newark.com/search?st=P6KE51A",
+   "price_usd_each": 1.28,
+   "mass_g_each": null,
+   "note": null,
+   "pack_qty": null,
+   "sellers": [
+    {
+     "seller": "Newark",
+     "url": "https://www.newark.com/search?st=P6KE51A",
+     "seller_pn": "99AC4212",
+     "price_usd": 1.28,
+     "pack_qty": 1,
+     "in_stock": true,
+     "stock": 1476,
+     "read_on": "2026-10-27"
+    },
+    {
+     "seller": "TME",
+     "url": "https://www.tme.eu/en/details/p6ke51a-dio/",
+     "seller_pn": "P6KE51A-DIO",
+     "price_usd": 0.47,
+     "pack_qty": 1,
+     "in_stock": true,
+     "stock": 4628,
+     "read_on": "2026-10-27"
+    }
+   ],
+   "media_key": "tvs-p6ke51a",
    "thumb": null,
    "thumb_from": null,
    "alternates": []
@@ -4849,6 +5523,126 @@
    "alternates": []
   },
   {
+   "item": "Resistor 10.0 R 1 % 1/4 W metal film (Yageo MFR-25FBF52)",
+   "id": "yageo-mfr-25fbf52-10r",
+   "key": "yageo-mfr-25fbf52-10r",
+   "qty": 2,
+   "for": "el_r_10r",
+   "part_number": "MFR-25FBF52-10R",
+   "vendor": "Yageo",
+   "url": "https://www.newark.com/search?st=MFR-25FBF52-10R",
+   "price_usd_each": 0.1,
+   "mass_g_each": null,
+   "note": null,
+   "pack_qty": null,
+   "sellers": [
+    {
+     "seller": "Newark",
+     "url": "https://www.newark.com/search?st=MFR-25FBF52-10R",
+     "seller_pn": "49AK5972",
+     "price_usd": 0.1,
+     "pack_qty": 1,
+     "in_stock": true,
+     "stock": 9608,
+     "read_on": "2026-10-27"
+    },
+    {
+     "seller": "Quest Components",
+     "url": "https://www.questcomp.com/",
+     "seller_pn": null,
+     "price_usd": 0.0705,
+     "pack_qty": 1,
+     "in_stock": true,
+     "stock": 88,
+     "read_on": "2026-10-27"
+    }
+   ],
+   "media_key": "yageo-mfr-25fbf52-10r",
+   "thumb": null,
+   "thumb_from": null,
+   "alternates": []
+  },
+  {
+   "item": "Resistor 162 R 1 % 1/4 W metal film (Yageo MFR-25FBF52)",
+   "id": "yageo-mfr-25fbf52-162r",
+   "key": "yageo-mfr-25fbf52-162r",
+   "qty": 2,
+   "for": "el_r_162r",
+   "part_number": "MFR-25FBF52-162R",
+   "vendor": "Yageo",
+   "url": "https://www.mouser.com/ProductDetail/603-MFR-25FBF52-162R",
+   "price_usd_each": 0.1,
+   "mass_g_each": null,
+   "note": null,
+   "pack_qty": null,
+   "sellers": [
+    {
+     "seller": "Mouser",
+     "url": "https://www.mouser.com/ProductDetail/603-MFR-25FBF52-162R",
+     "seller_pn": "603-MFR-25FBF52-162R",
+     "price_usd": 0.1,
+     "pack_qty": 1,
+     "in_stock": true,
+     "stock": 7377,
+     "read_on": "2026-10-27"
+    },
+    {
+     "seller": "Arrow",
+     "url": "https://www.arrow.com/en/products/mfr-25fbf52-162r/yageo",
+     "seller_pn": "V99:2348_17733694",
+     "price_usd": 0.016,
+     "pack_qty": 1,
+     "in_stock": true,
+     "stock": "8185 (Americas)",
+     "read_on": "2026-10-27"
+    }
+   ],
+   "media_key": "yageo-mfr-25fbf52-162r",
+   "thumb": null,
+   "thumb_from": null,
+   "alternates": []
+  },
+  {
+   "item": "Resistor 182 k 1 % 1/4 W metal film (Yageo MFR-25FBF52)",
+   "id": "yageo-mfr-25fbf52-182k",
+   "key": "yageo-mfr-25fbf52-182k",
+   "qty": 2,
+   "for": "el_r_182k",
+   "part_number": "MFR-25FBF52-182K",
+   "vendor": "Yageo",
+   "url": "https://www.mouser.com/ProductDetail/603-MFR-25FBF52-182K",
+   "price_usd_each": 0.1,
+   "mass_g_each": null,
+   "note": null,
+   "pack_qty": null,
+   "sellers": [
+    {
+     "seller": "Mouser",
+     "url": "https://www.mouser.com/ProductDetail/603-MFR-25FBF52-182K",
+     "seller_pn": "603-MFR-25FBF52-182K",
+     "price_usd": 0.1,
+     "pack_qty": 1,
+     "in_stock": true,
+     "stock": 31912,
+     "read_on": "2026-10-27"
+    },
+    {
+     "seller": "Quest Components",
+     "url": "https://www.questcomp.com/",
+     "seller_pn": null,
+     "price_usd": 0.045,
+     "pack_qty": 1,
+     "in_stock": true,
+     "stock": 440,
+     "read_on": "2026-10-27"
+    }
+   ],
+   "media_key": "yageo-mfr-25fbf52-182k",
+   "thumb": null,
+   "thumb_from": null,
+   "alternates": []
+  },
+  {
    "item": "Resistor 1.00 k 1 % 1/4 W metal film (Yageo MFR-25FBF52)",
    "id": "yageo-mfr-25fbf52-1k",
    "key": "yageo-mfr-25fbf52-1k",
@@ -4889,10 +5683,130 @@
    "alternates": []
   },
   {
+   "item": "Resistor 1.33 k 1 % 1/4 W metal film (Yageo MFR-25FBF52)",
+   "id": "yageo-mfr-25fbf52-1k33",
+   "key": "yageo-mfr-25fbf52-1k33",
+   "qty": 2,
+   "for": "el_r_1k33",
+   "part_number": "MFR-25FBF52-1K33",
+   "vendor": "Yageo",
+   "url": "https://www.mouser.com/ProductDetail/603-MFR-25FBF52-1K33",
+   "price_usd_each": 0.1,
+   "mass_g_each": null,
+   "note": null,
+   "pack_qty": null,
+   "sellers": [
+    {
+     "seller": "Mouser",
+     "url": "https://www.mouser.com/ProductDetail/603-MFR-25FBF52-1K33",
+     "seller_pn": "603-MFR-25FBF52-1K33",
+     "price_usd": 0.1,
+     "pack_qty": 1,
+     "in_stock": true,
+     "stock": 17999,
+     "read_on": "2026-10-27"
+    },
+    {
+     "seller": "Arrow",
+     "url": "https://www.arrow.com/en/products/mfr-25fbf52-1k33/yageo",
+     "seller_pn": "V99:2348_17668792",
+     "price_usd": 0.016,
+     "pack_qty": 1,
+     "in_stock": true,
+     "stock": "3495 (Americas)",
+     "read_on": "2026-10-27"
+    }
+   ],
+   "media_key": "yageo-mfr-25fbf52-1k33",
+   "thumb": null,
+   "thumb_from": null,
+   "alternates": []
+  },
+  {
+   "item": "Resistor 20.0 R 1 % 1/4 W metal film (Yageo MFR-25FBF52)",
+   "id": "yageo-mfr-25fbf52-20r",
+   "key": "yageo-mfr-25fbf52-20r",
+   "qty": 2,
+   "for": "el_r_20r",
+   "part_number": "MFR-25FBF52-20R",
+   "vendor": "Yageo",
+   "url": "https://www.mouser.com/ProductDetail/603-MFR-25FBF52-20R",
+   "price_usd_each": 0.1,
+   "mass_g_each": null,
+   "note": null,
+   "pack_qty": null,
+   "sellers": [
+    {
+     "seller": "Mouser",
+     "url": "https://www.mouser.com/ProductDetail/603-MFR-25FBF52-20R",
+     "seller_pn": "603-MFR-25FBF52-20R",
+     "price_usd": 0.1,
+     "pack_qty": 1,
+     "in_stock": true,
+     "stock": 3236,
+     "read_on": "2026-10-27"
+    },
+    {
+     "seller": "Arrow",
+     "url": "https://www.arrow.com/en/products/mfr-25fbf52-20r/yageo",
+     "seller_pn": "V99:2348_17665225",
+     "price_usd": 0.016,
+     "pack_qty": 1,
+     "in_stock": true,
+     "stock": 6692,
+     "read_on": "2026-10-27"
+    }
+   ],
+   "media_key": "yageo-mfr-25fbf52-20r",
+   "thumb": null,
+   "thumb_from": null,
+   "alternates": []
+  },
+  {
+   "item": "Resistor 324 R 1 % 1/4 W metal film (Yageo MFR-25FBF52)",
+   "id": "yageo-mfr-25fbf52-324r",
+   "key": "yageo-mfr-25fbf52-324r",
+   "qty": 2,
+   "for": "el_r_324r",
+   "part_number": "MFR-25FBF52-324R",
+   "vendor": "Yageo",
+   "url": "https://www.mouser.com/ProductDetail/603-MFR-25FBF52-324R",
+   "price_usd_each": 0.1,
+   "mass_g_each": null,
+   "note": null,
+   "pack_qty": null,
+   "sellers": [
+    {
+     "seller": "Mouser",
+     "url": "https://www.mouser.com/ProductDetail/603-MFR-25FBF52-324R",
+     "seller_pn": "603-MFR-25FBF52-324R",
+     "price_usd": 0.1,
+     "pack_qty": 1,
+     "in_stock": true,
+     "stock": 7829,
+     "read_on": "2026-10-27"
+    },
+    {
+     "seller": "Arrow",
+     "url": "https://www.arrow.com/en/products/mfr-25fbf52-324r/yageo",
+     "seller_pn": "V99:2348_17662115",
+     "price_usd": 0.016,
+     "pack_qty": 1,
+     "in_stock": true,
+     "stock": 9514,
+     "read_on": "2026-10-27"
+    }
+   ],
+   "media_key": "yageo-mfr-25fbf52-324r",
+   "thumb": null,
+   "thumb_from": null,
+   "alternates": []
+  },
+  {
    "item": "Resistor 39 k 1 % 1/4 W metal film (Yageo MFR-25FBF52)",
    "id": "yageo-mfr-25fbf52-39k",
    "key": "yageo-mfr-25fbf52-39k",
-   "qty": 3,
+   "qty": 5,
    "for": "el_r_39k",
    "part_number": "MFR-25FBF52-39K",
    "vendor": "Yageo",
@@ -4924,6 +5838,46 @@
     }
    ],
    "media_key": "yageo-mfr-25fbf52-39k",
+   "thumb": null,
+   "thumb_from": null,
+   "alternates": []
+  },
+  {
+   "item": "Resistor 40.2 R 1 % 1/4 W metal film (Yageo MFR-25FBF52)",
+   "id": "yageo-mfr-25fbf52-40r2",
+   "key": "yageo-mfr-25fbf52-40r2",
+   "qty": 2,
+   "for": "el_r_40r2",
+   "part_number": "MFR-25FBF52-40R2",
+   "vendor": "Yageo",
+   "url": "https://www.mouser.com/ProductDetail/603-MFR-25FBF52-40R2",
+   "price_usd_each": 0.1,
+   "mass_g_each": null,
+   "note": null,
+   "pack_qty": null,
+   "sellers": [
+    {
+     "seller": "Mouser",
+     "url": "https://www.mouser.com/ProductDetail/603-MFR-25FBF52-40R2",
+     "seller_pn": "603-MFR-25FBF52-40R2",
+     "price_usd": 0.1,
+     "pack_qty": 1,
+     "in_stock": true,
+     "stock": 5209,
+     "read_on": "2026-10-27"
+    },
+    {
+     "seller": "Quest Components",
+     "url": "https://www.questcomp.com/",
+     "seller_pn": null,
+     "price_usd": 0.063,
+     "pack_qty": 1,
+     "in_stock": true,
+     "stock": 557,
+     "read_on": "2026-10-27"
+    }
+   ],
+   "media_key": "yageo-mfr-25fbf52-40r2",
    "thumb": null,
    "thumb_from": null,
    "alternates": []
@@ -5209,14 +6163,14 @@
    "alternates": []
   },
   {
-   "item": "Resistor 91 k 1 % 1/4 W metal film (Yageo MFR-25FBF52)",
-   "id": "yageo-mfr-25fbf52-91k",
-   "key": "yageo-mfr-25fbf52-91k",
+   "item": "Resistor 80.6 R 1 % 1/4 W metal film (Yageo MFR-25FBF52)",
+   "id": "yageo-mfr-25fbf52-80r6",
+   "key": "yageo-mfr-25fbf52-80r6",
    "qty": 2,
-   "for": "el_r_91k",
-   "part_number": "MFR-25FBF52-91K",
+   "for": "el_r_80r6",
+   "part_number": "MFR-25FBF52-80R6",
    "vendor": "Yageo",
-   "url": "https://www.mouser.com/ProductDetail/603-MFR-25FBF52-91K",
+   "url": "https://www.mouser.com/ProductDetail/603-MFR-25FBF52-80R6",
    "price_usd_each": 0.1,
    "mass_g_each": null,
    "note": null,
@@ -5224,17 +6178,17 @@
    "sellers": [
     {
      "seller": "Mouser",
-     "url": "https://www.mouser.com/ProductDetail/603-MFR-25FBF52-91K",
-     "seller_pn": "603-MFR-25FBF52-91K",
+     "url": "https://www.mouser.com/ProductDetail/603-MFR-25FBF52-80R6",
+     "seller_pn": "603-MFR-25FBF52-80R6",
      "price_usd": 0.1,
      "pack_qty": 1,
      "in_stock": true,
-     "stock": 13902,
+     "stock": 18577,
      "read_on": "2026-10-27"
     },
     {
      "seller": "Digi-Key",
-     "url": "https://www.digikey.com/en/products/result?keywords=MFR-25FBF52-91K",
+     "url": "https://www.digikey.com/en/products/result?keywords=MFR-25FBF52-80R6",
      "seller_pn": null,
      "price_usd": null,
      "pack_qty": 1,
@@ -5243,7 +6197,7 @@
      "read_on": "2026-10-27"
     }
    ],
-   "media_key": "yageo-mfr-25fbf52-91k",
+   "media_key": "yageo-mfr-25fbf52-80r6",
    "thumb": null,
    "thumb_from": null,
    "alternates": []
@@ -5325,7 +6279,7 @@
     }
    ],
    "media_key": "amass-xt60e-m",
-   "thumb": null,
+   "thumb": "references/vendor/thumbs/amass-xt60e-m.jpg",
    "thumb_from": "https://pro.maplin.co.uk/products/male-xt60e-panel-mount-gold-plated-connector-20a-amass",
    "alternates": []
   },
@@ -5354,7 +6308,7 @@
     }
    ],
    "media_key": "turret_screw_m2_5x8",
-   "thumb": null,
+   "thumb": "references/vendor/thumbs/turret_screw_m2_5x8.jpg",
    "thumb_from": "https://www.mcmaster.com/91290A102/",
    "alternates": [
     {
@@ -5397,7 +6351,7 @@
     }
    ],
    "media_key": "turret_nut_m2_5",
-   "thumb": null,
+   "thumb": "references/vendor/thumbs/turret_nut_m2_5.jpg",
    "thumb_from": "https://www.mcmaster.com/91828A113/",
    "alternates": [
     {
@@ -5416,40 +6370,50 @@
    ]
   },
   {
-   "item": "Round snap-in rocker switch, DPST, 10 A 28 VDC (UL), \u00d820.2 panel hole, panels to 3 mm",
-   "id": "bulgin-r13244aaaa",
-   "key": "bulgin-r13244aaaa",
+   "item": "m-Series Mini ON-OFF battery switch, single circuit, 48 V DC, 275-300 A continuous (D70: the stand's DC power switch, 15 A or more)",
+   "id": "blue-sea-6006",
+   "key": "blue-sea-6006",
    "qty": 1,
    "for": "bench",
-   "part_number": "R13244AAAA",
-   "vendor": "Bulgin",
-   "url": "https://www.digikey.com/en/products/result?keywords=708-3111-ND",
-   "price_usd_each": 4.58,
+   "part_number": "6006",
+   "vendor": "Blue Sea Systems",
+   "url": "https://www.walmart.com/ip/Blue-Sea-6006200-Battery-Switch-Mini-ON-OFF-Black/931742861",
+   "price_usd_each": 34.16,
    "pack_qty": null,
    "mass_g_each": null,
    "sellers": [
     {
-     "seller": "Digi-Key",
-     "url": "https://www.digikey.com/en/products/result?keywords=708-3111-ND",
-     "seller_pn": "708-3111-ND",
-     "price_usd": 4.58,
-     "pack_qty": 1,
-     "in_stock": true,
-     "stock": "866 (Octopart, updated 2026-10-26 12:48 UTC)",
-     "read_on": "2026-10-27"
+     "seller": "Walmart",
+     "url": "https://www.walmart.com/ip/Blue-Sea-6006200-Battery-Switch-Mini-ON-OFF-Black/931742861",
+     "seller_pn": null,
+     "price_usd": 34.16,
+     "pack_qty": null,
+     "in_stock": null,
+     "stock": null,
+     "read_on": "2026-10-28"
     },
     {
-     "seller": "Mouser",
-     "url": "https://www.mouser.com/ProductDetail/167-R13244AAAA",
-     "seller_pn": "167-R13244AAAA",
-     "price_usd": 4.13,
-     "pack_qty": 1,
-     "in_stock": true,
-     "stock": "347 (Octopart, updated 2026-10-26 21:01 UTC)",
-     "read_on": "2026-10-27"
+     "seller": "NavStore",
+     "url": "https://navstore.com/products/blue-sea-6006-m-series-mini-battery-switch-single-circuit-on-off-red-6006",
+     "seller_pn": null,
+     "price_usd": 27.95,
+     "pack_qty": null,
+     "in_stock": false,
+     "stock": null,
+     "read_on": "2026-10-28"
+    },
+    {
+     "seller": "Waytek",
+     "url": "https://waytekwire.com/item/78405B/Blue-Sea-Systems-6006-m-Series-Battery-Switch-",
+     "seller_pn": null,
+     "price_usd": 39.96,
+     "pack_qty": null,
+     "in_stock": false,
+     "stock": null,
+     "read_on": "2026-10-28"
     }
    ],
-   "media_key": "bulgin-r13244aaaa",
+   "media_key": "blue-sea-6006",
    "thumb": null,
    "thumb_from": null,
    "alternates": []
@@ -6085,7 +7049,7 @@
     }
    ],
    "media_key": "turret_screw_m3x8",
-   "thumb": null,
+   "thumb": "references/vendor/thumbs/turret_screw_m3x8.jpg",
    "thumb_from": "https://www.mcmaster.com/91290A113/",
    "alternates": [
     {
@@ -6104,40 +7068,186 @@
    ]
   },
   {
-   "item": "Enclosed AC-DC supply, 24 V 14.6 A, 350 W",
-   "id": "meanwell-lrs-350-24",
-   "key": "meanwell-lrs-350-24",
+   "item": "DCB609 FLEXVOLT 20V/60V MAX 9.0Ah",
+   "id": "dewalt-dcb609",
+   "key": "dewalt-dcb609",
    "qty": 1,
    "for": "bench",
-   "part_number": "LRS-350-24",
-   "vendor": "Mean Well",
-   "url": "https://www.jameco.com/webapp/wcs/stores/servlet/ProductDisplay?langId=-1&storeId=10001&catalogId=10001&productId=2219823",
-   "price_usd_each": 32.1,
+   "part_number": "DCB609 FLEXVOLT 20V/60V MAX 9.0Ah",
+   "vendor": "DeWalt",
+   "url": "https://thepowertoolstore.com/products/dewalt-dcb609",
+   "price_usd_each": 259.0,
    "pack_qty": null,
    "mass_g_each": null,
    "sellers": [
     {
-     "seller": "Jameco",
-     "url": "https://www.jameco.com/webapp/wcs/stores/servlet/ProductDisplay?langId=-1&storeId=10001&catalogId=10001&productId=2219823",
-     "seller_pn": "2219823",
-     "price_usd": 32.1,
-     "pack_qty": 1,
+     "seller": "The Power Tool Store",
+     "url": "https://thepowertoolstore.com/products/dewalt-dcb609",
+     "seller_pn": null,
+     "price_usd": null,
+     "pack_qty": null,
      "in_stock": true,
-     "stock": "245 (Octopart, updated 2026-10-27 06:18 UTC)",
+     "stock": null,
+     "read_on": null
+    }
+   ],
+   "media_key": "dewalt-dcb609",
+   "thumb": null,
+   "thumb_from": null,
+   "alternates": []
+  },
+  {
+   "item": "DeWalt 20 V MAX battery dock adapter, 12 AWG leads (takes a FLEXVOLT pack in its 20 V mode)",
+   "id": "dewalt-20v-dock-adapter-12awg",
+   "key": "dewalt-20v-dock-adapter-12awg",
+   "qty": 1,
+   "for": "bench",
+   "part_number": "DeWalt 18/20 V MAX battery dock adapter, 12 AWG leads",
+   "vendor": "generic",
+   "url": "https://www.walmart.com/c/kp/dewalt-adapter",
+   "price_usd_each": 12.95,
+   "pack_qty": 1,
+   "mass_g_each": null,
+   "sellers": [
+    {
+     "seller": "Walmart",
+     "url": "https://www.walmart.com/c/kp/dewalt-adapter",
+     "seller_pn": null,
+     "price_usd": 12.95,
+     "pack_qty": null,
+     "in_stock": null,
+     "stock": null,
+     "read_on": null
+    },
+    {
+     "seller": "Etsy",
+     "url": "https://www.etsy.com/listing/838361833",
+     "seller_pn": null,
+     "price_usd": 13.5,
+     "pack_qty": null,
+     "in_stock": null,
+     "stock": null,
+     "read_on": null
+    }
+   ],
+   "media_key": "dewalt-20v-dock-adapter-12awg",
+   "thumb": null,
+   "thumb_from": null,
+   "alternates": []
+  },
+  {
+   "item": "Amass XT30U male, 8-pack (the devices' end: the J501 and lidar box adapter leads; D58)",
+   "id": "xt30_m",
+   "key": "xt30_m",
+   "qty": 1,
+   "for": "bench",
+   "part_number": "XT30U-M 8-pack",
+   "vendor": "Amass",
+   "url": "https://www.pyrodrone.com/products/yellow-xt30u-m-8-pack-male-device",
+   "price_usd_each": 0.3738,
+   "pack_qty": 8,
+   "mass_g_each": null,
+   "sellers": [
+    {
+     "seller": "Pyrodrone",
+     "url": "https://www.pyrodrone.com/products/yellow-xt30u-m-8-pack-male-device",
+     "seller_pn": null,
+     "price_usd": 2.99,
+     "pack_qty": 8,
+     "in_stock": true,
+     "stock": "available",
      "read_on": "2026-10-27"
     },
     {
-     "seller": "TRC Electronics",
-     "url": "https://www.trcelectronics.com/products/mean-well-lrs-350-24",
-     "seller_pn": "LRS-350-24",
-     "price_usd": 34.81,
-     "pack_qty": 1,
+     "seller": "RaceDayQuads",
+     "url": "https://www.racedayquads.com/products/xt30-connector-male-or-female",
+     "seller_pn": null,
+     "price_usd": 0.99,
+     "pack_qty": null,
      "in_stock": true,
-     "stock": "In Stock: 2,902 can ship now",
+     "stock": "available (single)",
      "read_on": "2026-10-27"
     }
    ],
-   "media_key": "meanwell-lrs-350-24",
+   "media_key": "xt30_m",
+   "thumb": null,
+   "thumb_from": null,
+   "alternates": []
+  },
+  {
+   "item": "Bussmann HHM inline MINI fuse holder, 2-30 A (rated 32 V DC: the 58 V fuse does the interrupting; label it \"58 V fuses only\")",
+   "id": "fuse_holder_mini_inline",
+   "key": "fuse_holder_mini_inline",
+   "qty": 1,
+   "for": "bench",
+   "part_number": "HHM",
+   "vendor": "Eaton Bussmann",
+   "url": "https://www.rockauto.com/en/moreinfo.php?pk=1474944",
+   "price_usd_each": 2.28,
+   "pack_qty": null,
+   "mass_g_each": null,
+   "sellers": [
+    {
+     "seller": "RockAuto",
+     "url": "https://www.rockauto.com/en/moreinfo.php?pk=1474944",
+     "seller_pn": null,
+     "price_usd": 2.28,
+     "pack_qty": null,
+     "in_stock": true,
+     "stock": "Add to Cart",
+     "read_on": "2026-10-27"
+    },
+    {
+     "seller": "LCSC",
+     "url": "https://www.lcsc.com/product-detail/C3207515.html",
+     "seller_pn": null,
+     "price_usd": 0.3,
+     "pack_qty": null,
+     "in_stock": true,
+     "stock": "0 (Keystone 3570 PCB holder: the fuse-board upgrade)",
+     "read_on": "2026-10-27"
+    }
+   ],
+   "media_key": "fuse_holder_mini_inline",
+   "thumb": null,
+   "thumb_from": null,
+   "alternates": []
+  },
+  {
+   "item": "Littelfuse MINI 58V blade fuse 20 A (the RS-04 branches)",
+   "id": "fuse_mini58_20a",
+   "key": "fuse_mini58_20a",
+   "qty": 1,
+   "for": "bench",
+   "part_number": "0997020.WXN",
+   "vendor": "Littelfuse",
+   "url": "https://www.lcsc.com/product-detail/C207028.html",
+   "price_usd_each": 0.61,
+   "pack_qty": null,
+   "mass_g_each": null,
+   "sellers": [
+    {
+     "seller": "LCSC",
+     "url": "https://www.lcsc.com/product-detail/C207028.html",
+     "seller_pn": "C207028",
+     "price_usd": 0.61,
+     "pack_qty": null,
+     "in_stock": true,
+     "stock": "1,609",
+     "read_on": "2026-10-27"
+    },
+    {
+     "seller": "element14",
+     "url": "https://nz.element14.com/littelfuse/0997020-wxn/auto-blade-fuse-2a-58v/dp/2748837",
+     "seller_pn": null,
+     "price_usd": null,
+     "pack_qty": null,
+     "in_stock": true,
+     "stock": "listed (snippet)",
+     "read_on": "2026-10-27"
+    }
+   ],
+   "media_key": "fuse_mini58_20a",
    "thumb": null,
    "thumb_from": null,
    "alternates": []
@@ -6192,10 +7302,10 @@
    "alternates": []
   },
   {
-   "item": "Cheetah Rival-compatible rounds, 100-pack",
+   "item": "Worker Cheetah Rival-compatible rounds, 100-pack",
    "id": "worker-cheetah-rival-rounds-100",
    "key": "worker-cheetah-rival-rounds-100",
-   "qty": 3,
+   "qty": 2,
    "for": "ammo",
    "part_number": "Cheetah Rival-compatible rounds, 100-pack",
    "vendor": "Worker",
@@ -6211,6 +7321,16 @@
      "price_usd": null,
      "pack_qty": null,
      "in_stock": true,
+     "stock": null,
+     "read_on": null
+    },
+    {
+     "seller": "Out of Darts",
+     "url": "https://outofdarts.com/products/worker-ammo-rival-rounds",
+     "seller_pn": null,
+     "price_usd": null,
+     "pack_qty": null,
+     "in_stock": null,
      "stock": null,
      "read_on": null
     }
@@ -6231,6 +7351,72 @@
      "changes": null,
      "checked": "2026-10-27",
      "evidence": "Read from Amazon's search-results page (price, delivery, rating); the product page itself served a captcha to a plain fetch (not bypassed), and its page title (via WebFetch) names the brand 'Little Valentine', so this is NOT the official Hasbro refill. The official Hasbro Nerf Rival 100-round refill was not found at Amazon or Target today: Amazon lists only the official 25-pack (Nerf B1589FR6, ASI"
+    }
+   ]
+  },
+  {
+   "item": "Nerf Rival 60 Accu-Round Refill (Hasbro F5052), 60 official Rival rounds",
+   "id": "hasbro-nerf-rival-accu-round-60",
+   "key": "hasbro-nerf-rival-accu-round-60",
+   "qty": 1,
+   "for": "ammo",
+   "part_number": "F5052",
+   "vendor": "Hasbro (Nerf)",
+   "url": "https://www.walmart.com/c/kp/nerf-rival-balls",
+   "price_usd_each": 19.99,
+   "pack_qty": 1,
+   "mass_g_each": null,
+   "sellers": [
+    {
+     "seller": "Walmart",
+     "url": "https://www.walmart.com/c/kp/nerf-rival-balls",
+     "seller_pn": null,
+     "price_usd": 19.99,
+     "pack_qty": null,
+     "in_stock": true,
+     "stock": null,
+     "read_on": null
+    },
+    {
+     "seller": "eBay",
+     "url": "https://www.ebay.com/p/13055032602",
+     "seller_pn": null,
+     "price_usd": 16.95,
+     "pack_qty": null,
+     "in_stock": null,
+     "stock": null,
+     "read_on": null
+    }
+   ],
+   "media_key": "hasbro-nerf-rival-accu-round-60",
+   "thumb": "references/vendor/thumbs/hasbro-nerf-rival-accu-round-60.jpg",
+   "thumb_from": "https://www.ebay.com/p/13055032602",
+   "alternates": [
+    {
+     "supplier": "Walmart",
+     "part_number": "Nerf Rival 50-Round Refill",
+     "url": "https://www.walmart.com/ip/Nerf-Rival-50-Round-Refill/1417174757",
+     "price": "$15.95",
+     "price_usd_each": 15.95,
+     "pack_qty": 1,
+     "stock": null,
+     "drop_in": true,
+     "changes": "50 rounds, not 60",
+     "checked": "2026-10-27",
+     "evidence": "Walmart listing read through a web search (Walmart's own pages answer a robot check)"
+    },
+    {
+     "supplier": "Out of Darts",
+     "part_number": "Worker Cheetah 100-pack",
+     "url": "https://outofdarts.com/products/worker-cheetah-rounds-rival-compatible-ammo-100-pack",
+     "price": "$14.99",
+     "price_usd_each": 14.99,
+     "pack_qty": 1,
+     "stock": "In stock",
+     "drop_in": true,
+     "changes": "third-party Rival-compatible rounds (D67 accepts 22.2-22.8 mm, 1.6-2.0 g)",
+     "checked": "2026-10-27",
+     "evidence": "catalog/turret.json worker-cheetah-rival-rounds-100"
     }
    ]
   }
@@ -6753,14 +7939,125 @@
   "screws, inserts, dowels, springs": 17,
   "CT connector pair (Micro-Fit 3.0 class)": 12
  },
+ "ammo_side_by_side": [
+  {
+   "pack": "Worker Cheetah Rival-compatible rounds, 100",
+   "maker": "Worker (third party)",
+   "rounds": 100,
+   "seller": "Out of Darts",
+   "price_usd": 14.99,
+   "diameter_mm": 22.7,
+   "mass_g": 1.75,
+   "key": "worker-cheetah-rival-rounds-100",
+   "bought": 2,
+   "usd_per_round": 0.15,
+   "within_d67": true
+  },
+  {
+   "pack": "Rival-compatible rounds, 100 (Amazon ASIN B071SC9QYG; its page names the brand Little Valentine)",
+   "maker": "third party",
+   "rounds": 100,
+   "seller": "Amazon",
+   "price_usd": 14.99,
+   "diameter_mm": null,
+   "mass_g": null,
+   "key": "worker-cheetah-rival-rounds-100",
+   "bought": 0,
+   "note": "size and mass not published: weigh and gauge 10 before use (the bench's ammo check)",
+   "usd_per_round": 0.15,
+   "within_d67": null
+  },
+  {
+   "pack": "Nerf Rival 60 Accu-Round Refill (F5052)",
+   "maker": "Hasbro (official)",
+   "rounds": 60,
+   "seller": "eBay",
+   "price_usd": 16.95,
+   "diameter_mm": 22.7,
+   "mass_g": 1.83,
+   "key": "hasbro-nerf-rival-accu-round-60",
+   "bought": 0,
+   "usd_per_round": 0.282,
+   "within_d67": true
+  },
+  {
+   "pack": "Nerf Rival 50-Round Refill",
+   "maker": "Hasbro (official)",
+   "rounds": 50,
+   "seller": "Walmart",
+   "price_usd": 15.95,
+   "diameter_mm": 22.7,
+   "mass_g": 1.83,
+   "key": "hasbro-nerf-rival-accu-round-60",
+   "bought": 0,
+   "usd_per_round": 0.319,
+   "within_d67": true
+  },
+  {
+   "pack": "Nerf Rival 60 Accu-Round Refill (F5052)",
+   "maker": "Hasbro (official)",
+   "rounds": 60,
+   "seller": "Walmart",
+   "price_usd": 19.99,
+   "diameter_mm": 22.7,
+   "mass_g": 1.83,
+   "key": "hasbro-nerf-rival-accu-round-60",
+   "bought": 1,
+   "usd_per_round": 0.333,
+   "within_d67": true
+  },
+  {
+   "pack": "Dart Zone Powerstrike rounds",
+   "maker": "Dart Zone (third party)",
+   "rounds": null,
+   "seller": null,
+   "price_usd": null,
+   "diameter_mm": 22.8,
+   "mass_g": 1.85,
+   "key": null,
+   "bought": 0,
+   "note": "accepted by D67; no price read: not on the order sheets",
+   "usd_per_round": null,
+   "within_d67": true
+  },
+  {
+   "pack": "Adventure Force rounds",
+   "maker": "Adventure Force (Walmart's own, third party)",
+   "rounds": null,
+   "seller": "Walmart",
+   "price_usd": null,
+   "diameter_mm": 22.8,
+   "mass_g": 1.88,
+   "key": null,
+   "bought": 0,
+   "note": "accepted by D67; no price read",
+   "usd_per_round": null,
+   "within_d67": true
+  }
+ ],
+ "turret_mass": {
+  "with_30_balls_g": 2560.8,
+  "empty_g": 2505.9,
+  "ceiling_kg": 2.6,
+  "margin_g": 39.2,
+  "within_ceiling": true,
+  "com_mm": [
+   -4.1,
+   -2.8,
+   49.2
+  ],
+  "decision": "D71 (the 37.5 kg robot covers the turret as its own robot, D66)"
+ },
  "price_usd_known": {
-  "turret": 716.34,
-  "bench_stand": 382.87,
+  "turret": 1808.94,
+  "bench_stand": 660.57,
   "tools": 255.73
  },
  "not_in_a_catalogue": [],
  "no_listed_price": [],
- "no_second_source": [],
+ "no_second_source": [
+  "dewalt-dcb609"
+ ],
  "ordered_to_drawing": {
   "pan_clamp": {
    "drawing": "exports/turret/pan_clamp.dxf",
@@ -6769,7 +8066,38 @@
    "thickness_in": 0.125,
    "density_g_cm3": 2.7,
    "vendor": "SendCutSend",
-   "url": "https://sendcutsend.com/materials/6061-t6-aluminum/"
+   "url": "https://sendcutsend.com/materials/6061-t6-aluminum/",
+   "operations": "none"
+  },
+  "cradle_plate_l": {
+   "drawing": "exports/turret/cradle_plate_l.dxf",
+   "name": "6061-T6 aluminium",
+   "thickness_mm": 3.175,
+   "thickness_in": 0.125,
+   "density_g_cm3": 2.7,
+   "vendor": "SendCutSend",
+   "url": "https://sendcutsend.com/materials/6061-t6-aluminum/",
+   "operations": "4 holes countersunk 90 deg to \u00d86.4 on the face drawn (the face on the rail; DIN 7991 M3 flat heads)"
+  },
+  "cradle_plate_r": {
+   "drawing": "exports/turret/cradle_plate_r.dxf",
+   "name": "6061-T6 aluminium",
+   "thickness_mm": 3.175,
+   "thickness_in": 0.125,
+   "density_g_cm3": 2.7,
+   "vendor": "SendCutSend",
+   "url": "https://sendcutsend.com/materials/6061-t6-aluminum/",
+   "operations": "the \u00d84.2 hole tapped M5 x 0.8; 2 holes countersunk 90 deg to \u00d86.4 on the face drawn (the face on the rail)"
+  },
+  "stop_lug": {
+   "drawing": "exports/turret/stop_lug.dxf",
+   "name": "6061-T6 aluminium",
+   "thickness_mm": 2.54,
+   "thickness_in": 0.1,
+   "density_g_cm3": 2.7,
+   "vendor": "SendCutSend",
+   "url": "https://sendcutsend.com/materials/6061-t6-aluminum/",
+   "operations": "2 holes tapped M3 x 0.5"
   }
  },
  "note": "every line names a catalogue key (catalog/turret.json, hardware.json, sourcing.json): off the shelf with a listed price, printed, or ordered to our drawing at an instant online price (docs/decisions.yaml D40); qty is per turret; packs are bought whole (each item's pack_qty); thumbnails and alternates from cad/bom_media.py"

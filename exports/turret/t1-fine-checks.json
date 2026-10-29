@@ -1,28 +1,108 @@
 {
  "over_pinion_tilt_-25": {
-  "cradle": [
-   2.48,
-   198
-  ],
-  "laser_mount": [
-   7.54,
-   198
-  ],
-  "laser": [
-   17.95,
-   204
-  ],
-  "ct_thumbscrew": [
-   60.82,
-   230
-  ],
-  "cartridge_body": [
-   11.84,
-   166
-  ],
   "barrel": [
    6.02,
    180
+  ],
+  "cartridge_body": [
+   13.95,
+   167
+  ],
+  "cradle": [
+   18.9,
+   130
+  ],
+  "cradle_plate_l": [
+   21.13,
+   130
+  ],
+  "flywheel_motor_l": [
+   34.45,
+   130
+  ],
+  "flywheel_motor_r": [
+   34.45,
+   130
+  ],
+  "laser_mount": [
+   40.48,
+   130
+  ],
+  "laser": [
+   45.26,
+   130
+  ],
+  "laser_inserts": [
+   46.52,
+   130
+  ],
+  "laser_screws": [
+   47.23,
+   130
+  ],
+  "feed_motor": [
+   52.88,
+   130
+  ],
+  "horn_boss": [
+   61.0,
+   130
+  ],
+  "cradle_plate_r": [
+   65.22,
+   130
+  ],
+  "dial": [
+   68.23,
+   130
+  ],
+  "shoulder_screw": [
+   75.87,
+   130
+  ],
+  "pivot_spacer": [
+   76.01,
+   130
+  ],
+  "stop_lug": [
+   80.03,
+   130
+  ],
+  "esc_l": [
+   81.73,
+   130
+  ],
+  "esc_r": [
+   81.73,
+   130
+  ],
+  "tilt_bearing_inner": [
+   82.56,
+   130
+  ],
+  "hopper_inserts": [
+   86.93,
+   130
+  ],
+  "hopper": [
+   87.99,
+   130
+  ],
+  "cartridge_board": [
+   91.29,
+   130
+  ],
+  "ct_thumbscrew": [
+   91.79,
+   130
+  ],
+  "hopper_lid": [
+   143.99,
+   130
+  ],
+  "hopper_flap": [
+   171.89,
+   130
   ]
  },
  "lead_bundle_clearance_mm": {
@@ -66,5 +146,6 @@
    "circlip_50": 41.55,
    "pan_base": 33.88
   }
- }
+ },
+ "over_pinion_how": "nearest approach to the pan pinion (mm, at the pan in deg), pans 130..230 every 1 deg, tilt -25"
 }

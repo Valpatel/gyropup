@@ -18,7 +18,7 @@
    "grams_each": 133,
    "grams": 133,
    "hours": 6.4,
-   "cost_usd": 10.68,
+   "cost_usd": 10.73,
    "infill": "2 mm walls, 40 % gyroid",
    "how": "PA6-CF on its foot; 4 x M5 x 16 into the head ring, 2 x \u00d85 dowels",
    "sliced": true,
@@ -121,18 +121,18 @@
    "material": "pa6-cf",
    "qty": 1,
    "size_mm": [
-    152,
+    173,
     91,
-    48
+    40
    ],
    "fits": true,
    "placement": "straight",
-   "grams_each": 104,
-   "grams": 104,
-   "hours": 4.8,
-   "cost_usd": 8.33,
+   "grams_each": 118,
+   "grams": 118,
+   "hours": 5.1,
+   "cost_usd": 9.41,
    "infill": "100 %",
-   "how": "PA6-CF on its back; 4 x M4 x 10 to the turntable (heads 4 mm down in the bridge)",
+   "how": "PA6-CF on its back; 4 x M4 x 10 to the turntable (heads 6 mm down in the 12 mm bridge)",
    "sliced": true,
    "settings": {
     "wall_loops": "4",
@@ -150,36 +150,85 @@
    "material": "pa6-cf",
    "qty": 1,
    "size_mm": [
-    182,
-    126,
-    59
+    150,
+    114,
+    10
    ],
    "fits": true,
    "placement": "straight",
-   "grams_each": 77,
-   "grams": 77,
-   "hours": 3.5,
-   "cost_usd": 6.16,
+   "grams_each": 50,
+   "grams": 50,
+   "hours": 2.1,
+   "cost_usd": 3.98,
    "infill": "100 %",
-   "how": "PA6-CF flat; ISO 7379 6 x 12 shoulder screw (M5) in an insert",
+   "how": "PA6-CF flat, no supports: the rail frame (D48); 8 x M3 inserts for the aluminium cheek plates",
    "sliced": true,
    "settings": {
     "wall_loops": "4",
     "sparse_infill_density": "100%",
     "sparse_infill_pattern": "zig-zag",
-    "curr_bed_type": "Textured PEI Plate",
-    "enable_support": "1",
-    "support_type": "tree(auto)",
-    "support_threshold_angle": "30"
+    "curr_bed_type": "Textured PEI Plate"
    },
    "print_file": "exports/turret/print/cradle.3mf",
-   "orientation": "flat"
+   "orientation": "flat, no supports"
+  },
+  "horn_boss": {
+   "material": "pa6-cf",
+   "qty": 1,
+   "size_mm": [
+    20,
+    20,
+    9
+   ],
+   "fits": true,
+   "placement": "straight",
+   "grams_each": 2,
+   "grams": 2,
+   "hours": 0.2,
+   "cost_usd": 0.23,
+   "infill": "100 %",
+   "how": "PA6-CF on an end face; between the +y plate and the tilt servo's horn (4 x M3 x 14 flat heads)",
+   "sliced": true,
+   "settings": {
+    "wall_loops": "4",
+    "sparse_infill_density": "100%",
+    "sparse_infill_pattern": "zig-zag",
+    "curr_bed_type": "Textured PEI Plate"
+   },
+   "print_file": "exports/turret/print/horn_boss.3mf",
+   "orientation": "on an end face"
+  },
+  "pivot_spacer": {
+   "material": "pa6-cf",
+   "qty": 1,
+   "size_mm": [
+    18,
+    18,
+    4
+   ],
+   "fits": true,
+   "placement": "straight",
+   "grams_each": 1,
+   "grams": 1,
+   "hours": 0.0,
+   "cost_usd": 0.05,
+   "infill": "100 %",
+   "how": "PA6-CF on its boss face, land up; between the -y plate and the MR126 (the shoulder screw through it)",
+   "sliced": true,
+   "settings": {
+    "wall_loops": "4",
+    "sparse_infill_density": "100%",
+    "sparse_infill_pattern": "zig-zag",
+    "curr_bed_type": "Textured PEI Plate"
+   },
+   "print_file": "exports/turret/print/pivot_spacer.3mf",
+   "orientation": "on its boss face, the land up"
   },
   "cartridge_body": {
    "material": "pa6-cf",
    "qty": 1,
    "size_mm": [
-    163,
+    166,
     103,
     82
    ],
@@ -188,7 +237,7 @@
    "grams_each": 188,
    "grams": 188,
    "hours": 10.7,
-   "cost_usd": 14.97,
+   "cost_usd": 14.98,
    "infill": "100 %",
    "how": "PA6-CF on its base; supports under the chute",
    "sliced": true,
@@ -208,8 +257,8 @@
    "material": "pa6-cf",
    "qty": 2,
    "size_mm": [
-    28,
-    28,
+    30,
+    30,
     12
    ],
    "fits": true,
@@ -217,7 +266,7 @@
    "grams_each": 5,
    "grams": 10,
    "hours": 0.4,
-   "cost_usd": 0.87,
+   "cost_usd": 0.82,
    "infill": "100 %",
    "how": "PA6-CF on its top face; on the X2216's prop adapter: washer + M5 nylon-insert nut; bore reamed to 5.00",
    "sliced": true,
@@ -234,8 +283,8 @@
    "material": "tpu95",
    "qty": 2,
    "size_mm": [
-    34,
-    34,
+    38,
+    38,
     12
    ],
    "fits": true,
@@ -289,7 +338,7 @@
    "material": "petg",
    "qty": 1,
    "size_mm": [
-    111,
+    103,
     101,
     65
    ],
@@ -370,18 +419,18 @@
    "material": "petg",
    "qty": 1,
    "size_mm": [
-    20,
-    18,
-    24
+    33,
+    25,
+    18
    ],
    "fits": true,
    "placement": "straight",
    "grams_each": 6,
    "grams": 6,
    "hours": 0.4,
-   "cost_usd": 0.1,
+   "cost_usd": 0.08,
    "infill": "2 mm walls, 40 % gyroid",
-   "how": "PETG; 3 x M3 boresight, 2 x M3 to the cradle",
+   "how": "PETG; 3 x M3 boresight, 2 x M3 x 10 to the socket pad",
    "sliced": true,
    "settings": {
     "wall_loops": "5",
@@ -431,7 +480,7 @@
    "grams_each": 7,
    "grams": 7,
    "hours": 0.3,
-   "cost_usd": 0.55,
+   "cost_usd": 0.52,
    "infill": "100 %",
    "how": "PA6-CF on its top face; in the turntable's bore (ribs + CA)",
    "sliced": true,
@@ -450,14 +499,14 @@
    "size_mm": [
     58,
     57,
-    46
+    49
    ],
    "fits": true,
    "placement": "straight",
    "grams_each": 24,
    "grams": 24,
    "hours": 0.9,
-   "cost_usd": 0.35,
+   "cost_usd": 0.34,
    "infill": "2 mm walls, 40 % gyroid",
    "how": "PETG on its back; 4 x M3 x 8 flat heads to the -y yoke arm; 4 x M3 inserts for the boards",
    "sliced": true,
@@ -470,22 +519,73 @@
    "print_file": "exports/turret/print/board_bay.3mf",
    "orientation": "on its back"
   },
+  "board_bay_lid": {
+   "material": "petg",
+   "qty": 1,
+   "size_mm": [
+    58,
+    57,
+    4
+   ],
+   "fits": true,
+   "placement": "straight",
+   "grams_each": 4,
+   "grams": 4,
+   "hours": 0.2,
+   "cost_usd": 0.06,
+   "infill": "2 mm walls, 40 % gyroid",
+   "how": "PETG flat; snaps into the bay's open face"
+  },
+  "compute_tray": {
+   "material": "pa6-cf",
+   "qty": 1,
+   "size_mm": [
+    156,
+    156,
+    16
+   ],
+   "fits": true,
+   "placement": "straight",
+   "grams_each": 93,
+   "grams": 93,
+   "hours": 6.1,
+   "cost_usd": 7.45,
+   "infill": "2 mm walls, 40 % gyroid",
+   "how": "PA6-CF flat; 4 x M5 x 16 down into the head's inserts (first), 4 x M4 inserts for the shell"
+  },
+  "compute_shell": {
+   "material": "petg",
+   "qty": 1,
+   "size_mm": [
+    156,
+    156,
+    76
+   ],
+   "fits": true,
+   "placement": "straight",
+   "grams_each": 84,
+   "grams": 84,
+   "hours": 3.4,
+   "cost_usd": 1.18,
+   "infill": "2 mm walls, 40 % gyroid",
+   "how": "PETG upside down; 4 x M4 x 10 down into the tray, 4 x M5 inserts for the pan base"
+  },
   "stand_box": {
    "material": "petg",
    "qty": 1,
    "size_mm": [
     200,
-    180,
-    100
+    200,
+    150
    ],
    "fits": true,
    "placement": "straight",
    "grams_each": 377,
    "grams": 377,
    "hours": 8.4,
-   "cost_usd": 5.27,
+   "cost_usd": 5.28,
    "infill": "2 mm walls, 40 % gyroid",
-   "how": "printed PETG upside down; 4 x M5 + 4 x M3 inserts",
+   "how": "printed PETG upside down; 4 x M5 + 4 x M3 inserts for the bottom, 2 x M3 for the dock, 4 x M3 for the board",
    "sliced": true,
    "settings": {
     "wall_loops": "3",
@@ -504,8 +604,8 @@
    "qty": 1,
    "size_mm": [
     240,
-    180,
-    16
+    200,
+    8
    ],
    "fits": true,
    "placement": "straight",
@@ -514,7 +614,7 @@
    "hours": 2.5,
    "cost_usd": 1.45,
    "infill": "2 mm walls, 40 % gyroid",
-   "how": "printed PETG flat; 4 x M3 x 8 into the corner bosses; 4 rubber feet; 4 x M3 inserts for the board",
+   "how": "printed PETG flat; 4 x M3 x 8 into the corner bosses; 4 rubber feet; two ribs the pack slides on",
    "sliced": true,
    "settings": {
     "wall_loops": "3",
@@ -528,10 +628,10 @@
  },
  "by_material": {
   "pa6-cf": {
-   "grams": 637,
-   "hours": 31.8,
-   "cost_usd": 50.98,
-   "parts": 11
+   "grams": 720,
+   "hours": 37.0,
+   "cost_usd": 57.59,
+   "parts": 14
   },
   "tpu95": {
    "grams": 9,
@@ -540,14 +640,14 @@
    "parts": 2
   },
   "petg": {
-   "grams": 645,
-   "hours": 17.6,
-   "cost_usd": 9.0,
-   "parts": 8
+   "grams": 733,
+   "hours": 21.2,
+   "cost_usd": 10.22,
+   "parts": 10
   }
  },
  "too_big": [],
- "total_hours": 50.0,
- "total_grams": 1291,
+ "total_hours": 58.8,
+ "total_grams": 1462,
  "note": "the bench turret (cad/turret.py, v0: no bumper, no fill flap) and its stand; grams and hours are Bambu Studio's where the part is sliced (sliced: true, cad/turret_print.py), rough otherwise"
 }

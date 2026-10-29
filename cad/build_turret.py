@@ -50,10 +50,15 @@ CAT = _catalogue()
 # lines are the electronics on its boards (docs/turret-plan.md 2, docs/turret-wiring.md). Qty 0: bought with another.
 TURRET_BOUGHT = {
     'pan_servo': ('feetech-sts3215-c018-12v', 1), 'tilt_servo': ('feetech-sts3215-c018-12v', 1),
-    'flywheel_motor_l': ('sunnysky-x2216-880kv-v3', 1), 'flywheel_motor_r': ('sunnysky-x2216-880kv-v3', 1),
+    'flywheel_motor_l': ('sunnysky-x2216-1400kv-v3', 1), 'flywheel_motor_r': ('sunnysky-x2216-1400kv-v3', 1),
     'esc_l': ('repeat-robotics-am32-35a-esc', 1), 'esc_r': ('repeat-robotics-am32-35a-esc', 1),
+    # D51: the backup pair with stock AM32 and a documented telemetry pad, bought with the first order; the pair that
+    # returns bidirectional-DShot eRPM on the bench (plan N10) is the one built in, the other is the spare
+    'esc_backup_pair': ('lumenier-razor-pro-f4-45a-am32', 2),
     'feed_motor': ('feetech-sts3215-c018-12v', 1), 'cartridge_board': ('proto-board-52x50', 1),
     'laser': ('quarton-vlm-650-03-lpt', 1), 'pan_clamp': ('sendcutsend-pan-clamp', 1),
+    # the cradle's aluminium (D48): the same SendCutSend cart as the clamp
+    'cradle_plate_l': ('sendcutsend-cradle-plate-l', 1), 'cradle_plate_r': ('sendcutsend-cradle-plate-r', 1), 'stop_lug': ('sendcutsend-stop-lug', 1),
     'pan_bearing': ('vxb-6810-2rs', 1), 'pan_bearing_inner': ('vxb-6810-2rs', 0),
     'tilt_bearing': ('bearing_mr126', 1), 'tilt_bearing_inner': ('bearing_mr126', 0),
     'circlip_50': ('circlip_50', 1), 'shoulder_screw': ('shoulder_6x12_m5', 1),
@@ -61,23 +66,29 @@ TURRET_BOUGHT = {
     'slip_ring': ('sparkfun-rob-13065', 1), 'slip_ring_rotor': ('sparkfun-rob-13065', 0), 'ring_leads_rotor': ('sparkfun-rob-13065', 0),
     'ring_coupling': ('turret_tube_coupling', 1), 'index_magnet': ('turret_magnet_disc', 1), 'hall_switch': ('allegro-a1120lua-t', 1),
     'ct_thumbscrew': ('turret_thumbscrew_m4x12', 1),
+    # D66: the turret's own computer and power input, in the compute plinth
+    'compute': ('seeed-recomputer-mini-j4012-ext', 1), 'eth_jack': ('adafruit-909', 1), 'xt30_input': ('xt30_f', 1),
+    'input_fuses': ('fuse_holder_mini_inline', 2), 'hw_fuse_main': ('fuse_mini58_20a', 1), 'hw_fuse_compute': ('fuse_mini58_5a', 1),
+    'hw_plinth_inserts_m5': ('insert_m5', 4), 'hw_plinth_screws_m5': ('screw_m5x16', 4), 'hw_plinth_dowels': ('dowel_5x16', 2),
+    'hw_plinth_m4': ('turret_screw_m4x10', 4), 'hw_plinth_inserts_m4': ('turret_insert_m4', 4),
     'base_board': ('proto-board-52x50', 1), 'turret_board': ('proto-board-52x50', 3),
     # hardware
     'hw_tm_screws': ('screw_m5x16', 4), 'hw_tm_dowels': ('dowel_5x16', 2),
     'hw_screw_m2x10': ('turret_screw_m2x10', 4), 'hw_screw_m2x20': ('turret_screw_m2x20', 4), 'hw_flat_m2x6': ('turret_screw_m2x6_flat', 4),
     'hw_screw_m3x6': ('screw_m3x6', 20), 'hw_screw_m3x8': ('turret_screw_m3x8', 15), 'hw_screw_m3x10': ('turret_screw_m3x10', 2),
-    'hw_screw_m3x12': ('turret_screw_m3x12', 4), 'hw_screw_m3x16': ('turret_screw_m3x16', 4),
+    'hw_screw_m3x16': ('turret_screw_m3x16', 4),
+    'hw_flat_m3x14': ('turret_screw_m3x14_flat_ss', 4), 'hw_button_m3x8': ('turret_screw_m3x8_button', 8), 'hw_flat_m3x6': ('turret_screw_m3x6_flat', 2),
     'hw_screw_m4x10': ('turret_screw_m4x10', 8), 'hw_flat_m3x8': ('turret_screw_m3x8_flat', 4),
     'hw_flat_m3x10': ('turret_screw_m3x10_flat', 3), 'hw_setscrew_m3x6': ('turret_setscrew_m3x6_nylon', 4),
-    'hw_insert_m3': ('insert_m3', 29), 'hw_insert_m4': ('turret_insert_m4', 9),
-    'hw_insert_m5': ('insert_m5', 1), 'hw_washer_m3_large': ('washer_m3_large', 3),
+    'hw_insert_m3': ('insert_m3', 37), 'hw_insert_m4': ('turret_insert_m4', 9),
+    'hw_washer_m3_large': ('washer_m3_large', 3),
     'hw_dowel_4x8': ('turret_dowel_4x8', 2), 'hw_oring_ct': ('turret_oring_ct', 1), 'hw_standoff_m3x12': ('turret_standoff_m3x12', 4),
     'hw_hub_nuts': ('nut_m5_nyloc', 2),
     'hw_standoff_m3x14': ('turret_standoff_m3x14', 4),
     # electronics (docs/turret-plan.md 2.4, 5.4)
-    'el_mcu': ('adafruit-feather-m4-can-4759', 1), 'el_flywheel_regulator': ('pololu-d24v150f12-2885', 1),
-    'el_12v_regulators': ('pololu-d36v50f12-4095', 1), 'el_5v_regulator': ('pololu-d36v28f5-3782', 1),
-    'el_safety_switch': ('pololu-2815', 1), 'el_capacitors': ('panasonic-eeu-fr1v102', 2),
+    'el_mcu': ('adafruit-feather-m4-can-4759', 1), 'el_flywheel_regulator': ('tdk-lambda-i6a4w020a033v-001-r', 1),
+    'el_12v_regulators': ('pololu-d36v50f12-4095', 2), 'el_5v_regulator': ('pololu-d36v28f5-3782', 1),
+    'el_safety_switch': ('pololu-2815', 1), 'el_capacitors': ('panasonic-eeu-fr1j471b', 2),
     'el_555': ('ti-ne555p', 1), 'el_opto': ('vishay-4n35', 1), 'el_monostables': ('ti-cd74hc423e', 1), 'el_supervisor': ('microchip-mcp120', 1),
     'el_trip_latch': ('ti-sn74hc74n', 1), 'el_and': ('ti-sn74hc08n', 1), 'el_brake_driver': ('ti-sn74hct14n', 1), 'el_bus_buffer': ('ti-sn74ahct125n', 1),
     'el_gate_comparator': ('ti-lm393p', 1), 'el_brake_fets': ('infineon-irlz44npbf', 6), 'el_gate_emitters': ('vishay-tsal4400', 2),
@@ -89,7 +100,7 @@ TURRET_BOUGHT = {
     # plugs 24 males (24 AWG); the ring's own 28 AWG leads 24 females (26-30 AWG)
     'el_microfit_f18': ('molex-43030-0038', 8), 'el_microfit_m18': ('molex-43031-0021', 8),
     'el_microfit_f24': ('molex-43030-0001', 14), 'el_microfit_m24': ('molex-43031-0001', 40), 'el_microfit_f28': ('molex-43030-0010', 30),
-    'el_fuse_holder': ('littelfuse-0fhm0001zxj', 1), 'el_fuse': ('littelfuse-0297005-wxnv', 2), 'el_laser_switch': ('onsemi-2n7000', 1),
+    'el_fuse_holder': ('littelfuse-0fhm0001zxj', 1), 'el_fuse': ('fuse_mini58_10a', 2), 'el_laser_switch': ('onsemi-2n7000', 1),
     'el_polyfuse_3a': ('bourns-mf-r300', 3), 'el_polyfuse_2a': ('bourns-mf-r250', 1),
     'el_dt_wedge': ('te-w12p', 1), 'el_dt_pins': ('te-0460-202-16141', 12),
     'el_wire_24awg': ('pololu-ul1007-24awg-60ft', 4), 'el_wire_18awg': ('remington-18ptfestr-25ft', 1),
@@ -103,7 +114,7 @@ def _passive_line(key: str) -> str:
     return {'yageo-rsf100jb-73-2k2': 'el_r_2k2_1w', 'cap-film-100n-5pct': 'el_c_100n_film', 'cap-mlcc-100n-50v': 'el_c_100n',
             'cap-mlcc-1u-50v': 'el_c_1u', 'panasonic-ecq-e1105kf': 'el_c_1u_film', 'onsemi-1n4148': 'el_d_1n4148',
             'omron-b3f-1000': 'el_sw_reset', 'vishay-bat85': 'el_d_bat85', 'schottky-1n5817': 'el_d_1n5817',
-            'schottky-1n5822': 'el_d_1n5822', 'tvs-p6ke15a': 'el_d_tvs15', 'bourns-mf-r010': 'el_polyfuse_loop'}.get(key, 'el_' + key)
+            'schottky-1n5822': 'el_d_1n5822', 'tvs-p6ke15a': 'el_d_tvs15', 'tvs-p6ke51a': 'el_d_tvs51', 'diode-1n5408g': 'el_d_1n5408', 'bourns-mf-r010': 'el_polyfuse_loop'}.get(key, 'el_' + key)
 
 
 # the boards' resistors, capacitors, diodes and the reset button, counted from cad/turret_boards.py COMPONENTS (the
@@ -120,12 +131,64 @@ V1_ONLY = {
 # the robot's printed parts the bench leaves off (D42; cad/turret_print.py NOT_PRINTED): out of the bench's print plan
 V1_PRINTED = ('bumper_ring', 'hopper_flap')
 # the bench stand (cad/turret_stand.py), its supply, the reference chronograph and the ammunition: [(key, qty)]
-BENCH_BOUGHT = [('amass-xt60e-m', 1), ('turret_screw_m2_5x8', 2), ('turret_nut_m2_5', 2), ('bulgin-r13244aaaa', 1),
+BENCH_BOUGHT = [('amass-xt60e-m', 1), ('turret_screw_m2_5x8', 2), ('turret_nut_m2_5', 2), ('blue-sea-6006', 1),
                 ('fuse-holder-5x20-panel', 1), ('littelfuse-0477005-mxp', 2), ('switchcraft-tb3m', 1), ('switchcraft-ta3flx', 1),
                 ('pendant-hold-to-run', 1),
                 ('usb-can-canable2', 1), ('proto-board-70x50', 1), ('bumper-feet-12.7', 4), ('insert_m5', 4), ('insert_m3', 8),
-                ('turret_screw_m3x8', 4), ('meanwell-lrs-350-24', 1), ('caldwell-ballistic-precision-chronograph-bt', 1),
-                ('worker-cheetah-rival-rounds-100', 3)]
+                ('turret_screw_m3x8', 4),
+                # D66: the stand runs the turret on one FLEXVOLT pack in 20 V mode in a dock, to the turret's XT30
+                ('dewalt-dcb609', 1), ('dewalt-20v-dock-adapter-12awg', 1), ('xt30_m', 1), ('fuse_holder_mini_inline', 1), ('fuse_mini58_20a', 1),
+                ('caldwell-ballistic-precision-chronograph-bt', 1),
+                # the ammo (D67): a third-party Rival-compatible pack and the official Nerf Rival refill, side by side,
+                # cheapest a round first (any round 22.2-22.8 mm, 1.6-2.0 g: cad/turret_gates.py ammo_range)
+                ('worker-cheetah-rival-rounds-100', 2), ('hasbro-nerf-rival-accu-round-60', 1)]
+# D67's ammo side by side: the official Hasbro packs and third-party Rival-compatible ones, a round's price from the
+# catalogue (prices read 2026-10-25..27; catalog/turret.json, catalog/alternates.json), each against D67's accepted range
+# (22.2-22.8 mm, 1.6-2.0 g: the feed's and bore's `ammo_range` gate and the launch ceiling's corners). Sizes and masses:
+# docs/turret-physics.md 2 (Out of Darts records, BlasterHub's weighing). 'bought' marks the BOM's lines
+AMMO_SIDE_BY_SIDE = [
+    {'pack': 'Worker Cheetah Rival-compatible rounds, 100', 'maker': 'Worker (third party)', 'rounds': 100, 'seller': 'Out of Darts',
+     'price_usd': 14.99, 'diameter_mm': 22.7, 'mass_g': 1.75, 'key': 'worker-cheetah-rival-rounds-100', 'bought': 2},
+    {'pack': 'Rival-compatible rounds, 100 (Amazon ASIN B071SC9QYG; its page names the brand Little Valentine)', 'maker': 'third party',
+     'rounds': 100, 'seller': 'Amazon', 'price_usd': 14.99, 'diameter_mm': None, 'mass_g': None, 'key': 'worker-cheetah-rival-rounds-100',
+     'bought': 0, 'note': 'size and mass not published: weigh and gauge 10 before use (the bench\'s ammo check)'},
+    {'pack': 'Nerf Rival 50-Round Refill', 'maker': 'Hasbro (official)', 'rounds': 50, 'seller': 'Walmart', 'price_usd': 15.95,
+     'diameter_mm': 22.7, 'mass_g': 1.83, 'key': 'hasbro-nerf-rival-accu-round-60', 'bought': 0},
+    {'pack': 'Nerf Rival 60 Accu-Round Refill (F5052)', 'maker': 'Hasbro (official)', 'rounds': 60, 'seller': 'eBay', 'price_usd': 16.95,
+     'diameter_mm': 22.7, 'mass_g': 1.83, 'key': 'hasbro-nerf-rival-accu-round-60', 'bought': 0},
+    {'pack': 'Nerf Rival 60 Accu-Round Refill (F5052)', 'maker': 'Hasbro (official)', 'rounds': 60, 'seller': 'Walmart', 'price_usd': 19.99,
+     'diameter_mm': 22.7, 'mass_g': 1.83, 'key': 'hasbro-nerf-rival-accu-round-60', 'bought': 1},
+    {'pack': 'Dart Zone Powerstrike rounds', 'maker': 'Dart Zone (third party)', 'rounds': None, 'seller': None, 'price_usd': None,
+     'diameter_mm': 22.8, 'mass_g': 1.85, 'key': None, 'bought': 0, 'note': 'accepted by D67; no price read: not on the order sheets'},
+    {'pack': 'Adventure Force rounds', 'maker': 'Adventure Force (Walmart\'s own, third party)', 'rounds': None, 'seller': 'Walmart',
+     'price_usd': None, 'diameter_mm': 22.8, 'mass_g': 1.88, 'key': None, 'bought': 0, 'note': 'accepted by D67; no price read'},
+]
+
+
+def turret_mass(T):
+    """D71: the turret's mass on Gyropup against its 2.6 kg ceiling (cad/turret.py mass_properties: printed parts by the
+    printed-part model, bought parts at their catalogue masses, the not-modelled allowance), with and without the
+    hopper's 30 balls."""
+    import turret_mount as tm
+    _, m_b, c_b = tu.mass_properties(T, with_balls=True)
+    _, m_e, _ = tu.mass_properties(T, with_balls=False)
+    return {'with_30_balls_g': round(m_b, 1), 'empty_g': round(m_e, 1), 'ceiling_kg': tm.MASS_CEILING_KG,
+            'margin_g': round(tm.MASS_CEILING_KG * 1000 - m_b, 1), 'within_ceiling': m_b <= tm.MASS_CEILING_KG * 1000,
+            'com_mm': [round(c, 1) for c in c_b], 'decision': 'D71 (the 37.5 kg robot covers the turret as its own robot, D66)'}
+
+
+def ammo_side_by_side():
+    """The ammo table with a round's price and D67's verdict, cheapest a round first (unpriced last)."""
+    out = []
+    for a in AMMO_SIDE_BY_SIDE:
+        r = dict(a)
+        r['usd_per_round'] = round(a['price_usd'] / a['rounds'], 3) if a['price_usd'] and a['rounds'] else None
+        d, m = a['diameter_mm'], a['mass_g']
+        r['within_d67'] = None if d is None or m is None else (22.2 <= d <= 22.8 and 1.6 <= m <= 2.0)
+        out.append(r)
+    return sorted(out, key=lambda r: (r['usd_per_round'] is None, r['usd_per_round'] or 0.0))
+
+
 # bought once for the build (docs/turret-assembly.md's tools): [(key, qty)]
 TOOLS = [('waveshare-bus-servo-adapter-a', 1), ('tool-deutsch-crimper-iwd1620', 1), ('tool-microfit-crimper', 1), ('tool-am32-usb-linker', 1),
          ('tool-circlip-pliers', 1), ('tool-insert-tips', 1), ('tool-reamer-5mm', 1), ('tool-dial-indicator', 1)]
@@ -180,7 +243,7 @@ def main():
                 'part_number': it.get('model'), 'vendor': it.get('vendor'), 'url': buys[0].get('url'), 'price_usd_each': it.get('price_usd'),
                 'pack_qty': it.get('pack_qty'), 'mass_g_each': None,
                 'sellers': [{k: b.get(k) for k in ('seller', 'url', 'seller_pn', 'price_usd', 'pack_qty', 'in_stock', 'stock', 'read_on')} for b in buys if b.get('url')]}
-    bench = [line(key, qty, 'ammo' if key.startswith('worker-') else 'bench') for key, qty in BENCH_BOUGHT]
+    bench = [line(key, qty, 'ammo' if key.startswith(('worker-', 'hasbro-nerf-')) else 'bench') for key, qty in BENCH_BOUGHT]
     tools = [line(key, qty, 'tool') for key, qty in TOOLS]
     v1 = [line(key, qty, name) for name, (key, qty) in V1_ONLY.items()]
     for r in rows:
@@ -199,8 +262,11 @@ def main():
     no_backup = sorted({r['key'] for r in rows + bench + tools if r['qty'] and len(r.get('sellers') or []) < 2 and not r.get('alternates')
                         and r['key'] not in drawn})
     priced = lambda rs: round(sum((r['price_usd_each'] or 0) * r['qty'] for r in rs), 2)
-    sheet = {n: {'drawing': f'exports/turret/{n}.dxf', **tu.SHEET[st], 'thickness_in': tu.SHEET[st]['thickness_in']} for n, st in tu.SHEET_PARTS.items()}
+    sheet = {n: {'drawing': f'exports/turret/{n}.dxf', **tu.SHEET[st], 'thickness_in': tu.SHEET[st]['thickness_in'],
+                 'operations': tu.SHEET_OPS.get(n, 'none')} for n, st in tu.SHEET_PARTS.items()}
     (OUT / 'bom.json').write_text(json.dumps({'bench_turret': rows, 'bench_stand': bench, 'tools': tools, 'v1_only': v1, 'not_modelled': tu.NOT_MODELLED_G,
+                                              'ammo_side_by_side': ammo_side_by_side(),
+                                              'turret_mass': turret_mass(T),
                                               'price_usd_known': {'turret': priced(rows), 'bench_stand': priced(bench), 'tools': priced(tools)},
                                               'not_in_a_catalogue': missing, 'no_listed_price': unpriced, 'no_second_source': no_backup,
                                               'ordered_to_drawing': sheet,
@@ -237,6 +303,8 @@ def main():
     import turret_orders                                  # the order sheets from bom.json and the catalogue
     summary['orders'] = {k: v for k, v in turret_orders.write(OUT / 'bom.json').items() if k in ('grand_total_usd', 'lines', 'sellers')}
     (OUT / 'bench.json').write_text(json.dumps(summary, indent=1) + '\n')
+    import turret_mount                                   # the turret's interface for the body: exports/turret/mount.json
+    turret_mount.write(T)
     sl = summary.get('sliced') or {}
     print(f"bench turret: {summary['printed_g'] / 1000:.2f} kg printed, ~{summary['print_hours']} h"
           + (f"; sliced {sl['grams'] / 1000:.2f} kg, {sl['hours']} h" if sl.get('grams') else '') + f"; stand {ts.W:.0f} x {ts.D:.0f} x {ts.H:.0f} mm"

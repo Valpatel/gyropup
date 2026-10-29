@@ -1,0 +1,291 @@
+{
+  "schema": "cadagent.gate/1",
+  "gate": "motion",
+  "pass": true,
+  "status": "pass",
+  "counts": {
+    "pass": 1,
+    "warn": 0,
+    "fail": 0
+  },
+  "checks": [
+    {
+      "id": "motion:pan+tilt",
+      "status": "pass",
+      "message": "pan+tilt: no collision in 210 poses (pan -170..170 deg in 35 samples (10 deg apart, up to 26.358 mm of travel); tilt 0..25 deg in 6 samples (5 deg apart, up to 13.349 mm of travel))",
+      "parts": [
+        "pan_bearing_inner",
+        "tilt_bearing_inner"
+      ],
+      "evidence": {
+        "joints": [
+          "pan",
+          "tilt"
+        ],
+        "poses": 210,
+        "density": [
+          {
+            "joint": "pan",
+            "axis": "rotate",
+            "unit": "deg",
+            "range": [
+              -170.0,
+              170.0
+            ],
+            "samples": 35,
+            "declared_samples": 35,
+            "step": 10.0,
+            "max_radius_mm": 151.017,
+            "max_travel_per_step_mm": 26.358
+          },
+          {
+            "joint": "tilt",
+            "axis": "rotate",
+            "unit": "deg",
+            "range": [
+              0.0,
+              25.0
+            ],
+            "samples": 6,
+            "declared_samples": 6,
+            "step": 5.0,
+            "max_radius_mm": 152.971,
+            "max_travel_per_step_mm": 13.349
+          }
+        ],
+        "coarsened": false,
+        "max_poses": 2000,
+        "moving": [
+          "pan_ring",
+          "pan_spacer",
+          "tilt_yoke",
+          "ring_driver",
+          "board_bay",
+          "board_bay_lid",
+          "pan_bearing_inner",
+          "circlip_50",
+          "slip_ring_rotor",
+          "ring_coupling",
+          "turret_board",
+          "hall_switch",
+          "tilt_servo",
+          "tilt_bearing",
+          "cradle",
+          "horn_boss",
+          "pivot_spacer",
+          "cartridge_body",
+          "flywheel",
+          "flywheel_m",
+          "flywheel_tyre",
+          "flywheel_tyre_m",
+          "dial",
+          "hopper",
+          "hopper_lid",
+          "hopper_flap",
+          "barrel",
+          "laser_mount",
+          "cradle_plate_l",
+          "cradle_plate_r",
+          "stop_lug",
+          "tilt_bearing_inner",
+          "shoulder_screw",
+          "flywheel_motor_l",
+          "flywheel_motor_r",
+          "cartridge_board",
+          "esc_l",
+          "esc_r",
+          "feed_motor",
+          "ct_thumbscrew",
+          "laser",
+          "laser_screws",
+          "laser_inserts",
+          "hopper_inserts"
+        ],
+        "bodies": [
+          "pan",
+          "tilt"
+        ],
+        "intended_contacts": [
+          "horn_boss|tilt_servo",
+          "pan_bearing|pan_bearing_inner",
+          "pan_pinion|pan_ring",
+          "pan_pinion|pan_servo",
+          "ring_coupling|slip_ring",
+          "ring_leads_rotor|slip_ring",
+          "shoulder_screw|tilt_bearing",
+          "shoulder_screw|tilt_yoke",
+          "slip_ring|slip_ring_rotor",
+          "stop_lug|tilt_yoke",
+          "tilt_bearing|tilt_bearing_inner"
+        ],
+        "intended_contacts_touching": {
+          "horn_boss|tilt_servo": {
+            "poses": 210,
+            "first": "pan=-170deg,tilt=0deg",
+            "last": "pan=170deg,tilt=25deg"
+          },
+          "stop_lug|tilt_yoke": {
+            "poses": 70,
+            "first": "pan=-170deg,tilt=0deg",
+            "last": "pan=170deg,tilt=25deg"
+          }
+        },
+        "collisions": [],
+        "min_clearance_mm": 0.316228,
+        "at": {
+          "gap_mm": 0.316228,
+          "pair": [
+            "pivot_spacer",
+            "tilt_bearing"
+          ],
+          "pose": "pan=-170deg,tilt=0deg",
+          "point_a": [
+            -13.907892,
+            59.295756,
+            140.0
+          ],
+          "point_b": [
+            -14.220699,
+            59.342142,
+            140.0
+          ]
+        }
+      }
+    }
+  ],
+  "findings": [],
+  "exclusions": [
+    {
+      "parts": [
+        "slip_ring",
+        "slip_ring_rotor"
+      ],
+      "reason": "the slip ring's rotor stub drawn 0.01 mm into its own stator (one bought part, the ring's envelope)"
+    }
+  ],
+  "limits": {
+    "touch_mm": 0.05,
+    "overlap_mm3": 0.001,
+    "near_mm": 1.0,
+    "volume_check_mm3": 0.2,
+    "default_samples": 12,
+    "max_step_deg": 12.0,
+    "max_step_mm": null,
+    "max_poses": 2000,
+    "refine_steps": 8,
+    "strict_contacts": false,
+    "combine": []
+  },
+  "assumptions": [
+    "joints are sampled at discrete values across their declared ranges, both ends included; the density is reported per joint axis. A collision that starts and ends between two samples, or a feature thinner than the travel per sample, can be missed: this is not a swept-volume check",
+    "a joint's range is measured from the pose the model was built in (0 = as modelled); a joint's axis is in assembly coordinates at that pose, and a child joint's axis is carried by its parent",
+    "what moves with a joint is its moving part's body: the transitive closure over fixed joints and fastener clamps/into (relations.moving_bodies), or the assembly's own body labels",
+    "joints in one chain are sampled on a grid; independent joints one at a time with the others at home (0 clamped into the range) unless combined",
+    "pairs that do not move relative to each other (static against static, parts of one body) are not queried; the relation table and connectivity gate cover them",
+    "exact B-rep relations within the relation tolerances; no tolerance stack, print shrink, deflection or backlash: a clear pose in the model does not prove the printed parts clear"
+  ],
+  "physical_fit_verified": false,
+  "groups": [
+    {
+      "id": "pan+tilt",
+      "joints": [
+        "pan",
+        "tilt"
+      ],
+      "poses": 210,
+      "density": [
+        {
+          "joint": "pan",
+          "axis": "rotate",
+          "unit": "deg",
+          "range": [
+            -170.0,
+            170.0
+          ],
+          "samples": 35,
+          "declared_samples": 35,
+          "step": 10.0,
+          "max_radius_mm": 151.017,
+          "max_travel_per_step_mm": 26.358
+        },
+        {
+          "joint": "tilt",
+          "axis": "rotate",
+          "unit": "deg",
+          "range": [
+            0.0,
+            25.0
+          ],
+          "samples": 6,
+          "declared_samples": 6,
+          "step": 5.0,
+          "max_radius_mm": 152.971,
+          "max_travel_per_step_mm": 13.349
+        }
+      ],
+      "coarsened": false,
+      "max_poses": 2000,
+      "bodies": [
+        "pan",
+        "tilt"
+      ],
+      "intended_contacts": [
+        "horn_boss|tilt_servo",
+        "pan_bearing|pan_bearing_inner",
+        "pan_pinion|pan_ring",
+        "pan_pinion|pan_servo",
+        "ring_coupling|slip_ring",
+        "ring_leads_rotor|slip_ring",
+        "shoulder_screw|tilt_bearing",
+        "shoulder_screw|tilt_yoke",
+        "slip_ring|slip_ring_rotor",
+        "stop_lug|tilt_yoke",
+        "tilt_bearing|tilt_bearing_inner"
+      ],
+      "intended_contacts_touching": {
+        "horn_boss|tilt_servo": {
+          "poses": 210,
+          "first": "pan=-170deg,tilt=0deg",
+          "last": "pan=170deg,tilt=25deg"
+        },
+        "stop_lug|tilt_yoke": {
+          "poses": 70,
+          "first": "pan=-170deg,tilt=0deg",
+          "last": "pan=170deg,tilt=25deg"
+        }
+      },
+      "collisions": [],
+      "min_clearance_mm": 0.316228,
+      "at": {
+        "gap_mm": 0.316228,
+        "pair": [
+          "pivot_spacer",
+          "tilt_bearing"
+        ],
+        "pose": "pan=-170deg,tilt=0deg",
+        "point_a": [
+          -13.907892,
+          59.295756,
+          140.0
+        ],
+        "point_b": [
+          -14.220699,
+          59.342142,
+          140.0
+        ]
+      },
+      "status": "pass"
+    }
+  ],
+  "not_checked": [],
+  "stats": {
+    "joints": 2,
+    "groups": 1,
+    "poses": 210,
+    "pair_queries": 15570,
+    "kernel_queries": 2577,
+    "memo_hits": 5100,
+    "cache_hits": 7893,
+    "seconds": 722.527
+  }
+}

@@ -1,16 +1,16 @@
 {
  "checks": {
   "clearance": {
-   "deck_min_gap_mm": 50.7,
+   "deck_min_gap_mm": 135.5,
    "deck_worst_pose_deg": [
     -160.0,
     -25.0
    ],
    "antenna_min_gap_mm": {
-    "antenna_left_46.5": 91.6,
-    "antenna_left_145.5": 91.6,
-    "antenna_right_46.5": 91.6,
-    "antenna_right_145.5": 91.6
+    "antenna_left_46.5": 110.5,
+    "antenna_left_145.5": 110.5,
+    "antenna_right_46.5": 110.5,
+    "antenna_right_145.5": 110.5
    },
    "antenna_tilt_max_deg": [
     [
@@ -293,79 +293,298 @@
    "antenna_limited_pans_deg": [],
    "note": "antennas: upright swivel dipoles on all four RP-SMA bulkheads (none chosen yet: typical 2.4 GHz swivel dipole, \u00d810 x 108 (est; none chosen))"
   },
-  "muzzle_outside_deck_mm": -30.9,
+  "muzzle_outside_deck_mm": -28.8,
+  "ball_path": {
+   "file": "exports/turret/lidar/box.json",
+   "current": true,
+   "margin_mm": 10.0,
+   "limited_pan_window_deg": null,
+   "clear": true,
+   "no_fire_from_pan_deg": 120.0,
+   "note": "every pan and tilt clear of the deck, the box and upright antennas by the margin; no firing within 60 deg of straight back (the operator's side)"
+  },
   "airflow": {
    "mouth_mm": [
-    124,
-    33
+    158,
+    37
    ],
    "throat_mm": [
-    80,
-    33
+    158,
+    37
    ],
-   "air_speed_mps": {
-    "grille": 1.17,
-    "throat": 1.36
+   "grille": {
+    "bars": 11,
+    "bar_mm": 2.0,
+    "pitch_mm": 14.0,
+    "gap_mm": 12.0,
+    "open_fraction": 0.861
    },
-   "loss_pa": 1.94,
-   "flow_before_m3h": 12.94,
-   "flow_after_m3h": 12.06,
-   "flow_drop_pct": 6.8,
-   "note": "hand estimate (K = 1 at the grille, K = 1 for the turn into the collar; a linear 8015 fan curve, 15.2 Pa / 38.9 m3/h, through the J501 CFD operating point); the J501 CFD (tools/thermal.py there) should check it with the deck and shroud in the domain"
+   "air_speed_mps": {
+    "mouth": 1.93,
+    "grille": 2.25,
+    "throat": 1.93
+   },
+   "losses_pa": {
+    "grille": 3.03,
+    "turn": 2.24
+   },
+   "loss_pa": 5.27,
+   "flow_before_m3h": 40.7,
+   "flow_after_m3h": 36.61,
+   "flow_drop_pct": 10.1,
+   "fan_fraction_of_free_air_after": 0.39,
+   "limit_pct": 10.0,
+   "ok": false,
+   "fan": {
+    "model": "9215-Y: 12 V, 0-4000 rpm PWM, 14.1-55.26 CFM, 0.84-2.87 mmH2O, 0.24-2.28 W, 4-pin 2510 (S06 p.2, drawing p.11)",
+    "dp0_pa": 28.1,
+    "q_free_m3h": 93.9,
+    "note": "9215-Y at full speed (12 V, 4000 rpm): 55.26 CFM free air, 2.87 mmH2O at zero flow (S06 p.2); straight-line curve between the two. Blows up: it pulls air in through the fin block's open sides and out through the lid grille (user, 2026-10-27, on the fitted cooler)."
+   },
+   "operating_point": {
+    "q_m3h": 40.7,
+    "dp_pa": 15.92,
+    "fraction_of_free_air": 0.433,
+    "air_into_fan_c": 28.12,
+    "converged": true,
+    "case_revision": "0.9-g48r",
+    "source": "/home/scubasonar/Code/j501-agx/exports/thermal/cooled-0.9.json",
+    "note": "the J501's CFD of the bare box at 40 W in 25 C air"
+   },
+   "method": "losses K x 0.5 rho v^2 (rho 1.2): K = 1 through the grille's gaps (the entry and the bars), K = 1 for the turn down into the fan on the whole flow across the duct over the fan's centre; the box's own resistance as k q^2 through the J501 CFD's operating point; the fan's straight-line curve from its J501 parameters (dp0, q_free); the new flow where the two meet",
+   "sensitivity_flow_drop_pct": {
+    "the plan's duct: a 124 mm mouth flaring from the \u00d8111 collar, 2 mm bars on 8": 18.0,
+    "a 124 mm mouth with this grille, as wide back to the fan": 14.9,
+    "K = 1.5 for the turn": 11.8,
+    "Idelchik: a sharp inlet (0.5) and the bars by Kirschmer (0.22) on the mouth speed, the turn K = 1": 7.7,
+    "with the roof cells the floor covers, as if all the air left through the roof (upper bound)": 20.6,
+    "at the J501's first Rev 0.9 point (27.5 m3/h at 19.9 Pa, the plan's)": 4.7,
+    "the plan's duct at that point": 9.1
+   },
+   "not_modelled": "the open roof cells the shroud's floor covers (they vent through the 1 mm under it: intake_seal; bounded in the sensitivity), the deck over the exhaust, the fan's swirl",
+   "bench_proof": "the thermometer, as the J501's own criterion: the box at 40 W (a 40 W nvpmodel under load) with the adapter on and the turret parked, a thermocouple in the collar 10 mm over the grille and one in the room 0.5 m away at the same height, logged for 30 min: the intake within 3 K of the room, and the module's temperatures from tegrastats no worse than for the same 30 min without the adapter (task N17)",
+   "note": "hand estimate on the J501 0.9-g48r fan and its CFD's operating point (not converged: rerun this build when it settles); the mouth is as wide as the deck's front legs allow"
+  },
+  "intake_seal": {
+   "hole_r_mm": 47.96,
+   "tape_r_mm": [
+    48.46,
+    51.46
+   ],
+   "collar_r_mm": 55.4,
+   "collar_d_mm": 110.8,
+   "intake": "grille",
+   "grille_open_r_mm": 44.52,
+   "first_open_cell_r_mm": 56.46,
+   "tape_margin_mm": {
+    "to_the_grille_openings": 3.94,
+    "to_the_first_open_cell": 5.0
+   },
+   "open_cells": 106,
+   "open_cells_under_the_shroud": 68,
+   "note": "the J501 roof is solid on top from the grille's openings out to its first open hex cell (the grille's rim, the skirt's top, a band of cells closed by a 1.2 mm skin: its cad/build.py); the foam ring lies in the middle of that band, so no exhaust cell opens inside it. The open cells under the shroud's floor vent through the 1 mm under it"
+  },
+  "design_gates": {
+   "file": "exports/turret/gates.json",
+   "verdicts": "exports/turret/gates",
+   "toolkit": "cadagent.gates (connectivity, containment, relation table, fasteners, motion)",
+   "fingerprint": "1432c61b9714e16d",
+   "ok": true,
+   "gates": {
+    "connectivity": {
+     "ok": true,
+     "status": "warn",
+     "counts": {
+      "pass": 29,
+      "warn": 61,
+      "fail": 0
+     }
+    },
+    "hopper": {
+     "ok": true,
+     "status": "warn",
+     "counts": {
+      "pass": 64,
+      "warn": 1,
+      "fail": 0
+     }
+    },
+    "path": {
+     "ok": true,
+     "status": "pass",
+     "counts": {
+      "pass": 410,
+      "warn": 0,
+      "fail": 0
+     }
+    },
+    "sweep": {
+     "ok": true,
+     "status": "pass",
+     "counts": {
+      "pass": 40,
+      "warn": 0,
+      "fail": 0
+     }
+    },
+    "ammo_range": {
+     "ok": true,
+     "status": "pass",
+     "counts": {
+      "pass": 6,
+      "warn": 0,
+      "fail": 0
+     }
+    },
+    "fasteners": {
+     "ok": true,
+     "status": "pass",
+     "counts": {
+      "pass": 35,
+      "warn": 0,
+      "fail": 0
+     }
+    },
+    "motion_mechanisms": {
+     "ok": true,
+     "status": "warn",
+     "counts": {
+      "pass": 5,
+      "warn": 1,
+      "fail": 0
+     }
+    },
+    "motion_aim": {
+     "ok": true,
+     "status": "pass",
+     "counts": {
+      "pass": 1,
+      "warn": 0,
+      "fail": 0
+     }
+    }
+   }
+  },
+  "exhaust": {
+   "mouth_x_mm": 90.5,
+   "mouth_z_mm": [
+    100.0,
+    137.0
+   ],
+   "mouth_w_mm": 158.0,
+   "j501_intakes_top_z_mm": 88,
+   "intakes_below_mouth_mm": 12.0,
+   "plinth_vents_behind_mouth_mm": 94.5,
+   "plinth_vents_from_z_mm": 170.3,
+   "fan_blows": "up (exhaust through the lid grille; J501 thermal.fan.note)",
+   "plume": {
+    "keep_out": {
+     "x_mm": [
+      90.5,
+      190.5
+     ],
+     "half_width_mm": 94.0,
+     "z_mm": [
+      100.0,
+      217.0
+     ]
+    },
+    "least_mm": 12.5,
+    "nearest": {
+     "part": "compute_tray",
+     "pan_deg": 0.0,
+     "tilt_deg": 0.0
+    },
+    "required_mm": 10.0,
+    "ok": true,
+    "how": "the J501 fan blows up into the shroud, whose duct throws the plume forward out of the deck's mouth, where it rises: the box ahead of the mouth is kept clear of the turret at every pan of the grid, level and fully depressed"
+   },
+   "ok": true,
+   "note": "the J501 exhaust leaves the deck's front mouth (158.0 mm wide, z 100.0-137.0), 12.0 mm above the J501's highest intake vent, with the front corners walled; the plinth breathes 94.5 mm behind the mouth; no part of the turret comes within 12.5 mm of the plume's keep-out ahead of the mouth at any pan or tilt. To prove on the bench: the J501's intake and the J4012's within 3 K of the room with both at full load (bench_proof)"
+  },
+  "shroud_fit": {
+   "legs_mm": {
+    "leg_1": 5.17,
+    "leg_2": 29.6,
+    "leg_3": 3.7,
+    "leg_4": 26.45
+   },
+   "tm_bosses_mm": {
+    "tm_boss_1": null,
+    "tm_boss_2": null,
+    "tm_boss_3": null,
+    "tm_boss_4": null
+   },
+   "least_mm": 3.7,
+   "required_mm": 3.0,
+   "ok": true,
+   "shroud_over_the_roof_mm": 1.0,
+   "how": "the BRepExtrema distance between the intake shroud and each leg (the deck cut round it, under the deck plate) and anything of the deck below its plate at each TM insert (none: the inserts are wholly in the 8 mm deck)"
   },
   "tipping": {
-   "total_kg": 3.35,
-   "com_height_mm": 145,
-   "tip_angle_deg": 32,
-   "push_to_tip_n": 10.6,
-   "push_height_mm": 281,
+   "total_kg": 4.29,
+   "com_height_mm": 191,
+   "tip_angle_deg": 25,
+   "push_to_tip_n": 10.3,
+   "push_height_mm": 371,
    "note": "J501: 368 g printed (its slice report) + 1.0 kg Orin, carrier and cooler (est); a sideways push at the tilt axis that lifts the box off its narrow edge"
   },
   "overspeed": {
-   "max_exit_mps": 18.9,
-   "max_fps": 62,
-   "cap_mps": 21.34,
-   "physics_ceiling_fps": 67.6,
-   "note": "the fixed 12 V flywheel rail is the ceiling: at the X2216s' full no-load speed on it (10560 rpm) a ball leaves at about 19 m/s by this page's rough model (the physics' fastest ball at 100 % throttle on a fast motor and a high rail: 67.6 fps on \u00d834 tyres, docs/turret-physics.md section 4), under the 70 fps cap; the barrel's two gates trip the safety line on any ball over 66 fps, and 24 V must never reach the ESCs"
+   "max_exit_mps": 29.8,
+   "max_fps": 98,
+   "cap_mps": 32.0,
+   "physics_ceiling_fps": 103.91,
+   "note": "the flywheel rail, trimmed per turret (11.31 V nominal: the faster X2216 turns 15722 rpm with no load), is the ceiling (D68): at full throttle a ball leaves at about 30 m/s by this page's rough model; the physics' fastest accepted round (22.2-22.8 mm, 1.6-2.0 g) with every tolerance: 103.91 fps on \u00d838 tyres, docs/turret-physics.md section 4, under the 105 fps ceiling and ASTM F963's 2,500 J/m2; the barrel's two gates trip the safety line on any ball over 105 fps. Eye protection recommended, as Hasbro does for Rival"
   },
   "release": {
-   "after_drop_ms": 103,
-   "coast_s": 1.1,
-   "note": "a ball that has already dropped still fires up to 103 ms after ARM is released; the phase-short brake (six FETs on the cartridge board, 5-14 ms after the line drops) stops the wheels to 5 % about 48 ms after release (docs/turret-physics.md section 5), where unbraked they would coast 1.1 s",
-   "brake_to_5pct_ms": 48,
-   "brake_tau_ms": 10.16
+   "after_drop_ms": 102,
+   "coast_s": 1.3,
+   "note": "a ball that has already dropped still fires up to 102 ms after ARM is released; the phase-short brake (six FETs on the cartridge board, 5-14 ms after the line drops) stops the wheels to 5 % about 80 ms after release (docs/turret-physics.md section 5), where unbraked they would coast 1.3 s",
+   "brake_to_5pct_ms": 80,
+   "brake_tau_ms": 18.08
   },
   "lid_screw": "M3 x 40 ISO 4762, tip at z 62 (as the J501's own M3 x 16)",
+  "heights_mm": {
+   "roof": 97.0,
+   "deck_underside": 137.0,
+   "tm_face": 145.0,
+   "antenna_tops_over_tm_face": 25.0
+  },
   "too_big": []
  },
  "mechanics": {
   "ball": {
    "d_mm": 22.7,
    "mass_g": 1.83,
-   "speed_mps": 15.85,
-   "fps": 52.0,
+   "speed_mps": 28.96,
+   "fps": 95.0,
    "bore_mm": 24.7,
-   "cap_fps": 70,
-   "energy_j": 0.23
+   "cap_fps": 105,
+   "target_fps": [
+    95,
+    100
+   ],
+   "energy_j": 0.767
   },
   "flywheel": {
-   "d_mm": 34.0,
-   "centres_mm": 53.02,
-   "crush_mm": 3.68,
-   "crush_pct": 16.2,
-   "rpm": 8860.0,
-   "surface_mps": 15.8,
-   "efficiency_assumed": 1.005,
-   "throttle_pct": 84,
-   "motor_kv": 880,
-   "no_load_rpm": 10560,
-   "inertia_kg_mm2": 6.46,
-   "energy_j_each": 2.78,
-   "speed_drop_per_shot_pct": 2.7,
-   "recovery_ms": 0.8,
-   "spin_up_ms_motor_limit": 28,
-   "coast_down_s": 1.1,
-   "current_limit_a": 20.0,
+   "d_mm": 38.0,
+   "centres_mm": 51.62,
+   "crush_mm": 9.08,
+   "crush_pct": 40.0,
+   "rpm": 15290.0,
+   "surface_mps": 30.4,
+   "efficiency_assumed": 0.952,
+   "throttle_pct": 97,
+   "motor_kv": 1400,
+   "no_load_rpm": 15722,
+   "rail_v": 11.31,
+   "inertia_kg_mm2": 7.44,
+   "energy_j_each": 9.53,
+   "speed_drop_per_shot_pct": 2.6,
+   "recovery_ms": 4.6,
+   "spin_up_ms_motor_limit": 175,
+   "coast_down_s": 1.3,
+   "current_limit_a": 10.0,
    "note": "the set speed for the nominal ball at the physics' set fps (sim/turret_launch3d.py); foam loss 30 % (assumed); the chronograph gates in the barrel measure the real speed"
   },
   "feed": {
@@ -384,10 +603,10 @@
   "timing": {
    "dial_to_exit_ms": 235,
    "chute_ms": 86,
-   "to_nip_ms": 8,
-   "nip_to_muzzle_ms": 7.8,
+   "to_nip_ms": 11,
+   "nip_to_muzzle_ms": 4.3,
    "speed_into_nip_mps": 0.65,
-   "trigger_to_muzzle_ms": 338
+   "trigger_to_muzzle_ms": 337
   },
   "pan": {
    "pinion_teeth": 21,
@@ -404,9 +623,9 @@
    ],
    "hard_stop_deg": 173.5,
    "encoder_counts_per_turret_deg": 34.1,
-   "inertia_kg_m2": 0.00419,
-   "accel_at_cap_deg_s2": 60309,
-   "time_to_full_slew_ms": 1.5
+   "inertia_kg_m2": 0.00476,
+   "accel_at_cap_deg_s2": 53038,
+   "time_to_full_slew_ms": 1.7
   },
   "tilt": {
    "servo_stall_nm": 2.94,
@@ -415,10 +634,10 @@
     -25.0,
     0.0
    ],
-   "group_mass_g": 708,
-   "com_ahead_mm": -4.8,
-   "holding_nm": -0.03,
-   "margin": 87.8
+   "group_mass_g": 757,
+   "com_ahead_mm": -7.6,
+   "holding_nm": -0.06,
+   "margin": 52.1
   },
   "flight_level": {
    "rows": [
@@ -459,20 +678,47 @@
      14.6
     ]
    ],
-   "from_height_m": 0.566,
-   "lands_m": 6.24,
+   "from_height_m": 0.656,
+   "lands_m": 6.65,
    "note": "a level shot from the bench (the box on a 0.3 m crate): [range m, time s, drop mm, speed m/s]; drag as a sphere, Cd 0.5"
   }
  },
  "masses_g": {
-  "turret_with_balls": 1639,
-  "adapter": 338,
+  "turret_with_balls": 2561,
+  "adapter": 357,
   "j501_printed": 368.2,
   "j501_inside_est": 1000.0
  },
- "z_tm_mm": 141.0,
+ "z_tm_mm": 145.0,
  "j501": {
   "revision": "0.9-g48r",
-  "source": "/home/scubasonar/Code/j501-agx/cad/parameters.json"
+  "built_for": "0.9-g48r",
+  "source": "/home/scubasonar/Code/j501-agx/cad/parameters.json",
+  "parameters_git": {
+   "state": "committed",
+   "head": "fefc79dc056ad010b8fcf5fb69ed2cf4cf9361c3",
+   "branch": "rev0.9-g48r",
+   "tags_at_head": [],
+   "file": "cad/parameters.json"
+  },
+  "warning": null,
+  "cooler": "Seeed reComputer mini J501 heatsink with fan (SKU 100099421): a G48R heat-pipe tower (Li Yang Peng) on a 2 mm copper spreader, 9215 fan 92 x 92 x 15 mm, 12 V",
+  "fan": "9215-Y: 12 V, 0-4000 rpm PWM, 14.1-55.26 CFM, 0.84-2.87 mmH2O, 0.24-2.28 W, 4-pin 2510 (S06 p.2, drawing p.11)",
+  "fan_xy_box_mm": [
+   -9.5,
+   2.0
+  ],
+  "roof_z_mm": 97.0,
+  "intake": {
+   "kind": "grille",
+   "frame": 92.0,
+   "corner_chamfer": 17.5,
+   "clearance": 6.0,
+   "skirt_wall": 2.4,
+   "thickness": 3.0,
+   "hub_d": 20.0,
+   "open_r": 44.519999999999996
+  },
+  "meshes": "exports/view (its view meshes)"
  }
 }

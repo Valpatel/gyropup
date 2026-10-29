@@ -1,0 +1,6 @@
+McMaster-Carr parts. McMaster-Carr CAD, for design use; not redistributed.
+Files per part: <PN>.step (as downloaded), <PN>.norm.step (moved into the frame for its kind), <PN>.page.json (the product page's data).
+
+51225K24 Continuous-Flex Tpv Rubber Tube for Chemicals, 3/16" ID, 5/16" OD
+URL: https://www.mcmaster.com/51225K24/
+Downloaded: 2026-10-27

@@ -56,7 +56,8 @@
   "tof_vl53l1x": "https://www.sparkfun.com/products/14722",
   "load_cells_4x50": "https://vxb.com/products/4-pack-50kg-half-bridge-load-cell-sensor-kit-with",
   "xt60e_f_panel": "https://pro.maplin.co.uk/products/female-xt60e-panel-mount-gold-plated-connector-20a-amass",
-  "fuse_holder_5x20": "https://www.lcsc.com/product-detail/C206937.html"
+  "fuse_holder_5x20": "https://www.lcsc.com/product-detail/C206937.html",
+  "hasbro-nerf-rival-accu-round-60": "https://www.ebay.com/p/13055032602"
  },
  "image_urls": {
   "feetech-sts3215-c018-12v": "https://www.waveshare.com/media/catalog/product/cache/1/image/560x560/9df78eab33525d08d6e5fb8d27136e95/s/t/st3215-servo-1_5.jpg",
@@ -77,7 +78,8 @@
   "fuse-5x20-5a-slow": "https://assets.lcsc.com/images/lcsc/900x900/20250824_Littelfuse-0218005-MXP_C142728_front.jpg",
   "pendant-hold-to-run": "https://cdn11.bigcommerce.com/s-rwcdtzv1dl/images/stencil/1280x1280/products/253/1023/21__48704_copy__76767.1755183350.jpg?c=1",
   "usb-can-canable2": "https://cdn.shopify.com/s/files/1/0478/7532/6101/products/FYSETC-UCAN-Board-Based-on-STM32F072-USB-to-CAN-Adapter-Support-with-CAnable-CandleLight-Klipper-firmware_e3321e86-3f1d-4340-886e-7fdda740ea04.jpg?v=1670897213",
-  "bumper-feet-12.7": "https://mm.digikey.com/Volume0/opasdata/d220001/derivates/1/003/249/318/MFG_19_SJ5003_sml%28200x200%29.jpg"
+  "bumper-feet-12.7": "https://mm.digikey.com/Volume0/opasdata/d220001/derivates/1/003/249/318/MFG_19_SJ5003_sml%28200x200%29.jpg",
+  "hasbro-nerf-rival-accu-round-60": "https://i.ebayimg.com/images/g/bqIAAeSw9hZoi1lK/s-l1600.jpg"
  },
  "risk": {
   "dji-robomaster-snail-2305": {

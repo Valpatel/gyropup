@@ -20,15 +20,16 @@ Each model, and where its numbers come from:
                the next dial motion (the rerun's double at -25 deg, freed alone by a dither); a step jams with
                p_jam (0.003) 10-35 deg in, and a 20 deg reverse clears it with p 0.9
   wheels       per wheel an AM32 ESC: arms after 0.5 s of zero throttle, answers every DShot frame with eRPM (and
-               EDT temperatures), drives rpm toward throttle x KV (880 +-3 %) x rail (11.8-12.3 V, or 24 V for test
-               4.6) x 0.994, tau 15 ms, accel capped by the 10 A limit on 6.9e-6 kg m^2 (the launch rerun); brake on
-               stop (the low-side FETs on) tau 8 ms; unpowered it coasts (tau 2 s) until the phase short (tau 6.9
-               ms); a ball takes 7 % of each wheel's speed
+               EDT temperatures), drives rpm toward throttle x KV (1400 +-3 %) x rail x 0.993, the rail trimmed at the
+               bench so the faster motor's no-load is at or under 15,722 rpm (one resistor step, 0-1 % under; 20.5 V
+               for test 4.6: the converter bypassed), tau 15 ms, accel capped by the 10 A limit on 7.6e-6 kg m^2 (the
+               D68 launch run); brake on stop (the low-side FETs on) tau 8 ms; unpowered it coasts (tau 2 s) until the
+               phase short (tau 23 ms effective); a ball takes 6 % of each wheel's speed
   balls        from the pocket reaching the hole to the nip in 105 +- 12 ms (+10 ms at -25 deg: the feed rerun's
-               300-330 ms from the step's command to first touch); launched at the launch rerun's speed:
-               52 fps at 8,855 rpm on Ø34, 65.4 fps at the worst corner's 11,461 rpm (linear between in rpm, the
-               ratio falling 2.7 %), +- 2 %; below 1,011 rpm it rests at the nip and leaves at 6.3 fps when the wheels
-               pass it (the stray ball); gate 1 30 mm past the nip, gate 2 60 mm on, +-30 us edge jitter; the
+               300-330 ms from the step's command to first touch); launched at the D68 launch run's speed for the
+               Hasbro ball: 95 fps at 15,286 rpm on Ø38, 97.1 at the trimmed no-load 15,722 (linear between in rpm,
+               the ratio falling 0.6 %), +- 2 %; below 1,400 rpm it rests at the nip and leaves at 2.9 fps when the
+               wheels pass it (the stray ball); gate 1 30 mm past the nip, gate 2 60 mm on, +-30 us edge jitter; the
                reference chronograph 1 m out reads 0.4 fps less +- 0.2
   stand-ins    ring resistance, CAN error frames, temperatures, paper groups, plates: plausible numbers for the
                dry run, marked 'sim stand-in' in every result
@@ -49,10 +50,14 @@ from turret_fw import HAL
 DT = 0.001
 
 
+FALL = 1.0 - (C.FULL_THROTTLE_FPS / C.SET_FPS_DESIGN) / (C.NO_LOAD_RPM_TRIM / C.SET_RPM_DESIGN)   # 0.6 %
+
+
 def launch_fps(rpm: float) -> float:
-    """The launch rerun's ball speed on Ø34: 52 fps at 8,855 rpm, 65.4 at 11,461 (a stand-in between)."""
+    """The D68 launch run's Hasbro ball on Ø38: 95 fps at 15,269 rpm, 98.4 at the trimmed no-load 15,930 (a stand-in
+    between and beyond)."""
     r = rpm / C.SET_RPM_DESIGN
-    fall = 0.027 * max(0.0, (rpm - C.SET_RPM_DESIGN) / (11461.0 - C.SET_RPM_DESIGN))
+    fall = FALL * max(0.0, (rpm - C.SET_RPM_DESIGN) / (C.NO_LOAD_RPM_TRIM - C.SET_RPM_DESIGN))
     return C.SET_FPS_DESIGN * r * (1.0 - fall)
 
 
@@ -86,7 +91,8 @@ class SimTurret(HAL):
         hr = random.Random(seed * 7 + 1)
         self.pan_hw = th.Hardware(hr)
         self.index_offset = self.pan_hw.h / 2 + hr.uniform(-0.3, 0.3)     # the assembly calibration
-        self.pan_servo = SimServo(C.ID_PAN, mode=C.MODE_STEP, rng=random.Random(seed * 7 + 2), p_corrupt=2e-4)
+        self.pan_servo = SimServo(C.ID_PAN, mode=C.MODE_STEP, rng=random.Random(seed * 7 + 2), p_corrupt=2e-4,
+                                  max_torque=opt.get('pan_max_torque', C.PAN_MAX_TORQUE))
         self.pan_servo.read_noise = 1.0
         self._sync_pan()
         self.pan_servo.goal = self.pan_servo.pos
@@ -126,7 +132,8 @@ class SimTurret(HAL):
         # -------------------------------------------------- the wheels
         self.kv = [C.MOTOR_KV * (1 + r.uniform(-0.03, 0.03)) for _ in range(2)]
         self.k_nl = [C.K_NL * (1 + r.uniform(-0.02, 0.01)) for _ in range(2)]
-        self.rail_v = opt.get('rail_v', r.uniform(11.8, 12.3))
+        # the bench's trim (test 4.1): one fixed resistor, the step under the target, for the faster motor
+        self.rail_v = opt.get('rail_v', C.NO_LOAD_RPM_TRIM / max(k * n for k, n in zip(self.kv, self.k_nl)) * r.uniform(0.99, 1.0))
         self.esc = [{'on_t': None, 'armed': False, 'zero_since': None, 'thr': 0.0, 'edt': False, 'n': 0}
                     for _ in range(2)]
         self.rpm = [0.0, 0.0]
@@ -135,14 +142,20 @@ class SimTurret(HAL):
         self.esc_frames_out: List[Tuple[int, float, int]] = []
         self.esc_unplugged = False                     # CT unplugged (the 5.3 tests: a lamp on 12 V FLY instead)
         self.rpm_log: deque = deque(maxlen=30000)      # (t, mean rpm), for the release test's +50 ms reading
+        # the supply on the XT30 (D66): Gyropup's 10S bus by default (36 V, its middle), or the stand's pack (15-20.5 V);
+        # supply_v may be a function of time (a pack sagging mid-test). i24_log is the input current (the name is the
+        # old 24 V ring's); supply_r the source's resistance (pack, leads, ring)
+        self.supply_v = opt.get('supply_v', 36.0)
+        self.supply_r = opt.get('supply_r', 0.06)
+        self.bus_unmeasured = opt.get('bus_unmeasured', False)
         self.i24_log: deque = deque(maxlen=60000)
         self.i24_peak = 0.0
-        self.bus_min = 24.0
+        self.bus_min = self.supply_now
         # -------------------------------------------------- balls and gates
         self.balls: List[dict] = []
         self.gate_ev: List[Tuple[float, int]] = []
         self.launched: List[dict] = []
-        self.tyre_mm = opt.get('tyre_mm', 34)
+        self.tyre_mm = opt.get('tyre_mm', C.TYRE_DESIGN_MM)
         # -------------------------------------------------- CAN
         self.to_fw: deque = deque()
         self.to_host: deque = deque()
@@ -202,11 +215,15 @@ class SimTurret(HAL):
         self.laser_on = on
 
     def bus_mv(self) -> int:
-        return int(self.bus_now * 1000)
+        return 0 if self.bus_unmeasured else int(self.bus_now * 1000)
+
+    @property
+    def supply_now(self) -> float:
+        return self.supply_v(self.t) if callable(self.supply_v) else self.supply_v
 
     @property
     def bus_now(self) -> float:
-        return 24.0 - 0.06 * (self.i24_log[-1][1] if self.i24_log else 0.3)
+        return self.supply_now - self.supply_r * (self.i24_log[-1][1] if self.i24_log else 0.3)
 
     # =================================================================== the operator's and the instruments' side
     def set_pendant(self, held: bool):
@@ -424,7 +441,7 @@ class SimTurret(HAL):
         self.esc_frames_out.append((k, self.t, word))
 
     def _wheels(self, t: float):
-        j = 6.9e-6                                     # rotor + hub + tyre, kg m^2 (the launch rerun)
+        j = 7.6e-6                                     # rotor + hub + tyre, kg m^2 (the D68 launch run, Ø38)
         a_max = 10.0 * 60.0 / (2 * math.pi * C.MOTOR_KV) / j * 60.0 / (2 * math.pi)   # rpm/s at the 10 A limit
         p_tot = 0.0
         for k, e in enumerate(self.esc):
@@ -444,7 +461,8 @@ class SimTurret(HAL):
             if e['on_t'] is not None and e['armed']:
                 p_tot += max(0.0, j * om * al) / 0.85 + 2.0 * e['thr']     # ESC 85 %, ~2 W of losses at speed
         self.rpm_log.append((t, (self.rpm[0] + self.rpm[1]) / 2.0))
-        i24 = 0.25 + p_tot / (24.0 * 0.9)                                 # logic and servos idle; regulator 90 %
+        v_in = self.supply_now
+        i24 = (0.25 * 24.0 + p_tot / 0.9) / v_in                          # logic and servos idle (6 W); regulator 90 %
         self.i24_log.append((t, i24))
         self.i24_peak = max(self.i24_peak, i24)
         self.bus_min = min(self.bus_min, self.bus_now)
@@ -456,15 +474,15 @@ class SimTurret(HAL):
                 b['state'] = 'nip'
             if b['state'] == 'nip':
                 rpm = sum(self.rpm) / 2.0
-                if rpm < 1011.0:
+                if rpm < 1400.0:
                     b['stray'] = True
                     continue
                 if b.get('stray'):
-                    v = (6.3 + self.rng.gauss(0, 0.4)) * C.FPS
+                    v = (2.9 + self.rng.gauss(0, 0.4)) * C.FPS
                 else:
                     v = launch_fps(rpm) * (1 + self.rng.gauss(0, 0.02)) * C.FPS
                 for k in range(2):
-                    self.rpm[k] *= 0.93
+                    self.rpm[k] *= 0.94
                 t1 = t + 0.0048 + 0.030 / v + self.rng.uniform(-30e-6, 30e-6)
                 t2 = t1 + 0.060 / v + self.rng.uniform(-30e-6, 30e-6)
                 self._gate(t1, 1)

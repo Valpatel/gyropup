@@ -1,0 +1,77 @@
+{
+  "schema": "cadagent.gate/1",
+  "gate": "turret-ammo",
+  "pass": true,
+  "status": "pass",
+  "counts": {
+    "pass": 6,
+    "warn": 0,
+    "fail": 0
+  },
+  "checks": [
+    {
+      "id": "ammo:biggest_along_the_path",
+      "status": "pass",
+      "message": "22.8 mm ball at 82 path points: {'pass': 410, 'warn': 0, 'fail': 0}"
+    },
+    {
+      "id": "ammo:biggest_in_the_pockets",
+      "status": "pass",
+      "message": "22.8 mm balls in the 8 pockets: {'pass': 20, 'warn': 0, 'fail': 0}"
+    },
+    {
+      "id": "ammo:one_ball_a_pocket",
+      "status": "pass",
+      "message": "pocket 25.06 mm along the pitch circle against two 22.2 mm balls"
+    },
+    {
+      "id": "ammo:squeezed",
+      "status": "pass",
+      "message": "nip gap 13.62 mm: 40.3-38.6 % squeeze"
+    },
+    {
+      "id": "ammo:speed_ceiling",
+      "status": "pass",
+      "message": "fastest accepted round 103.91 fps (d22.8-m1.6-E0.75-mu1-e0.75: the lightest, 1.6 g) <= 105; densest 2480 J/m^2 (d22.2-m2-E3-mu1-e0.75) < 2500",
+      "evidence": {
+        "worst_corner": "d22.8-m1.6-E0.75-mu1-e0.75",
+        "fps": 103.91,
+        "densest": "d22.2-m2-E3-mu1-e0.75",
+        "ked_j_m2": 2480
+      }
+    },
+    {
+      "id": "ammo:bore_play",
+      "status": "pass",
+      "message": "feed and chute 1.40-2.00 mm, barrel 1.90-2.50 mm"
+    }
+  ],
+  "findings": [],
+  "exclusions": [],
+  "limits": {
+    "diameters_mm": [
+      22.2,
+      22.8
+    ]
+  },
+  "assumptions": [
+    "the biggest round is checked at the design pile's pocket positions and on the path's centre line",
+    "the smallest round's checks are arithmetic on the pitch circle and the nip gap",
+    "the model is checked, not the print: no tolerance stack, shrink or deflection"
+  ],
+  "physical_fit_verified": false,
+  "pocket_length_mm": 25.06,
+  "nip_gap_mm": 13.62,
+  "smallest_squeezed_pct": 38.6,
+  "biggest_squeezed_pct": 40.3,
+  "bore_play_mm": {
+    "feed_and_chute": [
+      1.4,
+      2.0
+    ],
+    "barrel": [
+      1.9,
+      2.5
+    ]
+  }
+}

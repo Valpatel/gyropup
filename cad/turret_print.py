@@ -41,6 +41,8 @@ PLATE = {'curr_bed_type': 'Textured PEI Plate'}      # the slicer's default cool
 PARTS = [
     ('stand_box', 'bench/stand_box.stl', 'petg', 1, STAND, True, 'upside down, on its top plate', 'the stand first: it needs no decision'),
     ('stand_bottom', 'bench/stand_bottom.stl', 'petg', 1, STAND, False, 'flat', ''),
+    ('compute_tray', 'compute_tray.stl', 'pa6-cf', 1, PARTIAL, False, 'flat, ribs up', 'the compute plinth\'s floor (D66): 4 x M4 inserts'),
+    ('compute_shell', 'compute_shell.stl', 'petg', 1, PETG, True, 'upside down, on its top rim', 'the compute plinth\'s wall (D66): 4 x M5 inserts in the column tops'),
     ('pan_base', 'pan_base.stl', 'pa6-cf', 1, PARTIAL, True, 'on its foot', '40 % gyroid inside 4 perimeters (the FEA case)'),
     ('pan_ring', 'pan_ring.stl', 'pa6-cf', 1, SOLID, True, 'upside down: the gear teeth flat on the bed', ''),
     ('pan_spacer', 'pan_spacer.stl', 'pa6-cf', 1, SOLID, False, 'on its wide end', ''),
@@ -48,9 +50,11 @@ PARTS = [
     ('ring_carrier', 'ring_carrier.stl', 'pa6-cf', 1, SOLID, False, 'on its top face', 'reprint once the ring\'s flange holes are measured (plan T6)'),
     ('ring_driver', 'ring_driver.stl', 'pa6-cf', 1, SOLID, False, 'on its top face', ''),
     ('tilt_yoke', 'tilt_yoke.stl', 'pa6-cf', 1, SOLID, True, 'on its back: the layers run along the arms', ''),
-    ('cradle', 'cradle.stl', 'pa6-cf', 1, SOLID, True, 'flat',
-     'its cheeks bend across the layers (FEA: SF 0.77 under a 50 N push on the muzzle, humid PA6-CF): keep it dry, do not push the barrel, '
-     'and print a spare when the schedule allows'),
+    ('cradle', 'cradle.stl', 'pa6-cf', 1, SOLID, False, 'flat, no supports',
+     'the rail frame (D48): its cheeks are the two SendCutSend plates; 8 x M3 inserts in the rebates, put in from the side'),
+    ('horn_boss', 'horn_boss.stl', 'pa6-cf', 1, SOLID, False, 'on an end face', 'between the +y plate and the tilt servo\'s horn (D48)'),
+    ('pivot_spacer', 'pivot_spacer.stl', 'pa6-cf', 1, SOLID, False, 'on its boss face, the land up',
+     'between the -y plate and the MR126 (D48); its 1 mm land bears on the inner race only'),
     ('cartridge_body', 'cartridge_body.stl', 'pa6-cf', 1, SOLID, True, 'on its base; supports under the floor, the chute and the cage plate',
      'the longest print: after the motor and a servo are checked against the drawings (plan T2, T4)'),
     ('flywheel', 'flywheel.stl', 'pa6-cf', 2, SOLID, False, 'on its top face (the flange seat flat on the bed)', 'ream the bore to 5.00'),
@@ -60,15 +64,19 @@ PARTS = [
     ('barrel', 'barrel.stl', 'petg', 1, PETG, True, 'standing on its socket end', 'change to blaze orange for the last 15 mm (a filament change at that layer)'),
     ('laser_mount', 'laser_mount.stl', 'petg', 1, PETG, False, 'on its foot', ''),
     ('board_bay', 'board_bay.stl', 'petg', 1, PETG, False, 'on its back', ''),
+    ('board_bay_lid', 'board_bay_lid.stl', 'petg', 1, PETG, False, 'flat, the lip up', 'the bay\'s snap lid (modelled since 2026-10-27)'),
     ('flywheel_tyre', 'flywheel_tyre_d34.stl', 'tpu95', 2, TPU, False, 'flat', 'Ø34 mounted (printed 4 % under the Ø28 rim): the only tyre for the X2216 (D42)'),
 ]
 NOT_PRINTED = {'bumper_ring': 'v1 (the robot): no bumper on the bench', 'hopper_flap': 'v1: the dock\'s fill flap',
-               'pan_clamp': 'cut by SendCutSend in 6061-T6 aluminium (exports/turret/pan_clamp.dxf)'}
+               'pan_clamp': 'cut by SendCutSend in 6061-T6 aluminium (exports/turret/pan_clamp.dxf)',
+               'cradle_plate_l': 'cut by SendCutSend in 6061-T6 aluminium 0.125 in, 4 countersinks (exports/turret/cradle_plate_l.dxf; D48)',
+               'cradle_plate_r': 'cut by SendCutSend in 6061-T6 aluminium 0.125 in, tapped M5, 2 countersinks (exports/turret/cradle_plate_r.dxf; D48)',
+               'stop_lug': 'cut by SendCutSend in 6061-T6 aluminium 0.100 in, 2 holes tapped M3 (exports/turret/stop_lug.dxf; D48)'}
 # the print order (plan 4.2): the stand first, then the pan stack and the tilt group, the cartridge parts after the motor
 # and the servo are in hand, the tyres last
 SCHEDULE = [('Day 1', ['stand_box', 'stand_bottom']),
-            ('Day 1-2: the pan stack (PA6-CF)', ['pan_base', 'pan_ring', 'pan_spacer', 'pan_pinion', 'ring_carrier', 'ring_driver']),
-            ('Day 2-3: the tilt group (PA6-CF, PETG)', ['tilt_yoke', 'cradle', 'board_bay', 'laser_mount']),
+            ('Day 1-2: the compute plinth and the pan stack (PA6-CF, PETG)', ['compute_tray', 'compute_shell', 'pan_base', 'pan_ring', 'pan_spacer', 'pan_pinion', 'ring_carrier', 'ring_driver']),
+            ('Day 2-3: the tilt group (PA6-CF, PETG)', ['tilt_yoke', 'cradle', 'horn_boss', 'pivot_spacer', 'board_bay', 'board_bay_lid', 'laser_mount']),
             ('Once the X2216 and a servo are in hand: the cartridge', ['cartridge_body', 'flywheel', 'dial', 'hopper', 'hopper_lid', 'barrel']),
             ('Last', ['flywheel_tyre'])]
 
@@ -118,6 +126,8 @@ def main():
             print(f"  {name:15} {mat:10} x{copies}  {row.get('grams')} g  {row.get('minutes')} min  {row['size_mm']}"
                   f"{'  ERROR ' + str(row.get('error')) if row.get('error') or not row.get('grams') else ''}  ({time.time() - t0:.0f} s)")
         rows[name] = row
+    order = [p[0] for p in PARTS]                                # the table in PARTS' order; parts no longer printed are dropped
+    rows = {n: rows[n] for n in order if n in rows}
     tot = lambda key, mats: round(sum((r.get(key) or 0) * r['copies'] for r in rows.values() if r['material'] in mats), 1)
     by = {m: {'grams': tot('grams', (m,)), 'hours': round(tot('minutes', (m,)) / 60, 1)} for m in ('pa6-cf', 'petg', 'petg-clear', 'tpu95')}
     res = {'printer': PRINTER, 'nozzle': '0.4 mm hardened steel (PA6-CF is abrasive)', 'process': PROCESS, 'bed_mm': BED, 'parts': rows,
