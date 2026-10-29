@@ -14,20 +14,27 @@ const browser = await engine.launch({ headless: true, ...(engine === chromium ? 
   channel: process.env.PLAYWRIGHT_CHANNEL === 'chrome' ? 'chrome' : undefined,
   args: ['--no-sandbox'],
 } : {}) });
-const context = await browser.newContext({ viewport: { width: 1440, height: 900 }, reducedMotion: 'reduce' });
+const contextOptions = { viewport: { width: 1440, height: 900 }, reducedMotion: 'reduce' };
+const context = await browser.newContext(contextOptions);
 const errors = [], cases = [], pages = [];
 const movieURL = url => /\/web\/highlights\/gyropup-highlights\.(mp4|webm)$/.test(url.pathname);
 const record = message => { cases.push(message); console.log('PASS ' + message); };
 await mkdir(out, { recursive: true });
-await context.addInitScript(() => {
+const initialPreferences = () => {
   localStorage.setItem('gyropup.probe', 'off');
   sessionStorage.setItem('gyropup.prototype-notice', '2026-10-29-v1');
-});
+};
+await context.addInitScript(initialPreferences);
 const json = async path => { const response = await context.request.get(base + path); assert.ok(response.ok(), path); return response.json(); };
 const version = await json('/version.json');
 
-async function pageFor({ motion = 'reduce', saveData = false, heroMode = 'failed', setup = async () => {} } = {}) {
-  const page = await context.newPage(); pages.push(page);
+async function pageFor({ motion = 'reduce', saveData = false, heroMode = 'failed', isolatedClock = false, setup = async () => {} } = {}) {
+  // Playwright clocks belong to a BrowserContext, not just a Page. Reinstalling
+  // in a reused WebKit context hit an undefined __pwClock controller before
+  // navigation, and otherwise leaks virtual time into later unrelated cases.
+  const pageContext = isolatedClock ? await browser.newContext(contextOptions) : context;
+  if (isolatedClock) await pageContext.addInitScript(initialPreferences);
+  const page = await pageContext.newPage(); pages.push(page);
   page.setDefaultTimeout(30000);
   page.on('pageerror', error => errors.push(error.message));
   page.mediaRequests = [];
@@ -317,7 +324,7 @@ try {
   await removedHero.locator('.hero-scene').evaluate(el => el.remove()); await waitPlaying(removedHero);
   record('Removing a pending hero through an ancestor releases its queued reel'); await removedHero.close();
 
-  const hungHero = await pageFor({ heroMode: 'held', setup: page => page.clock.install() }); await show(hungHero);
+  const hungHero = await pageFor({ heroMode: 'held', isolatedClock: true, setup: page => page.clock.install() }); await show(hungHero);
   await hungHero.locator('.highlight-toggle').click();
   await hungHero.waitForFunction(() => document.querySelector('.highlight-card').dataset.state === 'queued');
   await hungHero.clock.fastForward(60001);
@@ -326,7 +333,7 @@ try {
   assert.equal(await hungHero.locator('#robot-preview').getAttribute('data-state'), 'loading', 'Timeout does not relabel the CAD as successful');
   assert.equal(await hungHero.locator('.highlight-toggle-label').innerText(), 'Play now');
   await hungHero.locator('.highlight-toggle').click(); await waitPlaying(hungHero);
-  record('A hung hero has a bounded wait followed by an explicit, labelled manual choice'); await hungHero.close();
+  record('A hung hero has a bounded wait followed by an explicit, labelled manual choice'); await hungHero.context().close();
 
   const partial = await pageFor(); await show(partial);
   await partial.locator('#highlight-video').evaluate(video => {
@@ -351,7 +358,7 @@ try {
   await partial.locator('.highlight-toggle').click(); await waitPlaying(partial);
   record('Startup needs a contiguous buffer at currentTime; cancellation and cached resume do not depend on future events'); await partial.close();
 
-  const frozenRecovery = await pageFor({ setup: page => page.clock.install() }); await show(frozenRecovery);
+  const frozenRecovery = await pageFor({ isolatedClock: true, setup: page => page.clock.install() }); await show(frozenRecovery);
   await frozenRecovery.locator('.highlight-toggle').click(); await waitPlaying(frozenRecovery);
   await frozenRecovery.waitForFunction(() => {
     const v = document.querySelector('#highlight-video');
@@ -372,7 +379,7 @@ try {
   await frozenRecovery.evaluate(() => window.__heldRecoveryFrame(performance.now(), { mediaTime: 5, presentedFrames: 20 }));
   assert.equal(await frozenRecovery.locator('.highlight-card').getAttribute('data-state'), 'error');
   assert.equal(await frozenRecovery.locator('#highlight-video').evaluate(v => v.paused), true, 'A stale recovery frame cannot revive the failed attempt');
-  record('A lone seek frame cannot disarm the frozen-recovery watchdog, and its late callback stays invalid'); await frozenRecovery.close();
+  record('A lone seek frame cannot disarm the frozen-recovery watchdog, and its late callback stays invalid'); await frozenRecovery.context().close();
 
   assert.deepEqual(errors, []);
   assert.deepEqual(await json('/version.json'), version, 'Single published build throughout test');
