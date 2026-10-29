@@ -39,6 +39,9 @@ jobs:
               npm run test:loading-sim
               npm run test:loading-portal
               npm run test:loading-hero
+          - suite: build-portal
+            commands: |
+              npm run test:build-portal
     steps:
       - uses: actions/checkout@v4
         with:
