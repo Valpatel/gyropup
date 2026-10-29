@@ -12,7 +12,7 @@ export function createDataReader(fetcher = globalThis.fetch) {
       if (!response.ok) { await response.body?.cancel(); throw new Error(`${label}: the server returned HTTP ${response.status}. Please retry.`); }
       let value;
       try { value = await response[type](); }
-      catch (cause) { throw new Error(`${label}: the downloaded data could not be read. Please retry.`, { cause }); }
+      catch (cause) { throw new Error(`${label}: ${controller.signal.aborted ? 'the request timed out' : 'the downloaded data could not be read'}. Please retry.`, { cause }); }
       if (type === 'json' && (!value || typeof value !== 'object')) throw new Error(`${label}: the downloaded JSON has no usable data.`);
       if (validate && !validate(value)) throw new Error(`${label}: the downloaded data has an unexpected format.`);
       return value;

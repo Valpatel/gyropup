@@ -6,6 +6,7 @@
 //   base.add(rig.group); rig.set('l', hip, knee, wheel);            // joint angles as in the physics model
 import * as THREE from 'three';
 import { STLLoader } from 'three/addons/loaders/STLLoader.js';
+import { createDataReader, isRecord, validateSTLBytes, validateGeometry } from './kit/portal-data.js';
 
 const TO_PAGE = new THREE.Matrix4().set(0, 1, 0, 0, 0, 0, 1, 0, 1, 0, 0, 0, 0, 0, 0, 1).multiply(new THREE.Matrix4().makeScale(0.001, 0.001, 0.001));
 
@@ -23,22 +24,24 @@ function mirrored(geo) {
 }
 
 export async function loadCadRig(root, designFile) {
-  let man;
-  try {
-    const r = await fetch(`${root}exports/links/manifest.json`, { cache: 'no-store' });
-    if (!r.ok) return null;
-    man = await r.json();
-  } catch { return null; }
-  if (man.design !== designFile || man.available === false) return null;
+  const reader=createDataReader(fetch);
+  const man=await reader.json(`${root}exports/links/manifest.json`,{optional:true,label:'Archived CAD manifest',validate:isRecord});
+  if (!man || man.design !== designFile || man.available === false) return null;
+  if(!isRecord(man.links)||!['body','thigh','shin','wheel','crank','rod'].every(k=>Array.isArray(man.links[k]))||
+     !Object.values(man.links).every(parts=>Array.isArray(parts)&&parts.every(p=>isRecord(p)&&typeof p.file==='string'&&p.file.length))||
+     ![man.thigh_mm,man.shin_mm,man.crank_r_mm].every(Number.isFinite))throw new Error('The archived CAD manifest has an unexpected format.');
   const loader = new STLLoader();
   const geo = {};
   await Promise.all(Object.values(man.links).flat().map(async (p) => {
-    try {                                                       // 'local' meshes (vendor models) exist only where they were built
-      const g = await loader.loadAsync(`${root}exports/links/${p.file}`);
+      // Only an explicitly local, unpublished vendor file may be absent. A
+      // server/parse failure must not silently become a partial ready assembly.
+      const bytes=await reader.bytes(`${root}exports/links/${p.file}`,{optional:p.local===true,label:`Archived CAD part ${p.name||p.file}`});
+      if(!bytes)return;
+      validateSTLBytes(bytes);
+      const g=validateGeometry(loader.parse(bytes));
       g.applyMatrix4(TO_PAGE);
       g.computeVertexNormals();
       geo[p.file] = g;
-    } catch { if (!p.local) console.warn('missing mesh', p.file); }
   }));
   for (const k of Object.keys(man.links)) man.links[k] = man.links[k].filter((p) => geo[p.file]);
   const a = man.thigh_mm / 1000, b = man.shin_mm / 1000, r = man.crank_r_mm / 1000;

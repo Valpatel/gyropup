@@ -18,6 +18,7 @@ import { STLLoader } from 'three/addons/loaders/STLLoader.js';
 import { BALL, ballMesh } from './turret3d.js';
 import { section, slider, chips, readouts, toggle } from './kit/panel.js';
 import { createReloadEffect, RELOAD_OPEN_ANGLE } from './turret_reload.js';
+import { createDataReader, isRecord, validateSTLBytes, validateGeometry } from './kit/portal-data.js';
 
 const M = 0.001;
 const D2R = Math.PI / 180;
@@ -39,9 +40,8 @@ const fmt = (v, d = 0) => Number(v).toLocaleString('en-US', { minimumFractionDig
 
 export async function createTurretBench({ stage, sfx, panel, root = '../', onLayout = () => {} }) {
   const base = `${root}exports/sim/turret_box/`;
-  const res = await fetch(`${base}manifest.json`, { cache: 'no-store' });
-  if (!res.ok) throw new Error('no turret_box export: run .venv/bin/python cad/build_turret_box.py');
-  const man = await res.json();
+  const reader=createDataReader(fetch);
+  const man = await reader.json(`${base}manifest.json`, {label:'Turret manifest',validate:isRecord});
   const vector = (v,n=3) => Array.isArray(v)&&v.length===n&&v.every(Number.isFinite);
   if (!Array.isArray(man.parts) || !man.parts.length || !man.pivots ||
       !['pan','tilt','pinion','dial','wheel_l','wheel_r','flap'].every(k=>vector(man.pivots[k])) ||
@@ -104,9 +104,10 @@ export async function createTurretBench({ stage, sfx, panel, root = '../', onLay
   const loaded = await Promise.allSettled(man.parts.map(async (e) => {
     if (!groups[e.group]) throw new Error(`Unknown turret part group: ${e.group}`);
     const meshURL = base + e.file + (e.sha256 ? `?v=${e.sha256}` : '');
-    const geo = await loader.loadAsync(meshURL);
-    const positions=geo.getAttribute('position');
-    if (!positions || positions.count<3 || !positions.array.every(Number.isFinite)) { geo.dispose(); throw new Error(`Invalid turret mesh: ${e.file}`); }
+    const bytes=await reader.bytes(meshURL,{label:`Turret part ${e.name||e.file}`});
+    validateSTLBytes(bytes);
+    const geo=loader.parse(bytes);
+    try{validateGeometry(geo);}catch(error){geo.dispose();throw error;}
     geo.applyMatrix4(TO_PAGE);
     const offset = new THREE.Vector3();
     if (e.group === 'pinion') { offset.copy(P(man.pivots.pinion)).negate(); geo.translate(offset.x, offset.y, offset.z); }

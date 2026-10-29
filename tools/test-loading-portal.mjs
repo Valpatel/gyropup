@@ -162,7 +162,23 @@ try{
   await talk.locator('#detect').click();await state(talk,'service-load-status','loading');assert.ok(await talk.locator('#detect').isDisabled());
   await talk.evaluate(()=>window.releaseServices({tts:{ok:false,name:'Browser voice'},stt:{ok:false,name:'Unavailable'},llm:{ok:false}}));
   await state(talk,'service-load-status','ready');assert.ok(await talk.locator('#detect').isEnabled());assert.ok(await talk.evaluate(()=>window.savedTalk===window.__talk));
-  assert.match(await talk.locator('#svc').innerText(),/scripted/);record('Talk same-stage retry and service pending state');await talk.close();
+  assert.match(await talk.locator('#svc').innerText(),/scripted/);record('Talk same-stage retry and service pending state');
+  // The legacy procedural fallback is explicit availability, never an HTTP500
+  // or malformed required CAD file disguised as a successful model switch.
+  const legacy='/exports/links/manifest.json',design='designs/default.json';
+  let legacyData={design,available:false},legacyFailure=true;
+  await talk.route(url=>url.pathname===legacy,route=>legacyFailure?fail(route):route.fulfill({json:legacyData}));
+  const legacyLoad=()=>talk.evaluate(async design=>{try{const {loadCadRig}=await import('/designer/cadrig.js');const rig=await loadCadRig('/',design);let meshes=0;rig?.group.traverse(o=>{if(o.isMesh)meshes++;});return{absent:rig===null,meshes};}catch(error){return{error:error.message};}},design);
+  assert.match((await legacyLoad()).error,/HTTP 503/);legacyFailure=false;
+  assert.equal((await legacyLoad()).absent,true);
+  legacyData={design:'different-design.json',available:true};assert.equal((await legacyLoad()).absent,true);
+  legacyData={design,links:{body:[{name:'fixture',file:'audit.stl',color:'#f2731a'}],thigh:[],shin:[],wheel:[],crank:[],rod:[]},thigh_mm:200,shin_mm:200,crank_r_mm:20};
+  await talk.route('**/exports/links/audit.stl',route=>route.fulfill({body:' '.repeat(80)+'solid invalid\nendsolid invalid\n'}));
+  assert.match((await legacyLoad()).error,/not STL geometry/);
+  await talk.unroute('**/exports/links/audit.stl');const legacyBytes=await(await context.request.get(base+partURL)).body();
+  await talk.route('**/exports/links/audit.stl',route=>route.fulfill({body:legacyBytes}));assert.equal((await legacyLoad()).meshes,1);
+  assert.ok(await talk.evaluate(()=>window.savedTalk===window.__talk&&window.originalCanvas===document.querySelector('#app canvas')));
+  record('Archived CAD explicit fallback versus failed manifest/mesh');await talk.close();
   assert.deepEqual(errors,[],'No escaped bootstrap or decode exceptions');
   const version=await json('/version.json');assert.deepEqual(version,initialVersion,'Do not mix assets from multiple builds during this suite');await writeFile(`${out}/${engine.name()}-report.json`,JSON.stringify({checkedAt:new Date().toISOString(),base,version,cases,errors},null,2));
   console.log(`PASS ${engine.name()}: ${cases.length} portal loading/recovery cases; optional404 versus failure, stale reports, invalid STL/JSON/surfaces, real frame readiness, same-stage Talk retry and keyboard/phone status controls`);
