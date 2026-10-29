@@ -25,6 +25,13 @@ test('existing duplicates are repaired; cloned rows retain their own independent
  assert.equal(document.querySelectorAll('[data-model-preview]').length,2);
  for(const r of [tr,clone])assert.equal(r.querySelector('[data-model-preview]').previousElementSibling.textContent,'STEP');
 });
+test('enhanced BOM keeps its single action with the sticky part identity on phones',()=>{
+ const {document}=parseHTML('<html><body><table><tr><td><a href="/exports/part.step"><img alt="part"></a></td><td class="cad-part-identity"><b>Part</b></td><td><a href="/exports/part.step">STEP</a></td></tr></table></body></html>');
+ apply(document);apply(document);
+ assert.equal(document.querySelectorAll('[data-model-preview]').length,1);
+ assert.equal(document.querySelector('[data-model-preview]').parentElement,document.querySelector('.cad-part-identity'));
+ assert.equal(document.querySelectorAll('[data-model-original][download]').length,2);
+});
 test('different models and file-directory entries retain their own previews',()=>{
  const {document}=parseHTML('<html><body><table><tr><td><a href="/exports/part.step">Part</a><a href="/exports/different.stl">Different</a></td></tr></table><ul><li><a href="/exports/part.step">Part</a></li><li><a href="/exports/different.stl">Different</a></li></ul></body></html>');
  apply(document);apply(document);assert.equal(document.querySelectorAll('[data-model-preview]').length,4);

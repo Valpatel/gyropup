@@ -18,10 +18,11 @@ const checkModelActions=async()=>{
   return {key:row.dataset.partKey||row.textContent.trim().slice(0,40),
    files:[...new Set(originals.map(a=>new URL(a.href,location.href).pathname))].sort(),
    previews:previews.map(a=>new URL(a.href,location.href).searchParams.get('file')).sort(),
-   downloads:originals.every(a=>a.hasAttribute('download'))};
+   downloads:originals.every(a=>a.hasAttribute('download')),
+   identityVisible:!row.querySelector('.cad-part-identity')||previews.every(a=>a.parentElement===row.querySelector('.cad-part-identity'))};
  }).filter(row=>row.files.length));
  assert.ok(rows.length>0,'Real BOM contains downloadable models');
- for(const row of rows){assert.deepEqual(row.previews,row.files,row.key+' has exactly one preview per model');assert.equal(row.downloads,true,row.key);}
+ for(const row of rows){assert.deepEqual(row.previews,row.files,row.key+' has exactly one preview per model');assert.equal(row.downloads,true,row.key);assert.equal(row.identityVisible,true,row.key+' keeps preview with part identity');}
 };
 const exported=async()=>{const download=page.waitForEvent('download');await page.getByRole('button',{name:'Export progress',exact:true}).click();return JSON.parse(await readFile(await(await download).path(),'utf8'));};
 const checkNativeSort=async(table,column,direction)=>{

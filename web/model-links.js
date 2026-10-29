@@ -36,7 +36,9 @@ export function addModelPreviews(host,{base,published}) {
     if(preview.textContent!=='Preview 3D')preview.textContent='Preview 3D';
     const label='Preview '+decodeURIComponent(url.pathname.split('/').pop())+' in 3D';
     if(preview.getAttribute('aria-label')!==label)preview.setAttribute('aria-label',label);
-    if(anchor.nextElementSibling!==preview)anchor.after(preview);
+    const identity=scope.tagName==='TR'?scope.querySelector('.cad-part-identity'):null;
+    if(identity){if(preview.parentElement!==identity)identity.append(preview);}
+    else if(anchor.nextElementSibling!==preview)anchor.after(preview);
   }
 }
 if(typeof window!=='undefined'&&window.document) {
