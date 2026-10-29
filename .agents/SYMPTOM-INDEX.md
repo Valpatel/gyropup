@@ -21,3 +21,4 @@
 | Phone status checkboxes remain reachable but their part names disappear, despite sticky cell styling | [Sticky identity and the scroll wrapper](inbox/2026-10-29-sticky-part-identity-needs-the-scroll-wrapper.md) |
 | Wheel tests fail after a fixed sleep under software rendering | [Wait for rendered camera targets](inbox/2026-10-29-camera-tests-must-wait-for-rendered-targets.md) |
 | Demo hit counts increase but targets stay upright, detach, or clip through the floor | [Hits must produce visible, validated motion](inbox/2026-10-29-target-hits-need-visible-motion.md) |
+| Published notes show Mermaid source instead of a diagram | [Validate the published diagram consumer](inbox/2026-10-29-mermaid-needs-the-published-renderer.md) |
