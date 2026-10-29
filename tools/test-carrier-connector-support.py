@@ -45,6 +45,16 @@ class SupportEvidence(unittest.TestCase):
                 self.assertIs(checks[name+str(i)],True)
         for name in ('negative:closed_panel_blocks_housing','negative:blocked_new_hole'):
             self.assertIs(checks[name],True)
+        for name in ('C3_service:mated->unplugged','C3_service:unplugged->outboard_before_park',
+                     'C3_service:outboard_before_park->parked','negative:C3_unplug_blocker',
+                     'carrier_added_material:all_neighbours','carrier:nonmating_neighbours'):
+            self.assertIs(checks[name],True)
+        mates=self.receipt['existing_unqualified_mates']
+        self.assertEqual(set(mates),{f'base_board_inserts#{i}_AUTHORED' for i in range(4)})
+        for row in mates.values():
+            self.assertEqual(row['baseline']['state'],'overlapping')
+            self.assertEqual(row['candidate']['state'],'overlapping')
+            self.assertIs(row['physical_fit_verified'],False)
 
     def test_strength_snap_and_thread_limits_cannot_become_readiness(self):
         self.assertIs(self.receipt['readiness'],False)

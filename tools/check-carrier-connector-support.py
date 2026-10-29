@@ -22,6 +22,7 @@ import print_provenance as provenance
 def context_paths(root=ROOT):
     return [root/'tools/check-carrier-connector-support.py',
             root/'tools/check-carrier-connector-inputs.py',
+            root/'tools/check-carrier-connector-pose.py',
             root/'research/carrier-service-connectors/private-inputs.json',
             root/'research/carrier-service-connectors/support-hardware-catalog.json']
 
@@ -39,8 +40,9 @@ def validate_receipt(receipt,root=ROOT):
     if receipt['private_hardware_sha256']!=expected:
         raise ValueError('Support hardware identities differ')
     connectors=json.loads((root/'research/carrier-service-connectors/private-inputs.json').read_text())
-    if receipt['private_housing_sha256']!=next(e['sha256'] for e in connectors['parts'] if e['part']=='43020-1200'):
-        raise ValueError('Support housing identity differs')
+    wanted={e['part']:e['sha256'] for e in connectors['parts'] if e['part'] in ('43020-1200','43025-1200')}
+    if receipt['private_connector_sha256']!=wanted:
+        raise ValueError('Support connector identities differ')
     if receipt['readiness'] is not False or receipt['load_screen']['structural_readiness'] is not False:
         raise ValueError('Bounded support check cannot establish readiness')
     if not receipt['checks'] or any(c['pass'] is not True for c in receipt['checks']):
@@ -67,11 +69,17 @@ def run(output,public_out=None):
     if RELATIONS_VERSION!='4':raise ValueError('Requires released v0.4.2 relation predicates')
     spec=importlib.util.spec_from_file_location('connector_inputs',context_paths()[1])
     source=importlib.util.module_from_spec(spec);spec.loader.exec_module(source)
+    pose_spec=importlib.util.spec_from_file_location('connector_pose',context_paths()[2])
+    pose=importlib.util.module_from_spec(pose_spec);pose_spec.loader.exec_module(pose)
     if provenance.snapshot(ROOT)!=inputs:raise ValueError('Inputs changed during imports')
     manifest=json.loads(source.MANIFEST.read_text())
     plug_entry=next(e for e in manifest['parts'] if e['part']=='43020-1200')
     plug=(cq.importers.importStep(str(source.private_path(plug_entry))).val()
           .rotate((0,0,0),(0,1,0),-90).translate((84.,-8.445,34.)))
+    rec_entry=next(e for e in manifest['parts'] if e['part']=='43025-1200')
+    rec=(cq.importers.importStep(str(source.private_path(rec_entry))).val()
+         .rotate((0,0,0),(0,0,1),180).translate((0.,12.325,0.))
+         .rotate((0,0,0),(0,1,0),-90).translate((84.,-8.445,34.)))
     hardware=cs.hardware(private=True)
     hardware={n:s.val() for n,s in hardware.items()}
     carrier=cs.carrier().val();support=cs.support().val();original=bb.carrier().val()
@@ -115,8 +123,21 @@ def run(output,public_out=None):
             tol=Tolerances(contain_mm3=math.nextafter(.5e-6,0.))
             r=relation(original.intersect(region),carrier.intersect(region),tol)
             check(f'preserve_original_mount:{group}:{i}',r.state=='contains' and r.contained=='both')
-    for n,s in [('carrier',carrier),('support',support)]:
-        ok,ev=clear(s,obstacles);check(n+':installed_neighbours',ok,**ev)
+    # The four heat-set interfaces already interfere before this change. Preserve
+    # their raw relations and the exact unchanged local-region proof above; do
+    # not mislabel their fit as clearance or add an intended-overlap waiver.
+    mating_names={n for n in obstacles if n.startswith('base_board_inserts#')}
+    existing_mates={n:{'baseline':relation(original,obstacles[n]).to_dict(),
+                       'candidate':relation(carrier,obstacles[n]).to_dict(),
+                       'physical_fit_verified':False,
+                       'qualification':'Unchanged existing heat-set mate; not an accepted clearance.'}
+                    for n in sorted(mating_names)}
+    added=carrier.cut(original)
+    check('carrier_added_material_valid',added.isValid() and len(added.Solids())==2)
+    ok,ev=clear(added,obstacles);check('carrier_added_material:all_neighbours',ok,**ev)
+    ok,ev=clear(carrier,{n:s for n,s in obstacles.items() if n not in mating_names})
+    check('carrier:nonmating_neighbours',ok,excluded_existing_mates=sorted(mating_names),**ev)
+    ok,ev=clear(support,obstacles);check('support:installed_neighbours',ok,**ev)
     ok,ev=clear(support,{'carrier':carrier});check('support:carrier_seat',ok,**ev)
     lanes=[(23.,z,.7) for z in (15.5,18.,20.5,23.)]+[(20.,17.,1.016),(20.,24.,1.016)]
     for i,(y,z,r) in enumerate(lanes):
@@ -161,6 +182,19 @@ def run(output,public_out=None):
         # Full-array rectangle is deliberately conservative; no claimed wire OD.
         exit_box=bb.box(82.15,85.85,y0,y1,24.925,43.075)
         ok,ev=clear(exit_box,{'support':support});check('C3_straight_exit:'+side,ok,**ev)
+    # Recheck every existing C3 service segment against this actual new support,
+    # including all attached new hardware, not only the earlier bare carrier.
+    def swept_box(initial,final):
+        a=bounds(rec.translate(initial));b=bounds(rec.translate(final))
+        lo=[min(a[i],b[i]) for i in range(3)];hi=[max(a[i+3],b[i+3]) for i in range(3)]
+        return bb.box(lo[0],hi[0],lo[1],hi[1],lo[2],hi[2])
+    states=list(pose.STATES.items())
+    new_obstacles={'carrier':carrier,'support':support,**hardware}
+    for (a,initial),(b,final) in zip(states,states[1:]):
+        sweep=swept_box(initial,final)
+        ok,ev=clear(sweep,new_obstacles);check('C3_service:'+a+'->'+b,ok,**ev)
+    first=swept_box(states[0][1],states[1][1])
+    check('negative:C3_unplug_blocker',relation(first,bb.box(80.,85.,13.,15.,30.,35.)).state in ('contains','overlapping'))
     missing_hole=carrier.fuse(bb.cx(1.7,53.,56.,*cs.HOLES[0]).val())
     check('negative:blocked_new_hole',relation(hardware['c3_support_screws#0'],missing_hole).state=='overlapping')
     check('panel_thickness_in_drawing_range',1.4<=cs.PANEL_Y[1]-cs.PANEL_Y[0]<=2.54,
@@ -169,7 +203,8 @@ def run(output,public_out=None):
     result={'schema':1,'readiness':False,'bounded_geometry_checks_pass':all(c['pass'] for c in checks),
             'inputs':inputs,'input_fingerprint':provenance.fingerprint(inputs),'context_files':context,
             'private_hardware_sha256':{e['model']:e['private_file_sha256'][e['cad']['file']] for e in records},
-            'private_housing_sha256':plug_entry['sha256'],'checks':checks,'relations':relations,
+            'private_connector_sha256':{e['part']:e['sha256'] for e in (plug_entry,rec_entry)},
+            'checks':checks,'relations':relations,'existing_unqualified_mates':existing_mates,
             'panel_housing_relation':panel_relation.to_dict(),'panel_retention_qualified':False,
             'load_screen':cs.load_screen(),'assembly_order':cs.assembly_order(),'rigid_module_members':cs.module_members(),
             'limits':['Not a full insertion/removal sequence or upper-head-motion check.',
