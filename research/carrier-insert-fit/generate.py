@@ -88,8 +88,8 @@ def validate_local(s, spec):
     if bore.state not in ('apart', 'touching'):
         raise ValueError('Nominal pilot is obstructed or too shallow')
     floor = relation(s, bore_probe(spec, 6.51, 7.99, 1.99))
-    if floor.state != 'contains' or floor.contained != 'b':
-        raise ValueError('Blind pilot floor/back wall is missing or too thin')
+    if floor.state != 'contains' or floor.contained != 'b_in_a':
+        raise ValueError(f'Blind pilot floor/back wall is missing or too thin: {floor.to_dict()}')
     return {'pilot_clear': bore.to_dict(), 'floor_present': floor.to_dict()}
 
 
