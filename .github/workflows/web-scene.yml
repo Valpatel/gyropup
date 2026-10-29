@@ -5,7 +5,7 @@ on:
     branches: [main]
 jobs:
   turret-motion:
-    runs-on: ubuntu-latest
+    runs-on: ubuntu-24.04 # Supported by the pinned Playwright 1.56 browser dependencies.
     timeout-minutes: 12
     steps:
       - uses: actions/checkout@v4
