@@ -19,7 +19,8 @@
     "test:audio": "node tools/test-audio-settings.mjs",
     "test:hero": "node tools/test-hero-preview.mjs",
     "test:demo": "node tools/test-live-demo.mjs",
-    "test:models": "node tools/test-current-model.mjs"
+    "test:models": "node tools/test-current-model.mjs",
+    "test:notice": "node tools/test-prototype-notice.mjs"
   },
   "devDependencies": {
     "@playwright/test": "1.56.1",

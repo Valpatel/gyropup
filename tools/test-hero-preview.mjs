@@ -1,3 +1,4 @@
+import { acknowledgePrototypeNotice } from './test-prototype-session.mjs';
 /** Exercise the visible poster-to-WebGL handoff, not merely matching CSS boxes. */
 import assert from 'node:assert/strict';
 import {mkdir,writeFile} from 'node:fs/promises';
@@ -46,6 +47,7 @@ async function visibleComposition(page,first=false){return page.evaluate(async f
 try{
  for(const dpr of [1,2]){
   const context=await browser.newContext({viewport:dpr===1?{width:1440,height:1000}:{width:320,height:568},deviceScaleFactor:dpr,reducedMotion:'reduce'});await context.addInitScript(prefs);
+await acknowledgePrototypeNotice(context);
   const page=await context.newPage();page.setDefaultTimeout(60000);page.on('pageerror',e=>errors.push(e.message));
   let release;
   await page.route('**/robot_v2.js*',async route=>{await new Promise(resolve=>release=resolve);await route.continue();});
@@ -84,6 +86,7 @@ try{
  // Normal-motion pages must reveal the same first frame before beginning idle motion.
  {
   const context=await browser.newContext({viewport:{width:1440,height:1000}});await context.addInitScript(prefs);
+await acknowledgePrototypeNotice(context);
   await context.addInitScript(()=>new MutationObserver(()=>{const h=window.__heroPreview;if(h&&!window.firstHeroFrame){window.firstHeroFrame=h.captureFrame();window.firstHeroCamera=h.camera.position.toArray();}}).observe(document,{subtree:true,attributes:true,attributeFilter:['data-ready']}));
   const page=await context.newPage();page.on('pageerror',e=>errors.push(e.message));
   await page.goto(base+'/',{waitUntil:'domcontentloaded'});await page.waitForFunction(()=>window.firstHeroFrame);
@@ -104,6 +107,7 @@ try{
  // Hold the image for actual renderer failures as well as slow network loading.
  for(const failure of ['module','webgl']){
   const context=await browser.newContext({viewport:{width:320,height:568}});await context.addInitScript(prefs);
+await acknowledgePrototypeNotice(context);
   if(failure==='webgl')await context.addInitScript(()=>{const get=HTMLCanvasElement.prototype.getContext;HTMLCanvasElement.prototype.getContext=function(type,...rest){return /webgl/.test(type)?null:get.call(this,type,...rest);};});
   const page=await context.newPage();page.on('pageerror',e=>errors.push(e.message));
   if(failure==='module')await page.route('**/robot_v2.js*',route=>route.abort());
@@ -116,6 +120,7 @@ try{
  // Native hover, keyboard and touch activation exercise the real presentation API.
  for(const touch of [false,true]){
   const context=await browser.newContext({viewport:touch?{width:390,height:844}:{width:1440,height:1000},hasTouch:touch,isMobile:touch,reducedMotion:'reduce'});
+await acknowledgePrototypeNotice(context);
   await context.addInitScript(prefs);await context.addInitScript(voiceStub);
   const page=await context.newPage();page.on('pageerror',e=>errors.push(e.message));
   await page.goto(base+'/',{waitUntil:'networkidle'});await page.waitForFunction(()=>window.__heroPreview);

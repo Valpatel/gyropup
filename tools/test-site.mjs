@@ -1,3 +1,4 @@
+import { acknowledgePrototypeNotice } from './test-prototype-session.mjs';
 /** Browser regression checks against the real static site (SITE_URL selects local or production). */
 import assert from 'node:assert/strict';
 import { mkdir, writeFile } from 'node:fs/promises';
@@ -5,6 +6,7 @@ import { chromium } from '@playwright/test';
 const base = (process.env.SITE_URL || 'http://127.0.0.1:8764').replace(/\/$/,'');
 const browser = await chromium.launch({channel:process.env.PLAYWRIGHT_CHANNEL || 'chrome',headless:true,args:['--no-sandbox','--use-gl=angle','--use-angle=swiftshader','--enable-unsafe-swiftshader']});
 const context = await browser.newContext({viewport:{width:390,height:844},hasTouch:true,deviceScaleFactor:1});
+await acknowledgePrototypeNotice(context);
 const page = await context.newPage();
 const errors=[],missing=[],results=[];
 page.on('pageerror',e=>errors.push(e.message));
