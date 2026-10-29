@@ -33,6 +33,7 @@ jobs:
               npm run test:services
           - suite: loading
             commands: |
+              npm run test:portal-data
               npm run test:loading-sim
               npm run test:loading-portal
               npm run test:loading-hero
