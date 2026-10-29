@@ -33,3 +33,9 @@ retirement still requires ownership checks. A Git ancestor or an empty connectio
 snapshot does not prove no client needs a preview. Ephemeral tests own their
 teardown; expiry is only a fallback. The imported server factory intentionally
 does not take ownership of the caller's test lifecycle.
+
+Independent review reproduced a startup race three times: a parent that exited
+during Node module loading was replaced by a subreaper before the child sampled
+its PID. CI and spawned test helpers now supply the actual launcher's PID, and a
+real immediate-parent-exit regression verifies refusal to bind. Manual callers
+without that identity retain the hard deadline as the pre-execution fallback.

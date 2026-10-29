@@ -18,6 +18,10 @@ only in ephemeral mode for existing CI. These CLI servers stop when their parent
 changes or after 30 minutes, even if discovery/health checks keep polling them.
 `--ttl-seconds N` can shorten that hard deadline. Always retain the child handle
 and stop/wait in `finally`, or use a shell EXIT trap; automatic expiry is a backup.
+Automated launchers also pass `GYROPUP_PREVIEW_PARENT_PID` as their own PID
+(`$$` in the CI shell, `process.pid` in Node). This rejects a parent already gone
+when the child begins startup. Without that explicit identity, a manual CLI can
+only observe parent changes after its code starts; the hard deadline still applies.
 Imports of `createSiteServer` remain test-owned and require explicit teardown.
 
 Do not retire a process merely because its title, age, or CPU resembles another.

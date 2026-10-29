@@ -20,7 +20,7 @@ let server;
 let base = process.env.SITE_URL?.replace(/\/$/, '');
 before(async () => {
   if (base) return;
-  server = spawn(process.execPath, ['tools/serve-site.mjs'], { cwd: root, env: { ...process.env, PORT: '0' }, stdio: ['ignore', 'pipe', 'inherit'] });
+  server = spawn(process.execPath, ['tools/serve-site.mjs'], { cwd: root, env: { ...process.env, PORT: '0', GYROPUP_PREVIEW_PARENT_PID: String(process.pid) }, stdio: ['ignore', 'pipe', 'inherit'] });
   const timeout = setTimeout(() => server.kill(), 10_000);
   try {
     const [output] = await once(server.stdout, 'data');

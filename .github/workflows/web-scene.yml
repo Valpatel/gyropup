@@ -78,7 +78,7 @@ jobs:
           PLAYWRIGHT_CHANNEL: chromium
           SITE_URL: http://127.0.0.1:8879
         run: |
-          node tools/serve-site.mjs --ephemeral > /tmp/gyropup-site.log 2>&1 &
+          GYROPUP_PREVIEW_PARENT_PID=$$ node tools/serve-site.mjs --ephemeral > /tmp/gyropup-site.log 2>&1 &
           server_pid=$!
           trap 'kill "$server_pid"' EXIT
           ${{ matrix.commands }}

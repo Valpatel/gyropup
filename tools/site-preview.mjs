@@ -23,6 +23,8 @@ export async function inspectPreview(port = SHARED_PORT) {
 
 export async function startPreview({createServer, directory, repository, port = SHARED_PORT,
   temporary = false, ttlMs = MAX_TEMPORARY_MS, parentPid = process.ppid}) {
+  if (temporary && (!Number.isSafeInteger(parentPid) || parentPid <= 0)) throw new Error('Invalid temporary preview parent PID.');
+  if (temporary && process.ppid !== parentPid) throw new Error('Temporary preview parent exited before startup.');
   directory = await realpath(directory);
   await access(path.join(directory, 'index.html'));
   if (!Number.isInteger(port) || port < 0 || port > 65535 || (!temporary && port === 0)) throw new Error('Invalid preview port.');
@@ -68,7 +70,7 @@ export async function startPreview({createServer, directory, repository, port = 
   return {server, metadata, stop, reused:false};
 }
 
-export async function previewCLI(createServer, root, args = process.argv.slice(2)) {
+export async function previewCLI(createServer, root, args = process.argv.slice(2), initialParentPid = process.ppid) {
   if (args.length === 1 && args[0] === '--status') {
     console.log(JSON.stringify(await inspectPreview(), null, 2));
     return;
@@ -83,5 +85,6 @@ export async function previewCLI(createServer, root, args = process.argv.slice(2
   const port = Number(process.env.PORT ?? (temporary ? 0 : SHARED_PORT));
   if (!temporary && port !== SHARED_PORT) throw new Error(`Persistent previews use port ${SHARED_PORT}. Reuse it; tests may use --ephemeral with cleanup.`);
   const repository = execFileSync('git', ['-C', path.dirname(root), 'rev-parse', '--path-format=absolute', '--git-common-dir'], {encoding:'utf8'}).trim();
-  return startPreview({createServer, directory:root, repository:await realpath(repository), port, temporary, ttlMs});
+  const parentPid = Number(process.env.GYROPUP_PREVIEW_PARENT_PID ?? initialParentPid);
+  return startPreview({createServer, directory:root, repository:await realpath(repository), port, temporary, ttlMs, parentPid});
 }

@@ -21,7 +21,7 @@ async function freePort() {
   const port = server.address().port; await new Promise(resolve => server.close(resolve)); return port;
 }
 function child(file, env = {}, args = []) {
-  const p = spawn(process.execPath, [file, ...args], {env:{...process.env, ...env}, stdio:['ignore','pipe','pipe']});
+  const p = spawn(process.execPath, [file, ...args], {env:{...process.env, GYROPUP_PREVIEW_PARENT_PID:String(process.pid), ...env}, stdio:['ignore','pipe','pipe']});
   children.add(p); p.output = ''; p.done = false;
   p.stdout.on('data', data => { p.output += data; }); p.stderr.on('data', data => { p.output += data; });
   p.on('exit', () => { p.done = true; children.delete(p); });
@@ -107,7 +107,7 @@ test('a bounded temporary server expires even while polled', async () => {
 
 test('temporary server exits when its actual launching parent disappears', async () => {
   const ownerFile=path.join(directory,'owner.mjs');
-  await writeFile(ownerFile,`import {spawn} from 'node:child_process'; spawn(process.execPath,[${JSON.stringify(driver)}],{stdio:'inherit',env:process.env});`);
+  await writeFile(ownerFile,`import {spawn} from 'node:child_process'; spawn(process.execPath,[${JSON.stringify(driver)}],{stdio:'inherit',env:{...process.env,GYROPUP_PREVIEW_PARENT_PID:String(process.pid)}});`);
   const owner=child(ownerFile,envFor(0,a,{TEMPORARY:'1',TTL:'10000'})), url=await ready(owner);
   try {
     await stop(owner);
@@ -128,4 +128,15 @@ test('CLI fixed-port ephemeral mode preserves CI startup and signal cleanup', as
   const port=await freePort(), p=child(path.join(cli,'tools','serve-site.mjs'),{PORT:String(port)},['--ephemeral']);
   const url=await ready(p); assert.equal(url,`http://127.0.0.1:${port}`);
   await stop(p); await assert.rejects(fetch(url));
+});
+
+test('CLI refuses to bind if its identified parent exits during module startup', async () => {
+  const ownerFile=path.join(directory,'early-owner.mjs');
+  await writeFile(ownerFile,`import {spawn} from 'node:child_process';
+spawn(process.execPath,[${JSON.stringify(path.join(cli,'tools','serve-site.mjs'))},'--ephemeral','--ttl-seconds','2'],
+{stdio:'inherit',env:{...process.env,GYROPUP_PREVIEW_PARENT_PID:String(process.pid)}}); process.exit(0);`);
+  const port=await freePort(), owner=child(ownerFile,{PORT:String(port)});
+  await until(()=>owner.output.includes('parent exited before startup'),'early parent exit was not detected');
+  await stopped(owner); await assert.rejects(fetch(`http://127.0.0.1:${port}`));
+  assert.doesNotMatch(owner.output,/Gyropup: http:/);
 });

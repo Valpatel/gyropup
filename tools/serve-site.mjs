@@ -42,7 +42,8 @@ return http.createServer(async (req,res)=>{
 });
 }
 if (process.argv[1] && import.meta.url === pathToFileURL(process.argv[1]).href) {
+  const initialParentPid = process.ppid;
   const {previewCLI} = await import('./site-preview.mjs');
-  try { await previewCLI(createSiteServer, root); }
+  try { await previewCLI(createSiteServer, root, process.argv.slice(2), initialParentPid); }
   catch (error) { console.error(error.message); process.exitCode = 1; }
 }
