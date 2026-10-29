@@ -45,6 +45,49 @@ balls through the fill port onto the dial's real cone and fins, parked, a ball s
 rest (slowest ball 0.0009 m/s at the end). `exports/turret/feed/pile.json` holds the result; the gates and the 3D page
 both read it.
 
+## The dossier (cad-agent's process)
+
+The turret is the first part of Gyropup on cad-agent's full process (the toolkit's docs/dossier.md and docs/gates.md):
+these eight sections as a YAML dossier, the geometry declared on the dossier registry, every integrity gate and the
+dossier lint run by `cad-agent gates`, and `cad-agent check` failing on a failing, missing or stale verdict.
+
+| File | What it holds |
+|---|---|
+| `dossier/project.yaml` | the requirements (R1-R19, each with its source and how it is verified), the interfaces between sections, the gates' declarations (ground, free parts, intended overlaps, ignored pairs, tools) |
+| `dossier/sections/S1-base.yaml` .. `S8-stand.yaml` | each section's purpose, requirements, interfaces, decisions (with the alternatives rejected) and a card per part: its function, interfaces, material, screws, checks |
+| `dossier/decisions.yaml` | the turret's project decisions (D40, D48, D66-D68, D70) and the dossier's own (T0.1-T0.8) |
+| `dossier/gate-declarations.yaml` | what the schema cannot say yet: the hopper's `contains` with `closed_by`, the screws' thread overlaps |
+| `cad/turret_dossier.py` | the registry build: every part at home in T (the stand under the plinth), the hopper's cavity, the joints, the gated screws, the build order -> `exports/dossier-geometry.json` |
+| `exports/gates/*.json`, `*.md` | the verdicts: connectivity, containment, fasteners, motion, assembly, wall, the dossier lint; and the turret's own `turret-path`, `turret-ammo` |
+
+```
+.venv/bin/cad-agent gates --build             # build the record, run every gate and the lint (heavy: gp-remote --host gb10-01)
+.venv/bin/python cad/turret_gates.py --dossier   # the ball path and D67's ammo range, bound to that record
+.venv/bin/cad-agent dossier                   # the lint again, with the turret's own verdicts
+.venv/bin/cad-agent check                     # fails on a failing, missing or stale verdict
+```
+
+**Bodies and the chain rule (T0.1).** cadagent puts a part in a moving body only through a declared fixed joint or
+fastener, growing from the joint's moving part, and stops at every moving joint's fixed part. So each child joint hangs
+on its parent's moving part: I-tilt on `pan_ring` (the pan's), I-feed, I-wheel-l, I-wheel-r and I-flap on
+`cartridge_body` (the tilt's). Their holds are measured from those parts, with declared clearances where the gap is not
+the bearing's (I-tilt 39 mm, I-flap 69 mm, the wheels 4 and 1.5 mm); the bearings (the 61810's races, the MR126, the
+horns) are the joints' intended contacts. The 37 fixed joints are the mounts of the moving parts, each an interface in
+the dossier. The settled load rides with the hopper (I-pile, T0.2), so the motion gate sweeps it with the tilt frame.
+
+**Results (run 3, gb10-01, 2026-10-28; the record built at d627004 + the merges of dd96792 and dd02fcd):**
+
+| Gate | Result | What is open |
+|---|---|---|
+| connectivity | 137 pass, 1 warn, 2 fail | I-wheel-r's declared clearance (1.5 mm) is under the right hub's gap since dd96792 moved the CT dowel's boss (3.5 mm, as the left): set it to 4 mm and rerun. The warning: index_magnet on pan_clamp (a line contact through the clamp's hole), undeclared |
+| containment | 64 pass, 1 warn | the support check (report only: balls held in an arch) |
+| fasteners | 35 pass | |
+| motion | pass, 1 warning (7,560 poses: pan 35 x tilt 6 x dial 3 x flap 3 x wheels 2, plus the pinion 13; 9,903 s on gb10-01) | run 2 found the flap's knuckle on the lid at 51.1 deg and the hub overlaps, both fixed |
+| assembly | 220 pass, 6 fail | stop_lug: the cradle cannot be lowered into the yoke with the lug on its plate (the upper stop sector, 8.2 mm before its seat); base_board: drawn in a closed pocket of pan_base (no straight way in); both open mechanical items for the next round. The poured load, the rotor's leads (a cable) and the MR126's races (pressed in from inside before the cradle) are not straight insertions |
+| wall | 16 pass, 12 fail | features under 0.8 mm, mostly boolean sliver skins: cartridge_body and ring_carrier 0.002 mm, pan_ring 0.025, pan_base 0.07, compute_shell 0.10, laser_mount 0.12, tilt_yoke 0.15, cradle 0.20; dial 0.64, hopper 0.62, hopper_lid 0.70, pivot_spacer 0.75 |
+| turret-path, turret-ammo | pass (410 and 6 checks), bound to this record on gb10-01 | they bind only to a record their own machine reproduces: the GB10's hashes differ from the workstation's |
+| dossier lint | 7 errors (section-below-gated: the failures above and the FEA's open recoil case), 2 warnings; S8 gated, the others built | T4.7 (the cartridge's recoil SF) and T8.2 (the stand's switch cut-out) open |
+
 ---
 
 ## 1. Base and pan drive

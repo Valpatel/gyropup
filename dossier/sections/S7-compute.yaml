@@ -1,0 +1,167 @@
+# The turret's dossier (cad-agent: docs/dossier.md in the toolkit). Hand-edited YAML; joined by id to the geometry
+# cad/turret_dossier.py registers (exports/dossier-geometry.json). The design story is docs/turret-sections.md.
+id: S7-compute
+title: Compute and power (D66)
+purpose: 'Make the turret a robot of its own: its own computer, one power input for the stand''s pack and Gyropup''s bus,
+  and its fuses, all inside the turret'
+requirements:
+- R1
+- R9
+- R12
+- R14
+- R15
+author: turret-dossier agent
+interfaces:
+- id: I-tray-shell
+  between:
+  - compute_shell
+  - compute_tray
+  kind: fastened
+  datum: the tray's top, T z -76
+  description: 4 x M4 x 10 down into the tray's inserts.
+  owner: S7-compute
+- id: I-j4012-tray
+  between:
+  - compute
+  - compute_tray
+  kind: contact
+  datum: between the tray's locating ribs
+  description: The J4012 stands on the tray between its ribs.
+  owner: S7-compute
+- id: I-j4012-tabs
+  between:
+  - compute
+  - compute_shell
+  kind: contact
+  datum: the shell's four tabs
+  description: The shell's tabs hold the J4012 down.
+  owner: S7-compute
+- id: I-eth-jack
+  between:
+  - eth_jack
+  - compute_shell
+  kind: fastened
+  datum: the -x wall's boss
+  description: 2 x 4-40 through the jack's ears; the jack 2 mm short of the J4012.
+  owner: S7-compute
+- id: I-xt30
+  between:
+  - xt30_input
+  - compute_shell
+  kind: press_fit
+  datum: the -x wall's pocket
+  description: The XT30's housing clamped in the wall's 8 mm boss.
+  owner: S7-compute
+- id: I-fuses
+  between:
+  - input_fuses
+  - compute_tray
+  kind: snap_fit
+  datum: beside the J4012
+  description: Two inline MINI holders clipped to the tray.
+  owner: S7-compute
+parts:
+- id: compute_tray
+  function: 'The plinth''s floor: bolted to the head''s (or the stand''s) TM face; carries the J4012 and the fuses, and the
+    shell''s inserts'
+  interfaces:
+  - I-tray-shell
+  - I-j4012-tray
+  - I-fuses
+  - I-stand-tm
+  material:
+    name: PA6-CF
+    process: FDM
+    wall_mm: 0.8
+    print_axis: +Z
+  checks:
+  - gate:connectivity
+  - gate:assembly
+- id: compute_shell
+  function: 'The plinth''s wall and columns: holds the J4012 down, carries the jack and the XT30, and the pan base''s inserts'
+  interfaces:
+  - I-tray-shell
+  - I-j4012-tabs
+  - I-eth-jack
+  - I-xt30
+  - I-plinth-base
+  material:
+    name: PETG
+    process: FDM
+    wall_mm: 0.8
+    print_axis: -Z
+  checks:
+  - gate:connectivity
+  - gate:assembly
+- id: compute
+  function: 'The turret''s computer: reComputer Mini J4012 with Extension (Orin NX 16 GB)'
+  interfaces:
+  - I-j4012-tray
+  - I-j4012-tabs
+  material:
+    name: Seeed reComputer Mini J4012
+    process: bought
+  checks:
+  - gate:connectivity
+  - gate:assembly
+- id: eth_jack
+  function: Ethernet to the J501 (panel RJ-45)
+  interfaces:
+  - I-eth-jack
+  material:
+    name: Adafruit 909
+    process: bought
+  checks:
+  - gate:connectivity
+  - gate:assembly
+- id: xt30_input
+  function: The power input, 12-54 V
+  interfaces:
+  - I-xt30
+  material:
+    name: Amass XT30U-F
+    process: bought
+  checks:
+  - gate:connectivity
+  - gate:assembly
+- id: input_fuses
+  function: The input's 20 A main and 5 A J4012 fuses (58 V MINI)
+  interfaces:
+  - I-fuses
+  material:
+    name: Bussmann HHM holders, Littelfuse MINI 58 V
+    process: bought
+  checks:
+  - gate:connectivity
+  - gate:assembly
+decisions:
+- id: T7.1
+  decision: The reComputer Mini J4012 with Extension kit
+  why: The one listing with the NX 16 GB and a fan and heat sink sold for it on that carrier; the extension has the RJ-45
+    and CAN
+  alternatives:
+  - option: The bare carrier with a dev-kit heat sink
+    rejected: 'no cooler sold for the NX on this carrier: our guess at 40 W'
+  - option: A USB Ethernet dongle
+    rejected: one more part hanging on a port
+- id: T7.2
+  decision: A round plinth under the pan base (Ø156, inside the bumper)
+  why: 'The J4012 is 95 x 63 x 67 and the pan base''s middle is the slip ring''s: no 95 mm chord inside r 72'
+  alternatives:
+  - option: A square box
+    rejected: corners outside the bumper, a separate box look
+  - option: The computer in Gyropup's head
+    rejected: 'D66: the turret must stand alone'
+- id: T7.3
+  decision: A tray and a shell, not one printed box
+  why: The tray goes on first with short M5s; the shell's columns then take the pan base's M5s at the same positions
+  alternatives:
+  - option: One printed box
+    rejected: 90 mm through-bolts (none at a listed price we could read) or screws under the columns that cannot be reached
+- id: T7.4
+  decision: The ports on the -x side and the vents behind the pan axis only
+  why: The operator's side, away from the barrel's arc; the J501's exhaust leaves the deck's front mouth, so the plinth breathes
+    from behind
+  alternatives:
+  - option: Vents all round
+    rejected: the front vents would draw the J501's exhaust plume

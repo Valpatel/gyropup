@@ -1,0 +1,556 @@
+{
+  "schema": "cadagent.gate/1",
+  "gate": "dossier-lint",
+  "pass": false,
+  "status": "fail",
+  "counts": {
+    "pass": 32,
+    "warn": 2,
+    "fail": 7
+  },
+  "checks": [
+    {
+      "id": "section-below-gated@dossier/sections/S1-base.yaml:3",
+      "status": "fail",
+      "message": "section 'S1-base' is built, below gated: pan_base: gate:assembly fail (failing: step:53:insert); turret-fea fail (verdict.all_ok is False); gate:wall fail (failing: wall:pan_base); pan_clamp: gate:assembly fail (failing: step:50:insert); pan_bearing: gate:assembly fail (failing: step:50:insert); pan_bearing_inner: gate:assembly fail (failing: step:50:insert)",
+      "parts": [
+        "circlip_50",
+        "pan_base",
+        "pan_bearing",
+        "pan_bearing_inner",
+        "pan_clamp",
+        "pan_pinion",
+        "pan_ring",
+        "pan_spacer"
+      ],
+      "evidence": {
+        "code": "section-below-gated",
+        "file": "dossier/sections/S1-base.yaml",
+        "line": 3,
+        "item": "S1-base"
+      }
+    },
+    {
+      "id": "section-below-gated@dossier/sections/S2-tilt.yaml:3",
+      "status": "fail",
+      "message": "section 'S2-tilt' is built, below gated: tilt_yoke: gate:assembly fail (failing: step:29:insert, step:31:insert, step:32:insert, step:50:insert); turret-fea fail (verdict.all_ok is False); gate:wall fail (failing: wall:tilt_yoke); cradle: turret-fea fail (verdict.all_ok is False); gate:wall fail (failing: wall:cradle); cradle_plate_l: turret-fea fail (verdict.all_ok is False); cradle_plate_r: turret-fea fail (verdict.all_ok is False)",
+      "parts": [
+        "cradle",
+        "cradle_plate_l",
+        "cradle_plate_r",
+        "horn_boss",
+        "pivot_spacer",
+        "stop_lug",
+        "tilt_bearing",
+        "tilt_bearing_inner",
+        "tilt_yoke"
+      ],
+      "evidence": {
+        "code": "section-below-gated",
+        "file": "dossier/sections/S2-tilt.yaml",
+        "line": 3,
+        "item": "S2-tilt"
+      }
+    },
+    {
+      "id": "section-below-gated@dossier/sections/S3-feed.yaml:3",
+      "status": "fail",
+      "message": "section 'S3-feed' is built, below gated: dial: gate:wall fail (failing: wall:dial); hopper: gate:assembly fail (failing: step:12:insert); gate:wall fail (failing: wall:hopper); hopper_lid: gate:wall fail (failing: wall:hopper_lid); ball: gate:assembly fail (failing: step:12:insert)",
+      "parts": [
+        "ball",
+        "dial",
+        "hopper",
+        "hopper_lid"
+      ],
+      "evidence": {
+        "code": "section-below-gated",
+        "file": "dossier/sections/S3-feed.yaml",
+        "line": 3,
+        "item": "S3-feed"
+      }
+    },
+    {
+      "id": "section-below-gated@dossier/sections/S4-launcher.yaml:3",
+      "status": "fail",
+      "message": "section 'S4-launcher' is built, below gated: cartridge_body: gate:connectivity fail (failing: joint:I-wheel-r); turret-fea fail (verdict.all_ok is False); gate:wall fail (failing: wall:cartridge_body); flywheel_m: gate:connectivity fail (failing: connect:body:flywheel_m, joint:I-wheel-r); flywheel_tyre_m: gate:connectivity fail (failing: connect:body:flywheel_m)",
+      "parts": [
+        "cartridge_body",
+        "flywheel_m",
+        "flywheel_tyre_m"
+      ],
+      "evidence": {
+        "code": "section-below-gated",
+        "file": "dossier/sections/S4-launcher.yaml",
+        "line": 3,
+        "item": "S4-launcher"
+      }
+    },
+    {
+      "id": "decision-open@dossier/sections/S4-launcher.yaml:304",
+      "status": "warn",
+      "message": "decision 'T4.7' is open; section 'S4-launcher' cannot be signed off until it is decided",
+      "evidence": {
+        "code": "decision-open",
+        "file": "dossier/sections/S4-launcher.yaml",
+        "line": 304,
+        "item": "S4-launcher"
+      }
+    },
+    {
+      "id": "section-below-gated@dossier/sections/S5-barrel.yaml:3",
+      "status": "fail",
+      "message": "section 'S5-barrel' is built, below gated: laser_mount: gate:wall fail (failing: wall:laser_mount)",
+      "parts": [
+        "laser_mount"
+      ],
+      "evidence": {
+        "code": "section-below-gated",
+        "file": "dossier/sections/S5-barrel.yaml",
+        "line": 3,
+        "item": "S5-barrel"
+      }
+    },
+    {
+      "id": "section-below-gated@dossier/sections/S6-wiring.yaml:3",
+      "status": "fail",
+      "message": "section 'S6-wiring' is built, below gated: slip_ring_rotor: gate:assembly fail (failing: step:50:insert); ring_carrier: gate:wall fail (failing: wall:ring_carrier); ring_driver: gate:assembly fail (failing: step:50:insert); board_bay: gate:assembly fail (failing: step:50:insert)",
+      "parts": [
+        "base_board",
+        "board_bay",
+        "ring_carrier",
+        "ring_driver",
+        "slip_ring_rotor"
+      ],
+      "evidence": {
+        "code": "section-below-gated",
+        "file": "dossier/sections/S6-wiring.yaml",
+        "line": 3,
+        "item": "S6-wiring"
+      }
+    },
+    {
+      "id": "section-below-gated@dossier/sections/S7-compute.yaml:3",
+      "status": "fail",
+      "message": "section 'S7-compute' is built, below gated: compute_shell: gate:wall fail (failing: wall:compute_shell)",
+      "parts": [
+        "compute_shell"
+      ],
+      "evidence": {
+        "code": "section-below-gated",
+        "file": "dossier/sections/S7-compute.yaml",
+        "line": 3,
+        "item": "S7-compute"
+      }
+    },
+    {
+      "id": "decision-open@dossier/sections/S8-stand.yaml:212",
+      "status": "warn",
+      "message": "decision 'T8.2' is open; section 'S8-stand' cannot be signed off until it is decided",
+      "evidence": {
+        "code": "decision-open",
+        "file": "dossier/sections/S8-stand.yaml",
+        "line": 212,
+        "item": "S8-stand"
+      }
+    },
+    {
+      "id": "rule:card-no-function",
+      "status": "pass",
+      "message": "a part card states its function"
+    },
+    {
+      "id": "rule:card-no-interfaces",
+      "status": "pass",
+      "message": "a part card lists its interfaces (free parts, and a one-part dossier, excepted)"
+    },
+    {
+      "id": "rule:card-no-decision",
+      "status": "pass",
+      "message": "a part card, or another card or the section it is in, records a decision"
+    },
+    {
+      "id": "rule:interface-not-party",
+      "status": "pass",
+      "message": "a card lists only interfaces whose `between` names the part or its section"
+    },
+    {
+      "id": "rule:interface-one-sided",
+      "status": "pass",
+      "message": "an interface between two parts is listed on both parts' cards"
+    },
+    {
+      "id": "rule:interface-datum-conflict",
+      "status": "pass",
+      "message": "the two sections that declare an interface agree on its datum (\u00a75.4)"
+    },
+    {
+      "id": "rule:interface-conflict",
+      "status": "pass",
+      "message": "the two declarations of an interface agree on its other fields"
+    },
+    {
+      "id": "rule:fastener-via-mismatch",
+      "status": "pass",
+      "message": "a card's fastener runs `via` an interface between this part and `to`"
+    },
+    {
+      "id": "rule:exemption-unknown-party",
+      "status": "pass",
+      "message": "a gates.intended_overlaps or ignore_pairs entry names parts, part instances or fasteners the build registered"
+    },
+    {
+      "id": "rule:wall-undeclared",
+      "status": "pass",
+      "message": "a card checked by gate:wall (an error) or made by an additive process (a warning) declares material.wall_mm"
+    },
+    {
+      "id": "rule:decision-incomplete",
+      "status": "pass",
+      "message": "a decided decision has a `why` and at least one alternative"
+    },
+    {
+      "id": "rule:alternative-no-reason",
+      "status": "pass",
+      "message": "every alternative says why it was rejected"
+    },
+    {
+      "id": "rule:unknown-check",
+      "status": "pass",
+      "message": "every check id is gate:<name> or a cad.checks id in cad-agent.yaml"
+    },
+    {
+      "id": "rule:requirement-untraced",
+      "status": "pass",
+      "message": "every requirement is referenced by a section"
+    },
+    {
+      "id": "rule:requirement-unchecked",
+      "status": "pass",
+      "message": "every requirement has a check (its own, or one on a card of its sections)"
+    },
+    {
+      "id": "rule:waiver-no-rationale",
+      "status": "pass",
+      "message": "a waived requirement says why in `rationale`"
+    },
+    {
+      "id": "rule:requirement-status-ignored",
+      "status": "pass",
+      "message": "a requirement's status is computed; only `waived` belongs in YAML"
+    },
+    {
+      "id": "rule:section-no-requirements",
+      "status": "pass",
+      "message": "a section names the requirements it serves"
+    },
+    {
+      "id": "rule:section-no-parts",
+      "status": "pass",
+      "message": "a section has part cards"
+    },
+    {
+      "id": "rule:status-not-earned",
+      "status": "pass",
+      "message": "a card claims reviewed/signed_off only with a current reviewer record"
+    },
+    {
+      "id": "rule:status-overclaimed",
+      "status": "pass",
+      "message": "a card's YAML status is not above the computed one"
+    },
+    {
+      "id": "rule:review-invalid",
+      "status": "pass",
+      "message": "a reviewer record is valid (cadagent.dossier.review.validate_record: its fields, each answer with evidence, a sign-off consistent with its findings and answers)"
+    },
+    {
+      "id": "rule:review-unknown-section",
+      "status": "pass",
+      "message": "a reviewer record names a section of the dossier"
+    },
+    {
+      "id": "rule:review-same-actor",
+      "status": "pass",
+      "message": "a review is by an actor who neither built nor wrote any part of the section, and not `unknown` (gates: require_separate_reviewer)"
+    },
+    {
+      "id": "rule:review-builder-unknown",
+      "status": "pass",
+      "message": "a current review of a section whose parts were built by a known actor (else nobody can be shown to be someone else, and it does not count)"
+    },
+    {
+      "id": "rule:review-incomplete",
+      "status": "pass",
+      "message": "a current review judges every decision and traces every requirement of its section, and answers exactly the questions of the packet on disk (else it does not count; cadagent.dossier.review.check_record)"
+    },
+    {
+      "id": "rule:review-stale",
+      "status": "pass",
+      "message": "the latest review still matches the geometry (else its sign-off is void)"
+    },
+    {
+      "id": "rule:signoff-open-decision",
+      "status": "pass",
+      "message": "a section with an open decision is not signed off"
+    },
+    {
+      "id": "rule:geometry-missing",
+      "status": "pass",
+      "message": "the build's geometry record exists, so cards can be joined to shapes"
+    },
+    {
+      "id": "rule:geometry-invalid",
+      "status": "pass",
+      "message": "the geometry record is readable JSON"
+    },
+    {
+      "id": "rule:verdict-invalid",
+      "status": "pass",
+      "message": "a gate verdict is readable JSON"
+    },
+    {
+      "id": "rule:verdict-stale",
+      "status": "pass",
+      "message": "a gate verdict was computed from the current geometry record (its inputs match)"
+    }
+  ],
+  "findings": [
+    {
+      "id": "section-below-gated@dossier/sections/S1-base.yaml:3",
+      "status": "fail",
+      "message": "section 'S1-base' is built, below gated: pan_base: gate:assembly fail (failing: step:53:insert); turret-fea fail (verdict.all_ok is False); gate:wall fail (failing: wall:pan_base); pan_clamp: gate:assembly fail (failing: step:50:insert); pan_bearing: gate:assembly fail (failing: step:50:insert); pan_bearing_inner: gate:assembly fail (failing: step:50:insert)",
+      "parts": [
+        "circlip_50",
+        "pan_base",
+        "pan_bearing",
+        "pan_bearing_inner",
+        "pan_clamp",
+        "pan_pinion",
+        "pan_ring",
+        "pan_spacer"
+      ],
+      "evidence": {
+        "code": "section-below-gated",
+        "file": "dossier/sections/S1-base.yaml",
+        "line": 3,
+        "item": "S1-base"
+      }
+    },
+    {
+      "id": "section-below-gated@dossier/sections/S2-tilt.yaml:3",
+      "status": "fail",
+      "message": "section 'S2-tilt' is built, below gated: tilt_yoke: gate:assembly fail (failing: step:29:insert, step:31:insert, step:32:insert, step:50:insert); turret-fea fail (verdict.all_ok is False); gate:wall fail (failing: wall:tilt_yoke); cradle: turret-fea fail (verdict.all_ok is False); gate:wall fail (failing: wall:cradle); cradle_plate_l: turret-fea fail (verdict.all_ok is False); cradle_plate_r: turret-fea fail (verdict.all_ok is False)",
+      "parts": [
+        "cradle",
+        "cradle_plate_l",
+        "cradle_plate_r",
+        "horn_boss",
+        "pivot_spacer",
+        "stop_lug",
+        "tilt_bearing",
+        "tilt_bearing_inner",
+        "tilt_yoke"
+      ],
+      "evidence": {
+        "code": "section-below-gated",
+        "file": "dossier/sections/S2-tilt.yaml",
+        "line": 3,
+        "item": "S2-tilt"
+      }
+    },
+    {
+      "id": "section-below-gated@dossier/sections/S3-feed.yaml:3",
+      "status": "fail",
+      "message": "section 'S3-feed' is built, below gated: dial: gate:wall fail (failing: wall:dial); hopper: gate:assembly fail (failing: step:12:insert); gate:wall fail (failing: wall:hopper); hopper_lid: gate:wall fail (failing: wall:hopper_lid); ball: gate:assembly fail (failing: step:12:insert)",
+      "parts": [
+        "ball",
+        "dial",
+        "hopper",
+        "hopper_lid"
+      ],
+      "evidence": {
+        "code": "section-below-gated",
+        "file": "dossier/sections/S3-feed.yaml",
+        "line": 3,
+        "item": "S3-feed"
+      }
+    },
+    {
+      "id": "section-below-gated@dossier/sections/S4-launcher.yaml:3",
+      "status": "fail",
+      "message": "section 'S4-launcher' is built, below gated: cartridge_body: gate:connectivity fail (failing: joint:I-wheel-r); turret-fea fail (verdict.all_ok is False); gate:wall fail (failing: wall:cartridge_body); flywheel_m: gate:connectivity fail (failing: connect:body:flywheel_m, joint:I-wheel-r); flywheel_tyre_m: gate:connectivity fail (failing: connect:body:flywheel_m)",
+      "parts": [
+        "cartridge_body",
+        "flywheel_m",
+        "flywheel_tyre_m"
+      ],
+      "evidence": {
+        "code": "section-below-gated",
+        "file": "dossier/sections/S4-launcher.yaml",
+        "line": 3,
+        "item": "S4-launcher"
+      }
+    },
+    {
+      "id": "decision-open@dossier/sections/S4-launcher.yaml:304",
+      "status": "warn",
+      "message": "decision 'T4.7' is open; section 'S4-launcher' cannot be signed off until it is decided",
+      "evidence": {
+        "code": "decision-open",
+        "file": "dossier/sections/S4-launcher.yaml",
+        "line": 304,
+        "item": "S4-launcher"
+      }
+    },
+    {
+      "id": "section-below-gated@dossier/sections/S5-barrel.yaml:3",
+      "status": "fail",
+      "message": "section 'S5-barrel' is built, below gated: laser_mount: gate:wall fail (failing: wall:laser_mount)",
+      "parts": [
+        "laser_mount"
+      ],
+      "evidence": {
+        "code": "section-below-gated",
+        "file": "dossier/sections/S5-barrel.yaml",
+        "line": 3,
+        "item": "S5-barrel"
+      }
+    },
+    {
+      "id": "section-below-gated@dossier/sections/S6-wiring.yaml:3",
+      "status": "fail",
+      "message": "section 'S6-wiring' is built, below gated: slip_ring_rotor: gate:assembly fail (failing: step:50:insert); ring_carrier: gate:wall fail (failing: wall:ring_carrier); ring_driver: gate:assembly fail (failing: step:50:insert); board_bay: gate:assembly fail (failing: step:50:insert)",
+      "parts": [
+        "base_board",
+        "board_bay",
+        "ring_carrier",
+        "ring_driver",
+        "slip_ring_rotor"
+      ],
+      "evidence": {
+        "code": "section-below-gated",
+        "file": "dossier/sections/S6-wiring.yaml",
+        "line": 3,
+        "item": "S6-wiring"
+      }
+    },
+    {
+      "id": "section-below-gated@dossier/sections/S7-compute.yaml:3",
+      "status": "fail",
+      "message": "section 'S7-compute' is built, below gated: compute_shell: gate:wall fail (failing: wall:compute_shell)",
+      "parts": [
+        "compute_shell"
+      ],
+      "evidence": {
+        "code": "section-below-gated",
+        "file": "dossier/sections/S7-compute.yaml",
+        "line": 3,
+        "item": "S7-compute"
+      }
+    },
+    {
+      "id": "decision-open@dossier/sections/S8-stand.yaml:212",
+      "status": "warn",
+      "message": "decision 'T8.2' is open; section 'S8-stand' cannot be signed off until it is decided",
+      "evidence": {
+        "code": "decision-open",
+        "file": "dossier/sections/S8-stand.yaml",
+        "line": 212,
+        "item": "S8-stand"
+      }
+    }
+  ],
+  "exclusions": [],
+  "limits": {
+    "required_section_status": "gated"
+  },
+  "assumptions": [
+    "declarations only: the lint checks that the dossier is complete and agrees with the build's geometry record, not that the geometry is right (the gates) or meets the requirements (the reviewer)",
+    "a gate verdict counts only when its inputs match the current geometry record and, for a project, the gate's declarations and options (verdict-stale otherwise)"
+  ],
+  "physical_fit_verified": false,
+  "sections": {
+    "S1-base": "built",
+    "S2-tilt": "built",
+    "S3-feed": "built",
+    "S4-launcher": "built",
+    "S5-barrel": "built",
+    "S6-wiring": "built",
+    "S7-compute": "built",
+    "S8-stand": "gated"
+  },
+  "parts": {
+    "pan_base": "built",
+    "pan_clamp": "built",
+    "pan_bearing": "built",
+    "pan_bearing_inner": "built",
+    "pan_ring": "built",
+    "pan_spacer": "built",
+    "circlip_50": "built",
+    "pan_pinion": "built",
+    "pan_servo": "gated",
+    "bumper_ring": "gated",
+    "index_magnet": "gated",
+    "hall_switch": "gated",
+    "tilt_yoke": "built",
+    "cradle": "built",
+    "cradle_plate_l": "built",
+    "cradle_plate_r": "built",
+    "stop_lug": "built",
+    "horn_boss": "built",
+    "pivot_spacer": "built",
+    "tilt_servo": "gated",
+    "tilt_bearing": "built",
+    "tilt_bearing_inner": "built",
+    "shoulder_screw": "gated",
+    "ct_thumbscrew": "gated",
+    "dial": "built",
+    "hopper": "built",
+    "hopper_lid": "built",
+    "hopper_flap": "gated",
+    "feed_motor": "gated",
+    "hopper_inserts": "gated",
+    "ball": "built",
+    "cartridge_body": "built",
+    "flywheel": "gated",
+    "flywheel_m": "built",
+    "flywheel_tyre": "gated",
+    "flywheel_tyre_m": "built",
+    "flywheel_motor_l": "gated",
+    "flywheel_motor_r": "gated",
+    "esc_l": "gated",
+    "esc_r": "gated",
+    "cartridge_board": "gated",
+    "barrel": "gated",
+    "laser_mount": "built",
+    "laser": "gated",
+    "laser_screws": "gated",
+    "laser_inserts": "gated",
+    "slip_ring": "gated",
+    "slip_ring_rotor": "built",
+    "ring_carrier": "built",
+    "ring_driver": "built",
+    "ring_coupling": "gated",
+    "board_bay": "built",
+    "board_bay_lid": "gated",
+    "turret_board": "gated",
+    "base_board": "built",
+    "dt_receptacle": "gated",
+    "dt_plug": "gated",
+    "compute_tray": "gated",
+    "compute_shell": "built",
+    "compute": "gated",
+    "eth_jack": "gated",
+    "xt30_input": "gated",
+    "input_fuses": "gated",
+    "stand_box": "gated",
+    "stand_bottom": "gated",
+    "stand_foot": "gated",
+    "dock": "gated",
+    "pack": "gated",
+    "terminal_board": "gated",
+    "usb_can": "gated",
+    "panel_switch": "gated",
+    "panel_pendant": "gated"
+  }
+}

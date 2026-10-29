@@ -1,0 +1,402 @@
+# The turret's dossier (cad-agent: docs/dossier.md in the toolkit). Hand-edited YAML; joined by id to the geometry
+# cad/turret_dossier.py registers (exports/dossier-geometry.json). The design story is docs/turret-sections.md.
+title: Gyropup turret
+requirements:
+- id: R1
+  text: 'Mount on the TM pattern (4 x M5 on 80 x 80, 2 x Ø5 dowels): on Gyropup''s head or on the stand'
+  source:
+    kind: derived
+    ref: docs/turret-sections.md 7
+  verify_by: inspection
+  checks:
+  - gate:connectivity
+- id: R2
+  text: Pan continuously (a slip ring passes power and signals), 3:1 off an STS3215, with an absolute index at pan 0; gated
+    over +-170 deg
+  source:
+    kind: derived
+    ref: docs/turret-sections.md 1
+  verify_by: analysis
+  checks:
+  - gate:motion
+- id: R3
+  text: 'Tilt 0 to -25 deg between hard stops: the barrel never points above level'
+  source:
+    kind: standard
+    ref: kid-safety rule S5 (study 6.3)
+  verify_by: analysis
+  checks:
+  - gate:motion
+- id: R4
+  text: Hold 30 Rival rounds
+  source:
+    kind: derived
+    ref: docs/turret-sections.md 3
+  verify_by: analysis
+  checks:
+  - gate:containment
+- id: R5
+  text: Hand one ball at a time to the flywheels, three a second; parked, powered or not, no ball reaches the wheels
+  source:
+    kind: derived
+    ref: docs/turret-sections.md 3; sim/turret_feed.py
+  verify_by: analysis
+- id: R6
+  text: Feed, squeeze and fire any Rival-compatible round of 22.2-22.8 mm and 1.6-2.0 g
+  source:
+    kind: user
+    quote: It's ok to use off brand balls, just as long as they're close enough.
+    ref: D67
+  verify_by: analysis
+  checks:
+  - gate:turret-ammo
+- id: R7
+  text: A Hasbro round leaves at 95-100 fps; no accepted round above 105 fps, the densest under ASTM F963's 2,500 J/m^2
+  source:
+    kind: user
+    quote: Please don't take the fun out of this, it's for older kids we need to fire these things pretty good.
+    ref: D68
+  verify_by: analysis
+  checks:
+  - turret-launch
+- id: R8
+  text: 'The ball''s way from the exit pocket to the muzzle is clear: only the tyres touch it, at the nip'
+  source:
+    kind: derived
+    ref: docs/turret-sections.md 3-5
+  verify_by: analysis
+  checks:
+  - gate:turret-path
+- id: R9
+  text: 'Every part is held: nothing in the model floats'
+  source:
+    kind: agent
+    ref: the integrity gates (docs/gates.md)
+  verify_by: analysis
+  checks:
+  - gate:connectivity
+- id: R10
+  text: Nothing collides over the aim's range (pan +-170 x tilt 0..-25) or the mechanisms' (the dial, the flywheels, the flap,
+    the pinion), with the hopper loaded
+  source:
+    kind: agent
+    ref: the integrity gates
+  verify_by: analysis
+  checks:
+  - gate:motion
+- id: R11
+  text: Every gated screw seats, engages its insert and can be driven with its key
+  source:
+    kind: agent
+    ref: cad/turret.py GATED_SCREWS
+  verify_by: analysis
+  checks:
+  - gate:fasteners
+- id: R12
+  text: The turret goes together in its build order, each part along a straight path
+  source:
+    kind: agent
+    ref: the integrity gates
+  verify_by: analysis
+  checks:
+  - gate:assembly
+- id: R13
+  text: 'Strength: SF 1.2 on the rare cases (falls), 2.0 on the everyday ones, layer-aware for printed parts'
+  source:
+    kind: derived
+    ref: D33; docs/turret-sections.md 2
+  verify_by: analysis
+  checks:
+  - turret-fea
+- id: R14
+  text: Every part is bought at a listed price, printed, or cut at an instant online price
+  source:
+    kind: user
+    quote: We should use mostly off the shelf parts, 3d printed parts, and sendcutsend or similar parts?
+    ref: D40
+  verify_by: inspection
+- id: R15
+  text: The turret carries its own Jetson Orin NX 16 GB and takes one XT30 input, 12-54 V
+  source:
+    kind: user
+    quote: I would use a jetson orin nx 16gb.
+    ref: D66
+  verify_by: inspection
+- id: R16
+  text: The turret stands alone on one DCB609 FLEXVOLT in 20 V mode, with the hold-to-run pendant
+  source:
+    kind: user
+    quote: They can combined of course, but would basically be two independent robots
+    ref: D66
+  verify_by: inspection
+- id: R17
+  text: Every slip-ring circuit carries at most 2 A, on the bus and on the stand's pack
+  source:
+    kind: derived
+    ref: D70; sim/turret_power.py
+  verify_by: analysis
+- id: R18
+  text: Nothing spins unless ARM is held; the chronograph trips at 105 fps
+  source:
+    kind: standard
+    ref: D68; firmware/turret tests
+  verify_by: test
+- id: R19
+  text: Show the aim with a laser parallel to the bore, under 1 mW (Class 2)
+  source:
+    kind: derived
+    ref: docs/turret-sections.md 5
+  verify_by: inspection
+sections:
+- sections/*.yaml
+interfaces:
+- id: I-tilt
+  between:
+  - cartridge_body
+  - pan_ring
+  kind: revolute
+  datum: the tilt axis, T (0, y, tilt_t = 140); the MR126 in the -y arm, the servo horn on +y
+  description: 'Tilt 0 to -25 deg (muzzle down) between hard stops. The real bearings are the MR126 (tilt_bearing_inner in
+    tilt_bearing, 0.1 mm) and the tilt servo''s horn on horn_boss: those are the joint''s intended contacts. cadagent''s chain
+    rule makes a child joint''s fixed part the parent''s moving part (pan_ring), so the hold is measured from cartridge_body
+    to pan_ring (38.7 mm); the 39 mm clearance stands for the yoke and cradle between them (reported on Valpatel/cad-agent#39).'
+  clearance: 39.0
+  owner: S4-launcher
+- id: I-feed
+  between:
+  - dial
+  - cartridge_body
+  kind: revolute
+  datum: the dial axis, C (0, 0, z)
+  description: The dial turns on the feed servo's horn, 45 deg a shot; gated 0-90 deg (spokes repeat every 45, fins every
+    90). Measured from the dial to the dial housing (0.71 mm).
+  owner: S3-feed
+- id: I-flap
+  between:
+  - hopper_flap
+  - cartridge_body
+  kind: revolute
+  datum: the flap hinge, C (FILL_PORT x - 19, y, hopper_top + 6), along y
+  description: 'The fill flap on its Ø2 pin in the lid''s lugs (0.36 mm from the lid: the intended contact), opening 50 deg: its knuckle meets the lid at 51 deg (T3.5).
+    The chain rule measures it from the flap to cartridge_body (68.4 mm), so the 69 mm clearance stands for the lid and hopper
+    between them.'
+  clearance: 69.0
+  owner: S3-feed
+- id: I-yoke
+  between:
+  - tilt_yoke
+  - pan_ring
+  kind: fastened
+  datum: the turntable's top, T z 69
+  description: 4 x M4 x 10 into inserts in the turntable; the bridge bears inside r 35.
+  owner: S2-tilt
+- id: I-driver
+  between:
+  - ring_driver
+  - pan_ring
+  kind: bonded
+  datum: the turntable's bore
+  description: 'Three crush ribs and CA in the bore (2 mm^3 shared: the ribs'' crush, an intended overlap).'
+  owner: S6-wiring
+- id: I-bay
+  between:
+  - board_bay
+  - tilt_yoke
+  kind: fastened
+  datum: the -y arm's outer face
+  description: 4 x M3 x 8 flat heads to the -y yoke arm.
+  owner: S6-wiring
+- id: I-ct
+  between:
+  - cradle
+  - cartridge_body
+  kind: fastened
+  datum: 'the cradle''s rails (CT: 2 dowels, a thumbscrew)'
+  description: The cartridge sits on the rails on two dowels, held by the captive thumbscrew.
+  owner: S2-tilt
+- id: I-hopper-inserts
+  between:
+  - hopper_inserts
+  - cartridge_body
+  kind: press_fit
+  datum: the housing's three lugs
+  description: 3 x McMaster 94459A140 heat-set M3 inserts.
+  owner: S3-feed
+- id: I-barrel
+  between:
+  - barrel
+  - cartridge_body
+  kind: press_fit
+  datum: the barrel socket, C x 98
+  description: The barrel in the cage's socket, a set screw through the socket.
+  owner: S5-barrel
+- id: I-laser-inserts
+  between:
+  - laser_inserts
+  - cartridge_body
+  kind: press_fit
+  datum: the barrel socket's pad, C z 22.6
+  description: 2 x McMaster 94459A140 heat-set M3 inserts in the pad.
+  owner: S5-barrel
+- id: I-feed-servo
+  between:
+  - feed_motor
+  - cartridge_body
+  kind: fastened
+  datum: under the dial floor
+  description: 4 x M2 x 6 countersunk from above; its face in a 0.75 mm pocket.
+  owner: S3-feed
+- id: I-plinth-base
+  between:
+  - pan_base
+  - compute_shell
+  kind: fastened
+  datum: the TM face, T z 0
+  description: 4 x M5 x 16 into inserts in the shell's four columns.
+  owner: S1-base
+- id: I-carrier
+  between:
+  - ring_carrier
+  - pan_base
+  kind: fastened
+  datum: under the base
+  description: 3 x M3 x 10 flat heads up into the base.
+  owner: S6-wiring
+- id: I-base-board
+  between:
+  - base_board
+  - pan_base
+  kind: fastened
+  datum: inside the base, -x side
+  description: The base board on standoffs in the base.
+  owner: S6-wiring
+- id: I-dt
+  between:
+  - dt_receptacle
+  - pan_base
+  kind: fastened
+  datum: the base's -y wall
+  description: The DT12 flange receptacle on the base's wall (the TM connector).
+  owner: S6-wiring
+- id: I-stand-tm
+  between:
+  - compute_tray
+  - stand_box
+  kind: fastened
+  datum: the stand's top plate (the TM pattern), T z -86
+  description: 4 x M5 x 16 down into the stand's inserts, 2 x Ø5 dowels (as on the head).
+  owner: S7-compute
+- id: I-hopper-seat
+  between:
+  - hopper
+  - cartridge_body
+  kind: contact
+  datum: the dial housing's top, C z 160 - path_t
+  description: The hopper stands on the housing, its three lugs on the housing's lugs.
+  owner: S3-feed
+- id: I-laser-pad
+  between:
+  - laser_mount
+  - cartridge_body
+  kind: contact
+  datum: the barrel socket's pad, C z 22.6
+  description: The holder's foot on the pad.
+  owner: S5-barrel
+- id: I-driver-yoke
+  between:
+  - ring_driver
+  - tilt_yoke
+  kind: contact
+  datum: the bridge's underside, T z 69
+  description: The driver's top under the yoke's bridge.
+  owner: S6-wiring
+decisions: decisions.yaml
+gates:
+  touch_tol_mm: 0.05
+  grounded:
+  - compute_tray
+  free_parts:
+  - part: ball
+    reason: a loose round of the physics-settled hopper load (sim/turret_feed.py --pile); held by the hopper's cavity
+  - part: dt_plug
+    reason: the robot harness's plug, a separate cable plugged into the receptacle (absent on the stand)
+  intended_overlaps:
+  - parts:
+    - circlip_50
+    - pan_ring
+    reason: 'the circlip drawn at its groove''s d2: 0.05 mm^3'
+  - parts:
+    - ring_driver
+    - pan_ring
+    reason: 'the driver''s three crush ribs in the turntable''s bore: 2 mm^3'
+  - parts:
+    - slip_ring_rotor
+    - ring_coupling
+    reason: 'the tube stretched over the rotor stub: 0.10 mm^3'
+  - parts:
+    - bumper_ring
+    - pan_base
+    reason: 'the bumper''s lug on a base tab: 0.04 mm^3 (curved faces)'
+  - parts:
+    - esc_l
+    - cartridge_body
+    reason: 'the ESC envelope drawn 0.01 mm into the cage plate: 3.4 mm^3'
+  - parts:
+    - esc_r
+    - cartridge_body
+    reason: 'the ESC envelope drawn 0.01 mm into the cage plate: 3.4 mm^3'
+  - parts:
+    - flywheel
+    - flywheel_motor_l
+    reason: 'each hub''s bore on its X2216''s prop adapter: a 0.008 mm^3 modelling overlap where the envelopes meet (a slip fit)'
+  - parts:
+    - flywheel_m
+    - flywheel_motor_r
+    reason: 'each hub''s bore on its X2216''s prop adapter: a 0.008 mm^3 modelling overlap where the envelopes meet (a slip fit)'
+  - parts:
+    - slip_ring_rotor
+    - slip_ring
+    reason: 'one bought slip ring drawn as two solids: the rotor stub drawn 0.01 mm into the stator''s end face (0.28 mm^3)'
+  - parts:
+    - ct_thumbscrew
+    - cradle
+    reason: 'the captive thumbscrew''s collar in the rail: 0.34 mm^3'
+  - parts:
+    - laser_screws
+    - laser_mount
+    reason: 'the set screws in the ring''s tapped holes: the thread envelope (Ø3 in the Ø2.5 tap drill)'
+  - parts:
+    - panel_switch
+    - stand_box
+    reason: 'the rocker''s 24 mm square envelope through its Ø20.2 round cut-out: the envelope, not the part'
+  - parts:
+    - panel_pendant
+    - stand_box
+    reason: 'the TB3M socket''s square envelope through its round cut-out: the envelope, not the part'
+  - parts:
+    - dt_plug
+    - dt_receptacle
+    reason: 'the mated DT connector: the plug''s shell drawn over the receptacle''s insert'
+  - parts:
+    - ball
+    - cartridge_body
+    reason: 'the settle''s soft contacts with the dial housing''s floor (0.19 mm^3 at most); the hopper''s containment checks the balls against the hopper'
+  - parts:
+    - ball
+    - dial
+    reason: 'the settle''s soft contacts with the dial''s cone, fins and pockets'
+  ignore_pairs:
+  - parts:
+    - pan_pinion
+    - pan_ring
+    reason: 'the gear mesh (T0.6): no gear coupling in the gates; turret.pinion_check checks it over pan'
+  - parts:
+    - ball
+    - dial
+    reason: the dial's fins and spokes stir and carry the load by design (T0.2); sim/turret_feed.py checks the feed
+  strict_interfaces: false
+  motion_samples: 12
+  tools:
+    hex 2.5:
+      envelope_d: 3.0
+      length: 60.0

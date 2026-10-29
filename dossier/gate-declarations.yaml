@@ -1,0 +1,18 @@
+# Declarations the dossier's schema cannot say yet (cad: gates: declarations:), read by cad-agent gates.
+contains:
+  # The 30-ball load in the hopper's registered cavity. Here, not on the hopper's card: a card's `contains` takes no
+  # `closed_by`, and contains_list() keeps the card's entry over this one for the same container, cavity and item
+  # (reported on Valpatel/cad-agent#39). The cavity runs from the dial housing's floor (in cartridge_body) to the
+  # lid's underside, so its box reaches into theirs.
+- container: hopper
+  cavity: hopper_cavity
+  what: ball
+  count: 30
+  free: true
+  closed_by: [cartridge_body, hopper_lid]
+intended_overlaps:
+  # a pair exemption naming a fastener (the dossier's gates.intended_overlaps takes part ids only)
+- parts: [laser_foot_screws, laser_inserts]
+  reason: 'thread envelope: the M3 screw''s nominal Ø3 in the insert''s Ø2.5 minor diameter, by design'
+- parts: [hopper_screws, hopper_inserts]
+  reason: 'thread envelope: the M3 screw''s nominal Ø3 in the insert''s Ø2.5 minor diameter, by design'
