@@ -68,9 +68,19 @@ const react = (ev) => { try { talk?.react?.(ev); } catch { /* the voice is optio
 
 // ---- layout: keep the robot out from under the panels
 const hud = $('#hud');
-const sceneLoading = createLoadingStatus($('#stage-overlay'), { overlay:true, id:'sim-loading' });
+// A body-level overlay stays above speech bubbles without raising the whole HUD.
+const sceneLoading = createLoadingStatus(document.body, { overlay:true, id:'sim-loading' });
+sceneLoading.element.style.position='fixed';
+function positionLoadStatus() {
+  const area=$('#stage-overlay').getBoundingClientRect(), top=area.top+8;
+  const actions=document.getElementById(state.bench?'tb-actions':'robot-actions');
+  const actionBox=actions&&!actions.hidden&&actions.offsetParent?actions.getBoundingClientRect():null;
+  Object.assign(sceneLoading.element.style,{top:`${top}px`,left:`${area.left+area.width/2}px`,
+    maxWidth:`${Math.max(0,area.width-16)}px`,maxHeight:`${Math.max(44,(actionBox?.top??area.bottom)-top-8)}px`,overflow:'auto'});
+}
 function beginLoad(message) {
   if (!document.body.dataset.ready) { startupMessage(message); return null; }
+  positionLoadStatus();
   return sceneLoading.begin(message, {onCancel:cancelPendingLoad});
 }
 function cancelPendingLoad() {
@@ -101,6 +111,7 @@ const updateInsets = () => {
   const br = bar && !bar.hidden && bar.offsetParent && getComputedStyle(bar).position !== 'static' ? bar.getBoundingClientRect() : null;
   if (br?.height) ins.bottom = Math.max(ins.bottom, window.innerHeight - br.top + 6);
   stage.setInsets(ins);
+  positionLoadStatus();
 };
 const panelFold = collapsiblePanel(hud, $('#panel'), { key: 'gyropup-sim-panel', onChange: () => { updateInsets(); if (state.replay) frameReplay(); } });
 [...$('#topbar').querySelectorAll('.hud-pill')].filter((b) => /PANEL/.test(b.textContent)).forEach((b) => b.classList.add('panel-pill'));
@@ -234,10 +245,6 @@ async function loadDesign(value) {
   if (!robotCache.has(value)) robotCache.set(value, (async () => {
     const v2 = value === 'v2';
     const design = v2 ? { name: 'Gyropup v2 (five-bar)' } : value === '@designer' ? fromDesigner : await getJson(`../${value}`);
-    let summary = null;
-    if (value !== '@designer') {
-      try { summary = await getJson(`../exports/sim/${value.split('/').pop().replace(/\.json$/, '')}/summary.json`); } catch { /* not simulated */ }
-    }
     let robot;
     if (v2) robot = await buildRobotV2('../', { eyes });
     else {
@@ -246,7 +253,7 @@ async function loadDesign(value) {
       const cad = value === '@designer' ? null : await loadCadRig('../', value);
       robot = buildRobot(design, catalog, { eyes, mech, cad });
     }
-    return { design, v2, summary, robot, result: v2 ? null : evaluate(design, catalog, materials) };
+    return { design, v2, summary:null, robot, result: v2 ? null : evaluate(design, catalog, materials) };
   })());
   let next;
   try { next = await robotCache.get(value); }
@@ -300,16 +307,19 @@ async function listRuns(value, request, token) {
   if (value === '@designer') return true;
   const stem = value.split('/').pop().replace(/\.json$/, '');
   try {
-    const sm = state.summary ?? await getJson(`../exports/sim/${stem}/summary.json`);
+    // Metadata has its own retry path; do not cache a malformed list with usable geometry.
+    const sm = await getJson(`../exports/sim/${stem}/summary.json`);
     if (request !== designRequest) return;
     if (!sm || typeof sm.scenarios !== 'object' || !sm.scenarios) throw new Error('Invalid recording list');
     state.summary = sm;
+    state.modelMass = sm.mass_kg ?? state.modelMass;
     runSel.innerHTML += Object.entries(sm.scenarios).map(([n, r]) => `<option value="${stem}/${n}">Recorded: ${r.title} — ${r.pass ? 'pass' : 'FAIL'}</option>`).join('');
     runSel.value=state.replay?.key ?? '';
     renderSummary();
     return true;
   } catch {
     if (request !== designRequest) return false;
+    state.summary=null;renderSummary();
     const failureToken=token??sceneLoading.begin('Loading recordings…');
     sceneLoading.fail('The robot is ready, but its recordings could not load.', {token:failureToken,
       onRetry:async()=>{ const next=sceneLoading.begin('Loading recordings…',{onCancel:cancelPendingLoad});
@@ -493,6 +503,24 @@ function boxFromMjcf(attrs) {
   return mesh;
 }
 
+function validateRecording(run) {
+  const vector=(v,n)=>Array.isArray(v)&&v.length===n&&v.every(Number.isFinite);
+  const list=(items,check)=>items===undefined||(Array.isArray(items)&&items.every(check));
+  const frames=run?.frames, width=frames?.qpos?.[0]?.length;
+  if (!frames || !Number.isFinite(frames.fps) || frames.fps<=0 || !(width>=7) ||
+    !Array.isArray(frames.qpos) || !frames.qpos.every(f=>vector(f,width)&&Math.hypot(...f.slice(3,7))>0)) throw new Error('Invalid recording frames');
+  const layout=run.qpos_layout;
+  if (!layout || Array.isArray(layout) || typeof layout!=='object' || !Object.entries(layout).every(([name,index])=>
+    Number.isInteger(index)&&index>=0&&index+(/^(root$|ball_|dart_)/.test(name)?7:1)<=width)) throw new Error('Invalid recording joints');
+  if (!list(run.props,p=>p&&typeof p.name==='string'&&[2,3,5,6].includes(p.type)&&vector(p.pos,3)&&
+    vector(p.quat,4)&&Math.hypot(...p.quat)>0&&vector(p.size,3)&&p.size.every(v=>v>=0)&&vector(p.rgba,4))) throw new Error('Invalid recording scenery');
+  const names=new Set((run.props??[]).map(p=>p.name));
+  if (!list(run.movers,m=>m&&vector(m.pivot,3)&&vector(m.axis,3)&&Math.hypot(...m.axis)>0&&
+    Number.isInteger(m.qpos)&&m.qpos>=0&&m.qpos<width&&Array.isArray(m.geoms)&&m.geoms.every(n=>names.has(n)))) throw new Error('Invalid recording motion');
+  if (!list(run.events,e=>e&&typeof e.type==='string'&&Number.isFinite(e.t)&&e.t>=0)||
+    !list(run.reasons,r=>typeof r==='string')) throw new Error('Invalid recording events');
+}
+
 async function startReplay(key) {
   const request = ++replayRequest;
   if (!key) { stopReplay(); return; }
@@ -505,11 +533,8 @@ async function startReplay(key) {
     // No reset while loading. A late response must not replace a newer player choice.
     if (!runCache.has(key)) runCache.set(key, getJson(`../exports/sim/${key}.json`));
     run = await runCache.get(key);
-    const frames=run?.frames;
-    if (!frames || !(frames.fps>0) || !Array.isArray(frames.qpos) || !frames.qpos.length ||
-      !frames.qpos.every(f=>Array.isArray(f)&&f.length>=7&&f.every(Number.isFinite)) ||
-      (run.props && (!Array.isArray(run.props)||!run.props.every(p=>['pos','quat','size','rgba'].every(k=>Array.isArray(p[k])&&p[k].every(Number.isFinite))))) ||
-      (run.events && !Array.isArray(run.events))) throw new Error('Invalid recording data');
+    // Validate every field used by scene construction before switching the robot presentation.
+    validateRecording(run);
   } catch (error) {
     runCache.delete(key);
     if (request === replayRequest) {

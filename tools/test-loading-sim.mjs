@@ -17,11 +17,14 @@ const identity=()=>page.evaluate(()=>{const s=window.__sim,k=window.loadingIdent
 const afterFrames=()=>page.evaluate(()=>new Promise(resolve=>requestAnimationFrame(()=>requestAnimationFrame(resolve))));
 let releaseNav,releaseModel,releaseRun;
 try {
+ const version=await(await context.request.get(base+'/version.json')).json();
  // The real nav helper returns useful links while its optional config is still pending.
+ let navRequested;const navRequest=new Promise(resolve=>{navRequested=resolve;});
  await page.route('**/__loading_shell__',r=>r.fulfill({contentType:'text/html',body:'<!doctype html><body></body>'}));
- await page.route('**/site/nav.json',async r=>{await new Promise(resolve=>{releaseNav=resolve;});await r.continue();});
+ await page.route('**/site/nav.json',async r=>{await new Promise(resolve=>{releaseNav=resolve;navRequested();});await r.continue();});
  await page.goto(base+'/__loading_shell__');
  const navResult=await page.evaluate(async()=>{const {mountAppNav}=await import('/designer/kit/appnav.js');const nav=await mountAppNav({root:'../'});return {links:nav.querySelectorAll('a').length,text:nav.textContent};});
+ await navRequest;
  assert.ok(releaseNav&&navResult.links>=6&&navResult.text.includes('Play'),'Navigation is usable before its configuration arrives');
  releaseNav();await page.unroute('**/site/nav.json');
  // Static startup feedback exists even if the main module cannot load; Retry recovers a fresh bootstrap.
@@ -50,7 +53,12 @@ try {
  await page.waitForFunction(()=>document.getElementById('sim-loading').dataset.state==='error');
  assert.equal(await identity(),true);assert.equal(await page.evaluate(()=>window.__sim.state.robot===window.loadingIdentity.robot),true);
  await retry.click();await page.waitForFunction(()=>window.__sim.state.modelKey==='designs/default.json');await hidden();assert.equal(await identity(),true);
- await page.selectOption('#design-select','v2');await page.waitForFunction(()=>window.__sim.state.modelKey==='v2');await hidden();
+ let summaryAttempts=0;
+ await page.route('**/exports/sim/v2/summary.json',r=>++summaryAttempts===1?r.fulfill({json:{scenarios:null}}):r.continue());
+ await page.selectOption('#design-select','v2');await page.waitForFunction(()=>window.__sim.state.modelKey==='v2');
+ await page.waitForFunction(()=>document.getElementById('sim-loading').dataset.state==='error');
+ assert.match(await status.textContent(),/recordings could not load/);
+ await retry.click();await hidden();assert.equal(summaryAttempts,2,'Retry refetches a malformed recording list instead of reusing it');
  await page.waitForFunction(()=>!window.__sim.state.cameraTransition&&!window.__sim.state.transition);
  // Background loading is an overlay: it cannot move the camera or hide manual actions.
  await page.route('**/exports/sim/v2/targets.json',async r=>{await new Promise(resolve=>{releaseRun=resolve;});await r.continue();});
@@ -70,10 +78,25 @@ try {
  assert.equal(await identity(),true);await hidden();
  await page.unroute('**/exports/sim/v2/targets.json');
  let recordingAttempts=0;
- await page.route('**/exports/sim/v2/drive.json',r=>++recordingAttempts===1?r.fulfill({contentType:'application/json',body:'{"frames":{"fps":30,"qpos":[]}}'}):r.continue());
- await page.selectOption('#run-select','v2/drive');await page.waitForFunction(()=>document.getElementById('sim-loading').dataset.state==='error');
- assert.equal(await page.evaluate(()=>window.__sim.state.robot.presentation.mode),'current');
+ await page.route('**/exports/sim/v2/drive.json',async r=>{
+  ++recordingAttempts;if(recordingAttempts>4){await r.continue();return;}
+  const response=await r.fetch(),run=await response.json();
+  if(recordingAttempts===1)run.frames.qpos=[];
+  if(recordingAttempts===2)run.props=[{name:'broken',type:6,pos:[],quat:[1,0,0,0],size:[1,1,1],rgba:[1,1,1,1]}];
+  if(recordingAttempts===3)run.movers=[{pivot:[0,0,0],axis:[],qpos:0,geoms:[]}];
+  if(recordingAttempts===4)run.qpos_layout.ball_bad=run.frames.qpos[0].length-1;
+  await r.fulfill({json:run});
+ });
+ await page.selectOption('#run-select','v2/drive');
+ for(let attempt=1;attempt<=4;attempt++) {
+  await page.waitForFunction(()=>document.getElementById('sim-loading').dataset.state==='error');
+  assert.equal(recordingAttempts,attempt);
+  assert.equal(await page.evaluate(()=>window.__sim.state.robot.presentation.mode==='current'&&!window.__sim.state.replay),true);
+  assert.equal(await identity(),true);
+  if(attempt<4){const next=page.waitForResponse(r=>r.url().endsWith('/exports/sim/v2/drive.json'));await retry.click();await(await next).finished();}
+ }
  await retry.click();await page.waitForFunction(()=>window.__sim.state.replay?.key==='v2/drive');await hidden();
+ assert.equal(recordingAttempts,5);
  assert.equal(await identity(),true);
  await page.locator('#robot-actions [data-action=reload]').click();assert.equal(await page.evaluate(()=>window.__sim.state.replay),null);
  // Required bench geometry must fail as a whole, then recover without duplicate controls.
@@ -83,10 +106,25 @@ try {
  await page.waitForFunction(()=>document.getElementById('sim-loading').dataset.state==='error');
  assert.equal(await page.evaluate(()=>window.__sim.state.bench||!!window.__sim.bench()),false);
  assert.equal(await identity(),true);
- await page.setViewportSize({width:320,height:568});await page.evaluate(()=>window.__sim.talk.dock.collapse(true));await afterFrames();
- const layout=await retry.evaluate(el=>{const r=el.getBoundingClientRect(),hit=document.elementFromPoint(r.x+r.width/2,r.y+r.height/2);return {x:r.x,y:r.y,right:r.right,bottom:r.bottom,height:r.height,reachable:el===hit||el.contains(hit)};});
- assert.ok(layout.x>=0&&layout.right<=320&&layout.y>=0&&layout.bottom<=568&&layout.height>=44&&layout.reachable,JSON.stringify(layout));
- await page.screenshot({path:`${out}/${engine.name()}-phone-retry.png`});
+ const layouts=[];
+ for(const [width,height] of [[320,568],[844,390]]) {
+  await page.setViewportSize({width,height});await page.evaluate(()=>window.__sim.talk.dock.collapse(true));await afterFrames();
+  const layout=await retry.evaluate(el=>{
+   const r=el.getBoundingClientRect(),hit=document.elementFromPoint(r.x+r.width/2,r.y+r.height/2);
+   const status=el.closest('.gp-loading'),box=status.getBoundingClientRect(),actions=document.getElementById('robot-actions').getBoundingClientRect();
+   const bubble=document.querySelector('.gp-bubble'),b=bubble.getBoundingClientRect();
+   const left=Math.max(box.left,b.left),right=Math.min(box.right,b.right),top=Math.max(box.top,b.top),bottom=Math.min(box.bottom,b.bottom);
+   let readable=true;
+   if(right>left&&bottom>top&&!bubble.classList.contains('hidden')) {
+    // Pointer transparency must not conceal a stacking-order bug in this visual overlap check.
+    const pointer=bubble.style.pointerEvents;bubble.style.pointerEvents='auto';
+    readable=status.contains(document.elementFromPoint((left+right)/2,(top+bottom)/2));bubble.style.pointerEvents=pointer;
+   }
+   return {x:r.x,y:r.y,right:r.right,bottom:r.bottom,height:r.height,reachable:el===hit||el.contains(hit),aboveControls:box.bottom<=actions.top,readable};
+  });
+  assert.ok(layout.x>=0&&layout.right<=width&&layout.y>=0&&layout.bottom<=height&&layout.height>=44&&layout.reachable&&layout.aboveControls&&layout.readable,JSON.stringify({width,height,layout}));
+  layouts.push({viewportWidth:width,viewportHeight:height,...layout});await page.screenshot({path:`${out}/${engine.name()}-retry-${width}x${height}.png`});
+ }
  await retry.click();await page.waitForFunction(()=>window.__sim.bench()?.active);await hidden();
  assert.equal(await page.evaluate(()=>window.__sim.bench().api.mechanism.parts.length===window.__sim.bench().manifest.parts.length),true);
  assert.equal(await page.locator('#tb-actions').count(),1);assert.equal(await identity(),true);
@@ -94,6 +132,7 @@ try {
  const tokens=await page.evaluate(async()=>{const {createLoadingStatus}=await import('./kit/loading.js');const s=createLoadingStatus(document.body);const first=s.begin('First');const second=s.begin('Second');s.fail('Old failure',{token:first});s.ready(first);const before=s.element.textContent;s.ready(second);const result={before,hidden:s.element.hidden};s.dispose();return result;});
  assert.match(tokens.before,/Second/);assert.equal(tokens.hidden,true);
  assert.deepEqual(errors,[]);assert.equal(await page.evaluate(()=>document.body.dataset.stageError),undefined);
- await writeFile(`${out}/${engine.name()}-report.json`,JSON.stringify({base,moduleAttempts,designAttempts,recordingAttempts,meshAttempts,layout,errors},null,2));
+ assert.deepEqual(await(await context.request.get(base+'/version.json')).json(),version,'The same build must serve the whole test');
+ await writeFile(`${out}/${engine.name()}-report.json`,JSON.stringify({checkedAt:new Date().toISOString(),base,version,moduleAttempts,designAttempts,summaryAttempts,recordingAttempts,meshAttempts,layouts,errors},null,2));
  console.log(`PASS ${engine.name()}: nonblocking navigation, static startup/retry, visible delayed loads, model retry, retained scene/conversation, manual takeover cancellation, strict bench parts/retry, phone actions and stale status tokens`);
 } finally {releaseNav?.();releaseModel?.();releaseRun?.();await browser.close();}
