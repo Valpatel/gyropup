@@ -1,4 +1,9 @@
 {
+ "publication": {
+   "status": "historical",
+   "reviewed": "2026-10-29",
+   "reason": "Archived turret print estimates and files predate the current mechanical changes and lack current source receipts. No complete turret print kit has been regenerated or qualified."
+ },
  "printer": "Bambu Lab P1S 0.4 nozzle",
  "nozzle": "0.4 mm hardened steel (PA6-CF is abrasive)",
  "process": "0.20mm Standard @BBL X1C",

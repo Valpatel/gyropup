@@ -472,6 +472,9 @@ const orderRow = (l) => `<tr data-key="${esc(l.key)}" data-part-key="${esc(l.fil
   + `<td>${l.filament?'Use the material specified by the print plan.':altList(l)}</td></tr>`;
 const ORDER_HEAD='<thead><tr><th>Picture</th><th>Part</th><th>Supplier part number</th><th>Quantity needed</th><th>Unit price</th><th>Order cost</th><th>Alternates</th></tr></thead>';
 
+const historicalPlans = plans => plans.filter(p=>p.data.publication?.status==='historical');
+const historicalPrintNotice = plans => historicalPlans(plans).length ? `<aside class="print-history-note" role="note"><strong>Historical turret print plan</strong><p>${[...new Set(historicalPlans(plans).map(p=>p.data.publication.reason))].map(esc).join(' ')}</p><p><a href="${docPage('docs/mechanical-readiness.md')}">Current mechanical readiness</a> · <a href="${docPage('research/carrier-insert-fit/README.md')}">Separate insert-fit specimens</a> (geometry only; not a sliced or physically verified full kit).</p></aside>` : '';
+
 const render = () => {
   partsUI.dispose(document.querySelector('main'));
   noPic = new Set();
@@ -489,12 +492,14 @@ const render = () => {
   const hours = sum(prints.mats.map((m) => m.hours));
   const grams = sum(prints.mats.map((m) => m.grams));
   const sellers = groups.filter((g) => !g.none).length;
+  const includesHistoricalPrint = STREAMS.some(s=>included.has(s.id)&&historicalPlans(s.plans).length);
+  const historicalTotals = includesHistoricalPrint ? '<span class="print-history-total">Includes archived turret time, material and filament-cost estimates; not a current full-kit plan.</span>' : '';
 
   $('summary').innerHTML=`<p class="portal-summary-note">${STREAMS.some(s=>!s.complete)?'Published-data subtotal · incomplete workstreams excluded':'Included prototype workstreams'}</p><div class="summary-grid">`
     +`<div><small>Parts and filament</small><b id="sum-total" data-usd="${total}">${usd(total)}</b><p>${lines.length} lines · ${sellers} sellers · whole packs</p></div>`
     +`<div><small>Made to order · estimate</small><b id="sum-made" data-usd="${madeEst}">${madeRows.length?`~${usd(madeEst)}`:'—'}</b><p>${madeRows.length} custom parts</p></div>`
     +`<div><small>Printing · estimate</small><b id="sum-hours" data-h="${hours.toFixed(1)}">${hours.toFixed(1)} h</b><p>${kg(grams)} kg of material</p></div>`
-    +`<div><small>Prices to confirm</small><b id="sum-unpriced" data-n="${unpricedBought.length+madeUnpriced.length}">${unpricedBought.length+madeUnpriced.length}</b><p>Unpriced lines excluded from totals</p></div></div>`;
+    +`<div><small>Prices to confirm</small><b id="sum-unpriced" data-n="${unpricedBought.length+madeUnpriced.length}">${unpricedBought.length+madeUnpriced.length}</b><p>Unpriced lines excluded from totals</p></div></div>`+historicalTotals;
 
   // the workstreams
   $('streams').innerHTML = STREAMS.map((s) => {
@@ -513,6 +518,7 @@ const render = () => {
     return `<div class="card stream${included.has(s.id) ? '' : ' off'}"><b>${esc(s.title)}</b><span class="tag ${s.complete?'pass':'warn'}">${s.complete?'FROM THE DATA':'PARTIAL EXPORT · EXCLUDED'}</span>`
       + `<p>${esc(s.about)} Plan: ${planLink}.</p>`
       + `<p>${s.plans.length ? `${plural(nParts, 'printed part')}, ~${ph.toFixed(1)} h. ` : 'No print plan yet. '}${esc(own)}${own ? '.' : ''}</p>`
+      + historicalPrintNotice(s.plans)
       + `<details><summary>Published source files</summary><ul class="files">${files}</ul></details>`
       + `<label class="inc"><input type="checkbox" data-stream="${esc(s.id)}"${s.complete?'':' disabled'}${included.has(s.id) ? ' checked' : ''}> include in the lists and totals</label></div>`;
   }).join('');
@@ -552,7 +558,7 @@ const render = () => {
     return `<details class="seller" id="g-${esc(g.key.replace(/[^a-z0-9]+/gi, '-'))}"><summary><b>${esc(g.name)}</b>`
       + `<span class="why">${plural(g.lines.length, 'line')}${g.unpriced ? ` · <span class="tag fail">${g.unpriced} WITHOUT A PRICE</span>` : ''}`
       + `${g.filament ? ' · whole kilograms of what the print plans weigh, no allowance for reprints' : ''}</span>`
-      + `<span class="sub">${usd(g.total)}</span><span>Open list ↕</span></summary>${g.url?`<p class="seller-link"><a href="${esc(g.url)}">Visit ${esc(g.name)} ↗</a></p>`:''}<table class="cmp" data-track="buy" data-label="${esc(g.name)}">${ORDER_HEAD}<tbody>${g.lines.map(orderRow).join('')}</tbody></table>`
+      + `<span class="sub">${usd(g.total)}</span><span>Open list ↕</span></summary>${g.url?`<p class="seller-link"><a href="${esc(g.url)}">Visit ${esc(g.name)} ↗</a></p>`:''}${g.filament?historicalTotals:''}<table class="cmp" data-track="buy" data-label="${esc(g.name)}">${ORDER_HEAD}<tbody>${g.lines.map(orderRow).join('')}</tbody></table>`
       + `${paste.length > 2 ? `<footer><details class="paste"><summary>part numbers and packs to paste into the order form</summary>`
         + `<textarea readonly rows="${Math.min(paste.length, 12)}">${esc(paste.map((l) => `${l.s.pn}\t${l.packs}`).join('\n'))}</textarea></details></footer>` : ''}</details>`;
   }).join('')
@@ -570,7 +576,7 @@ const render = () => {
   $('printlede').innerHTML = `Every printed part of the included print plans, in printing order: the leg${STREAMS.find((s) => s.id === 'rig').present ? ' and its rig' : ''}`
     + ` in the order of <a href="${esc(secLink('docs/leg-prototype-plan.md', '6.2'))}">docs/leg-prototype-plan.md 6.2</a> (the day it names),`
     + ` everything else longest first. About <b>${hours.toFixed(1)} h</b> on one P1S; the plans' hours are rough (grams / density / a`
-    + ` strength-holding volumetric rate). Filament cost is for the grams used; the order list buys whole kilograms.`;
+    + ` strength-holding volumetric rate). Filament cost is for the grams used; the order list buys whole kilograms.`+historicalTotals;
   $('materials').innerHTML = `<div class="tablewrap"><table class="cmp" id="mattable" data-label="Filament totals"><thead><tr><th>material</th><th class="n">pieces</th><th class="n">kg</th><th class="n">hours</th>`
     + `<th class="n"><span class="wide">filament </span>used</th><th class="n">to buy</th></tr></thead><tbody>`
     + prints.mats.map((m) => `<tr data-mat="${esc(m.key)}" data-hours="${m.hours.toFixed(1)}" data-grams="${m.grams}" data-cost="${m.cost.toFixed(2)}">`
@@ -578,7 +584,7 @@ const render = () => {
       + `<td class="n" data-sort-value="${m.cost}">${usd(m.cost)}</td><td class="n" data-sort-value="${m.buyUsd??''}">${m.buyKg} kg<span class="wide"> · </span><br class="narrow">${usd(m.buyUsd)}</td></tr>`).join('')
     + `<tr class="tot" data-fixed><td>total</td><td class="n">${sum(prints.mats.map((m) => m.parts))}</td><td class="n">${kg(grams)}</td><td class="n" id="mat-hours">${hours.toFixed(1)}</td>`
     + `<td class="n">${usd(round2(sum(prints.mats.map((m) => m.cost))))}</td><td class="n">${usd(round2(sum(prints.mats.map((m) => m.buyUsd || 0))))}</td></tr></tbody></table></div>`;
-  $('queue').innerHTML=prints.queues.map(q=>`<h3>${esc(q.title)}</h3><p class="lede">${esc(q.how)} · ${q.parts.length} parts · about ${q.hours.toFixed(1)} h</p><table class="cmp" data-track="print" data-label="${esc(q.title)} print queue"><thead><tr><th>Order</th><th>Picture</th><th>Part</th><th>Material</th><th>Quantity</th><th>Grams</th><th>Hours</th><th>Print setup</th></tr></thead><tbody>`+q.parts.map((p,i)=>`<tr data-part="${esc(p.name)}" data-part-key="print/${esc(p.stream+'/'+p.name)}" data-part-label="${esc(p.name)}"><td data-sort-value="${i+1}">${i+1}</td><td>${thumb(imageKey(p.name,p.stream),p.name,true)}</td><td>${p.stl?`<a href="${esc(p.stl)}">${esc(p.name)}</a>`:esc(p.name)}${p.nostl?'<small>Model export pending</small>':''}</td><td>${esc(p.material)}</td><td data-sort-value="${p.qty}">${p.qty}</td><td data-sort-value="${p.grams}">${p.grams}</td><td data-sort-value="${p.hours}">${p.hours}</td><td><details><summary>Placement and instructions</summary>${(p.size_mm||[]).join(' × ')} mm · ${esc(p.placement||'')}<p>${esc(p.how||'')} ${esc(p.infill||'')}</p>${p.day?`<p>Plan day ${esc(p.day)}</p>`:''}${p.fits===false?'<strong>Exceeds the specified print bed</strong>':''}</details></td></tr>`).join('')+'</tbody></table>').join('')||'<p class="lede">No print plan in the included workstreams.</p>';
+  $('queue').innerHTML=prints.queues.map(q=>`<h3>${esc(q.title)}</h3><p class="lede">${esc(q.how)} · ${q.parts.length} parts · about ${q.hours.toFixed(1)} h${historicalPlans(q.plans||[]).length?' · archived estimate':''}</p>${historicalPrintNotice(q.plans||[])}<table class="cmp" data-track="print" data-label="${esc(q.title)} print queue"><thead><tr><th>Order</th><th>Picture</th><th>Part</th><th>Material</th><th>Quantity</th><th>Grams</th><th>Hours</th><th>Print setup</th></tr></thead><tbody>`+q.parts.map((p,i)=>`<tr data-part="${esc(p.name)}" data-part-key="print/${esc(p.stream+'/'+p.name)}" data-part-label="${esc(p.name)}"><td data-sort-value="${i+1}">${i+1}</td><td>${thumb(imageKey(p.name,p.stream),p.name,true)}</td><td>${p.stl?`<a href="${esc(p.stl)}">${esc(p.name)}</a>`:esc(p.name)}${p.nostl?'<small>Model export pending</small>':''}</td><td>${esc(p.material)}</td><td data-sort-value="${p.qty}">${p.qty}</td><td data-sort-value="${p.grams}">${p.grams}</td><td data-sort-value="${p.hours}">${p.hours}</td><td><details><summary>Placement and instructions</summary>${(p.size_mm||[]).join(' × ')} mm · ${esc(p.placement||'')}<p>${esc(p.how||'')} ${esc(p.infill||'')}</p>${p.day?`<p>Plan day ${esc(p.day)}</p>`:''}${p.fits===false?'<strong>Exceeds the specified print bed</strong>':''}</details></td></tr>`).join('')+'</tbody></table>').join('')||'<p class="lede">No print plan in the included workstreams.</p>';
   partsUI.enhance(document.querySelector('main'));
   const el = $('nopic');
   if (el) el.innerHTML = noPicNote();
@@ -654,7 +660,7 @@ const printQueue = () => {
   }
   for (const s of others) {
     const parts = partsOf(s).sort((a, b) => b.hours - a.hours || a.name.localeCompare(b.name));
-    queues.push({ title: s.title, how: 'longest first', parts });
+    queues.push({ title: s.title, how: 'longest first', parts, plans:s.plans });
   }
   for (const q of queues) q.hours = sum(q.parts.map((p) => p.hours || 0));
   for (const s of [...legLike, ...others]) {
