@@ -65,7 +65,7 @@
 .motto-label{flex:none;display:flex;align-items:center;gap:12px;margin:0;color:#d4edbd;font:750 10px/1.5 'JetBrains Mono',monospace;letter-spacing:.09em;text-transform:uppercase}
 .motto-label svg{width:34px;height:34px;padding:5px;border:1px solid #96bba5;border-radius:10px;color:#ffd15b}
 .motto-line{position:relative;z-index:1;display:flex;flex-wrap:wrap;justify-content:space-between;gap:6px 24px;flex:1;margin:0;font-size:clamp(24px,2.75vw,40px);line-height:1.1;font-weight:850;font-style:italic;letter-spacing:-.055em;text-transform:uppercase}
-.motto-line span{white-space:nowrap}.motto-line strong{font-weight:inherit;color:#ffd15b}
+.motto-line span{white-space:nowrap}.motto-line strong{font-weight:inherit;color:#ffd15b;margin-inline-start:.12em}
 .motto+.hero{padding-top:42px}
 @media(max-width:1050px){.motto{gap:18px;padding:23px 24px}.motto-label{max-width:115px;font-size:9px}.motto-label svg{flex:none}.motto-line{gap:5px 18px;font-size:26px}}
 @media(max-width:760px){.motto{display:block;padding:20px 22px;border-radius:18px;box-shadow:0 5px 0 #cfe5bf}.motto-label{max-width:none;margin-bottom:14px;font-size:9px}.motto-label svg{width:28px;height:28px}.motto-line{display:grid;gap:3px;font-size:clamp(27px,6.8vw,40px)}.motto+.hero{padding-top:32px}}
