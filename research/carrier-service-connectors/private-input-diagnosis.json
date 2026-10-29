@@ -57,6 +57,7 @@
       "cad/turret_boards.py": "c7a115d2fe3cefddf46b0dd521e21076e1f7721235df3e7bd22fadb6e165707b",
       "cad/turret_box.py": "7ad68697d006181cad758ffc243d599ebaadb0ad098c7902137acfcebec54999",
       "cad/turret_carrier_interfaces.py": "9d6dd70ef106195f0f70783458b5c93a30c257af623f1d3be28caec85212d743",
+      "cad/turret_carrier_support.py": "ce4badb9b9314fc3a03ab187c5b2ba21b1a8a865c6c38a4637221071176110de",
       "cad/turret_dossier.py": "d9a08a49fa719534f2f1a14699f84057236eaf7a9be909e35f89ceacc87a15d9",
       "cad/turret_gates.py": "013fa03b36bd576799901ac21c2953a2e00688e36c75090b340498a664277b80",
       "cad/turret_lidar.py": "2101a2ca20558d8b231fd9004d864c7b385b5a9bd4cdb102249477c0384713e9",
@@ -89,14 +90,14 @@
     },
     "GYROPUP_CAD_PARAMS_sha256": null,
     "versions": {
-      "cad-agent": "0.1.0",
+      "cad-agent": "0.4.0",
       "cadquery": "2.8.0",
       "cadquery-ocp": "7.9.3.1.1",
       "numpy": "2.5.4"
     },
     "toolkit_sources_sha256": "c2941322d5f3d000d3777b0047567211d06855861fa5e14229d7d7519fef3ed3"
   },
-  "input_fingerprint": "be0d6f5c39e2edba02e5c11600a8725921047448fe2099b2a0792593ae76266a",
+  "input_fingerprint": "dd0e5c77b8bc2ae7066f4fb987637bb9874d5e8e839f116b6190d16f2cc659f1",
   "context_files": {
     "tools/check-carrier-connector-inputs.py": "20b4f98e5cef0067d921e645b44fd0809ae2bffee1f1055351e7188623ef0c45",
     "research/carrier-service-connectors/private-inputs.json": "db7318f705e1966a93b07bacbab153eaa5fa9bc03a3d6a8114fff3a573382348"
@@ -154,7 +155,7 @@
       "witness": {
         "overlap_centroid_estimate": {
           "method": "Gauss centroid refinements 1e-6 and 1e-8; approximate witness only",
-          "refinement_delta_mm": 1.3343621073704092e-15
+          "refinement_delta_mm": 9.78980554269517e-16
         },
         "overlap_centroid": [
           -0.022331,
@@ -172,7 +173,7 @@
         "volume_integration": {
           "method": "adaptive BRepGProp GK, requested relative errors 1e-6 and 1e-8",
           "error_basis": "max(OCCT summed absolute face-error estimates, refinement delta); not a rigorous bound",
-          "max_estimated_error_mm3": 2.2977338902744704e-09,
+          "max_estimated_error_mm3": 2.2977780250639883e-09,
           "max_refinement_delta_mm3": 6.773461791453883e-10
         }
       },
@@ -190,7 +191,7 @@
       "witness": {
         "overlap_centroid_estimate": {
           "method": "Gauss centroid refinements 1e-6 and 1e-8; approximate witness only",
-          "refinement_delta_mm": 9.273228780575301e-16
+          "refinement_delta_mm": 2.4838138800754842e-15
         },
         "overlap_centroid": [
           0.068891,
@@ -208,7 +209,7 @@
         "volume_integration": {
           "method": "adaptive BRepGProp GK, requested relative errors 1e-6 and 1e-8",
           "error_basis": "max(OCCT summed absolute face-error estimates, refinement delta); not a rigorous bound",
-          "max_estimated_error_mm3": 2.29781099537357e-09,
+          "max_estimated_error_mm3": 2.297752336505509e-09,
           "max_refinement_delta_mm3": 6.371010385919362e-10
         }
       },
@@ -235,8 +236,8 @@
         "volume_integration": {
           "method": "adaptive BRepGProp GK, requested relative errors 1e-6 and 1e-8",
           "error_basis": "max(OCCT summed absolute face-error estimates, refinement delta); not a rigorous bound",
-          "max_estimated_error_mm3": 2.297666196429863e-09,
-          "max_refinement_delta_mm3": 5.902620614506304e-10
+          "max_estimated_error_mm3": 2.2977189742437368e-09,
+          "max_refinement_delta_mm3": 5.904894351260737e-10
         }
       },
       "exact": true,
@@ -359,5 +360,5 @@
     "No latch flexure, crimped terminal, lead diameter/bend or physical-fit qualification.",
     "Exact male terminal and servo mating connector CAD remain missing."
   ],
-  "elapsed_seconds": 6.9
+  "elapsed_seconds": 4.374
 }

@@ -27,5 +27,17 @@
   "review_corrections": [
     "Optional parameter-file identity is checked, with a changed-environment negative control.",
     "Filled-pilot negative is a valid joined solid; each CAD negative must fail for its intended diagnostic."
+  ],
+  "subsequent_regenerations": [
+    {
+      "source_revision": "120d531312596eb9c803ab60e5772937f82fb4bc",
+      "toolkit_revision": "2ad426943ce2c7232875e105e50810849f9a3e5e",
+      "parent_run": "../carrier-service-connectors/support-run.json",
+      "stage_elapsed_wall_seconds": 7.61,
+      "stage_peak_rss_kib": 558156,
+      "exit_code": 0,
+      "physical_trial_performed": false,
+      "reason": "New opt-in CAD module changes conservative input closure; original specimen datum stacks unchanged."
+    }
   ]
 }

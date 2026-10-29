@@ -1,6 +1,6 @@
 {
   "schema": "gyropup.carrier-insert-fit/1",
-  "source_revision": "660271612fdacd7dc2b02faa0f2a1f140e7b067c",
+  "source_revision": "120d531312596eb9c803ab60e5772937f82fb4bc",
   "inputs": {
     "files": {
       "cad/assembly.py": "4b7c7ef0a5364e524b14d7599b2357f0de4249a2c51e8a02cc69d929b30bab8a",
@@ -56,6 +56,7 @@
       "cad/turret_boards.py": "c7a115d2fe3cefddf46b0dd521e21076e1f7721235df3e7bd22fadb6e165707b",
       "cad/turret_box.py": "7ad68697d006181cad758ffc243d599ebaadb0ad098c7902137acfcebec54999",
       "cad/turret_carrier_interfaces.py": "9d6dd70ef106195f0f70783458b5c93a30c257af623f1d3be28caec85212d743",
+      "cad/turret_carrier_support.py": "ce4badb9b9314fc3a03ab187c5b2ba21b1a8a865c6c38a4637221071176110de",
       "cad/turret_dossier.py": "d9a08a49fa719534f2f1a14699f84057236eaf7a9be909e35f89ceacc87a15d9",
       "cad/turret_gates.py": "013fa03b36bd576799901ac21c2953a2e00688e36c75090b340498a664277b80",
       "cad/turret_lidar.py": "2101a2ca20558d8b231fd9004d864c7b385b5a9bd4cdb102249477c0384713e9",
@@ -693,10 +694,10 @@
   ],
   "files": {
     "base-anchor.3mf": "6c2a09c805a503e327404999aba049bd897911074f535795d627955cb870a615",
-    "base-anchor.step": "ad47b335873f87519f1b099c8e687738aca0c2d6f89c4ede3bbc1cf4f5eebefc",
+    "base-anchor.step": "2b6f36271866fff16fd9a2360cdd31c0807498c1a907e2b44d4e02d4e945e5b3",
     "base-anchor.stl": "ce29f74ad434979e27b0025e5bb06cfcc07bd5ded646b1a483fc5f211352d8d7",
     "carrier-boss.3mf": "b46b7c50eb099ea07d1e05f0551bef47ffe4c697ffbdcf0cd5af2d954d619bd2",
-    "carrier-boss.step": "c7144e8504ce6ee0089bd20ef3bf219258e490a89a81367b39730a64ed86db22",
+    "carrier-boss.step": "0fdfc7a91684b15220e844b45865970e93d901751200badbd45fa43fb470ca09",
     "carrier-boss.stl": "374fcbef1209f1ea25dfa195dcf7106e197ecbbaf919842c50a924967da563d3",
     "measurements.csv": "763fce59e411c8a81f168694643a536181d41c1891dffa0eec1f62ad4f8f8820"
   }
