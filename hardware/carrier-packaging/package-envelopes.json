@@ -2,6 +2,22 @@
   "design_clearance_mm": null,
   "note": "Body, land pattern and nominal moduleprofile are different records; unknowns remain null. These are no thermal or footprint qualification.",
   "packages": {
+    "bzg03c75": {
+      "land_outer_mm": [
+        6.7,
+        2.21
+      ],
+      "match": [
+        "BZG03C75-M3_A-08"
+      ],
+      "maximum_body_mm": [
+        5.28,
+        2.79,
+        2.29
+      ],
+      "note": "Modern exactgrade package only; equivalence to legacyFig10 clamp remains unqualified.",
+      "source": "bzg03"
+    },
     "csd19531": {
       "land_outer_mm": [
         6.305,
@@ -72,6 +88,42 @@
       "note": "Heightconservativelyaddsmaxstandoff0.05totableAmax0.8. ExposedpadmayconnectonlyfloatingVSS.",
       "source": "ltc4359"
     },
+    "ne555p": {
+      "lead_below_seating_min_mm": 3.18,
+      "lead_pitch_mm": 2.54,
+      "lead_row_gauge_range_mm": [
+        7.62,
+        8.26
+      ],
+      "lead_width_max_mm": 0.53,
+      "match": [
+        "NE555P"
+      ],
+      "maximum_body_mm": [
+        10.16,
+        6.6,
+        5.08
+      ],
+      "maximum_unformed_lead_span_mm": 10.92,
+      "note": "ViewedactualPDIPdrawing35;5.08ismaxaboveseatingplaneincludingbody/shoulder. Formedleadpitch/soldertrim/undersideprojectionnotqualified.",
+      "source": "ne555p"
+    },
+    "onsemi_1n4148": {
+      "additional_unknowns": [
+        "formedleadpitchandbodyorientation",
+        "leadstand-offandtrimming"
+      ],
+      "lead_diameter_max_mm": 0.533,
+      "match": [
+        "1N4148"
+      ],
+      "maximum_body_mm": [
+        4.56,
+        1.91,
+        1.91
+      ],
+      "source": "onsemi_1n4148"
+    },
     "panasonic_fc": {
       "additional_unknowns": [
         "mountinggap",
@@ -120,12 +172,17 @@
       "source": "pololu5577"
     },
     "tnpw0805": {
-      "land_outer_mm": null,
+      "land_outer_mm": [
+        2.8,
+        1.45
+      ],
+      "land_source": "tnpw_lands",
       "maximum_body_mm": [
         2.1,
         1.4,
         0.55
       ],
+      "note": "Manufacturer IPC7351 reflow option; no application creepage/thermal acceptance.",
       "prefix": "TNPW0805",
       "source": "tnpw0805"
     },
@@ -159,6 +216,46 @@
         1.2
       ],
       "source": "v10p20"
+    },
+    "vishay_k104": {
+      "lead_pitch_range_mm": [
+        1.7,
+        3.3
+      ],
+      "match": [
+        "K104K15X7RF53L2"
+      ],
+      "maximum_body_mm": [
+        4,
+        2.6,
+        4
+      ],
+      "maximum_seating_offset_mm": 1.6,
+      "note": "Exactsize15,L2style; fullbody+seating5.6maxfromboardbeforeinstallationtolerances; do notusebodyalone.",
+      "source": "vishay_k"
+    },
+    "wima_mks2": {
+      "additional_unknowns": [
+        "bodytolerance",
+        "solderedformedlead/PCBstack"
+      ],
+      "lead_diameter_mm": 0.5,
+      "lead_pitch_mm": 5,
+      "lead_pitch_tolerance_mm": 0.5,
+      "match": [
+        "MKS2C031001A00JSSD"
+      ],
+      "maximum_body_mm": null,
+      "nominal_body_mm": [
+        7.2,
+        2.5,
+        6.5
+      ],
+      "source": "wima_mks2",
+      "supplied_lead_length_mm": [
+        4,
+        6
+      ]
     },
     "wsl2512": {
       "land_outer_mm": [

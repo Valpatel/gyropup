@@ -48,17 +48,6 @@ def inventory():
                      'pins_from_reviewed_candidate': None, 'placement': None, 'maximum_envelope': None})
     front_contract = json.loads((HERE / 'front-reference-contract.json').read_text())
     packages = json.loads((HERE / 'package-envelopes.json').read_text())['packages']
-    for row in rows:
-        if row['id'].startswith('I.'):
-            row['reference_pin_contract'] = front_contract['component_pins'][row['id']]
-        matches = [(name, data) for name, data in packages.items()
-                   if row['mpn'] in data.get('match', []) or
-                   (data.get('prefix') and (row['mpn'] or '').startswith(data['prefix']))]
-        if len(matches) > 1:
-            raise ValueError('ambiguous exact package match: ' + row['id'])
-        if matches:
-            row['package_evidence_id'], row['maximum_envelope'] = matches[0]
-
     catalog = {r.get('key', r.get('id')): r for r in json.loads(CATALOG.read_text())}
     tree = ast.parse(BOARDS.read_text())
     assignment = next(n for n in tree.body if isinstance(n, ast.Assign) and
@@ -97,13 +86,43 @@ def inventory():
                      'value': value, 'catalog_key': key, 'source': str(BOARDS.relative_to(ROOT)),
                      'prior_sources': part.get('sources', []), 'placement': 'existing envelope only; exact leads/pads not established',
                      'maximum_envelope': None})
+    for row in rows:
+        if row['id'].startswith('I.'):
+            row['reference_pin_contract'] = front_contract['component_pins'][row['id']]
+        matches = [(name, data) for name, data in packages.items()
+                   if row['mpn'] in data.get('match', []) or
+                   (data.get('prefix') and (row['mpn'] or '').startswith(data['prefix']))]
+        if len(matches) > 1:
+            raise ValueError('ambiguous exact package match: ' + row['id'])
+        if matches:
+            row['package_evidence_id'], row['maximum_envelope'] = matches[0]
+
+    retained_offers = json.loads((ROOT / 'hardware/carrier-pan-protection/availability.json').read_text())
+    front_offers = json.loads((ROOT / 'research/protection/carrier-practical-architecture.inputs.json').read_text())
+    for row in rows:
+        row['supplier_observation'] = None
+        source = ('hardware/carrier-pan-protection/availability.json' if row['id'].startswith('P.')
+                  else 'research/protection/carrier-practical-architecture.inputs.json')
+        if row['id'].startswith('P.'):
+            matches = [(n, offer) for n, offer in enumerate(retained_offers['rows']) if offer['mpn'] == row['mpn']]
+            if matches:
+                row['supplier_observation'] = {'source': source, 'row_index': matches[0][0],
+                    'observed_on': retained_offers['observed_date'], 'readiness': False,
+                    'limit': 'Carry-forward dated observation only; see exact stock/pack/lead caveats at source.'}
+        elif row['id'].startswith('I.'):
+            matches = [(n, offer) for n, offer in enumerate(front_offers['supplier_observations']) if offer[0] == row['mpn']]
+            if matches:
+                row['supplier_observation'] = {'source': source, 'row_index': matches[0][0],
+                    'observed_on': front_offers['observed_on'], 'readiness': False,
+                    'limit': 'Carry-forward dated observation only; DDZ9699T scarce/unconfirmed, modern clamp equivalence and pulse qualification open.'}
+
     if len([r for r in rows if r['group'] == 'retained_cutoff_converter']) != 28:
         raise ValueError('retained protection inventory changed; review new complete scope')
     if len([r for r in rows if r['group'] == 'retained_legacy_control_board']) != 9:
         raise ValueError('retained legacy control inventory changed; review scope')
     return {'status': 'WIP_INVENTORY_NOT_A_FROZEN_LAYOUT',
             'source_sha256': {str(p.relative_to(ROOT)): hashlib.sha256(p.read_bytes()).hexdigest()
-                              for p in (Path(__file__), CIRCUIT, BOARDS, CATALOG, HERE / 'front-reference-contract.json', HERE / 'package-envelopes.json', HERE / 'primary-envelope-sources.json')},
+                              for p in (Path(__file__), CIRCUIT, BOARDS, CATALOG, HERE / 'front-reference-contract.json', HERE / 'package-envelopes.json', HERE / 'primary-envelope-sources.json', HERE / 'terminal-contract.json', ROOT / 'docs/base-board-interfaces.md', ROOT / 'docs/carrier-service-connectors.md', ROOT / 'hardware/carrier-pan-protection/pins.md', ROOT / 'hardware/carrier-pan-protection/availability.json', ROOT / 'research/protection/carrier-practical-architecture.inputs.json')},
             'inventory_count': len(rows), 'rows': rows,
             'package_evidence_count': sum(r['maximum_envelope'] is not None for r in rows),
             'excluded_replaced_parts': ['P.D1: V10P20 series barrier replaced by complete I.* inventory',

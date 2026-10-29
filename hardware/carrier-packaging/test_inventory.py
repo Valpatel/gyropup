@@ -62,5 +62,28 @@ class InventoryTests(unittest.TestCase):
         d=copy.deepcopy(self.reference);d['reference']['pdf_sha256']='0'*64
         with self.assertRaises(ValueError):C.validate_reference(d)
 
+    def test_terminal_contract_and_forbidden_bus_substitution(self):
+        d=json.loads((HERE / 'terminal-contract.json').read_text())
+        self.assertEqual(C.validate_terminals(d)['external_positions'],21)
+        c3=next(x for x in d['existing_interfaces'] if x['id']=='C3.module')
+        c3['pins']['11']='PAN_INPUT'
+        with self.assertRaises(ValueError):C.validate_terminals(d)
+
+    def test_ring_contact_cannot_inherit_module_wire(self):
+        d=json.loads((HERE / 'terminal-contract.json').read_text())
+        fixed=next(x for x in d['existing_interfaces'] if x['id']=='C3.fixed')
+        fixed['wire_awg']=24
+        with self.assertRaises(ValueError):C.validate_terminals(d)
+
+    def test_unknown_terminations_remain_unallocated(self):
+        d=json.loads((HERE / 'terminal-contract.json').read_text())
+        d['all_terminals_allocated']=True
+        with self.assertRaises(ValueError):C.validate_terminals(d)
+
+    def test_shunt_ends_cannot_disappear_from_junction_inventory(self):
+        d=json.loads((HERE / 'terminal-contract.json').read_text())
+        next(x for x in d['junctions'] if x['id']=='J_BUS')['logical_members'].remove('H.D14.K')
+        with self.assertRaises(ValueError):C.validate_terminals(d)
+
 
 if __name__=='__main__':unittest.main()

@@ -7,7 +7,7 @@
   "fit_qualified": false,
   "frozen": false,
   "inventory_count": 47,
-  "package_evidence_count": 27,
+  "package_evidence_count": 32,
   "remaining_physical_inventory": [
     "external F4, D8, D14 and exact upstream fuse/holder boundary",
     "C2/C3/servo housings, contacts, crimps and actual leads",
@@ -49,6 +49,13 @@
       "placement": null,
       "prior_candidate_footprint": null,
       "source": "hardware/carrier-pan-protection/circuit_design.py",
+      "supplier_observation": {
+        "limit": "Carry-forward dated observation only; see exact stock/pack/lead caveats at source.",
+        "observed_on": "2026-10-29",
+        "readiness": false,
+        "row_index": 0,
+        "source": "hardware/carrier-pan-protection/availability.json"
+      },
       "value": "100V N-MOS"
     },
     {
@@ -85,6 +92,13 @@
       "placement": null,
       "prior_candidate_footprint": null,
       "source": "hardware/carrier-pan-protection/circuit_design.py",
+      "supplier_observation": {
+        "limit": "Carry-forward dated observation only; see exact stock/pack/lead caveats at source.",
+        "observed_on": "2026-10-29",
+        "readiness": false,
+        "row_index": 0,
+        "source": "hardware/carrier-pan-protection/availability.json"
+      },
       "value": "100V N-MOS"
     },
     {
@@ -116,6 +130,13 @@
       "placement": null,
       "prior_candidate_footprint": "Resistor_SMD:R_2512_6332Metric",
       "source": "hardware/carrier-pan-protection/circuit_design.py",
+      "supplier_observation": {
+        "limit": "Carry-forward dated observation only; see exact stock/pack/lead caveats at source.",
+        "observed_on": "2026-10-29",
+        "readiness": false,
+        "row_index": 1,
+        "source": "hardware/carrier-pan-protection/availability.json"
+      },
       "value": "10mR 1% 1W"
     },
     {
@@ -139,6 +160,13 @@
       "placement": null,
       "prior_candidate_footprint": "Package_SO:MSOP-10_3x3mm_P0.5mm",
       "source": "hardware/carrier-pan-protection/circuit_design.py",
+      "supplier_observation": {
+        "limit": "Carry-forward dated observation only; see exact stock/pack/lead caveats at source.",
+        "observed_on": "2026-10-29",
+        "readiness": false,
+        "row_index": 2,
+        "source": "hardware/carrier-pan-protection/availability.json"
+      },
       "value": "LTC4368IMS-2"
     },
     {
@@ -188,6 +216,13 @@
       "placement": null,
       "prior_candidate_footprint": null,
       "source": "hardware/carrier-pan-protection/circuit_design.py",
+      "supplier_observation": {
+        "limit": "Carry-forward dated observation only; see exact stock/pack/lead caveats at source.",
+        "observed_on": "2026-10-29",
+        "readiness": false,
+        "row_index": 3,
+        "source": "hardware/carrier-pan-protection/availability.json"
+      },
       "value": "D42V55F12 / 5577"
     },
     {
@@ -195,12 +230,17 @@
       "group": "retained_cutoff_converter",
       "id": "P.R2",
       "maximum_envelope": {
-        "land_outer_mm": null,
+        "land_outer_mm": [
+          2.8,
+          1.45
+        ],
+        "land_source": "tnpw_lands",
         "maximum_body_mm": [
           2.1,
           1.4,
           0.55
         ],
+        "note": "Manufacturer IPC7351 reflow option; no application creepage/thermal acceptance.",
         "prefix": "TNPW0805",
         "source": "tnpw0805"
       },
@@ -213,6 +253,13 @@
       "placement": null,
       "prior_candidate_footprint": "Resistor_SMD:R_0805_2012Metric",
       "source": "hardware/carrier-pan-protection/circuit_design.py",
+      "supplier_observation": {
+        "limit": "Carry-forward dated observation only; see exact stock/pack/lead caveats at source.",
+        "observed_on": "2026-10-29",
+        "readiness": false,
+        "row_index": 4,
+        "source": "hardware/carrier-pan-protection/availability.json"
+      },
       "value": "464k 0.1%"
     },
     {
@@ -220,12 +267,17 @@
       "group": "retained_cutoff_converter",
       "id": "P.R3",
       "maximum_envelope": {
-        "land_outer_mm": null,
+        "land_outer_mm": [
+          2.8,
+          1.45
+        ],
+        "land_source": "tnpw_lands",
         "maximum_body_mm": [
           2.1,
           1.4,
           0.55
         ],
+        "note": "Manufacturer IPC7351 reflow option; no application creepage/thermal acceptance.",
         "prefix": "TNPW0805",
         "source": "tnpw0805"
       },
@@ -238,6 +290,13 @@
       "placement": null,
       "prior_candidate_footprint": "Resistor_SMD:R_0805_2012Metric",
       "source": "hardware/carrier-pan-protection/circuit_design.py",
+      "supplier_observation": {
+        "limit": "Carry-forward dated observation only; see exact stock/pack/lead caveats at source.",
+        "observed_on": "2026-10-29",
+        "readiness": false,
+        "row_index": 5,
+        "source": "hardware/carrier-pan-protection/availability.json"
+      },
       "value": "4.99k 0.1%"
     },
     {
@@ -245,12 +304,17 @@
       "group": "retained_cutoff_converter",
       "id": "P.R4",
       "maximum_envelope": {
-        "land_outer_mm": null,
+        "land_outer_mm": [
+          2.8,
+          1.45
+        ],
+        "land_source": "tnpw_lands",
         "maximum_body_mm": [
           2.1,
           1.4,
           0.55
         ],
+        "note": "Manufacturer IPC7351 reflow option; no application creepage/thermal acceptance.",
         "prefix": "TNPW0805",
         "source": "tnpw0805"
       },
@@ -263,6 +327,13 @@
       "placement": null,
       "prior_candidate_footprint": "Resistor_SMD:R_0805_2012Metric",
       "source": "hardware/carrier-pan-protection/circuit_design.py",
+      "supplier_observation": {
+        "limit": "Carry-forward dated observation only; see exact stock/pack/lead caveats at source.",
+        "observed_on": "2026-10-29",
+        "readiness": false,
+        "row_index": 6,
+        "source": "hardware/carrier-pan-protection/availability.json"
+      },
       "value": "100k 0.1%"
     },
     {
@@ -270,12 +341,17 @@
       "group": "retained_cutoff_converter",
       "id": "P.R5",
       "maximum_envelope": {
-        "land_outer_mm": null,
+        "land_outer_mm": [
+          2.8,
+          1.45
+        ],
+        "land_source": "tnpw_lands",
         "maximum_body_mm": [
           2.1,
           1.4,
           0.55
         ],
+        "note": "Manufacturer IPC7351 reflow option; no application creepage/thermal acceptance.",
         "prefix": "TNPW0805",
         "source": "tnpw0805"
       },
@@ -288,6 +364,13 @@
       "placement": null,
       "prior_candidate_footprint": "Resistor_SMD:R_0805_2012Metric",
       "source": "hardware/carrier-pan-protection/circuit_design.py",
+      "supplier_observation": {
+        "limit": "Carry-forward dated observation only; see exact stock/pack/lead caveats at source.",
+        "observed_on": "2026-10-29",
+        "readiness": false,
+        "row_index": 5,
+        "source": "hardware/carrier-pan-protection/availability.json"
+      },
       "value": "4.99k 0.1%"
     },
     {
@@ -295,12 +378,17 @@
       "group": "retained_cutoff_converter",
       "id": "P.R6",
       "maximum_envelope": {
-        "land_outer_mm": null,
+        "land_outer_mm": [
+          2.8,
+          1.45
+        ],
+        "land_source": "tnpw_lands",
         "maximum_body_mm": [
           2.1,
           1.4,
           0.55
         ],
+        "note": "Manufacturer IPC7351 reflow option; no application creepage/thermal acceptance.",
         "prefix": "TNPW0805",
         "source": "tnpw0805"
       },
@@ -313,6 +401,13 @@
       "placement": null,
       "prior_candidate_footprint": "Resistor_SMD:R_0805_2012Metric",
       "source": "hardware/carrier-pan-protection/circuit_design.py",
+      "supplier_observation": {
+        "limit": "Carry-forward dated observation only; see exact stock/pack/lead caveats at source.",
+        "observed_on": "2026-10-29",
+        "readiness": false,
+        "row_index": 7,
+        "source": "hardware/carrier-pan-protection/availability.json"
+      },
       "value": "499k 0.1%"
     },
     {
@@ -320,12 +415,17 @@
       "group": "retained_cutoff_converter",
       "id": "P.R7",
       "maximum_envelope": {
-        "land_outer_mm": null,
+        "land_outer_mm": [
+          2.8,
+          1.45
+        ],
+        "land_source": "tnpw_lands",
         "maximum_body_mm": [
           2.1,
           1.4,
           0.55
         ],
+        "note": "Manufacturer IPC7351 reflow option; no application creepage/thermal acceptance.",
         "prefix": "TNPW0805",
         "source": "tnpw0805"
       },
@@ -338,6 +438,13 @@
       "placement": null,
       "prior_candidate_footprint": "Resistor_SMD:R_0805_2012Metric",
       "source": "hardware/carrier-pan-protection/circuit_design.py",
+      "supplier_observation": {
+        "limit": "Carry-forward dated observation only; see exact stock/pack/lead caveats at source.",
+        "observed_on": "2026-10-29",
+        "readiness": false,
+        "row_index": 6,
+        "source": "hardware/carrier-pan-protection/availability.json"
+      },
       "value": "100k 0.1%"
     },
     {
@@ -345,12 +452,17 @@
       "group": "retained_cutoff_converter",
       "id": "P.R8",
       "maximum_envelope": {
-        "land_outer_mm": null,
+        "land_outer_mm": [
+          2.8,
+          1.45
+        ],
+        "land_source": "tnpw_lands",
         "maximum_body_mm": [
           2.1,
           1.4,
           0.55
         ],
+        "note": "Manufacturer IPC7351 reflow option; no application creepage/thermal acceptance.",
         "prefix": "TNPW0805",
         "source": "tnpw0805"
       },
@@ -363,6 +475,13 @@
       "placement": null,
       "prior_candidate_footprint": "Resistor_SMD:R_0805_2012Metric",
       "source": "hardware/carrier-pan-protection/circuit_design.py",
+      "supplier_observation": {
+        "limit": "Carry-forward dated observation only; see exact stock/pack/lead caveats at source.",
+        "observed_on": "2026-10-29",
+        "readiness": false,
+        "row_index": 8,
+        "source": "hardware/carrier-pan-protection/availability.json"
+      },
       "value": "22k 0.1%"
     },
     {
@@ -370,12 +489,17 @@
       "group": "retained_cutoff_converter",
       "id": "P.R9",
       "maximum_envelope": {
-        "land_outer_mm": null,
+        "land_outer_mm": [
+          2.8,
+          1.45
+        ],
+        "land_source": "tnpw_lands",
         "maximum_body_mm": [
           2.1,
           1.4,
           0.55
         ],
+        "note": "Manufacturer IPC7351 reflow option; no application creepage/thermal acceptance.",
         "prefix": "TNPW0805",
         "source": "tnpw0805"
       },
@@ -388,6 +512,13 @@
       "placement": null,
       "prior_candidate_footprint": "Resistor_SMD:R_0805_2012Metric",
       "source": "hardware/carrier-pan-protection/circuit_design.py",
+      "supplier_observation": {
+        "limit": "Carry-forward dated observation only; see exact stock/pack/lead caveats at source.",
+        "observed_on": "2026-10-29",
+        "readiness": false,
+        "row_index": 6,
+        "source": "hardware/carrier-pan-protection/availability.json"
+      },
       "value": "100k 0.1%"
     },
     {
@@ -426,6 +557,13 @@
       "placement": null,
       "prior_candidate_footprint": "Capacitor_THT:CP_Radial_D8.0mm_P3.50mm",
       "source": "hardware/carrier-pan-protection/circuit_design.py",
+      "supplier_observation": {
+        "limit": "Carry-forward dated observation only; see exact stock/pack/lead caveats at source.",
+        "observed_on": "2026-10-29",
+        "readiness": false,
+        "row_index": 9,
+        "source": "hardware/carrier-pan-protection/availability.json"
+      },
       "value": "22uF 100V 20%"
     },
     {
@@ -453,6 +591,13 @@
       "placement": null,
       "prior_candidate_footprint": "Capacitor_SMD:C_1206_3216Metric",
       "source": "hardware/carrier-pan-protection/circuit_design.py",
+      "supplier_observation": {
+        "limit": "Carry-forward dated observation only; see exact stock/pack/lead caveats at source.",
+        "observed_on": "2026-10-29",
+        "readiness": false,
+        "row_index": 10,
+        "source": "hardware/carrier-pan-protection/availability.json"
+      },
       "value": "47nF 100V 1%"
     },
     {
@@ -480,6 +625,13 @@
       "placement": null,
       "prior_candidate_footprint": "Capacitor_SMD:C_0805_2012Metric",
       "source": "hardware/carrier-pan-protection/circuit_design.py",
+      "supplier_observation": {
+        "limit": "Carry-forward dated observation only; see exact stock/pack/lead caveats at source.",
+        "observed_on": "2026-10-29",
+        "readiness": false,
+        "row_index": 11,
+        "source": "hardware/carrier-pan-protection/availability.json"
+      },
       "value": "6.8nF 50V 5%"
     },
     {
@@ -511,6 +663,13 @@
       "placement": null,
       "prior_candidate_footprint": null,
       "source": "hardware/carrier-pan-protection/circuit_design.py",
+      "supplier_observation": {
+        "limit": "Carry-forward dated observation only; see exact stock/pack/lead caveats at source.",
+        "observed_on": "2026-10-29",
+        "readiness": false,
+        "row_index": 12,
+        "source": "hardware/carrier-pan-protection/availability.json"
+      },
       "value": "200V negative clamp"
     },
     {
@@ -542,6 +701,13 @@
       "placement": null,
       "prior_candidate_footprint": "Resistor_SMD:R_2512_6332Metric",
       "source": "hardware/carrier-pan-protection/circuit_design.py",
+      "supplier_observation": {
+        "limit": "Carry-forward dated observation only; see exact stock/pack/lead caveats at source.",
+        "observed_on": "2026-10-29",
+        "readiness": false,
+        "row_index": 13,
+        "source": "hardware/carrier-pan-protection/availability.json"
+      },
       "value": "20mR 1% 1W"
     },
     {
@@ -549,12 +715,17 @@
       "group": "retained_cutoff_converter",
       "id": "P.R11",
       "maximum_envelope": {
-        "land_outer_mm": null,
+        "land_outer_mm": [
+          2.8,
+          1.45
+        ],
+        "land_source": "tnpw_lands",
         "maximum_body_mm": [
           2.1,
           1.4,
           0.55
         ],
+        "note": "Manufacturer IPC7351 reflow option; no application creepage/thermal acceptance.",
         "prefix": "TNPW0805",
         "source": "tnpw0805"
       },
@@ -567,6 +738,13 @@
       "placement": null,
       "prior_candidate_footprint": "Resistor_SMD:R_0805_2012Metric",
       "source": "hardware/carrier-pan-protection/circuit_design.py",
+      "supplier_observation": {
+        "limit": "Carry-forward dated observation only; see exact stock/pack/lead caveats at source.",
+        "observed_on": "2026-10-29",
+        "readiness": false,
+        "row_index": 6,
+        "source": "hardware/carrier-pan-protection/availability.json"
+      },
       "value": "100k 0.1%"
     },
     {
@@ -574,12 +752,17 @@
       "group": "retained_cutoff_converter",
       "id": "P.R12",
       "maximum_envelope": {
-        "land_outer_mm": null,
+        "land_outer_mm": [
+          2.8,
+          1.45
+        ],
+        "land_source": "tnpw_lands",
         "maximum_body_mm": [
           2.1,
           1.4,
           0.55
         ],
+        "note": "Manufacturer IPC7351 reflow option; no application creepage/thermal acceptance.",
         "prefix": "TNPW0805",
         "source": "tnpw0805"
       },
@@ -592,6 +775,13 @@
       "placement": null,
       "prior_candidate_footprint": "Resistor_SMD:R_0805_2012Metric",
       "source": "hardware/carrier-pan-protection/circuit_design.py",
+      "supplier_observation": {
+        "limit": "Carry-forward dated observation only; see exact stock/pack/lead caveats at source.",
+        "observed_on": "2026-10-29",
+        "readiness": false,
+        "row_index": 14,
+        "source": "hardware/carrier-pan-protection/availability.json"
+      },
       "value": "150k 0.1%"
     },
     {
@@ -599,12 +789,17 @@
       "group": "retained_cutoff_converter",
       "id": "P.R13",
       "maximum_envelope": {
-        "land_outer_mm": null,
+        "land_outer_mm": [
+          2.8,
+          1.45
+        ],
+        "land_source": "tnpw_lands",
         "maximum_body_mm": [
           2.1,
           1.4,
           0.55
         ],
+        "note": "Manufacturer IPC7351 reflow option; no application creepage/thermal acceptance.",
         "prefix": "TNPW0805",
         "source": "tnpw0805"
       },
@@ -617,6 +812,13 @@
       "placement": null,
       "prior_candidate_footprint": "Resistor_SMD:R_0805_2012Metric",
       "source": "hardware/carrier-pan-protection/circuit_design.py",
+      "supplier_observation": {
+        "limit": "Carry-forward dated observation only; see exact stock/pack/lead caveats at source.",
+        "observed_on": "2026-10-29",
+        "readiness": false,
+        "row_index": 15,
+        "source": "hardware/carrier-pan-protection/availability.json"
+      },
       "value": "10k 0.1%"
     },
     {
@@ -624,12 +826,17 @@
       "group": "retained_cutoff_converter",
       "id": "P.R14",
       "maximum_envelope": {
-        "land_outer_mm": null,
+        "land_outer_mm": [
+          2.8,
+          1.45
+        ],
+        "land_source": "tnpw_lands",
         "maximum_body_mm": [
           2.1,
           1.4,
           0.55
         ],
+        "note": "Manufacturer IPC7351 reflow option; no application creepage/thermal acceptance.",
         "prefix": "TNPW0805",
         "source": "tnpw0805"
       },
@@ -642,6 +849,13 @@
       "placement": null,
       "prior_candidate_footprint": "Resistor_SMD:R_0805_2012Metric",
       "source": "hardware/carrier-pan-protection/circuit_design.py",
+      "supplier_observation": {
+        "limit": "Carry-forward dated observation only; see exact stock/pack/lead caveats at source.",
+        "observed_on": "2026-10-29",
+        "readiness": false,
+        "row_index": 7,
+        "source": "hardware/carrier-pan-protection/availability.json"
+      },
       "value": "499k 0.1%"
     },
     {
@@ -657,6 +871,13 @@
       "placement": null,
       "prior_candidate_footprint": "Capacitor_SMD:C_0805_2012Metric",
       "source": "hardware/carrier-pan-protection/circuit_design.py",
+      "supplier_observation": {
+        "limit": "Carry-forward dated observation only; see exact stock/pack/lead caveats at source.",
+        "observed_on": "2026-10-29",
+        "readiness": false,
+        "row_index": 16,
+        "source": "hardware/carrier-pan-protection/availability.json"
+      },
       "value": "100nF 100V 10% X7R"
     },
     {
@@ -672,6 +893,13 @@
       "placement": null,
       "prior_candidate_footprint": "Capacitor_SMD:C_0805_2012Metric",
       "source": "hardware/carrier-pan-protection/circuit_design.py",
+      "supplier_observation": {
+        "limit": "Carry-forward dated observation only; see exact stock/pack/lead caveats at source.",
+        "observed_on": "2026-10-29",
+        "readiness": false,
+        "row_index": 16,
+        "source": "hardware/carrier-pan-protection/availability.json"
+      },
       "value": "100nF 100V 10% X7R"
     },
     {
@@ -699,6 +927,13 @@
       "placement": null,
       "prior_candidate_footprint": "Capacitor_SMD:C_1206_3216Metric",
       "source": "hardware/carrier-pan-protection/circuit_design.py",
+      "supplier_observation": {
+        "limit": "Carry-forward dated observation only; see exact stock/pack/lead caveats at source.",
+        "observed_on": "2026-10-29",
+        "readiness": false,
+        "row_index": 10,
+        "source": "hardware/carrier-pan-protection/availability.json"
+      },
       "value": "47nF 100V 1%"
     },
     {
@@ -726,6 +961,13 @@
       "placement": null,
       "prior_candidate_footprint": "Capacitor_SMD:C_1206_3216Metric",
       "source": "hardware/carrier-pan-protection/circuit_design.py",
+      "supplier_observation": {
+        "limit": "Carry-forward dated observation only; see exact stock/pack/lead caveats at source.",
+        "observed_on": "2026-10-29",
+        "readiness": false,
+        "row_index": 10,
+        "source": "hardware/carrier-pan-protection/availability.json"
+      },
       "value": "47nF 100V 1%"
     },
     {
@@ -753,6 +995,13 @@
       "placement": null,
       "prior_candidate_footprint": "Capacitor_SMD:C_1206_3216Metric",
       "source": "hardware/carrier-pan-protection/circuit_design.py",
+      "supplier_observation": {
+        "limit": "Carry-forward dated observation only; see exact stock/pack/lead caveats at source.",
+        "observed_on": "2026-10-29",
+        "readiness": false,
+        "row_index": 10,
+        "source": "hardware/carrier-pan-protection/availability.json"
+      },
       "value": "47nF 100V 1%"
     },
     {
@@ -796,6 +1045,13 @@
       "placement": null,
       "prior_candidate_footprint": null,
       "source": "hardware/carrier-pan-protection/circuit_design.py",
+      "supplier_observation": {
+        "limit": "Carry-forward dated observation only; see exact stock/pack/lead caveats at source.",
+        "observed_on": "2026-10-29",
+        "readiness": false,
+        "row_index": 17,
+        "source": "hardware/carrier-pan-protection/availability.json"
+      },
       "value": "UV / OD active-low"
     },
     {
@@ -832,6 +1088,13 @@
         "7": null
       },
       "source": "https://www.analog.com/media/en/technical-documentation/data-sheets/ltc4359.pdf#page=12",
+      "supplier_observation": {
+        "limit": "Carry-forward dated observation only; DDZ9699T scarce/unconfirmed, modern clamp equivalence and pulse qualification open.",
+        "observed_on": "2026-10-29",
+        "readiness": false,
+        "row_index": 0,
+        "source": "research/protection/carrier-practical-architecture.inputs.json"
+      },
       "value": "ideal diode controller"
     },
     {
@@ -863,6 +1126,13 @@
         "3": "BUS_HEAD_FUSED"
       },
       "source": "https://www.analog.com/media/en/technical-documentation/data-sheets/ltc4359.pdf#page=12",
+      "supplier_observation": {
+        "limit": "Carry-forward dated observation only; DDZ9699T scarce/unconfirmed, modern clamp equivalence and pulse qualification open.",
+        "observed_on": "2026-10-29",
+        "readiness": false,
+        "row_index": 1,
+        "source": "research/protection/carrier-practical-architecture.inputs.json"
+      },
       "value": "250V N-MOS"
     },
     {
@@ -878,6 +1148,13 @@
         "K": "BUS_HEAD_FUSED"
       },
       "source": "https://www.analog.com/media/en/technical-documentation/data-sheets/ltc4359.pdf#page=12",
+      "supplier_observation": {
+        "limit": "Carry-forward dated observation only; DDZ9699T scarce/unconfirmed, modern clamp equivalence and pulse qualification open.",
+        "observed_on": "2026-10-29",
+        "readiness": false,
+        "row_index": 2,
+        "source": "research/protection/carrier-practical-architecture.inputs.json"
+      },
       "value": "70V TVS"
     },
     {
@@ -893,14 +1170,37 @@
         "K": "FLOATING_VSS"
       },
       "source": "https://www.analog.com/media/en/technical-documentation/data-sheets/ltc4359.pdf#page=12",
+      "supplier_observation": {
+        "limit": "Carry-forward dated observation only; DDZ9699T scarce/unconfirmed, modern clamp equivalence and pulse qualification open.",
+        "observed_on": "2026-10-29",
+        "readiness": false,
+        "row_index": 3,
+        "source": "research/protection/carrier-practical-architecture.inputs.json"
+      },
       "value": "5.1V zener"
     },
     {
       "group": "complete_ideal_diode_reference_inventory",
       "id": "I.D3",
-      "maximum_envelope": null,
+      "maximum_envelope": {
+        "land_outer_mm": [
+          6.7,
+          2.21
+        ],
+        "match": [
+          "BZG03C75-M3_A-08"
+        ],
+        "maximum_body_mm": [
+          5.28,
+          2.79,
+          2.29
+        ],
+        "note": "Modern exactgrade package only; equivalence to legacyFig10 clamp remains unqualified.",
+        "source": "bzg03"
+      },
       "mpn": "BZG03C75-M3_A-08",
       "package": "SMA",
+      "package_evidence_id": "bzg03c75",
       "pins_from_reviewed_candidate": null,
       "placement": null,
       "reference_pin_contract": {
@@ -908,6 +1208,13 @@
         "K": "FRONT_OUT_SENSE"
       },
       "source": "https://www.analog.com/media/en/technical-documentation/data-sheets/ltc4359.pdf#page=12",
+      "supplier_observation": {
+        "limit": "Carry-forward dated observation only; DDZ9699T scarce/unconfirmed, modern clamp equivalence and pulse qualification open.",
+        "observed_on": "2026-10-29",
+        "readiness": false,
+        "row_index": 4,
+        "source": "research/protection/carrier-practical-architecture.inputs.json"
+      },
       "value": "75V zener; modern grade equivalence open"
     },
     {
@@ -923,6 +1230,13 @@
         "K": "FRONT_GATE"
       },
       "source": "https://www.analog.com/media/en/technical-documentation/data-sheets/ltc4359.pdf#page=12",
+      "supplier_observation": {
+        "limit": "Carry-forward dated observation only; DDZ9699T scarce/unconfirmed, modern clamp equivalence and pulse qualification open.",
+        "observed_on": "2026-10-29",
+        "readiness": false,
+        "row_index": 5,
+        "source": "research/protection/carrier-practical-architecture.inputs.json"
+      },
       "value": "12V gate zener; supply not confirmed"
     },
     {
@@ -938,6 +1252,13 @@
         "K": "GND"
       },
       "source": "https://www.analog.com/media/en/technical-documentation/data-sheets/ltc4359.pdf#page=12",
+      "supplier_observation": {
+        "limit": "Carry-forward dated observation only; DDZ9699T scarce/unconfirmed, modern clamp equivalence and pulse qualification open.",
+        "observed_on": "2026-10-29",
+        "readiness": false,
+        "row_index": 6,
+        "source": "research/protection/carrier-practical-architecture.inputs.json"
+      },
       "value": "floating-reference return diode"
     },
     {
@@ -953,6 +1274,13 @@
         "K": "VIN_PROTECTED"
       },
       "source": "https://www.analog.com/media/en/technical-documentation/data-sheets/ltc4359.pdf#page=12",
+      "supplier_observation": {
+        "limit": "Carry-forward dated observation only; DDZ9699T scarce/unconfirmed, modern clamp equivalence and pulse qualification open.",
+        "observed_on": "2026-10-29",
+        "readiness": false,
+        "row_index": 7,
+        "source": "research/protection/carrier-practical-architecture.inputs.json"
+      },
       "value": "150V TVS, Littelfuse candidate manufacturer"
     },
     {
@@ -968,6 +1296,13 @@
         "2": "FRONT_OUT_SENSE"
       },
       "source": "https://www.analog.com/media/en/technical-documentation/data-sheets/ltc4359.pdf#page=12",
+      "supplier_observation": {
+        "limit": "Carry-forward dated observation only; DDZ9699T scarce/unconfirmed, modern clamp equivalence and pulse qualification open.",
+        "observed_on": "2026-10-29",
+        "readiness": false,
+        "row_index": 8,
+        "source": "research/protection/carrier-practical-architecture.inputs.json"
+      },
       "value": "2kohm pulse resistor candidate; pulse acceptance open"
     },
     {
@@ -983,19 +1318,41 @@
         "2": "FLOATING_VSS"
       },
       "source": "https://www.analog.com/media/en/technical-documentation/data-sheets/ltc4359.pdf#page=12",
+      "supplier_observation": null,
       "value": "47nF reference capacitor; exact voltage/MPN pending topology check"
     },
     {
       "catalog_key": "ti-ne555p",
       "group": "retained_legacy_control_board",
       "id": "L.U1",
-      "maximum_envelope": null,
+      "maximum_envelope": {
+        "lead_below_seating_min_mm": 3.18,
+        "lead_pitch_mm": 2.54,
+        "lead_row_gauge_range_mm": [
+          7.62,
+          8.26
+        ],
+        "lead_width_max_mm": 0.53,
+        "match": [
+          "NE555P"
+        ],
+        "maximum_body_mm": [
+          10.16,
+          6.6,
+          5.08
+        ],
+        "maximum_unformed_lead_span_mm": 10.92,
+        "note": "ViewedactualPDIPdrawing35;5.08ismaxaboveseatingplaneincludingbody/shoulder. Formedleadpitch/soldertrim/undersideprojectionnotqualified.",
+        "source": "ne555p"
+      },
       "mpn": "NE555P",
+      "package_evidence_id": "ne555p",
       "placement": "existing envelope only; exact leads/pads not established",
       "prior_sources": [
         "https://www.ti.com/product/NE555/part-details/NE555P"
       ],
       "source": "cad/turret_boards.py",
+      "supplier_observation": null,
       "value": "NE555P"
     },
     {
@@ -1010,6 +1367,7 @@
         "https://www.digikey.com/en/products/detail/yageo/MFR-25FBF52-1K/1.00KXBK-ND/13011"
       ],
       "source": "cad/turret_boards.py",
+      "supplier_observation": null,
       "value": "1.00 k 1 %"
     },
     {
@@ -1024,34 +1382,77 @@
         "https://www.digikey.com/en/products/detail/yageo/MFR-25FRF52-6K8/MFR-25FRF52-6K8-ND/9139107"
       ],
       "source": "cad/turret_boards.py",
+      "supplier_observation": null,
       "value": "6.8 k 1 %"
     },
     {
       "catalog_key": "cap-film-100n-5pct",
       "group": "retained_legacy_control_board",
       "id": "L.C1",
-      "maximum_envelope": null,
+      "maximum_envelope": {
+        "additional_unknowns": [
+          "bodytolerance",
+          "solderedformedlead/PCBstack"
+        ],
+        "lead_diameter_mm": 0.5,
+        "lead_pitch_mm": 5,
+        "lead_pitch_tolerance_mm": 0.5,
+        "match": [
+          "MKS2C031001A00JSSD"
+        ],
+        "maximum_body_mm": null,
+        "nominal_body_mm": [
+          7.2,
+          2.5,
+          6.5
+        ],
+        "source": "wima_mks2",
+        "supplied_lead_length_mm": [
+          4,
+          6
+        ]
+      },
       "mpn": "MKS2C031001A00JSSD",
+      "package_evidence_id": "wima_mks2",
       "placement": "existing envelope only; exact leads/pads not established",
       "prior_sources": [
         "https://www.mouser.com/ProductDetail/WIMA/MKS2-1-63-5/?qs=ISKKXg98%252B1lWN2VQKHfGJg%3D%3D",
         "https://www.newark.com/search?st=46T6775"
       ],
       "source": "cad/turret_boards.py",
+      "supplier_observation": null,
       "value": "100 nF film 5 %"
     },
     {
       "catalog_key": "cap-mlcc-100n-50v",
       "group": "retained_legacy_control_board",
       "id": "L.C2",
-      "maximum_envelope": null,
+      "maximum_envelope": {
+        "lead_pitch_range_mm": [
+          1.7,
+          3.3
+        ],
+        "match": [
+          "K104K15X7RF53L2"
+        ],
+        "maximum_body_mm": [
+          4,
+          2.6,
+          4
+        ],
+        "maximum_seating_offset_mm": 1.6,
+        "note": "Exactsize15,L2style; fullbody+seating5.6maxfromboardbeforeinstallationtolerances; do notusebodyalone.",
+        "source": "vishay_k"
+      },
       "mpn": "K104K15X7RF53L2",
+      "package_evidence_id": "vishay_k104",
       "placement": "existing envelope only; exact leads/pads not established",
       "prior_sources": [
         "https://www.mouser.com/ProductDetail/594-K104K15X7RF53L2",
         "https://www.digikey.com/en/products/detail/vishay-beyschlag-draloric-bc-components/K104K15X7RF53L2/2820506"
       ],
       "source": "cad/turret_boards.py",
+      "supplier_observation": null,
       "value": "100 nF X7R"
     },
     {
@@ -1066,20 +1467,38 @@
         "https://www.digikey.com/en/products/detail/tdk/FG24X7R1H105KRT06/5802988"
       ],
       "source": "cad/turret_boards.py",
+      "supplier_observation": null,
       "value": "1 uF X7R"
     },
     {
       "catalog_key": "onsemi-1n4148",
       "group": "retained_legacy_control_board",
       "id": "L.D1",
-      "maximum_envelope": null,
+      "maximum_envelope": {
+        "additional_unknowns": [
+          "formedleadpitchandbodyorientation",
+          "leadstand-offandtrimming"
+        ],
+        "lead_diameter_max_mm": 0.533,
+        "match": [
+          "1N4148"
+        ],
+        "maximum_body_mm": [
+          4.56,
+          1.91,
+          1.91
+        ],
+        "source": "onsemi_1n4148"
+      },
       "mpn": "1N4148",
+      "package_evidence_id": "onsemi_1n4148",
       "placement": "existing envelope only; exact leads/pads not established",
       "prior_sources": [
         "https://www.mouser.com/ProductDetail/512-1N4148",
         "https://www.digikey.com/en/products/detail/onsemi/1N4148/458603"
       ],
       "source": "cad/turret_boards.py",
+      "supplier_observation": null,
       "value": "1N4148"
     },
     {
@@ -1094,6 +1513,7 @@
         "https://www.digikey.com/product-detail/en/yageo/RSF100JB-73-2K2/2.2KW-1-ND/18091"
       ],
       "source": "cad/turret_boards.py",
+      "supplier_observation": null,
       "value": "2.2 k 1 W"
     },
     {
@@ -1107,17 +1527,24 @@
         "https://www.mouser.com/c/?q=MF-R300"
       ],
       "source": "cad/turret_boards.py",
+      "supplier_observation": null,
       "value": "MF-R300"
     }
   ],
   "source_sha256": {
     "cad/turret_boards.py": "c7a115d2fe3cefddf46b0dd521e21076e1f7721235df3e7bd22fadb6e165707b",
     "catalog/turret.json": "036b39b5e923169713b20907fd1a113bf9044e3b201d9fcd2c4f2fcbbabdc367",
+    "docs/base-board-interfaces.md": "32a4d63c33ee79dad2753a7be1d8dc6b60ea557a8a842370f5f1ca5680e6d7b8",
+    "docs/carrier-service-connectors.md": "f73db1114d1d807002ff454b5cb9ae1c7d94c1e29af89567b640e36f17966ec7",
     "hardware/carrier-packaging/front-reference-contract.json": "f658762cb95e52615563630107bb940ddc16a12de5d287d0c48cfd134530417b",
-    "hardware/carrier-packaging/inventory.py": "14babbec732828994d63cf3d9cd6478be00ff49452294c2186c2becdb17edd5c",
-    "hardware/carrier-packaging/package-envelopes.json": "88f9ffb3a3e1aa5eff60f75045ae93d66b14f49070d63c8b16453325ac1d5b89",
-    "hardware/carrier-packaging/primary-envelope-sources.json": "24ef8438483a96769604720497e2250b56cb3e7e54cd035cd5939011f6d7dfca",
-    "hardware/carrier-pan-protection/circuit_design.py": "37b4d99eecaa1f567109df6762a00f69f46c02e6efbe7d53c35893d2955ace8a"
+    "hardware/carrier-packaging/inventory.py": "bd9d65bba0dfa666665a4cae3631c5ef9933f8dc5361f2b2deb018ecd80e552d",
+    "hardware/carrier-packaging/package-envelopes.json": "ab0d9e97b28ca3e4277e2351163c5d409e81642c3f52aef7fd5a96a90b51fb3b",
+    "hardware/carrier-packaging/primary-envelope-sources.json": "b67ac8c2193f1089803ef48bd7d50f687324438c15ce93e3b538c54b9b6460c4",
+    "hardware/carrier-packaging/terminal-contract.json": "ff3dc0f5f2fbb0169727f67edb67e9f0bf94d96fe45a852f40b0fd5719a33ce6",
+    "hardware/carrier-pan-protection/availability.json": "549a8ccdfd7d9ea95b5baedcb47ec7aa971cfbdeffe1092e4be13df40c480ec8",
+    "hardware/carrier-pan-protection/circuit_design.py": "37b4d99eecaa1f567109df6762a00f69f46c02e6efbe7d53c35893d2955ace8a",
+    "hardware/carrier-pan-protection/pins.md": "37ce5846b0335bea6263851fd83cf629d92b1a8a897f00f5cb5ec8205a7cadc4",
+    "research/protection/carrier-practical-architecture.inputs.json": "0b6fddcf95ea8719ae215e24827ceb1c33624a0e113604e4db1afe2f95891a70"
   },
   "status": "WIP_INVENTORY_NOT_A_FROZEN_LAYOUT"
 }

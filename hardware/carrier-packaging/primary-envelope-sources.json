@@ -103,8 +103,8 @@
       "id": "kemet_c0g_esd",
       "observed": "2026-10-29",
       "pages": [
-        4,
-        6,
+        5,
+        7,
         8
       ],
       "sha256": "e7a71bb470bbc82e77e3ecbfce7749d3f5c963985e62d4494ad52de285945189",
@@ -116,10 +116,72 @@
       "observed": "2026-10-29",
       "pages": [
         3,
-        9
+        6,
+        10
       ],
       "sha256": "02d179914aeb9585eb2229ba8e18ef9d6b01c77c056de2af295d6950a2a5cc0d",
       "url": "https://yageogroup.com/content/datasheet/asset/file/KEM_C1003_C0G_SMD"
+    },
+    {
+      "evidence": "IPC7351 reflow0805 outerZ2.80 xX1.45mm; padY0.90,gapG1.00. Tabledoesnotestablishapplicationcreepageorheatdissipation.",
+      "id": "tnpw_lands",
+      "observed": "2026-10-29",
+      "pages": [
+        1
+      ],
+      "sha256": "9e2b145c937da3be1e926b8afc2856959754eeb4d1103241d838038f7308144e",
+      "url": "https://www.vishay.com/doc?28950"
+    },
+    {
+      "evidence": "Rev1.0Oct24,2025SMAmax5.28leadspan x2.79bodywidth x2.29height;land6.7refspan x2.21width. ExactM3gradequalification remains open.",
+      "id": "bzg03",
+      "observed": "2026-10-29",
+      "pages": [
+        4
+      ],
+      "sha256": "c3769a50c82951d6d0ebcb0c907873d151c5886733655c1fe848ec03f1233543",
+      "url": "https://www.vishay.com/doc?86574="
+    },
+    {
+      "evidence": "03.26table exactMKS2C031001A00:nominalW2.5,H6.5,L7.2,PCM5mm;diameter0.5lead,5+/-0.5pitch,SD4..6mm suppliedlead. Bodydimensionaltolerance notfound; do not callnominalmax.",
+      "id": "wima_mks2",
+      "observed": "2026-10-29",
+      "pages": [
+        2
+      ],
+      "sha256": "2a64392db00b639b6d0fca1d9e1a3aa38c1a5138ca6796a713914a9918d05fe9",
+      "url": "https://www.wima.de/wp-content/uploads/media/e_WIMA_MKS_2.pdf"
+    },
+    {
+      "evidence": "ExactK104K15X7RF53L2: size15maxW4,H4,T2.6;L2straightleadspacing2.5+/-0.8;maxseatingheight1.6mmadditionaltoH. Actualforming/solderstacknotqualified.",
+      "id": "vishay_k",
+      "observed": "2026-10-29",
+      "pages": [
+        2
+      ],
+      "sha256": "555cf6e7062fe1de1962ee38c5b8cfcff0c9cab469d563599ec6505b70485457",
+      "url": "https://www.vishay.com/docs/45171/kseries.pdf"
+    },
+    {
+      "evidence": "Exact1N4148bulkDO35:CASE017AGIssueOmaxbody4.56xdiam1.91,leadmax0.533mm. Blackbandiscathode. Installedleadforming/pitchnotprovided.",
+      "id": "onsemi_1n4148",
+      "observed": "2026-10-29",
+      "pages": [
+        1,
+        5
+      ],
+      "sha256": "07bb416babd5fdcd86c6ecf628315812edc97adfaafe3fd5e894cd6f7aa8469a",
+      "url": "https://www.onsemi.com/pdf/datasheet/1n914-d.pdf"
+    },
+    {
+      "evidence": "ActualimageonlyPDIP8drawing4040082/E04/2010viewed: maxL10.16W6.6,5.08aboveseatingplane;unformedleadspan10.92max,gaugerow7.62..8.26,pitch2.54,leadwidth0.53max,belowseatingmin3.18. NotceramicJGorSOICPSvariants.",
+      "id": "ne555p",
+      "observed": "2026-10-29",
+      "pages": [
+        35
+      ],
+      "sha256": "a3756e59fd06d0ba736edf9ffe71d99d2aae33fb7e49fedc86165a241179f4a6",
+      "url": "https://www.ti.com/lit/ds/symlink/ne555.pdf"
     }
   ],
   "status": "WIP_PRIMARY_INVENTORY_NOT_A_LAYOUT"

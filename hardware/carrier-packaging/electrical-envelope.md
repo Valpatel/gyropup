@@ -27,7 +27,7 @@ The actual LTC4359 Rev F PDF and Figure10 pixels have now been inspected indepen
 
 The DCB6 exposed pad is electrically NC in this paper proposal, following page11's guidance to increase effective spacing above30 V. Pin6 still returns to floating VSS; the physical exposed metal is not omitted from the land envelope. Actual creepage, contamination/leakage and thermal behavior remain unresolved. The SHDN pin remains open as drawn in Figure10, with its leakage condition visible. This is not approval to route a compact high-voltage board merely because the IC fits.
 
-[Package records](package-envelopes.json) currently provide primary evidence for27 of47 electronic items; they distinguish maximum body dimensions, nominal module profiles and manufacturer lands. They do not establish a complete footprint/terminal inventory or a placement. The Panasonic valve requires at least2 mm of free space: its upright maximum body plus valve allowance alone is14.5 mm, before mounting, PCB, underside solder and insulation. The18 mm trial stack therefore cannot be accepted from nominal component heights.
+[Package records](package-envelopes.json) currently provide primary evidence for32 of47 electronic items; they distinguish maximum body dimensions, nominal module profiles and manufacturer lands. They do not establish a complete footprint/terminal inventory or a placement. The Panasonic valve requires at least2 mm of free space: its upright maximum body plus valve allowance alone is14.5 mm, before mounting, PCB, underside solder and insulation. The18 mm trial stack therefore cannot be accepted from nominal component heights.
 
 The mechanical investigation now also holds the region on the bumper teardown sequence. The existing C3 support obstructs a pure upward rigid bumper lift, while some carrier/support fasteners require the bumper removed for the currently modelled straight tools. The proposed electronics overhang adds an obstruction. No new board placement is frozen while a viable rigid teardown path or explicit retention redesign is missing.
 
@@ -37,4 +37,16 @@ Next: complete maximum body/land/lead and terminal inventories, resolve the mech
 
 ## Reproduce the current bounded checks
 
-Run `python hardware/carrier-packaging/inventory.py`, then `python hardware/carrier-packaging/check.py` and `python -m unittest discover -s hardware/carrier-packaging -p 'test_*.py'`. Eight tests include dropped/duplicate items, stale source or dimensions, improper readiness promotion, reversed clamps, grounded floating reference/capacitor and mistaken direct load-capacitor assignment. These are inventory/reference controls, not EDA/ERC, physical collision, thermal or waveform validation.
+Run `python hardware/carrier-packaging/inventory.py`, then `python hardware/carrier-packaging/check.py` and `python -m unittest discover -s hardware/carrier-packaging -p 'test_*.py'`. Twelve tests include dropped/duplicate items, stale source or dimensions, improper readiness promotion, reversed clamps, grounded floating reference/capacitor and mistaken direct load-capacitor assignment, protected-PAN substitution on the raw C3 bus and a24 AWG wire substituted into the original28 AWG ring contact, and an omitted existing shunt lead at a junction. These are inventory/reference controls, not EDA/ERC, physical collision, thermal or waveform validation.
+
+## Complete external net inventory, physical terminals still open
+
+The [terminal contract](terminal-contract.json) enumerates all21 external connector positions, three continuous CAN/TTL bypasses, the raw BUS and return junctions, the protected12 V split, nine legacy control components and adjacent F4/D8/D14/fuse-holder obligations. This is a net-to-endpoint inventory, not21 invented solder pads. Every source/return junction, physical protection-board termination, reset interface and strain-relief location remains unallocated.
+
+The fixed C3 female43030-0010 contacts belong to the original28 AWG ring leads; the removable male43031-0001 contacts use24 AWG tails. There is no existing24 AWG-to-female0010 qualification. Root's Alpha6712/6716 wire candidates have manufacturer5D bend figures, recorded with their exact maximum diameters and limitations. They are not selected substitutions for Pololu/Remington wire, do not define repeated-flex life, and do not change the fixed ring lead or its contacts.
+
+## Obtainability is a dated source record
+
+Each applicable inventory row now links the exact same-day reviewed supplier observation by source-file hash and row index. These are carried forward from the2026-10-29 protection and architecture records; they are not a newly refreshed or reserved stock claim. Critical examples are LTC4368IMS-2#PBF (1,295 listed; one-piece tube offer), LTC4359IDCB#TRPBF (1,712 listed; cut tape; factory10 weeks) and IPB200N25N3GATMA1 (10,794 indexed; cut tape; factory52 weeks). See the linked records for exact URLs, price, pack quantities and limits.
+
+The actual build supply remains unresolved: DDZ9699T-7 had only one cached Mouser item with refresh403 and zero DigiKey stock; Pololu5577 is rationed with no confirmed count/lead time; several exact resistors have uncertain stock or packaging. COUT has no selected exact MPN. No substitute, carrier/catalog selection, purchase or procurement pass is produced here.

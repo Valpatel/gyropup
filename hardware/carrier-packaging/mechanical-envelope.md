@@ -1,6 +1,9 @@
 # PAN carrier mechanical envelope — contract proposal
 
-**2026-10-29; not frozen, not a fit or fabrication approval.** This read-only
+**2026-10-29; not frozen, not a fit or fabrication approval.** The single-piece
+bumper teardown prevents freezing the original shelf proposal. The concrete
+correction below is one independently removable +X bumper sector using the
+existing mounts, coupled to the retained electronics/C3 service sequence. This read-only
 investigation uses engineering `fa459d09aebe416be21edc1c11ceb37fe41c3f7e`,
 including the reviewed PR86 C3 support. No CAD, circuit, vendor geometry or
 generated receipt changed. The electrical and mechanical authors must accept a
@@ -20,8 +23,9 @@ the OEM lead/interface has been qualified for the electrical load contract.
 All coordinates below are millimetres in turret frame T: the mounting face is
 Z=0, the carrier is on +X, and its existing outward service direction is +X.
 The +45 mm illustration is a finite removal endpoint to investigate, not a new
-whole-module sweep result. The robot bumper is removed before carrier service;
-the pan base, bearing, clamp and servo remain installed.
+whole-module sweep result. The legacy sequence requires bumper removal first;
+the proposed correction removes only its new +X service sector. The pan base,
+bearing, clamp, servo and remaining bumper arc stay installed.
 
 | Item | Existing occupied region or requirement | Source and limitation |
 | --- | --- | --- |
@@ -82,6 +86,127 @@ entirely external region would need new evidence; neither is assumed here.
 These are source-derived interval conflicts, not newly run BREP collisions.
 They are sufficient to reject using either simple bounding-box idea as a
 complete service contract.
+
+## Break the bumper/carrier teardown loop with one service sector
+
+The original one-piece bumper cannot simply lift through the added region:
+T=(20,82) has radius84.404 and lies in its XY projection, so the ring's Z20 top
+would meet the proposed Z23 bottom after 3 mm. The C3 support already presents
+the same unresolved prerequisite: its solid lower panel at X84,Y−7.5 starts
+Z20.5, directly over the ring at radius84.334, allowing only 0.5 mm upward travel.
+Downward motion immediately meets the retained base tabs (their top and the
+bumper's bottom are both Z6). A planar escape through the existing −Y opening is
+not demonstrated by its 62 mm width around a retained Ø144 skirt. No rigid 3D
+tilt path has been verified; no TPU flex is credited.
+
+Removing the carrier or C3 support first does not resolve this with the current
+tools. The lower carrier-retainer shafts at Y±31,Z9 and support-screw shafts at
+Y±10,Z10 intersect the installed ring's Z6..20 band. These observations reject
+those simple prerequisite orders; they do not prove that every possible tilted
+motion is impossible.
+
+**Chosen next design action:** split the existing open ring once at its +60°
+radial seam. The +X service sector runs from the existing right-hand −Y opening
+to that seam and retains the existing +30° and330° mounts. The other connected
+arc retains 90°,150° and210°. Do not use symmetric ±60° cuts: the short arc from
+the existing right-hand opening to −60° would become a separate unmounted stub.
+No base, bearing, bolt-axis or original carrier-fastener datum changes.
+
+For an exact nominal partition of the existing bumper B, the service sector is
+`B ∩ {X≥0, sqrt(3)·X−Y≥0}`; the remaining part is its complement in B. The
+`X≥0` restriction avoids erroneously assigning the left-hand end of the open
+ring to the service part. It does not introduce another physical seam through
+the existing −Y gap. The nominal partition preserves installed impact coverage;
+print clearances, seam retention and impact behavior are not thereby qualified.
+
+Use a radial step-lap at the +60° seam rather than a new independent clip or
+extra loose fastener: the service sector's outer radial half (R84..86) extends
+3 mm across the nominal seam, while the remaining arc's inner half (R82..84)
+supports that overlap. Signed distance is `(sqrt(3)·X−Y)/2`; the outer service
+half extends to −3 mm and the inner service half starts at 0. This is a proposed
+profile, not generated geometry. The offset seams maintain a radial barrier
+when eventual manufacturing clearance is introduced; no through-gap may be
+accepted from a generic clearance offset. Both pieces retain their existing
+bolts and washers. The lap provides coverage and alignment, while the existing
+two-versus-three fastener groups provide the proposed retention. It receives
+no assumed structural or impact rating. Verify local print thickness, edge
+radius, tear-out, compression set and retention after defining the actual seam.
+
+The nominal rigid teardown sequence is:
+
+1. Deenergize and disconnect/release C2 as required by its real interface. Keep
+   C3 in its seated orientation while accessing the bumper screws. The proposed
+   quarter-turned parked C3 exit would otherwise cross the +30° bolt's tool
+   corridor; parking it first is the wrong order.
+2. Remove only the two +X-sector M3×20 screws and Ø9 washers at approximately
+   (72.746,±42). Both heads face +Z. Reserve a coaxial Ø6 shaft from the nominal
+   head top Z23.9 to Z60 for the next geometry check; this design reservation is
+   not a selected complete tool/hand model. The seated C3 and trial board do
+   not occupy those XY axes. Confirm the actual tool and upper-head pose.
+3. Translate this sector +100X without rotating it, sliding on the existing tab
+   bearing faces at the installed Z position. Its nominal bare-ring bounds
+   become X131..186,Y−80.2185..74.4782,Z6..20,
+   before any seam refinement. Thus it is beyond both retainer/tool corridors
+   (the farthest tested shaft ends at X121.01). The added outer lap can decrease
+   the initial X bound near the +60° seam but remains well above31; retain and
+   verify X≥31 as an explicit geometry requirement.
+4. Now perform the accepted C3 disconnect/quarter-turn/park and servo/harness
+   disconnects, remove the four carrier retainers, and withdraw the complete
+   retained electronics module. The remaining bumper arc stays fastened. Reverse
+   this order to install: the service sector is last, after the module is
+   retained and C3 is returned from its parked pose.
+
+This is a finite rigid-path proposal with useful nominal separation facts:
+the sector has intended bearing contact with the retained tab tops, rather than
+passing through them. It stays 0.5 mm below the current C3 panel and 3 mm below
+the proposed electronics region. In
+the low attachment zone's Y33..56 range, the unmodified ring's inner surface
+has X≥sqrt(82²−56²)=59.900, already beyond that zone's X56 maximum, and moving
+outward increases the separation. At the new seam, +X translation increases
+the signed separating distance; the outer lap moves outward rather than
+hooking under the remaining inner half. The rest of the ring lies beyond the
+upper seam or on the opposite side of the original opening, away from the
+positive-X motion. These are interval/half-space arguments, not a new exact
+BREP sweep or measured tolerance pass. A previously considered 0.25 mm lift
+would leave only 0.25 mm on either side; **it is rejected as a practical service
+prescription and must not be frozen.** Print distortion, friction and assembly
+tolerances can consume the current gap. Do not
+call this physically serviceable until the actual source-bound seam, hardware,
+rigid sweep and measured clearance support it.
+
+The concrete clearance revision to screen with the support redesign is raising
+the relevant panel underside from Z20.5 to Z21 while leaving the connector and
+cutout in place. This would give **1 mm nominal overhead separation** during
+radial sliding. It is not yet changed in CAD. The lowest cutout edge is
+`34−22.89/2=22.555`, so the lower ligament shrinks from 2.055 to 1.555 mm. That
+loss of section must be explicitly addressed in the load-path revision; it is
+not granted strength because the outer frame clears. Raising the underside to
+Z22 to provide 1 mm lift plus 1 mm gap would leave only 0.555 mm ligament and is
+rejected at this stage. Lowering the bumper top would remove the original
+installed impact coverage, so that is not the selected correction.
+
+**Practical-clearance design question before freezing:** choose the minimum
+free service gap and allowable vertical runout, then bound panel/bumper print
+error, assembled stack error, moisture/thermal change, installed distortion and
+load deflection. The required inequality is
+`nominal_gap − adverse_stack ≥ required_service_gap + allowed_runout`.
+These terms are not supplied or measured yet. A 1 mm nominal target cannot
+prove a 1 mm practical gap with a nonzero adverse stack. Sliding contact with the
+tab bearing faces also requires a real friction/handling and surface-fit check;
+no flexible deformation, forced scraping or zero-tolerance printing is assumed.
+If the strengthened support cannot provide the selected clearance with an
+adequate ligament, revise the joint contour before freezing the electronics.
+
+The split changes neither the 96 N C3 mating-load source nor its lever, two
+support-bolt datums or load path into the carrier. The bumper is not a brace:
+the unqualified 35.4 MPa support screen remains. A support-stiffening revision
+must be checked with this service sector and the real C2 bodies/tool lanes.
+Simply widening the current X56..61.5 posts to X66 is rejected: the negative-Y
+post then overlaps the C2 power and signal module reservations. Do not freeze
+a thicker post from a section formula alone. The next geometry checkpoint
+must show a concrete rib/load-path design around those bodies, preserved mount
+and tool clearances, and updated load/retention calculations before print
+readiness; neither this split nor an unchanged geometry pass establishes strength.
 
 ## One finite candidate to negotiate
 
@@ -194,8 +319,11 @@ mounting load; adding electronics cannot inherit strength from a geometry pass.
 
 1. Electrical author returns the complete exact component/land and terminal
    inventory, a practical layout/thermal assumption, actual PCB thickness and
-   assembled per-side heights. Jointly accept or revise the single contour and
-   clockwise C3 park proposal above before any CAD/circuit generation.
+   assembled per-side heights. Jointly accept or revise the single contour,
+   one-seam service sector, strengthened support/clearance basis and clockwise
+   C3 park proposal above before any CAD/circuit generation. The one-piece
+   bumper prerequisite is superseded only after the new rigid sector path and
+   fastening/coverage evidence pass; it cannot be waived in a service receipt.
 2. Source-bound BREP checks must include actual base/skirt, existing PCB and all
    retained hardware, bearing/clamp/servo, C3 support, bumper fasteners and real
    connector parts. Check seated, unplugged, quarter-turn, parked and every
@@ -206,7 +334,10 @@ mounting load; adding electronics cannot inherit strength from a geometry pass.
    retained harness anchors, keeper, strain relief, complete free exits and
    routed slack. Check removal prerequisites rather than silently deleting
    obstructing parts. Required unresolved dimensions must fail readiness.
-4. Meaningful negatives: unchanged+Y C3 exits block the initial shelf removal;
+4. Meaningful negatives: the one-piece ring cannot lift through the panel/new
+   electronics; a symmetric second seam creates an unmounted stub; a moved or
+   missing sector mount fails the preserved five-mount inventory; parking C3
+   before removing the +30° bolt blocks its tool corridor; unchanged+Y C3 exits block the initial shelf removal;
    a low inward component below the skirt top blocks straight removal; a
    protruding attached terminal/fastener blocks the module; blocked retainer and
    bumper-tool access fail; omission or incorrect orientation of a retained
