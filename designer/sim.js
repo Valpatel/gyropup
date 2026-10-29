@@ -846,8 +846,8 @@ function setupLiveRange() {
     size: [.025,.025,.25], pos: [p.pos[0],p.pos[1],.25], quat: [1,0,0,0], rgba: [.3,.4,.36,1] }]) });
   liveTargetMotion.clear();
   for (const target of liveTargets) liveTargetMotion.set(target.name, {
-    // The 50 mm square stand hinges 25 mm above the floor; both pieces share this pivot.
-    pivot: new THREE.Vector3(target.pos[1], .025, target.pos[0]),
+    // Hinge along the far bottom edge of the 50 mm square foot. A center pivot clips its corner through the floor.
+    pivot: new THREE.Vector3(target.pos[1], 0, target.pos[0] + .025),
     names: [target.name, target.name + '_stand'],
     meshes: [propMeshes.get(target.name), propMeshes.get(target.name + '_stand')],
     angle: 0, velocity: 0, down: false, reset: null,
