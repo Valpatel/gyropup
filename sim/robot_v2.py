@@ -524,9 +524,6 @@ def export_rig(rb, lid, lid_at, turret_base, turret_groups_):
         m = gmi.place(motor, (x, fb.Y['motor_out'] + Y_OFF, 0), (0, 1, 0))
         man['body'].append(_put('body', f'motor_{"f" if x > 0 else "r"}_l', m, COLORS['motor']))
         man['body'].append(_put('body', f'motor_{"f" if x > 0 else "r"}_r', m, COLORS['motor'], mirror=True))
-        ad = gmi.place(gmi.output_adapter(fb.MOTOR, 'L')[0], (x, fb.Y['motor_out'] + Y_OFF, 0), (0, 1, 0))
-        man['body'].append(_put('body', f'adapter_{"f" if x > 0 else "r"}_l', ad, COLORS['adapter']))
-        man['body'].append(_put('body', f'adapter_{"f" if x > 0 else "r"}_r', ad, COLORS['adapter'], mirror=True))
     by_colour = {}                                               # the frame: one mesh per colour (fewer files to load)
     for n, prt in rb['parts'].items():
         if prt.shape is None:
@@ -543,14 +540,19 @@ def export_rig(rb, lid, lid_at, turret_base, turret_groups_):
     man['body'].append(_put('body', 'lidar', lidar_shape(lid, lid_at), COLORS['lidar']))
     man['body'] += turret_base
     # the leg links in their own frames (left as built; the page mirrors them for the right, MuJoCo uses _m copies)
-    man['links']['upper'] = [_put('link', 'upper_link', L.parts['upper_link'], COLORS['link'])]
+    # Adapters and their output screws rotate with each upper link, as in
+    # fivebar.assembly. The motor housings above remain on the fixed body.
+    upper_parts = [('upper_link', L.parts['upper_link'], COLORS['link']),
+                   ('output_adapter', L.parts['output_adapter'], COLORS['adapter']),
+                   *[(name, shape, '#454952') for name, shape in fb.upper_output_screws()]]
+    man['links']['upper'] = [_put('link', name, shape, colour) for name, shape, colour in upper_parts]
     man['links']['front'] = [_put('link', 'front_link', L.parts['front_link'], COLORS['link'])]
     man['links']['wheel_link'] = [_put('link', 'wheel_link', L.parts['wheel_link'], COLORS['wheel_link'])]
     tyre, hub = fb.botwheel()
     man['links']['wheel'] = [_put('link', 'tyre', tyre, COLORS['tyre']), _put('link', 'hub', hub, COLORS['hub'])]
     for key, parts in list(man['links'].items()):
         for p in parts:
-            src = {'upper_link': L.parts['upper_link'], 'front_link': L.parts['front_link'], 'wheel_link': L.parts['wheel_link'],
+            src = {**{name: shape for name, shape, _ in upper_parts}, 'front_link': L.parts['front_link'], 'wheel_link': L.parts['wheel_link'],
                    'tyre': tyre, 'hub': hub}[p['name']]
             _put('link', p['name'], src, p['color'], mirror=True)
     return man
