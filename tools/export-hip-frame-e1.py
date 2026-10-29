@@ -76,7 +76,8 @@ def main():
     fields = OUT / 'hip_frame-E1.json'
     receipt = {'schema': 1, 'purpose': 'Reproduced static E1 field for an explanatory deformation animation',
         'source_revision': revision, 'source_hashes': before, 'toolkit_sources_sha256': toolkit,
-        'versions': {name: version(name) for name in ('cad-agent', 'cadquery', 'cadquery-ocp', 'numpy', 'scikit-fem', 'gmsh')},
+        'versions': {**{name: version(name) for name in ('cad-agent', 'cadquery', 'cadquery-ocp', 'numpy', 'scikit-fem')},
+                     'gmsh': gmsh.__version__},
         'mapped_runtime_libraries': runtime_hashes,
         'baseline': original, 'reproduced': solved, 'fields': fields.relative_to(ROOT).as_posix(),
         'fields_sha256': digest(fields), 'transient_simulation': False, 'qualified_for_manufacture': False,
