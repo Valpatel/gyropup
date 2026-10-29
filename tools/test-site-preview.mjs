@@ -1,6 +1,6 @@
 import assert from 'node:assert/strict';
 import {test, before, after} from 'node:test';
-import {mkdtemp, mkdir, writeFile, cp, rm} from 'node:fs/promises';
+import {mkdtemp, mkdir, writeFile, cp, rm, symlink, realpath} from 'node:fs/promises';
 import {spawn, execFileSync} from 'node:child_process';
 import {once} from 'node:events';
 import http from 'node:http';
@@ -53,6 +53,7 @@ ttlMs:Number(process.env.TTL || 1800000)}); } catch (error) { console.error(erro
   cli = path.join(directory, 'cli'); await mkdir(path.join(cli,'tools'), {recursive:true});
   await mkdir(path.join(cli,'dist')); await writeFile(path.join(cli,'dist','index.html'),'CLI fixture');
   for (const file of ['serve-site.mjs','site-preview.mjs','site-cache.mjs']) await cp(path.join(import.meta.dirname,file),path.join(cli,'tools',file));
+  await symlink(await realpath(path.join(import.meta.dirname,'../node_modules')),path.join(cli,'node_modules'),'dir');
   execFileSync('git',['init','-q',cli]);
 });
 after(async () => {
