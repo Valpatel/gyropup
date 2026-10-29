@@ -63,6 +63,21 @@ The user requested a second validation pass after PR44: consistent current model
 
 Validation is staged: baseline reproduction, focused regression and negative controls, independent review, then hosted checks against the deployed version. Repeating an assertion does not replace testing a different state or input sequence. Historical simulation evidence and human play judgments remain distinct from presentation tests.
 
+### Integrated results, 2026-10-29
+
+The implementation for [PR48](https://github.com/Valpatel/gyropup/pull/48) closes the presentation gaps above. Local Chromium and WebKit checks passed on the integrated build; final current-head CI, independent review and production receipts belong on that PR.
+
+| Area | Measured result | Remaining limit |
+| --- | --- | --- |
+| Poster, backdrop and inspection | Twelve viewport/DPR cases per browser compare actual rendered silhouettes: minimum overlap 0.9904 Chromium / 0.9807 WebKit, maximum mean RGB error 1.967 / 2.799 out of 255. Delayed imports, module/WebGL failure, hover, keyboard/touch controls and reduced motion pass. Phone and desktop screenshots show the cool background and complete robot. | A static fallback cannot reproduce later animation. |
+| Current model | Same 48 current turret parts on landing, live robot and character demo; 46 independent required poses plus 90 operating frames pass with maximum landmark error 0.000010 mm. Wrong pivot, owner, axis sign, parent and units are rejected. Actual barrel-mouth and emitted-ball origins agree. | The committed v2 body remains an interim rig. No new full-body CAD, mass, collision-clearance or dynamics validation is implied. See [current-model evidence](current-model.md). |
+| Default live demo | Both browsers observe real autonomous shots and target hits, pause, manual fire/reload/drive takeover, live slider feedback and preserved scene/conversation identity. Robot controls pass six layouts for v1/v2, desktop/touch and saved mute/URL overrides. | This is a kinematic showcase with browser projectile integration, not a new MuJoCo recording. Full-robot reload opens its flap and fills the existing counter; the bench retains the detailed jar/pour animation. |
+| Recorded evidence | Explicit archived activities keep their original turret, muzzle and ball-speed frames. Repeated archive/current swaps, failed fetches and late-request cancellation pass. Recorded mass is labeled as such. | Older reports remain evidence of their original model and loads. |
+| Landing character | Greeting screenshots caught low-contrast inherited speech text; corrected theme tokens now have a 4.5:1 text-contrast regression. Gesture-gated speech, master/voice mute, offscreen suppression and reduced-motion behavior pass. | Hidden-document behavior uses an explicit visibility adapter; these tests do not claim native tab-switch automation or judge voice quality. |
+| Product weight ceiling | Active product copy, requirements and D72 now specify 100 lb / 45.36 kg for the complete operating robot. The [weight budget](../design-weight-budget.md) distinguishes the current estimated mass from the new ceiling. | Historical 37 kg load gates and actual CAD masses remain unchanged. Full-ceiling structural and motion validation is open. |
+
+Reproduce the new checks with `npm run test:hero`, `npm run test:models` and `npm run test:demo`, setting `SITE_URL` to the built site. Use `PLAYWRIGHT_BROWSER=webkit` for the second browser engine. CI runs the new suites alongside the existing mechanism, gameplay, portal, audio, cache and agent-markdown regressions in three parallel groups.
+
 ## Evidence and method
 
 The independent broad probe `/tmp/gyropup-playground-audit.mjs` checks deliberate control groups, state changes and scene identity rather than clicking arbitrary buttons. The portal probe `/tmp/gyropup-portal-audit.mjs` and receipt `/tmp/gyropup-portal-audit.json` cover the landing page, progress, build, design notebook, FEA and character demo. Built-site portal receipts are `/tmp/gyropup-portal-chromium/report.json` and `/tmp/gyropup-portal-webkit/report.json`, both with no page errors or missing required resources. Scratch paths describe this session's evidence and are not durable repository dependencies.
