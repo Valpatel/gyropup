@@ -1,0 +1,28 @@
+name: Carrier packaging contract
+on:
+  pull_request:
+    paths:
+      - 'hardware/carrier-packaging/**'
+      - 'hardware/carrier-pan-protection/**'
+      - 'research/protection/carrier-practical-architecture.inputs.json'
+      - 'cad/turret_boards.py'
+      - 'catalog/turret.json'
+      - 'catalog/hardware.json'
+      - 'docs/base-board-interfaces.md'
+      - 'docs/carrier-service-connectors.md'
+      - '.github/workflows/carrier-packaging.yml'
+  workflow_dispatch:
+permissions:
+  contents: read
+jobs:
+  bounded-contract:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-python@v5
+        with:
+          python-version: '3.12'
+      - name: Check committed inventory without regenerating stale evidence
+        run: python hardware/carrier-packaging/check.py
+      - name: Exercise reference, terminal and source corruption controls
+        run: python -m unittest discover -s hardware/carrier-packaging -p 'test_*.py' -v

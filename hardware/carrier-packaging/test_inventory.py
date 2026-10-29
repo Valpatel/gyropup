@@ -1,0 +1,226 @@
+import copy
+import importlib.util
+import json
+from pathlib import Path
+import unittest
+
+HERE = Path(__file__).resolve().parent
+spec = importlib.util.spec_from_file_location('packaging_check', HERE / 'check.py')
+C = importlib.util.module_from_spec(spec)
+spec.loader.exec_module(C)
+
+
+class InventoryTests(unittest.TestCase):
+    def setUp(self):
+        self.inventory = json.loads((HERE / 'component-inventory.json').read_text())
+        self.reference = json.loads((HERE / 'front-reference-contract.json').read_text())
+
+    def test_current_source_inventory_and_reference(self):
+        self.assertEqual(C.validate_inventory(self.inventory)['electronic_items'],47)
+        self.assertEqual(C.validate_reference(self.reference)['reference_items'],10)
+
+    def test_omitted_and_duplicated_parts_rejected(self):
+        for kind in ('drop','duplicate'):
+            with self.subTest(kind=kind):
+                d=copy.deepcopy(self.inventory)
+                if kind=='drop':d['rows'].pop()
+                else:d['rows'].append(copy.deepcopy(d['rows'][0]))
+                with self.assertRaises(ValueError):C.validate_inventory(d)
+
+    def test_stale_source_or_package_record_rejected(self):
+        for kind in ('source','dimension'):
+            with self.subTest(kind=kind):
+                d=copy.deepcopy(self.inventory)
+                if kind=='source':d['source_sha256']['cad/turret_boards.py']='0'*64
+                else:d['rows'][0]['maximum_envelope']['maximum_body_mm'][2]=0
+                with self.assertRaises(ValueError):C.validate_inventory(d)
+
+    def test_readiness_cannot_be_promoted(self):
+        for key in ('frozen','complete_physical_inventory','fit_qualified'):
+            d=copy.deepcopy(self.inventory);d[key]=True
+            with self.assertRaises(ValueError):C.validate_inventory(d)
+
+    def test_floating_reference_must_not_be_grounded(self):
+        for pin in ('6','7'):
+            d=copy.deepcopy(self.reference);d['component_pins']['I.U1'][pin]='GND'
+            with self.assertRaises(ValueError):C.validate_reference(d)
+
+    def test_reversed_clamp_and_grounded_cout_rejected(self):
+        for ref in ('I.D1','I.D2','I.D3','I.D4','I.D5','I.D6'):
+            d=copy.deepcopy(self.reference);p=d['component_pins'][ref];p['A'],p['K']=p['K'],p['A']
+            with self.subTest(ref=ref),self.assertRaises(ValueError):C.validate_reference(d)
+        d=copy.deepcopy(self.reference);d['component_pins']['I.COUT']['2']='GND'
+        with self.assertRaises(ValueError):C.validate_reference(d)
+
+    def test_package_variant_and_load_cap_confusion_rejected(self):
+        d=copy.deepcopy(self.reference);d['component_pins']['I.U1']['7']='GND'
+        with self.assertRaises(ValueError):C.validate_reference(d)
+        d=copy.deepcopy(self.reference);d['interfaces']['load_capacitance']['dedicated_front_capacitor']='P.C1'
+        with self.assertRaises(ValueError):C.validate_reference(d)
+
+    def test_reference_revision_requires_visual_review(self):
+        d=copy.deepcopy(self.reference);d['reference']['pdf_sha256']='0'*64
+        with self.assertRaises(ValueError):C.validate_reference(d)
+
+    def test_terminal_contract_and_forbidden_bus_substitution(self):
+        d=json.loads((HERE / 'terminal-contract.json').read_text())
+        self.assertEqual(C.validate_terminals(d)['external_positions'],21)
+        c3=next(x for x in d['existing_interfaces'] if x['id']=='C3.module')
+        c3['pins']['11']='PAN_INPUT'
+        with self.assertRaises(ValueError):C.validate_terminals(d)
+
+    def test_ring_contact_cannot_inherit_module_wire(self):
+        d=json.loads((HERE / 'terminal-contract.json').read_text())
+        fixed=next(x for x in d['existing_interfaces'] if x['id']=='C3.fixed')
+        fixed['wire_awg']=24
+        with self.assertRaises(ValueError):C.validate_terminals(d)
+
+    def test_unknown_terminations_remain_unallocated(self):
+        d=json.loads((HERE / 'terminal-contract.json').read_text())
+        d['all_terminals_allocated']=True
+        with self.assertRaises(ValueError):C.validate_terminals(d)
+
+    def test_shunt_ends_cannot_disappear_from_junction_inventory(self):
+        d=json.loads((HERE / 'terminal-contract.json').read_text())
+        next(x for x in d['junctions'] if x['id']=='J_BUS')['logical_members'].remove('H.D14.K')
+        with self.assertRaises(ValueError):C.validate_terminals(d)
+
+    def test_every_interface_identity_pin_and_net_is_required(self):
+        original=json.loads((HERE / 'terminal-contract.json').read_text())
+        for index,row in enumerate(original['existing_interfaces']):
+            for mode in ('delete','duplicate','rename'):
+                d=copy.deepcopy(original)
+                if mode=='delete': d['existing_interfaces'].pop(index)
+                elif mode=='duplicate': d['existing_interfaces'].append(copy.deepcopy(row))
+                else: d['existing_interfaces'][index]['id'] += '.unexpected'
+                with self.subTest(interface=row['id'],mode=mode), self.assertRaises(ValueError):
+                    C.validate_terminals(d)
+            for pin in row.get('pins',{}):
+                for mode in ('delete','wrong_net'):
+                    d=copy.deepcopy(original); pins=d['existing_interfaces'][index]['pins']
+                    if mode=='delete': pins.pop(pin)
+                    else: pins[pin]='BUS_HEAD_FUSED' if pins[pin]!='BUS_HEAD_FUSED' else 'PAN_INPUT'
+                    with self.subTest(interface=row['id'],pin=pin,mode=mode), self.assertRaises(ValueError):
+                        C.validate_terminals(d)
+        # A duplicate must fail before conversion to a dictionary could hide it.
+        d=copy.deepcopy(original)
+        d['existing_interfaces'].append(copy.deepcopy(next(x for x in d['existing_interfaces'] if x['id']=='C3.module')))
+        with self.assertRaisesRegex(ValueError,'duplicate interface'): C.validate_terminals(d)
+
+    def test_every_bypass_and_junction_endpoint_is_required(self):
+        original=json.loads((HERE / 'terminal-contract.json').read_text())
+        for index,row in enumerate(original['continuous_bypasses']):
+            for mode in ('delete','duplicate','missing_endpoint','wrong_net'):
+                d=copy.deepcopy(original)
+                if mode=='delete': d['continuous_bypasses'].pop(index)
+                elif mode=='duplicate': d['continuous_bypasses'].append(copy.deepcopy(row))
+                elif mode=='missing_endpoint': d['continuous_bypasses'][index][0]='MISSING.1'
+                else: d['continuous_bypasses'][index][2]='GND'
+                with self.subTest(bypass=row,mode=mode), self.assertRaises(ValueError): C.validate_terminals(d)
+        for index,row in enumerate(original['junctions']):
+            for mode in ('delete','duplicate','wrong_net'):
+                d=copy.deepcopy(original)
+                if mode=='delete': d['junctions'].pop(index)
+                elif mode=='duplicate': d['junctions'].append(copy.deepcopy(row))
+                else: d['junctions'][index]['net']='UNEXPECTED'
+                with self.subTest(junction=row['id'],mode=mode), self.assertRaises(ValueError): C.validate_terminals(d)
+            for member in row['logical_members']:
+                for mode in ('delete','duplicate','missing_endpoint'):
+                    d=copy.deepcopy(original); members=d['junctions'][index]['logical_members']
+                    if mode=='delete': members.remove(member)
+                    elif mode=='duplicate': members.append(member)
+                    else: members[members.index(member)]='MISSING.1'
+                    with self.subTest(junction=row['id'],member=member,mode=mode), self.assertRaises(ValueError):
+                        C.validate_terminals(d)
+
+    def test_legacy_and_protection_pin_membership_is_exact(self):
+        original=json.loads((HERE / 'terminal-contract.json').read_text())
+        for ref,pins in original['legacy_control_pins'].items():
+            for pin in pins:
+                for mode in ('delete','wrong_net'):
+                    d=copy.deepcopy(original)
+                    if mode=='delete': d['legacy_control_pins'][ref].pop(pin)
+                    else: d['legacy_control_pins'][ref][pin]='UNEXPECTED'
+                    with self.subTest(ref=ref,pin=pin,mode=mode), self.assertRaises(ValueError): C.validate_terminals(d)
+        for index,row in enumerate(original['adjacent_protection']):
+            d=copy.deepcopy(original);d['adjacent_protection'].append(copy.deepcopy(row))
+            with self.subTest(ref=row['id'],mode='duplicate'), self.assertRaises(ValueError): C.validate_terminals(d)
+            d=copy.deepcopy(original);d['adjacent_protection'].pop(index)
+            with self.subTest(ref=row['id'],mode='delete'), self.assertRaises(ValueError): C.validate_terminals(d)
+            for pin in row.get('pins',{}):
+                d=copy.deepcopy(original);d['adjacent_protection'][index]['pins'][pin]='UNEXPECTED'
+                with self.subTest(ref=row['id'],pin=pin), self.assertRaises(ValueError): C.validate_terminals(d)
+        for port in original['protection_external_terminal_proposal']['ports']:
+            d=copy.deepcopy(original);d['protection_external_terminal_proposal']['ports'].remove(port)
+            with self.subTest(port=port,mode='delete'), self.assertRaises(ValueError): C.validate_terminals(d)
+            d=copy.deepcopy(original);d['protection_external_terminal_proposal']['port_nets'][port]='UNEXPECTED'
+            with self.subTest(port=port,mode='wrong_net'), self.assertRaises(ValueError): C.validate_terminals(d)
+
+    def test_position_totals_do_not_replace_endpoint_membership(self):
+        original=json.loads((HERE / 'terminal-contract.json').read_text())
+        for key in ('C2_module','C3_module','servo','total_external_positions'):
+            d=copy.deepcopy(original);d['physical_end_count'][key]+=1
+            with self.subTest(key=key), self.assertRaises(ValueError): C.validate_terminals(d)
+        d=copy.deepcopy(original);d['protection_external_terminal_proposal']['pad_geometry']={'imaginary':True}
+        with self.assertRaises(ValueError): C.validate_terminals(d)
+
+    def test_cout_packaging_candidate_does_not_become_selection(self):
+        for key,value in [('selected_mpn','C1206C473F1GECAUTO'),('qualification',True),('rated_voltage_v',75)]:
+            d=copy.deepcopy(self.reference);d['packaging_candidates']['I.COUT'][key]=value
+            with self.subTest(key=key),self.assertRaises(ValueError): C.validate_reference(d)
+
+    def test_manufacturer_dimension_axes_and_limits_cannot_be_relabelled(self):
+        original=json.loads((HERE / 'package-envelopes.json').read_text())
+        self.assertEqual(C.validate_package_limits(original)['exact_package_axis_controls'],4)
+        for mode in ('terminal_width_as_height','mixed_limits_as_max_land','coated_span_as_body','minimum_lead_as_maximum'):
+            d=copy.deepcopy(original);p=d['packages']
+            if mode=='terminal_width_as_height':p['littelfuse_smcj150a']['maximum_body_mm'][2]=3.2
+            elif mode=='mixed_limits_as_max_land':p['littelfuse_smcj150a']['land_outer_mm']=[9,3.3]
+            elif mode=='coated_span_as_body':p['bourns_mfr300']['maximum_body_mm']=[12,18.3,3]
+            else:p['bourns_mfr300']['formed_flat_envelope_mm']=[12,25.9,3]
+            with self.subTest(mode=mode),self.assertRaises(ValueError):C.validate_package_limits(d)
+
+    def test_paper_assignment_covers_all_electronics_and_wire_ends(self):
+        d=json.loads((HERE/'allocation-proposal.json').read_text());r=C.validate_allocation(d)
+        self.assertEqual((r['paper_assigned_electronics'],r['control_wire_pad_candidates'],r['power_wire_pad_candidates']),(47,19,4))
+        self.assertEqual(r['cap_margin_before_unknown_allowances_mm'],0.5)
+        self.assertEqual(r['module_nominal_top_z_mm'],37.67)
+        self.assertEqual(r['module_nominal_under_clearance_mm'],0.8)
+        self.assertFalse(r['physical_allocation_qualified'])
+
+    def test_paper_assignment_rejects_omitted_or_duplicate_components(self):
+        original=json.loads((HERE/'allocation-proposal.json').read_text())
+        for mode in ('missing','duplicate','move_legacy'):
+            d=copy.deepcopy(original)
+            if mode=='missing':d['assemblies'][1]['electronic_members'].pop()
+            elif mode=='duplicate':d['assemblies'][1]['electronic_members'].append(d['assemblies'][0]['electronic_members'][0])
+            else:d['assemblies'][1]['electronic_members'].append(d['assemblies'][0]['electronic_members'].pop())
+            with self.subTest(mode=mode),self.assertRaises(ValueError):C.validate_allocation(d)
+
+    def test_paper_assignment_rejects_hidden_wire_end_or_changed_net(self):
+        original=json.loads((HERE/'allocation-proposal.json').read_text())
+        for mode in ('missing_ground','duplicate','protected_bus'):
+            d=copy.deepcopy(original);p=d['assemblies'][1]['wire_pad_candidates']
+            if mode=='missing_ground':p[:]=[r for r in p if r['id']!='POWER.GND_OUT']
+            elif mode=='duplicate':p.append(copy.deepcopy(p[0]))
+            else:p[0]['net']='PAN_INPUT'
+            with self.subTest(mode=mode),self.assertRaises(ValueError):C.validate_allocation(d)
+
+    def test_unknown_stack_allowances_cannot_be_zeroed_or_qualified(self):
+        original=json.loads((HERE/'allocation-proposal.json').read_text())
+        for group,key,value in [('capacitor','mount_gap_mm',0),('capacitor','vent_free_min_mm',0),('capacitor','qualified',True),('converter','profile_tolerance_mm',0),('converter','nominal_bottom_parts_mm',0),('converter','qualified',True)]:
+            d=copy.deepcopy(original);d['height_screens'][group][key]=value
+            with self.subTest(group=group,key=key),self.assertRaises(ValueError):C.validate_allocation(d)
+
+    def test_exact_revision_and_lead_extent_are_not_generic_package_shortcuts(self):
+        original=json.loads((HERE/'package-envelopes.json').read_text())
+        for mode in ('old_s1b_height','land_width_as_whole_part','old_tdk_pitch','coating_as_full_envelope'):
+            d=copy.deepcopy(original);p=d['packages']
+            if mode=='old_s1b_height':p['diodes_s1b']['maximum_body_mm'][2]=2.3
+            elif mode=='land_width_as_whole_part':p['diodes_s1b']['minimum_body_land_union_mm']=[6.5,1.7]
+            elif mode=='old_tdk_pitch':p['tdk_fg24']['incoming_pitch_range_mm']=[4.8,5.8]
+            else:p['tdk_fg24']['complete_installed_envelope_mm']=[4.5,3,5.5]
+            with self.subTest(mode=mode),self.assertRaises(ValueError):C.validate_package_limits(d)
+
+
+if __name__=='__main__':unittest.main()

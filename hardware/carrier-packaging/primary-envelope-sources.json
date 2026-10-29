@@ -1,0 +1,377 @@
+{
+  "sources": [
+    {
+      "date": "18 June 2025",
+      "evidence": "Viewed dimension drawing: 25.4mm square with board edge +/-0.3mm; items5570-5577 profile6.1 abovePCB,1.57PCB,1.4 belowPCB. These profile heights have no stated tolerance, so reserve allowance separately. Twelve1.02mm holes,2.54pitch, three2.18 mounting holes.",
+      "id": "pololu5577",
+      "observed": "2026-10-29",
+      "pages": [
+        1
+      ],
+      "sha256": "115ff5f3896b7440a0e7dc3f527f17eebabd29f1e7ebc737c6a60a0c6870cf5b",
+      "url": "https://www.pololu.com/file/0J2180/d42v55fx-step-down-voltage-regulators-dimensions.pdf"
+    },
+    {
+      "evidence": "EEUFC2A220 exact100V22uF case8x11.5mm; family drawing D+/-0.5mm, L<=16 givesL+/-1.0mm except listed15mm variants. Max8.5diameter,12.5body;0.6+/-0.05lead,3.5+/-0.5pitch. Vent clearance/mounting stack still to freeze. Page15 requires at least2mm free space above pressure valve for6.3..16mm diameter; do not consume this as component height.",
+      "id": "panasonic_fc",
+      "observed": "2026-10-29",
+      "pages": [
+        1,
+        15
+      ],
+      "sha256": "42d91ae29ab6122dfe20974abad2efd45d91a29337a73c5a5319616301b004f7",
+      "url": "https://industrial.panasonic.com/cdbs/www-data/pdf/RDF0000/ABA0000C1209.pdf"
+    },
+    {
+      "evidence": "TNPW0805 body2.0+/-0.1 x1.25+/-0.15 x0.45+/-0.10mm. Max2.1x1.4x0.55; land recommendation separate doc28950.",
+      "id": "tnpw0805",
+      "observed": "2026-10-29",
+      "pages": [
+        15
+      ],
+      "revision": "10-Apr-2026",
+      "sha256": "6f0508c568cb355aaf2accdd33fe3a780d3ea5ef207c4c9a71839a8acadc33a5",
+      "url": "https://www.vishay.com/docs/28758/tnpw_e3.pdf"
+    },
+    {
+      "evidence": "0.007..0.5ohm row: max body6.604x3.434x0.889mm. Recommended pads a1.65,b3.68,gap4.06 => total span7.36x3.68mm. Kelvin endpoint routing remains required.",
+      "id": "wsl2512",
+      "observed": "2026-10-29",
+      "pages": [
+        2
+      ],
+      "sha256": "96c2dc89ae1e3039815ed6c41f566a6e9f6b53035f8e45ea2ada1697935a44dc",
+      "url": "https://www.vishay.com/docs/30100/wsl.pdf"
+    },
+    {
+      "evidence": "Viewed Q5A package: D1max5.00,Emax6.10,Amax1.10mm; page10 recommended outer land max6.305x5.00mm. No invented exposed pad9; drain5..8 share copper.",
+      "id": "csd19531",
+      "observed": "2026-10-29",
+      "pages": [
+        9,
+        10
+      ],
+      "sha256": "bee261f0df17541099fec60efdc9cd4cb0cf00de5ac0ba2ff582657038cbcf92",
+      "url": "https://www.ti.com/lit/ds/symlink/csd19531q5a.pdf"
+    },
+    {
+      "evidence": "Viewed DYY0014A drawing4224643/D07/2024: bodylength4.3max excludes up to0.15flash eachend; totalleadwidth3.36max,height1.1max. Reserve4.6length including permittedflash. Padcentres3.0apart;14pads1.05x0.3, pitch0.5.",
+      "id": "tps3760",
+      "observed": "2026-10-29",
+      "pages": [
+        41,
+        42
+      ],
+      "sha256": "eb7d626587f369ade98d55b60823ed28e4b4d955b41181c4443763cf0eef5e7d",
+      "url": "https://www.ti.com/lit/ds/symlink/tps3760.pdf"
+    },
+    {
+      "evidence": "Viewed TO277A body/lead bound6.65x4.75x1.20max; recommended land6.80x4.80mm before solder/courtyard. CathodeK exposedpad; anodes1/2.",
+      "id": "v10p20",
+      "observed": "2026-10-29",
+      "pages": [
+        4
+      ],
+      "sha256": "1680b3564a2a3aeb2f84aafa4ea7261eb13e9a0c20987e861223508c571db08e",
+      "url": "https://www.vishay.com/docs/89316/v10p20.pdf"
+    },
+    {
+      "evidence": "Viewed page1 pin1G,2D/tab,3S and page9 max15.88x10.31x4.57mm; recommended land outer16.25x10.90. Thermal example is not a carrier allocation.",
+      "id": "ipb200n25",
+      "observed": "2026-10-29",
+      "pages": [
+        1,
+        9
+      ],
+      "sha256": "40d90aec1c320d814ffe3f3bb4f10e4048e71cde3b93257962f8031cefa092ac",
+      "url": "https://www.infineon.com/assets/row/public/documents/24/49/infineon-ipp-b-i-200n25n3-g-datasheet-en.pdf"
+    },
+    {
+      "evidence": "Actual RevF Figure10 viewed and independently crosschecked. DCB6 outline2.00+/-0.10x3.00+/-0.10x0.75+/-0.05 with0..0.05 standoff; reserve0.85 totalheight conservatively. Padpattern3.55+/-0.05 across leads; exposedpad optionally VSS.",
+      "id": "ltc4359",
+      "observed": "2026-10-29",
+      "pages": [
+        2,
+        12,
+        16
+      ],
+      "sha256": "8d05e6ba4259028463bbdb751d639715506ef28d1bd5eabac1b012786ea7d970",
+      "url": "https://www.analog.com/media/en/technical-documentation/data-sheets/ltc4359.pdf"
+    },
+    {
+      "evidence": "C1206C473F1GECAUTO: 47nF100V1206 standardtermination rowEH; length3.2+/-0.2,width1.6+/-0.2,thickness1.6+/-0.2mm. These dimensions do not include solder. DensityB reflow land table distinguishes actual pad extents from V1/V2 placement courtyard; no minimum-density qualification inferred.",
+      "id": "kemet_c0g_esd",
+      "observed": "2026-10-29",
+      "pages": [
+        5,
+        7,
+        8,
+        10
+      ],
+      "sha256": "e7a71bb470bbc82e77e3ecbfce7749d3f5c963985e62d4494ad52de285945189",
+      "url": "https://yageogroup.com/content/datasheet/asset/file/KEM_C1091_C0G_ESD"
+    },
+    {
+      "evidence": "C0805C682J5GACTU:6800pF50V0805 rowDN; body2.0+/-0.2x1.25+/-0.2x0.78+/-0.10mm. Exactmanufacturer sheet mirrored byFarnell2739974 corroborates. DensityB reflow land table distinguishes actual pad extents from V1/V2 placement courtyard; no minimum-density qualification inferred.",
+      "id": "kemet_c0g",
+      "observed": "2026-10-29",
+      "pages": [
+        3,
+        6,
+        10,
+        12
+      ],
+      "sha256": "02d179914aeb9585eb2229ba8e18ef9d6b01c77c056de2af295d6950a2a5cc0d",
+      "url": "https://yageogroup.com/content/datasheet/asset/file/KEM_C1003_C0G_SMD"
+    },
+    {
+      "evidence": "IPC7351 reflow0805 outerZ2.80 xX1.45mm; padY0.90,gapG1.00. Tabledoesnotestablishapplicationcreepageorheatdissipation.",
+      "id": "tnpw_lands",
+      "observed": "2026-10-29",
+      "pages": [
+        1
+      ],
+      "sha256": "9e2b145c937da3be1e926b8afc2856959754eeb4d1103241d838038f7308144e",
+      "url": "https://www.vishay.com/doc?28950"
+    },
+    {
+      "evidence": "Rev1.0Oct24,2025SMAmax5.28leadspan x2.79bodywidth x2.29height;land6.7refspan x2.21width. ExactM3gradequalification remains open.",
+      "id": "bzg03",
+      "observed": "2026-10-29",
+      "pages": [
+        4
+      ],
+      "sha256": "c3769a50c82951d6d0ebcb0c907873d151c5886733655c1fe848ec03f1233543",
+      "url": "https://www.vishay.com/doc?86574="
+    },
+    {
+      "evidence": "03.26table exactMKS2C031001A00:nominalW2.5,H6.5,L7.2,PCM5mm;diameter0.5lead,5+/-0.5pitch,SD4..6mm suppliedlead. Bodydimensionaltolerance notfound; do not callnominalmax.",
+      "id": "wima_mks2",
+      "observed": "2026-10-29",
+      "pages": [
+        2
+      ],
+      "sha256": "2a64392db00b639b6d0fca1d9e1a3aa38c1a5138ca6796a713914a9918d05fe9",
+      "url": "https://www.wima.de/wp-content/uploads/media/e_WIMA_MKS_2.pdf"
+    },
+    {
+      "evidence": "ExactK104K15X7RF53L2: size15maxW4,H4,T2.6;L2straightleadspacing2.5+/-0.8;maxseatingheight1.6mmadditionaltoH. Actualforming/solderstacknotqualified.",
+      "id": "vishay_k",
+      "observed": "2026-10-29",
+      "pages": [
+        2
+      ],
+      "sha256": "555cf6e7062fe1de1962ee38c5b8cfcff0c9cab469d563599ec6505b70485457",
+      "url": "https://www.vishay.com/docs/45171/kseries.pdf"
+    },
+    {
+      "evidence": "Exact1N4148bulkDO35:CASE017AGIssueOmaxbody4.56xdiam1.91,leadmax0.533mm. Blackbandiscathode. Installedleadforming/pitchnotprovided.",
+      "id": "onsemi_1n4148",
+      "observed": "2026-10-29",
+      "pages": [
+        1,
+        5
+      ],
+      "sha256": "07bb416babd5fdcd86c6ecf628315812edc97adfaafe3fd5e894cd6f7aa8469a",
+      "url": "https://www.onsemi.com/pdf/datasheet/1n914-d.pdf"
+    },
+    {
+      "evidence": "ActualimageonlyPDIP8drawing4040082/E04/2010viewed: maxL10.16W6.6,5.08aboveseatingplane;unformedleadspan10.92max,gaugerow7.62..8.26,pitch2.54,leadwidth0.53max,belowseatingmin3.18. NotceramicJGorSOICPSvariants.",
+      "id": "ne555p",
+      "observed": "2026-10-29",
+      "pages": [
+        35
+      ],
+      "sha256": "a3756e59fd06d0ba736edf9ffe71d99d2aae33fb7e49fedc86165a241179f4a6",
+      "url": "https://www.ti.com/lit/ds/symlink/ne555.pdf"
+    },
+    {
+      "evidence": "Viewed SOD523: max lead span He1.65, width D0.85, height A0.65 mm; body E1.25 max. Recommended lands span2.00 x0.70, pad0.60 and gap0.80. Band marks cathode; no numerical pin identities inferred.",
+      "id": "ddz9699",
+      "observed": "2026-10-29",
+      "pages": [
+        1,
+        6
+      ],
+      "public_distributor_entry": "https://sg.element14.com/diodes-inc/ddz9699t-7/zener-diode-12v-0-15w-sod-523/dp/3945445",
+      "revision": "DS30553 Rev8-2, October2017",
+      "sha256": "b38bbd85d3fcc58919638c971408e479c3e9b540943b65f0eeea1981c7cf9bcd",
+      "url": "https://4donline.ihs.com/images/VipMasterIC/IC/DIOD/DIOD-S-A0003550665/DIOD-S-A0003550665-1.pdf?hkey=6D3A4C79FDBF58556ACFDE234799DDF0"
+    },
+    {
+      "evidence": "Viewed exact SMA drawing: max lead span E5.59, width A2.92 and height J2.30 mm. Recommended pads span6.50 x1.70, pad2.50 long, gap1.50. Do not transfer this height to S1B revision24.",
+      "id": "smat70a",
+      "observed": "2026-10-29",
+      "pages": [
+        1,
+        3,
+        4
+      ],
+      "public_distributor_entry": "https://uk.farnell.com/diodes-inc/smat70a-13-f/diode-tvs-uni-dir-70v-400w-sma/dp/1858620",
+      "revision": "DS30213 Rev11-2, November2014",
+      "sha256": "65aad151e0c2aa6926a8f3a8686b5afc460f44fa0b3cb597594413173ebcc13e",
+      "url": "https://4donline.ihs.com/images/VipMasterIC/IC/DIOD/DIOD-S-A0000194668/DIOD-S-A0000194668-1.pdf?hkey=6D3A4C79FDBF58556ACFDE234799DDF0"
+    },
+    {
+      "evidence": "Viewed SOD123: maximum He3.85 xD1.70 xA1.35 mm including stand-off. Land span4.05 x0.95, pad0.90 long. Exact -7-F grade retained.",
+      "id": "mmsz5231",
+      "observed": "2026-10-29",
+      "pages": [
+        1,
+        4
+      ],
+      "public_distributor_entry": "https://www.newark.com/diodes-inc/mmsz5231b-7-f/diode-zener-5-1v-0-5w-sod-123/dp/12T2210",
+      "revision": "DS18010 Rev28-2, October2017",
+      "sha256": "7c7ac7a58521db27991b0d8dbd84d04d00fc84bc85af85bed1c8d31b20ebd200",
+      "url": "https://4donline.ihs.com/images/VipMasterIC/IC/DIOD/DIOD-S-A0003550771/DIOD-S-A0003550771-1.pdf?hkey=6D3A4C79FDBF58556ACFDE234799DDF0"
+    },
+    {
+      "evidence": "Viewed1206-HP row: body3.1+/-0.20 x1.6+/-0.15 x0.5+/-0.15 mm. Reflow lands Z3.60 xX1.80; padY1.05 and gapG1.50. This is not the wave-solder row or a pulse qualification.",
+      "id": "crcw_hp",
+      "observed": "2026-10-29",
+      "pages": [
+        9
+      ],
+      "revision": "17-Mar-2026, document20043",
+      "sha256": "32bd4d94168d55efdfc9027fdf77b6d07089394de8f57f647498b0d768fe5452",
+      "url": "https://www.vishay.com/docs/20043/crcwhpe3.pdf"
+    },
+    {
+      "evidence": "100nF100V0805 waterfall gives DN: thickness0.78+/-0.10; body2.0+/-0.2 x1.25+/-0.2. Viewed densityB reflow: centre offsets C0.90, pads Y1.15 xX1.45 => copper span2.95 x1.45; V1/V2 are courtyard3.50 x2.00, not copper. Effective capacitance/assembly qualification separate.",
+      "id": "kemet_x7r",
+      "observed": "2026-10-29",
+      "pages": [
+        3,
+        5,
+        9,
+        12
+      ],
+      "revision": "C1002_X7R 2026-09-01",
+      "sha256": "d8e6ca6631862e31a19b90b6cfe13f1b20153c2efd6c8e30f1a5d5ba147aa908",
+      "url": "https://yageogroup.com/content/datasheet/asset/file/KEM_C1002_X7R_SMD"
+    },
+    {
+      "evidence": "Actual dimension drawing viewed. MFR-25, not miniatureMFR25S: length6.3+/-0.5, diameter2.4+/-0.2, lead0.55+/-0.05. Exact B bulk/F100ppm/52 axial code is not M/FB factory-formed option. Installed lead pitch and board stack remain unspecified.",
+      "id": "yageo_mfr",
+      "observed": "2026-10-29",
+      "pages": [
+        2,
+        3
+      ],
+      "revision": "Apr03,2024 V4",
+      "sha256": "b460acdb476469774e0785a8ef85aec79e2d95fe41beaa79c5a414e4e95e3fe0",
+      "url": "https://yageogroup.com/content/datasheet/asset/file/YAGEO-MFR_DATASHEET"
+    },
+    {
+      "evidence": "Actual dimension drawing viewed. RSF100, not miniatureRSF1WS: length11.5+/-1.0, diameter4.5+/-0.5, lead0.8+/-0.05. Exact B bulk/73 axial code is not M/MB factory-formed option. Installed lead pitch, body cooling and board stack remain unspecified.",
+      "id": "yageo_rsf",
+      "observed": "2026-10-29",
+      "pages": [
+        2,
+        3
+      ],
+      "revision": "Apr01,2024 V4",
+      "sha256": "7c43489665a7e2848fcb4de40cb9ed51f173673c1eb6e49c0a7e0d89cca75694",
+      "url": "https://yageogroup.com/content/datasheet/asset/file/YAGEO-RSF_DATASHEET"
+    },
+    {
+      "evidence": "Actual current style2 drawing viewed. A12.0max width, B18.3max includes body and coated lead transition, E3.0max thickness; C5.1+/-0.7 pitch, D7.6min bare lead, diameter0.81. No body-only height, overall maximum or formed-flat geometry supplied. Hold3.0A at23C and2.04A at60C are not a guaranteed continuous3.25A operating point.",
+      "id": "bourns_mfr300",
+      "limits": [
+        "B spans the rectangular body and coated lead shoulder; body-only height is not separately dimensioned.",
+        "D is a minimum; B plus D is not a maximum overall length.",
+        "No qualified formed-flat lead geometry or finished PCB hole/land pattern supplied."
+      ],
+      "observed": "2026-10-29",
+      "pages": [
+        3,
+        4,
+        8
+      ],
+      "revision": "MF-R SERIES, REV. AR, 09/26",
+      "sha256": "d22f0f06c89097844c15e7b29d9aa5704334f4aa76778b6bc2b11aa0d7db2c72",
+      "url": "https://www.bourns.com/docs/product-datasheets/mf-r.pdf"
+    },
+    {
+      "evidence": "Actual historical authorized mirror viewed: overall G8.13max x C6.22max x D2.62max; A3.2 is terminal width, not height. Molded length B7.11max. Lands I>=3.3, J/L>=2.4, K<=4.2. Mixed min/max values do not define a maximum land span. Current2025 parsed dimensions agree, but current PDF pixels remain unavailable.",
+      "id": "littelfuse_smcj150a",
+      "limits": [
+        "Historical authorized-distributor mirror, not the current2025 revision.",
+        "All A..L dimension table values match the current2025 primary extracted text; current PDF pixels were not available from that denied primary.",
+        "9.0x3.3 is a possible chosen pattern using J/L minima and K maximum, not a manufacturer maximum land envelope.",
+        "Exact standard unidirectional SMCJ150A family; no CA, HR, or other manufacturer substitution."
+      ],
+      "observed": "2026-10-29",
+      "pages": [
+        5
+      ],
+      "revision": "JC.10/29/20",
+      "sha256": "fc7dbc6ac38dbb5c3bcf210c217b13689c80b6830fc775ef66745c9f131fdbb5",
+      "url": "https://www.mouser.com/datasheet/2/240/Littelfuse_TVS_Diode_SMCJ_Datasheet_pdf-1317380.pdf"
+    },
+    {
+      "acquisition": "Normal Chrome public PDF-viewer download after an earlier protocol error. ADI product entry403 retained as failed access evidence; no credentials, bypass or access settings changed.",
+      "evidence": "Actual source pages viewed. MS10 body3.00+/-0.102 permits0.152flash each side; reserve3.406 along pin row. Overall lead span4.90+/-0.152, height1.10max. Pad span5.10minimum, inner gap3.20..3.45, pad length0.889+/-0.127 and width0.305+/-0.038, pitch0.50. No MS8 or DFN substitution.",
+      "id": "ltc4368_ms10",
+      "manufacturer_url": "https://www.analog.com/media/en/technical-documentation/data-sheets/ltc4368.pdf",
+      "observed": "2026-10-29",
+      "pages": [
+        2,
+        19
+      ],
+      "render_sha256": {
+        "page19": "694899e062b653e6d091469691721dbbb179757d04f253da34752d856ffc216c",
+        "page2": "e68616d1544d4847b763a2090fd057ff7f264260c4491e90668c0e1a80adb30c"
+      },
+      "revision": "LTC4368 RevC04/21; package05-08-1661 RevF",
+      "sha256": "1a4f8b351d04f893511f6c8023b882a0bbcb0118521c71b0c4c032c5e7af7a52",
+      "url": "https://www.mouser.com/datasheet/2/609/ltc4368-3126108.pdf"
+    },
+    {
+      "evidence": "Actual served primary DS16003Rev24-2 SMA drawing: overall lead span E5.59max, body width A2.92max, height J2.40max. Molded length B4.60max. Pads2.50x1.70 with1.50gap,6.50span. This is not the SMB row or older Rev20 height2.30. Package/land union is at least6.50x2.92 before added clearance.",
+      "id": "diodes_s1b",
+      "limits": [
+        "Current served manufacturer URL is the observed source, not a claim of recently issued revision. Older Rev20-2 Jmax2.30 is superseded for this captured revision by Jmax2.40.",
+        "The package and pad pages direct latest geometry to AP02002/AP02001 respectively; these separate application notes were not retrieved in this bounded task.",
+        "Suggested 6.5 x1.7 pad-plan rectangle is not the full component courtyard: the body is up to2.92 wide. Additional solder/courtyard/process allowances not assigned."
+      ],
+      "observed": "2026-10-29",
+      "pages": [
+        3,
+        4
+      ],
+      "render_sha256": {
+        "diodes-s1b-3.png": "7497127c8498b78c9447eebe265bf55e5dcfc7f1dcb6cd2ddb732218f57411dc",
+        "diodes-s1b-4.png": "84d5cd7f08c9b6df7b3b65f5872f705fc3dfd3f6eacec26aa0c115de6a5c2b27"
+      },
+      "revision": "DS16003 Rev.24-2 December 2014",
+      "sha256": "b02c2d1278212e6ce4486762b4fef19cd2e933f0452272557adf1bfbefe97d59",
+      "url": "https://www.diodes.com/assets/Datasheets/ds16003.pdf"
+    },
+    {
+      "acquisition": "Exact-product public Datasheet download; transient link query omitted, refresh the normal product link if necessary. Manufacturer individual-sheet direct URL returned403 and is not claimed visually inspected.",
+      "evidence": "Actual20241125 family drawing and exact FG24X7R1H105KRT06 row viewed. Coating width4.5max, thickness3.0max;5.5max reaches formed-lead straight-section datum. Lead pitch5+/-1, free leads7+/-2 below datum, lead diameter0.5+0.10/-0.03. Bends extend outside coating width; this does not define a finished installed body/lead envelope.",
+      "id": "tdk_fg24",
+      "limits": [
+        "5.5 mm is not merely coating-body height; it reaches the formed-lead datum. The drawing shows bends outside the 4.5 mm coating width.",
+        "Family 2024 pitch 5 +/-1 mm differs from older individual-sheet extracted text 5 +0.8/-0.2. The older direct sheet returned403 in ordinary browser and was not visually inspected. Do not merge revision-specific tolerances silently.",
+        "No finished PCB hole size, solder-tail height, reforming procedure, courtyard, mounting stand-off, or flat orientation qualification inferred. Delivery specification remains to be selected."
+      ],
+      "observed": "2026-10-29",
+      "older_text_only_source": "https://product.tdk.com/en/system/files/dam/doc/product/capacitor/ceramic/lead-mlcc/chara_sheet/fg24x7r1h105krt06.pdf",
+      "pages": [
+        20,
+        22
+      ],
+      "public_distributor_entry": "https://jlcpcb.com/partdetail/TDK-FG24X7R1H105KRT06/C694551",
+      "render_sha256": {
+        "tdk-fg-dimensions-p20.png": "d323a6370f785a63675b4d6f1063d76788279092d729d8c25f94204daef66c74",
+        "tdk-fg-exact-p22.png": "abfec285d6c57615c6b103e5bd22388f003ea9b8dcae48dfb7b807cb92548abf"
+      },
+      "revision": "leadmlcc_halogenfree_fg_en 2024-11-25",
+      "sha256": "fb578a0b9a60361f2c1e0f45cbace199071713b7fa11f2b01da7f3569f14caca",
+      "url": "https://jlc-prod-smt.oss-eu-central-1.aliyuncs.com/smtDataManualFile/8559364035163815936-C694551.pdf"
+    }
+  ],
+  "status": "WIP_PRIMARY_INVENTORY_NOT_A_LAYOUT"
+}

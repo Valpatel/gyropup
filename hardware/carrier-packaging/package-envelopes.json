@@ -1,0 +1,629 @@
+{
+  "design_clearance_mm": null,
+  "note": "Body, land pattern and nominal moduleprofile are different records; unknowns remain null. These are no thermal or footprint qualification.",
+  "packages": {
+    "bourns_mfr300": {
+      "bare_lead_length_min_mm": 7.6,
+      "formed_flat_envelope_mm": null,
+      "land_outer_mm": null,
+      "lead_diameter_mm": 0.81,
+      "lead_pitch_mm": 5.1,
+      "lead_pitch_tolerance_mm": 0.7,
+      "match": [
+        "MF-R300"
+      ],
+      "maximum_body_mm": null,
+      "maximum_coated_span_mm": {
+        "thickness_E": 3,
+        "top_to_coating_end_B": 18.3,
+        "width_A": 12
+      },
+      "note": "Style2 unformed source, not the existing12x14x3.5 flat envelope. B includes coated lead transition; D is minimum and cannot establish overall maximum. Lead forming, board holes, mounting/thermal clearance and actual height remain open.",
+      "source": "bourns_mfr300"
+    },
+    "bzg03c75": {
+      "land_outer_mm": [
+        6.7,
+        2.21
+      ],
+      "match": [
+        "BZG03C75-M3_A-08"
+      ],
+      "maximum_body_mm": [
+        5.28,
+        2.79,
+        2.29
+      ],
+      "note": "Modern exactgrade package only; equivalence to legacyFig10 clamp remains unqualified.",
+      "source": "bzg03"
+    },
+    "crcw_hp": {
+      "land_gap_mm": 1.5,
+      "land_outer_mm": [
+        3.6,
+        1.8
+      ],
+      "land_pad_mm": [
+        1.05,
+        1.8
+      ],
+      "match": [
+        "CRCW12062K00FKEAHP"
+      ],
+      "maximum_body_mm": [
+        3.3,
+        1.75,
+        0.65
+      ],
+      "source": "crcw_hp"
+    },
+    "csd19531": {
+      "land_outer_mm": [
+        6.305,
+        5
+      ],
+      "match": [
+        "CSD19531Q5AT"
+      ],
+      "maximum_body_mm": [
+        6.1,
+        5,
+        1.1
+      ],
+      "source": "csd19531"
+    },
+    "ddz9699": {
+      "land_gap_mm": 0.8,
+      "land_outer_mm": [
+        2,
+        0.7
+      ],
+      "land_pad_mm": [
+        0.6,
+        0.7
+      ],
+      "match": [
+        "DDZ9699T-7"
+      ],
+      "maximum_body_mm": [
+        1.65,
+        0.85,
+        0.65
+      ],
+      "pin_basis": "Cathode band K, opposite lead A; project pad numbering remains separate.",
+      "source": "ddz9699"
+    },
+    "diodes_s1b": {
+      "land_gap_mm": 1.5,
+      "land_outer_mm": [
+        6.5,
+        1.7
+      ],
+      "land_pad_mm": [
+        2.5,
+        1.7
+      ],
+      "match": [
+        "S1B-13-F"
+      ],
+      "maximum_body_mm": [
+        5.59,
+        2.92,
+        2.4
+      ],
+      "maximum_molded_body_mm": [
+        4.6,
+        2.92,
+        2.4
+      ],
+      "minimum_body_land_union_mm": [
+        6.5,
+        2.92
+      ],
+      "note": "Rev24-2 drawing, not neighboring SMB or older Rev20 J2.30. Separate latest package/pad application notes not retrieved; incoming drawing/assembly acceptance remains open.",
+      "pin_basis": "Cathode band K, opposite lead A; actual footprint numbering remains separate.",
+      "source": "diodes_s1b"
+    },
+    "ipb200n25": {
+      "land_outer_mm": [
+        16.25,
+        10.9
+      ],
+      "match": [
+        "IPB200N25N3GATMA1"
+      ],
+      "maximum_body_mm": [
+        15.88,
+        10.31,
+        4.57
+      ],
+      "source": "ipb200n25"
+    },
+    "kemet_c0g": {
+      "land_center_offsets_mm": [
+        -0.9,
+        0.9
+      ],
+      "land_density": "B, manufacturer reflow recommendation; not an application qualification",
+      "land_outer_mm": [
+        2.95,
+        1.45
+      ],
+      "land_pad_mm": [
+        1.15,
+        1.45
+      ],
+      "manufacturer_courtyard_mm": [
+        3.5,
+        2
+      ],
+      "match": [
+        "C0805C682J5GACTU"
+      ],
+      "maximum_body_mm": [
+        2.2,
+        1.45,
+        0.88
+      ],
+      "source": "kemet_c0g"
+    },
+    "kemet_c0g_esd": {
+      "land_center_offsets_mm": [
+        -1.5,
+        1.5
+      ],
+      "land_density": "B, manufacturer reflow recommendation; not an application qualification",
+      "land_outer_mm": [
+        4.15,
+        1.8
+      ],
+      "land_pad_mm": [
+        1.15,
+        1.8
+      ],
+      "manufacturer_courtyard_mm": [
+        4.7,
+        2.3
+      ],
+      "match": [
+        "C1206C473F1GECAUTO"
+      ],
+      "maximum_body_mm": [
+        3.4,
+        1.8,
+        1.8
+      ],
+      "source": "kemet_c0g_esd"
+    },
+    "kemet_x7r": {
+      "land_center_offsets_mm": [
+        -0.9,
+        0.9
+      ],
+      "land_density": "B, manufacturer reflow recommendation; not an application qualification",
+      "land_outer_mm": [
+        2.95,
+        1.45
+      ],
+      "land_pad_mm": [
+        1.15,
+        1.45
+      ],
+      "manufacturer_courtyard_mm": [
+        3.5,
+        2
+      ],
+      "match": [
+        "C0805C104K1RACTU"
+      ],
+      "maximum_body_mm": [
+        2.2,
+        1.45,
+        0.88
+      ],
+      "source": "kemet_x7r"
+    },
+    "littelfuse_smcj150a": {
+      "land_constraints_mm": {
+        "each_pad_length_min": 2.4,
+        "inner_gap_max": 4.2,
+        "pad_width_min": 3.3
+      },
+      "land_outer_mm": null,
+      "manufacturer": "Littelfuse",
+      "match": [
+        "SMCJ150A"
+      ],
+      "maximum_body_mm": [
+        8.13,
+        6.22,
+        2.62
+      ],
+      "maximum_molded_body_mm": [
+        7.11,
+        6.22,
+        2.62
+      ],
+      "planning_land_basis": "Project choice using minimum2.4mm pads and maximum4.2mm gap; not a manufacturer maximum or assembly qualification. No alternate manufacturer,CA orHR variant.",
+      "planning_land_mm": [
+        9,
+        3.3
+      ],
+      "source": "littelfuse_smcj150a"
+    },
+    "ltc4359": {
+      "land_outer_mm": [
+        3.6,
+        2.1
+      ],
+      "match": [
+        "LTC4359IDCB#TRPBF"
+      ],
+      "maximum_body_mm": [
+        3.1,
+        2.1,
+        0.85
+      ],
+      "note": "Height conservatively adds maximum stand-off0.05 to tableA maximum0.8. EP is explicitly NC in the paper proposal following >30V spacing guidance; pin6 remains FLOATING_VSS. EP metal/land is still reserved.",
+      "source": "ltc4359"
+    },
+    "ltc4368_ms10": {
+      "land_constraints_mm": {
+        "inner_gap_range": [
+          3.2,
+          3.45
+        ],
+        "overall_span_min": 5.1,
+        "pad_length_range": [
+          0.762,
+          1.016
+        ],
+        "pad_width_range": [
+          0.267,
+          0.343
+        ]
+      },
+      "land_outer_mm": null,
+      "lead_pitch_mm": 0.5,
+      "match": [
+        "LTC4368IMS-2#PBF"
+      ],
+      "maximum_body_mm": [
+        3.406,
+        5.052,
+        1.1
+      ],
+      "note": "No exposed pad on this MS10 variant. Pin1 marker and top/bottom orientation must be preserved in actual footprint assignment.",
+      "pin_functions_top_view": {
+        "1": "VIN",
+        "10": "GATE",
+        "2": "UV",
+        "3": "OV",
+        "4": "RETRY",
+        "5": "GND",
+        "6": "SHDN",
+        "7": "FAULT",
+        "8": "VOUT",
+        "9": "SENSE"
+      },
+      "planning_gap_mm": 3.2,
+      "planning_land_basis": "Project rectangular pads0.3x1.0 at0.5pitch, gap3.2, overall span5.2. Within manufacturer ranges but no assembly/creepage acceptance. Body extends beyond pin-row land length2.3.",
+      "planning_land_mm": [
+        2.3,
+        5.2
+      ],
+      "planning_pad_mm": [
+        0.3,
+        1.0
+      ],
+      "source": "ltc4368_ms10"
+    },
+    "mmsz5231": {
+      "land_outer_mm": [
+        4.05,
+        0.95
+      ],
+      "land_pad_mm": [
+        0.9,
+        0.95
+      ],
+      "match": [
+        "MMSZ5231B-7-F"
+      ],
+      "maximum_body_mm": [
+        3.85,
+        1.7,
+        1.35
+      ],
+      "pin_basis": "Cathode band K, opposite lead A; project pad numbering remains separate.",
+      "source": "mmsz5231"
+    },
+    "ne555p": {
+      "lead_below_seating_min_mm": 3.18,
+      "lead_pitch_mm": 2.54,
+      "lead_row_gauge_range_mm": [
+        7.62,
+        8.26
+      ],
+      "lead_width_max_mm": 0.53,
+      "match": [
+        "NE555P"
+      ],
+      "maximum_body_mm": [
+        10.16,
+        6.6,
+        5.08
+      ],
+      "maximum_unformed_lead_span_mm": 10.92,
+      "note": "ViewedactualPDIPdrawing35;5.08ismaxaboveseatingplaneincludingbody/shoulder. Formedleadpitch/soldertrim/undersideprojectionnotqualified.",
+      "source": "ne555p"
+    },
+    "onsemi_1n4148": {
+      "additional_unknowns": [
+        "formedleadpitchandbodyorientation",
+        "leadstand-offandtrimming"
+      ],
+      "lead_diameter_max_mm": 0.533,
+      "match": [
+        "1N4148"
+      ],
+      "maximum_body_mm": [
+        4.56,
+        1.91,
+        1.91
+      ],
+      "source": "onsemi_1n4148"
+    },
+    "panasonic_fc": {
+      "additional_unknowns": [
+        "mountinggap",
+        "leadformingandretention"
+      ],
+      "land_outer_mm": null,
+      "lead_diameter_max_mm": 0.65,
+      "lead_pitch_range_mm": [
+        3,
+        4
+      ],
+      "match": [
+        "EEU-FC2A220"
+      ],
+      "maximum_body_mm": [
+        8.5,
+        8.5,
+        12.5
+      ],
+      "pressure_valve_clearance_min_mm": 2,
+      "shape": "cylinder",
+      "source": "panasonic_fc"
+    },
+    "pololu5577": {
+      "additional_unknowns": [
+        "profiletolerances",
+        "actualsolder/lead/mountstack",
+        "12padorientationandterminalaccess"
+      ],
+      "board_edge_tolerance_mm": 0.3,
+      "electrical_hole_mm": 1.02,
+      "electrical_holes": 12,
+      "match": [
+        "Pololu 5577"
+      ],
+      "maximum_body_mm": null,
+      "mounting_hole_mm": 2.18,
+      "mounting_holes": 3,
+      "nominal_board_mm": [
+        25.4,
+        25.4,
+        1.57
+      ],
+      "nominal_bottom_mm": 1.4,
+      "nominal_top_mm": 6.1,
+      "source": "pololu5577"
+    },
+    "smat70a": {
+      "land_gap_mm": 1.5,
+      "land_outer_mm": [
+        6.5,
+        1.7
+      ],
+      "land_pad_mm": [
+        2.5,
+        1.7
+      ],
+      "match": [
+        "SMAT70A-13-F"
+      ],
+      "maximum_body_mm": [
+        5.59,
+        2.92,
+        2.3
+      ],
+      "pin_basis": "Cathode band K, opposite lead A; project pad numbering remains separate.",
+      "source": "smat70a"
+    },
+    "tdk_fg24": {
+      "coating_width_max_mm": 4.5,
+      "complete_installed_envelope_mm": null,
+      "free_lead_length_below_datum_range_mm": [
+        5,
+        9
+      ],
+      "incoming_pitch_range_mm": [
+        4,
+        6
+      ],
+      "land_outer_mm": null,
+      "lead_diameter_range_mm": [
+        0.47,
+        0.6
+      ],
+      "match": [
+        "FG24X7R1H105KRT06"
+      ],
+      "maximum_body_mm": null,
+      "note": "Use revision-specific2024 family dimensions for paper screening. Older2015 text-only sheet has a narrower pitch range; delivery specification remains unselected. Formed bends exceed4.5mm coating width. No PCB drill, finished solder tail or flat reforming qualification follows.",
+      "older_individual_sheet_text_pitch_range_mm": [
+        4.8,
+        5.8
+      ],
+      "source": "tdk_fg24",
+      "thickness_max_mm": 3,
+      "top_to_formed_lead_datum_max_mm": 5.5
+    },
+    "tnpw0805": {
+      "land_outer_mm": [
+        2.8,
+        1.45
+      ],
+      "land_source": "tnpw_lands",
+      "maximum_body_mm": [
+        2.1,
+        1.4,
+        0.55
+      ],
+      "note": "Manufacturer IPC7351 reflow option; no application creepage/thermal acceptance.",
+      "prefix": "TNPW0805",
+      "source": "tnpw0805"
+    },
+    "tps3760": {
+      "land_outer_mm": [
+        4.05,
+        3.3
+      ],
+      "match": [
+        "TPS3760A012DYYR"
+      ],
+      "maximum_body_mm": [
+        4.6,
+        3.36,
+        1.1
+      ],
+      "note": "Bodylengthincludesallowed0.15mmflashatbothends. Lands4.05span x3.3array; bodyextendsbeyondarray.",
+      "source": "tps3760"
+    },
+    "v10p20": {
+      "land_outer_mm": [
+        6.8,
+        4.8
+      ],
+      "match": [
+        "V10P20-M3/87A"
+      ],
+      "maximum_body_mm": [
+        6.65,
+        4.75,
+        1.2
+      ],
+      "source": "v10p20"
+    },
+    "vishay_k104": {
+      "lead_pitch_range_mm": [
+        1.7,
+        3.3
+      ],
+      "match": [
+        "K104K15X7RF53L2"
+      ],
+      "maximum_body_mm": [
+        4,
+        2.6,
+        4
+      ],
+      "maximum_seating_offset_mm": 1.6,
+      "note": "Exactsize15,L2style; fullbody+seating5.6maxfromboardbeforeinstallationtolerances; do notusebodyalone.",
+      "source": "vishay_k"
+    },
+    "wima_mks2": {
+      "additional_unknowns": [
+        "bodytolerance",
+        "solderedformedlead/PCBstack"
+      ],
+      "lead_diameter_mm": 0.5,
+      "lead_pitch_mm": 5,
+      "lead_pitch_tolerance_mm": 0.5,
+      "match": [
+        "MKS2C031001A00JSSD"
+      ],
+      "maximum_body_mm": null,
+      "nominal_body_mm": [
+        7.2,
+        2.5,
+        6.5
+      ],
+      "source": "wima_mks2",
+      "supplied_lead_length_mm": [
+        4,
+        6
+      ]
+    },
+    "wsl2512": {
+      "land_outer_mm": [
+        7.36,
+        3.68
+      ],
+      "match": [
+        "WSL2512R0100FEA",
+        "WSL2512R0200FEA"
+      ],
+      "maximum_body_mm": [
+        6.604,
+        3.434,
+        0.889
+      ],
+      "source": "wsl2512"
+    },
+    "yageo_mfr": {
+      "additional_unknowns": [
+        "formed lead pitch and minimum bend clearance",
+        "stand-off, mounting and underside trimming",
+        "solder pad/drill selection"
+      ],
+      "land_outer_mm": null,
+      "lead_diameter_max_mm": 0.6,
+      "match": [
+        "MFR-25FBF52-1K",
+        "MFR-25FBF52-6K8"
+      ],
+      "maximum_body_mm": [
+        6.8,
+        2.6,
+        2.6
+      ],
+      "shape": "axial cylinder; installed orientation unfrozen",
+      "source": "yageo_mfr",
+      "unformed_lead_length_range_mm": [
+        26,
+        30
+      ]
+    },
+    "yageo_rsf": {
+      "additional_unknowns": [
+        "formed lead pitch and minimum bend clearance",
+        "stand-off, mounting and underside trimming",
+        "solder pad/drill selection"
+      ],
+      "land_outer_mm": null,
+      "lead_diameter_max_mm": 0.85,
+      "match": [
+        "RSF100JB-73-2K2"
+      ],
+      "maximum_body_mm": [
+        12.5,
+        5,
+        5
+      ],
+      "shape": "axial cylinder; installed orientation unfrozen",
+      "source": "yageo_rsf",
+      "unformed_lead_length_range_mm": [
+        33,
+        37
+      ]
+    }
+  },
+  "pcb_contour_frozen": false,
+  "planar_envelope_rule": "A land rectangle bounds copper only. Actual placement must union complete component/lead geometry and lands, then add courtyard/assembly/electrical clearances. A null complete body/lead envelope must not become zero size.",
+  "solder_height_mm": null,
+  "status": "PARTIAL_PRIMARY_PACKAGE_INVENTORY_NOT_PLACEMENT",
+  "units": "mm"
+}
