@@ -16,7 +16,7 @@ SPEC.loader.exec_module(D)
 
 # Figure10 labels are namespaced I.* so no legacy designator is silently reused.
 # This is an inventory, NOT an inferred or connected circuit. Exact pin/net
-# transcription remains gated on visual retrieval of the manufacturer diagram.
+# transcription is separately bound to actual manufacturer pixels and pin drawings.
 FRONT = [
     ('U1', 'LTC4359IDCB#TRPBF', 'ideal diode controller', 'DFN6 DCB with exposed pad'),
     ('Q1', 'IPB200N25N3GATMA1', '250V N-MOS', 'PG-TO263-3'),
@@ -46,6 +46,19 @@ def inventory():
                      'mpn': mpn, 'value': value, 'package': package,
                      'source': 'https://www.analog.com/media/en/technical-documentation/data-sheets/ltc4359.pdf#page=12',
                      'pins_from_reviewed_candidate': None, 'placement': None, 'maximum_envelope': None})
+    front_contract = json.loads((HERE / 'front-reference-contract.json').read_text())
+    packages = json.loads((HERE / 'package-envelopes.json').read_text())['packages']
+    for row in rows:
+        if row['id'].startswith('I.'):
+            row['reference_pin_contract'] = front_contract['component_pins'][row['id']]
+        matches = [(name, data) for name, data in packages.items()
+                   if row['mpn'] in data.get('match', []) or
+                   (data.get('prefix') and (row['mpn'] or '').startswith(data['prefix']))]
+        if len(matches) > 1:
+            raise ValueError('ambiguous exact package match: ' + row['id'])
+        if matches:
+            row['package_evidence_id'], row['maximum_envelope'] = matches[0]
+
     catalog = {r.get('key', r.get('id')): r for r in json.loads(CATALOG.read_text())}
     tree = ast.parse(BOARDS.read_text())
     assignment = next(n for n in tree.body if isinstance(n, ast.Assign) and
@@ -90,8 +103,9 @@ def inventory():
         raise ValueError('retained legacy control inventory changed; review scope')
     return {'status': 'WIP_INVENTORY_NOT_A_FROZEN_LAYOUT',
             'source_sha256': {str(p.relative_to(ROOT)): hashlib.sha256(p.read_bytes()).hexdigest()
-                              for p in (Path(__file__), CIRCUIT, BOARDS, CATALOG)},
+                              for p in (Path(__file__), CIRCUIT, BOARDS, CATALOG, HERE / 'front-reference-contract.json', HERE / 'package-envelopes.json', HERE / 'primary-envelope-sources.json')},
             'inventory_count': len(rows), 'rows': rows,
+            'package_evidence_count': sum(r['maximum_envelope'] is not None for r in rows),
             'excluded_replaced_parts': ['P.D1: V10P20 series barrier replaced by complete I.* inventory',
                                         'L.U2: old D36V50F12 replaced functionally by P.U2 D42V55F12'],
             'remaining_physical_inventory': ['external F4, D8, D14 and exact upstream fuse/holder boundary',

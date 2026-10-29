@@ -1,43 +1,126 @@
 {
-  "status": "WIP_PRIMARY_INVENTORY_NOT_A_LAYOUT",
   "sources": [
     {
-      "id": "pololu5577",
-      "url": "https://www.pololu.com/file/0J2180/d42v55fx-step-down-voltage-regulators-dimensions.pdf",
       "date": "18 June 2025",
+      "evidence": "Viewed dimension drawing: 25.4mm square with board edge +/-0.3mm; items5570-5577 profile6.1 abovePCB,1.57PCB,1.4 belowPCB. These profile heights have no stated tolerance, so reserve allowance separately. Twelve1.02mm holes,2.54pitch, three2.18 mounting holes.",
+      "id": "pololu5577",
+      "observed": "2026-10-29",
       "pages": [
         1
       ],
-      "observed": "2026-10-29",
-      "evidence": "Viewed dimension drawing: 25.4mm square with board edge +/-0.3mm; items5570-5577 profile6.1 abovePCB,1.57PCB,1.4 belowPCB. These profile heights have no stated tolerance, so reserve allowance separately. Twelve1.02mm holes,2.54pitch, three2.18 mounting holes."
+      "sha256": "115ff5f3896b7440a0e7dc3f527f17eebabd29f1e7ebc737c6a60a0c6870cf5b",
+      "url": "https://www.pololu.com/file/0J2180/d42v55fx-step-down-voltage-regulators-dimensions.pdf"
     },
     {
+      "evidence": "EEUFC2A220 exact100V22uF case8x11.5mm; family drawing D+/-0.5mm, L<=16 givesL+/-1.0mm except listed15mm variants. Max8.5diameter,12.5body;0.6+/-0.05lead,3.5+/-0.5pitch. Vent clearance/mounting stack still to freeze. Page15 requires at least2mm free space above pressure valve for6.3..16mm diameter; do not consume this as component height.",
       "id": "panasonic_fc",
-      "url": "https://industrial.panasonic.com/cdbs/www-data/pdf/RDF0000/ABA0000C1209.pdf",
-      "pages": [
-        1
-      ],
       "observed": "2026-10-29",
-      "evidence": "EEUFC2A220 exact100V22uF case8x11.5mm; family drawing D+/-0.5mm, L<=16 givesL+/-1.0mm except listed15mm variants. Max8.5diameter,12.5body;0.6+/-0.05lead,3.5+/-0.5pitch. Vent clearance/mounting stack still to freeze."
+      "pages": [
+        1,
+        15
+      ],
+      "sha256": "42d91ae29ab6122dfe20974abad2efd45d91a29337a73c5a5319616301b004f7",
+      "url": "https://industrial.panasonic.com/cdbs/www-data/pdf/RDF0000/ABA0000C1209.pdf"
     },
     {
+      "evidence": "TNPW0805 body2.0+/-0.1 x1.25+/-0.15 x0.45+/-0.10mm. Max2.1x1.4x0.55; land recommendation separate doc28950.",
       "id": "tnpw0805",
-      "url": "https://www.vishay.com/docs/28758/tnpw_e3.pdf",
-      "revision": "10-Apr-2026",
+      "observed": "2026-10-29",
       "pages": [
         15
       ],
-      "observed": "2026-10-29",
-      "evidence": "TNPW0805 body2.0+/-0.1 x1.25+/-0.15 x0.45+/-0.10mm. Max2.1x1.4x0.55; land recommendation separate doc28950."
+      "revision": "10-Apr-2026",
+      "sha256": "6f0508c568cb355aaf2accdd33fe3a780d3ea5ef207c4c9a71839a8acadc33a5",
+      "url": "https://www.vishay.com/docs/28758/tnpw_e3.pdf"
     },
     {
+      "evidence": "0.007..0.5ohm row: max body6.604x3.434x0.889mm. Recommended pads a1.65,b3.68,gap4.06 => total span7.36x3.68mm. Kelvin endpoint routing remains required.",
       "id": "wsl2512",
-      "url": "https://www.vishay.com/docs/30100/wsl.pdf",
+      "observed": "2026-10-29",
       "pages": [
         2
       ],
+      "sha256": "96c2dc89ae1e3039815ed6c41f566a6e9f6b53035f8e45ea2ada1697935a44dc",
+      "url": "https://www.vishay.com/docs/30100/wsl.pdf"
+    },
+    {
+      "evidence": "Viewed Q5A package: D1max5.00,Emax6.10,Amax1.10mm; page10 recommended outer land max6.305x5.00mm. No invented exposed pad9; drain5..8 share copper.",
+      "id": "csd19531",
       "observed": "2026-10-29",
-      "evidence": "0.007..0.5ohm row: max body6.604x3.434x0.889mm. Recommended pads a1.65,b3.68,gap4.06 => total span7.36x3.68mm. Kelvin endpoint routing remains required."
+      "pages": [
+        9,
+        10
+      ],
+      "sha256": "bee261f0df17541099fec60efdc9cd4cb0cf00de5ac0ba2ff582657038cbcf92",
+      "url": "https://www.ti.com/lit/ds/symlink/csd19531q5a.pdf"
+    },
+    {
+      "evidence": "Viewed DYY0014A drawing4224643/D07/2024: bodylength4.3max excludes up to0.15flash eachend; totalleadwidth3.36max,height1.1max. Reserve4.6length including permittedflash. Padcentres3.0apart;14pads1.05x0.3, pitch0.5.",
+      "id": "tps3760",
+      "observed": "2026-10-29",
+      "pages": [
+        41,
+        42
+      ],
+      "sha256": "eb7d626587f369ade98d55b60823ed28e4b4d955b41181c4443763cf0eef5e7d",
+      "url": "https://www.ti.com/lit/ds/symlink/tps3760.pdf"
+    },
+    {
+      "evidence": "Viewed TO277A body/lead bound6.65x4.75x1.20max; recommended land6.80x4.80mm before solder/courtyard. CathodeK exposedpad; anodes1/2.",
+      "id": "v10p20",
+      "observed": "2026-10-29",
+      "pages": [
+        4
+      ],
+      "sha256": "1680b3564a2a3aeb2f84aafa4ea7261eb13e9a0c20987e861223508c571db08e",
+      "url": "https://www.vishay.com/docs/89316/v10p20.pdf"
+    },
+    {
+      "evidence": "Viewed page1 pin1G,2D/tab,3S and page9 max15.88x10.31x4.57mm; recommended land outer16.25x10.90. Thermal example is not a carrier allocation.",
+      "id": "ipb200n25",
+      "observed": "2026-10-29",
+      "pages": [
+        1,
+        9
+      ],
+      "sha256": "40d90aec1c320d814ffe3f3bb4f10e4048e71cde3b93257962f8031cefa092ac",
+      "url": "https://www.infineon.com/assets/row/public/documents/24/49/infineon-ipp-b-i-200n25n3-g-datasheet-en.pdf"
+    },
+    {
+      "evidence": "Actual RevF Figure10 viewed and independently crosschecked. DCB6 outline2.00+/-0.10x3.00+/-0.10x0.75+/-0.05 with0..0.05 standoff; reserve0.85 totalheight conservatively. Padpattern3.55+/-0.05 across leads; exposedpad optionally VSS.",
+      "id": "ltc4359",
+      "observed": "2026-10-29",
+      "pages": [
+        2,
+        12,
+        16
+      ],
+      "sha256": "8d05e6ba4259028463bbdb751d639715506ef28d1bd5eabac1b012786ea7d970",
+      "url": "https://www.analog.com/media/en/technical-documentation/data-sheets/ltc4359.pdf"
+    },
+    {
+      "evidence": "C1206C473F1GECAUTO: 47nF100V1206 standardtermination rowEH; length3.2+/-0.2,width1.6+/-0.2,thickness1.6+/-0.2mm. These dimensions do not include solder.",
+      "id": "kemet_c0g_esd",
+      "observed": "2026-10-29",
+      "pages": [
+        4,
+        6,
+        8
+      ],
+      "sha256": "e7a71bb470bbc82e77e3ecbfce7749d3f5c963985e62d4494ad52de285945189",
+      "url": "https://yageogroup.com/content/datasheet/asset/file/KEM_C1091_C0G_ESD"
+    },
+    {
+      "evidence": "C0805C682J5GACTU:6800pF50V0805 rowDN; body2.0+/-0.2x1.25+/-0.2x0.78+/-0.10mm. Exactmanufacturer sheet mirrored byFarnell2739974 corroborates.",
+      "id": "kemet_c0g",
+      "observed": "2026-10-29",
+      "pages": [
+        3,
+        9
+      ],
+      "sha256": "02d179914aeb9585eb2229ba8e18ef9d6b01c77c056de2af295d6950a2a5cc0d",
+      "url": "https://yageogroup.com/content/datasheet/asset/file/KEM_C1003_C0G_SMD"
     }
-  ]
+  ],
+  "status": "WIP_PRIMARY_INVENTORY_NOT_A_LAYOUT"
 }

@@ -1,0 +1,91 @@
+{
+  "component_pins": {
+    "I.COUT": {
+      "1": "FRONT_OUT_SENSE",
+      "2": "FLOATING_VSS"
+    },
+    "I.D1": {
+      "A": "INPUT_CLAMP_MID",
+      "K": "BUS_HEAD_FUSED"
+    },
+    "I.D2": {
+      "A": "INPUT_CLAMP_MID",
+      "K": "FLOATING_VSS"
+    },
+    "I.D3": {
+      "A": "FLOATING_VSS",
+      "K": "FRONT_OUT_SENSE"
+    },
+    "I.D4": {
+      "A": "BUS_HEAD_FUSED",
+      "K": "FRONT_GATE"
+    },
+    "I.D5": {
+      "A": "FLOATING_VSS",
+      "K": "GND"
+    },
+    "I.D6": {
+      "A": "BUS_HEAD_FUSED",
+      "K": "VIN_PROTECTED"
+    },
+    "I.Q1": {
+      "1": "FRONT_GATE",
+      "2": "VIN_PROTECTED",
+      "3": "BUS_HEAD_FUSED"
+    },
+    "I.R2": {
+      "1": "VIN_PROTECTED",
+      "2": "FRONT_OUT_SENSE"
+    },
+    "I.U1": {
+      "1": "FRONT_OUT_SENSE",
+      "2": "FRONT_GATE",
+      "3": "BUS_HEAD_FUSED",
+      "4": "BUS_HEAD_FUSED",
+      "5": null,
+      "6": "FLOATING_VSS",
+      "7": null
+    }
+  },
+  "electrically_qualified": false,
+  "frozen": false,
+  "interfaces": {
+    "input": "BUS_HEAD_FUSED after existing whole-head10A fuse; raw C3 BUS does not enter this circuit",
+    "load_capacitance": {
+      "candidate": "Downstream cutoff/converter network; P.C1 is on PAN_INPUT after the cutoff pair and is isolated when that pair opens. It is NOT a permanently connected front VOUT capacitor.",
+      "dedicated_front_capacitor": null,
+      "qualification": "Front effective capacitance/leakage and charged-output behavior by cutoff state unresolved; floating47nF COUT is never CLOAD.",
+      "reference": "Figure10 separate CLOAD from power VOUT to systemGND; value unspecified"
+    },
+    "output": "VIN_PROTECTED maps to reviewed P.U1 VIN, cutoff input and P.D2 negative clamp; NOT12V_PAN",
+    "return": "GND is system return; FLOATING_VSS is deliberately separate"
+  },
+  "native_circuit_generated": false,
+  "observed": "2026-10-29",
+  "open_gates": [
+    "exact COUT MPN/voltage/dielectric",
+    "all clamp/current/pulse/temperature qualification for the declared source and charged-output envelope",
+    "modern BZG03C75 grade equivalence and DDZ9699T procurement",
+    "layout leakage to floating reference and open SHDN; physical creepage/copper/thermal",
+    "actual source/load waveforms and output regeneration",
+    "DCB pin spacing above30V: actual creepage/clearance and contamination/leakage; no64C/W thermal inheritance with unqualified exposed-pad/copper arrangement"
+  ],
+  "pin_basis": {
+    "I.Q1": "Infineon Rev2.5 page1: gate1, drain2/tab, source3; page9 PG-TO263-3.",
+    "I.U1": "Actual RevF page2 DCB6 TOP VIEW independently viewed; page2 render identity recorded separately. Exposed pad7 electricallyNC follows page11 guidance to increase effective pin spacing above30V; its physical metal/land still must be reserved. Pin6 remains FLOATING_VSS. SHDN5 open follows Figure10; leakage/startup remains unqualified.",
+    "R_and_C": "Project endpoint IDs1/2 for nonpolar parts, not a manufacturer numbering claim.",
+    "diodes": "Manufacturer cathode-band convention; A/K here are physical polarity names, not invented package numbers. Verify exact footprint pad numbering before EDA."
+  },
+  "reference": {
+    "figure": 10,
+    "page": 12,
+    "pdf_sha256": "8d05e6ba4259028463bbdb751d639715506ef28d1bd5eabac1b012786ea7d970",
+    "public_document_committed": false,
+    "rendered_page_sha256": "683206d5c5b09213ccc7f3fe9fae98451c4bf61529a8072adb92355c6dc7a5f7",
+    "rendered_pin_page_sha256": "f5dde027c7a54e2b59cd6d580b46479f86eaa61db4f682b43d0eda5f500bf18c",
+    "revision": "F, December2021",
+    "url": "https://www.analog.com/media/en/technical-documentation/data-sheets/ltc4359.pdf",
+    "visual_crosscheck": "author, integration owner and independent reviewer read actual page pixels"
+  },
+  "status": "VISUALLY_TRANSCRIBED_REFERENCE_NOT_NEW_NATIVE_CIRCUIT"
+}

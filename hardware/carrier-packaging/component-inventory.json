@@ -7,6 +7,7 @@
   "fit_qualified": false,
   "frozen": false,
   "inventory_count": 47,
+  "package_evidence_count": 27,
   "remaining_physical_inventory": [
     "external F4, D8, D14 and exact upstream fuse/holder boundary",
     "C2/C3/servo housings, contacts, crimps and actual leads",
@@ -18,8 +19,23 @@
       "datasheet": "https://www.ti.com/lit/ds/symlink/csd19531q5a.pdf",
       "group": "retained_cutoff_converter",
       "id": "P.Q1",
-      "maximum_envelope": null,
+      "maximum_envelope": {
+        "land_outer_mm": [
+          6.305,
+          5
+        ],
+        "match": [
+          "CSD19531Q5AT"
+        ],
+        "maximum_body_mm": [
+          6.1,
+          5,
+          1.1
+        ],
+        "source": "csd19531"
+      },
       "mpn": "CSD19531Q5AT",
+      "package_evidence_id": "csd19531",
       "pins_from_reviewed_candidate": {
         "1": "COMMON_SOURCE",
         "2": "COMMON_SOURCE",
@@ -39,8 +55,23 @@
       "datasheet": "https://www.ti.com/lit/ds/symlink/csd19531q5a.pdf",
       "group": "retained_cutoff_converter",
       "id": "P.Q2",
-      "maximum_envelope": null,
+      "maximum_envelope": {
+        "land_outer_mm": [
+          6.305,
+          5
+        ],
+        "match": [
+          "CSD19531Q5AT"
+        ],
+        "maximum_body_mm": [
+          6.1,
+          5,
+          1.1
+        ],
+        "source": "csd19531"
+      },
       "mpn": "CSD19531Q5AT",
+      "package_evidence_id": "csd19531",
       "pins_from_reviewed_candidate": {
         "1": "COMMON_SOURCE",
         "2": "COMMON_SOURCE",
@@ -60,8 +91,24 @@
       "datasheet": "https://www.vishay.com/docs/30100/wsl.pdf",
       "group": "retained_cutoff_converter",
       "id": "P.R1",
-      "maximum_envelope": null,
+      "maximum_envelope": {
+        "land_outer_mm": [
+          7.36,
+          3.68
+        ],
+        "match": [
+          "WSL2512R0100FEA",
+          "WSL2512R0200FEA"
+        ],
+        "maximum_body_mm": [
+          6.604,
+          3.434,
+          0.889
+        ],
+        "source": "wsl2512"
+      },
       "mpn": "WSL2512R0100FEA",
+      "package_evidence_id": "wsl2512",
       "pins_from_reviewed_candidate": {
         "1": "SENSE_HI",
         "2": "PAN_INPUT"
@@ -98,8 +145,32 @@
       "datasheet": "https://www.pololu.com/product/5577",
       "group": "retained_cutoff_converter",
       "id": "P.U2",
-      "maximum_envelope": null,
+      "maximum_envelope": {
+        "additional_unknowns": [
+          "profiletolerances",
+          "actualsolder/lead/mountstack",
+          "12padorientationandterminalaccess"
+        ],
+        "board_edge_tolerance_mm": 0.3,
+        "electrical_hole_mm": 1.02,
+        "electrical_holes": 12,
+        "match": [
+          "Pololu 5577"
+        ],
+        "maximum_body_mm": null,
+        "mounting_hole_mm": 2.18,
+        "mounting_holes": 3,
+        "nominal_board_mm": [
+          25.4,
+          25.4,
+          1.57
+        ],
+        "nominal_bottom_mm": 1.4,
+        "nominal_top_mm": 6.1,
+        "source": "pololu5577"
+      },
       "mpn": "Pololu 5577",
+      "package_evidence_id": "pololu5577",
       "pins_from_reviewed_candidate": {
         "A1": "12V_PAN",
         "A2": "GND",
@@ -123,8 +194,18 @@
       "datasheet": "https://www.vishay.com/docs/28758/tnpw_e3.pdf",
       "group": "retained_cutoff_converter",
       "id": "P.R2",
-      "maximum_envelope": null,
+      "maximum_envelope": {
+        "land_outer_mm": null,
+        "maximum_body_mm": [
+          2.1,
+          1.4,
+          0.55
+        ],
+        "prefix": "TNPW0805",
+        "source": "tnpw0805"
+      },
       "mpn": "TNPW0805464KBEEN",
+      "package_evidence_id": "tnpw0805",
       "pins_from_reviewed_candidate": {
         "1": "VIN_PROTECTED",
         "2": "OV_DIV"
@@ -138,8 +219,18 @@
       "datasheet": "https://www.vishay.com/docs/28758/tnpw_e3.pdf",
       "group": "retained_cutoff_converter",
       "id": "P.R3",
-      "maximum_envelope": null,
+      "maximum_envelope": {
+        "land_outer_mm": null,
+        "maximum_body_mm": [
+          2.1,
+          1.4,
+          0.55
+        ],
+        "prefix": "TNPW0805",
+        "source": "tnpw0805"
+      },
       "mpn": "TNPW08054K99BEEN",
+      "package_evidence_id": "tnpw0805",
       "pins_from_reviewed_candidate": {
         "1": "OV_DIV",
         "2": "GND"
@@ -153,8 +244,18 @@
       "datasheet": "https://www.vishay.com/docs/28758/tnpw_e3.pdf",
       "group": "retained_cutoff_converter",
       "id": "P.R4",
-      "maximum_envelope": null,
+      "maximum_envelope": {
+        "land_outer_mm": null,
+        "maximum_body_mm": [
+          2.1,
+          1.4,
+          0.55
+        ],
+        "prefix": "TNPW0805",
+        "source": "tnpw0805"
+      },
       "mpn": "TNPW0805100KBEEN",
+      "package_evidence_id": "tnpw0805",
       "pins_from_reviewed_candidate": {
         "1": "VIN_PROTECTED",
         "2": "UV_DIV"
@@ -168,8 +269,18 @@
       "datasheet": "https://www.vishay.com/docs/28758/tnpw_e3.pdf",
       "group": "retained_cutoff_converter",
       "id": "P.R5",
-      "maximum_envelope": null,
+      "maximum_envelope": {
+        "land_outer_mm": null,
+        "maximum_body_mm": [
+          2.1,
+          1.4,
+          0.55
+        ],
+        "prefix": "TNPW0805",
+        "source": "tnpw0805"
+      },
       "mpn": "TNPW08054K99BEEN",
+      "package_evidence_id": "tnpw0805",
       "pins_from_reviewed_candidate": {
         "1": "UV_DIV",
         "2": "GND"
@@ -183,8 +294,18 @@
       "datasheet": "https://www.vishay.com/docs/28758/tnpw_e3.pdf",
       "group": "retained_cutoff_converter",
       "id": "P.R6",
-      "maximum_envelope": null,
+      "maximum_envelope": {
+        "land_outer_mm": null,
+        "maximum_body_mm": [
+          2.1,
+          1.4,
+          0.55
+        ],
+        "prefix": "TNPW0805",
+        "source": "tnpw0805"
+      },
       "mpn": "TNPW0805499KBEEN",
+      "package_evidence_id": "tnpw0805",
       "pins_from_reviewed_candidate": {
         "1": "VIN_PROTECTED",
         "2": "SHDN_DIV"
@@ -198,8 +319,18 @@
       "datasheet": "https://www.vishay.com/docs/28758/tnpw_e3.pdf",
       "group": "retained_cutoff_converter",
       "id": "P.R7",
-      "maximum_envelope": null,
+      "maximum_envelope": {
+        "land_outer_mm": null,
+        "maximum_body_mm": [
+          2.1,
+          1.4,
+          0.55
+        ],
+        "prefix": "TNPW0805",
+        "source": "tnpw0805"
+      },
       "mpn": "TNPW0805100KBEEN",
+      "package_evidence_id": "tnpw0805",
       "pins_from_reviewed_candidate": {
         "1": "SHDN_DIV",
         "2": "GND"
@@ -213,8 +344,18 @@
       "datasheet": "https://www.vishay.com/docs/28758/tnpw_e3.pdf",
       "group": "retained_cutoff_converter",
       "id": "P.R8",
-      "maximum_envelope": null,
+      "maximum_envelope": {
+        "land_outer_mm": null,
+        "maximum_body_mm": [
+          2.1,
+          1.4,
+          0.55
+        ],
+        "prefix": "TNPW0805",
+        "source": "tnpw0805"
+      },
       "mpn": "TNPW080522K0BEEN",
+      "package_evidence_id": "tnpw0805",
       "pins_from_reviewed_candidate": {
         "1": "GATE",
         "2": "GATE_RC"
@@ -228,8 +369,18 @@
       "datasheet": "https://www.vishay.com/docs/28758/tnpw_e3.pdf",
       "group": "retained_cutoff_converter",
       "id": "P.R9",
-      "maximum_envelope": null,
+      "maximum_envelope": {
+        "land_outer_mm": null,
+        "maximum_body_mm": [
+          2.1,
+          1.4,
+          0.55
+        ],
+        "prefix": "TNPW0805",
+        "source": "tnpw0805"
+      },
       "mpn": "TNPW0805100KBEEN",
+      "package_evidence_id": "tnpw0805",
       "pins_from_reviewed_candidate": {
         "1": "PAN_INPUT",
         "2": "GND"
@@ -243,8 +394,31 @@
       "datasheet": "https://industrial.panasonic.com/ww/products/pt/aluminum-cap-lead/models/EEUFC2A220",
       "group": "retained_cutoff_converter",
       "id": "P.C1",
-      "maximum_envelope": null,
+      "maximum_envelope": {
+        "additional_unknowns": [
+          "mountinggap",
+          "leadformingandretention"
+        ],
+        "land_outer_mm": null,
+        "lead_diameter_max_mm": 0.65,
+        "lead_pitch_range_mm": [
+          3,
+          4
+        ],
+        "match": [
+          "EEU-FC2A220"
+        ],
+        "maximum_body_mm": [
+          8.5,
+          8.5,
+          12.5
+        ],
+        "pressure_valve_clearance_min_mm": 2,
+        "shape": "cylinder",
+        "source": "panasonic_fc"
+      },
       "mpn": "EEU-FC2A220",
+      "package_evidence_id": "panasonic_fc",
       "pins_from_reviewed_candidate": {
         "1": "PAN_INPUT",
         "2": "GND"
@@ -258,8 +432,20 @@
       "datasheet": "https://yageogroup.com/content/datasheet/asset/file/KEM_C1091_C0G_ESD",
       "group": "retained_cutoff_converter",
       "id": "P.C2",
-      "maximum_envelope": null,
+      "maximum_envelope": {
+        "land_outer_mm": null,
+        "match": [
+          "C1206C473F1GECAUTO"
+        ],
+        "maximum_body_mm": [
+          3.4,
+          1.8,
+          1.8
+        ],
+        "source": "kemet_c0g_esd"
+      },
       "mpn": "C1206C473F1GECAUTO",
+      "package_evidence_id": "kemet_c0g_esd",
       "pins_from_reviewed_candidate": {
         "1": "GATE_RC",
         "2": "GND"
@@ -273,8 +459,20 @@
       "datasheet": "https://yageogroup.com/content/datasheet/asset/file/KEM_C1003_C0G_SMD",
       "group": "retained_cutoff_converter",
       "id": "P.C3",
-      "maximum_envelope": null,
+      "maximum_envelope": {
+        "land_outer_mm": null,
+        "match": [
+          "C0805C682J5GACTU"
+        ],
+        "maximum_body_mm": [
+          2.2,
+          1.45,
+          0.88
+        ],
+        "source": "kemet_c0g"
+      },
       "mpn": "C0805C682J5GACTU",
+      "package_evidence_id": "kemet_c0g",
       "pins_from_reviewed_candidate": {
         "1": "GATE",
         "2": "COMMON_SOURCE"
@@ -288,8 +486,23 @@
       "datasheet": "https://www.vishay.com/docs/89316/v10p20.pdf",
       "group": "retained_cutoff_converter",
       "id": "P.D2",
-      "maximum_envelope": null,
+      "maximum_envelope": {
+        "land_outer_mm": [
+          6.8,
+          4.8
+        ],
+        "match": [
+          "V10P20-M3/87A"
+        ],
+        "maximum_body_mm": [
+          6.65,
+          4.75,
+          1.2
+        ],
+        "source": "v10p20"
+      },
       "mpn": "V10P20-M3/87A",
+      "package_evidence_id": "v10p20",
       "pins_from_reviewed_candidate": {
         "1": "GND",
         "2": "GND",
@@ -304,8 +517,24 @@
       "datasheet": "https://www.vishay.com/docs/30100/wsl.pdf",
       "group": "retained_cutoff_converter",
       "id": "P.R10",
-      "maximum_envelope": null,
+      "maximum_envelope": {
+        "land_outer_mm": [
+          7.36,
+          3.68
+        ],
+        "match": [
+          "WSL2512R0100FEA",
+          "WSL2512R0200FEA"
+        ],
+        "maximum_body_mm": [
+          6.604,
+          3.434,
+          0.889
+        ],
+        "source": "wsl2512"
+      },
       "mpn": "WSL2512R0200FEA",
+      "package_evidence_id": "wsl2512",
       "pins_from_reviewed_candidate": {
         "1": "SENSE_HI",
         "2": "PAN_INPUT"
@@ -319,8 +548,18 @@
       "datasheet": "https://www.vishay.com/docs/28758/tnpw_e3.pdf",
       "group": "retained_cutoff_converter",
       "id": "P.R11",
-      "maximum_envelope": null,
+      "maximum_envelope": {
+        "land_outer_mm": null,
+        "maximum_body_mm": [
+          2.1,
+          1.4,
+          0.55
+        ],
+        "prefix": "TNPW0805",
+        "source": "tnpw0805"
+      },
       "mpn": "TNPW0805100KBEEN",
+      "package_evidence_id": "tnpw0805",
       "pins_from_reviewed_candidate": {
         "1": "VIN_PROTECTED",
         "2": "GND"
@@ -334,8 +573,18 @@
       "datasheet": "https://www.vishay.com/docs/28758/tnpw_e3.pdf",
       "group": "retained_cutoff_converter",
       "id": "P.R12",
-      "maximum_envelope": null,
+      "maximum_envelope": {
+        "land_outer_mm": null,
+        "maximum_body_mm": [
+          2.1,
+          1.4,
+          0.55
+        ],
+        "prefix": "TNPW0805",
+        "source": "tnpw0805"
+      },
       "mpn": "TNPW0805150KBEEN",
+      "package_evidence_id": "tnpw0805",
       "pins_from_reviewed_candidate": {
         "1": "PAN_INPUT",
         "2": "EN_SENSE"
@@ -349,8 +598,18 @@
       "datasheet": "https://www.vishay.com/docs/28758/tnpw_e3.pdf",
       "group": "retained_cutoff_converter",
       "id": "P.R13",
-      "maximum_envelope": null,
+      "maximum_envelope": {
+        "land_outer_mm": null,
+        "maximum_body_mm": [
+          2.1,
+          1.4,
+          0.55
+        ],
+        "prefix": "TNPW0805",
+        "source": "tnpw0805"
+      },
       "mpn": "TNPW080510K0BEEN",
+      "package_evidence_id": "tnpw0805",
       "pins_from_reviewed_candidate": {
         "1": "EN_SENSE",
         "2": "GND"
@@ -364,8 +623,18 @@
       "datasheet": "https://www.vishay.com/docs/28758/tnpw_e3.pdf",
       "group": "retained_cutoff_converter",
       "id": "P.R14",
-      "maximum_envelope": null,
+      "maximum_envelope": {
+        "land_outer_mm": null,
+        "maximum_body_mm": [
+          2.1,
+          1.4,
+          0.55
+        ],
+        "prefix": "TNPW0805",
+        "source": "tnpw0805"
+      },
       "mpn": "TNPW0805499KBEEN",
+      "package_evidence_id": "tnpw0805",
       "pins_from_reviewed_candidate": {
         "1": "PAN_INPUT",
         "2": "PAN_ENABLE"
@@ -409,8 +678,20 @@
       "datasheet": "https://yageogroup.com/content/datasheet/asset/file/KEM_C1091_C0G_ESD",
       "group": "retained_cutoff_converter",
       "id": "P.C6",
-      "maximum_envelope": null,
+      "maximum_envelope": {
+        "land_outer_mm": null,
+        "match": [
+          "C1206C473F1GECAUTO"
+        ],
+        "maximum_body_mm": [
+          3.4,
+          1.8,
+          1.8
+        ],
+        "source": "kemet_c0g_esd"
+      },
       "mpn": "C1206C473F1GECAUTO",
+      "package_evidence_id": "kemet_c0g_esd",
       "pins_from_reviewed_candidate": {
         "1": "GATE_RC",
         "2": "GND"
@@ -424,8 +705,20 @@
       "datasheet": "https://yageogroup.com/content/datasheet/asset/file/KEM_C1091_C0G_ESD",
       "group": "retained_cutoff_converter",
       "id": "P.C7",
-      "maximum_envelope": null,
+      "maximum_envelope": {
+        "land_outer_mm": null,
+        "match": [
+          "C1206C473F1GECAUTO"
+        ],
+        "maximum_body_mm": [
+          3.4,
+          1.8,
+          1.8
+        ],
+        "source": "kemet_c0g_esd"
+      },
       "mpn": "C1206C473F1GECAUTO",
+      "package_evidence_id": "kemet_c0g_esd",
       "pins_from_reviewed_candidate": {
         "1": "GATE_RC",
         "2": "GND"
@@ -439,8 +732,20 @@
       "datasheet": "https://yageogroup.com/content/datasheet/asset/file/KEM_C1091_C0G_ESD",
       "group": "retained_cutoff_converter",
       "id": "P.C8",
-      "maximum_envelope": null,
+      "maximum_envelope": {
+        "land_outer_mm": null,
+        "match": [
+          "C1206C473F1GECAUTO"
+        ],
+        "maximum_body_mm": [
+          3.4,
+          1.8,
+          1.8
+        ],
+        "source": "kemet_c0g_esd"
+      },
       "mpn": "C1206C473F1GECAUTO",
+      "package_evidence_id": "kemet_c0g_esd",
       "pins_from_reviewed_candidate": {
         "1": "GATE_RC",
         "2": "GND"
@@ -454,8 +759,24 @@
       "datasheet": "https://www.ti.com/lit/ds/symlink/tps3760.pdf",
       "group": "retained_cutoff_converter",
       "id": "P.U3",
-      "maximum_envelope": null,
+      "maximum_envelope": {
+        "land_outer_mm": [
+          4.05,
+          3.3
+        ],
+        "match": [
+          "TPS3760A012DYYR"
+        ],
+        "maximum_body_mm": [
+          4.6,
+          3.36,
+          1.1
+        ],
+        "note": "Bodylengthincludesallowed0.15mmflashatbothends. Lands4.05span x3.3array; bodyextendsbeyondarray.",
+        "source": "tps3760"
+      },
       "mpn": "TPS3760A012DYYR",
+      "package_evidence_id": "tps3760",
       "pins_from_reviewed_candidate": {
         "1": "PAN_INPUT",
         "10": null,
@@ -480,22 +801,67 @@
     {
       "group": "complete_ideal_diode_reference_inventory",
       "id": "I.U1",
-      "maximum_envelope": null,
+      "maximum_envelope": {
+        "land_outer_mm": [
+          3.6,
+          2.1
+        ],
+        "match": [
+          "LTC4359IDCB#TRPBF"
+        ],
+        "maximum_body_mm": [
+          3.1,
+          2.1,
+          0.85
+        ],
+        "note": "Heightconservativelyaddsmaxstandoff0.05totableAmax0.8. ExposedpadmayconnectonlyfloatingVSS.",
+        "source": "ltc4359"
+      },
       "mpn": "LTC4359IDCB#TRPBF",
       "package": "DFN6 DCB with exposed pad",
+      "package_evidence_id": "ltc4359",
       "pins_from_reviewed_candidate": null,
       "placement": null,
+      "reference_pin_contract": {
+        "1": "FRONT_OUT_SENSE",
+        "2": "FRONT_GATE",
+        "3": "BUS_HEAD_FUSED",
+        "4": "BUS_HEAD_FUSED",
+        "5": null,
+        "6": "FLOATING_VSS",
+        "7": null
+      },
       "source": "https://www.analog.com/media/en/technical-documentation/data-sheets/ltc4359.pdf#page=12",
       "value": "ideal diode controller"
     },
     {
       "group": "complete_ideal_diode_reference_inventory",
       "id": "I.Q1",
-      "maximum_envelope": null,
+      "maximum_envelope": {
+        "land_outer_mm": [
+          16.25,
+          10.9
+        ],
+        "match": [
+          "IPB200N25N3GATMA1"
+        ],
+        "maximum_body_mm": [
+          15.88,
+          10.31,
+          4.57
+        ],
+        "source": "ipb200n25"
+      },
       "mpn": "IPB200N25N3GATMA1",
       "package": "PG-TO263-3",
+      "package_evidence_id": "ipb200n25",
       "pins_from_reviewed_candidate": null,
       "placement": null,
+      "reference_pin_contract": {
+        "1": "FRONT_GATE",
+        "2": "VIN_PROTECTED",
+        "3": "BUS_HEAD_FUSED"
+      },
       "source": "https://www.analog.com/media/en/technical-documentation/data-sheets/ltc4359.pdf#page=12",
       "value": "250V N-MOS"
     },
@@ -507,6 +873,10 @@
       "package": "SMA",
       "pins_from_reviewed_candidate": null,
       "placement": null,
+      "reference_pin_contract": {
+        "A": "INPUT_CLAMP_MID",
+        "K": "BUS_HEAD_FUSED"
+      },
       "source": "https://www.analog.com/media/en/technical-documentation/data-sheets/ltc4359.pdf#page=12",
       "value": "70V TVS"
     },
@@ -518,6 +888,10 @@
       "package": "SOD123",
       "pins_from_reviewed_candidate": null,
       "placement": null,
+      "reference_pin_contract": {
+        "A": "INPUT_CLAMP_MID",
+        "K": "FLOATING_VSS"
+      },
       "source": "https://www.analog.com/media/en/technical-documentation/data-sheets/ltc4359.pdf#page=12",
       "value": "5.1V zener"
     },
@@ -529,6 +903,10 @@
       "package": "SMA",
       "pins_from_reviewed_candidate": null,
       "placement": null,
+      "reference_pin_contract": {
+        "A": "FLOATING_VSS",
+        "K": "FRONT_OUT_SENSE"
+      },
       "source": "https://www.analog.com/media/en/technical-documentation/data-sheets/ltc4359.pdf#page=12",
       "value": "75V zener; modern grade equivalence open"
     },
@@ -540,6 +918,10 @@
       "package": "SOD523",
       "pins_from_reviewed_candidate": null,
       "placement": null,
+      "reference_pin_contract": {
+        "A": "BUS_HEAD_FUSED",
+        "K": "FRONT_GATE"
+      },
       "source": "https://www.analog.com/media/en/technical-documentation/data-sheets/ltc4359.pdf#page=12",
       "value": "12V gate zener; supply not confirmed"
     },
@@ -551,6 +933,10 @@
       "package": "SMA",
       "pins_from_reviewed_candidate": null,
       "placement": null,
+      "reference_pin_contract": {
+        "A": "FLOATING_VSS",
+        "K": "GND"
+      },
       "source": "https://www.analog.com/media/en/technical-documentation/data-sheets/ltc4359.pdf#page=12",
       "value": "floating-reference return diode"
     },
@@ -562,6 +948,10 @@
       "package": "SMC",
       "pins_from_reviewed_candidate": null,
       "placement": null,
+      "reference_pin_contract": {
+        "A": "BUS_HEAD_FUSED",
+        "K": "VIN_PROTECTED"
+      },
       "source": "https://www.analog.com/media/en/technical-documentation/data-sheets/ltc4359.pdf#page=12",
       "value": "150V TVS, Littelfuse candidate manufacturer"
     },
@@ -573,6 +963,10 @@
       "package": "1206",
       "pins_from_reviewed_candidate": null,
       "placement": null,
+      "reference_pin_contract": {
+        "1": "VIN_PROTECTED",
+        "2": "FRONT_OUT_SENSE"
+      },
       "source": "https://www.analog.com/media/en/technical-documentation/data-sheets/ltc4359.pdf#page=12",
       "value": "2kohm pulse resistor candidate; pulse acceptance open"
     },
@@ -584,6 +978,10 @@
       "package": null,
       "pins_from_reviewed_candidate": null,
       "placement": null,
+      "reference_pin_contract": {
+        "1": "FRONT_OUT_SENSE",
+        "2": "FLOATING_VSS"
+      },
       "source": "https://www.analog.com/media/en/technical-documentation/data-sheets/ltc4359.pdf#page=12",
       "value": "47nF reference capacitor; exact voltage/MPN pending topology check"
     },
@@ -715,7 +1113,10 @@
   "source_sha256": {
     "cad/turret_boards.py": "c7a115d2fe3cefddf46b0dd521e21076e1f7721235df3e7bd22fadb6e165707b",
     "catalog/turret.json": "036b39b5e923169713b20907fd1a113bf9044e3b201d9fcd2c4f2fcbbabdc367",
-    "hardware/carrier-packaging/inventory.py": "fffeac944f3afd1902b0f460327da7db1388a02112fa1b878ef0b6432061a6e1",
+    "hardware/carrier-packaging/front-reference-contract.json": "f658762cb95e52615563630107bb940ddc16a12de5d287d0c48cfd134530417b",
+    "hardware/carrier-packaging/inventory.py": "14babbec732828994d63cf3d9cd6478be00ff49452294c2186c2becdb17edd5c",
+    "hardware/carrier-packaging/package-envelopes.json": "88f9ffb3a3e1aa5eff60f75045ae93d66b14f49070d63c8b16453325ac1d5b89",
+    "hardware/carrier-packaging/primary-envelope-sources.json": "24ef8438483a96769604720497e2250b56cb3e7e54cd035cd5939011f6d7dfca",
     "hardware/carrier-pan-protection/circuit_design.py": "37b4d99eecaa1f567109df6762a00f69f46c02e6efbe7d53c35893d2955ace8a"
   },
   "status": "WIP_INVENTORY_NOT_A_FROZEN_LAYOUT"

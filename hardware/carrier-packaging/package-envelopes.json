@@ -1,0 +1,184 @@
+{
+  "design_clearance_mm": null,
+  "note": "Body, land pattern and nominal moduleprofile are different records; unknowns remain null. These are no thermal or footprint qualification.",
+  "packages": {
+    "csd19531": {
+      "land_outer_mm": [
+        6.305,
+        5
+      ],
+      "match": [
+        "CSD19531Q5AT"
+      ],
+      "maximum_body_mm": [
+        6.1,
+        5,
+        1.1
+      ],
+      "source": "csd19531"
+    },
+    "ipb200n25": {
+      "land_outer_mm": [
+        16.25,
+        10.9
+      ],
+      "match": [
+        "IPB200N25N3GATMA1"
+      ],
+      "maximum_body_mm": [
+        15.88,
+        10.31,
+        4.57
+      ],
+      "source": "ipb200n25"
+    },
+    "kemet_c0g": {
+      "land_outer_mm": null,
+      "match": [
+        "C0805C682J5GACTU"
+      ],
+      "maximum_body_mm": [
+        2.2,
+        1.45,
+        0.88
+      ],
+      "source": "kemet_c0g"
+    },
+    "kemet_c0g_esd": {
+      "land_outer_mm": null,
+      "match": [
+        "C1206C473F1GECAUTO"
+      ],
+      "maximum_body_mm": [
+        3.4,
+        1.8,
+        1.8
+      ],
+      "source": "kemet_c0g_esd"
+    },
+    "ltc4359": {
+      "land_outer_mm": [
+        3.6,
+        2.1
+      ],
+      "match": [
+        "LTC4359IDCB#TRPBF"
+      ],
+      "maximum_body_mm": [
+        3.1,
+        2.1,
+        0.85
+      ],
+      "note": "Heightconservativelyaddsmaxstandoff0.05totableAmax0.8. ExposedpadmayconnectonlyfloatingVSS.",
+      "source": "ltc4359"
+    },
+    "panasonic_fc": {
+      "additional_unknowns": [
+        "mountinggap",
+        "leadformingandretention"
+      ],
+      "land_outer_mm": null,
+      "lead_diameter_max_mm": 0.65,
+      "lead_pitch_range_mm": [
+        3,
+        4
+      ],
+      "match": [
+        "EEU-FC2A220"
+      ],
+      "maximum_body_mm": [
+        8.5,
+        8.5,
+        12.5
+      ],
+      "pressure_valve_clearance_min_mm": 2,
+      "shape": "cylinder",
+      "source": "panasonic_fc"
+    },
+    "pololu5577": {
+      "additional_unknowns": [
+        "profiletolerances",
+        "actualsolder/lead/mountstack",
+        "12padorientationandterminalaccess"
+      ],
+      "board_edge_tolerance_mm": 0.3,
+      "electrical_hole_mm": 1.02,
+      "electrical_holes": 12,
+      "match": [
+        "Pololu 5577"
+      ],
+      "maximum_body_mm": null,
+      "mounting_hole_mm": 2.18,
+      "mounting_holes": 3,
+      "nominal_board_mm": [
+        25.4,
+        25.4,
+        1.57
+      ],
+      "nominal_bottom_mm": 1.4,
+      "nominal_top_mm": 6.1,
+      "source": "pololu5577"
+    },
+    "tnpw0805": {
+      "land_outer_mm": null,
+      "maximum_body_mm": [
+        2.1,
+        1.4,
+        0.55
+      ],
+      "prefix": "TNPW0805",
+      "source": "tnpw0805"
+    },
+    "tps3760": {
+      "land_outer_mm": [
+        4.05,
+        3.3
+      ],
+      "match": [
+        "TPS3760A012DYYR"
+      ],
+      "maximum_body_mm": [
+        4.6,
+        3.36,
+        1.1
+      ],
+      "note": "Bodylengthincludesallowed0.15mmflashatbothends. Lands4.05span x3.3array; bodyextendsbeyondarray.",
+      "source": "tps3760"
+    },
+    "v10p20": {
+      "land_outer_mm": [
+        6.8,
+        4.8
+      ],
+      "match": [
+        "V10P20-M3/87A"
+      ],
+      "maximum_body_mm": [
+        6.65,
+        4.75,
+        1.2
+      ],
+      "source": "v10p20"
+    },
+    "wsl2512": {
+      "land_outer_mm": [
+        7.36,
+        3.68
+      ],
+      "match": [
+        "WSL2512R0100FEA",
+        "WSL2512R0200FEA"
+      ],
+      "maximum_body_mm": [
+        6.604,
+        3.434,
+        0.889
+      ],
+      "source": "wsl2512"
+    }
+  },
+  "pcb_contour_frozen": false,
+  "solder_height_mm": null,
+  "status": "PARTIAL_PRIMARY_PACKAGE_INVENTORY_NOT_PLACEMENT",
+  "units": "mm"
+}
