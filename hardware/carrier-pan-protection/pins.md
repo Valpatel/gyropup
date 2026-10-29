@@ -33,7 +33,7 @@ This is a circuit candidate; none of its reference designators replace the exist
 | 3 | SENSE | EN_SENSE, R12/R13 divider |
 | 6 | RESET | PAN_ENABLE, U2 B6 and R14 pullup |
 | 8,13 | GND | Both GND, both exported |
-| 9 | CTR/MR | EN_DELAY, C9 to GND |
+| 9 | CTR/MR | Explicit NC; required for the datasheet 2 ms startup condition |
 | 10 | CTS | NC for minimum assertion delay, not grounded/latch mode |
 | 2,4,5,7,11,12,14 | NC | Each explicitly unconnected |
 
@@ -79,4 +79,4 @@ External solder/interconnect nodes are BUS_HEAD_FUSED, GND and12V_PAN; SHDN_DIV 
 
 ## Physical termination ownership
 
-This candidate assigns **no external physical pads**. BUS_HEAD_FUSED taps an unallocated whole-head BUS junction; the return junction and a possible separate load return remain unallocated. 12V_PAN must feed existing F1 (servo) and F4 (pendant). CAN pass-through, pulse generation and PAN TTL are outside this sheet. The harness author may route C2 CAN wires directly to C3, and TTL past the PCB, without inventing pads here. The legacy rotated2.5×10.2 mm “servo, ring, CAN pads” block is not a per-wire solder map and is not accepted space for these30 parts.
+This candidate assigns **no external physical pads**. BUS_HEAD_FUSED taps an unallocated whole-head BUS junction; the return junction and a possible separate load return remain unallocated. 12V_PAN must feed existing F1 (servo) and F4 (pendant). CAN pass-through, pulse generation and PAN TTL are outside this sheet. The harness author may route C2 CAN wires directly to C3, and TTL past the PCB, without inventing pads here. The legacy rotated2.5×10.2 mm “servo, ring, CAN pads” block is not a per-wire solder map and is not accepted space for these 29 parts.

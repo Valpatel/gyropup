@@ -51,6 +51,28 @@ def supervisor_window():
         fall.append(f(ref));rise.append(f(ref+.8*.02*(1+h)))
     return {'fall_V':bounds(fall),'rise_V':bounds(rise)}
 
+def supervisor_timing():
+    # TPS3760 revA p9 tSD<=2ms applies with CTR/MR OPEN. Footnote4 says
+    # a connected CTR capacitor adds time. Do not infer open from a default value.
+    net=D.PARTS['U3']['pins']['9']
+    if net is None:
+        return {'CTR_connection':'NC','installed_CTR_capacitance_F':0,
+                'tSD_screen_max_s':.002,'tCTR_open_max_s_at20pct_overdrive':40e-6,
+                'actual_slow_ramp_EN_loading_qualified':False}
+    caps=[(ref,p) for ref,p in D.PARTS.items() if p['pins'].get('1')==net and p['pins'].get('2')=='GND']
+    # Deliberately support the reviewed prior C9 only. Any new timing network
+    # requires reviewed tolerance and topology rather than a generic guessed delay.
+    if len(caps)!=1 or caps[0][1]['mpn']!='C0805C682J5GACTU':
+        raise ValueError('unreviewed connected CTR network')
+    ref,p=caps[0]
+    connected={(r,pin) for r,part in D.PARTS.items() for pin,n in part['pins'].items() if n==net}
+    if connected!={('U3','9'),(ref,'1')}:raise ValueError('unreviewed CTR loading')
+    c=capacitance(ref);ctol=.05+30e-6*65
+    added_max=-math.log(.25)*1.147e6*c*(1+ctol)+40e-6
+    return {'CTR_connection':net,'installed_CTR_capacitance_F':c,
+            'tCTR_cap_screen_max_s':added_max,'tSD_screen_max_s':.002+added_max,
+            'actual_slow_ramp_EN_loading_qualified':False}
+
 def static_screen(*, cin_uF=500, efficiency=.8, diode_drop_V=1.5, fet_pair_ohm=.030,
                   clamp_min_V=-2, charged_output_V=55, raw_reverse_V=-42,
                   measured_slew_V_per_s=None):
@@ -75,7 +97,8 @@ def static_screen(*, cin_uF=500, efficiency=.8, diode_drop_V=1.5, fet_pair_ohm=.
     total=load+charging+controller_aux
     startup=trips(.030,.070)
     available=15-diode_drop_V-startup[0]*(fet_pair_ohm+sr[1])
-    max_before_valid=2.7+.002*slew
+    timing=supervisor_timing()
+    max_before_valid=2.7+timing['tSD_screen_max_s']*slew
     gates={
       'startup_current_budget':total<startup[0],
       '15V_enable_headroom':available>en['rise_V'][1],
@@ -91,7 +114,7 @@ def static_screen(*, cin_uF=500, efficiency=.8, diode_drop_V=1.5, fet_pair_ohm=.
              'FET_pair_hot_resistance_max_ohm':fet_pair_ohm,'protected_input_min_V':clamp_min_V,
              'charged_output_max_V':charged_output_V,'raw_reverse_V':raw_reverse_V,'auxiliary_input_allowance_A':controller_aux},
       'sense_nominal_ohm':sense,'input_trip_A':{'forward_steady':trips(.040,.060),'forward_startup_at_Vout_0':startup,'reverse_magnitude':trips(.001,.005)},
-      'EN':en,'ramp_bank_min_F':cap_min,'ramp_slew_model_V_per_s':slew,
+      'EN':en,'supervisor_timing':timing,'ramp_bank_min_F':cap_min,'ramp_slew_model_V_per_s':slew,
       'startup_load_input_A':load,'capacitor_charge_A':charging,'startup_total_A':total,'startup_margin_A':startup[0]-total,
       'PAN_INPUT_available_at15V_V':available,'15V_enable_margin_V':available-en['rise_V'][1],
       'supervisor_voltage_at_max_startup_delay_V':max_before_valid,
@@ -109,8 +132,6 @@ def require_static_screen(**kwargs):
 
 def calculate():
     r=static_screen();tol=.001+25e-6*65
-    # CTR timing: datasheet p23 min -ln(.31)*877k*Cmin; max -ln(.25)*1.147M*Cmax+40us.
-    cdelay=capacitance('C9');ctol=.05+30e-6*65
     return {
       'status':'UNSELECTED_UNQUALIFIED_STATIC_SCREENING',
       'temperature_scenario_C':[-40,85],'reference_temperature_C':25,
@@ -120,7 +141,6 @@ def calculate():
       'revision_B_conditional_screen':r,
       'legacy_unprotected_U1_differential_V':{'raw_minus42_output42':-84,'raw_minus42_output55':-97},
       'legacy_10mohm_startup_min_A':.030/(.010*(1+.01+75e-6*65)),
-      'EN_release_delay_s':[-math.log(.31)*877e3*cdelay*(1-ctol),-math.log(.25)*1.147e6*cdelay*(1+ctol)+40e-6],
       'sense_each_loss_W_at60mV':[.060**2/(resistance(x)*(1-.01-75e-6*65)) for x in ('R1','R10')],
       'local_C1_only_energy_at42V_max_tolerance_J':.5*22e-6*1.2*42**2,
       'bleeder_42V_to5V_seconds_capacitance_scenarios':{str(u)+'uF':round(resistance('R9')*(1+tol)*u*1e-6*math.log(42/5),9) for u in (22,100,500)},

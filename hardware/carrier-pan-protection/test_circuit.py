@@ -17,7 +17,7 @@ import calculate
 class CircuitTests(unittest.TestCase):
     def setUp(self):self.root=ET.parse(HERE/'reports/netlist.xml').getroot()
     def test_actual_kicad_netlist(self):
-        self.assertEqual(verify.check_netlist(self.root)['package_leads'],104)
+        self.assertEqual(verify.check_netlist(self.root)['package_leads'],102)
     def test_artifact_binding(self): verify.check_receipt()
     def test_receipt_cannot_drop_source_bindings(self):
         receipt=json.loads((HERE/'reports/receipt.json').read_text())
@@ -41,7 +41,7 @@ class CircuitTests(unittest.TestCase):
         self.assertEqual(json.loads((HERE/'reports/calculations.json').read_text()),r)
     def test_candidate_bom_and_availability_coverage(self):
         with (HERE/'candidate-bom.csv').open() as f: rows=list(csv.DictReader(f))
-        self.assertEqual(len(rows),30)
+        self.assertEqual(len(rows),29)
         self.assertEqual({r['reference']:r['candidate_mpn'] for r in rows},verify.MPNS)
         offers=json.loads((HERE/'availability.json').read_text())
         pairs={}
@@ -78,6 +78,22 @@ class CircuitTests(unittest.TestCase):
     def test_wrong_supervisor_ov_variant_rejected(self):
         self.root.find("./components/comp[@ref='U3']/fields/field[@name='MPN']").text='TPS3760E012DYYR'
         with self.assertRaises(AssertionError):verify.check_netlist(self.root)
+    def test_restored_ctr_capacitor_invalidates_two_ms_sequencing(self):
+        self.assertIsNone(calculate.D.PARTS['U3']['pins']['9'])
+        self.assertEqual(calculate.supervisor_timing()['tSD_screen_max_s'],.002)
+        try:
+            calculate.D.PARTS['U3']['pins']['9']='EN_DELAY'
+            calculate.D.PARTS['C9']={'value':'6.8nF 50V 5%','mpn':'C0805C682J5GACTU','pins':{'1':'EN_DELAY','2':'GND'}}
+            r=calculate.static_screen()
+            self.assertGreater(r['supervisor_timing']['tSD_screen_max_s'],.0134)
+            self.assertGreater(r['supervisor_voltage_at_max_startup_delay_V'],7.03)
+            self.assertFalse(r['gates']['supervisor_valid_before_module_minimum'])
+            with self.assertRaises(ValueError):calculate.require_static_screen()
+            calculate.D.PARTS['C9']['mpn']='unknown'
+            with self.assertRaises(ValueError):calculate.static_screen()
+        finally:
+            calculate.D.PARTS['U3']['pins']['9']=None
+            calculate.D.PARTS.pop('C9',None)
     def native_negative(self,change):
         with tempfile.TemporaryDirectory(prefix='pan-native-negative-') as td:
             td=Path(td);tree=S.parse((HERE/'pan-cutoff.kicad_sch').read_text());change(tree)
@@ -155,6 +171,17 @@ class CircuitTests(unittest.TestCase):
             k=float(S.first(next(p for p in pins if S.first(p,'number')[1]=='K'),'at')[axis+1])
             a=float(S.first(next(p for p in pins if S.first(p,'number')[1]=='1'),'at')[axis+1])
             self.assertGreater((tip[axis]-back[axis])*(k-a),0)
+    def test_native_ctr_must_remain_explicitly_open(self):
+        def change(tree):
+            u3=next(s for s in S.find(tree,'symbol') if any(p[1:3]==['Reference','U3'] for p in S.find(s,'property')))
+            lib=next(s for s in S.find(S.first(tree,'lib_symbols'),'symbol') if s[1]==S.first(u3,'lib_id')[1])
+            pin=next(p for unit in S.find(lib,'symbol') for p in S.find(unit,'pin') if S.first(p,'number')[1]=='9')
+            xy=S.first(u3,'at');local=S.first(pin,'at');point=(round(float(xy[1])+float(local[1]),4),round(float(xy[2])-float(local[2]),4))
+            nc=next(p for p in S.find(tree,'no_connect') if tuple(map(float,S.first(p,'at')[1:]))==point)
+            tree.remove(nc)
+            label=copy.deepcopy(next(p for p in S.find(tree,'label') if p[1]=='GND'))
+            S.first(label,'at')[1:]=[*point,0];S.first(label,'uuid')[1]='d5cfc8c2-e349-4003-93b4-0f7611627076';tree.append(label)
+        self.native_negative(change)
     def assert_body_diodes(self,tree):
         # Check the visible diode separately from net connectivity: graphics can lie while ERC passes.
         for name in ('Q_IN','Q_OUT'):

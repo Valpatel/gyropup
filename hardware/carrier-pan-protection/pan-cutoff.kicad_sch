@@ -5160,91 +5160,6 @@
 		)
 	)
 	(symbol
-		(lib_id "Candidate:C_V")
-		(at 525.78 208.28 0)
-		(unit 1)
-		(exclude_from_sim no)
-		(in_bom yes)
-		(on_board yes)
-		(dnp no)
-		(uuid "3a4d8be1-24be-58ed-8d45-beed8d08d325")
-		(property "Reference" "C9"
-			(at 539.75 205.74 0)
-			(effects
-				(font
-					(size 1.27 1.27)
-				)
-			)
-		)
-		(property "Value" "6.8nF 50V 5%"
-			(at 539.75 209.55 0)
-			(effects
-				(font
-					(size 1.27 1.27)
-				)
-			)
-		)
-		(property "Footprint" "Capacitor_SMD:C_0805_2012Metric"
-			(at 0 0 0)
-			(effects
-				(font
-					(size 1.27 1.27)
-				)
-				(hide yes)
-			)
-		)
-		(property "Datasheet" "https://yageogroup.com/content/datasheet/asset/file/KEM_C1003_C0G_SMD"
-			(at 0 0 0)
-			(effects
-				(font
-					(size 1.27 1.27)
-				)
-				(hide yes)
-			)
-		)
-		(property "MPN" "C0805C682J5GACTU"
-			(at 0 0 0)
-			(effects
-				(font
-					(size 1.27 1.27)
-				)
-				(hide yes)
-			)
-		)
-		(property "Status" "UNSELECTED / UNQUALIFIED CANDIDATE"
-			(at 0 0 0)
-			(effects
-				(font
-					(size 1.27 1.27)
-				)
-				(hide yes)
-			)
-		)
-		(property "Note" "U3 CTR release delay. CTS open for minimum assertion delay; no delay capacitor on SENSE."
-			(at 0 0 0)
-			(effects
-				(font
-					(size 1.27 1.27)
-				)
-				(hide yes)
-			)
-		)
-		(pin "1"
-			(uuid "ad7abc2a-6e59-5886-8c28-ae602c00b0f3")
-		)
-		(pin "2"
-			(uuid "acaa946a-5ab1-58f5-8edd-d9bb30694101")
-		)
-		(instances
-			(project "pan-cutoff"
-				(path "/a5073607-958b-514a-8360-0c680e339499"
-					(reference "C9")
-					(unit 1)
-				)
-			)
-		)
-	)
-	(symbol
 		(lib_id "Candidate:TPS3760A012")
 		(at 457.2 185.42 0)
 		(unit 1)
@@ -5305,7 +5220,7 @@
 				(hide yes)
 			)
 		)
-		(property "Note" "A012 is adjustable UV with2% hysteresis and active-low open drain. E012 is OV, NOT a substitute."
+		(property "Note" "A012 is adjustable UV with2% hysteresis and active-low open drain. E012 is OV, NOT a substitute. CTR and CTS open; no added timing capacitor."
 			(at 0 0 0)
 			(effects
 				(font
@@ -5864,16 +5779,6 @@
 		(uuid "79352db2-c61d-51c8-80f0-8d9f95fb40e4")
 	)
 	(label "GND"
-		(at 525.78 214.63 270)
-		(effects
-			(font
-				(size 1.016 1.016)
-			)
-			(justify right bottom)
-		)
-		(uuid "ea6d4cb7-766b-5a56-8568-ea1dd42c95a3")
-	)
-	(label "GND"
 		(at 436.88 208.28 180)
 		(effects
 			(font
@@ -5882,6 +5787,10 @@
 			(justify right bottom)
 		)
 		(uuid "d651992f-f4c3-53d9-b7ee-f19334cfed65")
+	)
+	(no_connect
+		(at 477.52 185.42)
+		(uuid "b7bb06a8-5d03-5858-9e55-15708a06bfa6")
 	)
 	(no_connect
 		(at 477.52 198.12)
@@ -6795,28 +6704,6 @@
 		)
 		(uuid "86ee724e-d115-5952-a80d-f7b6d9b8f6cb")
 	)
-	(wire
-		(pts
-			(xy 477.52 185.42)
-			(xy 525.78 185.42)
-		)
-		(stroke
-			(width 0)
-			(type default)
-		)
-		(uuid "ce6ed49a-a229-58a8-8370-d7bcf791adf2")
-	)
-	(wire
-		(pts
-			(xy 525.78 185.42)
-			(xy 525.78 201.93)
-		)
-		(stroke
-			(width 0)
-			(type default)
-		)
-		(uuid "7360d6ba-176c-5c57-ab13-7e7e919ca467")
-	)
 	(label "COMMON_SOURCE"
 		(at 93.98 45.72 0)
 		(effects
@@ -6997,16 +6884,6 @@
 		)
 		(uuid "91da0bf9-53fd-5a87-bddf-fc4b7d58b46c")
 	)
-	(label "EN_DELAY"
-		(at 492.76 185.42 0)
-		(effects
-			(font
-				(size 1.016 1.016)
-			)
-			(justify left bottom)
-		)
-		(uuid "b11750e3-8b8a-52e1-8219-7aa5a0e113cd")
-	)
 	(label "PAN_INPUT"
 		(at 426.72 119.38 0)
 		(effects
@@ -7015,7 +6892,7 @@
 			)
 			(justify left bottom)
 		)
-		(uuid "a225c7c8-3570-5161-8ace-8a016b41e450")
+		(uuid "b11750e3-8b8a-52e1-8219-7aa5a0e113cd")
 	)
 	(junction
 		(at 220.98 45.72)

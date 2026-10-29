@@ -191,10 +191,9 @@
     {
       "mpn": "C0805C682J5GACTU",
       "references": [
-        "C3",
-        "C9"
+        "C3"
       ],
-      "build_quantity": 2,
+      "build_quantity": 1,
       "value": "6.8nF 50V 5%",
       "primary_spec_url": "https://yageogroup.com/content/datasheet/asset/file/KEM_C1003_C0G_SMD",
       "offer_url": "https://www.digikey.com/en/products/detail/kemet/C0805C682J5GACTU/2213110",

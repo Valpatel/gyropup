@@ -1,8 +1,4 @@
 {
-  "EN_release_delay_s": [
-    0.006621623776750857,
-    0.011414253029863266
-  ],
   "FET_pair_loss_W_at3_25A_max25C_Rds": 0.13520000000000001,
   "OV": {
     "overdrive_50mV_V": [
@@ -107,6 +103,13 @@
     "startup_load_input_A": 3.9867540382315774,
     "startup_margin_A": 0.28078511655101845,
     "startup_total_A": 4.1532584844489815,
+    "supervisor_timing": {
+      "CTR_connection": "NC",
+      "actual_slow_ramp_EN_loading_qualified": false,
+      "installed_CTR_capacitance_F": 0,
+      "tCTR_open_max_s_at20pct_overdrive": 4e-05,
+      "tSD_screen_max_s": 0.002
+    },
     "supervisor_voltage_at_max_startup_delay_V": 3.3460177848696175
   },
   "sense_each_loss_W_at60mV": [

@@ -256,35 +256,6 @@
         </unit>
       </units>
     </comp>
-    <comp ref="C9">
-      <value>6.8nF 50V 5%</value>
-      <footprint>Capacitor_SMD:C_0805_2012Metric</footprint>
-      <datasheet>https://yageogroup.com/content/datasheet/asset/file/KEM_C1003_C0G_SMD</datasheet>
-      <fields>
-        <field name="MPN">C0805C682J5GACTU</field>
-        <field name="Status">UNSELECTED / UNQUALIFIED CANDIDATE</field>
-        <field name="Note">U3 CTR release delay. CTS open for minimum assertion delay; no delay capacitor on SENSE.</field>
-        <field name="Footprint">Capacitor_SMD:C_0805_2012Metric</field>
-        <field name="Datasheet">https://yageogroup.com/content/datasheet/asset/file/KEM_C1003_C0G_SMD</field>
-        <field name="Description" />
-      </fields>
-      <libsource lib="Candidate" part="C_V" description="" />
-      <property name="MPN" value="C0805C682J5GACTU" />
-      <property name="Status" value="UNSELECTED / UNQUALIFIED CANDIDATE" />
-      <property name="Note" value="U3 CTR release delay. CTS open for minimum assertion delay; no delay capacitor on SENSE." />
-      <property name="Sheetname" value="" />
-      <property name="Sheetfile" value="pan-cutoff.kicad_sch" />
-      <sheetpath names="/" tstamps="/" />
-      <tstamps>3a4d8be1-24be-58ed-8d45-beed8d08d325</tstamps>
-      <units>
-        <unit name="A">
-          <pins>
-            <pin num="1" />
-            <pin num="2" />
-          </pins>
-        </unit>
-      </units>
-    </comp>
     <comp ref="D1">
       <value>200V series barrier</value>
       <datasheet>https://www.vishay.com/docs/89316/v10p20.pdf</datasheet>
@@ -898,7 +869,7 @@
       <fields>
         <field name="MPN">TPS3760A012DYYR</field>
         <field name="Status">UNSELECTED / UNQUALIFIED CANDIDATE</field>
-        <field name="Note">A012 is adjustable UV with2% hysteresis and active-low open drain. E012 is OV, NOT a substitute.</field>
+        <field name="Note">A012 is adjustable UV with2% hysteresis and active-low open drain. E012 is OV, NOT a substitute. CTR and CTS open; no added timing capacitor.</field>
         <field name="Footprint" />
         <field name="Datasheet">https://www.ti.com/lit/ds/symlink/tps3760.pdf</field>
         <field name="Description" />
@@ -906,7 +877,7 @@
       <libsource lib="Candidate" part="TPS3760A012" description="" />
       <property name="MPN" value="TPS3760A012DYYR" />
       <property name="Status" value="UNSELECTED / UNQUALIFIED CANDIDATE" />
-      <property name="Note" value="A012 is adjustable UV with2% hysteresis and active-low open drain. E012 is OV, NOT a substitute." />
+      <property name="Note" value="A012 is adjustable UV with2% hysteresis and active-low open drain. E012 is OV, NOT a substitute. CTR and CTS open; no added timing capacitor." />
       <property name="Sheetname" value="" />
       <property name="Sheetfile" value="pan-cutoff.kicad_sch" />
       <sheetpath names="/" tstamps="/" />
@@ -1158,30 +1129,26 @@
       <node ref="Q2" pin="2" pinfunction="S_2" pintype="passive" />
       <node ref="Q2" pin="3" pinfunction="S_3" pintype="passive" />
     </net>
-    <net code="4" name="/EN_DELAY" class="Default">
-      <node ref="C9" pin="1" pintype="passive" />
-      <node ref="U3" pin="9" pinfunction="CTR_9" pintype="passive" />
-    </net>
-    <net code="5" name="/EN_SENSE" class="Default">
+    <net code="4" name="/EN_SENSE" class="Default">
       <node ref="R12" pin="2" pintype="passive" />
       <node ref="R13" pin="1" pintype="passive" />
       <node ref="U3" pin="3" pinfunction="SENSE_3" pintype="input" />
     </net>
-    <net code="6" name="/GATE" class="Default">
+    <net code="5" name="/GATE" class="Default">
       <node ref="C3" pin="1" pintype="passive" />
       <node ref="Q1" pin="4" pinfunction="G_4" pintype="input" />
       <node ref="Q2" pin="4" pinfunction="G_4" pintype="input" />
       <node ref="R8" pin="1" pintype="passive" />
       <node ref="U1" pin="10" pinfunction="GATE_10" pintype="output" />
     </net>
-    <net code="7" name="/GATE_RC" class="Default">
+    <net code="6" name="/GATE_RC" class="Default">
       <node ref="C2" pin="1" pintype="passive" />
       <node ref="C6" pin="1" pintype="passive" />
       <node ref="C7" pin="1" pintype="passive" />
       <node ref="C8" pin="1" pintype="passive" />
       <node ref="R8" pin="2" pintype="passive" />
     </net>
-    <net code="8" name="/GND" class="Default">
+    <net code="7" name="/GND" class="Default">
       <node ref="C1" pin="2" pinfunction="-_2" pintype="passive" />
       <node ref="C2" pin="2" pintype="passive" />
       <node ref="C4" pin="2" pintype="passive" />
@@ -1189,7 +1156,6 @@
       <node ref="C6" pin="2" pintype="passive" />
       <node ref="C7" pin="2" pintype="passive" />
       <node ref="C8" pin="2" pintype="passive" />
-      <node ref="C9" pin="2" pintype="passive" />
       <node ref="D2" pin="1" pinfunction="A_1" pintype="passive" />
       <node ref="D2" pin="2" pinfunction="A_2" pintype="passive" />
       <node ref="R11" pin="2" pintype="passive" />
@@ -1207,17 +1173,17 @@
       <node ref="U3" pin="13" pinfunction="GND_13" pintype="passive" />
       <node ref="U3" pin="8" pinfunction="GND_8" pintype="power_in" />
     </net>
-    <net code="9" name="/OV_DIV" class="Default">
+    <net code="8" name="/OV_DIV" class="Default">
       <node ref="R2" pin="2" pintype="passive" />
       <node ref="R3" pin="1" pintype="passive" />
       <node ref="U1" pin="3" pinfunction="OV_3" pintype="input" />
     </net>
-    <net code="10" name="/PAN_ENABLE" class="Default">
+    <net code="9" name="/PAN_ENABLE" class="Default">
       <node ref="R14" pin="2" pintype="passive" />
       <node ref="U2" pin="B6" pinfunction="EN_B6" pintype="input" />
       <node ref="U3" pin="6" pinfunction="RESET_6" pintype="open_collector" />
     </net>
-    <net code="11" name="/PAN_INPUT" class="Default">
+    <net code="10" name="/PAN_INPUT" class="Default">
       <node ref="C1" pin="1" pinfunction="+_1" pintype="passive" />
       <node ref="C5" pin="1" pintype="passive" />
       <node ref="R1" pin="2" pintype="passive" />
@@ -1230,7 +1196,7 @@
       <node ref="U2" pin="B4" pinfunction="VIN_B4" pintype="passive" />
       <node ref="U3" pin="1" pinfunction="VDD_1" pintype="power_in" />
     </net>
-    <net code="12" name="/SENSE_HI" class="Default">
+    <net code="11" name="/SENSE_HI" class="Default">
       <node ref="Q2" pin="5" pinfunction="D_5" pintype="passive" />
       <node ref="Q2" pin="6" pinfunction="D_6" pintype="passive" />
       <node ref="Q2" pin="7" pinfunction="D_7" pintype="passive" />
@@ -1239,17 +1205,17 @@
       <node ref="R10" pin="1" pintype="passive" />
       <node ref="U1" pin="9" pinfunction="SENSE_9" pintype="input" />
     </net>
-    <net code="13" name="/SHDN_DIV" class="Default">
+    <net code="12" name="/SHDN_DIV" class="Default">
       <node ref="R6" pin="2" pintype="passive" />
       <node ref="R7" pin="1" pintype="passive" />
       <node ref="U1" pin="6" pinfunction="SHDN_6" pintype="input" />
     </net>
-    <net code="14" name="/UV_DIV" class="Default">
+    <net code="13" name="/UV_DIV" class="Default">
       <node ref="R4" pin="2" pintype="passive" />
       <node ref="R5" pin="1" pintype="passive" />
       <node ref="U1" pin="2" pinfunction="UV_2" pintype="input" />
     </net>
-    <net code="15" name="/VIN_PROTECTED" class="Default">
+    <net code="14" name="/VIN_PROTECTED" class="Default">
       <node ref="C4" pin="1" pintype="passive" />
       <node ref="D1" pin="K" pinfunction="K_K" pintype="passive" />
       <node ref="D2" pin="K" pinfunction="K_K" pintype="passive" />
@@ -1263,15 +1229,18 @@
       <node ref="R6" pin="1" pintype="passive" />
       <node ref="U1" pin="1" pinfunction="VIN_1" pintype="power_in" />
     </net>
-    <net code="16" name="unconnected-(U1-FAULT-Pad7)" class="Default">
+    <net code="15" name="unconnected-(U1-FAULT-Pad7)" class="Default">
       <node ref="U1" pin="7" pinfunction="FAULT_7" pintype="open_collector+no_connect" />
     </net>
-    <net code="17" name="unconnected-(U2-PG-PadA6)" class="Default">
+    <net code="16" name="unconnected-(U2-PG-PadA6)" class="Default">
       <node ref="U2" pin="A6" pinfunction="PG_A6" pintype="open_collector+no_connect" />
     </net>
-    <net code="18" name="unconnected-(U2-VRP-PadA5)" class="Default">
+    <net code="17" name="unconnected-(U2-VRP-PadA5)" class="Default">
       <node ref="U2" pin="A5" pinfunction="VRP_A5" pintype="passive+no_connect" />
       <node ref="U2" pin="B5" pinfunction="VRP_B5" pintype="passive+no_connect" />
+    </net>
+    <net code="18" name="unconnected-(U3-CTR-Pad9)" class="Default">
+      <node ref="U3" pin="9" pinfunction="CTR_9" pintype="passive+no_connect" />
     </net>
     <net code="19" name="unconnected-(U3-CTS-Pad10)" class="Default">
       <node ref="U3" pin="10" pinfunction="CTS_10" pintype="passive+no_connect" />

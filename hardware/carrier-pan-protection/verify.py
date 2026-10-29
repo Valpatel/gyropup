@@ -18,14 +18,13 @@ NETS={
  'UV_DIV':'R4.2 R5.1 U1.2',
  'OV_DIV':'R2.2 R3.1 U1.3',
  'SHDN_DIV':'R6.2 R7.1 U1.6',
- 'GND':'U1.4 U1.5 U2.A2 U2.A3 U2.B2 U2.B3 R3.2 R5.2 R7.2 R9.2 C1.2 C2.2 D2.1 D2.2 C4.2 C5.2 C6.2 C7.2 C8.2 C9.2 R11.2 R13.2 U3.8 U3.13',
+ 'GND':'U1.4 U1.5 U2.A2 U2.A3 U2.B2 U2.B3 R3.2 R5.2 R7.2 R9.2 C1.2 C2.2 D2.1 D2.2 C4.2 C5.2 C6.2 C7.2 C8.2 R11.2 R13.2 U3.8 U3.13',
  '12V_PAN':'U2.A1 U2.B1',
  'EN_SENSE':'R12.2 R13.1 U3.3',
- 'EN_DELAY':'C9.1 U3.9',
  'PAN_ENABLE':'R14.2 U3.6 U2.B6',
 }
 NC_GROUPS={frozenset(('U1.7',)),frozenset(('U2.A6',)),frozenset(('U2.A5','U2.B5')),
-           *[frozenset((f'U3.{pin}',)) for pin in (2,4,5,7,10,11,12,14)]}
+           *[frozenset((f'U3.{pin}',)) for pin in (2,4,5,7,9,10,11,12,14)]}
 PINS_U1={'1':'VIN','2':'UV','3':'OV','4':'RETRY','5':'GND','6':'SHDN','7':'FAULT','8':'VOUT','9':'SENSE','10':'GATE'}
 PINS_U2={'A1':'VOUT','B1':'VOUT','A2':'GND','A3':'GND','B2':'GND','B3':'GND','A4':'VIN','B4':'VIN','A5':'VRP','B5':'VRP','A6':'PG','B6':'EN'}
 MPNS={'U1':'LTC4368IMS-2#PBF','U2':'Pololu 5577','Q1':'CSD19531Q5AT','Q2':'CSD19531Q5AT',
@@ -35,7 +34,7 @@ MPNS={'U1':'LTC4368IMS-2#PBF','U2':'Pololu 5577','Q1':'CSD19531Q5AT','Q2':'CSD19
 
 MPNS.update({'D1':'V10P20-M3/87A','D2':'V10P20-M3/87A','U3':'TPS3760A012DYYR',
  'R10':'WSL2512R0200FEA','R11':'TNPW0805100KBEEN','R12':'TNPW0805150KBEEN','R13':'TNPW080510K0BEEN','R14':'TNPW0805499KBEEN',
- 'C4':'C0805C104K1RACTU','C5':'C0805C104K1RACTU','C6':'C1206C473F1GECAUTO','C7':'C1206C473F1GECAUTO','C8':'C1206C473F1GECAUTO','C9':'C0805C682J5GACTU'})
+ 'C4':'C0805C104K1RACTU','C5':'C0805C104K1RACTU','C6':'C1206C473F1GECAUTO','C7':'C1206C473F1GECAUTO','C8':'C1206C473F1GECAUTO'})
 PINS_U3={'1':'VDD','3':'SENSE','6':'RESET','8':'GND','13':'GND','9':'CTR','10':'CTS',**{str(n):'NC' for n in (2,4,5,7,11,12,14)}}
 
 def check_netlist(root):
@@ -63,7 +62,7 @@ def check_netlist(root):
     assert set(comps)==set(MPNS), 'missing/extra component'
     for ref,mpn in MPNS.items():
         assert comps[ref].find("./fields/field[@name='MPN']").text==mpn, f'{ref} wrong candidate MPN'
-    assert len(seen)==104, f'expected104 package leads, got{len(seen)}'
+    assert len(seen)==102, f'expected102 package leads, got{len(seen)}'
     return {'components':len(comps),'package_leads':len(seen),'connected_nets':len(actual),'NC_groups':len(ncs)}
 
 def sha(p):return hashlib.sha256(p.read_bytes()).hexdigest()

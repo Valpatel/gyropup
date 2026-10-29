@@ -27,5 +27,4 @@ C5,1,100nF 100V 10% X7R,C0805C104K1RACTU,https://yageogroup.com/content/datashee
 C6,1,47nF 100V 1%,C1206C473F1GECAUTO,https://yageogroup.com/content/datasheet/asset/file/KEM_C1091_C0G_ESD,"Parallel ramp bank, total188nF nominal; C0G30ppm/K screen."
 C7,1,47nF 100V 1%,C1206C473F1GECAUTO,https://yageogroup.com/content/datasheet/asset/file/KEM_C1091_C0G_ESD,"Parallel ramp bank, total188nF nominal; C0G30ppm/K screen."
 C8,1,47nF 100V 1%,C1206C473F1GECAUTO,https://yageogroup.com/content/datasheet/asset/file/KEM_C1091_C0G_ESD,"Parallel ramp bank, total188nF nominal; C0G30ppm/K screen."
-C9,1,6.8nF 50V 5%,C0805C682J5GACTU,https://yageogroup.com/content/datasheet/asset/file/KEM_C1003_C0G_SMD,U3 CTR release delay. CTS open for minimum assertion delay; no delay capacitor on SENSE.
-U3,1,UV / OD active-low,TPS3760A012DYYR,https://www.ti.com/lit/ds/symlink/tps3760.pdf,"A012 is adjustable UV with2% hysteresis and active-low open drain. E012 is OV, NOT a substitute."
+U3,1,UV / OD active-low,TPS3760A012DYYR,https://www.ti.com/lit/ds/symlink/tps3760.pdf,"A012 is adjustable UV with2% hysteresis and active-low open drain. E012 is OV, NOT a substitute. CTR and CTS open; no added timing capacitor."

@@ -100,11 +100,9 @@ for ref,n1,n2,xy in [('C4','VIN_PROTECTED','GND',(88.9,279.4)),('C5','PAN_INPUT'
 for ref,x in [('C6',279.4),('C7',317.5),('C8',355.6)]:
     part(ref,'C_V','47nF 100V 1%','C1206C473F1GECAUTO',{1:'GATE_RC',2:'GND'},(x,175.26),KEMET_AUTO,
          'Parallel ramp bank, total188nF nominal; C0G30ppm/K screen.','Capacitor_SMD:C_1206_3216Metric')
-part('C9','C_V','6.8nF 50V 5%','C0805C682J5GACTU',{1:'EN_DELAY',2:'GND'},(525.78,208.28),KEMET,
-     'U3 CTR release delay. CTS open for minimum assertion delay; no delay capacitor on SENSE.','Capacitor_SMD:C_0805_2012Metric')
 part('U3','TPS3760A012','UV / OD active-low','TPS3760A012DYYR',
-     {1:'PAN_INPUT',3:'EN_SENSE',6:'PAN_ENABLE',8:'GND',13:'GND',9:'EN_DELAY',10:None,**{n:None for n in (2,4,5,7,11,12,14)}},
-     (457.2,185.42),SUPERVISOR,'A012 is adjustable UV with2% hysteresis and active-low open drain. E012 is OV, NOT a substitute.',
+     {1:'PAN_INPUT',3:'EN_SENSE',6:'PAN_ENABLE',8:'GND',13:'GND',9:None,10:None,**{n:None for n in (2,4,5,7,11,12,14)}},
+     (457.2,185.42),SUPERVISOR,'A012 is adjustable UV with2% hysteresis and active-low open drain. E012 is OV, NOT a substitute. CTR and CTS open; no added timing capacitor.',
      '')
 for i,net,xy in [(1,'BUS_HEAD_FUSED',(20.32,45.72)),(2,'GND',(149.86,180.34)),(3,'PAN_INPUT',(269.24,45.72)),(4,'VIN_PROTECTED',(55.88,45.72))]:
     part(f'#FLG0{i}','FLAG','PWR_FLAG','',{1:net},xy,'','ERC declaration only; not physical proof.')
@@ -152,15 +150,14 @@ WIRE_PATHS += [
  ('PAN_INPUT',[(398.78,160.02),(398.78,119.38),(426.72,119.38),(525.78,119.38),(525.78,139.7)]),
  ('PAN_INPUT',[(426.72,119.38),(426.72,165.1),(436.88,165.1)]),
  ('PAN_ENABLE',[(477.52,165.1),(525.78,165.1),(525.78,149.86)]),
- ('EN_DELAY',[(477.52,185.42),(525.78,185.42),(525.78,201.93)]),
-]
+ ]
 WIRE_LABELS = [
  ('COMMON_SOURCE',(93.98,45.72)),('SENSE_HI',(187.96,45.72)),('PAN_INPUT',(254,45.72)),
  ('GATE',(175.26,76.2)),('GATE_RC',(241.3,147.32)),
  ('UV_DIV',(139.7,119.38)),('OV_DIV',(139.7,139.7)),('SHDN_DIV',(139.7,160.02)),
  ('GND',(241.3,180.34)),('GND',(279.4,121.92)),('GND',(149.86,180.34)),
 ]
-WIRE_LABELS += [('BUS_HEAD_FUSED',(20.32,45.72)),('VIN_PROTECTED',(48.26,45.72)),('VIN_PROTECTED',(43.18,261.62)),('GND',(43.18,297.18)),('GND',(279.4,195.58)),('EN_SENSE',(411.48,177.8)),('PAN_ENABLE',(492.76,165.1)),('EN_DELAY',(492.76,185.42)),('PAN_INPUT',(426.72,119.38))]
+WIRE_LABELS += [('BUS_HEAD_FUSED',(20.32,45.72)),('VIN_PROTECTED',(48.26,45.72)),('VIN_PROTECTED',(43.18,261.62)),('GND',(43.18,297.18)),('GND',(279.4,195.58)),('EN_SENSE',(411.48,177.8)),('PAN_ENABLE',(492.76,165.1)),('PAN_INPUT',(426.72,119.38))]
 JUNCTIONS = [(220.98,45.72),(261.62,45.72),(241.3,147.32),(279.4,147.32),(317.5,147.32),(317.5,195.58),(88.9,261.62),(88.9,297.18),(398.78,177.8),(426.72,119.38),(110.49,45.72),(279.4,45.72),(307.34,45.72),(110.49,76.2),(144.78,76.2),
              (215.9,114.3),(127,119.38),(91.44,139.7),(55.88,160.02),(149.86,170.18)]
 NOTES = [
