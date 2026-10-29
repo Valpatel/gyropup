@@ -37,15 +37,16 @@ try {
   await page.waitForFunction(()=>document.body.dataset.ready==='1');
   // Older CAD snapshots retain their own frames; their beam must still originate
   // at their fitted laser rather than the procedural stand-in's old position.
-  assert.ok(await page.evaluate(()=>{
+  const checkLaser=()=>page.evaluate(()=>{
     const t=window.__sim.state.robot.turret;
-    const mesh=t.tilt.children.find(m=>/_laser$/.test(m.name));
+    let mesh;t.tilt.traverse(m=>{if(m.isMesh && /_laser$/.test(m.name))mesh=m;});
     if(!mesh)return false;
     mesh.geometry.computeBoundingBox();const b=mesh.geometry.boundingBox;
     const front=t.laserOrigin.position.clone();b.getCenter(front);front.z=b.max.z;
     mesh.updateWorldMatrix(true,false);mesh.localToWorld(front);
     return front.distanceTo(t.laserOrigin.getWorldPosition(front.clone()))<1e-6;
-  }),'Robot CAD laser origin is on its actual lens');
+  });
+  assert.ok(await checkLaser(),'V2 CAD laser origin is on its actual lens');
   await page.selectOption('#design-select','turret-box');
   await page.waitForFunction(()=>window.__sim.bench()?.active);
   const samples = await page.evaluate(({fixture})=>{
@@ -75,10 +76,17 @@ try {
     const api=window.__sim.bench().api,g=api.mechanism.groups;
     const a={pan:0,tilt:0,pinion:0,dial:0,wheel_l:90,wheel_r:0,flap:0};
     const origin=g.wheel_l.position.clone();g.wheel_l.position.z+=.048;
+    const members=api.mechanism.parts.filter(p=>p.e.group==='wheel_l');
+    const positions=members.map(p=>p.mesh.position.clone());
+    members.forEach(p=>p.mesh.position.z-=.048); // Preserve the correct home pose, exactly as the original bug did.
+    api.poseMechanism({...a,wheel_l:0});
+    const home=window.captureTurret('wrong-pivot-home',{...a,wheel_l:0});
     api.poseMechanism(Object.fromEntries(Object.entries(a).map(([k,v])=>[k,v*Math.PI/180])));
-    const result=window.captureTurret('deliberate-48mm-error',a);g.wheel_l.position.copy(origin);return result;
+    const quarter=window.captureTurret('wrong-pivot-quarter',a);
+    g.wheel_l.position.copy(origin);members.forEach((p,i)=>p.mesh.position.copy(positions[i]));return {home,quarter};
   });
-  assert.ok(maxError(broken).error>40,'Independent oracle rejects a displaced shaft');
+  assert.ok(maxError(broken.home).error<.02,'Seeded wrong pivot still passes at home');
+  assert.ok(maxError(broken.quarter).error>60,'Independent intermediate-pose oracle rejects the original orbit failure');
   // Check connected effects, bearings, balls, and actual live firing through the normal frame loop.
   const attachments=await page.evaluate(()=>{
     const api=window.__sim.bench().api,m=api.mechanism;
