@@ -24,6 +24,29 @@ const base = `http://127.0.0.1:${server.address().port}`;
 const browser = process.env.PLAYWRIGHT_BROWSER === 'webkit'
   ? await webkit.launch() : await chromium.launch({channel:'chrome', headless:true});
 try {
+  // Build validation catches the exact failure that blanks a page when a new
+  // relative dependency exists locally but was omitted from git ls-files.
+  for (const source of [
+    "import './missing.js';",
+    "import { createControls } from './missing.js';",
+    "export { createControls } from './missing.js';",
+    "const controls = await import('./missing.js');",
+  ]) {
+    await writeFile(path.join(root, 'entry.js'), source);
+    await assert.rejects(versionSiteAssets(root), /Missing relative module: entry\.js imports \.\/missing\.js/);
+  }
+  await writeFile(path.join(root, 'present.js'), 'export const value = 1;');
+  await writeFile(path.join(root, 'entry.js'), [
+    "import './present.js?v=old#fixture';",
+    "import { value } from 'an-import-map-alias';",
+    "import { remote } from 'https://example.com/remote.js';",
+    "// import './comment-only.js';",
+    "/* export { example } from './comment-only.js'; */",
+    'const example = "import(\'./string-only.js\')";',
+    "const url = './computed.js'; const computed = import(url);",
+  ].join('\n'));
+  await versionSiteAssets(root); // Queries, comments, strings, aliases and remote URLs are supported.
+  await rm(path.join(root, 'present.js'));
   async function release(name, versioned) {
     const files = {
       'index.html': '<!doctype html><html><head><link rel="stylesheet" href="./style.css"><script type="importmap">{"imports":{"three":"./vendor/core.js","three/addons/":"./vendor/addons/"}}</script></head><body><p>Cache fixture</p><script type="module" src="./entry.js"></script></body></html>',
