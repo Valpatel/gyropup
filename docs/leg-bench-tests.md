@@ -1,5 +1,11 @@
 # Leg bench tests (milestone M3)
 
+> **Fixture revision in progress:** old dyno lug plates and the nominal frame-ring
+> coupon do not reproduce an acceptable RS-04 mounting stack. See
+> [RS-04 mounting fit](rs04-mounting-fit.md) before preparing any print or bench setup.
+> The procedures below are planned tests, not evidence that the hardware passed.
+
+
 How to test the first leg, from a motor on the bench to the power cut on the rig, with the numbers the simulation
 predicts and the pass/fail of each test (docs/leg-prototype-plan.md section 5, tasks T12 and T13). Before anything
 moves, go through `docs/leg-rig-safety.md`. The parts: `docs/leg-rig-orders.md`. The wiring:

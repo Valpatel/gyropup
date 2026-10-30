@@ -76,13 +76,23 @@ def label(v: float) -> str:
 # ----------------------------------------------------------------------------------- the dyno (B1, B2)
 
 DYNO_AXIS_Z = 90.0                   # the motors' axis above the board
-LUG_T = 14.0                         # plate thickness at the lugs: an M4 x 20 then takes 6 mm of the 7 mm lug threads
+LUG_T = 14.0                         # main ring; thickening this whole face would intersect the rotating hub disc
+LUG_HEAD_BOSS_H = 1.6                # local seats: 15.6 mm grip with M4 x 20 gives 4.4 mm nominal penetration
+LUG_HEAD_BOSS_R = 5.0                # centred at r53, clears the rotating r45 disc by 3 mm radially
+DYNO_DISC_RELIEF_R = 46.0
+DYNO_DISC_RELIEF_Y = 13.0            # disc rear face is nominally y14; 0.7 mm gap at output offset 0.2 mm
+
+
+def lug_screw_seat_y():
+    return LUG_T + LUG_HEAD_BOSS_H
 
 
 def dyno_lug_plate():
     """PETG: a ring round the motor's lug circle (the output-side lug face against its back, y = 0; the output flange
     in the central hole, 0.5 mm proud of the lug face) on two legs and a foot with four slots for M6 bolts through the
-    board. Printed on its foot."""
+    board. Local raised screw seats preserve the rotating hub's path; the central
+    front relief provides nominal axial disc clearance. Printed on its foot.
+    Printed dimensions and thread engagement require measurement before use."""
     b = MI['case']['bolts']
     ring = cq.Workplane('XZ', origin=(0, LUG_T, 0)).center(0, DYNO_AXIS_Z).circle(66.0).circle(29.0).extrude(LUG_T)
     s = ring
@@ -92,7 +102,12 @@ def dyno_lug_plate():
         s = s.union(g)
     s = s.union(bx(-75, 75, -60, LUG_T, 0, 8))                                       # foot (behind: the motor's side)
     for (x, z) in pts(b['pcd'], [fb.RS04_LUG0 + 36 * k for k in range(10)]):
-        s = s.cut(cq.Workplane('XZ', origin=(0, LUG_T + 1, 0)).center(x, DYNO_AXIS_Z + z).circle(gmi.clear('M4') / 2).extrude(LUG_T + 2))
+        s = s.union(cq.Workplane('XZ', origin=(0, lug_screw_seat_y(), 0))
+                    .center(x, DYNO_AXIS_Z + z).circle(LUG_HEAD_BOSS_R).extrude(LUG_HEAD_BOSS_H + 0.01))
+        s = s.cut(cq.Workplane('XZ', origin=(0, lug_screw_seat_y() + 1, 0))
+                  .center(x, DYNO_AXIS_Z + z).circle(gmi.clear('M4') / 2).extrude(lug_screw_seat_y() + 2))
+    s = s.cut(cq.Workplane('XZ', origin=(0, LUG_T + 1, 0)).center(0, DYNO_AXIS_Z)
+              .circle(DYNO_DISC_RELIEF_R).extrude(LUG_T + 1 - DYNO_DISC_RELIEF_Y))
     for a in fb.RS04_DOWELS:                                                         # Ø5 x 16 dowels into the motor's holes
         x, z = b['pcd'] / 2 * math.cos(math.radians(a)), b['pcd'] / 2 * math.sin(math.radians(a))
         s = s.cut(cq.Workplane('XZ', origin=(0, 6.0, 0)).center(x, DYNO_AXIS_Z + z).circle(2.5 - 0.03).extrude(7.0))
@@ -345,29 +360,38 @@ def render_setups() -> list:
 
 # ----------------------------------------------------------------------------------- fit coupons (PA6-CF)
 
+def coupon_frame_ring_parent(frame=None):
+    """Exact front motor ring cut from the parent, still in the parent's coordinates.
+
+    Keep screw seats, dowels and the full lug stack; a bearing-seat-only ring cannot
+    validate motor mounting. Pass an already-built frame to avoid rebuilding it.
+    """
+    frame = fb.hip_frame() if frame is None else frame
+    mx = fb.motors()[0][0]
+    yf0, yf1 = fb.Y['frame']
+    return frame.intersect(fb.ycyl(62.0, yf0, yf1, mx))
+
+
 def coupon_frame_ring(dv: float):
     """The hip frame round one motor, the part next to the leg: the 61812's lead-in from the motor side, its seat
     (Ø78 + dv, 10 mm) and the lip (Ø73) it stops on. The nominal one is the frame's whole lug ring (Ø124) with the 10 M4
-    lug holes counterbored as in the frame and the two Ø5 dowel holes, so a motor bolts on; the -0.1 / +0.1 variants
-    are the seat in a thin ring. Printed lip side up (the frame prints web-down too)."""
+    lug holes and actual counterbores cut directly from the parent, plus the two
+    Ø5 dowel holes. Its outer/lip face goes DOWN, as in build_leg.ROT['hip_frame'].
+    The -0.1 / +0.1 variants are bearing-seat-only rings, not motor-mount specimens."""
+    if dv == 0:
+        mx = fb.motors()[0][0]
+        return (coupon_frame_ring_parent().rotate((0, 0, 0), (1, 0, 0), -90)
+                .translate((-mx, 0, fb.Y['frame'][1])))
     yf1 = fb.Y['frame'][1]
     yb0, yb1 = fb.Y['bearing']
     z0 = yb0 - 2.0
     h = yf1 - z0
-    ring = 62.0 if dv == 0 else fb.AC['bearing_od'] / 2 + 6.0
+    ring = fb.AC['bearing_od'] / 2 + 6.0
     s = zc(ring, 0, h)
     s = s.cut(zc(fb.AC['bearing_od'] / 2 + 0.3, -1, yb0 - z0))
     s = s.cut(zc(fb.AC['bearing_od'] / 2 + dv / 2, yb0 - z0 - 0.01, yb1 - z0))
     s = s.cut(zc(fb.AC['lip_d'] / 2, yb1 - z0 - 0.01, h + 1))
-    if dv == 0:
-        b = MI['case']['bolts']
-        for a in fb.lug_angles(True):
-            x, y = b['pcd'] / 2 * math.cos(math.radians(a)), b['pcd'] / 2 * math.sin(math.radians(a))
-            s = s.cut(zc(gmi.clear('M4') / 2, -1, h + 1, x, y))
-        for a in fb.dowel_angles(True):
-            x, y = b['pcd'] / 2 * math.cos(math.radians(a)), b['pcd'] / 2 * math.sin(math.radians(a))
-            s = s.cut(zc(2.5 - 0.03, -1, h + 1, x, y))
-    return engrave(s, label(dv), 0, -(fb.AC['lip_d'] / 2 + (5.5 if dv == 0 else 1.6)), h, 3.0)
+    return engrave(s, label(dv), 0, -(fb.AC['lip_d'] / 2 + 1.6), h, 3.0)
 
 
 def coupon_hub_face(dv: float):

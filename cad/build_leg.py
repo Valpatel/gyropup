@@ -56,7 +56,7 @@ BOUGHT = [
     ('knee_spacer', 2, 'between each knee\'s two inner races (28 mm)'),
     ('eye_sleeve', 4, 'steel sleeves, two end to end in each upper link\'s knee eye: spread the pin\'s load on the plastic'),
     ('stop_pin', 4, 'stop posts: Ø16 x 40 vented pull-out dowels, 23 mm into blind holes in the hip frame (retaining compound), TPU sleeves over them'),
-    ('screw_m4x20', 20, 'motor lugs (10 per motor), heads 10 mm down in the hip frame: 5.9 mm into the 7 mm threads'),
+    ('screw_m4x20', 20, 'motor lugs (10 per motor), seats 8.5 mm down: 4.4 mm nominal penetration into 5 mm-min usable threads; measure before assembly'),
     ('dowel_5x16', 4, 'into each motor\'s two locating holes, 12 mm into the hip frame'),
     ('dowel_5x20', 4, 'two in each adapter\'s standard face, pressed 8 mm into its H7 holes, 12 mm into the upper link (issue #5)'),
     ('screw_m5x25', 18, 'motor outputs through the CNC output adapters (9 per motor), heads in pockets below the face'),
