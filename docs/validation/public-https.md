@@ -1,12 +1,12 @@
 # Public HTTPS and corporate DNS filtering
 
 Investigation: [issue 119](https://github.com/Valpatel/gyropup/issues/119).
-Checks below were made on **2026-10-30, 06:57–07:06 UTC**. The reported corporate
+Checks below were made on **2026-10-30, 06:57–07:11 UTC**. The reported corporate
 network failure remains unresolved; successful public probes do not establish
 that the affected visitor reaches the same server.
 
 The visitor reported an operating-system certificate-trust warning for
-`www.gyropup.com`, followed by a DNS-firewall message saying that a name server
+`www.gyropup.com` with code `NET::ERR_CERT_AUTHORITY_INVALID`, followed by a DNS-firewall message saying that a name server
 was on a blocklist. This establishes a filtering symptom. A substituted HTTPS
 block page could explain the certificate warning, but the affected device's
 certificate, DNS answer and filter event have not yet been captured. The filter
@@ -42,10 +42,11 @@ absent locally; no legacy trust-store coverage is claimed.
 | `www.gyropup.com` (same sole SAN) | 2026-10-28 23:05:54 to 2027-01-27 00:05:52 | `2cec00dd9ace878493d0b71f27f482a35a4216c290238f2b204c665346e94cd0` |
 
 The workstation has no IPv6 default route. Its immediate IPv6 connection failure
-does not test the remote service. A separate SSL Labs assessment of www is
-tracked in issue 119; at 07:06 UTC its first IPv6 endpoint had completed with
-grade A and no warnings, while the other endpoints were still being assessed.
-Do not treat a partial external assessment as coverage of every address.
+does not test the remote service. An independent SSL Labs assessment completed
+at the 07:11 UTC retrieval: **all four www addresses (two IPv4, two IPv6) were
+Ready, grade A, with no warnings**. The [machine-readable summary](public-https-ssllabs.json)
+records the source API, retrieval time and individual endpoint results. This
+external assessment covers www; it does not reproduce the corporate policy path.
 
 Normal `npx wrangler whoami` succeeded as the existing OS user using the installed
 Node 22 runtime. Pages reads work with that refreshed OAuth credential. Both the
@@ -82,47 +83,32 @@ affected network, an administrator should capture the ordinary resolver answer,
 browser certificate issuer/fingerprint and matching DNS-security event. Do not
 change the employee's resolver or bypass the browser warning to collect evidence.
 
-## Review request, ready for the identified policy owner
+## Could the domain simply be too new?
 
-The text below is a draft, **not sent**. The owner should attach the actual block
-event, timestamp, vendor and category before submitting it through the company's
-approved review process. Do not publish internal network or employee details.
+Yes, this is plausible. [Verisign's registry RDAP record](https://rdap.verisign.com/com/v1/domain/GYROPUP.COM)
+records registration at **2026-10-28 14:41:31 UTC**, about 40 hours before the
+initial probes above. Registration age and a filter's first observation are
+different clocks. For example,
+[Cisco Umbrella's newly seen category](https://www.cisco.com/c/en/us/support/docs/security/umbrella/224735-enable-newly-seen-domains-security.html)
+uses a 24-hour observation window, while
+[Palo Alto's newly registered category](https://docs.paloaltonetworks.com/advanced-url-filtering/administration/url-filtering-basics/url-categories?otp=risk-categories)
+covers registrations in the preceding 32 days. These examples establish that
+such policies exist; neither identifies the affected network's product or rule.
+There is no evidence-based date when this particular block will disappear.
 
-> Please review the DNS-security block affecting `gyropup.com` and
-> `www.gyropup.com`. The site is a public robotics project with design documents
-> and browser simulations, hosted on Cloudflare Pages. A visitor sees a message
-> that a name server is listed on a blocklist, together with an HTTPS trust
-> warning. Please identify the matched indicator, feed, policy and action:
-> queried hostname, answer IP, name-server hostname or name-server IP.
->
-> Public checks on 2026-10-30 verified both hostnames' Google Trust Services
-> certificates, HTTPS 200 responses and active Pages custom-domain validation.
-> The authoritative nameservers are `aspen.ns.cloudflare.com` and
-> `everton.ns.cloudflare.com`. Please check for a stale or overly broad shared
-> nameserver classification. If this is a reputation error, please request a
-> vendor correction; if it is an intentional policy, please review whether a
-> narrow exception for these two hostnames is appropriate. Please retain normal
-> TLS validation and other protections. Evidence and certificate fingerprints:
-> https://github.com/Valpatel/gyropup/blob/ops/https-diagnostics/docs/validation/public-https.md
+The name-server wording leaves other explanations open.
+[Infoblox's RPZ documentation](https://www.infoblox.com/dns-security-resource-center/dns-security-solutions/dns-security-solutions-response-policy-zones-rpz/)
+describes name-server triggers that can affect every domain served by a shared
+server. [Cisco's HTTPS block-page explanation](https://community.cisco.com/t5/umbrella-announcements/umbrella-dns-block-pages-and-certificate-trust-on-unmanaged/ta-p/5314311)
+explains why a substituted block page can produce a browser trust warning.
+These are documented mechanisms, not identification of this visitor's vendor.
 
-Official references support the diagnostic distinction, but do not identify this
-visitor's vendor:
-
-- [Infoblox RPZ documentation](https://www.infoblox.com/dns-security-resource-center/dns-security-solutions/dns-security-solutions-response-policy-zones-rpz/)
-  describes name-server triggers that can affect every domain served by that
-  server and redirection to internal security pages.
-- [Cisco's HTTPS block-page explanation](https://community.cisco.com/t5/umbrella-announcements/umbrella-dns-block-pages-and-certificate-trust-on-unmanaged/ta-p/5314311)
-  explains why a substituted block page can produce a browser trust warning.
-- If the identified vendor is Infoblox, use its
-  [Dossier feedback process](https://docs.infoblox.com/space/BloxOneThreatDefense/230493737/Dossier%2BThreat%2BResearch%2BFeedback)
-  for an incorrect threat indicator or category. If it is Zscaler, its
-  [Site Review process](https://help.zscaler.com/zia/looking-up-urls-site-review)
-  supports category review; a DNS threat/feed decision may instead require the
-  administrator's support case with the actual DNS event.
-- [Cloudflare Pages custom-domain guidance](https://developers.cloudflare.com/pages/configuration/custom-domains/)
-  requires the registered domain and correct DNS. Both are present here.
+No policy-review request will be filed, per the owner's decision. No external
+message was sent. The public TLS investigation is complete; the corporate DNS
+filter's classification and eventual recovery remain unverified. A later normal
+visit can establish whether the block has cleared. If investigation is resumed,
+start with the affected network's actual DNS answer, certificate and filter event.
 
 Changing CAs, disabling HTTPS or moving nameservers has no demonstrated basis
-in this evidence. Keep issue 119 open until the affected path is identified and
-verified after the policy correction, or the policy owner confirms an intentional
-restriction.
+in this evidence. Keep the corporate-policy observation separate from an actual
+hosting defect, and do not claim that waiting is a guaranteed fix.

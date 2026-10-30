@@ -2,7 +2,7 @@
 
 | Symptom | Canonical guidance |
 | --- | --- |
-| A browser reports an untrusted certificate while a DNS firewall names a blocked domain or name server | [Failing-path evidence and policy review](inbox/2026-10-30-dns-filter-warnings-need-the-failing-path.md), [public HTTPS receipt](../docs/validation/public-https.md) |
+| A browser reports an untrusted certificate while a DNS firewall names a blocked domain or name server | [Failing-path evidence and domain-age limits](inbox/2026-10-30-dns-filter-warnings-need-the-failing-path.md), [public HTTPS receipt](../docs/validation/public-https.md) |
 | Local services fill with old branch previews, or dependency symlinks look like unfinished work | [One shared preview and bounded test listeners](domains/site-preview.md), [incident](inbox/2026-10-29-preview-servers-need-one-owner.md) |
 | Valid supplier connector solids overlap when mated or omit wire-entry holes, contacts or latch details | [Vendor solids can omit functional cavities](inbox/2026-10-29-valid-vendor-solids-can-omit-connector-cavities.md) |
 | A TVS breakdown or nominal cutoff looks safe but peak voltage, recovery or shared-branch loads remain unbounded | [Electrical protection limits and evidence](domains/electrical-protection.md) |

@@ -1,0 +1,48 @@
+{
+  "retrievedAt": "2026-10-30T07:11:05.800774+00:00",
+  "source": "https://api.ssllabs.com/api/v3/analyze?host=www.gyropup.com&publish=off&fromCache=on&all=done",
+  "host": "www.gyropup.com",
+  "status": "READY",
+  "startTime": 1793343828114,
+  "endTime": null,
+  "engineVersion": "2.4.3",
+  "criteriaVersion": "2009q",
+  "endpoints": [
+    {
+      "ipAddress": "2606:4700:3030:0:0:0:6815:1e2e",
+      "statusMessage": "Ready",
+      "grade": "A",
+      "gradeTrustIgnored": "A",
+      "hasWarnings": false,
+      "progress": 100,
+      "duration": 88716
+    },
+    {
+      "ipAddress": "2606:4700:3030:0:0:0:ac43:968e",
+      "statusMessage": "Ready",
+      "grade": "A",
+      "gradeTrustIgnored": "A",
+      "hasWarnings": false,
+      "progress": 100,
+      "duration": 88451
+    },
+    {
+      "ipAddress": "104.21.30.46",
+      "statusMessage": "Ready",
+      "grade": "A",
+      "gradeTrustIgnored": "A",
+      "hasWarnings": false,
+      "progress": 100,
+      "duration": 88070
+    },
+    {
+      "ipAddress": "172.67.150.142",
+      "statusMessage": "Ready",
+      "grade": "A",
+      "gradeTrustIgnored": "A",
+      "hasWarnings": false,
+      "progress": 100,
+      "duration": 88380
+    }
+  ]
+}

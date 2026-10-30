@@ -128,8 +128,8 @@ only describes those resolvers at that time.
 
 The [2026-10-30 HTTPS investigation](validation/public-https.md) records a
 visitor's DNS-firewall block alongside successful public certificate checks.
-It includes certificate fingerprints, reproducible diagnostics and an unsent
-policy-review draft. A filter's substituted HTTPS block page can itself produce
+It includes certificate fingerprints, reproducible diagnostics and the limits
+of a newly registered domain explanation. A filter's substituted HTTPS block page can itself produce
 a privacy warning; identify the failing resolver, certificate and policy event
 before changing Cloudflare DNS or certificate settings.
 
