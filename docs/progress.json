@@ -1,5 +1,5 @@
 {
-  "updated": "2026-10-29",
+  "updated": "2026-10-30",
   "status": [
     {
       "title": "Project stage",
@@ -7,9 +7,9 @@
       "note": "No assembled robot yet. The goal is a 100 lb maximum robot with a $10,000 target budget; these are design targets, not achieved specifications."
     },
     {
-      "title": "Turret hardware",
-      "value": "Fit tests in preparation",
-      "note": "Inspect the carrier hardware and insert-fit specimens in the design notebook. Complete wiring, printed strength and physical fit remain open."
+      "title": "Leg mounting fit",
+      "value": "Candidate · support unresolved",
+      "note": "Manufacturer CAD confirms corrected screw depth, but nearby factory-retainer recesses leave eight support checks failing. Candidate models and complete evidence are available; no fabrication approval."
     },
     {
       "title": "Structural evidence",
@@ -267,6 +267,25 @@
           "href": "../site/pages/docs-mechanical-readiness-md.html"
         }
       ]
+    },
+    {
+      "time": "2026-10-30",
+      "title": "Leg mounts: corrected screw depth, a real support gap",
+      "text": "The frame, dyno plate and exact parent coupon now have 4.4 mm nominal screw penetration against 5 mm guaranteed thread. Checks using manufacturer models and cad-agent preserve eight support failures near factory-retainer recesses; declared driver approaches pass, but the mounting design remains unqualified.",
+      "links": [
+        {
+          "title": "Inspect the candidate parts",
+          "href": "../site/pages/docs-rs04-mounting-fit-md.html"
+        },
+        {
+          "title": "Read the complete investigation",
+          "href": "../site/pages/research-rs04-lug-stacks-readme-md.html"
+        },
+        {
+          "title": "Open mounting acceptance · issue 116",
+          "href": "https://github.com/Valpatel/gyropup/issues/116"
+        }
+      ]
     }
   ],
   "shopping": {
@@ -296,5 +315,5 @@
       }
     ]
   },
-  "focus": "Current focus: the turret’s removable electronics carrier, real fasteners, wiring space and first fit-test prints."
+  "focus": "Current focus: prepare the ordered RS-04 leg motors for a verified mounting interface. Corrected screw depth is documented, but eight support checks still fail; contact/load spreading and physical fit must be resolved before a leg print release."
 }
