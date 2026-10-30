@@ -32,6 +32,7 @@
 | Isolated video tests pass but real-page autoplay stalls or times out CAD parts on a slow connection | [Integrated media loading and buffering](domains/structural-media.md) |
 | Replay stalls with a full buffer, or late readiness starts an offscreen movie download | [Native recovery and current visibility](domains/structural-media.md) |
 | A moving replay hits its recovery timeout, or a fresh motion preference precedes its change event | [Frame-progress watchdogs and current preferences](domains/structural-media.md) |
+| Playback and replay work but the finished player presents duplicate actions or loses keyboard focus | [Distinct player-action ownership](inbox/2026-10-30-player-actions-need-distinct-state-ownership.md) |
 | A second virtual-clock fixture fails inside Playwright before navigation | [Isolate virtual-clock browser contexts](inbox/2026-10-29-virtual-clocks-need-isolated-browser-contexts.md) |
 | A native navigation works but its test rejects Cloudflare canonicalization or a queryless static Back link | [Exact canonical navigation routes](inbox/2026-10-29-hosted-navigation-must-accept-the-canonical-route.md) |
 | A mesher fails with OpenSSL symbols despite gmsh-first imports, or runtime version lookup fails after solving | [Select the mesher runtime before Python starts](inbox/2026-10-29-mesher-runtime-must-be-selected-before-python-starts.md) |
