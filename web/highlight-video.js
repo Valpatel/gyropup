@@ -30,15 +30,16 @@ if (card) {
     return bounds.width > 0 && bounds.height > 0 && bounds.bottom > -margin &&
       bounds.top < innerHeight + margin && bounds.right > 0 && bounds.left < innerWidth;
   };
-  const wantsPlayback = () => visible && withinViewport() && !document.hidden && !failed && !finished &&
+  const atEnd = () => finished || video.ended;
+  const wantsPlayback = () => visible && withinViewport() && !document.hidden && !failed && !atEnd() &&
     !userPaused && (manualPlay || !manualOnly());
-  const wantsDownload = () => !document.hidden && !failed && !finished && !userPaused &&
+  const wantsDownload = () => !document.hidden && !failed && !atEnd() && !userPaused &&
     ((manualPlay && visible && withinViewport()) || (near && withinViewport(180) && !manualOnly() && !preloadCancelled));
   const waitsForHero = () => !video.hasAttribute('src') && heroLoading() && !heroBypassed;
   const queued = () => wantsPlayback() && waitsForHero() && !heroWaitExpired;
   // Replay belongs to the persistent primary control after completion. Restart
   // is a different action, useful only while there is an unfinished position.
-  const canRestart = () => ready && !failed && !finished && !video.ended && video.currentTime > .05;
+  const canRestart = () => ready && !failed && !atEnd() && video.currentTime > .05;
   const clearHeroTimer = () => { clearTimeout(heroTimer); heroTimer = undefined; };
   const clearMediaTimer = () => { clearTimeout(mediaTimer); mediaTimer = undefined; };
   const clearFrameRecovery = () => {
@@ -53,14 +54,15 @@ if (card) {
     progress.style.width = `${video.duration ? video.currentTime / video.duration * 100 : 0}%`;
   };
   const paint = () => {
-    const playing = !video.paused && !finished;
+    const ended = atEnd();
+    const playing = !video.paused && !ended;
     const waiting = queued();
     const delayed = heroWaitExpired && waitsForHero();
     card.dataset.state = failed ? 'error' : delayed ? 'delayed' : waiting ? 'queued' :
-      buffering ? 'buffering' : finished ? 'ended' : playing ? 'playing' : ready || userPaused ? 'paused' : 'idle';
+      ended ? 'ended' : buffering ? 'buffering' : playing ? 'playing' : ready || userPaused ? 'paused' : 'idle';
     card.dataset.ready = String(ready && !failed);
     const action = failed ? 'Try again' : delayed ? 'Play now' :
-      playing || waiting || (buffering && wantsPlayback()) ? 'Pause' : finished ? 'Replay' : 'Play';
+      ended ? 'Replay' : playing || waiting || (buffering && wantsPlayback()) ? 'Pause' : 'Play';
     label.textContent = action;
     icon.textContent = action === 'Pause' ? 'Ⅱ' : action === 'Try again' || action === 'Replay' ? '↻' : '▶';
     toggle.setAttribute('aria-label', failed ? 'Try loading highlights again' : delayed ?
@@ -72,8 +74,8 @@ if (card) {
     restart.disabled = !restartAvailable;
     const statusText = failed ? 'The reel couldn’t load. Try again.' : delayed ?
       'The robot is still loading. Play now to load the reel too.' : waiting ?
-      'The robot is loading. Your reel will play next.' : buffering ? 'Getting the reel ready for playback…' :
-      finished ? 'That’s a glimpse. Explore the simulator for more.' : playing ? 'Playing · no sound' :
+      'The robot is loading. Your reel will play next.' : ended ? 'That’s a glimpse. Explore the simulator for more.' :
+      buffering ? 'Getting the reel ready for playback…' : playing ? 'Playing · no sound' :
       ready || userPaused ? 'Paused · no sound' : manualOnly() ? 'Press play when you’re ready · no sound' :
       'Silent highlights from the workshop.';
     if (status.textContent !== statusText) status.textContent = statusText;

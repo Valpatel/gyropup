@@ -258,11 +258,13 @@ try {
   await show(delayed);
   await delayed.locator('.highlight-toggle').click();
   await expect.poll(() => Boolean(held), { timeout: 30000 }).toBe(true);
+  await assertHighlightControls(delayed, 'Pause');
   await delayed.locator('.highlight-toggle').click();
   await delayed.unroute(movieURL); await held.continue();
   await delayed.waitForFunction(() => document.querySelector('.highlight-card').dataset.state === 'paused' && document.querySelector('#highlight-video').readyState >= 2);
   await delayed.waitForTimeout(200);
   assert.equal(await delayed.locator('#highlight-video').evaluate(v => v.paused), true, 'Late media cannot undo a loading-state user pause');
+  await assertHighlightControls(delayed, 'Play');
   await delayed.locator('.highlight-toggle').click(); await waitPlaying(delayed);
   record('A pause during loading survives the delayed response and allows deliberate playback'); await delayed.close();
 
@@ -283,6 +285,7 @@ try {
     const heldHero = await pageFor({ motion: 'no-preference', heroMode: 'held' }); await show(heldHero);
     await heldHero.waitForFunction(() => document.querySelector('.highlight-card').dataset.state === 'queued');
     await noMovie(heldHero, 'A nearby reel must not compete with pending hero downloads');
+    await assertHighlightControls(heldHero, 'Pause');
     await releaseHero(heldHero, settled); await waitPlaying(heldHero);
     record(`Queued autoplay releases after hero ${settled}, without importing its renderer`); await heldHero.close();
   }
@@ -290,7 +293,7 @@ try {
   await manualHero.locator('.highlight-toggle').click();
   await manualHero.waitForFunction(() => document.querySelector('.highlight-card').dataset.state === 'queued');
   await noMovie(manualHero, 'Explicit Play also gives pending CAD downloads priority');
-  assert.equal(await manualHero.locator('.highlight-toggle-label').innerText(), 'Pause');
+  await assertHighlightControls(manualHero, 'Pause');
   await manualHero.locator('.highlight-toggle').click(); await releaseHero(manualHero);
   await noMovie(manualHero, 'Cancelling manual queued playback survives the late hero completion');
   await manualHero.locator('.highlight-toggle').click(); await waitPlaying(manualHero);
