@@ -1,4 +1,4 @@
-"""Kernel-free controls for the bounded drawing-depth constraint and strict input closure.
+"""Kernel-free receipt-integrity tests for an explicitly failing CAD candidate.
 
 Actual geometry evidence comes from cad/rs04_lug_checks.py on the CAD host.
 These controls cannot qualify a generated part or a manufacturer assembly.
@@ -74,12 +74,20 @@ class LugStackControls(unittest.TestCase):
 def synthetic_receipt(directory):
     """Only a schema/identity fixture. Its sentinel files are never CAD evidence."""
     def measured(name, grip):
-        return {'name': name, 'measurement': {'screw': {'length_mm': 20.}},
-                'toolkit_row': {'grip_mm': grip}, 'drawing': checks.drawing_depth(grip, 20., 5.)}
+        return {'name': name, 'measurement': {'screw': {'length_mm': 20.},
+                'tool': {'clear': True, 'blocked': [], 'tool': checks.DRIVER_NAME, 'step': 1,
+                         'present': ['printed', 'motor', name], 'envelope': checks.MEASURED_DRIVER_ENVELOPE,
+                         'start_t_mm': -4.}},
+                'toolkit_row': {'grip_mm': grip, 'thread_depth_mm': 7.}, 'drawing': checks.drawing_depth(grip, 20., 5.)}
     rows = [measured(name, 15.6) for name in sorted(checks.instance_names())]
     by_id = {key: {'id': key, 'status': 'pass'} for key in checks.expected_check_ids()}
     for row in rows:
-        by_id[row['name'] + ':drawing-depth']['evidence'] = row['drawing']
+        name = row['name']
+        by_id[name + ':drawing-depth']['evidence'] = row['drawing']
+        by_id[f'fastener:{name}:length'].update(status='warn', message='7.00 mm of thread modelled, the record says 5')
+        if name in checks.SUPPORT_FAILURE_LINES:
+            by_id[f'fastener:{name}:stack'].update(status='fail', message='nothing under printed within 0.05 mm',
+                evidence={'angles': [{'angle': i, 'ok': i != checks.SUPPORT_FAILURE_LINES[name]} for i in range(8)]})
     controls = {}
     for name, penetration in checks.CONTROL_PENETRATION.items():
         row = measured(name, 20 - penetration)
@@ -98,11 +106,26 @@ def synthetic_receipt(directory):
         artifacts[name] = {'files': files, 'stl_check': {'cad_valid': True, 'watertight': True, 'solid_count': 1}}
     source_files = {p.relative_to(ROOT).as_posix(): checks.digest(p) for folder in ('cad', 'catalog', 'designs')
                     for p in (ROOT / folder).rglob('*') if p.is_file() and p.suffix in ('.py', '.json')}
+    recesses = {}
+    for key, (instance, _, _) in checks.RECESS_PROBES.items():
+        record = {'source_step_sha256': checks.PRIVATE_HASHES[checks.PRIVATE_FILES[0]], 'representative_instance': instance,
+                  'factory_fastener_sha256': 'a' * 64, 'factory_head_z_mm': 24.79, 'factory_head_recess_mm': .21,
+                  'candidate_shapes': {'a' * 64: [], 'b' * 64: []},
+                  'rays': [{'radius_mm': r, 'material_intervals_t_from_z26': {'a' * 64: [[1.21, 2.]], 'b' * 64: [[2.01, 4.]]},
+                            'nearest_material_gap_mm': .21} for r in [2.45, 2.825, 3.2]]}
+        recesses[key] = record
+        by_id[f'factory-recess:{key}']['evidence'] = record
+    top = list(by_id.values())
     return {'schema': 'cadagent.gate/1', 'gate': 'rs04-front-lugs',
             'limits': {'min_engagement_mm': checks.MIN_ENGAGEMENT_MM,
                        'nominal_depth_reserve_mm': checks.DEPTH_RESERVE_MM},
-            'pass': True, 'status': 'pass', 'counts': {'pass': len(by_id), 'warn': 0, 'fail': 0},
-            'findings': [], 'checks': list(by_id.values()), 'instances': rows, 'negative_controls': controls,
+            'pass': False, 'status': 'fail',
+            'counts': {s: sum(c['status'] == s for c in top) for s in ('pass', 'warn', 'fail')},
+            'findings': [c for c in top if c['status'] != 'pass'], 'checks': top, 'instances': rows,
+            'negative_controls': controls, 'factory_recesses': recesses, 'manufacturer_lug_plate': {'sha256': 'b' * 64},
+            'driver_approach': {'name': checks.DRIVER_NAME, 'envelope': checks.DRIVER_ENVELOPE, 'step': checks.DRIVER_STEP,
+                'blocked_control': {'caught': True, 'check': {'id': 'negative:blocked-driver', 'status': 'fail'},
+                    'tool': {'clear': False, 'blocked': [{'part': 'blocked_driver_path', 'state': 'overlapping'}]}}},
             'artifacts': artifacts, 'assumptions': checks.LIMITS, **{k: False for k in checks.READY_FLAGS},
             'source_inputs': {'project': {'files': source_files, 'toolkit_sources_sha256': checks.TOOLKIT_SOURCES,
                                           'versions': {'cad-agent': '0.4.2'}, 'GYROPUP_CAD_PARAMS_sha256': None},
@@ -120,13 +143,38 @@ class ReceiptControls(unittest.TestCase):
     def validate(self, data):
         return checks.validate_receipt(data, self.directory)
 
-    def test_complete_identity_fixture(self):
+    def test_complete_failing_receipt_has_integrity_but_is_not_qualified(self):
         self.assertTrue(self.validate(self.receipt))
+        self.assertIs(self.receipt['pass'], False)
 
     def test_missing_failed_or_duplicate_check_cannot_pass(self):
         for mutate in (lambda d: d['checks'].pop(),
                        lambda d: d['checks'].append(copy.deepcopy(d['checks'][0])),
-                       lambda d: d['checks'][0].update(status='fail')):
+                       lambda d: next(c for c in d['checks'] if c['status'] == 'pass').update(status='fail')):
+            changed = copy.deepcopy(self.receipt)
+            mutate(changed)
+            with self.assertRaises(ValueError):
+                self.validate(changed)
+
+    def test_lost_known_failure_or_promoted_engineering_pass_rejects(self):
+        for mutate in (lambda d: d.update(status='pass'),
+                       lambda d: d.__setitem__('pass', True),
+                       lambda d: next(c for c in d['checks'] if c['status'] == 'fail').update(status='pass'),
+                       lambda d: next(c for c in d['checks'] if c['status'] == 'warn').update(status='pass')):
+            changed = copy.deepcopy(self.receipt)
+            mutate(changed)
+            with self.assertRaises(ValueError):
+                self.validate(changed)
+
+    def test_driver_and_recess_evidence_cannot_disappear_or_be_relabelled(self):
+        for mutate in (lambda d: d['driver_approach'].pop('blocked_control'),
+                       lambda d: d.__setitem__('checks', [c for c in d['checks'] if c['id'] != 'control:blocked-driver']),
+                       lambda d: d['driver_approach']['blocked_control'].update(caught=False),
+                       lambda d: d['instances'][0]['measurement']['tool'].update(clear=False),
+                       lambda d: d['instances'][0]['measurement']['tool']['envelope'].update(offset_mm=100.),
+                       lambda d: d['factory_recesses'].pop('native_165'),
+                       lambda d: d['factory_recesses']['native_minus_15']['rays'].pop(),
+                       lambda d: d['factory_recesses']['native_minus_15'].update(factory_head_recess_mm=0.)):
             changed = copy.deepcopy(self.receipt)
             mutate(changed)
             with self.assertRaises(ValueError):
@@ -137,7 +185,7 @@ class ReceiptControls(unittest.TestCase):
                        lambda d: d['instances'].append(copy.deepcopy(d['instances'][0])),
                        lambda d: d['negative_controls'].pop('legacy_dyno_14'),
                        lambda d: d['negative_controls']['legacy_dyno_14']['checks'].pop(),
-                       lambda d: d['negative_controls']['legacy_dyno_14']['drawing'].update(pass_=True)):
+                       lambda d: d['negative_controls']['legacy_dyno_14']['drawing'].__setitem__('pass', True)):
             changed = copy.deepcopy(self.receipt)
             mutate(changed)
             with self.assertRaises(ValueError):

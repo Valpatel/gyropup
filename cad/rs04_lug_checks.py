@@ -6,7 +6,8 @@ Run on the isolated CAD host, with a private vendor cache; nothing is downloaded
 This checks the actual printed seats and private manufacturer screw against the
 selected manufacturer lug plate. The drawing's guaranteed thread depth is a
 separate constraint: a deeper modelled hole does not extend that guarantee.
-It does not qualify complete motor mating, tool access, retention or strength.
+It preserves the candidate's known support failures. Receipt integrity is not
+leg qualification. Declared driver access is limited to the stated fitting step.
 """
 from __future__ import annotations
 
@@ -30,6 +31,16 @@ OUTPUT_PARTS = ('hip_frame', 'dyno_lug_plate', 'coupon_frame_ring_nom')
 READY_FLAGS = ('physical_fit_verified', 'full_assembly_qualified', 'thread_mating_verified',
                'tool_access_verified', 'manufacturing_tolerance_stack_verified', 'strength_verified')
 CONTROL_PENETRATION = {'legacy_counterbore_11': 6.9, 'legacy_dyno_14': 6., 'insufficient_engagement': 3.4}
+SUPPORT_FAILURE_INSTANCES = {'leg_front_04', 'leg_front_09', 'leg_rear_03', 'leg_rear_08',
+                             'coupon_nom_04', 'coupon_nom_09', 'dyno_02', 'dyno_07'}
+SUPPORT_FAILURE_LINES = {'leg_front_04': 2, 'leg_front_09': 6, 'leg_rear_03': 2, 'leg_rear_08': 6,
+                         'coupon_nom_04': 2, 'coupon_nom_09': 6, 'dyno_02': 0, 'dyno_07': 4}
+RECESS_PROBES = {'native_minus_15': ('dyno_02', -15., 0), 'native_165': ('dyno_07', 165., 4)}
+DRIVER_NAME = 'declared_3mm_hex_driver'
+DRIVER_ENVELOPE = {'segments': [{'d': 4., 'length': 60.}, {'d': 25., 'length': 80.}], 'start': 'head'}
+MEASURED_DRIVER_ENVELOPE = {**DRIVER_ENVELOPE, 'offset_mm': 0., 'swing': None}
+DRIVER_STEP = {'order': 1, 'fit': 'motor',
+               'note': 'Motor fitting on the separate frame/fixture, before upper links and stop posts are installed'}
 PRIVATE_HASHES = {
     'robstride-rs-04/RS04.stp': '92859a1e85a8846881432e193c808fe03a3da49ac18ad201c2d89de1746b9082',
     'robstride-rs-04/RS04User_Manual260713.pdf': '6782bf105cf4cc945142e65356bd7a21a9fc007b008ec3616307956030d72b31',
@@ -50,7 +61,10 @@ LIMITS = [
     'Exact screw-to-printed-part relations are checked. Full screw-to-motor thread mating is not checked.',
     'Four millimetres minimum engagement is a declared geometric screen, not a thread pull-out or torque rating.',
     'The 0.5 mm depth reserve is a nominal design allowance, not a verified manufacturing tolerance stack.',
-    'Driver approach, physical fit, bearing fits, print shrink, fatigue, strength and operation remain unqualified.',
+    'Driver access uses a declared 4 mm diameter x 60 mm shaft and 25 mm diameter x 80 mm handle envelope from the screw head, '
+    'at the separate motor-fitting step before upper links and stop posts; no actual tool, socket engagement, hand room or final service path is qualified.',
+    'The eight unsupported stack sectors over factory-retainer recesses remain failures; their load-spreading capacity is unqualified.',
+    'Physical fit, bearing fits, print shrink, fatigue, strength and operation remain unqualified.',
 ]
 
 
@@ -63,14 +77,15 @@ def instance_names():
 
 
 def instance_check_ids(name):
-    return {f'fastener:{name}:{kind}' for kind in ('seat', 'stack', 'holes', 'engagement', 'tip', 'length')} | {
+    return {f'fastener:{name}:{kind}' for kind in ('seat', 'stack', 'holes', 'engagement', 'tip', 'length', 'tool')} | {
         f'{name}:printed-relation', f'{name}:drawing-depth'}
 
 
 def expected_check_ids():
     return set().union(*(instance_check_ids(n) for n in instance_names())) | {
         'instance-coverage', 'dyno-hub-clearance', 'coupon-parent-transform', 'input-stability',
-        *(f'control:{n}' for n in CONTROL_PENETRATION)}
+        *(f'control:{n}' for n in CONTROL_PENETRATION), 'control:blocked-driver',
+        *(f'factory-recess:{n}' for n in RECESS_PROBES)}
 
 
 def context_inputs(root=ROOT):
@@ -78,7 +93,7 @@ def context_inputs(root=ROOT):
 
 
 def validate_receipt(data, directory, root=ROOT):
-    """Kernel-free validation of committed bounded evidence, with complete membership.
+    """Validate integrity of this explicitly FAILING candidate, never leg qualification.
 
     This validates the receipt's identity and recorded outcome; it does not rerun CAD.
     A changed accepted source/recipe needs a fresh run, never a re-signed old report.
@@ -107,11 +122,15 @@ def validate_receipt(data, directory, root=ROOT):
     if len(ids) != len(set(ids)) or set(ids) != expected_check_ids():
         raise ValueError('Check coverage differs')
     counts = {s: sum(c.get('status') == s for c in top) for s in ('pass', 'warn', 'fail')}
-    status = 'warn' if counts['warn'] else 'pass'
-    if (data.get('pass') is not True or counts['fail'] or sum(counts.values()) != len(top)
-            or data.get('counts') != counts or data.get('status') != status
+    expected_failures = {f'fastener:{n}:stack' for n in SUPPORT_FAILURE_INSTANCES}
+    expected_warnings = {f'fastener:{n}:length' for n in instance_names()}
+    if ({c['id'] for c in top if c['status'] == 'fail'} != expected_failures
+            or {c['id'] for c in top if c['status'] == 'warn'} != expected_warnings):
+        raise ValueError('Known failure/warning membership changed; this is not an engineering approval')
+    if (data.get('pass') is not False or sum(counts.values()) != len(top)
+            or data.get('counts') != counts or data.get('status') != 'fail'
             or data.get('findings') != [c for c in top if c['status'] != 'pass']):
-        raise ValueError('Failed or inconsistent checks')
+        raise ValueError('Engineering failure was promoted or summary is inconsistent')
     by_id = {c['id']: c for c in top}
     rows = data.get('instances') or []
     names = [r.get('name') for r in rows]
@@ -125,6 +144,22 @@ def validate_receipt(data, directory, root=ROOT):
         if (depth['pass'] is not True or row.get('drawing') != depth
                 or by_id[f'{name}:drawing-depth'].get('evidence') != depth):
             raise ValueError('Measured drawing-depth evidence differs')
+        if (by_id[f'fastener:{name}:length'].get('message') != '7.00 mm of thread modelled, the record says 5'
+                or abs(row.get('toolkit_row', {}).get('thread_depth_mm', -1) - 7.) > .001):
+            raise ValueError('Modelled-depth versus guaranteed-depth warning changed')
+        if name in SUPPORT_FAILURE_LINES:
+            failure = by_id[f'fastener:{name}:stack']
+            angles = failure.get('evidence', {}).get('angles') or []
+            if (not failure.get('message', '').startswith('nothing under printed within 0.05 mm')
+                    or len(angles) != 8
+                    or [a.get('angle') for a in angles if a.get('ok') is False] != [SUPPORT_FAILURE_LINES[name]]):
+                raise ValueError('Known support-sector failure evidence changed')
+        tool = measured.get('tool') or {}
+        if (tool.get('clear') is not True or tool.get('blocked') != [] or tool.get('error')
+                or tool.get('tool') != DRIVER_NAME or tool.get('step') != DRIVER_STEP['order']
+                or tool.get('present') != ['printed', 'motor', name]
+                or tool.get('envelope') != MEASURED_DRIVER_ENVELOPE or tool.get('start_t_mm') != -4.):
+            raise ValueError('Declared driver evidence differs')
     controls = data.get('negative_controls') or {}
     if set(controls) != set(CONTROL_PENETRATION):
         raise ValueError('Negative-control coverage differs')
@@ -140,6 +175,44 @@ def validate_receipt(data, directory, root=ROOT):
                 or not any(c['id'] == f'{name}:drawing-depth' and c['status'] == 'fail'
                            and c.get('evidence') == depth for c in cs)):
             raise ValueError('Negative-control measured failure lost')
+    driver = data.get('driver_approach') or {}
+    blocked = driver.get('blocked_control') or {}
+    block_evidence = blocked.get('tool') or {}
+    if (driver.get('name') != DRIVER_NAME or driver.get('envelope') != DRIVER_ENVELOPE
+            or driver.get('step') != DRIVER_STEP or blocked.get('caught') is not True
+            or blocked.get('check', {}).get('id') != 'negative:blocked-driver'
+            or blocked.get('check', {}).get('status') != 'fail'
+            or block_evidence.get('clear') is not False or block_evidence.get('error')
+            or not any(r.get('part') == 'blocked_driver_path' and r.get('state') in ('overlapping', 'contains')
+                       for r in block_evidence.get('blocked', []))):
+        raise ValueError('Driver blocked-path control missing or changed')
+    recesses = data.get('factory_recesses') or {}
+    if set(recesses) != set(RECESS_PROBES):
+        raise ValueError('Factory-recess evidence coverage differs')
+    for key, record in recesses.items():
+        if (record.get('source_step_sha256') != PRIVATE_HASHES[PRIVATE_FILES[0]]
+                or by_id[f'factory-recess:{key}'].get('evidence') != record
+                or record.get('representative_instance') != RECESS_PROBES[key][0]
+                or not isinstance(record.get('factory_fastener_sha256'), str)
+                or len(record['factory_fastener_sha256']) != 64
+                or any(c not in '0123456789abcdef' for c in record['factory_fastener_sha256'])
+                or abs(record.get('factory_head_z_mm', -1) - 24.79) > .001
+                or abs(record.get('factory_head_recess_mm', -1) - .21) > .001):
+            raise ValueError('Factory-retainer identity or recess changed')
+        if set(record.get('candidate_shapes', {})) != {data.get('manufacturer_lug_plate', {}).get('sha256'),
+                                                      record['factory_fastener_sha256']}:
+            raise ValueError('Factory-recess candidate membership changed')
+        rays = record.get('rays') or []
+        if [r.get('radius_mm') for r in rays] != [2.45, 2.825, 3.2]:
+            raise ValueError('Factory-recess ray coverage differs')
+        for ray in rays:
+            intervals = ray.get('material_intervals_t_from_z26') or {}
+            starts = [span[0] for spans in intervals.values() for span in spans]
+            if (not starts or record['factory_fastener_sha256'] not in intervals
+                    or set(intervals) - set(record.get('candidate_shapes', {}))
+                    or abs((min(starts) - 1.) - .21) > .001
+                    or abs(ray.get('nearest_material_gap_mm', -1) - (min(starts) - 1.)) > 1e-6):
+                raise ValueError('Factory-recess measured gap changed')
     artifacts = data.get('artifacts') or {}
     if set(artifacts) != set(OUTPUT_PARTS) or any(set(r.get('files', {})) != {'step', 'stl'} for r in artifacts.values()):
         raise ValueError('Artifact binding incomplete')
@@ -223,25 +296,32 @@ def _relation_check(name, relation, parts):
                  f'Exact relation: {relation.state}', parts, relation.to_dict())
 
 
-def check_instance(name, printed, motor, screw, seat, guaranteed_depth):
-    """Reuse the toolkit's measurements/rules; do not infer fit from declared stack numbers."""
-    from cadagent.gates import Assembly, Tolerances, relate
-    from cadagent.gates.fasteners import FastenerOptions, FastenerSpec, evaluate, measure
-    from cadagent.gates.verdict import Check
+def instance_assembly(name, printed, motor, screw, seat, guaranteed_depth):
+    from cadagent.gates import Assembly
+    from cadagent.gates.fasteners import FastenerSpec
     import gmi
     placed = _valid(gmi.place(screw, seat, (0, 1, 0)), name)
     assembly = Assembly({'printed': printed, 'motor': motor, name: placed})
     spec = FastenerSpec(name, 'printed', 'motor', axes=[(seat, (0, -1, 0))], key=PN,
                         diameter_mm=4., length_mm=20., pitch_mm=.7, min_engagement_mm=MIN_ENGAGEMENT_MM,
-                        thread_depth_mm=guaranteed_depth, instances=[name])
+                        thread_depth_mm=guaranteed_depth, instances=[name], tool=DRIVER_NAME)
+    return assembly, spec, placed
+
+
+def check_instance(name, printed, motor, screw, seat, guaranteed_depth):
+    """Reuse the toolkit's measurements/rules; do not infer fit from declared stack numbers."""
+    from cadagent.gates import Tolerances, relate
+    from cadagent.gates.fasteners import FastenerOptions, evaluate, measure, tool_access
+    from cadagent.gates.verdict import Check
+    assembly, spec, placed = instance_assembly(name, printed, motor, screw, seat, guaranteed_depth)
     options = FastenerOptions(lines=8, tip_clearance_mm=.5)
     relation = relate(placed, printed, Tolerances())
     measurement = measure(assembly, spec, 0, options, relations={'printed': relation})
     if measurement.get('error'):
         raise ValueError(f'{name}: {measurement["error"]}')
+    measurement['tool'] = tool_access(assembly, spec, 0, DRIVER_NAME, DRIVER_ENVELOPE,
+                                      ['printed', 'motor', name], DRIVER_STEP)
     checks, row = evaluate(spec, measurement, options)
-    # evaluate also checks driver access; no tool was measured in this deliberately bounded check.
-    checks = [c for c in checks if not c.id.endswith(':tool')]
     checks.append(_relation_check(f'{name}:printed-relation', relation, [name, 'printed']))
     depth = drawing_depth(row.get('grip_mm'), measurement['screw']['length_mm'], guaranteed_depth)
     checks.append(Check(f'{name}:drawing-depth', 'pass' if depth['pass'] else 'fail',
@@ -249,6 +329,117 @@ def check_instance(name, printed, motor, screw, seat, guaranteed_depth):
                         f"{depth['remaining_guaranteed_depth_mm']:.3f} mm guaranteed-depth reserve",
                         [name, 'printed', 'motor'], depth))
     return checks, {'name': name, 'measurement': measurement, 'toolkit_row': row, 'drawing': depth}
+
+
+def blocked_driver_control(printed, motor, screw, seat, depth):
+    import cadquery as cq
+    from cadagent.gates.fasteners import tool_access, tool_check
+    name = 'blocked_driver_control'
+    assembly, spec, _ = instance_assembly(name, printed, motor, screw, seat, depth)
+    x, y, z = seat
+    assembly.add('blocked_driver_path', cq.Solid.makeBox(10, 3, 10, cq.Vector(x - 5, y + 14, z - 5)))
+    tool = tool_access(assembly, spec, 0, DRIVER_NAME, DRIVER_ENVELOPE,
+                       ['printed', 'motor', name, 'blocked_driver_path'], DRIVER_STEP)
+    check = tool_check('negative:blocked-driver', name, spec, tool)
+    caught = (check.status == 'fail' and tool.get('clear') is False and not tool.get('error')
+              and any(r['part'] == 'blocked_driver_path' and r['state'] in ('overlapping', 'contains')
+                      for r in tool.get('blocked', [])))
+    return {'caught': caught, 'tool': tool, 'check': check.to_dict(),
+            'blocker': {'size_mm': [10, 3, 10], 'origin_mm': [x - 5, y + 14, z - 5]}}
+
+
+def factory_recess_evidence(imported, plate, rows, dyno_turn, dyno_axis_z):
+    """Probe the real factory-retainer recesses against every nearby imported solid.
+
+    Identifications use surfaces/axes/bounds and content hashes, never STEP indices.
+    The pinned toolkit's material-ray probe is diagnostic; it adds no support waiver.
+    """
+    from OCP.BRepAdaptor import BRepAdaptor_Surface
+    from OCP.GeomAbs import GeomAbs_Cylinder, GeomAbs_Cone
+    from cadagent.evidence import shape_content_hash
+    from cadagent.gates import Assembly
+    from cadagent.gates.fasteners import _Probe
+    from cadagent.gates.verdict import Check
+    solids = imported.solids().vals()
+    if len(solids) != 43:
+        raise ValueError('Pinned RS04 assembly must retain all 43 imported solids')
+    result, checks = {}, []
+    for key, (instance, angle_deg, line) in RECESS_PROBES.items():
+        angle = math.radians(angle_deg)
+        expected_xy = (57.6 * math.cos(angle), 57.6 * math.sin(angle))
+        cylinders, cones = [], []
+        for face in plate.Faces():
+            surface = BRepAdaptor_Surface(face.wrapped)
+            kind, box = surface.GetType(), face.BoundingBox()
+            if kind not in (GeomAbs_Cylinder, GeomAbs_Cone):
+                continue
+            geom = surface.Cylinder() if kind == GeomAbs_Cylinder else surface.Cone()
+            point, direction = geom.Axis().Location(), geom.Axis().Direction()
+            if abs(direction.Z()) < .999999 or math.hypot(point.X() - expected_xy[0], point.Y() - expected_xy[1]) > .01:
+                continue
+            if kind == GeomAbs_Cylinder and abs(geom.Radius() - 2.5) < .01 and abs(box.zmin - 24.65) < .01 and abs(box.zmax - 25) < .01:
+                cylinders.append({'axis_xy_mm': [point.X(), point.Y()], 'radius_mm': geom.Radius(),
+                                  'z_mm': [box.zmin, box.zmax]})
+            if kind == GeomAbs_Cone and abs(abs(geom.SemiAngle()) - math.pi / 4) < .001 and abs(box.zmin - 23.6) < .01 and abs(box.zmax - 24.65) < .01:
+                cones.append({'axis_xy_mm': [point.X(), point.Y()], 'angle_rad': geom.SemiAngle(),
+                              'z_mm': [box.zmin, box.zmax]})
+        if not cylinders or not cones:
+            raise ValueError(f'{key}: factory countersink surfaces were not identified')
+        factory = []
+        for solid in solids:
+            box = solid.BoundingBox()
+            if (math.hypot((box.xmin + box.xmax) / 2 - expected_xy[0],
+                           (box.ymin + box.ymax) / 2 - expected_xy[1]) < .02
+                    and 1 < max(box.xlen, box.ylen) < 6.5 and 23.6 < box.zmax <= 25.01):
+                factory.append(_valid(solid, key + ' factory fastener'))
+        if len(factory) != 1:
+            raise ValueError(f'{key}: expected one small coaxial factory fastener, found {len(factory)}')
+        factory_hash = shape_content_hash(factory[0])
+        row = next(r for r in rows if r['name'] == instance)
+        measurement = row['measurement']
+        origin = measurement['origin']
+        radii = measurement['annulus']['radii_mm']
+        phase = 2 * math.pi * (line + .5) / len(measurement['annulus']['lines'])
+        c, s = math.cos(math.radians(-dyno_turn)), math.sin(math.radians(-dyno_turn))
+        rays = []
+        for radius in radii:
+            wx = origin[0] + radius * math.cos(phase)
+            rotated_y = dyno_axis_z - (origin[2] + radius * math.sin(phase))
+            rays.append({'radius_mm': radius, 'native_xy_mm': [c * wx - s * rotated_y, s * wx + c * rotated_y]})
+        xs, ys = [r['native_xy_mm'][0] for r in rays], [r['native_xy_mm'][1] for r in rays]
+        candidates, boxes = {}, {}
+        for solid in solids:
+            box = solid.BoundingBox()
+            if (box.xmin <= max(xs) and box.xmax >= min(xs) and box.ymin <= max(ys) and box.ymax >= min(ys)
+                    and box.zmin <= 26 and box.zmax >= 22):
+                sha = shape_content_hash(_valid(solid, 'recess probe candidate'))
+                if sha in candidates:
+                    raise ValueError('Duplicate imported shape identity in factory-recess probe')
+                candidates[sha] = solid
+                boxes[sha] = [box.xmin, box.ymin, box.zmin, box.xmax, box.ymax, box.zmax]
+        if factory_hash not in candidates or shape_content_hash(plate) not in candidates:
+            raise ValueError('Factory-recess probe omitted its plate or fastener')
+        assembly = Assembly(candidates)
+        probe = _Probe(assembly)
+        for ray in rays:
+            x, y = ray['native_xy_mm']
+            intervals = probe.along(list(assembly), (x, y, 26), (0, 0, -1), 0, 4)
+            starts = [iv[0] for spans in intervals.values() for iv in spans]
+            if not starts:
+                raise ValueError('Factory-recess material ray found no material')
+            ray.update(material_intervals_t_from_z26=intervals, nearest_material_gap_mm=round(min(starts) - 1, 6))
+        head_z = factory[0].BoundingBox().zmax
+        record = {'source_step_sha256': PRIVATE_HASHES[PRIVATE_FILES[0]], 'representative_instance': instance,
+                  'cylinder': cylinders[0], 'cone': cones[0], 'factory_fastener_sha256': factory_hash,
+                  'candidate_shapes': boxes, 'factory_head_z_mm': head_z,
+                  'factory_head_recess_mm': round(25 - head_z, 6), 'rays': rays,
+                  'interpretation': 'The factory head is recessed below the mating plane; no support exception is granted.'}
+        observed = abs(record['factory_head_recess_mm'] - .21) < .001 and all(
+            abs(r['nearest_material_gap_mm'] - .21) < .001 for r in rays)
+        checks.append(Check('factory-recess:' + key, 'pass' if observed else 'fail',
+                            'Reproduce the recessed factory head and the unsupported annular sector', evidence=record))
+        result[key] = record
+    return checks, result
 
 
 def geometry_checks(vendor_root, *, export_dir=None):
@@ -274,7 +465,8 @@ def geometry_checks(vendor_root, *, export_dir=None):
     expected = [-3.5, -3.5, -20, 3.5, 3.5, 4]
     if any(abs(a - b) > .05 for a, b in zip(actual, expected)):
         raise ValueError(f'Normalized screw frame/dimensions differ: {actual}')
-    motor_raw, lug_axes = select_lug_plate(cq.importers.importStep(str(vendor_root / PRIVATE_FILES[0])))
+    imported_motor = cq.importers.importStep(str(vendor_root / PRIVATE_FILES[0]))
+    motor_raw, lug_axes = select_lug_plate(imported_motor)
     motor = motor_raw.translate((0, 0, -gmi.STEP_FRAMES[fb.MOTOR]['output_z']))
     depth = gmi.CAT[fb.MOTOR]['case']['bolts']['depth']
     if depth != 5 or gmi.CAT[fb.MOTOR]['case']['bolts']['thread'] != 'M4':
@@ -318,6 +510,13 @@ def geometry_checks(vendor_root, *, export_dir=None):
     checks.append(Check('instance-coverage', 'pass' if completed == EXPECTED_INSTANCES else 'fail',
                         'Every declared front-lug instance must be measured', evidence={'expected': EXPECTED_INSTANCES,
                                                                                        'completed': completed}))
+    print('Diagnosing both factory-retainer recesses against all nearby manufacturer solids', flush=True)
+    recess_checks, recesses = factory_recess_evidence(imported_motor, motor_raw, rows, dyno_turn, rb.DYNO_AXIS_Z)
+    checks.extend(recess_checks)
+    front_case = cases[0]
+    blocked_driver = blocked_driver_control(front_case[1], front_case[2], screw, front_case[3][0], depth)
+    checks.append(Check('control:blocked-driver', 'pass' if blocked_driver['caught'] else 'fail',
+                        'The same declared driver must fail when a solid blocks its approach'))
     hub = _valid(gmi.place(rb.dyno_hub(), (0, .5, rb.DYNO_AXIS_Z), (0, 1, 0)), 'dyno hub')
     hub_relation = relate(dyno, hub, Tolerances())
     checks.append(_relation_check('dyno-hub-clearance', hub_relation, ['dyno_lug_plate', 'dyno_hub']))
@@ -325,7 +524,6 @@ def geometry_checks(vendor_root, *, export_dir=None):
     # caught only when the measurement completed and the intended rule failed.
     from unittest.mock import patch
     negative_controls = {}
-    front_case = cases[0]
     for label, counterbore in [('legacy_counterbore_11', 11.), ('insufficient_engagement', 7.5)]:
         print(f'Geometry control: {label}', flush=True)
         with patch.object(fb, 'LUG_CB', counterbore):
@@ -371,7 +569,9 @@ def geometry_checks(vendor_root, *, export_dir=None):
                     'manufacturer_lug_plate': {'sha256': shape_content_hash(motor_raw), 'bore_axes_xy_mm': lug_axes,
                                                'bbox_mm': [-60, -60, 18, 60, 60, 25]},
                     'screw_bbox_mm': actual, 'dyno_motor_clock_deg': dyno_turn, 'artifacts': artifacts,
-                    'negative_controls': negative_controls}
+                    'negative_controls': negative_controls, 'factory_recesses': recesses,
+                    'driver_approach': {'name': DRIVER_NAME, 'envelope': DRIVER_ENVELOPE,
+                                        'step': DRIVER_STEP, 'blocked_control': blocked_driver}}
 
 
 def run(vendor_root, *, export_dir=None):
