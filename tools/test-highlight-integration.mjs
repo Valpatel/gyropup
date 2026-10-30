@@ -9,6 +9,7 @@
 import assert from 'node:assert/strict';
 import { mkdir, writeFile } from 'node:fs/promises';
 import { chromium, webkit } from '@playwright/test';
+import { assertHighlightControls } from './highlight-control-contract.mjs';
 
 const base = (process.env.SITE_URL || 'http://127.0.0.1:8899').replace(/\/$/, '');
 const out = process.env.TEST_OUTPUT || '/tmp/gyropup-highlight-integration';
@@ -321,8 +322,10 @@ async function run(mode) {
         assert.ok(completed.hero.renderCalls > 0); assert.ok(completed.hero.triangles > 0);
         assert.equal(completed.hero.soundEnabled, false);
         assert.equal(completed.hero.loadingHidden, true);
+        report.firstEndControls = await assertHighlightControls(page, 'Replay');
         await page.evaluate(() => { window.__highlightIntegrationProbe.replayRequestedAt = performance.now(); });
-        await page.locator('.highlight-replay').click();
+        await page.locator('.highlight-toggle').focus();
+        await page.keyboard.press('Enter');
         await page.waitForFunction(() => {
           const video = document.querySelector('#highlight-video');
           if (video.error || document.querySelector('.highlight-card').dataset.state === 'error') {
@@ -359,6 +362,8 @@ async function run(mode) {
         assert.equal(replayEnd.video.state, 'ended'); assert.equal(replayEnd.video.error, null);
         assert.ok(Math.abs(replayEnd.video.time - 22) < .1, 'The complete second replay reaches its natural 22-second end');
         assert.equal(replayEnd.hero.ready, true);
+        report.secondEndControls = await assertHighlightControls(page, 'Replay');
+        assert.equal(await page.locator('.highlight-toggle').evaluate(button => document.activeElement === button), true, 'The same keyboard control owns playback through completion and replay');
         // Leave the naturally ended player untouched; toggling here starts a third play.
         await page.screenshot({ path: `${out}/${browserLabel}-${mode}-390x844.png` });
         report.endVersion = await version(context);

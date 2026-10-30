@@ -3,6 +3,7 @@ import assert from 'node:assert/strict';
 import { mkdir, writeFile } from 'node:fs/promises';
 import { chromium, webkit, expect } from '@playwright/test';
 import { parseHTML } from 'linkedom';
+import { assertHighlightControls } from './highlight-control-contract.mjs';
 
 const base = (process.env.SITE_URL || 'http://127.0.0.1:8899').replace(/\/$/, '');
 const out = process.env.TEST_OUTPUT || '/tmp/gyropup-highlight-video';
@@ -140,6 +141,7 @@ try {
     assert.ok(response.ok()); assert.match(response.headers()['content-type'], new RegExp('^' + type));
   }
   const page = await pageFor(); await show(page);
+  await assertHighlightControls(page, 'Play');
   assert.equal(page.mediaRequests.length, 0, 'Reduced motion does not preload a movie');
   const poster = await page.locator('.highlight-poster').evaluate(async image => {
     await image.decode(); return { width: image.naturalWidth, height: image.naturalHeight };
@@ -179,6 +181,7 @@ try {
   assert.equal(pausedByDecoderWait, false, 'A full buffer with transient decoder waiting must not force a pause');
   await page.waitForFunction(() => document.querySelector('.highlight-card').dataset.state === 'playing');
   await page.locator('.highlight-toggle').click(); await paused(page);
+  await assertHighlightControls(page, 'Play', { restart: true });
   record('Hero failure independence, one encoding, moving decoded pixels, and uninterrupted full-buffer decoder waiting');
 
   for (const [width, height] of viewports) {
@@ -188,7 +191,7 @@ try {
     assert.ok(Math.abs(screen.width / screen.height - 16 / 9) < .01, 'Screen preserves 16:9');
     assert.ok(screen.x >= 0 && screen.x + screen.width <= width, 'Frame stays inside viewport');
     assert.ok(await page.locator('#highlight-description').evaluate(el => parseFloat(getComputedStyle(el).fontSize) >= 12), 'Footage context stays readable independently of source captions');
-    for (const selector of ['.highlight-toggle', '.highlight-replay', '.highlight-footage']) {
+    for (const selector of ['.highlight-toggle', '.highlight-restart', '.highlight-footage']) {
       const bounds = await page.locator(selector).boundingBox();
       assert.ok(bounds.width >= 44 && bounds.height >= 44, '44px touch targets');
       assert.ok(bounds.x >= 0 && bounds.x + bounds.width <= width, 'Controls stay inside viewport');
@@ -201,8 +204,9 @@ try {
     await page.screenshot({ path: `${out}/${browserLabel}-${width}x${height}.png`, fullPage: false });
   }
   record('13 phone portrait/landscape, tablet and desktop viewports: 16:9 containment, 44px controls and keyboard activation');
-  await page.locator('.highlight-replay').click(); await waitPlaying(page);
-  assert.ok(await page.locator('#highlight-video').evaluate(v => v.currentTime < 2), 'Replay returns to the start');
+  await page.locator('.highlight-restart').focus(); await page.keyboard.press('Enter'); await waitPlaying(page);
+  assert.equal(await page.locator('.highlight-toggle').evaluate(button => document.activeElement === button), true, 'Restart hands keyboard focus to the persistent playback control');
+  assert.ok(await page.locator('#highlight-video').evaluate(v => v.currentTime < 2), 'Restart returns unfinished playback to the start');
   await hide(page); await show(page); await paused(page);
   await page.waitForTimeout(250); assert.equal(await page.locator('#highlight-video').evaluate(v => v.paused), true);
   record('Reduced-motion playback stays manual after scrolling away and back');
@@ -227,10 +231,21 @@ try {
   await automatic.locator('.highlight-toggle').click(); await waitPlaying(automatic);
   await automatic.locator('#highlight-video').evaluate(v => { v.currentTime = v.duration - .25; });
   await automatic.waitForFunction(() => document.querySelector('.highlight-card').dataset.state === 'ended');
+  await assertHighlightControls(automatic, 'Replay');
   await hide(automatic); await show(automatic);
   assert.equal(await automatic.locator('#highlight-video').evaluate(v => v.paused), true, 'Ended reel never restarts on its own');
   await automatic.locator('.highlight-toggle').click(); await waitPlaying(automatic);
   assert.ok(await automatic.locator('#highlight-video').evaluate(v => v.currentTime < 2));
+  await automatic.waitForFunction(() => !document.querySelector('.highlight-restart').hidden);
+  await assertHighlightControls(automatic, 'Pause', { restart: true });
+  await automatic.locator('.highlight-restart').focus();
+  await automatic.locator('#highlight-video').evaluate(v => { v.currentTime = v.duration - .25; });
+  await automatic.waitForFunction(() => document.querySelector('.highlight-card').dataset.state === 'ended');
+  await assertHighlightControls(automatic, 'Replay');
+  assert.equal(await automatic.locator('.highlight-toggle').evaluate(button => document.activeElement === button), true, 'Natural completion transfers focus from Restart to Replay');
+  await automatic.keyboard.press('Space'); await waitPlaying(automatic);
+  await automatic.keyboard.press('Space'); await paused(automatic);
+  await assertHighlightControls(automatic, 'Play', { restart: true });
   record('Autoplay near viewport, offscreen/hidden suspension, preserved user pause, finite ending and deliberate replay'); await automatic.close();
 
   const saver = await pageFor({ motion: 'no-preference', saveData: true }); await show(saver);
@@ -258,6 +273,7 @@ try {
     await show(bad); await bad.locator('.highlight-toggle').click();
     await bad.waitForFunction(() => document.querySelector('.highlight-card').dataset.state === 'error');
     assert.ok(await bad.locator('.highlight-poster').isVisible(), 'Error retains poster');
+    await assertHighlightControls(bad, 'Try again');
     assert.equal(await bad.locator('.highlight-toggle-label').innerText(), 'Try again');
     await bad.unroute(movieURL); await bad.locator('.highlight-toggle').click(); await assertMoving(bad);
     record(`${fault} media failure retains poster and an explicit retry restores decoded playback`); await bad.close();
