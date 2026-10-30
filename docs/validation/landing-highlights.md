@@ -128,6 +128,13 @@ media recovery, keyboard controls and 13 phone/tablet/desktop viewports. Run it
 with bundled Chromium, installed Chrome and WebKit; a codec capability query alone
 is not a playback test. Both checks run in the existing presentation CI workflow.
 
+The primary button owns Play, Pause, Replay and Retry. A separate Restart button
+is available only during unfinished playback that has made progress. Both browser
+harnesses inspect the rendered and accessible control names, visibility and enabled
+state, including the natural first end and full second replay. Keyboard checks
+preserve focus when Restart disappears. This guards the duplicate Replay buttons
+reported in [issue 118](https://github.com/Valpatel/gyropup/issues/118).
+
 Final browser and independent review results are recorded on
 [PR 105](https://github.com/Valpatel/gyropup/pull/105). Production playback is checked
 again after the reviewed dev/main publication.

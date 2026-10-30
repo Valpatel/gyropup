@@ -45,3 +45,10 @@ still time out. Complete the full second replay past the watchdog deadline.
 Read current reduced-motion preferences at the final eligibility decision:
 WebKit can briefly report a fresh query as true before a retained list and its
 change listener update. Keep the listener for ongoing cancellation too.
+
+Validate the visible and accessible controls in every playback state. The primary
+control owns Play/Pause/Replay/Retry; Restart is a distinct unfinished-playback
+action and disappears when unavailable. Preserve focus when that action vanishes,
+and assert exactly one Replay after both natural ends. Decoding and recovery
+checks alone will not detect duplicated actions. See [the player-control incident](../inbox/2026-10-30-player-actions-need-distinct-state-ownership.md)
+and `tools/highlight-control-contract.mjs`.
