@@ -17,3 +17,10 @@ An updated generator does not label already-published historical print files or 
 Detailed thread models need source-bound mating clocking, not a generic intended-overlap waiver. Sampling may diagnose phase but cannot establish complete mating; a timed-out global check stays inconclusive. Keep seating, holes, engagement, tip clearance and physical insert coupons separate from that diagnostic. See [thread sampling limits](../inbox/2026-10-29-thread-sampling-does-not-qualify-mating.md).
 
 Insert-fit specimens must preserve their parent's local geometry and print orientation. A vertical carrier boss and horizontal base anchor need separate measurements. Record requested recipes, actual process conditions and physical observations independently; geometry-only3MF packages contain no slicer settings. See [the specimen orientation lesson](../inbox/2026-10-29-fit-specimens-must-preserve-layer-orientation.md) and `research/carrier-insert-fit/`.
+
+Motor fasteners require actual head-seat and mounting-face measurements against the
+manufacturer screw, followed by the drawing's usable-thread constraint. A deeper
+STEP drill hole does not enlarge that constraint. Preserve the full parent stack
+in mounting coupons and review neighboring rotating parts before changing seats.
+Nominal reserve and engagement are not physical tolerance or thread-strength proof.
+See [the RS-04 mounting incident](../inbox/2026-10-29-lug-depth-needs-measured-seats.md).

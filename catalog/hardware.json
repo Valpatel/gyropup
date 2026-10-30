@@ -2514,7 +2514,7 @@
   "confidence": "product page",
   "used_for": "motor plate onto the RS-04 output-side case lugs (10 x M4 per motor x 4)",
   "qty_per_robot": 40,
-  "notes": "Needs the plate counterbore 8.0 deep (CAD has 4.5): then 4.4 mm into the 5 mm-min lug thread. With 4.5 no stock length fits (M4x25 bottoms, M4x22 engages 2.4 mm)."
+  "notes": "RS-04 output-side lugs guarantee 5 mm usable thread (7 mm STEP drill depth is not usable thread). Current fivebar hip frame: 24.1 mm total, 8.5 mm counterbores, 15.6 mm nominal grip; M4x20 penetration 4.4 mm. Dyno local head-seat bosses also give 15.6 mm nominal grip. Measure actual screw length and printed grip before assembly; 0.6 mm nominal depth reserve does not qualify tolerance, thread strength or print readiness. See docs/rs04-mounting-fit.md."
  },
  {
   "id": "mcmaster-91290a334",
