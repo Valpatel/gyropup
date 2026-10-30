@@ -31,7 +31,31 @@ remove support under part of the sampled bearing annulus. The actual factory
 fastener head is also recessed 0.21 mm below the mounting face; adding that
 omitted solid does not establish flush support.
 
-The next iteration must retain these failures while checking driver approach and
-recording the complete contact evidence. A valid receipt means the evidence is
-complete and unchanged; it does **not** mean the engineering verdict passes.
-Contact/load spreading, manufacturing tolerances and physical fit remain open.
+## Second run: broader evidence, same unresolved support failures
+
+Source `924a5ceee88b71c4c3cad518932a81ea3b8f342f`, with the same pinned toolkit
+and CAD runtime, adds declared pre-link driver-approach checks, a blocked-driver
+control and geometric diagnostics that consider all relevant manufacturer solids
+at both factory-retainer recesses. It does not change the candidate geometry,
+loosen the stack tolerances or remove any support failures.
+
+The [current complete receipt](../../exports/leg/rs04-mounting-fit/checks.json)
+reports **322 passes, 40 warnings and 8 failures**. All forty driver approaches
+pass for the declared envelope; the blocked-path control is caught. Both factory
+heads remain 0.21 mm below the mounting face. The three authored STEP models are
+valid single solids and their print-oriented STL meshes are watertight.
+
+All fifteen receipt-integrity tests pass. The generator deliberately still exits
+1 because the engineering verdict fails. The run driver requires that exit and
+then validates the exact known failures, every expected positive check and
+negative control, all six artifact hashes and all false readiness flags. It rejects
+both missing failures and an unexpected promotion to a passing design.
+
+The complete run, including genuine regeneration of the five broadly source-bound
+carrier reports and the existing leg presentation attachments, finished at
+**2026-10-30 07:34:45 UTC**. Their existing guards passed; the independent motion
+reference and historical FEA media were not regenerated to accept new results.
+
+A valid receipt means the evidence is complete and unchanged; it does **not**
+mean the engineering verdict passes. Contact/load spreading, manufacturing
+tolerances and physical fit remain open in #116/#29.

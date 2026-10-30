@@ -51,11 +51,31 @@ orientation from `build_leg.ROT['hip_frame']`. The ±0.1 mm rings remain bearing
 specimens only; they do not validate motor mounting. Use the same material,
 conditioning and print process as the intended parent when conducting a fit trial.
 
-Existing `exports/leg/` and `exports/rig/bench/` files predate this correction. They
-are historical evidence and must not be used as a current motor-mount print kit.
-New bounded checks and candidate exports must be generated from the revised source
-and retain their source, toolkit and private-input hashes. A successful mesh export
-alone does not approve fabrication.
+The older full-leg and bench files in `exports/leg/` and `exports/rig/bench/`
+predate this correction. They are historical evidence and must not be used as a
+current motor-mount print kit. The separate `exports/leg/rs04-mounting-fit/`
+candidate below has source, toolkit and private-input hashes. A successful mesh
+export alone does not approve fabrication.
+
+## Inspect the candidate
+
+These files contain authored geometry only. Use the standard 3D preview to inspect
+the seats and reliefs. All three parts retain unresolved mounting support failures;
+none of these downloads is a released print job or sliced file.
+
+| Candidate part | Solid model | Print-oriented mesh |
+| --- | --- | --- |
+| Hip frame | [STEP](../exports/leg/rs04-mounting-fit/hip_frame.step) | [STL](../exports/leg/rs04-mounting-fit/hip_frame.stl) |
+| Dyno lug plate | [STEP](../exports/leg/rs04-mounting-fit/dyno_lug_plate.step) | [STL](../exports/leg/rs04-mounting-fit/dyno_lug_plate.stl) |
+| Exact parent motor-fit coupon | [STEP](../exports/leg/rs04-mounting-fit/coupon_frame_ring_nom.step) | [STL](../exports/leg/rs04-mounting-fit/coupon_frame_ring_nom.stl) |
+
+The [complete current receipt](../exports/leg/rs04-mounting-fit/checks.json) records
+**322 passes, 40 warnings and 8 failures**. It confirms 4.4 mm nominal penetration
+at all forty screws, valid single-solid authored models and watertight meshes.
+The driver checks cover only the declared fitting step: a 4 mm-diameter shaft,
+60 mm long, followed by a 25 mm-diameter handle, 80 mm long, approaching from the
+head top before upper links and stop posts are fitted. They do not qualify socket engagement,
+the actual purchased tool, assembled service access or tightening torque.
 
 ## Validation and remaining leg work
 
@@ -64,6 +84,12 @@ forty nominal screw depths but **fails eight receiver-support checks** near
 factory-retainer recesses in the motor. The adjacent factory screw heads are
 recessed too. These failures remain unresolved; the corrected depth alone does
 not qualify the mounting interface.
+
+The second run independently reproduces those support failures, measures both
+factory-retainer heads at 0.21 mm below the mounting plane, and rejects a blocked
+driver path. All fifteen evidence-integrity tests pass while the engineering
+verdict remains **failed**. Those tests reject missing failures, changed sources
+or outputs, and a falsely promoted pass; their success is not mounting acceptance.
 
 The check uses cad-agent's measured fastener interfaces and exact geometric
 relations, plus the drawing's usable-depth limit. It must reject the old seat depths,
