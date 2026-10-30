@@ -243,6 +243,10 @@ try {
   await automatic.waitForFunction(() => document.querySelector('.highlight-card').dataset.state === 'ended');
   await assertHighlightControls(automatic, 'Replay');
   assert.equal(await automatic.locator('.highlight-toggle').evaluate(button => document.activeElement === button), true, 'Natural completion transfers focus from Restart to Replay');
+  await automatic.keyboard.press('Tab');
+  assert.equal(await automatic.locator('.highlight-footage').evaluate(link => document.activeElement === link), true, 'Ended keyboard navigation skips the unavailable Restart action');
+  await automatic.keyboard.press('Shift+Tab');
+  assert.equal(await automatic.locator('.highlight-toggle').evaluate(button => document.activeElement === button), true, 'Keyboard navigation returns directly to the one Replay action');
   await automatic.keyboard.press('Space'); await waitPlaying(automatic);
   await automatic.keyboard.press('Space'); await paused(automatic);
   await assertHighlightControls(automatic, 'Play', { restart: true });

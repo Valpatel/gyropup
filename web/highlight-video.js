@@ -223,7 +223,13 @@ if (card) {
     clearFrameRecovery(); clearMediaTimer(); ready = true; buffering = false; paint();
   });
   video.addEventListener('pause', paint);
-  video.addEventListener('timeupdate', paint);
+  video.addEventListener('timeupdate', () => {
+    paintTime();
+    // Time changes continuously; control names and focus should change only
+    // when an action becomes available/unavailable or native playback ends.
+    const restartAvailable = canRestart();
+    if (restart.hidden !== !restartAvailable || (atEnd() && card.dataset.state !== 'ended')) paint();
+  });
   video.addEventListener('ended', () => {
     finished = true; manualPlay = false; buffering = false;
     clearFrameRecovery(); clearMediaTimer(); paint();
