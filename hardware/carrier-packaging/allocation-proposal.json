@@ -346,7 +346,7 @@
   "observed": "2026-10-29",
   "physical_inventory_complete": false,
   "source_sha256": {
-    "catalog/hardware.json": "c7fb31ff99094655a86cc94c3b90c1fee829d66c6484dfe66f6c0ae0a9076858",
+    "catalog/hardware.json": "b67a9859b3e3b960ff107032519393f53dc81b048607939942242d019f20af86",
     "hardware/carrier-packaging/allocation.py": "8528d8481124e8b621d1671c5f009a2ce94b987e1111d013c93339d40e1b25ac",
     "hardware/carrier-packaging/component-inventory.json": "cb5b28158c4d1fc487ddc98e460bbb0751fd51842d4ff4a1d643e4ed27558097",
     "hardware/carrier-packaging/mechanical-envelope.md": "b864e94290f451d689324aa89e69a282129f1819031429f26ce69711c8895fca",

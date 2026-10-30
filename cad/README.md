@@ -1,5 +1,13 @@
 # Printed parts (CAD)
 
+The current leg is the five-bar mechanism in [fivebar.py](fivebar.py), exported by
+[build_leg.py](build_leg.py), with arrival fixtures in [rig_bench.py](rig_bench.py).
+Start with [RS-04 mounting fit](../docs/rs04-mounting-fit.md) and the
+[mechanical readiness tracker](https://github.com/Valpatel/gyropup/issues/61).
+No complete leg is released for printing. The serial-leg `build.py`/`leg.py`
+assembly and validation claims below are historical, not verification of the five-bar leg.
+
+
 [`build.py`](build.py) makes every part of a design in CadQuery: the aluminium chassis, the two leg modules ([`leg.py`](leg.py), built on the mechanical interface standard in [`gmi.py`](gmi.py) and [`../docs/mechanical-interfaces.md`](../docs/mechanical-interfaces.md)), and the printed head, face and sensor mounts. The motor interfaces come from the vendors' drawings ([`../catalog/interfaces.json`](../catalog/interfaces.json)). [`studies.py`](studies.py) runs the stiffness and strength studies, and [`cables.py`](cables.py) checks the cable routes over the leg's whole range of motion.
 
 ```

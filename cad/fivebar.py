@@ -817,9 +817,10 @@ def cable_check(heights=(105, 130, 170, 220, 270, 320, 370, 390), min_mm3=5.0):
 
 
 KNEE_PIN_STOCK = (50, 55, 60, 70, 80, 90, 100)             # ISO 7379 Ø12 shoulder lengths McMaster stocks (mm)
-LUG_CB = 11.0                                            # the hip frame's M4 counterbores: an M4 x 20 then takes 4.9 mm
-                                                         # (1.2 d) of the RS-04's lug threads, which its drawing guarantees
-                                                         # only 5 deep (drilled 7 in the STEP): 5.9 could bottom (review M4)
+LUG_CB = 8.5                                             # 24.1 mm frame - 8.5 mm counterbore = 15.6 mm nominal grip;
+                                                         # M4 x 20 penetrates 4.4 mm into the drawing's 5 mm-min thread.
+                                                         # Measure printed grip and screw length before assembly;
+                                                         # the nominal 0.6 mm reserve is not a qualified tolerance stack.
 
 
 def knee_pin_length():
@@ -973,7 +974,7 @@ def screw(d, length, head_d, head_h, at, axis_y_sign, x, z):
 
 
 SCREWS = {   # what each screw group is, its size, and where its head seats (catalog/hardware.json keys)
-    'lugs': ('screw_m4x20', 'M4 x 20 into the motors\' lugs, heads 10 mm down in the hip frame'),
+    'lugs': ('screw_m4x20', 'M4 x 20 into the motors\' lugs, head seats 8.5 mm down in the hip frame; 4.4 mm nominal penetration'),
     'links': ('screw_m5x40', 'M5 x 40 through the upper links\' hubs into the adapters\' tapped holes, heads in counterbores'),
     'outputs': ('screw_m5x25', 'M5 x 25 through the adapters into the motors\' output flanges, heads in pockets below the standard face'),
     'wheel': ('screw_m6x30', 'M6 x 30 from inside the hub into the BotWheel\'s flange'),

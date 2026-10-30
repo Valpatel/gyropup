@@ -1,5 +1,13 @@
 # Leg v2 on the single-leg rig: the plan to a first physical leg (M3)
 
+> **Historical planning baseline, not assembly instructions for a released leg.**
+> The 2026-10-27 load, power and fit assumptions below are superseded in part.
+> Start with [current RS-04 mounting work](rs04-mounting-fit.md) and
+> [mechanical readiness #61](https://github.com/Valpatel/gyropup/issues/61).
+> Current hip-frame and knee-bearing predictions fail their requirements (#29).
+> The old motor screw stacks and nominal fit coupon must not be printed as supplied.
+
+
 Written 2026-10-27 by the planner (Fable 5.1) for the Opus implementer. Not committed. Read first: `cad/fivebar.py`,
 `cad/build_leg.py`, `cad/leg_studies.py`, `sim/leg_rig.py`, `exports/leg/{bom.json,print-plan.json,leg.json,rig-results.json}`,
 `exports/leg/fea/summary.json`, `research/leg-suspension.md` (sections 1-8), `docs/decisions.yaml` D36-D41,
@@ -480,14 +488,14 @@ instant price read at upload. Everything else on the rig is extrusion, bought ha
 
 0. On receipt (review M7): each O5 dowel must slip into the RS-04's locating holes by hand (drawn Ø5 0/-0.01; an m6 pin
    is +0.004/+0.012). If one does not, polish its motor end or buy -0.01 pins: the pins are pressed into the frame
-   only, never into both. Depth-gauge one motor's lug threads too: the M4 x 20s take 4.9 mm (the drawing promises 5).
+   only, never into both. Depth-gauge one motor's lug threads too: the revised M4 x 20 stack has 4.4 mm nominal penetration (the drawing promises 5); measure actual grip and screw length before assembly.
 1. Hip frame: M5 inserts (6) set with the soldering iron at the coupon-proven temperature (the stop pins go in last, step 7); the
    two 61812s pressed in from the motor side onto the lip (light fit + retaining compound if the coupon says so);
    O5 dowels pressed into the frame's locating holes (the motor then slides onto them).
 2. Output adapters (machined) onto the motors: the motor's 3 pins into the adapter's sockets, 9 x M5 x 25 (no
    washers: the heads sit in the pockets), threadlocker, the motor maker's torque; two O5 x 16 dowels pressed into
    each adapter's face (H7 holes, 8 mm in). Then each motor into the frame on its 2 dowels and 10 x M4 x 20 (heads
-   11 mm down in the counterbores), the adapter's j6 journal into the frame's 61812 with retaining compound (Loctite
+   8.5 mm down in the revised counterbores; see the current mounting-fit note), the adapter's j6 journal into the frame's 61812 with retaining compound (Loctite
    641: it comes apart). The frame's dowel holes set each motor's turn so its harness leaves level and outwards
    (the front one forwards, 25 deg up; the rear one backwards, 11 deg down): check both clear the flanges.
 3. Upper links: two eye sleeves pressed end to end from the outer face until the outer one is flush with that face

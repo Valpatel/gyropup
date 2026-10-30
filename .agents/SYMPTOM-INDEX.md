@@ -13,6 +13,7 @@
 | Hidden power pin, unexpected VIN net, generated schematic differs from intended net map | [Exported EDA connectivity](domains/electrical-protection.md), [incident and regression](inbox/2026-10-29-hidden-power-pins-can-create-unintended-global-nets.md) |
 | Supplier stock exists but exact rating, wire seal, retail pack or part identity does not match the assembly | [Supplier evidence and exact part identity](domains/supplier-evidence.md) |
 | CAD branches merge but the model, print kit, BOM or validation reports describe different revisions | [Mechanical release coherence](domains/mechanical-release.md) |
+| A motor screw engagement comment disagrees with its actual seats, a drill-depth model overstates usable thread, or a fit coupon omits parent features | [Measure seats and preserve the parent specimen](inbox/2026-10-29-lug-depth-needs-measured-seats.md) |
 | Entry warning loses focus, hides controls, or changes saved audio/scene state | [Prototype notice](domains/prototype-notice.md) |
 | Motto or landing graphics feel cheesy despite passing layout checks | [Gyropup visual character](domains/brand-presentation.md) |
 | A motor, wheel, feed dial or flap orbits outside its assembly while animating; static bounds still pass | [Rendered mechanism frames](domains/rendered-mechanisms.md) |
