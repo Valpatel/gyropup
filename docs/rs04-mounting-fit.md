@@ -59,6 +59,12 @@ alone does not approve fabrication.
 
 ## Validation and remaining leg work
 
+The [first complete CAD run](../research/rs04-lug-stacks/README.md) confirms all
+forty nominal screw depths but **fails eight receiver-support checks** near
+factory-retainer recesses in the motor. The adjacent factory screw heads are
+recessed too. These failures remain unresolved; the corrected depth alone does
+not qualify the mounting interface.
+
 The check uses cad-agent's measured fastener interfaces and exact geometric
 relations, plus the drawing's usable-depth limit. It must reject the old seat depths,
 missing manufacturer inputs, invalid geometry and inadequate engagement. Kernel
