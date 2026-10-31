@@ -1,0 +1,451 @@
+{
+  "schema": "cadagent.gate/1",
+  "gate": "ordered-motor-shaft-survey-gauge",
+  "pass": true,
+  "status": "pass",
+  "counts": {
+    "pass": 12,
+    "warn": 0,
+    "fail": 0
+  },
+  "checks": [
+    {
+      "id": "solid",
+      "status": "pass",
+      "message": "Authored gauge is one valid connected CAD solid.",
+      "evidence": {
+        "cad_valid": true,
+        "solid_count": 1,
+        "volume_cm3": 7.873,
+        "bounds_mm": [
+          -0.0,
+          -0.0,
+          0.0,
+          100.0,
+          32.0,
+          3.5
+        ],
+        "size_mm": [
+          100.0,
+          32.0,
+          3.5
+        ]
+      }
+    },
+    {
+      "id": "mesh",
+      "status": "pass",
+      "message": "Actual exported STL is watertight, connected and tracks CAD volume.",
+      "evidence": {
+        "degenerate_tessellation_faces_removed": 0,
+        "cad_valid": true,
+        "solid_count": 1,
+        "watertight": true,
+        "print_bounds_mm": [
+          100.0,
+          32.0,
+          3.5
+        ],
+        "volume_cm3": 7.873,
+        "connected_components": 1,
+        "relative_volume_error": 6.345734253605909e-06
+      }
+    },
+    {
+      "id": "step-roundtrip",
+      "status": "pass",
+      "message": "Reopened STEP retains all slot dimensions and open mouths.",
+      "evidence": {
+        "slots": [
+          {
+            "index": 0,
+            "x_mm": 11.0,
+            "y_mm": 20.0,
+            "expected_width_mm": 4.8,
+            "cylinder_diameters_mm": [
+              4.8
+            ],
+            "open_through_plate_and_edge": true,
+            "lands_present": true,
+            "pass": true
+          },
+          {
+            "index": 1,
+            "x_mm": 22.0,
+            "y_mm": 20.0,
+            "expected_width_mm": 4.9,
+            "cylinder_diameters_mm": [
+              4.9
+            ],
+            "open_through_plate_and_edge": true,
+            "lands_present": true,
+            "pass": true
+          },
+          {
+            "index": 2,
+            "x_mm": 33.0,
+            "y_mm": 20.0,
+            "expected_width_mm": 5.0,
+            "cylinder_diameters_mm": [
+              5.0
+            ],
+            "open_through_plate_and_edge": true,
+            "lands_present": true,
+            "pass": true
+          },
+          {
+            "index": 3,
+            "x_mm": 44.0,
+            "y_mm": 20.0,
+            "expected_width_mm": 5.1,
+            "cylinder_diameters_mm": [
+              5.1
+            ],
+            "open_through_plate_and_edge": true,
+            "lands_present": true,
+            "pass": true
+          },
+          {
+            "index": 4,
+            "x_mm": 55.0,
+            "y_mm": 20.0,
+            "expected_width_mm": 5.2,
+            "cylinder_diameters_mm": [
+              5.2
+            ],
+            "open_through_plate_and_edge": true,
+            "lands_present": true,
+            "pass": true
+          },
+          {
+            "index": 5,
+            "x_mm": 66.0,
+            "y_mm": 20.0,
+            "expected_width_mm": 5.3,
+            "cylinder_diameters_mm": [
+              5.3
+            ],
+            "open_through_plate_and_edge": true,
+            "lands_present": true,
+            "pass": true
+          },
+          {
+            "index": 6,
+            "x_mm": 77.0,
+            "y_mm": 20.0,
+            "expected_width_mm": 5.4,
+            "cylinder_diameters_mm": [
+              5.4
+            ],
+            "open_through_plate_and_edge": true,
+            "lands_present": true,
+            "pass": true
+          },
+          {
+            "index": 7,
+            "x_mm": 88.0,
+            "y_mm": 20.0,
+            "expected_width_mm": 5.5,
+            "cylinder_diameters_mm": [
+              5.5
+            ],
+            "open_through_plate_and_edge": true,
+            "lands_present": true,
+            "pass": true
+          }
+        ]
+      }
+    },
+    {
+      "id": "negative-controls",
+      "status": "pass",
+      "message": "Geometry probes reject the wrong slot and blocked mouths.",
+      "evidence": {
+        "wrong_first_slot_width_caught": true,
+        "blocked_mouths_caught": true
+      }
+    },
+    {
+      "id": "slot:0",
+      "status": "pass",
+      "message": "Actual slot cylinder diameter and opening match the experimental gauge specification.",
+      "evidence": {
+        "index": 0,
+        "x_mm": 11.0,
+        "y_mm": 20.0,
+        "expected_width_mm": 4.8,
+        "cylinder_diameters_mm": [
+          4.8
+        ],
+        "open_through_plate_and_edge": true,
+        "lands_present": true,
+        "pass": true
+      }
+    },
+    {
+      "id": "slot:1",
+      "status": "pass",
+      "message": "Actual slot cylinder diameter and opening match the experimental gauge specification.",
+      "evidence": {
+        "index": 1,
+        "x_mm": 22.0,
+        "y_mm": 20.0,
+        "expected_width_mm": 4.9,
+        "cylinder_diameters_mm": [
+          4.9
+        ],
+        "open_through_plate_and_edge": true,
+        "lands_present": true,
+        "pass": true
+      }
+    },
+    {
+      "id": "slot:2",
+      "status": "pass",
+      "message": "Actual slot cylinder diameter and opening match the experimental gauge specification.",
+      "evidence": {
+        "index": 2,
+        "x_mm": 33.0,
+        "y_mm": 20.0,
+        "expected_width_mm": 5.0,
+        "cylinder_diameters_mm": [
+          5.0
+        ],
+        "open_through_plate_and_edge": true,
+        "lands_present": true,
+        "pass": true
+      }
+    },
+    {
+      "id": "slot:3",
+      "status": "pass",
+      "message": "Actual slot cylinder diameter and opening match the experimental gauge specification.",
+      "evidence": {
+        "index": 3,
+        "x_mm": 44.0,
+        "y_mm": 20.0,
+        "expected_width_mm": 5.1,
+        "cylinder_diameters_mm": [
+          5.1
+        ],
+        "open_through_plate_and_edge": true,
+        "lands_present": true,
+        "pass": true
+      }
+    },
+    {
+      "id": "slot:4",
+      "status": "pass",
+      "message": "Actual slot cylinder diameter and opening match the experimental gauge specification.",
+      "evidence": {
+        "index": 4,
+        "x_mm": 55.0,
+        "y_mm": 20.0,
+        "expected_width_mm": 5.2,
+        "cylinder_diameters_mm": [
+          5.2
+        ],
+        "open_through_plate_and_edge": true,
+        "lands_present": true,
+        "pass": true
+      }
+    },
+    {
+      "id": "slot:5",
+      "status": "pass",
+      "message": "Actual slot cylinder diameter and opening match the experimental gauge specification.",
+      "evidence": {
+        "index": 5,
+        "x_mm": 66.0,
+        "y_mm": 20.0,
+        "expected_width_mm": 5.3,
+        "cylinder_diameters_mm": [
+          5.3
+        ],
+        "open_through_plate_and_edge": true,
+        "lands_present": true,
+        "pass": true
+      }
+    },
+    {
+      "id": "slot:6",
+      "status": "pass",
+      "message": "Actual slot cylinder diameter and opening match the experimental gauge specification.",
+      "evidence": {
+        "index": 6,
+        "x_mm": 77.0,
+        "y_mm": 20.0,
+        "expected_width_mm": 5.4,
+        "cylinder_diameters_mm": [
+          5.4
+        ],
+        "open_through_plate_and_edge": true,
+        "lands_present": true,
+        "pass": true
+      }
+    },
+    {
+      "id": "slot:7",
+      "status": "pass",
+      "message": "Actual slot cylinder diameter and opening match the experimental gauge specification.",
+      "evidence": {
+        "index": 7,
+        "x_mm": 88.0,
+        "y_mm": 20.0,
+        "expected_width_mm": 5.5,
+        "cylinder_diameters_mm": [
+          5.5
+        ],
+        "open_through_plate_and_edge": true,
+        "lands_present": true,
+        "pass": true
+      }
+    }
+  ],
+  "findings": [],
+  "exclusions": [],
+  "limits": {},
+  "assumptions": [
+    "Experimental clearance survey tool; no exact motor CAD is represented.",
+    "Seller nominal 5 mm claim only chooses the survey range; it is not a measured fit.",
+    "Use unpowered on an accessible smooth shoulder only. No force, threading, clamping or retention.",
+    "Printed slot sizes need measurement; CAD checks do not prove slicer or printer accuracy.",
+    "No mount, hub, screw stack, material strength or powered operation is qualified."
+  ],
+  "physical_fit_verified": false,
+  "source_sha256": {
+    "cad/ordered_motor_gauge.py": "196fadb67a03f63c02c956fa5cab7f4a451abb3fcbbc8d32badaf64da2da8891",
+    "research/ordered-turret-motor/seller-claims.json": "74508276b0107026bc0051ad1a76ad7aa8cc1a6abb148b4d22afa1beb7643a0c"
+  },
+  "artifact_sha256": {
+    "shaft-clearance-survey.step": "b7088c39df3192b2bcfb62a0d2bc2efd3b0dfd7ff1967df1b5cb9501133f651c",
+    "shaft-clearance-survey.stl": "319febc414c8a1cd0b4f2513ff50ce925b2b488f51443f586400a17ccdbe94a8"
+  },
+  "toolkit_sha256": {
+    "geometry.py": "148f271304dab6fd940e813ca560871ba27e82e3ce23e67634e9627a05b1d163",
+    "evidence.py": "21bf67565f9d44b20a7ad26d76fe2d59c7e9ea82a27de6ecf7d97d3d3fd3f1d3",
+    "gates/verdict.py": "3b0a9f75114141e8bfc3a0ccc45c8bb4e2390bdf06233a8643ace07308cd91d7"
+  },
+  "toolkit_revision": "2ad426943ce2c7232875e105e50810849f9a3e5e",
+  "project_revision": "8e85c199320fcd989093c90e920d2d87e6d6bda9",
+  "dependencies": {
+    "cad-agent": "0.4.2",
+    "cadquery": "2.8.0",
+    "cadquery-ocp": "7.9.3.1.1",
+    "trimesh": "5.2.0"
+  },
+  "font": {
+    "family": "DejaVu Sans",
+    "file": "DejaVuSans.ttf",
+    "sha256": "ae7b7855e115a5966d8b1b3f80f254ccc117ec86f9965e202ee2940453837280"
+  },
+  "shape_digest": "d49e49ab82eb38b990e7beb97bc61fc539e6a2d53f25571403b058fc2a9bb698",
+  "slots": [
+    {
+      "index": 0,
+      "x_mm": 11.0,
+      "y_mm": 20.0,
+      "expected_width_mm": 4.8,
+      "cylinder_diameters_mm": [
+        4.8
+      ],
+      "open_through_plate_and_edge": true,
+      "lands_present": true,
+      "pass": true
+    },
+    {
+      "index": 1,
+      "x_mm": 22.0,
+      "y_mm": 20.0,
+      "expected_width_mm": 4.9,
+      "cylinder_diameters_mm": [
+        4.9
+      ],
+      "open_through_plate_and_edge": true,
+      "lands_present": true,
+      "pass": true
+    },
+    {
+      "index": 2,
+      "x_mm": 33.0,
+      "y_mm": 20.0,
+      "expected_width_mm": 5.0,
+      "cylinder_diameters_mm": [
+        5.0
+      ],
+      "open_through_plate_and_edge": true,
+      "lands_present": true,
+      "pass": true
+    },
+    {
+      "index": 3,
+      "x_mm": 44.0,
+      "y_mm": 20.0,
+      "expected_width_mm": 5.1,
+      "cylinder_diameters_mm": [
+        5.1
+      ],
+      "open_through_plate_and_edge": true,
+      "lands_present": true,
+      "pass": true
+    },
+    {
+      "index": 4,
+      "x_mm": 55.0,
+      "y_mm": 20.0,
+      "expected_width_mm": 5.2,
+      "cylinder_diameters_mm": [
+        5.2
+      ],
+      "open_through_plate_and_edge": true,
+      "lands_present": true,
+      "pass": true
+    },
+    {
+      "index": 5,
+      "x_mm": 66.0,
+      "y_mm": 20.0,
+      "expected_width_mm": 5.3,
+      "cylinder_diameters_mm": [
+        5.3
+      ],
+      "open_through_plate_and_edge": true,
+      "lands_present": true,
+      "pass": true
+    },
+    {
+      "index": 6,
+      "x_mm": 77.0,
+      "y_mm": 20.0,
+      "expected_width_mm": 5.4,
+      "cylinder_diameters_mm": [
+        5.4
+      ],
+      "open_through_plate_and_edge": true,
+      "lands_present": true,
+      "pass": true
+    },
+    {
+      "index": 7,
+      "x_mm": 88.0,
+      "y_mm": 20.0,
+      "expected_width_mm": 5.5,
+      "cylinder_diameters_mm": [
+        5.5
+      ],
+      "open_through_plate_and_edge": true,
+      "lands_present": true,
+      "pass": true
+    }
+  ],
+  "negative_controls": {
+    "wrong_first_slot_width_caught": true,
+    "blocked_mouths_caught": true
+  },
+  "geometry_screen_passed": true,
+  "slicer_run": false,
+  "print_release": false,
+  "mount_design_released": false,
+  "hub_design_released": false,
+  "powered_operation_qualified": false
+}

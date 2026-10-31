@@ -180,6 +180,34 @@ class SurveyTests(unittest.TestCase):
             self.assertFalse(self.report(data)['pass'])
 
 
+class GaugeReceiptTests(unittest.TestCase):
+    def test_current_export_identity_and_real_geometry_results(self):
+        folder = ROOT / 'exports/turret/ordered-motor-fit'
+        data = json.loads((folder / 'checks.json').read_text())
+        self.assertEqual(data['schema'], 'cadagent.gate/1')
+        self.assertEqual(data['gate'], 'ordered-motor-shaft-survey-gauge')
+        self.assertIs(data['pass'], True)
+        self.assertEqual(data['counts'], {'pass': 12, 'warn': 0, 'fail': 0})
+        self.assertEqual(set(data['source_sha256']), {'cad/ordered_motor_gauge.py',
+                         'research/ordered-turret-motor/seller-claims.json'})
+        self.assertEqual(set(data['artifact_sha256']), {'shaft-clearance-survey.step', 'shaft-clearance-survey.stl'})
+        for path, digest in data['source_sha256'].items():
+            self.assertEqual(m.sha(ROOT / path), digest, path)
+        for path, digest in data['artifact_sha256'].items():
+            self.assertEqual(m.sha(folder / path), digest, path)
+        self.assertEqual(len(data['slots']), 8)
+        for i, row in enumerate(data['slots']):
+            self.assertIs(row['pass'], True)
+            self.assertEqual(row['cylinder_diameters_mm'], [round(4.8 + i / 10, 1)])
+            self.assertIs(row['open_through_plate_and_edge'], True)
+            self.assertIs(row['lands_present'], True)
+        self.assertEqual(data['negative_controls'], {'wrong_first_slot_width_caught': True,
+                                                    'blocked_mouths_caught': True})
+        for key in ('physical_fit_verified', 'slicer_run', 'print_release',
+                    'mount_design_released', 'hub_design_released', 'powered_operation_qualified'):
+            self.assertIs(data[key], False)
+
+
 class SheetTests(unittest.TestCase):
     def test_committed_svg_reproduces_and_physical_units_are_one_to_one(self):
         sheet = (ROOT / 'research/ordered-turret-motor/mount-pattern-survey.svg').read_text()

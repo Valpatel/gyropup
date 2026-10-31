@@ -84,6 +84,37 @@ The untouched template intentionally fails. A successful survey still reports
 motor; variation between samples matters. Keep private order details and personal
 information out of any evidence selected for publication.
 
+## Inspect the unpowered shaft survey gauge
+
+A small authored gauge now provides eight labelled open slots, **4.8–5.5 mm in
+0.1 mm increments**. These are experimental measurement-tool dimensions around
+the seller's nominal shaft size, not an assertion that the delivered motor has a
+usable 5 mm shoulder. The tool is 100 × 32 × 3 mm, with 0.5 mm raised labels.
+
+| Tool | Solid model | Print-oriented mesh |
+| --- | --- | --- |
+| Shaft-clearance survey gauge | [STEP](../exports/turret/ordered-motor-fit/shaft-clearance-survey.step) | [STL](../exports/turret/ordered-motor-fit/shaft-clearance-survey.stl) |
+
+The [actual CAD receipt](../exports/turret/ordered-motor-fit/checks.json) records
+**12 passes, no warnings and no failures** for the authored tool: one valid CAD
+solid, a connected watertight STL, eight measured slot diameters/open mouths,
+a STEP round trip, and rejected wrong-width/blocked-mouth controls. These are
+geometry screens only. **It has not been sliced, printed or physically checked;
+there is no print release or motor-fit approval.**
+
+When a print has separately been reviewed and measured, record each actual slot
+size and compare only with a verified accessible **smooth shoulder**, sliding
+sideways without force. If the motor has no suitable shoulder, do not use it on
+the thread or turn it into a thread gauge. Record the observed slip/clearance;
+do not use the tool to clamp, retain, power or spin a motor. The width labels
+state CAD nominal values, not calibrated printed dimensions.
+
+The gauge's source is `cad/ordered_motor_gauge.py`. Its remote export used the
+pushed project revision and pinned cad-agent sources recorded in the receipt;
+STEP/STL and all source hashes are checked by the kernel-free regression script.
+The run, log and collection command are recorded on
+[issue #124](https://github.com/Valpatel/gyropup/issues/124#issuecomment-6540045462).
+
 ## Design work that follows the survey
 
 | Step | Required evidence before proceeding |
