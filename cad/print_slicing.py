@@ -28,33 +28,47 @@ def engine_identity(executable: str) -> dict:
 
 
 def _profile(root: Path, kind: str, name: str) -> tuple[dict, dict]:
+    """Resolve Bambu parent → ordered includes → explicit child settings.
+
+    P1S machine G-code lives in included templates in recent Bambu profiles.
+    Following only ``inherits`` silently selects the generic 205°C startup.
+    """
     index = {}
     for path in sorted((root / kind).glob('*.json')):
-        data = json.loads(path.read_text())
+        if not path.resolve().is_relative_to(root.resolve()):
+            raise ValueError(f'Profile path escapes root: {path}')
+        raw = path.read_bytes()
+        data = json.loads(raw)
         key = data.get('name')
         if key in index:
             raise ValueError(f'Duplicate {kind} profile: {key}')
         if key:
-            index[key] = path
-    chain, seen, files = [], set(), {}
-    current = name
-    while current:
-        if current in seen:
-            raise ValueError(f'Cyclic {kind} profile inheritance: {current}')
+            index[key] = (path, raw, data)
+    active, files = set(), {}
+
+    def resolve(current):
+        if not isinstance(current, str) or not current or '/' in current or '\\' in current or current in ('.', '..'):
+            raise ValueError(f'Invalid {kind} profile reference: {current!r}')
+        if current in active:
+            raise ValueError(f'Cyclic {kind} profile inheritance/include: {current}')
         if current not in index:
             raise ValueError(f'Missing {kind} profile: {current}')
-        seen.add(current)
-        path = index[current]
-        # Parse and hash the same bytes, not two independent reads.
-        raw = path.read_bytes()
+        active.add(current)
+        path, raw, data = index[current]
         files[path.relative_to(root).as_posix()] = hashlib.sha256(raw).hexdigest()
-        data = json.loads(raw)
-        chain.append(data)
-        current = data.get('inherits')
-    flat = {}
-    for data in reversed(chain):
-        flat.update(data)
-    flat.pop('inherits', None)
+        flat = resolve(data['inherits']) if data.get('inherits') else {}
+        includes = data.get('include', [])
+        if isinstance(includes, str):
+            includes = [includes]
+        if not isinstance(includes, list):
+            raise ValueError(f'Invalid {kind} include list: {current}')
+        for included in includes:
+            flat.update(resolve(included))
+        flat.update({k: v for k, v in data.items() if k not in ('inherits', 'include')})
+        active.remove(current)
+        return flat
+
+    flat = resolve(name)
     flat.update(name=name, **{'from': 'system'})
     sid = {'machine': 'printer_settings_id', 'process': 'print_settings_id', 'filament': 'filament_settings_id'}[kind]
     flat[sid] = [name] if kind == 'filament' else name

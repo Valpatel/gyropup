@@ -288,6 +288,38 @@ class PrintSources(unittest.TestCase):
             with self.assertRaisesRegex(ValueError, 'Captured slicer settings changed'):
                 print_slicing.run(self.mesh, work, identity)
 
+    def test_included_templates_override_parent_before_explicit_child(self):
+        folder = self.profiles/'machine'
+        (folder/'base.json').write_text(json.dumps({'name': 'Base', 'machine_start_gcode': 'M109 S205', 'a': 'base'}))
+        (folder/'one.json').write_text(json.dumps({'name': 'Start', 'machine_start_gcode': 'M109 S[nozzle_temperature_initial_layer]', 'a': 'one'}))
+        (folder/'two.json').write_text(json.dumps({'name': 'End', 'machine_end_gcode': 'M104 S0', 'a': 'two'}))
+        (folder/'child.json').write_text(json.dumps({'name': turret_print.PRINTER, 'inherits': 'Base', 'include': ['Start', 'End'], 'a': 'child'}))
+        profile, files = print_slicing._profile(self.profiles, 'machine', turret_print.PRINTER)
+        self.assertEqual(profile['machine_start_gcode'], 'M109 S[nozzle_temperature_initial_layer]')
+        self.assertEqual(profile['machine_end_gcode'], 'M104 S0')
+        self.assertEqual(profile['a'], 'child')
+        self.assertNotIn('include', profile)
+        self.assertEqual(set(files), {'machine/'+n for n in ('base.json', 'one.json', 'two.json', 'child.json')})
+        original = files['machine/one.json']
+        (folder/'one.json').write_text(json.dumps({'name': 'Start', 'machine_start_gcode': 'changed'}))
+        self.assertNotEqual(original, print_slicing._profile(self.profiles, 'machine', turret_print.PRINTER)[1]['machine/one.json'])
+
+    def test_missing_cyclic_invalid_and_escaping_includes_fail_closed(self):
+        child = self.profiles/'machine/child.json'
+        for include in (['missing'], [turret_print.PRINTER], ['../outside'], [''], [3], {'invalid': 'type'}):
+            child.write_text(json.dumps({'name': turret_print.PRINTER, 'inherits': 'Base', 'include': include}))
+            with self.subTest(include=include), self.assertRaises(ValueError):
+                print_slicing._profile(self.profiles, 'machine', turret_print.PRINTER)
+        child.write_text(json.dumps({'name': turret_print.PRINTER, 'include': 'Base'}))
+        (self.profiles/'machine/base.json').write_text(json.dumps({'name': 'Base', 'inherits': turret_print.PRINTER}))
+        with self.assertRaisesRegex(ValueError, 'Cyclic'):
+            print_slicing._profile(self.profiles, 'machine', turret_print.PRINTER)
+        outside = self.root/'outside.json'
+        outside.write_text('{"name":"Outside"}')
+        (self.profiles/'machine/escape.json').symlink_to(outside)
+        with self.assertRaisesRegex(ValueError, 'escapes'):
+            print_slicing._profile(self.profiles, 'machine', turret_print.PRINTER)
+
     def test_publication_error_rolls_back_output_and_document(self):
         self.package(['--no-slice'])
         before = self.published()
