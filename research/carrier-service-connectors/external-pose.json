@@ -41,9 +41,9 @@
       "cad/leg_studies.py": "740c94fe586eff664fc4370804d8a056bf282be8f33ede3f5836db647bb4409f",
       "cad/parameters.json": "92cfeaa792a2466594852afeef08af70fe74335ce60f458bd976f62ec0a39e13",
       "cad/print_provenance.py": "db0d9cdc14e0d0363899d82c03eb31cb63ea0d7718fedcf127a5545f8f6bec88",
-      "cad/print_slicing.py": "3e0b5a8bf86c0aec92729425e12173d4ef131975b30d009918a26776d315c56f",
+      "cad/print_slicing.py": "13fd25fe32e75e0c66dbe8af132fd4d70fb030defb14d88a96f9ff77cbaf07bd",
       "cad/printplan.py": "0bd820acb603117a981dff62e18097dd0ad84edc1d75bc2d8a13cd5c36a4a5d9",
-      "cad/rig_assembly.py": "38afebccbe9daa0c610a90e47280781fb1460ab4668e6b4962f4d9defda288af",
+      "cad/rig_assembly.py": "181d7fa6bec55ce97f2b7fdacf4b021c81b79b9fb7855df8abf25b87f5d7fb5a",
       "cad/rig_bench.py": "c0efdacf2747ecbffe3019deeda9fd81c8fee641c798bf987987877f0b46b845",
       "cad/rig_hardware.py": "c71fdf439173243c0134ea588b9c9bf3a2d97c964c4675793f3db94db37a9754",
       "cad/rig_integrity.py": "5750354f73700a3f94bc2112b9972ed621dc7ea46a8123aa53ca76d22a45397b",
@@ -98,7 +98,7 @@
     },
     "toolkit_sources_sha256": "c2941322d5f3d000d3777b0047567211d06855861fa5e14229d7d7519fef3ed3"
   },
-  "input_fingerprint": "623f68ea792a08c9b1b9722fa4fae35eafe7db383c4bd38caeae61da5fb1e2a1",
+  "input_fingerprint": "5a41d4260f4ceeb6723ffea5434f29dcc7a00d6421a40801d14649cce89030c8",
   "context_files": {
     "tools/check-carrier-connector-pose.py": "cb06cb16943f5ee60b98ebe9b630d437aba395db58936028eb21f0a28e711346",
     "tools/check-carrier-connector-inputs.py": "20b4f98e5cef0067d921e645b44fd0809ae2bffee1f1055351e7188623ef0c45",
@@ -5508,5 +5508,5 @@
     "C2 released-source reservations are not a complete parked harness; module withdrawal is not checked.",
     "Upper head, remote hardware and all cable paths are not included; no whole-turret motion claim."
   ],
-  "elapsed_seconds": 64.285
+  "elapsed_seconds": 66.097
 }

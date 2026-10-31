@@ -1,5 +1,11 @@
 # Leg rig: assembly
 
+> **Historical assembly sequence:** these rig exports and loading assumptions
+> predate the current motor-mounting work. The RS-04 lug stack, support and
+> tightening procedure are not released. Use the
+> [current mounting-fit evidence](rs04-mounting-fit.md); this page is not a print
+> or powered-test instruction for the arriving motors.
+
 The order to build the single-leg rig and the first leg on it, from `cad/rig_assembly.py` (the pictures come from the CAD: each step's new parts in colour, lifted along the way they go in; what is already fitted in grey). Part numbers: `docs/leg-rig-orders.md`; wiring: `docs/leg-rig-wiring.md`; before anything moves: `docs/leg-rig-safety.md`; the tests: `docs/leg-bench-tests.md`.
 
 **Tools:** metric hex keys 2.5-6 mm and a 5/16 in key (the ballast screws), a torque wrench 2-25 N m and a torque screwdriver 1-6 N m (the M5s into printed parts), a soldering iron with heat-set tips (M4, M5, M8) at the coupon-proven temperature, an arbor press or a vise with soft jaws (bearings, sleeves), DIN 471 circlip pliers for a 60 mm ring, a machinist's square, the ferrule crimper. Threadlocker (medium) on every screw into steel; never a hard press into PA6-CF: the coupons set every fit.
@@ -44,7 +50,15 @@ Wired on the bench first (docs/leg-rig-wiring.md): the contactor on its two M4 i
 
 ![step 7](../exports/rig/assembly/step-07.png)
 
-The frame's inserts at the coupon-proven temperature: 6 x M5 in the flange ends, 4 x M8 for the stop posts. The two 61812s pressed in from the motor side onto the lip (the fit the frame coupon proved; Loctite 641 if it was a slip fit). The motors (each with its machined adapter already on, D46: 9 x M5 x 25, no washers, threadlocker, the adapter's journal into the 61812 with Loctite 641) onto their two Ø5 dowels, 10 x M4 x 20 each (heads 10 mm down in the counterbores; 2.5 N m). The four stop posts BARE (no TPU sleeves yet): the zero is set against the steel.
+The historical sequence fits the frame's inserts and two 61812s before the motors,
+using the coupon results to establish the bearing fit. Each motor's machined
+adapter and two Ø5 locating dowels then locate it in the frame. Those physical
+coupon results have not been recorded. The former 10 mm counterbore and 2.5 N m
+lug-tightening instructions are superseded: use the current motor-fit candidate
+to establish the actual screw stack, and qualify the joint's preload separately.
+The old sequence then fits the four bare stop posts before setting zero. This
+description preserves assembly order; it does not approve the archived hardware
+dimensions, retention method or a powered zeroing test.
 
 ## 8. The upper links (bench)
 
@@ -114,7 +128,7 @@ Weigh the plates. For 14.75 kg: one 2.5 lb plate per post (within 2 %: exports/r
 | Rails (M4 x 16 into drop-in nuts) | 4 N m |
 | Blocks to plate (M4 x 10 into the block) | 3 N m |
 | Plate to hip frame (M5 x 16 into heat-set inserts) | the B4 torque (1.5 N m until B4) |
-| Motor lugs (M4 x 20, 12.9, into the RS-04) | 2.5 N m |
+| Motor lugs (M4 x 20, 12.9, into the RS-04) | Not established; qualify the measured mounting joint and preload before use. |
 | Adapter to motor (M5 x 25, D46) | 6 N m, threadlocker |
 | Upper link to adapter (M5 x 40 into tapped 6061, heads on the printed link) | the B4 torque (1.5 N m until B4) |
 | Knee nut (M10 nyloc onto the steel sleeves) | 20 N m |

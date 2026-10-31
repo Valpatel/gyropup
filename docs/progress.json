@@ -1,5 +1,5 @@
 {
-  "updated": "2026-10-30",
+  "updated": "2026-10-31",
   "status": [
     {
       "title": "Project stage",
@@ -286,10 +286,67 @@
           "href": "https://github.com/Valpatel/gyropup/issues/116"
         }
       ]
+    },
+    {
+      "time": "2026-10-30",
+      "title": "Ordered motors: exact identity, measurable interfaces",
+      "text": "The ordered turret motor is now recorded as the exact Amazon 3115-900KV listing. Its seller claims are kept separate from sample measurements, with a scale-check mounting survey and an eight-slot shaft gauge. Twelve CAD checks pass for the gauge; it has not been printed or fitted. The historical SunnySky cartridge is not relabelled as this larger motor. Both turret and RS-04 mounting acceptance remain open.",
+      "links": [
+        {
+          "title": "Inspect the turret motor survey and gauge",
+          "href": "../site/pages/docs-ordered-turret-motor-md.html"
+        },
+        {
+          "title": "Confirmed purchases",
+          "href": "../site/pages/docs-purchases-md.html"
+        },
+        {
+          "title": "RS-04 mounting evidence",
+          "href": "../site/pages/docs-rs04-mounting-fit-md.html"
+        }
+      ]
+    },
+    {
+      "time": "2026-10-31",
+      "title": "A real sliced specimen for unpowered RS-04 fit checks",
+      "text": "One exact parent-derived motor ring now has a retained printer job, resolved settings, executable toolpaths and blank measurement sheets. The package shows the counterbore and outer-pocket bridges that need inspection after printing. It is a dimensional process trial: mounting support, preload, strength and powered use remain unqualified. No physical measurements are recorded.",
+      "links": [
+        {
+          "title": "Inspect the fit job and critical layers",
+          "href": "../site/pages/docs-rs04-fit-job-md.html"
+        },
+        {
+          "title": "Parent geometry and unresolved support",
+          "href": "../site/pages/docs-rs04-mounting-fit-md.html"
+        },
+        {
+          "title": "Ordered turret motor survey",
+          "href": "../site/pages/docs-ordered-turret-motor-md.html"
+        }
+      ]
+    },
+    {
+      "time": "2026-10-31",
+      "title": "A shaft gauge whose labels survive slicing",
+      "text": "The first 0.4 mm nozzle slice lost most small labels despite valid CAD. Larger bold lettering now deposits all eight widths and SURVEY ONLY on both upper layers; checks deliberately remove each label and must fail. The retained job estimates 28 minutes and 8.5 g. Its printed widths remain uncalibrated, and the ordered motor mount and hub still need actual sample measurements.",
+      "links": [
+        {
+          "title": "See the deposited layers and download the survey job",
+          "href": "../site/pages/docs-ordered-turret-motor-md.html#retained-unpowered-survey-slice"
+        },
+        {
+          "title": "RS-04 unpowered fit job",
+          "href": "../site/pages/docs-rs04-fit-job-md.html"
+        },
+        {
+          "title": "Ordered motor acceptance · issue 124",
+          "href": "https://github.com/Valpatel/gyropup/issues/124"
+        }
+      ]
     }
   ],
   "shopping": {
-    "note": "Prices and stock from 2026-10-25; Seeed's pages block automated reads, so confirm in the cart. The wheels (ODrive BotWheel pair, $269) and their Flipsky 75100 drivers are not sold by Seeed.",
+    "note": "Historical shopping estimate from 2026-10-25, not a current order list or stock check. Four RS-04 actuators and the Amazon 3115-900KV turret motors are now recorded in the purchase ledger. The fifth RS-04 shown here was a proposed spare and has not been ordered.",
     "items": [
       {
         "item": "RobStride RS-04 actuator",
@@ -315,5 +372,5 @@
       }
     ]
   },
-  "focus": "Current focus: prepare the ordered RS-04 leg motors for a verified mounting interface. Corrected screw depth is documented, but eight support checks still fail; contact/load spreading and physical fit must be resolved before a leg print release."
+  "focus": "Current focus: prepare both ordered motor families for real fit checks. The 3115-900KV shaft survey and RS-04 parent coupon now have retained unpowered print jobs and blank measurement records. Actual motor dimensions, printed fits and RS-04 mounting support still block complete turret and leg print releases."
 }

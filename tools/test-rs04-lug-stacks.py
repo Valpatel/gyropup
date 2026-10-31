@@ -5,6 +5,7 @@ These controls cannot qualify a generated part or a manufacturer assembly.
 """
 import importlib.util
 import argparse
+import ast
 import copy
 import json
 import math
@@ -24,6 +25,34 @@ OPTIONS, REMAINING = parser.parse_known_args()
 
 
 class LugStackControls(unittest.TestCase):
+    def test_regenerated_assembly_does_not_restore_withdrawn_mounting_instructions(self):
+        # Exercise the actual writer and its actual motor-step prose without
+        # importing the CAD/rendering runtime or regenerating historical images.
+        tree = ast.parse((ROOT / 'cad/rig_assembly.py').read_text())
+        steps = next(n.value for n in tree.body if isinstance(n, ast.Assign)
+                     and any(isinstance(t, ast.Name) and t.id == 'STEPS' for t in n.targets))
+        motor = next(row for row in steps.elts
+                     if isinstance(row.elts[0], ast.Constant)
+                     and row.elts[0].value == 'The hip frame and the motors (bench)')
+        prose = ast.literal_eval(motor.elts[-1])
+        writer = next(n for n in tree.body if isinstance(n, ast.FunctionDef) and n.name == 'write_doc')
+        with tempfile.TemporaryDirectory() as temp:
+            root = Path(temp)
+            (root / 'docs').mkdir()
+            namespace = {'R': root}
+            exec(compile(ast.Module(body=[writer], type_ignores=[]), 'rig_assembly.py', 'exec'), namespace)
+            namespace['write_doc']([{'step': 7, 'title': motor.elts[0].value,
+                                    'picture': 'exports/rig/assembly/step-07.png', 'how': prose}])
+            text = (root / 'docs/leg-rig-assembly.md').read_text()
+        self.assertLess(text.index('Unqualified assembly walkthrough'), text.index('## 7.'))
+        self.assertIn('no physical coupon results are recorded', text)
+        self.assertIn('rs04-mounting-fit.md', text)
+        self.assertIn('before upper links and stop posts', text)
+        torque = next(line for line in text.splitlines() if line.startswith('| Motor lugs '))
+        self.assertIn('Not established', torque)
+        self.assertNotIn('2.5 N m', torque)
+        self.assertNotIn('heads 10 mm down', prose)
+
     def test_candidate_frame_and_local_dyno_seats(self):
         for grip in (24.1 - 8.5, 14 + 1.6):
             row = checks.drawing_depth(grip, 20., 5.)

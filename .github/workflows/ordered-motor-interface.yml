@@ -1,0 +1,25 @@
+name: Ordered motor interface evidence
+on:
+  pull_request:
+  push:
+    branches: [main]
+permissions:
+  contents: read
+jobs:
+  survey-and-gauge-receipts:
+    runs-on: ubuntu-24.04
+    timeout-minutes: 5
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/checkout@v4
+        with:
+          repository: Valpatel/cad-agent
+          ref: 2ad426943ce2c7232875e105e50810849f9a3e5e
+          path: .ci/cad-agent
+      - uses: actions/setup-python@v5
+        with:
+          python-version: '3.12'
+      - name: Check exact-part acquisition, survey controls and committed gauge hashes
+        env:
+          PYTHONPATH: .ci/cad-agent/src
+        run: python tools/test-ordered-turret-motor.py

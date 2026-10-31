@@ -142,8 +142,16 @@ is the best there is (a bearing seat), the assembly uses Loctite 641 on it, as `
 
 ## C1-C6: commissioning, one motor on the bench supply
 
-On the dyno board (`exports/rig/bench/dyno_*`): each RS-04 on its lug plate on 10 x M4 x 20, at 2.5 N m. The bench
-supply (Mean Well LRS-600-36, 36 V: the robot's bus, D65) feeds the motor's XT30. Fit the CAN lead and its terminators.
+The archived dyno board (`exports/rig/bench/dyno_*`) is not a current mounting release.
+The proposed interface uses ten M4 × 20 screws per RS-04, but mounting support,
+the manufacturing tolerance stack and tightening preload remain unqualified in
+[the mounting-fit work](rs04-mounting-fit.md). The earlier 2.5 N m instruction had
+no established manufacturer or joint-validation basis and is withdrawn. Establish
+the measured joint and its tightening procedure before commissioning.
+
+The planned bench supply (Mean Well LRS-600-36, 36 V: the robot's bus, D65) feeds
+the motor's XT30. Fit the CAN lead and its terminators only as part of a released
+bench setup; this planned procedure is not evidence of readiness.
 
 | Step | Do | Pass |
 |---|---|---|

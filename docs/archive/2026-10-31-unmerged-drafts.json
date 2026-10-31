@@ -1,0 +1,449 @@
+{
+  "schema_version": 1,
+  "audited_on": "2026-10-31",
+  "purpose": "Historical unmerged draft preservation; not code integration or hardware qualification",
+  "comparison_baselines": {
+    "main": "b4eaa00269655cedccd719a99989f84e2799fa47",
+    "dev": "9b8710b6ff733fb55454f4f96af9d4b027ad62d9"
+  },
+  "archival_refs_status": "Pending coordinator publication and verification; original remote branches remained present at audit",
+  "drafts": [
+    {
+      "pr": 28,
+      "pr_url": "https://github.com/Valpatel/gyropup/pull/28",
+      "original_remote_ref": "refs/heads/body/program",
+      "source_tip": "5fe10c632f201cf886027fcd8499564b55dcda03",
+      "source_url": "https://github.com/Valpatel/gyropup/tree/5fe10c632f201cf886027fcd8499564b55dcda03",
+      "merge_base_with_comparison_main": "983e47e7ef9519105223f3a3f4802b14d914ff4d",
+      "unmerged_commits": [
+        {
+          "sha": "220e02c397cfc306aef65bd831662cdfb6b50f4d",
+          "merge_commit": false,
+          "subject": "Body #10: the turret's real 2.56 kg (turret/program cf6592e, centre 49.2 mm over the TM face) in place of the 1.70 kg head budget; levers 14 (the VLP-16 cable to 1 m, -153 g) and 16 (the packs at DeWalt's sheet's 1.46 kg, -210 g) taken: P3 37.26 kg, 36.76 kg with the scheduled levers, inside 37.0",
+          "url": "https://github.com/Valpatel/gyropup/commit/220e02c397cfc306aef65bd831662cdfb6b50f4d"
+        },
+        {
+          "sha": "c899d3090f84e779cad0a3d9f7d261eae0cc3e36",
+          "merge_commit": false,
+          "subject": "Body #26: the crush pads' retention: a solid 3 mm lip up each side plate's outer face (18 mm), joined to the lattice by a solid 6 mm web, held by the side plate's two low M3 screws through it into the floor flange's existing PEM S-M3-0 (M3 x 10 with a washer for the M3 x 6)",
+          "url": "https://github.com/Valpatel/gyropup/commit/c899d3090f84e779cad0a3d9f7d261eae0cc3e36"
+        },
+        {
+          "sha": "c9800128be7c7ebf8b901631135472621a6b50de",
+          "merge_commit": false,
+          "subject": "Body #10 WIP: lever 11 taken (two lightening windows in each cheek's web, under the strength envelope's 25 MPa: -0.19 kg); the deck to 1/8 in (D2 with the turret's real 2.56 kg was SF 1.83 at 0.100), its top raised by the 0.635 mm so nothing under it moves, the intake pitch to 11.2 mm (SendCutSend's minimum web); the slot web rule by each slot's own extent",
+          "url": "https://github.com/Valpatel/gyropup/commit/c9800128be7c7ebf8b901631135472621a6b50de"
+        },
+        {
+          "sha": "95370d0403f905b70f3f3f75a29a2f7ff780dc91",
+          "merge_commit": true,
+          "subject": "Merge remote-tracking branch 'origin/main' into body/program",
+          "url": "https://github.com/Valpatel/gyropup/commit/95370d0403f905b70f3f3f75a29a2f7ff780dc91"
+        },
+        {
+          "sha": "5fe10c632f201cf886027fcd8499564b55dcda03",
+          "merge_commit": false,
+          "subject": "Body #10 WIP: after merging leg/stops (983e47e): the robot sim takes the ledger's 3.53 kg wheel (the leg's strength cases and the body's leg loads keep its 4.0 kg), the tyre 54 mm as the leg has it; build clean (22 stances 0 clashes with the new hub dowels, integrity 75 joints clean); ledger P3 37.75 kg, 37.25 kg with the scheduled levers: 0.25 kg OVER 37.0 (leg.json grew to 9,708 g a leg, the 1/8 in deck +0.16 kg)",
+          "url": "https://github.com/Valpatel/gyropup/commit/5fe10c632f201cf886027fcd8499564b55dcda03"
+        }
+      ],
+      "git_cherry_against_baselines": {
+        "main": [
+          "+ 220e02c397cfc306aef65bd831662cdfb6b50f4d",
+          "+ c899d3090f84e779cad0a3d9f7d261eae0cc3e36",
+          "+ c9800128be7c7ebf8b901631135472621a6b50de",
+          "+ 5fe10c632f201cf886027fcd8499564b55dcda03"
+        ],
+        "dev": [
+          "+ 220e02c397cfc306aef65bd831662cdfb6b50f4d",
+          "+ c899d3090f84e779cad0a3d9f7d261eae0cc3e36",
+          "+ c9800128be7c7ebf8b901631135472621a6b50de",
+          "+ 5fe10c632f201cf886027fcd8499564b55dcda03"
+        ]
+      },
+      "changed_entries_from_merge_base": [
+        {
+          "status": "M",
+          "path": "cad/body_battery.py"
+        },
+        {
+          "status": "M",
+          "path": "cad/body_frame.py"
+        },
+        {
+          "status": "M",
+          "path": "cad/body_joints.py"
+        },
+        {
+          "status": "M",
+          "path": "cad/body_layout.py"
+        },
+        {
+          "status": "M",
+          "path": "cad/body_legloads.py"
+        },
+        {
+          "status": "M",
+          "path": "cad/body_params.py"
+        },
+        {
+          "status": "M",
+          "path": "cad/body_sheet.py"
+        },
+        {
+          "status": "M",
+          "path": "cad/test_body.py"
+        },
+        {
+          "status": "M",
+          "path": "docs/body-orders.md"
+        },
+        {
+          "status": "M",
+          "path": "docs/body-sections.md"
+        },
+        {
+          "status": "M",
+          "path": "exports/body/bay_skid.step"
+        },
+        {
+          "status": "M",
+          "path": "exports/body/bay_skid.stl"
+        },
+        {
+          "status": "M",
+          "path": "exports/body/body.json"
+        },
+        {
+          "status": "M",
+          "path": "exports/body/bom.json"
+        },
+        {
+          "status": "M",
+          "path": "exports/body/dcdc_bracket.step"
+        },
+        {
+          "status": "M",
+          "path": "exports/body/dcdc_bracket.stl"
+        },
+        {
+          "status": "M",
+          "path": "exports/body/gates/connectivity-P3.dot"
+        },
+        {
+          "status": "M",
+          "path": "exports/body/gates/connectivity-P3.json"
+        },
+        {
+          "status": "M",
+          "path": "exports/body/integrity.json"
+        },
+        {
+          "status": "M",
+          "path": "exports/body/mass.json"
+        },
+        {
+          "status": "M",
+          "path": "exports/body/plate_post.step"
+        },
+        {
+          "status": "M",
+          "path": "exports/body/plate_post.stl"
+        },
+        {
+          "status": "M",
+          "path": "exports/body/post.step"
+        },
+        {
+          "status": "M",
+          "path": "exports/body/post.stl"
+        },
+        {
+          "status": "M",
+          "path": "exports/body/print-plan.json"
+        },
+        {
+          "status": "M",
+          "path": "exports/body/riser.step"
+        },
+        {
+          "status": "M",
+          "path": "exports/body/sendcutsend/cheek_5052-H32_0.187in_x2.dxf"
+        },
+        {
+          "status": "M",
+          "path": "exports/body/sendcutsend/cheek_5052-H32_0.187in_x2.step"
+        },
+        {
+          "status": "A",
+          "path": "exports/body/sendcutsend/deck_5052-H32_0.125in_x1.dxf"
+        },
+        {
+          "status": "A",
+          "path": "exports/body/sendcutsend/deck_5052-H32_0.125in_x1.step"
+        },
+        {
+          "status": "M",
+          "path": "exports/body/shell/print-plan.json"
+        },
+        {
+          "status": "M",
+          "path": "exports/body/thermal/hand_model.json"
+        },
+        {
+          "status": "M",
+          "path": "sim/robot_v2.py"
+        }
+      ],
+      "acceptance_issues": [
+        {
+          "number": 10,
+          "url": "https://github.com/Valpatel/gyropup/issues/10"
+        },
+        {
+          "number": 26,
+          "url": "https://github.com/Valpatel/gyropup/issues/26"
+        }
+      ]
+    },
+    {
+      "pr": 30,
+      "pr_url": "https://github.com/Valpatel/gyropup/pull/30",
+      "original_remote_ref": "refs/heads/legrig/program",
+      "source_tip": "d862b59e4d101a43ba746a26d772cf529be58eee",
+      "source_url": "https://github.com/Valpatel/gyropup/tree/d862b59e4d101a43ba746a26d772cf529be58eee",
+      "merge_base_with_comparison_main": "a79e48cbba8ee08f9219a05dc79e642da9461efe",
+      "unmerged_commits": [
+        {
+          "sha": "0767c0e328117dd132ffbb832ac171bfea22779c",
+          "merge_commit": false,
+          "subject": "Leg rig on the merged leg: crouch to D71's 185 mm, the 254 mm wheel, 18.75 kg",
+          "url": "https://github.com/Valpatel/gyropup/commit/0767c0e328117dd132ffbb832ac171bfea22779c"
+        },
+        {
+          "sha": "2ab0b49b50f344bdf79d5111369bea44aebc87f8",
+          "merge_commit": false,
+          "subject": "Bench tests: the hip frame's proof load at 2x E1 and the undamped power-cut rule (#29)",
+          "url": "https://github.com/Valpatel/gyropup/commit/2ab0b49b50f344bdf79d5111369bea44aebc87f8"
+        },
+        {
+          "sha": "d7b0863126803b6ee95b0753871423865a38ae3e",
+          "merge_commit": false,
+          "subject": "WIP: the rig's checks on cad-agent's gates (#14)",
+          "url": "https://github.com/Valpatel/gyropup/commit/d7b0863126803b6ee95b0753871423865a38ae3e"
+        },
+        {
+          "sha": "edd1486ecac0da2ee00f9f07fdde1075169c5084",
+          "merge_commit": false,
+          "subject": "Rig predictions at 18.75 kg / 36 V on the merged leg (#8)",
+          "url": "https://github.com/Valpatel/gyropup/commit/edd1486ecac0da2ee00f9f07fdde1075169c5084"
+        },
+        {
+          "sha": "d862b59e4d101a43ba746a26d772cf529be58eee",
+          "merge_commit": true,
+          "subject": "Merge remote-tracking branch 'origin/main' into legrig/program",
+          "url": "https://github.com/Valpatel/gyropup/commit/d862b59e4d101a43ba746a26d772cf529be58eee"
+        }
+      ],
+      "git_cherry_against_baselines": {
+        "main": [
+          "+ 0767c0e328117dd132ffbb832ac171bfea22779c",
+          "+ 2ab0b49b50f344bdf79d5111369bea44aebc87f8",
+          "+ d7b0863126803b6ee95b0753871423865a38ae3e",
+          "+ edd1486ecac0da2ee00f9f07fdde1075169c5084"
+        ],
+        "dev": [
+          "+ 0767c0e328117dd132ffbb832ac171bfea22779c",
+          "+ 2ab0b49b50f344bdf79d5111369bea44aebc87f8",
+          "+ d7b0863126803b6ee95b0753871423865a38ae3e",
+          "+ edd1486ecac0da2ee00f9f07fdde1075169c5084"
+        ]
+      },
+      "changed_entries_from_merge_base": [
+        {
+          "status": "M",
+          "path": "cad/assembly_checks.py"
+        },
+        {
+          "status": "M",
+          "path": "cad/build_rig.py"
+        },
+        {
+          "status": "M",
+          "path": "cad/rig_assembly.py"
+        },
+        {
+          "status": "A",
+          "path": "cad/rig_gates.py"
+        },
+        {
+          "status": "M",
+          "path": "cad/rig_hardware.py"
+        },
+        {
+          "status": "D",
+          "path": "cad/rig_integrity.py"
+        },
+        {
+          "status": "M",
+          "path": "cad/rig_parts.py"
+        },
+        {
+          "status": "M",
+          "path": "docs/leg-bench-tests.md"
+        },
+        {
+          "status": "M",
+          "path": "docs/leg-rig-safety.md"
+        },
+        {
+          "status": "M",
+          "path": "docs/leg-rig-sections.md"
+        },
+        {
+          "status": "M",
+          "path": "exports/rig/faults.json"
+        },
+        {
+          "status": "D",
+          "path": "exports/rig/integrity.json"
+        },
+        {
+          "status": "M",
+          "path": "exports/rig/predictions.json"
+        },
+        {
+          "status": "M",
+          "path": "exports/rig/reproduction.json"
+        },
+        {
+          "status": "D",
+          "path": "exports/rig/runs/2026-10-27-211108-sim-jump-prediction.npz"
+        },
+        {
+          "status": "D",
+          "path": "exports/rig/runs/2026-10-27-211108-sim-jump-prediction.png"
+        },
+        {
+          "status": "R062",
+          "path": "exports/rig/runs/2026-10-28-070253-sim-jump-prediction.json",
+          "previous_path": "exports/rig/runs/2026-10-27-211108-sim-jump-prediction.json"
+        },
+        {
+          "status": "A",
+          "path": "exports/rig/runs/2026-10-28-070253-sim-jump-prediction.npz"
+        },
+        {
+          "status": "A",
+          "path": "exports/rig/runs/2026-10-28-070253-sim-jump-prediction.png"
+        },
+        {
+          "status": "M",
+          "path": "rig/criteria.json"
+        },
+        {
+          "status": "M",
+          "path": "rig/leg_control.py"
+        },
+        {
+          "status": "M",
+          "path": "rig/run.py"
+        },
+        {
+          "status": "M",
+          "path": "rig/sim_bus.py"
+        },
+        {
+          "status": "M",
+          "path": "rig/tests/test_control.py"
+        }
+      ],
+      "acceptance_issues": [
+        {
+          "number": 8,
+          "url": "https://github.com/Valpatel/gyropup/issues/8"
+        },
+        {
+          "number": 14,
+          "url": "https://github.com/Valpatel/gyropup/issues/14"
+        },
+        {
+          "number": 29,
+          "url": "https://github.com/Valpatel/gyropup/issues/29"
+        },
+        {
+          "number": 24,
+          "url": "https://github.com/Valpatel/gyropup/issues/24"
+        },
+        {
+          "number": 25,
+          "url": "https://github.com/Valpatel/gyropup/issues/25"
+        },
+        {
+          "number": 116,
+          "url": "https://github.com/Valpatel/gyropup/issues/116"
+        }
+      ]
+    },
+    {
+      "pr": 46,
+      "pr_url": "https://github.com/Valpatel/gyropup/pull/46",
+      "original_remote_ref": "refs/heads/research/can-actuator-candidates",
+      "source_tip": "40b5c5f2967ed8253a0e67cd8af875e06e3d27a3",
+      "source_url": "https://github.com/Valpatel/gyropup/tree/40b5c5f2967ed8253a0e67cd8af875e06e3d27a3",
+      "merge_base_with_comparison_main": "c17ce2f3e73cf236a45c74c484fbbb8f6611d652",
+      "unmerged_commits": [
+        {
+          "sha": "8b3cd3aa7cc93b69d413ec05cbae73b0b7e74a1a",
+          "merge_commit": false,
+          "subject": "docs: assess direct-battery CAN actuator candidates",
+          "url": "https://github.com/Valpatel/gyropup/commit/8b3cd3aa7cc93b69d413ec05cbae73b0b7e74a1a"
+        },
+        {
+          "sha": "40b5c5f2967ed8253a0e67cd8af875e06e3d27a3",
+          "merge_commit": false,
+          "subject": "docs: compare exact Deeahdah threaded-shaft motor candidate",
+          "url": "https://github.com/Valpatel/gyropup/commit/40b5c5f2967ed8253a0e67cd8af875e06e3d27a3"
+        }
+      ],
+      "git_cherry_against_baselines": {
+        "main": [
+          "+ 8b3cd3aa7cc93b69d413ec05cbae73b0b7e74a1a",
+          "+ 40b5c5f2967ed8253a0e67cd8af875e06e3d27a3"
+        ],
+        "dev": [
+          "+ 8b3cd3aa7cc93b69d413ec05cbae73b0b7e74a1a",
+          "+ 40b5c5f2967ed8253a0e67cd8af875e06e3d27a3"
+        ]
+      },
+      "changed_entries_from_merge_base": [
+        {
+          "status": "M",
+          "path": ".agents/SYMPTOM-INDEX.md"
+        },
+        {
+          "status": "A",
+          "path": ".agents/domains/can-hardware-selection.md"
+        },
+        {
+          "status": "A",
+          "path": ".agents/inbox/2026-10-29-check-the-proposed-architecture-before-rejecting-a-part.md"
+        },
+        {
+          "status": "A",
+          "path": "research/can-actuator-candidates-2026-10-29.md"
+        }
+      ],
+      "acceptance_issues": [
+        {
+          "number": 45,
+          "url": "https://github.com/Valpatel/gyropup/issues/45"
+        },
+        {
+          "number": 124,
+          "url": "https://github.com/Valpatel/gyropup/issues/124"
+        }
+      ]
+    }
+  ]
+}
