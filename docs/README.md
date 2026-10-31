@@ -25,7 +25,7 @@ not establish mechanical readiness. Older plans remain available for context and
   [engineering architecture](architecture.md), [weight ceiling and historical load limits](design-weight-budget.md).
 - [Mechanical review criteria and baseline history](mechanical-readiness.md), [interface standard](mechanical-interfaces.md),
   [print-source provenance](print-source-provenance.md).
-- Leg: [current RS-04 mounting fit](rs04-mounting-fit.md), [historical prototype plan](leg-prototype-plan.md), [bench tests](leg-bench-tests.md),
+- Leg: [current RS-04 mounting fit](rs04-mounting-fit.md), [unpowered fit job](rs04-fit-job.md), [historical prototype plan](leg-prototype-plan.md), [bench tests](leg-bench-tests.md),
   [rig assembly](leg-rig-assembly.md), [wiring](leg-rig-wiring.md), [safety](leg-rig-safety.md).
 - Turret: [ordered motor interface](ordered-turret-motor.md), [prototype plan](turret-prototype-plan.md), [next plan](turret-next-plan.md),
   [assembly](turret-assembly.md), [wiring](turret-wiring.md), [bench tests](turret-bench-tests.md),

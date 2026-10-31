@@ -1,5 +1,5 @@
 {
-  "updated": "2026-10-30",
+  "updated": "2026-10-31",
   "status": [
     {
       "title": "Project stage",
@@ -303,6 +303,25 @@
         {
           "title": "RS-04 mounting evidence",
           "href": "../site/pages/docs-rs04-mounting-fit-md.html"
+        }
+      ]
+    },
+    {
+      "time": "2026-10-31",
+      "title": "A real sliced specimen for unpowered RS-04 fit checks",
+      "text": "One exact parent-derived motor ring now has a retained printer job, resolved settings, executable toolpaths and blank measurement sheets. The package shows the counterbore and outer-pocket bridges that need inspection after printing. It is a dimensional process trial: mounting support, preload, strength and powered use remain unqualified. No physical measurements are recorded.",
+      "links": [
+        {
+          "title": "Inspect the fit job and critical layers",
+          "href": "../site/pages/docs-rs04-fit-job-md.html"
+        },
+        {
+          "title": "Parent geometry and unresolved support",
+          "href": "../site/pages/docs-rs04-mounting-fit-md.html"
+        },
+        {
+          "title": "Ordered turret motor survey",
+          "href": "../site/pages/docs-ordered-turret-motor-md.html"
         }
       ]
     }
