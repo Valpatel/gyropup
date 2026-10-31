@@ -111,7 +111,7 @@ the thread or turn it into a thread gauge. Record the observed slip/clearance;
 do not use the tool to clamp, retain, power or spin a motor. The width labels
 state CAD nominal values, not calibrated printed dimensions.
 
-The gauge's source is `cad/ordered_motor_gauge.py`. Its remote export used the
+The gauge's source is `research/ordered-turret-motor/gauge.py`. Its remote export used the
 pushed project revision and pinned cad-agent sources recorded in the receipt;
 STEP/STL and all source hashes are checked by the kernel-free regression script.
 The run, log and collection command are recorded on

@@ -14,14 +14,17 @@ from pathlib import Path
 import subprocess
 import sys
 
-ROOT = Path(__file__).resolve().parents[1]
+ROOT = Path(__file__).resolve().parents[2]
 WIDTHS = (4.8, 4.9, 5.0, 5.1, 5.2, 5.3, 5.4, 5.5)
 SIZE = (100., 32., 3.)
 SLOT_Y = 20.
 LABEL_HEIGHT = .5
-FONT = 'DejaVu Sans'
+FONT = 'DejaVu Sans Bold'
+FONT_PATH = Path('/usr/share/fonts/truetype/dejavu/DejaVuSans-Bold.ttf')
+FONT_SHA256 = '5c1247acef7f2b8522a31742c76d6adcb5569bacc0be7ceaa4dc39dd252ce895'
+LABEL_SIZE = 5.0
 NAME = 'shaft-clearance-survey'
-SOURCES = ('cad/ordered_motor_gauge.py', 'research/ordered-turret-motor/seller-claims.json')
+SOURCES = ('research/ordered-turret-motor/gauge.py', 'research/ordered-turret-motor/seller-claims.json')
 TOOLKIT = ('geometry.py', 'evidence.py', 'gates/verdict.py')
 
 
@@ -29,22 +32,30 @@ def digest(path):
     return hashlib.sha256(Path(path).read_bytes()).hexdigest()
 
 
-def make_gauge(widths=WIDTHS, labels=True):
+def make_gauge(widths=WIDTHS, labels=True, label_evidence=None):
     import cadquery as cq
+    if digest(FONT_PATH) != FONT_SHA256:
+        raise ValueError('Exact bold font file differs from the declared identity')
     plate = cq.Workplane('XY').box(*SIZE, centered=(False, False, False)).edges('|Z').fillet(2.)
+    def label(text, x, y, name):
+        shape = cq.Workplane('XY').text(text, LABEL_SIZE, LABEL_HEIGHT,
+                    font=FONT, fontPath=str(FONT_PATH), halign='center', valign='center').translate((x, y, SIZE[2]))
+        if label_evidence is not None:
+            def bounds(solid):
+                b = solid.BoundingBox()
+                return [b.xmin, b.ymin, b.zmin, b.xmax, b.ymax, b.zmax]
+            label_evidence.append({'id': name, 'text': text, 'bounds_mm': bounds(shape.val()),
+                                   'glyph_bounds_mm': sorted([bounds(s) for s in shape.val().Solids()])})
+        return shape
     for i, width in enumerate(widths):
         x = 11. + 11. * i
         circle = cq.Workplane('XY').center(x, SLOT_Y).circle(width / 2).extrude(5).translate((0, 0, -1))
         opening = cq.Workplane('XY').center(x, 27).rect(width, 14).extrude(5).translate((0, 0, -1))
         plate = plate.cut(circle.union(opening))
         if labels:
-            text = cq.Workplane('XY').text(f'{WIDTHS[i]:.1f}', 2.8, LABEL_HEIGHT, font=FONT,
-                                           halign='center', valign='center').translate((x, 11., SIZE[2]))
-            plate = plate.union(text)
+            plate = plate.union(label(f'{WIDTHS[i]:.1f}', x, 11., f'slot:{i}'))
     if labels:
-        text = cq.Workplane('XY').text('SURVEY ONLY', 3.2, LABEL_HEIGHT, font=FONT,
-                                       halign='center', valign='center').translate((50., 4.5, SIZE[2]))
-        plate = plate.union(text)
+        plate = plate.union(label('SURVEY ONLY', 50., 4.5, 'survey-only'))
     return plate.val()
 
 
@@ -88,7 +99,8 @@ def build(out):
     import trimesh
 
     out.mkdir(parents=True, exist_ok=True)
-    shape = make_gauge()
+    labels = []
+    shape = make_gauge(label_evidence=labels)
     solid = solid_report(shape)
     slots = measure_slots(shape)
     step, stl = out / f'{NAME}.step', out / f'{NAME}.stl'
@@ -106,7 +118,8 @@ def build(out):
     closed = measure_slots(shape.fuse(blocker))
     controls = {'wrong_first_slot_width_caught': not wrong[0]['pass'],
                 'blocked_mouths_caught': all(not row['pass'] for row in closed)}
-    checks = [Check('solid', 'pass' if solid['cad_valid'] and solid['solid_count'] == 1 else 'fail',
+    checks = [Check('solid', 'pass' if solid['cad_valid'] and solid['solid_count'] == 1
+                    and all(abs(a-b) < .001 for a, b in zip(solid['size_mm'], [100., 32., 3.5])) else 'fail',
                     'Authored gauge is one valid connected CAD solid.', evidence=solid),
               Check('mesh', 'pass' if mesh_report['watertight'] and components == 1 and mesh_volume_error < .002 else 'fail',
                     'Actual exported STL is watertight, connected and tracks CAD volume.',
@@ -119,7 +132,7 @@ def build(out):
                      'Actual slot cylinder diameter and opening match the experimental gauge specification.', evidence=r)
                for r in slots]
     toolkit_root = Path(cadagent.__file__).resolve().parent
-    font_path = Path(subprocess.check_output(['fc-match', '-f', '%{file}', FONT], text=True))
+    font_path = FONT_PATH
     report = verdict('ordered-motor-shaft-survey-gauge', checks,
                      assumptions=['Experimental clearance survey tool; no exact motor CAD is represented.',
                                   'Seller nominal 5 mm claim only chooses the survey range; it is not a measured fit.',
@@ -132,8 +145,10 @@ def build(out):
                             'toolkit_revision': subprocess.check_output(['git', '-C', str(toolkit_root), 'rev-parse', 'HEAD'], text=True).strip(),
                             'project_revision': subprocess.check_output(['git', '-C', str(ROOT), 'rev-parse', 'HEAD'], text=True).strip(),
                             'dependencies': {p: version(p) for p in ('cad-agent', 'cadquery', 'cadquery-ocp', 'trimesh')},
-                            'font': {'family': FONT, 'file': font_path.name, 'sha256': digest(font_path)},
-                            'shape_digest': shape_content_hash(shape), 'slots': slots, 'negative_controls': controls,
+                            'font': {'family': FONT, 'file': font_path.name, 'sha256': digest(font_path), 'explicit_font_path': str(font_path),
+                                     'text_size_mm': LABEL_SIZE, 'raised_height_mm': LABEL_HEIGHT},
+                            'shape_digest': shape_content_hash(shape), 'slots': slots, 'labels': labels,
+                            'negative_controls': controls,
                             'geometry_screen_passed': all(c.status == 'pass' for c in checks),
                             'slicer_run': False, 'print_release': False, 'mount_design_released': False,
                             'hub_design_released': False, 'powered_operation_qualified': False})
