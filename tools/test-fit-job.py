@@ -118,7 +118,7 @@ class FitJobTests(unittest.TestCase):
         with self.assertRaisesRegex(ValueError, 'G-code'): fit.sliced_members(self.job)
 
     def test_actual_object_temperature_and_waits_not_profile_labels(self):
-        code = ('M190 S100\nM109 S275\nG90\nM83\nG1 X100 Y100 Z0.2 F1800\n'
+        code = ('M220 S100\nM190 S100\nM109 S275\nG90\nM83\nG1 X100 Y100 Z0.2 F1800\n'
                 '; Z_HEIGHT: 0.2\n; FEATURE: Outer wall\nG1 X120 Y100 E1\nG1 X120 Y120 E1\n')
         got = fit.toolpaths(code, MACHINE)
         self.assertEqual(got['features']['Outer wall']['moves'], 2)
@@ -128,12 +128,12 @@ class FitJobTests(unittest.TestCase):
             with self.subTest(code=changed), self.assertRaises(ValueError): fit.toolpaths(changed, MACHINE)
 
     def test_arc_sweep_exceeding_bed_is_rejected_even_if_endpoints_fit(self):
-        code = ('M190 S100\nM109 S275\nG90\nM83\nG1 X100 Y100 Z0.2 F1800\n'
+        code = ('M220 S100\nM190 S100\nM109 S275\nG90\nM83\nG1 X100 Y100 Z0.2 F1800\n'
                 '; Z_HEIGHT: 0.2\n; FEATURE: Outer wall\nG2 X100 Y100 I100 J0 E1\n')
         with self.assertRaisesRegex(ValueError, 'volume or exclusion'): fit.toolpaths(code, MACHINE)
 
     def test_persistent_units_origins_and_arc_modes_fail_closed(self):
-        code = ('M190 S100\nM109 S275\nG90\nM83\nG1 X100 Y100 Z0.2 F1800\n'
+        code = ('M220 S100\nM190 S100\nM109 S275\nG90\nM83\nG1 X100 Y100 Z0.2 F1800\n'
                 '; Z_HEIGHT: 0.2\n; FEATURE: Outer wall\nG1 X120 Y100 E1\nG1 X120 Y120 E1\n')
         mutations = ['G20\n'+code, 'g20\n'+code,
                      code.replace('; Z_HEIGHT:', 'G92 X-100 Y-100\n; Z_HEIGHT:'),
@@ -150,7 +150,7 @@ class FitJobTests(unittest.TestCase):
         self.assertTrue(fit.toolpaths(code.replace('G90', 'G92 E0\nG90'), MACHINE)['temperature_waits_verified'])
 
     def test_cooling_reheat_requires_fresh_nozzle_and_bed_waits(self):
-        code = ('M190 S100\nM109 S275\nG90\nM83\nG1 X100 Y100 Z0.2 F1800\n'
+        code = ('M220 S100\nM190 S100\nM109 S275\nG90\nM83\nG1 X100 Y100 Z0.2 F1800\n'
                 '; Z_HEIGHT: 0.2\n; FEATURE: Outer wall\nG1 X120 Y100 E1\nG1 X120 Y120 E1\n')
         for cool, reheat, wait in [('M104 S0', 'M104 S275', 'M109 S275'),
                                    ('M104 S205', 'M104 S275', 'M109 S275'),
@@ -168,7 +168,7 @@ class FitJobTests(unittest.TestCase):
         with self.assertRaisesRegex(ValueError, 'temperatures/waits differ'): fit.toolpaths(conditional, MACHINE)
 
     def test_deposition_cap_uses_modal_feed_and_excludes_travel(self):
-        code = ('M190 S100\nM109 S275\nG90\nM83\nG1 X100 Y100 Z0.2 F1800\n'
+        code = ('M220 S100\nM190 S100\nM109 S275\nG90\nM83\nG1 X100 Y100 Z0.2 F1800\n'
                 '; Z_HEIGHT: 0.2\n; FEATURE: Outer wall\nG1 X110 Y110 F30000\n'
                 'G1 F5940\nG1 X120 Y110 E1\n')
         result = fit.toolpaths(code, MACHINE)
@@ -177,9 +177,14 @@ class FitJobTests(unittest.TestCase):
                         code.replace('F5940', 'F15000')):
             with self.subTest(code=changed), self.assertRaisesRegex(ValueError, 'commanded feed exceeds'):
                 fit.toolpaths(changed, MACHINE)
+        for changed in (code.replace('M220 S100', 'M220 S200'), code.replace('M220 S100\n', ''),
+                        code.replace('M220 S100', 'M220 R'),
+                        code.replace('M220 S100', 'M622 J1\nM220 S100\nM623')):
+            with self.subTest(code=changed), self.assertRaisesRegex(ValueError, 'feed override'):
+                fit.toolpaths(changed, MACHINE)
 
     def test_full_circle_and_vertical_deposition_receive_all_guards(self):
-        prefix = ('M190 S100\nM109 S275\nG90\nM83\nG1 X100 Y100 Z0.2 F1800\n'
+        prefix = ('M220 S100\nM190 S100\nM109 S275\nG90\nM83\nG1 X100 Y100 Z0.2 F1800\n'
                   '; Z_HEIGHT: 0.2\n; FEATURE: Outer wall\n')
         for motion in ('G2 I5 J0 E1', 'G3 I5 J0 E1', 'G1 Z0.3 E1'):
             code = prefix+motion+' F1800\nG1 X120 Y100 E1\n'
@@ -210,7 +215,7 @@ class FitJobTests(unittest.TestCase):
     def test_actual_sliced_mesh_transform_and_mapping(self):
         from cadagent.mesh3mf import CORE_NS, model_xml, read_3mf
         vertices, faces = read_3mf(self.job / 'geometry.3mf')
-        gcode = ('M190 S100\nM109 S275\nG90\nM83\nG1 X120 Y120 Z0.2 F1800\n'
+        gcode = ('M220 S100\nM190 S100\nM109 S275\nG90\nM83\nG1 X120 Y120 Z0.2 F1800\n'
                  '; Z_HEIGHT: 0.2\n; FEATURE: Outer wall\nG1 X130 Y120 E1\n')
         settings = {'printer_model': 'Bambu Lab P1S', 'printer_settings_id': fit.PROFILES['printer'],
                     'print_settings_id': fit.PROFILES['process'], 'filament_settings_id': [fit.PROFILES['filament']],

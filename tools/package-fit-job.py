@@ -148,6 +148,7 @@ def toolpaths(text, machine, nozzle_temp=275., bed_temp=100., drawings=None):
     import numpy as np
     xyze, relative_e, absolute_xyz = {}, False, True
     feed_mm_s = None
+    speed_override = None
     nozzle, waited_nozzle, bed, waited_bed = None, None, None, None
     feature, layer, body = None, None, False
     conditional_depth = 0
@@ -156,7 +157,7 @@ def toolpaths(text, machine, nozzle_temp=275., bed_temp=100., drawings=None):
                       'Skirt', 'Brim'}
     motion_codes = {'G0', 'G1', 'G2', 'G3', 'G4', 'G17', 'G21', 'G90', 'G92'}
     startup_motion_codes = motion_codes | {'G28', 'G29', 'G29.1', 'G29.2', 'G91', 'G380'}
-    body_m_codes = {'M73', 'M82', 'M83', 'M104', 'M106', 'M109', 'M140', 'M190', 'M204', 'M400',
+    body_m_codes = {'M73', 'M82', 'M83', 'M104', 'M106', 'M109', 'M140', 'M190', 'M204', 'M220', 'M400',
                     'M622', 'M622.1', 'M623', 'M971', 'M981', 'M991', 'M1002', 'M1003', 'M1004'}
     points, features, layer_z = [], {}, set()
     for line in text.splitlines():
@@ -200,6 +201,10 @@ def toolpaths(text, machine, nozzle_temp=275., bed_temp=100., drawings=None):
         if code == 'M623':
             conditional_depth -= 1
             if conditional_depth < 0: raise ValueError('Unbalanced conditional block')
+        if code == 'M220':
+            if not re.fullmatch(r'M220\s+S100(?:\.0*)?', command.upper()):
+                raise ValueError('Only explicit 100% feed override is supported')
+            if not conditional_depth: speed_override = 100.
         if code == 'M83': relative_e = True
         if code == 'M82': relative_e = False
         if code in ('M104', 'M109'):
@@ -265,6 +270,8 @@ def toolpaths(text, machine, nozzle_temp=275., bed_temp=100., drawings=None):
             if (nozzle, waited_nozzle, bed, waited_bed) != (nozzle_temp, nozzle_temp, bed_temp, bed_temp):
                 raise ValueError(f'Object deposition temperatures/waits differ: {(nozzle, waited_nozzle, bed, waited_bed)}')
             if not feature or feature == 'Custom': raise ValueError('Unexpected/unknown object deposition')
+            if speed_override != 100.:
+                raise ValueError('Object deposition requires an explicit 100% feed override reset')
             if feed_mm_s is None or feed_mm_s > 99.00001:
                 raise ValueError(f'Object deposition commanded feed exceeds 99 mm/s or is unknown: {feature} {feed_mm_s}')
             row = features.setdefault(feature, {'moves': 0, 'layer_z_mm': set(), 'max_commanded_feed_mm_s': 0.})
@@ -281,6 +288,7 @@ def toolpaths(text, machine, nozzle_temp=275., bed_temp=100., drawings=None):
             'object_temperature_C': nozzle_temp, 'bed_temperature_C': bed_temp,
             'max_deposition_commanded_feed_mm_s': max(v['max_commanded_feed_mm_s'] for v in features.values()),
             'deposition_commanded_feed_limit_mm_s': 99.,
+            'speed_override_percent': speed_override,
             'temperature_waits_verified': True, 'support_deposition_moves': 0,
             'features': {k: {**v, 'layer_z_mm': sorted(v['layer_z_mm'])} for k, v in features.items()},
             'limits': 'Object paths only; vendor homing/purge/wipe excluded. Feeds are commands, not attained speeds; non-deposition travel excluded from deposition cap. No physical bridge/support-removal or printer calibration qualification.'}
