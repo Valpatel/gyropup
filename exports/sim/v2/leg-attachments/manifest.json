@@ -2,7 +2,7 @@
   "schema_version": 1,
   "units": "mm",
   "frame": "upper-link local; x along link, y outboard, z up",
-  "source_revision": "6cbd17fd512f6e2f5304bc67418bedf70a678bd7",
+  "source_revision": "4675c2c387705e08d07fe6ee9128a808997d7892",
   "source_hashes": {
     "cad/fivebar.py": "3868538500225f5ccb9e15f11a75c3c124d24786396960e78029c51fbfd1fc84",
     "cad/gmi.py": "dab034a3ee939a7b5f4a6fbae5b8ba7371d2113c5380a8450733650c2d02deae",
