@@ -27,10 +27,22 @@ Corrective rule: inspect the actual deposited paths at functional feature layers
 including raised/recessed markings and narrow walls, even after geometry and
 process checks pass. Retain the G-code and image. Never infer printed label
 legibility from text in CAD or silently assume the recipe preserves small
-features. Here the frozen recipe/CAD remain unchanged and the documented fallback
-uses numbered slot positions, with every actual width and uncertainty left blank.
+features. Reject avoidable missing-label results instead of accepting a labelled
+tool without its markings. The unchanged first job is archived as rejected;
+the replacement uses 5 mm bold text from an explicit hash-bound font file while
+preserving slots, base and overall height. Its generator lives in the independent
+research-tool directory, with complete source/font/artifact binding.
 
-Limits: this is a retained unpowered dimensional trial with an explicit missing-
-label limitation, not a calibrated gauge or print release. Eight open slots in
+The replacement passed the original twelve remote CAD checks. Actual toolpaths
+visibly show all eight widths and SURVEY ONLY. The wrapper checks every glyph's
+centerline extent on both upper layers and rejects eighteen controls that remove
+each label in turn, plus the actual original small-text slice. A provisional
+0.30 mm centerline-edge allowance rejected a legible pointed glyph with a
+0.33782 mm inset; the screen explicitly allows one declared 0.4 mm nozzle diameter
+for finite-bead inset and rounded extrema. Recorded numerical extents and direct
+visual reading remain separate evidence; neither certifies exact printed lettering.
+
+Limits: this is a retained unpowered dimensional trial, not a calibrated gauge
+or print release. Every actual width and uncertainty remains blank. Eight open slots in
 CAD/toolpath views do not prove printed dimensions, surface quality or safe motor
 fit. No motor measurements, mounting, retention or thread-gauging approval follow.

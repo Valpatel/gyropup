@@ -121,8 +121,10 @@ The run, log and collection command are recorded on
 
 **The first small-text slice is rejected for label printability.** Its unchanged
 [diagnostic archive](../research/ordered-turret-motor/rejected-label-slice/README.md)
-preserves the missing lettering. Replacement bold-label CAD and a fresh slice
-are being validated; no print release follows from the earlier successful slice.
+preserves the missing lettering. The replacement uses 5 mm bold text from an
+explicit, hash-bound DejaVu Sans Bold font file, preserving all slot dimensions
+and the 100 × 32 × 3.5 mm overall size. Its fresh remote CAD export again passed
+all 12 geometry checks; the slice checks below are separate from those CAD screens.
 
 This uses the same declared P1S **0.4 mm hardened nozzle / Bambu PA6-CF trial-2**
 process as the [RS04 observation job](rs04-fit-job.md): 0.20 mm layers, four walls,
@@ -131,7 +133,7 @@ deposition capped at 99 mm/s. It is an experimental dimensional tool, not a
 calibrated gauge or an established printing process. Installed hardware,
 filament condition, actual slot widths and motor measurements remain unknown.
 
-The retained slice estimates **27 min 6 s, 8.40 g and 3.17 m** of filament.
+The retained slice estimates **27 min 41 s, 8.47 g and 3.20 m** of filament.
 Its 17 layers contain no support deposition; executable checks confirm the
 275°C / 100°C waits and 99 mm/s maximum commanded deposition feed. These are
 slicer estimates and command checks, not observed print performance.
@@ -152,14 +154,19 @@ is unsupported. Inspect that machine-job archive in Bambu Studio.
 
 ![Actual survey-gauge deposition at the base, plate top and raised-label layers](../exports/turret/shaft-survey-fit-job/critical-layers.png)
 
-**The raised width labels do not survive this recipe legibly.** The actual upper
-layers contain only small fragments; the source model's text is not proof of
-printed markings. Identify slots from the top with the open mouths pointing away
-from you: left to right, slots 1–8 have CAD nominal widths 4.8–5.5 mm. Mark that
-orientation and numbering separately before recording observations, and measure
-both each mouth and round end. Never substitute the nominal number for a measured
-width. Check edge swelling, strings, warping and surface defects; reject ambiguous
-or obstructed slots. No motor thread, clamping or retention use is permitted.
+The replacement's actual Z=3.2 and 3.4 mm deposition views were read directly:
+**4.8, 4.9, 5.0, 5.1, 5.2, 5.3, 5.4, 5.5 and SURVEY ONLY** are present and legible
+in the toolpaths. Per-glyph centerline extent checks cover all nine labels on both
+layers; eighteen negative controls remove each label's parsed deposition and must
+fail. The original rejected slice also fails this screen. The screen allows one
+0.4 mm nozzle diameter at glyph extrema for centerline inset and rounded tips;
+it does not prove exact glyph reproduction or physical readability.
+
+Identify slots from the top with open mouths pointing away: left to right, slots
+1–8 have CAD nominal widths 4.8–5.5 mm. Measure both each mouth and round end;
+never substitute a nominal label for a measured width. Check printed markings,
+edge swelling, strings, warping and surface defects; reject ambiguous or
+obstructed slots. No motor thread, clamping or retention use is permitted.
 
 Follow the linked PA6-CF preparation guidance: record drying and dry-feed humidity,
 the actual printer/nozzle/plate and calibration, then the conditioning and humidity
