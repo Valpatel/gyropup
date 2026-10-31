@@ -17,3 +17,11 @@ The purchased identity is now settled; dimensional fit, retention, tolerances,
 mass, wire exits, and physical acceptance remain open. An unpowered fit specimen
 will not qualify rotating retention, balance, strength, electrical limits or
 thermal performance. No current full-cartridge print is released by this work.
+
+Start with the [human survey and design plan](../../docs/ordered-turret-motor.md).
+The source packet is [seller-claims.json](seller-claims.json); actual observations
+belong in a copy of [measurements.template.json](measurements.template.json).
+The [mounting-pattern survey](mount-pattern-survey.svg) is a scale-checkable
+measurement aid, not a qualified mounting drawing. Regenerate these with
+`tools/ordered-turret-motor.py`; the kernel-free controls are in
+`tools/test-ordered-turret-motor.py`.
