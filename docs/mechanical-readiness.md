@@ -1,10 +1,24 @@
 # Mechanical readiness and integration plan
 
-> **Status guide — 2026-10-29:** The baseline table below records the earlier integration review, not today's branch or readiness inventory. PR15/27 have since been integrated; their source-specific findings remain evidence to reconcile. Read [program status #31](https://github.com/Valpatel/gyropup/issues/31), [mechanical tracker #61](https://github.com/Valpatel/gyropup/issues/61) and [carrier allocation #96](https://github.com/Valpatel/gyropup/issues/96) for current work. No complete turret print release or physical qualification is implied.
+> **Status guide — 2026-10-31:** The priority is the two ordered motor families: four RS-04 leg actuators and the Amazon PRO3115-900KV flywheel motors. Separate unpowered fit jobs are available; no complete turret or leg is released for fabrication or operation. The integration table below is historical. Current ownership and acceptance are tracked in [program #31](https://github.com/Valpatel/gyropup/issues/31) and [mechanical #61](https://github.com/Valpatel/gyropup/issues/61).
 
 This is the component review entry point for the first physical turret and the complete Gyropup assembly. It supersedes blanket “print now” statements in older planning documents until their referenced geometry, hardware assumptions and checks are reconciled. It does not declare physical fit or safe operation.
 
 Program tracker: [issue #61](https://github.com/Valpatel/gyropup/issues/61). The user requested a deliberate component-by-component review, hardware-complete models across legs and turret, consistent landing geometry, and a final repository state containing only `dev` and `main` branches.
+
+## Current print-preparation checkpoint
+
+| Interface | Available evidence and job | Still required |
+| --- | --- | --- |
+| Ordered 3115-900KV flywheel motor | [Exact listing, sample survey and sliced shaft gauge](ordered-turret-motor.md); all eight size labels survive the 0.4 mm slice, about 28 minutes / 8.5 g | Delivered-part dimensions, calibrated printed widths, mounting and shaft/retention design; the older SunnySky cartridge is a different motor |
+| RS-04 leg mounting | [Corrected parent geometry](rs04-mounting-fit.md) and [retained unpowered coupon job](rs04-fit-job.md), about 6 h 33 min / 172.44 g | Inspect the unsupported roofs and all screw seats, measure the actual stack, resolve motor-side support/load spreading ([support-ring comparison](rs04-support-study.md)) and establish tightening/preload limits |
+
+Both packages retain resolved profiles, executable toolpaths, source identities,
+inspection images and blank measurement records. Slicer estimates and valid solids
+are not physical measurements. The eight RS-04 support failures remain explicit;
+no manufacturer mounting torque has been established. Small fit specimens come
+before the full frames or a complete turret cartridge. Their successful printing
+would not close structure, bearings, guarded rotating parts, cables or powered tests.
 
 ## Historical integration baseline and recorded blockers
 
@@ -90,7 +104,7 @@ The website baseline is the reviewed Progress release: main `e8d160d` and dev `6
 
 The engineering integration combines the program/dossier sources with that portal. Imported full-kit print files and gate reports remain historical. Current inspection exports and print-provenance checks establish bounded file/source evidence; no complete turret print kit has been regenerated or qualified. [The old v0 print plan](turret-print.md) is an archive. The separate [insert-fit specimens](../research/carrier-insert-fit/README.md) preserve two local orientations and provide blank measurement records; their 3MF files contain geometry only, with no printer profile, G-code or physical results.
 
-Work stays on the **stationary base and removable electronics carrier**. The [current component register](base-board-component-checklist.md) records actual parts, placements, evidence and next actions. Reviewed PR67 and PR86 are integrated, including complete source binding, fail-closed geometry predicates, bounded connector poses and the 34-part support inspection assembly. Their independent engineering/browser reviews and negative controls passed. The two original mounting stacks remain intact. Full wired-module service, connector retention, support strength and physical fit remain unqualified; a housing path is not a routed-harness result.
+The **stationary base and removable electronics carrier** remain a separate unfinished workstream after the two ordered-motor interfaces. The [current component register](base-board-component-checklist.md) records actual parts, placements, evidence and next actions. Reviewed PR67 and PR86 are integrated, including complete source binding, fail-closed geometry predicates, bounded connector poses and the 34-part support inspection assembly. Their independent engineering/browser reviews and negative controls passed. The two original mounting stacks remain intact. Full wired-module service, connector retention, support strength and physical fit remain unqualified; a housing path is not a routed-harness result.
 
 The exact manufacturer STEP for retainer screw 91290A113 and support nut 90592A085 was acquired and normalized in PR86. It is no longer a missing-input blocker. Detailed-thread mating, heat-setting access, installed terminal/lead geometry and measured insert fits remain separate open questions. The earlier full thread probe timed out and established no mating pass.
 
@@ -98,9 +112,9 @@ The [supplier audit](../research/supply/turret-carrier-2026-10-29.md), [supply-p
 
 Cad-agent v0.4.2 is released at `2ad4269`, with validated-solid and aggregate volume-error predicates. Its preceding v0.4.1 provides the generic rigid-module API. Product checks use exact reviewed source revisions in isolated runs; existing project environments remain unchanged. The historical fused carrier checker does not establish full service through that API.
 
-The next acceptance steps are:
+When returning to the carrier, its acceptance steps are:
 
-1. Complete [issue96's shared packaging contract](https://github.com/Valpatel/gyropup/issues/96): actual component, terminal, PCB and thermal space, plus a noncircular assembly/removal order. PR97 is separate work in progress, not part of this integration's geometry.
+1. Complete [issue96's shared packaging contract](https://github.com/Valpatel/gyropup/issues/96): actual component, terminal, PCB and thermal space, plus a noncircular assembly/removal order. PR97 and PR103 published the paper/source contract; actual component allocation and complete installation remain open.
 2. Finish actual disconnects, junctions, solder-side insulation, strain relief, connector parking and bend-qualified cable routes. Validate the retained module and all remaining obstacles through the released rigid-module API, including prerequisite bumper/tool access.
 3. Resolve detailed-thread mating, heat-setting access and physical measurements using the separate source-bound specimens. Preserve failed and absent observations; a nominal coupon model is not a measured fit.
 4. Renew affected base/support structural and print evidence before a scoped unpowered assembly trial. Proceed to the pan drive and tilt assembly only after this carrier checkpoint is coherent.

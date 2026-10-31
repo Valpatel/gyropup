@@ -1,0 +1,165 @@
+{
+  "schema": "gyropup.ordered-motor-survey/1",
+  "part": "Deeahdah PRO3115-900KV",
+  "asin": "B0GJNX17YX",
+  "sample_id": null,
+  "observed_date": null,
+  "operator": null,
+  "datum": "mounting face z=0; shaft axis +z; +x toward lead exit; right-handed frame",
+  "identity_evidence": [],
+  "measurement_notes": null,
+  "measurements": {
+    "body_diameter_mm": {
+      "value": null,
+      "method": null,
+      "instrument": null,
+      "uncertainty": null,
+      "evidence": []
+    },
+    "lead_exit_xyz_mm": {
+      "value": null,
+      "method": null,
+      "instrument": null,
+      "uncertainty": null,
+      "evidence": []
+    },
+    "lead_free_length_mm": {
+      "value": null,
+      "method": null,
+      "instrument": null,
+      "uncertainty": null,
+      "evidence": []
+    },
+    "lead_outer_diameter_mm": {
+      "value": null,
+      "method": null,
+      "instrument": null,
+      "uncertainty": null,
+      "evidence": []
+    },
+    "mass_with_leads_g": {
+      "value": null,
+      "method": null,
+      "instrument": null,
+      "uncertainty": null,
+      "evidence": []
+    },
+    "mount_face_to_bell_top_mm": {
+      "value": null,
+      "method": null,
+      "instrument": null,
+      "uncertainty": null,
+      "evidence": []
+    },
+    "mount_face_to_shaft_tip_mm": {
+      "value": null,
+      "method": null,
+      "instrument": null,
+      "uncertainty": null,
+      "evidence": []
+    },
+    "mount_hole_centres_xy_mm": {
+      "value": null,
+      "method": null,
+      "instrument": null,
+      "uncertainty": null,
+      "evidence": []
+    },
+    "mount_thread_hand": {
+      "value": null,
+      "method": null,
+      "instrument": null,
+      "uncertainty": null,
+      "evidence": []
+    },
+    "mount_thread_major_diameter_mm": {
+      "value": null,
+      "method": null,
+      "instrument": null,
+      "uncertainty": null,
+      "evidence": []
+    },
+    "mount_thread_pitch_mm": {
+      "value": null,
+      "method": null,
+      "instrument": null,
+      "uncertainty": null,
+      "evidence": []
+    },
+    "mount_thread_usable_depth_mm": {
+      "value": null,
+      "method": null,
+      "instrument": null,
+      "uncertainty": null,
+      "evidence": []
+    },
+    "rear_protrusion_diameter_mm": {
+      "value": null,
+      "method": null,
+      "instrument": null,
+      "uncertainty": null,
+      "evidence": []
+    },
+    "rear_protrusion_mm": {
+      "value": null,
+      "method": null,
+      "instrument": null,
+      "uncertainty": null,
+      "evidence": []
+    },
+    "shaft_seating_face_diameter_mm": {
+      "value": null,
+      "method": null,
+      "instrument": null,
+      "uncertainty": null,
+      "evidence": []
+    },
+    "shaft_shoulder_diameter_mm": {
+      "value": null,
+      "method": null,
+      "instrument": null,
+      "uncertainty": null,
+      "evidence": []
+    },
+    "shaft_shoulder_length_mm": {
+      "value": null,
+      "method": null,
+      "instrument": null,
+      "uncertainty": null,
+      "evidence": []
+    },
+    "shaft_thread_hand": {
+      "value": null,
+      "method": null,
+      "instrument": null,
+      "uncertainty": null,
+      "evidence": []
+    },
+    "shaft_thread_major_diameter_mm": {
+      "value": null,
+      "method": null,
+      "instrument": null,
+      "uncertainty": null,
+      "evidence": []
+    },
+    "shaft_thread_pitch_mm": {
+      "value": null,
+      "method": null,
+      "instrument": null,
+      "uncertainty": null,
+      "evidence": []
+    },
+    "shaft_thread_usable_length_mm": {
+      "value": null,
+      "method": null,
+      "instrument": null,
+      "uncertainty": null,
+      "evidence": []
+    }
+  },
+  "physical_fit_verified": false,
+  "mount_design_released": false,
+  "hub_design_released": false,
+  "slicer_run": false,
+  "powered_operation_qualified": false
+}

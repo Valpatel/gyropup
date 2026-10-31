@@ -86,11 +86,13 @@ STEPS = [
                                               'leg_motor_rear', 'leg_screws_lugs', 'leg_stop_posts'],
      {'leg_hip_frame': 0, 'leg_bearing_61812_front': (0, -25, 0), 'leg_bearing_61812_rear': (0, -25, 0), 'leg_motor_front': (0, -70, 0),
       'leg_motor_rear': (0, -70, 0), 'leg_screws_lugs': (0, 40, 0), 'leg_stop_posts': (0, 40, 0)}, LEG_VIEW, 'leg',
-     'The frame\'s inserts at the coupon-proven temperature: 6 x M5 in the flange ends, 4 x M8 for the stop posts. The two '
-     '61812s pressed in from the motor side onto the lip (the fit the frame coupon proved; Loctite 641 if it was a slip '
-     'fit). The motors (each with its machined adapter already on, D46: 9 x M5 x 25, no washers, threadlocker, the '
-     'adapter\'s journal into the 61812 with Loctite 641) onto their two Ø5 dowels, 10 x M4 x 20 each (heads 10 mm down in '
-     'the counterbores; 2.5 N m). The four stop posts BARE (no TPU sleeves yet): the zero is set against the steel.'),
+     'The historical sequence fits the frame\'s inserts and two 61812s before the motors, using coupon results to '
+     'establish the bearing fit. Those physical coupon results have not been recorded. Each motor uses two Ø5 '
+     'locating dowels and ten M4 x 20 mounting screws. The former counterbore and lug-tightening instructions are '
+     'superseded: use [the current motor-fit evidence](rs04-mounting-fit.md) to establish the measured screw stack, '
+     'and qualify support and preload separately. Fit the lug screws before upper links and stop posts as specified '
+     'by the bounded driver-access study. This historical sequence does not approve dimensions, bearing retention, '
+     'tightening torque or a powered zeroing test.'),
 ('The upper links (bench)', ['leg_eye_sleeve_front', 'leg_eye_sleeve_rear', 'leg_upper_link_front', 'leg_upper_link_rear', 'leg_screws_links'],
      {'leg_eye_sleeve_front': (0, 60, 0), 'leg_eye_sleeve_rear': (0, 60, 0), 'leg_upper_link_front': (0, 40, 0),
       'leg_upper_link_rear': (0, 40, 0), 'leg_screws_links': (0, 70, 0)}, LEG_VIEW, 'leg',
@@ -243,6 +245,10 @@ def main():
 def write_doc(rows):
     """docs/leg-rig-assembly.md from the steps (regenerated with the pictures; edit STEPS, not the page)."""
     L = ['# Leg rig: assembly', '',
+         '> **Unqualified assembly walkthrough:** this sequence and its loading assumptions do not establish a current '
+         'print or operating release. The RS-04 lug support, physical fits and tightening procedure remain unqualified. '
+         'Use [the current mounting-fit evidence](rs04-mounting-fit.md) and the separate '
+         '[unpowered coupon job](rs04-fit-job.md); no physical coupon results are recorded.', '',
          'The order to build the single-leg rig and the first leg on it, from `cad/rig_assembly.py` (the pictures come from '
          'the CAD: each step\'s new parts in colour, lifted along the way they go in; what is already fitted in grey). Part '
          'numbers: `docs/leg-rig-orders.md`; wiring: `docs/leg-rig-wiring.md`; before anything moves: `docs/leg-rig-safety.md`; '
@@ -257,7 +263,7 @@ def write_doc(rows):
           '| Joint | Torque |', '|---|---|',
           '| Extrusion brackets (M8 into drop-in nuts) | 20 N m |', '| Rails (M4 x 16 into drop-in nuts) | 4 N m |',
           '| Blocks to plate (M4 x 10 into the block) | 3 N m |', '| Plate to hip frame (M5 x 16 into heat-set inserts) | the B4 torque (1.5 N m until B4) |',
-          '| Motor lugs (M4 x 20, 12.9, into the RS-04) | 2.5 N m |', '| Adapter to motor (M5 x 25, D46) | 6 N m, threadlocker |',
+          '| Motor lugs (M4 x 20, 12.9, into the RS-04) | Not established; qualify the measured mounting joint and preload before use. |', '| Adapter to motor (M5 x 25, D46) | 6 N m, threadlocker |',
           '| Upper link to adapter (M5 x 40 into tapped 6061, heads on the printed link) | the B4 torque (1.5 N m until B4) |',
           '| Knee nut (M10 nyloc onto the steel sleeves) | 20 N m |',
           '| Stop posts (M8 into heat-set inserts) | the B4 torque (5 N m until B4) |', '| Wheel (M6 x 30 into the BotWheel) | 8 N m, threadlocker |',
