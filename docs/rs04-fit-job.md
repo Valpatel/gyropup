@@ -87,8 +87,12 @@ Generation refuses an existing output directory and a stale source receipt.
 Verification does not run Bambu or CAD. It checks retained byte identities,
 source/recipe membership, actual sliced geometry/placement, machine and filament
 mapping, G-code thermal waits, paths, and raw time/material results. Keep the
-whole generated directory together, including resolved settings, raw logs/results,
+whole generated directory together, including raw profile templates, resolved settings, raw logs/results,
 standalone G-code and the sliced 3MF containing the same G-code.
+Offline verification re-resolves the retained profiles and requires complete
+engine/profile identities. Full-circle and vertical deposition receive the same
+temperature/feed checks; unsupported absolute extrusion or coordinate modes are
+rejected. An explicit 100% feed override reset is required before deposition.
 
 The [first rejected run](../research/retained-fit-jobs/README.md) demonstrates why
 these checks matter: the old inheritance-only resolver selected 205°C startup

@@ -31,6 +31,17 @@ class FitJobTests(unittest.TestCase):
         self.job = Path(self.temp.name)
         self.identity = {'names': fit.PROFILES, 'overrides': fit.OVERRIDES,
                          'effective_profiles': {'machine': MACHINE, 'process': fit.OVERRIDES, 'filament': {}}}
+        self.identity['engine'] = {'launcher': 'bambu-studio', 'snap_revision': '8',
+                                  'executable_sha256': 'a'*64, 'snap_manifest_sha256': 'b'*64,
+                                  'slicer_payload_sha256': 'c'*64}
+        self.identity['profile_files_sha256'] = {}
+        for kind, name in [('machine', fit.PROFILES['printer']), ('process', fit.PROFILES['process']), ('filament', fit.PROFILES['filament'])]:
+            directory = self.job / 'profiles' / kind
+            directory.mkdir(parents=True)
+            fit.dump(directory / 'fixture.json', {'name': name, **self.identity['effective_profiles'][kind]})
+            profile, used = fit.print_slicing._profile(self.job / 'profiles', kind, name)
+            self.identity['effective_profiles'][kind] = profile
+            self.identity['profile_files_sha256'].update(used)
         self.mesh = trimesh.creation.box(extents=[20, 30, 5])
         self.mesh.apply_translation([0, 0, 2.5])
         self.mesh.export(self.job / 'source.stl')
@@ -197,6 +208,28 @@ class FitJobTests(unittest.TestCase):
                 fit.toolpaths(prefix+motion+' F15000\nG1 X120 Y100 E1 F1800\n', MACHINE)
             with self.assertRaisesRegex(ValueError, 'temperatures/waits differ'):
                 fit.toolpaths(prefix+'M104 S205\n'+motion+' F1800\nM109 S275\nG1 X120 Y100 E1\n', MACHINE)
+
+    def test_absolute_extrusion_cannot_hide_deposition_behind_negative_E(self):
+        prefix = ('M220 S100\nM190 S100\nM109 S275\nG90\nM83\nG1 X100 Y100 Z0.2 F1800\n'
+                  '; Z_HEIGHT: 0.2\n; FEATURE: Outer wall\nG1 X120 Y100 E1\n')
+        for movement in ('G1 X120 Y120 E-99 F15000', 'G2 I5 J0 E-99 F15000', 'G1 E-101 F1800'):
+            with self.subTest(movement=movement), self.assertRaisesRegex(ValueError, 'Absolute object extrusion'):
+                fit.toolpaths(prefix+'M82\nG92 E-100\n'+movement+'\n', MACHINE)
+
+    def test_historical_engine_and_profile_membership_is_required(self):
+        for change in ('engine', 'profile_files_sha256', 'engine_digest', 'one_profile_hash',
+                       'machine', 'process', 'filament'):
+            identity = copy.deepcopy(self.identity)
+            if change in ('engine', 'profile_files_sha256'): identity.pop(change)
+            elif change == 'engine_digest': identity['engine']['slicer_payload_sha256'] = ''
+            elif change == 'one_profile_hash': identity['profile_files_sha256'].pop(next(iter(identity['profile_files_sha256'])))
+            else: identity['effective_profiles'].pop(change)
+            with self.subTest(change=change), self.assertRaises(ValueError):
+                fit.verify_slice_identity(self.job, identity)
+        path = self.job / 'profiles/machine/fixture.json'
+        path.write_text(path.read_text().replace('250', '300'))
+        with self.assertRaisesRegex(ValueError, 'profile closure'):
+            fit.verify_slice_identity(self.job, self.identity)
 
     def test_archived_real_205C_slice_is_rejected(self):
         archive = ROOT / 'research/retained-fit-jobs/rejected-7b67f03.zip'

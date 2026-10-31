@@ -228,6 +228,8 @@ def toolpaths(text, machine, nozzle_temp=275., bed_temp=100., drawings=None):
             # coordinates before an object point can be checked.
             for axis in 'XYZ': xyze.pop(axis, None)
         if code not in ('G0', 'G1', 'G2', 'G3'): continue
+        if body and 'E' in args and not relative_e:
+            raise ValueError('Absolute object extrusion is unsupported')
         if 'F' in args:
             feed_mm_s = args['F'] / 60.
             if not math.isfinite(feed_mm_s) or feed_mm_s <= 0:
@@ -395,6 +397,40 @@ def manifest(job):
             if p.is_file() and p != job / 'job.json'}
 
 
+def verify_slice_identity(job, identity):
+    """Re-resolve retained raw profiles offline; never trust optional metadata."""
+    if identity.get('names') != PROFILES or identity.get('overrides') != OVERRIDES:
+        raise ValueError('Wrong slicer recipe')
+    engine = identity.get('engine') or {}
+    engine_keys = {'launcher', 'executable_sha256', 'snap_revision', 'snap_manifest_sha256', 'slicer_payload_sha256'}
+    if (set(engine) != engine_keys or engine['launcher'] != 'bambu-studio'
+            or not isinstance(engine['snap_revision'], str) or not re.fullmatch(r'[1-9]\d*', engine['snap_revision'])):
+        raise ValueError('Incomplete historical slicer engine identity')
+    for key in engine_keys - {'launcher', 'snap_revision'}:
+        if not isinstance(engine[key], str) or not re.fullmatch(r'[0-9a-f]{64}', engine[key]):
+            raise ValueError('Invalid historical slicer engine digest')
+    captured = identity.get('effective_profiles') or {}
+    if set(captured) != {'machine', 'process', 'filament'}:
+        raise ValueError('Incomplete effective profile membership')
+    expected = identity.get('profile_files_sha256') or {}
+    if not expected or any(not isinstance(h, str) or not re.fullmatch(r'[0-9a-f]{64}', h) for h in expected.values()):
+        raise ValueError('Incomplete historical profile identity')
+    profiles, files = {}, {}
+    for kind, name in [('machine', PROFILES['printer']), ('process', PROFILES['process']), ('filament', PROFILES['filament'])]:
+        profiles[kind], used = print_slicing._profile(job / 'profiles', kind, name)
+        files.update(used)
+    proc = profiles['process']
+    for key, value in OVERRIDES.items():
+        proc[key] = value if isinstance(value, list) or not isinstance(proc.get(key), list) else [str(value)] * len(proc[key])
+    retained_files = {p.relative_to(job / 'profiles').as_posix(): sha(p)
+                      for p in (job / 'profiles').rglob('*') if p.is_file()}
+    if files != expected or retained_files != expected or profiles != captured:
+        raise ValueError('Historical profile closure or effective settings differ')
+    for kind, profile in captured.items():
+        if json.loads((job / 'slice' / (kind + '.json')).read_text()) != profile:
+            raise ValueError('Resolved settings changed')
+
+
 def verify(job, root=ROOT):
     job = Path(job)
     report = json.loads((job / 'job.json').read_text())
@@ -410,11 +446,7 @@ def verify(job, root=ROOT):
     if sha(job / 'source.stl') != report['inputs']['files'][str(SOURCE / (PART + '.stl'))]:
         raise ValueError('Staged source changed')
     identity = report['slice_inputs']
-    if identity['names'] != PROFILES or identity['overrides'] != OVERRIDES:
-        raise ValueError('Wrong slicer recipe')
-    for kind, profile in identity['effective_profiles'].items():
-        if json.loads((job / 'slice' / (kind + '.json')).read_text()) != profile:
-            raise ValueError('Resolved settings changed')
+    verify_slice_identity(job, identity)
     if report['geometry'] != geometry_check(job, identity) or report['archive_members'] != sliced_members(job):
         raise ValueError('Geometry or sliced archive differs')
     if report['metrics'] != measurements(job):
@@ -431,6 +463,17 @@ def generate(job, root=ROOT):
     before = input_identity(root)
     identity = print_slicing.capture(**PROFILES, overrides=OVERRIDES)
     job.mkdir(parents=True, exist_ok=False)
+    from cadagent import slicer
+    for name, expected in identity['profile_files_sha256'].items():
+        relative = Path(name)
+        if len(relative.parts) != 2 or relative.parts[0] not in ('machine', 'process', 'filament') or relative.suffix != '.json':
+            raise ValueError('Unexpected captured profile path')
+        raw = (slicer.profile_root() / relative).read_bytes()
+        if hashlib.sha256(raw).hexdigest() != expected:
+            raise ValueError('Profile bytes changed before slicing')
+        destination = job / 'profiles' / relative
+        destination.parent.mkdir(parents=True, exist_ok=True)
+        destination.write_bytes(raw)
     (job / 'source.stl').write_bytes((root / SOURCE / (PART + '.stl')).read_bytes())
     mesh = trimesh.load_mesh(job / 'source.stl', process=True)
     write_3mf(job / 'geometry.3mf', mesh.vertices, mesh.faces, PART, (256., 256.))
