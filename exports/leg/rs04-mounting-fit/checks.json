@@ -14450,9 +14450,10 @@
         "cad/interfaces.json": "a4842a317dd2e64e9b4e11d34376bc36c26e1ddf8435a4b16a85dae3cd730b73",
         "cad/leg.py": "86d141a9c548328b871cc118f3267797326294c89f4e50633e82274458b1d666",
         "cad/leg_studies.py": "740c94fe586eff664fc4370804d8a056bf282be8f33ede3f5836db647bb4409f",
+        "cad/ordered_motor_gauge.py": "196fadb67a03f63c02c956fa5cab7f4a451abb3fcbbc8d32badaf64da2da8891",
         "cad/parameters.json": "92cfeaa792a2466594852afeef08af70fe74335ce60f458bd976f62ec0a39e13",
         "cad/print_provenance.py": "db0d9cdc14e0d0363899d82c03eb31cb63ea0d7718fedcf127a5545f8f6bec88",
-        "cad/print_slicing.py": "3e0b5a8bf86c0aec92729425e12173d4ef131975b30d009918a26776d315c56f",
+        "cad/print_slicing.py": "13fd25fe32e75e0c66dbe8af132fd4d70fb030defb14d88a96f9ff77cbaf07bd",
         "cad/printplan.py": "0bd820acb603117a981dff62e18097dd0ad84edc1d75bc2d8a13cd5c36a4a5d9",
         "cad/rig_assembly.py": "38afebccbe9daa0c610a90e47280781fb1460ab4668e6b4962f4d9defda288af",
         "cad/rig_bench.py": "c0efdacf2747ecbffe3019deeda9fd81c8fee641c798bf987987877f0b46b845",
@@ -34907,7 +34908,7 @@
         "volume_cm3": 926.394
       },
       "files": {
-        "step": "848ea3cb68074d19110271a669f1e328e3bbe7b8a31abcef3f08e7e455fd6efe",
+        "step": "0ed441f7cb479028614b37d302d029d430d6c44437bdeff07a71a73d3ace16d5",
         "stl": "6905dede917c2422d384bc25db51d31c60eaee0d44aea90f96559b042ef1c875"
       }
     },
@@ -34925,7 +34926,7 @@
         "volume_cm3": 278.096
       },
       "files": {
-        "step": "7cd21449d165f6fd5790897e6ad85bcb8472b688895860772cd7a2654fbb40da",
+        "step": "019478e1a8a03954a5cd8472a0f8c0aa2d4b7ca7af9a372c444ad624194c5cc7",
         "stl": "ce7b8cf46b6ff804f388fae00d2a67fcc5a36d6a53fdc49d32b90cce71630a4f"
       }
     },
@@ -34943,7 +34944,7 @@
         "volume_cm3": 162.093
       },
       "files": {
-        "step": "9c8060de897ac173e6e76c88d1113df299a2be47602e7c76ad66159df2d4807d",
+        "step": "078cc2c501a248ad876e9dedc2e89f58d9521040a417b16450bea0f36c51201b",
         "stl": "41d2bcbe0226243bd2d78caf01480a359ffa3e1bdab803d7faab91cdab7ec968"
       }
     }
