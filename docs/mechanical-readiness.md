@@ -11,7 +11,7 @@ Program tracker: [issue #61](https://github.com/Valpatel/gyropup/issues/61). The
 | Interface | Available evidence and job | Still required |
 | --- | --- | --- |
 | Ordered 3115-900KV flywheel motor | [Exact listing, sample survey and sliced shaft gauge](ordered-turret-motor.md); all eight size labels survive the 0.4 mm slice, about 28 minutes / 8.5 g | Delivered-part dimensions, calibrated printed widths, mounting and shaft/retention design; the older SunnySky cartridge is a different motor |
-| RS-04 leg mounting | [Corrected parent geometry](rs04-mounting-fit.md) and [retained unpowered coupon job](rs04-fit-job.md), about 6 h 33 min / 172.44 g | Inspect the unsupported roofs and all screw seats, measure the actual stack, resolve motor-side support/load spreading and establish tightening/preload limits |
+| RS-04 leg mounting | [Corrected parent geometry](rs04-mounting-fit.md) and [retained unpowered coupon job](rs04-fit-job.md), about 6 h 33 min / 172.44 g | Inspect the unsupported roofs and all screw seats, measure the actual stack, resolve motor-side support/load spreading ([support-ring comparison](rs04-support-study.md)) and establish tightening/preload limits |
 
 Both packages retain resolved profiles, executable toolpaths, source identities,
 inspection images and blank measurement records. Slicer estimates and valid solids

@@ -88,3 +88,11 @@ source, toolkit, private inputs, all manufacturer identities, authored poses and
 eight public exports. Private manufacturer models remain private. Independent
 review reconstructs those inventories and inspects the exported solids; integrity
 checks preserve false engineering, physical-fit, strength and fabrication flags.
+
+**After any change under `cad/`, `catalog/` or `designs/`** the CI check of this
+receipt fails on purpose, because the receipt binds those sources. Restore it in
+this order: regenerate the parent mounting receipt, rerun the support probe on the
+compute host against the private models (about 15 minutes), have the new receipt
+independently reviewed, then update the two inventory pins in
+`tools/test-rs04-support-probe.py`. The research README is itself a hashed input,
+so it is not edited without that rerun.
