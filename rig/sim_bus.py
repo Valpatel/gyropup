@@ -42,7 +42,8 @@ class SimBus(MotorBus):
                  cap: Optional[float] = lr.LEG_CAP, rail_low: Optional[float] = None, damped_off: Optional[bool] = None,
                  pack: Optional[Pack] = None, temp0: float = 30.0, video: Optional[Path] = None, meshes: Optional[dict] = None,
                  record: bool = True, latency_ticks: int = 0):
-        self.sc = lr.SCENARIOS[scenario]
+        # a name is sim/leg_rig.py's scenario; a Scenario object (the rig's, rig/leg_control.py) is taken as given
+        self.sc = lr.SCENARIOS[scenario] if isinstance(scenario, str) else scenario
         self.half_mass = half_mass
         self.cap = cap
         self.xml, self.info = lr.mjcf(half_mass, meshes, self.sc.rail_low if rail_low is None else rail_low)

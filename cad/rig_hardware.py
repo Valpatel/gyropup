@@ -242,6 +242,39 @@ def screw_shapes(J: list) -> dict:
     return {j['name']: screw(j['seat'], j['into'], j['thread'], j['length'], j['head'], j['washer']) for j in J}
 
 
+NUT_BODY = {'M4': (16.0, 9.5), 'M5': (16.0, 9.5), 'M6': (18.0, 15.5), 'M8': (20.0, 15.5)}   # a drop-in nut's length x width
+INSERT_OD = {'M4': 5.6, 'M5': 6.4}        # the inserts' outsides fill their pilots
+
+
+def receiver_name(j: dict) -> str:
+    """The part a joint's screw threads into: its drop-in nut or insert (drawn here), else the part itself."""
+    k = j['thread_in']['kind']
+    return f"nut_{j['name']}" if k == 'slot_nut' else f"insert_{j['name']}" if k == 'insert' else j['holds'][1]
+
+
+def receivers(J: list) -> dict:
+    """The drop-in nuts under the slots' lips and the heat-set inserts in their pilots, each with its thread drawn as
+    a bore at the screw's envelope (so the screw touches its receiver and the receiver its host)."""
+    out = {}
+    for j in J:
+        k = j['thread_in']['kind']
+        if k not in ('slot_nut', 'insert'):
+            continue
+        n = cq.Vector(*j['into']).normalized()
+        start = cq.Vector(*j['seat']) + n * sum(j['clamp'])           # where the thread starts: under the lip, or the face
+        bore = j['d'] / 2 - 0.15
+        if k == 'slot_nut':
+            ln, w = NUT_BODY[j['thread']]
+            along = cq.Vector(0, 0, 1) if j['holds'][1] == 'post' else cq.Vector(1, 0, 0)
+            wp = cq.Workplane(_plane(start, along, n))
+            body = wp.rect(ln, w).extrude(j['thread_in']['depth'])
+        else:
+            wp = cq.Workplane(_plane(start, _perp(n), n))
+            body = wp.circle(INSERT_OD[j['thread']] / 2).extrude(j['thread_in']['depth'])
+        out[receiver_name(j)] = body.cut(cq.Workplane(_plane(start - n, _perp(n), n)).circle(bore).extrude(j['thread_in']['depth'] + 2))
+    return out
+
+
 # ----------------------------------------------------------------------------------- the brackets
 
 def corner_brackets() -> dict:

@@ -148,7 +148,7 @@ STEPS = [
      'One post at a time: out, its TPU sleeve on, back in (the B4 torque into the M8 insert, 5 N m until B4). Swing the leg by hand to both '
      'stops: no part touches another; the knees stay free.'),
     ('Ballast and tethers', ['ballast_plates'], {'ballast_plates': (0, -60, 0)}, BACK_VIEW, 'rig',
-     'Weigh the plates. For 14.75 kg: one 2.5 lb plate per post (within 2 %: exports/rig/rig.json), retained by the 2 in '
+     f'Weigh the plates. For {br.DESIGN_KG:g} kg: the plates exports/rig/rig.json lists for each post (its ballast table), retained by the 2 in '
      'washer and a 3/8-16 x 3/4 in screw in the post\'s end (25 N m). The carriage tether: the endless sling girth-hitched '
      'round the post under the top stop, a screwgate through the plate\'s tether hole, 150 mm slack above the highest jump. '
      'The link tether: a sling round the wheel link next to its knee boss to the same hole, slack over the whole range '
