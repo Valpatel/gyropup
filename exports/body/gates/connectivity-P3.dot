@@ -122,7 +122,11 @@ graph connectivity {
   "bay_rail_l" -- "belly_plate";
   "bay_rail_r" -- "bay_side_r";
   "bay_rail_r" -- "belly_plate";
+  "bay_side_l" -- "bay_skid_1" [color=orange, label="undeclared"];
+  "bay_side_l" -- "bay_skid_2" [color=orange, label="undeclared"];
   "bay_side_l" -- "belly_plate" [color=orange, label="undeclared"];
+  "bay_side_r" -- "bay_skid_3" [color=orange, label="undeclared"];
+  "bay_side_r" -- "bay_skid_4" [color=orange, label="undeclared"];
   "bay_side_r" -- "belly_plate" [color=orange, label="undeclared"];
   "belly_plate" -- "cheek_left";
   "belly_plate" -- "cheek_right";
@@ -221,6 +225,14 @@ graph connectivity {
   "bay_door_front" -- "bay_rail_r" [style=bold, label="bay_door_front_r:bay_door_front (axis)"];
   "bay_door_rear" -- "bay_rail_l" [style=bold, label="bay_door_rear_l:bay_door_rear (axis)"];
   "bay_door_rear" -- "bay_rail_r" [style=bold, label="bay_door_rear_r:bay_door_rear (axis)"];
+  "bay_side_l" -- "bay_floor" [style=bold, label="bay_pad_1:bay_side_l (axis)"];
+  "bay_skid_1" -- "bay_floor" [style=bold, label="bay_pad_1:bay_skid_1 (axis)"];
+  "bay_side_l" -- "bay_floor" [style=bold, label="bay_pad_2:bay_side_l (axis)"];
+  "bay_skid_2" -- "bay_floor" [style=bold, label="bay_pad_2:bay_skid_2 (axis)"];
+  "bay_side_r" -- "bay_floor" [style=bold, label="bay_pad_3:bay_side_r (axis)"];
+  "bay_skid_3" -- "bay_floor" [style=bold, label="bay_pad_3:bay_skid_3 (axis)"];
+  "bay_side_r" -- "bay_floor" [style=bold, label="bay_pad_4:bay_side_r (axis)"];
+  "bay_skid_4" -- "bay_floor" [style=bold, label="bay_pad_4:bay_skid_4 (axis)"];
   "bay_rail_l" -- "belly_plate" [style=bold, label="bay_rail_l:bay_rail_l (axis)"];
   "bay_rail_r" -- "belly_plate" [style=bold, label="bay_rail_r:bay_rail_r (axis)"];
   "bay_side_l" -- "bay_rail_l" [style=bold, label="bay_side_l_high:bay_side_l (axis)"];
@@ -248,10 +260,6 @@ graph connectivity {
   "frame_screws_left" -- "leg.left_hip_frame" [style=bold, label="hip_frame_left:frame_screws_left (axis)"];
   "cheek_right" -- "leg.right_hip_frame" [style=bold, label="hip_frame_right:cheek_right (axis)"];
   "frame_screws_right" -- "leg.right_hip_frame" [style=bold, label="hip_frame_right:frame_screws_right (axis)"];
-  "bay_skid_1" -- "bay_floor" [style=bold, label="hold:bay_skid_1|bay_floor (axis)"];
-  "bay_skid_2" -- "bay_floor" [style=bold, label="hold:bay_skid_2|bay_floor (axis)"];
-  "bay_skid_3" -- "bay_floor" [style=bold, label="hold:bay_skid_3|bay_floor (axis)"];
-  "bay_skid_4" -- "bay_floor" [style=bold, label="hold:bay_skid_4|bay_floor (axis)"];
   "cheek_nuts_left" -- "cheek_left" [style=bold, label="hold:cheek_nuts_left|cheek_left (axis)"];
   "cheek_nuts_right" -- "cheek_right" [style=bold, label="hold:cheek_nuts_right|cheek_right (axis)"];
   "compute_pallet" -- "isolator_1" [style=bold, label="hold:compute_pallet|isolator_1 (axis)"];

@@ -175,6 +175,13 @@ def cheek_windows():
     return out
 
 
+# Lever 11 (#10, D71): two lightening windows in each cheek's web, where the strength cases' envelope (S1, S1F, S1b, S2,
+# S3 at 18.75 kg a leg: exports/body/fea/*.json) stays under ~25 MPa: x 30..76 mm either side of the wheel harness
+# window, z -40..40 (cheek frame, mm), 8 mm corners; 16 mm from the cheek's ends, 27 mm from the standoffs, 30 mm from the
+# hip frame's holes. (x0, x1, z0, z1, r)
+CHEEK_LIGHTENING = [(30.0, 76.0, -40.0, 40.0, 8.0), (-76.0, -30.0, -40.0, 40.0, 8.0)]
+
+
 def cheek_part() -> bs.SheetPart:
     """One C-channel cheek (CHEEK_L x CHEEK_H OML, two CHEEK_FLANGE flanges outwards): holes for the hip frame's six
     inserts, countersinks for the standoffs, the harness windows; SS-M5-0 nuts in both flanges for the tray and the belly."""
@@ -184,7 +191,7 @@ def cheek_part() -> bs.SheetPart:
         feats.append(bs.Feature('hole', 'base', cheek_to_part(x, z), 5.5, note='hip frame insert, M5 x 12 ISO 7380 from the gap'))
     for x, z in SPACERS_XZ:                  # countersunk on the frame side: the heads sit flush under the motors' covers
         feats.append(bs.Feature('csk', 'base', cheek_to_part(x, z), 4.5, spec='M4', side='z1', note='M4 x 31 hex standoff, M4 x 10 flat head'))
-    for name, x0, x1, z0, z1, r in cheek_windows():
+    for name, x0, x1, z0, z1, r in cheek_windows() + [(f'lightening {i}', *w) for i, w in enumerate(CHEEK_LIGHTENING)]:
         u0, v0 = cheek_to_part(x1, z0)
         u1, v1 = cheek_to_part(x0, z1)
         feats.append(bs.Feature('slot', 'base', ((u0 + u1) / 2, (v0 + v1) / 2), size=(u1 - u0, v1 - v0, r), note=name))
@@ -288,7 +295,7 @@ def deck_part(mounts=None) -> bs.SheetPart:
 
 
 INTAKE_CELL = 8.0             # square cells, 3 mm webs: a child's finger does not reach the fan 45 mm below
-INTAKE_PITCH = 11.0
+INTAKE_PITCH = 11.2           # the webs at least the 1/8 in deck's thickness (SendCutSend's minimum web)
 INTAKE_R = round((bp.j501().get('fan') or {}).get('blade_diameter', 88.0) / 2 + 2.0, 1)   # the field round the J501 fan's axis: its blades + 2 mm
 RISER_FEET = [(40.0, 40.0), (-40.0, 40.0), (-40.0, -40.0), (40.0, -40.0)]     # under the TM bolts (turret.TM_BOLTS)
 
@@ -457,7 +464,7 @@ def din_rails(items):
     return {}
 
 
-DCDC_FOOT_T, DCDC_WALL_T = 4.0, 6.0      # the upright at y -124..-118: the P3 wall's ribs start at -124.1
+DCDC_FOOT_T, DCDC_WALL_T = 4.0, 5.5      # the upright at y -123.5..-118: inside the 1/8 in deck's lip (-123.8) and the P3 wall's ribs (-124.1)
 
 
 def _plate_top():

@@ -4,8 +4,8 @@
   "pass": true,
   "status": "warn",
   "counts": {
-    "pass": 116,
-    "warn": 26,
+    "pass": 120,
+    "warn": 30,
     "fail": 0
   },
   "checks": [
@@ -97,6 +97,102 @@
       "parts": [
         "bay_door_rear",
         "bay_rail_r"
+      ],
+      "evidence": {
+        "axes": []
+      }
+    },
+    {
+      "id": "fastener:bay_pad_1:bay_side_l",
+      "status": "pass",
+      "message": "fastener bay_pad_1:bay_side_l has no solid; its axis reaches bay_side_l and bay_floor over its length",
+      "parts": [
+        "bay_floor",
+        "bay_side_l"
+      ],
+      "evidence": {
+        "axes": []
+      }
+    },
+    {
+      "id": "fastener:bay_pad_1:bay_skid_1",
+      "status": "pass",
+      "message": "fastener bay_pad_1:bay_skid_1 has no solid; its axis reaches bay_skid_1 and bay_floor over its length",
+      "parts": [
+        "bay_floor",
+        "bay_skid_1"
+      ],
+      "evidence": {
+        "axes": []
+      }
+    },
+    {
+      "id": "fastener:bay_pad_2:bay_side_l",
+      "status": "pass",
+      "message": "fastener bay_pad_2:bay_side_l has no solid; its axis reaches bay_side_l and bay_floor over its length",
+      "parts": [
+        "bay_floor",
+        "bay_side_l"
+      ],
+      "evidence": {
+        "axes": []
+      }
+    },
+    {
+      "id": "fastener:bay_pad_2:bay_skid_2",
+      "status": "pass",
+      "message": "fastener bay_pad_2:bay_skid_2 has no solid; its axis reaches bay_skid_2 and bay_floor over its length",
+      "parts": [
+        "bay_floor",
+        "bay_skid_2"
+      ],
+      "evidence": {
+        "axes": []
+      }
+    },
+    {
+      "id": "fastener:bay_pad_3:bay_side_r",
+      "status": "pass",
+      "message": "fastener bay_pad_3:bay_side_r has no solid; its axis reaches bay_side_r and bay_floor over its length",
+      "parts": [
+        "bay_floor",
+        "bay_side_r"
+      ],
+      "evidence": {
+        "axes": []
+      }
+    },
+    {
+      "id": "fastener:bay_pad_3:bay_skid_3",
+      "status": "pass",
+      "message": "fastener bay_pad_3:bay_skid_3 has no solid; its axis reaches bay_skid_3 and bay_floor over its length",
+      "parts": [
+        "bay_floor",
+        "bay_skid_3"
+      ],
+      "evidence": {
+        "axes": []
+      }
+    },
+    {
+      "id": "fastener:bay_pad_4:bay_side_r",
+      "status": "pass",
+      "message": "fastener bay_pad_4:bay_side_r has no solid; its axis reaches bay_side_r and bay_floor over its length",
+      "parts": [
+        "bay_floor",
+        "bay_side_r"
+      ],
+      "evidence": {
+        "axes": []
+      }
+    },
+    {
+      "id": "fastener:bay_pad_4:bay_skid_4",
+      "status": "pass",
+      "message": "fastener bay_pad_4:bay_skid_4 has no solid; its axis reaches bay_skid_4 and bay_floor over its length",
+      "parts": [
+        "bay_floor",
+        "bay_skid_4"
       ],
       "evidence": {
         "axes": []
@@ -421,54 +517,6 @@
       "parts": [
         "frame_screws_right",
         "leg.right_hip_frame"
-      ],
-      "evidence": {
-        "axes": []
-      }
-    },
-    {
-      "id": "fastener:hold:bay_skid_1|bay_floor",
-      "status": "pass",
-      "message": "fastener hold:bay_skid_1|bay_floor has no solid; its axis reaches bay_skid_1 and bay_floor over its length",
-      "parts": [
-        "bay_floor",
-        "bay_skid_1"
-      ],
-      "evidence": {
-        "axes": []
-      }
-    },
-    {
-      "id": "fastener:hold:bay_skid_2|bay_floor",
-      "status": "pass",
-      "message": "fastener hold:bay_skid_2|bay_floor has no solid; its axis reaches bay_skid_2 and bay_floor over its length",
-      "parts": [
-        "bay_floor",
-        "bay_skid_2"
-      ],
-      "evidence": {
-        "axes": []
-      }
-    },
-    {
-      "id": "fastener:hold:bay_skid_3|bay_floor",
-      "status": "pass",
-      "message": "fastener hold:bay_skid_3|bay_floor has no solid; its axis reaches bay_skid_3 and bay_floor over its length",
-      "parts": [
-        "bay_floor",
-        "bay_skid_3"
-      ],
-      "evidence": {
-        "axes": []
-      }
-    },
-    {
-      "id": "fastener:hold:bay_skid_4|bay_floor",
-      "status": "pass",
-      "message": "fastener hold:bay_skid_4|bay_floor has no solid; its axis reaches bay_skid_4 and bay_floor over its length",
-      "parts": [
-        "bay_floor",
-        "bay_skid_4"
       ],
       "evidence": {
         "axes": []
@@ -1549,6 +1597,56 @@
       }
     },
     {
+      "id": "contact:bay_side_l|bay_skid_1",
+      "status": "warn",
+      "message": "bay_side_l and bay_skid_1 are in contact (touching, 2.9e+03 mm2) but no interface, joint, fastener, contains or intended overlap declares it",
+      "parts": [
+        "bay_side_l",
+        "bay_skid_1"
+      ],
+      "evidence": {
+        "state": "touching",
+        "contact_area_mm2": 2900.924014,
+        "witness": {
+          "point_a": [
+            -123.3,
+            51.2004,
+            -209.6402
+          ],
+          "point_b": [
+            -123.3,
+            51.2004,
+            -209.6402
+          ]
+        }
+      }
+    },
+    {
+      "id": "contact:bay_side_l|bay_skid_2",
+      "status": "warn",
+      "message": "bay_side_l and bay_skid_2 are in contact (touching, 2.9e+03 mm2) but no interface, joint, fastener, contains or intended overlap declares it",
+      "parts": [
+        "bay_side_l",
+        "bay_skid_2"
+      ],
+      "evidence": {
+        "state": "touching",
+        "contact_area_mm2": 2900.924014,
+        "witness": {
+          "point_a": [
+            61.7,
+            51.2004,
+            -209.6402
+          ],
+          "point_b": [
+            61.7,
+            51.2004,
+            -209.6402
+          ]
+        }
+      }
+    },
+    {
       "id": "contact:bay_side_l|belly_plate",
       "status": "warn",
       "message": "bay_side_l and belly_plate are in contact (touching, 496 mm2) but no interface, joint, fastener, contains or intended overlap declares it",
@@ -1569,6 +1667,56 @@
             -155.0,
             49.6002,
             -93.04
+          ]
+        }
+      }
+    },
+    {
+      "id": "contact:bay_side_r|bay_skid_3",
+      "status": "warn",
+      "message": "bay_side_r and bay_skid_3 are in contact (touching, 2.9e+03 mm2) but no interface, joint, fastener, contains or intended overlap declares it",
+      "parts": [
+        "bay_side_r",
+        "bay_skid_3"
+      ],
+      "evidence": {
+        "state": "touching",
+        "contact_area_mm2": 2900.924014,
+        "witness": {
+          "point_a": [
+            -123.3,
+            -51.2004,
+            -209.6402
+          ],
+          "point_b": [
+            -123.3,
+            -51.2004,
+            -209.6402
+          ]
+        }
+      }
+    },
+    {
+      "id": "contact:bay_side_r|bay_skid_4",
+      "status": "warn",
+      "message": "bay_side_r and bay_skid_4 are in contact (touching, 2.9e+03 mm2) but no interface, joint, fastener, contains or intended overlap declares it",
+      "parts": [
+        "bay_side_r",
+        "bay_skid_4"
+      ],
+      "evidence": {
+        "state": "touching",
+        "contact_area_mm2": 2900.924014,
+        "witness": {
+          "point_a": [
+            61.7,
+            -51.2004,
+            -209.6402
+          ],
+          "point_b": [
+            61.7,
+            -51.2004,
+            -209.6402
           ]
         }
       }
@@ -2201,6 +2349,56 @@
       }
     },
     {
+      "id": "contact:bay_side_l|bay_skid_1",
+      "status": "warn",
+      "message": "bay_side_l and bay_skid_1 are in contact (touching, 2.9e+03 mm2) but no interface, joint, fastener, contains or intended overlap declares it",
+      "parts": [
+        "bay_side_l",
+        "bay_skid_1"
+      ],
+      "evidence": {
+        "state": "touching",
+        "contact_area_mm2": 2900.924014,
+        "witness": {
+          "point_a": [
+            -123.3,
+            51.2004,
+            -209.6402
+          ],
+          "point_b": [
+            -123.3,
+            51.2004,
+            -209.6402
+          ]
+        }
+      }
+    },
+    {
+      "id": "contact:bay_side_l|bay_skid_2",
+      "status": "warn",
+      "message": "bay_side_l and bay_skid_2 are in contact (touching, 2.9e+03 mm2) but no interface, joint, fastener, contains or intended overlap declares it",
+      "parts": [
+        "bay_side_l",
+        "bay_skid_2"
+      ],
+      "evidence": {
+        "state": "touching",
+        "contact_area_mm2": 2900.924014,
+        "witness": {
+          "point_a": [
+            61.7,
+            51.2004,
+            -209.6402
+          ],
+          "point_b": [
+            61.7,
+            51.2004,
+            -209.6402
+          ]
+        }
+      }
+    },
+    {
       "id": "contact:bay_side_l|belly_plate",
       "status": "warn",
       "message": "bay_side_l and belly_plate are in contact (touching, 496 mm2) but no interface, joint, fastener, contains or intended overlap declares it",
@@ -2221,6 +2419,56 @@
             -155.0,
             49.6002,
             -93.04
+          ]
+        }
+      }
+    },
+    {
+      "id": "contact:bay_side_r|bay_skid_3",
+      "status": "warn",
+      "message": "bay_side_r and bay_skid_3 are in contact (touching, 2.9e+03 mm2) but no interface, joint, fastener, contains or intended overlap declares it",
+      "parts": [
+        "bay_side_r",
+        "bay_skid_3"
+      ],
+      "evidence": {
+        "state": "touching",
+        "contact_area_mm2": 2900.924014,
+        "witness": {
+          "point_a": [
+            -123.3,
+            -51.2004,
+            -209.6402
+          ],
+          "point_b": [
+            -123.3,
+            -51.2004,
+            -209.6402
+          ]
+        }
+      }
+    },
+    {
+      "id": "contact:bay_side_r|bay_skid_4",
+      "status": "warn",
+      "message": "bay_side_r and bay_skid_4 are in contact (touching, 2.9e+03 mm2) but no interface, joint, fastener, contains or intended overlap declares it",
+      "parts": [
+        "bay_side_r",
+        "bay_skid_4"
+      ],
+      "evidence": {
+        "state": "touching",
+        "contact_area_mm2": 2900.924014,
+        "witness": {
+          "point_a": [
+            61.7,
+            -51.2004,
+            -209.6402
+          ],
+          "point_b": [
+            61.7,
+            -51.2004,
+            -209.6402
           ]
         }
       }
@@ -4281,6 +4529,8 @@
         },
         "rigid": true,
         "declared_by": [
+          "fastener:bay_pad_1:bay_side_l",
+          "fastener:bay_pad_2:bay_side_l",
           "fastener:bay_side_l_low:bay_side_l"
         ]
       },
@@ -4305,6 +4555,8 @@
         },
         "rigid": true,
         "declared_by": [
+          "fastener:bay_pad_3:bay_side_r",
+          "fastener:bay_pad_4:bay_side_r",
           "fastener:bay_side_r_low:bay_side_r"
         ]
       },
@@ -4329,7 +4581,7 @@
         },
         "rigid": true,
         "declared_by": [
-          "fastener:hold:bay_skid_1|bay_floor"
+          "fastener:bay_pad_1:bay_skid_1"
         ]
       },
       {
@@ -4353,7 +4605,7 @@
         },
         "rigid": true,
         "declared_by": [
-          "fastener:hold:bay_skid_2|bay_floor"
+          "fastener:bay_pad_2:bay_skid_2"
         ]
       },
       {
@@ -4377,7 +4629,7 @@
         },
         "rigid": true,
         "declared_by": [
-          "fastener:hold:bay_skid_3|bay_floor"
+          "fastener:bay_pad_3:bay_skid_3"
         ]
       },
       {
@@ -4401,7 +4653,7 @@
         },
         "rigid": true,
         "declared_by": [
-          "fastener:hold:bay_skid_4|bay_floor"
+          "fastener:bay_pad_4:bay_skid_4"
         ]
       },
       {
@@ -4502,6 +4754,52 @@
       },
       {
         "a": "bay_side_l",
+        "b": "bay_skid_1",
+        "kind": "contact",
+        "state": "touching",
+        "gap_mm": 0.0,
+        "contact_area_mm2": 2900.924014,
+        "witness": {
+          "point_a": [
+            -123.3,
+            51.2004,
+            -209.6402
+          ],
+          "point_b": [
+            -123.3,
+            51.2004,
+            -209.6402
+          ]
+        },
+        "rigid": true,
+        "declared_by": [],
+        "undeclared": true
+      },
+      {
+        "a": "bay_side_l",
+        "b": "bay_skid_2",
+        "kind": "contact",
+        "state": "touching",
+        "gap_mm": 0.0,
+        "contact_area_mm2": 2900.924014,
+        "witness": {
+          "point_a": [
+            61.7,
+            51.2004,
+            -209.6402
+          ],
+          "point_b": [
+            61.7,
+            51.2004,
+            -209.6402
+          ]
+        },
+        "rigid": true,
+        "declared_by": [],
+        "undeclared": true
+      },
+      {
+        "a": "bay_side_l",
         "b": "belly_plate",
         "kind": "contact",
         "state": "touching",
@@ -4517,6 +4815,52 @@
             -155.0,
             49.6002,
             -93.04
+          ]
+        },
+        "rigid": true,
+        "declared_by": [],
+        "undeclared": true
+      },
+      {
+        "a": "bay_side_r",
+        "b": "bay_skid_3",
+        "kind": "contact",
+        "state": "touching",
+        "gap_mm": 0.0,
+        "contact_area_mm2": 2900.924014,
+        "witness": {
+          "point_a": [
+            -123.3,
+            -51.2004,
+            -209.6402
+          ],
+          "point_b": [
+            -123.3,
+            -51.2004,
+            -209.6402
+          ]
+        },
+        "rigid": true,
+        "declared_by": [],
+        "undeclared": true
+      },
+      {
+        "a": "bay_side_r",
+        "b": "bay_skid_4",
+        "kind": "contact",
+        "state": "touching",
+        "gap_mm": 0.0,
+        "contact_area_mm2": 2900.924014,
+        "witness": {
+          "point_a": [
+            61.7,
+            -51.2004,
+            -209.6402
+          ],
+          "point_b": [
+            61.7,
+            -51.2004,
+            -209.6402
           ]
         },
         "rigid": true,
@@ -5317,17 +5661,17 @@
         "kind": "contact",
         "state": "touching",
         "gap_mm": 0.0,
-        "contact_area_mm2": 8317.087089,
+        "contact_area_mm2": 8312.151774,
         "witness": {
           "point_a": [
-            60.525,
+            60.225,
             0.0,
-            216.0
+            216.635
           ],
           "point_b": [
-            60.525,
+            60.225,
             0.0,
-            216.0
+            216.635
           ]
         },
         "rigid": true,
@@ -5341,7 +5685,7 @@
         "kind": "contact",
         "state": "touching",
         "gap_mm": 0.0,
-        "contact_area_mm2": 444.104425,
+        "contact_area_mm2": 441.776171,
         "witness": {
           "point_a": [
             131.0,
@@ -5365,7 +5709,7 @@
         "kind": "contact",
         "state": "touching",
         "gap_mm": 0.0,
-        "contact_area_mm2": 444.104425,
+        "contact_area_mm2": 441.776171,
         "witness": {
           "point_a": [
             131.0,
@@ -5389,7 +5733,7 @@
         "kind": "contact",
         "state": "touching",
         "gap_mm": 0.0,
-        "contact_area_mm2": 444.104425,
+        "contact_area_mm2": 441.776171,
         "witness": {
           "point_a": [
             -153.0,
@@ -5413,7 +5757,7 @@
         "kind": "contact",
         "state": "touching",
         "gap_mm": 0.0,
-        "contact_area_mm2": 444.104425,
+        "contact_area_mm2": 441.776171,
         "witness": {
           "point_a": [
             -153.0,
@@ -5440,14 +5784,14 @@
         "contact_area_mm2": 5953.443742,
         "witness": {
           "point_a": [
-            -58.0,
+            -58.3,
             -40.0,
-            216.0
+            216.635
           ],
           "point_b": [
-            -58.0,
+            -58.3,
             -40.0,
-            216.0
+            216.635
           ]
         },
         "rigid": true,
@@ -5461,15 +5805,15 @@
         "kind": "contact",
         "state": "touching",
         "gap_mm": 0.0,
-        "contact_area_mm2": 15693.798177,
+        "contact_area_mm2": 15670.821832,
         "witness": {
           "point_a": [
-            -77.25,
+            -77.55,
             40.0,
             213.46
           ],
           "point_b": [
-            -77.25,
+            -77.55,
             40.0,
             213.46
           ]
@@ -5698,16 +6042,16 @@
         "kind": "contact",
         "state": "touching",
         "gap_mm": 0.0,
-        "contact_area_mm2": 682.205182,
+        "contact_area_mm2": 682.974985,
         "witness": {
           "point_a": [
-            -21.707473,
-            36.424303,
+            -22.087102,
+            36.946774,
             210.285
           ],
           "point_b": [
-            -21.707473,
-            36.424303,
+            -22.087102,
+            36.946774,
             210.285
           ]
         },
@@ -6415,14 +6759,14 @@
         "contact_area_mm2": 13291.570208,
         "witness": {
           "point_a": [
-            32.0,
+            31.7,
             0.0,
-            246.0
+            246.635
           ],
           "point_b": [
-            32.0,
+            31.7,
             0.0,
-            246.0
+            246.635
           ]
         },
         "rigid": true,
@@ -6626,17 +6970,17 @@
         "kind": "contact",
         "state": "touching",
         "gap_mm": 0.0,
-        "contact_area_mm2": 818.491594,
+        "contact_area_mm2": 819.761594,
         "witness": {
           "point_a": [
             -8.0,
             127.6,
-            216.0
+            216.635
           ],
           "point_b": [
             -8.0,
             127.6,
-            216.0
+            216.635
           ]
         },
         "rigid": true,
@@ -6650,17 +6994,17 @@
         "kind": "contact",
         "state": "touching",
         "gap_mm": 0.0,
-        "contact_area_mm2": 818.491594,
+        "contact_area_mm2": 819.761594,
         "witness": {
           "point_a": [
             -8.0,
             -129.6,
-            216.0
+            216.635
           ],
           "point_b": [
             -8.0,
             -129.6,
-            216.0
+            216.635
           ]
         },
         "rigid": true,
@@ -6702,12 +7046,12 @@
         "contact_area_mm2": 63.388347,
         "witness": {
           "point_a": [
-            -106.8123,
+            -107.1123,
             0.0,
             210.285
           ],
           "point_b": [
-            -106.8123,
+            -107.1123,
             0.0,
             210.285
           ]
@@ -6785,6 +7129,102 @@
         ]
       },
       {
+        "a": "bay_side_l",
+        "b": "bay_floor",
+        "kind": "fastener",
+        "fastener": "bay_pad_1:bay_side_l",
+        "measured": "axis reaches both",
+        "rigid": true,
+        "declared_by": [
+          "fastener:bay_pad_1:bay_side_l",
+          "fastener:bay_pad_2:bay_side_l",
+          "fastener:bay_side_l_low:bay_side_l"
+        ]
+      },
+      {
+        "a": "bay_skid_1",
+        "b": "bay_floor",
+        "kind": "fastener",
+        "fastener": "bay_pad_1:bay_skid_1",
+        "measured": "axis reaches both",
+        "rigid": true,
+        "declared_by": [
+          "fastener:bay_pad_1:bay_skid_1"
+        ]
+      },
+      {
+        "a": "bay_side_l",
+        "b": "bay_floor",
+        "kind": "fastener",
+        "fastener": "bay_pad_2:bay_side_l",
+        "measured": "axis reaches both",
+        "rigid": true,
+        "declared_by": [
+          "fastener:bay_pad_1:bay_side_l",
+          "fastener:bay_pad_2:bay_side_l",
+          "fastener:bay_side_l_low:bay_side_l"
+        ]
+      },
+      {
+        "a": "bay_skid_2",
+        "b": "bay_floor",
+        "kind": "fastener",
+        "fastener": "bay_pad_2:bay_skid_2",
+        "measured": "axis reaches both",
+        "rigid": true,
+        "declared_by": [
+          "fastener:bay_pad_2:bay_skid_2"
+        ]
+      },
+      {
+        "a": "bay_side_r",
+        "b": "bay_floor",
+        "kind": "fastener",
+        "fastener": "bay_pad_3:bay_side_r",
+        "measured": "axis reaches both",
+        "rigid": true,
+        "declared_by": [
+          "fastener:bay_pad_3:bay_side_r",
+          "fastener:bay_pad_4:bay_side_r",
+          "fastener:bay_side_r_low:bay_side_r"
+        ]
+      },
+      {
+        "a": "bay_skid_3",
+        "b": "bay_floor",
+        "kind": "fastener",
+        "fastener": "bay_pad_3:bay_skid_3",
+        "measured": "axis reaches both",
+        "rigid": true,
+        "declared_by": [
+          "fastener:bay_pad_3:bay_skid_3"
+        ]
+      },
+      {
+        "a": "bay_side_r",
+        "b": "bay_floor",
+        "kind": "fastener",
+        "fastener": "bay_pad_4:bay_side_r",
+        "measured": "axis reaches both",
+        "rigid": true,
+        "declared_by": [
+          "fastener:bay_pad_3:bay_side_r",
+          "fastener:bay_pad_4:bay_side_r",
+          "fastener:bay_side_r_low:bay_side_r"
+        ]
+      },
+      {
+        "a": "bay_skid_4",
+        "b": "bay_floor",
+        "kind": "fastener",
+        "fastener": "bay_pad_4:bay_skid_4",
+        "measured": "axis reaches both",
+        "rigid": true,
+        "declared_by": [
+          "fastener:bay_pad_4:bay_skid_4"
+        ]
+      },
+      {
         "a": "bay_rail_l",
         "b": "belly_plate",
         "kind": "fastener",
@@ -6825,6 +7265,8 @@
         "measured": "axis reaches both",
         "rigid": true,
         "declared_by": [
+          "fastener:bay_pad_1:bay_side_l",
+          "fastener:bay_pad_2:bay_side_l",
           "fastener:bay_side_l_low:bay_side_l"
         ]
       },
@@ -6847,6 +7289,8 @@
         "measured": "axis reaches both",
         "rigid": true,
         "declared_by": [
+          "fastener:bay_pad_3:bay_side_r",
+          "fastener:bay_pad_4:bay_side_r",
           "fastener:bay_side_r_low:bay_side_r"
         ]
       },
@@ -7083,50 +7527,6 @@
         "rigid": true,
         "declared_by": [
           "fastener:hip_frame_right:frame_screws_right"
-        ]
-      },
-      {
-        "a": "bay_skid_1",
-        "b": "bay_floor",
-        "kind": "fastener",
-        "fastener": "hold:bay_skid_1|bay_floor",
-        "measured": "axis reaches both",
-        "rigid": true,
-        "declared_by": [
-          "fastener:hold:bay_skid_1|bay_floor"
-        ]
-      },
-      {
-        "a": "bay_skid_2",
-        "b": "bay_floor",
-        "kind": "fastener",
-        "fastener": "hold:bay_skid_2|bay_floor",
-        "measured": "axis reaches both",
-        "rigid": true,
-        "declared_by": [
-          "fastener:hold:bay_skid_2|bay_floor"
-        ]
-      },
-      {
-        "a": "bay_skid_3",
-        "b": "bay_floor",
-        "kind": "fastener",
-        "fastener": "hold:bay_skid_3|bay_floor",
-        "measured": "axis reaches both",
-        "rigid": true,
-        "declared_by": [
-          "fastener:hold:bay_skid_3|bay_floor"
-        ]
-      },
-      {
-        "a": "bay_skid_4",
-        "b": "bay_floor",
-        "kind": "fastener",
-        "fastener": "hold:bay_skid_4|bay_floor",
-        "measured": "axis reaches both",
-        "rigid": true,
-        "declared_by": [
-          "fastener:hold:bay_skid_4|bay_floor"
         ]
       },
       {
@@ -8232,6 +8632,48 @@
     {
       "parts": [
         "bay_side_l",
+        "bay_skid_1"
+      ],
+      "state": "touching",
+      "contact_area_mm2": 2900.924014,
+      "overlap_mm3": null,
+      "witness": {
+        "point_a": [
+          -123.3,
+          51.2004,
+          -209.6402
+        ],
+        "point_b": [
+          -123.3,
+          51.2004,
+          -209.6402
+        ]
+      }
+    },
+    {
+      "parts": [
+        "bay_side_l",
+        "bay_skid_2"
+      ],
+      "state": "touching",
+      "contact_area_mm2": 2900.924014,
+      "overlap_mm3": null,
+      "witness": {
+        "point_a": [
+          61.7,
+          51.2004,
+          -209.6402
+        ],
+        "point_b": [
+          61.7,
+          51.2004,
+          -209.6402
+        ]
+      }
+    },
+    {
+      "parts": [
+        "bay_side_l",
         "belly_plate"
       ],
       "state": "touching",
@@ -8247,6 +8689,48 @@
           -155.0,
           49.6002,
           -93.04
+        ]
+      }
+    },
+    {
+      "parts": [
+        "bay_side_r",
+        "bay_skid_3"
+      ],
+      "state": "touching",
+      "contact_area_mm2": 2900.924014,
+      "overlap_mm3": null,
+      "witness": {
+        "point_a": [
+          -123.3,
+          -51.2004,
+          -209.6402
+        ],
+        "point_b": [
+          -123.3,
+          -51.2004,
+          -209.6402
+        ]
+      }
+    },
+    {
+      "parts": [
+        "bay_side_r",
+        "bay_skid_4"
+      ],
+      "state": "touching",
+      "contact_area_mm2": 2900.924014,
+      "overlap_mm3": null,
+      "witness": {
+        "point_a": [
+          61.7,
+          -51.2004,
+          -209.6402
+        ],
+        "point_b": [
+          61.7,
+          -51.2004,
+          -209.6402
         ]
       }
     },
@@ -8655,6 +9139,6 @@
   "relation_stats": {
     "parts": 93,
     "pairs": 4278,
-    "candidates": 206
+    "candidates": 216
   }
 }

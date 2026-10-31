@@ -227,10 +227,10 @@
    "note": "the deck on a post, from above",
    "screw_part": null,
    "grip_mm": [
-    2.54
+    3.17
    ],
    "engagement_mm": [
-    9.46
+    8.82
    ],
    "problems": []
   },
@@ -273,10 +273,10 @@
    "note": "the deck on a post, from above",
    "screw_part": null,
    "grip_mm": [
-    2.54
+    3.17
    ],
    "engagement_mm": [
-    9.46
+    8.82
    ],
    "problems": []
   },
@@ -319,10 +319,10 @@
    "note": "the deck on a post, from above",
    "screw_part": null,
    "grip_mm": [
-    2.54
+    3.17
    ],
    "engagement_mm": [
-    9.46
+    8.82
    ],
    "problems": []
   },
@@ -365,10 +365,10 @@
    "note": "the deck on a post, from above",
    "screw_part": null,
    "grip_mm": [
-    2.54
+    3.17
    ],
    "engagement_mm": [
-    9.46
+    8.82
    ],
    "problems": []
   },
@@ -388,10 +388,10 @@
    "note": "the riser on the deck (P1, no turret plate)",
    "screw_part": null,
    "grip_mm": [
-    2.54
+    3.17
    ],
    "engagement_mm": [
-    9.46
+    8.82
    ],
    "problems": []
   },
@@ -692,7 +692,7 @@
    "note": "the converter's base flange (its slots) on the bracket's upright",
    "screw_part": null,
    "grip_mm": [
-    8.0
+    7.5
    ],
    "engagement_mm": [
     4.0
@@ -891,7 +891,7 @@
    "joint": "bay_side_l_low",
    "stage": "P1",
    "screw": "M3 x 6 button",
-   "count": 5,
+   "count": 1,
    "stack": [
     "bay_side_l",
     "bay_floor"
@@ -908,6 +908,56 @@
    ],
    "engagement_mm": [
     3.51
+   ],
+   "problems": []
+  },
+  {
+   "joint": "bay_pad_1",
+   "stage": "P1",
+   "screw": "M3 x 10 socket",
+   "count": 2,
+   "stack": [
+    "bay_skid_1",
+    "bay_side_l",
+    "bay_floor"
+   ],
+   "receiver": [
+    "pem",
+    "bay_floor"
+   ],
+   "bom": "turret_screw_m3x10",
+   "note": "#26: a crush pad's lip held by the side plate's low screws into the floor's nuts (an M3 washer on the TPU)",
+   "screw_part": null,
+   "grip_mm": [
+    6.75
+   ],
+   "engagement_mm": [
+    3.96
+   ],
+   "problems": []
+  },
+  {
+   "joint": "bay_pad_2",
+   "stage": "P1",
+   "screw": "M3 x 10 socket",
+   "count": 2,
+   "stack": [
+    "bay_skid_2",
+    "bay_side_l",
+    "bay_floor"
+   ],
+   "receiver": [
+    "pem",
+    "bay_floor"
+   ],
+   "bom": "turret_screw_m3x10",
+   "note": "#26: a crush pad's lip held by the side plate's low screws into the floor's nuts (an M3 washer on the TPU)",
+   "screw_part": null,
+   "grip_mm": [
+    6.75
+   ],
+   "engagement_mm": [
+    3.96
    ],
    "problems": []
   },
@@ -962,7 +1012,7 @@
    "joint": "bay_side_r_low",
    "stage": "P1",
    "screw": "M3 x 6 button",
-   "count": 5,
+   "count": 1,
    "stack": [
     "bay_side_r",
     "bay_floor"
@@ -979,6 +1029,56 @@
    ],
    "engagement_mm": [
     3.51
+   ],
+   "problems": []
+  },
+  {
+   "joint": "bay_pad_3",
+   "stage": "P1",
+   "screw": "M3 x 10 socket",
+   "count": 2,
+   "stack": [
+    "bay_skid_3",
+    "bay_side_r",
+    "bay_floor"
+   ],
+   "receiver": [
+    "pem",
+    "bay_floor"
+   ],
+   "bom": "turret_screw_m3x10",
+   "note": "#26: a crush pad's lip held by the side plate's low screws into the floor's nuts (an M3 washer on the TPU)",
+   "screw_part": null,
+   "grip_mm": [
+    6.75
+   ],
+   "engagement_mm": [
+    3.96
+   ],
+   "problems": []
+  },
+  {
+   "joint": "bay_pad_4",
+   "stage": "P1",
+   "screw": "M3 x 10 socket",
+   "count": 2,
+   "stack": [
+    "bay_skid_4",
+    "bay_side_r",
+    "bay_floor"
+   ],
+   "receiver": [
+    "pem",
+    "bay_floor"
+   ],
+   "bom": "turret_screw_m3x10",
+   "note": "#26: a crush pad's lip held by the side plate's low screws into the floor's nuts (an M3 washer on the TPU)",
+   "screw_part": null,
+   "grip_mm": [
+    6.75
+   ],
+   "engagement_mm": [
+    3.96
    ],
    "problems": []
   },
@@ -1162,10 +1262,10 @@
    "note": "the riser through the turret plate and the deck (D59)",
    "screw_part": null,
    "grip_mm": [
-    5.71
+    6.35
    ],
    "engagement_mm": [
-    10.29
+    9.65
    ],
    "problems": []
   },
@@ -1186,10 +1286,10 @@
    "note": "the turret plate's ends up against the deck",
    "screw_part": null,
    "grip_mm": [
-    5.71
+    6.35
    ],
    "engagement_mm": [
-    5.04
+    4.41
    ],
    "problems": []
   },
@@ -1420,10 +1520,10 @@
    "note": "the deck on a post, from above",
    "screw_part": null,
    "grip_mm": [
-    2.54
+    3.17
    ],
    "engagement_mm": [
-    9.46
+    8.82
    ],
    "problems": []
   },
@@ -1466,10 +1566,10 @@
    "note": "the deck on a post, from above",
    "screw_part": null,
    "grip_mm": [
-    2.54
+    3.17
    ],
    "engagement_mm": [
-    9.46
+    8.82
    ],
    "problems": []
   },
@@ -1512,10 +1612,10 @@
    "note": "the deck on a post, from above",
    "screw_part": null,
    "grip_mm": [
-    2.54
+    3.17
    ],
    "engagement_mm": [
-    9.46
+    8.82
    ],
    "problems": []
   },
@@ -1558,10 +1658,10 @@
    "note": "the deck on a post, from above",
    "screw_part": null,
    "grip_mm": [
-    2.54
+    3.17
    ],
    "engagement_mm": [
-    9.46
+    8.82
    ],
    "problems": []
   },
@@ -1582,10 +1682,10 @@
    "note": "the riser through the turret plate and the deck (D59)",
    "screw_part": null,
    "grip_mm": [
-    5.71
+    6.35
    ],
    "engagement_mm": [
-    10.29
+    9.65
    ],
    "problems": []
   },
@@ -1606,10 +1706,10 @@
    "note": "the turret plate's ends up against the deck",
    "screw_part": null,
    "grip_mm": [
-    5.71
+    6.35
    ],
    "engagement_mm": [
-    5.04
+    4.41
    ],
    "problems": []
   },
@@ -1910,7 +2010,7 @@
    "note": "the converter's base flange (its slots) on the bracket's upright",
    "screw_part": null,
    "grip_mm": [
-    8.0
+    7.5
    ],
    "engagement_mm": [
     4.0
@@ -2109,7 +2209,7 @@
    "joint": "bay_side_l_low",
    "stage": "P3",
    "screw": "M3 x 6 button",
-   "count": 5,
+   "count": 1,
    "stack": [
     "bay_side_l",
     "bay_floor"
@@ -2126,6 +2226,56 @@
    ],
    "engagement_mm": [
     3.51
+   ],
+   "problems": []
+  },
+  {
+   "joint": "bay_pad_1",
+   "stage": "P3",
+   "screw": "M3 x 10 socket",
+   "count": 2,
+   "stack": [
+    "bay_skid_1",
+    "bay_side_l",
+    "bay_floor"
+   ],
+   "receiver": [
+    "pem",
+    "bay_floor"
+   ],
+   "bom": "turret_screw_m3x10",
+   "note": "#26: a crush pad's lip held by the side plate's low screws into the floor's nuts (an M3 washer on the TPU)",
+   "screw_part": null,
+   "grip_mm": [
+    6.75
+   ],
+   "engagement_mm": [
+    3.96
+   ],
+   "problems": []
+  },
+  {
+   "joint": "bay_pad_2",
+   "stage": "P3",
+   "screw": "M3 x 10 socket",
+   "count": 2,
+   "stack": [
+    "bay_skid_2",
+    "bay_side_l",
+    "bay_floor"
+   ],
+   "receiver": [
+    "pem",
+    "bay_floor"
+   ],
+   "bom": "turret_screw_m3x10",
+   "note": "#26: a crush pad's lip held by the side plate's low screws into the floor's nuts (an M3 washer on the TPU)",
+   "screw_part": null,
+   "grip_mm": [
+    6.75
+   ],
+   "engagement_mm": [
+    3.96
    ],
    "problems": []
   },
@@ -2180,7 +2330,7 @@
    "joint": "bay_side_r_low",
    "stage": "P3",
    "screw": "M3 x 6 button",
-   "count": 5,
+   "count": 1,
    "stack": [
     "bay_side_r",
     "bay_floor"
@@ -2197,6 +2347,56 @@
    ],
    "engagement_mm": [
     3.51
+   ],
+   "problems": []
+  },
+  {
+   "joint": "bay_pad_3",
+   "stage": "P3",
+   "screw": "M3 x 10 socket",
+   "count": 2,
+   "stack": [
+    "bay_skid_3",
+    "bay_side_r",
+    "bay_floor"
+   ],
+   "receiver": [
+    "pem",
+    "bay_floor"
+   ],
+   "bom": "turret_screw_m3x10",
+   "note": "#26: a crush pad's lip held by the side plate's low screws into the floor's nuts (an M3 washer on the TPU)",
+   "screw_part": null,
+   "grip_mm": [
+    6.75
+   ],
+   "engagement_mm": [
+    3.96
+   ],
+   "problems": []
+  },
+  {
+   "joint": "bay_pad_4",
+   "stage": "P3",
+   "screw": "M3 x 10 socket",
+   "count": 2,
+   "stack": [
+    "bay_skid_4",
+    "bay_side_r",
+    "bay_floor"
+   ],
+   "receiver": [
+    "pem",
+    "bay_floor"
+   ],
+   "bom": "turret_screw_m3x10",
+   "note": "#26: a crush pad's lip held by the side plate's low screws into the floor's nuts (an M3 washer on the TPU)",
+   "screw_part": null,
+   "grip_mm": [
+    6.75
+   ],
+   "engagement_mm": [
+    3.96
    ],
    "problems": []
   },
@@ -2848,7 +3048,11 @@
     "bay_door_rear|bay_floor",
     "bay_door_rear|bay_side_l",
     "bay_door_rear|bay_side_r",
+    "bay_side_l|bay_skid_1",
+    "bay_side_l|bay_skid_2",
     "bay_side_l|belly_plate",
+    "bay_side_r|bay_skid_3",
+    "bay_side_r|bay_skid_4",
     "bay_side_r|belly_plate",
     "cheek_left|frame_screws_left",
     "cheek_right|frame_screws_right",
@@ -2879,7 +3083,11 @@
     "bay_door_rear|bay_floor",
     "bay_door_rear|bay_side_l",
     "bay_door_rear|bay_side_r",
+    "bay_side_l|bay_skid_1",
+    "bay_side_l|bay_skid_2",
     "bay_side_l|belly_plate",
+    "bay_side_r|bay_skid_3",
+    "bay_side_r|bay_skid_4",
     "bay_side_r|belly_plate",
     "cheek_left|frame_screws_left",
     "cheek_right|frame_screws_right",
@@ -2910,7 +3118,11 @@
     "bay_door_rear|bay_floor",
     "bay_door_rear|bay_side_l",
     "bay_door_rear|bay_side_r",
+    "bay_side_l|bay_skid_1",
+    "bay_side_l|bay_skid_2",
     "bay_side_l|belly_plate",
+    "bay_side_r|bay_skid_3",
+    "bay_side_r|bay_skid_4",
     "bay_side_r|belly_plate",
     "cheek_left|frame_screws_left",
     "cheek_right|frame_screws_right",
@@ -2979,26 +3191,6 @@
    "eyes_board",
    "eyes_clip",
    "clamped between the clip and the face round its window"
-  ],
-  [
-   "bay_skid_1",
-   "bay_floor",
-   "3M VHB tape"
-  ],
-  [
-   "bay_skid_2",
-   "bay_floor",
-   "3M VHB tape"
-  ],
-  [
-   "bay_skid_3",
-   "bay_floor",
-   "3M VHB tape"
-  ],
-  [
-   "bay_skid_4",
-   "bay_floor",
-   "3M VHB tape"
   ],
   [
    "cheek_nuts_right",
@@ -3116,9 +3308,10 @@
   "P3"
  ],
  "screw_count": {
+  "M3 x 10 socket (P1+)": 8,
   "M3 x 10 thumb (P1+)": 4,
   "M3 x 16 pan (P3+)": 16,
-  "M3 x 6 button (P1+)": 20,
+  "M3 x 6 button (P1+)": 12,
   "M3 x 6 pan (P1+)": 4,
   "M3 x 6 socket (P3+)": 5,
   "M3 x 8 pan (P3+)": 14,
@@ -3136,7 +3329,7 @@
   "M5 x 8 button (P1+)": 8
  },
  "summary": {
-  "joints": 71,
+  "joints": 75,
   "screws": 183,
   "joints_with_problems": [],
   "floating": {},

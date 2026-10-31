@@ -139,9 +139,8 @@ def _fivebar():
 
 
 D69_WHEEL_KEY = 'hb10'                       # sim/wheel_candidates.json
-D69_WHEEL_CAD = {'od_mm': 254.0, 'tyre_width_mm': 64.0}     # D69's tyre is a 10 x 2.125 (54 mm); it is drawn 64 mm wide, as
-                                                             # the wheel study drew its 10 x 2.5 candidate: the wider band is
-                                                             # the conservative one for clearance and the roll lever
+D69_WHEEL_CAD = {'od_mm': 254.0, 'tyre_width_mm': 54.0}     # D69's 10 x 2.125 tyre, 54 mm wide, as sim/leg_rig.py has it
+                                                             # since leg/stops (main 983e47e); the study drew a 64 mm 10 x 2.5
 
 
 @functools.lru_cache(maxsize=1)
@@ -257,14 +256,15 @@ def z_spine_top() -> float:
 # ------------------------------------------------------------------------------------------- the box
 
 TRAY = '5052-0.125'                 # 1/8 in: at 0.100 in the landing case T1 was SF 1.55 where the tray overhangs the cheeks' ends
-DECK = '5052-0.100'
+DECK = '5052-0.125'                 # 1/8 in (it was 0.100): D2 with the turret's real 2.56 kg was SF 1.83 at 0.100 (#10)
 BELLY = '6061-0.100'
 PALLET = '6061-0.125'
 BODY_X = (-160.0, 160.0)            # the floor tray and deck, outside (OML)
 BODY_HALF_Y = 127.0                 # 254 wide: the shell's side walls go outside this (T7)
 TRAY_LIP = 15.0
 DECK_LIP = 20.0
-TOP = 216.0                         # the deck's top face (the sim's TOP)
+TOP = 216.0 + (0.125 - 0.100) * 25.4  # the deck's top face (the sim's TOP): 216 with the 0.100 in deck; the 1/8 in deck (#10, D2) keeps
+                                    # its underside where it was, so nothing under it moves
 # Four posts at the deck's corners (the battery lives in the belly, so no door path crosses the tray).
 POSTS = [(142.0, 109.0), (142.0, -109.0), (-142.0, 109.0), (-142.0, -109.0)]
 POST_W = 22.0                       # printed PA6-CF posts, square, M5 inserts at both ends
@@ -288,8 +288,10 @@ def z_belly_top() -> float:
 # ------------------------------------------------------------------------------------------- the turret (TM)
 
 
-HEAD_BUDGET = {'mass_kg': 1.70, 'com_above_face_mm': 100.0,      # the turret plan's head payload budget (docs/turret-next-plan.md:
-               'basis': 'docs/turret-next-plan.md 3.1 (proposed head payload budget)'}   # 1.639 kg with 30 balls today)
+HEAD_BUDGET = {'mass_kg': 2.561, 'com_above_face_mm': 49.2,      # D66/D71: the turret as its own robot (its Orin NX, carrier and
+               # converter), from turret/program's exports/turret/turret.json (cf6592e, 2026-10-28): 2,560.8 g with 30 balls, its
+               # centre 49.2 mm above the TM face. It replaces the 1.70 kg / 100 mm head budget of docs/turret-next-plan.md 3.1
+               'basis': 'turret/program cf6592e exports/turret/turret.json: 2560.8 g with 30 balls, centre 49.2 mm over the TM face (D66, D71)'}
 TURRET_GROMMET = (-130.0, -60.0)    # the turret harness through the deck, right rear: the turret's DT12 plug is on its right
 
 

@@ -261,10 +261,10 @@ def layout(cell=None):
                       'vectornav-vn-100-rugged', 'VN-100 Rugged on 2 x M3 + 2 dowels in the tray; its connector faces +x', (0.8, 0.2, 0.2)))
     # ---------------- the lidar's interface box behind the cooler (the G48R's fins draw in at +-y and its fan blows up through
     # the deck, so the strip behind its heat pipes' bends is the free one), its cable coiled flat under the deck beside it
-    items.append(Item('lidar_box', (-157.0, -122.0, 10.0, 95.0, zt + 53.0, zd - 2.0), 120.0, 'estimate (Polycase LP-41 class, plan 90 g + gland)',
+    items.append(Item('lidar_box', (-156.0, -121.0, 10.0, 95.0, zt + 53.0, zd - 2.0), 120.0, 'estimate (Polycase LP-41 class, plan 90 g + gland)',
                       'compute', 'P1', '', 'VLP-16 interface box standing on edge on a printed bracket behind the cooler, left; RJ45 '
                       'over the carrier to its 1GbE on the right edge', (0.3, 0.3, 0.33)))
-    items.append(Item('lidar_coil', (-157.0, -122.0, -48.0, 5.0, zd - 16.0, zd - 2.0), 230.0, 'estimate (3 m of the VLP-16 cable)', 'compute', 'P1', '',
+    items.append(Item('lidar_coil', (-156.0, -121.0, -48.0, 5.0, zd - 16.0, zd - 2.0), LIDAR_CABLE_G, LIDAR_CABLE_BASIS, 'compute', 'P1', '',
                       'the VLP-16\'s 3 m cable, coiled flat under the deck behind the cooler, clear of the turret harness\'s drop', (0.3, 0.3, 0.33)))
     gx, gy = bp.TURRET_GROMMET
     items.append(Item('turret_harness_drop', (gx - 12.0, gx + 12.0, gy - 12.0, gy + 12.0, zt + 45.0, zd), 0, '', 'deck', keepout=True,
@@ -399,6 +399,10 @@ def frame_boxes():
 # ------------------------------------------------------------------------------------------- mass and centre of mass
 
 HARDWARE_G = 300.0               # frame screws, standoffs, PEM nuts, inserts, cable ties (est)
+# lever 14 (taken on #10, D71): the VLP-16's 3 m cable shortened to 1 m (the coordinator's call; Velodyne's waiver to read):
+# 230 g for 3 m coiled, so about 77 g for 1 m
+LIDAR_CABLE_G = 77.0
+LIDAR_CABLE_BASIS = 'estimate: the VLP-16 cable cut to 1 m (lever 14; 230 g for the 3 m coil x 1/3)'
 WHEEL_CONNECTORS_G = 45.0       # D69: a DTP 4-way and a DT 6-way pair a wheel, mated, with contacts (est)
 HARNESS_G = 400.0                # every wire and connector of the body (est; docs/body-electrical.md lists them)
 LEG_STOPS_EXTRA_G = 200.0        # per leg: the hip frame's 13 mm flanges and the stop redesign (main cdda86d, 2026-10-27: 'roughly
@@ -422,7 +426,7 @@ BUDGET = {'robot_kg': 37.0, 'legs_kg_each': 10.85, 'body_and_head_kg': 15.3, 'de
 # wheel's solids (cad/body_params.py _fivebar() draws D69's wheel in the leg's place). The mass is the one listed number read on a
 # seller's page; D69 brackets 3.5-4.0 kg and two motors are weighed before the foot is cut (W1): GYROPUP_WHEEL_CHANGE_G adds
 # a change per wheel on top (e.g. 470 for the 4.0 kg the leg rig simulated).
-D69_WHEEL = {'key': 'hoverboard-10in-36v-350w', 'mass_g': 3530.0, 'od_mm': 254.0, 'tyre_width_mm': 64.0, 'rotor_share': 0.6,
+D69_WHEEL = {'key': 'hoverboard-10in-36v-350w', 'mass_g': 3530.0, 'od_mm': 254.0, 'tyre_width_mm': 54.0, 'rotor_share': 0.6,
              'botwheel_width_mm': 44.6, 'sim_upper_mass_g': 4000.0,
              'basis': 'D69 wheel: e-gizmo 230300029 lists 3.53 kg with the 10 x 2.125 pneumatic tyre (research/air-tyre-hub-wheels.md 3); '
                       'weigh two before the foot is cut (docs/wheel-change-plan.md W1)'}
@@ -441,13 +445,13 @@ LEVERS = [
     ('board_shunt', 8, -75, 3.0, 'P3', 'scheduled', 'the 1 mOhm shunt on the fuse board instead of the 85 g Blue Sea 150 A block', 'board_shunt'),
     ('harness_10awg', 9, -60, 25.0, 'P2', 'scheduled', 'the main path in 10 AWG, the VESC leads in 14 AWG, lengths cut to P0\'s measurements', 'harness_10awg'),
     ('pololu_12v', 10, 0, 0.0, 'P3', 'retired', 'Pololu D42V110F12 instead of the DDR-60L-12: moot since D65 (the TRACO TEP 150 replaced the DDR-60L-12)', None),
-    ('cheeks_rev_b', 11, -150, 120.0, 'P3', 'on call', 'cheeks Rev B: lightening holes where S1 < 40 MPa (-150), or 1/8 in with more standoffs (-330)', None),
+    ('cheeks_rev_b', 11, -150, 120.0, 'P3', 'on call', 'cheeks Rev B: lightening windows where the strength envelope is under 25 MPa (taken on #10)', 'cheeks_lightened'),
     ('alu_standoffs', 12, -80, 30.0, 'P3', 'on call', 'aluminium M5 x 120 hex standoffs in place of the printed deck posts', None),
     ('cooler_34mm', 13, -200, 49.0, 'P3', 'on call', 'the 34 mm WS-RDN-601 cooler instead of the fitted G48R (the user\'s call after the thermal test)', None),
-    ('lidar_cable_1m', 14, -150, 0.0, 'P3', 'on call', 'the VLP-16 cable shortened to 1 m (the user\'s call: a Velodyne waiver)', None),
+    ('lidar_cable_1m', 14, -153, 0.0, 'P3', 'on call', 'the VLP-16 cable shortened to 1 m (taken on #10; Velodyne\'s waiver to read)', 'lidar_cable_1m'),
     ('turret_levers', 15, -51, 0.0, 'P2', 'on call', 'the turret\'s own: a 24-ball hopper, a one-board bay (its plan, not scheduled here)', None),
     # after D69 (issue #10): what else could close the gap, none taken without the user's or the coordinator's word
-    ('packs_weighed', 16, -210, 0.0, 'P3', 'on call', 'the two DCB609 weighed: DeWalt\'s DCB547-XJ sheet says 1.46 kg against the 1.565 kg (3.45 lb) carried', None),
+    ('packs_weighed', 16, -210, 0.0, 'P3', 'on call', 'the two DCB609 at DeWalt\'s DCB547-XJ sheet\'s 1.46 kg (taken on #10) against the US page\'s 1.565 kg: weigh one', 'packs_sheet'),
     ('wheel_8in5', 17, -460, 0.0, 'P1', 'on call', 'D69\'s backup wheel, the 8.5 in of the same family (about 3.3 kg each, unverified): jump +15 mm, kerb 35 mm', None),
     ('packs_6ah', 18, -1000, 0.0, 'P1', 'on call', 'two DCB606 FLEXVOLT 6.0 Ah in the same bay and adapters (about 1.0 kg lighter the pair, 2/3 the energy: masses to read from DeWalt)', None),
 ]
@@ -489,8 +493,9 @@ def lever_taken(check: str, parts=None, L=None) -> bool:
             return False
         v = (p.shape.val() if hasattr(p.shape, 'val') else p.shape).Volume()
         return v < 0.9 * bp.POST_W ** 2 * bf.post_height()
-    if check in ('tray_lightened', 'deck_lightened', 'pallet_lightened'):
-        name = {'tray_lightened': 'floor_tray', 'deck_lightened': 'deck', 'pallet_lightened': 'compute_pallet'}[check]
+    if check in ('tray_lightened', 'deck_lightened', 'pallet_lightened', 'cheeks_lightened'):
+        name = {'tray_lightened': 'floor_tray', 'deck_lightened': 'deck', 'pallet_lightened': 'compute_pallet',
+                'cheeks_lightened': 'cheek_left'}[check]
         sp = parts.get(name).sheet if parts.get(name) is not None else None
         return bool(sp and any(f.note.startswith('lightening') for f in sp.features))
     names = {i.name for i in (L or {}).get('items', [])}
@@ -498,6 +503,11 @@ def lever_taken(check: str, parts=None, L=None) -> bool:
         return 'plate_fuse_board' in names
     if check == 'board_shunt':
         return 'plate_fuse_board' in names and 'plate_shunt' not in names
+    if check == 'lidar_cable_1m':
+        return LIDAR_CABLE_G <= 80.0
+    if check == 'packs_sheet':
+        import body_battery as bb
+        return bb.PACK['mass_g'] <= 1460.0
     if check == 'harness_10awg':
         return HARNESS_G <= 340.0
     if check == 'shell_from_cad':
@@ -515,7 +525,7 @@ def levers(parts=None, L=None) -> list:
 
 
 def gate(led: dict) -> dict:
-    """D69's gate on a P3 ledger: the ledger as it is, and with every scheduled lever not yet in the CAD taken (their
+    """D71's gate on a P3 ledger: the ledger as it is, and with every scheduled lever not yet in the CAD taken (their
     grams as the plan states them), against the ceiling (BUDGET): the robot, each leg, the body and head."""
     open_g = sum(l['grams'] for l in led['levers'] if l['kind'] == 'scheduled' and l['status'] == 'open')
     proj = led['total_kg'] + open_g / 1000.0
@@ -649,6 +659,11 @@ def ledger(L=None, parts=None, stage='P3'):
         add(it.group, it.name, it.mass_g, it.centre, it.basis)
     zt = bp.z_tray_top()
     add('frame', 'hardware', HARDWARE_G, (0.0, 0.0, 40.0), 'estimate')
+    import body_battery as bb
+    mats = json.loads((R / 'catalog/materials.json').read_text())
+    dv = sum((b[1] - b[0]) * (b[3] - b[2]) * (b[5] - b[4]) for p in bb.pad_boxes() for b in bb.pad_retention_boxes(p)) / 1000.0
+    add('frame', 'bay_pads_solid_lips', dv * (mats['tpu95']['density_g_cm3'] - mats[bb.PAD['material']]['density_g_cm3']),
+        (0.0, 0.0, bb.geometry()['z_floor']), 'CAD: the pads\' webs and lips are solid TPU, not lattice (#26)')
     add('power', 'harness', HARNESS_G, (60.0, 0.0, zt + 20.0), 'estimate (docs/body-wiring.md)')
     for side, sy in (('l', 1.0), ('r', -1.0)):          # D69: each wheel's DTP04-4P/DTP06-4S (phases) and DT04-6P/DT06-6S (halls,
         add('power', f'wheel_connectors_{side}', WHEEL_CONNECTORS_G, (-30.0, sy * 70.0, zt),   # NTC) at the cheek where the wheel lead enters
