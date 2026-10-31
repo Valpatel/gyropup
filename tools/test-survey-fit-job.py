@@ -16,6 +16,14 @@ JOB = ROOT / 'exports/turret/shaft-survey-fit-job'
 
 
 class SourceTests(unittest.TestCase):
+    def test_missing_or_partial_label_paths_fail_extent_screen(self):
+        import numpy as np
+        label = {'id': 'slot:0', 'text': '4.8', 'glyph_bounds_mm': [[0, 0, 3, 2, 3, 3.5]]}
+        paths = [np.array([[.2, .2], [1.8, .2], [1.8, 2.8], [.2, 2.8], [.2, .2]])]
+        self.assertEqual(m.check_label_coverage(paths, [label])[0]['text'], '4.8')
+        for altered in ([], [np.array([[.8, 1.], [1.2, 1.]])], [paths[0]+100]):
+            with self.assertRaises(ValueError): m.check_label_coverage(altered, [label])
+
     def test_current_reviewed_gauge_and_runtime(self):
         self.assertEqual(m.input_identity()['source_geometry_counts'], {'pass': 12, 'warn': 0, 'fail': 0})
 
@@ -50,6 +58,9 @@ class RetainedTests(unittest.TestCase):
     def test_complete_current_actual_job(self):
         self.assertTrue(m.verify(self.job)['slice_complete'])
         self.assertFalse(any(self.report['qualification'].values()))
+        controls = self.report['label_deposition']['missing_label_deposition_controls']
+        self.assertEqual(len(controls), 18)
+        self.assertTrue(all(value is True for value in controls.values()))
 
     def test_missing_files_and_changed_bytes_reject(self):
         for name in ('source.stl', 'profiles/machine/Bambu Lab P1S 0.4 nozzle.json',
@@ -85,6 +96,14 @@ class RetainedTests(unittest.TestCase):
             self.assertEqual(len(z.namelist()), len(set(z.namelist())))
             self.assertEqual(set(z.namelist()), set(expected))
             for name, p in expected.items(): self.assertEqual(z.read(name), p.read_bytes(), name)
+
+    def test_actual_rejected_small_text_slice_fails_label_screen(self):
+        with tempfile.TemporaryDirectory() as temp:
+            archive = ROOT / 'research/ordered-turret-motor/rejected-label-slice/job-1544582.zip'
+            with zipfile.ZipFile(archive) as z: z.extractall(temp)
+            old = Path(temp) / 'shaft-survey-fit-job'
+            with self.assertRaisesRegex(ValueError, 'label glyph'):
+                m.label_witness(old, self.report['slice_inputs'])
 
 
 if __name__ == '__main__': unittest.main()

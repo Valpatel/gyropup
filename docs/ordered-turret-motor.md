@@ -119,6 +119,11 @@ The run, log and collection command are recorded on
 
 ## Retained unpowered survey slice
 
+**The first small-text slice is rejected for label printability.** Its unchanged
+[diagnostic archive](../research/ordered-turret-motor/rejected-label-slice/README.md)
+preserves the missing lettering. Replacement bold-label CAD and a fresh slice
+are being validated; no print release follows from the earlier successful slice.
+
 This uses the same declared P1S **0.4 mm hardened nozzle / Bambu PA6-CF trial-2**
 process as the [RS04 observation job](rs04-fit-job.md): 0.20 mm layers, four walls,
 100% infill, textured PEI, no supports, 275°C nozzle / 100°C bed and commanded
