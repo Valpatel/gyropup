@@ -324,6 +324,25 @@
           "href": "../site/pages/docs-ordered-turret-motor-md.html"
         }
       ]
+    },
+    {
+      "time": "2026-10-31",
+      "title": "A shaft gauge whose labels survive slicing",
+      "text": "The first 0.4 mm nozzle slice lost most small labels despite valid CAD. Larger bold lettering now deposits all eight widths and SURVEY ONLY on both upper layers; checks deliberately remove each label and must fail. The retained job estimates 28 minutes and 8.5 g. Its printed widths remain uncalibrated, and the ordered motor mount and hub still need actual sample measurements.",
+      "links": [
+        {
+          "title": "See the deposited layers and download the survey job",
+          "href": "../site/pages/docs-ordered-turret-motor-md.html#retained-unpowered-survey-slice"
+        },
+        {
+          "title": "RS-04 unpowered fit job",
+          "href": "../site/pages/docs-rs04-fit-job-md.html"
+        },
+        {
+          "title": "Ordered motor acceptance · issue 124",
+          "href": "https://github.com/Valpatel/gyropup/issues/124"
+        }
+      ]
     }
   ],
   "shopping": {
@@ -353,5 +372,5 @@
       }
     ]
   },
-  "focus": "Current focus: prepare both ordered motor families for real fit checks. The 3115-900KV turret motor now has a documented survey and shaft gauge; its mount and hub await sample measurements. The RS-04 screw-depth correction is checked, while contact/load spreading and physical fit still block a leg print release."
+  "focus": "Current focus: prepare both ordered motor families for real fit checks. The 3115-900KV shaft survey and RS-04 parent coupon now have retained unpowered print jobs and blank measurement records. Actual motor dimensions, printed fits and RS-04 mounting support still block complete turret and leg print releases."
 }
