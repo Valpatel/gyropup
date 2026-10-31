@@ -9,6 +9,8 @@ before resuming; this file intentionally does not duplicate changing branch or p
 - [Mechanical integration #61](https://github.com/Valpatel/gyropup/issues/61) and
   [carrier packaging #96](https://github.com/Valpatel/gyropup/issues/96): remaining physical qualification work.
 - [Website development](site-deployment.md): build, production revision verification and preview ownership.
+- [Historical draft inventory](archive/2026-10-31-unmerged-drafts.md): exact body, rig and CAN source references,
+  evidence limits and unresolved acceptance ownership. Resume relevant work from current `dev`.
 
 The project remains at CAD and simulation, with no assembled robot or print release. Current website models,
 historical report evidence and physical qualification are distinct. Existing draft body, leg-rig and CAN work

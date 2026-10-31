@@ -45,6 +45,8 @@ not establish mechanical readiness. Older plans remain available for context and
 - [Structural media and its limits](structural-study-media.md), [current browser model](validation/current-model.md),
   [turret motion](validation/turret-motion.md), [carrier inspection](validation/carrier-connector-inspection.md),
   [landing highlights](validation/landing-highlights.md).
+- [Historical unmerged body, leg-rig and CAN drafts](archive/2026-10-31-unmerged-drafts.md): preserved source
+  references, recorded failures and the issues that own remaining acceptance work.
 
 ## Website
 
