@@ -14455,7 +14455,7 @@
         "cad/print_provenance.py": "db0d9cdc14e0d0363899d82c03eb31cb63ea0d7718fedcf127a5545f8f6bec88",
         "cad/print_slicing.py": "13fd25fe32e75e0c66dbe8af132fd4d70fb030defb14d88a96f9ff77cbaf07bd",
         "cad/printplan.py": "0bd820acb603117a981dff62e18097dd0ad84edc1d75bc2d8a13cd5c36a4a5d9",
-        "cad/rig_assembly.py": "38afebccbe9daa0c610a90e47280781fb1460ab4668e6b4962f4d9defda288af",
+        "cad/rig_assembly.py": "181d7fa6bec55ce97f2b7fdacf4b021c81b79b9fb7855df8abf25b87f5d7fb5a",
         "cad/rig_bench.py": "c0efdacf2747ecbffe3019deeda9fd81c8fee641c798bf987987877f0b46b845",
         "cad/rig_hardware.py": "c71fdf439173243c0134ea588b9c9bf3a2d97c964c4675793f3db94db37a9754",
         "cad/rig_integrity.py": "5750354f73700a3f94bc2112b9972ed621dc7ea46a8123aa53ca76d22a45397b",
@@ -14519,7 +14519,7 @@
       "mcmaster/91290A168/91290A168.page.json": "b4611ea236efce814835b36b177955b5aaa511fafadf6c0a9dfe43afa55a977b"
     },
     "context_files": {
-      "tools/test-rs04-lug-stacks.py": "90b5a03432706db440d71694c56bf4918b4bd25635ffcdd82f4f682665b6e928",
+      "tools/test-rs04-lug-stacks.py": "4ee0cea3f1c5a04872a2f260fd0568e976eea5d4bd6c3411147931eba0e140c1",
       "research/actuator-interfaces.md": "cb60373c321383a18a23ab3a0cdff3fd0e41c1d41e152e2828c395a731644699"
     },
     "toolkit_commit": "2ad426943ce2c7232875e105e50810849f9a3e5e"
@@ -34908,7 +34908,7 @@
         "volume_cm3": 926.394
       },
       "files": {
-        "step": "0ed441f7cb479028614b37d302d029d430d6c44437bdeff07a71a73d3ace16d5",
+        "step": "6059c0d12a6be1ac4c07f660885a7f276380a1b7bc4a4e2e0754541dd8ed6dc2",
         "stl": "6905dede917c2422d384bc25db51d31c60eaee0d44aea90f96559b042ef1c875"
       }
     },
@@ -34926,7 +34926,7 @@
         "volume_cm3": 278.096
       },
       "files": {
-        "step": "019478e1a8a03954a5cd8472a0f8c0aa2d4b7ca7af9a372c444ad624194c5cc7",
+        "step": "f55f8266611db4063e98927c0bd7b4fbddf4fa777c8fb419e107e96dd19a9be2",
         "stl": "ce7b8cf46b6ff804f388fae00d2a67fcc5a36d6a53fdc49d32b90cce71630a4f"
       }
     },
@@ -34944,7 +34944,7 @@
         "volume_cm3": 162.093
       },
       "files": {
-        "step": "078cc2c501a248ad876e9dedc2e89f58d9521040a417b16450bea0f36c51201b",
+        "step": "1edb2ecba12b2dce7d3ad60109fa13ef40fc7ceddb45ef1245f1818c1d33cd0c",
         "stl": "41d2bcbe0226243bd2d78caf01480a359ffa3e1bdab803d7faab91cdab7ec968"
       }
     }
