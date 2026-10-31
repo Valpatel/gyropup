@@ -203,6 +203,12 @@ class GaugeReceiptTests(unittest.TestCase):
             self.assertIs(row['lands_present'], True)
         self.assertEqual(data['negative_controls'], {'wrong_first_slot_width_caught': True,
                                                     'blocked_mouths_caught': True})
+        self.assertEqual(data['font']['sha256'], '5c1247acef7f2b8522a31742c76d6adcb5569bacc0be7ceaa4dc39dd252ce895')
+        self.assertEqual(data['font']['explicit_font_path'], '/usr/share/fonts/truetype/dejavu/DejaVuSans-Bold.ttf')
+        self.assertEqual(data['font']['text_size_mm'], 5.0)
+        self.assertEqual({r['id']: r['text'] for r in data['labels']},
+                         {f'slot:{i}': f'{4.8+i/10:.1f}' for i in range(8)} | {'survey-only': 'SURVEY ONLY'})
+        self.assertTrue(all(r['glyph_bounds_mm'] for r in data['labels']))
         for key in ('physical_fit_verified', 'slicer_run', 'print_release',
                     'mount_design_released', 'hub_design_released', 'powered_operation_qualified'):
             self.assertIs(data[key], False)

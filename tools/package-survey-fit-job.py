@@ -15,6 +15,7 @@ import json
 from pathlib import Path
 import re
 import subprocess
+import zipfile
 
 ROOT = Path(__file__).resolve().parents[1]
 spec = importlib.util.spec_from_file_location('fit_job_helpers', ROOT / 'tools/package-fit-job.py')
@@ -23,7 +24,7 @@ spec.loader.exec_module(fit)
 SOURCE = Path('exports/turret/ordered-motor-fit')
 PART = 'shaft-clearance-survey'
 # Reviewed actual 12-check geometry receipt; a changed gauge needs a new review.
-GAUGE_RECEIPT_SHA256 = 'bc7305efafa8e0cb62d68d56d276b2111803ab47ca77404efbe204650722716f'
+GAUGE_RECEIPT_SHA256 = 'ad3e52f221104638cf95bd51fcdd2e3defbc972a3a19cd32a8986604308e043c'
 SCOPE = 'UNPOWERED DIMENSIONAL SURVEY ONLY; uncalibrated; no motor mounting, retention, thread gauging or powered-operation approval'
 RECIPE = {'id': 'shaft-survey-pa6cf-trial-2', 'profiles': fit.PROFILES, 'overrides': fit.OVERRIDES,
           'process_source': fit.RECIPE['id'], 'copies': 1, 'scope': SCOPE,
@@ -107,6 +108,76 @@ def layer_witness(job, identity, render=False):
             'limits': 'Visual deposition witness only; no calibrated slot width, label legibility or physical print quality claim.'}
 
 
+def check_label_coverage(paths, labels):
+    """Bounded per-glyph extent screen on source-frame deposition centerlines.
+
+    One declared 0.4 mm nozzle diameter allows centerline inset and rounded extrema;
+    it is not a measured bead width or an OCR/physical readability certificate.
+    """
+    import numpy as np
+    results = []
+    for label in labels:
+        glyphs = []
+        for box in label['glyph_bounds_mm']:
+            lo, hi = np.array(box[:2]), np.array(box[3:5])
+            selected = [np.asarray(p) for p in paths
+                        if np.all(np.asarray(p) >= lo-.4) and np.all(np.asarray(p) <= hi+.4)]
+            if not selected: raise ValueError('Missing deposited label glyph: ' + label['id'])
+            points = np.concatenate(selected)
+            lower, upper = points.min(axis=0), points.max(axis=0)
+            length = sum(float(np.linalg.norm(np.diff(p, axis=0), axis=1).sum()) for p in selected)
+            if np.any(lower > lo+.4) or np.any(upper < hi-.4) or length < max(hi-lo)*.5:
+                raise ValueError('Insufficient deposited label glyph extent: ' + label['id'] + ' ' +
+                                 str({'glyph': box, 'deposition': [lower.tolist(), upper.tolist()], 'path_length': length}))
+            glyphs.append({'bounds_mm': box, 'deposition_centerline_bounds_xy_mm': [lower.tolist(), upper.tolist()],
+                           'path_length_mm': length, 'segments': len(selected)})
+        if not glyphs: raise ValueError('Missing source glyph inventory')
+        results.append({'id': label['id'], 'text': label['text'], 'glyphs': glyphs})
+    return results
+
+
+def label_witness(job, identity, root=ROOT):
+    """Map existing parser output back to the actual source glyph coordinates."""
+    import numpy as np
+    import trimesh
+    from cadagent.mesh3mf import CORE_NS
+    receipt = json.loads((root / SOURCE / 'checks.json').read_text())
+    labels = receipt['labels']
+    expected = {f'slot:{i}': f'{4.8+i/10:.1f}' for i in range(8)} | {'survey-only': 'SURVEY ONLY'}
+    if {r['id']: r['text'] for r in labels} != expected or len(labels) != 9:
+        raise ValueError('Incomplete source label inventory')
+    if identity['effective_profiles']['machine'].get('extruder_offset') != ['0x2']:
+        raise ValueError('Unsupported nozzle-to-model coordinate mapping')
+    ns = {'m': CORE_NS, 'p': 'http://schemas.microsoft.com/3dmanufacturing/production/2015/06'}
+    with zipfile.ZipFile(job / 'slice/out/sliced.3mf') as archive:
+        model = fit.ET.fromstring(archive.read('3D/3dmodel.model'))
+        component = model.find('m:resources/m:object/m:components/m:component', ns)
+        part = fit.ET.fromstring(archive.read(component.get('{'+ns['p']+'}path').lstrip('/')))
+        first = part.find('.//m:vertex', ns)
+        vertex = np.array([float(first.get(k)) for k in 'xyz'])
+        transform = np.array([float(v) for v in model.find('m:build/m:item', ns).get('transform').split()]).reshape(4, 3)
+    source = trimesh.load_mesh(job / 'source.stl', process=True)
+    shift = vertex - source.vertices[0]
+    drawings = {3.2: [], 3.4: []}
+    fit.toolpaths((job / 'slice/out/plate_1.gcode').read_text(), identity['effective_profiles']['machine'], drawings=drawings)
+    results, controls = {}, {}
+    for height, paths in drawings.items():
+        mapped = []
+        for _, points in paths:
+            xyz = np.column_stack((np.array(points) + [0., 2.], np.full(len(points), height)))
+            mapped.append(((xyz-transform[3]) @ transform[:3].T-shift)[:, :2])
+        results[str(height)] = check_label_coverage(mapped, labels)
+        for label in labels:
+            b = label['bounds_mm']; lo, hi = np.array(b[:2])-.4, np.array(b[3:5])+.4
+            removed = [p for p in mapped if not (np.all(p >= lo) and np.all(p <= hi))]
+            try: check_label_coverage(removed, labels)
+            except ValueError: controls[f'{height}:{label["id"]}'] = True
+            else: raise ValueError('Missing-label negative control unexpectedly passed')
+    return {'labels_by_layer': results, 'missing_label_deposition_controls': controls,
+            'nozzle_to_model_xy_mm': [0., 2.], 'glyph_edge_allowance_mm': .4,
+            'limits': 'Per-glyph deposited centerline extent screen, plus separate visual reading; no physical label or slot calibration.'}
+
+
 def verify(job, root=ROOT):
     job = Path(job)
     report = json.loads((job / 'job.json').read_text())
@@ -128,7 +199,8 @@ def verify(job, root=ROOT):
     for key, actual in (('geometry', fit.geometry_check(job, identity)),
                         ('archive_members', fit.sliced_members(job)), ('metrics', fit.measurements(job)),
                         ('sliced_inspection', fit.sliced_inspection(job, identity)),
-                        ('critical_layers', layer_witness(job, identity))):
+                        ('critical_layers', layer_witness(job, identity)),
+                        ('label_deposition', label_witness(job, identity, root))):
         if report.get(key) != actual: raise ValueError('Retained ' + key + ' differs')
     return report
 
@@ -158,12 +230,14 @@ def generate(job, root=ROOT):
     if before != input_identity(root): raise ValueError('Sources changed during slice; diagnostic only')
     inspection = fit.sliced_inspection(job, identity)
     layers = layer_witness(job, identity, render=True)
+    labels = label_witness(job, identity, root)
     for name, raw in record_bytes(job).items(): (job / name).write_bytes(raw)
     report = {'schema': 'gyropup.shaft-survey-fit-job/1', 'recipe': RECIPE, 'qualification': QUALIFICATION,
               'slice_complete': True, 'inputs': before, 'slice_inputs': identity,
               'source_commit': subprocess.check_output(['git', 'rev-parse', 'HEAD'], cwd=root, text=True).strip(),
               'geometry': geometry, 'metrics': fit.measurements(job), 'archive_members': fit.sliced_members(job),
-              'sliced_inspection': inspection, 'critical_layers': layers, 'files_sha256': fit.manifest(job)}
+              'sliced_inspection': inspection, 'critical_layers': layers, 'label_deposition': labels,
+              'files_sha256': fit.manifest(job)}
     fit.dump(job / 'job.json', report); verify(job, root)
     print(json.dumps({'job': str(job), 'metrics': report['metrics'], 'scope': SCOPE}), flush=True)
 
