@@ -4,7 +4,8 @@ Run in the isolated CAD environment after committing this source:
   python -B research/rs04-support/probe.py --vendor-root references/vendor --out /new/probe
 
 Imports all manufacturer solids, uses released cad-agent relations, and exports
-only authored comparison rings. No source geometry, tolerance or gate is changed.
+only authored comparison rings. Geometric classification tolerances stay at their
+released defaults; the recorded broad-phase near margin equals the touch margin.
 """
 from __future__ import annotations
 
@@ -29,6 +30,9 @@ INNER_DIAMETERS_MM = (80., 94.)
 OUTER_DIAMETERS_MM = (118., 120.)
 LUG_HOLE_D_MM = 4.5
 DOWEL_CLEARANCE_D_MM = 5.3
+# Query exact geometry only where enclosing boxes cannot prove no contact.
+# This is a broad-phase policy, not a physical clearance/fit requirement.
+BROAD_PHASE_MM = .01
 CONTEXT = ('research/rs04-support/probe.py', 'research/rs04-support/README.md',
            'exports/leg/rs04-mounting-fit/checks.json')
 LIMITS = [
@@ -93,7 +97,7 @@ def relation(a, b, a_name, b_name):
 def candidate_relations(candidate, name, counterparts):
     """Use the released broad phase and volume memoization; retain every requested pair."""
     from cadagent.gates import Assembly, Tolerances, relation_table
-    tol = Tolerances()
+    tol = Tolerances(near_mm=BROAD_PHASE_MM)
     assembly = Assembly({name: candidate, **counterparts})
     boxes = {key: box_values(assembly.shape(key)) for key in assembly}
     table = relation_table(assembly, tol, only=[name], contact_area=True, cache=None)
@@ -149,7 +153,7 @@ def probe(vendor_root, out, report):
     report['relation_policy'] = {'api': 'cadagent.gates.relation_table',
                                  'bounding_box_api': 'cadagent.gates.bounding_box',
                                  'candidate_pair_count': 59, 'cache': False,
-                                 'tolerances': asdict(Tolerances())}
+                                 'tolerances': asdict(Tolerances(near_mm=BROAD_PHASE_MM))}
     report['candidate_rings'] = {}
     report['progress'] = {'stage': 'manufacturer_inputs', 'completed_candidates': 0}
     checkpoint(out, report)

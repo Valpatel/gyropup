@@ -39,7 +39,7 @@ FLAGS = ('engineering_pass', 'physical_fit_verified', 'structural_qualification'
 EXPECTED_VENDOR_INVENTORY_SHA256 = None
 EXPECTED_AUTHORED_INVENTORY_SHA256 = None
 TOLERANCES = {'touch_mm': .01, 'overlap_mm3': .001, 'contain_mm3': .001,
-              'near_mm': 1., 'volume_check_mm3': .01}
+              'near_mm': .01, 'volume_check_mm3': .01}
 RELATION_POLICY = {'api': 'cadagent.gates.relation_table',
                    'bounding_box_api': 'cadagent.gates.bounding_box',
                    'candidate_pair_count': 59, 'cache': False, 'tolerances': TOLERANCES}
@@ -464,21 +464,24 @@ class ReceiptControls(unittest.TestCase):
                        lambda d: d['manufacturer_solids'][solid]['bbox_mm'].__setitem__(5, 5.),
                        lambda d: d['authored_mating_poses']['dyno_hub@45']['bbox_mm'].__setitem__(2, 0.),
                        lambda d: d['authored_mating_poses']['dyno_hub@45'].update(angle_deg=90),
-                       lambda d: d['relation_policy']['tolerances'].update(near_mm=.01),
+                       lambda d: d['relation_policy']['tolerances'].update(near_mm=1.),
                        lambda d: d['candidate_rings'][name]['relation_stats'].update(kernel_queries=0)):
             self.rejected(mutate)
 
-    def test_touch_tolerance_does_not_replace_near_margin(self):
+    def test_nominal_apart_bounds_do_not_claim_a_physical_clearance(self):
         row = {'a': 'ring', 'b': 'part', 'state': 'apart', 'exact': False,
-               'cached': False, 'gap_lower_bound_mm': .5}
-        boxes = ([-1, -1, 0, 1, 1, 1], [-1, -1, 1.5, 1, 1, 2.5])
-        with self.assertRaisesRegex(ValueError, 'Unproved'):
-            check_relation(row, 'ring', 'part', boxes)
-        row['gap_lower_bound_mm'] = 1.
-        with self.assertRaisesRegex(ValueError, 'Unproved'):
-            check_relation(row, 'ring', 'part', (boxes[0], [-1, -1, 2, 1, 1, 3]))
-        row['gap_lower_bound_mm'] = 1.000002
-        self.assertFalse(check_relation(row, 'ring', 'part', (boxes[0], [-1, -1, 2.0000016, 1, 1, 3])))
+               'cached': False, 'gap_lower_bound_mm': .02}
+        first = [-1, -1, 0, 1, 1, 1]
+        self.assertFalse(check_relation(row, 'ring', 'part', (first, [-1, -1, 1.02, 1, 1, 2.02])))
+        for gap in (.005, .01):
+            row['gap_lower_bound_mm'] = gap
+            # Z bounds begin at zero to avoid floating subtraction moving an
+            # exactly-on-threshold synthetic bound above the policy margin.
+            with self.assertRaisesRegex(ValueError, 'Unproved'):
+                check_relation(row, 'ring', 'part', ([-1, -1, -1, 1, 1, 0], [-1, -1, gap, 1, 1, gap + 1]))
+        exact = {'a': 'ring', 'b': 'part', 'state': 'touching', 'exact': True,
+                 'cached': False, 'gap_mm': .005, 'overlap_mm3': 0., 'contact_area_mm2': 0.}
+        self.assertFalse(check_relation(exact, 'ring', 'part', (first, [-1, -1, 1.005, 1, 1, 2.005])))
 
     def test_actual_plate_contact_cannot_be_replaced_by_a_bounded_row(self):
         name = next(iter(RINGS))
@@ -538,7 +541,7 @@ class ProducerBatchControls(unittest.TestCase):
                 return self[key]
 
         def table(assembly, tol, **kwargs):
-            calls.append(kwargs)
+            calls.append({**kwargs, 'near_mm': tol.near_mm})
 
             def get(a, b):
                 requested.append((a, b))
@@ -552,7 +555,7 @@ class ProducerBatchControls(unittest.TestCase):
 
         module = ModuleType('cadagent.gates')
         module.Assembly = Assembly
-        module.Tolerances = lambda: SimpleNamespace(near_mm=1.)
+        module.Tolerances = lambda **kwargs: SimpleNamespace(near_mm=kwargs.get('near_mm', 1.))
         module.relation_table = table
         module.bounding_box = lambda shape: tuple(shape)
         mock = patch.dict(sys.modules, {'cadagent': ModuleType('cadagent'), 'cadagent.gates': module})
@@ -564,7 +567,7 @@ class ProducerBatchControls(unittest.TestCase):
         requested, calls = self.fake_toolkit()
         counterparts = {f'part{i}': [-1, -1, 10, 1, 1, 11] for i in range(59)}
         rows, boxes, stats = PROBE.candidate_relations([-1, -1, 0, 1, 1, 1], 'ring', counterparts)
-        self.assertEqual(calls, [{'only': ['ring'], 'contact_area': True, 'cache': None}])
+        self.assertEqual(calls, [{'only': ['ring'], 'contact_area': True, 'cache': None, 'near_mm': .01}])
         self.assertEqual(requested, [('ring', key) for key in counterparts])
         self.assertEqual(set(rows), set(counterparts))
         self.assertEqual(set(boxes), {'ring', *counterparts})
@@ -579,7 +582,7 @@ class ProducerBatchControls(unittest.TestCase):
                 PROBE.candidate_relations([-1, -1, 0, 1, 1, 1], 'ring', {'part': [-1, -1, 10, 1, 1, 11]})
         self.fake_toolkit()
         with self.assertRaises(ValueError):
-            PROBE.candidate_relations([-1, -1, 0, 1, 1, 1], 'ring', {'part': [-1, -1, 1.5, 1, 1, 2.5]})
+            PROBE.candidate_relations([-1, -1, 0, 1, 1, 1], 'ring', {'part': [-1, -1, 1.005, 1, 1, 2.005]})
 
     def test_interrupted_checkpoint_preserves_previous_diagnostics(self):
         with tempfile.TemporaryDirectory() as temporary:

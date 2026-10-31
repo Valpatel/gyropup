@@ -55,17 +55,25 @@ The probe verifies the complete existing receipt and private/toolkit identities,
 hashes all 43 vendor solids, measures the projected head-bearing footprints on the
 actual motor plate with released `relate(..., contact_area=True)`, and records every
 candidate relation. Each ring uses released `relation_table(..., only=[ring])`
-with the unchanged default tolerances and no pair cache. The table memoizes solid
-volume integration and runs exact Boolean/distance queries for pairs whose
-axis-aligned bounding boxes are within 1 mm. Its `get()` method is called for all
+with no pair cache and an explicit **0.01 mm broad-phase near margin**. Touch,
+overlap, containment and volume-conservation tolerances retain their released
+defaults. The near margin equals the default touch margin: any larger enclosing-box
+gap already proves the solids apart under that nominal classification. This is
+not a manufacturing clearance requirement. The table memoizes solid volume
+integration and runs exact Boolean/distance queries where the boxes are within
+0.01 mm. Its `get()` method is called for all
 59 requested pairs; table iteration alone would omit the remote pairs.
 
 Remote pairs carry `exact: false` and a `gap_lower_bound_mm`, not an exact measured
 clearance. The report records the toolkit's analytic `bounding_box()` values,
 manufacturer content identities and all 16 actual posed authored content identities.
 The receipt verifier independently calculates box separation and requires a bound
-strictly greater than the unchanged 1 mm near margin. Every closer pair must be
+strictly greater than the recorded 0.01 mm near margin. Every closer pair must be
 exact. In particular motor-plate support must remain exact, touching and positive.
+The original 1 mm broad phase spent more than 20 minutes integrating a factory
+fastener with a proved 0.21 mm box gap. A separate timed diagnostic located that
+cost inside adaptive volume integration, before any Boolean query. This policy
+avoids that unnecessary measurement; it does not certify a usable 0.21 mm clearance.
 No contact or overlap measurement is inferred from a bounding box. This optimization
 does not skip any of the 472 candidate/counterpart pairs or change the ring geometry.
 
@@ -90,7 +98,7 @@ after independent inspection of the real result. Until then, real-receipt valida
 deliberately fails. `--pure` runs only synthetic orchestration/integrity controls;
 it neither inspects geometry nor accepts a missing research result. Those controls
 cover missing rows, changed inputs/artifacts, uncertain relations, invented bounds,
-the 1 mm near margin, lost exact plate contact, interrupted checkpoints and falsely
+the 0.01 mm broad-phase boundary, lost exact plate contact, interrupted checkpoints and falsely
 promoted readiness. A passing integrity test is not leg qualification.
 
 Exit zero means the investigation completed, even if it found a collision. The
