@@ -50,7 +50,10 @@ class FitJobTests(unittest.TestCase):
                        'slice_complete': True, 'inputs': self.inputs, 'slice_inputs': self.identity,
                        'geometry': fit.geometry_check(self.job, self.identity),
                        'metrics': fit.measurements(self.job), 'archive_members': fit.sliced_members(self.job),
-                       'files_sha256': fit.manifest(self.job)}
+                       'files_sha256': fit.manifest(self.job), 'sliced_inspection': {'fixture': True}}
+        # The tests below exercise retention independently of full Bambu archive
+        # structure; actual path/thermal parsing has separate adversarial tests.
+        patch.object(fit, 'sliced_inspection', return_value={'fixture': True}).start()
         fit.dump(self.job / 'job.json', self.report)
 
     def test_complete_retained_fixture(self):
@@ -105,6 +108,28 @@ class FitJobTests(unittest.TestCase):
     def test_geometry_only_3mf_is_not_sliced(self):
         (self.job / 'slice/out/sliced.3mf').write_bytes((self.job / 'geometry.3mf').read_bytes())
         with self.assertRaisesRegex(ValueError, 'G-code'): fit.sliced_members(self.job)
+
+    def test_actual_object_temperature_and_waits_not_profile_labels(self):
+        code = ('M190 S100\nM109 S275\nG90\nM83\nG1 X100 Y100 Z0.2\n'
+                '; Z_HEIGHT: 0.2\n; FEATURE: Outer wall\nG1 X120 Y100 E1\nG1 X120 Y120 E1\n')
+        got = fit.toolpaths(code, MACHINE)
+        self.assertEqual(got['features']['Outer wall']['moves'], 2)
+        for changed in (code.replace('M109 S275', 'M109 S205'), code.replace('M109', 'M104'),
+                        code.replace('M190', 'M140'), code.replace('M190 S100', 'M190 S60'),
+                        code.replace('Outer wall', 'Support'), code.replace('X120', 'X260')):
+            with self.subTest(code=changed), self.assertRaises(ValueError): fit.toolpaths(changed, MACHINE)
+
+    def test_arc_sweep_exceeding_bed_is_rejected_even_if_endpoints_fit(self):
+        code = ('M190 S100\nM109 S275\nG90\nM83\nG1 X100 Y100 Z0.2\n'
+                '; Z_HEIGHT: 0.2\n; FEATURE: Outer wall\nG2 X100 Y100 I100 J0 E1\n')
+        with self.assertRaisesRegex(ValueError, 'volume or exclusion'): fit.toolpaths(code, MACHINE)
+
+    def test_archived_real_205C_slice_is_rejected(self):
+        archive = ROOT / 'research/retained-fit-jobs/rejected-7b67f03.zip'
+        with zipfile.ZipFile(archive) as z:
+            gcode = z.read('slice/out/plate_1.gcode').decode()
+        with self.assertRaisesRegex(ValueError, 'temperatures/waits differ'):
+            fit.toolpaths(gcode, MACHINE)
 
 
 if __name__ == '__main__':
