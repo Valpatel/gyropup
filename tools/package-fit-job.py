@@ -258,7 +258,9 @@ def toolpaths(text, machine, nozzle_temp=275., bed_temp=100., drawings=None):
                 if ((angle-first)*direction) % (2*math.pi) <= sweep + 1e-8:
                     points.append([cx+radius*math.cos(angle), cy+radius*math.sin(angle), xyze['Z']])
         extrusion = args.get('E', 0)
-        if extrusion > 0 and any(k in args for k in 'XY'):
+        # Full-circle arcs may specify only I/J, and helical deposition can
+        # change only Z. Both move the nozzle while depositing material.
+        if extrusion > 0 and (any(k in args for k in 'XYZ') or code in ('G2', 'G3')):
             if not relative_e: raise ValueError('Absolute object extrusion is unsupported')
             if (nozzle, waited_nozzle, bed, waited_bed) != (nozzle_temp, nozzle_temp, bed_temp, bed_temp):
                 raise ValueError(f'Object deposition temperatures/waits differ: {(nozzle, waited_nozzle, bed, waited_bed)}')

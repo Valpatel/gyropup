@@ -178,6 +178,21 @@ class FitJobTests(unittest.TestCase):
             with self.subTest(code=changed), self.assertRaisesRegex(ValueError, 'commanded feed exceeds'):
                 fit.toolpaths(changed, MACHINE)
 
+    def test_full_circle_and_vertical_deposition_receive_all_guards(self):
+        prefix = ('M190 S100\nM109 S275\nG90\nM83\nG1 X100 Y100 Z0.2 F1800\n'
+                  '; Z_HEIGHT: 0.2\n; FEATURE: Outer wall\n')
+        for motion in ('G2 I5 J0 E1', 'G3 I5 J0 E1', 'G1 Z0.3 E1'):
+            code = prefix+motion+' F1800\nG1 X120 Y100 E1\n'
+            drawings = {.2: []}
+            report = fit.toolpaths(code, MACHINE, drawings=drawings)
+            self.assertEqual(report['features']['Outer wall']['moves'], 2)
+            self.assertEqual(len(drawings[.2]), 2)
+            self.assertEqual(report['max_deposition_commanded_feed_mm_s'], 30.)
+            with self.subTest(motion=motion), self.assertRaisesRegex(ValueError, 'commanded feed exceeds'):
+                fit.toolpaths(prefix+motion+' F15000\nG1 X120 Y100 E1 F1800\n', MACHINE)
+            with self.assertRaisesRegex(ValueError, 'temperatures/waits differ'):
+                fit.toolpaths(prefix+'M104 S205\n'+motion+' F1800\nM109 S275\nG1 X120 Y100 E1\n', MACHINE)
+
     def test_archived_real_205C_slice_is_rejected(self):
         archive = ROOT / 'research/retained-fit-jobs/rejected-7b67f03.zip'
         with zipfile.ZipFile(archive) as z:
