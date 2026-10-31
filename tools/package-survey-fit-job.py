@@ -81,9 +81,9 @@ def record_bytes(job):
 def layer_witness(job, identity, render=False):
     text = (job / 'slice/out/plate_1.gcode').read_text()
     layers = sorted({float(z) for z in re.findall(r'^; Z_HEIGHT: ([0-9.]+)$', text, re.M)})
-    if not layers or layers[0] != .2 or 2.8 not in layers or not 3.4 <= layers[-1] <= 3.8:
+    if not layers or layers[0] != .2 or 3.0 not in layers or not 3.4 <= layers[-1] <= 3.8:
         raise ValueError('Missing expected base/slot/label layer coverage')
-    chosen = [layers[0], 2.8, next(z for z in layers if z > 3.), layers[-1]]
+    chosen = [layers[0], 3.0, next(z for z in layers if z > 3.), layers[-1]]
     drawings = {z: [] for z in chosen}
     fit.toolpaths(text, identity['effective_profiles']['machine'], drawings=drawings)
     if len(drawings) != 4 or not all(drawings.values()): raise ValueError('Missing actual layer deposition')
