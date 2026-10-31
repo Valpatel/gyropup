@@ -44,6 +44,7 @@ class FitJobTests(unittest.TestCase):
         (self.job / 'slice/slicer.log').write_text('test fixture: not actual slicing')
         (self.job / 'critical-layers.png').write_bytes(b'test fixture: not an image')
         (self.job / 'measurements.csv').write_text('test fixture: not measured')
+        (self.job / 'process-record.csv').write_text('test fixture: not measured')
         fit.dump(out / 'result.json', {'return_code': 0, 'sliced_plates': [
             {'filaments': [{'total_used_g': 8}], 'total_predication': 120}]})
         with zipfile.ZipFile(out / 'sliced.3mf', 'w') as z:

@@ -9,6 +9,7 @@ from __future__ import annotations
 import argparse
 import csv
 import hashlib
+import importlib.metadata
 import json
 import math
 import re
@@ -40,7 +41,8 @@ QUALIFICATION = {'physical_fit_verified': False, 'mounting_approved': False, 'st
                  'full_leg_print_released': False, 'powered_operation_approved': False}
 TOOLKIT_COMMIT = '2ad426943ce2c7232875e105e50810849f9a3e5e'
 TOOLKIT_HELPERS = {'cadagent.mesh3mf': 'cf5aa2a2f6dab9d2a1e76539f158a10e38bc5e0fb72ceaabdf264178b83ce29f',
-                   'cadagent.slicer': 'fd5a746a54d920d13af228a9766da4b5b390cc043dded2fd0be4486db3f415f0'}
+                   'cadagent.slicer': 'fd5a746a54d920d13af228a9766da4b5b390cc043dded2fd0be4486db3f415f0',
+                   'cadagent._deps': '9a637459accd62b83497bcc0452e55c156f4775ce9bd816c4c334ddacaf59f9a'}
 
 
 def sha(path):
@@ -56,14 +58,21 @@ def input_identity(root=ROOT):
     directory = root / SOURCE
     data = json.loads((directory / 'checks.json').read_text())
     rs04_lug_checks.validate_receipt(data, directory, root)
-    from cadagent import mesh3mf, slicer
-    helpers = {m.__name__: sha(m.__file__) for m in (mesh3mf, slicer)}
+    from cadagent import mesh3mf, slicer, _deps
+    helpers = {m.__name__: sha(m.__file__) for m in (mesh3mf, slicer, _deps)}
     if helpers != TOOLKIT_HELPERS:
         raise ValueError('Use the released cad-agent helpers from ' + TOOLKIT_COMMIT)
-    files = ['tools/package-fit-job.py', 'cad/print_slicing.py', 'cad/print_provenance.py',
+    versions = {}
+    for line in (root / 'tools/fit-job-requirements.txt').read_text().splitlines():
+        if not line.strip() or line.startswith('#'): continue
+        package, expected = line.split('==')
+        versions[package] = importlib.metadata.version(package)
+        if versions[package] != expected:
+            raise ValueError('Fit-job runtime version differs: ' + package)
+    files = ['tools/package-fit-job.py', 'tools/fit-job-requirements.txt', 'cad/print_slicing.py', 'cad/print_provenance.py',
              'cad/rs04_lug_checks.py', str(SOURCE / 'checks.json'), str(SOURCE / (PART + '.stl'))]
     return {'files': {name: sha(root / name) for name in files},
-            'toolkit_helpers': helpers, 'toolkit_commit': TOOLKIT_COMMIT,
+            'toolkit_helpers': helpers, 'toolkit_commit': TOOLKIT_COMMIT, 'runtime_packages': versions,
             'engineering_pass': False, 'engineering_counts': data['counts'],
             'unresolved_failures': [c['id'] for c in data['checks'] if c['status'] == 'fail']}
 
@@ -316,7 +325,7 @@ def verify(job, root=ROOT):
         raise ValueError('Recipe/scope/qualification changed')
     if report['inputs'] != input_identity(root) or report['files_sha256'] != manifest(job):
         raise ValueError('Input or retained-output identity changed')
-    required = {'source.stl', 'geometry.3mf', 'critical-layers.png', 'measurements.csv',
+    required = {'source.stl', 'geometry.3mf', 'critical-layers.png', 'measurements.csv', 'process-record.csv',
                 'slice/machine.json', 'slice/process.json', 'slice/filament.json', 'slice/slicer.log',
                 'slice/exit-code.json', 'slice/out/result.json', 'slice/out/sliced.3mf', 'slice/out/plate_1.gcode'}
     if not required <= set(report['files_sha256']):
@@ -357,11 +366,18 @@ def generate(job, root=ROOT):
     plot_layers(job, identity)
     with (job / 'measurements.csv').open('w', newline='') as stream:
         writer = csv.writer(stream)
-        writer.writerow(['location', 'source_mesh_sha256', 'recipe', 'date_operator', 'printer_nozzle_plate',
-                         'filament_lot_drying_feeding', 'calibration', 'diameter_mm', 'depth_mm', 'remaining_grip_mm',
-                         'flatness_mm', 'sag_strings_or_other_defects', 'photo', 'notes'])
+        fields = ['location', 'actual_screw_length_mm', 'remaining_grip_mm', 'measurement_uncertainty_mm',
+                  'calculated_penetration_mm', 'seat_flatness_mm', 'contact_or_surface_notes',
+                  'seat_diameter_mm', 'seat_depth_mm', 'photo', 'notes']
+        writer.writerow(fields)
         for location in [f'motor_hole_{n:02}' for n in range(1, 11)] + ['bearing_seat_and_lip', 'dowel_1', 'dowel_2', 'outer_roof_1', 'outer_roof_2']:
-            writer.writerow([location, sha(job / 'source.stl'), RECIPE['id']] + ['']*11)
+            writer.writerow([location] + ['']*(len(fields)-1))
+    with (job / 'process-record.csv').open('w', newline='') as stream:
+        writer = csv.writer(stream)
+        fields = ['source_mesh_sha256', 'recipe', 'job_receipt_sha256', 'date_operator', 'printer', 'nozzle',
+                  'plate', 'filament_brand_lot', 'drying_temperature_time', 'feeding_conditions', 'calibration', 'notes']
+        writer.writerow(fields)
+        writer.writerow([sha(job / 'source.stl'), RECIPE['id']] + ['']*(len(fields)-2))
     report = {'schema': 'gyropup.fit-job/1', 'recipe': RECIPE, 'qualification': QUALIFICATION,
               'slice_complete': True, 'inputs': before, 'slice_inputs': identity,
               'source_commit': subprocess.check_output(['git', 'rev-parse', 'HEAD'], cwd=root, text=True).strip(),

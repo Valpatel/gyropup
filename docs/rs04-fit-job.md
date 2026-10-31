@@ -12,8 +12,8 @@ specimens; this RS04 package cannot qualify that motor family.
 
 ## Trial process and limits
 
-The declared trial uses a P1S with a **0.4mm hardened nozzle**, Bambu PA6-CF,
-0.20mm layers, four walls, 100% zig-zag infill, textured PEI, and support disabled.
+The declared trial uses a P1S with a **0.4 mm hardened nozzle**, Bambu PA6-CF,
+0.20 mm layers, four walls, 100% zig-zag infill, textured PEI, and support disabled.
 This is a new process trial, not an established leg-print recipe. Record the
 actual nozzle, plate, calibration, filament lot and drying/feeding conditions
 before printing. The machine profile does not prove what is installed.
@@ -24,27 +24,28 @@ the sliced mesh. A future parent print can have different raster direction,
 thermal history, warping and support conditions. Successful coupon measurements
 do not transfer automatically to the whole frame.
 
-The package checks the actual P1S profile's256×256mm area,250mm height and
-lower-left18×28mm exclusion. Both transformed mesh and object nozzle paths are
+The package checks the actual P1S profile's 256×256 mm area, 250 mm height and
+lower-left 18×28 mm exclusion. Both transformed mesh and object nozzle paths are
 checked; printer startup/end homing, purge and wipe moves are separate vendor
 operations. No printer was connected or started by generation.
 
 ## Inspect and measure
 
 The retained critical-layer image is drawn from executable G-code, with bridge
-deposition red and overhang walls orange. The counterbore roofs bridge at Z8.8mm.
+deposition red and overhang walls orange. The counterbore roofs bridge at Z=8.8 mm.
 The two outer-edge pockets clipped from the parent's blind stop-pin bores bridge
-at Z23.2mm. Support is disabled and no support deposition is accepted. This
+at Z=23.2 mm. Support is disabled and no support deposition is accepted. This
 does **not** prove that PA6-CF bridges will produce usable screw-seat surfaces.
 
 Inspect the bearing seat and lip, all ten motor holes and counterbores, dowel
 holes, and the outer pocket roofs. Record sagging, strings, incomplete walls,
 warping and first-layer distortion before any dimensional conclusion. Measure
-counterbore depth and remaining grip at every screw location; a nominal4.4mm
-penetration leaves only0.6mm to the drawing's5mm usable-thread minimum and is
+counterbore depth and remaining grip at every screw location; a nominal 4.4 mm
+penetration leaves only 0.6 mm to the drawing's 5 mm usable-thread minimum and is
 not a manufacturing tolerance budget. Do not use screw torque to pull a warped
-or obstructed part onto the motor. Unresolved receiver support remains a
-separate design failure even if a printed coupon fits by hand.
+or obstructed part onto the motor. The axial-support checks remain unresolved
+even if a printed coupon fits by hand. The 4 mm engagement and 0.5 mm reserve
+limits are declared geometric screens, not thread-strength or torque qualification.
 
 Keep a record of printer/nozzle/plate, slicer/job hashes, filament lot and drying,
 calibration, measured seat diameters/depths, grip at all ten locations, flatness,
@@ -52,10 +53,10 @@ surface defects and photos. Physical measurements are currently absent.
 
 ## Reproduce and verify
 
-Use cad-agent commit`2ad426943ce2c7232875e105e50810849f9a3e5e`, its`src/`
-directory on`PYTHONPATH`, and the lightweight versions in
+Use cad-agent commit `2ad426943ce2c7232875e105e50810849f9a3e5e`, its `src/`
+directory on `PYTHONPATH`, and the lightweight versions in
 [`tools/fit-job-requirements.txt`](../tools/fit-job-requirements.txt). Generation
-also needs Bambu Studio. The current installed build is02.08.04.57, snap revision8.
+also needs Bambu Studio. The current installed build is 02.08.04.57, snap revision 8.
 Keep input/work directories visible under home; the snap cannot read ordinary
 `/tmp` or hidden project directories.
 
@@ -71,10 +72,10 @@ Verification does not run Bambu or CAD. It checks retained byte identities,
 source/recipe membership, actual sliced geometry/placement, machine and filament
 mapping, G-code thermal waits, paths, and raw time/material results. Keep the
 whole generated directory together, including resolved settings, raw logs/results,
-standalone G-code and the sliced3MF containing the same G-code.
+standalone G-code and the sliced 3MF containing the same G-code.
 
 The [first rejected run](../research/retained-fit-jobs/README.md) demonstrates why
-these checks matter: the old inheritance-only resolver selected205°C startup
-despite a275°C filament label. It is diagnostic evidence and must not be printed.
+these checks matter: the old inheritance-only resolver selected 205°C startup
+despite a 275°C filament label. It is diagnostic evidence and must not be printed.
 The fixed resolver includes the installed vendor templates; no generated G-code
 is manually patched.
