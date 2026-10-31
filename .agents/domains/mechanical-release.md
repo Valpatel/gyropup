@@ -16,6 +16,11 @@ Resolve included printer templates as well as inheritance, and retain the actual
 
 An updated generator does not label already-published historical print files or instructions. Check direct document links and portal consumers of old print metadata, place historical status before actionable instructions, and distinguish a current bounded coupon package from an archived full kit. Keep the component register and readiness summary aligned with completed reviews and still-open qualifications. See [historical print-page status](../inbox/2026-10-29-historical-print-pages-need-local-status.md).
 
+When withdrawing a torque, dimension or qualification claim from a generated page,
+correct and test the generator as well as the published prose. Preserve source
+closure rules even for prose-only CAD-directory edits; do not re-sign older reports.
+See [withdraw instructions in the generator too](../inbox/2026-10-31-withdraw-instructions-in-the-generator-too.md).
+
 Detailed thread models need source-bound mating clocking, not a generic intended-overlap waiver. Sampling may diagnose phase but cannot establish complete mating; a timed-out global check stays inconclusive. Keep seating, holes, engagement, tip clearance and physical insert coupons separate from that diagnostic. See [thread sampling limits](../inbox/2026-10-29-thread-sampling-does-not-qualify-mating.md).
 
 Insert-fit specimens must preserve their parent's local geometry and print orientation. A vertical carrier boss and horizontal base anchor need separate measurements. Record requested recipes, actual process conditions and physical observations independently; geometry-only3MF packages contain no slicer settings. See [the specimen orientation lesson](../inbox/2026-10-29-fit-specimens-must-preserve-layer-orientation.md) and `research/carrier-insert-fit/`.

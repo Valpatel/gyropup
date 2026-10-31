@@ -54,9 +54,44 @@ python -B research/rs04-support/probe.py --vendor-root references/vendor --out /
 The probe verifies the complete existing receipt and private/toolkit identities,
 hashes all 43 vendor solids, measures the projected head-bearing footprints on the
 actual motor plate with released `relate(..., contact_area=True)`, and records every
-candidate relation. Invalid shapes, uncertain relations, missing inputs or source
+candidate relation. Each ring uses released `relation_table(..., only=[ring])`
+with the unchanged default tolerances and no pair cache. The table memoizes solid
+volume integration and runs exact Boolean/distance queries for pairs whose
+axis-aligned bounding boxes are within 1 mm. Its `get()` method is called for all
+59 requested pairs; table iteration alone would omit the remote pairs.
+
+Remote pairs carry `exact: false` and a `gap_lower_bound_mm`, not an exact measured
+clearance. The report records the toolkit's analytic `bounding_box()` values,
+manufacturer content identities and all 16 actual posed authored content identities.
+The receipt verifier independently calculates box separation and requires a bound
+strictly greater than the unchanged 1 mm near margin. Every closer pair must be
+exact. In particular motor-plate support must remain exact, touching and positive.
+No contact or overlap measurement is inferred from a bounding box. This optimization
+does not skip any of the 472 candidate/counterpart pairs or change the ring geometry.
+
+Invalid shapes, uncertain relations, missing inputs or source
 changes fail the probe. It exports only the eight authored ring STEP files. Private
-manufacturer CAD remains private. Partial diagnostics are explicitly incomplete.
+manufacturer CAD remains private. Baseline and footprint diagnostics are saved
+before the candidate loop. Each ring has progress, elapsed time and kernel-query
+statistics. Atomic `probe-incomplete.json` checkpoints survive an interrupted later
+query; they remain explicitly incomplete and are removed only after the final
+`probe.json` is written successfully. A complete public result directory has the
+final JSON and exactly eight authored STEP files.
+
+Run the kernel-free receipt and negative-control checks after collecting results:
+
+```sh
+python3 -B tools/test-rs04-support-probe.py
+```
+
+The default receipt is `research/rs04-support/results/probe.json`. The reviewed
+manufacturer and authored-pose inventory fingerprints must be pinned in the verifier
+after independent inspection of the real result. Until then, real-receipt validation
+deliberately fails. `--pure` runs only synthetic orchestration/integrity controls;
+it neither inspects geometry nor accepts a missing research result. Those controls
+cover missing rows, changed inputs/artifacts, uncertain relations, invented bounds,
+the 1 mm near margin, lost exact plate contact, interrupted checkpoints and falsely
+promoted readiness. A passing integrity test is not leg qualification.
 
 Exit zero means the investigation completed, even if it found a collision. The
 report always keeps engineering acceptance, structural qualification, fabrication
