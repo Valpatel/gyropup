@@ -1,0 +1,46 @@
+{
+  "schema": "gyropup.motor-seller-claims/1",
+  "part": "Deeahdah PRO3115-900KV",
+  "asin": "B0GJNX17YX",
+  "source_url": "https://www.amazon.com/dp/B0GJNX17YX",
+  "observed_date": "2026-10-30",
+  "source_html_sha256": "80961ea51e62896769cd3d7e377d390aab98007fbc5fd1f0ba8157315ee629bc",
+  "claims": {
+    "body_diameter": {
+      "label": "Motor Diameter(mm)",
+      "value": "37.1+/-0.15",
+      "status": "seller_claim_unmeasured"
+    },
+    "overall_length": {
+      "label": "Motor Length (mm)",
+      "value": "47.8+/-0.3(including output shaft)",
+      "status": "seller_claim_unmeasured"
+    },
+    "shaft_thread": {
+      "label": "Prop Adapter Shaft Thread",
+      "value": "M5",
+      "status": "seller_claim_unmeasured"
+    },
+    "mount_pattern": {
+      "label": "Bolt Pattern",
+      "value": "M3(19X19mm)",
+      "status": "seller_claim_unmeasured"
+    },
+    "bearing": {
+      "label": "Bearing",
+      "value": "Japanese NMB 11X5X5 mm",
+      "status": "seller_claim_unmeasured"
+    },
+    "mass": {
+      "label": "Weight",
+      "value": "120g (including 30cm 16AWG wires)",
+      "status": "seller_claim_unmeasured"
+    }
+  },
+  "limits": [
+    "Not a manufacturer drawing or delivered-sample measurement.",
+    "M5 does not establish pitch, handedness, seating datum or usable length.",
+    "M3(19X19mm) does not establish hole coordinates, pitch or usable thread depth.",
+    "Listing photos include multiple colour variants; no dimensions inferred from pixels."
+  ]
+}

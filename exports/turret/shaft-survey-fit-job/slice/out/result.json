@@ -1,0 +1,92 @@
+{
+    "error_string": "Success.",
+    "layer_height": 0.20000000298023224,
+    "peak_rss_mb": 325.7109375,
+    "plate_index": 0,
+    "return_code": 0,
+    "sliced_plates": [
+        {
+            "feature_type_times": {
+                "Bottom surface": 89.84505462646484,
+                "Custom": 366.3966369628906,
+                "Flush": 29.0,
+                "Gap infill": 9.52967643737793,
+                "Inner wall": 220.67445373535156,
+                "Internal solid infill": 343.22222900390625,
+                "Outer wall": 102.28034973144531,
+                "Sparse infill": 373.6415100097656,
+                "Top surface": 82.03724670410156,
+                "Travel": 59.95674514770508,
+                "Undefined": 44.67863464355469
+            },
+            "filament_change_times": 0,
+            "filaments": [
+                {
+                    "filament_id": "GFN05",
+                    "id": 1,
+                    "main_used_g": 8.471138000488281,
+                    "total_used_g": 8.471138000488281
+                }
+            ],
+            "id": 1,
+            "layer_filament_change": 0,
+            "main_predication": 1252.17919921875,
+            "obj_cached_cnt": 0,
+            "objects": [
+                {
+                    "bbox": {
+                        "depth": 32.0,
+                        "height": 3.5,
+                        "width": 100.0,
+                        "x": 77.99999237060547,
+                        "y": 112.0,
+                        "z": 0.0
+                    },
+                    "id": 5,
+                    "name": "shaft-clearance-survey",
+                    "triangle_count": 37586
+                }
+            ],
+            "times": {
+                "conflict_check_time": 0,
+                "detect_overhangs_time": 5,
+                "export_gcode_time": 131,
+                "flush_plan_time": 0,
+                "generate_support_material_time": 60,
+                "infill_generate_time": 42,
+                "infill_time": 139,
+                "ironing_time": 0,
+                "make_perimeters_time": 110,
+                "multifilament_segment_2d_time": 0,
+                "other_slice_time": 1,
+                "prepare_infill_time": 97,
+                "region_split_time": 0,
+                "skirt_brim_time": 4,
+                "slice_layers_time": 53,
+                "sliced_time": 461,
+                "sliced_time_with_cache": 135,
+                "support_detect_time": 0,
+                "support_interface_time": 0,
+                "support_normal_generate_time": 0,
+                "support_toolpath_time": 0,
+                "support_tree_generate_time": 0,
+                "toolpath_time": 9,
+                "wall_time": 57,
+                "wipe_tower_time": 1
+            },
+            "total_predication": 1661.2672119140625,
+            "triangle_count": 37586,
+            "warning_message": ""
+        }
+    ],
+    "sparse_infill_density": 100.0,
+    "times": {
+        "export_3mf_time": 142,
+        "export_slicedata_time": 0,
+        "export_time": 142,
+        "import_time": 85,
+        "load_slicedata_time": 0,
+        "prepare_time": 99
+    },
+    "wall_loops": 4
+}
