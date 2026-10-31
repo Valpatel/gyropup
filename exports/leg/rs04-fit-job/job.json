@@ -43,7 +43,7 @@
       "cad/print_slicing.py": "13fd25fe32e75e0c66dbe8af132fd4d70fb030defb14d88a96f9ff77cbaf07bd",
       "cad/print_provenance.py": "db0d9cdc14e0d0363899d82c03eb31cb63ea0d7718fedcf127a5545f8f6bec88",
       "cad/rs04_lug_checks.py": "02a75e6dd5d28c6c8c149141d100d1386125197f5edfb34143565c72d8a8dfb5",
-      "exports/leg/rs04-mounting-fit/checks.json": "2fd6e95b68402895a443a6ebc565b9dfafbcf5d25bc05e3b2533518d94b4de04",
+      "exports/leg/rs04-mounting-fit/checks.json": "e9bda1743238dfd68de5da283805289038edec808bf6e9c1f78c10e43b372c0a",
       "exports/leg/rs04-mounting-fit/coupon_frame_ring_nom.stl": "41d2bcbe0226243bd2d78caf01480a359ffa3e1bdab803d7faab91cdab7ec968"
     },
     "toolkit_helpers": {
@@ -1221,7 +1221,7 @@
       "slicer_payload_sha256": "b7f803605b7df175570e58c994bd8bfd12467b3aa2756cce32a931c670f3e5a9"
     }
   },
-  "source_commit": "55aa5c254bd78215e67664464ea0a8a5209f53aa",
+  "source_commit": "cfc82f4d56d84cae3f3d3df3294eed66e530655d",
   "geometry": {
     "bounds_mm": [
       [
@@ -1252,7 +1252,7 @@
   },
   "metrics": {
     "grams": 172.44,
-    "minutes": 392.7376302083333,
+    "minutes": 392.64918619791666,
     "filament_m": 65.17,
     "exit_code": 0,
     "return_code": 0,
@@ -1284,19 +1284,19 @@
       "bytes": 44072
     },
     "Metadata/plate_1.gcode.md5": {
-      "sha256": "92ca806db71b617cb4a05143e595f7144328c0a61e226264fb9310a7511d24e5",
+      "sha256": "2c549024955603e2897ca6d9d13e8dd4cebb53ac61588fb0eb331441551a616e",
       "bytes": 32
     },
     "Metadata/plate_1.gcode": {
-      "sha256": "a65288f2f9adc51db6b8abc07e4428530a4dce64fdefa4de1e54d8a0daa3628e",
-      "bytes": 11414634
+      "sha256": "763c16141ce81ae60916759cfeb56e21f667b4ab5bf439754d08a497b914d399",
+      "bytes": 11414526
     },
     "Metadata/_rels/model_settings.config.rels": {
       "sha256": "5ea2c0f459aec4d25341abd431edee7890c8d2fd02efbaed4b073d04cfa11440",
       "bytes": 255
     },
     "Metadata/model_settings.config": {
-      "sha256": "495747f5a18bbc6de81d1f38960fbe1b241b741b78f0a57b90a619cc6f449fac",
+      "sha256": "388d5d56d004c6bbd63404231d27df97d6e911389c1c63dec35eb5bdeee4c228",
       "bytes": 1508
     },
     "Metadata/cut_information.xml": {
@@ -1304,8 +1304,8 @@
       "bytes": 139
     },
     "Metadata/slice_info.config": {
-      "sha256": "dee21f6cee91b0a472e254dcb89abe3edc8ad2a7fea4ddef42e862d7cc486e85",
-      "bytes": 1692
+      "sha256": "152c7d5761b5c9ae5f43476e19933eaad5d2fa1759cf7cdf7322a989dfa11cd7",
+      "bytes": 1705
     },
     "Metadata/filament_sequence.json": {
       "sha256": "9e457664577459536d7512bf553066895dba22502a17ad79789ee272d2d569ba",
@@ -1949,11 +1949,11 @@
     "slice/exit-code.json": "124fd50cb6d223cdd18fedc166d00af7254199b6e6dedf9be82f71db87af6d01",
     "slice/filament.json": "0d2b91e9d7f31661688294b60c19e3fb922f1fde5d2f219ee16d85f190cb3374",
     "slice/machine.json": "44b41d9e562c8b9a7223ec87dd1c7e37271549983ea572f09a81f62a9b76d9af",
-    "slice/out/plate_1.gcode": "a65288f2f9adc51db6b8abc07e4428530a4dce64fdefa4de1e54d8a0daa3628e",
-    "slice/out/result.json": "5f0318ce0901954336777433c5dc0724a735312aae84225ac67b2df991e483b2",
-    "slice/out/sliced.3mf": "3d852a82a77ac870a6b7e69327d5e1136ffc2d34873bbceeedfe2cc214c77e62",
+    "slice/out/plate_1.gcode": "763c16141ce81ae60916759cfeb56e21f667b4ab5bf439754d08a497b914d399",
+    "slice/out/result.json": "5397f8dbbce8e8e80b654f32903522609d0700126a9a580c351c92bdbfb70047",
+    "slice/out/sliced.3mf": "88894905756eb4f642b273511564c4a678dc9d77dbf73f69eaa077adbd5b30a6",
     "slice/process.json": "9591ffa2ff4d223ebc859b1901766aabf71caf7cfdcf93719dcc77484b12a345",
-    "slice/slicer.log": "e267609d291b1d4587ec8d4aa8a92f00d3b8b3e307ca2391889ab639607d38a5",
+    "slice/slicer.log": "25225a301c0004311cd1d52f14b1a271c65ff831587ff1530c7f47127aa6498a",
     "source.stl": "41d2bcbe0226243bd2d78caf01480a359ffa3e1bdab803d7faab91cdab7ec968"
   }
 }
