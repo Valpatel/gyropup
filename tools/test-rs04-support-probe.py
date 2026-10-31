@@ -34,10 +34,11 @@ MOVING = {'leg_output_adapter', 'dyno_hub'}
 POSES = {str(angle) for angle in range(0, 360, 45)}
 PLATE = '7fbbc260947a82c2e8f1a426833b2b4a48d3303484a5b2df453ee8e57ad93a5c'
 FLAGS = ('engineering_pass', 'physical_fit_verified', 'structural_qualification', 'fabrication_release')
-# Set only after the actual 43-solid result has received independent review.
+# Independently reconstructed from the private manufacturer STEP and authored
+# geometry at 612594d on 2026-10-31; all eight actual exports were inspected.
 # A missing pin deliberately prevents a real receipt from passing this script.
-EXPECTED_VENDOR_INVENTORY_SHA256 = None
-EXPECTED_AUTHORED_INVENTORY_SHA256 = None
+EXPECTED_VENDOR_INVENTORY_SHA256 = '05317ea2f97fbf3821f84a7d62f4f5dad80c9e3bd0350de9bf2846044894ecd0'
+EXPECTED_AUTHORED_INVENTORY_SHA256 = '827ff83f05695725ef62c0cfcc17301aee64b4a71e08f7e9a0dd83f57ad69cef'
 TOLERANCES = {'touch_mm': .01, 'overlap_mm3': .001, 'contain_mm3': .001,
               'near_mm': .01, 'volume_check_mm3': .01}
 RELATION_POLICY = {'api': 'cadagent.gates.relation_table',

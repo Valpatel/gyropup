@@ -81,6 +81,13 @@ The driver checks cover only the declared fitting step: a 4 mm-diameter shaft,
 head top before upper links and stop posts are fitted. They do not qualify socket engagement,
 the actual purchased tool, assembled service access or tightening torque.
 
+## Support-ring comparison
+
+The [eight-ring contact study](rs04-support-study.md) measures the two interrupted
+head footprints and compares authored ring concepts against all manufacturer
+solids and sampled rotating parts. It reports nominal contact and clearance only;
+local load spreading, preload, a selected parent pocket and physical fit remain open.
+
 ## Validation and remaining leg work
 
 The [first complete CAD run](../research/rs04-lug-stacks/README.md) confirms all
@@ -91,7 +98,7 @@ not qualify the mounting interface.
 
 The second run independently reproduces those support failures, measures both
 factory-retainer heads at 0.21 mm below the mounting plane, and rejects a blocked
-driver path. All fifteen evidence-integrity tests pass while the engineering
+driver path. All sixteen evidence-integrity tests pass while the engineering
 verdict remains **failed**. Those tests reject missing failures, changed sources
 or outputs, and a falsely promoted pass; their success is not mounting acceptance.
 

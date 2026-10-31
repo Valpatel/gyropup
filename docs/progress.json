@@ -343,6 +343,25 @@
           "href": "https://github.com/Valpatel/gyropup/issues/124"
         }
       ]
+    },
+    {
+      "time": "2026-10-31",
+      "title": "Mapping the RS-04 mounting support",
+      "text": "Eight authored support rings now have 472 recorded relations against actual motor solids and sampled rotating adapters. Two screw-head footprints have interrupted motor-side support. The comparison finds nominal contact without reported interference, but ring strength, preload and a complete replacement pocket remain unqualified. All eight original mounting-support failures stay visible.",
+      "links": [
+        {
+          "title": "Inspect the ring comparison and its limits",
+          "href": "../site/pages/docs-rs04-support-study-md.html"
+        },
+        {
+          "title": "Parent mounting candidate",
+          "href": "../site/pages/docs-rs04-mounting-fit-md.html"
+        },
+        {
+          "title": "Unpowered fit job",
+          "href": "../site/pages/docs-rs04-fit-job-md.html"
+        }
+      ]
     }
   ],
   "shopping": {

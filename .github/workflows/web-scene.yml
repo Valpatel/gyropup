@@ -37,6 +37,7 @@ jobs:
             commands: |
               python3 tools/test-print-provenance.py
               python3 tools/test-rs04-lug-stacks.py
+              python3 tools/test-rs04-support-probe.py
               python3 research/thread-mating-2026-10-29/test_wrapper.py
               python3 tools/test-base-board-interfaces.py
               python3 tools/test-carrier-connector-inputs.py
