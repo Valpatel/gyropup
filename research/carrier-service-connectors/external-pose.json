@@ -39,7 +39,6 @@
       "cad/interfaces.json": "a4842a317dd2e64e9b4e11d34376bc36c26e1ddf8435a4b16a85dae3cd730b73",
       "cad/leg.py": "86d141a9c548328b871cc118f3267797326294c89f4e50633e82274458b1d666",
       "cad/leg_studies.py": "740c94fe586eff664fc4370804d8a056bf282be8f33ede3f5836db647bb4409f",
-      "cad/ordered_motor_gauge.py": "196fadb67a03f63c02c956fa5cab7f4a451abb3fcbbc8d32badaf64da2da8891",
       "cad/parameters.json": "92cfeaa792a2466594852afeef08af70fe74335ce60f458bd976f62ec0a39e13",
       "cad/print_provenance.py": "db0d9cdc14e0d0363899d82c03eb31cb63ea0d7718fedcf127a5545f8f6bec88",
       "cad/print_slicing.py": "13fd25fe32e75e0c66dbe8af132fd4d70fb030defb14d88a96f9ff77cbaf07bd",
@@ -99,7 +98,7 @@
     },
     "toolkit_sources_sha256": "c2941322d5f3d000d3777b0047567211d06855861fa5e14229d7d7519fef3ed3"
   },
-  "input_fingerprint": "16547b90395148eef69fd6dd10530c0369841c197b2f94134a9c01dff6b702cb",
+  "input_fingerprint": "5a41d4260f4ceeb6723ffea5434f29dcc7a00d6421a40801d14649cce89030c8",
   "context_files": {
     "tools/check-carrier-connector-pose.py": "cb06cb16943f5ee60b98ebe9b630d437aba395db58936028eb21f0a28e711346",
     "tools/check-carrier-connector-inputs.py": "20b4f98e5cef0067d921e645b44fd0809ae2bffee1f1055351e7188623ef0c45",
@@ -5509,5 +5508,5 @@
     "C2 released-source reservations are not a complete parked harness; module withdrawal is not checked.",
     "Upper head, remote hardware and all cable paths are not included; no whole-turret motion claim."
   ],
-  "elapsed_seconds": 59.971
+  "elapsed_seconds": 66.097
 }

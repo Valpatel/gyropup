@@ -39,7 +39,6 @@
       "cad/interfaces.json": "a4842a317dd2e64e9b4e11d34376bc36c26e1ddf8435a4b16a85dae3cd730b73",
       "cad/leg.py": "86d141a9c548328b871cc118f3267797326294c89f4e50633e82274458b1d666",
       "cad/leg_studies.py": "740c94fe586eff664fc4370804d8a056bf282be8f33ede3f5836db647bb4409f",
-      "cad/ordered_motor_gauge.py": "196fadb67a03f63c02c956fa5cab7f4a451abb3fcbbc8d32badaf64da2da8891",
       "cad/parameters.json": "92cfeaa792a2466594852afeef08af70fe74335ce60f458bd976f62ec0a39e13",
       "cad/print_provenance.py": "db0d9cdc14e0d0363899d82c03eb31cb63ea0d7718fedcf127a5545f8f6bec88",
       "cad/print_slicing.py": "13fd25fe32e75e0c66dbe8af132fd4d70fb030defb14d88a96f9ff77cbaf07bd",
@@ -99,7 +98,7 @@
     },
     "toolkit_sources_sha256": "c2941322d5f3d000d3777b0047567211d06855861fa5e14229d7d7519fef3ed3"
   },
-  "input_fingerprint": "16547b90395148eef69fd6dd10530c0369841c197b2f94134a9c01dff6b702cb",
+  "input_fingerprint": "5a41d4260f4ceeb6723ffea5434f29dcc7a00d6421a40801d14649cce89030c8",
   "context_files": {
     "tools/check-carrier-connector-support.py": "ddaef1821bb40721ef7f91f02e04b697c7fbc754829ae1eff17647329345838a",
     "tools/check-carrier-connector-inputs.py": "20b4f98e5cef0067d921e645b44fd0809ae2bffee1f1055351e7188623ef0c45",
@@ -6361,11 +6360,11 @@
     "C2/C3/servo parking, actual retained tails/junctions and added protection board remain incomplete.",
     "Wire-exit and tool corridors are explicit design reservations, not detailed cable/tool models."
   ],
-  "elapsed_seconds": 84.191,
+  "elapsed_seconds": 89.096,
   "public_artifact_sha256": {
-    "carrier-support-candidate.step": "369913735621b764495194f44d7820a74814762f666472f53108e5b6bcee4b65",
-    "C3-support-candidate.step": "af2916f6938c60d6f88e512006d7f544d2b02c5e9b2289db3fc5f85af3e076ca",
-    "C3-support-layout.step": "cb197ff376f188728ed0e0d607502c7ce0ff2e7f3b09c839ad4bba295489762b"
+    "carrier-support-candidate.step": "0b0a35025fa08c2287b258f71784c5171e7d4f3eb3bfa1223498fd9425eccfbc",
+    "C3-support-candidate.step": "df40652f3d3638be8475030fd8e1d636fac8b4a7a46bdb8415d0b205809f8ac6",
+    "C3-support-layout.step": "37dc7cbb720cb92885f39c119a3480fa4dbd4560eea61629100c81341da9c6b0"
   },
   "public_geometry_note": "Independently authored dimension representation; not manufacturer CAD; no threads or flexible clip geometry."
 }

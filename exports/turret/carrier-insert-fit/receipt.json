@@ -1,6 +1,6 @@
 {
   "schema": "gyropup.carrier-insert-fit/1",
-  "source_revision": "4675c2c387705e08d07fe6ee9128a808997d7892",
+  "source_revision": "2a4b2fd38b96ce1ce271a3cfeb40fccf551b640c",
   "inputs": {
     "files": {
       "cad/assembly.py": "4b7c7ef0a5364e524b14d7599b2357f0de4249a2c51e8a02cc69d929b30bab8a",
@@ -38,7 +38,6 @@
       "cad/interfaces.json": "a4842a317dd2e64e9b4e11d34376bc36c26e1ddf8435a4b16a85dae3cd730b73",
       "cad/leg.py": "86d141a9c548328b871cc118f3267797326294c89f4e50633e82274458b1d666",
       "cad/leg_studies.py": "740c94fe586eff664fc4370804d8a056bf282be8f33ede3f5836db647bb4409f",
-      "cad/ordered_motor_gauge.py": "196fadb67a03f63c02c956fa5cab7f4a451abb3fcbbc8d32badaf64da2da8891",
       "cad/parameters.json": "92cfeaa792a2466594852afeef08af70fe74335ce60f458bd976f62ec0a39e13",
       "cad/print_provenance.py": "db0d9cdc14e0d0363899d82c03eb31cb63ea0d7718fedcf127a5545f8f6bec88",
       "cad/print_slicing.py": "13fd25fe32e75e0c66dbe8af132fd4d70fb030defb14d88a96f9ff77cbaf07bd",
@@ -696,10 +695,10 @@
   ],
   "files": {
     "base-anchor.3mf": "6c2a09c805a503e327404999aba049bd897911074f535795d627955cb870a615",
-    "base-anchor.step": "fae6cf270f278f697f2c4178657b1e6d977af7fa931ecd0bdfc7502b980a1a65",
+    "base-anchor.step": "b472480b101cd40644dfc89f962013ee5dc1d3714745634daaf419f8708d54e5",
     "base-anchor.stl": "ce29f74ad434979e27b0025e5bb06cfcc07bd5ded646b1a483fc5f211352d8d7",
     "carrier-boss.3mf": "b46b7c50eb099ea07d1e05f0551bef47ffe4c697ffbdcf0cd5af2d954d619bd2",
-    "carrier-boss.step": "1d2fd7e11363fa03ffb2dcebbef6948d45cfff45cc6fdeeba228fdb528232df2",
+    "carrier-boss.step": "e09fb8b1d7cbb24ae65b6f9cc6767fd0bd5c610a8fe4a23e4c73fe106caecb20",
     "carrier-boss.stl": "374fcbef1209f1ea25dfa195dcf7106e197ecbbaf919842c50a924967da563d3",
     "measurements.csv": "763fce59e411c8a81f168694643a536181d41c1891dffa0eec1f62ad4f8f8820"
   }
