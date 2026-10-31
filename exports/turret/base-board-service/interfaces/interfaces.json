@@ -3498,7 +3498,7 @@
     "splice_application": "https://www.te.com/commerce/DocumentDelivery/DDEController?Action=srchrtrv&DocFormat=pdf&DocLang=English&DocNm=114-2157&DocType=Specification+Or+Standard&PartCntxt=320559",
     "wire": "https://www.remingtonindustries.com/content/PTFE%20Hook%20Up%20Wire%20Data%20Sheet.pdf"
   },
-  "seconds": 30.77,
+  "seconds": 31.3,
   "runtime": {
     "cadquery": "2.8.0",
     "OCP": "7.9.3.1"
@@ -3541,9 +3541,10 @@
       "cad/interfaces.json": "a4842a317dd2e64e9b4e11d34376bc36c26e1ddf8435a4b16a85dae3cd730b73",
       "cad/leg.py": "86d141a9c548328b871cc118f3267797326294c89f4e50633e82274458b1d666",
       "cad/leg_studies.py": "740c94fe586eff664fc4370804d8a056bf282be8f33ede3f5836db647bb4409f",
+      "cad/ordered_motor_gauge.py": "196fadb67a03f63c02c956fa5cab7f4a451abb3fcbbc8d32badaf64da2da8891",
       "cad/parameters.json": "92cfeaa792a2466594852afeef08af70fe74335ce60f458bd976f62ec0a39e13",
       "cad/print_provenance.py": "db0d9cdc14e0d0363899d82c03eb31cb63ea0d7718fedcf127a5545f8f6bec88",
-      "cad/print_slicing.py": "3e0b5a8bf86c0aec92729425e12173d4ef131975b30d009918a26776d315c56f",
+      "cad/print_slicing.py": "13fd25fe32e75e0c66dbe8af132fd4d70fb030defb14d88a96f9ff77cbaf07bd",
       "cad/printplan.py": "0bd820acb603117a981dff62e18097dd0ad84edc1d75bc2d8a13cd5c36a4a5d9",
       "cad/rig_assembly.py": "38afebccbe9daa0c610a90e47280781fb1460ab4668e6b4962f4d9defda288af",
       "cad/rig_bench.py": "c0efdacf2747ecbffe3019deeda9fd81c8fee641c798bf987987877f0b46b845",
@@ -3636,9 +3637,10 @@
     "cad/interfaces.json": "a4842a317dd2e64e9b4e11d34376bc36c26e1ddf8435a4b16a85dae3cd730b73",
     "cad/leg.py": "86d141a9c548328b871cc118f3267797326294c89f4e50633e82274458b1d666",
     "cad/leg_studies.py": "740c94fe586eff664fc4370804d8a056bf282be8f33ede3f5836db647bb4409f",
+    "cad/ordered_motor_gauge.py": "196fadb67a03f63c02c956fa5cab7f4a451abb3fcbbc8d32badaf64da2da8891",
     "cad/parameters.json": "92cfeaa792a2466594852afeef08af70fe74335ce60f458bd976f62ec0a39e13",
     "cad/print_provenance.py": "db0d9cdc14e0d0363899d82c03eb31cb63ea0d7718fedcf127a5545f8f6bec88",
-    "cad/print_slicing.py": "3e0b5a8bf86c0aec92729425e12173d4ef131975b30d009918a26776d315c56f",
+    "cad/print_slicing.py": "13fd25fe32e75e0c66dbe8af132fd4d70fb030defb14d88a96f9ff77cbaf07bd",
     "cad/printplan.py": "0bd820acb603117a981dff62e18097dd0ad84edc1d75bc2d8a13cd5c36a4a5d9",
     "cad/rig_assembly.py": "38afebccbe9daa0c610a90e47280781fb1460ab4668e6b4962f4d9defda288af",
     "cad/rig_bench.py": "c0efdacf2747ecbffe3019deeda9fd81c8fee641c798bf987987877f0b46b845",
@@ -3686,7 +3688,7 @@
     "catalog/wheel_motors.json": "e92baa60e433e177d87450145943c32bd6b60bebb97e1c1746354aa00f2dbc99",
     "designs/default.json": "3dc7d04d0d6eeec81decefa360f3904b093f19515d6944910c2cb20c976db211"
   },
-  "input_fingerprint": "623f68ea792a08c9b1b9722fa4fae35eafe7db383c4bd38caeae61da5fb1e2a1",
+  "input_fingerprint": "3fdd5f893604cae4193a1e6510af4c6fce3a2597a5f0c3d72840e356ce5e2107",
   "relation_tolerances": {
     "touch_mm": 0.01,
     "overlap_mm3": 1e-06,
@@ -7439,8 +7441,8 @@
     "Base and carrier changes require renewed structural, print and physical-fit qualification."
   ],
   "artifact_sha256": {
-    "carrier-wiring-candidate.step": "3f6d25160615e7e1a75c2e0028e50892cbeaf5cf343164f3d63ae35b85b6f6a2",
-    "pan-base-wiring-candidate.step": "6059eb8022e0d0bcb7df399af04e6b691a3ced1e2859f4fab45c5adb28953eac",
-    "carrier-wiring-layout.step": "528f0fa1d3270eb4474c939979ea0f3d42de472de7f7b3b07106e835a5fe3ff0"
+    "carrier-wiring-candidate.step": "20952efce4ee645bd8a90a7e56b3e19db3db9daae6644b29dcd3f9c47e363ce2",
+    "pan-base-wiring-candidate.step": "335d31c7237922621a7a19e8c8fb57b79e2435407fdda8ca6d2692e7f50c8e6e",
+    "carrier-wiring-layout.step": "6880f2fcb69f810ec7ef1e6876547ca2cbeb0c6cc2b89daac1131a778b08dba5"
   }
 }

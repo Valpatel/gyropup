@@ -1,6 +1,6 @@
 {
   "schema": "gyropup.carrier-insert-fit/1",
-  "source_revision": "924a5ceee88b71c4c3cad518932a81ea3b8f342f",
+  "source_revision": "6cbd17fd512f6e2f5304bc67418bedf70a678bd7",
   "inputs": {
     "files": {
       "cad/assembly.py": "4b7c7ef0a5364e524b14d7599b2357f0de4249a2c51e8a02cc69d929b30bab8a",
@@ -38,9 +38,10 @@
       "cad/interfaces.json": "a4842a317dd2e64e9b4e11d34376bc36c26e1ddf8435a4b16a85dae3cd730b73",
       "cad/leg.py": "86d141a9c548328b871cc118f3267797326294c89f4e50633e82274458b1d666",
       "cad/leg_studies.py": "740c94fe586eff664fc4370804d8a056bf282be8f33ede3f5836db647bb4409f",
+      "cad/ordered_motor_gauge.py": "196fadb67a03f63c02c956fa5cab7f4a451abb3fcbbc8d32badaf64da2da8891",
       "cad/parameters.json": "92cfeaa792a2466594852afeef08af70fe74335ce60f458bd976f62ec0a39e13",
       "cad/print_provenance.py": "db0d9cdc14e0d0363899d82c03eb31cb63ea0d7718fedcf127a5545f8f6bec88",
-      "cad/print_slicing.py": "3e0b5a8bf86c0aec92729425e12173d4ef131975b30d009918a26776d315c56f",
+      "cad/print_slicing.py": "13fd25fe32e75e0c66dbe8af132fd4d70fb030defb14d88a96f9ff77cbaf07bd",
       "cad/printplan.py": "0bd820acb603117a981dff62e18097dd0ad84edc1d75bc2d8a13cd5c36a4a5d9",
       "cad/rig_assembly.py": "38afebccbe9daa0c610a90e47280781fb1460ab4668e6b4962f4d9defda288af",
       "cad/rig_bench.py": "c0efdacf2747ecbffe3019deeda9fd81c8fee641c798bf987987877f0b46b845",
@@ -695,10 +696,10 @@
   ],
   "files": {
     "base-anchor.3mf": "6c2a09c805a503e327404999aba049bd897911074f535795d627955cb870a615",
-    "base-anchor.step": "9c278093c1b684544f67cbdf142e099395b8f3809e9c4914e3e71045766a9884",
+    "base-anchor.step": "17bed26ecf5feb4c83635d20623cdb47adb03dcc2eb83c02cfc58af3b71866e6",
     "base-anchor.stl": "ce29f74ad434979e27b0025e5bb06cfcc07bd5ded646b1a483fc5f211352d8d7",
     "carrier-boss.3mf": "b46b7c50eb099ea07d1e05f0551bef47ffe4c697ffbdcf0cd5af2d954d619bd2",
-    "carrier-boss.step": "4b8dddc892a64e45e8179f25fe83893d0e6605ed80eb8f6098778fc1a59ced48",
+    "carrier-boss.step": "9aa9ada25a2e0bbd238d5223fd7a186e424bba5802fd1cfb71ec9eff4de446e6",
     "carrier-boss.stl": "374fcbef1209f1ea25dfa195dcf7106e197ecbbaf919842c50a924967da563d3",
     "measurements.csv": "763fce59e411c8a81f168694643a536181d41c1891dffa0eec1f62ad4f8f8820"
   }
