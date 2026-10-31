@@ -14450,7 +14450,6 @@
         "cad/interfaces.json": "a4842a317dd2e64e9b4e11d34376bc36c26e1ddf8435a4b16a85dae3cd730b73",
         "cad/leg.py": "86d141a9c548328b871cc118f3267797326294c89f4e50633e82274458b1d666",
         "cad/leg_studies.py": "740c94fe586eff664fc4370804d8a056bf282be8f33ede3f5836db647bb4409f",
-        "cad/ordered_motor_gauge.py": "196fadb67a03f63c02c956fa5cab7f4a451abb3fcbbc8d32badaf64da2da8891",
         "cad/parameters.json": "92cfeaa792a2466594852afeef08af70fe74335ce60f458bd976f62ec0a39e13",
         "cad/print_provenance.py": "db0d9cdc14e0d0363899d82c03eb31cb63ea0d7718fedcf127a5545f8f6bec88",
         "cad/print_slicing.py": "13fd25fe32e75e0c66dbe8af132fd4d70fb030defb14d88a96f9ff77cbaf07bd",
@@ -34908,7 +34907,7 @@
         "volume_cm3": 926.394
       },
       "files": {
-        "step": "6059c0d12a6be1ac4c07f660885a7f276380a1b7bc4a4e2e0754541dd8ed6dc2",
+        "step": "4db31744d3da5b61d9ed6d40ad57f7dcf31374711f1aea534cc302b79ba0f1ae",
         "stl": "6905dede917c2422d384bc25db51d31c60eaee0d44aea90f96559b042ef1c875"
       }
     },
@@ -34926,7 +34925,7 @@
         "volume_cm3": 278.096
       },
       "files": {
-        "step": "f55f8266611db4063e98927c0bd7b4fbddf4fa777c8fb419e107e96dd19a9be2",
+        "step": "34fdcb55ae01c4c04a3b2b7259c1ee06d025c9048dab7e7fde6be76c20b0591c",
         "stl": "ce7b8cf46b6ff804f388fae00d2a67fcc5a36d6a53fdc49d32b90cce71630a4f"
       }
     },
@@ -34944,7 +34943,7 @@
         "volume_cm3": 162.093
       },
       "files": {
-        "step": "1edb2ecba12b2dce7d3ad60109fa13ef40fc7ceddb45ef1245f1818c1d33cd0c",
+        "step": "a768d256ac74238ba2701af217227672c672ae5fb095fc1ddd7ce783e6d0d999",
         "stl": "41d2bcbe0226243bd2d78caf01480a359ffa3e1bdab803d7faab91cdab7ec968"
       }
     }
