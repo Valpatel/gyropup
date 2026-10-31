@@ -281,5 +281,17 @@ class FitJobTests(unittest.TestCase):
         with self.assertRaisesRegex(ValueError, 'mapping differs'): INSPECT(self.job, self.identity)
 
 
+class PublishedArchiveTests(unittest.TestCase):
+    def test_complete_download_matches_retained_directory(self):
+        directory = ROOT / 'exports/leg/rs04-fit-job'
+        expected = {str(p.relative_to(directory.parent)): p for p in directory.rglob('*') if p.is_file()}
+        self.assertIn('rs04-fit-job/job.json', expected)
+        with zipfile.ZipFile(directory.with_suffix('.zip')) as archive:
+            self.assertEqual(len(archive.namelist()), len(set(archive.namelist())))
+            self.assertEqual(set(archive.namelist()), set(expected))
+            for name, path in expected.items():
+                self.assertEqual(archive.read(name), path.read_bytes(), name)
+
+
 if __name__ == '__main__':
     unittest.main()

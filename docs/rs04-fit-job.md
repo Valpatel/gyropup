@@ -10,6 +10,31 @@ failed mounting-support checks, including two on this coupon. Issues
 The ordered PRO3115 flywheel motors need their own interface geometry and fit
 specimens; this RS04 package cannot qualify that motor family.
 
+## Retained job and downloads
+
+The completed trial-2 slice estimates **6 h 32 min 44 s, 172.44 g and 65.17 m**
+of filament. These are slicer estimates, not observed print results. The retained
+G-code has 121 layers, no support deposition, a maximum commanded object-deposition
+feed of 99 mm/s, and verified 275°C nozzle / 100°C bed waits before deposition.
+The source receipt remains **322 pass / 40 warn / 8 fail**.
+
+- [Complete job ZIP](../exports/leg/rs04-fit-job.zip): source mesh, resolved settings,
+  raw profile templates, engine identity, logs/results, sliced 3MF, G-code and records.
+- [Actual sliced 3MF](../exports/leg/rs04-fit-job/slice/out/sliced.3mf) and
+  [standalone G-code](../exports/leg/rs04-fit-job/slice/out/plate_1.gcode).
+- [Machine-readable job receipt](../exports/leg/rs04-fit-job/job.json),
+  [blank measurement sheet](../exports/leg/rs04-fit-job/measurements.csv) and
+  [blank process record](../exports/leg/rs04-fit-job/process-record.csv).
+- Inspect the source coupon [STEP](../exports/leg/rs04-mounting-fit/coupon_frame_ring_nom.step)
+  or [STL](../exports/leg/rs04-mounting-fit/coupon_frame_ring_nom.stl) with the adjacent
+  geometry previews.
+
+The actual sliced 3MF contains Bambu's production extension and external object
+parts. The current browser viewer reports that extension as unsupported and keeps
+the original download available; use Bambu Studio to inspect this sliced archive.
+Both source STEP and STL previews were exercised successfully. Geometry previews
+do not display the deposited toolpaths or prove print quality.
+
 ## Trial process and limits
 
 The declared trial uses a P1S with a **0.4 mm hardened nozzle**, Bambu PA6-CF,
@@ -46,6 +71,8 @@ checked; printer startup/end homing, purge and wipe moves are separate vendor
 operations. No printer was connected or started by generation.
 
 ## Inspect and measure
+
+![Actual G-code deposition at the first layer, motor counterbore roofs, outer pocket roofs and bearing-seat lip](../exports/leg/rs04-fit-job/critical-layers.png)
 
 The retained critical-layer image is drawn from executable G-code, with bridge
 deposition red and overhang walls orange. The counterbore roofs bridge at Z=8.8 mm.
