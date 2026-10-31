@@ -99,8 +99,10 @@ The [actual CAD receipt](../exports/turret/ordered-motor-fit/checks.json) record
 **12 passes, no warnings and no failures** for the authored tool: one valid CAD
 solid, a connected watertight STL, eight measured slot diameters/open mouths,
 a STEP round trip, and rejected wrong-width/blocked-mouth controls. These are
-geometry screens only. **It has not been sliced, printed or physically checked;
-there is no print release or motor-fit approval.**
+geometry screens only. A separate retained slice is now available below. **It has
+not been printed or physically checked; there is no print release or motor-fit
+approval.** The CAD receipt's `slicer_run: false` describes that earlier geometry
+run; the separate slice receipt records the actual machine-job preparation.
 
 When a print has separately been reviewed and measured, record each actual slot
 size and compare only with a verified accessible **smooth shoulder**, sliding
@@ -109,11 +111,65 @@ the thread or turn it into a thread gauge. Record the observed slip/clearance;
 do not use the tool to clamp, retain, power or spin a motor. The width labels
 state CAD nominal values, not calibrated printed dimensions.
 
-The gauge's source is `cad/ordered_motor_gauge.py`. Its remote export used the
+The gauge's source is `research/ordered-turret-motor/gauge.py`. Its remote export used the
 pushed project revision and pinned cad-agent sources recorded in the receipt;
 STEP/STL and all source hashes are checked by the kernel-free regression script.
 The run, log and collection command are recorded on
 [issue #124](https://github.com/Valpatel/gyropup/issues/124#issuecomment-6540045462).
+
+## Retained unpowered survey slice
+
+This uses the same declared P1S **0.4 mm hardened nozzle / Bambu PA6-CF trial-2**
+process as the [RS04 observation job](rs04-fit-job.md): 0.20 mm layers, four walls,
+100% infill, textured PEI, no supports, 275°C nozzle / 100°C bed and commanded
+deposition capped at 99 mm/s. It is an experimental dimensional tool, not a
+calibrated gauge or an established printing process. Installed hardware,
+filament condition, actual slot widths and motor measurements remain unknown.
+
+The retained slice estimates **27 min 6 s, 8.40 g and 3.17 m** of filament.
+Its 17 layers contain no support deposition; executable checks confirm the
+275°C / 100°C waits and 99 mm/s maximum commanded deposition feed. These are
+slicer estimates and command checks, not observed print performance.
+
+- [Complete retained job ZIP](../exports/turret/shaft-survey-fit-job.zip).
+- [Actual sliced 3MF](../exports/turret/shaft-survey-fit-job/slice/out/sliced.3mf)
+  and [matching G-code](../exports/turret/shaft-survey-fit-job/slice/out/plate_1.gcode).
+- [Job receipt and slicer estimates](../exports/turret/shaft-survey-fit-job/job.json),
+  [eight-slot blank measurement sheet](../exports/turret/shaft-survey-fit-job/measurements.csv)
+  and [blank process record](../exports/turret/shaft-survey-fit-job/process-record.csv).
+
+The package preserves the exact source mesh and +Z layer normal, actual placement,
+raw/resolved profiles, executable identity, logs/results and executable toolpaths.
+It checks the P1S's actual bed area, exclusion and object nozzle paths. Use the
+STEP/STL previews above to inspect geometry. The sliced 3MF uses Bambu's production
+extension; the browser viewer offers its original download when that extension
+is unsupported. Inspect that machine-job archive in Bambu Studio.
+
+![Actual survey-gauge deposition at the base, plate top and raised-label layers](../exports/turret/shaft-survey-fit-job/critical-layers.png)
+
+**The raised width labels do not survive this recipe legibly.** The actual upper
+layers contain only small fragments; the source model's text is not proof of
+printed markings. Identify slots from the top with the open mouths pointing away
+from you: left to right, slots 1–8 have CAD nominal widths 4.8–5.5 mm. Mark that
+orientation and numbering separately before recording observations, and measure
+both each mouth and round end. Never substitute the nominal number for a measured
+width. Check edge swelling, strings, warping and surface defects; reject ambiguous
+or obstructed slots. No motor thread, clamping or retention use is permitted.
+
+Follow the linked PA6-CF preparation guidance: record drying and dry-feed humidity,
+the actual printer/nozzle/plate and calibration, then the conditioning and humidity
+at measurement. Moisture changes dimensions. Each record starts blank; no delivered
+motor measurements or print calibration have been inferred.
+
+Verification reuses the reviewed fit-job inspectors without invoking CAD or a
+printer. Use the same pinned lightweight runtime and cad-agent source noted in the
+RS04 job instructions:
+
+```sh
+python tools/test-survey-fit-job.py
+python tools/package-survey-fit-job.py --verify exports/turret/shaft-survey-fit-job
+timeout --kill-after=10s 300s python tools/package-survey-fit-job.py --out build/new-shaft-survey-job
+```
 
 ## Design work that follows the survey
 

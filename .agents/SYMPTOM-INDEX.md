@@ -68,3 +68,4 @@
 - A failed CAD receipt passes after its failed check or output manifest is deleted → [Require complete evidence membership](inbox/2026-10-29-receipt-coverage-must-not-be-optional.md), `tools/test-carrier-connector-support.py`.
 | Progress looks stale, the useful simulation is buried, or links cannot open collapsed reports | [Progress publication and readable history](domains/progress-publication.md) |
 - Terminal count stays correct after a CAN bypass, return, protected feed or interface identity is corrupted → [Require complete terminal membership](inbox/2026-10-29-receipt-coverage-must-not-be-optional.md#terminal-inventories-need-membership-checks-before-counts), `hardware/carrier-packaging/test_inventory.py`.
+| A valid gauge STL and successful slice lose small raised labels | [Inspect actual small-feature deposition](inbox/2026-10-31-inspect-deposition-of-small-gauge-labels.md) |

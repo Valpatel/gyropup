@@ -37,3 +37,8 @@ as a contact/preload solution. An interrupted ray may require a load-spreading
 study; adding a washer or quoting a scalar FEA safety factor does not supply it.
 Keep failed screens and unknown tightening loads explicit until suitable evidence
 resolves them. See [axial support and local contact](../inbox/2026-10-30-axial-support-is-not-a-contact-model.md).
+
+Small labels and narrow walls need inspection in actual deposited toolpaths;
+source mesh preservation does not prove feature deposition or readable markings.
+Keep missing-feature limits and blank physical measurement records explicit.
+See [the shaft-gauge label incident](../inbox/2026-10-31-inspect-deposition-of-small-gauge-labels.md).
