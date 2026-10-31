@@ -12,7 +12,14 @@ Assembly verification includes preassembly, tool access and service/removal in t
 
 Print packaging must use verified immutable input copies, bind resolved slicer profiles and the actual executable, reject failed/non-finite results, and derive totals only from accepted rows. Geometry-file coverage, successful slicing and physical qualification are separate states. See [the packaging incident](../inbox/2026-10-29-print-preflight-is-not-a-generation-transaction.md) and `tools/test-print-provenance.py` / `tools/test-print-packaging-mesh.py` for adversarial controls.
 
+Resolve included printer templates as well as inheritance, and retain the actual sliced archive and G-code. Verify executed thermal waits, machine/material mapping and sliced placement; a filament label or successful time estimate can coexist with wrong startup commands. See [the included-template incident](../inbox/2026-10-30-slicer-includes-control-executed-temperatures.md).
+
 An updated generator does not label already-published historical print files or instructions. Check direct document links and portal consumers of old print metadata, place historical status before actionable instructions, and distinguish a current bounded coupon package from an archived full kit. Keep the component register and readiness summary aligned with completed reviews and still-open qualifications. See [historical print-page status](../inbox/2026-10-29-historical-print-pages-need-local-status.md).
+
+When withdrawing a torque, dimension or qualification claim from a generated page,
+correct and test the generator as well as the published prose. Preserve source
+closure rules even for prose-only CAD-directory edits; do not re-sign older reports.
+See [withdraw instructions in the generator too](../inbox/2026-10-31-withdraw-instructions-in-the-generator-too.md).
 
 Detailed thread models need source-bound mating clocking, not a generic intended-overlap waiver. Sampling may diagnose phase but cannot establish complete mating; a timed-out global check stays inconclusive. Keep seating, holes, engagement, tip clearance and physical insert coupons separate from that diagnostic. See [thread sampling limits](../inbox/2026-10-29-thread-sampling-does-not-qualify-mating.md).
 
@@ -24,3 +31,9 @@ STEP drill hole does not enlarge that constraint. Preserve the full parent stack
 in mounting coupons and review neighboring rotating parts before changing seats.
 Nominal reserve and engagement are not physical tolerance or thread-strength proof.
 See [the RS-04 mounting incident](../inbox/2026-10-29-lug-depth-needs-measured-seats.md).
+
+Treat an axial fastener-support screen as its stated geometric assumption, not
+as a contact/preload solution. An interrupted ray may require a load-spreading
+study; adding a washer or quoting a scalar FEA safety factor does not supply it.
+Keep failed screens and unknown tightening loads explicit until suitable evidence
+resolves them. See [axial support and local contact](../inbox/2026-10-30-axial-support-is-not-a-contact-model.md).
