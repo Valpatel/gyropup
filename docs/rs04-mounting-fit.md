@@ -6,6 +6,10 @@ It is tracked in [issue #116](https://github.com/Valpatel/gyropup/issues/116), u
 The parts are design candidates, not a print or operating release. No physical fit,
 fastener preload, thread strength or powered fixture test has been completed.
 
+The separate [unpowered fit-observation slicing work](rs04-fit-job.md) retains
+printer/process settings and executable evidence. It does not resolve the eight
+mounting-support failures or qualify the complete leg for printing.
+
 ## What changed
 
 The RS-04 drawing guarantees **5 mm minimum usable thread** at the ten output-side
