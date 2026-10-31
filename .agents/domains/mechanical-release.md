@@ -26,3 +26,9 @@ STEP drill hole does not enlarge that constraint. Preserve the full parent stack
 in mounting coupons and review neighboring rotating parts before changing seats.
 Nominal reserve and engagement are not physical tolerance or thread-strength proof.
 See [the RS-04 mounting incident](../inbox/2026-10-29-lug-depth-needs-measured-seats.md).
+
+Treat an axial fastener-support screen as its stated geometric assumption, not
+as a contact/preload solution. An interrupted ray may require a load-spreading
+study; adding a washer or quoting a scalar FEA safety factor does not supply it.
+Keep failed screens and unknown tightening loads explicit until suitable evidence
+resolves them. See [axial support and local contact](../inbox/2026-10-30-axial-support-is-not-a-contact-model.md).

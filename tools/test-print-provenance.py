@@ -304,6 +304,14 @@ class PrintSources(unittest.TestCase):
         (folder/'one.json').write_text(json.dumps({'name': 'Start', 'machine_start_gcode': 'changed'}))
         self.assertNotEqual(original, print_slicing._profile(self.profiles, 'machine', turret_print.PRINTER)[1]['machine/one.json'])
 
+    def test_profile_labels_with_slashes_are_not_interpreted_as_paths(self):
+        folder = self.profiles/'machine'
+        (folder/'support.json').write_text(json.dumps({'name': 'Support For PA/PET', 'support_setting': 'included'}))
+        (folder/'child.json').write_text(json.dumps({'name': turret_print.PRINTER, 'include': 'Support For PA/PET'}))
+        profile, files = print_slicing._profile(self.profiles, 'machine', turret_print.PRINTER)
+        self.assertEqual(profile['support_setting'], 'included')
+        self.assertEqual(set(files), {'machine/child.json', 'machine/support.json'})
+
     def test_missing_cyclic_invalid_and_escaping_includes_fail_closed(self):
         child = self.profiles/'machine/child.json'
         for include in (['missing'], [turret_print.PRINTER], ['../outside'], [''], [3], {'invalid': 'type'}):

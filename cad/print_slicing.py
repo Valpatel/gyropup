@@ -47,7 +47,9 @@ def _profile(root: Path, kind: str, name: str) -> tuple[dict, dict]:
     active, files = set(), {}
 
     def resolve(current):
-        if not isinstance(current, str) or not current or '/' in current or '\\' in current or current in ('.', '..'):
+        # Profile references are lookup labels, not paths. Bambu uses names such
+        # as "Support For PA/PET"; filesystem containment is checked above.
+        if not isinstance(current, str) or not current:
             raise ValueError(f'Invalid {kind} profile reference: {current!r}')
         if current in active:
             raise ValueError(f'Cyclic {kind} profile inheritance/include: {current}')
