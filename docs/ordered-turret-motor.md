@@ -126,6 +126,11 @@ deposition capped at 99 mm/s. It is an experimental dimensional tool, not a
 calibrated gauge or an established printing process. Installed hardware,
 filament condition, actual slot widths and motor measurements remain unknown.
 
+The retained slice estimates **27 min 6 s, 8.40 g and 3.17 m** of filament.
+Its 17 layers contain no support deposition; executable checks confirm the
+275°C / 100°C waits and 99 mm/s maximum commanded deposition feed. These are
+slicer estimates and command checks, not observed print performance.
+
 - [Complete retained job ZIP](../exports/turret/shaft-survey-fit-job.zip).
 - [Actual sliced 3MF](../exports/turret/shaft-survey-fit-job/slice/out/sliced.3mf)
   and [matching G-code](../exports/turret/shaft-survey-fit-job/slice/out/plate_1.gcode).
