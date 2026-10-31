@@ -8,6 +8,7 @@ import tempfile
 import unittest
 from unittest.mock import patch
 import zipfile
+import xml.etree.ElementTree as ET
 
 import numpy as np
 import trimesh
@@ -17,6 +18,7 @@ ROOT = Path(__file__).resolve().parents[1]
 spec = importlib.util.spec_from_file_location('fit_job', ROOT / 'tools/package-fit-job.py')
 fit = importlib.util.module_from_spec(spec)
 spec.loader.exec_module(fit)
+INSPECT = fit.sliced_inspection
 MACHINE = {'printable_area': ['0x0', '256x0', '256x256', '0x256'],
            'printable_height': '250', 'bed_exclude_area': ['0x0', '18x0', '18x28', '0x28']}
 
@@ -135,6 +137,41 @@ class FitJobTests(unittest.TestCase):
             gcode = z.read('slice/out/plate_1.gcode').decode()
         with self.assertRaisesRegex(ValueError, 'temperatures/waits differ'):
             fit.toolpaths(gcode, MACHINE)
+
+    def test_actual_sliced_mesh_transform_and_mapping(self):
+        from cadagent.mesh3mf import CORE_NS, model_xml, read_3mf
+        vertices, faces = read_3mf(self.job / 'geometry.3mf')
+        gcode = ('M190 S100\nM109 S275\nG90\nM83\nG1 X120 Y120 Z0.2\n'
+                 '; Z_HEIGHT: 0.2\n; FEATURE: Outer wall\nG1 X130 Y120 E1\n')
+        settings = {'printer_model': 'Bambu Lab P1S', 'printer_settings_id': fit.PROFILES['printer'],
+                    'print_settings_id': fit.PROFILES['process'], 'filament_settings_id': [fit.PROFILES['filament']],
+                    'nozzle_diameter': ['0.4'], 'layer_height': '0.2', **fit.OVERRIDES,
+                    'nozzle_temperature': ['275'], 'nozzle_temperature_initial_layer': ['275'],
+                    'textured_plate_temp': ['100'], 'filament_type': ['PA6-CF']}
+        def archive(transform='1 0 0 0 1 0 0 0 1 0 0 0', points=vertices, profile=settings):
+            root = ET.Element('model', {'xmlns': CORE_NS, 'xmlns:p': 'http://schemas.microsoft.com/3dmanufacturing/production/2015/06', 'unit': 'millimeter'})
+            resources = ET.SubElement(root, 'resources')
+            obj = ET.SubElement(resources, 'object', {'id': '2'})
+            components = ET.SubElement(obj, 'components')
+            ET.SubElement(components, 'component', {'p:path': '/3D/Objects/object_1.model', 'objectid': '1', 'transform': '1 0 0 0 1 0 0 0 1 0 0 0'})
+            ET.SubElement(ET.SubElement(root, 'build'), 'item', {'objectid': '2', 'transform': transform})
+            with zipfile.ZipFile(self.job / 'slice/out/sliced.3mf', 'w') as z:
+                z.writestr('3D/3dmodel.model', ET.tostring(root))
+                z.writestr('3D/Objects/object_1.model', model_xml(points, faces, 'fixture'))
+                z.writestr('Metadata/project_settings.config', json.dumps(profile))
+                z.writestr('Metadata/plate_1.gcode', gcode)
+            (self.job / 'slice/out/plate_1.gcode').write_text(gcode)
+        archive()
+        self.assertTrue(INSPECT(self.job, self.identity)['parent_layer_normal_preserved'])
+        for transform in ('1 0 0 0 0 1 0 -1 0 0 0 0', '2 0 0 0 1 0 0 0 1 0 0 0', '-1 0 0 0 1 0 0 0 1 0 0 0'):
+            archive(transform=transform)
+            with self.subTest(transform=transform), self.assertRaisesRegex(ValueError, 'layer normal'):
+                INSPECT(self.job, self.identity)
+        changed = vertices.copy(); changed[0, 0] += .5
+        archive(points=changed)
+        with self.assertRaisesRegex(ValueError, 'changed the source mesh'): INSPECT(self.job, self.identity)
+        archive(profile={**settings, 'wall_loops': '2'})
+        with self.assertRaisesRegex(ValueError, 'mapping differs'): INSPECT(self.job, self.identity)
 
 
 if __name__ == '__main__':
