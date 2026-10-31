@@ -131,6 +131,41 @@ class FitJobTests(unittest.TestCase):
                 '; Z_HEIGHT: 0.2\n; FEATURE: Outer wall\nG2 X100 Y100 I100 J0 E1\n')
         with self.assertRaisesRegex(ValueError, 'volume or exclusion'): fit.toolpaths(code, MACHINE)
 
+    def test_persistent_units_origins_and_arc_modes_fail_closed(self):
+        code = ('M190 S100\nM109 S275\nG90\nM83\nG1 X100 Y100 Z0.2\n'
+                '; Z_HEIGHT: 0.2\n; FEATURE: Outer wall\nG1 X120 Y100 E1\nG1 X120 Y120 E1\n')
+        mutations = ['G20\n'+code, 'g20\n'+code,
+                     code.replace('; Z_HEIGHT:', 'G92 X-100 Y-100\n; Z_HEIGHT:'),
+                     'G92\n'+code, code.replace('G90', 'G90 G20'),
+                     code.replace('X120', 'XNaN'), code.replace('X120', 'X120.2.3')]
+        for modal in ('G18', 'G19', 'G90.1', 'G91.1', 'G54', 'G10'):
+            mutations.extend([modal+'\n'+code, code.replace('G1 X120', modal+'\nG1 X120', 1)])
+        for modal in ('G28', 'G29', 'G91', 'M206', 'M290', 'M999'):
+            mutations.append(code.replace('G1 X120', modal+'\nG1 X120', 1))
+        mutations.append(code.replace('Outer wall', 'unrecognized role'))
+        mutations.append(code.replace('Outer wall', 'Custom'))
+        for changed in mutations:
+            with self.subTest(code=changed), self.assertRaises(ValueError): fit.toolpaths(changed, MACHINE)
+        self.assertTrue(fit.toolpaths(code.replace('G90', 'G92 E0\nG90'), MACHINE)['temperature_waits_verified'])
+
+    def test_cooling_reheat_requires_fresh_nozzle_and_bed_waits(self):
+        code = ('M190 S100\nM109 S275\nG90\nM83\nG1 X100 Y100 Z0.2\n'
+                '; Z_HEIGHT: 0.2\n; FEATURE: Outer wall\nG1 X120 Y100 E1\nG1 X120 Y120 E1\n')
+        for cool, reheat, wait in [('M104 S0', 'M104 S275', 'M109 S275'),
+                                   ('M104 S205', 'M104 S275', 'M109 S275'),
+                                   ('M140 S0', 'M140 S100', 'M190 S100')]:
+            for marker in ('G90', 'G1 X120 Y100 E1'):
+                sequence = cool+'\nG4 P600000\n'+reheat+'\n'
+                changed = code.replace(marker, sequence+marker)
+                with self.subTest(sequence=sequence, marker=marker), self.assertRaisesRegex(ValueError, 'temperatures/waits differ'):
+                    fit.toolpaths(changed, MACHINE)
+                repaired = code.replace(marker, sequence+wait+'\n'+marker)
+                self.assertTrue(fit.toolpaths(repaired, MACHINE)['temperature_waits_verified'])
+        # Repeating an already reached target does not erase a valid wait.
+        self.assertTrue(fit.toolpaths(code.replace('G90', 'M104 S275\nM140 S100\nG90'), MACHINE)['temperature_waits_verified'])
+        conditional = code.replace('M109 S275', 'M622 J1\nM109 S275\nM623')
+        with self.assertRaisesRegex(ValueError, 'temperatures/waits differ'): fit.toolpaths(conditional, MACHINE)
+
     def test_archived_real_205C_slice_is_rejected(self):
         archive = ROOT / 'research/retained-fit-jobs/rejected-7b67f03.zip'
         with zipfile.ZipFile(archive) as z:

@@ -146,12 +146,22 @@ def toolpaths(text, machine, nozzle_temp=275., bed_temp=100., drawings=None):
     xyze, relative_e, absolute_xyz = {}, False, True
     nozzle, waited_nozzle, bed, waited_bed = None, None, None, None
     feature, layer, body = None, None, False
+    conditional_depth = 0
+    known_features = {'Custom', 'Inner wall', 'Outer wall', 'Gap infill', 'Bottom surface', 'Top surface',
+                      'Internal solid infill', 'Sparse infill', 'Bridge', 'Overhang wall', 'Floating vertical shell',
+                      'Skirt', 'Brim'}
+    motion_codes = {'G0', 'G1', 'G2', 'G3', 'G4', 'G17', 'G21', 'G90', 'G92'}
+    startup_motion_codes = motion_codes | {'G28', 'G29', 'G29.1', 'G29.2', 'G91', 'G380'}
+    body_m_codes = {'M73', 'M82', 'M83', 'M104', 'M106', 'M109', 'M140', 'M190', 'M204', 'M400',
+                    'M622', 'M622.1', 'M623', 'M971', 'M981', 'M991', 'M1002', 'M1003', 'M1004'}
     points, features, layer_z = [], {}, set()
     for line in text.splitlines():
         if line.startswith('; MACHINE_END_GCODE_START'):
             body = False
         if line.startswith('; FEATURE: '):
             feature = line.split(': ', 1)[1]
+            if feature not in known_features:
+                raise ValueError('Unknown or unsupported deposition feature: ' + feature)
         if line.startswith('; Z_HEIGHT: '):
             layer = float(line.split(': ', 1)[1])
             if not math.isfinite(layer): raise ValueError('Nonfinite layer height')
@@ -159,27 +169,66 @@ def toolpaths(text, machine, nozzle_temp=275., bed_temp=100., drawings=None):
             body = True
         command = line.split(';', 1)[0].strip()
         if not command: continue
-        code = command.split()[0]
-        args = {k: float(v) for k, v in re.findall(r'([XYZEFIJSR])\s*([-+]?(?:\d*\.\d+|\d+\.?\d*))', command)}
+        code = command.split()[0].upper()
+        if not re.fullmatch(r'[GMT]\d+(?:\.\d+)?', code):
+            raise ValueError('Unsupported command syntax: ' + code)
+        if re.search(r'\s[GM]\d+(?:\.\d+)?(?=\s|$)', command.upper()):
+            raise ValueError('Multiple commands on one line are unsupported')
+        # Reject modal/coordinate operations even before the first layer. Their
+        # state persists into deposition; comments are not a machine reset.
+        if code.startswith('G') and code not in (motion_codes if body else startup_motion_codes):
+            raise ValueError('Unsupported motion/modal command: ' + code)
+        if code in ('G90', 'G91', 'G17', 'G21') and len(command.split()) != 1:
+            raise ValueError('Unsupported arguments on coordinate-mode command')
+        args = {k: float(v) for k, v in re.findall(r'([XYZEFIJSR])\s*([-+]?(?:\d*\.\d+|\d+\.?\d*))', command.upper())}
+        if code in ('G0', 'G1', 'G2', 'G3', 'G92'):
+            allowed = 'E' if code == 'G92' else 'XYZEF' if code in ('G0', 'G1') else 'XYZEFIJP'
+            tail = command[len(command.split()[0]):].upper()
+            if not re.fullmatch(r'(?:\s*['+allowed+r']\s*[-+]?(?:\d*\.\d+|\d+\.?\d*))*\s*', tail):
+                raise ValueError('Unsupported motion arguments: ' + command)
         if code == 'G90': absolute_xyz = True
         if code == 'G91': absolute_xyz = False
-        if body and (code == 'G20' or code.startswith('T')):
-            raise ValueError('Unexpected units or tool change during object printing')
+        if body and code.startswith('T'):
+            raise ValueError('Unexpected tool change during object printing')
+        if body and code.startswith('M') and code not in body_m_codes:
+            raise ValueError('Unsupported object machine command: ' + code)
+        if code == 'M622': conditional_depth += 1
+        if code == 'M623':
+            conditional_depth -= 1
+            if conditional_depth < 0: raise ValueError('Unbalanced conditional block')
         if code == 'M83': relative_e = True
         if code == 'M82': relative_e = False
         if code in ('M104', 'M109'):
-            nozzle = args.get('S', args.get('R'))
-            if code == 'M109': waited_nozzle = nozzle
+            target = args.get('S', args.get('R'))
+            if target is None: raise ValueError('Unknown nozzle temperature command')
+            if target != nozzle or conditional_depth: waited_nozzle = None
+            nozzle = target
+            if code == 'M109' and not conditional_depth: waited_nozzle = nozzle
         if code in ('M140', 'M190'):
-            bed = args.get('S', args.get('R'))
-            if code == 'M190': waited_bed = bed
+            target = args.get('S', args.get('R'))
+            if target is None: raise ValueError('Unknown bed temperature command')
+            if target != bed or conditional_depth: waited_bed = None
+            bed = target
+            if code == 'M190' and not conditional_depth: waited_bed = bed
         if code == 'G92':
-            xyze.update({k: v for k, v in args.items() if k in 'XYZE'})
+            if set(args) != {'E'}:
+                raise ValueError('Only an explicit G92 E reset is supported')
+            xyze['E'] = args['E']
+        if code in ('G28', 'G29', 'G380'):
+            # Vendor startup homing/probing must be followed by explicit
+            # coordinates before an object point can be checked.
+            for axis in 'XYZ': xyze.pop(axis, None)
         if code not in ('G0', 'G1', 'G2', 'G3'): continue
         if body and not absolute_xyz: raise ValueError('Relative object motion is unsupported')
         start = dict(xyze)
-        xyze.update({k: v for k, v in args.items() if k in 'XYZ'})
-        if not body or feature == 'Custom': continue
+        for axis in 'XYZ':
+            if axis not in args: continue
+            if absolute_xyz: xyze[axis] = args[axis]
+            elif axis in xyze: xyze[axis] += args[axis]
+        if not body: continue
+        # Feedrate-only and retract/unretract commands do not move the nozzle.
+        # In particular, the first retraction remains at the vendor purge line.
+        if code in ('G0', 'G1') and not any(k in args for k in 'XYZ'): continue
         if not all(k in xyze for k in 'XYZ'): raise ValueError('Unknown object position')
         points.append([xyze[k] for k in 'XYZ'])
         line_points = [[start.get('X', xyze['X']), start.get('Y', xyze['Y'])], [xyze['X'], xyze['Y']]]
@@ -205,12 +254,13 @@ def toolpaths(text, machine, nozzle_temp=275., bed_temp=100., drawings=None):
             if not relative_e: raise ValueError('Absolute object extrusion is unsupported')
             if (nozzle, waited_nozzle, bed, waited_bed) != (nozzle_temp, nozzle_temp, bed_temp, bed_temp):
                 raise ValueError(f'Object deposition temperatures/waits differ: {(nozzle, waited_nozzle, bed, waited_bed)}')
-            if not feature or 'Support' in feature: raise ValueError('Unexpected/unknown support deposition')
+            if not feature or feature == 'Custom': raise ValueError('Unexpected/unknown object deposition')
             row = features.setdefault(feature, {'moves': 0, 'layer_z_mm': set()})
             row['moves'] += 1
             row['layer_z_mm'].add(layer)
             if drawings is not None and layer in drawings:
                 drawings[layer].append((feature, line_points))
+    if conditional_depth: raise ValueError('Unclosed conditional block')
     if not points or not features or not layer_z: raise ValueError('No object toolpaths')
     bounds = bed_check(np.array(points), machine, margin=.3)
     return {'object_nozzle_bounds': bounds, 'layer_count': len(layer_z),
