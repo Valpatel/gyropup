@@ -41,11 +41,15 @@ class FitJobTests(unittest.TestCase):
         for kind, profile in self.identity['effective_profiles'].items():
             fit.dump(self.job / 'slice' / (kind + '.json'), profile)
         fit.dump(self.job / 'slice/exit-code.json', {'exit_code': 0})
+        (self.job / 'slice/slicer.log').write_text('test fixture: not actual slicing')
+        (self.job / 'critical-layers.png').write_bytes(b'test fixture: not an image')
+        (self.job / 'measurements.csv').write_text('test fixture: not measured')
         fit.dump(out / 'result.json', {'return_code': 0, 'sliced_plates': [
             {'filaments': [{'total_used_g': 8}], 'total_predication': 120}]})
         with zipfile.ZipFile(out / 'sliced.3mf', 'w') as z:
             z.writestr('Metadata/plate_1.gcode', 'G1 X100 Y100 E1\n' * 100)
             z.writestr('Metadata/slice_info.config', '<filament used_m="2.5"/>')
+        (out / 'plate_1.gcode').write_text('G1 X100 Y100 E1\n' * 100)
         self.report = {'schema': 'gyropup.fit-job/1', 'recipe': fit.RECIPE, 'qualification': fit.QUALIFICATION,
                        'slice_complete': True, 'inputs': self.inputs, 'slice_inputs': self.identity,
                        'geometry': fit.geometry_check(self.job, self.identity),
