@@ -24,7 +24,7 @@ spec.loader.exec_module(fit)
 SOURCE = Path('exports/turret/ordered-motor-fit')
 PART = 'shaft-clearance-survey'
 # Reviewed actual 12-check geometry receipt; a changed gauge needs a new review.
-GAUGE_RECEIPT_SHA256 = 'bc7305efafa8e0cb62d68d56d276b2111803ab47ca77404efbe204650722716f'
+GAUGE_RECEIPT_SHA256 = 'ad3e52f221104638cf95bd51fcdd2e3defbc972a3a19cd32a8986604308e043c'
 SCOPE = 'UNPOWERED DIMENSIONAL SURVEY ONLY; uncalibrated; no motor mounting, retention, thread gauging or powered-operation approval'
 RECIPE = {'id': 'shaft-survey-pa6cf-trial-2', 'profiles': fit.PROFILES, 'overrides': fit.OVERRIDES,
           'process_source': fit.RECIPE['id'], 'copies': 1, 'scope': SCOPE,
