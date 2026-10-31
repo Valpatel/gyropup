@@ -30,9 +30,12 @@ PART = 'coupon_frame_ring_nom'
 PROFILES = dict(printer='Bambu Lab P1S 0.4 nozzle', process='0.20mm Standard @BBL X1C',
                 filament='Bambu PA6-CF @BBL X1C')
 OVERRIDES = {'wall_loops': '4', 'sparse_infill_density': '100%', 'sparse_infill_pattern': 'zig-zag',
-             'curr_bed_type': 'Textured PEI Plate', 'enable_support': '0'}
+             'curr_bed_type': 'Textured PEI Plate', 'enable_support': '0',
+             **{key: '99' for key in ('outer_wall_speed', 'inner_wall_speed', 'sparse_infill_speed',
+                                      'internal_solid_infill_speed', 'top_surface_speed', 'gap_infill_speed',
+                                      'initial_layer_infill_speed')}}
 SCOPE = 'UNPOWERED FIT OBSERVATION ONLY; no mounting, preload, torque, strength or powered-operation approval'
-RECIPE = {'id': 'rs04-parent-ring-pa6cf-trial-1', 'profiles': PROFILES, 'overrides': OVERRIDES,
+RECIPE = {'id': 'rs04-parent-ring-pa6cf-trial-2', 'profiles': PROFILES, 'overrides': OVERRIDES,
           'status': 'new declared trial; not an established leg process',
           'orientation': 'parent hip-frame outer face down; +Z layer normal preserved; in-plane rigid placement allowed',
           'copies': 1, 'scope': SCOPE}
@@ -144,6 +147,7 @@ def toolpaths(text, machine, nozzle_temp=275., bed_temp=100., drawings=None):
     """
     import numpy as np
     xyze, relative_e, absolute_xyz = {}, False, True
+    feed_mm_s = None
     nozzle, waited_nozzle, bed, waited_bed = None, None, None, None
     feature, layer, body = None, None, False
     conditional_depth = 0
@@ -219,6 +223,10 @@ def toolpaths(text, machine, nozzle_temp=275., bed_temp=100., drawings=None):
             # coordinates before an object point can be checked.
             for axis in 'XYZ': xyze.pop(axis, None)
         if code not in ('G0', 'G1', 'G2', 'G3'): continue
+        if 'F' in args:
+            feed_mm_s = args['F'] / 60.
+            if not math.isfinite(feed_mm_s) or feed_mm_s <= 0:
+                raise ValueError('Invalid commanded feed')
         if body and not absolute_xyz: raise ValueError('Relative object motion is unsupported')
         start = dict(xyze)
         for axis in 'XYZ':
@@ -255,9 +263,12 @@ def toolpaths(text, machine, nozzle_temp=275., bed_temp=100., drawings=None):
             if (nozzle, waited_nozzle, bed, waited_bed) != (nozzle_temp, nozzle_temp, bed_temp, bed_temp):
                 raise ValueError(f'Object deposition temperatures/waits differ: {(nozzle, waited_nozzle, bed, waited_bed)}')
             if not feature or feature == 'Custom': raise ValueError('Unexpected/unknown object deposition')
-            row = features.setdefault(feature, {'moves': 0, 'layer_z_mm': set()})
+            if feed_mm_s is None or feed_mm_s > 99.00001:
+                raise ValueError(f'Object deposition commanded feed exceeds 99 mm/s or is unknown: {feature} {feed_mm_s}')
+            row = features.setdefault(feature, {'moves': 0, 'layer_z_mm': set(), 'max_commanded_feed_mm_s': 0.})
             row['moves'] += 1
             row['layer_z_mm'].add(layer)
+            row['max_commanded_feed_mm_s'] = max(row['max_commanded_feed_mm_s'], feed_mm_s)
             if drawings is not None and layer in drawings:
                 drawings[layer].append((feature, line_points))
     if conditional_depth: raise ValueError('Unclosed conditional block')
@@ -266,9 +277,11 @@ def toolpaths(text, machine, nozzle_temp=275., bed_temp=100., drawings=None):
     return {'object_nozzle_bounds': bounds, 'layer_count': len(layer_z),
             'first_last_layer_z_mm': [min(layer_z), max(layer_z)],
             'object_temperature_C': nozzle_temp, 'bed_temperature_C': bed_temp,
+            'max_deposition_commanded_feed_mm_s': max(v['max_commanded_feed_mm_s'] for v in features.values()),
+            'deposition_commanded_feed_limit_mm_s': 99.,
             'temperature_waits_verified': True, 'support_deposition_moves': 0,
             'features': {k: {**v, 'layer_z_mm': sorted(v['layer_z_mm'])} for k, v in features.items()},
-            'limits': 'Object paths only; vendor homing/purge/wipe excluded. No physical bridge/support-removal or printer calibration qualification.'}
+            'limits': 'Object paths only; vendor homing/purge/wipe excluded. Feeds are commands, not attained speeds; non-deposition travel excluded from deposition cap. No physical bridge/support-removal or printer calibration qualification.'}
 
 
 def sliced_inspection(job, identity):
@@ -313,6 +326,10 @@ def sliced_inspection(job, identity):
             if not isinstance(values, list) or not values or set(values) != {'275'}:
                 raise ValueError('Sliced nozzle temperature mapping differs')
             expected[key] = values
+        for key, value in OVERRIDES.items():
+            values = actual.get(key)
+            if isinstance(values, list) and values and set(values) == {value}:
+                expected[key] = values
         if any(actual.get(k) != value for k, value in expected.items()):
             raise ValueError('Sliced machine/material/process mapping differs')
         gcode = z.read('Metadata/plate_1.gcode')
@@ -425,7 +442,9 @@ def generate(job, root=ROOT):
     with (job / 'process-record.csv').open('w', newline='') as stream:
         writer = csv.writer(stream)
         fields = ['source_mesh_sha256', 'recipe', 'job_receipt_sha256', 'date_operator', 'printer', 'nozzle',
-                  'plate', 'filament_brand_lot', 'drying_temperature_time', 'feeding_conditions', 'calibration', 'notes']
+                  'nozzle_wear_condition', 'extruder_gears_material_and_wear', 'filament_path_condition',
+                  'plate_and_glue', 'filament_brand_lot', 'drying_temperature_time', 'dry_feed_relative_humidity',
+                  'time_since_drying', 'measurement_conditioning', 'calibration', 'notes']
         writer.writerow(fields)
         writer.writerow([sha(job / 'source.stl'), RECIPE['id']] + ['']*(len(fields)-2))
     report = {'schema': 'gyropup.fit-job/1', 'recipe': RECIPE, 'qualification': QUALIFICATION,

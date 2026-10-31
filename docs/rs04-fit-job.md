@@ -18,6 +18,22 @@ This is a new process trial, not an established leg-print recipe. Record the
 actual nozzle, plate, calibration, filament lot and drying/feeding conditions
 before printing. The machine profile does not prove what is installed.
 
+Bambu's [PA6-CF preparation guidance](https://bambu-lab-jp.myshopify.com/en/products/pa6-cf)
+(checked 2026-10-30) calls for drying at 80°C for 8–12 hours and dry feeding below
+20% RH. It lists hardened 0.4/0.6/0.8 mm nozzles, preferring 0.6 mm, a 260–290°C
+nozzle range, and an 80–100°C bed with glue. This trial retains 0.4 mm, 275°C and
+100°C. Confirm the installed nozzle and extruder wear path; record drying,
+feeding and measurement conditioning because moisture affects dimensions and
+stiffness. Installed hardware and material conditioning remain unknown.
+
+Trial revision 2 caps the faster deposition roles at 99 mm/s, retaining slower
+wall/bridge settings where applicable, to respect the manufacturer's below
+100 mm/s guidance. The verifier checks commanded feed on positive-extrusion
+object moves, including modal feed inherited from earlier commands. Travel is
+separate; acceleration is not used to excuse an excessive deposition command.
+The previous temperature-correct diagnostic requested up to 250 mm/s for gap
+infill and is not the final trial recipe.
+
 The coupon preserves its parent's outer-face-down layer direction. Bambu may
 rotate it within XY; the receipt records the actual rigid placement and verifies
 the sliced mesh. A future parent print can have different raster direction,
