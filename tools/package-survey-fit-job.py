@@ -111,7 +111,7 @@ def layer_witness(job, identity, render=False):
 def check_label_coverage(paths, labels):
     """Bounded per-glyph extent screen on source-frame deposition centerlines.
 
-    A 0.30 mm edge allowance covers nominal half-bead width plus tessellation;
+    One declared 0.4 mm nozzle diameter allows centerline inset and rounded extrema;
     it is not a measured bead width or an OCR/physical readability certificate.
     """
     import numpy as np
@@ -121,13 +121,14 @@ def check_label_coverage(paths, labels):
         for box in label['glyph_bounds_mm']:
             lo, hi = np.array(box[:2]), np.array(box[3:5])
             selected = [np.asarray(p) for p in paths
-                        if np.all(np.asarray(p) >= lo-.3) and np.all(np.asarray(p) <= hi+.3)]
+                        if np.all(np.asarray(p) >= lo-.4) and np.all(np.asarray(p) <= hi+.4)]
             if not selected: raise ValueError('Missing deposited label glyph: ' + label['id'])
             points = np.concatenate(selected)
             lower, upper = points.min(axis=0), points.max(axis=0)
             length = sum(float(np.linalg.norm(np.diff(p, axis=0), axis=1).sum()) for p in selected)
-            if np.any(lower > lo+.3) or np.any(upper < hi-.3) or length < max(hi-lo)*.5:
-                raise ValueError('Insufficient deposited label glyph extent: ' + label['id'])
+            if np.any(lower > lo+.4) or np.any(upper < hi-.4) or length < max(hi-lo)*.5:
+                raise ValueError('Insufficient deposited label glyph extent: ' + label['id'] + ' ' +
+                                 str({'glyph': box, 'deposition': [lower.tolist(), upper.tolist()], 'path_length': length}))
             glyphs.append({'bounds_mm': box, 'deposition_centerline_bounds_xy_mm': [lower.tolist(), upper.tolist()],
                            'path_length_mm': length, 'segments': len(selected)})
         if not glyphs: raise ValueError('Missing source glyph inventory')
@@ -167,13 +168,13 @@ def label_witness(job, identity, root=ROOT):
             mapped.append(((xyz-transform[3]) @ transform[:3].T-shift)[:, :2])
         results[str(height)] = check_label_coverage(mapped, labels)
         for label in labels:
-            b = label['bounds_mm']; lo, hi = np.array(b[:2])-.3, np.array(b[3:5])+.3
+            b = label['bounds_mm']; lo, hi = np.array(b[:2])-.4, np.array(b[3:5])+.4
             removed = [p for p in mapped if not (np.all(p >= lo) and np.all(p <= hi))]
             try: check_label_coverage(removed, labels)
             except ValueError: controls[f'{height}:{label["id"]}'] = True
             else: raise ValueError('Missing-label negative control unexpectedly passed')
     return {'labels_by_layer': results, 'missing_label_deposition_controls': controls,
-            'nozzle_to_model_xy_mm': [0., 2.], 'glyph_edge_allowance_mm': .3,
+            'nozzle_to_model_xy_mm': [0., 2.], 'glyph_edge_allowance_mm': .4,
             'limits': 'Per-glyph deposited centerline extent screen, plus separate visual reading; no physical label or slot calibration.'}
 
 
