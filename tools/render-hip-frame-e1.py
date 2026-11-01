@@ -10,6 +10,11 @@ import subprocess
 ROOT = Path(__file__).resolve().parents[1]
 OUT = ROOT / 'exports/leg/fea/hip-frame-e1-media'
 FPS, SECONDS, WIDTH, HEIGHT = 24, 12, 960, 720
+# The recorded E1 gate this movie presents (exports/leg/fea/summary.json, regenerated on cad-agent v0.6.0 in issue
+# #29), read at the record's 4 mm mesh, and the same case at 3 mm from tools/hip-frame-study.py (FINER): the gate is
+# not converged, so the caption gives both. Review the captions whenever either value changes.
+GATE_SF, GATE_MESH_MM, FINE_MESH_MM = 1.63, 4.0, 3.0
+FINER = 'research/fea-v060-29/evidence/hip-frame-v060.json'
 
 
 def digest(path):
@@ -35,7 +40,13 @@ def main():
     if digest(ROOT / 'exports/leg/fea/summary.json') != receipt['source_hashes']['exports/leg/fea/summary.json']:
         raise ValueError('Published structural report changed; review the animation baseline')
     source_hashes = {str(p.relative_to(ROOT)): digest(p) for p in
-                     (Path(__file__), OUT / 'field-receipt.json', fields, ROOT / 'exports/leg/fea/summary.json')}
+                     (Path(__file__), OUT / 'field-receipt.json', fields, ROOT / 'exports/leg/fea/summary.json', ROOT / FINER)}
+    finer = json.loads((ROOT / FINER).read_text())
+    gate_row = next(c for c in finer['meshes'][str(GATE_MESH_MM)]['cases'] if c['case'] == 'E1')
+    fine_row = next(c for c in finer['meshes'][str(FINE_MESH_MM)]['cases'] if c['case'] == 'E1')
+    if gate_row['safety_factor'] != GATE_SF:
+        raise ValueError('The hip-frame study at the gate mesh differs from the recorded E1 case')
+    fine_sf = fine_row['safety_factor']
     data = json.loads(fields.read_text())
     def array(key):
         item = data['surface'][key]
@@ -45,7 +56,7 @@ def main():
     if not all(np.isfinite(a).all() for a in (points, displacement, stress)) or len(triangles) != len(stress):
         raise ValueError('Invalid static surface fields')
     baseline = receipt['baseline']
-    if baseline['ok'] is not False or baseline['safety_factor'] != 1.65 or baseline['target'] != 2.0:
+    if baseline['ok'] is not False or baseline['safety_factor'] != GATE_SF or baseline['target'] != 2.0:
         raise ValueError('Expected below-target E1 baseline')
     maximum = float(data['max_displacement_mm'])
     extent = float(np.ptp(points, axis=0).max())
@@ -71,12 +82,12 @@ def main():
     plot.add_text('GYROPUP / STRUCTURAL LAB', position=(28, 680), font_size=12, color='#83b8ce', font='arial')
     plot.add_text('HIP FRAME  /  E1', position=(28, 625), font_size=28, color='#f6f8ff', font='arial')
     plot.add_text('STATIC DEFORMATION', position=(570, 635), font_size=14, color='#75f4e8', font='arial')
-    plot.add_text('SF 1.65 / REQUIRED 2.00  —  BELOW TARGET', position=(28, 146), font_size=15,
-                  color='#ffbf69', font='arial')
+    plot.add_text(f'SF {GATE_SF:.2f} AT THE {GATE_MESH_MM:.0f} MM GATE MESH ({fine_sf:.2f} AT {FINE_MESH_MM:.0f} MM)'
+                  '  /  REQUIRED 2.00  —  BELOW TARGET', position=(28, 146), font_size=15, color='#ffbf69', font='arial')
     readout = plot.add_text('', position=(28, 92), font_size=14, color='#f6f8ff', font='arial')
     plot.add_text(f'Deformation ×{exaggeration}  •  gray ghost = unloaded shape', position=(28, 56),
                   font_size=13, color='#c1d3e0', font='arial')
-    plot.add_text('37.5 kg recorded baseline  •  static load scaling, not physical elapsed time',
+    plot.add_text('37.5 kg recorded baseline  •  cad-agent v0.6.0 humid PA6-CF  •  static load scaling, not elapsed time',
                   position=(28, 22), font_size=12, color='#c1d3e0', font='arial')
     movie = OUT / 'hip-frame-e1.mp4'
     command = ['ffmpeg', '-y', '-v', 'error', '-f', 'rawvideo', '-pix_fmt', 'rgb24', '-s', f'{WIDTH}x{HEIGHT}',
