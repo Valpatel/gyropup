@@ -13,8 +13,9 @@ is the one summary.json records, and adds, per case:
            (web-down, the frame's print: n = y). sigma_n = n.S.n is the stress across the layers, tau_n the shear
            along them. Two checks, both on the elements leg_studies judges (away from the clamps, the load patches
            and a stop pin's bearing band):
-             bond  sqrt(max(sigma_n, 0)^2 + 3 tau_n^2) against the across-layer allowable (pa6_cf_z: 23.0 MPa)
-             bulk  von Mises against the in-layer allowable (pa6_cf_xy: 49.0 MPa)
+             bond  sqrt(max(sigma_n, 0)^2 + 3 tau_n^2) against the across-layer allowable (cad-agent's pa6_cf_z)
+             bulk  von Mises against the in-layer allowable (pa6_cf_xy). Both come from the cad-agent that runs: 23 and
+                   49 MPa at the repo's pin 2ad4269; 23.04 and 48.96 at a682668, which ran issue #29's studies
            The interlayer shear strength is not on the data sheet; tau_n is taken against the across-layer allowable
            as von Mises takes shear (S / sqrt 3). Compression across the layers does not open them and counts only
            in the bulk check. It is a screening criterion for a transversely isotropic print, not a qualification.
@@ -210,7 +211,7 @@ def run_variant(out: Path, params: dict | None, cases, mesh: float, vmax: float 
                            capture_output=True).stdout.strip()
     import cadagent
     res = {'schema': 1, 'source_revision': rev, 'source_dirty': bool(dirty), 'params': params or {}, 'hip': dict(getattr(fb, 'HIP', {})),
-           'mesh_mm': mesh, 'render': {'vmax_mpa': vmax, 'deformation_scale': dscale}, 'cases': rows, 'mass_g': round(frame.Volume() / 1000 * MATERIALS['pa6_cf_z'].density_g_cm3, 1),
+           'mesh_mm': mesh, 'render': {'vmax_mpa': vmax, 'deformation_scale': dscale}, 'cases': rows, 'mass_g': round(frame.Volume() / 1000 * PA6_CF_DENSITY, 1),
            'volume_mm3': round(frame.Volume(), 1), 'allowables_mpa': {'across_layers': s_z, 'in_layers': s_xy},
            'print_normal': PRINT_NORMAL, **fit, 'toolkit': toolkit_identity(cadagent), 'seconds': round(time.time() - t0, 1),
            'inputs_sha256': {p: sha(ROOT / p) for p in ('cad/fivebar.py', 'cad/leg_studies.py', 'sim/leg_rig.py',
@@ -219,6 +220,8 @@ def run_variant(out: Path, params: dict | None, cases, mesh: float, vmax: float 
     return res
 
 
+PA6_CF_DENSITY = json.loads((ROOT / 'catalog/materials.json').read_text())['pa6-cf']['density_g_cm3']   # g/cm3, as
+                                   # build_leg's masses (not the FEA material's, which moves with the toolkit)
 BODY_ZT = 90.5                     # body_params.z_spine_top() for today's frame: the cheeks' flange faces (mm)
 CHEEK_CLEAR = 2.0                  # mm the frame's bottom stays above the cheeks' bottom flange (its inner face)
 

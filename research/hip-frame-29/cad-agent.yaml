@@ -2,7 +2,8 @@
 # runs cad/leg_studies.py's five hip-frame cases unchanged for each trial and returns each case's safety factor over
 # its target (margin_min, the worst) and the frame's mass, and fails a trial that no longer fits the print bed or that
 # would move the body's cheeks. Run it on a compute host (README.md here), e.g.
-#   cad-agent optimise --project research/hip-frame-29 --sampler nsga2 --trials 40 --workers 4
+#   cad-agent optimise --project research/hip-frame-29 --sampler nsga2 --trials 36 --workers 4 --seed 29
+# (issue #29's run n01: 36 trials, the command line's --trials over the 40 below)
 cad:
   name: gyropup-hip-frame-29
   title: Hip frame flanges and root fillet (gyropup issue 29)
