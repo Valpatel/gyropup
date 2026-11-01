@@ -85,8 +85,14 @@ def toolkit_identity(cadagent) -> dict:
     from importlib.metadata import PackageNotFoundError, distribution
     init = Path(cadagent.__file__).resolve()
     git = lambda *a: subprocess.run(['git', *a], cwd=init.parent, text=True, capture_output=True)
-    if git('ls-files', '--error-unmatch', init.name).returncode == 0:
-        tag = git('describe', '--tags', '--exact-match').stdout.strip() or git('describe', '--tags', '--always').stdout.strip()
+    tracked = git('ls-files', '--full-name', '--error-unmatch', init.name)
+    if tracked.returncode == 0:
+        # a cad-agent checkout keeps the package at src/cadagent/ (or cadagent/) of its own root; a copy vendored deeper
+        # in another repository would otherwise report that repository's tag and commit
+        if tracked.stdout.strip() not in ('src/cadagent/__init__.py', 'cadagent/__init__.py'):
+            return {'version': None, 'commit': None}
+        # the tag, or `git describe`'s tag-N-gSHA past it; no tag reachable (a shallow fetch of a SHA): no version
+        tag = git('describe', '--tags', '--exact-match').stdout.strip() or git('describe', '--tags').stdout.strip()
         return {'version': tag.removeprefix('v') or None, 'commit': git('rev-parse', 'HEAD').stdout.strip() or None}
     try:
         dist = distribution('cad-agent')
