@@ -82,12 +82,14 @@ def main():
     plot.add_text('GYROPUP / STRUCTURAL LAB', position=(28, 680), font_size=12, color='#83b8ce', font='arial')
     plot.add_text('HIP FRAME  /  E1', position=(28, 625), font_size=28, color='#f6f8ff', font='arial')
     plot.add_text('STATIC DEFORMATION', position=(570, 635), font_size=14, color='#75f4e8', font='arial')
-    plot.add_text(f'SF {GATE_SF:.2f} AT THE {GATE_MESH_MM:.0f} MM GATE MESH ({fine_sf:.2f} AT {FINE_MESH_MM:.0f} MM)'
-                  '  /  REQUIRED 2.00  —  BELOW TARGET', position=(28, 146), font_size=15, color='#ffbf69', font='arial')
+    plot.add_text(f'SF {GATE_SF:.2f} ({GATE_MESH_MM:.0f} MM GATE MESH)  /  REQUIRED 2.00  —  BELOW TARGET', position=(28, 176),
+                  font_size=15, color='#ffbf69', font='arial')
+    plot.add_text(f'{FINE_MESH_MM:.0f} MM MESH: SF {fine_sf:.2f}, NOT CONVERGED', position=(28, 148), font_size=13,
+                  color='#ffbf69', font='arial')
     readout = plot.add_text('', position=(28, 92), font_size=14, color='#f6f8ff', font='arial')
-    plot.add_text(f'Deformation ×{exaggeration}  •  gray ghost = unloaded shape', position=(28, 56),
+    plot.add_text(f'Deformation ×{exaggeration}  •  gray ghost = unloaded shape  •  cad-agent v0.6.0', position=(28, 56),
                   font_size=13, color='#c1d3e0', font='arial')
-    plot.add_text('37.5 kg recorded baseline  •  cad-agent v0.6.0 humid PA6-CF  •  static load scaling, not elapsed time',
+    plot.add_text('37.5 kg recorded baseline  •  static load scaling, not physical elapsed time',
                   position=(28, 22), font_size=12, color='#c1d3e0', font='arial')
     movie = OUT / 'hip-frame-e1.mp4'
     command = ['ffmpeg', '-y', '-v', 'error', '-f', 'rawvideo', '-pix_fmt', 'rgb24', '-s', f'{WIDTH}x{HEIGHT}',
