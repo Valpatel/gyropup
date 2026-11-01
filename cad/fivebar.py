@@ -58,6 +58,7 @@ PARAMS = {
     'eye_r': 20.0, 'eye_stub_fillet': 5.0,               # the upper link's knee-eye stub (radius + 0.5) and its root fillet; past
                                                          # (20, 5) the knee end grows a round bulb (eye_r + fillet) to carry it
     'apex_wall': 6.0, 'front_eye_fillet': 6.0,           # the front link's apex ring: wall round the 61812s, its inner-face fillet
+    'wheel_boss_fillet': 10.0,                           # the wheel link's knee boss where it leaves the link's inner face
     'hub_root_d': 64.0, 'hub_root_fillet': 0.0,          # the wheel link's hub where it leaves the link: the shoulder's diameter
                                                          # from 2 mm past the 61812 to the link (64: the abutment only), its fillet
     'hollow': False, 'skin': 5.0,                        # links as closed boxes (cavity, 'skin' walls): tried 2026-10-26, it
@@ -798,7 +799,7 @@ def front_link():
 
 WHEEL_RECESS_PLAY = 0.2     # mm: the BotWheel's Ø50 x 5 boss (height 5 +- 0.1) clears the recess's floor; its flange
                              # seats on the wheel link's outer face
-WHEEL_BOSS_FILLET = 10.0     # mm: where the wheel link's knee boss leaves its inner face, the link's peak in a landing's
+WHEEL_BOSS_FILLET = P['wheel_boss_fillet']   # mm: where the wheel link's knee boss leaves its inner face, the link's peak in a landing's
                              # full axle spike (cad/leg_studies.py R1w; 6 mm gave SF 1.13 at 14.75 kg)
 
 
