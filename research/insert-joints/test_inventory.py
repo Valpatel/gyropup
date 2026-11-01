@@ -170,7 +170,7 @@ class Inventory(unittest.TestCase):
 
     def test_control_a_fixed_note_must_be_dropped(self):
         with self.assertRaises(inv.Stale):
-            generate({'cad/fivebar.py': [('its 4 x M6 x 40', 'its 4 x M6 x 30')]})
+            generate({'cad/body_frame.py': [('two M4 x 10 down into the tray', 'two M4 x 12 down into the tray')]})
 
 
 if __name__ == '__main__':

@@ -10,9 +10,10 @@ parts ship:
   press_cage x 1       PETG    B3, B4: a frame round the S-type load cell on the press's axis (the cell hangs from the top
                                beam; what is tested comes up from the bottom beam)
   press_base, press_slider     B3: an M12 x 80 bolt through the base's nut lifts the slider
-  sleeve_block x 1     PA6-CF  B3: a real stop post in an M8 insert, its TPU sleeve under sleeve_anvil (the link's edge)
+  sleeve_block x 1     PA6-CF  B3: a real stop post (the Ø16 pin) in a blind hole as the hip frame's, its TPU sleeve
+                               under sleeve_anvil (the link's edge)
   sleeve_anvil x 1     PA6-CF  hung from the cell's lower thread
-  puller_m5 x 4, puller_m8 x 2 PA6-CF  B4: a heat-set insert as the hip frame has it (axis along the print's z), hung from
+  puller_m5 x 3        PA6-CF  B4: a heat-set insert as the hip frame has it (axis along the print's z), hung from
                                the cell; the screw under test comes up into it
   bearing_disc x 3     PA6-CF  B4: the upper link's material under an M5 head
   (B5, the tyre, runs on the rig with the leg: docs/leg-bench-tests.md)
@@ -231,13 +232,16 @@ def press_slider():
 
 def sleeve_block():
     """PA6-CF: an L standing on the slider against the left wall: the upright (x -36.5 to -10, 40 tall) holds a stop
-    post in an M8 insert (Ø9.6 x 16, as the hip frame) on its +x face, 25 mm up, so the post's 20 mm shoulder lies across
-    the press axis with its TPU sleeve centred on it; the foot runs under the sleeve to x +25 so the anvil's push lands
-    inside the block's footprint."""
+    post (D53: the Ø16 x 40 pin) in a blind hole on its +x face, 25 mm up, drawn and printed as the hip frame's (the
+    same diameter, depth and orientation of the hole to the layers), so the pin's free 17 mm lies across the press axis
+    with its TPU sleeve on it; the foot runs under the sleeve to x +25 so the anvil's push lands inside the block's
+    footprint. The pin goes in as in the leg (pressed, the same compound)."""
+    d, _, depth = fb.STOP_PIN
     up = bx(-CAGE_IN + 0.5, -10.0, 0, 40, 5, CAGE_D - 5)
     foot = bx(-10.0, 25.0, 0, 10, 5, CAGE_D - 5)
     s = up.union(foot)
-    s = s.cut(cq.Workplane('YZ', origin=(-10.0 + 0.01, 0, 0)).center(25.0, CAGE_D / 2).circle(4.8).extrude(-16.0))
+    s = s.cut(cq.Workplane('YZ', origin=(-10.0 + 0.01, 0, 0)).center(25.0, CAGE_D / 2)
+              .circle(d / 2 + fb.STOP_HOLE_PLAY).extrude(-depth))
     return s
 
 
@@ -252,8 +256,9 @@ def sleeve_anvil():
 def puller(size: str):
     """PA6-CF, printed with the insert's axis along z as in the hip frame (insert face up on the bed's far side). In
     the cage it hangs insert-down from the M12 x 80 stud: the stud's nut in a pocket slid in from the side, the wings
-    (73 wide) against the side walls take the test screw's torque. M5: Ø6.4 x 11 pilot; M8: Ø9.6 x 16."""
-    pilot, depth, clear = {'M5': (6.4, 11.0, 5.5), 'M8': (9.6, 16.0, 8.5)}[size]
+    (73 wide) against the side walls take the test screw's torque. M5: Ø6.4 x 11 pilot (the leg's only inserts since
+    D53 turned the M8 stop posts into Ø16 pins)."""
+    pilot, depth, clear = {'M5': (6.4, 11.0, 5.5)}[size]
     H = PULLER_H
     s = bx(-15, 15, -15, 15, 0, H).union(bx(-CAGE_IN + 0.5, CAGE_IN - 0.5, -15, 15, 0, 10))
     s = s.cut(zc(6.25, -1, 8.8))                                                     # the stud's way in
@@ -331,10 +336,10 @@ def press_scenes() -> dict:
     low_screw = _steel_cyl(12, c0 - 15, c0 + 15).union(_steel_cyl(18, c0 - 27, c0 - 15))
     bolt = _steel_cyl(12, y_slider - 80, y_slider).union(_hex_y(18, y_slider - 87.5, y_slider - 80))
     nut3 = _hex_y(NUT12[0] - 0.4, 3.2 + Y_WIN0, 3.0 + NUT12[1] - 0.2 + Y_WIN0).cut(_steel_cyl(12, 0, CAGE_H))
-    post = (cq.Workplane('YZ', origin=(-23.0, 0, 0)).center(axis, CAGE_D / 2).circle(4.0).extrude(13.0)
-            .union(cq.Workplane('YZ', origin=(-10.0, 0, 0)).center(axis, CAGE_D / 2).circle(5.0).extrude(20.0))
-            .union(cq.Workplane('YZ', origin=(10.0, 0, 0)).center(axis, CAGE_D / 2).circle(8.0).extrude(8.0)))
-    sleeve = (cq.Workplane('YZ', origin=(-8.0, 0, 0)).center(axis, CAGE_D / 2).circle(od / 2).circle(5.0).extrude(16.0))
+    pd, pl, pdepth = fb.STOP_PIN
+    post = cq.Workplane('YZ', origin=(-10.0 - pdepth, 0, 0)).center(axis, CAGE_D / 2).circle(pd / 2).extrude(pl)
+    sleeve = (cq.Workplane('YZ', origin=(-10.0, 0, 0)).center(axis, CAGE_D / 2).circle(od / 2).circle(pd / 2)   # on the block's
+              .extrude(fb.STOP_SLEEVE_TOP - fb.Y['frame'][1]))                                                # face, as on the frame's
     b3 = common + [('press_base', press_base().translate((0, Y_WIN0, 0)), PETG), ('M12 nut', nut3, STEEL),
                    ('M12 x 80 press bolt', bolt, STEEL), ('press_slider', press_slider().translate((0, y_slider, 0)), PETG),
                    ('sleeve_block', sleeve_block().translate((0, y_block, 0)), CF), ('stop post', post, STEEL),
@@ -451,10 +456,9 @@ FIXTURES = {   # name: (builder, material, qty, note)
     'press_cage': (press_cage, 'petg', 1, 'PETG, 6 walls, 40 % gyroid; flat (B3, B4)'),
     'press_base': (press_base, 'petg', 1, 'PETG, 6 walls, 40 % gyroid (B3)'),
     'press_slider': (press_slider, 'petg', 1, 'PETG, 6 walls, 40 % gyroid (B3)'),
-    'sleeve_block': (sleeve_block, 'pa6-cf', 1, 'PA6-CF, 100 %; an M8 insert, a real stop post and TPU sleeve (B3)'),
+    'sleeve_block': (sleeve_block, 'pa6-cf', 1, 'PA6-CF, 100 %; a real stop post (Ø16 pin) in its blind hole and TPU sleeve (B3)'),
     'sleeve_anvil': (sleeve_anvil, 'pa6-cf', 1, 'PA6-CF, 100 %, face down (B3)'),
     'puller_m5': (lambda: puller('M5'), 'pa6-cf', 3, 'PA6-CF, 6 walls, 60 % gyroid, insert face up (B4: two to 3.5 kN, one for the head test)'),
-    'puller_m8': (lambda: puller('M8'), 'pa6-cf', 1, 'PA6-CF, 6 walls, 60 % gyroid, insert face up (B4)'),
     'bearing_disc': (bearing_disc, 'pa6-cf', 3, 'PA6-CF, 100 %, flat (B4: the link under an M5 head)'),
 }
 COUPONS = {'coupon_frame_ring': coupon_frame_ring, 'coupon_hub_face': coupon_hub_face, 'coupon_knee_eye': coupon_knee_eye,

@@ -570,16 +570,12 @@ def build(repo):
         extra=[('wheel-clamp', 'owner', f"{wt:g} N m ~ {preload(wt, 6):.0f} N on {w_area:.0f} mm2 = {preload(wt, 6) / w_area:.0f} MPa "
                 f"on PA6-CF; the flange needs >= {t_need:.0f} N a screw, a bare head holds "
                 f"{mat['bearing_sustained_mpa'] * w_area:.0f} N, a DIN 433 washer {mat['bearing_sustained_mpa'] * w433:.0f} N "
-                f"({torque_for(mat['bearing_sustained_mpa'] * w433, 6):.2f} N m)"),
-               ('note-vs-joint', 'fix', f"cad/fivebar.py wheel_link() docstring: {q(repo.has('cad/fivebar.py', 'its 4 x M6 x 40'))}; "
-                'the joint and BOM are M6 x 30, and catalog/hardware.json screw_m6x40 still lists this joint')])
+                f"({torque_for(mat['bearing_sustained_mpa'] * w433, 6):.2f} N m)")])
 
     add(id='leg.stop_posts', assembly='leg', where='hip frame stop posts', qty_robot=8, insert=None, d_mm=8, material='pa6-cf',
         infill='100 %', receiver='none: Ø16 steel pins in blind holes since D53', screw='none', axis='print-z',
-        clamp=None, loads=[], notes='No insert any more. The generated assembly page still instructs one.',
-        extra=[('note-vs-joint', 'fix', 'cad/rig_assembly.py (docs/leg-rig-assembly.md) still says '
-                f"{q(repo.has('cad/rig_assembly.py', 'the B4 torque into the M8 insert, 5 N m until B4'))} and "
-                f"{q(repo.has('cad/rig_assembly.py', 'Stop posts (M8 into heat-set inserts)'))}: the posts are pins (D53)")])
+        clamp=None, loads=[], notes='No insert any more: the assembly page bonds the pins ('
+        f"{q(repo.has('cad/rig_assembly.py', 'Stop posts (Ø16 pins bonded in blind holes, D53, D74)'))}).")
 
     # ================================================================== the TM's sideways-fall load, from the TM face (D66)
     # mount.json's centre is in the turret frame T, whose origin is the pan base's foot. Since D66 the plinth's tray sits

@@ -394,14 +394,9 @@
      "code": "wheel-clamp",
      "level": "owner",
      "text": "8 N m ~ 6667 N on 44 mm2 = 150 MPa on PA6-CF; the flange needs >= 1331 N a screw, a bare head holds 1108 N, a DIN 433 washer 1521 N (1.82 N m)"
-    },
-    {
-     "code": "note-vs-joint",
-     "level": "fix",
-     "text": "cad/fivebar.py wheel_link() docstring: \"its 4 x M6 x 40\"; the joint and BOM are M6 x 30, and catalog/hardware.json screw_m6x40 still lists this joint"
     }
    ],
-   "verdict": "fix"
+   "verdict": "owner"
   },
   {
    "id": "leg.stop_posts",
@@ -417,15 +412,9 @@
    "axis": "print-z",
    "clamp": null,
    "loads": [],
-   "notes": "No insert any more. The generated assembly page still instructs one.",
-   "findings": [
-    {
-     "code": "note-vs-joint",
-     "level": "fix",
-     "text": "cad/rig_assembly.py (docs/leg-rig-assembly.md) still says \"the B4 torque into the M8 insert, 5 N m until B4\" and \"Stop posts (M8 into heat-set inserts)\": the posts are pins (D53)"
-    }
-   ],
-   "verdict": "fix"
+   "notes": "No insert any more: the assembly page bonds the pins (\"Stop posts (Ø16 pins bonded in blind holes, D53, D74)\").",
+   "findings": [],
+   "verdict": "ok"
   },
   {
    "id": "body.post_m5",
@@ -2376,18 +2365,6 @@
    "text": "riser dowel holes 8 deep vs mount.json's 12.5; a 16 mm pin goes 8 into the D66 tray, so it needs at least 8.5 in the riser"
   },
   {
-   "joint": "leg.stop_posts",
-   "code": "note-vs-joint",
-   "level": "fix",
-   "text": "cad/rig_assembly.py (docs/leg-rig-assembly.md) still says \"the B4 torque into the M8 insert, 5 N m until B4\" and \"Stop posts (M8 into heat-set inserts)\": the posts are pins (D53)"
-  },
-  {
-   "joint": "leg.wheel_botwheel",
-   "code": "note-vs-joint",
-   "level": "fix",
-   "text": "cad/fivebar.py wheel_link() docstring: \"its 4 x M6 x 40\"; the joint and BOM are M6 x 30, and catalog/hardware.json screw_m6x40 still lists this joint"
-  },
-  {
    "joint": "rig.pod_lid",
    "code": "no-receiver",
    "level": "fix",
@@ -2566,13 +2543,13 @@
   "families": 46,
   "inserts_on_robot": 151,
   "verdicts": {
-   "owner": 6,
+   "owner": 7,
    "check": 6,
-   "fix": 12,
+   "ok": 7,
    "note": 16,
-   "ok": 6
+   "fix": 10
   },
-  "fix": 18,
+  "fix": 16,
   "owner": 11,
   "check": 11
  },
@@ -2746,16 +2723,8 @@
    "lines": 1
   },
   {
-   "file": "cad/fivebar.py",
-   "literal": "its 4 x M6 x 40"
-  },
-  {
    "file": "cad/rig_assembly.py",
-   "literal": "the B4 torque into the M8 insert, 5 N m until B4"
-  },
-  {
-   "file": "cad/rig_assembly.py",
-   "literal": "Stop posts (M8 into heat-set inserts)"
+   "literal": "Stop posts (Ø16 pins bonded in blind holes, D53, D74)"
   },
   {
    "file": "cad/turret.py",

@@ -41,6 +41,8 @@ LEG_OVERLAPS = {
     ('leg_motor_rear', 'leg_screws_outputs'): 'the same',
     ('leg_wheel_link', 'leg_screws_wheel'): 'the wheel screws\' threads (drawn through the link)',
     ('leg_screws_wheel', 'leg_wheel_hub'): 'the wheel screws\' threads in the BotWheel\'s flange (envelope)',
+    **{(f'leg_stop_sleeve_{k}', 'leg_stop_posts'): 'D53: the TPU sleeve\'s bore is 0.2 mm under its Ø16 pin, a drawn stretch '
+                                                  'fit (85 mm3 each; fivebar.MATES has it)' for k in range(1, 5)},
     ('leg_wheel_link', 'leg_wheel_hub'): 'REPORTED to the leg\'s owner: 250 mm3 between the wheel link and the BotWheel\'s hub '
                                          '(the boss in its recess, or the envelope larger than the part)',
 }

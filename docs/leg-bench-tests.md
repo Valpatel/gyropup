@@ -228,7 +228,8 @@ Which of damper 0 and 1 the robot runs is decided by the same rerun.
 **Set-up (the press cage on its side, clamped to the bench):**
 - The load cell hangs from the top beam on an M12 x 30 at 30 N m.
 - The anvil hangs on a second M12 x 30, screwed into the cell's lower thread; its head sits in the anvil's socket.
-- A stop post goes in the sleeve block's M8 insert (5 N m), with its TPU sleeve on.
+- A stop post (one of the leg's Ø16 pins, D53) goes in the sleeve block's blind hole as it goes in the hip frame, with its
+  TPU sleeve on. The block's hole is drawn and printed as the frame's, so B3 also shows how the pin seats.
 - The block sits on the slider against the left wall.
 - The M12 x 80 press bolt comes up through the bottom beam into the press base's nut.
 - The dial indicator's tip rests on the slider's tab.
@@ -269,17 +270,16 @@ Set every insert with the soldering iron at the temperature B0 proved, as in the
 |---|---|---|---|---|
 | B4a: M5 insert (2 pullers) | an M6 oversized washer (steel) | M5 x 40, tighten in 0.5 N m steps, reading the tension, to 4 N m; then on to 3,500 N or until the insert pulls out or the thread strips | >= 1,200 N at a torque with margin; holds 2,400 N (2x) without moving | the frame-to-plate torque (6 x M5 x 16) |
 | B4b: the link under the head (1 puller) | a bearing disc (PA6-CF, the link's material) on the M6 washer | M5 x 40 to 1,200 N: note the torque; hold 30 min, reading at 1, 5, 10 and 30 min; then on to 2,000 N | the tension after 30 min >= 1,000 N; no crushing round the head at 2,000 N | the upper-link-to-adapter torque (8 x M5 x 40) and HUB_PRELOAD_N |
-| B4c: M8 insert (1 puller) | the 3/8 in washer | M8 x 40 in 1 N m steps to 10 N m or until the tension stops rising | the tension at 5 N m >= 2,000 N and still rising | the stop posts' torque: the lower of the torque at 2,000 N and 60 % of the torque where it stopped rising |
 
 Write the rows into `sheets/b4.csv`:
-- size (M5, M8);
+- size (M5; B4c, the M8 insert, went with D53: the stop posts are pins, not screws);
 - sample;
 - torque_nm;
 - tension_n;
 - pullout_n (on its own row, at the end).
 
 `fit_params` gives the tension per N m, the nut factor, the torque for 1,200 N and the pull-out. Put the torques into
-the assembly's torque table, which until then uses 1.5 N m for the M5s and 5 N m for the M8s. Send the measured
+the assembly's torque table, which until then uses 1.5 N m for the M5s. Send the measured
 preload to the main session (F2: `cad/leg_studies.py` reruns with it).
 
 ## B6: the packs' resistance
