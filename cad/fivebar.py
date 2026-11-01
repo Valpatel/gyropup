@@ -461,6 +461,8 @@ HIP = {                                          # the hip frame's shape beyond 
                                                  # +-(ring + dz)), which leaves room for a root fillet over the motors
     'root_r': 0.0,                               # mm: the flanges' roots on the motor side rounded, up to this radius and
     'root_gap': 0.75,                            # ... less where a motor's can (OD) comes within root_gap of the fillet
+    'ear_boss_fillet': 0.0,                      # mm: the knee-out ears' backing blocks' sides round the stop boss
+                                                 # rounded into the web where they stand inside the ear (0: square)
     'ear_tip': False,                            # the knee-out ears' backing blocks end flush with the ear's edge, not
                                                  # in a wedge whose rounded face stops short of it (a notch on the web)
     'bed_clip': True,                            # the bottom flange's outer corners cut back to the 45 deg lines through
@@ -557,6 +559,16 @@ def hip_frame():
                 prof += [(mx + rc - f + f * math.cos(math.radians(90 - 90 * k / 8)), yf0 - f + f * math.sin(math.radians(90 - 90 * k / 8))) for k in range(9)]
                 ring = cq.Workplane('XY').polyline(prof).close().revolve(360, (mx, 0, 0), (mx, 1, 0))
                 web = web.union(back).union(ring.intersect(yslab(blk, yf0 - f - 1.0, yf0 + 0.02)))
+                fb_ = HIP['ear_boss_fillet']
+                if fb_ > 0:                                    # the block's side round the stop boss rounded into the web
+                    rb = STOP_BOSS_R + 0.3                     # too, where it stands inside the ear: that sharp edge meets the
+                    bprof = [(px + rb, yf0 + 0.01), (px + rb + fb_, yf0 + 0.01)]       # motor-side fillet at the block's
+                    bprof += [(px + rb + fb_ - fb_ * math.sin(math.radians(90 * k / 8)),  # tip, which carried E1's and
+                               yf0 - fb_ + fb_ * math.cos(math.radians(90 * k / 8))) for k in range(9)]  # R1's peak (#29)
+                    bring = cq.Workplane('XY').polyline(bprof).close().revolve(360, (px, 0, 0), (px, 1, 0)).translate((0, 0, pz))
+                    bring = bring.intersect(yslab(lobe, yf0 - fb_ - 1.0, yf0 + 0.02)).cut(
+                        ycyl(rc - f, yf0 - fb_ - 2.0, yf0 + 1.0, mx))
+                    web = web.union(bring)
     if HIP['root_r'] > 0:                                    # the flanges' roots rounded on the motor side (HIP)
         for s_ in (1, -1):
             web = web.union(root_fillet(s_, zf, yf0, fl_x, (ax, bx)))
