@@ -23,6 +23,11 @@ See [withdraw instructions in the generator too](../inbox/2026-10-31-withdraw-in
 
 Detailed thread models need source-bound mating clocking, not a generic intended-overlap waiver. Sampling may diagnose phase but cannot establish complete mating; a timed-out global check stays inconclusive. Keep seating, holes, engagement, tip clearance and physical insert coupons separate from that diagnostic. See [thread sampling limits](../inbox/2026-10-29-thread-sampling-does-not-qualify-mating.md).
 
+Every insert joint and every printed part clamped by metal is screened in `research/insert-joints/` (pilot vs the
+maker's hole and depth, screw tip vs a blind pilot's floor, boss, layer orientation, clamped plastic, pull-out from the
+studies' loads). Regenerate it when a bound source line changes. A new layer in a screw stack needs the receiving
+pilot and the contract's datum re-checked on both sides of the interface. See [the TM bottoming lesson](../inbox/2026-11-01-a-new-layer-in-a-stack-needs-the-receivers-pilot.md).
+
 Insert-fit specimens must preserve their parent's local geometry and print orientation. A vertical carrier boss and horizontal base anchor need separate measurements. Record requested recipes, actual process conditions and physical observations independently; geometry-only3MF packages contain no slicer settings. See [the specimen orientation lesson](../inbox/2026-10-29-fit-specimens-must-preserve-layer-orientation.md) and `research/carrier-insert-fit/`.
 
 Motor fasteners require actual head-seat and mounting-face measurements against the
