@@ -450,11 +450,10 @@ HIP = {                                          # the hip frame's shape beyond 
                                                  # centre plane.
     'haunch': 0.0,                               # 0: the extra thickness runs the flange's whole length; L > 0: it tapers
                                                  # off L mm from the web (a haunch at the root, where the bending peaks)
-    'ear_ring_reach': 0.0,                       # mm: the knee-out ears' rounding into the web (STOP_EAR_FILLET) clipped
-                                                 # this much further along the top flange's root, so it runs out on its own
-                                                 # (to nothing where the motor's ring dips under the flange) instead of
-                                                 # being cut off at the ear's hull right on the root (a 0.1 mm sliver there
-                                                 # was the frame's R1 and E1 peak at 4 mm, x 89, z 62)
+    'flange_dz': 0.0,                            # mm: both flanges moved out from the motors' ring (their inner faces at
+                                                 # +-(ring + dz)), which leaves room for a root fillet over the motors
+    'root_r': 0.0,                               # mm: the flanges' roots on the motor side rounded, up to this radius and
+    'root_gap': 0.75,                            # ... less where a motor's can (OD) comes within root_gap of the fillet
     'bed_clip': True,                            # the bottom flange's outer corners cut back to the 45 deg lines through
                                                  # today's corners (|x| + |z| <= FLANGE_X + ring + FLANGE_T), so the frame
                                                  # still fits the bed turned (printplan.fits: 248.9 of 250 mm)
@@ -494,7 +493,7 @@ def hip_frame():
     fl_t = t_of[1]                                           # the top one's, which the stop ears' lobes meet
     web = ycyl(ring_r, yf0, yf1, ax).union(ycyl(ring_r, yf0, yf1, bx)).union(
         cq.Workplane('XY').box(2 * ax, yf1 - yf0, 2 * ring_r).translate((0, (yf0 + yf1) / 2, 0)))
-    zf = ring_r                                              # flanges: z from ring_r .. ring_r + t (above the motors' Ø120)
+    zf = ring_r + HIP['flange_dz']                           # flanges: z from zf .. zf + t (above the motors' Ø120)
     z_lo, z_hi = -(zf + t_of[-1]), zf + t_of[1]
     web = web.union(cq.Workplane('XY').box(2 * fl_x, yf1 - yf0, z_hi - z_lo).translate((0, (yf0 + yf1) / 2, (z_hi + z_lo) / 2)))
     mt = frame_mounts()
@@ -542,9 +541,10 @@ def hip_frame():
                 prof = [(mx + rc, yf0 + 0.01), (mx + rc - f, yf0 + 0.01)]
                 prof += [(mx + rc - f + f * math.cos(math.radians(90 - 90 * k / 8)), yf0 - f + f * math.sin(math.radians(90 - 90 * k / 8))) for k in range(9)]
                 ring = cq.Workplane('XY').polyline(prof).close().revolve(360, (mx, 0, 0), (mx, 1, 0))
-                reach = HIP['ear_ring_reach']                  # the rounding's clip along the flange's root (issue #29: cut
-                blk_r = _hull(blk + [(sx * (fl_x - 1.0 - reach), zf + 0.5)]) if reach > 0 else blk   # at the hull, it left
-                web = web.union(back).union(ring.intersect(yslab(blk_r, yf0 - f - 1.0, yf0 + 0.02)))  # a sliver on the root)
+                web = web.union(back).union(ring.intersect(yslab(blk, yf0 - f - 1.0, yf0 + 0.02)))
+    if HIP['root_r'] > 0:                                    # the flanges' roots rounded on the motor side (HIP)
+        for s_ in (1, -1):
+            web = web.union(root_fillet(s_, zf, yf0, fl_x, (ax, bx)))
     # the motors: lug screws (counterbored from the leg side, deep so a stocked length engages), the bore
     for mx, front in ((ax, True), (bx, False)):
         for a in lug_angles(front):
@@ -566,14 +566,41 @@ def hip_frame():
     # frame's face plane, the circlip's land) passes here at the leg's shortest, and a power cut squeezes the knee-out
     # stops' TPU up to 7.4 deg further (D39)
     hub_y = Y['hub'][0]
-    r_top, r_bot = -(zf + FLANGE_T) + 22.0, z_lo - 2.0       # its top where the hub passes; its floor below the frame
+    r_top, r_bot = -(ring_r + FLANGE_T) + 22.0, z_lo - 2.0   # its top where the hub passes; its floor below the frame
     web = web.cut(cq.Workplane('XY').box(64.0, yf1 + 1 - (hub_y - 1.5), r_top - r_bot).translate((0.0, (yf1 + 1 + hub_y - 1.5) / 2, (r_top + r_bot) / 2)))
     if HIP['bed_clip'] and t_of[-1] > FLANGE_T:              # the bottom corners back on today's 45 deg lines (bed fit)
-        d = fl_x + zf + FLANGE_T
+        d = fl_x + ring_r + FLANGE_T
         for sx in (1, -1):
             tri = [(sx * (d - (zf + t_of[-1]) - 1.0), z_lo - 1.0), (sx * (fl_x + 1.0), z_lo - 1.0), (sx * (fl_x + 1.0), -(d - fl_x - 1.0))]
             web = web.cut(yslab(tri, yc - 1.0, yf1 + 1.0))
     return web
+
+
+def root_fillet_r(x, zf, motors_x):
+    """The root fillet's radius at x (mm): HIP['root_r'], less where a motor's can (gmi OD) would come within
+    HIP['root_gap'] of the fillet's edge on the web face (zf - r), never under 0.5."""
+    rc = gmi.motor_interface(MOTOR)['od'] / 2
+    r = HIP['root_r']
+    for mx in motors_x:
+        if abs(x - mx) < rc:
+            r = min(r, zf - HIP['root_gap'] - math.sqrt(rc * rc - (x - mx) ** 2))
+    return max(0.5, r)
+
+
+def root_fillet(s, zf, yf0, fl_x, motors_x, step=2.5):
+    """A variable-radius fillet in the corner between a flange's inner face (z = s * zf) and the web's motor-side face
+    (y = yf0), along x from -fl_x to fl_x: a loft through its quarter-round sections (root_fillet_r), each reaching
+    0.2 mm into the flange and the web so it fuses."""
+    xs = [-fl_x + k * step for k in range(int(round(2 * fl_x / step)) + 1)]
+    wires = []
+    for x in xs:
+        r = root_fillet_r(x, zf, motors_x)
+        cy, cz = yf0 - r, zf - r                                     # the round's centre (z for the top flange)
+        arc = [(cy + r * math.cos(math.radians(a)), cz + r * math.sin(math.radians(a))) for a in range(90, -1, -10)]
+        pts = [(yf0 + 0.2, zf + 0.2)] + [(arc[0][0], zf + 0.2)] + arc[1:-1] + [(yf0 + 0.2, arc[-1][1])]
+        w = cq.Workplane('YZ', origin=(x, 0, 0)).polyline([(y_, s * z_) for y_, z_ in pts]).close().wires().val()
+        wires.append(w)
+    return cq.Workplane('XY').add(cq.Solid.makeLoft(wires, True))
 
 
 def stop_posts():
