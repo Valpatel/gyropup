@@ -14,8 +14,9 @@ is the one summary.json records, and adds, per case:
            along them. Two checks, both on the elements leg_studies judges (away from the clamps, the load patches
            and a stop pin's bearing band):
              bond  sqrt(max(sigma_n, 0)^2 + 3 tau_n^2) against the across-layer allowable (cad-agent's pa6_cf_z)
-             bulk  von Mises against the in-layer allowable (pa6_cf_xy). Both come from the cad-agent that runs: 23 and
-                   49 MPa at the repo's pin 2ad4269; 23.04 and 48.96 at a682668, which ran issue #29's studies
+             bulk  von Mises against the in-layer allowable (pa6_cf_xy). Both come from the cad-agent that runs: 18.13
+                   and 40.84 MPa at v0.6.0 (50d4921, the FEA records' toolkit since issue #29's re-run); 23 and 49 at
+                   v0.4.2 (2ad4269); 23.04 and 48.96 at a682668, which ran issue #29's hip-frame sweep
            The interlayer shear strength is not on the data sheet; tau_n is taken against the across-layer allowable
            as von Mises takes shear (S / sqrt 3). Compression across the layers does not open them and counts only
            in the bulk check. It is a screening criterion for a transversely isotropic print, not a qualification.
@@ -76,10 +77,18 @@ def layer_terms(sig, n):
 
 
 def toolkit_identity(cadagent) -> dict:
-    """The cad-agent that ran: its version and, from a git checkout, its commit (never its local path)."""
+    """The cad-agent that ran: its version and, from a git checkout of cad-agent, its commit (never its local path).
+    The commit is taken only when the package's own __init__.py is tracked there: a cad-agent installed into a venv
+    that lives inside another repository's checkout would otherwise report that repository's commit."""
+    from importlib.metadata import PackageNotFoundError, version
     root = Path(cadagent.__file__).resolve().parent
-    rev = subprocess.run(['git', 'rev-parse', 'HEAD'], cwd=root, text=True, capture_output=True).stdout.strip()
-    return {'version': getattr(cadagent, '__version__', None), 'commit': rev or None}
+    git = lambda *a: subprocess.run(['git', *a], cwd=root, text=True, capture_output=True)
+    rev = git('rev-parse', 'HEAD').stdout.strip() if git('ls-files', '--error-unmatch', '__init__.py').returncode == 0 else ''
+    try:
+        ver = version('cad-agent')                             # cadagent has no __version__ (v0.6.0)
+    except PackageNotFoundError:
+        ver = getattr(cadagent, '__version__', None)
+    return {'version': ver, 'commit': rev or None}
 
 
 def install_recorder():
