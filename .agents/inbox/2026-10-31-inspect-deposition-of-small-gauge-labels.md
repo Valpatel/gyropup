@@ -10,9 +10,9 @@ establish geometry, not feature deposition or readability.
 Evidence (owned `gyropup-survey-fit-job` checkout, no printer operation):
 
 ```
-PYTHONPATH=/home/scubasonar/Code/cad-agent-fit-jobs-runtime/src \
+PYTHONPATH=<cad-agent runtime checkout>/src \
   timeout --kill-after=10s 300s \
-  /home/scubasonar/Code/gyropup-fit-jobs/build/fit-check-env/bin/python \
+  build/fit-check-env/bin/python \
   tools/package-survey-fit-job.py --out exports/turret/shaft-survey-fit-job
 ```
 

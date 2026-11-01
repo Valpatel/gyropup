@@ -5,8 +5,8 @@ On 2026-10-29, issue 85 / PR 86 retrieved exact Molex 43020-1200 and 43025-1200 
 Reproduction, with the existing CAD environment and separate released cad-agent v0.4.2 source checkout:
 
 ```sh
-PYTHONPATH=/home/scubasonar/Code/cad-agent-carrier-validation/src \
-  /home/scubasonar/Code/gyropup/.venv/bin/python tools/check-carrier-connector-inputs.py \
+PYTHONPATH=<cad-agent v0.4.2 checkout>/src \
+  .venv/bin/python tools/check-carrier-connector-inputs.py \
   --out /tmp/carrier-private-input-diagnosis.json
 python3 tools/test-carrier-connector-inputs.py
 ```

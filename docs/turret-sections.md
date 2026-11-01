@@ -61,7 +61,7 @@ dossier lint run by `cad-agent gates`, and `cad-agent check` failing on a failin
 | `exports/gates/*.json`, `*.md` | the verdicts: connectivity, containment, fasteners, motion, assembly, wall, the dossier lint; and the turret's own `turret-path`, `turret-ammo` |
 
 ```
-.venv/bin/cad-agent gates --build             # build the record, run every gate and the lint (heavy: gp-remote --host gb10-01)
+.venv/bin/cad-agent gates --build             # build the record, run every gate and the lint (heavy: run it on a CAD host with tools/gp-remote)
 .venv/bin/python cad/turret_gates.py --dossier   # the ball path and D67's ammo range, bound to that record
 .venv/bin/cad-agent dossier                   # the lint again, with the turret's own verdicts
 .venv/bin/cad-agent check                     # fails on a failing, missing or stale verdict
@@ -75,17 +75,17 @@ the bearing's (I-tilt 39 mm, I-flap 69 mm, the wheels 4 and 1.5 mm); the bearing
 horns) are the joints' intended contacts. The 37 fixed joints are the mounts of the moving parts, each an interface in
 the dossier. The settled load rides with the hopper (I-pile, T0.2), so the motion gate sweeps it with the tilt frame.
 
-**Results (run 3, gb10-01, 2026-10-28; the record built at d627004 + the merges of dd96792 and dd02fcd):**
+**Results (run 3, on the recording compute host, 2026-10-28; the record built at d627004 + the merges of dd96792 and dd02fcd):**
 
 | Gate | Result | What is open |
 |---|---|---|
 | connectivity | 137 pass, 1 warn, 2 fail | I-wheel-r's declared clearance (1.5 mm) is under the right hub's gap since dd96792 moved the CT dowel's boss (3.5 mm, as the left): set it to 4 mm and rerun. The warning: index_magnet on pan_clamp (a line contact through the clamp's hole), undeclared |
 | containment | 64 pass, 1 warn | the support check (report only: balls held in an arch) |
 | fasteners | 35 pass | |
-| motion | pass, 1 warning (7,560 poses: pan 35 x tilt 6 x dial 3 x flap 3 x wheels 2, plus the pinion 13; 9,903 s on gb10-01) | run 2 found the flap's knuckle on the lid at 51.1 deg and the hub overlaps, both fixed |
+| motion | pass, 1 warning (7,560 poses: pan 35 x tilt 6 x dial 3 x flap 3 x wheels 2, plus the pinion 13; 9,903 s on the recording compute host) | run 2 found the flap's knuckle on the lid at 51.1 deg and the hub overlaps, both fixed |
 | assembly | 220 pass, 6 fail | stop_lug: the cradle cannot be lowered into the yoke with the lug on its plate (the upper stop sector, 8.2 mm before its seat); base_board: drawn in a closed pocket of pan_base (no straight way in); both open mechanical items for the next round. The poured load, the rotor's leads (a cable) and the MR126's races (pressed in from inside before the cradle) are not straight insertions |
 | wall | 16 pass, 12 fail | features under 0.8 mm, mostly boolean sliver skins: cartridge_body and ring_carrier 0.002 mm, pan_ring 0.025, pan_base 0.07, compute_shell 0.10, laser_mount 0.12, tilt_yoke 0.15, cradle 0.20; dial 0.64, hopper 0.62, hopper_lid 0.70, pivot_spacer 0.75 |
-| turret-path, turret-ammo | pass (410 and 6 checks), bound to this record on gb10-01 | they bind only to a record their own machine reproduces: the GB10's hashes differ from the workstation's |
+| turret-path, turret-ammo | pass (410 and 6 checks), bound to this record on the recording compute host | they bind only to a record their own machine reproduces: the GB10's hashes differ from the workstation's |
 | dossier lint | 7 errors (section-below-gated: the failures above and the FEA's open recoil case), 2 warnings; S8 gated, the others built | T4.7 (the cartridge's recoil SF) and T8.2 (the stand's switch cut-out) open |
 
 ---
@@ -536,14 +536,14 @@ dimensioned drawing when the switch arrives (bluesea.com refuses a plain fetch),
 | 3 Feed | 2026-10-27 | the hopper pile was hand-placed rings (interpenetrating, on the cone) | the physics settle (pile.json) | `hopper_*` pass: worst overlap 0.069 mm, no ball in a solid | |
 | 1 Base | 2026-10-27 | the hall switch drawn 0.2 mm under its pocket's roof (floating) | the pocket's roof seats it | `connectivity` | |
 | 6 Wiring | 2026-10-27 | the coupling tube 1 mm loose on the rotor stub (could not drive it) | 51225K24 3/16 in ID | `connectivity` | |
-| 1 Base | 2026-10-27 | the full FEA (layer-aware): the pan servo's pocket end wall bent across its layers, 0.57 at a full stall, 1.14 at the cap; the pinion 1.05 at a full stall | the end wall 3 -> 8 mm (SERVO_END_WALL): 1.91 at a stall, 3.81 at the cap (pan_base rerun on gb10-02; the falls 3.24 / 1.25 unchanged). The pinion stays open: its peak sits at the edge of the one-tooth model's load patch (p99 4x lower) | FEA | |
+| 1 Base | 2026-10-27 | the full FEA (layer-aware): the pan servo's pocket end wall bent across its layers, 0.57 at a full stall, 1.14 at the cap; the pinion 1.05 at a full stall | the end wall 3 -> 8 mm (SERVO_END_WALL): 1.91 at a stall, 3.81 at the cap (pan_base rerun on a CAD host; the falls 3.24 / 1.25 unchanged). The pinion stays open: its peak sits at the edge of the one-tooth model's load patch (p99 4x lower) | FEA | |
 | 7 Compute | 2026-10-27 | D66: the turret's own Jetson and input | the compute plinth (tray, shell, J4012, jack, XT30, fuses) | `connectivity`, sweep | |
 | 8 Stand | 2026-10-27 | D66: the stand on a FLEXVOLT | the pack slides into the stand's back onto a dock | stand overlap check | |
 | 2, 6 Layout | 2026-10-27 | the tilt servo stood 19 mm proud of its pocket, the board bay was an open tray: two boxes on the yoke's sides | the pocket's walls over the whole servo; the bay's lid | clash sweep, `connectivity` | |
 | 5 Laser | 2026-10-27 | the laser on its tab 32 mm beside the barrel reads as a separate box | open: on the cartridge's top over the barrel, on the axis (keeps it off the barrel, so a barrel swap needs no re-boresight) | | |
 | 5 Laser | 2026-10-28 | (the open row above) | done: the holder on the barrel socket's pad on the cartridge's top, the beam 29.5 mm over the bore on its plane; the cradle's tab removed; the three set screws modelled (McMaster 93285A115) | `connectivity` (the laser held through its set screws), clash sweep | |
 | all | 2026-10-28 | the turret's own gates moved onto cadagent.gates: the first run found the XT30 floating 0.2 mm in its pocket, the RJ-45 jack held only by touching the J4012's envelope, the laser touching nothing | 8 mm bosses inside the plinth's wall hold both connectors line to line; the jack ends 2 mm short of the J4012; the set screws modelled | `connectivity`, `hopper`, `path`, `sweep`, `ammo_range` | |
-| 1 Base | 2026-10-28 | the pinion's 1.05 at a full stall is at the root fillet, a real peak | the pan servo's EEPROM torque ceiling at 80 %, verified by the firmware: R-stall loads 80 %: pinion 1.31, ring teeth 1.5 | FEA (gb10-01 run 2026-10-28), test_firmware | |
+| 1 Base | 2026-10-28 | the pinion's 1.05 at a full stall is at the root fillet, a real peak | the pan servo's EEPROM torque ceiling at 80 %, verified by the firmware: R-stall loads 80 %: pinion 1.31, ring teeth 1.5 | FEA (CAD-host run 2026-10-28), test_firmware | |
 | 7, 8 Power | 2026-10-28 | D70: the stand's 10 A rocker below the 11-14 A of an unprofiled spin-up | Blue Sea 6006 battery switch (48 V DC, 275 A); the firmware's supply profile implemented and tested | turret_power, test_firmware `supply_*` | the stand panel's cut-out for the 6006 on arrival |
 | 3, 4 Cartridge | 2026-10-28 | cadagent's assembly gate (turret/dossier): the hopper's 0 deg lug under the cage plate (the hopper could not be lowered on); the CT front dowel at x 75 inside the right motor's opening from below (no material round it: the cartridge stood on one dowel) | lugs at 45/150/210 deg; the front dowel at x 50 (its Ø12 boss); cartridge FEA: fall 3.9, recoil 2.22 | assembly, FEA | the cradle's push-up case now 1.36 (< 2.0) with the dowel at x 50 |
 | 2 Tilt, 1 Base | 2026-10-28 | the assembly gate: the stop lug, on the -y plate, meets the yoke's upper stop sector 8 mm before the cradle seats; the base board sits in a closed pocket of the pan base (no straight path in or out) | open: the lug fitted after the cradle is hung (a route and screw access in the 4 mm stop gap), the base board's pocket opened on one side | assembly | both open |

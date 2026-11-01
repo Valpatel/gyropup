@@ -995,7 +995,8 @@ def main():
                'limits': LIMITS, 'landing': {vn: landing_limits(scs, a.half_mass) for vn, scs in merged.items()},
                'variants': {n: asdict(VARIANTS[n]) for n in merged if n in VARIANTS}, 'static': statics, 'table': rows, 'scenarios': merged}
         results_path.write_text(json.dumps(out, indent=1) + '\n')
-        print(f'wrote {results_path} ({time.time() - t0:.0f} s)', flush=True)
+        shown = results_path.relative_to(R) if results_path.is_relative_to(R) else results_path.name   # logs are committed
+        print(f'wrote {shown} ({time.time() - t0:.0f} s)', flush=True)
     for fam in a.sweep:
         variants = sweep_family(fam)
         scen = ['stand', 'jump60', 'drop150', 'off', 'off_damped', 'bump40_1']
