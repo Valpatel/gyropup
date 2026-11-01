@@ -1,0 +1,215 @@
+{
+ "schema": 1,
+ "what": "cad/studies.py (the D33-era serial leg: thigh, shin, yoke bracket) re-run at d794466 with cad-agent v0.6.0, against the committed exports/fea record (made at 4f7bea4 with v0.4.2). Every part meshes to a different element count and every design stress differs (ratio 0.38-2.62): the inputs that record read (cad/gmi.py, designs/default.json, exports/sim/default, which was not yet tracked at 4f7bea4) have changed since, so this run is not that record re-run. The record is left as it is; its material-only change is exact by scaling (stress does not depend on E in these force-loaded linear studies).",
+ "provenance": {
+  "run": "h1-historical-leg",
+  "command": "python cad/studies.py",
+  "rc": 0,
+  "host_role": "recording mechanical compute host: aarch64, conda-forge gmsh (the host that made the committed leg and turret records)",
+  "source_revision": "d794466880f8b14767fc3e26ada86ccf5d937005",
+  "source_dirty": false,
+  "toolkit": {
+   "version": "0.6.0",
+   "tag": "v0.6.0",
+   "commit": "50d4921a5ab26c7750a869ed41c9a4346ef1379c"
+  },
+  "mesher": {
+   "gmsh": "4.15.2",
+   "build": "conda-forge"
+  },
+  "packages": {
+   "cadquery": "2.8.0",
+   "cadquery-ocp": "7.9.3.1.1",
+   "scikit-fem": "12.0.2",
+   "numpy": "2.5.4",
+   "scipy": "1.18.1",
+   "pyamg": "5.3.0",
+   "matplotlib": "3.11.2"
+  },
+  "started_utc": "2026-11-01T09:42:21Z",
+  "finished_utc": "2026-11-01T09:54:23Z"
+ },
+ "verdict_rerun": {
+  "all": {
+   "wheel_deflection_mm": 5.14,
+   "min_safety_factor": 0.86,
+   "min_safety_factor_fall": 0.38,
+   "weakest": "yoke_bracket Y1-fall",
+   "ok": false,
+   "joint_ok": true,
+   "rod_ok": true
+  }
+ },
+ "rows": [
+  {
+   "part": "thigh",
+   "case": "T1",
+   "material": "pa6_cf_xy",
+   "record": {
+    "tets": 74687,
+    "von_mises_design_mpa": 14.78,
+    "safety_factor": 3.31
+   },
+   "rerun_at_dev": {
+    "tets": 92477,
+    "von_mises_design_mpa": 9.64,
+    "safety_factor": 4.23,
+    "material_data_hash": "b0989f2b1b1c8bdc"
+   },
+   "stress_ratio": 0.652
+  },
+  {
+   "part": "thigh",
+   "case": "T2",
+   "material": "pa6_cf_xy",
+   "record": {
+    "tets": 74687,
+    "von_mises_design_mpa": 25.67,
+    "safety_factor": 1.91
+   },
+   "rerun_at_dev": {
+    "tets": 92477,
+    "von_mises_design_mpa": 9.75,
+    "safety_factor": 4.19,
+    "material_data_hash": "b0989f2b1b1c8bdc"
+   },
+   "stress_ratio": 0.38
+  },
+  {
+   "part": "shin",
+   "case": "S1",
+   "material": "pa6_cf_xy",
+   "record": {
+    "tets": 59243,
+    "von_mises_design_mpa": 5.81,
+    "safety_factor": 8.43
+   },
+   "rerun_at_dev": {
+    "tets": 45163,
+    "von_mises_design_mpa": 7.39,
+    "safety_factor": 5.53,
+    "material_data_hash": "b0989f2b1b1c8bdc"
+   },
+   "stress_ratio": 1.272
+  },
+  {
+   "part": "output_adapter",
+   "case": "A1",
+   "material": "pa6_cf_z",
+   "record": {
+    "tets": 33122,
+    "von_mises_design_mpa": 5.29,
+    "safety_factor": 4.34
+   },
+   "rerun_at_dev": {
+    "tets": 30151,
+    "von_mises_design_mpa": 8.83,
+    "safety_factor": 2.05,
+    "material_data_hash": "813009441363f213"
+   },
+   "stress_ratio": 1.669
+  },
+  {
+   "part": "motor_plate",
+   "case": "P1",
+   "material": "pa6_cf_xy",
+   "record": {
+    "tets": 107886,
+    "von_mises_design_mpa": 18.82,
+    "safety_factor": 2.6
+   },
+   "rerun_at_dev": {
+    "tets": 88396,
+    "von_mises_design_mpa": 25.05,
+    "safety_factor": 1.63,
+    "material_data_hash": "b0989f2b1b1c8bdc"
+   },
+   "stress_ratio": 1.331
+  },
+  {
+   "part": "yoke_bracket",
+   "case": "Y1",
+   "material": "pa6_cf_z",
+   "record": {
+    "tets": 140062,
+    "von_mises_design_mpa": 8.01,
+    "safety_factor": 2.87
+   },
+   "rerun_at_dev": {
+    "tets": 101720,
+    "von_mises_design_mpa": 21.0,
+    "safety_factor": 0.86,
+    "material_data_hash": "813009441363f213"
+   },
+   "stress_ratio": 2.622
+  },
+  {
+   "part": "thigh",
+   "case": "T1-fall",
+   "material": "pa6_cf_xy",
+   "record": {
+    "tets": 74687,
+    "von_mises_design_mpa": 57.31,
+    "safety_factor": 0.86
+   },
+   "rerun_at_dev": {
+    "tets": 92477,
+    "von_mises_design_mpa": 22.91,
+    "safety_factor": 1.78,
+    "material_data_hash": "b0989f2b1b1c8bdc"
+   },
+   "stress_ratio": 0.4
+  },
+  {
+   "part": "thigh",
+   "case": "T2-fall",
+   "material": "pa6_cf_xy",
+   "record": {
+    "tets": 74687,
+    "von_mises_design_mpa": 78.96,
+    "safety_factor": 0.62
+   },
+   "rerun_at_dev": {
+    "tets": 92477,
+    "von_mises_design_mpa": 32.56,
+    "safety_factor": 1.25,
+    "material_data_hash": "b0989f2b1b1c8bdc"
+   },
+   "stress_ratio": 0.412
+  },
+  {
+   "part": "shin",
+   "case": "S1-fall",
+   "material": "pa6_cf_xy",
+   "record": {
+    "tets": 59243,
+    "von_mises_design_mpa": 18.96,
+    "safety_factor": 2.58
+   },
+   "rerun_at_dev": {
+    "tets": 45163,
+    "von_mises_design_mpa": 23.23,
+    "safety_factor": 1.76,
+    "material_data_hash": "b0989f2b1b1c8bdc"
+   },
+   "stress_ratio": 1.225
+  },
+  {
+   "part": "yoke_bracket",
+   "case": "Y1-fall",
+   "material": "pa6_cf_z",
+   "record": {
+    "tets": 140062,
+    "von_mises_design_mpa": 18.44,
+    "safety_factor": 1.25
+   },
+   "rerun_at_dev": {
+    "tets": 101720,
+    "von_mises_design_mpa": 47.93,
+    "safety_factor": 0.38,
+    "material_data_hash": "813009441363f213"
+   },
+   "stress_ratio": 2.599
+  }
+ ]
+}

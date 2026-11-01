@@ -22,7 +22,7 @@ class StudyMedia(unittest.TestCase):
     def test_corruptions(self):
         with tempfile.TemporaryDirectory(prefix='gyropup-study-faults-') as tmp:
             root = Path(tmp)
-            paths = [check.SUMMARY, 'exports/leg/fea/media.json', 'tools/render-hip-frame-e1.py']
+            paths = [check.SUMMARY, 'exports/leg/fea/media.json', 'tools/render-hip-frame-e1.py', check.FINER]
             paths += [p.relative_to(check.ROOT).as_posix() for p in (check.ROOT / check.MEDIA).iterdir() if p.is_file()]
             for path in paths:
                 target = root / path; target.parent.mkdir(parents=True, exist_ok=True); shutil.copyfile(check.ROOT / path, target)
@@ -38,6 +38,7 @@ class StudyMedia(unittest.TestCase):
                 return mutate
             fault(check.SUMMARY, edit(lambda d: d['results'].append({'part':'different','case':'E1'})), 'Stale report binding')
             fault('tools/render-hip-frame-e1.py', lambda p: p.write_bytes(p.read_bytes()+b'\n# changed\n'), 'Stale animation source')
+            fault(check.FINER, edit(lambda d: d['meshes']['3.0']['cases'][0].update(safety_factor=2.5)), 'Stale animation source')
             fault(check.MEDIA+'hip_frame-E1.json', lambda p: p.write_bytes(p.read_bytes()+b'\n'), 'Field bytes changed')
             fault(check.MEDIA+'hip-frame-e1.mp4', lambda p: p.write_bytes(p.read_bytes()[:-1]), 'Rendered artifact changed')
             fault(check.MEDIA+'hip-frame-e1.webm', lambda p: p.write_bytes(p.read_bytes()[:-1]), 'Rendered artifact changed')

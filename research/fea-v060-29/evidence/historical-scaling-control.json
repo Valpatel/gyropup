@@ -1,0 +1,243 @@
+{
+ "schema": 1,
+ "what": "The scaling control for the records this issue does not regenerate: cad/studies.py run twice at the same revision on the recording host, once with cad-agent v0.4.2 (2ad4269) and once with v0.6.0 (50d4921). Each pair is [v0.4.2, v0.6.0]. Same meshes, the same design stress in every study; the safety factor moves by the strength ratio (0.833 along the layers, 0.788 across, before rounding) and the deflection by the modulus ratio (2.91, 4.92). So, for a force-loaded linear-static study of one material, the v0.6.0 value is the v0.4.2 one scaled, and exports/fea/summary.json scales exactly.",
+ "runs": {
+  "source_revision": "d794466880f8b14767fc3e26ada86ccf5d937005",
+  "command": "python cad/studies.py",
+  "host": "recording mechanical compute host: aarch64, conda-forge gmsh 4.15.2 (the host that made the committed leg and turret records)",
+  "v0.4.2": "cad-agent 2ad426943ce2c7232875e105e50810849f9a3e5e on PYTHONPATH over the same venv; 2026-11-01T09:59Z",
+  "v0.6.0": "cad-agent 50d4921a5ab26c7750a869ed41c9a4346ef1379c; 2026-11-01T09:42Z"
+ },
+ "rows": [
+  {
+   "part": "thigh",
+   "case": "T1",
+   "material": "pa6_cf_xy",
+   "tets": [
+    92477,
+    92477
+   ],
+   "von_mises_design_mpa": [
+    9.64,
+    9.64
+   ],
+   "safety_factor": [
+    5.08,
+    4.23
+   ],
+   "max_displacement_mm": [
+    0.9464,
+    2.7587
+   ],
+   "sf_ratio": 0.833,
+   "deflection_ratio": 2.915
+  },
+  {
+   "part": "thigh",
+   "case": "T2",
+   "material": "pa6_cf_xy",
+   "tets": [
+    92477,
+    92477
+   ],
+   "von_mises_design_mpa": [
+    9.75,
+    9.75
+   ],
+   "safety_factor": [
+    5.03,
+    4.19
+   ],
+   "max_displacement_mm": [
+    0.7711,
+    2.2477
+   ],
+   "sf_ratio": 0.833,
+   "deflection_ratio": 2.915
+  },
+  {
+   "part": "shin",
+   "case": "S1",
+   "material": "pa6_cf_xy",
+   "tets": [
+    45163,
+    45163
+   ],
+   "von_mises_design_mpa": [
+    7.39,
+    7.39
+   ],
+   "safety_factor": [
+    6.63,
+    5.53
+   ],
+   "max_displacement_mm": [
+    0.8456,
+    2.4648
+   ],
+   "sf_ratio": 0.834,
+   "deflection_ratio": 2.915
+  },
+  {
+   "part": "output_adapter",
+   "case": "A1",
+   "material": "pa6_cf_z",
+   "tets": [
+    30151,
+    30151
+   ],
+   "von_mises_design_mpa": [
+    8.83,
+    8.83
+   ],
+   "safety_factor": [
+    2.6,
+    2.05
+   ],
+   "max_displacement_mm": [
+    0.0269,
+    0.1324
+   ],
+   "sf_ratio": 0.788,
+   "deflection_ratio": 4.922
+  },
+  {
+   "part": "motor_plate",
+   "case": "P1",
+   "material": "pa6_cf_xy",
+   "tets": [
+    88396,
+    88396
+   ],
+   "von_mises_design_mpa": [
+    25.05,
+    25.05
+   ],
+   "safety_factor": [
+    1.96,
+    1.63
+   ],
+   "max_displacement_mm": [
+    2.3721,
+    6.9144
+   ],
+   "sf_ratio": 0.832,
+   "deflection_ratio": 2.915
+  },
+  {
+   "part": "yoke_bracket",
+   "case": "Y1",
+   "material": "pa6_cf_z",
+   "tets": [
+    101720,
+    101720
+   ],
+   "von_mises_design_mpa": [
+    21.0,
+    21.0
+   ],
+   "safety_factor": [
+    1.1,
+    0.86
+   ],
+   "max_displacement_mm": [
+    1.3489,
+    6.6386
+   ],
+   "sf_ratio": 0.782,
+   "deflection_ratio": 4.921
+  },
+  {
+   "part": "thigh",
+   "case": "T1-fall",
+   "material": "pa6_cf_xy",
+   "tets": [
+    92477,
+    92477
+   ],
+   "von_mises_design_mpa": [
+    22.91,
+    22.91
+   ],
+   "safety_factor": [
+    2.14,
+    1.78
+   ],
+   "max_displacement_mm": [
+    1.969,
+    5.7394
+   ],
+   "sf_ratio": 0.832,
+   "deflection_ratio": 2.915
+  },
+  {
+   "part": "thigh",
+   "case": "T2-fall",
+   "material": "pa6_cf_xy",
+   "tets": [
+    92477,
+    92477
+   ],
+   "von_mises_design_mpa": [
+    32.56,
+    32.56
+   ],
+   "safety_factor": [
+    1.51,
+    1.25
+   ],
+   "max_displacement_mm": [
+    2.1894,
+    6.3819
+   ],
+   "sf_ratio": 0.828,
+   "deflection_ratio": 2.915
+  },
+  {
+   "part": "shin",
+   "case": "S1-fall",
+   "material": "pa6_cf_xy",
+   "tets": [
+    45163,
+    45163
+   ],
+   "von_mises_design_mpa": [
+    23.23,
+    23.23
+   ],
+   "safety_factor": [
+    2.11,
+    1.76
+   ],
+   "max_displacement_mm": [
+    1.7005,
+    4.9567
+   ],
+   "sf_ratio": 0.834,
+   "deflection_ratio": 2.915
+  },
+  {
+   "part": "yoke_bracket",
+   "case": "Y1-fall",
+   "material": "pa6_cf_z",
+   "tets": [
+    101720,
+    101720
+   ],
+   "von_mises_design_mpa": [
+    47.93,
+    47.93
+   ],
+   "safety_factor": [
+    0.48,
+    0.38
+   ],
+   "max_displacement_mm": [
+    3.3081,
+    16.2805
+   ],
+   "sf_ratio": 0.792,
+   "deflection_ratio": 4.921
+  }
+ ]
+}

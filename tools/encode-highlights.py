@@ -108,7 +108,7 @@ def main():
                    source_revision=check.command(['git', 'rev-parse', 'HEAD']).decode().strip(),
                    source_hashes=source_hashes, segments=check.SEGMENTS, historical_leg=historical,
                    e1=dict(source_start_seconds=1, source_duration_seconds=3, transient_simulation=False,
-                           deformation_exaggeration=77, safety_factor=1.65, required=2, baseline_kg=37.5),
+                           deformation_exaggeration=16, safety_factor=1.63, required=2, baseline_kg=37.5),
                    capture=dict(recipe='tools/capture-highlights.mjs', receipt='capture-receipt.json', frames='capture-frames.json',
                                 raw_frames_committed=False, current_model='48-part current turret; interim full-robot body'),
                    encoding=dict(ffmpeg=check.command(['ffmpeg', '-version']).decode().splitlines()[0],
@@ -116,7 +116,7 @@ def main():
                                  poster_frame=30, font='designer/kit/vendor/fonts/inter.woff2'),
                    limitations=['Browser motion is illustrative, with integrated live projectiles; not a new full-robot physics result.',
                                 'Leg footage retains its historical 16.25 kg / 48.1 V / BotWheel / 60 N m baseline.',
-                                'E1 is historical static load scaling, with a failed strength target; not transient dynamics.',
+                                'E1 is static load scaling of the recorded study (cad-agent v0.6.0 record), with a failed strength target; not transient dynamics.',
                                 'No new solver runs. Reproducible recipe and source identity, not a promise of cross-host identical encoded bytes.'],
                    outputs=outputs)
     write(out / 'receipt.json', receipt)

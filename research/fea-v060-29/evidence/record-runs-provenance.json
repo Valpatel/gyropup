@@ -1,0 +1,90 @@
+{
+ "schema": 1,
+ "what": "Run provenance of the two regenerated records (exports/leg/fea/ from run l1, exports/turret/fea/ from run t1) and of the hip-frame E1 field export (run e1), as written by the run script on the recording mechanical compute host. The other runs carry theirs in their own evidence files.",
+ "runs": {
+  "l1": {
+   "run": "l1-leg-record",
+   "command": "python cad/leg_studies.py --mesh 4 --no-anim",
+   "rc": 0,
+   "host_role": "recording mechanical compute host: aarch64, conda-forge gmsh (the host that made the committed leg and turret records)",
+   "source_revision": "d794466880f8b14767fc3e26ada86ccf5d937005",
+   "source_dirty": false,
+   "toolkit": {
+    "version": "0.6.0",
+    "tag": "v0.6.0",
+    "commit": "50d4921a5ab26c7750a869ed41c9a4346ef1379c"
+   },
+   "mesher": {
+    "gmsh": "4.15.2",
+    "build": "conda-forge"
+   },
+   "packages": {
+    "cadquery": "2.8.0",
+    "cadquery-ocp": "7.9.3.1.1",
+    "scikit-fem": "12.0.2",
+    "numpy": "2.5.4",
+    "scipy": "1.18.1",
+    "pyamg": "5.3.0",
+    "matplotlib": "3.11.2"
+   },
+   "started_utc": "2026-11-01T09:41:20Z",
+   "finished_utc": "2026-11-01T12:32:09Z"
+  },
+  "t1": {
+   "run": "t1-turret-record",
+   "command": "python cad/turret_studies.py --mesh 2.5",
+   "rc": 0,
+   "host_role": "recording mechanical compute host: aarch64, conda-forge gmsh (the host that made the committed leg and turret records)",
+   "source_revision": "d794466880f8b14767fc3e26ada86ccf5d937005",
+   "source_dirty": false,
+   "toolkit": {
+    "version": "0.6.0",
+    "tag": "v0.6.0",
+    "commit": "50d4921a5ab26c7750a869ed41c9a4346ef1379c"
+   },
+   "mesher": {
+    "gmsh": "4.15.2",
+    "build": "conda-forge"
+   },
+   "packages": {
+    "cadquery": "2.8.0",
+    "cadquery-ocp": "7.9.3.1.1",
+    "scikit-fem": "12.0.2",
+    "numpy": "2.5.4",
+    "scipy": "1.18.1",
+    "pyamg": "5.3.0",
+    "matplotlib": "3.11.2"
+   },
+   "started_utc": "2026-11-01T09:41:51Z",
+   "finished_utc": "2026-11-01T10:24:48Z"
+  },
+  "e1": {
+   "run": "e1-export",
+   "command": "python tools/export-hip-frame-e1.py",
+   "rc": 0,
+   "host_role": "recording mechanical compute host: aarch64, conda-forge gmsh (the host that made the committed leg and turret records)",
+   "source_revision": "7f0dc67a54f78c029ae04beb0cd96915cda4e733",
+   "source_dirty": false,
+   "toolkit": {
+    "version": "0.6.0",
+    "tag": "v0.6.0",
+    "commit": "50d4921a5ab26c7750a869ed41c9a4346ef1379c"
+   },
+   "mesher": {
+    "gmsh": "4.15.2",
+    "build": "conda-forge"
+   },
+   "packages": {
+    "cadquery": "2.8.0",
+    "cadquery-ocp": "7.9.3.1.1",
+    "scikit-fem": "12.0.2",
+    "numpy": "2.5.4",
+    "scipy": "1.18.1",
+    "pyamg": "5.3.0",
+    "matplotlib": "3.11.2"
+   },
+   "started_utc": "2026-11-01T12:32:50Z",
+   "finished_utc": "2026-11-01T12:37:26Z"
+  }
+ }
+}

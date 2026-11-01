@@ -8,7 +8,7 @@
     "seconds": 22,
     "audio": false
   },
-  "source_revision": "dab425f544ecbf8ea18b128f9c9ec3ee861284f0",
+  "source_revision": "1e77935448f5e9cb8d3b608bec48ec50c2565d02",
   "source_hashes": {
     "designer/cadrig.js": "a2cb4029ef786e0793c5eb0018e0aa8d919d829bde8c5d378c1b1480c457faaf",
     "designer/character/eyes.js": "3348578a121b75ab7425c3b6591e864b41b09512e67b642832e6c6b683d2e11b",
@@ -43,12 +43,12 @@
     "designer/turret_bench.css": "f6722bceaf5f92100c68f66dc84e491fff8593a7dbb9d8135ad20686c18485d4",
     "designer/turret_bench.js": "2c7c14ae024d451015e8559216f1b5bfc8ab814ed76b82eac645fa4d616318ad",
     "designer/turret_reload.js": "37b75f1250ca341e710abb9443d0e0120abe48e827efbc86b740db7b55a326e9",
-    "exports/leg/fea/hip-frame-e1-media/field-receipt.json": "ab55baf1e8acac50f49cc70b8657f029ede1e4de328d2aa9ce9ac5708100d7c2",
-    "exports/leg/fea/hip-frame-e1-media/hip-frame-e1.mp4": "e846a402145dfb49ccdc0067e3c43828b3de0591b003edf57d1bfdc37e52aa0c",
-    "exports/leg/fea/hip-frame-e1-media/hip_frame-E1.json": "80fee01acc44c0fc0cc6530808dafb8e67660320bb6cb93fbac5b8e7e98a7949",
-    "exports/leg/fea/hip-frame-e1-media/video-receipt.json": "0bd5fe01bcd5ea593be564ae6c8039c82083d4d23c8ce24c768cb05edecae1ec",
-    "exports/leg/fea/media.json": "b9d75907f51683c489a15d2e3c2bb73c894906b5f2a31190d42940a5930fa4fd",
-    "exports/leg/fea/summary.json": "a94c700284a789e9b810e9bdf2fc8989db518bd6df691dedb23c6da75a9a76e5",
+    "exports/leg/fea/hip-frame-e1-media/field-receipt.json": "a873808750f02fed68eee19aaa4b2ccd16192986cffcd3bb67029d75ae3f13dd",
+    "exports/leg/fea/hip-frame-e1-media/hip-frame-e1.mp4": "e8ada057ae885a0b41bf4c18d73e0c61c5a88ca49f2c07ae4c3247073a22f9c6",
+    "exports/leg/fea/hip-frame-e1-media/hip_frame-E1.json": "d04f1b471e0d6b75e99ee56b7c0698ca4bce7a070cec43f78ab313a3a4d4e49c",
+    "exports/leg/fea/hip-frame-e1-media/video-receipt.json": "fa6a2f28b3a0f4e682c11788ad1bf7c1d6145a5802ef5592ed605d729747fbb4",
+    "exports/leg/fea/media.json": "b6cf37aedea19e76cb50fef1519a96a8edc738e81298f3a34c79d13f735b0430",
+    "exports/leg/fea/summary.json": "9fef3119c182ca84d038f95183be842f6403be115cde4ea316423044568cd39f",
     "exports/leg/rig_jump.mp4": "7b59e8e0c807d04ca1387a4fd63f03536d44be5a637617e835fe5811ff50f217",
     "exports/sim/turret_box/barrel.stl": "ccb797222e64719fb8ba4a67ab236e6f9ba3b88ede36926a88cc917961bcde31",
     "exports/sim/turret_box/base_board.stl": "a3fd2d3a202337f01b3b45ad035b560fcbde07ebac8910b048ed94873d82fa20",
@@ -163,8 +163,8 @@
     "exports/sim/v2/rig/manifest.json": "0f394643875bcdff247c8f285f2d0d10499104a1073088ce37c4b5f1b337086f",
     "exports/sim/v2/summary.json": "297a40dc891e3bbb1f1985d7db461021446b5041b33969fdc33b63a4b573ceac",
     "tools/capture-highlights.mjs": "2865634d7d05047ecbd73ca75350026ac293f484243e58ad411897135326f0fd",
-    "tools/check-highlights.py": "9c79a16a017806474f0bf99068fd524735b67343880ee2394fd10251c05eb7c5",
-    "tools/encode-highlights.py": "8b20933314046ad771e3dd6e180ae3b294c67a51602f7dedde7592416e3077c9",
+    "tools/check-highlights.py": "d56a4e9e2cb6d05db5a324b0e9a40cfbfb96566f3fe2d9aec8e0c30d10b8ef32",
+    "tools/encode-highlights.py": "cafcfaf4b34e555f939da87b3b857d98abdc46cc9592a06e15f6b2f78df1cde4",
     "web/icon.svg": "0a1ba64971063f63310e5edd529874329cceb5d4adbbf95888e325accc95a303",
     "web/model-links.css": "8b9e13dcf3940a0081acdc28eca75126803089308255781a006465351b563eb2",
     "web/model-links.js": "ffb3fc044b2ce527840b0209c13074c3c7ccb187fd7bf47ff9b971311e643e2c",
@@ -350,8 +350,8 @@
     "source_start_seconds": 1,
     "source_duration_seconds": 3,
     "transient_simulation": false,
-    "deformation_exaggeration": 77,
-    "safety_factor": 1.65,
+    "deformation_exaggeration": 16,
+    "safety_factor": 1.63,
     "required": 2,
     "baseline_kg": 37.5
   },
@@ -409,28 +409,28 @@
   "limitations": [
     "Browser motion is illustrative, with integrated live projectiles; not a new full-robot physics result.",
     "Leg footage retains its historical 16.25 kg / 48.1 V / BotWheel / 60 N m baseline.",
-    "E1 is historical static load scaling, with a failed strength target; not transient dynamics.",
+    "E1 is static load scaling of the recorded study (cad-agent v0.6.0 record), with a failed strength target; not transient dynamics.",
     "No new solver runs. Reproducible recipe and source identity, not a promise of cross-host identical encoded bytes."
   ],
   "outputs": {
     "gyropup-highlights.mp4": {
-      "sha256": "cf45f2af576b2bf003f1da3fd119f62141e021e07ee107a78a392e0f25f2d277",
-      "bytes": 1808255
+      "sha256": "34d1a222692f7400b99b31c110c0e678dccf0d2847f82fec969deabb1a30bf9d",
+      "bytes": 1834385
     },
     "gyropup-highlights.webm": {
-      "sha256": "f21493150b77abac93db83de5141e50f2548aca6ad21f8f345487361e533837f",
-      "bytes": 1435260
+      "sha256": "c2df58541cca9005d9a7132bdd714d9790d1d6a487750c6e6ca8af42cab57383",
+      "bytes": 1464316
     },
     "gyropup-highlights.webp": {
-      "sha256": "a826b033ee34a943516c30c7d1e0e5ca3dcc8e7ea8bada2b027c26035b2acb04",
-      "bytes": 32584
+      "sha256": "949ec8db0fc70dcf111a0494811c9d19fdd36c5f5ccb7c316c4fe0844ffadc54",
+      "bytes": 32516
     },
     "capture-receipt.json": {
-      "sha256": "7bd72ced5d75976fa01b64b3653ff3cac5b330b3757fb629984eea1404f887b1",
-      "bytes": 113685
+      "sha256": "b00d7812b888b4c9d34ea66bec29556a9b67969ca94e3d75c7f8d59e76f78ed2",
+      "bytes": 113684
     },
     "capture-frames.json": {
-      "sha256": "e2d6df73e9419afc0daa00ad53e859d5142453b6e3759edb63699dc14de42db8",
+      "sha256": "bbd81cfc3179e69b945713bc3876865331aa13c2a4583627f21ef9889a8fb4bb",
       "bytes": 100989
     }
   }

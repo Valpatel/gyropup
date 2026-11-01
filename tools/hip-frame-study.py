@@ -14,8 +14,9 @@ is the one summary.json records, and adds, per case:
            along them. Two checks, both on the elements leg_studies judges (away from the clamps, the load patches
            and a stop pin's bearing band):
              bond  sqrt(max(sigma_n, 0)^2 + 3 tau_n^2) against the across-layer allowable (cad-agent's pa6_cf_z)
-             bulk  von Mises against the in-layer allowable (pa6_cf_xy). Both come from the cad-agent that runs: 23 and
-                   49 MPa at the repo's pin 2ad4269; 23.04 and 48.96 at a682668, which ran issue #29's studies
+             bulk  von Mises against the in-layer allowable (pa6_cf_xy). Both come from the cad-agent that runs: 18.13
+                   and 40.84 MPa at v0.6.0 (50d4921, the FEA records' toolkit since issue #29's re-run); 23 and 49 at
+                   v0.4.2 (2ad4269); 23.04 and 48.96 at a682668, which ran issue #29's hip-frame sweep
            The interlayer shear strength is not on the data sheet; tau_n is taken against the across-layer allowable
            as von Mises takes shear (S / sqrt 3). Compression across the layers does not open them and counts only
            in the bulk check. It is a screening criterion for a transversely isotropic print, not a qualification.
@@ -76,10 +77,29 @@ def layer_terms(sig, n):
 
 
 def toolkit_identity(cadagent) -> dict:
-    """The cad-agent that ran: its version and, from a git checkout, its commit (never its local path)."""
-    root = Path(cadagent.__file__).resolve().parent
-    rev = subprocess.run(['git', 'rev-parse', 'HEAD'], cwd=root, text=True, capture_output=True).stdout.strip()
-    return {'version': getattr(cadagent, '__version__', None), 'commit': rev or None}
+    """The cad-agent that ran: its version and commit, both from the copy that was imported (never its local path).
+    From a git checkout of cad-agent (its own __init__.py tracked there), the commit and its tag (`git describe`), so
+    a checkout put first on PYTHONPATH over a virtualenv's cad-agent records itself, not the virtualenv's version.
+    Otherwise the installed distribution's version, only if that distribution owns the imported __init__.py; else
+    None. (cadagent has no __version__ in v0.6.0.)"""
+    from importlib.metadata import PackageNotFoundError, distribution
+    init = Path(cadagent.__file__).resolve()
+    git = lambda *a: subprocess.run(['git', *a], cwd=init.parent, text=True, capture_output=True)
+    tracked = git('ls-files', '--full-name', '--error-unmatch', init.name)
+    if tracked.returncode == 0:
+        # a cad-agent checkout keeps the package at src/cadagent/ (or cadagent/) of its own root; a copy vendored deeper
+        # in another repository would otherwise report that repository's tag and commit
+        if tracked.stdout.strip() not in ('src/cadagent/__init__.py', 'cadagent/__init__.py'):
+            return {'version': None, 'commit': None}
+        # the tag, or `git describe`'s tag-N-gSHA past it; no tag reachable (a shallow fetch of a SHA): no version
+        tag = git('describe', '--tags', '--exact-match').stdout.strip() or git('describe', '--tags').stdout.strip()
+        return {'version': tag.removeprefix('v') or None, 'commit': git('rev-parse', 'HEAD').stdout.strip() or None}
+    try:
+        dist = distribution('cad-agent')
+    except PackageNotFoundError:
+        return {'version': None, 'commit': None}
+    owned = any(Path(dist.locate_file(f)).resolve() == init for f in dist.files or () if f.name == '__init__.py')
+    return {'version': dist.version if owned else None, 'commit': None}
 
 
 def install_recorder():

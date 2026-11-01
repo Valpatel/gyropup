@@ -1,5 +1,5 @@
 #!/usr/bin/env python3
-"""Verify the shipped historical E1 visualization, without CAD or a solver."""
+"""Verify the shipped E1 visualization of the recorded study, without CAD or a solver."""
 import array
 import base64
 from functools import lru_cache
@@ -13,6 +13,9 @@ import sys
 ROOT = Path(__file__).resolve().parents[1]
 MEDIA = 'exports/leg/fea/hip-frame-e1-media/'
 SUMMARY = 'exports/leg/fea/summary.json'
+FINER = 'research/fea-v060-29/evidence/hip-frame-v060.json'
+# The recorded E1 gate (cad-agent v0.6.0 record, issue #29) and its solved surface; review the media when they change.
+GATE_SF, VERTICES, TRIANGLES = 1.63, 25195, 50478
 
 
 def require(condition, message):
@@ -46,7 +49,7 @@ def validate(root=ROOT, decode=True):
     index = read('exports/leg/fea/media.json')['cases']['hip_frame/E1']
     baseline = next(row for row in read(SUMMARY)['results'] if (row['part'], row['case']) == ('hip_frame', 'E1'))
     require(baseline == field_receipt['baseline'], 'Published report differs from reproduced baseline')
-    require(baseline['safety_factor'] == 1.65 and baseline['target'] == 2 and baseline['ok'] is False,
+    require(baseline['safety_factor'] == GATE_SF and baseline['target'] == 2 and baseline['ok'] is False,
             'E1 strength gate must remain below target')
     require(field_receipt['transient_simulation'] is False and field_receipt['qualified_for_manufacture'] is False,
             'Static evidence cannot qualify hardware')
@@ -61,10 +64,10 @@ def validate(root=ROOT, decode=True):
     require(fields['units']['length'] == 'mm' and fields['units']['stress'] == 'MPa', 'Wrong field units')
     require(fields['name'] == 'hip_frame E1' and fields['result']['safety_factor'] == baseline['safety_factor'], 'Wrong solved case')
     surface = fields['surface']
-    require((surface['vertices'], surface['triangles']) == (20936, 41960), 'Surface topology changed')
+    require((surface['vertices'], surface['triangles']) == (VERTICES, TRIANGLES), 'Surface topology changed')
     decoded = {}
-    for key, dtype, shape, code in [('positions','float32',[20936,3],'f'),('displacement','float32',[20936,3],'f'),
-                                   ('index','uint32',[41960,3],'I'),('tri_von_mises','float32',[41960],'f')]:
+    for key, dtype, shape, code in [('positions','float32',[VERTICES,3],'f'),('displacement','float32',[VERTICES,3],'f'),
+                                   ('index','uint32',[TRIANGLES,3],'I'),('tri_von_mises','float32',[TRIANGLES],'f')]:
         item = surface[key]
         require(item['dtype'] == dtype and item['shape'] == shape, f'Invalid {key} layout')
         values = array.array(code, base64.b64decode(item['b64'], validate=True))
@@ -77,7 +80,7 @@ def validate(root=ROOT, decode=True):
     require(abs(maximum - baseline['max_displacement_mm']) < .0001, 'Displacement field differs from report')
     for key in ('max_displacement_mm', 'von_mises_design_mpa', 'safety_factor', 'target', 'ok'):
         require(field_receipt['reproduced'][key] == baseline[key], f'Reproduction differs: {key}')
-    expected_inputs = {'tools/render-hip-frame-e1.py', MEDIA + 'field-receipt.json', field_receipt['fields'], SUMMARY}
+    expected_inputs = {'tools/render-hip-frame-e1.py', MEDIA + 'field-receipt.json', field_receipt['fields'], SUMMARY, FINER}
     require(set(video_receipt['source_hashes']) == expected_inputs, 'Incomplete renderer inputs')
     for path, sha in video_receipt['source_hashes'].items():
         require(digest((root / path).read_bytes()) == sha, f'Stale animation source: {path}')
@@ -101,7 +104,7 @@ def validate(root=ROOT, decode=True):
         require(0 <= factor <= 1 and abs(frame['max_physical_displacement_mm'] - maximum * factor) < .000001,
                 'Presentation extrapolates the solved load or changes physical displacement')
     require(timeline[0]['load_factor'] == 0 and timeline[144]['load_factor'] == 1 and timeline[-1]['load_factor'] == 0, 'Missing load/unload loop')
-    result = {'historical_source': field_receipt['source_revision'], 'safety_factor': 1.65, 'required': 2,
+    result = {'historical_source': field_receipt['source_revision'], 'safety_factor': GATE_SF, 'required': 2,
               'vertices': surface['vertices'], 'triangles': surface['triangles']}
     if decode:
         movie = root / index['video']

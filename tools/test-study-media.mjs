@@ -42,7 +42,7 @@ try{
   assert.equal(await page.locator('#feavid').evaluate(v=>v.duration),12);
   assert.equal(await page.locator('#feavid').evaluate(v=>v.currentSrc.endsWith(v.canPlayType('video/mp4; codecs="avc1.64001f"')?'.mp4':'.webm')),true,'Choose a supported encoding');
   assert.equal(await page.locator('#feavid').evaluate(v=>v.paused),true,'Reduced motion waits for deliberate play');
-  assert.match(await page.locator('#feanote').innerText(),/Safety factor 1\.65 \/ required 2 — below target/);
+  assert.match(await page.locator('#feanote').innerText(),/Safety factor 1\.63 \/ required 2 — below target/);
   assert.match(await page.locator('.study-media-status').innerText(),/static load scaling, not elapsed physical time/);
   await checkPlayback(page);record('12-second real decode/play/pause with unchanged failed strength gate');
   for(const [width,height] of [[320,568],[390,844],[844,390],[1440,900]]){
@@ -84,7 +84,7 @@ try{
   }));
   await select(stale,hip);await state(stale,'error');assert.ok(await stale.locator('#feavid').isHidden());
   assert.equal(await stale.locator('#feanote a').count(),0,'Unbound fields cannot open as this case');
-  assert.match(await stale.locator('#feanote').innerText(),/1\.65/);record('Stale result identity rejects animation and field link');await stale.close();
+  assert.match(await stale.locator('#feanote').innerText(),/1\.63/);record('Stale result identity rejects animation and field link');await stale.close();
   const automatic=await pageFor(page=>page.emulateMedia({reducedMotion:'no-preference'}));
   await select(automatic,hip);await state(automatic,'ready');await automatic.locator('#fea-media').scrollIntoViewIfNeeded();
   await automatic.waitForFunction(()=>document.querySelector('#feavid').currentTime>.2);record('Muted autoplay works when reduced motion is not requested');await automatic.close();
