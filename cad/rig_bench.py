@@ -18,8 +18,9 @@ parts ship:
   bearing_disc x 3     PA6-CF  B4: the upper link's material under an M5 head
   (B5, the tyre, runs on the rig with the leg: docs/leg-bench-tests.md)
   coupon_* (x 3 each)  PA6-CF  the leg's seats at -0.1, 0 and +0.1 mm: the hip frame's motor ring and 61812 seat, the
-                               upper link's hub face (D46 pattern), its knee eye (an eye sleeve), the lower links' knee
-                               boss (a 6201), the front link's apex eye (a 61812), the wheel link's hub journal (a 61812's
+                               upper link's hub face (D46 pattern), its knee eye (an eye sleeve), the hip frame's stop-pin
+                               and RS-04 dowel holes (D74, #29), the lower links' knee
+                               boss (a 6301), the front link's apex eye (a 61812), the wheel link's hub journal (a 61812's
                                inner race) with its circlip groove
 
 Every coupon carries its variant engraved (-0.1 / 0 / +0.1, the change to the seat's diameter from the leg's CAD).
@@ -412,18 +413,40 @@ def coupon_hub_face(dv: float):
     return engrave(s, label(dv), 0, 0, t - 3.3, 4)
 
 
+def z_lead_in(r, c=None, x=0.0, y=0.0):
+    """The leg's bed-face lead-in (fivebar.MOUTH_CHAMFER x 45 deg) at a hole of radius r opening on z = 0."""
+    c = fb.MOUTH_CHAMFER if c is None else c
+    return cq.Workplane('XY').add(cq.Solid.makeCone(r + c + 1.0, r, c + 1.0, pnt=cq.Vector(x, y, -1.0), dir=cq.Vector(0, 0, 1)))
+
+
 def coupon_knee_eye(dv: float):
-    """The upper link's knee eye: one DIN 179 12 x 18 x 20 sleeve pressed into Ø(18 - 0.04 + dv), 22 mm of boss."""
+    """The upper link's knee eye: one DIN 179 12 x 18 x 20 sleeve pressed into the leg's hole + dv (Ø18 +
+    PRINT_HOLE_COMP), 22 mm of boss, the mouth's lead-in on the bed as in the link."""
     s = zc(fb.UPPER_EYE_R, 0, 22.0).union(bx(-fb.UPPER_EYE_R, 0, -14, 14, 0, 22.0))
-    s = s.cut(zc(fb.EYE_SLEEVE[0] / 2 - 0.02 + dv / 2, -1, 23))
+    r = fb.EYE_SLEEVE[0] / 2 + fb.PRINT_HOLE_COMP / 2 + dv / 2
+    s = s.cut(zc(r, -1, 23)).cut(z_lead_in(r))
     return engrave(s, label(dv), -13.0, 0, 22.0, 4)
 
 
+def coupon_frame_pins(dv: float):
+    """The hip frame's web (its 24.1 mm, printed on the leg-side face as the frame): a stop pin's blind hole
+    (Ø16.1 + dv, 23 deep, the lead-in) from the bed face, and an RS-04 dowel's (Ø5.155 + dv, 12 deep) from the top."""
+    yf0, yf1 = fb.Y['frame']
+    t = yf1 - yf0
+    s = bx(-22.0, 24.0, -14.0, 14.0, 0, t)
+    r = fb.STOP_PIN[0] / 2 + fb.STOP_HOLE_PLAY + dv / 2
+    s = s.cut(zc(r, -1, fb.STOP_PIN[2])).cut(z_lead_in(r))
+    s = s.cut(zc(2.5 + fb.PRINT_HOLE_COMP / 2 + 0.015 + dv / 2, t - 12.0, t + 1, 16.0, 0))
+    return engrave(s, label(dv), -16.0, 0, t, 4)
+
+
 def coupon_knee_boss(dv: float):
-    """A lower link's knee boss: a 6201 seat (Ø32.04 + dv, 10 mm) on the Ø27 web, Ø46 outside."""
-    bo = fb.KC['bearing_od']
-    s = zc(fb.KC['hub_od'] / 2, 0, 12.0)
-    s = s.cut(zc(bo / 2 + 0.02 + dv / 2, 2.0, 13)).cut(zc(fb.KC['shoulder_d'] / 2, -1, 3))
+    """A lower link's knee boss: the knee bearing's seat (KC: a 6301, Ø37.04 + dv, its full 12 mm width) on a 2 mm web
+    with the KC shoulder's bore, the boss's Ø51 outside."""
+    bo, bw = fb.KC['bearing_od'], fb.KC['bearing_w']
+    h = bw + 2.0
+    s = zc(fb.KC['hub_od'] / 2, 0, h)
+    s = s.cut(zc(bo / 2 + 0.02 + dv / 2, 2.0, h + 1)).cut(zc(fb.KC['shoulder_d'] / 2, -1, 3))
     return engrave(s.union(bx(fb.KC['hub_od'] / 2 - 3, fb.KC['hub_od'] / 2 + 12, -7, 7, 0, 6)), label(dv), fb.KC['hub_od'] / 2 + 5.5, 0, 6, 3.5)
 
 
@@ -461,7 +484,8 @@ FIXTURES = {   # name: (builder, material, qty, note)
     'puller_m5': (lambda: puller('M5'), 'pa6-cf', 3, 'PA6-CF, 6 walls, 60 % gyroid, insert face up (B4: two to 3.5 kN, one for the head test)'),
     'bearing_disc': (bearing_disc, 'pa6-cf', 3, 'PA6-CF, 100 %, flat (B4: the link under an M5 head)'),
 }
-COUPONS = {'coupon_frame_ring': coupon_frame_ring, 'coupon_hub_face': coupon_hub_face, 'coupon_knee_eye': coupon_knee_eye,
+COUPONS = {'coupon_frame_ring': coupon_frame_ring, 'coupon_frame_pins': coupon_frame_pins, 'coupon_hub_face': coupon_hub_face,
+           'coupon_knee_eye': coupon_knee_eye,
            'coupon_knee_boss': coupon_knee_boss, 'coupon_apex_eye': coupon_apex_eye, 'coupon_hub_stub': coupon_hub_stub}
 
 
