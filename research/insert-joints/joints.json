@@ -2648,7 +2648,7 @@
   },
   {
    "file": "cad/fivebar.py",
-   "pattern": "web = web\\.cut\\(ycyl\\(2\\.5 - 0\\.03, yf0 - 1, yf0 \\+ ([\\d.]+), x, z\\)\\)",
+   "pattern": "web = web\\.cut\\(ycyl\\(2\\.5 \\+ PRINT_HOLE_COMP / 2 \\+ [\\d.]+, yf0 - 1, yf0 \\+ ([\\d.]+), x, z\\)\\)",
    "value": 12.0,
    "lines": 1
   },

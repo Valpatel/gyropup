@@ -459,7 +459,7 @@ def build(repo):
     shear = 1000.0 * peak_motor / (10 * lug_r)
     # the motor's two Ø5 steel dowels on the same PCD, pressed 12 mm into the frame from the motor side (fivebar.py hip_frame)
     n_dowel = len(repo.has('cad/fivebar.py', 'RS04_LUG0, RS04_DOWELS = -15.0, (3.0, 183.0)').split('(')[1].split(','))
-    dowel_in = repo.num('cad/fivebar.py', r'web = web\.cut\(ycyl\(2\.5 - 0\.03, yf0 - 1, yf0 \+ ([\d.]+), x, z\)\)')
+    dowel_in = repo.num('cad/fivebar.py', r'web = web\.cut\(ycyl\(2\.5 \+ PRINT_HOLE_COMP / 2 \+ [\d.]+, yf0 - 1, yf0 \+ ([\d.]+), x, z\)\)')
     dowel_f = 1000.0 * peak_motor / (n_dowel * lug_r)
     dowel_mpa = dowel_f / (5.0 * dowel_in)
     lug_pre = mat['bearing_sustained_mpa'] * annulus(HEAD_D[('socket', 4)], fast['M4']['clear'])
