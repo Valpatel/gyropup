@@ -225,7 +225,7 @@ class Video:
             import matplotlib.pyplot as plt
             p = self.path.with_name(f'{self.path.stem}-frame-{self.n:04d}.png')
             plt.imsave(p, img)
-            self.kept.append(str(p))
+            self.kept.append(p.resolve().relative_to(R).as_posix() if p.resolve().is_relative_to(R) else p.name)  # e2e.json is committed
         self.n += 1
 
     def close(self):

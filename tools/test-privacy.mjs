@@ -17,11 +17,13 @@ const names = { names: privateNames() };
 test('each kind of private string is caught, without reporting the string', () => {
   const cases = {
     'home-path': [j('mesh: "/', 'home/', 'alice/Code/x.stl"'), j('cd /', 'Users/bob/src'), j('file:///', 'home/carol/a'),
+      j('cd /', 'home/', 'frank'), j('/var', '/home/', 'gina/x'), j('/tmp/x/-', 'home-', 'hank-Code/y'),
       j('C:\\', 'Users\\', 'dave\\x'), j('"C:\\\\', 'Users\\\\', 'erin\\\\x"')],
     'fleet-host': [j('run on gb10', '-99'), j('THOR', '-42 run'), j('ssh jetson', '-3'), j('ssh rtx', '1234', ' hostname')],
     'private-ip': [j('10.', '1.2.3'), j('http://192', '.168.0.9:8081'), j('172', '.20.1.1'), j('100', '.100.1.2'),
       j('fd7a:115c', ':a1e0::1')],
-    'tailnet-name': [j('robot.', 'example-net', '.ts.net')],
+    'tailnet-name': [j('robot.', 'example-net', '.ts.net'), j('https://', 'example-net', '.ts.net/'),
+      j('*.', 'example-net', '.ts.net')],
     'private-repo': [j('github.com/Valpatel/', 'some-private-tool'), j('see mvalancy/', 'notes')],
   };
   for (const [kind, samples] of Object.entries(cases)) {
@@ -54,9 +56,13 @@ test('exemptions and allowances are narrow and still needed', () => {
   const tracked = trackedFiles();
   for (const e of EXEMPT) {
     assert.ok(e.reason.length > 40, e.glob);
-    assert.ok(tracked.some(isExempt), `${e.glob} matches no tracked file`);
+    const files = tracked.filter(isExempt);
+    assert.ok(files.length, `${e.glob} matches no tracked file`);
+    for (const f of files) assert.ok(scanText(readFileSync(path.join(ROOT, f), 'utf8')).length, `${f} no longer needs its exemption`);
   }
-  assert.ok(isExempt('designer/kit/vendor/mermaid/mermaid.min.js'));
+  assert.ok(isExempt('designer/kit/vendor/occt-import-js/occt-import-js.js'));
+  assert.ok(!isExempt('designer/kit/vendor/mermaid/mermaid.min.js'));
+  assert.ok(!isExempt('designer/kit/vendor/occt-import-js/other.js'));
   assert.ok(!isExempt('designer/kit/vendor/file-viewer-sources.json'));
   assert.ok(!isExempt('designer/kit/vendor-notes.js'));
   const found = scanTracked(ROOT, names);
@@ -100,6 +106,8 @@ test(`${RATCHET} is well formed and no larger than on the base branch`, t => {
   const ratchet = loadRatchet();
   assert.deepEqual(ratchetProblems(ratchet), []);
   const { ref, ratchet: base } = baseRatchet();
+  // in CI a missing base is a broken checkout, not a pass; locally (no origin/dev, a shallow clone) it is a skip
+  if (!ref) assert.ok(process.env.GITHUB_ACTIONS !== 'true', 'cannot find the base commit to compare the ratchet with');
   if (!base) return t.skip(`no ratchet on the base (${ref || 'no history'}); this change introduces it`);
   assert.deepEqual(growthProblems(ratchet, base), [], `compared with ${ref}`);
 });

@@ -30,7 +30,8 @@ const IPV4_PRIVATE = String.raw`(?:10\.\d{1,3}|172\.(?:1[6-9]|2\d|3[01])|192\.16
 
 export const RULES = [
   { kind: 'home-path', fix: 'use a repository-relative path, or a placeholder such as <cad-agent checkout>',
-    patterns: [/(?<![\w.-])\/(?:home|Users)\/[A-Za-z_][\w.-]*\//g,
+    // with or without a trailing slash, under /var/home too, and folded into a folder name (/-home-<name>-...)
+    patterns: [/(?<![\w.-])(?:\/var)?\/(?:home|Users)\/[A-Za-z_][\w.-]*/g, /(?<=\/)-(?:home|Users)-[A-Za-z_][\w.]*-/g,
       /\b[A-Za-z]:(?:\\\\|\\)Users(?:\\\\|\\)[A-Za-z_][\w.-]*(?:\\\\|\\)/g] },
   { kind: 'fleet-host', fix: 'say "the recording compute host" or "a CAD host"; the hardware family alone (a GB10) is fine',
     // a hardware family plus a node number, or a GPU model written as a lowercase host name
@@ -38,15 +39,16 @@ export const RULES = [
   { kind: 'private-ip', fix: 'use a documentation address (192.0.2.0/24) or a name such as voice-host',
     patterns: [new RegExp(String.raw`(?<![\w.])${IPV4_PRIVATE}(?!\.?\d)`, 'g'), /\bfd7a:115c:a1e0:[0-9a-f:]*/gi] },
   { kind: 'tailnet-name', fix: 'name the role of the machine, not its tailnet name',
-    patterns: [/\b[a-z0-9](?:[a-z0-9-]*[a-z0-9])?\.[a-z0-9-]+\.ts\.net\b/gi] },
+    patterns: [/\b(?:[a-z0-9](?:[a-z0-9-]*[a-z0-9])?\.)?[a-z0-9-]+\.ts\.net\b/gi] },
   { kind: 'private-repo', fix: 'describe the repository, or list it in PUBLIC_REPOS once it is public' },
 ];
 export const KINDS = RULES.map(r => r.kind);
 
-// Third-party files copied verbatim: their strings are upstream's, and nothing of ours is written into them.
+// Third-party files copied verbatim whose own strings would match: exempt one file at a time, so a new vendored file
+// is still scanned.
 export const EXEMPT = [
-  { glob: 'designer/kit/vendor/**/*.js', reason: 'third-party library builds (three.js, mermaid, occt-import-js, linkedom, '
-    + 'file parsers) copied unmodified from the pinned releases recorded beside them' },
+  { glob: 'designer/kit/vendor/occt-import-js/occt-import-js.js', reason: "the unmodified upstream release, whose "
+    + "Emscripten build embeds two source paths from its builder's machine (not ours); recorded in file-viewer-sources.json" },
 ];
 
 // Findings that are public facts, not private details. Counts are per file; a new finding in the same file still fails.
