@@ -449,22 +449,34 @@ GUSSET_RUNOUT = 12.0                             # mm: the frame's gussets betwe
 FLANGE_T, FLANGE_X = 13.0, 95.0                  # the hip frame's top and bottom flanges: thickness, half-length (mm).
                                                  # They carry the leg to the body across the print's layers (it prints
                                                  # web-down): 7 mm gave SF 0.75 in a landing across the layers, 13 about 1.3
+# Issue #29 (2026-10-31, 18.75 kg a leg, the corrected out-of-plane loads): the turn case (E1) read SF 1.50 at 4 mm on
+# the recording host (1.59 on the x86 one), its peak at the bottom flange's square root (x 93). Screened at 4 mm:
+#   root_r 5 alone                    E1 1.50 (the fillet over the motors is thin; the peak stays at the root)
+#   root_r 6, dz 3, 16 / 16           R1 2.02, E1 1.96, E3o 2.59, E3i 2.75, R3o 1.27
+#   bent 5052 flanges (SendCutSend)   no 5052 sheet meets the root moment and still clears the tray and the cheeks'
+#                                     flange with the inserts where they are (research/hip-frame-29/bent-flange-check.json)
+#   print on its end (layers x)       passes every case on the layers' bond, but stands 274 mm: not on the 250 mm bed
+# then cad-agent optimise (NSGA-II, 36 trials, research/hip-frame-29): about half of the trials failed the body or bed
+# check before any FEA, and of the rest these two led (4 mm, first host):
+#   trial 1  root_r 7.5, dz 1.5, 13 / 18   R1 2.05, E1 2.06, E3o 2.42, E3i 2.75, R3o 1.19, 1106 g   <- HIP below
+#   trial 8  root_r 7, dz 2.5, 13 / 17     R1 2.01, E1 2.05, E3o 2.41, E3i 2.75, R3o 1.18, 1101 g
+# Trial 1 on the recording host reads R1 2.00 and E1 2.08 at 4 mm, but 1.79 and 1.81 at 3 mm. Its peak has moved to the
+# tip of each knee-out ear's backing block, where it ends on the web's motor face (x +-120, z 45, r 64 from the motor):
+# a sharp corner, so it is not converged. Two fixes there failed: the block run on to the ear's edge (E1 1.33: a knife
+# edge at r 66) and a revolved fillet round the boss side (the mesher refused its slivers). Next: a fillet along the
+# whole foot of the block (on a local solid), checked at 3 and 2.5 mm.
 HIP = {                                          # the hip frame's shape beyond the body interface (issue #29's sweep;
     'top_t': FLANGE_T,                           # GYROPUP_HIP_PARAMS, a JSON file, overrides it). Each flange's thickness:
-    'bottom_t': FLANGE_T,                        # it grows outwards (the inner face stays at the motors' ring) and the web
+    'bottom_t': 18.0,                            # it grows outwards (the inner face stays at the motors' ring) and the web
                                                  # with it, so the flange's root is that deep. The interface does not move:
                                                  # the inserts stay at frame_mounts() (FLANGE_T), the mount plane at the
                                                  # centre plane.
     'haunch': 0.0,                               # 0: the extra thickness runs the flange's whole length; L > 0: it tapers
                                                  # off L mm from the web (a haunch at the root, where the bending peaks)
-    'flange_dz': 0.0,                            # mm: both flanges moved out from the motors' ring (their inner faces at
+    'flange_dz': 1.5,                            # mm: both flanges moved out from the motors' ring (their inner faces at
                                                  # +-(ring + dz)), which leaves room for a root fillet over the motors
-    'root_r': 0.0,                               # mm: the flanges' roots on the motor side rounded, up to this radius and
+    'root_r': 7.5,                               # mm: the flanges' roots on the motor side rounded, up to this radius and
     'root_gap': 0.75,                            # ... less where a motor's can (OD) comes within root_gap of the fillet
-    'ear_boss_fillet': 0.0,                      # mm: the knee-out ears' backing blocks' sides round the stop boss
-                                                 # rounded into the web where they stand inside the ear (0: square)
-    'ear_tip': False,                            # the knee-out ears' backing blocks end flush with the ear's edge, not
-                                                 # in a wedge whose rounded face stops short of it (a notch on the web)
     'bed_clip': True,                            # the bottom flange's outer corners cut back to the 45 deg lines through
                                                  # today's corners (|x| + |z| <= FLANGE_X + ring + FLANGE_T), so the frame
                                                  # still fits the bed turned (printplan.fits: 248.9 of 250 mm)
@@ -546,29 +558,13 @@ def hip_frame():
                 # hull of the boss and the flange's end face (not of the ring: hugging the motor it thinned to a knife
                 # edge, which the frame's landing case tore at), so it also fills the corner of the flange's end; its
                 # face towards the motor rounded into the web (a square step there tore in the landing case too)
-                blk_pts = circle(px, pz, STOP_BOSS_R + 0.3) + [(sx * (fl_x - 1.0), zf + 0.5), (sx * (fl_x - 1.0), zf + fl_t - 1.0)]
-                if HIP['ear_tip']:                             # its tip follows the ear's own edge (the lobe's tangent from
-                    ang = lambda q: math.atan2(q[1], sx * (q[0] - mx))      # the boss to the ring) instead of ending in
-                    on_ring = [q for q in lobe if abs(math.hypot(q[0] - mx, q[1]) - (ring_r - 1.0)) < 1e-3]   # a wedge
-                    below = [q for q in on_ring if ang(q) < ang((px, pz))]  # inside the lobe: issue #29, E1's peak
-                    blk_pts += [max(below, key=ang)] if below else []
-                blk = _hull(blk_pts)
+                blk = _hull(circle(px, pz, STOP_BOSS_R + 0.3) + [(sx * (fl_x - 1.0), zf + 0.5), (sx * (fl_x - 1.0), zf + fl_t - 1.0)])
                 back = yslab(blk, yf0 - STOP_EAR_BACK, yf0 + 0.01).cut(ycyl(STOP_EAR_CLEAR, yf0 - STOP_EAR_BACK - 1, yf0 + 1, mx))
                 f, rc = STOP_EAR_FILLET, STOP_EAR_CLEAR
                 prof = [(mx + rc, yf0 + 0.01), (mx + rc - f, yf0 + 0.01)]
                 prof += [(mx + rc - f + f * math.cos(math.radians(90 - 90 * k / 8)), yf0 - f + f * math.sin(math.radians(90 - 90 * k / 8))) for k in range(9)]
                 ring = cq.Workplane('XY').polyline(prof).close().revolve(360, (mx, 0, 0), (mx, 1, 0))
                 web = web.union(back).union(ring.intersect(yslab(blk, yf0 - f - 1.0, yf0 + 0.02)))
-                fb_ = HIP['ear_boss_fillet']
-                if fb_ > 0:                                    # the block's side round the stop boss rounded into the web
-                    rb = STOP_BOSS_R + 0.3                     # too, where it stands inside the ear: that sharp edge meets the
-                    bprof = [(px + rb, yf0 + 0.01), (px + rb + fb_, yf0 + 0.01)]       # motor-side fillet at the block's
-                    bprof += [(px + rb + fb_ - fb_ * math.sin(math.radians(90 * k / 8)),  # tip, which carried E1's and
-                               yf0 - fb_ + fb_ * math.cos(math.radians(90 * k / 8))) for k in range(9)]  # R1's peak (#29)
-                    bring = cq.Workplane('XY').polyline(bprof).close().revolve(360, (px, 0, 0), (px, 1, 0)).translate((0, 0, pz))
-                    bring = bring.intersect(yslab(lobe, yf0 - fb_ - 1.0, yf0 + 0.02)).cut(
-                        ycyl(rc - f, yf0 - fb_ - 2.0, yf0 + 1.0, mx))
-                    web = web.union(bring)
     if HIP['root_r'] > 0:                                    # the flanges' roots rounded on the motor side (HIP)
         for s_ in (1, -1):
             web = web.union(root_fillet(s_, zf, yf0, fl_x, (ax, bx)))
