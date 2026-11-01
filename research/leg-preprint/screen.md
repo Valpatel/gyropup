@@ -228,10 +228,10 @@ printed vertical hole -0.20 to -0.05 mm on the diameter against the CAD (assumed
 
 | Fit | Part | Hole drawn | Mating | Interference drawn | As printed | Dry: p / hoop MPa, press N | Humid p | Mouth on the bed | Verdict |
 |---|---|---|---|---|---|---|---|---|---|
-| knee eye sleeves (2 x DIN 179 18 x 20) | upper_link | 17.96 | 18.012 - 18.023 | 0.052 to 0.063 | 0.102 to 0.263 | 34.2 / 52.7, 19340 | 7.9 | yes: chamfer | too tight once printed: 53 MPa hoop at the tight end (> half the dry strength); open the hole; 19 kN to press at the tight end: more than a bench vise |
+| knee eye sleeves (2 x DIN 179 18 x 20) | upper_link | 18.125 | 18.012 - 18.023 | -0.113 to -0.102 | -0.063 to 0.098 | 12.7 / 19.6, 7210 | 3.0 | yes: chamfer | 7 kN to press at the tight end: more than a bench vise; from clearance to interference across the band: C1 sets the hole |
 | knee 6301 outer races | front_link / wheel_link | 37.04 | 36.989 - 37.0 | -0.051 to -0.04 | -0.001 to 0.16 | 5.4 / 17.3, 1870 | 1.2 | yes: chamfer | from clearance to interference across the band: C1 sets the hole |
 | apex 61812 outer races | front_link | 78.04 | 77.987 - 78.0 | -0.053 to -0.04 | -0.003 to 0.16 | 1.2 / 8.7, 750 | 0.3 | yes: chamfer | from clearance to interference across the band: C1 sets the hole |
-| RS-04 dowels (2 x 5 m6) | hip_frame | 4.94 | 5.004 - 5.012 | 0.064 to 0.072 | 0.114 to 0.272 | 178.2 / 178.2, 8410 | 41.4 | no | too tight once printed: 178 MPa hoop at the tight end (> half the dry strength); open the hole; 8 kN to press at the tight end: more than a bench vise |
+| RS-04 dowels (2 x 5 m6) | hip_frame | 5.155 | 5.004 - 5.012 | -0.151 to -0.143 | -0.101 to 0.057 | 37.3 / 37.3, 1760 | 8.7 | no | from clearance to interference across the band: C1 sets the hole |
 | stop pins (16 x 40, retaining compound) | hip_frame | 16.1 | 16.007 - 16.018 | -0.093 to -0.082 | -0.043 to 0.118 | 24.2 / 24.2, 6990 | 5.6 | yes: chamfer | 7 kN to press at the tight end: more than a bench vise; from clearance to interference across the band: C1 sets the hole |
 
 ## Clamped plastic and preload

@@ -290,19 +290,23 @@ def fit_verdict(band, dry, press):
 def fits(repo, mat):
     """Press and slide fits into printed holes: the CAD's hole, the part's tolerance, the interference band once the
     printed hole closes up by PRINT_HOLE_ERR, and what that does dry (at assembly) and humid (in service)."""
-    eye_r = repo.num('cad/fivebar.py', r'^UPPER_HUB_R, UPPER_EYE_R = [\d.]+, ([\d.]+)')
-    sleeve_hole = 2 * (repo.num('cad/fivebar.py', r'^EYE_SLEEVE = \(([\d.]+), ') / 2
-                       - repo.num('cad/fivebar.py', r"u = u\.cut\(ycyl\(EYE_SLEEVE\[0\] / 2 - ([\d.]+), eye_sleeve_end\(\)"))
+    eye_r = repo.num('cad/fivebar.py', r"'eye_r': ([\d.]+), 'eye_stub_fillet'")
+    comp = repo.num('cad/fivebar.py', r'^PRINT_HOLE_COMP = ([\d.]+)')
+    repo.has('cad/fivebar.py', 'u = u.cut(ycyl(EYE_SLEEVE[0] / 2 + PRINT_HOLE_COMP / 2, eye_sleeve_end(), t + 1, l1, 0))')
+    sleeve_hole = repo.num('cad/fivebar.py', r'^EYE_SLEEVE = \(([\d.]+), ') + comp
     kc_od = repo.num('cad/fivebar.py', r"'bearing': '6301-2RS', 'bearing_od': ([\d.]+),")
     kc_hub = repo.num('cad/fivebar.py', r"'bearing_od': [\d.]+, 'bearing_w': [\d.]+, 'hub_od': ([\d.]+),")
     kc_w = repo.num('cad/fivebar.py', r"'bearing': '6301-2RS', 'bearing_od': [\d.]+, 'bearing_w': ([\d.]+),")
     kc_play = repo.num('cad/fivebar.py', r"c = ycyl\(bo / 2 \+ ([\d.]+), y0 - 0\.01, y0 \+ bw\)")
     ac = repo.json('cad/interfaces.json')['AC-L']
     ac_play = repo.num('cad/fivebar.py', r"f = f\.cut\(ycyl\(AC\['bearing_od'\] / 2 \+ ([\d.]+), ao\[0\], e1 \+ 1, l2\)\)")
-    ring_wall = repo.num('cad/fivebar.py', r"r_eye = AC\['bearing_od'\] / 2 \+ ([\d.]+)")
-    dowel_r = repo.num('cad/fivebar.py', r'web = web\.cut\(ycyl\(([\d.]+) - [\d.]+, yf0 - 1, yf0 \+ [\d.]+, x, z\)\)')
-    dowel_cut = repo.num('cad/fivebar.py', r'web = web\.cut\(ycyl\([\d.]+ - ([\d.]+), yf0 - 1, yf0 \+ [\d.]+, x, z\)\)')
-    dowel_in = repo.num('cad/fivebar.py', r'web = web\.cut\(ycyl\([\d.]+ - [\d.]+, yf0 - 1, yf0 \+ ([\d.]+), x, z\)\)')
+    repo.has('cad/fivebar.py', "r_eye = AC['bearing_od'] / 2 + P['apex_wall']")
+    ring_wall = repo.num('cad/fivebar.py', r"'apex_wall': ([\d.]+), 'front_eye_fillet'")
+    dw = r'web = web\.cut\(ycyl\({} \+ PRINT_HOLE_COMP / 2 \+ {}, yf0 - 1, yf0 \+ {}, x, z\)\)'
+    num, any_ = r'([\d.]+)', r'[\d.]+'
+    dowel_r = repo.num('cad/fivebar.py', dw.format(num, any_, any_)) + comp / 2
+    dowel_cut = -repo.num('cad/fivebar.py', dw.format(any_, num, any_))
+    dowel_in = repo.num('cad/fivebar.py', dw.format(any_, any_, num))
     stop_d = repo.num('cad/fivebar.py', r'^STOP_PIN = \(([\d.]+), ')
     stop_play = repo.num('cad/fivebar.py', r'^STOP_HOLE_PLAY = ([\d.]+)')
     stop_in = repo.num('cad/fivebar.py', r'^STOP_PIN = \([\d.]+, [\d.]+, ([\d.]+)\)')

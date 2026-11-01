@@ -76,14 +76,14 @@ class Screen(unittest.TestCase):
         self.assertLess(row['sigma_n_mpa'], 0)                  # compressive: only the shear term remains
         self.assertAlmostEqual(row['S_s_needed_mpa'], abs(row['tau_mpa']) * row['target'], delta=0.11)
 
-    def test_control_sleeve_hole_opened_relieves_the_fit(self):
+    def test_control_hole_compensation_relieves_the_fit(self):
         rel = 'cad/fivebar.py'
-        a = 'u = u.cut(ycyl(EYE_SLEEVE[0] / 2 - 0.02, eye_sleeve_end(), t + 1, l1, 0))'
-        tight = fit(self.doc, 'knee eye sleeves')
-        self.assertIn('too tight', tight['verdict'])
-        opened = fit(generate({rel: [(a, a.replace('- 0.02', '- 0.00'))]}), 'knee eye sleeves')
-        self.assertNotIn('too tight', opened['verdict'])
-        self.assertLess(opened['interference_printed_mm'][1], tight['interference_printed_mm'][1])
+        drawn = fit(self.doc, 'knee eye sleeves')
+        self.assertNotIn('too tight', drawn['verdict'])
+        self.assertIn('C1 sets the hole', drawn['verdict'])            # the band straddles zero: the coupon decides
+        bare = fit(generate({rel: [('PRINT_HOLE_COMP = 0.125', 'PRINT_HOLE_COMP = 0.0')]}), 'knee eye sleeves')
+        self.assertNotIn('C1 sets the hole', bare['verdict'])         # interference across the whole band
+        self.assertGreater(bare['at_max_dry']['press_n'], 2 * drawn['at_max_dry']['press_n'])
 
     def test_control_flange_thickness_moves_the_insert_wall(self):
         rel = 'cad/fivebar.py'

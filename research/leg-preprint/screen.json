@@ -1061,7 +1061,7 @@
    {
     "fit": "knee eye sleeves (2 x DIN 179 18 x 20)",
     "part": "upper_link",
-    "hole_drawn_mm": 17.96,
+    "hole_drawn_mm": 18.125,
     "mating_mm": [
      18.012,
      18.023
@@ -1069,27 +1069,27 @@
     "ring_od_mm": 39.0,
     "length_mm": 40.0,
     "interference_drawn_mm": [
-     0.052,
-     0.063
+     -0.113,
+     -0.102
     ],
     "interference_printed_mm": [
-     0.102,
-     0.263
+     -0.063,
+     0.098
     ],
     "at_max_dry": {
-     "p_mpa": 34.2,
-     "hoop_mpa": 52.7,
-     "hoop_of_S_xy_dry": 0.52,
-     "press_n": 19340.0
+     "p_mpa": 12.7,
+     "hoop_mpa": 19.6,
+     "hoop_of_S_xy_dry": 0.19,
+     "press_n": 7210.0
     },
     "at_max_humid": {
-     "p_mpa": 7.9,
-     "hoop_mpa": 12.2
+     "p_mpa": 3.0,
+     "hoop_mpa": 4.6
     },
     "grip_lost_humid": 0.77,
     "mouth_on_bed": true,
     "note": "pressed in from the outer face, which is on the bed (DOWN_OUTER)",
-    "verdict": "too tight once printed: 53 MPa hoop at the tight end (> half the dry strength); open the hole; 19 kN to press at the tight end: more than a bench vise"
+    "verdict": "7 kN to press at the tight end: more than a bench vise; from clearance to interference across the band: C1 sets the hole"
    },
    {
     "fit": "knee 6301 outer races",
@@ -1160,7 +1160,7 @@
    {
     "fit": "RS-04 dowels (2 x 5 m6)",
     "part": "hip_frame",
-    "hole_drawn_mm": 4.94,
+    "hole_drawn_mm": 5.155,
     "mating_mm": [
      5.004,
      5.012
@@ -1168,27 +1168,27 @@
     "ring_od_mm": null,
     "length_mm": 12.0,
     "interference_drawn_mm": [
-     0.064,
-     0.072
+     -0.151,
+     -0.143
     ],
     "interference_printed_mm": [
-     0.114,
-     0.272
+     -0.101,
+     0.057
     ],
     "at_max_dry": {
-     "p_mpa": 178.2,
-     "hoop_mpa": 178.2,
-     "hoop_of_S_xy_dry": 1.75,
-     "press_n": 8410.0
+     "p_mpa": 37.3,
+     "hoop_mpa": 37.3,
+     "hoop_of_S_xy_dry": 0.37,
+     "press_n": 1760.0
     },
     "at_max_humid": {
-     "p_mpa": 41.4,
-     "hoop_mpa": 41.4
+     "p_mpa": 8.7,
+     "hoop_mpa": 8.7
     },
     "grip_lost_humid": 0.77,
     "mouth_on_bed": false,
     "note": "blind from the motor side (the top as printed)",
-    "verdict": "too tight once printed: 178 MPa hoop at the tight end (> half the dry strength); open the hole; 8 kN to press at the tight end: more than a bench vise"
+    "verdict": "from clearance to interference across the band: C1 sets the hole"
    },
    {
     "fit": "stop pins (16 x 40, retaining compound)",
@@ -1778,20 +1778,24 @@
   },
   {
    "file": "cad/fivebar.py",
-   "pattern": "^UPPER_HUB_R, UPPER_EYE_R = [\\d.]+, ([\\d.]+)",
+   "pattern": "'eye_r': ([\\d.]+), 'eye_stub_fillet'",
    "value": 20.0,
    "lines": 1
   },
   {
    "file": "cad/fivebar.py",
-   "pattern": "^EYE_SLEEVE = \\(([\\d.]+), ",
-   "value": 18.0,
+   "pattern": "^PRINT_HOLE_COMP = ([\\d.]+)",
+   "value": 0.125,
    "lines": 1
   },
   {
    "file": "cad/fivebar.py",
-   "pattern": "u = u\\.cut\\(ycyl\\(EYE_SLEEVE\\[0\\] / 2 - ([\\d.]+), eye_sleeve_end\\(\\)",
-   "value": 0.02,
+   "literal": "u = u.cut(ycyl(EYE_SLEEVE[0] / 2 + PRINT_HOLE_COMP / 2, eye_sleeve_end(), t + 1, l1, 0))"
+  },
+  {
+   "file": "cad/fivebar.py",
+   "pattern": "^EYE_SLEEVE = \\(([\\d.]+), ",
+   "value": 18.0,
    "lines": 1
   },
   {
@@ -1826,25 +1830,29 @@
   },
   {
    "file": "cad/fivebar.py",
-   "pattern": "r_eye = AC\\['bearing_od'\\] / 2 \\+ ([\\d.]+)",
+   "literal": "r_eye = AC['bearing_od'] / 2 + P['apex_wall']"
+  },
+  {
+   "file": "cad/fivebar.py",
+   "pattern": "'apex_wall': ([\\d.]+), 'front_eye_fillet'",
    "value": 6.0,
    "lines": 1
   },
   {
    "file": "cad/fivebar.py",
-   "pattern": "web = web\\.cut\\(ycyl\\(([\\d.]+) - [\\d.]+, yf0 - 1, yf0 \\+ [\\d.]+, x, z\\)\\)",
+   "pattern": "web = web\\.cut\\(ycyl\\(([\\d.]+) \\+ PRINT_HOLE_COMP / 2 \\+ [\\d.]+, yf0 - 1, yf0 \\+ [\\d.]+, x, z\\)\\)",
    "value": 2.5,
    "lines": 1
   },
   {
    "file": "cad/fivebar.py",
-   "pattern": "web = web\\.cut\\(ycyl\\([\\d.]+ - ([\\d.]+), yf0 - 1, yf0 \\+ [\\d.]+, x, z\\)\\)",
-   "value": 0.03,
+   "pattern": "web = web\\.cut\\(ycyl\\([\\d.]+ \\+ PRINT_HOLE_COMP / 2 \\+ ([\\d.]+), yf0 - 1, yf0 \\+ [\\d.]+, x, z\\)\\)",
+   "value": 0.015,
    "lines": 1
   },
   {
    "file": "cad/fivebar.py",
-   "pattern": "web = web\\.cut\\(ycyl\\([\\d.]+ - [\\d.]+, yf0 - 1, yf0 \\+ ([\\d.]+), x, z\\)\\)",
+   "pattern": "web = web\\.cut\\(ycyl\\([\\d.]+ \\+ PRINT_HOLE_COMP / 2 \\+ [\\d.]+, yf0 - 1, yf0 \\+ ([\\d.]+), x, z\\)\\)",
    "value": 12.0,
    "lines": 1
   },

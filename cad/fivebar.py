@@ -87,6 +87,11 @@ TPU_SLEEVE = (32.0, 16.0)                                # the stop sleeve over 
                                                          # upper link's radial stop face squeezes square-on (D39, D53)
 STOP_SLEEVE_TOP = 19.0                                   # y of the sleeve's top: a 3 mm cap over the pin's end (y 16). The link
                                                          # meets only TPU, over y 0..19; above, its stop face passes over the cap
+PRINT_HOLE_COMP = 0.125                                  # mm on the diameter: a vertical printed hole comes out 0.05-0.20 under
+                                                         # the CAD (assumed until coupon C1 measures it); a press-fit hole is
+                                                         # drawn this much over its target so the band's middle lands on it
+MOUTH_CHAMFER = 0.5                                      # mm x 45 deg: a lead-in where a press-fit hole opens on the bed face; the
+                                                         # first layers squash into the hole (elephant's foot) (D74)
 EYE_SLEEVE = (18.0, 12.0, 20.0)                          # the steel sleeves pressed into each upper link's knee eye: OD, ID,
                                                          # length (McMaster 96990A403, DIN 179 12 x 18 x 20, HRC 61)
 EYE_SLEEVES = 2                                          # two, end to end, 40 mm: the knee pin cantilevers out to the lower
@@ -297,6 +302,14 @@ def cavity(L, r0, r1, y0, y1, keep0, keep1, skin=None):
     hw = lambda x: r0 + (r1 - r0) * x / L - t
     pts = [(a, -hw(a)), (b, -hw(b)), (b, hw(b)), (a, hw(a))]
     return yslab(pts, y0 + t, y1 - t)
+
+
+def mouth_chamfer(r, y_face, into, x=0.0, z=0.0, c=None):
+    """A c x 45 deg lead-in (MOUTH_CHAMFER) to cut where a round hole (radius r, its axis along y at (x, z)) opens on
+    the face at y_face; into: +1 when the hole runs from the face towards +y, -1 towards -y."""
+    c = MOUTH_CHAMFER if c is None else c
+    return cq.Workplane('XY').add(cq.Solid.makeCone(r + c + 1.0, r, c + 1.0, pnt=cq.Vector(x, y_face - into * 1.0, z),
+                                                    dir=cq.Vector(0, into, 0)))
 
 
 def knee_cartridge_cut(y0, y1):
@@ -588,7 +601,8 @@ def hip_frame():
             web = web.cut(ycyl(gmi.clear(b['thread']) * 0.95, yf1 - LUG_CB, yf1 + 1, x, z))
         for a in dowel_angles(front):                        # Ø5 steel dowels into the motor's locating holes
             x, z = mx + b['pcd'] / 2 * math.cos(math.radians(a)), b['pcd'] / 2 * math.sin(math.radians(a))
-            web = web.cut(ycyl(2.5 - 0.03, yf0 - 1, yf0 + 12.0, x, z))
+            web = web.cut(ycyl(2.5 + PRINT_HOLE_COMP / 2 + 0.015, yf0 - 1, yf0 + 12.0, x, z))   # a close fit once printed,
+            # epoxy-bonded: the dowel locates the motor in its H7 hole; in the plastic a press would split the web (D74)
         web = web.cut(ycyl(AC['bearing_od'] / 2 + 0.3, yf0 - 1, Y['bearing'][0], mx))          # the 61812 slides in from the
         web = web.cut(ycyl(AC['bearing_od'] / 2, Y['bearing'][0] - 0.01, Y['bearing'][1], mx))   # motor side, is pressed for its
         web = web.cut(ycyl(AC['lip_d'] / 2, Y['bearing'][1] - 0.01, yf1 + 1, mx))              # last 10 mm, stops on the lip
@@ -596,6 +610,7 @@ def hip_frame():
     # bridged in the print); a light fit dialled on the post coupon, the pin set with retaining compound (D53)
     for (px, pz) in stop_posts():
         web = web.cut(ycyl(STOP_PIN[0] / 2 + STOP_HOLE_PLAY, yf1 - STOP_PIN[2], yf1 + 1, px, pz))
+        web = web.cut(mouth_chamfer(STOP_PIN[0] / 2 + STOP_HOLE_PLAY, yf1, -1, px, pz))   # the mouth is on the bed
     web = web.cut(ycyl(9.0, yf0 - 1, yf1 + 1, 0.0, 0.0))                # cable pass between the motors
     # a relief in the leg-side face at the bottom, between the motors: the wheel link's hub end (5 mm proud of the
     # frame's face plane, the circlip's land) passes here at the leg's shortest, and a power cut squeezes the knee-out
@@ -738,7 +753,9 @@ def upper_link():
     ao = STD['AO-L']
     for (x, y) in gmi.circle_pts(ao['pcd'], angles=gmi.ao_bolt_deg(ao)):         # motor frame (x, y) -> link (x, -y)
         u = u.cut(ycyl(HUB_HEAD_CB[0] / 2, t - HUB_HEAD_CB[1], t + 1, x, -y))
-    u = u.cut(ycyl(EYE_SLEEVE[0] / 2 - 0.02, eye_sleeve_end(), t + 1, l1, 0))   # the steel sleeves, pressed in from outside
+    u = u.cut(ycyl(EYE_SLEEVE[0] / 2 + PRINT_HOLE_COMP / 2, eye_sleeve_end(), t + 1, l1, 0))   # the steel sleeves, pressed in
+    u = u.cut(mouth_chamfer(EYE_SLEEVE[0] / 2 + PRINT_HOLE_COMP / 2, t, -1, l1))   # from outside (the bed face): about 0.05 mm
+                                                                              # of press at the band's middle, epoxy-bonded (D74)
                                                                               # (the inner one's end in the nut pocket: the nut clamps steel)
     u = u.cut(ycyl(6.03, -EYE_BOSS - 1, t + 1, l1, 0))                     # the shoulder: 12 mm (through the nut pocket)
     if P['hollow']:
@@ -791,6 +808,7 @@ def front_link():
     f = f.cut(ycyl(36.0, e0 - 1, e1 + 1, l2, 0))                            # Ø72 web between the seats: the outer races' shoulders
     f = f.cut(ycyl(AC['bearing_od'] / 2 + 0.02, ao[0], e1 + 1, l2))          # outer 61812, pressed from the outer side
     f = f.cut(ycyl(AC['bearing_od'] / 2 + 0.02, e0 - 1, ai[1], l2))          # inner 61812, pressed from the inner side
+    f = f.cut(mouth_chamfer(AC['bearing_od'] / 2 + 0.02, e0, +1, l2))        # its mouth is on the bed
     if P['hollow']:
         cv = cavity(l2, KC['hub_od'] / 2, r_eye, y0, y1, KC['hub_od'] / 2 + 10.0, r_eye + 10.0)
         f = f.cut(cv) if cv is not None else f
@@ -818,6 +836,7 @@ def wheel_link():
     k = yslab(outline, y0, y1)
     k = k.union(ycyl(KC['hub_od'] / 2, kb0, kb1)).union(boss_fillet(outline, y0, -1, f=WHEEL_BOSS_FILLET))   # the boss reaches in, filleted
     k = k.cut(knee_cartridge_cut(kb0, kb1))
+    k = k.cut(mouth_chamfer(KC['bearing_od'] / 2 + 0.02, kb1, -1))           # the outer 6301's mouth is on the bed
     h0, h1 = Y['hub']
     ab0, ab1 = Y['apex_bearing']
     k = k.union(ycyl(32.0, ab1, h1 + 0.01, l2)).union(ycyl(30.0, h0, ab1 + 0.01, l2))   # Ø64 shoulder, then the Ø60 journal
