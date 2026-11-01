@@ -2193,6 +2193,10 @@
     "head_seat_mm": 6.0,
     "screw_mm": 10.0
    },
+   "stated_min_engage": [
+    3.5,
+    "cad/rig_hardware.py (pendant_clip_screw min_engage)"
+   ],
    "longer_screw_fits": true,
    "clamp": {
     "stack": "6 mm PETG clip",
@@ -2220,8 +2224,8 @@
     },
     {
      "code": "engagement-low",
-     "level": "fix",
-     "text": "4 mm of thread engaged = 1.00 d (the body checks ask 1.2 d)"
+     "level": "owner",
+     "text": "4 mm of thread engaged = 1.00 d: cad/rig_hardware.py (pendant_clip_screw min_engage) accepts 3.5 mm on purpose, the body checks ask 1.2 d; a 2 mm longer screw fits"
     },
     {
      "code": "axis-in-layer-plane",
@@ -2229,7 +2233,7 @@
      "text": "insert axis lies in the layer plane: installation and pull-out hoop stress opens the layer bonds through the axis (an axis along the print z is the strong way)"
     }
    ],
-   "verdict": "fix"
+   "verdict": "owner"
   },
   {
    "id": "rig.pod_lid",
@@ -2278,11 +2282,15 @@
    "screw": "M4 x 10 from the plate's back",
    "screw_side": "open end",
    "mating_hole_mm": 4.5,
-   "tip_depth_mm": 3.6500000000000004,
+   "tip_depth_mm": 3.65,
    "stack": {
     "head_seat_mm": 6.35,
     "screw_mm": 10.0
    },
+   "stated_min_engage": [
+    3.5,
+    "cad/rig_hardware.py (tof_arm_screw min_engage)"
+   ],
    "longer_screw_fits": true,
    "clamp": {
     "stack": "6.35 mm 6061 carriage plate",
@@ -2305,11 +2313,11 @@
     },
     {
      "code": "engagement-low",
-     "level": "fix",
-     "text": "3.65 mm of thread engaged = 0.91 d (the body checks ask 1.2 d)"
+     "level": "owner",
+     "text": "3.65 mm of thread engaged = 0.91 d: cad/rig_hardware.py (tof_arm_screw min_engage) accepts 3.5 mm on purpose, the body checks ask 1.2 d; a 2 mm longer screw fits"
     }
    ],
-   "verdict": "fix"
+   "verdict": "owner"
   }
  ],
  "findings": [
@@ -2380,22 +2388,10 @@
    "text": "cad/fivebar.py wheel_link() docstring: \"its 4 x M6 x 40\"; the joint and BOM are M6 x 30, and catalog/hardware.json screw_m6x40 still lists this joint"
   },
   {
-   "joint": "rig.pendant_clip",
-   "code": "engagement-low",
-   "level": "fix",
-   "text": "4 mm of thread engaged = 1.00 d (the body checks ask 1.2 d)"
-  },
-  {
    "joint": "rig.pod_lid",
    "code": "no-receiver",
    "level": "fix",
    "text": "the pod lid's screws (its note: \"PETG; 4 x M3 x 10 into the pod's inserts\") meet nothing in the pod: add four corner bosses with M3 inserts (94459A140 in Ø4.0 x 6.7 pilots, axis along the lid's screws) inside the pod's open face"
-  },
-  {
-   "joint": "rig.tof_arm",
-   "code": "engagement-low",
-   "level": "fix",
-   "text": "3.65 mm of thread engaged = 0.91 d (the body checks ask 1.2 d)"
   },
   {
    "joint": "stand.dock",
@@ -2482,6 +2478,18 @@
    "text": "8 N m ~ 6667 N on 44 mm2 = 150 MPa on PA6-CF; the flange needs >= 1331 N a screw, a bare head holds 1108 N, a DIN 433 washer 1521 N (1.82 N m)"
   },
   {
+   "joint": "rig.pendant_clip",
+   "code": "engagement-low",
+   "level": "owner",
+   "text": "4 mm of thread engaged = 1.00 d: cad/rig_hardware.py (pendant_clip_screw min_engage) accepts 3.5 mm on purpose, the body checks ask 1.2 d; a 2 mm longer screw fits"
+  },
+  {
+   "joint": "rig.tof_arm",
+   "code": "engagement-low",
+   "level": "owner",
+   "text": "3.65 mm of thread engaged = 0.91 d: cad/rig_hardware.py (tof_arm_screw min_engage) accepts 3.5 mm on purpose, the body checks ask 1.2 d; a 2 mm longer screw fits"
+  },
+  {
    "joint": "turret.plinth_columns",
    "code": "pan-base-dowels",
    "level": "owner",
@@ -2558,14 +2566,14 @@
   "families": 46,
   "inserts_on_robot": 151,
   "verdicts": {
-   "owner": 4,
+   "owner": 6,
    "check": 6,
-   "fix": 14,
+   "fix": 12,
    "note": 16,
    "ok": 6
   },
-  "fix": 20,
-  "owner": 9,
+  "fix": 18,
+  "owner": 11,
   "check": 11
  },
  "bindings": [
@@ -3332,6 +3340,18 @@
    "pattern": "s = s\\.union\\(cyl\\(([\\d.]+), 'z', t - 0\\.01, t \\+ 6\\.0, [cm]\\['x'\\]",
    "value": 5.0,
    "lines": 2
+  },
+  {
+   "file": "cad/rig_hardware.py",
+   "pattern": "'clamp': \\[6\\.0\\], 'thread_in': \\{'kind': 'insert', 'depth': INSERT\\['M4'\\]\\[0\\], 'beyond': rp\\.POD\\['wall'\\] \\+ 4\\.0 - INSERT\\['M4'\\]\\[0\\]\\},\\s+'min_engage': ([\\d.]+), 'holds': \\('pendant_clip', 'pod'\\)",
+   "value": 3.5,
+   "lines": 1
+  },
+  {
+   "file": "cad/rig_hardware.py",
+   "pattern": "'beyond': INSERT\\['M4'\\]\\[1\\]\\}, 'min_engage': ([\\d.]+),\\s+'holds': \\('carriage_plate', 'tof_arm'\\)",
+   "value": 3.5,
+   "lines": 1
   },
   {
    "file": "cad/rig_parts.py",

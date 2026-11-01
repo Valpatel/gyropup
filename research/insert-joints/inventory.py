@@ -277,8 +277,14 @@ def screen(j, ins, mat, F):
                 elif clear < TIP_ROOM:
                     out.append(('tip-near-floor', 'check', f"tip {clear:.2f} mm off the pilot floor"))
             if eng < ENGAGE_MIN_D * d - 0.01:
-                out.append(('engagement-low', 'fix' if j.get('longer_screw_fits') else 'note',
-                            f"{eng:g} mm of thread engaged = {eng / d:.2f} d (the body checks ask {ENGAGE_MIN_D:g} d)"))
+                stated = j.get('stated_min_engage')      # (mm, where): a project check that accepts less on purpose
+                if stated and eng >= stated[0] - 0.01:
+                    out.append(('engagement-low', 'owner' if j.get('longer_screw_fits') else 'note',
+                                f"{eng:g} mm of thread engaged = {eng / d:.2f} d: {stated[1]} accepts {stated[0]:g} mm on purpose, "
+                                f"the body checks ask {ENGAGE_MIN_D:g} d" + ("; a 2 mm longer screw fits" if j.get('longer_screw_fits') else '')))
+                else:
+                    out.append(('engagement-low', 'fix' if j.get('longer_screw_fits') else 'note',
+                                f"{eng:g} mm of thread engaged = {eng / d:.2f} d (the body checks ask {ENGAGE_MIN_D:g} d)"))
         if j.get('axis') == 'layer-plane':
             out.append(('axis-in-layer-plane', 'note', 'insert axis lies in the layer plane: installation and pull-out hoop '
                         'stress opens the layer bonds through the axis (an axis along the print z is the strong way)'))
@@ -1103,6 +1109,8 @@ def build(repo):
         extra=[('insert-torque', 'check', f"{contactor_t:g} N m on an M4 ~ {preload(contactor_t, 4):.0f} N; the PETG M4 insert's "
                 f"pull-out estimate is {pullout(mat['petg']['tau_mpa'], 5.6, 6.4):.0f} N: set it flush so the base bears on the "
                 f"brass and tighten to ~1 N m ({preload(1.0, 4):.0f} N)")])
+    rig_min_pend = repo.num('cad/rig_hardware.py', r"'clamp': \[6\.0\], 'thread_in': \{'kind': 'insert', 'depth': INSERT\['M4'\]\[0\], 'beyond': rp\.POD\['wall'\] \+ 4\.0 - INSERT\['M4'\]\[0\]\},\s+'min_engage': ([\d.]+), 'holds': \('pendant_clip', 'pod'\)")
+    rig_min_tof = repo.num('cad/rig_hardware.py', r"'beyond': INSERT\['M4'\]\[1\]\}, 'min_engage': ([\d.]+),\s+'holds': \('carriage_plate', 'tof_arm'\)")
     pod_wall = repo.num('cad/rig_parts.py', r"^POD = \{'w': [\d.]+, 'd': [\d.]+, 'h': [\d.]+, 'wall': ([\d.]+),")
     pend_d = pod_wall + repo.num('cad/rig_parts.py', r"cyl\(FAST\['M4'\]\['insert_pilot'\] / 2, 'y', -d / 2 - 1, -d / 2 \+ t \+ ([\d.]+), PENDANT_AT\[0\], z\)")
     clip_t = repo.num('cad/rig_parts.py', r"s = box\(-d / 2 - 4, d / 2 \+ 4, 0\.0, ([\d.]+), z0 - 7\.0, z1 \+ 7\.0\)")
@@ -1113,7 +1121,7 @@ def build(repo):
         boss_mm=2 * repo.num('cad/rig_parts.py', r"s = s\.union\(cyl\(([\d.]+), 'y', -d / 2 \+ t - 0\.01, -d / 2 \+ t \+ 4\.0, PENDANT_AT\[0\], z\)\)"),
         axis='layer-plane', orientation='pod printed on its floor: the wall inserts are horizontal, set from outside',
         screw=f"M4 x {pend_len:g} through the clip's {clip_t:g} mm back", screw_side='open end',
-        mating_hole_mm=2 * repo.num('cad/rig_parts.py', r"s = s\.cut\(cyl\(([\d.]+), 'y', -1, 7, 0\.0, z\)\)"), tip_depth_mm=pend_len - clip_t, stack={'head_seat_mm': clip_t, 'screw_mm': pend_len}, longer_screw_fits=pend_d - (pend_len + 2 - clip_t) >= TIP_ROOM,
+        mating_hole_mm=2 * repo.num('cad/rig_parts.py', r"s = s\.cut\(cyl\(([\d.]+), 'y', -1, 7, 0\.0, z\)\)"), tip_depth_mm=pend_len - clip_t, stack={'head_seat_mm': clip_t, 'screw_mm': pend_len}, stated_min_engage=(rig_min_pend, 'cad/rig_hardware.py (pendant_clip_screw min_engage)'), longer_screw_fits=pend_d - (pend_len + 2 - clip_t) >= TIP_ROOM,
         clamp={'stack': f'{clip_t:g} mm PETG clip', 'printed_mm': clip_t, 'limiter': None}, loads=[],
         notes=f"An M4 x {pend_len + 2:g} keeps {pend_len + 2 - clip_t:g} mm and stops {pend_d - (pend_len + 2 - clip_t):g} mm off the "
               "pilot's cap. Light duty: the pendant's weight.")
@@ -1136,7 +1144,8 @@ def build(repo):
         insert='turret_insert_m4', d_mm=4, material='petg', infill='PETG (rig parts)',
         hole={'d': fast['M4']['insert_pilot'], 'depth': repo.num('cad/rig_parts.py', r"'y', Y_PLATE_FRONT - 1, Y_PLATE_FRONT \+ ([\d.]+), x, z\)\)")},
         boss_mm=2 * repo.num('cad/rig_parts.py', r"s = s\.union\(cyl\(([\d.]+), 'y', Y_PLATE_FRONT, Y_PLATE_FRONT \+ 10\.0, x, z\)\)"), axis='print-z', orientation='', screw='M4 x 10 from the plate\'s back', screw_side='open end',
-        mating_hole_mm=fast['M4']['clear'], tip_depth_mm=10 - rig_plate_t, stack={'head_seat_mm': rig_plate_t, 'screw_mm': 10.0},
+        mating_hole_mm=fast['M4']['clear'], tip_depth_mm=round(10 - rig_plate_t, 2), stack={'head_seat_mm': rig_plate_t, 'screw_mm': 10.0},
+        stated_min_engage=(rig_min_tof, 'cad/rig_hardware.py (tof_arm_screw min_engage)'),
         longer_screw_fits=tof_depth - (12 - rig_plate_t) >= TIP_ROOM, clamp={'stack': f'{rig_plate_t:g} mm 6061 carriage plate', 'printed_mm': 0,
         'limiter': 'n/a'}, loads=[],
         notes=f"Light. An M4 x 12 keeps {12 - rig_plate_t:.2f} mm ({(12 - rig_plate_t) / 4:.1f} d) and stops {tof_depth - (12 - rig_plate_t):.2f} mm "
