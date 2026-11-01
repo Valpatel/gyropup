@@ -140,10 +140,11 @@ STEPS = [
      'The inner 61812 into the front link\'s apex eye from the inside, the outer from the outside (the apex coupon\'s fit); '
      'the wheel link\'s hub through both from the outside with the printed spacer between the inner races; the DIN 471-60 '
      'circlip in its groove (circlip pliers). The loop now closes: the leg folds and stretches by hand from stop to stop.'),
-('The wheel', ['leg_wheel_tyre', 'leg_wheel_hub', 'leg_screws_wheel'], {'leg_wheel_tyre': (0, 60, 0), 'leg_wheel_hub': (0, 60, 0),
-                                                                           'leg_screws_wheel': (0, -50, 0)}, RIG_VIEW, 'rig',
+('The wheel', ['leg_wheel_tyre', 'leg_wheel_hub', 'leg_washers_wheel', 'leg_screws_wheel'], {'leg_wheel_tyre': (0, 60, 0), 'leg_wheel_hub': (0, 60, 0),
+                                                                           'leg_washers_wheel': (0, -40, 0), 'leg_screws_wheel': (0, -50, 0)}, RIG_VIEW, 'rig',
      'Measure the BotWheel\'s flange threads first (bom.json\'s note: M6 x 30 for a 15 mm thread). Its boss into the wheel '
-     'link\'s recess, 4 x M6 x 30 from inside the hub (8 N m, threadlocker). Its phase and hall leads taped along the wheel '
+     'link\'s recess, 4 x M6 x 30 from inside the hub, each on a DIN 433 washer (1.8 N m, threadlocker: D74, the plastic '
+     'under the washer holds 1.5 kN; 8 N m crushed it at 150 MPa under a bare head). Its phase and hall leads taped along the wheel '
      'link and the rear upper link (not driven on the rig: plan section 1.3).'),
 ('The stop sleeves', ['leg_stop_sleeve_1', 'leg_stop_sleeve_2', 'leg_stop_sleeve_3', 'leg_stop_sleeve_4'],
      {f'leg_stop_sleeve_{k}': (0, 50, 0) for k in range(1, 5)}, RIG_VIEW, 'rig',
@@ -268,7 +269,7 @@ def write_doc(rows):
           '| Motor lugs (M4 x 20, 12.9, into the RS-04) | Not established; qualify the measured mounting joint and preload before use. |', '| Adapter to motor (M5 x 25, D46) | 6 N m, threadlocker |',
           '| Upper link to adapter (M5 x 40 into tapped 6061, heads on the printed link) | the B4 torque (1.5 N m until B4) |',
           '| Knee nut (M10 nyloc onto the steel sleeves) | 20 N m |',
-          '| Stop posts (Ø16 pins bonded in blind holes, D53, D74) | none: no thread |', '| Wheel (M6 x 30 into the BotWheel) | 8 N m, threadlocker |',
+          '| Stop posts (Ø16 pins bonded in blind holes, D53, D74) | none: no thread |', '| Wheel (M6 x 30 into the BotWheel, on DIN 433 washers) | 1.8 N m, threadlocker |',
           '| Ballast posts (3/8-16) | 25 N m |', '| Contactor mounting (M4) / load terminals (M5) | 2.3 / 4 N m (TE) |', '']
     (R / 'docs' / 'leg-rig-assembly.md').write_text('\n'.join(L))
 

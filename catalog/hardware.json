@@ -4392,6 +4392,50 @@
   "notes": "DIN 433 / ISO 7092 M12: 13 x 20 x 2 (1.8-2.2) = the 2 mm layer gap in cad/fivebar.py. No 13 x 24 x 2 is stocked (DIN 125 M12 is 13 x 24 x 2.5, too thick for the gap). The CAD's knee_washer envelope is 24 OD: make it 20. 20 is also the safer size: it bears on the 6001's inner ring (flat out to 15.2 in the McMaster model) and passes over the seal (recessed 0.4), while a 24 washer floating 0.5 mm on the 12 mm shoulder could reach the outer ring's face (from 24.8)."
  },
  {
+  "id": "washer-m6-din433",
+  "key": "washer_m6_din433",
+  "category": "fastener",
+  "vendor": "McMaster-Carr",
+  "model": null,
+  "name": "Washer, undersized (DIN 433), for M6 screw, 6.4 mm ID, 11.0 mm OD, 1.6 mm thick, 18-8 stainless steel",
+  "price_usd": null,
+  "price_note": "not read: on 2026-11-01 McMaster-Carr product pages returned no data to the parts tool (page reads empty), so the part number in the 98689A family (washer_m12_thin is 98689A118, the same family for M12) is to confirm",
+  "price_checked": null,
+  "pack_qty": null,
+  "pack_price_usd": null,
+  "buy": [
+   {
+    "seller": "McMaster-Carr",
+    "url": "https://www.mcmaster.com/products/washers/",
+    "in_stock": null,
+    "ships_from": "US"
+   }
+  ],
+  "specs": {
+   "standard": "DIN 433 (ISO 7092)",
+   "id_mm": 6.4,
+   "od_mm": 11.0,
+   "thickness_mm": 1.6,
+   "material": "18-8 stainless steel",
+   "mass_g": 0.8,
+   "mass_basis": "computed: 62.9 mm2 x 1.6 mm x 7.93 g/cm3 (18-8)"
+  },
+  "cad": {
+   "file": null,
+   "kind": "washer",
+   "frame": "axis +Z, centred on the axis; the larger end (flange, head, collar) at z = 0 and the part on +z; when both ends are the same size, the heavier end at z = 0",
+   "pending": "drawn from its dimensions (cad/fivebar.py WHEEL_WASHER) until the part number and STEP are confirmed: .venv/bin/python tools/mcmaster_cad.py --catalog --only washer_m6_din433"
+  },
+  "frame": "axis +Z, centred on the axis; the larger end (flange, head, collar) at z = 0 and the part on +z; when both ends are the same size, the heavier end at z = 0",
+  "sources": [
+   "DIN 433-1 / ISO 7092 small series washer, M6: d1 6.4, d2 11, h 1.6"
+  ],
+  "confidence": "standard size; part number not confirmed",
+  "used_for": "leg (D74): under each BotWheel screw's head on the wheel link's foot, inside the hub's Ø48 bore (4 per leg)",
+  "qty_per_robot": 8,
+  "notes": "Ø11 reaches r 23.5 on the 36 PCD, 0.5 mm inside the hub bore; a DIN 125 (Ø12) touches the bore wall and a DIN 9021 (Ø18, washer_m6_large) does not fit. 63 mm2 of PA6-CF under it hold 1.5 kN at the 25 MPa sustained screen (1.8 N m at K 0.2); the flange needs 1.33 kN a screw (research/insert-joints). The screw goes 7.6 mm into the BotWheel (1.3 d)."
+ },
+ {
   "id": "mcmaster-9056k68",
   "key": "knee_spacer",
   "category": "fastener",

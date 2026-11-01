@@ -297,9 +297,10 @@
   "adds": [
    "leg_wheel_tyre",
    "leg_wheel_hub",
+   "leg_washers_wheel",
    "leg_screws_wheel"
   ],
-  "how": "Measure the BotWheel's flange threads first (bom.json's note: M6 x 30 for a 15 mm thread). Its boss into the wheel link's recess, 4 x M6 x 30 from inside the hub (8 N m, threadlocker). Its phase and hall leads taped along the wheel link and the rear upper link (not driven on the rig: plan section 1.3).",
+  "how": "Measure the BotWheel's flange threads first (bom.json's note: M6 x 30 for a 15 mm thread). Its boss into the wheel link's recess, 4 x M6 x 30 from inside the hub, each on a DIN 433 washer (1.8 N m, threadlocker: D74, the plastic under the washer holds 1.5 kN; 8 N m crushed it at 150 MPa under a bare head). Its phase and hall leads taped along the wheel link and the rear upper link (not driven on the rig: plan section 1.3).",
   "picture": "exports/rig/assembly/step-15.png"
  },
  {

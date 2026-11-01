@@ -1022,10 +1022,10 @@
    "id": "leg.wheel_botwheel",
    "qty_robot": 8,
    "role": "the wheel on the leg",
-   "today": "4 x M6 x 30 from inside the hub, heads on 20.8 mm of PA6-CF; 8 N m puts 150.4 MPa under each head",
+   "today": "4 x M6 x 30 from inside the hub, heads on 20.8 mm of PA6-CF; 1.8 N m puts 24.7 MPa under each head",
    "high_stress": true,
    "reasons": [
-    "needs >= 1331 N a screw; a bare head holds 1108 N at 25 MPa"
+    "needs >= 1331 N a screw; a bare head holds 1521 N at 25 MPa"
    ],
    "options": {
     "washer": "a DIN 433 washer (fits inside the Ø48 bore): 1521 N, 1.14 x the need",
@@ -1264,15 +1264,15 @@
    },
    {
     "joint": "wheel foot, today (M6 head on the foot)",
-    "clamp": "20.8 mm of PA6-CF across its layers under 44 mm2",
+    "clamp": "20.8 mm of PA6-CF across its layers under 61 mm2",
     "k_bolt_kn_mm": 140.7,
-    "k_plastic_kn_mm": 1.04,
-    "preload_n": 1110.0,
+    "k_plastic_kn_mm": 1.43,
+    "preload_n": 1520.0,
     "stress_mpa": 25.0,
     "squeeze_mm": 1.07,
     "lost_n": {
-     "0.05": 50.0,
-     "0.2": 210.0
+     "0.05": 70.0,
+     "0.2": 280.0
     },
     "lost_frac": {
      "0.05": 0.05,

@@ -862,6 +862,9 @@ def wheel_link():
     return k
 
 
+WHEEL_WASHER = (6.4, 11.0, 1.6)   # DIN 433 M6 under each BotWheel screw's head on the foot's inner face (D74): 63 mm2
+                                  # of plastic under it instead of 44 under a bare Ø10 head; its Ø11 reaches r 23.5 in the
+                                  # hub's Ø48 bore. The screw goes 1.6 mm less into the wheel: 7.6 mm (1.3 d)
 HUB_ROOT_GAP = 2.0           # mm from the outer 61812's face (y apex_bearing[1]) to where a grown hub root may start
 HUB_ROOT_R_MAX = 37.5        # the front link's seat bore is r 39 and turns round the hub: 1.5 mm of radial room
 
@@ -1175,11 +1178,15 @@ def screw_groups(fr, j):
     out['screws_links'] = links
     out['screws_outputs'] = outputs
     ex, ez = j['E']
-    wheel = None
+    wheel, washers = None, None
+    wd, wD, wt = WHEEL_WASHER
     for (x, z) in gmi.circle_pts(36.0, 4, 45.0):
-        sc = screw(6.0, 30.0, 10.0, 6.0, Y['wheel_link'][0], 1, ex + x, ez + z)
+        sc = screw(6.0, 30.0, 10.0, 6.0, Y['wheel_link'][0] - wt, 1, ex + x, ez + z)
+        wa = bearing(wd, wD, wt, Y['wheel_link'][0] - wt, ex + x, ez + z)
         wheel = sc if wheel is None else wheel.union(sc)
+        washers = wa if washers is None else washers.union(wa)
     out['screws_wheel'] = wheel
+    out['washers_wheel'] = washers
     return out
 
 

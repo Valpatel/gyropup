@@ -93,7 +93,7 @@ class Inventory(unittest.TestCase):
         self.assertIn('screw-bottoms', codes(d, 'turret.plinth_columns'))
         self.assertIn('pan-base-dowels', codes(d, 'turret.plinth_columns'))
         self.assertIn('pilot-shorter-than-insert', codes(d, 'stand.dock'))
-        self.assertIn('printed-clamp-crush', codes(d, 'leg.wheel_botwheel'))
+        self.assertNotIn('printed-clamp-crush', codes(d, 'leg.wheel_botwheel'))   # D74: DIN 433 washers, 1.8 N m
         self.assertIn('printed-clamp-crush', codes(d, 'leg.upper_link_hub'))
         self.assertIn('engagement-low', codes(d, 'turret.pan_ring_yoke'))
         self.assertIn('engagement-low', codes(d, 'rig.pendant_clip'))

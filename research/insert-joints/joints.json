@@ -348,7 +348,7 @@
    "material": "pa6-cf",
    "infill": "100 %",
    "receiver": "BotWheel M6 (depth not published)",
-   "screw": "M6 x 30 ISO 4762 from inside the hub, no washer",
+   "screw": "M6 x 30 ISO 4762 from inside the hub, on a DIN 433 washer (D74)",
    "screw_side": "n/a",
    "axis": "print-z",
    "orientation": "wheel link printed flat on its outer face: the screw axis is the build direction",
@@ -357,18 +357,18 @@
     "printed_mm": 20.8,
     "limiter": null,
     "material": "PA6-CF",
-    "bearing": "Ø10 socket head",
-    "bearing_od_mm": 10.0,
+    "bearing": "DIN 433 M6 washer",
+    "bearing_od_mm": 11.0,
     "bearing_id_mm": 6.6,
-    "level": "owner",
-    "bearing_area_mm2": 44.3,
-    "bearing_mpa": 150.4,
-    "preload_at_sustained_n": 1108,
-    "torque_at_sustained_nm": 1.33
+    "level": "check",
+    "bearing_area_mm2": 60.8,
+    "bearing_mpa": 24.7,
+    "preload_at_sustained_n": 1521,
+    "torque_at_sustained_nm": 1.82
    },
-   "torque_nm": 8.0,
-   "torque_source": "docs/leg-rig-assembly.md: \"8 N m, threadlocker\" (no source given)",
-   "preload_n": 6667,
+   "torque_nm": 1.8,
+   "torque_source": "docs/leg-rig-assembly.md: \"1.8 N m, threadlocker\" (D74: the washer's plastic at the sustained screen)",
+   "preload_n": 1500,
    "loads": [
     {
      "case": "rare (jump_peak): axle 1776.3 N at 24.8 mm + 10 % grip at the tyre: 68 N m on 4 x M6 at PCD 36",
@@ -386,17 +386,12 @@
    "notes": "Keeping the flange closed needs about 1331 N a screw; the plastic under a bare Ø10 head holds 1108 N at 25 MPa, so no torque satisfies both. A DIN 9021 washer (catalog/hardware.json lists 8 for these screws) does not fit: on PCD 36 its Ø18 reaches r 27, past the hub's Ø48 bore. A DIN 433 (Ø11) reaches r 23.5 and fits (0.5 mm inside the bore, 1.5 mm outside the Ø22 cable hole): 61 mm2 holds 1521 N at 25 MPa (1.82 N m), 1.14 x the need.",
    "findings": [
     {
-     "code": "printed-clamp-crush",
-     "level": "owner",
-     "text": "6667 N on 44 mm2 of printed PA6-CF under the Ø10 socket head = 150 MPa (> 40 humid, 25 sustained); 20.8 mm of plastic in the clamp, no limiter"
-    },
-    {
      "code": "wheel-clamp",
-     "level": "owner",
-     "text": "8 N m ~ 6667 N on 44 mm2 = 150 MPa on PA6-CF; the flange needs >= 1331 N a screw, a bare head holds 1108 N, a DIN 433 washer 1521 N (1.82 N m)"
+     "level": "check",
+     "text": "1.8 N m ~ 1500 N on the DIN 433's 61 mm2 = 25 MPa on PA6-CF (D74; a bare head was 44 mm2); the flange needs >= 1331 N a screw, 1.13 x that at assembly: coupon C3 measures what creep leaves, re-torque after 24 h"
     }
    ],
-   "verdict": "owner"
+   "verdict": "check"
   },
   {
    "id": "leg.stop_posts",
@@ -2443,18 +2438,6 @@
    "text": "at the assumed 1200 N the hub's edge lifts at 104 N m; R1 puts 114.6 and R3 188.6 N m on it"
   },
   {
-   "joint": "leg.wheel_botwheel",
-   "code": "printed-clamp-crush",
-   "level": "owner",
-   "text": "6667 N on 44 mm2 of printed PA6-CF under the Ø10 socket head = 150 MPa (> 40 humid, 25 sustained); 20.8 mm of plastic in the clamp, no limiter"
-  },
-  {
-   "joint": "leg.wheel_botwheel",
-   "code": "wheel-clamp",
-   "level": "owner",
-   "text": "8 N m ~ 6667 N on 44 mm2 = 150 MPa on PA6-CF; the flange needs >= 1331 N a screw, a bare head holds 1108 N, a DIN 433 washer 1521 N (1.82 N m)"
-  },
-  {
    "joint": "rig.pendant_clip",
    "code": "engagement-low",
    "level": "owner",
@@ -2515,6 +2498,12 @@
    "text": "cut each spacer to the measured web gap (+0 / +0.05 mm) and check the bearings turn freely after torquing"
   },
   {
+   "joint": "leg.wheel_botwheel",
+   "code": "wheel-clamp",
+   "level": "check",
+   "text": "1.8 N m ~ 1500 N on the DIN 433's 61 mm2 = 25 MPa on PA6-CF (D74; a bare head was 44 mm2); the flange needs >= 1331 N a screw, 1.13 x that at assembly: coupon C3 measures what creep leaves, re-torque after 24 h"
+  },
+  {
    "joint": "rig.pod_m4",
    "code": "preload-vs-pullout",
    "level": "check",
@@ -2543,15 +2532,15 @@
   "families": 46,
   "inserts_on_robot": 151,
   "verdicts": {
-   "owner": 7,
-   "check": 6,
+   "owner": 6,
+   "check": 7,
    "ok": 7,
    "note": 16,
    "fix": 10
   },
   "fix": 16,
-  "owner": 11,
-  "check": 11
+  "owner": 9,
+  "check": 12
  },
  "bindings": [
   {
@@ -2690,8 +2679,8 @@
   },
   {
    "file": "cad/rig_assembly.py",
-   "pattern": "'\\| Wheel \\(M6 x 30 into the BotWheel\\) \\| ([\\d.]+) N m, threadlocker \\|'",
-   "value": 8.0,
+   "pattern": "'\\| Wheel \\(M6 x 30 into the BotWheel, on DIN 433 washers\\) \\| ([\\d.]+) N m, threadlocker \\|'",
+   "value": 1.8,
    "lines": 1
   },
   {
@@ -2720,6 +2709,24 @@
    "file": "cad/fivebar.py",
    "pattern": "k = k\\.cut\\(ycyl\\(([\\d.]+), h0 - 1, h1 - 0\\.01, l2\\)\\)\\s+# Ø48 bore",
    "value": 24.0,
+   "lines": 1
+  },
+  {
+   "file": "cad/fivebar.py",
+   "pattern": "^WHEEL_WASHER = \\([\\d.]+, ([\\d.]+), [\\d.]+\\)",
+   "value": 11.0,
+   "lines": 1
+  },
+  {
+   "file": "cad/fivebar.py",
+   "pattern": "^WHEEL_WASHER = \\(([\\d.]+), [\\d.]+, [\\d.]+\\)",
+   "value": 6.4,
+   "lines": 1
+  },
+  {
+   "file": "cad/fivebar.py",
+   "pattern": "^WHEEL_WASHER = \\([\\d.]+, [\\d.]+, ([\\d.]+)\\)",
+   "value": 1.6,
    "lines": 1
   },
   {

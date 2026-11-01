@@ -190,11 +190,11 @@ PR 2: both swept on the compute host; the lighter one that passes is drawn.
 
 ### `leg.wheel_botwheel` (8 on the robot): the wheel on the leg
 
-Today: 4 x M6 x 30 from inside the hub, heads on 20.8 mm of PA6-CF; 8 N m puts 150.4 MPa under each head.
+Today: 4 x M6 x 30 from inside the hub, heads on 20.8 mm of PA6-CF; 1.8 N m puts 24.7 MPa under each head.
 
 High-stress because:
 
-- needs >= 1331 N a screw; a bare head holds 1108 N at 25 MPa
+- needs >= 1331 N a screw; a bare head holds 1521 N at 25 MPa
 
 | Option | Screen |
 |---|---|
@@ -242,7 +242,7 @@ VDI 2230 joint diagram: preload lost = embedding x k_bolt k_clamp / (k_bolt + k_
 |---|---|---|---|---|---|---|
 | upper link hub, today (M5 head on the link) | 24.5 mm of PA6-CF across its layers under 33 mm2 | 1200.0 | 36.4 | 1.83 | 30.0 | 130.0 |
 | hip frame lugs, today (M4 head on the web) | 15.6 mm of PA6-CF across its layers under 23 mm2 | 560.0 | 25.0 | 0.8 | 40.0 | 140.0 |
-| wheel foot, today (M6 head on the foot) | 20.8 mm of PA6-CF across its layers under 44 mm2 | 1110.0 | 25.0 | 1.07 | 50.0 | 210.0 |
+| wheel foot, today (M6 head on the foot) | 20.8 mm of PA6-CF across its layers under 61 mm2 | 1520.0 | 25.0 | 1.07 | 70.0 | 280.0 |
 | upper link hub, 6061 clamp ring (per screw share) | 20.5 mm of PA6-CF across its layers under 239 mm2 | 4000.0 | 16.7 | 0.7 | 260.0 | 1060.0 |
 | hip frame mount, through-bolt on the plastic | 76.8 mm of PA6-CF across its layers under 153 mm2 | 3000.0 | 19.6 | 3.09 | 50.0 | 190.0 |
 | hip frame mount, sleeved through-bolt | steel sleeve (the plastic is outside the clamp path) | 5110.0 |  |  | 0 | 0 |

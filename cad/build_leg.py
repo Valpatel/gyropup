@@ -63,6 +63,7 @@ BOUGHT = [
     ('screw_m5x40', 16, 'upper links onto the output adapters (8 each), heads proud'),
     ('insert_m5', 6, 'the frame\'s flange ends (the body, or the rig\'s carriage)'),
     ('screw_m6x30', 4, 'the BotWheel\'s flange, from inside the wheel link\'s hub (M6 x 40 bottoms out unless its threads are > 15 deep: measure)'),
+    ('washer_m6_din433', 4, 'under the BotWheel screws\' heads on the wheel link\'s foot (D74: spreads the clamp; 1.8 N m)'),
 ]
 
 
