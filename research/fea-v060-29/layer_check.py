@@ -131,9 +131,9 @@ def main():
                    verdict_sf=r.get('verdict_sf', r['safety_factor']), turret_layer_aware_sf=r.get('sf_layer_aware'),
                    layer_check_governs=lc is not None and lc < r['safety_factor'],
                    layer_check_ok=lc is not None and lc >= r['target'])
-    import cadagent
+    from importlib.metadata import version            # cadagent has no __version__ (v0.6.0)
     rev = subprocess.run(['git', 'rev-parse', 'HEAD'], cwd=ROOT, text=True, capture_output=True).stdout.strip()
-    res = {'schema': 1, 'suite': a.suite, 'source_revision': rev, 'toolkit_version': getattr(cadagent, '__version__', None),
+    res = {'schema': 1, 'suite': a.suite, 'source_revision': rev, 'toolkit_version': version('cad-agent'),
            'mesh_mm': a.mesh or (4.0 if a.suite == 'leg' else 2.5), 'seconds': round(time.time() - t0, 1),
            'shear_assumption': 'toolkit default S_z / sqrt(3) (no data sheet gives an interlayer shear strength); '
                                'shear_half_sz repeats the check at S_z / 2, the turret study\'s own rule',

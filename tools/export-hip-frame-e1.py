@@ -16,6 +16,9 @@ import sys
 
 ROOT = Path(__file__).resolve().parents[1]
 OUT = ROOT / 'exports/leg/fea/hip-frame-e1-media'
+# The recorded E1 gate (exports/leg/fea/summary.json, regenerated on cad-agent v0.6.0 in issue #29). Review the
+# visualization explicitly whenever the record changes; never relabel another case as this one.
+RECORDED_SF = 1.63
 
 
 def digest(path):
@@ -41,7 +44,7 @@ def main():
             raise ValueError(f'Input differs from committed revision: {path}')
     baseline = json.loads((ROOT / 'exports/leg/fea/summary.json').read_text())
     original = next(r for r in baseline['results'] if r['part'] == 'hip_frame' and r['case'] == 'E1')
-    if original['safety_factor'] != 1.65 or original['target'] != 2.0 or original['ok'] is not False:
+    if original['safety_factor'] != RECORDED_SF or original['target'] != 2.0 or original['ok'] is not False:
         raise ValueError('Recorded E1 case changed; review the visualization baseline explicitly')
     OUT.mkdir(parents=True, exist_ok=True)
     # leg_studies reads load-sharing coefficients from OUT/summary.json. Preserve
@@ -86,7 +89,7 @@ def main():
     (OUT / 'field-receipt.json').write_text(json.dumps(receipt, indent=2) + '\n')
     # The copied summary was only an input to the narrow solve, not a new report.
     (OUT / 'summary.json').unlink()
-    print('PASS: one static E1 field reproduced; SF1.65 remains below target2.0.', flush=True)
+    print(f'PASS: one static E1 field reproduced; SF {RECORDED_SF} remains below target 2.0.', flush=True)
 
 
 if __name__ == '__main__':
