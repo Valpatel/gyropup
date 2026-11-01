@@ -76,12 +76,55 @@ class Repo:
             self._json[rel] = json.loads((self.root / rel).read_text())
         return self._json[rel]
 
-    def num(self, rel, pattern, group=1):
-        m = re.search(pattern, self.text(rel), re.M)
-        if not m:
+    def _all(self, rel, pattern, group, default=None):
+        ms = list(re.finditer(pattern, self.text(rel), re.M))
+        if not ms:
             raise Stale(f'{rel}: no match for {pattern!r}; the source changed, so update research/insert-joints/inventory.py')
-        v = float(m.group(group))
-        self.bindings.append({'file': rel, 'pattern': pattern, 'value': v})
+        vals = {float(m.group(group)) if m.group(group) is not None else default for m in ms}
+        if len(vals) != 1 or None in vals:
+            raise Stale(f'{rel}: {pattern!r} matches {len(ms)} lines with values {sorted(map(str, vals))}; bind each line '
+                        'on its own in research/insert-joints/inventory.py')
+        v = vals.pop()
+        self.bindings.append({'file': rel, 'pattern': pattern, 'value': v, 'lines': len(ms)})
+        return v
+
+    def num(self, rel, pattern, group=1):
+        """A number from every line the pattern matches (they must agree, so a second site cannot drift unseen)."""
+        return self._all(rel, pattern, group)
+
+    def opt(self, rel, pattern, default, group=1):
+        """As num(), for a call whose optional argument defaults (e.g. insert_hole(..., depth=INSERT_DEPTH))."""
+        return self._all(rel, pattern, group, default)
+
+    def block(self, rel, start):
+        """The source of one top-level def (from `start` to the next top-level statement)."""
+        t = self.text(rel)
+        i = t.find(start)
+        if i < 0:
+            raise Stale(f'{rel}: {start!r} is gone; update research/insert-joints/inventory.py')
+        m = re.compile(r'^\S', re.M).search(t, i + len(start))
+        self.bindings.append({'file': rel, 'block': start})
+        return t[i:m.start() if m else len(t)]
+
+    def bom_len(self, rel, for_key):
+        """A screw or pin length from a BOM line (its 'for' group), e.g. 'M4 x 0.7 mm Thread Size, 10 mm Long'."""
+        rows = []
+
+        def walk(x):
+            if isinstance(x, dict):
+                if x.get('for') == for_key and 'item' in x:
+                    rows.append(x)
+                for v in x.values():
+                    walk(v)
+            elif isinstance(x, list):
+                for v in x:
+                    walk(v)
+        walk(self.json(rel))
+        lens = {float(m.group(1)) for x in rows for m in [re.search(r'([\d.]+) ?mm Long', x['item'])] if m}
+        if len(lens) != 1:
+            raise Stale(f'{rel}: BOM group {for_key!r} gives lengths {sorted(lens)}; update research/insert-joints/inventory.py')
+        v = lens.pop()
+        self.bindings.append({'file': rel, 'bom_for': for_key, 'value': v})
         return v
 
     def has(self, rel, literal):
@@ -220,9 +263,9 @@ def screen(j, ins, mat, F):
             if ratio < SPIROL_BOSS - 0.005:
                 out.append(('boss-thin', 'note', f"boss Ø{boss:g} is {ratio:.2f} x the insert's Ø{i['od_mm']:g} "
                             f"(wall {j['boss_wall_mm']:g} mm; Spirol asks 2-3 x)"))
-        tip = j.get('tip_depth_mm')
+        tip = j.get('tip_depth_mm')               # the deepest tip of the family (bottoming)
         if tip is not None:
-            eng = min(tip, L)
+            eng = min(j.get('tip_min_mm', tip), L)  # the shallowest (engagement)
             j['thread_engaged_mm'] = r(eng, 2)
             if not hole.get('through'):
                 clear = hole['depth'] - tip
@@ -358,12 +401,13 @@ def build(repo):
     rare_t = frame_tension(rare_m, sc[rare_s]['body']['with_ground_n'])
     fault_t = frame_tension(fault_m, sc[fault_s]['body']['with_ground_n'])
     add(id='leg.hip_frame_mount', assembly='leg', where='hip frame flange ends (PA6-CF), the body cheek / rig plate',
+        typed={'row pitch 140 mm': 'frame_mounts(): ring r 62 + 1.5 + FLANGE_T / 2, a side', 'rig plate 6.35 mm': 'cad/rig_parts.py (text)'},
         qty_robot=hf['count'], insert='insert_m5', d_mm=5, material='pa6-cf', infill='100 %',
         hole={'d': fast['M5']['insert_pilot'], 'depth': fm_depth}, boss_mm=2 * fm_boss_r, material_mm=None,
         axis='print-z', orientation='frame printed web-down: the insert axis (y) is the build direction',
         screw=f"body: {', '.join(hf['screws'])} from the cheek side; rig: M5 x 16 + washer through the 6.35 plate",
         screw_side='open end: the screw pulls the insert out of its pilot under load', mating_hole_mm=fast['M5']['clear'],
-        tip_depth_mm=hf['tip_max'],
+        tip_depth_mm=hf['tip_max'], tip_min_mm=hf['tip_min'],
         clamp={'stack': '4.75 mm aluminium cheek (body) / 6.35 mm 6061 plate (rig) only', 'printed_mm': 0, 'limiter': 'n/a'},
         torque_nm=b4_torque, torque_source='docs/leg-rig-assembly.md (cad/rig_assembly.py): "the B4 torque (1.5 N m until B4)"',
         preload_n=r(preload(b4_torque, 5), 0),
@@ -404,9 +448,15 @@ def build(repo):
     lug_cb = repo.num('cad/fivebar.py', r'^LUG_CB = ([\d.]+)')
     frame_t = 24.1
     repo.has('cad/fivebar.py', '# 24.1 mm frame - 8.5 mm counterbore = 15.6 mm nominal grip;')
-    lug_r = 53.0   # research/rs04-lug-stacks/README.md: the factory recesses at r 57.6 sit 4.6 mm outboard of the M4 axes
+    lug_r = repo.num('cad/fivebar.py', r'\(10 x M4 on PCD ([\d.]+)\)') / 2
     peak_motor = max(v['peak_motor_nm'] for v in sc.values())
     shear = 1000.0 * peak_motor / (10 * lug_r)
+    # the motor's two Ø5 steel dowels on the same PCD, pressed 12 mm into the frame from the motor side (fivebar.py hip_frame)
+    n_dowel = len(repo.has('cad/fivebar.py', 'RS04_LUG0, RS04_DOWELS = -15.0, (3.0, 183.0)').split('(')[1].split(','))
+    dowel_in = repo.num('cad/fivebar.py', r'web = web\.cut\(ycyl\(2\.5 - 0\.03, yf0 - 1, yf0 \+ ([\d.]+), x, z\)\)')
+    dowel_f = 1000.0 * peak_motor / (n_dowel * lug_r)
+    dowel_mpa = dowel_f / (5.0 * dowel_in)
+    lug_pre = mat['bearing_sustained_mpa'] * annulus(HEAD_D[('socket', 4)], fast['M4']['clear'])
     add(id='leg.hip_frame_lugs', assembly='leg', where='hip frame web (PA6-CF, 24.1 mm) onto each RS-04 case',
         qty_robot=40, insert=None, d_mm=4, material='pa6-cf', infill='100 %', receiver='RS-04 case, 5 mm guaranteed thread',
         screw='M4 x 20 ISO 4762 12.9, 10 per motor, heads in Ø8.55 x 8.5 counterbores, no washer',
@@ -418,13 +468,15 @@ def build(repo):
         loads=[{'case': f"peak motor torque {peak_motor:g} N m on 10 lugs at r {lug_r:g} mm", 'per_insert_n': r(shear, 0),
                 'shear': True, 'source': 'exports/body/leg-loads.json scenarios peak_motor_nm'}],
         notes=f"No torque is set (issue #116). The plastic under the head sets it: {mat['bearing_sustained_mpa']:g} MPa on "
-              f"{annulus(7.0, fast['M4']['clear']):.1f} mm2 is {mat['bearing_sustained_mpa'] * annulus(7.0, fast['M4']['clear']):.0f} N. "
-              f"At that preload friction (mu 0.15) carries {0.15 * mat['bearing_sustained_mpa'] * annulus(7.0, fast['M4']['clear']):.0f} N "
-              f"a lug against {shear:.0f} N of shear at peak torque, so the lugs slip into bearing on their shanks.",
-        extra=[('lug-preload-plastic-limited', 'owner', f"{frame_t - lug_cb:.1f} mm of PA6-CF under each Ø7 head with no limiter: "
-                f"{mat['bearing_sustained_mpa']:g} MPa allows {mat['bearing_sustained_mpa'] * annulus(7.0, fast['M4']['clear']):.0f} N "
-                f"({torque_for(mat['bearing_sustained_mpa'] * annulus(7.0, fast['M4']['clear']), 4):.2f} N m), and friction then "
-                f"carries {0.15 * mat['bearing_sustained_mpa'] * annulus(7.0, fast['M4']['clear']):.0f} of the {shear:.0f} N per lug")])
+              f"{annulus(HEAD_D[('socket', 4)], fast['M4']['clear']):.1f} mm2 is {lug_pre:.0f} N. At that preload friction (mu 0.15) "
+              f"carries {0.15 * lug_pre:.0f} N a lug against {shear:.0f} N of shear at peak torque. The torque rides on the motor's "
+              f"{n_dowel} Ø5 steel dowels on the same PCD ({dowel_in:g} mm into the frame): {dowel_f:.0f} N each, {dowel_mpa:.0f} MPa "
+              f"bearing on the PA6-CF (< {mat['bearing_sustained_mpa']:g} sustained). The lug screws hold the frame on; they do not "
+              "carry the torque by friction.",
+        extra=[('lug-torque-from-plastic', 'check', f"set the lug screws' torque from the plastic (#116): {frame_t - lug_cb:.1f} mm of "
+                f"PA6-CF under each Ø7 head, no limiter: {mat['bearing_sustained_mpa']:g} MPa allows {lug_pre:.0f} N "
+                f"({torque_for(lug_pre, 4):.2f} N m at K 0.2). The peak torque then rides on the dowels ({dowel_f:.0f} N, "
+                f"{dowel_mpa:.0f} MPa): check their press fit in the printed frame on a coupon")])
 
     sleeve = (repo.num('cad/fivebar.py', r'^EYE_SLEEVE = \(([\d.]+), [\d.]+, [\d.]+\)'),
               repo.num('cad/fivebar.py', r'^EYE_SLEEVE = \([\d.]+, ([\d.]+), [\d.]+\)'),
@@ -433,6 +485,7 @@ def build(repo):
     knee_pre = preload(knee_t, 10)
     ring = annulus(20.0, sleeve[0])
     add(id='leg.knee_eye_sleeves', assembly='leg', where="upper link knee eye: two DIN 179 18 x 12 x 20 steel sleeves (pressed)",
+        typed={'washer Ø20': 'DIN 433 M10 (catalog washer under the nyloc)'},
         qty_robot=4, insert=None, d_mm=10, material='pa6-cf', infill='100 %', receiver='M10 nyloc on the inner sleeve',
         screw='ISO 7379 Ø12 shoulder screw, M10 nyloc', screw_side='n/a', axis='print-z',
         clamp={'stack': 'washer DIN 433 (Ø20) | sleeves 2 x 20 | nut: all steel if the outer sleeve is flush or proud',
@@ -463,38 +516,55 @@ def build(repo):
     wt = repo.num('cad/rig_assembly.py', r"'\| Wheel \(M6 x 30 into the BotWheel\) \| ([\d.]+) N m, threadlocker \|'")
     bw = repo.json('catalog/interfaces.json')['odrive-botwheel']
     pcd, wheel_d = bw['case']['bolts']['pcd'], bw['envelope']['outer_diameter']
-    y_flange, y_tyre = 80.0, 104.8   # wheel link outer face; tyre mid-plane (fivebar Y['wheel_link'][1], Y['wheel'])
+    boss_h = bw['case']['spigot']['height']
+    # the tyre's mid-plane from the flange face (the link's outer face): fivebar Stack y['tyre'] = (boss + a, boss + a + w)
+    tyre_a = repo.num('cad/fivebar.py', r"y\['tyre'\] = \(y\['wheel_boss'\] \+ ([\d.]+), y\['wheel_boss'\] \+ [\d.]+ \+ [\d.]+\)")
+    tyre_w = repo.num('cad/fivebar.py', r"y\['tyre'\] = \(y\['wheel_boss'\] \+ [\d.]+, y\['wheel_boss'\] \+ [\d.]+ \+ ([\d.]+)\)")
+    lever = -boss_h + tyre_a + tyre_w / 2
+    repo.has('cad/fivebar.py', "k = k.cut(ycyl(gmi.clear('M6') / 2, h1 - 1, y1 + 1, l2 + x, z))")   # heads on the foot's inner face
+    printed_w = wheel_t - boss_h - play          # the bolts (PCD 36) pass inside the Ø50 boss's recess: plastic to its floor
     yb = pcd / 2 * math.sin(math.radians(45))
+    cable_r = repo.num('cad/fivebar.py', r"k = k\.cut\(ycyl\(([\d.]+), h1 - 1, y1 \+ 1, l2\)\)\s+# the cable")
+    bore = 2 * repo.num('cad/fivebar.py', r"k = k\.cut\(ycyl\(([\d.]+), h0 - 1, h1 - 0\.01, l2\)\)\s+# Ø48 bore")
 
     def wheel_bolt(name):
         s = sc[name]
-        M = s['peak_axle_force_n'] * (y_tyre - y_flange) / 1000.0 + 0.10 * s['peak_wheel_force_n'] * wheel_d / 2000.0
+        M = s['peak_axle_force_n'] * lever / 1000.0 + 0.10 * s['peak_wheel_force_n'] * wheel_d / 2000.0
         return M, 1000.0 * M * yb / (4 * yb ** 2)
 
     m_rare, t_rare = wheel_bolt(rare_s)
     m_fault, t_fault = wheel_bolt(fault_s)
     w_area = annulus(HEAD_D[('socket', 6)], fast['M6']['clear'])
+    din433 = (11.0, 6.4, 1.6)                     # DIN 433 M6: OD, ID, thickness (the small washer for socket heads)
+    w433 = annulus(din433[0], fast['M6']['clear'])
+    t_need = max(t_rare, t_fault)
     add(id='leg.wheel_botwheel', assembly='leg', where="wheel link foot (PA6-CF) onto the BotWheel's stator flange",
         qty_robot=8, insert=None, d_mm=6, material='pa6-cf', infill='100 %', receiver='BotWheel M6 (depth not published)',
         screw='M6 x 30 ISO 4762 from inside the hub, no washer', screw_side='n/a', axis='print-z',
         orientation='wheel link printed flat on its outer face: the screw axis is the build direction',
-        clamp={'stack': f"{wheel_t:g} mm printed PA6-CF foot (head on the hub's floor to the flange on the outer face)",
-               'printed_mm': wheel_t, 'limiter': None, 'material': 'PA6-CF', 'bearing': 'Ø10 socket head',
+        clamp={'stack': f"{printed_w:.1f} mm printed PA6-CF under each head (the {wheel_t:g} mm foot less the Ø50 x {boss_h:g} boss "
+                        f"recess and its {play:g} play; the flange seats on the outer face outside the recess)",
+               'printed_mm': round(printed_w, 2), 'limiter': None, 'material': 'PA6-CF', 'bearing': 'Ø10 socket head',
                'bearing_od_mm': HEAD_D[('socket', 6)], 'bearing_id_mm': fast['M6']['clear'], 'level': 'owner'},
         torque_nm=wt, torque_source='docs/leg-rig-assembly.md: "8 N m, threadlocker" (no source given)',
         preload_n=r(preload(wt, 6), 0),
-        loads=[{'case': f"rare ({rare_s}): axle {sc[rare_s]['peak_axle_force_n']:g} N at {y_tyre - y_flange:.1f} mm + 10 % grip at the "
+        loads=[{'case': f"rare ({rare_s}): axle {sc[rare_s]['peak_axle_force_n']:g} N at {lever:.1f} mm + 10 % grip at the "
                         f"tyre: {m_rare:.0f} N m on 4 x M6 at PCD {pcd:g}", 'per_insert_n': r(t_rare, 0), 'tension': True,
                 'source': 'exports/body/leg-loads.json'},
                {'case': f"fault ({fault_s}): {m_fault:.0f} N m", 'per_insert_n': r(t_fault, 0), 'tension': True,
                 'source': 'exports/body/leg-loads.json'}],
-        notes=f"Keeping the flange closed needs about {max(t_rare, t_fault):.0f} N a screw; the plastic under a bare Ø10 head holds "
-              f"{mat['bearing_sustained_mpa'] * w_area:.0f} N at {mat['bearing_sustained_mpa']:g} MPa. No torque satisfies both "
-              "without a spreader or limiter. A DIN 9021 washer (catalog/hardware.json lists 8 for these screws) does not fit: "
-              f"on PCD {pcd:g} its Ø18 reaches r {pcd / 2 + 9:g}, past the hub's Ø48 bore.",
+        notes=f"Keeping the flange closed needs about {t_need:.0f} N a screw; the plastic under a bare Ø10 head holds "
+              f"{mat['bearing_sustained_mpa'] * w_area:.0f} N at {mat['bearing_sustained_mpa']:g} MPa, so no torque satisfies both. "
+              f"A DIN 9021 washer (catalog/hardware.json lists 8 for these screws) does not fit: on PCD {pcd:g} its Ø18 reaches "
+              f"r {pcd / 2 + 9:g}, past the hub's Ø{bore:g} bore. A DIN 433 (Ø{din433[0]:g}) reaches r {pcd / 2 + din433[0] / 2:g} "
+              f"and fits ({bore / 2 - pcd / 2 - din433[0] / 2:g} mm inside the bore, {pcd / 2 - din433[0] / 2 - cable_r:g} mm outside the "
+              f"Ø{2 * cable_r:g} cable hole): {w433:.0f} mm2 holds {mat['bearing_sustained_mpa'] * w433:.0f} N at {mat['bearing_sustained_mpa']:g} MPa "
+              f"({torque_for(mat['bearing_sustained_mpa'] * w433, 6):.2f} N m), {mat['bearing_sustained_mpa'] * w433 / t_need:.2f} x "
+              "the need.",
         extra=[('wheel-clamp', 'owner', f"{wt:g} N m ~ {preload(wt, 6):.0f} N on {w_area:.0f} mm2 = {preload(wt, 6) / w_area:.0f} MPa "
-                f"on PA6-CF; the flange needs >= {max(t_rare, t_fault):.0f} N a screw, the plastic holds "
-                f"{mat['bearing_sustained_mpa'] * w_area:.0f} N"),
+                f"on PA6-CF; the flange needs >= {t_need:.0f} N a screw, a bare head holds "
+                f"{mat['bearing_sustained_mpa'] * w_area:.0f} N, a DIN 433 washer {mat['bearing_sustained_mpa'] * w433:.0f} N "
+                f"({torque_for(mat['bearing_sustained_mpa'] * w433, 6):.2f} N m)"),
                ('note-vs-joint', 'fix', f"cad/fivebar.py wheel_link() docstring: {q(repo.has('cad/fivebar.py', 'its 4 x M6 x 40'))}; "
                 'the joint and BOM are M6 x 30, and catalog/hardware.json screw_m6x40 still lists this joint')])
 
@@ -505,6 +575,55 @@ def build(repo):
                 f"{q(repo.has('cad/rig_assembly.py', 'the B4 torque into the M8 insert, 5 N m until B4'))} and "
                 f"{q(repo.has('cad/rig_assembly.py', 'Stop posts (M8 into heat-set inserts)'))}: the posts are pins (D53)")])
 
+    # ================================================================== the TM's sideways-fall load, from the TM face (D66)
+    # mount.json's centre is in the turret frame T, whose origin is the pan base's foot. Since D66 the plinth's tray sits
+    # PLINTH['h'] below that (compute_tray: z0 = -P['h']), on the riser: the real TM face.
+    ph = repo.num('cad/turret.py', r"^PLINTH = \{'h': ([\d.]+), ")
+    repo.has('cad/turret.py', "z0 = -P['h']")
+    tray_t_ = repo.num('cad/turret.py', r"^PLINTH = \{'h': [\d.]+, 'r': [\d.]+, 'wall': [\d.]+, 'tray_t': ([\d.]+),")
+    fall_g = repo.num('cad/turret_studies.py', r'^FALL_G = ([\d.]+)')
+    repo.has('cad/turret_studies.py', "mom = F_side * M['com_mm'][2] / 1000")
+    tm_m, tm_z = mount['mass_kg'], mount['com_mm'][2]
+    below_face = max(0.0, -mount['envelope']['lowest_z_mm'])        # how far the turret reaches below frame T's origin
+    tm_arm = 2 * abs(mount['tm']['bolts_mm'][0][0]) / 1000.0         # the 80 mm pattern: two bolts in tension at 80 mm (as the hand check)
+    com_tm = tm_z + below_face            # the plinth's underside is the lowest point, and it sits on the riser
+    budget = float(re.search(r'centre at most ([\d.]+) mm above the TM face', mount['mass']['budget']).group(1))
+    f_side = tm_m * G0 * fall_g
+    t_riser_top = f_side * com_tm / 1000.0 / (2 * tm_arm)
+    riser_h = repo.num('cad/body_params.py', r'^RISER_H = ([\d.]+)')
+    repo.has('cad/body_frame.py', 'RISER_FEET = [(40.0, 40.0), (-40.0, 40.0), (-40.0, -40.0), (40.0, -40.0)]')
+    t_riser_feet = f_side * (com_tm + riser_h) / 1000.0 / (2 * tm_arm)
+    # the part above the plinth's columns: the turret less the plinth and what it holds (turret.json masses; the
+    # centroids are estimates: the tray at its mid-thickness, the shell at mid-height, the J4012 on the tray, the
+    # ports at mount.json's port height, the fuses on the tray)
+    tj = repo.json('exports/turret/turret.json')
+    j_h = repo.num('cad/turret.py', r"^J4012 = \{'L': [\d.]+, 'W': [\d.]+, 'H': ([\d.]+),")
+    port_z = mount['tm']['plinth']['xt30_mm'][2]
+    zt_ = -ph + tray_t_
+    below = [(tj['parts']['compute_tray']['mass_g_each'], -ph + tray_t_ / 2), (tj['parts']['compute_shell']['mass_g_each'], zt_ / 2),
+             (tj['bought']['compute']['mass_g'], zt_ + j_h / 2), (tj['bought']['eth_jack']['mass_g'], -ph + port_z),
+             (tj['bought']['xt30_input']['mass_g'], -ph + port_z), (tj['bought']['input_fuses']['mass_g'], zt_ + 5.0)]
+    m_below = sum(m for m, _ in below)
+    m_up = tm_m * 1000.0 - m_below
+    z_up = (tm_m * 1000.0 * tm_z - sum(m * z for m, z in below)) / m_up
+    t_columns = m_up / 1000.0 * G0 * fall_g * z_up / 1000.0 / (2 * tm_arm)
+    hc_tm = turret_hc['tm_bolts']['tension_per_bolt_n']
+    tm_case = (f"R: {fall_g:g} g sideways, the whole turret ({tm_m:g} kg) with its centre {com_tm:.1f} mm above the TM face "
+               f"(mount.json's {tm_z:g} in frame T + the {below_face:g} the turret reaches below it)")
+    tm_findings = []
+    if below_face > 1:
+        tm_findings.append(('tm-com-datum', 'fix', f"exports/turret/mount.json says frame T's origin is \"in the TM face\", but since D66 it reaches {below_face:g} mm below it "
+                            f"(envelope.lowest_z_mm): the origin is the pan base's foot and the plinth's tray is at z -{ph:g} (compute_tray z0 = -P['h']). Its centre "
+                            f"z {tm_z:g} is {com_tm:.1f} mm above the real TM face. hand_checks.tm_bolts uses {tm_z:g} "
+                            f"({hc_tm:g} N a bolt), and cad/body_params.tm() takes max({tm_z:g}, {budget:g}) = {max(tm_z, budget):g} "
+                            f"(com_above_deck_on_riser_mm {mount['mass'].get('com_above_deck_on_riser_mm')}). Fix cad/turret_mount.py "
+                            "(and turret_studies' tm_bolts) to measure from the plinth's underside, then re-run the body's riser "
+                            "and deck studies"))
+    if com_tm > budget:
+        tm_findings.append(('tm-com-budget', 'owner', f"the turret's centre is {com_tm:.1f} mm above the TM face against D71's "
+                            f"\"at most {budget:g} mm\": raise the budget and re-run the body's fall cases at {com_tm:.0f} mm, or "
+                            f"lower the turret (the plinth is {ph:g} mm)"))
+
     # ================================================================== BODY (P3)
     f = integ.pop('post_m5')
     post_w = repo.num('cad/body_params.py', r'^POST_W = ([\d.]+)')
@@ -514,7 +633,7 @@ def build(repo):
         insert='insert_m5', d_mm=5, material='pa6-cf', infill='100 %', hole={'d': fast['M5']['insert_pilot'], 'depth': post_depth},
         boss_mm=post_w, axis='print-z', orientation='printed standing: the insert axis is the build direction',
         screw=', '.join(f['screws']) + ' through the tray (3.17) and the deck (2.54)', screw_side='open end (foot: from below)',
-        mating_hole_mm=fast['M5']['clear'], tip_depth_mm=f['tip_max'],
+        mating_hole_mm=fast['M5']['clear'], tip_depth_mm=f['tip_max'], tip_min_mm=f['tip_min'],
         clamp={'stack': 'aluminium tray / deck only', 'printed_mm': 0, 'limiter': 'n/a'},
         torque_nm=b4_torque, preload_n=r(preload(b4_torque, 5), 0), torque_source='the M5-insert B4 torque (assumed)',
         loads=[{'case': "the landing's 8.65 g on a post (cad/body_frame.py post())", 'per_insert_n': post_n, 'tension': True,
@@ -524,11 +643,12 @@ def build(repo):
     f = integ.pop('post_m3')
     m3p = repo.num('cad/body_frame.py', r'^POST_M3_PILOT = ([\d.]+)')
     add(id='body.post_m3', assembly='body', where="deck posts' side and face bosses (9 x 9) for the P3 shell", qty_robot=f['count'],
+        typed={'shell boss 9.4 mm': 'cad/body_shell.py boss (read off the model)', 'pan head Ø5.6': 'ISO 7045 M3'},
         insert='insert_m3', d_mm=3, material='pa6-cf', infill='100 %',
         hole={'d': fast['M3']['insert_pilot'], 'depth': m3p, 'through': True},
         boss_mm=2 * repo.num('cad/body_frame.py', r'core = core\.cut\(box\(-([\d.]+), 4\.5, \*sorted\(\(sy \* w / 2'), axis='layer-plane',
         orientation='post printed standing: these inserts are horizontal', screw=', '.join(f['screws']) + ' through the PETG shell',
-        screw_side='open end', mating_hole_mm=fast['M3']['clear'], tip_depth_mm=f['tip_max'],
+        screw_side='open end', mating_hole_mm=fast['M3']['clear'], tip_depth_mm=f['tip_max'], tip_min_mm=f['tip_min'],
         clamp={'stack': 'PETG shell boss (9.4 mm) under a pan head', 'printed_mm': 9.4, 'limiter': None, 'material': 'PETG',
                'bearing': 'Ø5.6 pan head', 'bearing_od_mm': HEAD_D[('pan', 3)], 'bearing_id_mm': fast['M3']['clear']},
         loads=[{'case': 'a shell panel (light)', 'per_insert_n': 20, 'tension': True, 'source': 'estimate'}],
@@ -540,7 +660,7 @@ def build(repo):
     add(id='body.plate_post', assembly='body', where='power plate posts (PA6-CF 16 x 16, standing), both ends', qty_robot=f['count'],
         insert='insert_m5', d_mm=5, material='pa6-cf', infill='100 %', hole={'d': fast['M5']['insert_pilot'], 'depth': repo.num('cad/body_frame.py', r'return s\.cut\(cyl_z\(3\.2, -1\.0, ([\d.]+)\)\)\.cut\(cyl_z\(3\.2, h - 11\.0')},
         boss_mm=pp_w, axis='print-z', orientation='printed standing', screw=', '.join(f['screws']), screw_side='open end',
-        mating_hole_mm=fast['M5']['clear'], tip_depth_mm=f['tip_min'],
+        mating_hole_mm=fast['M5']['clear'], tip_depth_mm=f['tip_max'], tip_min_mm=f['tip_min'],
         clamp={'stack': 'aluminium tray / power plate only', 'printed_mm': 0, 'limiter': 'n/a'},
         loads=[{'case': 'the power plate and its electronics (est. 1.5 kg) at 10 g over 4 posts', 'per_insert_n': 37,
                 'tension': True, 'source': 'estimate'}],
@@ -554,12 +674,14 @@ def build(repo):
         hole={'d': 2 * repo.num('cad/body_frame.py', r's = s\.cut\(cyl_z\(([\d.]+), -1\.0, RISER_FOOT_PILOT, x, y\)\)'), 'depth': rfp},
         boss_mm=2 * repo.num('cad/body_frame.py', r'^RISER_LEG_R = ([\d.]+)'), axis='print-z',
         orientation='printed on its top face: insert axes along the build direction', screw=', '.join(f['screws']) + ' from below',
-        screw_side='open end (from below)', mating_hole_mm=fast['M5']['clear'], tip_depth_mm=f['tip_max'],
+        screw_side='open end (from below)', mating_hole_mm=fast['M5']['clear'], tip_depth_mm=f['tip_max'], tip_min_mm=f['tip_min'],
         clamp={'stack': 'turret plate + deck (aluminium)', 'printed_mm': 0, 'limiter': 'n/a'},
-        loads=[{'case': "the turret's 30 g sideways TM moment, carried down the riser's legs",
-                'per_insert_n': turret_hc['tm_bolts']['tension_per_bolt_n'], 'tension': True,
-                'source': 'exports/turret/fea/summary.json hand_checks.tm_bolts'}],
-        pullout_repo_n=turret_hc['tm_bolts']['m5_insert_pullout_n_est'], notes='Body joints: ' + ', '.join(f['joints']) + '.')
+        loads=[{'case': tm_case + f", {riser_h:g} mm further down at the feet (the riser's 80 x 80 legs)",
+                'per_insert_n': r(t_riser_feet, 0), 'tension': True,
+                'source': 'exports/turret/mount.json mass_kg, com_mm; cad/turret.py PLINTH; cad/body_params.py RISER_H'}],
+        pullout_repo_n=turret_hc['tm_bolts']['m5_insert_pullout_n_est'],
+        notes=f"The turret's hand check gives {hc_tm:g} N a bolt from its centre in frame T; measured from the TM face (D66) "
+              f"each foot sees {t_riser_feet:.0f} N. Body joints: " + ', '.join(f['joints']) + '.')
 
     riser_top = repo.num('cad/body_frame.py', r's = s\.cut\(cyl_z\(3\.2, H - ([\d.]+), H \+ 1\.0, x, y\)\)\s+# M5 insert from the top')
     riser_dowel = repo.num('cad/body_frame.py', r's = s\.cut\(cyl_z\(2\.5 - 0\.03, H - ([\d.]+), H \+ 1\.0, x, y\)\)')
@@ -569,27 +691,32 @@ def build(repo):
     tip_tray = tm_len - (plinth_t - plinth_cb)
     pin_l = float(mount['tm']['dowel_pin'].split('x')[1].split(',')[0])
     tray_dowel = repo.num('cad/turret.py', r's = s\.cut\(through_z\(x, y, 5\.0, z0 - 1, z0 \+ ([\d.]+)\)\)')
+    bolt_min = mount['riser']['bolt_hole_depth_min_mm']
+    dowel_min = float(re.search(r'at least ([\d.]+) mm', mount['riser']['dowel_holes']).group(1))
     add(id='body.riser_top_tm', assembly='body / turret', where="turret riser's top ring: the TM face's 4 M5 inserts",
         qty_robot=4, insert='insert_m5', d_mm=5, material='pa6-cf', infill='100 %',
         hole={'d': fast['M5']['insert_pilot'], 'depth': riser_top}, boss_mm=None, axis='print-z',
         orientation='riser printed on its top face', screw=f"{mount['tm']['bolt_screw']} down through the compute plinth's "
         f"{plinth_t:g} mm tray (Ø9.5 x {plinth_cb:g} counterbores, D66)", screw_side='open end (from above)',
-        mating_hole_mm=fast['M5']['clear'], tip_depth_mm=tip_tray,
+        mating_hole_mm=fast['M5']['clear'], tip_depth_mm=tip_tray, stack={'head_seat_mm': plinth_t - plinth_cb, 'screw_mm': tm_len},
         clamp={'stack': f"{plinth_t - plinth_cb:g} mm printed PA6-CF tray under each head (40 % gyroid per docs/turret-sections.md)",
                'printed_mm': plinth_t - plinth_cb, 'limiter': None, 'material': 'PA6-CF', 'bearing': 'Ø8.5 socket head',
                'bearing_od_mm': HEAD_D[('socket', 5)], 'bearing_id_mm': fast['M5']['clear']},
-        loads=[{'case': 'R: 30 g sideways on the whole turret', 'per_insert_n': turret_hc['tm_bolts']['tension_per_bolt_n'],
-                'tension': True, 'source': 'exports/turret/fea/summary.json hand_checks.tm_bolts'}],
+        loads=[{'case': tm_case, 'per_insert_n': r(t_riser_top, 0), 'tension': True,
+                'source': 'exports/turret/mount.json mass_kg, com_mm; cad/turret.py PLINTH (hand_checks.tm_bolts gives '
+                          f'{hc_tm:g} N from frame T)'}],
         pullout_repo_n=turret_hc['tm_bolts']['m5_insert_pullout_n_est'],
         notes=f"exports/turret/mount.json (the turret's contract with the robot) asks the head for "
-              f"{mount['riser']['bolt_hole_depth_min_mm']:g} mm bolt holes; the riser cuts {riser_top:g}. Its dowel holes are "
-              f"{riser_dowel:g} deep against the contract's {mount['riser']['dowel_holes'].split('at least ')[1].split(' mm')[0]} mm.",
-        extra=[('contract-depth', 'fix', f"riser TM pilots {riser_top:g} deep vs mount.json bolt_hole_depth_min_mm "
-                f"{mount['riser']['bolt_hole_depth_min_mm']:g} (and {tip_tray:g} with the D66 tray): deepen to >= {tip_tray + 1.5:g}, "
-                f"or use M5 x 12 (tip {12 - (plinth_t - plinth_cb):g}, 1.5 d engaged)"),
-               ('contract-dowel', 'fix', f"a {pin_l:g} mm TM dowel goes {tray_dowel:g} into the D66 tray, so it needs "
-                f"{pin_l - tray_dowel + 0.5:g} mm in the riser, which cuts {riser_dowel:g} (mount.json, written for the 4 mm "
-                f"pan-base holes, asks {mount['riser']['dowel_holes'].split('at least ')[1].split(' mm')[0]})")])
+              f"{bolt_min:g} mm bolt holes; the riser cuts {riser_top:g}. Its dowel holes are "
+              f"{riser_dowel:g} deep against the contract's {dowel_min:g} mm. The pilots stand on the legs (solid "
+              f"Ø{2 * repo.num('cad/body_frame.py', r'^RISER_LEG_R = ([\d.]+)'):g} under each bolt), so a deeper pilot fits.",
+        extra=tm_findings + ([('contract-depth', 'fix', f"riser TM pilots {riser_top:g} deep vs mount.json bolt_hole_depth_min_mm "
+                               f"{bolt_min:g} (and the tip at {tip_tray:g} with the D66 tray): deepen to >= {tip_tray + 1.5:g}, "
+                               f"or use M5 x 12 (tip {12 - (plinth_t - plinth_cb):g}, 1.5 d engaged)")]
+                             if riser_top < max(bolt_min, tip_tray + TIP_ROOM) else [])
+        + ([('contract-dowel', 'fix', f"a {pin_l:g} mm TM dowel goes {tray_dowel:g} into the D66 tray, so it needs "
+             f"{pin_l - tray_dowel + 0.5:g} mm in the riser, which cuts {riser_dowel:g} (mount.json asks {dowel_min:g})")]
+           if riser_dowel < max(pin_l - tray_dowel + 0.5, dowel_min) else []))
 
     f = integ.pop('dcdc_bracket')
     dwt = repo.num('cad/body_frame.py', r'^DCDC_FOOT_T, DCDC_WALL_T = [\d.]+, ([\d.]+)')
@@ -597,7 +724,7 @@ def build(repo):
         qty_robot=f['count'], insert='insert_m3', d_mm=3, material='pa6-cf', infill='100 %',
         hole={'d': fast['M3']['insert_pilot'], 'depth': dwt, 'through': True}, material_mm=dwt, boss_mm=None,
         axis='layer-plane', orientation='printed upright: these inserts are horizontal', screw=', '.join(f['screws']),
-        screw_side='open end', mating_hole_mm=fast['M3']['clear'], tip_depth_mm=f['tip_max'],
+        screw_side='open end', mating_hole_mm=fast['M3']['clear'], tip_depth_mm=f['tip_max'], tip_min_mm=f['tip_min'],
         clamp={'stack': "the converter's flange", 'printed_mm': 0, 'limiter': 'n/a'},
         loads=[{'case': 'the converter (est. 0.3 kg) at 10 g on 4', 'per_insert_n': 7, 'tension': False, 'source': 'estimate'}],
         notes='Body joints: ' + ', '.join(f['joints']) + '.',
@@ -610,7 +737,7 @@ def build(repo):
         hole={'d': fast['M3']['insert_pilot'], 'depth': repo.num('cad/body_frame.py', r's = s\.cut\(cyl_z\(2\.0, H - ([\d.]+), H \+ 0\.1, u, BUS_W / 2\)\)')},
         boss_mm=repo.num('cad/body_frame.py', r'^BUS_L, BUS_W = [\d.]+, ([\d.]+)'), axis='print-z', orientation='printed flat',
         screw=', '.join(f['screws']), screw_side='open end',
-        mating_hole_mm=fast['M3']['clear'], tip_depth_mm=f['tip_max'],
+        mating_hole_mm=fast['M3']['clear'], tip_depth_mm=f['tip_max'], tip_min_mm=f['tip_min'],
         clamp={'stack': 'copper bar / aluminium plate', 'printed_mm': 0, 'limiter': 'n/a'},
         loads=[{'case': 'bus bar and lugs (light)', 'per_insert_n': 15, 'tension': True, 'source': 'estimate'}],
         notes='Body joints: ' + ', '.join(f['joints']) + '.',
@@ -625,7 +752,7 @@ def build(repo):
         qty_robot=f['count'], insert='insert_m3', d_mm=3, material='pa6-cf', infill='100 %',
         hole={'d': fast['M3']['insert_pilot'], 'depth': side_d}, material_mm=rail_w, boss_mm=rail_h, axis='layer-plane',
         orientation='rail printed flat: side inserts horizontal', screw=', '.join(f['screws']) + ' through the 1.6 side plate',
-        screw_side='open end (shear duty)', mating_hole_mm=3.4, tip_depth_mm=f['tip_max'],
+        screw_side='open end (shear duty)', mating_hole_mm=3.4, tip_depth_mm=f['tip_max'], tip_min_mm=f['tip_min'],
         clamp={'stack': 'aluminium side plate', 'printed_mm': 0, 'limiter': 'n/a'},
         loads=[{'case': 'the bay and two packs (est. 3.5 kg) at 10 g on 10, in shear', 'per_insert_n': 34, 'shear': True,
                 'source': 'estimate'}], notes='Body joints: ' + ', '.join(f['joints']) + '.')
@@ -633,10 +760,11 @@ def build(repo):
     f = integ.pop('bay_rail_door')
     end_d = repo.num('cad/body_battery.py', r"r = r\.cut\(_cyl_x\(2\.0, \*sorted\(\(xe, xe \+ d \* ([\d.]+)\)\), yc, zc\)\)")
     add(id='body.bay_rail_door', assembly='body', where="battery bay rails' ends: the doors' thumbscrews",
+        typed={'door 4 mm': 'cad/body_battery.py door (read off the model)'},
         qty_robot=f['count'], insert='insert_m3', d_mm=3, material='pa6-cf', infill='100 %',
         hole={'d': fast['M3']['insert_pilot'], 'depth': end_d}, boss_mm=rail_w, axis='layer-plane',
         orientation='rail printed flat: end inserts horizontal', screw=', '.join(f['screws']) + ' through the PETG door',
-        screw_side='open end: a pack pushing the door pulls the insert', mating_hole_mm=3.4, tip_depth_mm=f['tip_max'],
+        screw_side='open end: a pack pushing the door pulls the insert', mating_hole_mm=3.4, tip_depth_mm=f['tip_max'], tip_min_mm=f['tip_min'],
         clamp={'stack': '4 mm PETG door under a thumb head (hand tight)', 'printed_mm': 4.0, 'limiter': None},
         loads=[{'case': 'a pack (est. 1.5 kg) at 10 g on a door\'s 2 screws', 'per_insert_n': 74, 'tension': True,
                 'source': 'estimate'}],
@@ -647,24 +775,44 @@ def build(repo):
 
     f = integ.pop('d435_cradle')
     add(id='body.d435_cradle', assembly='body', where="D435 cradles' feet (PA6-CF 8 x 8), from the shell apron",
+        typed={'apron 2 mm': 'the P3 shell wall'},
         qty_robot=f['count'], insert='insert_m3', d_mm=3, material='pa6-cf', infill='100 %',
         hole={'d': repo.num('cad/body_shell.py', r'plate = plate\.cut\(_hole_x\(y, z, ([\d.]+), \*sorted\(\(sx \* XI, sx \* \(XI - 7\.5\)\)\)\)\)'),
               'depth': repo.num('cad/body_shell.py', r'plate = plate\.cut\(_hole_x\(y, z, 4\.0, \*sorted\(\(sx \* XI, sx \* \(XI - ([\d.]+)\)\)\)\)\)')},
         boss_mm=2 * repo.num('cad/body_shell.py', r'plate = plate\.union\(box\(fa, fb, y - ([\d.]+), y \+ 4, z0 - 2, z0 \+ 6\)\)'),
         axis='layer-plane', orientation='cradle printed flat: the feet inserts horizontal',
-        screw=', '.join(f['screws']), screw_side='open end', mating_hole_mm=3.4, tip_depth_mm=f['tip_max'],
+        screw=', '.join(f['screws']), screw_side='open end', mating_hole_mm=3.4, tip_depth_mm=f['tip_max'], tip_min_mm=f['tip_min'],
         clamp={'stack': 'the 2 mm PETG apron', 'printed_mm': 2.0, 'limiter': None},
         loads=[{'case': 'a D435 (72 g) at 30 g on 2', 'per_insert_n': 11, 'tension': True, 'source': 'estimate'}],
         notes='Body joints: ' + ', '.join(f['joints']) + '.')
 
+    adp_t = repo.num('cad/body_battery.py', r'^PLATE_T = ([\d.]+)')
+    repo.has('cad/body_battery.py', "the adapter's own screws into inserts set on arrival.")
+    m3_short = min(i['length_mm'] for i in ins.values() if i['thread'].startswith('M3'))
+    add(id='body.battery_adapter', assembly='body', where="battery adapter plates (PA6-CF): each DCB609 adapter's own screws",
+        qty_robot=0, insert=None, d_mm=3, material='pa6-cf', infill='100 %',
+        receiver='M3 heat-set inserts set on arrival, from the adapter\'s holes (pattern not published; not counted)',
+        screw='M3 (the adapter\'s)', screw_side='open end: the pack hangs from the adapter', axis='print-z',
+        clamp={'stack': "the adapter's base", 'printed_mm': 0, 'limiter': 'n/a'},
+        loads=[{'case': 'a pack (1.565 kg) at 10 g, on the adapter\'s screws (count unknown)', 'per_insert_n': None,
+                'source': 'docs/body-sections.md (DCB609 mass)'}],
+        notes=f"The plates are {adp_t:g} mm (cad/body_battery.py PLATE_T) and sit flat under the belly plate, so an insert set "
+              f"from below has {adp_t:g} mm to live in.",
+        extra=[('plate-thinner-than-insert', 'owner', f"the {adp_t:g} mm adapter plates cannot hold an M3 insert: the shortest "
+                f"catalogue M3 (94459A130) is {m3_short:g} mm long and asks {ins['turret_insert_m3_short']['min_material_mm']:g} mm "
+                "of material, and the belly plate sits on the plate's top face. Options: bosses on the plate's underside at the "
+                "adapter's measured pattern (>= 6.5 mm for 94459A140), M3 screws up into PEM nuts or nuts above, or a thicker plate "
+                "where the adapter sits")] if adp_t < m3_short else [])
+
     f = integ.pop('shell_front')
     eyes_t = repo.num('cad/body_shell.py', r"^EYES = \{.*'board': \([\d.]+, [\d.]+, ([\d.]+)\)\}")
     add(id='body.eyes_clip', assembly='body', where="shell front's two bosses (PETG Ø8) for the eyes' clip", qty_robot=f['count'],
+        typed={'clip 2 mm': 'cad/body_shell.py eyes clip'},
         insert='insert_m3', d_mm=3, material='petg', infill='2 mm walls, 40 % gyroid',
         hole={'d': fast['M3']['insert_pilot'], 'depth': repo.num('cad/body_shell.py', r"\.center\(y, z\)\.circle\(2\.0\)\.extrude\(([\d.]+)\)\)")},
         material_mm=eyes_t, boss_mm=2 * repo.num('cad/body_shell.py', r"\.center\(y, z\)\.circle\(([\d.]+)\)\.extrude\(EYES\['board'\]\[2\] \+ 0\.01\)\)"),
         axis='print-z', orientation='shell printed on its outer face',
-        screw=', '.join(f['screws']), screw_side='open end', mating_hole_mm=3.4, tip_depth_mm=f['tip_max'],
+        screw=', '.join(f['screws']), screw_side='open end', mating_hole_mm=3.4, tip_depth_mm=f['tip_max'], tip_min_mm=f['tip_min'],
         clamp={'stack': 'the PETG clip', 'printed_mm': 2.0, 'limiter': None},
         loads=[{'case': 'the DualEye board (light)', 'per_insert_n': 5, 'tension': True, 'source': 'estimate'}],
         notes='Body joints: ' + ', '.join(f['joints']) + '.')
@@ -695,7 +843,8 @@ def build(repo):
                 ' / two M3 x 16 vs the joints M3 x 8; fan duct ' + q(repo.has('cad/body_shell.py', 'three M3 x 5 up into the turret plate')) +
                 ' vs M3 x 6'),
                ('door-side', 'fix', 'cad/body_shell.py ' + q(repo.has('cad/body_shell.py', "DOOR_SIDE = 'l'")) +
-                " but door()'s docstring says " + q(repo.has('cad/body_shell.py', "The right side's service door")))])
+                " but door()'s docstring says " + q(repo.has('cad/body_shell.py', "The right side's service door")) +
+                " and the module docstring " + q(repo.has('cad/body_shell.py', 'the right front one the service door')))])
 
     # ================================================================== TURRET
     ins_depth = repo.num('cad/turret.py', r'^INSERT_DEPTH = ([\d.]+)')
@@ -703,31 +852,56 @@ def build(repo):
     repo.has('cad/turret.py', 'self.bore = ball_d + 1.5')
     foot_t = repo.num('cad/turret.py', r'self\.foot_t = ([\d.]+)')
     col_r = repo.num('cad/turret.py', r"'col_r': ([\d.]+), 'cbore'")
+    repo.has('cad/turret.py', "def insert_hole(x, y, z_top, size='M3', depth=INSERT_DEPTH):")
+    col_depth = repo.opt('cad/turret.py', r"s = s\.cut\(insert_hole\(x, y, 0\.0, 'M5'(?:, ([\d.]+))?\)\)", ins_depth)
+    col_hollow = repo.num('cad/turret.py', r"\.cut\(cyl_z\(4\.0, zt \+ 5\.0, -([\d.]+), x, y\)\)\s+# hollow under the insert")
+    shell_src = repo.block('cad/turret.py', 'def compute_shell(G):')
+    col_tip = tm_len - foot_t
+    col_extra = []
+    if col_depth < col_tip + TIP_ROOM:
+        col_extra.append(('screw-bottoms-fix', 'fix', f"deepen the column pilots {col_depth:g} -> {col_tip + 1.5:g} (solid to "
+                          f"{col_hollow:g}), or use M5 x 12 (tip {12 - foot_t:g}, {12 - foot_t:g} mm engaged)"))
+    if 'TM_DOWELS' not in shell_src:
+        col_extra.append(('pan-base-dowels', 'owner', f"the pan base's TM dowel holes (cad/turret.py pan_base: TM_DOWELS at r "
+                          f"{abs(mount['tm']['dowels_mm'][0][0]):g}) meet no hole in the plinth's top (compute_shell() cuts none), but "
+                          f"the bench BOM buys hw_tm_dowels ({repo.bom_len('exports/turret/bench/bom.json', 'hw_tm_dowels'):g} mm pins): "
+                          "the pan base is then located only by its M5s in clearance. Add dowel bosses to the plinth's top, or drop "
+                          "the pins"))
     add(id='turret.plinth_columns', assembly='turret', where="compute plinth shell's four column tops (PETG): the pan base's TM",
         qty_robot=4, insert='insert_m5', d_mm=5, material='petg', infill='not in exports/turret/print/print.json yet',
-        hole={'d': fast['M5']['insert_pilot'], 'depth': ins_depth}, boss_mm=2 * col_r, axis='print-z',
+        hole={'d': fast['M5']['insert_pilot'], 'depth': col_depth}, boss_mm=2 * col_r, axis='print-z',
         orientation='shell printed upside down', screw=f"{mount['tm']['bolt_screw']} through the pan base's {foot_t:g} mm foot",
-        screw_side='open end (from above)', mating_hole_mm=fast['M5']['clear'], tip_depth_mm=tm_len - foot_t,
+        screw_side='open end (from above)', mating_hole_mm=fast['M5']['clear'], tip_depth_mm=col_tip,
+        stack={'head_seat_mm': foot_t, 'screw_mm': tm_len},
         clamp={'stack': f"{foot_t:g} mm PA6-CF foot (40 % gyroid) under each head", 'printed_mm': foot_t, 'limiter': None,
                'material': 'PA6-CF', 'bearing': 'Ø8.5 socket head', 'bearing_od_mm': HEAD_D[('socket', 5)],
                'bearing_id_mm': fast['M5']['clear']},
-        loads=[{'case': 'R: 30 g sideways on the turret', 'per_insert_n': turret_hc['tm_bolts']['tension_per_bolt_n'],
-                'tension': True, 'source': 'exports/turret/fea/summary.json hand_checks.tm_bolts'}],
-        notes="The column is solid PETG for 8 mm under the pilot (its hollow starts at z -16), so the deeper pilot fits.",
-        extra=[('screw-bottoms-fix', 'fix', f"deepen the column pilots {ins_depth:g} -> {tm_len - foot_t + 1.5:g} (solid to 16), or "
-                f"use M5 x 12 (tip {12 - foot_t:g}, {12 - foot_t:g} mm engaged)")])
+        loads=[{'case': f"R: {fall_g:g} g sideways on the turret above the plinth ({m_up / 1000:.2f} kg, centre {z_up:.0f} mm above "
+                        f"the columns' tops; estimate)", 'per_insert_n': r(t_columns, 0), 'tension': True,
+                'source': 'exports/turret/mount.json and turret.json masses; plinth centroids estimated (inventory.py)'}],
+        pullout_repo_n=turret_hc['tm_bolts']['m5_insert_pullout_n_est'],
+        notes=f"The column is solid PETG to z -{col_hollow:g} under the pilot, so the deeper pilot fits. The hand check's "
+              f"{hc_tm:g} N uses the whole turret's centre in frame T; the plinth and the J4012 ({m_below:.0f} g) hang below "
+              "these columns, so the part above them is lighter and its centre higher.",
+        extra=col_extra)
+    tray_depth = repo.opt('cad/turret.py', r"s = s\.cut\(insert_hole\(fx, fy, z1, 'M4'(?:, ([\d.]+))?\)\)", ins_depth)
+    shell_foot = 5.0
+    repo.has('cad/turret.py', 'y - 6.0, y + 6.0, zt, zt + 5.0)')
+    m4_plinth = repo.bom_len('exports/turret/bench/bom.json', 'hw_plinth_m4')
     add(id='turret.plinth_tray_m4', assembly='turret', where="compute plinth tray (PA6-CF): the shell's four feet",
         qty_robot=4, insert='turret_insert_m4', d_mm=4, material='pa6-cf', infill='40 % gyroid (docs/turret-sections.md)',
-        hole={'d': fast['M4']['insert_pilot'], 'depth': ins_depth}, axis='print-z', orientation='tray printed flat',
-        screw="M4 x 10 down through the shell's 5 mm PETG foot", screw_side='open end (from above)',
-        mating_hole_mm=fast['M4']['clear'], tip_depth_mm=10 - 5.0,
-        clamp={'stack': '5 mm PETG foot', 'printed_mm': 5.0, 'limiter': None}, loads=[],
-        notes='The shell foot is ' + q(repo.has('cad/turret.py', 'y - 6.0, y + 6.0, zt, zt + 5.0)')) + ' (5 mm).')
+        hole={'d': fast['M4']['insert_pilot'], 'depth': tray_depth}, axis='print-z', orientation='tray printed flat',
+        screw=f"M4 x {m4_plinth:g} (BOM hw_plinth_m4) down through the shell's {shell_foot:g} mm PETG foot",
+        screw_side='open end (from above)', mating_hole_mm=fast['M4']['clear'], tip_depth_mm=m4_plinth - shell_foot,
+        stack={'head_seat_mm': shell_foot, 'screw_mm': m4_plinth},
+        clamp={'stack': f'{shell_foot:g} mm PETG foot', 'printed_mm': shell_foot, 'limiter': None}, loads=[],
+        notes='The shell foot is ' + q('y - 6.0, y + 6.0, zt, zt + 5.0)') + f' ({shell_foot:g} mm).')
 
     hz = repo.num('cad/turret.py', r"s = s\.cut\(insert_hole\(x, y, hz1, 'M3', ([\d.]+)\)\)")
     clamp_t = repo.num('cad/turret.py', r'^CLAMP_T = ([\d.]+)')
     up = turret_hc['journal_lip']['force_n']
     add(id='turret.pan_base_clamp_ears', assembly='turret', where="pan base housing ears (PA6-CF): the 61810's clamp ring",
+        typed={'M3 x 8': 'docs/turret-sections.md clamp ring'},
         qty_robot=5, insert='insert_m3', d_mm=3, material='pa6-cf', infill='40 % gyroid inside 4 walls',
         hole={'d': fast['M3']['insert_pilot'], 'depth': hz}, axis='print-z', orientation='printed on its foot',
         screw=f"M3 x 8 through the {clamp_t:g} mm 6061 clamp ring", screw_side='open end (from above)',
@@ -738,6 +912,7 @@ def build(repo):
         pullout_repo_n=turret_hc['plate_inserts']['m3_insert_pullout_n_est'],
         notes='The capacity basis is a 100 % solid test; this part is 40 % gyroid inside 4 walls (unqualified).')
     add(id='turret.pan_base_carrier_tabs', assembly='turret', where="pan base tab pockets (from below): the ring carrier",
+        typed={'M3 x 10 flat, 4 mm tabs': 'cad/turret.py ring carrier'},
         qty_robot=3, insert='insert_m3', d_mm=3, material='pa6-cf', infill='40 % gyroid inside 4 walls',
         hole={'d': fast['M3']['insert_pilot'], 'depth': repo.num('cad/turret.py', r"C\['tab_t'\] - 0\.1, C\['tab_t'\] \+ ([\d.]+), x, y\)\)\s+# M3 insert from below")},
         axis='print-z', orientation='printed on its foot', screw="M3 x 10 flat heads up through the carrier's 4 mm tabs",
@@ -747,8 +922,11 @@ def build(repo):
     add(id='turret.base_board_carrier', assembly='turret', where='pan base anchor and the base-board carrier',
         qty_robot=8, insert='insert_m3', d_mm=3, material='pa6-cf', infill='carrier solid; anchor 40 % gyroid',
         hole={'d': repo.num('cad/turret_base_board.py', r'^INSERT_PILOT = ([\d.]+)'),
-              'depth': round(repo.num('cad/turret_base_board.py', r's = s\.cut\(cx\(INSERT_PILOT/2,[\d.]+,([\d.]+),y,z\)\)')
-                             - repo.num('cad/turret_base_board.py', r's = s\.cut\(cx\(INSERT_PILOT/2,([\d.]+),[\d.]+,y,z\)\)'), 2)}, axis='layer-plane',
+              'depth': round(min(   # service_base() (the anchor) and carrier(): each pilot bound on its own line
+                  repo.num('cad/turret_base_board.py', r'cx\(INSERT_PILOT/2,46\.5,([\d.]+),y,z\)')
+                  - repo.num('cad/turret_base_board.py', r'cx\(INSERT_PILOT/2,([\d.]+),53\.1,y,z\)'),
+                  repo.num('cad/turret_base_board.py', r'cx\(INSERT_PILOT/2,47\.9,([\d.]+),y,z\)')
+                  - repo.num('cad/turret_base_board.py', r'cx\(INSERT_PILOT/2,([\d.]+),54\.5,y,z\)')), 2)}, axis='layer-plane',
         orientation='anchor horizontal, carrier boss vertical', screw='M3 (see research/carrier-insert-fit)', screw_side='open end',
         mating_hole_mm=repo.num('cad/turret_base_board.py', r'^M3_CLEAR = ([\d.]+)'), tip_depth_mm=None,
         clamp=None, loads=[], notes='Covered by research/carrier-insert-fit (fit specimens for both orientations) and the '
@@ -766,24 +944,29 @@ def build(repo):
         material_mm=6.0, axis='print-z', orientation='printed on its foot', screw='M3 with washers through the TPU ring',
         screw_side='open end', mating_hole_mm=None, tip_depth_mm=None, clamp={'stack': 'TPU ring + washer', 'printed_mm': 0,
         'limiter': None}, loads=[], notes='The TPU is the compliance; snug only.')
+    yoke_depth = repo.opt('cad/turret.py', r"s = s\.cut\(insert_hole\(x, y, z1, 'M4'(?:, ([\d.]+))?\)\)", ins_depth)
+    yoke_seat = repo.num('cad/turret.py', r"\.cut\(cyl_z\(4\.0, b0 \+ ([\d.]+), b1 \+ 1, x, y\)\)")
+    yoke_len = float(re.search(r'an M4 x (\d+) keeps', repo.has('cad/turret.py', 'so an M4 x 10 keeps 4 mm')).group(1))
     add(id='turret.pan_ring_yoke', assembly='turret', where="pan ring (PA6-CF turntable): the tilt yoke's four M4",
         qty_robot=4, insert='turret_insert_m4', d_mm=4, material='pa6-cf', infill='100 %',
-        hole={'d': fast['M4']['insert_pilot'], 'depth': ins_depth}, axis='print-z', orientation='printed upside down',
-        screw='M4 x 10, heads 6 mm down in the yoke\'s 12 mm bridge (' + q(repo.has('cad/turret.py', 'the heads sit 6 mm above the bridge')) + ')',
-        screw_side='open end (from above)',
-        mating_hole_mm=fast['M4']['clear'], tip_depth_mm=10 - 6.0, longer_screw_fits=True,
-        clamp={'stack': '6 mm PA6-CF bridge', 'printed_mm': 6.0, 'limiter': None},
+        hole={'d': fast['M4']['insert_pilot'], 'depth': yoke_depth}, axis='print-z', orientation='printed upside down',
+        screw=f"M4 x {yoke_len:g}, heads on a seat {yoke_seat:g} mm above the yoke bridge's underside", screw_side='open end (from above)',
+        mating_hole_mm=fast['M4']['clear'], tip_depth_mm=yoke_len - yoke_seat, stack={'head_seat_mm': yoke_seat, 'screw_mm': yoke_len},
+        longer_screw_fits=yoke_depth - (yoke_len + 2 - yoke_seat) >= TIP_ROOM,
+        clamp={'stack': f'{yoke_seat:g} mm PA6-CF bridge', 'printed_mm': yoke_seat, 'limiter': None},
         loads=[{'case': 'R: 30 g sideways on the yoke and all it carries', 'per_insert_n': turret_hc['yoke_inserts']['tension_per_insert_n'],
                 'tension': True, 'source': 'exports/turret/fea/summary.json hand_checks.yoke_inserts'}],
         pullout_repo_n=turret_hc['yoke_inserts']['m4_insert_pullout_n_est'],
-        notes=repo.has('cad/turret.py', 'so an M4 x 10 keeps 4 mm in the turntable\'s insert') +
-              f'. An M4 x 12 keeps 6 mm (1.5 d) and stops {ins_depth - 6:g} mm off the pilot floor.')
+        notes=f"cad/turret.py: {q(repo.has('cad/turret.py', "so an M4 x 10 keeps 4 mm in the turntable's insert"))}. "
+              f"An M4 x {yoke_len + 2:g} keeps {yoke_len + 2 - yoke_seat:g} mm ({(yoke_len + 2 - yoke_seat) / 4:.1f} d) and stops "
+              f"{yoke_depth - (yoke_len + 2 - yoke_seat):g} mm off the pilot floor.")
     add(id='turret.ring_carrier', assembly='turret', where="ring carrier (PA6-CF): the slip ring's flange", qty_robot=3,
         insert='insert_m3', d_mm=3, material='pa6-cf', infill='100 %',
         hole={'d': fast['M3']['insert_pilot'], 'depth': repo.num('cad/turret.py', r"rg\['seat'\] - ([\d.]+), rg\['seat'\] \+ 0\.1, x, y\)\)\s+# flange screws")},
         axis='print-z', orientation='printed on its top face', screw="M3 x 8 + washers through the ring's flange",
         screw_side='open end', mating_hole_mm=None, tip_depth_mm=None, clamp=None, loads=[], notes='Light.')
     add(id='turret.yoke_board_bay', assembly='turret', where="tilt yoke -y arm (PA6-CF): the board bay", qty_robot=4,
+        typed={'M3 x 8 flat, 3 mm back': 'cad/turret.py board bay'},
         insert='insert_m3', d_mm=3, material='pa6-cf', infill='100 %',
         hole={'d': fast['M3']['insert_pilot'], 'depth': repo.num('cad/turret.py', r"-a1 - 0\.1, -a1 \+ ([\d.]+), x, z\)\)")},
         axis='layer-plane', orientation='yoke printed on its back: the arm inserts lie in the layers',
@@ -799,8 +982,9 @@ def build(repo):
         screw='M3 through the boards', screw_side='open end', mating_hole_mm=None, tip_depth_mm=None, clamp=None, loads=[],
         notes='Light.')
     side = repo.num('cad/turret.py', r'^INSERT_M3_SIDE = ([\d.]+)')
-    plate_t = 3.175
+    plate_t = clamp_t          # the cheek plates are the same 0.125 in 6061 as the clamp ring (exports/turret bench BOM sheet)
     add(id='turret.cradle_plates', assembly='turret', where="cradle rail frame rebates (PA6-CF): the two 6061 cheek plates",
+        typed={'M3 x 8 buttons': 'exports/turret/bench/bom.json hw_button_m3x8 (shared group)'},
         qty_robot=8, insert='insert_m3', d_mm=3, material='pa6-cf', infill='4 walls, 100 %',
         hole={'d': fast['M3']['insert_pilot'], 'depth': side}, axis='layer-plane',
         orientation='frame printed flat: inserts put in from the side', screw=f'M3 x 8 buttons through the {plate_t:g} mm plates',
@@ -841,8 +1025,10 @@ def build(repo):
     cap_z = repo.num('cad/turret.py', r"bz0 - 1, (-[\d.]+), \*ct_latch\)\)\s+# insert from below, 1 mm cap")
     ct_depth = cap_z - base_z0
     add(id='turret.ct_latch', assembly='turret', where="cartridge base (PA6-CF): the CT latch's one M4 (Ø10 boss, from below)",
+        typed={'loads 188 N, 88 N': 'exports/turret/fea/summary.json cradle R-fall-down; cad/turret_studies.py T_latch', 'rail 7 mm': 'cad/turret.py cradle rail'},
         qty_robot=1, insert='turret_insert_m4', d_mm=4, material='pa6-cf', infill='100 %',
-        hole={'d': fast['M4']['insert_pilot'], 'depth': round(ct_depth, 2)}, boss_mm=10.0, axis='print-z',
+        hole={'d': fast['M4']['insert_pilot'], 'depth': round(ct_depth, 2)},
+        boss_mm=2 * repo.num('cad/turret.py', r"s = s\.union\(cyl_z\(([\d.]+), bz0, -7\.5, \*ct_latch\)\)"), axis='print-z',
         orientation='printed on its base', screw='DIN 464 M4 x 12 knurled thumbscrew up through the cradle rail (hand tight)',
         screw_side='open end (from below): a tumble pulls the cartridge off it', mating_hole_mm=fast['M4']['clear'],
         tip_depth_mm=repo.num('cad/turret.py', r'the M4 x 12 keeps (\d+) mm in the cartridge'),
@@ -877,16 +1063,17 @@ def build(repo):
         screw='2 x M3 up through the adapter (drilled on arrival)', screw_side='open end', mating_hole_mm=None, tip_depth_mm=None,
         clamp=None, loads=[], notes=f"The {top:g} mm plate leaves {top - dock:g} mm over the {dock:g} mm pilot.",
         extra=[('pilot-fix', 'fix', f"a {dock:g} mm blind pilot takes neither M3 insert (5.7 or 4.3): use 94459A130 (4.3) in a "
-                f"{4.3 + 1.0:g} mm pilot ({top - 5.3:.1f} mm skin), or a boss under the plate for 94459A140")])
+                f"{4.3 + 1.0:g} mm pilot ({top - 5.3:.1f} mm skin), or a boss under the plate for 94459A140")]
+        if dock < min(i['length_mm'] for i in ins.values() if i['thread'].startswith('M3')) else [])
     add(id='stand.corners', assembly='turret stand', where="stand corner bosses (PETG Ø12): the bottom's 4 x M3", qty_robot=4,
         insert='insert_m3', d_mm=3, material='petg', infill='3 walls, 20 % gyroid',
         hole={'d': fast['M3']['insert_pilot'], 'depth': repo.num('cad/turret_stand.py', r"-H - 1, -H \+ ([\d.]+), x, y\)\)")},
         boss_mm=2 * repo.num('cad/turret_stand.py', r'^BOSS_R = ([\d.]+)'), axis='print-z', orientation='printed upside down', screw='M3 through the bottom', screw_side='open end',
         mating_hole_mm=None, tip_depth_mm=None, clamp=None, loads=[], notes='')
-    deck_t = repo.num('cad/turret_box.py', r'^TM_PILOT_DEPTH = DECK_T \+ ([\d.]+)')
+    deck_t = repo.num('cad/turret_box.py', r'^DECK_T = ([\d.]+)') + repo.num('cad/turret_box.py', r'^TM_PILOT_DEPTH = DECK_T \+ ([\d.]+)')
     add(id='box.tm', assembly='J501 box', where="J501 box deck (PETG): the turret's TM, through the 8 mm deck", qty_robot=4,
         insert='insert_m5', d_mm=5, material='petg', infill='see exports/turret/box', hole={'d': fast['M5']['insert_pilot'],
-        'depth': 8.0 + deck_t, 'through': True}, axis='print-z', orientation='deck printed upside down',
+        'depth': deck_t, 'through': True}, axis='print-z', orientation='deck printed upside down',
         screw='M5 x 12 buttons through the 5 mm foot (cad/turret_box.py)', screw_side='open end', mating_hole_mm=fast['M5']['clear'],
         tip_depth_mm=repo.num('cad/turret_box.py', r'^TM_SCREW_LEN = ([\d.]+)') - foot_t, clamp=None, loads=[],
         notes='Through pilot: the insert fills the 8 mm deck and the screw ends 1 mm short of its underside. With the D66 '
@@ -899,20 +1086,47 @@ def build(repo):
 
     # ================================================================== RIG (bench)
     contactor_t = repo.num('cad/rig_assembly.py', r'the contactor on its two M4 inserts \(([\d.]+) N m\)')
-    add(id='rig.pod_m4', assembly='leg rig', where="rig pod (PETG Ø10 bosses): contactor, relay, pendant clip", qty_robot=5,
+    add(id='rig.pod_m4', assembly='leg rig', where="rig pod floor (PETG Ø10 bosses): the contactor's two M4, the relay's one", qty_robot=3,
         insert='turret_insert_m4', d_mm=4, material='petg', infill='PETG (rig parts)',
-        hole={'d': fast['M4']['insert_pilot'], 'depth': repo.num('cad/rig_parts.py', r"FAST\['M4'\]\['insert_pilot'\] / 2, 'z', t - ([\d.]+), t \+ 6\.1, c\['x'\]")
-              + repo.num('cad/rig_parts.py', r"FAST\['M4'\]\['insert_pilot'\] / 2, 'z', t - 3\.0, t \+ ([\d.]+), c\['x'\]")},
-        boss_mm=2 * repo.num('cad/rig_parts.py', r"s = s\.union\(cyl\(([\d.]+), 'z', t - 0\.01, t \+ 6\.0, c\['x'\]"),
+        hole={'d': fast['M4']['insert_pilot'], 'depth': repo.num('cad/rig_parts.py', r"FAST\['M4'\]\['insert_pilot'\] / 2, 'z', t - ([\d.]+), t \+ 6\.1, [cm]\['x'\]")
+              + repo.num('cad/rig_parts.py', r"FAST\['M4'\]\['insert_pilot'\] / 2, 'z', t - 3\.0, t \+ ([\d.]+), [cm]\['x'\]")},
+        boss_mm=2 * repo.num('cad/rig_parts.py', r"s = s\.union\(cyl\(([\d.]+), 'z', t - 0\.01, t \+ 6\.0, [cm]\['x'\]"),
         axis='print-z', orientation='pod printed on its floor',
-        screw='M4 (contactor, relay); M4 x 10 (pendant clip)', screw_side='open end', mating_hole_mm=None, tip_depth_mm=None,
+        screw='M4 (contactor, relay)', screw_side='open end', mating_hole_mm=None, tip_depth_mm=None,
         clamp=None, torque_nm=contactor_t, torque_source="docs/leg-rig-assembly.md: 'the contactor on its two M4 inserts (2.3 N m)'",
         preload_n=r(preload(contactor_t, 4), 0), loads=[],
         notes="TE's 2.3 N m is a mounting torque for a metal panel; into a PETG insert it is about the insert's whole pull-out.",
         extra=[('insert-torque', 'check', f"{contactor_t:g} N m on an M4 ~ {preload(contactor_t, 4):.0f} N; the PETG M4 insert's "
                 f"pull-out estimate is {pullout(mat['petg']['tau_mpa'], 5.6, 6.4):.0f} N: set it flush so the base bears on the "
                 f"brass and tighten to ~1 N m ({preload(1.0, 4):.0f} N)")])
+    pod_wall = repo.num('cad/rig_parts.py', r"^POD = \{'w': [\d.]+, 'd': [\d.]+, 'h': [\d.]+, 'wall': ([\d.]+),")
+    pend_d = pod_wall + repo.num('cad/rig_parts.py', r"cyl\(FAST\['M4'\]\['insert_pilot'\] / 2, 'y', -d / 2 - 1, -d / 2 \+ t \+ ([\d.]+), PENDANT_AT\[0\], z\)")
+    clip_t = repo.num('cad/rig_parts.py', r"s = box\(-d / 2 - 4, d / 2 \+ 4, 0\.0, ([\d.]+), z0 - 7\.0, z1 \+ 7\.0\)")
+    pend_len = float(re.search(r'M4 x (\d+)', repo.has('cad/rig_parts.py', "PETG; 2 x M4 x 10 into the pod\\'s inserts")).group(1))
+    add(id='rig.pendant_clip', assembly='leg rig', where="rig pod's -y wall (PETG, 4 mm + a Ø10 boss inside): the pendant clip's two M4",
+        qty_robot=2, insert='turret_insert_m4', d_mm=4, material='petg', infill='PETG, 3 walls, 25 % infill',
+        hole={'d': fast['M4']['insert_pilot'], 'depth': pend_d},
+        boss_mm=2 * repo.num('cad/rig_parts.py', r"s = s\.union\(cyl\(([\d.]+), 'y', -d / 2 \+ t - 0\.01, -d / 2 \+ t \+ 4\.0, PENDANT_AT\[0\], z\)\)"),
+        axis='layer-plane', orientation='pod printed on its floor: the wall inserts are horizontal, set from outside',
+        screw=f"M4 x {pend_len:g} through the clip's {clip_t:g} mm back", screw_side='open end',
+        mating_hole_mm=2 * repo.num('cad/rig_parts.py', r"s = s\.cut\(cyl\(([\d.]+), 'y', -1, 7, 0\.0, z\)\)"), tip_depth_mm=pend_len - clip_t, stack={'head_seat_mm': clip_t, 'screw_mm': pend_len}, longer_screw_fits=pend_d - (pend_len + 2 - clip_t) >= TIP_ROOM,
+        clamp={'stack': f'{clip_t:g} mm PETG clip', 'printed_mm': clip_t, 'limiter': None}, loads=[],
+        notes=f"An M4 x {pend_len + 2:g} keeps {pend_len + 2 - clip_t:g} mm and stops {pend_d - (pend_len + 2 - clip_t):g} mm off the "
+              "pilot's cap. Light duty: the pendant's weight.")
+    lid_note = repo.has('cad/rig_parts.py', "PETG; 4 x M3 x 10 into the pod\\'s inserts")
+    pod_src = repo.block('cad/rig_parts.py', 'def pod():')
+    lid_src = repo.block('cad/rig_parts.py', 'def pod_lid():')
+    repo.has('cad/rig_parts.py', "for (x, z) in ((-w + 8, 8), (-8, 8), (-w + 8, h - 8), (-8, h - 8)):")
+    if "FAST['M3']" not in pod_src and '(-w + 8, 8)' in lid_src:
+        add(id='rig.pod_lid', assembly='leg rig', where="rig pod's open +y face: the lid's four M3", qty_robot=0, insert=None,
+            d_mm=3, material='petg', infill='PETG, 3 walls, 25 % infill', receiver='none modelled', screw='M3 x 10',
+            screw_side='n/a', axis='layer-plane', clamp=None, loads=[],
+            notes=f"The lid's part note says {q(lid_note)}; pod() cuts no M3 pilot, and the lid's corner holes (8 mm in) sit "
+                  f"over the pod's cavity (its walls are {pod_wall:g} mm).",
+            extra=[('no-receiver', 'fix', f"the pod lid's screws (its note: {q(lid_note)}) meet nothing in the pod: add four corner bosses with M3 "
+                    "inserts (94459A140 in Ø4.0 x 6.7 pilots, axis along the lid's screws) inside the pod's open face")])
     add(id='rig.tof_arm', assembly='leg rig', where="ToF arm (PETG Ø10 bosses) on the carriage plate", qty_robot=2,
+        typed={'M4 x 10': 'cad/rig_parts.py tof_arm note'},
         insert='turret_insert_m4', d_mm=4, material='petg', infill='PETG (rig parts)',
         hole={'d': fast['M4']['insert_pilot'], 'depth': repo.num('cad/rig_parts.py', r"'y', Y_PLATE_FRONT - 1, Y_PLATE_FRONT \+ ([\d.]+), x, z\)\)")},
         boss_mm=2 * repo.num('cad/rig_parts.py', r"s = s\.union\(cyl\(([\d.]+), 'y', Y_PLATE_FRONT, Y_PLATE_FRONT \+ 10\.0, x, z\)\)"), axis='print-z', orientation='', screw='M4 x 10 from the plate\'s back', screw_side='open end',
@@ -1020,6 +1234,9 @@ def markdown(doc):
             L.append(f"Load: {x['case']}: {x['per_insert_n'] if x.get('per_insert_n') is not None else '-'} N ({x['source']}).")
         if j.get('notes'):
             L.append(j['notes'])
+        if j.get('typed'):
+            L.append('Typed into the generator, not bound to a source line: ' +
+                     '; '.join(f"{k} ({v})" for k, v in j['typed'].items()) + '.')
         for f in j['findings']:
             L.append(f"- **{f['level']}** `{f['code']}`: {f['text']}")
         L.append('')
@@ -1027,11 +1244,14 @@ def markdown(doc):
 
 
 def cross_check(src, doc):
-    """Optional: every stack and preload again through cadagent (a checkout's src directory), compared to ours."""
+    """Optional: the stacks and preloads again through cadagent (a checkout's src directory), compared to ours.
+
+    Where a joint records its stack (`stack`: head seat above the insert's face, screw length), cadagent places the
+    screw from those; elsewhere it is given this inventory's own tip depth, which re-checks only the subtraction."""
     sys.path.insert(0, str(src))
     from cadagent.formulas import screws
     from cadagent.mechanical.fasteners import blind_insert_stack
-    out = {'stacks': 0, 'preloads': 0, 'disagree': []}
+    out = {'stacks_from_geometry': 0, 'stacks_from_tip': 0, 'preloads': 0, 'disagree': []}
     for j in doc['joints']:
         if j.get('torque_nm') and j.get('preload_n'):
             ca = screws.preload_from_torque(j['torque_nm'], j['d_mm'] / 1000.0)
@@ -1039,17 +1259,17 @@ def cross_check(src, doc):
             if abs(ca - j['preload_n']) > 1.0:
                 out['disagree'].append((j['id'], 'preload', ca, j['preload_n']))
         h, i = j.get('hole'), doc['inserts'].get(j.get('insert') or '')
-        if h and i and j.get('tip_depth_mm') is not None and not h.get('through'):
-            # one datum: the insert's face at 0, the head 10 mm above it, the pilot's floor at -depth
-            st = blind_insert_stack(head_seat=10.0, screw_length=10.0 + j['tip_depth_mm'], insert_top=0.0,
-                                    insert_length=i['length_mm'], hole_bottom=-max(h['depth'], i['length_mm']))
-            out['stacks'] += 1
-            ours = j.get('tip_clear_mm')
-            theirs = st['tip_clearance_mm'] if h['depth'] >= i['length_mm'] else None
-            if theirs is not None and abs(theirs - ours) > 0.01:
-                out['disagree'].append((j['id'], 'tip', theirs, ours))
-            if abs(st['engagement_mm'] - j['thread_engaged_mm']) > 0.01:
-                out['disagree'].append((j['id'], 'engagement', st['engagement_mm'], j['thread_engaged_mm']))
+        if not (h and i and j.get('tip_depth_mm') is not None) or h.get('through'):
+            continue
+        g = j.get('stack')
+        seat, length = (g['head_seat_mm'], g['screw_mm']) if g else (10.0, 10.0 + j['tip_depth_mm'])
+        out['stacks_from_geometry' if g else 'stacks_from_tip'] += 1
+        st = blind_insert_stack(head_seat=seat, screw_length=length, insert_top=0.0, insert_length=i['length_mm'],
+                                hole_bottom=-max(h['depth'], i['length_mm']))
+        if h['depth'] >= i['length_mm'] and abs(st['tip_clearance_mm'] - j['tip_clear_mm']) > 0.01:
+            out['disagree'].append((j['id'], 'tip', st['tip_clearance_mm'], j['tip_clear_mm']))
+        if not j.get('tip_min_mm') and abs(st['engagement_mm'] - j['thread_engaged_mm']) > 0.01:
+            out['disagree'].append((j['id'], 'engagement', st['engagement_mm'], j['thread_engaged_mm']))
     return out
 
 

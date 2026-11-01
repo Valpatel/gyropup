@@ -40,8 +40,12 @@ def generate(edits=None):
     return inv.document(repo)
 
 
+def joint(doc, jid):
+    return next(j for j in doc['joints'] if j['id'] == jid)
+
+
 def codes(doc, jid):
-    return {f['code'] for f in next(j for j in doc['joints'] if j['id'] == jid)['findings']}
+    return {f['code'] for f in joint(doc, jid)['findings']}
 
 
 class Inventory(unittest.TestCase):
@@ -85,19 +89,60 @@ class Inventory(unittest.TestCase):
     def test_known_findings(self):
         d = self.doc
         self.assertIn('screw-bottoms', codes(d, 'body.riser_top_tm'))
+        self.assertIn('tm-com-datum', codes(d, 'body.riser_top_tm'))
         self.assertIn('screw-bottoms', codes(d, 'turret.plinth_columns'))
+        self.assertIn('pan-base-dowels', codes(d, 'turret.plinth_columns'))
         self.assertIn('pilot-shorter-than-insert', codes(d, 'stand.dock'))
         self.assertIn('printed-clamp-crush', codes(d, 'leg.wheel_botwheel'))
         self.assertIn('printed-clamp-crush', codes(d, 'leg.upper_link_hub'))
         self.assertIn('engagement-low', codes(d, 'turret.pan_ring_yoke'))
+        self.assertIn('engagement-low', codes(d, 'rig.pendant_clip'))
+        self.assertIn('no-receiver', codes(d, 'rig.pod_lid'))
+        self.assertIn('plate-thinner-than-insert', codes(d, 'body.battery_adapter'))
         self.assertNotIn('screw-bottoms', codes(d, 'body.riser_feet'))
         self.assertEqual(d['summary']['fix'], sum(f['level'] == 'fix' for f in d['findings']))
 
-    def test_control_deeper_riser_pilot_clears_the_bottoming(self):
-        d = generate({'cad/body_frame.py': [('cyl_z(3.2, H - 9.5, H + 1.0, x, y)', 'cyl_z(3.2, H - 13.0, H + 1.0, x, y)')]})
-        c = codes(d, 'body.riser_top_tm')
+    def test_tm_load_from_the_tm_face(self):
+        """The TM bolts' 30 g load is taken about the plinth's underside (D66), not frame T's origin."""
+        j = joint(self.doc, 'body.riser_top_tm')
+        m = json.loads((inv.ROOT / 'exports/turret/mount.json').read_text())
+        arm = (m['com_mm'][2] - m['envelope']['lowest_z_mm']) / 1000.0
+        self.assertAlmostEqual(j['loads'][0]['per_insert_n'], m['mass_kg'] * inv.G0 * 30.0 * arm / 0.160, delta=1.0)
+        self.assertEqual(joint(self.doc, 'body.riser_feet')['verdict'], 'owner')   # SF < 2 on the feet
+
+    def test_control_riser_fixed(self):
+        """Both riser fixes applied: every riser finding except the turret's datum goes."""
+        d = generate({'cad/body_frame.py': [('cyl_z(3.2, H - 9.5, H + 1.0, x, y)', 'cyl_z(3.2, H - 13.0, H + 1.0, x, y)'),
+                                            ('cyl_z(2.5 - 0.03, H - 8.0, H + 1.0, x, y)', 'cyl_z(2.5 - 0.03, H - 13.0, H + 1.0, x, y)')]})
+        fixes = {f['code'] for f in joint(d, 'body.riser_top_tm')['findings'] if f['level'] == 'fix'}
+        self.assertEqual(fixes, {'tm-com-datum'})
+        self.assertNotIn('tip-near-floor', codes(d, 'body.riser_top_tm'))
+
+    def test_control_mount_datum_fixed(self):
+        """mount.json measured from the plinth's underside: the datum finding goes, the bolt load stays."""
+        before = joint(self.doc, 'body.riser_top_tm')['loads'][0]['per_insert_n']
+        d = generate({'exports/turret/mount.json': [('"com_mm": [\n  -4.1,\n  -2.8,\n  49.2\n ]', '"com_mm": [\n  -4.1,\n  -2.8,\n  135.2\n ]'),
+                                                    ('"lowest_z_mm": -86.0', '"lowest_z_mm": 0.0')]})
+        self.assertNotIn('tm-com-datum', codes(d, 'body.riser_top_tm'))
+        self.assertEqual(joint(d, 'body.riser_top_tm')['loads'][0]['per_insert_n'], before)
+
+    def test_control_plinth_column_pilot_from_its_own_call(self):
+        """The columns' depth is read from compute_shell's insert_hole() call, not INSERT_DEPTH."""
+        d = generate({'cad/turret.py': [("s = s.cut(insert_hole(x, y, 0.0, 'M5'))", "s = s.cut(insert_hole(x, y, 0.0, 'M5', 12.5))")]})
+        c = codes(d, 'turret.plinth_columns')
         self.assertNotIn('screw-bottoms', c)
-        self.assertNotIn('tip-near-floor', c)
+        self.assertNotIn('screw-bottoms-fix', c)
+        self.assertEqual(joint(d, 'turret.plinth_columns')['hole']['depth'], 12.5)
+
+    def test_control_shallow_yoke_and_tray_pilots(self):
+        d = generate({'cad/turret.py': [("s = s.cut(insert_hole(x, y, z1, 'M4'))", "s = s.cut(insert_hole(x, y, z1, 'M4', 5.0))"),
+                                        ("s = s.cut(insert_hole(fx, fy, z1, 'M4'))", "s = s.cut(insert_hole(fx, fy, z1, 'M4', 4.0))")]})
+        self.assertIn('pilot-shorter-than-insert', codes(d, 'turret.pan_ring_yoke'))
+        self.assertIn('pilot-shorter-than-insert', codes(d, 'turret.plinth_tray_m4'))
+
+    def test_control_stand_dock_fixed(self):
+        d = generate({'cad/turret_stand.py': [("-TOP - 0.01, -TOP + 4.0, dx0", "-TOP - 0.01, -TOP + 5.8, dx0")]})
+        self.assertEqual({f['code'] for f in joint(d, 'stand.dock')['findings'] if f['level'] == 'fix'}, set())
 
     def test_control_oversize_pilot_is_caught(self):
         d = generate({'cad/interfaces.json': [('"insert_pilot": 6.4', '"insert_pilot": 6.6')]})
@@ -113,6 +158,11 @@ class Inventory(unittest.TestCase):
     def test_control_a_changed_bound_line_stops_generation(self):
         with self.assertRaises(inv.Stale):
             generate({'cad/fivebar.py': [('LUG_CB = 8.5', 'LUG_CB_MM = 8.5')]})
+
+    def test_control_a_second_site_that_disagrees_stops_generation(self):
+        """A pattern that matches two lines binds both: the pod's relay boss drifting from the contactor's is noticed."""
+        with self.assertRaises(inv.Stale):
+            generate({'cad/rig_parts.py': [("'z', t - 3.0, t + 6.1, m['x'], m['y']", "'z', t - 2.0, t + 6.1, m['x'], m['y']")]})
 
     def test_control_a_fixed_note_must_be_dropped(self):
         with self.assertRaises(inv.Stale):

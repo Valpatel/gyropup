@@ -34,8 +34,15 @@ J501 box and the leg rig. Each joint records:
 - the torque the documents give, the preload it makes, and the load from the repository's own studies.
 
 The body's insert joints are read from the body's joint check, so a new body insert joint the generator does not
-know fails the generator. Elsewhere, each number is read from its source line by pattern. When a bound line changes,
-generation stops and names that line, so the table cannot drift from the CAD quietly.
+know fails the generator. Elsewhere, the generator reads each pilot, boss and stack number by pattern from the line
+that cuts it. A turret pilot is read from its own `insert_hole()` call, with `INSERT_DEPTH` only as the default. A
+pattern binds every line it matches, and they must agree. Screw lengths come from the BOM where it has a line of its
+own. When a bound line changes, generation stops and names the line.
+
+Some numbers are not modelled anywhere the generator can read: a few screw lengths in shared BOM groups, panel
+thicknesses, standard washer sizes and the estimated loads. Each joint lists them under **Typed into the generator**
+in `joints.md` (`typed` in `joints.json`). A change to one of them is not noticed. Fix findings are conditional on
+the bound values, so a fix applied to the CAD clears its finding at the next regeneration.
 
 ## Method
 
@@ -64,5 +71,11 @@ recorded and needs no action unless the duty changes.
   `exports/body/leg-loads.json`, `exports/leg/fea/summary.json` and the turret's hand checks.
 - The hip-frame row tension treats the flange as rigid (M / (3 x 140 mm)). The wheel bolt tension takes the moment
   about the flange's centre. Neither is a contact or preload model.
+- The TM bolts' 30 g load is taken about the plinth's underside, the real TM face since D66: the turret's height
+  above frame T's origin plus the 86 mm the turret reaches below it (`mount.json` `envelope.lowest_z_mm`). The load
+  on the plinth's columns uses the turret less the plinth and the J4012. Their masses are catalogued, but their
+  centroids are estimates.
+- `--cad-agent` places the screw from the stack's geometry (head seat and screw length) where a joint records it
+  (`stack`). Elsewhere it is given this inventory's own tip depth, so it re-checks only the subtraction.
 - Nothing here changes the CAD. Fixes that need `cad/` or `catalog/` edits are listed for a CAD-host regeneration.
   Those directories are hashed whole by the five carrier receipts.

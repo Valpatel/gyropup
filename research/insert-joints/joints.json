@@ -97,6 +97,10 @@
    "id": "leg.hip_frame_mount",
    "assembly": "leg",
    "where": "hip frame flange ends (PA6-CF), the body cheek / rig plate",
+   "typed": {
+    "row pitch 140 mm": "frame_mounts(): ring r 62 + 1.5 + FLANGE_T / 2, a side",
+    "rig plate 6.35 mm": "cad/rig_parts.py (text)"
+   },
    "qty_robot": 12,
    "insert": "insert_m5",
    "d_mm": 5,
@@ -114,6 +118,7 @@
    "screw_side": "open end: the screw pulls the insert out of its pilot under load",
    "mating_hole_mm": 5.5,
    "tip_depth_mm": 7.25,
+   "tip_min_mm": 7.25,
    "clamp": {
     "stack": "4.75 mm aluminium cheek (body) / 6.35 mm 6061 plate (rig) only",
     "printed_mm": 0,
@@ -256,20 +261,23 @@
      "source": "exports/body/leg-loads.json scenarios peak_motor_nm"
     }
    ],
-   "notes": "No torque is set (issue #116). The plastic under the head sets it: 25 MPa on 22.6 mm2 is 565 N. At that preload friction (mu 0.15) carries 85 N a lug against 226 N of shear at peak torque, so the lugs slip into bearing on their shanks.",
+   "notes": "No torque is set (issue #116). The plastic under the head sets it: 25 MPa on 22.6 mm2 is 565 N. At that preload friction (mu 0.15) carries 85 N a lug against 226 N of shear at peak torque. The torque rides on the motor's 2 Ø5 steel dowels on the same PCD (12 mm into the frame): 1132 N each, 19 MPa bearing on the PA6-CF (< 25 sustained). The lug screws hold the frame on; they do not carry the torque by friction.",
    "findings": [
     {
-     "code": "lug-preload-plastic-limited",
-     "level": "owner",
-     "text": "15.6 mm of PA6-CF under each Ø7 head with no limiter: 25 MPa allows 565 N (0.45 N m), and friction then carries 85 of the 226 N per lug"
+     "code": "lug-torque-from-plastic",
+     "level": "check",
+     "text": "set the lug screws' torque from the plastic (#116): 15.6 mm of PA6-CF under each Ø7 head, no limiter: 25 MPa allows 565 N (0.45 N m at K 0.2). The peak torque then rides on the dowels (1132 N, 19 MPa): check their press fit in the printed frame on a coupon"
     }
    ],
-   "verdict": "owner"
+   "verdict": "check"
   },
   {
    "id": "leg.knee_eye_sleeves",
    "assembly": "leg",
    "where": "upper link knee eye: two DIN 179 18 x 12 x 20 steel sleeves (pressed)",
+   "typed": {
+    "washer Ø20": "DIN 433 M10 (catalog washer under the nyloc)"
+   },
    "qty_robot": 4,
    "insert": null,
    "d_mm": 10,
@@ -345,8 +353,8 @@
    "axis": "print-z",
    "orientation": "wheel link printed flat on its outer face: the screw axis is the build direction",
    "clamp": {
-    "stack": "26 mm printed PA6-CF foot (head on the hub's floor to the flange on the outer face)",
-    "printed_mm": 26.0,
+    "stack": "20.8 mm printed PA6-CF under each head (the 26 mm foot less the Ø50 x 5 boss recess and its 0.2 play; the flange seats on the outer face outside the recess)",
+    "printed_mm": 20.8,
     "limiter": null,
     "material": "PA6-CF",
     "bearing": "Ø10 socket head",
@@ -375,17 +383,17 @@
      "source": "exports/body/leg-loads.json"
     }
    ],
-   "notes": "Keeping the flange closed needs about 1331 N a screw; the plastic under a bare Ø10 head holds 1108 N at 25 MPa. No torque satisfies both without a spreader or limiter. A DIN 9021 washer (catalog/hardware.json lists 8 for these screws) does not fit: on PCD 36 its Ø18 reaches r 27, past the hub's Ø48 bore.",
+   "notes": "Keeping the flange closed needs about 1331 N a screw; the plastic under a bare Ø10 head holds 1108 N at 25 MPa, so no torque satisfies both. A DIN 9021 washer (catalog/hardware.json lists 8 for these screws) does not fit: on PCD 36 its Ø18 reaches r 27, past the hub's Ø48 bore. A DIN 433 (Ø11) reaches r 23.5 and fits (0.5 mm inside the bore, 1.5 mm outside the Ø22 cable hole): 61 mm2 holds 1521 N at 25 MPa (1.82 N m), 1.14 x the need.",
    "findings": [
     {
      "code": "printed-clamp-crush",
      "level": "owner",
-     "text": "6667 N on 44 mm2 of printed PA6-CF under the Ø10 socket head = 150 MPa (> 40 humid, 25 sustained); 26 mm of plastic in the clamp, no limiter"
+     "text": "6667 N on 44 mm2 of printed PA6-CF under the Ø10 socket head = 150 MPa (> 40 humid, 25 sustained); 20.8 mm of plastic in the clamp, no limiter"
     },
     {
      "code": "wheel-clamp",
      "level": "owner",
-     "text": "8 N m ~ 6667 N on 44 mm2 = 150 MPa on PA6-CF; the flange needs >= 1331 N a screw, the plastic holds 1108 N"
+     "text": "8 N m ~ 6667 N on 44 mm2 = 150 MPa on PA6-CF; the flange needs >= 1331 N a screw, a bare head holds 1108 N, a DIN 433 washer 1521 N (1.82 N m)"
     },
     {
      "code": "note-vs-joint",
@@ -439,6 +447,7 @@
    "screw_side": "open end (foot: from below)",
    "mating_hole_mm": 5.5,
    "tip_depth_mm": 9.46,
+   "tip_min_mm": 8.82,
    "clamp": {
     "stack": "aluminium tray / deck only",
     "printed_mm": 0,
@@ -478,6 +487,10 @@
    "assembly": "body",
    "where": "deck posts' side and face bosses (9 x 9) for the P3 shell",
    "qty_robot": 16,
+   "typed": {
+    "shell boss 9.4 mm": "cad/body_shell.py boss (read off the model)",
+    "pan head Ø5.6": "ISO 7045 M3"
+   },
    "insert": "insert_m3",
    "d_mm": 3,
    "material": "pa6-cf",
@@ -494,6 +507,7 @@
    "screw_side": "open end",
    "mating_hole_mm": 3.4,
    "tip_depth_mm": 6.4,
+   "tip_min_mm": 6.4,
    "clamp": {
     "stack": "PETG shell boss (9.4 mm) under a pan head",
     "printed_mm": 9.4,
@@ -552,7 +566,8 @@
    "screw": "M5 x 10 button",
    "screw_side": "open end",
    "mating_hole_mm": 5.5,
-   "tip_depth_mm": 6.83,
+   "tip_depth_mm": 7.46,
+   "tip_min_mm": 6.83,
    "clamp": {
     "stack": "aluminium tray / power plate only",
     "printed_mm": 0,
@@ -570,7 +585,7 @@
    "boss_ratio": 2.25,
    "boss_wall_mm": 4.45,
    "thread_engaged_mm": 6.83,
-   "tip_clear_mm": 4.17,
+   "tip_clear_mm": 3.54,
    "pullout_est_n": 1676,
    "capacity_n": 1676,
    "sf_pullout": 45.29,
@@ -597,6 +612,7 @@
    "screw_side": "open end (from below)",
    "mating_hole_mm": 5.5,
    "tip_depth_mm": 10.29,
+   "tip_min_mm": 10.29,
    "clamp": {
     "stack": "turret plate + deck (aluminium)",
     "printed_mm": 0,
@@ -604,23 +620,29 @@
    },
    "loads": [
     {
-     "case": "the turret's 30 g sideways TM moment, carried down the riser's legs",
-     "per_insert_n": 233,
+     "case": "R: 30 g sideways, the whole turret (2.5608 kg) with its centre 135.2 mm above the TM face (mount.json's 49.2 in frame T + the 86 the turret reaches below it), 30 mm further down at the feet (the riser's 80 x 80 legs)",
+     "per_insert_n": 778,
      "tension": true,
-     "source": "exports/turret/fea/summary.json hand_checks.tm_bolts"
+     "source": "exports/turret/mount.json mass_kg, com_mm; cad/turret.py PLINTH; cad/body_params.py RISER_H"
     }
    ],
    "pullout_repo_n": 1500,
-   "notes": "Body joints: riser.",
+   "notes": "The turret's hand check gives 233 N a bolt from its centre in frame T; measured from the TM face (D66) each foot sees 778 N. Body joints: riser.",
    "boss_ratio": 2.53,
    "boss_wall_mm": 5.45,
    "thread_engaged_mm": 7.9,
    "tip_clear_mm": 1.71,
    "pullout_est_n": 1676,
    "capacity_n": 1500,
-   "sf_pullout": 6.44,
-   "findings": [],
-   "verdict": "ok"
+   "sf_pullout": 1.93,
+   "findings": [
+    {
+     "code": "pullout-margin",
+     "level": "owner",
+     "text": "pull-out estimate 1500 N / 778 N = 1.93"
+    }
+   ],
+   "verdict": "owner"
   },
   {
    "id": "body.riser_top_tm",
@@ -642,6 +664,10 @@
    "screw_side": "open end (from above)",
    "mating_hole_mm": 5.5,
    "tip_depth_mm": 11.5,
+   "stack": {
+    "head_seat_mm": 4.5,
+    "screw_mm": 16.0
+   },
    "clamp": {
     "stack": "4.5 mm printed PA6-CF tray under each head (40 % gyroid per docs/turret-sections.md)",
     "printed_mm": 4.5,
@@ -654,19 +680,19 @@
    },
    "loads": [
     {
-     "case": "R: 30 g sideways on the whole turret",
-     "per_insert_n": 233,
+     "case": "R: 30 g sideways, the whole turret (2.5608 kg) with its centre 135.2 mm above the TM face (mount.json's 49.2 in frame T + the 86 the turret reaches below it)",
+     "per_insert_n": 637,
      "tension": true,
-     "source": "exports/turret/fea/summary.json hand_checks.tm_bolts"
+     "source": "exports/turret/mount.json mass_kg, com_mm; cad/turret.py PLINTH (hand_checks.tm_bolts gives 233 N from frame T)"
     }
    ],
    "pullout_repo_n": 1500,
-   "notes": "exports/turret/mount.json (the turret's contract with the robot) asks the head for 12 mm bolt holes; the riser cuts 9.5. Its dowel holes are 8 deep against the contract's 12.5 mm.",
+   "notes": "exports/turret/mount.json (the turret's contract with the robot) asks the head for 12 mm bolt holes; the riser cuts 9.5. Its dowel holes are 8 deep against the contract's 12.5 mm. The pilots stand on the legs (solid Ø18 under each bolt), so a deeper pilot fits.",
    "thread_engaged_mm": 7.9,
    "tip_clear_mm": -2.0,
    "pullout_est_n": 1676,
    "capacity_n": 1500,
-   "sf_pullout": 6.44,
+   "sf_pullout": 2.35,
    "findings": [
     {
      "code": "screw-bottoms",
@@ -674,14 +700,29 @@
      "text": "the screw tip reaches 11.5 mm below the insert's face but the blind pilot is 9.5 deep: it bottoms 2.0 mm early and jacks the insert out (Spirol) instead of clamping"
     },
     {
+     "code": "pullout-margin",
+     "level": "check",
+     "text": "pull-out estimate 1500 N / 637 N = 2.35: qualify with the B4 pull-out coupon in this material and orientation"
+    },
+    {
+     "code": "tm-com-datum",
+     "level": "fix",
+     "text": "exports/turret/mount.json says frame T's origin is \"in the TM face\", but since D66 it reaches 86 mm below it (envelope.lowest_z_mm): the origin is the pan base's foot and the plinth's tray is at z -86 (compute_tray z0 = -P['h']). Its centre z 49.2 is 135.2 mm above the real TM face. hand_checks.tm_bolts uses 49.2 (233 N a bolt), and cad/body_params.tm() takes max(49.2, 100) = 100 (com_above_deck_on_riser_mm 79.2). Fix cad/turret_mount.py (and turret_studies' tm_bolts) to measure from the plinth's underside, then re-run the body's riser and deck studies"
+    },
+    {
+     "code": "tm-com-budget",
+     "level": "owner",
+     "text": "the turret's centre is 135.2 mm above the TM face against D71's \"at most 100 mm\": raise the budget and re-run the body's fall cases at 135 mm, or lower the turret (the plinth is 86 mm)"
+    },
+    {
      "code": "contract-depth",
      "level": "fix",
-     "text": "riser TM pilots 9.5 deep vs mount.json bolt_hole_depth_min_mm 12 (and 11.5 with the D66 tray): deepen to >= 13, or use M5 x 12 (tip 7.5, 1.5 d engaged)"
+     "text": "riser TM pilots 9.5 deep vs mount.json bolt_hole_depth_min_mm 12 (and the tip at 11.5 with the D66 tray): deepen to >= 13, or use M5 x 12 (tip 7.5, 1.5 d engaged)"
     },
     {
      "code": "contract-dowel",
      "level": "fix",
-     "text": "a 16 mm TM dowel goes 8 into the D66 tray, so it needs 8.5 mm in the riser, which cuts 8 (mount.json, written for the 4 mm pan-base holes, asks 12.5)"
+     "text": "a 16 mm TM dowel goes 8 into the D66 tray, so it needs 8.5 mm in the riser, which cuts 8 (mount.json asks 12.5)"
     }
    ],
    "verdict": "fix"
@@ -708,6 +749,7 @@
    "screw_side": "open end",
    "mating_hole_mm": 3.4,
    "tip_depth_mm": 4.0,
+   "tip_min_mm": 4.0,
    "clamp": {
     "stack": "the converter's flange",
     "printed_mm": 0,
@@ -764,6 +806,7 @@
    "screw_side": "open end",
    "mating_hole_mm": 3.4,
    "tip_depth_mm": 5.46,
+   "tip_min_mm": 4.83,
    "clamp": {
     "stack": "copper bar / aluminium plate",
     "printed_mm": 0,
@@ -780,7 +823,7 @@
    "notes": "Body joints: bus_insulator_1, bus_bar_1, bus_insulator_2, bus_bar_2.",
    "boss_ratio": 4.24,
    "boss_wall_mm": 7.64,
-   "thread_engaged_mm": 5.46,
+   "thread_engaged_mm": 4.83,
    "tip_clear_mm": 1.04,
    "pullout_est_n": 1167,
    "capacity_n": 1167,
@@ -820,6 +863,7 @@
    "screw_side": "open end (shear duty)",
    "mating_hole_mm": 3.4,
    "tip_depth_mm": 4.4,
+   "tip_min_mm": 4.4,
    "clamp": {
     "stack": "aluminium side plate",
     "printed_mm": 0,
@@ -858,6 +902,9 @@
    "id": "body.bay_rail_door",
    "assembly": "body",
    "where": "battery bay rails' ends: the doors' thumbscrews",
+   "typed": {
+    "door 4 mm": "cad/body_battery.py door (read off the model)"
+   },
    "qty_robot": 4,
    "insert": "insert_m3",
    "d_mm": 3,
@@ -874,6 +921,7 @@
    "screw_side": "open end: a pack pushing the door pulls the insert",
    "mating_hole_mm": 3.4,
    "tip_depth_mm": 6.0,
+   "tip_min_mm": 6.0,
    "clamp": {
     "stack": "4 mm PETG door under a thumb head (hand tight)",
     "printed_mm": 4.0,
@@ -918,6 +966,9 @@
    "id": "body.d435_cradle",
    "assembly": "body",
    "where": "D435 cradles' feet (PA6-CF 8 x 8), from the shell apron",
+   "typed": {
+    "apron 2 mm": "the P3 shell wall"
+   },
    "qty_robot": 4,
    "insert": "insert_m3",
    "d_mm": 3,
@@ -934,6 +985,7 @@
    "screw_side": "open end",
    "mating_hole_mm": 3.4,
    "tip_depth_mm": 6.0,
+   "tip_min_mm": 6.0,
    "clamp": {
     "stack": "the 2 mm PETG apron",
     "printed_mm": 2.0,
@@ -970,10 +1022,48 @@
    "verdict": "note"
   },
   {
+   "id": "body.battery_adapter",
+   "assembly": "body",
+   "where": "battery adapter plates (PA6-CF): each DCB609 adapter's own screws",
+   "qty_robot": 0,
+   "insert": null,
+   "d_mm": 3,
+   "material": "pa6-cf",
+   "infill": "100 %",
+   "receiver": "M3 heat-set inserts set on arrival, from the adapter's holes (pattern not published; not counted)",
+   "screw": "M3 (the adapter's)",
+   "screw_side": "open end: the pack hangs from the adapter",
+   "axis": "print-z",
+   "clamp": {
+    "stack": "the adapter's base",
+    "printed_mm": 0,
+    "limiter": "n/a"
+   },
+   "loads": [
+    {
+     "case": "a pack (1.565 kg) at 10 g, on the adapter's screws (count unknown)",
+     "per_insert_n": null,
+     "source": "docs/body-sections.md (DCB609 mass)"
+    }
+   ],
+   "notes": "The plates are 4 mm (cad/body_battery.py PLATE_T) and sit flat under the belly plate, so an insert set from below has 4 mm to live in.",
+   "findings": [
+    {
+     "code": "plate-thinner-than-insert",
+     "level": "owner",
+     "text": "the 4 mm adapter plates cannot hold an M3 insert: the shortest catalogue M3 (94459A130) is 4.3 mm long and asks 5.1 mm of material, and the belly plate sits on the plate's top face. Options: bosses on the plate's underside at the adapter's measured pattern (>= 6.5 mm for 94459A140), M3 screws up into PEM nuts or nuts above, or a thicker plate where the adapter sits"
+    }
+   ],
+   "verdict": "owner"
+  },
+  {
    "id": "body.eyes_clip",
    "assembly": "body",
    "where": "shell front's two bosses (PETG Ø8) for the eyes' clip",
    "qty_robot": 2,
+   "typed": {
+    "clip 2 mm": "cad/body_shell.py eyes clip"
+   },
    "insert": "insert_m3",
    "d_mm": 3,
    "material": "petg",
@@ -990,6 +1080,7 @@
    "screw_side": "open end",
    "mating_hole_mm": 3.4,
    "tip_depth_mm": 4.0,
+   "tip_min_mm": 4.0,
    "clamp": {
     "stack": "the PETG clip",
     "printed_mm": 2.0,
@@ -1079,7 +1170,7 @@
     {
      "code": "door-side",
      "level": "fix",
-     "text": "cad/body_shell.py \"DOOR_SIDE = 'l'\" but door()'s docstring says \"The right side's service door\""
+     "text": "cad/body_shell.py \"DOOR_SIDE = 'l'\" but door()'s docstring says \"The right side's service door\" and the module docstring \"the right front one the service door\""
     }
    ],
    "verdict": "fix"
@@ -1104,6 +1195,10 @@
    "screw_side": "open end (from above)",
    "mating_hole_mm": 5.5,
    "tip_depth_mm": 11.0,
+   "stack": {
+    "head_seat_mm": 5.0,
+    "screw_mm": 16.0
+   },
    "clamp": {
     "stack": "5 mm PA6-CF foot (40 % gyroid) under each head",
     "printed_mm": 5.0,
@@ -1116,20 +1211,21 @@
    },
    "loads": [
     {
-     "case": "R: 30 g sideways on the turret",
-     "per_insert_n": 233,
+     "case": "R: 30 g sideways on the turret above the plinth (1.73 kg, centre 96 mm above the columns' tops; estimate)",
+     "per_insert_n": 307,
      "tension": true,
-     "source": "exports/turret/fea/summary.json hand_checks.tm_bolts"
+     "source": "exports/turret/mount.json and turret.json masses; plinth centroids estimated (inventory.py)"
     }
    ],
-   "notes": "The column is solid PETG for 8 mm under the pilot (its hollow starts at z -16), so the deeper pilot fits.",
+   "pullout_repo_n": 1500,
+   "notes": "The column is solid PETG to z -16 under the pilot, so the deeper pilot fits. The hand check's 233 N uses the whole turret's centre in frame T; the plinth and the J4012 (832 g) hang below these columns, so the part above them is lighter and its centre higher.",
    "boss_ratio": 2.11,
    "boss_wall_mm": 3.94,
    "thread_engaged_mm": 7.9,
    "tip_clear_mm": -3.0,
    "pullout_est_n": 2587,
-   "capacity_n": 2587,
-   "sf_pullout": 11.11,
+   "capacity_n": 1500,
+   "sf_pullout": 4.89,
    "findings": [
     {
      "code": "pilot-below-spirol",
@@ -1145,6 +1241,11 @@
      "code": "screw-bottoms-fix",
      "level": "fix",
      "text": "deepen the column pilots 8 -> 12.5 (solid to 16), or use M5 x 12 (tip 7, 7 mm engaged)"
+    },
+    {
+     "code": "pan-base-dowels",
+     "level": "owner",
+     "text": "the pan base's TM dowel holes (cad/turret.py pan_base: TM_DOWELS at r 52) meet no hole in the plinth's top (compute_shell() cuts none), but the bench BOM buys hw_tm_dowels (16 mm pins): the pan base is then located only by its M5s in clearance. Add dowel bosses to the plinth's top, or drop the pins"
     }
    ],
    "verdict": "fix"
@@ -1164,10 +1265,14 @@
    },
    "axis": "print-z",
    "orientation": "tray printed flat",
-   "screw": "M4 x 10 down through the shell's 5 mm PETG foot",
+   "screw": "M4 x 10 (BOM hw_plinth_m4) down through the shell's 5 mm PETG foot",
    "screw_side": "open end (from above)",
    "mating_hole_mm": 4.5,
    "tip_depth_mm": 5.0,
+   "stack": {
+    "head_seat_mm": 5.0,
+    "screw_mm": 10.0
+   },
    "clamp": {
     "stack": "5 mm PETG foot",
     "printed_mm": 5.0,
@@ -1186,6 +1291,9 @@
    "id": "turret.pan_base_clamp_ears",
    "assembly": "turret",
    "where": "pan base housing ears (PA6-CF): the 61810's clamp ring",
+   "typed": {
+    "M3 x 8": "docs/turret-sections.md clamp ring"
+   },
    "qty_robot": 5,
    "insert": "insert_m3",
    "d_mm": 3,
@@ -1234,6 +1342,9 @@
    "id": "turret.pan_base_carrier_tabs",
    "assembly": "turret",
    "where": "pan base tab pockets (from below): the ring carrier",
+   "typed": {
+    "M3 x 10 flat, 4 mm tabs": "cad/turret.py ring carrier"
+   },
    "qty_robot": 3,
    "insert": "insert_m3",
    "d_mm": 3,
@@ -1389,10 +1500,14 @@
    },
    "axis": "print-z",
    "orientation": "printed upside down",
-   "screw": "M4 x 10, heads 6 mm down in the yoke's 12 mm bridge (\"the heads sit 6 mm above the bridge\")",
+   "screw": "M4 x 10, heads on a seat 6 mm above the yoke bridge's underside",
    "screw_side": "open end (from above)",
    "mating_hole_mm": 4.5,
    "tip_depth_mm": 4.0,
+   "stack": {
+    "head_seat_mm": 6.0,
+    "screw_mm": 10.0
+   },
    "longer_screw_fits": true,
    "clamp": {
     "stack": "6 mm PA6-CF bridge",
@@ -1408,7 +1523,7 @@
     }
    ],
    "pullout_repo_n": 1100,
-   "notes": "so an M4 x 10 keeps 4 mm in the turntable's insert. An M4 x 12 keeps 6 mm (1.5 d) and stops 2 mm off the pilot floor.",
+   "notes": "cad/turret.py: \"so an M4 x 10 keeps 4 mm in the turntable's insert\". An M4 x 12 keeps 6 mm (1.5 d) and stops 2 mm off the pilot floor.",
    "thread_engaged_mm": 4.0,
    "tip_clear_mm": 4.0,
    "pullout_est_n": 1188,
@@ -1461,6 +1576,9 @@
    "assembly": "turret",
    "where": "tilt yoke -y arm (PA6-CF): the board bay",
    "qty_robot": 4,
+   "typed": {
+    "M3 x 8 flat, 3 mm back": "cad/turret.py board bay"
+   },
    "insert": "insert_m3",
    "d_mm": 3,
    "material": "pa6-cf",
@@ -1548,6 +1666,9 @@
    "id": "turret.cradle_plates",
    "assembly": "turret",
    "where": "cradle rail frame rebates (PA6-CF): the two 6061 cheek plates",
+   "typed": {
+    "M3 x 8 buttons": "exports/turret/bench/bom.json hw_button_m3x8 (shared group)"
+   },
    "qty_robot": 8,
    "insert": "insert_m3",
    "d_mm": 3,
@@ -1726,6 +1847,10 @@
    "id": "turret.ct_latch",
    "assembly": "turret",
    "where": "cartridge base (PA6-CF): the CT latch's one M4 (Ø10 boss, from below)",
+   "typed": {
+    "loads 188 N, 88 N": "exports/turret/fea/summary.json cradle R-fall-down; cad/turret_studies.py T_latch",
+    "rail 7 mm": "cad/turret.py cradle rail"
+   },
    "qty_robot": 1,
    "insert": "turret_insert_m4",
    "d_mm": 4,
@@ -1994,8 +2119,8 @@
   {
    "id": "rig.pod_m4",
    "assembly": "leg rig",
-   "where": "rig pod (PETG Ø10 bosses): contactor, relay, pendant clip",
-   "qty_robot": 5,
+   "where": "rig pod floor (PETG Ø10 bosses): the contactor's two M4, the relay's one",
+   "qty_robot": 3,
    "insert": "turret_insert_m4",
    "d_mm": 4,
    "material": "petg",
@@ -2007,7 +2132,7 @@
    "boss_mm": 10.0,
    "axis": "print-z",
    "orientation": "pod printed on its floor",
-   "screw": "M4 (contactor, relay); M4 x 10 (pendant clip)",
+   "screw": "M4 (contactor, relay)",
    "screw_side": "open end",
    "mating_hole_mm": null,
    "tip_depth_mm": null,
@@ -2041,10 +2166,100 @@
    "verdict": "check"
   },
   {
+   "id": "rig.pendant_clip",
+   "assembly": "leg rig",
+   "where": "rig pod's -y wall (PETG, 4 mm + a Ø10 boss inside): the pendant clip's two M4",
+   "qty_robot": 2,
+   "insert": "turret_insert_m4",
+   "d_mm": 4,
+   "material": "petg",
+   "infill": "PETG, 3 walls, 25 % infill",
+   "hole": {
+    "d": 5.6,
+    "depth": 7.0
+   },
+   "boss_mm": 10.0,
+   "axis": "layer-plane",
+   "orientation": "pod printed on its floor: the wall inserts are horizontal, set from outside",
+   "screw": "M4 x 10 through the clip's 6 mm back",
+   "screw_side": "open end",
+   "mating_hole_mm": 4.4,
+   "tip_depth_mm": 4.0,
+   "stack": {
+    "head_seat_mm": 6.0,
+    "screw_mm": 10.0
+   },
+   "longer_screw_fits": true,
+   "clamp": {
+    "stack": "6 mm PETG clip",
+    "printed_mm": 6.0,
+    "limiter": null
+   },
+   "loads": [],
+   "notes": "An M4 x 12 keeps 6 mm and stops 1 mm off the pilot's cap. Light duty: the pendant's weight.",
+   "boss_ratio": 1.58,
+   "boss_wall_mm": 1.85,
+   "thread_engaged_mm": 4.0,
+   "tip_clear_mm": 3.0,
+   "pullout_est_n": 1834,
+   "capacity_n": 1834,
+   "findings": [
+    {
+     "code": "pilot-below-spirol",
+     "level": "note",
+     "text": "blind pilot 7 < insert + 2 pitches = 7.8 (Spirol: room for displaced melt; 0.6 mm below the insert)"
+    },
+    {
+     "code": "boss-thin",
+     "level": "note",
+     "text": "boss Ø10 is 1.58 x the insert's Ø6.31 (wall 1.85 mm; Spirol asks 2-3 x)"
+    },
+    {
+     "code": "engagement-low",
+     "level": "fix",
+     "text": "4 mm of thread engaged = 1.00 d (the body checks ask 1.2 d)"
+    },
+    {
+     "code": "axis-in-layer-plane",
+     "level": "note",
+     "text": "insert axis lies in the layer plane: installation and pull-out hoop stress opens the layer bonds through the axis (an axis along the print z is the strong way)"
+    }
+   ],
+   "verdict": "fix"
+  },
+  {
+   "id": "rig.pod_lid",
+   "assembly": "leg rig",
+   "where": "rig pod's open +y face: the lid's four M3",
+   "qty_robot": 0,
+   "insert": null,
+   "d_mm": 3,
+   "material": "petg",
+   "infill": "PETG, 3 walls, 25 % infill",
+   "receiver": "none modelled",
+   "screw": "M3 x 10",
+   "screw_side": "n/a",
+   "axis": "layer-plane",
+   "clamp": null,
+   "loads": [],
+   "notes": "The lid's part note says \"PETG; 4 x M3 x 10 into the pod's inserts\"; pod() cuts no M3 pilot, and the lid's corner holes (8 mm in) sit over the pod's cavity (its walls are 4 mm).",
+   "findings": [
+    {
+     "code": "no-receiver",
+     "level": "fix",
+     "text": "the pod lid's screws (its note: \"PETG; 4 x M3 x 10 into the pod's inserts\") meet nothing in the pod: add four corner bosses with M3 inserts (94459A140 in Ø4.0 x 6.7 pilots, axis along the lid's screws) inside the pod's open face"
+    }
+   ],
+   "verdict": "fix"
+  },
+  {
    "id": "rig.tof_arm",
    "assembly": "leg rig",
    "where": "ToF arm (PETG Ø10 bosses) on the carriage plate",
    "qty_robot": 2,
+   "typed": {
+    "M4 x 10": "cad/rig_parts.py tof_arm note"
+   },
    "insert": "turret_insert_m4",
    "d_mm": 4,
    "material": "petg",
@@ -2113,7 +2328,7 @@
    "joint": "body.printed_clamps",
    "code": "door-side",
    "level": "fix",
-   "text": "cad/body_shell.py \"DOOR_SIDE = 'l'\" but door()'s docstring says \"The right side's service door\""
+   "text": "cad/body_shell.py \"DOOR_SIDE = 'l'\" but door()'s docstring says \"The right side's service door\" and the module docstring \"the right front one the service door\""
   },
   {
    "joint": "body.riser_top_tm",
@@ -2123,15 +2338,21 @@
   },
   {
    "joint": "body.riser_top_tm",
+   "code": "tm-com-datum",
+   "level": "fix",
+   "text": "exports/turret/mount.json says frame T's origin is \"in the TM face\", but since D66 it reaches 86 mm below it (envelope.lowest_z_mm): the origin is the pan base's foot and the plinth's tray is at z -86 (compute_tray z0 = -P['h']). Its centre z 49.2 is 135.2 mm above the real TM face. hand_checks.tm_bolts uses 49.2 (233 N a bolt), and cad/body_params.tm() takes max(49.2, 100) = 100 (com_above_deck_on_riser_mm 79.2). Fix cad/turret_mount.py (and turret_studies' tm_bolts) to measure from the plinth's underside, then re-run the body's riser and deck studies"
+  },
+  {
+   "joint": "body.riser_top_tm",
    "code": "contract-depth",
    "level": "fix",
-   "text": "riser TM pilots 9.5 deep vs mount.json bolt_hole_depth_min_mm 12 (and 11.5 with the D66 tray): deepen to >= 13, or use M5 x 12 (tip 7.5, 1.5 d engaged)"
+   "text": "riser TM pilots 9.5 deep vs mount.json bolt_hole_depth_min_mm 12 (and the tip at 11.5 with the D66 tray): deepen to >= 13, or use M5 x 12 (tip 7.5, 1.5 d engaged)"
   },
   {
    "joint": "body.riser_top_tm",
    "code": "contract-dowel",
    "level": "fix",
-   "text": "a 16 mm TM dowel goes 8 into the D66 tray, so it needs 8.5 mm in the riser, which cuts 8 (mount.json, written for the 4 mm pan-base holes, asks 12.5)"
+   "text": "a 16 mm TM dowel goes 8 into the D66 tray, so it needs 8.5 mm in the riser, which cuts 8 (mount.json asks 12.5)"
   },
   {
    "joint": "leg.stop_posts",
@@ -2144,6 +2365,18 @@
    "code": "note-vs-joint",
    "level": "fix",
    "text": "cad/fivebar.py wheel_link() docstring: \"its 4 x M6 x 40\"; the joint and BOM are M6 x 30, and catalog/hardware.json screw_m6x40 still lists this joint"
+  },
+  {
+   "joint": "rig.pendant_clip",
+   "code": "engagement-low",
+   "level": "fix",
+   "text": "4 mm of thread engaged = 1.00 d (the body checks ask 1.2 d)"
+  },
+  {
+   "joint": "rig.pod_lid",
+   "code": "no-receiver",
+   "level": "fix",
+   "text": "the pod lid's screws (its note: \"PETG; 4 x M3 x 10 into the pod's inserts\") meet nothing in the pod: add four corner bosses with M3 inserts (94459A140 in Ø4.0 x 6.7 pilots, axis along the lid's screws) inside the pod's open face"
   },
   {
    "joint": "stand.dock",
@@ -2182,10 +2415,22 @@
    "text": "deepen the column pilots 8 -> 12.5 (solid to 16), or use M5 x 12 (tip 7, 7 mm engaged)"
   },
   {
-   "joint": "leg.hip_frame_lugs",
-   "code": "lug-preload-plastic-limited",
+   "joint": "body.battery_adapter",
+   "code": "plate-thinner-than-insert",
    "level": "owner",
-   "text": "15.6 mm of PA6-CF under each Ø7 head with no limiter: 25 MPa allows 565 N (0.45 N m), and friction then carries 85 of the 226 N per lug"
+   "text": "the 4 mm adapter plates cannot hold an M3 insert: the shortest catalogue M3 (94459A130) is 4.3 mm long and asks 5.1 mm of material, and the belly plate sits on the plate's top face. Options: bosses on the plate's underside at the adapter's measured pattern (>= 6.5 mm for 94459A140), M3 screws up into PEM nuts or nuts above, or a thicker plate where the adapter sits"
+  },
+  {
+   "joint": "body.riser_feet",
+   "code": "pullout-margin",
+   "level": "owner",
+   "text": "pull-out estimate 1500 N / 778 N = 1.93"
+  },
+  {
+   "joint": "body.riser_top_tm",
+   "code": "tm-com-budget",
+   "level": "owner",
+   "text": "the turret's centre is 135.2 mm above the TM face against D71's \"at most 100 mm\": raise the budget and re-run the body's fall cases at 135 mm, or lower the turret (the plinth is 86 mm)"
   },
   {
    "joint": "leg.hip_frame_mount",
@@ -2209,13 +2454,19 @@
    "joint": "leg.wheel_botwheel",
    "code": "printed-clamp-crush",
    "level": "owner",
-   "text": "6667 N on 44 mm2 of printed PA6-CF under the Ø10 socket head = 150 MPa (> 40 humid, 25 sustained); 26 mm of plastic in the clamp, no limiter"
+   "text": "6667 N on 44 mm2 of printed PA6-CF under the Ø10 socket head = 150 MPa (> 40 humid, 25 sustained); 20.8 mm of plastic in the clamp, no limiter"
   },
   {
    "joint": "leg.wheel_botwheel",
    "code": "wheel-clamp",
    "level": "owner",
-   "text": "8 N m ~ 6667 N on 44 mm2 = 150 MPa on PA6-CF; the flange needs >= 1331 N a screw, the plastic holds 1108 N"
+   "text": "8 N m ~ 6667 N on 44 mm2 = 150 MPa on PA6-CF; the flange needs >= 1331 N a screw, a bare head holds 1108 N, a DIN 433 washer 1521 N (1.82 N m)"
+  },
+  {
+   "joint": "turret.plinth_columns",
+   "code": "pan-base-dowels",
+   "level": "owner",
+   "text": "the pan base's TM dowel holes (cad/turret.py pan_base: TM_DOWELS at r 52) meet no hole in the plinth's top (compute_shell() cuts none), but the bench BOM buys hw_tm_dowels (16 mm pins): the pan base is then located only by its M5s in clearance. Add dowel bosses to the plinth's top, or drop the pins"
   },
   {
    "joint": "body.post_m5",
@@ -2228,6 +2479,18 @@
    "code": "ear-nyloc-on-petg",
    "level": "check",
    "text": "put an M5 washer under each ear bracket nyloc on the 2 mm PETG wall and tighten snug (no torque is stated)"
+  },
+  {
+   "joint": "body.riser_top_tm",
+   "code": "pullout-margin",
+   "level": "check",
+   "text": "pull-out estimate 1500 N / 637 N = 2.35: qualify with the B4 pull-out coupon in this material and orientation"
+  },
+  {
+   "joint": "leg.hip_frame_lugs",
+   "code": "lug-torque-from-plastic",
+   "level": "check",
+   "text": "set the lug screws' torque from the plastic (#116): 15.6 mm of PA6-CF under each Ø7 head, no limiter: 25 MPa allows 565 N (0.45 N m at K 0.2). The peak torque then rides on the dowels (1132 N, 19 MPa): check their press fit in the printed frame on a coupon"
   },
   {
    "joint": "leg.hip_frame_mount",
@@ -2273,84 +2536,97 @@
   }
  ],
  "summary": {
-  "families": 43,
+  "families": 46,
   "inserts_on_robot": 151,
   "verdicts": {
-   "owner": 3,
-   "check": 5,
-   "fix": 11,
+   "owner": 4,
+   "check": 6,
+   "fix": 13,
    "note": 17,
-   "ok": 7
+   "ok": 6
   },
-  "fix": 16,
-  "owner": 6,
-  "check": 9
+  "fix": 19,
+  "owner": 9,
+  "check": 11
  },
  "bindings": [
   {
    "file": "cad/studies.py",
    "pattern": "'washer_mpa': ([\\d.]+),",
-   "value": 25.0
+   "value": 25.0,
+   "lines": 1
   },
   {
    "file": "cad/studies.py",
    "pattern": "'bearing_mpa': ([\\d.]+),",
-   "value": 40.0
+   "value": 40.0,
+   "lines": 1
   },
   {
    "file": "cad/fivebar.py",
    "pattern": "'thread': 'M5', 'pilot_depth': ([\\d.]+), 'boss_r'",
-   "value": 11.0
+   "value": 11.0,
+   "lines": 1
   },
   {
    "file": "cad/fivebar.py",
    "pattern": "'pilot_depth': [\\d.]+, 'boss_r': ([\\d.]+), 'boss_len'",
-   "value": 7.0
+   "value": 7.0,
+   "lines": 1
   },
   {
    "file": "cad/fivebar.py",
    "pattern": "^FLANGE_T, FLANGE_X = ([\\d.]+), ",
-   "value": 13.0
+   "value": 13.0,
+   "lines": 1
   },
   {
    "file": "cad/fivebar.py",
    "pattern": "\\(zf \\+ FLANGE_T / 2 \\+ (1\\.5)\\)\\) for s in \\(1, -1\\)",
-   "value": 1.5
+   "value": 1.5,
+   "lines": 1
   },
   {
    "file": "cad/rig_assembly.py",
    "pattern": "'\\| Plate to hip frame \\(M5 x 16 into heat-set inserts\\) \\| the B4 torque \\(([\\d.]+) N m until B4\\) \\|'",
-   "value": 1.5
+   "value": 1.5,
+   "lines": 1
   },
   {
    "file": "cad/fivebar.py",
    "pattern": "^HUB_HEAD_CB = \\(([\\d.]+), [\\d.]+\\)",
-   "value": 10.0
+   "value": 10.0,
+   "lines": 1
   },
   {
    "file": "cad/fivebar.py",
    "pattern": "^HUB_HEAD_CB = \\([\\d.]+, ([\\d.]+)\\)",
-   "value": 5.5
+   "value": 5.5,
+   "lines": 1
   },
   {
    "file": "cad/fivebar.py",
    "pattern": "'upper_t': ([\\d.]+), 'upper_w0'",
-   "value": 30.0
+   "value": 30.0,
+   "lines": 1
   },
   {
    "file": "cad/leg_studies.py",
    "pattern": "^HUB_PRELOAD_N = ([\\d.]+)",
-   "value": 1200.0
+   "value": 1200.0,
+   "lines": 1
   },
   {
    "file": "cad/rig_assembly.py",
    "pattern": "'\\| Upper link to adapter \\(M5 x 40 into tapped 6061, heads on the printed link\\) \\| the B4 torque \\(([\\d.]+) N m until B4\\) \\|'",
-   "value": 1.5
+   "value": 1.5,
+   "lines": 1
   },
   {
    "file": "cad/fivebar.py",
    "pattern": "^LUG_CB = ([\\d.]+)",
-   "value": 8.5
+   "value": 8.5,
+   "lines": 1
   },
   {
    "file": "cad/fivebar.py",
@@ -2358,38 +2634,89 @@
   },
   {
    "file": "cad/fivebar.py",
+   "pattern": "\\(10 x M4 on PCD ([\\d.]+)\\)",
+   "value": 106.0,
+   "lines": 1
+  },
+  {
+   "file": "cad/fivebar.py",
+   "literal": "RS04_LUG0, RS04_DOWELS = -15.0, (3.0, 183.0)"
+  },
+  {
+   "file": "cad/fivebar.py",
+   "pattern": "web = web\\.cut\\(ycyl\\(2\\.5 - 0\\.03, yf0 - 1, yf0 \\+ ([\\d.]+), x, z\\)\\)",
+   "value": 12.0,
+   "lines": 1
+  },
+  {
+   "file": "cad/fivebar.py",
    "pattern": "^EYE_SLEEVE = \\(([\\d.]+), [\\d.]+, [\\d.]+\\)",
-   "value": 18.0
+   "value": 18.0,
+   "lines": 1
   },
   {
    "file": "cad/fivebar.py",
    "pattern": "^EYE_SLEEVE = \\([\\d.]+, ([\\d.]+), [\\d.]+\\)",
-   "value": 12.0
+   "value": 12.0,
+   "lines": 1
   },
   {
    "file": "cad/fivebar.py",
    "pattern": "^EYE_SLEEVE = \\([\\d.]+, [\\d.]+, ([\\d.]+)\\)",
-   "value": 20.0
+   "value": 20.0,
+   "lines": 1
   },
   {
    "file": "cad/rig_assembly.py",
    "pattern": "'\\| Knee nut \\(M10 nyloc onto the steel sleeves\\) \\| ([\\d.]+) N m \\|'",
-   "value": 20.0
+   "value": 20.0,
+   "lines": 1
   },
   {
    "file": "cad/fivebar.py",
    "pattern": "'wheel_t': ([\\d.]+), 'wheel_w0'",
-   "value": 26.0
+   "value": 26.0,
+   "lines": 1
   },
   {
    "file": "cad/fivebar.py",
    "pattern": "^WHEEL_RECESS_PLAY = ([\\d.]+)",
-   "value": 0.2
+   "value": 0.2,
+   "lines": 1
   },
   {
    "file": "cad/rig_assembly.py",
    "pattern": "'\\| Wheel \\(M6 x 30 into the BotWheel\\) \\| ([\\d.]+) N m, threadlocker \\|'",
-   "value": 8.0
+   "value": 8.0,
+   "lines": 1
+  },
+  {
+   "file": "cad/fivebar.py",
+   "pattern": "y\\['tyre'\\] = \\(y\\['wheel_boss'\\] \\+ ([\\d.]+), y\\['wheel_boss'\\] \\+ [\\d.]+ \\+ [\\d.]+\\)",
+   "value": 7.5,
+   "lines": 1
+  },
+  {
+   "file": "cad/fivebar.py",
+   "pattern": "y\\['tyre'\\] = \\(y\\['wheel_boss'\\] \\+ [\\d.]+, y\\['wheel_boss'\\] \\+ [\\d.]+ \\+ ([\\d.]+)\\)",
+   "value": 44.6,
+   "lines": 1
+  },
+  {
+   "file": "cad/fivebar.py",
+   "literal": "k = k.cut(ycyl(gmi.clear('M6') / 2, h1 - 1, y1 + 1, l2 + x, z))"
+  },
+  {
+   "file": "cad/fivebar.py",
+   "pattern": "k = k\\.cut\\(ycyl\\(([\\d.]+), h1 - 1, y1 \\+ 1, l2\\)\\)\\s+# the cable",
+   "value": 11.0,
+   "lines": 1
+  },
+  {
+   "file": "cad/fivebar.py",
+   "pattern": "k = k\\.cut\\(ycyl\\(([\\d.]+), h0 - 1, h1 - 0\\.01, l2\\)\\)\\s+# Ø48 bore",
+   "value": 24.0,
+   "lines": 1
   },
   {
    "file": "cad/fivebar.py",
@@ -2404,84 +2731,148 @@
    "literal": "Stop posts (M8 into heat-set inserts)"
   },
   {
-   "file": "cad/body_params.py",
-   "pattern": "^POST_W = ([\\d.]+)",
-   "value": 22.0
+   "file": "cad/turret.py",
+   "pattern": "^PLINTH = \\{'h': ([\\d.]+), ",
+   "value": 86.0,
+   "lines": 1
   },
   {
-   "file": "cad/body_frame.py",
-   "pattern": "s = s\\.cut\\(cyl_z\\(3\\.2, -1\\.0, ([\\d.]+)\\)\\)\\.cut\\(cyl_z\\(3\\.2, h - 11\\.0, h \\+ 1\\.0\\)\\)",
-   "value": 11.0
-  },
-  {
-   "file": "cad/body_frame.py",
-   "pattern": "it carries (\\d+) N at",
-   "value": 290.0
-  },
-  {
-   "file": "cad/body_frame.py",
-   "pattern": "^POST_M3_PILOT = ([\\d.]+)",
-   "value": 8.0
-  },
-  {
-   "file": "cad/body_frame.py",
-   "pattern": "core = core\\.cut\\(box\\(-([\\d.]+), 4\\.5, \\*sorted\\(\\(sy \\* w / 2",
-   "value": 4.5
-  },
-  {
-   "file": "cad/body_frame.py",
-   "pattern": "^PLATE_POST_W = ([\\d.]+)",
-   "value": 16.0
-  },
-  {
-   "file": "cad/body_frame.py",
-   "pattern": "return s\\.cut\\(cyl_z\\(3\\.2, -1\\.0, ([\\d.]+)\\)\\)\\.cut\\(cyl_z\\(3\\.2, h - 11\\.0",
-   "value": 11.0
-  },
-  {
-   "file": "cad/body_frame.py",
-   "pattern": "^RISER_FOOT_PILOT = ([\\d.]+)",
-   "value": 12.0
-  },
-  {
-   "file": "cad/body_frame.py",
-   "pattern": "s = s\\.cut\\(cyl_z\\(([\\d.]+), -1\\.0, RISER_FOOT_PILOT, x, y\\)\\)",
-   "value": 3.2
-  },
-  {
-   "file": "cad/body_frame.py",
-   "pattern": "^RISER_LEG_R = ([\\d.]+)",
-   "value": 9.0
-  },
-  {
-   "file": "cad/body_frame.py",
-   "pattern": "s = s\\.cut\\(cyl_z\\(3\\.2, H - ([\\d.]+), H \\+ 1\\.0, x, y\\)\\)\\s+# M5 insert from the top",
-   "value": 9.5
-  },
-  {
-   "file": "cad/body_frame.py",
-   "pattern": "s = s\\.cut\\(cyl_z\\(2\\.5 - 0\\.03, H - ([\\d.]+), H \\+ 1\\.0, x, y\\)\\)",
-   "value": 8.0
+   "file": "cad/turret.py",
+   "literal": "z0 = -P['h']"
   },
   {
    "file": "cad/turret.py",
    "pattern": "^PLINTH = \\{'h': [\\d.]+, 'r': [\\d.]+, 'wall': [\\d.]+, 'tray_t': ([\\d.]+),",
-   "value": 10.0
+   "value": 10.0,
+   "lines": 1
+  },
+  {
+   "file": "cad/turret_studies.py",
+   "pattern": "^FALL_G = ([\\d.]+)",
+   "value": 30.0,
+   "lines": 1
+  },
+  {
+   "file": "cad/turret_studies.py",
+   "literal": "mom = F_side * M['com_mm'][2] / 1000"
+  },
+  {
+   "file": "cad/body_params.py",
+   "pattern": "^RISER_H = ([\\d.]+)",
+   "value": 30.0,
+   "lines": 1
+  },
+  {
+   "file": "cad/body_frame.py",
+   "literal": "RISER_FEET = [(40.0, 40.0), (-40.0, 40.0), (-40.0, -40.0), (40.0, -40.0)]"
+  },
+  {
+   "file": "cad/turret.py",
+   "pattern": "^J4012 = \\{'L': [\\d.]+, 'W': [\\d.]+, 'H': ([\\d.]+),",
+   "value": 66.7,
+   "lines": 1
+  },
+  {
+   "file": "cad/body_params.py",
+   "pattern": "^POST_W = ([\\d.]+)",
+   "value": 22.0,
+   "lines": 1
+  },
+  {
+   "file": "cad/body_frame.py",
+   "pattern": "s = s\\.cut\\(cyl_z\\(3\\.2, -1\\.0, ([\\d.]+)\\)\\)\\.cut\\(cyl_z\\(3\\.2, h - 11\\.0, h \\+ 1\\.0\\)\\)",
+   "value": 11.0,
+   "lines": 1
+  },
+  {
+   "file": "cad/body_frame.py",
+   "pattern": "it carries (\\d+) N at",
+   "value": 290.0,
+   "lines": 1
+  },
+  {
+   "file": "cad/body_frame.py",
+   "pattern": "^POST_M3_PILOT = ([\\d.]+)",
+   "value": 8.0,
+   "lines": 1
+  },
+  {
+   "file": "cad/body_frame.py",
+   "pattern": "core = core\\.cut\\(box\\(-([\\d.]+), 4\\.5, \\*sorted\\(\\(sy \\* w / 2",
+   "value": 4.5,
+   "lines": 1
+  },
+  {
+   "file": "cad/body_frame.py",
+   "pattern": "^PLATE_POST_W = ([\\d.]+)",
+   "value": 16.0,
+   "lines": 1
+  },
+  {
+   "file": "cad/body_frame.py",
+   "pattern": "return s\\.cut\\(cyl_z\\(3\\.2, -1\\.0, ([\\d.]+)\\)\\)\\.cut\\(cyl_z\\(3\\.2, h - 11\\.0",
+   "value": 11.0,
+   "lines": 1
+  },
+  {
+   "file": "cad/body_frame.py",
+   "pattern": "^RISER_FOOT_PILOT = ([\\d.]+)",
+   "value": 12.0,
+   "lines": 1
+  },
+  {
+   "file": "cad/body_frame.py",
+   "pattern": "s = s\\.cut\\(cyl_z\\(([\\d.]+), -1\\.0, RISER_FOOT_PILOT, x, y\\)\\)",
+   "value": 3.2,
+   "lines": 1
+  },
+  {
+   "file": "cad/body_frame.py",
+   "pattern": "^RISER_LEG_R = ([\\d.]+)",
+   "value": 9.0,
+   "lines": 1
+  },
+  {
+   "file": "cad/body_frame.py",
+   "pattern": "s = s\\.cut\\(cyl_z\\(3\\.2, H - ([\\d.]+), H \\+ 1\\.0, x, y\\)\\)\\s+# M5 insert from the top",
+   "value": 9.5,
+   "lines": 1
+  },
+  {
+   "file": "cad/body_frame.py",
+   "pattern": "s = s\\.cut\\(cyl_z\\(2\\.5 - 0\\.03, H - ([\\d.]+), H \\+ 1\\.0, x, y\\)\\)",
+   "value": 8.0,
+   "lines": 1
+  },
+  {
+   "file": "cad/turret.py",
+   "pattern": "^PLINTH = \\{'h': [\\d.]+, 'r': [\\d.]+, 'wall': [\\d.]+, 'tray_t': ([\\d.]+),",
+   "value": 10.0,
+   "lines": 1
   },
   {
    "file": "cad/turret.py",
    "pattern": "'cbore': \\([\\d.]+, ([\\d.]+)\\)",
-   "value": 5.5
+   "value": 5.5,
+   "lines": 1
   },
   {
    "file": "cad/turret.py",
    "pattern": "s = s\\.cut\\(through_z\\(x, y, 5\\.0, z0 - 1, z0 \\+ ([\\d.]+)\\)\\)",
-   "value": 8.0
+   "value": 8.0,
+   "lines": 1
+  },
+  {
+   "file": "cad/body_frame.py",
+   "pattern": "^RISER_LEG_R = ([\\d.]+)",
+   "value": 9.0,
+   "lines": 1
   },
   {
    "file": "cad/body_frame.py",
    "pattern": "^DCDC_FOOT_T, DCDC_WALL_T = [\\d.]+, ([\\d.]+)",
-   "value": 6.0
+   "value": 6.0,
+   "lines": 1
   },
   {
    "file": "cad/body_frame.py",
@@ -2490,12 +2881,14 @@
   {
    "file": "cad/body_frame.py",
    "pattern": "s = s\\.cut\\(cyl_z\\(2\\.0, H - ([\\d.]+), H \\+ 0\\.1, u, BUS_W / 2\\)\\)",
-   "value": 6.5
+   "value": 6.5,
+   "lines": 1
   },
   {
    "file": "cad/body_frame.py",
    "pattern": "^BUS_L, BUS_W = [\\d.]+, ([\\d.]+)",
-   "value": 20.0
+   "value": 20.0,
+   "lines": 1
   },
   {
    "file": "cad/body_frame.py",
@@ -2504,22 +2897,26 @@
   {
    "file": "cad/body_battery.py",
    "pattern": "^RAIL_W, RAIL_H = ([\\d.]+), [\\d.]+",
-   "value": 8.0
+   "value": 8.0,
+   "lines": 1
   },
   {
    "file": "cad/body_battery.py",
    "pattern": "^RAIL_W, RAIL_H = [\\d.]+, ([\\d.]+)",
-   "value": 10.0
+   "value": 10.0,
+   "lines": 1
   },
   {
    "file": "cad/body_battery.py",
    "pattern": "r = r\\.cut\\(_cyl_y\\(2\\.0, \\*sorted\\(\\(yo, yo - sy \\* ([\\d.]+)\\)\\), x, zc\\)\\)",
-   "value": 6.5
+   "value": 6.5,
+   "lines": 1
   },
   {
    "file": "cad/body_battery.py",
    "pattern": "r = r\\.cut\\(_cyl_x\\(2\\.0, \\*sorted\\(\\(xe, xe \\+ d \\* ([\\d.]+)\\)\\), yc, zc\\)\\)",
-   "value": 7.5
+   "value": 7.5,
+   "lines": 1
   },
   {
    "file": "cad/body_battery.py",
@@ -2532,32 +2929,48 @@
   {
    "file": "cad/body_shell.py",
    "pattern": "plate = plate\\.cut\\(_hole_x\\(y, z, ([\\d.]+), \\*sorted\\(\\(sx \\* XI, sx \\* \\(XI - 7\\.5\\)\\)\\)\\)\\)",
-   "value": 4.0
+   "value": 4.0,
+   "lines": 1
   },
   {
    "file": "cad/body_shell.py",
    "pattern": "plate = plate\\.cut\\(_hole_x\\(y, z, 4\\.0, \\*sorted\\(\\(sx \\* XI, sx \\* \\(XI - ([\\d.]+)\\)\\)\\)\\)\\)",
-   "value": 7.5
+   "value": 7.5,
+   "lines": 1
   },
   {
    "file": "cad/body_shell.py",
    "pattern": "plate = plate\\.union\\(box\\(fa, fb, y - ([\\d.]+), y \\+ 4, z0 - 2, z0 \\+ 6\\)\\)",
-   "value": 4.0
+   "value": 4.0,
+   "lines": 1
+  },
+  {
+   "file": "cad/body_battery.py",
+   "pattern": "^PLATE_T = ([\\d.]+)",
+   "value": 4.0,
+   "lines": 1
+  },
+  {
+   "file": "cad/body_battery.py",
+   "literal": "the adapter's own screws into inserts set on arrival."
   },
   {
    "file": "cad/body_shell.py",
    "pattern": "^EYES = \\{.*'board': \\([\\d.]+, [\\d.]+, ([\\d.]+)\\)\\}",
-   "value": 7.0
+   "value": 7.0,
+   "lines": 1
   },
   {
    "file": "cad/body_shell.py",
    "pattern": "\\.center\\(y, z\\)\\.circle\\(2\\.0\\)\\.extrude\\(([\\d.]+)\\)\\)",
-   "value": 6.0
+   "value": 6.0,
+   "lines": 1
   },
   {
    "file": "cad/body_shell.py",
    "pattern": "\\.center\\(y, z\\)\\.circle\\(([\\d.]+)\\)\\.extrude\\(EYES\\['board'\\]\\[2\\] \\+ 0\\.01\\)\\)",
-   "value": 4.0
+   "value": 4.0,
+   "lines": 1
   },
   {
    "file": "cad/body_shell.py",
@@ -2576,14 +2989,20 @@
    "literal": "The right side's service door"
   },
   {
+   "file": "cad/body_shell.py",
+   "literal": "the right front one the service door"
+  },
+  {
    "file": "cad/turret.py",
    "pattern": "^INSERT_DEPTH = ([\\d.]+)",
-   "value": 8.0
+   "value": 8.0,
+   "lines": 1
   },
   {
    "file": "cad/turret.py",
    "pattern": "def __init__\\(self, ball_d: float = ([\\d.]+),",
-   "value": 22.7
+   "value": 22.7,
+   "lines": 1
   },
   {
    "file": "cad/turret.py",
@@ -2592,65 +3011,136 @@
   {
    "file": "cad/turret.py",
    "pattern": "self\\.foot_t = ([\\d.]+)",
-   "value": 5.0
+   "value": 5.0,
+   "lines": 1
   },
   {
    "file": "cad/turret.py",
    "pattern": "'col_r': ([\\d.]+), 'cbore'",
-   "value": 7.5
+   "value": 7.5,
+   "lines": 1
+  },
+  {
+   "file": "cad/turret.py",
+   "literal": "def insert_hole(x, y, z_top, size='M3', depth=INSERT_DEPTH):"
+  },
+  {
+   "file": "cad/turret.py",
+   "pattern": "s = s\\.cut\\(insert_hole\\(x, y, 0\\.0, 'M5'(?:, ([\\d.]+))?\\)\\)",
+   "value": 8.0,
+   "lines": 1
+  },
+  {
+   "file": "cad/turret.py",
+   "pattern": "\\.cut\\(cyl_z\\(4\\.0, zt \\+ 5\\.0, -([\\d.]+), x, y\\)\\)\\s+# hollow under the insert",
+   "value": 16.0,
+   "lines": 1
+  },
+  {
+   "file": "cad/turret.py",
+   "block": "def compute_shell(G):"
+  },
+  {
+   "file": "exports/turret/bench/bom.json",
+   "bom_for": "hw_tm_dowels",
+   "value": 16.0
+  },
+  {
+   "file": "cad/turret.py",
+   "pattern": "s = s\\.cut\\(insert_hole\\(fx, fy, z1, 'M4'(?:, ([\\d.]+))?\\)\\)",
+   "value": 8.0,
+   "lines": 1
   },
   {
    "file": "cad/turret.py",
    "literal": "y - 6.0, y + 6.0, zt, zt + 5.0)"
   },
   {
+   "file": "exports/turret/bench/bom.json",
+   "bom_for": "hw_plinth_m4",
+   "value": 10.0
+  },
+  {
    "file": "cad/turret.py",
    "pattern": "s = s\\.cut\\(insert_hole\\(x, y, hz1, 'M3', ([\\d.]+)\\)\\)",
-   "value": 6.0
+   "value": 6.0,
+   "lines": 1
   },
   {
    "file": "cad/turret.py",
    "pattern": "^CLAMP_T = ([\\d.]+)",
-   "value": 3.175
+   "value": 3.175,
+   "lines": 1
   },
   {
    "file": "cad/turret.py",
    "pattern": "C\\['tab_t'\\] - 0\\.1, C\\['tab_t'\\] \\+ ([\\d.]+), x, y\\)\\)\\s+# M3 insert from below",
-   "value": 7.0
+   "value": 7.0,
+   "lines": 1
   },
   {
    "file": "cad/turret_base_board.py",
    "pattern": "^INSERT_PILOT = ([\\d.]+)",
-   "value": 4.0
+   "value": 4.0,
+   "lines": 1
   },
   {
    "file": "cad/turret_base_board.py",
-   "pattern": "s = s\\.cut\\(cx\\(INSERT_PILOT/2,[\\d.]+,([\\d.]+),y,z\\)\\)",
-   "value": 53.1
+   "pattern": "cx\\(INSERT_PILOT/2,46\\.5,([\\d.]+),y,z\\)",
+   "value": 53.1,
+   "lines": 1
   },
   {
    "file": "cad/turret_base_board.py",
-   "pattern": "s = s\\.cut\\(cx\\(INSERT_PILOT/2,([\\d.]+),[\\d.]+,y,z\\)\\)",
-   "value": 46.5
+   "pattern": "cx\\(INSERT_PILOT/2,([\\d.]+),53\\.1,y,z\\)",
+   "value": 46.5,
+   "lines": 1
+  },
+  {
+   "file": "cad/turret_base_board.py",
+   "pattern": "cx\\(INSERT_PILOT/2,47\\.9,([\\d.]+),y,z\\)",
+   "value": 54.5,
+   "lines": 1
+  },
+  {
+   "file": "cad/turret_base_board.py",
+   "pattern": "cx\\(INSERT_PILOT/2,([\\d.]+),54\\.5,y,z\\)",
+   "value": 47.9,
+   "lines": 1
   },
   {
    "file": "cad/turret_base_board.py",
    "pattern": "^M3_CLEAR = ([\\d.]+)",
-   "value": 3.4
+   "value": 3.4,
+   "lines": 1
   },
   {
    "file": "cad/turret.py",
    "pattern": "s = s\\.cut\\(cyl_y\\(FAST\\['M4'\\]\\['insert_pilot'\\] / 2, -G\\.dt_y - 0\\.1, -G\\.dt_y \\+ ([\\d.]+), x, z\\)\\)",
-   "value": 8.0
+   "value": 8.0,
+   "lines": 1
   },
   {
    "file": "cad/turret.py",
    "pattern": "s = s\\.cut\\(insert_hole\\(x, y, G\\.bumper_z\\[0\\], 'M3', ([\\d.]+)\\)\\)",
-   "value": 5.5
+   "value": 5.5,
+   "lines": 1
   },
   {
    "file": "cad/turret.py",
-   "literal": "the heads sit 6 mm above the bridge"
+   "pattern": "s = s\\.cut\\(insert_hole\\(x, y, z1, 'M4'(?:, ([\\d.]+))?\\)\\)",
+   "value": 8.0,
+   "lines": 1
+  },
+  {
+   "file": "cad/turret.py",
+   "pattern": "\\.cut\\(cyl_z\\(4\\.0, b0 \\+ ([\\d.]+), b1 \\+ 1, x, y\\)\\)",
+   "value": 6.0,
+   "lines": 1
+  },
+  {
+   "file": "cad/turret.py",
+   "literal": "so an M4 x 10 keeps 4 mm"
   },
   {
    "file": "cad/turret.py",
@@ -2659,27 +3149,32 @@
   {
    "file": "cad/turret.py",
    "pattern": "rg\\['seat'\\] - ([\\d.]+), rg\\['seat'\\] \\+ 0\\.1, x, y\\)\\)\\s+# flange screws",
-   "value": 6.0
+   "value": 6.0,
+   "lines": 1
   },
   {
    "file": "cad/turret.py",
    "pattern": "-a1 - 0\\.1, -a1 \\+ ([\\d.]+), x, z\\)\\)",
-   "value": 6.0
+   "value": 6.0,
+   "lines": 1
   },
   {
    "file": "cad/turret.py",
    "pattern": "y1 - 0\\.1, y1 \\+ ([\\d.]+), x, z\\)\\)\\s+# 5\\.7 mm insert",
-   "value": 6.0
+   "value": 6.0,
+   "lines": 1
   },
   {
    "file": "cad/turret.py",
    "pattern": "s = s\\.union\\(cyl_y\\(([\\d.]+), y1, -a1 - t \\+ 0\\.01, x, z\\)\\)",
-   "value": 5.0
+   "value": 5.0,
+   "lines": 1
   },
   {
    "file": "cad/turret.py",
    "pattern": "^INSERT_M3_SIDE = ([\\d.]+)",
-   "value": 6.5
+   "value": 6.5,
+   "lines": 1
   },
   {
    "file": "cad/turret.py",
@@ -2692,17 +3187,20 @@
   {
    "file": "cad/turret.py",
    "pattern": "G\\.plate_z1 \\+ cb\\['boss_h'\\] \\+ cb\\['standoff'\\], 'M3', ([\\d.]+)\\)\\)",
-   "value": 6.0
+   "value": 6.0,
+   "lines": 1
   },
   {
    "file": "cad/turret.py",
    "pattern": "s = s\\.cut\\(insert_hole\\(x, y, SOCKET_PAD_Z, 'M3', ([\\d.]+)\\)\\)",
-   "value": 6.5
+   "value": 6.5,
+   "lines": 1
   },
   {
    "file": "cad/turret.py",
    "pattern": "^SOCKET_PAD_Z = ([\\d.]+)",
-   "value": 22.6
+   "value": 22.6,
+   "lines": 1
   },
   {
    "file": "cad/turret.py",
@@ -2711,97 +3209,178 @@
   {
    "file": "cad/turret.py",
    "pattern": "bz0 - 1, (-[\\d.]+), \\*ct_latch\\)\\)\\s+# insert from below, 1 mm cap",
-   "value": -8.5
+   "value": -8.5,
+   "lines": 1
+  },
+  {
+   "file": "cad/turret.py",
+   "pattern": "s = s\\.union\\(cyl_z\\(([\\d.]+), bz0, -7\\.5, \\*ct_latch\\)\\)",
+   "value": 5.0,
+   "lines": 1
   },
   {
    "file": "cad/turret.py",
    "pattern": "the M4 x 12 keeps (\\d+) mm in the cartridge",
-   "value": 5.0
+   "value": 5.0,
+   "lines": 1
   },
   {
    "file": "cad/turret.py",
    "pattern": "G\\.housing_top, 'M3', ([\\d.]+)\\)\\)",
-   "value": 6.0
+   "value": 6.0,
+   "lines": 1
   },
   {
    "file": "cad/turret_stand.py",
    "pattern": "^WALL, TOP, BOT = [\\d.]+, ([\\d.]+), [\\d.]+",
-   "value": 6.0
+   "value": 6.0,
+   "lines": 1
   },
   {
    "file": "cad/turret_stand.py",
    "pattern": "s = s\\.cut\\(_cyl_z\\(FAST\\['M3'\\]\\['insert_pilot'\\] / 2, -TOP - 0\\.01, -TOP \\+ ([\\d.]+), dx0",
-   "value": 4.0
+   "value": 4.0,
+   "lines": 1
   },
   {
    "file": "cad/turret_stand.py",
    "pattern": "s = s\\.cut\\(_cyl_z\\(FAST\\['M5'\\]\\['insert_pilot'\\] / 2, -TOP - ([\\d.]+), 0\\.1, x, y\\)\\)",
-   "value": 8.0
+   "value": 8.0,
+   "lines": 1
   },
   {
    "file": "cad/turret_stand.py",
    "pattern": "s = s\\.union\\(_cyl_z\\(([\\d.]+), -TOP - 8\\.0, -TOP \\+ 0\\.01, x, y\\)\\)",
-   "value": 7.0
+   "value": 7.0,
+   "lines": 1
   },
   {
    "file": "cad/turret_stand.py",
    "pattern": "-H - 1, -H \\+ ([\\d.]+), x, y\\)\\)",
-   "value": 8.0
+   "value": 8.0,
+   "lines": 1
   },
   {
    "file": "cad/turret_stand.py",
    "pattern": "^BOSS_R = ([\\d.]+)",
-   "value": 6.0
+   "value": 6.0,
+   "lines": 1
+  },
+  {
+   "file": "cad/turret_box.py",
+   "pattern": "^DECK_T = ([\\d.]+)",
+   "value": 8.0,
+   "lines": 1
   },
   {
    "file": "cad/turret_box.py",
    "pattern": "^TM_PILOT_DEPTH = DECK_T \\+ ([\\d.]+)",
-   "value": 0.1
+   "value": 0.1,
+   "lines": 1
   },
   {
    "file": "cad/turret_box.py",
    "pattern": "^TM_SCREW_LEN = ([\\d.]+)",
-   "value": 12.0
+   "value": 12.0,
+   "lines": 1
   },
   {
    "file": "cad/turret_box.py",
    "pattern": "DECK_Z0 - 0\\.1, DECK_Z0 \\+ ([\\d.]+), x, y\\)\\)",
-   "value": 5.0
+   "value": 5.0,
+   "lines": 1
   },
   {
    "file": "cad/rig_assembly.py",
    "pattern": "the contactor on its two M4 inserts \\(([\\d.]+) N m\\)",
-   "value": 2.3
+   "value": 2.3,
+   "lines": 1
   },
   {
    "file": "cad/rig_parts.py",
-   "pattern": "FAST\\['M4'\\]\\['insert_pilot'\\] / 2, 'z', t - ([\\d.]+), t \\+ 6\\.1, c\\['x'\\]",
-   "value": 3.0
+   "pattern": "FAST\\['M4'\\]\\['insert_pilot'\\] / 2, 'z', t - ([\\d.]+), t \\+ 6\\.1, [cm]\\['x'\\]",
+   "value": 3.0,
+   "lines": 2
   },
   {
    "file": "cad/rig_parts.py",
-   "pattern": "FAST\\['M4'\\]\\['insert_pilot'\\] / 2, 'z', t - 3\\.0, t \\+ ([\\d.]+), c\\['x'\\]",
-   "value": 6.1
+   "pattern": "FAST\\['M4'\\]\\['insert_pilot'\\] / 2, 'z', t - 3\\.0, t \\+ ([\\d.]+), [cm]\\['x'\\]",
+   "value": 6.1,
+   "lines": 2
   },
   {
    "file": "cad/rig_parts.py",
-   "pattern": "s = s\\.union\\(cyl\\(([\\d.]+), 'z', t - 0\\.01, t \\+ 6\\.0, c\\['x'\\]",
-   "value": 5.0
+   "pattern": "s = s\\.union\\(cyl\\(([\\d.]+), 'z', t - 0\\.01, t \\+ 6\\.0, [cm]\\['x'\\]",
+   "value": 5.0,
+   "lines": 2
+  },
+  {
+   "file": "cad/rig_parts.py",
+   "pattern": "^POD = \\{'w': [\\d.]+, 'd': [\\d.]+, 'h': [\\d.]+, 'wall': ([\\d.]+),",
+   "value": 4.0,
+   "lines": 1
+  },
+  {
+   "file": "cad/rig_parts.py",
+   "pattern": "cyl\\(FAST\\['M4'\\]\\['insert_pilot'\\] / 2, 'y', -d / 2 - 1, -d / 2 \\+ t \\+ ([\\d.]+), PENDANT_AT\\[0\\], z\\)",
+   "value": 3.0,
+   "lines": 1
+  },
+  {
+   "file": "cad/rig_parts.py",
+   "pattern": "s = box\\(-d / 2 - 4, d / 2 \\+ 4, 0\\.0, ([\\d.]+), z0 - 7\\.0, z1 \\+ 7\\.0\\)",
+   "value": 6.0,
+   "lines": 1
+  },
+  {
+   "file": "cad/rig_parts.py",
+   "literal": "PETG; 2 x M4 x 10 into the pod\\'s inserts"
+  },
+  {
+   "file": "cad/rig_parts.py",
+   "pattern": "s = s\\.union\\(cyl\\(([\\d.]+), 'y', -d / 2 \\+ t - 0\\.01, -d / 2 \\+ t \\+ 4\\.0, PENDANT_AT\\[0\\], z\\)\\)",
+   "value": 5.0,
+   "lines": 1
+  },
+  {
+   "file": "cad/rig_parts.py",
+   "pattern": "s = s\\.cut\\(cyl\\(([\\d.]+), 'y', -1, 7, 0\\.0, z\\)\\)",
+   "value": 2.2,
+   "lines": 1
+  },
+  {
+   "file": "cad/rig_parts.py",
+   "literal": "PETG; 4 x M3 x 10 into the pod\\'s inserts"
+  },
+  {
+   "file": "cad/rig_parts.py",
+   "block": "def pod():"
+  },
+  {
+   "file": "cad/rig_parts.py",
+   "block": "def pod_lid():"
+  },
+  {
+   "file": "cad/rig_parts.py",
+   "literal": "for (x, z) in ((-w + 8, 8), (-8, 8), (-w + 8, h - 8), (-8, h - 8)):"
   },
   {
    "file": "cad/rig_parts.py",
    "pattern": "'y', Y_PLATE_FRONT - 1, Y_PLATE_FRONT \\+ ([\\d.]+), x, z\\)\\)",
-   "value": 9.4
+   "value": 9.4,
+   "lines": 1
   },
   {
    "file": "cad/rig_parts.py",
    "pattern": "s = s\\.union\\(cyl\\(([\\d.]+), 'y', Y_PLATE_FRONT, Y_PLATE_FRONT \\+ 10\\.0, x, z\\)\\)",
-   "value": 5.0
+   "value": 5.0,
+   "lines": 1
   },
   {
    "file": "cad/rig_parts.py",
    "pattern": "^PLATE_T = ([\\d.]+)",
-   "value": 6.35
+   "value": 6.35,
+   "lines": 1
   }
  ]
 }
