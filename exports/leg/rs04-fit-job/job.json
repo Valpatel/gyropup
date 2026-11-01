@@ -43,8 +43,8 @@
       "cad/print_slicing.py": "13fd25fe32e75e0c66dbe8af132fd4d70fb030defb14d88a96f9ff77cbaf07bd",
       "cad/print_provenance.py": "db0d9cdc14e0d0363899d82c03eb31cb63ea0d7718fedcf127a5545f8f6bec88",
       "cad/rs04_lug_checks.py": "02a75e6dd5d28c6c8c149141d100d1386125197f5edfb34143565c72d8a8dfb5",
-      "exports/leg/rs04-mounting-fit/checks.json": "031bc23d782a19690a5dcacd767cdd4f03f7fa989f8a2059236001227057e733",
-      "exports/leg/rs04-mounting-fit/coupon_frame_ring_nom.stl": "41d2bcbe0226243bd2d78caf01480a359ffa3e1bdab803d7faab91cdab7ec968"
+      "exports/leg/rs04-mounting-fit/checks.json": "678fc294bed52ca4b82a52f6dc94d722b21174840aa9cce5656577a363356a49",
+      "exports/leg/rs04-mounting-fit/coupon_frame_ring_nom.stl": "bcf1a53f3fc8326bfdf887b2739ebf2015d32f573ee3bcfcdfa0e8f7996517e1"
     },
     "toolkit_helpers": {
       "cadagent.mesh3mf": "cf5aa2a2f6dab9d2a1e76539f158a10e38bc5e0fb72ceaabdf264178b83ce29f",
@@ -1221,7 +1221,7 @@
       "slicer_payload_sha256": "b7f803605b7df175570e58c994bd8bfd12467b3aa2756cce32a931c670f3e5a9"
     }
   },
-  "source_commit": "612594de5ab5b7bbf7afd6d89b511ecae070c3f1",
+  "source_commit": "52e12e508edb61df9f698d13ddf601d74ac535c6",
   "geometry": {
     "bounds_mm": [
       [
@@ -1252,7 +1252,7 @@
   },
   "metrics": {
     "grams": 172.44,
-    "minutes": 392.64918619791666,
+    "minutes": 392.8531901041667,
     "filament_m": 65.17,
     "exit_code": 0,
     "return_code": 0,
@@ -1264,11 +1264,11 @@
       "bytes": 432
     },
     "Metadata/plate_1.json": {
-      "sha256": "61ee0b0abeda3050af8ce42b4c8a756d1b6c8a476517f81596967eada0a92023",
-      "bytes": 456
+      "sha256": "c8cbd6b7b5b5ce0eba5110f781e4fceb79e9b5f7bd3ae47d7d7e9ec07237103f",
+      "bytes": 457
     },
     "3D/3dmodel.model": {
-      "sha256": "a8dc62dd9b6bf8e2b90bf96baf88aa15e0f6ff85551e9488b35b6180bb2a4154",
+      "sha256": "ab960a5dd95d4b86e6bb8838ce7880ef4bd83291d63cd9d4d792c43d85e6e66a",
       "bytes": 1570
     },
     "3D/_rels/3dmodel.model.rels": {
@@ -1276,7 +1276,7 @@
       "bytes": 272
     },
     "3D/Objects/object_1.model": {
-      "sha256": "5e435d61e419ba03747f7df7e5c1e8922b96ed3ca84750594e4ec6bee1d3e153",
+      "sha256": "8c04d86d2be0805f165718b075c17b4ab6840d10db7878d082e9322bd516214f",
       "bytes": 882309
     },
     "Metadata/project_settings.config": {
@@ -1284,19 +1284,19 @@
       "bytes": 44072
     },
     "Metadata/plate_1.gcode.md5": {
-      "sha256": "2c549024955603e2897ca6d9d13e8dd4cebb53ac61588fb0eb331441551a616e",
+      "sha256": "5f2a11b0f74aa4552788d45323ede6323efb26e9589b047707fddccd499adfe8",
       "bytes": 32
     },
     "Metadata/plate_1.gcode": {
-      "sha256": "763c16141ce81ae60916759cfeb56e21f667b4ab5bf439754d08a497b914d399",
-      "bytes": 11414526
+      "sha256": "e30a6840d6bc4f2a797348d6f5b949343ea00c55b03dd51dbdcdfe5fce60b306",
+      "bytes": 11407305
     },
     "Metadata/_rels/model_settings.config.rels": {
       "sha256": "5ea2c0f459aec4d25341abd431edee7890c8d2fd02efbaed4b073d04cfa11440",
       "bytes": 255
     },
     "Metadata/model_settings.config": {
-      "sha256": "548e1ed146dbf79081290d2579bad39b405e48ccd42a38d93949dd692136a842",
+      "sha256": "e764a928fc0448af77d6790504da8f6258dd7fafd9c456e3311b0e5793dfeb93",
       "bytes": 1508
     },
     "Metadata/cut_information.xml": {
@@ -1304,8 +1304,8 @@
       "bytes": 139
     },
     "Metadata/slice_info.config": {
-      "sha256": "5ef5816581b2057234faba1af745e9d98ffd8a9b40b05c9b3da42ec6eb49df42",
-      "bytes": 1685
+      "sha256": "1f72c644cc6a750d6753807de5e97ec76bf6f47bafb004420642df3a7a37b151",
+      "bytes": 1679
     },
     "Metadata/filament_sequence.json": {
       "sha256": "9e457664577459536d7512bf553066895dba22502a17ad79789ee272d2d569ba",
@@ -1471,7 +1471,7 @@
       "support_deposition_moves": 0,
       "features": {
         "Inner wall": {
-          "moves": 94038,
+          "moves": 93774,
           "layer_z_mm": [
             0.2,
             0.4,
@@ -1597,7 +1597,7 @@
           "max_commanded_feed_mm_s": 98.26086666666667
         },
         "Outer wall": {
-          "moves": 31059,
+          "moves": 31079,
           "layer_z_mm": [
             0.2,
             0.4,
@@ -1734,14 +1734,14 @@
           "max_commanded_feed_mm_s": 99.0
         },
         "Bottom surface": {
-          "moves": 1412,
+          "moves": 1416,
           "layer_z_mm": [
             0.2
           ],
           "max_commanded_feed_mm_s": 87.24289999999999
         },
         "Internal solid infill": {
-          "moves": 10259,
+          "moves": 10260,
           "layer_z_mm": [
             0.4,
             0.6,
@@ -1757,7 +1757,7 @@
           "max_commanded_feed_mm_s": 99.0
         },
         "Sparse infill": {
-          "moves": 170193,
+          "moves": 170185,
           "layer_z_mm": [
             0.8,
             1.0,
@@ -1876,7 +1876,7 @@
           "max_commanded_feed_mm_s": 98.26086666666667
         },
         "Floating vertical shell": {
-          "moves": 5618,
+          "moves": 5693,
           "layer_z_mm": [
             1.2,
             1.4,
@@ -1904,7 +1904,7 @@
           "max_commanded_feed_mm_s": 99.0
         },
         "Overhang wall": {
-          "moves": 155,
+          "moves": 158,
           "layer_z_mm": [
             8.8,
             23.2
@@ -1925,10 +1925,10 @@
     "limits": "In-plane raster direction may differ from a future parent job; no structural equivalence claim."
   },
   "files_sha256": {
-    "critical-layers.png": "11d062994e7f3311af05921de97e1b19439f4deaac1d4aa2abbb89da749dd878",
-    "geometry.3mf": "f0c2e78e6a672cc2ec978d34b4fbfd29eb8fa2372f6fdb80eed581f4a08b4d34",
+    "critical-layers.png": "96ef735f1cde7ec346f9f3b9cf1b97aa10b76ea08dbf58eb0f466b8bfdd06dff",
+    "geometry.3mf": "74e66b63819c11ef93dce7f02c6aaece2e335f49492d7dfb9422d0b8c88c86cd",
     "measurements.csv": "a425d41717706738b1a67cd3181f4b579a701e22d770688b8bd15b442ed35e2d",
-    "process-record.csv": "6224d504ee36349a0d614eac46ee2505e0a196d913b590e7234b1e2cce21045a",
+    "process-record.csv": "929ddfc12909c712ca9e69da8902bc0448fb8fe0fd0e88ea0be099a498968293",
     "profiles/filament/Bambu PA6-CF @BBL X1C.json": "80783d20169f5dc21b8e43e90d61af54d5f5fae816339e6b17aa8ecf7b87ed15",
     "profiles/filament/Bambu PA6-CF @base.json": "66d5d1a96e005afbc1cefbeaf8182de1b83b54ba3facfd219051303af64135c6",
     "profiles/filament/fdm_filament_common.json": "8c7105b7d59a28f600c43a946f067b8b4d707b9711c0bf6b88e9166e48878548",
@@ -1949,11 +1949,11 @@
     "slice/exit-code.json": "124fd50cb6d223cdd18fedc166d00af7254199b6e6dedf9be82f71db87af6d01",
     "slice/filament.json": "0d2b91e9d7f31661688294b60c19e3fb922f1fde5d2f219ee16d85f190cb3374",
     "slice/machine.json": "44b41d9e562c8b9a7223ec87dd1c7e37271549983ea572f09a81f62a9b76d9af",
-    "slice/out/plate_1.gcode": "763c16141ce81ae60916759cfeb56e21f667b4ab5bf439754d08a497b914d399",
-    "slice/out/result.json": "45d43c5a64bccb42dfb01dc95555385221cb9e47682f71218df2e46a4fa898a3",
-    "slice/out/sliced.3mf": "9f1531b9c223e353c9d4e5cacc1e78e8ae6dfc5de0c2b09f3c71e360ebbb5366",
+    "slice/out/plate_1.gcode": "e30a6840d6bc4f2a797348d6f5b949343ea00c55b03dd51dbdcdfe5fce60b306",
+    "slice/out/result.json": "4e6566cc69a77074fd84ccfec5ed0ba3c2d1c443a6be4474fbc5d3d5f8104eb9",
+    "slice/out/sliced.3mf": "9b4cd9bcb2855abd1b5dfd90a2797cd818556e885f1b67759134039408194a85",
     "slice/process.json": "9591ffa2ff4d223ebc859b1901766aabf71caf7cfdcf93719dcc77484b12a345",
-    "slice/slicer.log": "89fd3dd6a5a63bd6803f3b0a6ea8bd5acdad5df37d6dac0a397afdf37ca77539",
-    "source.stl": "41d2bcbe0226243bd2d78caf01480a359ffa3e1bdab803d7faab91cdab7ec968"
+    "slice/slicer.log": "76ac2545b6650a612bb53648e5a350a90356339655f39c290bbb8ac4aa272faf",
+    "source.stl": "bcf1a53f3fc8326bfdf887b2739ebf2015d32f573ee3bcfcdfa0e8f7996517e1"
   }
 }
