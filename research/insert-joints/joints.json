@@ -1,0 +1,2807 @@
+{
+ "schema": 1,
+ "generator": "research/insert-joints/inventory.py",
+ "status": "screen, not qualification: no part printed or tested for this inventory",
+ "basis": {
+  "nut_factor": 0.2,
+  "engage_min_d": 1.2,
+  "spirol_boss_ratio": 2.0,
+  "tip_room_mm": 0.5,
+  "pullout": {
+   "formula": "tau x pi x hole x insert length (the knurl cylinder)",
+   "petg_test": {
+    "kgf": 119.0,
+    "hole_mm": 4.0,
+    "length_mm": 5.7,
+    "torque_out_nm": 3.0,
+    "source": "cnck_petg"
+   },
+   "pla_test": {
+    "kgf": 181.0,
+    "hole_mm": 4.0,
+    "length_mm": 5.7,
+    "torque_out_nm": 3.5,
+    "source": "cnck_pla"
+   },
+   "materials": {
+    "petg": {
+     "z_mpa": 35.0,
+     "tau_mpa": 16.29,
+     "basis": "CNC Kitchen M3 x 5.7 in PETG (measured)"
+    },
+    "pa6-cf": {
+     "z_mpa": 22.67,
+     "tau_mpa": 10.55,
+     "basis": "PETG test x humid PA6-CF / PETG across-layer strength (22.7 / 35 MPa: Bambu TDS Z 48 MPa x Polymaker wet/dry 25.5/54)"
+    }
+   },
+   "repo_estimates_win_when_lower": true
+  },
+  "bearing": {
+   "sustained_mpa": 25.0,
+   "humid_mpa": 40.0,
+   "source": "cad/studies.py JOINT (washer_mpa, bearing_mpa)"
+  },
+  "sources": {
+   "spirol": "https://uk.spirol.com/assets/files/ins-wp-how-to-design-the-proper-hole-for-heat-ultrasonic-inserts-uk.pdf",
+   "cnck_petg": "https://www.cnckitchen.com/blog/helicoils-threaded-insets-and-embedded-nuts-in-3d-prints-strength-amp-strength-assessment",
+   "cnck_pla": "https://www.cnckitchen.com/blog/threaded-inserts-for-3d-prints-cheap-vs-expensive",
+   "cnck_hole": "https://www.cnckitchen.com/blog/are-our-heat-set-insert-datasheets-wrong",
+   "mcmaster": "https://www.mcmaster.com/94459A775/"
+  }
+ },
+ "inserts": {
+  "insert_m3": {
+   "pn": "94459A140",
+   "thread": "M3",
+   "pitch_mm": 0.5,
+   "length_mm": 5.7,
+   "max_hole_mm": 4.0,
+   "min_material_mm": 6.5,
+   "od_mm": 4.72,
+   "od_basis": "McMaster STEP bounding box (catalog/hardware.json cad.bbox_mm)"
+  },
+  "insert_m5": {
+   "pn": "94459A775",
+   "thread": "M5",
+   "pitch_mm": 0.8,
+   "length_mm": 7.9,
+   "max_hole_mm": 6.4,
+   "min_material_mm": 8.6,
+   "od_mm": 7.11,
+   "od_basis": "McMaster STEP bounding box (catalog/hardware.json cad.bbox_mm)"
+  },
+  "turret_insert_m4": {
+   "pn": "94459A160",
+   "thread": "M4",
+   "pitch_mm": 0.7,
+   "length_mm": 6.4,
+   "max_hole_mm": 5.6,
+   "min_material_mm": 7.1,
+   "od_mm": 6.31,
+   "od_basis": "estimate: maximum hole + 0.71 mm (the M3 and M5 STEPs); no STEP cached"
+  },
+  "turret_insert_m3_short": {
+   "pn": "94459A130",
+   "thread": "M3",
+   "pitch_mm": 0.5,
+   "length_mm": 4.3,
+   "max_hole_mm": 4.0,
+   "min_material_mm": 5.1,
+   "od_mm": 4.72,
+   "od_basis": "assumed equal to 94459A140 (same 4.0 mm maximum hole)"
+  }
+ },
+ "joints": [
+  {
+   "id": "leg.hip_frame_mount",
+   "assembly": "leg",
+   "where": "hip frame flange ends (PA6-CF), the body cheek / rig plate",
+   "qty_robot": 12,
+   "insert": "insert_m5",
+   "d_mm": 5,
+   "material": "pa6-cf",
+   "infill": "100 %",
+   "hole": {
+    "d": 6.4,
+    "depth": 11.0
+   },
+   "boss_mm": 14.0,
+   "material_mm": null,
+   "axis": "print-z",
+   "orientation": "frame printed web-down: the insert axis (y) is the build direction",
+   "screw": "body: M5 x 12 button from the cheek side; rig: M5 x 16 + washer through the 6.35 plate",
+   "screw_side": "open end: the screw pulls the insert out of its pilot under load",
+   "mating_hole_mm": 5.5,
+   "tip_depth_mm": 7.25,
+   "clamp": {
+    "stack": "4.75 mm aluminium cheek (body) / 6.35 mm 6061 plate (rig) only",
+    "printed_mm": 0,
+    "limiter": "n/a"
+   },
+   "torque_nm": 1.5,
+   "torque_source": "docs/leg-rig-assembly.md (cad/rig_assembly.py): \"the B4 torque (1.5 N m until B4)\"",
+   "preload_n": 1500,
+   "loads": [
+    {
+     "case": "rare (jump_peak): 182 N m roll on the 140 mm row pair + 10 % side grip",
+     "per_insert_n": 451,
+     "tension": true,
+     "source": "exports/body/leg-loads.json rare_body; cad/body_studies.py rare_leg_load()"
+    },
+    {
+     "case": "fault (power_off): 343.6 N m roll + 10 % side grip",
+     "per_insert_n": 851,
+     "tension": true,
+     "source": "exports/body/leg-loads.json fault_body"
+    }
+   ],
+   "pullout_repo_n": 1500,
+   "notes": "The leg hangs on these six inserts. Row tension = M / (3 x 140 mm), a rigid-flange screen. The flange is 13 mm thick at the top row, so the Ø14 boss is the wall. Body joints: hip_frame_left, hip_frame_right.",
+   "boss_ratio": 1.97,
+   "boss_wall_mm": 3.44,
+   "thread_engaged_mm": 7.25,
+   "tip_clear_mm": 3.75,
+   "pullout_est_n": 1676,
+   "capacity_n": 1500,
+   "sf_pullout": 1.76,
+   "findings": [
+    {
+     "code": "boss-thin",
+     "level": "note",
+     "text": "boss Ø14 is 1.97 x the insert's Ø7.11 (wall 3.44 mm; Spirol asks 2-3 x)"
+    },
+    {
+     "code": "pullout-margin",
+     "level": "owner",
+     "text": "pull-out estimate 1500 N / 851 N = 1.76"
+    },
+    {
+     "code": "preload-vs-pullout",
+     "level": "check",
+     "text": "1500 N of preload is 1.00 x the pull-out estimate: the clamped part must bear on the insert's brass face (insert flush to 0.13 mm proud, Spirol), or the knurl carries the preload too"
+    }
+   ],
+   "verdict": "owner"
+  },
+  {
+   "id": "leg.upper_link_hub",
+   "assembly": "leg",
+   "where": "upper link hub (PA6-CF, 30 mm) onto the CNC 6061 output adapter",
+   "qty_robot": 32,
+   "insert": null,
+   "d_mm": 5,
+   "material": "pa6-cf",
+   "infill": "100 %",
+   "receiver": "tapped 6061 (D46), 16 mm thread",
+   "screw": "M5 x 40 ISO 4762, 8 per upper link, heads in Ø10 x 5.5 counterbores, no washer",
+   "screw_side": "n/a (tapped metal)",
+   "axis": "print-z",
+   "orientation": "link printed flat: the screw axis is the build direction",
+   "clamp": {
+    "stack": "24.5 mm printed PA6-CF between the head and the adapter",
+    "printed_mm": 24.5,
+    "limiter": null,
+    "material": "PA6-CF",
+    "bearing": "Ø8.5 socket head",
+    "bearing_od_mm": 8.5,
+    "bearing_id_mm": 5.5,
+    "bearing_area_mm2": 33.0,
+    "bearing_mpa": 45.5,
+    "preload_at_sustained_n": 825,
+    "torque_at_sustained_nm": 0.82
+   },
+   "torque_nm": 1.5,
+   "torque_source": "docs/leg-rig-assembly.md: \"the B4 torque (1.5 N m until B4)\"",
+   "preload_n": 1500,
+   "loads": [
+    {
+     "case": "R1 out-of-plane 114.6 N m vs the edge lifting at 104 (tips at 288)",
+     "per_insert_n": null,
+     "source": "exports/leg/fea/summary.json joints.R1.hub_rear"
+    },
+    {
+     "case": "R3 out-of-plane 188.6 N m (sf_tip 1.53)",
+     "per_insert_n": null,
+     "source": "exports/leg/fea/summary.json joints.R3.hub_rear"
+    }
+   ],
+   "notes": "cad/leg_studies.py assumes 1200 N per screw; K = 0.2 at 1.5 N m gives 1500 N. Both open the hub's edge in R1 and R3 (the FEA summary), and the head's bearing on the plastic is over the creep screen: the joint needs more clamp than the plastic can hold.",
+   "findings": [
+    {
+     "code": "printed-clamp-crush",
+     "level": "owner",
+     "text": "1500 N on 33 mm2 of printed PA6-CF under the Ø8.5 socket head = 45 MPa (> 40 humid, 25 sustained); 24.5 mm of plastic in the clamp, no limiter"
+    },
+    {
+     "code": "hub-edge-lifts",
+     "level": "owner",
+     "text": "at the assumed 1200 N the hub's edge lifts at 104 N m; R1 puts 114.6 and R3 188.6 N m on it"
+    }
+   ],
+   "verdict": "owner"
+  },
+  {
+   "id": "leg.hip_frame_lugs",
+   "assembly": "leg",
+   "where": "hip frame web (PA6-CF, 24.1 mm) onto each RS-04 case",
+   "qty_robot": 40,
+   "insert": null,
+   "d_mm": 4,
+   "material": "pa6-cf",
+   "infill": "100 %",
+   "receiver": "RS-04 case, 5 mm guaranteed thread",
+   "screw": "M4 x 20 ISO 4762 12.9, 10 per motor, heads in Ø8.55 x 8.5 counterbores, no washer",
+   "screw_side": "n/a (motor thread)",
+   "axis": "print-z",
+   "orientation": "frame printed web-down: the screw axis is the build direction",
+   "clamp": {
+    "stack": "15.6 mm printed PA6-CF",
+    "printed_mm": 15.6,
+    "limiter": null,
+    "material": "PA6-CF",
+    "bearing": "Ø7 socket head",
+    "bearing_od_mm": 7.0,
+    "bearing_id_mm": 4.5,
+    "bearing_area_mm2": 22.6
+   },
+   "torque_nm": null,
+   "torque_source": "not established (docs/leg-rig-assembly.md; issue #116)",
+   "preload_n": null,
+   "loads": [
+    {
+     "case": "peak motor torque 120 N m on 10 lugs at r 53 mm",
+     "per_insert_n": 226,
+     "shear": true,
+     "source": "exports/body/leg-loads.json scenarios peak_motor_nm"
+    }
+   ],
+   "notes": "No torque is set (issue #116). The plastic under the head sets it: 25 MPa on 22.6 mm2 is 565 N. At that preload friction (mu 0.15) carries 85 N a lug against 226 N of shear at peak torque, so the lugs slip into bearing on their shanks.",
+   "findings": [
+    {
+     "code": "lug-preload-plastic-limited",
+     "level": "owner",
+     "text": "15.6 mm of PA6-CF under each Ø7 head with no limiter: 25 MPa allows 565 N (0.45 N m), and friction then carries 85 of the 226 N per lug"
+    }
+   ],
+   "verdict": "owner"
+  },
+  {
+   "id": "leg.knee_eye_sleeves",
+   "assembly": "leg",
+   "where": "upper link knee eye: two DIN 179 18 x 12 x 20 steel sleeves (pressed)",
+   "qty_robot": 4,
+   "insert": null,
+   "d_mm": 10,
+   "material": "pa6-cf",
+   "infill": "100 %",
+   "receiver": "M10 nyloc on the inner sleeve",
+   "screw": "ISO 7379 Ø12 shoulder screw, M10 nyloc",
+   "screw_side": "n/a",
+   "axis": "print-z",
+   "clamp": {
+    "stack": "washer DIN 433 (Ø20) | sleeves 2 x 20 | nut: all steel if the outer sleeve is flush or proud",
+    "printed_mm": 0,
+    "limiter": "the sleeves (40 mm)"
+   },
+   "torque_nm": 20.0,
+   "torque_source": "docs/leg-rig-assembly.md: knee nut 20 N m (steel on steel)",
+   "preload_n": 10000,
+   "loads": [],
+   "notes": "A working limiter only while the sleeve's end is not below the printed face: the Ø20 washer overhangs the Ø18 sleeve by 1 mm, so a recessed sleeve puts 10000 N on 60 mm2 of PA6-CF (168 MPa).",
+   "findings": [
+    {
+     "code": "limiter-flush",
+     "level": "check",
+     "text": "press the outer sleeve 0.1-0.2 mm proud of the link's outer face (or relieve the face to Ø21 x 0.3) and check it before torquing: recessed, the 20 N m nut crushes the face at 168 MPa"
+    }
+   ],
+   "verdict": "check"
+  },
+  {
+   "id": "leg.knee_spacer",
+   "assembly": "leg",
+   "where": "lower link knee boss: the 6061 tube between the two bearings' inner races",
+   "qty_robot": 4,
+   "insert": null,
+   "d_mm": 10,
+   "material": "pa6-cf",
+   "infill": "100 %",
+   "receiver": "the knee pin stack",
+   "screw": "the same knee pin and nut",
+   "screw_side": "n/a",
+   "axis": "print-z",
+   "clamp": {
+    "stack": "washer | 6301 inner | knee_spacer (5/8 in 6061 tube) | 6301 inner | washer",
+    "printed_mm": 0,
+    "limiter": "knee_spacer"
+   },
+   "torque_nm": 20.0,
+   "torque_source": "as the knee nut",
+   "preload_n": 10000,
+   "loads": [],
+   "notes": "The spacer must be at least the printed web gap between the two bearing seats; short, the 10000 N clamp goes through the balls into the outer races and the printed seats. catalog/hardware.json knee_spacer also records issue #29 (the Ø15.9 tube is under the 6301's 17.6 mm minimum abutment).",
+   "findings": [
+    {
+     "code": "spacer-length",
+     "level": "check",
+     "text": "cut each spacer to the measured web gap (+0 / +0.05 mm) and check the bearings turn freely after torquing"
+    }
+   ],
+   "verdict": "check"
+  },
+  {
+   "id": "leg.wheel_botwheel",
+   "assembly": "leg",
+   "where": "wheel link foot (PA6-CF) onto the BotWheel's stator flange",
+   "qty_robot": 8,
+   "insert": null,
+   "d_mm": 6,
+   "material": "pa6-cf",
+   "infill": "100 %",
+   "receiver": "BotWheel M6 (depth not published)",
+   "screw": "M6 x 30 ISO 4762 from inside the hub, no washer",
+   "screw_side": "n/a",
+   "axis": "print-z",
+   "orientation": "wheel link printed flat on its outer face: the screw axis is the build direction",
+   "clamp": {
+    "stack": "26 mm printed PA6-CF foot (head on the hub's floor to the flange on the outer face)",
+    "printed_mm": 26.0,
+    "limiter": null,
+    "material": "PA6-CF",
+    "bearing": "Ø10 socket head",
+    "bearing_od_mm": 10.0,
+    "bearing_id_mm": 6.6,
+    "level": "owner",
+    "bearing_area_mm2": 44.3,
+    "bearing_mpa": 150.4,
+    "preload_at_sustained_n": 1108,
+    "torque_at_sustained_nm": 1.33
+   },
+   "torque_nm": 8.0,
+   "torque_source": "docs/leg-rig-assembly.md: \"8 N m, threadlocker\" (no source given)",
+   "preload_n": 6667,
+   "loads": [
+    {
+     "case": "rare (jump_peak): axle 1776.3 N at 24.8 mm + 10 % grip at the tyre: 68 N m on 4 x M6 at PCD 36",
+     "per_insert_n": 1331,
+     "tension": true,
+     "source": "exports/body/leg-loads.json"
+    },
+    {
+     "case": "fault (power_off): 64 N m",
+     "per_insert_n": 1267,
+     "tension": true,
+     "source": "exports/body/leg-loads.json"
+    }
+   ],
+   "notes": "Keeping the flange closed needs about 1331 N a screw; the plastic under a bare Ø10 head holds 1108 N at 25 MPa. No torque satisfies both without a spreader or limiter. A DIN 9021 washer (catalog/hardware.json lists 8 for these screws) does not fit: on PCD 36 its Ø18 reaches r 27, past the hub's Ø48 bore.",
+   "findings": [
+    {
+     "code": "printed-clamp-crush",
+     "level": "owner",
+     "text": "6667 N on 44 mm2 of printed PA6-CF under the Ø10 socket head = 150 MPa (> 40 humid, 25 sustained); 26 mm of plastic in the clamp, no limiter"
+    },
+    {
+     "code": "wheel-clamp",
+     "level": "owner",
+     "text": "8 N m ~ 6667 N on 44 mm2 = 150 MPa on PA6-CF; the flange needs >= 1331 N a screw, the plastic holds 1108 N"
+    },
+    {
+     "code": "note-vs-joint",
+     "level": "fix",
+     "text": "cad/fivebar.py wheel_link() docstring: \"its 4 x M6 x 40\"; the joint and BOM are M6 x 30, and catalog/hardware.json screw_m6x40 still lists this joint"
+    }
+   ],
+   "verdict": "fix"
+  },
+  {
+   "id": "leg.stop_posts",
+   "assembly": "leg",
+   "where": "hip frame stop posts",
+   "qty_robot": 8,
+   "insert": null,
+   "d_mm": 8,
+   "material": "pa6-cf",
+   "infill": "100 %",
+   "receiver": "none: Ø16 steel pins in blind holes since D53",
+   "screw": "none",
+   "axis": "print-z",
+   "clamp": null,
+   "loads": [],
+   "notes": "No insert any more. The generated assembly page still instructs one.",
+   "findings": [
+    {
+     "code": "note-vs-joint",
+     "level": "fix",
+     "text": "cad/rig_assembly.py (docs/leg-rig-assembly.md) still says \"the B4 torque into the M8 insert, 5 N m until B4\" and \"Stop posts (M8 into heat-set inserts)\": the posts are pins (D53)"
+    }
+   ],
+   "verdict": "fix"
+  },
+  {
+   "id": "body.post_m5",
+   "assembly": "body",
+   "where": "deck posts (PA6-CF 22 x 22, standing), both ends",
+   "qty_robot": 8,
+   "insert": "insert_m5",
+   "d_mm": 5,
+   "material": "pa6-cf",
+   "infill": "100 %",
+   "hole": {
+    "d": 6.4,
+    "depth": 11.0
+   },
+   "boss_mm": 22.0,
+   "axis": "print-z",
+   "orientation": "printed standing: the insert axis is the build direction",
+   "screw": "M5 x 12 button through the tray (3.17) and the deck (2.54)",
+   "screw_side": "open end (foot: from below)",
+   "mating_hole_mm": 5.5,
+   "tip_depth_mm": 9.46,
+   "clamp": {
+    "stack": "aluminium tray / deck only",
+    "printed_mm": 0,
+    "limiter": "n/a"
+   },
+   "torque_nm": 1.5,
+   "preload_n": 1500,
+   "torque_source": "the M5-insert B4 torque (assumed)",
+   "loads": [
+    {
+     "case": "the landing's 8.65 g on a post (cad/body_frame.py post())",
+     "per_insert_n": 290.0,
+     "tension": true,
+     "source": "cad/body_frame.py post() docstring"
+    }
+   ],
+   "pullout_repo_n": 1500,
+   "notes": "Body joints: post_1_foot, post_1_head, post_2_foot, post_2_head, post_3_foot, post_3_head, post_4_foot, post_4_head.",
+   "boss_ratio": 3.09,
+   "boss_wall_mm": 7.45,
+   "thread_engaged_mm": 7.9,
+   "tip_clear_mm": 1.54,
+   "pullout_est_n": 1676,
+   "capacity_n": 1500,
+   "sf_pullout": 5.17,
+   "findings": [
+    {
+     "code": "preload-vs-pullout",
+     "level": "check",
+     "text": "1500 N of preload is 1.00 x the pull-out estimate: the clamped part must bear on the insert's brass face (insert flush to 0.13 mm proud, Spirol), or the knurl carries the preload too"
+    }
+   ],
+   "verdict": "check"
+  },
+  {
+   "id": "body.post_m3",
+   "assembly": "body",
+   "where": "deck posts' side and face bosses (9 x 9) for the P3 shell",
+   "qty_robot": 16,
+   "insert": "insert_m3",
+   "d_mm": 3,
+   "material": "pa6-cf",
+   "infill": "100 %",
+   "hole": {
+    "d": 4.0,
+    "depth": 8.0,
+    "through": true
+   },
+   "boss_mm": 9.0,
+   "axis": "layer-plane",
+   "orientation": "post printed standing: these inserts are horizontal",
+   "screw": "M3 x 16 pan through the PETG shell",
+   "screw_side": "open end",
+   "mating_hole_mm": 3.4,
+   "tip_depth_mm": 6.4,
+   "clamp": {
+    "stack": "PETG shell boss (9.4 mm) under a pan head",
+    "printed_mm": 9.4,
+    "limiter": null,
+    "material": "PETG",
+    "bearing": "Ø5.6 pan head",
+    "bearing_od_mm": 5.6,
+    "bearing_id_mm": 3.4,
+    "bearing_area_mm2": 15.6
+   },
+   "loads": [
+    {
+     "case": "a shell panel (light)",
+     "per_insert_n": 20,
+     "tension": true,
+     "source": "estimate"
+    }
+   ],
+   "notes": "The pilot runs 0.5 mm past the 7.5 mm boss into the post's hollow, so it is open at the bottom. Light duty. Body joints: wall_l_front, wall_l_rear, wall_r_front, wall_r_rear, shell_front_post_l, shell_front_post_r, shell_rear_post_l, shell_rear_post_r.",
+   "boss_ratio": 1.91,
+   "boss_wall_mm": 2.14,
+   "thread_engaged_mm": 5.7,
+   "pullout_est_n": 756,
+   "capacity_n": 756,
+   "sf_pullout": 37.78,
+   "findings": [
+    {
+     "code": "boss-thin",
+     "level": "note",
+     "text": "boss Ø9 is 1.91 x the insert's Ø4.72 (wall 2.14 mm; Spirol asks 2-3 x)"
+    },
+    {
+     "code": "axis-in-layer-plane",
+     "level": "note",
+     "text": "insert axis lies in the layer plane: installation and pull-out hoop stress opens the layer bonds through the axis (an axis along the print z is the strong way)"
+    }
+   ],
+   "verdict": "note"
+  },
+  {
+   "id": "body.plate_post",
+   "assembly": "body",
+   "where": "power plate posts (PA6-CF 16 x 16, standing), both ends",
+   "qty_robot": 8,
+   "insert": "insert_m5",
+   "d_mm": 5,
+   "material": "pa6-cf",
+   "infill": "100 %",
+   "hole": {
+    "d": 6.4,
+    "depth": 11.0
+   },
+   "boss_mm": 16.0,
+   "axis": "print-z",
+   "orientation": "printed standing",
+   "screw": "M5 x 10 button",
+   "screw_side": "open end",
+   "mating_hole_mm": 5.5,
+   "tip_depth_mm": 6.83,
+   "clamp": {
+    "stack": "aluminium tray / power plate only",
+    "printed_mm": 0,
+    "limiter": "n/a"
+   },
+   "loads": [
+    {
+     "case": "the power plate and its electronics (est. 1.5 kg) at 10 g over 4 posts",
+     "per_insert_n": 37,
+     "tension": true,
+     "source": "estimate"
+    }
+   ],
+   "notes": "The foot screws (M5 x 10 through 3.17) use the shortest engagement in the body. Body joints: plate_post_1_foot, plate_post_1_head, plate_post_2_foot, plate_post_2_head, plate_post_3_foot, plate_post_3_head, plate_post_4_foot, plate_post_4_head.",
+   "boss_ratio": 2.25,
+   "boss_wall_mm": 4.45,
+   "thread_engaged_mm": 6.83,
+   "tip_clear_mm": 4.17,
+   "pullout_est_n": 1676,
+   "capacity_n": 1676,
+   "sf_pullout": 45.29,
+   "findings": [],
+   "verdict": "ok"
+  },
+  {
+   "id": "body.riser_feet",
+   "assembly": "body",
+   "where": "turret riser's four feet (PA6-CF, printed on its top face)",
+   "qty_robot": 4,
+   "insert": "insert_m5",
+   "d_mm": 5,
+   "material": "pa6-cf",
+   "infill": "100 %",
+   "hole": {
+    "d": 6.4,
+    "depth": 12.0
+   },
+   "boss_mm": 18.0,
+   "axis": "print-z",
+   "orientation": "printed on its top face: insert axes along the build direction",
+   "screw": "M5 x 16 button from below",
+   "screw_side": "open end (from below)",
+   "mating_hole_mm": 5.5,
+   "tip_depth_mm": 10.29,
+   "clamp": {
+    "stack": "turret plate + deck (aluminium)",
+    "printed_mm": 0,
+    "limiter": "n/a"
+   },
+   "loads": [
+    {
+     "case": "the turret's 30 g sideways TM moment, carried down the riser's legs",
+     "per_insert_n": 233,
+     "tension": true,
+     "source": "exports/turret/fea/summary.json hand_checks.tm_bolts"
+    }
+   ],
+   "pullout_repo_n": 1500,
+   "notes": "Body joints: riser.",
+   "boss_ratio": 2.53,
+   "boss_wall_mm": 5.45,
+   "thread_engaged_mm": 7.9,
+   "tip_clear_mm": 1.71,
+   "pullout_est_n": 1676,
+   "capacity_n": 1500,
+   "sf_pullout": 6.44,
+   "findings": [],
+   "verdict": "ok"
+  },
+  {
+   "id": "body.riser_top_tm",
+   "assembly": "body / turret",
+   "where": "turret riser's top ring: the TM face's 4 M5 inserts",
+   "qty_robot": 4,
+   "insert": "insert_m5",
+   "d_mm": 5,
+   "material": "pa6-cf",
+   "infill": "100 %",
+   "hole": {
+    "d": 6.4,
+    "depth": 9.5
+   },
+   "boss_mm": null,
+   "axis": "print-z",
+   "orientation": "riser printed on its top face",
+   "screw": "M5 x 16, 4 off down through the compute plinth's 10 mm tray (Ø9.5 x 5.5 counterbores, D66)",
+   "screw_side": "open end (from above)",
+   "mating_hole_mm": 5.5,
+   "tip_depth_mm": 11.5,
+   "clamp": {
+    "stack": "4.5 mm printed PA6-CF tray under each head (40 % gyroid per docs/turret-sections.md)",
+    "printed_mm": 4.5,
+    "limiter": null,
+    "material": "PA6-CF",
+    "bearing": "Ø8.5 socket head",
+    "bearing_od_mm": 8.5,
+    "bearing_id_mm": 5.5,
+    "bearing_area_mm2": 33.0
+   },
+   "loads": [
+    {
+     "case": "R: 30 g sideways on the whole turret",
+     "per_insert_n": 233,
+     "tension": true,
+     "source": "exports/turret/fea/summary.json hand_checks.tm_bolts"
+    }
+   ],
+   "pullout_repo_n": 1500,
+   "notes": "exports/turret/mount.json (the turret's contract with the robot) asks the head for 12 mm bolt holes; the riser cuts 9.5. Its dowel holes are 8 deep against the contract's 12.5 mm.",
+   "thread_engaged_mm": 7.9,
+   "tip_clear_mm": -2.0,
+   "pullout_est_n": 1676,
+   "capacity_n": 1500,
+   "sf_pullout": 6.44,
+   "findings": [
+    {
+     "code": "screw-bottoms",
+     "level": "fix",
+     "text": "the screw tip reaches 11.5 mm below the insert's face but the blind pilot is 9.5 deep: it bottoms 2.0 mm early and jacks the insert out (Spirol) instead of clamping"
+    },
+    {
+     "code": "contract-depth",
+     "level": "fix",
+     "text": "riser TM pilots 9.5 deep vs mount.json bolt_hole_depth_min_mm 12 (and 11.5 with the D66 tray): deepen to >= 13, or use M5 x 12 (tip 7.5, 1.5 d engaged)"
+    },
+    {
+     "code": "contract-dowel",
+     "level": "fix",
+     "text": "a 16 mm TM dowel goes 8 into the D66 tray, so it needs 8.5 mm in the riser, which cuts 8 (mount.json, written for the 4 mm pan-base holes, asks 12.5)"
+    }
+   ],
+   "verdict": "fix"
+  },
+  {
+   "id": "body.dcdc_bracket",
+   "assembly": "body",
+   "where": "DC-DC bracket's upright (PA6-CF): the converter's four M3",
+   "qty_robot": 4,
+   "insert": "insert_m3",
+   "d_mm": 3,
+   "material": "pa6-cf",
+   "infill": "100 %",
+   "hole": {
+    "d": 4.0,
+    "depth": 6.0,
+    "through": true
+   },
+   "material_mm": 6.0,
+   "boss_mm": null,
+   "axis": "layer-plane",
+   "orientation": "printed upright: these inserts are horizontal",
+   "screw": "M3 x 6 pan",
+   "screw_side": "open end",
+   "mating_hole_mm": 3.4,
+   "tip_depth_mm": 4.0,
+   "clamp": {
+    "stack": "the converter's flange",
+    "printed_mm": 0,
+    "limiter": "n/a"
+   },
+   "loads": [
+    {
+     "case": "the converter (est. 0.3 kg) at 10 g on 4",
+     "per_insert_n": 7,
+     "tension": false,
+     "source": "estimate"
+    }
+   ],
+   "notes": "Body joints: power_dcdc.",
+   "thread_engaged_mm": 4.0,
+   "pullout_est_n": 756,
+   "capacity_n": 756,
+   "findings": [
+    {
+     "code": "material-thin",
+     "level": "note",
+     "text": "6 mm of part at the insert < the maker's 6.5 mm minimum material"
+    },
+    {
+     "code": "axis-in-layer-plane",
+     "level": "note",
+     "text": "insert axis lies in the layer plane: installation and pull-out hoop stress opens the layer bonds through the axis (an axis along the print z is the strong way)"
+    },
+    {
+     "code": "note-vs-joint",
+     "level": "fix",
+     "text": "part note \"two M4 x 10 down into the tray's nuts; the converter on four M3 x 8\" vs the joints: 2 x M4 x 12 into the power plate's PEM nuts, 4 x M3 x 6 (exports/body/integrity.json)"
+    }
+   ],
+   "verdict": "fix"
+  },
+  {
+   "id": "body.bus_insulator",
+   "assembly": "body",
+   "where": "bus bar insulators (PETG): bars from above, plate from below",
+   "qty_robot": 8,
+   "insert": "insert_m3",
+   "d_mm": 3,
+   "material": "petg",
+   "infill": "print plan: 2 mm walls, 40 % gyroid",
+   "hole": {
+    "d": 4.0,
+    "depth": 6.5
+   },
+   "boss_mm": 20.0,
+   "axis": "print-z",
+   "orientation": "printed flat",
+   "screw": "M3 x 8 socket",
+   "screw_side": "open end",
+   "mating_hole_mm": 3.4,
+   "tip_depth_mm": 5.46,
+   "clamp": {
+    "stack": "copper bar / aluminium plate",
+    "printed_mm": 0,
+    "limiter": "n/a"
+   },
+   "loads": [
+    {
+     "case": "bus bar and lugs (light)",
+     "per_insert_n": 15,
+     "tension": true,
+     "source": "estimate"
+    }
+   ],
+   "notes": "Body joints: bus_insulator_1, bus_bar_1, bus_insulator_2, bus_bar_2.",
+   "boss_ratio": 4.24,
+   "boss_wall_mm": 7.64,
+   "thread_engaged_mm": 5.46,
+   "tip_clear_mm": 1.04,
+   "pullout_est_n": 1167,
+   "capacity_n": 1167,
+   "sf_pullout": 77.79,
+   "findings": [
+    {
+     "code": "pilot-below-spirol",
+     "level": "note",
+     "text": "blind pilot 6.5 < insert + 2 pitches = 6.7 (Spirol: room for displaced melt; 0.8 mm below the insert)"
+    },
+    {
+     "code": "note-vs-plan",
+     "level": "fix",
+     "text": "part note says \"PETG, 100 % (never a carbon-filled filament\"; exports/body/print-plan.json prints it \"2 mm walls, 40 % gyroid\""
+    }
+   ],
+   "verdict": "fix"
+  },
+  {
+   "id": "body.bay_rail_side",
+   "assembly": "body",
+   "where": "battery bay rails (PA6-CF 8 x 10): the side plates' top row",
+   "qty_robot": 10,
+   "insert": "insert_m3",
+   "d_mm": 3,
+   "material": "pa6-cf",
+   "infill": "100 %",
+   "hole": {
+    "d": 4.0,
+    "depth": 6.5
+   },
+   "material_mm": 8.0,
+   "boss_mm": 10.0,
+   "axis": "layer-plane",
+   "orientation": "rail printed flat: side inserts horizontal",
+   "screw": "M3 x 6 button through the 1.6 side plate",
+   "screw_side": "open end (shear duty)",
+   "mating_hole_mm": 3.4,
+   "tip_depth_mm": 4.4,
+   "clamp": {
+    "stack": "aluminium side plate",
+    "printed_mm": 0,
+    "limiter": "n/a"
+   },
+   "loads": [
+    {
+     "case": "the bay and two packs (est. 3.5 kg) at 10 g on 10, in shear",
+     "per_insert_n": 34,
+     "shear": true,
+     "source": "estimate"
+    }
+   ],
+   "notes": "Body joints: bay_side_l_high, bay_side_r_high.",
+   "boss_ratio": 2.12,
+   "boss_wall_mm": 2.64,
+   "thread_engaged_mm": 4.4,
+   "tip_clear_mm": 2.1,
+   "pullout_est_n": 756,
+   "capacity_n": 756,
+   "findings": [
+    {
+     "code": "pilot-below-spirol",
+     "level": "note",
+     "text": "blind pilot 6.5 < insert + 2 pitches = 6.7 (Spirol: room for displaced melt; 0.8 mm below the insert)"
+    },
+    {
+     "code": "axis-in-layer-plane",
+     "level": "note",
+     "text": "insert axis lies in the layer plane: installation and pull-out hoop stress opens the layer bonds through the axis (an axis along the print z is the strong way)"
+    }
+   ],
+   "verdict": "note"
+  },
+  {
+   "id": "body.bay_rail_door",
+   "assembly": "body",
+   "where": "battery bay rails' ends: the doors' thumbscrews",
+   "qty_robot": 4,
+   "insert": "insert_m3",
+   "d_mm": 3,
+   "material": "pa6-cf",
+   "infill": "100 %",
+   "hole": {
+    "d": 4.0,
+    "depth": 7.5
+   },
+   "boss_mm": 8.0,
+   "axis": "layer-plane",
+   "orientation": "rail printed flat: end inserts horizontal",
+   "screw": "M3 x 10 thumb through the PETG door",
+   "screw_side": "open end: a pack pushing the door pulls the insert",
+   "mating_hole_mm": 3.4,
+   "tip_depth_mm": 6.0,
+   "clamp": {
+    "stack": "4 mm PETG door under a thumb head (hand tight)",
+    "printed_mm": 4.0,
+    "limiter": null
+   },
+   "loads": [
+    {
+     "case": "a pack (est. 1.5 kg) at 10 g on a door's 2 screws",
+     "per_insert_n": 74,
+     "tension": true,
+     "source": "estimate"
+    }
+   ],
+   "notes": "Body joints: bay_door_front_l, bay_door_front_r, bay_door_rear_l, bay_door_rear_r.",
+   "boss_ratio": 1.69,
+   "boss_wall_mm": 1.64,
+   "thread_engaged_mm": 5.7,
+   "tip_clear_mm": 1.5,
+   "pullout_est_n": 756,
+   "capacity_n": 756,
+   "sf_pullout": 10.21,
+   "findings": [
+    {
+     "code": "boss-thin",
+     "level": "note",
+     "text": "boss Ø8 is 1.69 x the insert's Ø4.72 (wall 1.64 mm; Spirol asks 2-3 x)"
+    },
+    {
+     "code": "axis-in-layer-plane",
+     "level": "note",
+     "text": "insert axis lies in the layer plane: installation and pull-out hoop stress opens the layer bonds through the axis (an axis along the print z is the strong way)"
+    },
+    {
+     "code": "note-vs-joint",
+     "level": "fix",
+     "text": "bay_rail part note \"four M4 x 16 up into the belly's nuts\" vs the joint M4 x 20 (bay_rail_l/r); adapter plates \"four M4 x 8 up into the belly's nuts\" vs M4 x 12"
+    }
+   ],
+   "verdict": "fix"
+  },
+  {
+   "id": "body.d435_cradle",
+   "assembly": "body",
+   "where": "D435 cradles' feet (PA6-CF 8 x 8), from the shell apron",
+   "qty_robot": 4,
+   "insert": "insert_m3",
+   "d_mm": 3,
+   "material": "pa6-cf",
+   "infill": "100 %",
+   "hole": {
+    "d": 4.0,
+    "depth": 7.5
+   },
+   "boss_mm": 8.0,
+   "axis": "layer-plane",
+   "orientation": "cradle printed flat: the feet inserts horizontal",
+   "screw": "M3 x 8 pan",
+   "screw_side": "open end",
+   "mating_hole_mm": 3.4,
+   "tip_depth_mm": 6.0,
+   "clamp": {
+    "stack": "the 2 mm PETG apron",
+    "printed_mm": 2.0,
+    "limiter": null
+   },
+   "loads": [
+    {
+     "case": "a D435 (72 g) at 30 g on 2",
+     "per_insert_n": 11,
+     "tension": true,
+     "source": "estimate"
+    }
+   ],
+   "notes": "Body joints: d435_cradle_front_feet, d435_cradle_rear_feet.",
+   "boss_ratio": 1.69,
+   "boss_wall_mm": 1.64,
+   "thread_engaged_mm": 5.7,
+   "tip_clear_mm": 1.5,
+   "pullout_est_n": 756,
+   "capacity_n": 756,
+   "sf_pullout": 68.7,
+   "findings": [
+    {
+     "code": "boss-thin",
+     "level": "note",
+     "text": "boss Ø8 is 1.69 x the insert's Ø4.72 (wall 1.64 mm; Spirol asks 2-3 x)"
+    },
+    {
+     "code": "axis-in-layer-plane",
+     "level": "note",
+     "text": "insert axis lies in the layer plane: installation and pull-out hoop stress opens the layer bonds through the axis (an axis along the print z is the strong way)"
+    }
+   ],
+   "verdict": "note"
+  },
+  {
+   "id": "body.eyes_clip",
+   "assembly": "body",
+   "where": "shell front's two bosses (PETG Ø8) for the eyes' clip",
+   "qty_robot": 2,
+   "insert": "insert_m3",
+   "d_mm": 3,
+   "material": "petg",
+   "infill": "2 mm walls, 40 % gyroid",
+   "hole": {
+    "d": 4.0,
+    "depth": 6.0
+   },
+   "material_mm": 7.0,
+   "boss_mm": 8.0,
+   "axis": "print-z",
+   "orientation": "shell printed on its outer face",
+   "screw": "M3 x 6 socket",
+   "screw_side": "open end",
+   "mating_hole_mm": 3.4,
+   "tip_depth_mm": 4.0,
+   "clamp": {
+    "stack": "the PETG clip",
+    "printed_mm": 2.0,
+    "limiter": null
+   },
+   "loads": [
+    {
+     "case": "the DualEye board (light)",
+     "per_insert_n": 5,
+     "tension": true,
+     "source": "estimate"
+    }
+   ],
+   "notes": "Body joints: eyes_clip.",
+   "boss_ratio": 1.69,
+   "boss_wall_mm": 1.64,
+   "thread_engaged_mm": 4.0,
+   "tip_clear_mm": 2.0,
+   "pullout_est_n": 1167,
+   "capacity_n": 1167,
+   "sf_pullout": 233.37,
+   "findings": [
+    {
+     "code": "pilot-below-spirol",
+     "level": "note",
+     "text": "blind pilot 6 < insert + 2 pitches = 6.7 (Spirol: room for displaced melt; 0.3 mm below the insert)"
+    },
+    {
+     "code": "boss-thin",
+     "level": "note",
+     "text": "boss Ø8 is 1.69 x the insert's Ø4.72 (wall 1.64 mm; Spirol asks 2-3 x)"
+    }
+   ],
+   "verdict": "note"
+  },
+  {
+   "id": "body.printed_clamps",
+   "assembly": "body",
+   "where": "printed parts clamped by screws into PEM nuts / nuts / tapped holes",
+   "qty_robot": 47,
+   "joints": [
+    "adapter_plate_front",
+    "adapter_plate_rear",
+    "bay_rail_l",
+    "bay_rail_r",
+    "d435_front_back",
+    "d435_rear_back",
+    "dcdc_bracket",
+    "ear_bracket_l",
+    "ear_bracket_r",
+    "fan_duct",
+    "isolator_1",
+    "isolator_2",
+    "isolator_3",
+    "isolator_4",
+    "shell_door",
+    "shell_hatch",
+    "splice_l",
+    "splice_r"
+   ],
+   "insert": null,
+   "d_mm": 4,
+   "material": "pa6-cf",
+   "infill": "mixed",
+   "receiver": "PEM / nyloc / nut / tapped",
+   "screw": "see notes",
+   "screw_side": "n/a",
+   "axis": "print-z",
+   "clamp": {
+    "stack": "see notes",
+    "printed_mm": 0,
+    "limiter": null
+   },
+   "loads": [],
+   "notes": "isolators (TPU, M4 x 20, snug by design: the foot is the compliance); bay rails (M4 x 20 through 10 mm PA6-CF into the belly PEMs); adapter plates (M4 x 12 through 4 mm PA6-CF); DC-DC bracket (M4 x 12 through its 4 mm foot); ear brackets (M5 x 14 through PA6-CF + the 2 mm PETG wall, nyloc inside); shell door / hatch / splices (M3 x 8 into nuts in PETG); fan duct (M3 x 6 into the tapped turret plate). None has a stated torque or a limiter; each is snug-only duty. The ear brackets' nylocs bear on bare 2 mm PETG.",
+   "findings": [
+    {
+     "code": "ear-nyloc-on-petg",
+     "level": "check",
+     "text": "put an M5 washer under each ear bracket nyloc on the 2 mm PETG wall and tighten snug (no torque is stated)"
+    },
+    {
+     "code": "note-vs-joint",
+     "level": "fix",
+     "text": "body_shell.py part notes \"four M3 x 16 into the wall\" / two M3 x 16 vs the joints M3 x 8; fan duct \"three M3 x 5 up into the turret plate\" vs M3 x 6"
+    },
+    {
+     "code": "door-side",
+     "level": "fix",
+     "text": "cad/body_shell.py \"DOOR_SIDE = 'l'\" but door()'s docstring says \"The right side's service door\""
+    }
+   ],
+   "verdict": "fix"
+  },
+  {
+   "id": "turret.plinth_columns",
+   "assembly": "turret",
+   "where": "compute plinth shell's four column tops (PETG): the pan base's TM",
+   "qty_robot": 4,
+   "insert": "insert_m5",
+   "d_mm": 5,
+   "material": "petg",
+   "infill": "not in exports/turret/print/print.json yet",
+   "hole": {
+    "d": 6.4,
+    "depth": 8.0
+   },
+   "boss_mm": 15.0,
+   "axis": "print-z",
+   "orientation": "shell printed upside down",
+   "screw": "M5 x 16, 4 off through the pan base's 5 mm foot",
+   "screw_side": "open end (from above)",
+   "mating_hole_mm": 5.5,
+   "tip_depth_mm": 11.0,
+   "clamp": {
+    "stack": "5 mm PA6-CF foot (40 % gyroid) under each head",
+    "printed_mm": 5.0,
+    "limiter": null,
+    "material": "PA6-CF",
+    "bearing": "Ø8.5 socket head",
+    "bearing_od_mm": 8.5,
+    "bearing_id_mm": 5.5,
+    "bearing_area_mm2": 33.0
+   },
+   "loads": [
+    {
+     "case": "R: 30 g sideways on the turret",
+     "per_insert_n": 233,
+     "tension": true,
+     "source": "exports/turret/fea/summary.json hand_checks.tm_bolts"
+    }
+   ],
+   "notes": "The column is solid PETG for 8 mm under the pilot (its hollow starts at z -16), so the deeper pilot fits.",
+   "boss_ratio": 2.11,
+   "boss_wall_mm": 3.94,
+   "thread_engaged_mm": 7.9,
+   "tip_clear_mm": -3.0,
+   "pullout_est_n": 2587,
+   "capacity_n": 2587,
+   "sf_pullout": 11.11,
+   "findings": [
+    {
+     "code": "pilot-below-spirol",
+     "level": "note",
+     "text": "blind pilot 8 < insert + 2 pitches = 9.5 (Spirol: room for displaced melt; 0.1 mm below the insert)"
+    },
+    {
+     "code": "screw-bottoms",
+     "level": "fix",
+     "text": "the screw tip reaches 11 mm below the insert's face but the blind pilot is 8 deep: it bottoms 3.0 mm early and jacks the insert out (Spirol) instead of clamping"
+    },
+    {
+     "code": "screw-bottoms-fix",
+     "level": "fix",
+     "text": "deepen the column pilots 8 -> 12.5 (solid to 16), or use M5 x 12 (tip 7, 7 mm engaged)"
+    }
+   ],
+   "verdict": "fix"
+  },
+  {
+   "id": "turret.plinth_tray_m4",
+   "assembly": "turret",
+   "where": "compute plinth tray (PA6-CF): the shell's four feet",
+   "qty_robot": 4,
+   "insert": "turret_insert_m4",
+   "d_mm": 4,
+   "material": "pa6-cf",
+   "infill": "40 % gyroid (docs/turret-sections.md)",
+   "hole": {
+    "d": 5.6,
+    "depth": 8.0
+   },
+   "axis": "print-z",
+   "orientation": "tray printed flat",
+   "screw": "M4 x 10 down through the shell's 5 mm PETG foot",
+   "screw_side": "open end (from above)",
+   "mating_hole_mm": 4.5,
+   "tip_depth_mm": 5.0,
+   "clamp": {
+    "stack": "5 mm PETG foot",
+    "printed_mm": 5.0,
+    "limiter": null
+   },
+   "loads": [],
+   "notes": "The shell foot is \"y - 6.0, y + 6.0, zt, zt + 5.0)\" (5 mm).",
+   "thread_engaged_mm": 5.0,
+   "tip_clear_mm": 3.0,
+   "pullout_est_n": 1188,
+   "capacity_n": 1188,
+   "findings": [],
+   "verdict": "ok"
+  },
+  {
+   "id": "turret.pan_base_clamp_ears",
+   "assembly": "turret",
+   "where": "pan base housing ears (PA6-CF): the 61810's clamp ring",
+   "qty_robot": 5,
+   "insert": "insert_m3",
+   "d_mm": 3,
+   "material": "pa6-cf",
+   "infill": "40 % gyroid inside 4 walls",
+   "hole": {
+    "d": 4.0,
+    "depth": 6.0
+   },
+   "axis": "print-z",
+   "orientation": "printed on its foot",
+   "screw": "M3 x 8 through the 3.175 mm 6061 clamp ring",
+   "screw_side": "open end (from above)",
+   "mating_hole_mm": 3.4,
+   "tip_depth_mm": 4.825,
+   "clamp": {
+    "stack": "aluminium ring",
+    "printed_mm": 0,
+    "limiter": "n/a"
+   },
+   "loads": [
+    {
+     "case": "R: 30 g with the turret upside down (the pan group on the ring)",
+     "per_insert_n": 77,
+     "tension": true,
+     "source": "exports/turret/fea/summary.json hand_checks.journal_lip"
+    }
+   ],
+   "pullout_repo_n": 700,
+   "notes": "The capacity basis is a 100 % solid test; this part is 40 % gyroid inside 4 walls (unqualified).",
+   "thread_engaged_mm": 4.83,
+   "tip_clear_mm": 1.17,
+   "pullout_est_n": 756,
+   "capacity_n": 700,
+   "sf_pullout": 9.09,
+   "findings": [
+    {
+     "code": "pilot-below-spirol",
+     "level": "note",
+     "text": "blind pilot 6 < insert + 2 pitches = 6.7 (Spirol: room for displaced melt; 0.3 mm below the insert)"
+    }
+   ],
+   "verdict": "note"
+  },
+  {
+   "id": "turret.pan_base_carrier_tabs",
+   "assembly": "turret",
+   "where": "pan base tab pockets (from below): the ring carrier",
+   "qty_robot": 3,
+   "insert": "insert_m3",
+   "d_mm": 3,
+   "material": "pa6-cf",
+   "infill": "40 % gyroid inside 4 walls",
+   "hole": {
+    "d": 4.0,
+    "depth": 7.0
+   },
+   "axis": "print-z",
+   "orientation": "printed on its foot",
+   "screw": "M3 x 10 flat heads up through the carrier's 4 mm tabs",
+   "screw_side": "open end (from below)",
+   "mating_hole_mm": 3.4,
+   "tip_depth_mm": 6.0,
+   "clamp": {
+    "stack": "PA6-CF carrier tab, countersunk",
+    "printed_mm": 4.0,
+    "limiter": null
+   },
+   "loads": [],
+   "notes": "Light: the carrier and the slip ring hang on it.",
+   "thread_engaged_mm": 5.7,
+   "tip_clear_mm": 1.0,
+   "pullout_est_n": 756,
+   "capacity_n": 756,
+   "findings": [],
+   "verdict": "ok"
+  },
+  {
+   "id": "turret.base_board_carrier",
+   "assembly": "turret",
+   "where": "pan base anchor and the base-board carrier",
+   "qty_robot": 8,
+   "insert": "insert_m3",
+   "d_mm": 3,
+   "material": "pa6-cf",
+   "infill": "carrier solid; anchor 40 % gyroid",
+   "hole": {
+    "d": 4.0,
+    "depth": 6.6
+   },
+   "axis": "layer-plane",
+   "orientation": "anchor horizontal, carrier boss vertical",
+   "screw": "M3 (see research/carrier-insert-fit)",
+   "screw_side": "open end",
+   "mating_hole_mm": 3.4,
+   "tip_depth_mm": null,
+   "clamp": null,
+   "loads": [],
+   "notes": "Covered by research/carrier-insert-fit (fit specimens for both orientations) and the base-board receipts; not re-screened here.",
+   "pullout_est_n": 756,
+   "capacity_n": 756,
+   "findings": [
+    {
+     "code": "pilot-below-spirol",
+     "level": "note",
+     "text": "blind pilot 6.6 < insert + 2 pitches = 6.7 (Spirol: room for displaced melt; 0.9 mm below the insert)"
+    },
+    {
+     "code": "axis-in-layer-plane",
+     "level": "note",
+     "text": "insert axis lies in the layer plane: installation and pull-out hoop stress opens the layer bonds through the axis (an axis along the print z is the strong way)"
+    }
+   ],
+   "verdict": "note"
+  },
+  {
+   "id": "turret.pan_base_dt_pad",
+   "assembly": "turret",
+   "where": "pan base wall (PA6-CF): the DT12 receptacle's flange",
+   "qty_robot": 4,
+   "insert": "turret_insert_m4",
+   "d_mm": 4,
+   "material": "pa6-cf",
+   "infill": "40 % gyroid inside 4 walls",
+   "hole": {
+    "d": 5.6,
+    "depth": 8.0
+   },
+   "axis": "layer-plane",
+   "orientation": "pan base printed on its foot: these are horizontal",
+   "screw": "the receptacle's flange screws",
+   "screw_side": "open end",
+   "mating_hole_mm": null,
+   "tip_depth_mm": null,
+   "clamp": null,
+   "loads": [
+    {
+     "case": "plug mating / unmating (est. 60 N on 4)",
+     "per_insert_n": 15,
+     "tension": true,
+     "source": "estimate"
+    }
+   ],
+   "notes": "Horizontal in a 40 % gyroid part, light duty.",
+   "pullout_est_n": 1188,
+   "capacity_n": 1188,
+   "sf_pullout": 79.19,
+   "findings": [
+    {
+     "code": "axis-in-layer-plane",
+     "level": "note",
+     "text": "insert axis lies in the layer plane: installation and pull-out hoop stress opens the layer bonds through the axis (an axis along the print z is the strong way)"
+    }
+   ],
+   "verdict": "note"
+  },
+  {
+   "id": "turret.pan_base_bumper_tabs",
+   "assembly": "turret",
+   "where": "pan base's 6 mm bumper tabs: the TPU bumper ring",
+   "qty_robot": 5,
+   "insert": "turret_insert_m3_short",
+   "d_mm": 3,
+   "material": "pa6-cf",
+   "infill": "40 % gyroid inside 4 walls",
+   "hole": {
+    "d": 4.0,
+    "depth": 5.5
+   },
+   "material_mm": 6.0,
+   "axis": "print-z",
+   "orientation": "printed on its foot",
+   "screw": "M3 with washers through the TPU ring",
+   "screw_side": "open end",
+   "mating_hole_mm": null,
+   "tip_depth_mm": null,
+   "clamp": {
+    "stack": "TPU ring + washer",
+    "printed_mm": 0,
+    "limiter": null
+   },
+   "loads": [],
+   "notes": "The TPU is the compliance; snug only.",
+   "pullout_est_n": 570,
+   "capacity_n": 570,
+   "findings": [],
+   "verdict": "ok"
+  },
+  {
+   "id": "turret.pan_ring_yoke",
+   "assembly": "turret",
+   "where": "pan ring (PA6-CF turntable): the tilt yoke's four M4",
+   "qty_robot": 4,
+   "insert": "turret_insert_m4",
+   "d_mm": 4,
+   "material": "pa6-cf",
+   "infill": "100 %",
+   "hole": {
+    "d": 5.6,
+    "depth": 8.0
+   },
+   "axis": "print-z",
+   "orientation": "printed upside down",
+   "screw": "M4 x 10, heads 6 mm down in the yoke's 12 mm bridge (\"the heads sit 6 mm above the bridge\")",
+   "screw_side": "open end (from above)",
+   "mating_hole_mm": 4.5,
+   "tip_depth_mm": 4.0,
+   "longer_screw_fits": true,
+   "clamp": {
+    "stack": "6 mm PA6-CF bridge",
+    "printed_mm": 6.0,
+    "limiter": null
+   },
+   "loads": [
+    {
+     "case": "R: 30 g sideways on the yoke and all it carries",
+     "per_insert_n": 174,
+     "tension": true,
+     "source": "exports/turret/fea/summary.json hand_checks.yoke_inserts"
+    }
+   ],
+   "pullout_repo_n": 1100,
+   "notes": "so an M4 x 10 keeps 4 mm in the turntable's insert. An M4 x 12 keeps 6 mm (1.5 d) and stops 2 mm off the pilot floor.",
+   "thread_engaged_mm": 4.0,
+   "tip_clear_mm": 4.0,
+   "pullout_est_n": 1188,
+   "capacity_n": 1100,
+   "sf_pullout": 6.32,
+   "findings": [
+    {
+     "code": "engagement-low",
+     "level": "fix",
+     "text": "4 mm of thread engaged = 1.00 d (the body checks ask 1.2 d)"
+    }
+   ],
+   "verdict": "fix"
+  },
+  {
+   "id": "turret.ring_carrier",
+   "assembly": "turret",
+   "where": "ring carrier (PA6-CF): the slip ring's flange",
+   "qty_robot": 3,
+   "insert": "insert_m3",
+   "d_mm": 3,
+   "material": "pa6-cf",
+   "infill": "100 %",
+   "hole": {
+    "d": 4.0,
+    "depth": 6.0
+   },
+   "axis": "print-z",
+   "orientation": "printed on its top face",
+   "screw": "M3 x 8 + washers through the ring's flange",
+   "screw_side": "open end",
+   "mating_hole_mm": null,
+   "tip_depth_mm": null,
+   "clamp": null,
+   "loads": [],
+   "notes": "Light.",
+   "pullout_est_n": 756,
+   "capacity_n": 756,
+   "findings": [
+    {
+     "code": "pilot-below-spirol",
+     "level": "note",
+     "text": "blind pilot 6 < insert + 2 pitches = 6.7 (Spirol: room for displaced melt; 0.3 mm below the insert)"
+    }
+   ],
+   "verdict": "note"
+  },
+  {
+   "id": "turret.yoke_board_bay",
+   "assembly": "turret",
+   "where": "tilt yoke -y arm (PA6-CF): the board bay",
+   "qty_robot": 4,
+   "insert": "insert_m3",
+   "d_mm": 3,
+   "material": "pa6-cf",
+   "infill": "100 %",
+   "hole": {
+    "d": 4.0,
+    "depth": 6.0
+   },
+   "axis": "layer-plane",
+   "orientation": "yoke printed on its back: the arm inserts lie in the layers",
+   "screw": "M3 x 8 flat heads through the bay's 3 mm back",
+   "screw_side": "open end",
+   "mating_hole_mm": 3.4,
+   "tip_depth_mm": 5.0,
+   "clamp": {
+    "stack": "3 mm PETG, countersunk",
+    "printed_mm": 3.0,
+    "limiter": null
+   },
+   "loads": [
+    {
+     "case": "R: 30 g down on the bay",
+     "per_insert_n": 12,
+     "tension": true,
+     "source": "exports/turret/fea/summary.json hand_checks.board_bay"
+    }
+   ],
+   "notes": "",
+   "thread_engaged_mm": 5.0,
+   "tip_clear_mm": 1.0,
+   "pullout_est_n": 756,
+   "capacity_n": 756,
+   "sf_pullout": 62.97,
+   "findings": [
+    {
+     "code": "pilot-below-spirol",
+     "level": "note",
+     "text": "blind pilot 6 < insert + 2 pitches = 6.7 (Spirol: room for displaced melt; 0.3 mm below the insert)"
+    },
+    {
+     "code": "axis-in-layer-plane",
+     "level": "note",
+     "text": "insert axis lies in the layer plane: installation and pull-out hoop stress opens the layer bonds through the axis (an axis along the print z is the strong way)"
+    }
+   ],
+   "verdict": "note"
+  },
+  {
+   "id": "turret.board_bay_boards",
+   "assembly": "turret",
+   "where": "board bay back (PETG Ø10 bosses): the boards",
+   "qty_robot": 4,
+   "insert": "insert_m3",
+   "d_mm": 3,
+   "material": "petg",
+   "infill": "5 walls, 40 % gyroid",
+   "hole": {
+    "d": 4.0,
+    "depth": 6.0
+   },
+   "boss_mm": 10.0,
+   "axis": "print-z",
+   "orientation": "printed on its back",
+   "screw": "M3 through the boards",
+   "screw_side": "open end",
+   "mating_hole_mm": null,
+   "tip_depth_mm": null,
+   "clamp": null,
+   "loads": [],
+   "notes": "Light.",
+   "boss_ratio": 2.12,
+   "boss_wall_mm": 2.64,
+   "pullout_est_n": 1167,
+   "capacity_n": 1167,
+   "findings": [
+    {
+     "code": "pilot-below-spirol",
+     "level": "note",
+     "text": "blind pilot 6 < insert + 2 pitches = 6.7 (Spirol: room for displaced melt; 0.3 mm below the insert)"
+    }
+   ],
+   "verdict": "note"
+  },
+  {
+   "id": "turret.cradle_plates",
+   "assembly": "turret",
+   "where": "cradle rail frame rebates (PA6-CF): the two 6061 cheek plates",
+   "qty_robot": 8,
+   "insert": "insert_m3",
+   "d_mm": 3,
+   "material": "pa6-cf",
+   "infill": "4 walls, 100 %",
+   "hole": {
+    "d": 4.0,
+    "depth": 6.5
+   },
+   "axis": "layer-plane",
+   "orientation": "frame printed flat: inserts put in from the side",
+   "screw": "M3 x 8 buttons through the 3.175 mm plates",
+   "screw_side": "open end",
+   "mating_hole_mm": 3.4,
+   "tip_depth_mm": 4.825,
+   "clamp": {
+    "stack": "aluminium plate",
+    "printed_mm": 0,
+    "limiter": "n/a"
+   },
+   "loads": [
+    {
+     "case": "R: 30 g sideways, the frame pulling one plate's foot",
+     "per_insert_n": 47,
+     "tension": true,
+     "source": "exports/turret/fea/summary.json hand_checks.plate_inserts"
+    }
+   ],
+   "pullout_repo_n": 700,
+   "notes": "PLATE foot_holes_x has 4 a plate ('foot_holes_x': (-3.0, 33.0, 58.0, 77.0)).",
+   "thread_engaged_mm": 4.83,
+   "tip_clear_mm": 1.67,
+   "pullout_est_n": 756,
+   "capacity_n": 700,
+   "sf_pullout": 14.89,
+   "findings": [
+    {
+     "code": "pilot-below-spirol",
+     "level": "note",
+     "text": "blind pilot 6.5 < insert + 2 pitches = 6.7 (Spirol: room for displaced melt; 0.8 mm below the insert)"
+    },
+    {
+     "code": "axis-in-layer-plane",
+     "level": "note",
+     "text": "insert axis lies in the layer plane: installation and pull-out hoop stress opens the layer bonds through the axis (an axis along the print z is the strong way)"
+    },
+    {
+     "code": "note-vs-joint",
+     "level": "fix",
+     "text": "cad/turret.py comment \"and their 3 x M3 inserts, put in from the rebate\": PLATE foot_holes_x has four a plate"
+    }
+   ],
+   "verdict": "fix"
+  },
+  {
+   "id": "turret.cartridge_board",
+   "assembly": "turret",
+   "where": "cartridge cage plate standoffs (PA6-CF): the cartridge board",
+   "qty_robot": 4,
+   "insert": "insert_m3",
+   "d_mm": 3,
+   "material": "pa6-cf",
+   "infill": "100 %",
+   "hole": {
+    "d": 4.0,
+    "depth": 6.0
+   },
+   "axis": "print-z",
+   "orientation": "printed on its base",
+   "screw": "M3 through the board",
+   "screw_side": "open end",
+   "mating_hole_mm": null,
+   "tip_depth_mm": null,
+   "clamp": null,
+   "loads": [],
+   "notes": "Light (30 g board).",
+   "pullout_est_n": 756,
+   "capacity_n": 756,
+   "findings": [
+    {
+     "code": "pilot-below-spirol",
+     "level": "note",
+     "text": "blind pilot 6 < insert + 2 pitches = 6.7 (Spirol: room for displaced melt; 0.3 mm below the insert)"
+    }
+   ],
+   "verdict": "note"
+  },
+  {
+   "id": "turret.laser_foot",
+   "assembly": "turret",
+   "where": "barrel socket pad: the laser holder (gated)",
+   "qty_robot": 2,
+   "insert": "insert_m3",
+   "d_mm": 3,
+   "material": "pa6-cf",
+   "infill": "100 %",
+   "hole": {
+    "d": 4.0,
+    "depth": 6.5
+   },
+   "axis": "print-z",
+   "orientation": "printed on its base",
+   "screw": "M3 x 10 (turret fastener gate)",
+   "screw_side": "open end",
+   "mating_hole_mm": 3.4,
+   "tip_depth_mm": null,
+   "clamp": {
+    "stack": "PETG laser foot",
+    "printed_mm": 6.0,
+    "limiter": null
+   },
+   "loads": [],
+   "notes": "Engagement and tip are checked by cadagent.gates.fasteners (exports/turret/gates.json).",
+   "pullout_est_n": 756,
+   "capacity_n": 756,
+   "findings": [
+    {
+     "code": "pilot-below-spirol",
+     "level": "note",
+     "text": "blind pilot 6.5 < insert + 2 pitches = 6.7 (Spirol: room for displaced melt; 0.8 mm below the insert)"
+    }
+   ],
+   "verdict": "note"
+  },
+  {
+   "id": "turret.barrel_set_screw",
+   "assembly": "turret",
+   "where": "barrel socket pad: the barrel's M3 set screw",
+   "qty_robot": 1,
+   "insert": "insert_m3",
+   "d_mm": 3,
+   "material": "pa6-cf",
+   "infill": "100 %",
+   "hole": {
+    "d": 4.0,
+    "through": true,
+    "depth": 10.5
+   },
+   "axis": "print-z",
+   "orientation": "printed on its base",
+   "screw": "M3 set screw onto the PETG barrel",
+   "screw_side": "reaction pushes the insert out (jack-out by design)",
+   "mating_hole_mm": null,
+   "tip_depth_mm": null,
+   "clamp": null,
+   "torque_nm": 0.2,
+   "preload_n": 333,
+   "torque_source": "recommended here (snug)",
+   "loads": [
+    {
+     "case": "the set screw's own thrust at 0.2 N m",
+     "per_insert_n": 333,
+     "tension": true,
+     "source": "K = 0.2"
+    }
+   ],
+   "notes": "The set screw's thrust on the barrel is reacted by the insert in pull-out. Snug only.",
+   "pullout_est_n": 756,
+   "capacity_n": 756,
+   "sf_pullout": 2.27,
+   "findings": [
+    {
+     "code": "pullout-margin",
+     "level": "check",
+     "text": "pull-out estimate 756 N / 333 N = 2.27: qualify with the B4 pull-out coupon in this material and orientation"
+    },
+    {
+     "code": "set-screw-torque",
+     "level": "check",
+     "text": "limit the set screw to ~0.2 N m (333 N); at 0.5 N m it pushes 833 N on the insert, about its whole estimated pull-out"
+    }
+   ],
+   "verdict": "check"
+  },
+  {
+   "id": "turret.ct_latch",
+   "assembly": "turret",
+   "where": "cartridge base (PA6-CF): the CT latch's one M4 (Ø10 boss, from below)",
+   "qty_robot": 1,
+   "insert": "turret_insert_m4",
+   "d_mm": 4,
+   "material": "pa6-cf",
+   "infill": "100 %",
+   "hole": {
+    "d": 5.6,
+    "depth": 6.6
+   },
+   "boss_mm": 10.0,
+   "axis": "print-z",
+   "orientation": "printed on its base",
+   "screw": "DIN 464 M4 x 12 knurled thumbscrew up through the cradle rail (hand tight)",
+   "screw_side": "open end (from below): a tumble pulls the cartridge off it",
+   "mating_hole_mm": 4.5,
+   "tip_depth_mm": 5.0,
+   "clamp": {
+    "stack": "7 mm PA6-CF rail under the collar (hand tight)",
+    "printed_mm": 7.0,
+    "limiter": null
+   },
+   "loads": [
+    {
+     "case": "R: 30 g, the cartridge (0.64 kg) pulled off the rails",
+     "per_insert_n": 188,
+     "tension": true,
+     "source": "exports/turret/fea/summary.json (cradle R-fall-down load 188 N, reversed)"
+    },
+    {
+     "case": "E: a 50 N push on the muzzle",
+     "per_insert_n": 88,
+     "tension": true,
+     "source": "cad/turret_studies.py T_latch (FEA cradle E-push-up)"
+    }
+   ],
+   "pullout_repo_n": 1100,
+   "notes": "One screw holds the cartridge. The pilot ends 0.2 mm past the 6.4 mm insert under a 1 mm cap; most of the insert sits in the free-standing Ø10 boss above the 3 mm plate.",
+   "boss_ratio": 1.58,
+   "boss_wall_mm": 1.85,
+   "thread_engaged_mm": 5.0,
+   "tip_clear_mm": 1.6,
+   "pullout_est_n": 1188,
+   "capacity_n": 1100,
+   "sf_pullout": 5.85,
+   "findings": [
+    {
+     "code": "pilot-below-spirol",
+     "level": "note",
+     "text": "blind pilot 6.6 < insert + 2 pitches = 7.8 (Spirol: room for displaced melt; 0.2 mm below the insert)"
+    },
+    {
+     "code": "boss-thin",
+     "level": "note",
+     "text": "boss Ø10 is 1.58 x the insert's Ø6.31 (wall 1.85 mm; Spirol asks 2-3 x)"
+    }
+   ],
+   "verdict": "note"
+  },
+  {
+   "id": "turret.hopper_lugs",
+   "assembly": "turret",
+   "where": "cartridge housing top: the hopper's three lugs (gated)",
+   "qty_robot": 3,
+   "insert": "insert_m3",
+   "d_mm": 3,
+   "material": "pa6-cf",
+   "infill": "100 %",
+   "hole": {
+    "d": 4.0,
+    "depth": 6.0
+   },
+   "axis": "print-z",
+   "orientation": "printed on its base",
+   "screw": "M3 x 8 through the PETG lugs (turret fastener gate)",
+   "screw_side": "open end",
+   "mating_hole_mm": 3.4,
+   "tip_depth_mm": null,
+   "clamp": null,
+   "loads": [],
+   "notes": "Checked by cadagent.gates.fasteners.",
+   "pullout_est_n": 756,
+   "capacity_n": 756,
+   "findings": [
+    {
+     "code": "pilot-below-spirol",
+     "level": "note",
+     "text": "blind pilot 6 < insert + 2 pitches = 6.7 (Spirol: room for displaced melt; 0.3 mm below the insert)"
+    }
+   ],
+   "verdict": "note"
+  },
+  {
+   "id": "stand.tm",
+   "assembly": "turret stand",
+   "where": "stand top plate (PETG, 3 walls 20 % gyroid): the plinth's TM",
+   "qty_robot": 4,
+   "insert": "insert_m5",
+   "d_mm": 5,
+   "material": "petg",
+   "infill": "3 walls, 20 % gyroid",
+   "hole": {
+    "d": 6.4,
+    "depth": 14.0
+   },
+   "boss_mm": 14.0,
+   "axis": "print-z",
+   "orientation": "printed upside down",
+   "screw": "M5 x 16, 4 off through the plinth tray",
+   "screw_side": "open end",
+   "mating_hole_mm": 5.5,
+   "tip_depth_mm": 11.5,
+   "clamp": null,
+   "loads": [],
+   "notes": "Bench duty.",
+   "boss_ratio": 1.97,
+   "boss_wall_mm": 3.44,
+   "thread_engaged_mm": 7.9,
+   "tip_clear_mm": 2.5,
+   "pullout_est_n": 2587,
+   "capacity_n": 2587,
+   "findings": [
+    {
+     "code": "boss-thin",
+     "level": "note",
+     "text": "boss Ø14 is 1.97 x the insert's Ø7.11 (wall 3.44 mm; Spirol asks 2-3 x)"
+    }
+   ],
+   "verdict": "note"
+  },
+  {
+   "id": "stand.dock",
+   "assembly": "turret stand",
+   "where": "stand top plate underside: the dock adapter's 2 x M3",
+   "qty_robot": 2,
+   "insert": "insert_m3",
+   "d_mm": 3,
+   "material": "petg",
+   "infill": "3 walls, 20 % gyroid",
+   "hole": {
+    "d": 4.0,
+    "depth": 4.0
+   },
+   "material_mm": 6.0,
+   "axis": "print-z",
+   "orientation": "printed upside down",
+   "screw": "2 x M3 up through the adapter (drilled on arrival)",
+   "screw_side": "open end",
+   "mating_hole_mm": null,
+   "tip_depth_mm": null,
+   "clamp": null,
+   "loads": [],
+   "notes": "The 6 mm plate leaves 2 mm over the 4 mm pilot.",
+   "pullout_est_n": 1167,
+   "capacity_n": 1167,
+   "findings": [
+    {
+     "code": "pilot-shorter-than-insert",
+     "level": "fix",
+     "text": "blind pilot 4 deep for a 5.7 mm insert: it cannot seat flush"
+    },
+    {
+     "code": "material-thin",
+     "level": "note",
+     "text": "6 mm of part at the insert < the maker's 6.5 mm minimum material"
+    },
+    {
+     "code": "pilot-fix",
+     "level": "fix",
+     "text": "a 4 mm blind pilot takes neither M3 insert (5.7 or 4.3): use 94459A130 (4.3) in a 5.3 mm pilot (0.7 mm skin), or a boss under the plate for 94459A140"
+    }
+   ],
+   "verdict": "fix"
+  },
+  {
+   "id": "stand.corners",
+   "assembly": "turret stand",
+   "where": "stand corner bosses (PETG Ø12): the bottom's 4 x M3",
+   "qty_robot": 4,
+   "insert": "insert_m3",
+   "d_mm": 3,
+   "material": "petg",
+   "infill": "3 walls, 20 % gyroid",
+   "hole": {
+    "d": 4.0,
+    "depth": 8.0
+   },
+   "boss_mm": 12.0,
+   "axis": "print-z",
+   "orientation": "printed upside down",
+   "screw": "M3 through the bottom",
+   "screw_side": "open end",
+   "mating_hole_mm": null,
+   "tip_depth_mm": null,
+   "clamp": null,
+   "loads": [],
+   "notes": "",
+   "boss_ratio": 2.54,
+   "boss_wall_mm": 3.64,
+   "pullout_est_n": 1167,
+   "capacity_n": 1167,
+   "findings": [],
+   "verdict": "ok"
+  },
+  {
+   "id": "box.tm",
+   "assembly": "J501 box",
+   "where": "J501 box deck (PETG): the turret's TM, through the 8 mm deck",
+   "qty_robot": 4,
+   "insert": "insert_m5",
+   "d_mm": 5,
+   "material": "petg",
+   "infill": "see exports/turret/box",
+   "hole": {
+    "d": 6.4,
+    "depth": 8.1,
+    "through": true
+   },
+   "axis": "print-z",
+   "orientation": "deck printed upside down",
+   "screw": "M5 x 12 buttons through the 5 mm foot (cad/turret_box.py)",
+   "screw_side": "open end",
+   "mating_hole_mm": 5.5,
+   "tip_depth_mm": 7.0,
+   "clamp": null,
+   "loads": [],
+   "notes": "Through pilot: the insert fills the 8 mm deck and the screw ends 1 mm short of its underside. With the D66 plinth's M5 x 16 instead, the tip would stand 3.5 mm below the deck.",
+   "thread_engaged_mm": 7.0,
+   "pullout_est_n": 2587,
+   "capacity_n": 2587,
+   "findings": [],
+   "verdict": "ok"
+  },
+  {
+   "id": "box.small",
+   "assembly": "J501 box",
+   "where": "box shroud tabs (M3 x 4.3 from below) and pod bosses (M3)",
+   "qty_robot": 10,
+   "insert": "turret_insert_m3_short",
+   "d_mm": 3,
+   "material": "petg",
+   "infill": "see exports/turret/box",
+   "hole": {
+    "d": 4.0,
+    "depth": 5.0
+   },
+   "axis": "print-z",
+   "orientation": "deck printed upside down",
+   "screw": "M3",
+   "screw_side": "open end",
+   "mating_hole_mm": null,
+   "tip_depth_mm": null,
+   "clamp": null,
+   "loads": [],
+   "notes": "Light. The pod bosses take the 5.7 mm M3 in 8.1 mm pilots.",
+   "pullout_est_n": 880,
+   "capacity_n": 880,
+   "findings": [
+    {
+     "code": "pilot-below-spirol",
+     "level": "note",
+     "text": "blind pilot 5 < insert + 2 pitches = 5.3 (Spirol: room for displaced melt; 0.7 mm below the insert)"
+    }
+   ],
+   "verdict": "note"
+  },
+  {
+   "id": "rig.pod_m4",
+   "assembly": "leg rig",
+   "where": "rig pod (PETG Ø10 bosses): contactor, relay, pendant clip",
+   "qty_robot": 5,
+   "insert": "turret_insert_m4",
+   "d_mm": 4,
+   "material": "petg",
+   "infill": "PETG (rig parts)",
+   "hole": {
+    "d": 5.6,
+    "depth": 9.1
+   },
+   "boss_mm": 10.0,
+   "axis": "print-z",
+   "orientation": "pod printed on its floor",
+   "screw": "M4 (contactor, relay); M4 x 10 (pendant clip)",
+   "screw_side": "open end",
+   "mating_hole_mm": null,
+   "tip_depth_mm": null,
+   "clamp": null,
+   "torque_nm": 2.3,
+   "torque_source": "docs/leg-rig-assembly.md: 'the contactor on its two M4 inserts (2.3 N m)'",
+   "preload_n": 2875,
+   "loads": [],
+   "notes": "TE's 2.3 N m is a mounting torque for a metal panel; into a PETG insert it is about the insert's whole pull-out.",
+   "boss_ratio": 1.58,
+   "boss_wall_mm": 1.85,
+   "pullout_est_n": 1834,
+   "capacity_n": 1834,
+   "findings": [
+    {
+     "code": "boss-thin",
+     "level": "note",
+     "text": "boss Ø10 is 1.58 x the insert's Ø6.31 (wall 1.85 mm; Spirol asks 2-3 x)"
+    },
+    {
+     "code": "preload-vs-pullout",
+     "level": "check",
+     "text": "2875 N of preload is 1.57 x the pull-out estimate: the clamped part must bear on the insert's brass face (insert flush to 0.13 mm proud, Spirol), or the knurl carries the preload too"
+    },
+    {
+     "code": "insert-torque",
+     "level": "check",
+     "text": "2.3 N m on an M4 ~ 2875 N; the PETG M4 insert's pull-out estimate is 1834 N: set it flush so the base bears on the brass and tighten to ~1 N m (1250 N)"
+    }
+   ],
+   "verdict": "check"
+  },
+  {
+   "id": "rig.tof_arm",
+   "assembly": "leg rig",
+   "where": "ToF arm (PETG Ø10 bosses) on the carriage plate",
+   "qty_robot": 2,
+   "insert": "turret_insert_m4",
+   "d_mm": 4,
+   "material": "petg",
+   "infill": "PETG (rig parts)",
+   "hole": {
+    "d": 5.6,
+    "depth": 9.4
+   },
+   "boss_mm": 10.0,
+   "axis": "print-z",
+   "orientation": "",
+   "screw": "M4 x 10 from the plate's back",
+   "screw_side": "open end",
+   "mating_hole_mm": 4.5,
+   "tip_depth_mm": 3.6500000000000004,
+   "clamp": null,
+   "loads": [],
+   "notes": "Light.",
+   "boss_ratio": 1.58,
+   "boss_wall_mm": 1.85,
+   "thread_engaged_mm": 3.65,
+   "tip_clear_mm": 5.75,
+   "pullout_est_n": 1834,
+   "capacity_n": 1834,
+   "findings": [
+    {
+     "code": "boss-thin",
+     "level": "note",
+     "text": "boss Ø10 is 1.58 x the insert's Ø6.31 (wall 1.85 mm; Spirol asks 2-3 x)"
+    },
+    {
+     "code": "engagement-low",
+     "level": "note",
+     "text": "3.65 mm of thread engaged = 0.91 d (the body checks ask 1.2 d)"
+    }
+   ],
+   "verdict": "note"
+  }
+ ],
+ "findings": [
+  {
+   "joint": "body.bay_rail_door",
+   "code": "note-vs-joint",
+   "level": "fix",
+   "text": "bay_rail part note \"four M4 x 16 up into the belly's nuts\" vs the joint M4 x 20 (bay_rail_l/r); adapter plates \"four M4 x 8 up into the belly's nuts\" vs M4 x 12"
+  },
+  {
+   "joint": "body.bus_insulator",
+   "code": "note-vs-plan",
+   "level": "fix",
+   "text": "part note says \"PETG, 100 % (never a carbon-filled filament\"; exports/body/print-plan.json prints it \"2 mm walls, 40 % gyroid\""
+  },
+  {
+   "joint": "body.dcdc_bracket",
+   "code": "note-vs-joint",
+   "level": "fix",
+   "text": "part note \"two M4 x 10 down into the tray's nuts; the converter on four M3 x 8\" vs the joints: 2 x M4 x 12 into the power plate's PEM nuts, 4 x M3 x 6 (exports/body/integrity.json)"
+  },
+  {
+   "joint": "body.printed_clamps",
+   "code": "note-vs-joint",
+   "level": "fix",
+   "text": "body_shell.py part notes \"four M3 x 16 into the wall\" / two M3 x 16 vs the joints M3 x 8; fan duct \"three M3 x 5 up into the turret plate\" vs M3 x 6"
+  },
+  {
+   "joint": "body.printed_clamps",
+   "code": "door-side",
+   "level": "fix",
+   "text": "cad/body_shell.py \"DOOR_SIDE = 'l'\" but door()'s docstring says \"The right side's service door\""
+  },
+  {
+   "joint": "body.riser_top_tm",
+   "code": "screw-bottoms",
+   "level": "fix",
+   "text": "the screw tip reaches 11.5 mm below the insert's face but the blind pilot is 9.5 deep: it bottoms 2.0 mm early and jacks the insert out (Spirol) instead of clamping"
+  },
+  {
+   "joint": "body.riser_top_tm",
+   "code": "contract-depth",
+   "level": "fix",
+   "text": "riser TM pilots 9.5 deep vs mount.json bolt_hole_depth_min_mm 12 (and 11.5 with the D66 tray): deepen to >= 13, or use M5 x 12 (tip 7.5, 1.5 d engaged)"
+  },
+  {
+   "joint": "body.riser_top_tm",
+   "code": "contract-dowel",
+   "level": "fix",
+   "text": "a 16 mm TM dowel goes 8 into the D66 tray, so it needs 8.5 mm in the riser, which cuts 8 (mount.json, written for the 4 mm pan-base holes, asks 12.5)"
+  },
+  {
+   "joint": "leg.stop_posts",
+   "code": "note-vs-joint",
+   "level": "fix",
+   "text": "cad/rig_assembly.py (docs/leg-rig-assembly.md) still says \"the B4 torque into the M8 insert, 5 N m until B4\" and \"Stop posts (M8 into heat-set inserts)\": the posts are pins (D53)"
+  },
+  {
+   "joint": "leg.wheel_botwheel",
+   "code": "note-vs-joint",
+   "level": "fix",
+   "text": "cad/fivebar.py wheel_link() docstring: \"its 4 x M6 x 40\"; the joint and BOM are M6 x 30, and catalog/hardware.json screw_m6x40 still lists this joint"
+  },
+  {
+   "joint": "stand.dock",
+   "code": "pilot-shorter-than-insert",
+   "level": "fix",
+   "text": "blind pilot 4 deep for a 5.7 mm insert: it cannot seat flush"
+  },
+  {
+   "joint": "stand.dock",
+   "code": "pilot-fix",
+   "level": "fix",
+   "text": "a 4 mm blind pilot takes neither M3 insert (5.7 or 4.3): use 94459A130 (4.3) in a 5.3 mm pilot (0.7 mm skin), or a boss under the plate for 94459A140"
+  },
+  {
+   "joint": "turret.cradle_plates",
+   "code": "note-vs-joint",
+   "level": "fix",
+   "text": "cad/turret.py comment \"and their 3 x M3 inserts, put in from the rebate\": PLATE foot_holes_x has four a plate"
+  },
+  {
+   "joint": "turret.pan_ring_yoke",
+   "code": "engagement-low",
+   "level": "fix",
+   "text": "4 mm of thread engaged = 1.00 d (the body checks ask 1.2 d)"
+  },
+  {
+   "joint": "turret.plinth_columns",
+   "code": "screw-bottoms",
+   "level": "fix",
+   "text": "the screw tip reaches 11 mm below the insert's face but the blind pilot is 8 deep: it bottoms 3.0 mm early and jacks the insert out (Spirol) instead of clamping"
+  },
+  {
+   "joint": "turret.plinth_columns",
+   "code": "screw-bottoms-fix",
+   "level": "fix",
+   "text": "deepen the column pilots 8 -> 12.5 (solid to 16), or use M5 x 12 (tip 7, 7 mm engaged)"
+  },
+  {
+   "joint": "leg.hip_frame_lugs",
+   "code": "lug-preload-plastic-limited",
+   "level": "owner",
+   "text": "15.6 mm of PA6-CF under each Ø7 head with no limiter: 25 MPa allows 565 N (0.45 N m), and friction then carries 85 of the 226 N per lug"
+  },
+  {
+   "joint": "leg.hip_frame_mount",
+   "code": "pullout-margin",
+   "level": "owner",
+   "text": "pull-out estimate 1500 N / 851 N = 1.76"
+  },
+  {
+   "joint": "leg.upper_link_hub",
+   "code": "printed-clamp-crush",
+   "level": "owner",
+   "text": "1500 N on 33 mm2 of printed PA6-CF under the Ø8.5 socket head = 45 MPa (> 40 humid, 25 sustained); 24.5 mm of plastic in the clamp, no limiter"
+  },
+  {
+   "joint": "leg.upper_link_hub",
+   "code": "hub-edge-lifts",
+   "level": "owner",
+   "text": "at the assumed 1200 N the hub's edge lifts at 104 N m; R1 puts 114.6 and R3 188.6 N m on it"
+  },
+  {
+   "joint": "leg.wheel_botwheel",
+   "code": "printed-clamp-crush",
+   "level": "owner",
+   "text": "6667 N on 44 mm2 of printed PA6-CF under the Ø10 socket head = 150 MPa (> 40 humid, 25 sustained); 26 mm of plastic in the clamp, no limiter"
+  },
+  {
+   "joint": "leg.wheel_botwheel",
+   "code": "wheel-clamp",
+   "level": "owner",
+   "text": "8 N m ~ 6667 N on 44 mm2 = 150 MPa on PA6-CF; the flange needs >= 1331 N a screw, the plastic holds 1108 N"
+  },
+  {
+   "joint": "body.post_m5",
+   "code": "preload-vs-pullout",
+   "level": "check",
+   "text": "1500 N of preload is 1.00 x the pull-out estimate: the clamped part must bear on the insert's brass face (insert flush to 0.13 mm proud, Spirol), or the knurl carries the preload too"
+  },
+  {
+   "joint": "body.printed_clamps",
+   "code": "ear-nyloc-on-petg",
+   "level": "check",
+   "text": "put an M5 washer under each ear bracket nyloc on the 2 mm PETG wall and tighten snug (no torque is stated)"
+  },
+  {
+   "joint": "leg.hip_frame_mount",
+   "code": "preload-vs-pullout",
+   "level": "check",
+   "text": "1500 N of preload is 1.00 x the pull-out estimate: the clamped part must bear on the insert's brass face (insert flush to 0.13 mm proud, Spirol), or the knurl carries the preload too"
+  },
+  {
+   "joint": "leg.knee_eye_sleeves",
+   "code": "limiter-flush",
+   "level": "check",
+   "text": "press the outer sleeve 0.1-0.2 mm proud of the link's outer face (or relieve the face to Ø21 x 0.3) and check it before torquing: recessed, the 20 N m nut crushes the face at 168 MPa"
+  },
+  {
+   "joint": "leg.knee_spacer",
+   "code": "spacer-length",
+   "level": "check",
+   "text": "cut each spacer to the measured web gap (+0 / +0.05 mm) and check the bearings turn freely after torquing"
+  },
+  {
+   "joint": "rig.pod_m4",
+   "code": "preload-vs-pullout",
+   "level": "check",
+   "text": "2875 N of preload is 1.57 x the pull-out estimate: the clamped part must bear on the insert's brass face (insert flush to 0.13 mm proud, Spirol), or the knurl carries the preload too"
+  },
+  {
+   "joint": "rig.pod_m4",
+   "code": "insert-torque",
+   "level": "check",
+   "text": "2.3 N m on an M4 ~ 2875 N; the PETG M4 insert's pull-out estimate is 1834 N: set it flush so the base bears on the brass and tighten to ~1 N m (1250 N)"
+  },
+  {
+   "joint": "turret.barrel_set_screw",
+   "code": "pullout-margin",
+   "level": "check",
+   "text": "pull-out estimate 756 N / 333 N = 2.27: qualify with the B4 pull-out coupon in this material and orientation"
+  },
+  {
+   "joint": "turret.barrel_set_screw",
+   "code": "set-screw-torque",
+   "level": "check",
+   "text": "limit the set screw to ~0.2 N m (333 N); at 0.5 N m it pushes 833 N on the insert, about its whole estimated pull-out"
+  }
+ ],
+ "summary": {
+  "families": 43,
+  "inserts_on_robot": 151,
+  "verdicts": {
+   "owner": 3,
+   "check": 5,
+   "fix": 11,
+   "note": 17,
+   "ok": 7
+  },
+  "fix": 16,
+  "owner": 6,
+  "check": 9
+ },
+ "bindings": [
+  {
+   "file": "cad/studies.py",
+   "pattern": "'washer_mpa': ([\\d.]+),",
+   "value": 25.0
+  },
+  {
+   "file": "cad/studies.py",
+   "pattern": "'bearing_mpa': ([\\d.]+),",
+   "value": 40.0
+  },
+  {
+   "file": "cad/fivebar.py",
+   "pattern": "'thread': 'M5', 'pilot_depth': ([\\d.]+), 'boss_r'",
+   "value": 11.0
+  },
+  {
+   "file": "cad/fivebar.py",
+   "pattern": "'pilot_depth': [\\d.]+, 'boss_r': ([\\d.]+), 'boss_len'",
+   "value": 7.0
+  },
+  {
+   "file": "cad/fivebar.py",
+   "pattern": "^FLANGE_T, FLANGE_X = ([\\d.]+), ",
+   "value": 13.0
+  },
+  {
+   "file": "cad/fivebar.py",
+   "pattern": "\\(zf \\+ FLANGE_T / 2 \\+ (1\\.5)\\)\\) for s in \\(1, -1\\)",
+   "value": 1.5
+  },
+  {
+   "file": "cad/rig_assembly.py",
+   "pattern": "'\\| Plate to hip frame \\(M5 x 16 into heat-set inserts\\) \\| the B4 torque \\(([\\d.]+) N m until B4\\) \\|'",
+   "value": 1.5
+  },
+  {
+   "file": "cad/fivebar.py",
+   "pattern": "^HUB_HEAD_CB = \\(([\\d.]+), [\\d.]+\\)",
+   "value": 10.0
+  },
+  {
+   "file": "cad/fivebar.py",
+   "pattern": "^HUB_HEAD_CB = \\([\\d.]+, ([\\d.]+)\\)",
+   "value": 5.5
+  },
+  {
+   "file": "cad/fivebar.py",
+   "pattern": "'upper_t': ([\\d.]+), 'upper_w0'",
+   "value": 30.0
+  },
+  {
+   "file": "cad/leg_studies.py",
+   "pattern": "^HUB_PRELOAD_N = ([\\d.]+)",
+   "value": 1200.0
+  },
+  {
+   "file": "cad/rig_assembly.py",
+   "pattern": "'\\| Upper link to adapter \\(M5 x 40 into tapped 6061, heads on the printed link\\) \\| the B4 torque \\(([\\d.]+) N m until B4\\) \\|'",
+   "value": 1.5
+  },
+  {
+   "file": "cad/fivebar.py",
+   "pattern": "^LUG_CB = ([\\d.]+)",
+   "value": 8.5
+  },
+  {
+   "file": "cad/fivebar.py",
+   "literal": "# 24.1 mm frame - 8.5 mm counterbore = 15.6 mm nominal grip;"
+  },
+  {
+   "file": "cad/fivebar.py",
+   "pattern": "^EYE_SLEEVE = \\(([\\d.]+), [\\d.]+, [\\d.]+\\)",
+   "value": 18.0
+  },
+  {
+   "file": "cad/fivebar.py",
+   "pattern": "^EYE_SLEEVE = \\([\\d.]+, ([\\d.]+), [\\d.]+\\)",
+   "value": 12.0
+  },
+  {
+   "file": "cad/fivebar.py",
+   "pattern": "^EYE_SLEEVE = \\([\\d.]+, [\\d.]+, ([\\d.]+)\\)",
+   "value": 20.0
+  },
+  {
+   "file": "cad/rig_assembly.py",
+   "pattern": "'\\| Knee nut \\(M10 nyloc onto the steel sleeves\\) \\| ([\\d.]+) N m \\|'",
+   "value": 20.0
+  },
+  {
+   "file": "cad/fivebar.py",
+   "pattern": "'wheel_t': ([\\d.]+), 'wheel_w0'",
+   "value": 26.0
+  },
+  {
+   "file": "cad/fivebar.py",
+   "pattern": "^WHEEL_RECESS_PLAY = ([\\d.]+)",
+   "value": 0.2
+  },
+  {
+   "file": "cad/rig_assembly.py",
+   "pattern": "'\\| Wheel \\(M6 x 30 into the BotWheel\\) \\| ([\\d.]+) N m, threadlocker \\|'",
+   "value": 8.0
+  },
+  {
+   "file": "cad/fivebar.py",
+   "literal": "its 4 x M6 x 40"
+  },
+  {
+   "file": "cad/rig_assembly.py",
+   "literal": "the B4 torque into the M8 insert, 5 N m until B4"
+  },
+  {
+   "file": "cad/rig_assembly.py",
+   "literal": "Stop posts (M8 into heat-set inserts)"
+  },
+  {
+   "file": "cad/body_params.py",
+   "pattern": "^POST_W = ([\\d.]+)",
+   "value": 22.0
+  },
+  {
+   "file": "cad/body_frame.py",
+   "pattern": "s = s\\.cut\\(cyl_z\\(3\\.2, -1\\.0, ([\\d.]+)\\)\\)\\.cut\\(cyl_z\\(3\\.2, h - 11\\.0, h \\+ 1\\.0\\)\\)",
+   "value": 11.0
+  },
+  {
+   "file": "cad/body_frame.py",
+   "pattern": "it carries (\\d+) N at",
+   "value": 290.0
+  },
+  {
+   "file": "cad/body_frame.py",
+   "pattern": "^POST_M3_PILOT = ([\\d.]+)",
+   "value": 8.0
+  },
+  {
+   "file": "cad/body_frame.py",
+   "pattern": "core = core\\.cut\\(box\\(-([\\d.]+), 4\\.5, \\*sorted\\(\\(sy \\* w / 2",
+   "value": 4.5
+  },
+  {
+   "file": "cad/body_frame.py",
+   "pattern": "^PLATE_POST_W = ([\\d.]+)",
+   "value": 16.0
+  },
+  {
+   "file": "cad/body_frame.py",
+   "pattern": "return s\\.cut\\(cyl_z\\(3\\.2, -1\\.0, ([\\d.]+)\\)\\)\\.cut\\(cyl_z\\(3\\.2, h - 11\\.0",
+   "value": 11.0
+  },
+  {
+   "file": "cad/body_frame.py",
+   "pattern": "^RISER_FOOT_PILOT = ([\\d.]+)",
+   "value": 12.0
+  },
+  {
+   "file": "cad/body_frame.py",
+   "pattern": "s = s\\.cut\\(cyl_z\\(([\\d.]+), -1\\.0, RISER_FOOT_PILOT, x, y\\)\\)",
+   "value": 3.2
+  },
+  {
+   "file": "cad/body_frame.py",
+   "pattern": "^RISER_LEG_R = ([\\d.]+)",
+   "value": 9.0
+  },
+  {
+   "file": "cad/body_frame.py",
+   "pattern": "s = s\\.cut\\(cyl_z\\(3\\.2, H - ([\\d.]+), H \\+ 1\\.0, x, y\\)\\)\\s+# M5 insert from the top",
+   "value": 9.5
+  },
+  {
+   "file": "cad/body_frame.py",
+   "pattern": "s = s\\.cut\\(cyl_z\\(2\\.5 - 0\\.03, H - ([\\d.]+), H \\+ 1\\.0, x, y\\)\\)",
+   "value": 8.0
+  },
+  {
+   "file": "cad/turret.py",
+   "pattern": "^PLINTH = \\{'h': [\\d.]+, 'r': [\\d.]+, 'wall': [\\d.]+, 'tray_t': ([\\d.]+),",
+   "value": 10.0
+  },
+  {
+   "file": "cad/turret.py",
+   "pattern": "'cbore': \\([\\d.]+, ([\\d.]+)\\)",
+   "value": 5.5
+  },
+  {
+   "file": "cad/turret.py",
+   "pattern": "s = s\\.cut\\(through_z\\(x, y, 5\\.0, z0 - 1, z0 \\+ ([\\d.]+)\\)\\)",
+   "value": 8.0
+  },
+  {
+   "file": "cad/body_frame.py",
+   "pattern": "^DCDC_FOOT_T, DCDC_WALL_T = [\\d.]+, ([\\d.]+)",
+   "value": 6.0
+  },
+  {
+   "file": "cad/body_frame.py",
+   "literal": "two M4 x 10 down into the tray\\'s nuts; the converter on four M3 x 8"
+  },
+  {
+   "file": "cad/body_frame.py",
+   "pattern": "s = s\\.cut\\(cyl_z\\(2\\.0, H - ([\\d.]+), H \\+ 0\\.1, u, BUS_W / 2\\)\\)",
+   "value": 6.5
+  },
+  {
+   "file": "cad/body_frame.py",
+   "pattern": "^BUS_L, BUS_W = [\\d.]+, ([\\d.]+)",
+   "value": 20.0
+  },
+  {
+   "file": "cad/body_frame.py",
+   "literal": "note='PETG, 100 % (never a carbon-filled filament"
+  },
+  {
+   "file": "cad/body_battery.py",
+   "pattern": "^RAIL_W, RAIL_H = ([\\d.]+), [\\d.]+",
+   "value": 8.0
+  },
+  {
+   "file": "cad/body_battery.py",
+   "pattern": "^RAIL_W, RAIL_H = [\\d.]+, ([\\d.]+)",
+   "value": 10.0
+  },
+  {
+   "file": "cad/body_battery.py",
+   "pattern": "r = r\\.cut\\(_cyl_y\\(2\\.0, \\*sorted\\(\\(yo, yo - sy \\* ([\\d.]+)\\)\\), x, zc\\)\\)",
+   "value": 6.5
+  },
+  {
+   "file": "cad/body_battery.py",
+   "pattern": "r = r\\.cut\\(_cyl_x\\(2\\.0, \\*sorted\\(\\(xe, xe \\+ d \\* ([\\d.]+)\\)\\), yc, zc\\)\\)",
+   "value": 7.5
+  },
+  {
+   "file": "cad/body_battery.py",
+   "literal": "four M4 x 16 up into the belly\\'s nuts"
+  },
+  {
+   "file": "cad/body_battery.py",
+   "literal": "four M4 x 8 up into the belly\\'s nuts"
+  },
+  {
+   "file": "cad/body_shell.py",
+   "pattern": "plate = plate\\.cut\\(_hole_x\\(y, z, ([\\d.]+), \\*sorted\\(\\(sx \\* XI, sx \\* \\(XI - 7\\.5\\)\\)\\)\\)\\)",
+   "value": 4.0
+  },
+  {
+   "file": "cad/body_shell.py",
+   "pattern": "plate = plate\\.cut\\(_hole_x\\(y, z, 4\\.0, \\*sorted\\(\\(sx \\* XI, sx \\* \\(XI - ([\\d.]+)\\)\\)\\)\\)\\)",
+   "value": 7.5
+  },
+  {
+   "file": "cad/body_shell.py",
+   "pattern": "plate = plate\\.union\\(box\\(fa, fb, y - ([\\d.]+), y \\+ 4, z0 - 2, z0 \\+ 6\\)\\)",
+   "value": 4.0
+  },
+  {
+   "file": "cad/body_shell.py",
+   "pattern": "^EYES = \\{.*'board': \\([\\d.]+, [\\d.]+, ([\\d.]+)\\)\\}",
+   "value": 7.0
+  },
+  {
+   "file": "cad/body_shell.py",
+   "pattern": "\\.center\\(y, z\\)\\.circle\\(2\\.0\\)\\.extrude\\(([\\d.]+)\\)\\)",
+   "value": 6.0
+  },
+  {
+   "file": "cad/body_shell.py",
+   "pattern": "\\.center\\(y, z\\)\\.circle\\(([\\d.]+)\\)\\.extrude\\(EYES\\['board'\\]\\[2\\] \\+ 0\\.01\\)\\)",
+   "value": 4.0
+  },
+  {
+   "file": "cad/body_shell.py",
+   "literal": "four M3 x 16 into the wall"
+  },
+  {
+   "file": "cad/body_shell.py",
+   "literal": "three M3 x 5 up into the turret plate"
+  },
+  {
+   "file": "cad/body_shell.py",
+   "literal": "DOOR_SIDE = 'l'"
+  },
+  {
+   "file": "cad/body_shell.py",
+   "literal": "The right side's service door"
+  },
+  {
+   "file": "cad/turret.py",
+   "pattern": "^INSERT_DEPTH = ([\\d.]+)",
+   "value": 8.0
+  },
+  {
+   "file": "cad/turret.py",
+   "pattern": "def __init__\\(self, ball_d: float = ([\\d.]+),",
+   "value": 22.7
+  },
+  {
+   "file": "cad/turret.py",
+   "literal": "self.bore = ball_d + 1.5"
+  },
+  {
+   "file": "cad/turret.py",
+   "pattern": "self\\.foot_t = ([\\d.]+)",
+   "value": 5.0
+  },
+  {
+   "file": "cad/turret.py",
+   "pattern": "'col_r': ([\\d.]+), 'cbore'",
+   "value": 7.5
+  },
+  {
+   "file": "cad/turret.py",
+   "literal": "y - 6.0, y + 6.0, zt, zt + 5.0)"
+  },
+  {
+   "file": "cad/turret.py",
+   "pattern": "s = s\\.cut\\(insert_hole\\(x, y, hz1, 'M3', ([\\d.]+)\\)\\)",
+   "value": 6.0
+  },
+  {
+   "file": "cad/turret.py",
+   "pattern": "^CLAMP_T = ([\\d.]+)",
+   "value": 3.175
+  },
+  {
+   "file": "cad/turret.py",
+   "pattern": "C\\['tab_t'\\] - 0\\.1, C\\['tab_t'\\] \\+ ([\\d.]+), x, y\\)\\)\\s+# M3 insert from below",
+   "value": 7.0
+  },
+  {
+   "file": "cad/turret_base_board.py",
+   "pattern": "^INSERT_PILOT = ([\\d.]+)",
+   "value": 4.0
+  },
+  {
+   "file": "cad/turret_base_board.py",
+   "pattern": "s = s\\.cut\\(cx\\(INSERT_PILOT/2,[\\d.]+,([\\d.]+),y,z\\)\\)",
+   "value": 53.1
+  },
+  {
+   "file": "cad/turret_base_board.py",
+   "pattern": "s = s\\.cut\\(cx\\(INSERT_PILOT/2,([\\d.]+),[\\d.]+,y,z\\)\\)",
+   "value": 46.5
+  },
+  {
+   "file": "cad/turret_base_board.py",
+   "pattern": "^M3_CLEAR = ([\\d.]+)",
+   "value": 3.4
+  },
+  {
+   "file": "cad/turret.py",
+   "pattern": "s = s\\.cut\\(cyl_y\\(FAST\\['M4'\\]\\['insert_pilot'\\] / 2, -G\\.dt_y - 0\\.1, -G\\.dt_y \\+ ([\\d.]+), x, z\\)\\)",
+   "value": 8.0
+  },
+  {
+   "file": "cad/turret.py",
+   "pattern": "s = s\\.cut\\(insert_hole\\(x, y, G\\.bumper_z\\[0\\], 'M3', ([\\d.]+)\\)\\)",
+   "value": 5.5
+  },
+  {
+   "file": "cad/turret.py",
+   "literal": "the heads sit 6 mm above the bridge"
+  },
+  {
+   "file": "cad/turret.py",
+   "literal": "so an M4 x 10 keeps 4 mm in the turntable's insert"
+  },
+  {
+   "file": "cad/turret.py",
+   "pattern": "rg\\['seat'\\] - ([\\d.]+), rg\\['seat'\\] \\+ 0\\.1, x, y\\)\\)\\s+# flange screws",
+   "value": 6.0
+  },
+  {
+   "file": "cad/turret.py",
+   "pattern": "-a1 - 0\\.1, -a1 \\+ ([\\d.]+), x, z\\)\\)",
+   "value": 6.0
+  },
+  {
+   "file": "cad/turret.py",
+   "pattern": "y1 - 0\\.1, y1 \\+ ([\\d.]+), x, z\\)\\)\\s+# 5\\.7 mm insert",
+   "value": 6.0
+  },
+  {
+   "file": "cad/turret.py",
+   "pattern": "s = s\\.union\\(cyl_y\\(([\\d.]+), y1, -a1 - t \\+ 0\\.01, x, z\\)\\)",
+   "value": 5.0
+  },
+  {
+   "file": "cad/turret.py",
+   "pattern": "^INSERT_M3_SIDE = ([\\d.]+)",
+   "value": 6.5
+  },
+  {
+   "file": "cad/turret.py",
+   "literal": "'foot_holes_x': (-3.0, 33.0, 58.0, 77.0)"
+  },
+  {
+   "file": "cad/turret.py",
+   "literal": "and their 3 x M3 inserts, put in from the rebate"
+  },
+  {
+   "file": "cad/turret.py",
+   "pattern": "G\\.plate_z1 \\+ cb\\['boss_h'\\] \\+ cb\\['standoff'\\], 'M3', ([\\d.]+)\\)\\)",
+   "value": 6.0
+  },
+  {
+   "file": "cad/turret.py",
+   "pattern": "s = s\\.cut\\(insert_hole\\(x, y, SOCKET_PAD_Z, 'M3', ([\\d.]+)\\)\\)",
+   "value": 6.5
+  },
+  {
+   "file": "cad/turret.py",
+   "pattern": "^SOCKET_PAD_Z = ([\\d.]+)",
+   "value": 22.6
+  },
+  {
+   "file": "cad/turret.py",
+   "literal": "self.base_z0 = -(self.br + 3.0)"
+  },
+  {
+   "file": "cad/turret.py",
+   "pattern": "bz0 - 1, (-[\\d.]+), \\*ct_latch\\)\\)\\s+# insert from below, 1 mm cap",
+   "value": -8.5
+  },
+  {
+   "file": "cad/turret.py",
+   "pattern": "the M4 x 12 keeps (\\d+) mm in the cartridge",
+   "value": 5.0
+  },
+  {
+   "file": "cad/turret.py",
+   "pattern": "G\\.housing_top, 'M3', ([\\d.]+)\\)\\)",
+   "value": 6.0
+  },
+  {
+   "file": "cad/turret_stand.py",
+   "pattern": "^WALL, TOP, BOT = [\\d.]+, ([\\d.]+), [\\d.]+",
+   "value": 6.0
+  },
+  {
+   "file": "cad/turret_stand.py",
+   "pattern": "s = s\\.cut\\(_cyl_z\\(FAST\\['M3'\\]\\['insert_pilot'\\] / 2, -TOP - 0\\.01, -TOP \\+ ([\\d.]+), dx0",
+   "value": 4.0
+  },
+  {
+   "file": "cad/turret_stand.py",
+   "pattern": "s = s\\.cut\\(_cyl_z\\(FAST\\['M5'\\]\\['insert_pilot'\\] / 2, -TOP - ([\\d.]+), 0\\.1, x, y\\)\\)",
+   "value": 8.0
+  },
+  {
+   "file": "cad/turret_stand.py",
+   "pattern": "s = s\\.union\\(_cyl_z\\(([\\d.]+), -TOP - 8\\.0, -TOP \\+ 0\\.01, x, y\\)\\)",
+   "value": 7.0
+  },
+  {
+   "file": "cad/turret_stand.py",
+   "pattern": "-H - 1, -H \\+ ([\\d.]+), x, y\\)\\)",
+   "value": 8.0
+  },
+  {
+   "file": "cad/turret_stand.py",
+   "pattern": "^BOSS_R = ([\\d.]+)",
+   "value": 6.0
+  },
+  {
+   "file": "cad/turret_box.py",
+   "pattern": "^TM_PILOT_DEPTH = DECK_T \\+ ([\\d.]+)",
+   "value": 0.1
+  },
+  {
+   "file": "cad/turret_box.py",
+   "pattern": "^TM_SCREW_LEN = ([\\d.]+)",
+   "value": 12.0
+  },
+  {
+   "file": "cad/turret_box.py",
+   "pattern": "DECK_Z0 - 0\\.1, DECK_Z0 \\+ ([\\d.]+), x, y\\)\\)",
+   "value": 5.0
+  },
+  {
+   "file": "cad/rig_assembly.py",
+   "pattern": "the contactor on its two M4 inserts \\(([\\d.]+) N m\\)",
+   "value": 2.3
+  },
+  {
+   "file": "cad/rig_parts.py",
+   "pattern": "FAST\\['M4'\\]\\['insert_pilot'\\] / 2, 'z', t - ([\\d.]+), t \\+ 6\\.1, c\\['x'\\]",
+   "value": 3.0
+  },
+  {
+   "file": "cad/rig_parts.py",
+   "pattern": "FAST\\['M4'\\]\\['insert_pilot'\\] / 2, 'z', t - 3\\.0, t \\+ ([\\d.]+), c\\['x'\\]",
+   "value": 6.1
+  },
+  {
+   "file": "cad/rig_parts.py",
+   "pattern": "s = s\\.union\\(cyl\\(([\\d.]+), 'z', t - 0\\.01, t \\+ 6\\.0, c\\['x'\\]",
+   "value": 5.0
+  },
+  {
+   "file": "cad/rig_parts.py",
+   "pattern": "'y', Y_PLATE_FRONT - 1, Y_PLATE_FRONT \\+ ([\\d.]+), x, z\\)\\)",
+   "value": 9.4
+  },
+  {
+   "file": "cad/rig_parts.py",
+   "pattern": "s = s\\.union\\(cyl\\(([\\d.]+), 'y', Y_PLATE_FRONT, Y_PLATE_FRONT \\+ 10\\.0, x, z\\)\\)",
+   "value": 5.0
+  },
+  {
+   "file": "cad/rig_parts.py",
+   "pattern": "^PLATE_T = ([\\d.]+)",
+   "value": 6.35
+  }
+ ]
+}
