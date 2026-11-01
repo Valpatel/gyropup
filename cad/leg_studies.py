@@ -130,7 +130,7 @@ VIEWS = {'upper_link': (20, -115), 'front_link': (20, -115), 'wheel_link': (20, 
 
 def whole_leg_shape(h_mm, lean=0.0):
     """The four links at a stance, fused into one solid by plugs standing in for the bearing stacks (the knees' two
-    6201s and the apex's two 61812s carry moment, so bonding them is close; the joints' own stresses are not this
+    bearings and the apex's two 61812s carry moment, so bonding them is close; the joints' own stresses are not this
     model's job). In the module frame; also returns the joint points."""
     phi = fb.stance(h_mm, lean)
     fr, j = fb.link_frames(*phi)
@@ -377,7 +377,7 @@ def frame_split_at_post(px, pz, u, z0):
 def joint_checks(C, SH):
     """The joints the whole-leg study bonds, checked on their own in the rare case R1, each chain at its design share of
     the out-of-plane load (chain_moments): each knee's steel pin in bending where it leaves the upper link's eye, its
-    6201s against their static rating, the eye's bearing pressure on its steel sleeve (linear along the sleeve); the
+    bearings (fivebar.KC) against their static rating, the eye's bearing pressure on its steel sleeve (linear along the sleeve); the
     apex 61812s; and each hub's bolted joint (8 x M5 into the adapter's tapped holes, 2 x Ø5 dowels on the Ø60 face):
     whether the screws' preload keeps it closed under its share of the hip's out-of-plane moment, and what the dowels
     carry once the torque beats friction (the landing's spike reaches the hubs through the rotors' inertia). And the
@@ -389,7 +389,7 @@ def joint_checks(C, SH):
         s0 = TARGETS['bearing_s0_rare']
         for joint, v in r.items():
             if joint.startswith('knee'):
-                checks += [(case, joint, '6201 s0', v['6201']['sf'], s0), (case, joint, 'pin', v['pin']['sf'], rare),
+                checks += [(case, joint, 'bearing s0', v['bearing']['sf'], s0), (case, joint, 'pin', v['pin']['sf'], rare),
                            (case, joint, 'eye pressure', v['eye_pressure']['sf'], rare)]
             elif joint == 'apex_61812':
                 checks.append((case, joint, 's0', v['sf'], s0))
@@ -408,6 +408,17 @@ def joint_checks(C, SH):
     return out
 
 
+def knee_bearing_load(F3, M3, span):
+    """The more loaded of a knee's two bearings (N): each takes half the pin force F3 (N, in the leg's plane) and the
+    out-of-plane moment M3 (N mm, about an in-plane axis) as a couple of (M3 x y) / span (mm) on the pair, so one gets
+    F3 / 2 + couple and the other F3 / 2 - couple. Until 2026-10-31 this was hypot(|F3| / 2, |M3| / span), which is
+    right only when the two are square to each other; in the power cut (R3) the rear knee's are 78 deg apart and its
+    worse bearing carries 6 % more (issue #29)."""
+    c = np.cross(np.asarray(M3, float), [0.0, 1.0, 0.0]) / span
+    h = np.asarray(F3, float) / 2
+    return float(max(np.linalg.norm(h + c), np.linalg.norm(h - c)))
+
+
 def _joint_checks_case(C, SH, case):
     """joint_checks() for one rare case."""
     c = C[case]
@@ -415,7 +426,8 @@ def _joint_checks_case(C, SH, case):
     sr, sf = SH[case]['rear'], SH[case]['front']
     kb0, kb1 = fb.Y['knee_boss']
     yk = (kb0 + kb1) / 2
-    span = (kb1 - kb0) - fb.KC['bearing_w']                   # between the two 6201s' centres, mm
+    span = (kb1 - kb0) - fb.KC['bearing_w']                   # between the two knee bearings' centres, mm
+    C0 = fb.KC['C0_n']
     t, L_sl, d_eye = fb.P['upper_t'], fb.EYE_SLEEVES * fb.EYE_SLEEVE[2], fb.EYE_SLEEVE[0]
     pin_z = math.pi * 12.0 ** 3 / 32                          # Ø12 shoulder, mm^3
     out = {'case': case, 'shares': {'rear': sr, 'front': sf}}
@@ -425,13 +437,15 @@ def _joint_checks_case(C, SH, case):
         M_face = np.cross([0.0, yk - t, 0.0], F3) + M3                   # where the pin leaves the eye (its outer face)
         M_sleeve = np.cross([0.0, yk - (t - L_sl / 2), 0.0], F3) + M3     # at the sleeve's middle
         Fn = float(np.linalg.norm(F3))
-        brg = math.hypot(Fn / 2, float(np.linalg.norm(M3)) / span)
+        brg = knee_bearing_load(F3, M3, span)
         sig = float(np.linalg.norm(M_face)) / pin_z
         eye_p = (6 * float(np.linalg.norm(M_sleeve)) / L_sl ** 2 + Fn / L_sl) / d_eye
         out[f'knee_{name}'] = {
             'out_of_plane_share': round(s_rear if name == 'rear' else 1.0 - s_rear, 2), 'pin_force_n': round(Fn),
             'moment_at_boss_nm': round(float(np.linalg.norm(M3)) / 1000, 1), 'moment_at_sleeve_nm': round(float(np.linalg.norm(M_sleeve)) / 1000, 1),
-            '6201': {'load_n': round(brg), 'C0_n': 3100, 'sf': round(3100 / brg, 2), 'target': TARGETS['bearing_s0_rare'], 'note': 's0 = C0 / P0'},
+            'bearing': {'type': fb.KC['bearing'], 'load_n': round(brg), 'C0_n': round(C0), 'sf': round(C0 / brg, 2),
+                        'target': TARGETS['bearing_s0_rare'],
+                        'note': 's0 = C0 / P0, P0 the worse bearing: half the pin force plus the moment\'s couple, as vectors'},
             'pin': {'stress_mpa': round(sig), 'yield_mpa': 1080, 'sf': round(1080 / sig, 2), 'note': 'ISO 7379 class 12.9, at the eye\'s face'},
             'eye_pressure': {'mpa': round(eye_p, 1), 'allowable_mpa': 40.0, 'sf': round(40.0 / eye_p, 2),
                              'note': f'PA6-CF, humid, sustained; linear along the Ø{d_eye:g} x {L_sl:g} steel sleeve'}}
@@ -552,7 +566,7 @@ def run(mesh, anim=True, only=None, only_cases=None, viewer=False):
         L.meta['leg'] = {'fea_material': 'pa6_cf_xy'}
         VIEWS['leg'] = (20, -60)
         JOINTS[key] = j
-        study('leg', key, setup, c['rare'], f"{c['from']}; the whole loop, joints bonded (the knees' 6201 pairs and the apex's 61812 pair carry moment)")
+        study('leg', key, setup, c['rare'], f"{c['from']}; the whole loop, joints bonded (the knees' bearing pairs and the apex's 61812 pair carry moment)")
         st = study('leg', f'{key}-out-of-plane', setup_oop, c['rare'], 'the out-of-plane part alone', record=False)
         SH[key] = shares_from(hub_reactions(st, {'front': ax_, 'rear': bx_}))
         del st

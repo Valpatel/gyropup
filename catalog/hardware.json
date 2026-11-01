@@ -4946,6 +4946,62 @@
   "notes": "6201-2RS, 12 x 32 x 10, sealed (Buna-N), steel, C3, ABEC 1: the same McMaster family as bearing_6001 (5972K82, the 6001-2RS of the earlier knee). Load ratings (McMaster): dynamic C 1,550 lb = 6.89 kN, static C0 690 lb = 3.07 kN (the C0 3.1 kN that cad/fivebar.py KC assumes); the 6001 has 1,100 / 530 lb. 14,600 rpm. cad/fivebar.py seats it in Ø32.04 x 10 bores at both ends of the 48 mm knee boss."
  },
  {
+  "id": "skf-6301-2rsh",
+  "key": "bearing_6301",
+  "category": "bearing",
+  "vendor": "SKF",
+  "model": "6301-2RSH",
+  "name": "Deep groove ball bearing 6301-2RSH (12 x 37 x 12, sealed both sides); McMaster-Carr 5972K86 is the same trade number (6301-2RS)",
+  "price_usd": 12.53,
+  "price_note": "McMaster-Carr 5972K86 (trade no. 6301-2RS, ABEC 1): $12.53 each on its public search table, 2026-10-31; the SKF bearing itself is not priced here",
+  "price_checked": "2026-10-31",
+  "pack_qty": 1,
+  "pack_price_usd": 12.53,
+  "buy": [
+   {
+    "seller": "SKF distributor",
+    "url": "https://www.skf.com/group/products/rolling-bearings/ball-bearings/deep-groove-ball-bearings/productid-6301-2RSH",
+    "in_stock": null,
+    "ships_from": null
+   },
+   {
+    "seller": "McMaster-Carr",
+    "url": "https://www.mcmaster.com/5972K86/",
+    "in_stock": null,
+    "ships_from": "US",
+    "note": "6301-2RS; its product page (static load rating, CAD) asked for a login on 2026-10-31 (twice): confirm C0 >= 4.15 kN on the page before buying it in place of the SKF part"
+   }
+  ],
+  "specs": {
+   "id_mm": 12.0,
+   "od_mm": 37.0,
+   "width_mm": 12.0,
+   "dynamic_load_c_n": 10100.0,
+   "static_load_c0_n": 4150.0,
+   "limiting_speed_rpm": 14000,
+   "mass_g": 60.2,
+   "mass_basis": "SKF product page",
+   "material": "Steel",
+   "abutments_mm": {
+    "da_min": 17.6,
+    "da_max": 19.4,
+    "Da_max": 31.4,
+    "ra_max": 1.0,
+    "basis": "SKF's 6301-2Z data (same bore, OD and width; the 2RSH page did not render its mounting tab)"
+   },
+   "source": "SKF product page 6301-2RSH (rendered 2026-10-31): d 12, D 37, B 12 mm; C 10.1 kN; C0 4.15 kN; limiting speed 14 000 r/min; SKF Explorer; cage sheet metal; CN clearance"
+  },
+  "cad": {
+   "file": null,
+   "kind": "bearing",
+   "available": null,
+   "note": "no vendor model fetched: drawn as a 12 x 37 x 12 ring (cad/fivebar.py bearing())"
+  },
+  "used_for": "the knees: two in each lower link's boss (issue #29)",
+  "qty_per_robot": 8,
+  "notes": "6301-2RS, 12 x 37 x 12, sealed: replaces the 6201-2RS (bearing_6201) in the knees (issue #29). In the undamped power cut (R3) the rear knee's worse bearing carries 3.65 kN with the 36 mm span: s0 1.14 on SKF's C0 4.15 kN, where the 6201 had 0.88 (3.49 kN on 38 mm, C0 3.07 kN). cad/fivebar.py seats it in Ø37.02 x 12 bores at both ends of the 48 mm knee boss, the boss Ø51."
+ },
+ {
   "id": "mcmaster-98541a174",
   "key": "circlip_60",
   "category": "fastener",

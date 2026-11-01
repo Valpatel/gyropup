@@ -6,6 +6,7 @@ import math
 import sys
 from pathlib import Path
 
+import numpy as np
 import pytest
 
 R = Path(__file__).resolve().parents[1]
@@ -47,3 +48,14 @@ def test_hip_frame_loads_balance_the_wheel(key):
     assert my_applied == pytest.approx(my_wheel, abs=1e-6)
     if key == 'E1':                                                  # a straight stance: the two reactions cancel
         assert tf == pytest.approx(-tr, rel=1e-9) and math.isclose(abs(tf), 46.48, abs_tol=0.05)
+
+
+def test_knee_bearing_load_is_the_worse_bearing():
+    """Square loads give hypot; in line they add on one bearing and cancel on the other."""
+    import math
+    F, M, span = np.array([1000.0, 0.0, 0.0]), np.array([0.0, 0.0, 38000.0]), 38.0      # couple along -x... and +x
+    c = np.cross(M, [0.0, 1.0, 0.0]) / span
+    assert abs(abs(c[0]) - 1000.0) < 1e-9 and abs(c[2]) < 1e-9                        # in line with F
+    assert abs(ls.knee_bearing_load(F, M, span) - 1500.0) < 1e-6
+    M_sq = np.array([38000.0, 0.0, 0.0])                                               # couple along z: square to F
+    assert abs(ls.knee_bearing_load(F, M_sq, span) - math.hypot(500.0, 1000.0)) < 1e-6

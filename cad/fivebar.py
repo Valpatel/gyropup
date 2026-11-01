@@ -22,7 +22,7 @@ Layers along y, from the output face outwards (mm):
     64.8        the BotWheel's boss face, in a recess in the wheel link's outer face; tyre 72.3 .. 116.9
     0 .. 44     the front link's apex eye (two 61812 28 mm apart on the wheel link's hub)
 The wheel link is the outer one so the wheel sits right against it (37 mm from its middle to the wheel's), which keeps
-the wheel's out-of-plane moment small where it is largest. Both knees are the same cartridge (two 6201-2RS in the lower
+the wheel's out-of-plane moment small where it is largest. Both knees are the same cartridge (two 6301-2RS in the lower
 link, a 12 mm ISO 7379 shoulder screw clamped in the upper link by an M10 nut in a pocket). The apex is two 61812 in the
 front link on the wheel link's hollow hub, held by a DIN 471 circlip: it carries moment, so the wheel's out-of-plane
 load is shared by both sides of the loop, and the wheel's cable and a hex key for its four M6 screws come through the
@@ -62,8 +62,14 @@ if os.environ.get('GYROPUP_LEG_PARAMS'):
     PARAMS.update(json.loads(Path(os.environ['GYROPUP_LEG_PARAMS']).read_text()))
 P = PARAMS
 
-KC = {**STD['KC'], 'bearing': '6201-2RS', 'bearing_od': 32.0, 'bearing_w': 10.0, 'hub_od': 46.0,
-      'shoulder_d': 27.0}                                 # the knees: 6201s (C0 3.1 kN), the outer races' shoulder Ø27
+KC = {**STD['KC'], 'bearing': '6301-2RS', 'bearing_od': 37.0, 'bearing_w': 12.0, 'hub_od': 51.0,
+      'shoulder_d': 31.0, 'C0_n': 4150.0, 'catalog': 'bearing_6301'}
+# The knees: two 6301-2RS in each lower link's boss (issue #29). The 6201-2RS (12 x 32 x 10, C0 3.07 kN at McMaster)
+# had s0 0.88 in the undamped power cut (R3) with the load on the worse bearing; the 6301 (12 x 37 x 12, SKF 6301-2RSH
+# datasheet: C 10.1 kN, C0 4.15 kN, 60 g) fits the same Ø12 pin and the same 48 mm boss, 36 mm between centres. The
+# boss keeps a 7 mm wall (Ø51); the outer races' shoulder is Ø31 (SKF's Da max 31.4). The inner races' spacer is the
+# 5/8 in tube as before: its Ø15.9 face is under SKF's da min 17.6 for the 6301, which matters for axial load on the
+# inner ring; a Ø18-19.4 spacer is the follow-up (issue #29).
 AC = STD['AC-L']
 FAST = STD['fasteners']
 ISO7379_HEAD = {12: (18.0, 9.0)}                         # shoulder d: head diameter, head height (McMaster 92981A408 / A411)
@@ -288,7 +294,8 @@ def cavity(L, r0, r1, y0, y1, keep0, keep1, skin=None):
 
 
 def knee_cartridge_cut(y0, y1):
-    """The knee seats in a lower link's knee boss (y0..y1), at the local origin: a 6201 at each end, a Ø27 web between."""
+    """The knee seats in a lower link's knee boss (y0..y1), at the local origin: a KC bearing at each end, the
+    KC shoulder's web between."""
     bo, bw = KC['bearing_od'], KC['bearing_w']
     c = ycyl(bo / 2 + 0.02, y0 - 0.01, y0 + bw).union(ycyl(bo / 2 + 0.02, y1 - bw, y1 + 0.01))
     return c.union(ycyl(KC['shoulder_d'] / 2, y0 - 1, y1 + 1))
@@ -721,7 +728,7 @@ FRONT_EYE_FILLET = 6.0       # mm: the front link's apex eye, where it stands in
 
 
 def front_link():
-    """Front lower link (printed PA6-CF, flat on its inner face): the knee boss with two 6201s reaching out over the
+    """Front lower link (printed PA6-CF, flat on its inner face): the knee boss with two KC bearings reaching out over the
     wheel link's layer, a 16 mm body, and the apex eye reaching in over the upper links' layer with two 61812s 28 mm
     apart on the wheel link's hub (each pressed against a central web), so the apex carries the wheel's out-of-plane
     moment into both sides of the loop. Built from the knee (origin) towards +x."""
@@ -753,7 +760,7 @@ WHEEL_BOSS_FILLET = 10.0     # mm: where the wheel link's knee boss leaves its i
 
 
 def wheel_link():
-    """Wheel link (printed PA6-CF, flat on its outer face): the knee boss with two 6201s reaching in over the front
+    """Wheel link (printed PA6-CF, flat on its outer face): the knee boss with two KC bearings reaching in over the front
     link's layer, a 24 mm body, and the apex foot: the BotWheel's Ø50 boss in a recess in the outer face, its 4 x M6 x 40
     through the foot from the inner side (heads inside the hub), and the hollow hub pointing in through the front link's
     apex eye: Ø60 for the 61812's inner race against a Ø64 shoulder, a DIN 471-60 circlip groove at its end, Ø48 inside
@@ -956,9 +963,9 @@ def leg_parts() -> Leg:
         fea='al6061' if adi['made'] == 'cnc' else 'pa6_cf_z', made=adi['made'], machining=(ad, adi['spec']) if adi['made'] == 'cnc' else None)
     add('upper_link', upper_link(), 'pa6-cf', 2, f"printed PA6-CF flat, {P['upper_t']:.0f} mm, 100 % solid; 8 x M5 into the adapter; "
         'the knee shoulder screw clamped by an M10 nyloc in a pocket; a radial stop face each side of the hub')
-    add('front_link', front_link(), 'pa6-cf', 1, f"printed PA6-CF flat on its inner face, {P['front_t']:.0f} mm body; two 6201-2RS at the knee, "
+    add('front_link', front_link(), 'pa6-cf', 1, f"printed PA6-CF flat on its inner face, {P['front_t']:.0f} mm body; two {KC['bearing']} at the knee, "
         'two 61812 at the apex (pressed against a central web)')
-    add('wheel_link', wheel_link(), 'pa6-cf', 1, f"printed PA6-CF flat on its outer face, {P['wheel_t']:.0f} mm body; two 6201-2RS at the knee; "
+    add('wheel_link', wheel_link(), 'pa6-cf', 1, f"printed PA6-CF flat on its outer face, {P['wheel_t']:.0f} mm body; two {KC['bearing']} at the knee; "
         'the BotWheel in its outer face (4 x M6 from inside the hub), the hub for the apex 61812 (DIN 471-60 circlip)')
     add('apex_spacer', apex_spacer(), 'pa6-cf', 1, 'printed PA6-CF ring between the apex 61812s\' inner races', fea=None)
     add('stop_sleeve', stop_sleeve(), 'tpu95', 4, 'printed TPU 95A cap-down, 100 % solid; a stretch fit on the stop pins', fea=None, solid=True)
@@ -1109,8 +1116,9 @@ def bought_parts(fr, j):
     kb0, kb1 = Y['knee_boss']
     for key, (p, _) in (('front', fr['front_link']), ('rear', fr['wheel_link'])):
         x, z = p
-        out[f'knee_6201_{key}_in'] = (bearing(12, 32, 10, kb0, x, z), 'bought')
-        out[f'knee_6201_{key}_out'] = (bearing(12, 32, 10, kb1 - 10, x, z), 'bought')
+        bo, bw = KC['bearing_od'], KC['bearing_w']
+        out[f'knee_bearing_{key}_in'] = (bearing(12, bo, bw, kb0, x, z), 'bought')
+        out[f'knee_bearing_{key}_out'] = (bearing(12, bo, bw, kb1 - bw, x, z), 'bought')
         out[f'knee_pin_{key}'] = (shoulder_screw(12, knee_pin_length()[0], 16, kb1 + 2.0, x, z), 'bought')
         out[f'knee_washer_{key}'] = (bearing(13, 20, 2, kb1, x, z).union(bearing(13, 20, 2, P['upper_t'], x, z)), 'bought')   # DIN 433 M12
         out[f'knee_spacer_{key}'] = (bearing(12.6, 15.9, kb1 - kb0 - 2 * KC['bearing_w'], kb0 + KC['bearing_w'], x, z), 'bought')   # 6061 tube
@@ -1229,7 +1237,7 @@ def _mated(a, b):
             return True
     for key in ('front', 'rear'):                      # each knee's own cartridge parts touch their links by design
         owners = {'front': ('upper_link_front', 'front_link'), 'rear': ('upper_link_rear', 'wheel_link')}[key]
-        kparts = (f'knee_6201_{key}', f'knee_pin_{key}', f'knee_washer_{key}', f'knee_nut_{key}', f'knee_spacer_{key}')
+        kparts = (f'knee_bearing_{key}', f'knee_pin_{key}', f'knee_washer_{key}', f'knee_nut_{key}', f'knee_spacer_{key}')
         if (a.startswith(kparts) and b.startswith(owners + kparts)) or (b.startswith(kparts) and a.startswith(owners + kparts)):
             return True
     return False

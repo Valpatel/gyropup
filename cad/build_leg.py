@@ -48,7 +48,7 @@ BOUGHT = [
     ('robstride-rs-04', 2, 'the two leg motors, in the hip frame'),
     ('odrive-botwheel', 1, 'the wheel, on the wheel link\'s hub'),
     ('bearing_61812', 4, 'support bearings round the two output adapters; two at the apex on the wheel link\'s hub'),
-    ('bearing_6201', 4, 'two in each knee'),
+    ('bearing_6301', 4, 'two in each knee'),
     ('circlip_60', 1, 'holds the apex 61812 on the wheel link\'s hub'),
     ('knee_pin', 2, 'knee shoulder screws, 12 mm x 90, M10 (cad/fivebar.py knee_pin_length)'),
     ('nut_m10_nyloc', 2, 'knee pins, in the upper links\' pockets'),
@@ -113,7 +113,7 @@ def assembled(h_mm: float, lean: float = 0.0, vendor: bool = False):
 
 COLOURS = {'screws': (.15, .15, .17), 'hip_frame': (.40, .43, .48), 'output_adapter': (.62, .65, .70), 'upper_link': (.96, .72, .16), 'front_link': (.96, .72, .16),
            'wheel_link': (.93, .60, .12), 'stop_sleeve': (.85, .22, .2), 'motor': (.17, .18, .2), 'bearing': (.78, .8, .83),
-           'knee_6201': (.78, .8, .83), 'apex_circlip': (.3, .3, .32), 'apex': (.78, .8, .83), 'knee_pin': (.66, .68, .72), 'knee_nut': (.66, .68, .72),
+           'knee_bearing': (.78, .8, .83), 'apex_circlip': (.3, .3, .32), 'apex': (.78, .8, .83), 'knee_pin': (.66, .68, .72), 'knee_nut': (.66, .68, .72),
            'knee_washer': (.7, .72, .76), 'stop_posts': (.6, .62, .66), 'wheel_tyre': (.1, .1, .11), 'wheel_hub': (.3, .32, .35)}
 
 
@@ -126,7 +126,7 @@ def colour(n):
 
 EXPLODE = {'motor': (0, -70, 0), 'output_adapter': (0, -25, 0), 'screws_outputs': (0, -25, 0), 'bearing_61812': (0, -12, 0), 'hip_frame': (0, -45, 0),
            'stop': (0, 10, 0), 'upper_link': (0, 30, 0), 'knee_nut': (0, 20, 0), 'front_link': (0, 75, 0), 'apex': (0, 75, 0),
-           'knee_6201': (0, 95, 0), 'knee_washer': (0, 95, 0), 'wheel_link': (0, 120, 0), 'knee_pin': (0, 175, 0), 'wheel': (0, 170, 0)}
+           'knee_bearing': (0, 95, 0), 'knee_washer': (0, 95, 0), 'wheel_link': (0, 120, 0), 'knee_pin': (0, 175, 0), 'wheel': (0, 170, 0)}
 
 
 def render(out: Path):

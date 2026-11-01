@@ -23,7 +23,7 @@ void mountAppNav({ root: '../', current: 'progress' });
 // the joints the whole-leg study bonds, checked on their own (cad/leg_studies.py joint_checks): each check's worst rare
 // case against its own target (rolling bearings by their static safety s0 = C0/P0, printed parts and pins by SF)
 const JOINT_NAMES = { knee_rear: 'rear knee', knee_front: 'front knee', apex_61812: 'apex 61812s', hub_rear: 'rear hub joint', hub_front: 'front hub joint' };
-const jointValue = (j, c) => ({ '6201 s0': () => `${j['6201'].load_n} N`, pin: () => `${j.pin.stress_mpa} MPa`, 'eye pressure': () => `${j.eye_pressure.mpa} MPa`,
+const jointValue = (j, c) => ({ 'bearing s0': () => `${j.bearing.load_n} N (${j.bearing.type})`, '6201 s0': () => `${j['6201'].load_n} N`, pin: () => `${j.pin.stress_mpa} MPa`, 'eye pressure': () => `${j.eye_pressure.mpa} MPa`,
   s0: () => `${j.load_n} N`, tipping: () => `${j.out_of_plane_nm} N·m (tips at ${j.tips_at_nm})`, 'dowel bearing': () => `${j.dowel_bearing_mpa} MPa` }[c.check] || (() => ''))();
 const jointRows = (J) => {
   const worst = {};
