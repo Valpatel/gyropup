@@ -7,6 +7,7 @@
   "E_z_humid": 487.82,
   "E_xy_dry": 4430.0,
   "E_z_dry": 2170.0,
+  "S_xy_dry": 102.0,
   "S_xy": 40.84,
   "S_z": 18.13,
   "S_s": 10.47,
@@ -910,7 +911,7 @@
    ],
    "options": {
     "insert": "today; keep preload <= 0.5 x pull-out (750 N, 0.75 N m) and the fault load (851 N) opens the joint; spin-out is not measured",
-    "sleeved through-bolt": "M5 8.8 through the flange's length and the web (76.8 mm of steel sleeve, Ø8 x Ø5.3), nut in a hex pocket on the web's leg face, head on the cheek / under the plate: preload 5112 N (5.1 N m) in steel, 6.0 x the fault tension; no insert, no creep in the clamp",
+    "sleeved through-bolt": "M5 8.8 through the flange's length and the web (76.8 mm of steel sleeve, Ø8 x Ø5.3), nut on a DIN 9021 M5 washer (Ø15) in a Ø15.5 pocket on the web's leg face, so the fault tension bears on the web round the sleeve; head on the cheek / under the plate: preload 5112 N (5.1 N m) in steel, 6.0 x the fault tension; no insert, no creep in the clamp",
     "threaded-rod tie": "the same with M5 rod and two nuts where no head fits; no gain here (the cheek side takes a head)",
     "captive nut": "a hex nut in a side pocket near the flange end: the 2.9 mm walls either side of an 8 mm nut split the flange; rejected",
     "through-bolt on the plastic": "no sleeve: the bolt precompresses the flange along its length (across the layers, the root's peel direction), but the preload creeps away (see preload)"
@@ -918,7 +919,7 @@
    "pick": "sleeved through-bolt",
    "why": "D74: the leg's primary load path and an insert at 1.0 x its pull-out at assembly torque. The sleeve keeps the preload out of the plastic; the flange root is then judged without precompression (conservative).",
    "pr2": "cad/fivebar.py frame_mounts(): 6 x Ø8.1 sleeve bores through the flange and web, an M5 hex pocket on the leg face; the Ø8.1 bore leaves 2.45 mm walls in the 13 mm flange, so the bolt line gets a local boss and the frame is re-run; the rig plate and the body cheek keep their Ø5.5 holes; screws M5 x ~90 (mcmaster-parts). Mass with a 6061 sleeve; a steel one adds 67 g more",
-   "mass_g_per_leg": 84.0
+   "mass_g_per_leg": 93.0
   },
   {
    "id": "leg.upper_link_hub",
@@ -958,7 +959,7 @@
    "pick": "sleeved through-bolt",
    "why": "D74: the motor's mount; today the plastic limits each screw to about 565 N. Coordinate with the RS-04 support work (issue #116) and its fit job before changing the frame's lug ring.",
    "pr2": "recommended; held until issue #116's mounting stack is settled (its fit job prints this ring)",
-   "mass_g_per_leg": 32.0
+   "mass_g_per_leg": 51.0
   },
   {
    "id": "leg.knee_eye_sleeves",
@@ -1010,7 +1011,7 @@
    ],
    "options": {
     "printed, bigger": "a root fillet at the Ø64 shoulder; the ring wall 6 -> 10-12 mm: lowest mass, may not reach 1.2",
-    "metal bushing": "a turned 6061 hub (journal, shoulder, circlip groove) clamped through the foot by the wheel's 4 x M6 (their heads then bear on metal, which also fixes the foot's crushed-plastic clamp); about +120 g a leg",
+    "metal bushing": "a turned 6061 hub (journal, shoulder, circlip groove) clamped through the foot by the wheel's 4 x M6 (their heads then bear on metal, which also fixes the foot's crushed-plastic clamp); about +104 g a leg (the Ø60 / Ø48 journal and the Ø64 shoulder in 6061 instead of PA6-CF, from cad/fivebar.py's hub)",
     "split apex collar": "the front link's inner half-eye as a separate printed collar, through-bolted to the link: the link then prints flat, and the bolts precompress the ring's layers"
    },
    "pick": "owner decision (mass)",
@@ -1453,7 +1454,7 @@
    "id": "C3",
    "name": "sleeved through-bolt joint, against the plastic clamp",
    "prints": "four 13 x 40 x 60 flange blocks, layers across the bolt as in the frame",
-   "features": "two with an Ø8.1 bore and a steel sleeve flush, two with an Ø5.5 bore (bolt on the plastic, a Ø15 washer); M5 8.8 through the B4 load cell",
+   "features": "two with an Ø8.1 bore and a steel sleeve flush, its nut on a DIN 9021 (Ø15) washer that reaches the plastic round the sleeve; two with an Ø5.5 bore (bolt on the plastic, a Ø15 washer); M5 8.8 through the B4 load cell; after the creep readings, pull each sleeved block apart to the fault tension (851 N) and check the washer holds it",
    "settles": "preload kept over 30 min, 24 h, 7 days and a humid week, sleeved against plain; the creep step the preload table screens; the re-torque schedule",
    "sheet": "c3-through-bolt.csv"
   },
@@ -1506,234 +1507,6 @@
   },
   {
    "file": "cad/fivebar.py",
-   "pattern": "'D': [\\d.]+, 'l1': ([\\d.]+), 'l2'",
-   "value": 150.0,
-   "lines": 1
-  },
-  {
-   "file": "cad/fivebar.py",
-   "pattern": "'D': [\\d.]+, 'l1': [\\d.]+, 'l2': ([\\d.]+),",
-   "value": 250.0,
-   "lines": 1
-  },
-  {
-   "file": "cad/fivebar.py",
-   "pattern": "'D': [\\d.]+, 'l1': ([\\d.]+), 'l2'",
-   "value": 150.0,
-   "lines": 1
-  },
-  {
-   "file": "cad/fivebar.py",
-   "pattern": "'D': [\\d.]+, 'l1': [\\d.]+, 'l2': ([\\d.]+),",
-   "value": 250.0,
-   "lines": 1
-  },
-  {
-   "file": "cad/fivebar.py",
-   "pattern": "'D': [\\d.]+, 'l1': ([\\d.]+), 'l2'",
-   "value": 150.0,
-   "lines": 1
-  },
-  {
-   "file": "cad/fivebar.py",
-   "pattern": "'D': [\\d.]+, 'l1': [\\d.]+, 'l2': ([\\d.]+),",
-   "value": 250.0,
-   "lines": 1
-  },
-  {
-   "file": "cad/fivebar.py",
-   "pattern": "'D': [\\d.]+, 'l1': ([\\d.]+), 'l2'",
-   "value": 150.0,
-   "lines": 1
-  },
-  {
-   "file": "cad/fivebar.py",
-   "pattern": "'D': [\\d.]+, 'l1': [\\d.]+, 'l2': ([\\d.]+),",
-   "value": 250.0,
-   "lines": 1
-  },
-  {
-   "file": "cad/fivebar.py",
-   "pattern": "'D': [\\d.]+, 'l1': ([\\d.]+), 'l2'",
-   "value": 150.0,
-   "lines": 1
-  },
-  {
-   "file": "cad/fivebar.py",
-   "pattern": "'D': [\\d.]+, 'l1': [\\d.]+, 'l2': ([\\d.]+),",
-   "value": 250.0,
-   "lines": 1
-  },
-  {
-   "file": "cad/fivebar.py",
-   "pattern": "'D': [\\d.]+, 'l1': ([\\d.]+), 'l2'",
-   "value": 150.0,
-   "lines": 1
-  },
-  {
-   "file": "cad/fivebar.py",
-   "pattern": "'D': [\\d.]+, 'l1': [\\d.]+, 'l2': ([\\d.]+),",
-   "value": 250.0,
-   "lines": 1
-  },
-  {
-   "file": "cad/fivebar.py",
-   "pattern": "'D': [\\d.]+, 'l1': ([\\d.]+), 'l2'",
-   "value": 150.0,
-   "lines": 1
-  },
-  {
-   "file": "cad/fivebar.py",
-   "pattern": "'D': [\\d.]+, 'l1': [\\d.]+, 'l2': ([\\d.]+),",
-   "value": 250.0,
-   "lines": 1
-  },
-  {
-   "file": "cad/fivebar.py",
-   "pattern": "'D': [\\d.]+, 'l1': ([\\d.]+), 'l2'",
-   "value": 150.0,
-   "lines": 1
-  },
-  {
-   "file": "cad/fivebar.py",
-   "pattern": "'D': [\\d.]+, 'l1': [\\d.]+, 'l2': ([\\d.]+),",
-   "value": 250.0,
-   "lines": 1
-  },
-  {
-   "file": "cad/fivebar.py",
-   "pattern": "'D': [\\d.]+, 'l1': ([\\d.]+), 'l2'",
-   "value": 150.0,
-   "lines": 1
-  },
-  {
-   "file": "cad/fivebar.py",
-   "pattern": "'D': [\\d.]+, 'l1': [\\d.]+, 'l2': ([\\d.]+),",
-   "value": 250.0,
-   "lines": 1
-  },
-  {
-   "file": "cad/fivebar.py",
-   "pattern": "'D': [\\d.]+, 'l1': ([\\d.]+), 'l2'",
-   "value": 150.0,
-   "lines": 1
-  },
-  {
-   "file": "cad/fivebar.py",
-   "pattern": "'D': [\\d.]+, 'l1': [\\d.]+, 'l2': ([\\d.]+),",
-   "value": 250.0,
-   "lines": 1
-  },
-  {
-   "file": "cad/fivebar.py",
-   "pattern": "'D': [\\d.]+, 'l1': ([\\d.]+), 'l2'",
-   "value": 150.0,
-   "lines": 1
-  },
-  {
-   "file": "cad/fivebar.py",
-   "pattern": "'D': [\\d.]+, 'l1': [\\d.]+, 'l2': ([\\d.]+),",
-   "value": 250.0,
-   "lines": 1
-  },
-  {
-   "file": "cad/fivebar.py",
-   "pattern": "'D': [\\d.]+, 'l1': ([\\d.]+), 'l2'",
-   "value": 150.0,
-   "lines": 1
-  },
-  {
-   "file": "cad/fivebar.py",
-   "pattern": "'D': [\\d.]+, 'l1': [\\d.]+, 'l2': ([\\d.]+),",
-   "value": 250.0,
-   "lines": 1
-  },
-  {
-   "file": "cad/fivebar.py",
-   "pattern": "'D': [\\d.]+, 'l1': ([\\d.]+), 'l2'",
-   "value": 150.0,
-   "lines": 1
-  },
-  {
-   "file": "cad/fivebar.py",
-   "pattern": "'D': [\\d.]+, 'l1': [\\d.]+, 'l2': ([\\d.]+),",
-   "value": 250.0,
-   "lines": 1
-  },
-  {
-   "file": "cad/fivebar.py",
-   "pattern": "'D': [\\d.]+, 'l1': ([\\d.]+), 'l2'",
-   "value": 150.0,
-   "lines": 1
-  },
-  {
-   "file": "cad/fivebar.py",
-   "pattern": "'D': [\\d.]+, 'l1': [\\d.]+, 'l2': ([\\d.]+),",
-   "value": 250.0,
-   "lines": 1
-  },
-  {
-   "file": "cad/fivebar.py",
-   "pattern": "'D': [\\d.]+, 'l1': ([\\d.]+), 'l2'",
-   "value": 150.0,
-   "lines": 1
-  },
-  {
-   "file": "cad/fivebar.py",
-   "pattern": "'D': [\\d.]+, 'l1': [\\d.]+, 'l2': ([\\d.]+),",
-   "value": 250.0,
-   "lines": 1
-  },
-  {
-   "file": "cad/fivebar.py",
-   "pattern": "'D': [\\d.]+, 'l1': ([\\d.]+), 'l2'",
-   "value": 150.0,
-   "lines": 1
-  },
-  {
-   "file": "cad/fivebar.py",
-   "pattern": "'D': [\\d.]+, 'l1': [\\d.]+, 'l2': ([\\d.]+),",
-   "value": 250.0,
-   "lines": 1
-  },
-  {
-   "file": "cad/fivebar.py",
-   "pattern": "'D': [\\d.]+, 'l1': ([\\d.]+), 'l2'",
-   "value": 150.0,
-   "lines": 1
-  },
-  {
-   "file": "cad/fivebar.py",
-   "pattern": "'D': [\\d.]+, 'l1': [\\d.]+, 'l2': ([\\d.]+),",
-   "value": 250.0,
-   "lines": 1
-  },
-  {
-   "file": "cad/fivebar.py",
-   "pattern": "'D': [\\d.]+, 'l1': ([\\d.]+), 'l2'",
-   "value": 150.0,
-   "lines": 1
-  },
-  {
-   "file": "cad/fivebar.py",
-   "pattern": "'D': [\\d.]+, 'l1': [\\d.]+, 'l2': ([\\d.]+),",
-   "value": 250.0,
-   "lines": 1
-  },
-  {
-   "file": "cad/fivebar.py",
-   "pattern": "'D': [\\d.]+, 'l1': ([\\d.]+), 'l2'",
-   "value": 150.0,
-   "lines": 1
-  },
-  {
-   "file": "cad/fivebar.py",
-   "pattern": "'D': [\\d.]+, 'l1': [\\d.]+, 'l2': ([\\d.]+),",
-   "value": 250.0,
-   "lines": 1
-  },
-  {
-   "file": "cad/fivebar.py",
    "pattern": "^FLANGE_T, FLANGE_X = ([\\d.]+), ",
    "value": 13.0,
    "lines": 1
@@ -1742,6 +1515,24 @@
    "file": "cad/leg_studies.py",
    "pattern": "^HUB_PRELOAD_N = ([\\d.]+)",
    "value": 1200.0,
+   "lines": 1
+  },
+  {
+   "file": "cad/fivebar.py",
+   "pattern": "\\.union\\(ycyl\\(([\\d.]+), h0, ab1 \\+ 0\\.01, l2\\)\\)",
+   "value": 30.0,
+   "lines": 1
+  },
+  {
+   "file": "cad/fivebar.py",
+   "pattern": "k = k\\.union\\(ycyl\\(([\\d.]+), ab1, h1 \\+ 0\\.01, l2\\)\\)",
+   "value": 32.0,
+   "lines": 1
+  },
+  {
+   "file": "cad/fivebar.py",
+   "pattern": "k = k\\.cut\\(ycyl\\(([\\d.]+), h0 - 1, h1 - 0\\.01, l2\\)\\)",
+   "value": 24.0,
    "lines": 1
   },
   {
@@ -1792,6 +1583,24 @@
    "file": "cad/fivebar.py",
    "pattern": "u = u\\.cut\\(ycyl\\(EYE_SLEEVE\\[0\\] / 2 - ([\\d.]+), eye_sleeve_end\\(\\)",
    "value": 0.02,
+   "lines": 1
+  },
+  {
+   "file": "cad/fivebar.py",
+   "pattern": "ycyl\\(UPPER_EYE_R - ([\\d.]+), -EYE_BOSS, 0\\.01, l1, 0\\)",
+   "value": 0.5,
+   "lines": 1
+  },
+  {
+   "file": "cad/fivebar.py",
+   "pattern": "^EYE_SLEEVE = \\([\\d.]+, [\\d.]+, ([\\d.]+)\\)",
+   "value": 20.0,
+   "lines": 1
+  },
+  {
+   "file": "cad/fivebar.py",
+   "pattern": "^EYE_SLEEVES = (\\d+)",
+   "value": 2.0,
    "lines": 1
   },
   {

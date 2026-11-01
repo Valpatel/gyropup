@@ -76,6 +76,18 @@ class Screen(unittest.TestCase):
         self.assertLess(row['sigma_n_mpa'], 0)                  # compressive: only the shear term remains
         self.assertAlmostEqual(row['S_s_needed_mpa'], abs(row['tau_mpa']) * row['target'], delta=0.11)
 
+    def test_required_shear_strength_tensile_branch(self):
+        # sigma_n tensile, under its share of S_z: S_s = tau / sqrt((1/target)^2 - (sigma_n/S_z)^2); a hand calculation
+        # with S_z 18.13 MPa (pa6_cf_z, v0.6.0) gives 16.6 MPa for the wheel link's E1
+        row = next(x for x in self.doc['layers']['rows'] if x['part'] == 'wheel_link' and x['case'] == 'E1')
+        self.assertGreater(row['sigma_n_mpa'], 0)
+        self.assertAlmostEqual(row['S_s_needed_mpa'], 16.6, delta=0.15)
+
+    def test_control_sleeve_count_moves_the_press_force(self):
+        one = fit(generate({'cad/fivebar.py': [('EYE_SLEEVES = 2 ', 'EYE_SLEEVES = 1 ')]}), 'knee eye sleeves')
+        two = fit(self.doc, 'knee eye sleeves')
+        self.assertAlmostEqual(one['at_max_dry']['press_n'] * 2, two['at_max_dry']['press_n'], delta=20)
+
     def test_control_sleeve_hole_opened_relieves_the_fit(self):
         rel = 'cad/fivebar.py'
         a = 'u = u.cut(ycyl(EYE_SLEEVE[0] / 2 - 0.02, eye_sleeve_end(), t + 1, l1, 0))'
