@@ -722,7 +722,7 @@
     {
      "code": "contract-dowel",
      "level": "fix",
-     "text": "a 16 mm TM dowel goes 8 into the D66 tray, so it needs 8.5 mm in the riser, which cuts 8 (mount.json asks 12.5)"
+     "text": "riser dowel holes 8 deep vs mount.json's 12.5; a 16 mm pin goes 8 into the D66 tray, so it needs at least 8.5 in the riser"
     }
    ],
    "verdict": "fix"
@@ -1245,7 +1245,7 @@
     {
      "code": "pan-base-dowels",
      "level": "owner",
-     "text": "the pan base's TM dowel holes (cad/turret.py pan_base: TM_DOWELS at r 52) meet no hole in the plinth's top (compute_shell() cuts none), but the bench BOM buys hw_tm_dowels (16 mm pins): the pan base is then located only by its M5s in clearance. Add dowel bosses to the plinth's top, or drop the pins"
+     "text": "the pan base's TM dowel holes (cad/turret.py pan_base: TM_DOWELS at r 52) meet no hole in the plinth's top (compute_shell() cuts none), but the bench BOM buys hw_plinth_dowels (16 mm pins, D66): the pan base is then located only by its M5s in clearance. Add dowel bosses to the plinth's top, or drop the pins"
     }
    ],
    "verdict": "fix"
@@ -1494,6 +1494,9 @@
    "d_mm": 4,
    "material": "pa6-cf",
    "infill": "100 %",
+   "typed": {
+    "M4 x 10": "cad/turret.py comment \"so an M4 x 10 keeps 4 mm\" (the BOM group hw_screw_m4x10 is shared)"
+   },
    "hole": {
     "d": 5.6,
     "depth": 8.0
@@ -1848,6 +1851,7 @@
    "assembly": "turret",
    "where": "cartridge base (PA6-CF): the CT latch's one M4 (Ø10 boss, from below)",
    "typed": {
+    "tip 5 mm in the cartridge": "cad/turret.py comment \"the M4 x 12 keeps 5 mm in the cartridge\"",
     "loads 188 N, 88 N": "exports/turret/fea/summary.json cradle R-fall-down; cad/turret_studies.py T_latch",
     "rail 7 mm": "cad/turret.py cradle rail"
    },
@@ -2352,7 +2356,7 @@
    "joint": "body.riser_top_tm",
    "code": "contract-dowel",
    "level": "fix",
-   "text": "a 16 mm TM dowel goes 8 into the D66 tray, so it needs 8.5 mm in the riser, which cuts 8 (mount.json asks 12.5)"
+   "text": "riser dowel holes 8 deep vs mount.json's 12.5; a 16 mm pin goes 8 into the D66 tray, so it needs at least 8.5 in the riser"
   },
   {
    "joint": "leg.stop_posts",
@@ -2466,7 +2470,7 @@
    "joint": "turret.plinth_columns",
    "code": "pan-base-dowels",
    "level": "owner",
-   "text": "the pan base's TM dowel holes (cad/turret.py pan_base: TM_DOWELS at r 52) meet no hole in the plinth's top (compute_shell() cuts none), but the bench BOM buys hw_tm_dowels (16 mm pins): the pan base is then located only by its M5s in clearance. Add dowel bosses to the plinth's top, or drop the pins"
+   "text": "the pan base's TM dowel holes (cad/turret.py pan_base: TM_DOWELS at r 52) meet no hole in the plinth's top (compute_shell() cuts none), but the bench BOM buys hw_plinth_dowels (16 mm pins, D66): the pan base is then located only by its M5s in clearance. Add dowel bosses to the plinth's top, or drop the pins"
   },
   {
    "joint": "body.post_m5",
@@ -3042,7 +3046,7 @@
   },
   {
    "file": "exports/turret/bench/bom.json",
-   "bom_for": "hw_tm_dowels",
+   "bom_for": "hw_plinth_dowels",
    "value": 16.0
   },
   {

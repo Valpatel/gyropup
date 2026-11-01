@@ -126,6 +126,10 @@ class Inventory(unittest.TestCase):
         self.assertNotIn('tm-com-datum', codes(d, 'body.riser_top_tm'))
         self.assertEqual(joint(d, 'body.riser_top_tm')['loads'][0]['per_insert_n'], before)
 
+    def test_control_a_datum_that_is_not_the_plinth_stops_generation(self):
+        with self.assertRaises(inv.Stale):
+            generate({'exports/turret/mount.json': [('"lowest_z_mm": -86.0', '"lowest_z_mm": -94.0')]})
+
     def test_control_plinth_column_pilot_from_its_own_call(self):
         """The columns' depth is read from compute_shell's insert_hole() call, not INSERT_DEPTH."""
         d = generate({'cad/turret.py': [("s = s.cut(insert_hole(x, y, 0.0, 'M5'))", "s = s.cut(insert_hole(x, y, 0.0, 'M5', 12.5))")]})

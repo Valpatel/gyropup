@@ -34,13 +34,13 @@ J501 box and the leg rig. Each joint records:
 - the torque the documents give, the preload it makes, and the load from the repository's own studies.
 
 The body's insert joints are read from the body's joint check, so a new body insert joint the generator does not
-know fails the generator. Elsewhere, the generator reads each pilot, boss and stack number by pattern from the line
-that cuts it. A turret pilot is read from its own `insert_hole()` call, with `INSERT_DEPTH` only as the default. A
+know fails the generator. Elsewhere, the generator reads each pilot and boss, and most stack numbers, by pattern from
+the line that cuts them. A turret pilot is read from its own `insert_hole()` call, with `INSERT_DEPTH` only as the default. A
 pattern binds every line it matches, and they must agree. Screw lengths come from the BOM where it has a line of its
 own. When a bound line changes, generation stops and names the line.
 
-Some numbers are not modelled anywhere the generator can read: a few screw lengths in shared BOM groups, panel
-thicknesses, standard washer sizes and the estimated loads. Each joint lists them under **Typed into the generator**
+Some numbers are not modelled anywhere the generator can read: a few screw lengths in shared BOM groups or code
+comments, panel thicknesses, standard washer sizes and the estimated loads. Each joint lists them under **Typed into the generator**
 in `joints.md` (`typed` in `joints.json`). A change to one of them is not noticed. Fix findings are conditional on
 the bound values, so a fix applied to the CAD clears its finding at the next regeneration.
 

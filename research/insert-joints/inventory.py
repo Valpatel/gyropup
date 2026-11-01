@@ -589,6 +589,9 @@ def build(repo):
     com_tm = tm_z + below_face            # the plinth's underside is the lowest point, and it sits on the riser
     budget = float(re.search(r'centre at most ([\d.]+) mm above the TM face', mount['mass']['budget']).group(1))
     f_side = tm_m * G0 * fall_g
+    if below_face > 1 and abs(below_face - ph) > 0.5:
+        raise Stale(f"exports/turret/mount.json: the turret reaches {below_face:g} mm below frame T but the plinth is {ph:g}: "
+                    "the TM face is no longer the plinth's underside; update research/insert-joints/inventory.py")
     t_riser_top = f_side * com_tm / 1000.0 / (2 * tm_arm)
     riser_h = repo.num('cad/body_params.py', r'^RISER_H = ([\d.]+)')
     repo.has('cad/body_frame.py', 'RISER_FEET = [(40.0, 40.0), (-40.0, 40.0), (-40.0, -40.0), (40.0, -40.0)]')
@@ -714,8 +717,8 @@ def build(repo):
                                f"{bolt_min:g} (and the tip at {tip_tray:g} with the D66 tray): deepen to >= {tip_tray + 1.5:g}, "
                                f"or use M5 x 12 (tip {12 - (plinth_t - plinth_cb):g}, 1.5 d engaged)")]
                              if riser_top < max(bolt_min, tip_tray + TIP_ROOM) else [])
-        + ([('contract-dowel', 'fix', f"a {pin_l:g} mm TM dowel goes {tray_dowel:g} into the D66 tray, so it needs "
-             f"{pin_l - tray_dowel + 0.5:g} mm in the riser, which cuts {riser_dowel:g} (mount.json asks {dowel_min:g})")]
+        + ([('contract-dowel', 'fix', f"riser dowel holes {riser_dowel:g} deep vs mount.json's {dowel_min:g}; a {pin_l:g} mm pin "
+             f"goes {tray_dowel:g} into the D66 tray, so it needs at least {pin_l - tray_dowel + 0.5:g} in the riser")]
            if riser_dowel < max(pin_l - tray_dowel + 0.5, dowel_min) else []))
 
     f = integ.pop('dcdc_bracket')
@@ -864,7 +867,7 @@ def build(repo):
     if 'TM_DOWELS' not in shell_src:
         col_extra.append(('pan-base-dowels', 'owner', f"the pan base's TM dowel holes (cad/turret.py pan_base: TM_DOWELS at r "
                           f"{abs(mount['tm']['dowels_mm'][0][0]):g}) meet no hole in the plinth's top (compute_shell() cuts none), but "
-                          f"the bench BOM buys hw_tm_dowels ({repo.bom_len('exports/turret/bench/bom.json', 'hw_tm_dowels'):g} mm pins): "
+                          f"the bench BOM buys hw_plinth_dowels ({repo.bom_len('exports/turret/bench/bom.json', 'hw_plinth_dowels'):g} mm pins, D66): "
                           "the pan base is then located only by its M5s in clearance. Add dowel bosses to the plinth's top, or drop "
                           "the pins"))
     add(id='turret.plinth_columns', assembly='turret', where="compute plinth shell's four column tops (PETG): the pan base's TM",
@@ -949,6 +952,7 @@ def build(repo):
     yoke_len = float(re.search(r'an M4 x (\d+) keeps', repo.has('cad/turret.py', 'so an M4 x 10 keeps 4 mm')).group(1))
     add(id='turret.pan_ring_yoke', assembly='turret', where="pan ring (PA6-CF turntable): the tilt yoke's four M4",
         qty_robot=4, insert='turret_insert_m4', d_mm=4, material='pa6-cf', infill='100 %',
+        typed={f'M4 x {yoke_len:g}': 'cad/turret.py comment "so an M4 x 10 keeps 4 mm" (the BOM group hw_screw_m4x10 is shared)'},
         hole={'d': fast['M4']['insert_pilot'], 'depth': yoke_depth}, axis='print-z', orientation='printed upside down',
         screw=f"M4 x {yoke_len:g}, heads on a seat {yoke_seat:g} mm above the yoke bridge's underside", screw_side='open end (from above)',
         mating_hole_mm=fast['M4']['clear'], tip_depth_mm=yoke_len - yoke_seat, stack={'head_seat_mm': yoke_seat, 'screw_mm': yoke_len},
@@ -1025,7 +1029,7 @@ def build(repo):
     cap_z = repo.num('cad/turret.py', r"bz0 - 1, (-[\d.]+), \*ct_latch\)\)\s+# insert from below, 1 mm cap")
     ct_depth = cap_z - base_z0
     add(id='turret.ct_latch', assembly='turret', where="cartridge base (PA6-CF): the CT latch's one M4 (Ø10 boss, from below)",
-        typed={'loads 188 N, 88 N': 'exports/turret/fea/summary.json cradle R-fall-down; cad/turret_studies.py T_latch', 'rail 7 mm': 'cad/turret.py cradle rail'},
+        typed={'tip 5 mm in the cartridge': 'cad/turret.py comment "the M4 x 12 keeps 5 mm in the cartridge"', 'loads 188 N, 88 N': 'exports/turret/fea/summary.json cradle R-fall-down; cad/turret_studies.py T_latch', 'rail 7 mm': 'cad/turret.py cradle rail'},
         qty_robot=1, insert='turret_insert_m4', d_mm=4, material='pa6-cf', infill='100 %',
         hole={'d': fast['M4']['insert_pilot'], 'depth': round(ct_depth, 2)},
         boss_mm=2 * repo.num('cad/turret.py', r"s = s\.union\(cyl_z\(([\d.]+), bz0, -7\.5, \*ct_latch\)\)"), axis='print-z',
