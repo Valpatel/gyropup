@@ -14,7 +14,8 @@ import { describe as describeLive, SOURCE } from '../web/cad-agent-live.js';
 const root = path.resolve(import.meta.dirname, '..');
 const read = file => readFile(path.join(root, file), 'utf8');
 const json = async file => JSON.parse(await read(file));
-const { document } = parseHTML(await read('index.html'));
+const source = await read('index.html');
+const { document } = parseHTML(source);
 const loop = document.querySelector('#loop');
 const text = el => el.textContent.replace(/\s+/g, ' ').trim();
 const card = tag => [...loop.querySelectorAll('.loop-card')].find(c => text(c.querySelector('.loop-tag')).startsWith(tag));
@@ -30,6 +31,8 @@ test('the section sits right after the hero and its ticker, and links to cad-age
   assert.equal(loop.getAttribute('aria-labelledby'), 'loop-title');
   assert.equal(loop.querySelector('.loop-live').dataset.state, 'static');
   assert.equal(loop.querySelectorAll('.loop-steps > li').length, 4);
+  // linkedom, like browsers, drops a stray end tag; the source itself must not have one.
+  assert.doesNotMatch(source, /<\/a>\s*<\/a>/);
 });
 
 test('FEA card: the v0.6.0 re-run counts and toolkit come from research/fea-v060-29', async () => {
