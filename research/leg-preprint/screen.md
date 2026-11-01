@@ -86,14 +86,14 @@ High-stress because:
 | Option | Screen |
 |---|---|
 | insert | today; keep preload <= 0.5 x pull-out (750 N, 0.75 N m) and the fault load (851 N) opens the joint; spin-out is not measured |
-| sleeved through-bolt | M5 8.8 through the flange's length and the web (76.8 mm of steel sleeve, Ø8 x Ø5.3), nut in a hex pocket on the web's leg face, head on the cheek / under the plate: preload 5112 N (5.1 N m) in steel, 6.0 x the fault tension; no insert, no creep in the clamp |
+| sleeved through-bolt | M5 8.8 through the flange's length and the web (76.8 mm of steel sleeve, Ø8 x Ø5.3), nut on a DIN 9021 M5 washer (Ø15) in a Ø15.5 pocket on the web's leg face, so the fault tension bears on the web round the sleeve; head on the cheek / under the plate: preload 5112 N (5.1 N m) in steel, 6.0 x the fault tension; no insert, no creep in the clamp |
 | threaded-rod tie | the same with M5 rod and two nuts where no head fits; no gain here (the cheek side takes a head) |
 | captive nut | a hex nut in a side pocket near the flange end: the 2.9 mm walls either side of an 8 mm nut split the flange; rejected |
 | through-bolt on the plastic | no sleeve: the bolt precompresses the flange along its length (across the layers, the root's peel direction), but the preload creeps away (see preload) |
 
 **Pick: sleeved through-bolt.** D74: the leg's primary load path and an insert at 1.0 x its pull-out at assembly torque. The sleeve keeps the preload out of the plastic; the flange root is then judged without precompression (conservative).
 
-PR 2: cad/fivebar.py frame_mounts(): 6 x Ø8.1 sleeve bores through the flange and web, an M5 hex pocket on the leg face; the Ø8.1 bore leaves 2.45 mm walls in the 13 mm flange, so the bolt line gets a local boss and the frame is re-run; the rig plate and the body cheek keep their Ø5.5 holes; screws M5 x ~90 (mcmaster-parts). Mass with a 6061 sleeve; a steel one adds 67 g more. Mass +84 g a leg.
+PR 2: cad/fivebar.py frame_mounts(): 6 x Ø8.1 sleeve bores through the flange and web, an M5 hex pocket on the leg face; the Ø8.1 bore leaves 2.45 mm walls in the 13 mm flange, so the bolt line gets a local boss and the frame is re-run; the rig plate and the body cheek keep their Ø5.5 holes; screws M5 x ~90 (mcmaster-parts). Mass with a 6061 sleeve; a steel one adds 67 g more. Mass +93 g a leg.
 
 ### `leg.upper_link_hub` (32 on the robot): the motor's torque and the leg's out-of-plane moment into the link
 
@@ -131,7 +131,7 @@ High-stress because:
 
 **Pick: sleeved through-bolt.** D74: the motor's mount; today the plastic limits each screw to about 565 N. Coordinate with the RS-04 support work (issue #116) and its fit job before changing the frame's lug ring.
 
-PR 2: recommended; held until issue #116's mounting stack is settled (its fit job prints this ring). Mass +32 g a leg.
+PR 2: recommended; held until issue #116's mounting stack is settled (its fit job prints this ring). Mass +51 g a leg.
 
 ### `leg.knee_eye_sleeves` (4 on the robot): the knee pin's moment into the upper link
 
@@ -181,7 +181,7 @@ High-stress because:
 | Option | Screen |
 |---|---|
 | printed, bigger | a root fillet at the Ø64 shoulder; the ring wall 6 -> 10-12 mm: lowest mass, may not reach 1.2 |
-| metal bushing | a turned 6061 hub (journal, shoulder, circlip groove) clamped through the foot by the wheel's 4 x M6 (their heads then bear on metal, which also fixes the foot's crushed-plastic clamp); about +120 g a leg |
+| metal bushing | a turned 6061 hub (journal, shoulder, circlip groove) clamped through the foot by the wheel's 4 x M6 (their heads then bear on metal, which also fixes the foot's crushed-plastic clamp); about +104 g a leg (the Ø60 / Ø48 journal and the Ø64 shoulder in 6061 instead of PA6-CF, from cad/fivebar.py's hub) |
 | split apex collar | the front link's inner half-eye as a separate printed collar, through-bolted to the link: the link then prints flat, and the bolts precompress the ring's layers |
 
 **Pick: owner decision (mass).** The hub root needs its peel stress x0.6 and the ring x0.4. Metal is certain and costs mass; printed is light and needs the FEA to show it.
@@ -281,7 +281,7 @@ every R3 margin is the undamped cut onto the stops; the rig's bumper or the meas
 |---|---|---|---|---|---|
 | C1 | bore and press-fit gauge | one block a variant (-0.1 / 0 / +0.1 mm), PA6-CF, the leg recipe, bores vertical as in the parts, half the mouths chamfered 0.5 x 45 deg on the bed face | a 6301 seat (12 mm deep, Ø31 shoulder), a DIN 179 sleeve bore 40 mm long, a Ø16.1 x 23 blind stop-pin hole, two Ø4.94 x 12 dowel holes, a 61812 seat segment (10 mm) | PRINT_HOLE_ERR for this printer (the hole each fit is drawn at), the press force and the grip dry and after a humid week, elephant's foot at the mouths, retaining compound on printed bores | [sheets/c1-bores.csv](sheets/c1-bores.csv) |
 | C2 | insert pull-out and spin-out in the real wall (B4a) | three flange-end slices of the hip frame (13 mm flange, Ø14 boss, the real 2.94 mm walls), printed as the frame (insert axis vertical) | the M5 insert at the frame's depth; a Ø15 bearing washer under the puller | the insert's pull-out across the layers in this wall (the 1500 N estimate) and its spin-out torque: the numbers the insert option is judged on, kept even if the mount goes to through-bolts (other leg and body inserts) | [sheets/c2-insert.csv](sheets/c2-insert.csv) |
-| C3 | sleeved through-bolt joint, against the plastic clamp | four 13 x 40 x 60 flange blocks, layers across the bolt as in the frame | two with an Ø8.1 bore and a steel sleeve flush, two with an Ø5.5 bore (bolt on the plastic, a Ø15 washer); M5 8.8 through the B4 load cell | preload kept over 30 min, 24 h, 7 days and a humid week, sleeved against plain; the creep step the preload table screens; the re-torque schedule | [sheets/c3-through-bolt.csv](sheets/c3-through-bolt.csv) |
+| C3 | sleeved through-bolt joint, against the plastic clamp | four 13 x 40 x 60 flange blocks, layers across the bolt as in the frame | two with an Ø8.1 bore and a steel sleeve flush, its nut on a DIN 9021 (Ø15) washer that reaches the plastic round the sleeve; two with an Ø5.5 bore (bolt on the plastic, a Ø15 washer); M5 8.8 through the B4 load cell; after the creep readings, pull each sleeved block apart to the fault tension (851 N) and check the washer holds it | preload kept over 30 min, 24 h, 7 days and a humid week, sleeved against plain; the creep step the preload table screens; the re-torque schedule | [sheets/c3-through-bolt.csv](sheets/c3-through-bolt.csv) |
 | C4 | boss-root layer coupon (the knee eye's stub) | the upper link's knee end, cut 40 mm back from the knee, printed as the link (stub up); two today, two with the PR 2 stub | the two DIN 179 sleeves and a Ø12 pin standing 46 mm out (the knee's lever), loaded sideways in the press cage | the load at which the stub's root peels (or the arm breaks) against the FEA's prediction for the same coupon: calibrates S_z and the unmeasured interlayer shear S_s the layer check assumes | [sheets/c4-boss-root.csv](sheets/c4-boss-root.csv) |
 
 ## Sources

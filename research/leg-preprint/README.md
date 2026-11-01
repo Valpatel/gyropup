@@ -35,12 +35,12 @@ CAD host (issue #137).
 |---:|---|---|---|
 | 1 | slicing | **The front link floats.** In its print orientation (`DOWN_INNER`), the apex eye's end (16 cm²) is the only part on the bed. The other 141 cm² of its underside hangs 32 mm up, because the eye reaches 32 mm in past the body. The print plan says "flat on its inner face" | change how it prints: make the inner half-eye a separate collar, bolted through, so the link prints flat; otherwise, supports under 141 cm² |
 | 2 | assembly | **The knee-eye sleeves and the RS-04 dowels are drawn too tight for a printed hole.** The sleeves are drawn 0.05–0.06 mm interference and the dowels 0.06–0.07 mm, before the print closes the hole. A printed vertical hole closes 0.05–0.2 mm (assumed until C1 measures it). That gives up to 0.26 mm on the Ø18 sleeves (53 MPa hoop in a Ø39 stub, about 19 kN to press both) and 0.27 mm on the Ø5 dowels (5 % strain: the plastic yields or cracks) | the holes drawn from C1's measured error, plus a lead-in chamfer |
-| 3 | assembly | **Hip-frame inserts are preloaded to their pull-out.** At the assembly torque of 1.5 N·m, each M5 insert carries 1,500 N, which is 1.0 × its estimated pull-out across the layers. The fault load is 851 N. Each insert has 2.94 mm walls in the 13 mm flange | sleeved M5 through-bolts (D74) |
+| 3 | assembly | **Hip-frame inserts may be preloaded to their pull-out.** At the assembly torque of 1.5 N·m, each M5 insert carries 1,500 N, which is 1.0 × its estimated (humid) pull-out across the layers. That holds when the cheek or plate does not bear on the insert's brass face; the insert inventory requires that it does (insert flush to 0.13 mm proud), and then the preload closes through the brass. Either way the 851 N fault load is 0.57 × the pull-out, with no measured spin-out or creep data. Each insert has 2.94 mm walls in the 13 mm flange | sleeved M5 through-bolts (D74) |
 | 4 | first load | **Knee-eye stub root peels across the layers.** This is the worst result in the leg: layer check 0.69 (R1, target 1.2), 0.77 (E1, target 2.0) and 0.48 (R3K, target 1.0). No print orientation fixes it: on edge, R1 goes to 0.99 and R3K stays at 0.48 | the stub's diameter and root fillet swept against the layer check; a machined eye is the fallback |
 | 5 | first load | **Front-link apex ring peels (0.52 R1, 0.71 E1).** The peak is at the outer face of the ring's 6 mm wall | swept together with #1 |
-| 6 | first load | **Wheel link's printed apex hub: root peels (0.70 R1w, target 1.2).** The Ø64 shoulder leaves the link's inner face along the build direction | a printed root fillet, or a turned 6061 hub (about +120 g a leg): owner decision |
+| 6 | first load | **Wheel link's printed apex hub: root peels (0.70 R1w, target 1.2).** The Ø64 shoulder leaves the link's inner face along the build direction | a printed root fillet, or a turned 6061 hub (about +104 g a leg): owner decision |
 | 7 | first week | **Hub face opens.** The upper link's 8 M5 heads sit on 24.5 mm of plastic at 45.5 MPa (the screen is 25). The face lifts at 104 N·m; R1 puts 114.6 N·m on it and R3 puts 188.6 | a 6061 clamp ring under all 8 heads: 4 kN a screw at 16.7 MPa, face shut to about 347 N·m |
-| 8 | first humid week | **Press fits lose grip.** The humid modulus is 0.23 × the dry one. A seat pressed dry keeps about a quarter of its grip once the part takes up water (6301 seat: 5.4 → 1.2 MPa) | axial retention never relies on the press alone (the seats already stop on webs); witness marks for race creep |
+| 8 | first humid week | **Press fits lose grip.** The humid in-service modulus is 0.23 × the dry TDS one (moisture 0.29 × with the record's ×0.8 print factor). A seat pressed dry keeps about a quarter of its grip once the part takes up water (6301 seat: 5.4 → 1.2 MPa) | axial retention never relies on the press alone (the seats already stop on webs); witness marks for race creep |
 | 9 | first stop hit | **Stop pins' retaining compound.** The pins (Ø16.1 holes) go from 0.04 mm clearance to 0.12 mm interference once printed, which wipes the compound or turns the fit into a 7 kN press. Henkel does not normally recommend LOCTITE 638 on plastics, because thermoplastics can stress-crack | hole set from C1; a structural epoxy |
 | 10 | the print | **The hip frame is 72.5 h and 1,106 g,** more than one 1 kg spool. The feed must stay dry for three days, and the 274 × 158 mm part has to be turned 45° on the bed | two spools dried together; dry box; brim |
 | 11 | the rig build | **The rig's own integrity check fails on today's leg: 88 interferences, every one a stop sleeve on its stop pin.** Each is 84.9 mm³, the TPU sleeve's drawn stretch fit (0.1 mm on the radius over the pin's 17 mm), across 4 sleeves × 22 poses. The D53 stop change (ab8c1b9, `leg/stops`) excused the fit in the leg's own clash list (`fivebar.MATES`) but not in the rig's (`cad/rig_integrity.py` LEG_OVERLAPS). The rig's checks had been recorded the same evening on a leg without the pins (c2cf8dc, `legrig/program`); the two branches met at 0054d45 and `exports/rig/integrity.json` was not regenerated after | the four sleeve/pin fits excused in the rig's list, with the reason |
@@ -63,18 +63,20 @@ which is the axis of every boss, bore and pin. Three kinds of geometry fail:
 
 For the failing rows, the "x" column in screen.md gives the factor by which the peak stress must fall. For a root
 loaded in bending, the radius must grow by the cube root of that factor. The "S_s needed" column gives the interlayer
-shear strength that would let the row pass unchanged. Wherever σn is tensile, no plausible S_s is enough: σn alone
-already exceeds the target's share of S_z, so the geometry has to change.
+shear strength that would let the row pass unchanged, at today's worst corner only, so it is a lower bound. Where
+the column says "none", σn alone already exceeds the target's share of S_z, so no S_s is enough and the geometry has
+to change. Tensile rows below that share (the wheel link's E1, the hip frame's E3o and R3o) have a finite S_s.
 
 [orientation_screen.py](orientation_screen.py) resolved the same solves on two other layer planes, on edge (z) and on
-end (x); see [screen.md](screen.md#print-orientation-layer-check-on-three-layer-planes). Every orientation's best case
-still falls short:
+end (x); see [screen.md](screen.md#print-orientation-layer-check-on-three-layer-planes). For the links, every
+orientation's best case still falls short; the hip frame passes on end but does not fit the bed:
 
 - **Upper link, on edge:** R1 rises from 0.69 to 0.99, but R3K stays at 0.48 and R2 falls from 0.80 to 0.62.
 - **Front link:** on edge it reaches only 0.55 (R1) and 0.80 (E1).
 - **Wheel link, on edge:** R1w rises from 0.70 to 0.90.
-- **Hip frame, on a flange face:** R3o (1.09) and E3o (2.23) pass, but E1 stays at 1.45. On end, the frame is
-  274 mm tall, which is over the bed's 256.
+- **Hip frame:** on end (x) every row passes (R1 1.82, E1 2.12, E3o 2.24, E3i 2.20, R3o 1.10), but the frame is
+  274 mm tall on end, over the bed's 256, and its bores would print horizontal. On a flange face, R3o (1.09) and E3o
+  (2.23) pass but E1 stays at 1.45.
 
 Every orientation other than today's also turns the bearing seats, the sleeve bores and the dowel holes horizontal.
 They then print out of round, and supports end up inside them. **Orientation is not the fix. Geometry, and metal
@@ -86,7 +88,7 @@ The leg has only six heat-set inserts per leg, all in the hip frame's flange end
 
 - **Pull-out:** about 1,500 N, estimated by the insert inventory from CNC Kitchen's M3 tests in PETG and scaled to
   humid PA6-CF across the layers. No PA6-CF insert has been pulled out.
-- **Wall:** 2.94 mm each side, against Spirol's rule of a boss at least 2 × the insert's diameter. The flange is 1.97 ×.
+- **Wall:** 2.94 mm each side, against Spirol's rule of a boss at least 2 × the insert's diameter. The 13 mm flange is 1.83 × the insert's Ø7.11 knurl.
 - **Spin-out:** not measured.
 
 A through-bolt removes all three (D74). C2 still pulls inserts in this exact wall, because the body and the turret
@@ -104,7 +106,8 @@ first humid week, and C3 measures the real creep.
 ### Pin bearing in printed eyes
 
 R3 puts 37.9 MPa on the knee eye (allowable 40, SF 1.06), spread along the two 20 mm sleeves. That is the undamped
-power cut. With the rig's bumper, or the measured RS-04 damping, the knee load falls 5.6 × (2,048 N to 364 N).
+power cut. With the RS-04's power-off damping as the rig assumes it (`power_off_damped`: 20 % of shorted phases, not
+measured; B1 measures it), the knee load falls 5.6 × (2,048 N to 364 N). No rig scenario models the bumper.
 Everywhere else in the leg, the pins bear on steel sleeves or bearings, never on plastic.
 
 ### Bearing seats: creep, retention, shrinkage
@@ -137,7 +140,9 @@ slicer's elephant-foot compensation on as well.
 - **Wheel link:** 20 cm², mostly at 5 mm.
 - **Front link:** floats (finding 1).
 - **Bed:** PA6-CF on a 100 °C bed in the enclosed P1S warps less than unfilled PA. The hip frame (274 × 158, turned
-  45°) and the two lower links (about 320 long, turned) are the parts whose corners lift. Use a 5 mm brim and
+  45°) and the two lower links (about 320 long, turned) are the parts whose corners lift. At 45° the frame's first
+  layer needs a 249.2 mm square of the 256 mm bed, so its brim is 3 mm at most (or brim ears at the corners). The
+  lower links fit with a 5 mm brim, but only at about 45° (252.3 and 254.3 mm). Use that and
   measure each bed face's flatness after printing (sheet in the print package, PR 2).
 - **Scars:** support scars must not land on a bearing face or a stop face. With the collar split, nothing in the leg
   prints on supports under a working face.
@@ -177,10 +182,12 @@ slicer's elephant-foot compensation on as well.
 With the motors held, 0.1 mm of radial play at any joint moves the axle 0.10–0.14 mm, and 0.1° at a motor moves it
 0.18–0.26 mm (crouch, stand and tall). The plays add up to:
 
-- **knees:** a few hundredths, from the shoulder screw in its F7 sleeves and the 6301's clearance;
+- **knees:** up to 0.085 mm radial each, in series: 0.046 in the shoulder screw's F7 sleeves, 0.029 in the bearing
+  bores and 0.009 of the 6301's internal clearance;
 - **apex:** up to 0.1 mm, from the 61812's inner races on the printed Ø60 journal (B0's hub-stub coupon sets this).
 
-So the axle wanders about ±0.2 mm, small next to a tyre's give. The motors' backlash, measured on B1, will dominate.
+So the axle wanders about ±0.2 mm as a root-sum-square, and up to about 0.38 mm in the worst case, small next to a
+tyre's give. The motors' backlash, measured on B1, will dominate.
 
 ### Assembly order and tool access
 
@@ -216,8 +223,8 @@ diagonally. A leg is 204 h and 3.08 kg of PA6-CF.
 The undamped power cut (`power_off`) sets every R3 margin:
 
 - **Loads:** 2,048 N on a knee and 122 N·m on a stop.
-- **Damped:** with the rig's bumper or the RS-04's power-off damping (`power_off_damped`), these drop to 364 N and
-  15 N·m.
+- **Damped:** with the RS-04's power-off damping as assumed (`power_off_damped`, 20 % of shorted phases, not
+  measured), these drop to 364 N and 15 N·m.
 - **Drops:** a 150 mm drop puts 1,605 N on the axle and 975 N on the knee.
 - **Proof:** the rig test with the bumper set, and the bearing inspection after any undamped cut, stay as issue #29
   lists them.
@@ -226,9 +233,9 @@ The undamped power cut (`power_off`) sets every R3 margin:
 
 | Joint | High-stress because | Pick | Mass a leg |
 |---|---|---|---:|
-| `leg.hip_frame_mount` | preload 1.0 × the insert's pull-out; fault 851 N against 1,500 N | sleeved M5 through-bolt, nut in a hex pocket on the web's leg face | +84 g (6061 sleeves; steel +67 g more) |
+| `leg.hip_frame_mount` | preload 1.0 × the insert's pull-out; fault 851 N against 1,500 N | sleeved M5 through-bolt, nut on a DIN 9021 washer in a pocket on the web's leg face (the washer reaches the plastic round the sleeve, so the fault tension bears on the web) | +93 g (6061 sleeves; steel +67 g more) |
 | `leg.upper_link_hub` | face lifts at 104 N·m against 114.6 (R1) and 188.6 (R3); 45.5 MPa under the heads | 6061 clamp ring under the 8 heads | +25 g |
-| `leg.hip_frame_lugs` | plastic limits each M4 to 565 N | crush sleeve under each head (held for #116) | +32 g |
+| `leg.hip_frame_lugs` | plastic limits each M4 to 565 N | crush sleeve under each head (held for #116) | +51 g |
 | `leg.knee_eye_sleeves` | stub root layer check 0.48–0.77 | keep the DIN 179 bushings; grow the stub | FEA sweep |
 | `leg.knee_spacer` | Ø15.9 under the 6301's 17.6 abutment | steel spacer, 18–19.4 mm | +6 g |
 | `leg.apex` | hub root 0.70, ring 0.52 | printed and bigger, or a turned hub; split collar | owner decision |
@@ -269,12 +276,14 @@ The press cage, the load cell and the pullers are B3 and B4's. No purchases have
 
 1. **The apex: printed or metal.**
    - The wheel link's hub root needs its peel stress × 0.58 (0.70 against 1.2) and the front link's ring × 0.43.
-   - A turned 6061 hub costs about +120 g a leg, and also puts the wheel's M6 heads on metal.
+   - A turned 6061 hub costs about +104 g a leg (screen.md: the journal and shoulder in 6061 instead of PA6-CF), and
+     also puts the wheel's M6 heads on metal.
    - A printed root fillet and a thicker ring are lighter, but nothing yet shows they reach the target.
    - PR 2 sweeps both and reports the masses.
 2. **The hip-frame mount's sleeve: 6061 or steel.** Steel is +67 g a leg more and costs about the same. 6061 at
-   5.1 kN is at 181 MPa, so it relies on the plastic around it to keep it straight.
-3. **Mass.** The D74 changes above add roughly 150–300 g a leg, depending on the apex choice. D71's as-built gate is
+   5.1 kN is at 181 MPa, under 6061-T6's yield; free, it buckles at about 18.7 kN (3.7 × the preload), so it does
+   not need the plastic to keep it straight.
+3. **Mass.** The D74 changes above add roughly 180–280 g a leg, depending on the apex choice. D71's as-built gate is
    37.0 kg, and the robot's ledger has been reported at 38.55 kg. D72 raised the product ceiling to 45.36 kg but asks
    for the affected load cases at the real mass before manufacturing.
 

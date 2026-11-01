@@ -96,7 +96,7 @@ def materials(repo):
     s_z = md['strength_z_mpa']
     return {
         'E_xy_humid': md['E_mpa'], 'E_z_humid': 2170.0 * 0.281 * 0.8,
-        'E_xy_dry': tds['modulus_gpa'] * 1000.0, 'E_z_dry': 2170.0,
+        'E_xy_dry': tds['modulus_gpa'] * 1000.0, 'E_z_dry': 2170.0, 'S_xy_dry': float(tds['tensile_mpa']),
         'S_xy': md['strength_xy_mpa'], 'S_z': s_z, 'S_s': s_z / math.sqrt(3), 'S_s_half': s_z / 2,
         'density': tds['density_g_cm3'],
         'washer_mpa': repo.num('cad/studies.py', r"'washer_mpa': ([\d.]+),"),
@@ -215,8 +215,10 @@ def layer_rows(repo, mat):
 
 def where(part, c, repo):
     """A plain name for a worst corner, from the part's own frame (each part's origin and axes as cad/fivebar.py)."""
-    l1 = repo.num('cad/fivebar.py', r"'D': [\d.]+, 'l1': ([\d.]+), 'l2'")
-    l2 = repo.num('cad/fivebar.py', r"'D': [\d.]+, 'l1': [\d.]+, 'l2': ([\d.]+),")
+    if getattr(repo, '_links', None) is None:      # bound once per repository object, not once per row
+        repo._links = (repo.num('cad/fivebar.py', r"'D': [\d.]+, 'l1': ([\d.]+), 'l2'"),
+                       repo.num('cad/fivebar.py', r"'D': [\d.]+, 'l1': [\d.]+, 'l2': ([\d.]+),"))
+    l1, l2 = repo._links
     x, y, z = c
     if part == 'upper_link':
         rk = math.hypot(x - l1, z)
@@ -274,9 +276,9 @@ def lame(delta, d, do, e):
     return p, p * k
 
 
-def fit_verdict(band, dry, press):
+def fit_verdict(band, dry, press, s_dry):
     out = []
-    if dry[1] > 0.5 * 102.0:
+    if dry[1] > 0.5 * s_dry:
         out.append(f'too tight once printed: {dry[1]:.0f} MPa hoop at the tight end (> half the dry strength); open the hole')
     if press > 5000:
         out.append(f'{press / 1000:.0f} kN to press at the tight end: more than a bench vise')
@@ -294,6 +296,10 @@ def fits(repo, mat):
     comp = repo.num('cad/fivebar.py', r'^PRINT_HOLE_COMP = ([\d.]+)')
     repo.has('cad/fivebar.py', 'u = u.cut(ycyl(EYE_SLEEVE[0] / 2 + PRINT_HOLE_COMP / 2, eye_sleeve_end(), t + 1, l1, 0))')
     sleeve_hole = repo.num('cad/fivebar.py', r'^EYE_SLEEVE = \(([\d.]+), ') + comp
+    repo.has('cad/fivebar.py', "re, fe = P['eye_r'], P['eye_stub_fillet']")
+    stub_in = repo.num('cad/fivebar.py', r"ycyl\(re - ([\d.]+), -EYE_BOSS, 0\.01, l1, 0\)")   # the eye stub's radius
+    sl_len = repo.num('cad/fivebar.py', r'^EYE_SLEEVE = \([\d.]+, [\d.]+, ([\d.]+)\)')
+    sl_n = repo.num('cad/fivebar.py', r'^EYE_SLEEVES = (\d+)')
     kc_od = repo.num('cad/fivebar.py', r"'bearing': '6301-2RS', 'bearing_od': ([\d.]+),")
     kc_hub = repo.num('cad/fivebar.py', r"'bearing_od': [\d.]+, 'bearing_w': [\d.]+, 'hub_od': ([\d.]+),")
     kc_w = repo.num('cad/fivebar.py', r"'bearing': '6301-2RS', 'bearing_od': [\d.]+, 'bearing_w': ([\d.]+),")
@@ -316,7 +322,7 @@ def fits(repo, mat):
     rows = [
         # name, part, hole as drawn, the mating part's diameter band, ring OD (None: plate), engaged length, mouth on the bed?
         ('knee eye sleeves (2 x DIN 179 18 x 20)', 'upper_link', sleeve_hole, (18 + sl_tol[0], 18 + sl_tol[1]),
-         2 * eye_r - 1.0, 2 * 20.0, True, 'pressed in from the outer face, which is on the bed (DOWN_OUTER)'),
+         2 * (eye_r - stub_in), sl_n * sl_len, True, 'pressed in from the outer face, which is on the bed (DOWN_OUTER)'),
         ('knee 6301 outer races', 'front_link / wheel_link', kc_od + 2 * kc_play, (kc_od - 0.011, kc_od), kc_hub, kc_w,
          True, 'one of the two seats opens on the bed face in each lower link'),
         ('apex 61812 outer races', 'front_link', ac['bearing_od'] + 2 * ac_play, (ac['bearing_od'] - 0.013, ac['bearing_od']),
@@ -337,11 +343,11 @@ def fits(repo, mat):
                     'ring_od_mm': do, 'length_mm': L,
                     'interference_drawn_mm': [r(drawn[0], 3), r(drawn[1], 3)],
                     'interference_printed_mm': [r(band[0], 3), r(band[1], 3)],
-                    'at_max_dry': {'p_mpa': r(dry[0], 1), 'hoop_mpa': r(dry[1], 1), 'hoop_of_S_xy_dry': r(dry[1] / 102.0, 2),
+                    'at_max_dry': {'p_mpa': r(dry[0], 1), 'hoop_mpa': r(dry[1], 1), 'hoop_of_S_xy_dry': r(dry[1] / mat['S_xy_dry'], 2),
                                    'press_n': r(press, -1)},
                     'at_max_humid': {'p_mpa': r(hum[0], 1), 'hoop_mpa': r(hum[1], 1)},
                     'grip_lost_humid': r(1 - hum[0] / dry[0], 2) if dry[0] else None,
-                    'mouth_on_bed': bed, 'note': note, 'verdict': fit_verdict(band, dry, press)})
+                    'mouth_on_bed': bed, 'note': note, 'verdict': fit_verdict(band, dry, press, mat['S_xy_dry'])})
     return {'basis': f"printed vertical hole {PRINT_HOLE_ERR[0]:+.2f} to {PRINT_HOLE_ERR[1]:+.2f} mm on the diameter against the "
                      f"CAD (assumed: C1 measures it); {SOURCES['lame']}; dry X-Y modulus {mat['E_xy_dry']:.0f} MPa at "
                      f"assembly, humid {mat['E_xy_humid']:.0f} in service; press force at mu {MU_PRESS}; hoop stress "
@@ -352,7 +358,9 @@ def fits(repo, mat):
 
 def clamp_row(name, d, grip_mm, area_mm2, preload_n, mat, bolt_len_mm, sleeve=False):
     """The clamped plastic's elastic squeeze and the preload a creep step takes, VDI 2230's joint diagram with the
-    plastic as one prismatic member under the bearing area (no cone: the plastic is far softer than the bolt)."""
+    plastic as one prismatic member under the bearing area. VDI 2230's substitute cone (set by the member's own
+    geometry) is left out, so k_clamp is understated and the preload a step takes is a lower bound. A fixed step is a
+    different strain on each grip: compare joints by the strain they can take, not by the newtons one step costs."""
     k_b = E_STEEL * AS_MM2[d] / bolt_len_mm
     if sleeve:
         return {'joint': name, 'clamp': 'steel sleeve (the plastic is outside the clamp path)', 'k_bolt_kn_mm': r(k_b / 1000, 1),
@@ -393,6 +401,7 @@ HUB_RING_AREA = annulus(66.0, 41.0) - 8 * annulus(5.5, 0)     # a 6061 ring Ø66
 # masses (g) for the mass column: estimates from steel volume (7.85 g/cm3), the catalogue's insert entry; mcmaster-parts
 # replaces them with the chosen parts' masses in PR 2
 SHCS_G = {'M5x90': 16.0, 'M5x16': 3.6}
+WASHER_9021_M5_G = annulus(15.0, 5.3) * 1.2 * 7.85e-3    # DIN 9021 M5, 1.2 thick, steel
 NUT_G = {'M5': 1.2}
 INSERT_G = {'M5': 1.103}
 
@@ -420,7 +429,8 @@ def joints(repo, mat, layers):
     pull = hf['pullout_repo_n']
     fault = max(l['per_insert_n'] for l in hf['loads'])
     flange_t = repo.num('cad/fivebar.py', r'^FLANGE_T, FLANGE_X = ([\d.]+), ')
-    wall = (flange_t - 7.11) / 2              # the M5 insert's knurl (Ø7.11, research/insert-joints) centred in the flange
+    knurl = repo.json('research/insert-joints/joints.json')['inserts']['insert_m5']['od_mm']
+    wall = (flange_t - knurl) / 2             # the M5 insert's knurl (research/insert-joints) centred in the flange
     sleeved = proof_preload(5, '8.8')
     flange = [row for row in layers['rows'] if row['part'] == 'hip_frame' and row['where'].startswith('flange')]
     flange_root = min(flange, key=lambda x: x['layer_sf'] / x['target'])
@@ -437,7 +447,8 @@ def joints(repo, mat, layers):
             'insert': f"today; keep preload <= 0.5 x pull-out ({0.5 * pull:.0f} N, {torque_for(0.5 * pull, 5):.2f} N m) and the "
                       f"fault load ({fault:.0f} N) opens the joint; spin-out is not measured",
             'sleeved through-bolt': f"M5 8.8 through the flange's length and the web ({FRAME_GRIP:.1f} mm of steel sleeve, Ø8 x Ø5.3), "
-                                    f"nut in a hex pocket on the web's leg face, head on the cheek / under the plate: preload "
+                                    f"nut on a DIN 9021 M5 washer (Ø15) in a Ø15.5 pocket on the web's leg face, so the fault "
+                                    f"tension bears on the web round the sleeve; head on the cheek / under the plate: preload "
                                     f"{sleeved:.0f} N ({torque_for(sleeved, 5):.1f} N m) in steel, {sleeved / fault:.1f} x the fault "
                                     "tension; no insert, no creep in the clamp",
             'threaded-rod tie': 'the same with M5 rod and two nuts where no head fits; no gain here (the cheek side takes a head)',
@@ -453,7 +464,8 @@ def joints(repo, mat, layers):
             f'the Ø8.1 bore leaves {(flange_t - 8.1) / 2:.2f} mm walls in the {flange_t:g} mm flange, so the bolt line gets a local boss and the '
             'frame is re-run; the rig plate and the body cheek keep their Ø5.5 holes; screws M5 x ~90 (mcmaster-parts). Mass '
             f'with a 6061 sleeve; a steel one adds {6 * sleeve_g(FRAME_GRIP, 7.85) - 6 * sleeve_g(FRAME_GRIP, 2.70):.0f} g more',
-        mass_g_per_leg=6 * (sleeve_g(FRAME_GRIP, 2.70) + SHCS_G['M5x90'] + NUT_G['M5'] - SHCS_G['M5x16'] - INSERT_G['M5'])
+        mass_g_per_leg=6 * (sleeve_g(FRAME_GRIP, 2.70) + SHCS_G['M5x90'] + NUT_G['M5'] + WASHER_9021_M5_G - SHCS_G['M5x16']
+                            - INSERT_G['M5'])
         - 6 * annulus(8.1, 0) * FRAME_GRIP / 1000 * mat['density']))
 
     # 2. upper link hub on the machined adapter
@@ -502,7 +514,7 @@ def joints(repo, mat, layers):
         why='D74: the motor\'s mount; today the plastic limits each screw to about 565 N. Coordinate with the RS-04 support '
             'work (issue #116) and its fit job before changing the frame\'s lug ring.',
         pr2='recommended; held until issue #116\'s mounting stack is settled (its fit job prints this ring)',
-        mass_g_per_leg=2 * 10 * 1.6))
+        mass_g_per_leg=r(2 * 10 * (annulus(7.0, 4.3) * 7.85 - annulus(7.0, 4.5) * mat['density']) * lugs['clamp']['printed_mm'] / 1000, 0)))
 
     # 4. knee eye sleeves (upper link)
     ke = J['leg.knee_eye_sleeves']
@@ -547,6 +559,13 @@ def joints(repo, mat, layers):
     hub_root = min((row for row in layers['rows'] if row['part'] == 'wheel_link' and row['where'].startswith('apex')),
                    key=lambda x: x['layer_sf'] / x['target'])
     ring = min((row for row in layers['rows'] if row['part'] == 'front_link'), key=lambda x: x['layer_sf'] / x['target'])
+    # a 6061 hub in place of the printed one: the Ø60 journal from the hub's end (y -6) to the outer 61812's face (y 45)
+    # and the Ø64 shoulder from there to the link's inner face (y 54), both round the Ø48 bore (cad/fivebar.py Stack)
+    jr = repo.num('cad/fivebar.py', r"\.union\(ycyl\(([\d.]+), h0, ab1 \+ 0\.01, l2\)\)")
+    sr = repo.num('cad/fivebar.py', r"k = k\.union\(ycyl\(([\d.]+), ab1, h1 \+ 0\.01, l2\)\)")
+    br = repo.num('cad/fivebar.py', r"k = k\.cut\(ycyl\(([\d.]+), h0 - 1, h1 - 0\.01, l2\)\)")
+    hub_mm3 = annulus(2 * jr, 2 * br) * (45.0 + 6.0) + annulus(2 * sr, 2 * br) * (54.0 - 45.0)
+    apex_hub_g = hub_mm3 / 1000 * (2.70 - mat['density'])
     out.append(joint_entry(
         'leg.apex', 2, 'the wheel\'s load and out-of-plane moment between the two lower links',
         today='two 61812 in the front link\'s printed ring (6 mm wall) on the wheel link\'s printed Ø60 hub; DIN 471-60 '
@@ -558,7 +577,8 @@ def joints(repo, mat, layers):
             'printed, bigger': 'a root fillet at the Ø64 shoulder; the ring wall 6 -> 10-12 mm: lowest mass, may not reach 1.2',
             'metal bushing': 'a turned 6061 hub (journal, shoulder, circlip groove) clamped through the foot by the wheel\'s '
                              '4 x M6 (their heads then bear on metal, which also fixes the foot\'s crushed-plastic clamp); '
-                             'about +120 g a leg',
+                             f'about +{apex_hub_g:.0f} g a leg (the Ø60 / Ø48 journal and the Ø64 shoulder in 6061 instead of '
+                             'PA6-CF, from cad/fivebar.py\'s hub)',
             'split apex collar': 'the front link\'s inner half-eye as a separate printed collar, through-bolted to the link: '
                                  'the link then prints flat, and the bolts precompress the ring\'s layers',
         },
@@ -583,7 +603,6 @@ def joints(repo, mat, layers):
         pr2='DIN 433 M6 washers under the heads; torque from the washer\'s plastic screen', mass_g_per_leg=4 * 0.7))
 
     # 8. stop posts
-    st = S['R3'].get('stop_post') or {}
     out.append(joint_entry(
         'leg.stop_posts', 8, 'the knee-out / knee-in stops',
         today='Ø16 x 40 52100 pins 23 mm into blind Ø16.1 holes, retaining compound; TPU 95A sleeves',
@@ -718,8 +737,10 @@ COUPONS = [
      'rows': [[s] for s in ('s1', 's2', 's3')]},
     {'id': 'C3', 'name': 'sleeved through-bolt joint, against the plastic clamp', 'prints': 'four 13 x 40 x 60 flange blocks, layers '
      'across the bolt as in the frame',
-     'features': 'two with an Ø8.1 bore and a steel sleeve flush, two with an Ø5.5 bore (bolt on the plastic, a Ø15 washer); '
-                 'M5 8.8 through the B4 load cell',
+     'features': 'two with an Ø8.1 bore and a steel sleeve flush, its nut on a DIN 9021 (Ø15) washer that reaches the '
+                 'plastic round the sleeve; two with an Ø5.5 bore (bolt on the plastic, a Ø15 washer); M5 8.8 through the B4 '
+                 'load cell; after the creep readings, pull each sleeved block apart to the fault tension (851 N) and '
+                 'check the washer holds it',
      'settles': 'preload kept over 30 min, 24 h, 7 days and a humid week, sleeved against plain; the creep step the preload '
                 'table screens; the re-torque schedule',
      'sheet': 'c3-through-bolt.csv',
