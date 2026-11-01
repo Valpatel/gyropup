@@ -48,12 +48,12 @@ BOUGHT = [
     ('robstride-rs-04', 2, 'the two leg motors, in the hip frame'),
     ('odrive-botwheel', 1, 'the wheel, on the wheel link\'s hub'),
     ('bearing_61812', 4, 'support bearings round the two output adapters; two at the apex on the wheel link\'s hub'),
-    ('bearing_6201', 4, 'two in each knee'),
+    ('bearing_6301', 4, 'two in each knee'),
     ('circlip_60', 1, 'holds the apex 61812 on the wheel link\'s hub'),
     ('knee_pin', 2, 'knee shoulder screws, 12 mm x 90, M10 (cad/fivebar.py knee_pin_length)'),
     ('nut_m10_nyloc', 2, 'knee pins, in the upper links\' pockets'),
     ('washer_m12_thin', 4, 'each side of each knee\'s bearing stack'),
-    ('knee_spacer', 2, 'between each knee\'s two inner races (28 mm)'),
+    ('knee_spacer', 2, f'between each knee\'s two inner races ({fb.knee_spacer_length():g} mm)'),
     ('eye_sleeve', 4, 'steel sleeves, two end to end in each upper link\'s knee eye: spread the pin\'s load on the plastic'),
     ('stop_pin', 4, 'stop posts: Ø16 x 40 vented pull-out dowels, 23 mm into blind holes in the hip frame (retaining compound), TPU sleeves over them'),
     ('screw_m4x20', 20, 'motor lugs (10 per motor), seats 8.5 mm down: 4.4 mm nominal penetration into 5 mm-min usable threads; measure before assembly'),
@@ -66,7 +66,8 @@ BOUGHT = [
 ]
 
 
-CUT_FROM_STOCK = {'knee_spacer': (4, 5.2)}      # pieces per stocked length, grams per piece
+CUT_FROM_STOCK = {'knee_spacer': (4, round(fb.knee_spacer_length() * 73.78 * 2.70e-3, 1))}   # pieces per stocked length,
+                                                 # grams per piece: the tube's 73.78 mm2 (15.875 x 12.573) of 6061
 
 
 def mass_g(name, shape):
@@ -84,7 +85,7 @@ def bom():
                          'name': it.get('name'), 'mass_g_each': it['specs'].get('mass_g'), 'price_usd_each': it.get('price_usd')})
             continue
         it = HARDWARE.get(key)
-        row = {'key': key, 'qty': qty, 'for': why, 'vendor': 'McMaster-Carr' if it else None,
+        row = {'key': key, 'qty': qty, 'for': why, 'vendor': (it.get('vendor') or 'McMaster-Carr') if it else None,
                'part_number': it['model'] if it else None, 'name': it['name'] if it else 'TO SOURCE',
                'mass_g_each': it['specs'].get('mass_g') if it else None, 'price_usd_each': it.get('price_usd') if it else None,
                'cad': bool(it and (it.get('cad') or {}).get('file'))}
@@ -113,7 +114,7 @@ def assembled(h_mm: float, lean: float = 0.0, vendor: bool = False):
 
 COLOURS = {'screws': (.15, .15, .17), 'hip_frame': (.40, .43, .48), 'output_adapter': (.62, .65, .70), 'upper_link': (.96, .72, .16), 'front_link': (.96, .72, .16),
            'wheel_link': (.93, .60, .12), 'stop_sleeve': (.85, .22, .2), 'motor': (.17, .18, .2), 'bearing': (.78, .8, .83),
-           'knee_6201': (.78, .8, .83), 'apex_circlip': (.3, .3, .32), 'apex': (.78, .8, .83), 'knee_pin': (.66, .68, .72), 'knee_nut': (.66, .68, .72),
+           'knee_bearing': (.78, .8, .83), 'apex_circlip': (.3, .3, .32), 'apex': (.78, .8, .83), 'knee_pin': (.66, .68, .72), 'knee_nut': (.66, .68, .72),
            'knee_washer': (.7, .72, .76), 'stop_posts': (.6, .62, .66), 'wheel_tyre': (.1, .1, .11), 'wheel_hub': (.3, .32, .35)}
 
 
@@ -126,7 +127,7 @@ def colour(n):
 
 EXPLODE = {'motor': (0, -70, 0), 'output_adapter': (0, -25, 0), 'screws_outputs': (0, -25, 0), 'bearing_61812': (0, -12, 0), 'hip_frame': (0, -45, 0),
            'stop': (0, 10, 0), 'upper_link': (0, 30, 0), 'knee_nut': (0, 20, 0), 'front_link': (0, 75, 0), 'apex': (0, 75, 0),
-           'knee_6201': (0, 95, 0), 'knee_washer': (0, 95, 0), 'wheel_link': (0, 120, 0), 'knee_pin': (0, 175, 0), 'wheel': (0, 170, 0)}
+           'knee_bearing': (0, 95, 0), 'knee_washer': (0, 95, 0), 'wheel_link': (0, 120, 0), 'knee_pin': (0, 175, 0), 'wheel': (0, 170, 0)}
 
 
 def render(out: Path):
@@ -219,7 +220,7 @@ def main():
     cnc_g = sum(masses[n] * L.meta[n]['qty'] for n in cnc)
     bought_g = sum((r['mass_g_each'] or 0) * r['qty'] for r in rows)
     missing = [r['key'] for r in rows if r['part_number'] is None]
-    no_cad = [r['key'] for r in rows if r['vendor'] == 'McMaster-Carr' and not r.get('cad')]
+    no_cad = [r['key'] for r in rows if r.get('cad') is False]          # catalogue hardware with no vendor model yet
     cnc_rows = [{k: c[k] for k in ('key', 'qty', 'vendor', 'backup', 'material', 'mass_g_each', 'size_mm', 'step', 'spec', 'price_usd_each',
                                    'price_estimate_usd_each', 'price_note')} for c in cnc.values()]
     (OUT / 'bom.json').write_text(json.dumps({'per_leg': rows, 'made_to_order': cnc_rows, 'to_source': missing, 'cad_pending': no_cad,

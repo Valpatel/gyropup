@@ -4,6 +4,8 @@ The Progress page's hip-frame E1 movie is a **12-second presentation of a linear
 
 The existing strength failure is unchanged: **SF 1.65, required 2.00**, maximum displacement **0.2678 mm**, humid weak-direction PA6-CF. This is the recorded **37.5 kg** robot baseline (rounded to 38 kg in the existing load description). It does not validate the future 100 lb target, printing, assembly, fatigue, contact, preload, buckling, crack propagation, or operation around people. A smoother animation is not stronger hardware.
 
+**Status, 2026-11-01:** this movie and its field are the record from before [PR 134](https://github.com/Valpatel/gyropup/pull/134) (issue 29), which changed the hip frame's flanges and the knee bearing. Studied at that PR's head, the new frame reads E1 SF 2.08 at the 4 mm gate and 1.81 at 3 mm, so the value is not converged against 2.00. Regenerating the full leg record and this movie with the pinned toolkit is the first next step in issue 29.
+
 ## Reproduction and provenance
 
 The original summary was published in `2cb254fad8927dc71d8b2c80176c01d5ad0578d8` from `python cad/leg_studies.py --no-anim` at `c1dbc10`. It contains a PNG but no video or exported field. The relevant mechanical and load inputs are unchanged at the production base `c9229dd24d5616f28c010a22d81627e24e3bf065`.

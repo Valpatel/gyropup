@@ -1,6 +1,6 @@
 {
   "schema": "gyropup.carrier-insert-fit/1",
-  "source_revision": "2a4b2fd38b96ce1ce271a3cfeb40fccf551b640c",
+  "source_revision": "0d6b8a32e55d3d3c253111b944ef1458ba16f49b",
   "inputs": {
     "files": {
       "cad/assembly.py": "4b7c7ef0a5364e524b14d7599b2357f0de4249a2c51e8a02cc69d929b30bab8a",
@@ -11,7 +11,7 @@
       "cad/body_fuse_board.py": "b705420639121f67e085d47d697dc05d7316737b0fcb7ad06bb3483e8ff01f2d",
       "cad/body_guards.py": "cc9f220ca9d4708eb81b86396d483115f03fe7a7be2f3bdfd8c5a998f521ffb8",
       "cad/body_joints.py": "78b96a277de30729bdaa121db7d20657c37ef933e710bafb3ee36738d6a40504",
-      "cad/body_layout.py": "1f4e675a1685fa0223355649dd6a3fd789f7aa032807a6fc2a6f7df75b660b49",
+      "cad/body_layout.py": "605c0162d0659cc5bae67e6230cea2ba259265fda0562e41a607f994030d07c4",
       "cad/body_legloads.py": "795ba8985155d2fea01a5463f737c3cccb1ce3c0082951eee05374ea172bc1cf",
       "cad/body_params.py": "e866a9390a68f08975637ce02b8a91c89cb1115279feb2b0f821dc10eab9bdce",
       "cad/body_sections.py": "29aa27a83d7a3c68c79af3561d96f6b29d925a83bcb1c5504a1fb694a7e101d1",
@@ -24,7 +24,7 @@
       "cad/bom_media.py": "5a602e66f19ec759909d195c3778a01dd558142896f5deb88525450b35f143b6",
       "cad/build.py": "e32a18e2ef8813917d804c10dd9ccb4f3dc0a6151447f2e413891cbdc8d331e4",
       "cad/build_body.py": "c164c14497312e0d499d001e9e48563b5941c7a5dce6ef591b9579b0a2462d1f",
-      "cad/build_leg.py": "0002c702608e4886b1f14252e17e1f53deecc2453355ff9e0490bd8142bed9a8",
+      "cad/build_leg.py": "1b43ff19f694fbad566cf7e53406a8f5b5ae5bf6038341f4574a7925893d98fb",
       "cad/build_rig.py": "c286adb59bae681147f84a38b97e8caaa73ad8eb8f55a3748ff0b738e85a3956",
       "cad/build_turret.py": "ebefa059c8d6259405e48b82d32c9e575b44b6e0ff6d8a5a7e329d06211eba4a",
       "cad/build_turret_box.py": "ccf563650cc5102ecc9a5d50691ae03bb14e0c1070584b7347ca6ea3b0946650",
@@ -33,16 +33,16 @@
       "cad/check_base_board_print.py": "13374e961abacca1ba5e79508dca654e7d4919eb81e773046a84292645ae2bdb",
       "cad/check_base_board_service.py": "bc05259433eaf5493ba5a6d702a7b5124f8fb17ef911207932137f9b675959ef",
       "cad/electronics.py": "e3d322ee903366af22caa191dbc1aab80546a1c90aac886d1d87b7905af93daa",
-      "cad/fivebar.py": "3868538500225f5ccb9e15f11a75c3c124d24786396960e78029c51fbfd1fc84",
+      "cad/fivebar.py": "a484b09addf3070f638821082bf7981f62ad0541a493da7076e1f94f269b6328",
       "cad/gmi.py": "dab034a3ee939a7b5f4a6fbae5b8ba7371d2113c5380a8450733650c2d02deae",
       "cad/interfaces.json": "a4842a317dd2e64e9b4e11d34376bc36c26e1ddf8435a4b16a85dae3cd730b73",
       "cad/leg.py": "86d141a9c548328b871cc118f3267797326294c89f4e50633e82274458b1d666",
-      "cad/leg_studies.py": "740c94fe586eff664fc4370804d8a056bf282be8f33ede3f5836db647bb4409f",
+      "cad/leg_studies.py": "69f15273d1111c9db4a63faa444cdbf0d6e3f5e8b107f986384b2158066acf35",
       "cad/parameters.json": "92cfeaa792a2466594852afeef08af70fe74335ce60f458bd976f62ec0a39e13",
       "cad/print_provenance.py": "db0d9cdc14e0d0363899d82c03eb31cb63ea0d7718fedcf127a5545f8f6bec88",
       "cad/print_slicing.py": "13fd25fe32e75e0c66dbe8af132fd4d70fb030defb14d88a96f9ff77cbaf07bd",
       "cad/printplan.py": "0bd820acb603117a981dff62e18097dd0ad84edc1d75bc2d8a13cd5c36a4a5d9",
-      "cad/rig_assembly.py": "181d7fa6bec55ce97f2b7fdacf4b021c81b79b9fb7855df8abf25b87f5d7fb5a",
+      "cad/rig_assembly.py": "279735fbb291e1eb0561079eb24739fd46314d45d6964d92bc990bd7173ee913",
       "cad/rig_bench.py": "c0efdacf2747ecbffe3019deeda9fd81c8fee641c798bf987987877f0b46b845",
       "cad/rig_hardware.py": "c71fdf439173243c0134ea588b9c9bf3a2d97c964c4675793f3db94db37a9754",
       "cad/rig_integrity.py": "5750354f73700a3f94bc2112b9972ed621dc7ea46a8123aa53ca76d22a45397b",
@@ -51,6 +51,7 @@
       "cad/rs04_lug_checks.py": "02a75e6dd5d28c6c8c149141d100d1386125197f5edfb34143565c72d8a8dfb5",
       "cad/studies.py": "35149401f3a753024568eba0b34765419ed535d42c5bf19a11544d13cad8f823",
       "cad/test_body.py": "8a9d3167ef2b94c9361e0d3be591a8ebbc268c7a6b191f111ce9a1838750e4c8",
+      "cad/test_leg_loads.py": "0ed04011ea672aa8bc387af272ddfa1783ec4fa1f379fde1e3dfbd9201867b51",
       "cad/turret.py": "76d4fa676c3181e1d3bf0c623cefa75e420a3b2ed90057320d038c8b7aa41534",
       "cad/turret_assembly.py": "2fc9805707c7ecc7f6a605c5a8a5c528fb89794f27d4eba699db8b02acc00b3f",
       "cad/turret_base_board.py": "153e49871e0a3359478cd34a50daf7e44f4497970097475c829dbbcdacda90ba",
@@ -71,7 +72,7 @@
       "catalog/alternates.json": "9d5da650878fefa12654cdedae841d2daf22c1101c7f038018a75b8921d5ee3b",
       "catalog/body.json": "295f114fbc5e400a12af71a8ae14ea6cb379a9233518b5b91236fae888f875de",
       "catalog/designed-media-validation.json": "f0ec08ffd77f7929e093742f6fcfa7c8b96417a52228de0f2d7c0433d8ca1a1c",
-      "catalog/hardware.json": "b67a9859b3e3b960ff107032519393f53dc81b048607939942242d019f20af86",
+      "catalog/hardware.json": "c60874a35ec4a9999d4cb7c0b8e081f6c972d575e64236d23752ff02f7e8ed23",
       "catalog/images.json": "9936ba0433f65278c583b847450604ee554c19a61365cfc49570b436df0bbd09",
       "catalog/index.json": "5e77d00c8ab4961f5da0bb2d5692a23170b9f4143e05d850d7b33fe36d70f334",
       "catalog/interfaces.json": "3889bc34503444f389e7951d74944f37b7e57b0b2b3be68ed596b959e83a46af",
@@ -174,8 +175,8 @@
             "volume_integration": {
               "method": "adaptive BRepGProp GK, requested relative errors 1e-6 and 1e-8",
               "error_basis": "max(OCCT summed absolute face-error estimates, refinement delta); not a rigorous bound",
-              "max_estimated_error_mm3": 1.6795694328240905e-07,
-              "max_refinement_delta_mm3": 2.842170943040401e-14
+              "max_estimated_error_mm3": 1.6795692039062653e-07,
+              "max_refinement_delta_mm3": 4.263256414560601e-14
             }
           },
           "exact": true,
@@ -194,7 +195,7 @@
           "witness": {
             "overlap_centroid_estimate": {
               "method": "Gauss centroid refinements 1e-6 and 1e-8; approximate witness only",
-              "refinement_delta_mm": 7.944109290391274e-15
+              "refinement_delta_mm": 7.105427357601002e-15
             },
             "overlap_centroid": [
               55.25,
@@ -212,7 +213,7 @@
             "volume_integration": {
               "method": "adaptive BRepGProp GK, requested relative errors 1e-6 and 1e-8",
               "error_basis": "max(OCCT summed absolute face-error estimates, refinement delta); not a rigorous bound",
-              "max_estimated_error_mm3": 2.0396804877510072e-07,
+              "max_estimated_error_mm3": 2.0396805491348477e-07,
               "max_refinement_delta_mm3": 7.105427357601002e-15
             },
             "inner_point": [
@@ -243,7 +244,7 @@
         "witness": {
           "overlap_centroid_estimate": {
             "method": "Gauss centroid refinements 1e-6 and 1e-8; approximate witness only",
-            "refinement_delta_mm": 3.847776009678453e-08
+            "refinement_delta_mm": 3.847776151660351e-08
           },
           "overlap_centroid": [
             4.160402,
@@ -261,8 +262,8 @@
           "volume_integration": {
             "method": "adaptive BRepGProp GK, requested relative errors 1e-6 and 1e-8",
             "error_basis": "max(OCCT summed absolute face-error estimates, refinement delta); not a rigorous bound",
-            "max_estimated_error_mm3": 1.681427339962741e-07,
-            "max_refinement_delta_mm3": 5.684341886080802e-14
+            "max_estimated_error_mm3": 1.6814272584188514e-07,
+            "max_refinement_delta_mm3": 0.0
           },
           "inner_point": [
             0.0,
@@ -291,7 +292,7 @@
         "witness": {
           "overlap_centroid_estimate": {
             "method": "Gauss centroid refinements 1e-6 and 1e-8; approximate witness only",
-            "refinement_delta_mm": 3.847775928465369e-08
+            "refinement_delta_mm": 3.8477758174168554e-08
           },
           "overlap_centroid": [
             53.317083,
@@ -309,7 +310,7 @@
           "volume_integration": {
             "method": "adaptive BRepGProp GK, requested relative errors 1e-6 and 1e-8",
             "error_basis": "max(OCCT summed absolute face-error estimates, refinement delta); not a rigorous bound",
-            "max_estimated_error_mm3": 1.6814267404775085e-07,
+            "max_estimated_error_mm3": 1.6814275448360457e-07,
             "max_refinement_delta_mm3": 0.0
           },
           "inner_point": [
@@ -334,7 +335,7 @@
         },
         "drilled_through": {
           "rejected": true,
-          "reason": "Blind pilot floor/back wall is missing or too thin: {'a': 'a', 'b': 'b', 'state': 'touching', 'gap_mm': 0.01, 'overlap_mm3': 0.0, 'witness': {'point_a': [55.99, -22.4, 11.0], 'point_b': [55.99, -22.4, 10.99], 'volume_integration': {'method': 'adaptive BRepGProp GK, requested relative errors 1e-6 and 1e-8', 'error_basis': 'max(OCCT summed absolute face-error estimates, refinement delta); not a rigorous bound', 'max_estimated_error_mm3': 1.8197332733450406e-07, 'max_refinement_delta_mm3': 7.105427357601002e-15}}, 'exact': True, 'cached': False}",
+          "reason": "Blind pilot floor/back wall is missing or too thin: {'a': 'a', 'b': 'b', 'state': 'touching', 'gap_mm': 0.01, 'overlap_mm3': 0.0, 'witness': {'point_a': [55.99, -22.4, 11.0], 'point_b': [55.99, -22.4, 10.99], 'volume_integration': {'method': 'adaptive BRepGProp GK, requested relative errors 1e-6 and 1e-8', 'error_basis': 'max(OCCT summed absolute face-error estimates, refinement delta); not a rigorous bound', 'max_estimated_error_mm3': 1.8197332796967006e-07, 'max_refinement_delta_mm3': 7.105427357601002e-15}}, 'exact': True, 'cached': False}",
           "expected_diagnostic": "Blind pilot floor/back wall is missing"
         },
         "wrong_orientation": {
@@ -461,7 +462,7 @@
             "volume_integration": {
               "method": "adaptive BRepGProp GK, requested relative errors 1e-6 and 1e-8",
               "error_basis": "max(OCCT summed absolute face-error estimates, refinement delta); not a rigorous bound",
-              "max_estimated_error_mm3": 4.876009138258191e-08,
+              "max_estimated_error_mm3": 4.876009700398871e-08,
               "max_refinement_delta_mm3": 0.0
             }
           },
@@ -481,7 +482,7 @@
           "witness": {
             "overlap_centroid_estimate": {
               "method": "Gauss centroid refinements 1e-6 and 1e-8; approximate witness only",
-              "refinement_delta_mm": 3.972054645195637e-15
+              "refinement_delta_mm": 7.105427357601002e-15
             },
             "overlap_centroid": [
               45.75,
@@ -499,7 +500,7 @@
             "volume_integration": {
               "method": "adaptive BRepGProp GK, requested relative errors 1e-6 and 1e-8",
               "error_basis": "max(OCCT summed absolute face-error estimates, refinement delta); not a rigorous bound",
-              "max_estimated_error_mm3": 8.514934486659494e-08,
+              "max_estimated_error_mm3": 8.514938358605857e-08,
               "max_refinement_delta_mm3": 3.552713678800501e-15
             },
             "inner_point": [
@@ -548,7 +549,7 @@
           "volume_integration": {
             "method": "adaptive BRepGProp GK, requested relative errors 1e-6 and 1e-8",
             "error_basis": "max(OCCT summed absolute face-error estimates, refinement delta); not a rigorous bound",
-            "max_estimated_error_mm3": 4.1374851060429356e-08,
+            "max_estimated_error_mm3": 4.1374841330340405e-08,
             "max_refinement_delta_mm3": 2.2737367544323206e-13
           },
           "inner_point": [
@@ -578,7 +579,7 @@
         "witness": {
           "overlap_centroid_estimate": {
             "method": "Gauss centroid refinements 1e-6 and 1e-8; approximate witness only",
-            "refinement_delta_mm": 0.0
+            "refinement_delta_mm": 1.0048591735576161e-14
           },
           "overlap_centroid": [
             48.942764,
@@ -596,7 +597,7 @@
           "volume_integration": {
             "method": "adaptive BRepGProp GK, requested relative errors 1e-6 and 1e-8",
             "error_basis": "max(OCCT summed absolute face-error estimates, refinement delta); not a rigorous bound",
-            "max_estimated_error_mm3": 4.137481999256829e-08,
+            "max_estimated_error_mm3": 4.137482088469376e-08,
             "max_refinement_delta_mm3": 2.2737367544323206e-13
           },
           "inner_point": [
@@ -621,7 +622,7 @@
         },
         "drilled_through": {
           "rejected": true,
-          "reason": "Blind pilot floor/back wall is missing or too thin: {'a': 'a', 'b': 'b', 'state': 'touching', 'gap_mm': 0.01, 'overlap_mm3': 0.0, 'witness': {'point_a': [45.01, -31.0, 7.0], 'point_b': [45.01, -31.0, 7.01], 'volume_integration': {'method': 'adaptive BRepGProp GK, requested relative errors 1e-6 and 1e-8', 'error_basis': 'max(OCCT summed absolute face-error estimates, refinement delta); not a rigorous bound', 'max_estimated_error_mm3': 4.4343741628746565e-08, 'max_refinement_delta_mm3': 3.552713678800501e-15}}, 'exact': True, 'cached': False}",
+          "reason": "Blind pilot floor/back wall is missing or too thin: {'a': 'a', 'b': 'b', 'state': 'touching', 'gap_mm': 0.01, 'overlap_mm3': 0.0, 'witness': {'point_a': [45.01, -31.0, 7.0], 'point_b': [45.01, -31.0, 7.01], 'volume_integration': {'method': 'adaptive BRepGProp GK, requested relative errors 1e-6 and 1e-8', 'error_basis': 'max(OCCT summed absolute face-error estimates, refinement delta); not a rigorous bound', 'max_estimated_error_mm3': 4.434368929531515e-08, 'max_refinement_delta_mm3': 3.552713678800501e-15}}, 'exact': True, 'cached': False}",
           "expected_diagnostic": "Blind pilot floor/back wall is missing"
         },
         "wrong_orientation": {
@@ -694,12 +695,12 @@
     "Three repeats per orientation are a measurement plan, not a statistical qualification."
   ],
   "files": {
-    "base-anchor.3mf": "6c2a09c805a503e327404999aba049bd897911074f535795d627955cb870a615",
-    "base-anchor.step": "b472480b101cd40644dfc89f962013ee5dc1d3714745634daaf419f8708d54e5",
-    "base-anchor.stl": "ce29f74ad434979e27b0025e5bb06cfcc07bd5ded646b1a483fc5f211352d8d7",
-    "carrier-boss.3mf": "b46b7c50eb099ea07d1e05f0551bef47ffe4c697ffbdcf0cd5af2d954d619bd2",
-    "carrier-boss.step": "e09fb8b1d7cbb24ae65b6f9cc6767fd0bd5c610a8fe4a23e4c73fe106caecb20",
-    "carrier-boss.stl": "374fcbef1209f1ea25dfa195dcf7106e197ecbbaf919842c50a924967da563d3",
+    "base-anchor.3mf": "3803b3a32499170250c1809129b3b0052f658c1c886fde41ba8fb4b55ec9d91e",
+    "base-anchor.step": "57b8ec3a8f435f1f2b6578d0c5801f6d2d4531faa1f4acc3196ba55433ca0802",
+    "base-anchor.stl": "02d9ceeca7f107f91fbd6d551683c594345cd1d6aff005924ccf06f4101ef86b",
+    "carrier-boss.3mf": "01279bd05697f36a1df4ed6143efbc27ec334edf477f5df72662c9d8e03e8d17",
+    "carrier-boss.step": "35de17567b3f2d4bd36c55d8ba48aff74e54e9f1126425cb72ab79214439f09d",
+    "carrier-boss.stl": "f6cdda4c76c14918d0f7790ae3f5260cb31e12938b3693daaec7848e30f064fb",
     "measurements.csv": "763fce59e411c8a81f168694643a536181d41c1891dffa0eec1f62ad4f8f8820"
   }
 }

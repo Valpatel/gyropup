@@ -127,12 +127,12 @@ STEPS = [
      '2 rear), `python -m rig.rs04 --id N setup`, save. Then python -m rig.calibrate: hold each upper link on its bare '
      f'knee-out post, it zeroes the motor there, you swing the link to the knee-in post, it checks the {BARE_TRAVEL:.0f} deg '
      'between the bare posts and the direction and writes rig/calibration.json. Power off.'),
-('The knees', ['leg_front_link', 'leg_wheel_link', 'leg_knee_6201_front_in', 'leg_knee_6201_front_out', 'leg_knee_6201_rear_in',
-                   'leg_knee_6201_rear_out', 'leg_knee_spacer_front', 'leg_knee_spacer_rear', 'leg_knee_washer_front', 'leg_knee_washer_rear',
+('The knees', ['leg_front_link', 'leg_wheel_link', 'leg_knee_bearing_front_in', 'leg_knee_bearing_front_out', 'leg_knee_bearing_rear_in',
+                   'leg_knee_bearing_rear_out', 'leg_knee_spacer_front', 'leg_knee_spacer_rear', 'leg_knee_washer_front', 'leg_knee_washer_rear',
                    'leg_knee_pin_front', 'leg_knee_pin_rear', 'leg_knee_nut_upper_front', 'leg_knee_nut_upper_rear'],
      {'leg_front_link': (0, 70, 0), 'leg_wheel_link': (0, 110, 0), 'leg_knee_pin_front': (0, 150, 0), 'leg_knee_pin_rear': (0, 150, 0)},
      RIG_VIEW, 'rig',
-     'Two 6201s and the 28 mm spacer tube into each lower link\'s knee boss (the boss coupon\'s fit), a DIN 433 washer each '
+     'Two 6301-2RS and the 24 mm spacer tube into each lower link\'s knee boss (the boss coupon\'s fit), a DIN 433 washer each '
      'side; the 12 x 90 shoulder screw from the outer side through the lower link, the washers and the eye sleeves; the '
      'M10 nyloc in the upper link\'s pocket onto the sleeves (20 N m: steel on steel). The knees turn freely.'),
 ('The apex', ['leg_apex_61812', 'leg_apex_spacer', 'leg_apex_circlip'], {'leg_apex_61812': (0, 60, 0), 'leg_apex_spacer': (0, -40, 0),

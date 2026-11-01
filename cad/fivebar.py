@@ -22,7 +22,7 @@ Layers along y, from the output face outwards (mm):
     64.8        the BotWheel's boss face, in a recess in the wheel link's outer face; tyre 72.3 .. 116.9
     0 .. 44     the front link's apex eye (two 61812 28 mm apart on the wheel link's hub)
 The wheel link is the outer one so the wheel sits right against it (37 mm from its middle to the wheel's), which keeps
-the wheel's out-of-plane moment small where it is largest. Both knees are the same cartridge (two 6201-2RS in the lower
+the wheel's out-of-plane moment small where it is largest. Both knees are the same cartridge (two 6301-2RS in the lower
 link, a 12 mm ISO 7379 shoulder screw clamped in the upper link by an M10 nut in a pocket). The apex is two 61812 in the
 front link on the wheel link's hollow hub, held by a DIN 471 circlip: it carries moment, so the wheel's out-of-plane
 load is shared by both sides of the loop, and the wheel's cable and a hex key for its four M6 screws come through the
@@ -62,8 +62,14 @@ if os.environ.get('GYROPUP_LEG_PARAMS'):
     PARAMS.update(json.loads(Path(os.environ['GYROPUP_LEG_PARAMS']).read_text()))
 P = PARAMS
 
-KC = {**STD['KC'], 'bearing': '6201-2RS', 'bearing_od': 32.0, 'bearing_w': 10.0, 'hub_od': 46.0,
-      'shoulder_d': 27.0}                                 # the knees: 6201s (C0 3.1 kN), the outer races' shoulder Ø27
+KC = {**STD['KC'], 'bearing': '6301-2RS', 'bearing_od': 37.0, 'bearing_w': 12.0, 'hub_od': 51.0,
+      'shoulder_d': 31.0, 'C0_n': 4150.0, 'catalog': 'bearing_6301'}
+# The knees: two 6301-2RS in each lower link's boss (issue #29). The 6201-2RS (12 x 32 x 10, C0 3.07 kN at McMaster)
+# had s0 0.88 in the undamped power cut (R3) with the load on the worse bearing; the 6301 (12 x 37 x 12, SKF 6301-2RSH
+# datasheet: C 10.1 kN, C0 4.15 kN, 60 g) fits the same Ø12 pin and the same 48 mm boss, 36 mm between centres. The
+# boss keeps a 7 mm wall (Ø51); the outer races' shoulder is Ø31 (SKF's Da max 31.4). The inner races' spacer is the
+# 5/8 in tube as before: its Ø15.9 face is under SKF's da min 17.6 for the 6301, which matters for axial load on the
+# inner ring; a Ø18-19.4 spacer is the follow-up (issue #29).
 AC = STD['AC-L']
 FAST = STD['fasteners']
 ISO7379_HEAD = {12: (18.0, 9.0)}                         # shoulder d: head diameter, head height (McMaster 92981A408 / A411)
@@ -288,10 +294,17 @@ def cavity(L, r0, r1, y0, y1, keep0, keep1, skin=None):
 
 
 def knee_cartridge_cut(y0, y1):
-    """The knee seats in a lower link's knee boss (y0..y1), at the local origin: a 6201 at each end, a Ø27 web between."""
+    """The knee seats in a lower link's knee boss (y0..y1), at the local origin: a KC bearing at each end, the
+    KC shoulder's web between."""
     bo, bw = KC['bearing_od'], KC['bearing_w']
     c = ycyl(bo / 2 + 0.02, y0 - 0.01, y0 + bw).union(ycyl(bo / 2 + 0.02, y1 - bw, y1 + 0.01))
     return c.union(ycyl(KC['shoulder_d'] / 2, y0 - 1, y1 + 1))
+
+
+def knee_spacer_length() -> float:
+    """The aluminium spacer between a knee's two inner races (mm): the knee boss less its two bearings."""
+    kb0, kb1 = Y['knee_boss']
+    return kb1 - kb0 - 2 * KC['bearing_w']
 
 
 # ----------------------------------------------------------------------------------- printed parts
@@ -442,6 +455,40 @@ GUSSET_RUNOUT = 12.0                             # mm: the frame's gussets betwe
 FLANGE_T, FLANGE_X = 13.0, 95.0                  # the hip frame's top and bottom flanges: thickness, half-length (mm).
                                                  # They carry the leg to the body across the print's layers (it prints
                                                  # web-down): 7 mm gave SF 0.75 in a landing across the layers, 13 about 1.3
+# Issue #29 (2026-10-31, 18.75 kg a leg, the corrected out-of-plane loads): the turn case (E1) read SF 1.50 at 4 mm on
+# the recording host (1.59 on the x86 one), its peak at the bottom flange's square root (x 93). Screened at 4 mm:
+#   root_r 5 alone                    E1 1.50 (the fillet over the motors is thin; the peak stays at the root)
+#   root_r 6, dz 3, 16 / 16           R1 2.02, E1 1.96, E3o 2.59, E3i 2.75, R3o 1.27
+#   bent 5052 flanges (SendCutSend)   no 5052 sheet meets the root moment and still clears the tray and the cheeks'
+#                                     flange with the inserts where they are (research/hip-frame-29/bent-flange-check.json)
+#   print on its end (layers x)       passes every case on the layers' bond, but stands 274 mm: not on the 250 mm bed
+# then cad-agent optimise (NSGA-II, 36 trials, research/hip-frame-29): 14 of the 36 failed the body or bed check before
+# any FEA. Trials 1, 8 (and 30, its repeat), 25, 28, 32 and 34 met every case; these two led (4 mm, first host):
+#   trial 1  root_r 7.5, dz 1.5, 13 / 18   R1 2.05, E1 2.06, E3o 2.42, E3i 2.75, R3o 1.19, 1106 g   <- HIP below
+#   trial 8  root_r 7, dz 2.5, 13 / 17     R1 2.01, E1 2.05, E3o 2.41, E3i 2.75, R3o 1.18, 1101 g
+# Trial 1 on the recording host reads R1 2.00 and E1 2.08 at 4 mm, but 1.79 and 1.81 at 3 mm. Its peak has moved to the
+# tip of each knee-out ear's backing block, where it ends on the web's motor face (x +-120, z 45, r 64 from the motor):
+# a sharp corner, so it is not converged. Two fixes there failed: the block run on to the ear's edge (E1 1.33: a knife
+# edge at r 66) and a revolved fillet round the boss side (the mesher refused its slivers). Next: a fillet along the
+# whole foot of the block (on a local solid), checked at 3 and 2.5 mm.
+HIP = {                                          # the hip frame's shape beyond the body interface (issue #29's sweep;
+    'top_t': FLANGE_T,                           # GYROPUP_HIP_PARAMS, a JSON file, overrides it). Each flange's thickness:
+    'bottom_t': 18.0,                            # it grows outwards (the inner face stays at ring + flange_dz) and the web
+                                                 # with it, so the flange's root is that deep. The interface does not move:
+                                                 # the inserts stay at frame_mounts() (FLANGE_T), the mount plane at the
+                                                 # centre plane.
+    'haunch': 0.0,                               # 0: the extra thickness runs the flange's whole length; L > 0: it tapers
+                                                 # off L mm from the web (a haunch at the root, where the bending peaks)
+    'flange_dz': 1.5,                            # mm: both flanges moved out from the motors' ring (their inner faces at
+                                                 # +-(ring + dz)), which leaves room for a root fillet over the motors
+    'root_r': 7.5,                               # mm: the flanges' roots on the motor side rounded, up to this radius and
+    'root_gap': 0.75,                            # ... less where a motor's can (OD) comes within root_gap of the fillet
+    'bed_clip': True,                            # the bottom flange's outer corners cut back to the 45 deg lines through
+                                                 # today's corners (|x| + |z| <= FLANGE_X + ring + FLANGE_T), so the frame
+                                                 # still fits the bed turned (printplan.fits: 248.9 of 250 mm)
+}
+if os.environ.get('GYROPUP_HIP_PARAMS'):
+    HIP.update(json.loads(Path(os.environ['GYROPUP_HIP_PARAMS']).read_text()))
 
 
 def frame_ring_r() -> float:
@@ -470,15 +517,25 @@ def hip_frame():
     b = gmi.motor_interface(MOTOR)['case']['bolts']
     ring_r = frame_ring_r()
     (ax, _), (bx, _) = motors()
-    fl_t, fl_x = FLANGE_T, FLANGE_X
+    fl_x = FLANGE_X
+    t_of = {1: HIP['top_t'], -1: HIP['bottom_t']}            # each flange's thickness (HIP)
+    fl_t = t_of[1]                                           # the top one's, which the stop ears' lobes meet
     web = ycyl(ring_r, yf0, yf1, ax).union(ycyl(ring_r, yf0, yf1, bx)).union(
         cq.Workplane('XY').box(2 * ax, yf1 - yf0, 2 * ring_r).translate((0, (yf0 + yf1) / 2, 0)))
-    zf = ring_r                                              # flanges: z from ring_r .. ring_r + fl_t (above the motors' Ø120)
-    web = web.union(cq.Workplane('XY').box(2 * fl_x, yf1 - yf0, 2 * (zf + fl_t)).translate((0, (yf0 + yf1) / 2, 0)))
+    zf = ring_r + HIP['flange_dz']                           # flanges: z from zf .. zf + t (above the motors' Ø120)
+    z_lo, z_hi = -(zf + t_of[-1]), zf + t_of[1]
+    web = web.union(cq.Workplane('XY').box(2 * fl_x, yf1 - yf0, z_hi - z_lo).translate((0, (yf0 + yf1) / 2, (z_hi + z_lo) / 2)))
     mt = frame_mounts()
     yc = mt['plane_y']
     for s in (1, -1):
-        fl = cq.Workplane('XY').box(2 * fl_x, yf0 - yc, fl_t).translate((0, (yf0 + yc) / 2, s * (zf + fl_t / 2)))
+        t = t_of[s]
+        if HIP['haunch'] > 0 and t > FLANGE_T:               # the extra thickness only near the root, tapering off
+            fl = cq.Workplane('XY').box(2 * fl_x, yf0 - yc, FLANGE_T).translate((0, (yf0 + yc) / 2, s * (zf + FLANGE_T / 2)))
+            L = min(HIP['haunch'], yf0 - yc)
+            wedge = [(yf0 + 0.01, s * (zf + FLANGE_T - 0.01)), (yf0 + 0.01, s * (zf + t)), (yf0 - L, s * (zf + FLANGE_T - 0.01))]
+            fl = fl.union(cq.Workplane('YZ', origin=(-fl_x, 0, 0)).polyline(wedge).close().extrude(2 * fl_x))
+        else:
+            fl = cq.Workplane('XY').box(2 * fl_x, yf0 - yc, t).translate((0, (yf0 + yc) / 2, s * (zf + t / 2)))
         web = web.union(fl)
         for x, zb in mt['inserts_xz']:                         # end bosses with M5 inserts (the body or the rig)
             if zb * s > 0:
@@ -514,6 +571,9 @@ def hip_frame():
                 prof += [(mx + rc - f + f * math.cos(math.radians(90 - 90 * k / 8)), yf0 - f + f * math.sin(math.radians(90 - 90 * k / 8))) for k in range(9)]
                 ring = cq.Workplane('XY').polyline(prof).close().revolve(360, (mx, 0, 0), (mx, 1, 0))
                 web = web.union(back).union(ring.intersect(yslab(blk, yf0 - f - 1.0, yf0 + 0.02)))
+    if HIP['root_r'] > 0:                                    # the flanges' roots rounded on the motor side (HIP)
+        for s_ in (1, -1):
+            web = web.union(root_fillet(s_, zf, yf0, fl_x, (ax, bx)))
     # the motors: lug screws (counterbored from the leg side, deep so a stocked length engages), the bore
     for mx, front in ((ax, True), (bx, False)):
         for a in lug_angles(front):
@@ -535,8 +595,42 @@ def hip_frame():
     # frame's face plane, the circlip's land) passes here at the leg's shortest, and a power cut squeezes the knee-out
     # stops' TPU up to 7.4 deg further (D39)
     hub_y = Y['hub'][0]
-    web = web.cut(cq.Workplane('XY').box(64.0, yf1 + 1 - (hub_y - 1.5), 24.0).translate((0.0, (yf1 + 1 + hub_y - 1.5) / 2, -(zf + fl_t) + 10.0)))
+    r_top, r_bot = -(ring_r + FLANGE_T) + 22.0, z_lo - 2.0   # its top where the hub passes; its floor below the frame
+    web = web.cut(cq.Workplane('XY').box(64.0, yf1 + 1 - (hub_y - 1.5), r_top - r_bot).translate((0.0, (yf1 + 1 + hub_y - 1.5) / 2, (r_top + r_bot) / 2)))
+    if HIP['bed_clip'] and zf + t_of[-1] > ring_r + FLANGE_T:   # the bottom corners back on today's 45 deg lines (bed fit),
+                                                                 # whenever the bottom face stands out past today's
+        d = fl_x + ring_r + FLANGE_T
+        for sx in (1, -1):
+            tri = [(sx * (d - (zf + t_of[-1]) - 1.0), z_lo - 1.0), (sx * (fl_x + 1.0), z_lo - 1.0), (sx * (fl_x + 1.0), -(d - fl_x - 1.0))]
+            web = web.cut(yslab(tri, yc - 1.0, yf1 + 1.0))
     return web
+
+
+def root_fillet_r(x, zf, motors_x):
+    """The root fillet's radius at x (mm): HIP['root_r'], less where a motor's can (gmi OD) would come within
+    HIP['root_gap'] of the fillet's edge on the web face (zf - r), never under 0.5."""
+    rc = gmi.motor_interface(MOTOR)['od'] / 2
+    r = HIP['root_r']
+    for mx in motors_x:
+        if abs(x - mx) < rc:
+            r = min(r, zf - HIP['root_gap'] - math.sqrt(rc * rc - (x - mx) ** 2))
+    return max(0.5, r)
+
+
+def root_fillet(s, zf, yf0, fl_x, motors_x, step=2.5):
+    """A variable-radius fillet in the corner between a flange's inner face (z = s * zf) and the web's motor-side face
+    (y = yf0), along x from -fl_x to fl_x: a loft through its quarter-round sections (root_fillet_r), each reaching
+    0.2 mm into the flange and the web so it fuses."""
+    xs = [-fl_x + k * step for k in range(int(round(2 * fl_x / step)) + 1)]
+    wires = []
+    for x in xs:
+        r = root_fillet_r(x, zf, motors_x)
+        cy, cz = yf0 - r, zf - r                                     # the round's centre (z for the top flange)
+        arc = [(cy + r * math.cos(math.radians(a)), cz + r * math.sin(math.radians(a))) for a in range(90, -1, -10)]
+        pts = [(yf0 + 0.2, zf + 0.2)] + [(arc[0][0], zf + 0.2)] + arc[1:-1] + [(yf0 + 0.2, arc[-1][1])]
+        w = cq.Workplane('YZ', origin=(x, 0, 0)).polyline([(y_, s * z_) for y_, z_ in pts]).close().wires().val()
+        wires.append(w)
+    return cq.Workplane('XY').add(cq.Solid.makeLoft(wires, True))
 
 
 def stop_posts():
@@ -657,7 +751,7 @@ FRONT_EYE_FILLET = 6.0       # mm: the front link's apex eye, where it stands in
 
 
 def front_link():
-    """Front lower link (printed PA6-CF, flat on its inner face): the knee boss with two 6201s reaching out over the
+    """Front lower link (printed PA6-CF, flat on its inner face): the knee boss with two KC bearings reaching out over the
     wheel link's layer, a 16 mm body, and the apex eye reaching in over the upper links' layer with two 61812s 28 mm
     apart on the wheel link's hub (each pressed against a central web), so the apex carries the wheel's out-of-plane
     moment into both sides of the loop. Built from the knee (origin) towards +x."""
@@ -689,7 +783,7 @@ WHEEL_BOSS_FILLET = 10.0     # mm: where the wheel link's knee boss leaves its i
 
 
 def wheel_link():
-    """Wheel link (printed PA6-CF, flat on its outer face): the knee boss with two 6201s reaching in over the front
+    """Wheel link (printed PA6-CF, flat on its outer face): the knee boss with two KC bearings reaching in over the front
     link's layer, a 24 mm body, and the apex foot: the BotWheel's Ø50 boss in a recess in the outer face, its 4 x M6 x 40
     through the foot from the inner side (heads inside the hub), and the hollow hub pointing in through the front link's
     apex eye: Ø60 for the 61812's inner race against a Ø64 shoulder, a DIN 471-60 circlip groove at its end, Ø48 inside
@@ -892,9 +986,9 @@ def leg_parts() -> Leg:
         fea='al6061' if adi['made'] == 'cnc' else 'pa6_cf_z', made=adi['made'], machining=(ad, adi['spec']) if adi['made'] == 'cnc' else None)
     add('upper_link', upper_link(), 'pa6-cf', 2, f"printed PA6-CF flat, {P['upper_t']:.0f} mm, 100 % solid; 8 x M5 into the adapter; "
         'the knee shoulder screw clamped by an M10 nyloc in a pocket; a radial stop face each side of the hub')
-    add('front_link', front_link(), 'pa6-cf', 1, f"printed PA6-CF flat on its inner face, {P['front_t']:.0f} mm body; two 6201-2RS at the knee, "
+    add('front_link', front_link(), 'pa6-cf', 1, f"printed PA6-CF flat on its inner face, {P['front_t']:.0f} mm body; two {KC['bearing']} at the knee, "
         'two 61812 at the apex (pressed against a central web)')
-    add('wheel_link', wheel_link(), 'pa6-cf', 1, f"printed PA6-CF flat on its outer face, {P['wheel_t']:.0f} mm body; two 6201-2RS at the knee; "
+    add('wheel_link', wheel_link(), 'pa6-cf', 1, f"printed PA6-CF flat on its outer face, {P['wheel_t']:.0f} mm body; two {KC['bearing']} at the knee; "
         'the BotWheel in its outer face (4 x M6 from inside the hub), the hub for the apex 61812 (DIN 471-60 circlip)')
     add('apex_spacer', apex_spacer(), 'pa6-cf', 1, 'printed PA6-CF ring between the apex 61812s\' inner races', fea=None)
     add('stop_sleeve', stop_sleeve(), 'tpu95', 4, 'printed TPU 95A cap-down, 100 % solid; a stretch fit on the stop pins', fea=None, solid=True)
@@ -1045,8 +1139,9 @@ def bought_parts(fr, j):
     kb0, kb1 = Y['knee_boss']
     for key, (p, _) in (('front', fr['front_link']), ('rear', fr['wheel_link'])):
         x, z = p
-        out[f'knee_6201_{key}_in'] = (bearing(12, 32, 10, kb0, x, z), 'bought')
-        out[f'knee_6201_{key}_out'] = (bearing(12, 32, 10, kb1 - 10, x, z), 'bought')
+        bo, bw = KC['bearing_od'], KC['bearing_w']
+        out[f'knee_bearing_{key}_in'] = (bearing(12, bo, bw, kb0, x, z), 'bought')
+        out[f'knee_bearing_{key}_out'] = (bearing(12, bo, bw, kb1 - bw, x, z), 'bought')
         out[f'knee_pin_{key}'] = (shoulder_screw(12, knee_pin_length()[0], 16, kb1 + 2.0, x, z), 'bought')
         out[f'knee_washer_{key}'] = (bearing(13, 20, 2, kb1, x, z).union(bearing(13, 20, 2, P['upper_t'], x, z)), 'bought')   # DIN 433 M12
         out[f'knee_spacer_{key}'] = (bearing(12.6, 15.9, kb1 - kb0 - 2 * KC['bearing_w'], kb0 + KC['bearing_w'], x, z), 'bought')   # 6061 tube
@@ -1165,7 +1260,7 @@ def _mated(a, b):
             return True
     for key in ('front', 'rear'):                      # each knee's own cartridge parts touch their links by design
         owners = {'front': ('upper_link_front', 'front_link'), 'rear': ('upper_link_rear', 'wheel_link')}[key]
-        kparts = (f'knee_6201_{key}', f'knee_pin_{key}', f'knee_washer_{key}', f'knee_nut_{key}', f'knee_spacer_{key}')
+        kparts = (f'knee_bearing_{key}', f'knee_pin_{key}', f'knee_washer_{key}', f'knee_nut_{key}', f'knee_spacer_{key}')
         if (a.startswith(kparts) and b.startswith(owners + kparts)) or (b.startswith(kparts) and a.startswith(owners + kparts)):
             return True
     return False

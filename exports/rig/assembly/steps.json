@@ -155,7 +155,7 @@
    "leg_screws_lugs",
    "leg_stop_posts"
   ],
-  "how": "The frame's inserts at the coupon-proven temperature: 6 x M5 in the flange ends, 4 x M8 for the stop posts. The two 61812s pressed in from the motor side onto the lip (the fit the frame coupon proved; Loctite 641 if it was a slip fit). The motors (each with its machined adapter already on, D46: 9 x M5 x 25, no washers, threadlocker, the adapter's journal into the 61812 with Loctite 641) onto their two \u00d85 dowels, 10 x M4 x 20 each (heads 10 mm down in the counterbores; 2.5 N m). The four stop posts BARE (no TPU sleeves yet): the zero is set against the steel.",
+  "how": "The historical sequence fits the frame's inserts and two 61812s before the motors, using coupon results to establish the bearing fit. Those physical coupon results have not been recorded. Each motor uses two \u00d85 locating dowels and ten M4 x 20 mounting screws. The former counterbore and lug-tightening instructions are superseded: use [the current motor-fit evidence](rs04-mounting-fit.md) to establish the measured screw stack, and qualify support and preload separately. Fit the lug screws before upper links and stop posts as specified by the bounded driver-access study. This historical sequence does not approve dimensions, bearing retention, tightening torque or a powered zeroing test.",
   "picture": "exports/rig/assembly/step-07.png"
  },
  {
@@ -255,7 +255,7 @@
   "step": 12,
   "title": "Zero the motors",
   "adds": [],
-  "how": "The bench supply (36 V; docs/leg-bench-tests.md, commissioning C1-C5): set each motor's id (127 -> 1 front, 2 rear), `python -m rig.rs04 --id N setup`, save. Then python -m rig.calibrate: hold each upper link on its bare knee-out post, it zeroes the motor there, you swing the link to the knee-in post, it checks the 125 deg between the bare posts and the direction and writes rig/calibration.json. Power off.",
+  "how": "The bench supply (36 V; docs/leg-bench-tests.md, commissioning C1-C5): set each motor's id (127 -> 1 front, 2 rear), `python -m rig.rs04 --id N setup`, save. Then python -m rig.calibrate: hold each upper link on its bare knee-out post, it zeroes the motor there, you swing the link to the knee-in post, it checks the 142 deg between the bare posts and the direction and writes rig/calibration.json. Power off.",
   "picture": "exports/rig/assembly/step-12.png"
  },
  {
@@ -264,10 +264,10 @@
   "adds": [
    "leg_front_link",
    "leg_wheel_link",
-   "leg_knee_6201_front_in",
-   "leg_knee_6201_front_out",
-   "leg_knee_6201_rear_in",
-   "leg_knee_6201_rear_out",
+   "leg_knee_bearing_front_in",
+   "leg_knee_bearing_front_out",
+   "leg_knee_bearing_rear_in",
+   "leg_knee_bearing_rear_out",
    "leg_knee_spacer_front",
    "leg_knee_spacer_rear",
    "leg_knee_washer_front",
@@ -277,7 +277,7 @@
    "leg_knee_nut_upper_front",
    "leg_knee_nut_upper_rear"
   ],
-  "how": "Two 6201s and the 28 mm spacer tube into each lower link's knee boss (the boss coupon's fit), a DIN 433 washer each side; the 12 x 90 shoulder screw from the outer side through the lower link, the washers and the eye sleeves; the M10 nyloc in the upper link's pocket onto the sleeves (20 N m: steel on steel). The knees turn freely.",
+  "how": "Two 6301-2RS and the 24 mm spacer tube into each lower link's knee boss (the boss coupon's fit), a DIN 433 washer each side; the 12 x 90 shoulder screw from the outer side through the lower link, the washers and the eye sleeves; the M10 nyloc in the upper link's pocket onto the sleeves (20 N m: steel on steel). The knees turn freely.",
   "picture": "exports/rig/assembly/step-13.png"
  },
  {

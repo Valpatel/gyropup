@@ -74,6 +74,20 @@ withdrawn mounting torque and obsolete seat-depth instructions, and the complete
 gauge/slicer changes. Mounting, carrier and attachment evidence was regenerated
 against the settled CAD source inventory before recording these frames.
 
+The reel was recaptured again on 2026-11-01 (UTC) from
+`0d1c38eee44054663e8b40a64008781ca33b6121`, served assets `613db6c433f4b59f7964`,
+for [PR 134](https://github.com/Valpatel/gyropup/pull/134) (issue 29). That PR's knee
+bearing, hip-frame defaults and knee-spacer length change `cad/fivebar.py` and `catalog/hardware.json`,
+which the attachment manifest pins, so the manifest and its screw envelopes were
+re-exported. Their vertices are the same as before to 1 µm; only the triangle order
+differs. The recorder produced all 480 browser frames through a test-owned
+`serve-site.mjs --ephemeral` listener, closed afterwards. The mechanism emitted
+nine shots, and target practice recorded three shots, three hits and three
+knockdowns. The unchanged encoder and guard produced and passed both companions,
+the poster and the receipts. The E1 and leg inserts are unchanged: that PR does
+not regenerate the recorded FEA summary or the E1 movie. The previous capture's
+note follows.
+
 Raw frames and validation output for this capture are retained locally under
 `build/motor-fit-highlights-release/`. Capture used an owned, temporary
 `createSiteServer` listener, closed after validation, with `CAPTURE_OUTPUT` set to
