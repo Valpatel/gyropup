@@ -55,6 +55,10 @@ PARAMS = {
     'stop_r': 60.0,                                      # stop posts: radius from the motor axis (between the lug screws)
     'stop_beta': 58.0,                                   # ... and their angle past the link's axis at its stop: 58 puts both of a
                                                          # motor's posts midway between two lug screws (100 + 2 x 58 = 6 x 36)
+    'eye_r': 20.0, 'eye_stub_fillet': 5.0,               # the upper link's knee end (radius) and the root fillet of its eye stub
+    'apex_wall': 6.0, 'front_eye_fillet': 6.0,           # the front link's apex ring: wall round the 61812s, its inner-face fillet
+    'hub_root_d': 64.0, 'hub_root_fillet': 0.0,          # the wheel link's hub where it leaves the link: the shoulder's diameter
+                                                         # from 2 mm past the 61812 to the link (64: the abutment only), its fillet
     'hollow': False, 'skin': 5.0,                        # links as closed boxes (cavity, 'skin' walls): tried 2026-10-26, it
                                                          # weakened the wheel link and the leg too much (cad/leg_studies.py); solid
 }
@@ -366,7 +370,7 @@ def lug_clock():
     return best[1], best[0]
 
 
-UPPER_HUB_R, UPPER_EYE_R = 36.0, 20.0
+UPPER_HUB_R, UPPER_EYE_R = 36.0, P['eye_r']
 
 
 def upper_half_width(r: float) -> float:
@@ -717,7 +721,7 @@ def upper_link():
     out = link_outline((0, 0), (l1, 0), P['upper_w0'], P['upper_w1'], UPPER_HUB_R, UPPER_EYE_R)
     u = yslab(out, 0.0, t).union(ycyl(UPPER_EYE_R - 0.5, -EYE_BOSS, 0.01, l1, 0))   # inside the outline's polygon: no slivers
     u = u.union(stop_dogs())
-    u = u.union(boss_fillet(out, 0.0, -1, r=UPPER_EYE_R - 0.5, f=5.0, cx=l1, arm_dir=-1))   # where the arm meets the boss
+    u = u.union(boss_fillet(out, 0.0, -1, r=UPPER_EYE_R - 0.5, f=P['eye_stub_fillet'], cx=l1, arm_dir=-1))   # where the arm meets the boss
     u = u.cut(gmi.place(gmi.std_face_mate('L', depth=t + 2), (0, 0, 0), (0, 1, 0)))
     # the 8 M5 heads sit in counterbores, below the hub's outer face: at the knee-out stops the front link passes
     # over the front hub, 2 mm off that face (review M1: proud heads were hit below a 106 mm leg)
@@ -746,7 +750,7 @@ def eye_sleeve_end():
 FRONT_KNEE_FILLET = 16.0     # mm: where the front link's knee boss stands out of its outer face into the wheel link's layer
                              # (the link's peak in the turn case, E1, at 17.75 kg and the 10 in wheel: 6 mm SF 1.62, 10 mm 1.82,
                              # 14 mm 2.05)
-FRONT_EYE_FILLET = 6.0       # mm: the front link's apex eye, where it stands in out of the link's inner face towards the
+FRONT_EYE_FILLET = P['front_eye_fillet']   # mm: the front link's apex eye, where it stands in out of the link's inner face towards the
                              # upper links' layer, rounded into the arm (issue #5: the eye-to-arm corner)
 
 
@@ -759,7 +763,7 @@ def front_link():
     y0, y1 = Y['front_link']
     e0, e1 = Y['apex_eye']
     kb0, kb1 = Y['knee_boss']
-    r_eye = AC['bearing_od'] / 2 + 6.0
+    r_eye = AC['bearing_od'] / 2 + P['apex_wall']
     outline = link_outline((0, 0), (l2, 0), P['front_w'], P['front_w'] + 12, KC['hub_od'] / 2, r_eye)
     f = yslab(outline, y0, y1)
     f = f.union(ycyl(KC['hub_od'] / 2, kb0, kb1)).union(boss_fillet(outline, y1, +1, f=FRONT_KNEE_FILLET)).union(ycyl(r_eye, e0, e1, l2))
@@ -800,6 +804,10 @@ def wheel_link():
     h0, h1 = Y['hub']
     ab0, ab1 = Y['apex_bearing']
     k = k.union(ycyl(32.0, ab1, h1 + 0.01, l2)).union(ycyl(30.0, h0, ab1 + 0.01, l2))   # Ø64 shoulder, then the Ø60 journal
+    if P['hub_root_d'] > 64.0:                                                              # the root grown past the bearing's face
+        k = k.union(ycyl(P['hub_root_d'] / 2, ab1 + HUB_ROOT_GAP, h1 + 0.01, l2))
+    if P['hub_root_fillet'] > 0:                                                            # into the link's inner face
+        k = k.union(ring_fillet(P['hub_root_d'] / 2, h1, -1, min(P['hub_root_fillet'], HUB_ROOT_R_MAX - P['hub_root_d'] / 2), l2))
     c0, c1 = Y['circlip']
     k = k.cut(ycyl(31.0, c0, c1, l2).cut(ycyl(28.5, c0 - 1, c1 + 1, l2)))                 # the circlip groove (Ø57)
     k = k.cut(ycyl(24.0, h0 - 1, h1 - 0.01, l2))                                            # Ø48 bore: cable and hex key
@@ -816,6 +824,18 @@ def wheel_link():
         k = k.cut(cq.Workplane('YZ', origin=(l2 - r_foot - 14.0, 0, 0)).center(yc, 0).circle(CABLE_PASS / 2).extrude(r_foot + 14.0))   # foot hole -> cavity
         k = k.cut(cq.Workplane('XY').box(CABLE_EXIT[0], y1 - y0, CABLE_EXIT[1]).translate((CABLE_EXIT_X, (y0 + yc) / 2 - 1, 0)))       # out of the inner face
     return k
+
+
+HUB_ROOT_GAP = 2.0           # mm from the outer 61812's face (y apex_bearing[1]) to where a grown hub root may start
+HUB_ROOT_R_MAX = 37.5        # the front link's seat bore is r 39 and turns round the hub: 1.5 mm of radial room
+
+
+def ring_fillet(r, face_y, side, f, cx=0.0):
+    """A full fillet ring where a round boss (radius r, round (cx, 0)) leaves a face at face_y towards side (-1: -y)."""
+    s = side
+    return (cq.Workplane('XY').moveTo(r, face_y + s * f).lineTo(r, face_y).lineTo(r + f, face_y)
+            .threePointArc((r + 0.2929 * f, face_y + s * 0.2929 * f), (r, face_y + s * f)).close()
+            .revolve(360, (0, 0, 0), (0, 1, 0))).translate((cx, 0, 0))
 
 
 def apex_spacer():
