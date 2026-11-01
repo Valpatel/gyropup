@@ -6,7 +6,7 @@ import { readFile } from 'node:fs/promises';
 import path from 'node:path';
 import { after, before, test } from 'node:test';
 import { parseHTML } from 'linkedom';
-import { chromium } from '@playwright/test';
+import { chromium, webkit } from '@playwright/test';
 import { createSiteServer } from './serve-site.mjs';
 import { acknowledgePrototypeNotice } from './test-prototype-session.mjs';
 import { describe as describeLive, SOURCE } from '../web/cad-agent-live.js';
@@ -110,7 +110,8 @@ before(async () => {
     await new Promise(resolve => server.listen(0, '127.0.0.1', resolve));
     base = `http://127.0.0.1:${server.address().port}`;
   }
-  browser = await chromium.launch({ channel: process.env.PLAYWRIGHT_CHANNEL || 'chrome', headless: true });
+  browser = process.env.PLAYWRIGHT_BROWSER === 'webkit' ? await webkit.launch({ headless: true })
+    : await chromium.launch({ channel: process.env.PLAYWRIGHT_CHANNEL === 'chromium' ? undefined : process.env.PLAYWRIGHT_CHANNEL || 'chrome', headless: true });
 });
 after(async () => {
   await browser?.close();
@@ -147,7 +148,7 @@ test('live data fills the reserved line without moving anything, at phone, table
     const beforeLine = await box(page, '.loop-live'), beforeFigure = await box(page, '.loop-figure'), beforeLoop = await box(page, '#loop');
     release();
     await page.waitForSelector('.loop-live[data-state="live"]');
-    assert.equal(await line.innerText(), 'Live: 179 catalogue entries · 64 pages · updated 1 Nov 2026');
+    assert.equal((await line.innerText()).trim(), 'Live: 179 catalogue entries · 64 pages · updated 1 Nov 2026');
     assert.equal(await line.locator('a').getAttribute('href'), 'https://github.com/Valpatel/cad-agent/commit/' + LIVE.revision);
     assert.deepEqual(await box(page, '.loop-live'), beforeLine, `live line moved at ${width}px`);
     assert.deepEqual(await box(page, '.loop-figure'), beforeFigure, `figure moved at ${width}px`);
