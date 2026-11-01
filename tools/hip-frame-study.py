@@ -74,6 +74,13 @@ def layer_terms(sig, n):
     return sn, tau
 
 
+def toolkit_identity(cadagent) -> dict:
+    """The cad-agent that ran: its version and, from a git checkout, its commit (never its local path)."""
+    root = Path(cadagent.__file__).resolve().parent
+    rev = subprocess.run(['git', 'rev-parse', 'HEAD'], cwd=root, text=True, capture_output=True).stdout.strip()
+    return {'version': getattr(cadagent, '__version__', None), 'commit': rev or None}
+
+
 def install_recorder():
     import leg_studies
     from cadagent.fea import Study
@@ -177,7 +184,9 @@ def run_variant(out: Path, params: dict | None, cases, mesh: float, vmax: float 
     s_z, s_xy = MATERIALS['pa6_cf_z'].strength_mpa, MATERIALS['pa6_cf_xy'].strength_mpa
     frame = fb.leg_parts().parts['hip_frame'].val()
     rows = []
-    for r, st in zip(summ['results'], STUDIES):
+    solved = {st.name: st for st in STUDIES}                  # leg_studies names each study '<part> <case>'
+    for r in summ['results']:
+        st = solved[f"{r['part']} {r['case']}"]
         a = analyse(ls, st, r['case'], s_z, s_xy)
         if dump:                                             # the field, for probing the stress along a feature later
             sig = stress_corners(st).mean(axis=3)
@@ -197,13 +206,13 @@ def run_variant(out: Path, params: dict | None, cases, mesh: float, vmax: float 
         rows.append(row)
     fit = interfaces(fb, frame, out)
     rev = subprocess.run(['git', 'rev-parse', 'HEAD'], cwd=ROOT, text=True, capture_output=True).stdout.strip()
-    dirty = subprocess.run(['git', 'status', '--porcelain', 'cad', 'sim', 'tools/hip-frame-study.py'], cwd=ROOT, text=True,
+    dirty = subprocess.run(['git', 'status', '--porcelain', 'cad', 'catalog', 'designs', 'sim', 'tools/hip-frame-study.py'], cwd=ROOT, text=True,
                            capture_output=True).stdout.strip()
     import cadagent
     res = {'schema': 1, 'source_revision': rev, 'source_dirty': bool(dirty), 'params': params or {}, 'hip': dict(getattr(fb, 'HIP', {})),
            'mesh_mm': mesh, 'render': {'vmax_mpa': vmax, 'deformation_scale': dscale}, 'cases': rows, 'mass_g': round(frame.Volume() / 1000 * MATERIALS['pa6_cf_z'].density_g_cm3, 1),
            'volume_mm3': round(frame.Volume(), 1), 'allowables_mpa': {'across_layers': s_z, 'in_layers': s_xy},
-           'print_normal': PRINT_NORMAL, **fit, 'toolkit': str(Path(cadagent.__file__).parent), 'seconds': round(time.time() - t0, 1),
+           'print_normal': PRINT_NORMAL, **fit, 'toolkit': toolkit_identity(cadagent), 'seconds': round(time.time() - t0, 1),
            'inputs_sha256': {p: sha(ROOT / p) for p in ('cad/fivebar.py', 'cad/leg_studies.py', 'sim/leg_rig.py',
                                                         'exports/leg/rig-results.json', 'exports/leg/fea/summary.json')}}
     (out / 'result.json').write_text(json.dumps(res, indent=1) + '\n')
@@ -269,8 +278,9 @@ def evaluator(out_root: Path, mesh: float):
                 'summary': 'does not fit: no FEA'}))
             return
         res = run_variant(out, params, HF_CASES, mesh, None, False)
-    except Exception as exc:                                 # a geometry the kernel cannot build is a failed trial
-        print(json.dumps({'metrics': {}, 'checks': [{'id': 'build', 'level': 'fail', 'text': f'{type(exc).__name__}: {exc}'}]}))
+    except Exception as exc:                                 # anything before the FEA (CAD build, fit checks) fails the trial;
+        print(json.dumps({'metrics': {}, 'checks': [{'id': 'precheck', 'level': 'fail',   # the text names the error
+                                                     'text': f'{type(exc).__name__}: {exc}'}]}))
         return
     m = metrics(res)
     checks = [{'id': f"sf-{c['case']}", 'level': 'ok' if c['ok'] else 'fail',
