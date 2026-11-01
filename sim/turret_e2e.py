@@ -46,6 +46,9 @@ import turret_common as tc  # noqa: E402
 
 OUT = R / 'exports' / 'turret' / 'e2e'
 MESH_DIR = R / 'build' / 'turret_e2e_meshes'
+# The committed world names its meshes relative to itself (MuJoCo resolves meshdir against the model file), never by an
+# absolute path on the machine that built it.
+MESH_REL = Path(os.path.relpath(MESH_DIR, OUT)).as_posix()
 MOUNT_Z = 0.55                      # m: the TM face above the floor on the standing robot (est; sim/turret_flight.py FLIGHT)
 TARGETS = [('t2m', 2.0, 20.0), ('t4m', 4.0, 0.0), ('t6m', 6.0, -25.0)]       # name, range (m), bearing (deg, + left)
 TARGET_Z = 0.30
@@ -92,7 +95,8 @@ COLORS = {'pa6-cf': '0.35 0.37 0.40 1', 'petg': '0.95 0.55 0.15 0.85', 'tpu95': 
 def world_xml(T, tu, groups, balls_n, fluidcoef, targets_xml):
     G = T.G
     sx, sy = G.servo_pan_xy
-    assets = ''.join(f'<mesh name="{nm}" file="{p}" scale="0.001 0.001 0.001"/>' for g in groups.values() for nm, p, m, mat in g)
+    assets = ''.join(f'<mesh name="{nm}" file="{Path(p).name}" scale="0.001 0.001 0.001"/>'
+                     for g in groups.values() for nm, p, m, mat in g)
     geom = lambda nm, m, mat, extra='': f'<geom type="mesh" mesh="{nm}" mass="{m:.5f}" rgba="{COLORS.get(mat, COLORS["bought"])}" contype="0" conaffinity="0" group="1" {extra}/>'
     base = ''.join(geom(nm, m, mat) for nm, p, m, mat in groups['base'])
     pan = ''.join(geom(nm, m, mat) for nm, p, m, mat in groups['pan'])
@@ -105,7 +109,7 @@ def world_xml(T, tu, groups, balls_n, fluidcoef, targets_xml):
     balls = tc.game_turret().balls_xml(balls_n).replace('fluidcoef="0.25 0.25 1.5 0 0"', f'fluidcoef="{fluidcoef}"')
     body_box = T.L['body'] if 'body' in T.L else {'depth': 181, 'width': 206, 'height': 112}
     return f'''<mujoco model="gyropup turret e2e">
-  <compiler angle="radian"/>
+  <compiler angle="radian" meshdir="{MESH_REL}"/>
   <option timestep="{DT}" gravity="0 0 -9.81" density="1.205" viscosity="1.81e-5" integrator="implicitfast"/>
   <visual><headlight diffuse="0.7 0.7 0.7" ambient="0.4 0.4 0.4"/><global offwidth="1280" offheight="720"/><map znear="0.01"/></visual>
   <asset>{assets}
@@ -318,7 +322,7 @@ def run(set_fps=95.0, mode='settled', quick=False, video=True, seed=7):
     n_balls = sum(1 for s in shots if s['fed'])
     xml = world_xml(T, tu, groups, n_balls, tf.mujoco_fluidcoef(spec_n), gt.targets_xml(targets))
     (OUT / 'e2e_world.xml').write_text(xml)
-    model = mujoco.MjModel.from_xml_string(xml)
+    model = mujoco.MjModel.from_xml_path(str(OUT / 'e2e_world.xml'))   # meshdir is relative to this file
     data = mujoco.MjData(model)
     sv = Servos(model, data)
     muzzle = model.site('muzzle').id

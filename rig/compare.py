@@ -277,9 +277,12 @@ def main(argv=None):
         doc['prediction_from'] = pred.get('from', str(PRED_FILE.relative_to(R)))
     stem = Path(a.run).with_suffix('')
     if a.plot:
-        doc['plot'] = str(overlay(arr, (pred or {}).get('series'), stem.with_suffix('.png'),
-                                  f"{doc['meta']['backend']} {test}, {doc['meta'].get('half_mass_kg')} kg",
-                                  'expected: ' + (pred or {}).get('from', '?').split(' (')[0].split('/')[-1]))
+        plot = overlay(arr, (pred or {}).get('series'), stem.with_suffix('.png'),
+                       f"{doc['meta']['backend']} {test}, {doc['meta'].get('half_mass_kg')} kg",
+                       'expected: ' + (pred or {}).get('from', '?').split(' (')[0].split('/')[-1])
+        # the run record is committed: name the plot from the repository root, never by this machine's absolute path
+        plot = plot.resolve()
+        doc['plot'] = plot.relative_to(R).as_posix() if plot.is_relative_to(R) else plot.name
     stem.with_suffix('.json').write_text(json.dumps(doc, indent=1, default=runlog._json) + '\n')
     for v in verdict:
         mark = 'PASS' if v['ok'] else ('----' if v['ok'] is None else 'FAIL')

@@ -348,7 +348,7 @@
     "air_into_fan_c": 28.12,
     "converged": true,
     "case_revision": "0.9-g48r",
-    "source": "/home/scubasonar/Code/j501-agx/exports/thermal/cooled-0.9.json",
+    "source": "J501_DIR/exports/thermal/cooled-0.9.json",
     "note": "the J501's CFD of the bare box at 40 W in 25 C air"
    },
    "method": "losses K x 0.5 rho v^2 (rho 1.2): K = 1 through the grille's gaps (the entry and the bars), K = 1 for the turn down into the fan on the whole flow across the duct over the fan's centre; the box's own resistance as k q^2 through the J501 CFD's operating point; the fan's straight-line curve from its J501 parameters (dp0, q_free); the new flow where the two meet",
@@ -693,7 +693,7 @@
  "j501": {
   "revision": "0.9-g48r",
   "built_for": "0.9-g48r",
-  "source": "/home/scubasonar/Code/j501-agx/cad/parameters.json",
+  "source": "J501_DIR/cad/parameters.json",
   "parameters_git": {
    "state": "committed",
    "head": "fefc79dc056ad010b8fcf5fb69ed2cf4cf9361c3",
