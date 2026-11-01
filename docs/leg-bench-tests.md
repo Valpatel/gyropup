@@ -132,13 +132,16 @@ dried, on the settings the leg will use.
 |---|---|---|
 | `coupon_frame_ring` | a 61812, from the motor side, onto the lip; the motor's 10 x M4 lugs on the nominal ring | the bearing presses in by hand or with a vise and soft jaws, seats on the lip, does not rock; no crack at the lugs |
 | `coupon_hub_face` | the machined adapter's Ø40 spigot and its two Ø5 dowels | the spigot enters by hand with no play you can feel; the dowels enter; the eight M5 clearance holes line up with the adapter's threads |
-| `coupon_knee_eye` | two DIN 179 12 x 18 x 20 sleeves, end to end | a vise press with soft jaws; they stay put when the coupon is knocked on the bench |
-| `coupon_knee_boss` | a 6201 | hand press, seats, no rocking |
+| `coupon_knee_eye` | a DIN 179 12 x 18 x 20 sleeve (the hole is the leg's, with `PRINT_HOLE_COMP` and the bed-face lead-in) | a light vise press with soft jaws, or a close slide for the structural epoxy (D74); it stays put when the coupon is knocked on the bench |
+| `coupon_frame_pins` | a Ø16 x 40 stop pin from the bed face; a Ø5 dowel from the top | the pin goes in with a light press or a close slide for the epoxy and seats on the floor; the dowel enters by hand, close (it locates the motor in its own H7 hole) |
+| `coupon_knee_boss` | a 6301 | hand press, seats, no rocking |
 | `coupon_apex_eye` | a 61812 | hand press, seats, no rocking |
 | `coupon_hub_stub` | a 61812's inner race and the DIN 471-60 circlip | the race slides on with a light push; the circlip snaps into its groove |
 
 Record the variant that fits each seat. The main session sets the leg's print offsets from that table. If a slip fit
-is the best there is (a bearing seat), the assembly uses Loctite 641 on it, as `docs/leg-rig-assembly.md` says.
+is the best there is (a bearing seat), the assembly uses Loctite 641 on it, as `docs/leg-rig-assembly.md` says, only
+after a coupon shows it on a printed bore: Henkel does not normally recommend its anaerobic compounds on thermoplastics
+(D74; research/leg-preprint).
 
 ## C1-C6: commissioning, one motor on the bench supply
 
