@@ -196,6 +196,7 @@ def run_variant(out: Path, params: dict | None, cases, mesh: float, vmax: float 
 
 
 BODY_ZT = 90.5                     # body_params.z_spine_top() for today's frame: the cheeks' flange faces (mm)
+CHEEK_CLEAR = 2.0                  # mm the frame's bottom stays above the cheeks' bottom flange (its inner face)
 
 
 def interfaces(fb, frame, out: Path) -> dict:
@@ -210,8 +211,11 @@ def interfaces(fb, frame, out: Path) -> dict:
     bp.frame_mounts.cache_clear()
     zt = bp.z_spine_top()
     bb = frame.BoundingBox()
+    cheek_in = -(BODY_ZT - bp.STOCK[bp.CHEEK]['t'])            # the cheeks' bottom flange, inner face (under the frame)
+    body_ok = zt <= BODY_ZT and bb.zmin >= cheek_in + CHEEK_CLEAR
     return {'bed': {'size_mm': size, 'placement': how, 'ok': how != 'TOO BIG'},
-            'body': {'z_spine_top_mm': zt, 'reference_mm': BODY_ZT, 'ok': zt <= BODY_ZT, 'inserts': fb.frame_mounts()['inserts_xz']},
+            'body': {'z_spine_top_mm': zt, 'reference_mm': BODY_ZT, 'cheek_flange_z_mm': round(cheek_in, 2),
+                     'frame_z_min_mm': round(bb.zmin, 2), 'ok': body_ok, 'inserts': fb.frame_mounts()['inserts_xz']},
             'bbox_mm': [round(v, 2) for v in (bb.xmin, bb.xmax, bb.ymin, bb.ymax, bb.zmin, bb.zmax)]}
 
 
@@ -242,7 +246,8 @@ def evaluator(out_root: Path, mesh: float):
                'text': f"{c['case']} SF {c['safety_factor']} against {c['target']}"} for c in res['cases']]
     checks += [{'id': 'bed', 'level': 'ok' if res['bed']['ok'] else 'fail', 'text': f"print bed: {res['bed']['placement']}"},
                {'id': 'body', 'level': 'ok' if res['body']['ok'] else 'fail',
-                'text': f"body cheeks' z {res['body']['z_spine_top_mm']} (today {BODY_ZT})"}]
+                'text': f"body cheeks' z {res['body']['z_spine_top_mm']} (today {BODY_ZT}); frame bottom {res['body']['frame_z_min_mm']} "
+                        f"over the cheeks' flange at {res['body']['cheek_flange_z_mm']}"}]
     print(json.dumps({'metrics': {**m, 'mass_kg': round(res['mass_g'] / 1000, 4)}, 'checks': checks,
                       'summary': ', '.join(f"{c['case']} {c['safety_factor']}" for c in res['cases']),
                       'data': {'result': str((out / 'result.json').relative_to(ROOT)) if out.is_relative_to(ROOT) else str(out / 'result.json')}}))
