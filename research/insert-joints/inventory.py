@@ -1129,13 +1129,18 @@ def build(repo):
                   f"over the pod's cavity (its walls are {pod_wall:g} mm).",
             extra=[('no-receiver', 'fix', f"the pod lid's screws (its note: {q(lid_note)}) meet nothing in the pod: add four corner bosses with M3 "
                     "inserts (94459A140 in Ø4.0 x 6.7 pilots, axis along the lid's screws) inside the pod's open face")])
+    rig_plate_t = repo.num('cad/rig_parts.py', r'^PLATE_T = ([\d.]+)')
+    tof_depth = repo.num('cad/rig_parts.py', r"'y', Y_PLATE_FRONT - 1, Y_PLATE_FRONT \+ ([\d.]+), x, z\)\)")
     add(id='rig.tof_arm', assembly='leg rig', where="ToF arm (PETG Ø10 bosses) on the carriage plate", qty_robot=2,
         typed={'M4 x 10': 'cad/rig_parts.py tof_arm note'},
         insert='turret_insert_m4', d_mm=4, material='petg', infill='PETG (rig parts)',
         hole={'d': fast['M4']['insert_pilot'], 'depth': repo.num('cad/rig_parts.py', r"'y', Y_PLATE_FRONT - 1, Y_PLATE_FRONT \+ ([\d.]+), x, z\)\)")},
         boss_mm=2 * repo.num('cad/rig_parts.py', r"s = s\.union\(cyl\(([\d.]+), 'y', Y_PLATE_FRONT, Y_PLATE_FRONT \+ 10\.0, x, z\)\)"), axis='print-z', orientation='', screw='M4 x 10 from the plate\'s back', screw_side='open end',
-        mating_hole_mm=fast['M4']['clear'], tip_depth_mm=10 - repo.num('cad/rig_parts.py', r'^PLATE_T = ([\d.]+)'), clamp=None, loads=[],
-        notes='Light.')
+        mating_hole_mm=fast['M4']['clear'], tip_depth_mm=10 - rig_plate_t, stack={'head_seat_mm': rig_plate_t, 'screw_mm': 10.0},
+        longer_screw_fits=tof_depth - (12 - rig_plate_t) >= TIP_ROOM, clamp={'stack': f'{rig_plate_t:g} mm 6061 carriage plate', 'printed_mm': 0,
+        'limiter': 'n/a'}, loads=[],
+        notes=f"Light. An M4 x 12 keeps {12 - rig_plate_t:.2f} mm ({(12 - rig_plate_t) / 4:.1f} d) and stops {tof_depth - (12 - rig_plate_t):.2f} mm "
+              "off the pilot's floor.")
 
     for j in J:
         screen(j, ins, mat, None)

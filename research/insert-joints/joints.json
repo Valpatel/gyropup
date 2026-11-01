@@ -2279,9 +2279,18 @@
    "screw_side": "open end",
    "mating_hole_mm": 4.5,
    "tip_depth_mm": 3.6500000000000004,
-   "clamp": null,
+   "stack": {
+    "head_seat_mm": 6.35,
+    "screw_mm": 10.0
+   },
+   "longer_screw_fits": true,
+   "clamp": {
+    "stack": "6.35 mm 6061 carriage plate",
+    "printed_mm": 0,
+    "limiter": "n/a"
+   },
    "loads": [],
-   "notes": "Light.",
+   "notes": "Light. An M4 x 12 keeps 5.65 mm (1.4 d) and stops 3.75 mm off the pilot's floor.",
    "boss_ratio": 1.58,
    "boss_wall_mm": 1.85,
    "thread_engaged_mm": 3.65,
@@ -2296,11 +2305,11 @@
     },
     {
      "code": "engagement-low",
-     "level": "note",
+     "level": "fix",
      "text": "3.65 mm of thread engaged = 0.91 d (the body checks ask 1.2 d)"
     }
    ],
-   "verdict": "note"
+   "verdict": "fix"
   }
  ],
  "findings": [
@@ -2381,6 +2390,12 @@
    "code": "no-receiver",
    "level": "fix",
    "text": "the pod lid's screws (its note: \"PETG; 4 x M3 x 10 into the pod's inserts\") meet nothing in the pod: add four corner bosses with M3 inserts (94459A140 in Ø4.0 x 6.7 pilots, axis along the lid's screws) inside the pod's open face"
+  },
+  {
+   "joint": "rig.tof_arm",
+   "code": "engagement-low",
+   "level": "fix",
+   "text": "3.65 mm of thread engaged = 0.91 d (the body checks ask 1.2 d)"
   },
   {
    "joint": "stand.dock",
@@ -2545,11 +2560,11 @@
   "verdicts": {
    "owner": 4,
    "check": 6,
-   "fix": 13,
-   "note": 17,
+   "fix": 14,
+   "note": 16,
    "ok": 6
   },
-  "fix": 19,
+  "fix": 20,
   "owner": 9,
   "check": 11
  },
@@ -3370,6 +3385,18 @@
   },
   {
    "file": "cad/rig_parts.py",
+   "pattern": "^PLATE_T = ([\\d.]+)",
+   "value": 6.35,
+   "lines": 1
+  },
+  {
+   "file": "cad/rig_parts.py",
+   "pattern": "'y', Y_PLATE_FRONT - 1, Y_PLATE_FRONT \\+ ([\\d.]+), x, z\\)\\)",
+   "value": 9.4,
+   "lines": 1
+  },
+  {
+   "file": "cad/rig_parts.py",
    "pattern": "'y', Y_PLATE_FRONT - 1, Y_PLATE_FRONT \\+ ([\\d.]+), x, z\\)\\)",
    "value": 9.4,
    "lines": 1
@@ -3378,12 +3405,6 @@
    "file": "cad/rig_parts.py",
    "pattern": "s = s\\.union\\(cyl\\(([\\d.]+), 'y', Y_PLATE_FRONT, Y_PLATE_FRONT \\+ 10\\.0, x, z\\)\\)",
    "value": 5.0,
-   "lines": 1
-  },
-  {
-   "file": "cad/rig_parts.py",
-   "pattern": "^PLATE_T = ([\\d.]+)",
-   "value": 6.35,
    "lines": 1
   }
  ]
