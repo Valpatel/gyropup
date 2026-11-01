@@ -461,6 +461,8 @@ HIP = {                                          # the hip frame's shape beyond 
                                                  # +-(ring + dz)), which leaves room for a root fillet over the motors
     'root_r': 0.0,                               # mm: the flanges' roots on the motor side rounded, up to this radius and
     'root_gap': 0.75,                            # ... less where a motor's can (OD) comes within root_gap of the fillet
+    'ear_tip': False,                            # the knee-out ears' backing blocks end flush with the ear's edge, not
+                                                 # in a wedge whose rounded face stops short of it (a notch on the web)
     'bed_clip': True,                            # the bottom flange's outer corners cut back to the 45 deg lines through
                                                  # today's corners (|x| + |z| <= FLANGE_X + ring + FLANGE_T), so the frame
                                                  # still fits the bed turned (printplan.fits: 248.9 of 250 mm)
@@ -542,7 +544,13 @@ def hip_frame():
                 # hull of the boss and the flange's end face (not of the ring: hugging the motor it thinned to a knife
                 # edge, which the frame's landing case tore at), so it also fills the corner of the flange's end; its
                 # face towards the motor rounded into the web (a square step there tore in the landing case too)
-                blk = _hull(circle(px, pz, STOP_BOSS_R + 0.3) + [(sx * (fl_x - 1.0), zf + 0.5), (sx * (fl_x - 1.0), zf + fl_t - 1.0)])
+                blk_pts = circle(px, pz, STOP_BOSS_R + 0.3) + [(sx * (fl_x - 1.0), zf + 0.5), (sx * (fl_x - 1.0), zf + fl_t - 1.0)]
+                if HIP['ear_tip']:                             # its tip follows the ear's own edge (the lobe's tangent from
+                    ang = lambda q: math.atan2(q[1], sx * (q[0] - mx))      # the boss to the ring) instead of ending in
+                    on_ring = [q for q in lobe if abs(math.hypot(q[0] - mx, q[1]) - (ring_r - 1.0)) < 1e-3]   # a wedge
+                    below = [q for q in on_ring if ang(q) < ang((px, pz))]  # inside the lobe: issue #29, E1's peak
+                    blk_pts += [max(below, key=ang)] if below else []
+                blk = _hull(blk_pts)
                 back = yslab(blk, yf0 - STOP_EAR_BACK, yf0 + 0.01).cut(ycyl(STOP_EAR_CLEAR, yf0 - STOP_EAR_BACK - 1, yf0 + 1, mx))
                 f, rc = STOP_EAR_FILLET, STOP_EAR_CLEAR
                 prof = [(mx + rc, yf0 + 0.01), (mx + rc - f, yf0 + 0.01)]
