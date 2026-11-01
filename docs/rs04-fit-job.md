@@ -12,7 +12,7 @@ specimens; this RS04 package cannot qualify that motor family.
 
 ## Retained job and downloads
 
-The completed trial-2 slice estimates **6 h 32 min 51 s, 172.44 g and 65.17 m**
+The completed trial-2 slice estimates **6 h 32 min 59 s, 172.44 g and 65.17 m**
 of filament. These are slicer estimates, not observed print results. The retained
 G-code has 121 layers, no support deposition, a maximum commanded object-deposition
 feed of 99 mm/s, and verified 275°C nozzle / 100°C bed waits before deposition.
