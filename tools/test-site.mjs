@@ -51,9 +51,12 @@ try {
     assert.ok(await page.getByRole('link',{name:'Home',exact:true}).isVisible(),`${route} at ${width}×${height}: the nav links are hidden`);
    }
    if(width<=760) {
+    assert.ok(await menuButton.isVisible(),`${route} at ${width}×${height}: no Menu button`);
     const box=await menuButton.boundingBox();
     assert.ok(box && width-(box.x+box.width)<=24 && box.y<60,`${route} at ${width}×${height}: the Menu button is not at the top right`);
     await menuButton.click();
+    const openScroll=await page.evaluate(()=>document.documentElement.scrollWidth);
+    assert.ok(openScroll<=width+1,`${route} overflows ${width}×${height} with the menu open: ${openScroll}`);
     assert.ok(await page.locator('.nav-links').isVisible());
     assert.ok(await page.getByRole('link',{name:'Home',exact:true}).isVisible());
     await page.keyboard.press('Escape');
@@ -77,6 +80,22 @@ try {
    assert.ok(scroll<=width+1,`No-script landing overflows at ${width}: ${scroll}`);
   }
  } finally { await plain.close(); }
+ // The phone header is laid out by CSS alone, so it must not change height when the menu script arrives late.
+ const late=await browser.newContext({viewport:{width:390,height:844}});
+ try {
+  await acknowledgePrototypeNotice(late);
+  const early=await late.newPage();
+  await early.route('**/web/landing-nav.js',route=>route.abort());
+  await early.goto(base+'/',{waitUntil:'domcontentloaded'});
+  const before=await early.locator('.site-header').evaluate(h=>h.getBoundingClientRect().height);
+  assert.ok(await early.getByRole('button',{name:'Menu'}).isVisible(),'Without its script the landing shows no Menu button');
+  assert.ok(!(await early.getByRole('link',{name:'Design notes'}).isVisible()),'Without its script the landing shows the phone links inline');
+  await page.goto(base+'/',{waitUntil:'networkidle'});
+  await page.setViewportSize({width:390,height:844});
+  await page.waitForSelector('.landing-nav.has-menu');
+  const after=await page.locator('.site-header').evaluate(h=>h.getBoundingClientRect().height);
+  assert.equal(before,after,`The landing header changes height when its menu script loads: ${before} → ${after}`);
+ } finally { await late.close(); }
  // A saved desktop collapse must not strand phone users without controls.
  await page.setViewportSize({width:1280,height:800});
  await page.goto(base+'/designer/sim.html?run=none&sound=0',{waitUntil:'networkidle'});
