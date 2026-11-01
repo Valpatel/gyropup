@@ -144,7 +144,7 @@ def render(st, path, vmax, title, view):
         st.result.update(saved)
 
 
-def run_variant(out: Path, params: dict | None, cases, mesh: float, vmax: float | None, viewer: bool):
+def run_variant(out: Path, params: dict | None, cases, mesh: float, vmax: float | None, viewer: bool, dump: bool = False):
     out = out.resolve()
     out.mkdir(parents=True, exist_ok=True)
     if params:
@@ -164,6 +164,11 @@ def run_variant(out: Path, params: dict | None, cases, mesh: float, vmax: float 
     rows = []
     for r, st in zip(summ['results'], STUDIES):
         a = analyse(ls, st, r['case'], s_z, s_xy)
+        if dump:                                             # the field, for probing the stress along a feature later
+            sig = stress_corners(st).mean(axis=3)
+            np.savez_compressed(out / f"field-{r['case']}.npz", centre=st.points[st.tets[:, :4]].mean(axis=1).astype(np.float32),
+                                vm=st.vm_elem.astype(np.float32), keep=judged_mask(ls, st, r['case']),
+                                sig=np.stack([sig[0, 0], sig[1, 1], sig[2, 2], sig[0, 1], sig[1, 2], sig[0, 2]]).T.astype(np.float32))
         row = {k: r.get(k) for k in ('part', 'case', 'safety_factor', 'target', 'ok', 'von_mises_design_mpa', 'design_peak_at_mm',
                                      'max_displacement_mm', 'load_from', 'material_id', 'seconds')}
         row['mesh'] = r['mesh']
@@ -227,13 +232,14 @@ def main():
     ap.add_argument('--mesh', type=float, default=4.0)
     ap.add_argument('--vmax', type=float, help='also render each case with this colour scale (MPa)')
     ap.add_argument('--viewer', action='store_true')
+    ap.add_argument('--dump', action='store_true', help='save each case\'s stress field (field-<case>.npz)')
     ap.add_argument('--evaluator', action='store_true')
     ap.add_argument('--out-root', type=Path, default=ROOT / 'build/hip-frame/sweep')
     a = ap.parse_args()
     if a.evaluator:
         return evaluator(a.out_root, a.mesh)
     params = json.loads(a.params.read_text()) if a.params else None
-    res = run_variant(a.out, params, a.cases, a.mesh, a.vmax, a.viewer)
+    res = run_variant(a.out, params, a.cases, a.mesh, a.vmax, a.viewer, a.dump)
     for c in res['cases']:
         L = c['layers'][PRINT_NORMAL]
         print(f"{c['case']:4} SF {c['safety_factor']:5} (>= {c['target']})  layers({PRINT_NORMAL}) {L['sf']} [{L['governed_by']}] "
