@@ -75,9 +75,9 @@ gauge/slicer changes. Mounting, carrier and attachment evidence was regenerated
 against the settled CAD source inventory before recording these frames.
 
 The reel was recaptured again on 2026-11-01 (UTC) from
-`2b95d1b89cbf9a986e6525ccf07cb8426d93736d`, served assets `63d5c930c19eb0aa511d`,
+`0d1c38eee44054663e8b40a64008781ca33b6121`, served assets `613db6c433f4b59f7964`,
 for [PR 134](https://github.com/Valpatel/gyropup/pull/134) (issue 29). That PR's knee
-bearing and hip-frame defaults change `cad/fivebar.py` and `catalog/hardware.json`,
+bearing, hip-frame defaults and knee-spacer length change `cad/fivebar.py` and `catalog/hardware.json`,
 which the attachment manifest pins, so the manifest and its screw envelopes were
 re-exported. Their vertices are the same as before to 1 µm; only the triangle order
 differs. The recorder produced all 480 browser frames through a test-owned
