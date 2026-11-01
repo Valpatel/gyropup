@@ -90,7 +90,7 @@ PR27's run-3 JSON reports connectivity 136 pass / 1 warning / 2 failures; assemb
 
 The motion configuration samples flywheels at 0° and 360° only; `max_step_deg`/`max_step_mm` are unset and `strict_contacts` is false. Assembly has no service/removal coverage. Each inspected gate says `physical_fit_verified:false`. Correct those coverage gaps before using new passes as release evidence. The historical full-kit print source named a Ø34 tyre while the program CAD used Ø38. The candidate now consumes the canonical selected tyre and rejects unbound/mixed print inputs; no regenerated or qualified full kit has been released. See [print source provenance](print-source-provenance.md).
 
-The full robot's existing 37–37.75 kg studies do not establish the requested 100 lb (45.36 kg) ceiling. The hip-frame E1 result (1.65 vs 2.0) and undamped knee-bearing static factor (0.94 vs 1.0) remain open, together with measured wheel-clamp and battery-dock interfaces.
+The full robot's existing 37–37.75 kg studies do not establish the requested 100 lb (45.36 kg) ceiling. The hip-frame E1 result (1.65 vs 2.0 in the committed record) and undamped knee-bearing static factor (0.94 vs 1.0) remain open (after [PR 134](https://github.com/Valpatel/gyropup/pull/134): E1 2.08 at the 4 mm gate but 1.81 at 3 mm, not converged; knee s0 1.14 with the 6301-2RS on SKF's C0; the full record is not yet regenerated), together with measured wheel-clamp and battery-dock interfaces.
 
 ## Branch and release closure
 
