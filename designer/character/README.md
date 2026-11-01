@@ -67,8 +67,8 @@ bubble still shows).
 Overrides, in the browser console (then reload):
 
 ```js
-localStorage['gyropup.ttsBase']  = 'http://192.168.1.20:8081';   // Piper elsewhere
-localStorage['gyropup.sttBase']  = 'http://192.168.1.20:8082';   // Whisper elsewhere
+localStorage['gyropup.ttsBase']  = 'http://192.0.2.20:8081';     // Piper elsewhere
+localStorage['gyropup.sttBase']  = 'http://192.0.2.20:8082';     // Whisper elsewhere
 localStorage['gyropup.llmBase']  = 'http://127.0.0.1:11434/v1';  // any OpenAI-compatible base URL
 localStorage['gyropup.llmModel'] = 'llama3.2:3b';
 localStorage['gyropup.llmKey']   = '...';                        // only for an endpoint that needs one; stays in this browser
@@ -149,7 +149,8 @@ GYROPUP_TTS_SPEAKER=8329 GYROPUP_TTS_PITCH=0`, or cori, or ljspeech).
 
 ## Ears and brain (Moxie's Whisper, Ollama)
 
-Whisper runs from the Moxie repo (`/home/scubasonar/Code/moxie-robot/repo`):
+Whisper runs from a checkout of the Moxie simulator
+([mvalancy/moxie-robot-saver](https://github.com/mvalancy/moxie-robot-saver)):
 
 ```sh
 # one-time: a venv with faster-whisper (the server looks for /tmp/piper-venv by default)

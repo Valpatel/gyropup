@@ -306,7 +306,7 @@ pip install rerun-sdk viser
 
 ### Open questions and risks
 
-1. **Isaac version mismatch.** Isaac Lab 3.0 targets Isaac Sim 6.2 and CUDA 13.0. Our vp-isaac-sim is 6.0 dev. The kit-less Newton path avoids the mismatch for training.
+1. **Isaac version mismatch.** Isaac Lab 3.0 targets Isaac Sim 6.2 and CUDA 13.0. Our Isaac Sim install is 6.0 dev. The kit-less Newton path avoids the mismatch for training.
 2. **Isaac closed loops.** PhysX loop handling ("Exclude From Articulation") is manual, and whether the importers do it is **not documented**. This is why RL uses the serial model.
 3. **Converter maturity.** `urdf-usd-converter` and `mujoco-usd-converter` are alpha, and `contype`/`conaffinity` collision filtering is not converted. Expect to check self-collision settings after every import.
 4. **Motor data.** CubeMars, Robstride and Damiao have no identified sim models anywhere we looked. Budget a bench rig: one leg actuator, a load arm, a CAN logger, then `mujoco.sysid`.
