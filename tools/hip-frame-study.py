@@ -77,18 +77,23 @@ def layer_terms(sig, n):
 
 
 def toolkit_identity(cadagent) -> dict:
-    """The cad-agent that ran: its version and, from a git checkout of cad-agent, its commit (never its local path).
-    The commit is taken only when the package's own __init__.py is tracked there: a cad-agent installed into a venv
-    that lives inside another repository's checkout would otherwise report that repository's commit."""
-    from importlib.metadata import PackageNotFoundError, version
-    root = Path(cadagent.__file__).resolve().parent
-    git = lambda *a: subprocess.run(['git', *a], cwd=root, text=True, capture_output=True)
-    rev = git('rev-parse', 'HEAD').stdout.strip() if git('ls-files', '--error-unmatch', '__init__.py').returncode == 0 else ''
+    """The cad-agent that ran: its version and commit, both from the copy that was imported (never its local path).
+    From a git checkout of cad-agent (its own __init__.py tracked there), the commit and its tag (`git describe`), so
+    a checkout put first on PYTHONPATH over a virtualenv's cad-agent records itself, not the virtualenv's version.
+    Otherwise the installed distribution's version, only if that distribution owns the imported __init__.py; else
+    None. (cadagent has no __version__ in v0.6.0.)"""
+    from importlib.metadata import PackageNotFoundError, distribution
+    init = Path(cadagent.__file__).resolve()
+    git = lambda *a: subprocess.run(['git', *a], cwd=init.parent, text=True, capture_output=True)
+    if git('ls-files', '--error-unmatch', init.name).returncode == 0:
+        tag = git('describe', '--tags', '--exact-match').stdout.strip() or git('describe', '--tags', '--always').stdout.strip()
+        return {'version': tag.removeprefix('v') or None, 'commit': git('rev-parse', 'HEAD').stdout.strip() or None}
     try:
-        ver = version('cad-agent')                             # cadagent has no __version__ (v0.6.0)
+        dist = distribution('cad-agent')
     except PackageNotFoundError:
-        ver = getattr(cadagent, '__version__', None)
-    return {'version': ver, 'commit': rev or None}
+        return {'version': None, 'commit': None}
+    owned = any(Path(dist.locate_file(f)).resolve() == init for f in dist.files or () if f.name == '__init__.py')
+    return {'version': dist.version if owned else None, 'commit': None}
 
 
 def install_recorder():

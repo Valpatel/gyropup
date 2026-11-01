@@ -103,6 +103,22 @@ def run_turret(out, mesh, parts):
     return ts.run(mesh, anim=False, only=parts)
 
 
+def toolkit_identity(cadagent):
+    """cad-agent's version and commit, both from the imported copy (as tools/hip-frame-study.py toolkit_identity)."""
+    from importlib.metadata import PackageNotFoundError, distribution
+    init = Path(cadagent.__file__).resolve()
+    git = lambda *a: subprocess.run(['git', *a], cwd=init.parent, text=True, capture_output=True)
+    if git('ls-files', '--error-unmatch', init.name).returncode == 0:
+        tag = git('describe', '--tags', '--exact-match').stdout.strip() or git('describe', '--tags', '--always').stdout.strip()
+        return {'version': tag.removeprefix('v') or None, 'commit': git('rev-parse', 'HEAD').stdout.strip() or None}
+    try:
+        dist = distribution('cad-agent')
+    except PackageNotFoundError:
+        return {'version': None, 'commit': None}
+    owned = any(Path(dist.locate_file(f)).resolve() == init for f in dist.files or () if f.name == '__init__.py')
+    return {'version': dist.version if owned else None, 'commit': None}
+
+
 def main():
     ap = argparse.ArgumentParser()
     ap.add_argument('suite', choices=('leg', 'turret'))
@@ -129,11 +145,14 @@ def main():
         lc = row['layer_check']['safety_factor']
         row.update(target=r['target'], gate_sf=r['safety_factor'], gate_material=r['material_id'],
                    verdict_sf=r.get('verdict_sf', r['safety_factor']), turret_layer_aware_sf=r.get('sf_layer_aware'),
+                   # lower than the gate SF; the README's "governs" compares with verdict_sf (the same on the leg)
                    layer_check_governs=lc is not None and lc < r['safety_factor'],
                    layer_check_ok=lc is not None and lc >= r['target'])
-    from importlib.metadata import version            # cadagent has no __version__ (v0.6.0)
+    import cadagent
     rev = subprocess.run(['git', 'rev-parse', 'HEAD'], cwd=ROOT, text=True, capture_output=True).stdout.strip()
-    res = {'schema': 1, 'suite': a.suite, 'source_revision': rev, 'toolkit_version': version('cad-agent'),
+    toolkit = toolkit_identity(cadagent)
+    res = {'schema': 1, 'suite': a.suite, 'source_revision': rev, 'toolkit_version': toolkit['version'],
+           'toolkit_commit': toolkit['commit'],
            'mesh_mm': a.mesh or (4.0 if a.suite == 'leg' else 2.5), 'seconds': round(time.time() - t0, 1),
            'shear_assumption': 'toolkit default S_z / sqrt(3) (no data sheet gives an interlayer shear strength); '
                                'shear_half_sz repeats the check at S_z / 2, the turret study\'s own rule',

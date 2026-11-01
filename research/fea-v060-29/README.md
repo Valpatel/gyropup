@@ -30,8 +30,11 @@ D33 leg (10, scaled; see below). "Below its own target" is each record's verdict
 target, and for the turret's printed parts its layer-aware SF.
 
 **Deflections** grow by the modulus ratio, ×2.91 along the layers and ×4.92 across, wherever the part did not change.
-That confirms #197's projection of them. Where the design changed, the ratio is 0.86 to 1.04 of that on the leg, and
-0.46 to 2.10 on the turret.
+That confirms #197's projection of them. The exceptions are four studies whose peak stress is unchanged but whose
+stiffness PR 134 changed: the wheel link's R1 and R1w grow ×2.70, and the hip frame's E3o and R3o ×4.69. The rest are
+within 1.3 % of the modulus ratio. Against today's leg on v0.4.2 (`evidence/leg-v042-today.json`), all 26 leg studies
+scale exactly. Where the design changed, the ratio is 0.86 to 1.04 of the modulus ratio on the leg, and 0.46 to 2.10
+on the turret.
 
 ### Studies whose SF crosses 2.0 or 1.2
 
@@ -55,8 +58,8 @@ On the turret's layer-aware verdict, 11 printed or aluminium cases cross 2.0 or 
 Sixteen cases miss their target after the re-run, against two before. Seven are on the leg (below) and nine on the
 turret (in its section). Ranked by SF over target, the furthest below are:
 
-- the hip frame's E1: 1.63 / 2.0 at the 4 mm gate mesh, and 1.41 at 3 mm, so not converged;
 - the turret cradle's E-push-up: 1.53 / 2.0;
+- the hip frame's E1: 1.63 / 2.0 at the 4 mm gate mesh, and 1.41 at 3 mm, so not converged;
 - the turret pan base's R-fall-side: 0.98 / 1.2;
 - the turret cartridge body's E-recoil: 1.65 / 2.0.
 
@@ -74,22 +77,48 @@ part's own frame, in mm (`exports/leg/fea/summary.json` `design_peak_at_mm`).
 | upper link E1F | the same; front link at −51° | PA6-CF xy | 2.0 | 2.17 → 1.79 | [27.6, 0.8, −13.7] | material |
 | upper link R3K | collapse (rig `power_off`): folded onto the stops, 122 N m on a stop post, 1831 N at the axle | PA6-CF xy | 1.0 | 1.08 → 0.90 | [25.6, 1.0, −17.2] | material |
 | front link E1 | turn | PA6-CF xy | 2.0 | 2.00 → 1.68 | [293.5, 51.0, −11.6], the apex | material |
-| hip frame E1 | turn: both upper links' pin forces | PA6-CF z | 2.0 | 1.65 → 1.63 (1.41 at 3 mm) | [94.8, −23.4, −58.9] | material ×0.79; PR 134's frame, stress ×0.80 |
+| hip frame E1 | turn: both upper links' pin forces | PA6-CF z | 2.0 | 1.65 → 1.63 (1.41 at 3 mm) | [94.8, −23.4, −58.9] at 4 mm; [120.0, −25.2, 45.0] at 3 mm | material ×0.79; PR 134's frame, stress ×0.80 |
 | hip frame E3o | a motor at its cap into a stop: 60 N m, 1038 N on the front motor's knee-out post | PA6-CF z | 2.0 | 2.38 → 1.88 (2.02 at 3 mm) | [112.4, −1.6, 56.7], the stop post's seat | material |
 | hip frame R3o | collapse: 122 N m, 2115 N on the front motor's knee-out post | PA6-CF z | 1.0 | 1.17 → 0.92 (0.99 at 3 mm) | [112.4, −1.6, 56.7] | material |
 
-The 3 mm values come from `evidence/hip-frame-v060.json`. Today's leg under v0.4.2 is in
+The 3 mm values come from `evidence/hip-frame-v060.json`. At 3 mm the hip frame's E1 peak is somewhere else,
+[120.0, −25.2, 45.0]. That is the region where the 4 mm layer check's worst corner also sits ([121.8, −25.1, 47.7]).
+So the drop from 1.63 to 1.41 is a second hot spot taking over, not the 4 mm peak refining. The E3o miss rests on
+the 4 mm gate alone: it reads 2.02 at 3 mm.
+
+Today's leg under v0.4.2 is in
 `evidence/leg-v042-today.json`: the same revision, host and meshes. It passes every target, and its weakest case is
 the front link's E1 at 2.02. Its design stress equals the v0.6.0 run's in all 26 studies, so each of the seven leg
 cases below target comes from the material change alone. The hip frame's E1 is 2.07 on today's frame under the old
-data. The front link's buckling SF goes from 14.47 to 4.96 because it scales with the modulus. The leg's joint checks all still pass. The weakest are the
-stop post's pin bearing in R3 at 1.03 / 1.0 and the knee's 6301-2RS static factor in R3 at 1.13 / 1.0. The front
-link's buckling SF is 4.96.
+data. The front link's buckling SF goes from 14.47 to 4.96 because it scales with the modulus.
+
+**The leg's joint checks did not take v0.6.0's data.** Three checks in `cad/leg_studies.py` judge printed-part
+bearing against Gyropup's own 40 MPa allowable for humid PA6-CF, sustained, in its layers:
+
+- the stop post's pin bearing in the hip frame's web (`PIN_BEARING_MPA`);
+- the knee eyes' pressure;
+- the hub dowels' bearing.
+
+That 40 MPa was set when the toolkit's humid in-layer strength was 49 MPa. It is now 98 % of v0.6.0's 40.84 MPa.
+The record reads these checks unchanged: the joint block of `evidence/leg-v042-today.json` equals the v0.6.0 one.
+
+They pass as recorded. The weakest are:
+
+- the stop post's web bearing in R3, 1.03 / 1.0;
+- the rear and front knee eyes in R3, 1.06 and 1.17;
+- the knee's 6301-2RS static factor in R3, 1.13 / 1.0, a steel bearing on SKF's C0, which the change does not
+  touch.
+
+Derated by the same ×0.833 as the in-layer strength, the stop post's bearing would read 0.86 and the knee eyes 0.88
+and 0.97. That is below 1.0. The bearing allowable is the owner's to set, and this PR leaves it as it is.
 
 **Options, for the owner to decide.** Design changes are out of scope here.
 
-- Add material where the peak is: the upper link's knee-end boss root, the front link's apex, the hip frame's E1 web
-  and its stop-post seat.
+- Add material where the peak is:
+  - the upper link's knee-end boss root;
+  - the front link's apex;
+  - the hip frame's two E1 hot spots, at 4 mm and at 3 mm;
+  - its stop-post seat.
 - Print the part another way, or use another material.
 - Cut the load. For R3K and R3o that means less torque on the stops when they fold with power off. For the turret's
   gears it means a lower servo stall cap.
@@ -149,7 +178,9 @@ S_s = S_z / √3 (10.47 MPa for humid PA6-CF). The turret's own check takes S_z 
 (`evidence/*-layer-check.json`, `shear_half_sz`), and neither is measured: a coupon test of the interlayer shear
 strength would replace both.
 
-**Governs** here means that the check reads lower than the SF the record judges the part on.
+**Governs** here means that the check reads lower than the SF the record judges the part on: the gate SF on the
+leg, and the layer-aware verdict on the turret's printed parts. The evidence files' `layer_check_governs` field
+compares with the gate SF. It is the same thing on the leg, and on the turret it is true for 15 studies.
 
 **Leg: governs on 17 of 20 printed-part studies.** Fifteen read below target on it, against 7 on the gate
 (`evidence/leg-layer-check.json`). The record judges the links on the in-layer strength (`pa6_cf_xy`). Their worst
@@ -157,8 +188,8 @@ corners sit where a boss whose axis runs along y, across the layers, meets the w
 knee-end boss at x ≈ 130 mm. On the front link it is the apex at [293.5, 48.0, −11.6], and on the wheel link
 [222.8, 54.0, 16.8]. There the stress opens the layers (σn, up to 25 MPa against S_z 18.1) and shears them (τ). The
 last columns show how much rests on the shear assumption. "Opening stress alone" is S_z / σn at that corner, an
-upper bound on a tension-only check that needs no shear allowable at all. On that alone, the front link's R1 (0.72),
-the wheel link's R1w (0.89) and the upper link's R1F (0.95) are below 1.0. Where σn is compressive (the upper link's
+upper bound on a tension-only check that needs no shear allowable at all. On that alone, four are below 1.0: the
+front link's R1 (0.72) and E1 (0.99), the wheel link's R1w (0.89) and the upper link's R1F (0.95). Where σn is compressive (the upper link's
 R3K, R3KF, R2 and E2), the result rests on the assumed shear allowable alone.
 
 | Study | Target | Gate SF (record) | layer_check, S_s = S_z/√3 | at S_s = S_z/2 | σn, τ at the worst corner (MPa) | Opening stress alone | Governs | Meets target |
@@ -239,7 +270,7 @@ and cf6592e replaced it with 28. That is why #197 counted 56 studies, with 26 �
 
 - **The method is right where the part did not change.** In the 29 regenerated studies with no change of design or
   load, the re-run SF is within 0.03 of the projection, which is rounding. The deflections grow by ×2.91 and ×4.92 as
-  projected. That holds because each study is one linear material under force loads: the stress does not depend on
+  projected, except four leg studies whose stiffness PR 134 changed (see Results). That holds because each study is one linear material under force loads: the stress does not depend on
   E. The two control runs show it (`evidence/historical-scaling-control.json`; the leg on both toolkits at one
   revision, `evidence/leg-v042-today.json`).
 - **It is wrong where the part changed after its record**, because a projection cannot see that:
@@ -266,7 +297,8 @@ Gyropup pins cad-agent in three kinds of place:
 - **Receipt constants** (`cad/rs04_lug_checks.py`, `tools/package-fit-job.py`): the same fit-job helpers. They are in
   `cad/`, which several evidence receipts hash, so they are unchanged.
 - **The FEA records.** They have no pin file. Each record now carries `material_data` per study (v0.6.0's material
-  row, with its constants hash), and each run's provenance is in `evidence/`.
+  row, with its constants hash). Each run's provenance is in `evidence/`. For the two records and the E1 export it
+  is in `evidence/record-runs-provenance.json`, with the command, exit code, revision, clean tree and packages.
 
 ## How it was run
 
