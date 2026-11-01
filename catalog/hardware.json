@@ -4999,7 +4999,7 @@
   },
   "used_for": "the knees: two in each lower link's boss (issue #29)",
   "qty_per_robot": 8,
-  "notes": "6301-2RS, 12 x 37 x 12, sealed: replaces the 6201-2RS (bearing_6201) in the knees (issue #29). In the undamped power cut (R3) the rear knee's worse bearing carries 3,672 N with the 36 mm span: s0 1.13 on SKF's C0 4.15 kN (exports/leg/fea/summary.json R3 knee_rear bearing), where the 6201 had 0.88 (3.49 kN on 38 mm, C0 3.07 kN). cad/fivebar.py seats it in Ø37.02 x 12 bores at both ends of the 48 mm knee boss, the boss Ø51."
+  "notes": "6301-2RS, 12 x 37 x 12, sealed: replaces the 6201-2RS (bearing_6201) in the knees (issue #29). In the undamped power cut (R3) the rear knee's worse bearing carries 3.65 kN with the 36 mm span: s0 1.14 on SKF's C0 4.15 kN, where the 6201 had 0.88 (3.49 kN on 38 mm, C0 3.07 kN). cad/fivebar.py seats it in Ø37.02 x 12 bores at both ends of the 48 mm knee boss, the boss Ø51."
  },
  {
   "id": "mcmaster-98541a174",
