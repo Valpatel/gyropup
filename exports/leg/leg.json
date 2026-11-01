@@ -120,15 +120,15 @@
   ]
  ],
  "mass_g": {
-  "printed": 2945,
+  "printed": 3080,
   "machined": 305,
-  "bought": 6459,
-  "total": 9708,
+  "bought": 6558,
+  "total": 9943,
   "printed_parts": {
-   "hip_frame": 1007.5,
+   "hip_frame": 1106.1,
    "upper_link": 399.5,
-   "front_link": 446.4,
-   "wheel_link": 615.8,
+   "front_link": 463.2,
+   "wheel_link": 635.1,
    "apex_spacer": 13.7,
    "stop_sleeve": 15.6
   },
@@ -141,56 +141,56 @@
  },
  "print": {
   "too_big": [],
-  "hours": 195.4
+  "hours": 204.2
  },
  "clashes": [],
  "cable_route": {
   "105": [
    [
     "upper_link_rear",
-    132
+    125
    ]
   ],
   "130": [
    [
     "upper_link_rear",
-    128
+    124
    ]
   ],
   "170": [
    [
     "upper_link_rear",
-    128
+    125
    ]
   ],
   "220": [
    [
     "upper_link_rear",
-    128
+    124
    ]
   ],
   "270": [
    [
     "upper_link_rear",
-    126
+    123
    ]
   ],
   "320": [
    [
     "upper_link_rear",
-    123
+    120
    ]
   ],
   "370": [
    [
     "upper_link_rear",
-    116
+    114
    ]
   ],
   "390": [
    [
     "upper_link_rear",
-    113
+    109
    ]
   ]
  },

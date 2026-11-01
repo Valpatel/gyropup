@@ -1,10 +1,6 @@
 # Leg rig: assembly
 
-> **Historical assembly sequence:** these rig exports and loading assumptions
-> predate the current motor-mounting work. The RS-04 lug stack, support and
-> tightening procedure are not released. Use the
-> [current mounting-fit evidence](rs04-mounting-fit.md); this page is not a print
-> or powered-test instruction for the arriving motors.
+> **Unqualified assembly walkthrough:** this sequence and its loading assumptions do not establish a current print or operating release. The RS-04 lug support, physical fits and tightening procedure remain unqualified. Use [the current mounting-fit evidence](rs04-mounting-fit.md) and the separate [unpowered coupon job](rs04-fit-job.md); no physical coupon results are recorded.
 
 The order to build the single-leg rig and the first leg on it, from `cad/rig_assembly.py` (the pictures come from the CAD: each step's new parts in colour, lifted along the way they go in; what is already fitted in grey). Part numbers: `docs/leg-rig-orders.md`; wiring: `docs/leg-rig-wiring.md`; before anything moves: `docs/leg-rig-safety.md`; the tests: `docs/leg-bench-tests.md`.
 
@@ -50,15 +46,7 @@ Wired on the bench first (docs/leg-rig-wiring.md): the contactor on its two M4 i
 
 ![step 7](../exports/rig/assembly/step-07.png)
 
-The historical sequence fits the frame's inserts and two 61812s before the motors,
-using the coupon results to establish the bearing fit. Each motor's machined
-adapter and two Ø5 locating dowels then locate it in the frame. Those physical
-coupon results have not been recorded. The former 10 mm counterbore and 2.5 N m
-lug-tightening instructions are superseded: use the current motor-fit candidate
-to establish the actual screw stack, and qualify the joint's preload separately.
-The old sequence then fits the four bare stop posts before setting zero. This
-description preserves assembly order; it does not approve the archived hardware
-dimensions, retention method or a powered zeroing test.
+The historical sequence fits the frame's inserts and two 61812s before the motors, using coupon results to establish the bearing fit. Those physical coupon results have not been recorded. Each motor uses two Ø5 locating dowels and ten M4 x 20 mounting screws. The former counterbore and lug-tightening instructions are superseded: use [the current motor-fit evidence](rs04-mounting-fit.md) to establish the measured screw stack, and qualify support and preload separately. Fit the lug screws before upper links and stop posts as specified by the bounded driver-access study. This historical sequence does not approve dimensions, bearing retention, tightening torque or a powered zeroing test.
 
 ## 8. The upper links (bench)
 
@@ -88,13 +76,13 @@ Its four drop-in nuts into the post's front slots from the top (the rails' screw
 
 ![step 12](../exports/rig/assembly/step-12.png)
 
-The bench supply (36 V; docs/leg-bench-tests.md, commissioning C1-C5): set each motor's id (127 -> 1 front, 2 rear), `python -m rig.rs04 --id N setup`, save. Then python -m rig.calibrate: hold each upper link on its bare knee-out post, it zeroes the motor there, you swing the link to the knee-in post, it checks the 125 deg between the bare posts and the direction and writes rig/calibration.json. Power off.
+The bench supply (36 V; docs/leg-bench-tests.md, commissioning C1-C5): set each motor's id (127 -> 1 front, 2 rear), `python -m rig.rs04 --id N setup`, save. Then python -m rig.calibrate: hold each upper link on its bare knee-out post, it zeroes the motor there, you swing the link to the knee-in post, it checks the 142 deg between the bare posts and the direction and writes rig/calibration.json. Power off.
 
 ## 13. The knees
 
 ![step 13](../exports/rig/assembly/step-13.png)
 
-Two 6201s and the 28 mm spacer tube into each lower link's knee boss (the boss coupon's fit), a DIN 433 washer each side; the 12 x 90 shoulder screw from the outer side through the lower link, the washers and the eye sleeves; the M10 nyloc in the upper link's pocket onto the sleeves (20 N m: steel on steel). The knees turn freely.
+Two 6301-2RS and the 24 mm spacer tube into each lower link's knee boss (the boss coupon's fit), a DIN 433 washer each side; the 12 x 90 shoulder screw from the outer side through the lower link, the washers and the eye sleeves; the M10 nyloc in the upper link's pocket onto the sleeves (20 N m: steel on steel). The knees turn freely.
 
 ## 14. The apex
 

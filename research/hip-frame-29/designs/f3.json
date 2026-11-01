@@ -1,0 +1,2 @@
+{"name": "f3", "description": "Screening run f3: flanges out 3 mm, 16 / 16, root fillet up to 6 mm",
+ "params": {"hip": {"root_r": 6, "flange_dz": 3, "top_t": 16, "bottom_t": 16}}}

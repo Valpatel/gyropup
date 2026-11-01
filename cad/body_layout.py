@@ -548,8 +548,8 @@ def leg_rows(h_mm=300.0):
     bought = {'motor_front': each('robstride-rs-04'), 'motor_rear': each('robstride-rs-04'),
               'wheel_tyre': wheel_g() * D69_WHEEL['rotor_share'], 'wheel_hub': wheel_g() * (1 - D69_WHEEL['rotor_share']),
               'bearing_61812_front': each('bearing_61812'), 'bearing_61812_rear': each('bearing_61812'),
-              'apex_61812': 2 * each('bearing_61812'), 'knee_6201_front_in': each('bearing_6201'), 'knee_6201_front_out': each('bearing_6201'),
-              'knee_6201_rear_in': each('bearing_6201'), 'knee_6201_rear_out': each('bearing_6201'), 'knee_pin_front': each('knee_pin'),
+              'apex_61812': 2 * each('bearing_61812'), 'knee_bearing_front_in': each('bearing_6301'), 'knee_bearing_front_out': each('bearing_6301'),
+              'knee_bearing_rear_in': each('bearing_6301'), 'knee_bearing_rear_out': each('bearing_6301'), 'knee_pin_front': each('knee_pin'),
               'knee_pin_rear': each('knee_pin'), 'stop_posts': 4 * each('stop_post'), 'apex_circlip': each('circlip_60'),
               'eye_sleeve_front': 2 * each('eye_sleeve'), 'eye_sleeve_rear': 2 * each('eye_sleeve'),
               'screws_lugs': 20 * each('screw_m4x20'), 'screws_links': 16 * each('screw_m5x40'), 'screws_wheel': 4 * each('screw_m6x30')}

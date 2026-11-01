@@ -2,7 +2,7 @@
 
 Issue [104](https://github.com/Valpatel/gyropup/issues/104) replaces the old
 target-practice snapshot with a 22-second edit of current browser footage and
-explicitly historical engineering studies. The public turret is the 48-part model
+explicitly labelled engineering studies (the leg-rig jump is historical). The public turret is the 48-part model
 shared by the landing character and simulator; the Orin bench adds 18 enclosure
 and adapter parts. The full-robot body remains an interim export. Current demo
 movement is scripted browser motion with projectile integration, not a newly
@@ -14,13 +14,13 @@ solved whole-robot physics run.
 | 4–7 s | Feed and flywheel inspection | Actual simulator callbacks and emitted balls, transparent shells |
 | 7–13 s | Target practice | Three actual projectile hits and three target knockdowns |
 | 13–16 s | Isolated leg-rig jump | Archived MuJoCo study, 16.25 kg per leg, 48.1 V, 60 N·m cap |
-| 16–19 s | Hip-frame E1 | Historical static load scaling, not transient dynamics |
+| 16–19 s | Hip-frame E1 | Static load scaling of the recorded study (cad-agent v0.6.0 record), not transient dynamics |
 | 19–22 s | Current robot | Current turret on the interim body, moving in the browser demo |
 
 The leg movie belongs to the report at
 `ae919f7211f236f398ff77cc25d00c2017c1ab9c`, not today's 18.75 kg / 36 V report.
-E1 retains its 37.5 kg baseline, deformation ×77, SF 1.65 versus required 2.00,
-and static-load labels. Its entire native frame is preserved with side bars;
+E1 retains its 37.5 kg baseline, deformation ×16, SF 1.63 at the 4 mm gate mesh
+(1.41 at 3 mm) versus required 2.00, and static-load labels. Its entire native frame is preserved with side bars;
 the failed strength target is neither cropped nor covered. These are prototype
 demonstrations, not physical testing or a print/safety release. The separate
 Progress leg-gallery mismatch is tracked in
@@ -74,6 +74,31 @@ withdrawn mounting torque and obsolete seat-depth instructions, and the complete
 gauge/slicer changes. Mounting, carrier and attachment evidence was regenerated
 against the settled CAD source inventory before recording these frames.
 
+The reel was recaptured again on 2026-11-01 (UTC) from
+`0d1c38eee44054663e8b40a64008781ca33b6121`, served assets `613db6c433f4b59f7964`,
+for [PR 134](https://github.com/Valpatel/gyropup/pull/134) (issue 29). That PR's knee
+bearing, hip-frame defaults and knee-spacer length change `cad/fivebar.py` and `catalog/hardware.json`,
+which the attachment manifest pins, so the manifest and its screw envelopes were
+re-exported. Their vertices are the same as before to 1 µm; only the triangle order
+differs. The recorder produced all 480 browser frames through a test-owned
+`serve-site.mjs --ephemeral` listener, closed afterwards. The mechanism emitted
+nine shots, and target practice recorded three shots, three hits and three
+knockdowns. The unchanged encoder and guard produced and passed both companions,
+the poster and the receipts. The E1 and leg inserts are unchanged: that PR does
+not regenerate the recorded FEA summary or the E1 movie.
+
+The E1 insert was replaced on 2026-11-01 (UTC) for
+[PR 135](https://github.com/Valpatel/gyropup/pull/135) (issue 29). That PR regenerates the
+leg record on cad-agent v0.6.0 at PR 134's frame, so the E1 movie is now that record's case:
+SF 1.63 at the 4 mm gate mesh and 1.41 at 3 mm, deformation ×16 (the softer humid PA6-CF
+deflects 4.9 times as far as before). The browser frames were recaptured from
+`afea74edf33904bf57f6bdcac6ae358e913e7aed`, served assets `9737346103cbeb1fa36c`, through a
+test-owned `serve-site.mjs --ephemeral` listener, closed afterwards; none of the capture's
+inputs differ from the previous capture's. The mechanism emitted nine shots, and target
+practice recorded three shots, three hits and three knockdowns. The unchanged encoder and
+guard produced and passed both companions, the poster and the receipts. The leg insert is
+unchanged. The previous capture's note follows.
+
 Raw frames and validation output for this capture are retained locally under
 `build/motor-fit-highlights-release/`. Capture used an owned, temporary
 `createSiteServer` listener, closed after validation, with `CAPTURE_OUTPUT` set to
@@ -97,8 +122,8 @@ untouched. Earlier diagnostic captures remain in their separate directories.
 `tools/encode-highlights.py` uses lossless intermediate segments, the repository's
 Inter font, and two encodings of the same edit. Outputs live in `web/highlights/`:
 
-- H.264 High 3.1, YUV420P, 720p30, fast-start MP4: 1,805,366 bytes.
-- VP9 Profile 0, YUV420P, 720p30, WebM: 1,435,653 bytes.
+- H.264 High 3.1, YUV420P, 720p30, fast-start MP4: 1,834,385 bytes.
+- VP9 Profile 0, YUV420P, 720p30, WebM: 1,464,316 bytes.
 - A 32,516-byte WebP poster from reel frame 30, with the same framing and lower third.
 - Source, edit, capture and output receipts, including the historical leg report.
 

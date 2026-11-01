@@ -1,0 +1,162 @@
+[
+ {
+  "name": "r01-base-m4",
+  "host_role": "mechanical compute host (x86-64, PyPI gmsh)",
+  "what": "today, the old load sign",
+  "source_revision": "0154ff005d52723f8372f33c795298d11d2739bc",
+  "command": "tools/hip-frame-study.py --out build/hip-frame/r01-base-m4 --mesh 4",
+  "result": "build/hip-frame/r01-base-m4/result.json"
+ },
+ {
+  "name": "r04-base-m3",
+  "host_role": "mechanical compute host (x86-64, PyPI gmsh)",
+  "what": "today, the old load sign",
+  "source_revision": "0154ff005d52723f8372f33c795298d11d2739bc",
+  "command": "tools/hip-frame-study.py --out build/hip-frame/r04-base-m3 --mesh 3",
+  "result": "build/hip-frame/r04-base-m3/result.json"
+ },
+ {
+  "name": "r02-fix-m4",
+  "host_role": "mechanical compute host (x86-64, PyPI gmsh)",
+  "what": "today, corrected loads",
+  "source_revision": "0eb9aae50bb94dbaf5eb9deb4e865895fd5de654",
+  "command": "tools/hip-frame-study.py --out build/hip-frame/r02-fix-m4 --mesh 4",
+  "result": "build/hip-frame/r02-fix-m4/result.json"
+ },
+ {
+  "name": "r03-fix-m3",
+  "host_role": "mechanical compute host (x86-64, PyPI gmsh)",
+  "what": "today, corrected loads",
+  "source_revision": "0eb9aae50bb94dbaf5eb9deb4e865895fd5de654",
+  "command": "tools/hip-frame-study.py --out build/hip-frame/r03-fix-m3 --mesh 3",
+  "result": "build/hip-frame/r03-fix-m3/result.json"
+ },
+ {
+  "name": "b03-before",
+  "host_role": "mechanical compute host (x86-64, PyPI gmsh)",
+  "what": "today: the gallery before",
+  "source_revision": "5995f940581d693db6aa56fc1393ea69b970fedf",
+  "command": "tools/hip-frame-study.py --out build/hip-frame/b03-before --mesh 4 --vmax 16 --dscale 80 --dump",
+  "result": "build/hip-frame/b03-before/result.json"
+ },
+ {
+  "name": "b02-before",
+  "host_role": "second mechanical compute host (aarch64, conda-forge gmsh)",
+  "what": "today on the recording host",
+  "source_revision": "5995f940581d693db6aa56fc1393ea69b970fedf",
+  "command": "tools/hip-frame-study.py --out build/hip-frame/b02-before --mesh 4",
+  "result": "build/hip-frame/b02-before/result.json"
+ },
+ {
+  "name": "s01-m4",
+  "host_role": "mechanical compute host (x86-64, PyPI gmsh)",
+  "what": "top flange 21 mm",
+  "source_revision": "03161d61c611bc2619c97130b680eeb6aeb9ad97",
+  "command": "tools/hip-frame-study.py --out build/hip-frame/s01-m4 --params <s01> --mesh 4",
+  "result": "build/hip-frame/s01-m4/result.json"
+ },
+ {
+  "name": "s02-m4",
+  "host_role": "mechanical compute host (x86-64, PyPI gmsh)",
+  "what": "flanges 21 / 18 mm",
+  "source_revision": "03161d61c611bc2619c97130b680eeb6aeb9ad97",
+  "command": "tools/hip-frame-study.py --out build/hip-frame/s02-m4 --params <s02> --mesh 4",
+  "result": "build/hip-frame/s02-m4/result.json"
+ },
+ {
+  "name": "s03-m4",
+  "host_role": "mechanical compute host (x86-64, PyPI gmsh)",
+  "what": "flanges 21 / 18 mm, 30 mm haunch",
+  "source_revision": "03161d61c611bc2619c97130b680eeb6aeb9ad97",
+  "command": "tools/hip-frame-study.py --out build/hip-frame/s03-m4 --params <s03> --mesh 4",
+  "result": "build/hip-frame/s03-m4/result.json"
+ },
+ {
+  "name": "s04-m4",
+  "host_role": "mechanical compute host (x86-64, PyPI gmsh)",
+  "what": "flanges 17 / 17 mm, 30 mm haunch",
+  "source_revision": "03161d61c611bc2619c97130b680eeb6aeb9ad97",
+  "command": "tools/hip-frame-study.py --out build/hip-frame/s04-m4 --params <s04> --mesh 4",
+  "result": "build/hip-frame/s04-m4/result.json"
+ },
+ {
+  "name": "s05-m4",
+  "host_role": "mechanical compute host (x86-64, PyPI gmsh)",
+  "what": "the ear lobe reaching 30 mm round the ring",
+  "source_revision": "4e8cbf5d37124f0d507b75803bf8119d21cf9280",
+  "command": "tools/hip-frame-study.py --out build/hip-frame/s05-m4 --params <s05> --mesh 4",
+  "result": "build/hip-frame/s05-m4/result.json"
+ },
+ {
+  "name": "f1-m4",
+  "host_role": "mechanical compute host (x86-64, PyPI gmsh)",
+  "what": "root fillet 5 mm",
+  "source_revision": "a25b8c5e33187ba08fa0fb75fb5b2be83e9a17ea",
+  "command": "tools/hip-frame-study.py --out build/hip-frame/f1-m4 --params <f1> --mesh 4",
+  "result": "build/hip-frame/f1-m4/result.json"
+ },
+ {
+  "name": "f2-m4",
+  "host_role": "mechanical compute host (x86-64, PyPI gmsh)",
+  "what": "root fillet 5 mm, flanges 16 / 16",
+  "source_revision": "a25b8c5e33187ba08fa0fb75fb5b2be83e9a17ea",
+  "command": "tools/hip-frame-study.py --out build/hip-frame/f2-m4 --params <f2> --mesh 4",
+  "result": "build/hip-frame/f2-m4/result.json"
+ },
+ {
+  "name": "f3-m4",
+  "host_role": "mechanical compute host (x86-64, PyPI gmsh)",
+  "what": "root fillet 6 mm, flanges out 3 mm, 16 / 16",
+  "source_revision": "a25b8c5e33187ba08fa0fb75fb5b2be83e9a17ea",
+  "command": "tools/hip-frame-study.py --out build/hip-frame/f3-m4 --params <f3> --mesh 4",
+  "result": "build/hip-frame/f3-m4/result.json"
+ },
+ {
+  "name": "f4-m4",
+  "host_role": "mechanical compute host (x86-64, PyPI gmsh)",
+  "what": "root fillet 5 mm, flanges 21 / 18",
+  "source_revision": "a25b8c5e33187ba08fa0fb75fb5b2be83e9a17ea",
+  "command": "tools/hip-frame-study.py --out build/hip-frame/f4-m4 --params <f4> --mesh 4",
+  "result": "build/hip-frame/f4-m4/result.json"
+ },
+ {
+  "name": "c-t1-m4",
+  "host_role": "second mechanical compute host (aarch64, conda-forge gmsh)",
+  "what": "the sweep's trial 1 (the new default) on the recording host",
+  "source_revision": "5995f940581d693db6aa56fc1393ea69b970fedf",
+  "command": "tools/hip-frame-study.py --out build/hip-frame/c-t1-m4 --params <t1> --mesh 4",
+  "result": "build/hip-frame/c-t1-m4/result.json"
+ },
+ {
+  "name": "c-t1-m3",
+  "host_role": "second mechanical compute host (aarch64, conda-forge gmsh)",
+  "what": "trial 1 at 3 mm: the convergence check",
+  "source_revision": "5995f940581d693db6aa56fc1393ea69b970fedf",
+  "command": "tools/hip-frame-study.py --out build/hip-frame/c-t1-m3 --params <t1> --mesh 3",
+  "result": "build/hip-frame/c-t1-m3/result.json"
+ },
+ {
+  "name": "c-t1e-m4",
+  "host_role": "second mechanical compute host (aarch64, conda-forge gmsh)",
+  "what": "trial 1 with ear_tip (failed: a knife edge at r 66)",
+  "source_revision": "7a229920b1c876d11202c0cb452929ac402d5975",
+  "command": "tools/hip-frame-study.py --out build/hip-frame/c-t1e-m4 --params <t1 + ear_tip> --mesh 4",
+  "result": "build/hip-frame/c-t1e-m4/result.json"
+ },
+ {
+  "name": "c-dev-m3",
+  "host_role": "second mechanical compute host (aarch64, conda-forge gmsh)",
+  "what": "today at 3 mm on the recording host: the convergence check's before",
+  "source_revision": "d8eda8276706b5e6a9dc00d7c37460977137dd0f",
+  "command": "tools/hip-frame-study.py --out build/hip-frame/c-dev-m3 --params <today: 13 / 13, no fillet> --mesh 3",
+  "result": "build/hip-frame/c-dev-m3/result.json"
+ },
+ {
+  "name": "a-after",
+  "host_role": "mechanical compute host (x86-64, PyPI gmsh)",
+  "what": "the new default: the gallery after",
+  "source_revision": "d8eda8276706b5e6a9dc00d7c37460977137dd0f",
+  "command": "tools/hip-frame-study.py --out build/hip-frame/a-after --mesh 4 --vmax 16 --dscale 80 --dump",
+  "result": "build/hip-frame/a-after/result.json"
+ }
+]

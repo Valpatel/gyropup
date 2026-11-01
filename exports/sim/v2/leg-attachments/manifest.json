@@ -2,13 +2,13 @@
   "schema_version": 1,
   "units": "mm",
   "frame": "upper-link local; x along link, y outboard, z up",
-  "source_revision": "2a4b2fd38b96ce1ce271a3cfeb40fccf551b640c",
+  "source_revision": "0d6b8a32e55d3d3c253111b944ef1458ba16f49b",
   "source_hashes": {
-    "cad/fivebar.py": "3868538500225f5ccb9e15f11a75c3c124d24786396960e78029c51fbfd1fc84",
+    "cad/fivebar.py": "a484b09addf3070f638821082bf7981f62ad0541a493da7076e1f94f269b6328",
     "cad/gmi.py": "dab034a3ee939a7b5f4a6fbae5b8ba7371d2113c5380a8450733650c2d02deae",
     "cad/interfaces.json": "a4842a317dd2e64e9b4e11d34376bc36c26e1ddf8435a4b16a85dae3cd730b73",
     "catalog/interfaces.json": "3889bc34503444f389e7951d74944f37b7e57b0b2b3be68ed596b959e83a46af",
-    "catalog/hardware.json": "b67a9859b3e3b960ff107032519393f53dc81b048607939942242d019f20af86"
+    "catalog/hardware.json": "c60874a35ec4a9999d4cb7c0b8e081f6c972d575e64236d23752ff02f7e8ed23"
   },
   "adapter_source": {
     "revision": "31908a86a782c440e47beb0f502e3ef0fd944aa2",
@@ -37,7 +37,7 @@
       "color": "#454952",
       "catalog_key": "screw_m5x25",
       "geometry": "project-authored cylindrical envelope; head/socket/thread detail omitted",
-      "sha256": "59d0844c74b611ce75febb2f779c0601f63f9a6de5c2f1323907809d63b3297b"
+      "sha256": "909f3b5b626778914d966244eca544f9c0ef6b2adef30a77016a33fce3c55bf8"
     },
     {
       "name": "output_screw_2",
@@ -45,7 +45,7 @@
       "color": "#454952",
       "catalog_key": "screw_m5x25",
       "geometry": "project-authored cylindrical envelope; head/socket/thread detail omitted",
-      "sha256": "58ff1d7d98f2de574b33fac73c9a3a9c473feefd68929abf4cbee052e9583619"
+      "sha256": "091c5d7ace9b7e474124e599f56994ad5a89db783ed45a3d17b50a0d7855920b"
     },
     {
       "name": "output_screw_3",
@@ -53,7 +53,7 @@
       "color": "#454952",
       "catalog_key": "screw_m5x25",
       "geometry": "project-authored cylindrical envelope; head/socket/thread detail omitted",
-      "sha256": "7a3b8d34d1b4ff337ddf1a836f0103712d8ab9bafa45c390141fe2151d945a89"
+      "sha256": "04133fa91ce5b89b35abeae3e513d1ac9285c743c5bb0fbea9d91af453a51c64"
     },
     {
       "name": "output_screw_4",
@@ -61,7 +61,7 @@
       "color": "#454952",
       "catalog_key": "screw_m5x25",
       "geometry": "project-authored cylindrical envelope; head/socket/thread detail omitted",
-      "sha256": "00f87327fba9965dee90ad4f98157bb481c94c311299c1d291942d3a3765860e"
+      "sha256": "ec5ea7229d6ea25f1a40bbb5b5e0ea7439b2fa49ffb1ea6370cd919d4e6741fc"
     },
     {
       "name": "output_screw_5",
@@ -69,7 +69,7 @@
       "color": "#454952",
       "catalog_key": "screw_m5x25",
       "geometry": "project-authored cylindrical envelope; head/socket/thread detail omitted",
-      "sha256": "cdd5b8ea34f7f063711b1c643c39fc406d5577c3d1aad9077a9c46d7e4797824"
+      "sha256": "861a399a68aed6e2683e550ee99965a3cbfebc5adef4d609845c618ba82748f1"
     },
     {
       "name": "output_screw_6",
@@ -77,7 +77,7 @@
       "color": "#454952",
       "catalog_key": "screw_m5x25",
       "geometry": "project-authored cylindrical envelope; head/socket/thread detail omitted",
-      "sha256": "cb763beb4269045cafd5693cb066cabd4a0383e38c3f2d78fb6d28d672566d93"
+      "sha256": "a1e1d6560782d8a9b91980075dc7f0c32b9b9adef3990bfb035ed862479aa87c"
     },
     {
       "name": "output_screw_7",
@@ -85,7 +85,7 @@
       "color": "#454952",
       "catalog_key": "screw_m5x25",
       "geometry": "project-authored cylindrical envelope; head/socket/thread detail omitted",
-      "sha256": "5dfe4a22530a8a65bffd5ac60803cb7ba313a9a2ca849291d3356a3173db3f6d"
+      "sha256": "727aa7163d767c354ba2fb5d13db77036c49242ccafec3060d7f3eefc70f2f63"
     },
     {
       "name": "output_screw_8",
@@ -93,7 +93,7 @@
       "color": "#454952",
       "catalog_key": "screw_m5x25",
       "geometry": "project-authored cylindrical envelope; head/socket/thread detail omitted",
-      "sha256": "1a7b8e8c08fee9f8610d988280cd3124124c9552a6ca13204d668929c801b8d8"
+      "sha256": "2043909763ab79d7ace9d61f63f9c345179cc82b5af47a7cc94d42cfce8912f3"
     },
     {
       "name": "output_screw_9",
@@ -101,7 +101,7 @@
       "color": "#454952",
       "catalog_key": "screw_m5x25",
       "geometry": "project-authored cylindrical envelope; head/socket/thread detail omitted",
-      "sha256": "a4dbfbe14280fca277045865cd3901500779c68d7ff15ef1748c84bc7ecae5c4"
+      "sha256": "249a480589f77e1712be50bb767f950a8163e61a0634eb4f53006afbca9b1a0d"
     }
   ]
 }

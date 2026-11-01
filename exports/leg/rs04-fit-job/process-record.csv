@@ -1,2 +1,2 @@
 source_mesh_sha256,recipe,job_receipt_sha256,date_operator,printer,nozzle,nozzle_wear_condition,extruder_gears_material_and_wear,filament_path_condition,plate_and_glue,filament_brand_lot,drying_temperature_time,dry_feed_relative_humidity,time_since_drying,measurement_conditioning,calibration,notes
-41d2bcbe0226243bd2d78caf01480a359ffa3e1bdab803d7faab91cdab7ec968,rs04-parent-ring-pa6cf-trial-2,,,,,,,,,,,,,,,
+bcf1a53f3fc8326bfdf887b2739ebf2015d32f573ee3bcfcdfa0e8f7996517e1,rs04-parent-ring-pa6cf-trial-2,,,,,,,,,,,,,,,

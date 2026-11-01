@@ -61,10 +61,26 @@
   {
    "part": "leg",
    "material": "PA6-CF along the layers (humid)",
-   "material_note": "Bambu PA6-CF TDS 102 MPa dry in the layers, x0.6 humid, x0.8 print: for parts printed so their main stress runs in the layers",
+   "material_note": "Bambu PA6-CF TDS V3.0: dry X-Y tensile modulus 4430 MPa x0.290 humid and strength 102 MPa x0.500 humid (Polymaker PA6-CF20 V1.1 wet / dry), each x0.8 print. For parts printed so their main stress runs in the layers",
+   "material_source": "bambu-pa6-cf-tds",
+   "material_direction": "X-Y",
+   "material_data": {
+    "key": "pa6_cf_xy",
+    "name": "PA6-CF along the layers (humid)",
+    "E_mpa": 1029.2023852254965,
+    "E_direction": "X-Y",
+    "nu": 0.35,
+    "strength_mpa": 40.83732845379689,
+    "strength_xy_mpa": 40.83732845379689,
+    "strength_z_mpa": 18.133333333333333,
+    "density_g_cm3": 1.09,
+    "source": "bambu-pa6-cf-tds",
+    "note": "Bambu PA6-CF TDS V3.0: dry X-Y tensile modulus 4430 MPa x0.290 humid and strength 102 MPa x0.500 humid (Polymaker PA6-CF20 V1.1 wet / dry), each x0.8 print. For parts printed so their main stress runs in the layers",
+    "constants_hash": "b0989f2b1b1c8bdc"
+   },
    "mesh": {
-    "nodes": 56870,
-    "tets": 266886,
+    "nodes": 56654,
+    "tets": 266605,
     "size_mm": 4.0,
     "element": "P2 tetrahedra"
    },
@@ -148,39 +164,55 @@
      "area_mm2": 2277.0
     }
    ],
-   "max_displacement_mm": 13.4941,
+   "max_displacement_mm": 36.2212,
    "probe_displacement_mm": [
-    0.7035,
-    10.58,
-    2.3958
+    1.951,
+    28.3911,
+    6.4643
    ],
-   "max_von_mises_mpa": 62.24,
-   "von_mises_design_mpa": 20.43,
-   "safety_factor": 2.4,
-   "assumptions": "linear elastic, small deflection, isotropic; faces clamped where fixed; no contact, preload or buckling",
-   "stiffness_n_per_mm": 8.9,
+   "max_von_mises_mpa": 54.42,
+   "von_mises_design_mpa": 19.71,
+   "safety_factor": 2.07,
+   "assumptions": "linear elastic, small deflection, isotropic: E 1029.2 MPa, a modulus in the layer plane (X-Y), and strength 40.8373 MPa everywhere (Bambu PA6-CF TDS V3.0: dry X-Y tensile modulus 4430 MPa x0.290 humid and strength 102 MPa x0.500 humid (Polymaker PA6-CF20 V1.1 wet / dry), each x0.8 print. For parts printed so their main stress runs in the layers), though a printed part is not isotropic; faces clamped where fixed; no contact, preload or buckling",
+   "stiffness_n_per_mm": 3.3,
    "torsional_stiffness_nm_per_deg": null,
    "design_peak_at_mm": [
-    -139.1,
-    30.6,
-    -119.5
+    -136.1,
+    30.2,
+    -117.4
    ],
-   "safety_factor_with_joint_plugs": 0.79,
+   "safety_factor_with_joint_plugs": 0.75,
    "case": "R1",
    "material_id": "pa6_cf_xy",
-   "load_from": "the rig's landings (drop_150, the capped jump): knees at 574 N, as 945 N on the axle at 342 mm (statics on the 1605 N spike gives 975), plus 10 % fore-aft and 10 % sideways; the whole loop, joints bonded (the knees' 6201 pairs and the apex's 61812 pair carry moment)",
+   "load_from": "the rig's landings (drop_150, the capped jump): knees at 574 N, as 945 N on the axle at 342 mm (statics on the 1605 N spike gives 975), plus 10 % fore-aft and 10 % sideways; the whole loop, joints bonded (the knees' bearing pairs and the apex's 61812 pair carry moment)",
    "png": "exports/leg/fea/leg-R1.png",
    "target": 1.2,
    "ok": true,
-   "seconds": 1539.3
+   "seconds": 1402.7
   },
   {
    "part": "leg",
    "material": "PA6-CF along the layers (humid)",
-   "material_note": "Bambu PA6-CF TDS 102 MPa dry in the layers, x0.6 humid, x0.8 print: for parts printed so their main stress runs in the layers",
+   "material_note": "Bambu PA6-CF TDS V3.0: dry X-Y tensile modulus 4430 MPa x0.290 humid and strength 102 MPa x0.500 humid (Polymaker PA6-CF20 V1.1 wet / dry), each x0.8 print. For parts printed so their main stress runs in the layers",
+   "material_source": "bambu-pa6-cf-tds",
+   "material_direction": "X-Y",
+   "material_data": {
+    "key": "pa6_cf_xy",
+    "name": "PA6-CF along the layers (humid)",
+    "E_mpa": 1029.2023852254965,
+    "E_direction": "X-Y",
+    "nu": 0.35,
+    "strength_mpa": 40.83732845379689,
+    "strength_xy_mpa": 40.83732845379689,
+    "strength_z_mpa": 18.133333333333333,
+    "density_g_cm3": 1.09,
+    "source": "bambu-pa6-cf-tds",
+    "note": "Bambu PA6-CF TDS V3.0: dry X-Y tensile modulus 4430 MPa x0.290 humid and strength 102 MPa x0.500 humid (Polymaker PA6-CF20 V1.1 wet / dry), each x0.8 print. For parts printed so their main stress runs in the layers",
+    "constants_hash": "b0989f2b1b1c8bdc"
+   },
    "mesh": {
-    "nodes": 57371,
-    "tets": 269943,
+    "nodes": 56723,
+    "tets": 266740,
     "size_mm": 4.0,
     "element": "P2 tetrahedra"
    },
@@ -244,39 +276,55 @@
      "area_mm2": 2277.0
     }
    ],
-   "max_displacement_mm": 11.0119,
+   "max_displacement_mm": 29.4344,
    "probe_displacement_mm": [
-    0.3869,
-    8.4503,
-    2.057
+    1.0712,
+    22.5826,
+    5.5344
    ],
-   "max_von_mises_mpa": 52.69,
-   "von_mises_design_mpa": 17.18,
-   "safety_factor": 2.85,
-   "assumptions": "linear elastic, small deflection, isotropic; faces clamped where fixed; no contact, preload or buckling",
-   "stiffness_n_per_mm": 21.8,
+   "max_von_mises_mpa": 40.06,
+   "von_mises_design_mpa": 17.58,
+   "safety_factor": 2.32,
+   "assumptions": "linear elastic, small deflection, isotropic: E 1029.2 MPa, a modulus in the layer plane (X-Y), and strength 40.8373 MPa everywhere (Bambu PA6-CF TDS V3.0: dry X-Y tensile modulus 4430 MPa x0.290 humid and strength 102 MPa x0.500 humid (Polymaker PA6-CF20 V1.1 wet / dry), each x0.8 print. For parts printed so their main stress runs in the layers), though a printed part is not isotropic; faces clamped where fixed; no contact, preload or buckling",
+   "stiffness_n_per_mm": 8.1,
    "torsional_stiffness_nm_per_deg": null,
    "design_peak_at_mm": [
-    -165.0,
-    30.3,
-    -101.3
+    -169.5,
+    30.5,
+    -98.2
    ],
-   "safety_factor_with_joint_plugs": 0.93,
+   "safety_factor_with_joint_plugs": 1.02,
    "case": "E1",
    "material_id": "pa6_cf_xy",
-   "load_from": "standing: 2.5 x 184 N vertical, 0.5 g of a 38 kg robot sideways; the whole loop, joints bonded (the knees' 6201 pairs and the apex's 61812 pair carry moment)",
+   "load_from": "standing: 2.5 x 184 N vertical, 0.5 g of a 38 kg robot sideways; the whole loop, joints bonded (the knees' bearing pairs and the apex's 61812 pair carry moment)",
    "png": "exports/leg/fea/leg-E1.png",
    "target": 2.0,
    "ok": true,
-   "seconds": 1881.0
+   "seconds": 1470.7
   },
   {
    "part": "leg",
    "material": "PA6-CF along the layers (humid)",
-   "material_note": "Bambu PA6-CF TDS 102 MPa dry in the layers, x0.6 humid, x0.8 print: for parts printed so their main stress runs in the layers",
+   "material_note": "Bambu PA6-CF TDS V3.0: dry X-Y tensile modulus 4430 MPa x0.290 humid and strength 102 MPa x0.500 humid (Polymaker PA6-CF20 V1.1 wet / dry), each x0.8 print. For parts printed so their main stress runs in the layers",
+   "material_source": "bambu-pa6-cf-tds",
+   "material_direction": "X-Y",
+   "material_data": {
+    "key": "pa6_cf_xy",
+    "name": "PA6-CF along the layers (humid)",
+    "E_mpa": 1029.2023852254965,
+    "E_direction": "X-Y",
+    "nu": 0.35,
+    "strength_mpa": 40.83732845379689,
+    "strength_xy_mpa": 40.83732845379689,
+    "strength_z_mpa": 18.133333333333333,
+    "density_g_cm3": 1.09,
+    "source": "bambu-pa6-cf-tds",
+    "note": "Bambu PA6-CF TDS V3.0: dry X-Y tensile modulus 4430 MPa x0.290 humid and strength 102 MPa x0.500 humid (Polymaker PA6-CF20 V1.1 wet / dry), each x0.8 print. For parts printed so their main stress runs in the layers",
+    "constants_hash": "b0989f2b1b1c8bdc"
+   },
    "mesh": {
-    "nodes": 56726,
-    "tets": 265990,
+    "nodes": 56867,
+    "tets": 267897,
     "size_mm": 4.0,
     "element": "P2 tetrahedra"
    },
@@ -340,36 +388,52 @@
      "area_mm2": 2277.0
     }
    ],
-   "max_displacement_mm": 13.3977,
+   "max_displacement_mm": 35.4378,
    "probe_displacement_mm": [
-    0.1872,
-    8.4079,
-    4.4534
+    0.5135,
+    22.1152,
+    11.8803
    ],
-   "max_von_mises_mpa": 93.98,
-   "von_mises_design_mpa": 26.03,
-   "safety_factor": 1.88,
-   "assumptions": "linear elastic, small deflection, isotropic; faces clamped where fixed; no contact, preload or buckling",
-   "stiffness_n_per_mm": 21.8,
+   "max_von_mises_mpa": 78.76,
+   "von_mises_design_mpa": 25.88,
+   "safety_factor": 1.58,
+   "assumptions": "linear elastic, small deflection, isotropic: E 1029.2 MPa, a modulus in the layer plane (X-Y), and strength 40.8373 MPa everywhere (Bambu PA6-CF TDS V3.0: dry X-Y tensile modulus 4430 MPa x0.290 humid and strength 102 MPa x0.500 humid (Polymaker PA6-CF20 V1.1 wet / dry), each x0.8 print. For parts printed so their main stress runs in the layers), though a printed part is not isotropic; faces clamped where fixed; no contact, preload or buckling",
+   "stiffness_n_per_mm": 8.3,
    "torsional_stiffness_nm_per_deg": null,
    "design_peak_at_mm": [
-    -213.9,
-    30.6,
-    -3.9
+    -209.1,
+    30.3,
+    -1.6
    ],
    "safety_factor_with_joint_plugs": 0.52,
    "case": "R3",
    "material_id": "pa6_cf_xy",
-   "load_from": "rig 'power_off' (no motor damping): folded onto the stops, 122 N m on a stop post and 1831 N on the axle (quasi-static: the knees' real force matches statics), plus 10 % sideways; the whole loop, joints bonded (the knees' 6201 pairs and the apex's 61812 pair carry moment)",
+   "load_from": "rig 'power_off' (no motor damping): folded onto the stops, 122 N m on a stop post and 1831 N on the axle (quasi-static: the knees' real force matches statics), plus 10 % sideways; the whole loop, joints bonded (the knees' bearing pairs and the apex's 61812 pair carry moment)",
    "png": "exports/leg/fea/leg-R3.png",
    "target": 1.0,
    "ok": true,
-   "seconds": 1914.4
+   "seconds": 1570.3
   },
   {
    "part": "upper_link",
    "material": "PA6-CF along the layers (humid)",
-   "material_note": "Bambu PA6-CF TDS 102 MPa dry in the layers, x0.6 humid, x0.8 print: for parts printed so their main stress runs in the layers",
+   "material_note": "Bambu PA6-CF TDS V3.0: dry X-Y tensile modulus 4430 MPa x0.290 humid and strength 102 MPa x0.500 humid (Polymaker PA6-CF20 V1.1 wet / dry), each x0.8 print. For parts printed so their main stress runs in the layers",
+   "material_source": "bambu-pa6-cf-tds",
+   "material_direction": "X-Y",
+   "material_data": {
+    "key": "pa6_cf_xy",
+    "name": "PA6-CF along the layers (humid)",
+    "E_mpa": 1029.2023852254965,
+    "E_direction": "X-Y",
+    "nu": 0.35,
+    "strength_mpa": 40.83732845379689,
+    "strength_xy_mpa": 40.83732845379689,
+    "strength_z_mpa": 18.133333333333333,
+    "density_g_cm3": 1.09,
+    "source": "bambu-pa6-cf-tds",
+    "note": "Bambu PA6-CF TDS V3.0: dry X-Y tensile modulus 4430 MPa x0.290 humid and strength 102 MPa x0.500 humid (Polymaker PA6-CF20 V1.1 wet / dry), each x0.8 print. For parts printed so their main stress runs in the layers",
+    "constants_hash": "b0989f2b1b1c8bdc"
+   },
    "mesh": {
     "nodes": 14504,
     "tets": 66109,
@@ -381,7 +445,7 @@
      "kind": "force",
      "n": [
       -244.95185955424415,
-      71.65070193786528,
+      71.74522792986774,
       -419.85845697604634
      ],
      "area_mm2": 2209.3
@@ -428,7 +492,7 @@
     },
     {
      "kind": "torque",
-     "nm": -25.852764381543018,
+     "nm": -25.904595826140348,
      "axis": [
       1.0,
       0.0,
@@ -448,7 +512,7 @@
     },
     {
      "kind": "torque",
-     "nm": 64.07236175582068,
+     "nm": 64.16723091315782,
      "axis": [
       0.0,
       0.0,
@@ -467,36 +531,52 @@
      "area_mm2": 2209.3
     }
    ],
-   "max_displacement_mm": 2.6588,
+   "max_displacement_mm": 7.76,
    "probe_displacement_mm": [
-    0.2257,
-    1.8344,
-    -0.1246
+    0.6588,
+    5.354,
+    -0.3626
    ],
-   "max_von_mises_mpa": 78.9,
-   "von_mises_design_mpa": 26.83,
-   "safety_factor": 1.83,
-   "assumptions": "linear elastic, small deflection, isotropic; faces clamped where fixed; no contact, preload or buckling",
-   "stiffness_n_per_mm": 1879.5,
-   "torsional_stiffness_nm_per_deg": 47.95,
+   "max_von_mises_mpa": 79.0,
+   "von_mises_design_mpa": 26.86,
+   "safety_factor": 1.52,
+   "assumptions": "linear elastic, small deflection, isotropic: E 1029.2 MPa, a modulus in the layer plane (X-Y), and strength 40.8373 MPa everywhere (Bambu PA6-CF TDS V3.0: dry X-Y tensile modulus 4430 MPa x0.290 humid and strength 102 MPa x0.500 humid (Polymaker PA6-CF20 V1.1 wet / dry), each x0.8 print. For parts printed so their main stress runs in the layers), though a printed part is not isotropic; faces clamped where fixed; no contact, preload or buckling",
+   "stiffness_n_per_mm": 643.8,
+   "torsional_stiffness_nm_per_deg": 16.45,
    "design_peak_at_mm": [
     29.9,
     0.6,
     5.5
    ],
-   "safety_factor_with_pad_rim": 1.33,
+   "safety_factor_with_pad_rim": 1.1,
    "case": "R1",
    "material_id": "pa6_cf_xy",
    "load_from": "the rig's landings (drop_150, the capped jump): knees at 574 N, as 945 N on the axle at 342 mm (statics on the 1605 N spike gives 975), plus 10 % fore-aft and 10 % sideways; the rear upper link at -116 deg, 76% of the out-of-plane load",
    "png": "exports/leg/fea/upper_link-R1.png",
    "target": 1.2,
    "ok": true,
-   "seconds": 25.6
+   "seconds": 27.9
   },
   {
    "part": "upper_link",
    "material": "PA6-CF along the layers (humid)",
-   "material_note": "Bambu PA6-CF TDS 102 MPa dry in the layers, x0.6 humid, x0.8 print: for parts printed so their main stress runs in the layers",
+   "material_note": "Bambu PA6-CF TDS V3.0: dry X-Y tensile modulus 4430 MPa x0.290 humid and strength 102 MPa x0.500 humid (Polymaker PA6-CF20 V1.1 wet / dry), each x0.8 print. For parts printed so their main stress runs in the layers",
+   "material_source": "bambu-pa6-cf-tds",
+   "material_direction": "X-Y",
+   "material_data": {
+    "key": "pa6_cf_xy",
+    "name": "PA6-CF along the layers (humid)",
+    "E_mpa": 1029.2023852254965,
+    "E_direction": "X-Y",
+    "nu": 0.35,
+    "strength_mpa": 40.83732845379689,
+    "strength_xy_mpa": 40.83732845379689,
+    "strength_z_mpa": 18.133333333333333,
+    "density_g_cm3": 1.09,
+    "source": "bambu-pa6-cf-tds",
+    "note": "Bambu PA6-CF TDS V3.0: dry X-Y tensile modulus 4430 MPa x0.290 humid and strength 102 MPa x0.500 humid (Polymaker PA6-CF20 V1.1 wet / dry), each x0.8 print. For parts printed so their main stress runs in the layers",
+    "constants_hash": "b0989f2b1b1c8bdc"
+   },
    "mesh": {
     "nodes": 14504,
     "tets": 66109,
@@ -508,7 +588,7 @@
      "kind": "force",
      "n": [
       -330.00808943991956,
-      67.0189283297447,
+      69.85470808981852,
       565.6486440805099
      ],
      "area_mm2": 2209.3
@@ -535,7 +615,7 @@
     },
     {
      "kind": "torque",
-     "nm": 15.0676437078033,
+     "nm": 15.067643707803303,
      "axis": [
       0.0,
       0.0,
@@ -555,7 +635,7 @@
     },
     {
      "kind": "torque",
-     "nm": 28.408085671656284,
+     "nm": 30.376019759762034,
      "axis": [
       1.0,
       0.0,
@@ -575,7 +655,7 @@
     },
     {
      "kind": "torque",
-     "nm": 52.00834910322426,
+     "nm": 54.65582193673492,
      "axis": [
       0.0,
       0.0,
@@ -594,36 +674,52 @@
      "area_mm2": 2209.3
     }
    ],
-   "max_displacement_mm": 2.4197,
+   "max_displacement_mm": 7.3376,
    "probe_displacement_mm": [
-    0.1977,
-    1.639,
-    0.1831
+    0.6007,
+    4.9693,
+    0.5151
    ],
-   "max_von_mises_mpa": 81.31,
-   "von_mises_design_mpa": 25.97,
-   "safety_factor": 1.89,
-   "assumptions": "linear elastic, small deflection, isotropic; faces clamped where fixed; no contact, preload or buckling",
-   "stiffness_n_per_mm": 2924.5,
-   "torsional_stiffness_nm_per_deg": 44.28,
+   "max_von_mises_mpa": 83.91,
+   "von_mises_design_mpa": 27.05,
+   "safety_factor": 1.51,
+   "assumptions": "linear elastic, small deflection, isotropic: E 1029.2 MPa, a modulus in the layer plane (X-Y), and strength 40.8373 MPa everywhere (Bambu PA6-CF TDS V3.0: dry X-Y tensile modulus 4430 MPa x0.290 humid and strength 102 MPa x0.500 humid (Polymaker PA6-CF20 V1.1 wet / dry), each x0.8 print. For parts printed so their main stress runs in the layers), though a printed part is not isotropic; faces clamped where fixed; no contact, preload or buckling",
+   "stiffness_n_per_mm": 985.3,
+   "torsional_stiffness_nm_per_deg": 15.34,
    "design_peak_at_mm": [
     27.6,
     0.8,
     -13.7
    ],
-   "safety_factor_with_pad_rim": 1.19,
+   "safety_factor_with_pad_rim": 0.96,
    "case": "R1F",
    "material_id": "pa6_cf_xy",
-   "load_from": "the rig's landings (drop_150, the capped jump): knees at 574 N, as 945 N on the axle at 342 mm (statics on the 1605 N spike gives 975), plus 10 % fore-aft and 10 % sideways; the front upper link at -64 deg, 71% of the out-of-plane load",
+   "load_from": "the rig's landings (drop_150, the capped jump): knees at 574 N, as 945 N on the axle at 342 mm (statics on the 1605 N spike gives 975), plus 10 % fore-aft and 10 % sideways; the front upper link at -64 deg, 74% of the out-of-plane load",
    "png": "exports/leg/fea/upper_link-R1F.png",
    "target": 1.2,
    "ok": true,
-   "seconds": 25.6
+   "seconds": 27.6
   },
   {
    "part": "upper_link",
    "material": "PA6-CF along the layers (humid)",
-   "material_note": "Bambu PA6-CF TDS 102 MPa dry in the layers, x0.6 humid, x0.8 print: for parts printed so their main stress runs in the layers",
+   "material_note": "Bambu PA6-CF TDS V3.0: dry X-Y tensile modulus 4430 MPa x0.290 humid and strength 102 MPa x0.500 humid (Polymaker PA6-CF20 V1.1 wet / dry), each x0.8 print. For parts printed so their main stress runs in the layers",
+   "material_source": "bambu-pa6-cf-tds",
+   "material_direction": "X-Y",
+   "material_data": {
+    "key": "pa6_cf_xy",
+    "name": "PA6-CF along the layers (humid)",
+    "E_mpa": 1029.2023852254965,
+    "E_direction": "X-Y",
+    "nu": 0.35,
+    "strength_mpa": 40.83732845379689,
+    "strength_xy_mpa": 40.83732845379689,
+    "strength_z_mpa": 18.133333333333333,
+    "density_g_cm3": 1.09,
+    "source": "bambu-pa6-cf-tds",
+    "note": "Bambu PA6-CF TDS V3.0: dry X-Y tensile modulus 4430 MPa x0.290 humid and strength 102 MPa x0.500 humid (Polymaker PA6-CF20 V1.1 wet / dry), each x0.8 print. For parts printed so their main stress runs in the layers",
+    "constants_hash": "b0989f2b1b1c8bdc"
+   },
    "mesh": {
     "nodes": 14504,
     "tets": 66109,
@@ -635,7 +731,7 @@
      "kind": "force",
      "n": [
       -44.344975338077575,
-      132.435,
+      132.802875,
       -309.8663327030192
      ],
      "area_mm2": 2209.3
@@ -682,7 +778,7 @@
     },
     {
      "kind": "torque",
-     "nm": -50.35154874532812,
+     "nm": -50.51895783252765,
      "axis": [
       1.0,
       0.0,
@@ -702,7 +798,7 @@
     },
     {
      "kind": "torque",
-     "nm": 37.07384732542634,
+     "nm": 37.180772010249264,
      "axis": [
       0.0,
       0.0,
@@ -721,36 +817,52 @@
      "area_mm2": 2209.3
     }
    ],
-   "max_displacement_mm": 1.8531,
+   "max_displacement_mm": 5.4167,
    "probe_displacement_mm": [
-    0.1374,
-    1.1522,
-    0.009
+    0.4016,
+    3.3678,
+    0.0278
    ],
-   "max_von_mises_mpa": 61.23,
-   "von_mises_design_mpa": 22.99,
-   "safety_factor": 2.13,
-   "assumptions": "linear elastic, small deflection, isotropic; faces clamped where fixed; no contact, preload or buckling",
-   "stiffness_n_per_mm": 803.8,
-   "torsional_stiffness_nm_per_deg": 46.62,
+   "max_von_mises_mpa": 61.4,
+   "von_mises_design_mpa": 23.05,
+   "safety_factor": 1.77,
+   "assumptions": "linear elastic, small deflection, isotropic: E 1029.2 MPa, a modulus in the layer plane (X-Y), and strength 40.8373 MPa everywhere (Bambu PA6-CF TDS V3.0: dry X-Y tensile modulus 4430 MPa x0.290 humid and strength 102 MPa x0.500 humid (Polymaker PA6-CF20 V1.1 wet / dry), each x0.8 print. For parts printed so their main stress runs in the layers), though a printed part is not isotropic; faces clamped where fixed; no contact, preload or buckling",
+   "stiffness_n_per_mm": 274.7,
+   "torsional_stiffness_nm_per_deg": 16.0,
    "design_peak_at_mm": [
     23.6,
     1.2,
     20.7
    ],
-   "safety_factor_with_pad_rim": 1.55,
+   "safety_factor_with_pad_rim": 1.29,
    "case": "E1",
    "material_id": "pa6_cf_xy",
    "load_from": "standing: 2.5 x 184 N vertical, 0.5 g of a 38 kg robot sideways; the rear upper link at -129 deg, 72% of the out-of-plane load",
    "png": "exports/leg/fea/upper_link-E1.png",
    "target": 2.0,
-   "ok": true,
-   "seconds": 26.4
+   "ok": false,
+   "seconds": 27.4
   },
   {
    "part": "upper_link",
    "material": "PA6-CF along the layers (humid)",
-   "material_note": "Bambu PA6-CF TDS 102 MPa dry in the layers, x0.6 humid, x0.8 print: for parts printed so their main stress runs in the layers",
+   "material_note": "Bambu PA6-CF TDS V3.0: dry X-Y tensile modulus 4430 MPa x0.290 humid and strength 102 MPa x0.500 humid (Polymaker PA6-CF20 V1.1 wet / dry), each x0.8 print. For parts printed so their main stress runs in the layers",
+   "material_source": "bambu-pa6-cf-tds",
+   "material_direction": "X-Y",
+   "material_data": {
+    "key": "pa6_cf_xy",
+    "name": "PA6-CF along the layers (humid)",
+    "E_mpa": 1029.2023852254965,
+    "E_direction": "X-Y",
+    "nu": 0.35,
+    "strength_mpa": 40.83732845379689,
+    "strength_xy_mpa": 40.83732845379689,
+    "strength_z_mpa": 18.133333333333333,
+    "density_g_cm3": 1.09,
+    "source": "bambu-pa6-cf-tds",
+    "note": "Bambu PA6-CF TDS V3.0: dry X-Y tensile modulus 4430 MPa x0.290 humid and strength 102 MPa x0.500 humid (Polymaker PA6-CF20 V1.1 wet / dry), each x0.8 print. For parts printed so their main stress runs in the layers",
+    "constants_hash": "b0989f2b1b1c8bdc"
+   },
    "mesh": {
     "nodes": 14504,
     "tets": 66109,
@@ -762,7 +874,7 @@
      "kind": "force",
      "n": [
       -44.344975338077575,
-      131.33137499999998,
+      132.6189375,
       309.8663327030192
      ],
      "area_mm2": 2209.3
@@ -789,7 +901,7 @@
     },
     {
      "kind": "torque",
-     "nm": 2.02472093868822,
+     "nm": 2.024720938688221,
      "axis": [
       0.0,
       0.0,
@@ -809,7 +921,7 @@
     },
     {
      "kind": "torque",
-     "nm": 49.849321483729575,
+     "nm": 50.435253288927875,
      "axis": [
       1.0,
       0.0,
@@ -829,7 +941,7 @@
     },
     {
      "kind": "torque",
-     "nm": 36.753073270957636,
+     "nm": 37.12730966783779,
      "axis": [
       0.0,
       0.0,
@@ -848,36 +960,52 @@
      "area_mm2": 2209.3
     }
    ],
-   "max_displacement_mm": 1.8453,
+   "max_displacement_mm": 5.4319,
    "probe_displacement_mm": [
-    0.137,
-    1.1494,
-    -0.0104
+    0.4032,
+    3.3829,
+    -0.0357
    ],
-   "max_von_mises_mpa": 70.28,
-   "von_mises_design_mpa": 22.59,
-   "safety_factor": 2.17,
-   "assumptions": "linear elastic, small deflection, isotropic; faces clamped where fixed; no contact, preload or buckling",
-   "stiffness_n_per_mm": 813.4,
-   "torsional_stiffness_nm_per_deg": 47.07,
+   "max_von_mises_mpa": 70.87,
+   "von_mises_design_mpa": 22.81,
+   "safety_factor": 1.79,
+   "assumptions": "linear elastic, small deflection, isotropic: E 1029.2 MPa, a modulus in the layer plane (X-Y), and strength 40.8373 MPa everywhere (Bambu PA6-CF TDS V3.0: dry X-Y tensile modulus 4430 MPa x0.290 humid and strength 102 MPa x0.500 humid (Polymaker PA6-CF20 V1.1 wet / dry), each x0.8 print. For parts printed so their main stress runs in the layers), though a printed part is not isotropic; faces clamped where fixed; no contact, preload or buckling",
+   "stiffness_n_per_mm": 275.4,
+   "torsional_stiffness_nm_per_deg": 16.15,
    "design_peak_at_mm": [
     27.6,
     0.8,
     -13.7
    ],
-   "safety_factor_with_pad_rim": 1.37,
+   "safety_factor_with_pad_rim": 1.13,
    "case": "E1F",
    "material_id": "pa6_cf_xy",
-   "load_from": "standing: 2.5 x 184 N vertical, 0.5 g of a 38 kg robot sideways; the front upper link at -51 deg, 71% of the out-of-plane load",
+   "load_from": "standing: 2.5 x 184 N vertical, 0.5 g of a 38 kg robot sideways; the front upper link at -51 deg, 72% of the out-of-plane load",
    "png": "exports/leg/fea/upper_link-E1F.png",
    "target": 2.0,
-   "ok": true,
-   "seconds": 25.5
+   "ok": false,
+   "seconds": 28.2
   },
   {
    "part": "upper_link",
    "material": "PA6-CF along the layers (humid)",
-   "material_note": "Bambu PA6-CF TDS 102 MPa dry in the layers, x0.6 humid, x0.8 print: for parts printed so their main stress runs in the layers",
+   "material_note": "Bambu PA6-CF TDS V3.0: dry X-Y tensile modulus 4430 MPa x0.290 humid and strength 102 MPa x0.500 humid (Polymaker PA6-CF20 V1.1 wet / dry), each x0.8 print. For parts printed so their main stress runs in the layers",
+   "material_source": "bambu-pa6-cf-tds",
+   "material_direction": "X-Y",
+   "material_data": {
+    "key": "pa6_cf_xy",
+    "name": "PA6-CF along the layers (humid)",
+    "E_mpa": 1029.2023852254965,
+    "E_direction": "X-Y",
+    "nu": 0.35,
+    "strength_mpa": 40.83732845379689,
+    "strength_xy_mpa": 40.83732845379689,
+    "strength_z_mpa": 18.133333333333333,
+    "density_g_cm3": 1.09,
+    "source": "bambu-pa6-cf-tds",
+    "note": "Bambu PA6-CF TDS V3.0: dry X-Y tensile modulus 4430 MPa x0.290 humid and strength 102 MPa x0.500 humid (Polymaker PA6-CF20 V1.1 wet / dry), each x0.8 print. For parts printed so their main stress runs in the layers",
+    "constants_hash": "b0989f2b1b1c8bdc"
+   },
    "mesh": {
     "nodes": 14504,
     "tets": 66109,
@@ -889,7 +1017,7 @@
      "kind": "force",
      "n": [
       1924.6040172714002,
-      138.03478,
+      138.76706000000001,
       -822.1196292289671
      ],
      "area_mm2": 2209.3
@@ -936,7 +1064,7 @@
     },
     {
      "kind": "torque",
-     "nm": -116.15582390913048,
+     "nm": -116.91159925154139,
      "axis": [
       1.0,
       0.0,
@@ -956,7 +1084,7 @@
     },
     {
      "kind": "torque",
-     "nm": 23.534614503751477,
+     "nm": 23.33274334168817,
      "axis": [
       0.0,
       0.0,
@@ -975,16 +1103,16 @@
      "area_mm2": 2209.3
     }
    ],
-   "max_displacement_mm": 2.5406,
+   "max_displacement_mm": 7.4318,
    "probe_displacement_mm": [
-    -0.0833,
-    -1.0727,
-    -0.0257
+    -0.2442,
+    -3.1359,
+    -0.0677
    ],
-   "max_von_mises_mpa": 123.75,
-   "von_mises_design_mpa": 45.29,
-   "safety_factor": 1.08,
-   "assumptions": "linear elastic, small deflection, isotropic; faces clamped where fixed; no contact, preload or buckling",
+   "max_von_mises_mpa": 124.25,
+   "von_mises_design_mpa": 45.52,
+   "safety_factor": 0.9,
+   "assumptions": "linear elastic, small deflection, isotropic: E 1029.2 MPa, a modulus in the layer plane (X-Y), and strength 40.8373 MPa everywhere (Bambu PA6-CF TDS V3.0: dry X-Y tensile modulus 4430 MPa x0.290 humid and strength 102 MPa x0.500 humid (Polymaker PA6-CF20 V1.1 wet / dry), each x0.8 print. For parts printed so their main stress runs in the layers), though a printed part is not isotropic; faces clamped where fixed; no contact, preload or buckling",
    "stiffness_n_per_mm": null,
    "torsional_stiffness_nm_per_deg": null,
    "design_peak_at_mm": [
@@ -992,19 +1120,35 @@
     1.0,
     -17.2
    ],
-   "safety_factor_with_pad_rim": 0.84,
+   "safety_factor_with_pad_rim": 0.7,
    "case": "R3K",
    "material_id": "pa6_cf_xy",
-   "load_from": "rig 'power_off' (no motor damping): folded onto the stops, 122 N m on a stop post and 1831 N on the axle (quasi-static: the knees' real force matches statics), plus 10 % sideways; the rear upper link at 177 deg, 75% of the out-of-plane load",
+   "load_from": "rig 'power_off' (no motor damping): folded onto the stops, 122 N m on a stop post and 1831 N on the axle (quasi-static: the knees' real force matches statics), plus 10 % sideways; the rear upper link at 177 deg, 76% of the out-of-plane load",
    "png": "exports/leg/fea/upper_link-R3K.png",
    "target": 1.0,
-   "ok": true,
-   "seconds": 27.2
+   "ok": false,
+   "seconds": 30.6
   },
   {
    "part": "upper_link",
    "material": "PA6-CF along the layers (humid)",
-   "material_note": "Bambu PA6-CF TDS 102 MPa dry in the layers, x0.6 humid, x0.8 print: for parts printed so their main stress runs in the layers",
+   "material_note": "Bambu PA6-CF TDS V3.0: dry X-Y tensile modulus 4430 MPa x0.290 humid and strength 102 MPa x0.500 humid (Polymaker PA6-CF20 V1.1 wet / dry), each x0.8 print. For parts printed so their main stress runs in the layers",
+   "material_source": "bambu-pa6-cf-tds",
+   "material_direction": "X-Y",
+   "material_data": {
+    "key": "pa6_cf_xy",
+    "name": "PA6-CF along the layers (humid)",
+    "E_mpa": 1029.2023852254965,
+    "E_direction": "X-Y",
+    "nu": 0.35,
+    "strength_mpa": 40.83732845379689,
+    "strength_xy_mpa": 40.83732845379689,
+    "strength_z_mpa": 18.133333333333333,
+    "density_g_cm3": 1.09,
+    "source": "bambu-pa6-cf-tds",
+    "note": "Bambu PA6-CF TDS V3.0: dry X-Y tensile modulus 4430 MPa x0.290 humid and strength 102 MPa x0.500 humid (Polymaker PA6-CF20 V1.1 wet / dry), each x0.8 print. For parts printed so their main stress runs in the layers",
+    "constants_hash": "b0989f2b1b1c8bdc"
+   },
    "mesh": {
     "nodes": 14504,
     "tets": 66109,
@@ -1016,7 +1160,7 @@
      "kind": "force",
      "n": [
       1924.6040172714004,
-      121.92462000000002,
+      122.10769000000002,
       822.1196292289665
      ],
      "area_mm2": 2209.3
@@ -1063,7 +1207,7 @@
     },
     {
      "kind": "torque",
-     "nm": 99.52876637609037,
+     "nm": 99.71771021169309,
      "axis": [
       1.0,
       0.0,
@@ -1083,7 +1227,7 @@
     },
     {
      "kind": "torque",
-     "nm": 27.97578006914417,
+     "nm": 27.925312278628347,
      "axis": [
       0.0,
       0.0,
@@ -1102,16 +1246,16 @@
      "area_mm2": 2209.3
     }
    ],
-   "max_displacement_mm": 2.3351,
+   "max_displacement_mm": 6.813,
    "probe_displacement_mm": [
-    -0.071,
-    -0.9913,
-    0.0844
+    -0.2072,
+    -2.8917,
+    0.2443
    ],
-   "max_von_mises_mpa": 96.46,
-   "von_mises_design_mpa": 40.27,
-   "safety_factor": 1.22,
-   "assumptions": "linear elastic, small deflection, isotropic; faces clamped where fixed; no contact, preload or buckling",
+   "max_von_mises_mpa": 96.54,
+   "von_mises_design_mpa": 40.33,
+   "safety_factor": 1.01,
+   "assumptions": "linear elastic, small deflection, isotropic: E 1029.2 MPa, a modulus in the layer plane (X-Y), and strength 40.8373 MPa everywhere (Bambu PA6-CF TDS V3.0: dry X-Y tensile modulus 4430 MPa x0.290 humid and strength 102 MPa x0.500 humid (Polymaker PA6-CF20 V1.1 wet / dry), each x0.8 print. For parts printed so their main stress runs in the layers), though a printed part is not isotropic; faces clamped where fixed; no contact, preload or buckling",
    "stiffness_n_per_mm": null,
    "torsional_stiffness_nm_per_deg": null,
    "design_peak_at_mm": [
@@ -1119,19 +1263,35 @@
     0.4,
     -25.5
    ],
-   "safety_factor_with_pad_rim": 0.93,
+   "safety_factor_with_pad_rim": 0.77,
    "case": "R3KF",
    "material_id": "pa6_cf_xy",
    "load_from": "rig 'power_off' (no motor damping): folded onto the stops, 122 N m on a stop post and 1831 N on the axle (quasi-static: the knees' real force matches statics), plus 10 % sideways; the front upper link at 3 deg, 67% of the out-of-plane load",
    "png": "exports/leg/fea/upper_link-R3KF.png",
    "target": 1.0,
    "ok": true,
-   "seconds": 26.9
+   "seconds": 55.7
   },
   {
    "part": "upper_link",
    "material": "PA6-CF along the layers (humid)",
-   "material_note": "Bambu PA6-CF TDS 102 MPa dry in the layers, x0.6 humid, x0.8 print: for parts printed so their main stress runs in the layers",
+   "material_note": "Bambu PA6-CF TDS V3.0: dry X-Y tensile modulus 4430 MPa x0.290 humid and strength 102 MPa x0.500 humid (Polymaker PA6-CF20 V1.1 wet / dry), each x0.8 print. For parts printed so their main stress runs in the layers",
+   "material_source": "bambu-pa6-cf-tds",
+   "material_direction": "X-Y",
+   "material_data": {
+    "key": "pa6_cf_xy",
+    "name": "PA6-CF along the layers (humid)",
+    "E_mpa": 1029.2023852254965,
+    "E_direction": "X-Y",
+    "nu": 0.35,
+    "strength_mpa": 40.83732845379689,
+    "strength_xy_mpa": 40.83732845379689,
+    "strength_z_mpa": 18.133333333333333,
+    "density_g_cm3": 1.09,
+    "source": "bambu-pa6-cf-tds",
+    "note": "Bambu PA6-CF TDS V3.0: dry X-Y tensile modulus 4430 MPa x0.290 humid and strength 102 MPa x0.500 humid (Polymaker PA6-CF20 V1.1 wet / dry), each x0.8 print. For parts printed so their main stress runs in the layers",
+    "constants_hash": "b0989f2b1b1c8bdc"
+   },
    "mesh": {
     "nodes": 14504,
     "tets": 66109,
@@ -1160,35 +1320,51 @@
      "area_mm2": 2819.4
     }
    ],
-   "max_displacement_mm": 2.1812,
+   "max_displacement_mm": 6.3578,
    "probe_displacement_mm": [
-    0.001,
-    -0.0006,
-    1.6036
+    0.0029,
+    -0.0016,
+    4.6744
    ],
    "max_von_mises_mpa": 47.61,
    "von_mises_design_mpa": 29.91,
-   "safety_factor": 1.64,
-   "assumptions": "linear elastic, small deflection, isotropic; faces clamped where fixed; no contact, preload or buckling",
-   "torsional_stiffness_nm_per_deg": 174.49,
+   "safety_factor": 1.37,
+   "assumptions": "linear elastic, small deflection, isotropic: E 1029.2 MPa, a modulus in the layer plane (X-Y), and strength 40.8373 MPa everywhere (Bambu PA6-CF TDS V3.0: dry X-Y tensile modulus 4430 MPa x0.290 humid and strength 102 MPa x0.500 humid (Polymaker PA6-CF20 V1.1 wet / dry), each x0.8 print. For parts printed so their main stress runs in the layers), though a printed part is not isotropic; faces clamped where fixed; no contact, preload or buckling",
+   "torsional_stiffness_nm_per_deg": 59.86,
    "design_peak_at_mm": [
     10.0,
     0.4,
     18.0
    ],
-   "safety_factor_with_pad_rim": 1.64,
+   "safety_factor_with_pad_rim": 1.37,
    "case": "R2",
    "material_id": "pa6_cf_xy",
    "load_from": "a motor at 120 N m against a stalled leg",
    "png": "exports/leg/fea/upper_link-R2.png",
    "target": 1.2,
    "ok": true,
-   "seconds": 90.0
+   "seconds": 180.9
   },
   {
    "part": "upper_link",
    "material": "PA6-CF along the layers (humid)",
-   "material_note": "Bambu PA6-CF TDS 102 MPa dry in the layers, x0.6 humid, x0.8 print: for parts printed so their main stress runs in the layers",
+   "material_note": "Bambu PA6-CF TDS V3.0: dry X-Y tensile modulus 4430 MPa x0.290 humid and strength 102 MPa x0.500 humid (Polymaker PA6-CF20 V1.1 wet / dry), each x0.8 print. For parts printed so their main stress runs in the layers",
+   "material_source": "bambu-pa6-cf-tds",
+   "material_direction": "X-Y",
+   "material_data": {
+    "key": "pa6_cf_xy",
+    "name": "PA6-CF along the layers (humid)",
+    "E_mpa": 1029.2023852254965,
+    "E_direction": "X-Y",
+    "nu": 0.35,
+    "strength_mpa": 40.83732845379689,
+    "strength_xy_mpa": 40.83732845379689,
+    "strength_z_mpa": 18.133333333333333,
+    "density_g_cm3": 1.09,
+    "source": "bambu-pa6-cf-tds",
+    "note": "Bambu PA6-CF TDS V3.0: dry X-Y tensile modulus 4430 MPa x0.290 humid and strength 102 MPa x0.500 humid (Polymaker PA6-CF20 V1.1 wet / dry), each x0.8 print. For parts printed so their main stress runs in the layers",
+    "constants_hash": "b0989f2b1b1c8bdc"
+   },
    "mesh": {
     "nodes": 14504,
     "tets": 66109,
@@ -1217,35 +1393,51 @@
      "area_mm2": 2819.4
     }
    ],
-   "max_displacement_mm": 1.0906,
+   "max_displacement_mm": 3.1789,
    "probe_displacement_mm": [
-    0.0005,
-    -0.0003,
-    0.8018
+    0.0015,
+    -0.0008,
+    2.3372
    ],
    "max_von_mises_mpa": 23.81,
    "von_mises_design_mpa": 14.95,
-   "safety_factor": 3.28,
-   "assumptions": "linear elastic, small deflection, isotropic; faces clamped where fixed; no contact, preload or buckling",
-   "torsional_stiffness_nm_per_deg": 174.49,
+   "safety_factor": 2.73,
+   "assumptions": "linear elastic, small deflection, isotropic: E 1029.2 MPa, a modulus in the layer plane (X-Y), and strength 40.8373 MPa everywhere (Bambu PA6-CF TDS V3.0: dry X-Y tensile modulus 4430 MPa x0.290 humid and strength 102 MPa x0.500 humid (Polymaker PA6-CF20 V1.1 wet / dry), each x0.8 print. For parts printed so their main stress runs in the layers), though a printed part is not isotropic; faces clamped where fixed; no contact, preload or buckling",
+   "torsional_stiffness_nm_per_deg": 59.86,
    "design_peak_at_mm": [
     10.0,
     0.4,
     18.0
    ],
-   "safety_factor_with_pad_rim": 3.28,
+   "safety_factor_with_pad_rim": 2.73,
    "case": "E2",
    "material_id": "pa6_cf_xy",
    "load_from": "a motor at 60 N m against a stalled leg",
    "png": "exports/leg/fea/upper_link-E2.png",
    "target": 2.0,
    "ok": true,
-   "seconds": 89.1
+   "seconds": 182.6
   },
   {
    "part": "upper_link",
    "material": "PA6-CF along the layers (humid)",
-   "material_note": "Bambu PA6-CF TDS 102 MPa dry in the layers, x0.6 humid, x0.8 print: for parts printed so their main stress runs in the layers",
+   "material_note": "Bambu PA6-CF TDS V3.0: dry X-Y tensile modulus 4430 MPa x0.290 humid and strength 102 MPa x0.500 humid (Polymaker PA6-CF20 V1.1 wet / dry), each x0.8 print. For parts printed so their main stress runs in the layers",
+   "material_source": "bambu-pa6-cf-tds",
+   "material_direction": "X-Y",
+   "material_data": {
+    "key": "pa6_cf_xy",
+    "name": "PA6-CF along the layers (humid)",
+    "E_mpa": 1029.2023852254965,
+    "E_direction": "X-Y",
+    "nu": 0.35,
+    "strength_mpa": 40.83732845379689,
+    "strength_xy_mpa": 40.83732845379689,
+    "strength_z_mpa": 18.133333333333333,
+    "density_g_cm3": 1.09,
+    "source": "bambu-pa6-cf-tds",
+    "note": "Bambu PA6-CF TDS V3.0: dry X-Y tensile modulus 4430 MPa x0.290 humid and strength 102 MPa x0.500 humid (Polymaker PA6-CF20 V1.1 wet / dry), each x0.8 print. For parts printed so their main stress runs in the layers",
+    "constants_hash": "b0989f2b1b1c8bdc"
+   },
    "mesh": {
     "nodes": 14504,
     "tets": 66109,
@@ -1323,36 +1515,52 @@
      "area_mm2": 564.2
     }
    ],
-   "max_displacement_mm": 0.1781,
+   "max_displacement_mm": 0.519,
    "probe_displacement_mm": [
-    0.0534,
-    -0.0141,
-    -0.0422
+    0.1557,
+    -0.0412,
+    -0.1231
    ],
    "max_von_mises_mpa": 22.9,
    "von_mises_design_mpa": 6.66,
-   "safety_factor": 7.36,
-   "assumptions": "linear elastic, small deflection, isotropic; faces clamped where fixed; no contact, preload or buckling",
-   "stiffness_n_per_mm": 15435.8,
-   "torsional_stiffness_nm_per_deg": 88.52,
+   "safety_factor": 6.13,
+   "assumptions": "linear elastic, small deflection, isotropic: E 1029.2 MPa, a modulus in the layer plane (X-Y), and strength 40.8373 MPa everywhere (Bambu PA6-CF TDS V3.0: dry X-Y tensile modulus 4430 MPa x0.290 humid and strength 102 MPa x0.500 humid (Polymaker PA6-CF20 V1.1 wet / dry), each x0.8 print. For parts printed so their main stress runs in the layers), though a printed part is not isotropic; faces clamped where fixed; no contact, preload or buckling",
+   "stiffness_n_per_mm": 5295.5,
+   "torsional_stiffness_nm_per_deg": 30.37,
    "design_peak_at_mm": [
     29.9,
     0.6,
     5.5
    ],
-   "safety_factor_with_pad_rim": 3.83,
+   "safety_factor_with_pad_rim": 3.19,
    "case": "E3",
    "material_id": "pa6_cf_xy",
    "load_from": "a motor at its 60 N m cap driving the link into a stop post: 1038 N square on its stop face, 57.8 mm from the hub's axis",
    "png": "exports/leg/fea/upper_link-E3.png",
    "target": 2.0,
    "ok": true,
-   "seconds": 25.7
+   "seconds": 55.2
   },
   {
    "part": "upper_link",
    "material": "PA6-CF along the layers (humid)",
-   "material_note": "Bambu PA6-CF TDS 102 MPa dry in the layers, x0.6 humid, x0.8 print: for parts printed so their main stress runs in the layers",
+   "material_note": "Bambu PA6-CF TDS V3.0: dry X-Y tensile modulus 4430 MPa x0.290 humid and strength 102 MPa x0.500 humid (Polymaker PA6-CF20 V1.1 wet / dry), each x0.8 print. For parts printed so their main stress runs in the layers",
+   "material_source": "bambu-pa6-cf-tds",
+   "material_direction": "X-Y",
+   "material_data": {
+    "key": "pa6_cf_xy",
+    "name": "PA6-CF along the layers (humid)",
+    "E_mpa": 1029.2023852254965,
+    "E_direction": "X-Y",
+    "nu": 0.35,
+    "strength_mpa": 40.83732845379689,
+    "strength_xy_mpa": 40.83732845379689,
+    "strength_z_mpa": 18.133333333333333,
+    "density_g_cm3": 1.09,
+    "source": "bambu-pa6-cf-tds",
+    "note": "Bambu PA6-CF TDS V3.0: dry X-Y tensile modulus 4430 MPa x0.290 humid and strength 102 MPa x0.500 humid (Polymaker PA6-CF20 V1.1 wet / dry), each x0.8 print. For parts printed so their main stress runs in the layers",
+    "constants_hash": "b0989f2b1b1c8bdc"
+   },
    "mesh": {
     "nodes": 14504,
     "tets": 66109,
@@ -1430,39 +1638,55 @@
      "area_mm2": 564.2
     }
    ],
-   "max_displacement_mm": 0.3629,
+   "max_displacement_mm": 1.0579,
    "probe_displacement_mm": [
-    0.1089,
-    -0.0288,
-    -0.0861
+    0.3173,
+    -0.0839,
+    -0.2509
    ],
    "max_von_mises_mpa": 46.68,
    "von_mises_design_mpa": 13.58,
-   "safety_factor": 3.61,
-   "assumptions": "linear elastic, small deflection, isotropic; faces clamped where fixed; no contact, preload or buckling",
-   "stiffness_n_per_mm": 15435.8,
-   "torsional_stiffness_nm_per_deg": 88.52,
+   "safety_factor": 3.01,
+   "assumptions": "linear elastic, small deflection, isotropic: E 1029.2 MPa, a modulus in the layer plane (X-Y), and strength 40.8373 MPa everywhere (Bambu PA6-CF TDS V3.0: dry X-Y tensile modulus 4430 MPa x0.290 humid and strength 102 MPa x0.500 humid (Polymaker PA6-CF20 V1.1 wet / dry), each x0.8 print. For parts printed so their main stress runs in the layers), though a printed part is not isotropic; faces clamped where fixed; no contact, preload or buckling",
+   "stiffness_n_per_mm": 5295.5,
+   "torsional_stiffness_nm_per_deg": 30.37,
    "design_peak_at_mm": [
     29.9,
     0.6,
     5.5
    ],
-   "safety_factor_with_pad_rim": 1.88,
+   "safety_factor_with_pad_rim": 1.57,
    "case": "R3",
    "material_id": "pa6_cf_xy",
    "load_from": "rig 'power_off' (no motor damping): folded onto the stops, 122 N m on a stop post and 1831 N on the axle (quasi-static: the knees' real force matches statics), plus 10 % sideways",
    "png": "exports/leg/fea/upper_link-R3.png",
    "target": 1.0,
    "ok": true,
-   "seconds": 26.5
+   "seconds": 29.5
   },
   {
    "part": "front_link",
    "material": "PA6-CF along the layers (humid)",
-   "material_note": "Bambu PA6-CF TDS 102 MPa dry in the layers, x0.6 humid, x0.8 print: for parts printed so their main stress runs in the layers",
+   "material_note": "Bambu PA6-CF TDS V3.0: dry X-Y tensile modulus 4430 MPa x0.290 humid and strength 102 MPa x0.500 humid (Polymaker PA6-CF20 V1.1 wet / dry), each x0.8 print. For parts printed so their main stress runs in the layers",
+   "material_source": "bambu-pa6-cf-tds",
+   "material_direction": "X-Y",
+   "material_data": {
+    "key": "pa6_cf_xy",
+    "name": "PA6-CF along the layers (humid)",
+    "E_mpa": 1029.2023852254965,
+    "E_direction": "X-Y",
+    "nu": 0.35,
+    "strength_mpa": 40.83732845379689,
+    "strength_xy_mpa": 40.83732845379689,
+    "strength_z_mpa": 18.133333333333333,
+    "density_g_cm3": 1.09,
+    "source": "bambu-pa6-cf-tds",
+    "note": "Bambu PA6-CF TDS V3.0: dry X-Y tensile modulus 4430 MPa x0.290 humid and strength 102 MPa x0.500 humid (Polymaker PA6-CF20 V1.1 wet / dry), each x0.8 print. For parts printed so their main stress runs in the layers",
+    "constants_hash": "b0989f2b1b1c8bdc"
+   },
    "mesh": {
-    "nodes": 9552,
-    "tets": 37081,
+    "nodes": 9585,
+    "tets": 37456,
     "size_mm": 4.0,
     "element": "P2 tetrahedra"
    },
@@ -1471,14 +1695,14 @@
      "kind": "force",
      "n": [
       -654.8768797613069,
-      67.0189283297447,
+      69.85470808981852,
       1.1368683772161603e-13
      ],
      "area_mm2": 12327.2
     },
     {
      "kind": "torque",
-     "nm": -1.354092921747675,
+     "nm": -1.3540929217476765,
      "axis": [
       0.0,
       0.0,
@@ -1490,7 +1714,7 @@
       1.0197126382353279e-15
      ],
      "about_centroid_mm": [
-      250.001,
+      250.0,
       26.068,
       0.0
      ],
@@ -1498,7 +1722,7 @@
     },
     {
      "kind": "torque",
-     "nm": -30.60659903165514,
+     "nm": -31.901659639482578,
      "axis": [
       1.0,
       0.0,
@@ -1510,7 +1734,7 @@
       1.0197126382353279e-15
      ],
      "about_centroid_mm": [
-      250.001,
+      250.0,
       26.068,
       0.0
      ],
@@ -1518,7 +1742,7 @@
     },
     {
      "kind": "torque",
-     "nm": 54.94700575469499,
+     "nm": 57.27198484163554,
      "axis": [
       0.0,
       0.0,
@@ -1530,25 +1754,25 @@
       1.0197126382353279e-15
      ],
      "about_centroid_mm": [
-      250.001,
+      250.0,
       26.068,
       0.0
      ],
      "area_mm2": 12327.2
     }
    ],
-   "max_displacement_mm": 17.2073,
+   "max_displacement_mm": 48.9967,
    "probe_displacement_mm": [
-    1.3549,
-    11.8003,
-    0.4909
+    3.9388,
+    33.3194,
+    1.3967
    ],
-   "max_von_mises_mpa": 28.98,
-   "von_mises_design_mpa": 28.98,
-   "safety_factor": 1.69,
-   "assumptions": "linear elastic, small deflection, isotropic; faces clamped where fixed; no contact, preload or buckling",
+   "max_von_mises_mpa": 33.21,
+   "von_mises_design_mpa": 33.21,
+   "safety_factor": 1.23,
+   "assumptions": "linear elastic, small deflection, isotropic: E 1029.2 MPa, a modulus in the layer plane (X-Y), and strength 40.8373 MPa everywhere (Bambu PA6-CF TDS V3.0: dry X-Y tensile modulus 4430 MPa x0.290 humid and strength 102 MPa x0.500 humid (Polymaker PA6-CF20 V1.1 wet / dry), each x0.8 print. For parts printed so their main stress runs in the layers), though a printed part is not isotropic; faces clamped where fixed; no contact, preload or buckling",
    "stiffness_n_per_mm": null,
-   "torsional_stiffness_nm_per_deg": 8.97,
+   "torsional_stiffness_nm_per_deg": 3.43,
    "design_peak_at_mm": [
     293.5,
     51.0,
@@ -1556,19 +1780,35 @@
    ],
    "case": "R1",
    "material_id": "pa6_cf_xy",
-   "load_from": "the rig's landings (drop_150, the capped jump): knees at 574 N, as 945 N on the axle at 342 mm (statics on the 1605 N spike gives 975), plus 10 % fore-aft and 10 % sideways; axial 655 N, 71% of the out-of-plane load at the apex",
+   "load_from": "the rig's landings (drop_150, the capped jump): knees at 574 N, as 945 N on the axle at 342 mm (statics on the 1605 N spike gives 975), plus 10 % fore-aft and 10 % sideways; axial 655 N, 74% of the out-of-plane load at the apex",
    "png": "exports/leg/fea/front_link-R1.png",
    "target": 1.2,
    "ok": true,
-   "seconds": 183.5
+   "seconds": 157.5
   },
   {
    "part": "front_link",
    "material": "PA6-CF along the layers (humid)",
-   "material_note": "Bambu PA6-CF TDS 102 MPa dry in the layers, x0.6 humid, x0.8 print: for parts printed so their main stress runs in the layers",
+   "material_note": "Bambu PA6-CF TDS V3.0: dry X-Y tensile modulus 4430 MPa x0.290 humid and strength 102 MPa x0.500 humid (Polymaker PA6-CF20 V1.1 wet / dry), each x0.8 print. For parts printed so their main stress runs in the layers",
+   "material_source": "bambu-pa6-cf-tds",
+   "material_direction": "X-Y",
+   "material_data": {
+    "key": "pa6_cf_xy",
+    "name": "PA6-CF along the layers (humid)",
+    "E_mpa": 1029.2023852254965,
+    "E_direction": "X-Y",
+    "nu": 0.35,
+    "strength_mpa": 40.83732845379689,
+    "strength_xy_mpa": 40.83732845379689,
+    "strength_z_mpa": 18.133333333333333,
+    "density_g_cm3": 1.09,
+    "source": "bambu-pa6-cf-tds",
+    "note": "Bambu PA6-CF TDS V3.0: dry X-Y tensile modulus 4430 MPa x0.290 humid and strength 102 MPa x0.500 humid (Polymaker PA6-CF20 V1.1 wet / dry), each x0.8 print. For parts printed so their main stress runs in the layers",
+    "constants_hash": "b0989f2b1b1c8bdc"
+   },
    "mesh": {
-    "nodes": 9552,
-    "tets": 37081,
+    "nodes": 9585,
+    "tets": 37456,
     "size_mm": 4.0,
     "element": "P2 tetrahedra"
    },
@@ -1577,14 +1817,14 @@
      "kind": "force",
      "n": [
       -313.0233553276064,
-      131.33137499999998,
+      132.6189375,
       -2.842170943040401e-14
      ],
      "area_mm2": 12327.2
     },
     {
      "kind": "torque",
-     "nm": -0.6472403025517556,
+     "nm": -0.6472403025517564,
      "axis": [
       0.0,
       0.0,
@@ -1596,7 +1836,7 @@
       1.0197126382353279e-15
      ],
      "about_centroid_mm": [
-      250.001,
+      250.0,
       26.068,
       0.0
      ],
@@ -1604,7 +1844,7 @@
     },
     {
      "kind": "torque",
-     "nm": -29.320409937512686,
+     "nm": -29.607864936900064,
      "axis": [
       1.0,
       0.0,
@@ -1616,7 +1856,7 @@
       1.0197126382353279e-15
      ],
      "about_centroid_mm": [
-      250.001,
+      250.0,
       26.068,
       0.0
      ],
@@ -1624,7 +1864,7 @@
     },
     {
      "kind": "torque",
-     "nm": 31.737151079684324,
+     "nm": 32.04829961968123,
      "axis": [
       0.0,
       0.0,
@@ -1636,45 +1876,61 @@
       1.0197126382353279e-15
      ],
      "about_centroid_mm": [
-      250.001,
+      250.0,
       26.068,
       0.0
      ],
      "area_mm2": 12327.2
     }
    ],
-   "max_displacement_mm": 14.7964,
+   "max_displacement_mm": 40.3188,
    "probe_displacement_mm": [
-    1.1474,
-    10.2678,
-    0.4702
+    3.1814,
+    27.7341,
+    1.2955
    ],
-   "max_von_mises_mpa": 24.53,
-   "von_mises_design_mpa": 24.53,
-   "safety_factor": 2.0,
-   "assumptions": "linear elastic, small deflection, isotropic; faces clamped where fixed; no contact, preload or buckling",
-   "stiffness_n_per_mm": 116.5,
-   "torsional_stiffness_nm_per_deg": 6.3,
+   "max_von_mises_mpa": 24.25,
+   "von_mises_design_mpa": 24.25,
+   "safety_factor": 1.68,
+   "assumptions": "linear elastic, small deflection, isotropic: E 1029.2 MPa, a modulus in the layer plane (X-Y), and strength 40.8373 MPa everywhere (Bambu PA6-CF TDS V3.0: dry X-Y tensile modulus 4430 MPa x0.290 humid and strength 102 MPa x0.500 humid (Polymaker PA6-CF20 V1.1 wet / dry), each x0.8 print. For parts printed so their main stress runs in the layers), though a printed part is not isotropic; faces clamped where fixed; no contact, preload or buckling",
+   "stiffness_n_per_mm": 43.1,
+   "torsional_stiffness_nm_per_deg": 2.44,
    "design_peak_at_mm": [
-    30.6,
-    52.9,
-    6.3
+    293.5,
+    51.0,
+    -11.6
    ],
    "case": "E1",
    "material_id": "pa6_cf_xy",
-   "load_from": "standing: 2.5 x 184 N vertical, 0.5 g of a 38 kg robot sideways; axial 313 N, 71% of the out-of-plane load at the apex",
+   "load_from": "standing: 2.5 x 184 N vertical, 0.5 g of a 38 kg robot sideways; axial 313 N, 72% of the out-of-plane load at the apex",
    "png": "exports/leg/fea/front_link-E1.png",
    "target": 2.0,
-   "ok": true,
-   "seconds": 260.2
+   "ok": false,
+   "seconds": 152.1
   },
   {
    "part": "wheel_link",
    "material": "PA6-CF along the layers (humid)",
-   "material_note": "Bambu PA6-CF TDS 102 MPa dry in the layers, x0.6 humid, x0.8 print: for parts printed so their main stress runs in the layers",
+   "material_note": "Bambu PA6-CF TDS V3.0: dry X-Y tensile modulus 4430 MPa x0.290 humid and strength 102 MPa x0.500 humid (Polymaker PA6-CF20 V1.1 wet / dry), each x0.8 print. For parts printed so their main stress runs in the layers",
+   "material_source": "bambu-pa6-cf-tds",
+   "material_direction": "X-Y",
+   "material_data": {
+    "key": "pa6_cf_xy",
+    "name": "PA6-CF along the layers (humid)",
+    "E_mpa": 1029.2023852254965,
+    "E_direction": "X-Y",
+    "nu": 0.35,
+    "strength_mpa": 40.83732845379689,
+    "strength_xy_mpa": 40.83732845379689,
+    "strength_z_mpa": 18.133333333333333,
+    "density_g_cm3": 1.09,
+    "source": "bambu-pa6-cf-tds",
+    "note": "Bambu PA6-CF TDS V3.0: dry X-Y tensile modulus 4430 MPa x0.290 humid and strength 102 MPa x0.500 humid (Polymaker PA6-CF20 V1.1 wet / dry), each x0.8 print. For parts printed so their main stress runs in the layers",
+    "constants_hash": "b0989f2b1b1c8bdc"
+   },
    "mesh": {
-    "nodes": 12552,
-    "tets": 52134,
+    "nodes": 12500,
+    "tets": 52011,
     "size_mm": 4.0,
     "element": "P2 tetrahedra"
    },
@@ -1704,7 +1960,7 @@
      "about_centroid_mm": [
       250.0,
       75.733,
-      0.0
+      -0.0
      ],
      "area_mm2": 2277.0
     },
@@ -1724,7 +1980,7 @@
      "about_centroid_mm": [
       250.0,
       75.733,
-      0.0
+      -0.0
      ],
      "area_mm2": 2277.0
     },
@@ -1744,7 +2000,7 @@
      "about_centroid_mm": [
       250.0,
       75.733,
-      0.0
+      -0.0
      ],
      "area_mm2": 2277.0
     },
@@ -1752,7 +2008,7 @@
      "kind": "force",
      "n": [
       244.09645532713185,
-      -22.875290064595507,
+      -22.780764072593048,
       -607.6846617635126
      ],
      "area_mm2": 9203.0
@@ -1779,7 +2035,7 @@
     },
     {
      "kind": "torque",
-     "nm": -0.909084406105237,
+     "nm": -0.9090844061052368,
      "axis": [
       0.0,
       0.0,
@@ -1799,7 +2055,7 @@
     },
     {
      "kind": "torque",
-     "nm": -13.509395906056598,
+     "nm": -13.45357195603157,
      "axis": [
       1.0,
       0.0,
@@ -1819,7 +2075,7 @@
     },
     {
      "kind": "torque",
-     "nm": -16.68460410782682,
+     "nm": -16.615659462753158,
      "axis": [
       0.0,
       0.0,
@@ -1838,22 +2094,22 @@
      "area_mm2": 9203.0
     }
    ],
-   "max_displacement_mm": 6.6528,
+   "max_displacement_mm": 17.9696,
    "probe_displacement_mm": [
-    -0.3206,
-    4.5442,
-    0.5516
+    -0.8796,
+    12.1722,
+    1.3846
    ],
-   "max_von_mises_mpa": 17.9,
-   "von_mises_design_mpa": 17.9,
-   "safety_factor": 2.74,
-   "assumptions": "linear elastic, small deflection, isotropic; faces clamped where fixed; no contact, preload or buckling",
+   "max_von_mises_mpa": 17.93,
+   "von_mises_design_mpa": 17.93,
+   "safety_factor": 2.28,
+   "assumptions": "linear elastic, small deflection, isotropic: E 1029.2 MPa, a modulus in the layer plane (X-Y), and strength 40.8373 MPa everywhere (Bambu PA6-CF TDS V3.0: dry X-Y tensile modulus 4430 MPa x0.290 humid and strength 102 MPa x0.500 humid (Polymaker PA6-CF20 V1.1 wet / dry), each x0.8 print. For parts printed so their main stress runs in the layers), though a printed part is not isotropic; faces clamped where fixed; no contact, preload or buckling",
    "stiffness_n_per_mm": null,
-   "torsional_stiffness_nm_per_deg": -37.89,
+   "torsional_stiffness_nm_per_deg": -13.75,
    "design_peak_at_mm": [
-    27.1,
-    54.8,
-    -16.2
+    31.8,
+    54.7,
+    -12.8
    ],
    "case": "R1",
    "material_id": "pa6_cf_xy",
@@ -1861,15 +2117,31 @@
    "png": "exports/leg/fea/wheel_link-R1.png",
    "target": 1.2,
    "ok": true,
-   "seconds": 266.4
+   "seconds": 55.8
   },
   {
    "part": "wheel_link",
    "material": "PA6-CF along the layers (humid)",
-   "material_note": "Bambu PA6-CF TDS 102 MPa dry in the layers, x0.6 humid, x0.8 print: for parts printed so their main stress runs in the layers",
+   "material_note": "Bambu PA6-CF TDS V3.0: dry X-Y tensile modulus 4430 MPa x0.290 humid and strength 102 MPa x0.500 humid (Polymaker PA6-CF20 V1.1 wet / dry), each x0.8 print. For parts printed so their main stress runs in the layers",
+   "material_source": "bambu-pa6-cf-tds",
+   "material_direction": "X-Y",
+   "material_data": {
+    "key": "pa6_cf_xy",
+    "name": "PA6-CF along the layers (humid)",
+    "E_mpa": 1029.2023852254965,
+    "E_direction": "X-Y",
+    "nu": 0.35,
+    "strength_mpa": 40.83732845379689,
+    "strength_xy_mpa": 40.83732845379689,
+    "strength_z_mpa": 18.133333333333333,
+    "density_g_cm3": 1.09,
+    "source": "bambu-pa6-cf-tds",
+    "note": "Bambu PA6-CF TDS V3.0: dry X-Y tensile modulus 4430 MPa x0.290 humid and strength 102 MPa x0.500 humid (Polymaker PA6-CF20 V1.1 wet / dry), each x0.8 print. For parts printed so their main stress runs in the layers",
+    "constants_hash": "b0989f2b1b1c8bdc"
+   },
    "mesh": {
-    "nodes": 12552,
-    "tets": 52134,
+    "nodes": 12500,
+    "tets": 52011,
     "size_mm": 4.0,
     "element": "P2 tetrahedra"
    },
@@ -1899,7 +2171,7 @@
      "about_centroid_mm": [
       250.0,
       75.733,
-      0.0
+      -0.0
      ],
      "area_mm2": 2277.0
     },
@@ -1919,7 +2191,7 @@
      "about_centroid_mm": [
       250.0,
       75.733,
-      0.0
+      -0.0
      ],
      "area_mm2": 2277.0
     },
@@ -1939,7 +2211,7 @@
      "about_centroid_mm": [
       250.0,
       75.733,
-      0.0
+      -0.0
      ],
      "area_mm2": 2277.0
     },
@@ -1947,7 +2219,7 @@
      "kind": "force",
      "n": [
       414.4625224243588,
-      -38.841,
+      -38.6805,
       -1031.8155477332064
      ],
      "area_mm2": 9203.0
@@ -1974,7 +2246,7 @@
     },
     {
      "kind": "torque",
-     "nm": -1.543575942330149,
+     "nm": -1.5435759423301487,
      "axis": [
       0.0,
       0.0,
@@ -1994,7 +2266,7 @@
     },
     {
      "kind": "torque",
-     "nm": -22.93822045121344,
+     "nm": -22.843434416291068,
      "axis": [
       1.0,
       0.0,
@@ -2014,7 +2286,7 @@
     },
     {
      "kind": "torque",
-     "nm": -28.329551508293,
+     "nm": -28.212487245862036,
      "axis": [
       0.0,
       0.0,
@@ -2033,22 +2305,22 @@
      "area_mm2": 9203.0
     }
    ],
-   "max_displacement_mm": 11.2962,
+   "max_displacement_mm": 30.5113,
    "probe_displacement_mm": [
-    -0.5444,
-    7.7159,
-    0.9366
+    -1.4935,
+    20.6678,
+    2.3509
    ],
-   "max_von_mises_mpa": 30.39,
-   "von_mises_design_mpa": 30.39,
-   "safety_factor": 1.61,
-   "assumptions": "linear elastic, small deflection, isotropic; faces clamped where fixed; no contact, preload or buckling",
+   "max_von_mises_mpa": 30.45,
+   "von_mises_design_mpa": 30.45,
+   "safety_factor": 1.34,
+   "assumptions": "linear elastic, small deflection, isotropic: E 1029.2 MPa, a modulus in the layer plane (X-Y), and strength 40.8373 MPa everywhere (Bambu PA6-CF TDS V3.0: dry X-Y tensile modulus 4430 MPa x0.290 humid and strength 102 MPa x0.500 humid (Polymaker PA6-CF20 V1.1 wet / dry), each x0.8 print. For parts printed so their main stress runs in the layers), though a printed part is not isotropic; faces clamped where fixed; no contact, preload or buckling",
    "stiffness_n_per_mm": null,
-   "torsional_stiffness_nm_per_deg": -37.89,
+   "torsional_stiffness_nm_per_deg": -13.75,
    "design_peak_at_mm": [
-    27.1,
-    54.8,
-    -16.2
+    31.8,
+    54.7,
+    -12.8
    ],
    "case": "R1w",
    "material_id": "pa6_cf_xy",
@@ -2056,15 +2328,31 @@
    "png": "exports/leg/fea/wheel_link-R1w.png",
    "target": 1.2,
    "ok": true,
-   "seconds": 289.9
+   "seconds": 55.3
   },
   {
    "part": "wheel_link",
    "material": "PA6-CF along the layers (humid)",
-   "material_note": "Bambu PA6-CF TDS 102 MPa dry in the layers, x0.6 humid, x0.8 print: for parts printed so their main stress runs in the layers",
+   "material_note": "Bambu PA6-CF TDS V3.0: dry X-Y tensile modulus 4430 MPa x0.290 humid and strength 102 MPa x0.500 humid (Polymaker PA6-CF20 V1.1 wet / dry), each x0.8 print. For parts printed so their main stress runs in the layers",
+   "material_source": "bambu-pa6-cf-tds",
+   "material_direction": "X-Y",
+   "material_data": {
+    "key": "pa6_cf_xy",
+    "name": "PA6-CF along the layers (humid)",
+    "E_mpa": 1029.2023852254965,
+    "E_direction": "X-Y",
+    "nu": 0.35,
+    "strength_mpa": 40.83732845379689,
+    "strength_xy_mpa": 40.83732845379689,
+    "strength_z_mpa": 18.133333333333333,
+    "density_g_cm3": 1.09,
+    "source": "bambu-pa6-cf-tds",
+    "note": "Bambu PA6-CF TDS V3.0: dry X-Y tensile modulus 4430 MPa x0.290 humid and strength 102 MPa x0.500 humid (Polymaker PA6-CF20 V1.1 wet / dry), each x0.8 print. For parts printed so their main stress runs in the layers",
+    "constants_hash": "b0989f2b1b1c8bdc"
+   },
    "mesh": {
-    "nodes": 12552,
-    "tets": 52134,
+    "nodes": 12500,
+    "tets": 52011,
     "size_mm": 4.0,
     "element": "P2 tetrahedra"
    },
@@ -2094,7 +2382,7 @@
      "about_centroid_mm": [
       250.0,
       75.733,
-      0.0
+      -0.0
      ],
      "area_mm2": 2277.0
     },
@@ -2114,7 +2402,7 @@
      "about_centroid_mm": [
       250.0,
       75.733,
-      0.0
+      -0.0
      ],
      "area_mm2": 2277.0
     },
@@ -2122,7 +2410,7 @@
      "kind": "force",
      "n": [
       24.741017226567777,
-      -51.502500000000005,
+      -51.13462500000001,
       -312.0440722833036
      ],
      "area_mm2": 9203.0
@@ -2149,7 +2437,7 @@
     },
     {
      "kind": "torque",
-     "nm": -0.09214256274933791,
+     "nm": -0.09214256274933738,
      "axis": [
       0.0,
       0.0,
@@ -2169,7 +2457,7 @@
     },
     {
      "kind": "torque",
-     "nm": -11.49819997549517,
+     "nm": -11.416069975670204,
      "axis": [
       1.0,
       0.0,
@@ -2189,7 +2477,7 @@
     },
     {
      "kind": "torque",
-     "nm": -12.44594159987621,
+     "nm": -12.357042017019952,
      "axis": [
       0.0,
       0.0,
@@ -2208,22 +2496,22 @@
      "area_mm2": 9203.0
     }
    ],
-   "max_displacement_mm": 5.9244,
+   "max_displacement_mm": 15.9255,
    "probe_displacement_mm": [
-    -0.2755,
-    4.2391,
-    0.1713
+    -0.7523,
+    11.3199,
+    0.4682
    ],
-   "max_von_mises_mpa": 15.55,
-   "von_mises_design_mpa": 15.55,
-   "safety_factor": 3.15,
-   "assumptions": "linear elastic, small deflection, isotropic; faces clamped where fixed; no contact, preload or buckling",
+   "max_von_mises_mpa": 15.4,
+   "von_mises_design_mpa": 15.4,
+   "safety_factor": 2.65,
+   "assumptions": "linear elastic, small deflection, isotropic: E 1029.2 MPa, a modulus in the layer plane (X-Y), and strength 40.8373 MPa everywhere (Bambu PA6-CF TDS V3.0: dry X-Y tensile modulus 4430 MPa x0.290 humid and strength 102 MPa x0.500 humid (Polymaker PA6-CF20 V1.1 wet / dry), each x0.8 print. For parts printed so their main stress runs in the layers), though a printed part is not isotropic; faces clamped where fixed; no contact, preload or buckling",
    "stiffness_n_per_mm": null,
-   "torsional_stiffness_nm_per_deg": -32.64,
+   "torsional_stiffness_nm_per_deg": -11.87,
    "design_peak_at_mm": [
-    27.7,
-    54.2,
-    -7.3
+    31.8,
+    54.7,
+    -12.8
    ],
    "case": "E1",
    "material_id": "pa6_cf_xy",
@@ -2231,15 +2519,31 @@
    "png": "exports/leg/fea/wheel_link-E1.png",
    "target": 2.0,
    "ok": true,
-   "seconds": 262.0
+   "seconds": 66.8
   },
   {
    "part": "hip_frame",
    "material": "PA6-CF across the layers (humid)",
-   "material_note": "Bambu PA6-CF TDS 48 MPa dry across the layers, x0.6 humid, x0.8 print: the safe value when the stress crosses the layers",
+   "material_note": "Bambu PA6-CF TDS V3.0: dry Z tensile modulus 2170 MPa x0.281 humid and strength 48 MPa x0.472 humid (Polymaker PA6-CF20 V1.1 wet / dry), each x0.8 print. The safe strength when the stress crosses the layers",
+   "material_source": "bambu-pa6-cf-tds",
+   "material_direction": "Z",
+   "material_data": {
+    "key": "pa6_cf_z",
+    "name": "PA6-CF across the layers (humid)",
+    "E_mpa": 487.66846655140307,
+    "E_direction": "Z",
+    "nu": 0.35,
+    "strength_mpa": 18.133333333333333,
+    "strength_xy_mpa": 40.83732845379689,
+    "strength_z_mpa": 18.133333333333333,
+    "density_g_cm3": 1.09,
+    "source": "bambu-pa6-cf-tds",
+    "note": "Bambu PA6-CF TDS V3.0: dry Z tensile modulus 2170 MPa x0.281 humid and strength 48 MPa x0.472 humid (Polymaker PA6-CF20 V1.1 wet / dry), each x0.8 print. The safe strength when the stress crosses the layers",
+    "constants_hash": "813009441363f213"
+   },
    "mesh": {
-    "nodes": 34101,
-    "tets": 146362,
+    "nodes": 43880,
+    "tets": 193760,
     "size_mm": 4.0,
     "element": "P2 tetrahedra"
    },
@@ -2248,7 +2552,7 @@
      "kind": "force",
      "n": [
       366.7496439129,
-      67.0189283297447,
+      69.85470808981852,
       542.5480866574559
      ],
      "area_mm2": 2449.6
@@ -2257,14 +2561,14 @@
      "kind": "force",
      "n": [
       -272.22365191043923,
-      71.65070193786528,
+      71.74522792986774,
       402.71183336715194
      ],
      "area_mm2": 2449.6
     },
     {
      "kind": "torque",
-     "nm": 114.44766620535219,
+     "nm": 114.59865257237773,
      "axis": [
       1.0,
       0.0,
@@ -2284,7 +2588,7 @@
     },
     {
      "kind": "torque",
-     "nm": -2.7083965332513067,
+     "nm": -2.7119696157489996,
      "axis": [
       0.0,
       0.0,
@@ -2304,7 +2608,7 @@
     },
     {
      "kind": "torque",
-     "nm": 107.04933422110119,
+     "nm": 111.5789252318671,
      "axis": [
       1.0,
       0.0,
@@ -2324,7 +2628,7 @@
     },
     {
      "kind": "torque",
-     "nm": -2.5333154908643487,
+     "nm": -2.6405079657951394,
      "axis": [
       0.0,
       0.0,
@@ -2352,69 +2656,85 @@
      ],
      "point_mm": [
       74.99999999999892,
-      -11.715054957053429,
-      1.4882820696101735e-12
+      -11.77820443220816,
+      1.4784614116486435e-12
      ],
      "about_centroid_mm": [
-      75.01,
-      -11.716,
-      -0.001
+      75.006,
+      -11.776,
+      0.001
      ],
-     "area_mm2": 5120.4
+     "area_mm2": 4807.5
     },
     {
      "kind": "torque",
-     "nm": -62.97876854640696,
+     "nm": 62.97876854640696,
      "axis": [
       0.0,
       1.0,
       0.0
      ],
      "point_mm": [
-      -74.999999999979,
-      -11.715054957053429,
-      1.4863503760684965e-12
+      -74.99999999997911,
+      -11.778204432208161,
+      1.4788356109429103e-12
      ],
      "about_centroid_mm": [
-      -74.992,
-      -11.716,
-      -0.0
+      -74.994,
+      -11.776,
+      0.0
      ],
-     "area_mm2": 5120.4
+     "area_mm2": 4807.5
     }
    ],
-   "max_displacement_mm": 0.3147,
+   "max_displacement_mm": 1.3304,
    "probe_displacement_mm": [
-    0.0048,
-    0.0305,
-    0.0422
+    0.0164,
+    0.0556,
+    -0.1614
    ],
-   "max_von_mises_mpa": 14.82,
-   "von_mises_design_mpa": 14.82,
-   "safety_factor": 1.55,
-   "assumptions": "linear elastic, small deflection, isotropic; faces clamped where fixed; no contact, preload or buckling",
-   "stiffness_n_per_mm": 13489.8,
-   "torsional_stiffness_nm_per_deg": null,
+   "max_von_mises_mpa": 12.09,
+   "von_mises_design_mpa": 11.49,
+   "safety_factor": 1.58,
+   "assumptions": "linear elastic, small deflection, isotropic: E 487.668 MPa, a modulus across the layers (Z), and strength 18.1333 MPa everywhere (Bambu PA6-CF TDS V3.0: dry Z tensile modulus 2170 MPa x0.281 humid and strength 48 MPa x0.472 humid (Polymaker PA6-CF20 V1.1 wet / dry), each x0.8 print. The safe strength when the stress crosses the layers), though a printed part is not isotropic; faces clamped where fixed; no contact, preload or buckling",
+   "stiffness_n_per_mm": null,
+   "torsional_stiffness_nm_per_deg": 890.09,
    "design_peak_at_mm": [
-    93.3,
-    -26.3,
-    -62.8
+    94.8,
+    -23.4,
+    -58.9
    ],
    "case": "R1",
    "material_id": "pa6_cf_z",
-   "load_from": "the rig's landings (drop_150, the capped jump): knees at 574 N, as 945 N on the axle at 342 mm (statics on the 1605 N spike gives 975), plus 10 % fore-aft and 10 % sideways; both upper links' pin forces, the out-of-plane moment 76% rear / 71% front",
+   "load_from": "the rig's landings (drop_150, the capped jump): knees at 574 N, as 945 N on the axle at 342 mm (statics on the 1605 N spike gives 975), plus 10 % fore-aft and 10 % sideways; both upper links' pin forces, the out-of-plane moment 76% rear / 74% front",
    "png": "exports/leg/fea/hip_frame-R1.png",
    "target": 1.2,
    "ok": true,
-   "seconds": 69.6
+   "seconds": 116.3
   },
   {
    "part": "hip_frame",
    "material": "PA6-CF across the layers (humid)",
-   "material_note": "Bambu PA6-CF TDS 48 MPa dry across the layers, x0.6 humid, x0.8 print: the safe value when the stress crosses the layers",
+   "material_note": "Bambu PA6-CF TDS V3.0: dry Z tensile modulus 2170 MPa x0.281 humid and strength 48 MPa x0.472 humid (Polymaker PA6-CF20 V1.1 wet / dry), each x0.8 print. The safe strength when the stress crosses the layers",
+   "material_source": "bambu-pa6-cf-tds",
+   "material_direction": "Z",
+   "material_data": {
+    "key": "pa6_cf_z",
+    "name": "PA6-CF across the layers (humid)",
+    "E_mpa": 487.66846655140307,
+    "E_direction": "Z",
+    "nu": 0.35,
+    "strength_mpa": 18.133333333333333,
+    "strength_xy_mpa": 40.83732845379689,
+    "strength_z_mpa": 18.133333333333333,
+    "density_g_cm3": 1.09,
+    "source": "bambu-pa6-cf-tds",
+    "note": "Bambu PA6-CF TDS V3.0: dry Z tensile modulus 2170 MPa x0.281 humid and strength 48 MPa x0.472 humid (Polymaker PA6-CF20 V1.1 wet / dry), each x0.8 print. The safe strength when the stress crosses the layers",
+    "constants_hash": "813009441363f213"
+   },
    "mesh": {
-    "nodes": 34101,
-    "tets": 146362,
+    "nodes": 43880,
+    "tets": 193760,
     "size_mm": 4.0,
     "element": "P2 tetrahedra"
    },
@@ -2423,7 +2743,7 @@
      "kind": "force",
      "n": [
       212.4136351015096,
-      131.33137499999998,
+      132.6189375,
       229.921875
      ],
      "area_mm2": 2449.6
@@ -2432,14 +2752,14 @@
      "kind": "force",
      "n": [
       -212.4136351015096,
-      132.435,
+      132.802875,
       229.921875
      ],
      "area_mm2": 2449.6
     },
     {
      "kind": "torque",
-     "nm": 93.89641499999999,
+     "nm": 94.15723837499999,
      "axis": [
       1.0,
       0.0,
@@ -2459,7 +2779,7 @@
     },
     {
      "kind": "torque",
-     "nm": 9.932625,
+     "nm": 9.960215625,
      "axis": [
       0.0,
       0.0,
@@ -2479,7 +2799,7 @@
     },
     {
      "kind": "torque",
-     "nm": 93.113944875,
+     "nm": 94.02682668749999,
      "axis": [
       1.0,
       0.0,
@@ -2499,7 +2819,7 @@
     },
     {
      "kind": "torque",
-     "nm": 9.849853125,
+     "nm": 9.946420312499999,
      "axis": [
       0.0,
       0.0,
@@ -2527,69 +2847,85 @@
      ],
      "point_mm": [
       74.99999999999892,
-      -11.715054957053429,
-      1.4882820696101735e-12
+      -11.77820443220816,
+      1.4784614116486435e-12
      ],
      "about_centroid_mm": [
-      75.01,
-      -11.716,
-      -0.001
+      75.006,
+      -11.776,
+      0.001
      ],
-     "area_mm2": 5120.4
+     "area_mm2": 4807.5
     },
     {
      "kind": "torque",
-     "nm": -46.479949905452884,
+     "nm": 46.479949905452884,
      "axis": [
       0.0,
       1.0,
       0.0
      ],
      "point_mm": [
-      -74.999999999979,
-      -11.715054957053429,
-      1.4863503760684965e-12
+      -74.99999999997911,
+      -11.778204432208161,
+      1.4788356109429103e-12
      ],
      "about_centroid_mm": [
-      -74.992,
-      -11.716,
-      -0.0
+      -74.994,
+      -11.776,
+      0.0
      ],
-     "area_mm2": 5120.4
+     "area_mm2": 4807.5
     }
    ],
-   "max_displacement_mm": 0.2678,
+   "max_displacement_mm": 1.3117,
    "probe_displacement_mm": [
-    -0.0054,
-    0.0536,
-    -0.025
+    -0.022,
+    0.1891,
+    -0.3455
    ],
-   "max_von_mises_mpa": 13.91,
-   "von_mises_design_mpa": 13.91,
-   "safety_factor": 1.65,
-   "assumptions": "linear elastic, small deflection, isotropic; faces clamped where fixed; no contact, preload or buckling",
-   "stiffness_n_per_mm": 46617.5,
-   "torsional_stiffness_nm_per_deg": -4482.85,
+   "max_von_mises_mpa": 11.13,
+   "von_mises_design_mpa": 11.13,
+   "safety_factor": 1.63,
+   "assumptions": "linear elastic, small deflection, isotropic: E 487.668 MPa, a modulus across the layers (Z), and strength 18.1333 MPa everywhere (Bambu PA6-CF TDS V3.0: dry Z tensile modulus 2170 MPa x0.281 humid and strength 48 MPa x0.472 humid (Polymaker PA6-CF20 V1.1 wet / dry), each x0.8 print. The safe strength when the stress crosses the layers), though a printed part is not isotropic; faces clamped where fixed; no contact, preload or buckling",
+   "stiffness_n_per_mm": null,
+   "torsional_stiffness_nm_per_deg": 341.82,
    "design_peak_at_mm": [
-    93.3,
-    -26.3,
-    -62.8
+    94.8,
+    -23.4,
+    -58.9
    ],
    "case": "E1",
    "material_id": "pa6_cf_z",
-   "load_from": "standing: 2.5 x 184 N vertical, 0.5 g of a 38 kg robot sideways; both upper links' pin forces, the out-of-plane moment 72% rear / 71% front",
+   "load_from": "standing: 2.5 x 184 N vertical, 0.5 g of a 38 kg robot sideways; both upper links' pin forces, the out-of-plane moment 72% rear / 72% front",
    "png": "exports/leg/fea/hip_frame-E1.png",
    "target": 2.0,
    "ok": false,
-   "seconds": 73.6
+   "seconds": 116.9
   },
   {
    "part": "hip_frame",
    "material": "PA6-CF across the layers (humid)",
-   "material_note": "Bambu PA6-CF TDS 48 MPa dry across the layers, x0.6 humid, x0.8 print: the safe value when the stress crosses the layers",
+   "material_note": "Bambu PA6-CF TDS V3.0: dry Z tensile modulus 2170 MPa x0.281 humid and strength 48 MPa x0.472 humid (Polymaker PA6-CF20 V1.1 wet / dry), each x0.8 print. The safe strength when the stress crosses the layers",
+   "material_source": "bambu-pa6-cf-tds",
+   "material_direction": "Z",
+   "material_data": {
+    "key": "pa6_cf_z",
+    "name": "PA6-CF across the layers (humid)",
+    "E_mpa": 487.66846655140307,
+    "E_direction": "Z",
+    "nu": 0.35,
+    "strength_mpa": 18.133333333333333,
+    "strength_xy_mpa": 40.83732845379689,
+    "strength_z_mpa": 18.133333333333333,
+    "density_g_cm3": 1.09,
+    "source": "bambu-pa6-cf-tds",
+    "note": "Bambu PA6-CF TDS V3.0: dry Z tensile modulus 2170 MPa x0.281 humid and strength 48 MPa x0.472 humid (Polymaker PA6-CF20 V1.1 wet / dry), each x0.8 print. The safe strength when the stress crosses the layers",
+    "constants_hash": "813009441363f213"
+   },
    "mesh": {
-    "nodes": 34126,
-    "tets": 146429,
+    "nodes": 43936,
+    "tets": 194081,
     "size_mm": 4.0,
     "element": "P2 tetrahedra"
    },
@@ -2601,7 +2937,7 @@
       0.0,
       1437.8686738157446
      ],
-     "area_mm2": 339.5
+     "area_mm2": 339.4
     },
     {
      "kind": "torque",
@@ -2617,11 +2953,11 @@
       56.067025562670835
      ],
      "about_centroid_mm": [
-      100.479,
+      100.48,
       -7.751,
       56.019
      ],
-     "area_mm2": 339.5
+     "area_mm2": 339.4
     },
     {
      "kind": "torque",
@@ -2637,11 +2973,11 @@
       56.067025562670835
      ],
      "about_centroid_mm": [
-      100.479,
+      100.48,
       -7.751,
       56.019
      ],
-     "area_mm2": 339.5
+     "area_mm2": 339.4
     },
     {
      "kind": "force",
@@ -2650,7 +2986,7 @@
       -0.0,
       -711.0642128451553
      ],
-     "area_mm2": 238.7
+     "area_mm2": 238.8
     },
     {
      "kind": "torque",
@@ -2666,11 +3002,11 @@
       48.88733929405793
      ],
      "about_centroid_mm": [
-      107.697,
-      -19.252,
-      48.936
+      107.7,
+      -19.251,
+      48.928
      ],
-     "area_mm2": 238.7
+     "area_mm2": 238.8
     },
     {
      "kind": "torque",
@@ -2686,11 +3022,11 @@
       48.88733929405793
      ],
      "about_centroid_mm": [
-      107.697,
-      -19.252,
-      48.936
+      107.7,
+      -19.251,
+      48.928
      ],
-     "area_mm2": 238.7
+     "area_mm2": 238.8
     },
     {
      "kind": "force",
@@ -2711,15 +3047,15 @@
      ],
      "point_mm": [
       74.99999999999892,
-      -11.715054957053429,
-      1.4882820696101735e-12
+      -11.77820443220816,
+      1.4784614116486435e-12
      ],
      "about_centroid_mm": [
-      75.01,
-      -11.716,
-      -0.0
+      75.006,
+      -11.776,
+      0.0
      ],
-     "area_mm2": 5120.4
+     "area_mm2": 4807.5
     },
     {
      "kind": "torque",
@@ -2731,15 +3067,15 @@
      ],
      "point_mm": [
       74.99999999999892,
-      -11.715054957053429,
-      1.4882820696101735e-12
+      -11.77820443220816,
+      1.4784614116486435e-12
      ],
      "about_centroid_mm": [
-      75.01,
-      -11.716,
-      -0.0
+      75.006,
+      -11.776,
+      0.0
      ],
-     "area_mm2": 5120.4
+     "area_mm2": 4807.5
     },
     {
      "kind": "torque",
@@ -2751,51 +3087,67 @@
      ],
      "point_mm": [
       74.99999999999892,
-      -11.715054957053429,
-      1.4882820696101735e-12
+      -11.77820443220816,
+      1.4784614116486435e-12
      ],
      "about_centroid_mm": [
-      75.01,
-      -11.716,
-      -0.0
+      75.006,
+      -11.776,
+      0.0
      ],
-     "area_mm2": 5120.4
+     "area_mm2": 4807.5
     }
    ],
-   "max_displacement_mm": 0.1612,
+   "max_displacement_mm": 0.7554,
    "probe_displacement_mm": [
-    -0.0384,
-    0.0473,
-    0.0944
+    -0.1835,
+    0.2332,
+    0.4359
    ],
-   "max_von_mises_mpa": 32.57,
+   "max_von_mises_mpa": 30.84,
    "von_mises_design_mpa": 9.65,
-   "safety_factor": 2.38,
-   "assumptions": "linear elastic, small deflection, isotropic; faces clamped where fixed; no contact, preload or buckling",
+   "safety_factor": 1.88,
+   "assumptions": "linear elastic, small deflection, isotropic: E 487.668 MPa, a modulus across the layers (Z), and strength 18.1333 MPa everywhere (Bambu PA6-CF TDS V3.0: dry Z tensile modulus 2170 MPa x0.281 humid and strength 48 MPa x0.472 humid (Polymaker PA6-CF20 V1.1 wet / dry), each x0.8 print. The safe strength when the stress crosses the layers), though a printed part is not isotropic; faces clamped where fixed; no contact, preload or buckling",
    "stiffness_n_per_mm": null,
-   "torsional_stiffness_nm_per_deg": -108.96,
+   "torsional_stiffness_nm_per_deg": -22.21,
    "design_peak_at_mm": [
-    112.5,
-    -3.2,
-    55.0
+    112.4,
+    -1.6,
+    56.7
    ],
-   "safety_factor_with_pin_band": 1.56,
-   "von_mises_with_pin_band_mpa": 14.73,
+   "safety_factor_with_pin_band": 1.22,
+   "von_mises_with_pin_band_mpa": 14.89,
    "case": "E3o",
    "material_id": "pa6_cf_z",
    "load_from": "a motor at its cap into a stop: 60 N m, 1038 N on the front motor's knee-out post, in its ear past the motor's ring (10.5 mm above the frame's face), the pin bearing as a contact (2053 N by the mouth, 1015 N back at depth), the motor's hub and lugs taking it back",
    "png": "exports/leg/fea/hip_frame-E3o.png",
    "target": 2.0,
-   "ok": true,
-   "seconds": 70.1
+   "ok": false,
+   "seconds": 110.2
   },
   {
    "part": "hip_frame",
    "material": "PA6-CF across the layers (humid)",
-   "material_note": "Bambu PA6-CF TDS 48 MPa dry across the layers, x0.6 humid, x0.8 print: the safe value when the stress crosses the layers",
+   "material_note": "Bambu PA6-CF TDS V3.0: dry Z tensile modulus 2170 MPa x0.281 humid and strength 48 MPa x0.472 humid (Polymaker PA6-CF20 V1.1 wet / dry), each x0.8 print. The safe strength when the stress crosses the layers",
+   "material_source": "bambu-pa6-cf-tds",
+   "material_direction": "Z",
+   "material_data": {
+    "key": "pa6_cf_z",
+    "name": "PA6-CF across the layers (humid)",
+    "E_mpa": 487.66846655140307,
+    "E_direction": "Z",
+    "nu": 0.35,
+    "strength_mpa": 18.133333333333333,
+    "strength_xy_mpa": 40.83732845379689,
+    "strength_z_mpa": 18.133333333333333,
+    "density_g_cm3": 1.09,
+    "source": "bambu-pa6-cf-tds",
+    "note": "Bambu PA6-CF TDS V3.0: dry Z tensile modulus 2170 MPa x0.281 humid and strength 48 MPa x0.472 humid (Polymaker PA6-CF20 V1.1 wet / dry), each x0.8 print. The safe strength when the stress crosses the layers",
+    "constants_hash": "813009441363f213"
+   },
    "mesh": {
-    "nodes": 34118,
-    "tets": 146387,
+    "nodes": 43895,
+    "tets": 193832,
     "size_mm": 4.0,
     "element": "P2 tetrahedra"
    },
@@ -2917,15 +3269,15 @@
      ],
      "point_mm": [
       74.99999999999892,
-      -11.715054957053429,
-      1.4882820696101735e-12
+      -11.77820443220816,
+      1.4784614116486435e-12
      ],
      "about_centroid_mm": [
-      75.009,
-      -11.716,
-      -0.0
+      75.006,
+      -11.776,
+      0.0
      ],
-     "area_mm2": 5120.3
+     "area_mm2": 4807.5
     },
     {
      "kind": "torque",
@@ -2937,15 +3289,15 @@
      ],
      "point_mm": [
       74.99999999999892,
-      -11.715054957053429,
-      1.4882820696101735e-12
+      -11.77820443220816,
+      1.4784614116486435e-12
      ],
      "about_centroid_mm": [
-      75.009,
-      -11.716,
-      -0.0
+      75.006,
+      -11.776,
+      0.0
      ],
-     "area_mm2": 5120.3
+     "area_mm2": 4807.5
     },
     {
      "kind": "torque",
@@ -2957,51 +3309,67 @@
      ],
      "point_mm": [
       74.99999999999892,
-      -11.715054957053429,
-      1.4882820696101735e-12
+      -11.77820443220816,
+      1.4784614116486435e-12
      ],
      "about_centroid_mm": [
-      75.009,
-      -11.716,
-      -0.0
+      75.006,
+      -11.776,
+      0.0
      ],
-     "area_mm2": 5120.3
+     "area_mm2": 4807.5
     }
    ],
-   "max_displacement_mm": 0.1399,
+   "max_displacement_mm": 0.6469,
    "probe_displacement_mm": [
-    -0.0332,
-    0.0006,
-    0.0241
+    -0.1637,
+    0.0041,
+    0.1245
    ],
-   "max_von_mises_mpa": 25.58,
-   "von_mises_design_mpa": 8.53,
-   "safety_factor": 2.7,
-   "assumptions": "linear elastic, small deflection, isotropic; faces clamped where fixed; no contact, preload or buckling",
+   "max_von_mises_mpa": 26.12,
+   "von_mises_design_mpa": 8.31,
+   "safety_factor": 2.18,
+   "assumptions": "linear elastic, small deflection, isotropic: E 487.668 MPa, a modulus across the layers (Z), and strength 18.1333 MPa everywhere (Bambu PA6-CF TDS V3.0: dry Z tensile modulus 2170 MPa x0.281 humid and strength 48 MPa x0.472 humid (Polymaker PA6-CF20 V1.1 wet / dry), each x0.8 print. The safe strength when the stress crosses the layers), though a printed part is not isotropic; faces clamped where fixed; no contact, preload or buckling",
    "stiffness_n_per_mm": null,
-   "torsional_stiffness_nm_per_deg": -5246.49,
+   "torsional_stiffness_nm_per_deg": -1144.84,
    "design_peak_at_mm": [
-    16.8,
-    -4.9,
-    -33.6
+    18.9,
+    -2.0,
+    -13.6
    ],
-   "safety_factor_with_pin_band": 2.44,
-   "von_mises_with_pin_band_mpa": 9.41,
+   "safety_factor_with_pin_band": 2.1,
+   "von_mises_with_pin_band_mpa": 8.62,
    "case": "E3i",
    "material_id": "pa6_cf_z",
    "load_from": "a motor at its cap into a stop: 60 N m, 1038 N on the front motor's knee-in post, between the motors (10.5 mm above the frame's face), the pin bearing as a contact (2053 N by the mouth, 1015 N back at depth), the motor's hub and lugs taking it back",
    "png": "exports/leg/fea/hip_frame-E3i.png",
    "target": 2.0,
    "ok": true,
-   "seconds": 65.7
+   "seconds": 93.2
   },
   {
    "part": "hip_frame",
    "material": "PA6-CF across the layers (humid)",
-   "material_note": "Bambu PA6-CF TDS 48 MPa dry across the layers, x0.6 humid, x0.8 print: the safe value when the stress crosses the layers",
+   "material_note": "Bambu PA6-CF TDS V3.0: dry Z tensile modulus 2170 MPa x0.281 humid and strength 48 MPa x0.472 humid (Polymaker PA6-CF20 V1.1 wet / dry), each x0.8 print. The safe strength when the stress crosses the layers",
+   "material_source": "bambu-pa6-cf-tds",
+   "material_direction": "Z",
+   "material_data": {
+    "key": "pa6_cf_z",
+    "name": "PA6-CF across the layers (humid)",
+    "E_mpa": 487.66846655140307,
+    "E_direction": "Z",
+    "nu": 0.35,
+    "strength_mpa": 18.133333333333333,
+    "strength_xy_mpa": 40.83732845379689,
+    "strength_z_mpa": 18.133333333333333,
+    "density_g_cm3": 1.09,
+    "source": "bambu-pa6-cf-tds",
+    "note": "Bambu PA6-CF TDS V3.0: dry Z tensile modulus 2170 MPa x0.281 humid and strength 48 MPa x0.472 humid (Polymaker PA6-CF20 V1.1 wet / dry), each x0.8 print. The safe strength when the stress crosses the layers",
+    "constants_hash": "813009441363f213"
+   },
    "mesh": {
-    "nodes": 34126,
-    "tets": 146429,
+    "nodes": 43936,
+    "tets": 194081,
     "size_mm": 4.0,
     "element": "P2 tetrahedra"
    },
@@ -3013,7 +3381,7 @@
       0.0,
       2930.855646794427
      ],
-     "area_mm2": 339.5
+     "area_mm2": 339.4
     },
     {
      "kind": "torque",
@@ -3029,11 +3397,11 @@
       56.067025562670835
      ],
      "about_centroid_mm": [
-      100.479,
+      100.48,
       -7.751,
       56.019
      ],
-     "area_mm2": 339.5
+     "area_mm2": 339.4
     },
     {
      "kind": "torque",
@@ -3049,11 +3417,11 @@
       56.067025562670835
      ],
      "about_centroid_mm": [
-      100.479,
+      100.48,
       -7.751,
       56.019
      ],
-     "area_mm2": 339.5
+     "area_mm2": 339.4
     },
     {
      "kind": "force",
@@ -3062,7 +3430,7 @@
       -0.0,
       -1449.3858871827092
      ],
-     "area_mm2": 238.7
+     "area_mm2": 238.8
     },
     {
      "kind": "torque",
@@ -3078,11 +3446,11 @@
       48.88733929405793
      ],
      "about_centroid_mm": [
-      107.697,
-      -19.252,
-      48.936
+      107.7,
+      -19.251,
+      48.928
      ],
-     "area_mm2": 238.7
+     "area_mm2": 238.8
     },
     {
      "kind": "torque",
@@ -3098,11 +3466,11 @@
       48.88733929405793
      ],
      "about_centroid_mm": [
-      107.697,
-      -19.252,
-      48.936
+      107.7,
+      -19.251,
+      48.928
      ],
-     "area_mm2": 238.7
+     "area_mm2": 238.8
     },
     {
      "kind": "force",
@@ -3123,15 +3491,15 @@
      ],
      "point_mm": [
       74.99999999999892,
-      -11.715054957053429,
-      1.4882820696101735e-12
+      -11.77820443220816,
+      1.4784614116486435e-12
      ],
      "about_centroid_mm": [
-      75.01,
-      -11.716,
-      -0.0
+      75.006,
+      -11.776,
+      0.0
      ],
-     "area_mm2": 5120.4
+     "area_mm2": 4807.5
     },
     {
      "kind": "torque",
@@ -3143,15 +3511,15 @@
      ],
      "point_mm": [
       74.99999999999892,
-      -11.715054957053429,
-      1.4882820696101735e-12
+      -11.77820443220816,
+      1.4784614116486435e-12
      ],
      "about_centroid_mm": [
-      75.01,
-      -11.716,
-      -0.0
+      75.006,
+      -11.776,
+      0.0
      ],
-     "area_mm2": 5120.4
+     "area_mm2": 4807.5
     },
     {
      "kind": "torque",
@@ -3163,48 +3531,64 @@
      ],
      "point_mm": [
       74.99999999999892,
-      -11.715054957053429,
-      1.4882820696101735e-12
+      -11.77820443220816,
+      1.4784614116486435e-12
      ],
      "about_centroid_mm": [
-      75.01,
-      -11.716,
-      -0.0
+      75.006,
+      -11.776,
+      0.0
      ],
-     "area_mm2": 5120.4
+     "area_mm2": 4807.5
     }
    ],
-   "max_displacement_mm": 0.3285,
+   "max_displacement_mm": 1.5398,
    "probe_displacement_mm": [
-    -0.0783,
-    0.0963,
-    0.1925
+    -0.3741,
+    0.4754,
+    0.8886
    ],
-   "max_von_mises_mpa": 66.38,
+   "max_von_mises_mpa": 62.86,
    "von_mises_design_mpa": 19.66,
-   "safety_factor": 1.17,
-   "assumptions": "linear elastic, small deflection, isotropic; faces clamped where fixed; no contact, preload or buckling",
+   "safety_factor": 0.92,
+   "assumptions": "linear elastic, small deflection, isotropic: E 487.668 MPa, a modulus across the layers (Z), and strength 18.1333 MPa everywhere (Bambu PA6-CF TDS V3.0: dry Z tensile modulus 2170 MPa x0.281 humid and strength 48 MPa x0.472 humid (Polymaker PA6-CF20 V1.1 wet / dry), each x0.8 print. The safe strength when the stress crosses the layers), though a printed part is not isotropic; faces clamped where fixed; no contact, preload or buckling",
    "stiffness_n_per_mm": null,
-   "torsional_stiffness_nm_per_deg": -108.96,
+   "torsional_stiffness_nm_per_deg": -22.21,
    "design_peak_at_mm": [
-    112.5,
-    -3.2,
-    55.0
+    112.4,
+    -1.6,
+    56.7
    ],
-   "safety_factor_with_pin_band": 0.77,
-   "von_mises_with_pin_band_mpa": 30.02,
+   "safety_factor_with_pin_band": 0.6,
+   "von_mises_with_pin_band_mpa": 30.35,
    "case": "R3o",
    "material_id": "pa6_cf_z",
    "load_from": "rig 'power_off' (no motor damping): folded onto the stops, 122 N m on a stop post and 1831 N on the axle (quasi-static: the knees' real force matches statics), plus 10 % sideways: 122 N m, 2115 N on the front motor's knee-out post, in its ear past the motor's ring (10.5 mm above the frame's face), the pin bearing as a contact (4184 N by the mouth, 2069 N back at depth), the motor's hub and lugs taking it back",
    "png": "exports/leg/fea/hip_frame-R3o.png",
    "target": 1.0,
-   "ok": true,
-   "seconds": 89.0
+   "ok": false,
+   "seconds": 92.7
   },
   {
    "part": "output_adapter",
    "material": "Aluminium 6061-T6",
-   "material_note": "yield strength",
+   "material_note": "yield strength 35 ksi, the A- or S-basis minimum (LT) of 6061-T6/T651 sheet and plate to 6 in (MIL-HDBK-5J Tables 3.6.2.0(b1), (b2)); extruded rod, bar and shapes are lower across the grain (33 ksi to 1 in, 28 ksi to 6.5 in, Table 3.6.2.0(g)); typical yield is 276 MPa",
+   "material_source": "mil-hdbk-5j",
+   "material_direction": null,
+   "material_data": {
+    "key": "al6061",
+    "name": "Aluminium 6061-T6",
+    "E_mpa": 68258.1,
+    "E_direction": null,
+    "nu": 0.33,
+    "strength_mpa": 241.3,
+    "strength_xy_mpa": null,
+    "strength_z_mpa": null,
+    "density_g_cm3": 2.7,
+    "source": "mil-hdbk-5j",
+    "note": "yield strength 35 ksi, the A- or S-basis minimum (LT) of 6061-T6/T651 sheet and plate to 6 in (MIL-HDBK-5J Tables 3.6.2.0(b1), (b2)); extruded rod, bar and shapes are lower across the grain (33 ksi to 1 in, 28 ksi to 6.5 in, Table 3.6.2.0(g)); typical yield is 276 MPa",
+    "constants_hash": "aeee977f95934faf"
+   },
    "mesh": {
     "nodes": 7235,
     "tets": 30226,
@@ -3234,7 +3618,7 @@
     },
     {
      "kind": "torque",
-     "nm": 114.479708733177,
+     "nm": 114.63073737266669,
      "axis": [
       1.0,
       0.0,
@@ -3262,18 +3646,18 @@
      "area_mm2": 2231.4
     }
    ],
-   "max_displacement_mm": 0.0051,
+   "max_displacement_mm": 0.0052,
    "probe_displacement_mm": [
     -0.0001,
     0.0001,
     0.0018
    ],
-   "max_von_mises_mpa": 49.33,
-   "von_mises_design_mpa": 24.65,
-   "safety_factor": 11.2,
+   "max_von_mises_mpa": 49.38,
+   "von_mises_design_mpa": 24.68,
+   "safety_factor": 9.78,
    "assumptions": "linear elastic, small deflection, isotropic; faces clamped where fixed; no contact, preload or buckling",
-   "torsional_stiffness_nm_per_deg": 16898.21,
-   "stiffness_n_per_mm": 364876.0,
+   "torsional_stiffness_nm_per_deg": 16744.58,
+   "stiffness_n_per_mm": 361107.9,
    "design_peak_at_mm": [
     10.3,
     -22.5,
@@ -3281,16 +3665,32 @@
    ],
    "case": "R1",
    "material_id": "al6061",
-   "load_from": "motor torque 77 N m with an out-of-plane moment of 114 N m and 655 N radial",
+   "load_from": "motor torque 77 N m with an out-of-plane moment of 115 N m and 655 N radial",
    "png": "exports/leg/fea/output_adapter-R1.png",
    "target": 1.2,
    "ok": true,
-   "seconds": 15.4
+   "seconds": 11.1
   },
   {
    "part": "output_adapter",
    "material": "Aluminium 6061-T6",
-   "material_note": "yield strength",
+   "material_note": "yield strength 35 ksi, the A- or S-basis minimum (LT) of 6061-T6/T651 sheet and plate to 6 in (MIL-HDBK-5J Tables 3.6.2.0(b1), (b2)); extruded rod, bar and shapes are lower across the grain (33 ksi to 1 in, 28 ksi to 6.5 in, Table 3.6.2.0(g)); typical yield is 276 MPa",
+   "material_source": "mil-hdbk-5j",
+   "material_direction": null,
+   "material_data": {
+    "key": "al6061",
+    "name": "Aluminium 6061-T6",
+    "E_mpa": 68258.1,
+    "E_direction": null,
+    "nu": 0.33,
+    "strength_mpa": 241.3,
+    "strength_xy_mpa": null,
+    "strength_z_mpa": null,
+    "density_g_cm3": 2.7,
+    "source": "mil-hdbk-5j",
+    "note": "yield strength 35 ksi, the A- or S-basis minimum (LT) of 6061-T6/T651 sheet and plate to 6 in (MIL-HDBK-5J Tables 3.6.2.0(b1), (b2)); extruded rod, bar and shapes are lower across the grain (33 ksi to 1 in, 28 ksi to 6.5 in, Table 3.6.2.0(g)); typical yield is 276 MPa",
+    "constants_hash": "aeee977f95934faf"
+   },
    "mesh": {
     "nodes": 7235,
     "tets": 30226,
@@ -3327,9 +3727,9 @@
    ],
    "max_von_mises_mpa": 32.39,
    "von_mises_design_mpa": 17.88,
-   "safety_factor": 15.44,
+   "safety_factor": 13.5,
    "assumptions": "linear elastic, small deflection, isotropic; faces clamped where fixed; no contact, preload or buckling",
-   "torsional_stiffness_nm_per_deg": 27314.64,
+   "torsional_stiffness_nm_per_deg": 27060.16,
    "design_peak_at_mm": [
     1.2,
     -23.4,
@@ -3341,12 +3741,28 @@
    "png": "exports/leg/fea/output_adapter-R2.png",
    "target": 1.2,
    "ok": true,
-   "seconds": 13.2
+   "seconds": 15.1
   },
   {
    "part": "output_adapter",
    "material": "Aluminium 6061-T6",
-   "material_note": "yield strength",
+   "material_note": "yield strength 35 ksi, the A- or S-basis minimum (LT) of 6061-T6/T651 sheet and plate to 6 in (MIL-HDBK-5J Tables 3.6.2.0(b1), (b2)); extruded rod, bar and shapes are lower across the grain (33 ksi to 1 in, 28 ksi to 6.5 in, Table 3.6.2.0(g)); typical yield is 276 MPa",
+   "material_source": "mil-hdbk-5j",
+   "material_direction": null,
+   "material_data": {
+    "key": "al6061",
+    "name": "Aluminium 6061-T6",
+    "E_mpa": 68258.1,
+    "E_direction": null,
+    "nu": 0.33,
+    "strength_mpa": 241.3,
+    "strength_xy_mpa": null,
+    "strength_z_mpa": null,
+    "density_g_cm3": 2.7,
+    "source": "mil-hdbk-5j",
+    "note": "yield strength 35 ksi, the A- or S-basis minimum (LT) of 6061-T6/T651 sheet and plate to 6 in (MIL-HDBK-5J Tables 3.6.2.0(b1), (b2)); extruded rod, bar and shapes are lower across the grain (33 ksi to 1 in, 28 ksi to 6.5 in, Table 3.6.2.0(g)); typical yield is 276 MPa",
+    "constants_hash": "aeee977f95934faf"
+   },
    "mesh": {
     "nodes": 7235,
     "tets": 30226,
@@ -3376,7 +3792,7 @@
     },
     {
      "kind": "torque",
-     "nm": 28.61992718329425,
+     "nm": 28.65768434316667,
      "axis": [
       1.0,
       0.0,
@@ -3410,12 +3826,12 @@
     0.0,
     0.0005
    ],
-   "max_von_mises_mpa": 19.1,
-   "von_mises_design_mpa": 10.58,
-   "safety_factor": 26.08,
+   "max_von_mises_mpa": 19.11,
+   "von_mises_design_mpa": 10.59,
+   "safety_factor": 22.79,
    "assumptions": "linear elastic, small deflection, isotropic; faces clamped where fixed; no contact, preload or buckling",
-   "torsional_stiffness_nm_per_deg": 15061.47,
-   "stiffness_n_per_mm": 356596.4,
+   "torsional_stiffness_nm_per_deg": 14926.31,
+   "stiffness_n_per_mm": 352922.0,
    "design_peak_at_mm": [
     10.3,
     -22.5,
@@ -3427,38 +3843,39 @@
    "png": "exports/leg/fea/output_adapter-E1.png",
    "target": 2.0,
    "ok": true,
-   "seconds": 14.5
+   "seconds": 12.3
   }
  ],
  "front_link_buckling": {
-  "P_cr_n": 9475,
+  "P_cr_n": 3251,
   "R1_compression_n": 655,
-  "sf": 14.47,
-  "note": "30 x 20 mm section, E 3000 MPa, pinned ends, 250 mm"
+  "sf": 4.96,
+  "note": "30 x 20 mm section, E 1029 MPa, pinned ends, 250 mm"
  },
  "joints": {
   "R1": {
    "case": "R1",
    "shares": {
-    "rear": 0.758,
-    "front": 0.709
+    "rear": 0.759,
+    "front": 0.739
    },
    "knee_rear": {
     "out_of_plane_share": 0.76,
     "pin_force_n": 486,
-    "moment_at_boss_nm": 69.1,
-    "moment_at_sleeve_nm": 87.8,
-    "6201": {
-     "load_n": 1834,
-     "C0_n": 3100,
-     "sf": 1.69,
+    "moment_at_boss_nm": 69.2,
+    "moment_at_sleeve_nm": 87.9,
+    "bearing": {
+     "type": "6301-2RS",
+     "load_n": 2120,
+     "C0_n": 4150,
+     "sf": 1.96,
      "target": 1.0,
-     "note": "s0 = C0 / P0"
+     "note": "s0 = C0 / P0, P0 the worse bearing: half the pin force plus the moment's couple, as vectors"
     },
     "pin": {
-     "stress_mpa": 468,
+     "stress_mpa": 469,
      "yield_mpa": 1080,
-     "sf": 2.31,
+     "sf": 2.3,
      "note": "ISO 7379 class 12.9, at the eye's face"
     },
     "eye_pressure": {
@@ -3469,42 +3886,43 @@
     }
    },
    "knee_front": {
-    "out_of_plane_share": 0.71,
+    "out_of_plane_share": 0.74,
     "pin_force_n": 655,
-    "moment_at_boss_nm": 59.3,
-    "moment_at_sleeve_nm": 86.5,
-    "6201": {
-     "load_n": 1594,
-     "C0_n": 3100,
-     "sf": 1.95,
+    "moment_at_boss_nm": 62.5,
+    "moment_at_sleeve_nm": 89.8,
+    "bearing": {
+     "type": "6301-2RS",
+     "load_n": 2025,
+     "C0_n": 4150,
+     "sf": 2.05,
      "target": 1.0,
-     "note": "s0 = C0 / P0"
+     "note": "s0 = C0 / P0, P0 the worse bearing: half the pin force plus the moment's couple, as vectors"
     },
     "pin": {
-     "stress_mpa": 438,
+     "stress_mpa": 458,
      "yield_mpa": 1080,
-     "sf": 2.46,
+     "sf": 2.36,
      "note": "ISO 7379 class 12.9, at the eye's face"
     },
     "eye_pressure": {
-     "mpa": 18.9,
+     "mpa": 19.6,
      "allowable_mpa": 40.0,
-     "sf": 2.11,
+     "sf": 2.04,
      "note": "PA6-CF, humid, sustained; linear along the \u00d818 x 40 steel sleeve"
     }
    },
    "apex_61812": {
-    "load_n": 1993,
+    "load_n": 2075,
     "C0_n": 10200,
-    "sf": 5.12,
+    "sf": 4.92,
     "target": 1.0,
     "note": "s0 = C0 / P0"
    },
    "hub_rear": {
-    "out_of_plane_nm": 114.5,
+    "out_of_plane_nm": 114.6,
     "edge_lifts_at_nm": 104.0,
     "tips_at_nm": 288.0,
-    "sf_tip": 2.52,
+    "sf_tip": 2.51,
     "torque_nm": 77.1,
     "torque_from": "rig: gearbox torque, every step",
     "friction_nm": 36.5,
@@ -3515,10 +3933,10 @@
     "assumes": "1200 N preload per screw (estimate: bench torque-tension coupon), friction 0.15, 12 mm of each dowel engaged"
    },
    "hub_front": {
-    "out_of_plane_nm": 107.1,
+    "out_of_plane_nm": 111.6,
     "edge_lifts_at_nm": 104.0,
     "tips_at_nm": 288.0,
-    "sf_tip": 2.69,
+    "sf_tip": 2.58,
     "torque_nm": 77.1,
     "torque_from": "rig: gearbox torque, every step",
     "friction_nm": 36.5,
@@ -3532,29 +3950,30 @@
   "R3": {
    "case": "R3",
    "shares": {
-    "rear": 0.754,
-    "front": 0.666
+    "rear": 0.758,
+    "front": 0.667
    },
    "knee_rear": {
-    "out_of_plane_share": 0.75,
+    "out_of_plane_share": 0.76,
     "pin_force_n": 2093,
-    "moment_at_boss_nm": 118.5,
-    "moment_at_sleeve_nm": 167.1,
-    "6201": {
-     "load_n": 3290,
-     "C0_n": 3100,
-     "sf": 0.94,
+    "moment_at_boss_nm": 119.2,
+    "moment_at_sleeve_nm": 167.9,
+    "bearing": {
+     "type": "6301-2RS",
+     "load_n": 3672,
+     "C0_n": 4150,
+     "sf": 1.13,
      "target": 1.0,
-     "note": "s0 = C0 / P0"
+     "note": "s0 = C0 / P0, P0 the worse bearing: half the pin force plus the moment's couple, as vectors"
     },
     "pin": {
-     "stress_mpa": 826,
+     "stress_mpa": 830,
      "yield_mpa": 1080,
-     "sf": 1.31,
+     "sf": 1.3,
      "note": "ISO 7379 class 12.9, at the eye's face"
     },
     "eye_pressure": {
-     "mpa": 37.7,
+     "mpa": 37.9,
      "allowable_mpa": 40.0,
      "sf": 1.06,
      "note": "PA6-CF, humid, sustained; linear along the \u00d818 x 40 steel sleeve"
@@ -3563,17 +3982,18 @@
    "knee_front": {
     "out_of_plane_share": 0.67,
     "pin_force_n": 2093,
-    "moment_at_boss_nm": 103.4,
-    "moment_at_sleeve_nm": 150.1,
-    "6201": {
-     "load_n": 2915,
-     "C0_n": 3100,
-     "sf": 1.06,
+    "moment_at_boss_nm": 103.6,
+    "moment_at_sleeve_nm": 150.3,
+    "bearing": {
+     "type": "6301-2RS",
+     "load_n": 3186,
+     "C0_n": 4150,
+     "sf": 1.3,
      "target": 1.0,
-     "note": "s0 = C0 / P0"
+     "note": "s0 = C0 / P0, P0 the worse bearing: half the pin force plus the moment's couple, as vectors"
     },
     "pin": {
-     "stress_mpa": 724,
+     "stress_mpa": 726,
      "yield_mpa": 1080,
      "sf": 1.49,
      "note": "ISO 7379 class 12.9, at the eye's face"
@@ -3586,17 +4006,17 @@
     }
    },
    "apex_61812": {
-    "load_n": 3713,
+    "load_n": 3718,
     "C0_n": 10200,
-    "sf": 2.75,
+    "sf": 2.74,
     "target": 1.0,
     "note": "s0 = C0 / P0"
    },
    "hub_rear": {
-    "out_of_plane_nm": 187.6,
+    "out_of_plane_nm": 188.6,
     "edge_lifts_at_nm": 104.0,
     "tips_at_nm": 288.0,
-    "sf_tip": 1.54,
+    "sf_tip": 1.53,
     "torque_nm": 29.0,
     "torque_from": "rig: gearbox torque, every step",
     "friction_nm": 36.5,
@@ -3607,7 +4027,7 @@
     "assumes": "1200 N preload per screw (estimate: bench torque-tension coupon), friction 0.15, 12 mm of each dowel engaged"
    },
    "hub_front": {
-    "out_of_plane_nm": 165.7,
+    "out_of_plane_nm": 166.0,
     "edge_lifts_at_nm": 104.0,
     "tips_at_nm": 288.0,
     "sf_tip": 1.74,
@@ -3669,8 +4089,8 @@
    {
     "case": "R1",
     "joint": "knee_rear",
-    "check": "6201 s0",
-    "sf": 1.69,
+    "check": "bearing s0",
+    "sf": 1.96,
     "target": 1.0,
     "ok": true
    },
@@ -3678,7 +4098,7 @@
     "case": "R1",
     "joint": "knee_rear",
     "check": "pin",
-    "sf": 2.31,
+    "sf": 2.3,
     "target": 1.2,
     "ok": true
    },
@@ -3693,8 +4113,8 @@
    {
     "case": "R1",
     "joint": "knee_front",
-    "check": "6201 s0",
-    "sf": 1.95,
+    "check": "bearing s0",
+    "sf": 2.05,
     "target": 1.0,
     "ok": true
    },
@@ -3702,7 +4122,7 @@
     "case": "R1",
     "joint": "knee_front",
     "check": "pin",
-    "sf": 2.46,
+    "sf": 2.36,
     "target": 1.2,
     "ok": true
    },
@@ -3710,7 +4130,7 @@
     "case": "R1",
     "joint": "knee_front",
     "check": "eye pressure",
-    "sf": 2.11,
+    "sf": 2.04,
     "target": 1.2,
     "ok": true
    },
@@ -3718,7 +4138,7 @@
     "case": "R1",
     "joint": "apex_61812",
     "check": "s0",
-    "sf": 5.12,
+    "sf": 4.92,
     "target": 1.0,
     "ok": true
    },
@@ -3726,7 +4146,7 @@
     "case": "R1",
     "joint": "hub_rear",
     "check": "tipping",
-    "sf": 2.52,
+    "sf": 2.51,
     "target": 1.2,
     "ok": true
    },
@@ -3742,7 +4162,7 @@
     "case": "R1",
     "joint": "hub_front",
     "check": "tipping",
-    "sf": 2.69,
+    "sf": 2.58,
     "target": 1.2,
     "ok": true
    },
@@ -3757,16 +4177,16 @@
    {
     "case": "R3",
     "joint": "knee_rear",
-    "check": "6201 s0",
-    "sf": 0.94,
+    "check": "bearing s0",
+    "sf": 1.13,
     "target": 1.0,
-    "ok": false
+    "ok": true
    },
    {
     "case": "R3",
     "joint": "knee_rear",
     "check": "pin",
-    "sf": 1.31,
+    "sf": 1.3,
     "target": 1.0,
     "ok": true
    },
@@ -3781,8 +4201,8 @@
    {
     "case": "R3",
     "joint": "knee_front",
-    "check": "6201 s0",
-    "sf": 1.06,
+    "check": "bearing s0",
+    "sf": 1.3,
     "target": 1.0,
     "ok": true
    },
@@ -3806,7 +4226,7 @@
     "case": "R3",
     "joint": "apex_61812",
     "check": "s0",
-    "sf": 2.75,
+    "sf": 2.74,
     "target": 1.0,
     "ok": true
    },
@@ -3814,7 +4234,7 @@
     "case": "R3",
     "joint": "hub_rear",
     "check": "tipping",
-    "sf": 1.54,
+    "sf": 1.53,
     "target": 1.0,
     "ok": true
    },
@@ -3861,121 +4281,121 @@
   ],
   "worst": {
    "case": "R3",
-   "joint": "knee_rear",
-   "check": "6201 s0",
-   "sf": 0.94,
+   "joint": "stop_post",
+   "check": "pin bearing in the web",
+   "sf": 1.03,
    "target": 1.0
   },
-  "all_ok": false
+  "all_ok": true
  },
  "shares": {
   "R1": {
    "measured": {
-    "moment": 0.608,
-    "sideways_force": 0.441,
+    "moment": 0.609,
+    "sideways_force": 0.411,
     "hub_moments_nm": {
      "front": [
-      -47.5,
-      6.2,
-      -0.2
+      -47.4,
+      7.7,
+      -0.1
      ],
      "rear": [
-      -73.2,
-      6.3,
-      8.7
+      -73.3,
+      6.6,
+      9.0
      ]
     },
     "hub_forces_n": {
      "front": [
-      3.4,
-      -52.9,
-      83.6
+      0.3,
+      -55.7,
+      95.5
      ],
      "rear": [
-      -3.4,
-      -41.7,
-      -83.6
+      -0.3,
+      -38.9,
+      -95.5
+     ]
+    }
+   },
+   "rear": 0.759,
+   "front": 0.739
+  },
+  "E1": {
+   "measured": {
+    "moment": 0.572,
+    "sideways_force": 0.429,
+    "hub_moments_nm": {
+     "front": [
+      -49.6,
+      5.7,
+      -4.1
+     ],
+     "rear": [
+      -66.1,
+      2.7,
+      6.1
+     ]
+    },
+    "hub_forces_n": {
+     "front": [
+      -5.6,
+      -105.0,
+      56.0
+     ],
+     "rear": [
+      5.6,
+      -79.0,
+      -56.0
+     ]
+    }
+   },
+   "rear": 0.722,
+   "front": 0.721
+  },
+  "R3": {
+   "measured": {
+    "moment": 0.608,
+    "sideways_force": 0.483,
+    "hub_moments_nm": {
+     "front": [
+      -74.2,
+      7.7,
+      -10.4
+     ],
+     "rear": [
+      -115.6,
+      4.1,
+      10.8
+     ]
+    },
+    "hub_forces_n": {
+     "front": [
+      -8.0,
+      -94.6,
+      78.9
+     ],
+     "rear": [
+      8.0,
+      -88.5,
+      -78.9
      ]
     }
    },
    "rear": 0.758,
-   "front": 0.709
-  },
-  "E1": {
-   "measured": {
-    "moment": 0.57,
-    "sideways_force": 0.436,
-    "hub_moments_nm": {
-     "front": [
-      -49.7,
-      4.4,
-      -4.4
-     ],
-     "rear": [
-      -66.0,
-      2.9,
-      6.2
-     ]
-    },
-    "hub_forces_n": {
-     "front": [
-      -1.5,
-      -103.7,
-      49.2
-     ],
-     "rear": [
-      1.5,
-      -80.2,
-      -49.2
-     ]
-    }
-   },
-   "rear": 0.72,
-   "front": 0.714
-  },
-  "R3": {
-   "measured": {
-    "moment": 0.604,
-    "sideways_force": 0.484,
-    "hub_moments_nm": {
-     "front": [
-      -74.9,
-      6.4,
-      -10.8
-     ],
-     "rear": [
-      -114.9,
-      4.0,
-      11.2
-     ]
-    },
-    "hub_forces_n": {
-     "front": [
-      5.2,
-      -94.5,
-      69.2
-     ],
-     "rear": [
-      -5.2,
-      -88.5,
-      -69.2
-     ]
-    }
-   },
-   "rear": 0.754,
-   "front": 0.666
+   "front": 0.667
   }
  },
  "verdict": {
-  "min_sf_everyday": 1.65,
-  "min_sf_rare": 1.55,
-  "min_sf_fault": 1.08,
+  "min_sf_everyday": 1.63,
+  "min_sf_rare": 1.23,
+  "min_sf_fault": 0.9,
   "all_ok": false,
   "joints_worst": {
    "case": "R3",
-   "joint": "knee_rear",
-   "check": "6201 s0",
-   "sf": 0.94,
+   "joint": "stop_post",
+   "check": "pin bearing in the web",
+   "sf": 1.03,
    "target": 1.0
   },
   "weakest": "hip_frame E1"

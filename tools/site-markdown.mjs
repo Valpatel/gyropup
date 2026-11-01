@@ -196,6 +196,10 @@ Current interactive CAD, historical reports and recordings, and physical qualifi
 
 These identify the website bundle; individual reports and recordings can have their own earlier provenance. Cite the supporting document, report revision or issue when summarizing. Repository operator instructions are outside this public guide; reading the site does not authorize deployment, purchases or hardware operation.
 
+## The toolkit behind it
+
+Gyropup is designed with [cad-agent](https://cad-agent.gyropup.com), an open-source (MIT), general-purpose CAD toolkit for agents; Gyropup is one real project that uses it. Its checks (fit and assembly gates, FEA, motion traces) find problems in Gyropup's design for Gyropup to fix, and each new kind of check becomes a tested toolkit feature for any project. The project overview's cad-agent section links each example to its record. cad-agent has its own [agent guide](https://cad-agent.gyropup.com/llms.txt) and [source](https://github.com/Valpatel/cad-agent). A passing check is a prediction, not proof of physical fit or strength.
+
 ## All public pages
 
 ${pages.map(line).join('\n')}

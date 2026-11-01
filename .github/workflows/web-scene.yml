@@ -9,10 +9,13 @@ jobs:
     timeout-minutes: 10
     steps:
       - uses: actions/checkout@v4
+      # Stays on v0.4.2: the retained fit jobs record the SHA-256 of the cad-agent helpers that sliced them
+      # (tools/package-fit-job.py TOOLKIT_HELPERS), and --verify refuses any other toolkit. It moves when a fit job is
+      # regenerated, not with the FEA records (which run on v0.6.0, 50d4921, issue 29).
       - uses: actions/checkout@v4
         with:
           repository: Valpatel/cad-agent
-          ref: 2ad426943ce2c7232875e105e50810849f9a3e5e
+          ref: 2ad426943ce2c7232875e105e50810849f9a3e5e # v0.4.2
           path: .cad-agent-toolkit
       - uses: actions/setup-python@v5
         with:
@@ -64,6 +67,7 @@ jobs:
               npm run test:audio
               npm run test:web
               npm run test:progress
+              npm run test:landing-loop
               npm run test:highlights
               npm run test:highlight-integration
               npm run test:markdown

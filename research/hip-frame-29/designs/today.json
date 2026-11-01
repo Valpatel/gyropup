@@ -1,0 +1,2 @@
+{"name": "today", "description": "The frame on dev at 4731b26 (cad/fivebar.py HIP defaults)",
+ "params": {"hip": {"root_r": 0, "flange_dz": 0, "top_t": 13, "bottom_t": 13}}}

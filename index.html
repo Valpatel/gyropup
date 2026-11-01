@@ -16,6 +16,7 @@
 <link rel="stylesheet" href="/web/landing.css">
 <link rel="stylesheet" href="/web/highlight-video.css">
 <script type="module" src="/web/highlight-video.js"></script>
+<script type="module" src="/web/cad-agent-live.js"></script>
 <script type="importmap">{"imports":{"three":"/designer/kit/vendor/three/three.module.min.js","three/addons/":"/designer/kit/vendor/three/addons/"}}</script>
 </head>
 <body class="landing-page">
@@ -41,6 +42,93 @@
 <div class="scene-caption"><b>Ready. Set. Robot.</b><span id="preview-hint">A robot taking shape, one iteration at a time.</span></div><div class="hero-controls" aria-label="Robot preview controls"><button id="hero-inspect" type="button" aria-pressed="false" disabled>Peek inside</button><button id="hero-sound" type="button" aria-pressed="true" disabled>Sound on</button><details class="hero-volume"><summary aria-label="Adjust volume" title="Adjust volume">♫</summary><label>Volume<input id="hero-volume" type="range" min="0" max="1" step="0.01" value="1" disabled><output>100%</output></label></details></div><span class="prototype-stamp">PROTOTYPE<br>IN PROGRESS ↗</span></div>
 </section>
 <div class="ticker"><div class="wrap"><span>MADE FOR PLAY</span><span aria-hidden="true">✳</span><span>POWERED BY CURIOSITY</span><span aria-hidden="true">✳</span><span>BUILT BY AUTONOMOUS SYSTEMS</span><span aria-hidden="true">✳</span></div></div>
+<!-- Every number below is from a committed record or a linked PR/issue; tools/test-landing-loop.mjs checks them against the records. -->
+<section id="loop" class="loop wrap" aria-labelledby="loop-title">
+  <div class="loop-heading">
+    <div><p class="eyebrow"><span class="status-dot"></span> ALWAYS IMPROVING · WITH CAD-AGENT</p><h2 id="loop-title">Checks that make <br><span>two projects better.</span></h2></div>
+    <div class="loop-lede">
+      <p>Gyropup is designed with <strong>cad-agent</strong>, an open-source, general-purpose CAD toolkit for agents. Its checks find problems for Gyropup to fix, and each new kind of check becomes a tested cad-agent tool, ready for any project.</p>
+      <div class="loop-actions"><a class="button loop-cta" href="https://cad-agent.gyropup.com">Explore cad-agent <span aria-hidden="true">↗</span></a> <a class="text-link" href="https://github.com/Valpatel/cad-agent">Source on GitHub ↗</a></div>
+      <p class="loop-live" data-state="static"><span class="status-dot" aria-hidden="true"></span><span class="loop-live-text">cad-agent.gyropup.com · open source (MIT) · for any CAD project</span></p>
+    </div>
+  </div>
+  <figure class="loop-figure">
+    <figcaption class="loop-figure-label">The loop</figcaption>
+    <ol class="loop-steps">
+      <li class="loop-step">
+        <svg class="loop-icon" viewBox="0 0 32 32" aria-hidden="true"><path d="M16 3 28 9.5v13L16 29 4 22.5v-13z"/><path d="m4 9.5 12 6.5 12-6.5M16 16v13"/></svg>
+        <span class="loop-n" aria-hidden="true">1</span><h3>Gyropup’s design</h3><p>CAD, parts and joints, all in git.</p>
+        <ul class="loop-chips loop-areas"><li>Leg</li><li>Turret</li><li>Body</li></ul>
+        <span class="loop-arrow" aria-hidden="true">→</span>
+      </li>
+      <li class="loop-step">
+        <svg class="loop-icon" viewBox="0 0 32 32" aria-hidden="true"><circle cx="13.5" cy="13.5" r="9"/><path d="m20 20 8 8M9.5 13.5l3 3 5.5-6"/></svg>
+        <span class="loop-n" aria-hidden="true">2</span><h3>cad-agent checks it</h3>
+        <ul class="loop-chips"><li>Fit &amp; assembly gates</li><li>FEA</li><li>Motion traces</li><li class="loop-chip-next">Joint audits, in progress</li></ul>
+        <span class="loop-arrow" aria-hidden="true">→</span>
+      </li>
+      <li class="loop-step">
+        <svg class="loop-icon" viewBox="0 0 32 32" aria-hidden="true"><path d="M16 29V19c0-5-9-6-9-14M16 19c0-5 9-6 9-14"/><path d="m3.5 8 3.5-3.5L10.5 8M21.5 8 25 4.5 28.5 8"/></svg>
+        <span class="loop-n" aria-hidden="true">3</span><h3>Findings go two ways</h3>
+        <ul class="loop-fork"><li class="fork-gyropup"><b>Fix Gyropup</b><span class="vh"> –</span> its parts and records</li><li class="fork-toolkit"><b>Grow cad-agent</b><span class="vh"> –</span> new, tested tools for every project</li></ul>
+        <span class="loop-arrow" aria-hidden="true">→</span>
+      </li>
+      <li class="loop-step">
+        <svg class="loop-icon" viewBox="0 0 32 32" aria-hidden="true"><circle cx="16" cy="16" r="12"/><ellipse cx="16" cy="16" rx="5" ry="12"/><path d="M4 16h24"/></svg>
+        <span class="loop-n" aria-hidden="true">4</span><h3>Both ship live</h3>
+        <ul class="loop-sites"><li>gyropup.com</li><li><a href="https://cad-agent.gyropup.com">cad-agent.<wbr>gyropup.com</a></li></ul>
+        <span class="loop-arrow" aria-hidden="true">→</span>
+      </li>
+    </ol>
+    <p class="loop-return"><span><span aria-hidden="true">↻</span> Then the loop runs again on the next change</span></p>
+  </figure>
+  <div class="loop-cards">
+    <article class="loop-card">
+      <p class="loop-tag">FEA RE-RUN · <a href="https://github.com/Valpatel/gyropup/pull/135">GYROPUP #135</a></p>
+      <h3>New material data, every leg and turret study <span class="nw">re-run</span></h3>
+      <p class="vh">Studies below their own target: 2 of 54 on cad-agent v0.4.2’s material data, 16 of 54 after the re-run on v0.6.0.</p>
+      <div class="loop-bars" aria-hidden="true">
+        <span>v0.4.2</span><span class="loop-bar" style="--n:2"><i></i></span><b>2</b>
+        <span>v0.6.0</span><span class="loop-bar is-after" style="--n:16"><i></i></span><b>16</b>
+        <small>of 54 leg and turret studies below their own target, on each release’s material data</small>
+      </div>
+      <p>cad-agent v0.6.0 brought cited data for humid PA6-CF and 6061 aluminium. The re-run shows which parts need work while the design is still in CAD.</p>
+      <p class="loop-links"><a href="/site/pages/research-fea-v060-29-readme-md.html">Before and after ↗</a> <a href="/research/fea-v060-29/evidence/record-runs-provenance.json">Run record: v0.6.0, 50d4921 ↗</a></p>
+    </article>
+    <article class="loop-card">
+      <p class="loop-tag">TURRET GATES · RUN OF 28 OCT 2026</p>
+      <h3>9 gates: 5 pass, 4 to fix</h3>
+      <ul class="loop-gates" aria-label="Gate verdicts">
+        <li data-status="pass"><span aria-hidden="true">✓</span>fasteners<span class="vh"> (pass)</span></li>
+        <li data-status="pass"><span aria-hidden="true">✓</span>ball path<span class="vh"> (pass)</span></li>
+        <li data-status="pass"><span aria-hidden="true">✓</span>ammo range<span class="vh"> (pass)</span></li>
+        <li data-status="warn"><span aria-hidden="true">!</span>motion<span class="vh"> (pass, with a warning)</span></li>
+        <li data-status="warn"><span aria-hidden="true">!</span>containment<span class="vh"> (pass, with a warning)</span></li>
+        <li data-status="fail"><span aria-hidden="true">✕</span>connectivity<span class="vh"> (fail)</span></li>
+        <li data-status="fail"><span aria-hidden="true">✕</span>assembly<span class="vh"> (fail)</span></li>
+        <li data-status="fail"><span aria-hidden="true">✕</span>wall<span class="vh"> (fail)</span></li>
+        <li data-status="fail"><span aria-hidden="true">✕</span>dossier lint<span class="vh"> (fail)</span></li>
+      </ul>
+      <p>The motion gate swept 7,560 poses. An earlier run caught the hopper flap’s hinge hitting its lid at 51.1°; it was fixed.</p>
+      <p class="loop-links"><a href="/site/pages/docs-turret-sections-md.html#the-dossier-cad-agent39s-process">Gate results ↗</a> <a href="https://github.com/Valpatel/gyropup/blob/main/cad-agent.yaml">cad-agent.yaml ↗</a></p>
+    </article>
+    <article class="loop-card">
+      <p class="loop-tag">MOTION TRACES · <a href="https://github.com/Valpatel/cad-agent/pull/61">CAD-AGENT #61</a></p>
+      <h3>A Gyropup bug became a tool</h3>
+      <p class="loop-metric"><b>0.00001 mm</b><span>worst error, 48 parts × 46 poses (limit 0.02 mm)</span></p>
+      <p>Turret parts in the browser once swung about the wrong pivot, 96 mm off at 180°. Gyropup fixed its axes (<a href="https://github.com/Valpatel/gyropup/pull/42">#42</a>); cad-agent gained a motion-trace check for every project.</p>
+      <p class="loop-links"><a href="/site/pages/docs-validation-current-model-md.html#evidence-receipt">Trace evidence ↗</a> <a href="/site/pages/docs-validation-turret-motion-md.html">The pivot bug ↗</a></p>
+    </article>
+    <article class="loop-card">
+      <p class="loop-tag">JOINT AUDIT · <a href="https://github.com/Valpatel/cad-agent/issues/230">CAD-AGENT #230</a></p>
+      <h3>Every insert and clamped joint</h3>
+      <p class="loop-progress"><svg class="loop-insert" viewBox="0 0 64 40" aria-hidden="true"><path class="boss" d="M6 39V14h52v25z"/><path class="plate" d="M12 8h40v6H12z"/><path class="insert" d="M25 14h14v17H25z"/><path d="M25 18h14M25 22h14M25 26h14"/><path class="screw" d="M29.5 5h5v23h-5zM23 1.5h18V5H23z"/></svg><span class="loop-status">In progress</span></p>
+      <p>cad-agent is adding checks for heat-set inserts and compression limiters: hole and boss size, pull-out, torque-out and preload. Gyropup’s joints are the worked example.</p>
+      <p class="loop-links"><a href="https://github.com/Valpatel/cad-agent/issues/230">Follow the work ↗</a></p>
+    </article>
+  </div>
+  <p class="loop-note"><span aria-hidden="true">✳</span> Checks and simulations are predictions. A passing gate or study doesn’t prove physical fit or strength; physical tests are still ahead.</p>
+</section>
 <section id="meet" class="meet wrap section"><div class="section-heading"><p class="eyebrow">01 / THE BIG IDEA</p><h2>Big robots.<br>Backyard legends.</h2></div><div class="meet-copy"><p class="large-copy">Meet your next<br>favorite rival.</p><p>A self-balancing robot. A foam-ball turret. A personality you can’t help rooting for. Gyropup is the beginning of a robot family that rolls, dodges, and battles alongside you.</p><p>Our future goal: supervised child and family play with proven, validated robot designs up to 100 pounds. Explore the simulated prototype today; current research hardware is unsafe for general use.</p><a class="text-link" href="/designer/sim.html">Meet Gyropup in the simulator ↗</a><p class="design-note">Our design weight ceiling is 100 lb (45.4 kg). The current CAD estimate is 37.5 kg (83 lb); prototype weigh-in and load validation are still ahead.</p></div></section>
 <section class="missions wrap" aria-label="Imagine the play"><article class="mission mission-orange"><span class="mission-icon" aria-hidden="true">◎</span><span class="mission-tag">01 / TAKE AIM</span><h3>Challenge accepted.</h3><p>Line up the targets. Make every foam ball count.</p><a href="/designer/sim.html?run=targets">Watch target practice <span aria-hidden="true">↗</span></a></article><article class="mission mission-blue"><span class="mission-icon" aria-hidden="true">↝</span><span class="mission-tag">02 / MAKE MOVES</span><h3>Roll with your rival.</h3><p>Two wheels. Moving legs. A whole lot of character.</p><a href="/designer/sim.html?run=drive">See Gyropup move <span aria-hidden="true">↗</span></a></article><article class="mission mission-yellow"><span class="mission-icon" aria-hidden="true">✳</span><span class="mission-tag">03 / DREAM BIGGER</span><h3>Build the next adventure.</h3><p>From one playful prototype to a whole robot family.</p><a href="/designer/progress.html">Follow what’s next <span aria-hidden="true">↗</span></a></article></section>
 <section class="play-section wrap" aria-labelledby="play-title">

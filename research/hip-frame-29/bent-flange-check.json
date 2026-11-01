@@ -1,0 +1,395 @@
+{
+ "body": {
+  "tray_underside_z_mm": 90.5,
+  "cheek_bottom_flange_inner_z_mm": -85.7502,
+  "inserts_xz": [
+   [
+    -83.0,
+    70.0
+   ],
+   [
+    0.0,
+    70.0
+   ],
+   [
+    83.0,
+    70.0
+   ],
+   [
+    -83.0,
+    -70.0
+   ],
+   [
+    0.0,
+    -70.0
+   ],
+   [
+    83.0,
+    -70.0
+   ]
+  ],
+  "printed_flange_outer_z_mm": 75.0
+ },
+ "assumptions": [
+  "the tab hangs from a bend at the plate towards the motors and carries the three holes at today's z +-70",
+  "hole-to-bend is measured from the hole edge to the bend's inside tangent",
+  "plate bending: the printed flange's root moment per unit width from E1's peak stress at its root (12.9 MPa on 13 mm, an upper bound), uniform across the width; 5052-H32 yield 193 MPa"
+ ],
+ "sheets": [
+  {
+   "sku": "ALU-040",
+   "T": 1.016,
+   "R": 0.61,
+   "K": 0.45,
+   "min_flange": 7.264,
+   "relief": 2.134,
+   "source": "sendcutsend-specs",
+   "hole_to_bend_rules": [
+    [
+     "sm-hole-to-bend-min-hubs",
+     "hubs-sheet-metal",
+     2.03
+    ],
+    [
+     "sm-hole-to-bend-min-davis",
+     "davis-2001-fabricator-design-tips",
+     2.03
+    ],
+    [
+     "sm-hole-to-bend-min-dfma",
+     "dfma-dfm-checklist",
+     2.64
+    ],
+    [
+     "sm-hole-to-bend-min-paulsen",
+     "paulsen-2017-machine-design-sheet-metal",
+     3.15
+    ],
+    [
+     "sm-slot-to-bend-min-paulsen",
+     "paulsen-2017-machine-design-sheet-metal",
+     4.67
+    ],
+    [
+     "sm-hole-to-bend-min-century",
+     "century-tywood-sheet-metal-reference",
+     2.44
+    ],
+    [
+     "sm-feature-to-bend-protolabs",
+     "protolabs-sheet-metal",
+     4.06
+    ]
+   ],
+   "hole_to_edge_mm": 3.17,
+   "strictest": {
+    "hole_to_bend_mm": 4.67,
+    "plate_outer_face_z_mm": 79.05,
+    "above_today_mm": 4.05,
+    "clears_tray": true,
+    "clears_cheek_flange": true,
+    "tab_length_mm": 15.0,
+    "tab_meets_min_flange": true
+   },
+   "most_lenient": {
+    "hole_to_bend_mm": 2.03,
+    "plate_outer_face_z_mm": 76.41,
+    "above_today_mm": 1.41,
+    "clears_tray": true,
+    "clears_cheek_flange": true,
+    "tab_length_mm": 12.3,
+    "tab_meets_min_flange": true
+   },
+   "plate_bending": {
+    "mpa": 2112.0,
+    "yield_mpa": 193.0,
+    "sf": 0.09,
+    "stiffness_vs_printed": 0.01
+   }
+  },
+  {
+   "sku": "ALU-063",
+   "T": 1.6,
+   "R": 0.889,
+   "K": 0.42,
+   "min_flange": 7.696,
+   "relief": 2.997,
+   "source": "sendcutsend-specs",
+   "hole_to_bend_rules": [
+    [
+     "sm-hole-to-bend-min-hubs",
+     "hubs-sheet-metal",
+     3.2
+    ],
+    [
+     "sm-hole-to-bend-min-davis",
+     "davis-2001-fabricator-design-tips",
+     3.2
+    ],
+    [
+     "sm-hole-to-bend-min-dfma",
+     "dfma-dfm-checklist",
+     4.09
+    ],
+    [
+     "sm-hole-to-bend-min-paulsen",
+     "paulsen-2017-machine-design-sheet-metal",
+     4.89
+    ],
+    [
+     "sm-slot-to-bend-min-paulsen",
+     "paulsen-2017-machine-design-sheet-metal",
+     7.29
+    ],
+    [
+     "sm-hole-to-bend-min-century",
+     "century-tywood-sheet-metal-reference",
+     3.73
+    ],
+    [
+     "sm-feature-to-bend-protolabs",
+     "protolabs-sheet-metal",
+     6.4
+    ]
+   ],
+   "hole_to_edge_mm": 3.2,
+   "strictest": {
+    "hole_to_bend_mm": 7.29,
+    "plate_outer_face_z_mm": 82.53,
+    "above_today_mm": 7.53,
+    "clears_tray": true,
+    "clears_cheek_flange": true,
+    "tab_length_mm": 18.5,
+    "tab_meets_min_flange": true
+   },
+   "most_lenient": {
+    "hole_to_bend_mm": 3.2,
+    "plate_outer_face_z_mm": 78.44,
+    "above_today_mm": 3.44,
+    "clears_tray": true,
+    "clears_cheek_flange": true,
+    "tab_length_mm": 14.4,
+    "tab_meets_min_flange": true
+   },
+   "plate_bending": {
+    "mpa": 851.6,
+    "yield_mpa": 193.0,
+    "sf": 0.23,
+    "stiffness_vs_printed": 0.05
+   }
+  },
+  {
+   "sku": "ALU-090",
+   "T": 2.286,
+   "R": 0.813,
+   "K": 0.37,
+   "min_flange": 8.28,
+   "relief": 3.607,
+   "source": "sendcutsend-specs",
+   "hole_to_bend_rules": [
+    [
+     "sm-hole-to-bend-min-hubs",
+     "hubs-sheet-metal",
+     4.57
+    ],
+    [
+     "sm-hole-to-bend-min-davis",
+     "davis-2001-fabricator-design-tips",
+     4.57
+    ],
+    [
+     "sm-hole-to-bend-min-dfma",
+     "dfma-dfm-checklist",
+     5.38
+    ],
+    [
+     "sm-hole-to-bend-min-paulsen",
+     "paulsen-2017-machine-design-sheet-metal",
+     6.53
+    ],
+    [
+     "sm-slot-to-bend-min-paulsen",
+     "paulsen-2017-machine-design-sheet-metal",
+     9.96
+    ],
+    [
+     "sm-hole-to-bend-min-century",
+     "century-tywood-sheet-metal-reference",
+     4.65
+    ],
+    [
+     "sm-feature-to-bend-protolabs",
+     "protolabs-sheet-metal",
+     9.14
+    ]
+   ],
+   "hole_to_edge_mm": 4.57,
+   "strictest": {
+    "hole_to_bend_mm": 9.96,
+    "plate_outer_face_z_mm": 85.81,
+    "above_today_mm": 10.81,
+    "clears_tray": true,
+    "clears_cheek_flange": false,
+    "tab_length_mm": 23.1,
+    "tab_meets_min_flange": true
+   },
+   "most_lenient": {
+    "hole_to_bend_mm": 4.57,
+    "plate_outer_face_z_mm": 80.42,
+    "above_today_mm": 5.42,
+    "clears_tray": true,
+    "clears_cheek_flange": true,
+    "tab_length_mm": 17.7,
+    "tab_meets_min_flange": true
+   },
+   "plate_bending": {
+    "mpa": 417.2,
+    "yield_mpa": 193.0,
+    "sf": 0.46,
+    "stiffness_vs_printed": 0.16
+   }
+  },
+  {
+   "sku": "ALU-125",
+   "T": 3.175,
+   "R": 3.175,
+   "K": 0.44,
+   "min_flange": 12.09,
+   "relief": 6.858,
+   "source": "sendcutsend-specs",
+   "hole_to_bend_rules": [
+    [
+     "sm-hole-to-bend-min-hubs",
+     "hubs-sheet-metal",
+     6.35
+    ],
+    [
+     "sm-hole-to-bend-min-davis",
+     "davis-2001-fabricator-design-tips",
+     6.35
+    ],
+    [
+     "sm-hole-to-bend-min-dfma",
+     "dfma-dfm-checklist",
+     9.52
+    ],
+    [
+     "sm-hole-to-bend-min-paulsen",
+     "paulsen-2017-machine-design-sheet-metal",
+     11.11
+    ],
+    [
+     "sm-slot-to-bend-min-paulsen",
+     "paulsen-2017-machine-design-sheet-metal",
+     15.88
+    ],
+    [
+     "sm-hole-to-bend-min-century",
+     "century-tywood-sheet-metal-reference",
+     9.52
+    ],
+    [
+     "sm-feature-to-bend-protolabs",
+     "protolabs-sheet-metal",
+     12.7
+    ]
+   ],
+   "hole_to_edge_mm": 6.35,
+   "strictest": {
+    "hole_to_bend_mm": 15.88,
+    "plate_outer_face_z_mm": 94.98,
+    "above_today_mm": 19.98,
+    "clears_tray": false,
+    "clears_cheek_flange": false,
+    "tab_length_mm": 34.1,
+    "tab_meets_min_flange": true
+   },
+   "most_lenient": {
+    "hole_to_bend_mm": 6.35,
+    "plate_outer_face_z_mm": 85.45,
+    "above_today_mm": 10.45,
+    "clears_tray": true,
+    "clears_cheek_flange": false,
+    "tab_length_mm": 24.6,
+    "tab_meets_min_flange": true
+   },
+   "plate_bending": {
+    "mpa": 216.3,
+    "yield_mpa": 193.0,
+    "sf": 0.89,
+    "stiffness_vs_printed": 0.43
+   }
+  },
+  {
+   "sku": "5052-0.187 (gyropup body_params.STOCK)",
+   "T": 4.7498,
+   "R": 6.35,
+   "K": 0.43,
+   "min_flange": 20.2692,
+   "relief": null,
+   "source": "gyropup cad/body_params.py",
+   "hole_to_bend_rules": [
+    [
+     "sm-hole-to-bend-min-hubs",
+     "hubs-sheet-metal",
+     9.5
+    ],
+    [
+     "sm-hole-to-bend-min-davis",
+     "davis-2001-fabricator-design-tips",
+     9.5
+    ],
+    [
+     "sm-hole-to-bend-min-dfma",
+     "dfma-dfm-checklist",
+     15.85
+    ],
+    [
+     "sm-hole-to-bend-min-paulsen",
+     "paulsen-2017-machine-design-sheet-metal",
+     18.22
+    ],
+    [
+     "sm-slot-to-bend-min-paulsen",
+     "paulsen-2017-machine-design-sheet-metal",
+     25.35
+    ],
+    [
+     "sm-hole-to-bend-min-century",
+     "century-tywood-sheet-metal-reference",
+     16.65
+    ],
+    [
+     "sm-feature-to-bend-protolabs",
+     "protolabs-sheet-metal",
+     19.0
+    ]
+   ],
+   "hole_to_edge_mm": 9.5,
+   "strictest": {
+    "hole_to_bend_mm": 25.35,
+    "plate_outer_face_z_mm": 109.2,
+    "above_today_mm": 34.2,
+    "clears_tray": false,
+    "clears_cheek_flange": false,
+    "tab_length_mm": 51.5,
+    "tab_meets_min_flange": true
+   },
+   "most_lenient": {
+    "hole_to_bend_mm": 9.5,
+    "plate_outer_face_z_mm": 93.35,
+    "above_today_mm": 18.35,
+    "clears_tray": false,
+    "clears_cheek_flange": false,
+    "tab_length_mm": 35.6,
+    "tab_meets_min_flange": true
+   },
+   "plate_bending": {
+    "mpa": 96.6,
+    "yield_mpa": 193.0,
+    "sf": 2.0,
+    "stiffness_vs_printed": 1.43
+   }
+  }
+ ]
+}

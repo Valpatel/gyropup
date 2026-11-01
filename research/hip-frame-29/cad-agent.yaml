@@ -1,0 +1,44 @@
+# Issue #29's sweep of the hip frame (cad/fivebar.py HIP): cad-agent optimise drives tools/hip-frame-study.py, which
+# runs cad/leg_studies.py's five hip-frame cases unchanged for each trial and returns each case's safety factor over
+# its target (margin_min, the worst) and the frame's mass, and fails a trial that no longer fits the print bed or that
+# would move the body's cheeks. Run it on a compute host (README.md here), e.g.
+#   cad-agent optimise --project research/hip-frame-29 --sampler nsga2 --trials 36 --workers 4 --seed 29
+# (issue #29's run n01: 36 trials, the command line's --trials over the 40 below)
+cad:
+  name: gyropup-hip-frame-29
+  title: Hip frame flanges and root fillet (gyropup issue 29)
+  explore:
+    catalogue: ["catalogue.json"]            # no parts are chosen here; cad-agent's explore wants a catalogue file
+    max_price_age_days: null
+    designs: ["designs/*.json"]
+    evaluator:
+      command: ["{python}", "../../tools/hip-frame-study.py", "--evaluator", "--mesh", "4", "--out-root", "../../build/hip-frame/sweep"]
+      timeout_s: 5400
+    objectives:
+      - {metric: margin_min, goal: max}
+      - {metric: mass_g, goal: min}
+    constraints:
+      - {metric: margin_min, min: 1.0}
+    metrics:
+      margin_min: {label: worst SF / target, digits: 3}
+      mass_g: {label: frame mass, unit: g, digits: 0}
+      sf_E1: {label: E1 SF, digits: 2}
+      sf_R1: {label: R1 SF, digits: 2}
+      sf_R3o: {label: R3o SF, digits: 2}
+    card_metrics: [margin_min, mass_g, sf_E1, sf_R1, sf_R3o]
+    out: ../../build/hip-frame/explore
+    search:
+      base: designs/today.json
+      sampler: nsga2
+      trials: 40
+      workers: 4
+      seed: 29
+      population: 12
+      space:
+        # the body bounds them: the top face under z 83 keeps the cheeks where they are (flange_dz + top_t <= 21), the
+        # bottom 2 mm over the cheeks' bottom flange (flange_dz + bottom_t <= 21.75); the evaluator fails a trial
+        # outside these before any FEA. Screening (f1-f4) found the fillet needs the root moved off the motor's can.
+        - {param: hip.root_r, low: 3, high: 8, step: 0.5}
+        - {param: hip.flange_dz, low: 0, high: 6, step: 0.5}
+        - {param: hip.top_t, low: 13, high: 19, step: 1}
+        - {param: hip.bottom_t, low: 13, high: 19, step: 1}
