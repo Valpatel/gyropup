@@ -194,7 +194,7 @@ knee_k1.6_both_plus The 1.6 N/mm knee spring built both plus 10 %
   knee_k1.6_both_plus kerb40_2   motor   29.9  axle    1962 N  gear   93.6 N m  JtF  284.9  L [300.0, 332.1]  body 4.63 g pk / 0.265 g rms  Fz 0.0..1690.4  air 0.031 s  (2.3 s)
   knee_k1.6_both_plus off        motor   10.8  axle    1170 N  gear   24.2 N m  JtF  165.2  L [293.6, 327.4]  rest 296.3 mm  stop 176.4 N m  (2.5 s)
   knee_k1.6_both_plus off_damped motor   10.8  axle     224 N  gear    9.3 N m  JtF   22.7  L [300.0, 327.4]  rest 313.0 mm  stop 0.0 N m  (2.5 s)
-wrote /home/scubasonar/Code/gyropup/exports/leg/springs/results-knee.json (132 s)
+wrote exports/leg/springs/results-knee.json (132 s)
   knee_k0.8_s0.8     drop150    motor   26.2  axle    2187 N  gear   67.8 N m  JtF  169.0  L [300.0, 346.4]  impact gear 63.3 N m at 0.0 ms  (0.7 s)
   knee_k0.8_s0.8     jump60     motor   60.0  axle    2545 N  gear   87.8 N m  JtF  279.1  L [176.1, 347.5]  jump 295.7 mm  spring returned 4.54 J  (2.5 s)
   knee_k0.8_s0.8     off        motor   10.8  axle    1019 N  gear   56.6 N m  JtF   75.6  L [99.7, 326.3]  rest 101.3 mm  stop 140.5 N m  (2.5 s)

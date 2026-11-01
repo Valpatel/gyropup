@@ -306,4 +306,4 @@ decisions:
   decision: 'The cartridge body''s recoil case: layer-aware SF 1.38 against 2.0 at the 105 fps ceiling (1.53 at the 95 fps
     set speed), its peak at the CT''s rear dowel in the 3 mm base plate. Options: Ø4 x 12 dowels in holes 6 mm into the new
     bosses, or a second latch'
-  why: The FEA (gb10-01, 2026-10-28) found it after the cage's spine, webs and latch boss raised the fall case to 2.21
+  why: The FEA (a CAD host, 2026-10-28) found it after the cage's spine, webs and latch boss raised the fall case to 2.21

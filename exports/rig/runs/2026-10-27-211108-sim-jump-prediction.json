@@ -184,5 +184,5 @@
   "settle_s": 0.19199999999999995
  },
  "prediction_from": "exports/rig/predictions.json (14.75 kg, the rig's controller)",
- "plot": "/home/scubasonar/gyropup-compute/wt/gyropup-legrig/exports/rig/runs/2026-10-27-211108-sim-jump-prediction.png"
+ "plot": "exports/rig/runs/2026-10-27-211108-sim-jump-prediction.png"
 }

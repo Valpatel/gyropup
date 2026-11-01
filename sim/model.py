@@ -375,7 +375,9 @@ def build(design_path: Path, out_dir: Path | None = None) -> dict:
                 continue
             link.body = rb.Body(al['mass_kg'], tuple(al['com_m']), tuple(tuple(r) for r in al['inertia_kg_m2']), link.name)
             off = tuple(-v * M for v in al['origin_mm'])
-            meshes = [V(mesh=p['mesh'], xyz=off, scale=M, rgba=_rgba(p['color'])) for p in al['parts'] if p.get('mesh') and Path(p['mesh']).exists()]
+            # assembly.json names meshes from the repository root (older exports: absolute paths, which R / keeps as they are)
+            meshes = [V(mesh=str(R / p['mesh']), xyz=off, scale=M, rgba=_rgba(p['color'])) for p in al['parts']
+                      if p.get('mesh') and (R / p['mesh']).exists()]
             if meshes:
                 link.visuals = meshes
         notes.append(f"links' mass and inertia from the CAD assembly ({asm['total_kg']:.2f} kg, {sum(len(l['parts']) for l in asm['links'].values())} parts)"
