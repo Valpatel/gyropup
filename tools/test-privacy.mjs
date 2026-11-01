@@ -60,9 +60,10 @@ test('exemptions and allowances are narrow and still needed', () => {
     assert.ok(files.length, `${e.glob} matches no tracked file`);
     for (const f of files) assert.ok(scanText(readFileSync(path.join(ROOT, f), 'utf8')).length, `${f} no longer needs its exemption`);
   }
-  assert.ok(isExempt('designer/kit/vendor/occt-import-js/occt-import-js.js'));
-  assert.ok(!isExempt('designer/kit/vendor/mermaid/mermaid.min.js'));
-  assert.ok(!isExempt('designer/kit/vendor/occt-import-js/other.js'));
+  // vendored files are scanned like any other; their known strings are counted allowances
+  for (const f of ['designer/kit/vendor/occt-import-js/occt-import-js.js', 'designer/kit/vendor/mermaid/mermaid.min.js']) {
+    assert.ok(!isExempt(f), f);
+  }
   assert.ok(!isExempt('designer/kit/vendor/file-viewer-sources.json'));
   assert.ok(!isExempt('designer/kit/vendor-notes.js'));
   const found = scanTracked(ROOT, names);
@@ -102,11 +103,16 @@ test('the ratchet only shrinks', () => {
   assert.match(growthProblems(parseRatchet('a | fleet-host=1 | a reason long enough'), base)[0], /grew from 0/);
 });
 
+test('the base override must name a commit', () => {
+  assert.equal(baseRatchet(ROOT, { PRIVACY_RATCHET_BASE: 'refs/heads/no-such-base-branch' }).ref, null);
+  assert.match(baseRatchet(ROOT, { PRIVACY_RATCHET_BASE: 'HEAD' }).ref, /^[0-9a-f]{40}$/);
+});
+
 test(`${RATCHET} is well formed and no larger than on the base branch`, t => {
   const ratchet = loadRatchet();
   assert.deepEqual(ratchetProblems(ratchet), []);
   const { ref, ratchet: base } = baseRatchet();
-  // in CI a missing base is a broken checkout, not a pass; locally (no origin/dev, a shallow clone) it is a skip
+  // in CI a missing base (no origin/<base>, a shallow clone, an override naming no commit) fails; locally it skips
   if (!ref) assert.ok(process.env.GITHUB_ACTIONS !== 'true', 'cannot find the base commit to compare the ratchet with');
   if (!base) return t.skip(`no ratchet on the base (${ref || 'no history'}); this change introduces it`);
   assert.deepEqual(growthProblems(ratchet, base), [], `compared with ${ref}`);

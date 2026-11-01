@@ -44,18 +44,18 @@ export const RULES = [
 ];
 export const KINDS = RULES.map(r => r.kind);
 
-// Third-party files copied verbatim whose own strings would match: exempt one file at a time, so a new vendored file
-// is still scanned.
-export const EXEMPT = [
-  { glob: 'designer/kit/vendor/occt-import-js/occt-import-js.js', reason: "the unmodified upstream release, whose "
-    + "Emscripten build embeds two source paths from its builder's machine (not ours); recorded in file-viewer-sources.json" },
-];
+// Paths skipped whole: { glob, reason }. Kept empty on purpose: a vendored file whose own strings match is better
+// listed in ALLOWED with exact counts, so a later edit that adds a finding still fails.
+export const EXEMPT = [];
 
 // Findings that are public facts, not private details. Counts are per file; a new finding in the same file still fails.
 export const ALLOWED = [
   { paths: ['catalog/sensors_compute.json', 'research/sensors-compute.md', 'site/pages/research-sensors-compute-md.html',
     'site/pages/research-sensors-compute-md.md'], counts: { 'private-ip': 1 },
     reason: "the lidar's factory-default address, quoted from the manufacturer's public manual" },
+  { paths: ['designer/kit/vendor/occt-import-js/occt-import-js.js'], counts: { 'home-path': 2 },
+    reason: "Emscripten's virtual file system home for its web_user, a constant of every Emscripten build, in the "
+    + 'unmodified upstream release recorded in file-viewer-sources.json' },
   { paths: ['tools/test-service-discovery.mjs'], counts: { 'private-ip': 4, 'tailnet-name': 1 },
     reason: 'fixture hosts for the test that proves the hosted simulator never probes private networks' },
 ];
@@ -231,6 +231,7 @@ export function baseRatchet(root = ROOT, env = process.env) {
   const git = (...args) => execFileSync('git', args, { cwd: root, stdio: ['ignore', 'pipe', 'ignore'] }).toString().trim();
   let ref = env.PRIVACY_RATCHET_BASE;
   try {
+    if (ref) ref = git('rev-parse', '--verify', `${ref}^{commit}`);   // an override that names no commit is no base
     if (!ref && env.GITHUB_EVENT_NAME === 'push') ref = git('rev-parse', 'HEAD^1');
     if (!ref) ref = git('merge-base', 'HEAD', `origin/${env.GITHUB_BASE_REF || 'dev'}`);
   } catch { return { ref: null, ratchet: null }; }
