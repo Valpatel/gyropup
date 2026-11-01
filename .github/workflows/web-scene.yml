@@ -49,6 +49,7 @@ jobs:
               python3 research/carrier-insert-fit/verify.py
               python3 research/carrier-insert-fit/test_guards.py
               python3 research/insert-joints/test_inventory.py
+              python3 research/leg-preprint/test_screen.py
               npm run test:turret
               npm run test:camera
               npm run test:models
