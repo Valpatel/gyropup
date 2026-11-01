@@ -98,10 +98,10 @@ class Inventory(unittest.TestCase):
         self.assertEqual(d['summary']['fix'], sum(f['level'] == 'fix' for f in d['findings']))
 
     def test_fixed_joints_pass(self):
-        """#137's clear fixes are in the CAD: none of these families has a fix-level finding left."""
+        """#137's clear fixes outside the leg are in the CAD: none of these families has a fix-level finding left (the
+        leg's, leg.wheel_botwheel and leg.stop_posts, belong to the leg's print-readiness work)."""
         fixed = ('body.riser_top_tm', 'turret.plinth_columns', 'stand.dock', 'turret.pan_ring_yoke', 'rig.pod_lid',
-                 'body.dcdc_bracket', 'body.bus_insulator', 'body.bay_rail_door', 'body.printed_clamps', 'leg.stop_posts',
-                 'leg.wheel_botwheel', 'turret.cradle_plates')
+                 'body.dcdc_bracket', 'body.bus_insulator', 'body.bay_rail_door', 'body.printed_clamps', 'turret.cradle_plates')
         for jid in fixed:
             self.assertEqual([f['code'] for f in joint(self.doc, jid)['findings'] if f['level'] == 'fix'], [], jid)
         self.assertEqual(joint(self.doc, 'rig.pod_lid')['insert'], 'insert_m3')
@@ -220,9 +220,12 @@ class Inventory(unittest.TestCase):
             generate({'cad/rig_parts.py': [("'z', t - 3.0, t + 6.1, m['x'], m['y']", "'z', t - 2.0, t + 6.1, m['x'], m['y']")]})
 
     def test_control_a_stale_note_comes_back(self):
-        """A fixed note quoted by a finding: the finding returns with the stale text."""
-        d = generate({'cad/fivebar.py': [('its 4 x M6 x 30', 'its 4 x M6 x 40')]})
-        self.assertIn('note-vs-joint', codes(d, 'leg.wheel_botwheel'))
+        """A note quoted by a finding: the finding goes when the note is fixed and returns with the stale text."""
+        self.assertIn('note-vs-joint', codes(self.doc, 'leg.wheel_botwheel'))          # the leg's: still stale
+        d = generate({'cad/fivebar.py': [('its 4 x M6 x 40', 'its 4 x M6 x 30')],
+                      'catalog/hardware.json': [("the BotWheel's stator flange, 4 x M6 from inside the wheel link (4 per leg)",
+                                                 "none on the robot now")]})
+        self.assertNotIn('note-vs-joint', codes(d, 'leg.wheel_botwheel'))
         d = generate({'cad/body_shell.py': [("'PETG; four M3 x 8 into the wall\\'s nuts'", "'PETG; four M3 x 16 into the wall\\'s nuts'")]})
         self.assertIn('note-vs-joint', codes(d, 'body.printed_clamps'))
 
