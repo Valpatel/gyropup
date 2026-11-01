@@ -133,12 +133,13 @@ def analyse(ls, st, case, s_z, s_xy):
     return out
 
 
-def render(st, path, vmax, title, view):
-    """cadagent.fea.Study.render with the colour scale fixed at vmax (MPa), so variants compare at one scale."""
+def render(st, path, vmax, title, view, dscale=None):
+    """cadagent.fea.Study.render with the colour scale fixed at vmax (MPa), and the deformation's exaggeration at
+    dscale when given, so variants compare at one scale."""
     saved = dict(st.result)
     st.result['von_mises_design_mpa'] = vmax
     try:
-        st.render(path, view=view, title=title)
+        st.render(path, scale=dscale, view=view, title=title)
     finally:
         st.result.clear()
         st.result.update(saved)
@@ -160,7 +161,8 @@ def precheck(out: Path, params: dict | None) -> dict:
     return interfaces(fb, fb.leg_parts().parts['hip_frame'].val(), out.resolve())
 
 
-def run_variant(out: Path, params: dict | None, cases, mesh: float, vmax: float | None, viewer: bool, dump: bool = False):
+def run_variant(out: Path, params: dict | None, cases, mesh: float, vmax: float | None, viewer: bool, dump: bool = False,
+                dscale: float | None = None):
     out = out.resolve()
     use_params(out, params)
     shutil.copyfile(ROOT / 'exports/leg/fea/summary.json', out / 'summary.json')
@@ -189,8 +191,8 @@ def run_variant(out: Path, params: dict | None, cases, mesh: float, vmax: float 
         row['layers_ok'] = a['layers'][PRINT_NORMAL]['sf'] >= r['target']
         if vmax:
             png = out / f"hip_frame-{r['case']}-fixed.png"
-            render(st, png, vmax, f"hip_frame {r['case']}: SF {r['safety_factor']} (target {r['target']}), colour scale 0-{vmax:g} MPa",
-                   ls.VIEWS['hip_frame'])
+            render(st, png, vmax, f"hip_frame {r['case']}: SF {r['safety_factor']} (target {r['target']}), colour scale 0-{vmax:g} MPa"
+                   + (f", deformation x{dscale:g}" if dscale else ''), ls.VIEWS['hip_frame'], dscale)
             row['png_fixed_scale'] = png.name
         rows.append(row)
     fit = interfaces(fb, frame, out)
@@ -199,7 +201,7 @@ def run_variant(out: Path, params: dict | None, cases, mesh: float, vmax: float 
                            capture_output=True).stdout.strip()
     import cadagent
     res = {'schema': 1, 'source_revision': rev, 'source_dirty': bool(dirty), 'params': params or {}, 'hip': dict(getattr(fb, 'HIP', {})),
-           'mesh_mm': mesh, 'cases': rows, 'mass_g': round(frame.Volume() / 1000 * MATERIALS['pa6_cf_z'].density_g_cm3, 1),
+           'mesh_mm': mesh, 'render': {'vmax_mpa': vmax, 'deformation_scale': dscale}, 'cases': rows, 'mass_g': round(frame.Volume() / 1000 * MATERIALS['pa6_cf_z'].density_g_cm3, 1),
            'volume_mm3': round(frame.Volume(), 1), 'allowables_mpa': {'across_layers': s_z, 'in_layers': s_xy},
            'print_normal': PRINT_NORMAL, **fit, 'toolkit': str(Path(cadagent.__file__).parent), 'seconds': round(time.time() - t0, 1),
            'inputs_sha256': {p: sha(ROOT / p) for p in ('cad/fivebar.py', 'cad/leg_studies.py', 'sim/leg_rig.py',
@@ -289,6 +291,7 @@ def main():
     ap.add_argument('--cases', nargs='+', default=list(HF_CASES))
     ap.add_argument('--mesh', type=float, default=4.0)
     ap.add_argument('--vmax', type=float, help='also render each case with this colour scale (MPa)')
+    ap.add_argument('--dscale', type=float, help="with --vmax: the renders' deformation exaggeration (default: automatic)")
     ap.add_argument('--viewer', action='store_true')
     ap.add_argument('--dump', action='store_true', help='save each case\'s stress field (field-<case>.npz)')
     ap.add_argument('--evaluator', action='store_true')
@@ -297,7 +300,7 @@ def main():
     if a.evaluator:
         return evaluator(a.out_root, a.mesh)
     params = json.loads(a.params.read_text()) if a.params else None
-    res = run_variant(a.out, params, a.cases, a.mesh, a.vmax, a.viewer, a.dump)
+    res = run_variant(a.out, params, a.cases, a.mesh, a.vmax, a.viewer, a.dump, a.dscale)
     for c in res['cases']:
         L = c['layers'][PRINT_NORMAL]
         print(f"{c['case']:4} SF {c['safety_factor']:5} (>= {c['target']})  layers({PRINT_NORMAL}) {L['sf']} [{L['governed_by']}] "
