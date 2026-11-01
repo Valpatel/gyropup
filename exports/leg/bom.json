@@ -32,14 +32,14 @@
    "cad": true
   },
   {
-   "key": "bearing_6201",
+   "key": "bearing_6301",
    "qty": 4,
    "for": "two in each knee",
    "vendor": "McMaster-Carr",
-   "part_number": "5972K42",
-   "name": "Steel Ball Bearing, Sealed, Trade No. 6201-2RS, for 12 mm Shaft Diameter",
-   "mass_g_each": 35.07,
-   "price_usd_each": 19.37,
+   "part_number": "6301-2RSH",
+   "name": "Deep groove ball bearing 6301-2RSH (12 x 37 x 12, sealed both sides); McMaster-Carr 5972K86 is the same trade number (6301-2RS)",
+   "mass_g_each": 60.2,
+   "price_usd_each": 12.53,
    "cad": false
   },
   {
@@ -122,7 +122,7 @@
   {
    "key": "screw_m4x20",
    "qty": 20,
-   "for": "motor lugs (10 per motor), heads 10 mm down in the hip frame: 5.9 mm into the 7 mm threads",
+   "for": "motor lugs (10 per motor), seats 8.5 mm down: 4.4 mm nominal penetration into 5 mm-min usable threads; measure before assembly",
    "vendor": "McMaster-Carr",
    "part_number": "91290A168",
    "name": "Black-Oxide Alloy Steel Socket Head Screw, US Origin, M4 x 0.7 mm Thread Size, 20 mm Long",
@@ -232,7 +232,7 @@
  ],
  "to_source": [],
  "cad_pending": [
-  "bearing_6201",
+  "bearing_6301",
   "circlip_60",
   "washer_m12_thin",
   "knee_spacer",
@@ -241,6 +241,6 @@
   "screw_m5x40",
   "screw_m6x30"
  ],
- "price_usd_per_leg": 1125.32,
+ "price_usd_per_leg": 1097.96,
  "made_to_order_estimate_usd_per_leg": 80.0
 }
