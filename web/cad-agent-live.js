@@ -22,6 +22,7 @@ function render(line, live) {
   const link = document.createElement('a');
   link.href = COMMITS + live.revision;
   link.textContent = live.date;
+  link.setAttribute('aria-label', `cad-agent commit ${live.revision.slice(0, 7)}, built ${live.date}`);
   text.replaceChildren(`Live: ${live.items.toLocaleString('en-US')} catalogue entries · ${live.pages.toLocaleString('en-US')} pages · updated `, link);
   line.dataset.state = 'live';
 }
@@ -31,7 +32,7 @@ export async function showLive(line = document.querySelector('.loop-live'), fetc
   const controller = new AbortController();
   const timer = setTimeout(() => controller.abort(), TIMEOUT_MS);
   try {
-    const response = await fetcher(SOURCE, { mode: 'cors', credentials: 'omit', signal: controller.signal });
+    const response = await fetcher(SOURCE, { mode: 'cors', credentials: 'omit', referrerPolicy: 'no-referrer', signal: controller.signal });
     if (!response.ok) return false;
     const live = describe(await response.json());
     if (!live) return false;
@@ -44,4 +45,15 @@ export async function showLive(line = document.querySelector('.loop-live'), fetc
   }
 }
 
-if (typeof document !== 'undefined') showLive();
+/** Ask only when the section comes near the viewport; the line's space is already reserved. */
+export function showLiveWhenNear(section = document.querySelector('#loop')) {
+  if (!section || typeof IntersectionObserver !== 'function') return showLive();
+  const observer = new IntersectionObserver(entries => {
+    if (!entries.some(entry => entry.isIntersecting)) return;
+    observer.disconnect();
+    showLive();
+  }, { rootMargin: '600px 0px' });
+  observer.observe(section);
+}
+
+if (typeof document !== 'undefined') showLiveWhenNear();

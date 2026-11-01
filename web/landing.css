@@ -154,6 +154,7 @@
 .loop-status::before{content:"";width:7px;height:7px;border-radius:50%;background:#b07f00;animation:loop-pulse 1.8s ease-in-out infinite}
 .loop-note{display:flex;gap:12px;align-items:flex-start;max-width:860px;margin:26px 0 0;color:#4a605c;font-size:12px;line-height:1.7}
 .loop-note>span{color:var(--orange);font-size:20px;line-height:1}
+.loop .nw{white-space:nowrap}
 .vh{position:absolute!important;width:1px;height:1px;overflow:hidden;clip:rect(0 0 0 0);clip-path:inset(50%);white-space:nowrap}
 
 @media(max-width:1250px){.loop-cards{grid-template-columns:repeat(2,minmax(0,1fr))}}
