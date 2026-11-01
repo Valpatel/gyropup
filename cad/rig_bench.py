@@ -238,10 +238,10 @@ def sleeve_block():
     footprint. The pin goes in as in the leg (pressed, the same compound)."""
     d, _, depth = fb.STOP_PIN
     up = bx(-CAGE_IN + 0.5, -10.0, 0, 40, 5, CAGE_D - 5)
-    foot = bx(-10.0, 25.0, 0, 10, 5, CAGE_D - 5)
-    s = up.union(foot)
+    foot = bx(-10.0, 25.0, 0, 25.0 - fb.TPU_SLEEVE[0] / 2 - 1.0, 5, CAGE_D - 5)   # 1 mm under the sleeve: the load goes
+    s = up.union(foot)                                                          # through the pin, not the foot
     s = s.cut(cq.Workplane('YZ', origin=(-10.0 + 0.01, 0, 0)).center(25.0, CAGE_D / 2)
-              .circle(d / 2 + fb.STOP_HOLE_PLAY).extrude(-depth))
+              .circle(d / 2 + fb.STOP_HOLE_PLAY).extrude(-depth - 0.01))
     return s
 
 
