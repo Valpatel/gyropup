@@ -1,0 +1,218 @@
+{
+ "schema": 1,
+ "purpose": "issue #29: the hip frame before and after, the sweep's chart and every trial",
+ "host_role": "mechanical compute host (x86-64, PyPI gmsh)",
+ "before": {
+  "source_revision": "5995f940581d693db6aa56fc1393ea69b970fedf",
+  "source_dirty": false,
+  "hip": {
+   "top_t": 13.0,
+   "bottom_t": 13.0,
+   "haunch": 0.0,
+   "flange_dz": 0.0,
+   "root_r": 0.0,
+   "root_gap": 0.75,
+   "bed_clip": true
+  },
+  "mesh_mm": 4.0,
+  "render": {
+   "vmax_mpa": 16.0,
+   "deformation_scale": 80.0
+  },
+  "mass_g": 1009.8,
+  "cases": {
+   "R1": {
+    "sf": 1.0,
+    "target": 1.2,
+    "ok": false,
+    "layers_sf": 1.04,
+    "peak_mpa": 23.04,
+    "peak_at_mm": [
+     89.2,
+     -25.2,
+     61.7
+    ],
+    "tets": 151459
+   },
+   "E1": {
+    "sf": 1.59,
+    "target": 2.0,
+    "ok": false,
+    "layers_sf": 1.42,
+    "peak_mpa": 14.51,
+    "peak_at_mm": [
+     -89.2,
+     -25.2,
+     61.7
+    ],
+    "tets": 151459
+   },
+   "E3o": {
+    "sf": 2.41,
+    "target": 2.0,
+    "ok": true,
+    "layers_sf": 3.01,
+    "peak_mpa": 9.56,
+    "peak_at_mm": [
+     112.5,
+     -2.4,
+     54.6
+    ],
+    "tets": 151852
+   },
+   "E3i": {
+    "sf": 2.76,
+    "target": 2.0,
+    "ok": true,
+    "layers_sf": 5.54,
+    "peak_mpa": 8.34,
+    "peak_at_mm": [
+     30.3,
+     -3.2,
+     -23.8
+    ],
+    "tets": 152223
+   },
+   "R3o": {
+    "sf": 1.18,
+    "target": 1.0,
+    "ok": true,
+    "layers_sf": 1.48,
+    "peak_mpa": 19.49,
+    "peak_at_mm": [
+     112.5,
+     -2.4,
+     54.6
+    ],
+    "tets": 151852
+   }
+  },
+  "result_sha256": "d19ad4f78f949c92b24ff2a57223c5f84325c0d1e3b94dae13cff69c21222133"
+ },
+ "after": {
+  "source_revision": "d8eda8276706b5e6a9dc00d7c37460977137dd0f",
+  "source_dirty": false,
+  "hip": {
+   "top_t": 13.0,
+   "bottom_t": 18.0,
+   "haunch": 0.0,
+   "flange_dz": 1.5,
+   "root_r": 7.5,
+   "root_gap": 0.75,
+   "bed_clip": true
+  },
+  "mesh_mm": 4.0,
+  "render": {
+   "vmax_mpa": 16.0,
+   "deformation_scale": 80.0
+  },
+  "mass_g": 1106.1,
+  "cases": {
+   "R1": {
+    "sf": 2.05,
+    "target": 1.2,
+    "ok": true,
+    "layers_sf": 1.62,
+    "peak_mpa": 11.23,
+    "peak_at_mm": [
+     -119.7,
+     -25.1,
+     44.8
+    ],
+    "tets": 193419
+   },
+   "E1": {
+    "sf": 2.06,
+    "target": 2.0,
+    "ok": true,
+    "layers_sf": 1.77,
+    "peak_mpa": 11.2,
+    "peak_at_mm": [
+     119.7,
+     -25.1,
+     44.8
+    ],
+    "tets": 193419
+   },
+   "E3o": {
+    "sf": 2.42,
+    "target": 2.0,
+    "ok": true,
+    "layers_sf": 2.44,
+    "peak_mpa": 9.53,
+    "peak_at_mm": [
+     112.4,
+     -1.6,
+     56.7
+    ],
+    "tets": 193418
+   },
+   "E3i": {
+    "sf": 2.75,
+    "target": 2.0,
+    "ok": true,
+    "layers_sf": 4.04,
+    "peak_mpa": 8.37,
+    "peak_at_mm": [
+     29.3,
+     -2.4,
+     -23.5
+    ],
+    "tets": 193661
+   },
+   "R3o": {
+    "sf": 1.19,
+    "target": 1.0,
+    "ok": true,
+    "layers_sf": 1.2,
+    "peak_mpa": 19.42,
+    "peak_at_mm": [
+     112.4,
+     -1.6,
+     56.7
+    ],
+    "tets": 193418
+   }
+  },
+  "result_sha256": "715152727cc075e1f505cfd4b167bf15301ca9c8fafbeefeaa989a4e9f9663b3"
+ },
+ "commands": {
+  "before_after": "tools/hip-frame-study.py --out <run> --mesh <mesh> --vmax <vmax> --dscale <dscale> --dump [--params <params.json>]",
+  "search": "cad-agent optimise --project research/hip-frame-29 --sampler nsga2",
+  "gallery": "python research/hip-frame-29/gallery.py --before <run> --after <run> --search <search> --runs <runs.json>"
+ },
+ "search": {
+  "config": {
+   "objectives": "bd24335db364c79d",
+   "constraints": "a32a853ee5f9ecdc",
+   "currency": "af9bae0a5ac6c532",
+   "space": "41d4100bde0547d1",
+   "slots": "44136fa355b3678a",
+   "base": "1ce1f0e9574ee88d",
+   "evaluator": "07c1d228a87d3aa7",
+   "parts": "44136fa355b3678a"
+  },
+  "trials": 36,
+  "trials_jsonl_sha256": "94e99ff95fe0444da437d1318fcb427b5ae2eae59bf33075c9aa03f89422d6a4"
+ },
+ "chart": "cad-agent leaderboard.html chart (cadagent.explore.page), screenshot in headless Chrome",
+ "assumptions": [
+  "loads: cad/leg_studies.py hip-frame cases at D71 18.75 kg a leg, the whole-leg load shares from exports/leg/fea/summary.json",
+  "material: PA6-CF across the layers (pa6_cf_z, 23.04 MPa) everywhere, humid; the layer-resolved check uses pa6_cf_xy (48.96 MPa) in the layers",
+  "linear elastic, small deflection, P2 tetrahedra; the colour scale is fixed, stress above it is the top colour",
+  "one host and one mesh for before and after; the two hosts mesh differently (trials.json names each run's host)"
+ ],
+ "limits": [
+  "the after design's E1 and R1 peak at a sharp corner (each knee-out ear's backing block ends on the web): not converged at this mesh. trials.json carries the 3 mm runs on the recording host (c-dev-m3, c-t1-m3)",
+  "FEA does not prove strength: the proof-load checks in issue #29 stay open"
+ ],
+ "outputs": {
+  "exports/leg/fea/hip-frame-29/hip_frame-R1-before-after.png": "94f8daab8f4c87696a508a11d7a4d949a13d11b221f1c25abc9c32a5d2322cad",
+  "exports/leg/fea/hip-frame-29/hip_frame-E1-before-after.png": "0e74aa4ac6919a502615e7017f54d82e3e543555df3861450b7a984649c9ec62",
+  "exports/leg/fea/hip-frame-29/hip_frame-E3o-before-after.png": "d07a3edfc456fb25640ed434a07c2388f927d96cf554658a624d90b4cb88c9bf",
+  "exports/leg/fea/hip-frame-29/hip_frame-E3i-before-after.png": "0bc944868f96eb4cd64629d8a526e80672afbdb4c89700cbaf262b140dd14b5f",
+  "exports/leg/fea/hip-frame-29/hip_frame-R3o-before-after.png": "213f4f7f6feaa2c888dcdb39b62fd0a590ed0c411a1d9c16ae6260ae1e07bd78",
+  "exports/leg/fea/hip-frame-29/sweep-chart.png": "c1ee484bf10cee19efd990857f2257257fe92dcb21e321993aa821a70c349621",
+  "exports/leg/fea/hip-frame-29/trials.json": "e071bab052a436e72f3707ac9896a67111d145b3208edabcb36ac21f76f494d4"
+ }
+}

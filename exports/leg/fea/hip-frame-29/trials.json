@@ -1,0 +1,2316 @@
+{
+ "schema": 1,
+ "screening": [
+  {
+   "name": "r01-base-m4",
+   "host_role": "mechanical compute host (x86-64, PyPI gmsh)",
+   "what": "today, the old load sign",
+   "source_revision": "0154ff005d52723f8372f33c795298d11d2739bc",
+   "command": "tools/hip-frame-study.py --out build/hip-frame/r01-base-m4 --mesh 4",
+   "hip": "the defaults at its source revision",
+   "mass_g": 1009.8,
+   "mesh_mm": 4.0,
+   "cases": {
+    "R1": {
+     "sf": 0.95,
+     "target": 1.2,
+     "ok": false,
+     "layers_sf": 0.99,
+     "peak_mpa": 24.25,
+     "peak_at_mm": [
+      89.2,
+      -25.2,
+      61.7
+     ],
+     "tets": 151459
+    },
+    "E1": {
+     "sf": 1.62,
+     "target": 2.0,
+     "ok": false,
+     "layers_sf": 1.33,
+     "peak_mpa": 14.21,
+     "peak_at_mm": [
+      89.2,
+      -25.2,
+      61.7
+     ],
+     "tets": 151459
+    },
+    "E3o": {
+     "sf": 2.41,
+     "target": 2.0,
+     "ok": true,
+     "layers_sf": 3.01,
+     "peak_mpa": 9.56,
+     "peak_at_mm": [
+      112.5,
+      -2.4,
+      54.6
+     ],
+     "tets": 151852
+    },
+    "E3i": {
+     "sf": 2.76,
+     "target": 2.0,
+     "ok": true,
+     "layers_sf": 5.54,
+     "peak_mpa": 8.34,
+     "peak_at_mm": [
+      30.3,
+      -3.2,
+      -23.8
+     ],
+     "tets": 152223
+    },
+    "R3o": {
+     "sf": 1.18,
+     "target": 1.0,
+     "ok": true,
+     "layers_sf": 1.48,
+     "peak_mpa": 19.49,
+     "peak_at_mm": [
+      112.5,
+      -2.4,
+      54.6
+     ],
+     "tets": 151852
+    }
+   },
+   "bed": null,
+   "body_ok": null
+  },
+  {
+   "name": "r04-base-m3",
+   "host_role": "mechanical compute host (x86-64, PyPI gmsh)",
+   "what": "today, the old load sign",
+   "source_revision": "0154ff005d52723f8372f33c795298d11d2739bc",
+   "command": "tools/hip-frame-study.py --out build/hip-frame/r04-base-m3 --mesh 3",
+   "hip": "the defaults at its source revision",
+   "mass_g": 1009.8,
+   "mesh_mm": 3.0,
+   "cases": {
+    "R1": {
+     "sf": 1.1,
+     "target": 1.2,
+     "ok": false,
+     "layers_sf": 1.08,
+     "peak_mpa": 20.88,
+     "peak_at_mm": [
+      89.0,
+      -25.2,
+      61.8
+     ],
+     "tets": 253981
+    },
+    "E1": {
+     "sf": 1.46,
+     "target": 2.0,
+     "ok": false,
+     "layers_sf": 1.18,
+     "peak_mpa": 15.79,
+     "peak_at_mm": [
+      93.7,
+      -26.0,
+      -62.5
+     ],
+     "tets": 253981
+    }
+   },
+   "bed": null,
+   "body_ok": null
+  },
+  {
+   "name": "r02-fix-m4",
+   "host_role": "mechanical compute host (x86-64, PyPI gmsh)",
+   "what": "today, corrected loads",
+   "source_revision": "0eb9aae50bb94dbaf5eb9deb4e865895fd5de654",
+   "command": "tools/hip-frame-study.py --out build/hip-frame/r02-fix-m4 --mesh 4",
+   "hip": "the defaults at its source revision",
+   "mass_g": 1009.8,
+   "mesh_mm": 4.0,
+   "cases": {
+    "R1": {
+     "sf": 1.0,
+     "target": 1.2,
+     "ok": false,
+     "layers_sf": 1.04,
+     "peak_mpa": 23.04,
+     "peak_at_mm": [
+      89.2,
+      -25.2,
+      61.7
+     ],
+     "tets": 151459
+    },
+    "E1": {
+     "sf": 1.59,
+     "target": 2.0,
+     "ok": false,
+     "layers_sf": 1.42,
+     "peak_mpa": 14.51,
+     "peak_at_mm": [
+      -89.2,
+      -25.2,
+      61.7
+     ],
+     "tets": 151459
+    },
+    "E3o": {
+     "sf": 2.41,
+     "target": 2.0,
+     "ok": true,
+     "layers_sf": 3.01,
+     "peak_mpa": 9.56,
+     "peak_at_mm": [
+      112.5,
+      -2.4,
+      54.6
+     ],
+     "tets": 151852
+    },
+    "E3i": {
+     "sf": 2.76,
+     "target": 2.0,
+     "ok": true,
+     "layers_sf": 5.54,
+     "peak_mpa": 8.34,
+     "peak_at_mm": [
+      30.3,
+      -3.2,
+      -23.8
+     ],
+     "tets": 152223
+    },
+    "R3o": {
+     "sf": 1.18,
+     "target": 1.0,
+     "ok": true,
+     "layers_sf": 1.48,
+     "peak_mpa": 19.49,
+     "peak_at_mm": [
+      112.5,
+      -2.4,
+      54.6
+     ],
+     "tets": 151852
+    }
+   },
+   "bed": null,
+   "body_ok": null
+  },
+  {
+   "name": "r03-fix-m3",
+   "host_role": "mechanical compute host (x86-64, PyPI gmsh)",
+   "what": "today, corrected loads",
+   "source_revision": "0eb9aae50bb94dbaf5eb9deb4e865895fd5de654",
+   "command": "tools/hip-frame-study.py --out build/hip-frame/r03-fix-m3 --mesh 3",
+   "hip": "the defaults at its source revision",
+   "mass_g": 1009.8,
+   "mesh_mm": 3.0,
+   "cases": {
+    "R1": {
+     "sf": 1.16,
+     "target": 1.2,
+     "ok": false,
+     "layers_sf": 1.15,
+     "peak_mpa": 19.86,
+     "peak_at_mm": [
+      89.0,
+      -25.2,
+      61.8
+     ],
+     "tets": 253981
+    },
+    "E1": {
+     "sf": 1.56,
+     "target": 2.0,
+     "ok": false,
+     "layers_sf": 1.27,
+     "peak_mpa": 14.72,
+     "peak_at_mm": [
+      93.7,
+      -26.0,
+      -62.5
+     ],
+     "tets": 253981
+    }
+   },
+   "bed": null,
+   "body_ok": null
+  },
+  {
+   "name": "b03-before",
+   "host_role": "mechanical compute host (x86-64, PyPI gmsh)",
+   "what": "today: the gallery before",
+   "source_revision": "5995f940581d693db6aa56fc1393ea69b970fedf",
+   "command": "tools/hip-frame-study.py --out build/hip-frame/b03-before --mesh 4 --vmax 16 --dscale 80 --dump",
+   "hip": {
+    "top_t": 13.0,
+    "bottom_t": 13.0,
+    "haunch": 0.0,
+    "flange_dz": 0.0,
+    "root_r": 0.0,
+    "root_gap": 0.75,
+    "bed_clip": true
+   },
+   "mass_g": 1009.8,
+   "mesh_mm": 4.0,
+   "cases": {
+    "R1": {
+     "sf": 1.0,
+     "target": 1.2,
+     "ok": false,
+     "layers_sf": 1.04,
+     "peak_mpa": 23.04,
+     "peak_at_mm": [
+      89.2,
+      -25.2,
+      61.7
+     ],
+     "tets": 151459
+    },
+    "E1": {
+     "sf": 1.59,
+     "target": 2.0,
+     "ok": false,
+     "layers_sf": 1.42,
+     "peak_mpa": 14.51,
+     "peak_at_mm": [
+      -89.2,
+      -25.2,
+      61.7
+     ],
+     "tets": 151459
+    },
+    "E3o": {
+     "sf": 2.41,
+     "target": 2.0,
+     "ok": true,
+     "layers_sf": 3.01,
+     "peak_mpa": 9.56,
+     "peak_at_mm": [
+      112.5,
+      -2.4,
+      54.6
+     ],
+     "tets": 151852
+    },
+    "E3i": {
+     "sf": 2.76,
+     "target": 2.0,
+     "ok": true,
+     "layers_sf": 5.54,
+     "peak_mpa": 8.34,
+     "peak_at_mm": [
+      30.3,
+      -3.2,
+      -23.8
+     ],
+     "tets": 152223
+    },
+    "R3o": {
+     "sf": 1.18,
+     "target": 1.0,
+     "ok": true,
+     "layers_sf": 1.48,
+     "peak_mpa": 19.49,
+     "peak_at_mm": [
+      112.5,
+      -2.4,
+      54.6
+     ],
+     "tets": 151852
+    }
+   },
+   "bed": "turned",
+   "body_ok": true
+  },
+  {
+   "name": "b02-before",
+   "host_role": "second mechanical compute host (aarch64, conda-forge gmsh)",
+   "what": "today on the recording host",
+   "source_revision": "5995f940581d693db6aa56fc1393ea69b970fedf",
+   "command": "tools/hip-frame-study.py --out build/hip-frame/b02-before --mesh 4",
+   "hip": {
+    "top_t": 13.0,
+    "bottom_t": 13.0,
+    "haunch": 0.0,
+    "flange_dz": 0.0,
+    "root_r": 0.0,
+    "root_gap": 0.75,
+    "bed_clip": true
+   },
+   "mass_g": 1009.8,
+   "mesh_mm": 4.0,
+   "cases": {
+    "R1": {
+     "sf": 1.01,
+     "target": 1.2,
+     "ok": false,
+     "layers_sf": 1.06,
+     "peak_mpa": 22.84,
+     "peak_at_mm": [
+      89.2,
+      -25.2,
+      61.7
+     ],
+     "tets": 151136
+    },
+    "E1": {
+     "sf": 1.5,
+     "target": 2.0,
+     "ok": false,
+     "layers_sf": 1.43,
+     "peak_mpa": 15.35,
+     "peak_at_mm": [
+      -89.2,
+      -25.2,
+      61.7
+     ],
+     "tets": 151136
+    },
+    "E3o": {
+     "sf": 2.39,
+     "target": 2.0,
+     "ok": true,
+     "layers_sf": 2.91,
+     "peak_mpa": 9.63,
+     "peak_at_mm": [
+      112.4,
+      -3.2,
+      55.2
+     ],
+     "tets": 150581
+    },
+    "E3i": {
+     "sf": 2.66,
+     "target": 2.0,
+     "ok": true,
+     "layers_sf": 5.64,
+     "peak_mpa": 8.65,
+     "peak_at_mm": [
+      14.9,
+      -5.0,
+      -33.7
+     ],
+     "tets": 150373
+    },
+    "R3o": {
+     "sf": 1.17,
+     "target": 1.0,
+     "ok": true,
+     "layers_sf": 1.43,
+     "peak_mpa": 19.62,
+     "peak_at_mm": [
+      112.4,
+      -3.2,
+      55.2
+     ],
+     "tets": 150581
+    }
+   },
+   "bed": "turned",
+   "body_ok": true
+  },
+  {
+   "name": "s01-m4",
+   "host_role": "mechanical compute host (x86-64, PyPI gmsh)",
+   "what": "top flange 21 mm",
+   "source_revision": "03161d61c611bc2619c97130b680eeb6aeb9ad97",
+   "command": "tools/hip-frame-study.py --out build/hip-frame/s01-m4 --params <s01> --mesh 4",
+   "hip": {
+    "top_t": 21,
+    "bottom_t": 13.0,
+    "haunch": 0.0,
+    "bed_clip": true
+   },
+   "mass_g": 1153.0,
+   "mesh_mm": 4.0,
+   "cases": {
+    "R1": {
+     "sf": 1.19,
+     "target": 1.2,
+     "ok": false,
+     "layers_sf": 1.21,
+     "peak_mpa": 19.37,
+     "peak_at_mm": [
+      -88.8,
+      -25.2,
+      61.7
+     ],
+     "tets": 160036
+    },
+    "E1": {
+     "sf": 1.39,
+     "target": 2.0,
+     "ok": false,
+     "layers_sf": 1.42,
+     "peak_mpa": 16.58,
+     "peak_at_mm": [
+      -88.8,
+      -25.2,
+      61.7
+     ],
+     "tets": 160036
+    },
+    "E3o": {
+     "sf": 2.63,
+     "target": 2.0,
+     "ok": true,
+     "layers_sf": 2.66,
+     "peak_mpa": 8.77,
+     "peak_at_mm": [
+      112.4,
+      -1.6,
+      56.5
+     ],
+     "tets": 160692
+    },
+    "E3i": {
+     "sf": 2.77,
+     "target": 2.0,
+     "ok": true,
+     "layers_sf": 5.39,
+     "peak_mpa": 8.32,
+     "peak_at_mm": [
+      29.3,
+      -2.4,
+      -23.5
+     ],
+     "tets": 160749
+    },
+    "R3o": {
+     "sf": 1.29,
+     "target": 1.0,
+     "ok": true,
+     "layers_sf": 1.3,
+     "peak_mpa": 17.88,
+     "peak_at_mm": [
+      112.4,
+      -1.6,
+      56.5
+     ],
+     "tets": 160692
+    }
+   },
+   "bed": "turned",
+   "body_ok": true
+  },
+  {
+   "name": "s02-m4",
+   "host_role": "mechanical compute host (x86-64, PyPI gmsh)",
+   "what": "flanges 21 / 18 mm",
+   "source_revision": "03161d61c611bc2619c97130b680eeb6aeb9ad97",
+   "command": "tools/hip-frame-study.py --out build/hip-frame/s02-m4 --params <s02> --mesh 4",
+   "hip": {
+    "top_t": 21,
+    "bottom_t": 18,
+    "haunch": 0.0,
+    "bed_clip": true
+   },
+   "mass_g": 1232.1,
+   "mesh_mm": 4.0,
+   "cases": {
+    "R1": {
+     "sf": 1.42,
+     "target": 1.2,
+     "ok": true,
+     "layers_sf": 1.15,
+     "peak_mpa": 16.17,
+     "peak_at_mm": [
+      88.8,
+      -25.2,
+      61.7
+     ],
+     "tets": 163939
+    },
+    "E1": {
+     "sf": 1.76,
+     "target": 2.0,
+     "ok": false,
+     "layers_sf": 1.3,
+     "peak_mpa": 13.11,
+     "peak_at_mm": [
+      73.2,
+      -25.0,
+      -62.4
+     ],
+     "tets": 163939
+    },
+    "E3o": {
+     "sf": 2.63,
+     "target": 2.0,
+     "ok": true,
+     "layers_sf": 2.77,
+     "peak_mpa": 8.77,
+     "peak_at_mm": [
+      112.4,
+      -1.6,
+      56.5
+     ],
+     "tets": 164680
+    },
+    "E3i": {
+     "sf": 2.74,
+     "target": 2.0,
+     "ok": true,
+     "layers_sf": 5.47,
+     "peak_mpa": 8.4,
+     "peak_at_mm": [
+      16.7,
+      -4.8,
+      -33.5
+     ],
+     "tets": 164773
+    },
+    "R3o": {
+     "sf": 1.29,
+     "target": 1.0,
+     "ok": true,
+     "layers_sf": 1.36,
+     "peak_mpa": 17.89,
+     "peak_at_mm": [
+      112.4,
+      -1.6,
+      56.5
+     ],
+     "tets": 164680
+    }
+   },
+   "bed": "turned",
+   "body_ok": true
+  },
+  {
+   "name": "s03-m4",
+   "host_role": "mechanical compute host (x86-64, PyPI gmsh)",
+   "what": "flanges 21 / 18 mm, 30 mm haunch",
+   "source_revision": "03161d61c611bc2619c97130b680eeb6aeb9ad97",
+   "command": "tools/hip-frame-study.py --out build/hip-frame/s03-m4 --params <s03> --mesh 4",
+   "hip": {
+    "top_t": 21,
+    "bottom_t": 18,
+    "haunch": 30,
+    "bed_clip": true
+   },
+   "mass_g": 1121.4,
+   "mesh_mm": 4.0,
+   "cases": {
+    "R1": {
+     "sf": 1.2,
+     "target": 1.2,
+     "ok": true,
+     "layers_sf": 1.22,
+     "peak_mpa": 19.27,
+     "peak_at_mm": [
+      -88.8,
+      -25.2,
+      61.7
+     ],
+     "tets": 155457
+    },
+    "E1": {
+     "sf": 1.43,
+     "target": 2.0,
+     "ok": false,
+     "layers_sf": 1.5,
+     "peak_mpa": 16.06,
+     "peak_at_mm": [
+      -88.8,
+      -25.2,
+      61.7
+     ],
+     "tets": 155457
+    },
+    "E3o": {
+     "sf": 2.63,
+     "target": 2.0,
+     "ok": true,
+     "layers_sf": 3.12,
+     "peak_mpa": 8.76,
+     "peak_at_mm": [
+      112.4,
+      -1.6,
+      56.5
+     ],
+     "tets": 155976
+    },
+    "E3i": {
+     "sf": 2.75,
+     "target": 2.0,
+     "ok": true,
+     "layers_sf": 5.75,
+     "peak_mpa": 8.39,
+     "peak_at_mm": [
+      16.7,
+      -4.8,
+      -33.5
+     ],
+     "tets": 155999
+    },
+    "R3o": {
+     "sf": 1.29,
+     "target": 1.0,
+     "ok": true,
+     "layers_sf": 1.53,
+     "peak_mpa": 17.85,
+     "peak_at_mm": [
+      112.4,
+      -1.6,
+      56.5
+     ],
+     "tets": 155976
+    }
+   },
+   "bed": "turned",
+   "body_ok": true
+  },
+  {
+   "name": "s04-m4",
+   "host_role": "mechanical compute host (x86-64, PyPI gmsh)",
+   "what": "flanges 17 / 17 mm, 30 mm haunch",
+   "source_revision": "03161d61c611bc2619c97130b680eeb6aeb9ad97",
+   "command": "tools/hip-frame-study.py --out build/hip-frame/s04-m4 --params <s04> --mesh 4",
+   "hip": {
+    "top_t": 17,
+    "bottom_t": 17,
+    "haunch": 30,
+    "bed_clip": true
+   },
+   "mass_g": 1076.3,
+   "mesh_mm": 4.0,
+   "cases": {
+    "R1": {
+     "sf": 0.93,
+     "target": 1.2,
+     "ok": false,
+     "layers_sf": 0.94,
+     "peak_mpa": 24.72,
+     "peak_at_mm": [
+      89.0,
+      -25.2,
+      61.7
+     ],
+     "tets": 153346
+    },
+    "E1": {
+     "sf": 1.37,
+     "target": 2.0,
+     "ok": false,
+     "layers_sf": 1.41,
+     "peak_mpa": 16.86,
+     "peak_at_mm": [
+      -89.0,
+      -25.2,
+      61.7
+     ],
+     "tets": 153346
+    },
+    "E3o": {
+     "sf": 2.44,
+     "target": 2.0,
+     "ok": true,
+     "layers_sf": 3.16,
+     "peak_mpa": 9.45,
+     "peak_at_mm": [
+      112.4,
+      -1.6,
+      56.7
+     ],
+     "tets": 154066
+    },
+    "E3i": {
+     "sf": 2.72,
+     "target": 2.0,
+     "ok": true,
+     "layers_sf": 5.78,
+     "peak_mpa": 8.47,
+     "peak_at_mm": [
+      29.3,
+      -2.4,
+      -23.5
+     ],
+     "tets": 154020
+    },
+    "R3o": {
+     "sf": 1.2,
+     "target": 1.0,
+     "ok": true,
+     "layers_sf": 1.55,
+     "peak_mpa": 19.26,
+     "peak_at_mm": [
+      112.4,
+      -1.6,
+      56.7
+     ],
+     "tets": 154066
+    }
+   },
+   "bed": "turned",
+   "body_ok": true
+  },
+  {
+   "name": "s05-m4",
+   "host_role": "mechanical compute host (x86-64, PyPI gmsh)",
+   "what": "the ear lobe reaching 30 mm round the ring",
+   "source_revision": "4e8cbf5d37124f0d507b75803bf8119d21cf9280",
+   "command": "tools/hip-frame-study.py --out build/hip-frame/s05-m4 --params <s05> --mesh 4",
+   "hip": {
+    "top_t": 13.0,
+    "bottom_t": 13.0,
+    "haunch": 0.0,
+    "ear_ring_reach": 30,
+    "bed_clip": true
+   },
+   "mass_g": 1009.8,
+   "mesh_mm": 4.0,
+   "cases": {
+    "R1": {
+     "sf": 0.95,
+     "target": 1.2,
+     "ok": false,
+     "layers_sf": 0.73,
+     "peak_mpa": 24.33,
+     "peak_at_mm": [
+      -65.0,
+      -25.1,
+      62.0
+     ],
+     "tets": 153255
+    },
+    "E1": {
+     "sf": 1.32,
+     "target": 2.0,
+     "ok": false,
+     "layers_sf": 1.04,
+     "peak_mpa": 17.49,
+     "peak_at_mm": [
+      -65.0,
+      -25.1,
+      62.0
+     ],
+     "tets": 153255
+    }
+   },
+   "bed": "turned",
+   "body_ok": true
+  },
+  {
+   "name": "f1-m4",
+   "host_role": "mechanical compute host (x86-64, PyPI gmsh)",
+   "what": "root fillet 5 mm",
+   "source_revision": "a25b8c5e33187ba08fa0fb75fb5b2be83e9a17ea",
+   "command": "tools/hip-frame-study.py --out build/hip-frame/f1-m4 --params <f1> --mesh 4",
+   "hip": {
+    "top_t": 13.0,
+    "bottom_t": 13.0,
+    "haunch": 0.0,
+    "flange_dz": 0.0,
+    "root_r": 5,
+    "root_gap": 0.75,
+    "bed_clip": true
+   },
+   "mass_g": 1011.2,
+   "mesh_mm": 4.0,
+   "cases": {
+    "R1": {
+     "sf": 1.21,
+     "target": 1.2,
+     "ok": true,
+     "layers_sf": 0.93,
+     "peak_mpa": 19.09,
+     "peak_at_mm": [
+      -75.6,
+      -26.1,
+      -62.0
+     ],
+     "tets": 174256
+    },
+    "E1": {
+     "sf": 1.5,
+     "target": 2.0,
+     "ok": false,
+     "layers_sf": 1.25,
+     "peak_mpa": 15.41,
+     "peak_at_mm": [
+      79.4,
+      -26.2,
+      -62.0
+     ],
+     "tets": 174256
+    },
+    "E3o": {
+     "sf": 2.29,
+     "target": 2.0,
+     "ok": true,
+     "layers_sf": 2.92,
+     "peak_mpa": 10.06,
+     "peak_at_mm": [
+      112.5,
+      -1.6,
+      56.5
+     ],
+     "tets": 175088
+    },
+    "E3i": {
+     "sf": 2.72,
+     "target": 2.0,
+     "ok": true,
+     "layers_sf": 3.6,
+     "peak_mpa": 8.47,
+     "peak_at_mm": [
+      16.7,
+      -4.7,
+      -33.4
+     ],
+     "tets": 175100
+    },
+    "R3o": {
+     "sf": 1.12,
+     "target": 1.0,
+     "ok": true,
+     "layers_sf": 1.43,
+     "peak_mpa": 20.51,
+     "peak_at_mm": [
+      112.5,
+      -1.6,
+      56.5
+     ],
+     "tets": 175088
+    }
+   },
+   "bed": "turned",
+   "body_ok": true
+  },
+  {
+   "name": "f2-m4",
+   "host_role": "mechanical compute host (x86-64, PyPI gmsh)",
+   "what": "root fillet 5 mm, flanges 16 / 16",
+   "source_revision": "a25b8c5e33187ba08fa0fb75fb5b2be83e9a17ea",
+   "command": "tools/hip-frame-study.py --out build/hip-frame/f2-m4 --params <f2> --mesh 4",
+   "hip": {
+    "top_t": 16,
+    "bottom_t": 16,
+    "haunch": 0.0,
+    "flange_dz": 0.0,
+    "root_r": 5,
+    "root_gap": 0.75,
+    "bed_clip": true
+   },
+   "mass_g": 1112.0,
+   "mesh_mm": 4.0,
+   "cases": {
+    "R1": {
+     "sf": 1.25,
+     "target": 1.2,
+     "ok": true,
+     "layers_sf": 1.09,
+     "peak_mpa": 18.43,
+     "peak_at_mm": [
+      -74.4,
+      -26.1,
+      -62.0
+     ],
+     "tets": 185446
+    },
+    "E1": {
+     "sf": 1.59,
+     "target": 2.0,
+     "ok": false,
+     "layers_sf": 1.47,
+     "peak_mpa": 14.47,
+     "peak_at_mm": [
+      76.9,
+      -26.1,
+      -62.0
+     ],
+     "tets": 185446
+    },
+    "E3o": {
+     "sf": 2.43,
+     "target": 2.0,
+     "ok": true,
+     "layers_sf": 2.93,
+     "peak_mpa": 9.5,
+     "peak_at_mm": [
+      112.4,
+      -1.6,
+      56.7
+     ],
+     "tets": 185760
+    },
+    "E3i": {
+     "sf": 2.72,
+     "target": 2.0,
+     "ok": true,
+     "layers_sf": 3.41,
+     "peak_mpa": 8.47,
+     "peak_at_mm": [
+      29.3,
+      -2.4,
+      -23.5
+     ],
+     "tets": 185558
+    },
+    "R3o": {
+     "sf": 1.19,
+     "target": 1.0,
+     "ok": true,
+     "layers_sf": 1.44,
+     "peak_mpa": 19.36,
+     "peak_at_mm": [
+      112.4,
+      -1.6,
+      56.7
+     ],
+     "tets": 185760
+    }
+   },
+   "bed": "turned",
+   "body_ok": true
+  },
+  {
+   "name": "f3-m4",
+   "host_role": "mechanical compute host (x86-64, PyPI gmsh)",
+   "what": "root fillet 6 mm, flanges out 3 mm, 16 / 16",
+   "source_revision": "a25b8c5e33187ba08fa0fb75fb5b2be83e9a17ea",
+   "command": "tools/hip-frame-study.py --out build/hip-frame/f3-m4 --params <f3> --mesh 4",
+   "hip": {
+    "top_t": 16,
+    "bottom_t": 16,
+    "haunch": 0.0,
+    "flange_dz": 3,
+    "root_r": 6,
+    "root_gap": 0.75,
+    "bed_clip": true
+   },
+   "mass_g": 1144.7,
+   "mesh_mm": 4.0,
+   "cases": {
+    "R1": {
+     "sf": 2.02,
+     "target": 1.2,
+     "ok": true,
+     "layers_sf": 1.85,
+     "peak_mpa": 11.43,
+     "peak_at_mm": [
+      -119.6,
+      -25.1,
+      44.8
+     ],
+     "tets": 187275
+    },
+    "E1": {
+     "sf": 1.96,
+     "target": 2.0,
+     "ok": false,
+     "layers_sf": 1.67,
+     "peak_mpa": 11.78,
+     "peak_at_mm": [
+      119.8,
+      -25.2,
+      45.1
+     ],
+     "tets": 187275
+    },
+    "E3o": {
+     "sf": 2.59,
+     "target": 2.0,
+     "ok": true,
+     "layers_sf": 2.46,
+     "peak_mpa": 8.9,
+     "peak_at_mm": [
+      112.4,
+      -1.6,
+      56.7
+     ],
+     "tets": 188271
+    },
+    "E3i": {
+     "sf": 2.75,
+     "target": 2.0,
+     "ok": true,
+     "layers_sf": 5.35,
+     "peak_mpa": 8.39,
+     "peak_at_mm": [
+      13.2,
+      -3.8,
+      -33.6
+     ],
+     "tets": 187675
+    },
+    "R3o": {
+     "sf": 1.27,
+     "target": 1.0,
+     "ok": true,
+     "layers_sf": 1.21,
+     "peak_mpa": 18.14,
+     "peak_at_mm": [
+      112.4,
+      -1.6,
+      56.7
+     ],
+     "tets": 188271
+    }
+   },
+   "bed": "turned",
+   "body_ok": true
+  },
+  {
+   "name": "f4-m4",
+   "host_role": "mechanical compute host (x86-64, PyPI gmsh)",
+   "what": "root fillet 5 mm, flanges 21 / 18",
+   "source_revision": "a25b8c5e33187ba08fa0fb75fb5b2be83e9a17ea",
+   "command": "tools/hip-frame-study.py --out build/hip-frame/f4-m4 --params <f4> --mesh 4",
+   "hip": {
+    "top_t": 21,
+    "bottom_t": 18,
+    "haunch": 0.0,
+    "flange_dz": 0.0,
+    "root_r": 5,
+    "root_gap": 0.75,
+    "bed_clip": true
+   },
+   "mass_g": 1233.6,
+   "mesh_mm": 4.0,
+   "cases": {
+    "R1": {
+     "sf": 1.42,
+     "target": 1.2,
+     "ok": true,
+     "layers_sf": 1.22,
+     "peak_mpa": 16.23,
+     "peak_at_mm": [
+      -73.0,
+      -25.4,
+      -61.9
+     ],
+     "tets": 197962
+    },
+    "E1": {
+     "sf": 1.84,
+     "target": 2.0,
+     "ok": false,
+     "layers_sf": 1.45,
+     "peak_mpa": 12.52,
+     "peak_at_mm": [
+      74.2,
+      -25.0,
+      -61.5
+     ],
+     "tets": 197962
+    },
+    "E3o": {
+     "sf": 2.63,
+     "target": 2.0,
+     "ok": true,
+     "layers_sf": 2.76,
+     "peak_mpa": 8.77,
+     "peak_at_mm": [
+      113.1,
+      -2.5,
+      57.0
+     ],
+     "tets": 198548
+    },
+    "E3i": {
+     "sf": 2.73,
+     "target": 2.0,
+     "ok": true,
+     "layers_sf": 3.58,
+     "peak_mpa": 8.43,
+     "peak_at_mm": [
+      30.0,
+      -5.9,
+      -21.7
+     ],
+     "tets": 198615
+    },
+    "R3o": {
+     "sf": 1.29,
+     "target": 1.0,
+     "ok": true,
+     "layers_sf": 1.36,
+     "peak_mpa": 17.87,
+     "peak_at_mm": [
+      113.1,
+      -2.5,
+      57.0
+     ],
+     "tets": 198548
+    }
+   },
+   "bed": "turned",
+   "body_ok": true
+  },
+  {
+   "name": "c-t1-m4",
+   "host_role": "second mechanical compute host (aarch64, conda-forge gmsh)",
+   "what": "the sweep's trial 1 (the new default) on the recording host",
+   "source_revision": "5995f940581d693db6aa56fc1393ea69b970fedf",
+   "command": "tools/hip-frame-study.py --out build/hip-frame/c-t1-m4 --params <t1> --mesh 4",
+   "hip": {
+    "top_t": 13,
+    "bottom_t": 18,
+    "haunch": 0.0,
+    "flange_dz": 1.5,
+    "root_r": 7.5,
+    "root_gap": 0.75,
+    "bed_clip": true
+   },
+   "mass_g": 1106.1,
+   "mesh_mm": 4.0,
+   "cases": {
+    "R1": {
+     "sf": 2.0,
+     "target": 1.2,
+     "ok": true,
+     "layers_sf": 1.71,
+     "peak_mpa": 11.53,
+     "peak_at_mm": [
+      94.8,
+      -23.4,
+      -58.9
+     ],
+     "tets": 193760
+    },
+    "E1": {
+     "sf": 2.08,
+     "target": 2.0,
+     "ok": true,
+     "layers_sf": 1.78,
+     "peak_mpa": 11.07,
+     "peak_at_mm": [
+      94.8,
+      -23.4,
+      -58.9
+     ],
+     "tets": 193760
+    },
+    "E3o": {
+     "sf": 2.39,
+     "target": 2.0,
+     "ok": true,
+     "layers_sf": 2.4,
+     "peak_mpa": 9.65,
+     "peak_at_mm": [
+      112.4,
+      -1.6,
+      56.7
+     ],
+     "tets": 194081
+    },
+    "E3i": {
+     "sf": 2.77,
+     "target": 2.0,
+     "ok": true,
+     "layers_sf": 4.06,
+     "peak_mpa": 8.31,
+     "peak_at_mm": [
+      18.9,
+      -2.0,
+      -13.6
+     ],
+     "tets": 193832
+    },
+    "R3o": {
+     "sf": 1.17,
+     "target": 1.0,
+     "ok": true,
+     "layers_sf": 1.18,
+     "peak_mpa": 19.66,
+     "peak_at_mm": [
+      112.4,
+      -1.6,
+      56.7
+     ],
+     "tets": 194081
+    }
+   },
+   "bed": "turned",
+   "body_ok": true
+  },
+  {
+   "name": "c-t1-m3",
+   "host_role": "second mechanical compute host (aarch64, conda-forge gmsh)",
+   "what": "trial 1 at 3 mm: the convergence check",
+   "source_revision": "5995f940581d693db6aa56fc1393ea69b970fedf",
+   "command": "tools/hip-frame-study.py --out build/hip-frame/c-t1-m3 --params <t1> --mesh 3",
+   "hip": {
+    "top_t": 13,
+    "bottom_t": 18,
+    "haunch": 0.0,
+    "flange_dz": 1.5,
+    "root_r": 7.5,
+    "root_gap": 0.75,
+    "bed_clip": true
+   },
+   "mass_g": 1106.1,
+   "mesh_mm": 3.0,
+   "cases": {
+    "R1": {
+     "sf": 1.79,
+     "target": 1.2,
+     "ok": true,
+     "layers_sf": 1.71,
+     "peak_mpa": 12.91,
+     "peak_at_mm": [
+      -120.0,
+      -25.2,
+      45.0
+     ],
+     "tets": 316476
+    },
+    "E1": {
+     "sf": 1.81,
+     "target": 2.0,
+     "ok": false,
+     "layers_sf": 1.63,
+     "peak_mpa": 12.72,
+     "peak_at_mm": [
+      120.0,
+      -25.2,
+      45.0
+     ],
+     "tets": 316476
+    },
+    "E3o": {
+     "sf": 2.56,
+     "target": 2.0,
+     "ok": true,
+     "layers_sf": 2.11,
+     "peak_mpa": 9.0,
+     "peak_at_mm": [
+      112.1,
+      -2.1,
+      55.6
+     ],
+     "tets": 316253
+    },
+    "E3i": {
+     "sf": 2.7,
+     "target": 2.0,
+     "ok": true,
+     "layers_sf": 4.31,
+     "peak_mpa": 8.53,
+     "peak_at_mm": [
+      16.3,
+      -4.0,
+      -33.1
+     ],
+     "tets": 316444
+    },
+    "R3o": {
+     "sf": 1.26,
+     "target": 1.0,
+     "ok": true,
+     "layers_sf": 1.03,
+     "peak_mpa": 18.34,
+     "peak_at_mm": [
+      112.1,
+      -2.1,
+      55.6
+     ],
+     "tets": 316253
+    }
+   },
+   "bed": "turned",
+   "body_ok": true
+  },
+  {
+   "name": "c-t1e-m4",
+   "host_role": "second mechanical compute host (aarch64, conda-forge gmsh)",
+   "what": "trial 1 with ear_tip (failed: a knife edge at r 66)",
+   "source_revision": "7a229920b1c876d11202c0cb452929ac402d5975",
+   "command": "tools/hip-frame-study.py --out build/hip-frame/c-t1e-m4 --params <t1 + ear_tip> --mesh 4",
+   "hip": {
+    "top_t": 13,
+    "bottom_t": 18,
+    "haunch": 0.0,
+    "flange_dz": 1.5,
+    "root_r": 7.5,
+    "root_gap": 0.75,
+    "ear_tip": true,
+    "bed_clip": true
+   },
+   "mass_g": 1108.0,
+   "mesh_mm": 4.0,
+   "cases": {
+    "R1": {
+     "sf": 1.45,
+     "target": 1.2,
+     "ok": true,
+     "layers_sf": 1.37,
+     "peak_mpa": 15.93,
+     "peak_at_mm": [
+      -125.9,
+      -27.3,
+      41.6
+     ],
+     "tets": 195342
+    },
+    "E1": {
+     "sf": 1.33,
+     "target": 2.0,
+     "ok": false,
+     "layers_sf": 1.2,
+     "peak_mpa": 17.29,
+     "peak_at_mm": [
+      125.9,
+      -27.3,
+      41.6
+     ],
+     "tets": 195342
+    },
+    "E3o": {
+     "sf": 2.39,
+     "target": 2.0,
+     "ok": true,
+     "layers_sf": 2.25,
+     "peak_mpa": 9.64,
+     "peak_at_mm": [
+      112.4,
+      -1.6,
+      56.7
+     ],
+     "tets": 195941
+    },
+    "E3i": {
+     "sf": 2.75,
+     "target": 2.0,
+     "ok": true,
+     "layers_sf": 3.64,
+     "peak_mpa": 8.37,
+     "peak_at_mm": [
+      17.7,
+      -2.4,
+      -33.5
+     ],
+     "tets": 195433
+    },
+    "R3o": {
+     "sf": 1.17,
+     "target": 1.0,
+     "ok": true,
+     "layers_sf": 1.1,
+     "peak_mpa": 19.65,
+     "peak_at_mm": [
+      112.4,
+      -1.6,
+      56.7
+     ],
+     "tets": 195941
+    }
+   },
+   "bed": "turned",
+   "body_ok": true
+  },
+  {
+   "name": "c-dev-m3",
+   "host_role": "second mechanical compute host (aarch64, conda-forge gmsh)",
+   "what": "today at 3 mm on the recording host: the convergence check's before",
+   "source_revision": "d8eda8276706b5e6a9dc00d7c37460977137dd0f",
+   "command": "tools/hip-frame-study.py --out build/hip-frame/c-dev-m3 --params <today: 13 / 13, no fillet> --mesh 3",
+   "hip": {
+    "top_t": 13,
+    "bottom_t": 13,
+    "haunch": 0.0,
+    "flange_dz": 0,
+    "root_r": 0,
+    "root_gap": 0.75,
+    "bed_clip": true
+   },
+   "mass_g": 1009.8,
+   "mesh_mm": 3.0,
+   "cases": {
+    "R1": {
+     "sf": 1.03,
+     "target": 1.2,
+     "ok": false,
+     "layers_sf": 1.05,
+     "peak_mpa": 22.47,
+     "peak_at_mm": [
+      -89.0,
+      -25.2,
+      61.8
+     ],
+     "tets": 255517
+    },
+    "E1": {
+     "sf": 1.27,
+     "target": 2.0,
+     "ok": false,
+     "layers_sf": 1.27,
+     "peak_mpa": 18.08,
+     "peak_at_mm": [
+      -89.0,
+      -25.2,
+      61.8
+     ],
+     "tets": 255517
+    },
+    "E3o": {
+     "sf": 2.48,
+     "target": 2.0,
+     "ok": true,
+     "layers_sf": 2.73,
+     "peak_mpa": 9.28,
+     "peak_at_mm": [
+      112.1,
+      -2.1,
+      55.6
+     ],
+     "tets": 254089
+    },
+    "E3i": {
+     "sf": 2.67,
+     "target": 2.0,
+     "ok": true,
+     "layers_sf": 5.52,
+     "peak_mpa": 8.63,
+     "peak_at_mm": [
+      28.9,
+      -4.0,
+      -22.1
+     ],
+     "tets": 254459
+    },
+    "R3o": {
+     "sf": 1.22,
+     "target": 1.0,
+     "ok": true,
+     "layers_sf": 1.34,
+     "peak_mpa": 18.92,
+     "peak_at_mm": [
+      112.1,
+      -2.1,
+      55.6
+     ],
+     "tets": 254089
+    }
+   },
+   "bed": "turned",
+   "body_ok": true
+  },
+  {
+   "name": "a-after",
+   "host_role": "mechanical compute host (x86-64, PyPI gmsh)",
+   "what": "the new default: the gallery after",
+   "source_revision": "d8eda8276706b5e6a9dc00d7c37460977137dd0f",
+   "command": "tools/hip-frame-study.py --out build/hip-frame/a-after --mesh 4 --vmax 16 --dscale 80 --dump",
+   "hip": {
+    "top_t": 13.0,
+    "bottom_t": 18.0,
+    "haunch": 0.0,
+    "flange_dz": 1.5,
+    "root_r": 7.5,
+    "root_gap": 0.75,
+    "bed_clip": true
+   },
+   "mass_g": 1106.1,
+   "mesh_mm": 4.0,
+   "cases": {
+    "R1": {
+     "sf": 2.05,
+     "target": 1.2,
+     "ok": true,
+     "layers_sf": 1.62,
+     "peak_mpa": 11.23,
+     "peak_at_mm": [
+      -119.7,
+      -25.1,
+      44.8
+     ],
+     "tets": 193419
+    },
+    "E1": {
+     "sf": 2.06,
+     "target": 2.0,
+     "ok": true,
+     "layers_sf": 1.77,
+     "peak_mpa": 11.2,
+     "peak_at_mm": [
+      119.7,
+      -25.1,
+      44.8
+     ],
+     "tets": 193419
+    },
+    "E3o": {
+     "sf": 2.42,
+     "target": 2.0,
+     "ok": true,
+     "layers_sf": 2.44,
+     "peak_mpa": 9.53,
+     "peak_at_mm": [
+      112.4,
+      -1.6,
+      56.7
+     ],
+     "tets": 193418
+    },
+    "E3i": {
+     "sf": 2.75,
+     "target": 2.0,
+     "ok": true,
+     "layers_sf": 4.04,
+     "peak_mpa": 8.37,
+     "peak_at_mm": [
+      29.3,
+      -2.4,
+      -23.5
+     ],
+     "tets": 193661
+    },
+    "R3o": {
+     "sf": 1.19,
+     "target": 1.0,
+     "ok": true,
+     "layers_sf": 1.2,
+     "peak_mpa": 19.42,
+     "peak_at_mm": [
+      112.4,
+      -1.6,
+      56.7
+     ],
+     "tets": 193418
+    }
+   },
+   "bed": "turned",
+   "body_ok": true
+  }
+ ],
+ "search": [
+  {
+   "trial": 3,
+   "hip": {
+    "root_r": 7.0,
+    "flange_dz": 4.5,
+    "top_t": 14,
+    "bottom_t": 18
+   },
+   "verdict": "fail",
+   "summary": "does not fit: no FEA",
+   "margin_min": null,
+   "mass_g": null,
+   "sf": {},
+   "failed_checks": [
+    "body cheeks' z 90.5 (today 90.5); frame bottom -84.5 over the cheeks' flange at -85.75"
+   ]
+  },
+  {
+   "trial": 5,
+   "hip": {
+    "root_r": 4.5,
+    "flange_dz": 4.0,
+    "top_t": 18,
+    "bottom_t": 18
+   },
+   "verdict": "fail",
+   "summary": "does not fit: no FEA",
+   "margin_min": null,
+   "mass_g": null,
+   "sf": {},
+   "failed_checks": [
+    "body cheeks' z 91.0 (today 90.5); frame bottom -84.0 over the cheeks' flange at -85.75"
+   ]
+  },
+  {
+   "trial": 6,
+   "hip": {
+    "root_r": 3.0,
+    "flange_dz": 6.0,
+    "top_t": 18,
+    "bottom_t": 19
+   },
+   "verdict": "fail",
+   "summary": "does not fit: no FEA",
+   "margin_min": null,
+   "mass_g": null,
+   "sf": {},
+   "failed_checks": [
+    "body cheeks' z 93.0 (today 90.5); frame bottom -87.0 over the cheeks' flange at -85.75"
+   ]
+  },
+  {
+   "trial": 7,
+   "hip": {
+    "root_r": 5.5,
+    "flange_dz": 4.0,
+    "top_t": 18,
+    "bottom_t": 16
+   },
+   "verdict": "fail",
+   "summary": "does not fit: no FEA",
+   "margin_min": null,
+   "mass_g": null,
+   "sf": {},
+   "failed_checks": [
+    "body cheeks' z 91.0 (today 90.5); frame bottom -82.0 over the cheeks' flange at -85.75"
+   ]
+  },
+  {
+   "trial": 4,
+   "hip": {
+    "root_r": 3.0,
+    "flange_dz": 2.5,
+    "top_t": 17,
+    "bottom_t": 14
+   },
+   "verdict": "fail",
+   "summary": "R1 1.62, E1 1.78, E3o 2.5, E3i 2.72, R3o 1.22",
+   "margin_min": 0.89,
+   "mass_g": 1124.1,
+   "sf": {
+    "R1": 1.62,
+    "E1": 1.78,
+    "E3o": 2.5,
+    "E3i": 2.72,
+    "R3o": 1.22
+   },
+   "failed_checks": [
+    "E1 SF 1.78 against 2.0"
+   ]
+  },
+  {
+   "trial": 2,
+   "hip": {
+    "root_r": 5.0,
+    "flange_dz": 3.5,
+    "top_t": 18,
+    "bottom_t": 18
+   },
+   "verdict": "fail",
+   "summary": "R1 1.93, E1 1.94, E3o 2.6, E3i 2.71, R3o 1.28",
+   "margin_min": 0.97,
+   "mass_g": 1216.0,
+   "sf": {
+    "R1": 1.93,
+    "E1": 1.94,
+    "E3o": 2.6,
+    "E3i": 2.71,
+    "R3o": 1.28
+   },
+   "failed_checks": [
+    "E1 SF 1.94 against 2.0"
+   ]
+  },
+  {
+   "trial": 8,
+   "hip": {
+    "root_r": 7.0,
+    "flange_dz": 2.5,
+    "top_t": 13,
+    "bottom_t": 17
+   },
+   "verdict": "ok",
+   "summary": "R1 2.01, E1 2.05, E3o 2.41, E3i 2.75, R3o 1.18",
+   "margin_min": 1.025,
+   "mass_g": 1101.1,
+   "sf": {
+    "R1": 2.01,
+    "E1": 2.05,
+    "E3o": 2.41,
+    "E3i": 2.75,
+    "R3o": 1.18
+   },
+   "failed_checks": []
+  },
+  {
+   "trial": 11,
+   "hip": {
+    "root_r": 5.5,
+    "flange_dz": 5.5,
+    "top_t": 15,
+    "bottom_t": 19
+   },
+   "verdict": "fail",
+   "summary": "does not fit: no FEA",
+   "margin_min": null,
+   "mass_g": null,
+   "sf": {},
+   "failed_checks": [
+    "body cheeks' z 90.5 (today 90.5); frame bottom -86.5 over the cheeks' flange at -85.75"
+   ]
+  },
+  {
+   "trial": 12,
+   "hip": {
+    "root_r": 3.5,
+    "flange_dz": 6.0,
+    "top_t": 19,
+    "bottom_t": 19
+   },
+   "verdict": "fail",
+   "summary": "does not fit: no FEA",
+   "margin_min": null,
+   "mass_g": null,
+   "sf": {},
+   "failed_checks": [
+    "body cheeks' z 94.0 (today 90.5); frame bottom -87.0 over the cheeks' flange at -85.75"
+   ]
+  },
+  {
+   "trial": 1,
+   "hip": {
+    "root_r": 7.5,
+    "flange_dz": 1.5,
+    "top_t": 13,
+    "bottom_t": 18
+   },
+   "verdict": "ok",
+   "summary": "R1 2.05, E1 2.06, E3o 2.42, E3i 2.75, R3o 1.19",
+   "margin_min": 1.03,
+   "mass_g": 1106.1,
+   "sf": {
+    "R1": 2.05,
+    "E1": 2.06,
+    "E3o": 2.42,
+    "E3i": 2.75,
+    "R3o": 1.19
+   },
+   "failed_checks": []
+  },
+  {
+   "trial": 13,
+   "hip": {
+    "root_r": 4.0,
+    "flange_dz": 5.5,
+    "top_t": 18,
+    "bottom_t": 14
+   },
+   "verdict": "fail",
+   "summary": "does not fit: no FEA",
+   "margin_min": null,
+   "mass_g": null,
+   "sf": {},
+   "failed_checks": [
+    "body cheeks' z 92.5 (today 90.5); frame bottom -81.5 over the cheeks' flange at -85.75"
+   ]
+  },
+  {
+   "trial": 14,
+   "hip": {
+    "root_r": 4.5,
+    "flange_dz": 3.5,
+    "top_t": 19,
+    "bottom_t": 13
+   },
+   "verdict": "fail",
+   "summary": "does not fit: no FEA",
+   "margin_min": null,
+   "mass_g": null,
+   "sf": {},
+   "failed_checks": [
+    "print bed: TOO BIG [274, 163, 81]",
+    "body cheeks' z 91.5 (today 90.5); frame bottom -78.5 over the cheeks' flange at -85.75"
+   ]
+  },
+  {
+   "trial": 15,
+   "hip": {
+    "root_r": 4.5,
+    "flange_dz": 4.0,
+    "top_t": 18,
+    "bottom_t": 19
+   },
+   "verdict": "fail",
+   "summary": "does not fit: no FEA",
+   "margin_min": null,
+   "mass_g": null,
+   "sf": {},
+   "failed_checks": [
+    "body cheeks' z 91.0 (today 90.5); frame bottom -85.0 over the cheeks' flange at -85.75"
+   ]
+  },
+  {
+   "trial": 17,
+   "hip": {
+    "root_r": 5.5,
+    "flange_dz": 2.5,
+    "top_t": 19,
+    "bottom_t": 13
+   },
+   "verdict": "fail",
+   "summary": "does not fit: no FEA",
+   "margin_min": null,
+   "mass_g": null,
+   "sf": {},
+   "failed_checks": [
+    "print bed: TOO BIG [274, 161, 81]"
+   ]
+  },
+  {
+   "trial": 9,
+   "hip": {
+    "root_r": 5.5,
+    "flange_dz": 4.0,
+    "top_t": 13,
+    "bottom_t": 17
+   },
+   "verdict": "fail",
+   "summary": "R1 1.95, E1 1.94, E3o 2.39, E3i 2.74, R3o 1.17",
+   "margin_min": 0.97,
+   "mass_g": 1116.3,
+   "sf": {
+    "R1": 1.95,
+    "E1": 1.94,
+    "E3o": 2.39,
+    "E3i": 2.74,
+    "R3o": 1.17
+   },
+   "failed_checks": [
+    "E1 SF 1.94 against 2.0"
+   ]
+  },
+  {
+   "trial": 10,
+   "hip": {
+    "root_r": 5.5,
+    "flange_dz": 4.5,
+    "top_t": 15,
+    "bottom_t": 15
+   },
+   "verdict": "fail",
+   "summary": "R1 1.89, E1 1.88, E3o 2.46, E3i 2.71, R3o 1.21",
+   "margin_min": 0.94,
+   "mass_g": 1127.7,
+   "sf": {
+    "R1": 1.89,
+    "E1": 1.88,
+    "E3o": 2.46,
+    "E3i": 2.71,
+    "R3o": 1.21
+   },
+   "failed_checks": [
+    "E1 SF 1.88 against 2.0"
+   ]
+  },
+  {
+   "trial": 20,
+   "hip": {
+    "root_r": 5.0,
+    "flange_dz": 1.5,
+    "top_t": 14,
+    "bottom_t": 13
+   },
+   "verdict": "fail",
+   "summary": "does not fit: no FEA",
+   "margin_min": null,
+   "mass_g": null,
+   "sf": {},
+   "failed_checks": [
+    "print bed: TOO BIG [274, 154, 81]"
+   ]
+  },
+  {
+   "trial": 16,
+   "hip": {
+    "root_r": 3.5,
+    "flange_dz": 2.5,
+    "top_t": 16,
+    "bottom_t": 16
+   },
+   "verdict": "fail",
+   "summary": "R1 1.64, E1 1.88, E3o 2.53, E3i 2.74, R3o 1.24",
+   "margin_min": 0.94,
+   "mass_g": 1137.5,
+   "sf": {
+    "R1": 1.64,
+    "E1": 1.88,
+    "E3o": 2.53,
+    "E3i": 2.74,
+    "R3o": 1.24
+   },
+   "failed_checks": [
+    "E1 SF 1.88 against 2.0"
+   ]
+  },
+  {
+   "trial": 22,
+   "hip": {
+    "root_r": 7.5,
+    "flange_dz": 3.0,
+    "top_t": 15,
+    "bottom_t": 19
+   },
+   "verdict": "fail",
+   "summary": "does not fit: no FEA",
+   "margin_min": null,
+   "mass_g": null,
+   "sf": {},
+   "failed_checks": [
+    "body cheeks' z 90.5 (today 90.5); frame bottom -84.0 over the cheeks' flange at -85.75"
+   ]
+  },
+  {
+   "trial": 18,
+   "hip": {
+    "root_r": 3.5,
+    "flange_dz": 2.0,
+    "top_t": 16,
+    "bottom_t": 15
+   },
+   "verdict": "fail",
+   "summary": "R1 1.62, E1 1.92, E3o 2.49, E3i 2.74, R3o 1.22",
+   "margin_min": 0.96,
+   "mass_g": 1116.5,
+   "sf": {
+    "R1": 1.62,
+    "E1": 1.92,
+    "E3o": 2.49,
+    "E3i": 2.74,
+    "R3o": 1.22
+   },
+   "failed_checks": [
+    "E1 SF 1.92 against 2.0"
+   ]
+  },
+  {
+   "trial": 19,
+   "hip": {
+    "root_r": 7.0,
+    "flange_dz": 4.5,
+    "top_t": 13,
+    "bottom_t": 17
+   },
+   "verdict": "fail",
+   "summary": "R1 1.92, E1 1.85, E3o 2.36, E3i 2.74, R3o 1.16",
+   "margin_min": 0.925,
+   "mass_g": 1123.0,
+   "sf": {
+    "R1": 1.92,
+    "E1": 1.85,
+    "E3o": 2.36,
+    "E3i": 2.74,
+    "R3o": 1.16
+   },
+   "failed_checks": [
+    "E1 SF 1.85 against 2.0"
+   ]
+  },
+  {
+   "trial": 21,
+   "hip": {
+    "root_r": 5.5,
+    "flange_dz": 3.5,
+    "top_t": 18,
+    "bottom_t": 15
+   },
+   "verdict": "fail",
+   "summary": "R1 2.0, E1 1.85, E3o 2.51, E3i 2.74, R3o 1.23",
+   "margin_min": 0.925,
+   "mass_g": 1170.9,
+   "sf": {
+    "R1": 2.0,
+    "E1": 1.85,
+    "E3o": 2.51,
+    "E3i": 2.74,
+    "R3o": 1.23
+   },
+   "failed_checks": [
+    "E1 SF 1.85 against 2.0"
+   ]
+  },
+  {
+   "trial": 26,
+   "hip": {
+    "root_r": 8.0,
+    "flange_dz": 4.5,
+    "top_t": 18,
+    "bottom_t": 16
+   },
+   "verdict": "fail",
+   "summary": "does not fit: no FEA",
+   "margin_min": null,
+   "mass_g": null,
+   "sf": {},
+   "failed_checks": [
+    "body cheeks' z 91.5 (today 90.5); frame bottom -82.5 over the cheeks' flange at -85.75"
+   ]
+  },
+  {
+   "trial": 23,
+   "hip": {
+    "root_r": 5.0,
+    "flange_dz": 0.5,
+    "top_t": 19,
+    "bottom_t": 17
+   },
+   "verdict": "fail",
+   "summary": "R1 1.58, E1 1.74, E3o 2.54, E3i 2.71, R3o 1.25",
+   "margin_min": 0.87,
+   "mass_g": 1186.9,
+   "sf": {
+    "R1": 1.58,
+    "E1": 1.74,
+    "E3o": 2.54,
+    "E3i": 2.71,
+    "R3o": 1.25
+   },
+   "failed_checks": [
+    "E1 SF 1.74 against 2.0"
+   ]
+  },
+  {
+   "trial": 24,
+   "hip": {
+    "root_r": 7.5,
+    "flange_dz": 0.0,
+    "top_t": 15,
+    "bottom_t": 14
+   },
+   "verdict": "fail",
+   "summary": "R1 1.21, E1 1.64, E3o 2.43, E3i 2.68, R3o 1.19",
+   "margin_min": 0.82,
+   "mass_g": 1063.7,
+   "sf": {
+    "R1": 1.21,
+    "E1": 1.64,
+    "E3o": 2.43,
+    "E3i": 2.68,
+    "R3o": 1.19
+   },
+   "failed_checks": [
+    "E1 SF 1.64 against 2.0"
+   ]
+  },
+  {
+   "trial": 27,
+   "hip": {
+    "root_r": 6.0,
+    "flange_dz": 4.5,
+    "top_t": 16,
+    "bottom_t": 16
+   },
+   "verdict": "fail",
+   "summary": "R1 1.89, E1 1.91, E3o 2.59, E3i 2.73, R3o 1.27",
+   "margin_min": 0.955,
+   "mass_g": 1161.4,
+   "sf": {
+    "R1": 1.89,
+    "E1": 1.91,
+    "E3o": 2.59,
+    "E3i": 2.73,
+    "R3o": 1.27
+   },
+   "failed_checks": [
+    "E1 SF 1.91 against 2.0"
+   ]
+  },
+  {
+   "trial": 30,
+   "hip": {
+    "root_r": 7.0,
+    "flange_dz": 2.5,
+    "top_t": 13,
+    "bottom_t": 17
+   },
+   "verdict": "ok",
+   "summary": "R1 2.01, E1 2.05, E3o 2.41, E3i 2.75, R3o 1.18",
+   "margin_min": 1.025,
+   "mass_g": 1101.1,
+   "sf": {
+    "R1": 2.01,
+    "E1": 2.05,
+    "E3o": 2.41,
+    "E3i": 2.75,
+    "R3o": 1.18
+   },
+   "failed_checks": []
+  },
+  {
+   "trial": 25,
+   "hip": {
+    "root_r": 6.5,
+    "flange_dz": 1.5,
+    "top_t": 13,
+    "bottom_t": 17
+   },
+   "verdict": "ok",
+   "summary": "R1 1.98, E1 2.05, E3o 2.44, E3i 2.75, R3o 1.19",
+   "margin_min": 1.025,
+   "mass_g": 1090.2,
+   "sf": {
+    "R1": 1.98,
+    "E1": 2.05,
+    "E3o": 2.44,
+    "E3i": 2.75,
+    "R3o": 1.19
+   },
+   "failed_checks": []
+  },
+  {
+   "trial": 29,
+   "hip": {
+    "root_r": 3.5,
+    "flange_dz": 1.5,
+    "top_t": 13,
+    "bottom_t": 18
+   },
+   "verdict": "fail",
+   "summary": "R1 1.7, E1 1.94, E3o 2.43, E3i 2.76, R3o 1.19",
+   "margin_min": 0.97,
+   "mass_g": 1103.8,
+   "sf": {
+    "R1": 1.7,
+    "E1": 1.94,
+    "E3o": 2.43,
+    "E3i": 2.76,
+    "R3o": 1.19
+   },
+   "failed_checks": [
+    "E1 SF 1.94 against 2.0"
+   ]
+  },
+  {
+   "trial": 28,
+   "hip": {
+    "root_r": 8.0,
+    "flange_dz": 3.0,
+    "top_t": 14,
+    "bottom_t": 15
+   },
+   "verdict": "ok",
+   "summary": "R1 1.98, E1 2.0, E3o 2.52, E3i 2.75, R3o 1.23",
+   "margin_min": 1.0,
+   "mass_g": 1094.6,
+   "sf": {
+    "R1": 1.98,
+    "E1": 2.0,
+    "E3o": 2.52,
+    "E3i": 2.75,
+    "R3o": 1.23
+   },
+   "failed_checks": []
+  },
+  {
+   "trial": 31,
+   "hip": {
+    "root_r": 7.5,
+    "flange_dz": 3.5,
+    "top_t": 13,
+    "bottom_t": 18
+   },
+   "verdict": "fail",
+   "summary": "R1 1.62, E1 1.96, E3o 2.47, E3i 2.75, R3o 1.21",
+   "margin_min": 0.98,
+   "mass_g": 1127.4,
+   "sf": {
+    "R1": 1.62,
+    "E1": 1.96,
+    "E3o": 2.47,
+    "E3i": 2.75,
+    "R3o": 1.21
+   },
+   "failed_checks": [
+    "E1 SF 1.96 against 2.0"
+   ]
+  },
+  {
+   "trial": 33,
+   "hip": {
+    "root_r": 3.5,
+    "flange_dz": 2.5,
+    "top_t": 13,
+    "bottom_t": 17
+   },
+   "verdict": "fail",
+   "summary": "R1 1.81, E1 1.85, E3o 2.39, E3i 2.76, R3o 1.17",
+   "margin_min": 0.925,
+   "mass_g": 1098.9,
+   "sf": {
+    "R1": 1.81,
+    "E1": 1.85,
+    "E3o": 2.39,
+    "E3i": 2.76,
+    "R3o": 1.17
+   },
+   "failed_checks": [
+    "E1 SF 1.85 against 2.0"
+   ]
+  },
+  {
+   "trial": 36,
+   "hip": {
+    "root_r": 7.0,
+    "flange_dz": 5.5,
+    "top_t": 17,
+    "bottom_t": 15
+   },
+   "verdict": "fail",
+   "summary": "does not fit: no FEA",
+   "margin_min": null,
+   "mass_g": null,
+   "sf": {},
+   "failed_checks": [
+    "body cheeks' z 91.5 (today 90.5); frame bottom -82.5 over the cheeks' flange at -85.75"
+   ]
+  },
+  {
+   "trial": 32,
+   "hip": {
+    "root_r": 7.5,
+    "flange_dz": 1.5,
+    "top_t": 13,
+    "bottom_t": 17
+   },
+   "verdict": "ok",
+   "summary": "R1 2.02, E1 2.05, E3o 2.41, E3i 2.75, R3o 1.18",
+   "margin_min": 1.025,
+   "mass_g": 1090.8,
+   "sf": {
+    "R1": 2.02,
+    "E1": 2.05,
+    "E3o": 2.41,
+    "E3i": 2.75,
+    "R3o": 1.18
+   },
+   "failed_checks": []
+  },
+  {
+   "trial": 34,
+   "hip": {
+    "root_r": 5.0,
+    "flange_dz": 2.0,
+    "top_t": 18,
+    "bottom_t": 15
+   },
+   "verdict": "ok",
+   "summary": "R1 1.91, E1 2.01, E3o 2.55, E3i 2.77, R3o 1.25",
+   "margin_min": 1.005,
+   "mass_g": 1153.4,
+   "sf": {
+    "R1": 1.91,
+    "E1": 2.01,
+    "E3o": 2.55,
+    "E3i": 2.77,
+    "R3o": 1.25
+   },
+   "failed_checks": []
+  },
+  {
+   "trial": 35,
+   "hip": {
+    "root_r": 3.0,
+    "flange_dz": 3.5,
+    "top_t": 17,
+    "bottom_t": 18
+   },
+   "verdict": "fail",
+   "summary": "R1 1.52, E1 1.71, E3o 2.57, E3i 2.71, R3o 1.26",
+   "margin_min": 0.855,
+   "mass_g": 1196.5,
+   "sf": {
+    "R1": 1.52,
+    "E1": 1.71,
+    "E3o": 2.57,
+    "E3i": 2.71,
+    "R3o": 1.26
+   },
+   "failed_checks": [
+    "E1 SF 1.71 against 2.0"
+   ]
+  }
+ ]
+}

@@ -33,7 +33,7 @@ def rel(p: Path) -> str:
 
 def case_rows(res: dict) -> dict:
     return {c['case']: {'sf': c['safety_factor'], 'target': c['target'], 'ok': c['ok'],
-                        'layers_sf': c['layers'][res['print_normal']]['sf'],
+                        'layers_sf': (c.get('layers') or {}).get(res.get('print_normal'), {}).get('sf'),
                         'peak_mpa': c['von_mises_design_mpa'], 'peak_at_mm': c['design_peak_at_mm'],
                         'tets': c['mesh']['tets']} for c in res['cases']}
 
@@ -54,7 +54,7 @@ def pair(before: Path, after: Path, case: str, rb: dict, ra: dict, out: Path):
     cb, ca = case_rows(rb)[case], case_rows(ra)[case]
     for x, label, c, res in ((8, 'Before: dev', cb, rb), (a.width + 32, 'After: issue #29', ca, ra)):
         hip = res['hip']
-        d.text((x, 6), f"{label}   {case} SF {c['sf']} (target {c['target']})", fill='black', font=font)
+        d.text((x, 6), f"{label}   {case} SF {c['sf']} (target {c['target']}), {res['mesh_mm']:g} mm mesh", fill='black', font=font)
         d.text((x, 34), f"flanges {hip['top_t']:g} / {hip['bottom_t']:g} mm, out {hip['flange_dz']:g} mm, root fillet "
                         f"{hip['root_r']:g} mm, {res['mass_g']:g} g", fill=(70, 70, 70), font=small)
     im.save(out)
@@ -116,8 +116,9 @@ def main():
     runs = json.loads(a.runs.read_text()) if a.runs else []
     for r in runs:
         res = json.loads(Path(r.pop('result')).read_text())
-        r.update({'hip': res['hip'], 'mass_g': res['mass_g'], 'mesh_mm': res['mesh_mm'], 'cases': case_rows(res),
-                  'bed': res['bed']['placement'], 'body_ok': res['body']['ok']})
+        r.update({'hip': res.get('hip') or 'the defaults at its source revision', 'mass_g': res.get('mass_g'), 'mesh_mm': res['mesh_mm'],
+                  'cases': case_rows(res), 'bed': (res.get('bed') or {}).get('placement'),     # the early runs (r0x, s0x) predate
+                  'body_ok': (res.get('body') or {}).get('ok')})                              # the mass, bed and body checks
     table = a.out / 'trials.json'
     table.write_text(json.dumps({'schema': 1, 'screening': runs, 'search': trials}, indent=1) + '\n')
     outputs.append(table)
@@ -140,7 +141,11 @@ def main():
             'assumptions': ['loads: cad/leg_studies.py hip-frame cases at D71 18.75 kg a leg, the whole-leg load shares from '
                             'exports/leg/fea/summary.json', 'material: PA6-CF across the layers (pa6_cf_z, 23.04 MPa) everywhere, '
                             'humid; the layer-resolved check uses pa6_cf_xy (48.96 MPa) in the layers',
-                            'linear elastic, small deflection, P2 tetrahedra; the colour scale is fixed, stress above it is the top colour'],
+                            'linear elastic, small deflection, P2 tetrahedra; the colour scale is fixed, stress above it is the top colour',
+                            'one host and one mesh for before and after; the two hosts mesh differently (trials.json names each run\'s host)'],
+            'limits': ['the after design\'s E1 and R1 peak at a sharp corner (each knee-out ear\'s backing block ends on the web): '
+                       'not converged at this mesh. trials.json carries the 3 mm runs on the recording host (c-dev-m3, c-t1-m3)',
+                       'FEA does not prove strength: the proof-load checks in issue #29 stay open'],
             'outputs': {rel(p): sha(p) for p in outputs}}
     (a.out / 'gallery.json').write_text(json.dumps(prov, indent=1) + '\n')
     print('\n'.join(rel(p) for p in outputs + [a.out / 'gallery.json']))
