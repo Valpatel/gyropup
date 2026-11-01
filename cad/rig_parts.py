@@ -427,6 +427,11 @@ def tof_mount():
 
 
 POD = {'w': 140.0, 'd': 200.0, 'h': 230.0, 'wall': 4.0, 'pad': 6.0}   # the electrics pod on the post's back face: depth off the post
+# the panel's (pod_lid) four M3 x 10 (pod frame x, z: 8 mm in from its edges) into heat-set inserts (94459A140, 5.7 mm) in
+# Ø10 bosses in the pod's open face's corners: the 3 mm panel leaves 7 mm of screw, so the pilots go 8.5 (#137: until
+# then the screws met nothing)
+POD_LID_SCREWS = ((-POD['w'] + 8.0, 8.0), (-8.0, 8.0), (-POD['w'] + 8.0, POD['h'] - 8.0), (-8.0, POD['h'] - 8.0))
+POD_LID_BOSS = {'r': 5.0, 'len': 11.0, 'pilot_depth': 8.5}
                                                           # (w), width across it (d), height
 # what goes inside (makers' drawings): the contactor bottom-mounted on 2 x M4 46.3 mm apart (TE LEV100: a Ø39.5 can 58 mm
 # tall, its M5 load terminals 17.78 apart on top); the off-delay relay (ProSense T2R, 2 in square, one central screw);
@@ -476,6 +481,11 @@ def pod():
     s = s.cut(box(u['x'] - u['w'] / 2, u['x'] + u['w'] / 2, u['y'] - u['d'] / 2, u['y'] + u['d'] / 2 + 3, t + 2.0, t + 9.0))
     s = s.cut(cyl(9.0, 'z', h - t - 1, h + 1, -w / 2, 0.0))                      # the service loop (motor power + CAN) out the top
     s = s.cut(cyl(5.0, 'z', -1, t + 1, -w + 25.0, -60.0))                         # the sensors' leads (ToF, load cells) out the bottom
+    b = POD_LID_BOSS                                                              # the panel's four M3 inserts, in the open face's corners
+    outer = box(-w, 0.0, -d / 2, d / 2, 0.0, h).edges('|X').fillet(6.0)
+    for (x, z) in POD_LID_SCREWS:
+        s = s.union(cyl(b['r'], 'y', d / 2 - b['len'], d / 2, x, z).intersect(outer))
+        s = s.cut(cyl(FAST['M3']['insert_pilot'] / 2, 'y', d / 2 - b['pilot_depth'], d / 2 + 1.0, x, z))
     return s
 
 
@@ -502,7 +512,7 @@ def pod_lid():
             s = s.cut(hole)
         else:
             s = s.cut(cyl(c[1] / 2, 'y', -1, t + 1, x, z))
-    for (x, z) in ((-w + 8, 8), (-8, 8), (-w + 8, h - 8), (-8, h - 8)):
+    for (x, z) in POD_LID_SCREWS:                                                 # M3 x 10 into the pod's corner inserts
         s = s.cut(cyl(1.7, 'y', -1, t + 1, x, z))
     return s
 

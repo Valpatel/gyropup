@@ -55,7 +55,7 @@ STEPS = [
      'the driver\'s crescent; the carrier\'s tabs into their pockets: 3 x M3 x 10 flat heads.'),
     ('The tilt yoke and the turret-board bay', ['tilt_yoke', 'ring_leads_rotor', 'board_bay', 'turret_board'],
      {'tilt_yoke': 50, 'board_bay': (0, -40, 0), 'turret_board': (0, -70, 0)}, (0.5, -1.0, 0.5),
-     'The rotor leads through the yoke\'s slot, the yoke on the turntable: 4 x M4 x 10. 4 x M3 inserts in the -y arm, the '
+     'The rotor leads through the yoke\'s slot, the yoke on the turntable: 4 x M4 x 12. 4 x M3 inserts in the -y arm, the '
      'bay on them: 4 x M3 x 8 flat heads; the three boards on their standoffs (12 and 14 mm); the ring\'s rotor plug and '
      'the hall into level 2.'),
     ('The tilt servo and the cradle on its aluminium cheeks',

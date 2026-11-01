@@ -1,6 +1,7 @@
 """Strength of the turret's printed parts (cadagent.fea) under slewing, a push on the barrel, and a fall.
 
     .venv/bin/python cad/turret_studies.py [--mesh 2.5] [--no-anim] [--only tilt_yoke pan_ring]
+    .venv/bin/python cad/turret_studies.py --hand-checks      # only the formula checks, into the existing summary.json
 
 Every printed part that carries load is meshed from cad/turret.py's solid (in its build frame), held where its bolts
 and seats hold it, loaded where its neighbours push, and solved with cadagent.fea (P2 tetrahedra, linear elastic).
@@ -514,7 +515,7 @@ def run(mesh, anim=True, only=None):
 
     summary = {'targets': TARGETS, 'mesh_mm': mesh, 'masses': M, 'results': results}
     if not only:
-        summary['hand_checks'] = hand_checks(G, M)
+        summary['hand_checks'] = hand_checks(G, M)          # with the FEA's masses (refresh_hand_checks() adds its own)
         summary['verdict'] = {
             'on': 'the layer-aware SF for printed parts (N2), the yield SF for the aluminium parts; the isotropic columns are reported with each result',
             'min_sf_everyday': min((r['verdict_sf'] for r in results if r['case'].startswith('E')), default=None),
@@ -586,11 +587,15 @@ def hand_checks(G, M):
     out['journal_lip'] = {'case': 'R: 30 g with the turret upside down', 'force_n': round(F_up), 'shear_area_mm2': round(A_lip), 'shear_mpa': round(tau, 2),
                           'allowable_mpa': round(0.5 * MATERIALS['pa6_cf_z'].strength_mpa, 1), 'sf': round(0.5 * MATERIALS['pa6_cf_z'].strength_mpa / tau, 1),
                           'note': 'shear allowable taken as half the across-layer tensile strength'}
-    # the TM bolts: the sideways fall's moment over the 80 x 80 pattern, two bolts in tension
+    # the TM bolts: the sideways fall's moment over the 80 x 80 pattern, two bolts in tension. The lever is the centre's
+    # height above the TM face: frame T's origin is the pan base's foot, PLINTH['h'] above the face since D66 (#137: it
+    # used the centre in frame T, 86 mm short)
     F_side = M['total_kg'] * G0 * FALL_G
-    mom = F_side * M['com_mm'][2] / 1000
+    h_face = M['com_mm'][2] + tu.PLINTH['h']
+    mom = F_side * h_face / 1000
     T_bolt = mom / (0.080 * 2)
-    out['tm_bolts'] = {'case': 'R: 30 g sideways on the whole turret', 'moment_nm': round(mom, 1), 'tension_per_bolt_n': round(T_bolt),
+    out['tm_bolts'] = {'case': 'R: 30 g sideways on the whole turret', 'com_above_tm_face_mm': round(h_face, 1),
+                       'moment_nm': round(mom, 1), 'tension_per_bolt_n': round(T_bolt),
                        'm5_insert_pullout_n_est': 1500, 'sf': round(1500 / T_bolt, 1), 'note': 'M5 heat-set insert in PA6-CF/PETG: ~1.5 kN pull-out (est, CNC Kitchen tests)'}
     # the yoke's four M4 inserts in the turntable: the upper panning group's sideways fall
     m_up = M['pan_kg'] - M['pan_ring_kg']
@@ -658,10 +663,26 @@ def hand_checks(G, M):
 SHEET_T = 3.175          # the cheek plates' 0.125 in
 
 
+def refresh_hand_checks():
+    """Recompute only hand_checks() (no mesh, no solve) against the turret as built now and write them into the existing
+    summary.json, with the masses they used beside them (`hand_checks_masses`: the FEA results keep `masses`)."""
+    f = OUT / 'summary.json'
+    summary = json.loads(f.read_text())
+    M = masses()
+    summary['hand_checks'] = hand_checks(tu.Geo(), M)
+    summary['hand_checks_masses'] = M
+    f.write_text(json.dumps(summary, indent=1, default=lambda o: o.tolist() if isinstance(o, np.ndarray) else str(o)) + '\n')
+    return summary
+
+
 if __name__ == '__main__':
     ap = argparse.ArgumentParser()
     ap.add_argument('--mesh', type=float, default=2.5)
     ap.add_argument('--no-anim', action='store_true')
     ap.add_argument('--only', nargs='+')
+    ap.add_argument('--hand-checks', action='store_true', help='only the formula checks, into the existing summary.json')
     a = ap.parse_args()
-    run(a.mesh, anim=not a.no_anim, only=a.only)
+    if a.hand_checks:
+        refresh_hand_checks()
+    else:
+        run(a.mesh, anim=not a.no_anim, only=a.only)

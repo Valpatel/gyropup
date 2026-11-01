@@ -4648,7 +4648,7 @@
    "https://www.mcmaster.com/91290A336/"
   ],
   "confidence": "product page",
-  "used_for": "leg v2: the BotWheel's stator flange, 4 x M6 from inside the wheel link (4 per leg)",
+  "used_for": "none on the robot now: the BotWheel's stator flange takes 4 x M6 x 30 (screw_m6x30; cad/fivebar.py JOINTS wheel, cad/build_leg.py), because an M6 x 40 bottoms unless the wheel's threads are over 15 mm deep; kept for its STEP and specs (the rig's bench lists its own M6 x 40)",
   "qty_per_robot": 8,
   "notes": "Head in the 11.2 x 7 counterbore (underside at y = 35); grip to the BotWheel's boss face (y = 67.8) 32.8 mm, so 7.2 mm into the wheel's M6 (1.2 d; the thread depth is not in interfaces.json yet: check it, 45 mm would give 12.2). Partially threaded, 24 mm minimum thread, so all of the engaged length is thread. Same series as screw_m6x35 (91290A334); 91290A203 (fully threaded, pack of 10, $4.90) is the cheaper buy for a single robot."
  },
@@ -4999,7 +4999,7 @@
   },
   "used_for": "the knees: two in each lower link's boss (issue #29)",
   "qty_per_robot": 8,
-  "notes": "6301-2RS, 12 x 37 x 12, sealed: replaces the 6201-2RS (bearing_6201) in the knees (issue #29). In the undamped power cut (R3) the rear knee's worse bearing carries 3.65 kN with the 36 mm span: s0 1.14 on SKF's C0 4.15 kN, where the 6201 had 0.88 (3.49 kN on 38 mm, C0 3.07 kN). cad/fivebar.py seats it in Ø37.02 x 12 bores at both ends of the 48 mm knee boss, the boss Ø51."
+  "notes": "6301-2RS, 12 x 37 x 12, sealed: replaces the 6201-2RS (bearing_6201) in the knees (issue #29). In the undamped power cut (R3) the rear knee's worse bearing carries 3,672 N with the 36 mm span: s0 1.13 on SKF's C0 4.15 kN (exports/leg/fea/summary.json R3 knee_rear bearing), where the 6201 had 0.88 (3.49 kN on 38 mm, C0 3.07 kN). cad/fivebar.py seats it in Ø37.02 x 12 bores at both ends of the 48 mm knee boss, the boss Ø51."
  },
  {
   "id": "mcmaster-98541a174",

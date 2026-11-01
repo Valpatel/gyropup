@@ -481,9 +481,9 @@ def dcdc_screws():
 
 
 def dcdc_bracket():
-    """The TRACO TEP 150-4815WI's bracket (PA6-CF): a foot on the tray under the converter, screwed down beyond its ends,
-    and an upright on its inner side its baseplate bolts to (four M3 from the carrier's side: the converter goes on the
-    bracket first, then the bracket on the tray). The converter's outer face stays at |y| 121: the left ear bracket's
+    """The TRACO TEP 150-4815WI's bracket (PA6-CF): a foot on the power plate under the converter, screwed down beyond its
+    ends, and an upright on its inner side its baseplate bolts to (four M3 from the carrier's side: the converter goes on
+    the bracket first, then the bracket on the plate). The converter's outer face stays at |y| 121: the left ear bracket's
     nyloc nuts stand inside the wall to 122.6."""
     import body_layout as bl
     d = bl.DCDC
@@ -583,6 +583,14 @@ RISER_FOOT_R = 22.0         # each leg ends in a Ø44 x 4 foot: it spreads the t
 RISER_FOOT_T = 4.0
 RISER_TOP_T = 9.0
 RISER_FOOT_PILOT = 12.0     # the feet's insert pilots: an M5 x 16 through the turret plate and deck reaches 10.3 mm in
+# The TM face's receivers, against the turret's contract (exports/turret/mount.json riser: bolt_hole_depth_min_mm,
+# dowel_holes). D66 put the compute plinth's 10 mm tray on the riser: its M5 x 16 heads sit on 5.5 mm counterbores'
+# floors 4.5 mm above the face, so each tip ends 11.5 mm down (the contract asks 12.5); its dowel holes are 8 deep from
+# below, so a 16 mm pin needs 8.5 in the riser. The legs are solid Ø18 under the bolts (the foot pilots reach z 12), and
+# the dowels, between the legs, get a boss under the 9 mm ring (issue #137).
+RISER_TM_PILOT = 13.0       # M5 insert pilots from the top: 1.5 mm past the M5 x 16's tip, 5 mm of PA6-CF over the foot pilot
+RISER_DOWEL_DEPTH = 9.5     # Ø5 dowel holes: a 16 mm pin pressed to the bottom stands 6.5 proud, 1.5 short of the tray hole's end
+RISER_DOWEL_BOSS = (6.0, 2.5)   # under the ring at each dowel: radius, depth below the ring (a 2 mm floor under the hole)
 
 
 def riser():
@@ -597,12 +605,14 @@ def riser():
     s = ring
     for (x, y) in RISER_FEET:
         s = s.union(cyl_z(RISER_LEG_R, 0.0, H - RISER_TOP_T + 0.01, x, y)).union(cyl_z(RISER_FOOT_R, 0.0, RISER_FOOT_T, x, y))
+    for (x, y) in t['dowels']:                                                  # the dowel holes run past the ring
+        s = s.union(cyl_z(RISER_DOWEL_BOSS[0], H - RISER_TOP_T - RISER_DOWEL_BOSS[1], H - RISER_TOP_T + 0.01, x, y))
     for (x, y) in t['bolts']:
-        s = s.cut(cyl_z(3.2, H - 9.5, H + 1.0, x, y))                          # M5 insert from the top (the turret)
+        s = s.cut(cyl_z(3.2, H - RISER_TM_PILOT, H + 1.0, x, y))                # M5 insert from the top (the turret)
     for (x, y) in RISER_FEET:
         s = s.cut(cyl_z(3.2, -1.0, RISER_FOOT_PILOT, x, y))                     # M5 insert from below (the deck; P2's M5 x 16 goes 10.3 in)
     for (x, y) in t['dowels']:
-        s = s.cut(cyl_z(2.5 - 0.03, H - 8.0, H + 1.0, x, y))
+        s = s.cut(cyl_z(2.5 - 0.03, H - RISER_DOWEL_DEPTH, H + 1.0, x, y))
     s = s.cut(cyl_z(t['hole_d'] / 2, H - RISER_TOP_T - 1, H + 1))
     return s
 
@@ -733,7 +743,7 @@ def frame_parts(mounts=None) -> dict:
                                                  'conducts, and the plate is bonded to the - bus); 4 x M3 inserts; test: > 10 MOhm at 50 V '
                                                  'from every lug screw to the plate before power')
     out['dcdc_bracket'] = Part('dcdc_bracket', 'printed', dcdc_bracket(), 1, material='pa6-cf', colour=(0.25, 0.27, 0.30),
-                               note='PA6-CF; two M4 x 10 down into the tray\'s nuts; the converter on four M3 x 8 through its upright')
+                               note='PA6-CF; two M4 x 12 down into the power plate\'s flush nuts; the converter on four M3 x 6 into the upright\'s inserts')
     # ---- the battery bay under the belly plate (D65: two DeWalt packs; cad/body_battery.py)
     import body_battery as bb
     out.update(bb.bay_parts())

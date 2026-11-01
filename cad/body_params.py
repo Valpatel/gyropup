@@ -315,7 +315,10 @@ def tm() -> dict:
         if mk:
             out['mass_kg'] = max(mk, HEAD_BUDGET['mass_kg'])
             out['mass_basis'] = 'exports/turret/mount.json (the budget when larger)'
-        if com:
+        if com:                                   # mount.json's TM frame: z above the TM face (#137: frame T until then)
+            if m.get('frame_t_above_face_mm') is None:
+                raise ValueError('exports/turret/mount.json has no frame_t_above_face_mm: it predates the TM-face frame '
+                                 '(#137); regenerate it (cad/turret_mount.py)')
             out['com_above_face_mm'] = max(float(com[2]), HEAD_BUDGET['com_above_face_mm'])
         out['mount_json'] = m
     return out
@@ -323,24 +326,29 @@ def tm() -> dict:
 
 def turret_plug_box() -> dict:
     """The turret's DT06-12SA plug and its withdrawal, as a box in the robot frame (x0, x1, y0, y1, z0, z1): from
-    exports/turret/mount.json's plug sweep box when the turret publishes it (docs/turret-next-plan.md N5), else from
-    cad/turret.py's receptacle (DT, DT_Z, the base's -y pad at dt_y): the plug 44 x 28 standing from the flange face and
-    sweeping 30 mm further out to withdraw. Nothing of the body may enter it (B6 keeps the shell out of it)."""
+    exports/turret/mount.json's dt12 boxes (the plug body and its 30 mm withdrawal, in the TM frame) when the file exists,
+    else from cad/turret.py's receptacle (DT, DT_Z, the base's -y pad at dt_y; DT_Z is in the turret's frame T, whose
+    origin is the pan base's foot, PLINTH['h'] above the TM face since D66): the plug 44 x 28 standing from the flange
+    face and sweeping 30 mm further out to withdraw. Nothing of the body may enter it (B6 keeps the shell out of it)."""
     import sys
     t = tm()
     m = t.get('mount_json') or {}
-    box = m.get('plug_sweep_box_mm') or m.get('plug_box_mm')
-    if box:                                                           # the turret's own, in the TM frame (pan axis, TM face)
-        x0, x1, y0, y1, z0, z1 = box
-        return {'box': (t['pan_x'] + x0, t['pan_x'] + x1, y0, y1, t['face_z'] + z0, t['face_z'] + z1), 'source': 'exports/turret/mount.json'}
+    b = (m.get('dt12') or {}).get('boxes') or {}
+    if b.get('plug_body') and b.get('withdrawal_sweep'):              # the turret's own, in the TM frame (pan axis, TM face)
+        pb, sw = b['plug_body'], b['withdrawal_sweep']
+        lo = [min(pb['min_mm'][k], sw['min_mm'][k]) for k in range(3)]
+        hi = [max(pb['max_mm'][k], sw['max_mm'][k]) for k in range(3)]
+        return {'box': (t['pan_x'] + lo[0], t['pan_x'] + hi[0], lo[1], hi[1], t['face_z'] + lo[2], t['face_z'] + hi[2]),
+                'source': 'exports/turret/mount.json dt12.boxes (plug_body, withdrawal_sweep)'}
     sys.path.insert(0, str(R / 'cad'))
     import turret as tu
     G = tu.Geo()
     pl, f = tu.DT['plug'], tu.DT['flange']
     y_in = -(G.dt_y + f[1])                                           # the flange's outer face: where the plug seats
     y_out = y_in - pl[1] - tu.DT['sweep']
-    return {'box': (t['pan_x'] - pl[0] / 2, t['pan_x'] + pl[0] / 2, y_out, y_in, t['face_z'] + tu.DT_Z - pl[2] / 2, t['face_z'] + tu.DT_Z + pl[2] / 2),
-            'source': 'cad/turret.py DT, DT_Z and Geo.dt_y (until exports/turret/mount.json, N5)'}
+    zc = t['face_z'] + tu.PLINTH['h'] + tu.DT_Z                       # frame T's DT_Z, from the TM face (#137)
+    return {'box': (t['pan_x'] - pl[0] / 2, t['pan_x'] + pl[0] / 2, y_out, y_in, zc - pl[2] / 2, zc + pl[2] / 2),
+            'source': 'cad/turret.py DT, DT_Z + PLINTH h and Geo.dt_y (until exports/turret/mount.json, N5)'}
 
 
 # ------------------------------------------------------------------------------------------- the lidar (VLP-16)

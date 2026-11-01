@@ -738,7 +738,7 @@ def bay_boards(G):
 
 
 def board_bay(G):
-    """The turret-board bay, printed PETG on its back: a 58 x 57 tray with 2 mm walls out to y -115, screwed to the -y
+    """The turret-board bay, printed PETG on its back: a 58 x 57 tray with 1.2 mm walls (TB) out to y -118, screwed to the -y
     yoke arm's outer face with 4 x M3 x 8 flat heads (countersunk in its 3 mm back, into inserts in the arm, beside and
     under the arm's lightening window; fit them before the boards), 4 bosses with M3 inserts for the level-0 board,
     and a window in the back for the ring's rotor leads, which come through the arm's window. The open face takes a
@@ -849,7 +849,8 @@ def tilt_yoke(G):
     for (x, z) in TB['screws']:                                                             # the turret-board bay's inserts
         s = s.cut(cyl_y(FAST['M3']['insert_pilot'] / 2, -a1 - 0.1, -a1 + 6.0, x, z))
     for (x, y) in YOKE_BOLTS:
-        # the heads sit 6 mm above the bridge's underside, so an M4 x 10 keeps 4 mm in the turntable's insert
+        # the heads sit 6 mm above the bridge's underside, so an M4 x 12 keeps 6 mm (1.5 d) in the turntable's insert and
+        # stops 2 mm off its 8 mm pilot's floor (an M4 x 10 kept 4 mm, 1.0 d: #137)
         s = s.cut(through_z(x, y, FAST['M4']['clear'], b0 - 1, b1 + 1)).cut(cyl_z(4.0, b0 + 6.0, b1 + 1, x, y))
     return s
 
@@ -879,7 +880,8 @@ def cradle(G):
         rail = rail.union(box(fx0, fx1, ra, rb, fz0, z0 + 0.01))                                # 10 mm deep along the plate's foot
         s = rail if s is None else s.union(rail)
     s = s.union(box(xr0, xr0 + 8, -r1, r1, z0 - RAIL_DEEP['dz'], z1))                          # rear cross bar
-    # the plates' rebates (0.3 mm longer than the foot at each end) and their 3 x M3 inserts, put in from the rebate
+    # the plates' rebates (0.3 mm longer than the foot at each end) and their 4 x M3 inserts (PLATE foot_holes_x), put in
+    # from the rebate
     p0 = G.plate_y[0]
     zf = (fz0 + z1) / 2
     for sgn in (1, -1):
@@ -1470,7 +1472,7 @@ def head_ring_tm(L, G=None):
 J4012 = {'L': 95.0, 'W': 63.0, 'H': 66.7, 'mass_g': 462.0, 'x0': -50.0,
          'name': 'Seeed reComputer Mini J4012 with Extension (Jetson Orin NX 16 GB, 10-40 W)'}
 PLINTH = {'h': 86.0, 'r': 78.0, 'wall': 2.5, 'tray_t': 10.0, 'col_r': 7.5, 'cbore': (9.5, 5.5), 'rib_h': 6.0,
-          'tab': 8.0, 'vent': (4.0, 36.0, 6), 'eth_y': 30.0, 'xt30_y': -30.0}
+          'tab': 8.0, 'vent': (4.0, 36.0, 6), 'eth_y': 30.0, 'xt30_y': -30.0, 'dowel_depth': 8.0}
 VENT_X1 = -6.0                 # the frontmost vent slot's x: everything behind the pan axis (see compute_shell)
 ETH_JACK = {'cut': (16.0, 14.0), 'body': (15.8, 13.8), 'ears': 25.0, 'depth': 20.0, 'boss': (28.0, 20.0), 'note': 'Adafruit 909 panel-mount RJ-45 extension (25 cm lead to the J4012\'s port)'}
 XT30_IN = {'body': (10.2, 5.2, 16.0), 'clamp': (16.0, 11.0), 'boss': (18.0, 12.0),
@@ -1493,7 +1495,7 @@ def compute_tray(G):
         fx, fy = x * (1 - 14.0 / 40.0), y                                      # the column's foot, inboard in x
         s = s.cut(insert_hole(fx, fy, z1, 'M4'))
     for (x, y) in TM_DOWELS:
-        s = s.cut(through_z(x, y, 5.0, z0 - 1, z0 + 8.0))
+        s = s.cut(through_z(x, y, 5.0, z0 - 1, z0 + P['dowel_depth']))
     J = J4012
     x0, x1, y1 = J['x0'], J['x0'] + J['L'], J['W'] / 2
     rh = P['rib_h']
@@ -1506,7 +1508,7 @@ def compute_tray(G):
 
 def compute_shell(G):
     """The plinth's wall, printed PETG upside down: a Ø156 x 3 ring from the tray to the pan base's foot, four columns
-    under the TM bolts (an M5 insert in each top for the pan base's M5 x 16; a foot with an M4 down into the tray; a tab
+    under the TM bolts (an M5 insert in each top, in a 12.5 mm pilot, for the pan base's M5 x 16; a foot with an M4 down into the tray; a tab
     that holds the J4012 down at each top corner), ribs from the columns to the wall, vents in the +-y walls behind the pan axis (the J501 exhaust plume is in front) beside the
     J4012's sides, and in the -x wall the Ethernet jack's window and the XT30 input's pocket, each through an 8 mm boss
     on the wall's inside whose slot holds the connector's body line to line (the jack also by its two 4-40 screws through
@@ -1525,7 +1527,9 @@ def compute_shell(G):
         sy = 1 if y > 0 else -1
         tab = box(x - P['tab'] / 2, x + P['tab'] / 2, sy * (J['W'] / 2 - 5.0), sy * (abs(y) - P['col_r'] + 0.5), jtop, jtop + 4.0)
         s = s.union(col).union(rib).union(foot).union(tab)
-        s = s.cut(insert_hole(x, y, 0.0, 'M5')).cut(cyl_z(4.0, zt + 5.0, -16.0, x, y))        # hollow under the insert
+        # the pan base's M5 x 16 through its 5 mm foot ends 11 mm down: a 12.5 mm pilot (not INSERT_DEPTH's 8, where it
+        # bottomed 3 mm early and jacked the insert out, #137) keeps 1.5 mm under the tip and 3.5 mm of PETG over the hollow
+        s = s.cut(insert_hole(x, y, 0.0, 'M5', 12.5)).cut(cyl_z(4.0, zt + 5.0, -16.0, x, y))        # hollow under the insert
         s = s.cut(through_z(fx, y, FAST['M4']['clear'], zt - 1, zt + 6)).cut(cyl_z(4.0, zt + 5.0, zt + 40.0, fx, y))
     # vents in the rear half only (x < VENT_X1): on Gyropup's J501 box the J501's fan blows its exhaust up and the
     # adapter's duct throws it out at the deck's front edge (J501 94da39d), so the plinth breathes from behind, away
@@ -1757,7 +1761,7 @@ MADE = [
     ('pan_ring', pan_ring, 'pan', 'pa6-cf', 1, ((1, 0, 0), 180), 'PA6-CF upside down; DIN 471-50 circlip; 4 x M4 inserts'),
     ('pan_spacer', pan_spacer, 'pan', 'pa6-cf', 1, ((1, 0, 0), 180), 'PA6-CF on its wide end; between the 61810 inner race and the circlip'),
     ('pan_pinion', pan_pinion, 'pinion', 'pa6-cf', 1, None, 'PA6-CF; 4 x M2 to the horn; turns -3 x pan about the servo axis'),
-    ('tilt_yoke', tilt_yoke, 'pan', 'pa6-cf', 1, ((0, 1, 0), 90), 'PA6-CF on its back; 4 x M4 x 10 to the turntable (heads 6 mm down in the 12 mm bridge)'),
+    ('tilt_yoke', tilt_yoke, 'pan', 'pa6-cf', 1, ((0, 1, 0), 90), 'PA6-CF on its back; 4 x M4 x 12 to the turntable (heads 6 mm down in the 12 mm bridge)'),
     ('cradle', cradle, 'tilt', 'pa6-cf', 1, None, 'PA6-CF flat, no supports: the rail frame (D48); 8 x M3 inserts for the aluminium cheek plates'),
     ('horn_boss', horn_boss, 'tilt', 'pa6-cf', 1, ((1, 0, 0), 90), 'PA6-CF on an end face; between the +y plate and the tilt servo\'s horn (4 x M3 x 14 flat heads)'),
     ('pivot_spacer', pivot_spacer, 'tilt', 'pa6-cf', 1, ((1, 0, 0), -90), 'PA6-CF on its boss face, land up; between the -y plate and the MR126 (the shoulder screw through it)'),

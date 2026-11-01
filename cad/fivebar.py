@@ -784,7 +784,7 @@ WHEEL_BOSS_FILLET = 10.0     # mm: where the wheel link's knee boss leaves its i
 
 def wheel_link():
     """Wheel link (printed PA6-CF, flat on its outer face): the knee boss with two KC bearings reaching in over the front
-    link's layer, a 24 mm body, and the apex foot: the BotWheel's Ø50 boss in a recess in the outer face, its 4 x M6 x 40
+    link's layer, a 24 mm body, and the apex foot: the BotWheel's Ø50 boss in a recess in the outer face, its 4 x M6 x 30
     through the foot from the inner side (heads inside the hub), and the hollow hub pointing in through the front link's
     apex eye: Ø60 for the 61812's inner race against a Ø64 shoulder, a DIN 471-60 circlip groove at its end, Ø48 inside
     so the wheel's cable and a hex key pass. Built from the knee (origin) towards +x."""
