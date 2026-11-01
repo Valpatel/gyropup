@@ -655,8 +655,15 @@ def build(repo):
                             "(and turret_studies' tm_bolts) to measure from the plinth's underside, then re-run the body's riser "
                             "and deck studies"))
     if com_tm > budget:
+        # the body's turret fall (cad/body_studies.py D2) takes its centre from mount.json: say what it gives there
+        body_fea = repo.json('exports/body/fea/summary.json')
+        d2 = (body_fea.get('results') or {}).get('D2-turret-fall') or {}
+        d2_at = re.search(r'its centre (\d+) mm above the TM face', d2.get('why') or '')
+        d2_target = (body_fea.get('targets') or {}).get('sf_turret_fall')
+        d2_txt = (f"; the body's D2 turret fall at {d2_at.group(1)} mm gives the deck SF {d2['sf_by_part']} against {d2_target:g}"
+                  if d2_at and d2.get('sf_by_part') is not None and d2_target else '')
         tm_findings.append(('tm-com-budget', 'owner', f"the turret's centre is {com_tm:.1f} mm above the TM face against D71's "
-                            f"\"at most {budget:g} mm\": raise the budget and re-run the body's fall cases at {com_tm:.0f} mm, or "
+                            f"\"at most {budget:g} mm\"{d2_txt}: raise the budget and strengthen the deck under the riser, or "
                             f"lower the turret (the plinth is {ph:g} mm)"))
 
     # ================================================================== BODY (P3)
