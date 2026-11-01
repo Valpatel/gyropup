@@ -144,12 +144,25 @@ def render(st, path, vmax, title, view):
         st.result.update(saved)
 
 
-def run_variant(out: Path, params: dict | None, cases, mesh: float, vmax: float | None, viewer: bool, dump: bool = False):
-    out = out.resolve()
+def use_params(out: Path, params: dict | None):
     out.mkdir(parents=True, exist_ok=True)
     if params:
         (out / 'params.json').write_text(json.dumps(params, indent=1) + '\n')
         os.environ['GYROPUP_HIP_PARAMS'] = str((out / 'params.json').resolve())
+
+
+def precheck(out: Path, params: dict | None) -> dict:
+    """interfaces() of the variant, without the FEA (cad/fivebar.py reads GYROPUP_HIP_PARAMS when it is imported)."""
+    use_params(out.resolve(), params)
+    sys.path[:0] = [str(ROOT / 'cad'), str(ROOT)]
+    import gmsh  # noqa: F401
+    import fivebar as fb
+    return interfaces(fb, fb.leg_parts().parts['hip_frame'].val(), out.resolve())
+
+
+def run_variant(out: Path, params: dict | None, cases, mesh: float, vmax: float | None, viewer: bool, dump: bool = False):
+    out = out.resolve()
+    use_params(out, params)
     shutil.copyfile(ROOT / 'exports/leg/fea/summary.json', out / 'summary.json')
     sys.path[:0] = [str(ROOT / 'cad'), str(ROOT)]
     import gmsh  # noqa: F401  (before CadQuery, as the compute hosts' mesher wants)
@@ -235,8 +248,24 @@ def evaluator(out_root: Path, mesh: float):
     """cad-agent optimise's command evaluator: the request (JSON) on stdin, the result (JSON) on stdout."""
     req = json.loads(sys.stdin.read())
     params = (req.get('params') or {}).get('hip') or {}
-    out = out_root / req.get('id', 'trial')
+    out = out_root.resolve() / req.get('id', 'trial')
+    reply = os.fdopen(os.dup(1), 'w')                        # stdout is the reply: the solver's own output (Python's
+    sys.stdout.flush()                                       # and gmsh's, which writes to fd 1) goes to stderr
+    os.dup2(2, 1)
+
+    def print(text):
+        reply.write(text + '\n')
+        reply.flush()
     try:
+        fit = precheck(out, params)                          # a frame that no longer fits is failed before any FEA
+        if not (fit['bed']['ok'] and fit['body']['ok']):
+            print(json.dumps({'metrics': {}, 'checks': [
+                {'id': 'bed', 'level': 'ok' if fit['bed']['ok'] else 'fail', 'text': f"print bed: {fit['bed']['placement']} {fit['bed']['size_mm']}"},
+                {'id': 'body', 'level': 'ok' if fit['body']['ok'] else 'fail',
+                 'text': f"body cheeks' z {fit['body']['z_spine_top_mm']} (today {BODY_ZT}); frame bottom "
+                         f"{fit['body']['frame_z_min_mm']} over the cheeks' flange at {fit['body']['cheek_flange_z_mm']}"}],
+                'summary': 'does not fit: no FEA'}))
+            return
         res = run_variant(out, params, HF_CASES, mesh, None, False)
     except Exception as exc:                                 # a geometry the kernel cannot build is a failed trial
         print(json.dumps({'metrics': {}, 'checks': [{'id': 'build', 'level': 'fail', 'text': f'{type(exc).__name__}: {exc}'}]}))

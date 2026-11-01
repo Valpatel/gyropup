@@ -34,7 +34,10 @@ cad:
       seed: 29
       population: 12
       space:
-        - {param: hip.root_r, low: 0, high: 8, step: 0.5}
-        - {param: hip.flange_dz, low: 0, high: 5, step: 0.5}
+        # the body bounds them: the top face under z 83 keeps the cheeks where they are (flange_dz + top_t <= 21), the
+        # bottom 2 mm over the cheeks' bottom flange (flange_dz + bottom_t <= 21.75); the evaluator fails a trial
+        # outside these before any FEA. Screening (f1-f4) found the fillet needs the root moved off the motor's can.
+        - {param: hip.root_r, low: 3, high: 8, step: 0.5}
+        - {param: hip.flange_dz, low: 0, high: 6, step: 0.5}
         - {param: hip.top_t, low: 13, high: 19, step: 1}
         - {param: hip.bottom_t, low: 13, high: 19, step: 1}
