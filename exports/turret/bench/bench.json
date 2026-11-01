@@ -1,36 +1,13 @@
 {
  "too_big": [],
- "print_hours": 58.8,
- "printed_g": 1462,
+ "print_hours": 70.2,
+ "printed_g": 1327,
  "stand_mm": [
   200.0,
   200.0,
   150.0
  ],
- "note": "printed_g and print_hours are print-plan.json's (the slicer's where sliced); sliced is cad/turret_print.py's own total",
- "sliced": {
-  "grams": 1281.4,
-  "hours": 49.3,
-  "by_material": {
-   "pa6-cf": {
-    "grams": 627.4,
-    "hours": 31.0
-   },
-   "petg": {
-    "grams": 604.1,
-    "hours": 16.0
-   },
-   "petg-clear": {
-    "grams": 41.0,
-    "hours": 1.7
-   },
-   "tpu95": {
-    "grams": 8.9,
-    "hours": 0.6
-   }
-  },
-  "file": "exports/turret/print/print.json"
- },
+ "note": "printed_g and print_hours mix current sliced estimates with rough estimates; sliced includes only accepted current rows",
  "orders": {
   "sellers": [
    "Waveshare",
@@ -60,7 +37,7 @@
    "Jameco",
    "Farnell"
   ],
-  "grand_total_usd": 2992.97,
-  "lines": 149
+  "grand_total_usd": 3016.18,
+  "lines": 151
  }
 }

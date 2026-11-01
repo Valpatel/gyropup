@@ -1,8 +1,8 @@
 {
   "schema": 1,
-  "source_revision": "8b86e7ff207804e33327edbb64a1f53e10f471f2",
+  "source_revision": "ba0946ffbf3fd2d8459a1c93a8f302c311d4fae9",
   "source_hashes": {
-    "cad/turret.py": "76d4fa676c3181e1d3bf0c623cefa75e420a3b2ed90057320d038c8b7aa41534",
+    "cad/turret.py": "8fb9947d9ea48a7955b92491c46f325c0650be12b1b1ba086bcf0a61f59e2f92",
     "cad/gmi.py": "dab034a3ee939a7b5f4a6fbae5b8ba7371d2113c5380a8450733650c2d02deae",
     "cad/interfaces.json": "a4842a317dd2e64e9b4e11d34376bc36c26e1ddf8435a4b16a85dae3cd730b73",
     "catalog/interfaces.json": "3889bc34503444f389e7951d74944f37b7e57b0b2b3be68ed596b959e83a46af",
@@ -20,7 +20,7 @@
       "stl": "exports/turret/component-preview/pan_clamp.stl",
       "stl_sha256": "a69f1ff101842adb59afa702ffa608835e9e2b40a1d5ece06b2fb4d38700afac",
       "step": "exports/turret/component-preview/pan_clamp.step",
-      "step_sha256": "0051c41979f033a431aa9c14ed368f0a96fc00b80977c0cedaaa4ea357a6448d",
+      "step_sha256": "da26dd0aee47a30dc1b7451493ca68f6d4355ac77a314d54f8f3f9cdb3be5b9b",
       "bounds_mm": [
         -37.0,
         -43.373066958946424,
@@ -53,7 +53,7 @@
       "stl": "exports/turret/component-preview/cradle_plate_l.stl",
       "stl_sha256": "3cd8f02dd9210c2074c6deeaf1ce821dc99d814d9f5704c7aa544290a9b403fa",
       "step": "exports/turret/component-preview/cradle_plate_l.step",
-      "step_sha256": "05814b3427c21c720a55038ce87b0e634f163e4f80741b594256c2b4dd590d2a",
+      "step_sha256": "2635679cdfbf26c151af5c9a0f4ca34e8e7e0e4e5242ba465feab5a22b02a151",
       "bounds_mm": [
         -10.0,
         53.61,
@@ -86,7 +86,7 @@
       "stl": "exports/turret/component-preview/cradle_plate_r.stl",
       "stl_sha256": "a559bfe5368a0a43be6fa1ea88ca41788826ecd4bc01b6695f59182f4d399f95",
       "step": "exports/turret/component-preview/cradle_plate_r.step",
-      "step_sha256": "53e378491d355b57c1e65a6edbcf13939f776a001dc826255f040ebbcaf141c3",
+      "step_sha256": "fdb8b44eff88798719a0af5b356e3893911dbc74afe8b17bad69a6e0a47e6258",
       "bounds_mm": [
         -10.0,
         -56.785,
@@ -119,7 +119,7 @@
       "stl": "exports/turret/component-preview/stop_lug.stl",
       "stl_sha256": "bd9f242d2d21909d4e1ef1e026b0c91735475bf1df950fe6120a2b34a5637b26",
       "step": "exports/turret/component-preview/stop_lug.step",
-      "step_sha256": "7774b79dd726f9c762b83160613db2c4c54a842f61831ebf614b696df0c83e05",
+      "step_sha256": "3a3f18e712ccc185ed18f50e0de7eb2782f1926175f801f0ffa8c4a6386fadc1",
       "bounds_mm": [
         36.076816554752895,
         -59.324999999999996,

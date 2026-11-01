@@ -3,9 +3,8 @@
 # One file per line: path | kind=count, kind=count | reason. Lower a count as strings are removed; delete the line when
 # the file is clean (the test says which). Kinds: home-path, fleet-host, private-ip, tailnet-name, private-repo.
 
-# Cleared at next regeneration: the CAD-host regeneration on fix/insert-joint-cad applies the cad/ patch in #141.
-cad/turret_gates.py | fleet-host=1 | cleared at next regeneration: the gp-remote example in the docstring names a host; any byte change under cad/ invalidates the carrier receipts, so the one-line fix ships with the regeneration
-exports/sim/turret_box/manifest.json | home-path=5 | cleared at next regeneration: cad/build_turret_box.py wrote the J501 view meshes' absolute sources; the highlight receipts bind this file, so it is rewritten only by the patched generator
+# Waiting on the turret gates: the #141 patch is in cad/ (#145), but cad/build_turret_box.py refuses to build until cad/turret_gates.py is re-run (its stored result is stale since the carrier work changed cad/turret.py).
+exports/sim/turret_box/manifest.json | home-path=5 | cleared at the next turret box build: cad/build_turret_box.py wrote the J501 view meshes' absolute sources; the highlight receipts bind this file, so it is rewritten only by the patched generator, after a turret gate run
 
 # rl/: another session owns it (#141 hand-off): rl/scripts/sim2sim.py records the model folder as an absolute path.
 rl/results/sim2sim_metrics.json | home-path=1 | rl hand-off: line 3 "model" is absolute; fix rl/scripts/sim2sim.py and rerun or edit the value

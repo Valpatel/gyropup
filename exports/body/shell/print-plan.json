@@ -156,7 +156,7 @@
    "hours": 0.8,
    "cost_usd": 0.29,
    "infill": "2 mm walls, 40 % gyroid",
-   "how": "PETG; four M3 x 16 into the wall's nuts"
+   "how": "PETG; four M3 x 8 into the wall's nuts"
   },
   "shell_hatch": {
    "material": "petg",
@@ -173,7 +173,7 @@
    "hours": 0.4,
    "cost_usd": 0.14,
    "infill": "2 mm walls, 40 % gyroid",
-   "how": "PETG; two M3 x 16 into the wall's nuts"
+   "how": "PETG; two M3 x 8 into the wall's nuts"
   },
   "d435_cradle_front": {
    "material": "pa6-cf",
@@ -224,7 +224,7 @@
    "hours": 0.4,
    "cost_usd": 0.14,
    "infill": "2 mm walls, 40 % gyroid",
-   "how": "PETG: the fan's exhaust goes only out through the deck; three M3 x 5 up into the turret plate"
+   "how": "PETG: the fan's exhaust goes only out through the deck; three M3 x 6 up into the turret plate"
   },
   "eyes_clip": {
    "material": "petg",

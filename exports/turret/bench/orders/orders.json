@@ -37,7 +37,7 @@
   "SparkFun": 56.95,
   "Digi-Key": 198.71,
   "Mouser": 89.09,
-  "McMaster-Carr": 490.37,
+  "McMaster-Carr": 513.58,
   "VXB Bearings": 74.98,
   "SendCutSend": 0,
   "Seeed Studio": 999.0,
@@ -55,8 +55,8 @@
   "Jameco": 0.99,
   "Farnell": 0.98
  },
- "grand_total_usd": 2992.97,
- "lines": 149,
+ "grand_total_usd": 3016.18,
+ "lines": 151,
  "off_rule_sellers": [
   "Farnell",
   "Jameco",

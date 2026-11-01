@@ -260,7 +260,7 @@
   "geometry_sha256": "5bad6c43b1a7de966cb762d36221071fe9cfaaf682c1c6f2200f9469309bb488",
   "image_url": null,
   "path": "exports/thumbs/body--adapter_plate_front.png",
-  "fetched": "2026-10-29",
+  "fetched": "2026-11-01",
   "material": "pa6-cf",
   "bom": "body",
   "group": "body-first-frame",
@@ -287,7 +287,7 @@
   "geometry_sha256": "c3b97e6b125c5f5221d34022a7c5720120672f014fd97eddc588ea59980e061b",
   "image_url": null,
   "path": "exports/thumbs/body--adapter_plate_rear.png",
-  "fetched": "2026-10-29",
+  "fetched": "2026-11-01",
   "material": "pa6-cf",
   "bom": "body",
   "group": "body-first-frame",
@@ -314,7 +314,7 @@
   "geometry_sha256": "10df817f0161a86125bcafa21fe18af40f87ad534776181d7b4bbba0ba4a3d25",
   "image_url": null,
   "path": "exports/thumbs/body--bay_door_front.png",
-  "fetched": "2026-10-29",
+  "fetched": "2026-11-01",
   "material": "petg",
   "bom": "body",
   "group": "body-first-frame",
@@ -341,7 +341,7 @@
   "geometry_sha256": "5397dc1c1bb75e30664960600ed34b39f9e203f49a765bb04e49be7e5c016b0e",
   "image_url": null,
   "path": "exports/thumbs/body--bay_door_rear.png",
-  "fetched": "2026-10-29",
+  "fetched": "2026-11-01",
   "material": "petg",
   "bom": "body",
   "group": "body-first-frame",
@@ -365,10 +365,10 @@
  "body/bay_floor": {
   "kind": "render",
   "source_url": "exports/body/sendcutsend/bay_floor_5052-H32_0.063in_x1.step",
-  "geometry_sha256": "89584928815565c544686535ecbe2828095f37d2a1184a2db47c6f260175df1e",
+  "geometry_sha256": "6042248d9d98f28d61a692c8f0f6176658f398b428edd391a72435c871f4a020",
   "image_url": null,
   "path": "exports/thumbs/body--bay_floor.png",
-  "fetched": "2026-10-29",
+  "fetched": "2026-11-01",
   "material": "aluminium",
   "bom": "body",
   "group": "machined-and-cut",
@@ -386,7 +386,7 @@
     480,
     480
    ],
-   "sha256": "4a89a3fe5636e3bb574d42d4822a591864ed01a43db2214cbef741c2feb11245"
+   "sha256": "aa96d0148970a73baf7250a3f62ae45ab7373a303a8736b1d79ba24bc28d10d0"
   }
  },
  "body/bay_rail_l": {
@@ -395,7 +395,7 @@
   "geometry_sha256": "2dd42e5e9a72a2d2a151384d0d3be7d54981c01dc55119328ebca24439d7c184",
   "image_url": null,
   "path": "exports/thumbs/body--bay_rail_l.png",
-  "fetched": "2026-10-29",
+  "fetched": "2026-11-01",
   "material": "pa6-cf",
   "bom": "body",
   "group": "body-first-frame",
@@ -422,7 +422,7 @@
   "geometry_sha256": "57cac53bf09a799b7071fb72b25bf3b4409e85d015118e8178f9247a2c8303aa",
   "image_url": null,
   "path": "exports/thumbs/body--bay_rail_r.png",
-  "fetched": "2026-10-29",
+  "fetched": "2026-11-01",
   "material": "pa6-cf",
   "bom": "body",
   "group": "body-first-frame",
@@ -446,10 +446,10 @@
  "body/bay_side": {
   "kind": "render",
   "source_url": "exports/body/sendcutsend/bay_side_5052-H32_0.063in_x2.step",
-  "geometry_sha256": "7e97e27e0f82b29e74e824e66d58a125cae519ef5662af0c19d6d786cb4ba8a9",
+  "geometry_sha256": "b890a0524cfabb61896863b0fb1e91ef800bdb5fea26c39ee53c3e983b833c31",
   "image_url": null,
   "path": "exports/thumbs/body--bay_side.png",
-  "fetched": "2026-10-29",
+  "fetched": "2026-11-01",
   "material": "aluminium",
   "bom": "body",
   "group": "machined-and-cut",
@@ -467,16 +467,16 @@
     480,
     480
    ],
-   "sha256": "8b54d37a0438c7084c28f97fc00aecf519c324369e05d4ee0109e72fae099601"
+   "sha256": "f3c7177850984037b84127eaebf2968e775cac27f1c52f92e459fc0b284c6d69"
   }
  },
  "body/bay_skid": {
   "kind": "render",
   "source_url": "exports/body/bay_skid.stl",
-  "geometry_sha256": "ceb788f97deed6d78a63db5c3d24a1212d91b7b54678b2aea5f4558d7d8d3e00",
+  "geometry_sha256": "12c2f659c2d6735f62875fe5f179256f2db866f4b416c342bf6cfcff342579f9",
   "image_url": null,
   "path": "exports/thumbs/body--bay_skid.png",
-  "fetched": "2026-10-29",
+  "fetched": "2026-11-01",
   "material": "tpu95-gyroid",
   "bom": "body",
   "group": "body-first-frame",
@@ -500,10 +500,10 @@
  "body/belly_plate": {
   "kind": "render",
   "source_url": "exports/body/sendcutsend/belly_plate_6061-T6_0.100in_x1.step",
-  "geometry_sha256": "e7d953ce513f63bd4de65bb9b271447e098003db4a92ab6da5e085206d1d2681",
+  "geometry_sha256": "2af3b469e66fd083802420616e860e9f4c128dd4ddf4e608d2b987b7651b5dbd",
   "image_url": null,
   "path": "exports/thumbs/body--belly_plate.png",
-  "fetched": "2026-10-29",
+  "fetched": "2026-11-01",
   "material": "aluminium",
   "bom": "body",
   "group": "machined-and-cut",
@@ -521,16 +521,16 @@
     480,
     480
    ],
-   "sha256": "35159f72bd6dd142c982cde390143e58048f9c3b6f621aa487f26d8d09cab95c"
+   "sha256": "74db8771e5034161419248fa65885d8410fc5915f4b555de90f1282c16998656"
   }
  },
  "body/bus_bar": {
   "kind": "render",
   "source_url": "exports/body/sendcutsend/bus_bar_C110_0.125in_x2.step",
-  "geometry_sha256": "6b02bfa3afec5ff1fdc351a6313f54f8664de0d00975bf2dc7d15be92440d45c",
+  "geometry_sha256": "09aa2f488c7b2c3bec9f8588c51cd15dbb78d92160bdcd088fe4458aaf655235",
   "image_url": null,
   "path": "exports/thumbs/body--bus_bar.png",
-  "fetched": "2026-10-29",
+  "fetched": "2026-11-01",
   "material": "copper",
   "bom": "body",
   "group": "machined-and-cut",
@@ -548,7 +548,7 @@
     480,
     480
    ],
-   "sha256": "6108b6dc592acf515695377accd00043adb1e662ad56af89624819614fae6d17"
+   "sha256": "68abf889615eb28a5c33176167d3b5b3cb57f405d08589dd0fe313e6ead011b4"
   }
  },
  "body/bus_insulator": {
@@ -557,7 +557,7 @@
   "geometry_sha256": "2c138c7dbe129161c974555fc191b1f19a5ef2bab432c6fa11606b3e3e6ce2f3",
   "image_url": null,
   "path": "exports/thumbs/body--bus_insulator.png",
-  "fetched": "2026-10-29",
+  "fetched": "2026-11-01",
   "material": "petg",
   "bom": "body",
   "group": "body-first-frame",
@@ -581,10 +581,10 @@
  "body/cheek": {
   "kind": "render",
   "source_url": "exports/body/sendcutsend/cheek_5052-H32_0.187in_x2.step",
-  "geometry_sha256": "feae8ac0f57620c5c4c5ce92ae49e3f9d7d754c48e44ac26654f3e5ae817d9c8",
+  "geometry_sha256": "73cf01270a32a11e5bb3c46464ff763237907b8f0d427ab663a8b3d95a9e5fe2",
   "image_url": null,
   "path": "exports/thumbs/body--cheek.png",
-  "fetched": "2026-10-29",
+  "fetched": "2026-11-01",
   "material": "aluminium",
   "bom": "body",
   "group": "machined-and-cut",
@@ -602,16 +602,16 @@
     480,
     480
    ],
-   "sha256": "fdce7a2542c48581c712257c44af9ceb5049ad2027e83bd47d09686c7a379ac5"
+   "sha256": "fa57b242d856533cf58f3d2a956703384a5d8369db305c884ccfd670ea323255"
   }
  },
  "body/compute_pallet": {
   "kind": "render",
   "source_url": "exports/body/sendcutsend/compute_pallet_6061-T6_0.125in_x1.step",
-  "geometry_sha256": "892a84905e0d3fc65792e2bba26c32f3bb49728491eaf62291678d34728ed502",
+  "geometry_sha256": "668d7b7b483c289845797c19880990e9920b55ae4699ddc589461272968068ad",
   "image_url": null,
   "path": "exports/thumbs/body--compute_pallet.png",
-  "fetched": "2026-10-29",
+  "fetched": "2026-11-01",
   "material": "aluminium",
   "bom": "body",
   "group": "machined-and-cut",
@@ -629,7 +629,7 @@
     480,
     480
    ],
-   "sha256": "9bf22f88869554876e8e23fcb8358ee0618701bf4ec9982a44cd66bee49c8f2d"
+   "sha256": "d38d931a34fcb4dc8258a2fbc1670e1505fab7f0b17869932ed0f4c8337f50d8"
   }
  },
  "body/dcdc_bracket": {
@@ -638,7 +638,7 @@
   "geometry_sha256": "e1cc02232bc0bf5df5b97f070a989bc5b84397f7f7942f5a92f4ad0ad0b972e7",
   "image_url": null,
   "path": "exports/thumbs/body--dcdc_bracket.png",
-  "fetched": "2026-10-29",
+  "fetched": "2026-11-01",
   "material": "pa6-cf",
   "bom": "body",
   "group": "body-first-frame",
@@ -662,10 +662,10 @@
  "body/deck": {
   "kind": "render",
   "source_url": "exports/body/sendcutsend/deck_5052-H32_0.100in_x1.step",
-  "geometry_sha256": "4ef99fe85dad1f14b2f4d31e0115a2f752a3067dd5216559ad88d7d4397ad107",
+  "geometry_sha256": "af6723fcdffe488c7bb9acbdc74c65e4205400176975ef773aa53701d579f646",
   "image_url": null,
   "path": "exports/thumbs/body--deck.png",
-  "fetched": "2026-10-29",
+  "fetched": "2026-11-01",
   "material": "aluminium",
   "bom": "body",
   "group": "machined-and-cut",
@@ -683,16 +683,16 @@
     480,
     480
    ],
-   "sha256": "44120a3bd61958e34b87b5014bec99c8a251623d4dd85852fe30d60b49dd9dcd"
+   "sha256": "569851ef144c87a9afe8a8d18efdda7eda8f9a5971c754fb6b1220fb88d713f4"
   }
  },
  "body/floor_tray": {
   "kind": "render",
   "source_url": "exports/body/sendcutsend/floor_tray_5052-H32_0.125in_x1.step",
-  "geometry_sha256": "c34178586aa6396dacf9f64dbf862caa00863627a44541f643ab8a805b5c7466",
+  "geometry_sha256": "8c945c0b7f8d70d35161b8ab9c426c723d16868262b4c2f39ea3db42eb5158d6",
   "image_url": null,
   "path": "exports/thumbs/body--floor_tray.png",
-  "fetched": "2026-10-29",
+  "fetched": "2026-11-01",
   "material": "aluminium",
   "bom": "body",
   "group": "machined-and-cut",
@@ -710,7 +710,7 @@
     480,
     480
    ],
-   "sha256": "6bcab832fc15168639349b64113c0c80aca45279c6e6235642d78bc909c2ccc5"
+   "sha256": "4a05cbc5ab4ae745e0ead45b65e0234e84110eeab422281f501d55f6007e8c51"
   }
  },
  "body/isolator": {
@@ -719,7 +719,7 @@
   "geometry_sha256": "e73b7552c0189f809cd69e35d0c59db0d016a6f9f18280171a85cc4687fbecce",
   "image_url": null,
   "path": "exports/thumbs/body--isolator.png",
-  "fetched": "2026-10-29",
+  "fetched": "2026-11-01",
   "material": "tpu95",
   "bom": "body",
   "group": "body-first-frame",
@@ -746,7 +746,7 @@
   "geometry_sha256": "5b5e282d2e16b95b5167b4ffcfa3f7754600f2f7e6b133974ef7a7e08ef0c16b",
   "image_url": null,
   "path": "exports/thumbs/body--plate_post.png",
-  "fetched": "2026-10-29",
+  "fetched": "2026-11-01",
   "material": "pa6-cf",
   "bom": "body",
   "group": "body-first-frame",
@@ -773,7 +773,7 @@
   "geometry_sha256": "0db4877c1804b101d28002a5c1fbe89fcb71a8ec0c5cc64b61060a118213f9ad",
   "image_url": null,
   "path": "exports/thumbs/body--post.png",
-  "fetched": "2026-10-29",
+  "fetched": "2026-11-01",
   "material": "pa6-cf",
   "bom": "body",
   "group": "body-first-frame",
@@ -797,10 +797,10 @@
  "body/power_plate": {
   "kind": "render",
   "source_url": "exports/body/sendcutsend/power_plate_5052-H32_0.100in_x1.step",
-  "geometry_sha256": "a9d75cc93169834ecf7f8db6595a16482953c98d6b452089e8e1633554a08e74",
+  "geometry_sha256": "33f884326386ea4ec1ab7f41b4099cc78ca587ce1f9a38ac7dd05d2c66ec25ef",
   "image_url": null,
   "path": "exports/thumbs/body--power_plate.png",
-  "fetched": "2026-10-29",
+  "fetched": "2026-11-01",
   "material": "aluminium",
   "bom": "body",
   "group": "machined-and-cut",
@@ -818,16 +818,16 @@
     480,
     480
    ],
-   "sha256": "94ce26a224a54ba45f00040c9fdee3b897fcb5b26cc7d7dc7c044941b3dc9aab"
+   "sha256": "68dd6653d5a0f2c70685b94d1bd2611f8f3bdec2d9fce3b87fbab8fd7c3b3dd5"
   }
  },
  "body/riser": {
   "kind": "render",
   "source_url": "exports/body/riser.stl",
-  "geometry_sha256": "d4f8dd2014dec059d827eeaa9c37906249f7bff661aa0625a86f92b74a96e1af",
+  "geometry_sha256": "399b12471969eec18e05c3c84a3f08df315e7551a5a99cc266409ce5d2e2e463",
   "image_url": null,
   "path": "exports/thumbs/body--riser.png",
-  "fetched": "2026-10-29",
+  "fetched": "2026-11-01",
   "material": "pa6-cf",
   "bom": "body",
   "group": "body-first-frame",
@@ -840,21 +840,21 @@
     -0.0,
     30.0
    ],
-   "triangles": 8400,
+   "triangles": 9240,
    "size_px": [
     480,
     480
    ],
-   "sha256": "530032993ecc4ac3cdc6e7b23cb38b1bc81051a41096b9c7d9d1ccb8c0a2301e"
+   "sha256": "90da65f58ca38385048d13ad651169b07235786a231dbb536d72a094ae3a0272"
   }
  },
  "body/turret_plate": {
   "kind": "render",
   "source_url": "exports/body/sendcutsend/turret_plate_6061-T6_0.125in_x1.step",
-  "geometry_sha256": "9b2066456f0985268dc4e3c1253a18b0d441f522da724fb81cd7246167ebb5cb",
+  "geometry_sha256": "1516d23c858f0114ace2a96f26446d2cd6088dfea345740bfd1d43ef8b13a049",
   "image_url": null,
   "path": "exports/thumbs/body--turret_plate.png",
-  "fetched": "2026-10-29",
+  "fetched": "2026-11-01",
   "material": "aluminium",
   "bom": "body",
   "group": "machined-and-cut",
@@ -872,7 +872,7 @@
     480,
     480
    ],
-   "sha256": "3cfff7200ceada6c4ff79d85097b5527497325266734d9e79238122dc8a2477f"
+   "sha256": "815f5a5630d4d519061ef4bf86d44a74cb240b5df0a246a86b2115faad9fd757"
   }
  },
  "bolt_m12x80": {
@@ -1007,7 +1007,7 @@
   "geometry_sha256": "048b938d3b7ce7eb8f36c73015d07bc895696b756098277aa3d480671e1ac7ba",
   "image_url": null,
   "path": "exports/thumbs/rig--carriage_plate.png",
-  "fetched": "2026-10-29",
+  "fetched": "2026-11-01",
   "material": "aluminium",
   "bom": "rig",
   "group": "machined-and-cut",
@@ -1025,7 +1025,7 @@
     480,
     480
    ],
-   "sha256": "f45bf37dab387a91a530ed0b90d555ccee70c21b3e12a81f9590c40ee84e12f9"
+   "sha256": "ded173f372bca32811451390b6f07503d9bc6252db894b59af61d2a25117eb83"
   },
   "alias_of": "rig/carriage_plate"
  },
@@ -1909,7 +1909,7 @@
   "geometry_sha256": "f31754b45d253ba6e3ca57cca5a7454bc7ae26b7f03080fcfe5a7d47df3ddca1",
   "image_url": null,
   "path": "exports/thumbs/leg--output_adapter.png",
-  "fetched": "2026-10-29",
+  "fetched": "2026-11-01",
   "material": "aluminium",
   "bom": "leg",
   "group": "machined-and-cut",
@@ -1927,7 +1927,7 @@
     480,
     480
    ],
-   "sha256": "3d7bf343ed2bccfcd251c4c1f960be091229c059a57d2e8159f8daba06c9105c"
+   "sha256": "831d230b52a703dbd5c0630066e870385243b39a49cc725b2da535b6d69a86e7"
   }
  },
  "load_cell_mount": {
@@ -2221,7 +2221,7 @@
   "geometry_sha256": "f31754b45d253ba6e3ca57cca5a7454bc7ae26b7f03080fcfe5a7d47df3ddca1",
   "image_url": null,
   "path": "exports/thumbs/leg--output_adapter.png",
-  "fetched": "2026-10-29",
+  "fetched": "2026-11-01",
   "material": "aluminium",
   "bom": "leg",
   "group": "machined-and-cut",
@@ -2239,7 +2239,7 @@
     480,
     480
    ],
-   "sha256": "3d7bf343ed2bccfcd251c4c1f960be091229c059a57d2e8159f8daba06c9105c"
+   "sha256": "831d230b52a703dbd5c0630066e870385243b39a49cc725b2da535b6d69a86e7"
   },
   "alias_of": "leg/output_adapter"
  },
@@ -2289,10 +2289,10 @@
  "pan_clamp": {
   "kind": "render",
   "source_url": "exports/turret/component-preview/pan_clamp.step",
-  "geometry_sha256": "0051c41979f033a431aa9c14ed368f0a96fc00b80977c0cedaaa4ea357a6448d",
+  "geometry_sha256": "da26dd0aee47a30dc1b7451493ca68f6d4355ac77a314d54f8f3f9cdb3be5b9b",
   "image_url": null,
   "path": "exports/thumbs/turret--pan_clamp.png",
-  "fetched": "2026-10-29",
+  "fetched": "2026-11-01",
   "material": "aluminium",
   "bom": "turret",
   "group": "machined-and-cut",
@@ -2310,7 +2310,7 @@
     480,
     480
    ],
-   "sha256": "8fce35c42ac6fac3ab679f182f9d4b0b5ddd04a3c6aa4566f239f4734fcedadd"
+   "sha256": "40a5ddfbae8a29cccf85a8baa2a50818cafe3ed45cce7c28c44306013de0ac2f"
   },
   "geometry_manifest": "exports/turret/component-preview/manifest.json",
   "note": "Authored current cut-part inspection STEP; mechanical qualification remains open.",
@@ -2680,7 +2680,7 @@
   "geometry_sha256": "048b938d3b7ce7eb8f36c73015d07bc895696b756098277aa3d480671e1ac7ba",
   "image_url": null,
   "path": "exports/thumbs/rig--carriage_plate.png",
-  "fetched": "2026-10-29",
+  "fetched": "2026-11-01",
   "material": "aluminium",
   "bom": "rig",
   "group": "machined-and-cut",
@@ -2698,7 +2698,7 @@
     480,
     480
    ],
-   "sha256": "f45bf37dab387a91a530ed0b90d555ccee70c21b3e12a81f9590c40ee84e12f9"
+   "sha256": "ded173f372bca32811451390b6f07503d9bc6252db894b59af61d2a25117eb83"
   }
  },
  "rig/tof_vl53l1x": {
@@ -3269,10 +3269,10 @@
  "turret/cradle_plate_l": {
   "kind": "render",
   "source_url": "exports/turret/component-preview/cradle_plate_l.step",
-  "geometry_sha256": "05814b3427c21c720a55038ce87b0e634f163e4f80741b594256c2b4dd590d2a",
+  "geometry_sha256": "2635679cdfbf26c151af5c9a0f4ca34e8e7e0e4e5242ba465feab5a22b02a151",
   "image_url": null,
   "path": "exports/thumbs/turret--cradle_plate_l.png",
-  "fetched": "2026-10-29",
+  "fetched": "2026-11-01",
   "material": "aluminium",
   "bom": "turret",
   "group": "machined-and-cut",
@@ -3290,7 +3290,7 @@
     480,
     480
    ],
-   "sha256": "ab183202ba7380aba8d0a2d5726a9b8189c241dd8f26585d10dfa2a5c24831c9"
+   "sha256": "e6d0094a74fcd18e35c245bc22139df896501c7b2626594c9ebc3456ba3a55e5"
   },
   "geometry_manifest": "exports/turret/component-preview/manifest.json",
   "note": "Authored current cut-part inspection STEP; mechanical qualification remains open."
@@ -3298,10 +3298,10 @@
  "turret/cradle_plate_r": {
   "kind": "render",
   "source_url": "exports/turret/component-preview/cradle_plate_r.step",
-  "geometry_sha256": "53e378491d355b57c1e65a6edbcf13939f776a001dc826255f040ebbcaf141c3",
+  "geometry_sha256": "fdb8b44eff88798719a0af5b356e3893911dbc74afe8b17bad69a6e0a47e6258",
   "image_url": null,
   "path": "exports/thumbs/turret--cradle_plate_r.png",
-  "fetched": "2026-10-29",
+  "fetched": "2026-11-01",
   "material": "aluminium",
   "bom": "turret",
   "group": "machined-and-cut",
@@ -3319,7 +3319,7 @@
     480,
     480
    ],
-   "sha256": "f4bca723605ac800fa276621a8dd33d751d6ee4ed0b5a136945645c93450d01c"
+   "sha256": "b6c8754e9231b5ff34cc8885f016612cea491b37902a8d0baa85675b2984a330"
   },
   "geometry_manifest": "exports/turret/component-preview/manifest.json",
   "note": "Authored current cut-part inspection STEP; mechanical qualification remains open."
@@ -3327,10 +3327,10 @@
  "turret/pan_clamp": {
   "kind": "render",
   "source_url": "exports/turret/component-preview/pan_clamp.step",
-  "geometry_sha256": "0051c41979f033a431aa9c14ed368f0a96fc00b80977c0cedaaa4ea357a6448d",
+  "geometry_sha256": "da26dd0aee47a30dc1b7451493ca68f6d4355ac77a314d54f8f3f9cdb3be5b9b",
   "image_url": null,
   "path": "exports/thumbs/turret--pan_clamp.png",
-  "fetched": "2026-10-29",
+  "fetched": "2026-11-01",
   "material": "aluminium",
   "bom": "turret",
   "group": "machined-and-cut",
@@ -3348,7 +3348,7 @@
     480,
     480
    ],
-   "sha256": "8fce35c42ac6fac3ab679f182f9d4b0b5ddd04a3c6aa4566f239f4734fcedadd"
+   "sha256": "40a5ddfbae8a29cccf85a8baa2a50818cafe3ed45cce7c28c44306013de0ac2f"
   },
   "geometry_manifest": "exports/turret/component-preview/manifest.json",
   "note": "Authored current cut-part inspection STEP; mechanical qualification remains open."
@@ -3356,10 +3356,10 @@
  "turret/stop_lug": {
   "kind": "render",
   "source_url": "exports/turret/component-preview/stop_lug.step",
-  "geometry_sha256": "7774b79dd726f9c762b83160613db2c4c54a842f61831ebf614b696df0c83e05",
+  "geometry_sha256": "3a3f18e712ccc185ed18f50e0de7eb2782f1926175f801f0ffa8c4a6386fadc1",
   "image_url": null,
   "path": "exports/thumbs/turret--stop_lug.png",
-  "fetched": "2026-10-29",
+  "fetched": "2026-11-01",
   "material": "aluminium",
   "bom": "turret",
   "group": "machined-and-cut",
@@ -3377,7 +3377,7 @@
     480,
     480
    ],
-   "sha256": "dbca4562a2f337f135c6a68237f187df608f97bf37666045ece0eb1bd6c8baa7"
+   "sha256": "597deb86a1f5ceeb5944441c9c3410e01372aa54219bcf85eca99ad4f09dd23b"
   },
   "geometry_manifest": "exports/turret/component-preview/manifest.json",
   "note": "Authored current cut-part inspection STEP; mechanical qualification remains open."

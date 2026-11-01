@@ -135,7 +135,9 @@ graph connectivity {
   "cheek_left" -- "frame_screws_left" [color=orange, label="undeclared"];
   "cheek_left" -- "leg.left_hip_frame";
   "cheek_left" -- "spacers";
+  "cheek_nuts_left" -- "leg.left_hip_frame" [color=orange, label="undeclared"];
   "cheek_nuts_right" -- "cheek_right";
+  "cheek_nuts_right" -- "leg.right_hip_frame" [color=orange, label="undeclared"];
   "cheek_right" -- "floor_tray";
   "cheek_right" -- "frame_screws_right" [color=orange, label="undeclared"];
   "cheek_right" -- "leg.right_hip_frame";
@@ -227,10 +229,6 @@ graph connectivity {
   "bay_side_l" -- "bay_floor" [style=bold, label="bay_side_l_low:bay_side_l (axis)"];
   "bay_side_r" -- "bay_rail_r" [style=bold, label="bay_side_r_high:bay_side_r (axis)"];
   "bay_side_r" -- "bay_floor" [style=bold, label="bay_side_r_low:bay_side_r (axis)"];
-  "belly_plate" -- "cheek_left" [style=bold, label="belly_flange_left:belly_plate (axis)"];
-  "cheek_nuts_left" -- "cheek_left" [style=bold, label="belly_flange_left:cheek_nuts_left (axis)"];
-  "belly_plate" -- "cheek_right" [style=bold, label="belly_flange_right:belly_plate (axis)"];
-  "cheek_nuts_right" -- "cheek_right" [style=bold, label="belly_flange_right:cheek_nuts_right (axis)"];
   "bus_bar_1" -- "bus_insulator_1" [style=bold, label="bus_bar_1:bus_bar_1 (axis)"];
   "bus_bar_2" -- "bus_insulator_2" [style=bold, label="bus_bar_2:bus_bar_2 (axis)"];
   "power_plate" -- "bus_insulator_1" [style=bold, label="bus_insulator_1:power_plate (axis)"];
@@ -329,4 +327,8 @@ graph connectivity {
   "shell_side_l_rear" -- "post_3" [style=bold, label="wall_l_rear:shell_side_l_rear (axis)"];
   "shell_side_r_front" -- "post_2" [style=bold, label="wall_r_front:shell_side_r_front (axis)"];
   "shell_side_r_rear" -- "post_4" [style=bold, label="wall_r_rear:shell_side_r_rear (axis)"];
+  "belly_plate" -- "cheek_left" [style=dashed, color=red, fontcolor=red, label="belly_flange_left:belly_plate unrealised"];
+  "cheek_nuts_left" -- "cheek_left" [style=dashed, color=red, fontcolor=red, label="belly_flange_left:cheek_nuts_left unrealised"];
+  "belly_plate" -- "cheek_right" [style=dashed, color=red, fontcolor=red, label="belly_flange_right:belly_plate unrealised"];
+  "cheek_nuts_right" -- "cheek_right" [style=dashed, color=red, fontcolor=red, label="belly_flange_right:cheek_nuts_right unrealised"];
 }

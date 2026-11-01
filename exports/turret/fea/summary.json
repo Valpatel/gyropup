@@ -3186,10 +3186,11 @@
   },
   "tm_bolts": {
    "case": "R: 30 g sideways on the whole turret",
-   "moment_nm": 37.3,
-   "tension_per_bolt_n": 233,
+   "com_above_tm_face_mm": 135.3,
+   "moment_nm": 102.4,
+   "tension_per_bolt_n": 640,
    "m5_insert_pullout_n_est": 1500,
-   "sf": 6.4,
+   "sf": 2.3,
    "note": "M5 heat-set insert in PA6-CF/PETG: ~1.5 kN pull-out (est, CNC Kitchen tests)"
   },
   "yoke_inserts": {
@@ -3589,5 +3590,19 @@
    "verdict_sf": 2.27,
    "ok": true
   }
- ]
+ ],
+ "hand_checks_masses": {
+  "tilt_kg": 0.7611275,
+  "pan_kg": 1.30634,
+  "total_kg": 2.5734000000000004,
+  "cartridge_kg": 0.6398900000000001,
+  "com_mm": [
+   -3.7844774054068573,
+   -2.7628596125330063,
+   49.267047649332525
+  ],
+  "pan_group_com_z_mm": 122.9274633325152,
+  "mass_g_with_balls": 2560.8,
+  "pan_ring_kg": 0.07790000000000001
+ }
 }
