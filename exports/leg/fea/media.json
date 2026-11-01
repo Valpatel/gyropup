@@ -11,11 +11,11 @@
       "duration_seconds": 12,
       "receipt": "exports/leg/fea/hip-frame-e1-media/video-receipt.json",
       "recorded": {
-        "safety_factor": 1.65,
+        "safety_factor": 1.63,
         "target": 2.0,
-        "max_displacement_mm": 0.2678,
-        "von_mises_design_mpa": 13.91,
-        "load_from": "standing: 2.5 x 184 N vertical, 0.5 g of a 38 kg robot sideways; both upper links' pin forces, the out-of-plane moment 72% rear / 71% front"
+        "max_displacement_mm": 1.3117,
+        "von_mises_design_mpa": 11.13,
+        "load_from": "standing: 2.5 x 184 N vertical, 0.5 g of a 38 kg robot sideways; both upper links' pin forces, the out-of-plane moment 72% rear / 72% front"
       }
     }
   }
