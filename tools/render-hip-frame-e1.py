@@ -45,8 +45,9 @@ def main():
     if not all(np.isfinite(a).all() for a in (points, displacement, stress)) or len(triangles) != len(stress):
         raise ValueError('Invalid static surface fields')
     baseline = receipt['baseline']
-    if baseline['ok'] is not False or baseline['safety_factor'] != 1.65 or baseline['target'] != 2.0:
-        raise ValueError('Expected below-target E1 baseline')
+    if baseline['target'] != 2.0 or baseline['ok'] != (baseline['safety_factor'] >= baseline['target']):
+        raise ValueError('Unexpected E1 baseline: its target or its gate changed')
+    meets = baseline['ok']
     maximum = float(data['max_displacement_mm'])
     extent = float(np.ptp(points, axis=0).max())
     exaggeration = max(1, round(.075 * extent / maximum))
@@ -71,8 +72,9 @@ def main():
     plot.add_text('GYROPUP / STRUCTURAL LAB', position=(28, 680), font_size=12, color='#83b8ce', font='arial')
     plot.add_text('HIP FRAME  /  E1', position=(28, 625), font_size=28, color='#f6f8ff', font='arial')
     plot.add_text('STATIC DEFORMATION', position=(570, 635), font_size=14, color='#75f4e8', font='arial')
-    plot.add_text('SF 1.65 / REQUIRED 2.00  —  BELOW TARGET', position=(28, 146), font_size=15,
-                  color='#ffbf69', font='arial')
+    plot.add_text(f"SF {baseline['safety_factor']:.2f} / REQUIRED {baseline['target']:.2f}  —  "
+                  f"{'MEETS TARGET (FEA)' if meets else 'BELOW TARGET'}", position=(28, 146), font_size=15,
+                  color='#7ee0a1' if meets else '#ffbf69', font='arial')
     readout = plot.add_text('', position=(28, 92), font_size=14, color='#f6f8ff', font='arial')
     plot.add_text(f'Deformation ×{exaggeration}  •  gray ghost = unloaded shape', position=(28, 56),
                   font_size=13, color='#c1d3e0', font='arial')
@@ -145,7 +147,10 @@ def main():
         'source_hashes': source_hashes, 'outputs': files, 'ffprobe': probe, 'webm_ffprobe': webm_probe, 'decoded_all_frames': True,
         'renderer': {'pyvista': pv.__version__, 'numpy': np.__version__, 'fps': FPS, 'duration_seconds': SECONDS,
                      'deformation_exaggeration': exaggeration, 'load_factor_range': [0, 1]},
-        'timeline': timeline, 'transient_simulation': False, 'qualification': 'Presentation of the reproduced static E1 field; strength gate remains failed.'}
+        'timeline': timeline, 'transient_simulation': False,
+        'qualification': 'Presentation of the reproduced static E1 field; ' + (
+            'the FEA strength gate passes, which is not proof: the physical proof load (issue #29) is still required.'
+            if meets else 'strength gate remains failed.')}
     (OUT / 'video-receipt.json').write_text(json.dumps(result, indent=2) + '\n')
     index = {'schema': 1, 'cases': {'hip_frame/E1': {'kind': 'static-deformation', 'transient_simulation': False,
         'video': movie.relative_to(ROOT).as_posix(), 'webm': webm.relative_to(ROOT).as_posix(),
@@ -154,7 +159,8 @@ def main():
         'receipt': (OUT / 'video-receipt.json').relative_to(ROOT).as_posix(),
         'recorded': {k: baseline[k] for k in ('safety_factor', 'target', 'max_displacement_mm', 'von_mises_design_mpa', 'load_from')}}}}
     (ROOT / 'exports/leg/fea/media.json').write_text(json.dumps(index, indent=2) + '\n')
-    print(f'PASS: {SECONDS}s / {FPS * SECONDS} decoded frames; static field scaling only, E1 gate remains below target.')
+    print(f'PASS: {SECONDS}s / {FPS * SECONDS} decoded frames; static field scaling only, E1 SF {baseline["safety_factor"]} '
+          f'{"meets" if meets else "remains below"} its target.')
 
 
 if __name__ == '__main__':

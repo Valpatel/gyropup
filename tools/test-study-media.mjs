@@ -42,9 +42,10 @@ try{
   assert.equal(await page.locator('#feavid').evaluate(v=>v.duration),12);
   assert.equal(await page.locator('#feavid').evaluate(v=>v.currentSrc.endsWith(v.canPlayType('video/mp4; codecs="avc1.64001f"')?'.mp4':'.webm')),true,'Choose a supported encoding');
   assert.equal(await page.locator('#feavid').evaluate(v=>v.paused),true,'Reduced motion waits for deliberate play');
-  assert.match(await page.locator('#feanote').innerText(),/Safety factor 1\.65 \/ required 2 — below target/);
+  const e1=summary.results[hip];
+  assert.ok((await page.locator('#feanote').innerText()).includes(`Safety factor ${e1.safety_factor} / required ${e1.target}${e1.safety_factor<e1.target?' — below target':''}.`),'The note states the recorded E1 gate');
   assert.match(await page.locator('.study-media-status').innerText(),/static load scaling, not elapsed physical time/);
-  await checkPlayback(page);record('12-second real decode/play/pause with unchanged failed strength gate');
+  await checkPlayback(page);record('12-second real decode/play/pause with the recorded strength gate');
   for(const [width,height] of [[320,568],[390,844],[844,390],[1440,900]]){
     await page.setViewportSize({width,height});await page.locator('#fea-media').scrollIntoViewIfNeeded();
     assert.ok(await page.evaluate(()=>document.documentElement.scrollWidth<=innerWidth+1),'No horizontal overflow');

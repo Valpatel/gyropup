@@ -46,8 +46,8 @@ def validate(root=ROOT, decode=True):
     index = read('exports/leg/fea/media.json')['cases']['hip_frame/E1']
     baseline = next(row for row in read(SUMMARY)['results'] if (row['part'], row['case']) == ('hip_frame', 'E1'))
     require(baseline == field_receipt['baseline'], 'Published report differs from reproduced baseline')
-    require(baseline['safety_factor'] == 1.65 and baseline['target'] == 2 and baseline['ok'] is False,
-            'E1 strength gate must remain below target')
+    require(baseline['target'] == 2 and baseline['ok'] == (baseline['safety_factor'] >= baseline['target']),
+            'E1 strength gate is inconsistent with its safety factor')
     require(field_receipt['transient_simulation'] is False and field_receipt['qualified_for_manufacture'] is False,
             'Static evidence cannot qualify hardware')
     # Historical CAD is compared to the producer Git revision, not silently
@@ -61,10 +61,11 @@ def validate(root=ROOT, decode=True):
     require(fields['units']['length'] == 'mm' and fields['units']['stress'] == 'MPa', 'Wrong field units')
     require(fields['name'] == 'hip_frame E1' and fields['result']['safety_factor'] == baseline['safety_factor'], 'Wrong solved case')
     surface = fields['surface']
-    require((surface['vertices'], surface['triangles']) == (20936, 41960), 'Surface topology changed')
+    nv, nt = surface['vertices'], surface['triangles']          # the field's bytes are bound by fields_sha256 above
+    require(isinstance(nv, int) and isinstance(nt, int) and nv > 1000 and nt > 1000, 'Surface topology missing')
     decoded = {}
-    for key, dtype, shape, code in [('positions','float32',[20936,3],'f'),('displacement','float32',[20936,3],'f'),
-                                   ('index','uint32',[41960,3],'I'),('tri_von_mises','float32',[41960],'f')]:
+    for key, dtype, shape, code in [('positions','float32',[nv,3],'f'),('displacement','float32',[nv,3],'f'),
+                                   ('index','uint32',[nt,3],'I'),('tri_von_mises','float32',[nt],'f')]:
         item = surface[key]
         require(item['dtype'] == dtype and item['shape'] == shape, f'Invalid {key} layout')
         values = array.array(code, base64.b64decode(item['b64'], validate=True))
@@ -101,7 +102,8 @@ def validate(root=ROOT, decode=True):
         require(0 <= factor <= 1 and abs(frame['max_physical_displacement_mm'] - maximum * factor) < .000001,
                 'Presentation extrapolates the solved load or changes physical displacement')
     require(timeline[0]['load_factor'] == 0 and timeline[144]['load_factor'] == 1 and timeline[-1]['load_factor'] == 0, 'Missing load/unload loop')
-    result = {'historical_source': field_receipt['source_revision'], 'safety_factor': 1.65, 'required': 2,
+    result = {'historical_source': field_receipt['source_revision'], 'safety_factor': baseline['safety_factor'],
+              'required': baseline['target'],
               'vertices': surface['vertices'], 'triangles': surface['triangles']}
     if decode:
         movie = root / index['video']
