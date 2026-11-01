@@ -450,6 +450,11 @@ HIP = {                                          # the hip frame's shape beyond 
                                                  # centre plane.
     'haunch': 0.0,                               # 0: the extra thickness runs the flange's whole length; L > 0: it tapers
                                                  # off L mm from the web (a haunch at the root, where the bending peaks)
+    'ear_ring_reach': 0.0,                       # mm: the knee-out ears' rounding into the web (STOP_EAR_FILLET) clipped
+                                                 # this much further along the top flange's root, so it runs out on its own
+                                                 # (to nothing where the motor's ring dips under the flange) instead of
+                                                 # being cut off at the ear's hull right on the root (a 0.1 mm sliver there
+                                                 # was the frame's R1 and E1 peak at 4 mm, x 89, z 62)
     'bed_clip': True,                            # the bottom flange's outer corners cut back to the 45 deg lines through
                                                  # today's corners (|x| + |z| <= FLANGE_X + ring + FLANGE_T), so the frame
                                                  # still fits the bed turned (printplan.fits: 248.9 of 250 mm)
@@ -537,7 +542,9 @@ def hip_frame():
                 prof = [(mx + rc, yf0 + 0.01), (mx + rc - f, yf0 + 0.01)]
                 prof += [(mx + rc - f + f * math.cos(math.radians(90 - 90 * k / 8)), yf0 - f + f * math.sin(math.radians(90 - 90 * k / 8))) for k in range(9)]
                 ring = cq.Workplane('XY').polyline(prof).close().revolve(360, (mx, 0, 0), (mx, 1, 0))
-                web = web.union(back).union(ring.intersect(yslab(blk, yf0 - f - 1.0, yf0 + 0.02)))
+                reach = HIP['ear_ring_reach']                  # the rounding's clip along the flange's root (issue #29: cut
+                blk_r = _hull(blk + [(sx * (fl_x - 1.0 - reach), zf + 0.5)]) if reach > 0 else blk   # at the hull, it left
+                web = web.union(back).union(ring.intersect(yslab(blk_r, yf0 - f - 1.0, yf0 + 0.02)))  # a sliver on the root)
     # the motors: lug screws (counterbored from the leg side, deep so a stocked length engages), the bore
     for mx, front in ((ax, True), (bx, False)):
         for a in lug_angles(front):
