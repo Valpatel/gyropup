@@ -301,6 +301,12 @@ def knee_cartridge_cut(y0, y1):
     return c.union(ycyl(KC['shoulder_d'] / 2, y0 - 1, y1 + 1))
 
 
+def knee_spacer_length() -> float:
+    """The aluminium spacer between a knee's two inner races (mm): the knee boss less its two bearings."""
+    kb0, kb1 = Y['knee_boss']
+    return kb1 - kb0 - 2 * KC['bearing_w']
+
+
 # ----------------------------------------------------------------------------------- printed parts
 
 RS04_LUG0, RS04_DOWELS = -15.0, (3.0, 183.0)     # in the vendor STEP's own frame: first M4 lug, the two Ø5 locating holes
@@ -456,8 +462,8 @@ FLANGE_T, FLANGE_X = 13.0, 95.0                  # the hip frame's top and botto
 #   bent 5052 flanges (SendCutSend)   no 5052 sheet meets the root moment and still clears the tray and the cheeks'
 #                                     flange with the inserts where they are (research/hip-frame-29/bent-flange-check.json)
 #   print on its end (layers x)       passes every case on the layers' bond, but stands 274 mm: not on the 250 mm bed
-# then cad-agent optimise (NSGA-II, 36 trials, research/hip-frame-29): about half of the trials failed the body or bed
-# check before any FEA, and of the rest these two led (4 mm, first host):
+# then cad-agent optimise (NSGA-II, 36 trials, research/hip-frame-29): 14 of the 36 failed the body or bed check before
+# any FEA. Trials 1, 8 (and 30, its repeat), 25, 28, 32 and 34 met every case; these two led (4 mm, first host):
 #   trial 1  root_r 7.5, dz 1.5, 13 / 18   R1 2.05, E1 2.06, E3o 2.42, E3i 2.75, R3o 1.19, 1106 g   <- HIP below
 #   trial 8  root_r 7, dz 2.5, 13 / 17     R1 2.01, E1 2.05, E3o 2.41, E3i 2.75, R3o 1.18, 1101 g
 # Trial 1 on the recording host reads R1 2.00 and E1 2.08 at 4 mm, but 1.79 and 1.81 at 3 mm. Its peak has moved to the
@@ -467,7 +473,7 @@ FLANGE_T, FLANGE_X = 13.0, 95.0                  # the hip frame's top and botto
 # whole foot of the block (on a local solid), checked at 3 and 2.5 mm.
 HIP = {                                          # the hip frame's shape beyond the body interface (issue #29's sweep;
     'top_t': FLANGE_T,                           # GYROPUP_HIP_PARAMS, a JSON file, overrides it). Each flange's thickness:
-    'bottom_t': 18.0,                            # it grows outwards (the inner face stays at the motors' ring) and the web
+    'bottom_t': 18.0,                            # it grows outwards (the inner face stays at ring + flange_dz) and the web
                                                  # with it, so the flange's root is that deep. The interface does not move:
                                                  # the inserts stay at frame_mounts() (FLANGE_T), the mount plane at the
                                                  # centre plane.
@@ -591,7 +597,8 @@ def hip_frame():
     hub_y = Y['hub'][0]
     r_top, r_bot = -(ring_r + FLANGE_T) + 22.0, z_lo - 2.0   # its top where the hub passes; its floor below the frame
     web = web.cut(cq.Workplane('XY').box(64.0, yf1 + 1 - (hub_y - 1.5), r_top - r_bot).translate((0.0, (yf1 + 1 + hub_y - 1.5) / 2, (r_top + r_bot) / 2)))
-    if HIP['bed_clip'] and t_of[-1] > FLANGE_T:              # the bottom corners back on today's 45 deg lines (bed fit)
+    if HIP['bed_clip'] and zf + t_of[-1] > ring_r + FLANGE_T:   # the bottom corners back on today's 45 deg lines (bed fit),
+                                                                 # whenever the bottom face stands out past today's
         d = fl_x + ring_r + FLANGE_T
         for sx in (1, -1):
             tri = [(sx * (d - (zf + t_of[-1]) - 1.0), z_lo - 1.0), (sx * (fl_x + 1.0), z_lo - 1.0), (sx * (fl_x + 1.0), -(d - fl_x - 1.0))]
