@@ -16,7 +16,9 @@ before any leg part.
   bound line changes, the screen goes stale and the test fails.
 - **The print-orientation screen** is [orientation_screen.py](orientation_screen.py). It ran on the compute host and
   its output is in [evidence/](evidence/).
-- **Changes:** this PR changes no CAD. The fixes are planned for a second PR, which reruns the FEA.
+- **Changes:** the review below was written against `dev` before any fix (PR #147), and its hand-written numbers are
+  from then. [screen.md](screen.md) follows the current CAD, so on later commits it shows the fixes. What the second PR
+  changed and what its FEA rerun found are in [docs/leg-print-package.md](../../docs/leg-print-package.md).
 
 **What this is not:** CAD and FEA prove neither fit nor strength. The layer check is a linear, isotropic solve
 resolved on the layer plane, and its interlayer shear allowable has not been measured. The press-fit and creep

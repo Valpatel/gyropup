@@ -3,7 +3,7 @@ print plan, the parts list with McMaster part numbers, the mass, and a clash swe
 
     .venv/bin/python cad/build_leg.py [--no-render] [--no-clash]
 
-Writes exports/leg/: <part>.step, <part>.stl (print orientation, on z = 0), leg_stand.step (the assembled leg with the
+Writes exports/leg/: <part>.step, <part>.stl and <part>.3mf (print orientation, on z = 0), leg_stand.step (the assembled leg with the
 bought parts as envelopes: the vendor models are not redistributed), *.png, print-plan.json, bom.json, leg.json; and
 exports/leg/cnc/ for the parts machined to order (D46): <part>.step in the frame it is machined in, <part>.stl for its
 picture, README.md with the callouts the order needs beyond the STEP, cnc.json.
@@ -13,8 +13,10 @@ from __future__ import annotations
 import argparse
 import json
 import math
+import re
 import sys
 import time
+import zipfile
 from pathlib import Path
 
 import cadquery as cq
@@ -24,7 +26,7 @@ sys.path.insert(0, str(R / 'cad'))
 import fivebar as fb  # noqa: E402
 import gmi  # noqa: E402
 import printplan  # noqa: E402
-from cadagent.geometry import export_print_stl  # noqa: E402
+from cadagent.geometry import export_print_stl, flatten_to_bed  # noqa: E402
 from cadagent.robot import solid_mass_properties  # noqa: E402
 
 OUT = R / 'exports' / 'leg'
@@ -160,6 +162,21 @@ CNC_ORDER = {'vendor': 'JLCCNC (jlccnc.com: upload the STEP for the instant pric
                            'shipping from China is extra and takes 5-10 days'}
 
 
+def export_print_3mf(solid, path: Path, rotation=None):
+    """The part as a 3MF (mm) in the STL's print orientation on z = 0, for a slicer that starts from a 3MF. CadQuery's
+    creation-date stamp is dropped and the zip dates fixed, so an unchanged part writes the same file."""
+    s = solid if rotation is None else solid.rotate((0, 0, 0), tuple(rotation[0]), rotation[1])
+    cq.exporters.export(flatten_to_bed(s), str(path), tolerance=0.05, angularTolerance=0.12)
+    with zipfile.ZipFile(path) as z:
+        files = {n: z.read(n) for n in z.namelist()}
+    files['3D/3dmodel.model'] = re.sub(rb'<metadata name="CreationDate">[^<]*</metadata>', b'', files['3D/3dmodel.model'])
+    with zipfile.ZipFile(path, 'w') as z:
+        for n, b in files.items():
+            zi = zipfile.ZipInfo(n, date_time=(1980, 1, 1, 0, 0, 0))
+            zi.compress_type = zipfile.ZIP_DEFLATED
+            z.writestr(zi, b)
+
+
 def cnc_part(name: str, m: dict, grams: float) -> dict:
     """A part machined to order: its STEP in the frame it is machined in, an STL for its picture, and the callouts."""
     shape, spec = m['machining']
@@ -205,11 +222,12 @@ def main():
         if m.get('made') == 'cnc':                       # machined to order from its STEP: not printed
             cnc[name] = cnc_part(name, m, masses[name])
             report[name] = {'qty': m['qty'], 'material': m['material'], 'made': m['note'], 'order': cnc[name]['step']}
-            for stale in (OUT / f'{name}.step', OUT / f'{name}.stl'):
+            for stale in (OUT / f'{name}.step', OUT / f'{name}.stl', OUT / f'{name}.3mf'):
                 stale.unlink(missing_ok=True)
             continue
         cq.exporters.export(solid, str(OUT / f'{name}.step'))
         rep = export_print_stl(solid, OUT / f'{name}.stl', rotation=ROT.get(name))
+        export_print_3mf(solid, OUT / f'{name}.3mf', rotation=ROT.get(name))
         report[name] = {**rep, 'qty': m['qty'], 'material': m['material'], 'made': m['note']}
         plan[name] = printplan.row(solid, ROT.get(name), m['material'], m['qty'], masses[name], m.get('solid', True), m['note'])
     too_big = printplan.write(OUT / 'print-plan.json', plan)
