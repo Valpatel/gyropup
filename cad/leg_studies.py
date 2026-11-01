@@ -253,6 +253,17 @@ def shares_from(rx):
             'front': round(min(1.0, 1.0 - min(s_m, s_f) + SHARE_MARGIN), 3)}
 
 
+def motor_reactions_y(ld):
+    """The two motors' reaction torques on the hip frame about +y (N m): (front, rear). sim.leg_rig.pin_forces gives
+    tau_front as the front motor's torque on its link and tau_rear as minus the rear motor's (both in its x-z cross
+    convention, cr(a, b) = a_x b_z - a_z b_x, which is about -y), so in a symmetric stance they come out equal where the
+    real torques are equal and opposite (cad/test_leg_loads.py checks it by virtual work and by the frame's balance). The frame takes each motor's torque
+    back through its lugs: +tau_front and -tau_rear about +y. Until 2026-10-31 both were applied as +tau, which put an
+    in-plane moment of 2 tau on the frame that no load on the leg makes (93 N m in E1, 126 N m in R1; issue #29)."""
+    tf, tr = ld['tau']
+    return float(tf), float(-tr)
+
+
 def members_only(st, j):
     """The whole-leg study's safety factor on the printed members: elements more than the joints' plug radius (+ 8 mm)
     from the knee and apex axes are judged; the plugs stand in for steel pins and bearings (checked by joint_checks)."""
@@ -652,7 +663,7 @@ def run(mesh, anim=True, only=None, only_cases=None, viewer=False):
         ld = c['loads']
         Ff, Fr = ld['F_C_on_upper'], ld['F_D_on_upper']
         Mx, Mz = ld['M_B_out']
-        tf, tr = ld['tau']
+        tf, tr = motor_reactions_y(ld)
 
         sr, sf = SH[key]['rear'], SH[key]['front']
 
