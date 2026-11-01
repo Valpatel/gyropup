@@ -21,6 +21,15 @@ try {
   if(route.includes('sim.html')) await page.waitForFunction(()=>document.body.dataset.ready==='1');
   if(route.includes('progress')) await page.waitForSelector('#status .card');
   if(route!=='/') await page.waitForSelector('.appnav');
+  if(route==='/') {
+   // The landing page offers the same navigation as every other page (site/nav.json): no separate "Let's play" pill.
+   const shared=await (await page.request.get(base+'/site/nav.json')).json();
+   const want=shared.nav.map(n=>({title:n.title,href:/^https?:/.test(n.href)?n.href:'/'+n.href}));
+   const got=await page.locator('.landing-nav .nav-links a').evaluateAll(as=>as.map(a=>({title:a.textContent.trim(),href:a.getAttribute('href')})));
+   assert.deepEqual(got,want,'The landing nav must list the same links as site/nav.json');
+   assert.equal(await page.getByRole('link',{name:/let.s play/i}).count(),0,'The landing header has a "Let\'s play" link again');
+   await page.waitForSelector('.landing-nav.has-menu');
+  }
   for(const [width,height] of sizes) {
    await page.setViewportSize({width,height});
    await page.evaluate(()=>new Promise(r=>requestAnimationFrame(()=>requestAnimationFrame(r))));
@@ -35,8 +44,16 @@ try {
       await drawer.click();assert.equal(await drawer.getAttribute('aria-expanded'),'false');
     }
    }
-   if(route!=='/' && width<=760) {
-    await page.getByRole('button',{name:'Menu'}).click();
+   // One control at the top right on every page: the Menu button on phones, the links themselves on wider screens.
+   const menuButton=page.getByRole('button',{name:'Menu'});
+   if(width>760) {
+    assert.ok(!(await menuButton.isVisible()),`${route} at ${width}×${height}: a Menu button on a wide screen`);
+    assert.ok(await page.getByRole('link',{name:'Home',exact:true}).isVisible(),`${route} at ${width}×${height}: the nav links are hidden`);
+   }
+   if(width<=760) {
+    const box=await menuButton.boundingBox();
+    assert.ok(box && width-(box.x+box.width)<=24 && box.y<60,`${route} at ${width}×${height}: the Menu button is not at the top right`);
+    await menuButton.click();
     assert.ok(await page.locator('.nav-links').isVisible());
     assert.ok(await page.getByRole('link',{name:'Home',exact:true}).isVisible());
     await page.keyboard.press('Escape');
@@ -47,6 +64,19 @@ try {
   await page.setViewportSize({width:390,height:844});
   await page.screenshot({path:`test-results/${route==='/'?'landing':route.replaceAll('/','-')}-phone.png`,fullPage:route==='/'});
  }
+ // Without script the landing's Menu button stays hidden and its links stay visible, without overflow.
+ const plain=await browser.newContext({javaScriptEnabled:false,viewport:{width:390,height:844}});
+ try {
+  const noScript=await plain.newPage();
+  await noScript.goto(base+'/',{waitUntil:'domcontentloaded'});
+  for(const width of [320,390,1440]) {
+   await noScript.setViewportSize({width,height:844});
+   assert.ok(await noScript.getByRole('link',{name:'Design notes'}).isVisible(),`No-script landing at ${width}: nav links hidden`);
+   assert.ok(!(await noScript.getByRole('button',{name:'Menu'}).isVisible()),`No-script landing at ${width}: a Menu button that cannot work`);
+   const scroll=await noScript.evaluate(()=>document.documentElement.scrollWidth);
+   assert.ok(scroll<=width+1,`No-script landing overflows at ${width}: ${scroll}`);
+  }
+ } finally { await plain.close(); }
  // A saved desktop collapse must not strand phone users without controls.
  await page.setViewportSize({width:1280,height:800});
  await page.goto(base+'/designer/sim.html?run=none&sound=0',{waitUntil:'networkidle'});
