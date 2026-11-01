@@ -55,7 +55,8 @@ PARAMS = {
     'stop_r': 60.0,                                      # stop posts: radius from the motor axis (between the lug screws)
     'stop_beta': 58.0,                                   # ... and their angle past the link's axis at its stop: 58 puts both of a
                                                          # motor's posts midway between two lug screws (100 + 2 x 58 = 6 x 36)
-    'eye_r': 20.0, 'eye_stub_fillet': 5.0,               # the upper link's knee end (radius) and the root fillet of its eye stub
+    'eye_r': 20.0, 'eye_stub_fillet': 5.0,               # the upper link's knee-eye stub (radius + 0.5) and its root fillet; past
+                                                         # (20, 5) the knee end grows a round bulb (eye_r + fillet) to carry it
     'apex_wall': 6.0, 'front_eye_fillet': 6.0,           # the front link's apex ring: wall round the 61812s, its inner-face fillet
     'hub_root_d': 64.0, 'hub_root_fillet': 0.0,          # the wheel link's hub where it leaves the link: the shoulder's diameter
                                                          # from 2 mm past the 61812 to the link (64: the abutment only), its fillet
@@ -370,7 +371,7 @@ def lug_clock():
     return best[1], best[0]
 
 
-UPPER_HUB_R, UPPER_EYE_R = 36.0, P['eye_r']
+UPPER_HUB_R, UPPER_EYE_R = 36.0, 20.0           # the link's end circles: they set its edges, and the stops' clearance
 
 
 def upper_half_width(r: float) -> float:
@@ -719,9 +720,17 @@ def upper_link():
     the front motor, pointing along +x from the origin (the rear one is the same part)."""
     l1, t = P['l1'], P['upper_t']
     out = link_outline((0, 0), (l1, 0), P['upper_w0'], P['upper_w1'], UPPER_HUB_R, UPPER_EYE_R)
-    u = yslab(out, 0.0, t).union(ycyl(UPPER_EYE_R - 0.5, -EYE_BOSS, 0.01, l1, 0))   # inside the outline's polygon: no slivers
+    re, fe = P['eye_r'], P['eye_stub_fillet']
+    u = yslab(out, 0.0, t)
+    bulb = eye_bulb_r()
+    if bulb:                                                                    # the knee end grown round a bigger stub
+        u = u.union(ycyl(bulb, 0.0, t, l1, 0))
+    u = u.union(ycyl(re - 0.5, -EYE_BOSS, 0.01, l1, 0))                       # inside the outline's polygon: no slivers
     u = u.union(stop_dogs())
-    u = u.union(boss_fillet(out, 0.0, -1, r=UPPER_EYE_R - 0.5, f=P['eye_stub_fillet'], cx=l1, arm_dir=-1))   # where the arm meets the boss
+    if bulb:                                                                    # the stub's root filleted all round, on the bulb
+        u = u.union(ring_fillet(re - 0.5, 0.0, -1, fe, l1).intersect(ycyl(bulb, -fe - 0.01, 0.01, l1, 0)))
+    else:
+        u = u.union(boss_fillet(out, 0.0, -1, r=re - 0.5, f=fe, cx=l1, arm_dir=-1))   # where the arm meets the boss
     u = u.cut(gmi.place(gmi.std_face_mate('L', depth=t + 2), (0, 0, 0), (0, 1, 0)))
     # the 8 M5 heads sit in counterbores, below the hub's outer face: at the knee-out stops the front link passes
     # over the front hub, 2 mm off that face (review M1: proud heads were hit below a 106 mm leg)
@@ -740,6 +749,13 @@ def upper_link():
     top = eye_sleeve_end() + 1.5                                           # the pocket reaches 1.5 past the sleeves' end: the nut on steel for a short stack (review S2)
     hexa = cq.Workplane('XZ', origin=(0, top, 0)).center(l1, 0).polygon(6, M10_NUT[0] / math.cos(math.pi / 6) + 0.3).extrude(top + EYE_BOSS + 0.5)
     return u.cut(hexa)
+
+
+def eye_bulb_r():
+    """The upper link's knee end grown into a round bulb when the eye stub is bigger than today's (radius, or None)."""
+    if P['eye_r'] <= UPPER_EYE_R and P['eye_stub_fillet'] <= 5.0:
+        return None
+    return P['eye_r'] + P['eye_stub_fillet']
 
 
 def eye_sleeve_end():
@@ -887,7 +903,7 @@ def cable(phi1: float, phi2: float):
     wm = (w0 + w1) / 2
     hw = lambda x: KC['hub_od'] / 2 + (42.0 - KC['hub_od'] / 2) * x / l2     # the wheel link's half-width, x from the knee
     r = CABLE_D / 2 + 2.0
-    r_knee = max(KC['hub_od'] / 2, UPPER_EYE_R) + r + 4.0           # round the knee, clear of the boss and the eye
+    r_knee = max(KC['hub_od'] / 2, eye_bulb_r() or UPPER_EYE_R) + r + 4.0   # round the knee, clear of the boss and the eye
 
     def on(p0, d, s, n, off, y):
         return cq.Vector(p0[0] + s * d[0] + off * n[0], y, p0[1] + s * d[1] + off * n[1])
