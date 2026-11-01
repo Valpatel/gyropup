@@ -122,8 +122,8 @@
  "mass_g": {
   "printed": 3080,
   "machined": 305,
-  "bought": 6559,
-  "total": 9944,
+  "bought": 6558,
+  "total": 9943,
   "printed_parts": {
    "hip_frame": 1106.1,
    "upper_link": 399.5,

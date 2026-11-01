@@ -35,7 +35,7 @@
    "key": "bearing_6301",
    "qty": 4,
    "for": "two in each knee",
-   "vendor": "McMaster-Carr",
+   "vendor": "SKF",
    "part_number": "6301-2RSH",
    "name": "Deep groove ball bearing 6301-2RSH (12 x 37 x 12, sealed both sides); McMaster-Carr 5972K86 is the same trade number (6301-2RS)",
    "mass_g_each": 60.2,
@@ -89,11 +89,11 @@
   {
    "key": "knee_spacer",
    "qty": 2,
-   "for": "between each knee's two inner races (28 mm)",
+   "for": "between each knee's two inner races (24 mm)",
    "vendor": "McMaster-Carr",
    "part_number": "9056K68",
    "name": "Multipurpose 6061 Aluminum Round Tube, 0.065\" Wall Thickness, 5/8\" OD (cut 4 per length)",
-   "mass_g_each": 5.2,
+   "mass_g_each": 4.8,
    "price_usd_each": 1.56,
    "cad": false
   },
