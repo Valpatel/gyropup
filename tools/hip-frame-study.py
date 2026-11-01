@@ -180,6 +180,7 @@ def run_variant(out: Path, params: dict | None, cases, mesh: float, vmax: float 
                    ls.VIEWS['hip_frame'])
             row['png_fixed_scale'] = png.name
         rows.append(row)
+    fit = interfaces(fb, frame, out)
     rev = subprocess.run(['git', 'rev-parse', 'HEAD'], cwd=ROOT, text=True, capture_output=True).stdout.strip()
     dirty = subprocess.run(['git', 'status', '--porcelain', 'cad', 'sim', 'tools/hip-frame-study.py'], cwd=ROOT, text=True,
                            capture_output=True).stdout.strip()
@@ -187,11 +188,31 @@ def run_variant(out: Path, params: dict | None, cases, mesh: float, vmax: float 
     res = {'schema': 1, 'source_revision': rev, 'source_dirty': bool(dirty), 'params': params or {}, 'hip': dict(getattr(fb, 'HIP', {})),
            'mesh_mm': mesh, 'cases': rows, 'mass_g': round(frame.Volume() / 1000 * MATERIALS['pa6_cf_z'].density_g_cm3, 1),
            'volume_mm3': round(frame.Volume(), 1), 'allowables_mpa': {'across_layers': s_z, 'in_layers': s_xy},
-           'print_normal': PRINT_NORMAL, 'toolkit': str(Path(cadagent.__file__).parent), 'seconds': round(time.time() - t0, 1),
+           'print_normal': PRINT_NORMAL, **fit, 'toolkit': str(Path(cadagent.__file__).parent), 'seconds': round(time.time() - t0, 1),
            'inputs_sha256': {p: sha(ROOT / p) for p in ('cad/fivebar.py', 'cad/leg_studies.py', 'sim/leg_rig.py',
                                                         'exports/leg/rig-results.json', 'exports/leg/fea/summary.json')}}
     (out / 'result.json').write_text(json.dumps(res, indent=1) + '\n')
     return res
+
+
+BODY_ZT = 90.5                     # body_params.z_spine_top() for today's frame: the cheeks' flange faces (mm)
+
+
+def interfaces(fb, frame, out: Path) -> dict:
+    """What a variant must keep: it fits the bed (printplan.fits, in build_leg's print rotation), and the body built
+    round it does not move (body_params.z_spine_top() from the frame's faces on the centre plane; the inserts are
+    fivebar.frame_mounts(), which the sweep does not change)."""
+    import body_params as bp
+    import printplan
+    from build_leg import ROT
+    size, how = printplan.fits(frame, ROT['hip_frame'])
+    bp.CACHE = out / 'body-cache'                       # its cache is keyed by the sources, not by GYROPUP_HIP_PARAMS
+    bp.frame_mounts.cache_clear()
+    zt = bp.z_spine_top()
+    bb = frame.BoundingBox()
+    return {'bed': {'size_mm': size, 'placement': how, 'ok': how != 'TOO BIG'},
+            'body': {'z_spine_top_mm': zt, 'reference_mm': BODY_ZT, 'ok': zt <= BODY_ZT, 'inserts': fb.frame_mounts()['inserts_xz']},
+            'bbox_mm': [round(v, 2) for v in (bb.xmin, bb.xmax, bb.ymin, bb.ymax, bb.zmin, bb.zmax)]}
 
 
 def metrics(res):
@@ -219,6 +240,9 @@ def evaluator(out_root: Path, mesh: float):
     m = metrics(res)
     checks = [{'id': f"sf-{c['case']}", 'level': 'ok' if c['ok'] else 'fail',
                'text': f"{c['case']} SF {c['safety_factor']} against {c['target']}"} for c in res['cases']]
+    checks += [{'id': 'bed', 'level': 'ok' if res['bed']['ok'] else 'fail', 'text': f"print bed: {res['bed']['placement']}"},
+               {'id': 'body', 'level': 'ok' if res['body']['ok'] else 'fail',
+                'text': f"body cheeks' z {res['body']['z_spine_top_mm']} (today {BODY_ZT})"}]
     print(json.dumps({'metrics': {**m, 'mass_kg': round(res['mass_g'] / 1000, 4)}, 'checks': checks,
                       'summary': ', '.join(f"{c['case']} {c['safety_factor']}" for c in res['cases']),
                       'data': {'result': str((out / 'result.json').relative_to(ROOT)) if out.is_relative_to(ROOT) else str(out / 'result.json')}}))
@@ -245,7 +269,7 @@ def main():
         print(f"{c['case']:4} SF {c['safety_factor']:5} (>= {c['target']})  layers({PRINT_NORMAL}) {L['sf']} [{L['governed_by']}] "
               f"peak {c['peak']['element_centre_mm']} sigma_n {L['at_isotropic_peak']['sigma_n_mpa']} tau_n {L['at_isotropic_peak']['tau_n_mpa']}",
               flush=True)
-    print('mass', res['mass_g'], 'g')
+    print('mass', res['mass_g'], 'g; bed', res['bed']['placement'], res['bed']['size_mm'], '; body cheeks z', res['body']['z_spine_top_mm'])
 
 
 if __name__ == '__main__':

@@ -442,6 +442,20 @@ GUSSET_RUNOUT = 12.0                             # mm: the frame's gussets betwe
 FLANGE_T, FLANGE_X = 13.0, 95.0                  # the hip frame's top and bottom flanges: thickness, half-length (mm).
                                                  # They carry the leg to the body across the print's layers (it prints
                                                  # web-down): 7 mm gave SF 0.75 in a landing across the layers, 13 about 1.3
+HIP = {                                          # the hip frame's shape beyond the body interface (issue #29's sweep;
+    'top_t': FLANGE_T,                           # GYROPUP_HIP_PARAMS, a JSON file, overrides it). Each flange's thickness:
+    'bottom_t': FLANGE_T,                        # it grows outwards (the inner face stays at the motors' ring) and the web
+                                                 # with it, so the flange's root is that deep. The interface does not move:
+                                                 # the inserts stay at frame_mounts() (FLANGE_T), the mount plane at the
+                                                 # centre plane.
+    'haunch': 0.0,                               # 0: the extra thickness runs the flange's whole length; L > 0: it tapers
+                                                 # off L mm from the web (a haunch at the root, where the bending peaks)
+    'bed_clip': True,                            # the bottom flange's outer corners cut back to the 45 deg lines through
+                                                 # today's corners (|x| + |z| <= FLANGE_X + ring + FLANGE_T), so the frame
+                                                 # still fits the bed turned (printplan.fits: 248.9 of 250 mm)
+}
+if os.environ.get('GYROPUP_HIP_PARAMS'):
+    HIP.update(json.loads(Path(os.environ['GYROPUP_HIP_PARAMS']).read_text()))
 
 
 def frame_ring_r() -> float:
@@ -470,15 +484,25 @@ def hip_frame():
     b = gmi.motor_interface(MOTOR)['case']['bolts']
     ring_r = frame_ring_r()
     (ax, _), (bx, _) = motors()
-    fl_t, fl_x = FLANGE_T, FLANGE_X
+    fl_x = FLANGE_X
+    t_of = {1: HIP['top_t'], -1: HIP['bottom_t']}            # each flange's thickness (HIP)
+    fl_t = t_of[1]                                           # the top one's, which the stop ears' lobes meet
     web = ycyl(ring_r, yf0, yf1, ax).union(ycyl(ring_r, yf0, yf1, bx)).union(
         cq.Workplane('XY').box(2 * ax, yf1 - yf0, 2 * ring_r).translate((0, (yf0 + yf1) / 2, 0)))
-    zf = ring_r                                              # flanges: z from ring_r .. ring_r + fl_t (above the motors' Ø120)
-    web = web.union(cq.Workplane('XY').box(2 * fl_x, yf1 - yf0, 2 * (zf + fl_t)).translate((0, (yf0 + yf1) / 2, 0)))
+    zf = ring_r                                              # flanges: z from ring_r .. ring_r + t (above the motors' Ø120)
+    z_lo, z_hi = -(zf + t_of[-1]), zf + t_of[1]
+    web = web.union(cq.Workplane('XY').box(2 * fl_x, yf1 - yf0, z_hi - z_lo).translate((0, (yf0 + yf1) / 2, (z_hi + z_lo) / 2)))
     mt = frame_mounts()
     yc = mt['plane_y']
     for s in (1, -1):
-        fl = cq.Workplane('XY').box(2 * fl_x, yf0 - yc, fl_t).translate((0, (yf0 + yc) / 2, s * (zf + fl_t / 2)))
+        t = t_of[s]
+        if HIP['haunch'] > 0 and t > FLANGE_T:               # the extra thickness only near the root, tapering off
+            fl = cq.Workplane('XY').box(2 * fl_x, yf0 - yc, FLANGE_T).translate((0, (yf0 + yc) / 2, s * (zf + FLANGE_T / 2)))
+            L = min(HIP['haunch'], yf0 - yc)
+            wedge = [(yf0 + 0.01, s * (zf + FLANGE_T - 0.01)), (yf0 + 0.01, s * (zf + t)), (yf0 - L, s * (zf + FLANGE_T - 0.01))]
+            fl = fl.union(cq.Workplane('YZ', origin=(-fl_x, 0, 0)).polyline(wedge).close().extrude(2 * fl_x))
+        else:
+            fl = cq.Workplane('XY').box(2 * fl_x, yf0 - yc, t).translate((0, (yf0 + yc) / 2, s * (zf + t / 2)))
         web = web.union(fl)
         for x, zb in mt['inserts_xz']:                         # end bosses with M5 inserts (the body or the rig)
             if zb * s > 0:
@@ -535,7 +559,13 @@ def hip_frame():
     # frame's face plane, the circlip's land) passes here at the leg's shortest, and a power cut squeezes the knee-out
     # stops' TPU up to 7.4 deg further (D39)
     hub_y = Y['hub'][0]
-    web = web.cut(cq.Workplane('XY').box(64.0, yf1 + 1 - (hub_y - 1.5), 24.0).translate((0.0, (yf1 + 1 + hub_y - 1.5) / 2, -(zf + fl_t) + 10.0)))
+    r_top, r_bot = -(zf + FLANGE_T) + 22.0, z_lo - 2.0       # its top where the hub passes; its floor below the frame
+    web = web.cut(cq.Workplane('XY').box(64.0, yf1 + 1 - (hub_y - 1.5), r_top - r_bot).translate((0.0, (yf1 + 1 + hub_y - 1.5) / 2, (r_top + r_bot) / 2)))
+    if HIP['bed_clip'] and t_of[-1] > FLANGE_T:              # the bottom corners back on today's 45 deg lines (bed fit)
+        d = fl_x + zf + FLANGE_T
+        for sx in (1, -1):
+            tri = [(sx * (d - (zf + t_of[-1]) - 1.0), z_lo - 1.0), (sx * (fl_x + 1.0), z_lo - 1.0), (sx * (fl_x + 1.0), -(d - fl_x - 1.0))]
+            web = web.cut(yslab(tri, yc - 1.0, yf1 + 1.0))
     return web
 
 
