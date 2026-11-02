@@ -201,12 +201,12 @@
    "preload_n": 1500,
    "loads": [
     {
-     "case": "R1 out-of-plane 114.6 N m vs the edge lifting at 104 (tips at 288)",
+     "case": "R1 out-of-plane 115.7 N m vs the edge lifting at 104 (tips at 288)",
      "per_insert_n": null,
      "source": "exports/leg/fea/summary.json joints.R1.hub_rear"
     },
     {
-     "case": "R3 out-of-plane 188.6 N m (sf_tip 1.53)",
+     "case": "R3 out-of-plane 190.1 N m (sf_tip 1.52)",
      "per_insert_n": null,
      "source": "exports/leg/fea/summary.json joints.R3.hub_rear"
     }
@@ -221,7 +221,7 @@
     {
      "code": "hub-edge-lifts",
      "level": "owner",
-     "text": "at the assumed 1200 N the hub's edge lifts at 104 N m; R1 puts 114.6 and R3 188.6 N m on it"
+     "text": "at the assumed 1200 N the hub's edge lifts at 104 N m; R1 puts 115.7 and R3 190.1 N m on it"
     }
    ],
    "verdict": "owner"
@@ -2435,7 +2435,7 @@
    "joint": "leg.upper_link_hub",
    "code": "hub-edge-lifts",
    "level": "owner",
-   "text": "at the assumed 1200 N the hub's edge lifts at 104 N m; R1 puts 114.6 and R3 188.6 N m on it"
+   "text": "at the assumed 1200 N the hub's edge lifts at 104 N m; R1 puts 115.7 and R3 190.1 N m on it"
   },
   {
    "joint": "rig.pendant_clip",

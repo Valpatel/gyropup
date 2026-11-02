@@ -5,7 +5,7 @@
    "solids": 1,
    "watertight": true,
    "fits": true,
-   "grams": 422
+   "grams": 417
   },
   "dyno_hub": {
    "valid": true,
@@ -47,7 +47,7 @@
    "solids": 1,
    "watertight": true,
    "fits": true,
-   "grams": 60
+   "grams": 53
   },
   "sleeve_anvil": {
    "valid": true,
@@ -62,13 +62,6 @@
    "watertight": true,
    "fits": true,
    "grams": 115
-  },
-  "puller_m8": {
-   "valid": true,
-   "solids": 1,
-   "watertight": true,
-   "fits": true,
-   "grams": 38
   },
   "bearing_disc": {
    "valid": true,
@@ -89,7 +82,7 @@
    "solids": 1,
    "watertight": true,
    "fits": true,
-   "grams": 109
+   "grams": 177
   },
   "coupon_frame_ring_p01": {
    "valid": true,
@@ -97,6 +90,27 @@
    "watertight": true,
    "fits": true,
    "grams": 25
+  },
+  "coupon_frame_pins_m01": {
+   "valid": true,
+   "solids": 1,
+   "watertight": true,
+   "fits": true,
+   "grams": 29
+  },
+  "coupon_frame_pins_nom": {
+   "valid": true,
+   "solids": 1,
+   "watertight": true,
+   "fits": true,
+   "grams": 28
+  },
+  "coupon_frame_pins_p01": {
+   "valid": true,
+   "solids": 1,
+   "watertight": true,
+   "fits": true,
+   "grams": 28
   },
   "coupon_hub_face_m01": {
    "valid": true,
@@ -145,21 +159,21 @@
    "solids": 1,
    "watertight": true,
    "fits": true,
-   "grams": 13
+   "grams": 17
   },
   "coupon_knee_boss_nom": {
    "valid": true,
    "solids": 1,
    "watertight": true,
    "fits": true,
-   "grams": 13
+   "grams": 17
   },
   "coupon_knee_boss_p01": {
    "valid": true,
    "solids": 1,
    "watertight": true,
    "fits": true,
-   "grams": 13
+   "grams": 16
   },
   "coupon_apex_eye_m01": {
    "valid": true,
@@ -215,8 +229,8 @@
    138.0,
    214.0
   ],
-  "b3_slack_mm": 6.0,
-  "b3_sleeve_od": 26.0,
+  "b3_slack_mm": 3.0,
+  "b3_sleeve_od": 32.0,
   "b4_stud_end": 73.0,
   "b4_nut": [
    77.0,

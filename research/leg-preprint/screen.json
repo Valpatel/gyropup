@@ -23,8 +23,8 @@
    256,
    256
   ],
-  "total_hours": 204.2,
-  "total_grams": 3079,
+  "total_hours": 208.1,
+  "total_grams": 3140,
   "parts": [
    {
     "part": "hip_frame",
@@ -40,8 +40,8 @@
     "hours_each": 72.5,
     "orientation": "DOWN_OUTER",
     "stl": {
-     "bed_cm2": 256.4,
-     "overhang_cm2": 34.8,
+     "bed_cm2": 255.3,
+     "overhang_cm2": 35.5,
      "height_mm": 81.3,
      "top_bands": [
       [
@@ -61,7 +61,7 @@
     "flags": [
      {
       "code": "supports",
-      "text": "35 cm2 of overhang steeper than 45 deg; biggest at z 6 mm (18 cm2), 8 mm (8 cm2), 23 mm (8 cm2)"
+      "text": "36 cm2 of overhang steeper than 45 deg; biggest at z 6 mm (18 cm2), 8 mm (8 cm2), 23 mm (8 cm2)"
      },
      {
       "code": "spool",
@@ -78,22 +78,26 @@
     "material": "pa6-cf",
     "qty": 2,
     "size_mm": [
-     206,
+     214,
      94,
      50
     ],
     "placement": "straight",
-    "grams_each": 400,
-    "hours_each": 26.2,
+    "grams_each": 424,
+    "hours_each": 27.8,
     "orientation": "DOWN_OUTER",
     "stl": {
-     "bed_cm2": 113.6,
-     "overhang_cm2": 4.4,
+     "bed_cm2": 120.5,
+     "overhang_cm2": 4.7,
      "height_mm": 50.0,
      "top_bands": [
       [
        6,
        4.4
+      ],
+      [
+       0,
+       0.2
       ],
       [
        40,
@@ -104,7 +108,7 @@
     "flags": [
      {
       "code": "long",
-      "text": "26 h a part: dry feed (< 20 % RH) for the whole print; the bed and enclosure at temperature throughout"
+      "text": "28 h a part: dry feed (< 20 % RH) for the whole print; the bed and enclosure at temperature throughout"
      }
     ]
    },
@@ -119,11 +123,11 @@
     ],
     "placement": "turned",
     "grams_each": 463,
-    "hours_each": 30.4,
+    "hours_each": 30.3,
     "orientation": "DOWN_INNER",
     "stl": {
-     "bed_cm2": 15.8,
-     "overhang_cm2": 154.0,
+     "bed_cm2": 14.5,
+     "overhang_cm2": 154.8,
      "height_mm": 80.0,
      "top_bands": [
       [
@@ -143,7 +147,7 @@
     "flags": [
      {
       "code": "floats",
-      "text": "more overhang (154 cm2) than bed contact (16 cm2): it stands on 16 cm2 and 141 cm2 of its underside hangs 32 mm up; it needs support under that or another orientation"
+      "text": "more overhang (155 cm2) than bed contact (15 cm2): it stands on 15 cm2 and 141 cm2 of its underside hangs 32 mm up; it needs support under that or another orientation"
      },
      {
       "code": "long",
@@ -161,12 +165,12 @@
      86
     ],
     "placement": "turned",
-    "grams_each": 635,
-    "hours_each": 41.6,
+    "grams_each": 647,
+    "hours_each": 42.4,
     "orientation": "DOWN_OUTER",
     "stl": {
-     "bed_cm2": 176.2,
-     "overhang_cm2": 20.5,
+     "bed_cm2": 175.6,
+     "overhang_cm2": 20.9,
      "height_mm": 86.0,
      "top_bands": [
       [
@@ -186,7 +190,7 @@
     "flags": [
      {
       "code": "supports",
-      "text": "20 cm2 of overhang steeper than 45 deg; biggest at z 5 mm (15 cm2), 12 mm (3 cm2), 79 mm (3 cm2)"
+      "text": "21 cm2 of overhang steeper than 45 deg; biggest at z 5 mm (15 cm2), 12 mm (3 cm2), 79 mm (3 cm2)"
      },
      {
       "code": "long",

@@ -6,14 +6,14 @@ Everything the first leg and its single-leg test rig need that is not printed: b
 
 | Group | Lines | Cost |
 |---|---|---|
-| The leg (one leg) | 19 | $1,280.70 |
+| The leg (one leg) | 20 | $1,280.70 |
 | Filament | 3 | $483.91 |
 | The rig: guide, frame, ballast, safety | 34 | $1,091.77 |
 | Electronics and wiring | 31 | $634.01 |
 | The bench tests (B1-B6) | 10 | $139.16 |
-| **All** | 97 | **$3,629.55** |
+| **All** | 98 | **$3,629.55** |
 
-Shipping, tax and the motors' duties are not included. Upload-priced parts count at the middle of their estimate: Output adapter (instant price on upload (est. $40 each)), Carriage plate (instant price on upload (est. $60-90 each)). Several lines buy a pack (McMaster sells screws by 25-100): the cost is the packs'.
+Shipping, tax and the motors' duties are not included. Upload-priced parts count at the middle of their estimate: Washer (instant price on upload), Output adapter (instant price on upload (est. $40 each)), Carriage plate (instant price on upload (est. $60-90 each)). Several lines buy a pack (McMaster sells screws by 25-100): the cost is the packs'.
 
 ## Order first (long leads)
 
@@ -28,7 +28,7 @@ Shipping, tax and the motors' duties are not included. Upload-priced parts count
 
 | Vendor | Lines | Cost |
 |---|---|---|
-| McMaster-Carr | 30 | $517.86 |
+| McMaster-Carr | 31 | $517.86 |
 | Seeed Studio | 1 | $510.00 |
 | MISUMI | 10 | $484.86 |
 | Bambu Lab | 3 | $483.91 |
@@ -85,13 +85,14 @@ Shipping, tax and the motors' duties are not included. Upload-priced parts count
 | Black-Oxide Alloy Steel Socket Head Screw, M5 x 0.8 mm Thread Size, 40 mm Long, Partially Threaded | 19 | [McMaster-Carr 91290A662](https://www.mcmaster.com/91290A662/) | $8.09 per 50 |  | $8.09 | [Belmetric BSH5X40](https://belmetric.com/m5x0-8-socket-head-cap-screw-din-912-class-12-9/), $0.28 | upper links onto the output adapters (8 each), heads proud; +3 for the bench (B4: the screws under test (two inserts to 3.5 kN, the link-under-the-head test)) |
 | Heat-Set Threaded Inserts for Plastic, Standard, Brass, M5 x 0.8 mm Thread Size, 7.9 mm Installed Length | 9 | [McMaster-Carr 94459A775](https://www.mcmaster.com/94459A775/) | $6.82 per 25 |  | $6.82 | [ruthex RX-M5x9.5 (SKU GE-M5x95-001)](https://www.ruthex.de/products/ruthex-gewindeeinsatz-m5-50-stuck-rx-m5x9-5-messing-gewindebuchsen),  (NOT drop-in: 9.5 mm long vs McMaster 7.9 mm (1.6 mm longer). The short version RX-M5Sx5.8 (and CNC Kitchen 'M5 x 5.8 short', also listed) is 2.1 mm shorter. No 7.9 mm M5 at ruthex or CNC Kitchen. EUR 9.99 per 50 (VAT incl.), no USD price.) | the frame's flange ends (the body, or the rig's carriage); +3 for the bench (B4: one in each M5 puller) |
 | Black-Oxide Alloy Steel Socket Head Screw, US Origin, M6 x 1 mm Thread Size, 30 mm Long | 4 | [McMaster-Carr 91290A332](https://www.mcmaster.com/91290A332/) | $11.36 per 50 |  | $11.36 | [Belmetric BSH6X30](https://belmetric.com/m6x1-0-socket-head-cap-screw-din-912-class-12-9/), $0.23 | the BotWheel's flange, from inside the wheel link's hub (M6 x 40 bottoms out unless its threads are > 15 deep: measure) |
+| Washer, undersized (DIN 433), for M6 screw, 6.4 mm ID, 11.0 mm OD, 1.6 mm thick, 18-8 stainless steel | 4 | [McMaster-Carr](https://www.mcmaster.com/products/washers/) | instant price on upload |  | $0.00 |  | under the BotWheel screws' heads on the wheel link's foot (D74: spreads the clamp; 1.8 N m) |
 | Output adapter, machined Aluminium 6061-T6 (machined) | 2 | [JLCCNC output_adapter.step](https://jlccnc.com/) | instant price on upload (est. $40 each) |  | $80.00 | [Xometry output_adapter.step](https://www.xometry.com/), instant price on upload | two per leg, made from `exports/leg/cnc/output_adapter.step` with the callouts in `exports/leg/cnc/README.md` (D46) (an estimate until the instant price is read on upload (D40: no quotes; JLCCNC turned-and-milled 6061, qty 4); shipping from China is extra and takes 5-10 days) |
 
 ## Filament
 
 | Part | Qty | Buy (primary) | Price | Stock | Cost | Backup | For |
 |---|---|---|---|---|---|---|---|
-| Bambu Lab PA6-CF (hardened nozzle; dried 8-12 h at 80 C), 1 kg spool | 5 | [Bambu Lab (US store) Bambu Lab PA6-CF (hardened nozzle; dried 8-12 h at 80 C)](https://us.store.bambulab.com/) | $79.99 |  | $399.95 | Gigaparts, $79.99/kg PA6-CF, in stock (read 2026-10-27, docs/leg-prototype-plan.md 6.1) | 3.74 kg of parts (leg, rig, bench fixtures and coupons) + 25 % for supports, purge and a reprint |
+| Bambu Lab PA6-CF (hardened nozzle; dried 8-12 h at 80 C), 1 kg spool | 5 | [Bambu Lab (US store) Bambu Lab PA6-CF (hardened nozzle; dried 8-12 h at 80 C)](https://us.store.bambulab.com/) | $79.99 |  | $399.95 | Gigaparts, $79.99/kg PA6-CF, in stock (read 2026-10-27, docs/leg-prototype-plan.md 6.1) | 3.92 kg of parts (leg, rig, bench fixtures and coupons) + 25 % for supports, purge and a reprint |
 | Bambu Lab PETG Basic, 1 kg spool | 3 | [Bambu Lab (US store) Bambu Lab PETG Basic](https://us.store.bambulab.com/) | $13.99 |  | $41.97 | any maker, the same material (petg); the print plans assume Bambu's settings | 2.39 kg of parts (leg, rig, bench fixtures and coupons) + 25 % for supports, purge and a reprint |
 | Bambu Lab TPU 95A HF, 1 kg spool | 1 | [Bambu Lab (US store) Bambu Lab TPU 95A HF](https://us.store.bambulab.com/) | $41.99 |  | $41.99 | any maker, the same material (tpu95); the print plans assume Bambu's settings | 0.43 kg of parts (leg, rig, bench fixtures and coupons) + 25 % for supports, purge and a reprint |
 

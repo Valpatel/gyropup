@@ -43,7 +43,7 @@ The leg's bought parts and their links are in [leg-rig-orders.md](leg-rig-orders
 |---|---|---|---|
 | DIN 433 M6 washer, 6.4 x 11 x 1.6, stainless (`washer_m6_din433`) | 4 | under the BotWheel screws' heads (D74) | McMaster-Carr part number to confirm: its product pages returned no data on 2026-11-01 |
 | Structural epoxy for metal to nylon (two-part, gap-filling, about 0.1-0.25 mm) | 1 kit | the stop pins, the knee-eye sleeves and the RS-04 dowels (D74): Henkel does not recommend the anaerobic retainer (LOCTITE 638) on thermoplastics | the owner picks the product; C1 tries it |
-| PA6-CF, two 1 kg spools of one lot | 3.1 kg in all | the hip frame alone is 1,106 g | dry before use (section 3) |
+| PA6-CF, four 1 kg spools of one lot | 3.1 kg a leg with purge and brim | the hip frame alone is 1,106 g, so it takes a spool change | dry before use (section 3) |
 | TPU 95A | 62 g | the four stop sleeves | |
 
 ## 2. Print the coupons first
@@ -81,7 +81,7 @@ z = 0. `exports/leg/print-plan.json` gives each part's hours and grams.
 |---|---|---|---|---|
 | hip_frame | 1 | the web's outer (leg-side) face; turned 45° to fit the 256 mm bed | 100 % solid | 72 h and more than one spool: splice or change the spool at a layer change, from the same lot. At 45° it needs a 249.2 mm square of the 256 mm bed, so the brim is 3 mm at most (or brim ears at the corners). The stop-pin holes open on the bed: keep their 0.5 mm lead-ins clean |
 | upper_link | 2 | the outer face (the head pockets open at the bed) | 100 % solid | the knee-eye sleeve holes open on the bed |
-| front_link | 1 | the inner face | 100 % solid; **supports from the bed under the link's body** | it floats: only the apex ring (16 cm²) touches the bed, with 141 cm² of underside 32 mm up. Use tree supports from the build plate only, never in the bearing seats |
+| front_link | 1 | the inner face | 100 % solid; **supports from the bed under the link's body** | it floats: only the apex ring (15 cm²) touches the bed, with 141 cm² of underside 32 mm up. Use tree supports from the build plate only, never in the bearing seats |
 | wheel_link | 1 | the outer face | 100 % solid | the outer knee seat opens on the bed |
 | apex_spacer | 1 | the inner face | 100 % solid | |
 | stop_sleeve | 4 | cap down | TPU 95A, 100 % | |
