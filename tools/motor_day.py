@@ -911,6 +911,10 @@ def _money(v):
     return f'${v:,.2f}' if v else '-'
 
 
+def _and(words: list) -> str:
+    return ', '.join(words[:-1]) + (' and ' if len(words) > 1 else '') + (words[-1] if words else '')
+
+
 def write_doc(ctx):
     doc = DOC.read_text()
     slices, der, stand, steps, sheets, mc, other = (ctx[k] for k in ('slices', 'der', 'stand', 'steps', 'sheets', 'mc', 'other'))
@@ -1108,7 +1112,7 @@ def write_doc(ctx):
               'much only B1 says (it needs the dyno, an archived fixture: [bench tests](leg-bench-tests.md#b1-the-power-off-'
               f"damping-decides-d39)). **Until then the accidental cut is the residual risk**: at worst {w['part'].replace('_', ' ')} "
               f"at a factor of {w['sf']} (under 1: it may break). Keep spare printed "
-              + ' and '.join(sorted({r['part'].replace('_', ' ') + 's' for r in und['rows'] if r['sf'] is not None and r['sf'] < 1.2 * r['target']}))
+              + _and(sorted({r['part'].replace('_', ' ') + 's' for r in und['rows'] if r['sf'] is not None and r['sf'] < 1.2 * r['target']}))
               + ' on hand, keep the clear zone, set the floor stop before every session, and inspect the parts above after any cut.']
     L += ['', '**Stop the ladder** at any crack, whitening, click or creak, a screw\'s paint mark broken, a motor case over '
           '40 °C, or a fault. Photograph it, write it on #156. **Look first** at: the wheel link\'s hub root (where the hub '
