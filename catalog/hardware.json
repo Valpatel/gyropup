@@ -4203,9 +4203,9 @@
    "https://www.mcmaster.com/98432A386/"
   ],
   "confidence": "product page",
-  "used_for": "leg v2 stop posts (D53): 4 per leg, 23 mm into blind Ø16 holes in the hip frame's web (a light fit, Loctite 638 filling the gap), the tapped end up under the TPU sleeve; the upper links' radial stop faces land on the sleeves at +3 / -97 deg",
+  "used_for": "leg v2 stop posts (D53): 4 per leg, 23 mm into blind Ø16 holes in the hip frame's web (a light fit, bonded with structural epoxy: D74, not LOCTITE 638 on the plastic), the tapped end up under the TPU sleeve; the upper links' radial stop faces land on the sleeves at +3 / -97 deg",
   "qty_per_robot": 8,
-  "notes": "Vented pull-out dowel (DIN 7979 D, m6): the flat lets air and retaining compound out of the blind hole (turn it to face the motor's axis, square to the stop's load), and the M8 thread in its end takes a puller screw, so a pin can come out of the printed frame. Ø16 because a Ø12 pin 22 mm into the printed web bears at SF 0.6 everyday against the link's straight edge and 1.2 with the radial stop face, against 2 (cad/leg_studies.py stop_checks); Ø16 x 23 with the face: 2.1."
+  "notes": "Vented pull-out dowel (DIN 7979 D, m6): the flat lets air and the bonding epoxy out of the blind hole (turn it to face the motor's axis, square to the stop's load), and the M8 thread in its end takes a puller screw, so a pin can come out of the printed frame. Ø16 because a Ø12 pin 22 mm into the printed web bears at SF 0.6 everyday against the link's straight edge and 1.2 with the radial stop face, against 2 (cad/leg_studies.py stop_checks); Ø16 x 23 with the face: 2.1."
  },
  {
   "id": "mcmaster-94459a778",

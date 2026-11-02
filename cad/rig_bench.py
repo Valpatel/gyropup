@@ -441,20 +441,24 @@ def coupon_frame_pins(dv: float):
 
 
 def coupon_knee_boss(dv: float):
-    """A lower link's knee boss: the knee bearing's seat (KC: a 6301, Ø37.04 + dv, its full 12 mm width) on a 2 mm web
-    with the KC shoulder's bore, the boss's Ø51 outside."""
+    """A lower link's knee boss: the knee bearing's seat (KC: a 6301, Ø37.04 + dv, its full 12 mm width) opening on the
+    bed face with the leg's lead-in, as the wheel link's outer seat does, on a 2 mm web with the KC shoulder's bore at
+    the top; the boss's Ø51 outside."""
     bo, bw = fb.KC['bearing_od'], fb.KC['bearing_w']
     h = bw + 2.0
+    r = bo / 2 + 0.02 + dv / 2
     s = zc(fb.KC['hub_od'] / 2, 0, h)
-    s = s.cut(zc(bo / 2 + 0.02 + dv / 2, 2.0, h + 1)).cut(zc(fb.KC['shoulder_d'] / 2, -1, 3))
+    s = s.cut(zc(r, -1, bw)).cut(z_lead_in(r)).cut(zc(fb.KC['shoulder_d'] / 2, bw - 1, h + 1))
     return engrave(s.union(bx(fb.KC['hub_od'] / 2 - 3, fb.KC['hub_od'] / 2 + 12, -7, 7, 0, 6)), label(dv), fb.KC['hub_od'] / 2 + 5.5, 0, 6, 3.5)
 
 
 def coupon_apex_eye(dv: float):
-    """The front link's apex eye: a 61812 seat (Ø78.04 + dv, 10 mm) against the Ø72 web, Ø90 outside."""
+    """The front link's apex eye: a 61812 seat (Ø78.04 + dv, 10 mm) opening on the bed face with the leg's lead-in, as
+    the front link's inner seat does, against the Ø72 web at the top; Ø90 outside."""
     ao = fb.AC['bearing_od']
+    r = ao / 2 + 0.02 + dv / 2
     s = zc(ao / 2 + 6.0, 0, 13.0)
-    s = s.cut(zc(ao / 2 + 0.02 + dv / 2, 3.0, 14)).cut(zc(36.0, -1, 4))
+    s = s.cut(zc(r, -1, 10.0)).cut(z_lead_in(r)).cut(zc(36.0, 9.0, 14))
     return engrave(s, label(dv), 0, -(ao / 2 + 3.0), 13.0, 3.0)
 
 
@@ -470,6 +474,58 @@ def coupon_hub_stub(dv: float):
     return engrave(s, label(dv), 0, -28.0, 4.0, 3.0)
 
 
+C3_BLOCK = (60.0, 40.0)             # mm: C3's flange blocks, the hip frame's 13 mm flange (FLANGE_T) by this
+C3_BORES = {'sleeved': 8.1, 'plain': gmi.clear('M5')}
+
+
+def coupon_flange_bolt(kind: str):
+    """C3: a hip-frame flange block (FLANGE_T thick, layers across the bolt as in the frame), its bolt hole from the bed
+    face with the lead-in: Ø8.1 for the 8 x 5.3 sleeve ('sleeved') or the M5 clearance ('plain', the bolt on the plastic)."""
+    t = fb.FLANGE_T
+    L, W = C3_BLOCK
+    r = C3_BORES[kind] / 2
+    s = bx(-L / 2, L / 2, -W / 2, W / 2, 0, t).cut(zc(r, -1, t + 1)).cut(z_lead_in(r))
+    return engrave(s, {'sleeved': 'S', 'plain': 'P'}[kind], -L / 2 + 8, 0, t, 5)
+
+
+def coupon_wheel_foot():
+    """C3's wheel samples: the wheel link's foot under one BotWheel screw (the 20.8 mm of PA6-CF the M6 clamps, layers
+    across it as in the link), the M6 clearance hole with the bed-face lead-in. The DIN 433 washer and the M6 x 30 go on
+    the top; a 5 mm steel plate stands in for the BotWheel's flange under it."""
+    t = fb.Y['wheel_boss'] - fb.WHEEL_RECESS_PLAY - fb.Y['hub'][1]
+    r = gmi.clear('M6') / 2
+    s = bx(-15.0, 15.0, -15.0, 15.0, 0, t).cut(zc(r, -1, t + 1)).cut(z_lead_in(r))
+    return engrave(s, 'W', -10.0, 0, t, 5)
+
+
+C4_CUT_BACK = 40.0                  # mm: C4 keeps the upper link's knee end from this far back along the arm
+
+
+def coupon_knee_stub_link(stub: str):
+    """C4 in the upper link's own frame (x along the link, the knee at (l1, 0), y the layer normal): the knee end cut
+    C4_CUT_BACK back from the knee, with 'today''s stub (the 5 mm root fillet, no bulb, as on dev) or 'pr2''s (the
+    drawn fillet and bulb). Everything else is the drawn link: the sleeve holes with PRINT_HOLE_COMP and the lead-in.
+    research/leg-preprint/c4_fea.py meshes this shape."""
+    keep = fb.P['eye_stub_fillet']
+    if stub == 'today':
+        fb.P['eye_stub_fillet'] = 5.0
+    try:
+        u = fb.upper_link()
+    finally:
+        fb.P['eye_stub_fillet'] = keep
+    l1, t = fb.P['l1'], fb.P['upper_t']
+    box = cq.Workplane('XY').box(C4_CUT_BACK + 60.0, fb.EYE_BOSS + t + 10.0, 100.0).translate(
+        (l1 - C4_CUT_BACK + (C4_CUT_BACK + 60.0) / 2, (t - fb.EYE_BOSS) / 2, 0))
+    return u.intersect(box)
+
+
+def coupon_knee_stub(stub: str):
+    """C4 in its print orientation, as the link prints: the outer face on the bed, the stub up, the knee on the z axis."""
+    t = fb.P['upper_t']
+    s = coupon_knee_stub_link(stub).rotate((0, 0, 0), (1, 0, 0), -90).translate((-fb.P['l1'], 0, t))
+    return engrave(s, {'today': 'DEV', 'pr2': 'PR2'}[stub], -C4_CUT_BACK + 7.0, 0, t, 4)
+
+
 # ----------------------------------------------------------------------------------- the list
 
 FIXTURES = {   # name: (builder, material, qty, note)
@@ -483,6 +539,11 @@ FIXTURES = {   # name: (builder, material, qty, note)
     'sleeve_anvil': (sleeve_anvil, 'pa6-cf', 1, 'PA6-CF, 100 %, face down (B3)'),
     'puller_m5': (lambda: puller('M5'), 'pa6-cf', 3, 'PA6-CF, 6 walls, 60 % gyroid, insert face up (B4: two to 3.5 kN, one for the head test)'),
     'bearing_disc': (bearing_disc, 'pa6-cf', 3, 'PA6-CF, 100 %, flat (B4: the link under an M5 head)'),
+    'coupon_c3_sleeved': (lambda: coupon_flange_bolt('sleeved'), 'pa6-cf', 2, 'PA6-CF, 100 %, dried, flat (C3: an 8 x 5.3 steel sleeve flush, M5 8.8 through the B4 load cell)'),
+    'coupon_c3_plain': (lambda: coupon_flange_bolt('plain'), 'pa6-cf', 2, 'PA6-CF, 100 %, dried, flat (C3: M5 8.8 on the plastic, a Ø15 washer)'),
+    'coupon_c3_wheel': (coupon_wheel_foot, 'pa6-cf', 2, 'PA6-CF, 100 %, dried, flat (C3: M6 x 30 on a DIN 433 at 1.8 N m into a 5 mm steel plate)'),
+    'coupon_c4_today': (lambda: coupon_knee_stub('today'), 'pa6-cf', 2, 'PA6-CF, 100 %, dried; outer face down, stub up, as the link (C4: dev\'s stub)'),
+    'coupon_c4_pr2': (lambda: coupon_knee_stub('pr2'), 'pa6-cf', 2, 'PA6-CF, 100 %, dried; outer face down, stub up, as the link (C4: the drawn stub)'),
 }
 COUPONS = {'coupon_frame_ring': coupon_frame_ring, 'coupon_frame_pins': coupon_frame_pins, 'coupon_hub_face': coupon_hub_face,
            'coupon_knee_eye': coupon_knee_eye,

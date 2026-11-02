@@ -1196,7 +1196,7 @@
     "verdict": "from clearance to interference across the band: C1 sets the hole"
    },
    {
-    "fit": "stop pins (16 x 40, retaining compound)",
+    "fit": "stop pins (16 x 40, epoxy-bonded)",
     "part": "hip_frame",
     "hole_drawn_mm": 16.1,
     "mating_mm": [
@@ -1443,7 +1443,7 @@
    "name": "bore and press-fit gauge",
    "prints": "one block a variant (-0.1 / 0 / +0.1 mm), PA6-CF, the leg recipe, bores vertical as in the parts, half the mouths chamfered 0.5 x 45 deg on the bed face",
    "features": "a 6301 seat (12 mm deep, Ø31 shoulder), a DIN 179 sleeve bore 40 mm long, a Ø16.1 x 23 blind stop-pin hole, two Ø4.94 x 12 dowel holes, a 61812 seat segment (10 mm)",
-   "settles": "PRINT_HOLE_ERR for this printer (the hole each fit is drawn at), the press force and the grip dry and after a humid week, elephant's foot at the mouths, retaining compound on printed bores",
+   "settles": "PRINT_HOLE_ERR for this printer (the hole each fit is drawn at), the press force and the grip dry and after a humid week, elephant's foot at the mouths, the epoxy bond in printed bores",
    "sheet": "c1-bores.csv"
   },
   {

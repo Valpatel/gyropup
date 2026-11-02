@@ -330,7 +330,7 @@ def fits(repo, mat):
          ac['bearing_od'] + 2 * ring_wall, ac['bearing_w'], True, 'the inner seat opens on the bed face (DOWN_INNER)'),
         ('RS-04 dowels (2 x 5 m6)', 'hip_frame', 2 * (dowel_r - dowel_cut), (5.004, 5.012), None, dowel_in, False,
          'blind from the motor side (the top as printed)'),
-        ('stop pins (16 x 40, retaining compound)', 'hip_frame', stop_d + 2 * stop_play, (stop_d + 0.007, stop_d + 0.018),
+        ('stop pins (16 x 40, epoxy-bonded)', 'hip_frame', stop_d + 2 * stop_play, (stop_d + 0.007, stop_d + 0.018),
          None, stop_in, True, 'blind from the leg side, which is on the bed (DOWN_OUTER)'),
     ]
     out = []
@@ -726,7 +726,7 @@ COUPONS = [
      'features': 'a 6301 seat (12 mm deep, Ø31 shoulder), a DIN 179 sleeve bore 40 mm long, a Ø16.1 x 23 blind stop-pin hole, '
                  'two Ø4.94 x 12 dowel holes, a 61812 seat segment (10 mm)',
      'settles': 'PRINT_HOLE_ERR for this printer (the hole each fit is drawn at), the press force and the grip dry and after a '
-                'humid week, elephant\'s foot at the mouths, retaining compound on printed bores',
+                'humid week, elephant\'s foot at the mouths, the epoxy bond in printed bores',
      'sheet': 'c1-bores.csv',
      'columns': ['variant', 'feature', 'mouth', 'd_mouth_0deg_mm', 'd_mouth_90deg_mm', 'd_mid_0deg_mm', 'd_mid_90deg_mm',
                  'press_force_n', 'pushout_dry_n', 'pushout_humid_7d_n', 'mass_dry_g', 'mass_humid_7d_g', 'notes'],

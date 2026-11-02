@@ -57,8 +57,9 @@ PARAMS = {
                                                          # motor's posts midway between two lug screws (100 + 2 x 58 = 6 x 36)
     'eye_r': 20.0, 'eye_stub_fillet': 7.5,               # the upper link's knee-eye stub (radius + 0.5) and its root fillet; past
                                                          # (20, 5) the knee end grows a round bulb (eye_r + fillet) to carry it.
-                                                         # 5 -> 7.5 (Ø55 bulb) lifts E1 1.77 -> 2.12 and R3K 0.90 -> 1.11, +25 g a
-                                                         # link; 10 gave 2.40 / 1.20 at +37 g (D74 sweep, issue #29)
+                                                         # 5 -> 7.5 (Ø55 bulb) lifts the gate's E1 1.77 -> 2.07 and R3K 0.90 -> 1.06
+                                                         # (the record's rerun), +25 g a link; 10 gave 2.40 / 1.20 at +37 g in the
+                                                         # D74 sweep (issue #29)
     'apex_wall': 6.0, 'front_eye_fillet': 6.0,           # the front link's apex ring: wall round the 61812s, its inner-face fillet
     'wheel_boss_fillet': 16.0,                           # the wheel link's knee boss where it leaves the link's inner face
     'hub_root_d': 75.0, 'hub_root_fillet': 0.0,          # the wheel link's hub where it leaves the link: the shoulder's diameter
@@ -609,7 +610,7 @@ def hip_frame():
         web = web.cut(ycyl(AC['bearing_od'] / 2, Y['bearing'][0] - 0.01, Y['bearing'][1], mx))   # motor side, is pressed for its
         web = web.cut(ycyl(AC['lip_d'] / 2, Y['bearing'][1] - 0.01, yf1 + 1, mx))              # last 10 mm, stops on the lip
     # stop posts: blind holes for the Ø16 steel pins, 23 deep from the leg-side face (a 1.1 mm floor on the motor side,
-    # bridged in the print); a light fit dialled on the post coupon, the pin set with retaining compound (D53)
+    # bridged in the print); a light fit dialled on the post coupon, the pin bonded with structural epoxy (D53, D74)
     for (px, pz) in stop_posts():
         web = web.cut(ycyl(STOP_PIN[0] / 2 + STOP_HOLE_PLAY, yf1 - STOP_PIN[2], yf1 + 1, px, pz))
         web = web.cut(mouth_chamfer(STOP_PIN[0] / 2 + STOP_HOLE_PLAY, yf1, -1, px, pz))   # the mouth is on the bed
@@ -756,7 +757,7 @@ def upper_link():
     for (x, y) in gmi.circle_pts(ao['pcd'], angles=gmi.ao_bolt_deg(ao)):         # motor frame (x, y) -> link (x, -y)
         u = u.cut(ycyl(HUB_HEAD_CB[0] / 2, t - HUB_HEAD_CB[1], t + 1, x, -y))
     u = u.cut(ycyl(EYE_SLEEVE[0] / 2 + PRINT_HOLE_COMP / 2, eye_sleeve_end(), t + 1, l1, 0))   # the steel sleeves, pressed in
-    u = u.cut(mouth_chamfer(EYE_SLEEVE[0] / 2 + PRINT_HOLE_COMP / 2, t, -1, l1))   # from outside (the bed face): about 0.05 mm
+    u = u.cut(mouth_chamfer(EYE_SLEEVE[0] / 2 + PRINT_HOLE_COMP / 2, t, -1, l1))   # from outside (the bed face): about 0.02 mm
                                                                               # of press at the band's middle, epoxy-bonded (D74)
                                                                               # (the inner one's end in the nut pocket: the nut clamps steel)
     u = u.cut(ycyl(6.03, -EYE_BOSS - 1, t + 1, l1, 0))                     # the shoulder: 12 mm (through the nut pocket)
@@ -786,7 +787,7 @@ def eye_sleeve_end():
 FRONT_KNEE_FILLET = 16.0     # mm: where the front link's knee boss stands out of its outer face into the wheel link's layer
                              # (the link's peak in the turn case, E1, at 17.75 kg and the 10 in wheel: 6 mm SF 1.62, 10 mm 1.82,
                              # 14 mm 2.05)
-FRONT_EYE_FILLET = P['front_eye_fillet']   # mm: the front link's apex eye, where it stands in out of the link's inner face towards the
+FRONT_EYE_FILLET = P['front_eye_fillet']   # (front_link() reads P at call time, for sweeps) mm: the front link's apex eye, where it stands in out of the link's inner face towards the
                              # upper links' layer, rounded into the arm (issue #5: the eye-to-arm corner)
 
 
@@ -803,8 +804,8 @@ def front_link():
     outline = link_outline((0, 0), (l2, 0), P['front_w'], P['front_w'] + 12, KC['hub_od'] / 2, r_eye)
     f = yslab(outline, y0, y1)
     f = f.union(ycyl(KC['hub_od'] / 2, kb0, kb1)).union(boss_fillet(outline, y1, +1, f=FRONT_KNEE_FILLET)).union(ycyl(r_eye, e0, e1, l2))
-    if FRONT_EYE_FILLET > 0:                                                 # where the apex eye stands out of the inner face
-        f = f.union(boss_fillet(outline, y0, -1, r=r_eye - 0.5, f=FRONT_EYE_FILLET, cx=l2, arm_dir=-1))
+    if P['front_eye_fillet'] > 0:                                            # where the apex eye stands out of the inner face
+        f = f.union(boss_fillet(outline, y0, -1, r=r_eye - 0.5, f=P['front_eye_fillet'], cx=l2, arm_dir=-1))
     f = f.cut(knee_cartridge_cut(kb0, kb1))
     ao, ai = Y['apex_bearing'], Y['apex_bearing_in']
     f = f.cut(ycyl(36.0, e0 - 1, e1 + 1, l2, 0))                            # Ø72 web between the seats: the outer races' shoulders
@@ -819,9 +820,10 @@ def front_link():
 
 WHEEL_RECESS_PLAY = 0.2     # mm: the BotWheel's Ø50 x 5 boss (height 5 +- 0.1) clears the recess's floor; its flange
                              # seats on the wheel link's outer face
-WHEEL_BOSS_FILLET = P['wheel_boss_fillet']   # mm: where the wheel link's knee boss leaves its inner face, the link's peak in a landing's
+WHEEL_BOSS_FILLET = P['wheel_boss_fillet']   # (wheel_link() reads P at call time, for sweeps) mm: where the wheel link's knee boss leaves its inner face, the link's peak in a landing's
                              # full axle spike (cad/leg_studies.py R1w; 6 mm gave SF 1.13 at 14.75 kg; 10 -> 16 with the hub root
-                             # at Ø75 took the layer check's R1w from 0.70 to 0.90 and R1 to 1.53, +12 g: D74 sweep, issue #29)
+                             # at Ø75 took the layer check's R1w from 0.70 to 0.88 and R1 to 1.49 in the record's rerun, +12 g:
+                             # D74, issue #29. The hub root's corner is sharp (hub_root_fillet 0), so R1w there is mesh-dependent)
 
 
 def wheel_link():
@@ -837,7 +839,7 @@ def wheel_link():
     r_foot = 42.0
     outline = link_outline((0, 0), (l2, 0), P['wheel_w1'], P['wheel_w0'], KC['hub_od'] / 2, r_foot)
     k = yslab(outline, y0, y1)
-    k = k.union(ycyl(KC['hub_od'] / 2, kb0, kb1)).union(boss_fillet(outline, y0, -1, f=WHEEL_BOSS_FILLET))   # the boss reaches in, filleted
+    k = k.union(ycyl(KC['hub_od'] / 2, kb0, kb1)).union(boss_fillet(outline, y0, -1, f=P['wheel_boss_fillet']))   # the boss reaches in, filleted
     k = k.cut(knee_cartridge_cut(kb0, kb1))
     k = k.cut(mouth_chamfer(KC['bearing_od'] / 2 + 0.02, kb1, -1))           # the outer 6301's mouth is on the bed
     h0, h1 = Y['hub']
@@ -1042,7 +1044,7 @@ def leg_parts() -> Leg:
 
     ad, adi = gmi.output_adapter(MOTOR, 'L')
     add('hip_frame', hip_frame(), 'pa6-cf', 1, 'printed PA6-CF web-down (turned 45 deg on the bed), 100 % solid; '
-        '20 x M4 into the motors, 2 x 61812 pressed in from the motor side onto a 2 mm lip (no retainers), 6 x M5 inserts in the flange ends, 4 x Ø16 stop pins in blind holes (23 deep, retaining compound)',
+        '20 x M4 into the motors, 2 x 61812 pressed in from the motor side onto a 2 mm lip (no retainers), 6 x M5 inserts in the flange ends, 4 x Ø16 stop pins in blind holes (23 deep, epoxy-bonded, D74)',
         fea='pa6_cf_z')                          # judged across the layers: web-down, its flanges carry the leg along print-z
     add('output_adapter', gmi.place(ad, (0, Y['motor_out'], 0), (0, 1, 0)), adi['material'], 2, adi['note'],
         fea='al6061' if adi['made'] == 'cnc' else 'pa6_cf_z', made=adi['made'], machining=(ad, adi['spec']) if adi['made'] == 'cnc' else None)
