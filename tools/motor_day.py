@@ -270,28 +270,52 @@ def record_loads() -> dict:
             'power_off_axle_n': S['cases']['R3']['Fw3'][2], 'stop_nm': S['cases']['R3']['stop_nm'], 'cap_nm': 60.0, 'peak_nm': 120.0}
 
 
+def knee_of(run: dict) -> float:
+    return max(run['peak_joint_force_n'].get('knee_f', 0), run['peak_joint_force_n'].get('knee_r', 0))
+
+
 def scale_of(case: str, run: dict, off: dict, rec: dict, cap: float):
-    """(load ratio day-one / record, target, what it is) for a FEA row's case, or None where the stand does not load it."""
-    knee = max(run['peak_joint_force_n'].get('knee_f', 0), run['peak_joint_force_n'].get('knee_r', 0))
+    """[(load ratio day-one / record, target, what it is), ...] for a FEA row's case: each day-one run that loads it (a
+    knee case takes the jump's landing and the power cut's), or [] where the stand does not load it."""
+    knee = knee_of(run)
     if case in ('R1', 'R1F'):
-        return knee / rec['knee_dyn_n'], LANDING_TARGET, f"landing: knee {knee:.0f} N against {rec['knee_dyn_n']:.0f} N"
+        return [(knee / rec['knee_dyn_n'], LANDING_TARGET, f"landing: knee {knee:.0f} N against {rec['knee_dyn_n']:.0f} N"),
+                (knee_of(off) / rec['knee_dyn_n'], FAULT_TARGET,
+                 f"power cut onto the floor stop: knee {knee_of(off):.0f} N against {rec['knee_dyn_n']:.0f} N")]
     if case in ('R1w',):
-        return run['peak_axle_force_n'] / rec['axle_full_n'], LANDING_TARGET, \
-            f"landing on the wheel link: axle {run['peak_axle_force_n']:.0f} N against {rec['axle_full_n']:.0f} N"
+        return [(run['peak_axle_force_n'] / rec['axle_full_n'], LANDING_TARGET,
+                 f"landing on the wheel link: axle {run['peak_axle_force_n']:.0f} N against {rec['axle_full_n']:.0f} N")]
     if case in ('E2', 'E3', 'E3o', 'E3i'):
-        return cap / rec['cap_nm'], 2.0, f'a motor at the {cap:.0f} N m cap (record {rec["cap_nm"]:.0f})'
+        return [(cap / rec['cap_nm'], 2.0, f'a motor at the {cap:.0f} N m cap (record {rec["cap_nm"]:.0f})')]
     if case == 'R2':
-        return cap / rec['peak_nm'], 2.0, f'a motor stalled at the {cap:.0f} N m cap, every day on day one (record {rec["peak_nm"]:.0f})'
-    if case in ('R3', 'R3K', 'R3KF'):
-        if case == 'R3':      # the upper link's own stop face: only if the leg reaches its stops
-            st = off.get('peak_stop_nm') or 0.0
-            return st / rec['stop_nm'], FAULT_TARGET, f'power cut: stop {st:.0f} N m against {rec["stop_nm"]:.0f}'
-        return off['peak_axle_force_n'] / rec['power_off_axle_n'], FAULT_TARGET, \
-            f"power cut onto the floor stop: axle {off['peak_axle_force_n']:.0f} N against {rec['power_off_axle_n']:.0f} N"
-    if case == 'R3o':
+        return [(cap / rec['peak_nm'], 2.0, f'a motor stalled at the {cap:.0f} N m cap, every day on day one (record {rec["peak_nm"]:.0f})')]
+    if case in ('R3', 'R3o'):      # the upper link's own stop face: only if the leg reaches its stops
         st = off.get('peak_stop_nm') or 0.0
-        return st / rec['stop_nm'], FAULT_TARGET, f'power cut: stop {st:.0f} N m against {rec["stop_nm"]:.0f}'
-    return None                                              # E1 (a turn): no turns on the stand
+        return [(st / rec['stop_nm'], FAULT_TARGET, f'power cut: stop {st:.0f} N m against {rec["stop_nm"]:.0f}')]
+    if case in ('R3K', 'R3KF'):
+        return [(off['peak_axle_force_n'] / rec['power_off_axle_n'], FAULT_TARGET,
+                 f"power cut onto the floor stop: axle {off['peak_axle_force_n']:.0f} N against {rec['power_off_axle_n']:.0f} N")]
+    return []                                                # E1 (a turn): no turns on the stand
+
+
+def _row(r: dict, f: float, target: float, why: str, pla, LC: dict) -> dict:
+    """One FEA row at PLA strength (linear: the factor scales with the strength) and at the day-one load ratio f."""
+    s_rec = r['material_data']['strength_mpa']
+    gate = r['safety_factor'] * pla.strength_mpa / s_rec
+    lc = LC.get((r['part'], r['case']))
+    layer = None
+    if lc and r['material_data'].get('strength_z_mpa'):
+        # bond: S_z and S_s scale together (S_s = S_z / sqrt 3 for both); bulk: in-layer strength
+        k_z = pla.strength_mpa / r['material_data']['strength_z_mpa']
+        k_xy = pla.strength_mpa / r['material_data'].get('strength_xy_mpa', s_rec)
+        layer = min(lc.get('safety_factor_bond', lc['safety_factor']) * k_z, lc.get('safety_factor_bulk', 99) * k_xy)
+    base = min(gate, layer) if layer is not None else gate
+    sf = base / f if f > 1e-9 else None
+    return {'part': r['part'], 'case': r['case'], 'record_gate': r['safety_factor'],
+            'record_layer': lc['safety_factor'] if lc else None, 'pla_gate_at_record_load': round(gate, 2),
+            'pla_layer_at_record_load': round(layer, 2) if layer is not None else None, 'load_ratio': round(f, 3),
+            'sf': round(sf, 2) if sf is not None else None, 'target': target, 'ok': sf is None or sf >= target,
+            'governed_by': ('layer' if layer is not None and layer < gate else 'gate'), 'load': why}
 
 
 def derate(sim: dict) -> dict:
@@ -313,37 +337,20 @@ def derate(sim: dict) -> dict:
            'caps': {}, 'rows': []}
     for cap in caps:
         run = runs[('jump', cap)]
-        rows = []
-        for r in S['results']:
-            if r['part'] == 'leg':
-                continue
-            sc = scale_of(r['case'], run, off, rec, cap)
-            if sc is None:
-                continue
-            f, target, why = sc
-            s_rec = r['material_data']['strength_mpa']
-            gate = r['safety_factor'] * pla.strength_mpa / s_rec
-            lc = LC.get((r['part'], r['case']))
-            layer = None
-            if lc and r['material_data'].get('strength_z_mpa'):
-                # bond: S_z and S_s scale together (S_s = S_z / sqrt 3 for both); bulk: in-layer strength
-                k_z = pla.strength_mpa / r['material_data']['strength_z_mpa']
-                k_xy = pla.strength_mpa / r['material_data'].get('strength_xy_mpa', s_rec)
-                layer = min(lc.get('safety_factor_bond', lc['safety_factor']) * k_z, lc.get('safety_factor_bulk', 99) * k_xy)
-            base = min(gate, layer) if layer is not None else gate
-            sf = base / f if f > 1e-9 else None
-            rows.append({'part': r['part'], 'case': r['case'], 'record_gate': r['safety_factor'],
-                         'record_layer': lc['safety_factor'] if lc else None, 'pla_gate_at_record_load': round(gate, 2),
-                         'pla_layer_at_record_load': round(layer, 2) if layer is not None else None, 'load_ratio': round(f, 3),
-                         'sf': round(sf, 2) if sf is not None else None, 'target': target, 'ok': sf is None or sf >= target,
-                         'governed_by': ('layer' if layer is not None and layer < gate else 'gate'), 'load': why})
+        rows = [_row(r, f, target, why, pla, LC) for r in S['results'] if r['part'] != 'leg'
+                for f, target, why in scale_of(r['case'], run, off, rec, cap)]
         worst = min((x for x in rows if x['sf'] is not None), key=lambda x: x['sf'] / x['target'])
         out['caps'][str(cap)] = {'jump_mm': run['jump_height_mm'], 'axle_n': run['peak_axle_force_n'],
-                                 'knee_n': max(run['peak_joint_force_n'].values()), 'all_ok': all(x['ok'] for x in rows),
+                                 'knee_n': knee_of(run), 'all_ok': all(x['ok'] for x in rows),
                                  'worst': f"{worst['part']} {worst['case']} {worst['sf']}", 'rows': rows}
     ok = [c for c in caps if out['caps'][str(c)]['all_ok']]
     out['pla_cap_nm'] = max(ok) if ok else None
-    out['stand_cap_nm'] = next(r['cap_nm'] for r in sim['runs'] if r['test'] == 'stand_up')
+    out['stand_cap_nm'] = max(r['cap_nm'] for r in sim['runs'] if r['test'] != 'jump')
+    out['stand_runs'] = {r['test']: {'cap_nm': r['cap_nm'], 'peak_motor_nm': r['peak_motor_nm'], 'knee_n': knee_of(r),
+                                     'axle_n': r['peak_axle_force_n']} for r in sim['runs'] if r['test'] != 'jump'}
+    if out['pla_cap_nm'] is None or out['stand_cap_nm'] > out['pla_cap_nm']:
+        raise SystemExit(f"the stand-up, squat and power-cut runs are at {out['stand_cap_nm']:g} N m, above the PLA cap "
+                         f"({out['pla_cap_nm']}): lower STAND_CAP in tools/motor_day_sim.py and rerun it")
     # the hub clamp in tapped PLA: the record's friction at its preload, at the PLA torque's preload (T = K F d, K 0.2)
     j = S['joints']['R1']['hub_rear']
     t_pla = 1.0
@@ -705,6 +712,11 @@ def drawings(P, items, names, rev, meta, fm):
     s.view('side', pr, direction=(0, 1, 0), up=(0, 0, 1), box=(0.0, 0.35, 0.62, 0.65), hidden=False)
     s.view('top', pr, direction=(0, 0, -1), up=(0, 1, 0), box=(0.0, 0.0, 0.62, 0.35), hidden=False, balloons=False)
     s.view('iso', pr, direction=(-0.8, 1.0, -0.6), up=(0, 0, 1), box=(0.62, 0.2, 0.38, 0.6), hidden=False)
+    bh, bk = P['leg_output_adapter_front'].BoundingBox(), P['leg_eye_sleeve_front'].BoundingBox()
+    hip_c = ((bh.xmin + bh.xmax) / 2, 0, (bh.zmin + bh.zmax) / 2)
+    knee_c = ((bk.xmin + bk.xmax) / 2, 0, (bk.zmin + bk.zmax) / 2)
+    s.dim('side', hip_c, knee_c, offset=-45, text=f'{math.dist(hip_c, knee_c):.1f} hip to knee')
+    s.dim('side', (bh.xmin, 0, hip_c[2]), (bh.xmax, 0, hip_c[2]), offset=bh.zlen / 2 + 18, text=f'Ø{bh.xlen:.0f} adapter')
     s.parts_list(rows_for(pr, ('dowel_5x20',)))
     sheets.append(s)
     # MD-03: the knees, the apex and the foot
@@ -918,7 +930,8 @@ def write_doc(ctx):
          'a row\'s factor scales with the strength.',
          f"- **Loads:** the rig's controller and MuJoCo model at each cap, at {der['sim']['mass_kg']:.1f} kg "
          f"(`tools/motor_day_sim.py`), against the loads the record's cases were run at (knee {der['record']['loads']['knee_dyn_n']:.0f} N "
-         f"in a landing, axle {der['record']['loads']['axle_full_n']:.0f} N on the wheel link, the motors' 60 and 120 N m).",
+         f"in a landing, axle {der['record']['loads']['axle_full_n']:.0f} N on the wheel link, the motors' 60 and 120 N m). "
+         'A knee case is checked at the landing (target 2) and at the power cut onto the floor stop (a fault: target 1).',
          '- **Not in it:** PLA is brittle (it cracks without warning, where PA6-CF whitens first), creeps, and softens at '
          '55 °C. No margin is added for these: the ladder adds them by stepping up slowly and inspecting after each rung.', '',
          '| Cap at the motors | Jump (sim) | Axle peak | Knee peak | Weakest row | All rows at target |', '|---|---|---|---|---|---|']
@@ -929,8 +942,13 @@ def write_doc(ctx):
     L += ['', f"**The PLA cap is {cap:.0f} N m**" if cap else '**No simulated cap keeps every row at target.**']
     if cap:
         x = der['caps'][str(cap)]
-        L[-1] += (f": a {x['jump_mm']:.0f} mm hop. Above it the first row to fall short is the weakest one in the next row of "
-                  'the table.')
+        L[-1] += f": a {x['jump_mm']:.0f} mm hop."
+        nxt = [c for c in caps if float(c) > cap]
+        if nxt:
+            y = der['caps'][nxt[0]]
+            bad = min((r for r in y['rows'] if not r['ok']), key=lambda r: r['sf'] / r['target'])
+            L[-1] += (f" At {float(nxt[0]):.0f} N m {bad['part']} {bad['case']} falls to {bad['sf']}, under its target of "
+                      f"{bad['target']:g}.")
         rows = sorted((r for r in x['rows'] if r['sf'] is not None), key=lambda r: r['sf'] / r['target'])
         L += ['', f'Where PLA fails first, at {cap:.0f} N m (the weakest rows):', '',
               '| Part | Case | PLA factor | Target | Governed by | Load |', '|---|---|---|---|---|---|']
@@ -938,39 +956,53 @@ def write_doc(ctx):
             L.append(f"| {r['part']} | {r['case']} | {r['sf']} | {r['target']:g} | {r['governed_by']} | {r['load']} |")
     hc = der['hub_clamp']
     L += ['', f"The hub clamp in the PLA adapter: {hc['preload_n']} N a screw at {hc['torque_nm']} N m gives about "
-          f"{hc['friction_nm']} N m of friction against a {cap or 0:.0f} N m cap (the dowels carry the rest). {hc['note'].split(': ')[-1]}",
+          f"{hc['friction_nm']} N m of friction against a {cap or 0:.0f} N m cap (the dowels carry the rest). "
+          f"{hc['note'].split(': ')[-1][:1].upper()}{hc['note'].split(': ')[-1][1:]}",
           '', 'Full table: [derating.json](../exports/motor-day/derating.json).']
     doc = _fill(doc, 'derating', '\n'.join(L))
     # ---- the ladder
     sc = der['stand_cap_nm']
+    hm = f"--half-mass {der['sim']['mass_kg']:.2f}"
+    gb = {t: x['peak_motor_nm'] for t, x in der['stand_runs'].items()}
     lad = [
         ('L0', 'Unpowered', '-', 'Fold and stretch the leg by hand from stop to stop; the boom swings freely; the foot lands '
          'on the mat at the stance with the boom level.', 'any rub, any part touching another'),
-        ('L1', 'Commission each motor', '2 A bench limit', 'Phase 0.4 on all four motors (C1-C6): ids 1 front, 2 rear on this leg; '
-         '`python -m rig.rs04 --id N param limit_torque 10`, then save.', 'the motor reads back the limit you set'),
+        ('L1', 'Commission each motor', '2 A bench limit', 'Phase 0.4 (C1-C5) on all four motors, then C6: ids 1 front, 2 rear on this leg. '
+         'C4 saves the rig\'s 60 N m; then `python -m rig.rs04 --id N param limit_torque 10` and `--id N save`, so a motor '
+         'powers up at 10.', 'the motor reads back 10 after a power cycle'),
         ('L2', 'Zero on the bare stops', '10 N m', 'The boom propped on the floor stop, the foot in the air. '
          '`python -m rig.calibrate`, one link at a time onto its stop pins by hand.', 'the 142 deg between the posts; no creak at the stop pins'),
-        ('L3', 'In-air sweeps', '10 N m', '`python -m rig.run --backend can --test squat --rate-limit 5` with the foot in the air '
-         '(boom propped).', 'smooth; the knees and the adapters do not click; motor cases under 40 °C'),
-        ('L4', 'Stand up', f'{sc:.0f} N m', '`--test stand_up`, the foot on the mat.', 'holds 300 mm; peak motor torque about 8 N m (sim)'),
-        ('L5', 'Squat x 3', f'{sc:.0f} N m', '`--test squat`.', 're-check every screw\'s paint mark after'),
-        ('L6', 'Power cut onto the floor stop', f'{sc:.0f} N m', '`--test power_off`: let go of the pendant.',
+        ('L3', 'In-air sweeps', '10 N m', f'`python -m rig.run --backend can --test squat --cap 10 {hm} --rate-limit 5` '
+         'with the foot in the air (boom propped).', 'smooth; the knees and the adapters do not click; motor cases under 40 °C'),
+        ('L4', 'Stand up', f'{sc:.0f} N m', f'`--test stand_up --cap {sc:.0f} {hm}`, the foot on the mat.',
+         f"holds 300 mm; peak motor torque about {gb['stand_up']:.0f} N m (sim)"),
+        ('L5', 'Squat x 3', f'{sc:.0f} N m', f'`--test squat --cap {sc:.0f} {hm}`.', 're-check every screw\'s paint mark after'),
+        ('L6', 'Power cut onto the floor stop', f'{sc:.0f} N m', f'`--test power_off --cap {sc:.0f} {hm}`: let go of the pendant.',
          'the boom lands on the floor stop, not the leg on its own stops'),
     ]
     jc = [c for c in caps if (not cap) or float(c) <= cap]
     for k, c in enumerate(jc):
         x = der['caps'][c]
         lad.append((f'L{7 + k}', 'Hop' if k == 0 else 'Higher hop', f'{float(c):.0f} N m',
-                    f"`python -m rig.rs04 --id N param limit_torque {float(c):.0f}` on both motors, then `--test jump`.",
+                    f"`--test jump --cap {float(c):.0f} {hm}`.",
                     f"about {x['jump_mm']:.0f} mm; inspect the weakest rows' corners (below) with a lamp"))
-    L = ['Each rung runs only after the one before it passed and the leg was inspected. The motors\' own `limit_torque` is '
-         'the cap: set it on both before the rung and read it back. The safety rules of '
+    L = ['Each rung runs only after the one before it passed and the leg was inspected. `--cap` is the cap in both places: '
+         '`rig.run` writes it to both motors\' `limit_torque` at start-up, reads it back (it stops if a motor does not take it) '
+         'and clips its own commands to it. Without `--cap` the rig runs at 60 N m: never on the PLA leg. `--half-mass` is '
+         'the simulated mass the stand is ballasted to. The safety rules of '
          '[leg-rig-safety.md](leg-rig-safety.md) apply unchanged (one operator, the pendant, the clear zone, eye protection).', '',
          '```mermaid', 'flowchart LR'] + [f'  {a}["{a}<br/>{b}<br/>{c}"]' + (f' --> {lad[i + 1][0]}' if i + 1 < len(lad) else '')
                                          for i, (a, b, c, _, _) in enumerate(lad)] + ['```', '',
          '| Rung | What | Cap | How | Pass when |', '|---|---|---|---|---|']
     for a, b, c, d, e in lad:
         L.append(f'| {a} | {b} | {c} | {d} | {e} |')
+    if cap:
+        cut = [r for r in der['caps'][str(cap)]['rows'] if r['sf'] is not None and r['load'].startswith('power cut')]
+        tight = min(cut, key=lambda r: r['sf'] / r['target']) if cut else None
+        if tight and tight['sf'] / tight['target'] < 1.5:
+            L += ['', f"**L6 is a close call** ({tight['part']} {tight['case']}: {tight['sf']} against {tight['target']:g}, "
+                  f"{tight['load']}). Run it once, with the floor stop checked first, and inspect the "
+                  f"{tight['part'].replace('_', ' ')} before going on."]
     L += ['', '**Stop the ladder** at any crack, whitening, click or creak, a screw\'s paint mark broken, a motor case over '
           '40 °C, or a fault. Photograph it, write it on #156. **Look first** at: the wheel link\'s hub root (where the hub '
           'leaves the link, inside the apex), the front link\'s apex ring, the upper links\' knee-eye stubs, the PLA adapters '

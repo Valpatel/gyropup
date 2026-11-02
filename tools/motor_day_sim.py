@@ -23,7 +23,8 @@ from rig import leg_control as lc, run  # noqa: E402
 
 OUT = R / 'exports' / 'motor-day'
 JUMP_CAPS = (12.0, 15.0, 20.0, 25.0, 30.0, 40.0)   # N m at the motors (limit_torque) and in the laptop's clip
-STAND_CAP = 20.0                                    # the stand-up and squat rungs
+STAND_CAP = 12.0                                    # the stand-up, squat and power-cut rungs: no rung above the
+                                                    # PLA cap (tools/motor_day.py refuses a stand cap above it)
 KEYS = ('jump_height_mm', 'peak_motor_nm', 'peak_axle_force_n', 'peak_wheel_force_n', 'peak_knee_pin_n', 'peak_gearbox_nm',
         'peak_stop_nm', 'stop_hits', 'L_range_mm', 'peak_joint_force_n', 'peak_front_link_n', 'peak_motor_speed_rad_s')
 
