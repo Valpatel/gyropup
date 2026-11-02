@@ -1,0 +1,68 @@
+/* Design-note pages (tools/doc-page.mjs): the lead card, status strips counted from a note's own tables, and folds. */
+.doc-card{margin:22px 0 34px;padding:18px 20px;border:1px solid #dedfd3;border-radius:18px;background:linear-gradient(135deg,#fffef9,#f6f3e6);box-shadow:0 8px 24px #294a3810}
+.doc-facts{display:flex;flex-wrap:wrap;gap:6px 8px;margin:0;font:600 11px/1.6 'JetBrains Mono',monospace;color:#4f5e57}
+.doc-facts span{padding:2px 10px;border-radius:999px;background:#eef1e4}
+.doc-facts a{color:#8f3312}
+.doc-sections{display:flex;flex-wrap:wrap;gap:6px;margin:12px 0 0}
+.doc-sections a{padding:4px 11px;border:1px solid #d7dccb;border-radius:999px;background:#fff;color:#263e35;font-size:12px;line-height:1.5;text-decoration:none}
+.doc-sections a:hover{border-color:#c94718;color:#a83b16}
+.doc-sections a[data-folded]::after{content:" ▾";color:#8a958c}
+.doc-live{display:grid;grid-template-columns:minmax(160px,260px) minmax(0,1fr);gap:18px;align-items:center;margin-top:16px;padding-top:16px;border-top:1px dashed #d4d8c8}
+.doc-live-shot{display:block;border-radius:12px;overflow:hidden;background:#eef3f4;border:1px solid #dde3dc}
+.doc-live-shot img{display:block;width:100%;height:auto;aspect-ratio:16/11;object-fit:contain}
+.doc-live-title{margin:0 0 6px;font-size:13px;line-height:1.5;color:#4f5e57}
+.doc-live-title b{color:#263e35}
+.doc-meters{margin:0;padding:0;list-style:none}
+.doc-meters li{margin:0 0 8px;font-size:13px;line-height:1.4}
+.doc-meters b{font-size:15px}
+.doc-meters small{color:#5c6b63}
+.doc-meter-bar,.doc-strip-bar{display:flex;height:8px;margin-top:4px;border-radius:99px;overflow:hidden;background:#e5e8de}
+.doc-meter-bar i,.doc-strip-bar i{display:block;width:var(--w);height:100%}
+.doc-live-more{font-size:12px;font-weight:650}
+/* The same colours as the status board: green meets, amber short, red under, hatched grey not measured. */
+[data-k=pass],[data-k=good]{background:#3f8a46}
+[data-k=note],[data-k=other]{background:#5f8f9a}
+[data-k=warn],[data-k=work]{background:#d9a21b}
+[data-k=fail],[data-k=bad]{background:#c2421b}
+[data-k=unknown],[data-k=todo]{background:repeating-linear-gradient(135deg,#cfd4cb 0 5px,#e7eae2 5px 10px)}
+[data-k=muted]{background:#b9bdb3}
+.doc-strip{margin:22px 0 10px;padding:14px 16px 10px;border:1px solid #dedfd3;border-radius:14px;background:#fff;min-height:96px}
+.doc-strip figcaption{font-size:12px;line-height:1.5;color:#4f5e57}
+.doc-strip-bar{height:16px;margin:8px 0 10px}
+.doc-strip-bar i+i{box-shadow:inset 2px 0 #fff}
+.doc-strip-legend{display:flex;flex-wrap:wrap;gap:4px 14px;margin:0;padding:0;list-style:none;font-size:12px;line-height:1.6}
+.doc-strip-legend li{display:flex;align-items:center;gap:6px;background:none}
+.doc-strip-legend li::before{content:"";width:10px;height:10px;border-radius:3px;background:inherit}
+.doc-strip-legend li[data-k]{background:none}
+.doc-strip-legend li[data-k=good]::before{background:#3f8a46}.doc-strip-legend li[data-k=work]::before{background:#d9a21b}
+.doc-strip-legend li[data-k=bad]::before{background:#c2421b}.doc-strip-legend li[data-k=other]::before,.doc-strip-legend li[data-k=note]::before{background:#5f8f9a}
+.doc-strip-legend li[data-k=muted]::before{background:#b9bdb3}
+.doc-strip-legend li[data-k=todo]::before{background:repeating-linear-gradient(135deg,#cfd4cb 0 3px,#e7eae2 3px 6px)}
+.doc-fold{margin:14px 0 22px;border:1px solid #dedfd3;border-left:4px solid #c94718;border-radius:12px;background:#fffdf7}
+.doc-fold>summary{display:flex;flex-wrap:wrap;align-items:baseline;gap:4px 8px;min-height:44px;padding:10px 16px;cursor:pointer;font-size:14px;line-height:1.5;list-style:none}
+.doc-fold>summary::-webkit-details-marker{display:none}
+.doc-fold>summary::before{content:"+";flex:none;display:inline-grid;place-items:center;width:20px;height:20px;border-radius:50%;background:#c94718;color:#fff;font-weight:700;line-height:1;transition:transform .2s}
+.doc-fold[open]>summary::before{content:"−"}
+.doc-fold-label{color:#6b4a3a}
+.doc-fold>summary small{flex-basis:100%;padding-left:28px;color:#5c6b63;font:11px/1.5 'JetBrains Mono',monospace}
+.doc-fold[open]{padding:0 16px 6px}
+.doc-fold[open]>summary{margin:0 -16px 8px;border-bottom:1px dashed #e0dccd}
+@media(prefers-reduced-motion:reduce){.doc-fold>summary::before{transition:none}}
+@media(max-width:600px){.doc-live{grid-template-columns:1fr}.doc-card{padding:14px}.doc-fold>summary small{padding-left:0}}
+/* A folded section: its heading is the summary, so a long note reads as an outline until a section is opened. */
+.doc-section{margin:6px 0;border-left-color:#173d3c}
+.doc-section+.doc-section{margin-top:6px}
+.doc-section>summary{flex-wrap:nowrap;align-items:center;gap:10px;min-height:44px;padding:6px 14px}
+.doc-section>summary h2{flex:1;margin:0;font-size:18px;line-height:1.35;letter-spacing:-.01em}
+.doc-section>summary small{flex:none;flex-basis:auto;max-width:42%;padding-left:0;text-align:right}
+.doc-section[open]>summary{flex-wrap:wrap}
+.doc-section[open]>summary h2{font-size:24px}
+.doc-section[open]>summary small{flex-basis:100%;max-width:none;text-align:left;padding-left:30px}
+@media(max-width:600px){.doc-section>summary{flex-wrap:wrap}.doc-section>summary small{flex-basis:100%;max-width:none;text-align:left;padding-left:30px}}
+/* Four or more folded sections in a row: an outline, two to a row on a wide screen; an opened one takes the width. */
+@media(min-width:900px){
+  .doc-outline{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:8px 10px;margin:10px 0}
+  .doc-outline>.doc-section{margin:0}
+  .doc-outline>.doc-section[open]{grid-column:1/-1}
+  .doc-outline>.doc-section:not([open])>summary small{display:none}
+}

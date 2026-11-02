@@ -18,6 +18,24 @@ limit; a 20 mOhm shunt in the ring's +24 V stator lead; a two-channel scope with
 magnetic base; a thermocouple or IR thermometer; 300 balls of one brand (Worker Cheetah), plus 50 worn and 50 damp ones
 for test 5.3.
 
+```mermaid
+flowchart TB
+    subgraph R1 ["In the order the turret is built"]
+        direction LR
+        T1["Test 1<br>Parts, fits<br>unpowered"] --> T2["Test 2<br>Strength<br>bench level"] --> T3["Test 3<br>Electrics<br>no motors"] --> T4["Test 4<br>Flywheels<br>ceiling first"]
+    end
+    subgraph R2 [" "]
+        direction LR
+        T5["Test 5<br>Feeding"] --> T6["Test 6<br>Accuracy<br>and the game"] --> T7["Readings, pass/fail<br>bench/*.json"]
+    end
+    subgraph R3 ["Rehearsal only"]
+        direction LR
+        H["bench_host.py<br>--sim"] -.-> X["bench/sim/<br>never evidence"]
+    end
+    R1 --> R2
+    R2 ~~~ R3
+```
+
 ## 1. Parts and fits (nothing powered)
 
 | # | Test | Accept | JSON |

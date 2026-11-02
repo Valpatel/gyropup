@@ -43,6 +43,7 @@
     "test:privacy": "node --test tools/test-privacy.mjs",
     "test:status-board": "node --test tools/test-status-board.mjs",
     "test:timeline": "node --test tools/test-timeline.mjs",
+    "test:doc-pages": "node --test tools/test-doc-pages.mjs",
     "test:walls": "node tools/test-walls.mjs"
   },
   "devDependencies": {

@@ -92,6 +92,7 @@ jobs:
               npm run test:landing-loop
               npm run test:status-board
               npm run test:timeline
+              npm run test:doc-pages
               npm run test:walls
               npm run test:highlights
               npm run test:highlight-integration

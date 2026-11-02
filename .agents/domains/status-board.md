@@ -25,3 +25,12 @@ from git's objects to `/site/timeline/`. It sits at `<!-- timeline -->` on the l
 (newest 5, the rest folded), plus `/site/timeline.json`. `npm run test:timeline` reads git again and fails if a pull request
 or commit in the shown span that changed the design is missing, or if a release shows as one change. Good PR titles make good
 labels: the first clause before "; " or " — " is what the timeline shows.
+
+Design notes (`tools/doc-page.mjs`) are shown, never rewritten, by the build: a lead card (git date, length, sections,
+and for a one-subsystem note that subsystem's render and first three status-board readings), a status strip over any
+table whose `Status`/`Verdict`/`Result`/`State` column is a real scale of short words, and folds that keep each
+stretch of prose between pictures under about a screen (opening kept, then only a short first paragraph, then only
+the heading as the fold's summary). Pictures, diagrams and strips never fold. To make a note better than an outline,
+give it something to look at: a render from `exports/`, a Mermaid diagram of its order or flow (and raise the count in
+`tools/test-diagrams.mjs`), or a table with a status column. `npm run test:doc-pages` checks that every word of the
+Markdown is still on the page and that every strip agrees with its table.
