@@ -199,7 +199,8 @@ def faults(test: str = 'squat', at: float = 1.0) -> dict:
     return doc
 
 
-def run_hil(test: str, half_mass: float, rate: float, pack: Pack, plot: bool = False, tag: str = 'hil'):
+def run_hil(test: str, half_mass: float, rate: float, pack: Pack, plot: bool = False, tag: str = 'hil',
+            cap: Optional[float] = None):
     from rig.can_bus import Calibration, CanBus, MotorCal
     from rig.hil import HilLink
     from rig.sim_bus import SimBus
@@ -209,11 +210,13 @@ def run_hil(test: str, half_mass: float, rate: float, pack: Pack, plot: bool = F
     cal = Calibration(MotorCal(1, -1, fo + 0.05), MotorCal(2, -1, ro - 0.05), 'HIL: both motors reversed, zero offset')
     sim = SimBus(test, half_mass=half_mass, tick=1 / rate, cap=sc.cap, pack=pack, latency_ticks=0)
     link = HilLink(sim, cal, cut_at=0.6 if test.startswith('power_off') else None)
-    bus = CanBus(link.port, cal, tick=1 / rate, realtime=False, clock=link.clock, after_exchange=link.advance)
+    config = cap_setup(cap)[0] if cap is not None else None       # --cap: the software motors take it as the real ones do
+    bus = CanBus(link.port, cal, tick=1 / rate, realtime=False, clock=link.clock, after_exchange=link.advance, config=config)
     link.begin()
-    lim = lc.Limits(cap=sc.cap or lc.LEG_PEAK)
+    c = min(sc.cap or lc.LEG_PEAK, cap) if cap is not None else (sc.cap or lc.LEG_PEAK)
+    lim = lc.Limits(cap=c)
     if pack.r_int == 0.0:                                        # an ideal bus: no packs, so no voltage window
-        lim = lc.Limits(cap=sc.cap or lc.LEG_PEAK, vbus_max=1e9, vbus_min=0.0, vbus_floor=0.0)
+        lim = lc.Limits(cap=c, vbus_max=1e9, vbus_min=0.0, vbus_floor=0.0)
     ctl = lc.LegController(test, sim.ff_n, lim, tick=1 / rate, external_cut=True)
     log = RunLog('hil', test, {'half_mass_kg': half_mass, 'rate_hz': rate, 'pack': {'v_oc': pack.v_oc, 'r_int': pack.r_int}}, tag)
     loop(bus, ctl, log, sc.duration)
@@ -237,6 +240,20 @@ def cap_setup(cap: Optional[float], rate_limit: Optional[float] = None) -> tuple
     return {**P.RIG_CONFIG, 'limit_torque': c}, lc.Limits(rate=rate_limit, cap=c)
 
 
+def cap_guard(rs04_bus, ids, cap: Optional[float]) -> Optional[str]:
+    """Why a run must not start, or None. Without --cap the start-up writes the rig's 60 N m; a motor that holds a lower
+    limit (a weaker leg's, docs/motor-day.md) is not raised by a forgotten flag: the operator must say --cap 60."""
+    if cap is not None:
+        return None
+    from rig import rs04 as P
+    held = {i: P.Motor(rs04_bus, i).read('limit_torque') for i in ids}
+    low = {i: v for i, v in held.items() if v < lc.LEG_CAP - 1e-6}
+    if low:
+        return (f"motor(s) {', '.join(f'{i} at {v:g} N m' for i, v in low.items())} hold a lower limit_torque than the rig's "
+                f'{lc.LEG_CAP:g}: pass --cap (the lower one for a printed leg, or --cap {lc.LEG_CAP:g} to raise it on purpose)')
+    return None
+
+
 def run_can(a) -> int:
     from rig.can_bus import Calibration, CanBus
     from rig.canio import SocketCan
@@ -247,6 +264,11 @@ def run_can(a) -> int:
     config, limits = cap_setup(a.cap, a.rate_limit)
     cal = Calibration.load()
     bus = CanBus(SocketCan(a.iface), cal, tick=1 / a.rate, require_node=not a.no_node, damper=a.damper, config=config)
+    why = cap_guard(bus.bus, (cal.front.id, cal.rear.id), a.cap)
+    if why:
+        print(f'refused: {why}')
+        bus.close()
+        return 5
     ctl = lc.LegController(a.test, lc.ff_for(a.half_mass, *_ff_masses()), limits, tick=1 / a.rate,
                            external_cut=True)
     log = RunLog('can', a.test, {'half_mass_kg': a.half_mass, 'rate_hz': a.rate, 'iface': a.iface, 'calibration': cal.__dict__,
@@ -338,7 +360,7 @@ def main(argv=None):
         print(json.dumps({k: v for k, v in o['results'].items() if k not in ('series', 'rig')}, indent=1))
         return 0
     if a.backend == 'hil':
-        o = run_hil(a.test, a.half_mass, a.rate, pack, a.plot)
+        o = run_hil(a.test, a.half_mass, a.rate, pack, a.plot, cap=a.cap)
         print(json.dumps({k: v for k, v in o['results'].items() if k not in ('series', 'rig')}, indent=1))
         print('timing', o['bus'].timing.summary())
         return 0

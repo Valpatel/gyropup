@@ -68,7 +68,7 @@ def main():
     OUT.mkdir(parents=True, exist_ok=True)
     m = floor_mass()
     rows = [one('jump', c, m) for c in JUMP_CAPS]
-    rows += [one('stand_up', STAND_CAP, m), one('squat', STAND_CAP, m), one('power_off', STAND_CAP, m)]
+    rows += [one(t, STAND_CAP, m) for t in ('stand_up', 'squat', 'power_off', 'power_off_damped')]
     mass = rows[0]['rig']
     doc = {'made_by': 'tools/motor_day_sim.py', 'controller': 'rig/leg_control.py on rig/sim_bus.py (MuJoCo, sim/leg_rig.py)',
            'rate_hz': 500.0, 'latency_ticks': 1, 'pack': 'rig/run.py pack_for (the FLEXVOLT pair at the start rule)',

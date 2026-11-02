@@ -151,14 +151,17 @@ def stand_parts():
     zb = FLOOR_Z + base_t
     xu = xr + t / 2 + 3.0 + t / 2                              # the uprights outside the rails, a washer between
     up_top = d / 2 + 60.0
-    P['base'] = _box(-xu - 120, xu + 120, y_piv - 250, y_piv + 250, FLOOR_Z, zb)
+    z_top = up_top - 40                                        # the brace meets the upright 40 mm under its top
+    run = z_top - zb                                           # a 45 deg brace runs as far back as it drops
+    P['base'] = _box(-xu - 120, xu + 120, y_piv - d / 2 - run - 40, y_piv + 250, FLOOR_Z, zb)
     for s, side in ((1, 'right'), (-1, 'left')):
         P[f'upright_{side}'] = _box(s * xu - t / 2, s * xu + t / 2, y_piv - d / 2, y_piv + d / 2, zb, up_top)
-        # a brace from the upright's back face down to the base (a 2x4 at 45 deg)
-        L = (up_top - zb - 40) * math.sqrt(2)
-        br = (cq.Workplane('XY').box(t, d, L).rotate((0, 0, 0), (1, 0, 0), -45)
-              .translate((s * xu, y_piv - d / 2 - (up_top - zb - 40) / 2 - d * 0.35, zb + (up_top - zb - 40) / 2)))
-        P[f'brace_{side}'] = br
+        # a brace from the upright's back face down to the base: a 2x4 at 45 deg, cut plumb at the upright and level
+        # on the base (its 89 mm face in the YZ plane, so it is 89 x sqrt 2 tall where it meets the upright)
+        yb, w = y_piv - d / 2, d * math.sqrt(2)
+        P[f'brace_{side}'] = (cq.Workplane('YZ', origin=(s * xu - t / 2, 0, 0))
+                              .polyline([(yb, z_top), (yb, z_top - w), (yb - (z_top - w - zb), zb), (yb - run, zb)]).close()
+                              .extrude(t))
         a0, a1 = sorted((s * (xr - t / 2 - 6.0), s * (xu + t / 2 + 12.0)))
         P[f'pivot_bolt_{side}'] = cq.Workplane('YZ', origin=(a0, 0, 0)).center(y_piv, 0).circle(6.35).extrude(a1 - a0)
     # the floor stop: offcuts under each rail near the plate, topped with a rubber pad, on a floor board
@@ -264,9 +267,12 @@ def _load(p: Path, default=None):
 def record_loads() -> dict:
     """The loads the FEA record's cases were run at (cad/leg_studies.py cases(), from exports/leg/rig-results.json)."""
     rig = _load(R / 'exports/leg/rig-results.json')['scenarios']
-    knee = max(max(rig[n].get('peak_joint_force_n', {}).get(k, 0.0) for k in ('knee_f', 'knee_r')) for n in ('drop_150', 'jump'))
+
+    def peak(keys):
+        return max(max(rig[n].get('peak_joint_force_n', {}).get(k, 0.0) for k in keys) for n in ('drop_150', 'jump'))
     S = _load(R / 'exports/leg/fea/summary.json')
-    return {'knee_dyn_n': knee, 'axle_full_n': rig['drop_150']['peak_axle_force_n'],
+    return {'knee_dyn_n': peak(('knee_f', 'knee_r')), 'hip_dyn_n': peak(('hip_f', 'hip_r')),
+            'axle_full_n': rig['drop_150']['peak_axle_force_n'],
             'power_off_axle_n': S['cases']['R3']['Fw3'][2], 'stop_nm': S['cases']['R3']['stop_nm'], 'cap_nm': 60.0, 'peak_nm': 120.0}
 
 
@@ -274,28 +280,58 @@ def knee_of(run: dict) -> float:
     return max(run['peak_joint_force_n'].get('knee_f', 0), run['peak_joint_force_n'].get('knee_r', 0))
 
 
-def scale_of(case: str, run: dict, off: dict, rec: dict, cap: float):
-    """[(load ratio day-one / record, target, what it is), ...] for a FEA row's case: each day-one run that loads it (a
-    knee case takes the jump's landing and the power cut's), or [] where the stand does not load it."""
-    knee = knee_of(run)
+def hip_of(run: dict) -> float:
+    return max(run['peak_joint_force_n'].get('hip_f', 0), run['peak_joint_force_n'].get('hip_r', 0))
+
+
+def _joints(run: dict, rec: dict, lf: float, hub: bool = False):
+    """The larger of the knee's and the hip's ratio to the record's landing (and, for a power cut, the hub torque's to the
+    60 N m cap the record's hub carries): a row of a landing case is scaled by its worst joint."""
+    k, h = knee_of(run) * lf / rec['knee_dyn_n'], hip_of(run) * lf / rec['hip_dyn_n']
+    g = (run.get('peak_gearbox_nm') or 0.0) / rec['cap_nm'] if hub else 0.0
+    f = max(k, h, g)
+    what = ('knee' if f == k else 'hip' if f == h else 'hub torque')
+    txt = {'knee': f"knee {knee_of(run) * lf:.0f} N against {rec['knee_dyn_n']:.0f} N",
+           'hip': f"hip {hip_of(run) * lf:.0f} N against {rec['hip_dyn_n']:.0f} N",
+           'hub torque': f"hub {run.get('peak_gearbox_nm') or 0:.0f} N m against {rec['cap_nm']:.0f}"}[what]
+    return f, txt
+
+
+def scale_of(case: str, run: dict, rec: dict, cap: float, lf: float):
+    """[(load ratio day-one / record, target, what it is)] for a FEA row's case under the powered runs (the jump at the
+    cap: its landing and its push), or [] where they do not load it. lf scales the simulated forces to the stand's mass."""
     if case in ('R1', 'R1F'):
-        return [(knee / rec['knee_dyn_n'], LANDING_TARGET, f"landing: knee {knee:.0f} N against {rec['knee_dyn_n']:.0f} N"),
-                (knee_of(off) / rec['knee_dyn_n'], FAULT_TARGET,
-                 f"power cut onto the floor stop: knee {knee_of(off):.0f} N against {rec['knee_dyn_n']:.0f} N")]
+        f, txt = _joints(run, rec, lf)
+        return [(f, LANDING_TARGET, f'landing: {txt}')]
     if case in ('R1w',):
-        return [(run['peak_axle_force_n'] / rec['axle_full_n'], LANDING_TARGET,
-                 f"landing on the wheel link: axle {run['peak_axle_force_n']:.0f} N against {rec['axle_full_n']:.0f} N")]
+        ax = run['peak_axle_force_n'] * lf
+        return [(ax / rec['axle_full_n'], LANDING_TARGET, f"landing on the wheel link: axle {ax:.0f} N against {rec['axle_full_n']:.0f} N")]
     if case in ('E2', 'E3', 'E3o', 'E3i'):
         return [(cap / rec['cap_nm'], 2.0, f'a motor at the {cap:.0f} N m cap (record {rec["cap_nm"]:.0f})')]
     if case == 'R2':
         return [(cap / rec['peak_nm'], 2.0, f'a motor stalled at the {cap:.0f} N m cap, every day on day one (record {rec["peak_nm"]:.0f})')]
-    if case in ('R3', 'R3o'):      # the upper link's own stop face: only if the leg reaches its stops
+    return []                         # E1 (a turn): no turns on the stand; R3* (a power cut): power_cut_rows()
+
+
+def cut_scale(case: str, off: dict, rec: dict, lf: float):
+    """The same for a power cut onto the floor stop (target 1: a fault). The backdriven hub torque enters the cases that
+    carry a hub torque."""
+    g = off.get('peak_gearbox_nm') or 0.0
+    if case in ('R1', 'R1F'):
+        f, txt = _joints(off, rec, lf, hub=True)
+        return [(f, FAULT_TARGET, f'power cut: {txt}')]
+    if case in ('R1w', 'R3K', 'R3KF'):
+        ax = off['peak_axle_force_n'] * lf
+        ref = rec['axle_full_n'] if case == 'R1w' else rec['power_off_axle_n']
+        return [(ax / ref, FAULT_TARGET, f'power cut: axle {ax:.0f} N against {ref:.0f} N')]
+    if case in ('R3', 'R3o'):          # the upper link's own stop face: only if the leg reaches its stops
         st = off.get('peak_stop_nm') or 0.0
         return [(st / rec['stop_nm'], FAULT_TARGET, f'power cut: stop {st:.0f} N m against {rec["stop_nm"]:.0f}')]
-    if case in ('R3K', 'R3KF'):
-        return [(off['peak_axle_force_n'] / rec['power_off_axle_n'], FAULT_TARGET,
-                 f"power cut onto the floor stop: axle {off['peak_axle_force_n']:.0f} N against {rec['power_off_axle_n']:.0f} N")]
-    return []                                                # E1 (a turn): no turns on the stand
+    if case in ('E2', 'E3', 'E3o', 'E3i'):
+        return [(g / rec['cap_nm'], FAULT_TARGET, f'power cut: hub {g:.0f} N m against {rec["cap_nm"]:.0f}')]
+    if case == 'R2':
+        return [(g / rec['peak_nm'], FAULT_TARGET, f'power cut: hub {g:.0f} N m against {rec["peak_nm"]:.0f}')]
+    return []
 
 
 def _row(r: dict, f: float, target: float, why: str, pla, LC: dict) -> dict:
@@ -318,7 +354,16 @@ def _row(r: dict, f: float, target: float, why: str, pla, LC: dict) -> dict:
             'governed_by': ('layer' if layer is not None and layer < gate else 'gate'), 'load': why}
 
 
-def derate(sim: dict) -> dict:
+def _verdict(rows: list) -> dict:
+    worst = min((x for x in rows if x['sf'] is not None), key=lambda x: x['sf'] / x['target'])
+    return {'all_ok': all(x['ok'] for x in rows), 'worst': f"{worst['part']} {worst['case']} {worst['sf']}",
+            'margin': round(worst['sf'] / worst['target'], 3), 'rows': rows}
+
+
+def derate(sim: dict, stand: dict) -> dict:
+    """PLA factors for every FEA row of the leg under the stand's runs. The simulation carries one mass for weight and
+    inertia; the stand's weight at the foot and its inertia differ, so the simulated forces are scaled up by the larger
+    of the two over the simulated mass (forces in a landing go roughly with the mass)."""
     from cadagent.fea import MATERIALS
     pla = MATERIALS['pla']
     S = _load(R / 'exports/leg/fea/summary.json')
@@ -326,28 +371,42 @@ def derate(sim: dict) -> dict:
           _load(R / 'research/leg-preprint/evidence/leg-layer-check-print-ready.json')['rows'] if r.get('layer_check')}
     rec = record_loads()
     runs = {(r['test'], r['cap_nm']): r for r in sim['runs']}
-    off = next(r for r in sim['runs'] if r['test'] == 'power_off')
     caps = sorted(c for (t, c) in runs if t == 'jump')
+    m_sim = sim['mass_kg']
+    m_stand = max(stand['scale_reads_kg'], stand['effective_mass_kg'])
+    lf = max(1.0, m_stand / m_sim)
+    fea = [r for r in S['results'] if r['part'] != 'leg']
     out = {'pla': {'name': pla.name, 'strength_mpa': pla.strength_mpa, 'E_mpa': pla.E_mpa, 'note': pla.note,
                    'from': 'cadagent.fea.MATERIALS["pla"]'},
            'record': {'file': 'exports/leg/fea/summary.json', 'layer_check': 'research/leg-preprint/evidence/leg-layer-check-print-ready.json',
                       'mesh_mm': S.get('mesh_mm'), 'loads': rec},
-           'sim': {'file': 'exports/motor-day/sim.json', 'mass_kg': sim['mass_kg']},
-           'targets': {'landing': LANDING_TARGET, 'cap': 2.0, 'fault': FAULT_TARGET},
-           'caps': {}, 'rows': []}
+           'sim': {'file': 'exports/motor-day/sim.json', 'mass_kg': m_sim},
+           'mass': {'sim_kg': m_sim, 'stand_scale_kg': stand['scale_reads_kg'], 'stand_effective_kg': stand['effective_mass_kg'],
+                    'load_factor': round(lf, 3),
+                    'note': 'simulated forces x load_factor = the larger of the stand\'s weight at the foot and its inertia over '
+                            'the simulated mass (never below 1)'},
+           'targets': {'landing': LANDING_TARGET, 'cap': 2.0, 'fault': FAULT_TARGET}, 'caps': {}, 'power_cut': {}}
     for cap in caps:
         run = runs[('jump', cap)]
-        rows = [_row(r, f, target, why, pla, LC) for r in S['results'] if r['part'] != 'leg'
-                for f, target, why in scale_of(r['case'], run, off, rec, cap)]
-        worst = min((x for x in rows if x['sf'] is not None), key=lambda x: x['sf'] / x['target'])
-        out['caps'][str(cap)] = {'jump_mm': run['jump_height_mm'], 'axle_n': run['peak_axle_force_n'],
-                                 'knee_n': knee_of(run), 'all_ok': all(x['ok'] for x in rows),
-                                 'worst': f"{worst['part']} {worst['case']} {worst['sf']}", 'rows': rows}
+        rows = [_row(r, f, t, why, pla, LC) for r in fea for f, t, why in scale_of(r['case'], run, rec, cap, lf)]
+        out['caps'][str(cap)] = {'jump_mm': run['jump_height_mm'], 'axle_n': run['peak_axle_force_n'], 'knee_n': knee_of(run),
+                                 'hub_nm': run.get('peak_gearbox_nm'), **_verdict(rows)}
     ok = [c for c in caps if out['caps'][str(c)]['all_ok']]
-    out['pla_cap_nm'] = max(ok) if ok else None
+    cap = out['pla_cap_nm'] = max(ok) if ok else None
+    # the heaviest stand the cap still holds: the landing rows scale with the mass, the cap rows do not
+    if cap:
+        land = [r for r in out['caps'][str(cap)]['rows'] if r['case'] in ('R1', 'R1F', 'R1w') and r['sf']]
+        out['mass']['max_stand_kg'] = round(m_sim * lf * min(r['sf'] / r['target'] for r in land), 2)
+    for test in ('power_off', 'power_off_damped'):
+        off = next((r for r in sim['runs'] if r['test'] == test), None)
+        if off:
+            rows = [_row(r, f, t, why, pla, LC) for r in fea for f, t, why in cut_scale(r['case'], off, rec, lf)]
+            out['power_cut'][test] = {'cap_nm': off['cap_nm'], 'axle_n': off['peak_axle_force_n'], 'knee_n': knee_of(off),
+                                      'hip_n': hip_of(off), 'hub_nm': off.get('peak_gearbox_nm'), **_verdict(rows)}
     out['stand_cap_nm'] = max(r['cap_nm'] for r in sim['runs'] if r['test'] != 'jump')
     out['stand_runs'] = {r['test']: {'cap_nm': r['cap_nm'], 'peak_motor_nm': r['peak_motor_nm'], 'knee_n': knee_of(r),
-                                     'axle_n': r['peak_axle_force_n']} for r in sim['runs'] if r['test'] != 'jump'}
+                                     'hip_n': hip_of(r), 'axle_n': r['peak_axle_force_n'], 'hub_nm': r.get('peak_gearbox_nm')}
+                         for r in sim['runs'] if r['test'] != 'jump'}
     if out['pla_cap_nm'] is None or out['stand_cap_nm'] > out['pla_cap_nm']:
         raise SystemExit(f"the stand-up, squat and power-cut runs are at {out['stand_cap_nm']:g} N m, above the PLA cap "
                          f"({out['pla_cap_nm']}): lower STAND_CAP in tools/motor_day_sim.py and rerun it")
@@ -357,8 +416,8 @@ def derate(sim: dict) -> dict:
     pre = t_pla / (0.2 * 0.005)
     out['hub_clamp'] = {'torque_nm': t_pla, 'preload_n': round(pre), 'record_friction_nm': j['friction_nm'],
                         'record_preload_n': 1200, 'friction_nm': round(j['friction_nm'] * pre / 1200, 1),
-                        'note': 'eight M5 x 40 into the PLA adapter\'s hand-tapped holes at 1.0 N m (K = 0.2): the clamp\'s '
-                                'friction against the cap; the two dowels carry the rest. PLA creeps under a clamp: re-torque '
+                        'note': 'eight M5 x 40 into the PLA adapter\'s hand-tapped holes at 1.0 N m (K = 0.2): the clamp\'s friction against the hub torque; '
+                                'the two dowels carry the rest. PLA creeps under a clamp: re-torque '
                                 'before each session.'}
     return out
 
@@ -494,7 +553,7 @@ def other_vendor_rows(other: list, slices: dict) -> list:
                             ('Carriage bolt 1/2-13 x 5 in, 2 fender washers, 1 nylon-insert nut (the pivot, each side)', 2, ''),
                             ('Construction screws #10 x 3 in (rails to cleats, cleats through the plate, uprights, braces)', 40, ''),
                             ('Rope 6 mm (1/4 in), 3 m, and a screw eye (the tether)', 1, ''),
-                            ('Sandbags or weight plates (the stand\'s base, and the ballast on the end plate)', 4, ''),
+                            ('Sandbags or weight plates (on the stand\'s base)', 4, ''),
                             ('Bathroom scale (weigh the boom\'s end: the effective mass)', 1, 'in hand?'),
                             ('Rubber mat under the foot', 1, 'catalog/rig.json rubber_mat (Amazon)')):
         out.append({'group': 'stand (hardware store)', 'item': name, 'qty': qty, 'vendor': 'any hardware store', 'part_number': '',
@@ -596,11 +655,13 @@ STEPS = [   # (title, parts added (prefixes), lift (mm along x, y, z) per prefix
       'leg_screws_wheel': (0, -50, 0), 'leg_washers_wheel': (0, -40, 0)}, (0.85, 1.0, 0.55),
      'The two 61812s into the front link\'s apex eye, the wheel link\'s hub through them with the printed spacer, the '
      'circlip. The foot\'s boss into the wheel link\'s recess, four M6 nylon-insert nuts in its pockets, four M6 x 40 from '
-     'inside the hub on the DIN 433 washers at 1.8 N m. The leg folds and stretches by hand from stop to stop.'),
+     'inside the hub on the DIN 433 washers at 0.9 N m (the nuts bear on printed PLA: half the PA6-CF leg\'s torque). '
+     'The leg folds and stretches by hand from stop to stop.'),
     ('Stop sleeves, then onto the boom', ['leg_stop_sleeve'], {'leg_stop_sleeve': (0, 50, 0)}, (1.0, 0.8, 0.6),
      'The TPU sleeves over the stop pins. The leg onto the end plate: six M5 x 30 with fender washers from the plate\'s '
      'back into the hip frame\'s inserts (1.5 N m), each motor\'s lead through its slot. Tie the tether. Put the leg\'s '
-     'foot on the bathroom scale with the motors unpowered and add ballast on the plate to the mass the derating assumes.'),
+     'foot on the bathroom scale with the motors unpowered, the boom resting on it, and write the reading down: it is '
+     '`--half-mass` in the ladder. No ballast.'),
 ]
 
 
@@ -678,16 +739,19 @@ def drawings(P, items, names, rev, meta, fm):
         return [ds.Part(v, k[0]) for k, v in groups.items()]
 
     def rows_for(prts, extra=()):
+        """The sheet's parts list: what it draws (ballooned) and the extras it names but has no model of."""
+        drawn = {p.item for p in prts if p.item}
         out = []
-        for it in sorted({p.item for p in prts if p.item} | {items[k] for k in extra if k in items}):
+        for it in sorted(drawn | {items[k] for k in extra if k in items}):
             key = next(k for k, v in items.items() if v == it)
             nm, qty, src = names.get(key, (key, '', ''))
-            out.append((it, qty, nm, src))
+            out.append((it, qty, nm if it in drawn else f'{nm} (not drawn)', src))
         return out
     y0, y1 = meta['plate_y']
     sheets = []
     # MD-01: the hip module
-    hip = ['leg_hip_frame', 'leg_bearing_61812_front', 'leg_bearing_61812_rear', 'leg_motor', 'leg_screws_lugs', 'leg_stop_posts']
+    hip = ['leg_hip_frame', 'leg_bearing_61812_front', 'leg_bearing_61812_rear', 'leg_motor', 'leg_screws_lugs', 'leg_stop_posts',
+           'leg_stop_sleeve']
     s = ds.Sheet('Hip module', 'MD-01', rev, 'the hip frame, the two RS-04s, the support bearings, the stop pins',
                  notes=['Inserts: six M5 heat-set in the flange ends (item list). Lug screws snug only: the torque is not '
                         'established (#116). Stop pins bonded with structural epoxy (D74).'])
@@ -706,8 +770,8 @@ def drawings(P, items, names, rev, meta, fm):
     s = ds.Sheet('Upper link and adapter', 'MD-02', rev, 'the front side; the rear is its mirror about x = 0',
                  notes=['PLA adapter (day one): tap the eight M5 holes by hand; M5 x 40 at 1.0 N m. Replace with the machined '
                         '6061 adapter before any run above the PLA cap.'])
-    pr = [p for p in parts(ul) if any(_cx(sh) > 0 for sh in p.shapes)] or parts(ul)
-    pr = [ds.Part([sh for sh in p.shapes if _cx(sh) > -5], p.item) for p in pr]
+    # the front side only, solid by solid (a part's model may hold both sides in one compound)
+    pr = [ds.Part([so for sh in p.shapes for so in (sh.Solids() or [sh]) if _cx(so) > 0], p.item) for p in parts(ul)]
     pr = [p for p in pr if p.shapes]
     s.view('side', pr, direction=(0, 1, 0), up=(0, 0, 1), box=(0.0, 0.35, 0.62, 0.65), hidden=False)
     s.view('top', pr, direction=(0, 0, -1), up=(0, 1, 0), box=(0.0, 0.0, 0.62, 0.35), hidden=False, balloons=False)
@@ -723,7 +787,8 @@ def drawings(P, items, names, rev, meta, fm):
     lw = ['leg_front_link', 'leg_wheel_link', 'leg_knee', 'leg_apex', 'foot', 'leg_screws_wheel', 'leg_washers_wheel']
     s = ds.Sheet('Lower links, knees, apex and foot', 'MD-03', rev, 'the five-bar\'s lower half at the 300 mm stance',
                  notes=['Knee nuts 20 N m (steel on steel). Foot: M6 x 40 on DIN 433 washers into nyloc nuts in its pockets, '
-                        '1.8 N m. The foot does not turn: it stands in for the BotWheel at the tyre\'s radius.'])
+                        '0.9 N m (PLA under the nuts: re-torque before each session). The foot does not turn: it stands in for the '
+                        'BotWheel at the tyre\'s radius.'])
     pr = parts(lw)
     s.view('side', pr, direction=(0, 1, 0), up=(0, 0, 1), box=(0.0, 0.3, 0.6, 0.7), hidden=False)
     s.view('front', pr, direction=(-1, 0, 0), up=(0, 0, 1), box=(0.6, 0.3, 0.4, 0.7), hidden=False, balloons=False)
@@ -731,7 +796,7 @@ def drawings(P, items, names, rev, meta, fm):
     zc = (ax.zmin + ax.zmax) / 2
     s.dim('side', (-WHEEL_R, 0, zc), (WHEEL_R, 0, zc), offset=-(WHEEL_R + 20), text=f'Ø{2 * WHEEL_R:.1f} (the tyre\'s)')
     s.dim('side', (220, 0, 0), (220, 0, zc - WHEEL_R), offset=-25, text=f'{STANCE + WHEEL_R:.0f} hip to floor')
-    s.parts_list(rows_for(pr))
+    s.parts_list(rows_for(pr, ('nut_m6_nyloc',)))
     sheets.append(s)
     # MD-04: the foot itself
     f, _ = foot()
@@ -849,7 +914,7 @@ def write_doc(ctx):
     giv = ['| The rig has | The boom stand |', '|---|---|',
            '| Vertical rails: the hip goes straight up | An arc about the pivot: over a 150 mm rise the foot moves '
            f"{150 ** 2 / (2 * stand['pivot_to_hip_mm']):.0f} mm along the boom (the wheel's axle direction) |",
-           '| 14.75 kg of ballast, the robot\'s half | ballast to the simulation\'s mass (below): lighter, so gentler landings |',
+           '| 14.75 kg of ballast, the robot\'s half | no ballast: the boom\'s own weight at the foot (below), lighter, so gentler landings |',
            '| ToF height sensor, load plate | none: the motors\' encoders give the leg\'s length; film the jump against a tape |',
            '| Bumpers and a top stop | the floor stop and the tether |',
            '| The rig\'s numbers (S1-S6) compare with the simulation | rough: the arc and the boom\'s inertia are not in the model |']
@@ -857,12 +922,13 @@ def write_doc(ctx):
     body = [f"![The PLA leg on the boom stand](../exports/motor-day/steps/step-{len(steps):02d}.png)", '',
             f"The boom is two 2x4 rails, {stand['pivot_to_hip_mm'] / 1000:.2f} m from the pivot to the hip. Its parts and "
             f"dimensions are on drawing MD-05 below. What it gives up:", ''] + giv + ['',
-            f"**Ballast.** The derating below assumes {der['sim']['mass_kg']:.1f} kg moving at the foot (the simulation's "
-            f"lightest leg). The stand comes to about **{stand['effective_mass_kg']:.1f} kg** effective "
-            f"({stand['moving_kg']:.1f} kg moving, lumber at estimated densities), and a scale under the foot reads about "
-            f"{stand['scale_reads_kg']:.1f} kg. Weigh it with the motors unpowered and add ballast on the end plate up to the "
-            f"simulated mass, not more: a heavier boom lands harder. Ballast on the plate adds the same to both numbers, so stop "
-            f"when the scale reads about **{stand['scale_reads_kg'] + max(0.0, der['sim']['mass_kg'] - stand['effective_mass_kg']):.1f} kg**."]
+            f"**Weight, not ballast.** The simulation carries one mass, {der['sim']['mass_kg']:.1f} kg, for both the weight "
+            f"the leg holds and the inertia it accelerates. The stand already weighs about **{stand['scale_reads_kg']:.1f} kg** "
+            f"at the foot (a scale under it, the boom resting on it) while its inertia there is about "
+            f"{stand['effective_mass_kg']:.1f} kg ({stand['moving_kg']:.1f} kg moving, lumber at estimated densities). Ballast on "
+            f"the plate would add to both, so add none. Weigh it with the motors unpowered: the reading is `--half-mass` in the "
+            f"ladder. The derating scales the simulated forces by the larger mass; **above {der['mass'].get('max_stand_kg', 0):.1f} kg "
+            f"the PLA cap no longer holds**: lighten the boom (a thinner end plate, shorter rails) before running."]
     doc = _fill(doc, 'stand', '\n'.join(body))
     # ---- prints
     ph = {'0': 'Phase 0', '1a': 'Coupons', '1b': 'Leg and stand'}
@@ -923,50 +989,69 @@ def write_doc(ctx):
     doc = _fill(doc, 'assembly', '\n'.join(L))
     # ---- derating
     caps = sorted(der['caps'], key=float)
+    ms = der['mass']
     L = [f"Every day-one run lands, so the landings are held to the everyday target ({LANDING_TARGET:g}), not the rare-event "
-         f"1.2 the robot's record uses. How the numbers are made:", '',
+         f"1.2 the robot's record uses. A power cut is a fault: target {FAULT_TARGET:g}. How the numbers are made:", '',
          f"- **Material:** cad-agent's PLA row ({der['pla']['strength_mpa']} MPa, \"{der['pla']['note']}\") against each "
          'row\'s humid PA6-CF strength (40.8 MPa in the layers, 18.1 across) or 6061 for the adapter. The FEA is linear, so '
          'a row\'s factor scales with the strength.',
-         f"- **Loads:** the rig's controller and MuJoCo model at each cap, at {der['sim']['mass_kg']:.1f} kg "
+         f"- **Loads:** the rig's controller and MuJoCo model at each cap, at {ms['sim_kg']:.1f} kg "
          f"(`tools/motor_day_sim.py`), against the loads the record's cases were run at (knee {der['record']['loads']['knee_dyn_n']:.0f} N "
-         f"in a landing, axle {der['record']['loads']['axle_full_n']:.0f} N on the wheel link, the motors' 60 and 120 N m). "
-         'A knee case is checked at the landing (target 2) and at the power cut onto the floor stop (a fault: target 1).',
+         f"and hip {der['record']['loads']['hip_dyn_n']:.0f} N in a landing, axle {der['record']['loads']['axle_full_n']:.0f} N on the "
+         "wheel link, the motors' 60 and 120 N m). A landing case takes its worst joint; a power cut also its backdriven hub torque.",
+         f"- **Mass:** the simulation has one mass; the stand weighs about {ms['stand_scale_kg']:.1f} kg at the foot and its inertia "
+         f"is about {ms['stand_effective_kg']:.1f} kg there. The simulated forces are scaled by the larger over the simulated mass "
+         f"(x {ms['load_factor']:.2f}).",
          '- **Not in it:** PLA is brittle (it cracks without warning, where PA6-CF whitens first), creeps, and softens at '
          '55 °C. No margin is added for these: the ladder adds them by stepping up slowly and inspecting after each rung.', '',
-         '| Cap at the motors | Jump (sim) | Axle peak | Knee peak | Weakest row | All rows at target |', '|---|---|---|---|---|---|']
+         '| Cap at the motors | Jump (sim) | Axle peak | Knee peak | Hub peak | Weakest row | All rows at target |',
+         '|---|---|---|---|---|---|---|']
     for c in caps:
         x = der['caps'][c]
-        L.append(f"| {float(c):.0f} N m | {x['jump_mm']:.0f} mm | {x['axle_n']:.0f} N | {x['knee_n']:.0f} N | {x['worst']} | "
-                 f"{'yes' if x['all_ok'] else '**no**'} |")
+        L.append(f"| {float(c):.0f} N m | {x['jump_mm']:.0f} mm | {x['axle_n']:.0f} N | {x['knee_n']:.0f} N | {x['hub_nm']:.0f} N m | "
+                 f"{x['worst']} | {'yes' if x['all_ok'] else '**no**'} |")
     L += ['', f"**The PLA cap is {cap:.0f} N m**" if cap else '**No simulated cap keeps every row at target.**']
     if cap:
         x = der['caps'][str(cap)]
-        L[-1] += f": a {x['jump_mm']:.0f} mm hop."
+        L[-1] += f": a {x['jump_mm']:.0f} mm hop in the model (expect less: the stand is heavier at the foot than it is massive)."
         nxt = [c for c in caps if float(c) > cap]
         if nxt:
             y = der['caps'][nxt[0]]
             bad = min((r for r in y['rows'] if not r['ok']), key=lambda r: r['sf'] / r['target'])
             L[-1] += (f" At {float(nxt[0]):.0f} N m {bad['part']} {bad['case']} falls to {bad['sf']}, under its target of "
                       f"{bad['target']:g}.")
+        if ms.get('max_stand_kg'):
+            L[-1] += f" The cap holds for a stand up to **{ms['max_stand_kg']:.1f} kg** at the foot (the landings scale with it)."
         rows = sorted((r for r in x['rows'] if r['sf'] is not None), key=lambda r: r['sf'] / r['target'])
         L += ['', f'Where PLA fails first, at {cap:.0f} N m (the weakest rows):', '',
               '| Part | Case | PLA factor | Target | Governed by | Load |', '|---|---|---|---|---|---|']
-        for r in rows[:6]:
+        for r in rows[:5]:
             L.append(f"| {r['part']} | {r['case']} | {r['sf']} | {r['target']:g} | {r['governed_by']} | {r['load']} |")
+    pc = der['power_cut']
+    names = {'power_off': 'undamped (the worst case)', 'power_off_damped': 'with the RS-04\'s power-off damping (assumed: B1 measures it)'}
+    L += ['', f"**A power cut onto the floor stop** (the pendant let go, on purpose or not, at the {der['stand_cap_nm']:.0f} N m stand):", '',
+          '| Motors | Knee | Hip | Hub | Axle | Weakest rows | All rows at 1 |', '|---|---|---|---|---|---|---|']
+    for t, x in pc.items():
+        w = sorted((r for r in x['rows'] if r['sf'] is not None), key=lambda r: r['sf'] / r['target'])[:2]
+        L.append(f"| {names.get(t, t)} | {x['knee_n']:.0f} N | {x['hip_n']:.0f} N | {x['hub_nm']:.0f} N m | {x['axle_n']:.0f} N | "
+                 + '; '.join(f"{r['part']} {r['case']} {r['sf']} ({r['load'].split(': ', 1)[-1]})" for r in w)
+                 + f" | {'yes' if x['all_ok'] else '**no**'} |")
     hc = der['hub_clamp']
+    hop = der['caps'][str(cap)]['hub_nm'] if cap else None
+    cut_hub = max((x['hub_nm'] for x in pc.values()), default=None)
     L += ['', f"The hub clamp in the PLA adapter: {hc['preload_n']} N a screw at {hc['torque_nm']} N m gives about "
-          f"{hc['friction_nm']} N m of friction against a {cap or 0:.0f} N m cap (the dowels carry the rest). "
-          f"{hc['note'].split(': ')[-1][:1].upper()}{hc['note'].split(': ')[-1][1:]}",
+          f"{hc['friction_nm']} N m of friction. The hub sees about {hop:.0f} N m in the hop" + (
+              f" and up to {cut_hub:.0f} N m in a power cut" if cut_hub else '') + ': above the friction the two dowels carry it. '
+          f"{hc['note'].split(': ')[-1].split('; ')[-1][:1].upper()}{hc['note'].split(': ')[-1].split('; ')[-1][1:]}",
           '', 'Full table: [derating.json](../exports/motor-day/derating.json).']
     doc = _fill(doc, 'derating', '\n'.join(L))
     # ---- the ladder
     sc = der['stand_cap_nm']
-    hm = f"--half-mass {der['sim']['mass_kg']:.2f}"
+    hm = '--damper 0 --half-mass KG'
     gb = {t: x['peak_motor_nm'] for t, x in der['stand_runs'].items()}
     lad = [
         ('L0', 'Unpowered', '-', 'Fold and stretch the leg by hand from stop to stop; the boom swings freely; the foot lands '
-         'on the mat at the stance with the boom level.', 'any rub, any part touching another'),
+         'on the mat at the stance with the boom level.', 'no rub; no part touches another'),
         ('L1', 'Commission each motor', '2 A bench limit', 'Phase 0.4 (C1-C5) on all four motors, then C6: ids 1 front, 2 rear on this leg. '
          'C4 saves the rig\'s 60 N m; then `python -m rig.rs04 --id N param limit_torque 10` and `--id N save`, so a motor '
          'powers up at 10.', 'the motor reads back 10 after a power cycle'),
@@ -977,38 +1062,50 @@ def write_doc(ctx):
         ('L4', 'Stand up', f'{sc:.0f} N m', f'`--test stand_up --cap {sc:.0f} {hm}`, the foot on the mat.',
          f"holds 300 mm; peak motor torque about {gb['stand_up']:.0f} N m (sim)"),
         ('L5', 'Squat x 3', f'{sc:.0f} N m', f'`--test squat --cap {sc:.0f} {hm}`.', 're-check every screw\'s paint mark after'),
-        ('L6', 'Power cut onto the floor stop', f'{sc:.0f} N m', f'`--test power_off --cap {sc:.0f} {hm}`: let go of the pendant.',
-         'the boom lands on the floor stop, not the leg on its own stops'),
     ]
+    und, dmp = pc.get('power_off', {}), pc.get('power_off_damped', {})
+    if und.get('all_ok'):
+        lad.append(('L6', 'Power cut onto the floor stop', f'{sc:.0f} N m', f'`--test power_off --cap {sc:.0f} {hm}`: let go of the pendant.',
+                    'the boom lands on the floor stop, not the leg on its own stops'))
+    elif dmp.get('all_ok'):
+        lad.append(('L6', 'Damped power cut (after B1)', f'{sc:.0f} N m',
+                    f'Only once B1 has measured the RS-04\'s power-off damping at or above the model\'s: '
+                    f'`--test power_off_damped --cap {sc:.0f} {hm}`, let go of the pendant.',
+                    'the boom lands on the floor stop, not the leg on its own stops'))
     jc = [c for c in caps if (not cap) or float(c) <= cap]
     for k, c in enumerate(jc):
         x = der['caps'][c]
-        lad.append((f'L{7 + k}', 'Hop' if k == 0 else 'Higher hop', f'{float(c):.0f} N m',
-                    f"`--test jump --cap {float(c):.0f} {hm}`.",
-                    f"about {x['jump_mm']:.0f} mm; inspect the weakest rows' corners (below) with a lamp"))
-    L = ['Each rung runs only after the one before it passed and the leg was inspected. `--cap` is the cap in both places: '
-         '`rig.run` writes it to both motors\' `limit_torque` at start-up, reads it back (it stops if a motor does not take it) '
-         'and clips its own commands to it. Without `--cap` the rig runs at 60 N m: never on the PLA leg. `--half-mass` is '
-         'the simulated mass the stand is ballasted to. The safety rules of '
-         '[leg-rig-safety.md](leg-rig-safety.md) apply unchanged (one operator, the pendant, the clear zone, eye protection).', '',
+        lad.append((f'L{len(lad)}', 'Hop' if k == 0 else 'Higher hop', f'{float(c):.0f} N m', f"`--test jump --cap {float(c):.0f} {hm}`.",
+                    f"a hop of up to about {x['jump_mm']:.0f} mm; inspect the weakest rows' corners (above) with a lamp"))
+    L = ['Each rung runs only after the one before it passed and the leg was inspected. In every `rig.run` command:', '',
+         '- `--cap` is the cap in both places: `rig.run` writes it to both motors\' `limit_torque` at start-up, reads it back '
+         '(it stops if a motor does not take it) and clips its own commands to it. **Without `--cap` the rig runs at 60 N m: '
+         'never on the PLA leg.**',
+         '- `--damper 0` keeps the RS-04\'s power-off anti-backdrive protection on (the factory default), so a power cut is '
+         'damped.',
+         f"- `--half-mass KG`: KG is the scale's reading under the foot from assembly step 7 (about {ms['stand_scale_kg']:.1f}). "
+         'It sets the gravity feed-forward.', '',
+         'The safety rules of [leg-rig-safety.md](leg-rig-safety.md) apply unchanged (one operator, the pendant, the clear '
+         'zone, eye protection).', '',
          '```mermaid', 'flowchart LR'] + [f'  {a}["{a}<br/>{b}<br/>{c}"]' + (f' --> {lad[i + 1][0]}' if i + 1 < len(lad) else '')
                                          for i, (a, b, c, _, _) in enumerate(lad)] + ['```', '',
          '| Rung | What | Cap | How | Pass when |', '|---|---|---|---|---|']
     for a, b, c, d, e in lad:
         L.append(f'| {a} | {b} | {c} | {d} | {e} |')
-    if cap:
-        cut = [r for r in der['caps'][str(cap)]['rows'] if r['sf'] is not None and r['load'].startswith('power cut')]
-        tight = min(cut, key=lambda r: r['sf'] / r['target']) if cut else None
-        if tight and tight['sf'] / tight['target'] < 1.5:
-            L += ['', f"**L6 is a close call** ({tight['part']} {tight['case']}: {tight['sf']} against {tight['target']:g}, "
-                  f"{tight['load']}). Run it once, with the floor stop checked first, and inspect the "
-                  f"{tight['part'].replace('_', ' ')} before going on."]
+    if not und.get('all_ok'):
+        w = min((r for r in und['rows'] if r['sf'] is not None), key=lambda r: r['sf'] / r['target'])
+        L += ['', f"**No deliberate undamped power cut on PLA.** Undamped, {w['part']} {w['case']} comes to {w['sf']} against "
+              f"{w['target']:g} ({w['load']}). " + (
+                  'With the modelled damping every row holds, so the damped cut waits for B1 to measure it. '
+                  if dmp.get('all_ok') else 'Even with the modelled damping a row falls short, so no power cut is on the ladder. ')
+              + 'A pendant let go by accident at any rung is the same event: set the floor stop before every session, and '
+              'inspect the parts above after any cut.']
     L += ['', '**Stop the ladder** at any crack, whitening, click or creak, a screw\'s paint mark broken, a motor case over '
           '40 °C, or a fault. Photograph it, write it on #156. **Look first** at: the wheel link\'s hub root (where the hub '
           'leaves the link, inside the apex), the front link\'s apex ring, the upper links\' knee-eye stubs, the PLA adapters '
           'round their dowels and screws, and the foot\'s spokes.', '',
-         f"Above {cap:.0f} N m the leg needs the machined adapters and PA6-CF (the [print package](leg-print-package.md))."
-         if cap else '']
+          f"Above {cap:.0f} N m the leg needs the machined adapters and PA6-CF (the [print package](leg-print-package.md))."
+          if cap else '']
     doc = _fill(doc, 'ladder', '\n'.join(L))
     DOC.write_text(doc)
 
@@ -1037,8 +1134,34 @@ def bundle(files: list):
         for src, arc in files:
             zi = zipfile.ZipInfo(f'motor-day/{arc}', date_time=(2026, 11, 2, 0, 0, 0))
             zi.compress_type = zipfile.ZIP_DEFLATED
-            zf.writestr(zi, (R / src).read_bytes())
+            zf.writestr(zi, src if isinstance(src, bytes) else (R / src).read_bytes())
     return z
+
+
+SITE = 'https://gyropup.com'
+REPO = 'https://github.com/Valpatel/gyropup/blob/main'
+
+
+def zip_markdown(text: str, files: list) -> str:
+    """docs/motor-day.md for the bundle: a link to a file in the bundle points inside it, a link to another page goes to
+    the site (docs/<name>.md -> its page), anything else to the repository on GitHub."""
+    import re
+    inside = {('../' + src) if not src.startswith('docs/') else src[len('docs/'):]: arc for src, arc in files
+              if isinstance(src, str)}
+
+    def fix(m):
+        url = m.group(1)
+        if re.match(r'^[a-z]+:', url) or url.startswith('#'):
+            return m.group(0)
+        path, _, frag = url.partition('#')
+        if path in inside:
+            new = inside[path]
+        elif path.endswith('.md') and '/' not in path:
+            new = f"{SITE}/site/pages/docs-{path[:-3]}-md.html"
+        else:
+            new = f"{REPO}/{(Path('docs') / path).as_posix().replace('docs/../', '')}"
+        return f"]({new}{'#' + frag if frag else ''})"
+    return re.sub(r'\]\(([^)\s]+)\)', fix, text)
 
 
 def _rev() -> str:
@@ -1083,9 +1206,11 @@ def main():
     bad = [k for k, s in slices.items() if not s.get('ok')]
     if bad:
         raise SystemExit(f'failed slices: {bad}')
-    der = derate(sim)
-    (OUT / 'derating.json').write_text(json.dumps(der, indent=1) + '\n')
     mc, other_leg = hardware_rows()
+    P, meta, fm = scene()
+    stand = stand_masses(P, slices, mc, meta, fm)
+    der = derate(sim, stand)
+    (OUT / 'derating.json').write_text(json.dumps(der, indent=1) + '\n')
     other = other_vendor_rows(other_leg, slices)
     prints = []
     for key, fpath, qty, recipe, phase, how in PRINTS:
@@ -1111,8 +1236,6 @@ def main():
                'substitute', 'for'])
     write_csv(OUT / 'other-vendors.csv', other, ['group', 'item', 'qty', 'vendor', 'part_number', 'price_usd_each', 'cost_usd',
                                                 'when', 'url', 'note'])
-    P, meta, fm = scene()
-    stand = stand_masses(P, slices, mc, meta, fm)
     (OUT / 'stand.json').write_text(json.dumps({'geometry': meta, 'foot': fm, 'masses': stand}, indent=1) + '\n')
     steps, sheets = [], []
     if not a.no_render:
@@ -1135,7 +1258,7 @@ def main():
         files.append(('exports/motor-day/drawings/motor-day-drawings.pdf', 'drawings/motor-day-drawings.pdf'))
     for r in steps:
         files.append((r['picture'], f"steps/{Path(r['picture']).name}"))
-    files.append(('docs/motor-day.md', 'motor-day.md'))
+    files.append((zip_markdown((R / 'docs/motor-day.md').read_text(), files).encode(), 'motor-day.md'))
     z = bundle(files)
     print(f'-> {z.relative_to(R)} ({z.stat().st_size / 1e6:.1f} MB), docs/motor-day.md; PLA cap {der["pla_cap_nm"]} N m')
 

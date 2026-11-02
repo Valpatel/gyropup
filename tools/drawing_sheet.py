@@ -311,8 +311,8 @@ class Sheet:
 
     def _table(self, ax, w):
         x0, y_top = A3[0] - 8 - w, A3[1] - 8
-        cols = (11, 10, w - 11 - 10 - 40, 40)
-        heads = ('ITEM', 'QTY', 'PART', 'SOURCE')
+        cols = (11, 14, w - 11 - 14 - 40, 40)
+        heads = ('ITEM', 'QTY/LEG', 'PART', 'SOURCE')
         rh = 4.6
         y = y_top - rh
         ax.add_patch(Rectangle((x0, y), w, rh, fc='#142b38', ec=INK, lw=0.5))

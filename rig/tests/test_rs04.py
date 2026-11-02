@@ -337,3 +337,14 @@ def test_a_lower_cap_is_written_to_the_motor_and_clipped_by_the_laptop():
     m.enable()
     m.mit(t=40.0)
     assert emu[1].applied == pytest.approx(12.0)
+
+
+def test_a_forgotten_cap_does_not_raise_a_lower_limit_held_in_the_motors():
+    """rig/run.py cap_guard: motors saved at 10 N m (docs/motor-day.md L1) are not raised to 60 by a run without --cap."""
+    from rig.run import cap_guard
+    vb, bus, emu = rig_bus()
+    assert cap_guard(bus, (1, 2), None) is None                                      # the rig's 60: nothing to protect
+    bus.motor(2).write_check('limit_torque', 10.0)
+    why = cap_guard(bus, (1, 2), None)
+    assert why and '2 at 10 N m' in why and '1 at' not in why
+    assert cap_guard(bus, (1, 2), 12.0) is None and cap_guard(bus, (1, 2), 60.0) is None   # said on purpose
