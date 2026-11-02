@@ -44,7 +44,7 @@ The leg's bought parts and their links are in [leg-rig-orders.md](leg-rig-orders
 |---|---|---|---|
 | DIN 433 M6 washer, 6.4 x 11 x 1.6, stainless (`washer_m6_din433`) | 4 | under the BotWheel screws' heads (D74) | McMaster-Carr part number to confirm: its product pages returned no data on 2026-11-01 |
 | Structural epoxy for metal to nylon (two-part, gap-filling, about 0.1-0.25 mm) | 1 kit | the stop pins, the knee-eye sleeves and the RS-04 dowels (D74): Henkel does not recommend the anaerobic retainer (LOCTITE 638) on thermoplastics | the owner picks the product; C1 tries it |
-| PA6-CF, four 1 kg spools of one lot | 3.1 kg of parts a leg (the print plan), plus supports, brim and purge | the hip frame alone is 1,106 g, so it takes a spool change | dry before use (section 3) |
+| PA6-CF, six 1 kg spools of one lot | 3.1 kg of parts a leg (the print plan), plus supports, brim and purge; the coupons take about 1.7 kg and 110 h more (`exports/rig/bench/print-plan.json`) | the hip frame alone is 1,106 g, so it takes a spool change. The coupons calibrate the parts, so they come from the same lot | dry before use (section 3) |
 | TPU 95A | 62 g | the four stop sleeves | |
 
 ## 2. Print the coupons first
@@ -220,8 +220,8 @@ The plots in the summary show these edges red. Bench test B4b (the hub on its ad
 
 | Stub | Weakest direction | Predicted peel load (2 mm / 1.5 mm mesh) | Governed by | Bulk (in-layer) load |
 |---|---|---|---|---|
-| dev's (coupon_c4_today) | -x | 1,350 N / 1,420 N | bond | 3,390 N |
-| drawn (coupon_c4_pr2) | +z | 1,780 N / 1,800 N | bond | 3,750 N |
+| dev's (coupon_c4_today) | -x | 1,290 N / 1,400 N | bond | 3,220 N |
+| drawn (coupon_c4_pr2) | -z | 1,850 N / 1,870 N | bond | 3,540 N |
 
 The prediction uses the humid PA6-CF rows, so condition C4 humid first (its sheet says how): a dry coupon reads about twice the prediction. Load it in the weakest direction. The measured peel load over the predicted one is the factor on the assumed S_z and S_s for every row above; the two stubs check that the drawn one gains what the FEA says.
 

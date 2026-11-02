@@ -96,14 +96,14 @@
    "solids": 1,
    "watertight": true,
    "fits": true,
-   "grams": 182
+   "grams": 402
   },
   "coupon_c4_pr2": {
    "valid": true,
    "solids": 1,
    "watertight": true,
    "fits": true,
-   "grams": 232
+   "grams": 452
   },
   "coupon_frame_ring_m01": {
    "valid": true,

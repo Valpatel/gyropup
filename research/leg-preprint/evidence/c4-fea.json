@@ -8,7 +8,7 @@
   1.0,
   0.0
  ],
- "cut_back_mm": 40.0,
+ "cut_back_mm": 90.0,
  "rows": [
   {
    "stub": "today",
@@ -16,18 +16,18 @@
    "mesh_mm": 2.0,
    "load_n": 1000.0,
    "load_at_y_mm": 56.0,
-   "gate_sf_at_1kn": 3.39,
-   "von_mises_design_mpa": 12.03,
+   "gate_sf_at_1kn": 3.22,
+   "von_mises_design_mpa": 12.69,
    "layer_check_at_1kn": {
     "normal": [
      0.0,
      1.0,
      0.0
     ],
-    "safety_factor": 1.62,
+    "safety_factor": 1.58,
     "governed_by": "bond",
-    "safety_factor_bond": 1.62,
-    "safety_factor_bulk": 3.39,
+    "safety_factor_bond": 1.58,
+    "safety_factor_bulk": 3.22,
     "allowables_mpa": {
      "xy": 40.837,
      "z": 18.133,
@@ -35,31 +35,31 @@
     },
     "shear_basis": "interlayer shear allowable assumed to be strength_z / sqrt(3), the ratio von Mises gives an isotropic solid: no filament data sheet gives one; pass strength_shear from a coupon",
     "worst": {
-     "element": 49930,
+     "element": 90260,
      "corner_mm": [
-      129.307,
-      -1.738,
-      0.853
+      128.368,
+      -0.904,
+      -0.166
      ],
      "element_centre_mm": [
-      129.085,
-      -0.731,
-      0.828
+      129.731,
+      -0.607,
+      -0.366
      ],
-     "sigma_n_mpa": -7.549,
-     "tau_n_mpa": 6.447,
-     "von_mises_mpa": 11.541,
-     "bond": 0.6158,
-     "bulk": 0.2826,
+     "sigma_n_mpa": -7.269,
+     "tau_n_mpa": 6.644,
+     "von_mises_mpa": 12.685,
+     "bond": 0.6346,
+     "bulk": 0.3106,
      "mode": "bond"
     },
-    "judged_elements": 47155,
+    "judged_elements": 105639,
     "assumptions": "the stress of the linear, isotropic solve (one modulus), resolved on the layer plane at every element corner; bond: the opening stress across the layers and the shear along them, in quadratic interaction, against the across-layer and interlayer shear allowables (compression across the layers left out); bulk: von Mises against the in-plane allowable. A screening check for a transversely isotropic print, not a qualification: an anisotropic part can carry its load differently, and walls, seams and infill are not modelled. Test a printed part"
    },
-   "predicted_peel_n": 1620,
-   "predicted_bulk_n": 3390,
-   "tets": 53925,
-   "seconds": 19.7
+   "predicted_peel_n": 1580,
+   "predicted_bulk_n": 3220,
+   "tets": 114144,
+   "seconds": 511.3
   },
   {
    "stub": "today",
@@ -67,18 +67,18 @@
    "mesh_mm": 2.0,
    "load_n": 1000.0,
    "load_at_y_mm": 56.0,
-   "gate_sf_at_1kn": 3.39,
-   "von_mises_design_mpa": 12.03,
+   "gate_sf_at_1kn": 3.22,
+   "von_mises_design_mpa": 12.69,
    "layer_check_at_1kn": {
     "normal": [
      0.0,
      1.0,
      0.0
     ],
-    "safety_factor": 1.35,
+    "safety_factor": 1.29,
     "governed_by": "bond",
-    "safety_factor_bond": 1.35,
-    "safety_factor_bulk": 3.39,
+    "safety_factor_bond": 1.29,
+    "safety_factor_bulk": 3.22,
     "allowables_mpa": {
      "xy": 40.837,
      "z": 18.133,
@@ -86,31 +86,31 @@
     },
     "shear_basis": "interlayer shear allowable assumed to be strength_z / sqrt(3), the ratio von Mises gives an isotropic solid: no filament data sheet gives one; pass strength_shear from a coupon",
     "worst": {
-     "element": 49930,
+     "element": 90260,
      "corner_mm": [
-      129.307,
-      -1.738,
-      0.853
+      129.368,
+      -1.793,
+      -1.155
      ],
      "element_centre_mm": [
-      129.085,
-      -0.731,
-      0.828
+      129.731,
+      -0.607,
+      -0.366
      ],
-     "sigma_n_mpa": 7.549,
-     "tau_n_mpa": 6.447,
-     "von_mises_mpa": 11.541,
-     "bond": 0.7433,
-     "bulk": 0.2826,
+     "sigma_n_mpa": 9.268,
+     "tau_n_mpa": 6.133,
+     "von_mises_mpa": 11.319,
+     "bond": 0.7774,
+     "bulk": 0.2772,
      "mode": "bond"
     },
-    "judged_elements": 47155,
+    "judged_elements": 105639,
     "assumptions": "the stress of the linear, isotropic solve (one modulus), resolved on the layer plane at every element corner; bond: the opening stress across the layers and the shear along them, in quadratic interaction, against the across-layer and interlayer shear allowables (compression across the layers left out); bulk: von Mises against the in-plane allowable. A screening check for a transversely isotropic print, not a qualification: an anisotropic part can carry its load differently, and walls, seams and infill are not modelled. Test a printed part"
    },
-   "predicted_peel_n": 1350,
-   "predicted_bulk_n": 3390,
-   "tets": 53925,
-   "seconds": 16.5
+   "predicted_peel_n": 1290,
+   "predicted_bulk_n": 3220,
+   "tets": 114144,
+   "seconds": 202.9
   },
   {
    "stub": "today",
@@ -118,18 +118,18 @@
    "mesh_mm": 2.0,
    "load_n": 1000.0,
    "load_at_y_mm": 56.0,
-   "gate_sf_at_1kn": 3.3,
-   "von_mises_design_mpa": 12.37,
+   "gate_sf_at_1kn": 3.08,
+   "von_mises_design_mpa": 13.25,
    "layer_check_at_1kn": {
     "normal": [
      0.0,
      1.0,
      0.0
     ],
-    "safety_factor": 1.97,
+    "safety_factor": 1.86,
     "governed_by": "bond",
-    "safety_factor_bond": 1.97,
-    "safety_factor_bulk": 3.3,
+    "safety_factor_bond": 1.86,
+    "safety_factor_bulk": 3.08,
     "allowables_mpa": {
      "xy": 40.837,
      "z": 18.133,
@@ -137,31 +137,31 @@
     },
     "shear_basis": "interlayer shear allowable assumed to be strength_z / sqrt(3), the ratio von Mises gives an isotropic solid: no filament data sheet gives one; pass strength_shear from a coupon",
     "worst": {
-     "element": 39372,
+     "element": 93959,
      "corner_mm": [
-      136.372,
-      -1.902,
-      15.415
+      133.731,
+      -1.791,
+      12.744
      ],
      "element_centre_mm": [
-      136.042,
-      -0.668,
-      14.619
+      134.524,
+      -1.089,
+      13.744
      ],
-     "sigma_n_mpa": 6.199,
-     "tau_n_mpa": 3.937,
-     "von_mises_mpa": 8.104,
-     "bond": 0.5082,
-     "bulk": 0.1984,
+     "sigma_n_mpa": 5.839,
+     "tau_n_mpa": 4.526,
+     "von_mises_mpa": 8.892,
+     "bond": 0.539,
+     "bulk": 0.2177,
      "mode": "bond"
     },
-    "judged_elements": 47155,
+    "judged_elements": 105639,
     "assumptions": "the stress of the linear, isotropic solve (one modulus), resolved on the layer plane at every element corner; bond: the opening stress across the layers and the shear along them, in quadratic interaction, against the across-layer and interlayer shear allowables (compression across the layers left out); bulk: von Mises against the in-plane allowable. A screening check for a transversely isotropic print, not a qualification: an anisotropic part can carry its load differently, and walls, seams and infill are not modelled. Test a printed part"
    },
-   "predicted_peel_n": 1970,
-   "predicted_bulk_n": 3300,
-   "tets": 53925,
-   "seconds": 16.3
+   "predicted_peel_n": 1860,
+   "predicted_bulk_n": 3080,
+   "tets": 114144,
+   "seconds": 323.5
   },
   {
    "stub": "today",
@@ -169,18 +169,18 @@
    "mesh_mm": 2.0,
    "load_n": 1000.0,
    "load_at_y_mm": 56.0,
-   "gate_sf_at_1kn": 3.3,
-   "von_mises_design_mpa": 12.37,
+   "gate_sf_at_1kn": 3.08,
+   "von_mises_design_mpa": 13.25,
    "layer_check_at_1kn": {
     "normal": [
      0.0,
      1.0,
      0.0
     ],
-    "safety_factor": 1.99,
+    "safety_factor": 1.84,
     "governed_by": "bond",
-    "safety_factor_bond": 1.99,
-    "safety_factor_bulk": 3.3,
+    "safety_factor_bond": 1.84,
+    "safety_factor_bulk": 3.08,
     "allowables_mpa": {
      "xy": 40.837,
      "z": 18.133,
@@ -188,31 +188,31 @@
     },
     "shear_basis": "interlayer shear allowable assumed to be strength_z / sqrt(3), the ratio von Mises gives an isotropic solid: no filament data sheet gives one; pass strength_shear from a coupon",
     "worst": {
-     "element": 44159,
+     "element": 104588,
      "corner_mm": [
-      133.61,
-      -1.903,
-      -12.438
+      134.984,
+      -2.063,
+      -13.887
      ],
      "element_centre_mm": [
-      133.723,
-      -2.23,
-      -11.143
+      134.983,
+      -2.355,
+      -12.841
      ],
-     "sigma_n_mpa": 5.774,
-     "tau_n_mpa": 4.064,
-     "von_mises_mpa": 8.194,
-     "bond": 0.502,
-     "bulk": 0.2006,
+     "sigma_n_mpa": 6.712,
+     "tau_n_mpa": 4.154,
+     "von_mises_mpa": 8.425,
+     "bond": 0.5426,
+     "bulk": 0.2063,
      "mode": "bond"
     },
-    "judged_elements": 47155,
+    "judged_elements": 105639,
     "assumptions": "the stress of the linear, isotropic solve (one modulus), resolved on the layer plane at every element corner; bond: the opening stress across the layers and the shear along them, in quadratic interaction, against the across-layer and interlayer shear allowables (compression across the layers left out); bulk: von Mises against the in-plane allowable. A screening check for a transversely isotropic print, not a qualification: an anisotropic part can carry its load differently, and walls, seams and infill are not modelled. Test a printed part"
    },
-   "predicted_peel_n": 1990,
-   "predicted_bulk_n": 3300,
-   "tets": 53925,
-   "seconds": 15.5
+   "predicted_peel_n": 1840,
+   "predicted_bulk_n": 3080,
+   "tets": 114144,
+   "seconds": 673.8
   },
   {
    "stub": "today",
@@ -220,18 +220,18 @@
    "mesh_mm": 1.5,
    "load_n": 1000.0,
    "load_at_y_mm": 56.0,
-   "gate_sf_at_1kn": 3.28,
-   "von_mises_design_mpa": 12.43,
+   "gate_sf_at_1kn": 3.31,
+   "von_mises_design_mpa": 12.36,
    "layer_check_at_1kn": {
     "normal": [
      0.0,
      1.0,
      0.0
     ],
-    "safety_factor": 1.42,
+    "safety_factor": 1.4,
     "governed_by": "bond",
-    "safety_factor_bond": 1.42,
-    "safety_factor_bulk": 3.28,
+    "safety_factor_bond": 1.4,
+    "safety_factor_bulk": 3.31,
     "allowables_mpa": {
      "xy": 40.837,
      "z": 18.133,
@@ -239,31 +239,31 @@
     },
     "shear_basis": "interlayer shear allowable assumed to be strength_z / sqrt(3), the ratio von Mises gives an isotropic solid: no filament data sheet gives one; pass strength_shear from a coupon",
     "worst": {
-     "element": 102557,
+     "element": 244009,
      "corner_mm": [
-      128.624,
-      -1.089,
-      0.629
+      129.143,
+      -1.311,
+      -3.353
      ],
      "element_centre_mm": [
-      128.438,
-      -0.53,
-      0.223
+      129.739,
+      -1.558,
+      -2.711
      ],
-     "sigma_n_mpa": 5.854,
-     "tau_n_mpa": 6.541,
-     "von_mises_mpa": 11.854,
-     "bond": 0.7033,
-     "bulk": 0.2903,
+     "sigma_n_mpa": 6.402,
+     "tau_n_mpa": 6.486,
+     "von_mises_mpa": 11.682,
+     "bond": 0.713,
+     "bulk": 0.2861,
      "mode": "bond"
     },
-    "judged_elements": 109421,
+    "judged_elements": 244111,
     "assumptions": "the stress of the linear, isotropic solve (one modulus), resolved on the layer plane at every element corner; bond: the opening stress across the layers and the shear along them, in quadratic interaction, against the across-layer and interlayer shear allowables (compression across the layers left out); bulk: von Mises against the in-plane allowable. A screening check for a transversely isotropic print, not a qualification: an anisotropic part can carry its load differently, and walls, seams and infill are not modelled. Test a printed part"
    },
-   "predicted_peel_n": 1420,
-   "predicted_bulk_n": 3280,
-   "tets": 121003,
-   "seconds": 41.4
+   "predicted_peel_n": 1400,
+   "predicted_bulk_n": 3310,
+   "tets": 258886,
+   "seconds": 698.1
   },
   {
    "stub": "pr2",
@@ -271,18 +271,18 @@
    "mesh_mm": 2.0,
    "load_n": 1000.0,
    "load_at_y_mm": 56.0,
-   "gate_sf_at_1kn": 2.87,
-   "von_mises_design_mpa": 14.23,
+   "gate_sf_at_1kn": 2.82,
+   "von_mises_design_mpa": 14.47,
    "layer_check_at_1kn": {
     "normal": [
      0.0,
      1.0,
      0.0
     ],
-    "safety_factor": 2.16,
+    "safety_factor": 2.1,
     "governed_by": "bond",
-    "safety_factor_bond": 2.16,
-    "safety_factor_bulk": 2.87,
+    "safety_factor_bond": 2.1,
+    "safety_factor_bulk": 2.82,
     "allowables_mpa": {
      "xy": 40.837,
      "z": 18.133,
@@ -290,31 +290,31 @@
     },
     "shear_basis": "interlayer shear allowable assumed to be strength_z / sqrt(3), the ratio von Mises gives an isotropic solid: no filament data sheet gives one; pass strength_shear from a coupon",
     "worst": {
-     "element": 49289,
+     "element": 98980,
      "corner_mm": [
       128.09,
       -1.977,
       0.824
      ],
      "element_centre_mm": [
-      127.75,
-      -0.882,
-      1.548
+      127.74,
+      -1.013,
+      1.374
      ],
-     "sigma_n_mpa": -4.17,
-     "tau_n_mpa": 4.849,
-     "von_mises_mpa": 8.699,
-     "bond": 0.4631,
-     "bulk": 0.213,
+     "sigma_n_mpa": -4.355,
+     "tau_n_mpa": 4.989,
+     "von_mises_mpa": 8.944,
+     "bond": 0.4766,
+     "bulk": 0.219,
      "mode": "bond"
     },
-    "judged_elements": 59031,
+    "judged_elements": 117943,
     "assumptions": "the stress of the linear, isotropic solve (one modulus), resolved on the layer plane at every element corner; bond: the opening stress across the layers and the shear along them, in quadratic interaction, against the across-layer and interlayer shear allowables (compression across the layers left out); bulk: von Mises against the in-plane allowable. A screening check for a transversely isotropic print, not a qualification: an anisotropic part can carry its load differently, and walls, seams and infill are not modelled. Test a printed part"
    },
-   "predicted_peel_n": 2160,
-   "predicted_bulk_n": 2870,
-   "tets": 65814,
-   "seconds": 20.5
+   "predicted_peel_n": 2100,
+   "predicted_bulk_n": 2820,
+   "tets": 126466,
+   "seconds": 46.4
   },
   {
    "stub": "pr2",
@@ -322,18 +322,18 @@
    "mesh_mm": 2.0,
    "load_n": 1000.0,
    "load_at_y_mm": 56.0,
-   "gate_sf_at_1kn": 2.87,
-   "von_mises_design_mpa": 14.23,
+   "gate_sf_at_1kn": 2.82,
+   "von_mises_design_mpa": 14.47,
    "layer_check_at_1kn": {
     "normal": [
      0.0,
      1.0,
      0.0
     ],
-    "safety_factor": 1.89,
+    "safety_factor": 1.87,
     "governed_by": "bond",
-    "safety_factor_bond": 1.89,
-    "safety_factor_bulk": 2.87,
+    "safety_factor_bond": 1.87,
+    "safety_factor_bulk": 2.82,
     "allowables_mpa": {
      "xy": 40.837,
      "z": 18.133,
@@ -341,31 +341,31 @@
     },
     "shear_basis": "interlayer shear allowable assumed to be strength_z / sqrt(3), the ratio von Mises gives an isotropic solid: no filament data sheet gives one; pass strength_shear from a coupon",
     "worst": {
-     "element": 61380,
+     "element": 98980,
      "corner_mm": [
-      128.341,
-      -2.205,
-      -1.132
+      128.09,
+      -1.977,
+      0.824
      ],
      "element_centre_mm": [
-      129.291,
-      -2.645,
-      -1.782
+      127.74,
+      -1.013,
+      1.374
      ],
-     "sigma_n_mpa": 5.156,
-     "tau_n_mpa": 4.669,
-     "von_mises_mpa": 8.326,
-     "bond": 0.5289,
-     "bulk": 0.2039,
+     "sigma_n_mpa": 4.355,
+     "tau_n_mpa": 4.989,
+     "von_mises_mpa": 8.944,
+     "bond": 0.5337,
+     "bulk": 0.219,
      "mode": "bond"
     },
-    "judged_elements": 59031,
+    "judged_elements": 117943,
     "assumptions": "the stress of the linear, isotropic solve (one modulus), resolved on the layer plane at every element corner; bond: the opening stress across the layers and the shear along them, in quadratic interaction, against the across-layer and interlayer shear allowables (compression across the layers left out); bulk: von Mises against the in-plane allowable. A screening check for a transversely isotropic print, not a qualification: an anisotropic part can carry its load differently, and walls, seams and infill are not modelled. Test a printed part"
    },
-   "predicted_peel_n": 1890,
-   "predicted_bulk_n": 2870,
-   "tets": 65814,
-   "seconds": 27.2
+   "predicted_peel_n": 1870,
+   "predicted_bulk_n": 2820,
+   "tets": 126466,
+   "seconds": 49.2
   },
   {
    "stub": "pr2",
@@ -373,18 +373,18 @@
    "mesh_mm": 2.0,
    "load_n": 1000.0,
    "load_at_y_mm": 56.0,
-   "gate_sf_at_1kn": 3.75,
-   "von_mises_design_mpa": 10.9,
+   "gate_sf_at_1kn": 3.54,
+   "von_mises_design_mpa": 11.54,
    "layer_check_at_1kn": {
     "normal": [
      0.0,
      1.0,
      0.0
     ],
-    "safety_factor": 1.78,
+    "safety_factor": 1.96,
     "governed_by": "bond",
-    "safety_factor_bond": 1.78,
-    "safety_factor_bulk": 3.75,
+    "safety_factor_bond": 1.96,
+    "safety_factor_bulk": 3.54,
     "allowables_mpa": {
      "xy": 40.837,
      "z": 18.133,
@@ -392,31 +392,31 @@
     },
     "shear_basis": "interlayer shear allowable assumed to be strength_z / sqrt(3), the ratio von Mises gives an isotropic solid: no filament data sheet gives one; pass strength_shear from a coupon",
     "worst": {
-     "element": 21604,
+     "element": 80212,
      "corner_mm": [
       133.331,
-      12.0,
-      -21.872
+      16.0,
+      21.872
      ],
      "element_centre_mm": [
-      134.557,
-      12.851,
-      -21.39
+      132.429,
+      16.46,
+      20.857
      ],
-     "sigma_n_mpa": 4.608,
-     "tau_n_mpa": 5.234,
-     "von_mises_mpa": 9.436,
-     "bond": 0.5608,
-     "bulk": 0.2311,
+     "sigma_n_mpa": -3.305,
+     "tau_n_mpa": 5.332,
+     "von_mises_mpa": 10.15,
+     "bond": 0.5093,
+     "bulk": 0.2485,
      "mode": "bond"
     },
-    "judged_elements": 59031,
+    "judged_elements": 117943,
     "assumptions": "the stress of the linear, isotropic solve (one modulus), resolved on the layer plane at every element corner; bond: the opening stress across the layers and the shear along them, in quadratic interaction, against the across-layer and interlayer shear allowables (compression across the layers left out); bulk: von Mises against the in-plane allowable. A screening check for a transversely isotropic print, not a qualification: an anisotropic part can carry its load differently, and walls, seams and infill are not modelled. Test a printed part"
    },
-   "predicted_peel_n": 1780,
-   "predicted_bulk_n": 3750,
-   "tets": 65814,
-   "seconds": 28.6
+   "predicted_peel_n": 1960,
+   "predicted_bulk_n": 3540,
+   "tets": 126466,
+   "seconds": 70.1
   },
   {
    "stub": "pr2",
@@ -424,18 +424,18 @@
    "mesh_mm": 2.0,
    "load_n": 1000.0,
    "load_at_y_mm": 56.0,
-   "gate_sf_at_1kn": 3.75,
-   "von_mises_design_mpa": 10.9,
+   "gate_sf_at_1kn": 3.54,
+   "von_mises_design_mpa": 11.54,
    "layer_check_at_1kn": {
     "normal": [
      0.0,
      1.0,
      0.0
     ],
-    "safety_factor": 1.92,
+    "safety_factor": 1.85,
     "governed_by": "bond",
-    "safety_factor_bond": 1.92,
-    "safety_factor_bulk": 3.75,
+    "safety_factor_bond": 1.85,
+    "safety_factor_bulk": 3.54,
     "allowables_mpa": {
      "xy": 40.837,
      "z": 18.133,
@@ -443,50 +443,50 @@
     },
     "shear_basis": "interlayer shear allowable assumed to be strength_z / sqrt(3), the ratio von Mises gives an isotropic solid: no filament data sheet gives one; pass strength_shear from a coupon",
     "worst": {
-     "element": 59845,
+     "element": 80212,
      "corner_mm": [
       133.331,
       16.0,
       21.872
      ],
      "element_centre_mm": [
-      134.1,
-      16.808,
-      21.807
+      132.429,
+      16.46,
+      20.857
      ],
-     "sigma_n_mpa": 1.071,
-     "tau_n_mpa": 5.428,
-     "von_mises_mpa": 10.424,
-     "bond": 0.5218,
-     "bulk": 0.2553,
+     "sigma_n_mpa": 3.305,
+     "tau_n_mpa": 5.332,
+     "von_mises_mpa": 10.15,
+     "bond": 0.541,
+     "bulk": 0.2485,
      "mode": "bond"
     },
-    "judged_elements": 59031,
+    "judged_elements": 117943,
     "assumptions": "the stress of the linear, isotropic solve (one modulus), resolved on the layer plane at every element corner; bond: the opening stress across the layers and the shear along them, in quadratic interaction, against the across-layer and interlayer shear allowables (compression across the layers left out); bulk: von Mises against the in-plane allowable. A screening check for a transversely isotropic print, not a qualification: an anisotropic part can carry its load differently, and walls, seams and infill are not modelled. Test a printed part"
    },
-   "predicted_peel_n": 1920,
-   "predicted_bulk_n": 3750,
-   "tets": 65814,
-   "seconds": 27.4
+   "predicted_peel_n": 1850,
+   "predicted_bulk_n": 3540,
+   "tets": 126466,
+   "seconds": 90.8
   },
   {
    "stub": "pr2",
-   "direction": "+z",
+   "direction": "-z",
    "mesh_mm": 1.5,
    "load_n": 1000.0,
    "load_at_y_mm": 56.0,
-   "gate_sf_at_1kn": 3.56,
-   "von_mises_design_mpa": 11.46,
+   "gate_sf_at_1kn": 3.57,
+   "von_mises_design_mpa": 11.44,
    "layer_check_at_1kn": {
     "normal": [
      0.0,
      1.0,
      0.0
     ],
-    "safety_factor": 1.8,
+    "safety_factor": 1.87,
     "governed_by": "bond",
-    "safety_factor_bond": 1.8,
-    "safety_factor_bulk": 3.56,
+    "safety_factor_bond": 1.87,
+    "safety_factor_bulk": 3.57,
     "allowables_mpa": {
      "xy": 40.837,
      "z": 18.133,
@@ -494,31 +494,31 @@
     },
     "shear_basis": "interlayer shear allowable assumed to be strength_z / sqrt(3), the ratio von Mises gives an isotropic solid: no filament data sheet gives one; pass strength_shear from a coupon",
     "worst": {
-     "element": 138327,
+     "element": 134530,
      "corner_mm": [
       133.331,
-      13.5,
-      -21.872
+      21.0,
+      21.872
      ],
      "element_centre_mm": [
-      133.883,
-      14.119,
-      -21.779
+      132.85,
+      21.384,
+      20.963
      ],
-     "sigma_n_mpa": 1.738,
-     "tau_n_mpa": 5.717,
-     "von_mises_mpa": 11.089,
-     "bond": 0.5544,
-     "bulk": 0.2715,
+     "sigma_n_mpa": 3.469,
+     "tau_n_mpa": 5.225,
+     "von_mises_mpa": 9.751,
+     "bond": 0.5345,
+     "bulk": 0.2388,
      "mode": "bond"
     },
-    "judged_elements": 139922,
+    "judged_elements": 274704,
     "assumptions": "the stress of the linear, isotropic solve (one modulus), resolved on the layer plane at every element corner; bond: the opening stress across the layers and the shear along them, in quadratic interaction, against the across-layer and interlayer shear allowables (compression across the layers left out); bulk: von Mises against the in-plane allowable. A screening check for a transversely isotropic print, not a qualification: an anisotropic part can carry its load differently, and walls, seams and infill are not modelled. Test a printed part"
    },
-   "predicted_peel_n": 1800,
-   "predicted_bulk_n": 3560,
-   "tets": 151556,
-   "seconds": 89.1
+   "predicted_peel_n": 1870,
+   "predicted_bulk_n": 3570,
+   "tets": 289488,
+   "seconds": 559.3
   }
  ]
 }

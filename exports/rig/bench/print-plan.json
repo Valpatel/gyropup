@@ -230,16 +230,16 @@
    "material": "pa6-cf",
    "qty": 2,
    "size_mm": [
-    60,
-    49,
+    110,
+    88,
     50
    ],
    "fits": true,
    "placement": "straight",
-   "grams_each": 91,
-   "grams": 182,
-   "hours": 11.9,
-   "cost_usd": 14.55,
+   "grams_each": 201,
+   "grams": 402,
+   "hours": 26.3,
+   "cost_usd": 32.16,
    "infill": "100 %",
    "how": "PA6-CF, 100 %, dried; outer face down, stub up, as the link (C4: dev's stub)"
   },
@@ -247,16 +247,16 @@
    "material": "pa6-cf",
    "qty": 2,
    "size_mm": [
-    68,
-    55,
+    118,
+    88,
     50
    ],
    "fits": true,
    "placement": "straight",
-   "grams_each": 116,
-   "grams": 232,
-   "hours": 15.2,
-   "cost_usd": 18.53,
+   "grams_each": 226,
+   "grams": 452,
+   "hours": 29.6,
+   "cost_usd": 36.14,
    "infill": "100 %",
    "how": "PA6-CF, 100 %, dried; outer face down, stub up, as the link (C4: the drawn stub)"
   },
@@ -632,14 +632,14 @@
    "parts": 2
   },
   "pa6-cf": {
-   "grams": 1429,
-   "hours": 93.5,
-   "cost_usd": 114.08,
+   "grams": 1869,
+   "hours": 122.3,
+   "cost_usd": 149.3,
    "parts": 39
   }
  },
  "too_big": [],
- "total_hours": 145.3,
- "total_grams": 2618,
+ "total_hours": 174.1,
+ "total_grams": 3058,
  "note": "bench fixtures and fit coupons (task T4)"
 }
