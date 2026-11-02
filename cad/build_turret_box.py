@@ -673,7 +673,7 @@ def main():
             lo, hi = tris.reshape(-1, 3).min(axis=0), tris.reshape(-1, 3).max(axis=0)
             parts.append({'name': f'j501_{name}', 'part': name, 'group': 'j501', 'file': f'j501_{name}.stl', 'color': col, 'opacity': 1.0,
                           'kind': 'j501', 'bbox': [round(float(x), 1) for x in (*lo, *hi)], 'title': TITLE.get(name, name), 'role': role,
-                          'explode': [0, 0, 0], 'triangles': [n0, len(tris)], 'source': str(src)})
+                          'explode': [0, 0, 0], 'triangles': [n0, len(tris)], 'source': tb.j501_label(src)})
             j501.append(name)
 
     # ---- mass properties of the moving groups (for the tilt holding torque and the pan's inertia)

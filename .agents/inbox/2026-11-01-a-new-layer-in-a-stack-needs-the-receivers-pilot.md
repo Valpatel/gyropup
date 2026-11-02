@@ -42,3 +42,16 @@ the same way: the tray's 8 mm dowel holes leave a 16 mm pin needing 8.5 mm in th
 These findings come from the CAD, not from an assembled turret. The fixes (deeper pilots or M5 x 12, the contract's
 datum) are `cad/` changes and need the carrier receipts regenerated on the CAD host. See
 `research/insert-joints/joints.md`.
+
+## Resolution (#145)
+
+All three findings are fixed in the CAD, and the inventory re-reads each one from source, so a regression brings the
+finding back:
+
+- The riser's TM pilots are now 13 mm deep (`RISER_TM_PILOT`). The tip stops 1.5 mm short of the floor.
+- The plinth's columns take the M5 in a 12.5 mm pilot. That also leaves 1.5 mm under the tip.
+- `mount.json` is in the TM frame (`frame_t_above_face_mm`), and every z is measured from the real face. The centre is 135.3 mm above it. That is over D71's 100 mm, and it is an owner decision. `cad/body_params.py` `tm()` refuses a file without the frame key.
+- The riser's dowel holes are 9.5 mm deep, on bosses.
+
+Rebuilding the body for the regenerated receipts also showed that dev's committed body exports had gone stale against
+the 10-31 hip-frame change. Run the body build after any change it depends on, not only after a body change.
