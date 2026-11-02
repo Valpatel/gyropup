@@ -263,16 +263,16 @@ Where PLA fails first, at 12 N m (the weakest rows):
 |---|---|---|---|---|---|
 | wheel_link | R1w | 2.14 | 2 | gate | landing on the wheel link: axle 753 N against 1605 N |
 | front_link | R1 | 2.87 | 2 | layer | landing: knee 160 N against 574 N |
-| output_adapter | R1 | 3.61 | 2 | gate | landing: knee 160 N against 574 N |
 | upper_link | R1 | 4.02 | 2 | gate | landing: knee 160 N against 574 N |
 | upper_link | R1F | 4.06 | 2 | gate | landing: knee 160 N against 574 N |
+| output_adapter | R1 | 4.42 | 2 | gate | landing: hip 129 N against 565 N |
 
 **A power cut onto the floor stop** (the pendant let go, on purpose or not, at the 12 N m stand):
 
 | Motors | Knee | Hip | Hub | Axle | Weakest rows | All rows at 1 |
 |---|---|---|---|---|---|---|
-| undamped (the worst case) | 394 N | 592 N | 49 N m | 252 N | front_link R1 0.71 (hip 634 N against 565 N); output_adapter R1 0.9 (hip 634 N against 565 N) | **no** |
-| with the RS-04's power-off damping (assumed: B1 measures it) | 66 N | 63 N | 7 N m | 95 N | front_link R1 6.52 (knee 70 N against 574 N); output_adapter R1 8.21 (knee 70 N against 574 N) | yes |
+| undamped (the worst case) | 394 N | 592 N | 49 N m | 252 N | output_adapter R1 0.9 (hip 634 N against 565 N); upper_link R1 1.0 (hip 634 N against 565 N) | **no** |
+| with the RS-04's power-off damping (assumed: B1 measures it) | 66 N | 63 N | 7 N m | 95 N | front_link R1 6.52 (knee 70 N against 574 N); output_adapter R1 8.39 (hub 7 N m against 60) | yes |
 
 The hub clamp in the PLA adapter: 1000 N a screw at 1.0 N m gives about 30.4 N m of friction. The hub sees about 18 N m in the hop and up to 49 N m in a power cut: above the friction the two dowels carry it. Re-torque before each session.
 
@@ -311,7 +311,7 @@ flowchart LR
 | L6 | Damped power cut (skip until B1) | 12 N m | Only once B1 has measured the RS-04's power-off damping at or above the model's: `--test power_off_damped --cap 12 --damper 0 --half-mass KG`, let go of the pendant. | the boom lands on the floor stop, not the leg on its own stops |
 | L7 | Hop | 12 N m | `--test jump --cap 12 --damper 0 --half-mass KG`. | a hop of up to about 46 mm; inspect the weakest rows' corners (above) with a lamp |
 
-**No deliberate undamped power cut on PLA.** Undamped, front_link R1 comes to 0.71 against 1 (power cut: hip 634 N against 565 N). With the modelled damping every row holds, so the damped cut waits for B1 to measure it. A pendant let go by accident is the same event, damped by the protection `--damper 0` keeps on (by how much, B1 says): set the floor stop before every session, and inspect the parts above after any cut.
+**No deliberate undamped power cut on PLA.** Undamped, output_adapter R1 comes to 0.9 against 1 (power cut: hip 634 N against 565 N). With the modelled damping every row holds, so the damped cut waits for B1 to measure it. A pendant let go by accident is the same event, damped by the protection `--damper 0` keeps on, but by how much only B1 says (it needs the dyno, an archived fixture: [bench tests](leg-bench-tests.md#b1-the-power-off-damping-decides-d39)). **Until then the accidental cut is the residual risk**: at worst output adapter at a factor of 0.9 (under 1: it may break). Keep a spare printed output adapter on hand, keep the clear zone, set the floor stop before every session, and inspect the parts above after any cut.
 
 **Stop the ladder** at any crack, whitening, click or creak, a screw's paint mark broken, a motor case over 40 °C, or a fault. Photograph it, write it on #156. **Look first** at: the wheel link's hub root (where the hub leaves the link, inside the apex), the front link's apex ring, the upper links' knee-eye stubs, the PLA adapters round their dowels and screws, and the foot's spokes.
 
