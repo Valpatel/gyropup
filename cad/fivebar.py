@@ -1184,8 +1184,9 @@ def screw_groups(fr, j):
     wheel, washers = None, None
     wd, wD, wt = WHEEL_WASHER
     for (x, z) in gmi.circle_pts(36.0, 4, 45.0):
-        sc = screw(6.0, 30.0, 10.0, 6.0, Y['wheel_link'][0] - wt, 1, ex + x, ez + z)
-        wa = bearing(wd, wD, wt, Y['wheel_link'][0] - wt, ex + x, ez + z)
+        yw = Y['hub'][1] - 0.01 - wt                                 # on the hub bore's floor (the bore stops 0.01 short)
+        sc = screw(6.0, 30.0, 10.0, 6.0, yw, 1, ex + x, ez + z)
+        wa = bearing(wd, wD, wt, yw, ex + x, ez + z)
         wheel = sc if wheel is None else wheel.union(sc)
         washers = wa if washers is None else washers.union(wa)
     out['screws_wheel'] = wheel
