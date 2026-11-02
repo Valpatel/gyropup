@@ -1,0 +1,1490 @@
+{
+ "schema": 1,
+ "source_revision": "fa2e71fe0a8c8698c760c7bdcfeeaaa4d2192104",
+ "toolkit": {
+  "version": "0.6.0",
+  "commit": "50d4921a5ab26c7750a869ed41c9a4346ef1379c"
+ },
+ "mesh_mm": 4.0,
+ "seconds": 1577.3,
+ "normals": {
+  "y": [
+   0.0,
+   1.0,
+   0.0
+  ],
+  "z": [
+   0.0,
+   0.0,
+   1.0
+  ],
+  "x": [
+   1.0,
+   0.0,
+   0.0
+  ]
+ },
+ "shear_assumption": "toolkit default S_z / sqrt(3); sf_at_half_sz repeats it at S_z / 2; neither is measured",
+ "rows": [
+  {
+   "part": "upper_link",
+   "case": "R1",
+   "material": "PA6-CF along the layers (humid)",
+   "orientations": {
+    "y": {
+     "normal": [
+      0.0,
+      1.0,
+      0.0
+     ],
+     "sf": 0.69,
+     "governed_by": "bond",
+     "sf_bond": 0.69,
+     "sf_bulk": 1.52,
+     "sf_at_half_sz": 0.62,
+     "worst": {
+      "corner_mm": [
+       130.514,
+       -2.741,
+       -4.678
+      ],
+      "sigma_n_mpa": 17.142,
+      "tau_n_mpa": 11.571
+     }
+    },
+    "z": {
+     "normal": [
+      0.0,
+      0.0,
+      1.0
+     ],
+     "sf": 0.99,
+     "governed_by": "bond",
+     "sf_bond": 0.99,
+     "sf_bulk": 1.52,
+     "sf_at_half_sz": 0.9,
+     "worst": {
+      "corner_mm": [
+       129.357,
+       -0.559,
+       -8.174
+      ],
+      "sigma_n_mpa": 10.568,
+      "tau_n_mpa": 8.616
+     }
+    },
+    "x": {
+     "normal": [
+      1.0,
+      0.0,
+      0.0
+     ],
+     "sf": 0.56,
+     "governed_by": "bond",
+     "sf_bond": 0.56,
+     "sf_bulk": 1.52,
+     "sf_at_half_sz": 0.53,
+     "worst": {
+      "corner_mm": [
+       129.357,
+       -0.559,
+       -8.174
+      ],
+      "sigma_n_mpa": 25.163,
+      "tau_n_mpa": 11.568
+     }
+    }
+   },
+   "target": 1.2,
+   "gate_sf": 1.52,
+   "gate_material": "pa6_cf_xy"
+  },
+  {
+   "part": "upper_link",
+   "case": "R1F",
+   "material": "PA6-CF along the layers (humid)",
+   "orientations": {
+    "y": {
+     "normal": [
+      0.0,
+      1.0,
+      0.0
+     ],
+     "sf": 0.66,
+     "governed_by": "bond",
+     "sf_bond": 0.66,
+     "sf_bulk": 1.51,
+     "sf_at_half_sz": 0.61,
+     "worst": {
+      "corner_mm": [
+       131.256,
+       -2.312,
+       7.752
+      ],
+      "sigma_n_mpa": 19.089,
+      "tau_n_mpa": 11.389
+     }
+    },
+    "z": {
+     "normal": [
+      0.0,
+      0.0,
+      1.0
+     ],
+     "sf": 1.01,
+     "governed_by": "bond",
+     "sf_bond": 1.01,
+     "sf_bulk": 1.51,
+     "sf_at_half_sz": 0.93,
+     "worst": {
+      "corner_mm": [
+       128.769,
+       -0.724,
+       5.409
+      ],
+      "sigma_n_mpa": 12.626,
+      "tau_n_mpa": 7.407
+     }
+    },
+    "x": {
+     "normal": [
+      1.0,
+      0.0,
+      0.0
+     ],
+     "sf": 0.55,
+     "governed_by": "bond",
+     "sf_bond": 0.55,
+     "sf_bulk": 1.51,
+     "sf_at_half_sz": 0.52,
+     "worst": {
+      "corner_mm": [
+       128.769,
+       -0.724,
+       5.409
+      ],
+      "sigma_n_mpa": 23.739,
+      "tau_n_mpa": 12.976
+     }
+    }
+   },
+   "target": 1.2,
+   "gate_sf": 1.51,
+   "gate_material": "pa6_cf_xy"
+  },
+  {
+   "part": "upper_link",
+   "case": "E1",
+   "material": "PA6-CF along the layers (humid)",
+   "orientations": {
+    "y": {
+     "normal": [
+      0.0,
+      1.0,
+      0.0
+     ],
+     "sf": 0.77,
+     "governed_by": "bond",
+     "sf_bond": 0.77,
+     "sf_bulk": 1.77,
+     "sf_at_half_sz": 0.7,
+     "worst": {
+      "corner_mm": [
+       131.344,
+       -2.459,
+       -7.728
+      ],
+      "sigma_n_mpa": 14.673,
+      "tau_n_mpa": 10.668
+     }
+    },
+    "z": {
+     "normal": [
+      0.0,
+      0.0,
+      1.0
+     ],
+     "sf": 0.86,
+     "governed_by": "bond",
+     "sf_bond": 0.86,
+     "sf_bulk": 1.77,
+     "sf_at_half_sz": 0.78,
+     "worst": {
+      "corner_mm": [
+       129.357,
+       -0.559,
+       -8.174
+      ],
+      "sigma_n_mpa": 12.054,
+      "tau_n_mpa": 10.013
+     }
+    },
+    "x": {
+     "normal": [
+      1.0,
+      0.0,
+      0.0
+     ],
+     "sf": 0.69,
+     "governed_by": "bond",
+     "sf_bond": 0.69,
+     "sf_bulk": 1.77,
+     "sf_at_half_sz": 0.64,
+     "worst": {
+      "corner_mm": [
+       129.357,
+       -0.559,
+       -8.174
+      ],
+      "sigma_n_mpa": 18.078,
+      "tau_n_mpa": 10.93
+     }
+    }
+   },
+   "target": 2.0,
+   "gate_sf": 1.77,
+   "gate_material": "pa6_cf_xy"
+  },
+  {
+   "part": "upper_link",
+   "case": "E1F",
+   "material": "PA6-CF along the layers (humid)",
+   "orientations": {
+    "y": {
+     "normal": [
+      0.0,
+      1.0,
+      0.0
+     ],
+     "sf": 0.77,
+     "governed_by": "bond",
+     "sf_bond": 0.77,
+     "sf_bulk": 1.79,
+     "sf_at_half_sz": 0.71,
+     "worst": {
+      "corner_mm": [
+       131.256,
+       -2.312,
+       7.752
+      ],
+      "sigma_n_mpa": 16.159,
+      "tau_n_mpa": 9.803
+     }
+    },
+    "z": {
+     "normal": [
+      0.0,
+      0.0,
+      1.0
+     ],
+     "sf": 0.98,
+     "governed_by": "bond",
+     "sf_bond": 0.98,
+     "sf_bulk": 1.79,
+     "sf_at_half_sz": 0.89,
+     "worst": {
+      "corner_mm": [
+       130.693,
+       -0.699,
+       10.445
+      ],
+      "sigma_n_mpa": 11.639,
+      "tau_n_mpa": 8.279
+     }
+    },
+    "x": {
+     "normal": [
+      1.0,
+      0.0,
+      0.0
+     ],
+     "sf": 0.68,
+     "governed_by": "bond",
+     "sf_bond": 0.68,
+     "sf_bulk": 1.79,
+     "sf_at_half_sz": 0.63,
+     "worst": {
+      "corner_mm": [
+       130.693,
+       -0.699,
+       10.445
+      ],
+      "sigma_n_mpa": 19.274,
+      "tau_n_mpa": 10.595
+     }
+    }
+   },
+   "target": 2.0,
+   "gate_sf": 1.79,
+   "gate_material": "pa6_cf_xy"
+  },
+  {
+   "part": "upper_link",
+   "case": "R3K",
+   "material": "PA6-CF along the layers (humid)",
+   "orientations": {
+    "y": {
+     "normal": [
+      0.0,
+      1.0,
+      0.0
+     ],
+     "sf": 0.48,
+     "governed_by": "bond",
+     "sf_bond": 0.48,
+     "sf_bulk": 0.9,
+     "sf_at_half_sz": 0.42,
+     "worst": {
+      "corner_mm": [
+       130.693,
+       -0.699,
+       10.445
+      ],
+      "sigma_n_mpa": -21.409,
+      "tau_n_mpa": 21.769
+     }
+    },
+    "z": {
+     "normal": [
+      0.0,
+      0.0,
+      1.0
+     ],
+     "sf": 0.48,
+     "governed_by": "bond",
+     "sf_bond": 0.48,
+     "sf_bulk": 0.9,
+     "sf_at_half_sz": 0.41,
+     "worst": {
+      "corner_mm": [
+       137.904,
+       30.0,
+       0.764
+      ],
+      "sigma_n_mpa": 4.557,
+      "tau_n_mpa": 21.787
+     }
+    },
+    "x": {
+     "normal": [
+      1.0,
+      0.0,
+      0.0
+     ],
+     "sf": 0.46,
+     "governed_by": "bond",
+     "sf_bond": 0.46,
+     "sf_bulk": 0.9,
+     "sf_at_half_sz": 0.4,
+     "worst": {
+      "corner_mm": [
+       128.769,
+       -0.724,
+       5.409
+      ],
+      "sigma_n_mpa": -23.665,
+      "tau_n_mpa": 22.598
+     }
+    }
+   },
+   "target": 1.0,
+   "gate_sf": 0.9,
+   "gate_material": "pa6_cf_xy"
+  },
+  {
+   "part": "upper_link",
+   "case": "R3KF",
+   "material": "PA6-CF along the layers (humid)",
+   "orientations": {
+    "y": {
+     "normal": [
+      0.0,
+      1.0,
+      0.0
+     ],
+     "sf": 0.53,
+     "governed_by": "bond",
+     "sf_bond": 0.53,
+     "sf_bulk": 1.01,
+     "sf_at_half_sz": 0.46,
+     "worst": {
+      "corner_mm": [
+       132.107,
+       -0.684,
+       -12.76
+      ],
+      "sigma_n_mpa": -16.908,
+      "tau_n_mpa": 19.607
+     }
+    },
+    "z": {
+     "normal": [
+      0.0,
+      0.0,
+      1.0
+     ],
+     "sf": 0.52,
+     "governed_by": "bond",
+     "sf_bond": 0.52,
+     "sf_bulk": 1.01,
+     "sf_at_half_sz": 0.45,
+     "worst": {
+      "corner_mm": [
+       137.904,
+       30.0,
+       0.764
+      ],
+      "sigma_n_mpa": 1.142,
+      "tau_n_mpa": 19.967
+     }
+    },
+    "x": {
+     "normal": [
+      1.0,
+      0.0,
+      0.0
+     ],
+     "sf": 0.51,
+     "governed_by": "bond",
+     "sf_bond": 0.51,
+     "sf_bulk": 1.01,
+     "sf_at_half_sz": 0.45,
+     "worst": {
+      "corner_mm": [
+       137.904,
+       30.0,
+       0.764
+      ],
+      "sigma_n_mpa": 8.412,
+      "tau_n_mpa": 19.902
+     }
+    }
+   },
+   "target": 1.0,
+   "gate_sf": 1.01,
+   "gate_material": "pa6_cf_xy"
+  },
+  {
+   "part": "upper_link",
+   "case": "R2",
+   "material": "PA6-CF along the layers (humid)",
+   "orientations": {
+    "y": {
+     "normal": [
+      0.0,
+      1.0,
+      0.0
+     ],
+     "sf": 0.8,
+     "governed_by": "bond",
+     "sf_bond": 0.8,
+     "sf_bulk": 1.37,
+     "sf_at_half_sz": 0.69,
+     "worst": {
+      "corner_mm": [
+       11.139,
+       -0.01,
+       16.671
+      ],
+      "sigma_n_mpa": -2.292,
+      "tau_n_mpa": 13.066
+     }
+    },
+    "z": {
+     "normal": [
+      0.0,
+      0.0,
+      1.0
+     ],
+     "sf": 0.62,
+     "governed_by": "bond",
+     "sf_bond": 0.62,
+     "sf_bulk": 1.37,
+     "sf_at_half_sz": 0.6,
+     "worst": {
+      "corner_mm": [
+       20.05,
+       -0.01,
+       -0.0
+      ],
+      "sigma_n_mpa": 26.422,
+      "tau_n_mpa": 7.377
+     }
+    },
+    "x": {
+     "normal": [
+      1.0,
+      0.0,
+      0.0
+     ],
+     "sf": 0.74,
+     "governed_by": "bond",
+     "sf_bond": 0.74,
+     "sf_bulk": 1.37,
+     "sf_at_half_sz": 0.65,
+     "worst": {
+      "corner_mm": [
+       11.139,
+       -0.01,
+       -16.671
+      ],
+      "sigma_n_mpa": 12.425,
+      "tau_n_mpa": 12.2
+     }
+    }
+   },
+   "target": 1.2,
+   "gate_sf": 1.37,
+   "gate_material": "pa6_cf_xy"
+  },
+  {
+   "part": "upper_link",
+   "case": "E2",
+   "material": "PA6-CF along the layers (humid)",
+   "orientations": {
+    "y": {
+     "normal": [
+      0.0,
+      1.0,
+      0.0
+     ],
+     "sf": 1.6,
+     "governed_by": "bond",
+     "sf_bond": 1.6,
+     "sf_bulk": 2.73,
+     "sf_at_half_sz": 1.39,
+     "worst": {
+      "corner_mm": [
+       11.139,
+       -0.01,
+       16.671
+      ],
+      "sigma_n_mpa": -1.146,
+      "tau_n_mpa": 6.533
+     }
+    },
+    "z": {
+     "normal": [
+      0.0,
+      0.0,
+      1.0
+     ],
+     "sf": 1.24,
+     "governed_by": "bond",
+     "sf_bond": 1.24,
+     "sf_bulk": 2.73,
+     "sf_at_half_sz": 1.2,
+     "worst": {
+      "corner_mm": [
+       20.05,
+       -0.01,
+       -0.0
+      ],
+      "sigma_n_mpa": 13.211,
+      "tau_n_mpa": 3.688
+     }
+    },
+    "x": {
+     "normal": [
+      1.0,
+      0.0,
+      0.0
+     ],
+     "sf": 1.48,
+     "governed_by": "bond",
+     "sf_bond": 1.48,
+     "sf_bulk": 2.73,
+     "sf_at_half_sz": 1.3,
+     "worst": {
+      "corner_mm": [
+       11.139,
+       -0.01,
+       -16.671
+      ],
+      "sigma_n_mpa": 6.212,
+      "tau_n_mpa": 6.1
+     }
+    }
+   },
+   "target": 2.0,
+   "gate_sf": 2.73,
+   "gate_material": "pa6_cf_xy"
+  },
+  {
+   "part": "upper_link",
+   "case": "E3",
+   "material": "PA6-CF along the layers (humid)",
+   "orientations": {
+    "y": {
+     "normal": [
+      0.0,
+      1.0,
+      0.0
+     ],
+     "sf": 2.58,
+     "governed_by": "bond",
+     "sf_bond": 2.58,
+     "sf_bulk": 6.13,
+     "sf_at_half_sz": 2.46,
+     "worst": {
+      "corner_mm": [
+       14.725,
+       -0.01,
+       20.034
+      ],
+      "sigma_n_mpa": 5.861,
+      "tau_n_mpa": 2.236
+     }
+    },
+    "z": {
+     "normal": [
+      0.0,
+      0.0,
+      1.0
+     ],
+     "sf": 3.19,
+     "governed_by": "bond",
+     "sf_bond": 3.19,
+     "sf_bulk": 6.13,
+     "sf_at_half_sz": 2.77,
+     "worst": {
+      "corner_mm": [
+       30.786,
+       7.5,
+       32.738
+      ],
+      "sigma_n_mpa": 0.757,
+      "tau_n_mpa": 3.248
+     }
+    },
+    "x": {
+     "normal": [
+      1.0,
+      0.0,
+      0.0
+     ],
+     "sf": 2.33,
+     "governed_by": "bond",
+     "sf_bond": 2.33,
+     "sf_bulk": 6.13,
+     "sf_at_half_sz": 2.24,
+     "worst": {
+      "corner_mm": [
+       34.005,
+       3.75,
+       33.064
+      ],
+      "sigma_n_mpa": 6.855,
+      "tau_n_mpa": 2.146
+     }
+    }
+   },
+   "target": 2.0,
+   "gate_sf": 6.13,
+   "gate_material": "pa6_cf_xy"
+  },
+  {
+   "part": "upper_link",
+   "case": "R3",
+   "material": "PA6-CF along the layers (humid)",
+   "orientations": {
+    "y": {
+     "normal": [
+      0.0,
+      1.0,
+      0.0
+     ],
+     "sf": 1.27,
+     "governed_by": "bond",
+     "sf_bond": 1.27,
+     "sf_bulk": 3.01,
+     "sf_at_half_sz": 1.21,
+     "worst": {
+      "corner_mm": [
+       14.725,
+       -0.01,
+       20.034
+      ],
+      "sigma_n_mpa": 11.947,
+      "tau_n_mpa": 4.559
+     }
+    },
+    "z": {
+     "normal": [
+      0.0,
+      0.0,
+      1.0
+     ],
+     "sf": 1.57,
+     "governed_by": "bond",
+     "sf_bond": 1.57,
+     "sf_bulk": 3.01,
+     "sf_at_half_sz": 1.36,
+     "worst": {
+      "corner_mm": [
+       30.786,
+       7.5,
+       32.738
+      ],
+      "sigma_n_mpa": 1.544,
+      "tau_n_mpa": 6.62
+     }
+    },
+    "x": {
+     "normal": [
+      1.0,
+      0.0,
+      0.0
+     ],
+     "sf": 1.14,
+     "governed_by": "bond",
+     "sf_bond": 1.14,
+     "sf_bulk": 3.01,
+     "sf_at_half_sz": 1.1,
+     "worst": {
+      "corner_mm": [
+       34.005,
+       3.75,
+       33.064
+      ],
+      "sigma_n_mpa": 13.972,
+      "tau_n_mpa": 4.373
+     }
+    }
+   },
+   "target": 1.0,
+   "gate_sf": 3.01,
+   "gate_material": "pa6_cf_xy"
+  },
+  {
+   "part": "front_link",
+   "case": "R1",
+   "material": "PA6-CF along the layers (humid)",
+   "orientations": {
+    "y": {
+     "normal": [
+      0.0,
+      1.0,
+      0.0
+     ],
+     "sf": 0.52,
+     "governed_by": "bond",
+     "sf_bond": 0.52,
+     "sf_bulk": 1.23,
+     "sf_at_half_sz": 0.48,
+     "worst": {
+      "corner_mm": [
+       293.466,
+       48.0,
+       -11.648
+      ],
+      "sigma_n_mpa": 25.307,
+      "tau_n_mpa": 13.784
+     }
+    },
+    "z": {
+     "normal": [
+      0.0,
+      0.0,
+      1.0
+     ],
+     "sf": 0.55,
+     "governed_by": "bond",
+     "sf_bond": 0.55,
+     "sf_bulk": 1.23,
+     "sf_at_half_sz": 0.5,
+     "worst": {
+      "corner_mm": [
+       277.395,
+       48.0,
+       35.701
+      ],
+      "sigma_n_mpa": 21.902,
+      "tau_n_mpa": 14.275
+     }
+    },
+    "x": {
+     "normal": [
+      1.0,
+      0.0,
+      0.0
+     ],
+     "sf": 0.34,
+     "governed_by": "bond",
+     "sf_bond": 0.34,
+     "sf_bulk": 1.23,
+     "sf_at_half_sz": 0.33,
+     "worst": {
+      "corner_mm": [
+       293.466,
+       48.0,
+       -11.648
+      ],
+      "sigma_n_mpa": 47.127,
+      "tau_n_mpa": 14.159
+     }
+    }
+   },
+   "target": 1.2,
+   "gate_sf": 1.23,
+   "gate_material": "pa6_cf_xy"
+  },
+  {
+   "part": "front_link",
+   "case": "E1",
+   "material": "PA6-CF along the layers (humid)",
+   "orientations": {
+    "y": {
+     "normal": [
+      0.0,
+      1.0,
+      0.0
+     ],
+     "sf": 0.71,
+     "governed_by": "bond",
+     "sf_bond": 0.71,
+     "sf_bulk": 1.68,
+     "sf_at_half_sz": 0.66,
+     "worst": {
+      "corner_mm": [
+       293.466,
+       48.0,
+       -11.648
+      ],
+      "sigma_n_mpa": 18.361,
+      "tau_n_mpa": 10.312
+     }
+    },
+    "z": {
+     "normal": [
+      0.0,
+      0.0,
+      1.0
+     ],
+     "sf": 0.8,
+     "governed_by": "bond",
+     "sf_bond": 0.8,
+     "sf_bulk": 1.68,
+     "sf_at_half_sz": 0.74,
+     "worst": {
+      "corner_mm": [
+       277.395,
+       48.0,
+       35.701
+      ],
+      "sigma_n_mpa": 15.822,
+      "tau_n_mpa": 9.341
+     }
+    },
+    "x": {
+     "normal": [
+      1.0,
+      0.0,
+      0.0
+     ],
+     "sf": 0.47,
+     "governed_by": "bond",
+     "sf_bond": 0.47,
+     "sf_bulk": 1.68,
+     "sf_at_half_sz": 0.45,
+     "worst": {
+      "corner_mm": [
+       293.466,
+       48.0,
+       -11.648
+      ],
+      "sigma_n_mpa": 34.208,
+      "tau_n_mpa": 10.487
+     }
+    }
+   },
+   "target": 2.0,
+   "gate_sf": 1.68,
+   "gate_material": "pa6_cf_xy"
+  },
+  {
+   "part": "wheel_link",
+   "case": "R1",
+   "material": "PA6-CF along the layers (humid)",
+   "orientations": {
+    "y": {
+     "normal": [
+      0.0,
+      1.0,
+      0.0
+     ],
+     "sf": 1.2,
+     "governed_by": "bond",
+     "sf_bond": 1.2,
+     "sf_bulk": 2.28,
+     "sf_at_half_sz": 1.13,
+     "worst": {
+      "corner_mm": [
+       222.793,
+       54.0,
+       16.846
+      ],
+      "sigma_n_mpa": 12.046,
+      "tau_n_mpa": 5.307
+     }
+    },
+    "z": {
+     "normal": [
+      0.0,
+      0.0,
+      1.0
+     ],
+     "sf": 1.53,
+     "governed_by": "bond",
+     "sf_bond": 1.53,
+     "sf_bulk": 2.28,
+     "sf_at_half_sz": 1.38,
+     "worst": {
+      "corner_mm": [
+       218.061,
+       54.0,
+       1.97
+      ],
+      "sigma_n_mpa": 7.001,
+      "tau_n_mpa": 5.512
+     }
+    },
+    "x": {
+     "normal": [
+      1.0,
+      0.0,
+      0.0
+     ],
+     "sf": 0.88,
+     "governed_by": "bond",
+     "sf_bond": 0.88,
+     "sf_bulk": 2.28,
+     "sf_at_half_sz": 0.83,
+     "worst": {
+      "corner_mm": [
+       29.891,
+       53.498,
+       -12.426
+      ],
+      "sigma_n_mpa": 16.901,
+      "tau_n_mpa": 6.872
+     }
+    }
+   },
+   "target": 1.2,
+   "gate_sf": 2.28,
+   "gate_material": "pa6_cf_xy"
+  },
+  {
+   "part": "wheel_link",
+   "case": "R1w",
+   "material": "PA6-CF along the layers (humid)",
+   "orientations": {
+    "y": {
+     "normal": [
+      0.0,
+      1.0,
+      0.0
+     ],
+     "sf": 0.7,
+     "governed_by": "bond",
+     "sf_bond": 0.7,
+     "sf_bulk": 1.34,
+     "sf_at_half_sz": 0.67,
+     "worst": {
+      "corner_mm": [
+       222.793,
+       54.0,
+       16.846
+      ],
+      "sigma_n_mpa": 20.453,
+      "tau_n_mpa": 9.011
+     }
+    },
+    "z": {
+     "normal": [
+      0.0,
+      0.0,
+      1.0
+     ],
+     "sf": 0.9,
+     "governed_by": "bond",
+     "sf_bond": 0.9,
+     "sf_bulk": 1.34,
+     "sf_at_half_sz": 0.81,
+     "worst": {
+      "corner_mm": [
+       218.061,
+       54.0,
+       1.97
+      ],
+      "sigma_n_mpa": 11.887,
+      "tau_n_mpa": 9.36
+     }
+    },
+    "x": {
+     "normal": [
+      1.0,
+      0.0,
+      0.0
+     ],
+     "sf": 0.52,
+     "governed_by": "bond",
+     "sf_bond": 0.52,
+     "sf_bulk": 1.34,
+     "sf_at_half_sz": 0.49,
+     "worst": {
+      "corner_mm": [
+       29.891,
+       53.498,
+       -12.426
+      ],
+      "sigma_n_mpa": 28.697,
+      "tau_n_mpa": 11.669
+     }
+    }
+   },
+   "target": 1.2,
+   "gate_sf": 1.34,
+   "gate_material": "pa6_cf_xy"
+  },
+  {
+   "part": "wheel_link",
+   "case": "E1",
+   "material": "PA6-CF along the layers (humid)",
+   "orientations": {
+    "y": {
+     "normal": [
+      0.0,
+      1.0,
+      0.0
+     ],
+     "sf": 1.44,
+     "governed_by": "bond",
+     "sf_bond": 1.44,
+     "sf_bulk": 2.65,
+     "sf_at_half_sz": 1.28,
+     "worst": {
+      "corner_mm": [
+       28.759,
+       51.986,
+       -6.485
+      ],
+      "sigma_n_mpa": 5.682,
+      "tau_n_mpa": 6.466
+     }
+    },
+    "z": {
+     "normal": [
+      0.0,
+      0.0,
+      1.0
+     ],
+     "sf": 2.15,
+     "governed_by": "bond",
+     "sf_bond": 2.15,
+     "sf_bulk": 2.65,
+     "sf_at_half_sz": 1.94,
+     "worst": {
+      "corner_mm": [
+       29.891,
+       53.498,
+       -12.426
+      ],
+      "sigma_n_mpa": 4.826,
+      "tau_n_mpa": 3.998
+     }
+    },
+    "x": {
+     "normal": [
+      1.0,
+      0.0,
+      0.0
+     ],
+     "sf": 1.02,
+     "governed_by": "bond",
+     "sf_bond": 1.02,
+     "sf_bulk": 2.65,
+     "sf_at_half_sz": 0.97,
+     "worst": {
+      "corner_mm": [
+       29.891,
+       53.498,
+       -12.426
+      ],
+      "sigma_n_mpa": 14.932,
+      "tau_n_mpa": 5.644
+     }
+    }
+   },
+   "target": 2.0,
+   "gate_sf": 2.65,
+   "gate_material": "pa6_cf_xy"
+  },
+  {
+   "part": "hip_frame",
+   "case": "R1",
+   "material": "PA6-CF across the layers (humid)",
+   "orientations": {
+    "y": {
+     "normal": [
+      0.0,
+      1.0,
+      0.0
+     ],
+     "sf": 1.32,
+     "governed_by": "bond",
+     "sf_bond": 1.32,
+     "sf_bulk": 3.55,
+     "sf_at_half_sz": 1.22,
+     "worst": {
+      "corner_mm": [
+       76.25,
+       -26.488,
+       -63.128
+      ],
+      "sigma_n_mpa": 9.854,
+      "tau_n_mpa": 5.544
+     }
+    },
+    "z": {
+     "normal": [
+      0.0,
+      0.0,
+      1.0
+     ],
+     "sf": 1.4,
+     "governed_by": "bond",
+     "sf_bond": 1.4,
+     "sf_bulk": 3.55,
+     "sf_at_half_sz": 1.27,
+     "worst": {
+      "corner_mm": [
+       -120.996,
+       -25.1,
+       45.474
+      ],
+      "sigma_n_mpa": 7.293,
+      "tau_n_mpa": 6.162
+     }
+    },
+    "x": {
+     "normal": [
+      1.0,
+      0.0,
+      0.0
+     ],
+     "sf": 1.82,
+     "governed_by": "bond",
+     "sf_bond": 1.82,
+     "sf_bulk": 3.55,
+     "sf_at_half_sz": 1.67,
+     "worst": {
+      "corner_mm": [
+       95.0,
+       -4.443,
+       -58.686
+      ],
+      "sigma_n_mpa": 7.294,
+      "tau_n_mpa": 3.913
+     }
+    }
+   },
+   "target": 1.2,
+   "gate_sf": 1.58,
+   "gate_material": "pa6_cf_z"
+  },
+  {
+   "part": "hip_frame",
+   "case": "E1",
+   "material": "PA6-CF across the layers (humid)",
+   "orientations": {
+    "y": {
+     "normal": [
+      0.0,
+      1.0,
+      0.0
+     ],
+     "sf": 1.39,
+     "governed_by": "bond",
+     "sf_bond": 1.39,
+     "sf_bulk": 3.67,
+     "sf_at_half_sz": 1.28,
+     "worst": {
+      "corner_mm": [
+       121.765,
+       -25.1,
+       47.741
+      ],
+      "sigma_n_mpa": 9.26,
+      "tau_n_mpa": 5.331
+     }
+    },
+    "z": {
+     "normal": [
+      0.0,
+      0.0,
+      1.0
+     ],
+     "sf": 1.45,
+     "governed_by": "bond",
+     "sf_bond": 1.45,
+     "sf_bulk": 3.67,
+     "sf_at_half_sz": 1.3,
+     "worst": {
+      "corner_mm": [
+       120.996,
+       -25.1,
+       45.474
+      ],
+      "sigma_n_mpa": 7.032,
+      "tau_n_mpa": 5.996
+     }
+    },
+    "x": {
+     "normal": [
+      1.0,
+      0.0,
+      0.0
+     ],
+     "sf": 2.12,
+     "governed_by": "bond",
+     "sf_bond": 2.12,
+     "sf_bulk": 3.67,
+     "sf_at_half_sz": 1.91,
+     "worst": {
+      "corner_mm": [
+       -95.0,
+       -1.0,
+       -58.686
+      ],
+      "sigma_n_mpa": 6.628,
+      "tau_n_mpa": 3.13
+     }
+    }
+   },
+   "target": 2.0,
+   "gate_sf": 1.63,
+   "gate_material": "pa6_cf_z"
+  },
+  {
+   "part": "hip_frame",
+   "case": "E3o",
+   "material": "PA6-CF across the layers (humid)",
+   "orientations": {
+    "y": {
+     "normal": [
+      0.0,
+      1.0,
+      0.0
+     ],
+     "sf": 1.89,
+     "governed_by": "bond",
+     "sf_bond": 1.89,
+     "sf_bulk": 4.23,
+     "sf_at_half_sz": 1.8,
+     "worst": {
+      "corner_mm": [
+       95.0,
+       -65.1,
+       63.5
+      ],
+      "sigma_n_mpa": 8.011,
+      "tau_n_mpa": 3.047
+     }
+    },
+    "z": {
+     "normal": [
+      0.0,
+      0.0,
+      1.0
+     ],
+     "sf": 2.23,
+     "governed_by": "bond",
+     "sf_bond": 2.23,
+     "sf_bulk": 4.23,
+     "sf_at_half_sz": 1.94,
+     "worst": {
+      "corner_mm": [
+       95.0,
+       -65.1,
+       63.5
+      ],
+      "sigma_n_mpa": 4.196,
+      "tau_n_mpa": 4.025
+     }
+    },
+    "x": {
+     "normal": [
+      1.0,
+      0.0,
+      0.0
+     ],
+     "sf": 2.24,
+     "governed_by": "bond",
+     "sf_bond": 2.24,
+     "sf_bulk": 4.23,
+     "sf_at_half_sz": 1.94,
+     "worst": {
+      "corner_mm": [
+       98.405,
+       -1.0,
+       62.825
+      ],
+      "sigma_n_mpa": -3.091,
+      "tau_n_mpa": 4.678
+     }
+    }
+   },
+   "target": 2.0,
+   "gate_sf": 1.88,
+   "gate_material": "pa6_cf_z"
+  },
+  {
+   "part": "hip_frame",
+   "case": "E3i",
+   "material": "PA6-CF across the layers (humid)",
+   "orientations": {
+    "y": {
+     "normal": [
+      0.0,
+      1.0,
+      0.0
+     ],
+     "sf": 3.2,
+     "governed_by": "bond",
+     "sf_bond": 3.2,
+     "sf_bulk": 4.91,
+     "sf_at_half_sz": 2.77,
+     "worst": {
+      "corner_mm": [
+       95.0,
+       -25.1,
+       -58.686
+      ],
+      "sigma_n_mpa": -4.658,
+      "tau_n_mpa": 3.277
+     }
+    },
+    "z": {
+     "normal": [
+      0.0,
+      0.0,
+      1.0
+     ],
+     "sf": 2.93,
+     "governed_by": "bond",
+     "sf_bond": 2.93,
+     "sf_bulk": 4.91,
+     "sf_at_half_sz": 2.56,
+     "worst": {
+      "corner_mm": [
+       25.96,
+       -1.0,
+       -16.471
+      ],
+      "sigma_n_mpa": 1.755,
+      "tau_n_mpa": 3.433
+     }
+    },
+    "x": {
+     "normal": [
+      1.0,
+      0.0,
+      0.0
+     ],
+     "sf": 2.2,
+     "governed_by": "bond",
+     "sf_bond": 2.2,
+     "sf_bulk": 4.91,
+     "sf_at_half_sz": 2.03,
+     "worst": {
+      "corner_mm": [
+       25.96,
+       -1.0,
+       -16.471
+      ],
+      "sigma_n_mpa": 5.646,
+      "tau_n_mpa": 3.454
+     }
+    }
+   },
+   "target": 2.0,
+   "gate_sf": 2.18,
+   "gate_material": "pa6_cf_z"
+  },
+  {
+   "part": "hip_frame",
+   "case": "R3o",
+   "material": "PA6-CF across the layers (humid)",
+   "orientations": {
+    "y": {
+     "normal": [
+      0.0,
+      1.0,
+      0.0
+     ],
+     "sf": 0.93,
+     "governed_by": "bond",
+     "sf_bond": 0.93,
+     "sf_bulk": 2.08,
+     "sf_at_half_sz": 0.88,
+     "worst": {
+      "corner_mm": [
+       95.0,
+       -65.1,
+       63.5
+      ],
+      "sigma_n_mpa": 16.328,
+      "tau_n_mpa": 6.211
+     }
+    },
+    "z": {
+     "normal": [
+      0.0,
+      0.0,
+      1.0
+     ],
+     "sf": 1.09,
+     "governed_by": "bond",
+     "sf_bond": 1.09,
+     "sf_bulk": 2.08,
+     "sf_at_half_sz": 0.95,
+     "worst": {
+      "corner_mm": [
+       95.0,
+       -65.1,
+       63.5
+      ],
+      "sigma_n_mpa": 8.553,
+      "tau_n_mpa": 8.204
+     }
+    },
+    "x": {
+     "normal": [
+      1.0,
+      0.0,
+      0.0
+     ],
+     "sf": 1.1,
+     "governed_by": "bond",
+     "sf_bond": 1.1,
+     "sf_bulk": 2.08,
+     "sf_at_half_sz": 0.95,
+     "worst": {
+      "corner_mm": [
+       98.405,
+       -1.0,
+       62.825
+      ],
+      "sigma_n_mpa": -6.3,
+      "tau_n_mpa": 9.536
+     }
+    }
+   },
+   "target": 1.0,
+   "gate_sf": 0.92,
+   "gate_material": "pa6_cf_z"
+  }
+ ]
+}
