@@ -99,7 +99,8 @@ STEPS = [
      (0.6, -1.0, 0.5),
      'The cartridge down onto the cradle\'s two dowels, the knurled thumbscrew up into its insert (its O-ring keeps it in '
      'the rail); the two CT plugs (2 x 3 power, 2 x 5 signal). Then the turret on its stand: 2 x Ø5 dowels, 4 x M5 x 16, '
-     'and the DT12 plug. The TPU bumper ring (5 x M3 x 20 and oversized washers on the base\'s tabs) is for the robot (v1).'),
+     'and the DT12 plug (the stand\'s two dock inserts went in from below with a flat tip, the top face on a flat plate and '
+     'the seat checked flat after; the dock adapter\'s M3s are no longer than its base + 5 mm). The TPU bumper ring (5 x M3 x 20 and oversized washers on the base\'s tabs) is for the robot (v1).'),
 ]
 
 

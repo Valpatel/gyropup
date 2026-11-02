@@ -147,6 +147,14 @@ class Inventory(unittest.TestCase):
         with self.assertRaises(inv.Stale):
             generate({'exports/turret/mount.json': [('"frame_t_above_face_mm": 86.0', '"frame_t_above_face_mm": 80.0')]})
 
+    def test_control_a_half_migrated_mount_stops_generation(self):
+        """The TM frame's key with frame T's envelope would count the plinth's 86 mm twice: generation stops."""
+        m = json.loads((inv.ROOT / 'exports/turret/mount.json').read_text())
+        dz = m['frame_t_above_face_mm']
+        low = m['envelope']['lowest_z_mm']
+        with self.assertRaises(inv.Stale):
+            generate({'exports/turret/mount.json': [(f'"lowest_z_mm": {json.dumps(low)}', f'"lowest_z_mm": {json.dumps(round(low - dz, 2))}')]})
+
     def test_control_hand_check_in_frame_t(self):
         """A hand check that still takes the lever from frame T is caught: the source line and its number."""
         d = generate({'cad/turret_studies.py': [("h_face = M['com_mm'][2] + tu.PLINTH['h']", "h_face = M['com_mm'][2]")]})

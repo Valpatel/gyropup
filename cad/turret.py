@@ -2171,8 +2171,11 @@ def main():
     cq.exporters.export(head_ring_tm(L).val(), str(out / 'head_ring_tm.step'))
     print(f'\nTURRET: {tot / 1000:.3f} kg with 30 balls ({tot_empty / 1000:.3f} kg empty): made {made_g:.0f} g, bought {bought_g:.0f} g, '
           f'not modelled {nm} g, balls 55 g')
-    print(f'  centre of mass from the mount point (pan axis on the TM face): x {com[0]:+.1f}, y {com[1]:+.1f}, z {com[2]:+.1f} mm '
-          f'(empty: {com_empty[0]:+.1f}, {com_empty[1]:+.1f}, {com_empty[2]:+.1f})')
+    # frame T's origin is the pan axis at the pan base's foot, PLINTH['h'] above the TM face (the plinth's underside, D66):
+    # the body's datum is the TM face (exports/turret/mount.json), so both are printed and written (#137)
+    print(f'  centre of mass in frame T (the pan axis at the pan base\'s foot): x {com[0]:+.1f}, y {com[1]:+.1f}, z {com[2]:+.1f} mm '
+          f'(empty: {com_empty[0]:+.1f}, {com_empty[1]:+.1f}, {com_empty[2]:+.1f}); '
+          f'{com[2] + PLINTH["h"]:.1f} mm above the TM face ({PLINTH["h"]:g} mm below frame T)')
     # tilt balance: the moving group's centre of mass about the tilt axis
     tilt_names = [n for n in T.local if T.frame[n] == 'tilt']
     tm = sum(rows[n]['mass_g'] * rows[n].get('qty', 1) for n in tilt_names if n in rows) + rows['balls_30']['mass_g']
@@ -2194,7 +2197,11 @@ def main():
     info_out = {k: v for k, v in info.items() if k != 'head_ring'}
     print('\nINFO', json.dumps(info_out, indent=None)[:1500])
     summary.update({'info': info_out, 'clashes': cl, 'gaps_under_1mm': gaps, 'mass_g_with_balls': round(tot, 1), 'mass_g_empty': round(tot_empty, 1),
-                    'com_from_mount_mm': [round(c, 1) for c in com], 'not_modelled_g': NOT_MODELLED_G,
+                    'com_frame_t_mm': [round(c, 1) for c in com],
+                    'com_from_tm_face_mm': [round(com[0], 1), round(com[1], 1), round(com[2] + PLINTH['h'], 1)],
+                    'com_frames': f"com_frame_t_mm is in frame T (the pan axis at the pan base's foot); com_from_tm_face_mm is "
+                                  f"from the pan axis on the TM face, {PLINTH['h']:g} mm lower (exports/turret/mount.json's frame, #137)",
+                    'not_modelled_g': NOT_MODELLED_G,
                     'print_hours': round(made_h, 1), 'made_g': round(made_g, 1)})
     (out / 'turret.json').write_text(json.dumps(summary, indent=1, default=str) + '\n')
     print_provenance.write_receipt(R, out,

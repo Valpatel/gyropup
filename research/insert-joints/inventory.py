@@ -610,6 +610,10 @@ def build(repo):
     if frame_dz is not None and abs(frame_dz - ph) > 0.01:
         raise Stale(f"exports/turret/mount.json: frame_t_above_face_mm {frame_dz:g} but PLINTH h {ph:g}; regenerate it")
     below_face = max(0.0, -mount['envelope']['lowest_z_mm'])        # how far the turret reaches below the file's origin
+    if frame_dz is not None and below_face > 1:
+        # half migrated: the frame key says the TM face but the envelope is still frame T's, so the 86 mm would count twice
+        raise Stale(f"exports/turret/mount.json: frame_t_above_face_mm {frame_dz:g} (the TM frame) but envelope.lowest_z_mm "
+                    f"{-below_face:g} (frame T's): the file is half migrated; regenerate it (cad/turret_mount.py)")
     tm_arm = 2 * abs(mount['tm']['bolts_mm'][0][0]) / 1000.0         # the 80 mm pattern: two bolts in tension at 80 mm (as the hand check)
     com_tm = tm_z + below_face            # the plinth's underside is the lowest point, and it sits on the riser
     tm_zT = com_tm - ph                   # the centre in frame T (the plinth's centroids below are in frame T)
@@ -1116,7 +1120,7 @@ def build(repo):
     add(id='stand.dock', assembly='turret stand', where="stand top plate underside: the dock adapter's 2 x M3", qty_robot=2,
         insert=dock_ins, d_mm=3, material='petg', infill='3 walls, 20 % gyroid',
         hole={'d': fast['M3']['insert_pilot'], 'depth': dock}, material_mm=top, axis='print-z', orientation='printed upside down',
-        screw='2 x M3 up through the adapter (drilled on arrival)', screw_side='open end', mating_hole_mm=None, tip_depth_mm=None,
+        screw='2 x M3 up through the adapter (drilled on arrival), no longer than its base + 5 mm', screw_side='open end', mating_hole_mm=None, tip_depth_mm=None,
         clamp=None, loads=[], notes=f"The {top:g} mm plate leaves {top - dock:g} mm over the {dock:g} mm pilot.",
         extra=[('pilot-fix', 'fix', f"a {dock:g} mm blind pilot takes neither M3 insert (5.7 or 4.3): use 94459A130 (4.3) in a "
                 f"{4.3 + 1.0:g} mm pilot ({top - 5.3:.1f} mm skin), or a boss under the plate for 94459A140")]

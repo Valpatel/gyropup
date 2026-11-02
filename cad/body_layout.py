@@ -279,10 +279,11 @@ def layout(cell=None):
                       'catalogue (830 g without cable)', 'deck', 'P1', 'velodyne-vlp-16', 'VLP-16 on the deck', (0.17, 0.18, 0.2),
                       cyl=(lid['x'], 0.0, lid['d'] / 2)))
     tj = json.loads((R / 'exports/turret/turret.json').read_text())
-    hz = t['com_above_face_mm']                       # the head budget: 1.70 kg with its centre 100 mm above the TM face
+    hz = t['com_above_face_mm']                       # the head's centre above the TM face: mount.json's, or the budget's 100 mm when larger
     items.append(Item('turret', (t['pan_x'] - t['bumper_r'], t['pan_x'] + t['bumper_r'], -t['bumper_r'], t['bumper_r'], t['face_z'], t['face_z'] + 2 * hz),
-                      1000.0 * t['mass_kg'], f"budget {t['mass_kg']} kg (turret.json: {tj['mass_g_with_balls'] / 1000:.3f} kg with 30 balls); "
-                      + t['mass_basis'], 'deck', 'P2', '', 'the foam-ball turret on the riser (P1: a dummy of the budget mass)',
+                      1000.0 * t['mass_kg'], f"{t['mass_basis']}; {t['mass_kg']:.3f} kg, its centre {hz:.1f} mm above the TM face "
+                      f"(turret.json: {tj['mass_g_with_balls'] / 1000:.3f} kg with 30 balls)", 'deck', 'P2', '',
+                      f"the foam-ball turret on the riser (P1: a dummy of its {t['mass_kg']:.2f} kg)",
                       (0.55, 0.57, 0.6), cyl=(t['pan_x'], 0.0, t['bumper_r'])))
     # ---------------- the battery in the belly (D65): two DCB609 packs on their rail adapters
     g = bb.geometry()

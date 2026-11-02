@@ -287,15 +287,17 @@ def main():
           '']
     # mass
     gate = g3.get('gate') or {}
+    tur = next((it for it in L['raw']['items'] if it.name == 'turret'), None)     # the head as the ledger carries it
     lv = {l['key']: l for l in (g3.get('levers') or [])}
     oc = [l for l in (g3.get('levers') or []) if l['kind'] == 'on call' and l['status'] == 'open']
     o += ['## 6. The mass gate (D71)', '',
           f"The P3 ledger is {g3.get('total_kg')} kg; with every scheduled lever {gate.get('with_scheduled_levers_kg')} kg against "
           f"D71's {gate.get('ceiling_kg')} kg ceiling (37.5 kg design mass, 18.75 kg a leg): a margin of {gate.get('margin_kg'):+.2f} kg, "
           f"{'pass' if gate.get('pass') else 'OVER'}. The wheels are D69's 10 in hub motors at the listed 3.53 kg each; the battery "
-          f"group is {(g3.get('groups_kg') or {}).get('battery')} kg (two DCB609 at DeWalt US's 1565 g each). The head is still the "
-          '1.70 kg budget: the turret as its own robot (D66) weighs 2.55 kg on its branch, which uses about 0.85 kg of the margin '
-          'when it lands. The on-call levers stay listed as margin (D71), none taken without the user\'s or the coordinator\'s word:', '',
+          f"group is {(g3.get('groups_kg') or {}).get('battery')} kg (two DCB609 at DeWalt US's 1565 g each). The head is "
+          + (f"the turret as its own robot (D66) at {tur.mass_g / 1000:.2f} kg with 30 balls ({tur.note.split(';')[0]}), "
+             f"{tur.mass_g / 1000 - 1.70:+.2f} kg on the 1.70 kg head budget" if tur is not None else 'the 1.70 kg head budget')
+          + '. The on-call levers stay listed as margin (D71), none taken without the user\'s or the coordinator\'s word:', '',
           '| # | Lever | g | Stage |', '|---|---|---|---|']
     o += [f"| {l['n']} | {l['what']} | {l['grams']} | {l['stage']} |" for l in oc]
     o += ['']
