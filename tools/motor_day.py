@@ -1013,7 +1013,7 @@ def write_doc(ctx):
     L += ['', f"**The PLA cap is {cap:.0f} N m**" if cap else '**No simulated cap keeps every row at target.**']
     if cap:
         x = der['caps'][str(cap)]
-        L[-1] += f": a {x['jump_mm']:.0f} mm hop in the model (expect less: the stand is heavier at the foot than it is massive)."
+        L[-1] += f": a {x['jump_mm']:.0f} mm hop in the model (expect less: the stand's weight at the foot is more than its inertia there)."
         nxt = [c for c in caps if float(c) > cap]
         if nxt:
             y = der['caps'][nxt[0]]
@@ -1068,7 +1068,7 @@ def write_doc(ctx):
         lad.append(('L6', 'Power cut onto the floor stop', f'{sc:.0f} N m', f'`--test power_off --cap {sc:.0f} {hm}`: let go of the pendant.',
                     'the boom lands on the floor stop, not the leg on its own stops'))
     elif dmp.get('all_ok'):
-        lad.append(('L6', 'Damped power cut (after B1)', f'{sc:.0f} N m',
+        lad.append(('L6', 'Damped power cut (skip until B1)', f'{sc:.0f} N m',
                     f'Only once B1 has measured the RS-04\'s power-off damping at or above the model\'s: '
                     f'`--test power_off_damped --cap {sc:.0f} {hm}`, let go of the pendant.',
                     'the boom lands on the floor stop, not the leg on its own stops'))
@@ -1098,8 +1098,8 @@ def write_doc(ctx):
               f"{w['target']:g} ({w['load']}). " + (
                   'With the modelled damping every row holds, so the damped cut waits for B1 to measure it. '
                   if dmp.get('all_ok') else 'Even with the modelled damping a row falls short, so no power cut is on the ladder. ')
-              + 'A pendant let go by accident at any rung is the same event: set the floor stop before every session, and '
-              'inspect the parts above after any cut.']
+              + 'A pendant let go by accident is the same event, damped by the protection `--damper 0` keeps on (by how much, '
+              'B1 says): set the floor stop before every session, and inspect the parts above after any cut.']
     L += ['', '**Stop the ladder** at any crack, whitening, click or creak, a screw\'s paint mark broken, a motor case over '
           '40 °C, or a fault. Photograph it, write it on #156. **Look first** at: the wheel link\'s hub root (where the hub '
           'leaves the link, inside the apex), the front link\'s apex ring, the upper links\' knee-eye stubs, the PLA adapters '
