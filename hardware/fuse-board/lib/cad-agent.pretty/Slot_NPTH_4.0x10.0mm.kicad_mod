@@ -1,0 +1,101 @@
+(footprint "Slot_NPTH_4.0x10.0mm"
+	(version 20241229)
+	(generator "cad-agent")
+	(layer "F.Cu")
+	(descr "non-plated slot 4 x 10 mm")
+	(tags "slot NPTH cable tie")
+	(property "Reference" "REF**"
+		(at 0 0 0)
+		(layer "F.Fab")
+		(uuid "6c33a652-cbd9-5b89-b817-04ac28f412ca")
+		(effects
+			(font
+				(size 1 1)
+				(thickness 0.15)
+			)
+		)
+	)
+	(property "Value" "Slot_NPTH_4.0x10.0mm"
+		(at 0 0 0)
+		(layer "F.Fab")
+		(hide yes)
+		(uuid "b8bab0e0-f348-5575-833b-26e4194c65c1")
+		(effects
+			(font
+				(size 1 1)
+				(thickness 0.15)
+			)
+		)
+	)
+	(property "Datasheet" ""
+		(at 0 0 0)
+		(layer "F.Fab")
+		(hide yes)
+		(uuid "57df44b5-b5f6-5f53-b7a7-a0290f8a7975")
+		(effects
+			(font
+				(size 1 1)
+				(thickness 0.15)
+			)
+		)
+	)
+	(property "Description" "non-plated slot 4 x 10 mm"
+		(at 0 0 0)
+		(layer "F.Fab")
+		(hide yes)
+		(uuid "9b5da255-2609-53ab-9333-0157d6d0cfbe")
+		(effects
+			(font
+				(size 1 1)
+				(thickness 0.15)
+			)
+		)
+	)
+	(fp_line
+		(start -2.5 -5.5)
+		(end 2.5 -5.5)
+		(stroke
+			(width 0.05)
+			(type solid)
+		)
+		(layer "F.CrtYd")
+		(uuid "acc6fe04-1739-5443-ad48-6b2cb032b761")
+	)
+	(fp_line
+		(start 2.5 -5.5)
+		(end 2.5 5.5)
+		(stroke
+			(width 0.05)
+			(type solid)
+		)
+		(layer "F.CrtYd")
+		(uuid "32fa09ce-5a7f-578e-ba3e-c12924c7ad14")
+	)
+	(fp_line
+		(start 2.5 5.5)
+		(end -2.5 5.5)
+		(stroke
+			(width 0.05)
+			(type solid)
+		)
+		(layer "F.CrtYd")
+		(uuid "b0dd7550-02cf-536a-b5ca-a048d28cbdcb")
+	)
+	(fp_line
+		(start -2.5 5.5)
+		(end -2.5 -5.5)
+		(stroke
+			(width 0.05)
+			(type solid)
+		)
+		(layer "F.CrtYd")
+		(uuid "a6acc685-9ab3-50e0-bd0e-5ddf8da5976e")
+	)
+	(pad "" np_thru_hole oval
+		(at 0 0)
+		(size 4 10)
+		(drill oval 4 10)
+		(layers "*.Cu" "*.Mask")
+		(uuid "d67ea5f5-9f44-593b-b173-bcfb49727b3f")
+	)
+)

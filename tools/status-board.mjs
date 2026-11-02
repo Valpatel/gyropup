@@ -371,14 +371,21 @@ export function collectStatus(r) {
     const analysis = r.json('hardware/fuse-board/reports/analysis.json');
     const within = analysis.branches.filter(b => b.within_ipc2221_limits).length;
     const pan = r.json('hardware/carrier-pan-protection/reports/calculations.json');
+    const models = r.json('hardware/fuse-board/reports/model-audit.json'); // cad-agent library audit: every part has a body
+    const parts = models.footprints - models.waived.length, shown = parts - models.findings.length;
     const violations = found('DRC violations'), unconnected = found('unconnected pads');
     const drcRead = Number.isFinite(violations) && Number.isFinite(unconnected); // a report the reader cannot parse is not a pass
-    panels.push({ id: 'electronics', name: 'Electronics', blurb: 'Fuse board and the turret’s power cutoff', image: { src: '/hardware/fuse-board/pictures/top.png', alt: 'The fuse board’s top side, rendered from its KiCad layout', width: 1376, height: 1208 },
+    panels.push({ id: 'electronics', name: 'Electronics', blurb: 'Fuse board and the turret’s power cutoff', image: { src: '/hardware/fuse-board/pictures/angle.png', alt: 'The fuse board in 3D, rendered from its KiCad layout with a body on every part', width: 1376, height: 1040 },
       model: null, docs: 'docs/body-fuse-board.md', records: ['hardware/fuse-board/reports', 'hardware/carrier-pan-protection/reports'], meters: [
         {
           id: 'drc', label: 'Fuse board DRC', value: drcRead ? `${violations + unconnected}` : '—', unit: drcRead ? 'violations' : 'report not read',
           state: !drcRead ? 'unknown' : violations + unconnected ? 'fail' : 'pass', bar: bar(1, [{ k: !drcRead ? 'unknown' : violations + unconnected ? 'fail' : 'pass', n: 1 }]),
           note: drcRead ? `${plural(violations, 'design-rule violation')}, ${plural(unconnected, 'unconnected pad')} (KiCad)` : 'The KiCad report’s counts could not be read', source: SOURCE('hardware/fuse-board/reports/drc.rpt'), data: { violations, unconnected },
+        },
+        {
+          id: 'bodies', label: 'Parts with a 3D body', value: `${shown} of ${parts}`, unit: 'placed parts',
+          state: models.pass ? 'pass' : 'fail', bar: bar(parts, [{ k: 'pass', n: shown }, { k: 'fail', n: parts - shown }]),
+          note: `${plural(models.waived.length, 'footprint')} with no part on it (test pads, tie slots), each with its reason`, source: SOURCE('hardware/fuse-board/reports/model-audit.json'), data: { shown, parts, waived: models.waived.length },
         },
         {
           id: 'copper', label: 'Fused branches', value: `${within} of ${analysis.branches.length}`, unit: 'within IPC-2221',

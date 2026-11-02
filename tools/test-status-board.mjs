@@ -214,6 +214,9 @@ test('wheels, rig and electronics read their records; what is not measured is gr
   assert.equal(meter(progress, 'rig', 'bench').value, String(runs.filter(r => r.meta.backend !== 'sim').length));
   const faults = Object.values(json('exports/rig/faults.json').faults);
   assert.equal(meter(progress, 'rig', 'faults').value, `${faults.filter(f => f.ok).length} of ${faults.length}`);
+  const audit = json('hardware/fuse-board/reports/model-audit.json'), parts = audit.footprints - audit.waived.length;
+  assert.equal(meter(progress, 'electronics', 'bodies').value, `${parts - audit.findings.length} of ${parts}`);
+  assert.equal(meter(progress, 'electronics', 'bodies').state, audit.pass ? 'pass' : 'fail');
   const drc = readFileSync(path.join(root, 'hardware/fuse-board/reports/drc.rpt'), 'utf8');
   const found = [...drc.matchAll(/Found (\d+) (DRC violations|unconnected pads)/g)].reduce((n, m) => n + Number(m[1]), 0);
   assert.equal(meter(progress, 'electronics', 'drc').value, String(found));
