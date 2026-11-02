@@ -54,12 +54,12 @@
      "record_layer": 0.83,
      "pla_gate_at_record_load": 1.12,
      "pla_layer_at_record_load": 1.12,
-     "load_ratio": 0.279,
-     "sf": 4.02,
+     "load_ratio": 0.308,
+     "sf": 3.63,
      "target": 2.0,
      "ok": true,
      "governed_by": "gate",
-     "load": "landing: knee 160 N against 574 N"
+     "load": "landing: hub 18 N m against 60"
     },
     {
      "part": "upper_link",
@@ -68,12 +68,12 @@
      "record_layer": 0.85,
      "pla_gate_at_record_load": 1.13,
      "pla_layer_at_record_load": 1.13,
-     "load_ratio": 0.279,
-     "sf": 4.06,
+     "load_ratio": 0.308,
+     "sf": 3.67,
      "target": 2.0,
      "ok": true,
      "governed_by": "gate",
-     "load": "landing: knee 160 N against 574 N"
+     "load": "landing: hub 18 N m against 60"
     },
     {
      "part": "upper_link",
@@ -166,12 +166,12 @@
      "record_layer": 1.34,
      "pla_gate_at_record_load": 2.21,
      "pla_layer_at_record_load": 1.85,
-     "load_ratio": 0.228,
-     "sf": 8.1,
+     "load_ratio": 0.308,
+     "sf": 5.99,
      "target": 2.0,
      "ok": true,
      "governed_by": "layer",
-     "load": "landing: hip 129 N against 565 N"
+     "load": "landing: hub 18 N m against 60"
     },
     {
      "part": "hip_frame",
@@ -208,12 +208,12 @@
      "record_layer": null,
      "pla_gate_at_record_load": 1.01,
      "pla_layer_at_record_load": null,
-     "load_ratio": 0.228,
-     "sf": 4.42,
+     "load_ratio": 0.308,
+     "sf": 3.27,
      "target": 2.0,
      "ok": true,
      "governed_by": "gate",
-     "load": "landing: hip 129 N against 565 N"
+     "load": "landing: hub 18 N m against 60"
     },
     {
      "part": "output_adapter",
@@ -247,12 +247,12 @@
      "record_layer": 0.83,
      "pla_gate_at_record_load": 1.12,
      "pla_layer_at_record_load": 1.12,
-     "load_ratio": 0.361,
-     "sf": 3.1,
+     "load_ratio": 0.393,
+     "sf": 2.85,
      "target": 2.0,
      "ok": true,
      "governed_by": "gate",
-     "load": "landing: knee 208 N against 574 N"
+     "load": "landing: hub 24 N m against 60"
     },
     {
      "part": "upper_link",
@@ -261,12 +261,12 @@
      "record_layer": 0.85,
      "pla_gate_at_record_load": 1.13,
      "pla_layer_at_record_load": 1.13,
-     "load_ratio": 0.361,
-     "sf": 3.13,
+     "load_ratio": 0.393,
+     "sf": 2.88,
      "target": 2.0,
      "ok": true,
      "governed_by": "gate",
-     "load": "landing: knee 208 N against 574 N"
+     "load": "landing: hub 24 N m against 60"
     },
     {
      "part": "upper_link",
@@ -359,12 +359,12 @@
      "record_layer": 1.34,
      "pla_gate_at_record_load": 2.21,
      "pla_layer_at_record_load": 1.85,
-     "load_ratio": 0.299,
-     "sf": 6.18,
+     "load_ratio": 0.393,
+     "sf": 4.7,
      "target": 2.0,
      "ok": true,
      "governed_by": "layer",
-     "load": "landing: hip 169 N against 565 N"
+     "load": "landing: hub 24 N m against 60"
     },
     {
      "part": "hip_frame",
@@ -401,12 +401,12 @@
      "record_layer": null,
      "pla_gate_at_record_load": 1.01,
      "pla_layer_at_record_load": null,
-     "load_ratio": 0.299,
-     "sf": 3.37,
+     "load_ratio": 0.393,
+     "sf": 2.56,
      "target": 2.0,
      "ok": true,
      "governed_by": "gate",
-     "load": "landing: hip 169 N against 565 N"
+     "load": "landing: hub 24 N m against 60"
     },
     {
      "part": "output_adapter",
@@ -440,12 +440,12 @@
      "record_layer": 0.83,
      "pla_gate_at_record_load": 1.12,
      "pla_layer_at_record_load": 1.12,
-     "load_ratio": 0.433,
-     "sf": 2.59,
+     "load_ratio": 0.478,
+     "sf": 2.34,
      "target": 2.0,
      "ok": true,
      "governed_by": "gate",
-     "load": "landing: knee 249 N against 574 N"
+     "load": "landing: hub 29 N m against 60"
     },
     {
      "part": "upper_link",
@@ -454,12 +454,12 @@
      "record_layer": 0.85,
      "pla_gate_at_record_load": 1.13,
      "pla_layer_at_record_load": 1.13,
-     "load_ratio": 0.433,
-     "sf": 2.62,
+     "load_ratio": 0.478,
+     "sf": 2.37,
      "target": 2.0,
      "ok": true,
      "governed_by": "gate",
-     "load": "landing: knee 249 N against 574 N"
+     "load": "landing: hub 29 N m against 60"
     },
     {
      "part": "upper_link",
@@ -552,12 +552,12 @@
      "record_layer": 1.34,
      "pla_gate_at_record_load": 2.21,
      "pla_layer_at_record_load": 1.85,
-     "load_ratio": 0.369,
-     "sf": 5.0,
+     "load_ratio": 0.478,
+     "sf": 3.86,
      "target": 2.0,
      "ok": true,
      "governed_by": "layer",
-     "load": "landing: hip 208 N against 565 N"
+     "load": "landing: hub 29 N m against 60"
     },
     {
      "part": "hip_frame",
@@ -594,12 +594,12 @@
      "record_layer": null,
      "pla_gate_at_record_load": 1.01,
      "pla_layer_at_record_load": null,
-     "load_ratio": 0.369,
-     "sf": 2.73,
+     "load_ratio": 0.478,
+     "sf": 2.11,
      "target": 2.0,
      "ok": true,
      "governed_by": "gate",
-     "load": "landing: hip 208 N against 565 N"
+     "load": "landing: hub 29 N m against 60"
     },
     {
      "part": "output_adapter",
@@ -633,12 +633,12 @@
      "record_layer": 0.83,
      "pla_gate_at_record_load": 1.12,
      "pla_layer_at_record_load": 1.12,
-     "load_ratio": 0.506,
-     "sf": 2.22,
+     "load_ratio": 0.555,
+     "sf": 2.02,
      "target": 2.0,
      "ok": true,
      "governed_by": "gate",
-     "load": "landing: knee 291 N against 574 N"
+     "load": "landing: hub 33 N m against 60"
     },
     {
      "part": "upper_link",
@@ -647,12 +647,12 @@
      "record_layer": 0.85,
      "pla_gate_at_record_load": 1.13,
      "pla_layer_at_record_load": 1.13,
-     "load_ratio": 0.506,
-     "sf": 2.24,
+     "load_ratio": 0.555,
+     "sf": 2.04,
      "target": 2.0,
      "ok": true,
      "governed_by": "gate",
-     "load": "landing: knee 291 N against 574 N"
+     "load": "landing: hub 33 N m against 60"
     },
     {
      "part": "upper_link",
@@ -745,12 +745,12 @@
      "record_layer": 1.34,
      "pla_gate_at_record_load": 2.21,
      "pla_layer_at_record_load": 1.85,
-     "load_ratio": 0.432,
-     "sf": 4.28,
+     "load_ratio": 0.555,
+     "sf": 3.33,
      "target": 2.0,
      "ok": true,
      "governed_by": "layer",
-     "load": "landing: hip 244 N against 565 N"
+     "load": "landing: hub 33 N m against 60"
     },
     {
      "part": "hip_frame",
@@ -787,12 +787,12 @@
      "record_layer": null,
      "pla_gate_at_record_load": 1.01,
      "pla_layer_at_record_load": null,
-     "load_ratio": 0.432,
-     "sf": 2.33,
+     "load_ratio": 0.555,
+     "sf": 1.81,
      "target": 2.0,
-     "ok": true,
+     "ok": false,
      "governed_by": "gate",
-     "load": "landing: hip 244 N against 565 N"
+     "load": "landing: hub 33 N m against 60"
     },
     {
      "part": "output_adapter",
@@ -826,12 +826,12 @@
      "record_layer": 0.83,
      "pla_gate_at_record_load": 1.12,
      "pla_layer_at_record_load": 1.12,
-     "load_ratio": 0.539,
-     "sf": 2.08,
+     "load_ratio": 0.637,
+     "sf": 1.76,
      "target": 2.0,
-     "ok": true,
+     "ok": false,
      "governed_by": "gate",
-     "load": "landing: knee 310 N against 574 N"
+     "load": "landing: hub 38 N m against 60"
     },
     {
      "part": "upper_link",
@@ -840,12 +840,12 @@
      "record_layer": 0.85,
      "pla_gate_at_record_load": 1.13,
      "pla_layer_at_record_load": 1.13,
-     "load_ratio": 0.539,
-     "sf": 2.1,
+     "load_ratio": 0.637,
+     "sf": 1.78,
      "target": 2.0,
-     "ok": true,
+     "ok": false,
      "governed_by": "gate",
-     "load": "landing: knee 310 N against 574 N"
+     "load": "landing: hub 38 N m against 60"
     },
     {
      "part": "upper_link",
@@ -938,12 +938,12 @@
      "record_layer": 1.34,
      "pla_gate_at_record_load": 2.21,
      "pla_layer_at_record_load": 1.85,
-     "load_ratio": 0.496,
-     "sf": 3.73,
+     "load_ratio": 0.637,
+     "sf": 2.9,
      "target": 2.0,
      "ok": true,
      "governed_by": "layer",
-     "load": "landing: hip 280 N against 565 N"
+     "load": "landing: hub 38 N m against 60"
     },
     {
      "part": "hip_frame",
@@ -980,12 +980,12 @@
      "record_layer": null,
      "pla_gate_at_record_load": 1.01,
      "pla_layer_at_record_load": null,
-     "load_ratio": 0.496,
-     "sf": 2.03,
+     "load_ratio": 0.637,
+     "sf": 1.58,
      "target": 2.0,
-     "ok": true,
+     "ok": false,
      "governed_by": "gate",
-     "load": "landing: hip 280 N against 565 N"
+     "load": "landing: hub 38 N m against 60"
     },
     {
      "part": "output_adapter",
@@ -1019,12 +1019,12 @@
      "record_layer": 0.83,
      "pla_gate_at_record_load": 1.12,
      "pla_layer_at_record_load": 1.12,
-     "load_ratio": 0.647,
-     "sf": 1.73,
+     "load_ratio": 0.748,
+     "sf": 1.5,
      "target": 2.0,
      "ok": false,
      "governed_by": "gate",
-     "load": "landing: knee 372 N against 574 N"
+     "load": "landing: hub 45 N m against 60"
     },
     {
      "part": "upper_link",
@@ -1033,12 +1033,12 @@
      "record_layer": 0.85,
      "pla_gate_at_record_load": 1.13,
      "pla_layer_at_record_load": 1.13,
-     "load_ratio": 0.647,
-     "sf": 1.75,
+     "load_ratio": 0.748,
+     "sf": 1.51,
      "target": 2.0,
      "ok": false,
      "governed_by": "gate",
-     "load": "landing: knee 372 N against 574 N"
+     "load": "landing: hub 45 N m against 60"
     },
     {
      "part": "upper_link",
@@ -1131,12 +1131,12 @@
      "record_layer": 1.34,
      "pla_gate_at_record_load": 2.21,
      "pla_layer_at_record_load": 1.85,
-     "load_ratio": 0.634,
-     "sf": 2.91,
+     "load_ratio": 0.748,
+     "sf": 2.47,
      "target": 2.0,
      "ok": true,
      "governed_by": "layer",
-     "load": "landing: hip 358 N against 565 N"
+     "load": "landing: hub 45 N m against 60"
     },
     {
      "part": "hip_frame",
@@ -1173,12 +1173,12 @@
      "record_layer": null,
      "pla_gate_at_record_load": 1.01,
      "pla_layer_at_record_load": null,
-     "load_ratio": 0.634,
-     "sf": 1.59,
+     "load_ratio": 0.748,
+     "sf": 1.35,
      "target": 2.0,
      "ok": false,
      "governed_by": "gate",
-     "load": "landing: hip 358 N against 565 N"
+     "load": "landing: hub 45 N m against 60"
     },
     {
      "part": "output_adapter",

@@ -263,9 +263,9 @@ Where PLA fails first, at 12 N m (the weakest rows):
 |---|---|---|---|---|---|
 | wheel_link | R1w | 2.14 | 2 | gate | landing on the wheel link: axle 753 N against 1605 N |
 | front_link | R1 | 2.87 | 2 | layer | landing: knee 160 N against 574 N |
-| upper_link | R1 | 4.02 | 2 | gate | landing: knee 160 N against 574 N |
-| upper_link | R1F | 4.06 | 2 | gate | landing: knee 160 N against 574 N |
-| output_adapter | R1 | 4.42 | 2 | gate | landing: hip 129 N against 565 N |
+| output_adapter | R1 | 3.27 | 2 | gate | landing: hub 18 N m against 60 |
+| upper_link | R1 | 3.63 | 2 | gate | landing: hub 18 N m against 60 |
+| upper_link | R1F | 3.67 | 2 | gate | landing: hub 18 N m against 60 |
 
 **A power cut onto the floor stop** (the pendant let go, on purpose or not, at the 12 N m stand):
 
@@ -311,7 +311,7 @@ flowchart LR
 | L6 | Damped power cut (skip until B1) | 12 N m | Only once B1 has measured the RS-04's power-off damping at or above the model's: `--test power_off_damped --cap 12 --damper 0 --half-mass KG`, let go of the pendant. | the boom lands on the floor stop, not the leg on its own stops |
 | L7 | Hop | 12 N m | `--test jump --cap 12 --damper 0 --half-mass KG`. | a hop of up to about 46 mm; inspect the weakest rows' corners (above) with a lamp |
 
-**No deliberate undamped power cut on PLA.** Undamped, output_adapter R1 comes to 0.9 against 1 (power cut: hip 634 N against 565 N). With the modelled damping every row holds, so the damped cut waits for B1 to measure it. A pendant let go by accident is the same event, damped by the protection `--damper 0` keeps on, but by how much only B1 says (it needs the dyno, an archived fixture: [bench tests](leg-bench-tests.md#b1-the-power-off-damping-decides-d39)). **Until then the accidental cut is the residual risk**: at worst output adapter at a factor of 0.9 (under 1: it may break). Keep a spare printed output adapter on hand, keep the clear zone, set the floor stop before every session, and inspect the parts above after any cut.
+**No deliberate undamped power cut on PLA.** Undamped, output_adapter R1 comes to 0.9 against 1 (power cut: hip 634 N against 565 N). With the modelled damping every row holds, so the damped cut waits for B1 to measure it. A pendant let go by accident is the same event, damped by the protection `--damper 0` keeps on, but by how much only B1 says (it needs the dyno, an archived fixture: [bench tests](leg-bench-tests.md#b1-the-power-off-damping-decides-d39)). **Until then the accidental cut is the residual risk**: at worst output adapter at a factor of 0.9 (under 1: it may break). Keep spare printed front links, output adapters and upper links on hand, keep the clear zone, set the floor stop before every session, and inspect the parts above after any cut.
 
 **Stop the ladder** at any crack, whitening, click or creak, a screw's paint mark broken, a motor case over 40 °C, or a fault. Photograph it, write it on #156. **Look first** at: the wheel link's hub root (where the hub leaves the link, inside the apex), the front link's apex ring, the upper links' knee-eye stubs, the PLA adapters round their dowels and screws, and the foot's spokes.
 
