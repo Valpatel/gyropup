@@ -44,7 +44,7 @@ try{
   assert.ok(await page.locator('#hero-loading').isVisible());assert.ok(await page.locator('#hero-loading button').isHidden());assert.equal(await page.locator('#robot-preview canvas').count(),0);
   assert.equal(await page.locator('.hero-loading-icon').evaluate(e=>getComputedStyle(e).animationName),'none','Reduced motion preserves static loading feedback');
   assert.ok(before.status.y>=before.poster.bottom&&before.status.bottom<=before.hero.bottom,'Status uses the caption band below the matching poster');
-  release();await ready(page);
+  release();await ready(page);await settle(page);
   const after=await layout(page);assert.deepEqual(after.scroll,before.scroll,'Loading the scene does not scroll the page');assert.deepEqual(after.hero,before.hero);assert.deepEqual(after.poster,before.poster);
   const boxes=await page.evaluate(()=>[document.querySelector('.scene-fallback'),document.querySelector('#robot-preview canvas')].map(e=>{const r=e.getBoundingClientRect();return [r.x,r.y,r.width,r.height];}));assert.deepEqual(boxes[0],boxes[1]);
   await page.evaluate(()=>{window.heroIdentity=window.__heroPreview;document.querySelector('#hero-loading button').click();});

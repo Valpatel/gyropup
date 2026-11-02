@@ -14,6 +14,7 @@ Evidence (local, Playwright 1.56.1 Chromium, with `Emulation.setCPUThrottlingRat
 
 - unthrottled: scrollY 200 → 200 across the element screenshot; the suite passes, which is why it failed only on CI;
 - throttled: scrollY 200 → 220 across the screenshot alone, with `landing.js` still held; the unmodified test then fails with exactly the CI values above;
+- throttled with scroll anchoring disabled (`overflow-anchor:none`), the same 1×1 resize still occurs but scrollY stays at 200, so scroll anchoring is what moves the page (independent review of #163);
 - the corrected test passes throttled (baseline scroll 220, hero y 10.39 before and after) and unthrottled.
 
 Correction: the same rule `tools/test-hero-preview.mjs` already follows ([earlier incident](2026-10-29-measure-handoff-after-font-and-capture-setup.md)). Font loading and the screenshot are setup; take the strict baseline after them and two rendered frames, while the module is still held. The test now also records the scroll offset and asserts it is unchanged by the scene load, so a page that scrolls itself is reported as such. Exact box equality is kept. A mutation that adds 60 px above the hero once the scene is ready still fails the test.
