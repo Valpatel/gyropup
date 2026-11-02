@@ -1,0 +1,553 @@
+{
+ "made_by": "cad/motor_day.py --slice (cadagent.slicer on Bambu Studio)",
+ "engine": {
+  "launcher": "bambu-studio",
+  "executable_sha256": "8764c3b9d3dbbc6a59a6e9de607a54cb3e7bc190d479b64548e12f7cd8bc6baf",
+  "snap_revision": "8",
+  "snap_manifest_sha256": "2427110dc3d01f9bded7f35fd5f9d0937366ddcc5defebd12b40fe37f13098a1",
+  "slicer_payload_sha256": "b7f803605b7df175570e58c994bd8bfd12467b3aa2756cce32a931c670f3e5a9"
+ },
+ "note": "slicer estimates for planning; the 3MF and STL files carry geometry only: use the recipe in prints.csv",
+ "parts": {
+  "coupon_frame_ring_nom": {
+   "file": "exports/rig/bench/coupon_frame_ring_nom.stl",
+   "sha256": "4b2b5efee4d0504ddf80f7efd25a679fca5be77d994928b1e2ff554e39d80a23",
+   "recipe": "solid",
+   "overrides": {
+    "wall_loops": "4",
+    "sparse_infill_density": "100%",
+    "sparse_infill_pattern": "zig-zag"
+   },
+   "filament": "Bambu PLA Basic @BBL P1S 0.4 nozzle",
+   "printer": "Bambu Lab P1S 0.4 nozzle",
+   "process": "0.20mm Standard @BBL X1C",
+   "grams": 201.6,
+   "minutes": 216.8,
+   "filament_m": 66.52,
+   "ok": true,
+   "error": null
+  },
+  "coupon_knee_eye_m01": {
+   "file": "exports/rig/bench/coupon_knee_eye_m01.stl",
+   "sha256": "6b6b4758e9715b86a4e0d5acc421e20e2f50da80b40e2ff558ab9de5829dc0ce",
+   "recipe": "solid",
+   "overrides": {
+    "wall_loops": "4",
+    "sparse_infill_density": "100%",
+    "sparse_infill_pattern": "zig-zag"
+   },
+   "filament": "Bambu PLA Basic @BBL P1S 0.4 nozzle",
+   "printer": "Bambu Lab P1S 0.4 nozzle",
+   "process": "0.20mm Standard @BBL X1C",
+   "grams": 28.61,
+   "minutes": 32.9,
+   "filament_m": 9.44,
+   "ok": true,
+   "error": null
+  },
+  "coupon_knee_eye_nom": {
+   "file": "exports/rig/bench/coupon_knee_eye_nom.stl",
+   "sha256": "c013d8f5ae2bdd2cc053616b8d5b770a5a74340db3e5352b8416d550b3cd6649",
+   "recipe": "solid",
+   "overrides": {
+    "wall_loops": "4",
+    "sparse_infill_density": "100%",
+    "sparse_infill_pattern": "zig-zag"
+   },
+   "filament": "Bambu PLA Basic @BBL P1S 0.4 nozzle",
+   "printer": "Bambu Lab P1S 0.4 nozzle",
+   "process": "0.20mm Standard @BBL X1C",
+   "grams": 28.54,
+   "minutes": 32.9,
+   "filament_m": 9.42,
+   "ok": true,
+   "error": null
+  },
+  "coupon_knee_eye_p01": {
+   "file": "exports/rig/bench/coupon_knee_eye_p01.stl",
+   "sha256": "ba1c05591a0e34b6d79304461c7c379d1e68ccefce662a4e9827971efca78ef2",
+   "recipe": "solid",
+   "overrides": {
+    "wall_loops": "4",
+    "sparse_infill_density": "100%",
+    "sparse_infill_pattern": "zig-zag"
+   },
+   "filament": "Bambu PLA Basic @BBL P1S 0.4 nozzle",
+   "printer": "Bambu Lab P1S 0.4 nozzle",
+   "process": "0.20mm Standard @BBL X1C",
+   "grams": 28.47,
+   "minutes": 32.7,
+   "filament_m": 9.39,
+   "ok": true,
+   "error": null
+  },
+  "coupon_frame_pins_m01": {
+   "file": "exports/rig/bench/coupon_frame_pins_m01.stl",
+   "sha256": "ebe440e05005f0d997b43e696698e156b8d09775f3b7d02de5a4badf57ac02c3",
+   "recipe": "solid",
+   "overrides": {
+    "wall_loops": "4",
+    "sparse_infill_density": "100%",
+    "sparse_infill_pattern": "zig-zag"
+   },
+   "filament": "Bambu PLA Basic @BBL P1S 0.4 nozzle",
+   "printer": "Bambu Lab P1S 0.4 nozzle",
+   "process": "0.20mm Standard @BBL X1C",
+   "grams": 32.66,
+   "minutes": 39.5,
+   "filament_m": 10.78,
+   "ok": true,
+   "error": null
+  },
+  "coupon_frame_pins_nom": {
+   "file": "exports/rig/bench/coupon_frame_pins_nom.stl",
+   "sha256": "6e8df3bffb6fc956de08bde5e5bd7e89102d3d9a6c4f2e6a57a1636bce6f67a6",
+   "recipe": "solid",
+   "overrides": {
+    "wall_loops": "4",
+    "sparse_infill_density": "100%",
+    "sparse_infill_pattern": "zig-zag"
+   },
+   "filament": "Bambu PLA Basic @BBL P1S 0.4 nozzle",
+   "printer": "Bambu Lab P1S 0.4 nozzle",
+   "process": "0.20mm Standard @BBL X1C",
+   "grams": 32.58,
+   "minutes": 39.3,
+   "filament_m": 10.75,
+   "ok": true,
+   "error": null
+  },
+  "coupon_frame_pins_p01": {
+   "file": "exports/rig/bench/coupon_frame_pins_p01.stl",
+   "sha256": "f192e5dd1813ed5b61d459d773a7544e38a19fdd35e646a984e3e4cd0ae6005a",
+   "recipe": "solid",
+   "overrides": {
+    "wall_loops": "4",
+    "sparse_infill_density": "100%",
+    "sparse_infill_pattern": "zig-zag"
+   },
+   "filament": "Bambu PLA Basic @BBL P1S 0.4 nozzle",
+   "printer": "Bambu Lab P1S 0.4 nozzle",
+   "process": "0.20mm Standard @BBL X1C",
+   "grams": 32.51,
+   "minutes": 39.4,
+   "filament_m": 10.73,
+   "ok": true,
+   "error": null
+  },
+  "coupon_knee_boss_m01": {
+   "file": "exports/rig/bench/coupon_knee_boss_m01.stl",
+   "sha256": "6de5d2b0ecb8d54a6d3ecfe5c00563e468d7f47ec559bf8a341a3262af34df37",
+   "recipe": "solid",
+   "overrides": {
+    "wall_loops": "4",
+    "sparse_infill_density": "100%",
+    "sparse_infill_pattern": "zig-zag"
+   },
+   "filament": "Bambu PLA Basic @BBL P1S 0.4 nozzle",
+   "printer": "Bambu Lab P1S 0.4 nozzle",
+   "process": "0.20mm Standard @BBL X1C",
+   "grams": 19.03,
+   "minutes": 26.6,
+   "filament_m": 6.28,
+   "ok": true,
+   "error": null
+  },
+  "coupon_knee_boss_nom": {
+   "file": "exports/rig/bench/coupon_knee_boss_nom.stl",
+   "sha256": "7738094c8e32b571f373bfd63d38bd3789fc4f8011144b4e6dc5a1499a59cc07",
+   "recipe": "solid",
+   "overrides": {
+    "wall_loops": "4",
+    "sparse_infill_density": "100%",
+    "sparse_infill_pattern": "zig-zag"
+   },
+   "filament": "Bambu PLA Basic @BBL P1S 0.4 nozzle",
+   "printer": "Bambu Lab P1S 0.4 nozzle",
+   "process": "0.20mm Standard @BBL X1C",
+   "grams": 18.95,
+   "minutes": 26.4,
+   "filament_m": 6.25,
+   "ok": true,
+   "error": null
+  },
+  "coupon_knee_boss_p01": {
+   "file": "exports/rig/bench/coupon_knee_boss_p01.stl",
+   "sha256": "c7cf4b8502f0829ba8e1134edeae5e5f3318a5e88cf2c07e928910ac28fcbc8c",
+   "recipe": "solid",
+   "overrides": {
+    "wall_loops": "4",
+    "sparse_infill_density": "100%",
+    "sparse_infill_pattern": "zig-zag"
+   },
+   "filament": "Bambu PLA Basic @BBL P1S 0.4 nozzle",
+   "printer": "Bambu Lab P1S 0.4 nozzle",
+   "process": "0.20mm Standard @BBL X1C",
+   "grams": 18.87,
+   "minutes": 26.5,
+   "filament_m": 6.23,
+   "ok": true,
+   "error": null
+  },
+  "coupon_apex_eye_m01": {
+   "file": "exports/rig/bench/coupon_apex_eye_m01.stl",
+   "sha256": "f0b05fbed77defe6bdc48a5ef90b075208b62b30d3a5d75c431eddc0b5403418",
+   "recipe": "solid",
+   "overrides": {
+    "wall_loops": "4",
+    "sparse_infill_density": "100%",
+    "sparse_infill_pattern": "zig-zag"
+   },
+   "filament": "Bambu PLA Basic @BBL P1S 0.4 nozzle",
+   "printer": "Bambu Lab P1S 0.4 nozzle",
+   "process": "0.20mm Standard @BBL X1C",
+   "grams": 28.4,
+   "minutes": 42.3,
+   "filament_m": 9.37,
+   "ok": true,
+   "error": null
+  },
+  "coupon_apex_eye_nom": {
+   "file": "exports/rig/bench/coupon_apex_eye_nom.stl",
+   "sha256": "f74f0a0c267d41329440a25db8bc1f93cf09d9d422e0cdca48e42afa40621220",
+   "recipe": "solid",
+   "overrides": {
+    "wall_loops": "4",
+    "sparse_infill_density": "100%",
+    "sparse_infill_pattern": "zig-zag"
+   },
+   "filament": "Bambu PLA Basic @BBL P1S 0.4 nozzle",
+   "printer": "Bambu Lab P1S 0.4 nozzle",
+   "process": "0.20mm Standard @BBL X1C",
+   "grams": 28.26,
+   "minutes": 42.1,
+   "filament_m": 9.33,
+   "ok": true,
+   "error": null
+  },
+  "coupon_apex_eye_p01": {
+   "file": "exports/rig/bench/coupon_apex_eye_p01.stl",
+   "sha256": "baa2d09a788156096c1b82f05ec5852395b470f18573d2adcf8230fcbe47745e",
+   "recipe": "solid",
+   "overrides": {
+    "wall_loops": "4",
+    "sparse_infill_density": "100%",
+    "sparse_infill_pattern": "zig-zag"
+   },
+   "filament": "Bambu PLA Basic @BBL P1S 0.4 nozzle",
+   "printer": "Bambu Lab P1S 0.4 nozzle",
+   "process": "0.20mm Standard @BBL X1C",
+   "grams": 28.08,
+   "minutes": 42.0,
+   "filament_m": 9.26,
+   "ok": true,
+   "error": null
+  },
+  "coupon_hub_stub_m01": {
+   "file": "exports/rig/bench/coupon_hub_stub_m01.stl",
+   "sha256": "b11fc83dec93d8bdc21e06a834bddc6c7202d9e7f1abd0bd53ac115ed09d9edf",
+   "recipe": "solid",
+   "overrides": {
+    "wall_loops": "4",
+    "sparse_infill_density": "100%",
+    "sparse_infill_pattern": "zig-zag"
+   },
+   "filament": "Bambu PLA Basic @BBL P1S 0.4 nozzle",
+   "printer": "Bambu Lab P1S 0.4 nozzle",
+   "process": "0.20mm Standard @BBL X1C",
+   "grams": 30.18,
+   "minutes": 44.0,
+   "filament_m": 9.96,
+   "ok": true,
+   "error": null
+  },
+  "coupon_hub_stub_nom": {
+   "file": "exports/rig/bench/coupon_hub_stub_nom.stl",
+   "sha256": "cb9000bed15bf80737b86414eb709953f5818179efab050bdb4fa941597e834f",
+   "recipe": "solid",
+   "overrides": {
+    "wall_loops": "4",
+    "sparse_infill_density": "100%",
+    "sparse_infill_pattern": "zig-zag"
+   },
+   "filament": "Bambu PLA Basic @BBL P1S 0.4 nozzle",
+   "printer": "Bambu Lab P1S 0.4 nozzle",
+   "process": "0.20mm Standard @BBL X1C",
+   "grams": 30.4,
+   "minutes": 44.1,
+   "filament_m": 10.03,
+   "ok": true,
+   "error": null
+  },
+  "coupon_hub_stub_p01": {
+   "file": "exports/rig/bench/coupon_hub_stub_p01.stl",
+   "sha256": "911590a56740db9355731331904cc2e6a233d2095a07b1774186bef7d908c32b",
+   "recipe": "solid",
+   "overrides": {
+    "wall_loops": "4",
+    "sparse_infill_density": "100%",
+    "sparse_infill_pattern": "zig-zag"
+   },
+   "filament": "Bambu PLA Basic @BBL P1S 0.4 nozzle",
+   "printer": "Bambu Lab P1S 0.4 nozzle",
+   "process": "0.20mm Standard @BBL X1C",
+   "grams": 30.57,
+   "minutes": 44.7,
+   "filament_m": 10.09,
+   "ok": true,
+   "error": null
+  },
+  "coupon_hub_face_m01": {
+   "file": "exports/rig/bench/coupon_hub_face_m01.stl",
+   "sha256": "51cf02a6c3db4120982ea8fa6ed60dd2847668468ba2f19a2953ee4a7831547d",
+   "recipe": "solid",
+   "overrides": {
+    "wall_loops": "4",
+    "sparse_infill_density": "100%",
+    "sparse_infill_pattern": "zig-zag"
+   },
+   "filament": "Bambu PLA Basic @BBL P1S 0.4 nozzle",
+   "printer": "Bambu Lab P1S 0.4 nozzle",
+   "process": "0.20mm Standard @BBL X1C",
+   "grams": 23.7,
+   "minutes": 32.3,
+   "filament_m": 7.82,
+   "ok": true,
+   "error": null
+  },
+  "coupon_hub_face_nom": {
+   "file": "exports/rig/bench/coupon_hub_face_nom.stl",
+   "sha256": "1af993a0c758390ba099b25b66291c09ede84f79b5c860a7965f8c6dc5258f43",
+   "recipe": "solid",
+   "overrides": {
+    "wall_loops": "4",
+    "sparse_infill_density": "100%",
+    "sparse_infill_pattern": "zig-zag"
+   },
+   "filament": "Bambu PLA Basic @BBL P1S 0.4 nozzle",
+   "printer": "Bambu Lab P1S 0.4 nozzle",
+   "process": "0.20mm Standard @BBL X1C",
+   "grams": 23.65,
+   "minutes": 32.2,
+   "filament_m": 7.8,
+   "ok": true,
+   "error": null
+  },
+  "coupon_hub_face_p01": {
+   "file": "exports/rig/bench/coupon_hub_face_p01.stl",
+   "sha256": "bdd6cff8b25fa9c4f1057de4082d6366523dabdc33c2abd1543e1c703d6e5a53",
+   "recipe": "solid",
+   "overrides": {
+    "wall_loops": "4",
+    "sparse_infill_density": "100%",
+    "sparse_infill_pattern": "zig-zag"
+   },
+   "filament": "Bambu PLA Basic @BBL P1S 0.4 nozzle",
+   "printer": "Bambu Lab P1S 0.4 nozzle",
+   "process": "0.20mm Standard @BBL X1C",
+   "grams": 23.62,
+   "minutes": 32.4,
+   "filament_m": 7.79,
+   "ok": true,
+   "error": null
+  },
+  "coupon_frame_ring_m01": {
+   "file": "exports/rig/bench/coupon_frame_ring_m01.stl",
+   "sha256": "89ab2871ca22183a225228d2569810575019bb4fd784fa886dd58609d2076f00",
+   "recipe": "solid",
+   "overrides": {
+    "wall_loops": "4",
+    "sparse_infill_density": "100%",
+    "sparse_infill_pattern": "zig-zag"
+   },
+   "filament": "Bambu PLA Basic @BBL P1S 0.4 nozzle",
+   "printer": "Bambu Lab P1S 0.4 nozzle",
+   "process": "0.20mm Standard @BBL X1C",
+   "grams": 28.85,
+   "minutes": 43.6,
+   "filament_m": 9.52,
+   "ok": true,
+   "error": null
+  },
+  "coupon_frame_ring_p01": {
+   "file": "exports/rig/bench/coupon_frame_ring_p01.stl",
+   "sha256": "214e4038d0aec49c42f8d69919bc1cb544718c4adbd75ad5f39089e9f81c0037",
+   "recipe": "solid",
+   "overrides": {
+    "wall_loops": "4",
+    "sparse_infill_density": "100%",
+    "sparse_infill_pattern": "zig-zag"
+   },
+   "filament": "Bambu PLA Basic @BBL P1S 0.4 nozzle",
+   "printer": "Bambu Lab P1S 0.4 nozzle",
+   "process": "0.20mm Standard @BBL X1C",
+   "grams": 28.53,
+   "minutes": 42.8,
+   "filament_m": 9.42,
+   "ok": true,
+   "error": null
+  },
+  "hip_frame": {
+   "file": "exports/leg/hip_frame.3mf",
+   "sha256": "edaf9bdfd4015f4aee6b388fbc7a50e39e719a86e7da5e583af5407af61cba47",
+   "recipe": "solid",
+   "overrides": {
+    "wall_loops": "4",
+    "sparse_infill_density": "100%",
+    "sparse_infill_pattern": "zig-zag"
+   },
+   "filament": "Bambu PLA Basic @BBL P1S 0.4 nozzle",
+   "printer": "Bambu Lab P1S 0.4 nozzle",
+   "process": "0.20mm Standard @BBL X1C",
+   "grams": 1261.08,
+   "minutes": 1160.5,
+   "filament_m": 416.11,
+   "ok": true,
+   "error": null
+  },
+  "upper_link": {
+   "file": "exports/leg/upper_link.3mf",
+   "sha256": "12f817b6ec899a62a933f749e6ceccc300f9b37bb6f9113517ce70c41d2ad943",
+   "recipe": "solid",
+   "overrides": {
+    "wall_loops": "4",
+    "sparse_infill_density": "100%",
+    "sparse_infill_pattern": "zig-zag"
+   },
+   "filament": "Bambu PLA Basic @BBL P1S 0.4 nozzle",
+   "printer": "Bambu Lab P1S 0.4 nozzle",
+   "process": "0.20mm Standard @BBL X1C",
+   "grams": 481.64,
+   "minutes": 424.6,
+   "filament_m": 158.92,
+   "ok": true,
+   "error": null
+  },
+  "front_link": {
+   "file": "exports/leg/front_link.3mf",
+   "sha256": "820cc786c0ab3091190ed6555acd8013a3e9e15a5ace3311e0de30f809e806b1",
+   "recipe": "solid",
+   "overrides": {
+    "wall_loops": "4",
+    "sparse_infill_density": "100%",
+    "sparse_infill_pattern": "zig-zag"
+   },
+   "filament": "Bambu PLA Basic @BBL P1S 0.4 nozzle",
+   "printer": "Bambu Lab P1S 0.4 nozzle",
+   "process": "0.20mm Standard @BBL X1C",
+   "grams": 526.09,
+   "minutes": 484.1,
+   "filament_m": 173.59,
+   "ok": true,
+   "error": null
+  },
+  "wheel_link": {
+   "file": "exports/leg/wheel_link.3mf",
+   "sha256": "361e8c17288e1610b089ab643e4ef888fb52b8588746ddab7eecc19608118b17",
+   "recipe": "solid",
+   "overrides": {
+    "wall_loops": "4",
+    "sparse_infill_density": "100%",
+    "sparse_infill_pattern": "zig-zag"
+   },
+   "filament": "Bambu PLA Basic @BBL P1S 0.4 nozzle",
+   "printer": "Bambu Lab P1S 0.4 nozzle",
+   "process": "0.20mm Standard @BBL X1C",
+   "grams": 734.13,
+   "minutes": 639.5,
+   "filament_m": 242.24,
+   "ok": true,
+   "error": null
+  },
+  "apex_spacer": {
+   "file": "exports/leg/apex_spacer.3mf",
+   "sha256": "3a4933e01db31bb0a4885a26c9c7d16bb3af62370e917499f193122837442403",
+   "recipe": "solid",
+   "overrides": {
+    "wall_loops": "4",
+    "sparse_infill_density": "100%",
+    "sparse_infill_pattern": "zig-zag"
+   },
+   "filament": "Bambu PLA Basic @BBL P1S 0.4 nozzle",
+   "printer": "Bambu Lab P1S 0.4 nozzle",
+   "process": "0.20mm Standard @BBL X1C",
+   "grams": 15.31,
+   "minutes": 15.9,
+   "filament_m": 5.05,
+   "ok": true,
+   "error": null
+  },
+  "output_adapter_pla": {
+   "file": "exports/leg/cnc/output_adapter.stl",
+   "sha256": "9bfc751e66a3b52ebe9c0ea7ab95d228a1922db1dc33e4f26e1af92259e73434",
+   "recipe": "solid",
+   "overrides": {
+    "wall_loops": "4",
+    "sparse_infill_density": "100%",
+    "sparse_infill_pattern": "zig-zag"
+   },
+   "filament": "Bambu PLA Basic @BBL P1S 0.4 nozzle",
+   "printer": "Bambu Lab P1S 0.4 nozzle",
+   "process": "0.20mm Standard @BBL X1C",
+   "grams": 69.94,
+   "minutes": 112.1,
+   "filament_m": 23.08,
+   "ok": true,
+   "error": null
+  },
+  "foot": {
+   "file": "exports/motor-day/parts/foot.stl",
+   "sha256": "62a53482cea714b01366609357d8b5abe8b022c65d4b5e591528e7616e83e1d0",
+   "recipe": "foot",
+   "overrides": {
+    "wall_loops": "6",
+    "sparse_infill_density": "40%",
+    "sparse_infill_pattern": "gyroid"
+   },
+   "filament": "Bambu PLA Basic @BBL P1S 0.4 nozzle",
+   "printer": "Bambu Lab P1S 0.4 nozzle",
+   "process": "0.20mm Standard @BBL X1C",
+   "grams": 246.45,
+   "minutes": 444.8,
+   "filament_m": 81.32,
+   "ok": true,
+   "error": null
+  },
+  "stop_sleeve": {
+   "file": "exports/leg/stop_sleeve.3mf",
+   "sha256": "f5273dcf18922b8d6ba4f15240c11d26d7c449f9997dbf282f769a379ec2be86",
+   "recipe": "tpu",
+   "overrides": {
+    "wall_loops": "4",
+    "sparse_infill_density": "100%",
+    "sparse_infill_pattern": "zig-zag"
+   },
+   "filament": "Bambu TPU 95A HF @BBL P1S",
+   "printer": "Bambu Lab P1S 0.4 nozzle",
+   "process": "0.20mm Standard @BBL X1C",
+   "grams": 15.63,
+   "minutes": 25.3,
+   "filament_m": 5.33,
+   "ok": true,
+   "error": null
+  },
+  "drill_template": {
+   "file": "exports/motor-day/parts/drill_template.stl",
+   "sha256": "442a053a13e7fee4429b1f0237057eb76ce9333dcac95f7ba7d7f7f14eb4eb2b",
+   "recipe": "jig",
+   "overrides": {
+    "wall_loops": "2",
+    "sparse_infill_density": "15%",
+    "sparse_infill_pattern": "grid"
+   },
+   "filament": "Bambu PLA Basic @BBL P1S 0.4 nozzle",
+   "printer": "Bambu Lab P1S 0.4 nozzle",
+   "process": "0.20mm Standard @BBL X1C",
+   "grams": 60.86,
+   "minutes": 60.5,
+   "filament_m": 20.08,
+   "ok": true,
+   "error": null
+  }
+ }
+}

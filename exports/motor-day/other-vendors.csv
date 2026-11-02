@@ -1,0 +1,46 @@
+group,item,qty,vendor,part_number,price_usd_each,cost_usd,when,url,note
+filament,"Bambu Lab PLA Basic, 1 kg spool",6,Bambu Lab,,14.99,89.94,Phase 1,https://us.store.bambulab.com/products/pla-basic-filament,4.69 kg sliced + 10 %
+filament,"Bambu Lab TPU 95A HF, 1 kg spool",1,Bambu Lab,,41.99,41.99,Phase 1,https://us.store.bambulab.com/products/tpu-95a-hf,0.06 kg sliced + 10 %
+leg,RobStride RS-04,2,RobStride,RS-04,255.0,,later,,in hand (arriving 2026-11-02)
+leg,ODrive Robotics BotWheel (BW0124),1,ODrive Robotics,BotWheel (BW0124),134.5,,later,,later: the printed foot stands in on day one (other vendors)
+leg,"Output adapter, machined 6061-T6 (exports/leg/cnc/output_adapter.step, README.md)",2,JLCCNC (instant price on upload),,,,order now (5-10 days),https://jlccnc.com/,replaces the PLA stand-ins before any cap above the PLA cap
+leg,"Structural epoxy, two-part, metal to plastic (D74)",1,owner's choice,,,,Phase 3,,"the stop pins, the knee-eye sleeves, the RS-04 dowels; not an anaerobic retainer on plastic"
+electronics,"DeWalt 20 V MAX dock adapter, 12 AWG leads, switch and 30 A blade fuse",2,"Amazon (CHoiKWong, sold by LIANQUAN)",ASIN B0B9NPZM3M,9.99,19.98,"Phase 4 (the pod: pendant, contactor, relay)",https://www.amazon.com/dp/B0B9NPZM3M,
+electronics,36 V 16.6 A enclosed supply,1,Bravo Electro,Mean Well LRS-600-36,61.6,61.6,Phase 0 (bench spin-up),https://www.bravoelectro.com/lrs-600-36.html,
+electronics,"Class CC time-delay fuse 30 A, 600 VAC / 300 VDC",1,Standard Electric Supply,Littelfuse KLDR030.TXP,31.7,31.7,"Phase 4 (the pod: pendant, contactor, relay)",https://www.standardelectricsupply.com/Littelfuse-KLDR030-TXP-POWR-GARD-Time-Delay-Fuse,
+electronics,"Class CC fuse holder, 1-pole, DIN rail, 600 VAC/DC",1,Galco,Littelfuse LPSC0001Z,28.99,28.99,"Phase 4 (the pod: pendant, contactor, relay)",https://www.galco.com/lpsc0001z-littelfuse.html,
+electronics,"Sealed DC contactor 100 A, 900 VDC, 12 V coil (5.5 W)",1,"TTI, Inc.",TE Kilovac LEV100A4ANG (3-1618389-7),86.64,86.64,"Phase 4 (the pod: pendant, contactor, relay)",https://www.tti.com/content/ttiinc/en/apps/part-detail.html?partsNumber=LEV100A4ANG&mfgShortname=TYC,
+electronics,"Timer relay, multifunction (off-delay with a trigger input), 0.1-10 s, 12-125 VDC / 240 VAC, 10 A",1,AutomationDirect,ProSense T2R-M1-ADJ-240U,44.5,44.5,"Phase 4 (the pod: pendant, contactor, relay)",https://www.automationdirect.com/adc/shopping/catalog/relays_-z-_timers/timer_relays/t2r-m1-adj-240u,
+electronics,"DIN-rail DC-DC, 18-75 V in, 12 V 2.5 A out",1,Bravo Electro,Mean Well DDR-30L-12,27.6,27.6,"Phase 4 (the pod: pendant, contactor, relay)",https://www.bravoelectro.com/ddr-30l-12.html,
+electronics,USB to CAN adapter (candleLight gs_usb: SocketCAN),1,BIQU Equipment,BIGTREETECH U2C V2.1 (SKU 1030000107),23.99,23.99,Phase 0 (bench spin-up),https://biqu.equipment/products/bigtreetech-ebb36-42-can-bus-u2c-v2-1-klipper-board?variant=39762747949154,US alternate: InnoMaker USB2CAN-Module (isolated) $34.99 ships from China: order the US alternate for day one
+electronics,Feather M4 CAN Express (ATSAME51),1,Adafruit,4759,24.95,24.95,"Phase 4 (the pod: pendant, contactor, relay)",https://www.adafruit.com/product/4759,
+electronics,"VL53L1X time-of-flight breakout, 30-4000 mm",1,Adafruit,3967,14.95,14.95,"Phase 4 (the pod: pendant, contactor, relay)",https://www.adafruit.com/product/3967,
+electronics,HX711 load cell amplifier,1,SparkFun,SEN-13879,4.95,4.95,"Phase 4 (the pod: pendant, contactor, relay)",https://www.sparkfun.com/products/13879,
+electronics,4 x 50 kg half-bridge load cells + HX711,1,Amazon (Geekstory),ASIN B079FTXR7Y,7.9,7.9,"Phase 4 (the pod: pendant, contactor, relay)",https://www.amazon.com/dp/B079FTXR7Y,
+electronics,"Momentary switch, 35 mm, 6 ft cord, 3.5 mm mono plug",1,AbleNet,Specs IC (10000114),75.0,75.0,"Phase 4 (the pod: pendant, contactor, relay)",https://www.ablenetinc.com/specs-ic/,
+electronics,"12 AWG silicone wire, 10 ft red + 10 ft black",1,BNTECHGO,SW12G68008F10C2,14.98,14.98,Phase 0 (bench spin-up),https://bntechgo.com/bntechgo-12-gauge-silicone-wire-kit-ultra-flexible-20-ft-black-and-red-each-color-10-ft-high-temp-200-c-600v-12-awg-silicone-wire-680-strands-of-tinned-copper-wire-stranded-wire-stranded-wire-for-model-battery/,
+electronics,"XT30 connector, male",3,RaceDayQuads,Amass XT30 (male),0.99,2.97,Phase 0 (bench spin-up),https://www.racedayquads.com/products/xt30-connector-male-or-female,
+electronics,XT60H connector,4,RaceDayQuads,Amass XT60H (male + female),0.99,3.96,"Phase 4 (the pod: pendant, contactor, relay)",https://www.racedayquads.com/products/amass-xt60h-connector-1pc-choose-your-version,
+electronics,"Shielded 22 AWG 1.5-pair data cable, 20 ft",1,AutomationDirect,Quabbin Q0357-1,21.2,21.2,Phase 0 (bench spin-up),https://www.automationdirect.com/adc/shopping/catalog/bulk_wire_-a-_cable/data_-a-_communication_cable/q0357-1,
+electronics,120 ohm 1/4 W (1000),2,"TTI, Inc.",YAGEO CFR-25JB-52-120R,0.0156,15.6,Phase 0 (bench spin-up),https://www.tti.com/content/ttiinc/en/apps/part-detail.html?partsNumber=CFR-25JB-52-120R&mfgShortname=YAG,
+electronics,Ferrule crimper + 770 ferrules (23-10 AWG),1,IWISS,HSC8 6-4-KIT,19.99,19.99,"Phase 4 (the pod: pendant, contactor, relay)",https://www.iwiss.com/products/hsc8-6-4-kit-ferrule-crimping-tool-kit-awg-23-10-self-adjustable-ratchet-ferrule-crimper-plier-c-w-770end-sleeve-ferrules-connector-terminals,
+electronics,Heat-shrink assortment,1,RaceDayQuads,Heat Shrink Tube Set (530PC),9.99,9.99,Phase 0 (bench spin-up),https://www.racedayquads.com/products/530-pcs-heat-shrink-tube-set,
+electronics,10 ohm 25 W aluminium-housed resistor (box of 10),1,"TTI, Inc.",TE HSA2510RJ,3.7,37.0,"Phase 4 (the pod: pendant, contactor, relay)",https://www.tti.com/content/ttiinc/en/apps/part-detail.html?partsNumber=HSA2510RJ&mfgShortname=TYC,
+electronics,"JST GH 1.25 mm 2-pin header, top entry (SMT)",4,LCSC,JST BM02B-GHS-TBT(LF)(SN) (LCSC C161690),0.0897,0.36,Phase 0 (bench spin-up),https://www.lcsc.com/product-detail/C161690.html,
+electronics,"Rectifier diode 1N4001 (1 A, 50 V)",2,SparkFun,COM-08589,0.25,0.5,"Phase 4 (the pod: pendant, contactor, relay)",https://www.sparkfun.com/diode-rectifier-1a-50v-1n4001.html,
+electronics,"Resistor kit 1/4 W, 500 (incl. 2.2k, 4.7k, 10k, 100k)",1,SparkFun,COM-10969,9.0,9.0,"Phase 4 (the pod: pendant, contactor, relay)",https://www.sparkfun.com/resistor-kit-1-4w-500-total.html,
+electronics,FeatherWing Proto,2,Adafruit,2884,4.95,9.9,"Phase 4 (the pod: pendant, contactor, relay)",https://www.adafruit.com/product/2884,
+electronics,Socket head screw M2.5 x 8,4,McMaster-Carr,91290A102,0.246,12.3,"Phase 4 (the pod: pendant, contactor, relay)",https://www.mcmaster.com/91290A102/,
+electronics,XT60 male panel plug (the pack's inlet),1,Maplin (UK),Amass XT60E-M,1.5,1.5,"Phase 4 (the pod: pendant, contactor, relay)",https://pro.maplin.co.uk/products/male-xt60e-panel-mount-gold-plated-connector-20a-amass,
+electronics,XT60 female panel socket (the motors' outlet),1,Jameco Electronics,Amass XT60E-F,0.95,0.95,"Phase 4 (the pod: pendant, contactor, relay)",https://www.jameco.com/z/XT60E-F-Amass-XT60-Female-Bullet-Plug-Connector-2-Position-for-RC-Battery-Panel-Mount-60A_2338319.html,
+electronics,3.5 mm panel jack,1,Master Electronics,Switchcraft 35PM2A,6.95,6.95,"Phase 4 (the pod: pendant, contactor, relay)",https://www.masterelectronics.com/en/switchcraft/35pm2a-12319088.html,
+electronics,5 x 20 mm panel fuse holder,1,Digi-Key,Littelfuse 03455LS1H,7.16,7.16,"Phase 4 (the pod: pendant, contactor, relay)",https://www.digikey.com/en/products/detail/littelfuse-inc/03455LS1H/553826,
+electronics,"5 x 20 mm fuse 5 A, DC-rated",2,Digi-Key,Littelfuse 0477005.MXP,1.0,2.0,"Phase 4 (the pod: pendant, contactor, relay)",https://www.digikey.com/en/products/detail/littelfuse-inc/0477005-MXP/1979192,
+stand (hardware store),"2x4 lumber, 8 ft (the rails, cleats, uprights, braces, floor stop)",4,any hardware store,,,,Phase 2,,straight and dry; spruce-pine-fir
+stand (hardware store),"Plywood 23/32 in, 2 x 4 ft (the end plate, the base, the stop board)",1,any hardware store,,,,Phase 2,,catalog/rig.json plywood_18
+stand (hardware store),"Carriage bolt 1/2-13 x 5 in, 2 fender washers, 1 nylon-insert nut (the pivot, each side)",2,any hardware store,,,,Phase 2,,price not checked
+stand (hardware store),"Construction screws #10 x 3 in (rails to cleats, cleats through the plate, uprights, braces)",40,any hardware store,,,,Phase 2,,price not checked
+stand (hardware store),"Rope 6 mm (1/4 in), 3 m, and a screw eye (the tether)",1,any hardware store,,,,Phase 2,,price not checked
+stand (hardware store),"Sandbags or weight plates (the stand's base, and the ballast on the end plate)",4,any hardware store,,,,Phase 2,,price not checked
+stand (hardware store),Bathroom scale (weigh the boom's end: the effective mass),1,any hardware store,,,,Phase 2,,in hand?
+stand (hardware store),Rubber mat under the foot,1,any hardware store,,,,Phase 2,,catalog/rig.json rubber_mat (Amazon)
