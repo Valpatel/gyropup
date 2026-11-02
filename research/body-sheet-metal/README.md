@@ -82,6 +82,9 @@ option ran only the cases it changes. Today was re-run on the same host as the b
   1.70 kg budget the committed record used. The deck reaches SF 1.38 and the plate's clamp zone 0.46 at a 100 mm
   centre; PR #145 finds 1.21 at the real 135 mm. **A's 1/8 in deck without the plate reaches 1.95** on the same load,
   host and mask. That is better, but still short of 2.0, so the deck's D2 fix is the CAD rebuild's to finish.
+
+<details><summary>How far to trust these numbers: D2's mask, the riveted keel, C's deflection, the mesh</summary>
+
 - A's `summary.json` names the 1.2 abuse target in its text, because `cad/body_studies.py` drops to it when the plate is gone; this study judges A's deck at 2.0, the same target as today's.
 - **Read 1.38 and 1.95 as a comparison, not as margins.** Both peaks sit 25.9 mm from a riser foot's centre, just
   outside the 25.75 mm disc the by-part rule leaves out round each foot, so the disc's size sets them as much as the
@@ -99,10 +102,13 @@ option ran only the cases it changes. Today was re-run on the same host as the b
   is 9.5×. The rivets nearest the hips take more than an even share, so the margin is lower; the rebuild would check
   them one by one.
 - **A's deck at a 3 mm mesh** reads 4.54 / 0.322 mm (front) and 6.92 / 0.197 mm (riser), against 4.31 / 0.320 and
-  6.84 / 0.197 at 4 mm, so the mesh has converged (`fea/A-mesh3`).
+  6.84 / 0.197 at 4 mm, so D1 has converged (`fea/A-mesh3`).
 - The by-part rule (`cad/body_studies.py`) judges the deck away from the rigid post pads. It counts every element below
   the deck's underside as the plate, and that includes the deck's own lips. In A's runs they stay far below yield
   (44 MPa at most).
+
+</details>
+
 
 ## PEM nuts against heat-set inserts
 
