@@ -168,12 +168,15 @@ function sheetMeter(r, files, label, what) {
   const rows = counts.reduce((n, c) => n + c.rows, 0), measured = counts.reduce((n, c) => n + c.measured, 0);
   return {
     id: 'bench', label, value: `${measured} of ${rows}`, unit: 'rows measured',
-    state: measured === rows ? 'pass' : measured ? 'warn' : 'unknown',
+    state: measured === rows ? 'pass' : measured ? 'part' : 'unknown',
     bar: bar(rows, [{ k: 'pass', n: measured }, { k: 'unknown', n: rows - measured }]),
     note: measured ? `${what}: ${rows - measured} rows still blank` : `No row filled in yet: ${what}`,
     source: SOURCE(files[0], files.length > 1 ? `${files.length} measurement sheets` : path.posix.basename(files[0])), data: { rows, measured, files },
   };
 }
+
+/** A ledger row whose basis says it was put on a scale; every other basis (CAD, catalogue, estimate) is not a weighing. */
+export const WEIGHED = /^(weighed|measured|scale)\b/i;
 
 /** `released`: true or false from a release record, or null when the subsystem has no release record. */
 function printMeter(r, file, released) {
@@ -259,7 +262,7 @@ export function collectStatus(r) {
           id: 'gates', label: 'cad-agent gates', value: `${g.pass + g.warn} of ${g.gates}`, unit: 'pass',
           state: g.fail ? 'fail' : g.warn ? 'warn' : 'pass',
           bar: bar(g.gates, [{ k: 'pass', n: g.pass }, { k: 'warn', n: g.warn }, { k: 'fail', n: g.fail }]),
-          note: `${g.warn} of the passes carry a warning; ${g.fail} to fix: ${gates.filter(x => x.status === 'fail').map(x => GATE_NAMES[x.gate] || x.gate).join(', ')}`,
+          note: `${g.warn} of the passes carry a warning; ` + (g.fail ? `${g.fail} to fix: ${gates.filter(x => x.status === 'fail').map(x => GATE_NAMES[x.gate] || x.gate).join(', ')}` : 'none to fix'),
           source: { href: '/exports/gates/', label: `${g.gates} gate records` }, data: g,
         },
         feaMeter(r, 'exports/turret/fea/summary.json', 'turret studies'),
@@ -395,7 +398,7 @@ export function collectStatus(r) {
   const fea = all.filter(m => m.id === 'fea').map(m => m.data);
   const benchRows = all.filter(m => m.id === 'bench' && m.data?.rows).reduce((a, m) => ({ rows: a.rows + m.data.rows, measured: a.measured + m.data.measured }), { rows: 0, measured: 0 });
   const summary = {
-    mass: { kg: mass.total_kg, gate: mass.budget.robot_kg, design: mass.budget.design_mass_kg, ceiling, weighed: /weigh/i.test(JSON.stringify(Object.keys(massRecord.P3))), file: 'exports/body/mass.json' },
+    mass: { kg: mass.total_kg, gate: mass.budget.robot_kg, design: mass.budget.design_mass_kg, ceiling, weighed: mass.rows.filter(row => WEIGHED.test(row.basis || '')).length, rows: mass.rows.length, file: 'exports/body/mass.json' },
     fea: { studies: fea.reduce((n, c) => n + c.studies, 0), pass: fea.reduce((n, c) => n + c.pass, 0), below: fea.reduce((n, c) => n + c.below, 0), under1: fea.reduce((n, c) => n + c.under1, 0) },
     gates: panels.find(p => p.id === 'turret').meters[0].data,
     fixes: jointCount(r.json(inventory), r.json(inventory).joints.map(j => j.assembly)).findings.fix,
@@ -407,7 +410,7 @@ export function collectStatus(r) {
 
 // --- HTML --------------------------------------------------------------------------------------------------------
 
-const STATE_WORD = { pass: 'on target', warn: 'below target', fail: 'needs a fix', unknown: 'not yet measured', note: 'noted' };
+const STATE_WORD = { pass: 'on target', warn: 'below target', part: 'being measured', fail: 'needs a fix', unknown: 'not yet measured', note: 'noted' };
 const LEGEND = [['pass', 'Meets its target'], ['note', 'Noted, no action'], ['warn', 'Below target / owner’s call'], ['fail', 'Under 1.0 / to fix'], ['unknown', 'Not yet measured']];
 
 function meterHTML(m) {
@@ -427,7 +430,7 @@ function panelHTML(p, { compact }) {
     : `<div class="sb-shot sb-noshot" role="img" aria-label="No render of this part yet"><svg viewBox="0 0 120 80" aria-hidden="true"><circle cx="60" cy="40" r="30"/><circle cx="60" cy="40" r="11"/><path d="M60 10v19M60 51v19M30 40h19M71 40h19"/></svg><span>No render yet</span></div>`;
   const gates = !compact && p.gates ? `<ul class="sb-gates" aria-label="Gate verdicts">${p.gates.map(g => `<li data-status="${g.status}"><a href="/${esc(g.file)}">${esc(g.name)}</a><span class="vh"> (${g.status === 'warn' ? 'pass, with a warning' : g.status})</span></li>`).join('')}</ul>` : '';
   const more = compact && p.meters.length > meters.length ? `<a class="sb-more" href="/designer/progress.html#board-${p.id}">${p.meters.length - meters.length} more on Progress →</a>` : '';
-  const worst = p.meters.some(m => m.state === 'fail') ? 'fail' : p.meters.some(m => m.state === 'warn') ? 'warn' : p.meters.every(m => m.state === 'unknown') ? 'unknown' : 'pass';
+  const worst = p.meters.some(m => m.state === 'fail') ? 'fail' : p.meters.some(m => m.state === 'warn') ? 'warn' : p.meters.every(m => m.state === 'unknown' || m.state === 'part') ? 'unknown' : 'pass';
   return `<article class="sb-panel" id="board-${p.id}${compact ? '-landing' : ''}" data-subsystem="${p.id}" data-state="${worst}" data-visual aria-labelledby="sb-${p.id}${compact ? '-l' : ''}">${shot}`
     + `<div class="sb-body"><header><h3 id="sb-${p.id}${compact ? '-l' : ''}"><a href="${esc(docPage(p.docs))}">${esc(p.name)}</a></h3><p class="sb-blurb">${esc(p.blurb)}</p>${when}</header>`
     + `<ul class="sb-meters">${meters.map(meterHTML).join('')}</ul>${gates}${more}</div></article>`;
@@ -441,7 +444,7 @@ export function renderBoard({ panels, summary }, { compact = false, heading = 'h
     + `<div class="sb-stat sb-mass"><p class="sb-stat-label">Robot mass, P3 ledger</p><p class="sb-stat-value"><b>${kg(s.mass.kg)}</b> kg</p>`
     + `<span class="sb-scale" aria-hidden="true"><i class="sb-fill" style="--w:${massPct(s.mass.kg)}%"></i><i class="sb-tick" style="--x:${massPct(s.mass.gate)}%"></i><i class="sb-tick is-design" style="--x:${massPct(s.mass.design)}%"></i><i class="sb-tick is-end" style="--x:100%"></i></span>`
     + `<p class="sb-ticks"><span class="is-gate">${kg(s.mass.gate)} as-built gate</span><span class="is-design">${kg(s.mass.design)} design mass</span><span class="is-end">${kg(s.mass.ceiling)} ceiling</span></p>`
-    + `<p class="sb-stat-note">${s.mass.kg <= s.mass.gate ? 'Under' : 'Over'} D71’s ${kg(s.mass.gate)} kg as-built gate; the product ceiling is ${kg(s.mass.ceiling)} kg (D72).${s.mass.weighed ? '' : ' A CAD ledger: nothing weighed yet.'}</p></div>`
+    + `<p class="sb-stat-note">${s.mass.kg <= s.mass.gate ? 'Under' : 'Over'} D71’s ${kg(s.mass.gate)} kg as-built gate; the product ceiling is ${kg(s.mass.ceiling)} kg (D72).${s.mass.weighed ? ` ${s.mass.weighed} of ${s.mass.rows} rows weighed.` : ' A CAD ledger: nothing weighed yet.'}</p></div>`
     + `<div class="sb-stat"><p class="sb-stat-label">Strength studies on target</p><p class="sb-stat-value"><b>${s.fea.pass}</b> of ${s.fea.studies}</p><span class="sb-bar" aria-hidden="true"><i data-k="pass" style="--w:${num(s.fea.pass / s.fea.studies * 100, 3)}%"></i><i data-k="warn" style="--w:${num(s.fea.below / s.fea.studies * 100, 3)}%"></i><i data-k="fail" style="--w:${num(s.fea.under1 / s.fea.studies * 100, 3)}%"></i></span><p class="sb-stat-note">${s.fea.below} below target, ${s.fea.under1} under 1.0, across the leg, turret and body.</p></div>`
     + `<div class="sb-stat"><p class="sb-stat-label">Insert-joint fixes open</p><p class="sb-stat-value"><b>${s.fixes}</b></p><p class="sb-stat-note">Clear corrections the joint inventory found; the CAD fixes clear them when they land.</p></div>`
     + `<div class="sb-stat${s.bench.measured ? '' : ' sb-unknown'}"><p class="sb-stat-label">Bench rows measured</p><p class="sb-stat-value"><b>${s.bench.measured}</b> of ${s.bench.rows}</p><span class="sb-bar" aria-hidden="true"><i data-k="pass" style="--w:${num(s.bench.measured / s.bench.rows * 100, 3)}%"></i><i data-k="unknown" style="--w:${num((s.bench.rows - s.bench.measured) / s.bench.rows * 100, 3)}%"></i></span><p class="sb-stat-note">${s.bench.measured ? `${s.bench.rows - s.bench.measured} rows of the coupon and gauge sheets still blank.` : 'Coupons and gauges are designed and sliced; no sheet has a reading yet.'}</p></div>`

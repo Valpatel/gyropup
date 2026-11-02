@@ -11,7 +11,7 @@ import { parseHTML } from 'linkedom';
 import { chromium, webkit } from '@playwright/test';
 import { createSiteServer } from './serve-site.mjs';
 import { acknowledgePrototypeNotice } from './test-prototype-session.mjs';
-import { collectStatus, createReader, docPage, measuredColumns, renderBoard, sheetCount, shortDate } from './status-board.mjs';
+import { WEIGHED, collectStatus, createReader, docPage, measuredColumns, renderBoard, sheetCount, shortDate } from './status-board.mjs';
 import { ago } from '../web/status-board.js';
 
 const root = path.resolve(import.meta.dirname, '..');
@@ -83,6 +83,12 @@ test('turret gates: one pill a verdict file, in the counts', () => {
   assert.equal(m.value, `${statuses.filter(s => s !== 'fail').length} of ${files.length}`);
   assert.equal(m.state, statuses.includes('fail') ? 'fail' : statuses.includes('warn') ? 'warn' : 'pass');
   for (const pill of pills) assert.ok(existsSync(path.join(dist, pill.querySelector('a').getAttribute('href'))), pill.textContent);
+  // With no failing gate the note says so, rather than "0 to fix: ".
+  const real = createReader(root, { git: false });
+  const clean = collectStatus({ ...real, json: p => { const v = real.json(p); return p.startsWith('exports/gates/') && v.status === 'fail' ? { ...v, status: 'pass' } : v; } });
+  const note = clean.panels.find(p => p.id === 'turret').meters.find(m => m.id === 'gates').note;
+  assert.match(note, /; none to fix$/);
+  assert.doesNotMatch(note, /0 to fix/);
 });
 
 test('insert joints: each panel counts its assemblies’ joints by verdict, and every joint is on one panel', () => {
@@ -116,6 +122,17 @@ test('mass against D71: the P3 ledger, each leg and the body and head', () => {
   const d72 = Number(readFileSync(path.join(root, 'docs/decisions.yaml'), 'utf8').match(/- id: D72\n[\s\S]*?\(([\d.]+) kg\)/)[1]);
   assert.match(text(strip), new RegExp(`ceiling is ${d72.toFixed(2)} kg \\(D72\\)`));
   assert.equal(published.summary.mass.ceiling, d72);
+  // Weighed rows are counted from each row's basis, never guessed from key names.
+  const weighed = p3.rows.filter(row => /^(weighed|measured|scale)\b/i.test(row.basis || '')).length;
+  assert.equal(published.summary.mass.weighed, weighed);
+  if (!weighed) assert.match(text(strip), /A CAD ledger: nothing weighed yet/);
+  assert.ok(WEIGHED.test('weighed on the bench scale') && !WEIGHED.test('CAD volume × density') && !WEIGHED.test('estimate (to weigh first)'));
+  const real = createReader(root, { git: false });
+  const planned = collectStatus({ ...real, json: p => { const v = real.json(p); return p === 'exports/body/mass.json' ? { ...v, P3: { ...v.P3, to_weigh_first: ['leg'] } } : v; } });
+  assert.equal(planned.summary.mass.weighed, weighed, 'a planning key does not count as a weighing');
+  const one = collectStatus({ ...real, json: p => { const v = real.json(p); return p === 'exports/body/mass.json' ? { ...v, P3: { ...v.P3, rows: v.P3.rows.map((row, i) => i ? row : { ...row, basis: 'weighed, kitchen scale' }) } } : v; } });
+  assert.equal(one.summary.mass.weighed, weighed + 1);
+  assert.match(renderBoard(one), new RegExp(`${weighed + 1} of ${p3.rows.length} rows weighed`));
   assert.equal(meter(progress, 'leg', 'mass').value, `${p3.gate.leg_each_kg} kg`);
   assert.equal(meter(progress, 'leg', 'mass').unit, `of ${p3.budget.legs_kg_each} kg`);
   assert.equal(meter(progress, 'body', 'mass').value, `${p3.body_and_head_kg} kg`);
@@ -162,6 +179,14 @@ test('measurement sheets: blank rows are "not yet measured", a filled row counts
   assert.equal(m.value, `0 of ${rows}`);
   assert.equal(m.state, 'unknown');
   assert.deepEqual(m.widths, [['unknown', 100]]);
+  // A sheet partly filled in is being measured: not green, and not "below target" either.
+  const real = createReader(root, { git: false });
+  const part = collectStatus({ ...real, text: p => { const v = real.text(p); return p === 'exports/leg/rs04-fit-job/measurements.csv' ? v.replace(/\n([^,\n]+),([^,\n]*),,/, '\n$1,$2,4.71,') : v; } });
+  const bench = part.panels.find(p => p.id === 'leg').meters.find(m => m.id === 'bench');
+  assert.equal(bench.data.measured, 1, 'the fixture fills one reading');
+  assert.equal(bench.state, 'part');
+  const html = parseHTML(`<main>${renderBoard(part)}</main>`).document.querySelector('[data-subsystem="leg"] [data-meter="bench"]');
+  assert.match(text(html.querySelector('.sb-state')), /^being measured$/);
 });
 
 test('wheels, rig and electronics read their records; what is not measured is grey', () => {

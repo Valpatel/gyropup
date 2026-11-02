@@ -76,7 +76,7 @@ a.sb-shot:hover img{transform:scale(1.04)}
 .sb-note{margin:7px 0 0;color:var(--sb-muted);font-size:12px;line-height:1.5}
 .sb-state{font-weight:700}
 .sb-meter[data-state=pass] .sb-state{color:var(--sb-pass-t)}.sb-meter[data-state=warn] .sb-state{color:var(--sb-warn-t)}
-.sb-meter[data-state=fail] .sb-state{color:var(--sb-fail-t)}.sb-meter[data-state=unknown] .sb-state{color:var(--sb-unknown-t)}
+.sb-meter[data-state=fail] .sb-state{color:var(--sb-fail-t)}.sb-meter[data-state=unknown] .sb-state{color:var(--sb-unknown-t)}.sb-meter[data-state=part] .sb-state{color:var(--sb-note-t)}
 .sb-src{white-space:nowrap;color:#285059}
 .sb-gates{display:flex;flex-wrap:wrap;gap:5px;margin:10px 0 0;padding:0;list-style:none}
 .sb-gates li{border:1px solid;border-radius:999px;font:650 11px/1.4 'Inter',system-ui,sans-serif}
