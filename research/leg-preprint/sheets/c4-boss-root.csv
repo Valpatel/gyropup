@@ -1,5 +1,5 @@
-sample,stub,load_at_first_whitening_n,load_at_failure_n,failure_plane,pin_deflection_at_1kn_mm,notes
-a,today,,,,,
-b,today,,,,,
-c,pr2,,,,,
-d,pr2,,,,,
+sample,stub,mass_dry_g,mass_conditioned_g,conditioning,load_at_first_whitening_n,load_at_failure_n,failure_plane,pin_deflection_at_1kn_mm,notes
+a,today,,,,,,,,
+b,today,,,,,,,,
+c,pr2,,,,,,,,
+d,pr2,,,,,,,,

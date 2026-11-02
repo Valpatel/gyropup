@@ -3,7 +3,7 @@ print plan, the parts list with McMaster part numbers, the mass, and a clash swe
 
     .venv/bin/python cad/build_leg.py [--no-render] [--no-clash]
 
-Writes exports/leg/: <part>.step, <part>.stl (print orientation, on z = 0), leg_stand.step (the assembled leg with the
+Writes exports/leg/: <part>.step, <part>.stl and <part>.3mf (print orientation, on z = 0), leg_stand.step (the assembled leg with the
 bought parts as envelopes: the vendor models are not redistributed), *.png, print-plan.json, bom.json, leg.json; and
 exports/leg/cnc/ for the parts machined to order (D46): <part>.step in the frame it is machined in, <part>.stl for its
 picture, README.md with the callouts the order needs beyond the STEP, cnc.json.
@@ -13,8 +13,10 @@ from __future__ import annotations
 import argparse
 import json
 import math
+import re
 import sys
 import time
+import zipfile
 from pathlib import Path
 
 import cadquery as cq
@@ -24,7 +26,7 @@ sys.path.insert(0, str(R / 'cad'))
 import fivebar as fb  # noqa: E402
 import gmi  # noqa: E402
 import printplan  # noqa: E402
-from cadagent.geometry import export_print_stl  # noqa: E402
+from cadagent.geometry import export_print_stl, flatten_to_bed  # noqa: E402
 from cadagent.robot import solid_mass_properties  # noqa: E402
 
 OUT = R / 'exports' / 'leg'
@@ -55,7 +57,7 @@ BOUGHT = [
     ('washer_m12_thin', 4, 'each side of each knee\'s bearing stack'),
     ('knee_spacer', 2, f'between each knee\'s two inner races ({fb.knee_spacer_length():g} mm)'),
     ('eye_sleeve', 4, 'steel sleeves, two end to end in each upper link\'s knee eye: spread the pin\'s load on the plastic'),
-    ('stop_pin', 4, 'stop posts: Ø16 x 40 vented pull-out dowels, 23 mm into blind holes in the hip frame (retaining compound), TPU sleeves over them'),
+    ('stop_pin', 4, 'stop posts: Ø16 x 40 vented pull-out dowels, 23 mm into blind holes in the hip frame (epoxy-bonded, D74), TPU sleeves over them'),
     ('screw_m4x20', 20, 'motor lugs (10 per motor), seats 8.5 mm down: 4.4 mm nominal penetration into 5 mm-min usable threads; measure before assembly'),
     ('dowel_5x16', 4, 'into each motor\'s two locating holes, 12 mm into the hip frame'),
     ('dowel_5x20', 4, 'two in each adapter\'s standard face, pressed 8 mm into its H7 holes, 12 mm into the upper link (issue #5)'),
@@ -63,6 +65,7 @@ BOUGHT = [
     ('screw_m5x40', 16, 'upper links onto the output adapters (8 each), heads proud'),
     ('insert_m5', 6, 'the frame\'s flange ends (the body, or the rig\'s carriage)'),
     ('screw_m6x30', 4, 'the BotWheel\'s flange, from inside the wheel link\'s hub (M6 x 40 bottoms out unless its threads are > 15 deep: measure)'),
+    ('washer_m6_din433', 4, 'under the BotWheel screws\' heads on the wheel link\'s foot (D74: spreads the clamp; 1.8 N m)'),
 ]
 
 
@@ -159,6 +162,21 @@ CNC_ORDER = {'vendor': 'JLCCNC (jlccnc.com: upload the STEP for the instant pric
                            'shipping from China is extra and takes 5-10 days'}
 
 
+def export_print_3mf(solid, path: Path, rotation=None):
+    """The part as a 3MF (mm) in the STL's print orientation on z = 0, for a slicer that starts from a 3MF. CadQuery's
+    creation-date stamp is dropped and the zip dates fixed, so an unchanged part writes the same file."""
+    s = solid if rotation is None else solid.rotate((0, 0, 0), tuple(rotation[0]), rotation[1])
+    cq.exporters.export(flatten_to_bed(s), str(path), tolerance=0.05, angularTolerance=0.12)
+    with zipfile.ZipFile(path) as z:
+        files = {n: z.read(n) for n in z.namelist()}
+    files['3D/3dmodel.model'] = re.sub(rb'<metadata name="CreationDate">[^<]*</metadata>', b'', files['3D/3dmodel.model'])
+    with zipfile.ZipFile(path, 'w') as z:
+        for n, b in files.items():
+            zi = zipfile.ZipInfo(n, date_time=(1980, 1, 1, 0, 0, 0))
+            zi.compress_type = zipfile.ZIP_DEFLATED
+            z.writestr(zi, b)
+
+
 def cnc_part(name: str, m: dict, grams: float) -> dict:
     """A part machined to order: its STEP in the frame it is machined in, an STL for its picture, and the callouts."""
     shape, spec = m['machining']
@@ -204,11 +222,12 @@ def main():
         if m.get('made') == 'cnc':                       # machined to order from its STEP: not printed
             cnc[name] = cnc_part(name, m, masses[name])
             report[name] = {'qty': m['qty'], 'material': m['material'], 'made': m['note'], 'order': cnc[name]['step']}
-            for stale in (OUT / f'{name}.step', OUT / f'{name}.stl'):
+            for stale in (OUT / f'{name}.step', OUT / f'{name}.stl', OUT / f'{name}.3mf'):
                 stale.unlink(missing_ok=True)
             continue
         cq.exporters.export(solid, str(OUT / f'{name}.step'))
         rep = export_print_stl(solid, OUT / f'{name}.stl', rotation=ROT.get(name))
+        export_print_3mf(solid, OUT / f'{name}.3mf', rotation=ROT.get(name))
         report[name] = {**rep, 'qty': m['qty'], 'material': m['material'], 'made': m['note']}
         plan[name] = printplan.row(solid, ROT.get(name), m['material'], m['qty'], masses[name], m.get('solid', True), m['note'])
     too_big = printplan.write(OUT / 'print-plan.json', plan)

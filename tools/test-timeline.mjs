@@ -52,6 +52,18 @@ test('without history the timeline says so; counts read as words', () => {
   assert.match(html, /commit\/a{40}">aaaaaaa</);
 });
 
+test('on Progress the open list ends on a picture; the text-only changes after it fold away', () => {
+  const ev = (n, image) => ({ sha: String(n).repeat(40).slice(0, 40), date: '2026-11-01T00:00:00Z', pr: n, label: `L${n}`, subsystems: [], decisions: [],
+    image: image ? { file: 'exports/x.png', before: false } : null, kinds: {} });
+  const events = [ev(1, true), ev(2, true), ev(3, false), ev(4, false), ev(5, false), ev(6, true)];
+  const open = html => html.split('<details')[0].match(/pull\/\d+/g);
+  const progress = renderTimeline(events, { show: 5, more: events.length });
+  assert.deepEqual(open(progress), ['pull/1', 'pull/2']);
+  assert.match(progress, /<summary>4 earlier changes</);
+  assert.equal(open(renderTimeline(events, { show: 4, compact: true })).length, 4, 'with nothing to fold into, the list is kept');
+  assert.equal(open(renderTimeline(events.map(e => ({ ...e, image: null })), { show: 5, more: 6 })).length, 5, 'with no pictures at all, the list is kept');
+});
+
 test('subsystems come from paths', () => {
   assert.equal(subsystemOf('cad/fivebar.py'), 'leg');
   assert.equal(subsystemOf('exports/gates/wall.json'), 'turret');

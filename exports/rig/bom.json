@@ -2892,53 +2892,6 @@
    ]
   },
   {
-   "key": "insert_m8",
-   "qty": 2,
-   "for": "B4: the M8 puller; B3: the sleeve block's stop post",
-   "name": "Heat-Set Threaded Inserts for Plastic, Standard, Brass, M8 x 1.25mm Thread Size, 12.7mm Installed Length",
-   "vendor": "McMaster-Carr",
-   "part_number": "94459A778",
-   "price_usd_each": 0.6544,
-   "pack_qty": 25,
-   "sellers": [
-    {
-     "seller": "McMaster-Carr",
-     "url": "https://www.mcmaster.com/94459A778/",
-     "seller_pn": "94459A778",
-     "price_usd": 16.36,
-     "pack_qty": 25,
-     "stock": null,
-     "in_stock": null,
-     "ships_from": null,
-     "read_on": "2026-10-26"
-    },
-    {
-     "seller": "3DJake",
-     "url": "https://www.3djake.com/cnc-kitchen/threaded-inserts-m8-standard",
-     "seller_pn": "CNC-4262391010044",
-     "price_usd": 11.180000000000001,
-     "pack_qty": 20,
-     "stock": "In stock",
-     "read_on": "2026-10-27",
-     "drop_in": false,
-     "changes": "CNC Kitchen's table gives the hole as 9.7 mm, against 9.6 mm in the CAD (0.1 mm larger). Length 12.7 mm matches. It will probably go into the existing 9.6 mm hole with slightly more interference, but that is not confirmed.",
-     "price_text": "$11.18 ($0.56 / pc), excl. VAT"
-    },
-    {
-     "seller": "ruthex",
-     "url": "https://www.ruthex.de/products/ruthex-gewindeeinsatz-m8-20-stuck-rx-m8x12-7-messing-gewindebuchsen",
-     "seller_pn": "RX-M8x12.7 (set GE-M8x127-001)",
-     "price_usd": null,
-     "pack_qty": 20,
-     "stock": "In stock",
-     "read_on": "2026-10-27",
-     "drop_in": false,
-     "changes": "Length 12.7 mm matches, but the recommended hole diameter is not in the page text (the table is an image), so the fit in a 9.6 mm hole is unverified.",
-     "price_text": "9.99 EUR / 20 pcs"
-    }
-   ]
-  },
-  {
    "key": "washer_m6_large",
    "qty": 2,
    "for": "B4: under the screw under test, over the cage's hole",
@@ -2970,41 +2923,6 @@
      "drop_in": true,
      "changes": "18-8 metric fender washer 6 mm x 18 mm OD, 1.4-1.8 mm thick (same as McMaster's DIN 9021 part); the page does not list the ID (DIN 9021 M6 is 6.4 mm)",
      "price_text": "$0.12 / ea (bag: $7.82 / 100)"
-    }
-   ]
-  },
-  {
-   "key": "washer_3_8",
-   "qty": 1,
-   "for": "B4: under the M8 screw under test",
-   "name": "Oversized washer for 3/8 in, 1.25 in OD",
-   "vendor": "McMaster-Carr",
-   "part_number": "91090A121",
-   "price_usd_each": 0.1424,
-   "pack_qty": 50,
-   "sellers": [
-    {
-     "seller": "McMaster-Carr",
-     "url": "https://www.mcmaster.com/91090A121/",
-     "seller_pn": "91090A121",
-     "price_usd": 7.12,
-     "pack_qty": 50,
-     "stock": null,
-     "in_stock": true,
-     "ships_from": "US",
-     "read_on": "2026-10-27"
-    },
-    {
-     "seller": "Bolt Depot",
-     "url": "https://boltdepot.com/Product-Details?product=2970",
-     "seller_pn": "2970",
-     "price_usd": 0.19,
-     "pack_qty": 1,
-     "stock": "no count shown; orderable (Add button, not marked 'Temporarily unavailable')",
-     "read_on": "2026-10-27",
-     "drop_in": true,
-     "changes": "Same 3/8 in zinc-plated steel fender washer, 13/32 in (0.400-0.420 in) ID x 1-1/4 in OD, ASME B18.21.1; thickness band 0.047-0.080 in vs McMaster's 0.042-0.051 in (both regular fender thickness, up to 0.7 mm thicker at worst)",
-     "price_text": "$0.19 / ea (bag: $11.63 / 100)"
     }
    ]
   },

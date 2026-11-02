@@ -16,7 +16,11 @@ before any leg part.
   bound line changes, the screen goes stale and the test fails.
 - **The print-orientation screen** is [orientation_screen.py](orientation_screen.py). It ran on the compute host and
   its output is in [evidence/](evidence/).
-- **Changes:** this PR changes no CAD. The fixes are planned for a second PR, which reruns the FEA.
+- **Changes:** the review below was written against `dev` before any fix (PR #147), and its hand-written numbers are
+  from then. [screen.md](screen.md) follows the current CAD, so on later commits it shows the fixes. What the second PR
+  changed and what its FEA rerun found are in [docs/leg-print-package.md](../../docs/leg-print-package.md). `screen.py`
+  also writes that page's two generated blocks (the summary and section 8) from the rerun's evidence, and
+  [figure.py](figure.py) draws its chart from the same rows.
 
 **What this is not:** CAD and FEA prove neither fit nor strength. The layer check is a linear, isotropic solve
 resolved on the layer plane, and its interlayer shear allowable has not been measured. The press-fit and creep
@@ -97,7 +101,8 @@ keep theirs.
 Plastic clamped under a head creeps and sheds preload. With the bolt about ten times stiffer than the plastic, every
 0.05 mm the plastic gives costs most of that step × the plastic's stiffness. The losses are tabulated in
 [screen.md](screen.md#clamped-plastic-and-preload). When humid, the modulus across the layers is 488 MPa, so the
-squeeze is large: 1.8 mm under an M5 head on the hub today, at the assumed 1,200 N. A sleeved joint loses nothing to
+squeeze is large: the prismatic screen gives 1.8 mm under an M5 head on the hub today, at the assumed 1,200 N. That is
+an upper bound, because the pressure cone VDI 2230 adds spreads the load and stiffens the plastic. A sleeved joint loses nothing to
 the plastic's creep. A clamp ring loses about 7 % per 0.05 mm, so the hub joint gets a re-torque at 24 h and after the
 first humid week, and C3 measures the real creep.
 
@@ -231,7 +236,7 @@ The undamped power cut (`power_off`) sets every R3 margin:
 
 | Joint | High-stress because | Pick | Mass a leg |
 |---|---|---|---:|
-| `leg.hip_frame_mount` | preload 1.0 × the insert's pull-out; fault 851 N against 1,500 N | sleeved M5 through-bolt, nut on a DIN 9021 washer in a pocket on the web's leg face (the washer reaches the plastic round the sleeve, so the fault tension bears on the web) | +93 g (6061 sleeves; steel +67 g more) |
+| `leg.hip_frame_mount` | fault 851 N against a 1,500 N humid pull-out estimate (0.57 ×); preload up to 1.0 × it if the cheek misses the brass face | sleeved M5 through-bolt, nut on a DIN 9021 washer in a pocket on the web's leg face (the washer reaches the plastic round the sleeve, so the fault tension bears on the web) | +93 g (6061 sleeves; steel +67 g more) |
 | `leg.upper_link_hub` | face lifts at 104 N·m against 114.6 (R1) and 188.6 (R3); 45.5 MPa under the heads | 6061 clamp ring under the 8 heads | +25 g |
 | `leg.hip_frame_lugs` | plastic limits each M4 to 565 N | crush sleeve under each head (held for #116) | +51 g |
 | `leg.knee_eye_sleeves` | stub root layer check 0.48–0.77 | keep the DIN 179 bushings; grow the stub | FEA sweep |
@@ -255,9 +260,8 @@ next to them.
 | **C3** sleeved through-bolt against a bolt on the plastic | the preload kept at 30 min, 24 h, 7 days and after a humid week; the creep step and the re-torque | [c3-through-bolt.csv](sheets/c3-through-bolt.csv) |
 | **C4** boss-root layer coupon (the knee stub), today's geometry and PR 2's | the load at which the root peels, against the FEA's prediction for the same coupon. It calibrates S_z and the unmeasured S_s | [c4-boss-root.csv](sheets/c4-boss-root.csv) |
 
-The B0 coupons need updating along with these. The `coupon_knee_boss` docstring and the bench page still describe
-the 6201, and its seat is 10 mm deep for the 12 mm-wide 6301. B4c (the M8 insert for the stop posts) is moot since
-D53. PR 2 draws C1–C4 in `cad/rig_bench.py` and packages them.
+The B0 coupons follow the leg in PR 2 (#148): the knee-boss coupon carries the 6301 at its full width. B4c (the M8 insert for the stop posts) is moot since
+D53. PR 2 (#148) draws C1–C4 in `cad/rig_bench.py`, and `c4_fea.py` predicts C4's peel load from an FEA of the coupon.
 
 **To print and test these, the owner needs:**
 
@@ -288,7 +292,10 @@ The press cage, the load cell and the pullers are B3 and B4's. No purchases have
 ## Reproduce
 
 ```bash
-python3 research/leg-preprint/screen.py           # regenerate screen.json, screen.md, sheets/
+python3 research/leg-preprint/screen.py           # regenerate screen.json, screen.md, sheets/, the print package's blocks
+python research/leg-preprint/figure.py            # docs/img/leg-print-ready-sf.png (needs matplotlib)
+# on a compute host, cad-agent v0.6.0: coupon C4's FEA (evidence/c4-fea.json)
+python research/leg-preprint/c4_fea.py --out build/c4-fea
 python3 research/leg-preprint/test_screen.py      # freshness and controls (CI: web-scene mechanism suite)
 # on a compute host (cad-remote-runs), with cad-agent v0.6.0 as the records pin:
 python research/leg-preprint/orientation_screen.py --out build/leg-preprint/orientation --mesh 4

@@ -159,9 +159,12 @@ function eventHTML(e, i) {
     + `<h3 class="tl-label">${esc(e.label)} <span class="tl-ref">${link}</span></h3>${decisions}${pictures}</div></li>`;
 }
 
-/** The timeline's HTML: the newest `show` changes; on Progress, the rest folded below. */
+/** The timeline's HTML: the newest `show` changes; on Progress, the rest folded below. Where the rest fold away, the
+ * open list ends on a change with a picture: text-only changes after the last picture go into the fold, so the open
+ * list never trails into a wall of text (tools/site-walls.mjs). */
 export function renderTimeline(events, { show = 6, more = 0, compact = false } = {}) {
   if (!events.length) return `<section id="changes" class="timeline" aria-labelledby="changes-title"><h2 id="changes-title">What changed</h2><p class="tl-empty">The change history is not available in this build.</p></section>`;
+  if (more) { const last = events.slice(0, show).findLastIndex(e => e.image); if (last >= 0) { more += show - last - 1; show = last + 1; } }
   const shown = events.slice(0, show), folded = events.slice(show, show + more);
   const span = `from ${shortDate(events.at(-1).date)} to ${shortDate(events[0].date)}`;
   return `<section id="changes" class="timeline${compact ? ' is-compact' : ''}" aria-labelledby="changes-title" data-generated="tools/timeline.mjs">`

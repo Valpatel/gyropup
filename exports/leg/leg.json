@@ -16,6 +16,13 @@
   "knee_in_deg": -97.0,
   "stop_r": 60.0,
   "stop_beta": 58.0,
+  "eye_r": 20.0,
+  "eye_stub_fillet": 7.5,
+  "apex_wall": 6.0,
+  "front_eye_fillet": 6.0,
+  "wheel_boss_fillet": 16.0,
+  "hub_root_d": 75.0,
+  "hub_root_fillet": 0.0,
   "hollow": false,
   "skin": 5.0
  },
@@ -120,15 +127,15 @@
   ]
  ],
  "mass_g": {
-  "printed": 3080,
+  "printed": 3140,
   "machined": 305,
-  "bought": 6558,
-  "total": 9943,
+  "bought": 6561,
+  "total": 10007,
   "printed_parts": {
-   "hip_frame": 1106.1,
-   "upper_link": 399.5,
-   "front_link": 463.2,
-   "wheel_link": 635.1,
+   "hip_frame": 1106.0,
+   "upper_link": 424.2,
+   "front_link": 463.1,
+   "wheel_link": 646.6,
    "apex_spacer": 13.7,
    "stop_sleeve": 15.6
   },
@@ -141,14 +148,14 @@
  },
  "print": {
   "too_big": [],
-  "hours": 204.2
+  "hours": 208.1
  },
  "clashes": [],
  "cable_route": {
   "105": [
    [
     "upper_link_rear",
-    125
+    123
    ]
   ],
   "130": [
@@ -160,41 +167,43 @@
   "170": [
    [
     "upper_link_rear",
-    125
+    123
    ]
   ],
   "220": [
    [
     "upper_link_rear",
-    124
+    122
    ]
   ],
   "270": [
    [
     "upper_link_rear",
-    123
+    122
    ]
   ],
   "320": [
    [
     "upper_link_rear",
-    120
+    119
    ]
   ],
   "370": [
    [
     "upper_link_rear",
-    114
+    113
    ]
   ],
   "390": [
    [
     "upper_link_rear",
-    109
+    107
    ]
   ]
  },
- "bought_to_source": [],
+ "bought_to_source": [
+  "washer_m6_din433"
+ ],
  "pictures": [
   "leg-stand-iso.png",
   "leg-stand-outside.png",

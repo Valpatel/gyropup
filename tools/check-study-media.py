@@ -13,9 +13,10 @@ import sys
 ROOT = Path(__file__).resolve().parents[1]
 MEDIA = 'exports/leg/fea/hip-frame-e1-media/'
 SUMMARY = 'exports/leg/fea/summary.json'
-FINER = 'research/fea-v060-29/evidence/hip-frame-v060.json'
-# The recorded E1 gate (cad-agent v0.6.0 record, issue #29) and its solved surface; review the media when they change.
-GATE_SF, VERTICES, TRIANGLES = 1.63, 25195, 50478
+FINER = 'research/leg-preprint/evidence/hip-frame-print-ready.json'
+# The recorded E1 gate (cad-agent v0.6.0, the print-ready rerun of #148, issue #29) and its solved surface; review the
+# media when they change.
+GATE_SF, VERTICES, TRIANGLES = 1.60, 25232, 50552
 
 
 def require(condition, message):

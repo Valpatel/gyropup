@@ -90,7 +90,7 @@ class Inventory(unittest.TestCase):
         d = self.doc
         self.assertIn('tm-com-budget', codes(d, 'body.riser_top_tm'))             # the owner's: 135 mm against D71's 100
         self.assertIn('pan-base-dowels', codes(d, 'turret.plinth_columns'))
-        self.assertIn('printed-clamp-crush', codes(d, 'leg.wheel_botwheel'))
+        self.assertNotIn('printed-clamp-crush', codes(d, 'leg.wheel_botwheel'))   # D74: DIN 433 washers, 1.8 N m
         self.assertIn('printed-clamp-crush', codes(d, 'leg.upper_link_hub'))
         self.assertIn('engagement-low', codes(d, 'rig.pendant_clip'))
         self.assertIn('plate-thinner-than-insert', codes(d, 'body.battery_adapter'))
@@ -229,11 +229,9 @@ class Inventory(unittest.TestCase):
 
     def test_control_a_stale_note_comes_back(self):
         """A note quoted by a finding: the finding goes when the note is fixed and returns with the stale text."""
-        self.assertIn('note-vs-joint', codes(self.doc, 'leg.wheel_botwheel'))          # the leg's: still stale
-        d = generate({'cad/fivebar.py': [('its 4 x M6 x 40', 'its 4 x M6 x 30')],
-                      'catalog/hardware.json': [("the BotWheel's stator flange, 4 x M6 from inside the wheel link (4 per leg)",
-                                                 "none on the robot now")]})
-        self.assertNotIn('note-vs-joint', codes(d, 'leg.wheel_botwheel'))
+        self.assertNotIn('note-vs-joint', codes(self.doc, 'leg.wheel_botwheel'))       # fixed on leg/print-ready (#148)
+        d = generate({'cad/fivebar.py': [('its 4 x M6 x 30', 'its 4 x M6 x 40')]})
+        self.assertIn('note-vs-joint', codes(d, 'leg.wheel_botwheel'))
         d = generate({'cad/body_shell.py': [("'PETG; four M3 x 8 into the wall\\'s nuts'", "'PETG; four M3 x 16 into the wall\\'s nuts'")]})
         self.assertIn('note-vs-joint', codes(d, 'body.printed_clamps'))
 

@@ -1,5 +1,7 @@
-sample,kind,torque_nm,preload_0_n,preload_30min_n,preload_24h_n,preload_7d_n,preload_humid_7d_n,retorque_nm,notes
-a,sleeved,,,,,,,,
-b,sleeved,,,,,,,,
-c,plastic,,,,,,,,
-d,plastic,,,,,,,,
+sample,kind,clamped_length_mm,torque_nm,preload_0_n,preload_30min_n,preload_24h_n,preload_7d_n,preload_humid_7d_n,retorque_nm,notes
+a,sleeved,,,,,,,,,
+b,sleeved,,,,,,,,,
+c,plastic,,,,,,,,,
+d,plastic,,,,,,,,,
+e,wheel,,,,,,,,,
+f,wheel,,,,,,,,,

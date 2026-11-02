@@ -2,13 +2,13 @@
   "schema_version": 1,
   "units": "mm",
   "frame": "upper-link local; x along link, y outboard, z up",
-  "source_revision": "0d6b8a32e55d3d3c253111b944ef1458ba16f49b",
+  "source_revision": "9aa076d89cb1abd56918ecd53339e6bd5e5741ce",
   "source_hashes": {
-    "cad/fivebar.py": "a484b09addf3070f638821082bf7981f62ad0541a493da7076e1f94f269b6328",
+    "cad/fivebar.py": "356fc1e55529674afd3f96d1ae2e96913c2b43058fba565b584c2c460f41f02d",
     "cad/gmi.py": "dab034a3ee939a7b5f4a6fbae5b8ba7371d2113c5380a8450733650c2d02deae",
     "cad/interfaces.json": "a4842a317dd2e64e9b4e11d34376bc36c26e1ddf8435a4b16a85dae3cd730b73",
     "catalog/interfaces.json": "3889bc34503444f389e7951d74944f37b7e57b0b2b3be68ed596b959e83a46af",
-    "catalog/hardware.json": "c60874a35ec4a9999d4cb7c0b8e081f6c972d575e64236d23752ff02f7e8ed23"
+    "catalog/hardware.json": "af0f7f3bdce4ee93649e278106d00a93fe2ebea3569c057f1d2a04fe4b360015"
   },
   "adapter_source": {
     "revision": "31908a86a782c440e47beb0f502e3ef0fd944aa2",

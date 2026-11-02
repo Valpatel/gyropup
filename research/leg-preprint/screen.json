@@ -4,7 +4,7 @@
  "status": "screen: nothing here has been printed or tested; the coupons and the proof loads decide",
  "materials": {
   "E_xy_humid": 1029.2,
-  "E_z_humid": 487.82,
+  "E_z_humid": 487.67,
   "E_xy_dry": 4430.0,
   "E_z_dry": 2170.0,
   "S_xy_dry": 102.0,
@@ -23,8 +23,8 @@
    256,
    256
   ],
-  "total_hours": 204.2,
-  "total_grams": 3079,
+  "total_hours": 208.1,
+  "total_grams": 3140,
   "parts": [
    {
     "part": "hip_frame",
@@ -40,8 +40,8 @@
     "hours_each": 72.5,
     "orientation": "DOWN_OUTER",
     "stl": {
-     "bed_cm2": 256.4,
-     "overhang_cm2": 34.8,
+     "bed_cm2": 255.3,
+     "overhang_cm2": 35.5,
      "height_mm": 81.3,
      "top_bands": [
       [
@@ -61,7 +61,7 @@
     "flags": [
      {
       "code": "supports",
-      "text": "35 cm2 of overhang steeper than 45 deg; biggest at z 6 mm (18 cm2), 8 mm (8 cm2), 23 mm (8 cm2)"
+      "text": "36 cm2 of overhang steeper than 45 deg; biggest at z 6 mm (18 cm2), 8 mm (8 cm2), 23 mm (8 cm2)"
      },
      {
       "code": "spool",
@@ -78,22 +78,26 @@
     "material": "pa6-cf",
     "qty": 2,
     "size_mm": [
-     206,
+     214,
      94,
      50
     ],
     "placement": "straight",
-    "grams_each": 400,
-    "hours_each": 26.2,
+    "grams_each": 424,
+    "hours_each": 27.8,
     "orientation": "DOWN_OUTER",
     "stl": {
-     "bed_cm2": 113.6,
-     "overhang_cm2": 4.4,
+     "bed_cm2": 120.5,
+     "overhang_cm2": 4.7,
      "height_mm": 50.0,
      "top_bands": [
       [
        6,
        4.4
+      ],
+      [
+       0,
+       0.2
       ],
       [
        40,
@@ -104,7 +108,7 @@
     "flags": [
      {
       "code": "long",
-      "text": "26 h a part: dry feed (< 20 % RH) for the whole print; the bed and enclosure at temperature throughout"
+      "text": "28 h a part: dry feed (< 20 % RH) for the whole print; the bed and enclosure at temperature throughout"
      }
     ]
    },
@@ -119,11 +123,11 @@
     ],
     "placement": "turned",
     "grams_each": 463,
-    "hours_each": 30.4,
+    "hours_each": 30.3,
     "orientation": "DOWN_INNER",
     "stl": {
-     "bed_cm2": 15.8,
-     "overhang_cm2": 154.0,
+     "bed_cm2": 14.5,
+     "overhang_cm2": 154.8,
      "height_mm": 80.0,
      "top_bands": [
       [
@@ -143,7 +147,7 @@
     "flags": [
      {
       "code": "floats",
-      "text": "more overhang (154 cm2) than bed contact (16 cm2): it stands on 16 cm2 and 141 cm2 of its underside hangs 32 mm up; it needs support under that or another orientation"
+      "text": "more overhang (155 cm2) than bed contact (15 cm2): it stands on 15 cm2 and 141 cm2 of its underside hangs 32 mm up; it needs support under that or another orientation"
      },
      {
       "code": "long",
@@ -161,12 +165,12 @@
      86
     ],
     "placement": "turned",
-    "grams_each": 635,
-    "hours_each": 41.6,
+    "grams_each": 647,
+    "hours_each": 42.4,
     "orientation": "DOWN_OUTER",
     "stl": {
-     "bed_cm2": 176.2,
-     "overhang_cm2": 20.5,
+     "bed_cm2": 175.6,
+     "overhang_cm2": 20.9,
      "height_mm": 86.0,
      "top_bands": [
       [
@@ -186,7 +190,7 @@
     "flags": [
      {
       "code": "supports",
-      "text": "20 cm2 of overhang steeper than 45 deg; biggest at z 5 mm (15 cm2), 12 mm (3 cm2), 79 mm (3 cm2)"
+      "text": "21 cm2 of overhang steeper than 45 deg; biggest at z 5 mm (15 cm2), 12 mm (3 cm2), 79 mm (3 cm2)"
      },
      {
       "code": "long",
@@ -906,7 +910,7 @@
    "high_stress": true,
    "reasons": [
     "fault tension 851 N an insert against an estimated 1500 N pull-out (SF 1.76), pulled across the layers",
-    "the assembly torque already preloads it to 1.00 x that pull-out",
+    "the assembly torque preloads it to 1.00 x that (humid) pull-out if the cheek misses the insert's brass face; with the face bearing (the inventory's condition) the preload closes through the brass",
     "the flange's layer check: R3o 0.93 against 1.0 (flange root, inner face (x 95, y -65.1)), 6 mm past the inserts' pilots"
    ],
    "options": {
@@ -917,7 +921,7 @@
     "through-bolt on the plastic": "no sleeve: the bolt precompresses the flange along its length (across the layers, the root's peel direction), but the preload creeps away (see preload)"
    },
    "pick": "sleeved through-bolt",
-   "why": "D74: the leg's primary load path and an insert at 1.0 x its pull-out at assembly torque. The sleeve keeps the preload out of the plastic; the flange root is then judged without precompression (conservative).",
+   "why": "D74: the leg's primary load path; the 851 N fault tension is 0.57 x the insert's estimated humid pull-out, with no measured spin-out or creep (and up to 1.0 x at assembly if the cheek misses the brass face). The sleeve keeps the preload out of the plastic; the flange root is then judged without precompression (conservative).",
    "pr2": "cad/fivebar.py frame_mounts(): 6 x Ø8.1 sleeve bores through the flange and web, an M5 hex pocket on the leg face; the Ø8.1 bore leaves 2.45 mm walls in the 13 mm flange, so the bolt line gets a local boss and the frame is re-run; the rig plate and the body cheek keep their Ø5.5 holes; screws M5 x ~90 (mcmaster-parts). Mass with a 6061 sleeve; a steel one adds 67 g more",
    "mass_g_per_leg": 93.0
   },
@@ -928,7 +932,7 @@
    "today": "8 x M5 x 40 into the tapped 6061 adapter, heads on 24.5 mm of PA6-CF (Ø8.5 heads, no washer); 1.5 N m puts 45.5 MPa under each head",
    "high_stress": true,
    "reasons": [
-    "the hub's edge lifts at 104 N m (at 1200 N a screw); R1 puts 114.6 and R3 188.6 N m on it",
+    "the hub's edge lifts at 104 N m (at 1200 N a screw); R1 puts 115.7 and R3 190.1 N m on it",
     "45.5 MPa under the heads against the 25 MPa sustained screen"
    ],
    "options": {
@@ -969,7 +973,7 @@
    "high_stress": true,
    "reasons": [
     "the eye stub's root: layer check E1 0.77 against 2.0 (the worst in the leg)",
-    "R3: 167.9 N m at the sleeves, 37.9 MPa on the eye (SF 1.06)"
+    "R3: 169.1 N m at the sleeves, 38.1 MPa on the eye (SF 1.05)"
    ],
    "options": {
     "metal bushing": "today's sleeves stay; the stub around them grows (diameter and root fillet) until its root passes, judged by the layer check",
@@ -1007,7 +1011,7 @@
    "reasons": [
     "the wheel link's hub root: layer check R1w 0.7 against 1.2",
     "the front link's apex ring: E1 0.71 against 2.0",
-    "bearings fine (s0 2.74 in R3)"
+    "bearings fine (s0 2.76 in R3)"
    ],
    "options": {
     "printed, bigger": "a root fillet at the Ø64 shoulder; the ring wall 6 -> 10-12 mm: lowest mass, may not reach 1.2",
@@ -1023,10 +1027,10 @@
    "id": "leg.wheel_botwheel",
    "qty_robot": 8,
    "role": "the wheel on the leg",
-   "today": "4 x M6 x 30 from inside the hub, heads on 20.8 mm of PA6-CF; 8 N m puts 150.4 MPa under each head",
+   "today": "4 x M6 x 30 from inside the hub, heads on 20.8 mm of PA6-CF; 1.8 N m puts 24.7 MPa under each head",
    "high_stress": true,
    "reasons": [
-    "needs >= 1331 N a screw; a bare head holds 1108 N at 25 MPa"
+    "needs >= 1331 N a screw; a bare head holds 1521 N at 25 MPa"
    ],
    "options": {
     "washer": "a DIN 433 washer (fits inside the Ø48 bore): 1521 N, 1.14 x the need",
@@ -1062,7 +1066,7 @@
    {
     "fit": "knee eye sleeves (2 x DIN 179 18 x 20)",
     "part": "upper_link",
-    "hole_drawn_mm": 17.96,
+    "hole_drawn_mm": 18.125,
     "mating_mm": [
      18.012,
      18.023
@@ -1070,27 +1074,27 @@
     "ring_od_mm": 39.0,
     "length_mm": 40.0,
     "interference_drawn_mm": [
-     0.052,
-     0.063
+     -0.113,
+     -0.102
     ],
     "interference_printed_mm": [
-     0.102,
-     0.263
+     -0.063,
+     0.098
     ],
     "at_max_dry": {
-     "p_mpa": 34.2,
-     "hoop_mpa": 52.7,
-     "hoop_of_S_xy_dry": 0.52,
-     "press_n": 19340.0
+     "p_mpa": 12.7,
+     "hoop_mpa": 19.6,
+     "hoop_of_S_xy_dry": 0.19,
+     "press_n": 7210.0
     },
     "at_max_humid": {
-     "p_mpa": 7.9,
-     "hoop_mpa": 12.2
+     "p_mpa": 3.0,
+     "hoop_mpa": 4.6
     },
     "grip_lost_humid": 0.77,
     "mouth_on_bed": true,
     "note": "pressed in from the outer face, which is on the bed (DOWN_OUTER)",
-    "verdict": "too tight once printed: 53 MPa hoop at the tight end (> half the dry strength); open the hole; 19 kN to press at the tight end: more than a bench vise"
+    "verdict": "7 kN to press at the tight end: more than a bench vise; from clearance to interference across the band: C1 sets the hole"
    },
    {
     "fit": "knee 6301 outer races",
@@ -1161,7 +1165,7 @@
    {
     "fit": "RS-04 dowels (2 x 5 m6)",
     "part": "hip_frame",
-    "hole_drawn_mm": 4.94,
+    "hole_drawn_mm": 5.155,
     "mating_mm": [
      5.004,
      5.012
@@ -1169,30 +1173,30 @@
     "ring_od_mm": null,
     "length_mm": 12.0,
     "interference_drawn_mm": [
-     0.064,
-     0.072
+     -0.151,
+     -0.143
     ],
     "interference_printed_mm": [
-     0.114,
-     0.272
+     -0.101,
+     0.057
     ],
     "at_max_dry": {
-     "p_mpa": 178.2,
-     "hoop_mpa": 178.2,
-     "hoop_of_S_xy_dry": 1.75,
-     "press_n": 8410.0
+     "p_mpa": 37.3,
+     "hoop_mpa": 37.3,
+     "hoop_of_S_xy_dry": 0.37,
+     "press_n": 1760.0
     },
     "at_max_humid": {
-     "p_mpa": 41.4,
-     "hoop_mpa": 41.4
+     "p_mpa": 8.7,
+     "hoop_mpa": 8.7
     },
     "grip_lost_humid": 0.77,
     "mouth_on_bed": false,
     "note": "blind from the motor side (the top as printed)",
-    "verdict": "too tight once printed: 178 MPa hoop at the tight end (> half the dry strength); open the hole; 8 kN to press at the tight end: more than a bench vise"
+    "verdict": "from clearance to interference across the band: C1 sets the hole"
    },
    {
-    "fit": "stop pins (16 x 40, retaining compound)",
+    "fit": "stop pins (16 x 40, epoxy-bonded)",
     "part": "hip_frame",
     "hole_drawn_mm": 16.1,
     "mating_mm": [
@@ -1265,15 +1269,15 @@
    },
    {
     "joint": "wheel foot, today (M6 head on the foot)",
-    "clamp": "20.8 mm of PA6-CF across its layers under 44 mm2",
+    "clamp": "20.8 mm of PA6-CF across its layers under 61 mm2",
     "k_bolt_kn_mm": 140.7,
-    "k_plastic_kn_mm": 1.04,
-    "preload_n": 1110.0,
+    "k_plastic_kn_mm": 1.43,
+    "preload_n": 1520.0,
     "stress_mpa": 25.0,
     "squeeze_mm": 1.07,
     "lost_n": {
-     "0.05": 50.0,
-     "0.2": 210.0
+     "0.05": 70.0,
+     "0.2": 280.0
     },
     "lost_frac": {
      "0.05": 0.05,
@@ -1427,11 +1431,11 @@
   ],
   "undamped_over_damped_knee": 5.6,
   "r3_knee": {
-   "bearing_s0": 1.13,
-   "pin_sf": 1.3,
-   "eye_sf": 1.06
+   "bearing_s0": 1.12,
+   "pin_sf": 1.29,
+   "eye_sf": 1.05
   },
-  "note": "every R3 margin is the undamped cut onto the stops; the rig's bumper or the measured power-off damping (B1) divides the knee load by the ratio above"
+  "note": "every R3 margin is the undamped cut onto the stops; the RS-04's power-off damping as the rig assumes it (20 % of shorted phases, not measured: B1 measures it) divides the knee load by the ratio above; no rig scenario models the bumper"
  },
  "coupons": [
   {
@@ -1439,7 +1443,7 @@
    "name": "bore and press-fit gauge",
    "prints": "one block a variant (-0.1 / 0 / +0.1 mm), PA6-CF, the leg recipe, bores vertical as in the parts, half the mouths chamfered 0.5 x 45 deg on the bed face",
    "features": "a 6301 seat (12 mm deep, Ø31 shoulder), a DIN 179 sleeve bore 40 mm long, a Ø16.1 x 23 blind stop-pin hole, two Ø4.94 x 12 dowel holes, a 61812 seat segment (10 mm)",
-   "settles": "PRINT_HOLE_ERR for this printer (the hole each fit is drawn at), the press force and the grip dry and after a humid week, elephant's foot at the mouths, retaining compound on printed bores",
+   "settles": "PRINT_HOLE_ERR for this printer (the hole each fit is drawn at), the press force and the grip dry and after a humid week, elephant's foot at the mouths, the epoxy bond in printed bores",
    "sheet": "c1-bores.csv"
   },
   {
@@ -1453,17 +1457,17 @@
   {
    "id": "C3",
    "name": "sleeved through-bolt joint, against the plastic clamp",
-   "prints": "four 13 x 40 x 60 flange blocks, layers across the bolt as in the frame",
-   "features": "two with an Ø8.1 bore and a steel sleeve flush, its nut on a DIN 9021 (Ø15) washer that reaches the plastic round the sleeve; two with an Ø5.5 bore (bolt on the plastic, a Ø15 washer); M5 8.8 through the B4 load cell; after the creep readings, pull each sleeved block apart to the fault tension (851 N) and check the washer holds it",
-   "settles": "preload kept over 30 min, 24 h, 7 days and a humid week, sleeved against plain; the creep step the preload table screens; the re-torque schedule",
+   "prints": "four 13 x 40 x 60 flange blocks, layers across the bolt as in the frame (coupon_c3_sleeved, coupon_c3_plain), and two 30 x 30 wheel-foot blocks, the 20.8 mm the BotWheel's M6 clamps (coupon_c3_wheel)",
+   "features": "two with an Ø8.1 bore and a steel sleeve flush, its nut on a DIN 9021 (Ø15) washer that reaches the plastic round the sleeve; two with an Ø5.5 bore (bolt on the plastic, a Ø15 washer); M5 8.8 through the B4 load cell; after the creep readings, load each sleeved joint in tension to the fault tension (851 N) through the load cell, the block held at its far face, and check that the washer carries it into the plastic round its pocket: the joint stays closed and the pocket does not crush. The wheel blocks: M6 x 30 on a DIN 433 at 1.8 N m with threadlocker into a 5 mm steel plate (the BotWheel's flange), through the load cell: the clamp left after creep against the 1331 N the wheel's flange needs",
+   "settles": "preload kept over 30 min, 24 h, 7 days and a humid week, sleeved against plain; the creep step the preload table screens; the re-torque schedule. A block clamps 13 mm of plastic, the frame's through-bolt about 77 mm: report the creep as mm per mm of clamped plastic and scale it to the frame (the washer's pocket and the frame's 2.45 mm walls are not in the block: B4 checks those on the frame)",
    "sheet": "c3-through-bolt.csv"
   },
   {
    "id": "C4",
    "name": "boss-root layer coupon (the knee eye's stub)",
-   "prints": "the upper link's knee end, cut 40 mm back from the knee, printed as the link (stub up); two today, two with the PR 2 stub",
-   "features": "the two DIN 179 sleeves and a Ø12 pin standing 46 mm out (the knee's lever), loaded sideways in the press cage",
-   "settles": "the load at which the stub's root peels (or the arm breaks) against the FEA's prediction for the same coupon: calibrates S_z and the unmeasured interlayer shear S_s the layer check assumes",
+   "prints": "the upper link's knee end, cut 90 mm back from the knee, printed as the link (stub up): coupon_c4_today (dev's stub) and coupon_c4_pr2 (the drawn one), two each",
+   "features": "conditioned humid before the test, as the prediction assumes (c4_fea.py uses the humid PA6-CF rows): weighed dry, then held over water (or at 70 C / 62 % RH, ISO 1110) until the mass stops rising, and weighed again; a dry coupon reads about 2 x the prediction and must not be compared with it. The two DIN 179 sleeves bonded in and the Ø12 knee pin through them; the arm's last 20 mm clamped square in the press cage; the load on the pin at the knee boss's mid-plane (26 mm past the link's outer face), in the direction c4_fea.py finds weakest",
+   "settles": "the load at which the stub's root peels (or the arm breaks) against c4_fea.py's prediction for the same coupon (docs/leg-print-package.md section 8): measured over predicted is the factor on the S_z and S_s the layer check assumes",
    "sheet": "c4-boss-root.csv"
   }
  ],
@@ -1569,9 +1573,19 @@
   },
   {
    "file": "cad/fivebar.py",
-   "pattern": "^UPPER_HUB_R, UPPER_EYE_R = [\\d.]+, ([\\d.]+)",
+   "pattern": "'eye_r': ([\\d.]+), 'eye_stub_fillet'",
    "value": 20.0,
    "lines": 1
+  },
+  {
+   "file": "cad/fivebar.py",
+   "pattern": "^PRINT_HOLE_COMP = ([\\d.]+)",
+   "value": 0.125,
+   "lines": 1
+  },
+  {
+   "file": "cad/fivebar.py",
+   "literal": "u = u.cut(ycyl(EYE_SLEEVE[0] / 2 + PRINT_HOLE_COMP / 2, eye_sleeve_end(), t + 1, l1, 0))"
   },
   {
    "file": "cad/fivebar.py",
@@ -1581,13 +1595,11 @@
   },
   {
    "file": "cad/fivebar.py",
-   "pattern": "u = u\\.cut\\(ycyl\\(EYE_SLEEVE\\[0\\] / 2 - ([\\d.]+), eye_sleeve_end\\(\\)",
-   "value": 0.02,
-   "lines": 1
+   "literal": "re, fe = P['eye_r'], P['eye_stub_fillet']"
   },
   {
    "file": "cad/fivebar.py",
-   "pattern": "ycyl\\(UPPER_EYE_R - ([\\d.]+), -EYE_BOSS, 0\\.01, l1, 0\\)",
+   "pattern": "ycyl\\(re - ([\\d.]+), -EYE_BOSS, 0\\.01, l1, 0\\)",
    "value": 0.5,
    "lines": 1
   },
@@ -1635,25 +1647,29 @@
   },
   {
    "file": "cad/fivebar.py",
-   "pattern": "r_eye = AC\\['bearing_od'\\] / 2 \\+ ([\\d.]+)",
+   "literal": "r_eye = AC['bearing_od'] / 2 + P['apex_wall']"
+  },
+  {
+   "file": "cad/fivebar.py",
+   "pattern": "'apex_wall': ([\\d.]+), 'front_eye_fillet'",
    "value": 6.0,
    "lines": 1
   },
   {
    "file": "cad/fivebar.py",
-   "pattern": "web = web\\.cut\\(ycyl\\(([\\d.]+) - [\\d.]+, yf0 - 1, yf0 \\+ [\\d.]+, x, z\\)\\)",
+   "pattern": "web = web\\.cut\\(ycyl\\(([\\d.]+) \\+ PRINT_HOLE_COMP / 2 \\+ [\\d.]+, yf0 - 1, yf0 \\+ [\\d.]+, x, z\\)\\)",
    "value": 2.5,
    "lines": 1
   },
   {
    "file": "cad/fivebar.py",
-   "pattern": "web = web\\.cut\\(ycyl\\([\\d.]+ - ([\\d.]+), yf0 - 1, yf0 \\+ [\\d.]+, x, z\\)\\)",
-   "value": 0.03,
+   "pattern": "web = web\\.cut\\(ycyl\\([\\d.]+ \\+ PRINT_HOLE_COMP / 2 \\+ ([\\d.]+), yf0 - 1, yf0 \\+ [\\d.]+, x, z\\)\\)",
+   "value": 0.015,
    "lines": 1
   },
   {
    "file": "cad/fivebar.py",
-   "pattern": "web = web\\.cut\\(ycyl\\([\\d.]+ - [\\d.]+, yf0 - 1, yf0 \\+ ([\\d.]+), x, z\\)\\)",
+   "pattern": "web = web\\.cut\\(ycyl\\([\\d.]+ \\+ PRINT_HOLE_COMP / 2 \\+ [\\d.]+, yf0 - 1, yf0 \\+ ([\\d.]+), x, z\\)\\)",
    "value": 12.0,
    "lines": 1
   },

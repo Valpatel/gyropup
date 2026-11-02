@@ -22,7 +22,7 @@ try {
  assert.equal(await page.locator('#history li').count(),progress.log.length-3);
  assert.equal(await page.locator('details.progress-fold[open]').count(),0,'Detailed reports and history start collapsed');
  assert.ok(await page.locator('#fea-media').isVisible());
- assert.match(await page.locator('#feanote').innerText(),/hip_frame E1[\s\S]*1\.63 \/ required 2 — below target/);
+ assert.match(await page.locator('#feanote').innerText(),/hip_frame E1[\s\S]*1\.6 \/ required 2 — below target/);
  const feature=await page.locator('#fea-media').boundingBox(),contextBox=await page.locator('.study-context').boundingBox();
  assert.ok(feature.y<contextBox.y,'On a phone the movie precedes its explanation');
  const portraits=[[320,568],[360,640],[375,667],[390,844],[393,852],[412,915],[414,896],[430,932],[480,960]];
