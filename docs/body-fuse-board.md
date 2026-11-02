@@ -8,9 +8,9 @@ schematic and PCB), `build.sh` (checks, fabrication files, pictures), `analysis.
 30-41 V, no charge port) and D66 (the turret on its own fused branch of the bus; one TRACO TEP 150-4812WI, 12 V
 12.5 A isolated, feeds the J501 and the 12 V rail in place of both DDR converters).
 
-![The board, top](../hardware/fuse-board/pictures/top.png)
+![The board in 3D, component side: the twelve MINI fuse holders with their fuses (yellow 20 A, green 30 A, red 10 A, brown 7.5 A; two spares empty), the M6 and M4 studs, the shunt and the INA228](../hardware/fuse-board/pictures/angle.png)
 
-![The board in 3D: every part has a body from cad-agent's parts library](../hardware/fuse-board/pictures/angle.png)
+![The board from straight above, component side: each fuse is seen end-on in its holder, coloured by rating](../hardware/fuse-board/pictures/top.png)
 
 | | |
 |---|---|
@@ -103,7 +103,7 @@ underside is at z 213.5, 39 mm above the fuses.
 
 ## 3. Layout and mounting
 
-![The board, bottom](../hardware/fuse-board/pictures/bottom.png)
+![The board's underside (solder side): only the holders' pins, the stud nuts and the bottom copper; the fuses are on the other side](../hardware/fuse-board/pictures/bottom.png)
 
 The holders stand in two rows of six across the robot, 10 mm apart, inputs toward the + bus band between the rows,
 outputs outward to a row of studs on each long edge: the four RS-04s and the two VESCs along the board's left edge
