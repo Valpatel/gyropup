@@ -17,3 +17,11 @@ counts every record again on its own and fails a board that disagrees.
 cad-agent's #179): the longest stretch of content with no image, diagram or `[data-visual]` graphic of at least
 120 x 80 px. Over 1200 px fails, except pages on `tools/wall-backlog.json`, which only shrinks. Mark `data-visual`
 only on a real drawing of data or design (a bar chart, a flow diagram), never on a text card to pass the gate.
+
+"What changed" (`tools/timeline.mjs`) is the design's history from git: each first-parent commit on the integration
+branch that changed CAD source, geometry, a render, hardware, a decision, or added a record, with git's date, the PR
+title cut to its first clause, subsystem chips from the paths, and the render it changed before and after, copied
+from git's objects to `/site/timeline/`. It sits at `<!-- timeline -->` on the landing page (newest 4) and Progress
+(newest 8, the rest folded), plus `/site/timeline.json`. `npm run test:timeline` reads git again and fails if a commit
+that touched `cad/`, `hardware/` or `docs/decisions.yaml` in the shown span is missing. Good PR titles make good
+labels: the first clause before "; " or " — " is what the timeline shows.

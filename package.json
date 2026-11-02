@@ -42,6 +42,7 @@
     "test:landing-loop": "node --test tools/test-landing-loop.mjs",
     "test:privacy": "node --test tools/test-privacy.mjs",
     "test:status-board": "node --test tools/test-status-board.mjs",
+    "test:timeline": "node --test tools/test-timeline.mjs",
     "test:walls": "node tools/test-walls.mjs"
   },
   "devDependencies": {
