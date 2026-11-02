@@ -219,7 +219,7 @@ D74's treatment for #145's 782 N: off-axis through-bolts into deck PEM nuts woul
 | Joint loads | Gyropup | the hip frame's 851 N (`research/leg-preprint/screen.md`), the riser feet's 782 N (PR #145), the rest by hand above |
 
 **Gaps found in cad-agent v0.13.0.** These belong in cad-agent and will be fixed there through its own PR flow, not in
-Gyropup. The coordinator reports that sheet-metal, PEM and rivet work is under way in cad-agent.
+Gyropup. Sheet-metal, PEM and rivet work is already under way in cad-agent.
 
 1. There are no PEM or clinch-hardware rules: hole, edge, spacing, bend distance, sheet range, installed side and load
    direction.
