@@ -55,6 +55,18 @@ PEM_DATA = {'source': 'PennEngineering bulletin CL (self-clinching nuts), Perfor
 # ISO 898-1 proof loads (N) of the class 8.8 / 12.9 screws the body uses, the limit when the load presses a PEM's
 # head into the sheet (the direction SendCutSend's page asks for: "load pulls the nut into the part")
 PROOF_N = {'M3': {'8.8': 2920, '12.9': 4380}, 'M4': {'8.8': 5100, '12.9': 7640}, 'M5': {'8.8': 8250, '12.9': 12400}}
+# The same bulletin's rule (CL-17, "DON'T"): "DON'T install screw in the head side of fastener. Install from opposite side
+# so that the fastener load is toward sheet. The clinching force is designed only to hold the fastener during handling
+# and to resist torque during assembly." So pushout and torque-out are the hold in handling and assembly; loaded the
+# right way the joint is as strong as the nut's thread or the screw. PennEngineering's "Axial Strength and Mating Screw
+# Recommended Tightening Torque" sheet (updated 10/28/21) gives the nut's minimum axial strength with a 180 ksi screw
+# and the recommended tightening torque, for unified sizes only: the nearest unified nut stands in for each metric one.
+PEM_AXIAL = {'M3': {'unified': 'S-440-0', 'min_axial_n': round(988 * 4.4482), 'torque_grade5_nm': round(8.5 * 0.11298, 2)},
+             'M4': {'unified': 'S-832-0', 'min_axial_n': round(1971 * 4.4482), 'torque_grade5_nm': round(25 * 0.11298, 2)},
+             'M5': {'unified': 'SS-024-0', 'min_axial_n': round(2239 * 4.4482), 'torque_grade5_nm': round(33 * 0.11298, 2)},
+             'source': 'PennEngineering, Axial Strength and Mating Screw Recommended Tightening Torque for PEM self-clinching '
+                       'nuts (unified; 180 ksi screw; K = 0.20), updated 10/28/21, read 2026-11-01'}
+HEADS = {'M3': (5.5, 3.4), 'M4': (7.0, 4.5), 'M5': (8.5, 5.5)}       # a washer face and clearance hole for the metal clamp
 RIVET_DATA = {'size': '1/8 in aluminium body, steel mandrel, dome head (POP AD43BS class; grip 0.126-0.187 in)',
               'shear_n': round(170 * 4.4482), 'tensile_n': round(220 * 4.4482),
               'source': 'IFI-114 (2015) minimum ultimate loads, printed in Fastener SuperStore\'s rivet catalogue page '
@@ -150,16 +162,24 @@ def joint_table() -> list:
     for thread, pem, insert in (('M3', 'S-M3-0', 'mcmaster-94459A140'), ('M4', 'S-M4-0', 'mcmaster-94459A160'),
                                 ('M5', 'SS-M5-0', 'mcmaster-94459A775')):
         for mat in ('pa6-cf20-polymaker-wet', 'petg-bambu-basic'):
-            r = ins.check_joint(insert=insert, material=mat, axis='upright', pull_n=0.0, turn_nm=0.0)
+            # a metal part clamped on the insert (a plate onto a printed boss), class 8.8 screw, a small separating load
+            # so the allowable rows are filled in; margin 2 (cad-agent's default)
+            h, cl = HEADS[thread]
+            r = ins.check_joint(insert=insert, material=mat, axis='upright', screw_class='8.8', pull_n=100.0, turn_nm=0.3,
+                                head_mm=h, clearance_mm=cl, clamped={'material': 'metal', 'thickness_mm': 3.175})
             cap = r['capacity']
+            lim = lambda name: next((c['limit'] for c in r['checks'] if c['check'] == name), None)
             rows.append({'thread': thread, 'insert': insert, 'material': mat,
                          'insert_pull_out_n': {k: round(v) for k, v in cap['pull_out'].items()},
                          'insert_torque_out_nm': {k: round(v, 2) for k, v in cap['torque_out'].items()},
-                         'insert_allowable_pull_n': next((c['limit'] for c in r['checks'] if c['check'] == 'pull-out'), None),
-                         'insert_allowable_torque_nm': next((c['limit'] for c in r['checks'] if c['check'] == 'torque-out'), None),
-                         'insert_margin': r['margin'],
+                         'insert_allowable_pull_n': round(lim('pull-out')), 'insert_allowable_turn_nm': round(lim('torque-out'), 2),
+                         'insert_tighten_nm': round(r['torque']['allowed_nm'], 2), 'insert_tighten_governed_by': r['torque']['governed_by'],
+                         'insert_preload_n': {k: round(v) for k, v in r['torque']['preload_n'].items()},
+                         'insert_verdict': r['verdict'], 'insert_margin': r['margin'],
                          'pem': pem, 'pem_pushout_n': PEM_DATA[pem]['pushout_n'], 'pem_torque_out_nm': PEM_DATA[pem]['torque_out_nm'],
-                         'pem_head_side_n': PROOF_N[thread]['8.8']})
+                         'pem_axial_min_n': PEM_AXIAL[thread]['min_axial_n'], 'pem_axial_unified': PEM_AXIAL[thread]['unified'],
+                         'pem_tighten_grade5_nm': PEM_AXIAL[thread]['torque_grade5_nm'],
+                         'screw_8_8_proof_n': PROOF_N[thread]['8.8']})
     return rows
 
 
@@ -168,6 +188,17 @@ def joint_table() -> list:
 def printed_today() -> dict:
     pp = json.loads((R / 'exports/body/print-plan.json').read_text())
     return {k: {'qty': v['qty'], 'grams': v['grams'], 'hours': v['hours'], 'material': v['material']} for k, v in pp['parts'].items()}
+
+
+RIVET_USD_EST = 0.12     # an estimate, not a quote: 1/8 in aluminium / steel blind rivets sell in 100s at about this price
+                         # each (distributors' pages could not be read by script on 2026-11-01); a hand riveter is ~$25 once
+
+
+def usd_per_g(material) -> float:
+    """The print plan's own filament price (exports/body/print-plan.json by_material: cost / grams)."""
+    pp = json.loads((R / 'exports/body/print-plan.json').read_text())['by_material']
+    m = pp.get(material) or pp['pa6-cf']
+    return m['cost_usd'] / m['grams']
 
 
 def pa6_rate_g_per_h() -> float:
@@ -304,6 +335,10 @@ def main():
                         'build_steps': build_steps(sheet, fast, prin)}}
         s = opts[opt]['summary']
         s['frame_mass_g'] = s['sheet_mass_g'] + s['printed_g']
+        s['printed_usd'] = round(sum(v['grams'] * usd_per_g(v['material']) for v in prin.values()), 2)
+        s['rivets_usd_est'] = round(fast.get('rivet_1_8', 0) * RIVET_USD_EST, 2)
+        if s['sheet_usd'] is not None:
+            s['total_usd'] = round(s['sheet_usd'] + s['printed_usd'] + s['rivets_usd_est'], 2)
     checks = {}
     for opt, ps in P.options().items():
         for name, sp in ps.items():
@@ -323,7 +358,7 @@ def main():
                       'hardware_setup_usd': round(g('probe_4pem') - g('probe_flat') - 4 * per, 2),
                       'two_bends_usd': round(g('probe_2b') - g('probe_flat'), 2), 'read_on': pr['probe_flat']['read_on']}
     out = {'issue': 155, 'toolkit': {'cad_agent': 'v0.13.0', 'commit': sha[:7]}, 'pa6_rate_g_per_h': round(rate, 1),
-           'options': opts, 'checks': checks, 'joints': joint_table(), 'pem_data': PEM_DATA, 'rivet': RIVET_DATA,
+           'options': opts, 'checks': checks, 'joints': joint_table(), 'pem_data': PEM_DATA, 'pem_axial': PEM_AXIAL, 'rivet': RIVET_DATA,
            'scs_price_probes': probes, 'fea': fea_rows()}
     OUT.write_text(json.dumps(out, indent=1, default=str) + '\n')
     for opt, o in opts.items():

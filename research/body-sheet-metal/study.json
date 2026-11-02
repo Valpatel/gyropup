@@ -1,0 +1,2922 @@
+{
+ "issue": 155,
+ "toolkit": {
+  "cad_agent": "v0.13.0",
+  "commit": "7c5c44d"
+ },
+ "pa6_rate_g_per_h": 15.2,
+ "options": {
+  "today": {
+   "sheet": [
+    {
+     "part": "cheek",
+     "stock": "5052-0.187",
+     "material": "5052-H32 aluminium",
+     "qty": 2,
+     "bends": 2,
+     "pem": 8,
+     "pem_types": {
+      "SS-M5-0": 8
+     },
+     "countersinks": 8,
+     "flat_mm": [
+      184.0,
+      223.0
+     ],
+     "mass_g_each": 491.9,
+     "price_each": 63.87,
+     "price_line": 127.74,
+     "price_read_on": "2026-11-01",
+     "cut_only_each_qty1": 54.25,
+     "with_services_each_qty1": 94.07,
+     "refused": null,
+     "quote_error": null
+    },
+    {
+     "part": "floor_tray",
+     "stock": "5052-0.125",
+     "material": "5052-H32 aluminium",
+     "qty": 1,
+     "bends": 4,
+     "pem": 4,
+     "pem_types": {
+      "S-M4-0": 4
+     },
+     "countersinks": 0,
+     "flat_mm": [
+      339.0,
+      273.0
+     ],
+     "mass_g_each": 752.6,
+     "price_each": 80.62,
+     "price_line": 80.62,
+     "price_read_on": "2026-11-01",
+     "cut_only_each_qty1": 50.19,
+     "with_services_each_qty1": 80.62,
+     "refused": null,
+     "quote_error": null
+    },
+    {
+     "part": "belly_plate",
+     "stock": "6061-0.100",
+     "material": "6061-T6 aluminium",
+     "qty": 1,
+     "bends": 0,
+     "pem": 16,
+     "pem_types": {
+      "S-M4-0": 16
+     },
+     "countersinks": 0,
+     "flat_mm": [
+      320.0,
+      116.0
+     ],
+     "mass_g_each": 247.4,
+     "price_each": 62.16,
+     "price_line": 62.16,
+     "price_read_on": "2026-11-01",
+     "cut_only_each_qty1": 51.0,
+     "with_services_each_qty1": 62.16,
+     "refused": null,
+     "quote_error": null
+    },
+    {
+     "part": "deck",
+     "stock": "5052-0.100",
+     "material": "5052-H32 aluminium",
+     "qty": 1,
+     "bends": 4,
+     "pem": 0,
+     "pem_types": {},
+     "countersinks": 0,
+     "flat_mm": [
+      350.3,
+      284.3
+     ],
+     "mass_g_each": 649.0,
+     "price_each": 79.11,
+     "price_line": 79.11,
+     "price_read_on": "2026-11-01",
+     "cut_only_each_qty1": 62.8,
+     "with_services_each_qty1": 79.11,
+     "refused": null,
+     "quote_error": null
+    },
+    {
+     "part": "compute_pallet",
+     "stock": "6061-0.125",
+     "material": "6061-T6 aluminium",
+     "qty": 1,
+     "bends": 0,
+     "pem": 0,
+     "pem_types": {},
+     "countersinks": 8,
+     "flat_mm": [
+      194.0,
+      158.0
+     ],
+     "mass_g_each": 228.7,
+     "price_each": 49.4,
+     "price_line": 49.4,
+     "price_read_on": "2026-11-01",
+     "cut_only_each_qty1": 30.62,
+     "with_services_each_qty1": 49.4,
+     "refused": null,
+     "quote_error": null
+    },
+    {
+     "part": "power_plate",
+     "stock": "5052-0.100",
+     "material": "5052-H32 aluminium",
+     "qty": 1,
+     "bends": 0,
+     "pem": 16,
+     "pem_types": {
+      "F-M5-2": 10,
+      "F-M4-2": 6
+     },
+     "countersinks": 0,
+     "flat_mm": [
+      124.0,
+      206.0
+     ],
+     "mass_g_each": 161.7,
+     "price_each": 47.48,
+     "price_line": 47.48,
+     "price_read_on": "2026-11-01",
+     "cut_only_each_qty1": 28.87,
+     "with_services_each_qty1": 47.48,
+     "refused": null,
+     "quote_error": null
+    },
+    {
+     "part": "bus_bar",
+     "stock": "C110-0.125",
+     "material": "C110 copper",
+     "qty": 2,
+     "bends": 0,
+     "pem": 0,
+     "pem_types": {},
+     "countersinks": 0,
+     "flat_mm": [
+      110.0,
+      20.0
+     ],
+     "mass_g_each": 57.4,
+     "price_each": 18.22,
+     "price_line": 36.44,
+     "price_read_on": "2026-11-01",
+     "cut_only_each_qty1": 23.56,
+     "with_services_each_qty1": 23.56,
+     "refused": null,
+     "quote_error": null
+    },
+    {
+     "part": "turret_plate",
+     "stock": "6061-0.125",
+     "material": "6061-T6 aluminium",
+     "qty": 1,
+     "bends": 0,
+     "pem": 2,
+     "pem_types": {
+      "SS-M5-0": 2
+     },
+     "countersinks": 0,
+     "flat_mm": [
+      160.0,
+      140.0
+     ],
+     "mass_g_each": 134.5,
+     "price_each": 44.11,
+     "price_line": 44.11,
+     "price_read_on": "2026-11-01",
+     "cut_only_each_qty1": 27.45,
+     "with_services_each_qty1": 44.11,
+     "refused": null,
+     "quote_error": null
+    },
+    {
+     "part": "bay_floor",
+     "stock": "5052-0.063",
+     "material": "5052-H32 aluminium",
+     "qty": 1,
+     "bends": 2,
+     "pem": 10,
+     "pem_types": {
+      "S-M3-0": 10
+     },
+     "countersinks": 0,
+     "flat_mm": [
+      310.0,
+      134.0
+     ],
+     "mass_g_each": 174.1,
+     "price_each": 51.12,
+     "price_line": 51.12,
+     "price_read_on": "2026-11-01",
+     "cut_only_each_qty1": 27.54,
+     "with_services_each_qty1": 51.12,
+     "refused": null,
+     "quote_error": null
+    },
+    {
+     "part": "bay_side",
+     "stock": "5052-0.063",
+     "material": "5052-H32 aluminium",
+     "qty": 2,
+     "bends": 0,
+     "pem": 0,
+     "pem_types": {},
+     "countersinks": 0,
+     "flat_mm": [
+      310.0,
+      128.6
+     ],
+     "mass_g_each": 108.0,
+     "price_each": 22.05,
+     "price_line": 44.1,
+     "price_read_on": "2026-11-01",
+     "cut_only_each_qty1": 27.21,
+     "with_services_each_qty1": 29.75,
+     "refused": null,
+     "quote_error": null
+    }
+   ],
+   "fasteners": {
+    "insert_m3": 26,
+    "insert_m5": 36,
+    "screw_m3x6": 28,
+    "screw_m3x8_socket": 8,
+    "screw_m4x10_flat": 16,
+    "screw_m4x12_socket": 10,
+    "screw_m4x20": 12,
+    "screw_m5x10_button": 18,
+    "screw_m5x12_button": 40,
+    "standoff_m4x31_ff": 8,
+    "standoff_m3x16_ff": 4,
+    "turret_screw_m3x6_flat": 4,
+    "screw_m6x16": 10,
+    "nut_m6_nyloc": 10
+   },
+   "printed": {
+    "post": {
+     "qty": 4,
+     "grams": 174,
+     "hours": 11.4,
+     "material": "pa6-cf"
+    },
+    "riser": {
+     "qty": 1,
+     "grams": 174,
+     "hours": 11.4,
+     "material": "pa6-cf"
+    },
+    "isolator": {
+     "qty": 4,
+     "grams": 8,
+     "hours": 0.9,
+     "material": "tpu95"
+    },
+    "plate_post": {
+     "qty": 4,
+     "grams": 43,
+     "hours": 2.8,
+     "material": "pa6-cf"
+    },
+    "bus_insulator": {
+     "qty": 2,
+     "grams": 76,
+     "hours": 3.0,
+     "material": "petg"
+    },
+    "dcdc_bracket": {
+     "qty": 1,
+     "grams": 61,
+     "hours": 4.0,
+     "material": "pa6-cf"
+    },
+    "bay_rail_l": {
+     "qty": 1,
+     "grams": 26,
+     "hours": 1.7,
+     "material": "pa6-cf"
+    },
+    "bay_rail_r": {
+     "qty": 1,
+     "grams": 26,
+     "hours": 1.7,
+     "material": "pa6-cf"
+    },
+    "adapter_plate_front": {
+     "qty": 1,
+     "grams": 31,
+     "hours": 2.1,
+     "material": "pa6-cf"
+    },
+    "bay_door_front": {
+     "qty": 1,
+     "grams": 66,
+     "hours": 2.6,
+     "material": "petg"
+    },
+    "adapter_plate_rear": {
+     "qty": 1,
+     "grams": 31,
+     "hours": 2.1,
+     "material": "pa6-cf"
+    },
+    "bay_door_rear": {
+     "qty": 1,
+     "grams": 66,
+     "hours": 2.6,
+     "material": "petg"
+    },
+    "bay_skid": {
+     "qty": 4,
+     "grams": 236,
+     "hours": 47.7,
+     "material": "tpu95-gyroid"
+    }
+   },
+   "summary": {
+    "plates_unique": 10,
+    "plates_pieces": 13,
+    "bends": 14,
+    "bent_parts_unique": 4,
+    "max_bends_one_part": 4,
+    "pem": 64,
+    "unique_bought_fasteners": 14,
+    "sheet_usd": 622.28,
+    "sheet_mass_g": 3663,
+    "printed_g": 1018,
+    "print_hours": 94.0,
+    "printed_parts": 26,
+    "build_steps": {
+     "parts": 39,
+     "screws_nuts_standoffs": 168,
+     "inserts": 62,
+     "rivets": 0,
+     "total": 269
+    },
+    "frame_mass_g": 4681,
+    "printed_usd": 58.49,
+    "rivets_usd_est": 0.0,
+    "total_usd": 680.77
+   }
+  },
+  "A": {
+   "sheet": [
+    {
+     "part": "cheek",
+     "stock": "5052-0.187",
+     "material": "5052-H32 aluminium",
+     "qty": 2,
+     "bends": 2,
+     "pem": 8,
+     "pem_types": {
+      "SS-M5-0": 8
+     },
+     "countersinks": 8,
+     "flat_mm": [
+      184.0,
+      223.0
+     ],
+     "mass_g_each": 491.9,
+     "price_each": 63.87,
+     "price_line": 127.74,
+     "price_read_on": "2026-11-01",
+     "cut_only_each_qty1": 54.25,
+     "with_services_each_qty1": 94.07,
+     "refused": null,
+     "quote_error": null
+    },
+    {
+     "part": "belly_plate",
+     "stock": "6061-0.100",
+     "material": "6061-T6 aluminium",
+     "qty": 1,
+     "bends": 0,
+     "pem": 16,
+     "pem_types": {
+      "S-M4-0": 16
+     },
+     "countersinks": 0,
+     "flat_mm": [
+      320.0,
+      116.0
+     ],
+     "mass_g_each": 247.4,
+     "price_each": 62.16,
+     "price_line": 62.16,
+     "price_read_on": "2026-11-01",
+     "cut_only_each_qty1": 51.0,
+     "with_services_each_qty1": 62.16,
+     "refused": null,
+     "quote_error": null
+    },
+    {
+     "part": "compute_pallet",
+     "stock": "6061-0.125",
+     "material": "6061-T6 aluminium",
+     "qty": 1,
+     "bends": 0,
+     "pem": 0,
+     "pem_types": {},
+     "countersinks": 8,
+     "flat_mm": [
+      194.0,
+      158.0
+     ],
+     "mass_g_each": 228.7,
+     "price_each": 49.4,
+     "price_line": 49.4,
+     "price_read_on": "2026-11-01",
+     "cut_only_each_qty1": 30.62,
+     "with_services_each_qty1": 49.4,
+     "refused": null,
+     "quote_error": null
+    },
+    {
+     "part": "power_plate",
+     "stock": "5052-0.100",
+     "material": "5052-H32 aluminium",
+     "qty": 1,
+     "bends": 0,
+     "pem": 16,
+     "pem_types": {
+      "F-M5-2": 10,
+      "F-M4-2": 6
+     },
+     "countersinks": 0,
+     "flat_mm": [
+      124.0,
+      206.0
+     ],
+     "mass_g_each": 161.7,
+     "price_each": 47.48,
+     "price_line": 47.48,
+     "price_read_on": "2026-11-01",
+     "cut_only_each_qty1": 28.87,
+     "with_services_each_qty1": 47.48,
+     "refused": null,
+     "quote_error": null
+    },
+    {
+     "part": "bus_bar",
+     "stock": "C110-0.125",
+     "material": "C110 copper",
+     "qty": 2,
+     "bends": 0,
+     "pem": 0,
+     "pem_types": {},
+     "countersinks": 0,
+     "flat_mm": [
+      110.0,
+      20.0
+     ],
+     "mass_g_each": 57.4,
+     "price_each": 18.22,
+     "price_line": 36.44,
+     "price_read_on": "2026-11-01",
+     "cut_only_each_qty1": 23.56,
+     "with_services_each_qty1": 23.56,
+     "refused": null,
+     "quote_error": null
+    },
+    {
+     "part": "bay_floor",
+     "stock": "5052-0.063",
+     "material": "5052-H32 aluminium",
+     "qty": 1,
+     "bends": 2,
+     "pem": 10,
+     "pem_types": {
+      "S-M3-0": 10
+     },
+     "countersinks": 0,
+     "flat_mm": [
+      310.0,
+      134.0
+     ],
+     "mass_g_each": 174.1,
+     "price_each": 51.12,
+     "price_line": 51.12,
+     "price_read_on": "2026-11-01",
+     "cut_only_each_qty1": 27.54,
+     "with_services_each_qty1": 51.12,
+     "refused": null,
+     "quote_error": null
+    },
+    {
+     "part": "bay_side",
+     "stock": "5052-0.063",
+     "material": "5052-H32 aluminium",
+     "qty": 2,
+     "bends": 0,
+     "pem": 0,
+     "pem_types": {},
+     "countersinks": 0,
+     "flat_mm": [
+      310.0,
+      128.6
+     ],
+     "mass_g_each": 108.0,
+     "price_each": 22.05,
+     "price_line": 44.1,
+     "price_read_on": "2026-11-01",
+     "cut_only_each_qty1": 27.21,
+     "with_services_each_qty1": 29.75,
+     "refused": null,
+     "quote_error": null
+    },
+    {
+     "part": "floor_tray_2b",
+     "stock": "5052-0.125",
+     "material": "5052-H32 aluminium",
+     "qty": 1,
+     "bends": 2,
+     "pem": 4,
+     "pem_types": {
+      "S-M4-0": 4
+     },
+     "countersinks": 0,
+     "flat_mm": [
+      320.0,
+      273.0
+     ],
+     "mass_g_each": 716.8,
+     "price_each": 78.92,
+     "price_line": 78.92,
+     "price_read_on": "2026-11-01",
+     "cut_only_each_qty1": 48.49,
+     "with_services_each_qty1": 78.92,
+     "refused": null,
+     "quote_error": null
+    },
+    {
+     "part": "deck_2b",
+     "stock": "5052-0.125",
+     "material": "5052-H32 aluminium",
+     "qty": 1,
+     "bends": 2,
+     "pem": 3,
+     "pem_types": {
+      "S-M3-0": 3
+     },
+     "countersinks": 0,
+     "flat_mm": [
+      320.0,
+      283.0
+     ],
+     "mass_g_each": 747.5,
+     "price_each": 81.2,
+     "price_line": 81.2,
+     "price_read_on": "2026-11-01",
+     "cut_only_each_qty1": 57.62,
+     "with_services_each_qty1": 81.2,
+     "refused": null,
+     "quote_error": null
+    }
+   ],
+   "fasteners": {
+    "insert_m3": 26,
+    "insert_m5": 36,
+    "screw_m3x6": 28,
+    "screw_m3x8_socket": 8,
+    "screw_m4x10_flat": 16,
+    "screw_m4x12_socket": 10,
+    "screw_m4x20": 12,
+    "screw_m5x12_button": 56,
+    "standoff_m4x31_ff": 8,
+    "standoff_m3x16_ff": 4,
+    "turret_screw_m3x6_flat": 4,
+    "screw_m6x16": 10,
+    "nut_m6_nyloc": 10
+   },
+   "printed": {
+    "post": {
+     "qty": 4,
+     "grams": 174,
+     "hours": 11.4,
+     "material": "pa6-cf"
+    },
+    "riser": {
+     "qty": 1,
+     "grams": 174,
+     "hours": 11.4,
+     "material": "pa6-cf"
+    },
+    "isolator": {
+     "qty": 4,
+     "grams": 8,
+     "hours": 0.9,
+     "material": "tpu95"
+    },
+    "plate_post": {
+     "qty": 4,
+     "grams": 43,
+     "hours": 2.8,
+     "material": "pa6-cf"
+    },
+    "bus_insulator": {
+     "qty": 2,
+     "grams": 76,
+     "hours": 3.0,
+     "material": "petg"
+    },
+    "dcdc_bracket": {
+     "qty": 1,
+     "grams": 61,
+     "hours": 4.0,
+     "material": "pa6-cf"
+    },
+    "bay_rail_l": {
+     "qty": 1,
+     "grams": 26,
+     "hours": 1.7,
+     "material": "pa6-cf"
+    },
+    "bay_rail_r": {
+     "qty": 1,
+     "grams": 26,
+     "hours": 1.7,
+     "material": "pa6-cf"
+    },
+    "adapter_plate_front": {
+     "qty": 1,
+     "grams": 31,
+     "hours": 2.1,
+     "material": "pa6-cf"
+    },
+    "bay_door_front": {
+     "qty": 1,
+     "grams": 66,
+     "hours": 2.6,
+     "material": "petg"
+    },
+    "adapter_plate_rear": {
+     "qty": 1,
+     "grams": 31,
+     "hours": 2.1,
+     "material": "pa6-cf"
+    },
+    "bay_door_rear": {
+     "qty": 1,
+     "grams": 66,
+     "hours": 2.6,
+     "material": "petg"
+    },
+    "bay_skid": {
+     "qty": 4,
+     "grams": 236,
+     "hours": 47.7,
+     "material": "tpu95-gyroid"
+    }
+   },
+   "summary": {
+    "plates_unique": 9,
+    "plates_pieces": 12,
+    "bends": 10,
+    "bent_parts_unique": 4,
+    "max_bends_one_part": 2,
+    "pem": 65,
+    "unique_bought_fasteners": 13,
+    "sheet_usd": 578.56,
+    "sheet_mass_g": 3591,
+    "printed_g": 1018,
+    "print_hours": 94.0,
+    "printed_parts": 26,
+    "build_steps": {
+     "parts": 38,
+     "screws_nuts_standoffs": 166,
+     "inserts": 62,
+     "rivets": 0,
+     "total": 266
+    },
+    "frame_mass_g": 4609,
+    "printed_usd": 58.49,
+    "rivets_usd_est": 0.0,
+    "total_usd": 637.05
+   }
+  },
+  "B": {
+   "sheet": [
+    {
+     "part": "cheek",
+     "stock": "5052-0.187",
+     "material": "5052-H32 aluminium",
+     "qty": 2,
+     "bends": 2,
+     "pem": 8,
+     "pem_types": {
+      "SS-M5-0": 8
+     },
+     "countersinks": 8,
+     "flat_mm": [
+      184.0,
+      223.0
+     ],
+     "mass_g_each": 491.9,
+     "price_each": 63.87,
+     "price_line": 127.74,
+     "price_read_on": "2026-11-01",
+     "cut_only_each_qty1": 54.25,
+     "with_services_each_qty1": 94.07,
+     "refused": null,
+     "quote_error": null
+    },
+    {
+     "part": "compute_pallet",
+     "stock": "6061-0.125",
+     "material": "6061-T6 aluminium",
+     "qty": 1,
+     "bends": 0,
+     "pem": 0,
+     "pem_types": {},
+     "countersinks": 8,
+     "flat_mm": [
+      194.0,
+      158.0
+     ],
+     "mass_g_each": 228.7,
+     "price_each": 49.4,
+     "price_line": 49.4,
+     "price_read_on": "2026-11-01",
+     "cut_only_each_qty1": 30.62,
+     "with_services_each_qty1": 49.4,
+     "refused": null,
+     "quote_error": null
+    },
+    {
+     "part": "power_plate",
+     "stock": "5052-0.100",
+     "material": "5052-H32 aluminium",
+     "qty": 1,
+     "bends": 0,
+     "pem": 16,
+     "pem_types": {
+      "F-M5-2": 10,
+      "F-M4-2": 6
+     },
+     "countersinks": 0,
+     "flat_mm": [
+      124.0,
+      206.0
+     ],
+     "mass_g_each": 161.7,
+     "price_each": 47.48,
+     "price_line": 47.48,
+     "price_read_on": "2026-11-01",
+     "cut_only_each_qty1": 28.87,
+     "with_services_each_qty1": 47.48,
+     "refused": null,
+     "quote_error": null
+    },
+    {
+     "part": "bus_bar",
+     "stock": "C110-0.125",
+     "material": "C110 copper",
+     "qty": 2,
+     "bends": 0,
+     "pem": 0,
+     "pem_types": {},
+     "countersinks": 0,
+     "flat_mm": [
+      110.0,
+      20.0
+     ],
+     "mass_g_each": 57.4,
+     "price_each": 18.22,
+     "price_line": 36.44,
+     "price_read_on": "2026-11-01",
+     "cut_only_each_qty1": 23.56,
+     "with_services_each_qty1": 23.56,
+     "refused": null,
+     "quote_error": null
+    },
+    {
+     "part": "floor_tray_2b",
+     "stock": "5052-0.125",
+     "material": "5052-H32 aluminium",
+     "qty": 1,
+     "bends": 2,
+     "pem": 4,
+     "pem_types": {
+      "S-M4-0": 4
+     },
+     "countersinks": 0,
+     "flat_mm": [
+      320.0,
+      273.0
+     ],
+     "mass_g_each": 716.8,
+     "price_each": 78.92,
+     "price_line": 78.92,
+     "price_read_on": "2026-11-01",
+     "cut_only_each_qty1": 48.49,
+     "with_services_each_qty1": 78.92,
+     "refused": null,
+     "quote_error": null
+    },
+    {
+     "part": "deck_2b",
+     "stock": "5052-0.125",
+     "material": "5052-H32 aluminium",
+     "qty": 1,
+     "bends": 2,
+     "pem": 3,
+     "pem_types": {
+      "S-M3-0": 3
+     },
+     "countersinks": 0,
+     "flat_mm": [
+      320.0,
+      283.0
+     ],
+     "mass_g_each": 747.5,
+     "price_each": 81.2,
+     "price_line": 81.2,
+     "price_read_on": "2026-11-01",
+     "cut_only_each_qty1": 57.62,
+     "with_services_each_qty1": 81.2,
+     "refused": null,
+     "quote_error": null
+    },
+    {
+     "part": "keel_half",
+     "stock": "5052-0.090",
+     "material": "5052-H32 aluminium",
+     "qty": 2,
+     "bends": 2,
+     "pem": 4,
+     "pem_types": {
+      "S-M4-0": 4
+     },
+     "countersinks": 0,
+     "flat_mm": [
+      320.0,
+      220.4
+     ],
+     "mass_g_each": 342.1,
+     "price_each": 57.22,
+     "price_line": 114.44,
+     "price_read_on": "2026-11-01",
+     "cut_only_each_qty1": 59.55,
+     "with_services_each_qty1": 83.13,
+     "refused": null,
+     "quote_error": null
+    },
+    {
+     "part": "strap",
+     "stock": "5052-0.090",
+     "material": "5052-H32 aluminium",
+     "qty": 2,
+     "bends": 0,
+     "pem": 0,
+     "pem_types": {},
+     "countersinks": 0,
+     "flat_mm": [
+      320.0,
+      40.0
+     ],
+     "mass_g_each": 76.2,
+     "price_each": 15.31,
+     "price_line": 30.62,
+     "price_read_on": "2026-11-01",
+     "cut_only_each_qty1": 18.57,
+     "with_services_each_qty1": 21.11,
+     "refused": null,
+     "quote_error": null
+    }
+   ],
+   "fasteners": {
+    "insert_m3": 26,
+    "insert_m5": 36,
+    "screw_m3x6": 18,
+    "screw_m3x8_socket": 8,
+    "screw_m4x10_flat": 16,
+    "screw_m4x12_socket": 10,
+    "screw_m4x20": 4,
+    "screw_m5x12_button": 56,
+    "standoff_m4x31_ff": 8,
+    "standoff_m3x16_ff": 4,
+    "turret_screw_m3x6_flat": 4,
+    "screw_m6x16": 10,
+    "nut_m6_nyloc": 10,
+    "rivet_1_8": 32
+   },
+   "printed": {
+    "post": {
+     "qty": 4,
+     "grams": 174,
+     "hours": 11.4,
+     "material": "pa6-cf"
+    },
+    "riser": {
+     "qty": 1,
+     "grams": 174,
+     "hours": 11.4,
+     "material": "pa6-cf"
+    },
+    "isolator": {
+     "qty": 4,
+     "grams": 8,
+     "hours": 0.9,
+     "material": "tpu95"
+    },
+    "plate_post": {
+     "qty": 4,
+     "grams": 43,
+     "hours": 2.8,
+     "material": "pa6-cf"
+    },
+    "bus_insulator": {
+     "qty": 2,
+     "grams": 76,
+     "hours": 3.0,
+     "material": "petg"
+    },
+    "dcdc_bracket": {
+     "qty": 1,
+     "grams": 61,
+     "hours": 4.0,
+     "material": "pa6-cf"
+    },
+    "bay_rail_l": {
+     "qty": 1,
+     "grams": 52,
+     "hours": 3.4,
+     "material": "pa6-cf"
+    },
+    "bay_rail_r": {
+     "qty": 1,
+     "grams": 52,
+     "hours": 3.4,
+     "material": "pa6-cf"
+    },
+    "adapter_plate_front": {
+     "qty": 1,
+     "grams": 31,
+     "hours": 2.1,
+     "material": "pa6-cf"
+    },
+    "bay_door_front": {
+     "qty": 1,
+     "grams": 66,
+     "hours": 2.6,
+     "material": "petg"
+    },
+    "adapter_plate_rear": {
+     "qty": 1,
+     "grams": 31,
+     "hours": 2.1,
+     "material": "pa6-cf"
+    },
+    "bay_door_rear": {
+     "qty": 1,
+     "grams": 66,
+     "hours": 2.6,
+     "material": "petg"
+    },
+    "bay_skid": {
+     "qty": 4,
+     "grams": 236,
+     "hours": 47.7,
+     "material": "tpu95-gyroid"
+    }
+   },
+   "summary": {
+    "plates_unique": 8,
+    "plates_pieces": 12,
+    "bends": 12,
+    "bent_parts_unique": 4,
+    "max_bends_one_part": 2,
+    "pem": 47,
+    "unique_bought_fasteners": 14,
+    "sheet_usd": 566.24,
+    "sheet_mass_g": 3790,
+    "printed_g": 1070,
+    "print_hours": 97.4,
+    "printed_parts": 26,
+    "build_steps": {
+     "parts": 38,
+     "screws_nuts_standoffs": 148,
+     "inserts": 62,
+     "rivets": 32,
+     "total": 280
+    },
+    "frame_mass_g": 4860,
+    "printed_usd": 62.65,
+    "rivets_usd_est": 3.84,
+    "total_usd": 632.73
+   }
+  },
+  "C": {
+   "sheet": [
+    {
+     "part": "cheek",
+     "stock": "5052-0.187",
+     "material": "5052-H32 aluminium",
+     "qty": 2,
+     "bends": 2,
+     "pem": 8,
+     "pem_types": {
+      "SS-M5-0": 8
+     },
+     "countersinks": 8,
+     "flat_mm": [
+      184.0,
+      223.0
+     ],
+     "mass_g_each": 491.9,
+     "price_each": 63.87,
+     "price_line": 127.74,
+     "price_read_on": "2026-11-01",
+     "cut_only_each_qty1": 54.25,
+     "with_services_each_qty1": 94.07,
+     "refused": null,
+     "quote_error": null
+    },
+    {
+     "part": "bus_bar",
+     "stock": "C110-0.125",
+     "material": "C110 copper",
+     "qty": 2,
+     "bends": 0,
+     "pem": 0,
+     "pem_types": {},
+     "countersinks": 0,
+     "flat_mm": [
+      110.0,
+      20.0
+     ],
+     "mass_g_each": 57.4,
+     "price_each": 18.22,
+     "price_line": 36.44,
+     "price_read_on": "2026-11-01",
+     "cut_only_each_qty1": 23.56,
+     "with_services_each_qty1": 23.56,
+     "refused": null,
+     "quote_error": null
+    },
+    {
+     "part": "keel_half",
+     "stock": "5052-0.090",
+     "material": "5052-H32 aluminium",
+     "qty": 2,
+     "bends": 2,
+     "pem": 4,
+     "pem_types": {
+      "S-M4-0": 4
+     },
+     "countersinks": 0,
+     "flat_mm": [
+      320.0,
+      220.4
+     ],
+     "mass_g_each": 342.1,
+     "price_each": 57.22,
+     "price_line": 114.44,
+     "price_read_on": "2026-11-01",
+     "cut_only_each_qty1": 59.55,
+     "with_services_each_qty1": 83.13,
+     "refused": null,
+     "quote_error": null
+    },
+    {
+     "part": "strap",
+     "stock": "5052-0.090",
+     "material": "5052-H32 aluminium",
+     "qty": 2,
+     "bends": 0,
+     "pem": 0,
+     "pem_types": {},
+     "countersinks": 0,
+     "flat_mm": [
+      320.0,
+      40.0
+     ],
+     "mass_g_each": 76.2,
+     "price_each": 15.31,
+     "price_line": 30.62,
+     "price_read_on": "2026-11-01",
+     "cut_only_each_qty1": 18.57,
+     "with_services_each_qty1": 21.11,
+     "refused": null,
+     "quote_error": null
+    },
+    {
+     "part": "turret_plate",
+     "stock": "6061-0.125",
+     "material": "6061-T6 aluminium",
+     "qty": 1,
+     "bends": 0,
+     "pem": 2,
+     "pem_types": {
+      "SS-M5-0": 2
+     },
+     "countersinks": 0,
+     "flat_mm": [
+      160.0,
+      140.0
+     ],
+     "mass_g_each": 134.5,
+     "price_each": 44.11,
+     "price_line": 44.11,
+     "price_read_on": "2026-11-01",
+     "cut_only_each_qty1": 27.45,
+     "with_services_each_qty1": 44.11,
+     "refused": null,
+     "quote_error": null
+    }
+   ],
+   "fasteners": {
+    "insert_m3": 26,
+    "insert_m5": 58,
+    "screw_m3x6": 18,
+    "screw_m3x8_socket": 8,
+    "screw_m4x10_flat": 16,
+    "screw_m4x12_socket": 10,
+    "screw_m4x20": 4,
+    "screw_m5x12_button": 72,
+    "standoff_m4x31_ff": 8,
+    "standoff_m3x16_ff": 4,
+    "turret_screw_m3x6_flat": 4,
+    "screw_m6x16": 10,
+    "nut_m6_nyloc": 10,
+    "rivet_1_8": 32,
+    "insert_m4": 10
+   },
+   "printed": {
+    "post": {
+     "qty": 4,
+     "grams": 174,
+     "hours": 11.4,
+     "material": "pa6-cf"
+    },
+    "riser": {
+     "qty": 1,
+     "grams": 174,
+     "hours": 11.4,
+     "material": "pa6-cf"
+    },
+    "plate_post": {
+     "qty": 4,
+     "grams": 43,
+     "hours": 2.8,
+     "material": "pa6-cf"
+    },
+    "bus_insulator": {
+     "qty": 2,
+     "grams": 76,
+     "hours": 3.0,
+     "material": "petg"
+    },
+    "dcdc_bracket": {
+     "qty": 1,
+     "grams": 61,
+     "hours": 4.0,
+     "material": "pa6-cf"
+    },
+    "bay_rail_l": {
+     "qty": 1,
+     "grams": 52,
+     "hours": 3.4,
+     "material": "pa6-cf"
+    },
+    "bay_rail_r": {
+     "qty": 1,
+     "grams": 52,
+     "hours": 3.4,
+     "material": "pa6-cf"
+    },
+    "adapter_plate_front": {
+     "qty": 1,
+     "grams": 31,
+     "hours": 2.1,
+     "material": "pa6-cf"
+    },
+    "bay_door_front": {
+     "qty": 1,
+     "grams": 66,
+     "hours": 2.6,
+     "material": "petg"
+    },
+    "adapter_plate_rear": {
+     "qty": 1,
+     "grams": 31,
+     "hours": 2.1,
+     "material": "pa6-cf"
+    },
+    "bay_door_rear": {
+     "qty": 1,
+     "grams": 66,
+     "hours": 2.6,
+     "material": "petg"
+    },
+    "bay_skid": {
+     "qty": 4,
+     "grams": 236,
+     "hours": 47.7,
+     "material": "tpu95-gyroid"
+    },
+    "deck_printed": {
+     "qty": 2,
+     "grams": 831,
+     "hours": 54.6,
+     "material": "pa6-cf"
+    },
+    "tray_printed": {
+     "qty": 2,
+     "grams": 771,
+     "hours": 50.7,
+     "material": "pa6-cf"
+    },
+    "pallet_printed": {
+     "qty": 1,
+     "grams": 174,
+     "hours": 11.5,
+     "material": "pa6-cf"
+    },
+    "power_plate_printed": {
+     "qty": 1,
+     "grams": 155,
+     "hours": 10.2,
+     "material": "pa6-cf"
+    }
+   },
+   "summary": {
+    "plates_unique": 5,
+    "plates_pieces": 9,
+    "bends": 8,
+    "bent_parts_unique": 2,
+    "max_bends_one_part": 2,
+    "pem": 26,
+    "unique_bought_fasteners": 15,
+    "sheet_usd": 353.35,
+    "sheet_mass_g": 2070,
+    "printed_g": 2993,
+    "print_hours": 223.5,
+    "printed_parts": 28,
+    "build_steps": {
+     "parts": 37,
+     "screws_nuts_standoffs": 164,
+     "inserts": 94,
+     "rivets": 32,
+     "total": 327
+    },
+    "frame_mass_g": 5063,
+    "printed_usd": 216.92,
+    "rivets_usd_est": 3.84,
+    "total_usd": 574.11
+   }
+  }
+ },
+ "checks": {
+  "cheek": {
+   "part": "cheek",
+   "stock": "5052-0.187",
+   "gyropup_rules": "pass",
+   "bend": {
+    "stock_row": null,
+    "radius_mm": 4.7498,
+    "radius_rule": "sm-bend-radius-min-hubs",
+    "k": 0.33,
+    "k_rule": "sm-k-air-soft-r-le-t-hubs",
+    "allowance_mm": 9.923088,
+    "deduction_mm": 9.076112,
+    "min_flange_mm": 33.2486,
+    "min_flange_rule": "sm-flange-min-century",
+    "relief_depth_mm": 9.9996,
+    "gyropup_stock": {
+     "r_mm": 6.35,
+     "k": 0.43,
+     "bd_mm": 9.017
+    }
+   },
+   "flat_length": {
+    "legs_mm": [
+     30.0,
+     181.0,
+     30.0
+    ],
+    "flat_mm": 222.847776,
+    "verdict": "fail",
+    "detail": "legs [0, 2] are shorter than the 33.25 mm flange (sm-flange-min-century)"
+   },
+   "dfm": {
+    "verdict": "fail",
+    "stock": null,
+    "rows": [
+     {
+      "name": "flange S",
+      "size": 30.0,
+      "verdict": "pass",
+      "detail": "meets all 2 verified rules",
+      "strictest_mm": 18.9992,
+      "shop": null,
+      "rules": [
+       [
+        "sm-flange-min-protolabs",
+        18.9992,
+        "pass"
+       ],
+       [
+        "sm-flange-min-davis",
+        18.9992,
+        "pass"
+       ]
+      ]
+     },
+     {
+      "name": "flange N",
+      "size": 30.0,
+      "verdict": "pass",
+      "detail": "meets all 2 verified rules",
+      "strictest_mm": 18.9992,
+      "shop": null,
+      "rules": [
+       [
+        "sm-flange-min-protolabs",
+        18.9992,
+        "pass"
+       ],
+       [
+        "sm-flange-min-davis",
+        18.9992,
+        "pass"
+       ]
+      ]
+     },
+     {
+      "name": "nearest hole to a bend (hip frame insert, M5 x 12 ISO 7380 from )",
+      "size": 6.65,
+      "verdict": "fail",
+      "detail": "beyond all 3 verified rules",
+      "strictest_mm": 18.9992,
+      "shop": null,
+      "rules": [
+       [
+        "sm-hole-to-bend-min-hubs",
+        9.4996,
+        "fail"
+       ],
+       [
+        "sm-hole-to-bend-min-davis",
+        9.4996,
+        "fail"
+       ],
+       [
+        "sm-feature-to-bend-protolabs",
+        18.9992,
+        "fail"
+       ]
+      ]
+     },
+     {
+      "name": "smallest hole",
+      "size": 4.5,
+      "verdict": "fail",
+      "detail": "beyond all 2 verified rules",
+      "strictest_mm": 4.7498,
+      "shop": null,
+      "rules": [
+       [
+        "sm-hole-min-protolabs",
+        4.7498,
+        "fail"
+       ],
+       [
+        "sm-hole-min-davis",
+        4.7498,
+        "fail"
+       ]
+      ]
+     }
+    ]
+   }
+  },
+  "floor_tray": {
+   "part": "floor_tray",
+   "stock": "5052-0.125",
+   "gyropup_rules": "pass",
+   "bend": {
+    "stock_row": "ALU-125",
+    "radius_mm": 3.175,
+    "radius_rule": "sendcutsend-5052-and-mild-steel ALU-125 (sendcutsend-specs)",
+    "k": 0.44,
+    "k_rule": "sendcutsend-5052-and-mild-steel ALU-125 (sendcutsend-specs)",
+    "allowance_mm": 7.181681,
+    "deduction_mm": 5.518319,
+    "min_flange_mm": 12.09,
+    "min_flange_rule": "sendcutsend-5052-and-mild-steel ALU-125 (sendcutsend-specs)",
+    "relief_depth_mm": 6.858,
+    "gyropup_stock": {
+     "r_mm": 3.175,
+     "k": 0.44,
+     "bd_mm": 5.518
+    }
+   },
+   "flat_length": {
+    "legs_mm": [
+     15.0,
+     254.0,
+     15.0
+    ],
+    "flat_mm": 272.963362,
+    "verdict": "pass",
+    "detail": "every leg is at least the 12.09 mm flange"
+   },
+   "dfm": {
+    "verdict": "fail",
+    "stock": "ALU-125",
+    "rows": [
+     {
+      "name": "flange S",
+      "size": 15.0,
+      "verdict": "pass",
+      "detail": "meets the shop's 12.09 mm for ALU-125 (3.175 mm); the shop's table decides, the generic rules are shown beside it",
+      "strictest_mm": 22.224999999999998,
+      "shop": {
+       "rule": "sendcutsend-5052-and-mild-steel ALU-125 (sendcutsend-specs)",
+       "source": "sendcutsend-specs",
+       "verified": true,
+       "min": 12.09,
+       "units": "mm",
+       "text": "at least 12.09 mm",
+       "verdict": "pass",
+       "why": "meets the shop's 12.09 mm for ALU-125 (3.175 mm)"
+      },
+      "rules": [
+       [
+        "sm-flange-min-protolabs",
+        12.7,
+        "pass"
+       ],
+       [
+        "sm-flange-min-davis",
+        12.7,
+        "pass"
+       ],
+       [
+        "sm-flange-min-century",
+        22.224999999999998,
+        "fail"
+       ],
+       [
+        "sm-flange-min-hubs",
+        9.524999999999999,
+        "pass"
+       ]
+      ]
+     },
+     {
+      "name": "flange N",
+      "size": 15.0,
+      "verdict": "pass",
+      "detail": "meets the shop's 12.09 mm for ALU-125 (3.175 mm); the shop's table decides, the generic rules are shown beside it",
+      "strictest_mm": 22.224999999999998,
+      "shop": {
+       "rule": "sendcutsend-5052-and-mild-steel ALU-125 (sendcutsend-specs)",
+       "source": "sendcutsend-specs",
+       "verified": true,
+       "min": 12.09,
+       "units": "mm",
+       "text": "at least 12.09 mm",
+       "verdict": "pass",
+       "why": "meets the shop's 12.09 mm for ALU-125 (3.175 mm)"
+      },
+      "rules": [
+       [
+        "sm-flange-min-protolabs",
+        12.7,
+        "pass"
+       ],
+       [
+        "sm-flange-min-davis",
+        12.7,
+        "pass"
+       ],
+       [
+        "sm-flange-min-century",
+        22.224999999999998,
+        "fail"
+       ],
+       [
+        "sm-flange-min-hubs",
+        9.524999999999999,
+        "pass"
+       ]
+      ]
+     },
+     {
+      "name": "flange W",
+      "size": 15.0,
+      "verdict": "pass",
+      "detail": "meets the shop's 12.09 mm for ALU-125 (3.175 mm); the shop's table decides, the generic rules are shown beside it",
+      "strictest_mm": 22.224999999999998,
+      "shop": {
+       "rule": "sendcutsend-5052-and-mild-steel ALU-125 (sendcutsend-specs)",
+       "source": "sendcutsend-specs",
+       "verified": true,
+       "min": 12.09,
+       "units": "mm",
+       "text": "at least 12.09 mm",
+       "verdict": "pass",
+       "why": "meets the shop's 12.09 mm for ALU-125 (3.175 mm)"
+      },
+      "rules": [
+       [
+        "sm-flange-min-protolabs",
+        12.7,
+        "pass"
+       ],
+       [
+        "sm-flange-min-davis",
+        12.7,
+        "pass"
+       ],
+       [
+        "sm-flange-min-century",
+        22.224999999999998,
+        "fail"
+       ],
+       [
+        "sm-flange-min-hubs",
+        9.524999999999999,
+        "pass"
+       ]
+      ]
+     },
+     {
+      "name": "flange E",
+      "size": 15.0,
+      "verdict": "pass",
+      "detail": "meets the shop's 12.09 mm for ALU-125 (3.175 mm); the shop's table decides, the generic rules are shown beside it",
+      "strictest_mm": 22.224999999999998,
+      "shop": {
+       "rule": "sendcutsend-5052-and-mild-steel ALU-125 (sendcutsend-specs)",
+       "source": "sendcutsend-specs",
+       "verified": true,
+       "min": 12.09,
+       "units": "mm",
+       "text": "at least 12.09 mm",
+       "verdict": "pass",
+       "why": "meets the shop's 12.09 mm for ALU-125 (3.175 mm)"
+      },
+      "rules": [
+       [
+        "sm-flange-min-protolabs",
+        12.7,
+        "pass"
+       ],
+       [
+        "sm-flange-min-davis",
+        12.7,
+        "pass"
+       ],
+       [
+        "sm-flange-min-century",
+        22.224999999999998,
+        "fail"
+       ],
+       [
+        "sm-flange-min-hubs",
+        9.524999999999999,
+        "pass"
+       ]
+      ]
+     },
+     {
+      "name": "nearest hole to a bend (power plate post, M5 x 10 ISO 7380 up fr)",
+      "size": 5.9,
+      "verdict": "fail",
+      "detail": "beyond all 6 verified rules",
+      "strictest_mm": 12.7,
+      "shop": null,
+      "rules": [
+       [
+        "sm-hole-to-bend-min-hubs",
+        6.35,
+        "fail"
+       ],
+       [
+        "sm-hole-to-bend-min-davis",
+        6.35,
+        "fail"
+       ],
+       [
+        "sm-hole-to-bend-min-dfma",
+        9.524999999999999,
+        "fail"
+       ],
+       [
+        "sm-hole-to-bend-min-paulsen",
+        11.1125,
+        "fail"
+       ],
+       [
+        "sm-hole-to-bend-min-century",
+        9.524999999999999,
+        "fail"
+       ],
+       [
+        "sm-feature-to-bend-protolabs",
+        12.7,
+        "fail"
+       ]
+      ]
+     },
+     {
+      "name": "smallest hole",
+      "size": 2.5,
+      "verdict": "fail",
+      "detail": "beyond all 2 verified rules",
+      "strictest_mm": 3.175,
+      "shop": null,
+      "rules": [
+       [
+        "sm-hole-min-protolabs",
+        3.175,
+        "fail"
+       ],
+       [
+        "sm-hole-min-davis",
+        3.175,
+        "fail"
+       ]
+      ]
+     },
+     {
+      "name": "corner relief (round, depth = its radius t)",
+      "size": 3.17,
+      "verdict": "fail",
+      "detail": "below the shop's 6.858 mm for ALU-125 (3.175 mm); the shop's table decides, the generic rules are shown beside it",
+      "strictest_mm": 6.85,
+      "shop": {
+       "rule": "sendcutsend-5052-and-mild-steel ALU-125 (sendcutsend-specs)",
+       "source": "sendcutsend-specs",
+       "verified": true,
+       "min": 6.858,
+       "units": "mm",
+       "text": "at least 6.858 mm",
+       "verdict": "fail",
+       "why": "below the shop's 6.858 mm for ALU-125 (3.175 mm)"
+      },
+      "rules": [
+       [
+        "sm-relief-depth-min-davis",
+        6.35,
+        "fail"
+       ],
+       [
+        "sm-relief-depth-min-century",
+        6.35,
+        "fail"
+       ],
+       [
+        "sm-relief-depth-min-sendcutsend",
+        6.85,
+        "fail"
+       ],
+       [
+        "sm-relief-depth-min-paulsen",
+        3.175,
+        "pass"
+       ]
+      ]
+     }
+    ]
+   }
+  },
+  "belly_plate": {
+   "part": "belly_plate",
+   "stock": "6061-0.100",
+   "gyropup_rules": "pass",
+   "cadagent": "flat part: no bend rules apply",
+   "dfm": {
+    "verdict": "pass",
+    "rows": [
+     [
+      "smallest hole",
+      "pass"
+     ]
+    ]
+   }
+  },
+  "deck": {
+   "part": "deck",
+   "stock": "5052-0.100",
+   "gyropup_rules": "pass",
+   "bend": {
+    "stock_row": null,
+    "radius_mm": 2.54,
+    "radius_rule": "sm-bend-radius-min-hubs",
+    "k": 0.33,
+    "k_rule": "sm-k-air-soft-r-le-t-hubs",
+    "allowance_mm": 5.306464,
+    "deduction_mm": 4.853536,
+    "min_flange_mm": 17.78,
+    "min_flange_rule": "sm-flange-min-century",
+    "relief_depth_mm": 5.58,
+    "gyropup_stock": {
+     "r_mm": 3.175,
+     "k": 0.4,
+     "bd_mm": 4.847
+    }
+   },
+   "flat_length": {
+    "legs_mm": [
+     20.0,
+     254.0,
+     20.0
+    ],
+    "flat_mm": 284.292928,
+    "verdict": "pass",
+    "detail": "every leg is at least the 17.78 mm flange"
+   },
+   "dfm": {
+    "verdict": "fail",
+    "stock": null,
+    "rows": [
+     {
+      "name": "flange S",
+      "size": 20.0,
+      "verdict": "pass",
+      "detail": "meets all 2 verified rules",
+      "strictest_mm": 10.16,
+      "shop": null,
+      "rules": [
+       [
+        "sm-flange-min-protolabs",
+        10.16,
+        "pass"
+       ],
+       [
+        "sm-flange-min-davis",
+        10.16,
+        "pass"
+       ]
+      ]
+     },
+     {
+      "name": "flange N",
+      "size": 20.0,
+      "verdict": "pass",
+      "detail": "meets all 2 verified rules",
+      "strictest_mm": 10.16,
+      "shop": null,
+      "rules": [
+       [
+        "sm-flange-min-protolabs",
+        10.16,
+        "pass"
+       ],
+       [
+        "sm-flange-min-davis",
+        10.16,
+        "pass"
+       ]
+      ]
+     },
+     {
+      "name": "flange W",
+      "size": 20.0,
+      "verdict": "pass",
+      "detail": "meets all 2 verified rules",
+      "strictest_mm": 10.16,
+      "shop": null,
+      "rules": [
+       [
+        "sm-flange-min-protolabs",
+        10.16,
+        "pass"
+       ],
+       [
+        "sm-flange-min-davis",
+        10.16,
+        "pass"
+       ]
+      ]
+     },
+     {
+      "name": "flange E",
+      "size": 20.0,
+      "verdict": "pass",
+      "detail": "meets all 2 verified rules",
+      "strictest_mm": 10.16,
+      "shop": null,
+      "rules": [
+       [
+        "sm-flange-min-protolabs",
+        10.16,
+        "pass"
+       ],
+       [
+        "sm-flange-min-davis",
+        10.16,
+        "pass"
+       ]
+      ]
+     },
+     {
+      "name": "nearest hole to a bend (VLP-16 locating pin 5/32 in (ream to a l)",
+      "size": 4.86,
+      "verdict": "fail",
+      "detail": "beyond all 3 verified rules",
+      "strictest_mm": 10.16,
+      "shop": null,
+      "rules": [
+       [
+        "sm-hole-to-bend-min-hubs",
+        5.08,
+        "fail"
+       ],
+       [
+        "sm-hole-to-bend-min-davis",
+        5.08,
+        "fail"
+       ],
+       [
+        "sm-feature-to-bend-protolabs",
+        10.16,
+        "fail"
+       ]
+      ]
+     },
+     {
+      "name": "smallest hole",
+      "size": 3.95,
+      "verdict": "pass",
+      "detail": "meets all 2 verified rules",
+      "strictest_mm": 2.54,
+      "shop": null,
+      "rules": [
+       [
+        "sm-hole-min-protolabs",
+        2.54,
+        "pass"
+       ],
+       [
+        "sm-hole-min-davis",
+        2.54,
+        "pass"
+       ]
+      ]
+     },
+     {
+      "name": "corner relief (round, depth = its radius t)",
+      "size": 2.54,
+      "verdict": "warn",
+      "detail": "no verified rule limits this feature for this process: not checked",
+      "strictest_mm": null,
+      "shop": null,
+      "rules": []
+     }
+    ]
+   }
+  },
+  "compute_pallet": {
+   "part": "compute_pallet",
+   "stock": "6061-0.125",
+   "gyropup_rules": "pass",
+   "cadagent": "flat part: no bend rules apply",
+   "dfm": {
+    "verdict": "pass",
+    "rows": [
+     [
+      "smallest hole",
+      "pass"
+     ]
+    ]
+   }
+  },
+  "power_plate": {
+   "part": "power_plate",
+   "stock": "5052-0.100",
+   "gyropup_rules": "pass",
+   "cadagent": "flat part: no bend rules apply",
+   "dfm": {
+    "verdict": "pass",
+    "rows": [
+     [
+      "smallest hole",
+      "pass"
+     ]
+    ]
+   }
+  },
+  "bus_bar": {
+   "part": "bus_bar",
+   "stock": "C110-0.125",
+   "gyropup_rules": "pass",
+   "cadagent": "flat part: no bend rules apply"
+  },
+  "turret_plate": {
+   "part": "turret_plate",
+   "stock": "6061-0.125",
+   "gyropup_rules": "pass",
+   "cadagent": "flat part: no bend rules apply",
+   "dfm": {
+    "verdict": "fail",
+    "rows": [
+     [
+      "smallest hole",
+      "fail"
+     ]
+    ]
+   }
+  },
+  "bay_floor": {
+   "part": "bay_floor",
+   "stock": "5052-0.063",
+   "gyropup_rules": "pass",
+   "bend": {
+    "stock_row": "ALU-063",
+    "radius_mm": 0.889,
+    "radius_rule": "sendcutsend-5052-and-mild-steel ALU-063 (sendcutsend-specs)",
+    "k": 0.42,
+    "k_rule": "sendcutsend-5052-and-mild-steel ALU-063 (sendcutsend-specs)",
+    "allowance_mm": 2.452145,
+    "deduction_mm": 2.526255,
+    "min_flange_mm": 7.696,
+    "min_flange_rule": "sendcutsend-5052-and-mild-steel ALU-063 (sendcutsend-specs)",
+    "relief_depth_mm": 2.997,
+    "gyropup_stock": {
+     "r_mm": 0.889,
+     "k": 0.42,
+     "bd_mm": 2.526
+    }
+   },
+   "flat_length": {
+    "legs_mm": [
+     20.0,
+     99.10040000000001,
+     20.0
+    ],
+    "flat_mm": 134.04789,
+    "verdict": "pass",
+    "detail": "every leg is at least the 7.696 mm flange"
+   },
+   "dfm": {
+    "verdict": "pass",
+    "stock": "ALU-063",
+    "rows": [
+     {
+      "name": "flange S",
+      "size": 20.0,
+      "verdict": "pass",
+      "detail": "meets the shop's 7.696 mm for ALU-063 (1.6 mm); the shop's table decides, the generic rules are shown beside it",
+      "strictest_mm": 8.7122,
+      "shop": {
+       "rule": "sendcutsend-5052-and-mild-steel ALU-063 (sendcutsend-specs)",
+       "source": "sendcutsend-specs",
+       "verified": true,
+       "min": 7.696,
+       "units": "mm",
+       "text": "at least 7.696 mm",
+       "verdict": "pass",
+       "why": "meets the shop's 7.696 mm for ALU-063 (1.6 mm)"
+      },
+      "rules": [
+       [
+        "sm-flange-min-protolabs",
+        6.400799999999999,
+        "pass"
+       ],
+       [
+        "sm-flange-min-davis",
+        6.400799999999999,
+        "pass"
+       ],
+       [
+        "sm-flange-min-century",
+        8.7122,
+        "pass"
+       ],
+       [
+        "sm-flange-min-hubs",
+        4.0893999999999995,
+        "pass"
+       ]
+      ]
+     },
+     {
+      "name": "flange N",
+      "size": 20.0,
+      "verdict": "pass",
+      "detail": "meets the shop's 7.696 mm for ALU-063 (1.6 mm); the shop's table decides, the generic rules are shown beside it",
+      "strictest_mm": 8.7122,
+      "shop": {
+       "rule": "sendcutsend-5052-and-mild-steel ALU-063 (sendcutsend-specs)",
+       "source": "sendcutsend-specs",
+       "verified": true,
+       "min": 7.696,
+       "units": "mm",
+       "text": "at least 7.696 mm",
+       "verdict": "pass",
+       "why": "meets the shop's 7.696 mm for ALU-063 (1.6 mm)"
+      },
+      "rules": [
+       [
+        "sm-flange-min-protolabs",
+        6.400799999999999,
+        "pass"
+       ],
+       [
+        "sm-flange-min-davis",
+        6.400799999999999,
+        "pass"
+       ],
+       [
+        "sm-flange-min-century",
+        8.7122,
+        "pass"
+       ],
+       [
+        "sm-flange-min-hubs",
+        4.0893999999999995,
+        "pass"
+       ]
+      ]
+     },
+     {
+      "name": "nearest hole to a bend (bay side plate)",
+      "size": 7.38,
+      "verdict": "pass",
+      "detail": "meets all 6 verified rules",
+      "strictest_mm": 6.400799999999999,
+      "shop": null,
+      "rules": [
+       [
+        "sm-hole-to-bend-min-hubs",
+        3.2003999999999997,
+        "pass"
+       ],
+       [
+        "sm-hole-to-bend-min-davis",
+        3.2003999999999997,
+        "pass"
+       ],
+       [
+        "sm-hole-to-bend-min-dfma",
+        4.0893999999999995,
+        "pass"
+       ],
+       [
+        "sm-hole-to-bend-min-paulsen",
+        4.8895,
+        "pass"
+       ],
+       [
+        "sm-hole-to-bend-min-century",
+        3.7337999999999996,
+        "pass"
+       ],
+       [
+        "sm-feature-to-bend-protolabs",
+        6.400799999999999,
+        "pass"
+       ]
+      ]
+     },
+     {
+      "name": "smallest hole",
+      "size": 4.27,
+      "verdict": "pass",
+      "detail": "meets all 2 verified rules",
+      "strictest_mm": 1.6001999999999998,
+      "shop": null,
+      "rules": [
+       [
+        "sm-hole-min-protolabs",
+        1.6001999999999998,
+        "pass"
+       ],
+       [
+        "sm-hole-min-davis",
+        1.6001999999999998,
+        "pass"
+       ]
+      ]
+     }
+    ]
+   }
+  },
+  "bay_side": {
+   "part": "bay_side",
+   "stock": "5052-0.063",
+   "gyropup_rules": "pass",
+   "cadagent": "flat part: no bend rules apply",
+   "dfm": {
+    "verdict": "pass",
+    "rows": [
+     [
+      "smallest hole",
+      "pass"
+     ]
+    ]
+   }
+  },
+  "floor_tray_2b": {
+   "part": "floor_tray_2b",
+   "stock": "5052-0.125",
+   "gyropup_rules": "pass",
+   "bend": {
+    "stock_row": "ALU-125",
+    "radius_mm": 3.175,
+    "radius_rule": "sendcutsend-5052-and-mild-steel ALU-125 (sendcutsend-specs)",
+    "k": 0.44,
+    "k_rule": "sendcutsend-5052-and-mild-steel ALU-125 (sendcutsend-specs)",
+    "allowance_mm": 7.181681,
+    "deduction_mm": 5.518319,
+    "min_flange_mm": 12.09,
+    "min_flange_rule": "sendcutsend-5052-and-mild-steel ALU-125 (sendcutsend-specs)",
+    "relief_depth_mm": 6.858,
+    "gyropup_stock": {
+     "r_mm": 3.175,
+     "k": 0.44,
+     "bd_mm": 5.518
+    }
+   },
+   "flat_length": {
+    "legs_mm": [
+     15.0,
+     254.0,
+     15.0
+    ],
+    "flat_mm": 272.963362,
+    "verdict": "pass",
+    "detail": "every leg is at least the 12.09 mm flange"
+   },
+   "dfm": {
+    "verdict": "fail",
+    "stock": "ALU-125",
+    "rows": [
+     {
+      "name": "flange S",
+      "size": 15.0,
+      "verdict": "pass",
+      "detail": "meets the shop's 12.09 mm for ALU-125 (3.175 mm); the shop's table decides, the generic rules are shown beside it",
+      "strictest_mm": 22.224999999999998,
+      "shop": {
+       "rule": "sendcutsend-5052-and-mild-steel ALU-125 (sendcutsend-specs)",
+       "source": "sendcutsend-specs",
+       "verified": true,
+       "min": 12.09,
+       "units": "mm",
+       "text": "at least 12.09 mm",
+       "verdict": "pass",
+       "why": "meets the shop's 12.09 mm for ALU-125 (3.175 mm)"
+      },
+      "rules": [
+       [
+        "sm-flange-min-protolabs",
+        12.7,
+        "pass"
+       ],
+       [
+        "sm-flange-min-davis",
+        12.7,
+        "pass"
+       ],
+       [
+        "sm-flange-min-century",
+        22.224999999999998,
+        "fail"
+       ],
+       [
+        "sm-flange-min-hubs",
+        9.524999999999999,
+        "pass"
+       ]
+      ]
+     },
+     {
+      "name": "flange N",
+      "size": 15.0,
+      "verdict": "pass",
+      "detail": "meets the shop's 12.09 mm for ALU-125 (3.175 mm); the shop's table decides, the generic rules are shown beside it",
+      "strictest_mm": 22.224999999999998,
+      "shop": {
+       "rule": "sendcutsend-5052-and-mild-steel ALU-125 (sendcutsend-specs)",
+       "source": "sendcutsend-specs",
+       "verified": true,
+       "min": 12.09,
+       "units": "mm",
+       "text": "at least 12.09 mm",
+       "verdict": "pass",
+       "why": "meets the shop's 12.09 mm for ALU-125 (3.175 mm)"
+      },
+      "rules": [
+       [
+        "sm-flange-min-protolabs",
+        12.7,
+        "pass"
+       ],
+       [
+        "sm-flange-min-davis",
+        12.7,
+        "pass"
+       ],
+       [
+        "sm-flange-min-century",
+        22.224999999999998,
+        "fail"
+       ],
+       [
+        "sm-flange-min-hubs",
+        9.524999999999999,
+        "pass"
+       ]
+      ]
+     },
+     {
+      "name": "nearest hole to a bend (post, M5 x 12 ISO 7380 from below)",
+      "size": 8.9,
+      "verdict": "warn",
+      "detail": "meets 2 of 6 verified rules; beyond sm-hole-to-bend-min-dfma, sm-hole-to-bend-min-paulsen, sm-hole-to-bend-min-century, sm-feature-to-bend-protolabs",
+      "strictest_mm": 12.7,
+      "shop": null,
+      "rules": [
+       [
+        "sm-hole-to-bend-min-hubs",
+        6.35,
+        "pass"
+       ],
+       [
+        "sm-hole-to-bend-min-davis",
+        6.35,
+        "pass"
+       ],
+       [
+        "sm-hole-to-bend-min-dfma",
+        9.524999999999999,
+        "fail"
+       ],
+       [
+        "sm-hole-to-bend-min-paulsen",
+        11.1125,
+        "fail"
+       ],
+       [
+        "sm-hole-to-bend-min-century",
+        9.524999999999999,
+        "fail"
+       ],
+       [
+        "sm-feature-to-bend-protolabs",
+        12.7,
+        "fail"
+       ]
+      ]
+     },
+     {
+      "name": "smallest hole",
+      "size": 2.5,
+      "verdict": "fail",
+      "detail": "beyond all 2 verified rules",
+      "strictest_mm": 3.175,
+      "shop": null,
+      "rules": [
+       [
+        "sm-hole-min-protolabs",
+        3.175,
+        "fail"
+       ],
+       [
+        "sm-hole-min-davis",
+        3.175,
+        "fail"
+       ]
+      ]
+     }
+    ]
+   }
+  },
+  "deck_2b": {
+   "part": "deck_2b",
+   "stock": "5052-0.125",
+   "gyropup_rules": "pass",
+   "bend": {
+    "stock_row": "ALU-125",
+    "radius_mm": 3.175,
+    "radius_rule": "sendcutsend-5052-and-mild-steel ALU-125 (sendcutsend-specs)",
+    "k": 0.44,
+    "k_rule": "sendcutsend-5052-and-mild-steel ALU-125 (sendcutsend-specs)",
+    "allowance_mm": 7.181681,
+    "deduction_mm": 5.518319,
+    "min_flange_mm": 12.09,
+    "min_flange_rule": "sendcutsend-5052-and-mild-steel ALU-125 (sendcutsend-specs)",
+    "relief_depth_mm": 6.858,
+    "gyropup_stock": {
+     "r_mm": 3.175,
+     "k": 0.44,
+     "bd_mm": 5.518
+    }
+   },
+   "flat_length": {
+    "legs_mm": [
+     20.0,
+     254.0,
+     20.0
+    ],
+    "flat_mm": 282.963362,
+    "verdict": "pass",
+    "detail": "every leg is at least the 12.09 mm flange"
+   },
+   "dfm": {
+    "verdict": "warn",
+    "stock": "ALU-125",
+    "rows": [
+     {
+      "name": "flange S",
+      "size": 20.0,
+      "verdict": "pass",
+      "detail": "meets the shop's 12.09 mm for ALU-125 (3.175 mm); the shop's table decides, the generic rules are shown beside it",
+      "strictest_mm": 22.224999999999998,
+      "shop": {
+       "rule": "sendcutsend-5052-and-mild-steel ALU-125 (sendcutsend-specs)",
+       "source": "sendcutsend-specs",
+       "verified": true,
+       "min": 12.09,
+       "units": "mm",
+       "text": "at least 12.09 mm",
+       "verdict": "pass",
+       "why": "meets the shop's 12.09 mm for ALU-125 (3.175 mm)"
+      },
+      "rules": [
+       [
+        "sm-flange-min-protolabs",
+        12.7,
+        "pass"
+       ],
+       [
+        "sm-flange-min-davis",
+        12.7,
+        "pass"
+       ],
+       [
+        "sm-flange-min-century",
+        22.224999999999998,
+        "fail"
+       ],
+       [
+        "sm-flange-min-hubs",
+        9.524999999999999,
+        "pass"
+       ]
+      ]
+     },
+     {
+      "name": "flange N",
+      "size": 20.0,
+      "verdict": "pass",
+      "detail": "meets the shop's 12.09 mm for ALU-125 (3.175 mm); the shop's table decides, the generic rules are shown beside it",
+      "strictest_mm": 22.224999999999998,
+      "shop": {
+       "rule": "sendcutsend-5052-and-mild-steel ALU-125 (sendcutsend-specs)",
+       "source": "sendcutsend-specs",
+       "verified": true,
+       "min": 12.09,
+       "units": "mm",
+       "text": "at least 12.09 mm",
+       "verdict": "pass",
+       "why": "meets the shop's 12.09 mm for ALU-125 (3.175 mm)"
+      },
+      "rules": [
+       [
+        "sm-flange-min-protolabs",
+        12.7,
+        "pass"
+       ],
+       [
+        "sm-flange-min-davis",
+        12.7,
+        "pass"
+       ],
+       [
+        "sm-flange-min-century",
+        22.224999999999998,
+        "fail"
+       ],
+       [
+        "sm-flange-min-hubs",
+        9.524999999999999,
+        "pass"
+       ]
+      ]
+     },
+     {
+      "name": "nearest hole to a bend (post, M5 x 12 ISO 7380 from above)",
+      "size": 8.9,
+      "verdict": "warn",
+      "detail": "meets 2 of 6 verified rules; beyond sm-hole-to-bend-min-dfma, sm-hole-to-bend-min-paulsen, sm-hole-to-bend-min-century, sm-feature-to-bend-protolabs",
+      "strictest_mm": 12.7,
+      "shop": null,
+      "rules": [
+       [
+        "sm-hole-to-bend-min-hubs",
+        6.35,
+        "pass"
+       ],
+       [
+        "sm-hole-to-bend-min-davis",
+        6.35,
+        "pass"
+       ],
+       [
+        "sm-hole-to-bend-min-dfma",
+        9.524999999999999,
+        "fail"
+       ],
+       [
+        "sm-hole-to-bend-min-paulsen",
+        11.1125,
+        "fail"
+       ],
+       [
+        "sm-hole-to-bend-min-century",
+        9.524999999999999,
+        "fail"
+       ],
+       [
+        "sm-feature-to-bend-protolabs",
+        12.7,
+        "fail"
+       ]
+      ]
+     },
+     {
+      "name": "smallest hole",
+      "size": 3.95,
+      "verdict": "pass",
+      "detail": "meets all 2 verified rules",
+      "strictest_mm": 3.175,
+      "shop": null,
+      "rules": [
+       [
+        "sm-hole-min-protolabs",
+        3.175,
+        "pass"
+       ],
+       [
+        "sm-hole-min-davis",
+        3.175,
+        "pass"
+       ]
+      ]
+     }
+    ]
+   }
+  },
+  "keel_half": {
+   "part": "keel_half",
+   "stock": "5052-0.090",
+   "gyropup_rules": "pass",
+   "bend": {
+    "stock_row": "ALU-090",
+    "radius_mm": 0.813,
+    "radius_rule": "sendcutsend-5052-and-mild-steel ALU-090 (sendcutsend-specs)",
+    "k": 0.37,
+    "k_rule": "sendcutsend-5052-and-mild-steel ALU-090 (sendcutsend-specs)",
+    "allowance_mm": 2.605668,
+    "deduction_mm": 3.592332,
+    "min_flange_mm": 8.28,
+    "min_flange_rule": "sendcutsend-5052-and-mild-steel ALU-090 (sendcutsend-specs)",
+    "relief_depth_mm": 3.607,
+    "gyropup_stock": {
+     "r_mm": 0.813,
+     "k": 0.37,
+     "bd_mm": 3.592
+    }
+   },
+   "flat_length": {
+    "legs_mm": [
+     48.2004,
+     131.14020000000002,
+     48.2004
+    ],
+    "flat_mm": 220.356336,
+    "verdict": "pass",
+    "detail": "every leg is at least the 8.28 mm flange"
+   },
+   "dfm": {
+    "verdict": "warn",
+    "stock": "ALU-090",
+    "rows": [
+     {
+      "name": "flange S",
+      "size": 48.2,
+      "verdict": "pass",
+      "detail": "meets the shop's 8.28 mm for ALU-090 (2.286 mm); the shop's table decides, the generic rules are shown beside it",
+      "strictest_mm": 10.846499999999997,
+      "shop": {
+       "rule": "sendcutsend-5052-and-mild-steel ALU-090 (sendcutsend-specs)",
+       "source": "sendcutsend-specs",
+       "verified": true,
+       "min": 8.28,
+       "units": "mm",
+       "text": "at least 8.28 mm",
+       "verdict": "pass",
+       "why": "meets the shop's 8.28 mm for ALU-090 (2.286 mm)"
+      },
+      "rules": [
+       [
+        "sm-flange-min-protolabs",
+        9.143999999999998,
+        "pass"
+       ],
+       [
+        "sm-flange-min-davis",
+        9.143999999999998,
+        "pass"
+       ],
+       [
+        "sm-flange-min-century",
+        10.846499999999997,
+        "pass"
+       ],
+       [
+        "sm-flange-min-hubs",
+        5.384999999999999,
+        "pass"
+       ]
+      ]
+     },
+     {
+      "name": "flange N",
+      "size": 48.2,
+      "verdict": "pass",
+      "detail": "meets the shop's 8.28 mm for ALU-090 (2.286 mm); the shop's table decides, the generic rules are shown beside it",
+      "strictest_mm": 10.846499999999997,
+      "shop": {
+       "rule": "sendcutsend-5052-and-mild-steel ALU-090 (sendcutsend-specs)",
+       "source": "sendcutsend-specs",
+       "verified": true,
+       "min": 8.28,
+       "units": "mm",
+       "text": "at least 8.28 mm",
+       "verdict": "pass",
+       "why": "meets the shop's 8.28 mm for ALU-090 (2.286 mm)"
+      },
+      "rules": [
+       [
+        "sm-flange-min-protolabs",
+        9.143999999999998,
+        "pass"
+       ],
+       [
+        "sm-flange-min-davis",
+        9.143999999999998,
+        "pass"
+       ],
+       [
+        "sm-flange-min-century",
+        10.846499999999997,
+        "pass"
+       ],
+       [
+        "sm-flange-min-hubs",
+        5.384999999999999,
+        "pass"
+       ]
+      ]
+     },
+     {
+      "name": "nearest hole to a bend (M5 x 10 ISO 7380 up into the cheek flang)",
+      "size": 8.31,
+      "verdict": "warn",
+      "detail": "meets 5 of 6 verified rules; beyond sm-feature-to-bend-protolabs",
+      "strictest_mm": 9.143999999999998,
+      "shop": null,
+      "rules": [
+       [
+        "sm-hole-to-bend-min-hubs",
+        4.571999999999999,
+        "pass"
+       ],
+       [
+        "sm-hole-to-bend-min-davis",
+        4.571999999999999,
+        "pass"
+       ],
+       [
+        "sm-hole-to-bend-min-dfma",
+        5.384999999999999,
+        "pass"
+       ],
+       [
+        "sm-hole-to-bend-min-paulsen",
+        6.527999999999999,
+        "pass"
+       ],
+       [
+        "sm-hole-to-bend-min-century",
+        4.6484999999999985,
+        "pass"
+       ],
+       [
+        "sm-feature-to-bend-protolabs",
+        9.143999999999998,
+        "fail"
+       ]
+      ]
+     },
+     {
+      "name": "smallest hole",
+      "size": 3.3,
+      "verdict": "pass",
+      "detail": "meets all 2 verified rules",
+      "strictest_mm": 2.2859999999999996,
+      "shop": null,
+      "rules": [
+       [
+        "sm-hole-min-protolabs",
+        2.2859999999999996,
+        "pass"
+       ],
+       [
+        "sm-hole-min-davis",
+        2.2859999999999996,
+        "pass"
+       ]
+      ]
+     }
+    ]
+   }
+  },
+  "strap": {
+   "part": "strap",
+   "stock": "5052-0.090",
+   "gyropup_rules": "pass",
+   "cadagent": "flat part: no bend rules apply",
+   "dfm": {
+    "verdict": "pass",
+    "rows": [
+     [
+      "smallest hole",
+      "pass"
+     ]
+    ]
+   }
+  }
+ },
+ "joints": [
+  {
+   "thread": "M3",
+   "insert": "mcmaster-94459A140",
+   "material": "pa6-cf20-polymaker-wet",
+   "insert_pull_out_n": {
+    "low": 546,
+    "mid": 919,
+    "high": 1147
+   },
+   "insert_torque_out_nm": {
+    "low": 0.85,
+    "mid": 2.09,
+    "high": 3.82
+   },
+   "insert_allowable_pull_n": 273,
+   "insert_allowable_turn_nm": 0.42,
+   "insert_tighten_nm": 0.4,
+   "insert_tighten_governed_by": "insert_face",
+   "insert_preload_n": {
+    "low": 486,
+    "high": 1044
+   },
+   "insert_verdict": "warn",
+   "insert_margin": 2.0,
+   "pem": "S-M3-0",
+   "pem_pushout_n": 280,
+   "pem_torque_out_nm": 0.9,
+   "pem_axial_min_n": 4395,
+   "pem_axial_unified": "S-440-0",
+   "pem_tighten_grade5_nm": 0.96,
+   "screw_8_8_proof_n": 2920
+  },
+  {
+   "thread": "M3",
+   "insert": "mcmaster-94459A140",
+   "material": "petg-bambu-basic",
+   "insert_pull_out_n": {
+    "low": 750,
+    "mid": 979,
+    "high": 1086
+   },
+   "insert_torque_out_nm": {
+    "low": 1.16,
+    "mid": 2.22,
+    "high": 3.61
+   },
+   "insert_allowable_pull_n": 375,
+   "insert_allowable_turn_nm": 0.58,
+   "insert_tighten_nm": 0.4,
+   "insert_tighten_governed_by": "insert_face",
+   "insert_preload_n": {
+    "low": 486,
+    "high": 1044
+   },
+   "insert_verdict": "warn",
+   "insert_margin": 2.0,
+   "pem": "S-M3-0",
+   "pem_pushout_n": 280,
+   "pem_torque_out_nm": 0.9,
+   "pem_axial_min_n": 4395,
+   "pem_axial_unified": "S-440-0",
+   "pem_tighten_grade5_nm": 0.96,
+   "screw_8_8_proof_n": 2920
+  },
+  {
+   "thread": "M4",
+   "insert": "mcmaster-94459A160",
+   "material": "pa6-cf20-polymaker-wet",
+   "insert_pull_out_n": {
+    "low": 727,
+    "mid": 1224,
+    "high": 1528
+   },
+   "insert_torque_out_nm": {
+    "low": 1.34,
+    "mid": 3.3,
+    "high": 6.03
+   },
+   "insert_allowable_pull_n": 364,
+   "insert_allowable_turn_nm": 0.67,
+   "insert_tighten_nm": 0.56,
+   "insert_tighten_governed_by": "insert_face",
+   "insert_preload_n": {
+    "low": 507,
+    "high": 1082
+   },
+   "insert_verdict": "warn",
+   "insert_margin": 2.0,
+   "pem": "S-M4-0",
+   "pem_pushout_n": 300,
+   "pem_torque_out_nm": 2.37,
+   "pem_axial_min_n": 8767,
+   "pem_axial_unified": "S-832-0",
+   "pem_tighten_grade5_nm": 2.82,
+   "screw_8_8_proof_n": 5100
+  },
+  {
+   "thread": "M4",
+   "insert": "mcmaster-94459A160",
+   "material": "petg-bambu-basic",
+   "insert_pull_out_n": {
+    "low": 998,
+    "mid": 1304,
+    "high": 1446
+   },
+   "insert_torque_out_nm": {
+    "low": 1.83,
+    "mid": 3.52,
+    "high": 5.71
+   },
+   "insert_allowable_pull_n": 499,
+   "insert_allowable_turn_nm": 0.92,
+   "insert_tighten_nm": 0.56,
+   "insert_tighten_governed_by": "insert_face",
+   "insert_preload_n": {
+    "low": 507,
+    "high": 1082
+   },
+   "insert_verdict": "warn",
+   "insert_margin": 2.0,
+   "pem": "S-M4-0",
+   "pem_pushout_n": 300,
+   "pem_torque_out_nm": 2.37,
+   "pem_axial_min_n": 8767,
+   "pem_axial_unified": "S-832-0",
+   "pem_tighten_grade5_nm": 2.82,
+   "screw_8_8_proof_n": 5100
+  },
+  {
+   "thread": "M5",
+   "insert": "mcmaster-94459A775",
+   "material": "pa6-cf20-polymaker-wet",
+   "insert_pull_out_n": {
+    "low": 1140,
+    "mid": 1919,
+    "high": 2394
+   },
+   "insert_torque_out_nm": {
+    "low": 2.66,
+    "mid": 6.56,
+    "high": 12.0
+   },
+   "insert_allowable_pull_n": 570,
+   "insert_allowable_turn_nm": 1.33,
+   "insert_tighten_nm": 1.26,
+   "insert_tighten_governed_by": "insert_face",
+   "insert_preload_n": {
+    "low": 917,
+    "high": 1977
+   },
+   "insert_verdict": "warn",
+   "insert_margin": 2.0,
+   "pem": "SS-M5-0",
+   "pem_pushout_n": 300,
+   "pem_torque_out_nm": 3.0,
+   "pem_axial_min_n": 9960,
+   "pem_axial_unified": "SS-024-0",
+   "pem_tighten_grade5_nm": 3.73,
+   "screw_8_8_proof_n": 8250
+  },
+  {
+   "thread": "M5",
+   "insert": "mcmaster-94459A775",
+   "material": "petg-bambu-basic",
+   "insert_pull_out_n": {
+    "low": 1565,
+    "mid": 2044,
+    "high": 2267
+   },
+   "insert_torque_out_nm": {
+    "low": 3.65,
+    "mid": 6.99,
+    "high": 11.36
+   },
+   "insert_allowable_pull_n": 782,
+   "insert_allowable_turn_nm": 1.82,
+   "insert_tighten_nm": 1.26,
+   "insert_tighten_governed_by": "insert_face",
+   "insert_preload_n": {
+    "low": 917,
+    "high": 1977
+   },
+   "insert_verdict": "warn",
+   "insert_margin": 2.0,
+   "pem": "SS-M5-0",
+   "pem_pushout_n": 300,
+   "pem_torque_out_nm": 3.0,
+   "pem_axial_min_n": 9960,
+   "pem_axial_unified": "SS-024-0",
+   "pem_tighten_grade5_nm": 3.73,
+   "screw_8_8_proof_n": 8250
+  }
+ ],
+ "pem_data": {
+  "source": "PennEngineering bulletin CL (self-clinching nuts), Performance Data, 10/13/26; averages",
+  "url": "https://www.pemnet.com/products/product-finder/ss-m5-0/ (Datasheets: the CL bulletin PDF)",
+  "read_on": "2026-11-01",
+  "sheet": "5052-H34 aluminium",
+  "S-M3-0": {
+   "pushout_n": 280,
+   "torque_out_nm": 0.9,
+   "install_kn": "6.7-8.9"
+  },
+  "S-M4-0": {
+   "pushout_n": 300,
+   "torque_out_nm": 2.37,
+   "install_kn": "11.2-13.4"
+  },
+  "SS-M5-0": {
+   "pushout_n": 300,
+   "torque_out_nm": 3.0,
+   "install_kn": "11.2-15.6"
+  },
+  "S-M6-0": {
+   "pushout_n": 970,
+   "torque_out_nm": 7.9,
+   "install_kn": "18-32"
+  },
+  "nut_yield_mpa": 720
+ },
+ "pem_axial": {
+  "M3": {
+   "unified": "S-440-0",
+   "min_axial_n": 4395,
+   "torque_grade5_nm": 0.96
+  },
+  "M4": {
+   "unified": "S-832-0",
+   "min_axial_n": 8767,
+   "torque_grade5_nm": 2.82
+  },
+  "M5": {
+   "unified": "SS-024-0",
+   "min_axial_n": 9960,
+   "torque_grade5_nm": 3.73
+  },
+  "source": "PennEngineering, Axial Strength and Mating Screw Recommended Tightening Torque for PEM self-clinching nuts (unified; 180 ksi screw; K = 0.20), updated 10/28/21, read 2026-11-01"
+ },
+ "rivet": {
+  "size": "1/8 in aluminium body, steel mandrel, dome head (POP AD43BS class; grip 0.126-0.187 in)",
+  "shear_n": 756,
+  "tensile_n": 979,
+  "source": "IFI-114 (2015) minimum ultimate loads, printed in Fastener SuperStore's rivet catalogue page (fastenersuperstore.com/product_specs/rivets-blind-aluminum-steel-dome-standard), read 2026-11-01"
+ },
+ "scs_price_probes": {
+  "plate": "200 x 150 mm, 1/8 in 5052, deburred, qty 1",
+  "flat": 25.31,
+  "two_bends": 42.36,
+  "four_pem": 32.65,
+  "twelve_pem": 34.53,
+  "per_pem_usd": 0.235,
+  "hardware_setup_usd": 6.4,
+  "two_bends_usd": 17.05,
+  "read_on": "2026-11-01"
+ },
+ "fea": {}
+}
