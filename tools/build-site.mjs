@@ -8,6 +8,7 @@ import { parseHTML } from 'linkedom';
 import { addModelPreviews } from '../web/model-links.js';
 import { writeMarkdownSite } from './site-markdown.mjs';
 import { SITE_CACHE_CONTROL, versionSiteAssets } from './site-cache.mjs';
+import { collectStatus, createReader, renderBoard, shallowHistory } from './status-board.mjs';
 const root = path.resolve(import.meta.dirname, '..');
 const out = path.join(root, 'dist');
 const read = (p) => readFile(path.join(root, p), 'utf8');
@@ -41,6 +42,21 @@ for (const image of Object.values(images)) {
 }
 await writeFile(path.join(out,'catalog/images.json'),JSON.stringify(images));
 await mkdir(path.join(out, 'site/pages'), { recursive: true });
+// The design status board: every number from a committed record, every date from git. Cloudflare Pages clones
+// shallowly, so there the build first fetches the history; anywhere else a shallow checkout shows no dates rather
+// than wrong ones (tools/status-board.mjs).
+let history = !shallowHistory(root);
+if (!history && process.env.CF_PAGES) {
+  try { execFileSync('git', ['fetch', '--quiet', '--unshallow'], { cwd: root, stdio: 'inherit', timeout: 300000 }); history = !shallowHistory(root); }
+  catch (error) { console.warn(`Status board: could not fetch the history (${error.message}); change dates are left out.`); }
+}
+const status = collectStatus(createReader(root, { git: history }));
+for (const [file, options] of [['index.html', { compact: true }], ['designer/progress.html', {}]]) {
+  const target = path.join(out, file), html = await readFile(target, 'utf8');
+  if (!html.includes('<!-- status-board -->')) throw new Error(`${file} has no <!-- status-board --> marker`);
+  await writeFile(target, html.replace('<!-- status-board -->', renderBoard(status, options)));
+}
+await writeFile(path.join(out, 'site/status.json'), JSON.stringify({ generator: 'tools/status-board.mjs', history, ...status }, null, 2));
 const nav = [
   {id:'home', title:'Home', href:''}, {id:'simulate',title:'Play',href:'designer/sim.html'},
   {id:'progress',title:'Progress',href:'designer/progress.html'}, {id:'build',title:'Build',href:'designer/build.html'},
@@ -126,5 +142,5 @@ for (const file of (await readdir(out, { recursive:true })).filter(file => file.
 const assets = await versionSiteAssets(out);
 // Markdown records final HTML hashes, so asset URL migration must precede it.
 const markdownPages = await writeMarkdownSite(out);
-await writeFile(path.join(out,'version.json'),JSON.stringify({revision,assets,built:new Date().toISOString()},null,2));
+await writeFile(path.join(out,'version.json'),JSON.stringify({revision,assets,history,built:new Date().toISOString()},null,2));
 console.log(`Built dist: landing page, simulator, portal, ${documents.length} documents, ${markdownPages.length} Markdown pages and committed design assets. Revision ${revision.slice(0,12)}`);

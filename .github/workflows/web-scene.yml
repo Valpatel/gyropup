@@ -90,6 +90,8 @@ jobs:
               npm run test:web
               npm run test:progress
               npm run test:landing-loop
+              npm run test:status-board
+              npm run test:walls
               npm run test:highlights
               npm run test:highlight-integration
               npm run test:markdown

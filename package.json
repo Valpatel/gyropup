@@ -40,7 +40,9 @@
     "test:highlight-integration": "node tools/test-highlight-integration.mjs",
     "test:highlight-media": "python3 tools/check-highlights.py",
     "test:landing-loop": "node --test tools/test-landing-loop.mjs",
-    "test:privacy": "node --test tools/test-privacy.mjs"
+    "test:privacy": "node --test tools/test-privacy.mjs",
+    "test:status-board": "node --test tools/test-status-board.mjs",
+    "test:walls": "node tools/test-walls.mjs"
   },
   "devDependencies": {
     "@playwright/test": "1.56.1",
