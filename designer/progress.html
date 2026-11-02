@@ -80,6 +80,8 @@
   }
 </style>
 <link rel="stylesheet" href="progress.css">
+<link rel="stylesheet" href="../web/status-board.css">
+<script type="module" src="../web/status-board.js"></script>
 </head>
 <body>
 <main class="prog">
@@ -91,7 +93,7 @@
     <p id="current-focus" class="current-focus"></p>
   </header>
   <div id="progress-loading"><div class="gp-loading" role="status" aria-live="polite" aria-busy="true" data-state="loading"><span class="gp-loading-icon" aria-hidden="true"></span><span class="gp-loading-message">Loading the published progress reports…</span></div></div>
-  <nav class="portal-jumps" aria-label="Progress sections"><a href="#strength">Deformation</a><a href="#latest">Latest work</a><a href="#status">Status</a><a href="#designs">Designs &amp; tests</a><a href="#parts">Parts &amp; prints</a><a href="#archive">History</a></nav>
+  <nav class="portal-jumps" aria-label="Progress sections"><a href="#strength">Deformation</a><a href="#latest">Latest work</a><a href="#board">Design status</a><a href="#status">Status</a><a href="#designs">Designs &amp; tests</a><a href="#parts">Parts &amp; prints</a><a href="#archive">History</a></nav>
 
   <section class="study-feature" id="strength" aria-labelledby="strength-title">
     <div class="feature-heading"><p class="eyebrow">Inside the engineering</p><h2 id="strength-title">See where the structure bends.</h2><p>Explore a solved load case, then open the same field in 3D. The movement is exaggerated so small deflections are visible.</p></div>
@@ -103,7 +105,10 @@
   </section>
 
   <section id="latest" aria-labelledby="latest-title"><h2 class="section-title" id="latest-title">Latest from the workshop</h2><ul class="log latest-grid" id="log"></ul></section>
-  <section aria-labelledby="status-title"><h2 class="section-title" id="status-title">Where we are</h2><div class="status" id="status"></div></section>
+
+  <!-- status-board -->
+
+  <details class="progress-fold" id="status-fold"><summary><span><strong id="status-title">Where we are, in words</strong><small>The written status of each workstream; the board above shows the same work from its records</small></span></summary><div class="fold-body"><div class="status" id="status"></div></div></details>
 
   <section id="designs" aria-labelledby="designs-title"><h2 class="section-title" id="designs-title">Designs &amp; recorded tests</h2><p class="lede">Open a workstream to inspect its published snapshot. CAD and simulation remain distinct from physical testing.</p>
     <details class="progress-fold"><summary><span><strong>The five-bar leg</strong><small>Both motors in the body · poses, geometry and renders</small></span></summary><div class="fold-body"><p class="lede" id="leglede"></p><div class="gallery" id="leg"></div></div></details>

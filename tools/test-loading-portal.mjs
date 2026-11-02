@@ -102,9 +102,9 @@ try{
     await page.getByText('The five-bar leg',{exact:true}).click();
     assert.match(await page.locator('#leglede').innerText(),/Two RS-04s/);
     await page.evaluate(()=>window.__portalLoads.progress.retry());await state(page,'load-progress','ready');
-    assert.match(await page.locator('#status').innerText(),/Newer report/);
+    assert.match(await page.locator('#status').textContent(),/Newer report/); // the written status is folded under the board, so read its text, not its rendering
     if(stale==='failure')await fail(oldRoute);else await oldRoute.fulfill({contentType:'application/json',body:JSON.stringify({...progress,status:[{title:'Obsolete report',value:'Old response'}]})});
-    await ready(page);assert.match(await page.locator('#status').innerText(),/Newer report/);assert.doesNotMatch(await page.locator('#status').innerText(),/Obsolete/);
+    await ready(page);assert.match(await page.locator('#status').textContent(),/Newer report/);assert.doesNotMatch(await page.locator('#status').textContent(),/Obsolete/);
     record('Progress independence and stale '+stale);await page.close();
   }
   const reports=await pageFor('/designer/progress.html',async page=>{

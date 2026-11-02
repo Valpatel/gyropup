@@ -239,6 +239,16 @@ across stage changes, conversation and scene identity, loop blending, stale
 fetches, cached models, target re-racking, and phone slider layouts. The mock
 verifies browser continuity without claiming a production AI backend is online.
 
+### The design status board and walls of text
+
+The landing page and Progress carry a status board built from the committed records at build time
+(`tools/status-board.mjs`): gate verdicts, strength studies against their own targets, the insert-joint inventory,
+the leg's pre-print screen, print plans, bench measurement sheets and mass against D71. Each panel shows git's date
+for its records; Cloudflare's shallow clone is unshallowed by the build (only when `CF_PAGES` is set). Run
+`npm run test:status-board`. `npm run test:walls` fails a page with more than 1200 px of text and no figure at
+1366 x 800; `tools/wall-backlog.json` lists the pages that did on 2026-11-01 and only shrinks
+(`node tools/test-walls.mjs --report` lists every page).
+
 ### Keep public progress current
 
 At each meaningful engineering checkpoint and website release, update

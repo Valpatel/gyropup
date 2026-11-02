@@ -1,0 +1,112 @@
+/* The design status board (tools/status-board.mjs): a navy summary strip, then one light panel a subsystem.
+   Colours mean the same thing everywhere: green meets its target, teal is noted, amber is below target or the owner's
+   call, orange-red is under 1.0 or a fix, and hatched grey is not measured yet. */
+@import url('/designer/kit/vendor/fonts/fonts.css');
+.status-board{--sb-ink:#173d3c;--sb-muted:#4f625e;--sb-line:#d5ddd5;--sb-card:#fffef9;
+  --sb-pass:#3f7d43;--sb-note:#5b8a94;--sb-warn:#d69a12;--sb-fail:#bd3a12;--sb-unknown:#b9c2be;
+  --sb-pass-t:#23502a;--sb-note-t:#285059;--sb-warn-t:#694a00;--sb-fail-t:#8c290b;--sb-unknown-t:#4c5955;
+  margin:clamp(56px,7vw,96px) 0;color:var(--sb-ink);font-family:'Inter',system-ui,sans-serif}
+.status-board *,.status-board *::before,.status-board *::after{box-sizing:border-box}
+.status-board a{color:inherit}
+.status-board .vh{position:absolute;width:1px;height:1px;overflow:hidden;clip:rect(0 0 0 0);white-space:nowrap}
+.sb-heading{display:grid;grid-template-columns:minmax(0,1.1fr) minmax(0,1fr);gap:clamp(20px,5vw,72px);align-items:end;margin-bottom:28px}
+.sb-heading .eyebrow{display:flex;align-items:center;gap:9px;margin:0 0 12px;color:#386248;font:700 11px/1.5 'JetBrains Mono',monospace;letter-spacing:.12em}
+.sb-heading .status-dot{flex:none;width:9px;height:9px;border-radius:50%;background:#e2541d;box-shadow:0 0 0 4px #e2541d22;animation:sb-pulse 1.8s ease-in-out infinite}
+.sb-heading h2{margin:0;font-size:clamp(34px,4.6vw,58px);line-height:1.02;letter-spacing:-.045em}
+.sb-heading h2 span{color:#bd3a12}
+.sb-lede{margin:0;color:var(--sb-muted);font-size:15px;line-height:1.7}
+.sb-lede time{white-space:nowrap;color:var(--sb-ink);font-weight:650}
+
+/* The strip: the robot as a whole, on the warning's approved navy surface. */
+.sb-strip{display:grid;grid-template-columns:1.5fr repeat(3,minmax(0,1fr));gap:1px;overflow:hidden;border-radius:22px;background:#2b4651;
+  box-shadow:0 18px 44px #132a3426,inset 0 1px 0 #ffffff14}
+.sb-stat{min-width:0;padding:22px 22px 20px;background:radial-gradient(ellipse at 0 100%,#294650 0,transparent 75%),#132a34;color:#eef4f1}
+.sb-stat-label{margin:0 0 8px;color:#ffd36d;font:700 10px/1.5 'JetBrains Mono',monospace;letter-spacing:.1em;text-transform:uppercase}
+.sb-stat-value{margin:0 0 14px;font-size:15px;color:#c7d6d1}
+.sb-stat-value b{color:#fff;font-size:34px;line-height:1;letter-spacing:-.03em;font-weight:750;margin-right:2px}
+.sb-stat-note{margin:12px 0 0;color:#b6c7c2;font-size:12px;line-height:1.55}
+.sb-stat .sb-bar{background:#ffffff1f}
+.sb-scale{position:relative;display:block;height:12px;margin:0 0 30px;border-radius:6px;background:#ffffff1f}
+.sb-scale .sb-fill{position:absolute;inset:0 auto 0 0;width:var(--w);border-radius:6px;background:linear-gradient(90deg,#4f9a54,#79c46d);transform-origin:left}
+.sb-tick{position:absolute;top:-4px;bottom:-4px;left:var(--x);width:2px;margin-left:-1px;background:#ffd36d}
+.sb-tick.is-design{background:#ffffff99}.sb-tick.is-end{margin-left:-2px;background:#ff9b78}
+.sb-scale{margin-bottom:10px}
+.sb-ticks{display:flex;flex-wrap:wrap;gap:4px 14px;margin:0;color:#d7e3df;font:600 10px/1.5 'JetBrains Mono',monospace}
+.sb-ticks span{display:inline-flex;align-items:center;gap:6px}
+.sb-ticks span::before{content:"";width:2px;height:11px;background:#ffd36d}
+.sb-ticks .is-design::before{background:#ffffff99}.sb-ticks .is-end::before{background:#ff9b78}
+.sb-legend{display:flex;flex-wrap:wrap;gap:6px 18px;margin:18px 2px 20px;padding:0;list-style:none;color:var(--sb-muted);font-size:12px}
+.sb-legend li{display:flex;align-items:center;gap:7px}
+.sb-legend li::before{content:"";width:22px;height:9px;border-radius:5px;background:var(--c)}
+.sb-legend [data-k=pass],.sb-bar [data-k=pass]{--c:var(--sb-pass)}
+.sb-legend [data-k=note],.sb-bar [data-k=note]{--c:var(--sb-note)}
+.sb-legend [data-k=warn],.sb-bar [data-k=warn]{--c:var(--sb-warn)}
+.sb-legend [data-k=fail],.sb-bar [data-k=fail]{--c:var(--sb-fail)}
+.sb-legend [data-k=unknown],.sb-bar [data-k=unknown]{--c:repeating-linear-gradient(135deg,#c3cbc7 0 4px,#e2e7e4 4px 8px)}
+
+/* The panels. */
+.sb-grid{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:18px}
+.sb-panel{position:relative;display:flex;flex-direction:column;min-width:0;overflow:hidden;border:1px solid var(--sb-line);border-radius:20px;background:var(--sb-card);box-shadow:0 10px 26px #294a3810}
+.sb-panel::before{content:"";position:absolute;z-index:1;inset:0 0 auto;height:4px;background:var(--edge,var(--sb-pass))}
+.sb-panel[data-state=warn]{--edge:var(--sb-warn)}.sb-panel[data-state=fail]{--edge:var(--sb-fail)}.sb-panel[data-state=unknown]{--edge:#9aa6a1}
+.sb-shot{position:relative;display:block;aspect-ratio:16/10;overflow:hidden;background:linear-gradient(145deg,#e2f0f4,#bfdbe5)}
+.sb-shot img{display:block;width:100%;height:100%;object-fit:contain;transition:transform .5s ease}
+a.sb-shot:hover img{transform:scale(1.04)}
+.sb-noshot{display:grid;place-content:center;justify-items:center;gap:8px;background:repeating-linear-gradient(135deg,#eef1ef 0 10px,#e3e8e5 10px 20px);color:#4c5955;font:650 12px 'JetBrains Mono',monospace}
+.sb-noshot svg{width:110px;height:74px;fill:none;stroke:#8e9a95;stroke-width:3;stroke-dasharray:6 5}
+.sb-body{display:flex;flex-direction:column;flex:1;padding:16px 18px 18px}
+.sb-body h3{margin:0;font-size:21px;letter-spacing:-.02em}
+.sb-body h3 a{text-decoration:none}.sb-body h3 a:hover,.sb-body h3 a:focus-visible{text-decoration:underline}
+.sb-blurb{margin:3px 0 8px;color:var(--sb-muted);font-size:13px;line-height:1.45}
+.sb-when{display:flex;flex-wrap:wrap;align-items:center;gap:4px;margin:0 0 6px;color:var(--sb-muted);font:600 11px/1.5 'JetBrains Mono',monospace}
+.sb-when time{color:var(--sb-ink)}
+.sb-when a{color:#285059}
+.sb-pulse{flex:none;width:8px;height:8px;margin-right:4px;border-radius:50%;background:#9aa6a1}
+.sb-when.is-recent .sb-pulse{background:#e2541d;box-shadow:0 0 0 0 #e2541d66;animation:sb-ring 2s ease-out infinite}
+.sb-when.is-recent .sb-ago{color:#8c290b}
+.sb-meters{margin:6px 0 0;padding:0;list-style:none}
+.sb-meter{padding:11px 0 10px;border-top:1px solid #e3e8e1}
+.sb-meter-head{display:flex;flex-wrap:wrap;align-items:baseline;justify-content:space-between;gap:2px 10px;margin:0 0 7px}
+.sb-label{font-size:13px;font-weight:650}
+.sb-reading{font-size:12px;color:var(--sb-muted);text-align:right}
+.sb-value{color:var(--sb-ink);font-size:17px;font-weight:750;letter-spacing:-.01em}
+.sb-bar{display:flex;gap:2px;height:10px;overflow:hidden;border-radius:5px;background:#e7ece8}
+.sb-bar i{display:block;flex:none;width:var(--w);height:100%;background:var(--c);border-radius:2px;transform-origin:left}
+.sb-bar i:first-child{border-radius:5px 2px 2px 5px}.sb-bar i:last-child{border-radius:2px 5px 5px 2px}.sb-bar i:only-child{border-radius:5px}
+.sb-note{margin:7px 0 0;color:var(--sb-muted);font-size:12px;line-height:1.5}
+.sb-state{font-weight:700}
+.sb-meter[data-state=pass] .sb-state{color:var(--sb-pass-t)}.sb-meter[data-state=warn] .sb-state{color:var(--sb-warn-t)}
+.sb-meter[data-state=fail] .sb-state{color:var(--sb-fail-t)}.sb-meter[data-state=unknown] .sb-state{color:var(--sb-unknown-t)}.sb-meter[data-state=part] .sb-state{color:var(--sb-note-t)}
+.sb-src{white-space:nowrap;color:#285059}
+.sb-gates{display:flex;flex-wrap:wrap;gap:5px;margin:10px 0 0;padding:0;list-style:none}
+.sb-gates li{border:1px solid;border-radius:999px;font:650 11px/1.4 'Inter',system-ui,sans-serif}
+.sb-gates a{display:block;padding:3px 9px;text-decoration:none}
+.sb-gates li::before{content:"";display:none}
+.sb-gates [data-status=pass]{border-color:#b6d6a4;background:#e6f2dd;color:#23502a}
+.sb-gates [data-status=warn]{border-color:#e6cd82;background:#fff3cd;color:#5c4300}
+.sb-gates [data-status=fail]{border-color:#efb79e;background:#fde5d9;color:#8c290b}
+.sb-more{align-self:flex-start;margin-top:auto;padding-top:12px;color:#285059;font-size:13px;font-weight:650}
+.sb-swipe{display:none;margin:-6px 2px 10px;color:var(--sb-muted);font:600 11px 'JetBrains Mono',monospace}
+.sb-foot{margin:18px 2px 0;color:var(--sb-muted);font-size:12px;line-height:1.6}
+
+/* Motion that means something: with the script, bars fill as the board comes into view, and a panel whose records
+   changed in the last few days pulses. Without the script (or with reduced motion) everything is drawn in full. */
+.sb-armed .sb-panel{transition:opacity .5s ease,transform .5s ease}
+.sb-armed .sb-panel:not(.is-in){opacity:0;transform:translateY(14px)}
+.sb-armed :is(.sb-bar i,.sb-fill){transition:transform .9s cubic-bezier(.2,.7,.2,1) calc(var(--d,0) * 1ms)}
+.sb-armed :is(.sb-panel,.sb-strip):not(.is-in) :is(.sb-bar i,.sb-fill){transform:scaleX(0)}
+@keyframes sb-pulse{50%{opacity:.35}}
+@keyframes sb-ring{0%{box-shadow:0 0 0 0 #e2541d66}80%,100%{box-shadow:0 0 0 8px #e2541d00}}
+@media(prefers-reduced-motion:reduce){.status-board *,.status-board *::before,.status-board *::after{animation:none!important;transition:none!important}
+  .sb-armed .sb-panel,.sb-armed :is(.sb-panel,.sb-strip) :is(.sb-bar i,.sb-fill){opacity:1;transform:none}}
+
+.status-board.is-compact .sb-meter:nth-child(n+4){display:none}
+@media(max-width:1100px){.sb-grid{grid-template-columns:repeat(2,minmax(0,1fr))}.sb-strip{grid-template-columns:repeat(2,minmax(0,1fr))}.sb-mass{grid-column:1/-1}}
+@media(max-width:760px){.sb-heading{grid-template-columns:1fr;gap:14px}.sb-grid{grid-template-columns:1fr}.sb-strip{grid-template-columns:repeat(2,minmax(0,1fr))}.sb-stat{padding:16px}.sb-stat.sb-unknown{grid-column:1/-1}.sb-stat-value b{font-size:30px}
+  .sb-shot{aspect-ratio:16/9}}
+@media(max-width:760px){.status-board.is-compact .sb-grid{display:flex;gap:12px;overflow-x:auto;scroll-snap-type:x mandatory;margin:0 calc(var(--sb-gutter,20px) * -1);padding:4px var(--sb-gutter,20px) 14px;scroll-padding:0 var(--sb-gutter,20px);overscroll-behavior-x:contain}
+  .status-board.is-compact .sb-panel{flex:0 0 min(86%,340px);scroll-snap-align:start}
+  .status-board.is-compact .sb-grid:focus-visible{outline:3px solid #b5652f;outline-offset:2px}
+  .sb-swipe{display:block}}
+@media(max-width:360px){.status-board{--sb-gutter:16px}}
+@media(max-width:380px){.sb-tick.is-design::after{display:none}.sb-body{padding:14px}}
