@@ -341,7 +341,7 @@ def fea_rows():
     out = {'runs': {k: {'provenance': v['provenance'], 'seconds': v['seconds'], 'note': EXTRA_RUNS.get(k)} for k, v in runs.items()}}
     for opt, src in FEA_FROM.items():
         res = {}
-        for run in set(src.values()):
+        for run in sorted(set(src.values())):
             for case, r in (runs.get(run) or {}).get('results', {}).items():
                 if src[case[0]] == run:
                     res[case] = {**r, 'run': run}
