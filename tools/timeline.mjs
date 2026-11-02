@@ -64,6 +64,7 @@ export function changeUnits(git, head = 'HEAD') {
       seen.add(sha);
       const [p1, p2] = parents.split(' ');
       if (p2 && /^Merge pull request #\d+ /m.test(git(['log', '--first-parent', '--merges', '--format=%s', `${p1}..${p2}`]))) { walk([`${p1}..${p2}`]); continue; }
+      if (!p1) continue; // the first commit has nothing to compare against
       units.push({ sha, date, subject, body: body || '' });
     }
   };

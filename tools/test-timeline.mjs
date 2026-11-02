@@ -101,19 +101,30 @@ test('every published change is a pull request or a direct commit that changed t
   }
 });
 
-test('nothing is skipped: every pull request and direct commit in the span that changed the design is on the timeline', () => {
+test('nothing is skipped: every change in the span that changed the design is on the timeline', () => {
   const shas = new Set(events.map(e => e.sha)), since = Date.parse(events.at(-1).date);
-  const candidates = [
-    ...git('log', '--merges', '--format=%H %cI', '--grep=^Merge pull request #', 'HEAD').toString().trim().split('\n'),
-    ...git('log', '--first-parent', '--no-merges', '--format=%H %cI', 'HEAD').toString().trim().split('\n'),
-  ].map(l => l.split(' ')).filter(([, d]) => Date.parse(d) >= since).map(([sha]) => sha);
-  let checked = 0;
-  for (const sha of new Set(candidates)) {
-    if (isIntegration(sha) || !designChange(sha)) continue;
+  // Every commit of the main line, and of every branch an integration merge brings in (its first parent up to its
+  // second), each once: pull request merges, other merges and direct commits alike.
+  const units = new Set(), seen = new Set(), ranges = [['HEAD']];
+  while (ranges.length) {
+    for (const line of git('log', '--first-parent', '--format=%H %P%x1f%cI', ...ranges.pop()).toString().trim().split('\n')) {
+      const [ids, date] = line.split('\x1f'), [sha, p1, p2] = ids.split(' ');
+      if (seen.has(sha) || Date.parse(date) < since) continue;
+      seen.add(sha);
+      if (isIntegration(sha)) ranges.push([`${p1}..${p2}`]);
+      else units.add(sha);
+    }
+  }
+  const mainLine = new Set(git('rev-list', '--first-parent', 'HEAD').toString().trim().split('\n'));
+  let checked = 0, opened = 0;
+  for (const sha of units) {
+    if (!designChange(sha)) continue;
     checked++;
+    if (!mainLine.has(sha)) opened++;
     assert.ok(shas.has(sha), `${sha.slice(0, 7)} changed the design but is not on the timeline`);
   }
-  assert.ok(checked >= 10, `only ${checked} pull requests and commits checked`);
+  assert.ok(checked >= 10, `only ${checked} changes checked`);
+  assert.ok(opened > 0, 'the changes inside opened branches were checked too');
 });
 
 test('the public site, built from main, shows the same pull requests, never a release', { skip: !git('branch', '-r', '--list', 'origin/main').toString().trim() && 'no origin/main here' }, () => {
@@ -122,6 +133,7 @@ test('the public site, built from main, shows the same pull requests, never a re
   for (const e of main) {
     assert.doesNotMatch(e.label, /^Release\b/);
     assert.doesNotMatch(e.title, /from Valpatel\/dev$/, `${e.sha.slice(0, 7)} is a release merge`);
+    assert.ok(!isIntegration(e.sha), `${e.sha.slice(0, 7)} is a merge that carries pull requests`);
   }
 });
 
