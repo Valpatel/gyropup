@@ -295,7 +295,7 @@ def main():
           f"D71's {gate.get('ceiling_kg')} kg ceiling (37.5 kg design mass, 18.75 kg a leg): a margin of {gate.get('margin_kg'):+.2f} kg, "
           f"{'pass' if gate.get('pass') else 'OVER'}. The wheels are D69's 10 in hub motors at the listed 3.53 kg each; the battery "
           f"group is {(g3.get('groups_kg') or {}).get('battery')} kg (two DCB609 at DeWalt US's 1565 g each). The head is "
-          + (f"the turret as its own robot (D66) at {tur.mass_g / 1000:.2f} kg with 30 balls ({tur.note.split(';')[0]}), "
+          + (f"the turret as its own robot (D66) at {tur.mass_g / 1000:.2f} kg with 30 balls, from {tur.basis.split(';')[0]}, "
              f"{tur.mass_g / 1000 - 1.70:+.2f} kg on the 1.70 kg head budget" if tur is not None else 'the 1.70 kg head budget')
           + '. The on-call levers stay listed as margin (D71), none taken without the user\'s or the coordinator\'s word:', '',
           '| # | Lever | g | Stage |', '|---|---|---|---|']

@@ -1173,7 +1173,7 @@
     }
    ],
    "pullout_repo_n": 1500,
-   "notes": "The column is solid PETG to z -16 under the 12.5 mm pilot. The hand check's 640 N is the whole turret at the TM face; the plinth and the J4012 (832 g) hang below these columns, so the part above them is lighter and its centre higher.",
+   "notes": "The column is solid PETG to z -16 under the 12.5 mm pilot. The hand check's 640 N is the whole turret at the TM face; the plinth and the J4012 (831 g) hang below these columns, so the part above them is lighter and its centre higher.",
    "boss_ratio": 2.11,
    "boss_wall_mm": 3.94,
    "thread_engaged_mm": 7.9,
@@ -1926,7 +1926,7 @@
    "material_mm": 6.0,
    "axis": "print-z",
    "orientation": "printed upside down",
-   "screw": "2 x M3 up through the adapter (drilled on arrival)",
+   "screw": "2 x M3 up through the adapter (drilled on arrival), no longer than its base + 5 mm",
    "screw_side": "open end",
    "mating_hole_mm": null,
    "tip_depth_mm": null,

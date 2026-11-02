@@ -325,7 +325,7 @@ Screw side: open end (from above).
 Clamp: 5 mm PA6-CF foot (40 % gyroid) under each head; limiter: none.
 Pull-out estimate 2587 N (repository estimate 1500 N; the lower is used).
 Load: R: 30 g sideways on the turret above the plinth (1.74 kg, centre 96 mm above the columns' tops; estimate): 308 N (exports/turret/mount.json and turret.json masses; plinth centroids estimated (inventory.py)).
-The column is solid PETG to z -16 under the 12.5 mm pilot. The hand check's 640 N is the whole turret at the TM face; the plinth and the J4012 (832 g) hang below these columns, so the part above them is lighter and its centre higher.
+The column is solid PETG to z -16 under the 12.5 mm pilot. The hand check's 640 N is the whole turret at the TM face; the plinth and the J4012 (831 g) hang below these columns, so the part above them is lighter and its centre higher.
 - **owner** `pan-base-dowels`: the pan base's TM dowel holes (cad/turret.py pan_base: TM_DOWELS at r 52) meet no hole in the plinth's top (compute_shell() cuts none), but the bench BOM buys hw_plinth_dowels (16 mm pins, D66): the pan base is then located only by its M5s in clearance. Add dowel bosses to the plinth's top, or drop the pins
 
 ### `turret.plinth_tray_m4`
@@ -506,7 +506,7 @@ Bench duty.
 
 ### `stand.dock`
 
-stand top plate underside: the dock adapter's 2 x M3. Material petg (3 walls, 20 % gyroid). Screw: 2 x M3 up through the adapter (drilled on arrival).
+stand top plate underside: the dock adapter's 2 x M3. Material petg (3 walls, 20 % gyroid). Screw: 2 x M3 up through the adapter (drilled on arrival), no longer than its base + 5 mm.
 Orientation: printed upside down.
 Screw side: open end.
 Pull-out estimate 880 N.

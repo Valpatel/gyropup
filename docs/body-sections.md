@@ -243,7 +243,7 @@ The wire list is `cad/body_wiring.py` (docs/body-electrical.md 3.1 is generated 
 
 ## 6. The mass gate (D71)
 
-The P3 ledger is 38.56 kg; with every scheduled lever 38.06 kg against D71's 37.0 kg ceiling (37.5 kg design mass, 18.75 kg a leg): a margin of -1.06 kg, OVER. The wheels are D69's 10 in hub motors at the listed 3.53 kg each; the battery group is 3.27 kg (two DCB609 at DeWalt US's 1565 g each). The head is the turret as its own robot (D66) at 2.57 kg with 30 balls (the foam-ball turret on the riser (P1: a dummy of its 2.57 kg)), +0.87 kg on the 1.70 kg head budget. The on-call levers stay listed as margin (D71), none taken without the user's or the coordinator's word:
+The P3 ledger is 38.56 kg; with every scheduled lever 38.06 kg against D71's 37.0 kg ceiling (37.5 kg design mass, 18.75 kg a leg): a margin of -1.06 kg, OVER. The wheels are D69's 10 in hub motors at the listed 3.53 kg each; the battery group is 3.27 kg (two DCB609 at DeWalt US's 1565 g each). The head is the turret as its own robot (D66) at 2.57 kg with 30 balls, from exports/turret/mount.json (the budget when larger), +0.87 kg on the 1.70 kg head budget. The on-call levers stay listed as margin (D71), none taken without the user's or the coordinator's word:
 
 | # | Lever | g | Stage |
 |---|---|---|---|
