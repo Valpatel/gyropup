@@ -8,7 +8,7 @@
     "seconds": 22,
     "audio": false
   },
-  "source_revision": "1e77935448f5e9cb8d3b608bec48ec50c2565d02",
+  "source_revision": "c16e73f583573cd4792259d6f8dd45e142585c3b",
   "source_hashes": {
     "designer/cadrig.js": "a2cb4029ef786e0793c5eb0018e0aa8d919d829bde8c5d378c1b1480c457faaf",
     "designer/character/eyes.js": "3348578a121b75ab7425c3b6591e864b41b09512e67b642832e6c6b683d2e11b",
@@ -43,12 +43,12 @@
     "designer/turret_bench.css": "f6722bceaf5f92100c68f66dc84e491fff8593a7dbb9d8135ad20686c18485d4",
     "designer/turret_bench.js": "2c7c14ae024d451015e8559216f1b5bfc8ab814ed76b82eac645fa4d616318ad",
     "designer/turret_reload.js": "37b75f1250ca341e710abb9443d0e0120abe48e827efbc86b740db7b55a326e9",
-    "exports/leg/fea/hip-frame-e1-media/field-receipt.json": "a873808750f02fed68eee19aaa4b2ccd16192986cffcd3bb67029d75ae3f13dd",
-    "exports/leg/fea/hip-frame-e1-media/hip-frame-e1.mp4": "e8ada057ae885a0b41bf4c18d73e0c61c5a88ca49f2c07ae4c3247073a22f9c6",
-    "exports/leg/fea/hip-frame-e1-media/hip_frame-E1.json": "d04f1b471e0d6b75e99ee56b7c0698ca4bce7a070cec43f78ab313a3a4d4e49c",
-    "exports/leg/fea/hip-frame-e1-media/video-receipt.json": "fa6a2f28b3a0f4e682c11788ad1bf7c1d6145a5802ef5592ed605d729747fbb4",
-    "exports/leg/fea/media.json": "b6cf37aedea19e76cb50fef1519a96a8edc738e81298f3a34c79d13f735b0430",
-    "exports/leg/fea/summary.json": "9fef3119c182ca84d038f95183be842f6403be115cde4ea316423044568cd39f",
+    "exports/leg/fea/hip-frame-e1-media/field-receipt.json": "5ce8c9ffc58120623187f2eb7093b3a8054c95f110a7f709aa224800de00d00a",
+    "exports/leg/fea/hip-frame-e1-media/hip-frame-e1.mp4": "2cf4b003483267f1a3a1d1170854689777bdd952bb303789b4075819125a422c",
+    "exports/leg/fea/hip-frame-e1-media/hip_frame-E1.json": "87a7854995c14f9b32b914db7bb837b347d3218d6be6f35c3eafac91840dd4ff",
+    "exports/leg/fea/hip-frame-e1-media/video-receipt.json": "d52525700b585b27b30079f8082b15a697dc0f6c21c7f8f3b3965fcab693c7bb",
+    "exports/leg/fea/media.json": "dbe019e1df2edc47bc8dbb8aa8066ec859cc203fedbbf0aab79a89e75a22a17b",
+    "exports/leg/fea/summary.json": "ab8a61b8fb54351e786e8d1437aaf94ffde34b39f77b98f75a5215e4fc0ff2a0",
     "exports/leg/rig_jump.mp4": "7b59e8e0c807d04ca1387a4fd63f03536d44be5a637617e835fe5811ff50f217",
     "exports/sim/turret_box/barrel.stl": "ccb797222e64719fb8ba4a67ab236e6f9ba3b88ede36926a88cc917961bcde31",
     "exports/sim/turret_box/base_board.stl": "a3fd2d3a202337f01b3b45ad035b560fcbde07ebac8910b048ed94873d82fa20",
@@ -117,7 +117,7 @@
     "exports/sim/turret_box/tilt_servo.stl": "fa578ec54f47861e5cd9170ac5be5df1832dc52183a61012bb0cef230604946b",
     "exports/sim/turret_box/tilt_yoke.stl": "36c324a2ef44b2e208bb5d5eccff6312d3665664a30c548620dfada7eec5fd69",
     "exports/sim/turret_box/turret_board.stl": "869bd5ba08b01bad5c56710062b511ba91b90c6a48cdec394bc40e193c7156a9",
-    "exports/sim/v2/leg-attachments/manifest.json": "4afea17ea343b74231fb1db032bb4ec8f754fa4efe88024b04e47f2810783573",
+    "exports/sim/v2/leg-attachments/manifest.json": "43d55c6821d0852069ed47bf50ab118ad72054db798056da942a33aa2b0da498",
     "exports/sim/v2/leg-attachments/output_adapter.stl": "abadcc27e7425adcb6d3851684ffd915ea74e1a96699a262e9ad0fe15e096e6b",
     "exports/sim/v2/leg-attachments/output_screw_1.stl": "909f3b5b626778914d966244eca544f9c0ef6b2adef30a77016a33fce3c55bf8",
     "exports/sim/v2/leg-attachments/output_screw_2.stl": "091c5d7ace9b7e474124e599f56994ad5a89db783ed45a3d17b50a0d7855920b",
@@ -163,8 +163,8 @@
     "exports/sim/v2/rig/manifest.json": "0f394643875bcdff247c8f285f2d0d10499104a1073088ce37c4b5f1b337086f",
     "exports/sim/v2/summary.json": "297a40dc891e3bbb1f1985d7db461021446b5041b33969fdc33b63a4b573ceac",
     "tools/capture-highlights.mjs": "2865634d7d05047ecbd73ca75350026ac293f484243e58ad411897135326f0fd",
-    "tools/check-highlights.py": "d56a4e9e2cb6d05db5a324b0e9a40cfbfb96566f3fe2d9aec8e0c30d10b8ef32",
-    "tools/encode-highlights.py": "cafcfaf4b34e555f939da87b3b857d98abdc46cc9592a06e15f6b2f78df1cde4",
+    "tools/check-highlights.py": "cc404d66689fd9f76f1592d46234ad0062801d4c34037bd226d47b316332b50d",
+    "tools/encode-highlights.py": "4de6d8a9135da8d7a10ac7cfb3b0749bda8c5c270da2a18cb4a83434adf8bc72",
     "web/icon.svg": "0a1ba64971063f63310e5edd529874329cceb5d4adbbf95888e325accc95a303",
     "web/model-links.css": "8b9e13dcf3940a0081acdc28eca75126803089308255781a006465351b563eb2",
     "web/model-links.js": "ffb3fc044b2ce527840b0209c13074c3c7ccb187fd7bf47ff9b971311e643e2c",
@@ -351,7 +351,7 @@
     "source_duration_seconds": 3,
     "transient_simulation": false,
     "deformation_exaggeration": 16,
-    "safety_factor": 1.63,
+    "safety_factor": 1.6,
     "required": 2,
     "baseline_kg": 37.5
   },
@@ -414,23 +414,23 @@
   ],
   "outputs": {
     "gyropup-highlights.mp4": {
-      "sha256": "34d1a222692f7400b99b31c110c0e678dccf0d2847f82fec969deabb1a30bf9d",
-      "bytes": 1834385
+      "sha256": "e4da37d7bd0658c2ca6444e1dbd482201d565f0a79ac23eda7ccd960fb16579f",
+      "bytes": 1837288
     },
     "gyropup-highlights.webm": {
-      "sha256": "c2df58541cca9005d9a7132bdd714d9790d1d6a487750c6e6ca8af42cab57383",
-      "bytes": 1464316
+      "sha256": "4bc2765dc0edab9c87aeda1da1368307adaf58d9f69c554919087e7cb1796d5b",
+      "bytes": 1465454
     },
     "gyropup-highlights.webp": {
-      "sha256": "949ec8db0fc70dcf111a0494811c9d19fdd36c5f5ccb7c316c4fe0844ffadc54",
-      "bytes": 32516
+      "sha256": "e18bfb2d76a13127d632c7bb1c88d905f05ca640d6e11efab8bcc0e1476d33b0",
+      "bytes": 32722
     },
     "capture-receipt.json": {
-      "sha256": "b00d7812b888b4c9d34ea66bec29556a9b67969ca94e3d75c7f8d59e76f78ed2",
-      "bytes": 113684
+      "sha256": "18448b1ccfdaebfaff718c9ee2aa9486e4fdf567a021df8384cb20c77de24ae2",
+      "bytes": 113685
     },
     "capture-frames.json": {
-      "sha256": "bbd81cfc3179e69b945713bc3876865331aa13c2a4583627f21ef9889a8fb4bb",
+      "sha256": "3a2480b6c03c4381bf5ae0a94cda9ba987b380a972c9c29bbebe92b99f160920",
       "bytes": 100989
     }
   }
