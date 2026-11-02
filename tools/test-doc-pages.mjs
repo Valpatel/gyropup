@@ -9,7 +9,7 @@ import { parseHTML } from 'linkedom';
 import { chromium, webkit } from '@playwright/test';
 import { createSiteServer } from './serve-site.mjs';
 import { acknowledgePrototypeNotice } from './test-prototype-session.mjs';
-import { enhanceDocument, isCaveat, statusKind, tableStates } from './doc-page.mjs';
+import { SHOWN_WHOLE, enhanceDocument, isCaveat, statusKind, tableStates } from './doc-page.mjs';
 import { subsystemOf } from './timeline.mjs';
 
 const root = path.resolve(import.meta.dirname, '..');
@@ -66,7 +66,7 @@ test('folds keep every word, every id, and never fold a picture', async () => {
 });
 
 test('every built note keeps its Markdown’s words, under a lead card', async () => {
-  let checked = 0, previews = 0;
+  let checked = 0, previews = 0, wholeNotes = 0;
   for (const page of pages) {
     const file = sources.get(page);
     if (!file) continue;
@@ -83,6 +83,8 @@ test('every built note keeps its Markdown’s words, under a lead card', async (
     // A table of models may fold; its summary then counts the models inside.
     const folded = [...article.querySelectorAll('details.doc-fold a[href]')].filter(own).filter(a => !a.closest('table'));
     assert.equal(folded.length, 0, `${page}: a model's preview is folded: ${folded[0]?.getAttribute('href')}`);
+    // A safety note is shown whole: its rules and emergency steps are never behind a fold.
+    if (SHOWN_WHOLE.test(file)) { assert.equal(article.querySelectorAll('details.doc-fold').length, 0, `${page}: a safety note is folded`); wholeNotes++; }
     const caveat = [...article.querySelectorAll('details.doc-fold > p')].find(isCaveat);
     assert.equal(caveat, undefined, `${page}: a caveat is folded: "${caveat?.textContent.slice(0, 60)}"`);
     for (const fold of article.querySelectorAll('details.doc-fold')) {
@@ -96,6 +98,7 @@ test('every built note keeps its Markdown’s words, under a lead card', async (
   }
   assert.ok(checked >= 100, `${checked} notes`);
   assert.ok(previews >= 50, `${previews} model links checked`);
+  assert.ok(wholeNotes >= 4, `${wholeNotes} safety notes shown whole`);
 });
 
 test('strips agree with a recount of their own table', () => {

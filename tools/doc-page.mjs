@@ -180,6 +180,9 @@ function foldPiece(document, piece, level) {
 }
 
 /** The enhanced article HTML and a summary of what changed in its presentation. */
+/** Notes shown whole: a safety note's rules and emergency steps are never one click away. */
+export const SHOWN_WHOLE = /(^|\/)[^/]*safety[^/]*\.md$/i;
+
 export function enhanceDocument(html, { file, changed = null, panel = null } = {}) {
   const { document } = parseHTML(`<!doctype html><html><body><article>${html}</article></body></html>`);
   const article = document.querySelector('article');
@@ -203,16 +206,18 @@ export function enhanceDocument(html, { file, changed = null, panel = null } = {
     if (i <= h1 || el === lede) continue;
     if (el.tagName === 'H2') { section = { title: el.textContent.trim(), id: el.id }; sections.push(section); open(el); continue; }
     if (isVisual(el)) { piece = null; stretches.push([]); continue; }
-    if (isKept(el)) { piece = null; section.actions = true; continue; } // stays in place, and ends the piece before it
+    // Stays in place and ends the piece before it; its height still counts against the stretch it sits in.
+    if (isKept(el)) { piece = null; section.actions = true; stretches.at(-1).kept = (stretches.at(-1).kept || 0) + blockHeight(el); continue; }
     if (!piece) open(null);
     piece.blocks.push(el);
   }
   // The title, lede and card open the first stretch, unless the card shows the part.
   const head = H2_PX + (lede ? blockHeight(lede) : 0) + (panel ? -Infinity : 170);
   let folds = 0;
-  for (const [n, stretch] of stretches.entries()) {
+  const whole = SHOWN_WHOLE.test(file || '');
+  for (const [n, stretch] of whole ? [] : stretches.entries()) {
     const base = n === 0 ? Math.max(0, head) : 0;
-    const level = [0, 1, 2].find(l => base + stretch.reduce((h, p) => h + pieceHeight(p, l), 0) <= TARGET_PX) ?? 2;
+    const level = [0, 1, 2].find(l => base + (stretch.kept || 0) + stretch.reduce((h, p) => h + pieceHeight(p, l), 0) <= TARGET_PX) ?? 2;
     for (const p of stretch) if (foldPiece(document, p, level)) { folds++; p.section.folded = true; if (level === 2 && p.h2 && !p.section.actions) p.section.outline = true; }
   }
   // Four or more folded sections in a row read as an outline: laid out two to a row on a wide screen (web/doc-page.css).

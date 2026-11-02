@@ -4,6 +4,21 @@ Work in progress for [issue 85](https://github.com/Valpatel/gyropup/issues/85), 
 
 The [C2 candidate](base-board-interfaces.md) requires C3 and the pan-servo connection to be unplugged while the carrier remains mechanically retained. C3 now has source-bound housing poses, unplug/park sweeps and a separate support/access candidate checked against the listed neighbours. Actual retained cable routes, the servo disconnect and complete module withdrawal remain unqualified. The bounded C2/C3 checks do not establish that complete service sequence.
 
+```mermaid
+flowchart TB
+    subgraph R1 ["C2 candidate: the carrier stays mechanically retained"]
+        direction LR
+        A["Unplug C3"] --> B["C3 checked:<br>housing poses,<br>unplug and park sweeps,<br>support candidate"]
+        C["Unplug the<br>pan servo"] --> D["Servo disconnect<br>unqualified"]
+    end
+    subgraph R2 ["Not yet established"]
+        direction LR
+        E["Retained cable<br>routes unqualified"] --> F["Complete module<br>withdrawal unqualified"]
+    end
+    B --> E
+    D --> F
+```
+
 | Interface | Current project selection | Evidence to establish before a service claim |
 | --- | --- | --- |
 | C3, module side | Molex 43020-1200 housing, twelve 43031-0001 male terminals, 24 AWG board tails | Exact cavity/view map, housing and contact geometry, installed pose, free wire exit, latch/grip access and module-side retention |
