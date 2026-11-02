@@ -3,7 +3,7 @@
 targets as today's record. cad/ is imported and patched in this process only: nothing in it is edited.
 
     python research/body-sheet-metal/fea.py --option today            # every case, today's parts (the baseline, rerun here)
-    python research/body-sheet-metal/fea.py --option A                 # the deck and tray cases on option A's deck and tray
+    python research/body-sheet-metal/fea.py --option A                 # the deck cases on option A's deck (no turret plate)
     python research/body-sheet-metal/fea.py --option B                 # the spine cases on option B's keel (no belly plate)
     python research/body-sheet-metal/fea.py --option C                 # the deck and tray cases with printed PA6-CF plates
 
@@ -30,7 +30,7 @@ import body_params as bp  # noqa: E402
 import body_frame as bf  # noqa: E402
 
 CASES = {'today': ['S1', 'S1F', 'S2', 'S3', 'D1', 'D2', 'T1'],
-         'A': ['D1', 'D2', 'T1'],                      # the spine is today's: its cases are the baseline's
+         'A': ['D1', 'D2'],                            # the spine and the tray are today's: their cases are the baseline's
          'B': ['S1', 'S1F', 'S2', 'S3'],                      # the deck and tray are A's
          'C': ['D1', 'D2', 'T1']}                      # the spine and keel are B's
 PRINTED_T = {'deck': 8.0, 'tray': 8.0}                 # option C: solid PA6-CF plates this thick (two halves each, joined)
@@ -57,7 +57,8 @@ def patch(option, mounts):
     orig = bf.frame_parts
     if option in ('A', 'C'):
         if option == 'A':
-            deck, tray = P.deck_2b(mounts), P.tray_2b(mounts)
+            # the tray keeps its four bends (the two-bend tray missed T1: fea/A-tray2b, made at b169a6d)
+            deck, tray = P.deck_2b(mounts), bf.tray_part(mounts)
             bp.DECK = deck.stock
         else:
             deck = P.two_bends(bf.deck_part(mounts), 'deck_printed', stock=_printed_stock(PRINTED_T['deck']))
@@ -79,6 +80,29 @@ def patch(option, mounts):
     if option == 'B':
         bp.BELLY = P.KEEL_STOCK
         st.spine_box = lambda: keel_spine_box()
+    if option == 'A':
+        _deck_by_part_without_plate(st)
+
+
+def _deck_by_part_without_plate(st):
+    """cad/body_studies.deck_cases judges the deck 'by part' only when the turret plate is on: the elements within 4 mm
+    of a post pad's footprint or a clamp pad's rim (rigid-clamp corners, singular in a linear model) are reported apart.
+    Without the plate it returns the raw peak, which sits on those corners, so option A would be judged on a measure
+    today's deck is not. This rebuilds deck_cases in this process with the same by-part rule when the plate is gone (the
+    riser's four feet, which bolt through the deck in A, keep their clamp zones; there are no plate elements)."""
+    import inspect
+    import textwrap
+    src = textwrap.dedent(inspect.getsource(st.deck_cases))
+    old = "        if plate is None:\n            return {}\n"
+    assert old in src, 'cad/body_studies.deck_cases changed: update fea.py'
+    src = src.replace(old, "")
+    for a in ("+ [(x, y, PLATE_CLAMP_D) for x, y in bf.turret_plate_end_holes()])", "sf = min(v for v in (sfd, sfp) if v)"):
+        assert a in src, 'cad/body_studies.deck_cases changed: update fea.py'
+    src = src.replace("+ [(x, y, PLATE_CLAMP_D) for x, y in bf.turret_plate_end_holes()])",
+                      "+ ([(x, y, PLATE_CLAMP_D) for x, y in bf.turret_plate_end_holes()] if parts.get('turret_plate') is not None else []))")
+    src = src.replace("sf = min(v for v in (sfd, sfp) if v)", "sf = min(v for v in (sfd, sfp) if v) if (sfd or sfp) else None")
+    ns = st.__dict__
+    exec(compile(src, st.__file__, 'exec'), ns)        # defines deck_cases in body_studies' own namespace
 
 
 def keel_spine_box():
@@ -132,8 +156,9 @@ def main():
     ap.add_argument('--option', required=True, choices=sorted(CASES))
     ap.add_argument('--mesh', type=float, default=4.0)
     ap.add_argument('--only', nargs='*')
+    ap.add_argument('--tag', default='', help='a suffix for the output folder (a finer-mesh check, a variant)')
     a = ap.parse_args()
-    out = HERE / 'fea' / a.option
+    out = HERE / 'fea' / (a.option + a.tag)
     out.mkdir(parents=True, exist_ok=True)
     os.environ['GYROPUP_BODY_FEA_OUT'] = str(out)
     import body_layout as bl
@@ -145,6 +170,7 @@ def main():
     res = st.run(a.mesh, False, cases)
     summ = json.loads((out / 'summary.json').read_text())
     summ['option'] = a.option
+    summ['mesh_mm'] = a.mesh
     summ['provenance'] = provenance()
     summ['seconds'] = round(time.time() - t0)
     for r in summ['results'].values():                 # repository-relative paths only

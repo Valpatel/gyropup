@@ -20,6 +20,7 @@ import matplotlib
 
 matplotlib.use('Agg')
 import matplotlib.pyplot as plt  # noqa: E402
+import matplotlib.ticker  # noqa: E402
 from matplotlib.patches import FancyArrowPatch, Rectangle  # noqa: E402
 
 plt.rcParams['text.parse_math'] = False      # prices carry '$'
@@ -262,6 +263,9 @@ def fig_joints():
     ax.set_xticks(range(len(rows)))
     ax.set_xticklabels(th, fontsize=9, color=INK)
     ax.set_ylim(100, 300000)
+    ax.set_yticks([100, 300, 1000, 3000, 10000, 30000])
+    ax.set_yticklabels(['100', '300', '1,000', '3,000', '10,000', '30,000'])
+    ax.yaxis.set_minor_locator(matplotlib.ticker.NullLocator())
     ax.set_ylabel('N (log)', fontsize=8, color=INK2)
     ax.grid(axis='y', color=GRID, lw=0.6)
     ax.set_axisbelow(True)

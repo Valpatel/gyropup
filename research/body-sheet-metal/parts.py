@@ -176,10 +176,12 @@ def options(m=None) -> dict:
     """{option: {part name: SheetPart}} for the SendCutSend side of each option."""
     m = m if m is not None else _mounts()
     t = today(m)
-    a = {k: v for k, v in t.items() if k not in ('floor_tray', 'deck', 'turret_plate')}
-    a.update({'floor_tray_2b': tray_2b(m), 'deck_2b': deck_2b(m)})
+    # the floor tray keeps its four bends: with lips on its long sides only it misses T1 (SF 1.74 against 2.0, 1.01 mm;
+    # fea/A-tray2b, the first run of option A), so tray_2b is priced and checked but is in no option
+    a = {k: v for k, v in t.items() if k not in ('deck', 'turret_plate')}
+    a.update({'deck_2b': deck_2b(m)})
     b = {k: v for k, v in a.items() if k not in ('belly_plate', 'bay_floor', 'bay_side')}
     b.update({'keel_half': keel_half(m), 'strap': strap()})
-    c = {k: v for k, v in b.items() if k not in ('floor_tray_2b', 'deck_2b', 'compute_pallet', 'power_plate')}
+    c = {k: v for k, v in b.items() if k not in ('floor_tray', 'deck_2b', 'compute_pallet', 'power_plate')}
     c['turret_plate'] = t['turret_plate']
-    return {'today': t, 'A': a, 'B': b, 'C': c}
+    return {'today': t, 'A': a, 'B': b, 'C': c, 'tray_2b': {'floor_tray_2b': tray_2b(m)}}
