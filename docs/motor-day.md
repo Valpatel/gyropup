@@ -242,38 +242,38 @@ Generated from the same CAD with hidden-line views, balloons keyed to the BOM it
 Every day-one run lands, so the landings are held to the everyday target (2), not the rare-event 1.2 the robot's record uses. How the numbers are made:
 
 - **Material:** cad-agent's PLA row (25 MPa, "Bambu PLA Basic: Z (layer) strength used") against each row's humid PA6-CF strength (40.8 MPa in the layers, 18.1 across) or 6061 for the adapter. The FEA is linear, so a row's factor scales with the strength.
-- **Loads:** the rig's controller and MuJoCo model at each cap, at 11.1 kg (`tools/motor_day_sim.py`), against the loads the record's cases were run at (knee 574 N in a landing, axle 1605 N on the wheel link, the motors' 60 and 120 N m).
+- **Loads:** the rig's controller and MuJoCo model at each cap, at 11.1 kg (`tools/motor_day_sim.py`), against the loads the record's cases were run at (knee 574 N in a landing, axle 1605 N on the wheel link, the motors' 60 and 120 N m). A knee case is checked at the landing (target 2) and at the power cut onto the floor stop (a fault: target 1).
 - **Not in it:** PLA is brittle (it cracks without warning, where PA6-CF whitens first), creeps, and softens at 55 °C. No margin is added for these: the ladder adds them by stepping up slowly and inspecting after each rung.
 
 | Cap at the motors | Jump (sim) | Axle peak | Knee peak | Weakest row | All rows at target |
 |---|---|---|---|---|---|
-| 12 N m | 46 mm | 703 N | 229 N | wheel_link R1w 2.29 | yes |
-| 15 N m | 62 mm | 818 N | 290 N | wheel_link R1w 1.97 | **no** |
-| 20 N m | 79 mm | 914 N | 344 N | wheel_link R1w 1.76 | **no** |
-| 25 N m | 97 mm | 1261 N | 399 N | wheel_link R1w 1.28 | **no** |
-| 30 N m | 105 mm | 1284 N | 410 N | wheel_link R1w 1.25 | **no** |
-| 40 N m | 116 mm | 1258 N | 444 N | wheel_link R1w 1.28 | **no** |
+| 12 N m | 46 mm | 703 N | 149 N | wheel_link R1w 2.29 | yes |
+| 15 N m | 62 mm | 818 N | 194 N | wheel_link R1w 1.97 | **no** |
+| 20 N m | 79 mm | 914 N | 232 N | wheel_link R1w 1.76 | **no** |
+| 25 N m | 97 mm | 1261 N | 271 N | wheel_link R1w 1.28 | **no** |
+| 30 N m | 105 mm | 1284 N | 289 N | wheel_link R1w 1.25 | **no** |
+| 40 N m | 116 mm | 1258 N | 347 N | wheel_link R1w 1.28 | **no** |
 
-**The PLA cap is 12 N m**: a 46 mm hop. Above it the first row to fall short is the weakest one in the next row of the table.
+**The PLA cap is 12 N m**: a 46 mm hop. At 15 N m wheel_link R1w falls to 1.97, under its target of 2.
 
 Where PLA fails first, at 12 N m (the weakest rows):
 
 | Part | Case | PLA factor | Target | Governed by | Load |
 |---|---|---|---|---|---|
 | wheel_link | R1w | 2.29 | 2 | gate | landing on the wheel link: axle 703 N against 1605 N |
+| front_link | R1 | 1.17 | 1 | layer | power cut onto the floor stop: knee 394 N against 574 N |
+| output_adapter | R1 | 1.47 | 1 | gate | power cut onto the floor stop: knee 394 N against 574 N |
 | front_link | R1 | 3.07 | 2 | layer | landing: knee 149 N against 574 N |
-| output_adapter | R1 | 3.87 | 2 | gate | landing: knee 149 N against 574 N |
-| upper_link | R1 | 4.31 | 2 | gate | landing: knee 149 N against 574 N |
-| upper_link | R1F | 4.35 | 2 | gate | landing: knee 149 N against 574 N |
-| wheel_link | R1 | 6.54 | 2 | layer | landing: knee 149 N against 574 N |
+| upper_link | R1 | 1.63 | 1 | gate | power cut onto the floor stop: knee 394 N against 574 N |
+| upper_link | R1F | 1.65 | 1 | gate | power cut onto the floor stop: knee 394 N against 574 N |
 
-The hub clamp in the PLA adapter: 1000 N a screw at 1.0 N m gives about 30.4 N m of friction against a 12 N m cap (the dowels carry the rest). re-torque before each session.
+The hub clamp in the PLA adapter: 1000 N a screw at 1.0 N m gives about 30.4 N m of friction against a 12 N m cap (the dowels carry the rest). Re-torque before each session.
 
 Full table: [derating.json](../exports/motor-day/derating.json).
 <!-- /gen:derating -->
 
 <!-- gen:ladder -->
-Each rung runs only after the one before it passed and the leg was inspected. The motors' own `limit_torque` is the cap: set it on both before the rung and read it back. The safety rules of [leg-rig-safety.md](leg-rig-safety.md) apply unchanged (one operator, the pendant, the clear zone, eye protection).
+Each rung runs only after the one before it passed and the leg was inspected. `--cap` is the cap in both places: `rig.run` writes it to both motors' `limit_torque` at start-up, reads it back (it stops if a motor does not take it) and clips its own commands to it. Without `--cap` the rig runs at 60 N m: never on the PLA leg. `--half-mass` is the simulated mass the stand is ballasted to. The safety rules of [leg-rig-safety.md](leg-rig-safety.md) apply unchanged (one operator, the pendant, the clear zone, eye protection).
 
 ```mermaid
 flowchart LR
@@ -281,22 +281,24 @@ flowchart LR
   L1["L1<br/>Commission each motor<br/>2 A bench limit"] --> L2
   L2["L2<br/>Zero on the bare stops<br/>10 N m"] --> L3
   L3["L3<br/>In-air sweeps<br/>10 N m"] --> L4
-  L4["L4<br/>Stand up<br/>20 N m"] --> L5
-  L5["L5<br/>Squat x 3<br/>20 N m"] --> L6
-  L6["L6<br/>Power cut onto the floor stop<br/>20 N m"] --> L7
+  L4["L4<br/>Stand up<br/>12 N m"] --> L5
+  L5["L5<br/>Squat x 3<br/>12 N m"] --> L6
+  L6["L6<br/>Power cut onto the floor stop<br/>12 N m"] --> L7
   L7["L7<br/>Hop<br/>12 N m"]
 ```
 
 | Rung | What | Cap | How | Pass when |
 |---|---|---|---|---|
 | L0 | Unpowered | - | Fold and stretch the leg by hand from stop to stop; the boom swings freely; the foot lands on the mat at the stance with the boom level. | any rub, any part touching another |
-| L1 | Commission each motor | 2 A bench limit | Phase 0.4 on all four motors (C1-C6): ids 1 front, 2 rear on this leg; `python -m rig.rs04 --id N param limit_torque 10`, then save. | the motor reads back the limit you set |
+| L1 | Commission each motor | 2 A bench limit | Phase 0.4 (C1-C5) on all four motors, then C6: ids 1 front, 2 rear on this leg. C4 saves the rig's 60 N m; then `python -m rig.rs04 --id N param limit_torque 10` and `--id N save`, so a motor powers up at 10. | the motor reads back 10 after a power cycle |
 | L2 | Zero on the bare stops | 10 N m | The boom propped on the floor stop, the foot in the air. `python -m rig.calibrate`, one link at a time onto its stop pins by hand. | the 142 deg between the posts; no creak at the stop pins |
-| L3 | In-air sweeps | 10 N m | `python -m rig.run --backend can --test squat --rate-limit 5` with the foot in the air (boom propped). | smooth; the knees and the adapters do not click; motor cases under 40 °C |
-| L4 | Stand up | 20 N m | `--test stand_up`, the foot on the mat. | holds 300 mm; peak motor torque about 8 N m (sim) |
-| L5 | Squat x 3 | 20 N m | `--test squat`. | re-check every screw's paint mark after |
-| L6 | Power cut onto the floor stop | 20 N m | `--test power_off`: let go of the pendant. | the boom lands on the floor stop, not the leg on its own stops |
-| L7 | Hop | 12 N m | `python -m rig.rs04 --id N param limit_torque 12` on both motors, then `--test jump`. | about 46 mm; inspect the weakest rows' corners (below) with a lamp |
+| L3 | In-air sweeps | 10 N m | `python -m rig.run --backend can --test squat --cap 10 --half-mass 11.10 --rate-limit 5` with the foot in the air (boom propped). | smooth; the knees and the adapters do not click; motor cases under 40 °C |
+| L4 | Stand up | 12 N m | `--test stand_up --cap 12 --half-mass 11.10`, the foot on the mat. | holds 300 mm; peak motor torque about 8 N m (sim) |
+| L5 | Squat x 3 | 12 N m | `--test squat --cap 12 --half-mass 11.10`. | re-check every screw's paint mark after |
+| L6 | Power cut onto the floor stop | 12 N m | `--test power_off --cap 12 --half-mass 11.10`: let go of the pendant. | the boom lands on the floor stop, not the leg on its own stops |
+| L7 | Hop | 12 N m | `--test jump --cap 12 --half-mass 11.10`. | about 46 mm; inspect the weakest rows' corners (below) with a lamp |
+
+**L6 is a close call** (front_link R1: 1.17 against 1, power cut onto the floor stop: knee 394 N against 574 N). Run it once, with the floor stop checked first, and inspect the front link before going on.
 
 **Stop the ladder** at any crack, whitening, click or creak, a screw's paint mark broken, a motor case over 40 °C, or a fault. Photograph it, write it on #156. **Look first** at: the wheel link's hub root (where the hub leaves the link, inside the apex), the front link's apex ring, the upper links' knee-eye stubs, the PLA adapters round their dowels and screws, and the foot's spokes.
 

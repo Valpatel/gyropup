@@ -1,5 +1,5 @@
 {
- "made_by": "cad/motor_day_sim.py",
+ "made_by": "tools/motor_day_sim.py",
  "controller": "rig/leg_control.py on rig/sim_bus.py (MuJoCo, sim/leg_rig.py)",
  "rate_hz": 500.0,
  "latency_ticks": 1,
@@ -103,7 +103,7 @@
      "aw": -0.82
     }
    },
-   "seconds": 1.3
+   "seconds": 1.2
   },
   {
    "jump_height_mm": 79.4,
@@ -144,7 +144,7 @@
      "aw": -0.82
     }
    },
-   "seconds": 1.3
+   "seconds": 1.5
   },
   {
    "jump_height_mm": 96.7,
@@ -185,7 +185,7 @@
      "aw": -0.82
     }
    },
-   "seconds": 1.2
+   "seconds": 1.3
   },
   {
    "jump_height_mm": 105.1,
@@ -267,7 +267,7 @@
      "aw": -0.82
     }
    },
-   "seconds": 1.1
+   "seconds": 1.2
   },
   {
    "jump_height_mm": null,
@@ -292,7 +292,7 @@
    "peak_front_link_n": 108.0,
    "peak_motor_speed_rad_s": 1.0,
    "test": "stand_up",
-   "cap_nm": 20.0,
+   "cap_nm": 12.0,
    "rig": {
     "half_mass_kg": 11.09,
     "dummy_kg": 0.0,
@@ -333,7 +333,7 @@
    "peak_front_link_n": 96.8,
    "peak_motor_speed_rad_s": 0.99,
    "test": "squat",
-   "cap_nm": 20.0,
+   "cap_nm": 12.0,
    "rig": {
     "half_mass_kg": 11.09,
     "dummy_kg": 0.0,
@@ -349,7 +349,7 @@
      "aw": -0.82
     }
    },
-   "seconds": 2.5
+   "seconds": 2.7
   },
   {
    "jump_height_mm": null,
@@ -374,7 +374,7 @@
    "peak_front_link_n": 269.3,
    "peak_motor_speed_rad_s": 7.47,
    "test": "power_off",
-   "cap_nm": 20.0,
+   "cap_nm": 12.0,
    "rig": {
     "half_mass_kg": 11.09,
     "dummy_kg": 0.0,
@@ -390,7 +390,7 @@
      "aw": -0.82
     }
    },
-   "seconds": 0.9
+   "seconds": 1.0
   }
  ]
 }

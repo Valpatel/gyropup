@@ -32,7 +32,7 @@
   "12.0": {
    "jump_mm": 46.1,
    "axle_n": 703.2,
-   "knee_n": 228.6,
+   "knee_n": 149.4,
    "all_ok": true,
    "worst": "wheel_link R1w 2.29",
    "rows": [
@@ -52,6 +52,20 @@
     },
     {
      "part": "upper_link",
+     "case": "R1",
+     "record_gate": 1.83,
+     "record_layer": 0.83,
+     "pla_gate_at_record_load": 1.12,
+     "pla_layer_at_record_load": 1.12,
+     "load_ratio": 0.685,
+     "sf": 1.63,
+     "target": 1.0,
+     "ok": true,
+     "governed_by": "gate",
+     "load": "power cut onto the floor stop: knee 394 N against 574 N"
+    },
+    {
+     "part": "upper_link",
      "case": "R1F",
      "record_gate": 1.85,
      "record_layer": 0.85,
@@ -63,6 +77,20 @@
      "ok": true,
      "governed_by": "gate",
      "load": "landing: knee 149 N against 574 N"
+    },
+    {
+     "part": "upper_link",
+     "case": "R1F",
+     "record_gate": 1.85,
+     "record_layer": 0.85,
+     "pla_gate_at_record_load": 1.13,
+     "pla_layer_at_record_load": 1.13,
+     "load_ratio": 0.685,
+     "sf": 1.65,
+     "target": 1.0,
+     "ok": true,
+     "governed_by": "gate",
+     "load": "power cut onto the floor stop: knee 394 N against 574 N"
     },
     {
      "part": "upper_link",
@@ -163,6 +191,20 @@
      "load": "landing: knee 149 N against 574 N"
     },
     {
+     "part": "front_link",
+     "case": "R1",
+     "record_gate": 1.37,
+     "record_layer": 0.58,
+     "pla_gate_at_record_load": 0.84,
+     "pla_layer_at_record_load": 0.8,
+     "load_ratio": 0.685,
+     "sf": 1.17,
+     "target": 1.0,
+     "ok": true,
+     "governed_by": "layer",
+     "load": "power cut onto the floor stop: knee 394 N against 574 N"
+    },
+    {
      "part": "wheel_link",
      "case": "R1",
      "record_gate": 2.78,
@@ -175,6 +217,20 @@
      "ok": true,
      "governed_by": "layer",
      "load": "landing: knee 149 N against 574 N"
+    },
+    {
+     "part": "wheel_link",
+     "case": "R1",
+     "record_gate": 2.78,
+     "record_layer": 1.49,
+     "pla_gate_at_record_load": 1.7,
+     "pla_layer_at_record_load": 1.7,
+     "load_ratio": 0.685,
+     "sf": 2.48,
+     "target": 1.0,
+     "ok": true,
+     "governed_by": "layer",
+     "load": "power cut onto the floor stop: knee 394 N against 574 N"
     },
     {
      "part": "wheel_link",
@@ -203,6 +259,20 @@
      "ok": true,
      "governed_by": "layer",
      "load": "landing: knee 149 N against 574 N"
+    },
+    {
+     "part": "hip_frame",
+     "case": "R1",
+     "record_gate": 1.6,
+     "record_layer": 1.34,
+     "pla_gate_at_record_load": 2.21,
+     "pla_layer_at_record_load": 1.85,
+     "load_ratio": 0.685,
+     "sf": 2.7,
+     "target": 1.0,
+     "ok": true,
+     "governed_by": "layer",
+     "load": "power cut onto the floor stop: knee 394 N against 574 N"
     },
     {
      "part": "hip_frame",
@@ -262,6 +332,20 @@
     },
     {
      "part": "output_adapter",
+     "case": "R1",
+     "record_gate": 9.72,
+     "record_layer": null,
+     "pla_gate_at_record_load": 1.01,
+     "pla_layer_at_record_load": null,
+     "load_ratio": 0.685,
+     "sf": 1.47,
+     "target": 1.0,
+     "ok": true,
+     "governed_by": "gate",
+     "load": "power cut onto the floor stop: knee 394 N against 574 N"
+    },
+    {
+     "part": "output_adapter",
      "case": "R2",
      "record_gate": 13.5,
      "record_layer": null,
@@ -279,7 +363,7 @@
   "15.0": {
    "jump_mm": 61.6,
    "axle_n": 817.5,
-   "knee_n": 289.6,
+   "knee_n": 193.8,
    "all_ok": false,
    "worst": "wheel_link R1w 1.97",
    "rows": [
@@ -299,6 +383,20 @@
     },
     {
      "part": "upper_link",
+     "case": "R1",
+     "record_gate": 1.83,
+     "record_layer": 0.83,
+     "pla_gate_at_record_load": 1.12,
+     "pla_layer_at_record_load": 1.12,
+     "load_ratio": 0.685,
+     "sf": 1.63,
+     "target": 1.0,
+     "ok": true,
+     "governed_by": "gate",
+     "load": "power cut onto the floor stop: knee 394 N against 574 N"
+    },
+    {
+     "part": "upper_link",
      "case": "R1F",
      "record_gate": 1.85,
      "record_layer": 0.85,
@@ -310,6 +408,20 @@
      "ok": true,
      "governed_by": "gate",
      "load": "landing: knee 194 N against 574 N"
+    },
+    {
+     "part": "upper_link",
+     "case": "R1F",
+     "record_gate": 1.85,
+     "record_layer": 0.85,
+     "pla_gate_at_record_load": 1.13,
+     "pla_layer_at_record_load": 1.13,
+     "load_ratio": 0.685,
+     "sf": 1.65,
+     "target": 1.0,
+     "ok": true,
+     "governed_by": "gate",
+     "load": "power cut onto the floor stop: knee 394 N against 574 N"
     },
     {
      "part": "upper_link",
@@ -410,6 +522,20 @@
      "load": "landing: knee 194 N against 574 N"
     },
     {
+     "part": "front_link",
+     "case": "R1",
+     "record_gate": 1.37,
+     "record_layer": 0.58,
+     "pla_gate_at_record_load": 0.84,
+     "pla_layer_at_record_load": 0.8,
+     "load_ratio": 0.685,
+     "sf": 1.17,
+     "target": 1.0,
+     "ok": true,
+     "governed_by": "layer",
+     "load": "power cut onto the floor stop: knee 394 N against 574 N"
+    },
+    {
      "part": "wheel_link",
      "case": "R1",
      "record_gate": 2.78,
@@ -422,6 +548,20 @@
      "ok": true,
      "governed_by": "layer",
      "load": "landing: knee 194 N against 574 N"
+    },
+    {
+     "part": "wheel_link",
+     "case": "R1",
+     "record_gate": 2.78,
+     "record_layer": 1.49,
+     "pla_gate_at_record_load": 1.7,
+     "pla_layer_at_record_load": 1.7,
+     "load_ratio": 0.685,
+     "sf": 2.48,
+     "target": 1.0,
+     "ok": true,
+     "governed_by": "layer",
+     "load": "power cut onto the floor stop: knee 394 N against 574 N"
     },
     {
      "part": "wheel_link",
@@ -450,6 +590,20 @@
      "ok": true,
      "governed_by": "layer",
      "load": "landing: knee 194 N against 574 N"
+    },
+    {
+     "part": "hip_frame",
+     "case": "R1",
+     "record_gate": 1.6,
+     "record_layer": 1.34,
+     "pla_gate_at_record_load": 2.21,
+     "pla_layer_at_record_load": 1.85,
+     "load_ratio": 0.685,
+     "sf": 2.7,
+     "target": 1.0,
+     "ok": true,
+     "governed_by": "layer",
+     "load": "power cut onto the floor stop: knee 394 N against 574 N"
     },
     {
      "part": "hip_frame",
@@ -509,6 +663,20 @@
     },
     {
      "part": "output_adapter",
+     "case": "R1",
+     "record_gate": 9.72,
+     "record_layer": null,
+     "pla_gate_at_record_load": 1.01,
+     "pla_layer_at_record_load": null,
+     "load_ratio": 0.685,
+     "sf": 1.47,
+     "target": 1.0,
+     "ok": true,
+     "governed_by": "gate",
+     "load": "power cut onto the floor stop: knee 394 N against 574 N"
+    },
+    {
+     "part": "output_adapter",
      "case": "R2",
      "record_gate": 13.5,
      "record_layer": null,
@@ -526,7 +694,7 @@
   "20.0": {
    "jump_mm": 79.4,
    "axle_n": 914.0,
-   "knee_n": 344.4,
+   "knee_n": 232.0,
    "all_ok": false,
    "worst": "wheel_link R1w 1.76",
    "rows": [
@@ -546,6 +714,20 @@
     },
     {
      "part": "upper_link",
+     "case": "R1",
+     "record_gate": 1.83,
+     "record_layer": 0.83,
+     "pla_gate_at_record_load": 1.12,
+     "pla_layer_at_record_load": 1.12,
+     "load_ratio": 0.685,
+     "sf": 1.63,
+     "target": 1.0,
+     "ok": true,
+     "governed_by": "gate",
+     "load": "power cut onto the floor stop: knee 394 N against 574 N"
+    },
+    {
+     "part": "upper_link",
      "case": "R1F",
      "record_gate": 1.85,
      "record_layer": 0.85,
@@ -557,6 +739,20 @@
      "ok": true,
      "governed_by": "gate",
      "load": "landing: knee 232 N against 574 N"
+    },
+    {
+     "part": "upper_link",
+     "case": "R1F",
+     "record_gate": 1.85,
+     "record_layer": 0.85,
+     "pla_gate_at_record_load": 1.13,
+     "pla_layer_at_record_load": 1.13,
+     "load_ratio": 0.685,
+     "sf": 1.65,
+     "target": 1.0,
+     "ok": true,
+     "governed_by": "gate",
+     "load": "power cut onto the floor stop: knee 394 N against 574 N"
     },
     {
      "part": "upper_link",
@@ -657,6 +853,20 @@
      "load": "landing: knee 232 N against 574 N"
     },
     {
+     "part": "front_link",
+     "case": "R1",
+     "record_gate": 1.37,
+     "record_layer": 0.58,
+     "pla_gate_at_record_load": 0.84,
+     "pla_layer_at_record_load": 0.8,
+     "load_ratio": 0.685,
+     "sf": 1.17,
+     "target": 1.0,
+     "ok": true,
+     "governed_by": "layer",
+     "load": "power cut onto the floor stop: knee 394 N against 574 N"
+    },
+    {
      "part": "wheel_link",
      "case": "R1",
      "record_gate": 2.78,
@@ -669,6 +879,20 @@
      "ok": true,
      "governed_by": "layer",
      "load": "landing: knee 232 N against 574 N"
+    },
+    {
+     "part": "wheel_link",
+     "case": "R1",
+     "record_gate": 2.78,
+     "record_layer": 1.49,
+     "pla_gate_at_record_load": 1.7,
+     "pla_layer_at_record_load": 1.7,
+     "load_ratio": 0.685,
+     "sf": 2.48,
+     "target": 1.0,
+     "ok": true,
+     "governed_by": "layer",
+     "load": "power cut onto the floor stop: knee 394 N against 574 N"
     },
     {
      "part": "wheel_link",
@@ -697,6 +921,20 @@
      "ok": true,
      "governed_by": "layer",
      "load": "landing: knee 232 N against 574 N"
+    },
+    {
+     "part": "hip_frame",
+     "case": "R1",
+     "record_gate": 1.6,
+     "record_layer": 1.34,
+     "pla_gate_at_record_load": 2.21,
+     "pla_layer_at_record_load": 1.85,
+     "load_ratio": 0.685,
+     "sf": 2.7,
+     "target": 1.0,
+     "ok": true,
+     "governed_by": "layer",
+     "load": "power cut onto the floor stop: knee 394 N against 574 N"
     },
     {
      "part": "hip_frame",
@@ -756,6 +994,20 @@
     },
     {
      "part": "output_adapter",
+     "case": "R1",
+     "record_gate": 9.72,
+     "record_layer": null,
+     "pla_gate_at_record_load": 1.01,
+     "pla_layer_at_record_load": null,
+     "load_ratio": 0.685,
+     "sf": 1.47,
+     "target": 1.0,
+     "ok": true,
+     "governed_by": "gate",
+     "load": "power cut onto the floor stop: knee 394 N against 574 N"
+    },
+    {
+     "part": "output_adapter",
      "case": "R2",
      "record_gate": 13.5,
      "record_layer": null,
@@ -773,7 +1025,7 @@
   "25.0": {
    "jump_mm": 96.7,
    "axle_n": 1261.3,
-   "knee_n": 399.3,
+   "knee_n": 271.2,
    "all_ok": false,
    "worst": "wheel_link R1w 1.28",
    "rows": [
@@ -793,6 +1045,20 @@
     },
     {
      "part": "upper_link",
+     "case": "R1",
+     "record_gate": 1.83,
+     "record_layer": 0.83,
+     "pla_gate_at_record_load": 1.12,
+     "pla_layer_at_record_load": 1.12,
+     "load_ratio": 0.685,
+     "sf": 1.63,
+     "target": 1.0,
+     "ok": true,
+     "governed_by": "gate",
+     "load": "power cut onto the floor stop: knee 394 N against 574 N"
+    },
+    {
+     "part": "upper_link",
      "case": "R1F",
      "record_gate": 1.85,
      "record_layer": 0.85,
@@ -804,6 +1070,20 @@
      "ok": true,
      "governed_by": "gate",
      "load": "landing: knee 271 N against 574 N"
+    },
+    {
+     "part": "upper_link",
+     "case": "R1F",
+     "record_gate": 1.85,
+     "record_layer": 0.85,
+     "pla_gate_at_record_load": 1.13,
+     "pla_layer_at_record_load": 1.13,
+     "load_ratio": 0.685,
+     "sf": 1.65,
+     "target": 1.0,
+     "ok": true,
+     "governed_by": "gate",
+     "load": "power cut onto the floor stop: knee 394 N against 574 N"
     },
     {
      "part": "upper_link",
@@ -904,6 +1184,20 @@
      "load": "landing: knee 271 N against 574 N"
     },
     {
+     "part": "front_link",
+     "case": "R1",
+     "record_gate": 1.37,
+     "record_layer": 0.58,
+     "pla_gate_at_record_load": 0.84,
+     "pla_layer_at_record_load": 0.8,
+     "load_ratio": 0.685,
+     "sf": 1.17,
+     "target": 1.0,
+     "ok": true,
+     "governed_by": "layer",
+     "load": "power cut onto the floor stop: knee 394 N against 574 N"
+    },
+    {
      "part": "wheel_link",
      "case": "R1",
      "record_gate": 2.78,
@@ -916,6 +1210,20 @@
      "ok": true,
      "governed_by": "layer",
      "load": "landing: knee 271 N against 574 N"
+    },
+    {
+     "part": "wheel_link",
+     "case": "R1",
+     "record_gate": 2.78,
+     "record_layer": 1.49,
+     "pla_gate_at_record_load": 1.7,
+     "pla_layer_at_record_load": 1.7,
+     "load_ratio": 0.685,
+     "sf": 2.48,
+     "target": 1.0,
+     "ok": true,
+     "governed_by": "layer",
+     "load": "power cut onto the floor stop: knee 394 N against 574 N"
     },
     {
      "part": "wheel_link",
@@ -944,6 +1252,20 @@
      "ok": true,
      "governed_by": "layer",
      "load": "landing: knee 271 N against 574 N"
+    },
+    {
+     "part": "hip_frame",
+     "case": "R1",
+     "record_gate": 1.6,
+     "record_layer": 1.34,
+     "pla_gate_at_record_load": 2.21,
+     "pla_layer_at_record_load": 1.85,
+     "load_ratio": 0.685,
+     "sf": 2.7,
+     "target": 1.0,
+     "ok": true,
+     "governed_by": "layer",
+     "load": "power cut onto the floor stop: knee 394 N against 574 N"
     },
     {
      "part": "hip_frame",
@@ -1003,6 +1325,20 @@
     },
     {
      "part": "output_adapter",
+     "case": "R1",
+     "record_gate": 9.72,
+     "record_layer": null,
+     "pla_gate_at_record_load": 1.01,
+     "pla_layer_at_record_load": null,
+     "load_ratio": 0.685,
+     "sf": 1.47,
+     "target": 1.0,
+     "ok": true,
+     "governed_by": "gate",
+     "load": "power cut onto the floor stop: knee 394 N against 574 N"
+    },
+    {
+     "part": "output_adapter",
      "case": "R2",
      "record_gate": 13.5,
      "record_layer": null,
@@ -1020,7 +1356,7 @@
   "30.0": {
    "jump_mm": 105.1,
    "axle_n": 1284.2,
-   "knee_n": 410.0,
+   "knee_n": 289.2,
    "all_ok": false,
    "worst": "wheel_link R1w 1.25",
    "rows": [
@@ -1040,6 +1376,20 @@
     },
     {
      "part": "upper_link",
+     "case": "R1",
+     "record_gate": 1.83,
+     "record_layer": 0.83,
+     "pla_gate_at_record_load": 1.12,
+     "pla_layer_at_record_load": 1.12,
+     "load_ratio": 0.685,
+     "sf": 1.63,
+     "target": 1.0,
+     "ok": true,
+     "governed_by": "gate",
+     "load": "power cut onto the floor stop: knee 394 N against 574 N"
+    },
+    {
+     "part": "upper_link",
      "case": "R1F",
      "record_gate": 1.85,
      "record_layer": 0.85,
@@ -1051,6 +1401,20 @@
      "ok": true,
      "governed_by": "gate",
      "load": "landing: knee 289 N against 574 N"
+    },
+    {
+     "part": "upper_link",
+     "case": "R1F",
+     "record_gate": 1.85,
+     "record_layer": 0.85,
+     "pla_gate_at_record_load": 1.13,
+     "pla_layer_at_record_load": 1.13,
+     "load_ratio": 0.685,
+     "sf": 1.65,
+     "target": 1.0,
+     "ok": true,
+     "governed_by": "gate",
+     "load": "power cut onto the floor stop: knee 394 N against 574 N"
     },
     {
      "part": "upper_link",
@@ -1151,6 +1515,20 @@
      "load": "landing: knee 289 N against 574 N"
     },
     {
+     "part": "front_link",
+     "case": "R1",
+     "record_gate": 1.37,
+     "record_layer": 0.58,
+     "pla_gate_at_record_load": 0.84,
+     "pla_layer_at_record_load": 0.8,
+     "load_ratio": 0.685,
+     "sf": 1.17,
+     "target": 1.0,
+     "ok": true,
+     "governed_by": "layer",
+     "load": "power cut onto the floor stop: knee 394 N against 574 N"
+    },
+    {
      "part": "wheel_link",
      "case": "R1",
      "record_gate": 2.78,
@@ -1163,6 +1541,20 @@
      "ok": true,
      "governed_by": "layer",
      "load": "landing: knee 289 N against 574 N"
+    },
+    {
+     "part": "wheel_link",
+     "case": "R1",
+     "record_gate": 2.78,
+     "record_layer": 1.49,
+     "pla_gate_at_record_load": 1.7,
+     "pla_layer_at_record_load": 1.7,
+     "load_ratio": 0.685,
+     "sf": 2.48,
+     "target": 1.0,
+     "ok": true,
+     "governed_by": "layer",
+     "load": "power cut onto the floor stop: knee 394 N against 574 N"
     },
     {
      "part": "wheel_link",
@@ -1191,6 +1583,20 @@
      "ok": true,
      "governed_by": "layer",
      "load": "landing: knee 289 N against 574 N"
+    },
+    {
+     "part": "hip_frame",
+     "case": "R1",
+     "record_gate": 1.6,
+     "record_layer": 1.34,
+     "pla_gate_at_record_load": 2.21,
+     "pla_layer_at_record_load": 1.85,
+     "load_ratio": 0.685,
+     "sf": 2.7,
+     "target": 1.0,
+     "ok": true,
+     "governed_by": "layer",
+     "load": "power cut onto the floor stop: knee 394 N against 574 N"
     },
     {
      "part": "hip_frame",
@@ -1250,6 +1656,20 @@
     },
     {
      "part": "output_adapter",
+     "case": "R1",
+     "record_gate": 9.72,
+     "record_layer": null,
+     "pla_gate_at_record_load": 1.01,
+     "pla_layer_at_record_load": null,
+     "load_ratio": 0.685,
+     "sf": 1.47,
+     "target": 1.0,
+     "ok": true,
+     "governed_by": "gate",
+     "load": "power cut onto the floor stop: knee 394 N against 574 N"
+    },
+    {
+     "part": "output_adapter",
      "case": "R2",
      "record_gate": 13.5,
      "record_layer": null,
@@ -1267,7 +1687,7 @@
   "40.0": {
    "jump_mm": 116.0,
    "axle_n": 1257.6,
-   "knee_n": 444.4,
+   "knee_n": 346.9,
    "all_ok": false,
    "worst": "wheel_link R1w 1.28",
    "rows": [
@@ -1287,6 +1707,20 @@
     },
     {
      "part": "upper_link",
+     "case": "R1",
+     "record_gate": 1.83,
+     "record_layer": 0.83,
+     "pla_gate_at_record_load": 1.12,
+     "pla_layer_at_record_load": 1.12,
+     "load_ratio": 0.685,
+     "sf": 1.63,
+     "target": 1.0,
+     "ok": true,
+     "governed_by": "gate",
+     "load": "power cut onto the floor stop: knee 394 N against 574 N"
+    },
+    {
+     "part": "upper_link",
      "case": "R1F",
      "record_gate": 1.85,
      "record_layer": 0.85,
@@ -1298,6 +1732,20 @@
      "ok": false,
      "governed_by": "gate",
      "load": "landing: knee 347 N against 574 N"
+    },
+    {
+     "part": "upper_link",
+     "case": "R1F",
+     "record_gate": 1.85,
+     "record_layer": 0.85,
+     "pla_gate_at_record_load": 1.13,
+     "pla_layer_at_record_load": 1.13,
+     "load_ratio": 0.685,
+     "sf": 1.65,
+     "target": 1.0,
+     "ok": true,
+     "governed_by": "gate",
+     "load": "power cut onto the floor stop: knee 394 N against 574 N"
     },
     {
      "part": "upper_link",
@@ -1398,6 +1846,20 @@
      "load": "landing: knee 347 N against 574 N"
     },
     {
+     "part": "front_link",
+     "case": "R1",
+     "record_gate": 1.37,
+     "record_layer": 0.58,
+     "pla_gate_at_record_load": 0.84,
+     "pla_layer_at_record_load": 0.8,
+     "load_ratio": 0.685,
+     "sf": 1.17,
+     "target": 1.0,
+     "ok": true,
+     "governed_by": "layer",
+     "load": "power cut onto the floor stop: knee 394 N against 574 N"
+    },
+    {
      "part": "wheel_link",
      "case": "R1",
      "record_gate": 2.78,
@@ -1410,6 +1872,20 @@
      "ok": true,
      "governed_by": "layer",
      "load": "landing: knee 347 N against 574 N"
+    },
+    {
+     "part": "wheel_link",
+     "case": "R1",
+     "record_gate": 2.78,
+     "record_layer": 1.49,
+     "pla_gate_at_record_load": 1.7,
+     "pla_layer_at_record_load": 1.7,
+     "load_ratio": 0.685,
+     "sf": 2.48,
+     "target": 1.0,
+     "ok": true,
+     "governed_by": "layer",
+     "load": "power cut onto the floor stop: knee 394 N against 574 N"
     },
     {
      "part": "wheel_link",
@@ -1438,6 +1914,20 @@
      "ok": true,
      "governed_by": "layer",
      "load": "landing: knee 347 N against 574 N"
+    },
+    {
+     "part": "hip_frame",
+     "case": "R1",
+     "record_gate": 1.6,
+     "record_layer": 1.34,
+     "pla_gate_at_record_load": 2.21,
+     "pla_layer_at_record_load": 1.85,
+     "load_ratio": 0.685,
+     "sf": 2.7,
+     "target": 1.0,
+     "ok": true,
+     "governed_by": "layer",
+     "load": "power cut onto the floor stop: knee 394 N against 574 N"
     },
     {
      "part": "hip_frame",
@@ -1497,6 +1987,20 @@
     },
     {
      "part": "output_adapter",
+     "case": "R1",
+     "record_gate": 9.72,
+     "record_layer": null,
+     "pla_gate_at_record_load": 1.01,
+     "pla_layer_at_record_load": null,
+     "load_ratio": 0.685,
+     "sf": 1.47,
+     "target": 1.0,
+     "ok": true,
+     "governed_by": "gate",
+     "load": "power cut onto the floor stop: knee 394 N against 574 N"
+    },
+    {
+     "part": "output_adapter",
      "case": "R2",
      "record_gate": 13.5,
      "record_layer": null,
@@ -1514,7 +2018,27 @@
  },
  "rows": [],
  "pla_cap_nm": 12.0,
- "stand_cap_nm": 20.0,
+ "stand_cap_nm": 12.0,
+ "stand_runs": {
+  "stand_up": {
+   "cap_nm": 12.0,
+   "peak_motor_nm": 7.5,
+   "knee_n": 82.5,
+   "axle_n": 97.8
+  },
+  "squat": {
+   "cap_nm": 12.0,
+   "peak_motor_nm": 7.5,
+   "knee_n": 70.4,
+   "axle_n": 95.0
+  },
+  "power_off": {
+   "cap_nm": 12.0,
+   "peak_motor_nm": 7.4,
+   "knee_n": 393.7,
+   "axle_n": 251.5
+  }
+ },
  "hub_clamp": {
   "torque_nm": 1.0,
   "preload_n": 1000,

@@ -1,5 +1,5 @@
 {
- "made_by": "cad/motor_day.py --slice (cadagent.slicer on Bambu Studio)",
+ "made_by": "tools/motor_day.py --slice (cadagent.slicer on Bambu Studio)",
  "engine": {
   "launcher": "bambu-studio",
   "executable_sha256": "8764c3b9d3dbbc6a59a6e9de607a54cb3e7bc190d479b64548e12f7cd8bc6baf",
