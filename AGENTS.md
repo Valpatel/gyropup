@@ -20,3 +20,9 @@ Tests may use `--ephemeral` (30-minute maximum, parent-bound) or import
 address and clean up the exact process you started. Keep at most one deliberate
 user-facing preview after validation, and stop temporary captures/comparisons.
 Never kill by process name or stop a shared terminal/agent scope.
+
+## Public repository, public site
+
+Never commit or publish absolute home paths, compute host names, LAN or tailnet addresses, or private repository
+names. Generators write repository-relative paths; notes name a machine by its role ("a CAD host"). Run
+`npm run build && npm run test:privacy`; see [the incident](.agents/inbox/2026-11-01-generated-exports-carried-home-paths.md).

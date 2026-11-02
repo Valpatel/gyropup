@@ -115,7 +115,7 @@ Tick with a link to the evidence (file, picture, result JSON). Unticked = open.
       modelled corner (yoke push 1.82, cartridge recoil 1.57, pan base at a servo stall 1.13; p99 SF 4-11), except the
       **cradle**, whose cheeks bend across the layers (0.78 / 0.62 in the falls, 0.77 under a 50 N push on the
       muzzle): named for v1 (plan T16); on the bench no pushing on the barrel.
-      **N1/N2 (2026-10-27, the full run on gb10-01, exports/turret/fea/summary.json, 28 studies, layer-aware):** the
+      **N1/N2 (2026-10-27, the full run on a CAD host, exports/turret/fea/summary.json, 28 studies, layer-aware):** the
       cradle is fixed (D48): the rail frame 2.51 / 4.29 / 2.22, the aluminium cheek plates and the stop lug pass, the yoke
       2.14 on the push. Three cases stay under target in the layer-aware column (the isotropic one passes them): the pan
       base's servo posts at a full servo stall (interlaminar shear at a post's root, 0.57 against 1.2; 1.14 against 2.0
