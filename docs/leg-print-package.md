@@ -27,12 +27,13 @@ Coupon C4 decides the layer rows (section 8). The mass is in section 9 and the o
 
 <!-- /gen:glance -->
 
-The weak spots, from the re-run's isotropic stress plots (`exports/leg/fea/`):
+The weak spots, from the re-run's isotropic stress plots (`exports/leg/fea/`). Each plot is coloured by the
+isotropic stress, so its red is not always the layer check's worst corner:
 
 | Upper link, knee stub (R3K) | Front link, apex ring (E1) | Wheel link, hub root (R1w) | Hip frame (E1) |
 |---|---|---|---|
 | ![upper link R3K](../exports/leg/fea/upper_link-R3K.png) | ![front link E1](../exports/leg/fea/front_link-E1.png) | ![wheel link R1w](../exports/leg/fea/wheel_link-R1w.png) | ![hip frame E1](../exports/leg/fea/hip_frame-E1.png) |
-| C4 is this stub | decision 1 | decision 1 | decision 2 |
+| red at the hub's bonded pad rim (left out of the gate: section 8); the layer check's worst corner is the knee stub, which C4 tests | the apex ring: decision 1 | the hub root, a sharp corner, so its number depends on the mesh: decision 1 | decision 2 |
 
 ## 1. Buy first (nothing is ordered yet)
 
@@ -43,23 +44,22 @@ The leg's bought parts and their links are in [leg-rig-orders.md](leg-rig-orders
 |---|---|---|---|
 | DIN 433 M6 washer, 6.4 x 11 x 1.6, stainless (`washer_m6_din433`) | 4 | under the BotWheel screws' heads (D74) | McMaster-Carr part number to confirm: its product pages returned no data on 2026-11-01 |
 | Structural epoxy for metal to nylon (two-part, gap-filling, about 0.1-0.25 mm) | 1 kit | the stop pins, the knee-eye sleeves and the RS-04 dowels (D74): Henkel does not recommend the anaerobic retainer (LOCTITE 638) on thermoplastics | the owner picks the product; C1 tries it |
-| PA6-CF, four 1 kg spools of one lot | 3.1 kg a leg with purge and brim | the hip frame alone is 1,106 g, so it takes a spool change | dry before use (section 3) |
+| PA6-CF, four 1 kg spools of one lot | 3.1 kg of parts a leg (the print plan), plus supports, brim and purge | the hip frame alone is 1,106 g, so it takes a spool change | dry before use (section 3) |
 | TPU 95A | 62 g | the four stop sleeves | |
 
 ## 2. Print the coupons first
 
-The four coupons and their measurement sheets are in
-[research/leg-preprint/README.md](../research/leg-preprint/README.md#print-first-coupons) and
-[research/leg-preprint/sheets/](../research/leg-preprint/sheets/). They take hours, not days, and each one changes a
-number in the CAD:
+The coupons are drawn in `cad/rig_bench.py` and exported to `exports/rig/bench/` (STEP and STL, in print
+orientation). Their measurement sheets are in [research/leg-preprint/sheets/](../research/leg-preprint/sheets/), and
+[research/leg-preprint/README.md](../research/leg-preprint/README.md#print-first-coupons) says what each settles.
+They take hours, not days, and each one changes a number in the CAD:
 
-- **C1, the bores.** It measures the printed-hole error that `PRINT_HOLE_COMP` assumes (0.125 mm on the diameter, the
-  middle of an assumed -0.20 to -0.05 mm). Set the constant from it before printing the links.
-- **C2, the insert.** It measures the M5 insert's pull-out against the hip-frame mount's preload.
-- **C3, the clamp.** It measures how much preload creep takes from a clamped printed stack in 24 h. That sets the
-  re-torque schedule.
-- **C4, the boss root.** It loads a printed boss root across its layers. The layer check uses an interlayer
-  shear strength that nobody has measured (S_z / sqrt(3)), and C4 measures it (section 7).
+| Coupon | Files | What it changes |
+|---|---|---|
+| **C1, the bores** | `coupon_knee_eye`, `coupon_frame_pins`, `coupon_knee_boss`, `coupon_apex_eye`, `coupon_hub_stub`, `coupon_hub_face`, `coupon_frame_ring` (each at -0.1 / 0 / +0.1 mm) | The printed-hole error. `PRINT_HOLE_COMP` (0.125 mm on the diameter, the middle of an assumed -0.20 to -0.05 mm) sets the sleeve and dowel holes; set it from C1 before printing the links. The 6301 and 61812 seats and the stop-pin holes are drawn at their own fits (`KC`, `AC`, `STOP_HOLE_PLAY` in `cad/fivebar.py`), so C1's numbers change them by hand. Every seat coupon opens on the bed face with the leg's lead-in, as the parts do |
+| **C2, the insert** | `insert_coupon`, `puller_m5` | The M5 insert's pull-out against the hip-frame mount's preload |
+| **C3, the clamp** | `coupon_c3_sleeved`, `coupon_c3_plain` (the frame's flange, M5), `coupon_c3_wheel` (the wheel link's foot, M6 on a DIN 433) | How much preload creep takes from a clamped printed stack: the re-torque schedule, and whether the wheel joint keeps the clamp it needs (below) |
+| **C4, the boss root** | `coupon_c4_today`, `coupon_c4_pr2` (the upper link's knee end with dev's stub and the drawn one) | The interlayer strength the layer check assumes. The FEA of the coupon itself predicts the load at which each root peels (section 8); the measured load over the predicted one is the factor on the assumed S_z and S_s |
 
 ## 3. Drying and printer set-up
 
@@ -88,7 +88,9 @@ z = 0. `exports/leg/print-plan.json` gives each part's hours and grams.
 
 ## 5. After printing, before assembly
 
-1. Weigh each part and compare it with the print plan. More than 5 % light means voids: do not use the part.
+1. Weigh each part and compare it with the print plan, after the same comparison on the C1 coupons: their
+   measured-to-CAD mass ratio is this printer's solid ratio. A part more than 5 % under that ratio has voids: do not
+   use it.
 2. Measure every press-fit bore at its mouth and 5 mm in, on two diameters, as C1's sheet does:
    - the knee-eye sleeve holes, drawn Ø18.125;
    - the 6301 seats, Ø37.04;
@@ -107,10 +109,13 @@ z = 0. `exports/leg/print-plan.json` gives each part's hours and grams.
 Follow [leg-rig-assembly.md](leg-rig-assembly.md). The D74 joints change it here:
 
 - **Stop pins, knee-eye sleeves and RS-04 dowels:** bond them with the structural epoxy, pressed or pushed to depth,
-  and let it cure fully before you load them. The sleeve holes are drawn for about 0.05 mm of press at the printed
+  and let it cure fully before you load them. The sleeve holes are drawn for about 0.02 mm of press at the printed
   band's middle; C1 says whether they come out loose or tight.
-- **BotWheel:** 4 x M6 x 30, each on a DIN 433 washer, at 1.8 N m with threadlocker (it was 8 N m). The plastic
-  under a bare head was at 150 MPa; under the washer it is at 25 MPa.
+- **BotWheel:** 4 x M6 x 30, each on a DIN 433 washer, at 1.8 N m with threadlocker (it was 8 N m), 7.4 mm into the
+  wheel. The plastic under a bare head was at 150 MPa. Most of the drop to 25 MPa comes from the lower torque; the
+  washer raises the bearing area from 44 to 61 mm². At 1.8 N m the joint has 1.13 x the clamp the wheel's flange
+  needs, and only at assembly, before torque scatter and creep: the flange may open at the rare peak. C3's wheel
+  samples measure what is left after creep. If it is short, the fix is a steel plate under the heads, not more torque.
 - **Re-torque** every clamped printed joint after 24 h and after the first humid week. C3 sets the schedule.
 - The stop sleeves go on last, over the bonded pins.
 
@@ -122,26 +127,42 @@ Run these on the bench with the motors unpowered, before any powered rig test. S
 - The hip frame is bolted to the rig's carriage plate, with the carriage clamped.
 - Load the wheel's axle with weights, or with the bench press and its load cell.
 - A dial indicator reads at the axle.
+- The TPU stop sleeves are in the load path and creep. Load to P1 once and unload to seat them, then zero the
+  indicator. To judge the plastic parts' set alone, swap the sleeves for rigid spacers of the same size.
+
+<!-- gen:proof -->
 
 | Step | Load at the axle | Hold | Pass |
 |---|---|---|---|
-| P1 | 460 N vertical (E1: 2.5 x the standing 184 N) | 10 min | it returns to within 0.05 mm of its start; no whitening, cracking or creaking |
-| P2 | 945 N vertical (R1: the landing's quasi-static axle force) | 1 min | set after unloading under 0.1 mm; the same visual checks; the torque marks have not moved |
+| P1 | 460 N vertical (E1's axle load: 2.5 x standing) | 10 min | after the seating cycle, it returns to within 0.05 mm of its start; no whitening, cracking or creaking |
+| P2 | 945 N vertical (R1's axle load, applied in the folded posture) | 1 min | set after unloading under 0.1 mm; the same visual checks; the torque marks have not moved |
 | P3 | 10 % of P2 sideways, at the tyre's mid-plane | 1 min | the same |
+
+In the folded posture the axle load goes where R3's does, and P2 is 0.52 of R3's 1831 N. Scaled from the R3 rows (generated by `screen.py` from the same record):
+
+| Part | Case | Gate at P2 | Layer check at P2 | Left-out edge at P2 |
+|---|---|---|---|---|
+| upper_link | R3K | 2.05 | 1.14 | pad rim 1.28 |
+| upper_link | R3KF | 2.32 | 1.28 | pad rim 1.36 |
+| hip_frame | R3o | 1.94 | 1.82 | pin band 1.01 |
+
+So P2 brings the knee stubs and the stop pins' bands near SF 1 in the folded posture: apply it in steps of a quarter, listening and watching the indicator, and stop at the first whitening.
+
+<!-- /gen:proof -->
 
 After P2, look closely with a lamp at:
 
 - the upper links' knee-eye roots;
-- the wheel link's knee boss root and hub root;
-- the front link's apex ring;
-- the hip frame's flange roots.
+- the hip frame round the stop pins and at its flange roots;
+- the wheel link's knee boss root.
 
-These are where the layer check below is short. Any crack there stops the build: the part goes to metal or is
-redesigned.
+Any crack stops the build: the part goes to metal or is redesigned.
 
-The folded posture loads the stops, the links' bending and the frame, but it does not reproduce every R1 or E1 path
-through the knees and the apex. The rig's powered tests (S1-S5 in [leg-bench-tests.md](leg-bench-tests.md)) cover
-those, after this page.
+**What these do not check.** The folded posture carries the load through the stops, the links' bending and the
+frame. It is not the R1 or E1 load path through the knees and the apex: the front link's apex ring has no R3 row, so
+what P2 does there is not known. To proof the R1 path unpowered, hold the leg at its R1 height with a steel bar
+locking each motor's output adapter to the hip frame; that bar is not drawn yet. The rig's powered tests (S1-S5 in
+[leg-bench-tests.md](leg-bench-tests.md)) cover these paths after this page.
 
 ## 8. The leg's studies after these changes
 
@@ -151,6 +172,7 @@ Generated by `research/leg-preprint/screen.py` from `exports/leg/fea/summary.jso
 
 - **Isotropic gate:** 18 of 20 rows at target, against 13 before.
 - **Layer check:** 5 of 20 rows at target, against 5 before. It assumes the interlayer shear strength S_s = S_z / sqrt(3) = 10.47 MPa; nobody has measured it.
+- **Mass basis:** the loads are the 37.5 kg design robot's (`cad/leg_studies.py` ROBOT_KG). At the 38.69 kg this branch weighs (section 9) every SF falls by 0.969: hip_frame E3o 2.04 → **1.98** (target 2) and hip_frame R3o 1 → **0.97** (target 1) would then miss their targets. They are counted at target above, but they sit at the limit.
 
 | Part | Case | Target | Gate: before → now | Layer check: before → now | Printed strength that would pass (MPa) | Worst corner |
 |---|---|---|---|---|---|---|
@@ -175,7 +197,32 @@ Generated by `research/leg-preprint/screen.py` from `exports/leg/fea/summary.jso
 | hip_frame | E3i | 2 | 2.18 → 2.21 | 3.2 → 2.99 |  | web, motor side (x 95, z -59) |
 | hip_frame | R3o | 1 | **0.92** → 1 | **0.93** → **0.94** | S_s ≥ 13.2 (1.3× assumed) | flange root, inner face (x 95, y -65.1) |
 
-Bold: under target. The strength column is what coupon C4 has to show for the row to pass as drawn: an interlayer shear strength S_s (with S_z at the assumed 18.13 MPa), or, where through-layer tension alone fails, a through-layer strength S_z (with S_s scaled with it). A row whose number C4 does not reach needs geometry or metal (section 10); a row that needs more than about twice the assumed value is unlikely to pass, so read those as the parts most likely to need it. Proof load P2 checks the same corners on the first leg.
+Bold: under target. The strength column is what coupon C4 has to show for the row to pass as drawn: an interlayer shear strength S_s (with S_z at the assumed 18.13 MPa), or, where through-layer tension alone fails, a through-layer strength S_z (with S_s scaled with it). A row whose number C4 does not reach needs geometry or metal (section 10); a row that needs more than about twice the assumed value is unlikely to pass, so read those as the parts most likely to need it. Each number holds at the row's worst corner only, so it is a lower bound.
+
+**Left out of the gate, as the records do.** Two contact edges the linear model cannot resolve are not judged: the upper link's bonded pad rim (the adapter's edge on the hub face) and the hip frame's band round a stop pin (the pin bearing on its hole). Counted, they would read:
+
+| Part | Case | Target | Gate as judged | With the left-out edge |
+|---|---|---|---|---|
+| upper_link | R1 | 1.2 | 1.83 | pad rim **1** |
+| upper_link | R1F | 1.2 | 1.85 | pad rim **0.95** |
+| upper_link | E1 | 2 | 2.07 | pad rim **1.16** |
+| upper_link | E1F | 2 | 2.11 | pad rim **1.13** |
+| upper_link | R3K | 1 | 1.06 | pad rim **0.66** |
+| upper_link | R3KF | 1 | 1.2 | pad rim **0.7** |
+| hip_frame | E3o | 2 | 2.04 | pin band **1.06** |
+| hip_frame | E3i | 2 | 2.21 | pin band **1.34** |
+| hip_frame | R3o | 1 | 1 | pin band **0.52** |
+
+The plots in the summary show these edges red. Bench test B4b (the hub on its adapter) and proof load P2 (the pins, section 7) are the physical checks.
+
+**Coupon C4's prediction** (`research/leg-preprint/evidence/c4-fea.json`, `research/leg-preprint/c4_fea.py`: the coupon itself at 1 kN, held at its cut face, loaded through the knee bore at the knee boss's mid-plane):
+
+| Stub | Weakest direction | Predicted peel load (2 mm / 1.5 mm mesh) | Governed by | Bulk (in-layer) load |
+|---|---|---|---|---|
+| dev's (coupon_c4_today) | -x | 1,350 N / 1,420 N | bond | 3,390 N |
+| drawn (coupon_c4_pr2) | +z | 1,780 N / 1,800 N | bond | 3,750 N |
+
+Load C4 in the weakest direction. The measured peel load over the predicted one is the factor on the assumed S_z and S_s for every row above; the two stubs check that the drawn one gains what the FEA says.
 
 <!-- /gen:final-record -->
 
@@ -207,7 +254,8 @@ These are not drawn on this branch. The pre-print review
    - A turned 6061 hub costs +104 g. It also puts the wheel's M6 heads on metal.
    - A 6061 bearing ring bonded into the front link (Ø78 / Ø84 x 45 mm) is 34 cm³, so +56 g net of the plastic it
      replaces. It has not been drawn or run.
-   - Printed as drawn: C4 measures the interlayer strength, and proof load P2 checks the ring.
+   - Printed as drawn: C4 measures the interlayer strength. No unpowered proof load checks the ring (section 7);
+     the rig's powered tests are the first to load it.
 2. **The hip-frame mount: inserts or sleeved through-bolts (+93 g).** D74 picks the through-bolt: an 851 N fault
    tension on inserts with a 1,500 N estimated humid pull-out. It is not drawn here. The frame's FEA has to change with
    it, because the bolt then carries the flange's end load to the web, and the frame still misses its gate (E1 1.60

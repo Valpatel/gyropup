@@ -16,7 +16,7 @@ SUMMARY = 'exports/leg/fea/summary.json'
 FINER = 'research/leg-preprint/evidence/hip-frame-print-ready.json'
 # The recorded E1 gate (cad-agent v0.6.0, the print-ready rerun of #148, issue #29) and its solved surface; review the
 # media when they change.
-GATE_SF, VERTICES, TRIANGLES = 1.60, 25195, 50478
+GATE_SF, VERTICES, TRIANGLES = 1.60, 25232, 50552
 
 
 def require(condition, message):

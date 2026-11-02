@@ -109,6 +109,38 @@ class Screen(unittest.TestCase):
         self.assertIn('S_z', row['S_s_needed_mpa'])          # through-layer tension alone fails at the assumed S_z
         self.assertLess(row['gate_now'], row['target'])       # and the gate still misses: owner decision 1
 
+    def test_proof_block_scales_the_r3_rows(self):
+        # linear statics: at P2 (R1's axle load, in the folded posture) each R3 row's SF is R3's load over P2's times it
+        repo = sc.Repo(sc.ROOT)
+        fr = sc.final_record(repo, sc.materials(repo))
+        cases = repo.json(sc.FINAL_GATE)['cases']
+        k = cases['R3']['Fw3'][2] / cases['R1']['Fw3'][2]
+        self.assertAlmostEqual(k, 1830.7 / 945.26, places=3)
+        row = next(x for x in fr['rows'] if (x['part'], x['case']) == ('upper_link', 'R3K'))
+        block = sc.proof_block(repo, fr)
+        self.assertIn(f"| upper_link | R3K | {row['gate_now'] * k:.2f} | {row['layer_now'] * k:.2f} |", block)
+        self.assertIn('| P2 | 945 N vertical', block)
+
+    def test_mass_basis_flags_rows_at_the_limit(self):
+        repo = sc.Repo(sc.ROOT)
+        fr = sc.final_record(repo, sc.materials(repo))
+        self.assertEqual(fr['design_kg'], 37.5)                                  # cad/leg_studies.py ROBOT_KG
+        r3o = next(x for x in fr['rows'] if (x['part'], x['case']) == ('hip_frame', 'R3o'))
+        self.assertGreaterEqual(r3o['gate_now'], r3o['target'])
+        self.assertLess(r3o['gate_at_robot_mass'], r3o['target'])
+        self.assertIn('hip_frame R3o', sc.final_block(fr).split('**Mass basis:**')[1].split('\n')[0])
+
+    def test_c4_prediction_takes_the_weakest_direction(self):
+        repo = sc.Repo(sc.ROOT)
+        ev = repo.json(sc.C4_EVIDENCE)
+        pred = sc.c4_prediction(repo)
+        for stub in ('today', 'pr2'):
+            coarse = [x for x in ev['rows'] if x['stub'] == stub and x['mesh_mm'] == 2.0]
+            self.assertEqual(len(coarse), 4)
+            self.assertEqual(pred[stub]['peel_n'], min(x['predicted_peel_n'] for x in coarse))
+            for x in coarse:                                      # linear: the peel load is 1 kN x the layer SF at 1 kN
+                self.assertAlmostEqual(x['predicted_peel_n'], 1000 * x['layer_check_at_1kn']['safety_factor'], delta=0.5)
+
     def test_control_sleeve_count_moves_the_press_force(self):
         one = fit(generate({'cad/fivebar.py': [('EYE_SLEEVES = 2 ', 'EYE_SLEEVES = 1 ')]}), 'knee eye sleeves')
         two = fit(self.doc, 'knee eye sleeves')

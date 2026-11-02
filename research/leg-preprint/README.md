@@ -262,7 +262,7 @@ next to them.
 
 The B0 coupons need updating along with these. The `coupon_knee_boss` docstring and the bench page still describe
 the 6201, and its seat is 10 mm deep for the 12 mm-wide 6301. B4c (the M8 insert for the stop posts) is moot since
-D53. PR 2 draws C1–C4 in `cad/rig_bench.py` and packages them.
+D53. PR 2 (#148) draws C1–C4 in `cad/rig_bench.py`, and `c4_fea.py` predicts C4's peel load from an FEA of the coupon.
 
 **To print and test these, the owner needs:**
 
@@ -295,6 +295,8 @@ The press cage, the load cell and the pullers are B3 and B4's. No purchases have
 ```bash
 python3 research/leg-preprint/screen.py           # regenerate screen.json, screen.md, sheets/, the print package's blocks
 python research/leg-preprint/figure.py            # docs/img/leg-print-ready-sf.png (needs matplotlib)
+# on a compute host, cad-agent v0.6.0: coupon C4's FEA (evidence/c4-fea.json)
+python research/leg-preprint/c4_fea.py --out build/c4-fea
 python3 research/leg-preprint/test_screen.py      # freshness and controls (CI: web-scene mechanism suite)
 # on a compute host (cad-remote-runs), with cad-agent v0.6.0 as the records pin:
 python research/leg-preprint/orientation_screen.py --out build/leg-preprint/orientation --mesh 4

@@ -1457,17 +1457,17 @@
   {
    "id": "C3",
    "name": "sleeved through-bolt joint, against the plastic clamp",
-   "prints": "four 13 x 40 x 60 flange blocks, layers across the bolt as in the frame",
-   "features": "two with an Ø8.1 bore and a steel sleeve flush, its nut on a DIN 9021 (Ø15) washer that reaches the plastic round the sleeve; two with an Ø5.5 bore (bolt on the plastic, a Ø15 washer); M5 8.8 through the B4 load cell; after the creep readings, load each sleeved joint in tension to the fault tension (851 N) through the load cell, the block held at its far face, and check that the washer carries it into the plastic round its pocket: the joint stays closed and the pocket does not crush",
+   "prints": "four 13 x 40 x 60 flange blocks, layers across the bolt as in the frame (coupon_c3_sleeved, coupon_c3_plain), and two 30 x 30 wheel-foot blocks, the 20.8 mm the BotWheel's M6 clamps (coupon_c3_wheel)",
+   "features": "two with an Ø8.1 bore and a steel sleeve flush, its nut on a DIN 9021 (Ø15) washer that reaches the plastic round the sleeve; two with an Ø5.5 bore (bolt on the plastic, a Ø15 washer); M5 8.8 through the B4 load cell; after the creep readings, load each sleeved joint in tension to the fault tension (851 N) through the load cell, the block held at its far face, and check that the washer carries it into the plastic round its pocket: the joint stays closed and the pocket does not crush. The wheel blocks: M6 x 30 on a DIN 433 at 1.8 N m with threadlocker into a 5 mm steel plate (the BotWheel's flange), through the load cell: the clamp left after creep against the 1331 N the wheel's flange needs",
    "settles": "preload kept over 30 min, 24 h, 7 days and a humid week, sleeved against plain; the creep step the preload table screens; the re-torque schedule",
    "sheet": "c3-through-bolt.csv"
   },
   {
    "id": "C4",
    "name": "boss-root layer coupon (the knee eye's stub)",
-   "prints": "the upper link's knee end, cut 40 mm back from the knee, printed as the link (stub up); two today, two with the PR 2 stub",
-   "features": "the two DIN 179 sleeves and a Ø12 pin standing 46 mm out (the knee's lever), loaded sideways in the press cage",
-   "settles": "the load at which the stub's root peels (or the arm breaks) against the FEA's prediction for the same coupon: calibrates S_z and the unmeasured interlayer shear S_s the layer check assumes",
+   "prints": "the upper link's knee end, cut 40 mm back from the knee, printed as the link (stub up): coupon_c4_today (dev's stub) and coupon_c4_pr2 (the drawn one), two each",
+   "features": "the two DIN 179 sleeves bonded in and the Ø12 knee pin through them; the arm's cut end clamped square in the press cage; the load on the pin at the knee boss's mid-plane (26 mm past the link's outer face), in the direction c4_fea.py finds weakest",
+   "settles": "the load at which the stub's root peels (or the arm breaks) against c4_fea.py's prediction for the same coupon (docs/leg-print-package.md section 8): measured over predicted is the factor on the S_z and S_s the layer check assumes",
    "sheet": "c4-boss-root.csv"
   }
  ],
