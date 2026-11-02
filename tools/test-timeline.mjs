@@ -55,6 +55,8 @@ test('without history the timeline says so; counts read as words', () => {
 test('subsystems come from paths', () => {
   assert.equal(subsystemOf('cad/fivebar.py'), 'leg');
   assert.equal(subsystemOf('exports/gates/wall.json'), 'turret');
+  assert.equal(subsystemOf('docs/carrier-service-connectors.md'), 'turret', 'the removable carrier sits on the turret pan base');
+  assert.equal(subsystemOf('hardware/carrier-pan-protection/README.md'), 'electronics');
   assert.equal(subsystemOf('exports/rig/rig-side.png'), 'rig');
   assert.equal(subsystemOf('hardware/fuse-board/design.py'), 'electronics');
   assert.equal(subsystemOf('exports/wheels/summary_curb.json'), 'wheels');

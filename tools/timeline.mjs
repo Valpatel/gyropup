@@ -22,7 +22,7 @@ export const SUBSYSTEMS = [
   ['rig', /(^|\/)(rig|legrig)(\/|_|-)|leg[_-]rig|exports\/rig\//],
   ['wheels', /wheel/],
   ['electronics', /^hardware\/|fuse|wiring|carrier-pan|electr|firmware\/|protection/],
-  ['turret', /turret|exports\/gates\/|dossier|hopper|flywheel|cartridge|barrel|pan_|tilt_|launcher/],
+  ['turret', /turret|carrier|base-board|exports\/gates\/|dossier|hopper|flywheel|cartridge|barrel|pan_|tilt_|launcher/],
   ['leg', /(^|\/)leg|fivebar|rs04|hip_frame|hip-frame|upper_link|front_link|knee/],
   ['body', /body|chassis|battery|shell/],
 ];
