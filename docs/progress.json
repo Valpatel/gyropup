@@ -1,10 +1,15 @@
 {
-  "updated": "2026-10-31",
+  "updated": "2026-11-01",
   "status": [
     {
       "title": "Project stage",
       "value": "CAD + simulation",
       "note": "No assembled robot yet. The goal is a 100 lb maximum robot with a $10,000 target budget; these are design targets, not achieved specifications."
+    },
+    {
+      "title": "Motor day",
+      "value": "Plan + build package · draft",
+      "note": "RS-04 leg motors arrive 2026-11-02. A generated PLA print list, McMaster order, assembly drawings and a low-current test ladder to a first hop on a lumber boom stand. PLA caps the motors at 12 N m. Not yet reviewed, no motor has run."
     },
     {
       "title": "Leg mounting fit",
@@ -360,6 +365,21 @@
         {
           "title": "Unpowered fit job",
           "href": "../site/pages/docs-rs04-fit-job-md.html"
+        }
+      ]
+    },
+    {
+      "time": "2026-11-01",
+      "title": "Motor day: from unboxing to a first PLA hop",
+      "text": "The large leg motors arrive tomorrow. One generated package covers checks on arrival, 30 PLA prints (about 82 h, 4.7 kg), a 20-line McMaster order, seven exploded assembly steps, five ballooned drawings and a test ladder that starts at 2 A and stops at the 12 N m PLA cap. The rig model at that cap predicts about 46 mm of hop. These figures are scaled from the PA6-CF FEA, not measured, and no motor has run yet.",
+      "links": [
+        {
+          "title": "Motor day plan",
+          "href": "../site/pages/docs-motor-day-md.html"
+        },
+        {
+          "title": "Download the build package (zip)",
+          "href": "../exports/motor-day/motor-day-package.zip"
         }
       ]
     }

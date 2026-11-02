@@ -4,6 +4,7 @@
     python -m rig.run --backend sim --test jump --rate 250 --plot
     python -m rig.run --backend hil --test jump                      # the CAN path on two software RS-04s + MuJoCo
     python -m rig.run --backend can --iface can0 --test stand_up     # the rig itself (pendant held, ARM typed)
+    python -m rig.run --backend can --test jump --cap 12 --half-mass 11.09   # a lower cap (docs/motor-day.md, PLA)
     python -m rig.run --reproduce        # T7: every scenario as sim/leg_rig.py ran it -> exports/rig/reproduction.json
     python -m rig.run --predict          # the rig as built: 14.75 kg, the FLEXVOLT pack, a tick of latency, at 500 Hz
                                          # -> exports/rig/predictions.json (the numbers docs/leg-bench-tests.md quotes)
@@ -198,7 +199,8 @@ def faults(test: str = 'squat', at: float = 1.0) -> dict:
     return doc
 
 
-def run_hil(test: str, half_mass: float, rate: float, pack: Pack, plot: bool = False, tag: str = 'hil'):
+def run_hil(test: str, half_mass: float, rate: float, pack: Pack, plot: bool = False, tag: str = 'hil',
+            cap: Optional[float] = None):
     from rig.can_bus import Calibration, CanBus, MotorCal
     from rig.hil import HilLink
     from rig.sim_bus import SimBus
@@ -208,11 +210,13 @@ def run_hil(test: str, half_mass: float, rate: float, pack: Pack, plot: bool = F
     cal = Calibration(MotorCal(1, -1, fo + 0.05), MotorCal(2, -1, ro - 0.05), 'HIL: both motors reversed, zero offset')
     sim = SimBus(test, half_mass=half_mass, tick=1 / rate, cap=sc.cap, pack=pack, latency_ticks=0)
     link = HilLink(sim, cal, cut_at=0.6 if test.startswith('power_off') else None)
-    bus = CanBus(link.port, cal, tick=1 / rate, realtime=False, clock=link.clock, after_exchange=link.advance)
+    config = cap_setup(cap)[0] if cap is not None else None       # --cap: the software motors take it as the real ones do
+    bus = CanBus(link.port, cal, tick=1 / rate, realtime=False, clock=link.clock, after_exchange=link.advance, config=config)
     link.begin()
-    lim = lc.Limits(cap=sc.cap or lc.LEG_PEAK)
+    c = min(sc.cap or lc.LEG_PEAK, cap) if cap is not None else (sc.cap or lc.LEG_PEAK)
+    lim = lc.Limits(cap=c)
     if pack.r_int == 0.0:                                        # an ideal bus: no packs, so no voltage window
-        lim = lc.Limits(cap=sc.cap or lc.LEG_PEAK, vbus_max=1e9, vbus_min=0.0, vbus_floor=0.0)
+        lim = lc.Limits(cap=c, vbus_max=1e9, vbus_min=0.0, vbus_floor=0.0)
     ctl = lc.LegController(test, sim.ff_n, lim, tick=1 / rate, external_cut=True)
     log = RunLog('hil', test, {'half_mass_kg': half_mass, 'rate_hz': rate, 'pack': {'v_oc': pack.v_oc, 'r_int': pack.r_int}}, tag)
     loop(bus, ctl, log, sc.duration)
@@ -224,6 +228,32 @@ def run_hil(test: str, half_mass: float, rate: float, pack: Pack, plot: bool = F
     return {'results': res, 'log': log, 'paths': paths, 'bus': bus}
 
 
+def cap_setup(cap: Optional[float], rate_limit: Optional[float] = None) -> tuple:
+    """(the motors' start-up settings, the laptop's limits) for a run capped at `cap` N m (None: the rig's 60).
+
+    One number sets both caps: the motors' limit_torque, written and read back at start-up (rig/rs04.py configure), and
+    the laptop's clip. A lower cap is how a weaker leg runs (docs/motor-day.md: PLA); a higher one is refused."""
+    from rig import rs04 as P
+    c = lc.LEG_CAP if cap is None else float(cap)
+    if not 0.0 < c <= lc.LEG_CAP:
+        raise ValueError(f'--cap {c:g}: the rig runs at 0 < cap <= {lc.LEG_CAP:g} N m (D38)')
+    return {**P.RIG_CONFIG, 'limit_torque': c}, lc.Limits(rate=rate_limit, cap=c)
+
+
+def cap_guard(rs04_bus, ids, cap: Optional[float]) -> Optional[str]:
+    """Why a run must not start, or None. Without --cap the start-up writes the rig's 60 N m; a motor that holds a lower
+    limit (a weaker leg's, docs/motor-day.md) is not raised by a forgotten flag: the operator must say --cap 60."""
+    if cap is not None:
+        return None
+    from rig import rs04 as P
+    held = {i: P.Motor(rs04_bus, i).read('limit_torque') for i in ids}
+    low = {i: v for i, v in held.items() if v < lc.LEG_CAP - 1e-6}
+    if low:
+        return (f"motor(s) {', '.join(f'{i} at {v:g} N m' for i, v in low.items())} hold a lower limit_torque than the rig's "
+                f'{lc.LEG_CAP:g}: pass --cap (the lower one for a printed leg, or --cap {lc.LEG_CAP:g} to raise it on purpose)')
+    return None
+
+
 def run_can(a) -> int:
     from rig.can_bus import Calibration, CanBus
     from rig.canio import SocketCan
@@ -231,11 +261,18 @@ def run_can(a) -> int:
     if a.test not in RIG_TESTS:
         print(f'{a.test} is not a rig test (the motors are capped at 60 N m)')
         return 2
+    config, limits = cap_setup(a.cap, a.rate_limit)
     cal = Calibration.load()
-    bus = CanBus(SocketCan(a.iface), cal, tick=1 / a.rate, require_node=not a.no_node, damper=a.damper)
-    ctl = lc.LegController(a.test, lc.ff_for(a.half_mass, *_ff_masses()), lc.Limits(rate=a.rate_limit), tick=1 / a.rate,
+    bus = CanBus(SocketCan(a.iface), cal, tick=1 / a.rate, require_node=not a.no_node, damper=a.damper, config=config)
+    why = cap_guard(bus.bus, (cal.front.id, cal.rear.id), a.cap)
+    if why:
+        print(f'refused: {why}')
+        bus.close()
+        return 5
+    ctl = lc.LegController(a.test, lc.ff_for(a.half_mass, *_ff_masses()), limits, tick=1 / a.rate,
                            external_cut=True)
-    log = RunLog('can', a.test, {'half_mass_kg': a.half_mass, 'rate_hz': a.rate, 'iface': a.iface, 'calibration': cal.__dict__}, a.tag)
+    log = RunLog('can', a.test, {'half_mass_kg': a.half_mass, 'rate_hz': a.rate, 'iface': a.iface, 'calibration': cal.__dict__,
+                                 'cap_nm': limits.cap}, a.tag)
     if not a.yes:
         input(f'{sc.title}. Clear the zone, hold the pendant, then press Enter to configure the motors: ')
     tk = bus.start()
@@ -294,6 +331,7 @@ def main(argv=None):
     ap.add_argument('--iface', default='can0')
     ap.add_argument('--damper', type=int, choices=(0, 1))
     ap.add_argument('--rate-limit', type=float, help='N m per tick the command may change (the first hanging tests: 5)')
+    ap.add_argument('--cap', type=float, help='N m: the motors\' limit_torque and the laptop\'s clip, at most 60 (default 60)')
     ap.add_argument('--no-node', action='store_true', help='CAN without the rig node: bench tests only, never with the leg on the rig')
     ap.add_argument('--yes', action='store_true')
     ap.add_argument('--inject', help='simulation only: a fault kind@seconds (rig/faults.py), e.g. run@1.0')
@@ -318,11 +356,11 @@ def main(argv=None):
         inj = (a.inject.split('@')[0], float(a.inject.split('@')[1])) if a.inject else None
         o = run_sim(a.test, a.half_mass, a.rate, pack, a.latency, contact_truth=a.contact_truth, tag=a.tag, plot=a.plot,
                     video=(OUT / 'runs' / f'{a.test}.mp4') if a.video else None, inject=inj,
-                    limits=lc.Limits(rate=a.rate_limit) if a.rate_limit else None)
+                    limits=cap_setup(a.cap, a.rate_limit)[1] if (a.rate_limit or a.cap is not None) else None)
         print(json.dumps({k: v for k, v in o['results'].items() if k not in ('series', 'rig')}, indent=1))
         return 0
     if a.backend == 'hil':
-        o = run_hil(a.test, a.half_mass, a.rate, pack, a.plot)
+        o = run_hil(a.test, a.half_mass, a.rate, pack, a.plot, cap=a.cap)
         print(json.dumps({k: v for k, v in o['results'].items() if k not in ('series', 'rig')}, indent=1))
         print('timing', o['bus'].timing.summary())
         return 0
