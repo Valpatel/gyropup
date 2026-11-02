@@ -108,7 +108,7 @@ def main():
                    source_revision=check.command(['git', 'rev-parse', 'HEAD']).decode().strip(),
                    source_hashes=source_hashes, segments=check.SEGMENTS, historical_leg=historical,
                    e1=dict(source_start_seconds=1, source_duration_seconds=3, transient_simulation=False,
-                           deformation_exaggeration=16, safety_factor=1.63, required=2, baseline_kg=37.5),
+                           deformation_exaggeration=16, safety_factor=1.60, required=2, baseline_kg=37.5),
                    capture=dict(recipe='tools/capture-highlights.mjs', receipt='capture-receipt.json', frames='capture-frames.json',
                                 raw_frames_committed=False, current_model='48-part current turret; interim full-robot body'),
                    encoding=dict(ffmpeg=check.command(['ffmpeg', '-version']).decode().splitlines()[0],
