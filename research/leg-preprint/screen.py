@@ -894,6 +894,7 @@ BLOCK = ('<!-- gen:final-record -->', '<!-- /gen:final-record -->')
 
 
 C4_EVIDENCE = 'research/leg-preprint/evidence/c4-fea.json'
+HIP_MESH = 'research/leg-preprint/evidence/hip-frame-print-ready.json'
 ROBOT_KG = 38.69      # the robot with this branch (docs/leg-print-package.md section 9: the ledger's 38.56 + 2 x 64 g)
 
 
@@ -940,7 +941,11 @@ def final_record(repo, mat):
     design_kg = repo.num('cad/leg_studies.py', r'^ROBOT_KG = ([\d.]+)')
     for x in rows:
         x['gate_at_robot_mass'] = r(x['gate_now'] * design_kg / ROBOT_KG, 2)
-    return {'design_kg': design_kg, 'robot_kg': ROBOT_KG, 'c4': c4_prediction(repo),
+    hf = repo.json(HIP_MESH)['meshes']
+    mesh_check = [{'case': c['case'], 'sf_4': c['safety_factor'],
+                   'sf_3': next(d['safety_factor'] for d in hf['3.0']['cases'] if d['case'] == c['case']),
+                   'target': c['target']} for c in hf['4.0']['cases']]
+    return {'design_kg': design_kg, 'robot_kg': ROBOT_KG, 'c4': c4_prediction(repo), 'hip_mesh': mesh_check,
             'S_z_assumed_mpa': r(mat['S_z'], 2), 'source_revision': ev['source_revision'], 'toolkit': ev['toolkit_version'], 'mesh_mm': ev['mesh_mm'],
             'S_s_assumed_mpa': r(mat['S_s'], 2), 'rows': rows}
 
@@ -970,7 +975,11 @@ def final_block(fr):
                            for x in at_mass)
               + (' would then miss their targets. They are counted at target above, but they sit at the limit.' if len(at_mass) > 1
                  else ' would then miss its target. It is counted at target above, but it sits at the limit.') if at_mass
-              else 'no row that is at target drops under it.'), '',
+              else 'no row that is at target drops under it.'),
+           f"- **Mesh check (the hip frame, `{HIP_MESH}`):** the gate at 4 mm and at 3 mm: "
+           + ', '.join(f"{c['case']} {c['sf_4']:g} → " + (f"**{c['sf_3']:g}**" if c['sf_3'] < c['target'] else f"{c['sf_3']:g}")
+                       for c in fr['hip_mesh'])
+           + '. The gate is not converged, so read every frame row as a screen; bold rows miss their target at 3 mm.', '',
            '| Part | Case | Target | Gate: before → now | Layer check: before → now | Printed strength that would pass (MPa) | Worst corner |',
            '|---|---|---|---|---|---|---|']
     for x in fr['rows']:

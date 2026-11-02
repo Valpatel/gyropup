@@ -7,11 +7,11 @@ Everything the first leg and its single-leg test rig need that is not printed: b
 | Group | Lines | Cost |
 |---|---|---|
 | The leg (one leg) | 20 | $1,280.70 |
-| Filament | 3 | $483.91 |
+| Filament | 3 | $563.90 |
 | The rig: guide, frame, ballast, safety | 34 | $1,091.77 |
 | Electronics and wiring | 31 | $634.01 |
 | The bench tests (B1-B6) | 10 | $139.16 |
-| **All** | 98 | **$3,629.55** |
+| **All** | 98 | **$3,709.54** |
 
 Shipping, tax and the motors' duties are not included. Upload-priced parts count at the middle of their estimate: Washer (instant price on upload), Output adapter (instant price on upload (est. $40 each)), Carriage plate (instant price on upload (est. $60-90 each)). Several lines buy a pack (McMaster sells screws by 25-100): the cost is the packs'.
 
@@ -28,10 +28,10 @@ Shipping, tax and the motors' duties are not included. Upload-priced parts count
 
 | Vendor | Lines | Cost |
 |---|---|---|
+| Bambu Lab | 3 | $563.90 |
 | McMaster-Carr | 31 | $517.86 |
 | Seeed Studio | 1 | $510.00 |
 | MISUMI | 10 | $484.86 |
-| Bambu Lab | 3 | $483.91 |
 | ODrive Robotics | 1 | $269.00 |
 | Amazon | 6 | $218.01 |
 | Bearings Direct | 1 | $154.32 |
@@ -77,7 +77,7 @@ Shipping, tax and the motors' duties are not included. Upload-priced parts count
 | 18-8 Stainless Steel Washer, Undersized, for M12 Screw Size, 13.0 mm ID, 20.0 mm OD | 4 | [McMaster-Carr 98689A118](https://www.mcmaster.com/98689A118/) | $13.71 per 100 |  | $13.71 | [Belmetric WF12X20SS](https://belmetric.com/flat-washer-small-outer-diameter-a2-stainless-din-433/), $0.20 | each side of each knee's bearing stack |
 | Multipurpose 6061 Aluminum Round Tube, 0.065" Wall Thickness, 5/8" OD (cut 4 per length) | 2 | [McMaster-Carr 9056K68](https://www.mcmaster.com/9056K68/) | $1.56 |  | $3.12 | [Speedy Metals t61r.625x.065](https://www.speedymetals.com/p-4561-58-od-x-0065-wall-tube-6061-t6-aluminum.aspx), 12in length: $8.96 (custom by the inch: Base Price $0.50) | between each knee's two inner races (24 mm) |
 | Metric Press-Fit Drill Bushing, 12 mm ID, 18 mm OD, 20 mm Long, Chamfer on One End | 4 | [McMaster-Carr 96990A403](https://www.mcmaster.com/96990A403/) | $16.11 |  | $64.44 | [JW Winco DIN 179-B12-20-A-NI](https://www.jwwinco.com/en-us/products/product-family/Stainless-Steel/DIN-179-Stainless-Steel-Press-Fit-Drill-Bushings),  | steel sleeves, two end to end in each upper link's knee eye: spread the pin's load on the plastic |
-| Vented Pull-Out Dowel Pin with Flat Shaft, High-Strength 52100 Alloy Steel, 16 mm Diameter, 40 mm Long | 4 | [McMaster-Carr 98432A386](https://www.mcmaster.com/98432A386/) | $5.88 |  | $23.52 | [McMaster-Carr 91595A845](https://www.mcmaster.com/91595A845/), $5.01 each (The plain 52100 dowel (DIN 6325-m6, Rockwell C52, Ø16 x 40): no vent and no tapped end. Print a Ø2 vent through the hole's 1.1 mm floor at its outer edge (off the motor's face) so air and compound get out, and accept that the pin cannot be pulled out of the blind hole.) | stop posts: Ø16 x 40 vented pull-out dowels, 23 mm into blind holes in the hip frame (retaining compound), TPU sleeves over them |
+| Vented Pull-Out Dowel Pin with Flat Shaft, High-Strength 52100 Alloy Steel, 16 mm Diameter, 40 mm Long | 4 | [McMaster-Carr 98432A386](https://www.mcmaster.com/98432A386/) | $5.88 |  | $23.52 | [McMaster-Carr 91595A845](https://www.mcmaster.com/91595A845/), $5.01 each (The plain 52100 dowel (DIN 6325-m6, Rockwell C52, Ø16 x 40): no vent and no tapped end. Print a Ø2 vent through the hole's 1.1 mm floor at its outer edge (off the motor's face) so air and compound get out, and accept that the pin cannot be pulled out of the blind hole.) | stop posts: Ø16 x 40 vented pull-out dowels, 23 mm into blind holes in the hip frame (epoxy-bonded, D74), TPU sleeves over them |
 | Black-Oxide Alloy Steel Socket Head Screw, US Origin, M4 x 0.7 mm Thread Size, 20 mm Long | 20 | [McMaster-Carr 91290A168](https://www.mcmaster.com/91290A168/) | $14.47 per 100 |  | $14.47 | [Belmetric BSH4X20](https://belmetric.com/m4x0-7-socket-head-cap-screw-din-912-class-12-9/), $0.20 | motor lugs (10 per motor), seats 8.5 mm down: 4.4 mm nominal penetration into 5 mm-min usable threads; measure before assembly |
 | Dowel Pin, 52100 Alloy Steel, 5 mm Diameter, 16 mm Long | 4 | [McMaster-Carr 91595A352](https://www.mcmaster.com/91595A352/) | $19.22 per 50 |  | $19.22 | [WDS Components 662-20316](https://www.wdscomponents.com/en-us/5mm-x-16mm-steel-precision-dowel-pin), $0.60 | into each motor's two locating holes, 12 mm into the hip frame |
 | Dowel Pin, 52100 Alloy Steel, 5 mm Diameter, 20 mm Long | 4 | [McMaster-Carr 91595A356](https://www.mcmaster.com/91595A356/) | $10.88 per 25 |  | $10.88 |  | two in each adapter's standard face, pressed 8 mm into its H7 holes, 12 mm into the upper link (issue #5) |
@@ -92,7 +92,7 @@ Shipping, tax and the motors' duties are not included. Upload-priced parts count
 
 | Part | Qty | Buy (primary) | Price | Stock | Cost | Backup | For |
 |---|---|---|---|---|---|---|---|
-| Bambu Lab PA6-CF (hardened nozzle; dried 8-12 h at 80 C), 1 kg spool | 5 | [Bambu Lab (US store) Bambu Lab PA6-CF (hardened nozzle; dried 8-12 h at 80 C)](https://us.store.bambulab.com/) | $79.99 |  | $399.95 | Gigaparts, $79.99/kg PA6-CF, in stock (read 2026-10-27, docs/leg-prototype-plan.md 6.1) | 3.92 kg of parts (leg, rig, bench fixtures and coupons) + 25 % for supports, purge and a reprint |
+| Bambu Lab PA6-CF (hardened nozzle; dried 8-12 h at 80 C), 1 kg spool | 6 | [Bambu Lab (US store) Bambu Lab PA6-CF (hardened nozzle; dried 8-12 h at 80 C)](https://us.store.bambulab.com/) | $79.99 |  | $479.94 | Gigaparts, $79.99/kg PA6-CF, in stock (read 2026-10-27, docs/leg-prototype-plan.md 6.1) | 4.51 kg of parts (leg, rig, bench fixtures and coupons) + 25 % for supports, purge and a reprint |
 | Bambu Lab PETG Basic, 1 kg spool | 3 | [Bambu Lab (US store) Bambu Lab PETG Basic](https://us.store.bambulab.com/) | $13.99 |  | $41.97 | any maker, the same material (petg); the print plans assume Bambu's settings | 2.39 kg of parts (leg, rig, bench fixtures and coupons) + 25 % for supports, purge and a reprint |
 | Bambu Lab TPU 95A HF, 1 kg spool | 1 | [Bambu Lab (US store) Bambu Lab TPU 95A HF](https://us.store.bambulab.com/) | $41.99 |  | $41.99 | any maker, the same material (tpu95); the print plans assume Bambu's settings | 0.43 kg of parts (leg, rig, bench fixtures and coupons) + 25 % for supports, purge and a reprint |
 

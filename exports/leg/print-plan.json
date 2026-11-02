@@ -20,7 +20,7 @@
    "hours": 72.5,
    "cost_usd": 88.47,
    "infill": "100 %",
-   "how": "printed PA6-CF web-down (turned 45 deg on the bed), 100 % solid; 20 x M4 into the motors, 2 x 61812 pressed in from the motor side onto a 2 mm lip (no retainers), 6 x M5 inserts in the flange ends, 4 x \u00d816 stop pins in blind holes (23 deep, retaining compound)"
+   "how": "printed PA6-CF web-down (turned 45 deg on the bed), 100 % solid; 20 x M4 into the motors, 2 x 61812 pressed in from the motor side onto a 2 mm lip (no retainers), 6 x M5 inserts in the flange ends, 4 x \u00d816 stop pins in blind holes (23 deep, epoxy-bonded, D74)"
   },
   "upper_link": {
    "material": "pa6-cf",

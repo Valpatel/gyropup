@@ -175,6 +175,91 @@
    "infill": "100 %",
    "how": "PA6-CF, 100 %, flat (B4: the link under an M5 head)"
   },
+  "coupon_c3_sleeved": {
+   "material": "pa6-cf",
+   "qty": 2,
+   "size_mm": [
+    60,
+    40,
+    13
+   ],
+   "fits": true,
+   "placement": "straight",
+   "grams_each": 33,
+   "grams": 67,
+   "hours": 4.4,
+   "cost_usd": 5.32,
+   "infill": "100 %",
+   "how": "PA6-CF, 100 %, dried, flat (C3: an 8 x 5.3 steel sleeve flush, M5 8.8 through the B4 load cell)"
+  },
+  "coupon_c3_plain": {
+   "material": "pa6-cf",
+   "qty": 2,
+   "size_mm": [
+    60,
+    40,
+    13
+   ],
+   "fits": true,
+   "placement": "straight",
+   "grams_each": 34,
+   "grams": 67,
+   "hours": 4.4,
+   "cost_usd": 5.39,
+   "infill": "100 %",
+   "how": "PA6-CF, 100 %, dried, flat (C3: M5 8.8 on the plastic, a \u00d815 washer)"
+  },
+  "coupon_c3_wheel": {
+   "material": "pa6-cf",
+   "qty": 2,
+   "size_mm": [
+    30,
+    30,
+    21
+   ],
+   "fits": true,
+   "placement": "straight",
+   "grams_each": 20,
+   "grams": 39,
+   "hours": 2.6,
+   "cost_usd": 3.14,
+   "infill": "100 %",
+   "how": "PA6-CF, 100 %, dried, flat (C3: M6 x 30 on a DIN 433 at 1.8 N m into a 5 mm steel plate)"
+  },
+  "coupon_c4_today": {
+   "material": "pa6-cf",
+   "qty": 2,
+   "size_mm": [
+    60,
+    49,
+    50
+   ],
+   "fits": true,
+   "placement": "straight",
+   "grams_each": 91,
+   "grams": 182,
+   "hours": 11.9,
+   "cost_usd": 14.55,
+   "infill": "100 %",
+   "how": "PA6-CF, 100 %, dried; outer face down, stub up, as the link (C4: dev's stub)"
+  },
+  "coupon_c4_pr2": {
+   "material": "pa6-cf",
+   "qty": 2,
+   "size_mm": [
+    68,
+    55,
+    50
+   ],
+   "fits": true,
+   "placement": "straight",
+   "grams_each": 116,
+   "grams": 232,
+   "hours": 15.2,
+   "cost_usd": 18.53,
+   "infill": "100 %",
+   "how": "PA6-CF, 100 %, dried; outer face down, stub up, as the link (C4: the drawn stub)"
+  },
   "coupon_frame_ring_m01": {
    "material": "pa6-cf",
    "qty": 1,
@@ -443,7 +528,7 @@
    "grams_each": 25,
    "grams": 25,
    "hours": 1.6,
-   "cost_usd": 1.99,
+   "cost_usd": 1.98,
    "infill": "100 %",
    "how": "PA6-CF, 100 %, dried; the seat at -0.1 mm on the leg's"
   },
@@ -460,7 +545,7 @@
    "grams_each": 25,
    "grams": 25,
    "hours": 1.6,
-   "cost_usd": 1.98,
+   "cost_usd": 1.97,
    "infill": "100 %",
    "how": "PA6-CF, 100 %, dried; the seat at 0 mm on the leg's"
   },
@@ -547,14 +632,14 @@
    "parts": 2
   },
   "pa6-cf": {
-   "grams": 842,
-   "hours": 55.0,
-   "cost_usd": 67.17,
-   "parts": 29
+   "grams": 1429,
+   "hours": 93.5,
+   "cost_usd": 114.08,
+   "parts": 39
   }
  },
  "too_big": [],
- "total_hours": 106.8,
- "total_grams": 2031,
+ "total_hours": 145.3,
+ "total_grams": 2618,
  "note": "bench fixtures and fit coupons (task T4)"
 }

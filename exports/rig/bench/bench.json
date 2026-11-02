@@ -70,6 +70,41 @@
    "fits": true,
    "grams": 6
   },
+  "coupon_c3_sleeved": {
+   "valid": true,
+   "solids": 1,
+   "watertight": true,
+   "fits": true,
+   "grams": 67
+  },
+  "coupon_c3_plain": {
+   "valid": true,
+   "solids": 1,
+   "watertight": true,
+   "fits": true,
+   "grams": 67
+  },
+  "coupon_c3_wheel": {
+   "valid": true,
+   "solids": 1,
+   "watertight": true,
+   "fits": true,
+   "grams": 39
+  },
+  "coupon_c4_today": {
+   "valid": true,
+   "solids": 1,
+   "watertight": true,
+   "fits": true,
+   "grams": 182
+  },
+  "coupon_c4_pr2": {
+   "valid": true,
+   "solids": 1,
+   "watertight": true,
+   "fits": true,
+   "grams": 232
+  },
   "coupon_frame_ring_m01": {
    "valid": true,
    "solids": 1,
