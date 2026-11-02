@@ -9,7 +9,7 @@ import { parseHTML } from 'linkedom';
 import { chromium, webkit } from '@playwright/test';
 import { createSiteServer } from './serve-site.mjs';
 import { acknowledgePrototypeNotice } from './test-prototype-session.mjs';
-import { enhanceDocument, statusKind, tableStates } from './doc-page.mjs';
+import { enhanceDocument, isCaveat, statusKind, tableStates } from './doc-page.mjs';
 import { subsystemOf } from './timeline.mjs';
 
 const root = path.resolve(import.meta.dirname, '..');
@@ -34,13 +34,17 @@ test('a strip only for a real status column of short words, counted row by row',
   const states = tableStates(table(['#', 'Status'], [['R1', 'done'], ['R2', 'open'], ['R3', 'open; waiting on parts'], ['R4', 'dropped'], ['R5', 'Done (PR 3)']]));
   assert.deepEqual(states.states.map(s => [s.key, s.n, s.kind]), [['done', 2, 'good'], ['open', 2, 'todo'], ['dropped', 1, 'muted']]);
   assert.equal(states.rows, 5);
+  // A blank status is counted as not stated, so the bar covers every row.
+  const blanks = tableStates(table(['#', 'Status'], [['R1', 'done'], ['R2', ''], ['R3', 'open'], ['R4', 'done'], ['R5', ''], ['R6', 'open']]));
+  assert.equal(blanks.rows, 6);
+  assert.deepEqual(blanks.states.map(s => [s.key, s.n, s.kind]), [['done', 2, 'good'], ['open', 2, 'todo'], ['no status', 2, 'todo']]);
   assert.equal(tableStates(table(['Status'], [['done'], ['open'], ['done']])), null, 'too few rows');
   assert.equal(tableStates(table(['State', 'Draw'], [['safe', '1'], ['armed', '2'], ['firing', '3'], ['docked', '4']])), null, 'names of states are not a scale');
   assert.equal(tableStates(table(['Verdict'], [['8'], ['2'], ['6'], ['1']])), null, 'numbers are not a scale');
   assert.equal(tableStates(table(['Item', 'Notes'], [['a', 'done'], ['b', 'done'], ['c', 'done'], ['d', 'done']])), null, 'no status column');
 });
 
-const longDoc = ['# A long note', 'The lede.', '## One', ...Array(14).fill('Words '.repeat(120)), '![a render](/x.png)', 'After the picture.',
+const longDoc = ['# A long note', 'The lede.', '## One', ...Array(7).fill('Words '.repeat(120)), '[Part STEP](/exports/part.step)', ...Array(3).fill('Words '.repeat(120)), '**Not qualified for fabrication.** Measure it first.', ...Array(4).fill('Words '.repeat(120)), '![a render](/x.png)', 'After the picture.',
   ...Array.from({ length: 12 }, (_, i) => `## Part ${i}\n\n${'More words here. '.repeat(90)}\n\n### Detail ${i}\n\nThe last fact of part ${i}.`)].join('\n\n');
 test('folds keep every word, every id, and never fold a picture', async () => {
   const raw = await marked.parse(longDoc, { renderer: Object.assign(new marked.Renderer(), { heading({ tokens, depth }) { const t = this.parser.parseInline(tokens); return `<h${depth} id="${t.toLowerCase().replace(/\W+/g, '-')}">${t}</h${depth}>`; } }) });
@@ -51,13 +55,18 @@ test('folds keep every word, every id, and never fold a picture', async () => {
   for (const el of before.querySelectorAll('[id]')) assert.equal(out.querySelectorAll(`#${el.id}`).length, 1, el.id);
   assert.equal(out.querySelectorAll('details img, details pre.mermaid, details .doc-strip').length, 0);
   assert.ok(out.querySelector('img:not(details img)'));
+  // A link to a model is an action (web/model-links.js adds "Preview in 3D"): it stays in view.
+  assert.ok(out.querySelector('a[href="/exports/part.step"]'));
+  assert.equal(out.querySelector('a[href="/exports/part.step"]').closest('details'), null, 'a model link is never folded');
+  // A paragraph that opens with a bold limit stays in view too.
+  assert.equal([...out.querySelectorAll('p')].find(p => p.textContent.startsWith('Not qualified')).closest('details'), null, 'a caveat is never folded');
   assert.ok(out.querySelector('details.doc-section > summary > h2#part-3'), 'a section folds behind its own heading');
   assert.equal(out.querySelector('h1 + p').textContent, 'The lede.', 'the lede stays in view');
   assert.ok(out.querySelector('aside.doc-card'));
 });
 
 test('every built note keeps its Markdown’s words, under a lead card', async () => {
-  let checked = 0;
+  let checked = 0, previews = 0;
   for (const page of pages) {
     const file = sources.get(page);
     if (!file) continue;
@@ -69,11 +78,24 @@ test('every built note keeps its Markdown’s words, under a lead card', async (
     const raw = fragment(await marked.parse(readFileSync(path.join(root, file), 'utf8')));
     for (const el of raw.querySelectorAll('p, li, td, th, h2, h3, h4')) if (!el.querySelector('img') && norm(el.textContent)) assert.ok(text.includes(norm(el.textContent)), `${file}: "${norm(el.textContent).slice(0, 60)}"`);
     assert.equal(article.querySelectorAll('details.doc-fold img, details.doc-fold video, details.doc-fold .doc-strip, details.doc-fold code.language-mermaid').length, 0, `${page}: a picture is folded`);
+    // A link to a model gets a "Preview in 3D" action (web/model-links.js): in a table, a list or prose, it stays in view.
+    const own = a => /\.(step|stp|stl|3mf|glb|gltf)([?#].*)?$/i.test(a.getAttribute('href')) && !/^(https?:)?\/\//.test(a.getAttribute('href'));
+    // A table of models may fold; its summary then counts the models inside.
+    const folded = [...article.querySelectorAll('details.doc-fold a[href]')].filter(own).filter(a => !a.closest('table'));
+    assert.equal(folded.length, 0, `${page}: a model's preview is folded: ${folded[0]?.getAttribute('href')}`);
+    const caveat = [...article.querySelectorAll('details.doc-fold > p')].find(isCaveat);
+    assert.equal(caveat, undefined, `${page}: a caveat is folded: "${caveat?.textContent.slice(0, 60)}"`);
+    for (const fold of article.querySelectorAll('details.doc-fold')) {
+      const n = [...fold.querySelectorAll('a[href]')].filter(own).length;
+      if (n) assert.match(norm(fold.querySelector('summary').textContent), new RegExp(`\\b${n} 3D models?\\b`), `${page}: a fold says how many models it holds`);
+    }
+    previews += [...article.querySelectorAll('a[href]')].filter(own).length;
     const ids = [...article.querySelectorAll('[id]')].map(el => el.id);
     assert.equal(new Set(ids).size, ids.length, `${page}: ids are unique`);
     checked++;
   }
   assert.ok(checked >= 100, `${checked} notes`);
+  assert.ok(previews >= 50, `${previews} model links checked`);
 });
 
 test('strips agree with a recount of their own table', () => {
@@ -88,7 +110,7 @@ test('strips agree with a recount of their own table', () => {
       const cells = [...t.querySelectorAll('tbody tr')].map(tr => norm(tr.children[col].textContent).toLowerCase());
       const legend = [...strip.querySelectorAll('.doc-strip-legend li')].map(li => [norm(li.querySelector('b').textContent), norm(li.textContent).replace(/^\d+ /, '')]);
       assert.equal(legend.reduce((n, [c]) => n + Number(c), 0), cells.length, page);
-      for (const [n, key] of legend) assert.equal(cells.filter(c => c === key || c.startsWith(key + ' ') || c.startsWith(key + ';') || c.startsWith(key + ',') || c.startsWith(key + ' (')).length, Number(n), `${page}: ${key}`);
+      for (const [n, key] of legend) assert.equal(cells.filter(c => key === 'no status' ? c === '' : c === key || c.startsWith(key + ' ') || c.startsWith(key + ';') || c.startsWith(key + ',') || c.startsWith(key + ' (')).length, Number(n), `${page}: ${key}`);
       assert.match(strip.querySelector('figcaption').textContent, new RegExp(`^${cells.length} rows by ${head[col]}`));
       strips++;
     }

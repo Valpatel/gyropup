@@ -44,6 +44,18 @@ export function blockHeight(el) {
   return lines(text) * LINE + 15;
 }
 const isVisual = el => el.matches?.(VISUAL) || !!el.querySelector?.(VISUAL);
+const MODEL_FILE = /\.(step|stp|stl|3mf|glb|gltf)(?:[?#].*)?$/i;
+const modelLinks = el => [...el.querySelectorAll?.('a[href]') || []].filter(a => isModelLink(a.getAttribute('href'))).length;
+/** Prose or a list that links a model: web/model-links.js gives each such link a "Preview in 3D" action, so the block stays
+ * in view. A table of models may fold, and its fold's summary counts the models inside. */
+export const isModelAction = el => !el.classList?.contains('table-scroll') && el.tagName !== 'TABLE' && modelLinks(el) > 0;
+/** A paragraph that opens with a bold caveat ("**Not qualified for fabrication.**", "**Never …**"): a limit is never folded away. */
+export const isCaveat = el => el.tagName === 'P' && el.firstChild?.tagName === 'STRONG' && CAVEAT.test(el.firstChild.textContent.trim());
+const CAVEAT = /^(not|no|never|do not|don't|unsafe|warning|caution|danger|until|nothing)\b|\bnot (yet )?(structurally |physically )?(qualified|approved|recommended|tested|printed|validated|verified|safe|released|evidence|for fabrication)\b/i;
+/** Kept in view where it stands: a model's preview action, or a caveat. */
+const isKept = el => isModelAction(el) || isCaveat(el);
+/** A link to one of this site's own model files (model-links.js previews only those, never another site's). */
+export const isModelLink = href => MODEL_FILE.test(href) && !/^([a-z][a-z0-9+.-]*:|\/\/)/i.test(href);
 
 // ---- status strips ----------------------------------------------------------------------------------------------
 const STATE_COLUMN = /^(status|verdict|result|state)$/i;
@@ -66,9 +78,9 @@ export function tableStates(table) {
   const head = [...(table.querySelector('thead tr') || table.querySelector('tr'))?.children || []].map(th => th.textContent.trim());
   const col = head.findIndex(h => STATE_COLUMN.test(h));
   if (col < 0) return null;
-  const rows = [...table.querySelectorAll('tbody tr')].map(tr => tr.children[col]?.textContent || '').filter(s => s.trim());
-  if (rows.length < 4) return null;
-  const keys = rows.map(statusKey);
+  const cells = [...table.querySelectorAll('tbody tr')].map(tr => tr.children[col]?.textContent || '');
+  const keys = cells.filter(s => s.trim()).map(statusKey), blank = cells.length - keys.length;
+  if (keys.length < 4) return null;
   if (keys.some(k => !k || k.split(' ').length > 3 || k.length > 24)) return null;
   const counts = new Map();
   for (const k of keys) counts.set(k, (counts.get(k) || 0) + 1);
@@ -77,9 +89,11 @@ export function tableStates(table) {
   // A table of states that are names (safe, armed, firing) or numbers is not counted.
   if (keys.filter(k => statusKind(k) !== 'other').length < 0.75 * keys.length) return null;
   const order = ['good', 'note', 'work', 'other', 'todo', 'bad', 'muted'];
-  const states = [...counts].map(([key, n]) => ({ key, n, kind: statusKind(key) }))
-    .sort((a, b) => order.indexOf(a.kind) - order.indexOf(b.kind) || b.n - a.n);
-  return { column: head[col], rows: rows.length, states };
+  const states = [...counts].map(([key, n]) => ({ key, n, kind: statusKind(key) }));
+  // A row with no status is counted too, as one not yet stated, so the bar covers the whole table.
+  if (blank) states.push({ key: 'no status', n: blank, kind: 'todo' });
+  states.sort((a, b) => order.indexOf(a.kind) - order.indexOf(b.kind) || b.n - a.n);
+  return { column: head[col], rows: cells.length, states };
 }
 function stripHTML({ column, rows, states }) {
   return `<figure class="doc-strip" data-visual data-generated="tools/doc-page.mjs"><figcaption><b>${plural(rows, 'row')}</b> by ${esc(column.toLowerCase())}, counted from the table below</figcaption>`
@@ -118,7 +132,7 @@ const isHeading = el => /^H[3-6]$/.test(el.tagName);
 /** How many of a piece's blocks stay in view at a level. */
 function keepCount(piece, level) {
   const { blocks } = piece;
-  if (level === 2 && piece.h2) return 0;
+  if (level === 2 && piece.h2 && !piece.section.actions) return 0;
   if (level === 2) level = 1; // the note's own opening, before its first section, keeps a short first paragraph
   if (level === 1) return blocks[0]?.tagName === 'P' && words(blocks[0].textContent) >= 8 && blockHeight(blocks[0]) <= SHORT_PX && textHeight(blocks) > SHORT_PX + 200 ? 1 : (textHeight(blocks) <= SHORT_PX ? blocks.length : 0);
   if (textHeight(blocks) <= FOLD_PX) return blocks.length;
@@ -134,20 +148,21 @@ function keepCount(piece, level) {
 }
 function pieceHeight(piece, level) {
   const n = keepCount(piece, level), folded = n < piece.blocks.length;
-  if (level === 2 && piece.h2) return piece.blocks.length ? 56 : H2_PX;
+  if (level === 2 && piece.h2 && !piece.section.actions) return piece.blocks.length ? 56 : H2_PX;
   return (piece.h2 ? H2_PX : 0) + textHeight(piece.blocks.slice(0, n)) + (folded ? SUMMARY_PX : 0);
 }
 const describe = (blocks, { headings = true } = {}) => {
   const text = blocks.map(el => el.textContent).join(' ');
   const tables = blocks.filter(el => el.classList.contains('table-scroll')).length;
   const heads = blocks.filter(isHeading).map(el => el.textContent.trim());
-  return [plural(words(text), 'word'), tables ? plural(tables, 'table') : null, headings && heads.length ? heads.slice(0, 3).join(' · ') + (heads.length > 3 ? ' …' : '') : null].filter(Boolean).join(' · ');
+  const models = blocks.reduce((n, el) => n + modelLinks(el), 0);
+  return [plural(words(text), 'word'), tables ? plural(tables, 'table') : null, models ? `${models} 3D ${models === 1 ? 'model' : 'models'}` : null, headings && heads.length ? heads.slice(0, 3).join(' · ') + (heads.length > 3 ? ' …' : '') : null].filter(Boolean).join(' · ');
 };
 function foldPiece(document, piece, level) {
   const n = keepCount(piece, level), rest = piece.blocks.slice(n);
   if (!rest.length) return false;
   const details = document.createElement('details');
-  if (level === 2 && piece.h2) {
+  if (level === 2 && piece.h2 && !piece.section.actions) {
     // The heading is the summary: the section reads as one line of an outline until opened.
     details.className = 'doc-fold doc-section';
     piece.h2.before(details);
@@ -188,6 +203,7 @@ export function enhanceDocument(html, { file, changed = null, panel = null } = {
     if (i <= h1 || el === lede) continue;
     if (el.tagName === 'H2') { section = { title: el.textContent.trim(), id: el.id }; sections.push(section); open(el); continue; }
     if (isVisual(el)) { piece = null; stretches.push([]); continue; }
+    if (isKept(el)) { piece = null; section.actions = true; continue; } // stays in place, and ends the piece before it
     if (!piece) open(null);
     piece.blocks.push(el);
   }
@@ -197,7 +213,7 @@ export function enhanceDocument(html, { file, changed = null, panel = null } = {
   for (const [n, stretch] of stretches.entries()) {
     const base = n === 0 ? Math.max(0, head) : 0;
     const level = [0, 1, 2].find(l => base + stretch.reduce((h, p) => h + pieceHeight(p, l), 0) <= TARGET_PX) ?? 2;
-    for (const p of stretch) if (foldPiece(document, p, level)) { folds++; p.section.folded = true; if (level === 2 && p.h2) p.section.outline = true; }
+    for (const p of stretch) if (foldPiece(document, p, level)) { folds++; p.section.folded = true; if (level === 2 && p.h2 && !p.section.actions) p.section.outline = true; }
   }
   // Four or more folded sections in a row read as an outline: laid out two to a row on a wide screen (web/doc-page.css).
   let outline = [];
@@ -217,4 +233,4 @@ export function enhanceDocument(html, { file, changed = null, panel = null } = {
 }
 
 /** The frame's script: a link or address to a folded heading opens its fold. */
-export const OPEN_FOLDS = `const openTo=id=>{const t=id&&document.getElementById(decodeURIComponent(id));for(let d=t?.closest('details');d;d=d.parentElement.closest('details'))d.open=true;return t;};const go=()=>{const t=openTo(location.hash.slice(1));if(t)t.scrollIntoView();};addEventListener('hashchange',go);if(location.hash)go();`;
+export const OPEN_FOLDS = `const openTo=id=>{let k=id;try{k=decodeURIComponent(id);}catch{}const t=k&&document.getElementById(k);for(let d=t?.closest('details');d;d=d.parentElement.closest('details'))d.open=true;return t;};const go=()=>{const t=openTo(location.hash.slice(1));if(t)t.scrollIntoView();};addEventListener('hashchange',go);if(location.hash)go();`;

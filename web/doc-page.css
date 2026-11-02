@@ -41,8 +41,8 @@
 .doc-fold{margin:14px 0 22px;border:1px solid #dedfd3;border-left:4px solid #c94718;border-radius:12px;background:#fffdf7}
 .doc-fold>summary{display:flex;flex-wrap:wrap;align-items:baseline;gap:4px 8px;min-height:44px;padding:10px 16px;cursor:pointer;font-size:14px;line-height:1.5;list-style:none}
 .doc-fold>summary::-webkit-details-marker{display:none}
-.doc-fold>summary::before{content:"+";flex:none;display:inline-grid;place-items:center;width:20px;height:20px;border-radius:50%;background:#c94718;color:#fff;font-weight:700;line-height:1;transition:transform .2s}
-.doc-fold[open]>summary::before{content:"−"}
+.doc-fold>summary::before{content:"+";content:"+"/"";flex:none;display:inline-grid;place-items:center;width:20px;height:20px;border-radius:50%;background:#c94718;color:#fff;font-weight:700;line-height:1;transition:transform .2s}
+.doc-fold[open]>summary::before{content:"−";content:"−"/""}
 .doc-fold-label{color:#6b4a3a}
 .doc-fold>summary small{flex-basis:100%;padding-left:28px;color:#5c6b63;font:11px/1.5 'JetBrains Mono',monospace}
 .doc-fold[open]{padding:0 16px 6px}
