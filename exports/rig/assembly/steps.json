@@ -297,9 +297,10 @@
   "adds": [
    "leg_wheel_tyre",
    "leg_wheel_hub",
+   "leg_washers_wheel",
    "leg_screws_wheel"
   ],
-  "how": "Measure the BotWheel's flange threads first (bom.json's note: M6 x 30 for a 15 mm thread). Its boss into the wheel link's recess, 4 x M6 x 30 from inside the hub (8 N m, threadlocker). Its phase and hall leads taped along the wheel link and the rear upper link (not driven on the rig: plan section 1.3).",
+  "how": "Measure the BotWheel's flange threads first (bom.json's note: M6 x 30 for a 15 mm thread). Its boss into the wheel link's recess, 4 x M6 x 30 from inside the hub, each on a DIN 433 washer (1.8 N m, threadlocker: D74, the plastic under the washer holds 1.5 kN; 8 N m crushed it at 150 MPa under a bare head). Its phase and hall leads taped along the wheel link and the rear upper link (not driven on the rig: plan section 1.3).",
   "picture": "exports/rig/assembly/step-15.png"
  },
  {
@@ -311,7 +312,7 @@
    "leg_stop_sleeve_3",
    "leg_stop_sleeve_4"
   ],
-  "how": "One post at a time: out, its TPU sleeve on, back in (the B4 torque into the M8 insert, 5 N m until B4). Swing the leg by hand to both stops: no part touches another; the knees stay free.",
+  "how": "Each TPU sleeve pushed down over its stop pin to the frame's face (a stretch fit: the bore is 0.2 mm under the pin). The pins went into the frame's blind holes at the hip-frame step with structural epoxy (D74; not an anaerobic retainer, which Henkel does not recommend on plastics) and do not come out (D53). Swing the leg by hand to both stops: no part touches another; the knees stay free.",
   "picture": "exports/rig/assembly/step-16.png"
  },
  {

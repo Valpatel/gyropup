@@ -18,24 +18,24 @@
    "grams_each": 1106,
    "grams": 1106,
    "hours": 72.5,
-   "cost_usd": 88.48,
+   "cost_usd": 88.47,
    "infill": "100 %",
-   "how": "printed PA6-CF web-down (turned 45 deg on the bed), 100 % solid; 20 x M4 into the motors, 2 x 61812 pressed in from the motor side onto a 2 mm lip (no retainers), 6 x M5 inserts in the flange ends, 4 x \u00d816 stop pins in blind holes (23 deep, retaining compound)"
+   "how": "printed PA6-CF web-down (turned 45 deg on the bed), 100 % solid; 20 x M4 into the motors, 2 x 61812 pressed in from the motor side onto a 2 mm lip (no retainers), 6 x M5 inserts in the flange ends, 4 x \u00d816 stop pins in blind holes (23 deep, epoxy-bonded, D74)"
   },
   "upper_link": {
    "material": "pa6-cf",
    "qty": 2,
    "size_mm": [
-    206,
+    214,
     94,
     50
    ],
    "fits": true,
    "placement": "straight",
-   "grams_each": 400,
-   "grams": 799,
-   "hours": 52.4,
-   "cost_usd": 63.91,
+   "grams_each": 424,
+   "grams": 848,
+   "hours": 55.6,
+   "cost_usd": 67.86,
    "infill": "100 %",
    "how": "printed PA6-CF flat, 30 mm, 100 % solid; 8 x M5 into the adapter; the knee shoulder screw clamped by an M10 nyloc in a pocket; a radial stop face each side of the hub"
   },
@@ -51,8 +51,8 @@
    "placement": "turned",
    "grams_each": 463,
    "grams": 463,
-   "hours": 30.4,
-   "cost_usd": 37.05,
+   "hours": 30.3,
+   "cost_usd": 37.04,
    "infill": "100 %",
    "how": "printed PA6-CF flat on its inner face, 20 mm body; two 6301-2RS at the knee, two 61812 at the apex (pressed against a central web)"
   },
@@ -66,10 +66,10 @@
    ],
    "fits": true,
    "placement": "turned",
-   "grams_each": 635,
-   "grams": 635,
-   "hours": 41.6,
-   "cost_usd": 50.8,
+   "grams_each": 647,
+   "grams": 647,
+   "hours": 42.4,
+   "cost_usd": 51.72,
    "infill": "100 %",
    "how": "printed PA6-CF flat on its outer face, 26 mm body; two 6301-2RS at the knee; the BotWheel in its outer face (4 x M6 from inside the hub), the hub for the apex 61812 (DIN 471-60 circlip)"
   },
@@ -110,9 +110,9 @@
  },
  "by_material": {
   "pa6-cf": {
-   "grams": 3017,
-   "hours": 197.8,
-   "cost_usd": 241.34,
+   "grams": 3078,
+   "hours": 201.7,
+   "cost_usd": 246.19,
    "parts": 6
   },
   "tpu95": {
@@ -123,7 +123,7 @@
   }
  },
  "too_big": [],
- "total_hours": 204.2,
- "total_grams": 3079,
+ "total_hours": 208.1,
+ "total_grams": 3140,
  "note": "hours are rough: grams / material density / a strength-holding volumetric rate"
 }

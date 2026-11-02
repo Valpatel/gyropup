@@ -94,13 +94,13 @@ The inner 61812 into the front link's apex eye from the inside, the outer from t
 
 ![step 15](../exports/rig/assembly/step-15.png)
 
-Measure the BotWheel's flange threads first (bom.json's note: M6 x 30 for a 15 mm thread). Its boss into the wheel link's recess, 4 x M6 x 30 from inside the hub (8 N m, threadlocker). Its phase and hall leads taped along the wheel link and the rear upper link (not driven on the rig: plan section 1.3).
+Measure the BotWheel's flange threads first (bom.json's note: M6 x 30 for a 15 mm thread). Its boss into the wheel link's recess, 4 x M6 x 30 from inside the hub, each on a DIN 433 washer (1.8 N m, threadlocker: D74, the plastic under the washer holds 1.5 kN; 8 N m crushed it at 150 MPa under a bare head). Its phase and hall leads taped along the wheel link and the rear upper link (not driven on the rig: plan section 1.3).
 
 ## 16. The stop sleeves
 
 ![step 16](../exports/rig/assembly/step-16.png)
 
-One post at a time: out, its TPU sleeve on, back in (the B4 torque into the M8 insert, 5 N m until B4). Swing the leg by hand to both stops: no part touches another; the knees stay free.
+Each TPU sleeve pushed down over its stop pin to the frame's face (a stretch fit: the bore is 0.2 mm under the pin). The pins went into the frame's blind holes at the hip-frame step with structural epoxy (D74; not an anaerobic retainer, which Henkel does not recommend on plastics) and do not come out (D53). Swing the leg by hand to both stops: no part touches another; the knees stay free.
 
 ## 17. Ballast and tethers
 
@@ -120,7 +120,7 @@ Weigh the plates. For 14.75 kg: one 2.5 lb plate per post (within 2 %: exports/r
 | Adapter to motor (M5 x 25, D46) | 6 N m, threadlocker |
 | Upper link to adapter (M5 x 40 into tapped 6061, heads on the printed link) | the B4 torque (1.5 N m until B4) |
 | Knee nut (M10 nyloc onto the steel sleeves) | 20 N m |
-| Stop posts (M8 into heat-set inserts) | the B4 torque (5 N m until B4) |
-| Wheel (M6 x 30 into the BotWheel) | 8 N m, threadlocker |
+| Stop posts (Ø16 pins bonded in blind holes, D53, D74) | none: no thread |
+| Wheel (M6 x 30 into the BotWheel, on DIN 433 washers) | 1.8 N m, threadlocker |
 | Ballast posts (3/8-16) | 25 N m |
 | Contactor mounting (M4) / load terminals (M5) | 2.3 / 4 N m (TE) |

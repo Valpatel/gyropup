@@ -92,10 +92,11 @@ def materials(repo):
     moduli the press fits see at assembly."""
     ev = repo.json(LAYER_EVIDENCE)
     md = next(row['material_data'] for row in ev['rows'] if row['material_data']['key'] == 'pa6_cf_xy')
+    mz = next(row['material_data'] for row in ev['rows'] if row['material_data']['key'] == 'pa6_cf_z')
     tds = repo.json('catalog/materials.json')['pa6-cf']
     s_z = md['strength_z_mpa']
     return {
-        'E_xy_humid': md['E_mpa'], 'E_z_humid': 2170.0 * 0.281 * 0.8,
+        'E_xy_humid': md['E_mpa'], 'E_z_humid': mz['E_mpa'],
         'E_xy_dry': tds['modulus_gpa'] * 1000.0, 'E_z_dry': 2170.0, 'S_xy_dry': float(tds['tensile_mpa']),
         'S_xy': md['strength_xy_mpa'], 'S_z': s_z, 'S_s': s_z / math.sqrt(3), 'S_s_half': s_z / 2,
         'density': tds['density_g_cm3'],
@@ -292,10 +293,12 @@ def fit_verdict(band, dry, press, s_dry):
 def fits(repo, mat):
     """Press and slide fits into printed holes: the CAD's hole, the part's tolerance, the interference band once the
     printed hole closes up by PRINT_HOLE_ERR, and what that does dry (at assembly) and humid (in service)."""
-    eye_r = repo.num('cad/fivebar.py', r'^UPPER_HUB_R, UPPER_EYE_R = [\d.]+, ([\d.]+)')
-    sleeve_hole = 2 * (repo.num('cad/fivebar.py', r'^EYE_SLEEVE = \(([\d.]+), ') / 2
-                       - repo.num('cad/fivebar.py', r"u = u\.cut\(ycyl\(EYE_SLEEVE\[0\] / 2 - ([\d.]+), eye_sleeve_end\(\)"))
-    stub_in = repo.num('cad/fivebar.py', r"ycyl\(UPPER_EYE_R - ([\d.]+), -EYE_BOSS, 0\.01, l1, 0\)")   # the eye stub's radius
+    eye_r = repo.num('cad/fivebar.py', r"'eye_r': ([\d.]+), 'eye_stub_fillet'")
+    comp = repo.num('cad/fivebar.py', r'^PRINT_HOLE_COMP = ([\d.]+)')
+    repo.has('cad/fivebar.py', 'u = u.cut(ycyl(EYE_SLEEVE[0] / 2 + PRINT_HOLE_COMP / 2, eye_sleeve_end(), t + 1, l1, 0))')
+    sleeve_hole = repo.num('cad/fivebar.py', r'^EYE_SLEEVE = \(([\d.]+), ') + comp
+    repo.has('cad/fivebar.py', "re, fe = P['eye_r'], P['eye_stub_fillet']")
+    stub_in = repo.num('cad/fivebar.py', r"ycyl\(re - ([\d.]+), -EYE_BOSS, 0\.01, l1, 0\)")   # the eye stub's radius
     sl_len = repo.num('cad/fivebar.py', r'^EYE_SLEEVE = \([\d.]+, [\d.]+, ([\d.]+)\)')
     sl_n = repo.num('cad/fivebar.py', r'^EYE_SLEEVES = (\d+)')
     kc_od = repo.num('cad/fivebar.py', r"'bearing': '6301-2RS', 'bearing_od': ([\d.]+),")
@@ -304,10 +307,13 @@ def fits(repo, mat):
     kc_play = repo.num('cad/fivebar.py', r"c = ycyl\(bo / 2 \+ ([\d.]+), y0 - 0\.01, y0 \+ bw\)")
     ac = repo.json('cad/interfaces.json')['AC-L']
     ac_play = repo.num('cad/fivebar.py', r"f = f\.cut\(ycyl\(AC\['bearing_od'\] / 2 \+ ([\d.]+), ao\[0\], e1 \+ 1, l2\)\)")
-    ring_wall = repo.num('cad/fivebar.py', r"r_eye = AC\['bearing_od'\] / 2 \+ ([\d.]+)")
-    dowel_r = repo.num('cad/fivebar.py', r'web = web\.cut\(ycyl\(([\d.]+) - [\d.]+, yf0 - 1, yf0 \+ [\d.]+, x, z\)\)')
-    dowel_cut = repo.num('cad/fivebar.py', r'web = web\.cut\(ycyl\([\d.]+ - ([\d.]+), yf0 - 1, yf0 \+ [\d.]+, x, z\)\)')
-    dowel_in = repo.num('cad/fivebar.py', r'web = web\.cut\(ycyl\([\d.]+ - [\d.]+, yf0 - 1, yf0 \+ ([\d.]+), x, z\)\)')
+    repo.has('cad/fivebar.py', "r_eye = AC['bearing_od'] / 2 + P['apex_wall']")
+    ring_wall = repo.num('cad/fivebar.py', r"'apex_wall': ([\d.]+), 'front_eye_fillet'")
+    dw = r'web = web\.cut\(ycyl\({} \+ PRINT_HOLE_COMP / 2 \+ {}, yf0 - 1, yf0 \+ {}, x, z\)\)'
+    num, any_ = r'([\d.]+)', r'[\d.]+'
+    dowel_r = repo.num('cad/fivebar.py', dw.format(num, any_, any_)) + comp / 2
+    dowel_cut = -repo.num('cad/fivebar.py', dw.format(any_, num, any_))
+    dowel_in = repo.num('cad/fivebar.py', dw.format(any_, any_, num))
     stop_d = repo.num('cad/fivebar.py', r'^STOP_PIN = \(([\d.]+), ')
     stop_play = repo.num('cad/fivebar.py', r'^STOP_HOLE_PLAY = ([\d.]+)')
     stop_in = repo.num('cad/fivebar.py', r'^STOP_PIN = \([\d.]+, [\d.]+, ([\d.]+)\)')
@@ -324,7 +330,7 @@ def fits(repo, mat):
          ac['bearing_od'] + 2 * ring_wall, ac['bearing_w'], True, 'the inner seat opens on the bed face (DOWN_INNER)'),
         ('RS-04 dowels (2 x 5 m6)', 'hip_frame', 2 * (dowel_r - dowel_cut), (5.004, 5.012), None, dowel_in, False,
          'blind from the motor side (the top as printed)'),
-        ('stop pins (16 x 40, retaining compound)', 'hip_frame', stop_d + 2 * stop_play, (stop_d + 0.007, stop_d + 0.018),
+        ('stop pins (16 x 40, epoxy-bonded)', 'hip_frame', stop_d + 2 * stop_play, (stop_d + 0.007, stop_d + 0.018),
          None, stop_in, True, 'blind from the leg side, which is on the bed (DOWN_OUTER)'),
     ]
     out = []
@@ -435,7 +441,8 @@ def joints(repo, mat, layers):
               f"direction; {wall:.2f} mm of wall each side in the {flange_t:g} mm flange; {hf['torque_nm']:g} N m",
         high=[f"fault tension {fault:.0f} N an insert against an estimated {pull:.0f} N pull-out (SF {pull / fault:.2f}), "
               "pulled across the layers",
-              f"the assembly torque already preloads it to {hf['preload_n'] / pull:.2f} x that pull-out",
+              f"the assembly torque preloads it to {hf['preload_n'] / pull:.2f} x that (humid) pull-out if the cheek misses the "
+              "insert's brass face; with the face bearing (the inventory's condition) the preload closes through the brass",
               f"the flange's layer check: {flange_root['case']} {flange_root['layer_sf']} against {flange_root['target']} "
               f"({flange_root['where']}), 6 mm past the inserts' pilots"],
         options={
@@ -453,7 +460,9 @@ def joints(repo, mat, layers):
                                            "the root's peel direction), but the preload creeps away (see preload)",
         },
         pick='sleeved through-bolt',
-        why='D74: the leg\'s primary load path and an insert at 1.0 x its pull-out at assembly torque. The sleeve keeps the '
+        why=f'D74: the leg\'s primary load path; the {fault:.0f} N fault tension is {fault / pull:.2f} x the insert\'s estimated '
+            'humid pull-out, with no measured spin-out or creep (and up to 1.0 x at assembly if the cheek misses the brass '
+            'face). The sleeve keeps the '
             'preload out of the plastic; the flange root is then judged without precompression (conservative).',
         pr2='cad/fivebar.py frame_mounts(): 6 x Ø8.1 sleeve bores through the flange and web, an M5 hex pocket on the leg face; '
             f'the Ø8.1 bore leaves {(flange_t - 8.1) / 2:.2f} mm walls in the {flange_t:g} mm flange, so the bolt line gets a local boss and the '
@@ -704,8 +713,9 @@ def impact(repo):
     return {'scenarios': rows,
             'undamped_over_damped_knee': r(rig['power_off']['peak_knee_pin_n'] / rig['power_off_damped']['peak_knee_pin_n'], 1),
             'r3_knee': {'bearing_s0': k3['bearing']['sf'], 'pin_sf': k3['pin']['sf'], 'eye_sf': k3['eye_pressure']['sf']},
-            'note': 'every R3 margin is the undamped cut onto the stops; the rig\'s bumper or the measured power-off damping '
-                    '(B1) divides the knee load by the ratio above'}
+            'note': 'every R3 margin is the undamped cut onto the stops; the RS-04\'s power-off damping as the rig assumes it '
+                    '(20 % of shorted phases, not measured: B1 measures it) divides the knee load by the ratio above; no rig '
+                    'scenario models the bumper'}
 
 
 # ---------------------------------------------------------------------------------------------------- coupons
@@ -716,7 +726,7 @@ COUPONS = [
      'features': 'a 6301 seat (12 mm deep, Ø31 shoulder), a DIN 179 sleeve bore 40 mm long, a Ø16.1 x 23 blind stop-pin hole, '
                  'two Ø4.94 x 12 dowel holes, a 61812 seat segment (10 mm)',
      'settles': 'PRINT_HOLE_ERR for this printer (the hole each fit is drawn at), the press force and the grip dry and after a '
-                'humid week, elephant\'s foot at the mouths, retaining compound on printed bores',
+                'humid week, elephant\'s foot at the mouths, the epoxy bond in printed bores',
      'sheet': 'c1-bores.csv',
      'columns': ['variant', 'feature', 'mouth', 'd_mouth_0deg_mm', 'd_mouth_90deg_mm', 'd_mid_0deg_mm', 'd_mid_90deg_mm',
                  'press_force_n', 'pushout_dry_n', 'pushout_humid_7d_n', 'mass_dry_g', 'mass_humid_7d_g', 'notes'],
@@ -731,25 +741,37 @@ COUPONS = [
      'columns': ['sample', 'torque_nm', 'tension_n', 'spinout_nm', 'pullout_n', 'failure_mode', 'notes'],
      'rows': [[s] for s in ('s1', 's2', 's3')]},
     {'id': 'C3', 'name': 'sleeved through-bolt joint, against the plastic clamp', 'prints': 'four 13 x 40 x 60 flange blocks, layers '
-     'across the bolt as in the frame',
+     'across the bolt as in the frame (coupon_c3_sleeved, coupon_c3_plain), and two 30 x 30 wheel-foot blocks, the 20.8 mm '
+     'the BotWheel\'s M6 clamps (coupon_c3_wheel)',
      'features': 'two with an Ø8.1 bore and a steel sleeve flush, its nut on a DIN 9021 (Ø15) washer that reaches the '
                  'plastic round the sleeve; two with an Ø5.5 bore (bolt on the plastic, a Ø15 washer); M5 8.8 through the B4 '
-                 'load cell; after the creep readings, pull each sleeved block apart to the fault tension (851 N) and '
-                 'check the washer holds it',
+                 'load cell; after the creep readings, load each sleeved joint in tension to the fault tension (851 N) '
+                 'through the load cell, the block held at its far face, and check that the washer carries it into the '
+                 'plastic round its pocket: the joint stays closed and the pocket does not crush. The wheel blocks: M6 x 30 '
+                 'on a DIN 433 at 1.8 N m with threadlocker into a 5 mm steel plate (the BotWheel\'s flange), through the '
+                 'load cell: the clamp left after creep against the 1331 N the wheel\'s flange needs',
      'settles': 'preload kept over 30 min, 24 h, 7 days and a humid week, sleeved against plain; the creep step the preload '
-                'table screens; the re-torque schedule',
+                'table screens; the re-torque schedule. A block clamps 13 mm of plastic, the frame\'s through-bolt about 77 mm: '
+                'report the creep as mm per mm of clamped plastic and scale it to the frame (the washer\'s pocket and the '
+                'frame\'s 2.45 mm walls are not in the block: B4 checks those on the frame)',
      'sheet': 'c3-through-bolt.csv',
-     'columns': ['sample', 'kind', 'torque_nm', 'preload_0_n', 'preload_30min_n', 'preload_24h_n', 'preload_7d_n',
+     'columns': ['sample', 'kind', 'clamped_length_mm', 'torque_nm', 'preload_0_n', 'preload_30min_n', 'preload_24h_n', 'preload_7d_n',
                  'preload_humid_7d_n', 'retorque_nm', 'notes'],
-     'rows': [[s, k] for s, k in (('a', 'sleeved'), ('b', 'sleeved'), ('c', 'plastic'), ('d', 'plastic'))]},
-    {'id': 'C4', 'name': 'boss-root layer coupon (the knee eye\'s stub)', 'prints': 'the upper link\'s knee end, cut 40 mm back from the '
-     'knee, printed as the link (stub up); two today, two with the PR 2 stub',
-     'features': 'the two DIN 179 sleeves and a Ø12 pin standing 46 mm out (the knee\'s lever), loaded sideways in the press cage',
-     'settles': 'the load at which the stub\'s root peels (or the arm breaks) against the FEA\'s prediction for the same coupon: '
-                'calibrates S_z and the unmeasured interlayer shear S_s the layer check assumes',
+     'rows': [[s, k] for s, k in (('a', 'sleeved'), ('b', 'sleeved'), ('c', 'plastic'), ('d', 'plastic'), ('e', 'wheel'),
+                                  ('f', 'wheel'))]},
+    {'id': 'C4', 'name': 'boss-root layer coupon (the knee eye\'s stub)', 'prints': 'the upper link\'s knee end, cut 90 mm back from the '
+     'knee, printed as the link (stub up): coupon_c4_today (dev\'s stub) and coupon_c4_pr2 (the drawn one), two each',
+     'features': 'conditioned humid before the test, as the prediction assumes (c4_fea.py uses the humid PA6-CF rows): '
+                 'weighed dry, then held over water (or at 70 C / 62 % RH, ISO 1110) until the mass stops rising, and weighed '
+                 'again; a dry coupon reads about 2 x the prediction and must not be compared with it. The two DIN 179 sleeves '
+                 'bonded in and the Ø12 knee pin through them; the arm\'s last 20 mm clamped square in the press cage; the load '
+                 'on the pin at the knee boss\'s mid-plane (26 mm past the link\'s outer face), in the direction c4_fea.py '
+                 'finds weakest',
+     'settles': 'the load at which the stub\'s root peels (or the arm breaks) against c4_fea.py\'s prediction for the same '
+                'coupon (docs/leg-print-package.md section 8): measured over predicted is the factor on the S_z and S_s the layer check assumes',
      'sheet': 'c4-boss-root.csv',
-     'columns': ['sample', 'stub', 'load_at_first_whitening_n', 'load_at_failure_n', 'failure_plane', 'pin_deflection_at_1kn_mm',
-                 'notes'],
+     'columns': ['sample', 'stub', 'mass_dry_g', 'mass_conditioned_g', 'conditioning', 'load_at_first_whitening_n',
+                 'load_at_failure_n', 'failure_plane', 'pin_deflection_at_1kn_mm', 'notes'],
      'rows': [[s, g] for s, g in (('a', 'today'), ('b', 'today'), ('c', 'pr2'), ('d', 'pr2'))]},
 ]
 
@@ -870,9 +892,203 @@ def markdown(doc):
     return '\n'.join(L)
 
 
+PACKAGE_DOC = 'docs/leg-print-package.md'
+FINAL_LAYER = 'research/leg-preprint/evidence/leg-layer-check-print-ready.json'
+FINAL_GATE = 'exports/leg/fea/summary.json'
+BLOCK = ('<!-- gen:final-record -->', '<!-- /gen:final-record -->')
+
+
+C4_EVIDENCE = 'research/leg-preprint/evidence/c4-fea.json'
+HIP_MESH = 'research/leg-preprint/evidence/hip-frame-print-ready.json'
+ROBOT_KG = 38.69      # the robot with this branch (docs/leg-print-package.md section 9: the ledger's 38.56 + 2 x 64 g)
+
+
+def c4_prediction(repo):
+    """Each C4 stub's predicted peel load: the weakest direction at the 2 mm mesh, and the same at 1.5 mm."""
+    ev = repo.json(C4_EVIDENCE)
+    out = {}
+    for stub in ('today', 'pr2'):
+        rows = [x for x in ev['rows'] if x['stub'] == stub]
+        coarse = min((x for x in rows if x['mesh_mm'] == 2.0), key=lambda x: x['predicted_peel_n'])
+        fine = next(x for x in rows if x['mesh_mm'] == 1.5 and x['direction'] == coarse['direction'])
+        out[stub] = {'direction': coarse['direction'], 'peel_n': coarse['predicted_peel_n'], 'peel_n_fine': fine['predicted_peel_n'],
+                     'bulk_n': coarse['predicted_bulk_n'], 'governed_by': coarse['layer_check_at_1kn']['governed_by']}
+    return out
+
+
+def final_record(repo, mat):
+    """The leg record before (the v0.6.0 layer-check evidence of dev's leg) and after the print-ready changes (the
+    rerun record and its layer check), each printed part's case against its target, and what settles each short row."""
+    before = {(x['part'], x['case']): x for x in repo.json(LAYER_EVIDENCE)['rows']}
+    ev = repo.json(FINAL_LAYER)
+    gate = {(x['part'], x['case']): x for x in repo.json(FINAL_GATE)['results']}
+    rows = []
+    for x in ev['rows']:
+        k = (x['part'], x['case'])
+        lc, b = x['layer_check'], before.get(k)
+        tgt, sf = x['target'], lc['safety_factor']
+        w = lc['worst']
+        sn, tau = max(w['sigma_n_mpa'], 0.0), abs(w['tau_n_mpa'])
+        lim = 1.0 / tgt
+        need = None
+        if sf < tgt:
+            # Shear-limited: the S_s that passes at the assumed S_z. Tension-limited (σn alone fails at the assumed S_z):
+            # the S_z that passes with S_s scaled with it (S_z / sqrt(3)), which is S_z x target / SF.
+            need = ({'S_s': r(tau / math.sqrt(lim ** 2 - (sn / mat['S_z']) ** 2), 1)} if sn / mat['S_z'] < lim
+                    else {'S_z': r(mat['S_z'] * tgt / sf, 1)})
+        g = gate[k]['safety_factor']
+        masked = {name: gate[k][m] for m, name in (('safety_factor_with_pad_rim', 'pad rim'),
+                                                   ('safety_factor_with_pin_band', 'pin band')) if m in gate[k]}
+        rows.append({'part': x['part'], 'case': x['case'], 'target': tgt, 'left_out': masked,
+                     'gate_before': b['gate_sf'] if b else None, 'gate_now': g,
+                     'layer_before': b['layer_check']['safety_factor'] if b else None, 'layer_now': sf,
+                     'S_s_needed_mpa': need, 'where': where(x['part'], w['corner_mm'], repo)})
+    design_kg = repo.num('cad/leg_studies.py', r'^ROBOT_KG = ([\d.]+)')
+    for x in rows:
+        x['gate_at_robot_mass'] = r(x['gate_now'] * design_kg / ROBOT_KG, 2)
+    hf = repo.json(HIP_MESH)['meshes']
+    mesh_check = [{'case': c['case'], 'sf_4': c['safety_factor'],
+                   'sf_3': next(d['safety_factor'] for d in hf['3.0']['cases'] if d['case'] == c['case']),
+                   'target': c['target']} for c in hf['4.0']['cases']]
+    return {'design_kg': design_kg, 'robot_kg': ROBOT_KG, 'c4': c4_prediction(repo), 'hip_mesh': mesh_check,
+            'S_z_assumed_mpa': r(mat['S_z'], 2), 'source_revision': ev['source_revision'], 'toolkit': ev['toolkit_version'], 'mesh_mm': ev['mesh_mm'],
+            'S_s_assumed_mpa': r(mat['S_s'], 2), 'rows': rows}
+
+
+def mat_sz(fr):
+    return fr['S_z_assumed_mpa']
+
+
+def final_block(fr):
+    n = len(fr['rows'])
+    gb = sum(1 for x in fr['rows'] if x['gate_before'] is not None and x['gate_before'] >= x['target'])
+    gn = sum(1 for x in fr['rows'] if x['gate_now'] >= x['target'])
+    lb = sum(1 for x in fr['rows'] if x['layer_before'] is not None and x['layer_before'] >= x['target'])
+    ln = sum(1 for x in fr['rows'] if x['layer_now'] >= x['target'])
+    at_mass = [x for x in fr['rows'] if x['gate_now'] >= x['target'] > x['gate_at_robot_mass']]
+    c4 = fr['c4']
+    out = [BLOCK[0], '',
+           f"Generated by `research/leg-preprint/screen.py` from `{FINAL_GATE}` and `{FINAL_LAYER}` (cad-agent "
+           f"{fr['toolkit']}, {fr['mesh_mm']:g} mm mesh, source {fr['source_revision'][:7]}), against dev's record "
+           f"(`{LAYER_EVIDENCE}`). The printed parts' rows are below.", '',
+           f"- **Isotropic gate:** {gn} of {n} rows at target, against {gb} before.",
+           f"- **Layer check:** {ln} of {n} rows at target, against {lb} before. It assumes the interlayer shear strength S_s = S_z / sqrt(3) = "
+           f"{fr['S_s_assumed_mpa']:g} MPa; nobody has measured it.",
+           f"- **Mass basis:** the loads are the {fr['design_kg']:g} kg design robot's (`cad/leg_studies.py` ROBOT_KG). At the "
+           f"{fr['robot_kg']:g} kg this branch weighs (section 9) every SF falls by {fr['design_kg'] / fr['robot_kg']:.3f}: "
+           + (' and '.join(f"{x['part']} {x['case']} {x['gate_now']:g} → **{x['gate_at_robot_mass']:g}** (target {x['target']:g})"
+                           for x in at_mass)
+              + (' would then miss their targets. They are counted at target above, but they sit at the limit.' if len(at_mass) > 1
+                 else ' would then miss its target. It is counted at target above, but it sits at the limit.') if at_mass
+              else 'no row that is at target drops under it.'),
+           f"- **Mesh check (the hip frame, `{HIP_MESH}`):** the gate at 4 mm and at 3 mm: "
+           + ', '.join(f"{c['case']} {c['sf_4']:g} → " + (f"**{c['sf_3']:g}**" if c['sf_3'] < c['target'] else f"{c['sf_3']:g}")
+                       for c in fr['hip_mesh'])
+           + '. The gate is not converged, so read every frame row as a screen; bold rows miss their target at 3 mm.', '',
+           '| Part | Case | Target | Gate: before → now | Layer check: before → now | Printed strength that would pass (MPa) | Worst corner |',
+           '|---|---|---|---|---|---|---|']
+    for x in fr['rows']:
+        mark = lambda v: f"**{v:g}**" if v is not None and v < x['target'] else ('-' if v is None else f'{v:g}')
+        nd = x['S_s_needed_mpa']
+        need = '' if nd is None else (
+            f"S_s ≥ {nd['S_s']:g} ({nd['S_s'] / fr['S_s_assumed_mpa']:.1f}× assumed)" if 'S_s' in nd
+            else f"S_z ≥ {nd['S_z']:g} ({nd['S_z'] / fr['S_z_assumed_mpa']:.1f}× assumed; tension)")
+        out.append(f"| {x['part']} | {x['case']} | {x['target']:g} | {mark(x['gate_before'])} → {mark(x['gate_now'])} | "
+                   f"{mark(x['layer_before'])} → {mark(x['layer_now'])} | {need} | {x['where']} |")
+    left = [x for x in fr['rows'] if any(v < x['target'] for v in x['left_out'].values())]
+    out += ['', f"Bold: under target. The strength column is what coupon C4 has to show for the row to pass as drawn: an "
+            f"interlayer shear strength S_s (with S_z at the assumed {mat_sz(fr):g} MPa), or, where through-layer tension "
+            f"alone fails, a through-layer strength S_z (with S_s scaled with it). A row whose number C4 does not reach needs "
+            f"geometry or metal (section 10); a row that needs more than about twice the assumed value is unlikely to pass, so "
+            f"read those as the parts most likely to need it. Each number holds at the row's worst corner only, so it is a "
+            f"lower bound.", '',
+            '**Left out of the gate, as the records do.** Two contact edges the linear model cannot resolve are not judged: '
+            'the upper link\'s bonded pad rim (the adapter\'s edge on the hub face) and the hip frame\'s band round a stop pin '
+            '(the pin bearing on its hole). Counted, they would read:', '',
+            '| Part | Case | Target | Gate as judged | With the left-out edge |', '|---|---|---|---|---|']
+    for x in left:
+        out.append(f"| {x['part']} | {x['case']} | {x['target']:g} | {x['gate_now']:g} | "
+                   + ', '.join(f"{k} **{v:g}**" if v < x['target'] else f'{k} {v:g}' for k, v in x['left_out'].items()) + ' |')
+    out += ['', 'The plots in the summary show these edges red. Bench test B4b (the hub on its adapter) and proof load P2 '
+            '(the pins, section 7) are the physical checks.', '',
+            f"**Coupon C4's prediction** (`{C4_EVIDENCE}`, `research/leg-preprint/c4_fea.py`: the coupon itself at 1 kN, "
+            "held at its cut face 90 mm back, loaded through the knee bore at the knee boss's mid-plane):", '',
+            '| Stub | Weakest direction | Predicted peel load (2 mm / 1.5 mm mesh) | Governed by | Bulk (in-layer) load |',
+            '|---|---|---|---|---|']
+    for stub, name in (('today', "dev's (coupon_c4_today)"), ('pr2', 'drawn (coupon_c4_pr2)')):
+        c = c4[stub]
+        out.append(f"| {name} | {c['direction']} | {c['peel_n']:,} N / {c['peel_n_fine']:,} N | {c['governed_by']} | {c['bulk_n']:,} N |")
+    out += ['', 'The prediction uses the humid PA6-CF rows, so condition C4 humid first (its sheet says how): a dry coupon '
+            'reads about twice the prediction. Load it in the weakest direction. The measured peel load over the predicted one '
+            'is the factor on the assumed S_z and S_s for every row above; the two stubs check that the drawn one gains what '
+            'the FEA says.', '', BLOCK[1]]
+    return '\n'.join(out)
+
+
+PROOF = ('<!-- gen:proof -->', '<!-- /gen:proof -->')
+
+
+def proof_block(repo, fr):
+    """The proof loads, and what the folded-posture rows (R3) predict at them: linear, so each SF scales by R3's axle
+    load over the proof load."""
+    cases = repo.json(FINAL_GATE)['cases']
+    r3 = cases['R3']['Fw3'][2]
+    p1, p2 = cases['E1']['Fw3'][2], cases['R1']['Fw3'][2]
+    rows = [x for x in fr['rows'] if x['case'] in ('R3K', 'R3KF', 'R3o')]
+    out = [PROOF[0], '',
+           '| Step | Load at the axle | Hold | Pass |', '|---|---|---|---|',
+           f"| P1 | {p1:.0f} N vertical (E1's axle load: 2.5 x standing) | 10 min | after the seating cycle, it returns to within "
+           '0.05 mm of its start; no whitening, cracking or creaking |',
+           f"| P2 | {p2:.0f} N vertical (R1's axle load, applied in the folded posture) | 1 min | set after unloading under 0.1 mm; "
+           'the same visual checks; the torque marks have not moved |',
+           '| P3 | 10 % of P2 sideways, at the tyre\'s mid-plane | 1 min | the same |', '',
+           f"In the folded posture the axle load goes where R3's does, and P2 is {p2 / r3:.2f} of R3's {r3:.0f} N. Scaled from "
+           'the R3 rows (generated by `screen.py` from the same record):', '',
+           '| Part | Case | Gate at P2 | Layer check at P2 | Left-out edge at P2 |', '|---|---|---|---|---|']
+    for x in rows:
+        k = r3 / p2
+        edge = ', '.join(f"{n} {v * k:.2f}" for n, v in x['left_out'].items()) or '-'
+        out.append(f"| {x['part']} | {x['case']} | {x['gate_now'] * k:.2f} | {x['layer_now'] * k:.2f} | {edge} |")
+    out += ['', 'So P2 brings the knee stubs and the stop pins\' bands near SF 1 in the folded posture: apply it in steps of '
+            'a quarter, listening and watching the indicator, and stop at the first whitening.', '', PROOF[1]]
+    return '\n'.join(out)
+
+
+GLANCE = ('<!-- gen:glance -->', '<!-- /gen:glance -->')
+
+
+def glance_block(fr):
+    n, rows = len(fr['rows']), fr['rows']
+    count = lambda k: sum(1 for x in rows if x[k] is not None and x[k] >= x['target'])
+    better = lambda b, a: sum(1 for x in rows if x[b] is not None and x[a] > x[b])
+    return '\n'.join([
+        GLANCE[0], '',
+        'The chart is `research/leg-preprint/figure.py`, drawn from the same rows as the table in section 8 '
+        '(generated by `screen.py`).', '',
+        '| | Isotropic gate | Layer check (S_s assumed) |', '|---|---|---|',
+        f"| Rows at target, dev's record | {count('gate_before')} of {n} | {count('layer_before')} of {n} |",
+        f"| Rows at target, this branch | {count('gate_now')} of {n} | {count('layer_now')} of {n} |",
+        f"| Rows that went up | {better('gate_before', 'gate_now')} of {n} | {better('layer_before', 'layer_now')} of {n} |",
+        '', 'Coupon C4 decides the layer rows (section 8). The mass is in section 9 and the open decisions in section 10.',
+        '', GLANCE[1]])
+
+
+def splice(text, marks, block):
+    s, e = text.index(marks[0]), text.index(marks[1]) + len(marks[1])
+    return text[:s] + block + text[e:]
+
+
+def package_doc(repo, mat):
+    """docs/leg-print-package.md with its generated blocks rewritten (the rest is written by hand)."""
+    fr = final_record(repo, mat)
+    text = splice(splice(repo.text(PACKAGE_DOC), BLOCK, final_block(fr)), GLANCE, glance_block(fr))
+    return splice(text, PROOF, proof_block(repo, fr))
+
+
 def outputs(repo):
     doc = document(repo)
     files = {OUT_JSON: json.dumps(doc, indent=1, ensure_ascii=False) + '\n', OUT_MD: markdown(doc)}
+    files[ROOT / PACKAGE_DOC] = package_doc(repo, materials(repo))
     for name, text in coupon_sheets().items():
         files[SHEETS / name] = text
     return files

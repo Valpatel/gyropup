@@ -459,7 +459,7 @@ def build(repo):
     shear = 1000.0 * peak_motor / (10 * lug_r)
     # the motor's two Ø5 steel dowels on the same PCD, pressed 12 mm into the frame from the motor side (fivebar.py hip_frame)
     n_dowel = len(repo.has('cad/fivebar.py', 'RS04_LUG0, RS04_DOWELS = -15.0, (3.0, 183.0)').split('(')[1].split(','))
-    dowel_in = repo.num('cad/fivebar.py', r'web = web\.cut\(ycyl\(2\.5 - 0\.03, yf0 - 1, yf0 \+ ([\d.]+), x, z\)\)')
+    dowel_in = repo.num('cad/fivebar.py', r'web = web\.cut\(ycyl\(2\.5 \+ PRINT_HOLE_COMP / 2 \+ [\d.]+, yf0 - 1, yf0 \+ ([\d.]+), x, z\)\)')
     dowel_f = 1000.0 * peak_motor / (n_dowel * lug_r)
     dowel_mpa = dowel_f / (5.0 * dowel_in)
     lug_pre = mat['bearing_sustained_mpa'] * annulus(HEAD_D[('socket', 4)], fast['M4']['clear'])
@@ -519,7 +519,7 @@ def build(repo):
 
     wheel_t = repo.num('cad/fivebar.py', r"'wheel_t': ([\d.]+), 'wheel_w0'")
     play = repo.num('cad/fivebar.py', r'^WHEEL_RECESS_PLAY = ([\d.]+)')
-    wt = repo.num('cad/rig_assembly.py', r"'\| Wheel \(M6 x 30 into the BotWheel\) \| ([\d.]+) N m, threadlocker \|'")
+    wt = repo.num('cad/rig_assembly.py', r"'\| Wheel \(M6 x 30 into the BotWheel, on DIN 433 washers\) \| ([\d.]+) N m, threadlocker \|'")
     bw = repo.json('catalog/interfaces.json')['odrive-botwheel']
     pcd, wheel_d = bw['case']['bolts']['pcd'], bw['envelope']['outer_diameter']
     boss_h = bw['case']['spigot']['height']
@@ -541,18 +541,19 @@ def build(repo):
     m_rare, t_rare = wheel_bolt(rare_s)
     m_fault, t_fault = wheel_bolt(fault_s)
     w_area = annulus(HEAD_D[('socket', 6)], fast['M6']['clear'])
-    din433 = (11.0, 6.4, 1.6)                     # DIN 433 M6: OD, ID, thickness (the small washer for socket heads)
+    din433 = tuple(repo.num('cad/fivebar.py', r'^WHEEL_WASHER = \(' + ', '.join([r'[\d.]+'] * k + [r'([\d.]+)'] + [r'[\d.]+'] * (2 - k)) + r'\)')
+                   for k in (1, 0, 2))                # DIN 433 M6 as drawn (D74): OD, ID, thickness
     w433 = annulus(din433[0], fast['M6']['clear'])
     t_need = max(t_rare, t_fault)
     add(id='leg.wheel_botwheel', assembly='leg', where="wheel link foot (PA6-CF) onto the BotWheel's stator flange",
         qty_robot=8, insert=None, d_mm=6, material='pa6-cf', infill='100 %', receiver='BotWheel M6 (depth not published)',
-        screw='M6 x 30 ISO 4762 from inside the hub, no washer', screw_side='n/a', axis='print-z',
+        screw='M6 x 30 ISO 4762 from inside the hub, on a DIN 433 washer (D74)', screw_side='n/a', axis='print-z',
         orientation='wheel link printed flat on its outer face: the screw axis is the build direction',
         clamp={'stack': f"{printed_w:.1f} mm printed PA6-CF under each head (the {wheel_t:g} mm foot less the Ø50 x {boss_h:g} boss "
                         f"recess and its {play:g} play; the flange seats on the outer face outside the recess)",
-               'printed_mm': round(printed_w, 2), 'limiter': None, 'material': 'PA6-CF', 'bearing': 'Ø10 socket head',
-               'bearing_od_mm': HEAD_D[('socket', 6)], 'bearing_id_mm': fast['M6']['clear'], 'level': 'owner'},
-        torque_nm=wt, torque_source='docs/leg-rig-assembly.md: "8 N m, threadlocker" (no source given)',
+               'printed_mm': round(printed_w, 2), 'limiter': None, 'material': 'PA6-CF', 'bearing': 'DIN 433 M6 washer',
+               'bearing_od_mm': din433[0], 'bearing_id_mm': fast['M6']['clear'], 'level': 'check'},
+        torque_nm=wt, torque_source=f'docs/leg-rig-assembly.md: "{wt:g} N m, threadlocker" (D74: the washer\'s plastic at the sustained screen)',
         preload_n=r(preload(wt, 6), 0),
         loads=[{'case': f"rare ({rare_s}): axle {sc[rare_s]['peak_axle_force_n']:g} N at {lever:.1f} mm + 10 % grip at the "
                         f"tyre: {m_rare:.0f} N m on 4 x M6 at PCD {pcd:g}", 'per_insert_n': r(t_rare, 0), 'tension': True,
@@ -567,19 +568,15 @@ def build(repo):
               f"Ø{2 * cable_r:g} cable hole): {w433:.0f} mm2 holds {mat['bearing_sustained_mpa'] * w433:.0f} N at {mat['bearing_sustained_mpa']:g} MPa "
               f"({torque_for(mat['bearing_sustained_mpa'] * w433, 6):.2f} N m), {mat['bearing_sustained_mpa'] * w433 / t_need:.2f} x "
               "the need.",
-        extra=[('wheel-clamp', 'owner', f"{wt:g} N m ~ {preload(wt, 6):.0f} N on {w_area:.0f} mm2 = {preload(wt, 6) / w_area:.0f} MPa "
-                f"on PA6-CF; the flange needs >= {t_need:.0f} N a screw, a bare head holds "
-                f"{mat['bearing_sustained_mpa'] * w_area:.0f} N, a DIN 433 washer {mat['bearing_sustained_mpa'] * w433:.0f} N "
-                f"({torque_for(mat['bearing_sustained_mpa'] * w433, 6):.2f} N m)"),
-               ('note-vs-joint', 'fix', f"cad/fivebar.py wheel_link() docstring: {q(repo.has('cad/fivebar.py', 'its 4 x M6 x 40'))}; "
-                'the joint and BOM are M6 x 30, and catalog/hardware.json screw_m6x40 still lists this joint')])
+        extra=[('wheel-clamp', 'check', f"{wt:g} N m ~ {preload(wt, 6):.0f} N on the DIN 433's {w433:.0f} mm2 = "
+                f"{preload(wt, 6) / w433:.0f} MPa on PA6-CF (D74; a bare head was {w_area:.0f} mm2); the flange needs >= "
+                f"{t_need:.0f} N a screw, {preload(wt, 6) / t_need:.2f} x that at assembly: coupon C3 measures what creep "
+                "leaves, re-torque after 24 h")])
 
     add(id='leg.stop_posts', assembly='leg', where='hip frame stop posts', qty_robot=8, insert=None, d_mm=8, material='pa6-cf',
         infill='100 %', receiver='none: Ø16 steel pins in blind holes since D53', screw='none', axis='print-z',
-        clamp=None, loads=[], notes='No insert any more. The generated assembly page still instructs one.',
-        extra=[('note-vs-joint', 'fix', 'cad/rig_assembly.py (docs/leg-rig-assembly.md) still says '
-                f"{q(repo.has('cad/rig_assembly.py', 'the B4 torque into the M8 insert, 5 N m until B4'))} and "
-                f"{q(repo.has('cad/rig_assembly.py', 'Stop posts (M8 into heat-set inserts)'))}: the posts are pins (D53)")])
+        clamp=None, loads=[], notes='No insert any more: the assembly page bonds the pins ('
+        f"{q(repo.has('cad/rig_assembly.py', 'Stop posts (Ø16 pins bonded in blind holes, D53, D74)'))}).")
 
     # ================================================================== the TM's sideways-fall load, from the TM face (D66)
     # mount.json's centre is in the turret frame T, whose origin is the pan base's foot. Since D66 the plinth's tray sits

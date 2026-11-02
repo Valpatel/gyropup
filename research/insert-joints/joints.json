@@ -201,12 +201,12 @@
    "preload_n": 1500,
    "loads": [
     {
-     "case": "R1 out-of-plane 114.6 N m vs the edge lifting at 104 (tips at 288)",
+     "case": "R1 out-of-plane 115.7 N m vs the edge lifting at 104 (tips at 288)",
      "per_insert_n": null,
      "source": "exports/leg/fea/summary.json joints.R1.hub_rear"
     },
     {
-     "case": "R3 out-of-plane 188.6 N m (sf_tip 1.53)",
+     "case": "R3 out-of-plane 190.1 N m (sf_tip 1.52)",
      "per_insert_n": null,
      "source": "exports/leg/fea/summary.json joints.R3.hub_rear"
     }
@@ -221,7 +221,7 @@
     {
      "code": "hub-edge-lifts",
      "level": "owner",
-     "text": "at the assumed 1200 N the hub's edge lifts at 104 N m; R1 puts 114.6 and R3 188.6 N m on it"
+     "text": "at the assumed 1200 N the hub's edge lifts at 104 N m; R1 puts 115.7 and R3 190.1 N m on it"
     }
    ],
    "verdict": "owner"
@@ -348,7 +348,7 @@
    "material": "pa6-cf",
    "infill": "100 %",
    "receiver": "BotWheel M6 (depth not published)",
-   "screw": "M6 x 30 ISO 4762 from inside the hub, no washer",
+   "screw": "M6 x 30 ISO 4762 from inside the hub, on a DIN 433 washer (D74)",
    "screw_side": "n/a",
    "axis": "print-z",
    "orientation": "wheel link printed flat on its outer face: the screw axis is the build direction",
@@ -357,18 +357,18 @@
     "printed_mm": 20.8,
     "limiter": null,
     "material": "PA6-CF",
-    "bearing": "Ø10 socket head",
-    "bearing_od_mm": 10.0,
+    "bearing": "DIN 433 M6 washer",
+    "bearing_od_mm": 11.0,
     "bearing_id_mm": 6.6,
-    "level": "owner",
-    "bearing_area_mm2": 44.3,
-    "bearing_mpa": 150.4,
-    "preload_at_sustained_n": 1108,
-    "torque_at_sustained_nm": 1.33
+    "level": "check",
+    "bearing_area_mm2": 60.8,
+    "bearing_mpa": 24.7,
+    "preload_at_sustained_n": 1521,
+    "torque_at_sustained_nm": 1.82
    },
-   "torque_nm": 8.0,
-   "torque_source": "docs/leg-rig-assembly.md: \"8 N m, threadlocker\" (no source given)",
-   "preload_n": 6667,
+   "torque_nm": 1.8,
+   "torque_source": "docs/leg-rig-assembly.md: \"1.8 N m, threadlocker\" (D74: the washer's plastic at the sustained screen)",
+   "preload_n": 1500,
    "loads": [
     {
      "case": "rare (jump_peak): axle 1776.3 N at 24.8 mm + 10 % grip at the tyre: 68 N m on 4 x M6 at PCD 36",
@@ -386,22 +386,12 @@
    "notes": "Keeping the flange closed needs about 1331 N a screw; the plastic under a bare Ø10 head holds 1108 N at 25 MPa, so no torque satisfies both. A DIN 9021 washer (catalog/hardware.json lists 8 for these screws) does not fit: on PCD 36 its Ø18 reaches r 27, past the hub's Ø48 bore. A DIN 433 (Ø11) reaches r 23.5 and fits (0.5 mm inside the bore, 1.5 mm outside the Ø22 cable hole): 61 mm2 holds 1521 N at 25 MPa (1.82 N m), 1.14 x the need.",
    "findings": [
     {
-     "code": "printed-clamp-crush",
-     "level": "owner",
-     "text": "6667 N on 44 mm2 of printed PA6-CF under the Ø10 socket head = 150 MPa (> 40 humid, 25 sustained); 20.8 mm of plastic in the clamp, no limiter"
-    },
-    {
      "code": "wheel-clamp",
-     "level": "owner",
-     "text": "8 N m ~ 6667 N on 44 mm2 = 150 MPa on PA6-CF; the flange needs >= 1331 N a screw, a bare head holds 1108 N, a DIN 433 washer 1521 N (1.82 N m)"
-    },
-    {
-     "code": "note-vs-joint",
-     "level": "fix",
-     "text": "cad/fivebar.py wheel_link() docstring: \"its 4 x M6 x 40\"; the joint and BOM are M6 x 30, and catalog/hardware.json screw_m6x40 still lists this joint"
+     "level": "check",
+     "text": "1.8 N m ~ 1500 N on the DIN 433's 61 mm2 = 25 MPa on PA6-CF (D74; a bare head was 44 mm2); the flange needs >= 1331 N a screw, 1.13 x that at assembly: coupon C3 measures what creep leaves, re-torque after 24 h"
     }
    ],
-   "verdict": "fix"
+   "verdict": "check"
   },
   {
    "id": "leg.stop_posts",
@@ -417,15 +407,9 @@
    "axis": "print-z",
    "clamp": null,
    "loads": [],
-   "notes": "No insert any more. The generated assembly page still instructs one.",
-   "findings": [
-    {
-     "code": "note-vs-joint",
-     "level": "fix",
-     "text": "cad/rig_assembly.py (docs/leg-rig-assembly.md) still says \"the B4 torque into the M8 insert, 5 N m until B4\" and \"Stop posts (M8 into heat-set inserts)\": the posts are pins (D53)"
-    }
-   ],
-   "verdict": "fix"
+   "notes": "No insert any more: the assembly page bonds the pins (\"Stop posts (Ø16 pins bonded in blind holes, D53, D74)\").",
+   "findings": [],
+   "verdict": "ok"
   },
   {
    "id": "body.post_m5",
@@ -2376,18 +2360,6 @@
    "text": "riser dowel holes 8 deep vs mount.json's 12.5; a 16 mm pin goes 8 into the D66 tray, so it needs at least 8.5 in the riser"
   },
   {
-   "joint": "leg.stop_posts",
-   "code": "note-vs-joint",
-   "level": "fix",
-   "text": "cad/rig_assembly.py (docs/leg-rig-assembly.md) still says \"the B4 torque into the M8 insert, 5 N m until B4\" and \"Stop posts (M8 into heat-set inserts)\": the posts are pins (D53)"
-  },
-  {
-   "joint": "leg.wheel_botwheel",
-   "code": "note-vs-joint",
-   "level": "fix",
-   "text": "cad/fivebar.py wheel_link() docstring: \"its 4 x M6 x 40\"; the joint and BOM are M6 x 30, and catalog/hardware.json screw_m6x40 still lists this joint"
-  },
-  {
    "joint": "rig.pod_lid",
    "code": "no-receiver",
    "level": "fix",
@@ -2463,19 +2435,7 @@
    "joint": "leg.upper_link_hub",
    "code": "hub-edge-lifts",
    "level": "owner",
-   "text": "at the assumed 1200 N the hub's edge lifts at 104 N m; R1 puts 114.6 and R3 188.6 N m on it"
-  },
-  {
-   "joint": "leg.wheel_botwheel",
-   "code": "printed-clamp-crush",
-   "level": "owner",
-   "text": "6667 N on 44 mm2 of printed PA6-CF under the Ø10 socket head = 150 MPa (> 40 humid, 25 sustained); 20.8 mm of plastic in the clamp, no limiter"
-  },
-  {
-   "joint": "leg.wheel_botwheel",
-   "code": "wheel-clamp",
-   "level": "owner",
-   "text": "8 N m ~ 6667 N on 44 mm2 = 150 MPa on PA6-CF; the flange needs >= 1331 N a screw, a bare head holds 1108 N, a DIN 433 washer 1521 N (1.82 N m)"
+   "text": "at the assumed 1200 N the hub's edge lifts at 104 N m; R1 puts 115.7 and R3 190.1 N m on it"
   },
   {
    "joint": "rig.pendant_clip",
@@ -2538,6 +2498,12 @@
    "text": "cut each spacer to the measured web gap (+0 / +0.05 mm) and check the bearings turn freely after torquing"
   },
   {
+   "joint": "leg.wheel_botwheel",
+   "code": "wheel-clamp",
+   "level": "check",
+   "text": "1.8 N m ~ 1500 N on the DIN 433's 61 mm2 = 25 MPa on PA6-CF (D74; a bare head was 44 mm2); the flange needs >= 1331 N a screw, 1.13 x that at assembly: coupon C3 measures what creep leaves, re-torque after 24 h"
+  },
+  {
    "joint": "rig.pod_m4",
    "code": "preload-vs-pullout",
    "level": "check",
@@ -2567,14 +2533,14 @@
   "inserts_on_robot": 151,
   "verdicts": {
    "owner": 6,
-   "check": 6,
-   "fix": 12,
+   "check": 7,
+   "ok": 7,
    "note": 16,
-   "ok": 6
+   "fix": 10
   },
-  "fix": 18,
-  "owner": 11,
-  "check": 11
+  "fix": 16,
+  "owner": 9,
+  "check": 12
  },
  "bindings": [
   {
@@ -2671,7 +2637,7 @@
   },
   {
    "file": "cad/fivebar.py",
-   "pattern": "web = web\\.cut\\(ycyl\\(2\\.5 - 0\\.03, yf0 - 1, yf0 \\+ ([\\d.]+), x, z\\)\\)",
+   "pattern": "web = web\\.cut\\(ycyl\\(2\\.5 \\+ PRINT_HOLE_COMP / 2 \\+ [\\d.]+, yf0 - 1, yf0 \\+ ([\\d.]+), x, z\\)\\)",
    "value": 12.0,
    "lines": 1
   },
@@ -2713,8 +2679,8 @@
   },
   {
    "file": "cad/rig_assembly.py",
-   "pattern": "'\\| Wheel \\(M6 x 30 into the BotWheel\\) \\| ([\\d.]+) N m, threadlocker \\|'",
-   "value": 8.0,
+   "pattern": "'\\| Wheel \\(M6 x 30 into the BotWheel, on DIN 433 washers\\) \\| ([\\d.]+) N m, threadlocker \\|'",
+   "value": 1.8,
    "lines": 1
   },
   {
@@ -2747,15 +2713,25 @@
   },
   {
    "file": "cad/fivebar.py",
-   "literal": "its 4 x M6 x 40"
+   "pattern": "^WHEEL_WASHER = \\([\\d.]+, ([\\d.]+), [\\d.]+\\)",
+   "value": 11.0,
+   "lines": 1
+  },
+  {
+   "file": "cad/fivebar.py",
+   "pattern": "^WHEEL_WASHER = \\(([\\d.]+), [\\d.]+, [\\d.]+\\)",
+   "value": 6.4,
+   "lines": 1
+  },
+  {
+   "file": "cad/fivebar.py",
+   "pattern": "^WHEEL_WASHER = \\([\\d.]+, [\\d.]+, ([\\d.]+)\\)",
+   "value": 1.6,
+   "lines": 1
   },
   {
    "file": "cad/rig_assembly.py",
-   "literal": "the B4 torque into the M8 insert, 5 N m until B4"
-  },
-  {
-   "file": "cad/rig_assembly.py",
-   "literal": "Stop posts (M8 into heat-set inserts)"
+   "literal": "Stop posts (Ø16 pins bonded in blind holes, D53, D74)"
   },
   {
    "file": "cad/turret.py",

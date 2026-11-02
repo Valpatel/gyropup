@@ -16,9 +16,9 @@ import sys
 
 ROOT = Path(__file__).resolve().parents[1]
 OUT = ROOT / 'exports/leg/fea/hip-frame-e1-media'
-# The recorded E1 gate (exports/leg/fea/summary.json, regenerated on cad-agent v0.6.0 in issue #29). Review the
-# visualization explicitly whenever the record changes; never relabel another case as this one.
-RECORDED_SF = 1.63
+# The recorded E1 gate (exports/leg/fea/summary.json, regenerated on cad-agent v0.6.0 for the print-ready leg, #148,
+# issue #29). Review the visualization explicitly whenever the record changes; never relabel another case as this one.
+RECORDED_SF = 1.60
 
 
 def digest(path):

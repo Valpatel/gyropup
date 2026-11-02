@@ -93,7 +93,7 @@ class Inventory(unittest.TestCase):
         self.assertIn('screw-bottoms', codes(d, 'turret.plinth_columns'))
         self.assertIn('pan-base-dowels', codes(d, 'turret.plinth_columns'))
         self.assertIn('pilot-shorter-than-insert', codes(d, 'stand.dock'))
-        self.assertIn('printed-clamp-crush', codes(d, 'leg.wheel_botwheel'))
+        self.assertNotIn('printed-clamp-crush', codes(d, 'leg.wheel_botwheel'))   # D74: DIN 433 washers, 1.8 N m
         self.assertIn('printed-clamp-crush', codes(d, 'leg.upper_link_hub'))
         self.assertIn('engagement-low', codes(d, 'turret.pan_ring_yoke'))
         self.assertIn('engagement-low', codes(d, 'rig.pendant_clip'))
@@ -170,7 +170,7 @@ class Inventory(unittest.TestCase):
 
     def test_control_a_fixed_note_must_be_dropped(self):
         with self.assertRaises(inv.Stale):
-            generate({'cad/fivebar.py': [('its 4 x M6 x 40', 'its 4 x M6 x 30')]})
+            generate({'cad/body_frame.py': [('two M4 x 10 down into the tray', 'two M4 x 12 down into the tray')]})
 
 
 if __name__ == '__main__':

@@ -111,7 +111,7 @@
   {
    "key": "stop_pin",
    "qty": 4,
-   "for": "stop posts: \u00d816 x 40 vented pull-out dowels, 23 mm into blind holes in the hip frame (retaining compound), TPU sleeves over them",
+   "for": "stop posts: \u00d816 x 40 vented pull-out dowels, 23 mm into blind holes in the hip frame (epoxy-bonded, D74), TPU sleeves over them",
    "vendor": "McMaster-Carr",
    "part_number": "98432A386",
    "name": "Vented Pull-Out Dowel Pin with Flat Shaft, High-Strength 52100 Alloy Steel, 16 mm Diameter, 40 mm Long",
@@ -195,6 +195,17 @@
    "mass_g_each": 8.45,
    "price_usd_each": 0.2272,
    "cad": false
+  },
+  {
+   "key": "washer_m6_din433",
+   "qty": 4,
+   "for": "under the BotWheel screws' heads on the wheel link's foot (D74: spreads the clamp; 1.8 N m)",
+   "vendor": "McMaster-Carr",
+   "part_number": null,
+   "name": "Washer, undersized (DIN 433), for M6 screw, 6.4 mm ID, 11.0 mm OD, 1.6 mm thick, 18-8 stainless steel",
+   "mass_g_each": 0.8,
+   "price_usd_each": null,
+   "cad": false
   }
  ],
  "made_to_order": [
@@ -230,7 +241,9 @@
    "price_note": "an estimate until the instant price is read on upload (D40: no quotes; JLCCNC turned-and-milled 6061, qty 4); shipping from China is extra and takes 5-10 days"
   }
  ],
- "to_source": [],
+ "to_source": [
+  "washer_m6_din433"
+ ],
  "cad_pending": [
   "bearing_6301",
   "circlip_60",
@@ -239,7 +252,8 @@
   "eye_sleeve",
   "screw_m5x25",
   "screw_m5x40",
-  "screw_m6x30"
+  "screw_m6x30",
+  "washer_m6_din433"
  ],
  "price_usd_per_leg": 1097.96,
  "made_to_order_estimate_usd_per_leg": 80.0

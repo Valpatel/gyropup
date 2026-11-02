@@ -172,7 +172,7 @@ def validate_bindings(receipt, capture, frame_manifest, out=OUT, raw_frames=None
     require(receipt['historical_leg'] == historical_leg(), 'Historical leg baseline differs from the matching video revision')
     require(receipt['historical_leg']['video_sha256'] == receipt['source_hashes'][LEG], 'Leg clip is not its historical Git blob')
     require(receipt['e1'] == dict(source_start_seconds=1, source_duration_seconds=3, transient_simulation=False,
-                                deformation_exaggeration=16, safety_factor=1.63, required=2, baseline_kg=37.5),
+                                deformation_exaggeration=16, safety_factor=1.60, required=2, baseline_kg=37.5),
             'Static E1 evidence mislabeled')
     # Reuse the independent field/report closure check; no solver is imported.
     spec = importlib.util.spec_from_file_location('study_check', ROOT / 'tools/check-study-media.py')

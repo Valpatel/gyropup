@@ -4203,9 +4203,9 @@
    "https://www.mcmaster.com/98432A386/"
   ],
   "confidence": "product page",
-  "used_for": "leg v2 stop posts (D53): 4 per leg, 23 mm into blind Ø16 holes in the hip frame's web (a light fit, Loctite 638 filling the gap), the tapped end up under the TPU sleeve; the upper links' radial stop faces land on the sleeves at +3 / -97 deg",
+  "used_for": "leg v2 stop posts (D53): 4 per leg, 23 mm into blind Ø16 holes in the hip frame's web (a light fit, bonded with structural epoxy: D74, not LOCTITE 638 on the plastic), the tapped end up under the TPU sleeve; the upper links' radial stop faces land on the sleeves at +3 / -97 deg",
   "qty_per_robot": 8,
-  "notes": "Vented pull-out dowel (DIN 7979 D, m6): the flat lets air and retaining compound out of the blind hole (turn it to face the motor's axis, square to the stop's load), and the M8 thread in its end takes a puller screw, so a pin can come out of the printed frame. Ø16 because a Ø12 pin 22 mm into the printed web bears at SF 0.6 everyday against the link's straight edge and 1.2 with the radial stop face, against 2 (cad/leg_studies.py stop_checks); Ø16 x 23 with the face: 2.1."
+  "notes": "Vented pull-out dowel (DIN 7979 D, m6): the flat lets air and the bonding epoxy out of the blind hole (turn it to face the motor's axis, square to the stop's load), and the M8 thread in its end takes a puller screw, so a pin can come out of the printed frame. Ø16 because a Ø12 pin 22 mm into the printed web bears at SF 0.6 everyday against the link's straight edge and 1.2 with the radial stop face, against 2 (cad/leg_studies.py stop_checks); Ø16 x 23 with the face: 2.1."
  },
  {
   "id": "mcmaster-94459a778",
@@ -4390,6 +4390,50 @@
   "used_for": "leg v2 knee joints: one each side of each knee's bearing stack (upper link to the inner 6001, outer 6001 to the knee pin's head)",
   "qty_per_robot": 8,
   "notes": "DIN 433 / ISO 7092 M12: 13 x 20 x 2 (1.8-2.2) = the 2 mm layer gap in cad/fivebar.py. No 13 x 24 x 2 is stocked (DIN 125 M12 is 13 x 24 x 2.5, too thick for the gap). The CAD's knee_washer envelope is 24 OD: make it 20. 20 is also the safer size: it bears on the 6001's inner ring (flat out to 15.2 in the McMaster model) and passes over the seal (recessed 0.4), while a 24 washer floating 0.5 mm on the 12 mm shoulder could reach the outer ring's face (from 24.8)."
+ },
+ {
+  "id": "washer-m6-din433",
+  "key": "washer_m6_din433",
+  "category": "fastener",
+  "vendor": "McMaster-Carr",
+  "model": null,
+  "name": "Washer, undersized (DIN 433), for M6 screw, 6.4 mm ID, 11.0 mm OD, 1.6 mm thick, 18-8 stainless steel",
+  "price_usd": null,
+  "price_note": "not read: on 2026-11-01 McMaster-Carr product pages returned no data to the parts tool (page reads empty), so the part number in the 98689A family (washer_m12_thin is 98689A118, the same family for M12) is to confirm",
+  "price_checked": null,
+  "pack_qty": null,
+  "pack_price_usd": null,
+  "buy": [
+   {
+    "seller": "McMaster-Carr",
+    "url": "https://www.mcmaster.com/products/washers/",
+    "in_stock": null,
+    "ships_from": "US"
+   }
+  ],
+  "specs": {
+   "standard": "DIN 433 (ISO 7092)",
+   "id_mm": 6.4,
+   "od_mm": 11.0,
+   "thickness_mm": 1.6,
+   "material": "18-8 stainless steel",
+   "mass_g": 0.8,
+   "mass_basis": "computed: 62.9 mm2 x 1.6 mm x 7.93 g/cm3 (18-8)"
+  },
+  "cad": {
+   "file": null,
+   "kind": "washer",
+   "frame": "axis +Z, centred on the axis; the larger end (flange, head, collar) at z = 0 and the part on +z; when both ends are the same size, the heavier end at z = 0",
+   "pending": "drawn from its dimensions (cad/fivebar.py WHEEL_WASHER) until the part number and STEP are confirmed: .venv/bin/python tools/mcmaster_cad.py --catalog --only washer_m6_din433"
+  },
+  "frame": "axis +Z, centred on the axis; the larger end (flange, head, collar) at z = 0 and the part on +z; when both ends are the same size, the heavier end at z = 0",
+  "sources": [
+   "DIN 433-1 / ISO 7092 small series washer, M6: d1 6.4, d2 11, h 1.6"
+  ],
+  "confidence": "standard size; part number not confirmed",
+  "used_for": "leg (D74): under each BotWheel screw's head on the wheel link's foot, inside the hub's Ø48 bore (4 per leg)",
+  "qty_per_robot": 8,
+  "notes": "Ø11 reaches r 23.5 on the 36 PCD, 0.5 mm inside the hub bore; a DIN 125 (Ø12) touches the bore wall and a DIN 9021 (Ø18, washer_m6_large) does not fit. 61 mm2 of PA6-CF under it (the Ø11 washer over the Ø6.6 hole) hold 1.5 kN at the 25 MPa sustained screen (1.8 N m at K 0.2); the flange needs 1.33 kN a screw (research/insert-joints). The screw goes 7.6 mm into the BotWheel (1.3 d)."
  },
  {
   "id": "mcmaster-9056k68",
@@ -4648,8 +4692,8 @@
    "https://www.mcmaster.com/91290A336/"
   ],
   "confidence": "product page",
-  "used_for": "leg v2: the BotWheel's stator flange, 4 x M6 from inside the wheel link (4 per leg)",
-  "qty_per_robot": 8,
+  "used_for": "no longer in the leg: the BotWheel's flange takes 4 x M6 x 30 (screw_m6x30) from inside the wheel link's hub, since the 15 mm thread in the flange would bottom an M6 x 40; kept as a reference part",
+  "qty_per_robot": null,
   "notes": "Head in the 11.2 x 7 counterbore (underside at y = 35); grip to the BotWheel's boss face (y = 67.8) 32.8 mm, so 7.2 mm into the wheel's M6 (1.2 d; the thread depth is not in interfaces.json yet: check it, 45 mm would give 12.2). Partially threaded, 24 mm minimum thread, so all of the engaged length is thread. Same series as screw_m6x35 (91290A334); 91290A203 (fully threaded, pack of 10, $4.90) is the cheaper buy for a single robot."
  },
  {

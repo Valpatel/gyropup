@@ -83,19 +83,77 @@ class Screen(unittest.TestCase):
         self.assertGreater(row['sigma_n_mpa'], 0)
         self.assertAlmostEqual(row['S_s_needed_mpa'], 16.6, delta=0.15)
 
+    def test_final_record_strength_needed_passes_the_row(self):
+        # each short row's needed strength, put back into the criterion at the row's worst corner, gives SF = target
+        repo = sc.Repo(sc.ROOT)
+        mat = sc.materials(repo)
+        fr = sc.final_record(repo, mat)
+        ev = {(x['part'], x['case']): x['layer_check'] for x in repo.json(sc.FINAL_LAYER)['rows']}
+        short = [x for x in fr['rows'] if x['layer_now'] < x['target']]
+        self.assertTrue(short)
+        for x in short:
+            w = ev[(x['part'], x['case'])]['worst']
+            sn, tau = max(w['sigma_n_mpa'], 0.0), abs(w['tau_n_mpa'])
+            need = x['S_s_needed_mpa']
+            s_z, s_s = (mat['S_z'], need['S_s']) if 'S_s' in need else (need['S_z'], need['S_z'] / 3 ** 0.5)
+            sf = 1 / ((sn / s_z) ** 2 + (tau / s_s) ** 2) ** 0.5
+            self.assertAlmostEqual(sf / x['target'], 1.0, delta=0.01, msg=x)
+        for x in fr['rows']:
+            if x['layer_now'] >= x['target']:
+                self.assertIsNone(x['S_s_needed_mpa'], x)
+
+    def test_final_record_front_link_apex_is_tension_limited(self):
+        repo = sc.Repo(sc.ROOT)
+        fr = sc.final_record(repo, sc.materials(repo))
+        row = next(x for x in fr['rows'] if x['part'] == 'front_link' and x['case'] == 'E1')
+        self.assertIn('S_z', row['S_s_needed_mpa'])          # through-layer tension alone fails at the assumed S_z
+        self.assertLess(row['gate_now'], row['target'])       # and the gate still misses: owner decision 1
+
+    def test_proof_block_scales_the_r3_rows(self):
+        # linear statics: at P2 (R1's axle load, in the folded posture) each R3 row's SF is R3's load over P2's times it
+        repo = sc.Repo(sc.ROOT)
+        fr = sc.final_record(repo, sc.materials(repo))
+        cases = repo.json(sc.FINAL_GATE)['cases']
+        k = cases['R3']['Fw3'][2] / cases['R1']['Fw3'][2]
+        self.assertAlmostEqual(k, 1830.7 / 945.26, places=3)
+        row = next(x for x in fr['rows'] if (x['part'], x['case']) == ('upper_link', 'R3K'))
+        block = sc.proof_block(repo, fr)
+        self.assertIn(f"| upper_link | R3K | {row['gate_now'] * k:.2f} | {row['layer_now'] * k:.2f} |", block)
+        self.assertIn('| P2 | 945 N vertical', block)
+
+    def test_mass_basis_flags_rows_at_the_limit(self):
+        repo = sc.Repo(sc.ROOT)
+        fr = sc.final_record(repo, sc.materials(repo))
+        self.assertEqual(fr['design_kg'], 37.5)                                  # cad/leg_studies.py ROBOT_KG
+        r3o = next(x for x in fr['rows'] if (x['part'], x['case']) == ('hip_frame', 'R3o'))
+        self.assertGreaterEqual(r3o['gate_now'], r3o['target'])
+        self.assertLess(r3o['gate_at_robot_mass'], r3o['target'])
+        self.assertIn('hip_frame R3o', sc.final_block(fr).split('**Mass basis:**')[1].split('\n')[0])
+
+    def test_c4_prediction_takes_the_weakest_direction(self):
+        repo = sc.Repo(sc.ROOT)
+        ev = repo.json(sc.C4_EVIDENCE)
+        pred = sc.c4_prediction(repo)
+        for stub in ('today', 'pr2'):
+            coarse = [x for x in ev['rows'] if x['stub'] == stub and x['mesh_mm'] == 2.0]
+            self.assertEqual(len(coarse), 4)
+            self.assertEqual(pred[stub]['peel_n'], min(x['predicted_peel_n'] for x in coarse))
+            for x in coarse:                                      # linear: the peel load is 1 kN x the layer SF at 1 kN
+                self.assertAlmostEqual(x['predicted_peel_n'], 1000 * x['layer_check_at_1kn']['safety_factor'], delta=0.5)
+
     def test_control_sleeve_count_moves_the_press_force(self):
         one = fit(generate({'cad/fivebar.py': [('EYE_SLEEVES = 2 ', 'EYE_SLEEVES = 1 ')]}), 'knee eye sleeves')
         two = fit(self.doc, 'knee eye sleeves')
         self.assertAlmostEqual(one['at_max_dry']['press_n'] * 2, two['at_max_dry']['press_n'], delta=20)
 
-    def test_control_sleeve_hole_opened_relieves_the_fit(self):
+    def test_control_hole_compensation_relieves_the_fit(self):
         rel = 'cad/fivebar.py'
-        a = 'u = u.cut(ycyl(EYE_SLEEVE[0] / 2 - 0.02, eye_sleeve_end(), t + 1, l1, 0))'
-        tight = fit(self.doc, 'knee eye sleeves')
-        self.assertIn('too tight', tight['verdict'])
-        opened = fit(generate({rel: [(a, a.replace('- 0.02', '- 0.00'))]}), 'knee eye sleeves')
-        self.assertNotIn('too tight', opened['verdict'])
-        self.assertLess(opened['interference_printed_mm'][1], tight['interference_printed_mm'][1])
+        drawn = fit(self.doc, 'knee eye sleeves')
+        self.assertNotIn('too tight', drawn['verdict'])
+        self.assertIn('C1 sets the hole', drawn['verdict'])            # the band straddles zero: the coupon decides
+        bare = fit(generate({rel: [('PRINT_HOLE_COMP = 0.125', 'PRINT_HOLE_COMP = 0.0')]}), 'knee eye sleeves')
+        self.assertNotIn('C1 sets the hole', bare['verdict'])         # interference across the whole band
+        self.assertGreater(bare['at_max_dry']['press_n'], 2 * drawn['at_max_dry']['press_n'])
 
     def test_control_flange_thickness_moves_the_insert_wall(self):
         rel = 'cad/fivebar.py'
