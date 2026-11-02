@@ -24,7 +24,7 @@
 .tl-chip[data-subsystem=body]{background:#e6e1f4;color:#3d2f6b}.tl-chip[data-subsystem=wheels]{background:#e3ebce;color:#34501d}
 .tl-chip[data-subsystem=rig]{background:#f4e0d8;color:#6e2d18}.tl-chip[data-subsystem=electronics]{background:#d9f0e2;color:#1f5133}
 .tl-kinds{color:var(--tl-muted);font-size:11px}
-.tl-label{margin:0;font-size:16px;line-height:1.4;letter-spacing:-.01em}
+.tl-label{margin:0;font-size:16px;line-height:1.4;letter-spacing:-.01em;overflow-wrap:anywhere}
 .tl-ref{font:600 11px 'JetBrains Mono',monospace;white-space:nowrap}
 .tl-decisions{margin:8px 0 0;padding:0;list-style:none;font-size:13px;line-height:1.5;color:#2c4a44}
 .tl-decisions li{margin:3px 0;padding-left:10px;border-left:3px solid #ffc342}
