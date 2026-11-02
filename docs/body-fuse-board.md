@@ -261,7 +261,8 @@ The checks show it:
 The bodies are envelopes from the datasheets, not the makers' models, so they are good for pictures and clearance,
 not for fit. These numbers are assumptions:
 - a fitted fuse stands 8.8 mm above its holder, as `cad/body_fuse_board.py` assumes;
-- the holder's pins (1.0 x 0.5 mm, 3.3 mm below the board) and its peg (2.4 mm round);
+- the holder's pins (1.0 x 0.5 mm, reaching 3.3 mm below its seat on the board's top, so 1.7 mm past the underside) and
+  its peg (2.4 mm round);
 - the ring lug, drawn as a ring 1.0 mm (M4) or 1.2 mm (M6) thick, with no tongue;
 - the nyloc nut and lug sizes, which come from cad-agent's tables marked unverified.
 

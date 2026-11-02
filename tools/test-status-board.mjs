@@ -220,6 +220,16 @@ test('wheels, rig and electronics read their records; what is not measured is gr
   const audit = json('hardware/fuse-board/reports/model-audit.json'), parts = audit.footprints - audit.waived.length;
   assert.equal(meter(progress, 'electronics', 'bodies').value, `${parts - new Set(audit.findings.map(f => f.footprint)).size} of ${parts}`);
   assert.equal(meter(progress, 'electronics', 'bodies').state, audit.pass ? 'pass' : 'fail');
+  { // a holder with its body and its fuse both missing is one part without a body, not two
+    const real = createReader(root, { git: false });
+    const [a, b] = ['F1 (cad-agent:holder)', 'R1 (cad-agent:shunt)'];
+    const bad = { ...audit, pass: false, findings: [{ check: 'missing_model', footprint: a, detail: 'holder.step' },
+      { check: 'missing_model', footprint: a, detail: 'fuse.step' }, { check: 'no_model', footprint: b, detail: '' }] };
+    const status = collectStatus({ ...real, json: p => p === 'hardware/fuse-board/reports/model-audit.json' ? bad : real.json(p) });
+    const m = status.panels.find(x => x.id === 'electronics').meters.find(x => x.id === 'bodies');
+    assert.equal(m.value, `${parts - 2} of ${parts}`);
+    assert.equal(m.state, 'fail');
+  }
   const drc = readFileSync(path.join(root, 'hardware/fuse-board/reports/drc.rpt'), 'utf8');
   const found = [...drc.matchAll(/Found (\d+) (DRC violations|unconnected pads)/g)].reduce((n, m) => n + Number(m[1]), 0);
   assert.equal(meter(progress, 'electronics', 'drc').value, String(found));
