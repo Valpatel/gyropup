@@ -97,12 +97,11 @@ def deck_2b(m) -> bs.SheetPart:
     for (x, y) in bsh.duct_tabs():
         p.features.append(bs.Feature('pem', 'base', bf.tray_uv(x, y), bp.PEM['S-M3-0']['H'], spec='S-M3-0',
                                      note='fan duct tab (was tapped in the turret plate)'))
-    for f in p.features:                             # the riser's four feet: a PEM SS-M5-0 each, pressed from the underside
-        if f.note.startswith('riser'):               # (its head below, the riser on the flush face): the nut of D74's
-            f.kind, f.spec, f.d = 'pem', 'SS-M5-0', bp.PEM['SS-M5-0']['H']        # sleeved through-bolt (PR #145: 782 N a foot)
-            f.note = 'riser foot: PEM SS-M5-0 from below, the nut of a sleeved M5 through-bolt from the riser (D74)'
+    # The riser's four feet keep today's plain holes (M5 from below into the riser's inserts). A PEM nut there would be
+    # loaded on its head side: the feet sit under the TM bolts, on solid legs with the turret's insert on the same axis,
+    # so no screw reaches a deck nut from the top (review of PR #158). A PEM version needs off-axis holes in the feet.
     p.note = ('the deck in 1/8 in 5052 with 20 mm lips on its two long sides (2 bends); the turret plate (D59) folded in: '
-              'the riser bolts straight through the deck into four PEM SS-M5-0, the duct tabs into three PEM S-M3-0')
+              'the riser screws up through the deck into its inserts as today, the duct tabs into three PEM S-M3-0')
     return p
 
 

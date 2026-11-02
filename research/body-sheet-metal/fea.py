@@ -65,7 +65,9 @@ def patch(option, mounts):
             tray = P.two_bends(bf.tray_part(mounts), 'tray_printed', stock=_printed_stock(PRINTED_T['tray']))
             bp.DECK, bp.TRAY = deck.stock, tray.stock
             from cadagent.fea import MATERIALS
-            st.AL5052 = MATERIALS['pa6_cf_xy']          # the deck and tray's material; the turret plate stays 6061 by part
+            # the deck and tray's material. deck_cases meshes its whole model (the turret plate too) in this one
+            # material, so C's deflection is an upper bound (review of PR #158); C fails D1 by 4x either way
+            st.AL5052 = MATERIALS['pa6_cf_xy']
 
         def frame_parts(m=None):
             out = orig(m)

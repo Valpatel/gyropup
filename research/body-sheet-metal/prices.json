@@ -1013,44 +1013,43 @@
   "picked": {
    "bending": "2 bends found in the DXF's BEND layer, each 90 deg UP",
    "hardware": {
-    "6.375mm": "SS-M5-0 -> Nut, M5x0.8",
     "4.267mm": "S-M3-0 -> Nut, M3x0.5"
    },
    "finish": "Deburring"
   },
   "cut_only": {
-   "each": 57.69,
-   "subtotal": 57.69,
+   "each": 57.62,
+   "subtotal": 57.62,
    "breaks": {
-    "2": 43.86,
-    "10": 33.96,
-    "50": 26.05,
-    "100": 22.29,
-    "1000": 17.77
+    "2": 43.81,
+    "10": 33.9,
+    "50": 26.0,
+    "100": 22.24,
+    "1000": 17.74
    },
    "arrives": "Nov 5"
   },
   "with_services": {
-   "each": 81.27,
-   "subtotal": 81.27,
+   "each": 81.2,
+   "subtotal": 81.2,
    "breaks": {
-    "2": 55.99,
-    "10": 43.19,
-    "50": 33.55,
-    "100": 29.33,
-    "1000": 22.78
+    "2": 55.81,
+    "10": 41.67,
+    "50": 31.9,
+    "100": 27.78,
+    "1000": 21.83
    },
    "arrives": "Nov 6"
   },
   "final": {
-   "each": 81.27,
-   "subtotal": 81.27,
+   "each": 81.2,
+   "subtotal": 81.2,
    "breaks": {
-    "2": 55.99,
-    "10": 43.19,
-    "50": 33.55,
-    "100": 29.33,
-    "1000": 22.78
+    "2": 55.81,
+    "10": 41.67,
+    "50": 31.9,
+    "100": 27.78,
+    "1000": 21.83
    },
    "arrives": "Nov 6"
   },
@@ -1066,7 +1065,6 @@
    "bends": 2,
    "csk": {},
    "hw": {
-    "SS-M5-0": 4,
     "S-M3-0": 3
    },
    "taps": {}
@@ -1209,7 +1207,7 @@
  },
  "cheek_pem": {
   "file": "research/body-sheet-metal/dxf/cheek_pem_5052-0.187_x2.dxf",
-  "error": "Locator.click: Timeout 20000ms exceeded.\nCall log:\n  - waiting for get_by_text(re.compile(r\"^\\s*Deburring\\s*$\", re.IGNORECASE)).last\n    - locator resolved to <div class=\"column\" data-v-14a59a95=\"\" data-v-6a10b674=\"\">\u21b5      Deburring\u21b5    </div>\n  - attempting click action\n    2 \u00d7 waiting for element to be visible, enabled and stable\n      - element is visible, enabled and stable\n      - scrolling ",
+  "error": "Locator.click: Timeout 20000ms exceeded.",
   "read_on": "2026-11-01",
   "seller": "SendCutSend",
   "url": "https://app.sendcutsend.com/",

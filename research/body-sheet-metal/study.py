@@ -221,17 +221,16 @@ def fasteners_today() -> dict:
 
 
 DELTAS = {
-    # option A: the riser's four foot inserts become PEM SS-M5-0 in the deck (D74's sleeved through-bolts, PR #145's
-    # 782 N a foot); the turret plate's two end screws go; the plate posts' M5 x 10 become M5 x 12 (one length for every M5:
+    # option A: the turret plate's two end screws go; the plate posts' M5 x 10 become M5 x 12 (one length for every M5:
     # 12 - 2.54 = 9.5 mm into an 11 mm pilot through the power plate, 8.8 mm through the tray)
-    'A': {'screw_m5x10_button': ('to', 'screw_m5x12_button'), 'insert_m5': -4},
+    'A': {'screw_m5x10_button': ('to', 'screw_m5x12_button')},
     # option B adds: the bay sides' ten screws into the old floor's flange nuts go, the rails' eight M4 x 20 into the belly
     # plate's nuts go (the rails screw to the keel's web, as they did to the side plates), 32 blind rivets join the straps
     'B': {'screw_m3x6': -10, 'screw_m4x20': -8, 'rivet_1_8': +32},
     # option C adds: the four printed plates' PEM nuts become heat-set inserts (the tray's 4 S-M4-0, the power plate's 10
     # F-M5-2 and 6 F-M4-2), the turret plate comes back with its two end screws, and each of the two split plates (deck,
     # tray) is joined by six M5 x 12 into inserts
-    'C': {'insert_m4': +10, 'insert_m5': +10 + 12 + 4, 'screw_m5x12_button': +12 + 2},
+    'C': {'insert_m4': +10, 'insert_m5': +10 + 12, 'screw_m5x12_button': +12 + 2},
 }
 
 
@@ -300,7 +299,8 @@ def sheet_bill(option) -> list:
                      'price_each': fin.get('each'), 'price_line': fin.get('subtotal'), 'price_read_on': q.get('read_on'),
                      'cut_only_each_qty1': (q.get('cut_only') or {}).get('each'),
                      'with_services_each_qty1': (q.get('with_services') or {}).get('each'),
-                     'refused': q.get('refused') or None, 'quote_error': q.get('error')})
+                     'refused': q.get('refused') or None,
+                     'quote_error': ((q.get('error') or '').splitlines() or [None])[0]})
     return rows
 
 

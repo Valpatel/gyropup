@@ -120,7 +120,7 @@ def _section(ax, opt):
 def fig_sections():
     fig = _fig(13.0, 6.2)
     notes = {'today': ['10 SendCutSend parts, 14 bends', 'tray + deck: 4 bends, corner reliefs', 'belly plate, bay floor, 2 bay sides', 'turret plate under the deck'],
-             'A': ['9 parts, 12 bends, 81 PEM', 'deck 1/8 in, 2 bends, turret plate folded in', 'PEM nuts: 6 a cheek (hip frame), 4 at the riser', 'tray keeps 4 bends (T1); bay as today'],
+             'A': ['9 parts, 12 bends, 77 PEM', 'deck 1/8 in, 2 bends, turret plate folded in', 'PEM nuts: 6 a cheek for the hip frame', 'tray keeps 4 bends (T1); bay as today'],
              'B': ['8 parts, 14 bends', 'A, plus the bay + belly as two identical', 'C-channels riveted to two flat straps', '32 x 1/8 in blind rivets'],
              'C': ['5 parts, 8 bends', 'deck, tray, pallet, power plate printed', 'in PA6-CF (8 / 6 mm solid)', 'keel as B; turret plate back']}
     for i, o in enumerate(ORDER):

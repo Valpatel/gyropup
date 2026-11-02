@@ -16,16 +16,17 @@ proposal; the choice is the owner's. Nothing in `cad/` or `catalog/` changes her
 | + printed material, rivets (est.) | $58 | **$58** | $66 | $221 |
 | Unique SendCutSend parts / pieces | 10 / 13 | **9 / 12** | 8 / 12 | 5 / 9 |
 | Bends: all pieces / most on one part | 14 / 4 | **12 / 4** | 14 / 4 | 8 / 2 |
-| PEM hardware pressed by SendCutSend | 64 | **81** | 63 | 38 |
-| Heat-set inserts in the body | 62 | **58** | 58 | 94 |
-| Unique bought fasteners | 14 | **13** | 14 (+ rivet) | 15 |
+| PEM hardware pressed by SendCutSend | 64 | **77** | 59 | 38 |
+| Heat-set inserts in the body | 62 | **62** | 62 | 94 |
+| Unique bought fasteners | 14 | **13** | 14 (incl. rivet) | 15 |
 | Frame mass: sheet + printed | 4.68 kg | **4.64 kg** | 4.89 kg | 5.06 kg |
 | FEA: cases that miss | D2 (1.38) | **D2 (1.95)** | D2 (A's deck) | D1: 1.94 mm deck |
-| Build steps | 269 | **262** | 276 | 327 |
+| Build steps | 269 | **266** | 280 | 327 |
 | Print hours (body) | 94 | **94** | 97 | 224 |
 
 Costs are SendCutSend's instant quote for one set, deburred, read 2026-11-01 (no account, no cart, no order). One
-part's quote timed out: A's cheek is priced as the quoted cheek plus six PEM nuts at the probes' rate. Printed
+part's quote timed out: A's cheek is priced as the quoted cheek plus six PEM nuts at the probes' rate. A part's price
+is each at its set quantity: the cheek's $63.87 is each of two (one alone is $94.07). Printed
 material is at the body print plan's own filament price. Rivets are an estimate at $0.12 each, not quoted. Masses come
 from the CAD solids at each material's density. Build steps count parts, screws, nuts, standoffs, inserts and rivets.
 `study.json` has every row, part by part.
@@ -44,14 +45,15 @@ bends cost little, and more PEM nuts in a part that already has some cost almost
 - **Today's body already follows the owner's pattern.** It is ten SendCutSend plates carrying 64 PEM nuts and
   standoffs. The printed posts, riser and cassettes carry the rest. The cheeks (3/16 in, $128 the pair) are the
   largest line and the hip-to-hip load path. They stay as they are.
-- **A** folds the turret plate into a thicker two-bend deck, and puts PEM nuts where D74's high-stress joints need a
-  nut: −$39 and −38 g.
-- **B** also merges the belly plate, bay floor and bay sides into two identical riveted C-channels. It saves $12 more,
-  but adds 0.25 kg and 32 rivets. PR #145 puts the robot at 38.56 kg against D71's 37.0 kg gate.
+- **A** folds the turret plate into a thicker two-bend deck, and puts PEM nuts in the cheeks for the hip frame's
+  through-bolts (D74): −$39 and −38 g.
+- **B** also merges the belly plate, bay floor and bay sides into two identical riveted C-channels. It saves $12 more
+  of metal, $4 more in all, but adds 0.25 kg and 32 rivets. PR #145 puts the robot at 38.56 kg against D71's 37.0 kg
+  gate.
 - **C** prints the deck, tray, pallet and power plate. That cuts the metal bill by $266 against today but costs $158 of
-  PA6-CF and 130 print hours, and its deck is four times too soft.
+  PA6-CF and 130 print hours, its deck deflects about four times the limit, and it drops the compute's TPU isolators.
 - **Quantity is the larger lever.** At ten of a part, the cheek is $44.89 instead of $63.87 and the deck $43.19
-  instead of $81.27 (SendCutSend's own price breaks).
+  instead of $81.20 (SendCutSend's own price breaks).
 
 ![Parts, bends, PEM hardware, fasteners, build steps and print hours by option](fig-counts.png)
 
@@ -71,19 +73,31 @@ option ran only the cases it changes. Today was re-run on the same host as the b
 | D1 front: deck SF / deflection (2.0, ≤ 0.5 mm) | 5.53 / 0.31 mm | 4.31 / 0.32 mm | A's | 4.55 / **1.94 mm** |
 | D1 riser: deck SF / deflection | 6.13 / 0.31 mm | 6.84 / 0.20 mm | A's | 7.28 / **1.39 mm** |
 | D2 turret fall: deck SF (2.0) | **1.38** | **1.95** | A's | not run (stopped) |
-| D2: the turret plate's clamp zone | **0.46** | no plate; riser feet 1.25 | A's | not run |
+| D2, reported only: rigid-pad edges (post corners; clamp-pad rims) | 0.35; 0.46 | 0.52; 1.25 | A's | not run |
 
 - **Two bends are not enough for the floor tray.** With lips on its long sides only, T1 drops to SF 1.74 and 1.01 mm
   (the first run of A, kept as `fea/A-tray2b`). So the tray keeps its four bends in every option. The deck manages
   with two bends at 1/8 in.
 - **D2 already fails today** with the turret's real mass. `exports/turret/mount.json` gives 2.56 kg, against the
   1.70 kg budget the committed record used. The deck reaches SF 1.38 and the plate's clamp zone 0.46 at a 100 mm
-  centre; PR #145 finds 1.21 at the real 135 mm. **A's 1/8 in deck without the plate reaches 1.95** on the same load
-  and host. That is better, but still short of 2.0, so the deck's D2 fix is the CAD rebuild's to finish. PR #145's
-  riser-foot finding (782 N a foot) gets A's PEM nuts.
+  centre; PR #145 finds 1.21 at the real 135 mm. **A's 1/8 in deck without the plate reaches 1.95** on the same load,
+  host and mask. That is better, but still short of 2.0, so the deck's D2 fix is the CAD rebuild's to finish.
+- A's `summary.json` names the 1.2 abuse target in its text, because `cad/body_studies.py` drops to it when the plate is gone; this study judges A's deck at 2.0, the same target as today's.
+- **Read 1.38 and 1.95 as a comparison, not as margins.** Both peaks sit 25.9 mm from a riser foot's centre, just
+  outside the 25.75 mm disc the by-part rule leaves out round each foot, so the disc's size sets them as much as the
+  deck does. The 2 mm mesh was shown to converge for today's deck with the plate, not for A's; A's D2 has no finer-mesh
+  or mask-radius check yet, and the rebuild PR runs one. The rigid-pad edges in the last row are singular at this
+  mesh: `cad/body_studies.py` reports them, it does not judge on them, and today's clamp-pad rims (between the plates)
+  are a different place from A's (round the riser's feet).
 - **C's D2 and T1 were stopped.** D1 had already ruled C out, and its D2 at the 2 mm mesh held 60 GB of a shared host.
-- **B's riveted keel matches today's box on every spine case.** The model treats the rivets as bonded. Each 1/8 in
-  rivet's IFI-114 minimum is 756 N in shear.
+  C's model meshes the turret plate in PA6-CF too, so its deflection is an upper bound; with 1.94 mm against 0.5 mm,
+  C still fails.
+- **B's keel matches today with the rivets modelled as a bond** (the flanges and the strap fused over their overlap,
+  a continuous weld), so the FEA cannot tell B's joints apart from today's plate. A hand check of the rivets: S1F's
+  344 N·m over the 184 mm couple puts about 1.87 kN across the seam, about 230 N on each of the 8 rivets a row. That is
+  3.3× IFI-114's 756 N minimum shear, and bearing in the 0.090 in flange (3.3 × 2.29 mm at 1.5 × 193 MPa, about 2.2 kN)
+  is 9.5×. The rivets nearest the hips take more than an even share, so the margin is lower; the rebuild would check
+  them one by one.
 - **A's deck at a 3 mm mesh** reads 4.54 / 0.322 mm (front) and 6.92 / 0.197 mm (riser), against 4.31 / 0.320 and
   6.84 / 0.197 at 4 mm, so the mesh has converged (`fea/A-mesh3`).
 - The by-part rule (`cad/body_studies.py`) judges the deck away from the rigid post pads. It counts every element below
@@ -120,8 +134,7 @@ tightening torque come from its "Axial Strength and Mating Screw Recommended Tig
 
 | Joint | PEM | Load per nut | Loaded toward the sheet? | Margin |
 |---|---|---|---|---|
-| Hip frame to cheek (A: the nut for D74's sleeved M5 through-bolt) | SS-M5-0, 6 a cheek | 851 N fault tension | yes: head in the spine's gap, frame on the flush face | 9.96 kN min. axial: × 11.7 (an insert's 570 N allowable would fail) |
-| Riser feet to deck (A: the nut for a sleeved through-bolt) | SS-M5-0, 4 | 782 N (PR #145) | yes: head under the deck, riser on top | × 12.7 |
+| Hip frame to cheek (A: the nut for D74's sleeved M5 through-bolt) | SS-M5-0, 6 a cheek | 851 N fault tension | yes: head in the spine's gap, frame on the flush face | the M5 8.8 screw's 8.25 kN proof (below the nut's 9.96 kN): × 9.7. An insert's 570 N allowable misses cad-agent's factor of 2 |
 | Tray and belly to the cheeks' flanges | SS-M5-0, 8 a cheek | ~475 N shear, ~40 N tension (hand estimate) | yes (pressed from the flanges' inner side) | friction under a 3.7 N·m clamp (≈3.9 kN, μ 0.3): × 2.4 |
 | Pack adapter plates to the belly or keel | S-M4-0, 4 a pack | 33 N | yes (screws up from below) | 300 N pushout even reversed: × 9 |
 | Compute pallet isolator studs, tray | S-M4-0, 4 | 29 N | either | 300 N pushout: × 10 |
@@ -131,15 +144,22 @@ tightening torque come from its "Axial Strength and Mating Screw Recommended Tig
 The flange shear is the S1F roll moment (344 N·m) taken as a couple between the tray and the belly, 184 mm apart, on
 four screws a flange. **In A, a PEM replaces the loose nut of each high-stress joint.** D74's sleeved hip-frame
 through-bolts need a nut on the far side of the 31 mm gap. Six SS-M5-0 in each cheek put that nut in the plate, so the
-bolt goes in from the leg's face, nothing is held in the gap, and the nut cannot turn. The riser's feet work the same
-way. Both pass SendCutSend's rules at the existing holes (Gyropup's sheet checks) and cost about $0.24 a nut. Tighten
-to PennEngineering's 3.7 N·m (about 3.9 kN, 4.5× the fault tension), not the 5.1 N·m the leg plan sets for a loose
-nut. Heat-set inserts stay in the lightly loaded printed parts: the deck and power-plate posts and the bay rails.
+bolt goes in from the leg's face, nothing is held in the gap, and the nut cannot turn. The nuts pass SendCutSend's
+rules at the existing holes (Gyropup's sheet checks) and cost about $0.24 each. Tighten to PennEngineering's 3.7 N·m.
+That is above the nut's 3.0 N·m torque-out, which is measured with no clamp: once the screw clamps, the nut's head
+bears on the sheet and its friction carries the torque. It gives about 3.9 kN of clamp (4.5× the fault tension),
+less than the 5.1 kN the leg plan sets for a loose nut.
+
+**The riser's feet stay on inserts in A.** PR #145 finds 782 N a foot, a D74 high-stress joint. A PEM nut in the deck
+would be loaded on its head side there (300 N pushout): the feet sit under the turret's bolts, on solid Ø18 legs with
+the turret's insert on the same axis, so no screw reaches a deck nut from the top. A PEM version needs two off-axis
+holes in each foot, outside the leg, with the deck's nuts moved to match: that is a riser change for the rebuild.
+Heat-set inserts stay in the lightly loaded printed parts: the deck and power-plate posts and the bay rails.
 
 ## The options
 
 - **A, PEM plates.** The deck becomes 1/8 in 5052 with lips on its two long sides only (two bends), and takes over the
-  turret plate's job. The riser bolts straight through the deck into four PEM SS-M5-0, and the fan duct's three tabs
+  turret plate's job. The riser screws up through the deck into its inserts as today, and the fan duct's three tabs
   become PEM S-M3-0. Each cheek gains six SS-M5-0 for the hip frame. Every M5 button screw becomes M5 × 12. The tray,
   belly plate, bay, pallet and power plate stay as they are.
 - **B, riveted keel.** A, plus the belly plate, the bay floor and both bay sides become two identical 0.090 in 5052
@@ -147,25 +167,26 @@ nut. Heat-set inserts stay in the lightly loaded printed parts: the deck and pow
   The bay rails grow from 10 to 20 mm so their screws clear the top bend.
 - **C, printed plates.** B, plus the deck, tray, compute pallet and power plate are printed in PA6-CF, solid at 8 mm
   and 6 mm. The deck and tray each print in two halves, joined with M5 screws into inserts. The turret plate comes
-  back.
+  back. The compute pallet sits on the tray's inserts without its TPU isolators.
 
 ## Recommendation
 
 **Option A.** It is the only option that is cheaper, lighter and quicker to build than today's body, and stiffer
 where today's fails:
 
-- It costs $39 less and weighs 38 g less, with seven fewer build steps.
-- Its deck has two bends, and the turret plate it replaces was the part that failed D2's clamp check.
-- Every high-stress joint D74 and PR #145 name gets a PEM nut, loaded toward the sheet, at about 12× its load.
+- It costs $39 less and weighs 38 g less, with three fewer build steps.
+- Its deck has two bends, replaces the turret plate, and reaches D2 1.95 against today's 1.38 on the same load.
+- The hip frame's through-bolts (D74) get a PEM nut in each cheek, loaded toward the sheet, at 9.7× their load.
 
-B's riveted keel is sound (it matches today on every spine case), but saves only $12 more, for 0.25 kg the mass budget
-does not have and 32 rivets to pull. C fails the deck's stiffness by four times and costs 130 print hours. Mild steel
+B's riveted keel matches today with the rivets modelled as a bond, and the rivets pass a hand check at about 3×. It
+saves only $4 more in all, for 0.25 kg the mass budget does not have and 32 rivets to pull. C fails the deck's stiffness by four times and costs 130 print hours. Mild steel
 does not pay either. A floor tray as stiff in bending as today's needs 2.24 mm of steel (E × t³ matched), and the
 nearest gauge SendCutSend stocks, 0.104 in, weighs about 1.08 kg more than the 5052 tray.
 
 D2 is not closed by any option. A raises the deck from 1.38 to 1.95 at the old 100 mm centre. The CAD rebuild (the
-second PR) has to reach 2.0 at the turret's real 135 mm centre. The levers are the riser's foot spacing, a fold-down lip
-at the riser, or 0.160 in at the riser, each re-run on D2.
+second PR) has to reach 2.0 at the turret's real 135 mm centre, with a finer-mesh and mask check. The levers are the
+riser's foot spacing, a fold-down lip at the riser, or 0.160 in at the riser, each re-run on D2. The riser's feet need
+D74's treatment for #145's 782 N: off-axis through-bolts into deck PEM nuts would be the PEM version.
 
 ## Owner decisions
 

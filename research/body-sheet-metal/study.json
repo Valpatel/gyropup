@@ -569,7 +569,7 @@
      "cut_only_each_qty1": null,
      "with_services_each_qty1": null,
      "refused": null,
-     "quote_error": "Locator.click: Timeout 20000ms exceeded.\nCall log:\n  - waiting for get_by_text(re.compile(r\"^\\s*Deburring\\s*$\", re.IGNORECASE)).last\n    - locator resolved to <div class=\"column\" data-v-14a59a95=\"\" data-v-6a10b674=\"\">\u21b5      Deburring\u21b5    </div>\n  - attempting click action\n    2 \u00d7 waiting for element to be visible, enabled and stable\n      - element is visible, enabled and stable\n      - scrolling "
+     "quote_error": "Locator.click: Timeout 20000ms exceeded."
     },
     {
      "price_estimate": null,
@@ -578,9 +578,8 @@
      "material": "5052-H32 aluminium",
      "qty": 1,
      "bends": 2,
-     "pem": 7,
+     "pem": 3,
      "pem_types": {
-      "SS-M5-0": 4,
       "S-M3-0": 3
      },
      "countersinks": 0,
@@ -588,19 +587,19 @@
       320.0,
       283.0
      ],
-     "mass_g_each": 747.2,
-     "price_each": 81.27,
-     "price_line": 81.27,
+     "mass_g_each": 747.5,
+     "price_each": 81.2,
+     "price_line": 81.2,
      "price_read_on": "2026-11-01",
-     "cut_only_each_qty1": 57.69,
-     "with_services_each_qty1": 81.27,
+     "cut_only_each_qty1": 57.62,
+     "with_services_each_qty1": 81.2,
      "refused": null,
      "quote_error": null
     }
    ],
    "fasteners": {
     "insert_m3": 26,
-    "insert_m5": 32,
+    "insert_m5": 36,
     "screw_m3x6": 28,
     "screw_m3x8_socket": 8,
     "screw_m4x10_flat": 16,
@@ -699,9 +698,9 @@
     "bends": 12,
     "bent_parts_unique": 4,
     "max_bends_one_part": 4,
-    "pem": 81,
+    "pem": 77,
     "unique_bought_fasteners": 13,
-    "sheet_usd": 583.15,
+    "sheet_usd": 583.08,
     "sheet_mass_g": 3625,
     "printed_g": 1018,
     "print_hours": 94.0,
@@ -709,14 +708,14 @@
     "build_steps": {
      "parts": 38,
      "screws_nuts_standoffs": 166,
-     "inserts": 58,
+     "inserts": 62,
      "rivets": 0,
-     "total": 262
+     "total": 266
     },
     "frame_mass_g": 4643,
     "printed_usd": 58.49,
     "rivets_usd_est": 0.0,
-    "total_usd": 641.64
+    "total_usd": 641.57
    }
   },
   "B": {
@@ -841,7 +840,7 @@
      "cut_only_each_qty1": null,
      "with_services_each_qty1": null,
      "refused": null,
-     "quote_error": "Locator.click: Timeout 20000ms exceeded.\nCall log:\n  - waiting for get_by_text(re.compile(r\"^\\s*Deburring\\s*$\", re.IGNORECASE)).last\n    - locator resolved to <div class=\"column\" data-v-14a59a95=\"\" data-v-6a10b674=\"\">\u21b5      Deburring\u21b5    </div>\n  - attempting click action\n    2 \u00d7 waiting for element to be visible, enabled and stable\n      - element is visible, enabled and stable\n      - scrolling "
+     "quote_error": "Locator.click: Timeout 20000ms exceeded."
     },
     {
      "price_estimate": null,
@@ -850,9 +849,8 @@
      "material": "5052-H32 aluminium",
      "qty": 1,
      "bends": 2,
-     "pem": 7,
+     "pem": 3,
      "pem_types": {
-      "SS-M5-0": 4,
       "S-M3-0": 3
      },
      "countersinks": 0,
@@ -860,12 +858,12 @@
       320.0,
       283.0
      ],
-     "mass_g_each": 747.2,
-     "price_each": 81.27,
-     "price_line": 81.27,
+     "mass_g_each": 747.5,
+     "price_each": 81.2,
+     "price_line": 81.2,
      "price_read_on": "2026-11-01",
-     "cut_only_each_qty1": 57.69,
-     "with_services_each_qty1": 81.27,
+     "cut_only_each_qty1": 57.62,
+     "with_services_each_qty1": 81.2,
      "refused": null,
      "quote_error": null
     },
@@ -920,7 +918,7 @@
    ],
    "fasteners": {
     "insert_m3": 26,
-    "insert_m5": 32,
+    "insert_m5": 36,
     "screw_m3x6": 18,
     "screw_m3x8_socket": 8,
     "screw_m4x10_flat": 16,
@@ -1020,9 +1018,9 @@
     "bends": 14,
     "bent_parts_unique": 4,
     "max_bends_one_part": 4,
-    "pem": 63,
+    "pem": 59,
     "unique_bought_fasteners": 14,
-    "sheet_usd": 570.83,
+    "sheet_usd": 570.76,
     "sheet_mass_g": 3824,
     "printed_g": 1070,
     "print_hours": 97.4,
@@ -1030,14 +1028,14 @@
     "build_steps": {
      "parts": 38,
      "screws_nuts_standoffs": 148,
-     "inserts": 58,
+     "inserts": 62,
      "rivets": 32,
-     "total": 276
+     "total": 280
     },
     "frame_mass_g": 4894,
     "printed_usd": 62.65,
     "rivets_usd_est": 3.84,
-    "total_usd": 637.32
+    "total_usd": 637.25
    }
   },
   "C": {
@@ -1088,7 +1086,7 @@
      "cut_only_each_qty1": null,
      "with_services_each_qty1": null,
      "refused": null,
-     "quote_error": "Locator.click: Timeout 20000ms exceeded.\nCall log:\n  - waiting for get_by_text(re.compile(r\"^\\s*Deburring\\s*$\", re.IGNORECASE)).last\n    - locator resolved to <div class=\"column\" data-v-14a59a95=\"\" data-v-6a10b674=\"\">\u21b5      Deburring\u21b5    </div>\n  - attempting click action\n    2 \u00d7 waiting for element to be visible, enabled and stable\n      - element is visible, enabled and stable\n      - scrolling "
+     "quote_error": "Locator.click: Timeout 20000ms exceeded."
     },
     {
      "price_estimate": null,
