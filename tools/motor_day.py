@@ -290,8 +290,8 @@ HIP_SIDE = {'hip_frame', 'output_adapter', 'upper_link'}           # the parts t
 
 def _joints(part: str, run: dict, rec: dict, lf: float, hub: bool = False):
     """A landing case's row scaled by the worst of the joints its part carries: the knee's ratio to the record's landing
-    for the links, the hip's for the hip side, and (for a power cut) the backdriven hub torque's to the 60 N m cap the
-    record's hub carries."""
+    for the links, the hip's for the hip side, and the hub torque's (the push's, or a power cut's backdriven one) to the
+    60 N m cap the record's hub carries."""
     cand = []
     if part in KNEE_SIDE or part not in HIP_SIDE:
         cand.append((knee_of(run) * lf / rec['knee_dyn_n'], f"knee {knee_of(run) * lf:.0f} N against {rec['knee_dyn_n']:.0f} N"))
@@ -307,7 +307,7 @@ def scale_of(part: str, case: str, run: dict, rec: dict, cap: float, lf: float):
     """[(load ratio day-one / record, target, what it is)] for a FEA row's case under the powered runs (the jump at the
     cap: its landing and its push), or [] where they do not load it. lf scales the simulated forces to the stand's mass."""
     if case in ('R1', 'R1F'):
-        f, txt = _joints(part, run, rec, lf)
+        f, txt = _joints(part, run, rec, lf, hub=True)
         return [(f, LANDING_TARGET, f'landing: {txt}')]
     if case in ('R1w',):
         ax = run['peak_axle_force_n'] * lf
@@ -1107,8 +1107,9 @@ def write_doc(ctx):
               + 'A pendant let go by accident is the same event, damped by the protection `--damper 0` keeps on, but by how '
               'much only B1 says (it needs the dyno, an archived fixture: [bench tests](leg-bench-tests.md#b1-the-power-off-'
               f"damping-decides-d39)). **Until then the accidental cut is the residual risk**: at worst {w['part'].replace('_', ' ')} "
-              f"at a factor of {w['sf']} (under 1: it may break). Keep a spare printed {w['part'].replace('_', ' ')} on hand, keep the clear zone, set the "
-              'floor stop before every session, and inspect the parts above after any cut.']
+              f"at a factor of {w['sf']} (under 1: it may break). Keep spare printed "
+              + ' and '.join(sorted({r['part'].replace('_', ' ') + 's' for r in und['rows'] if r['sf'] is not None and r['sf'] < 1.2 * r['target']}))
+              + ' on hand, keep the clear zone, set the floor stop before every session, and inspect the parts above after any cut.']
     L += ['', '**Stop the ladder** at any crack, whitening, click or creak, a screw\'s paint mark broken, a motor case over '
           '40 °C, or a fault. Photograph it, write it on #156. **Look first** at: the wheel link\'s hub root (where the hub '
           'leaves the link, inside the apex), the front link\'s apex ring, the upper links\' knee-eye stubs, the PLA adapters '
