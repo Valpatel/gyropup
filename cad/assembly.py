@@ -21,6 +21,7 @@ from __future__ import annotations
 
 import json
 import math
+import os
 from pathlib import Path
 
 import cadquery as cq
@@ -83,7 +84,8 @@ class Assembly:
                 f = mesh_dir / f'{lk}__{name}.stl'
                 cq.exporters.export(_val(shape), str(f), tolerance=0.3, angularTolerance=0.3)
                 fit_mesh(f, 150_000)                       # MuJoCo takes at most 200 000 faces (vendor models exceed it)
-                mesh = str(f)
+                # name the mesh from the repository root: the committed assembly.json must not carry this machine's path
+                mesh = Path(os.path.relpath(f.resolve(), Path(__file__).resolve().parents[1])).as_posix()
             parts[lk].append({'name': name, 'kind': kind, 'mass_kg': round(b.mass, 5), 'com_m': [round(v, 5) for v in b.com],
                               'mesh': mesh, 'color': color, 'estimate': est})
         by_kind = {}

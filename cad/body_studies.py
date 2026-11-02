@@ -408,10 +408,11 @@ def deck_cases(record, mesh, want):
         st = Study(model, AL5052, mesh_mm=min(mesh, D2_MESH_MM), name='deck D2 turret fall')
         st.fix(post_faces)
         tm_face = lambda f: f.kind == 'Plane' and abs(f.bbox[2] - (bp.TOP + bp.RISER_H)) < 0.05 and abs(f.bbox[5] - (bp.TOP + bp.RISER_H)) < 0.05
-        m, hcom = t['mass_kg'], t['com_above_face_mm']      # the head budget (1.70 kg, 100 mm), or the turret's mount.json
+        m, hcom = t['mass_kg'], t['com_above_face_mm']      # the turret's mount.json, or the head budget (1.70 kg, 100 mm) when larger
         F = 30 * G * m
         Gc = force_at(st, tm_face, (F * 0.7071, 0.0, -F * 0.7071), (t['pan_x'], 0.0, bp.TOP + bp.RISER_H + hcom))
-        record('D2-turret-fall', st, 'D2', f'a 30 g fall of the {m:.2f} kg head (the turret plan\'s budget) at 45 deg, its centre {hcom:.0f} mm '
+        src = 'the head budget' if 'mount.json' not in t['mass_basis'] else 'the turret\'s exports/turret/mount.json'
+        record('D2-turret-fall', st, 'D2', f'a 30 g fall of the {m:.2f} kg head ({src}) at 45 deg, its centre {hcom:.0f} mm '
                'above the TM face: a tip-over' + (', the turret plate under the riser (D59: SF >= 2.0, the everyday target)'
                                                   if plate is not None else ' (SF >= 1.2, the abuse target)'), by_part, view=(30, -50))
 

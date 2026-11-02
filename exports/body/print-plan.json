@@ -87,7 +87,7 @@
    "grams": 76,
    "hours": 3.0,
    "cost_usd": 1.07,
-   "infill": "2 mm walls, 40 % gyroid",
+   "infill": "100 %",
    "how": "PETG, 100 % (never a carbon-filled filament: carbon conducts, and the plate is bonded to the - bus); 4 x M3 inserts; test: > 10 MOhm at 50 V from every lug screw to the plate before power"
   },
   "dcdc_bracket": {
@@ -105,7 +105,7 @@
    "hours": 4.0,
    "cost_usd": 4.91,
    "infill": "100 %",
-   "how": "PA6-CF; two M4 x 10 down into the tray's nuts; the converter on four M3 x 8 through its upright"
+   "how": "PA6-CF; two M4 x 12 down into the power plate's flush nuts; the converter on four M3 x 6 into the upright's inserts"
   },
   "bay_rail_l": {
    "material": "pa6-cf",
@@ -122,7 +122,7 @@
    "hours": 1.7,
    "cost_usd": 2.06,
    "infill": "100 %",
-   "how": "PA6-CF; four M4 x 16 up into the belly's nuts, five M3 inserts, two in its ends"
+   "how": "PA6-CF; four M4 x 20 up into the belly's nuts, five M3 inserts, two in its ends"
   },
   "bay_rail_r": {
    "material": "pa6-cf",
@@ -139,7 +139,7 @@
    "hours": 1.7,
    "cost_usd": 2.06,
    "infill": "100 %",
-   "how": "PA6-CF; four M4 x 16 up into the belly's nuts, five M3 inserts, two in its ends"
+   "how": "PA6-CF; four M4 x 20 up into the belly's nuts, five M3 inserts, two in its ends"
   },
   "adapter_plate_front": {
    "material": "pa6-cf",
@@ -156,7 +156,7 @@
    "hours": 2.1,
    "cost_usd": 2.51,
    "infill": "100 %",
-   "how": "PA6-CF; four M4 x 8 up into the belly's nuts; the adapter's screws into inserts set on arrival"
+   "how": "PA6-CF; four M4 x 12 up into the belly's nuts; the adapter's screws into inserts set on arrival"
   },
   "bay_door_front": {
    "material": "petg",
@@ -190,7 +190,7 @@
    "hours": 2.1,
    "cost_usd": 2.51,
    "infill": "100 %",
-   "how": "PA6-CF; four M4 x 8 up into the belly's nuts; the adapter's screws into inserts set on arrival"
+   "how": "PA6-CF; four M4 x 12 up into the belly's nuts; the adapter's screws into inserts set on arrival"
   },
   "bay_door_rear": {
    "material": "petg",
