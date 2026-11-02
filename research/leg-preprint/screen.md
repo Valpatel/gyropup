@@ -80,7 +80,7 @@ Today: M5 heat-set insert in each flange end, pilot Ø6.4 x 11, its axis the bui
 High-stress because:
 
 - fault tension 851 N an insert against an estimated 1500 N pull-out (SF 1.76), pulled across the layers
-- the assembly torque already preloads it to 1.00 x that pull-out
+- the assembly torque preloads it to 1.00 x that (humid) pull-out if the cheek misses the insert's brass face; with the face bearing (the inventory's condition) the preload closes through the brass
 - the flange's layer check: R3o 0.93 against 1.0 (flange root, inner face (x 95, y -65.1)), 6 mm past the inserts' pilots
 
 | Option | Screen |
@@ -91,7 +91,7 @@ High-stress because:
 | captive nut | a hex nut in a side pocket near the flange end: the 2.9 mm walls either side of an 8 mm nut split the flange; rejected |
 | through-bolt on the plastic | no sleeve: the bolt precompresses the flange along its length (across the layers, the root's peel direction), but the preload creeps away (see preload) |
 
-**Pick: sleeved through-bolt.** D74: the leg's primary load path and an insert at 1.0 x its pull-out at assembly torque. The sleeve keeps the preload out of the plastic; the flange root is then judged without precompression (conservative).
+**Pick: sleeved through-bolt.** D74: the leg's primary load path; the 851 N fault tension is 0.57 x the insert's estimated humid pull-out, with no measured spin-out or creep (and up to 1.0 x at assembly if the cheek misses the brass face). The sleeve keeps the preload out of the plastic; the flange root is then judged without precompression (conservative).
 
 PR 2: cad/fivebar.py frame_mounts(): 6 x Ø8.1 sleeve bores through the flange and web, an M5 hex pocket on the leg face; the Ø8.1 bore leaves 2.45 mm walls in the 13 mm flange, so the bolt line gets a local boss and the frame is re-run; the rig plate and the body cheek keep their Ø5.5 holes; screws M5 x ~90 (mcmaster-parts). Mass with a 6061 sleeve; a steel one adds 67 g more. Mass +93 g a leg.
 
@@ -101,7 +101,7 @@ Today: 8 x M5 x 40 into the tapped 6061 adapter, heads on 24.5 mm of PA6-CF (Ø8
 
 High-stress because:
 
-- the hub's edge lifts at 104 N m (at 1200 N a screw); R1 puts 114.6 and R3 188.6 N m on it
+- the hub's edge lifts at 104 N m (at 1200 N a screw); R1 puts 115.7 and R3 190.1 N m on it
 - 45.5 MPa under the heads against the 25 MPa sustained screen
 
 | Option | Screen |
@@ -140,7 +140,7 @@ Today: two DIN 179 sleeves pressed into the eye (already metal bushings), the sh
 High-stress because:
 
 - the eye stub's root: layer check E1 0.77 against 2.0 (the worst in the leg)
-- R3: 167.9 N m at the sleeves, 37.9 MPa on the eye (SF 1.06)
+- R3: 169.1 N m at the sleeves, 38.1 MPa on the eye (SF 1.05)
 
 | Option | Screen |
 |---|---|
@@ -176,7 +176,7 @@ High-stress because:
 
 - the wheel link's hub root: layer check R1w 0.7 against 1.2
 - the front link's apex ring: E1 0.71 against 2.0
-- bearings fine (s0 2.74 in R3)
+- bearings fine (s0 2.76 in R3)
 
 | Option | Screen |
 |---|---|
@@ -266,7 +266,7 @@ ISO 286-2 tolerance grades (F7, f9, n6, m6); DIN 179 drill bushings: bore F7, ou
 
 ## Falls and the stops
 
-every R3 margin is the undamped cut onto the stops; the rig's bumper or the measured power-off damping (B1) divides the knee load by the ratio above (x5.6).
+every R3 margin is the undamped cut onto the stops; the RS-04's power-off damping as the rig assumes it (20 % of shorted phases, not measured: B1 measures it) divides the knee load by the ratio above; no rig scenario models the bumper (x5.6).
 
 | Scenario | Axle N | Knee pin N | Stop N m | Gearbox N m |
 |---|---|---|---|---|
@@ -281,7 +281,7 @@ every R3 margin is the undamped cut onto the stops; the rig's bumper or the meas
 |---|---|---|---|---|---|
 | C1 | bore and press-fit gauge | one block a variant (-0.1 / 0 / +0.1 mm), PA6-CF, the leg recipe, bores vertical as in the parts, half the mouths chamfered 0.5 x 45 deg on the bed face | a 6301 seat (12 mm deep, Ø31 shoulder), a DIN 179 sleeve bore 40 mm long, a Ø16.1 x 23 blind stop-pin hole, two Ø4.94 x 12 dowel holes, a 61812 seat segment (10 mm) | PRINT_HOLE_ERR for this printer (the hole each fit is drawn at), the press force and the grip dry and after a humid week, elephant's foot at the mouths, retaining compound on printed bores | [sheets/c1-bores.csv](sheets/c1-bores.csv) |
 | C2 | insert pull-out and spin-out in the real wall (B4a) | three flange-end slices of the hip frame (13 mm flange, Ø14 boss, the real 2.94 mm walls), printed as the frame (insert axis vertical) | the M5 insert at the frame's depth; a Ø15 bearing washer under the puller | the insert's pull-out across the layers in this wall (the 1500 N estimate) and its spin-out torque: the numbers the insert option is judged on, kept even if the mount goes to through-bolts (other leg and body inserts) | [sheets/c2-insert.csv](sheets/c2-insert.csv) |
-| C3 | sleeved through-bolt joint, against the plastic clamp | four 13 x 40 x 60 flange blocks, layers across the bolt as in the frame | two with an Ø8.1 bore and a steel sleeve flush, its nut on a DIN 9021 (Ø15) washer that reaches the plastic round the sleeve; two with an Ø5.5 bore (bolt on the plastic, a Ø15 washer); M5 8.8 through the B4 load cell; after the creep readings, pull each sleeved block apart to the fault tension (851 N) and check the washer holds it | preload kept over 30 min, 24 h, 7 days and a humid week, sleeved against plain; the creep step the preload table screens; the re-torque schedule | [sheets/c3-through-bolt.csv](sheets/c3-through-bolt.csv) |
+| C3 | sleeved through-bolt joint, against the plastic clamp | four 13 x 40 x 60 flange blocks, layers across the bolt as in the frame | two with an Ø8.1 bore and a steel sleeve flush, its nut on a DIN 9021 (Ø15) washer that reaches the plastic round the sleeve; two with an Ø5.5 bore (bolt on the plastic, a Ø15 washer); M5 8.8 through the B4 load cell; after the creep readings, load each sleeved joint in tension to the fault tension (851 N) through the load cell, the block held at its far face, and check that the washer carries it into the plastic round its pocket: the joint stays closed and the pocket does not crush | preload kept over 30 min, 24 h, 7 days and a humid week, sleeved against plain; the creep step the preload table screens; the re-torque schedule | [sheets/c3-through-bolt.csv](sheets/c3-through-bolt.csv) |
 | C4 | boss-root layer coupon (the knee eye's stub) | the upper link's knee end, cut 40 mm back from the knee, printed as the link (stub up); two today, two with the PR 2 stub | the two DIN 179 sleeves and a Ø12 pin standing 46 mm out (the knee's lever), loaded sideways in the press cage | the load at which the stub's root peels (or the arm breaks) against the FEA's prediction for the same coupon: calibrates S_z and the unmeasured interlayer shear S_s the layer check assumes | [sheets/c4-boss-root.csv](sheets/c4-boss-root.csv) |
 
 ## Sources

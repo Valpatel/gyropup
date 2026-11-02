@@ -83,6 +83,32 @@ class Screen(unittest.TestCase):
         self.assertGreater(row['sigma_n_mpa'], 0)
         self.assertAlmostEqual(row['S_s_needed_mpa'], 16.6, delta=0.15)
 
+    def test_final_record_strength_needed_passes_the_row(self):
+        # each short row's needed strength, put back into the criterion at the row's worst corner, gives SF = target
+        repo = sc.Repo(sc.ROOT)
+        mat = sc.materials(repo)
+        fr = sc.final_record(repo, mat)
+        ev = {(x['part'], x['case']): x['layer_check'] for x in repo.json(sc.FINAL_LAYER)['rows']}
+        short = [x for x in fr['rows'] if x['layer_now'] < x['target']]
+        self.assertTrue(short)
+        for x in short:
+            w = ev[(x['part'], x['case'])]['worst']
+            sn, tau = max(w['sigma_n_mpa'], 0.0), abs(w['tau_n_mpa'])
+            need = x['S_s_needed_mpa']
+            s_z, s_s = (mat['S_z'], need['S_s']) if 'S_s' in need else (need['S_z'], need['S_z'] / 3 ** 0.5)
+            sf = 1 / ((sn / s_z) ** 2 + (tau / s_s) ** 2) ** 0.5
+            self.assertAlmostEqual(sf / x['target'], 1.0, delta=0.01, msg=x)
+        for x in fr['rows']:
+            if x['layer_now'] >= x['target']:
+                self.assertIsNone(x['S_s_needed_mpa'], x)
+
+    def test_final_record_front_link_apex_is_tension_limited(self):
+        repo = sc.Repo(sc.ROOT)
+        fr = sc.final_record(repo, sc.materials(repo))
+        row = next(x for x in fr['rows'] if x['part'] == 'front_link' and x['case'] == 'E1')
+        self.assertIn('S_z', row['S_s_needed_mpa'])          # through-layer tension alone fails at the assumed S_z
+        self.assertLess(row['gate_now'], row['target'])       # and the gate still misses: owner decision 1
+
     def test_control_sleeve_count_moves_the_press_force(self):
         one = fit(generate({'cad/fivebar.py': [('EYE_SLEEVES = 2 ', 'EYE_SLEEVES = 1 ')]}), 'knee eye sleeves')
         two = fit(self.doc, 'knee eye sleeves')

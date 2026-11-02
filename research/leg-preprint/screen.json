@@ -4,7 +4,7 @@
  "status": "screen: nothing here has been printed or tested; the coupons and the proof loads decide",
  "materials": {
   "E_xy_humid": 1029.2,
-  "E_z_humid": 487.82,
+  "E_z_humid": 487.67,
   "E_xy_dry": 4430.0,
   "E_z_dry": 2170.0,
   "S_xy_dry": 102.0,
@@ -906,7 +906,7 @@
    "high_stress": true,
    "reasons": [
     "fault tension 851 N an insert against an estimated 1500 N pull-out (SF 1.76), pulled across the layers",
-    "the assembly torque already preloads it to 1.00 x that pull-out",
+    "the assembly torque preloads it to 1.00 x that (humid) pull-out if the cheek misses the insert's brass face; with the face bearing (the inventory's condition) the preload closes through the brass",
     "the flange's layer check: R3o 0.93 against 1.0 (flange root, inner face (x 95, y -65.1)), 6 mm past the inserts' pilots"
    ],
    "options": {
@@ -917,7 +917,7 @@
     "through-bolt on the plastic": "no sleeve: the bolt precompresses the flange along its length (across the layers, the root's peel direction), but the preload creeps away (see preload)"
    },
    "pick": "sleeved through-bolt",
-   "why": "D74: the leg's primary load path and an insert at 1.0 x its pull-out at assembly torque. The sleeve keeps the preload out of the plastic; the flange root is then judged without precompression (conservative).",
+   "why": "D74: the leg's primary load path; the 851 N fault tension is 0.57 x the insert's estimated humid pull-out, with no measured spin-out or creep (and up to 1.0 x at assembly if the cheek misses the brass face). The sleeve keeps the preload out of the plastic; the flange root is then judged without precompression (conservative).",
    "pr2": "cad/fivebar.py frame_mounts(): 6 x Ø8.1 sleeve bores through the flange and web, an M5 hex pocket on the leg face; the Ø8.1 bore leaves 2.45 mm walls in the 13 mm flange, so the bolt line gets a local boss and the frame is re-run; the rig plate and the body cheek keep their Ø5.5 holes; screws M5 x ~90 (mcmaster-parts). Mass with a 6061 sleeve; a steel one adds 67 g more",
    "mass_g_per_leg": 93.0
   },
@@ -928,7 +928,7 @@
    "today": "8 x M5 x 40 into the tapped 6061 adapter, heads on 24.5 mm of PA6-CF (Ø8.5 heads, no washer); 1.5 N m puts 45.5 MPa under each head",
    "high_stress": true,
    "reasons": [
-    "the hub's edge lifts at 104 N m (at 1200 N a screw); R1 puts 114.6 and R3 188.6 N m on it",
+    "the hub's edge lifts at 104 N m (at 1200 N a screw); R1 puts 115.7 and R3 190.1 N m on it",
     "45.5 MPa under the heads against the 25 MPa sustained screen"
    ],
    "options": {
@@ -969,7 +969,7 @@
    "high_stress": true,
    "reasons": [
     "the eye stub's root: layer check E1 0.77 against 2.0 (the worst in the leg)",
-    "R3: 167.9 N m at the sleeves, 37.9 MPa on the eye (SF 1.06)"
+    "R3: 169.1 N m at the sleeves, 38.1 MPa on the eye (SF 1.05)"
    ],
    "options": {
     "metal bushing": "today's sleeves stay; the stub around them grows (diameter and root fillet) until its root passes, judged by the layer check",
@@ -1007,7 +1007,7 @@
    "reasons": [
     "the wheel link's hub root: layer check R1w 0.7 against 1.2",
     "the front link's apex ring: E1 0.71 against 2.0",
-    "bearings fine (s0 2.74 in R3)"
+    "bearings fine (s0 2.76 in R3)"
    ],
    "options": {
     "printed, bigger": "a root fillet at the Ø64 shoulder; the ring wall 6 -> 10-12 mm: lowest mass, may not reach 1.2",
@@ -1427,11 +1427,11 @@
   ],
   "undamped_over_damped_knee": 5.6,
   "r3_knee": {
-   "bearing_s0": 1.13,
-   "pin_sf": 1.3,
-   "eye_sf": 1.06
+   "bearing_s0": 1.12,
+   "pin_sf": 1.29,
+   "eye_sf": 1.05
   },
-  "note": "every R3 margin is the undamped cut onto the stops; the rig's bumper or the measured power-off damping (B1) divides the knee load by the ratio above"
+  "note": "every R3 margin is the undamped cut onto the stops; the RS-04's power-off damping as the rig assumes it (20 % of shorted phases, not measured: B1 measures it) divides the knee load by the ratio above; no rig scenario models the bumper"
  },
  "coupons": [
   {
@@ -1454,7 +1454,7 @@
    "id": "C3",
    "name": "sleeved through-bolt joint, against the plastic clamp",
    "prints": "four 13 x 40 x 60 flange blocks, layers across the bolt as in the frame",
-   "features": "two with an Ø8.1 bore and a steel sleeve flush, its nut on a DIN 9021 (Ø15) washer that reaches the plastic round the sleeve; two with an Ø5.5 bore (bolt on the plastic, a Ø15 washer); M5 8.8 through the B4 load cell; after the creep readings, pull each sleeved block apart to the fault tension (851 N) and check the washer holds it",
+   "features": "two with an Ø8.1 bore and a steel sleeve flush, its nut on a DIN 9021 (Ø15) washer that reaches the plastic round the sleeve; two with an Ø5.5 bore (bolt on the plastic, a Ø15 washer); M5 8.8 through the B4 load cell; after the creep readings, load each sleeved joint in tension to the fault tension (851 N) through the load cell, the block held at its far face, and check that the washer carries it into the plastic round its pocket: the joint stays closed and the pocket does not crush",
    "settles": "preload kept over 30 min, 24 h, 7 days and a humid week, sleeved against plain; the creep step the preload table screens; the re-torque schedule",
    "sheet": "c3-through-bolt.csv"
   },
