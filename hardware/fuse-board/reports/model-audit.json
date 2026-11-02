@@ -1,0 +1,33 @@
+{
+  "pass": true,
+  "footprints": 43,
+  "with_model": 37,
+  "findings": [],
+  "waived": [
+    {
+      "footprint": "H1 (cad-agent:Slot_NPTH_4.0x10.0mm)",
+      "reason": "a non-plated slot for a cable tie (a hole)"
+    },
+    {
+      "footprint": "H2 (cad-agent:Slot_NPTH_4.0x10.0mm)",
+      "reason": "a non-plated slot for a cable tie (a hole)"
+    },
+    {
+      "footprint": "H3 (cad-agent:Slot_NPTH_4.0x10.0mm)",
+      "reason": "a non-plated slot for a cable tie (a hole)"
+    },
+    {
+      "footprint": "TP1 (TestPoint:TestPoint_THTPad_D2.0mm_Drill1.0mm)",
+      "reason": "a bare test pad (copper; the Adafruit 5832 lands here by wire)"
+    },
+    {
+      "footprint": "TP2 (TestPoint:TestPoint_THTPad_D2.0mm_Drill1.0mm)",
+      "reason": "a bare test pad (copper; the Adafruit 5832 lands here by wire)"
+    },
+    {
+      "footprint": "TP3 (TestPoint:TestPoint_THTPad_D2.0mm_Drill1.0mm)",
+      "reason": "a bare test pad (copper; the Adafruit 5832 lands here by wire)"
+    }
+  ],
+  "unused_waivers": []
+}
