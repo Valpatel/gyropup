@@ -92,7 +92,48 @@
    "engagement_mm": [
     5.36
    ],
-   "problems": []
+   "problems": [
+    {
+     "at": [
+      -62.0,
+      37.04,
+      -93.04
+     ],
+     "problems": [
+      "the tip hits leg.left_hip_frame at 11.5 mm"
+     ]
+    },
+    {
+     "at": [
+      -20.0,
+      37.04,
+      -93.04
+     ],
+     "problems": [
+      "the tip hits leg.left_hip_frame at 11.5 mm"
+     ]
+    },
+    {
+     "at": [
+      20.0,
+      37.04,
+      -93.04
+     ],
+     "problems": [
+      "the tip hits leg.left_hip_frame at 11.5 mm"
+     ]
+    },
+    {
+     "at": [
+      62.0,
+      37.04,
+      -93.04
+     ],
+     "problems": [
+      "the tip hits leg.left_hip_frame at 11.5 mm"
+     ]
+    }
+   ]
   },
   {
    "joint": "hip_frame_right",
@@ -186,7 +227,48 @@
    "engagement_mm": [
     5.36
    ],
-   "problems": []
+   "problems": [
+    {
+     "at": [
+      -62.0,
+      -37.04,
+      -93.04
+     ],
+     "problems": [
+      "the tip hits leg.right_hip_frame at 11.5 mm"
+     ]
+    },
+    {
+     "at": [
+      -20.0,
+      -37.04,
+      -93.04
+     ],
+     "problems": [
+      "the tip hits leg.right_hip_frame at 11.5 mm"
+     ]
+    },
+    {
+     "at": [
+      20.0,
+      -37.04,
+      -93.04
+     ],
+     "problems": [
+      "the tip hits leg.right_hip_frame at 11.5 mm"
+     ]
+    },
+    {
+     "at": [
+      62.0,
+      -37.04,
+      -93.04
+     ],
+     "problems": [
+      "the tip hits leg.right_hip_frame at 11.5 mm"
+     ]
+    }
+   ]
   },
   {
    "joint": "post_1_foot",
@@ -1285,7 +1367,48 @@
    "engagement_mm": [
     5.36
    ],
-   "problems": []
+   "problems": [
+    {
+     "at": [
+      -62.0,
+      37.04,
+      -93.04
+     ],
+     "problems": [
+      "the tip hits leg.left_hip_frame at 11.5 mm"
+     ]
+    },
+    {
+     "at": [
+      -20.0,
+      37.04,
+      -93.04
+     ],
+     "problems": [
+      "the tip hits leg.left_hip_frame at 11.5 mm"
+     ]
+    },
+    {
+     "at": [
+      20.0,
+      37.04,
+      -93.04
+     ],
+     "problems": [
+      "the tip hits leg.left_hip_frame at 11.5 mm"
+     ]
+    },
+    {
+     "at": [
+      62.0,
+      37.04,
+      -93.04
+     ],
+     "problems": [
+      "the tip hits leg.left_hip_frame at 11.5 mm"
+     ]
+    }
+   ]
   },
   {
    "joint": "hip_frame_right",
@@ -1379,7 +1502,48 @@
    "engagement_mm": [
     5.36
    ],
-   "problems": []
+   "problems": [
+    {
+     "at": [
+      -62.0,
+      -37.04,
+      -93.04
+     ],
+     "problems": [
+      "the tip hits leg.right_hip_frame at 11.5 mm"
+     ]
+    },
+    {
+     "at": [
+      -20.0,
+      -37.04,
+      -93.04
+     ],
+     "problems": [
+      "the tip hits leg.right_hip_frame at 11.5 mm"
+     ]
+    },
+    {
+     "at": [
+      20.0,
+      -37.04,
+      -93.04
+     ],
+     "problems": [
+      "the tip hits leg.right_hip_frame at 11.5 mm"
+     ]
+    },
+    {
+     "at": [
+      62.0,
+      -37.04,
+      -93.04
+     ],
+     "problems": [
+      "the tip hits leg.right_hip_frame at 11.5 mm"
+     ]
+    }
+   ]
   },
   {
    "joint": "post_1_foot",
@@ -2838,9 +3002,14 @@
  },
  "connectivity": {
   "P1": {
-   "status": "warn",
-   "pass": true,
-   "fails": [],
+   "status": "fail",
+   "pass": false,
+   "fails": [
+    "fastener:belly_flange_left:belly_plate",
+    "fastener:belly_flange_left:cheek_nuts_left",
+    "fastener:belly_flange_right:belly_plate",
+    "fastener:belly_flange_right:cheek_nuts_right"
+   ],
    "undeclared_contacts": [
     "bay_door_front|bay_floor",
     "bay_door_front|bay_side_l",
@@ -2851,6 +3020,8 @@
     "bay_side_l|belly_plate",
     "bay_side_r|belly_plate",
     "cheek_left|frame_screws_left",
+    "cheek_nuts_left|leg.left_hip_frame",
+    "cheek_nuts_right|leg.right_hip_frame",
     "cheek_right|frame_screws_right",
     "compute_pallet|isolator_2",
     "compute_pallet|isolator_3",
@@ -2869,9 +3040,14 @@
    "verdict": "build/gates/connectivity-P1.json"
   },
   "P2": {
-   "status": "warn",
-   "pass": true,
-   "fails": [],
+   "status": "fail",
+   "pass": false,
+   "fails": [
+    "fastener:belly_flange_left:belly_plate",
+    "fastener:belly_flange_left:cheek_nuts_left",
+    "fastener:belly_flange_right:belly_plate",
+    "fastener:belly_flange_right:cheek_nuts_right"
+   ],
    "undeclared_contacts": [
     "bay_door_front|bay_floor",
     "bay_door_front|bay_side_l",
@@ -2882,6 +3058,8 @@
     "bay_side_l|belly_plate",
     "bay_side_r|belly_plate",
     "cheek_left|frame_screws_left",
+    "cheek_nuts_left|leg.left_hip_frame",
+    "cheek_nuts_right|leg.right_hip_frame",
     "cheek_right|frame_screws_right",
     "compute_pallet|isolator_2",
     "compute_pallet|isolator_3",
@@ -2900,9 +3078,14 @@
    "verdict": "build/gates/connectivity-P2.json"
   },
   "P3": {
-   "status": "warn",
-   "pass": true,
-   "fails": [],
+   "status": "fail",
+   "pass": false,
+   "fails": [
+    "fastener:belly_flange_left:belly_plate",
+    "fastener:belly_flange_left:cheek_nuts_left",
+    "fastener:belly_flange_right:belly_plate",
+    "fastener:belly_flange_right:cheek_nuts_right"
+   ],
    "undeclared_contacts": [
     "bay_door_front|bay_floor",
     "bay_door_front|bay_side_l",
@@ -2913,6 +3096,8 @@
     "bay_side_l|belly_plate",
     "bay_side_r|belly_plate",
     "cheek_left|frame_screws_left",
+    "cheek_nuts_left|leg.left_hip_frame",
+    "cheek_nuts_right|leg.right_hip_frame",
     "cheek_right|frame_screws_right",
     "compute_pallet|isolator_2",
     "compute_pallet|isolator_3",
@@ -3138,12 +3323,15 @@
  "summary": {
   "joints": 71,
   "screws": 183,
-  "joints_with_problems": [],
+  "joints_with_problems": [
+   "belly_flange_left",
+   "belly_flange_right"
+  ],
   "floating": {},
   "connectivity_pass": {
-   "P1": true,
-   "P2": true,
-   "P3": true
+   "P1": false,
+   "P2": false,
+   "P3": false
   },
   "clashes": 0
  }

@@ -2947,6 +2947,111 @@
   ]
  },
  {
+  "id": "pod-insert-m3",
+  "key": "pod_insert_m3",
+  "group": "rig",
+  "category": "fastener",
+  "vendor": "McMaster-Carr",
+  "model": "94459A140",
+  "name": "Heat-set insert M3 (brass), 5.7 mm",
+  "price_usd": 0.2182,
+  "price_note": "50 per pack at $10.91",
+  "price_checked": "2026-10-27",
+  "pack_qty": 50,
+  "pack_price_usd": 10.91,
+  "buy": [
+   {
+    "seller": "McMaster-Carr",
+    "url": "https://www.mcmaster.com/94459A140/",
+    "in_stock": true,
+    "ships_from": "US",
+    "stock_text": null
+   }
+  ],
+  "specs": {},
+  "sources": [
+   "https://www.mcmaster.com/94459A140/"
+  ],
+  "confidence": "product page",
+  "used_for": "the pod: the panel's four M3 x 10, in the open face's corner bosses (cad/rig_parts.py POD_LID_SCREWS)",
+  "qty": 4,
+  "notes": "Same part as catalog/hardware.json insert_m3 (its price read of the same date).",
+  "alternates": [
+   {
+    "supplier": "ruthex",
+    "part_number": "RX-M3x5.7 (SKU GE-M3x57-001)",
+    "url": "https://www.ruthex.de/products/ruthex-gewindeeinsatz-m3-100-stuck-rx-m3x5-7-messing-gewindebuchsen",
+    "price": null,
+    "price_usd_each": null,
+    "pack_qty": 100,
+    "stock": "InStock (schema.org availability)",
+    "drop_in": true,
+    "changes": null,
+    "checked": "2026-10-27",
+    "evidence": "Brass M3 heat-set insert, 5.7 mm long - same length as McMaster 94459A140. Only EUR shown: EUR 8.99 per pack of 100 (German store, VAT incl.; 50 packs EUR 449.50). No ruthex US-dollar store found. Alternative maker store: CNC Kitchen 'Heat Set Insert M3 x 5.7' EUR 9.40 per 100, 'Auf Lager' (in stock), https://cnckitchen.store/products/heat-set-insert-m3-x-5-7-100-pieces . Hole size not re-read tod"
+   },
+   {
+    "supplier": "3DJake",
+    "part_number": "CNC-X001FCE4M5",
+    "url": "https://www.3djake.com/cnc-kitchen/threaded-inserts-m3-standard",
+    "price": "$11.18 ($0.11 / pc), excl. VAT",
+    "price_usd_each": 0.1118,
+    "pack_qty": 100,
+    "stock": "In stock",
+    "drop_in": true,
+    "changes": null,
+    "checked": "2026-10-27",
+    "evidence": "curl of the 3DJake page: 'CNC Kitchen Threaded Inserts M3 Standard, M3 x 5.7 (100 pieces)', InStock. The dimension table lists M3: L 5.7, hole D3 4.0, min wall 1.6, matching the 4.0 mm hole and 5.7 mm length. Also sold direct at cnckitchen.store as TC-M3x5.7, 100 pcs, 9.40 EUR, InStock."
+   }
+  ]
+ },
+ {
+  "id": "screw-m3x10-pod",
+  "key": "screw_m3x10_pod",
+  "group": "rig",
+  "category": "fastener",
+  "vendor": "McMaster-Carr",
+  "model": "91290A115",
+  "name": "Black-oxide alloy steel socket head screw M3 x 10",
+  "price_usd": 0.1323,
+  "price_note": "100 per pack at $13.23",
+  "price_checked": "2026-10-27",
+  "pack_qty": 100,
+  "pack_price_usd": 13.23,
+  "buy": [
+   {
+    "seller": "McMaster-Carr",
+    "url": "https://www.mcmaster.com/91290A115/",
+    "in_stock": true,
+    "ships_from": "US",
+    "stock_text": null
+   }
+  ],
+  "specs": {},
+  "sources": [
+   "https://www.mcmaster.com/91290A115/"
+  ],
+  "confidence": "product page",
+  "used_for": "the pod's panel into the corner inserts (3 mm panel, 7 mm into the 5.7 mm inserts)",
+  "qty": 4,
+  "notes": "Same part as catalog/turret.json turret_screw_m3x10 (its price read of the same date).",
+  "alternates": [
+   {
+    "supplier": "Belmetric",
+    "part_number": "BSH3X10",
+    "url": "https://belmetric.com/m3x0-5-socket-head-cap-screw-din-912-class-12-9/",
+    "price": "$0.14",
+    "price_usd_each": 0.14,
+    "pack_qty": 1,
+    "stock": "in stock",
+    "drop_in": true,
+    "changes": null,
+    "checked": "2026-10-27",
+    "evidence": "Same spec, 10 mm (select Length=10mm). $0.14 each; 25-99 $0.10; 100-999 $0.09; 1000+ $0.08."
+   }
+  ]
+ },
+ {
   "id": "screw-m2-5x8",
   "key": "screw_m2_5x8",
   "group": "electronics",

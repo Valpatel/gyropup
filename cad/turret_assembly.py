@@ -55,7 +55,7 @@ STEPS = [
      'the driver\'s crescent; the carrier\'s tabs into their pockets: 3 x M3 x 10 flat heads.'),
     ('The tilt yoke and the turret-board bay', ['tilt_yoke', 'ring_leads_rotor', 'board_bay', 'turret_board'],
      {'tilt_yoke': 50, 'board_bay': (0, -40, 0), 'turret_board': (0, -70, 0)}, (0.5, -1.0, 0.5),
-     'The rotor leads through the yoke\'s slot, the yoke on the turntable: 4 x M4 x 10. 4 x M3 inserts in the -y arm, the '
+     'The rotor leads through the yoke\'s slot, the yoke on the turntable: 4 x M4 x 12. 4 x M3 inserts in the -y arm, the '
      'bay on them: 4 x M3 x 8 flat heads; the three boards on their standoffs (12 and 14 mm); the ring\'s rotor plug and '
      'the hall into level 2.'),
     ('The tilt servo and the cradle on its aluminium cheeks',
@@ -99,7 +99,8 @@ STEPS = [
      (0.6, -1.0, 0.5),
      'The cartridge down onto the cradle\'s two dowels, the knurled thumbscrew up into its insert (its O-ring keeps it in '
      'the rail); the two CT plugs (2 x 3 power, 2 x 5 signal). Then the turret on its stand: 2 x Ø5 dowels, 4 x M5 x 16, '
-     'and the DT12 plug. The TPU bumper ring (5 x M3 x 20 and oversized washers on the base\'s tabs) is for the robot (v1).'),
+     'and the DT12 plug (the stand\'s two dock inserts went in from below with a flat tip, the top face on a flat plate and '
+     'the seat checked flat after; the dock adapter\'s M3s are no longer than its base + 5 mm). The TPU bumper ring (5 x M3 x 20 and oversized washers on the base\'s tabs) is for the robot (v1).'),
 ]
 
 

@@ -93,6 +93,15 @@ def _git(*args):
     return r.stdout.strip() if r.returncode == 0 else None
 
 
+def j501_label(f) -> str:
+    """A J501 file as the exports name it: from J501_DIR, never by this machine's absolute path."""
+    f = Path(f)
+    try:
+        return 'J501_DIR/' + f.resolve().relative_to(J501_DIR.resolve()).as_posix()
+    except ValueError:
+        return 'J501_DIR/.../' + f.name
+
+
 def _provenance(f):
     """The parameters file's state in the J501 repo: committed at HEAD, modified (uncommitted) or untracked."""
     top = _git('rev-parse', '--show-toplevel')
@@ -115,7 +124,7 @@ def _operating_point(rev):
         if fan and fan.get('flow_m3h') and fan.get('pressure_rise_pa') is not None:
             return {'q_m3h': fan['flow_m3h'], 'dp_pa': fan['pressure_rise_pa'], 'fraction_of_free_air': fan.get('fraction_of_free_air'),
                     'air_into_fan_c': fan.get('air_through_fan_c'), 'converged': d.get('converged'), 'case_revision': d.get('revision'),
-                    'source': str(f), 'note': 'the J501\'s CFD of the bare box at 40 W in 25 C air'}
+                    'source': j501_label(f), 'note': 'the J501\'s CFD of the bare box at 40 W in 25 C air'}
     p = dict(_CFD_POINT.get(major) or _CFD_POINT['0.8'])
     p['source'] = 'built-in (no ' + f.name + ' in the J501 tree)'
     return p
@@ -143,7 +152,7 @@ def _j501():
                   'fan_xy': [C['center_in_pcb'][0] + E['pcb_margin'], C['center_in_pcb'][1] + E['pcb_margin']],
                   'hex': {'af': E.get('hex_across_flats', 10.0), 'web': E.get('hex_web', 1.8), 'field': E.get('hex_field', p['hex']['field'])},
                   'bulkheads': [[b['side'], b['y']] for b in ab['positions']], 'bulkhead_z': ab['z'],
-                  'cooler': C.get('model', p['cooler']), 'revision': P.get('revision'), 'source': str(f), 'git': _provenance(f)})
+                  'cooler': C.get('model', p['cooler']), 'revision': P.get('revision'), 'source': j501_label(f), 'git': _provenance(f)})
         if E.get('fan_grille') and C.get('fan'):          # Rev 0.9: a flush grille over the fan, on its octagonal outline
             g, fan = E['fan_grille'], C['fan']
             p['intake'] = {'kind': 'grille', 'frame': fan['frame'], 'corner_chamfer': fan['corner_chamfer'], 'clearance': g['clearance'],

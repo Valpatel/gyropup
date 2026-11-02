@@ -56,7 +56,7 @@
     }
    ],
    "media_key": "feetech-sts3215-c018-12v",
-   "thumb": "references/vendor/thumbs/feetech-sts3215-c018-12v.jpg",
+   "thumb": null,
    "thumb_from": "https://www.waveshare.com/st3215-servo.htm?sku=22414",
    "alternates": [
     {
@@ -165,7 +165,7 @@
     }
    ],
    "media_key": "feetech-sts3215-c018-12v",
-   "thumb": "references/vendor/thumbs/feetech-sts3215-c018-12v.jpg",
+   "thumb": null,
    "thumb_from": "https://www.waveshare.com/st3215-servo.htm?sku=22414",
    "alternates": [
     {
@@ -504,7 +504,7 @@
     }
    ],
    "media_key": "feetech-sts3215-c018-12v",
-   "thumb": "references/vendor/thumbs/feetech-sts3215-c018-12v.jpg",
+   "thumb": null,
    "thumb_from": "https://www.waveshare.com/st3215-servo.htm?sku=22414",
    "alternates": [
     {
@@ -718,7 +718,7 @@
    "vendor": "SendCutSend",
    "url": "https://sendcutsend.com/materials/6061-t6-aluminum/",
    "price_usd_each": null,
-   "mass_g_each": 24.6,
+   "mass_g_each": 24.9,
    "note": null,
    "pack_qty": null,
    "sellers": [
@@ -762,7 +762,7 @@
    "vendor": "SendCutSend",
    "url": "https://sendcutsend.com/materials/6061-t6-aluminum/",
    "price_usd_each": null,
-   "mass_g_each": 25.0,
+   "mass_g_each": 25.4,
    "note": null,
    "pack_qty": null,
    "sellers": [
@@ -1417,7 +1417,7 @@
     }
    ],
    "media_key": "sparkfun-rob-13065",
-   "thumb": "references/vendor/thumbs/sparkfun-rob-13065.jpg",
+   "thumb": null,
    "thumb_from": "https://www.sparkfun.com/products/13065",
    "alternates": [
     {
@@ -1461,7 +1461,7 @@
     }
    ],
    "media_key": "sparkfun-rob-13065",
-   "thumb": "references/vendor/thumbs/sparkfun-rob-13065.jpg",
+   "thumb": null,
    "thumb_from": "https://www.sparkfun.com/products/13065",
    "alternates": [
     {
@@ -1505,7 +1505,7 @@
     }
    ],
    "media_key": "sparkfun-rob-13065",
-   "thumb": "references/vendor/thumbs/sparkfun-rob-13065.jpg",
+   "thumb": null,
    "thumb_from": "https://www.sparkfun.com/products/13065",
    "alternates": [
     {
@@ -2568,7 +2568,7 @@
    "item": "Black-Oxide Alloy Steel Socket Head Screw, US Origin, M3 x 0.5 mm Thread Size, 8 mm Long",
    "id": "turret_screw_m3x8",
    "key": "turret_screw_m3x8",
-   "qty": 15,
+   "qty": 19,
    "for": "hw_screw_m3x8",
    "part_number": "91290A113",
    "vendor": "McMaster-Carr",
@@ -2832,7 +2832,7 @@
    "item": "Black-Oxide Alloy Steel Socket Head Screw, US Origin, M4 x 0.7 mm Thread Size, 10 mm Long",
    "id": "turret_screw_m4x10",
    "key": "turret_screw_m4x10",
-   "qty": 8,
+   "qty": 4,
    "for": "hw_screw_m4x10",
    "part_number": "91290A144",
    "vendor": "McMaster-Carr",
@@ -2915,6 +2915,46 @@
      "evidence": "Same spec, 8 mm, black oxide 10.9 (select Black Oxide, 8mm). $0.18 each; 25-99 $0.11; 100-999 $0.10; 1000+ $0.08."
     }
    ]
+  },
+  {
+   "item": "Black-oxide alloy steel socket head screw, M4 x 0.7 x 12 mm (the fuse board's M4 studs, down through the lug into the standoff's nyloc)",
+   "id": "screw_m4x12_socket",
+   "key": "screw_m4x12_socket",
+   "qty": 4,
+   "for": "hw_screw_m4x12",
+   "part_number": "91290A148",
+   "vendor": "McMaster-Carr",
+   "url": "https://www.mcmaster.com/91290A148/",
+   "price_usd_each": 0.123,
+   "mass_g_each": null,
+   "note": null,
+   "pack_qty": 100,
+   "sellers": [
+    {
+     "seller": "McMaster-Carr",
+     "url": "https://www.mcmaster.com/91290A148/",
+     "seller_pn": "91290A148",
+     "price_usd": 12.3,
+     "pack_qty": 100,
+     "in_stock": true,
+     "stock": "product page read (McMaster ships next day)",
+     "read_on": "2026-10-27"
+    },
+    {
+     "seller": "McMaster-Carr",
+     "url": "https://www.mcmaster.com/91290A150/",
+     "seller_pn": "91290A150",
+     "price_usd": 14.23,
+     "pack_qty": 100,
+     "in_stock": true,
+     "stock": "M4 x 14 of the same series (a stack of three lugs)",
+     "read_on": "2026-10-27"
+    }
+   ],
+   "media_key": "screw_m4x12_socket",
+   "thumb": null,
+   "thumb_from": null,
+   "alternates": []
   },
   {
    "item": "Black-Oxide Alloy Steel Hex-Drive Flat Head Screw, 90 Degree Countersink, M3 x 0.5 mm Thread Size, 10 mm Long",
@@ -3008,7 +3048,7 @@
    "item": "Heat-Set Threaded Inserts for Plastic, Standard, Brass, M3 x 0.5 mm Thread Size, 5.7 mm Installed Length",
    "id": "insert_m3",
    "key": "insert_m3",
-   "qty": 37,
+   "qty": 41,
    "for": "hw_insert_m3",
    "part_number": "94459A140",
    "vendor": "McMaster-Carr",
@@ -3426,7 +3466,7 @@
     }
    ],
    "media_key": "adafruit-feather-m4-can-4759",
-   "thumb": "references/vendor/thumbs/adafruit-feather-m4-can-4759.jpg",
+   "thumb": null,
    "thumb_from": "https://www.adafruit.com/product/4759",
    "alternates": []
   },
@@ -3496,7 +3536,7 @@
     }
    ],
    "media_key": "pololu-d36v50f12-4095",
-   "thumb": "references/vendor/thumbs/pololu-d36v50f12-4095.jpg",
+   "thumb": null,
    "thumb_from": "https://www.pololu.com/product/4095",
    "alternates": [
     {
@@ -3540,7 +3580,7 @@
     }
    ],
    "media_key": "pololu-d36v28f5-3782",
-   "thumb": "references/vendor/thumbs/pololu-d36v28f5-3782.jpg",
+   "thumb": null,
    "thumb_from": "https://www.pololu.com/product/3782",
    "alternates": [
     {
@@ -3584,7 +3624,7 @@
     }
    ],
    "media_key": "pololu-2815",
-   "thumb": "references/vendor/thumbs/pololu-2815.jpg",
+   "thumb": null,
    "thumb_from": "https://www.pololu.com/product/2815",
    "alternates": [
     {
@@ -7025,6 +7065,49 @@
    ]
   },
   {
+   "item": "Heat-Set Threaded Inserts for Plastic, Standard, Brass, M3 x 0.5 mm Thread Size, 4.3 mm Installed Length",
+   "id": "turret_insert_m3_short",
+   "key": "turret_insert_m3_short",
+   "qty": 2,
+   "for": "bench",
+   "part_number": "94459A130",
+   "vendor": "McMaster-Carr",
+   "url": "https://www.mcmaster.com/94459A130/",
+   "price_usd_each": 0.2182,
+   "pack_qty": 50,
+   "mass_g_each": null,
+   "sellers": [
+    {
+     "seller": "McMaster-Carr",
+     "url": "https://www.mcmaster.com/94459A130/",
+     "seller_pn": null,
+     "price_usd": null,
+     "pack_qty": null,
+     "in_stock": null,
+     "stock": null,
+     "read_on": null
+    }
+   ],
+   "media_key": "turret_insert_m3_short",
+   "thumb": null,
+   "thumb_from": "https://www.mcmaster.com/94459A130/",
+   "alternates": [
+    {
+     "supplier": "ruthex",
+     "part_number": "RX-M3Sx4.0 (SKU GE-M3Sx40-002)",
+     "url": "https://www.ruthex.de/products/ruthex-gewindeeinsatz-m3s-100stuck-rx-m3x4-0-short-messing-gewindebuchsen-fur-3d-druck",
+     "price": null,
+     "price_usd_each": null,
+     "pack_qty": 100,
+     "stock": "InStock (schema.org availability)",
+     "drop_in": true,
+     "changes": null,
+     "checked": "2026-10-27",
+     "evidence": "Length differs: 4.0 mm vs McMaster 4.3 mm (0.3 mm shorter); brass M3 short insert. EUR 8.99 per 100 (VAT incl.), no USD price. CNC Kitchen's short M3 is 3.0 mm (further off)."
+    }
+   ]
+  },
+  {
    "item": "Black-Oxide Alloy Steel Socket Head Screw, US Origin, M3 x 0.5 mm Thread Size, 8 mm Long",
    "id": "turret_screw_m3x8",
    "key": "turret_screw_m3x8",
@@ -8036,21 +8119,21 @@
   }
  ],
  "turret_mass": {
-  "with_30_balls_g": 2560.8,
-  "empty_g": 2505.9,
+  "with_30_balls_g": 2573.4,
+  "empty_g": 2518.5,
   "ceiling_kg": 2.6,
-  "margin_g": 39.2,
+  "margin_g": 26.6,
   "within_ceiling": true,
   "com_mm": [
-   -4.1,
+   -3.8,
    -2.8,
-   49.2
+   49.3
   ],
   "decision": "D71 (the 37.5 kg robot covers the turret as its own robot, D66)"
  },
  "price_usd_known": {
-  "turret": 1808.94,
-  "bench_stand": 660.57,
+  "turret": 1810.3,
+  "bench_stand": 661.0,
   "tools": 255.73
  },
  "not_in_a_catalogue": [],

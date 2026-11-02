@@ -76,12 +76,14 @@ STEPS = [
      'pocket\'s floor through the deck into drop-in nuts in the bumper member\'s top slot (the holes sit 11 mm behind the '
      'base\'s centre, over the slot); a TPU block in each pocket, a cap on each (R0 in docs/leg-bench-tests.md picks the '
      'infill first).'),
-    ('The pod', ['pod', 'pod_lid', 'pendant_clip', 'pod_screws'], {'pod': (0, -60, 0), 'pod_lid': (-50, 0, 0), 'pendant_clip': (40, 0, 0),
-                                                                   'pod_screws': (0, -90, 0)}, BACK_VIEW, 'rig',
+    ('The pod', ['pod', 'pod_lid', 'pendant_clip', 'pod_screws', 'pod_lid_screws'],
+     {'pod': (0, -60, 0), 'pod_lid': (-50, 0, 0), 'pendant_clip': (40, 0, 0), 'pod_screws': (0, -90, 0), 'pod_lid_screws': (-70, 0, 0)},
+     BACK_VIEW, 'rig',
      'Wired on the bench first (docs/leg-rig-wiring.md): the contactor on its two M4 inserts (2.3 N m), the relay on its '
      'one, the Class CC fuse holder and the 12 V converter on the printed rail, the U2C in its pocket, the Feather on its '
      'FeatherWing on the -y wall; the panel\'s XT60s, jack and fuse holder. Then on the post\'s back face: 4 x M8 x 16 '
-     'through the 6 mm pads into drop-in nuts. The pendant\'s clip on the -y wall: 2 x M4 x 10 into its inserts.'),
+     'through the 6 mm pads into drop-in nuts. The pendant\'s clip on the -y wall: 2 x M4 x 10 into its inserts. The '
+     'panel over the open face: 4 x M3 x 10 into M3 inserts in the corner bosses.'),
 ('The hip frame and the motors (bench)', ['leg_hip_frame', 'leg_bearing_61812_front', 'leg_bearing_61812_rear', 'leg_motor_front',
                                               'leg_motor_rear', 'leg_screws_lugs', 'leg_stop_posts'],
      {'leg_hip_frame': 0, 'leg_bearing_61812_front': (0, -25, 0), 'leg_bearing_61812_rear': (0, -25, 0), 'leg_motor_front': (0, -70, 0),
@@ -174,6 +176,7 @@ GROUPS = {   # a step's group name -> the prefixes of the parts it fits
     'rails': ('rail_left', 'rail_right', 'rail_screw'), 'deck_screws': ('deck_screw',), 'blocks': ('block_',),
     'block_screws': ('block_screw',), 'ballast_posts': ('ballast_shaft', 'ballast_screw', 'ballast_spacer'), 'tof_arm': ('tof_arm',),
     'bumper_screws': ('bumper_screw',), 'top_stop_screws': ('top_stop_screw',), 'pod_screws': ('pod_screw',),
+    'pod_lid_screws': ('pod_lid_screw',),
     'tof_mount': ('tof_mount',), 'frame_screws': ('frame_screw',), 'ballast_plates': ('weight_plate', 'ballast_keeper'),
 }
 

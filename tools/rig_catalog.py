@@ -267,6 +267,12 @@ add('featherwing_proto', 'electronics', 'wiring', 'Adafruit', '2884', 'FeatherWi
     stock='In Stock', used_for='one under the Feather (the dividers, the sensors\' plugs); one as the carriage\'s CAN junction (the GH headers)')
 add('pod_insert_m4', 'rig', 'fastener', 'McMaster-Carr', '94459A160', 'Heat-set insert M4 (brass)', 0.2346, 7, f'{MCM}94459A160/', pack=50, pack_price=11.73,
     used_for='the pod: the contactor (2), the relay (1), the pendant clip (2); the ToF target arm (2)', note='Same part as catalog/turret.json turret_insert_m4.')
+add('pod_insert_m3', 'rig', 'fastener', 'McMaster-Carr', '94459A140', 'Heat-set insert M3 (brass), 5.7 mm', 0.2182, 4, f'{MCM}94459A140/', pack=50, pack_price=10.91,
+    used_for='the pod: the panel\'s four M3 x 10, in the open face\'s corner bosses (cad/rig_parts.py POD_LID_SCREWS)',
+    note='Same part as catalog/hardware.json insert_m3 (its price read of the same date).')
+add('screw_m3x10_pod', 'rig', 'fastener', 'McMaster-Carr', '91290A115', 'Black-oxide alloy steel socket head screw M3 x 10', 0.1323, 4, f'{MCM}91290A115/',
+    pack=100, pack_price=13.23, used_for='the pod\'s panel into the corner inserts (3 mm panel, 7 mm into the 5.7 mm inserts)',
+    note='Same part as catalog/turret.json turret_screw_m3x10 (its price read of the same date).')
 add('screw_m2_5x8', 'electronics', 'fastener', 'McMaster-Carr', '91290A102', 'Socket head screw M2.5 x 8', 0.246, 4, f'{MCM}91290A102/', pack=50, pack_price=12.30,
     used_for='the Feather\'s FeatherWing into the pod\'s bosses (self-tapping into PETG)', note='Same part as catalog/turret.json turret_screw_m2_5x8.')
 add('xt60e_m_panel', 'electronics', 'wiring', 'Maplin (UK)', 'Amass XT60E-M', 'XT60 male panel plug (the pack\'s inlet)', 1.50, 1,
@@ -313,7 +319,8 @@ BACKUPS = {
     'fuse-5a-dc': alt('Mouser', '576-0477005.MXP (Littelfuse 0477005.MXP)', 'https://www.mouser.com/ProductDetail/576-0477005.MXP', '$2.18 each (1+); $2.01 (10+); $1.67 (50+)', 2.18, pack=1, stock="8590 in stock (Mouser's figure as listed on findchips.com today)", drop_in=True, changes='Identical part (5x20 mm, 5 A time-lag, 500 Vac / 400 Vdc). mouser.com blocks automated reading; price and stock come from findchips.com/search/0477005.MXP', how='search snippet'),
 }
 SHARED_ALTS = {'screw-m6x30-deck': 'screw_m6x30', 'xt60e-f-panel': 'amass-xt60e-f', 'jack-3p5': 'jack-3.5mm-panel',
-               'fuse-holder-5x20': 'fuse-holder-5x20-panel'}       # their backups are catalog/alternates.json's
+               'fuse-holder-5x20': 'fuse-holder-5x20-panel', 'pod-insert-m3': 'insert_m3',
+               'screw-m3x10-pod': 'turret_screw_m3x10'}             # their backups are catalog/alternates.json's
 _alts = json.loads((Path(__file__).resolve().parents[1] / 'catalog' / 'alternates.json').read_text())
 for _it in items:
     if _it['id'] in SHARED_ALTS:

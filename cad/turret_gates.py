@@ -25,7 +25,7 @@ rigid motion (Turret.pose_shape as a gp_Trsf), so a pose only changes placements
 
     .venv/bin/python cad/turret_gates.py          (exit 1 when a gate fails)
     .venv/bin/python cad/turret_gates.py --dossier   (path + ammo range for cad-agent check: exports/gates/turret-*.json)
-    gp-remote --host gb10-02 --pull exports/turret/gates.json --pull exports/turret/gates/ -- \\
+    gp-remote --pull exports/turret/gates.json --pull exports/turret/gates/ -- \\
         env CADAGENT_GATE_CACHE=$HOME/gyropup-compute/cache/turret-gates python -u cad/turret_gates.py
 """
 from __future__ import annotations

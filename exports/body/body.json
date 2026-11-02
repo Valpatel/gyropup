@@ -2,7 +2,7 @@
  "numbers": {
   "spine_w_mm": 40.5,
   "y_off_mm": 102.55,
-  "track_mm": 433.7,
+  "track_mm": 434.1,
   "z_spine_top_mm": 90.5,
   "z_tray_top_mm": 93.675,
   "top_mm": 216.0,
@@ -14,7 +14,7 @@
   "tm_face_z_mm": 246.0,
   "pan_axis_x_mm": -40.0,
   "lidar_axis_x_mm": 103.0,
-  "wheel_y_module_mm": 114.3,
+  "wheel_y_module_mm": 114.5,
   "centre_plane_module_mm": -82.30000000000001
  },
  "interface": {
@@ -144,16 +144,16 @@
     [
      -95.0,
      95.0,
-     -77.0,
-     -62.0,
-     2414.0
+     -81.5,
+     -63.0,
+     3286.5
     ],
     [
      -95.0,
      95.0,
-     62.0,
+     63.0,
      77.0,
-     2414.0
+     2384.0
     ]
    ],
    "frame_bbox": [
@@ -161,7 +161,7 @@
     137.0,
     -82.3,
     -1.0,
-    -77.0,
+    -81.5,
     77.0
    ],
    "source": "fivebar.frame_mounts",
@@ -177,12 +177,12 @@
   "frame_to_cheek": [
    {
     "side": "left",
-    "overlap_mm3": 0.0,
+    "overlap_mm3": 44.0,
     "gap_mm": 0.0
    },
    {
     "side": "right",
-    "overlap_mm3": 0.0,
+    "overlap_mm3": 44.0,
     "gap_mm": 0.0
    }
   ],
@@ -546,7 +546,7 @@
     "grams": 76,
     "hours": 3.0,
     "cost_usd": 1.07,
-    "infill": "2 mm walls, 40 % gyroid",
+    "infill": "100 %",
     "how": "PETG, 100 % (never a carbon-filled filament: carbon conducts, and the plate is bonded to the - bus); 4 x M3 inserts; test: > 10 MOhm at 50 V from every lug screw to the plate before power"
    },
    "dcdc_bracket": {
@@ -564,7 +564,7 @@
     "hours": 4.0,
     "cost_usd": 4.91,
     "infill": "100 %",
-    "how": "PA6-CF; two M4 x 10 down into the tray's nuts; the converter on four M3 x 8 through its upright"
+    "how": "PA6-CF; two M4 x 12 down into the power plate's flush nuts; the converter on four M3 x 6 into the upright's inserts"
    },
    "bay_rail_l": {
     "material": "pa6-cf",
@@ -581,7 +581,7 @@
     "hours": 1.7,
     "cost_usd": 2.06,
     "infill": "100 %",
-    "how": "PA6-CF; four M4 x 16 up into the belly's nuts, five M3 inserts, two in its ends"
+    "how": "PA6-CF; four M4 x 20 up into the belly's nuts, five M3 inserts, two in its ends"
    },
    "bay_rail_r": {
     "material": "pa6-cf",
@@ -598,7 +598,7 @@
     "hours": 1.7,
     "cost_usd": 2.06,
     "infill": "100 %",
-    "how": "PA6-CF; four M4 x 16 up into the belly's nuts, five M3 inserts, two in its ends"
+    "how": "PA6-CF; four M4 x 20 up into the belly's nuts, five M3 inserts, two in its ends"
    },
    "adapter_plate_front": {
     "material": "pa6-cf",
@@ -615,7 +615,7 @@
     "hours": 2.1,
     "cost_usd": 2.51,
     "infill": "100 %",
-    "how": "PA6-CF; four M4 x 8 up into the belly's nuts; the adapter's screws into inserts set on arrival"
+    "how": "PA6-CF; four M4 x 12 up into the belly's nuts; the adapter's screws into inserts set on arrival"
    },
    "bay_door_front": {
     "material": "petg",
@@ -649,7 +649,7 @@
     "hours": 2.1,
     "cost_usd": 2.51,
     "infill": "100 %",
-    "how": "PA6-CF; four M4 x 8 up into the belly's nuts; the adapter's screws into inserts set on arrival"
+    "how": "PA6-CF; four M4 x 12 up into the belly's nuts; the adapter's screws into inserts set on arrival"
    },
    "bay_door_rear": {
     "material": "petg",
@@ -846,12 +846,15 @@
  "integrity": {
   "joints": 71,
   "screws": 183,
-  "joints_with_problems": [],
+  "joints_with_problems": [
+   "belly_flange_left",
+   "belly_flange_right"
+  ],
   "floating": {},
   "connectivity_pass": {
-   "P1": true,
-   "P2": true,
-   "P3": true
+   "P1": false,
+   "P2": false,
+   "P3": false
   },
   "clashes": 0
  },
@@ -947,7 +950,44 @@
    ]
   ],
   "poses_past_a_stop": [],
-  "clashes": [],
+  "clashes": [
+   [
+    "L.hip_frame",
+    "cheek_left",
+    44.0,
+    [
+     102.0,
+     0.0
+    ]
+   ],
+   [
+    "L.hip_frame",
+    "cheek_nuts_left",
+    89.0,
+    [
+     102.0,
+     0.0
+    ]
+   ],
+   [
+    "R.hip_frame",
+    "cheek_right",
+    44.0,
+    [
+     102.0,
+     0.0
+    ]
+   ],
+   [
+    "R.hip_frame",
+    "cheek_nuts_right",
+    89.0,
+    [
+     102.0,
+     0.0
+    ]
+   ]
+  ],
   "nearest_moving_mm": [
    [
     "upper_link_front",
@@ -1006,7 +1046,7 @@
    [
     "upper_link_front",
     "shell_front",
-    44.73,
+    38.42,
     [
      102.0,
      0.0
@@ -1015,7 +1055,7 @@
    [
     "upper_link_front",
     "shell_rear",
-    44.73,
+    38.42,
     [
      102.0,
      0.0
@@ -1024,7 +1064,7 @@
    [
     "upper_link_rear",
     "shell_rear",
-    44.73,
+    38.42,
     [
      102.0,
      0.0
@@ -1033,7 +1073,7 @@
    [
     "upper_link_rear",
     "shell_front",
-    44.73,
+    38.42,
     [
      102.0,
      0.0
@@ -1042,7 +1082,7 @@
    [
     "front_link",
     "shell_front",
-    65.79,
+    63.65,
     [
      102.0,
      0.0
@@ -1051,7 +1091,7 @@
    [
     "front_link",
     "shell_rear",
-    65.79,
+    63.65,
     [
      102.0,
      0.0
@@ -1060,7 +1100,7 @@
    [
     "wheel_link",
     "shell_rear",
-    71.68,
+    69.21,
     [
      102.0,
      0.0
@@ -1069,7 +1109,7 @@
    [
     "wheel_link",
     "shell_front",
-    71.68,
+    69.21,
     [
      102.0,
      0.0
@@ -1738,15 +1778,15 @@
      -18.0,
      -153.08,
      -78.08,
-     251.0,
-     279.0
+     337.0,
+     365.0
     ],
     "mass_g": 0,
     "basis": "",
     "group": "deck",
     "stage": "P1",
     "catalog": "",
-    "note": "the turret's DT06-12SA plug and the 30 mm it withdraws (cad/turret.py DT, DT_Z and Geo.dt_y (until exports/turret/mount.json, N5))",
+    "note": "the turret's DT06-12SA plug and the 30 mm it withdraws (exports/turret/mount.json dt12.boxes (plug_body, withdrawal_sweep))",
     "keepout": true
    },
    {
@@ -1775,10 +1815,10 @@
      -86.0,
      86.0,
      246.0,
-     446.0
+     516.6
     ],
-    "mass_g": 1700.0,
-    "basis": "budget 1.7 kg (turret.json: 1.639 kg with 30 balls); docs/turret-next-plan.md 3.1 (proposed head payload budget)",
+    "mass_g": 2573.4,
+    "basis": "budget 2.5734 kg (turret.json: 2.561 kg with 30 balls); exports/turret/mount.json (the budget when larger)",
     "group": "deck",
     "stage": "P2",
     "catalog": "",
@@ -1880,21 +1920,21 @@
  "mass": {
   "P1": {
    "stage": "P1",
-   "total_kg": 33.82,
+   "total_kg": 34.74,
    "com_mm": [
-    3.3,
+    3.2,
     -1.1,
-    -76.7
+    -77.4
    ],
    "groups_kg": {
-    "legs": 21.624,
+    "legs": 22.546,
     "frame": 4.846,
     "compute": 1.513,
     "power": 1.739,
     "deck": 0.83,
     "battery": 3.27
    },
-   "legs_kg": 21.62,
+   "legs_kg": 22.55,
    "body_and_head_kg": 12.2,
    "budget": {
     "robot_kg": 37.0,
@@ -1906,7 +1946,7 @@
     "com_y_mm": 5.0,
     "basis": "D71 (37.0 kg as built, 37.5 kg design; it replaces D69's 35.0 / 35.5 kg); legs 2 x 10.85 kg (leg.json + D53 stops + the D69 wheel at its listed 3.53 kg + the clamp hardware), body and head 15.3 kg"
    },
-   "leg_extra": "leg.json 9282 g + 200 g announced for the stops and flanges (D53)",
+   "leg_extra": "leg.json 9943 g (published with the stops in)",
    "levers": [
     {
      "key": "shell_2mm",
@@ -2092,23 +2132,23 @@
   },
   "P3": {
    "stage": "P3",
-   "total_kg": 36.77,
+   "total_kg": 38.56,
    "com_mm": [
-    1.4,
+    0.4,
     -1.0,
-    -49.8
+    -39.7
    ],
    "groups_kg": {
-    "legs": 21.624,
+    "legs": 22.546,
     "frame": 4.98,
     "shell": 1.11,
     "compute": 1.513,
     "power": 1.739,
-    "deck": 2.53,
+    "deck": 3.403,
     "battery": 3.27
    },
-   "legs_kg": 21.62,
-   "body_and_head_kg": 15.14,
+   "legs_kg": 22.55,
+   "body_and_head_kg": 16.02,
    "budget": {
     "robot_kg": 37.0,
     "legs_kg_each": 10.85,
@@ -2119,7 +2159,7 @@
     "com_y_mm": 5.0,
     "basis": "D71 (37.0 kg as built, 37.5 kg design; it replaces D69's 35.0 / 35.5 kg); legs 2 x 10.85 kg (leg.json + D53 stops + the D69 wheel at its listed 3.53 kg + the clamp hardware), body and head 15.3 kg"
    },
-   "leg_extra": "leg.json 9282 g + 200 g announced for the stops and flanges (D53)",
+   "leg_extra": "leg.json 9943 g (published with the stops in)",
    "levers": [
     {
      "key": "shell_2mm",
@@ -2304,18 +2344,18 @@
    ],
    "gate": {
     "ceiling_kg": 37.0,
-    "gap_kg": -0.23,
+    "gap_kg": 1.56,
     "open_scheduled_g": -500,
-    "with_scheduled_levers_kg": 36.27,
-    "body_and_head_with_levers_kg": 14.64,
-    "leg_each_kg": 10.81,
-    "pass": true,
+    "with_scheduled_levers_kg": 38.06,
+    "body_and_head_with_levers_kg": 15.52,
+    "leg_each_kg": 11.275,
+    "pass": false,
     "on_call_next": [
      "cheeks_rev_b",
      "alu_standoffs",
      "cooler_34mm"
     ],
-    "margin_kg": 0.73,
+    "margin_kg": -1.06,
     "on_call_open_g": -2301,
     "rule": "the P3 ledger with every scheduled lever taken (the open ones at the plan's grams) under the 37.0 kg ceiling, each leg under 10.85 kg and the body and head under 15.3 kg (D71); over it, the on-call levers go in order before the next order, each with the user's or the coordinator's word"
    }

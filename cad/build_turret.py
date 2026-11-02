@@ -78,7 +78,9 @@ TURRET_BOUGHT = {
     'hw_screw_m3x6': ('screw_m3x6', 20), 'hw_screw_m3x8': ('turret_screw_m3x8', 19), 'hw_screw_m3x10': ('turret_screw_m3x10', 2),
     'hw_screw_m3x16': ('turret_screw_m3x16', 4),
     'hw_flat_m3x14': ('turret_screw_m3x14_flat_ss', 4), 'hw_button_m3x8': ('turret_screw_m3x8_button', 8), 'hw_flat_m3x6': ('turret_screw_m3x6_flat', 2),
-    'hw_screw_m4x10': ('turret_screw_m4x10', 8), 'hw_flat_m3x8': ('turret_screw_m3x8_flat', 4),
+    'hw_screw_m4x10': ('turret_screw_m4x10', 4), 'hw_flat_m3x8': ('turret_screw_m3x8_flat', 4),
+    # the tilt yoke on the turntable: M4 x 12, 6 mm (1.5 d) into the inserts (an M4 x 10 kept 4 mm, 1.0 d: #137)
+    'hw_screw_m4x12': ('screw_m4x12_socket', 4),
     'hw_flat_m3x10': ('turret_screw_m3x10_flat', 3), 'hw_setscrew_m3x6': ('turret_setscrew_m3x6_nylon', 4),
     'hw_insert_m3': ('insert_m3', 41), 'hw_insert_m4': ('turret_insert_m4', 9),
     'hw_washer_m3_large': ('washer_m3_large', 3),
@@ -135,6 +137,7 @@ BENCH_BOUGHT = [('amass-xt60e-m', 1), ('turret_screw_m2_5x8', 2), ('turret_nut_m
                 ('fuse-holder-5x20-panel', 1), ('littelfuse-0477005-mxp', 2), ('switchcraft-tb3m', 1), ('switchcraft-ta3flx', 1),
                 ('pendant-hold-to-run', 1),
                 ('usb-can-canable2', 1), ('proto-board-70x50', 1), ('bumper-feet-12.7', 4), ('insert_m5', 4), ('insert_m3', 8),
+                ('turret_insert_m3_short', 2),       # the dock adapter's 2 x M3: 4.3 mm inserts in the 6 mm top plate (#137)
                 ('turret_screw_m3x8', 4),
                 # D66: the stand runs the turret on one FLEXVOLT pack in 20 V mode in a dock, to the turret's XT30
                 ('dewalt-dcb609', 1), ('dewalt-20v-dock-adapter-12awg', 1), ('xt30_m', 1), ('fuse_holder_mini_inline', 1), ('fuse_mini58_20a', 1),
