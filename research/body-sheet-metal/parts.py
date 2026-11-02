@@ -97,8 +97,26 @@ def deck_2b(m) -> bs.SheetPart:
     for (x, y) in bsh.duct_tabs():
         p.features.append(bs.Feature('pem', 'base', bf.tray_uv(x, y), bp.PEM['S-M3-0']['H'], spec='S-M3-0',
                                      note='fan duct tab (was tapped in the turret plate)'))
+    for f in p.features:                             # the riser's four feet: a PEM SS-M5-0 each, pressed from the underside
+        if f.note.startswith('riser'):               # (its head below, the riser on the flush face): the nut of D74's
+            f.kind, f.spec, f.d = 'pem', 'SS-M5-0', bp.PEM['SS-M5-0']['H']        # sleeved through-bolt (PR #145: 782 N a foot)
+            f.note = 'riser foot: PEM SS-M5-0 from below, the nut of a sleeved M5 through-bolt from the riser (D74)'
     p.note = ('the deck in 1/8 in 5052 with 20 mm lips on its two long sides (2 bends); the turret plate (D59) folded in: '
-              'the riser bolts straight through the deck, the duct tabs into three PEM S-M3-0')
+              'the riser bolts straight through the deck into four PEM SS-M5-0, the duct tabs into three PEM S-M3-0')
+    return p
+
+
+def cheek_pem() -> bs.SheetPart:
+    """Today's cheek with a PEM SS-M5-0 at each of its six hip-frame holes, pressed from the gap side (the head in the
+    gap, the hip frame on the flush face): the nut of D74's sleeved M5 through-bolt from the leg's face, so nothing is
+    held in the 31 mm gap and the nut cannot turn."""
+    p = copy.deepcopy(bf.cheek_part())
+    p.name = 'cheek_pem'
+    for f in p.features:
+        if 'hip frame' in f.note:
+            f.kind, f.spec, f.d = 'pem', 'SS-M5-0', bp.PEM['SS-M5-0']['H']
+            f.note = 'hip frame: PEM SS-M5-0 from the gap side, the nut of a sleeved M5 through-bolt from the leg (D74)'
+    p.note = (p.note or '') + '; option A: six more SS-M5-0 at the hip-frame holes'
     return p
 
 
@@ -178,8 +196,8 @@ def options(m=None) -> dict:
     t = today(m)
     # the floor tray keeps its four bends: with lips on its long sides only it misses T1 (SF 1.74 against 2.0, 1.01 mm;
     # fea/A-tray2b, the first run of option A), so tray_2b is priced and checked but is in no option
-    a = {k: v for k, v in t.items() if k not in ('deck', 'turret_plate')}
-    a.update({'deck_2b': deck_2b(m)})
+    a = {k: v for k, v in t.items() if k not in ('cheek', 'deck', 'turret_plate')}
+    a.update({'cheek_pem': cheek_pem(), 'deck_2b': deck_2b(m)})
     b = {k: v for k, v in a.items() if k not in ('belly_plate', 'bay_floor', 'bay_side')}
     b.update({'keel_half': keel_half(m), 'strap': strap()})
     c = {k: v for k, v in b.items() if k not in ('floor_tray', 'deck_2b', 'compute_pallet', 'power_plate')}

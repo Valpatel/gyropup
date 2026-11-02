@@ -31,7 +31,7 @@ INK, INK2, MUTED, GRID, SURFACE = '#0b0b0b', '#52514e', '#8a8984', '#e6e5e1', '#
 METAL, PRINT = '#b9b8b2', '#f1dfc0'          # unchanged sheet metal; printed parts
 FAIL = '#d03b3b'
 OPT = {'today': '#2a78d6', 'A': '#eb6834', 'B': '#1baf7a', 'C': '#eda100'}     # categorical slots 1-4, fixed order
-NAME = {'today': 'Today', 'A': 'A  two-bend plates', 'B': 'B  riveted keel', 'C': 'C  printed plates'}
+NAME = {'today': 'Today', 'A': 'A  PEM plates', 'B': 'B  riveted keel', 'C': 'C  printed plates'}
 ORDER = ['today', 'A', 'B', 'C']
 
 
@@ -75,10 +75,11 @@ def _section(ax, opt):
         tt, dt, fc_td, h = 8.0, 8.0, PRINT, '////'
     else:
         tt, dt, fc_td, h = 3.175, (3.175 if opt in ('A', 'B') else 2.54), (c if opt in ('A', 'B') else METAL), None
-    _box(ax, -127, 127, zt, zt + tt, fc_td, hatch=h)
+    fc_t = fc_td if opt == 'C' else METAL                   # the tray keeps its four bends except in C
+    _box(ax, -127, 127, zt, zt + tt, fc_t, hatch=h)
     _box(ax, -127, 127, top - dt, top, fc_td, hatch=h)
     for s in (1, -1):
-        _box(ax, s * 127, s * (127 - tt), zt - 15, zt + tt, fc_td, hatch=h)
+        _box(ax, s * 127, s * (127 - tt), zt - 15, zt + tt, fc_t, hatch=h)
         _box(ax, s * 127, s * (127 - dt), top - 20, top, fc_td, hatch=h)
         _box(ax, s * 95, s * 107, zt + tt, top - dt, PRINT, hatch='////')        # deck posts (printed PA6-CF)
     # compute pallet and power plate (stand-ins on the tray)
@@ -119,8 +120,8 @@ def _section(ax, opt):
 def fig_sections():
     fig = _fig(13.0, 6.2)
     notes = {'today': ['10 SendCutSend parts, 14 bends', 'tray + deck: 4 bends, corner reliefs', 'belly plate, bay floor, 2 bay sides', 'turret plate under the deck'],
-             'A': ['9 parts, 10 bends', 'tray + deck: 2 bends each (long sides)', 'deck 1/8 in 5052, turret plate folded in', 'bay as today'],
-             'B': ['8 parts, 12 bends', 'A, plus the bay + belly as two identical', 'C-channels riveted to two flat straps', '32 x 1/8 in blind rivets'],
+             'A': ['9 parts, 12 bends, 81 PEM', 'deck 1/8 in, 2 bends, turret plate folded in', 'PEM nuts: 6 a cheek (hip frame), 4 at the riser', 'tray keeps 4 bends (T1); bay as today'],
+             'B': ['8 parts, 14 bends', 'A, plus the bay + belly as two identical', 'C-channels riveted to two flat straps', '32 x 1/8 in blind rivets'],
              'C': ['5 parts, 8 bends', 'deck, tray, pallet, power plate printed', 'in PA6-CF (8 / 6 mm solid)', 'keel as B; turret plate back']}
     for i, o in enumerate(ORDER):
         ax = fig.add_axes([0.005 + i * 0.25, 0.14, 0.24, 0.78])
@@ -147,7 +148,7 @@ def fig_cost():
             v = r['price_line'] or 0.0
             ax.barh(y, v, left=left, height=0.62, color=OPT[o], alpha=1.0 - 0.13 * min(j, 6), edgecolor=SURFACE, linewidth=2)
             if v > 40:
-                ax.text(left + v / 2, y, {'compute_pallet': 'pallet', 'power_plate': 'power', 'turret_plate': 'turret', 'belly_plate': 'belly', 'floor_tray_2b': 'tray', 'floor_tray': 'tray', 'deck_2b': 'deck', 'bay_floor': 'bay floor', 'bay_side': 'sides', 'keel_half': 'keel halves', 'bus_bar': 'bus'}.get(r['part'], r['part']), ha='center', va='center',
+                ax.text(left + v / 2, y, {'cheek': 'cheeks', 'cheek_pem': 'cheeks', 'compute_pallet': 'pallet', 'power_plate': 'power', 'turret_plate': 'turret', 'belly_plate': 'belly', 'floor_tray_2b': 'tray', 'floor_tray': 'tray', 'deck_2b': 'deck', 'bay_floor': 'bay floor', 'bay_side': 'sides', 'keel_half': 'keel halves', 'bus_bar': 'bus'}.get(r['part'], r['part']), ha='center', va='center',
                         fontsize=6.5, color=INK if j > 1 else SURFACE)
             left += v
         tot = S['options'][o]['summary']['sheet_usd']
@@ -167,7 +168,7 @@ def fig_cost():
 def fig_counts():
     metrics = [('plates_unique', 'unique SendCutSend parts', lambda s: s['plates_unique']),
                ('bends', 'bends (all pieces)', lambda s: s['bends']),
-               ('pem', 'PEM hardware pressed by SendCutSend', lambda s: s['pem']),
+               ('pem', 'PEM hardware (arrives pressed in)', lambda s: s['pem']),
                ('fast', 'unique bought fasteners', lambda s: s['unique_bought_fasteners']),
                ('steps', 'build steps (parts + screws + inserts + rivets)', lambda s: s['build_steps']['total']),
                ('hours', 'print hours (body)', lambda s: s['print_hours'])]
@@ -184,7 +185,7 @@ def fig_counts():
         ax.set_yticks([])
         ax.set_ylim(0, max(vals) * 1.22)
         ax.set_title(title, fontsize=9, color=INK, loc='left')
-    fig.text(0.03, 0.005, 'Lower is simpler. PEM nuts and standoffs come pressed in, so they add no build step; rivets and '
+    fig.text(0.03, 0.005, 'Lower is simpler, except PEM hardware: it arrives pressed in, so it adds no build step; rivets and '
              'heat-set inserts do. Print hours: the body print plan, with the new printed parts at its own PA6-CF rate.',
              fontsize=7.5, color=INK2)
     _save(fig, 'fig-counts.png')
@@ -203,19 +204,22 @@ def fig_fea():
     for c in cases:
         for o in ORDER:
             r = (fea.get(o) or {}).get('results', {}).get(c)
-            if not r or not r.get('sf') or not r.get('target'):
-                continue
+            if not r or not r.get('sf') or not r.get('target') or r.get('run') != o:
+                continue                            # each option's own runs only: a case it inherits is the other's dot
             rows.append((c, o, r['sf'] / r['target'], r))
             if r.get('deflection_mm') is not None:
-                rows.append((c + ' deflection', o, t['deck_mm'] / r['deflection_mm'], r))
+                rows.append((c + ', deflection', o, t['deck_mm'] / r['deflection_mm'], r))
             if r.get('twist_deg') is not None:
-                rows.append((c + ' twist', o, t['twist_deg'] / r['twist_deg'], r))
+                rows.append((c + ', twist angle', o, t['twist_deg'] / r['twist_deg'], r))
+    r2 = (fea.get('A-tray2b') or {}).get('results', {}).get('T1-tray')
+    if r2 and r2.get('sf') and r2.get('target'):
+        rows.append(('T1-tray, two-bend tray', 'A', r2['sf'] / r2['target'], r2))
     labels = []
     for c, _, _, _ in rows:
         if c not in labels:
             labels.append(c)
     fig = _fig(10.0, 0.42 * len(labels) + 1.4)
-    ax = fig.add_axes([0.24, 0.12, 0.72, 0.80])
+    ax = fig.add_axes([0.24, 0.17, 0.72, 0.76])
     _style(ax)
     ax.set_xscale('log')
     ax.axvline(1.0, color=INK2, lw=1)
@@ -232,12 +236,14 @@ def fig_fea():
     ax.set_xticklabels(['0.25', '0.5', '1', '2', '4', '8', '16'], fontsize=8, color=INK2)
     ax.grid(axis='x', color=GRID, lw=0.6)
     ax.set_axisbelow(True)
+    fig.text(0.24, 0.035, 'An option shows only the cases it changes: A the deck, B the spine (its keel), C the deck and tray; '
+             'the rest are today\'s or the option\'s it builds on.', fontsize=7.5, color=INK2)
     ax.set_xlabel('margin over the body plan\'s target, log scale (strength: SF / target; deck deflection: 0.5 mm / '
                   'deflection; twist: 0.1 deg / twist). Under 1 misses.', fontsize=8, color=INK2)
     for o in ORDER:
         ax.scatter([], [], s=34, color=OPT[o], label=NAME[o])
     ax.legend(loc='lower right', fontsize=7.5, frameon=False, labelcolor=INK)
-    ax.set_title('FEA at 18.75 kg a leg: every option against the same cases, loads and 4 mm mesh, on one host',
+    ax.set_title('FEA at 18.75 kg a leg: every option on the same cases, loads and mesh (4 mm; D2 2 mm), on one host',
                  fontsize=10, color=INK, loc='left')
     _save(fig, 'fig-fea.png')
 

@@ -1,0 +1,321 @@
+{
+ "targets": {
+  "sf": 2.0,
+  "sf_fault": 1.2,
+  "deck_mm": 0.5,
+  "twist_deg": 0.1,
+  "sf_turret_fall": 2.0
+ },
+ "results": {
+  "D1-hand-front": {
+   "part": "deck D1 front",
+   "material": "5052-H32 aluminium",
+   "material_note": "yield strength (ASM); used for the whole box (6061-T6 parts are stronger)",
+   "material_source": null,
+   "material_direction": null,
+   "material_data": {
+    "key": null,
+    "name": "5052-H32 aluminium",
+    "E_mpa": 70300.0,
+    "E_direction": null,
+    "nu": 0.33,
+    "strength_mpa": 193.0,
+    "strength_xy_mpa": null,
+    "strength_z_mpa": null,
+    "density_g_cm3": 2.68,
+    "source": null,
+    "note": "yield strength (ASM); used for the whole box (6061-T6 parts are stronger)",
+    "constants_hash": "b5d2ee7c6d657031"
+   },
+   "mesh": {
+    "nodes": 74572,
+    "tets": 258141,
+    "size_mm": 3.0,
+    "element": "P2 tetrahedra",
+    "mesher": {
+     "gmsh": "4.15.2",
+     "occ": "7.8.1",
+     "build": {
+      "os": "Linux64-sdk",
+      "date": "20260324"
+     },
+     "library": {
+      "file": "libgmsh.so.4.15",
+      "sha256_16": "9db3090d3b720c57"
+     },
+     "platform": {
+      "system": "Linux",
+      "machine": "x86_64",
+      "python": "3.12.3"
+     }
+    },
+    "refine": [],
+    "slivers": {
+     "faces": [],
+     "edges": []
+    },
+    "peak": {
+     "stress_mpa": 83.59,
+     "at_mm": [
+      131.0,
+      98.0,
+      212.825
+     ],
+     "where": "sharp inside corner (no fillet: the peak there rises as the mesh is refined)",
+     "element_mm": 3.021,
+     "wall_mm": 3.175,
+     "elements_across": 1.1,
+     "wall_resolved": false,
+     "radius_mm": null,
+     "radius_resolved": null,
+     "note": "the design peak sits in a 3.2 mm wall only 1.1 elements thick: a peak in a wall one or two elements thick is not a result. Mesh finer there (refine=[(point, radius, size)], a size under 1.1 mm) and check it with converge(); the peak is at a sharp re-entrant corner, which is singular: its stress rises with every refinement and never converges. Model the fillet the part will have"
+    }
+   },
+   "loads": [
+    {
+     "kind": "force",
+     "n": [
+      0.0,
+      0.0,
+      -300.0
+     ],
+     "area_mm2": 7739.7
+    }
+   ],
+   "max_displacement_mm": 0.3865,
+   "probe_displacement_mm": [
+    0.0008,
+    0.0001,
+    -0.322
+   ],
+   "max_von_mises_mpa": 177.3,
+   "von_mises_design_mpa": 83.59,
+   "safety_factor": 2.31,
+   "assumptions": "linear elastic, small deflection, isotropic; faces clamped where fixed; no contact, preload or buckling",
+   "stiffness_n_per_mm": 931.6,
+   "case": "D1-hand-front",
+   "rare": false,
+   "why": "300 N down on the deck at the front (a child leaning on it)",
+   "deflection_mm": 0.322,
+   "pass_deflection": true,
+   "deck_peak_mpa": 42.5,
+   "deck_peak_at_mm": [
+    134.0,
+    93.9,
+    215.2
+   ],
+   "deck_sf": 4.54,
+   "plate_peak_mpa": 11.7,
+   "plate_sf": 23.5,
+   "sf_by_part": 4.54,
+   "post_corner_peak_mpa": 83.6,
+   "post_corner_sf": 2.31,
+   "post_corner_pass": true,
+   "plate_clamp_peak_mpa": 26.7,
+   "plate_clamp_sf": 7.23,
+   "note_by_part": "the deck and riser at 5052-H32's 193 MPa, the turret plate at 6061-T6's 276 MPa; the deck within 4 mm of a post pad (a rigid-clamp corner) reported apart, against the abuse target 1.2",
+   "picture": "research/body-sheet-metal/fea/A-mesh3/D1-hand-front.png",
+   "target_sf": 2.0,
+   "corner_check": "reported only (finer than the 4 mm reference)",
+   "pass": true,
+   "hot_spots": [
+    [
+     83.6,
+     132.3,
+     97.0,
+     213.6,
+     "plates"
+    ],
+    [
+     79.6,
+     130.2,
+     -96.9,
+     213.6,
+     "plates"
+    ],
+    [
+     42.9,
+     142.2,
+     -96.5,
+     213.6,
+     "plates"
+    ],
+    [
+     41.1,
+     148.8,
+     97.6,
+     213.6,
+     "plates"
+    ]
+   ]
+  },
+  "D1-hand-riser": {
+   "part": "deck D1 riser",
+   "material": "5052-H32 aluminium",
+   "material_note": "yield strength (ASM); used for the whole box (6061-T6 parts are stronger)",
+   "material_source": null,
+   "material_direction": null,
+   "material_data": {
+    "key": null,
+    "name": "5052-H32 aluminium",
+    "E_mpa": 70300.0,
+    "E_direction": null,
+    "nu": 0.33,
+    "strength_mpa": 193.0,
+    "strength_xy_mpa": null,
+    "strength_z_mpa": null,
+    "density_g_cm3": 2.68,
+    "source": null,
+    "note": "yield strength (ASM); used for the whole box (6061-T6 parts are stronger)",
+    "constants_hash": "b5d2ee7c6d657031"
+   },
+   "mesh": {
+    "nodes": 74572,
+    "tets": 258141,
+    "size_mm": 3.0,
+    "element": "P2 tetrahedra",
+    "mesher": {
+     "gmsh": "4.15.2",
+     "occ": "7.8.1",
+     "build": {
+      "os": "Linux64-sdk",
+      "date": "20260324"
+     },
+     "library": {
+      "file": "libgmsh.so.4.15",
+      "sha256_16": "9db3090d3b720c57"
+     },
+     "platform": {
+      "system": "Linux",
+      "machine": "x86_64",
+      "python": "3.12.3"
+     }
+    },
+    "refine": [],
+    "slivers": {
+     "faces": [],
+     "edges": []
+    },
+    "peak": {
+     "stress_mpa": 53.27,
+     "at_mm": [
+      -131.0,
+      98.0,
+      212.825
+     ],
+     "where": "sharp inside corner (no fillet: the peak there rises as the mesh is refined)",
+     "element_mm": 2.949,
+     "wall_mm": 3.175,
+     "elements_across": 1.1,
+     "wall_resolved": false,
+     "radius_mm": null,
+     "radius_resolved": null,
+     "note": "the design peak sits in a 3.2 mm wall only 1.1 elements thick: a peak in a wall one or two elements thick is not a result. Mesh finer there (refine=[(point, radius, size)], a size under 1.1 mm) and check it with converge(); the peak is at a sharp re-entrant corner, which is singular: its stress rises with every refinement and never converges. Model the fillet the part will have"
+    }
+   },
+   "loads": [
+    {
+     "kind": "force",
+     "n": [
+      0.0,
+      0.0,
+      -300.0
+     ],
+     "area_mm2": 13302.3
+    }
+   ],
+   "max_displacement_mm": 0.2535,
+   "probe_displacement_mm": [
+    0.0246,
+    0.0002,
+    -0.1973
+   ],
+   "max_von_mises_mpa": 122.58,
+   "von_mises_design_mpa": 53.27,
+   "safety_factor": 3.62,
+   "assumptions": "linear elastic, small deflection, isotropic; faces clamped where fixed; no contact, preload or buckling",
+   "stiffness_n_per_mm": 1520.5,
+   "case": "D1-hand-riser",
+   "rare": false,
+   "why": "300 N down on the deck at the riser (a child leaning on it)",
+   "deflection_mm": 0.197,
+   "pass_deflection": true,
+   "deck_peak_mpa": 27.9,
+   "deck_peak_at_mm": [
+    -138.1,
+    85.0,
+    213.1
+   ],
+   "deck_sf": 6.92,
+   "plate_peak_mpa": 12.3,
+   "plate_sf": 22.4,
+   "sf_by_part": 6.92,
+   "post_corner_peak_mpa": 53.3,
+   "post_corner_sf": 3.62,
+   "post_corner_pass": true,
+   "plate_clamp_peak_mpa": 33.0,
+   "plate_clamp_sf": 5.84,
+   "note_by_part": "the deck and riser at 5052-H32's 193 MPa, the turret plate at 6061-T6's 276 MPa; the deck within 4 mm of a post pad (a rigid-clamp corner) reported apart, against the abuse target 1.2",
+   "picture": "research/body-sheet-metal/fea/A-mesh3/D1-hand-riser.png",
+   "target_sf": 2.0,
+   "corner_check": "reported only (finer than the 4 mm reference)",
+   "pass": true,
+   "hot_spots": [
+    [
+     53.3,
+     -132.6,
+     97.3,
+     213.6,
+     "plates"
+    ],
+    [
+     47.5,
+     -132.7,
+     -97.4,
+     213.6,
+     "plates"
+    ],
+    [
+     33.0,
+     12.1,
+     58.8,
+     215.7,
+     "plates"
+    ],
+    [
+     30.1,
+     -90.7,
+     60.4,
+     215.7,
+     "plates"
+    ],
+    [
+     29.1,
+     130.2,
+     -96.9,
+     213.6,
+     "plates"
+    ],
+    [
+     28.4,
+     132.3,
+     97.0,
+     213.6,
+     "plates"
+    ]
+   ]
+  }
+ },
+ "option": "A",
+ "mesh_mm": 3.0,
+ "provenance": {
+  "host_role": "the x86 mechanical compute host",
+  "arch": "x86_64",
+  "mesher": "gmsh 4.15.2",
+  "toolkit": "cad-agent 7c5c44d",
+  "source": "597751c",
+  "python": "3.12.3",
+  "date": "2026-11-01"
+ },
+ "seconds": 1360
+}

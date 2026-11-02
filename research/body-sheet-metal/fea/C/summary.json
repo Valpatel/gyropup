@@ -1,0 +1,487 @@
+{
+ "targets": {
+  "sf": 2.0,
+  "sf_fault": 1.2,
+  "deck_mm": 0.5,
+  "twist_deg": 0.1,
+  "sf_turret_fall": 2.0
+ },
+ "results": {
+  "D1-hand-front": {
+   "part": "deck D1 front",
+   "material": "PA6-CF along the layers (humid)",
+   "material_note": "Bambu PA6-CF TDS V3.0: dry X-Y tensile modulus 4430 MPa x0.290 humid and strength 102 MPa x0.500 humid (Polymaker PA6-CF20 V1.1 wet / dry), each x0.8 print. For parts printed so their main stress runs in the layers",
+   "material_source": "bambu-pa6-cf-tds",
+   "material_direction": "X-Y",
+   "material_data": {
+    "key": "pa6_cf_xy",
+    "name": "PA6-CF along the layers (humid)",
+    "E_mpa": 1029.2023852254965,
+    "E_direction": "X-Y",
+    "nu": 0.35,
+    "strength_mpa": 40.83732845379689,
+    "strength_xy_mpa": 40.83732845379689,
+    "strength_z_mpa": 18.133333333333333,
+    "density_g_cm3": 1.09,
+    "source": "bambu-pa6-cf-tds",
+    "note": "Bambu PA6-CF TDS V3.0: dry X-Y tensile modulus 4430 MPa x0.290 humid and strength 102 MPa x0.500 humid (Polymaker PA6-CF20 V1.1 wet / dry), each x0.8 print. For parts printed so their main stress runs in the layers",
+    "constants_hash": "b0989f2b1b1c8bdc"
+   },
+   "mesh": {
+    "nodes": 68723,
+    "tets": 265795,
+    "size_mm": 4.0,
+    "element": "P2 tetrahedra",
+    "mesher": {
+     "gmsh": "4.15.2",
+     "occ": "7.8.1",
+     "build": {
+      "os": "Linux64-sdk",
+      "date": "20260324"
+     },
+     "library": {
+      "file": "libgmsh.so.4.15",
+      "sha256_16": "9db3090d3b720c57"
+     },
+     "platform": {
+      "system": "Linux",
+      "machine": "x86_64",
+      "python": "3.12.3"
+     }
+    },
+    "refine": [],
+    "slivers": {
+     "faces": [
+      {
+       "tag": 316,
+       "kind": "Cylinder",
+       "area_mm2": 0.823856,
+       "width_mm": 0.239878,
+       "under_mm2": 0.16,
+       "under_mm": 0.4,
+       "why": "narrow",
+       "center_mm": [
+        -64.558,
+        55.838,
+        205.912
+       ]
+      }
+     ],
+     "edges": [
+      {
+       "tag": 573,
+       "length_mm": 0.01,
+       "under_mm": 0.4,
+       "center_mm": [
+        21.379,
+        44.0,
+        207.495
+       ]
+      },
+      {
+       "tag": 575,
+       "length_mm": 0.01,
+       "under_mm": 0.4,
+       "center_mm": [
+        11.0,
+        58.763,
+        207.495
+       ]
+      },
+      {
+       "tag": 787,
+       "length_mm": 0.01,
+       "under_mm": 0.4,
+       "center_mm": [
+        11.0,
+        -58.763,
+        207.495
+       ]
+      },
+      {
+       "tag": 789,
+       "length_mm": 0.01,
+       "under_mm": 0.4,
+       "center_mm": [
+        21.379,
+        -44.0,
+        207.495
+       ]
+      },
+      {
+       "tag": 840,
+       "length_mm": 0.259482,
+       "under_mm": 0.4,
+       "center_mm": [
+        -64.558,
+        55.838,
+        207.5
+       ]
+      },
+      {
+       "tag": 921,
+       "length_mm": 0.259482,
+       "under_mm": 0.4,
+       "center_mm": [
+        -64.558,
+        55.838,
+        204.325
+       ]
+      }
+     ]
+    },
+    "peak": {
+     "stress_mpa": 17.76,
+     "at_mm": [
+      131.0,
+      98.0,
+      208.0
+     ],
+     "where": "sharp inside corner (no fillet: the peak there rises as the mesh is refined)",
+     "element_mm": 4.275,
+     "wall_mm": 8.0,
+     "elements_across": 1.9,
+     "wall_resolved": false,
+     "radius_mm": null,
+     "radius_resolved": null,
+     "note": "the design peak sits in a 8.0 mm wall only 1.9 elements thick: a peak in a wall one or two elements thick is not a result. Mesh finer there (refine=[(point, radius, size)], a size under 2.7 mm) and check it with converge(); the peak is at a sharp re-entrant corner, which is singular: its stress rises with every refinement and never converges. Model the fillet the part will have"
+    }
+   },
+   "loads": [
+    {
+     "kind": "force",
+     "n": [
+      0.0,
+      0.0,
+      -300.0
+     ],
+     "area_mm2": 7736.0
+    }
+   ],
+   "max_displacement_mm": 2.2121,
+   "probe_displacement_mm": [
+    0.0002,
+    0.0004,
+    -1.9376
+   ],
+   "max_von_mises_mpa": 41.25,
+   "von_mises_design_mpa": 17.76,
+   "safety_factor": 2.3,
+   "assumptions": "linear elastic, small deflection, isotropic: E 1029.2 MPa, a modulus in the layer plane (X-Y), and strength 40.8373 MPa everywhere (Bambu PA6-CF TDS V3.0: dry X-Y tensile modulus 4430 MPa x0.290 humid and strength 102 MPa x0.500 humid (Polymaker PA6-CF20 V1.1 wet / dry), each x0.8 print. For parts printed so their main stress runs in the layers), though a printed part is not isotropic; faces clamped where fixed; no contact, preload or buckling",
+   "stiffness_n_per_mm": 154.8,
+   "case": "D1-hand-front",
+   "rare": false,
+   "why": "300 N down on the deck at the front (a child leaning on it), the turret plate under the riser (D59)",
+   "deflection_mm": 1.938,
+   "pass_deflection": false,
+   "deck_peak_mpa": 9.0,
+   "deck_peak_at_mm": [
+    145.4,
+    0.3,
+    208.5
+   ],
+   "deck_sf": 4.55,
+   "plate_peak_mpa": 3.9,
+   "plate_sf": 71.6,
+   "sf_by_part": 4.55,
+   "post_corner_peak_mpa": 17.8,
+   "post_corner_sf": 2.3,
+   "post_corner_pass": true,
+   "plate_clamp_peak_mpa": 5.3,
+   "plate_clamp_sf": 7.75,
+   "note_by_part": "the deck and riser at 5052-H32's 193 MPa, the turret plate at 6061-T6's 276 MPa; the deck within 4 mm of a post pad (a rigid-clamp corner) reported apart, against the abuse target 1.2",
+   "picture": "research/body-sheet-metal/fea/C/D1-hand-front.png",
+   "target_sf": 2.0,
+   "corner_check": "judged (4 mm reference mesh)",
+   "pass": true,
+   "hot_spots": [
+    [
+     17.8,
+     132.6,
+     96.8,
+     209.0,
+     "plates"
+    ],
+    [
+     17.7,
+     132.6,
+     -96.8,
+     209.0,
+     "plates"
+    ],
+    [
+     9.0,
+     145.4,
+     0.3,
+     208.5,
+     "plates"
+    ],
+    [
+     8.5,
+     147.9,
+     96.8,
+     209.0,
+     "plates"
+    ],
+    [
+     8.4,
+     147.7,
+     -96.8,
+     209.0,
+     "plates"
+    ],
+    [
+     6.9,
+     106.5,
+     0.7,
+     208.9,
+     "plates"
+    ]
+   ]
+  },
+  "D1-hand-riser": {
+   "part": "deck D1 riser",
+   "material": "PA6-CF along the layers (humid)",
+   "material_note": "Bambu PA6-CF TDS V3.0: dry X-Y tensile modulus 4430 MPa x0.290 humid and strength 102 MPa x0.500 humid (Polymaker PA6-CF20 V1.1 wet / dry), each x0.8 print. For parts printed so their main stress runs in the layers",
+   "material_source": "bambu-pa6-cf-tds",
+   "material_direction": "X-Y",
+   "material_data": {
+    "key": "pa6_cf_xy",
+    "name": "PA6-CF along the layers (humid)",
+    "E_mpa": 1029.2023852254965,
+    "E_direction": "X-Y",
+    "nu": 0.35,
+    "strength_mpa": 40.83732845379689,
+    "strength_xy_mpa": 40.83732845379689,
+    "strength_z_mpa": 18.133333333333333,
+    "density_g_cm3": 1.09,
+    "source": "bambu-pa6-cf-tds",
+    "note": "Bambu PA6-CF TDS V3.0: dry X-Y tensile modulus 4430 MPa x0.290 humid and strength 102 MPa x0.500 humid (Polymaker PA6-CF20 V1.1 wet / dry), each x0.8 print. For parts printed so their main stress runs in the layers",
+    "constants_hash": "b0989f2b1b1c8bdc"
+   },
+   "mesh": {
+    "nodes": 68723,
+    "tets": 265795,
+    "size_mm": 4.0,
+    "element": "P2 tetrahedra",
+    "mesher": {
+     "gmsh": "4.15.2",
+     "occ": "7.8.1",
+     "build": {
+      "os": "Linux64-sdk",
+      "date": "20260324"
+     },
+     "library": {
+      "file": "libgmsh.so.4.15",
+      "sha256_16": "9db3090d3b720c57"
+     },
+     "platform": {
+      "system": "Linux",
+      "machine": "x86_64",
+      "python": "3.12.3"
+     }
+    },
+    "refine": [],
+    "slivers": {
+     "faces": [
+      {
+       "tag": 316,
+       "kind": "Cylinder",
+       "area_mm2": 0.823856,
+       "width_mm": 0.239878,
+       "under_mm2": 0.16,
+       "under_mm": 0.4,
+       "why": "narrow",
+       "center_mm": [
+        -64.558,
+        55.838,
+        205.912
+       ]
+      }
+     ],
+     "edges": [
+      {
+       "tag": 573,
+       "length_mm": 0.01,
+       "under_mm": 0.4,
+       "center_mm": [
+        21.379,
+        44.0,
+        207.495
+       ]
+      },
+      {
+       "tag": 575,
+       "length_mm": 0.01,
+       "under_mm": 0.4,
+       "center_mm": [
+        11.0,
+        58.763,
+        207.495
+       ]
+      },
+      {
+       "tag": 787,
+       "length_mm": 0.01,
+       "under_mm": 0.4,
+       "center_mm": [
+        11.0,
+        -58.763,
+        207.495
+       ]
+      },
+      {
+       "tag": 789,
+       "length_mm": 0.01,
+       "under_mm": 0.4,
+       "center_mm": [
+        21.379,
+        -44.0,
+        207.495
+       ]
+      },
+      {
+       "tag": 840,
+       "length_mm": 0.259482,
+       "under_mm": 0.4,
+       "center_mm": [
+        -64.558,
+        55.838,
+        207.5
+       ]
+      },
+      {
+       "tag": 921,
+       "length_mm": 0.259482,
+       "under_mm": 0.4,
+       "center_mm": [
+        -64.558,
+        55.838,
+        204.325
+       ]
+      }
+     ]
+    },
+    "peak": {
+     "stress_mpa": 13.01,
+     "at_mm": [
+      -131.0,
+      -98.0,
+      208.0
+     ],
+     "where": "sharp inside corner (no fillet: the peak there rises as the mesh is refined)",
+     "element_mm": 4.274,
+     "wall_mm": 8.0,
+     "elements_across": 1.9,
+     "wall_resolved": false,
+     "radius_mm": null,
+     "radius_resolved": null,
+     "note": "the design peak sits in a 8.0 mm wall only 1.9 elements thick: a peak in a wall one or two elements thick is not a result. Mesh finer there (refine=[(point, radius, size)], a size under 2.7 mm) and check it with converge(); the peak is at a sharp re-entrant corner, which is singular: its stress rises with every refinement and never converges. Model the fillet the part will have"
+    }
+   },
+   "loads": [
+    {
+     "kind": "force",
+     "n": [
+      0.0,
+      0.0,
+      -300.0
+     ],
+     "area_mm2": 13302.2
+    }
+   ],
+   "max_displacement_mm": 1.8054,
+   "probe_displacement_mm": [
+    0.1682,
+    0.0022,
+    -1.3924
+   ],
+   "max_von_mises_mpa": 29.39,
+   "von_mises_design_mpa": 13.01,
+   "safety_factor": 3.14,
+   "assumptions": "linear elastic, small deflection, isotropic: E 1029.2 MPa, a modulus in the layer plane (X-Y), and strength 40.8373 MPa everywhere (Bambu PA6-CF TDS V3.0: dry X-Y tensile modulus 4430 MPa x0.290 humid and strength 102 MPa x0.500 humid (Polymaker PA6-CF20 V1.1 wet / dry), each x0.8 print. For parts printed so their main stress runs in the layers), though a printed part is not isotropic; faces clamped where fixed; no contact, preload or buckling",
+   "stiffness_n_per_mm": 215.5,
+   "case": "D1-hand-riser",
+   "rare": false,
+   "why": "300 N down on the deck at the riser (a child leaning on it), the turret plate under the riser (D59)",
+   "deflection_mm": 1.392,
+   "pass_deflection": false,
+   "deck_peak_mpa": 5.6,
+   "deck_peak_at_mm": [
+    -137.7,
+    84.7,
+    208.5
+   ],
+   "deck_sf": 7.28,
+   "plate_peak_mpa": 3.8,
+   "plate_sf": 71.99,
+   "sf_by_part": 7.28,
+   "post_corner_peak_mpa": 13.0,
+   "post_corner_sf": 3.14,
+   "post_corner_pass": true,
+   "plate_clamp_peak_mpa": 7.3,
+   "plate_clamp_sf": 5.56,
+   "note_by_part": "the deck and riser at 5052-H32's 193 MPa, the turret plate at 6061-T6's 276 MPa; the deck within 4 mm of a post pad (a rigid-clamp corner) reported apart, against the abuse target 1.2",
+   "picture": "research/body-sheet-metal/fea/C/D1-hand-riser.png",
+   "target_sf": 2.0,
+   "corner_check": "judged (4 mm reference mesh)",
+   "pass": true,
+   "hot_spots": [
+    [
+     13.0,
+     -132.8,
+     -97.2,
+     209.0,
+     "plates"
+    ],
+    [
+     11.1,
+     -133.1,
+     96.3,
+     209.0,
+     "plates"
+    ],
+    [
+     7.3,
+     -79.6,
+     -47.5,
+     221.4,
+     "plates"
+    ],
+    [
+     7.1,
+     130.0,
+     -97.5,
+     210.2,
+     "plates"
+    ],
+    [
+     7.1,
+     -83.8,
+     47.2,
+     222.1,
+     "plates"
+    ],
+    [
+     6.9,
+     132.6,
+     96.8,
+     209.0,
+     "plates"
+    ]
+   ]
+  }
+ },
+ "option": "C",
+ "mesh_mm": 4.0,
+ "provenance": {
+  "host_role": "the x86 mechanical compute host",
+  "arch": "x86_64",
+  "mesher": "gmsh 4.15.2",
+  "toolkit": "cad-agent 7c5c44d",
+  "source": "b169a6d",
+  "python": "3.12.3",
+  "date": "2026-11-01",
+  "note": "D1 only: the run was stopped during D2 (60 GB at the 2 mm mesh on a shared host) after D1 decided option C; written by fea.py up to D1, provenance added by hand from the same run"
+ }
+}

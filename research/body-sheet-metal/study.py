@@ -221,16 +221,17 @@ def fasteners_today() -> dict:
 
 
 DELTAS = {
-    # option A: the turret plate's two end screws go; the plate posts' M5 x 10 become M5 x 12 (one length for every M5:
+    # option A: the riser's four foot inserts become PEM SS-M5-0 in the deck (D74's sleeved through-bolts, PR #145's
+    # 782 N a foot); the turret plate's two end screws go; the plate posts' M5 x 10 become M5 x 12 (one length for every M5:
     # 12 - 2.54 = 9.5 mm into an 11 mm pilot through the power plate, 8.8 mm through the tray)
-    'A': {'screw_m5x10_button': ('to', 'screw_m5x12_button')},
+    'A': {'screw_m5x10_button': ('to', 'screw_m5x12_button'), 'insert_m5': -4},
     # option B adds: the bay sides' ten screws into the old floor's flange nuts go, the rails' eight M4 x 20 into the belly
     # plate's nuts go (the rails screw to the keel's web, as they did to the side plates), 32 blind rivets join the straps
     'B': {'screw_m3x6': -10, 'screw_m4x20': -8, 'rivet_1_8': +32},
     # option C adds: the four printed plates' PEM nuts become heat-set inserts (the tray's 4 S-M4-0, the power plate's 10
     # F-M5-2 and 6 F-M4-2), the turret plate comes back with its two end screws, and each of the two split plates (deck,
     # tray) is joined by six M5 x 12 into inserts
-    'C': {'insert_m4': +10, 'insert_m5': +10 + 12, 'screw_m5x12_button': +12 + 2},
+    'C': {'insert_m4': +10, 'insert_m5': +10 + 12 + 4, 'screw_m5x12_button': +12 + 2},
 }
 
 
@@ -268,14 +269,32 @@ def printed(option, rate) -> dict:
     return p
 
 
+# a part whose quote did not finish, priced from the quoted part it differs from by PEM nuts only
+PRICE_FROM = {'cheek_pem': ('cheek', 6)}
+
+
+def _per_pem(pr):
+    g = lambda k: ((pr.get(k) or {}).get('final') or {}).get('each')
+    return (g('probe_12pem') - g('probe_4pem')) / 8 if g('probe_12pem') and g('probe_4pem') else None
+
+
 def sheet_bill(option) -> list:
     pr = json.loads(PRICES.read_text()) if PRICES.exists() else {}
     rows = []
     for name, sp in P.options()[option].items():
         o = sp.order()
         q = pr.get(name, {})
-        fin = q.get('final') or {}
-        rows.append({'part': name, 'stock': sp.stock, 'material': o['material'], 'qty': sp.qty, 'bends': o['bends'],
+        fin = dict(q.get('final') or {})
+        est = None
+        if not fin.get('each') and name in PRICE_FROM:            # the quote page did not finish: estimated from a quoted part
+            base, extra = PRICE_FROM[name]
+            b = (pr.get(base) or {}).get('final') or {}
+            per = _per_pem(pr)
+            if b.get('each') and per:
+                each = round(b['each'] + extra * per, 2)
+                fin = {'each': each, 'subtotal': round(each * sp.qty, 2)}
+                est = f'estimated: {base} (quoted) + {extra} PEM nuts at the probes\' ${per:.3f} each; the quote page timed out'
+        rows.append({'price_estimate': est, 'part': name, 'stock': sp.stock, 'material': o['material'], 'qty': sp.qty, 'bends': o['bends'],
                      'pem': sum(o['hardware'].values()), 'pem_types': o['hardware'], 'countersinks': sum(o['countersinks'].values()),
                      'flat_mm': o['flat_mm'], 'mass_g_each': round(mass_g(sp), 1),
                      'price_each': fin.get('each'), 'price_line': fin.get('subtotal'), 'price_read_on': q.get('read_on'),
@@ -295,19 +314,41 @@ def build_steps(sheet, fast, prin) -> dict:
     return {'parts': parts, 'screws_nuts_standoffs': screws, 'inserts': ins, 'rivets': riv, 'total': parts + screws + ins + riv}
 
 
+# Which run each option's case comes from: a case an option does not change is the run of the option it inherits it from
+FEA_FROM = {'today': {'S': 'today', 'D': 'today', 'T': 'today'},
+            'A': {'S': 'today', 'D': 'A', 'T': 'today'},          # A changes the deck only (the tray keeps its four bends)
+            'B': {'S': 'B', 'D': 'A', 'T': 'today'},              # B's keel; the deck and tray are A's
+            'C': {'S': 'B', 'D': 'C', 'T': 'C'}}                  # C's printed deck and tray; the spine and keel are B's
+EXTRA_RUNS = {'A-tray2b': 'A with the two-bend tray (superseded: misses T1)', 'A-mesh3': "A's deck at a 3 mm mesh (the finer check)"}
+
+
+def _fea_row(v):
+    return {'sf': v.get('sf_by_part') or v.get('sf_away_from_spacer_ends') or v.get('safety_factor'),
+            'sf_raw': v.get('safety_factor'), 'target': v.get('target_sf'), 'pass': v.get('pass'),
+            'max_displacement_mm': v.get('max_displacement_mm'), 'deflection_mm': v.get('deflection_mm'),
+            'twist_deg': v.get('twist_deg'), 'mesh_mm': (v.get('mesh') or {}).get('size_mm'),
+            'tets': (v.get('mesh') or {}).get('tets'), 'material': v.get('material'), 'picture': v.get('picture'),
+            'deck_sf': v.get('deck_sf'), 'plate_sf': v.get('plate_sf'), 'plate_clamp_sf': v.get('plate_clamp_sf'),
+            'post_corner_sf': v.get('post_corner_sf'), 'head': v.get('why')}
+
+
 def fea_rows():
-    out = {}
-    for opt in ('today', 'A', 'B', 'C'):
-        f = HERE / 'fea' / opt / 'summary.json'
-        if f.exists():
-            d = json.loads(f.read_text())
-            out[opt] = {'provenance': d.get('provenance'), 'results': {
-                k: {'sf': v.get('sf_by_part') or v.get('sf_away_from_spacer_ends') or v.get('safety_factor'),
-                    'sf_raw': v.get('safety_factor'), 'target': v.get('target_sf'), 'pass': v.get('pass'),
-                    'max_displacement_mm': v.get('max_displacement_mm'), 'deflection_mm': v.get('deflection_mm'),
-                    'twist_deg': v.get('twist_deg'), 'mesh_mm': (v.get('mesh') or {}).get('size_mm'),
-                    'tets': (v.get('mesh') or {}).get('tets'), 'material': v.get('material'), 'picture': v.get('picture')}
-                for k, v in d['results'].items()}}
+    runs = {}
+    for f in sorted((HERE / 'fea').glob('*/summary.json')):
+        d = json.loads(f.read_text())
+        runs[f.parent.name] = {'provenance': d.get('provenance'), 'seconds': d.get('seconds'),
+                               'results': {k: _fea_row(v) for k, v in d['results'].items()}}
+    out = {'runs': {k: {'provenance': v['provenance'], 'seconds': v['seconds'], 'note': EXTRA_RUNS.get(k)} for k, v in runs.items()}}
+    for opt, src in FEA_FROM.items():
+        res = {}
+        for run in set(src.values()):
+            for case, r in (runs.get(run) or {}).get('results', {}).items():
+                if src[case[0]] == run:
+                    res[case] = {**r, 'run': run}
+        out[opt] = {'results': res}
+    for k in EXTRA_RUNS:
+        if k in runs:
+            out[k] = {'results': {c: {**r, 'run': k} for c, r in runs[k]['results'].items()}}
     return out
 
 

@@ -9,6 +9,7 @@
   "today": {
    "sheet": [
     {
+     "price_estimate": null,
      "part": "cheek",
      "stock": "5052-0.187",
      "material": "5052-H32 aluminium",
@@ -33,6 +34,7 @@
      "quote_error": null
     },
     {
+     "price_estimate": null,
      "part": "floor_tray",
      "stock": "5052-0.125",
      "material": "5052-H32 aluminium",
@@ -57,6 +59,7 @@
      "quote_error": null
     },
     {
+     "price_estimate": null,
      "part": "belly_plate",
      "stock": "6061-0.100",
      "material": "6061-T6 aluminium",
@@ -81,6 +84,7 @@
      "quote_error": null
     },
     {
+     "price_estimate": null,
      "part": "deck",
      "stock": "5052-0.100",
      "material": "5052-H32 aluminium",
@@ -103,6 +107,7 @@
      "quote_error": null
     },
     {
+     "price_estimate": null,
      "part": "compute_pallet",
      "stock": "6061-0.125",
      "material": "6061-T6 aluminium",
@@ -125,6 +130,7 @@
      "quote_error": null
     },
     {
+     "price_estimate": null,
      "part": "power_plate",
      "stock": "5052-0.100",
      "material": "5052-H32 aluminium",
@@ -150,6 +156,7 @@
      "quote_error": null
     },
     {
+     "price_estimate": null,
      "part": "bus_bar",
      "stock": "C110-0.125",
      "material": "C110 copper",
@@ -172,6 +179,7 @@
      "quote_error": null
     },
     {
+     "price_estimate": null,
      "part": "turret_plate",
      "stock": "6061-0.125",
      "material": "6061-T6 aluminium",
@@ -196,6 +204,7 @@
      "quote_error": null
     },
     {
+     "price_estimate": null,
      "part": "bay_floor",
      "stock": "5052-0.063",
      "material": "5052-H32 aluminium",
@@ -220,6 +229,7 @@
      "quote_error": null
     },
     {
+     "price_estimate": null,
      "part": "bay_side",
      "stock": "5052-0.063",
      "material": "5052-H32 aluminium",
@@ -367,30 +377,32 @@
   "A": {
    "sheet": [
     {
-     "part": "cheek",
-     "stock": "5052-0.187",
+     "price_estimate": null,
+     "part": "floor_tray",
+     "stock": "5052-0.125",
      "material": "5052-H32 aluminium",
-     "qty": 2,
-     "bends": 2,
-     "pem": 8,
+     "qty": 1,
+     "bends": 4,
+     "pem": 4,
      "pem_types": {
-      "SS-M5-0": 8
+      "S-M4-0": 4
      },
-     "countersinks": 8,
+     "countersinks": 0,
      "flat_mm": [
-      184.0,
-      223.0
+      339.0,
+      273.0
      ],
-     "mass_g_each": 491.9,
-     "price_each": 63.87,
-     "price_line": 127.74,
+     "mass_g_each": 752.6,
+     "price_each": 80.62,
+     "price_line": 80.62,
      "price_read_on": "2026-11-01",
-     "cut_only_each_qty1": 54.25,
-     "with_services_each_qty1": 94.07,
+     "cut_only_each_qty1": 50.19,
+     "with_services_each_qty1": 80.62,
      "refused": null,
      "quote_error": null
     },
     {
+     "price_estimate": null,
      "part": "belly_plate",
      "stock": "6061-0.100",
      "material": "6061-T6 aluminium",
@@ -415,6 +427,7 @@
      "quote_error": null
     },
     {
+     "price_estimate": null,
      "part": "compute_pallet",
      "stock": "6061-0.125",
      "material": "6061-T6 aluminium",
@@ -437,6 +450,7 @@
      "quote_error": null
     },
     {
+     "price_estimate": null,
      "part": "power_plate",
      "stock": "5052-0.100",
      "material": "5052-H32 aluminium",
@@ -462,6 +476,7 @@
      "quote_error": null
     },
     {
+     "price_estimate": null,
      "part": "bus_bar",
      "stock": "C110-0.125",
      "material": "C110 copper",
@@ -484,6 +499,7 @@
      "quote_error": null
     },
     {
+     "price_estimate": null,
      "part": "bay_floor",
      "stock": "5052-0.063",
      "material": "5052-H32 aluminium",
@@ -508,6 +524,7 @@
      "quote_error": null
     },
     {
+     "price_estimate": null,
      "part": "bay_side",
      "stock": "5052-0.063",
      "material": "5052-H32 aluminium",
@@ -530,37 +547,40 @@
      "quote_error": null
     },
     {
-     "part": "floor_tray_2b",
-     "stock": "5052-0.125",
+     "price_estimate": "estimated: cheek (quoted) + 6 PEM nuts at the probes' $0.235 each; the quote page timed out",
+     "part": "cheek_pem",
+     "stock": "5052-0.187",
      "material": "5052-H32 aluminium",
-     "qty": 1,
+     "qty": 2,
      "bends": 2,
-     "pem": 4,
+     "pem": 14,
      "pem_types": {
-      "S-M4-0": 4
+      "SS-M5-0": 14
      },
-     "countersinks": 0,
+     "countersinks": 8,
      "flat_mm": [
-      320.0,
-      273.0
+      184.0,
+      223.0
      ],
-     "mass_g_each": 716.8,
-     "price_each": 78.92,
-     "price_line": 78.92,
+     "mass_g_each": 491.3,
+     "price_each": 65.28,
+     "price_line": 130.56,
      "price_read_on": "2026-11-01",
-     "cut_only_each_qty1": 48.49,
-     "with_services_each_qty1": 78.92,
+     "cut_only_each_qty1": null,
+     "with_services_each_qty1": null,
      "refused": null,
-     "quote_error": null
+     "quote_error": "Locator.click: Timeout 20000ms exceeded.\nCall log:\n  - waiting for get_by_text(re.compile(r\"^\\s*Deburring\\s*$\", re.IGNORECASE)).last\n    - locator resolved to <div class=\"column\" data-v-14a59a95=\"\" data-v-6a10b674=\"\">\u21b5      Deburring\u21b5    </div>\n  - attempting click action\n    2 \u00d7 waiting for element to be visible, enabled and stable\n      - element is visible, enabled and stable\n      - scrolling "
     },
     {
+     "price_estimate": null,
      "part": "deck_2b",
      "stock": "5052-0.125",
      "material": "5052-H32 aluminium",
      "qty": 1,
      "bends": 2,
-     "pem": 3,
+     "pem": 7,
      "pem_types": {
+      "SS-M5-0": 4,
       "S-M3-0": 3
      },
      "countersinks": 0,
@@ -568,19 +588,19 @@
       320.0,
       283.0
      ],
-     "mass_g_each": 747.5,
-     "price_each": 81.2,
-     "price_line": 81.2,
+     "mass_g_each": 747.2,
+     "price_each": 81.27,
+     "price_line": 81.27,
      "price_read_on": "2026-11-01",
-     "cut_only_each_qty1": 57.62,
-     "with_services_each_qty1": 81.2,
+     "cut_only_each_qty1": 57.69,
+     "with_services_each_qty1": 81.27,
      "refused": null,
      "quote_error": null
     }
    ],
    "fasteners": {
     "insert_m3": 26,
-    "insert_m5": 36,
+    "insert_m5": 32,
     "screw_m3x6": 28,
     "screw_m3x8_socket": 8,
     "screw_m4x10_flat": 16,
@@ -676,56 +696,58 @@
    "summary": {
     "plates_unique": 9,
     "plates_pieces": 12,
-    "bends": 10,
+    "bends": 12,
     "bent_parts_unique": 4,
-    "max_bends_one_part": 2,
-    "pem": 65,
+    "max_bends_one_part": 4,
+    "pem": 81,
     "unique_bought_fasteners": 13,
-    "sheet_usd": 578.56,
-    "sheet_mass_g": 3591,
+    "sheet_usd": 583.15,
+    "sheet_mass_g": 3625,
     "printed_g": 1018,
     "print_hours": 94.0,
     "printed_parts": 26,
     "build_steps": {
      "parts": 38,
      "screws_nuts_standoffs": 166,
-     "inserts": 62,
+     "inserts": 58,
      "rivets": 0,
-     "total": 266
+     "total": 262
     },
-    "frame_mass_g": 4609,
+    "frame_mass_g": 4643,
     "printed_usd": 58.49,
     "rivets_usd_est": 0.0,
-    "total_usd": 637.05
+    "total_usd": 641.64
    }
   },
   "B": {
    "sheet": [
     {
-     "part": "cheek",
-     "stock": "5052-0.187",
+     "price_estimate": null,
+     "part": "floor_tray",
+     "stock": "5052-0.125",
      "material": "5052-H32 aluminium",
-     "qty": 2,
-     "bends": 2,
-     "pem": 8,
+     "qty": 1,
+     "bends": 4,
+     "pem": 4,
      "pem_types": {
-      "SS-M5-0": 8
+      "S-M4-0": 4
      },
-     "countersinks": 8,
+     "countersinks": 0,
      "flat_mm": [
-      184.0,
-      223.0
+      339.0,
+      273.0
      ],
-     "mass_g_each": 491.9,
-     "price_each": 63.87,
-     "price_line": 127.74,
+     "mass_g_each": 752.6,
+     "price_each": 80.62,
+     "price_line": 80.62,
      "price_read_on": "2026-11-01",
-     "cut_only_each_qty1": 54.25,
-     "with_services_each_qty1": 94.07,
+     "cut_only_each_qty1": 50.19,
+     "with_services_each_qty1": 80.62,
      "refused": null,
      "quote_error": null
     },
     {
+     "price_estimate": null,
      "part": "compute_pallet",
      "stock": "6061-0.125",
      "material": "6061-T6 aluminium",
@@ -748,6 +770,7 @@
      "quote_error": null
     },
     {
+     "price_estimate": null,
      "part": "power_plate",
      "stock": "5052-0.100",
      "material": "5052-H32 aluminium",
@@ -773,6 +796,7 @@
      "quote_error": null
     },
     {
+     "price_estimate": null,
      "part": "bus_bar",
      "stock": "C110-0.125",
      "material": "C110 copper",
@@ -795,37 +819,40 @@
      "quote_error": null
     },
     {
-     "part": "floor_tray_2b",
-     "stock": "5052-0.125",
+     "price_estimate": "estimated: cheek (quoted) + 6 PEM nuts at the probes' $0.235 each; the quote page timed out",
+     "part": "cheek_pem",
+     "stock": "5052-0.187",
      "material": "5052-H32 aluminium",
-     "qty": 1,
+     "qty": 2,
      "bends": 2,
-     "pem": 4,
+     "pem": 14,
      "pem_types": {
-      "S-M4-0": 4
+      "SS-M5-0": 14
      },
-     "countersinks": 0,
+     "countersinks": 8,
      "flat_mm": [
-      320.0,
-      273.0
+      184.0,
+      223.0
      ],
-     "mass_g_each": 716.8,
-     "price_each": 78.92,
-     "price_line": 78.92,
+     "mass_g_each": 491.3,
+     "price_each": 65.28,
+     "price_line": 130.56,
      "price_read_on": "2026-11-01",
-     "cut_only_each_qty1": 48.49,
-     "with_services_each_qty1": 78.92,
+     "cut_only_each_qty1": null,
+     "with_services_each_qty1": null,
      "refused": null,
-     "quote_error": null
+     "quote_error": "Locator.click: Timeout 20000ms exceeded.\nCall log:\n  - waiting for get_by_text(re.compile(r\"^\\s*Deburring\\s*$\", re.IGNORECASE)).last\n    - locator resolved to <div class=\"column\" data-v-14a59a95=\"\" data-v-6a10b674=\"\">\u21b5      Deburring\u21b5    </div>\n  - attempting click action\n    2 \u00d7 waiting for element to be visible, enabled and stable\n      - element is visible, enabled and stable\n      - scrolling "
     },
     {
+     "price_estimate": null,
      "part": "deck_2b",
      "stock": "5052-0.125",
      "material": "5052-H32 aluminium",
      "qty": 1,
      "bends": 2,
-     "pem": 3,
+     "pem": 7,
      "pem_types": {
+      "SS-M5-0": 4,
       "S-M3-0": 3
      },
      "countersinks": 0,
@@ -833,16 +860,17 @@
       320.0,
       283.0
      ],
-     "mass_g_each": 747.5,
-     "price_each": 81.2,
-     "price_line": 81.2,
+     "mass_g_each": 747.2,
+     "price_each": 81.27,
+     "price_line": 81.27,
      "price_read_on": "2026-11-01",
-     "cut_only_each_qty1": 57.62,
-     "with_services_each_qty1": 81.2,
+     "cut_only_each_qty1": 57.69,
+     "with_services_each_qty1": 81.27,
      "refused": null,
      "quote_error": null
     },
     {
+     "price_estimate": null,
      "part": "keel_half",
      "stock": "5052-0.090",
      "material": "5052-H32 aluminium",
@@ -867,6 +895,7 @@
      "quote_error": null
     },
     {
+     "price_estimate": null,
      "part": "strap",
      "stock": "5052-0.090",
      "material": "5052-H32 aluminium",
@@ -891,7 +920,7 @@
    ],
    "fasteners": {
     "insert_m3": 26,
-    "insert_m5": 36,
+    "insert_m5": 32,
     "screw_m3x6": 18,
     "screw_m3x8_socket": 8,
     "screw_m4x10_flat": 16,
@@ -988,56 +1017,33 @@
    "summary": {
     "plates_unique": 8,
     "plates_pieces": 12,
-    "bends": 12,
+    "bends": 14,
     "bent_parts_unique": 4,
-    "max_bends_one_part": 2,
-    "pem": 47,
+    "max_bends_one_part": 4,
+    "pem": 63,
     "unique_bought_fasteners": 14,
-    "sheet_usd": 566.24,
-    "sheet_mass_g": 3790,
+    "sheet_usd": 570.83,
+    "sheet_mass_g": 3824,
     "printed_g": 1070,
     "print_hours": 97.4,
     "printed_parts": 26,
     "build_steps": {
      "parts": 38,
      "screws_nuts_standoffs": 148,
-     "inserts": 62,
+     "inserts": 58,
      "rivets": 32,
-     "total": 280
+     "total": 276
     },
-    "frame_mass_g": 4860,
+    "frame_mass_g": 4894,
     "printed_usd": 62.65,
     "rivets_usd_est": 3.84,
-    "total_usd": 632.73
+    "total_usd": 637.32
    }
   },
   "C": {
    "sheet": [
     {
-     "part": "cheek",
-     "stock": "5052-0.187",
-     "material": "5052-H32 aluminium",
-     "qty": 2,
-     "bends": 2,
-     "pem": 8,
-     "pem_types": {
-      "SS-M5-0": 8
-     },
-     "countersinks": 8,
-     "flat_mm": [
-      184.0,
-      223.0
-     ],
-     "mass_g_each": 491.9,
-     "price_each": 63.87,
-     "price_line": 127.74,
-     "price_read_on": "2026-11-01",
-     "cut_only_each_qty1": 54.25,
-     "with_services_each_qty1": 94.07,
-     "refused": null,
-     "quote_error": null
-    },
-    {
+     "price_estimate": null,
      "part": "bus_bar",
      "stock": "C110-0.125",
      "material": "C110 copper",
@@ -1060,6 +1066,32 @@
      "quote_error": null
     },
     {
+     "price_estimate": "estimated: cheek (quoted) + 6 PEM nuts at the probes' $0.235 each; the quote page timed out",
+     "part": "cheek_pem",
+     "stock": "5052-0.187",
+     "material": "5052-H32 aluminium",
+     "qty": 2,
+     "bends": 2,
+     "pem": 14,
+     "pem_types": {
+      "SS-M5-0": 14
+     },
+     "countersinks": 8,
+     "flat_mm": [
+      184.0,
+      223.0
+     ],
+     "mass_g_each": 491.3,
+     "price_each": 65.28,
+     "price_line": 130.56,
+     "price_read_on": "2026-11-01",
+     "cut_only_each_qty1": null,
+     "with_services_each_qty1": null,
+     "refused": null,
+     "quote_error": "Locator.click: Timeout 20000ms exceeded.\nCall log:\n  - waiting for get_by_text(re.compile(r\"^\\s*Deburring\\s*$\", re.IGNORECASE)).last\n    - locator resolved to <div class=\"column\" data-v-14a59a95=\"\" data-v-6a10b674=\"\">\u21b5      Deburring\u21b5    </div>\n  - attempting click action\n    2 \u00d7 waiting for element to be visible, enabled and stable\n      - element is visible, enabled and stable\n      - scrolling "
+    },
+    {
+     "price_estimate": null,
      "part": "keel_half",
      "stock": "5052-0.090",
      "material": "5052-H32 aluminium",
@@ -1084,6 +1116,7 @@
      "quote_error": null
     },
     {
+     "price_estimate": null,
      "part": "strap",
      "stock": "5052-0.090",
      "material": "5052-H32 aluminium",
@@ -1106,6 +1139,7 @@
      "quote_error": null
     },
     {
+     "price_estimate": null,
      "part": "turret_plate",
      "stock": "6061-0.125",
      "material": "6061-T6 aluminium",
@@ -1251,10 +1285,10 @@
     "bends": 8,
     "bent_parts_unique": 2,
     "max_bends_one_part": 2,
-    "pem": 26,
+    "pem": 38,
     "unique_bought_fasteners": 15,
-    "sheet_usd": 353.35,
-    "sheet_mass_g": 2070,
+    "sheet_usd": 356.17,
+    "sheet_mass_g": 2068,
     "printed_g": 2993,
     "print_hours": 223.5,
     "printed_parts": 28,
@@ -1265,10 +1299,10 @@
      "rivets": 32,
      "total": 327
     },
-    "frame_mass_g": 5063,
+    "frame_mass_g": 5061,
     "printed_usd": 216.92,
     "rivets_usd_est": 3.84,
-    "total_usd": 574.11
+    "total_usd": 576.93
    }
   }
  },
@@ -2118,175 +2152,122 @@
     ]
    }
   },
-  "floor_tray_2b": {
-   "part": "floor_tray_2b",
-   "stock": "5052-0.125",
+  "cheek_pem": {
+   "part": "cheek_pem",
+   "stock": "5052-0.187",
    "gyropup_rules": "pass",
    "bend": {
-    "stock_row": "ALU-125",
-    "radius_mm": 3.175,
-    "radius_rule": "sendcutsend-5052-and-mild-steel ALU-125 (sendcutsend-specs)",
-    "k": 0.44,
-    "k_rule": "sendcutsend-5052-and-mild-steel ALU-125 (sendcutsend-specs)",
-    "allowance_mm": 7.181681,
-    "deduction_mm": 5.518319,
-    "min_flange_mm": 12.09,
-    "min_flange_rule": "sendcutsend-5052-and-mild-steel ALU-125 (sendcutsend-specs)",
-    "relief_depth_mm": 6.858,
+    "stock_row": null,
+    "radius_mm": 4.7498,
+    "radius_rule": "sm-bend-radius-min-hubs",
+    "k": 0.33,
+    "k_rule": "sm-k-air-soft-r-le-t-hubs",
+    "allowance_mm": 9.923088,
+    "deduction_mm": 9.076112,
+    "min_flange_mm": 33.2486,
+    "min_flange_rule": "sm-flange-min-century",
+    "relief_depth_mm": 9.9996,
     "gyropup_stock": {
-     "r_mm": 3.175,
-     "k": 0.44,
-     "bd_mm": 5.518
+     "r_mm": 6.35,
+     "k": 0.43,
+     "bd_mm": 9.017
     }
    },
    "flat_length": {
     "legs_mm": [
-     15.0,
-     254.0,
-     15.0
+     30.0,
+     181.0,
+     30.0
     ],
-    "flat_mm": 272.963362,
-    "verdict": "pass",
-    "detail": "every leg is at least the 12.09 mm flange"
+    "flat_mm": 222.847776,
+    "verdict": "fail",
+    "detail": "legs [0, 2] are shorter than the 33.25 mm flange (sm-flange-min-century)"
    },
    "dfm": {
     "verdict": "fail",
-    "stock": "ALU-125",
+    "stock": null,
     "rows": [
      {
       "name": "flange S",
-      "size": 15.0,
+      "size": 30.0,
       "verdict": "pass",
-      "detail": "meets the shop's 12.09 mm for ALU-125 (3.175 mm); the shop's table decides, the generic rules are shown beside it",
-      "strictest_mm": 22.224999999999998,
-      "shop": {
-       "rule": "sendcutsend-5052-and-mild-steel ALU-125 (sendcutsend-specs)",
-       "source": "sendcutsend-specs",
-       "verified": true,
-       "min": 12.09,
-       "units": "mm",
-       "text": "at least 12.09 mm",
-       "verdict": "pass",
-       "why": "meets the shop's 12.09 mm for ALU-125 (3.175 mm)"
-      },
+      "detail": "meets all 2 verified rules",
+      "strictest_mm": 18.9992,
+      "shop": null,
       "rules": [
        [
         "sm-flange-min-protolabs",
-        12.7,
+        18.9992,
         "pass"
        ],
        [
         "sm-flange-min-davis",
-        12.7,
-        "pass"
-       ],
-       [
-        "sm-flange-min-century",
-        22.224999999999998,
-        "fail"
-       ],
-       [
-        "sm-flange-min-hubs",
-        9.524999999999999,
+        18.9992,
         "pass"
        ]
       ]
      },
      {
       "name": "flange N",
-      "size": 15.0,
+      "size": 30.0,
       "verdict": "pass",
-      "detail": "meets the shop's 12.09 mm for ALU-125 (3.175 mm); the shop's table decides, the generic rules are shown beside it",
-      "strictest_mm": 22.224999999999998,
-      "shop": {
-       "rule": "sendcutsend-5052-and-mild-steel ALU-125 (sendcutsend-specs)",
-       "source": "sendcutsend-specs",
-       "verified": true,
-       "min": 12.09,
-       "units": "mm",
-       "text": "at least 12.09 mm",
-       "verdict": "pass",
-       "why": "meets the shop's 12.09 mm for ALU-125 (3.175 mm)"
-      },
+      "detail": "meets all 2 verified rules",
+      "strictest_mm": 18.9992,
+      "shop": null,
       "rules": [
        [
         "sm-flange-min-protolabs",
-        12.7,
+        18.9992,
         "pass"
        ],
        [
         "sm-flange-min-davis",
-        12.7,
-        "pass"
-       ],
-       [
-        "sm-flange-min-century",
-        22.224999999999998,
-        "fail"
-       ],
-       [
-        "sm-flange-min-hubs",
-        9.524999999999999,
+        18.9992,
         "pass"
        ]
       ]
      },
      {
-      "name": "nearest hole to a bend (post, M5 x 12 ISO 7380 from below)",
-      "size": 8.9,
-      "verdict": "warn",
-      "detail": "meets 2 of 6 verified rules; beyond sm-hole-to-bend-min-dfma, sm-hole-to-bend-min-paulsen, sm-hole-to-bend-min-century, sm-feature-to-bend-protolabs",
-      "strictest_mm": 12.7,
+      "name": "nearest hole to a bend (hip frame: PEM SS-M5-0 from the gap side)",
+      "size": 6.21,
+      "verdict": "fail",
+      "detail": "beyond all 3 verified rules",
+      "strictest_mm": 18.9992,
       "shop": null,
       "rules": [
        [
         "sm-hole-to-bend-min-hubs",
-        6.35,
-        "pass"
+        9.4996,
+        "fail"
        ],
        [
         "sm-hole-to-bend-min-davis",
-        6.35,
-        "pass"
-       ],
-       [
-        "sm-hole-to-bend-min-dfma",
-        9.524999999999999,
-        "fail"
-       ],
-       [
-        "sm-hole-to-bend-min-paulsen",
-        11.1125,
-        "fail"
-       ],
-       [
-        "sm-hole-to-bend-min-century",
-        9.524999999999999,
+        9.4996,
         "fail"
        ],
        [
         "sm-feature-to-bend-protolabs",
-        12.7,
+        18.9992,
         "fail"
        ]
       ]
      },
      {
       "name": "smallest hole",
-      "size": 2.5,
+      "size": 4.5,
       "verdict": "fail",
       "detail": "beyond all 2 verified rules",
-      "strictest_mm": 3.175,
+      "strictest_mm": 4.7498,
       "shop": null,
       "rules": [
        [
         "sm-hole-min-protolabs",
-        3.175,
+        4.7498,
         "fail"
        ],
        [
         "sm-hole-min-davis",
-        3.175,
+        4.7498,
         "fail"
        ]
       ]
@@ -2660,6 +2641,182 @@
      ]
     ]
    }
+  },
+  "floor_tray_2b": {
+   "part": "floor_tray_2b",
+   "stock": "5052-0.125",
+   "gyropup_rules": "pass",
+   "bend": {
+    "stock_row": "ALU-125",
+    "radius_mm": 3.175,
+    "radius_rule": "sendcutsend-5052-and-mild-steel ALU-125 (sendcutsend-specs)",
+    "k": 0.44,
+    "k_rule": "sendcutsend-5052-and-mild-steel ALU-125 (sendcutsend-specs)",
+    "allowance_mm": 7.181681,
+    "deduction_mm": 5.518319,
+    "min_flange_mm": 12.09,
+    "min_flange_rule": "sendcutsend-5052-and-mild-steel ALU-125 (sendcutsend-specs)",
+    "relief_depth_mm": 6.858,
+    "gyropup_stock": {
+     "r_mm": 3.175,
+     "k": 0.44,
+     "bd_mm": 5.518
+    }
+   },
+   "flat_length": {
+    "legs_mm": [
+     15.0,
+     254.0,
+     15.0
+    ],
+    "flat_mm": 272.963362,
+    "verdict": "pass",
+    "detail": "every leg is at least the 12.09 mm flange"
+   },
+   "dfm": {
+    "verdict": "fail",
+    "stock": "ALU-125",
+    "rows": [
+     {
+      "name": "flange S",
+      "size": 15.0,
+      "verdict": "pass",
+      "detail": "meets the shop's 12.09 mm for ALU-125 (3.175 mm); the shop's table decides, the generic rules are shown beside it",
+      "strictest_mm": 22.224999999999998,
+      "shop": {
+       "rule": "sendcutsend-5052-and-mild-steel ALU-125 (sendcutsend-specs)",
+       "source": "sendcutsend-specs",
+       "verified": true,
+       "min": 12.09,
+       "units": "mm",
+       "text": "at least 12.09 mm",
+       "verdict": "pass",
+       "why": "meets the shop's 12.09 mm for ALU-125 (3.175 mm)"
+      },
+      "rules": [
+       [
+        "sm-flange-min-protolabs",
+        12.7,
+        "pass"
+       ],
+       [
+        "sm-flange-min-davis",
+        12.7,
+        "pass"
+       ],
+       [
+        "sm-flange-min-century",
+        22.224999999999998,
+        "fail"
+       ],
+       [
+        "sm-flange-min-hubs",
+        9.524999999999999,
+        "pass"
+       ]
+      ]
+     },
+     {
+      "name": "flange N",
+      "size": 15.0,
+      "verdict": "pass",
+      "detail": "meets the shop's 12.09 mm for ALU-125 (3.175 mm); the shop's table decides, the generic rules are shown beside it",
+      "strictest_mm": 22.224999999999998,
+      "shop": {
+       "rule": "sendcutsend-5052-and-mild-steel ALU-125 (sendcutsend-specs)",
+       "source": "sendcutsend-specs",
+       "verified": true,
+       "min": 12.09,
+       "units": "mm",
+       "text": "at least 12.09 mm",
+       "verdict": "pass",
+       "why": "meets the shop's 12.09 mm for ALU-125 (3.175 mm)"
+      },
+      "rules": [
+       [
+        "sm-flange-min-protolabs",
+        12.7,
+        "pass"
+       ],
+       [
+        "sm-flange-min-davis",
+        12.7,
+        "pass"
+       ],
+       [
+        "sm-flange-min-century",
+        22.224999999999998,
+        "fail"
+       ],
+       [
+        "sm-flange-min-hubs",
+        9.524999999999999,
+        "pass"
+       ]
+      ]
+     },
+     {
+      "name": "nearest hole to a bend (post, M5 x 12 ISO 7380 from below)",
+      "size": 8.9,
+      "verdict": "warn",
+      "detail": "meets 2 of 6 verified rules; beyond sm-hole-to-bend-min-dfma, sm-hole-to-bend-min-paulsen, sm-hole-to-bend-min-century, sm-feature-to-bend-protolabs",
+      "strictest_mm": 12.7,
+      "shop": null,
+      "rules": [
+       [
+        "sm-hole-to-bend-min-hubs",
+        6.35,
+        "pass"
+       ],
+       [
+        "sm-hole-to-bend-min-davis",
+        6.35,
+        "pass"
+       ],
+       [
+        "sm-hole-to-bend-min-dfma",
+        9.524999999999999,
+        "fail"
+       ],
+       [
+        "sm-hole-to-bend-min-paulsen",
+        11.1125,
+        "fail"
+       ],
+       [
+        "sm-hole-to-bend-min-century",
+        9.524999999999999,
+        "fail"
+       ],
+       [
+        "sm-feature-to-bend-protolabs",
+        12.7,
+        "fail"
+       ]
+      ]
+     },
+     {
+      "name": "smallest hole",
+      "size": 2.5,
+      "verdict": "fail",
+      "detail": "beyond all 2 verified rules",
+      "strictest_mm": 3.175,
+      "shop": null,
+      "rules": [
+       [
+        "sm-hole-min-protolabs",
+        3.175,
+        "fail"
+       ],
+       [
+        "sm-hole-min-davis",
+        3.175,
+        "fail"
+       ]
+      ]
+     }
+    ]
+   }
   }
  },
  "joints": [
@@ -2918,5 +3075,871 @@
   "two_bends_usd": 17.05,
   "read_on": "2026-11-01"
  },
- "fea": {}
+ "fea": {
+  "runs": {
+   "A": {
+    "provenance": {
+     "host_role": "the x86 mechanical compute host",
+     "arch": "x86_64",
+     "mesher": "gmsh 4.15.2",
+     "toolkit": "cad-agent 7c5c44d",
+     "source": "597751c",
+     "python": "3.12.3",
+     "date": "2026-11-01"
+    },
+    "seconds": 1689,
+    "note": null
+   },
+   "A-mesh3": {
+    "provenance": {
+     "host_role": "the x86 mechanical compute host",
+     "arch": "x86_64",
+     "mesher": "gmsh 4.15.2",
+     "toolkit": "cad-agent 7c5c44d",
+     "source": "597751c",
+     "python": "3.12.3",
+     "date": "2026-11-01"
+    },
+    "seconds": 1360,
+    "note": "A's deck at a 3 mm mesh (the finer check)"
+   },
+   "A-tray2b": {
+    "provenance": {
+     "host_role": "the x86 mechanical compute host",
+     "arch": "x86_64",
+     "mesher": "gmsh 4.15.2",
+     "toolkit": "cad-agent 7c5c44d",
+     "source": "b169a6d",
+     "python": "3.12.3",
+     "date": "2026-11-01"
+    },
+    "seconds": 1559,
+    "note": "A with the two-bend tray (superseded: misses T1)"
+   },
+   "B": {
+    "provenance": {
+     "host_role": "the x86 mechanical compute host",
+     "arch": "x86_64",
+     "mesher": "gmsh 4.15.2",
+     "toolkit": "cad-agent 7c5c44d",
+     "source": "b169a6d",
+     "python": "3.12.3",
+     "date": "2026-11-01"
+    },
+    "seconds": 671,
+    "note": null
+   },
+   "C": {
+    "provenance": {
+     "host_role": "the x86 mechanical compute host",
+     "arch": "x86_64",
+     "mesher": "gmsh 4.15.2",
+     "toolkit": "cad-agent 7c5c44d",
+     "source": "b169a6d",
+     "python": "3.12.3",
+     "date": "2026-11-01",
+     "note": "D1 only: the run was stopped during D2 (60 GB at the 2 mm mesh on a shared host) after D1 decided option C; written by fea.py up to D1, provenance added by hand from the same run"
+    },
+    "seconds": null,
+    "note": null
+   },
+   "today": {
+    "provenance": {
+     "host_role": "the x86 mechanical compute host",
+     "arch": "x86_64",
+     "mesher": "gmsh 4.15.2",
+     "toolkit": "cad-agent 7c5c44d",
+     "source": "b169a6d",
+     "python": "3.12.3",
+     "date": "2026-11-01"
+    },
+    "seconds": 2013,
+    "note": null
+   }
+  },
+  "today": {
+   "results": {
+    "S1-landing": {
+     "sf": 5.71,
+     "sf_raw": 2.46,
+     "target": 2.0,
+     "pass": true,
+     "max_displacement_mm": 0.0506,
+     "deflection_mm": null,
+     "twist_deg": null,
+     "mesh_mm": 4.0,
+     "tets": 114325,
+     "material": "5052-H32 aluminium",
+     "picture": "research/body-sheet-metal/fea/today/S1-landing.png",
+     "deck_sf": null,
+     "plate_sf": null,
+     "plate_clamp_sf": null,
+     "post_corner_sf": null,
+     "head": "rig 'jump_peak' at 18.75 kg a leg (axle 1776 N): 182 N m roll and 632 N up at the hip frame's mount plane, plus 10 % of the 1060 N ground force sideways at the contact patch on BOTH legs; the payload's inertia on the tray (80 %) and the belly (20 %)",
+     "run": "today"
+    },
+    "S1F-collapse": {
+     "sf": 2.99,
+     "sf_raw": 1.34,
+     "target": 1.2,
+     "pass": true,
+     "max_displacement_mm": 0.0922,
+     "deflection_mm": null,
+     "twist_deg": null,
+     "mesh_mm": 4.0,
+     "tets": 114325,
+     "material": "5052-H32 aluminium",
+     "picture": "research/body-sheet-metal/fea/today/S1F-collapse.png",
+     "deck_sf": null,
+     "plate_sf": null,
+     "plate_clamp_sf": null,
+     "post_corner_sf": null,
+     "head": "rig 'power_off' at 18.75 kg a leg (axle 1929 N): 344 N m roll and 1208 N up at the hip frame's mount plane, plus 10 % of the 1945 N ground force sideways at the contact patch on BOTH legs (the undamped power cut, D39); payload inertia as S1",
+     "run": "today"
+    },
+    "S1b-one-leg-bound": {
+     "sf": 4.57,
+     "sf_raw": 2.77,
+     "target": 2.0,
+     "pass": true,
+     "max_displacement_mm": 0.0466,
+     "deflection_mm": null,
+     "twist_deg": null,
+     "mesh_mm": 4.0,
+     "tets": 114325,
+     "material": "5052-H32 aluminium",
+     "picture": "research/body-sheet-metal/fea/today/S1b-one-leg-bound.png",
+     "deck_sf": null,
+     "plate_sf": null,
+     "plate_clamp_sf": null,
+     "post_corner_sf": null,
+     "head": "rig 'jump_peak' at 18.75 kg a leg (axle 1776 N): 182 N m roll and 632 N up at the hip frame's mount plane, plus 10 % of the 1060 N ground force sideways at the contact patch on ONE leg, the other cheek clamped: every newton crosses the gap (a bound: in a one-wheel landing the body's inertia takes most of it)",
+     "run": "today"
+    },
+    "S2-twist": {
+     "sf": 7.94,
+     "sf_raw": 7.94,
+     "target": 2.0,
+     "pass": true,
+     "max_displacement_mm": 0.0156,
+     "deflection_mm": null,
+     "twist_deg": 0.0126,
+     "mesh_mm": 4.0,
+     "tets": 114325,
+     "material": "5052-H32 aluminium",
+     "picture": "research/body-sheet-metal/fea/today/S2-twist.png",
+     "deck_sf": null,
+     "plate_sf": null,
+     "plate_clamp_sf": null,
+     "post_corner_sf": null,
+     "head": "one leg's 80 N m roll moment (the HM budget) against the other's",
+     "run": "today"
+    },
+    "S3-pitch": {
+     "sf": 27.54,
+     "sf_raw": 27.54,
+     "target": 2.0,
+     "pass": true,
+     "max_displacement_mm": 0.003,
+     "deflection_mm": null,
+     "twist_deg": null,
+     "mesh_mm": 4.0,
+     "tets": 114325,
+     "material": "5052-H32 aluminium",
+     "picture": "research/body-sheet-metal/fea/today/S3-pitch.png",
+     "deck_sf": null,
+     "plate_sf": null,
+     "plate_clamp_sf": null,
+     "post_corner_sf": null,
+     "head": "the two motors' 60 N m caps reacted as one 120 N m couple about y, and 600 N fore-aft (the HM budget)",
+     "run": "today"
+    },
+    "D1-hand-front": {
+     "sf": 5.53,
+     "sf_raw": 2.74,
+     "target": 2.0,
+     "pass": true,
+     "max_displacement_mm": 0.4263,
+     "deflection_mm": 0.306,
+     "twist_deg": null,
+     "mesh_mm": 4.0,
+     "tets": 148709,
+     "material": "5052-H32 aluminium",
+     "picture": "research/body-sheet-metal/fea/today/D1-hand-front.png",
+     "deck_sf": 5.53,
+     "plate_sf": 12.6,
+     "plate_clamp_sf": 6.03,
+     "post_corner_sf": 2.74,
+     "head": "300 N down on the deck at the front (a child leaning on it), the turret plate under the riser (D59)",
+     "run": "today"
+    },
+    "D1-hand-riser": {
+     "sf": 6.13,
+     "sf_raw": 3.22,
+     "target": 2.0,
+     "pass": true,
+     "max_displacement_mm": 0.4314,
+     "deflection_mm": 0.314,
+     "twist_deg": null,
+     "mesh_mm": 4.0,
+     "tets": 148709,
+     "material": "5052-H32 aluminium",
+     "picture": "research/body-sheet-metal/fea/today/D1-hand-riser.png",
+     "deck_sf": 6.13,
+     "plate_sf": 18.22,
+     "plate_clamp_sf": 4.25,
+     "post_corner_sf": 3.22,
+     "head": "300 N down on the deck at the riser (a child leaning on it), the turret plate under the riser (D59)",
+     "run": "today"
+    },
+    "D2-turret-fall": {
+     "sf": 1.38,
+     "sf_raw": 0.35,
+     "target": 2.0,
+     "pass": false,
+     "max_displacement_mm": 1.9063,
+     "deflection_mm": null,
+     "twist_deg": null,
+     "mesh_mm": 2.0,
+     "tets": 387772,
+     "material": "5052-H32 aluminium",
+     "picture": "research/body-sheet-metal/fea/today/D2-turret-fall.png",
+     "deck_sf": 1.38,
+     "plate_sf": 4.82,
+     "plate_clamp_sf": 0.46,
+     "post_corner_sf": 0.35,
+     "head": "a 30 g fall of the 2.56 kg head (the turret plan's budget) at 45 deg, its centre 100 mm above the TM face: a tip-over, the turret plate under the riser (D59: SF >= 2.0, the everyday target)",
+     "run": "today"
+    },
+    "T1-tray": {
+     "sf": 2.21,
+     "sf_raw": 2.21,
+     "target": 2.0,
+     "pass": true,
+     "max_displacement_mm": 0.5453,
+     "deflection_mm": null,
+     "twist_deg": null,
+     "mesh_mm": 4.0,
+     "tets": 94392,
+     "material": "5052-H32 aluminium",
+     "picture": "research/body-sheet-metal/fea/today/T1-tray.png",
+     "deck_sf": null,
+     "plate_sf": null,
+     "plate_clamp_sf": null,
+     "post_corner_sf": null,
+     "head": "what stands on the floor tray at 8.51 g (the body's landing peak from the rig): the compute 1.39 kg on its isolators, the power skid 1.86 kg on its posts, the deck with the lidar and turret 4.56 kg on the deck posts, the DDR-120C; the tray held by its screws",
+     "run": "today"
+    }
+   }
+  },
+  "A": {
+   "results": {
+    "S1-landing": {
+     "sf": 5.71,
+     "sf_raw": 2.46,
+     "target": 2.0,
+     "pass": true,
+     "max_displacement_mm": 0.0506,
+     "deflection_mm": null,
+     "twist_deg": null,
+     "mesh_mm": 4.0,
+     "tets": 114325,
+     "material": "5052-H32 aluminium",
+     "picture": "research/body-sheet-metal/fea/today/S1-landing.png",
+     "deck_sf": null,
+     "plate_sf": null,
+     "plate_clamp_sf": null,
+     "post_corner_sf": null,
+     "head": "rig 'jump_peak' at 18.75 kg a leg (axle 1776 N): 182 N m roll and 632 N up at the hip frame's mount plane, plus 10 % of the 1060 N ground force sideways at the contact patch on BOTH legs; the payload's inertia on the tray (80 %) and the belly (20 %)",
+     "run": "today"
+    },
+    "S1F-collapse": {
+     "sf": 2.99,
+     "sf_raw": 1.34,
+     "target": 1.2,
+     "pass": true,
+     "max_displacement_mm": 0.0922,
+     "deflection_mm": null,
+     "twist_deg": null,
+     "mesh_mm": 4.0,
+     "tets": 114325,
+     "material": "5052-H32 aluminium",
+     "picture": "research/body-sheet-metal/fea/today/S1F-collapse.png",
+     "deck_sf": null,
+     "plate_sf": null,
+     "plate_clamp_sf": null,
+     "post_corner_sf": null,
+     "head": "rig 'power_off' at 18.75 kg a leg (axle 1929 N): 344 N m roll and 1208 N up at the hip frame's mount plane, plus 10 % of the 1945 N ground force sideways at the contact patch on BOTH legs (the undamped power cut, D39); payload inertia as S1",
+     "run": "today"
+    },
+    "S1b-one-leg-bound": {
+     "sf": 4.57,
+     "sf_raw": 2.77,
+     "target": 2.0,
+     "pass": true,
+     "max_displacement_mm": 0.0466,
+     "deflection_mm": null,
+     "twist_deg": null,
+     "mesh_mm": 4.0,
+     "tets": 114325,
+     "material": "5052-H32 aluminium",
+     "picture": "research/body-sheet-metal/fea/today/S1b-one-leg-bound.png",
+     "deck_sf": null,
+     "plate_sf": null,
+     "plate_clamp_sf": null,
+     "post_corner_sf": null,
+     "head": "rig 'jump_peak' at 18.75 kg a leg (axle 1776 N): 182 N m roll and 632 N up at the hip frame's mount plane, plus 10 % of the 1060 N ground force sideways at the contact patch on ONE leg, the other cheek clamped: every newton crosses the gap (a bound: in a one-wheel landing the body's inertia takes most of it)",
+     "run": "today"
+    },
+    "S2-twist": {
+     "sf": 7.94,
+     "sf_raw": 7.94,
+     "target": 2.0,
+     "pass": true,
+     "max_displacement_mm": 0.0156,
+     "deflection_mm": null,
+     "twist_deg": 0.0126,
+     "mesh_mm": 4.0,
+     "tets": 114325,
+     "material": "5052-H32 aluminium",
+     "picture": "research/body-sheet-metal/fea/today/S2-twist.png",
+     "deck_sf": null,
+     "plate_sf": null,
+     "plate_clamp_sf": null,
+     "post_corner_sf": null,
+     "head": "one leg's 80 N m roll moment (the HM budget) against the other's",
+     "run": "today"
+    },
+    "S3-pitch": {
+     "sf": 27.54,
+     "sf_raw": 27.54,
+     "target": 2.0,
+     "pass": true,
+     "max_displacement_mm": 0.003,
+     "deflection_mm": null,
+     "twist_deg": null,
+     "mesh_mm": 4.0,
+     "tets": 114325,
+     "material": "5052-H32 aluminium",
+     "picture": "research/body-sheet-metal/fea/today/S3-pitch.png",
+     "deck_sf": null,
+     "plate_sf": null,
+     "plate_clamp_sf": null,
+     "post_corner_sf": null,
+     "head": "the two motors' 60 N m caps reacted as one 120 N m couple about y, and 600 N fore-aft (the HM budget)",
+     "run": "today"
+    },
+    "T1-tray": {
+     "sf": 2.21,
+     "sf_raw": 2.21,
+     "target": 2.0,
+     "pass": true,
+     "max_displacement_mm": 0.5453,
+     "deflection_mm": null,
+     "twist_deg": null,
+     "mesh_mm": 4.0,
+     "tets": 94392,
+     "material": "5052-H32 aluminium",
+     "picture": "research/body-sheet-metal/fea/today/T1-tray.png",
+     "deck_sf": null,
+     "plate_sf": null,
+     "plate_clamp_sf": null,
+     "post_corner_sf": null,
+     "head": "what stands on the floor tray at 8.51 g (the body's landing peak from the rig): the compute 1.39 kg on its isolators, the power skid 1.86 kg on its posts, the deck with the lidar and turret 4.56 kg on the deck posts, the DDR-120C; the tray held by its screws",
+     "run": "today"
+    },
+    "D1-hand-front": {
+     "sf": 4.31,
+     "sf_raw": 2.57,
+     "target": 2.0,
+     "pass": true,
+     "max_displacement_mm": 0.385,
+     "deflection_mm": 0.32,
+     "twist_deg": null,
+     "mesh_mm": 4.0,
+     "tets": 190289,
+     "material": "5052-H32 aluminium",
+     "picture": "research/body-sheet-metal/fea/A/D1-hand-front.png",
+     "deck_sf": 4.31,
+     "plate_sf": 25.25,
+     "plate_clamp_sf": 9.31,
+     "post_corner_sf": 2.57,
+     "head": "300 N down on the deck at the front (a child leaning on it)",
+     "run": "A"
+    },
+    "D1-hand-riser": {
+     "sf": 6.84,
+     "sf_raw": 4.08,
+     "target": 2.0,
+     "pass": true,
+     "max_displacement_mm": 0.2531,
+     "deflection_mm": 0.197,
+     "twist_deg": null,
+     "mesh_mm": 4.0,
+     "tets": 190289,
+     "material": "5052-H32 aluminium",
+     "picture": "research/body-sheet-metal/fea/A/D1-hand-riser.png",
+     "deck_sf": 6.84,
+     "plate_sf": 22.43,
+     "plate_clamp_sf": 5.86,
+     "post_corner_sf": 4.08,
+     "head": "300 N down on the deck at the riser (a child leaning on it)",
+     "run": "A"
+    },
+    "D2-turret-fall": {
+     "sf": 1.95,
+     "sf_raw": 0.52,
+     "target": 2.0,
+     "pass": false,
+     "max_displacement_mm": 1.1849,
+     "deflection_mm": null,
+     "twist_deg": null,
+     "mesh_mm": 2.0,
+     "tets": 413617,
+     "material": "5052-H32 aluminium",
+     "picture": "research/body-sheet-metal/fea/A/D2-turret-fall.png",
+     "deck_sf": 1.95,
+     "plate_sf": 6.27,
+     "plate_clamp_sf": 1.25,
+     "post_corner_sf": 0.52,
+     "head": "a 30 g fall of the 2.56 kg head (the turret plan's budget) at 45 deg, its centre 100 mm above the TM face: a tip-over (SF >= 1.2, the abuse target)",
+     "run": "A"
+    }
+   }
+  },
+  "B": {
+   "results": {
+    "T1-tray": {
+     "sf": 2.21,
+     "sf_raw": 2.21,
+     "target": 2.0,
+     "pass": true,
+     "max_displacement_mm": 0.5453,
+     "deflection_mm": null,
+     "twist_deg": null,
+     "mesh_mm": 4.0,
+     "tets": 94392,
+     "material": "5052-H32 aluminium",
+     "picture": "research/body-sheet-metal/fea/today/T1-tray.png",
+     "deck_sf": null,
+     "plate_sf": null,
+     "plate_clamp_sf": null,
+     "post_corner_sf": null,
+     "head": "what stands on the floor tray at 8.51 g (the body's landing peak from the rig): the compute 1.39 kg on its isolators, the power skid 1.86 kg on its posts, the deck with the lidar and turret 4.56 kg on the deck posts, the DDR-120C; the tray held by its screws",
+     "run": "today"
+    },
+    "D1-hand-front": {
+     "sf": 4.31,
+     "sf_raw": 2.57,
+     "target": 2.0,
+     "pass": true,
+     "max_displacement_mm": 0.385,
+     "deflection_mm": 0.32,
+     "twist_deg": null,
+     "mesh_mm": 4.0,
+     "tets": 190289,
+     "material": "5052-H32 aluminium",
+     "picture": "research/body-sheet-metal/fea/A/D1-hand-front.png",
+     "deck_sf": 4.31,
+     "plate_sf": 25.25,
+     "plate_clamp_sf": 9.31,
+     "post_corner_sf": 2.57,
+     "head": "300 N down on the deck at the front (a child leaning on it)",
+     "run": "A"
+    },
+    "D1-hand-riser": {
+     "sf": 6.84,
+     "sf_raw": 4.08,
+     "target": 2.0,
+     "pass": true,
+     "max_displacement_mm": 0.2531,
+     "deflection_mm": 0.197,
+     "twist_deg": null,
+     "mesh_mm": 4.0,
+     "tets": 190289,
+     "material": "5052-H32 aluminium",
+     "picture": "research/body-sheet-metal/fea/A/D1-hand-riser.png",
+     "deck_sf": 6.84,
+     "plate_sf": 22.43,
+     "plate_clamp_sf": 5.86,
+     "post_corner_sf": 4.08,
+     "head": "300 N down on the deck at the riser (a child leaning on it)",
+     "run": "A"
+    },
+    "D2-turret-fall": {
+     "sf": 1.95,
+     "sf_raw": 0.52,
+     "target": 2.0,
+     "pass": false,
+     "max_displacement_mm": 1.1849,
+     "deflection_mm": null,
+     "twist_deg": null,
+     "mesh_mm": 2.0,
+     "tets": 413617,
+     "material": "5052-H32 aluminium",
+     "picture": "research/body-sheet-metal/fea/A/D2-turret-fall.png",
+     "deck_sf": 1.95,
+     "plate_sf": 6.27,
+     "plate_clamp_sf": 1.25,
+     "post_corner_sf": 0.52,
+     "head": "a 30 g fall of the 2.56 kg head (the turret plan's budget) at 45 deg, its centre 100 mm above the TM face: a tip-over (SF >= 1.2, the abuse target)",
+     "run": "A"
+    },
+    "S1-landing": {
+     "sf": 5.71,
+     "sf_raw": 2.45,
+     "target": 2.0,
+     "pass": true,
+     "max_displacement_mm": 0.0506,
+     "deflection_mm": null,
+     "twist_deg": null,
+     "mesh_mm": 4.0,
+     "tets": 101672,
+     "material": "5052-H32 aluminium",
+     "picture": "research/body-sheet-metal/fea/B/S1-landing.png",
+     "deck_sf": null,
+     "plate_sf": null,
+     "plate_clamp_sf": null,
+     "post_corner_sf": null,
+     "head": "rig 'jump_peak' at 18.75 kg a leg (axle 1776 N): 182 N m roll and 632 N up at the hip frame's mount plane, plus 10 % of the 1060 N ground force sideways at the contact patch on BOTH legs; the payload's inertia on the tray (80 %) and the belly (20 %)",
+     "run": "B"
+    },
+    "S1F-collapse": {
+     "sf": 2.99,
+     "sf_raw": 1.34,
+     "target": 1.2,
+     "pass": true,
+     "max_displacement_mm": 0.0923,
+     "deflection_mm": null,
+     "twist_deg": null,
+     "mesh_mm": 4.0,
+     "tets": 101672,
+     "material": "5052-H32 aluminium",
+     "picture": "research/body-sheet-metal/fea/B/S1F-collapse.png",
+     "deck_sf": null,
+     "plate_sf": null,
+     "plate_clamp_sf": null,
+     "post_corner_sf": null,
+     "head": "rig 'power_off' at 18.75 kg a leg (axle 1929 N): 344 N m roll and 1208 N up at the hip frame's mount plane, plus 10 % of the 1945 N ground force sideways at the contact patch on BOTH legs (the undamped power cut, D39); payload inertia as S1",
+     "run": "B"
+    },
+    "S1b-one-leg-bound": {
+     "sf": 4.58,
+     "sf_raw": 2.78,
+     "target": 2.0,
+     "pass": true,
+     "max_displacement_mm": 0.0466,
+     "deflection_mm": null,
+     "twist_deg": null,
+     "mesh_mm": 4.0,
+     "tets": 101672,
+     "material": "5052-H32 aluminium",
+     "picture": "research/body-sheet-metal/fea/B/S1b-one-leg-bound.png",
+     "deck_sf": null,
+     "plate_sf": null,
+     "plate_clamp_sf": null,
+     "post_corner_sf": null,
+     "head": "rig 'jump_peak' at 18.75 kg a leg (axle 1776 N): 182 N m roll and 632 N up at the hip frame's mount plane, plus 10 % of the 1060 N ground force sideways at the contact patch on ONE leg, the other cheek clamped: every newton crosses the gap (a bound: in a one-wheel landing the body's inertia takes most of it)",
+     "run": "B"
+    },
+    "S2-twist": {
+     "sf": 8.0,
+     "sf_raw": 8.0,
+     "target": 2.0,
+     "pass": true,
+     "max_displacement_mm": 0.0156,
+     "deflection_mm": null,
+     "twist_deg": 0.0126,
+     "mesh_mm": 4.0,
+     "tets": 101672,
+     "material": "5052-H32 aluminium",
+     "picture": "research/body-sheet-metal/fea/B/S2-twist.png",
+     "deck_sf": null,
+     "plate_sf": null,
+     "plate_clamp_sf": null,
+     "post_corner_sf": null,
+     "head": "one leg's 80 N m roll moment (the HM budget) against the other's",
+     "run": "B"
+    },
+    "S3-pitch": {
+     "sf": 27.55,
+     "sf_raw": 27.55,
+     "target": 2.0,
+     "pass": true,
+     "max_displacement_mm": 0.003,
+     "deflection_mm": null,
+     "twist_deg": null,
+     "mesh_mm": 4.0,
+     "tets": 101672,
+     "material": "5052-H32 aluminium",
+     "picture": "research/body-sheet-metal/fea/B/S3-pitch.png",
+     "deck_sf": null,
+     "plate_sf": null,
+     "plate_clamp_sf": null,
+     "post_corner_sf": null,
+     "head": "the two motors' 60 N m caps reacted as one 120 N m couple about y, and 600 N fore-aft (the HM budget)",
+     "run": "B"
+    }
+   }
+  },
+  "C": {
+   "results": {
+    "D1-hand-front": {
+     "sf": 4.55,
+     "sf_raw": 2.3,
+     "target": 2.0,
+     "pass": true,
+     "max_displacement_mm": 2.2121,
+     "deflection_mm": 1.938,
+     "twist_deg": null,
+     "mesh_mm": 4.0,
+     "tets": 265795,
+     "material": "PA6-CF along the layers (humid)",
+     "picture": "research/body-sheet-metal/fea/C/D1-hand-front.png",
+     "deck_sf": 4.55,
+     "plate_sf": 71.6,
+     "plate_clamp_sf": 7.75,
+     "post_corner_sf": 2.3,
+     "head": "300 N down on the deck at the front (a child leaning on it), the turret plate under the riser (D59)",
+     "run": "C"
+    },
+    "D1-hand-riser": {
+     "sf": 7.28,
+     "sf_raw": 3.14,
+     "target": 2.0,
+     "pass": true,
+     "max_displacement_mm": 1.8054,
+     "deflection_mm": 1.392,
+     "twist_deg": null,
+     "mesh_mm": 4.0,
+     "tets": 265795,
+     "material": "PA6-CF along the layers (humid)",
+     "picture": "research/body-sheet-metal/fea/C/D1-hand-riser.png",
+     "deck_sf": 7.28,
+     "plate_sf": 71.99,
+     "plate_clamp_sf": 5.56,
+     "post_corner_sf": 3.14,
+     "head": "300 N down on the deck at the riser (a child leaning on it), the turret plate under the riser (D59)",
+     "run": "C"
+    },
+    "S1-landing": {
+     "sf": 5.71,
+     "sf_raw": 2.45,
+     "target": 2.0,
+     "pass": true,
+     "max_displacement_mm": 0.0506,
+     "deflection_mm": null,
+     "twist_deg": null,
+     "mesh_mm": 4.0,
+     "tets": 101672,
+     "material": "5052-H32 aluminium",
+     "picture": "research/body-sheet-metal/fea/B/S1-landing.png",
+     "deck_sf": null,
+     "plate_sf": null,
+     "plate_clamp_sf": null,
+     "post_corner_sf": null,
+     "head": "rig 'jump_peak' at 18.75 kg a leg (axle 1776 N): 182 N m roll and 632 N up at the hip frame's mount plane, plus 10 % of the 1060 N ground force sideways at the contact patch on BOTH legs; the payload's inertia on the tray (80 %) and the belly (20 %)",
+     "run": "B"
+    },
+    "S1F-collapse": {
+     "sf": 2.99,
+     "sf_raw": 1.34,
+     "target": 1.2,
+     "pass": true,
+     "max_displacement_mm": 0.0923,
+     "deflection_mm": null,
+     "twist_deg": null,
+     "mesh_mm": 4.0,
+     "tets": 101672,
+     "material": "5052-H32 aluminium",
+     "picture": "research/body-sheet-metal/fea/B/S1F-collapse.png",
+     "deck_sf": null,
+     "plate_sf": null,
+     "plate_clamp_sf": null,
+     "post_corner_sf": null,
+     "head": "rig 'power_off' at 18.75 kg a leg (axle 1929 N): 344 N m roll and 1208 N up at the hip frame's mount plane, plus 10 % of the 1945 N ground force sideways at the contact patch on BOTH legs (the undamped power cut, D39); payload inertia as S1",
+     "run": "B"
+    },
+    "S1b-one-leg-bound": {
+     "sf": 4.58,
+     "sf_raw": 2.78,
+     "target": 2.0,
+     "pass": true,
+     "max_displacement_mm": 0.0466,
+     "deflection_mm": null,
+     "twist_deg": null,
+     "mesh_mm": 4.0,
+     "tets": 101672,
+     "material": "5052-H32 aluminium",
+     "picture": "research/body-sheet-metal/fea/B/S1b-one-leg-bound.png",
+     "deck_sf": null,
+     "plate_sf": null,
+     "plate_clamp_sf": null,
+     "post_corner_sf": null,
+     "head": "rig 'jump_peak' at 18.75 kg a leg (axle 1776 N): 182 N m roll and 632 N up at the hip frame's mount plane, plus 10 % of the 1060 N ground force sideways at the contact patch on ONE leg, the other cheek clamped: every newton crosses the gap (a bound: in a one-wheel landing the body's inertia takes most of it)",
+     "run": "B"
+    },
+    "S2-twist": {
+     "sf": 8.0,
+     "sf_raw": 8.0,
+     "target": 2.0,
+     "pass": true,
+     "max_displacement_mm": 0.0156,
+     "deflection_mm": null,
+     "twist_deg": 0.0126,
+     "mesh_mm": 4.0,
+     "tets": 101672,
+     "material": "5052-H32 aluminium",
+     "picture": "research/body-sheet-metal/fea/B/S2-twist.png",
+     "deck_sf": null,
+     "plate_sf": null,
+     "plate_clamp_sf": null,
+     "post_corner_sf": null,
+     "head": "one leg's 80 N m roll moment (the HM budget) against the other's",
+     "run": "B"
+    },
+    "S3-pitch": {
+     "sf": 27.55,
+     "sf_raw": 27.55,
+     "target": 2.0,
+     "pass": true,
+     "max_displacement_mm": 0.003,
+     "deflection_mm": null,
+     "twist_deg": null,
+     "mesh_mm": 4.0,
+     "tets": 101672,
+     "material": "5052-H32 aluminium",
+     "picture": "research/body-sheet-metal/fea/B/S3-pitch.png",
+     "deck_sf": null,
+     "plate_sf": null,
+     "plate_clamp_sf": null,
+     "post_corner_sf": null,
+     "head": "the two motors' 60 N m caps reacted as one 120 N m couple about y, and 600 N fore-aft (the HM budget)",
+     "run": "B"
+    }
+   }
+  },
+  "A-tray2b": {
+   "results": {
+    "D1-hand-front": {
+     "sf": 2.57,
+     "sf_raw": 2.57,
+     "target": 2.0,
+     "pass": true,
+     "max_displacement_mm": 0.385,
+     "deflection_mm": 0.32,
+     "twist_deg": null,
+     "mesh_mm": 4.0,
+     "tets": 190289,
+     "material": "5052-H32 aluminium",
+     "picture": "research/body-sheet-metal/fea/A-tray2b/D1-hand-front.png",
+     "deck_sf": null,
+     "plate_sf": null,
+     "plate_clamp_sf": null,
+     "post_corner_sf": null,
+     "head": "300 N down on the deck at the front (a child leaning on it)",
+     "run": "A-tray2b"
+    },
+    "D1-hand-riser": {
+     "sf": 4.08,
+     "sf_raw": 4.08,
+     "target": 2.0,
+     "pass": true,
+     "max_displacement_mm": 0.2531,
+     "deflection_mm": 0.197,
+     "twist_deg": null,
+     "mesh_mm": 4.0,
+     "tets": 190289,
+     "material": "5052-H32 aluminium",
+     "picture": "research/body-sheet-metal/fea/A-tray2b/D1-hand-riser.png",
+     "deck_sf": null,
+     "plate_sf": null,
+     "plate_clamp_sf": null,
+     "post_corner_sf": null,
+     "head": "300 N down on the deck at the riser (a child leaning on it)",
+     "run": "A-tray2b"
+    },
+    "D2-turret-fall": {
+     "sf": 0.52,
+     "sf_raw": 0.52,
+     "target": 2.0,
+     "pass": false,
+     "max_displacement_mm": 1.1849,
+     "deflection_mm": null,
+     "twist_deg": null,
+     "mesh_mm": 2.0,
+     "tets": 413617,
+     "material": "5052-H32 aluminium",
+     "picture": "research/body-sheet-metal/fea/A-tray2b/D2-turret-fall.png",
+     "deck_sf": null,
+     "plate_sf": null,
+     "plate_clamp_sf": null,
+     "post_corner_sf": null,
+     "head": "a 30 g fall of the 2.56 kg head (the turret plan's budget) at 45 deg, its centre 100 mm above the TM face: a tip-over (SF >= 1.2, the abuse target)",
+     "run": "A-tray2b"
+    },
+    "T1-tray": {
+     "sf": 1.74,
+     "sf_raw": 1.74,
+     "target": 2.0,
+     "pass": false,
+     "max_displacement_mm": 1.0135,
+     "deflection_mm": null,
+     "twist_deg": null,
+     "mesh_mm": 4.0,
+     "tets": 92729,
+     "material": "5052-H32 aluminium",
+     "picture": "research/body-sheet-metal/fea/A-tray2b/T1-tray.png",
+     "deck_sf": null,
+     "plate_sf": null,
+     "plate_clamp_sf": null,
+     "post_corner_sf": null,
+     "head": "what stands on the floor tray at 8.51 g (the body's landing peak from the rig): the compute 1.39 kg on its isolators, the power skid 1.86 kg on its posts, the deck with the lidar and turret 4.56 kg on the deck posts, the DDR-120C; the tray held by its screws",
+     "run": "A-tray2b"
+    }
+   }
+  },
+  "A-mesh3": {
+   "results": {
+    "D1-hand-front": {
+     "sf": 4.54,
+     "sf_raw": 2.31,
+     "target": 2.0,
+     "pass": true,
+     "max_displacement_mm": 0.3865,
+     "deflection_mm": 0.322,
+     "twist_deg": null,
+     "mesh_mm": 3.0,
+     "tets": 258141,
+     "material": "5052-H32 aluminium",
+     "picture": "research/body-sheet-metal/fea/A-mesh3/D1-hand-front.png",
+     "deck_sf": 4.54,
+     "plate_sf": 23.5,
+     "plate_clamp_sf": 7.23,
+     "post_corner_sf": 2.31,
+     "head": "300 N down on the deck at the front (a child leaning on it)",
+     "run": "A-mesh3"
+    },
+    "D1-hand-riser": {
+     "sf": 6.92,
+     "sf_raw": 3.62,
+     "target": 2.0,
+     "pass": true,
+     "max_displacement_mm": 0.2535,
+     "deflection_mm": 0.197,
+     "twist_deg": null,
+     "mesh_mm": 3.0,
+     "tets": 258141,
+     "material": "5052-H32 aluminium",
+     "picture": "research/body-sheet-metal/fea/A-mesh3/D1-hand-riser.png",
+     "deck_sf": 6.92,
+     "plate_sf": 22.4,
+     "plate_clamp_sf": 5.84,
+     "post_corner_sf": 3.62,
+     "head": "300 N down on the deck at the riser (a child leaning on it)",
+     "run": "A-mesh3"
+    }
+   }
+  }
+ }
 }
