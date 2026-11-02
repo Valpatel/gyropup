@@ -78,7 +78,7 @@ The barrel into its socket (a nylon-tip M3 set screw through the socket's insert
 
 ![step 12](../exports/turret/assembly/step-12.png)
 
-The cartridge down onto the cradle's two dowels, the knurled thumbscrew up into its insert (its O-ring keeps it in the rail); the two CT plugs (2 x 3 power, 2 x 5 signal). Then the turret on its stand: 2 x Ø5 dowels, 4 x M5 x 16, and the DT12 plug. The TPU bumper ring (5 x M3 x 20 and oversized washers on the base's tabs) is for the robot (v1).
+The cartridge down onto the cradle's two dowels, the knurled thumbscrew up into its insert (its O-ring keeps it in the rail); the two CT plugs (2 x 3 power, 2 x 5 signal). Then the turret on its stand: 2 x Ø5 dowels, 4 x M5 x 16, and the DT12 plug (the stand's two dock inserts went in from below with a flat tip, the top face on a flat plate and the seat checked flat after; the dock adapter's M3s are no longer than its base + 5 mm). The TPU bumper ring (5 x M3 x 20 and oversized washers on the base's tabs) is for the robot (v1).
 
 ## The hardware, all steps
 
@@ -105,7 +105,7 @@ The cartridge down onto the cradle's two dowels, the knurled thumbscrew up into 
 | flat m3x6 | Black-Oxide Alloy Steel Hex-Drive Flat Head Screw, 90 Degree Countersink, M3 x 0.5 mm Thread Size, 6 mm Long | McMaster-Carr 91294A126 | 2 |
 | screw m4x10 | Black-Oxide Alloy Steel Socket Head Screw, US Origin, M4 x 0.7 mm Thread Size, 10 mm Long | McMaster-Carr 91290A144 | 4 |
 | flat m3x8 | Black-Oxide Alloy Steel Hex-Drive Flat Head Screw, 90 Degree Countersink, M3 x 0.5 mm Thread Size, 8 mm Long | McMaster-Carr 91294A128 | 4 |
-| screw m4x12 | Black-oxide alloy steel socket head screw, M4 x 0.7 x 12 mm (the fuse board's M4 studs, down through the lug into the standoff's nyloc) | McMaster-Carr 91290A148 | 4 |
+| screw m4x12 | Black-oxide alloy steel socket head screw, M4 x 0.7 x 12 mm | McMaster-Carr 91290A148 | 4 |
 | flat m3x10 | Black-Oxide Alloy Steel Hex-Drive Flat Head Screw, 90 Degree Countersink, M3 x 0.5 mm Thread Size, 10 mm Long | McMaster-Carr 91294A130 | 3 |
 | setscrew m3x6 | Nylon-Tip 18-8 Stainless Steel Set Screw, M3 x 0.5 mm Thread, 6 mm Long | McMaster-Carr 93285A115 | 4 |
 | insert m3 | Heat-Set Threaded Inserts for Plastic, Standard, Brass, M3 x 0.5 mm Thread Size, 5.7 mm Installed Length | McMaster-Carr 94459A140 | 41 |

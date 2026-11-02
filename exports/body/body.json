@@ -1818,11 +1818,11 @@
      516.6
     ],
     "mass_g": 2573.4,
-    "basis": "budget 2.5734 kg (turret.json: 2.561 kg with 30 balls); exports/turret/mount.json (the budget when larger)",
+    "basis": "exports/turret/mount.json (the budget when larger); 2.573 kg, its centre 135.3 mm above the TM face (turret.json: 2.573 kg with 30 balls)",
     "group": "deck",
     "stage": "P2",
     "catalog": "",
-    "note": "the foam-ball turret on the riser (P1: a dummy of the budget mass)",
+    "note": "the foam-ball turret on the riser (P1: a dummy of its 2.57 kg)",
     "keepout": false
    },
    {

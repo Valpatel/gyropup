@@ -3289,7 +3289,7 @@
      0.0,
      381.3
     ],
-    "basis": "budget 2.5734 kg (turret.json: 2.561 kg with 30 balls); exports/turret/mount.json (the budget when larger)"
+    "basis": "exports/turret/mount.json (the budget when larger); 2.573 kg, its centre 135.3 mm above the TM face (turret.json: 2.573 kg with 30 balls)"
    },
    {
     "group": "battery",

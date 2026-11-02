@@ -1152,7 +1152,7 @@
    "torsional_stiffness_nm_per_deg": 104.08,
    "case": "D2-turret-fall",
    "rare": "D2",
-   "why": "a 30 g fall of the 2.57 kg head (the turret plan's budget) at 45 deg, its centre 135 mm above the TM face: a tip-over, the turret plate under the riser (D59: SF >= 2.0, the everyday target)",
+   "why": "a 30 g fall of the 2.57 kg head (the turret's exports/turret/mount.json) at 45 deg, its centre 135 mm above the TM face: a tip-over, the turret plate under the riser (D59: SF >= 2.0, the everyday target)",
    "deck_peak_mpa": 160.1,
    "deck_peak_at_mm": [
     10.8,
