@@ -8,7 +8,7 @@
     "seconds": 22,
     "audio": false
   },
-  "source_revision": "c16e73f583573cd4792259d6f8dd45e142585c3b",
+  "source_revision": "1f94edbe2253f4281477c913afc4d9e790abb410",
   "source_hashes": {
     "designer/cadrig.js": "a2cb4029ef786e0793c5eb0018e0aa8d919d829bde8c5d378c1b1480c457faaf",
     "designer/character/eyes.js": "3348578a121b75ab7425c3b6591e864b41b09512e67b642832e6c6b683d2e11b",
@@ -117,7 +117,7 @@
     "exports/sim/turret_box/tilt_servo.stl": "fa578ec54f47861e5cd9170ac5be5df1832dc52183a61012bb0cef230604946b",
     "exports/sim/turret_box/tilt_yoke.stl": "36c324a2ef44b2e208bb5d5eccff6312d3665664a30c548620dfada7eec5fd69",
     "exports/sim/turret_box/turret_board.stl": "869bd5ba08b01bad5c56710062b511ba91b90c6a48cdec394bc40e193c7156a9",
-    "exports/sim/v2/leg-attachments/manifest.json": "43d55c6821d0852069ed47bf50ab118ad72054db798056da942a33aa2b0da498",
+    "exports/sim/v2/leg-attachments/manifest.json": "6945afc6b3f2237426d6e44828c3bb0e1b0e1ecdc3945fc358ce2f013c612245",
     "exports/sim/v2/leg-attachments/output_adapter.stl": "abadcc27e7425adcb6d3851684ffd915ea74e1a96699a262e9ad0fe15e096e6b",
     "exports/sim/v2/leg-attachments/output_screw_1.stl": "909f3b5b626778914d966244eca544f9c0ef6b2adef30a77016a33fce3c55bf8",
     "exports/sim/v2/leg-attachments/output_screw_2.stl": "091c5d7ace9b7e474124e599f56994ad5a89db783ed45a3d17b50a0d7855920b",
@@ -414,23 +414,23 @@
   ],
   "outputs": {
     "gyropup-highlights.mp4": {
-      "sha256": "e4da37d7bd0658c2ca6444e1dbd482201d565f0a79ac23eda7ccd960fb16579f",
-      "bytes": 1837288
+      "sha256": "a0bdf8b62684f8923580a58301ae8694c9d06368ac2cf5e3a05722e2eee1c572",
+      "bytes": 1837394
     },
     "gyropup-highlights.webm": {
-      "sha256": "4bc2765dc0edab9c87aeda1da1368307adaf58d9f69c554919087e7cb1796d5b",
-      "bytes": 1465454
+      "sha256": "7b47b10daeed299818bd6671919e93749e6767f99592ae097019b6de4976f25a",
+      "bytes": 1465682
     },
     "gyropup-highlights.webp": {
-      "sha256": "e18bfb2d76a13127d632c7bb1c88d905f05ca640d6e11efab8bcc0e1476d33b0",
-      "bytes": 32722
+      "sha256": "13e89d1799601372d065e25823c5dedf328f98b41972cb403c58382f3881ff29",
+      "bytes": 32610
     },
     "capture-receipt.json": {
-      "sha256": "18448b1ccfdaebfaff718c9ee2aa9486e4fdf567a021df8384cb20c77de24ae2",
-      "bytes": 113685
+      "sha256": "147a5fcf3ed88db087d6792405d94f47d302903ed159e399f00b036de6da1c1d",
+      "bytes": 113684
     },
     "capture-frames.json": {
-      "sha256": "3a2480b6c03c4381bf5ae0a94cda9ba987b380a972c9c29bbebe92b99f160920",
+      "sha256": "3fe112022e162dd66f4b66991790e2051af05a70d521bb76abac66aac88227fc",
       "bytes": 100989
     }
   }
