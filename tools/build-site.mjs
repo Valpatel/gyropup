@@ -47,7 +47,8 @@ await mkdir(path.join(out, 'site/pages'), { recursive: true });
 // than wrong ones (tools/status-board.mjs).
 let history = !shallowHistory(root);
 if (!history && process.env.CF_PAGES) {
-  try { execFileSync('git', ['fetch', '--quiet', '--unshallow'], { cwd: root, stdio: 'inherit', timeout: 300000 }); history = !shallowHistory(root); }
+  // Never wait on a credential prompt: a public clone needs none, and a failed fetch only leaves the dates out.
+  try { execFileSync('git', ['fetch', '--quiet', '--unshallow'], { cwd: root, stdio: 'inherit', timeout: 300000, env: { ...process.env, GIT_TERMINAL_PROMPT: '0' } }); history = !shallowHistory(root); }
   catch (error) { console.warn(`Status board: could not fetch the history (${error.message}); change dates are left out.`); }
 }
 const status = collectStatus(createReader(root, { git: history }));

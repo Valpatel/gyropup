@@ -27,12 +27,20 @@ const problems = [];
 const listed = Object.keys(backlog.pages);
 if (listed.length !== backlog.left) problems.push(`${BACKLOG}: ${listed.length} pages but "left" says ${backlog.left}: ${listed.length < backlog.left ? `lower "left" to ${listed.length}` : 'the backlog only shrinks; break the page up instead'}`);
 const git = (...args) => execFileSync('git', args, { cwd: root, stdio: ['ignore', 'pipe', 'ignore'] }).toString().trim();
-let baseList = null;
-try {
-  const ref = process.env.WALLS_BASE_REF || git('merge-base', 'HEAD', `origin/${process.env.GITHUB_BASE_REF || 'dev'}`);
-  baseList = JSON.parse(git('show', `${ref}:${BACKLOG}`)).pages;
-} catch { /* the base has no backlog yet (this change adds it), or no base ref: nothing to compare */ }
-if (baseList) for (const route of listed) if (!(route in baseList)) problems.push(`${BACKLOG}: ${route} is not on the base branch's backlog; the list only shrinks`);
+let baseList = null, ref = null;
+try { ref = process.env.WALLS_BASE_REF || git('merge-base', 'HEAD', `origin/${process.env.GITHUB_BASE_REF || 'dev'}`); }
+catch { if (process.env.CI && !report) problems.push(`${BACKLOG}: no merge base with origin/${process.env.GITHUB_BASE_REF || 'dev'}, so the shrink-only check cannot run (fetch the full history)`); }
+if (ref) {
+  try { baseList = JSON.parse(git('show', `${ref}:${BACKLOG}`)).pages; }
+  catch { /* the base has no backlog yet: this change adds it */ }
+}
+// A page may only come off the list, and its recorded stretch may only go down: never above the base's number.
+if (baseList) for (const route of listed) {
+  if (!(route in baseList)) problems.push(`${BACKLOG}: ${route} is not on the base branch's backlog; the list only shrinks`);
+  else if (backlog.pages[route] > baseList[route]) problems.push(`${BACKLOG}: ${route} is recorded at ${backlog.pages[route]}px, above the base's ${baseList[route]}px; the numbers only go down`);
+}
+// The band absorbs layout differences between engines and runs; past it, a backlog page has grown.
+export const GROWTH = 1.1;
 
 let server, base = process.env.SITE_URL?.replace(/\/$/, '');
 if (!base) {
@@ -72,6 +80,7 @@ try {
     const where = `${wall.worst}px with nothing to look at, ${wall.from}-${wall.to}px into the page, after "${wall.after}"`;
     if (route in backlog.pages) {
       if (wall.worst < WALL_CLEARED) problems.push(`walls ${route}: ${where}, under ${WALL_CLEARED}px: remove it from ${BACKLOG} and lower "left"`);
+      else if (wall.worst > backlog.pages[route] * GROWTH) problems.push(`walls ${route}: ${where}, more than ${Math.round((GROWTH - 1) * 100)}% over the ${backlog.pages[route]}px recorded in ${BACKLOG}; a page on the backlog may not grow`);
     } else if (wall.worst > WALL_LIMIT) problems.push(`walls ${route}: ${where}; the limit is ${WALL_LIMIT}px. Lead with a diagram, a render, a chart from the page's own table or a status strip, or fold long evidence into <details>`);
   }
   await context.close();

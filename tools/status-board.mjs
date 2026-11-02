@@ -4,8 +4,9 @@
  * its own, so a board that disagrees with its records fails CI.
  *
  * Honest by construction: a below-target study is amber, one under 1.0 (or a fix the records ask for) is red, and
- * anything with no committed measurement is a grey "not yet measured" state. A record that is missing shows as missing;
- * nothing here is typed in by hand except which record answers which question.
+ * anything with no committed measurement is a grey "not yet measured" state. A record that is missing shows as missing.
+ * Numbers and the words beside them are built from the records; what is typed in is which record answers which
+ * question, and the plain-language name of each check.
  */
 import { execFileSync } from 'node:child_process';
 import { existsSync, readdirSync, readFileSync } from 'node:fs';
@@ -60,7 +61,10 @@ export function feaCount(summary) {
     const target = r.target ?? r.target_sf;
     if (ok) { out.pass++; continue; }
     if (sf < 1) out.under1++; else out.below++;
-    if (!out.worst || sf / target < out.worst.sf / out.worst.target) out.worst = { part: r.part, case: r.case, sf, target };
+    // The worst: the lowest safety factor among those under 1.0 if any, else the smallest margin to target.
+    const rank = x => x.sf < 1 ? [0, x.sf] : [1, x.sf / x.target];
+    const [a, b] = [rank({ sf, target }), out.worst && rank(out.worst)];
+    if (!b || a[0] < b[0] || (a[0] === b[0] && a[1] < b[1])) out.worst = { part: r.part, case: r.case, sf, target };
   }
   return out;
 }
@@ -86,12 +90,29 @@ export function jointCount(inventory, assemblies) {
 
 /** A measurement sheet: rows, and the rows with any measured value. A measured value is a cell in a column with a unit
  * (…_mm, …_n, …_nm, …_g, …_deg, …_mpa, …_c, …_s), other than the drawn (cad_/nominal_) values the sheet starts with. */
+export const MEASURED_UNIT = /_(mm|um|n|nm|g|kg|deg|mpa|kn|c|s|ms|v|a|ma|w|rpm|hz|pct|ohm|mohm)$/;
+const NOT_MEASURED = /^(cad_|nominal|calculated_|predicted_|expected_|target_|measurement_uncertainty)/;
+/** Columns of a measurement sheet that hold a reading. */
+export const measuredColumns = head => head.map(h => MEASURED_UNIT.test(h) && !NOT_MEASURED.test(h));
+/** CSV rows, honouring double quotes (a note may hold a comma). */
+export function csvRows(text) {
+  const rows = [[]];
+  let cell = '', quoted = false;
+  for (let i = 0; i < text.length; i++) {
+    const c = text[i];
+    if (quoted) { if (c === '"' && text[i + 1] === '"') { cell += '"'; i++; } else if (c === '"') quoted = false; else cell += c; continue; }
+    if (c === '"') quoted = true;
+    else if (c === ',') { rows.at(-1).push(cell); cell = ''; }
+    else if (c === '\n' || c === '\r') { if (c === '\r' && text[i + 1] === '\n') i++; rows.at(-1).push(cell); cell = ''; rows.push([]); }
+    else cell += c;
+  }
+  rows.at(-1).push(cell);
+  return rows.filter(r => r.some(v => v.trim() !== ''));
+}
 export function sheetCount(csv) {
-  const lines = csv.trim().split(/\r?\n/);
-  const head = lines.shift().split(',');
-  const measured = head.map(h => /_(mm|n|nm|g|deg|mpa|kn|c|s|v|a)$/.test(h) && !/^(cad_|nominal)/.test(h));
-  const rows = lines.map(l => l.split(','));
-  return { rows: rows.length, measured: rows.filter(r => r.some((v, i) => measured[i] && v.trim() !== '')).length };
+  const [head, ...rows] = csvRows(csv.trim());
+  const measured = measuredColumns(head);
+  return { rows: rows.length, columns: measured.filter(Boolean).length, measured: rows.filter(r => r.some((v, i) => measured[i] && v.trim() !== '')).length };
 }
 
 /** The leg's pre-print screen (research/leg-preprint): the across-the-layers check and the printed press fits. */
@@ -106,7 +127,7 @@ export function screenCount(screen) {
 /** A print plan: parts, the ones that fit the bed, hours and grams. */
 export function printCount(plan) {
   const parts = Object.values(plan.parts);
-  return { parts: parts.length, fit: parts.filter(p => p.fits).length, hours: plan.total_hours, grams: plan.total_grams };
+  return { parts: parts.length, prints: parts.reduce((n, p) => n + (p.qty ?? 1), 0), fit: parts.filter(p => p.fits).length, hours: plan.total_hours, grams: plan.total_grams, bed: plan.bed_mm };
 }
 
 // --- The panels --------------------------------------------------------------------------------------------------
@@ -124,20 +145,20 @@ function feaMeter(r, file, what) {
     id: 'fea', label: 'Strength studies', value: `${c.pass} of ${c.studies}`, unit: 'meet their own target',
     state: c.under1 ? 'fail' : c.below ? 'warn' : 'pass',
     bar: bar(c.studies, [{ k: 'pass', n: c.pass }, { k: 'warn', n: c.below }, { k: 'fail', n: c.under1 }]),
-    note: parts.length ? `${parts.join(', ')}; weakest ${c.worst.part.replace(/_/g, ' ')} ${c.worst.case}: ${num(c.worst.sf)} against ${Number(c.worst.target).toFixed(1)}` : `${what}, all at or above target`,
+    note: parts.length ? `${parts.join(', ')}; ${c.worst.sf < 1 ? 'lowest' : 'least margin'}: ${c.worst.part.replace(/_/g, ' ')} ${c.worst.case}, ${num(c.worst.sf)} against ${Number(c.worst.target).toFixed(1)}` : `${what}, all at or above target`,
     source: SOURCE(file), data: c,
   };
 }
 
 function jointMeter(r, assemblies) {
   const file = 'research/insert-joints/joints.json';
-  const c = jointCount(r.json(file), assemblies);
+  const inventory = r.json(file), c = jointCount(inventory, assemblies);
   const v = c.verdicts;
   return {
     id: 'joints', label: 'Insert joints', value: `${c.joints}`, unit: `joint ${c.joints === 1 ? 'family' : 'families'}, ${plural(c.inserts, 'insert')}`,
     state: v.fix ? 'fail' : v.owner ? 'warn' : v.check ? 'unknown' : 'pass',
     bar: bar(c.joints, [{ k: 'pass', n: v.ok }, { k: 'note', n: v.note }, { k: 'unknown', n: v.check }, { k: 'warn', n: v.owner }, { k: 'fail', n: v.fix }]),
-    note: [v.fix && `${v.fix} to fix`, v.owner && `${v.owner} owner’s call`, v.check && `${v.check} to check at assembly`, v.note && `${v.note} noted`, v.ok && `${v.ok} clear`].filter(Boolean).join(' · ') + ' (a screen: nothing printed or pulled yet)',
+    note: [v.fix && `${v.fix} to fix`, v.owner && `${v.owner} owner’s call`, v.check && `${v.check} to check at assembly`, v.note && `${v.note} noted`, v.ok && `${v.ok} clear`].filter(Boolean).join(' · ') + ` (${inventory.status.split(':')[0]})`,
     source: SOURCE(file), data: c,
   };
 }
@@ -154,13 +175,15 @@ function sheetMeter(r, files, label, what) {
   };
 }
 
+/** `released`: true or false from a release record, or null when the subsystem has no release record. */
 function printMeter(r, file, released) {
   const c = printCount(r.json(file));
+  const bed = Array.isArray(c.bed) ? c.bed.join(' x ') : c.bed;
   return {
-    id: 'print', label: 'Print plan', value: `${c.parts}`, unit: `parts · ${num(c.hours, 0)} h · ${num(c.grams / 1000, 1)} kg`,
+    id: 'print', label: 'Print plan', value: `${c.parts}`, unit: `${c.parts === 1 ? 'design' : 'designs'}, ${plural(c.prints, 'print')} · ${num(c.hours, 0)} h · ${num(c.grams / 1000, 1)} kg`,
     state: released ? 'pass' : 'unknown',
     bar: bar(c.parts, [{ k: released ? 'pass' : 'unknown', n: c.fit }, { k: 'fail', n: c.parts - c.fit }]),
-    note: `${c.fit === c.parts ? `All ${c.parts}` : `${c.fit} of ${c.parts}`} fit the 256 mm bed · ${released ? 'released for print' : 'not released for print'}`,
+    note: `${c.fit === c.parts ? `All ${c.parts}` : `${c.fit} of ${c.parts}`} fit the ${bed} mm bed · ${released === null ? 'no print release recorded' : released ? 'released for print' : 'not released for print'}`,
     source: SOURCE(file), data: { ...c, released },
   };
 }
@@ -179,7 +202,11 @@ const GATE_NAMES = { 'turret-path': 'ball path', 'turret-ammo': 'ammo range', 'd
 
 /** Every panel, in a fixed order. Each lists the records it reads (its "changed" date is the newest of them). */
 export function collectStatus(r) {
-  const mass = r.json('exports/body/mass.json').P3;
+  const massRecord = r.json('exports/body/mass.json'), mass = massRecord.P3;
+  // D72's product ceiling, from the decision's own words ("100 lb (45.359237 kg)").
+  const d72 = r.text('docs/decisions.yaml').match(/- id: D72\n[\s\S]*?\((\d+(?:\.\d+)?) kg\)/);
+  if (!d72) throw new Error('docs/decisions.yaml: D72 no longer states the ceiling in kg');
+  const ceiling = Number(d72[1]);
   const inventory = 'research/insert-joints/joints.json';
   const panels = [];
 
@@ -267,7 +294,7 @@ export function collectStatus(r) {
         jointMeter(r, ['body', 'body / turret']),
         massMeter({ label: 'Mass, body and head', kg: mass.body_and_head_kg, limit: mass.budget.body_and_head_kg, file: 'exports/body/mass.json',
           note: `P3 ledger against D71’s ${kg(mass.budget.body_and_head_kg)} kg budget; ${kg(mass.gate.body_and_head_with_levers_kg)} kg with the scheduled savings` }),
-        printMeter(r, 'exports/body/print-plan.json', false),
+        printMeter(r, 'exports/body/print-plan.json', null),
       ] });
   }
 
@@ -278,19 +305,25 @@ export function collectStatus(r) {
     const heights = Object.entries(curb.heights);
     const passed = heights.filter(([, h]) => h.pass).length;
     const clashes = fit.clashes.length + fit.wheel_clashes.length + fit.out_of_range.length;
-    panels.push({ id: 'wheels', name: 'Wheels', blurb: curb.wheel.title.replace(/\s*\(.*\)$/, ''), image: null,
+    const cleared = heights.filter(([, h]) => h.pass).map(([mm]) => Number(mm)), failed = heights.filter(([, h]) => !h.pass).map(([mm]) => Number(mm));
+    const kerbNote = !failed.length ? `Clears every height up to ${Math.max(...cleared)} mm at ${curb.speed_mps} m/s`
+      : !cleared.length ? `Clears none of ${failed.map(mm => `${mm} mm`).join(', ')} at ${curb.speed_mps} m/s`
+      : `Up to ${Math.max(...cleared)} mm at ${curb.speed_mps} m/s; ${failed.map(mm => `${mm} mm`).join(', ')} ${failed.length === 1 ? 'fails' : 'fail'}`;
+    const fitNote = clashes ? [fit.clashes.length && plural(fit.clashes.length, 'clash', 'clashes'), fit.wheel_clashes.length && plural(fit.wheel_clashes.length, 'wheel clash', 'wheel clashes'), fit.out_of_range.length && plural(fit.out_of_range.length, 'out-of-range pose')].filter(Boolean).join(', ') + ' in the fit check'
+      : 'No clash or out-of-range pose in the fit check';
+    panels.push({ id: 'wheels', name: 'Wheels', blurb: curb.wheel.title, image: null,
       model: null, docs: 'research/air-tyre-hub-wheels.md', records: ['exports/wheels'], meters: [
         {
           id: 'kerb', label: 'Kerb climbs (sim)', value: `${passed} of ${heights.length}`, unit: 'heights cleared',
           state: passed === heights.length ? 'pass' : passed ? 'warn' : 'fail',
           bar: bar(heights.length, heights.map(([, h]) => ({ k: h.pass ? 'pass' : 'fail', n: 1 }))),
-          note: `Up to ${Math.max(...heights.filter(([, h]) => h.pass).map(([mm]) => Number(mm)))} mm at ${curb.speed_mps} m/s; ${heights.filter(([, h]) => !h.pass).map(([mm]) => `${Number(mm)} mm`).join(', ')} fails`,
+          note: kerbNote,
           source: SOURCE('exports/wheels/summary_curb.json'), data: { heights: Object.fromEntries(heights.map(([mm, h]) => [mm, h.pass])) },
         },
         {
           id: 'fit', label: 'Fit in the leg', value: `${clashes}`, unit: clashes === 1 ? 'clash' : 'clashes',
           state: clashes ? 'fail' : 'pass', bar: bar(1, [{ k: clashes ? 'fail' : 'pass', n: 1 }]),
-          note: `No clash or out-of-range pose in the fit check; track ${num(fit.track_mm, 0)} mm`, source: SOURCE('exports/wheels/fit_clashes.json'), data: { clashes },
+          note: `${fitNote}; track ${num(fit.track_mm, 0)} mm`, source: SOURCE('exports/wheels/fit_clashes.json'), data: { clashes },
         },
         { id: 'bench', label: 'Bought and measured', value: '—', unit: 'no wheel yet', state: 'unknown', bar: bar(1, [{ k: 'unknown', n: 1 }]),
           note: 'No wheel bought or measured on the bench in this revision', source: null, data: null },
@@ -318,7 +351,7 @@ export function collectStatus(r) {
           note: `Injected during a ${faults.test} in simulation at ${num(faults.half_mass_kg)} kg`, source: SOURCE('exports/rig/faults.json'), data: { drills: drills.length, ok: drillsOk },
         },
         jointMeter(r, ['leg rig', 'J501 box']),
-        printMeter(r, 'exports/rig/print-plan.json', false),
+        printMeter(r, 'exports/rig/print-plan.json', null),
         {
           id: 'bench', label: 'Runs on the real rig', value: `${physical}`, unit: `of ${plural(runs.length, 'recorded run')}`,
           state: physical ? 'pass' : 'unknown', bar: bar(Math.max(runs.length, 1), [{ k: 'pass', n: physical }, { k: 'unknown', n: Math.max(runs.length, 1) - physical }]),
@@ -336,12 +369,13 @@ export function collectStatus(r) {
     const within = analysis.branches.filter(b => b.within_ipc2221_limits).length;
     const pan = r.json('hardware/carrier-pan-protection/reports/calculations.json');
     const violations = found('DRC violations'), unconnected = found('unconnected pads');
+    const drcRead = Number.isFinite(violations) && Number.isFinite(unconnected); // a report the reader cannot parse is not a pass
     panels.push({ id: 'electronics', name: 'Electronics', blurb: 'Fuse board and the turret’s power cutoff', image: { src: '/hardware/fuse-board/pictures/top.png', alt: 'The fuse board’s top side, rendered from its KiCad layout', width: 1376, height: 1208 },
       model: null, docs: 'docs/body-fuse-board.md', records: ['hardware/fuse-board/reports', 'hardware/carrier-pan-protection/reports'], meters: [
         {
-          id: 'drc', label: 'Fuse board DRC', value: `${violations + unconnected}`, unit: 'violations',
-          state: violations + unconnected ? 'fail' : 'pass', bar: bar(1, [{ k: violations + unconnected ? 'fail' : 'pass', n: 1 }]),
-          note: `${plural(violations, 'design-rule violation')}, ${plural(unconnected, 'unconnected pad')} (KiCad)`, source: SOURCE('hardware/fuse-board/reports/drc.rpt'), data: { violations, unconnected },
+          id: 'drc', label: 'Fuse board DRC', value: drcRead ? `${violations + unconnected}` : '—', unit: drcRead ? 'violations' : 'report not read',
+          state: !drcRead ? 'unknown' : violations + unconnected ? 'fail' : 'pass', bar: bar(1, [{ k: !drcRead ? 'unknown' : violations + unconnected ? 'fail' : 'pass', n: 1 }]),
+          note: drcRead ? `${plural(violations, 'design-rule violation')}, ${plural(unconnected, 'unconnected pad')} (KiCad)` : 'The KiCad report’s counts could not be read', source: SOURCE('hardware/fuse-board/reports/drc.rpt'), data: { violations, unconnected },
         },
         {
           id: 'copper', label: 'Fused branches', value: `${within} of ${analysis.branches.length}`, unit: 'within IPC-2221',
@@ -351,7 +385,7 @@ export function collectStatus(r) {
         {
           id: 'pan', label: 'Turret power cutoff', value: `${pan.unqualified.length}`, unit: 'screens still open',
           state: pan.unqualified.length ? 'unknown' : 'pass', bar: bar(pan.unqualified.length || 1, [{ k: pan.unqualified.length ? 'unknown' : 'pass', n: pan.unqualified.length || 1 }]),
-          note: `A candidate, not qualified (${pan.status.toLowerCase().replace(/_/g, ' ')}): no PCB, transient or bench test yet`, source: SOURCE('hardware/carrier-pan-protection/reports/calculations.json'), data: { status: pan.status, open: pan.unqualified.length },
+          note: `${pan.status.toLowerCase().replace(/_/g, ' ')}; open: ${pan.unqualified.map(u => u.replace(/_/g, ' ')).join(', ')}`, source: SOURCE('hardware/carrier-pan-protection/reports/calculations.json'), data: { status: pan.status, open: pan.unqualified.length },
         },
       ] });
   }
@@ -361,7 +395,7 @@ export function collectStatus(r) {
   const fea = all.filter(m => m.id === 'fea').map(m => m.data);
   const benchRows = all.filter(m => m.id === 'bench' && m.data?.rows).reduce((a, m) => ({ rows: a.rows + m.data.rows, measured: a.measured + m.data.measured }), { rows: 0, measured: 0 });
   const summary = {
-    mass: { kg: mass.total_kg, gate: mass.budget.robot_kg, design: mass.budget.design_mass_kg, ceiling: 45.36, file: 'exports/body/mass.json' },
+    mass: { kg: mass.total_kg, gate: mass.budget.robot_kg, design: mass.budget.design_mass_kg, ceiling, weighed: /weigh/i.test(JSON.stringify(Object.keys(massRecord.P3))), file: 'exports/body/mass.json' },
     fea: { studies: fea.reduce((n, c) => n + c.studies, 0), pass: fea.reduce((n, c) => n + c.pass, 0), below: fea.reduce((n, c) => n + c.below, 0), under1: fea.reduce((n, c) => n + c.under1, 0) },
     gates: panels.find(p => p.id === 'turret').meters[0].data,
     fixes: jointCount(r.json(inventory), r.json(inventory).joints.map(j => j.assembly)).findings.fix,
@@ -407,15 +441,15 @@ export function renderBoard({ panels, summary }, { compact = false, heading = 'h
     + `<div class="sb-stat sb-mass"><p class="sb-stat-label">Robot mass, P3 ledger</p><p class="sb-stat-value"><b>${kg(s.mass.kg)}</b> kg</p>`
     + `<span class="sb-scale" aria-hidden="true"><i class="sb-fill" style="--w:${massPct(s.mass.kg)}%"></i><i class="sb-tick" style="--x:${massPct(s.mass.gate)}%"></i><i class="sb-tick is-design" style="--x:${massPct(s.mass.design)}%"></i><i class="sb-tick is-end" style="--x:100%"></i></span>`
     + `<p class="sb-ticks"><span class="is-gate">${kg(s.mass.gate)} as-built gate</span><span class="is-design">${kg(s.mass.design)} design mass</span><span class="is-end">${kg(s.mass.ceiling)} ceiling</span></p>`
-    + `<p class="sb-stat-note">${s.mass.kg <= s.mass.gate ? 'Under' : 'Over'} D71’s ${kg(s.mass.gate)} kg as-built gate; the product ceiling is 100 lb (45.36 kg, D72). Not weighed yet.</p></div>`
+    + `<p class="sb-stat-note">${s.mass.kg <= s.mass.gate ? 'Under' : 'Over'} D71’s ${kg(s.mass.gate)} kg as-built gate; the product ceiling is ${kg(s.mass.ceiling)} kg (D72).${s.mass.weighed ? '' : ' A CAD ledger: nothing weighed yet.'}</p></div>`
     + `<div class="sb-stat"><p class="sb-stat-label">Strength studies on target</p><p class="sb-stat-value"><b>${s.fea.pass}</b> of ${s.fea.studies}</p><span class="sb-bar" aria-hidden="true"><i data-k="pass" style="--w:${num(s.fea.pass / s.fea.studies * 100, 3)}%"></i><i data-k="warn" style="--w:${num(s.fea.below / s.fea.studies * 100, 3)}%"></i><i data-k="fail" style="--w:${num(s.fea.under1 / s.fea.studies * 100, 3)}%"></i></span><p class="sb-stat-note">${s.fea.below} below target, ${s.fea.under1} under 1.0, across the leg, turret and body.</p></div>`
     + `<div class="sb-stat"><p class="sb-stat-label">Insert-joint fixes open</p><p class="sb-stat-value"><b>${s.fixes}</b></p><p class="sb-stat-note">Clear corrections the joint inventory found; the CAD fixes clear them when they land.</p></div>`
-    + `<div class="sb-stat sb-unknown"><p class="sb-stat-label">Bench rows measured</p><p class="sb-stat-value"><b>${s.bench.measured}</b> of ${s.bench.rows}</p><span class="sb-bar" aria-hidden="true"><i data-k="pass" style="--w:${num(s.bench.measured / s.bench.rows * 100, 3)}%"></i><i data-k="unknown" style="--w:${num((s.bench.rows - s.bench.measured) / s.bench.rows * 100, 3)}%"></i></span><p class="sb-stat-note">Coupons and gauges are designed and sliced; nothing is printed and measured yet.</p></div>`
+    + `<div class="sb-stat${s.bench.measured ? '' : ' sb-unknown'}"><p class="sb-stat-label">Bench rows measured</p><p class="sb-stat-value"><b>${s.bench.measured}</b> of ${s.bench.rows}</p><span class="sb-bar" aria-hidden="true"><i data-k="pass" style="--w:${num(s.bench.measured / s.bench.rows * 100, 3)}%"></i><i data-k="unknown" style="--w:${num((s.bench.rows - s.bench.measured) / s.bench.rows * 100, 3)}%"></i></span><p class="sb-stat-note">${s.bench.measured ? `${s.bench.rows - s.bench.measured} rows of the coupon and gauge sheets still blank.` : 'Coupons and gauges are designed and sliced; no sheet has a reading yet.'}</p></div>`
     + `</div>`;
   const legend = `<ul class="sb-legend" aria-hidden="true">${LEGEND.map(([k, t]) => `<li data-k="${k}">${t}</li>`).join('')}</ul>`;
   const latest = s.changed ? ` The newest record changed <time datetime="${esc(s.changed.date)}">${shortDate(s.changed.date)}</time>.` : '';
   return `<section id="board" class="status-board${compact ? ' is-compact' : ''}" aria-labelledby="board-title" data-generated="tools/status-board.mjs">`
-    + `<div class="sb-heading"><div><p class="eyebrow"><span class="status-dot"></span> LIVE FROM THE RECORDS</p><${heading} id="board-title">The design, <span>right now.</span></${heading}></div>`
+    + `<div class="sb-heading"><div><p class="eyebrow"><span class="status-dot"></span> FROM THE RECORDS, AT BUILD</p><${heading} id="board-title">The design, <span>right now.</span></${heading}></div>`
     + `<p class="sb-lede">Every bar is read from a committed check, study or measurement sheet when the site is built. Amber and red are real shortfalls; grey is not measured yet.${latest}</p></div>`
     + strip + legend + (compact ? '<p class="sb-swipe" aria-hidden="true">Swipe for every subsystem →</p>' : '') + `<div class="sb-grid"${compact ? ' tabindex="0" role="group" aria-label="Subsystem panels"' : ''}>${panels.map(p => panelHTML(p, { compact })).join('')}</div>`
     + `<p class="sb-foot">Checks and simulations are predictions; a green bar is not physical proof. Data: <a href="/site/status.json">status.json</a>.</p></section>`;

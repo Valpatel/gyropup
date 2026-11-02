@@ -11,7 +11,7 @@ import { parseHTML } from 'linkedom';
 import { chromium, webkit } from '@playwright/test';
 import { createSiteServer } from './serve-site.mjs';
 import { acknowledgePrototypeNotice } from './test-prototype-session.mjs';
-import { collectStatus, createReader, docPage, renderBoard, sheetCount, shortDate } from './status-board.mjs';
+import { collectStatus, createReader, docPage, measuredColumns, renderBoard, sheetCount, shortDate } from './status-board.mjs';
 import { ago } from '../web/status-board.js';
 
 const root = path.resolve(import.meta.dirname, '..');
@@ -51,11 +51,18 @@ test('FEA: every study counted against its own verdict, and those under 1.0 show
   for (const [panel, file] of [['leg', 'exports/leg/fea/summary.json'], ['turret', 'exports/turret/fea/summary.json'], ['body', 'exports/body/fea/summary.json']]) {
     const raw = json(file).results, results = Array.isArray(raw) ? raw : Object.values(raw);
     let pass = 0, under1 = 0;
+    const failing = [];
     for (const r of results) {
-      if (r.ok === true || r.pass === true) pass++;
-      else if ((r.sf_by_part ?? r.verdict_sf ?? r.safety_factor) < 1) under1++;
+      if (r.ok === true || r.pass === true) { pass++; continue; }
+      const sf = r.sf_by_part ?? r.verdict_sf ?? r.safety_factor;
+      if (sf < 1) under1++;
+      failing.push({ name: `${r.part.replace(/_/g, ' ')} ${r.case}`, sf, target: r.target ?? r.target_sf });
     }
     const m = meter(progress, panel, 'fea');
+    // The note names the lowest study under 1.0 when there is one, else the one with the least margin to its target.
+    const reds = failing.filter(f => f.sf < 1).sort((a, b) => a.sf - b.sf);
+    const named = reds[0] || failing.sort((a, b) => a.sf / a.target - b.sf / b.target)[0];
+    if (named) assert.match(m.note, new RegExp(`${reds.length ? 'lowest' : 'least margin'}: ${named.name}, ${Number(named.sf).toFixed(2).replace(/\.?0+$/, '')} against`), panel);
     assert.equal(m.value, `${pass} of ${results.length}`, panel);
     assert.equal(m.state, under1 ? 'fail' : pass < results.length ? 'warn' : 'pass', panel);
     assert.deepEqual(m.widths.map(([k]) => k), ['pass', 'warn', 'fail'].filter((k, i) => [pass, results.length - pass - under1, under1][i] > 0));
@@ -89,6 +96,10 @@ test('insert joints: each panel counts its assemblies’ joints by verdict, and 
     assert.match(m.unit, new RegExp(`${joints.reduce((n, j) => n + j.qty_robot, 0)} inserts`));
     const fix = joints.filter(j => j.verdict === 'fix').length;
     if (fix) { assert.equal(m.state, 'fail'); assert.match(m.note, new RegExp(`^needs a fix · ${fix} to fix`)); }
+    const by = k => joints.filter(j => j.verdict === k).length;
+    const expected = [['pass', by('ok')], ['note', by('note')], ['unknown', by('check')], ['warn', by('owner')], ['fail', by('fix')]].filter(([, n]) => n);
+    assert.deepEqual(m.widths.map(([k, w]) => [k, Math.round(w * 1000)]), expected.map(([k, n]) => [k, Math.round(n / joints.length * 100000)]), panel);
+    assert.match(m.note, new RegExp(inventory.status.split(':')[0]));
     segmentsAddUp(m);
   }
   const strip = [...progress.querySelectorAll('.sb-stat')].find(s => /fixes open/.test(text(s)));
@@ -102,6 +113,9 @@ test('mass against D71: the P3 ledger, each leg and the body and head', () => {
   const strip = progress.querySelector('.sb-mass');
   assert.equal(text(strip.querySelector('.sb-stat-value')), `${p3.total_kg} kg`);
   assert.match(text(strip), /Under D71’s 37\.0 kg as-built gate/);
+  const d72 = Number(readFileSync(path.join(root, 'docs/decisions.yaml'), 'utf8').match(/- id: D72\n[\s\S]*?\(([\d.]+) kg\)/)[1]);
+  assert.match(text(strip), new RegExp(`ceiling is ${d72.toFixed(2)} kg \\(D72\\)`));
+  assert.equal(published.summary.mass.ceiling, d72);
   assert.equal(meter(progress, 'leg', 'mass').value, `${p3.gate.leg_each_kg} kg`);
   assert.equal(meter(progress, 'leg', 'mass').unit, `of ${p3.budget.legs_kg_each} kg`);
   assert.equal(meter(progress, 'body', 'mass').value, `${p3.body_and_head_kg} kg`);
@@ -117,18 +131,31 @@ test('the leg’s pre-print screen, print plans and release flags', () => {
   assert.equal(fits.value, `${screen.fits.rows.filter(r => /too tight/.test(r.verdict)).length} of ${screen.fits.rows.length}`);
   for (const [panel, file] of [['leg', 'exports/leg/print-plan.json'], ['body', 'exports/body/print-plan.json'], ['rig', 'exports/rig/print-plan.json']]) {
     const plan = json(file), m = meter(progress, panel, 'print');
-    assert.equal(m.value, String(Object.keys(plan.parts).length));
-    assert.equal(m.state, 'unknown', `${panel}: nothing is released for print`);
-    assert.match(m.note, /not released for print/);
+    const parts = Object.values(plan.parts);
+    assert.equal(m.value, String(parts.length));
+    assert.match(m.unit, new RegExp(`^designs?, ${parts.reduce((n, p) => n + p.qty, 0)} prints? · `));
+    assert.match(m.note, new RegExp(`fit the ${[].concat(plan.bed_mm).join(' x ')} mm bed`));
+    // The leg's release is a flag in its fit job; the body and the rig have no release record at all.
+    const released = panel === 'leg' ? json('exports/leg/rs04-fit-job/job.json').qualification.full_leg_print_released : null;
+    assert.equal(m.state, released ? 'pass' : 'unknown', panel);
+    assert.match(m.note, released === null ? /no print release recorded/ : released ? /released for print/ : /not released for print/);
   }
-  assert.equal(json('exports/leg/rs04-fit-job/job.json').qualification.full_leg_print_released, false);
   assert.equal(meter(progress, 'turret', 'print').value, json('exports/turret/print/print.json').publication.status);
 });
 
 test('measurement sheets: blank rows are "not yet measured", a filled row counts', () => {
-  assert.deepEqual(sheetCount('slot,cad_nominal_width_mm,actual_mouth_width_mm,notes\n1,4.8,,\n2,5.0,,looks fine\n'), { rows: 2, measured: 0 });
-  assert.deepEqual(sheetCount('slot,cad_nominal_width_mm,actual_mouth_width_mm,notes\n1,4.8,4.71,\n2,5.0,,\n'), { rows: 2, measured: 1 });
-  assert.deepEqual(sheetCount('sample,torque_nm,failure_mode\ns1,,\ns2,1.5,\n'), { rows: 2, measured: 1 });
+  assert.deepEqual(sheetCount('slot,cad_nominal_width_mm,actual_mouth_width_mm,notes\n1,4.8,,\n2,5.0,,looks fine\n'), { rows: 2, columns: 1, measured: 0 });
+  assert.deepEqual(sheetCount('slot,cad_nominal_width_mm,actual_mouth_width_mm,notes\n1,4.8,4.71,\n2,5.0,,\n'), { rows: 2, columns: 1, measured: 1 });
+  assert.deepEqual(sheetCount('sample,torque_nm,failure_mode\ns1,,\ns2,1.5,\n'), { rows: 2, columns: 1, measured: 1 });
+  assert.deepEqual(sheetCount('sample,mass_kg,speed_rpm\ns1,1.2,3000\n'), { rows: 1, columns: 2, measured: 1 }, 'kg and rpm are readings');
+  assert.deepEqual(sheetCount('id,contact_or_surface_notes,seat_diameter_mm\n1,"rough, pitted",\n'), { rows: 1, columns: 1, measured: 0 }, 'a quoted comma stays in its cell');
+  assert.deepEqual(sheetCount('id,calculated_penetration_mm,measurement_uncertainty_mm,gap_mm\n1,0.2,0.05,\n'), { rows: 1, columns: 1, measured: 0 }, 'calculations are not readings');
+  // Every sheet the board reads has at least one reading column it recognises, so a new unit is classified on purpose.
+  for (const m of published.panels.flatMap(p => p.meters).filter(m => m.id === 'bench' && m.data?.files))
+    for (const f of m.data.files) {
+      const head = readFileSync(path.join(root, f), 'utf8').split(/\r?\n/)[0].split(',');
+      assert.ok(measuredColumns(head).some(Boolean), `${f}: no column the board reads as a measurement`);
+    }
   const sheets = ['exports/leg/rs04-fit-job/measurements.csv', ...json('research/leg-preprint/screen.json').coupons.map(c => `research/leg-preprint/sheets/${c.sheet}`)];
   const rows = sheets.reduce((n, f) => n + readFileSync(path.join(root, f), 'utf8').trim().split('\n').length - 1, 0);
   const m = meter(progress, 'leg', 'bench');
@@ -143,6 +170,20 @@ test('wheels, rig and electronics read their records; what is not measured is gr
   const heights = Object.values(curb.heights);
   assert.equal(meter(progress, 'wheels', 'kerb').value, `${heights.filter(h => h.pass).length} of ${heights.length}`);
   assert.equal(meter(progress, 'wheels', 'bench').state, 'unknown');
+  const fit = json('exports/wheels/fit_clashes.json').hb10, clashes = fit.clashes.length + fit.wheel_clashes.length + fit.out_of_range.length;
+  assert.equal(meter(progress, 'wheels', 'fit').value, String(clashes));
+  assert.equal(meter(progress, 'wheels', 'fit').state, clashes ? 'fail' : 'pass');
+  assert.match(meter(progress, 'wheels', 'fit').note, clashes ? /in the fit check/ : /No clash or out-of-range pose/);
+  assert.equal(progress.querySelector('.sb-panel[data-subsystem="wheels"] .sb-blurb').textContent, curb.wheel.title, 'the record’s own caveat stays');
+  const integrity = json('exports/rig/integrity.json');
+  const rigScrews = meter(progress, 'rig', 'integrity');
+  assert.equal(rigScrews.value, `${integrity.screws.filter(x => x.ok).length} of ${integrity.screws.length}`);
+  assert.match(rigScrews.note, new RegExp(`${integrity.interference.poses} poses swept, ${integrity.interference.hits.length} hit`));
+  const body = json('exports/body/integrity.json').summary;
+  assert.equal(meter(progress, 'body', 'integrity').value, `${body.joints - body.joints_with_problems.length} of ${body.joints}`);
+  assert.match(meter(progress, 'body', 'integrity').unit, new RegExp(`\\(${body.screws} screws\\)`));
+  const branches = json('hardware/fuse-board/reports/analysis.json').branches;
+  assert.equal(meter(progress, 'electronics', 'copper').value, `${branches.filter(b => b.within_ipc2221_limits === true).length} of ${branches.length}`);
   assert.ok(progress.querySelector('.sb-panel[data-subsystem="wheels"] .sb-noshot'), 'no render is drawn as missing, not borrowed');
   const runs = readdirSync(path.join(root, 'exports/rig/runs')).filter(f => f.endsWith('.json')).map(f => json(`exports/rig/runs/${f}`));
   assert.equal(meter(progress, 'rig', 'bench').value, String(runs.filter(r => r.meta.backend !== 'sim').length));
@@ -154,6 +195,7 @@ test('wheels, rig and electronics read their records; what is not measured is gr
   const pan = json('hardware/carrier-pan-protection/reports/calculations.json');
   assert.equal(meter(progress, 'electronics', 'pan').value, String(pan.unqualified.length));
   assert.equal(meter(progress, 'electronics', 'pan').state, 'unknown');
+  for (const u of pan.unqualified) assert.ok(meter(progress, 'electronics', 'pan').note.includes(u.replace(/_/g, ' ')), u);
 });
 
 test('each panel’s date is git’s newest commit to its records, and its records cover every source it links', () => {
@@ -193,6 +235,18 @@ test('a missing record and a shallow history are shown as such, not guessed', ()
   assert.equal(document.querySelectorAll('.sb-when time').length, 0);
   assert.match(text(document.querySelector('.sb-when')), /Change date not available/);
   assert.match(text(document.querySelector('[data-meter="layers"]')), /No pre-print screen in this revision/);
+  // A DRC report the reader cannot parse is grey, never a green "NaN".
+  const reworded = collectStatus({ ...real, text: p => p.endsWith('drc.rpt') ? 'Report changed its wording' : real.text(p) });
+  assert.equal(reworded.panels.find(p => p.id === 'electronics').meters.find(m => m.id === 'drc').state, 'unknown');
+  // The kerb note at the ends of the range.
+  const curbs = heights => collectStatus({ ...real, json: p => { const v = real.json(p); return p.endsWith('summary_curb.json') ? { ...v, hb10: { ...v.hb10, heights } } : v; } })
+    .panels.find(p => p.id === 'wheels').meters.find(m => m.id === 'kerb').note;
+  assert.match(curbs({ 30: { pass: true }, 50: { pass: true } }), /^Clears every height up to 50 mm/);
+  assert.match(curbs({ 30: { pass: false }, 50: { pass: false } }), /^Clears none of 30 mm, 50 mm/);
+  // The bench summary follows its numbers: one reading turns it from grey to counted.
+  const measured = renderBoard({ ...status, summary: { ...status.summary, bench: { rows: 70, measured: 1 } } });
+  assert.doesNotMatch(measured, /no sheet has a reading yet/);
+  assert.match(measured, /69 rows of the coupon and gauge sheets still blank/);
 });
 
 test('"how long ago" labels', () => {
@@ -312,7 +366,7 @@ test('text on the board has at least 4.5:1 contrast against its background', asy
 test('Markdown routes keep the board’s readings and drop its drawn bars', async () => {
   for (const route of ['/index.md', '/designer/progress.md']) {
     const md = await (await fetch(base + route)).text();
-    const section = md.slice(md.indexOf('LIVE FROM THE RECORDS'), md.indexOf('a green bar is not physical proof'));
+    const section = md.slice(md.indexOf('FROM THE RECORDS, AT BUILD'), md.indexOf('a green bar is not physical proof'));
     assert.ok(section.length > 500, route);
     assert.match(section, /Strength studies \*\*\d+ of \d+\*\* meet their own target/);
     if (route === '/index.md') assert.match(section, /\[4 more on Progress →\]\([^)]*\/designer\/progress\.html#board-leg\)/);
