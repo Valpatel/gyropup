@@ -39,12 +39,12 @@ The boom is two 2x4 rails, 1.54 m from the pivot to the hip. Its parts and dimen
 | The rig has | The boom stand |
 |---|---|
 | Vertical rails: the hip goes straight up | An arc about the pivot: over a 150 mm rise the foot moves 7 mm along the boom (the wheel's axle direction) |
-| 14.75 kg of ballast, the robot's half | ballast to the simulation's mass (below): lighter, so gentler landings |
+| 14.75 kg of ballast, the robot's half | no ballast: the boom's own weight at the foot (below), lighter, so gentler landings |
 | ToF height sensor, load plate | none: the motors' encoders give the leg's length; film the jump against a tape |
 | Bumpers and a top stop | the floor stop and the tether |
 | The rig's numbers (S1-S6) compare with the simulation | rough: the arc and the boom's inertia are not in the model |
 
-**Ballast.** The derating below assumes 11.1 kg moving at the foot (the simulation's lightest leg). The stand comes to about **10.6 kg** effective (15.1 kg moving, lumber at estimated densities), and a scale under the foot reads about 11.9 kg. Weigh it with the motors unpowered and add ballast on the end plate up to the simulated mass, not more: a heavier boom lands harder. Ballast on the plate adds the same to both numbers, so stop when the scale reads about **12.4 kg**.
+**Weight, not ballast.** The simulation carries one mass, 11.1 kg, for both the weight the leg holds and the inertia it accelerates. The stand already weighs about **11.9 kg** at the foot (a scale under it, the boom resting on it) while its inertia there is about 10.6 kg (15.1 kg moving, lumber at estimated densities). Ballast on the plate would add to both, so add none. Weigh it with the motors unpowered: the reading is `--half-mass` in the ladder. The derating scales the simulated forces by the larger mass; **above 12.7 kg the PLA cap no longer holds**: lighten the boom (a thinner end plate, shorter rails) before running.
 <!-- /gen:stand -->
 
 ## Phase 0: when the motors arrive (unpowered first)
@@ -159,7 +159,7 @@ Part numbers from `catalog/hardware.json` (picked and read with the mcmaster-par
 | stand (hardware store) | Carriage bolt 1/2-13 x 5 in, 2 fender washers, 1 nylon-insert nut (the pivot, each side) | 2 | any hardware store | - | Phase 2 | price not checked |
 | stand (hardware store) | Construction screws #10 x 3 in (rails to cleats, cleats through the plate, uprights, braces) | 40 | any hardware store | - | Phase 2 | price not checked |
 | stand (hardware store) | Rope 6 mm (1/4 in), 3 m, and a screw eye (the tether) | 1 | any hardware store | - | Phase 2 | price not checked |
-| stand (hardware store) | Sandbags or weight plates (the stand's base, and the ballast on the end plate) | 4 | any hardware store | - | Phase 2 | price not checked |
+| stand (hardware store) | Sandbags or weight plates (on the stand's base) | 4 | any hardware store | - | Phase 2 | price not checked |
 | stand (hardware store) | Bathroom scale (weigh the boom's end: the effective mass) | 1 | any hardware store | - | Phase 2 | in hand? |
 | stand (hardware store) | Rubber mat under the foot | 1 | any hardware store | - | Phase 2 | catalog/rig.json rubber_mat (Amazon) |
 <!-- /gen:orders -->
@@ -203,13 +203,13 @@ Two 6301-2RS and the 24 mm spacer into each lower link's knee boss, a washer eac
 
 ![step 6](../exports/motor-day/steps/step-06.png)
 
-The two 61812s into the front link's apex eye, the wheel link's hub through them with the printed spacer, the circlip. The foot's boss into the wheel link's recess, four M6 nylon-insert nuts in its pockets, four M6 x 40 from inside the hub on the DIN 433 washers at 1.8 N m. The leg folds and stretches by hand from stop to stop.
+The two 61812s into the front link's apex eye, the wheel link's hub through them with the printed spacer, the circlip. The foot's boss into the wheel link's recess, four M6 nylon-insert nuts in its pockets, four M6 x 40 from inside the hub on the DIN 433 washers at 0.9 N m (the nuts bear on printed PLA: half the PA6-CF leg's torque). The leg folds and stretches by hand from stop to stop.
 
 #### 7. Stop sleeves, then onto the boom
 
 ![step 7](../exports/motor-day/steps/step-07.png)
 
-The TPU sleeves over the stop pins. The leg onto the end plate: six M5 x 30 with fender washers from the plate's back into the hip frame's inserts (1.5 N m), each motor's lead through its slot. Tie the tether. Put the leg's foot on the bathroom scale with the motors unpowered and add ballast on the plate to the mass the derating assumes.
+The TPU sleeves over the stop pins. The leg onto the end plate: six M5 x 30 with fender washers from the plate's back into the hip frame's inserts (1.5 N m), each motor's lead through its slot. Tie the tether. Put the leg's foot on the bathroom scale with the motors unpowered, the boom resting on it, and write the reading down: it is `--half-mass` in the ladder. No ballast.
 
 ### Drawings
 
@@ -239,41 +239,54 @@ Generated from the same CAD with hidden-line views, balloons keyed to the BOM it
 ## Phase 4: the test ladder to a first jump
 
 <!-- gen:derating -->
-Every day-one run lands, so the landings are held to the everyday target (2), not the rare-event 1.2 the robot's record uses. How the numbers are made:
+Every day-one run lands, so the landings are held to the everyday target (2), not the rare-event 1.2 the robot's record uses. A power cut is a fault: target 1. How the numbers are made:
 
 - **Material:** cad-agent's PLA row (25 MPa, "Bambu PLA Basic: Z (layer) strength used") against each row's humid PA6-CF strength (40.8 MPa in the layers, 18.1 across) or 6061 for the adapter. The FEA is linear, so a row's factor scales with the strength.
-- **Loads:** the rig's controller and MuJoCo model at each cap, at 11.1 kg (`tools/motor_day_sim.py`), against the loads the record's cases were run at (knee 574 N in a landing, axle 1605 N on the wheel link, the motors' 60 and 120 N m). A knee case is checked at the landing (target 2) and at the power cut onto the floor stop (a fault: target 1).
+- **Loads:** the rig's controller and MuJoCo model at each cap, at 11.1 kg (`tools/motor_day_sim.py`), against the loads the record's cases were run at (knee 574 N and hip 565 N in a landing, axle 1605 N on the wheel link, the motors' 60 and 120 N m). A landing case takes its worst joint; a power cut also its backdriven hub torque.
+- **Mass:** the simulation has one mass; the stand weighs about 11.9 kg at the foot and its inertia is about 10.6 kg there. The simulated forces are scaled by the larger over the simulated mass (x 1.07).
 - **Not in it:** PLA is brittle (it cracks without warning, where PA6-CF whitens first), creeps, and softens at 55 °C. No margin is added for these: the ladder adds them by stepping up slowly and inspecting after each rung.
 
-| Cap at the motors | Jump (sim) | Axle peak | Knee peak | Weakest row | All rows at target |
-|---|---|---|---|---|---|
-| 12 N m | 46 mm | 703 N | 149 N | wheel_link R1w 2.29 | yes |
-| 15 N m | 62 mm | 818 N | 194 N | wheel_link R1w 1.97 | **no** |
-| 20 N m | 79 mm | 914 N | 232 N | wheel_link R1w 1.76 | **no** |
-| 25 N m | 97 mm | 1261 N | 271 N | wheel_link R1w 1.28 | **no** |
-| 30 N m | 105 mm | 1284 N | 289 N | wheel_link R1w 1.25 | **no** |
-| 40 N m | 116 mm | 1258 N | 347 N | wheel_link R1w 1.28 | **no** |
+| Cap at the motors | Jump (sim) | Axle peak | Knee peak | Hub peak | Weakest row | All rows at target |
+|---|---|---|---|---|---|---|
+| 12 N m | 46 mm | 703 N | 149 N | 18 N m | wheel_link R1w 2.14 | yes |
+| 15 N m | 62 mm | 818 N | 194 N | 24 N m | wheel_link R1w 1.84 | **no** |
+| 20 N m | 79 mm | 914 N | 232 N | 29 N m | wheel_link R1w 1.65 | **no** |
+| 25 N m | 97 mm | 1261 N | 271 N | 33 N m | wheel_link R1w 1.19 | **no** |
+| 30 N m | 105 mm | 1284 N | 289 N | 38 N m | wheel_link R1w 1.17 | **no** |
+| 40 N m | 116 mm | 1258 N | 347 N | 45 N m | wheel_link R1w 1.2 | **no** |
 
-**The PLA cap is 12 N m**: a 46 mm hop. At 15 N m wheel_link R1w falls to 1.97, under its target of 2.
+**The PLA cap is 12 N m**: a 46 mm hop in the model (expect less: the stand's weight at the foot is more than its inertia there). At 15 N m wheel_link R1w falls to 1.84, under its target of 2. The cap holds for a stand up to **12.7 kg** at the foot (the landings scale with it).
 
 Where PLA fails first, at 12 N m (the weakest rows):
 
 | Part | Case | PLA factor | Target | Governed by | Load |
 |---|---|---|---|---|---|
-| wheel_link | R1w | 2.29 | 2 | gate | landing on the wheel link: axle 703 N against 1605 N |
-| front_link | R1 | 1.17 | 1 | layer | power cut onto the floor stop: knee 394 N against 574 N |
-| output_adapter | R1 | 1.47 | 1 | gate | power cut onto the floor stop: knee 394 N against 574 N |
-| front_link | R1 | 3.07 | 2 | layer | landing: knee 149 N against 574 N |
-| upper_link | R1 | 1.63 | 1 | gate | power cut onto the floor stop: knee 394 N against 574 N |
-| upper_link | R1F | 1.65 | 1 | gate | power cut onto the floor stop: knee 394 N against 574 N |
+| wheel_link | R1w | 2.14 | 2 | gate | landing on the wheel link: axle 753 N against 1605 N |
+| front_link | R1 | 2.87 | 2 | layer | landing: knee 160 N against 574 N |
+| output_adapter | R1 | 3.61 | 2 | gate | landing: knee 160 N against 574 N |
+| upper_link | R1 | 4.02 | 2 | gate | landing: knee 160 N against 574 N |
+| upper_link | R1F | 4.06 | 2 | gate | landing: knee 160 N against 574 N |
 
-The hub clamp in the PLA adapter: 1000 N a screw at 1.0 N m gives about 30.4 N m of friction against a 12 N m cap (the dowels carry the rest). Re-torque before each session.
+**A power cut onto the floor stop** (the pendant let go, on purpose or not, at the 12 N m stand):
+
+| Motors | Knee | Hip | Hub | Axle | Weakest rows | All rows at 1 |
+|---|---|---|---|---|---|---|
+| undamped (the worst case) | 394 N | 592 N | 49 N m | 252 N | front_link R1 0.71 (hip 634 N against 565 N); output_adapter R1 0.9 (hip 634 N against 565 N) | **no** |
+| with the RS-04's power-off damping (assumed: B1 measures it) | 66 N | 63 N | 7 N m | 95 N | front_link R1 6.52 (knee 70 N against 574 N); output_adapter R1 8.21 (knee 70 N against 574 N) | yes |
+
+The hub clamp in the PLA adapter: 1000 N a screw at 1.0 N m gives about 30.4 N m of friction. The hub sees about 18 N m in the hop and up to 49 N m in a power cut: above the friction the two dowels carry it. Re-torque before each session.
 
 Full table: [derating.json](../exports/motor-day/derating.json).
 <!-- /gen:derating -->
 
 <!-- gen:ladder -->
-Each rung runs only after the one before it passed and the leg was inspected. `--cap` is the cap in both places: `rig.run` writes it to both motors' `limit_torque` at start-up, reads it back (it stops if a motor does not take it) and clips its own commands to it. Without `--cap` the rig runs at 60 N m: never on the PLA leg. `--half-mass` is the simulated mass the stand is ballasted to. The safety rules of [leg-rig-safety.md](leg-rig-safety.md) apply unchanged (one operator, the pendant, the clear zone, eye protection).
+Each rung runs only after the one before it passed and the leg was inspected. In every `rig.run` command:
+
+- `--cap` is the cap in both places: `rig.run` writes it to both motors' `limit_torque` at start-up, reads it back (it stops if a motor does not take it) and clips its own commands to it. **Without `--cap` the rig runs at 60 N m: never on the PLA leg.**
+- `--damper 0` keeps the RS-04's power-off anti-backdrive protection on (the factory default), so a power cut is damped.
+- `--half-mass KG`: KG is the scale's reading under the foot from assembly step 7 (about 11.9). It sets the gravity feed-forward.
+
+The safety rules of [leg-rig-safety.md](leg-rig-safety.md) apply unchanged (one operator, the pendant, the clear zone, eye protection).
 
 ```mermaid
 flowchart LR
@@ -283,22 +296,22 @@ flowchart LR
   L3["L3<br/>In-air sweeps<br/>10 N m"] --> L4
   L4["L4<br/>Stand up<br/>12 N m"] --> L5
   L5["L5<br/>Squat x 3<br/>12 N m"] --> L6
-  L6["L6<br/>Power cut onto the floor stop<br/>12 N m"] --> L7
+  L6["L6<br/>Damped power cut (skip until B1)<br/>12 N m"] --> L7
   L7["L7<br/>Hop<br/>12 N m"]
 ```
 
 | Rung | What | Cap | How | Pass when |
 |---|---|---|---|---|
-| L0 | Unpowered | - | Fold and stretch the leg by hand from stop to stop; the boom swings freely; the foot lands on the mat at the stance with the boom level. | any rub, any part touching another |
+| L0 | Unpowered | - | Fold and stretch the leg by hand from stop to stop; the boom swings freely; the foot lands on the mat at the stance with the boom level. | no rub; no part touches another |
 | L1 | Commission each motor | 2 A bench limit | Phase 0.4 (C1-C5) on all four motors, then C6: ids 1 front, 2 rear on this leg. C4 saves the rig's 60 N m; then `python -m rig.rs04 --id N param limit_torque 10` and `--id N save`, so a motor powers up at 10. | the motor reads back 10 after a power cycle |
 | L2 | Zero on the bare stops | 10 N m | The boom propped on the floor stop, the foot in the air. `python -m rig.calibrate`, one link at a time onto its stop pins by hand. | the 142 deg between the posts; no creak at the stop pins |
-| L3 | In-air sweeps | 10 N m | `python -m rig.run --backend can --test squat --cap 10 --half-mass 11.10 --rate-limit 5` with the foot in the air (boom propped). | smooth; the knees and the adapters do not click; motor cases under 40 °C |
-| L4 | Stand up | 12 N m | `--test stand_up --cap 12 --half-mass 11.10`, the foot on the mat. | holds 300 mm; peak motor torque about 8 N m (sim) |
-| L5 | Squat x 3 | 12 N m | `--test squat --cap 12 --half-mass 11.10`. | re-check every screw's paint mark after |
-| L6 | Power cut onto the floor stop | 12 N m | `--test power_off --cap 12 --half-mass 11.10`: let go of the pendant. | the boom lands on the floor stop, not the leg on its own stops |
-| L7 | Hop | 12 N m | `--test jump --cap 12 --half-mass 11.10`. | about 46 mm; inspect the weakest rows' corners (below) with a lamp |
+| L3 | In-air sweeps | 10 N m | `python -m rig.run --backend can --test squat --cap 10 --damper 0 --half-mass KG --rate-limit 5` with the foot in the air (boom propped). | smooth; the knees and the adapters do not click; motor cases under 40 °C |
+| L4 | Stand up | 12 N m | `--test stand_up --cap 12 --damper 0 --half-mass KG`, the foot on the mat. | holds 300 mm; peak motor torque about 8 N m (sim) |
+| L5 | Squat x 3 | 12 N m | `--test squat --cap 12 --damper 0 --half-mass KG`. | re-check every screw's paint mark after |
+| L6 | Damped power cut (skip until B1) | 12 N m | Only once B1 has measured the RS-04's power-off damping at or above the model's: `--test power_off_damped --cap 12 --damper 0 --half-mass KG`, let go of the pendant. | the boom lands on the floor stop, not the leg on its own stops |
+| L7 | Hop | 12 N m | `--test jump --cap 12 --damper 0 --half-mass KG`. | a hop of up to about 46 mm; inspect the weakest rows' corners (above) with a lamp |
 
-**L6 is a close call** (front_link R1: 1.17 against 1, power cut onto the floor stop: knee 394 N against 574 N). Run it once, with the floor stop checked first, and inspect the front link before going on.
+**No deliberate undamped power cut on PLA.** Undamped, front_link R1 comes to 0.71 against 1 (power cut: hip 634 N against 565 N). With the modelled damping every row holds, so the damped cut waits for B1 to measure it. A pendant let go by accident is the same event, damped by the protection `--damper 0` keeps on (by how much, B1 says): set the floor stop before every session, and inspect the parts above after any cut.
 
 **Stop the ladder** at any crack, whitening, click or creak, a screw's paint mark broken, a motor case over 40 °C, or a fault. Photograph it, write it on #156. **Look first** at: the wheel link's hub root (where the hub leaves the link, inside the apex), the front link's apex ring, the upper links' knee-eye stubs, the PLA adapters round their dowels and screws, and the foot's spokes.
 

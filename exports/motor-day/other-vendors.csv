@@ -41,6 +41,6 @@ stand (hardware store),"Plywood 23/32 in, 2 x 4 ft (the end plate, the base, the
 stand (hardware store),"Carriage bolt 1/2-13 x 5 in, 2 fender washers, 1 nylon-insert nut (the pivot, each side)",2,any hardware store,,,,Phase 2,,price not checked
 stand (hardware store),"Construction screws #10 x 3 in (rails to cleats, cleats through the plate, uprights, braces)",40,any hardware store,,,,Phase 2,,price not checked
 stand (hardware store),"Rope 6 mm (1/4 in), 3 m, and a screw eye (the tether)",1,any hardware store,,,,Phase 2,,price not checked
-stand (hardware store),"Sandbags or weight plates (the stand's base, and the ballast on the end plate)",4,any hardware store,,,,Phase 2,,price not checked
+stand (hardware store),Sandbags or weight plates (on the stand's base),4,any hardware store,,,,Phase 2,,price not checked
 stand (hardware store),Bathroom scale (weigh the boom's end: the effective mass),1,any hardware store,,,,Phase 2,,in hand?
 stand (hardware store),Rubber mat under the foot,1,any hardware store,,,,Phase 2,,catalog/rig.json rubber_mat (Amazon)
