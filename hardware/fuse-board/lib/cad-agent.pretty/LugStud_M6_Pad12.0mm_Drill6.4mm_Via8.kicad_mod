@@ -5,8 +5,8 @@
 	(descr "M6 lug stud: plated 6.4 mm hole, 12 mm pad both sides, 8 stitching vias")
 	(tags "stud lug ring terminal M6 power")
 	(property "Reference" "REF**"
-		(at 0 0 0)
-		(layer "F.Fab")
+		(at 0 -7.25 0)
+		(layer "F.SilkS")
 		(uuid "82508fe3-4d76-5f29-8cea-60e16720b26d")
 		(effects
 			(font

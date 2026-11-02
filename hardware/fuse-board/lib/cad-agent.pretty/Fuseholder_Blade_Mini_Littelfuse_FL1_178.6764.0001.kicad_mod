@@ -2,11 +2,11 @@
 	(version 20241229)
 	(generator "cad-agent")
 	(layer "F.Cu")
-	(descr "Littelfuse MINI FL1 PCB holder 178.6764.0001 for MINI (FK1) blade fuses, 30 A max, 22 A continuous")
+	(descr "Littelfuse MINI FL1 PCB holder 178.6764.0001 for MINI (FK1) blade fuses, 30 A max")
 	(tags "fuse holder blade mini FL1 Littelfuse")
 	(property "Reference" "REF**"
-		(at 0 0 0)
-		(layer "F.Fab")
+		(at 0 -4.25 0)
+		(layer "F.SilkS")
 		(uuid "d30dd933-2094-5e31-bf4e-54f634b7c974")
 		(effects
 			(font
@@ -39,7 +39,7 @@
 			)
 		)
 	)
-	(property "Description" "Littelfuse MINI FL1 PCB holder 178.6764.0001 for MINI (FK1) blade fuses, 30 A max, 22 A continuous"
+	(property "Description" "Littelfuse MINI FL1 PCB holder 178.6764.0001 for MINI (FK1) blade fuses, 30 A max"
 		(at 0 0 0)
 		(layer "F.Fab")
 		(hide yes)

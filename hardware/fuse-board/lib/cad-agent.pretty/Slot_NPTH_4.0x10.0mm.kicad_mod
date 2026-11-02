@@ -5,8 +5,8 @@
 	(descr "non-plated slot 4 x 10 mm")
 	(tags "slot NPTH cable tie")
 	(property "Reference" "REF**"
-		(at 0 0 0)
-		(layer "F.Fab")
+		(at 0 -6.5 0)
+		(layer "F.SilkS")
 		(uuid "6c33a652-cbd9-5b89-b817-04ac28f412ca")
 		(effects
 			(font

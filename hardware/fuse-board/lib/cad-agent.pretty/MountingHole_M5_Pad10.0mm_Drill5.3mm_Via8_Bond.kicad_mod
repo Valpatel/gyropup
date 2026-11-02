@@ -5,8 +5,8 @@
 	(descr "M5 mounting hole, plated, 10 mm pad both sides with 8 vias: bonds the net to the plate")
 	(tags "mounting hole bond M5")
 	(property "Reference" "REF**"
-		(at 0 0 0)
-		(layer "F.Fab")
+		(at 0 -6.5 0)
+		(layer "F.SilkS")
 		(uuid "40c4790e-fcfd-5d2a-8d5d-4ff03b0586e3")
 		(effects
 			(font

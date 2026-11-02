@@ -5,8 +5,8 @@
 	(descr "Bourns CSS2H-3920 current-sense resistor, 4-terminal (Kelvin) layout, net-tied sense pads")
 	(tags "shunt kelvin current sense Bourns CSS2H 3920")
 	(property "Reference" "REF**"
-		(at 0 0 0)
-		(layer "F.Fab")
+		(at 0 -5.15 0)
+		(layer "F.SilkS")
 		(uuid "99b11625-4978-588e-b47b-de335c5abcb5")
 		(effects
 			(font

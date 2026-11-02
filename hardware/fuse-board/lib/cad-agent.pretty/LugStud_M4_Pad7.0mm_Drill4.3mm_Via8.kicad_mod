@@ -5,8 +5,8 @@
 	(descr "M4 lug stud: plated 4.3 mm hole, 7 mm pad both sides, 8 stitching vias")
 	(tags "stud lug ring terminal M4 power")
 	(property "Reference" "REF**"
-		(at 0 0 0)
-		(layer "F.Fab")
+		(at 0 -4.75 0)
+		(layer "F.SilkS")
 		(uuid "4b045368-a77d-5f83-80a1-851568ab9318")
 		(effects
 			(font
