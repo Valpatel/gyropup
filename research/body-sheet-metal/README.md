@@ -59,7 +59,7 @@ bends cost little, and more PEM nuts in a part that already has some cost almost
 
 All four options ran the body plan's cases at 18.75 kg a leg on one host, the x86 mechanical compute host, with one
 mesher, gmsh 4.15.2, and cad-agent 7c5c44d (v0.13.0). Cases ran at a 4 mm mesh and D2 at its converged 2 mm. Each
-option ran only the cases it changes. Today was re-run on the same host as the baseline.
+option ran only the cases it changes. Today was re-run on the same host as the baseline. The runs used the body CAD on dev at e07843c, before PR #145 merged, so D2's head is 2.56 kg at the 100 mm budget centre. #145 moves the centre to 135 mm.
 
 ![Each FEA case's margin over its target, per option](fig-fea.png)
 
