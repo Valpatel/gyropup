@@ -562,7 +562,7 @@ jobsite-rated tools, and their adapters face up under the belly plate.
 
 - The DCB609 and the Terrafirma adapter are envelopes until they are measured (#20). Their rows say so, and a test
   keeps them labelled.
-- **The body's strength at D71's 18.75 kg a leg** (gb10-02 and gb10-01; exports/body/fea/summary.json, leg-loads.json;
+- **The body's strength at D71's 18.75 kg a leg** (two CAD hosts; exports/body/fea/summary.json, leg-loads.json;
   41 V; the side grip at the 10 in wheel's radius and tyre plane). Every case passes:
 
   | Case | SF | Target | Mesh |

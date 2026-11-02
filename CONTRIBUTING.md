@@ -17,7 +17,9 @@ CAD, simulation or hardware work.
 
 For website changes, use Node 22 and the commands in [site deployment](docs/site-deployment.md).
 New public files must be tracked before the allowlisted build can include them. Use `npm run build` and the
-checks relevant to the change; Markdown/discovery changes use `npm run test:markdown`. Check preview ownership
+checks relevant to the change; Markdown/discovery changes use `npm run test:markdown`. The repository and site are public:
+`npm run test:privacy` rejects home-directory paths, compute host names, private addresses and private repository
+names in tracked files and `dist/`; its ratchet (`tools/privacy-ratchet.txt`) may only shrink. Check preview ownership
 before serving a build, and tear down temporary test listeners. Reviewed `main` publishes the website; `dev`
 integration and a successful local build do not themselves prove a production deployment.
 

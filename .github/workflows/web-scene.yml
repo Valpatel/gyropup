@@ -29,6 +29,26 @@ jobs:
           python tools/package-fit-job.py --verify exports/leg/rs04-fit-job
           python tools/test-survey-fit-job.py
           python tools/package-survey-fit-job.py --verify exports/turret/shaft-survey-fit-job
+  privacy:
+    # No home paths, fleet host names, private addresses or private repository names in the tracked files or the
+    # built site, beyond the shrink-only tools/privacy-ratchet.txt (issue 141). Reports never print the strings.
+    runs-on: ubuntu-24.04
+    timeout-minutes: 10
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          fetch-depth: 0 # the build's legacy mesh migration, and the base branch's ratchet for the shrink-only check
+      - uses: actions/setup-node@v4
+        with:
+          node-version: 22
+          cache: npm
+      - run: npm ci
+      - run: npm run build
+      - name: Check tracked files and dist/
+        env:
+          # optional: extra private names, kept out of the repository (empty when the secret is unset)
+          GYROPUP_PRIVATE_NAMES: ${{ secrets.GYROPUP_PRIVATE_NAMES }}
+        run: npm run test:privacy
   browser-validation:
     runs-on: ubuntu-24.04
     timeout-minutes: 20

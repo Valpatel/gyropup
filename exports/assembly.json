@@ -52,7 +52,7 @@
       -0.0,
       0.01599
      ],
-     "mesh": "/home/scubasonar/Code/gyropup/exports/mjcf/base__chassis.stl",
+     "mesh": "exports/mjcf/base__chassis.stl",
      "color": "#5a5f68",
      "estimate": false
     },
@@ -65,7 +65,7 @@
       0.0,
       -0.01148
      ],
-     "mesh": "/home/scubasonar/Code/gyropup/exports/mjcf/base__battery_cradle.stl",
+     "mesh": "exports/mjcf/base__battery_cradle.stl",
      "color": "#2f343c",
      "estimate": false
     },
@@ -78,7 +78,7 @@
       6e-05,
       0.20255
      ],
-     "mesh": "/home/scubasonar/Code/gyropup/exports/mjcf/base__head_saddle.stl",
+     "mesh": "exports/mjcf/base__head_saddle.stl",
      "color": "#3b3f46",
      "estimate": false
     },
@@ -91,7 +91,7 @@
       0.0,
       0.00417
      ],
-     "mesh": "/home/scubasonar/Code/gyropup/exports/mjcf/base__electronics_bay.stl",
+     "mesh": "exports/mjcf/base__electronics_bay.stl",
      "color": "#9aa3ad",
      "estimate": false
     },
@@ -104,7 +104,7 @@
       0.0,
       0.01355
      ],
-     "mesh": "/home/scubasonar/Code/gyropup/exports/mjcf/base__face.stl",
+     "mesh": "exports/mjcf/base__face.stl",
      "color": "#2f343c",
      "estimate": false
     },
@@ -117,7 +117,7 @@
       -0.0,
       -0.01794
      ],
-     "mesh": "/home/scubasonar/Code/gyropup/exports/mjcf/base__camera_cradle_1.stl",
+     "mesh": "exports/mjcf/base__camera_cradle_1.stl",
      "color": "#3b3f46",
      "estimate": false
     },
@@ -130,7 +130,7 @@
       -0.0,
       -0.01791
      ],
-     "mesh": "/home/scubasonar/Code/gyropup/exports/mjcf/base__camera_cradle_2.stl",
+     "mesh": "exports/mjcf/base__camera_cradle_2.stl",
      "color": "#3b3f46",
      "estimate": false
     },
@@ -143,7 +143,7 @@
       0.00158,
       -0.029
      ],
-     "mesh": "/home/scubasonar/Code/gyropup/exports/mjcf/base__lidar_hanger.stl",
+     "mesh": "exports/mjcf/base__lidar_hanger.stl",
      "color": "#3b3f46",
      "estimate": false
     },
@@ -156,7 +156,7 @@
       -0.0,
       -0.09258
      ],
-     "mesh": "/home/scubasonar/Code/gyropup/exports/mjcf/base__lidar_guard.stl",
+     "mesh": "exports/mjcf/base__lidar_guard.stl",
      "color": "#9aa3ad",
      "estimate": false
     },
@@ -169,7 +169,7 @@
       0.18611,
       0.09389
      ],
-     "mesh": "/home/scubasonar/Code/gyropup/exports/mjcf/base__yoke_bracket_l.stl",
+     "mesh": "exports/mjcf/base__yoke_bracket_l.stl",
      "color": "#b8bec7",
      "estimate": false
     },
@@ -182,7 +182,7 @@
       -0.18611,
       0.09389
      ],
-     "mesh": "/home/scubasonar/Code/gyropup/exports/mjcf/base__yoke_bracket_r.stl",
+     "mesh": "exports/mjcf/base__yoke_bracket_r.stl",
      "color": "#b8bec7",
      "estimate": false
     },
@@ -195,7 +195,7 @@
       0.18308,
       -0.03923
      ],
-     "mesh": "/home/scubasonar/Code/gyropup/exports/mjcf/base__hip_motor_plate_l.stl",
+     "mesh": "exports/mjcf/base__hip_motor_plate_l.stl",
      "color": "#9aa3ad",
      "estimate": false
     },
@@ -208,7 +208,7 @@
       -0.18308,
       -0.03923
      ],
-     "mesh": "/home/scubasonar/Code/gyropup/exports/mjcf/base__hip_motor_plate_r.stl",
+     "mesh": "exports/mjcf/base__hip_motor_plate_r.stl",
      "color": "#9aa3ad",
      "estimate": false
     },
@@ -221,7 +221,7 @@
       0.29602,
       0.03923
      ],
-     "mesh": "/home/scubasonar/Code/gyropup/exports/mjcf/base__knee_motor_plate_l.stl",
+     "mesh": "exports/mjcf/base__knee_motor_plate_l.stl",
      "color": "#9aa3ad",
      "estimate": false
     },
@@ -234,7 +234,7 @@
       -0.29602,
       0.03923
      ],
-     "mesh": "/home/scubasonar/Code/gyropup/exports/mjcf/base__knee_motor_plate_r.stl",
+     "mesh": "exports/mjcf/base__knee_motor_plate_r.stl",
      "color": "#9aa3ad",
      "estimate": false
     },
@@ -247,7 +247,7 @@
       -0.00131,
       0.22482
      ],
-     "mesh": "/home/scubasonar/Code/gyropup/exports/mjcf/base__pan_base.stl",
+     "mesh": "exports/mjcf/base__pan_base.stl",
      "color": "#4a5058",
      "estimate": false
     },
@@ -260,7 +260,7 @@
       -0.0,
       0.2535
      ],
-     "mesh": "/home/scubasonar/Code/gyropup/exports/mjcf/base__pan_clamp.stl",
+     "mesh": "exports/mjcf/base__pan_clamp.stl",
      "color": "#4a5058",
      "estimate": false
     },
@@ -273,7 +273,7 @@
       -0.0,
       0.2637
      ],
-     "mesh": "/home/scubasonar/Code/gyropup/exports/mjcf/base__pan_pinion.stl",
+     "mesh": "exports/mjcf/base__pan_pinion.stl",
      "color": "#4a5058",
      "estimate": false
     },
@@ -286,7 +286,7 @@
       0.00856,
       0.226
      ],
-     "mesh": "/home/scubasonar/Code/gyropup/exports/mjcf/base__bumper_ring.stl",
+     "mesh": "exports/mjcf/base__bumper_ring.stl",
      "color": "#4a5058",
      "estimate": false
     },
@@ -299,7 +299,7 @@
       0.14372,
       -0.0
      ],
-     "mesh": "/home/scubasonar/Code/gyropup/exports/mjcf/base__hip_motor_l.stl",
+     "mesh": "exports/mjcf/base__hip_motor_l.stl",
      "color": "#3a3f47",
      "estimate": false
     },
@@ -312,7 +312,7 @@
       0.33538,
       -0.0
      ],
-     "mesh": "/home/scubasonar/Code/gyropup/exports/mjcf/base__knee_motor_l.stl",
+     "mesh": "exports/mjcf/base__knee_motor_l.stl",
      "color": "#3a3f47",
      "estimate": false
     },
@@ -325,7 +325,7 @@
       -0.14372,
       -0.0
      ],
-     "mesh": "/home/scubasonar/Code/gyropup/exports/mjcf/base__hip_motor_r.stl",
+     "mesh": "exports/mjcf/base__hip_motor_r.stl",
      "color": "#3a3f47",
      "estimate": false
     },
@@ -338,7 +338,7 @@
       -0.33538,
       -0.0
      ],
-     "mesh": "/home/scubasonar/Code/gyropup/exports/mjcf/base__knee_motor_r.stl",
+     "mesh": "exports/mjcf/base__knee_motor_r.stl",
      "color": "#3a3f47",
      "estimate": false
     },
@@ -351,7 +351,7 @@
       0.23955,
       0.05467
      ],
-     "mesh": "/home/scubasonar/Code/gyropup/exports/mjcf/base__posts_l.stl",
+     "mesh": "exports/mjcf/base__posts_l.stl",
      "color": "#d6dbe1",
      "estimate": false
     },
@@ -364,7 +364,7 @@
       -0.23955,
       0.05467
      ],
-     "mesh": "/home/scubasonar/Code/gyropup/exports/mjcf/base__posts_r.stl",
+     "mesh": "exports/mjcf/base__posts_r.stl",
      "color": "#d6dbe1",
      "estimate": false
     },
@@ -377,7 +377,7 @@
       0.01001,
       0.23695
      ],
-     "mesh": "/home/scubasonar/Code/gyropup/exports/mjcf/base__turret_pan_servo.stl",
+     "mesh": "exports/mjcf/base__turret_pan_servo.stl",
      "color": "#2d3748",
      "estimate": true
     },
@@ -390,7 +390,7 @@
       0.0,
       0.2485
      ],
-     "mesh": "/home/scubasonar/Code/gyropup/exports/mjcf/base__turret_pan_bearing.stl",
+     "mesh": "exports/mjcf/base__turret_pan_bearing.stl",
      "color": "#2d3748",
      "estimate": true
     },
@@ -403,7 +403,7 @@
       -0.07679,
       0.229
      ],
-     "mesh": "/home/scubasonar/Code/gyropup/exports/mjcf/base__turret_dt_receptacle.stl",
+     "mesh": "exports/mjcf/base__turret_dt_receptacle.stl",
      "color": "#2d3748",
      "estimate": true
     },
@@ -416,7 +416,7 @@
       -0.0,
       0.0285
      ],
-     "mesh": "/home/scubasonar/Code/gyropup/exports/mjcf/base__battery_1.stl",
+     "mesh": "exports/mjcf/base__battery_1.stl",
      "color": "#fdb913",
      "estimate": false
     },
@@ -442,7 +442,7 @@
       0.0,
       0.0
      ],
-     "mesh": "/home/scubasonar/Code/gyropup/exports/mjcf/base__j501_base.stl",
+     "mesh": "exports/mjcf/base__j501_base.stl",
      "color": "#e8892b",
      "estimate": false
     },
@@ -455,7 +455,7 @@
       0.0,
       0.0
      ],
-     "mesh": "/home/scubasonar/Code/gyropup/exports/mjcf/base__j501_cover.stl",
+     "mesh": "exports/mjcf/base__j501_cover.stl",
      "color": "#e8892b",
      "estimate": false
     },
@@ -468,7 +468,7 @@
       0.0,
       0.0
      ],
-     "mesh": "/home/scubasonar/Code/gyropup/exports/mjcf/base__j501_front_no_gmsl.stl",
+     "mesh": "exports/mjcf/base__j501_front_no_gmsl.stl",
      "color": "#e8892b",
      "estimate": false
     },
@@ -481,7 +481,7 @@
       0.0,
       0.0
      ],
-     "mesh": "/home/scubasonar/Code/gyropup/exports/mjcf/base__j501_rear_io.stl",
+     "mesh": "exports/mjcf/base__j501_rear_io.stl",
      "color": "#e8892b",
      "estimate": false
     },
@@ -494,7 +494,7 @@
       0.0,
       0.0
      ],
-     "mesh": "/home/scubasonar/Code/gyropup/exports/mjcf/base__j501_side_hatch.stl",
+     "mesh": "exports/mjcf/base__j501_side_hatch.stl",
      "color": "#e8892b",
      "estimate": false
     },
@@ -507,7 +507,7 @@
       -0.0,
       -0.06915
      ],
-     "mesh": "/home/scubasonar/Code/gyropup/exports/mjcf/base__lidar.stl",
+     "mesh": "exports/mjcf/base__lidar.stl",
      "color": "#2a2d33",
      "estimate": false
     },
@@ -520,7 +520,7 @@
       -0.0,
       -0.0075
      ],
-     "mesh": "/home/scubasonar/Code/gyropup/exports/mjcf/base__depth_front.stl",
+     "mesh": "exports/mjcf/base__depth_front.stl",
      "color": "#2a2d33",
      "estimate": false
     },
@@ -533,7 +533,7 @@
       -0.0,
       -0.0075
      ],
-     "mesh": "/home/scubasonar/Code/gyropup/exports/mjcf/base__depth_rear.stl",
+     "mesh": "exports/mjcf/base__depth_rear.stl",
      "color": "#2a2d33",
      "estimate": false
     },
@@ -546,7 +546,7 @@
       -0.05,
       0.005
      ],
-     "mesh": "/home/scubasonar/Code/gyropup/exports/mjcf/base__headlight_r.stl",
+     "mesh": "exports/mjcf/base__headlight_r.stl",
      "color": "#2d3748",
      "estimate": false
     },
@@ -559,7 +559,7 @@
       0.05,
       0.005
      ],
-     "mesh": "/home/scubasonar/Code/gyropup/exports/mjcf/base__headlight_l.stl",
+     "mesh": "exports/mjcf/base__headlight_l.stl",
      "color": "#2d3748",
      "estimate": false
     },
@@ -572,7 +572,7 @@
       0.068,
       0.00435
      ],
-     "mesh": "/home/scubasonar/Code/gyropup/exports/mjcf/base__motor_driver_l.stl",
+     "mesh": "exports/mjcf/base__motor_driver_l.stl",
      "color": "#2b6cb0",
      "estimate": false
     },
@@ -585,7 +585,7 @@
       -0.068,
       0.00435
      ],
-     "mesh": "/home/scubasonar/Code/gyropup/exports/mjcf/base__motor_driver_r.stl",
+     "mesh": "exports/mjcf/base__motor_driver_r.stl",
      "color": "#2b6cb0",
      "estimate": false
     },
@@ -598,7 +598,7 @@
       0.06845,
       -0.01655
      ],
-     "mesh": "/home/scubasonar/Code/gyropup/exports/mjcf/base__imu.stl",
+     "mesh": "exports/mjcf/base__imu.stl",
      "color": "#c53030",
      "estimate": false
     },
@@ -611,7 +611,7 @@
       -0.08988,
       0.00307
      ],
-     "mesh": "/home/scubasonar/Code/gyropup/exports/mjcf/base__balance_mcu.stl",
+     "mesh": "exports/mjcf/base__balance_mcu.stl",
      "color": "#276749",
      "estimate": false
     },
@@ -624,7 +624,7 @@
       -0.0574,
       -0.01585
      ],
-     "mesh": "/home/scubasonar/Code/gyropup/exports/mjcf/base__can_transceiver_1.stl",
+     "mesh": "exports/mjcf/base__can_transceiver_1.stl",
      "color": "#2f855a",
      "estimate": false
     },
@@ -637,7 +637,7 @@
       -0.0742,
       -0.01585
      ],
-     "mesh": "/home/scubasonar/Code/gyropup/exports/mjcf/base__can_transceiver_2.stl",
+     "mesh": "exports/mjcf/base__can_transceiver_2.stl",
      "color": "#2f855a",
      "estimate": false
     },
@@ -650,7 +650,7 @@
       -0.008,
       -0.008
      ],
-     "mesh": "/home/scubasonar/Code/gyropup/exports/mjcf/base__regen_clamp.stl",
+     "mesh": "exports/mjcf/base__regen_clamp.stl",
      "color": "#718096",
      "estimate": false
     },
@@ -663,7 +663,7 @@
       -0.0354,
       0.023
      ],
-     "mesh": "/home/scubasonar/Code/gyropup/exports/mjcf/base__dcdc_compute.stl",
+     "mesh": "exports/mjcf/base__dcdc_compute.stl",
      "color": "#a0aec0",
      "estimate": false
     },
@@ -676,7 +676,7 @@
       0.05645,
       0.0245
      ],
-     "mesh": "/home/scubasonar/Code/gyropup/exports/mjcf/base__dcdc_12v.stl",
+     "mesh": "exports/mjcf/base__dcdc_12v.stl",
      "color": "#a0aec0",
      "estimate": false
     },
@@ -689,7 +689,7 @@
       0.05615,
       0.03325
      ],
-     "mesh": "/home/scubasonar/Code/gyropup/exports/mjcf/base__contactor.stl",
+     "mesh": "exports/mjcf/base__contactor.stl",
      "color": "#4a5568",
      "estimate": false
     },
@@ -702,7 +702,7 @@
       -0.05605,
       0.0015
      ],
-     "mesh": "/home/scubasonar/Code/gyropup/exports/mjcf/base__power_switch.stl",
+     "mesh": "exports/mjcf/base__power_switch.stl",
      "color": "#2d3748",
      "estimate": false
     },
@@ -715,7 +715,7 @@
       -0.06755,
       0.051
      ],
-     "mesh": "/home/scubasonar/Code/gyropup/exports/mjcf/base__fuse.stl",
+     "mesh": "exports/mjcf/base__fuse.stl",
      "color": "#1a202c",
      "estimate": false
     },
@@ -728,7 +728,7 @@
       0.0,
       0.047
      ],
-     "mesh": "/home/scubasonar/Code/gyropup/exports/mjcf/base__estop.stl",
+     "mesh": "exports/mjcf/base__estop.stl",
      "color": "#e53e3e",
      "estimate": false
     },
@@ -741,7 +741,7 @@
       0.0,
       0.14344
      ],
-     "mesh": "/home/scubasonar/Code/gyropup/exports/mjcf/base__eyes.stl",
+     "mesh": "exports/mjcf/base__eyes.stl",
      "color": "#1a202c",
      "estimate": false
     },
@@ -813,7 +813,7 @@
       -0.0,
       0.26276
      ],
-     "mesh": "/home/scubasonar/Code/gyropup/exports/mjcf/turret_pan__pan_ring.stl",
+     "mesh": "exports/mjcf/turret_pan__pan_ring.stl",
      "color": "#4a5058",
      "estimate": false
     },
@@ -826,7 +826,7 @@
       0.00348,
       0.30171
      ],
-     "mesh": "/home/scubasonar/Code/gyropup/exports/mjcf/turret_pan__tilt_yoke.stl",
+     "mesh": "exports/mjcf/turret_pan__tilt_yoke.stl",
      "color": "#4a5058",
      "estimate": false
     },
@@ -839,7 +839,7 @@
       0.09004,
       0.32699
      ],
-     "mesh": "/home/scubasonar/Code/gyropup/exports/mjcf/turret_pan__turret_tilt_servo.stl",
+     "mesh": "exports/mjcf/turret_pan__turret_tilt_servo.stl",
      "color": "#2d3748",
      "estimate": true
     },
@@ -852,7 +852,7 @@
       -0.06699,
       0.337
      ],
-     "mesh": "/home/scubasonar/Code/gyropup/exports/mjcf/turret_pan__turret_tilt_bearing.stl",
+     "mesh": "exports/mjcf/turret_pan__turret_tilt_bearing.stl",
      "color": "#2d3748",
      "estimate": true
     },
@@ -911,7 +911,7 @@
       -0.00311,
       0.31542
      ],
-     "mesh": "/home/scubasonar/Code/gyropup/exports/mjcf/turret_tilt__cradle.stl",
+     "mesh": "exports/mjcf/turret_tilt__cradle.stl",
      "color": "#4a5058",
      "estimate": false
     },
@@ -924,7 +924,7 @@
       -5e-05,
       0.32865
      ],
-     "mesh": "/home/scubasonar/Code/gyropup/exports/mjcf/turret_tilt__cartridge_body.stl",
+     "mesh": "exports/mjcf/turret_tilt__cartridge_body.stl",
      "color": "#4a5058",
      "estimate": false
     },
@@ -937,7 +937,7 @@
       0.02999,
       0.32239
      ],
-     "mesh": "/home/scubasonar/Code/gyropup/exports/mjcf/turret_tilt__flywheel_1.stl",
+     "mesh": "exports/mjcf/turret_tilt__flywheel_1.stl",
      "color": "#4a5058",
      "estimate": false
     },
@@ -950,7 +950,7 @@
       -0.02999,
       0.32239
      ],
-     "mesh": "/home/scubasonar/Code/gyropup/exports/mjcf/turret_tilt__flywheel_2.stl",
+     "mesh": "exports/mjcf/turret_tilt__flywheel_2.stl",
      "color": "#4a5058",
      "estimate": false
     },
@@ -963,7 +963,7 @@
       0.02999,
       0.322
      ],
-     "mesh": "/home/scubasonar/Code/gyropup/exports/mjcf/turret_tilt__flywheel_tyre_1.stl",
+     "mesh": "exports/mjcf/turret_tilt__flywheel_tyre_1.stl",
      "color": "#4a5058",
      "estimate": false
     },
@@ -976,7 +976,7 @@
       -0.02999,
       0.322
      ],
-     "mesh": "/home/scubasonar/Code/gyropup/exports/mjcf/turret_tilt__flywheel_tyre_2.stl",
+     "mesh": "exports/mjcf/turret_tilt__flywheel_tyre_2.stl",
      "color": "#4a5058",
      "estimate": false
     },
@@ -989,7 +989,7 @@
       0.0,
       0.34514
      ],
-     "mesh": "/home/scubasonar/Code/gyropup/exports/mjcf/turret_tilt__dial.stl",
+     "mesh": "exports/mjcf/turret_tilt__dial.stl",
      "color": "#4a5058",
      "estimate": false
     },
@@ -1002,7 +1002,7 @@
       -0.0,
       0.37401
      ],
-     "mesh": "/home/scubasonar/Code/gyropup/exports/mjcf/turret_tilt__hopper.stl",
+     "mesh": "exports/mjcf/turret_tilt__hopper.stl",
      "color": "#9cc7e8",
      "estimate": false
     },
@@ -1015,7 +1015,7 @@
       -0.0,
       0.39333
      ],
-     "mesh": "/home/scubasonar/Code/gyropup/exports/mjcf/turret_tilt__hopper_lid.stl",
+     "mesh": "exports/mjcf/turret_tilt__hopper_lid.stl",
      "color": "#9cc7e8",
      "estimate": false
     },
@@ -1028,7 +1028,7 @@
       0.0,
       0.39634
      ],
-     "mesh": "/home/scubasonar/Code/gyropup/exports/mjcf/turret_tilt__hopper_flap.stl",
+     "mesh": "exports/mjcf/turret_tilt__hopper_flap.stl",
      "color": "#4a5058",
      "estimate": false
     },
@@ -1041,7 +1041,7 @@
       0.0,
       0.322
      ],
-     "mesh": "/home/scubasonar/Code/gyropup/exports/mjcf/turret_tilt__barrel.stl",
+     "mesh": "exports/mjcf/turret_tilt__barrel.stl",
      "color": "#ff6a13",
      "estimate": false
     },
@@ -1054,7 +1054,7 @@
       -0.032,
       0.31697
      ],
-     "mesh": "/home/scubasonar/Code/gyropup/exports/mjcf/turret_tilt__laser_mount.stl",
+     "mesh": "exports/mjcf/turret_tilt__laser_mount.stl",
      "color": "#4a5058",
      "estimate": false
     },
@@ -1067,7 +1067,7 @@
       0.02999,
       0.34224
      ],
-     "mesh": "/home/scubasonar/Code/gyropup/exports/mjcf/turret_tilt__turret_flywheel_motor_l.stl",
+     "mesh": "exports/mjcf/turret_tilt__turret_flywheel_motor_l.stl",
      "color": "#2d3748",
      "estimate": true
     },
@@ -1080,7 +1080,7 @@
       -0.02999,
       0.34224
      ],
-     "mesh": "/home/scubasonar/Code/gyropup/exports/mjcf/turret_tilt__turret_flywheel_motor_r.stl",
+     "mesh": "exports/mjcf/turret_tilt__turret_flywheel_motor_r.stl",
      "color": "#2d3748",
      "estimate": true
     },
@@ -1093,7 +1093,7 @@
       0.0075,
       0.3595
      ],
-     "mesh": "/home/scubasonar/Code/gyropup/exports/mjcf/turret_tilt__turret_esc_l.stl",
+     "mesh": "exports/mjcf/turret_tilt__turret_esc_l.stl",
      "color": "#2d3748",
      "estimate": true
     },
@@ -1106,7 +1106,7 @@
       -0.0075,
       0.3595
      ],
-     "mesh": "/home/scubasonar/Code/gyropup/exports/mjcf/turret_tilt__turret_esc_r.stl",
+     "mesh": "exports/mjcf/turret_tilt__turret_esc_r.stl",
      "color": "#2d3748",
      "estimate": true
     },
@@ -1119,7 +1119,7 @@
       0.0,
       0.30782
      ],
-     "mesh": "/home/scubasonar/Code/gyropup/exports/mjcf/turret_tilt__turret_feed_motor.stl",
+     "mesh": "exports/mjcf/turret_tilt__turret_feed_motor.stl",
      "color": "#2d3748",
      "estimate": true
     },
@@ -1132,7 +1132,7 @@
       0.0,
       0.31625
      ],
-     "mesh": "/home/scubasonar/Code/gyropup/exports/mjcf/turret_tilt__turret_feed_esc.stl",
+     "mesh": "exports/mjcf/turret_tilt__turret_feed_esc.stl",
      "color": "#2d3748",
      "estimate": true
     },
@@ -1145,7 +1145,7 @@
       -0.032,
       0.322
      ],
-     "mesh": "/home/scubasonar/Code/gyropup/exports/mjcf/turret_tilt__turret_laser.stl",
+     "mesh": "exports/mjcf/turret_tilt__turret_laser.stl",
      "color": "#2d3748",
      "estimate": true
     },
@@ -1204,7 +1204,7 @@
       0.18385,
       -0.0
      ],
-     "mesh": "/home/scubasonar/Code/gyropup/exports/mjcf/thigh_l__hip_output_adapter_l.stl",
+     "mesh": "exports/mjcf/thigh_l__hip_output_adapter_l.stl",
      "color": "#d6dbe1",
      "estimate": false
     },
@@ -1217,7 +1217,7 @@
       0.29525,
       0.0
      ],
-     "mesh": "/home/scubasonar/Code/gyropup/exports/mjcf/thigh_l__knee_output_adapter_l.stl",
+     "mesh": "exports/mjcf/thigh_l__knee_output_adapter_l.stl",
      "color": "#d6dbe1",
      "estimate": false
     },
@@ -1230,7 +1230,7 @@
       0.22518,
       -0.09201
      ],
-     "mesh": "/home/scubasonar/Code/gyropup/exports/mjcf/thigh_l__thigh_l.stl",
+     "mesh": "exports/mjcf/thigh_l__thigh_l.stl",
      "color": "#f5b82e",
      "estimate": false
     },
@@ -1243,7 +1243,7 @@
       0.27543,
       -0.01222
      ],
-     "mesh": "/home/scubasonar/Code/gyropup/exports/mjcf/thigh_l__knee_crank_l.stl",
+     "mesh": "exports/mjcf/thigh_l__knee_crank_l.stl",
      "color": "#d6dbe1",
      "estimate": false
     },
@@ -1256,7 +1256,7 @@
       0.2613,
       -0.15796
      ],
-     "mesh": "/home/scubasonar/Code/gyropup/exports/mjcf/thigh_l__pushrod_l.stl",
+     "mesh": "exports/mjcf/thigh_l__pushrod_l.stl",
      "color": "#c9ced6",
      "estimate": false
     },
@@ -1315,7 +1315,7 @@
       0.28693,
       -0.34014
      ],
-     "mesh": "/home/scubasonar/Code/gyropup/exports/mjcf/shin_l__shin_l.stl",
+     "mesh": "exports/mjcf/shin_l__shin_l.stl",
      "color": "#f5b82e",
      "estimate": false
     },
@@ -1328,7 +1328,7 @@
       0.31072,
       -0.4
      ],
-     "mesh": "/home/scubasonar/Code/gyropup/exports/mjcf/shin_l__wheel_adapter_l.stl",
+     "mesh": "exports/mjcf/shin_l__wheel_adapter_l.stl",
      "color": "#d6dbe1",
      "estimate": false
     },
@@ -1341,7 +1341,7 @@
       0.34495,
       -0.4
      ],
-     "mesh": "/home/scubasonar/Code/gyropup/exports/mjcf/shin_l__wheel_stator_l.stl",
+     "mesh": "exports/mjcf/shin_l__wheel_stator_l.stl",
      "color": "#3a3f47",
      "estimate": true
     },
@@ -1413,7 +1413,7 @@
       0.3461,
       -0.4
      ],
-     "mesh": "/home/scubasonar/Code/gyropup/exports/mjcf/wheel_l__wheel_rotor_l.stl",
+     "mesh": "exports/mjcf/wheel_l__wheel_rotor_l.stl",
      "color": "#1d2025",
      "estimate": true
     }
@@ -1459,7 +1459,7 @@
       -0.18385,
       -0.0
      ],
-     "mesh": "/home/scubasonar/Code/gyropup/exports/mjcf/thigh_r__hip_output_adapter_r.stl",
+     "mesh": "exports/mjcf/thigh_r__hip_output_adapter_r.stl",
      "color": "#d6dbe1",
      "estimate": false
     },
@@ -1472,7 +1472,7 @@
       -0.29525,
       0.0
      ],
-     "mesh": "/home/scubasonar/Code/gyropup/exports/mjcf/thigh_r__knee_output_adapter_r.stl",
+     "mesh": "exports/mjcf/thigh_r__knee_output_adapter_r.stl",
      "color": "#d6dbe1",
      "estimate": false
     },
@@ -1485,7 +1485,7 @@
       -0.22518,
       -0.09201
      ],
-     "mesh": "/home/scubasonar/Code/gyropup/exports/mjcf/thigh_r__thigh_r.stl",
+     "mesh": "exports/mjcf/thigh_r__thigh_r.stl",
      "color": "#f5b82e",
      "estimate": false
     },
@@ -1498,7 +1498,7 @@
       -0.27543,
       -0.01222
      ],
-     "mesh": "/home/scubasonar/Code/gyropup/exports/mjcf/thigh_r__knee_crank_r.stl",
+     "mesh": "exports/mjcf/thigh_r__knee_crank_r.stl",
      "color": "#d6dbe1",
      "estimate": false
     },
@@ -1511,7 +1511,7 @@
       -0.2613,
       -0.15796
      ],
-     "mesh": "/home/scubasonar/Code/gyropup/exports/mjcf/thigh_r__pushrod_r.stl",
+     "mesh": "exports/mjcf/thigh_r__pushrod_r.stl",
      "color": "#c9ced6",
      "estimate": false
     },
@@ -1570,7 +1570,7 @@
       -0.28693,
       -0.34014
      ],
-     "mesh": "/home/scubasonar/Code/gyropup/exports/mjcf/shin_r__shin_r.stl",
+     "mesh": "exports/mjcf/shin_r__shin_r.stl",
      "color": "#f5b82e",
      "estimate": false
     },
@@ -1583,7 +1583,7 @@
       -0.31072,
       -0.4
      ],
-     "mesh": "/home/scubasonar/Code/gyropup/exports/mjcf/shin_r__wheel_adapter_r.stl",
+     "mesh": "exports/mjcf/shin_r__wheel_adapter_r.stl",
      "color": "#d6dbe1",
      "estimate": false
     },
@@ -1596,7 +1596,7 @@
       -0.34495,
       -0.4
      ],
-     "mesh": "/home/scubasonar/Code/gyropup/exports/mjcf/shin_r__wheel_stator_r.stl",
+     "mesh": "exports/mjcf/shin_r__wheel_stator_r.stl",
      "color": "#3a3f47",
      "estimate": true
     },
@@ -1668,7 +1668,7 @@
       -0.3461,
       -0.4
      ],
-     "mesh": "/home/scubasonar/Code/gyropup/exports/mjcf/wheel_r__wheel_rotor_r.stl",
+     "mesh": "exports/mjcf/wheel_r__wheel_rotor_r.stl",
      "color": "#1d2025",
      "estimate": true
     }

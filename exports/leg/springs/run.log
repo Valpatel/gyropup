@@ -545,7 +545,7 @@ none_deep          No spring, jumping from a 120 mm crouch
   none_deep          kerb40_2   motor   37.0  axle    1856 N  gear   93.7 N m  JtF  275.2  L [295.4, 312.3]  body 4.77 g pk / 0.32 g rms  Fz 0.0..1597.4  air 0.043 s  (1.8 s)
   none_deep          off        motor    8.8  axle    2098 N  gear   72.5 N m  JtF  133.4  L [97.8, 302.7]  rest 101.4 mm  stop 193.8 N m  (1.8 s)
   none_deep          off_damped motor    8.8  axle     177 N  gear    8.7 N m  JtF   12.2  L [101.3, 302.7]  rest 101.4 mm  stop 13.3 N m  (1.8 s)
-wrote /home/scubasonar/Code/gyropup/exports/leg/springs/results.json (277 s)
+wrote exports/leg/springs/results.json (277 s)
   tor_k2_s0.5        drop150    motor   27.0  axle    2170 N  gear   66.1 N m  JtF  179.6  L [300.0, 338.5]  impact gear 61.3 N m at 0.0 ms  (0.6 s)
   tor_k2_s0.5        jump60     motor   60.0  axle    2434 N  gear   87.1 N m  JtF  277.5  L [170.4, 350.9]  jump 288.8 mm  spring returned 2.55 J  (1.9 s)
   tor_k2_s0.5        off        motor    8.8  axle    1209 N  gear   45.0 N m  JtF   80.1  L [99.5, 316.3]  rest 114.3 mm  stop 115.4 N m  (2.0 s)

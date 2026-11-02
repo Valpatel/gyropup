@@ -17,13 +17,14 @@
 <link rel="stylesheet" href="/web/highlight-video.css">
 <script type="module" src="/web/highlight-video.js"></script>
 <script type="module" src="/web/cad-agent-live.js"></script>
+<script type="module" src="/web/landing-nav.js"></script>
 <script type="importmap">{"imports":{"three":"/designer/kit/vendor/three/three.module.min.js","three/addons/":"/designer/kit/vendor/three/addons/"}}</script>
 </head>
 <body class="landing-page">
 <a class="skip" href="#main">Skip to content</a>
 <header class="site-header wrap">
 <a class="wordmark" href="/" aria-label="Gyropup home"><img src="/web/icon.svg" width="38" height="38" alt="">gyropup<span class="brand-dot">.</span></a>
-<nav aria-label="Main navigation"><a href="#meet">Meet Gyropup</a><a href="#built">How it's built</a><a href="/designer/progress.html">Progress</a><a class="nav-play" href="/designer/sim.html">Let's play <span aria-hidden="true">↗</span></a></nav>
+<nav class="landing-nav" aria-label="Main navigation"><button type="button" class="menu-toggle" aria-expanded="false" aria-controls="landing-nav-links">Menu <span aria-hidden="true">☰</span></button><div class="nav-links" id="landing-nav-links"><a href="/" aria-current="page">Home</a><a href="/designer/sim.html">Play</a><a href="/designer/progress.html">Progress</a><a href="/designer/build.html">Build</a><a href="/site/">Design notes</a><a href="https://github.com/Valpatel/gyropup">GitHub ↗</a></div></nav>
 </header>
 <main id="main">
 <section class="motto wrap" aria-labelledby="motto-label">
