@@ -372,7 +372,8 @@ export function collectStatus(r) {
     const within = analysis.branches.filter(b => b.within_ipc2221_limits).length;
     const pan = r.json('hardware/carrier-pan-protection/reports/calculations.json');
     const models = r.json('hardware/fuse-board/reports/model-audit.json'); // cad-agent library audit: every part has a body
-    const parts = models.footprints - models.waived.length, shown = parts - models.findings.length;
+    // a footprint can have more than one finding (a holder carries its own body and its fuse's), so count footprints
+    const parts = models.footprints - models.waived.length, shown = parts - new Set(models.findings.map(f => f.footprint)).size;
     const violations = found('DRC violations'), unconnected = found('unconnected pads');
     const drcRead = Number.isFinite(violations) && Number.isFinite(unconnected); // a report the reader cannot parse is not a pass
     panels.push({ id: 'electronics', name: 'Electronics', blurb: 'Fuse board and the turret’s power cutoff', image: { src: '/hardware/fuse-board/pictures/angle.png', alt: 'The fuse board in 3D, rendered from its KiCad layout with a body on every part', width: 1376, height: 1040 },

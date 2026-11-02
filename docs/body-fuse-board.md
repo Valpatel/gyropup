@@ -247,8 +247,10 @@ The holders, the shunt, the studs, the plate bond and the tie slots now come fro
   places in each fitted holder.
 
 The footprints are the ones this board drew for itself before, pad for pad. In KiCad's pcbnew, the regenerated board's
-pads, tracks, vias, zone fills, drawings and placements are the same as before. The one difference: the 136
-stitching-via pads of the studs and the plate bond moved by 1 nm, from the footprint file's rounding.
+pads, tracks, vias, drawings and placements are the same as before, with three small differences:
+- the 136 stitching-via pads of the studs and the plate bond moved by up to 1 nm, from the footprint file's rounding;
+- one +BUS fill on B.Cu differs by 0.03 mm², which KiCad's zone fill does from run to run;
+- the fab-layer reference text moved to the library's place above each part.
 
 The checks show it:
 - `cad-agent library audit` (in `build.sh`, `reports/model-audit.json`) passes. 37 of the 43 footprints carry a
@@ -256,8 +258,14 @@ The checks show it:
 - `pictures/angle.png` shows the board in 3D.
 - `fab/fuse-board.step` (built, not committed: 1.4 MB) is the board with every body, for the body's CAD.
 
-The bodies are envelopes from the datasheets, not the makers' models. Two of their numbers are assumptions: a fitted
-fuse stands 8.8 mm above its holder (as `cad/body_fuse_board.py` assumes), and the holder's pins are 1.0 x 0.5 mm.
+The bodies are envelopes from the datasheets, not the makers' models, so they are good for pictures and clearance,
+not for fit. These numbers are assumptions:
+- a fitted fuse stands 8.8 mm above its holder, as `cad/body_fuse_board.py` assumes;
+- the holder's pins (1.0 x 0.5 mm, 3.3 mm below the board) and its peg (2.4 mm round);
+- the ring lug, drawn as a ring 1.0 mm (M4) or 1.2 mm (M6) thick, with no tongue;
+- the nyloc nut and lug sizes, which come from cad-agent's tables marked unverified.
+
+J15 takes two lugs, but its body shows one.
 
 ### Assembly and sourcing of U1 and the holders (the owner decides; nothing is bought)
 
@@ -275,7 +283,7 @@ The proposal is **A** for P3's bring-up, since it needs nothing new, then **B** 
 
 | Option | What it takes | For | Against |
 |---|---|---|---|
-| **A. Hand-solder** (today's default) | 24 joints on stitched 2 oz pours: a 60-80 W iron with a large chisel tip, the board preheated to about 100 C on a hot plate | Cheapest; the snap-in peg holds each holder while it is soldered | About an hour; a cold joint on a 30 A branch is the risk, so inspect each joint and pull-test each holder |
+| **A. Hand-solder** (today's default) | 24 joints on stitched 2 oz pours: a 60-80 W iron with a large chisel tip, the board preheated to about 100 C on a hot plate | Cheapest. The peg sits in an oval slot (2.7 x 4.3 mm, not the datasheet's 2.7 mm round hole) so it fits either side; it locates the holder but may not grip, so tape or clamp each holder flat while it is soldered | About an hour; a cold joint on a 30 A branch is the risk, so inspect each joint and pull-test each holder |
 | B. JLCPCB's through-hole assembly | The holders from LCSC (stock checked at order) or consigned; JLCPCB's THT soldering | Machine-soldered | Priced per joint; needs a sign-in to quote; the 2 oz pours slow selective soldering, so ask JLCPCB whether it can |
 
 The proposal is **A**.

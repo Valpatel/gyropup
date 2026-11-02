@@ -18,6 +18,11 @@ TMP="$(mktemp -d "${TMPDIR:-/tmp}/fuse-board.XXXXXX")"
 trap 'rm -rf "$TMP"' EXIT
 
 # cad-agent's parts library: lib/cad-agent.pretty and lib/cad-agent.3dshapes (with a MINI fuse body per rating used)
+"$CAD_AGENT" library --help > /dev/null 2>&1 || {
+  echo "build.sh: $CAD_AGENT has no 'library' command; install a cad-agent with cadagent.library (cad-agent #295)" \
+       "with the cad extra, or set CAD_AGENT=<path to one>" >&2
+  exit 1
+}
 FUSES="$(python3 -c 'import design as D; print(*sorted({h[3] for h in D.HOLDERS if h[3]}))')"
 $N "$CAD_AGENT" library build lib --project . --fuse $FUSES > /dev/null
 $N "$KPY" generate.py > /dev/null

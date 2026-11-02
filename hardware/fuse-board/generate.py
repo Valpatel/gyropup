@@ -82,18 +82,6 @@ def stable_board(path: Path):
     P.SaveBoard(str(path), b)
 
 
-def stable_uuids(path: Path):
-    """KiCad gives every saved item a random UUID: renumber them in file order from the file's name, so a rebuild with
-    nothing changed leaves the files as they were. Only (uuid "...") tokens change; footprint paths keep the schematic's."""
-    import re
-    n = [0]
-
-    def sub(m):
-        n[0] += 1
-        return f'(uuid "{uid(path.name, n[0])}")'
-    path.write_text(re.sub(r'\(uuid "[0-9a-fA-F-]{36}"\)', sub, path.read_text()))
-
-
 ROOT_UUID = uid('root')
 
 # ======================================================================================== the parts list
@@ -318,63 +306,6 @@ def kc(bx, by):
 
 def board_xy(v):
     return (P.ToMM(v.x) - X0, Y0 - P.ToMM(v.y))
-
-
-def new_fp(name, desc):
-    fp = P.FOOTPRINT(None)
-    fp.SetFPID(P.LIB_ID('fuse-board', name))
-    fp.SetLibDescription(desc)
-    return fp
-
-
-def add_pad(fp, num, at, size, drill=None, shape=P.PAD_SHAPE_CIRCLE, attr=None, layers=None, drill_oval=None):
-    pad = P.PAD(fp)
-    pad.SetNumber(num)
-    pad.SetShape(shape)
-    pad.SetSize(P.VECTOR2I(MM(size[0]), MM(size[1])))
-    if attr is None:
-        attr = P.PAD_ATTRIB_PTH if drill else P.PAD_ATTRIB_SMD
-    pad.SetAttribute(attr)
-    if drill_oval:
-        pad.SetDrillShape(P.PAD_DRILL_SHAPE_OBLONG)
-        pad.SetDrillSize(P.VECTOR2I(MM(drill_oval[0]), MM(drill_oval[1])))
-    elif drill:
-        pad.SetDrillSize(P.VECTOR2I(MM(drill), MM(drill)))
-    if layers is None:
-        layers = {P.PAD_ATTRIB_PTH: pad.PTHMask(), P.PAD_ATTRIB_NPTH: pad.UnplatedHoleMask(), P.PAD_ATTRIB_SMD: pad.SMDMask()}[attr]
-    pad.SetLayerSet(layers)
-    pad.SetFPRelativePosition(P.VECTOR2I(MM(at[0]), MM(at[1])))
-    fp.Add(pad)
-    return pad
-
-
-def fp_line(fp, a, b, layer, w=0.12):
-    s = P.PCB_SHAPE(fp, P.SHAPE_T_SEGMENT)
-    s.SetStart(P.VECTOR2I(MM(a[0]), MM(a[1])))
-    s.SetEnd(P.VECTOR2I(MM(b[0]), MM(b[1])))
-    s.SetLayer(layer)
-    s.SetWidth(MM(w))
-    fp.Add(s)
-
-
-def fp_rect(fp, x0, y0, x1, y1, layer, w=0.12):
-    for a, b in (((x0, y0), (x1, y0)), ((x1, y0), (x1, y1)), ((x1, y1), (x0, y1)), ((x0, y1), (x0, y0))):
-        fp_line(fp, a, b, layer, w)
-
-
-def fp_circle(fp, r, layer, w=0.12, c=(0, 0)):
-    s = P.PCB_SHAPE(fp, P.SHAPE_T_CIRCLE)
-    s.SetCenter(P.VECTOR2I(MM(c[0]), MM(c[1])))
-    s.SetEnd(P.VECTOR2I(MM(c[0] + r), MM(c[1])))
-    s.SetLayer(layer)
-    s.SetWidth(MM(w))
-    fp.Add(s)
-
-
-def fp_ref_value(fp):
-    fp.Reference().SetLayer(P.F_Fab)
-    fp.Value().SetLayer(P.F_Fab)
-    fp.Value().SetVisible(False)
 
 
 def load_fp(lib_id):
