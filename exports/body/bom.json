@@ -1303,7 +1303,7 @@
    "for": "P1: 2 dcdc bracket, 4 adapter plate front, 4 adapter plate rear (cad/body_joints.py)",
    "vendor": "McMaster-Carr",
    "part_number": "91290A148",
-   "name": "Black-oxide alloy steel socket head screw, M4 x 0.7 x 12 mm (the fuse board's M4 studs, down through the lug into the standoff's nyloc)",
+   "name": "Black-oxide alloy steel socket head screw, M4 x 0.7 x 12 mm",
    "mass_g_each": null,
    "price_usd_each": 0.123,
    "url": "https://www.mcmaster.com/91290A148/",

@@ -107,8 +107,11 @@ def stand_box():
     for sy in (-1, 1):
         s = s.union(_box(dx0 + 4.0, dx0 + DOCK['L'] + 1.5, sy * (DOCK['W'] / 2), sy * (DOCK['W'] / 2 + 3.0), -TOP - DOCK['H'] + 6.0, -TOP + 0.5))
     s = s.union(_box(dx0 + DOCK['L'], dx0 + DOCK['L'] + 3.0, -DOCK['W'] / 2 - 3.0, DOCK['W'] / 2 + 3.0, -TOP - 12.0, -TOP + 0.5))
+    # the dock's two M3 inserts from below: the short 94459A130 (4.3 mm) in 5.3 mm pilots, 0.7 mm of plate over them (the
+    # 5.7 mm 94459A140 cannot seat in the 6 mm plate; the 4 mm pilots took neither, #137). The pilots sit inside the
+    # plinth's seat, so the screws stop at the adapter's base + 5 mm and the inserts go in flat (PARTS' note)
     for dy in (-15.0, 15.0):
-        s = s.cut(_cyl_z(FAST['M3']['insert_pilot'] / 2, -TOP - 0.01, -TOP + 4.0, dx0 + DOCK['L'] / 2, dy))
+        s = s.cut(_cyl_z(FAST['M3']['insert_pilot'] / 2, -TOP - 0.01, -TOP + 5.3, dx0 + DOCK['L'] / 2, dy))
     # the terminal board's bosses on the +y wall
     bx, bz, by = BOARD_ON_WALL['x'], BOARD_ON_WALL['z'], BOARD_ON_WALL['y']
     for x in (bx[0] + 2.0, bx[1] - 2.0):
@@ -185,7 +188,9 @@ def bought():
     return out
 
 
-PARTS = {'stand_box': ('petg', 1, 'printed PETG upside down; 4 x M5 + 4 x M3 inserts for the bottom, 2 x M3 for the dock, 4 x M3 for the board', ((1, 0, 0), 180)),
+PARTS = {'stand_box': ('petg', 1, 'printed PETG upside down; 4 x M5 + 4 x M3 inserts for the bottom, 2 x M3 x 4.3 (94459A130) for the dock '
+                           '(set with a flat tip, the top face on a flat plate, then check the plinth seat flat; the dock adapter\'s '
+                           'M3s no longer than its base + 5 mm: 0.7 mm of plate over the pilots), 4 x M3 for the board', ((1, 0, 0), 180)),
          'stand_bottom': ('petg', 1, 'printed PETG flat; 4 x M3 x 8 into the corner bosses; 4 rubber feet; two ribs the pack slides on', None)}
 
 

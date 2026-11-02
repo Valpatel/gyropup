@@ -19,7 +19,7 @@ try {
   await page.goto(base+route,{waitUntil:'networkidle'});
   if(route==='/') await page.waitForSelector('#robot-preview[data-ready="true"]');
   if(route.includes('sim.html')) await page.waitForFunction(()=>document.body.dataset.ready==='1');
-  if(route.includes('progress')) await page.waitForSelector('#status .card');
+  if(route.includes('progress')) await page.waitForSelector('#status .card',{state:'attached'}); // the written status is folded under the board
   if(route!=='/') await page.waitForSelector('.appnav');
   if(route==='/') {
    // The landing page offers the same navigation as every other page (site/nav.json): no separate "Let's play" pill.

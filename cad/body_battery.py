@@ -212,7 +212,7 @@ def rail(side):
     x0, x1 = g['x_in']
     r = _box(x0, x1, y0, y1, z0, z1)
     yc = (y0 + y1) / 2
-    for x, _ in rail_holes():                                 # M4 x 16 socket heads under the rail (19 mm over the packs)
+    for x, _ in rail_holes():                                 # M4 x 20 socket heads under the rail (19 mm over the packs)
         r = r.cut(_cyl_z(2.25, z0 - 1, z1 + 1, x, yc))
     zc = (z0 + z1) / 2
     for x in SIDE_SCREWS_X:                                   # M3 inserts from the outer face (the side plate's top row)
@@ -315,10 +315,10 @@ def bay_parts() -> dict:
         out[f'bay_side_{side}'] = Part(f'bay_side_{side}', 'sheet', place_side(sds, side), 1, sd if side == 'l' else None, sds,
                                        sd.s['material'], colour=al, note=sd.note)
         out[f'bay_rail_{side}'] = Part(f'bay_rail_{side}', 'printed', rail(side), 1, material='pa6-cf', colour=pa6,
-                                       note='PA6-CF; four M4 x 16 up into the belly\'s nuts, five M3 inserts, two in its ends')
+                                       note='PA6-CF; four M4 x 20 up into the belly\'s nuts, five M3 inserts, two in its ends')
     for k in ('front', 'rear'):
         out[f'adapter_plate_{k}'] = Part(f'adapter_plate_{k}', 'printed', adapter_plate(k), 1, material='pa6-cf', colour=pa6,
-                                         note='PA6-CF; four M4 x 8 up into the belly\'s nuts; the adapter\'s screws into inserts set on arrival')
+                                         note='PA6-CF; four M4 x 12 up into the belly\'s nuts; the adapter\'s screws into inserts set on arrival')
         out[f'bay_door_{k}'] = Part(f'bay_door_{k}', 'printed', door(k == 'front'), 1, material='petg', colour=petg,
                                     note='PETG; two knurled M3 x 10 thumbscrews into the rails\' ends', print_rotation=((0, 1, 0), 90))
     for i, sk in enumerate(skids()):

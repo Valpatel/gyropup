@@ -191,3 +191,15 @@
 }
 @media(max-width:400px){.loop-live{min-height:5.1em}}
 @media(scripting:none){.landing-nav .menu-toggle{display:none}.landing-nav .nav-links{display:flex;position:static;flex-wrap:wrap;justify-content:flex-end;background:none;box-shadow:none;border:0;padding:0}}
+
+/* Each build step shows a real output of that step (#150). */
+.step-shot{margin:0 0 18px}.step-shot img{display:block;width:100%;height:auto;aspect-ratio:16/10;object-fit:cover;border-radius:14px;background:#fff;border:1px solid #d5dccd;box-shadow:0 8px 20px #294a3812}
+.step-shot figcaption{margin-top:8px;color:#4d6159;font:600 11px/1.4 'JetBrains Mono',monospace}
+@media(max-width:760px){.build-steps .step-shot{grid-column:2;grid-row:auto;margin:6px 0 12px}}
+.closing-robot{display:block;width:min(260px,62vw);height:auto;margin:0 auto 10px;filter:drop-shadow(0 18px 24px #173d3c22)}
+.meet-shot{margin:32px 0 0}.meet-shot img{display:block;width:100%;height:auto;aspect-ratio:16/11;object-fit:cover;object-position:50% 70%;border-radius:20px;border:1px solid #d5dccd;background:#ecf2f4}.meet-shot figcaption{margin-top:9px;color:#4d6159;font:600 11px/1.4 'JetBrains Mono',monospace}
+.roadmap-map{display:block;width:100%;max-width:960px;height:auto;margin:0 auto 26px;font:600 13px 'Inter',system-ui,sans-serif}
+.rm-links path{fill:none;stroke:#7fa8a0;stroke-width:2;stroke-dasharray:6 6} /* still: these links are planned, not live */
+.rm-node rect{fill:#fffef9;stroke:#a9c5b8}.rm-node text,.rm-robot text{text-anchor:middle;fill:#173d3c}
+.rm-robot rect{fill:#ffdf93;stroke:#d2a53c}.rm-robot text{font-weight:800}.rm-note{fill:#526863;font:600 11px 'JetBrains Mono',monospace}
+@media(max-width:760px){.roadmap-map{display:none}}
