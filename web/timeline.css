@@ -14,7 +14,8 @@
 .tl-list::before{content:"";position:absolute;left:96px;top:8px;bottom:8px;width:2px;background:linear-gradient(#bd3a12,#d5ddd5 70%)}
 .tl-event{position:relative;display:grid;grid-template-columns:84px minmax(0,1fr);gap:0 28px;padding:0 0 18px}
 .tl-event::before{content:"";position:absolute;left:91px;top:7px;width:12px;height:12px;border-radius:50%;background:#fffdf5;border:3px solid var(--dot,#7fa8a0)}
-.tl-event:first-child::before{--dot:#bd3a12;box-shadow:0 0 0 0 #bd3a1266;animation:tl-ring 2.2s ease-out infinite}
+/* The newest change: the first of the visible list only, not the first of the folded earlier ones. */
+.timeline>.tl-list>.tl-event:first-child::before{--dot:#bd3a12;box-shadow:0 0 0 0 #bd3a1266;animation:tl-ring 2.2s ease-out infinite}
 .tl-event time{padding-top:3px;color:var(--tl-muted);font:700 11px/1.4 'JetBrains Mono',monospace;text-align:right}
 .tl-card{min-width:0;padding:14px 16px;border:1px solid var(--tl-line);border-radius:16px;background:#fffef9;box-shadow:0 6px 18px #294a380c}
 .tl-meta{display:flex;flex-wrap:wrap;align-items:center;gap:6px 8px;margin:0 0 6px}
@@ -36,6 +37,7 @@
 .tl-more{margin:4px 0 0}
 .tl-more>summary{display:inline-flex;align-items:center;min-height:44px;margin-left:112px;padding:8px 14px;border:1px solid #c8d4c8;border-radius:999px;background:#f1f5e9;cursor:pointer;font-weight:650;font-size:13px}
 .tl-more[open]>summary{margin-bottom:16px}
+.tl-more .tl-list::before{background:#d5ddd5}
 .tl-all{display:inline-block;margin-left:112px;font-weight:650;font-size:13px}
 .tl-empty{color:var(--tl-muted)}
 /* New items arrive: each change slides in as it comes into view (web/timeline.js); reduced motion keeps them still. */

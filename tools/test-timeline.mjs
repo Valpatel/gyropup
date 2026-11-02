@@ -10,7 +10,7 @@ import { parseHTML } from 'linkedom';
 import { chromium, webkit } from '@playwright/test';
 import { createSiteServer } from './serve-site.mjs';
 import { acknowledgePrototypeNotice } from './test-prototype-session.mjs';
-import { DESIGN_PATHS, decisionChanges, imagePaths, renderTimeline, shorten, subsystemOf } from './timeline.mjs';
+import { DESIGN_PATHS, collectTimeline, decisionChanges, gitIn, imagePaths, renderTimeline, shorten, subsystemOf } from './timeline.mjs';
 import { shortDate } from './status-board.mjs';
 
 const root = path.resolve(import.meta.dirname, '..');
@@ -37,6 +37,9 @@ test('decisions: added ones are new, edited ones revised, from the diff’s cont
     ' - id: D2', '   title: B', '-', '+- id: D3', '+  title: C', ' - id: D4', '   title: D'].join('\n');
   assert.deepEqual(decisionChanges(diff), [{ id: 'D1', change: 'revised' }, { id: 'D3', change: 'new' }]);
   assert.deepEqual(decisionChanges(''), []);
+  // A decision moved within the file is revised, not new; one only removed is not listed.
+  const moved = ['@@ -1,6 +1,6 @@', '-- id: D9', '-  title: Moved', ' - id: D2', '   title: B', '+- id: D9', '+  title: Moved', '-- id: D5', '-  title: Gone'].join('\n');
+  assert.deepEqual(decisionChanges(moved), [{ id: 'D9', change: 'revised' }]);
 });
 
 test('without history the timeline says so; counts read as words', () => {
@@ -59,29 +62,67 @@ test('subsystems come from paths', () => {
   assert.equal(subsystemOf('docs/decisions.yaml'), null);
 });
 
-test('every published change is a first-parent commit that changed the design, newest first, with git’s date', () => {
-  const firstParent = new Set(git('rev-list', '--first-parent', 'HEAD').toString().trim().split('\n'));
+// Read again here, by its own commands: the merges that carry pull requests (a release from dev into main, a sync back)
+// are opened up, so each change is a pull request's merge or a direct commit, never a release.
+const isIntegration = sha => {
+  const [p1, p2] = git('show', '-s', '--format=%P', sha).toString().trim().split(' ');
+  return !!p2 && /^Merge pull request #\d+ /m.test(git('log', '--first-parent', '--merges', '--format=%s', `${p1}..${p2}`).toString());
+};
+/** The generator's rule, written out again: what a commit changed against its first parent decides if it shows. */
+const designChange = sha => {
+  const changed = git('diff', '--name-status', '--no-renames', `${sha}^1`, sha, '--', ...DESIGN_PATHS).toString().trim().split('\n').filter(Boolean)
+    .map(l => { const [st, ...p] = l.split('\t'); return [st[0], p.at(-1)]; }).filter(([, f]) => !/^exports\/(sim|links)\/|\.log$/.test(f));
+  const decisions = /^[+-](?![+-]{2} )\s*\S/m.test(git('diff', `${sha}^1`, sha, '--', 'docs/decisions.yaml').toString());
+  return decisions || changed.some(([st, f]) => /^(cad|hardware)\//.test(f) || /\.(step|stp|stl|3mf|dxf)$/.test(f)
+    || (/\.(png|jpg|webp)$/.test(f) && !/thumbs\//.test(f)) || (st === 'A' && /\.(json|csv)$/.test(f)));
+};
+
+test('every published change is a pull request or a direct commit that changed the design, newest first, with git’s date', () => {
+  const reachable = new Set(git('rev-list', 'HEAD').toString().trim().split('\n'));
   assert.ok(events.length >= 10, 'the history has design changes');
   let last = Infinity;
   for (const e of events) {
-    assert.ok(firstParent.has(e.sha), e.sha);
+    assert.ok(reachable.has(e.sha), e.sha);
+    assert.ok(!isIntegration(e.sha), `${e.sha.slice(0, 7)} is a release or sync merge; its pull requests show instead`);
+    assert.doesNotMatch(e.label, /^Release\b/);
     const [date, subject] = git('show', '-s', '--format=%cI%x1f%s', e.sha).toString().trim().split('\x1f');
     assert.equal(e.date, date);
     assert.ok(Date.parse(date) <= last, 'newest first'); last = Date.parse(date);
-    const files = git('diff', '--name-only', `${e.sha}^1`, e.sha, '--', ...DESIGN_PATHS).toString().trim().split('\n').filter(Boolean);
-    assert.ok(files.some(f => /^cad\/|^hardware\/|\.(step|stp|stl|3mf|dxf|png|jpg|webp)$|^docs\/decisions\.yaml$/.test(f) || /\.(json|csv)$/.test(f)), `${e.sha} changed the design`);
+    assert.ok(designChange(e.sha), `${e.sha} changed the design`);
     if (e.pr) assert.match(subject, new RegExp(`^Merge pull request #${e.pr} `));
     const yamlDiff = git('diff', '-U60', `${e.sha}^1`, e.sha, '--', 'docs/decisions.yaml').toString();
+    const then = e.decisions.length ? git('show', `${e.sha}:docs/decisions.yaml`).toString() : '';
     for (const d of e.decisions) {
-      if (d.change === 'new') assert.match(yamlDiff, new RegExp(`^\\+- id: ${d.id}$`, 'm'), `${e.sha} adds ${d.id}`);
-      else assert.match(yamlDiff, new RegExp(`^ - id: ${d.id}$(\\n[ +-](?!- id:).*)*?\\n[+-]\\s*\\S`, 'm'), `${e.sha} revises ${d.id}`);
+      if (d.change === 'new') { assert.match(yamlDiff, new RegExp(`^\\+- id: ${d.id}$`, 'm'), `${e.sha} adds ${d.id}`); assert.doesNotMatch(yamlDiff, new RegExp(`^-- id: ${d.id}$`, 'm')); }
+      else assert.match(yamlDiff, new RegExp(`^[ +-]- id: ${d.id}$(\\n[ +-](?!- id:).*)*?\\n[+-]\\s*\\S`, 'm'), `${e.sha} revises ${d.id}`);
+      // The title is the one the decision had in that commit.
+      if (d.title) assert.ok(then.includes(d.title.replace(/…$/, '').slice(0, 40)), `${e.sha} ${d.id}: "${d.title}"`);
     }
   }
-  // Nothing is skipped between the first and the last shown: every first-parent design commit in that span is listed,
-  // unless it only touched logs, browser snapshots or existing records.
-  const shas = new Set(events.map(e => e.sha));
-  const span = git('log', '--first-parent', '-m', '--format=%H', `${events.at(-1).sha}^1..HEAD`, '--', 'cad', 'docs/decisions.yaml', 'hardware').toString().trim().split('\n').filter(Boolean);
-  for (const sha of new Set(span)) assert.ok(shas.has(sha), `${sha.slice(0, 7)} changed CAD, hardware or decisions but is not on the timeline`);
+});
+
+test('nothing is skipped: every pull request and direct commit in the span that changed the design is on the timeline', () => {
+  const shas = new Set(events.map(e => e.sha)), since = Date.parse(events.at(-1).date);
+  const candidates = [
+    ...git('log', '--merges', '--format=%H %cI', '--grep=^Merge pull request #', 'HEAD').toString().trim().split('\n'),
+    ...git('log', '--first-parent', '--no-merges', '--format=%H %cI', 'HEAD').toString().trim().split('\n'),
+  ].map(l => l.split(' ')).filter(([, d]) => Date.parse(d) >= since).map(([sha]) => sha);
+  let checked = 0;
+  for (const sha of new Set(candidates)) {
+    if (isIntegration(sha) || !designChange(sha)) continue;
+    checked++;
+    assert.ok(shas.has(sha), `${sha.slice(0, 7)} changed the design but is not on the timeline`);
+  }
+  assert.ok(checked >= 10, `only ${checked} pull requests and commits checked`);
+});
+
+test('the public site, built from main, shows the same pull requests, never a release', { skip: !git('branch', '-r', '--list', 'origin/main').toString().trim() && 'no origin/main here' }, () => {
+  const main = collectTimeline(gitIn(root), { head: 'origin/main', limit: 12 });
+  assert.ok(main.length > 0);
+  for (const e of main) {
+    assert.doesNotMatch(e.label, /^Release\b/);
+    assert.doesNotMatch(e.title, /from Valpatel\/dev$/, `${e.sha.slice(0, 7)} is a release merge`);
+  }
 });
 
 test('before and after renders are git’s own blobs, published under /site/timeline/', () => {

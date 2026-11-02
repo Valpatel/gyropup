@@ -1,8 +1,9 @@
-/** "What changed": the design's own history, from git, when the site is built. Each change is one commit on the
- * integration branch's first-parent line (a merged pull request, or a direct commit) that changed the design: CAD
- * source, geometry, a render, a new record, a decision, or hardware. Its date is git's, its label the PR's title (or
- * the commit's subject) shortened, its subsystems come from the paths it touched, and when it changed a render the
- * build publishes that render before and after, straight from git's objects.
+/** "What changed": the design's own history, from git, when the site is built. Each change is a merged pull request
+ * or a direct commit that changed the design: CAD source, geometry, a render, a new record, a decision, or hardware.
+ * Release merges (dev into main) and syncs are opened into the pull requests they carry, so main, which publishes the
+ * site, shows the same changes as dev. Its date is git's, its label the PR's title (or the commit's subject)
+ * shortened, its subsystems come from the paths it touched, and when it changed a render the build publishes that
+ * render before and after, straight from git's objects.
  *
  * tools/build-site.mjs writes the timeline into the landing page and Progress (<!-- timeline --> markers) and
  * /site/timeline.json. tools/test-timeline.mjs reads git again on its own and compares.
@@ -49,20 +50,43 @@ export function shorten(title, max = 84) {
   return cut.slice(0, cut.lastIndexOf(' ')).replace(/[,:;(]+$/, '') + '…';
 }
 
+/** The units of change, newest first: the first-parent line of `head`, with every merge of an integration line (a
+ * release from dev into main, or a sync back) opened into the merges and commits it carries, each once. A merge is an
+ * integration merge when the line it brings in has pull-request merges of its own; a feature branch that merged its
+ * base in stays one change. Returns [{ sha, date, subject, body }]. */
+export function changeUnits(git, head = 'HEAD') {
+  const seen = new Set(), units = [];
+  const walk = range => {
+    const log = git(['log', '--first-parent', '--format=%H%x1f%P%x1f%cI%x1f%s%x1f%b%x1e', ...range]);
+    for (const rec of log.split('\x1e').map(r => r.trim()).filter(Boolean)) {
+      const [sha, parents, date, subject, body] = rec.split('\x1f');
+      if (seen.has(sha)) continue;
+      seen.add(sha);
+      const [p1, p2] = parents.split(' ');
+      if (p2 && /^Merge pull request #\d+ /m.test(git(['log', '--first-parent', '--merges', '--format=%s', `${p1}..${p2}`]))) { walk([`${p1}..${p2}`]); continue; }
+      units.push({ sha, date, subject, body: body || '' });
+    }
+  };
+  walk([head]);
+  return units.sort((a, b) => Date.parse(b.date) - Date.parse(a.date));
+}
+
+/** Decision titles as the commit itself had them. */
+const titlesAt = (git, sha) => {
+  try { return Object.fromEntries(parseDecisions(git(['show', `${sha}:docs/decisions.yaml`])).map(d => [d.id, d.title])); } catch { return {}; }
+};
+
 /** The changes, newest first. `git(args)` runs git in the repository and returns its output. */
-export function collectTimeline(git, { limit = 40, decisions = [] } = {}) {
-  const log = git(['log', '--first-parent', '-m', '--format=@@%H%x1f%cI%x1f%s%x1f%b%x1e', '--name-status', 'HEAD', '--', ...DESIGN_PATHS]);
-  const titles = Object.fromEntries(decisions.map(d => [d.id, d.title]));
+export function collectTimeline(git, { limit = 40, head = 'HEAD' } = {}) {
   const events = [];
-  for (const chunk of log.split('@@').slice(1)) {
-    const [head, files = ''] = chunk.split('\x1e');
-    const [sha, date, subject, body] = head.split('\x1f');
+  for (const { sha, date, subject, body } of changeUnits(git, head)) {
+    const files = git(['diff', '--name-status', '--no-renames', `${sha}^1`, sha, '--', ...DESIGN_PATHS]);
     const changes = files.trim().split('\n').filter(Boolean).map(l => { const [status, ...p] = l.split('\t'); return { status: status[0], file: p.at(-1) }; })
       .filter(c => !NOT_DESIGN.test(c.file));
+    if (!changes.length) continue;
     const pr = subject.match(/^Merge pull request #(\d+)/)?.[1] ?? null;
     const title = pr ? (body.trim().split('\n')[0] || subject) : subject;
     const touched = changes.some(c => c.file === 'docs/decisions.yaml') ? decisionChanges(git(['diff', '-U60', `${sha}^1`, sha, '--', 'docs/decisions.yaml'])) : [];
-    const added = touched.map(d => d.id);
     const kinds = {
       cad: changes.filter(c => /^cad\//.test(c.file)).length,
       geometry: changes.filter(c => GEOMETRY.test(c.file)).length,
@@ -73,10 +97,11 @@ export function collectTimeline(git, { limit = 40, decisions = [] } = {}) {
     };
     // A design change touched CAD, geometry, a render, hardware, a decision, or added a record.
     if (!Object.values(kinds).some(Boolean)) continue;
+    const titles = touched.length ? titlesAt(git, sha) : {};
     const counts = {};
     for (const c of changes) { const s = subsystemOf(c.file); if (s) counts[s] = (counts[s] || 0) + 1; }
     const subsystems = Object.entries(counts).sort((a, b) => b[1] - a[1]).map(([s]) => s).slice(0, 2);
-    if (!subsystems.length) for (const id of added) { const s = subsystemOf((titles[id] || '').toLowerCase()); if (s && !subsystems.includes(s)) subsystems.push(s); }
+    if (!subsystems.length) for (const { id } of touched) { const s = subsystemOf((titles[id] || '').toLowerCase()); if (s && !subsystems.includes(s)) subsystems.push(s); }
     const image = pickRender(changes, subsystems[0]);
     events.push({ sha, date, pr, label: shorten(title), title, subsystems, kinds, files: changes.length,
       decisions: touched.map(d => ({ ...d, title: titles[d.id] ? shorten(titles[d.id], 90) : null })),
@@ -88,16 +113,18 @@ export function collectTimeline(git, { limit = 40, decisions = [] } = {}) {
 
 /** The decisions a diff of docs/decisions.yaml adds or revises, from enough context to see each entry's id. */
 export function decisionChanges(diff) {
-  const seen = new Map();
+  const added = new Set(), removed = new Set(), edited = new Set(), order = [];
+  const note = id => { if (!order.includes(id)) order.push(id); };
   let id = null;
   for (const line of diff.split('\n')) {
     if (line.startsWith('@@')) { id = null; continue; }
     const m = line.match(/^([ +-])- id: (D\d+)\s*$/);
-    if (m) { id = m[2]; if (m[1] === '+') seen.set(id, 'new'); else if (m[1] === '-' && !seen.has(id)) seen.set(id, 'removed'); continue; }
-    if (id && /^[+-]\s*\S/.test(line) && !seen.has(id)) seen.set(id, 'revised'); // blank lines are not revisions
+    if (m) { id = m[2]; note(id); if (m[1] === '+') added.add(id); else if (m[1] === '-') removed.add(id); continue; }
+    if (id && /^[+-]\s*\S/.test(line) && !/^(\+\+\+|---) /.test(line)) edited.add(id); // blank lines are not revisions
   }
-  // An id both removed and added in place is a revision.
-  return [...seen].filter(([, change]) => change !== 'removed').map(([id, change]) => ({ id, change }));
+  // Added and not removed is new; removed and added again (moved) or edited in place is a revision; removed only is gone.
+  return order.filter(id => added.has(id) || edited.has(id)).filter(id => !(removed.has(id) && !added.has(id)))
+    .map(id => ({ id, change: added.has(id) && !removed.has(id) ? 'new' : 'revised' }));
 }
 
 /** The render that best shows a change: an assembly view, then a part render, then a study's still. */
@@ -125,7 +152,7 @@ function eventHTML(e, i) {
   const chips = e.subsystems.map(s => `<span class="tl-chip" data-subsystem="${s}">${SUBSYSTEM_NAMES[s]}</span>`).join('') || '<span class="tl-chip">Shared records</span>';
   const kinds = KIND_WORDS.filter(([k]) => e.kinds[k]).map(([k, w]) => count(e.kinds[k], w)).join(' · ');
   const decisions = e.decisions.length ? `<ul class="tl-decisions">${e.decisions.map(d => `<li><b>${esc(d.id)}</b>${d.change === 'revised' ? ' <em>revised</em>' : ''} ${esc(d.title || '')}</li>`).join('')}</ul>` : '';
-  const pictures = img ? `<figure class="tl-pics${img.before ? ' has-before' : ''}">${img.before ? `<span class="tl-pic"><img src="${img.before}" alt="Before: ${esc(e.image.file)}" loading="lazy" decoding="async"><small>before</small></span><span class="tl-arrow" aria-hidden="true">→</span>` : ''}<span class="tl-pic"><img src="${img.after}" alt="${img.before ? 'After' : 'New'}: ${esc(e.image.file)}" loading="lazy" decoding="async"><small>${img.before ? 'after' : 'new'}</small></span><figcaption>${esc(e.image.file)}</figcaption></figure>` : '';
+  const pictures = img ? `<figure class="tl-pics${img.before ? ' has-before' : ''}">${img.before ? `<span class="tl-pic"><img src="${img.before}" alt="${esc(e.label)}: the render before" loading="lazy" decoding="async"><small>before</small></span><span class="tl-arrow" aria-hidden="true">→</span>` : ''}<span class="tl-pic"><img src="${img.after}" alt="${esc(e.label)}: the render ${img.before ? 'after' : 'it added'}" loading="lazy" decoding="async"><small>${img.before ? 'after' : 'new'}</small></span><figcaption>${esc(e.image.file)}</figcaption></figure>` : '';
   const link = e.pr ? `<a href="https://github.com/Valpatel/gyropup/pull/${e.pr}">#${e.pr}</a>` : `<a href="https://github.com/Valpatel/gyropup/commit/${e.sha}">${e.sha.slice(0, 7)}</a>`;
   return `<li class="tl-event" style="--i:${i}"${img ? ' data-visual' : ''}><time datetime="${esc(e.date)}">${shortDate(e.date)}</time><div class="tl-card"><p class="tl-meta">${chips}<span class="tl-kinds">${kinds}</span></p>`
     + `<h3 class="tl-label">${esc(e.label)} <span class="tl-ref">${link}</span></h3>${decisions}${pictures}</div></li>`;
@@ -135,10 +162,10 @@ function eventHTML(e, i) {
 export function renderTimeline(events, { show = 6, more = 0, compact = false } = {}) {
   if (!events.length) return `<section id="changes" class="timeline" aria-labelledby="changes-title"><h2 id="changes-title">What changed</h2><p class="tl-empty">The change history is not available in this build.</p></section>`;
   const shown = events.slice(0, show), folded = events.slice(show, show + more);
-  const days = new Set(events.map(e => e.date.slice(0, 10))).size;
+  const span = `from ${shortDate(events.at(-1).date)} to ${shortDate(events[0].date)}`;
   return `<section id="changes" class="timeline${compact ? ' is-compact' : ''}" aria-labelledby="changes-title" data-generated="tools/timeline.mjs">`
     + `<div class="tl-heading"><p class="eyebrow"><span class="status-dot"></span> FROM THE GIT HISTORY</p><h2 id="changes-title">What changed, <span>and when.</span></h2>`
-    + `<p class="tl-lede">The last ${events.length} design changes over ${days} days: CAD, models, renders, records and decisions, newest first. Where a change re-rendered a part, its before and after.</p></div>`
+    + `<p class="tl-lede">The last ${events.length} design changes, ${span}: CAD, models, renders, records and decisions, newest first. Where a change re-rendered a part, its before and after.</p></div>`
     + `<ol class="tl-list">${shown.map(eventHTML).join('')}</ol>`
     + (folded.length ? `<details class="tl-more"><summary>${folded.length} earlier changes</summary><ol class="tl-list">${folded.map((e, i) => eventHTML(e, i + shown.length)).join('')}</ol></details>` : '')
     + (compact ? `<a class="tl-all" href="/designer/progress.html#changes">Every change on Progress →</a>` : '')
