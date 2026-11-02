@@ -1,0 +1,211 @@
+(footprint "R_Shunt_Bourns_CSS2H-3920_Kelvin"
+	(version 20241229)
+	(generator "cad-agent")
+	(layer "F.Cu")
+	(descr "Bourns CSS2H-3920 current-sense resistor, 4-terminal (Kelvin) layout, net-tied sense pads")
+	(tags "shunt kelvin current sense Bourns CSS2H 3920")
+	(property "Reference" "REF**"
+		(at 0 -5.15 0)
+		(layer "F.SilkS")
+		(uuid "99b11625-4978-588e-b47b-de335c5abcb5")
+		(effects
+			(font
+				(size 1 1)
+				(thickness 0.15)
+			)
+		)
+	)
+	(property "Value" "R_Shunt_Bourns_CSS2H-3920_Kelvin"
+		(at 0 0 0)
+		(layer "F.Fab")
+		(hide yes)
+		(uuid "0506d7ca-8a13-51e9-9aaa-a3e9c7af9e44")
+		(effects
+			(font
+				(size 1 1)
+				(thickness 0.15)
+			)
+		)
+	)
+	(property "Datasheet" "https://www.bourns.com/data/global/pdfs/CSS2H-3920.pdf"
+		(at 0 0 0)
+		(layer "F.Fab")
+		(hide yes)
+		(uuid "edc6424e-3927-548a-a70f-7735acd1a433")
+		(effects
+			(font
+				(size 1 1)
+				(thickness 0.15)
+			)
+		)
+	)
+	(property "Description" "Bourns CSS2H-3920 current-sense resistor, 4-terminal (Kelvin) layout, net-tied sense pads"
+		(at 0 0 0)
+		(layer "F.Fab")
+		(hide yes)
+		(uuid "8dc0cc0a-609e-5df3-8a67-000df3269586")
+		(effects
+			(font
+				(size 1 1)
+				(thickness 0.15)
+			)
+		)
+	)
+	(attr smd)
+	(net_tie_pad_groups "1, 2" "3, 4")
+	(fp_line
+		(start -4.2 -3.65)
+		(end -4.2 -2.9)
+		(stroke
+			(width 0.3)
+			(type solid)
+		)
+		(layer "F.Cu")
+		(uuid "263c7a4b-efc2-5e9f-94b2-236cd66aa70f")
+	)
+	(fp_line
+		(start 4.2 -3.65)
+		(end 4.2 -2.9)
+		(stroke
+			(width 0.3)
+			(type solid)
+		)
+		(layer "F.Cu")
+		(uuid "fa51049a-d01e-55d1-bfb6-65a02f54753e")
+	)
+	(fp_line
+		(start -1.6 -3.35)
+		(end 1.6 -3.35)
+		(stroke
+			(width 0.15)
+			(type solid)
+		)
+		(layer "F.SilkS")
+		(uuid "ee6912c7-b433-586a-a6dc-7f53287aaa02")
+	)
+	(fp_line
+		(start -1.6 3.35)
+		(end 1.6 3.35)
+		(stroke
+			(width 0.15)
+			(type solid)
+		)
+		(layer "F.SilkS")
+		(uuid "2d025bda-60e3-5d02-b3b9-b60a271a53af")
+	)
+	(fp_line
+		(start -5.75 -4.15)
+		(end 5.75 -4.15)
+		(stroke
+			(width 0.05)
+			(type solid)
+		)
+		(layer "F.CrtYd")
+		(uuid "1420927e-1fe7-54cc-9c5d-d2d9ccb0d024")
+	)
+	(fp_line
+		(start 5.75 -4.15)
+		(end 5.75 3.35)
+		(stroke
+			(width 0.05)
+			(type solid)
+		)
+		(layer "F.CrtYd")
+		(uuid "5c78000e-9249-508f-823f-7d2f196975b1")
+	)
+	(fp_line
+		(start 5.75 3.35)
+		(end -5.75 3.35)
+		(stroke
+			(width 0.05)
+			(type solid)
+		)
+		(layer "F.CrtYd")
+		(uuid "26c92739-59f8-5b5b-9356-b4cdb1721dfd")
+	)
+	(fp_line
+		(start -5.75 3.35)
+		(end -5.75 -4.15)
+		(stroke
+			(width 0.05)
+			(type solid)
+		)
+		(layer "F.CrtYd")
+		(uuid "47b280a0-10e5-58e3-90da-175a8a7065c5")
+	)
+	(fp_line
+		(start -5 -2.6)
+		(end 5 -2.6)
+		(stroke
+			(width 0.1)
+			(type solid)
+		)
+		(layer "F.Fab")
+		(uuid "cdb0ae77-1de6-570d-aab6-e880d5676618")
+	)
+	(fp_line
+		(start 5 -2.6)
+		(end 5 2.6)
+		(stroke
+			(width 0.1)
+			(type solid)
+		)
+		(layer "F.Fab")
+		(uuid "85fdc11f-60a7-5a00-a585-617983ab6bb4")
+	)
+	(fp_line
+		(start 5 2.6)
+		(end -5 2.6)
+		(stroke
+			(width 0.1)
+			(type solid)
+		)
+		(layer "F.Fab")
+		(uuid "31890edf-a727-51d2-af1e-4f09c10141df")
+	)
+	(fp_line
+		(start -5 2.6)
+		(end -5 -2.6)
+		(stroke
+			(width 0.1)
+			(type solid)
+		)
+		(layer "F.Fab")
+		(uuid "4245f7ca-b465-5633-ab9c-ac504ad488fb")
+	)
+	(pad "1" smd rect
+		(at -3.8 0)
+		(size 3.4 6.2)
+		(layers "F.Cu" "F.Mask" "F.Paste")
+		(uuid "1cb525fc-81e9-58f9-a420-4b655ca06407")
+	)
+	(pad "2" smd rect
+		(at -4.2 -3.65)
+		(size 0.5 0.5)
+		(layers "F.Cu" "F.Mask" "F.Paste")
+		(uuid "262c4a08-a129-545d-90a5-a292942829d9")
+	)
+	(pad "3" smd rect
+		(at 4.2 -3.65)
+		(size 0.5 0.5)
+		(layers "F.Cu" "F.Mask" "F.Paste")
+		(uuid "23fcc4ad-bc10-5a37-9673-ca7c188ee31a")
+	)
+	(pad "4" smd rect
+		(at 3.8 0)
+		(size 3.4 6.2)
+		(layers "F.Cu" "F.Mask" "F.Paste")
+		(uuid "1e80a298-8018-5e9d-8174-b80fcda25330")
+	)
+	(model "${KIPRJMOD}/lib/cad-agent.3dshapes/R_Shunt_Bourns_CSS2H-3920.step"
+		(offset
+			(xyz 0 0 0)
+		)
+		(scale
+			(xyz 1 1 1)
+		)
+		(rotate
+			(xyz 0 0 0)
+		)
+	)
+)

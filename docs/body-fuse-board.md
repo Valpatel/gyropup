@@ -10,6 +10,8 @@ schematic and PCB), `build.sh` (checks, fabrication files, pictures), `analysis.
 
 ![The board, top](../hardware/fuse-board/pictures/top.png)
 
+![The board in 3D: every part has a body from cad-agent's parts library](../hardware/fuse-board/pictures/angle.png)
+
 | | |
 |---|---|
 | Board | 88 x 76 mm, 2 layers, 2 oz (70 um) copper, 1.6 mm FR-4, lead-free HASL, green |
@@ -18,7 +20,7 @@ schematic and PCB), `build.sh` (checks, fabrication files, pictures), `analysis.
 | Shunt | Bourns CSS2H-3920R-1L00F, 1 mOhm 1 %, 8 W, on the **high side** between the MRBF and the + bus |
 | Monitor | INA228 (U1, TSSOP-10) on the board, or the Adafruit 5832 wired to three pads (TP1-TP3); I2C on a JST GH 4-pin |
 | Studs | M6 for the 80 A input; M4 for every branch, the 12 V input, the star point and the frame bond |
-| Checks | KiCad DRC clean against JLCPCB's 2 oz rules, schematic parity 0, ERC 0 (`hardware/fuse-board/reports/`) |
+| Checks | KiCad DRC clean against JLCPCB's 2 oz rules, schematic parity 0, ERC 0; every placed part has a 3D body or a reason it is not a part (`hardware/fuse-board/reports/`) |
 | Price | JLCPCB $40.60 for 5 boards (instant price from the uploaded zip); one board built for $154.48 in parts and packs |
 | Mass | 132 g with its screws, nuts and standoffs (45 g the bare board with its holders) |
 
@@ -234,6 +236,58 @@ copper.
   stencil, $3.07 for each extended part) plus the parts; an estimate, since its BOM step asks for a sign-in. The
   default below is hand assembly: the shunt on its 2 oz pours wants a hot plate or hot air with preheat, the rest is
   0603 and a 1.25 mm GH.
+
+### Every part has a body
+
+The holders, the shunt, the studs, the plate bond and the tie slots now come from cad-agent's parts library
+(`cadagent.library`, cad-agent #287). `build.sh` writes them into `hardware/fuse-board/lib/` with
+`cad-agent library build lib --project .`:
+- `lib/cad-agent.pretty`: the footprints;
+- `lib/cad-agent.3dshapes`: their bodies, coloured STEP, plus a MINI fuse per rating used, which `generate.py`
+  places in each fitted holder.
+
+The footprints are the ones this board drew for itself before, pad for pad. In KiCad's pcbnew, the regenerated board's
+pads, tracks, vias, drawings and placements are the same as before, with three small differences:
+- the 136 stitching-via pads of the studs and the plate bond moved by up to 1 nm, from the footprint file's rounding;
+- one +BUS fill on B.Cu differs by 0.03 mm², which KiCad's zone fill does from run to run;
+- the fab-layer reference text moved to the library's place above each part.
+
+The checks show it:
+- `cad-agent library audit` (in `build.sh`, `reports/model-audit.json`) passes. 37 of the 43 footprints carry a
+  model that resolves. TP1-TP3 (bare pads) and H1-H3 (holes) are waived with their reasons.
+- `pictures/angle.png` shows the board in 3D.
+- `fab/fuse-board.step` (built, not committed: 1.4 MB) is the board with every body, for the body's CAD.
+
+The bodies are envelopes from the datasheets, not the makers' models, so they are good for pictures and clearance,
+not for fit. These numbers are assumptions:
+- a fitted fuse stands 8.8 mm above its holder, as `cad/body_fuse_board.py` assumes;
+- the holder's pins (1.0 x 0.5 mm, reaching 3.3 mm below its seat on the board's top, so 1.7 mm past the underside) and
+  its peg (2.4 mm round);
+- the ring lug, drawn as a ring 1.0 mm (M4) or 1.2 mm (M6) thick, with no tongue;
+- the nyloc nut and lug sizes, which come from cad-agent's tables marked unverified.
+
+J15 takes two lugs, but its body shows one.
+
+### Assembly and sourcing of U1 and the holders (the owner decides; nothing is bought)
+
+**U1, the INA228AIDGSR** (TSSOP-10, 0.5 mm pitch). LCSC C2887910 had none on 2026-10-27, so U1 is marked DNP.
+
+| Option | What it takes | For | Against |
+|---|---|---|---|
+| **A. Leave U1 off; the Adafruit 5832 on TP1-TP3** (today's default) | Nothing new: the 5832 is reused from P0 | No new part, no fine-pitch soldering | A daughter board on wires; its own 15 mOhm shunt must stay removed |
+| B. Hand-fit U1 from a distributor with stock | One INA228AIDGSR (about $6.50; check DigiKey, Mouser or TI's store at order time); hot air, or an iron with flux | The board as designed; the 5832 is freed | 0.5 mm pitch next to the 2 oz pours: preheat, and check the pins under a scope |
+| C. JLCPCB fits U1 | LCSC stock returning, or JLCPCB's global sourcing or consigned parts | Machine-placed | A sign-in and a quote; an extended-part fee ($3.07) plus sourcing; waits on stock |
+
+The proposal is **A** for P3's bring-up, since it needs nothing new, then **B** once the 5832 is wanted elsewhere.
+
+**The 12 holders** (Littelfuse 178.6764.0001, through-hole, LCSC C142933). They are not in the JLCPCB BOM and CPL.
+
+| Option | What it takes | For | Against |
+|---|---|---|---|
+| **A. Hand-solder** (today's default) | 24 joints on stitched 2 oz pours: a 60-80 W iron with a large chisel tip, the board preheated to about 100 C on a hot plate | Cheapest. The peg sits in an oval slot (2.7 x 4.3 mm, not the datasheet's 2.7 mm round hole) so it fits either side; it locates the holder but may not grip, so tape or clamp each holder flat while it is soldered | About an hour; a cold joint on a 30 A branch is the risk, so inspect each joint and pull-test each holder |
+| B. JLCPCB's through-hole assembly | The holders from LCSC (stock checked at order) or consigned; JLCPCB's THT soldering | Machine-soldered | Priced per joint; needs a sign-in to quote; the 2 oz pours slow selective soldering, so ask JLCPCB whether it can |
+
+The proposal is **A**.
 
 ## 7. Parts and prices
 
