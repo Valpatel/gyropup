@@ -22,11 +22,11 @@ import fivebar as fb
 import rig_parts as rp
 
 SLOT = {'lip': 3.0, 'nut': {'M4': 4.0, 'M5': 5.0, 'M6': 5.0, 'M8': 6.0}, 'room': 3.0, 'groove_w': 16.5, 'groove_d': 12.0}
-SHCS = {'M4': (7.0, 4.0), 'M5': (8.5, 5.0), 'M6': (10.0, 6.0), 'M8': (13.0, 8.0), '3/8-16': (14.29, 9.53)}   # head d, k
+SHCS = {'M3': (5.5, 3.0), 'M4': (7.0, 4.0), 'M5': (8.5, 5.0), 'M6': (10.0, 6.0), 'M8': (13.0, 8.0), '3/8-16': (14.29, 9.53)}   # head d, k
 BHCS = {'M8': (14.0, 4.4)}                                                                                    # ISO 7380
-DIA = {'M4': 4.0, 'M5': 5.0, 'M6': 6.0, 'M8': 8.0, '3/8-16': 9.525}
+DIA = {'M3': 3.0, 'M4': 4.0, 'M5': 5.0, 'M6': 6.0, 'M8': 8.0, '3/8-16': 9.525}
 WASHERS = {'M5': (10.0, 1.0), 'M6L': (18.0, 1.6), '3/8': (20.6, 1.65), '3/8_2in': (50.8, 3.0)}                 # OD, t
-INSERT = {'M4': (6.4, 3.0), 'M5': (7.9, 3.1)}         # installed length, the pilot's depth past it
+INSERT = {'M3': (5.7, rp.POD_LID_BOSS['pilot_depth'] - 5.7), 'M4': (6.4, 3.0), 'M5': (7.9, 3.1)}   # installed length, the pilot's depth past it
 HG_THREAD = 5.0                                       # HGH15CA's M4 mounting threads (HIWIN: M4 x 5)
 SHAFT_THREAD = 19.05                                  # the ballast shafts' 3/8-16 thread, 3/4 in deep (McMaster 6649K433)
 WOOD_DEPTH = rp.DECK_T                                # a wood screw's room in the deck
@@ -192,6 +192,11 @@ def joints(zh_carriage: float = 0.0) -> list:
                   'seat': (rp.POD['d'] / 2 + 6.0, rp.Y_POST_BACK + rp.PENDANT_AT[0], br.POD_Z + rp.PENDANT_AT[1] + z), 'into': (-1, 0, 0),
                   'clamp': [6.0], 'thread_in': {'kind': 'insert', 'depth': INSERT['M4'][0], 'beyond': rp.POD['wall'] + 4.0 - INSERT['M4'][0]},
                   'min_engage': 3.5, 'holds': ('pendant_clip', 'pod')})
+    for (x, z) in rp.POD_LID_SCREWS:                             # the pod's panel: 4 x M3 x 10 into the corner bosses' inserts
+        J.append({'name': f'pod_lid_screw_{x:+.0f}{z:+.0f}', 'body': 'frame', 'thread': 'M3', 'length': 10.0, 'head': 'shcs', 'washer': None,
+                  'seat': (-(rp.POD['d'] / 2 + 3.0), rp.Y_POST_BACK + x, br.POD_Z + z), 'into': (1, 0, 0),
+                  'clamp': [3.0], 'thread_in': {'kind': 'insert', 'depth': INSERT['M3'][0], 'beyond': INSERT['M3'][1]},
+                  'min_engage': 1.2 * 3.0, 'holds': ('pod_lid', 'pod')})
     # ---- the carriage (at hip height zh_carriage)
     zh = zh_carriage
     for sx in (-1, 1):                                          # the blocks: 16 x M4 x 10 from the plate's front

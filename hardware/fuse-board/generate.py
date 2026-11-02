@@ -1,6 +1,9 @@
 """Generate the fuse board's KiCad 10 project from design.py: the schematic (fuse-board.kicad_sch), the PCB
-(fuse-board.kicad_pcb, zones filled), the project file with JLCPCB's 2 oz rules, the custom footprints
-(fuse-board.pretty) and the library tables. Run with KiCad's own Python (it imports pcbnew):
+(fuse-board.kicad_pcb, zones filled), the project file with JLCPCB's 2 oz rules and the library tables. The board's
+own parts (the holders, the shunt, the studs, the plate bond, the tie slots) come from cad-agent's parts library,
+which build.sh writes into lib/ first (``cad-agent library build lib --project .``): lib/cad-agent.pretty (the
+footprints) and lib/cad-agent.3dshapes (their 3D bodies, and a MINI fuse per rating). Run with KiCad's own Python (it
+imports pcbnew):
 
     nice -n 15 ~/.local/share/kicad-10.0.1/bin/python3.11 hardware/fuse-board/generate.py
 
@@ -79,23 +82,20 @@ def stable_board(path: Path):
     P.SaveBoard(str(path), b)
 
 
-def stable_uuids(path: Path):
-    """KiCad gives every saved item a random UUID: renumber them in file order from the file's name, so a rebuild with
-    nothing changed leaves the files as they were. Only (uuid "...") tokens change; footprint paths keep the schematic's."""
-    import re
-    n = [0]
-
-    def sub(m):
-        n[0] += 1
-        return f'(uuid "{uid(path.name, n[0])}")'
-    path.write_text(re.sub(r'\(uuid "[0-9a-fA-F-]{36}"\)', sub, path.read_text()))
-
-
 ROOT_UUID = uid('root')
 
 # ======================================================================================== the parts list
 # ref -> dict(sym, fp, value, pins {pin: net}, fields)
-FL1 = 'fuse-board:Littelfuse_MINI_FL1_178.6764.0001'
+# cad-agent's parts library (cadagent.library): footprints identical, pad for pad, to the ones this board drew itself
+# before (fuse-board.pretty), now with their 3D bodies
+LIB = 'cad-agent'
+LIB_DIR = HERE / 'lib'
+MODELS = '${KIPRJMOD}/lib/cad-agent.3dshapes'
+FL1 = f'{LIB}:Fuseholder_Blade_Mini_Littelfuse_FL1_178.6764.0001'
+STUD = {'M4': f'{LIB}:LugStud_M4_Pad7.0mm_Drill4.3mm_Via8', 'M6': f'{LIB}:LugStud_M6_Pad12.0mm_Drill6.4mm_Via8'}
+SHUNT_FP = f'{LIB}:R_Shunt_Bourns_CSS2H-3920_Kelvin'
+BOND_FP = f'{LIB}:MountingHole_M5_Pad10.0mm_Drill5.3mm_Via8_Bond'
+SLOT_FP = f'{LIB}:Slot_NPTH_4.0x10.0mm'
 PARTS = {}
 
 
@@ -108,9 +108,9 @@ for ref, label, wire, amps, net_in, col, row in D.HOLDERS:
          MPN='Littelfuse 178.6764.0001 (MINI FL1, 58 V DC, 22 A cont.)', LCSC='C142933',
          Fuse=(f'Littelfuse {"099707.5" if amps == 7.5 else f"0997{int(amps):03d}"}.WXN MINI 58V {amps:g} A') if amps else 'none (spare)', Wire=wire or '-')
 for ref, label, net, x, y, size, wires in D.STUDS:
-    part(ref, 'Connector_Generic:Conn_01x01', f'fuse-board:Stud_{size}_Lug', label, {'1': net},
-         MPN=f'{size} stud: socket head up from below, nyloc, lug(s), nyloc', Wires='; '.join(wires))
-part('R1', 'Device:R_Shunt', 'fuse-board:Bourns_CSS2H-3920_Kelvin', '1mR 1% 8W', {'1': '+BAT_IN', '2': 'SNS_P', '3': 'SNS_N', '4': '+BUS'},
+    part(ref, 'Connector_Generic:Conn_01x01', STUD[size], label, {'1': net},
+         MPN=f'{size} stud: socket head down through the lug(s) and the board into a nyloc in its standoff\'s pocket', Wires='; '.join(wires))
+part('R1', 'Device:R_Shunt', SHUNT_FP, '1mR 1% 8W', {'1': '+BAT_IN', '2': 'SNS_P', '3': 'SNS_N', '4': '+BUS'},
      MPN='Bourns CSS2H-3920R-1L00F', LCSC='C4087295')
 part('U1', 'Sensor_Energy:INA228', 'Package_SO:TSSOP-10_3x3mm_P0.5mm', 'INA228',
      {'1': 'BUS-', '2': 'BUS-', '4': 'SDA', '5': 'SCL', '6': '3V3', '7': 'BUS-', '8': 'VBUS', '9': 'INN', '10': 'INP'},
@@ -122,10 +122,10 @@ part('J17', 'Connector_Generic_MountingPin:Conn_01x04_MountingPin', 'Connector_J
 for ref, net, x, y, note in D.TPS:
     part(ref, 'Connector:TestPoint', 'TestPoint:TestPoint_THTPad_D2.0mm_Drill1.0mm', net, {'1': net}, Note=note)
 for ref, label, net, x, y in D.MOUNTS:
-    part(ref, 'Mechanical:MountingHole_Pad', 'fuse-board:Mount_M5_PlateBond', label, {'1': net},
-         Note='M5 x 12 button head into the power plate\'s flush nut through an 8 mm printed standoff: bonds the plate to BUS-')
+    part(ref, 'Mechanical:MountingHole_Pad', BOND_FP, label, {'1': net},
+         Note='M5 x 14 socket head into the power plate\'s flush nut through a 10 mm printed standoff: bonds the plate to BUS-')
 for ref, x, y in D.TIES:
-    part(ref, 'Mechanical:MountingHole', 'fuse-board:TieSlot_4x10', 'tie slot', {}, Note='cable tie through the plate\'s slot')
+    part(ref, 'Mechanical:MountingHole', SLOT_FP, 'tie slot', {}, Note='cable tie through the plate\'s slot')
 # ERC: the power-in pins (U1 VS, GND) and the mounting-hole pin are fed from off the board
 for i, net in enumerate(('3V3', 'BUS-', '+BAT_IN', '+12V')):
     part(f'#FLG{i + 1:02d}', 'power:PWR_FLAG', '', 'PWR_FLAG', {'1': net})
@@ -135,6 +135,16 @@ NO_CONNECT = [('U1', '3')]                   # ALERT: the firmware polls
 NO_BOM = {r for r in PARTS if r.startswith(('#', 'H', 'TP'))}
 
 # ======================================================================================== the schematic
+
+def lib_fields(lib_id: str):
+    """(Datasheet, Description) of a cad-agent library footprint, so the symbol carries the same fields as its
+    footprint (DRC's schematic parity compares them); ('', '') for KiCad's stock footprints, as before."""
+    if not lib_id.startswith(f'{LIB}:'):
+        return '', ''
+    tree = S.parse((LIB_DIR / f'{LIB}.pretty' / f'{lib_id.split(":")[1]}.kicad_mod').read_text())
+    got = {x[1]: x[2] for x in S.find(tree, 'property') if len(x) > 2}
+    return got.get('Datasheet', ''), got.get('Description', '')
+
 
 def lib_symbol(lib_id: str):
     lib, name = lib_id.split(':')
@@ -238,8 +248,8 @@ def write_schematic():
                 [S.Sym('dnp'), S.Sym('yes' if ref in DNP else 'no')], [S.Sym('uuid'), u],
                 prop('Reference', ref, X + 3.81, Y - 1.27, hide=ref.startswith('#'), justify='left'),
                 prop('Value', p['value'], X + 3.81, Y + 1.27, justify='left'),
-                prop('Footprint', p['fp'], X, Y, hide=True), prop('Datasheet', '', X, Y, hide=True),
-                prop('Description', '', X, Y, hide=True)]
+                prop('Footprint', p['fp'], X, Y, hide=True), prop('Datasheet', lib_fields(p['fp'])[0], X, Y, hide=True),
+                prop('Description', lib_fields(p['fp'])[1], X, Y, hide=True)]
         for k, v in p['fields'].items():
             node.append(prop(k, v, X, Y, hide=True))
         for num in pins:
@@ -298,137 +308,9 @@ def board_xy(v):
     return (P.ToMM(v.x) - X0, Y0 - P.ToMM(v.y))
 
 
-def new_fp(name, desc):
-    fp = P.FOOTPRINT(None)
-    fp.SetFPID(P.LIB_ID('fuse-board', name))
-    fp.SetLibDescription(desc)
-    return fp
-
-
-def add_pad(fp, num, at, size, drill=None, shape=P.PAD_SHAPE_CIRCLE, attr=None, layers=None, drill_oval=None):
-    pad = P.PAD(fp)
-    pad.SetNumber(num)
-    pad.SetShape(shape)
-    pad.SetSize(P.VECTOR2I(MM(size[0]), MM(size[1])))
-    if attr is None:
-        attr = P.PAD_ATTRIB_PTH if drill else P.PAD_ATTRIB_SMD
-    pad.SetAttribute(attr)
-    if drill_oval:
-        pad.SetDrillShape(P.PAD_DRILL_SHAPE_OBLONG)
-        pad.SetDrillSize(P.VECTOR2I(MM(drill_oval[0]), MM(drill_oval[1])))
-    elif drill:
-        pad.SetDrillSize(P.VECTOR2I(MM(drill), MM(drill)))
-    if layers is None:
-        layers = {P.PAD_ATTRIB_PTH: pad.PTHMask(), P.PAD_ATTRIB_NPTH: pad.UnplatedHoleMask(), P.PAD_ATTRIB_SMD: pad.SMDMask()}[attr]
-    pad.SetLayerSet(layers)
-    pad.SetFPRelativePosition(P.VECTOR2I(MM(at[0]), MM(at[1])))
-    fp.Add(pad)
-    return pad
-
-
-def fp_line(fp, a, b, layer, w=0.12):
-    s = P.PCB_SHAPE(fp, P.SHAPE_T_SEGMENT)
-    s.SetStart(P.VECTOR2I(MM(a[0]), MM(a[1])))
-    s.SetEnd(P.VECTOR2I(MM(b[0]), MM(b[1])))
-    s.SetLayer(layer)
-    s.SetWidth(MM(w))
-    fp.Add(s)
-
-
-def fp_rect(fp, x0, y0, x1, y1, layer, w=0.12):
-    for a, b in (((x0, y0), (x1, y0)), ((x1, y0), (x1, y1)), ((x1, y1), (x0, y1)), ((x0, y1), (x0, y0))):
-        fp_line(fp, a, b, layer, w)
-
-
-def fp_circle(fp, r, layer, w=0.12, c=(0, 0)):
-    s = P.PCB_SHAPE(fp, P.SHAPE_T_CIRCLE)
-    s.SetCenter(P.VECTOR2I(MM(c[0]), MM(c[1])))
-    s.SetEnd(P.VECTOR2I(MM(c[0] + r), MM(c[1])))
-    s.SetLayer(layer)
-    s.SetWidth(MM(w))
-    fp.Add(s)
-
-
-def fp_ref_value(fp):
-    fp.Reference().SetLayer(P.F_Fab)
-    fp.Value().SetLayer(P.F_Fab)
-    fp.Value().SetVisible(False)
-
-
-def custom_footprints():
-    """{name: FOOTPRINT}: the holder, the Kelvin shunt, the studs, the plate-bond hole and the tie slot."""
-    out = {}
-    # Littelfuse MINI FL1 178.6764.0001 (datasheet rev 111616): terminals 8 +-0.15 apart in 1.5 +-0.1 holes; the
-    # snap-in peg in a 2.7 hole 0.8 off the terminals' line (its side is not dimensioned: an oval NPTH slot takes
-    # either); body 14.2 x 6.
-    fp = new_fp('Littelfuse_MINI_FL1_178.6764.0001', 'Littelfuse MINI FL1 PCB holder for MINI blade fuses, 58 V DC, 22 A continuous')
-    fp.SetAttributes(P.FP_THROUGH_HOLE)
-    add_pad(fp, '1', (-4.0, 0.0), (3.2, 3.2), drill=1.5)
-    add_pad(fp, '2', (4.0, 0.0), (3.2, 3.2), drill=1.5)
-    add_pad(fp, '', (0.0, 0.0), (2.7, 4.3), shape=P.PAD_SHAPE_OVAL, attr=P.PAD_ATTRIB_NPTH, drill_oval=(2.7, 4.3))
-    fp_rect(fp, -7.1, -3.0, 7.1, 3.0, P.F_Fab, 0.1)
-    fp_rect(fp, -7.35, -3.25, 7.35, 3.25, P.F_CrtYd, 0.05)
-    fp_rect(fp, -7.22, -3.12, 7.22, 3.12, P.F_SilkS, 0.15)
-    fp_ref_value(fp)
-    out['Littelfuse_MINI_FL1_178.6764.0001'] = fp
-    # Bourns CSS2H-3920: pads 3.40 x 6.20 at +-3.80 (the recommended layout); Kelvin taps (net-tie pads 2, 3) at the
-    # recommended measurement points 8.40 apart, at the pads' north edges, so the sense lines leave sideways of the
-    # current.
-    fp = new_fp('Bourns_CSS2H-3920_Kelvin', 'Bourns CSS2H-3920 1 mOhm shunt, 4-terminal (Kelvin) layout, net-tied sense pads')
-    add_pad(fp, '1', (-3.8, 0.0), (3.4, 6.2), shape=P.PAD_SHAPE_RECT)
-    add_pad(fp, '4', (3.8, 0.0), (3.4, 6.2), shape=P.PAD_SHAPE_RECT)
-    add_pad(fp, '2', (-4.2, -3.65), (0.5, 0.5), shape=P.PAD_SHAPE_RECT)
-    add_pad(fp, '3', (4.2, -3.65), (0.5, 0.5), shape=P.PAD_SHAPE_RECT)
-    fp_line(fp, (-4.2, -3.65), (-4.2, -2.9), P.F_Cu, 0.3)          # the Kelvin joints: copper of the net tie
-    fp_line(fp, (4.2, -3.65), (4.2, -2.9), P.F_Cu, 0.3)
-    fp.SetAttributes(P.FP_SMD)
-    fp.AddNetTiePadGroup('1, 2')
-    fp.AddNetTiePadGroup('3, 4')
-    fp_rect(fp, -5.0, -2.6, 5.0, 2.6, P.F_Fab, 0.1)
-    fp_rect(fp, -5.75, -4.15, 5.75, 3.35, P.F_CrtYd, 0.05)
-    fp_line(fp, (-1.6, -3.35), (1.6, -3.35), P.F_SilkS, 0.15)
-    fp_line(fp, (-1.6, 3.35), (1.6, 3.35), P.F_SilkS, 0.15)
-    fp_ref_value(fp)
-    out['Bourns_CSS2H-3920_Kelvin'] = fp
-    # studs: a plated hole in a pad on both layers ringed with vias
-    for size in ('M4', 'M6'):
-        d, dr = D.STUD_PAD[size], D.STUD_DRILL[size]
-        fp = new_fp(f'Stud_{size}_Lug', f'{size} lug stud: plated {dr} mm hole, {d} mm pad both sides, 8 stitching vias')
-        add_pad(fp, '1', (0, 0), (d, d), drill=dr)
-        rv = (dr / 2 + d / 2) / 2 + 0.15
-        for k in range(8):
-            a = 2 * math.pi * (k + 0.5) / 8
-            add_pad(fp, '1', (rv * math.cos(a), rv * math.sin(a)), (0.95, 0.95), drill=0.4)
-        fp_circle(fp, d / 2 + 0.25, P.F_CrtYd, 0.05)
-        fp_circle(fp, d / 2 + 0.15, P.F_Fab, 0.1)
-        fp_ref_value(fp)
-        out[f'Stud_{size}_Lug'] = fp
-    fp = new_fp('Mount_M5_PlateBond', 'M5 mounting hole, plated, 10 mm pad both sides with vias: the plate bond')
-    add_pad(fp, '1', (0, 0), (10.0, 10.0), drill=5.3)
-    for k in range(8):
-        a = 2 * math.pi * (k + 0.5) / 8
-        add_pad(fp, '1', (4.0 * math.cos(a), 4.0 * math.sin(a)), (0.95, 0.95), drill=0.4)
-    fp_circle(fp, 5.5, P.F_CrtYd, 0.05)
-    fp_circle(fp, 6.0, P.B_Fab, 0.1)                    # the printed standoff under the board (12 mm)
-    fp_ref_value(fp)
-    out['Mount_M5_PlateBond'] = fp
-    fp = new_fp('TieSlot_4x10', 'non-plated slot 4 x 10 for a cable tie through the power plate\'s slot')
-    add_pad(fp, '', (0, 0), (4.0, 10.0), shape=P.PAD_SHAPE_OVAL, attr=P.PAD_ATTRIB_NPTH, drill_oval=(4.0, 10.0))
-    fp_rect(fp, -2.5, -5.5, 2.5, 5.5, P.F_CrtYd, 0.05)
-    fp_ref_value(fp)
-    out['TieSlot_4x10'] = fp
-    lib = HERE / f'{PRJ}.pretty'
-    lib.mkdir(exist_ok=True)
-    io = P.PCB_IO_MGR.FindPlugin(P.PCB_IO_MGR.KICAD_SEXP)
-    for name, fp in out.items():
-        io.FootprintSave(str(lib), fp)
-        stable_uuids(lib / f'{name}.kicad_mod')
-    return out
-
-
 def load_fp(lib_id):
     lib, name = lib_id.split(':')
-    path = HERE / f'{PRJ}.pretty' if lib == 'fuse-board' else FPLIB / f'{lib}.pretty'
+    path = LIB_DIR / f'{LIB}.pretty' if lib == LIB else FPLIB / f'{lib}.pretty'
     fp = P.PCB_IO_MGR.FindPlugin(P.PCB_IO_MGR.KICAD_SEXP).FootprintLoad(str(path), name)
     if fp is None:
         raise SystemExit(f'footprint {lib_id} not found')
@@ -458,8 +340,16 @@ def placement():
     return pos
 
 
+def add_fuse(fp, amps):
+    """A holder's fuse: a second model on the holder, in its rating's colour (cad-agent's MINI fuse body)."""
+    m = P.FP_3DMODEL()
+    m.m_Filename = f'{MODELS}/MiniFuse_{amps:g}A.step'
+    fp.Models().push_back(m)
+
+
 def build_board(sym_uuids):
-    custom_footprints()
+    if not (LIB_DIR / f'{LIB}.pretty').is_dir():
+        raise SystemExit('lib/cad-agent.pretty is missing: run build.sh, or cad-agent library build lib --project .')
     b = P.BOARD()
     ds = b.GetDesignSettings()
     ds.SetCopperLayerCount(2)
@@ -487,6 +377,8 @@ def build_board(sym_uuids):
             if fld:
                 fld.SetVisible(False)
                 fld.SetLayer(P.F_Fab)
+        if p['fp'] == FL1 and p['fields'].get('Fuse', 'none').startswith('Littelfuse'):
+            add_fuse(fp, next(h[3] for h in D.HOLDERS if h[0] == ref))
         if ref in DNP:
             fp.SetDNP(True)
         if ref in NO_BOM:
@@ -821,7 +713,7 @@ def write_project():
     }
     (HERE / f'{PRJ}.kicad_pro').write_text(json.dumps(pro, indent=2) + '\n')
     (HERE / f'{PRJ}.kicad_dru').write_text(DRU)
-    (HERE / 'fp-lib-table').write_text('(fp_lib_table\n  (version 7)\n  (lib (name "fuse-board")(type "KiCad")(uri "${KIPRJMOD}/fuse-board.pretty")(options "")(descr "the fuse board\'s own footprints"))\n)\n')
+    (HERE / 'fp-lib-table').write_text('(fp_lib_table\n  (version 7)\n  (lib (name "cad-agent")(type "KiCad")(uri "${KIPRJMOD}/lib/cad-agent.pretty")(options "")(descr "cad-agent parts library, built by build.sh"))\n)\n')
 
 
 def main():

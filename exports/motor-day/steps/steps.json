@@ -1,0 +1,166 @@
+[
+ {
+  "step": 1,
+  "title": "The stand: base, uprights, braces",
+  "adds": [
+   "base",
+   "upright_right",
+   "brace_right",
+   "upright_left",
+   "brace_left",
+   "stop_board",
+   "floor_stop_right",
+   "stop_pad_right",
+   "floor_stop_left",
+   "stop_pad_left",
+   "mat"
+  ],
+  "items": [
+   36,
+   37,
+   38,
+   40,
+   41,
+   42,
+   44
+  ],
+  "how": "Screw the uprights to the base (four #10 x 3 in each, from below), the braces between them and the base. Stack the floor stop under where the rails will be and top it with the rubber pad. Weight the base with sandbags.",
+  "picture": "exports/motor-day/steps/step-01.png"
+ },
+ {
+  "step": 2,
+  "title": "The boom",
+  "adds": [
+   "end_plate",
+   "cleat_right",
+   "rail_right",
+   "cleat_left",
+   "rail_left",
+   "cross_member",
+   "pivot_bolt_right",
+   "pivot_bolt_left"
+  ],
+  "items": [
+   32,
+   33,
+   34,
+   35,
+   39
+  ],
+  "how": "Drill the end plate through the printed template (six \u00d85.5 and the two lead slots). Screw the cleats to the plate's back through its face, then the rails to the cleats' outer faces (four screws each, glued). Join the rails' far ends with the cross member. Hang the rails between the uprights on the two carriage bolts, a fender washer each side.",
+  "picture": "exports/motor-day/steps/step-02.png"
+ },
+ {
+  "step": 3,
+  "title": "Hip frame and motors (bench)",
+  "adds": [
+   "leg_hip_frame",
+   "leg_motor_front",
+   "leg_bearing_61812_front",
+   "leg_motor_rear",
+   "leg_bearing_61812_rear",
+   "leg_stop_posts",
+   "leg_screws_lugs"
+  ],
+  "items": [
+   1,
+   10,
+   18,
+   19,
+   30
+  ],
+  "how": "Heat-set the six M5 inserts. Press the two 61812s in from the motor side onto their lip (the C1 coupon says how tight PLA comes out). Bond the four stop pins with the epoxy and let it cure. Each motor on its two \u00d85 dowels and ten M4 x 20, snug only: the lug torque is not established (#116).",
+  "picture": "exports/motor-day/steps/step-03.png"
+ },
+ {
+  "step": 4,
+  "title": "Upper links and adapters (bench)",
+  "adds": [
+   "leg_output_adapter_front",
+   "leg_output_adapter_rear",
+   "leg_upper_link_front",
+   "leg_upper_link_rear",
+   "leg_eye_sleeve_front",
+   "leg_eye_sleeve_rear",
+   "leg_screws_links",
+   "leg_screws_outputs"
+  ],
+  "items": [
+   2,
+   6,
+   17,
+   22,
+   23
+  ],
+  "how": "Tap the PLA adapters' eight M5 holes. Each adapter onto its motor's output: nine M5 x 25, heads in the pockets, snug (PLA: no 6 N m). The two DIN 179 sleeves bonded end to end into each link's knee eye. Each link on its adapter: two \u00d85 x 20 dowels, eight M5 x 40 at 1.0 N m. Both links swing freely to their bare stop pins.",
+  "picture": "exports/motor-day/steps/step-04.png"
+ },
+ {
+  "step": 5,
+  "title": "Knees",
+  "adds": [
+   "leg_front_link",
+   "leg_wheel_link",
+   "leg_knee_bearing_front_in",
+   "leg_knee_bearing_front_out",
+   "leg_knee_pin_front",
+   "leg_knee_washer_front",
+   "leg_knee_spacer_front",
+   "leg_knee_bearing_rear_in",
+   "leg_knee_bearing_rear_out",
+   "leg_knee_pin_rear",
+   "leg_knee_washer_rear",
+   "leg_knee_spacer_rear",
+   "leg_knee_nut_upper_front",
+   "leg_knee_nut_upper_rear"
+  ],
+  "items": [
+   3,
+   4,
+   11,
+   13,
+   14,
+   15,
+   16
+  ],
+  "how": "Two 6301-2RS and the 24 mm spacer into each lower link's knee boss, a washer each side; the 12 x 90 shoulder screw from outside through the lower link and the eye sleeves; the M10 nyloc in the upper link's pocket (20 N m: steel on steel). The knees turn freely.",
+  "picture": "exports/motor-day/steps/step-05.png"
+ },
+ {
+  "step": 6,
+  "title": "Apex and foot",
+  "adds": [
+   "leg_apex_spacer",
+   "leg_apex_61812",
+   "leg_apex_circlip",
+   "leg_screws_wheel",
+   "leg_washers_wheel",
+   "foot"
+  ],
+  "items": [
+   5,
+   7,
+   10,
+   12,
+   25,
+   26
+  ],
+  "how": "The two 61812s into the front link's apex eye, the wheel link's hub through them with the printed spacer, the circlip. The foot's boss into the wheel link's recess, four M6 nylon-insert nuts in its pockets, four M6 x 40 from inside the hub on the DIN 433 washers at 0.9 N m (the nuts bear on printed PLA: half the PA6-CF leg's torque). The leg folds and stretches by hand from stop to stop.",
+  "picture": "exports/motor-day/steps/step-06.png"
+ },
+ {
+  "step": 7,
+  "title": "Stop sleeves, then onto the boom",
+  "adds": [
+   "leg_stop_sleeve_1",
+   "leg_stop_sleeve_2",
+   "leg_stop_sleeve_3",
+   "leg_stop_sleeve_4"
+  ],
+  "items": [
+   8
+  ],
+  "how": "The TPU sleeves over the stop pins. The leg onto the end plate: six M5 x 30 with fender washers from the plate's back into the hip frame's inserts (1.5 N m), each motor's lead through its slot. Tie the tether. Put the leg's foot on the bathroom scale with the motors unpowered, the boom resting on it, and write the reading down: it is `--half-mass` in the ladder. No ballast.",
+  "picture": "exports/motor-day/steps/step-07.png"
+ }
+]

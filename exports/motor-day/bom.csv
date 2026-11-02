@@ -1,0 +1,45 @@
+item,key,qty,part,source
+1,hip_frame,1,hip frame (PLA),print: hip_frame.3mf
+2,upper_link,2,upper link (PLA),print: upper_link.3mf
+3,front_link,1,front link (PLA),print: front_link.3mf
+4,wheel_link,1,wheel link (PLA),print: wheel_link.3mf
+5,apex_spacer,1,apex spacer (PLA),print: apex_spacer.3mf
+6,output_adapter_pla,2,output adapter pla (PLA),print: output_adapter.stl
+7,foot,1,foot (PLA),print: foot.stl
+8,stop_sleeve,4,stop sleeve (TPU),print: stop_sleeve.3mf
+9,drill_template,1,drill template (PLA),print: drill_template.stl
+10,bearing_61812,4,"Steel Ball Bearing, Steel, Shielded, Trade Number 6812-2Z, ABEC Rating 1",McMaster 6656K236
+11,bearing_6301,4,"Deep groove ball bearing 6301-2RSH (12 x 37 x 12, sealed both sides); McMaster-Carr 5972K86 is the same trade number (6301-2RS)",McMaster 5972K86
+12,circlip_60,1,"External Retaining Ring, for 60 mm OD, Black-Phosphate Spring Steel",McMaster 98541A174
+13,knee_pin,2,"Alloy Steel Shoulder Screws, 12 mm Shoulder Diameter, 90 mm Shoulder Length, M10 x 1.5 mm Thread",McMaster 92981A411
+14,nut_m10_nyloc,2,"High-Strength Steel Nylon-Insert Locknut, Zinc Plated, M10 x 1.5 mm Thread Size",McMaster 94645A220
+15,washer_m12_thin,4,"18-8 Stainless Steel Washer, Undersized, for M12 Screw Size, 13.0 mm ID, 20.0 mm OD",McMaster 98689A118
+16,knee_spacer,2,"Multipurpose 6061 Aluminum Round Tube, 0.065"" Wall Thickness, 5/8"" OD",McMaster 9056K68
+17,eye_sleeve,4,"Metric Press-Fit Drill Bushing, 12 mm ID, 18 mm OD, 20 mm Long, Chamfer on One End",McMaster 96990A403
+18,stop_pin,4,"Vented Pull-Out Dowel Pin with Flat Shaft, High-Strength 52100 Alloy Steel, 16 mm Diameter, 40 mm Long",McMaster 98432A386
+19,screw_m4x20,20,"Black-Oxide Alloy Steel Socket Head Screw, US Origin, M4 x 0.7 mm Thread Size, 20 mm Long",McMaster 91290A168
+20,dowel_5x16,4,"Dowel Pin, 52100 Alloy Steel, 5 mm Diameter, 16 mm Long",McMaster 91595A352
+21,dowel_5x20,4,"Dowel Pin, 52100 Alloy Steel, 5 mm Diameter, 20 mm Long",McMaster 91595A356
+22,screw_m5x25,18,"Black-Oxide Alloy Steel Socket Head Screw, US Origin, M5 x 0.8 mm Thread Size, 25 mm Long",McMaster 91290A252
+23,screw_m5x40,16,"Black-Oxide Alloy Steel Socket Head Screw, M5 x 0.8 mm Thread Size, 40 mm Long, Partially Threaded",McMaster 91290A662
+24,insert_m5,6,"Heat-Set Threaded Inserts for Plastic, Standard, Brass, M5 x 0.8 mm Thread Size, 7.9 mm Installed Length",McMaster 94459A775
+25,screw_m6x40,4,"Black-Oxide Alloy Steel Socket Head Screw, US Origin, M6 x 1 mm Thread Size, 40 mm Long",McMaster 91290A336
+26,washer_m6_din433,4,"Washer, undersized (DIN 433), for M6 screw, 6.4 mm ID, 11.0 mm OD, 1.6 mm thick, 18-8 stainless steel",McMaster (to confirm)
+27,nut_m6_nyloc,4,"High-Strength Steel Nylon-Insert Locknut, Zinc Plated, M6 x 1 mm Thread Size",McMaster 94645A205
+28,screw_m5x30,6,"Black-Oxide Alloy Steel Socket Head Screw, US Origin, M5 x 0.8 mm Thread Size, 30 mm Long",McMaster 91290A254
+29,washer_m5_large,6,"18-8 Stainless Steel Oversized Washer, for M5 Screw, 5.3mm ID, 15.0mm OD, 1.0mm to 1.4mm Thick",McMaster 91116A140
+30,robstride-rs-04,2,RobStride RS-04,in hand (arriving 2026-11-02)
+31,odrive-botwheel,1,ODrive Robotics BotWheel (BW0124),later: the printed foot stands in on day one (other vendors)
+32,end_plate,1,"End plate, 300 x 260 plywood (drill through the template)","plywood, cut"
+33,cleat,2,"Cleat, 2x4 x 260","lumber, cut"
+34,rail,2,"Boom rail, 2x4 x 1500","lumber, cut"
+35,cross_member,1,"Cross member, 2x4 between the rails' far ends","lumber, cut"
+36,upright,2,"Upright, 2x4 (pivot post)","lumber, cut"
+37,brace,2,"Brace, 2x4 at 45 deg","lumber, cut"
+38,base,1,"Base, plywood","plywood, cut"
+39,pivot_bolt,2,"Pivot: 1/2-13 x 5 in carriage bolt, washers, nyloc",hardware store
+40,floor_stop,2,"Floor stop, 2x4 offcuts stacked","lumber, cut"
+41,stop_pad,2,Rubber pad on the floor stop,rubber mat offcut
+42,stop_board,1,"Stop board, plywood","plywood, cut"
+43,tether,1,Tether: rope and screw eye,hardware store
+44,mat,1,Rubber mat under the foot,catalog/rig.json rubber_mat

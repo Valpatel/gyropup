@@ -132,13 +132,16 @@ dried, on the settings the leg will use.
 |---|---|---|
 | `coupon_frame_ring` | a 61812, from the motor side, onto the lip; the motor's 10 x M4 lugs on the nominal ring | the bearing presses in by hand or with a vise and soft jaws, seats on the lip, does not rock; no crack at the lugs |
 | `coupon_hub_face` | the machined adapter's Ø40 spigot and its two Ø5 dowels | the spigot enters by hand with no play you can feel; the dowels enter; the eight M5 clearance holes line up with the adapter's threads |
-| `coupon_knee_eye` | two DIN 179 12 x 18 x 20 sleeves, end to end | a vise press with soft jaws; they stay put when the coupon is knocked on the bench |
-| `coupon_knee_boss` | a 6201 | hand press, seats, no rocking |
+| `coupon_knee_eye` | a DIN 179 12 x 18 x 20 sleeve (the hole is the leg's, with `PRINT_HOLE_COMP` and the bed-face lead-in) | a light vise press with soft jaws, or a close slide for the structural epoxy (D74); it stays put when the coupon is knocked on the bench |
+| `coupon_frame_pins` | a Ø16 x 40 stop pin from the bed face; a Ø5 dowel from the top | the pin goes in with a light press or a close slide for the epoxy and seats on the floor; the dowel enters by hand, close (it locates the motor in its own H7 hole) |
+| `coupon_knee_boss` | a 6301 | hand press, seats, no rocking |
 | `coupon_apex_eye` | a 61812 | hand press, seats, no rocking |
 | `coupon_hub_stub` | a 61812's inner race and the DIN 471-60 circlip | the race slides on with a light push; the circlip snaps into its groove |
 
 Record the variant that fits each seat. The main session sets the leg's print offsets from that table. If a slip fit
-is the best there is (a bearing seat), the assembly uses Loctite 641 on it, as `docs/leg-rig-assembly.md` says.
+is the best there is (a bearing seat), the assembly uses Loctite 641 on it, as `docs/leg-rig-assembly.md` says, only
+after a coupon shows it on a printed bore: Henkel does not normally recommend its anaerobic compounds on thermoplastics
+(D74; research/leg-preprint).
 
 ## C1-C6: commissioning, one motor on the bench supply
 
@@ -228,7 +231,8 @@ Which of damper 0 and 1 the robot runs is decided by the same rerun.
 **Set-up (the press cage on its side, clamped to the bench):**
 - The load cell hangs from the top beam on an M12 x 30 at 30 N m.
 - The anvil hangs on a second M12 x 30, screwed into the cell's lower thread; its head sits in the anvil's socket.
-- A stop post goes in the sleeve block's M8 insert (5 N m), with its TPU sleeve on.
+- A stop post (one of the leg's Ø16 pins, D53) goes in the sleeve block's blind hole as it goes in the hip frame, with its
+  TPU sleeve on. The block's hole is drawn and printed as the frame's, so B3 also shows how the pin seats.
 - The block sits on the slider against the left wall.
 - The M12 x 80 press bolt comes up through the bottom beam into the press base's nut.
 - The dial indicator's tip rests on the slider's tab.
@@ -269,17 +273,16 @@ Set every insert with the soldering iron at the temperature B0 proved, as in the
 |---|---|---|---|---|
 | B4a: M5 insert (2 pullers) | an M6 oversized washer (steel) | M5 x 40, tighten in 0.5 N m steps, reading the tension, to 4 N m; then on to 3,500 N or until the insert pulls out or the thread strips | >= 1,200 N at a torque with margin; holds 2,400 N (2x) without moving | the frame-to-plate torque (6 x M5 x 16) |
 | B4b: the link under the head (1 puller) | a bearing disc (PA6-CF, the link's material) on the M6 washer | M5 x 40 to 1,200 N: note the torque; hold 30 min, reading at 1, 5, 10 and 30 min; then on to 2,000 N | the tension after 30 min >= 1,000 N; no crushing round the head at 2,000 N | the upper-link-to-adapter torque (8 x M5 x 40) and HUB_PRELOAD_N |
-| B4c: M8 insert (1 puller) | the 3/8 in washer | M8 x 40 in 1 N m steps to 10 N m or until the tension stops rising | the tension at 5 N m >= 2,000 N and still rising | the stop posts' torque: the lower of the torque at 2,000 N and 60 % of the torque where it stopped rising |
 
 Write the rows into `sheets/b4.csv`:
-- size (M5, M8);
+- size (M5; B4c, the M8 insert, went with D53: the stop posts are pins, not screws);
 - sample;
 - torque_nm;
 - tension_n;
 - pullout_n (on its own row, at the end).
 
 `fit_params` gives the tension per N m, the nut factor, the torque for 1,200 N and the pull-out. Put the torques into
-the assembly's torque table, which until then uses 1.5 N m for the M5s and 5 N m for the M8s. Send the measured
+the assembly's torque table, which until then uses 1.5 N m for the M5s. Send the measured
 preload to the main session (F2: `cad/leg_studies.py` reruns with it).
 
 ## B6: the packs' resistance
@@ -362,7 +365,7 @@ Each is one command. The tables above give its predicted numbers and its pass/fa
 | S3 jump | `... --test jump` | the load plate out; the tether on (150 mm of slack above the highest jump); the pack at or under the start voltage | inspect the knees, the adapters and the stop sleeves; compare with the simulation rerun at the measured J and tyre rate |
 | S4 drop | `... --test drop_150` | the carriage on the drop pin, 150 mm up; when the leg holds 300 mm (1 s), pull the pin; the run lasts 8 s | inspect as S3 |
 | S5 power cut, bumper high | `... --test power_off` | standing at 300 mm; release the pendant: the leg holds for the relay's 1.0 s, then the contactor opens | the carriage lands on the bumpers; compare the fall time with both predictions (undamped and damped): which one it matches says whether the damper works in a real fall |
-| S6 onto the leg's stops | `... --test power_off` with the bumpers shimmed down to 74 mm contact | only after B1 and the main session's rerun clear it | the knees, the eye sleeves, the pins and the 6201s inspected; the stop sleeves show no permanent set |
+| S6 onto the leg's stops | `... --test power_off` with the bumpers shimmed down to 74 mm contact | only after B1 and the main session's rerun clear it | the knees, the eye sleeves, the pins and the 6301s inspected; the stop sleeves show no permanent set |
 
 **The packs.** Jumps and drops start at or under the start voltage (B6). The runner reads the motors' VBUS before it
 arms and refuses above it.

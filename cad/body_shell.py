@@ -12,9 +12,9 @@ What it is (docs/body-safety.md, docs/body-thermal.md):
     keep 46 mm from every moving part.
   - The rear halves carry B7's louvres (14 slots 4 x 46 mm a side: ISO 13857 admits no finger at 4 mm), the body's
     air inlet beside the cooler's fins (the fan blows up and out through the deck); the left rear one the J501's port hatch (its window from the mated plugs, cadagent.connectors);
-    the right front one the service door over the power plate; the front halves the ear-pod brackets (PA6-CF, through
+    the left front one the service door over the power plate; the front halves the ear-pod brackets (PA6-CF, through
     the wall with M5 bolts and nyloc nuts; the SSC1's foot on a 5/16-18 nut; the pod's top at z 193, under the lidar's
-    -15 deg beam). The left front half has a vent over the J501's converter.
+    -15 deg beam). The right front half has a vent over the converter (DDR_VENT).
   - Front face: the eyes alone (a window for the DualEye board). Below the tray, an apron (|y| <= 58: 25 mm inside
     the knee eyes' sweep at |y| >= 83) carries the front D435 low, its lens in a window, on a PA6-CF cradle.
   - Rear face: the rear D435 the same way; four RP-SMA bulkheads (D-flat holes); between the right rear post and the
@@ -166,8 +166,8 @@ def _wall_half(side, half):
 
 
 def side_wall(side, half):
-    """A finished side wall half: the louvres (rear halves), the port hatch (left rear), the door (right front), the
-    ear bracket's bolt holes (front halves), the DDR-120C vent (left front)."""
+    """A finished side wall half: the louvres (rear halves), the port hatch (left rear), the door (left front, DOOR_SIDE), the
+    ear bracket's bolt holes (front halves), the DDR-120C vent (the other front half: right front)."""
     sy = 1.0 if side == 'l' else -1.0
     s = _wall_half(side, half)
     y0, y1 = sorted((sy * (YI - RIB_D - 1), sy * (YO + 1)))
@@ -228,7 +228,7 @@ def screw_holes_through(side, half):
 
 
 def door():
-    """The right side's service door: a 2 mm PETG plate 8 mm over the opening all round, four M3 x 16 into the wall's
+    """The left side's service door (DOOR_SIDE): a 2 mm PETG plate 8 mm over the opening all round, four M3 x 8 into the wall's
     nut pads, its edges rounded 2 mm (hazard table)."""
     x0, x1, z0, z1 = DOOR
     sy = 1.0 if DOOR_SIDE == 'l' else -1.0
@@ -239,7 +239,7 @@ def door():
 
 
 def hatch():
-    """The J501 port hatch's cover (left rear): 8 mm over the opening, two M3 x 16 into the wall's nut pads."""
+    """The J501 port hatch's cover (left rear): 8 mm over the opening, two M3 x 8 into the wall's nut pads."""
     hx0, hx1, hz0, hz1 = hatch_window()[0]
     h = box(hx0 - 11, min(hx1 + 3, SPLIT_X - 1.0), YO, YO + WALL_T, hz0 - 12, hz1 + 2).edges('|Y').fillet(3.0)
     for x, z in hatch_screws():
@@ -460,11 +460,11 @@ def shell_parts() -> dict:
         pr(f'ear_bracket_{side}', ear_bracket(side), 'pa6-cf', pa6, 'PA6-CF; four M5 x 14 through the wall, nyloc nuts inside')
     pr('shell_front', front_face(), 'petg', pet, 'PETG, 2 mm with ribs; printed on its outer face', ((0, 1, 0), -90))
     pr('shell_rear', rear_face(), 'petg', pet, 'PETG, 2 mm with ribs, the receiver\'s bay with it; printed on its outer face', ((0, 1, 0), 90))
-    pr('shell_door', door(), 'petg', pet, 'PETG; four M3 x 16 into the wall\'s nuts', ((1, 0, 0), 90))
-    pr('shell_hatch', hatch(), 'petg', pet, 'PETG; two M3 x 16 into the wall\'s nuts', ((1, 0, 0), -90))
+    pr('shell_door', door(), 'petg', pet, 'PETG; four M3 x 8 into the wall\'s nuts', ((1, 0, 0), 90))
+    pr('shell_hatch', hatch(), 'petg', pet, 'PETG; two M3 x 8 into the wall\'s nuts', ((1, 0, 0), -90))
     for front in (True, False):
         pr(f'd435_cradle_{"front" if front else "rear"}', d435_cradle(front), 'pa6-cf', pa6, 'PA6-CF; the D435 on its two back M3')
-    pr('fan_duct', fan_duct(), 'petg', pet, 'PETG: the fan\'s exhaust goes only out through the deck; three M3 x 5 up into the turret plate')
+    pr('fan_duct', fan_duct(), 'petg', pet, 'PETG: the fan\'s exhaust goes only out through the deck; three M3 x 6 up into the turret plate')
     pr('eyes_clip', eyes_clip(), 'petg', pet, 'PETG: holds the DualEye board in its window; two M3 x 6 into the face\'s bosses')
     # bought parts the shell carries, as envelopes (masses in the ledger's shell rows)
     for side in ('l', 'r'):

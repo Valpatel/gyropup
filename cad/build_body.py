@@ -408,8 +408,9 @@ def main():
         where = SH if p3 else OUT
         cq.exporters.export(_v(local), str(where / f'{base}.step'))
         export_print_stl(_v(local), where / f'{base}.stl', rotation=p.print_rotation)
+        solid = p.material == 'pa6-cf' or '100 %' in (p.note or '')      # a PETG part whose note asks 100 % (the bus insulators)
         (plan3 if p3 else plan)[base] = printplan.row(_v(local), p.print_rotation, p.material, d['qty'], masses[d['name']],
-                                                      p.material == 'pa6-cf', p.note)
+                                                      solid, p.note)
     too_big = printplan.write(OUT / 'print-plan.json', plan, note='body P0-P2: hours are rough (grams / density / a strength-holding rate)')
     too_big += printplan.write(SH / 'print-plan.json', plan3, note='body P3, the shell\'s printed parts: hours are rough')
     legs = bf.legs(300.0)

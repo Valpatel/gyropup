@@ -1,4 +1,4 @@
 (fp_lib_table
   (version 7)
-  (lib (name "fuse-board")(type "KiCad")(uri "${KIPRJMOD}/fuse-board.pretty")(options "")(descr "the fuse board's own footprints"))
+  (lib (name "cad-agent")(type "KiCad")(uri "${KIPRJMOD}/lib/cad-agent.pretty")(options "")(descr "cad-agent parts library, built by build.sh"))
 )

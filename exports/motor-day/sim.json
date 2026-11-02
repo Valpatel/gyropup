@@ -1,0 +1,437 @@
+{
+ "made_by": "tools/motor_day_sim.py",
+ "controller": "rig/leg_control.py on rig/sim_bus.py (MuJoCo, sim/leg_rig.py)",
+ "rate_hz": 500.0,
+ "latency_ticks": 1,
+ "pack": "rig/run.py pack_for (the FLEXVOLT pair at the start rule)",
+ "floor_stop_leg_mm": 140.0,
+ "mass_kg": 11.1,
+ "mass": {
+  "half_mass_kg": 11.09,
+  "dummy_kg": 0.0,
+  "moving_kg": 6.93,
+  "frame_kg": 4.17,
+  "carriage_kg": 4.17,
+  "armature": 0.02,
+  "stop_k_nm_per_rad": 856.0,
+  "ref": {
+   "phi1": -0.89,
+   "phi2": -2.25,
+   "af": -2.32,
+   "aw": -0.82
+  }
+ },
+ "note": "the model's leg is the PA6-CF leg with its BotWheel; the day-one leg is PLA with a printed foot. The mass the stand is ballasted to is this total.",
+ "runs": [
+  {
+   "jump_height_mm": 46.1,
+   "peak_motor_nm": 12.0,
+   "peak_axle_force_n": 703.2,
+   "peak_wheel_force_n": 1161.4,
+   "peak_knee_pin_n": 523.3,
+   "peak_gearbox_nm": 18.5,
+   "peak_stop_nm": 0.0,
+   "stop_hits": false,
+   "L_range_mm": [
+    160.2,
+    338.2
+   ],
+   "peak_joint_force_n": {
+    "knee_f": 140.9,
+    "knee_r": 149.4,
+    "hip_f": 118.0,
+    "hip_r": 120.2,
+    "apex": 228.6
+   },
+   "peak_front_link_n": 518.4,
+   "peak_motor_speed_rad_s": 6.9,
+   "test": "jump",
+   "cap_nm": 12.0,
+   "rig": {
+    "half_mass_kg": 11.09,
+    "dummy_kg": 0.0,
+    "moving_kg": 6.93,
+    "frame_kg": 4.17,
+    "carriage_kg": 4.17,
+    "armature": 0.02,
+    "stop_k_nm_per_rad": 856.0,
+    "ref": {
+     "phi1": -0.89,
+     "phi2": -2.25,
+     "af": -2.32,
+     "aw": -0.82
+    }
+   },
+   "seconds": 1.2
+  },
+  {
+   "jump_height_mm": 61.6,
+   "peak_motor_nm": 15.0,
+   "peak_axle_force_n": 817.5,
+   "peak_wheel_force_n": 1347.1,
+   "peak_knee_pin_n": 622.5,
+   "peak_gearbox_nm": 23.6,
+   "peak_stop_nm": 0.0,
+   "stop_hits": false,
+   "L_range_mm": [
+    160.2,
+    346.5
+   ],
+   "peak_joint_force_n": {
+    "knee_f": 177.7,
+    "knee_r": 193.8,
+    "hip_f": 155.6,
+    "hip_r": 157.5,
+    "apex": 289.6
+   },
+   "peak_front_link_n": 618.9,
+   "peak_motor_speed_rad_s": 8.84,
+   "test": "jump",
+   "cap_nm": 15.0,
+   "rig": {
+    "half_mass_kg": 11.09,
+    "dummy_kg": 0.0,
+    "moving_kg": 6.93,
+    "frame_kg": 4.17,
+    "carriage_kg": 4.17,
+    "armature": 0.02,
+    "stop_k_nm_per_rad": 856.0,
+    "ref": {
+     "phi1": -0.89,
+     "phi2": -2.25,
+     "af": -2.32,
+     "aw": -0.82
+    }
+   },
+   "seconds": 1.2
+  },
+  {
+   "jump_height_mm": 79.4,
+   "peak_motor_nm": 20.0,
+   "peak_axle_force_n": 914.0,
+   "peak_wheel_force_n": 1508.9,
+   "peak_knee_pin_n": 709.2,
+   "peak_gearbox_nm": 28.7,
+   "peak_stop_nm": 0.0,
+   "stop_hits": false,
+   "L_range_mm": [
+    160.2,
+    354.0
+   ],
+   "peak_joint_force_n": {
+    "knee_f": 218.1,
+    "knee_r": 232.0,
+    "hip_f": 193.8,
+    "hip_r": 194.6,
+    "apex": 344.4
+   },
+   "peak_front_link_n": 703.3,
+   "peak_motor_speed_rad_s": 11.43,
+   "test": "jump",
+   "cap_nm": 20.0,
+   "rig": {
+    "half_mass_kg": 11.09,
+    "dummy_kg": 0.0,
+    "moving_kg": 6.93,
+    "frame_kg": 4.17,
+    "carriage_kg": 4.17,
+    "armature": 0.02,
+    "stop_k_nm_per_rad": 856.0,
+    "ref": {
+     "phi1": -0.89,
+     "phi2": -2.25,
+     "af": -2.32,
+     "aw": -0.82
+    }
+   },
+   "seconds": 1.1
+  },
+  {
+   "jump_height_mm": 96.7,
+   "peak_motor_nm": 25.0,
+   "peak_axle_force_n": 1261.3,
+   "peak_wheel_force_n": 2108.5,
+   "peak_knee_pin_n": 997.8,
+   "peak_gearbox_nm": 33.3,
+   "peak_stop_nm": 0.0,
+   "stop_hits": false,
+   "L_range_mm": [
+    160.2,
+    360.6
+   ],
+   "peak_joint_force_n": {
+    "knee_f": 252.8,
+    "knee_r": 271.2,
+    "hip_f": 226.9,
+    "hip_r": 227.6,
+    "apex": 399.3
+   },
+   "peak_front_link_n": 961.3,
+   "peak_motor_speed_rad_s": 13.83,
+   "test": "jump",
+   "cap_nm": 25.0,
+   "rig": {
+    "half_mass_kg": 11.09,
+    "dummy_kg": 0.0,
+    "moving_kg": 6.93,
+    "frame_kg": 4.17,
+    "carriage_kg": 4.17,
+    "armature": 0.02,
+    "stop_k_nm_per_rad": 856.0,
+    "ref": {
+     "phi1": -0.89,
+     "phi2": -2.25,
+     "af": -2.32,
+     "aw": -0.82
+    }
+   },
+   "seconds": 1.1
+  },
+  {
+   "jump_height_mm": 105.1,
+   "peak_motor_nm": 30.0,
+   "peak_axle_force_n": 1284.2,
+   "peak_wheel_force_n": 2148.1,
+   "peak_knee_pin_n": 1018.9,
+   "peak_gearbox_nm": 38.2,
+   "peak_stop_nm": 0.0,
+   "stop_hits": false,
+   "L_range_mm": [
+    160.2,
+    359.2
+   ],
+   "peak_joint_force_n": {
+    "knee_f": 287.7,
+    "knee_r": 289.2,
+    "hip_f": 259.5,
+    "hip_r": 261.3,
+    "apex": 410.0
+   },
+   "peak_front_link_n": 982.4,
+   "peak_motor_speed_rad_s": 14.9,
+   "test": "jump",
+   "cap_nm": 30.0,
+   "rig": {
+    "half_mass_kg": 11.09,
+    "dummy_kg": 0.0,
+    "moving_kg": 6.93,
+    "frame_kg": 4.17,
+    "carriage_kg": 4.17,
+    "armature": 0.02,
+    "stop_k_nm_per_rad": 856.0,
+    "ref": {
+     "phi1": -0.89,
+     "phi2": -2.25,
+     "af": -2.32,
+     "aw": -0.82
+    }
+   },
+   "seconds": 1.1
+  },
+  {
+   "jump_height_mm": 116.0,
+   "peak_motor_nm": 40.0,
+   "peak_axle_force_n": 1257.6,
+   "peak_wheel_force_n": 2086.0,
+   "peak_knee_pin_n": 990.9,
+   "peak_gearbox_nm": 44.9,
+   "peak_stop_nm": 0.0,
+   "stop_hits": false,
+   "L_range_mm": [
+    160.2,
+    353.6
+   ],
+   "peak_joint_force_n": {
+    "knee_f": 346.9,
+    "knee_r": 343.9,
+    "hip_f": 334.2,
+    "hip_r": 331.5,
+    "apex": 444.4
+   },
+   "peak_front_link_n": 977.8,
+   "peak_motor_speed_rad_s": 15.76,
+   "test": "jump",
+   "cap_nm": 40.0,
+   "rig": {
+    "half_mass_kg": 11.09,
+    "dummy_kg": 0.0,
+    "moving_kg": 6.93,
+    "frame_kg": 4.17,
+    "carriage_kg": 4.17,
+    "armature": 0.02,
+    "stop_k_nm_per_rad": 856.0,
+    "ref": {
+     "phi1": -0.89,
+     "phi2": -2.25,
+     "af": -2.32,
+     "aw": -0.82
+    }
+   },
+   "seconds": 1.1
+  },
+  {
+   "jump_height_mm": null,
+   "peak_motor_nm": 7.5,
+   "peak_axle_force_n": 97.8,
+   "peak_wheel_force_n": 120.9,
+   "peak_knee_pin_n": 108.0,
+   "peak_gearbox_nm": 7.4,
+   "peak_stop_nm": 0.0,
+   "stop_hits": false,
+   "L_range_mm": [
+    140.0,
+    304.6
+   ],
+   "peak_joint_force_n": {
+    "knee_f": 82.5,
+    "knee_r": 81.4,
+    "hip_f": 79.5,
+    "hip_r": 78.5,
+    "apex": 85.9
+   },
+   "peak_front_link_n": 108.0,
+   "peak_motor_speed_rad_s": 1.0,
+   "test": "stand_up",
+   "cap_nm": 12.0,
+   "rig": {
+    "half_mass_kg": 11.09,
+    "dummy_kg": 0.0,
+    "moving_kg": 6.93,
+    "frame_kg": 4.17,
+    "carriage_kg": 4.17,
+    "armature": 0.02,
+    "stop_k_nm_per_rad": 856.0,
+    "ref": {
+     "phi1": -0.89,
+     "phi2": -2.25,
+     "af": -2.32,
+     "aw": -0.82
+    }
+   },
+   "seconds": 1.2
+  },
+  {
+   "jump_height_mm": null,
+   "peak_motor_nm": 7.5,
+   "peak_axle_force_n": 95.0,
+   "peak_wheel_force_n": 118.2,
+   "peak_knee_pin_n": 96.8,
+   "peak_gearbox_nm": 7.5,
+   "peak_stop_nm": 0.0,
+   "stop_hits": false,
+   "L_range_mm": [
+    159.3,
+    303.7
+   ],
+   "peak_joint_force_n": {
+    "knee_f": 70.4,
+    "knee_r": 70.3,
+    "hip_f": 67.6,
+    "hip_r": 67.5,
+    "apex": 73.8
+   },
+   "peak_front_link_n": 96.8,
+   "peak_motor_speed_rad_s": 0.99,
+   "test": "squat",
+   "cap_nm": 12.0,
+   "rig": {
+    "half_mass_kg": 11.09,
+    "dummy_kg": 0.0,
+    "moving_kg": 6.93,
+    "frame_kg": 4.17,
+    "carriage_kg": 4.17,
+    "armature": 0.02,
+    "stop_k_nm_per_rad": 856.0,
+    "ref": {
+     "phi1": -0.89,
+     "phi2": -2.25,
+     "af": -2.32,
+     "aw": -0.82
+    }
+   },
+   "seconds": 2.5
+  },
+  {
+   "jump_height_mm": null,
+   "peak_motor_nm": 7.4,
+   "peak_axle_force_n": 251.5,
+   "peak_wheel_force_n": 402.6,
+   "peak_knee_pin_n": 280.3,
+   "peak_gearbox_nm": 48.9,
+   "peak_stop_nm": 0.0,
+   "stop_hits": false,
+   "L_range_mm": [
+    137.0,
+    304.0
+   ],
+   "peak_joint_force_n": {
+    "knee_f": 383.2,
+    "knee_r": 393.7,
+    "hip_f": 583.7,
+    "hip_r": 591.5,
+    "apex": 352.5
+   },
+   "peak_front_link_n": 269.3,
+   "peak_motor_speed_rad_s": 7.47,
+   "test": "power_off",
+   "cap_nm": 12.0,
+   "rig": {
+    "half_mass_kg": 11.09,
+    "dummy_kg": 0.0,
+    "moving_kg": 6.93,
+    "frame_kg": 4.17,
+    "carriage_kg": 4.17,
+    "armature": 0.02,
+    "stop_k_nm_per_rad": 856.0,
+    "ref": {
+     "phi1": -0.89,
+     "phi2": -2.25,
+     "af": -2.32,
+     "aw": -0.82
+    }
+   },
+   "seconds": 0.9
+  },
+  {
+   "jump_height_mm": null,
+   "peak_motor_nm": 7.4,
+   "peak_axle_force_n": 95.0,
+   "peak_wheel_force_n": 118.2,
+   "peak_knee_pin_n": 93.5,
+   "peak_gearbox_nm": 7.2,
+   "peak_stop_nm": 0.0,
+   "stop_hits": false,
+   "L_range_mm": [
+    139.8,
+    304.0
+   ],
+   "peak_joint_force_n": {
+    "knee_f": 65.8,
+    "knee_r": 65.5,
+    "hip_f": 63.2,
+    "hip_r": 63.0,
+    "apex": 68.9
+   },
+   "peak_front_link_n": 93.5,
+   "peak_motor_speed_rad_s": 0.99,
+   "test": "power_off_damped",
+   "cap_nm": 12.0,
+   "rig": {
+    "half_mass_kg": 11.09,
+    "dummy_kg": 0.0,
+    "moving_kg": 6.93,
+    "frame_kg": 4.17,
+    "carriage_kg": 4.17,
+    "armature": 0.02,
+    "stop_k_nm_per_rad": 856.0,
+    "ref": {
+     "phi1": -0.89,
+     "phi2": -2.25,
+     "af": -2.32,
+     "aw": -0.82
+    }
+   },
+   "seconds": 0.9
+  }
+ ]
+}

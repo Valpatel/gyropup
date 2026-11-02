@@ -7,12 +7,29 @@
    "solid": false,
    "frame": "base",
    "doc": "The fixed base, printed PA6-CF on its foot (100 % solid): a \u00d8144 x 5 foot on the TM pattern (4 x M5 x 16",
-   "mass_g_each": 160.9,
-   "print_h": 10.5,
+   "mass_g_each": 156.2,
+   "print_h": 10.2,
    "bed_mm": [
     160.5,
     157.6,
     47.0
+   ],
+   "fits_bed": true,
+   "valid_single_solid": true
+  },
+  "base_board_carrier": {
+   "material": "pa6-cf",
+   "qty": 1,
+   "note": "Removable board carrier; exterior face on bed, standoffs up; service requires bumper removal",
+   "solid": true,
+   "frame": "base",
+   "doc": "Print exterior face down (rotate +90 about Y); insert bosses point upward.",
+   "mass_g_each": 5.3,
+   "print_h": 0.3,
+   "bed_mm": [
+    70.0,
+    32.0,
+    8.0
    ],
    "fits_bed": true,
    "valid_single_solid": true
@@ -71,7 +88,7 @@
   "tilt_yoke": {
    "material": "pa6-cf",
    "qty": 1,
-   "note": "PA6-CF on its back; 4 x M4 x 10 to the turntable (heads 6 mm down in the 12 mm bridge)",
+   "note": "PA6-CF on its back; 4 x M4 x 12 to the turntable (heads 6 mm down in the 12 mm bridge)",
    "solid": true,
    "frame": "pan",
    "doc": "Printed PA6-CF on its back (layers run along the arms): a 12 mm bridge on the turntable (4 x M4) and two 8 mm",
@@ -92,8 +109,8 @@
    "solid": true,
    "frame": "tilt",
    "doc": "The cradle's rail frame (D48), printed PA6-CF flat (100 % solid, no supports): two rails under the cartridge",
-   "mass_g_each": 45.9,
-   "print_h": 3.0,
+   "mass_g_each": 47.6,
+   "print_h": 3.1,
    "bed_mm": [
     149.6,
     113.6,
@@ -143,8 +160,8 @@
    "solid": true,
    "frame": "tilt",
    "doc": "The ball cartridge, printed PA6-CF on its base (100 % solid, 2.5 mm walls): a base plate on the cradle rails",
-   "mass_g_each": 166.7,
-   "print_h": 10.9,
+   "mass_g_each": 168.6,
+   "print_h": 11.0,
    "bed_mm": [
     165.6,
     103.2,
@@ -346,7 +363,7 @@
    "note": "PETG on its back; 4 x M3 x 8 flat heads to the -y yoke arm; 4 x M3 inserts for the boards",
    "solid": false,
    "frame": "pan",
-   "doc": "The turret-board bay, printed PETG on its back: a 58 x 57 tray with 2 mm walls out to y -115, screwed to the -y",
+   "doc": "The turret-board bay, printed PETG on its back: a 58 x 57 tray with 1.2 mm walls (TB) out to y -118, screwed to the -y",
    "mass_g_each": 28.5,
    "print_h": 1.1,
    "bed_mm": [
@@ -398,7 +415,7 @@
    "solid": false,
    "frame": "base",
    "doc": "The plinth's wall, printed PETG upside down: a \u00d8156 x 3 ring from the tray to the pan base's foot, four columns",
-   "mass_g_each": 187.1,
+   "mass_g_each": 186.4,
    "print_h": 7.5,
    "bed_mm": [
     156.0,
@@ -456,12 +473,12 @@
    "frame": "base"
   },
   "cradle_plate_l": {
-   "mass_g": 24.6,
+   "mass_g": 24.9,
    "note": "the +y cheek plate: the tilt servo's horn through the horn boss (4 x M3 x 14 flat heads, countersunk on its inner face); SendCutSend 6061-T6 aluminium 0.125 in (exports/turret/cradle_plate_l.dxf), on 4 x M3 x 8 button heads into the rail",
    "frame": "tilt"
   },
   "cradle_plate_r": {
-   "mass_g": 25.0,
+   "mass_g": 25.4,
    "note": "the -y cheek plate: tapped M5 for the shoulder screw, the stop lug on its outer face; SendCutSend 6061-T6 aluminium 0.125 in (exports/turret/cradle_plate_r.dxf), on 4 x M3 x 8 button heads into the rail",
    "frame": "tilt"
   },
@@ -492,7 +509,27 @@
   },
   "base_board": {
    "mass_g": 30.0,
-   "note": "base board (est): DT12 fuse, the 555 safety-pulse oscillator, the pan servo's 12 V regulator, the ring's stator connector",
+   "note": "50.8 x 30 x 1.6 PCB with drilled mounting holes and component envelopes from turret_boards.py; solder/connectors unverified",
+   "frame": "base"
+  },
+  "base_board_screws": {
+   "mass_g": 2.6,
+   "note": "authored simplified hardware; not manufacturer CAD; threads/knurls omitted; four instances, see docs/base-board-service.md",
+   "frame": "base"
+  },
+  "base_carrier_screws": {
+   "mass_g": 2.9,
+   "note": "authored simplified hardware; not manufacturer CAD; threads/knurls omitted; four instances, see docs/base-board-service.md",
+   "frame": "base"
+  },
+  "base_board_inserts": {
+   "mass_g": 1.43,
+   "note": "authored simplified hardware; not manufacturer CAD; threads/knurls omitted; four instances, see docs/base-board-service.md",
+   "frame": "base"
+  },
+  "base_carrier_inserts": {
+   "mass_g": 1.43,
+   "note": "authored simplified hardware; not manufacturer CAD; threads/knurls omitted; four instances, see docs/base-board-service.md",
    "frame": "base"
   },
   "turret_board": {
@@ -629,10 +666,10 @@
    "thickness_in": 0.125,
    "thickness_mm": 3.175,
    "size_mm": [
-    90.0,
+    94.0,
     62.1
    ],
-   "mass_g": 24.6,
+   "mass_g": 24.9,
    "order": "https://sendcutsend.com/materials/6061-t6-aluminum/",
    "operations": "4 holes countersunk 90 deg to \u00d86.4 on the face drawn (the face on the rail; DIN 7991 M3 flat heads)"
   },
@@ -644,10 +681,10 @@
    "thickness_in": 0.125,
    "thickness_mm": 3.175,
    "size_mm": [
-    90.0,
+    94.0,
     62.1
    ],
-   "mass_g": 25.0,
+   "mass_g": 25.4,
    "order": "https://sendcutsend.com/materials/6061-t6-aluminum/",
    "operations": "the \u00d84.2 hole tapped M5 x 0.8; 2 holes countersunk 90 deg to \u00d86.4 on the face drawn (the face on the rail)"
   },
@@ -725,13 +762,13 @@
    170.0
   ],
   "pan_hard_stop_deg": 173.5,
-  "mass_estimate_g": 2560.8,
+  "mass_estimate_g": 2573.4,
   "com": [
-   -4.1,
+   -3.8,
    -2.8,
-   349.2
+   349.3
   ],
-  "com_above_mount_mm": 49.2,
+  "com_above_mount_mm": 49.3,
   "ball_d": 22.7,
   "bore": 24.2,
   "pose": {
@@ -739,7 +776,43 @@
    "tilt": 0.0
   }
  },
- "clashes": [],
+ "clashes": [
+  [
+   "pan_base",
+   "base_carrier_inserts",
+   113.2,
+   0.0,
+   0.0
+  ],
+  [
+   "base_board_carrier",
+   "base_board_inserts",
+   113.2,
+   0.0,
+   0.0
+  ],
+  [
+   "base_board_screws",
+   "base_board_inserts",
+   38.0,
+   0.0,
+   0.0
+  ],
+  [
+   "base_carrier_screws",
+   "base_carrier_inserts",
+   43.2,
+   0.0,
+   0.0
+  ],
+  [
+   "tilt_yoke",
+   "ct_thumbscrew",
+   51.5,
+   0.0,
+   -25.0
+  ]
+ ],
  "gaps_under_1mm": [
   [
    "tilt_yoke",
@@ -756,13 +829,19 @@
    -25.0
   ]
  ],
- "mass_g_with_balls": 2560.8,
- "mass_g_empty": 2505.9,
- "com_from_mount_mm": [
-  -4.1,
+ "mass_g_with_balls": 2573.4,
+ "mass_g_empty": 2518.5,
+ "com_frame_t_mm": [
+  -3.8,
   -2.8,
-  49.2
+  49.3
  ],
+ "com_from_tm_face_mm": [
+  -3.8,
+  -2.8,
+  135.3
+ ],
+ "com_frames": "com_frame_t_mm is in frame T (the pan axis at the pan base's foot); com_from_tm_face_mm is from the pan axis on the TM face, 86 mm lower (exports/turret/mount.json's frame, #137)",
  "not_modelled_g": {
   "wiring and the cable loops": 50,
   "chronograph emitters/receivers + hopper-full beam": 10,
@@ -770,6 +849,6 @@
   "screws, inserts, dowels, springs": 17,
   "CT connector pair (Micro-Fit 3.0 class)": 12
  },
- "print_hours": 71.5,
- "made_g": 1208.9
+ "print_hours": 71.8,
+ "made_g": 1212.4
 }

@@ -31,9 +31,7 @@ BENCH_EXTRA = [
     ('screw_m5x25', 18, 'the dyno: each hub onto its motor\'s output (9 each)'),
     ('screw_m5x40', 3, 'B4: the screws under test (two inserts to 3.5 kN, the link-under-the-head test)'),
     ('insert_m5', 3, 'B4: one in each M5 puller'),
-    ('insert_m8', 2, 'B4: the M8 puller; B3: the sleeve block\'s stop post'),
     ('washer_m6_deck', 2, 'B4: under the screw under test, over the cage\'s hole'),
-    ('washer_3_8', 1, 'B4: under the M8 screw under test'),
     ('hx711', 1, 'B3, B4: the load cell\'s own amplifier on the rig node'),
 ]
 # a backup for a leg line catalog/alternates.json has none for (read on the date given)

@@ -13,8 +13,8 @@ FPS, SECONDS, WIDTH, HEIGHT = 24, 12, 960, 720
 # The recorded E1 gate this movie presents (exports/leg/fea/summary.json, regenerated on cad-agent v0.6.0 in issue
 # #29), read at the record's 4 mm mesh, and the same case at 3 mm from tools/hip-frame-study.py (FINER): the gate is
 # not converged, so the caption gives both. Review the captions whenever either value changes.
-GATE_SF, GATE_MESH_MM, FINE_MESH_MM = 1.63, 4.0, 3.0
-FINER = 'research/fea-v060-29/evidence/hip-frame-v060.json'
+GATE_SF, GATE_MESH_MM, FINE_MESH_MM = 1.60, 4.0, 3.0
+FINER = 'research/leg-preprint/evidence/hip-frame-print-ready.json'
 
 
 def digest(path):

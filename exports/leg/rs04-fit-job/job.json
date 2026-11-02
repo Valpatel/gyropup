@@ -43,8 +43,8 @@
       "cad/print_slicing.py": "13fd25fe32e75e0c66dbe8af132fd4d70fb030defb14d88a96f9ff77cbaf07bd",
       "cad/print_provenance.py": "db0d9cdc14e0d0363899d82c03eb31cb63ea0d7718fedcf127a5545f8f6bec88",
       "cad/rs04_lug_checks.py": "02a75e6dd5d28c6c8c149141d100d1386125197f5edfb34143565c72d8a8dfb5",
-      "exports/leg/rs04-mounting-fit/checks.json": "f4637af39ab50d8f90e2e1419bb760c1ee89791ee0b60fa74d4d5b39e170ee53",
-      "exports/leg/rs04-mounting-fit/coupon_frame_ring_nom.stl": "bcf1a53f3fc8326bfdf887b2739ebf2015d32f573ee3bcfcdfa0e8f7996517e1"
+      "exports/leg/rs04-mounting-fit/checks.json": "1e45925d33964b3da543869bac182569a47f51309954ba2a61b6bac02a29b75e",
+      "exports/leg/rs04-mounting-fit/coupon_frame_ring_nom.stl": "1830ff4c1c9dc2314295d3d601b238c857c774abaf108c6619fdd9901b1da2cd"
     },
     "toolkit_helpers": {
       "cadagent.mesh3mf": "cf5aa2a2f6dab9d2a1e76539f158a10e38bc5e0fb72ceaabdf264178b83ce29f",
@@ -1221,17 +1221,17 @@
       "slicer_payload_sha256": "b7f803605b7df175570e58c994bd8bfd12467b3aa2756cce32a931c670f3e5a9"
     }
   },
-  "source_commit": "4ed4169ad9ce692b7960f9e38e73b6587d0196e6",
+  "source_commit": "82bc5bdc80e46ccdbd867938a781d921d3af085c",
   "geometry": {
     "bounds_mm": [
       [
-        66.0038,
-        66.0075,
+        66.0018,
+        66.0041,
         0.0
       ],
       [
-        189.9962,
-        189.9925,
+        189.9982,
+        189.9959,
         24.1
       ]
     ],
@@ -1251,9 +1251,9 @@
     ]
   },
   "metrics": {
-    "grams": 172.44,
-    "minutes": 392.97669270833336,
-    "filament_m": 65.17,
+    "grams": 172.41,
+    "minutes": 392.7687174479167,
+    "filament_m": 65.16,
     "exit_code": 0,
     "return_code": 0,
     "error": null
@@ -1264,11 +1264,11 @@
       "bytes": 432
     },
     "Metadata/plate_1.json": {
-      "sha256": "c8cbd6b7b5b5ce0eba5110f781e4fceb79e9b5f7bd3ae47d7d7e9ec07237103f",
-      "bytes": 457
+      "sha256": "4d9f0f227b70988c5b890454f5d244fb34aee7a1608a1d1a7384c60982d27fdd",
+      "bytes": 438
     },
     "3D/3dmodel.model": {
-      "sha256": "ab960a5dd95d4b86e6bb8838ce7880ef4bd83291d63cd9d4d792c43d85e6e66a",
+      "sha256": "6e73c2418a6fc1f58a5b20d463d7198390227db75288b601f7f92a1d15610753",
       "bytes": 1570
     },
     "3D/_rels/3dmodel.model.rels": {
@@ -1276,27 +1276,27 @@
       "bytes": 272
     },
     "3D/Objects/object_1.model": {
-      "sha256": "8c04d86d2be0805f165718b075c17b4ab6840d10db7878d082e9322bd516214f",
-      "bytes": 882309
+      "sha256": "7497ace62bc7676ae312a57e61bacaca7282ce7b8343c26fc031140188c5813d",
+      "bytes": 900785
     },
     "Metadata/project_settings.config": {
       "sha256": "170d6fadfccef9996e2b851dfe058d289bd15a55a4b49242a4550f7ac197e4dd",
       "bytes": 44072
     },
     "Metadata/plate_1.gcode.md5": {
-      "sha256": "404e19b99435f46f390cc5ff76759cb4dd3418dc2ceb4eec0f07aa83cd842c24",
+      "sha256": "78703369616d6901663f87f27860de4f5e8a6f3cb1f3339f3d35052d73a751d0",
       "bytes": 32
     },
     "Metadata/plate_1.gcode": {
-      "sha256": "0c0f5e9b30df1212262f874b46d08f0686a44b03a8abb13f91860b4f521d7809",
-      "bytes": 11407601
+      "sha256": "dec0176ec6dd8fbbf9e8ad3fb9b690e2fa54a2d2293763cd459024066eef723e",
+      "bytes": 11590017
     },
     "Metadata/_rels/model_settings.config.rels": {
       "sha256": "5ea2c0f459aec4d25341abd431edee7890c8d2fd02efbaed4b073d04cfa11440",
       "bytes": 255
     },
     "Metadata/model_settings.config": {
-      "sha256": "faa6bea58f1a31ecd8bd904fbb2f08a1bfcc91305eb1192f575686e8de6f3346",
+      "sha256": "5b880014c06e997f9f3f3913c9b82ba3c4441f9c1301f6ba91711380a372ad86",
       "bytes": 1508
     },
     "Metadata/cut_information.xml": {
@@ -1304,8 +1304,8 @@
       "bytes": 139
     },
     "Metadata/slice_info.config": {
-      "sha256": "6c5abbd5a960a5e2e736e72cf61d8fcc5326762ffda6711f3b76615efd2ab325",
-      "bytes": 1679
+      "sha256": "188b5a503e04c466889956f7df3c1f9b701b439beeae45bbf763d8dac485de23",
+      "bytes": 1708
     },
     "Metadata/filament_sequence.json": {
       "sha256": "9e457664577459536d7512bf553066895dba22502a17ad79789ee272d2d569ba",
@@ -1320,13 +1320,13 @@
     "placed_geometry": {
       "bounds_mm": [
         [
-          66.00693408740106,
-          66.01369650375628,
+          66.00693860453588,
+          66.01347305843815,
           0.0
         ],
         [
-          189.9930563171579,
-          189.98629781298234,
+          189.99304253360222,
+          189.98650771773586,
           24.1000004
         ]
       ],
@@ -1347,13 +1347,13 @@
     },
     "transform_3mf": [
       [
-        -0.789146215,
-        0.614205382,
+        -0.751126405,
+        0.660158408,
         0.0
       ],
       [
-        -0.614205382,
-        -0.789146215,
+        -0.660158408,
+        -0.751126405,
         0.0
       ],
       [
@@ -1362,12 +1362,12 @@
         1.0
       ],
       [
-        128.00419,
-        127.99217,
+        128.00333,
+        127.98874,
         12.0500002
       ]
     ],
-    "in_plane_rotation_deg": 142.10579540122004,
+    "in_plane_rotation_deg": 138.68804499420628,
     "parent_layer_normal_preserved": true,
     "actual_settings": {
       "printer_model": "Bambu Lab P1S",
@@ -1433,7 +1433,7 @@
         "bounds_mm": [
           [
             66.217,
-            64.224,
+            64.223,
             0.2
           ],
           [
@@ -1471,7 +1471,7 @@
       "support_deposition_moves": 0,
       "features": {
         "Inner wall": {
-          "moves": 93774,
+          "moves": 93882,
           "layer_z_mm": [
             0.2,
             0.4,
@@ -1597,7 +1597,7 @@
           "max_commanded_feed_mm_s": 98.26086666666667
         },
         "Outer wall": {
-          "moves": 31079,
+          "moves": 31468,
           "layer_z_mm": [
             0.2,
             0.4,
@@ -1724,7 +1724,7 @@
           "max_commanded_feed_mm_s": 99.0
         },
         "Gap infill": {
-          "moves": 558,
+          "moves": 598,
           "layer_z_mm": [
             0.2,
             2.0,
@@ -1734,14 +1734,14 @@
           "max_commanded_feed_mm_s": 99.0
         },
         "Bottom surface": {
-          "moves": 1416,
+          "moves": 1419,
           "layer_z_mm": [
             0.2
           ],
-          "max_commanded_feed_mm_s": 87.24289999999999
+          "max_commanded_feed_mm_s": 87.2391
         },
         "Internal solid infill": {
-          "moves": 10260,
+          "moves": 10262,
           "layer_z_mm": [
             0.4,
             0.6,
@@ -1757,7 +1757,7 @@
           "max_commanded_feed_mm_s": 99.0
         },
         "Sparse infill": {
-          "moves": 170185,
+          "moves": 170625,
           "layer_z_mm": [
             0.8,
             1.0,
@@ -1876,7 +1876,7 @@
           "max_commanded_feed_mm_s": 98.26086666666667
         },
         "Floating vertical shell": {
-          "moves": 5693,
+          "moves": 5755,
           "layer_z_mm": [
             1.2,
             1.4,
@@ -1895,7 +1895,7 @@
           "max_commanded_feed_mm_s": 79.2
         },
         "Top surface": {
-          "moves": 1156,
+          "moves": 1161,
           "layer_z_mm": [
             2.0,
             12.2,
@@ -1904,7 +1904,7 @@
           "max_commanded_feed_mm_s": 99.0
         },
         "Overhang wall": {
-          "moves": 158,
+          "moves": 170,
           "layer_z_mm": [
             8.8,
             23.2
@@ -1912,7 +1912,7 @@
           "max_commanded_feed_mm_s": 10.0
         },
         "Bridge": {
-          "moves": 1246,
+          "moves": 1241,
           "layer_z_mm": [
             8.8,
             23.2
@@ -1925,10 +1925,10 @@
     "limits": "In-plane raster direction may differ from a future parent job; no structural equivalence claim."
   },
   "files_sha256": {
-    "critical-layers.png": "96ef735f1cde7ec346f9f3b9cf1b97aa10b76ea08dbf58eb0f466b8bfdd06dff",
-    "geometry.3mf": "74e66b63819c11ef93dce7f02c6aaece2e335f49492d7dfb9422d0b8c88c86cd",
+    "critical-layers.png": "e188c045166af48cd6145f63ddf207298980d55e04aa04070304230d8a2f76fd",
+    "geometry.3mf": "4d177d5e535b4360240d1fafd374c419b9b9d645ee34d6a0de6ac45a72c6db8d",
     "measurements.csv": "a425d41717706738b1a67cd3181f4b579a701e22d770688b8bd15b442ed35e2d",
-    "process-record.csv": "929ddfc12909c712ca9e69da8902bc0448fb8fe0fd0e88ea0be099a498968293",
+    "process-record.csv": "44ff3ad1329cc0dc674534d8e4f204dbc1c246d00d204d16c557ef2e0caea9a4",
     "profiles/filament/Bambu PA6-CF @BBL X1C.json": "80783d20169f5dc21b8e43e90d61af54d5f5fae816339e6b17aa8ecf7b87ed15",
     "profiles/filament/Bambu PA6-CF @base.json": "66d5d1a96e005afbc1cefbeaf8182de1b83b54ba3facfd219051303af64135c6",
     "profiles/filament/fdm_filament_common.json": "8c7105b7d59a28f600c43a946f067b8b4d707b9711c0bf6b88e9166e48878548",
@@ -1949,11 +1949,11 @@
     "slice/exit-code.json": "124fd50cb6d223cdd18fedc166d00af7254199b6e6dedf9be82f71db87af6d01",
     "slice/filament.json": "0d2b91e9d7f31661688294b60c19e3fb922f1fde5d2f219ee16d85f190cb3374",
     "slice/machine.json": "44b41d9e562c8b9a7223ec87dd1c7e37271549983ea572f09a81f62a9b76d9af",
-    "slice/out/plate_1.gcode": "0c0f5e9b30df1212262f874b46d08f0686a44b03a8abb13f91860b4f521d7809",
-    "slice/out/result.json": "3be3d97c051edce9c1f3bd6d7911c0e93e953882ad339e8bd3762b9fb40cd717",
-    "slice/out/sliced.3mf": "23a102b8f06ab4ef643e603a21f0fd61fcc39daa306300d4b92b9d324abb45b9",
+    "slice/out/plate_1.gcode": "dec0176ec6dd8fbbf9e8ad3fb9b690e2fa54a2d2293763cd459024066eef723e",
+    "slice/out/result.json": "f6700b4ea75a0c8f61bdaf532afe758cd7bb33fd2c28285ba27c14f9d3774342",
+    "slice/out/sliced.3mf": "9d5f4cedcf1fa46f579a485188afe920d92d2772f1de1141c2abd32b593893a3",
     "slice/process.json": "9591ffa2ff4d223ebc859b1901766aabf71caf7cfdcf93719dcc77484b12a345",
-    "slice/slicer.log": "822bdd4eb808cdb2755f24eb0b32de50b84a64c04b04beed430e9882f670273c",
-    "source.stl": "bcf1a53f3fc8326bfdf887b2739ebf2015d32f573ee3bcfcdfa0e8f7996517e1"
+    "slice/slicer.log": "3123c714742005cf29297d09539cfe34f7e47d912cdde34fa16fed1a8a7d2105",
+    "source.stl": "1830ff4c1c9dc2314295d3d601b238c857c774abaf108c6619fdd9901b1da2cd"
   }
 }

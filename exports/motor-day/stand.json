@@ -1,0 +1,121 @@
+{
+ "geometry": {
+  "plate_y": [
+   -100.6,
+   -82.3
+  ],
+  "cleat_back_y": -189.6,
+  "rail_end_y": -1600.6,
+  "pivot_y": -1540.6,
+  "pivot_z": 0.0,
+  "upright_x": 210.0,
+  "rail_x": 169.0,
+  "floor_stop_y": -309.6,
+  "floor_stop_top_z": -172.3,
+  "floor_stop_height_mm": 213.3,
+  "floor_z": -385.6,
+  "tether_length_note": "the hip may rise 150 mm above the stance: at the tether the boom rises 120 mm"
+ },
+ "foot": {
+  "y_face": 80.0,
+  "y_out": 104.0,
+  "tread_mid_y": 92.0,
+  "nut_seat_y": 84.5,
+  "screw": "screw_m6x40",
+  "nut": "nut_m6_nyloc"
+ },
+ "masses": {
+  "pivot_to_hip_mm": 1540.6,
+  "effective_mass_kg": 10.57,
+  "scale_reads_kg": 11.89,
+  "moving_kg": 15.08,
+  "rows": [
+   {
+    "part": "leg_motor_front",
+    "g": 1420,
+    "r_mm": 1488
+   },
+   {
+    "part": "leg_motor_rear",
+    "g": 1420,
+    "r_mm": 1488
+   },
+   {
+    "part": "end_plate",
+    "g": 842,
+    "r_mm": 1449
+   },
+   {
+    "part": "cleat_right",
+    "g": 396,
+    "r_mm": 1396
+   },
+   {
+    "part": "rail_right",
+    "g": 2283,
+    "r_mm": 690
+   },
+   {
+    "part": "cleat_left",
+    "g": 396,
+    "r_mm": 1396
+   },
+   {
+    "part": "rail_left",
+    "g": 2283,
+    "r_mm": 690
+   },
+   {
+    "part": "cross_member",
+    "g": 457,
+    "r_mm": -16
+   },
+   {
+    "part": "hip_frame",
+    "g": 1261,
+    "r_mm": 1541
+   },
+   {
+    "part": "upper_link",
+    "g": 963,
+    "r_mm": 1541
+   },
+   {
+    "part": "front_link",
+    "g": 526,
+    "r_mm": 1541
+   },
+   {
+    "part": "wheel_link",
+    "g": 734,
+    "r_mm": 1541
+   },
+   {
+    "part": "apex_spacer",
+    "g": 15,
+    "r_mm": 1541
+   },
+   {
+    "part": "output_adapter_pla",
+    "g": 140,
+    "r_mm": 1541
+   },
+   {
+    "part": "foot",
+    "g": 246,
+    "r_mm": 1633
+   },
+   {
+    "part": "stop_sleeve",
+    "g": 63,
+    "r_mm": 1541
+   },
+   {
+    "part": "bought hardware",
+    "g": 1636,
+    "r_mm": 1541
+   }
+  ],
+  "note": "lumber at 0.45 g/cm3 and plywood at 0.60 (estimates); printed parts at their sliced grams"
+ }
+}

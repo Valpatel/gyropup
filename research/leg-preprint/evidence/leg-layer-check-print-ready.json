@@ -1,0 +1,1492 @@
+{
+ "schema": 1,
+ "suite": "leg",
+ "source_revision": "f58ce4d1cfaa2bb750620ef915f18eb8fd1a7bb5",
+ "toolkit_version": "0.6.0",
+ "toolkit_commit": "50d4921a5ab26c7750a869ed41c9a4346ef1379c",
+ "mesh_mm": 4.0,
+ "seconds": 1529.4,
+ "shear_assumption": "toolkit default S_z / sqrt(3) (no data sheet gives an interlayer shear strength); shear_half_sz repeats the check at S_z / 2, the turret study's own rule",
+ "rows": [
+  {
+   "part": "upper_link",
+   "case": "R1",
+   "material": "PA6-CF along the layers (humid)",
+   "material_data": {
+    "key": "pa6_cf_xy",
+    "name": "PA6-CF along the layers (humid)",
+    "E_mpa": 1029.2023852254965,
+    "E_direction": "X-Y",
+    "nu": 0.35,
+    "strength_mpa": 40.83732845379689,
+    "strength_xy_mpa": 40.83732845379689,
+    "strength_z_mpa": 18.133333333333333,
+    "density_g_cm3": 1.09,
+    "source": "bambu-pa6-cf-tds",
+    "note": "Bambu PA6-CF TDS V3.0: dry X-Y tensile modulus 4430 MPa x0.290 humid and strength 102 MPa x0.500 humid (Polymaker PA6-CF20 V1.1 wet / dry), each x0.8 print. For parts printed so their main stress runs in the layers",
+    "constants_hash": "b0989f2b1b1c8bdc"
+   },
+   "layer_check": {
+    "normal": [
+     0.0,
+     1.0,
+     0.0
+    ],
+    "safety_factor": 0.83,
+    "governed_by": "bond",
+    "safety_factor_bond": 0.83,
+    "safety_factor_bulk": 1.83,
+    "allowables_mpa": {
+     "xy": 40.837,
+     "z": 18.133,
+     "shear": 10.469
+    },
+    "shear_basis": "interlayer shear allowable assumed to be strength_z / sqrt(3), the ratio von Mises gives an isotropic solid: no filament data sheet gives one; pass strength_shear from a coupon",
+    "worst": {
+     "element": 57177,
+     "corner_mm": [
+      129.696,
+      -2.632,
+      -6.42
+     ],
+     "element_centre_mm": [
+      131.244,
+      -3.244,
+      -5.612
+     ],
+     "sigma_n_mpa": 13.478,
+     "tau_n_mpa": 9.949,
+     "von_mises_mpa": 18.496,
+     "bond": 1.2064,
+     "bulk": 0.4529,
+     "mode": "bond"
+    },
+    "judged_elements": 60472,
+    "assumptions": "the stress of the linear, isotropic solve (one modulus), resolved on the layer plane at every element corner; bond: the opening stress across the layers and the shear along them, in quadratic interaction, against the across-layer and interlayer shear allowables (compression across the layers left out); bulk: von Mises against the in-plane allowable. A screening check for a transversely isotropic print, not a qualification: an anisotropic part can carry its load differently, and walls, seams and infill are not modelled. Test a printed part"
+   },
+   "shear_half_sz": {
+    "safety_factor": 0.75,
+    "governed_by": "bond",
+    "safety_factor_bond": 0.75,
+    "allowables_mpa": {
+     "xy": 40.837,
+     "z": 18.133,
+     "shear": 9.067
+    }
+   },
+   "target": 1.2,
+   "gate_sf": 1.83,
+   "gate_material": "pa6_cf_xy",
+   "verdict_sf": 1.83,
+   "turret_layer_aware_sf": null,
+   "layer_check_governs": true,
+   "layer_check_ok": false
+  },
+  {
+   "part": "upper_link",
+   "case": "R1F",
+   "material": "PA6-CF along the layers (humid)",
+   "material_data": {
+    "key": "pa6_cf_xy",
+    "name": "PA6-CF along the layers (humid)",
+    "E_mpa": 1029.2023852254965,
+    "E_direction": "X-Y",
+    "nu": 0.35,
+    "strength_mpa": 40.83732845379689,
+    "strength_xy_mpa": 40.83732845379689,
+    "strength_z_mpa": 18.133333333333333,
+    "density_g_cm3": 1.09,
+    "source": "bambu-pa6-cf-tds",
+    "note": "Bambu PA6-CF TDS V3.0: dry X-Y tensile modulus 4430 MPa x0.290 humid and strength 102 MPa x0.500 humid (Polymaker PA6-CF20 V1.1 wet / dry), each x0.8 print. For parts printed so their main stress runs in the layers",
+    "constants_hash": "b0989f2b1b1c8bdc"
+   },
+   "layer_check": {
+    "normal": [
+     0.0,
+     1.0,
+     0.0
+    ],
+    "safety_factor": 0.85,
+    "governed_by": "bond",
+    "safety_factor_bond": 0.85,
+    "safety_factor_bulk": 1.85,
+    "allowables_mpa": {
+     "xy": 40.837,
+     "z": 18.133,
+     "shear": 10.469
+    },
+    "shear_basis": "interlayer shear allowable assumed to be strength_z / sqrt(3), the ratio von Mises gives an isotropic solid: no filament data sheet gives one; pass strength_shear from a coupon",
+    "worst": {
+     "element": 57491,
+     "corner_mm": [
+      129.585,
+      -2.47,
+      6.538
+     ],
+     "element_centre_mm": [
+      129.737,
+      -0.911,
+      8.394
+     ],
+     "sigma_n_mpa": 10.235,
+     "tau_n_mpa": 10.785,
+     "von_mises_mpa": 19.522,
+     "bond": 1.1747,
+     "bulk": 0.4781,
+     "mode": "bond"
+    },
+    "judged_elements": 60472,
+    "assumptions": "the stress of the linear, isotropic solve (one modulus), resolved on the layer plane at every element corner; bond: the opening stress across the layers and the shear along them, in quadratic interaction, against the across-layer and interlayer shear allowables (compression across the layers left out); bulk: von Mises against the in-plane allowable. A screening check for a transversely isotropic print, not a qualification: an anisotropic part can carry its load differently, and walls, seams and infill are not modelled. Test a printed part"
+   },
+   "shear_half_sz": {
+    "safety_factor": 0.76,
+    "governed_by": "bond",
+    "safety_factor_bond": 0.76,
+    "allowables_mpa": {
+     "xy": 40.837,
+     "z": 18.133,
+     "shear": 9.067
+    }
+   },
+   "target": 1.2,
+   "gate_sf": 1.85,
+   "gate_material": "pa6_cf_xy",
+   "verdict_sf": 1.85,
+   "turret_layer_aware_sf": null,
+   "layer_check_governs": true,
+   "layer_check_ok": false
+  },
+  {
+   "part": "upper_link",
+   "case": "E1",
+   "material": "PA6-CF along the layers (humid)",
+   "material_data": {
+    "key": "pa6_cf_xy",
+    "name": "PA6-CF along the layers (humid)",
+    "E_mpa": 1029.2023852254965,
+    "E_direction": "X-Y",
+    "nu": 0.35,
+    "strength_mpa": 40.83732845379689,
+    "strength_xy_mpa": 40.83732845379689,
+    "strength_z_mpa": 18.133333333333333,
+    "density_g_cm3": 1.09,
+    "source": "bambu-pa6-cf-tds",
+    "note": "Bambu PA6-CF TDS V3.0: dry X-Y tensile modulus 4430 MPa x0.290 humid and strength 102 MPa x0.500 humid (Polymaker PA6-CF20 V1.1 wet / dry), each x0.8 print. For parts printed so their main stress runs in the layers",
+    "constants_hash": "b0989f2b1b1c8bdc"
+   },
+   "layer_check": {
+    "normal": [
+     0.0,
+     1.0,
+     0.0
+    ],
+    "safety_factor": 0.94,
+    "governed_by": "bond",
+    "safety_factor_bond": 0.94,
+    "safety_factor_bulk": 2.07,
+    "allowables_mpa": {
+     "xy": 40.837,
+     "z": 18.133,
+     "shear": 10.469
+    },
+    "shear_basis": "interlayer shear allowable assumed to be strength_z / sqrt(3), the ratio von Mises gives an isotropic solid: no filament data sheet gives one; pass strength_shear from a coupon",
+    "worst": {
+     "element": 53834,
+     "corner_mm": [
+      131.009,
+      -2.149,
+      -10.593
+     ],
+     "element_centre_mm": [
+      133.623,
+      -2.559,
+      -11.61
+     ],
+     "sigma_n_mpa": 11.05,
+     "tau_n_mpa": 9.081,
+     "von_mises_mpa": 17.085,
+     "bond": 1.06,
+     "bulk": 0.4184,
+     "mode": "bond"
+    },
+    "judged_elements": 60472,
+    "assumptions": "the stress of the linear, isotropic solve (one modulus), resolved on the layer plane at every element corner; bond: the opening stress across the layers and the shear along them, in quadratic interaction, against the across-layer and interlayer shear allowables (compression across the layers left out); bulk: von Mises against the in-plane allowable. A screening check for a transversely isotropic print, not a qualification: an anisotropic part can carry its load differently, and walls, seams and infill are not modelled. Test a printed part"
+   },
+   "shear_half_sz": {
+    "safety_factor": 0.85,
+    "governed_by": "bond",
+    "safety_factor_bond": 0.85,
+    "allowables_mpa": {
+     "xy": 40.837,
+     "z": 18.133,
+     "shear": 9.067
+    }
+   },
+   "target": 2.0,
+   "gate_sf": 2.07,
+   "gate_material": "pa6_cf_xy",
+   "verdict_sf": 2.07,
+   "turret_layer_aware_sf": null,
+   "layer_check_governs": true,
+   "layer_check_ok": false
+  },
+  {
+   "part": "upper_link",
+   "case": "E1F",
+   "material": "PA6-CF along the layers (humid)",
+   "material_data": {
+    "key": "pa6_cf_xy",
+    "name": "PA6-CF along the layers (humid)",
+    "E_mpa": 1029.2023852254965,
+    "E_direction": "X-Y",
+    "nu": 0.35,
+    "strength_mpa": 40.83732845379689,
+    "strength_xy_mpa": 40.83732845379689,
+    "strength_z_mpa": 18.133333333333333,
+    "density_g_cm3": 1.09,
+    "source": "bambu-pa6-cf-tds",
+    "note": "Bambu PA6-CF TDS V3.0: dry X-Y tensile modulus 4430 MPa x0.290 humid and strength 102 MPa x0.500 humid (Polymaker PA6-CF20 V1.1 wet / dry), each x0.8 print. For parts printed so their main stress runs in the layers",
+    "constants_hash": "b0989f2b1b1c8bdc"
+   },
+   "layer_check": {
+    "normal": [
+     0.0,
+     1.0,
+     0.0
+    ],
+    "safety_factor": 1.01,
+    "governed_by": "bond",
+    "safety_factor_bond": 1.01,
+    "safety_factor_bulk": 2.11,
+    "allowables_mpa": {
+     "xy": 40.837,
+     "z": 18.133,
+     "shear": 10.469
+    },
+    "shear_basis": "interlayer shear allowable assumed to be strength_z / sqrt(3), the ratio von Mises gives an isotropic solid: no filament data sheet gives one; pass strength_shear from a coupon",
+    "worst": {
+     "element": 57069,
+     "corner_mm": [
+      130.995,
+      -2.131,
+      10.604
+     ],
+     "element_centre_mm": [
+      131.414,
+      -2.41,
+      7.867
+     ],
+     "sigma_n_mpa": 10.361,
+     "tau_n_mpa": 8.463,
+     "von_mises_mpa": 16.178,
+     "bond": 0.9899,
+     "bulk": 0.3962,
+     "mode": "bond"
+    },
+    "judged_elements": 60472,
+    "assumptions": "the stress of the linear, isotropic solve (one modulus), resolved on the layer plane at every element corner; bond: the opening stress across the layers and the shear along them, in quadratic interaction, against the across-layer and interlayer shear allowables (compression across the layers left out); bulk: von Mises against the in-plane allowable. A screening check for a transversely isotropic print, not a qualification: an anisotropic part can carry its load differently, and walls, seams and infill are not modelled. Test a printed part"
+   },
+   "shear_half_sz": {
+    "safety_factor": 0.91,
+    "governed_by": "bond",
+    "safety_factor_bond": 0.91,
+    "allowables_mpa": {
+     "xy": 40.837,
+     "z": 18.133,
+     "shear": 9.067
+    }
+   },
+   "target": 2.0,
+   "gate_sf": 2.11,
+   "gate_material": "pa6_cf_xy",
+   "verdict_sf": 2.11,
+   "turret_layer_aware_sf": null,
+   "layer_check_governs": true,
+   "layer_check_ok": false
+  },
+  {
+   "part": "upper_link",
+   "case": "R3K",
+   "material": "PA6-CF along the layers (humid)",
+   "material_data": {
+    "key": "pa6_cf_xy",
+    "name": "PA6-CF along the layers (humid)",
+    "E_mpa": 1029.2023852254965,
+    "E_direction": "X-Y",
+    "nu": 0.35,
+    "strength_mpa": 40.83732845379689,
+    "strength_xy_mpa": 40.83732845379689,
+    "strength_z_mpa": 18.133333333333333,
+    "density_g_cm3": 1.09,
+    "source": "bambu-pa6-cf-tds",
+    "note": "Bambu PA6-CF TDS V3.0: dry X-Y tensile modulus 4430 MPa x0.290 humid and strength 102 MPa x0.500 humid (Polymaker PA6-CF20 V1.1 wet / dry), each x0.8 print. For parts printed so their main stress runs in the layers",
+    "constants_hash": "b0989f2b1b1c8bdc"
+   },
+   "layer_check": {
+    "normal": [
+     0.0,
+     1.0,
+     0.0
+    ],
+    "safety_factor": 0.59,
+    "governed_by": "bond",
+    "safety_factor_bond": 0.59,
+    "safety_factor_bulk": 1.06,
+    "allowables_mpa": {
+     "xy": 40.837,
+     "z": 18.133,
+     "shear": 10.469
+    },
+    "shear_basis": "interlayer shear allowable assumed to be strength_z / sqrt(3), the ratio von Mises gives an isotropic solid: no filament data sheet gives one; pass strength_shear from a coupon",
+    "worst": {
+     "element": 53961,
+     "corner_mm": [
+      130.995,
+      -2.131,
+      10.604
+     ],
+     "element_centre_mm": [
+      130.092,
+      0.061,
+      11.463
+     ],
+     "sigma_n_mpa": -15.335,
+     "tau_n_mpa": 17.609,
+     "von_mises_mpa": 35.188,
+     "bond": 1.6819,
+     "bulk": 0.8617,
+     "mode": "bond"
+    },
+    "judged_elements": 60472,
+    "assumptions": "the stress of the linear, isotropic solve (one modulus), resolved on the layer plane at every element corner; bond: the opening stress across the layers and the shear along them, in quadratic interaction, against the across-layer and interlayer shear allowables (compression across the layers left out); bulk: von Mises against the in-plane allowable. A screening check for a transversely isotropic print, not a qualification: an anisotropic part can carry its load differently, and walls, seams and infill are not modelled. Test a printed part"
+   },
+   "shear_half_sz": {
+    "safety_factor": 0.51,
+    "governed_by": "bond",
+    "safety_factor_bond": 0.51,
+    "allowables_mpa": {
+     "xy": 40.837,
+     "z": 18.133,
+     "shear": 9.067
+    }
+   },
+   "target": 1.0,
+   "gate_sf": 1.06,
+   "gate_material": "pa6_cf_xy",
+   "verdict_sf": 1.06,
+   "turret_layer_aware_sf": null,
+   "layer_check_governs": true,
+   "layer_check_ok": false
+  },
+  {
+   "part": "upper_link",
+   "case": "R3KF",
+   "material": "PA6-CF along the layers (humid)",
+   "material_data": {
+    "key": "pa6_cf_xy",
+    "name": "PA6-CF along the layers (humid)",
+    "E_mpa": 1029.2023852254965,
+    "E_direction": "X-Y",
+    "nu": 0.35,
+    "strength_mpa": 40.83732845379689,
+    "strength_xy_mpa": 40.83732845379689,
+    "strength_z_mpa": 18.133333333333333,
+    "density_g_cm3": 1.09,
+    "source": "bambu-pa6-cf-tds",
+    "note": "Bambu PA6-CF TDS V3.0: dry X-Y tensile modulus 4430 MPa x0.290 humid and strength 102 MPa x0.500 humid (Polymaker PA6-CF20 V1.1 wet / dry), each x0.8 print. For parts printed so their main stress runs in the layers",
+    "constants_hash": "b0989f2b1b1c8bdc"
+   },
+   "layer_check": {
+    "normal": [
+     0.0,
+     1.0,
+     0.0
+    ],
+    "safety_factor": 0.66,
+    "governed_by": "bond",
+    "safety_factor_bond": 0.66,
+    "safety_factor_bulk": 1.2,
+    "allowables_mpa": {
+     "xy": 40.837,
+     "z": 18.133,
+     "shear": 10.469
+    },
+    "shear_basis": "interlayer shear allowable assumed to be strength_z / sqrt(3), the ratio von Mises gives an isotropic solid: no filament data sheet gives one; pass strength_shear from a coupon",
+    "worst": {
+     "element": 53834,
+     "corner_mm": [
+      131.009,
+      -2.149,
+      -10.593
+     ],
+     "element_centre_mm": [
+      133.623,
+      -2.559,
+      -11.61
+     ],
+     "sigma_n_mpa": -19.441,
+     "tau_n_mpa": 15.88,
+     "von_mises_mpa": 30.6,
+     "bond": 1.5168,
+     "bulk": 0.7493,
+     "mode": "bond"
+    },
+    "judged_elements": 60472,
+    "assumptions": "the stress of the linear, isotropic solve (one modulus), resolved on the layer plane at every element corner; bond: the opening stress across the layers and the shear along them, in quadratic interaction, against the across-layer and interlayer shear allowables (compression across the layers left out); bulk: von Mises against the in-plane allowable. A screening check for a transversely isotropic print, not a qualification: an anisotropic part can carry its load differently, and walls, seams and infill are not modelled. Test a printed part"
+   },
+   "shear_half_sz": {
+    "safety_factor": 0.57,
+    "governed_by": "bond",
+    "safety_factor_bond": 0.57,
+    "allowables_mpa": {
+     "xy": 40.837,
+     "z": 18.133,
+     "shear": 9.067
+    }
+   },
+   "target": 1.0,
+   "gate_sf": 1.2,
+   "gate_material": "pa6_cf_xy",
+   "verdict_sf": 1.2,
+   "turret_layer_aware_sf": null,
+   "layer_check_governs": true,
+   "layer_check_ok": false
+  },
+  {
+   "part": "upper_link",
+   "case": "R2",
+   "material": "PA6-CF along the layers (humid)",
+   "material_data": {
+    "key": "pa6_cf_xy",
+    "name": "PA6-CF along the layers (humid)",
+    "E_mpa": 1029.2023852254965,
+    "E_direction": "X-Y",
+    "nu": 0.35,
+    "strength_mpa": 40.83732845379689,
+    "strength_xy_mpa": 40.83732845379689,
+    "strength_z_mpa": 18.133333333333333,
+    "density_g_cm3": 1.09,
+    "source": "bambu-pa6-cf-tds",
+    "note": "Bambu PA6-CF TDS V3.0: dry X-Y tensile modulus 4430 MPa x0.290 humid and strength 102 MPa x0.500 humid (Polymaker PA6-CF20 V1.1 wet / dry), each x0.8 print. For parts printed so their main stress runs in the layers",
+    "constants_hash": "b0989f2b1b1c8bdc"
+   },
+   "layer_check": {
+    "normal": [
+     0.0,
+     1.0,
+     0.0
+    ],
+    "safety_factor": 0.74,
+    "governed_by": "bond",
+    "safety_factor_bond": 0.74,
+    "safety_factor_bulk": 1.35,
+    "allowables_mpa": {
+     "xy": 40.837,
+     "z": 18.133,
+     "shear": 10.469
+    },
+    "shear_basis": "interlayer shear allowable assumed to be strength_z / sqrt(3), the ratio von Mises gives an isotropic solid: no filament data sheet gives one; pass strength_shear from a coupon",
+    "worst": {
+     "element": 65397,
+     "corner_mm": [
+      11.139,
+      -0.01,
+      16.671
+     ],
+     "element_centre_mm": [
+      12.916,
+      0.689,
+      15.914
+     ],
+     "sigma_n_mpa": 2.431,
+     "tau_n_mpa": 14.018,
+     "von_mises_mpa": 27.473,
+     "bond": 1.3456,
+     "bulk": 0.6728,
+     "mode": "bond"
+    },
+    "judged_elements": 60472,
+    "assumptions": "the stress of the linear, isotropic solve (one modulus), resolved on the layer plane at every element corner; bond: the opening stress across the layers and the shear along them, in quadratic interaction, against the across-layer and interlayer shear allowables (compression across the layers left out); bulk: von Mises against the in-plane allowable. A screening check for a transversely isotropic print, not a qualification: an anisotropic part can carry its load differently, and walls, seams and infill are not modelled. Test a printed part"
+   },
+   "shear_half_sz": {
+    "safety_factor": 0.64,
+    "governed_by": "bond",
+    "safety_factor_bond": 0.64,
+    "allowables_mpa": {
+     "xy": 40.837,
+     "z": 18.133,
+     "shear": 9.067
+    }
+   },
+   "target": 1.2,
+   "gate_sf": 1.35,
+   "gate_material": "pa6_cf_xy",
+   "verdict_sf": 1.35,
+   "turret_layer_aware_sf": null,
+   "layer_check_governs": true,
+   "layer_check_ok": false
+  },
+  {
+   "part": "upper_link",
+   "case": "E2",
+   "material": "PA6-CF along the layers (humid)",
+   "material_data": {
+    "key": "pa6_cf_xy",
+    "name": "PA6-CF along the layers (humid)",
+    "E_mpa": 1029.2023852254965,
+    "E_direction": "X-Y",
+    "nu": 0.35,
+    "strength_mpa": 40.83732845379689,
+    "strength_xy_mpa": 40.83732845379689,
+    "strength_z_mpa": 18.133333333333333,
+    "density_g_cm3": 1.09,
+    "source": "bambu-pa6-cf-tds",
+    "note": "Bambu PA6-CF TDS V3.0: dry X-Y tensile modulus 4430 MPa x0.290 humid and strength 102 MPa x0.500 humid (Polymaker PA6-CF20 V1.1 wet / dry), each x0.8 print. For parts printed so their main stress runs in the layers",
+    "constants_hash": "b0989f2b1b1c8bdc"
+   },
+   "layer_check": {
+    "normal": [
+     0.0,
+     1.0,
+     0.0
+    ],
+    "safety_factor": 1.49,
+    "governed_by": "bond",
+    "safety_factor_bond": 1.49,
+    "safety_factor_bulk": 2.7,
+    "allowables_mpa": {
+     "xy": 40.837,
+     "z": 18.133,
+     "shear": 10.469
+    },
+    "shear_basis": "interlayer shear allowable assumed to be strength_z / sqrt(3), the ratio von Mises gives an isotropic solid: no filament data sheet gives one; pass strength_shear from a coupon",
+    "worst": {
+     "element": 65397,
+     "corner_mm": [
+      11.139,
+      -0.01,
+      16.671
+     ],
+     "element_centre_mm": [
+      12.916,
+      0.689,
+      15.914
+     ],
+     "sigma_n_mpa": 1.216,
+     "tau_n_mpa": 7.009,
+     "von_mises_mpa": 13.737,
+     "bond": 0.6728,
+     "bulk": 0.3364,
+     "mode": "bond"
+    },
+    "judged_elements": 60472,
+    "assumptions": "the stress of the linear, isotropic solve (one modulus), resolved on the layer plane at every element corner; bond: the opening stress across the layers and the shear along them, in quadratic interaction, against the across-layer and interlayer shear allowables (compression across the layers left out); bulk: von Mises against the in-plane allowable. A screening check for a transversely isotropic print, not a qualification: an anisotropic part can carry its load differently, and walls, seams and infill are not modelled. Test a printed part"
+   },
+   "shear_half_sz": {
+    "safety_factor": 1.29,
+    "governed_by": "bond",
+    "safety_factor_bond": 1.29,
+    "allowables_mpa": {
+     "xy": 40.837,
+     "z": 18.133,
+     "shear": 9.067
+    }
+   },
+   "target": 2.0,
+   "gate_sf": 2.7,
+   "gate_material": "pa6_cf_xy",
+   "verdict_sf": 2.7,
+   "turret_layer_aware_sf": null,
+   "layer_check_governs": true,
+   "layer_check_ok": false
+  },
+  {
+   "part": "upper_link",
+   "case": "E3",
+   "material": "PA6-CF along the layers (humid)",
+   "material_data": {
+    "key": "pa6_cf_xy",
+    "name": "PA6-CF along the layers (humid)",
+    "E_mpa": 1029.2023852254965,
+    "E_direction": "X-Y",
+    "nu": 0.35,
+    "strength_mpa": 40.83732845379689,
+    "strength_xy_mpa": 40.83732845379689,
+    "strength_z_mpa": 18.133333333333333,
+    "density_g_cm3": 1.09,
+    "source": "bambu-pa6-cf-tds",
+    "note": "Bambu PA6-CF TDS V3.0: dry X-Y tensile modulus 4430 MPa x0.290 humid and strength 102 MPa x0.500 humid (Polymaker PA6-CF20 V1.1 wet / dry), each x0.8 print. For parts printed so their main stress runs in the layers",
+    "constants_hash": "b0989f2b1b1c8bdc"
+   },
+   "layer_check": {
+    "normal": [
+     0.0,
+     1.0,
+     0.0
+    ],
+    "safety_factor": 3.63,
+    "governed_by": "bond",
+    "safety_factor_bond": 3.63,
+    "safety_factor_bulk": 5.63,
+    "allowables_mpa": {
+     "xy": 40.837,
+     "z": 18.133,
+     "shear": 10.469
+    },
+    "shear_basis": "interlayer shear allowable assumed to be strength_z / sqrt(3), the ratio von Mises gives an isotropic solid: no filament data sheet gives one; pass strength_shear from a coupon",
+    "worst": {
+     "element": 55558,
+     "corner_mm": [
+      13.35,
+      -0.01,
+      19.035
+     ],
+     "element_centre_mm": [
+      12.738,
+      0.642,
+      18.571
+     ],
+     "sigma_n_mpa": 3.201,
+     "tau_n_mpa": 2.217,
+     "von_mises_mpa": 4.476,
+     "bond": 0.2757,
+     "bulk": 0.1096,
+     "mode": "bond"
+    },
+    "judged_elements": 61801,
+    "assumptions": "the stress of the linear, isotropic solve (one modulus), resolved on the layer plane at every element corner; bond: the opening stress across the layers and the shear along them, in quadratic interaction, against the across-layer and interlayer shear allowables (compression across the layers left out); bulk: von Mises against the in-plane allowable. A screening check for a transversely isotropic print, not a qualification: an anisotropic part can carry its load differently, and walls, seams and infill are not modelled. Test a printed part"
+   },
+   "shear_half_sz": {
+    "safety_factor": 3.32,
+    "governed_by": "bond",
+    "safety_factor_bond": 3.32,
+    "allowables_mpa": {
+     "xy": 40.837,
+     "z": 18.133,
+     "shear": 9.067
+    }
+   },
+   "target": 2.0,
+   "gate_sf": 5.63,
+   "gate_material": "pa6_cf_xy",
+   "verdict_sf": 5.63,
+   "turret_layer_aware_sf": null,
+   "layer_check_governs": true,
+   "layer_check_ok": true
+  },
+  {
+   "part": "upper_link",
+   "case": "R3",
+   "material": "PA6-CF along the layers (humid)",
+   "material_data": {
+    "key": "pa6_cf_xy",
+    "name": "PA6-CF along the layers (humid)",
+    "E_mpa": 1029.2023852254965,
+    "E_direction": "X-Y",
+    "nu": 0.35,
+    "strength_mpa": 40.83732845379689,
+    "strength_xy_mpa": 40.83732845379689,
+    "strength_z_mpa": 18.133333333333333,
+    "density_g_cm3": 1.09,
+    "source": "bambu-pa6-cf-tds",
+    "note": "Bambu PA6-CF TDS V3.0: dry X-Y tensile modulus 4430 MPa x0.290 humid and strength 102 MPa x0.500 humid (Polymaker PA6-CF20 V1.1 wet / dry), each x0.8 print. For parts printed so their main stress runs in the layers",
+    "constants_hash": "b0989f2b1b1c8bdc"
+   },
+   "layer_check": {
+    "normal": [
+     0.0,
+     1.0,
+     0.0
+    ],
+    "safety_factor": 1.78,
+    "governed_by": "bond",
+    "safety_factor_bond": 1.78,
+    "safety_factor_bulk": 2.76,
+    "allowables_mpa": {
+     "xy": 40.837,
+     "z": 18.133,
+     "shear": 10.469
+    },
+    "shear_basis": "interlayer shear allowable assumed to be strength_z / sqrt(3), the ratio von Mises gives an isotropic solid: no filament data sheet gives one; pass strength_shear from a coupon",
+    "worst": {
+     "element": 55558,
+     "corner_mm": [
+      13.35,
+      -0.01,
+      19.035
+     ],
+     "element_centre_mm": [
+      12.738,
+      0.642,
+      18.571
+     ],
+     "sigma_n_mpa": 6.524,
+     "tau_n_mpa": 4.518,
+     "von_mises_mpa": 9.123,
+     "bond": 0.5619,
+     "bulk": 0.2234,
+     "mode": "bond"
+    },
+    "judged_elements": 61801,
+    "assumptions": "the stress of the linear, isotropic solve (one modulus), resolved on the layer plane at every element corner; bond: the opening stress across the layers and the shear along them, in quadratic interaction, against the across-layer and interlayer shear allowables (compression across the layers left out); bulk: von Mises against the in-plane allowable. A screening check for a transversely isotropic print, not a qualification: an anisotropic part can carry its load differently, and walls, seams and infill are not modelled. Test a printed part"
+   },
+   "shear_half_sz": {
+    "safety_factor": 1.63,
+    "governed_by": "bond",
+    "safety_factor_bond": 1.63,
+    "allowables_mpa": {
+     "xy": 40.837,
+     "z": 18.133,
+     "shear": 9.067
+    }
+   },
+   "target": 1.0,
+   "gate_sf": 2.76,
+   "gate_material": "pa6_cf_xy",
+   "verdict_sf": 2.76,
+   "turret_layer_aware_sf": null,
+   "layer_check_governs": true,
+   "layer_check_ok": true
+  },
+  {
+   "part": "front_link",
+   "case": "R1",
+   "material": "PA6-CF along the layers (humid)",
+   "material_data": {
+    "key": "pa6_cf_xy",
+    "name": "PA6-CF along the layers (humid)",
+    "E_mpa": 1029.2023852254965,
+    "E_direction": "X-Y",
+    "nu": 0.35,
+    "strength_mpa": 40.83732845379689,
+    "strength_xy_mpa": 40.83732845379689,
+    "strength_z_mpa": 18.133333333333333,
+    "density_g_cm3": 1.09,
+    "source": "bambu-pa6-cf-tds",
+    "note": "Bambu PA6-CF TDS V3.0: dry X-Y tensile modulus 4430 MPa x0.290 humid and strength 102 MPa x0.500 humid (Polymaker PA6-CF20 V1.1 wet / dry), each x0.8 print. For parts printed so their main stress runs in the layers",
+    "constants_hash": "b0989f2b1b1c8bdc"
+   },
+   "layer_check": {
+    "normal": [
+     0.0,
+     1.0,
+     0.0
+    ],
+    "safety_factor": 0.58,
+    "governed_by": "bond",
+    "safety_factor_bond": 0.58,
+    "safety_factor_bulk": 1.37,
+    "allowables_mpa": {
+     "xy": 40.837,
+     "z": 18.133,
+     "shear": 10.469
+    },
+    "shear_basis": "interlayer shear allowable assumed to be strength_z / sqrt(3), the ratio von Mises gives an isotropic solid: no filament data sheet gives one; pass strength_shear from a coupon",
+    "worst": {
+     "element": 37374,
+     "corner_mm": [
+      293.466,
+      48.0,
+      -11.648
+     ],
+     "element_centre_mm": [
+      293.467,
+      51.0,
+      -11.647
+     ],
+     "sigma_n_mpa": 24.657,
+     "tau_n_mpa": 11.052,
+     "von_mises_mpa": 29.733,
+     "bond": 1.7214,
+     "bulk": 0.7281,
+     "mode": "bond"
+    },
+    "judged_elements": 28019,
+    "assumptions": "the stress of the linear, isotropic solve (one modulus), resolved on the layer plane at every element corner; bond: the opening stress across the layers and the shear along them, in quadratic interaction, against the across-layer and interlayer shear allowables (compression across the layers left out); bulk: von Mises against the in-plane allowable. A screening check for a transversely isotropic print, not a qualification: an anisotropic part can carry its load differently, and walls, seams and infill are not modelled. Test a printed part"
+   },
+   "shear_half_sz": {
+    "safety_factor": 0.55,
+    "governed_by": "bond",
+    "safety_factor_bond": 0.55,
+    "allowables_mpa": {
+     "xy": 40.837,
+     "z": 18.133,
+     "shear": 9.067
+    }
+   },
+   "target": 1.2,
+   "gate_sf": 1.37,
+   "gate_material": "pa6_cf_xy",
+   "verdict_sf": 1.37,
+   "turret_layer_aware_sf": null,
+   "layer_check_governs": true,
+   "layer_check_ok": false
+  },
+  {
+   "part": "front_link",
+   "case": "E1",
+   "material": "PA6-CF along the layers (humid)",
+   "material_data": {
+    "key": "pa6_cf_xy",
+    "name": "PA6-CF along the layers (humid)",
+    "E_mpa": 1029.2023852254965,
+    "E_direction": "X-Y",
+    "nu": 0.35,
+    "strength_mpa": 40.83732845379689,
+    "strength_xy_mpa": 40.83732845379689,
+    "strength_z_mpa": 18.133333333333333,
+    "density_g_cm3": 1.09,
+    "source": "bambu-pa6-cf-tds",
+    "note": "Bambu PA6-CF TDS V3.0: dry X-Y tensile modulus 4430 MPa x0.290 humid and strength 102 MPa x0.500 humid (Polymaker PA6-CF20 V1.1 wet / dry), each x0.8 print. For parts printed so their main stress runs in the layers",
+    "constants_hash": "b0989f2b1b1c8bdc"
+   },
+   "layer_check": {
+    "normal": [
+     0.0,
+     1.0,
+     0.0
+    ],
+    "safety_factor": 0.79,
+    "governed_by": "bond",
+    "safety_factor_bond": 0.79,
+    "safety_factor_bulk": 1.77,
+    "allowables_mpa": {
+     "xy": 40.837,
+     "z": 18.133,
+     "shear": 10.469
+    },
+    "shear_basis": "interlayer shear allowable assumed to be strength_z / sqrt(3), the ratio von Mises gives an isotropic solid: no filament data sheet gives one; pass strength_shear from a coupon",
+    "worst": {
+     "element": 37374,
+     "corner_mm": [
+      293.466,
+      48.0,
+      -11.648
+     ],
+     "element_centre_mm": [
+      293.467,
+      51.0,
+      -11.647
+     ],
+     "sigma_n_mpa": 17.976,
+     "tau_n_mpa": 8.357,
+     "von_mises_mpa": 21.758,
+     "bond": 1.2728,
+     "bulk": 0.5328,
+     "mode": "bond"
+    },
+    "judged_elements": 28019,
+    "assumptions": "the stress of the linear, isotropic solve (one modulus), resolved on the layer plane at every element corner; bond: the opening stress across the layers and the shear along them, in quadratic interaction, against the across-layer and interlayer shear allowables (compression across the layers left out); bulk: von Mises against the in-plane allowable. A screening check for a transversely isotropic print, not a qualification: an anisotropic part can carry its load differently, and walls, seams and infill are not modelled. Test a printed part"
+   },
+   "shear_half_sz": {
+    "safety_factor": 0.74,
+    "governed_by": "bond",
+    "safety_factor_bond": 0.74,
+    "allowables_mpa": {
+     "xy": 40.837,
+     "z": 18.133,
+     "shear": 9.067
+    }
+   },
+   "target": 2.0,
+   "gate_sf": 1.77,
+   "gate_material": "pa6_cf_xy",
+   "verdict_sf": 1.77,
+   "turret_layer_aware_sf": null,
+   "layer_check_governs": true,
+   "layer_check_ok": false
+  },
+  {
+   "part": "wheel_link",
+   "case": "R1",
+   "material": "PA6-CF along the layers (humid)",
+   "material_data": {
+    "key": "pa6_cf_xy",
+    "name": "PA6-CF along the layers (humid)",
+    "E_mpa": 1029.2023852254965,
+    "E_direction": "X-Y",
+    "nu": 0.35,
+    "strength_mpa": 40.83732845379689,
+    "strength_xy_mpa": 40.83732845379689,
+    "strength_z_mpa": 18.133333333333333,
+    "density_g_cm3": 1.09,
+    "source": "bambu-pa6-cf-tds",
+    "note": "Bambu PA6-CF TDS V3.0: dry X-Y tensile modulus 4430 MPa x0.290 humid and strength 102 MPa x0.500 humid (Polymaker PA6-CF20 V1.1 wet / dry), each x0.8 print. For parts printed so their main stress runs in the layers",
+    "constants_hash": "b0989f2b1b1c8bdc"
+   },
+   "layer_check": {
+    "normal": [
+     0.0,
+     1.0,
+     0.0
+    ],
+    "safety_factor": 1.49,
+    "governed_by": "bond",
+    "safety_factor_bond": 1.49,
+    "safety_factor_bulk": 2.78,
+    "allowables_mpa": {
+     "xy": 40.837,
+     "z": 18.133,
+     "shear": 10.469
+    },
+    "shear_basis": "interlayer shear allowable assumed to be strength_z / sqrt(3), the ratio von Mises gives an isotropic solid: no filament data sheet gives one; pass strength_shear from a coupon",
+    "worst": {
+     "element": 34519,
+     "corner_mm": [
+      216.724,
+      54.0,
+      17.291
+     ],
+     "element_centre_mm": [
+      218.363,
+      52.806,
+      15.375
+     ],
+     "sigma_n_mpa": 8.537,
+     "tau_n_mpa": 5.034,
+     "von_mises_mpa": 9.719,
+     "bond": 0.6729,
+     "bulk": 0.238,
+     "mode": "bond"
+    },
+    "judged_elements": 44241,
+    "assumptions": "the stress of the linear, isotropic solve (one modulus), resolved on the layer plane at every element corner; bond: the opening stress across the layers and the shear along them, in quadratic interaction, against the across-layer and interlayer shear allowables (compression across the layers left out); bulk: von Mises against the in-plane allowable. A screening check for a transversely isotropic print, not a qualification: an anisotropic part can carry its load differently, and walls, seams and infill are not modelled. Test a printed part"
+   },
+   "shear_half_sz": {
+    "safety_factor": 1.37,
+    "governed_by": "bond",
+    "safety_factor_bond": 1.37,
+    "allowables_mpa": {
+     "xy": 40.837,
+     "z": 18.133,
+     "shear": 9.067
+    }
+   },
+   "target": 1.2,
+   "gate_sf": 2.78,
+   "gate_material": "pa6_cf_xy",
+   "verdict_sf": 2.78,
+   "turret_layer_aware_sf": null,
+   "layer_check_governs": true,
+   "layer_check_ok": true
+  },
+  {
+   "part": "wheel_link",
+   "case": "R1w",
+   "material": "PA6-CF along the layers (humid)",
+   "material_data": {
+    "key": "pa6_cf_xy",
+    "name": "PA6-CF along the layers (humid)",
+    "E_mpa": 1029.2023852254965,
+    "E_direction": "X-Y",
+    "nu": 0.35,
+    "strength_mpa": 40.83732845379689,
+    "strength_xy_mpa": 40.83732845379689,
+    "strength_z_mpa": 18.133333333333333,
+    "density_g_cm3": 1.09,
+    "source": "bambu-pa6-cf-tds",
+    "note": "Bambu PA6-CF TDS V3.0: dry X-Y tensile modulus 4430 MPa x0.290 humid and strength 102 MPa x0.500 humid (Polymaker PA6-CF20 V1.1 wet / dry), each x0.8 print. For parts printed so their main stress runs in the layers",
+    "constants_hash": "b0989f2b1b1c8bdc"
+   },
+   "layer_check": {
+    "normal": [
+     0.0,
+     1.0,
+     0.0
+    ],
+    "safety_factor": 0.88,
+    "governed_by": "bond",
+    "safety_factor_bond": 0.88,
+    "safety_factor_bulk": 1.64,
+    "allowables_mpa": {
+     "xy": 40.837,
+     "z": 18.133,
+     "shear": 10.469
+    },
+    "shear_basis": "interlayer shear allowable assumed to be strength_z / sqrt(3), the ratio von Mises gives an isotropic solid: no filament data sheet gives one; pass strength_shear from a coupon",
+    "worst": {
+     "element": 34519,
+     "corner_mm": [
+      216.724,
+      54.0,
+      17.291
+     ],
+     "element_centre_mm": [
+      218.363,
+      52.806,
+      15.375
+     ],
+     "sigma_n_mpa": 14.495,
+     "tau_n_mpa": 8.547,
+     "von_mises_mpa": 16.502,
+     "bond": 1.1426,
+     "bulk": 0.4041,
+     "mode": "bond"
+    },
+    "judged_elements": 44241,
+    "assumptions": "the stress of the linear, isotropic solve (one modulus), resolved on the layer plane at every element corner; bond: the opening stress across the layers and the shear along them, in quadratic interaction, against the across-layer and interlayer shear allowables (compression across the layers left out); bulk: von Mises against the in-plane allowable. A screening check for a transversely isotropic print, not a qualification: an anisotropic part can carry its load differently, and walls, seams and infill are not modelled. Test a printed part"
+   },
+   "shear_half_sz": {
+    "safety_factor": 0.81,
+    "governed_by": "bond",
+    "safety_factor_bond": 0.81,
+    "allowables_mpa": {
+     "xy": 40.837,
+     "z": 18.133,
+     "shear": 9.067
+    }
+   },
+   "target": 1.2,
+   "gate_sf": 1.64,
+   "gate_material": "pa6_cf_xy",
+   "verdict_sf": 1.64,
+   "turret_layer_aware_sf": null,
+   "layer_check_governs": true,
+   "layer_check_ok": false
+  },
+  {
+   "part": "wheel_link",
+   "case": "E1",
+   "material": "PA6-CF along the layers (humid)",
+   "material_data": {
+    "key": "pa6_cf_xy",
+    "name": "PA6-CF along the layers (humid)",
+    "E_mpa": 1029.2023852254965,
+    "E_direction": "X-Y",
+    "nu": 0.35,
+    "strength_mpa": 40.83732845379689,
+    "strength_xy_mpa": 40.83732845379689,
+    "strength_z_mpa": 18.133333333333333,
+    "density_g_cm3": 1.09,
+    "source": "bambu-pa6-cf-tds",
+    "note": "Bambu PA6-CF TDS V3.0: dry X-Y tensile modulus 4430 MPa x0.290 humid and strength 102 MPa x0.500 humid (Polymaker PA6-CF20 V1.1 wet / dry), each x0.8 print. For parts printed so their main stress runs in the layers",
+    "constants_hash": "b0989f2b1b1c8bdc"
+   },
+   "layer_check": {
+    "normal": [
+     0.0,
+     1.0,
+     0.0
+    ],
+    "safety_factor": 1.78,
+    "governed_by": "bond",
+    "safety_factor_bond": 1.78,
+    "safety_factor_bulk": 3.2,
+    "allowables_mpa": {
+     "xy": 40.837,
+     "z": 18.133,
+     "shear": 10.469
+    },
+    "shear_basis": "interlayer shear allowable assumed to be strength_z / sqrt(3), the ratio von Mises gives an isotropic solid: no filament data sheet gives one; pass strength_shear from a coupon",
+    "worst": {
+     "element": 8644,
+     "corner_mm": [
+      31.649,
+      51.315,
+      -7.935
+     ],
+     "element_centre_mm": [
+      32.581,
+      53.359,
+      -6.769
+     ],
+     "sigma_n_mpa": 3.848,
+     "tau_n_mpa": 5.459,
+     "von_mises_mpa": 11.482,
+     "bond": 0.563,
+     "bulk": 0.2812,
+     "mode": "bond"
+    },
+    "judged_elements": 44241,
+    "assumptions": "the stress of the linear, isotropic solve (one modulus), resolved on the layer plane at every element corner; bond: the opening stress across the layers and the shear along them, in quadratic interaction, against the across-layer and interlayer shear allowables (compression across the layers left out); bulk: von Mises against the in-plane allowable. A screening check for a transversely isotropic print, not a qualification: an anisotropic part can carry its load differently, and walls, seams and infill are not modelled. Test a printed part"
+   },
+   "shear_half_sz": {
+    "safety_factor": 1.57,
+    "governed_by": "bond",
+    "safety_factor_bond": 1.57,
+    "allowables_mpa": {
+     "xy": 40.837,
+     "z": 18.133,
+     "shear": 9.067
+    }
+   },
+   "target": 2.0,
+   "gate_sf": 3.2,
+   "gate_material": "pa6_cf_xy",
+   "verdict_sf": 3.2,
+   "turret_layer_aware_sf": null,
+   "layer_check_governs": true,
+   "layer_check_ok": false
+  },
+  {
+   "part": "hip_frame",
+   "case": "R1",
+   "material": "PA6-CF across the layers (humid)",
+   "material_data": {
+    "key": "pa6_cf_z",
+    "name": "PA6-CF across the layers (humid)",
+    "E_mpa": 487.66846655140307,
+    "E_direction": "Z",
+    "nu": 0.35,
+    "strength_mpa": 18.133333333333333,
+    "strength_xy_mpa": 40.83732845379689,
+    "strength_z_mpa": 18.133333333333333,
+    "density_g_cm3": 1.09,
+    "source": "bambu-pa6-cf-tds",
+    "note": "Bambu PA6-CF TDS V3.0: dry Z tensile modulus 2170 MPa x0.281 humid and strength 48 MPa x0.472 humid (Polymaker PA6-CF20 V1.1 wet / dry), each x0.8 print. The safe strength when the stress crosses the layers",
+    "constants_hash": "813009441363f213"
+   },
+   "layer_check": {
+    "normal": [
+     0.0,
+     1.0,
+     0.0
+    ],
+    "safety_factor": 1.34,
+    "governed_by": "bond",
+    "safety_factor_bond": 1.34,
+    "safety_factor_bulk": 3.61,
+    "allowables_mpa": {
+     "xy": 40.837,
+     "z": 18.133,
+     "shear": 10.469
+    },
+    "shear_basis": "interlayer shear allowable assumed to be strength_z / sqrt(3), the ratio von Mises gives an isotropic solid: no filament data sheet gives one; pass strength_shear from a coupon",
+    "worst": {
+     "element": 167880,
+     "corner_mm": [
+      -73.75,
+      -26.488,
+      -63.128
+     ],
+     "element_centre_mm": [
+      -74.216,
+      -26.106,
+      -63.351
+     ],
+     "sigma_n_mpa": 10.421,
+     "tau_n_mpa": 5.005,
+     "von_mises_mpa": 10.538,
+     "bond": 0.7476,
+     "bulk": 0.258,
+     "mode": "bond"
+    },
+    "judged_elements": 162952,
+    "assumptions": "the stress of the linear, isotropic solve (one modulus), resolved on the layer plane at every element corner; bond: the opening stress across the layers and the shear along them, in quadratic interaction, against the across-layer and interlayer shear allowables (compression across the layers left out); bulk: von Mises against the in-plane allowable. A screening check for a transversely isotropic print, not a qualification: an anisotropic part can carry its load differently, and walls, seams and infill are not modelled. Test a printed part"
+   },
+   "shear_half_sz": {
+    "safety_factor": 1.25,
+    "governed_by": "bond",
+    "safety_factor_bond": 1.25,
+    "allowables_mpa": {
+     "xy": 40.837,
+     "z": 18.133,
+     "shear": 9.067
+    }
+   },
+   "target": 1.2,
+   "gate_sf": 1.6,
+   "gate_material": "pa6_cf_z",
+   "verdict_sf": 1.6,
+   "turret_layer_aware_sf": null,
+   "layer_check_governs": true,
+   "layer_check_ok": true
+  },
+  {
+   "part": "hip_frame",
+   "case": "E1",
+   "material": "PA6-CF across the layers (humid)",
+   "material_data": {
+    "key": "pa6_cf_z",
+    "name": "PA6-CF across the layers (humid)",
+    "E_mpa": 487.66846655140307,
+    "E_direction": "Z",
+    "nu": 0.35,
+    "strength_mpa": 18.133333333333333,
+    "strength_xy_mpa": 40.83732845379689,
+    "strength_z_mpa": 18.133333333333333,
+    "density_g_cm3": 1.09,
+    "source": "bambu-pa6-cf-tds",
+    "note": "Bambu PA6-CF TDS V3.0: dry Z tensile modulus 2170 MPa x0.281 humid and strength 48 MPa x0.472 humid (Polymaker PA6-CF20 V1.1 wet / dry), each x0.8 print. The safe strength when the stress crosses the layers",
+    "constants_hash": "813009441363f213"
+   },
+   "layer_check": {
+    "normal": [
+     0.0,
+     1.0,
+     0.0
+    ],
+    "safety_factor": 1.42,
+    "governed_by": "bond",
+    "safety_factor_bond": 1.42,
+    "safety_factor_bulk": 3.61,
+    "allowables_mpa": {
+     "xy": 40.837,
+     "z": 18.133,
+     "shear": 10.469
+    },
+    "shear_basis": "interlayer shear allowable assumed to be strength_z / sqrt(3), the ratio von Mises gives an isotropic solid: no filament data sheet gives one; pass strength_shear from a coupon",
+    "worst": {
+     "element": 182525,
+     "corner_mm": [
+      95.0,
+      -25.1,
+      -58.686
+     ],
+     "element_centre_mm": [
+      94.688,
+      -25.239,
+      -58.811
+     ],
+     "sigma_n_mpa": 9.491,
+     "tau_n_mpa": 4.939,
+     "von_mises_mpa": 9.523,
+     "bond": 0.7046,
+     "bulk": 0.2332,
+     "mode": "bond"
+    },
+    "judged_elements": 162952,
+    "assumptions": "the stress of the linear, isotropic solve (one modulus), resolved on the layer plane at every element corner; bond: the opening stress across the layers and the shear along them, in quadratic interaction, against the across-layer and interlayer shear allowables (compression across the layers left out); bulk: von Mises against the in-plane allowable. A screening check for a transversely isotropic print, not a qualification: an anisotropic part can carry its load differently, and walls, seams and infill are not modelled. Test a printed part"
+   },
+   "shear_half_sz": {
+    "safety_factor": 1.32,
+    "governed_by": "bond",
+    "safety_factor_bond": 1.32,
+    "allowables_mpa": {
+     "xy": 40.837,
+     "z": 18.133,
+     "shear": 9.067
+    }
+   },
+   "target": 2.0,
+   "gate_sf": 1.6,
+   "gate_material": "pa6_cf_z",
+   "verdict_sf": 1.6,
+   "turret_layer_aware_sf": null,
+   "layer_check_governs": true,
+   "layer_check_ok": false
+  },
+  {
+   "part": "hip_frame",
+   "case": "E3o",
+   "material": "PA6-CF across the layers (humid)",
+   "material_data": {
+    "key": "pa6_cf_z",
+    "name": "PA6-CF across the layers (humid)",
+    "E_mpa": 487.66846655140307,
+    "E_direction": "Z",
+    "nu": 0.35,
+    "strength_mpa": 18.133333333333333,
+    "strength_xy_mpa": 40.83732845379689,
+    "strength_z_mpa": 18.133333333333333,
+    "density_g_cm3": 1.09,
+    "source": "bambu-pa6-cf-tds",
+    "note": "Bambu PA6-CF TDS V3.0: dry Z tensile modulus 2170 MPa x0.281 humid and strength 48 MPa x0.472 humid (Polymaker PA6-CF20 V1.1 wet / dry), each x0.8 print. The safe strength when the stress crosses the layers",
+    "constants_hash": "813009441363f213"
+   },
+   "layer_check": {
+    "normal": [
+     0.0,
+     1.0,
+     0.0
+    ],
+    "safety_factor": 1.92,
+    "governed_by": "bond",
+    "safety_factor_bond": 1.92,
+    "safety_factor_bulk": 4.6,
+    "allowables_mpa": {
+     "xy": 40.837,
+     "z": 18.133,
+     "shear": 10.469
+    },
+    "shear_basis": "interlayer shear allowable assumed to be strength_z / sqrt(3), the ratio von Mises gives an isotropic solid: no filament data sheet gives one; pass strength_shear from a coupon",
+    "worst": {
+     "element": 179933,
+     "corner_mm": [
+      95.0,
+      -65.1,
+      63.5
+     ],
+     "element_centre_mm": [
+      94.498,
+      -65.706,
+      65.112
+     ],
+     "sigma_n_mpa": 7.866,
+     "tau_n_mpa": 3.03,
+     "von_mises_mpa": 7.101,
+     "bond": 0.5215,
+     "bulk": 0.1739,
+     "mode": "bond"
+    },
+    "judged_elements": 175764,
+    "assumptions": "the stress of the linear, isotropic solve (one modulus), resolved on the layer plane at every element corner; bond: the opening stress across the layers and the shear along them, in quadratic interaction, against the across-layer and interlayer shear allowables (compression across the layers left out); bulk: von Mises against the in-plane allowable. A screening check for a transversely isotropic print, not a qualification: an anisotropic part can carry its load differently, and walls, seams and infill are not modelled. Test a printed part"
+   },
+   "shear_half_sz": {
+    "safety_factor": 1.83,
+    "governed_by": "bond",
+    "safety_factor_bond": 1.83,
+    "allowables_mpa": {
+     "xy": 40.837,
+     "z": 18.133,
+     "shear": 9.067
+    }
+   },
+   "target": 2.0,
+   "gate_sf": 2.04,
+   "gate_material": "pa6_cf_z",
+   "verdict_sf": 2.04,
+   "turret_layer_aware_sf": null,
+   "layer_check_governs": true,
+   "layer_check_ok": false
+  },
+  {
+   "part": "hip_frame",
+   "case": "E3i",
+   "material": "PA6-CF across the layers (humid)",
+   "material_data": {
+    "key": "pa6_cf_z",
+    "name": "PA6-CF across the layers (humid)",
+    "E_mpa": 487.66846655140307,
+    "E_direction": "Z",
+    "nu": 0.35,
+    "strength_mpa": 18.133333333333333,
+    "strength_xy_mpa": 40.83732845379689,
+    "strength_z_mpa": 18.133333333333333,
+    "density_g_cm3": 1.09,
+    "source": "bambu-pa6-cf-tds",
+    "note": "Bambu PA6-CF TDS V3.0: dry Z tensile modulus 2170 MPa x0.281 humid and strength 48 MPa x0.472 humid (Polymaker PA6-CF20 V1.1 wet / dry), each x0.8 print. The safe strength when the stress crosses the layers",
+    "constants_hash": "813009441363f213"
+   },
+   "layer_check": {
+    "normal": [
+     0.0,
+     1.0,
+     0.0
+    ],
+    "safety_factor": 2.99,
+    "governed_by": "bond",
+    "safety_factor_bond": 2.99,
+    "safety_factor_bulk": 4.98,
+    "allowables_mpa": {
+     "xy": 40.837,
+     "z": 18.133,
+     "shear": 10.469
+    },
+    "shear_basis": "interlayer shear allowable assumed to be strength_z / sqrt(3), the ratio von Mises gives an isotropic solid: no filament data sheet gives one; pass strength_shear from a coupon",
+    "worst": {
+     "element": 182633,
+     "corner_mm": [
+      95.0,
+      -25.1,
+      -58.686
+     ],
+     "element_centre_mm": [
+      94.688,
+      -25.239,
+      -58.811
+     ],
+     "sigma_n_mpa": -5.169,
+     "tau_n_mpa": 3.507,
+     "von_mises_mpa": 6.541,
+     "bond": 0.335,
+     "bulk": 0.1602,
+     "mode": "bond"
+    },
+    "judged_elements": 176081,
+    "assumptions": "the stress of the linear, isotropic solve (one modulus), resolved on the layer plane at every element corner; bond: the opening stress across the layers and the shear along them, in quadratic interaction, against the across-layer and interlayer shear allowables (compression across the layers left out); bulk: von Mises against the in-plane allowable. A screening check for a transversely isotropic print, not a qualification: an anisotropic part can carry its load differently, and walls, seams and infill are not modelled. Test a printed part"
+   },
+   "shear_half_sz": {
+    "safety_factor": 2.59,
+    "governed_by": "bond",
+    "safety_factor_bond": 2.59,
+    "allowables_mpa": {
+     "xy": 40.837,
+     "z": 18.133,
+     "shear": 9.067
+    }
+   },
+   "target": 2.0,
+   "gate_sf": 2.21,
+   "gate_material": "pa6_cf_z",
+   "verdict_sf": 2.21,
+   "turret_layer_aware_sf": null,
+   "layer_check_governs": false,
+   "layer_check_ok": true
+  },
+  {
+   "part": "hip_frame",
+   "case": "R3o",
+   "material": "PA6-CF across the layers (humid)",
+   "material_data": {
+    "key": "pa6_cf_z",
+    "name": "PA6-CF across the layers (humid)",
+    "E_mpa": 487.66846655140307,
+    "E_direction": "Z",
+    "nu": 0.35,
+    "strength_mpa": 18.133333333333333,
+    "strength_xy_mpa": 40.83732845379689,
+    "strength_z_mpa": 18.133333333333333,
+    "density_g_cm3": 1.09,
+    "source": "bambu-pa6-cf-tds",
+    "note": "Bambu PA6-CF TDS V3.0: dry Z tensile modulus 2170 MPa x0.281 humid and strength 48 MPa x0.472 humid (Polymaker PA6-CF20 V1.1 wet / dry), each x0.8 print. The safe strength when the stress crosses the layers",
+    "constants_hash": "813009441363f213"
+   },
+   "layer_check": {
+    "normal": [
+     0.0,
+     1.0,
+     0.0
+    ],
+    "safety_factor": 0.94,
+    "governed_by": "bond",
+    "safety_factor_bond": 0.94,
+    "safety_factor_bulk": 2.26,
+    "allowables_mpa": {
+     "xy": 40.837,
+     "z": 18.133,
+     "shear": 10.469
+    },
+    "shear_basis": "interlayer shear allowable assumed to be strength_z / sqrt(3), the ratio von Mises gives an isotropic solid: no filament data sheet gives one; pass strength_shear from a coupon",
+    "worst": {
+     "element": 179933,
+     "corner_mm": [
+      95.0,
+      -65.1,
+      63.5
+     ],
+     "element_centre_mm": [
+      94.498,
+      -65.706,
+      65.112
+     ],
+     "sigma_n_mpa": 16.033,
+     "tau_n_mpa": 6.177,
+     "von_mises_mpa": 14.475,
+     "bond": 1.0629,
+     "bulk": 0.3545,
+     "mode": "bond"
+    },
+    "judged_elements": 175764,
+    "assumptions": "the stress of the linear, isotropic solve (one modulus), resolved on the layer plane at every element corner; bond: the opening stress across the layers and the shear along them, in quadratic interaction, against the across-layer and interlayer shear allowables (compression across the layers left out); bulk: von Mises against the in-plane allowable. A screening check for a transversely isotropic print, not a qualification: an anisotropic part can carry its load differently, and walls, seams and infill are not modelled. Test a printed part"
+   },
+   "shear_half_sz": {
+    "safety_factor": 0.9,
+    "governed_by": "bond",
+    "safety_factor_bond": 0.9,
+    "allowables_mpa": {
+     "xy": 40.837,
+     "z": 18.133,
+     "shear": 9.067
+    }
+   },
+   "target": 1.0,
+   "gate_sf": 1.0,
+   "gate_material": "pa6_cf_z",
+   "verdict_sf": 1.0,
+   "turret_layer_aware_sf": null,
+   "layer_check_governs": true,
+   "layer_check_ok": false
+  }
+ ]
+}
