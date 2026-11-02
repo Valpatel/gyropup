@@ -96,7 +96,7 @@ the body's to order, with its build pack):
 
 - **The plug:** the DT06-12SA with its W12S wedge and 12 size-16 sockets (`te-dt06-12sa-kit`, as the stand's), in a TE
   Deutsch 1011-248-1205 90 deg backshell that turns the harness down at the plug. The plug stands 45 mm proud of the
-  base's -y pad, its centre 19 mm above the TM face, and comes out 30 mm further: that box stays clear of the riser and
+  base's -y pad, its centre 105 mm above the TM face (19 mm above the pan base's foot, frame T), and comes out 30 mm further: that box stays clear of the riser and
   the deck (exports/turret/mount.json `dt12`).
 - **The pigtail:** 300 mm, from the plug down through a grommet in the top deck at the robot's **right rear, (-130, -60)**
   in the robot frame. The receptacle is on the turret's -y side (the robot's right) and the TM dowels let the turret go

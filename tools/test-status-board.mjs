@@ -118,7 +118,8 @@ test('mass against D71: the P3 ledger, each leg and the body and head', () => {
   assert.match(readFileSync(path.join(root, 'docs/decisions.yaml'), 'utf8'), /id: D71[\s\S]*?37\.0 kg as-built gate/);
   const strip = progress.querySelector('.sb-mass');
   assert.equal(text(strip.querySelector('.sb-stat-value')), `${p3.total_kg} kg`);
-  assert.match(text(strip), /Under D71’s 37\.0 kg as-built gate/);
+  // the verdict follows the ledger: Under at or below the gate, Over above it (the ledger moves as the CAD does)
+  assert.match(text(strip), new RegExp(`${p3.total_kg <= p3.budget.robot_kg ? 'Under' : 'Over'} D71’s 37\\.0 kg as-built gate`));
   const d72 = Number(readFileSync(path.join(root, 'docs/decisions.yaml'), 'utf8').match(/- id: D72\n[\s\S]*?\(([\d.]+) kg\)/)[1]);
   assert.match(text(strip), new RegExp(`ceiling is ${d72.toFixed(2)} kg \\(D72\\)`));
   assert.equal(published.summary.mass.ceiling, d72);
@@ -133,9 +134,11 @@ test('mass against D71: the P3 ledger, each leg and the body and head', () => {
   const one = collectStatus({ ...real, json: p => { const v = real.json(p); return p === 'exports/body/mass.json' ? { ...v, P3: { ...v.P3, rows: v.P3.rows.map((row, i) => i ? row : { ...row, basis: 'weighed, kitchen scale' }) } } : v; } });
   assert.equal(one.summary.mass.weighed, weighed + 1);
   assert.match(renderBoard(one), new RegExp(`${weighed + 1} of ${p3.rows.length} rows weighed`));
-  assert.equal(meter(progress, 'leg', 'mass').value, `${p3.gate.leg_each_kg} kg`);
-  assert.equal(meter(progress, 'leg', 'mass').unit, `of ${p3.budget.legs_kg_each} kg`);
-  assert.equal(meter(progress, 'body', 'mass').value, `${p3.body_and_head_kg} kg`);
+  // the board's kilograms: two decimals, trailing zeros dropped, always one (37.0, 36.77, 11.28 for the ledger's 11.275)
+  const kg = v => { const t = Number(v).toFixed(2).replace(/\.?0+$/, ''); return t.includes('.') ? t : `${t}.0`; };
+  assert.equal(meter(progress, 'leg', 'mass').value, `${kg(p3.gate.leg_each_kg)} kg`);
+  assert.equal(meter(progress, 'leg', 'mass').unit, `of ${kg(p3.budget.legs_kg_each)} kg`);
+  assert.equal(meter(progress, 'body', 'mass').value, `${kg(p3.body_and_head_kg)} kg`);
   assert.equal(meter(progress, 'body', 'mass').state, p3.body_and_head_kg <= p3.budget.body_and_head_kg ? 'pass' : 'fail');
 });
 
