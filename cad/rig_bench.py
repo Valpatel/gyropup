@@ -498,7 +498,9 @@ def coupon_wheel_foot():
     return engrave(s, 'W', -10.0, 0, t, 5)
 
 
-C4_CUT_BACK = 40.0                  # mm: C4 keeps the upper link's knee end from this far back along the arm
+C4_CUT_BACK = 90.0                  # mm: C4 keeps the upper link's knee end from this far back along the arm: its last 20 mm
+                                    # go in the clamp, which leaves about 50 mm (1.4 x the arm's depth) of free arm before the
+                                    # stub's root, so the clamp does not reach the root's stress (the FEA holds the cut face)
 
 
 def coupon_knee_stub_link(stub: str):

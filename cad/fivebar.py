@@ -867,9 +867,9 @@ def wheel_link():
     return k
 
 
-WHEEL_WASHER = (6.4, 11.0, 1.6)   # DIN 433 M6 under each BotWheel screw's head on the foot's inner face (D74): 63 mm2
+WHEEL_WASHER = (6.4, 11.0, 1.6)   # DIN 433 M6 under each BotWheel screw's head on the foot's inner face (D74): 61 mm2
                                   # of plastic under it instead of 44 under a bare Ø10 head; its Ø11 reaches r 23.5 in the
-                                  # hub's Ø48 bore. The screw goes 1.6 mm less into the wheel: 7.6 mm (1.3 d)
+                                  # hub's Ø48 bore. The screw goes 1.6 mm less into the wheel: about 7.4 mm (1.2 d)
 HUB_ROOT_GAP = 2.0           # mm from the outer 61812's face (y apex_bearing[1]) to where a grown hub root may start
 HUB_ROOT_R_MAX = 37.5        # the front link's seat bore is r 39 and turns round the hub: 1.5 mm of radial room
 

@@ -58,8 +58,8 @@ They take hours, not days, and each one changes a number in the CAD:
 |---|---|---|
 | **C1, the bores** | `coupon_knee_eye`, `coupon_frame_pins`, `coupon_knee_boss`, `coupon_apex_eye`, `coupon_hub_stub`, `coupon_hub_face`, `coupon_frame_ring` (each at -0.1 / 0 / +0.1 mm) | The printed-hole error. `PRINT_HOLE_COMP` (0.125 mm on the diameter, the middle of an assumed -0.20 to -0.05 mm) sets the sleeve and dowel holes; set it from C1 before printing the links. The 6301 and 61812 seats and the stop-pin holes are drawn at their own fits (`KC`, `AC`, `STOP_HOLE_PLAY` in `cad/fivebar.py`), so C1's numbers change them by hand. Every seat coupon opens on the bed face with the leg's lead-in, as the parts do |
 | **C2, the insert** | `insert_coupon`, `puller_m5` | The M5 insert's pull-out against the hip-frame mount's preload |
-| **C3, the clamp** | `coupon_c3_sleeved`, `coupon_c3_plain` (the frame's flange, M5), `coupon_c3_wheel` (the wheel link's foot, M6 on a DIN 433) | How much preload creep takes from a clamped printed stack: the re-torque schedule, and whether the wheel joint keeps the clamp it needs (below) |
-| **C4, the boss root** | `coupon_c4_today`, `coupon_c4_pr2` (the upper link's knee end with dev's stub and the drawn one) | The interlayer strength the layer check assumes. The FEA of the coupon itself predicts the load at which each root peels (section 8); the measured load over the predicted one is the factor on the assumed S_z and S_s |
+| **C3, the clamp** | `coupon_c3_sleeved`, `coupon_c3_plain` (the frame's flange, M5), `coupon_c3_wheel` (the wheel link's foot, M6 on a DIN 433) | How much preload creep takes from a clamped printed stack, reported per mm of clamped plastic and scaled to each joint: the re-torque schedule, and whether the wheel joint keeps the clamp it needs (below) |
+| **C4, the boss root** | `coupon_c4_today`, `coupon_c4_pr2` (the upper link's knee end with dev's stub and the drawn one) | The interlayer strength the layer check assumes. The FEA of the coupon itself predicts the load at which each root peels (section 8); the measured load over the predicted one is the factor on the assumed S_z and S_s. Condition it humid first, as the prediction assumes |
 
 ## 3. Drying and printer set-up
 
@@ -216,14 +216,14 @@ Bold: under target. The strength column is what coupon C4 has to show for the ro
 
 The plots in the summary show these edges red. Bench test B4b (the hub on its adapter) and proof load P2 (the pins, section 7) are the physical checks.
 
-**Coupon C4's prediction** (`research/leg-preprint/evidence/c4-fea.json`, `research/leg-preprint/c4_fea.py`: the coupon itself at 1 kN, held at its cut face, loaded through the knee bore at the knee boss's mid-plane):
+**Coupon C4's prediction** (`research/leg-preprint/evidence/c4-fea.json`, `research/leg-preprint/c4_fea.py`: the coupon itself at 1 kN, held at its cut face 90 mm back, loaded through the knee bore at the knee boss's mid-plane):
 
 | Stub | Weakest direction | Predicted peel load (2 mm / 1.5 mm mesh) | Governed by | Bulk (in-layer) load |
 |---|---|---|---|---|
 | dev's (coupon_c4_today) | -x | 1,350 N / 1,420 N | bond | 3,390 N |
 | drawn (coupon_c4_pr2) | +z | 1,780 N / 1,800 N | bond | 3,750 N |
 
-Load C4 in the weakest direction. The measured peel load over the predicted one is the factor on the assumed S_z and S_s for every row above; the two stubs check that the drawn one gains what the FEA says.
+The prediction uses the humid PA6-CF rows, so condition C4 humid first (its sheet says how): a dry coupon reads about twice the prediction. Load it in the weakest direction. The measured peel load over the predicted one is the factor on the assumed S_z and S_s for every row above; the two stubs check that the drawn one gains what the FEA says.
 
 <!-- /gen:final-record -->
 
@@ -269,3 +269,9 @@ These are not drawn on this branch. The pre-print review
    picked: McMaster-Carr's pages returned no data today.
 6. **Mass.** The robot is at about 38.69 kg with this branch, against D71's 37.0 kg. All of 1-5 with the metal apex
    add 180-280 g a leg more.
+
+**For the next CAD revision, the one that takes C1's numbers.** The wheel link's hub root is a sharp corner, so its
+R1w number depends on the mesh. The #148 review found that a 1.5 mm root fillet fits: it sits at y 52.5-54, past the
+front link's outer face. `hub_root_fillet` draws it, but the cap in `wheel_link()` (`HUB_ROOT_R_MAX`) needs relaxing
+for that band first. It changes the FEA record, so it goes in with C1's hole sizes rather than ahead of the first
+print.

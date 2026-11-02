@@ -260,8 +260,7 @@ next to them.
 | **C3** sleeved through-bolt against a bolt on the plastic | the preload kept at 30 min, 24 h, 7 days and after a humid week; the creep step and the re-torque | [c3-through-bolt.csv](sheets/c3-through-bolt.csv) |
 | **C4** boss-root layer coupon (the knee stub), today's geometry and PR 2's | the load at which the root peels, against the FEA's prediction for the same coupon. It calibrates S_z and the unmeasured S_s | [c4-boss-root.csv](sheets/c4-boss-root.csv) |
 
-The B0 coupons need updating along with these. The `coupon_knee_boss` docstring and the bench page still describe
-the 6201, and its seat is 10 mm deep for the 12 mm-wide 6301. B4c (the M8 insert for the stop posts) is moot since
+The B0 coupons follow the leg in PR 2 (#148): the knee-boss coupon carries the 6301 at its full width. B4c (the M8 insert for the stop posts) is moot since
 D53. PR 2 (#148) draws C1–C4 in `cad/rig_bench.py`, and `c4_fea.py` predicts C4's peel load from an FEA of the coupon.
 
 **To print and test these, the owner needs:**

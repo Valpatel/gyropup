@@ -365,7 +365,7 @@ Each is one command. The tables above give its predicted numbers and its pass/fa
 | S3 jump | `... --test jump` | the load plate out; the tether on (150 mm of slack above the highest jump); the pack at or under the start voltage | inspect the knees, the adapters and the stop sleeves; compare with the simulation rerun at the measured J and tyre rate |
 | S4 drop | `... --test drop_150` | the carriage on the drop pin, 150 mm up; when the leg holds 300 mm (1 s), pull the pin; the run lasts 8 s | inspect as S3 |
 | S5 power cut, bumper high | `... --test power_off` | standing at 300 mm; release the pendant: the leg holds for the relay's 1.0 s, then the contactor opens | the carriage lands on the bumpers; compare the fall time with both predictions (undamped and damped): which one it matches says whether the damper works in a real fall |
-| S6 onto the leg's stops | `... --test power_off` with the bumpers shimmed down to 74 mm contact | only after B1 and the main session's rerun clear it | the knees, the eye sleeves, the pins and the 6201s inspected; the stop sleeves show no permanent set |
+| S6 onto the leg's stops | `... --test power_off` with the bumpers shimmed down to 74 mm contact | only after B1 and the main session's rerun clear it | the knees, the eye sleeves, the pins and the 6301s inspected; the stop sleeves show no permanent set |
 
 **The packs.** Jumps and drops start at or under the start voltage (B6). The runner reads the motors' VBUS before it
 arms and refuses above it.

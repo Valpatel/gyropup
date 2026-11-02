@@ -751,22 +751,27 @@ COUPONS = [
                  'on a DIN 433 at 1.8 N m with threadlocker into a 5 mm steel plate (the BotWheel\'s flange), through the '
                  'load cell: the clamp left after creep against the 1331 N the wheel\'s flange needs',
      'settles': 'preload kept over 30 min, 24 h, 7 days and a humid week, sleeved against plain; the creep step the preload '
-                'table screens; the re-torque schedule',
+                'table screens; the re-torque schedule. A block clamps 13 mm of plastic, the frame\'s through-bolt about 77 mm: '
+                'report the creep as mm per mm of clamped plastic and scale it to the frame (the washer\'s pocket and the '
+                'frame\'s 2.45 mm walls are not in the block: B4 checks those on the frame)',
      'sheet': 'c3-through-bolt.csv',
-     'columns': ['sample', 'kind', 'torque_nm', 'preload_0_n', 'preload_30min_n', 'preload_24h_n', 'preload_7d_n',
+     'columns': ['sample', 'kind', 'clamped_length_mm', 'torque_nm', 'preload_0_n', 'preload_30min_n', 'preload_24h_n', 'preload_7d_n',
                  'preload_humid_7d_n', 'retorque_nm', 'notes'],
      'rows': [[s, k] for s, k in (('a', 'sleeved'), ('b', 'sleeved'), ('c', 'plastic'), ('d', 'plastic'), ('e', 'wheel'),
                                   ('f', 'wheel'))]},
-    {'id': 'C4', 'name': 'boss-root layer coupon (the knee eye\'s stub)', 'prints': 'the upper link\'s knee end, cut 40 mm back from the '
+    {'id': 'C4', 'name': 'boss-root layer coupon (the knee eye\'s stub)', 'prints': 'the upper link\'s knee end, cut 90 mm back from the '
      'knee, printed as the link (stub up): coupon_c4_today (dev\'s stub) and coupon_c4_pr2 (the drawn one), two each',
-     'features': 'the two DIN 179 sleeves bonded in and the Ø12 knee pin through them; the arm\'s cut end clamped square in '
-                 'the press cage; the load on the pin at the knee boss\'s mid-plane (26 mm past the link\'s outer face), in the '
-                 'direction c4_fea.py finds weakest',
+     'features': 'conditioned humid before the test, as the prediction assumes (c4_fea.py uses the humid PA6-CF rows): '
+                 'weighed dry, then held over water (or at 70 C / 62 % RH, ISO 1110) until the mass stops rising, and weighed '
+                 'again; a dry coupon reads about 2 x the prediction and must not be compared with it. The two DIN 179 sleeves '
+                 'bonded in and the Ø12 knee pin through them; the arm\'s last 20 mm clamped square in the press cage; the load '
+                 'on the pin at the knee boss\'s mid-plane (26 mm past the link\'s outer face), in the direction c4_fea.py '
+                 'finds weakest',
      'settles': 'the load at which the stub\'s root peels (or the arm breaks) against c4_fea.py\'s prediction for the same '
                 'coupon (docs/leg-print-package.md section 8): measured over predicted is the factor on the S_z and S_s the layer check assumes',
      'sheet': 'c4-boss-root.csv',
-     'columns': ['sample', 'stub', 'load_at_first_whitening_n', 'load_at_failure_n', 'failure_plane', 'pin_deflection_at_1kn_mm',
-                 'notes'],
+     'columns': ['sample', 'stub', 'mass_dry_g', 'mass_conditioned_g', 'conditioning', 'load_at_first_whitening_n',
+                 'load_at_failure_n', 'failure_plane', 'pin_deflection_at_1kn_mm', 'notes'],
      'rows': [[s, g] for s, g in (('a', 'today'), ('b', 'today'), ('c', 'pr2'), ('d', 'pr2'))]},
 ]
 
@@ -1007,14 +1012,16 @@ def final_block(fr):
     out += ['', 'The plots in the summary show these edges red. Bench test B4b (the hub on its adapter) and proof load P2 '
             '(the pins, section 7) are the physical checks.', '',
             f"**Coupon C4's prediction** (`{C4_EVIDENCE}`, `research/leg-preprint/c4_fea.py`: the coupon itself at 1 kN, "
-            "held at its cut face, loaded through the knee bore at the knee boss's mid-plane):", '',
+            "held at its cut face 90 mm back, loaded through the knee bore at the knee boss's mid-plane):", '',
             '| Stub | Weakest direction | Predicted peel load (2 mm / 1.5 mm mesh) | Governed by | Bulk (in-layer) load |',
             '|---|---|---|---|---|']
     for stub, name in (('today', "dev's (coupon_c4_today)"), ('pr2', 'drawn (coupon_c4_pr2)')):
         c = c4[stub]
         out.append(f"| {name} | {c['direction']} | {c['peel_n']:,} N / {c['peel_n_fine']:,} N | {c['governed_by']} | {c['bulk_n']:,} N |")
-    out += ['', 'Load C4 in the weakest direction. The measured peel load over the predicted one is the factor on the '
-            'assumed S_z and S_s for every row above; the two stubs check that the drawn one gains what the FEA says.', '', BLOCK[1]]
+    out += ['', 'The prediction uses the humid PA6-CF rows, so condition C4 humid first (its sheet says how): a dry coupon '
+            'reads about twice the prediction. Load it in the weakest direction. The measured peel load over the predicted one '
+            'is the factor on the assumed S_z and S_s for every row above; the two stubs check that the drawn one gains what '
+            'the FEA says.', '', BLOCK[1]]
     return '\n'.join(out)
 
 
