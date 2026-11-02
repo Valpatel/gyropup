@@ -23,9 +23,20 @@ import numpy as np
 import onnxruntime as ort
 
 HERE = Path(__file__).resolve().parents[1]
+
 sys.path.insert(0, str(HERE))
 sys.path.insert(0, str(HERE / 'scripts'))
 from play import COURSE, SECONDS, command_at  # noqa: E402
+
+
+def _repo_relative(path: Path) -> str:
+    """The model folder as a repo-relative POSIX path, so the published metrics never hold a home path (#141)."""
+    path = Path(path).resolve()
+    try:
+        return path.relative_to(HERE.parent).as_posix()
+    except ValueError:
+        return path.name
+
 
 LEGS = ('hip_l', 'knee_l', 'hip_r', 'knee_r')
 WHEELS = ('wheel_l', 'wheel_r')
@@ -152,7 +163,7 @@ def main():
     ew = np.array(log['wz']) - np.array(log['cmd_wz'])
     res = {
         'simulator': f'MuJoCo {mujoco.__version__} CPU, {dt * 1000:.0f} ms timestep, full robot.xml (turret held by PD)',
-        'model': str(Path(g.xml).parent), 'model_mass_kg': g.total_mass, 'policy': str(a.onnx.name), 'command_delay_ms': a.delay_ms, 'fell_at_s': fell_at,
+        'model': _repo_relative(Path(g.xml).parent), 'model_mass_kg': g.total_mass, 'policy': str(a.onnx.name), 'command_delay_ms': a.delay_ms, 'fell_at_s': fell_at,
         'rms_vx_error_mps': float(np.sqrt(np.mean(ev[settled] ** 2))),
         'rms_yaw_rate_error_radps': float(np.sqrt(np.mean(ew[settled] ** 2))),
         'max_abs_pitch_deg': float(np.max(np.abs(log['pitch']))),

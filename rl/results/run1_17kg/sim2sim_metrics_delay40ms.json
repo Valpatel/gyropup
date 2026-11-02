@@ -1,6 +1,6 @@
 {
  "simulator": "MuJoCo 3.11.0 CPU, 1 ms timestep, full robot.xml (turret held by PD)",
- "model": "/home/scubasonar/Code/gyropup/rl/results/trained_model",
+ "model": "rl/results/trained_model",
  "model_mass_kg": 17.028666,
  "policy": "policy.onnx",
  "command_delay_ms": 40.0,
