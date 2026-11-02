@@ -284,24 +284,30 @@ def hip_of(run: dict) -> float:
     return max(run['peak_joint_force_n'].get('hip_f', 0), run['peak_joint_force_n'].get('hip_r', 0))
 
 
-def _joints(run: dict, rec: dict, lf: float, hub: bool = False):
-    """The larger of the knee's and the hip's ratio to the record's landing (and, for a power cut, the hub torque's to the
-    60 N m cap the record's hub carries): a row of a landing case is scaled by its worst joint."""
-    k, h = knee_of(run) * lf / rec['knee_dyn_n'], hip_of(run) * lf / rec['hip_dyn_n']
-    g = (run.get('peak_gearbox_nm') or 0.0) / rec['cap_nm'] if hub else 0.0
-    f = max(k, h, g)
-    what = ('knee' if f == k else 'hip' if f == h else 'hub torque')
-    txt = {'knee': f"knee {knee_of(run) * lf:.0f} N against {rec['knee_dyn_n']:.0f} N",
-           'hip': f"hip {hip_of(run) * lf:.0f} N against {rec['hip_dyn_n']:.0f} N",
-           'hub torque': f"hub {run.get('peak_gearbox_nm') or 0:.0f} N m against {rec['cap_nm']:.0f}"}[what]
-    return f, txt
+KNEE_SIDE = {'upper_link', 'front_link', 'wheel_link'}           # the parts a knee pin loads
+HIP_SIDE = {'hip_frame', 'output_adapter', 'upper_link'}           # the parts the hip joint and the motor's hub load
 
 
-def scale_of(case: str, run: dict, rec: dict, cap: float, lf: float):
+def _joints(part: str, run: dict, rec: dict, lf: float, hub: bool = False):
+    """A landing case's row scaled by the worst of the joints its part carries: the knee's ratio to the record's landing
+    for the links, the hip's for the hip side, and (for a power cut) the backdriven hub torque's to the 60 N m cap the
+    record's hub carries."""
+    cand = []
+    if part in KNEE_SIDE or part not in HIP_SIDE:
+        cand.append((knee_of(run) * lf / rec['knee_dyn_n'], f"knee {knee_of(run) * lf:.0f} N against {rec['knee_dyn_n']:.0f} N"))
+    if part in HIP_SIDE:
+        cand.append((hip_of(run) * lf / rec['hip_dyn_n'], f"hip {hip_of(run) * lf:.0f} N against {rec['hip_dyn_n']:.0f} N"))
+        if hub:
+            g = run.get('peak_gearbox_nm') or 0.0
+            cand.append((g / rec['cap_nm'], f"hub {g:.0f} N m against {rec['cap_nm']:.0f}"))
+    return max(cand)
+
+
+def scale_of(part: str, case: str, run: dict, rec: dict, cap: float, lf: float):
     """[(load ratio day-one / record, target, what it is)] for a FEA row's case under the powered runs (the jump at the
     cap: its landing and its push), or [] where they do not load it. lf scales the simulated forces to the stand's mass."""
     if case in ('R1', 'R1F'):
-        f, txt = _joints(run, rec, lf)
+        f, txt = _joints(part, run, rec, lf)
         return [(f, LANDING_TARGET, f'landing: {txt}')]
     if case in ('R1w',):
         ax = run['peak_axle_force_n'] * lf
@@ -313,12 +319,12 @@ def scale_of(case: str, run: dict, rec: dict, cap: float, lf: float):
     return []                         # E1 (a turn): no turns on the stand; R3* (a power cut): power_cut_rows()
 
 
-def cut_scale(case: str, off: dict, rec: dict, lf: float):
+def cut_scale(part: str, case: str, off: dict, rec: dict, lf: float):
     """The same for a power cut onto the floor stop (target 1: a fault). The backdriven hub torque enters the cases that
     carry a hub torque."""
     g = off.get('peak_gearbox_nm') or 0.0
     if case in ('R1', 'R1F'):
-        f, txt = _joints(off, rec, lf, hub=True)
+        f, txt = _joints(part, off, rec, lf, hub=True)
         return [(f, FAULT_TARGET, f'power cut: {txt}')]
     if case in ('R1w', 'R3K', 'R3KF'):
         ax = off['peak_axle_force_n'] * lf
@@ -388,7 +394,7 @@ def derate(sim: dict, stand: dict) -> dict:
            'targets': {'landing': LANDING_TARGET, 'cap': 2.0, 'fault': FAULT_TARGET}, 'caps': {}, 'power_cut': {}}
     for cap in caps:
         run = runs[('jump', cap)]
-        rows = [_row(r, f, t, why, pla, LC) for r in fea for f, t, why in scale_of(r['case'], run, rec, cap, lf)]
+        rows = [_row(r, f, t, why, pla, LC) for r in fea for f, t, why in scale_of(r['part'], r['case'], run, rec, cap, lf)]
         out['caps'][str(cap)] = {'jump_mm': run['jump_height_mm'], 'axle_n': run['peak_axle_force_n'], 'knee_n': knee_of(run),
                                  'hub_nm': run.get('peak_gearbox_nm'), **_verdict(rows)}
     ok = [c for c in caps if out['caps'][str(c)]['all_ok']]
@@ -400,7 +406,7 @@ def derate(sim: dict, stand: dict) -> dict:
     for test in ('power_off', 'power_off_damped'):
         off = next((r for r in sim['runs'] if r['test'] == test), None)
         if off:
-            rows = [_row(r, f, t, why, pla, LC) for r in fea for f, t, why in cut_scale(r['case'], off, rec, lf)]
+            rows = [_row(r, f, t, why, pla, LC) for r in fea for f, t, why in cut_scale(r['part'], r['case'], off, rec, lf)]
             out['power_cut'][test] = {'cap_nm': off['cap_nm'], 'axle_n': off['peak_axle_force_n'], 'knee_n': knee_of(off),
                                       'hip_n': hip_of(off), 'hub_nm': off.get('peak_gearbox_nm'), **_verdict(rows)}
     out['stand_cap_nm'] = max(r['cap_nm'] for r in sim['runs'] if r['test'] != 'jump')
@@ -1098,8 +1104,11 @@ def write_doc(ctx):
               f"{w['target']:g} ({w['load']}). " + (
                   'With the modelled damping every row holds, so the damped cut waits for B1 to measure it. '
                   if dmp.get('all_ok') else 'Even with the modelled damping a row falls short, so no power cut is on the ladder. ')
-              + 'A pendant let go by accident is the same event, damped by the protection `--damper 0` keeps on (by how much, '
-              'B1 says): set the floor stop before every session, and inspect the parts above after any cut.']
+              + 'A pendant let go by accident is the same event, damped by the protection `--damper 0` keeps on, but by how '
+              'much only B1 says (it needs the dyno, an archived fixture: [bench tests](leg-bench-tests.md#b1-the-power-off-'
+              f"damping-decides-d39)). **Until then the accidental cut is the residual risk**: at worst {w['part'].replace('_', ' ')} "
+              f"at {w['sf']} of its strength. Keep a spare printed {w['part'].replace('_', ' ')} on hand, keep the clear zone, set the "
+              'floor stop before every session, and inspect the parts above after any cut.']
     L += ['', '**Stop the ladder** at any crack, whitening, click or creak, a screw\'s paint mark broken, a motor case over '
           '40 °C, or a fault. Photograph it, write it on #156. **Look first** at: the wheel link\'s hub root (where the hub '
           'leaves the link, inside the apex), the front link\'s apex ring, the upper links\' knee-eye stubs, the PLA adapters '
