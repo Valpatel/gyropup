@@ -20,8 +20,9 @@ async function layout(page){return page.evaluate(()=>{
  const box=e=>{const r=e.getBoundingClientRect();return{x:r.x,y:r.y,w:r.width,h:r.height,right:r.right,bottom:r.bottom};};
  const lum=color=>{const c=color.match(/[\d.]+/g).slice(0,3).map(Number).map(v=>{v/=255;return v<=.04045?v/12.92:((v+.055)/1.055)**2.4;});return .2126*c[0]+.7152*c[1]+.0722*c[2];};
  const style=getComputedStyle(status),a=lum(style.color),b=lum(style.backgroundColor);
- return {hero:box(hero),poster:box(poster),status:box(status),retry:box(status.querySelector('button')),contrast:(Math.max(a,b)+.05)/(Math.min(a,b)+.05),posterOpacity:getComputedStyle(poster).opacity,overflow:document.documentElement.scrollWidth>innerWidth+1};
+ return {scroll:{x:scrollX,y:scrollY},hero:box(hero),poster:box(poster),status:box(status),retry:box(status.querySelector('button')),contrast:(Math.max(a,b)+.05)/(Math.min(a,b)+.05),posterOpacity:getComputedStyle(poster).opacity,overflow:document.documentElement.scrollWidth>innerWidth+1};
 });}
+const settle=page=>page.evaluate(()=>new Promise(resolve=>requestAnimationFrame(()=>requestAnimationFrame(resolve))));
 async function capture(page,name){
  await page.evaluate(()=>Promise.all([document.fonts.load('600 12px Inter'),document.fonts.load('600 10px "JetBrains Mono"')]));
  // An intentionally held module can keep WebKit's document.fonts.ready pending.
@@ -35,13 +36,16 @@ try{
   await page.route('**/web/landing.js*',async route=>{await new Promise(resolve=>{release=resolve;requested();});await route.continue();});
   await page.goto(base+'/',{waitUntil:'domcontentloaded'});await request;
   await page.waitForFunction(()=>document.querySelector('.scene-fallback').naturalWidth===1024);await page.locator('.hero-scene').scrollIntoViewIfNeeded();
+  // Fonts and the screenshot are setup, not the handoff: an element screenshot taller than the viewport can resize
+  // it for the capture, and scroll anchoring may then leave the page scrolled. Take the baseline after both settle.
+  await capture(page,`loading-${width}`);await settle(page);
   const before=await layout(page);assert.equal(before.posterOpacity,'1');assert.equal(before.overflow,false);assert.ok(before.contrast>=4.5);
   assert.equal(await page.locator('#hero-loading').getAttribute('aria-busy'),'true');assert.match(await page.locator('#hero-loading-message').textContent(),/Loading/);
   assert.ok(await page.locator('#hero-loading').isVisible());assert.ok(await page.locator('#hero-loading button').isHidden());assert.equal(await page.locator('#robot-preview canvas').count(),0);
   assert.equal(await page.locator('.hero-loading-icon').evaluate(e=>getComputedStyle(e).animationName),'none','Reduced motion preserves static loading feedback');
   assert.ok(before.status.y>=before.poster.bottom&&before.status.bottom<=before.hero.bottom,'Status uses the caption band below the matching poster');
-  await capture(page,`loading-${width}`);release();await ready(page);
-  const after=await layout(page);assert.deepEqual(after.hero,before.hero);assert.deepEqual(after.poster,before.poster);
+  release();await ready(page);
+  const after=await layout(page);assert.deepEqual(after.scroll,before.scroll,'Loading the scene does not scroll the page');assert.deepEqual(after.hero,before.hero);assert.deepEqual(after.poster,before.poster);
   const boxes=await page.evaluate(()=>[document.querySelector('.scene-fallback'),document.querySelector('#robot-preview canvas')].map(e=>{const r=e.getBoundingClientRect();return [r.x,r.y,r.width,r.height];}));assert.deepEqual(boxes[0],boxes[1]);
   await page.evaluate(()=>{window.heroIdentity=window.__heroPreview;document.querySelector('#hero-loading button').click();});
   await page.waitForTimeout(100);assert.ok(await page.evaluate(()=>window.heroIdentity===window.__heroPreview),'A stale retry cannot reload a usable scene');

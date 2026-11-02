@@ -27,6 +27,7 @@
 | A fresh simulator clips the robot above the screen, but resizing or switching models repairs it | [Late overlay layout and camera insets](domains/playground-interactions.md) |
 | Loading poster and interactive hero jump in pose, scale or background | [Landing preview handoff](domains/landing-preview.md) |
 | Hero handoff assertion changes by a fraction of a pixel after font loading or a screenshot | [Separate font/capture setup from the handoff](inbox/2026-10-29-measure-handoff-after-font-and-capture-setup.md) |
+| Loading-hero test sees the hero move by whole pixels (e.g. 20 px at 844×390) only on CI or under load | [Take the baseline after the screenshot](inbox/2026-11-02-loading-hero-baseline-before-screenshot.md) |
 | Current pages show different robot versions, or archived balls miss a newly swapped barrel | [Current models and physics archives](domains/rendered-mechanisms.md#current-models-and-physics-archives) |
 | Model bounds pass but speech hides the robot, or a fresh wide phone looks worse than resized tests | [Visible mechanism layout checks](domains/rendered-mechanisms.md) |
 | A failed download looks unpublished, a partial model looks ready, or a retry overwrites newer data | [Loading readiness and report availability](domains/loading-readiness.md) |
