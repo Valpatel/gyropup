@@ -9,6 +9,7 @@ import { addModelPreviews } from '../web/model-links.js';
 import { writeMarkdownSite } from './site-markdown.mjs';
 import { SITE_CACHE_CONTROL, versionSiteAssets } from './site-cache.mjs';
 import { collectStatus, createReader, renderBoard, shallowHistory } from './status-board.mjs';
+import { collectTimeline, gitIn, imagePaths, renderTimeline } from './timeline.mjs';
 const root = path.resolve(import.meta.dirname, '..');
 const out = path.join(root, 'dist');
 const read = (p) => readFile(path.join(root, p), 'utf8');
@@ -58,6 +59,22 @@ for (const [file, options] of [['index.html', { compact: true }], ['designer/pro
   await writeFile(target, html.replace('<!-- status-board -->', renderBoard(status, options)));
 }
 await writeFile(path.join(out, 'site/status.json'), JSON.stringify({ generator: 'tools/status-board.mjs', history, ...status }, null, 2));
+// "What changed": the design changes on the integration branch, newest first, with the renders they changed before
+// and after, copied from git's own objects (tools/timeline.mjs). Without history the timeline says so.
+const changes = history ? collectTimeline(gitIn(root)) : [];
+await mkdir(path.join(out, 'site/timeline'), { recursive: true });
+for (const event of changes) {
+  const img = imagePaths(event);
+  if (!img) continue;
+  await writeFile(path.join(out, img.after), execFileSync('git', ['show', `${event.sha}:${event.image.file}`], { cwd: root, maxBuffer: 256 << 20 }));
+  if (img.before) await writeFile(path.join(out, img.before), execFileSync('git', ['show', `${event.sha}^1:${event.image.file}`], { cwd: root, maxBuffer: 256 << 20 }));
+}
+for (const [file, options] of [['index.html', { compact: true, show: 4 }], ['designer/progress.html', { show: 5, more: changes.length }]]) {
+  const target = path.join(out, file), html = await readFile(target, 'utf8');
+  if (!html.includes('<!-- timeline -->')) throw new Error(`${file} has no <!-- timeline --> marker`);
+  await writeFile(target, html.replace('<!-- timeline -->', renderTimeline(changes, options)));
+}
+await writeFile(path.join(out, 'site/timeline.json'), JSON.stringify({ generator: 'tools/timeline.mjs', history, events: changes }, null, 2));
 const nav = [
   {id:'home', title:'Home', href:''}, {id:'simulate',title:'Play',href:'designer/sim.html'},
   {id:'progress',title:'Progress',href:'designer/progress.html'}, {id:'build',title:'Build',href:'designer/build.html'},

@@ -1,0 +1,55 @@
+/* "What changed" (tools/timeline.mjs): a dated rail of real design changes, each with its subsystem, what kind of
+   files it changed, the decisions it added, and its render before and after when it re-rendered a part. */
+@import url('/designer/kit/vendor/fonts/fonts.css');
+.timeline{--tl-ink:#173d3c;--tl-muted:#4f625e;--tl-line:#d5ddd5;margin:clamp(56px,7vw,96px) 0;color:var(--tl-ink);font-family:'Inter',system-ui,sans-serif}
+.timeline *,.timeline *::before,.timeline *::after{box-sizing:border-box}
+.timeline a{color:#285059}
+.tl-heading{max-width:820px;margin-bottom:26px}
+.tl-heading .eyebrow{display:flex;align-items:center;gap:9px;margin:0 0 12px;color:#386248;font:700 11px/1.5 'JetBrains Mono',monospace;letter-spacing:.12em}
+.tl-heading .status-dot{flex:none;width:9px;height:9px;border-radius:50%;background:#437d44;box-shadow:0 0 0 4px #437d4422}
+.tl-heading h2{margin:0 0 12px;font-size:clamp(32px,4.2vw,52px);line-height:1.04;letter-spacing:-.045em}
+.tl-heading h2 span{color:#28736c}
+.tl-lede{margin:0;color:var(--tl-muted);font-size:15px;line-height:1.7}
+.tl-list{position:relative;margin:0;padding:0 0 0 0;list-style:none}
+.tl-list::before{content:"";position:absolute;left:96px;top:8px;bottom:8px;width:2px;background:linear-gradient(#bd3a12,#d5ddd5 70%)}
+.tl-event{position:relative;display:grid;grid-template-columns:84px minmax(0,1fr);gap:0 28px;padding:0 0 18px}
+.tl-event::before{content:"";position:absolute;left:91px;top:7px;width:12px;height:12px;border-radius:50%;background:#fffdf5;border:3px solid var(--dot,#7fa8a0)}
+/* The newest change: the first of the visible list only, not the first of the folded earlier ones. */
+.timeline>.tl-list>.tl-event:first-child::before{--dot:#bd3a12;box-shadow:0 0 0 0 #bd3a1266;animation:tl-ring 2.2s ease-out infinite}
+.tl-event time{padding-top:3px;color:var(--tl-muted);font:700 11px/1.4 'JetBrains Mono',monospace;text-align:right}
+.tl-card{min-width:0;padding:14px 16px;border:1px solid var(--tl-line);border-radius:16px;background:#fffef9;box-shadow:0 6px 18px #294a380c}
+.tl-meta{display:flex;flex-wrap:wrap;align-items:center;gap:6px 8px;margin:0 0 6px}
+.tl-chip{padding:2px 9px;border-radius:999px;background:#e7ece8;color:#2c4a44;font:700 10px/1.6 'JetBrains Mono',monospace;letter-spacing:.06em;text-transform:uppercase}
+.tl-chip[data-subsystem=leg]{background:#ffe7c2;color:#6b3d00}.tl-chip[data-subsystem=turret]{background:#dbeff4;color:#1d4b59}
+.tl-chip[data-subsystem=body]{background:#e6e1f4;color:#3d2f6b}.tl-chip[data-subsystem=wheels]{background:#e3ebce;color:#34501d}
+.tl-chip[data-subsystem=rig]{background:#f4e0d8;color:#6e2d18}.tl-chip[data-subsystem=electronics]{background:#d9f0e2;color:#1f5133}
+.tl-kinds{color:var(--tl-muted);font-size:11px}
+.tl-label{margin:0;font-size:16px;line-height:1.4;letter-spacing:-.01em}
+.tl-ref{font:600 11px 'JetBrains Mono',monospace;white-space:nowrap}
+.tl-decisions{margin:8px 0 0;padding:0;list-style:none;font-size:13px;line-height:1.5;color:#2c4a44}
+.tl-decisions li{margin:3px 0;padding-left:10px;border-left:3px solid #ffc342}
+.tl-pics{display:flex;align-items:center;gap:10px;flex-wrap:wrap;margin:12px 0 0}
+.tl-pic{position:relative;display:block;width:min(240px,42%);aspect-ratio:16/11;overflow:hidden;border:1px solid var(--tl-line);border-radius:12px;background:#eef3f4}
+.tl-pic img{display:block;width:100%;height:100%;object-fit:contain}
+.tl-pic small{position:absolute;left:6px;top:6px;padding:1px 7px;border-radius:999px;background:#173d3cd9;color:#fff;font:700 10px/1.6 'JetBrains Mono',monospace;text-transform:uppercase}
+.tl-arrow{color:#bd3a12;font-size:22px;font-weight:800}
+.tl-pics figcaption{flex-basis:100%;color:var(--tl-muted);font:600 10px/1.4 'JetBrains Mono',monospace;overflow-wrap:anywhere}
+.tl-more{margin:4px 0 0}
+.tl-more>summary{display:inline-flex;align-items:center;min-height:44px;margin-left:112px;padding:8px 14px;border:1px solid #c8d4c8;border-radius:999px;background:#f1f5e9;cursor:pointer;font-weight:650;font-size:13px}
+.tl-more[open]>summary{margin-bottom:16px}
+.tl-more .tl-list::before{background:#d5ddd5}
+.tl-all{display:inline-block;margin-left:112px;font-weight:650;font-size:13px}
+.tl-empty{color:var(--tl-muted)}
+/* New items arrive: each change slides in as it comes into view (web/timeline.js); reduced motion keeps them still. */
+.tl-armed .tl-event{transition:opacity .5s ease,transform .5s ease}
+.tl-armed .tl-event:not(.is-in){opacity:0;transform:translateX(-14px)}
+@keyframes tl-ring{0%{box-shadow:0 0 0 0 #bd3a1266}80%,100%{box-shadow:0 0 0 9px #bd3a1200}}
+@media(prefers-reduced-motion:reduce){.timeline *,.timeline *::before{animation:none!important;transition:none!important}.tl-armed .tl-event{opacity:1;transform:none}}
+@media(max-width:760px){
+  .tl-list::before{left:6px}
+  .tl-event{grid-template-columns:1fr;padding-left:26px}
+  .tl-event::before{left:1px}
+  .tl-event time{text-align:left;margin-bottom:6px}
+  .tl-pic{width:calc(50% - 22px)}
+  .tl-more>summary,.tl-all{margin-left:26px}
+}
