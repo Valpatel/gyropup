@@ -745,7 +745,7 @@ def drawings(P, items, names, rev, meta, fm):
         for it in sorted(drawn | {items[k] for k in extra if k in items}):
             key = next(k for k, v in items.items() if v == it)
             nm, qty, src = names.get(key, (key, '', ''))
-            out.append((it, qty, nm if it in drawn else f'{nm} (not drawn)', src))
+            out.append((it, qty, nm if it in drawn else f'[not drawn] {nm}', src))
         return out
     y0, y1 = meta['plate_y']
     sheets = []
