@@ -27,7 +27,7 @@ const contract=c3?{
   original:'/exports/turret/base-board-service/connectors/C3-support-layout.step',
   docPath:'/site/pages/docs-carrier-service-connectors-md.html',
   receipt:'../research/carrier-service-connectors/support-candidate.json',hashes:'public_artifact_sha256',
-  carrierName:'carrier_candidate_authored',members:34,screws:10,reservations:2,reservationColor:'a63d99',diagrams:1,
+  carrierName:'carrier_candidate_authored',members:34,screws:10,reservations:2,reservationColor:'a63d99',diagrams:0,
   status:/The current printed frame is not structurally qualified/,
 }: {
   original:'/exports/turret/base-board-service/interfaces/carrier-wiring-layout.step',
