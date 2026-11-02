@@ -43,7 +43,7 @@
       "cad/print_slicing.py": "13fd25fe32e75e0c66dbe8af132fd4d70fb030defb14d88a96f9ff77cbaf07bd",
       "cad/print_provenance.py": "db0d9cdc14e0d0363899d82c03eb31cb63ea0d7718fedcf127a5545f8f6bec88",
       "cad/rs04_lug_checks.py": "02a75e6dd5d28c6c8c149141d100d1386125197f5edfb34143565c72d8a8dfb5",
-      "exports/leg/rs04-mounting-fit/checks.json": "f4637af39ab50d8f90e2e1419bb760c1ee89791ee0b60fa74d4d5b39e170ee53",
+      "exports/leg/rs04-mounting-fit/checks.json": "60bb5b0f2a551fea4d28653ae4ca235e55d734b248a2bec2e4902792c37a0b4e",
       "exports/leg/rs04-mounting-fit/coupon_frame_ring_nom.stl": "bcf1a53f3fc8326bfdf887b2739ebf2015d32f573ee3bcfcdfa0e8f7996517e1"
     },
     "toolkit_helpers": {
@@ -1221,7 +1221,7 @@
       "slicer_payload_sha256": "b7f803605b7df175570e58c994bd8bfd12467b3aa2756cce32a931c670f3e5a9"
     }
   },
-  "source_commit": "4ed4169ad9ce692b7960f9e38e73b6587d0196e6",
+  "source_commit": "22db4c91f137290c2efd4e89e8184080118ee2d6",
   "geometry": {
     "bounds_mm": [
       [
@@ -1252,7 +1252,7 @@
   },
   "metrics": {
     "grams": 172.44,
-    "minutes": 392.97669270833336,
+    "minutes": 392.88450520833334,
     "filament_m": 65.17,
     "exit_code": 0,
     "return_code": 0,
@@ -1268,7 +1268,7 @@
       "bytes": 457
     },
     "3D/3dmodel.model": {
-      "sha256": "ab960a5dd95d4b86e6bb8838ce7880ef4bd83291d63cd9d4d792c43d85e6e66a",
+      "sha256": "34fa03c2b7233f6cdd64a6be3e49f9989a661c56e5c29ba886c27f4579725282",
       "bytes": 1570
     },
     "3D/_rels/3dmodel.model.rels": {
@@ -1284,19 +1284,19 @@
       "bytes": 44072
     },
     "Metadata/plate_1.gcode.md5": {
-      "sha256": "404e19b99435f46f390cc5ff76759cb4dd3418dc2ceb4eec0f07aa83cd842c24",
+      "sha256": "d2a3ba8b0d15972193635f7fb899533664662a61638b34b479f7d32ef4e41f2d",
       "bytes": 32
     },
     "Metadata/plate_1.gcode": {
-      "sha256": "0c0f5e9b30df1212262f874b46d08f0686a44b03a8abb13f91860b4f521d7809",
-      "bytes": 11407601
+      "sha256": "808238d9c79552cb12d7da063a799c36715ce9c31192105a19140bd003d28d4a",
+      "bytes": 11407358
     },
     "Metadata/_rels/model_settings.config.rels": {
       "sha256": "5ea2c0f459aec4d25341abd431edee7890c8d2fd02efbaed4b073d04cfa11440",
       "bytes": 255
     },
     "Metadata/model_settings.config": {
-      "sha256": "faa6bea58f1a31ecd8bd904fbb2f08a1bfcc91305eb1192f575686e8de6f3346",
+      "sha256": "1868b5ce24ea4ed2d3e60aa5d2e6b54940e583fe0585659fa7929cae37520dd6",
       "bytes": 1508
     },
     "Metadata/cut_information.xml": {
@@ -1304,8 +1304,8 @@
       "bytes": 139
     },
     "Metadata/slice_info.config": {
-      "sha256": "6c5abbd5a960a5e2e736e72cf61d8fcc5326762ffda6711f3b76615efd2ab325",
-      "bytes": 1679
+      "sha256": "fdbd4cee3a45c5a4750bca9fc11f12ec0f04fe0902aeb98d6287e5c26f3eaa72",
+      "bytes": 1685
     },
     "Metadata/filament_sequence.json": {
       "sha256": "9e457664577459536d7512bf553066895dba22502a17ad79789ee272d2d569ba",
@@ -1949,11 +1949,11 @@
     "slice/exit-code.json": "124fd50cb6d223cdd18fedc166d00af7254199b6e6dedf9be82f71db87af6d01",
     "slice/filament.json": "0d2b91e9d7f31661688294b60c19e3fb922f1fde5d2f219ee16d85f190cb3374",
     "slice/machine.json": "44b41d9e562c8b9a7223ec87dd1c7e37271549983ea572f09a81f62a9b76d9af",
-    "slice/out/plate_1.gcode": "0c0f5e9b30df1212262f874b46d08f0686a44b03a8abb13f91860b4f521d7809",
-    "slice/out/result.json": "3be3d97c051edce9c1f3bd6d7911c0e93e953882ad339e8bd3762b9fb40cd717",
-    "slice/out/sliced.3mf": "23a102b8f06ab4ef643e603a21f0fd61fcc39daa306300d4b92b9d324abb45b9",
+    "slice/out/plate_1.gcode": "808238d9c79552cb12d7da063a799c36715ce9c31192105a19140bd003d28d4a",
+    "slice/out/result.json": "c917e03efee9e7cd14f6e56d6efe0d562bbef6a93830db354feec95be35295ef",
+    "slice/out/sliced.3mf": "4af989ab2a85435647748f2149d83218b1474b70cea95ad33dc78afa33540d00",
     "slice/process.json": "9591ffa2ff4d223ebc859b1901766aabf71caf7cfdcf93719dcc77484b12a345",
-    "slice/slicer.log": "822bdd4eb808cdb2755f24eb0b32de50b84a64c04b04beed430e9882f670273c",
+    "slice/slicer.log": "92dfeb44c7b4e2ed4d5975f7fb096f16eed6464d1fc803b07aec667d5475dc4a",
     "source.stl": "bcf1a53f3fc8326bfdf887b2739ebf2015d32f573ee3bcfcdfa0e8f7996517e1"
   }
 }
