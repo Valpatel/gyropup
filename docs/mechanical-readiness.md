@@ -6,6 +6,23 @@ This is the component review entry point for the first physical turret and the c
 
 Program tracker: [issue #61](https://github.com/Valpatel/gyropup/issues/61). The user requested a deliberate component-by-component review, hardware-complete models across legs and turret, consistent landing geometry, and a final repository state containing only `dev` and `main` branches.
 
+```mermaid
+flowchart TB
+    subgraph R1 ["Review order"]
+        direction LR
+        B1["1<br>Baseline, bought<br>interfaces"] --> B2["2<br>Base and<br>service access"] --> B3["3<br>Pan bearing,<br>drive stack"] --> B4["4<br>Tilt yoke, stop<br>lug, cradle"]
+    end
+    subgraph R2 [" "]
+        direction LR
+        B5["5<br>Cartridge, launcher,<br>barrel"] --> B6["6<br>Feed and<br>reload"] --> B7["7<br>Electronics,<br>harness"]
+    end
+    subgraph R3 [" "]
+        direction LR
+        B8["8<br>Bench mount,<br>robot interface"] --> B9["9<br>Legs, wheels,<br>body"] --> B10["10<br>Unified export,<br>presentation"]
+    end
+    R1 --> R2 --> R3
+```
+
 ## Current print-preparation checkpoint
 
 | Interface | Available evidence and job | Still required |

@@ -248,6 +248,10 @@ for its records; Cloudflare's shallow clone is unshallowed by the build (only wh
 `npm run test:status-board`. `npm run test:walls` fails a page with more than 1200 px of text and no figure at
 1366 x 800; `tools/wall-backlog.json` lists the pages that did on 2026-11-01 and only shrinks
 (`node tools/test-walls.mjs --report` lists every page).
+"What changed" on the same two pages is the design's history from git (`tools/timeline.mjs`): each merged change to
+CAD, models, renders, records, hardware or decisions, with its render before and after; `npm run test:timeline`.
+Design notes keep their words but not their walls (`tools/doc-page.mjs`): a lead card with the subsystem's render and
+status-board readings, status strips counted from a note's own tables, and folds; `npm run test:doc-pages`.
 
 ### Keep public progress current
 

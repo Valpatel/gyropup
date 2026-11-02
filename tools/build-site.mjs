@@ -9,6 +9,8 @@ import { addModelPreviews } from '../web/model-links.js';
 import { writeMarkdownSite } from './site-markdown.mjs';
 import { SITE_CACHE_CONTROL, versionSiteAssets } from './site-cache.mjs';
 import { collectStatus, createReader, renderBoard, shallowHistory } from './status-board.mjs';
+import { collectTimeline, gitIn, imagePaths, renderTimeline, subsystemOf } from './timeline.mjs';
+import { OPEN_FOLDS, enhanceDocument } from './doc-page.mjs';
 const root = path.resolve(import.meta.dirname, '..');
 const out = path.join(root, 'dist');
 const read = (p) => readFile(path.join(root, p), 'utf8');
@@ -51,13 +53,30 @@ if (!history && process.env.CF_PAGES) {
   try { execFileSync('git', ['fetch', '--quiet', '--unshallow'], { cwd: root, stdio: 'inherit', timeout: 300000, env: { ...process.env, GIT_TERMINAL_PROMPT: '0' } }); history = !shallowHistory(root); }
   catch (error) { console.warn(`Status board: could not fetch the history (${error.message}); change dates are left out.`); }
 }
-const status = collectStatus(createReader(root, { git: history }));
+const reader = createReader(root, { git: history });
+const status = collectStatus(reader);
 for (const [file, options] of [['index.html', { compact: true }], ['designer/progress.html', {}]]) {
   const target = path.join(out, file), html = await readFile(target, 'utf8');
   if (!html.includes('<!-- status-board -->')) throw new Error(`${file} has no <!-- status-board --> marker`);
   await writeFile(target, html.replace('<!-- status-board -->', renderBoard(status, options)));
 }
 await writeFile(path.join(out, 'site/status.json'), JSON.stringify({ generator: 'tools/status-board.mjs', history, ...status }, null, 2));
+// "What changed": the design changes on the integration branch, newest first, with the renders they changed before
+// and after, copied from git's own objects (tools/timeline.mjs). Without history the timeline says so.
+const changes = history ? collectTimeline(gitIn(root)) : [];
+await mkdir(path.join(out, 'site/timeline'), { recursive: true });
+for (const event of changes) {
+  const img = imagePaths(event);
+  if (!img) continue;
+  await writeFile(path.join(out, img.after), execFileSync('git', ['show', `${event.sha}:${event.image.file}`], { cwd: root, maxBuffer: 256 << 20 }));
+  if (img.before) await writeFile(path.join(out, img.before), execFileSync('git', ['show', `${event.sha}^1:${event.image.file}`], { cwd: root, maxBuffer: 256 << 20 }));
+}
+for (const [file, options] of [['index.html', { compact: true, show: 4 }], ['designer/progress.html', { show: 5, more: changes.length }]]) {
+  const target = path.join(out, file), html = await readFile(target, 'utf8');
+  if (!html.includes('<!-- timeline -->')) throw new Error(`${file} has no <!-- timeline --> marker`);
+  await writeFile(target, html.replace('<!-- timeline -->', renderTimeline(changes, options)));
+}
+await writeFile(path.join(out, 'site/timeline.json'), JSON.stringify({ generator: 'tools/timeline.mjs', history, events: changes }, null, 2));
 const nav = [
   {id:'home', title:'Home', href:''}, {id:'simulate',title:'Play',href:'designer/sim.html'},
   {id:'progress',title:'Progress',href:'designer/progress.html'}, {id:'build',title:'Build',href:'designer/build.html'},
@@ -73,7 +92,7 @@ const documents = tracked.filter(p => /^(docs|research|hardware)\/.*\.md$/.test(
 documents.push('README.md', 'catalog/SCHEMA.md');
 const pagePath = p => `/site/pages/${slug(p)}.html`;
 function frame(title, body) {
-  return `<!doctype html><html lang="en"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width, initial-scale=1"><title>${esc(title)} · Gyropup</title><link rel="icon" href="/web/icon.svg"><link rel="stylesheet" href="/web/portal.css"><link rel="stylesheet" href="/designer/kit/diagrams.css"></head><body class="docs-page" data-diagram-theme="light"><main class="document"><a class="back" href="/site/">← Design notebook</a><p class="portal-label">BUILT BY AUTONOMOUS SYSTEMS · WORK IN PROGRESS</p>${body}<footer>Created by <a href="https://valpatel.com">Valpatel Software LLC</a>. © 2026. All rights reserved. Repository materials retain their stated licenses.</footer></main><script type="module">import {mountAppNav} from '/designer/kit/appnav.js'; mountAppNav({root:'../../',current:'docs'});</script><script type="module">import('/designer/kit/diagrams.js').then(m=>m.observeDiagrams()).catch(()=>{document.querySelectorAll('pre.mermaid,pre:has(>code.language-mermaid)').forEach(p=>{p.classList.add('cad-diagram-boot-error');const b=document.createElement('button');b.className='cad-diagram-reload';b.textContent='Reload diagrams';b.onclick=()=>location.reload();p.after(b);});});</script></body></html>`;
+  return `<!doctype html><html lang="en"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width, initial-scale=1"><title>${esc(title)} · Gyropup</title><link rel="icon" href="/web/icon.svg"><link rel="stylesheet" href="/web/portal.css"><link rel="stylesheet" href="/designer/kit/diagrams.css"><link rel="stylesheet" href="/web/doc-page.css"></head><body class="docs-page" data-diagram-theme="light"><main class="document"><a class="back" href="/site/">← Design notebook</a><p class="portal-label">BUILT BY AUTONOMOUS SYSTEMS · WORK IN PROGRESS</p>${body}<footer>Created by <a href="https://valpatel.com">Valpatel Software LLC</a>. © 2026. All rights reserved. Repository materials retain their stated licenses.</footer></main><script type="module">import {mountAppNav} from '/designer/kit/appnav.js'; mountAppNav({root:'../../',current:'docs'});</script><script>${OPEN_FOLDS}</script><script type="module">import('/designer/kit/diagrams.js').then(m=>m.observeDiagrams()).catch(()=>{document.querySelectorAll('pre.mermaid,pre:has(>code.language-mermaid)').forEach(p=>{p.classList.add('cad-diagram-boot-error');const b=document.createElement('button');b.className='cad-diagram-reload';b.textContent='Reload diagrams';b.onclick=()=>location.reload();p.after(b);});});</script></body></html>`;
 }
 const docs = [];
 for (const file of documents) {
@@ -100,6 +119,9 @@ for (const file of documents) {
   });
   html = html.replace(/<a href="https:\/\/github\.com\/Valpatel\/gyropup\/blob\/main\/(catalog\/(?:availability|lfp_batteries)\.json)">(.*?)<\/a>/g, '<span title="Historical file, not part of this revision">$2 (historical file)</span>');
   html = html.replace(/<table>/g,'<div class="table-scroll"><table>').replace(/<\/table>/g,'</table></div>');
+  // Lead card, status strips and folds (tools/doc-page.mjs): the same words, shown without walls of text.
+  const panel = status.panels.find(p => p.id === subsystemOf(file) && p.image) || null;
+  html = enhanceDocument(html, { file, changed: reader.changed([file]), panel }).html;
   await writeFile(path.join(out, pagePath(file)), frame(title, `<article>${html}</article>`));
   docs.push({title,file});
 }
