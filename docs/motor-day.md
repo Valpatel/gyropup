@@ -4,7 +4,7 @@ The four RS-04 leg motors arrive on 2026-11-02. This page is the plan for using 
 PLA, order its hardware, put it together and work up to a jump. PLA is not strong enough for the robot. Here it only
 has to survive a slow, capped test ladder, and the caps below are set so it should.
 
-Every table between `gen:` markers is written by `cad/motor_day.py` from the CAD, the catalogues and the rig
+Every table between `gen:` markers is written by `tools/motor_day.py` from the CAD, the catalogues and the rig
 simulation. Edit the script, not the tables.
 
 **Download everything:** [motor-day-package.zip](../exports/motor-day/motor-day-package.zip) (CSV lists, STL and 3MF
@@ -242,7 +242,7 @@ Generated from the same CAD with hidden-line views, balloons keyed to the BOM it
 Every day-one run lands, so the landings are held to the everyday target (2), not the rare-event 1.2 the robot's record uses. How the numbers are made:
 
 - **Material:** cad-agent's PLA row (25 MPa, "Bambu PLA Basic: Z (layer) strength used") against each row's humid PA6-CF strength (40.8 MPa in the layers, 18.1 across) or 6061 for the adapter. The FEA is linear, so a row's factor scales with the strength.
-- **Loads:** the rig's controller and MuJoCo model at each cap, at 11.1 kg (`cad/motor_day_sim.py`), against the loads the record's cases were run at (knee 574 N in a landing, axle 1605 N on the wheel link, the motors' 60 and 120 N m).
+- **Loads:** the rig's controller and MuJoCo model at each cap, at 11.1 kg (`tools/motor_day_sim.py`), against the loads the record's cases were run at (knee 574 N in a landing, axle 1605 N on the wheel link, the motors' 60 and 120 N m).
 - **Not in it:** PLA is brittle (it cracks without warning, where PA6-CF whitens first), creeps, and softens at 55 °C. No margin is added for these: the ladder adds them by stepping up slowly and inspecting after each rung.
 
 | Cap at the motors | Jump (sim) | Axle peak | Knee peak | Weakest row | All rows at target |

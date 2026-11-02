@@ -1,13 +1,13 @@
 """Motor day: the rig simulation at the day-one torque caps (docs/motor-day.md, issue #156).
 
-    .venv/bin/python cad/motor_day_sim.py            # ~6 min on one core -> exports/motor-day/sim.json
+    .venv/bin/python tools/motor_day_sim.py            # ~6 min on one core -> exports/motor-day/sim.json
 
 The rig's own controller and MuJoCo model (rig/run.py run_sim, sim/leg_rig.py) with the jump's push capped at each
 day-one cap, at the lightest mass the model can carry (the leg and the carriage with no ballast: the boom stand is
 ballasted to the same mass, docs/motor-day.md). The stand-up and the squat run at the ladder's stand cap; the power
 cut runs with the floor stop where the rig's bumpers are (140 mm), as the stand's floor stop is set.
 
-cad/motor_day.py reads the loads from this file and scales the leg's FEA record (exports/leg/fea/summary.json) to PLA.
+tools/motor_day.py reads the loads from this file and scales the leg's FEA record (exports/leg/fea/summary.json) to PLA.
 """
 from __future__ import annotations
 
@@ -69,7 +69,7 @@ def main():
     rows = [one('jump', c, m) for c in JUMP_CAPS]
     rows += [one('stand_up', STAND_CAP, m), one('squat', STAND_CAP, m), one('power_off', STAND_CAP, m)]
     mass = rows[0]['rig']
-    doc = {'made_by': 'cad/motor_day_sim.py', 'controller': 'rig/leg_control.py on rig/sim_bus.py (MuJoCo, sim/leg_rig.py)',
+    doc = {'made_by': 'tools/motor_day_sim.py', 'controller': 'rig/leg_control.py on rig/sim_bus.py (MuJoCo, sim/leg_rig.py)',
            'rate_hz': 500.0, 'latency_ticks': 1, 'pack': 'rig/run.py pack_for (the FLEXVOLT pair at the start rule)',
            'floor_stop_leg_mm': run.BUMPER_CONTACT_M * 1000,
            'mass_kg': round(mass['moving_kg'] + mass['frame_kg'] + mass['dummy_kg'], 2), 'mass': mass,
