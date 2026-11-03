@@ -60,6 +60,9 @@ def test_the_latch_head_clears_the_yoke_to_the_stop(turret):
         posed = turret.posed(0.0, tilt, names=['ct_thumbscrew', 'tilt_yoke'], robot=False)
         common = posed['ct_thumbscrew'].val().intersect(posed['tilt_yoke'].val())
         assert common.Volume() < 1e-6, f'the latch head is in the yoke at tilt {tilt} deg'
+        if tilt <= -22.9:                                   # where the relief works: the swept clearance, 1 mm
+            gap = posed['ct_thumbscrew'].val().distance(posed['tilt_yoke'].val())
+            assert gap > 0.98, f'{gap:.3f} mm between the latch head and the yoke at tilt {tilt} deg'
 
 
 def test_the_relief_is_needed_and_small(turret):
@@ -68,8 +71,8 @@ def test_the_relief_is_needed_and_small(turret):
     b0, b1 = G.bridge_z
     a1 = G.arm_y[1]
     bridge = tu.box(-20, 20, -a1, a1, b0, b1)
-    head = tu.thumb_solid(G).translate((-G.tilt_x, 0, G.path_t)).rotate((0, 0, G.tilt_t), (0, 1, G.tilt_t), tu.TILT_STOP_DEG)
+    head = tu.thumb_solid(G).translate((-G.tilt_x, 0, G.path_t)).rotate((0, 0, G.tilt_t), (0, 1, G.tilt_t), -G.tilt_min)
     assert head.intersect(bridge).val().Volume() > 10.0
-    cut = tu.thumb_sweep(G, clear=1.0, to_deg=-(tu.TILT_STOP_DEG + 2.0)).intersect(bridge).val()
+    cut = tu.thumb_sweep(G, clear=1.0, to_deg=-(-G.tilt_min + 2.0)).intersect(bridge).val()
     bb = cut.BoundingBox()
     assert cut.Volume() < 500.0 and b1 - bb.zmin < 5.0 and bb.xmin > 10.0     # <= 5 mm into the 12 mm bridge's front top
