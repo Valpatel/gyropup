@@ -71,7 +71,7 @@
 </div>
 <script type="module">
   try{
-  const [THREE,{ createStage },{ mountTalk },{ createSfx },{ buildRobotV2 },{ createEyes },{ collapsiblePanel, overlayInsets, section, slider },{ createLoadingStatus }]=await Promise.all([import('three'),import('../kit/stage.js'),import('./talk.js'),import('../sfx.js'),import('../robot_v2.js'),import('./eyes.js'),import('../kit/panel.js'),import('../kit/loading.js')]);
+  const [THREE,{ createStage },{ mountTalk, LINES },{ createSfx },{ buildRobotV2 },{ createEyes },{ collapsiblePanel, overlayInsets, section, slider },{ createLoadingStatus }]=await Promise.all([import('three'),import('../kit/stage.js'),import('./talk.js'),import('../sfx.js'),import('../robot_v2.js'),import('./eyes.js'),import('../kit/panel.js'),import('../kit/loading.js')]);
 
 
   const loadingHost=document.getElementById('talk-loading');loadingHost.replaceChildren();
@@ -147,7 +147,7 @@
 
   const btn = (parent, label, fn) => { const b = document.createElement('button'); b.className = 'hud-btn'; b.textContent = label; b.onclick = fn; parent.appendChild(b); };
   for (const ev of ['hello', 'fire', 'hit', 'down', 'miss', 'reload', 'empty', 'fall', 'low_battery']) btn(document.getElementById('events'), ev, () => talk.react(ev));
-  const lines = { happy: 'Wheee! That was fun!', curious: 'Ooh, what is that?', sleepy: 'Yawn... charger time?', grumpy: 'Hey! Foam balls at targets only!', surprised: 'Whoa! Did you see that?', focused: 'Locking on to the target...' };
+  const lines = LINES.DEMO_MOODS;
   for (const [mood, line] of Object.entries(lines)) btn(document.getElementById('moods'), mood, () => talk.say(line, { mood }));
   const detectButton=document.getElementById('detect');
   const serviceLoading=createLoadingStatus(document.getElementById('service-loading'),{id:'service-load-status',onRetry:detectServices});
@@ -163,7 +163,7 @@
   }
   detectButton.onclick=detectServices;detectButton.disabled=false;
 
-  setTimeout(() => talk.say('Hi! I am Gyropup. Want to play a target game?', { mood: 'happy', hold: 60000 }), 400);
+  setTimeout(() => talk.say(LINES.DEMO_GREETING, { mood: 'happy', hold: 60000 }), 400);
   await new Promise(requestAnimationFrame);stage.renderer.render(stage.scene,stage.camera);
   loading.ready(token);document.body.dataset.ready='1';
   }catch(error){if(own===request)loading.fail('Gyropup could not load. '+error.message,{token,onRetry:load});}

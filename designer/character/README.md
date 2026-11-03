@@ -7,6 +7,10 @@ Gyropup's personality in the browser: its eyes and its voice.
 | `eyes.js` | `createEyes()`: two canvas-texture eye screens with eased expressions, blinks and gaze drift |
 | `talk.js` | `mountTalk()`: speech bubble over the head, spoken voice (TTS), listening (STT), a small brain, canned reactions to sim events, and a bottom chat dock |
 | `talk.css` | The bubble and dock in the HUD skin (loaded by `talk.js` itself via `import.meta.url`) |
+| `lines.js` | Every fixed line Gyropup says (reactions, banter, safety answers, the scripted brain, sim intros, the landing page, the demo), and `fixedLines()` |
+| `voice/` | The recorded voice: one MP3 clip per fixed line and `manifest.json` (line → clip), made by `tools/render-voice.py` |
+| `pronunciation.json` | The pronunciation key: what a word is turned into before any voice speaks it ([below](#pronunciation-key)) |
+| `pronounce.js` | Applies the key in the browser (`tools/pronunciation.py` is the same for Python) |
 | `talk-demo.html` | Try `talk.js` alone: a cube-headed stand-in pup, event and mood buttons. Open `/designer/character/talk-demo.html` |
 
 ## talk.js
@@ -44,14 +48,68 @@ only speak some of the time. `fall`, `empty`, `low_battery` and `hello` skip the
 The dock sits at the bottom of the stage column, stopping short of the right-side panel (it reads `--panel-w` from
 `kit/hud.css`); below 820 px it sits above the bottom panel. The TALK tab collapses it, and the state is remembered.
 
+## The recorded voice
+
+Every line Gyropup says on the public site is fixed (the lines in `lines.js`), so each is recorded once, committed
+with the site and played as a clip: no voice server, and the same pup voice in every browser. Only an LLM answer is
+spoken live (the sidecar or the browser, below), through the pronunciation key. The speech bubble always shows the
+written line.
+
+- **Voice:** `tools/tts_server.py`'s Piper voice and pup settings (en_US-hfc_female-medium, 2 semitones up, pace 0.95;
+  [why](#why-en_us-hfc_female-medium)), so recorded and live lines sound alike. hfc_female has no high-quality model.
+- **Encoding:** MP3 VBR V5 (`libmp3lame -q:a 5`), mono, 22.05 kHz, silence trimmed: about 52 kbit/s, and every speech
+  band within 1.6 dB of the WAV. Opus at 24 kbit/s is half the size but loses about 3.7 dB at 4–8 kHz here and older
+  iOS Safari plays it unreliably; AAC is missing from the open-source Chromium the tests use. 125 lines, 270 s: 1.7 MB.
+- **Files:** `voice/<id>.mp3`, `<id>` a hash of the spoken text, the key's `version` and the voice settings
+  (`VOICE_TAG` in `tools/render-voice.py`); `voice/manifest.json` maps each written line to its clip, spoken text,
+  length, size and SHA-256.
+
+To add or change a line, edit it in `lines.js` (callers take it from there), then:
+
+```sh
+python3 tools/render-voice.py           # renders new and changed lines only, removes unused clips (needs Piper, ffmpeg, node)
+python3 tools/render-voice.py --check   # what CI runs (npm run test:voice): no Piper, only hashes
+```
+
+CI fails with "run tools/render-voice.py" when a line, a key entry that changes a line, the key version or the voice
+settings no longer match the clips, or when the set grows past its 3 MB budget. `--force` records the whole set
+again (Piper varies a little between takes). Commit the clips and the manifest with the change.
+
+## Pronunciation key
+
+`pronunciation.json` turns names a voice says wrongly into text it says right, for every voice: the recorded clips,
+the live sidecar (`tools/tts_server.py` applies it to every line it is sent, `--say` included) and browser speech.
+
+```json
+{ "match": "Gyropup", "say": "gyro pup", "why": "..." }
+```
+
+- `match`: the written word or phrase (or a list of them). Case-insensitive, whole words only: `Gyropup's`,
+  `Gyropup’s`, `Gyropups` and `Gyropups'` keep their ending (`gyro pup's`), while `Gyropupper`, `gyropup.com`, URLs
+  and e-mail addresses (the key's `protect` pattern) are left alone. The longest match wins.
+- `say`: a plain respelling, sent as text to every engine. It is applied in one pass, so applying the key twice is
+  the same as once (`gyro pup` stays `gyro pup`); the sidecar can safely re-apply it to text `talk.js` already did.
+- **Stress:** set by how `say` is split, which both Piper (espeak) and browser voices honour. A space makes separate
+  words, each stressed: `gyro pup` is dʒˈaɪɹoʊ pˈʌp where `Gyropup` was dʒˈaɪɹəpˌʌp. A hyphen joins syllables into
+  one word stressed on its first part: `sigh-an` is sˈaɪæn where `cyan` was saɪˈæn. Never capitals: espeak spells an
+  all-caps word (`gyro PUP` is "gyro P U P"). Not SSML (Piper reads text, most browsers ignore or read the tags), and
+  not Piper's `[[ phonemes ]]`: the browser cannot use them, and Piper drops a sentence break after a block.
+- `why`: what the voice said wrong and why this fixes it (espeak's phonemes are the evidence).
+
+To add an entry: add it, check the stress with `python3 tools/pronunciation.py --show` (espeak's phonemes for each
+entry as written and as said; needs Piper), add an example to `examples` (both test suites run them), then
+`python3 tools/render-voice.py` re-renders exactly the lines it changes. Bump `version` only when the key's rules
+change (it is part of every clip's hash, so it re-renders the whole set).
+
 ## Services and fallbacks
 
-Each service is probed once, on first use (the first `say`/`ask`/`listen`, or when the pointer first enters the
-dock), so an idle page does not log refused connections. Nothing needs a key or the internet unless you configure it.
+Each service is probed once, on first use (the first `ask`/`listen`, the first line without a recorded clip, or when
+the pointer first enters the dock), so an idle page does not log refused connections. Nothing needs a key or the internet unless you configure it.
 
 | | Used when reachable | Fallback |
 |---|---|---|
-| Voice | Gyropup's Piper sidecar ([below](#gyropups-voice-toolstts_serverpy)), `GET http://<page host>:8081/tts?text=…` (WAV), played as `/health`'s `rate` says (1: the sidecar shapes the voice). Moxie's Piper server also works; it says no rate, so it is played 14% faster and higher | the browser's `speechSynthesis`, a little higher, natural English voices first |
+| Voice (fixed lines) | the recorded clip, `voice/<id>.mp3` (same site, no service) | live speech, as below |
+| Voice (anything else) | Gyropup's Piper sidecar ([below](#gyropups-voice-toolstts_serverpy)), `GET http://<page host>:8081/tts?text=…` (WAV), played as `/health`'s `rate` says (1: the sidecar shapes the voice). Moxie's Piper server also works; it says no rate, so it is played 14% faster and higher | the browser's `speechSynthesis`, a little higher, natural English voices first |
 | Ears | Moxie's Whisper STT, `POST http://<page host>:8082/stt` (webm audio; Deepgram-shaped JSON back), silence auto-stop | Chrome's Web Speech API (sends audio to Google; needs internet). Neither: a clear message, type instead |
 | Brain | an OpenAI-compatible `POST <base>/chat/completions`: first `localStorage gyropup.llmBase`, else, on local pages only, Ollama at `http://127.0.0.1:11434` (first chat model from `/api/tags`, preferring llama3.2, qwen2.5, gemma, phi, mistral) | a scripted brain: keyword replies (hello, name, dance, shoot/balls, jump, battery, balance, joke, trick, ...) |
 
@@ -105,8 +163,9 @@ under a python that can. Voices live in `~/.local/share/piper-voices`; fetch ano
 
 The pup character is made in the sidecar, so every client hears the same voice and `talk.js` plays it as it is: Piper
 first speaks slower by the pitch factor, then a band-limited resample lifts the pitch and the formants (a smaller,
-younger voice, not just a higher one) and brings the pace back. Names espeak says wrongly are respelled before Piper
-sees them: Gyropup is "JYE-roh-pup" and Tritium "TRIT-ee-um" (`RESPELL` in the script).
+younger voice, not just a higher one) and brings the pace back. Names espeak says wrongly are respelled by the
+[pronunciation key](#pronunciation-key) before Piper sees them (Gyropup is "gyro pup", Tritium "Trittium"); the disk
+and memory caches are keyed by that respelled text, so a key change re-renders exactly the lines it changes.
 
 | Flag | Environment | Default | |
 |---|---|---|---|

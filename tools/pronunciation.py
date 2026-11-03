@@ -1,0 +1,102 @@
+"""Gyropup's pronunciation key, the Python side: what text is sent to a voice.
+
+    from pronunciation import pronounce
+    pronounce("Gyropup's turret")          # "gyro pup's turret"
+
+    python3 tools/pronunciation.py "Hi! I am Gyropup!"     # print what a voice is sent
+    python3 tools/pronunciation.py --show                  # espeak's phonemes for each entry, as written and as said (needs Piper)
+
+The key is designer/character/pronunciation.json; designer/character/pronounce.js applies the same file the same way in
+the browser (tools/test-pronunciation.mjs and tools/test-pronunciation.py run the same examples on both). The rules:
+an entry's `match` (a string or a list) is found case-insensitively as a whole word, optionally followed by 's, ’s,
+s', s’ or s, which are kept; text inside the key's `protect` pattern (URLs, e-mail addresses, domain names) is never
+changed; every entry is replaced in one pass, so a replacement is never matched again and applying the key twice
+gives the same text as once.
+"""
+from __future__ import annotations
+
+import json
+import re
+import sys
+from functools import lru_cache
+from pathlib import Path
+
+KEY_PATH = Path(__file__).resolve().parent.parent / 'designer' / 'character' / 'pronunciation.json'
+SUFFIX = "'s|’s|s'|s’|s"       # keep in step with pronounce.js
+WORD = 'A-Za-z0-9_'
+
+
+def load_key(path: Path | str = KEY_PATH) -> dict:
+    key = json.loads(Path(path).read_text(encoding='utf-8'))
+    for i, e in enumerate(key.get('entries', [])):
+        if not e.get('match') or not isinstance(e.get('say'), str) or not e['say'].strip():
+            raise ValueError(f'pronunciation entry {i} needs a "match" and a "say"')
+    return key
+
+
+def _norm(s: str) -> str:
+    return re.sub(r'\s+', ' ', s.strip().lower())
+
+
+class Pronouncer:
+    """A compiled key: call it on text."""
+
+    def __init__(self, key: dict):
+        self.version = key.get('version', 0)
+        self.say: dict[str, str] = {}
+        for e in key.get('entries', []):
+            for m in ([e['match']] if isinstance(e['match'], str) else e['match']):
+                self.say[_norm(m)] = e['say']
+        alts = sorted(self.say, key=len, reverse=True)
+        body = '|'.join(r'\s+'.join(re.escape(w) for w in m.split(' ')) for m in alts)
+        self.words = re.compile(rf'(^|[^{WORD}])({body})({SUFFIX})?(?![{WORD}])', re.I | re.A) if alts else None
+        self.protect = re.compile(key['protect'], re.I | re.A) if key.get('protect') else None
+
+    def _words(self, text: str) -> str:
+        if not self.words:
+            return text
+        return self.words.sub(lambda m: m.group(1) + self.say[_norm(m.group(2))] + (m.group(3) or ''), text)
+
+    def __call__(self, text: str) -> str:
+        text = str(text)
+        if not self.protect:
+            return self._words(text)
+        out, at = [], 0
+        for m in self.protect.finditer(text):
+            out += [self._words(text[at:m.start()]), m.group(0)]
+            at = m.end()
+        out.append(self._words(text[at:]))
+        return ''.join(out)
+
+
+@lru_cache(maxsize=None)
+def default() -> Pronouncer:
+    return Pronouncer(load_key())
+
+
+def pronounce(text: str) -> str:
+    """Text as a voice should be sent it, with the repository's key."""
+    return default()(text)
+
+
+def _show() -> int:
+    try:
+        from piper import PiperVoice
+    except ImportError:
+        sys.exit('--show needs piper-tts (python3 -m pip install --user piper-tts), or run it with the python that has it')
+    voice = Path.home() / '.local' / 'share' / 'piper-voices' / 'en_US-hfc_female-medium.onnx'
+    v = PiperVoice.load(str(voice))
+    ph = lambda t: ' | '.join(''.join(s) for s in v.phonemize(t))   # noqa: E731
+    for e in load_key()['entries']:
+        for m in ([e['match']] if isinstance(e['match'], str) else e['match']):
+            print(f'{m:16} {ph(m):28} -> {e["say"]:16} {ph(e["say"])}')
+    return 0
+
+
+if __name__ == '__main__':
+    args = sys.argv[1:]
+    if args == ['--show']:
+        sys.exit(_show())
+    if not args:
+        sys.exit(__doc__)
+    print(pronounce(' '.join(args)))
