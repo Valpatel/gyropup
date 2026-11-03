@@ -101,7 +101,7 @@ Today: 8 x M5 x 40 into the tapped 6061 adapter, heads on 24.5 mm of PA6-CF (Ø8
 
 High-stress because:
 
-- the hub's edge lifts at 104 N m (at 1200 N a screw); R1 puts 115.7 and R3 190.1 N m on it
+- the hub's edge lifts at 104 N m (at 1200 N a screw); R1 puts 114.9 and R3 188.1 N m on it
 - 45.5 MPa under the heads against the 25 MPa sustained screen
 
 | Option | Screen |
@@ -140,7 +140,7 @@ Today: two DIN 179 sleeves pressed into the eye (already metal bushings), the sh
 High-stress because:
 
 - the eye stub's root: layer check E1 0.77 against 2.0 (the worst in the leg)
-- R3: 169.1 N m at the sleeves, 38.1 MPa on the eye (SF 1.05)
+- R3: 167.3 N m at the sleeves, 37.7 MPa on the eye (SF 1.06)
 
 | Option | Screen |
 |---|---|
@@ -176,7 +176,7 @@ High-stress because:
 
 - the wheel link's hub root: layer check R1w 0.7 against 1.2
 - the front link's apex ring: E1 0.71 against 2.0
-- bearings fine (s0 2.76 in R3)
+- bearings fine (s0 2.79 in R3)
 
 | Option | Screen |
 |---|---|
@@ -270,10 +270,10 @@ every R3 margin is the undamped cut onto the stops; the RS-04's power-off dampin
 
 | Scenario | Axle N | Knee pin N | Stop N m | Gearbox N m |
 |---|---|---|---|---|
-| drop_150 | 1605.0 | 975.3 | 0.0 | 47.6 |
-| jump_peak | 1649.8 | 1304.6 | 0.0 | 109.8 |
-| power_off | 1830.7 | 2048.3 | 122.3 | 29.0 |
-| power_off_damped | 318.7 | 364.4 | 15.3 | 14.8 |
+| drop_150 | 1761.3 | 1077.8 | 0.0 | 50.0 |
+| jump_peak | 1619.7 | 1293.3 | 0.0 | 109.8 |
+| power_off | 1811.8 | 2027.6 | 121.5 | 28.9 |
+| power_off_damped | 316.8 | 362.9 | 15.1 | 14.8 |
 
 ## Print-first coupons
 

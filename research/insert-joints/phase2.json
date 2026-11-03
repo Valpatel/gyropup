@@ -6,7 +6,7 @@
  "status": "screen, not qualification: the toolkit set beside inventory.py; nothing printed or tested",
  "joints_json": {
   "path": "research/insert-joints/joints.json",
-  "sha256": "7a9ad2ea117df58efad78a226eee2014d7089c4639eb587168a9114b333ca6de",
+  "sha256": "28c6439cd9a739475ca27a8c496d3b2fd13c84efc6ab8665a2a3268e14b812eb",
   "summary": {
    "families": 46,
    "inserts_on_robot": 151,

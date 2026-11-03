@@ -8,7 +8,7 @@
     "seconds": 22,
     "audio": false
   },
-  "source_revision": "0b0c8b6e7586fb674e97253299433af85d36e6ef",
+  "source_revision": "2336aa3d651468cba4828f3f59cfbd1c7369f636",
   "source_hashes": {
     "designer/cadrig.js": "a2cb4029ef786e0793c5eb0018e0aa8d919d829bde8c5d378c1b1480c457faaf",
     "designer/character/eyes.js": "3348578a121b75ab7425c3b6591e864b41b09512e67b642832e6c6b683d2e11b",
@@ -43,13 +43,13 @@
     "designer/turret_bench.css": "77d4ab36125c5df22db86fafdc10a6d21470cee86c5e4201e50a3df7d9e79dc8",
     "designer/turret_bench.js": "2c7c14ae024d451015e8559216f1b5bfc8ab814ed76b82eac645fa4d616318ad",
     "designer/turret_reload.js": "37b75f1250ca341e710abb9443d0e0120abe48e827efbc86b740db7b55a326e9",
-    "exports/leg/fea/hip-frame-e1-media/field-receipt.json": "5ce8c9ffc58120623187f2eb7093b3a8054c95f110a7f709aa224800de00d00a",
+    "exports/leg/fea/hip-frame-e1-media/field-receipt.json": "eb4eac465394f49a24215d1d39b21a72665cde3e319db0c2d380478c05030f2a",
     "exports/leg/fea/hip-frame-e1-media/hip-frame-e1.mp4": "2cf4b003483267f1a3a1d1170854689777bdd952bb303789b4075819125a422c",
-    "exports/leg/fea/hip-frame-e1-media/hip_frame-E1.json": "87a7854995c14f9b32b914db7bb837b347d3218d6be6f35c3eafac91840dd4ff",
-    "exports/leg/fea/hip-frame-e1-media/video-receipt.json": "d52525700b585b27b30079f8082b15a697dc0f6c21c7f8f3b3965fcab693c7bb",
+    "exports/leg/fea/hip-frame-e1-media/hip_frame-E1.json": "57d35cec20107572c0fa222db16cbd66e2c74e8469b09927f9ca376ab4291e58",
+    "exports/leg/fea/hip-frame-e1-media/video-receipt.json": "06f7431bfb893c3d4f5d30444d77d5b3b8a2cb3a4f13bbd193b459e63560f939",
     "exports/leg/fea/media.json": "dbe019e1df2edc47bc8dbb8aa8066ec859cc203fedbbf0aab79a89e75a22a17b",
-    "exports/leg/fea/summary.json": "ab8a61b8fb54351e786e8d1437aaf94ffde34b39f77b98f75a5215e4fc0ff2a0",
-    "exports/leg/rig_jump.mp4": "7b59e8e0c807d04ca1387a4fd63f03536d44be5a637617e835fe5811ff50f217",
+    "exports/leg/fea/summary.json": "1488c5f62b90fd44162140ba1cb7adf8f52135a727cd37b6f08f4d2794000a39",
+    "exports/leg/rig_jump.mp4": "3e5188b87059d75c23e5eb48f32510aa5b4e4c5726e66ef3c43e86b15d28bc9c",
     "exports/sim/turret_box/barrel.stl": "ccb797222e64719fb8ba4a67ab236e6f9ba3b88ede36926a88cc917961bcde31",
     "exports/sim/turret_box/base_board.stl": "a3fd2d3a202337f01b3b45ad035b560fcbde07ebac8910b048ed94873d82fa20",
     "exports/sim/turret_box/board_bay.stl": "a1143179e3d8708137c93474ea5cc2309958d5d587da2218c01602a31fca8357",
@@ -163,8 +163,8 @@
     "exports/sim/v2/rig/manifest.json": "0f394643875bcdff247c8f285f2d0d10499104a1073088ce37c4b5f1b337086f",
     "exports/sim/v2/summary.json": "297a40dc891e3bbb1f1985d7db461021446b5041b33969fdc33b63a4b573ceac",
     "tools/capture-highlights.mjs": "2865634d7d05047ecbd73ca75350026ac293f484243e58ad411897135326f0fd",
-    "tools/check-highlights.py": "cc404d66689fd9f76f1592d46234ad0062801d4c34037bd226d47b316332b50d",
-    "tools/encode-highlights.py": "4de6d8a9135da8d7a10ac7cfb3b0749bda8c5c270da2a18cb4a83434adf8bc72",
+    "tools/check-highlights.py": "45d9408f3d434874a9e7b3e11f0a02567b74a47f978146d4abc00352d3098e31",
+    "tools/encode-highlights.py": "71e20bb2b9e186d2cbdfaf2bb619e80d93029e84f567eccfccfe9dee1da9d235",
     "web/icon.svg": "0a1ba64971063f63310e5edd529874329cceb5d4adbbf95888e325accc95a303",
     "web/model-links.css": "1a01e37f2bc7e74b7a79bc7b4416eb1a8e701039328809db061bf2ad7e20de05",
     "web/model-links.js": "ffb3fc044b2ce527840b0209c13074c3c7ccb187fd7bf47ff9b971311e643e2c",
@@ -239,8 +239,8 @@
         680,
         450
       ],
-      "title": "Archived MuJoCo",
-      "subtitle": "16.25 kg leg-rig jump study"
+      "title": "Simulated leg rig",
+      "subtitle": "18.75 kg MuJoCo jump study"
     },
     {
       "id": "e1",
@@ -276,21 +276,21 @@
     }
   ],
   "historical_leg": {
-    "revision": "ae919f7211f236f398ff77cc25d00c2017c1ab9c",
+    "revision": "e7b512870a39259a04a4930e2908af84001bc84e",
     "report": "exports/leg/rig-results.json",
-    "report_sha256": "89e2fdb42a5250430592b6a2f3b97e0c1ddddf7e6fa33a8ec8510f913d223c80",
+    "report_sha256": "171a1d4f2195468a235313fce29e5dde1272499b0d0934e22ad2bab5564ba902",
     "video": "exports/leg/rig_jump.mp4",
-    "video_sha256": "7b59e8e0c807d04ca1387a4fd63f03536d44be5a637617e835fe5811ff50f217",
-    "half_mass_kg": 16.25,
-    "bus_v": 48.1,
-    "wheel": "odrive-botwheel",
+    "video_sha256": "3e5188b87059d75c23e5eb48f32510aa5b4e4c5726e66ef3c43e86b15d28bc9c",
+    "half_mass_kg": 18.75,
+    "bus_v": 36.0,
+    "wheel": "10in-hub-motor",
     "scenario": {
       "scenario": "jump",
       "title": "Crouch, push off at the 60 N m cap, tuck in the air, land",
       "cap_nm": 60.0,
       "peak_motor_nm": 60.0,
-      "peak_motor_speed_rad_s": 14.56,
-      "peak_wheel_force_n": 3633.0,
+      "peak_motor_speed_rad_s": 12.65,
+      "peak_wheel_force_n": 2688.7,
       "pose_at_peak_wheel_force": {
         "L_mm": 251.5,
         "phi_deg": [
@@ -298,10 +298,10 @@
           -141.9
         ]
       },
-      "peak_axle_force_n": 2474.2,
+      "peak_axle_force_n": 1718.9,
       "axle_force_at_peak_n": [
-        -50.4,
-        2473.7
+        -14.0,
+        1718.9
       ],
       "pose_at_peak_axle_force": {
         "L_mm": 251.5,
@@ -310,22 +310,22 @@
           -141.9
         ]
       },
-      "peak_front_link_n": 1913.1,
-      "front_link_compression_n": 1913.1,
-      "front_link_tension_n": 116.4,
-      "peak_knee_pin_n": 1978.2,
+      "peak_front_link_n": 1343.1,
+      "front_link_compression_n": 1343.1,
+      "front_link_tension_n": 150.1,
+      "peak_knee_pin_n": 1360.9,
       "peak_stop_nm": 0.0,
       "stop_hits": false,
       "L_range_mm": [
-        154.1,
-        338.0
+        154.9,
+        337.8
       ],
       "rig": {
-        "half_mass_kg": 16.25,
-        "dummy_kg": 7.157,
-        "moving_kg": 5.026,
-        "frame_kg": 4.066,
-        "carriage_kg": 11.224,
+        "half_mass_kg": 18.75,
+        "dummy_kg": 7.657,
+        "moving_kg": 6.927,
+        "frame_kg": 4.166,
+        "carriage_kg": 11.823,
         "armature": 0.0243,
         "stop_k_nm_per_rad": 856,
         "ref": {
@@ -335,18 +335,18 @@
           "aw": -0.82496
         }
       },
-      "jump_height_mm": 244.2,
-      "peak_gearbox_nm": 100.7,
+      "jump_height_mm": 151.9,
+      "peak_gearbox_nm": 77.3,
       "gearbox_over_peak_ms": 0.0,
       "peak_joint_force_n": {
-        "knee_f": 759.8,
-        "knee_r": 772.6,
-        "hip_f": 686.5,
-        "hip_r": 683.5,
-        "apex": 1080.8
+        "knee_f": 574.2,
+        "knee_r": 569.2,
+        "hip_f": 564.2,
+        "hip_r": 559.6,
+        "apex": 700.3
       }
     },
-    "status": "Historical simulated single-leg rig; not a current full-robot or hardware test"
+    "status": "Simulated single-leg rig on the current leg; not a full-robot or hardware test"
   },
   "e1": {
     "source_start_seconds": 1,
@@ -410,29 +410,29 @@
   },
   "limitations": [
     "Browser motion is illustrative, with integrated live projectiles; not a new full-robot physics result.",
-    "Leg footage retains its historical 16.25 kg / 48.1 V / BotWheel / 60 N m baseline.",
+    "Leg footage is the single-leg MuJoCo rig at 18.75 kg / 36 V / 10 in hub motor / 60 N m cap, recorded with its report.",
     "E1 is static load scaling of the recorded study (cad-agent v0.6.0 record), with a failed strength target; not transient dynamics.",
     "No new solver runs. Reproducible recipe and source identity, not a promise of cross-host identical encoded bytes."
   ],
   "outputs": {
     "gyropup-highlights.mp4": {
-      "sha256": "281ed5aebc0e2e35ed94a812dd864e5df8759dd4476704f6507fee5f3a194778",
-      "bytes": 1860823
+      "sha256": "96330defcb75fe6f3eebc29aadbe85897a2f95e042697178a4b2150056833f7c",
+      "bytes": 1857481
     },
     "gyropup-highlights.webm": {
-      "sha256": "6de982b031c6cd099101016d3e65192be00461fd45c3ac902327d3e0e3072117",
-      "bytes": 1481688
+      "sha256": "7766804e85efb471dc07fcdd6cdb0d962396cd0e8b79939b04fee20f3fc04bc7",
+      "bytes": 1478016
     },
     "gyropup-highlights.webp": {
-      "sha256": "bf6d43afdae1280a2767053252e4686cc64e54011bea856960be72f51f25c4d9",
-      "bytes": 32560
+      "sha256": "949ec8db0fc70dcf111a0494811c9d19fdd36c5f5ccb7c316c4fe0844ffadc54",
+      "bytes": 32516
     },
     "capture-receipt.json": {
-      "sha256": "4e57a36ebb2f8e8c36f859de1810b1b1582500f642219b6a0edee31bb36dd2f4",
-      "bytes": 114163
+      "sha256": "9d00a907167cac2e66f7dcc5286591e2260d0ceb88523d48bf60263bfd2b9ecf",
+      "bytes": 114162
     },
     "capture-frames.json": {
-      "sha256": "f6cc18ecb57c014cf166ffb136b1e3a01bda694274679f67c5edf31e6da61f71",
+      "sha256": "ffa92a0553ebc29814a7bde6d09e4a45b7aa2594820283b879b114cd784cdea1",
       "bytes": 100989
     }
   }

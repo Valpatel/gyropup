@@ -147,7 +147,7 @@ try {
     await image.decode(); return { width: image.naturalWidth, height: image.naturalHeight };
   });
   assert.deepEqual(poster, { width: 1280, height: 720 }, 'Poster decodes at the same 16:9 dimensions as the reel');
-  assert.match(await page.locator('#highlight-description').innerText(), /archived leg-rig physics and historical static deformation/);
+  assert.match(await page.locator('#highlight-description').innerText(), /simulated leg-rig physics and static deformation/);
   const footageHref = await page.locator('.highlight-footage').getAttribute('href');
   const footageResponse = await context.request.get(new URL(footageHref, base).href);
   assert.ok(footageResponse.ok(), 'About the footage reaches its published document');
