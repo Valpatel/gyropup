@@ -324,12 +324,16 @@ and stays.
 
 ## C7 and S1: the leg's first stand
 
+On the motors, `--half-mass KG` is required: KG is the mass the carriage carries, which sets the gravity
+feed-forward. Take it from the ballast table in `exports/rig/rig.json` (`carried_kg` at the ballast fitted), or weigh
+it. It is not the design mass unless the ballast makes it so.
+
 1. **C7.** Hang the carriage on the drop pin at 150 mm with the leg in the air. Run
-   `python -m rig.run --backend can --test drop_150 --rate-limit 5` without pulling the pin. The leg rises to 300 mm
+   `python -m rig.run --backend can --test drop_150 --half-mass KG --rate-limit 5` without pulling the pin. The leg rises to 300 mm
    and holds. Then check the angles against a ruler with `python -m rig.calibrate --check`: the leg length within
    5 mm.
 2. **S1.** The carriage is on its bumpers and the load plate is under the wheel. Run
-   `python -m rig.run --backend can --test stand_up`. The first time, add `--rate-limit 5`.
+   `python -m rig.run --backend can --test stand_up --half-mass KG`. The first time, add `--rate-limit 5`.
 
 ## B5: the tyre, on the rig
 
@@ -340,7 +344,7 @@ and stays.
 
 **Steps:**
 
-1. Run `python -m rig.run --backend can --test tyre_press`. It stands up to 360 mm, then presses the wheel into the
+1. Run `python -m rig.run --backend can --test tyre_press --half-mass KG`. It stands up to 360 mm, then presses the wheel into the
    plate at 200, 300 ... 900 N and back down to 200 N, 4 s per step.
    - Near full stretch the motors' 60 N m reaches about 940 N.
    - If the carriage is not held, the leg stretches and the run goes limp at once.
@@ -361,7 +365,7 @@ Each is one command. The tables above give its predicted numbers and its pass/fa
 
 | Test | Command | Set-up | After the run |
 |---|---|---|---|
-| S2 squat | `python -m rig.run --backend can --test squat` | the load plate under the wheel | re-check every screw |
+| S2 squat | `python -m rig.run --backend can --test squat --half-mass KG` | the load plate under the wheel | re-check every screw |
 | S3 jump | `... --test jump` | the load plate out; the tether on (150 mm of slack above the highest jump); the pack at or under the start voltage | inspect the knees, the adapters and the stop sleeves; compare with the simulation rerun at the measured J and tyre rate |
 | S4 drop | `... --test drop_150` | the carriage on the drop pin, 150 mm up; when the leg holds 300 mm (1 s), pull the pin; the run lasts 8 s | inspect as S3 |
 | S5 power cut, bumper high | `... --test power_off` | standing at 300 mm; release the pendant: the leg holds for the relay's 1.0 s, then the contactor opens | the carriage lands on the bumpers; compare the fall time with both predictions (undamped and damped): which one it matches says whether the damper works in a real fall |

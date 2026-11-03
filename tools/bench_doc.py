@@ -47,7 +47,7 @@ def assumes() -> str:
             ('B3', 'stop sleeve rate (STOP_K) and travel', f"{a['stop_k_n_per_mm']:.0f} N/mm at the post ({a['STOP_K']:.0f} N m/rad at "
                                                          f"r {a['stop_r_m'] * 1000:.0f} mm), {a['stop_travel_mm']:.1f} mm before steel"),
             ('B4', 'preload per M5 in the hub joint (HUB_PRELOAD_N)', f"{a['HUB_PRELOAD_N']:.0f} N"),
-            ('B5', 'tyre contact (TYRE_SOLREF)', f"solref {a['TYRE_SOLREF']} (about 100-250 N/mm)"),
+            ('B5', 'tyre contact (TYRE_SOLREF)', f"solref {a['TYRE_SOLREF']} (D69's 10 x 2.125 air tyre at 30-35 psi: about 60 N/mm)"),
             ('B6', 'the packs\' resistance (rig/run.py --r-int)', '0.10 ohm (an estimate: two 5S3P packs in series, D65)')]
     L = ['| Test | What the simulation assumes | Value now |', '|---|---|---|']
     L += [f'| {t} | {w} | {v} |' for t, w, v in rows]
@@ -79,6 +79,8 @@ def criteria() -> str:
             lim = ch.get('tol', ch.get('max', ch.get('rel_tol')))
             if ch['kind'] in ('hold', 'pp', 'track', 'follow'):
                 lim = f'{lim * 1000:g} mm' if ch['kind'] != 'pp' else f"{ch['max'] * 1000:g} mm p-p"
+            elif ch['kind'] == 'range' and ch.get('around_weight_n') is not None:
+                lim = f"carried weight +- {ch['around_weight_n']:g} N"
             elif ch['kind'] in ('range',):
                 k_ = 1000.0 if ch.get('signal') == 'L' else 1.0
                 lo_, hi_ = ch.get('min'), ch.get('max')

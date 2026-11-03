@@ -3,10 +3,10 @@
     python -m rig.run --backend sim --test squat                     # MuJoCo, the rig's controller at 500 Hz
     python -m rig.run --backend sim --test jump --rate 250 --plot
     python -m rig.run --backend hil --test jump                      # the CAN path on two software RS-04s + MuJoCo
-    python -m rig.run --backend can --iface can0 --test stand_up     # the rig itself (pendant held, ARM typed)
+    python -m rig.run --backend can --iface can0 --test stand_up --half-mass 15.1   # the rig itself (pendant held, ARM typed)
     python -m rig.run --backend can --test jump --cap 12 --half-mass 11.09   # a lower cap (docs/motor-day.md, PLA)
     python -m rig.run --reproduce        # T7: every scenario as sim/leg_rig.py ran it -> exports/rig/reproduction.json
-    python -m rig.run --predict          # the rig as built: D71's 18.75 kg, the FLEXVOLT pack, a tick of latency, at 500 Hz
+    python -m rig.run --predict          # the rig at D71's design mass (18.75 kg), the FLEXVOLT pack, a tick of latency, 500 Hz
                                          # -> exports/rig/predictions.json (the numbers docs/leg-bench-tests.md quotes)
 
 Every run writes exports/rig/runs/<stamp>-<backend>-<test>.npz/.json (rig/log.py) and its verdict (rig/compare.py).
@@ -32,7 +32,7 @@ from rig.log import RunLog  # noqa: E402
 
 OUT = R / 'exports' / 'rig'
 DESIGN_KG = 18.75                     # D71: half the 37.5 kg design mass, a leg's own parts and wheel included
-REF_KG = 13.1                         # what exports/leg/rig-results.json was run at
+# the reproduction (T7) runs at exports/leg/rig-results.json's own half_mass_kg and bus_v (18.75 kg, 36 V since D71)
 RIG_TESTS = ('stand_up', 'squat', 'jump', 'drop_150', 'power_off', 'power_off_damped', 'tyre_press')
 BUMPER_CONTACT_M = 0.140              # the bottom bumpers meet the carriage at this leg length (cad/build_rig.py)
 DYNAMIC = ('jump', 'jump_peak', 'drop_150')
@@ -154,7 +154,7 @@ def predict(half_mass: float = DESIGN_KG, rate: float = 500.0, r_int: float = 0.
         ser['L_mm'] = [round(x * 1000, 2) for x in ser.pop('L')]
         tests[key] = {'test': test, 'rail_low_m': rail, 'pack': {'v_start': pack.v_oc, 'r_int': pack.r_int},
                       'summary': {k: v for k, v in res.items() if k != 'series'}, 'metrics': m,
-                      'verdict': compare.judge(test, arr, {'metrics': m}), 'series': ser}
+                      'verdict': compare.judge(test, arr, {'metrics': m}, half_mass), 'series': ser}
         print(f"  {key:20} jump {res['jump_height_mm']}  motor {res['peak_motor_nm']}  wheel {res['peak_wheel_force_n']}  "
               f"knee {res['peak_knee_pin_n']}  gearbox {res['peak_gearbox_nm']}  L {res['L_range_mm']}  VBUS {m.get('vbus_range_v')}")
     doc = {'half_mass_kg': half_mass, 'rate_hz': rate, 'latency_ticks': 1, 'pack_r_int': r_int,
@@ -319,7 +319,9 @@ def main(argv=None):
     ap = argparse.ArgumentParser(prog='python -m rig.run', description=__doc__.split('\n\n')[0])
     ap.add_argument('--backend', choices=('sim', 'hil', 'can'), default='sim')
     ap.add_argument('--test', choices=tuple(lc.SCENARIOS) + tuple(lc.BENCH_SCENARIOS), default='stand_up')
-    ap.add_argument('--half-mass', type=float, default=DESIGN_KG)
+    ap.add_argument('--half-mass', type=float, help=f'kg the leg carries: the gravity feed-forward. The simulation defaults to the '
+                    f'design mass ({DESIGN_KG}); on the motors it is required (the ballast table in exports/rig/rig.json, or '
+                    f'the scale reading under the foot: docs/motor-day.md)')
     ap.add_argument('--rate', type=float, default=500.0)
     ap.add_argument('--r-int', type=float, default=0.10, help='the packs\' resistance, ohm (measured: docs/leg-bench-tests.md B6)')
     ap.add_argument('--v-start', type=float, help='the pack voltage in the simulation (default: the start rule)')
@@ -339,6 +341,13 @@ def main(argv=None):
     ap.add_argument('--reproduce', action='store_true')
     ap.add_argument('--predict', action='store_true')
     a = ap.parse_args(argv)
+    if a.half_mass is None:
+        if a.backend == 'can' and not (a.reproduce or a.predict or a.faults):
+            # on the motors the feed-forward must be the mass actually carried: the design mass is not the rig's ballast
+            print('refused: --half-mass KG is required with --backend can: the mass the leg carries (the ballast table in '
+                  'exports/rig/rig.json, or the scale reading under the foot: docs/motor-day.md)')
+            return 2
+        a.half_mass = DESIGN_KG
     if a.reproduce:
         rep = reproduce(a.rate)
         print('T7 acceptance:', 'PASS' if rep['all_ok'] else 'FAIL')
