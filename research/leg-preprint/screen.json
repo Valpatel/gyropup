@@ -932,7 +932,7 @@
    "today": "8 x M5 x 40 into the tapped 6061 adapter, heads on 24.5 mm of PA6-CF (Ø8.5 heads, no washer); 1.5 N m puts 45.5 MPa under each head",
    "high_stress": true,
    "reasons": [
-    "the hub's edge lifts at 104 N m (at 1200 N a screw); R1 puts 115.7 and R3 190.1 N m on it",
+    "the hub's edge lifts at 104 N m (at 1200 N a screw); R1 puts 114.9 and R3 188.1 N m on it",
     "45.5 MPa under the heads against the 25 MPa sustained screen"
    ],
    "options": {
@@ -973,7 +973,7 @@
    "high_stress": true,
    "reasons": [
     "the eye stub's root: layer check E1 0.77 against 2.0 (the worst in the leg)",
-    "R3: 169.1 N m at the sleeves, 38.1 MPa on the eye (SF 1.05)"
+    "R3: 167.3 N m at the sleeves, 37.7 MPa on the eye (SF 1.06)"
    ],
    "options": {
     "metal bushing": "today's sleeves stay; the stub around them grows (diameter and root fillet) until its root passes, judged by the layer check",
@@ -1011,7 +1011,7 @@
    "reasons": [
     "the wheel link's hub root: layer check R1w 0.7 against 1.2",
     "the front link's apex ring: E1 0.71 against 2.0",
-    "bearings fine (s0 2.76 in R3)"
+    "bearings fine (s0 2.79 in R3)"
    ],
    "options": {
     "printed, bigger": "a root fillet at the Ø64 shoulder; the ring wall 6 -> 10-12 mm: lowest mass, may not reach 1.2",
@@ -1402,38 +1402,38 @@
   "scenarios": [
    {
     "scenario": "drop_150",
-    "axle_n": 1605.0,
-    "knee_pin_n": 975.3,
+    "axle_n": 1761.3,
+    "knee_pin_n": 1077.8,
     "stop_nm": 0.0,
-    "gearbox_nm": 47.6
+    "gearbox_nm": 50.0
    },
    {
     "scenario": "jump_peak",
-    "axle_n": 1649.8,
-    "knee_pin_n": 1304.6,
+    "axle_n": 1619.7,
+    "knee_pin_n": 1293.3,
     "stop_nm": 0.0,
     "gearbox_nm": 109.8
    },
    {
     "scenario": "power_off",
-    "axle_n": 1830.7,
-    "knee_pin_n": 2048.3,
-    "stop_nm": 122.3,
-    "gearbox_nm": 29.0
+    "axle_n": 1811.8,
+    "knee_pin_n": 2027.6,
+    "stop_nm": 121.5,
+    "gearbox_nm": 28.9
    },
    {
     "scenario": "power_off_damped",
-    "axle_n": 318.7,
-    "knee_pin_n": 364.4,
-    "stop_nm": 15.3,
+    "axle_n": 316.8,
+    "knee_pin_n": 362.9,
+    "stop_nm": 15.1,
     "gearbox_nm": 14.8
    }
   ],
   "undamped_over_damped_knee": 5.6,
   "r3_knee": {
-   "bearing_s0": 1.12,
-   "pin_sf": 1.29,
-   "eye_sf": 1.05
+   "bearing_s0": 1.13,
+   "pin_sf": 1.3,
+   "eye_sf": 1.06
   },
   "note": "every R3 margin is the undamped cut onto the stops; the RS-04's power-off damping as the rig assumes it (20 % of shorted phases, not measured: B1 measures it) divides the knee load by the ratio above; no rig scenario models the bumper"
  },

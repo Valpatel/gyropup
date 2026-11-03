@@ -115,11 +115,12 @@ class Screen(unittest.TestCase):
         fr = sc.final_record(repo, sc.materials(repo))
         cases = repo.json(sc.FINAL_GATE)['cases']
         k = cases['R3']['Fw3'][2] / cases['R1']['Fw3'][2]
-        self.assertAlmostEqual(k, 1830.7 / 945.26, places=3)
+        # the record's axle loads on the rig results regenerated in #8 (were 1830.7 / 945.26)
+        self.assertAlmostEqual(k, 1811.8 / 938.336, places=3)
         row = next(x for x in fr['rows'] if (x['part'], x['case']) == ('upper_link', 'R3K'))
         block = sc.proof_block(repo, fr)
         self.assertIn(f"| upper_link | R3K | {row['gate_now'] * k:.2f} | {row['layer_now'] * k:.2f} |", block)
-        self.assertIn('| P2 | 945 N vertical', block)
+        self.assertIn('| P2 | 938 N vertical', block)
 
     def test_mass_basis_flags_rows_at_the_limit(self):
         repo = sc.Repo(sc.ROOT)

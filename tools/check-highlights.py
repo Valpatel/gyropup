@@ -12,7 +12,9 @@ import subprocess
 ROOT = Path(__file__).resolve().parents[1]
 OUT = ROOT / 'web/highlights'
 WIDTH, HEIGHT, FPS, FRAMES = 1280, 720, 30, 660
-LEG_REVISION = 'ae919f7211f236f398ff77cc25d00c2017c1ab9c'
+# The commit that recorded rig_jump.mp4 together with the rig-results.json it shows (issue 8: 18.75 kg a leg,
+# 36 V, the 10 in hub-motor wheel). The clip used to be the 16.25 kg / 48.1 V run of ae919f7 (issue 106).
+LEG_REVISION = 'e7b512870a39259a04a4930e2908af84001bc84e'
 LEG = 'exports/leg/rig_jump.mp4'
 E1 = 'exports/leg/fea/hip-frame-e1-media/'
 MOVIES = ['gyropup-highlights.mp4', 'gyropup-highlights.webm']
@@ -28,7 +30,7 @@ SEGMENTS = [
     dict(id='battle', start=210, frames=180, samples=[220, 370], crop=[130, 100, 1020, 450],
          title='Target practice', subtitle='Interactive play simulation'),
     dict(id='leg', start=390, frames=90, samples=[393, 414], crop=[300, 100, 680, 450],
-         title='Archived MuJoCo', subtitle='16.25 kg leg-rig jump study'),
+         title='Simulated leg rig', subtitle='18.75 kg MuJoCo jump study'),
     dict(id='e1', start=480, frames=90, samples=[482, 567], crop=[360, 140, 590, 360],
          source_start_seconds=1, layout='Native 960 x 720, centered with 160 px side bars; all original labels retained'),
     dict(id='character', start=570, frames=90, samples=[575, 650], crop=[280, 100, 720, 450]),
@@ -113,8 +115,15 @@ def historical_leg():
     run = {key: value for key, value in report['scenarios']['jump'].items() if key != 'series'}
     return dict(revision=LEG_REVISION, report='exports/leg/rig-results.json', report_sha256=sha(data),
                 video=LEG, video_sha256=sha(git_bytes(LEG_REVISION, LEG)),
-                half_mass_kg=report['half_mass_kg'], bus_v=report['bus_v'], wheel='odrive-botwheel',
-                scenario=run, status='Historical simulated single-leg rig; not a current full-robot or hardware test')
+                half_mass_kg=report['half_mass_kg'], bus_v=report['bus_v'], wheel='10in-hub-motor',
+                scenario=run, status='Simulated single-leg rig on the current leg; not a full-robot or hardware test')
+
+
+def check_leg_report(receipt, report_bytes):
+    """The insert's captions describe the pinned report; the working tree's report must still be that report, so a
+    re-run rig cannot leave the clip describing numbers the repository no longer carries."""
+    require(sha(report_bytes) == receipt['historical_leg']['report_sha256'],
+            "The leg report on disk is not the pinned clip's report; re-record the clip with it and move LEG_REVISION")
 
 
 def validate_bindings(receipt, capture, frame_manifest, out=OUT, raw_frames=None):
@@ -171,6 +180,7 @@ def validate_bindings(receipt, capture, frame_manifest, out=OUT, raw_frames=None
     require(battle['shots'] >= 3 and battle['hits'] >= 2 and battle['targetsDown'] >= 2, 'Target play did not produce actual impacts')
     require(receipt['historical_leg'] == historical_leg(), 'Historical leg baseline differs from the matching video revision')
     require(receipt['historical_leg']['video_sha256'] == receipt['source_hashes'][LEG], 'Leg clip is not its historical Git blob')
+    check_leg_report(receipt, (ROOT / receipt['historical_leg']['report']).read_bytes())
     require(receipt['e1'] == dict(source_start_seconds=1, source_duration_seconds=3, transient_simulation=False,
                                 deformation_exaggeration=16, safety_factor=1.60, required=2, baseline_kg=37.5),
             'Static E1 evidence mislabeled')
@@ -314,7 +324,14 @@ def negative_controls(receipt, capture, frames, out, decoded):
     fault('stage instrumentation', lambda r,c,f: c['inputs']['/designer/kit/stage.js'].__setitem__('servedSha256', '0'*64))
     fault('frame count', lambda r,c,f: f['shots']['battle'].pop())
     fault('wrong turret name with unchanged part count', lambda r,c,f: next(s for s in c['shots'] if s['id']=='battle')['info']['parts'].__setitem__(0, 'older_turret'))
-    fault('historical load baseline', lambda r,c,f: r['historical_leg'].__setitem__('half_mass_kg', 18.75))
+    fault('historical load baseline', lambda r,c,f: r['historical_leg'].__setitem__('half_mass_kg', 16.25))
+    def leg_report_drift(r, c, f):
+        report = json.loads((ROOT / r['historical_leg']['report']).read_bytes())
+        report['half_mass_kg'] = 16.25
+        check_leg_report(r, json.dumps(report).encode())
+    try: leg_report_drift(copy.deepcopy(receipt), None, None)
+    except ValueError: rejected.append('leg report drift on disk')
+    else: raise ValueError('Negative control escaped: leg report drift on disk')
     fault('static animation label', lambda r,c,f: r['e1'].__setitem__('transient_simulation', True))
     fault('media bytes', lambda r,c,f: r['outputs'][MOVIES[0]].__setitem__('sha256', '0'*64))
     for segment in SEGMENTS:
