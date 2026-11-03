@@ -4,20 +4,35 @@ The current leg is the five-bar mechanism in [fivebar.py](fivebar.py), exported 
 [build_leg.py](build_leg.py), with arrival fixtures in [rig_bench.py](rig_bench.py).
 Start with [RS-04 mounting fit](../docs/rs04-mounting-fit.md) and the
 [mechanical readiness tracker](https://github.com/Valpatel/gyropup/issues/61).
-No complete leg is released for printing. The serial-leg `build.py`/`leg.py`
-assembly and validation claims below are historical, not verification of the five-bar leg.
+No complete leg is released for printing.
 
-
-[`build.py`](build.py) makes every part of a design in CadQuery: the aluminium chassis, the two leg modules ([`leg.py`](leg.py), built on the mechanical interface standard in [`gmi.py`](gmi.py) and [`../docs/mechanical-interfaces.md`](../docs/mechanical-interfaces.md)), and the printed head, face and sensor mounts. The motor interfaces come from the vendors' drawings ([`../catalog/interfaces.json`](../catalog/interfaces.json)). [`studies.py`](studies.py) runs the stiffness and strength studies, and [`cables.py`](cables.py) checks the cable routes over the leg's whole range of motion.
+[`../tools/robot_view.py`](../tools/robot_view.py) puts the whole robot together as it is drawn today: the P3 body, both five-bar legs
+at the 300 mm stance and the turret, with bought parts as envelopes. Its STEP files are what `cad-agent view` shows.
+[`../tools/leg_cables.py`](../tools/leg_cables.py) checks the wheel harness's route along the five-bar over the leg's
+range ([`../exports/leg/cables.json`](../exports/leg/cables.json), [`../exports/leg/cables.png`](../exports/leg/cables.png)).
+[`../tools/body_pictures.py`](../tools/body_pictures.py) redraws the body's pictures (`exports/body/`) with the turret
+and the VLP-16 drawn, not as the layout's envelopes; run it after `build_body.py`. All three live in `tools/` because
+receipts pin this folder's sources.
 
 ```
-.venv/bin/python cad/build.py designs/default.json   # STEP + print-ready STL in exports/, then:
-.venv/bin/cad-agent view                              # the 3D assembly, at /_cadagent/kit/viewer.html
+.venv/bin/python tools/robot_view.py   # exports/robot/*.step + robot.json, cad/assembly.png, cad/exploded.png
+.venv/bin/cad-agent view                # the 3D assembly, at /_cadagent/kit/viewer.html
+.venv/bin/python tools/leg_cables.py    # add --clash to sweep the cable against the leg's parts
+.venv/bin/python tools/body_pictures.py # exports/body/*.png and views/*.png with the turret and the VLP-16 drawn
 ```
 
 | Assembled, standing | Exploded |
 |---|---|
-| ![assembly](assembly.png) | ![exploded](exploded.png) |
+| ![Gyropup assembled from the current CAD: the P3 body, two five-bar legs and the turret](assembly.png) | ![Gyropup exploded: shell out, head up, bay down, legs out](exploded.png) |
+
+The serial-leg `build.py`/`leg.py` assembly and validation claims below are historical, not verification of the
+five-bar leg.
+
+[`build.py`](build.py) makes every part of a design in CadQuery: the aluminium chassis, the two leg modules ([`leg.py`](leg.py), built on the mechanical interface standard in [`gmi.py`](gmi.py) and [`../docs/mechanical-interfaces.md`](../docs/mechanical-interfaces.md)), and the printed head, face and sensor mounts. The motor interfaces come from the vendors' drawings ([`../catalog/interfaces.json`](../catalog/interfaces.json)). [`studies.py`](studies.py) runs the stiffness and strength studies, and [`cables.py`](cables.py) checked the serial leg's cable routes.
+
+```
+.venv/bin/python cad/build.py designs/default.json   # STEP + print-ready STL in exports/ (the serial leg, rev 0.1)
+```
 
 | Part | Qty | Made | Notes |
 |---|---|---|---|

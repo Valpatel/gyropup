@@ -1,0 +1,197 @@
+{
+ "leg": "five-bar (leg v2, cad/fivebar.py): l1 150 mm, l2 250 mm, motors 150 mm apart",
+ "wheel": {
+  "route": "hub (inner end, at the axle) -> under the apex eye -> along the wheel link's outer edge -> round the outside of the rear knee -> along the rear upper link's outer edge -> into the body 90 mm from the hip axis (fivebar.cable)",
+  "cable_d_mm": 9.0,
+  "stances": [
+   {
+    "height_mm": 104.0,
+    "phi_deg": [
+     2.0,
+     -182.0
+    ],
+    "length_mm": 613.1,
+    "min_bend_radius_mm": 7.5,
+    "tightest_at_mm": [
+     -171.1,
+     13.7,
+     35.7
+    ]
+   },
+   {
+    "height_mm": 151.7,
+    "phi_deg": [
+     -13.4,
+     -166.6
+    ],
+    "length_mm": 603.7,
+    "min_bend_radius_mm": 7.6,
+    "tightest_at_mm": [
+     -177.2,
+     13.7,
+     9.0
+    ]
+   },
+   {
+    "height_mm": 199.3,
+    "phi_deg": [
+     -25.4,
+     -154.6
+    ],
+    "length_mm": 594.6,
+    "min_bend_radius_mm": 7.6,
+    "tightest_at_mm": [
+     -176.8,
+     13.7,
+     -12.6
+    ]
+   },
+   {
+    "height_mm": 247.0,
+    "phi_deg": [
+     -37.0,
+     -143.0
+    ],
+    "length_mm": 585.4,
+    "min_bend_radius_mm": 7.6,
+    "tightest_at_mm": [
+     -172.2,
+     13.7,
+     -32.7
+    ]
+   },
+   {
+    "height_mm": 294.7,
+    "phi_deg": [
+     -49.4,
+     -130.6
+    ],
+    "length_mm": 575.7,
+    "min_bend_radius_mm": 7.6,
+    "tightest_at_mm": [
+     -163.0,
+     13.8,
+     -52.9
+    ]
+   },
+   {
+    "height_mm": 342.3,
+    "phi_deg": [
+     -64.3,
+     -115.7
+    ],
+    "length_mm": 565.4,
+    "min_bend_radius_mm": 7.6,
+    "tightest_at_mm": [
+     -146.4,
+     13.8,
+     -73.8
+    ]
+   },
+   {
+    "height_mm": 390.0,
+    "phi_deg": [
+     -92.0,
+     -88.0
+    ],
+    "length_mm": 554.6,
+    "min_bend_radius_mm": 7.6,
+    "tightest_at_mm": [
+     -103.8,
+     13.9,
+     -98.8
+    ]
+   }
+  ],
+  "length_mm": {
+   "min": 554.6,
+   "max": 613.1,
+   "slack_needed_mm": 58.5,
+   "note": "the spread over the stances: what the knee wrap and the loop at the hip must give"
+  },
+  "bend_radius": {
+   "min_mm": 7.5,
+   "needed_mm": 20.0,
+   "ok": false,
+   "note": "the drawn spline's tightest bend, against 10 x the 18 AWG conductor (rule 3, flexing). At 7 of 7 stances it is at fivebar.cable()'s third waypoint from the end, where the route turns off the rear upper link's edge into the body (the waypoints either side are 10.1 and 35.4 mm from it, at the closest): the drawn route needs a wider turn there before it is a harness drawing"
+  },
+  "lead_length": {
+   "botwheel_lead_mm": 300,
+   "route_max_mm": 613.1,
+   "note": "the BotWheel's own lead is 300 mm; the route ends where it enters the body, so the run on to the motor driver inside is extra"
+  },
+  "clash": {
+   "heights_mm": [
+    105,
+    130,
+    170,
+    220,
+    270,
+    320,
+    370,
+    390
+   ],
+   "hits": {
+    "105": [
+     [
+      "upper_link_rear",
+      123
+     ]
+    ],
+    "130": [
+     [
+      "upper_link_rear",
+      124
+     ]
+    ],
+    "170": [
+     [
+      "upper_link_rear",
+      123
+     ]
+    ],
+    "220": [
+     [
+      "upper_link_rear",
+      122
+     ]
+    ],
+    "270": [
+     [
+      "upper_link_rear",
+      122
+     ]
+    ],
+    "320": [
+     [
+      "upper_link_rear",
+      119
+     ]
+    ],
+    "370": [
+     [
+      "upper_link_rear",
+      113
+     ]
+    ],
+    "390": [
+     [
+      "upper_link_rear",
+      107
+     ]
+    ]
+   },
+   "ok": false,
+   "note": "parts the swept \u00d89 cable runs into (> 5 mm3), motors and the hub left out"
+  }
+ },
+ "front": {
+  "route": "rear cover (XT30 + CAN) on the hip frame -> into the body",
+  "crosses_joint": false
+ },
+ "rear": {
+  "route": "rear cover (XT30 + CAN) on the hip frame -> into the body",
+  "crosses_joint": false
+ },
+ "limits": "a drawn route, not a measured cable: clips are not drawn, and the rig decides (docs/mechanical-interfaces.md)"
+}
