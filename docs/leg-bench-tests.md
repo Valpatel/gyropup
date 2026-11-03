@@ -49,27 +49,27 @@ what the simulation assumes or predicts, and how it passes.
 |---|---|---|
 | B1 | power-off drag of an RS-04 (OFF_DAMPING) | 5.88 N m s/rad, linear (the undamped case: 0) |
 | B2 | rotor inertia at the output (ARMATURE) | 0.0243 kg m^2 (3e-4 x 9^2, an estimate) |
-| B3 | stop sleeve rate (STOP_K) and travel | 243 N/mm at the post (816 N m/rad at r 58 mm), 4.5 mm before steel |
+| B3 | stop sleeve rate (STOP_K) and travel | 238 N/mm at the post (856 N m/rad at r 60 mm), 7.8 mm before steel |
 | B4 | preload per M5 in the hub joint (HUB_PRELOAD_N) | 1200 N |
-| B5 | tyre contact (TYRE_SOLREF) | solref 0.0077 0.7 (about 100-250 N/mm) |
+| B5 | tyre contact (TYRE_SOLREF) | solref 0.0141 0.5 (D69's 10 x 2.125 air tyre at 30-35 psi: about 60 N/mm) |
 | B6 | the packs' resistance (rig/run.py --r-int) | 0.10 ohm (an estimate: two 5S3P packs in series, D65) |
 <!-- /gen:assumes -->
 
 ## The predicted numbers for the rig tests
 
 <!-- gen:predictions -->
-At 14.75 kg carried, 500 Hz with one tick of latency, the pack at its start rule (jumps and drops from 40.5 V, R_int 0.1 ohm), the bumpers meeting the carriage at a leg length of 140 mm (S6: lowered to 74 mm). From `python -m rig.run --predict`.
+At 18.75 kg carried, 500 Hz with one tick of latency, the pack at its start rule (jumps and drops from 40.5 V, R_int 0.1 ohm), the bumpers meeting the carriage at a leg length of 140 mm (S6: lowered to 74 mm). From `python -m rig.run --predict`.
 
 | Test | Motor peak N m | Gearbox peak N m | Wheel N | Knee pin N | Leg length mm | VBUS V | Jump mm | Fall s |
 |---|---|---|---|---|---|---|---|---|
-| S1 stand-up | 14.0 | 13.9 | 157 | 159 | 140-304 | 37.9-38.0 | - | - |
-| S2 squat | 14.1 | 14.0 | 157 | 151 | 157-303 | 37.9-38.0 | - | - |
-| S3 jump | 60.0 | 76.5 | 2,259 | 1,229 | 155-338 | 37.1-43.4 | 207 | - |
-| S4 drop 150 mm | 37.9 | 70.8 | 2,874 | 1,331 | 279-335 | 40.4-41.6 | - | - |
-| S5 power cut, undamped | 12.5 | 54.1 | 459 | 365 | 136-303 | 37.9-38.0 | - | 0.20 |
-| S5 power cut, damped | 12.5 | 12.5 | 159 | 160 | 139-303 | 37.9-38.0 | - | 0.42 |
-| S6 power cut onto the stops, undamped | 12.5 | 27.1 | 1,548 | 1,713 | 89-303 | 37.9-38.0 | - | 0.23 |
-| S6 power cut onto the stops, damped | 12.5 | 12.5 | 244 | 264 | 100-303 | 37.9-38.0 | - | 0.57 |
+| S1 stand-up | 16.5 | 16.4 | 198 | 192 | 140-305 | 37.8-38.0 | - | - |
+| S2 squat | 16.7 | 16.6 | 198 | 182 | 158-304 | 37.8-38.0 | - | - |
+| S3 jump | 60.0 | 70.9 | 2,667 | 1,277 | 155-341 | 37.1-43.2 | 164 | - |
+| S4 drop 150 mm | 38.4 | 47.4 | 2,361 | 960 | 278-343 | 40.3-41.6 | - | - |
+| S5 power cut, undamped | 15.0 | 53.8 | 404 | 282 | 137-304 | 37.9-38.0 | - | 0.20 |
+| S5 power cut, damped | 15.0 | 15.0 | 206 | 201 | 139-304 | 37.9-38.0 | - | 0.37 |
+| S6 power cut onto the stops, undamped | 15.0 | 28.9 | 1,836 | 2,027 | 88-304 | 37.9-38.0 | - | 0.23 |
+| S6 power cut onto the stops, damped | 15.0 | 15.0 | 339 | 362 | 99-304 | 37.9-38.0 | - | 0.49 |
 <!-- /gen:predictions -->
 
 ## Pass and fail for each run (`rig/criteria.json`)
@@ -81,26 +81,26 @@ compares the run with this very prediction, and "measured only" needs the load p
 <!-- gen:criteria -->
 | Test | Check | Limit | The prediction |
 |---|---|---|---|
-| S1 stand-up | holds 300 +- 10 mm | 10 mm | 3.5 |
+| S1 stand-up | holds 300 +- 10 mm | 10 mm | 5.2 |
 | S1 stand-up | follows the prediction within 15 mm | 15 mm | (the run itself) |
-| S1 stand-up | peak motor torque <= 18 N m | 18 | 14.0 |
-| S1 stand-up | no oscillation over 5 mm peak to peak in the hold | 5 mm p-p | 0.2 |
-| S1 stand-up | load plate 120-170 N steady (14.75 kg carried: about 145 N) | 120 to 170 | (measured only) |
-| S1 stand-up | VBUS inside 32-45 V | 32 to 45 | 37.9-38.0 |
+| S1 stand-up | peak motor torque <= 22 N m | 22 | 16.5 |
+| S1 stand-up | no oscillation over 5 mm peak to peak in the hold | 5 mm p-p | 0.1 |
+| S1 stand-up | load plate within 25 N of the carried weight, steady (at 18.75 kg: 184 N) | carried weight +- 25 N | (measured only) |
+| S1 stand-up | VBUS inside 32-45 V | 32 to 45 | 37.8-38.0 |
 | S2 squat | follows the prediction within 15 mm (the model is right) | 15 mm | (the run itself) |
-| S2 squat | tracks the command within 35 mm (the VMC lags a 0.5 Hz squat by design: 26 mm predicted) | 35 mm | 26.5 |
-| S2 squat | peak motor torque <= 18 N m | 18 | 14.1 |
-| S2 squat | VBUS under 45 V (regeneration) | - to 45 | 37.9-38.0 |
+| S2 squat | tracks the command within 35 mm (the VMC lags a 0.5 Hz squat by design: 28 mm predicted) | 35 mm | 28.1 |
+| S2 squat | peak motor torque <= 22 N m | 22 | 16.7 |
+| S2 squat | VBUS under 45 V (regeneration) | - to 45 | 37.8-38.0 |
 | S3 jump | the push and the flight follow the prediction within 20 mm (to the landing) | 20 mm | (the run itself) |
-| S3 jump | jump height 200-320 mm | 200-320 mm | 207.1 |
+| S3 jump | jump height 140-250 mm | 140-250 mm | 163.8 |
 | S3 jump | motor torque feedback <= 70 N m | 70 | 60.0 |
 | S3 jump | settles to 250 +- 15 mm within 0.5 s of landing | 0.5 s | 0.2 |
-| S3 jump | VBUS inside 28-45 V (a push sags it, the tuck and landing lift it) | 28 to 45 | 37.1-43.4 |
-| S4 drop 150 mm | motor torque feedback <= 55 N m | 55 | 37.9 |
-| S4 drop 150 mm | back to 300 +- 10 mm within 0.5 s of touching down | 0.5 s | 0.1 |
-| S4 drop 150 mm | the dip within 20 % of the prediction | 20 % | 20.6 |
+| S3 jump | VBUS inside 28-45 V (a push sags it, the tuck and landing lift it) | 28 to 45 | 37.1-43.2 |
+| S4 drop 150 mm | motor torque feedback <= 55 N m | 55 | 38.4 |
+| S4 drop 150 mm | back to 300 +- 10 mm within 0.5 s of touching down | 0.5 s | 0.2 |
+| S4 drop 150 mm | the dip within 20 % of the prediction | 20 % | 22.0 |
 | S5 power cut, undamped | the fall's time within 30 % of the prediction rerun with B1's damping | 30 % | 0.20 |
-| S5 power cut, damped | the fall's time within 30 % of the prediction rerun with B1's damping | 30 % | 0.42 |
+| S5 power cut, damped | the fall's time within 30 % of the prediction rerun with B1's damping | 30 % | 0.37 |
 | B5 tyre press (on the rig) | the load plate reads the commanded force within 15 % at every step (the motors' torque constant and the leg's geometry, checked) | 15 % | - |
 | B5 tyre press (on the rig) | motor torque <= 60 N m (the cap) | 60.5 | - |
 | B5 tyre press (on the rig) | the leg stays put while pressing (within 10 mm of 360) | 345 to 372 mm | - |
@@ -324,12 +324,16 @@ and stays.
 
 ## C7 and S1: the leg's first stand
 
+On the motors, `--half-mass KG` is required: KG is the mass the carriage carries, which sets the gravity
+feed-forward. Take it from the ballast table in `exports/rig/rig.json` (`carried_kg` at the ballast fitted), or weigh
+it. It is not the design mass unless the ballast makes it so.
+
 1. **C7.** Hang the carriage on the drop pin at 150 mm with the leg in the air. Run
-   `python -m rig.run --backend can --test drop_150 --rate-limit 5` without pulling the pin. The leg rises to 300 mm
+   `python -m rig.run --backend can --test drop_150 --half-mass KG --rate-limit 5` without pulling the pin. The leg rises to 300 mm
    and holds. Then check the angles against a ruler with `python -m rig.calibrate --check`: the leg length within
    5 mm.
 2. **S1.** The carriage is on its bumpers and the load plate is under the wheel. Run
-   `python -m rig.run --backend can --test stand_up`. The first time, add `--rate-limit 5`.
+   `python -m rig.run --backend can --test stand_up --half-mass KG`. The first time, add `--rate-limit 5`.
 
 ## B5: the tyre, on the rig
 
@@ -340,7 +344,7 @@ and stays.
 
 **Steps:**
 
-1. Run `python -m rig.run --backend can --test tyre_press`. It stands up to 360 mm, then presses the wheel into the
+1. Run `python -m rig.run --backend can --test tyre_press --half-mass KG`. It stands up to 360 mm, then presses the wheel into the
    plate at 200, 300 ... 900 N and back down to 200 N, 4 s per step.
    - Near full stretch the motors' 60 N m reaches about 940 N.
    - If the carriage is not held, the leg stretches and the run goes limp at once.
@@ -361,7 +365,7 @@ Each is one command. The tables above give its predicted numbers and its pass/fa
 
 | Test | Command | Set-up | After the run |
 |---|---|---|---|
-| S2 squat | `python -m rig.run --backend can --test squat` | the load plate under the wheel | re-check every screw |
+| S2 squat | `python -m rig.run --backend can --test squat --half-mass KG` | the load plate under the wheel | re-check every screw |
 | S3 jump | `... --test jump` | the load plate out; the tether on (150 mm of slack above the highest jump); the pack at or under the start voltage | inspect the knees, the adapters and the stop sleeves; compare with the simulation rerun at the measured J and tyre rate |
 | S4 drop | `... --test drop_150` | the carriage on the drop pin, 150 mm up; when the leg holds 300 mm (1 s), pull the pin; the run lasts 8 s | inspect as S3 |
 | S5 power cut, bumper high | `... --test power_off` | standing at 300 mm; release the pendant: the leg holds for the relay's 1.0 s, then the contactor opens | the carriage lands on the bumpers; compare the fall time with both predictions (undamped and damped): which one it matches says whether the damper works in a real fall |
