@@ -200,9 +200,17 @@ def bay_joints():
         J.append(Joint(f'bay_rail_{side}', 'M4', 20.0, 'socket', [_z(x, sy * yc, g['rail_z'][0]) for x, yc in bb.rail_holes()], (0.0, 0.0, 1.0),
                        (f'bay_rail_{side}', 'belly_plate'), ('pem', 'belly_plate'), pem='S-M4-0', bom='screw_m4x20',
                        note='a bay rail up into the belly\'s nuts, beyond the cheeks\' ends'))
-        J.append(Joint(f'bay_side_{side}_low', 'M3', 6.0, 'button', [_z(x, sy * g['side_out'], g['z_floor'] + 12.0) for x in bb.SIDE_SCREWS_X],
+        ps = bb.pad_screws()
+        free = [x for x in bb.SIDE_SCREWS_X if (side, x) not in ps]
+        J.append(Joint(f'bay_side_{side}_low', 'M3', 6.0, 'button', [_z(x, sy * g['side_out'], g['z_floor'] + 12.0) for x in free],
                        (0.0, -sy, 0.0), (f'bay_side_{side}', 'bay_floor'), ('pem', 'bay_floor'), pem='S-M3-0', bom='screw_m3x6',
                        note='a side plate into the floor\'s flange nuts'))
+        for n in sorted(set(v for (sd, _), v in ps.items() if sd == side)):
+            xs = [x for (sd, x), v in ps.items() if sd == side and v == n]
+            J.append(Joint(f'bay_pad_{n}', 'M3', 10.0, 'socket', [_z(x, sy * (g['side_out'] + bb.LIP['t'] + 0.5), g['z_floor'] + 12.0) for x in xs],
+                           (0.0, -sy, 0.0), (f'bay_skid_{n}', f'bay_side_{side}', 'bay_floor'), ('pem', 'bay_floor'), pem='S-M3-0',
+                           bom='turret_screw_m3x10', washer=0.5,
+                           note='#26: a crush pad\'s lip held by the side plate\'s low screws into the floor\'s nuts (an M3 washer on the TPU)'))
         J.append(Joint(f'bay_side_{side}_high', 'M3', 6.0, 'button', [_z(x, sy * g['side_out'], g['z_belly'] - bb.RAIL_H / 2) for x in bb.SIDE_SCREWS_X],
                        (0.0, -sy, 0.0), (f'bay_side_{side}',), ('insert', f'bay_rail_{side}'), bom='screw_m3x6',
                        note='a side plate into its rail\'s inserts'))
@@ -288,8 +296,7 @@ def holds():
          ('ear_pod_l', 'ear_bracket_l', 'the SSC1\'s 5/16-18 foot bolt into the nut held in the bracket\'s shelf'),
          ('ear_pod_r', 'ear_bracket_r', 'the SSC1\'s 5/16-18 foot bolt into the nut held in the bracket\'s shelf'),
          ('eyes_board', 'eyes_clip', 'clamped between the clip and the face round its window'),
-         ('bay_skid_1', 'bay_floor', '3M VHB tape'), ('bay_skid_2', 'bay_floor', '3M VHB tape'),
-         ('bay_skid_3', 'bay_floor', '3M VHB tape'), ('bay_skid_4', 'bay_floor', '3M VHB tape'),
+
          ('cheek_nuts_right', 'cheek_right', 'PEM SS-M5-0 pressed by SendCutSend'),
          ('turret_plate_nuts', 'turret_plate', 'PEM SS-M5-0 pressed by SendCutSend'),
          ]

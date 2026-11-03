@@ -22,8 +22,8 @@ The bay (one design from P1 on; the 13S2P's printed P0-P2 bay and P3 tub are gon
     XT90 pair and the two leads' way up through the belly's slot into the spine's gap
   - a SendCutSend 5052 0.063 floor (a U, its 20 mm flanges up) and two flat side plates with lightening windows, the
     sides screwed to the floor's flange nuts and to two printed rails, the rails screwed up into the belly's nuts
-  - two PETG end doors on two knurled M3 thumbscrews each (tool-free), four printed TPU crush pads on VHB tape under the floor
-    (issue #19): the robot sits on them
+  - two PETG end doors on two knurled M3 thumbscrews each (tool-free), four printed TPU crush pads on VHB tape under the floor,
+    each lip held by two side-plate screws (issues #19, #26): the robot sits on them
 """
 from __future__ import annotations
 
@@ -295,9 +295,51 @@ def pad_boxes():
     return out
 
 
+# Issue #26: the pads' retention. VHB alone may peel in a sliding or slanted landing (the sim's pads are rigid sideways),
+# so each pad carries a solid 3 mm lip up the side plate's outer face, joined to its lattice by a solid web under the
+# floor's edge and the side plate's bottom edge, and the side plate's two low M3 screws over it pass through the lip into
+# the floor flange's existing PEM S-M3-0 nuts (M3 x 10 for the M3 x 6: the floor is not changed). The lattice below the
+# web is the crush pad the sim models; the web's underside stays 44 mm over the ground, above the 30 mm stroke.
+LIP = {'t': 3.0, 'h': 18.0, 'web_t': 6.0}         # mm: the lip's thickness and height over the floor's underside; the web
+
+
+def pad_retention_boxes(b):
+    """A pad's solid web and lip (two boxes) for its lattice box b."""
+    g = geometry()
+    x0, x1, y0, y1, z0, z1 = b
+    sy = 1.0 if y0 > 0 else -1.0
+    yi = y1 if sy > 0 else y0                                     # the lattice's outer face
+    yo = sy * (g['side_out'] + LIP['t'])
+    web = (x0, x1, *sorted((yi, yo)), z1 - LIP['web_t'], z1)
+    lip = (x0, x1, *sorted((sy * g['side_out'], yo)), z1, z1 + LIP['h'])
+    return web, lip
+
+
 def skids():
-    """The crush pads as solids (the names stay bay_skid_N: the joints and the views know them by it)."""
-    return [_box(*b) for b in pad_boxes()]
+    """The crush pads as solids (the names stay bay_skid_N: the joints and the views know them by it): the lattice, its
+    web and its lip, one printed part (the lattice gyroid, the web and lip solid: two process settings in one print)."""
+    g = geometry()
+    out = []
+    for b in pad_boxes():
+        web, lip = pad_retention_boxes(b)
+        s = _box(*b).union(_box(*web)).union(_box(*lip))
+        for x in SIDE_SCREWS_X:                                   # the side plate's low screws through the lip: Ø3.4
+            if b[0] + 6.0 <= x <= b[1] - 6.0:
+                s = s.cut(cq.Workplane('XZ').workplane(offset=-(lip[3] + 1.0)).center(x, g['z_floor'] + 12.0).circle(1.7)
+                          .extrude(lip[3] - lip[2] + 2.0))
+        out.append(s)
+    return out
+
+
+def pad_screws():
+    """The side plates' low screws that pass through a pad's lip: {(side, x): pad index 1..4}."""
+    out = {}
+    for i, b in enumerate(pad_boxes()):
+        side = 'l' if b[2] > 0 else 'r'
+        for x in SIDE_SCREWS_X:
+            if b[0] + 6.0 <= x <= b[1] - 6.0:
+                out[(side, x)] = i + 1
+    return out
 
 
 def bay_parts() -> dict:
@@ -324,6 +366,6 @@ def bay_parts() -> dict:
     for i, sk in enumerate(skids()):
         out[f'bay_skid_{i + 1}'] = Part(f'bay_skid_{i + 1}', 'printed', sk, 1, material=PAD['material'], colour=(0.15, 0.15, 0.17),
                                         note=f"crush pad (#19): TPU 95A HF gyroid lattice, {PAD['h']:.0f} mm free, {PAD['stroke']:.0f} mm stroke, "
-                                             f"{PAD['plateau_n']:.0f} N plateau, on 3M VHB tape (no screw: under the packs there is 1 mm); "
+                                             f"{PAD['plateau_n']:.0f} N plateau, on 3M VHB tape, its solid lip under the side plate's two low M3 x 10 (#26); "
                                              'the robot sits on these')
     return out

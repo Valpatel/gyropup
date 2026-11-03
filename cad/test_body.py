@@ -355,7 +355,8 @@ if __name__ == '__main__':
 
 # cad-agent's connectivity gate (#14) at P3: the contacts no joint or hold declares, each reviewed (touching faces of
 # parts that are also screwed or held: the bay's doors and sides, the frame screws' heads on the cheeks, the pallet on
-# its isolators and the VESCs' envelopes under it, the ear pods and the eyes board on the shell, the J501's stack)
+# its isolators and the VESCs' envelopes under it, the ear pods and the eyes board on the shell, the J501's stack; the
+# crush pads' lips on the side plates, clamped by the same screws, #26)
 UNDECLARED_CONTACTS_P3 = [
     'bay_door_front|bay_floor',
     'bay_door_front|bay_side_l',
@@ -364,6 +365,10 @@ UNDECLARED_CONTACTS_P3 = [
     'bay_door_rear|bay_side_l',
     'bay_door_rear|bay_side_r',
     'bay_side_l|belly_plate',
+    'bay_side_l|bay_skid_1',
+    'bay_side_l|bay_skid_2',
+    'bay_side_r|bay_skid_3',
+    'bay_side_r|bay_skid_4',
     'bay_side_r|belly_plate',
     'cheek_left|frame_screws_left',
     'cheek_right|frame_screws_right',
