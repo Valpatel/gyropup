@@ -1,0 +1,329 @@
+{
+ "issue": 131,
+ "generator": "research/snap-fits/snaps.py",
+ "generator_sha256": "5df54f20172104594068b6122eecdbe110a38be8d1cca1e660b147998b4a627d",
+ "constants": "cad/turret_snaps.py",
+ "constants_sha256": "c373eaa3d7d7fdb9f7653791445d33bfc7952d7afefbe70d1eb8604d9b2cd7e7",
+ "spec": {
+  "file": "research/snap-fits/snaps.yaml",
+  "sha256": "a7d9b057d871499b63d65caeecff10ca262c417793ed65e9ad099a3b22f527eb"
+ },
+ "result": {
+  "file": "research/snap-fits/snapfit.json",
+  "sha256": "79cc5c076d8aea45b46ef3b671d9bec53a4ad5fd5761fb495ce88e13636a48b9"
+ },
+ "toolkit": {
+  "name": "cad-agent",
+  "tag": "v0.18.2",
+  "commit": "8e244f0ce48d8028d7c086b53eed3f0df9f68073",
+  "command": "cad-agent snapfit research/snap-fits/snaps.yaml --output research/snap-fits/snapfit.json"
+ },
+ "material": {
+  "declared": "petg-bambu-basic",
+  "orientation": "along",
+  "repeated": true,
+  "why": "Bambu PETG, declared as cad-agent's 'petg-bambu-basic'. The print plan uses Bambu PETG HF (cad/turret_print.py FILAMENT['petg']) and the catalogue lists PETG Basic (catalog/materials.json 'petg'); Basic's two data-sheet editions bound HF on all three quantities the check uses (allowable strain 1.28 % against 1.30 % along the layers, mating modulus 2780 against 1810 MPa, retention modulus 1460 against 1810 MPa), so a pass holds for either spool."
+ },
+ "friction": {
+  "low": 0.35,
+  "high": 0.6,
+  "source": "Covestro, Snap-Fit Joints for Plastics - A Design Guide, Table 3 (cad-agent research/compliant-mechanisms.md section 4): PETG is not listed; PBT, its polyester neighbour, is 0.35-0.40 against steel; low = 0.35, high = 0.40 x 1.5 (the table's same-material factor for PP, POM and PA)"
+ },
+ "hand_limit_n": 50.0,
+ "sf_retention": 1.2,
+ "profile": {
+  "ridge": [
+   [
+    0.3,
+    0.0
+   ],
+   [
+    1.5000000000000002,
+    1.2
+   ],
+   [
+    1.9000000000000004,
+    1.2
+   ],
+   [
+    3.9784609690826533,
+    0.0
+   ]
+  ],
+  "barb": [
+   [
+    1.680384757729337,
+    1.5
+   ],
+   [
+    3.932050807568878,
+    0.2
+   ],
+   [
+    4.332050807568878,
+    0.2
+   ],
+   [
+    6.583716857408419,
+    1.5
+   ]
+  ],
+  "ridge_s": [
+   0.3,
+   3.9784609690826533
+  ],
+  "tongue_s": [
+   -2.0,
+   6.583716857408419
+  ],
+  "lead_travel": 2.2516660498395407
+ },
+ "lids": {
+  "hopper_lid": {
+   "catch": "hopper",
+   "latches": 3,
+   "print": {
+    "rotation": [
+     [
+      1,
+      0,
+      0
+     ],
+     180
+    ],
+    "how": "upside down: the tongues lie in the bed plane; it stands on the flap's hinge lugs, 7 mm proud of the disc, so the disc and the latches print on supports (cad/turret_print.py); the barbs' return faces overhang 30 deg from the vertical"
+   },
+   "catch_print": {
+    "rotation": null,
+    "how": "standing on its bottom rim and the baffle: the ridges' undersides overhang 30 deg from the vertical"
+   },
+   "cycles": 2000,
+   "cycles_basis": "opened for every manual refill: about 5 a day of play, 200 days a year, 2 years (est)",
+   "arm": {
+    "length_mm": 27.5,
+    "thickness_mm": 3.0,
+    "width_mm": 8.583716857408419,
+    "undercut_mm": 1.0,
+    "root_radius_mm": 1.8,
+    "lead_deg": 30.0,
+    "return_deg": 30.0,
+    "barb_mm": 5.0,
+    "curved": true
+   },
+   "load": {
+    "case": "R-fall sideways (forward fall) at the -25 deg tilt stop",
+    "accel_g": 12.678547852220984,
+    "mass_g": 79.9,
+    "balls_g": 54.900000000000006,
+    "lid_g": 25.0,
+    "force_n": 9.93768669898,
+    "sf": 1.2,
+    "required_n": 11.925224038776,
+    "source": "cad/turret_studies.py R-fall (FALL_G 30, the TM design load of docs/cad-plan.md section 5); the hopper axis leans 25 deg at the stop (cad/turret.py tilt_min)"
+   },
+   "curved_beam": {
+    "k_force": 1.053917419839911,
+    "k_strain": 1.0084525787387921,
+    "r_mid_mm": 53.7,
+    "phi_deg": 29.341414089567294,
+    "basis": "Castigliano, circular cantilever with a radial tip load (r_mid = the hopper wall + TONGUE_N + h / 2)"
+   },
+   "per_latch": {
+    "root_strain": 0.005970855283022328,
+    "allowable": 0.00770503597122302,
+    "retention_low_n": 4.957400652059485,
+    "pull_off_high_n": 14.630727951081111,
+    "push_on_high_n": 14.63072795108111,
+    "shear_mpa": 0.5967667558980424,
+    "bending_mpa": 10.921388527088713
+   },
+   "checks": [
+    {
+     "check": "toolkit rows",
+     "value": [
+      true,
+      true
+     ],
+     "limit": true,
+     "pass": true,
+     "detail": "every cad-agent row of both declarations passes (root strain, root radius, retention at the low bound, mating at the high bound)"
+    },
+    {
+     "check": "root strain, beam-corrected",
+     "value": 0.005970855283022328,
+     "limit": 0.00770503597122302,
+     "pass": true,
+     "detail": "0.597 % (the toolkit's 0.592 % x 1.0085) vs 0.771 %"
+    },
+    {
+     "check": "retention, all latches, low bound",
+     "value": 14.872201956178456,
+     "limit": 11.925224038776,
+     "pass": true,
+     "detail": "3 x 4.96 N (friction 0.35, the lowest data-sheet modulus) vs 11.93 N = 1.2 x 9.94 N"
+    },
+    {
+     "check": "pull-off, all latches, high bound",
+     "value": 43.89218385324333,
+     "limit": 50.0,
+     "pass": true,
+     "detail": "3 x 14.63 N (friction 0.6, the highest data-sheet modulus, return 30 deg) vs 50 N by hand"
+    },
+    {
+     "check": "push-on, all latches, high bound",
+     "value": 43.892183853243324,
+     "limit": 50.0,
+     "pass": true,
+     "detail": "3 x 14.63 N (lead 30 deg) vs 50 N by hand"
+    },
+    {
+     "check": "barb and ridge, shear across the layers",
+     "value": 0.5967667558980424,
+     "limit": 5.0,
+     "pass": true,
+     "detail": "14.63 N on 24.5 mm2: 0.60 MPa vs 10 / 2 (SF 2)"
+    },
+    {
+     "check": "tongue bent out of its plane",
+     "value": 10.921388527088713,
+     "limit": 14.5,
+     "pass": true,
+     "detail": "6 x 14.63 N x 27.5 / (3 x 8.58^2) = 10.92 MPa along the layers vs 29 / 2 (SF 2)"
+    },
+    {
+     "check": "wall backed to the release",
+     "value": 1.9679491924311225,
+     "limit": 1.9000000000000004,
+     "pass": true,
+     "detail": "the backing (4 deep) still reaches s 1.968 when the barb tops the ridge (lift 2.032); the contact is at s 1.900"
+    }
+   ],
+   "pass": true
+  },
+  "board_bay_lid": {
+   "catch": "board_bay",
+   "latches": 2,
+   "print": {
+    "rotation": [
+     [
+      1,
+      0,
+      0
+     ],
+     90
+    ],
+    "how": "flat, the plate on the bed: the tongues lie in the bed plane; the barbs' return faces overhang 30 deg from the vertical"
+   },
+   "catch_print": {
+    "rotation": [
+     [
+      1,
+      0,
+      0
+     ],
+     -90
+    ],
+    "how": "on its back, the open face up: the ridges' back faces overhang 30 deg from the vertical"
+   },
+   "cycles": 100,
+   "cycles_basis": "opened for board service and bring-up: about 100 over the turret's life (est)",
+   "arm": {
+    "length_mm": 25.0,
+    "thickness_mm": 2.5,
+    "width_mm": 8.583716857408419,
+    "undercut_mm": 1.0,
+    "root_radius_mm": 1.5,
+    "lead_deg": 30.0,
+    "return_deg": 30.0,
+    "barb_mm": 6.0,
+    "curved": false
+   },
+   "load": {
+    "case": "R-fall sideways, along the lid's normal",
+    "accel_g": 30.0,
+    "mass_g": 11.5,
+    "force_n": 3.38445,
+    "sf": 1.2,
+    "required_n": 4.06134,
+    "source": "cad/turret_studies.py R-fall (FALL_G 30)"
+   },
+   "curved_beam": {
+    "k_force": 1.0,
+    "k_strain": 1.0,
+    "basis": "straight tongue: the toolkit's beam"
+   },
+   "per_latch": {
+    "root_strain": 0.005970149253731343,
+    "allowable": 0.00770503597122302,
+    "retention_low_n": 3.6231119547846387,
+    "pull_off_high_n": 10.69285479775413,
+    "push_on_high_n": 10.69285479775413,
+    "shear_mpa": 0.36345538708442665,
+    "bending_mpa": 8.707513424708166
+   },
+   "checks": [
+    {
+     "check": "toolkit rows",
+     "value": [
+      true,
+      true
+     ],
+     "limit": true,
+     "pass": true,
+     "detail": "every cad-agent row of both declarations passes (root strain, root radius, retention at the low bound, mating at the high bound)"
+    },
+    {
+     "check": "root strain, beam-corrected",
+     "value": 0.005970149253731343,
+     "limit": 0.00770503597122302,
+     "pass": true,
+     "detail": "0.597 % (the toolkit's 0.597 % x 1.0000) vs 0.771 %"
+    },
+    {
+     "check": "retention, all latches, low bound",
+     "value": 7.246223909569277,
+     "limit": 4.06134,
+     "pass": true,
+     "detail": "2 x 3.62 N (friction 0.35, the lowest data-sheet modulus) vs 4.06 N = 1.2 x 3.38 N"
+    },
+    {
+     "check": "pull-off, all latches, high bound",
+     "value": 21.38570959550826,
+     "limit": 50.0,
+     "pass": true,
+     "detail": "2 x 10.69 N (friction 0.6, the highest data-sheet modulus, return 30 deg) vs 50 N by hand"
+    },
+    {
+     "check": "push-on, all latches, high bound",
+     "value": 21.38570959550826,
+     "limit": 50.0,
+     "pass": true,
+     "detail": "2 x 10.69 N (lead 30 deg) vs 50 N by hand"
+    },
+    {
+     "check": "barb and ridge, shear across the layers",
+     "value": 0.36345538708442665,
+     "limit": 5.0,
+     "pass": true,
+     "detail": "10.69 N on 29.4 mm2: 0.36 MPa vs 10 / 2 (SF 2)"
+    },
+    {
+     "check": "tongue bent out of its plane",
+     "value": 8.707513424708166,
+     "limit": 14.5,
+     "pass": true,
+     "detail": "6 x 10.69 N x 25 / (2.5 x 8.58^2) = 8.71 MPa along the layers vs 29 / 2 (SF 2)"
+    },
+    {
+     "check": "wall backed to the release",
+     "value": 1.9679491924311225,
+     "limit": 1.9000000000000004,
+     "pass": true,
+     "detail": "the backing (4 deep) still reaches s 1.968 when the barb tops the ridge (lift 2.032); the contact is at s 1.900"
+    }
+   ],
+   "pass": true
+  }
+ },
+ "pass": true
+}

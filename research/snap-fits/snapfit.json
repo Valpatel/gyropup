@@ -1,0 +1,376 @@
+{
+  "pass": true,
+  "snaps": [
+    {
+      "name": "hopper_lid-latch-mu-low",
+      "strain": 0.005920809177254224,
+      "deflection_mm": 1.0,
+      "rows": [
+        {
+          "check": "root strain",
+          "value": 0.005920809177254224,
+          "limit": 0.00770503597122302,
+          "pass": true,
+          "detail": "0.59 % at 1.000 mm deflection vs 0.77 % allowed"
+        },
+        {
+          "check": "root radius",
+          "value": 1.8,
+          "limit": 0.381,
+          "pass": true,
+          "detail": "R 1.80 mm (minimum 0.38 mm); R/h 0.60"
+        },
+        {
+          "check": "retention force",
+          "value": 4.703784716655038,
+          "limit": 3.9751,
+          "pass": true,
+          "detail": "4.7 N to pull apart vs 4.0 N required (upper bound: the lowest edition's datasheet modulus)"
+        }
+      ],
+      "warnings": [],
+      "deflection_force_n": 7.706531468876506,
+      "retention_deflection_force_n": 4.047315087971114,
+      "mating_force_n": 8.956521583767813,
+      "self_locking": false,
+      "separation_force_n": 4.703784716655038,
+      "pass": true,
+      "limits": [
+        "closed-form small-deflection beam theory (Covestro/Bayer method): no large deflection, contact, creep or fatigue",
+        "one mating part assumed rigid unless share < 1 is given",
+        "permissible strain and secant modulus are the caller's inputs; values in MATERIALS are guide data, not measurements of a particular batch or print",
+        "a printed part's inter-layer strength and strain are lower than in-plane: the datasheet filaments carry this per direction; any other material in a layered process needs a sourced process_factor",
+        "a pass has no extra margin: the guide's own examples design to half the permissible strain",
+        "small deflection is assumed: when the deflection exceeds about a tenth of the arm length a warning is given and the closed form overestimates force and strain accuracy",
+        "hook-face geometry, wall deflection at the root and mould release are not checked",
+        "the model, not the part: print a coupon and measure the force and the strain at failure"
+      ],
+      "method": "Covestro, Snap-Fit Joints for Plastics - A Design Guide",
+      "material": {
+        "material": "Bambu PETG Basic",
+        "source": "Bambu Lab PETG Basic Technical Data Sheet V3.0 (PDF of 2026-01-25), p. 2, Mechanical Properties: https://store.bblcdn.com/s1/default/cb94589bf7994fdcbfa833badefae9cd/Bambu_PETG_Basic_Technical_Data_Sheet.pdf; Bambu Lab PETG Basic Technical Data Sheet V2.0 (PDF of 2023-06-26), p. 2, Mechanical Properties: https://www.additive-x.com/shop/mpattachments/file/viewonline/id/580/product_id/2330",
+        "condition": "",
+        "orientation": "along",
+        "repeated": true,
+        "editions": [
+          "Bambu Lab PETG Basic Technical Data Sheet V3.0",
+          "Bambu Lab PETG Basic Technical Data Sheet V2.0"
+        ],
+        "note": "V3.0 describes a reformulated filament sold under the same name, its bars not said to be annealed; V2.0's were. A spool does not say which it is, so both are kept and the cautious one taken per quantity: here V3.0 for both (allowable 0.96-1.28 % against V2.0's 2.3 %, modulus 2780 / 2550 MPa against 1460 / 1120). A printed coupon (#94) should record which filament it used.",
+        "xy": {
+          "strain": 0.012841726618705035,
+          "governed_by": "0.7 x UTS/E",
+          "sheet": "Bambu Lab PETG Basic Technical Data Sheet V3.0"
+        },
+        "z": {
+          "strain": 0.009607843137254901,
+          "governed_by": "0.7 x UTS/E",
+          "sheet": "Bambu Lab PETG Basic Technical Data Sheet V3.0"
+        },
+        "modulus": {
+          "mating": {
+            "mpa": 2780,
+            "sheet": "Bambu Lab PETG Basic Technical Data Sheet V3.0"
+          },
+          "retention": {
+            "mpa": 1460,
+            "sheet": "Bambu Lab PETG Basic Technical Data Sheet V2.0"
+          }
+        },
+        "moulded_cap": null,
+        "cap_source": null,
+        "allowable": 0.00770503597122302,
+        "status": "derived from the datasheet; a hypothesis until a printed coupon is measured",
+        "process": "fdm",
+        "process_factor": null,
+        "secant_mpa": 2780,
+        "secant_basis": "the highest datasheet tensile modulus of its editions, for mating force (an upper bound on the secant modulus)",
+        "retention_secant_mpa": 1460,
+        "retention_secant_basis": "the lowest datasheet tensile modulus of its editions, for retention force (still above the secant modulus)",
+        "friction": 0.35,
+        "friction_basis": "given"
+      }
+    },
+    {
+      "name": "hopper_lid-latch-mu-high",
+      "strain": 0.005920809177254224,
+      "deflection_mm": 1.0,
+      "rows": [
+        {
+          "check": "root strain",
+          "value": 0.005920809177254224,
+          "limit": 0.00770503597122302,
+          "pass": true,
+          "detail": "0.59 % at 1.000 mm deflection vs 0.77 % allowed"
+        },
+        {
+          "check": "root radius",
+          "value": 1.8,
+          "limit": 0.381,
+          "pass": true,
+          "detail": "R 1.80 mm (minimum 0.38 mm); R/h 0.60"
+        },
+        {
+          "check": "mating force",
+          "value": 13.882233726911451,
+          "limit": 16.6667,
+          "pass": true,
+          "detail": "13.9 N to assemble vs 16.7 N allowed (upper bound: the highest edition's datasheet modulus)"
+        }
+      ],
+      "warnings": [],
+      "deflection_force_n": 7.706531468876506,
+      "retention_deflection_force_n": 4.047315087971114,
+      "mating_force_n": 13.882233726911451,
+      "self_locking": false,
+      "separation_force_n": 7.290669511255654,
+      "pass": true,
+      "limits": [
+        "closed-form small-deflection beam theory (Covestro/Bayer method): no large deflection, contact, creep or fatigue",
+        "one mating part assumed rigid unless share < 1 is given",
+        "permissible strain and secant modulus are the caller's inputs; values in MATERIALS are guide data, not measurements of a particular batch or print",
+        "a printed part's inter-layer strength and strain are lower than in-plane: the datasheet filaments carry this per direction; any other material in a layered process needs a sourced process_factor",
+        "a pass has no extra margin: the guide's own examples design to half the permissible strain",
+        "small deflection is assumed: when the deflection exceeds about a tenth of the arm length a warning is given and the closed form overestimates force and strain accuracy",
+        "hook-face geometry, wall deflection at the root and mould release are not checked",
+        "the model, not the part: print a coupon and measure the force and the strain at failure"
+      ],
+      "method": "Covestro, Snap-Fit Joints for Plastics - A Design Guide",
+      "material": {
+        "material": "Bambu PETG Basic",
+        "source": "Bambu Lab PETG Basic Technical Data Sheet V3.0 (PDF of 2026-01-25), p. 2, Mechanical Properties: https://store.bblcdn.com/s1/default/cb94589bf7994fdcbfa833badefae9cd/Bambu_PETG_Basic_Technical_Data_Sheet.pdf; Bambu Lab PETG Basic Technical Data Sheet V2.0 (PDF of 2023-06-26), p. 2, Mechanical Properties: https://www.additive-x.com/shop/mpattachments/file/viewonline/id/580/product_id/2330",
+        "condition": "",
+        "orientation": "along",
+        "repeated": true,
+        "editions": [
+          "Bambu Lab PETG Basic Technical Data Sheet V3.0",
+          "Bambu Lab PETG Basic Technical Data Sheet V2.0"
+        ],
+        "note": "V3.0 describes a reformulated filament sold under the same name, its bars not said to be annealed; V2.0's were. A spool does not say which it is, so both are kept and the cautious one taken per quantity: here V3.0 for both (allowable 0.96-1.28 % against V2.0's 2.3 %, modulus 2780 / 2550 MPa against 1460 / 1120). A printed coupon (#94) should record which filament it used.",
+        "xy": {
+          "strain": 0.012841726618705035,
+          "governed_by": "0.7 x UTS/E",
+          "sheet": "Bambu Lab PETG Basic Technical Data Sheet V3.0"
+        },
+        "z": {
+          "strain": 0.009607843137254901,
+          "governed_by": "0.7 x UTS/E",
+          "sheet": "Bambu Lab PETG Basic Technical Data Sheet V3.0"
+        },
+        "modulus": {
+          "mating": {
+            "mpa": 2780,
+            "sheet": "Bambu Lab PETG Basic Technical Data Sheet V3.0"
+          },
+          "retention": {
+            "mpa": 1460,
+            "sheet": "Bambu Lab PETG Basic Technical Data Sheet V2.0"
+          }
+        },
+        "moulded_cap": null,
+        "cap_source": null,
+        "allowable": 0.00770503597122302,
+        "status": "derived from the datasheet; a hypothesis until a printed coupon is measured",
+        "process": "fdm",
+        "process_factor": null,
+        "secant_mpa": 2780,
+        "secant_basis": "the highest datasheet tensile modulus of its editions, for mating force (an upper bound on the secant modulus)",
+        "retention_secant_mpa": 1460,
+        "retention_secant_basis": "the lowest datasheet tensile modulus of its editions, for retention force (still above the secant modulus)",
+        "friction": 0.6,
+        "friction_basis": "given"
+      }
+    },
+    {
+      "name": "board_bay_lid-latch-mu-low",
+      "strain": 0.005970149253731343,
+      "deflection_mm": 1.0,
+      "rows": [
+        {
+          "check": "root strain",
+          "value": 0.005970149253731343,
+          "limit": 0.00770503597122302,
+          "pass": true,
+          "detail": "0.60 % at 1.000 mm deflection vs 0.77 % allowed"
+        },
+        {
+          "check": "root radius",
+          "value": 1.5,
+          "limit": 0.381,
+          "pass": true,
+          "detail": "R 1.50 mm (minimum 0.38 mm); R/h 0.60"
+        },
+        {
+          "check": "retention force",
+          "value": 3.6231119547846387,
+          "limit": 2.0307,
+          "pass": true,
+          "detail": "3.6 N to pull apart vs 2.0 N required (upper bound: the lowest edition's datasheet modulus)"
+        }
+      ],
+      "warnings": [],
+      "deflection_force_n": 5.935991542288557,
+      "retention_deflection_force_n": 3.117463184079602,
+      "mating_force_n": 6.898802215274858,
+      "self_locking": false,
+      "separation_force_n": 3.6231119547846387,
+      "pass": true,
+      "limits": [
+        "closed-form small-deflection beam theory (Covestro/Bayer method): no large deflection, contact, creep or fatigue",
+        "one mating part assumed rigid unless share < 1 is given",
+        "permissible strain and secant modulus are the caller's inputs; values in MATERIALS are guide data, not measurements of a particular batch or print",
+        "a printed part's inter-layer strength and strain are lower than in-plane: the datasheet filaments carry this per direction; any other material in a layered process needs a sourced process_factor",
+        "a pass has no extra margin: the guide's own examples design to half the permissible strain",
+        "small deflection is assumed: when the deflection exceeds about a tenth of the arm length a warning is given and the closed form overestimates force and strain accuracy",
+        "hook-face geometry, wall deflection at the root and mould release are not checked",
+        "the model, not the part: print a coupon and measure the force and the strain at failure"
+      ],
+      "method": "Covestro, Snap-Fit Joints for Plastics - A Design Guide",
+      "material": {
+        "material": "Bambu PETG Basic",
+        "source": "Bambu Lab PETG Basic Technical Data Sheet V3.0 (PDF of 2026-01-25), p. 2, Mechanical Properties: https://store.bblcdn.com/s1/default/cb94589bf7994fdcbfa833badefae9cd/Bambu_PETG_Basic_Technical_Data_Sheet.pdf; Bambu Lab PETG Basic Technical Data Sheet V2.0 (PDF of 2023-06-26), p. 2, Mechanical Properties: https://www.additive-x.com/shop/mpattachments/file/viewonline/id/580/product_id/2330",
+        "condition": "",
+        "orientation": "along",
+        "repeated": true,
+        "editions": [
+          "Bambu Lab PETG Basic Technical Data Sheet V3.0",
+          "Bambu Lab PETG Basic Technical Data Sheet V2.0"
+        ],
+        "note": "V3.0 describes a reformulated filament sold under the same name, its bars not said to be annealed; V2.0's were. A spool does not say which it is, so both are kept and the cautious one taken per quantity: here V3.0 for both (allowable 0.96-1.28 % against V2.0's 2.3 %, modulus 2780 / 2550 MPa against 1460 / 1120). A printed coupon (#94) should record which filament it used.",
+        "xy": {
+          "strain": 0.012841726618705035,
+          "governed_by": "0.7 x UTS/E",
+          "sheet": "Bambu Lab PETG Basic Technical Data Sheet V3.0"
+        },
+        "z": {
+          "strain": 0.009607843137254901,
+          "governed_by": "0.7 x UTS/E",
+          "sheet": "Bambu Lab PETG Basic Technical Data Sheet V3.0"
+        },
+        "modulus": {
+          "mating": {
+            "mpa": 2780,
+            "sheet": "Bambu Lab PETG Basic Technical Data Sheet V3.0"
+          },
+          "retention": {
+            "mpa": 1460,
+            "sheet": "Bambu Lab PETG Basic Technical Data Sheet V2.0"
+          }
+        },
+        "moulded_cap": null,
+        "cap_source": null,
+        "allowable": 0.00770503597122302,
+        "status": "derived from the datasheet; a hypothesis until a printed coupon is measured",
+        "process": "fdm",
+        "process_factor": null,
+        "secant_mpa": 2780,
+        "secant_basis": "the highest datasheet tensile modulus of its editions, for mating force (an upper bound on the secant modulus)",
+        "retention_secant_mpa": 1460,
+        "retention_secant_basis": "the lowest datasheet tensile modulus of its editions, for retention force (still above the secant modulus)",
+        "friction": 0.35,
+        "friction_basis": "given"
+      }
+    },
+    {
+      "name": "board_bay_lid-latch-mu-high",
+      "strain": 0.005970149253731343,
+      "deflection_mm": 1.0,
+      "rows": [
+        {
+          "check": "root strain",
+          "value": 0.005970149253731343,
+          "limit": 0.00770503597122302,
+          "pass": true,
+          "detail": "0.60 % at 1.000 mm deflection vs 0.77 % allowed"
+        },
+        {
+          "check": "root radius",
+          "value": 1.5,
+          "limit": 0.381,
+          "pass": true,
+          "detail": "R 1.50 mm (minimum 0.38 mm); R/h 0.60"
+        },
+        {
+          "check": "mating force",
+          "value": 10.69285479775413,
+          "limit": 25.0,
+          "pass": true,
+          "detail": "10.7 N to assemble vs 25.0 N allowed (upper bound: the highest edition's datasheet modulus)"
+        }
+      ],
+      "warnings": [],
+      "deflection_force_n": 5.935991542288557,
+      "retention_deflection_force_n": 3.117463184079602,
+      "mating_force_n": 10.69285479775413,
+      "self_locking": false,
+      "separation_force_n": 5.615671944144256,
+      "pass": true,
+      "limits": [
+        "closed-form small-deflection beam theory (Covestro/Bayer method): no large deflection, contact, creep or fatigue",
+        "one mating part assumed rigid unless share < 1 is given",
+        "permissible strain and secant modulus are the caller's inputs; values in MATERIALS are guide data, not measurements of a particular batch or print",
+        "a printed part's inter-layer strength and strain are lower than in-plane: the datasheet filaments carry this per direction; any other material in a layered process needs a sourced process_factor",
+        "a pass has no extra margin: the guide's own examples design to half the permissible strain",
+        "small deflection is assumed: when the deflection exceeds about a tenth of the arm length a warning is given and the closed form overestimates force and strain accuracy",
+        "hook-face geometry, wall deflection at the root and mould release are not checked",
+        "the model, not the part: print a coupon and measure the force and the strain at failure"
+      ],
+      "method": "Covestro, Snap-Fit Joints for Plastics - A Design Guide",
+      "material": {
+        "material": "Bambu PETG Basic",
+        "source": "Bambu Lab PETG Basic Technical Data Sheet V3.0 (PDF of 2026-01-25), p. 2, Mechanical Properties: https://store.bblcdn.com/s1/default/cb94589bf7994fdcbfa833badefae9cd/Bambu_PETG_Basic_Technical_Data_Sheet.pdf; Bambu Lab PETG Basic Technical Data Sheet V2.0 (PDF of 2023-06-26), p. 2, Mechanical Properties: https://www.additive-x.com/shop/mpattachments/file/viewonline/id/580/product_id/2330",
+        "condition": "",
+        "orientation": "along",
+        "repeated": true,
+        "editions": [
+          "Bambu Lab PETG Basic Technical Data Sheet V3.0",
+          "Bambu Lab PETG Basic Technical Data Sheet V2.0"
+        ],
+        "note": "V3.0 describes a reformulated filament sold under the same name, its bars not said to be annealed; V2.0's were. A spool does not say which it is, so both are kept and the cautious one taken per quantity: here V3.0 for both (allowable 0.96-1.28 % against V2.0's 2.3 %, modulus 2780 / 2550 MPa against 1460 / 1120). A printed coupon (#94) should record which filament it used.",
+        "xy": {
+          "strain": 0.012841726618705035,
+          "governed_by": "0.7 x UTS/E",
+          "sheet": "Bambu Lab PETG Basic Technical Data Sheet V3.0"
+        },
+        "z": {
+          "strain": 0.009607843137254901,
+          "governed_by": "0.7 x UTS/E",
+          "sheet": "Bambu Lab PETG Basic Technical Data Sheet V3.0"
+        },
+        "modulus": {
+          "mating": {
+            "mpa": 2780,
+            "sheet": "Bambu Lab PETG Basic Technical Data Sheet V3.0"
+          },
+          "retention": {
+            "mpa": 1460,
+            "sheet": "Bambu Lab PETG Basic Technical Data Sheet V2.0"
+          }
+        },
+        "moulded_cap": null,
+        "cap_source": null,
+        "allowable": 0.00770503597122302,
+        "status": "derived from the datasheet; a hypothesis until a printed coupon is measured",
+        "process": "fdm",
+        "process_factor": null,
+        "secant_mpa": 2780,
+        "secant_basis": "the highest datasheet tensile modulus of its editions, for mating force (an upper bound on the secant modulus)",
+        "retention_secant_mpa": 1460,
+        "retention_secant_basis": "the lowest datasheet tensile modulus of its editions, for retention force (still above the secant modulus)",
+        "friction": 0.6,
+        "friction_basis": "given"
+      }
+    }
+  ],
+  "method": "Covestro, Snap-Fit Joints for Plastics - A Design Guide",
+  "limits": [
+    "closed-form small-deflection beam theory (Covestro/Bayer method): no large deflection, contact, creep or fatigue",
+    "one mating part assumed rigid unless share < 1 is given",
+    "permissible strain and secant modulus are the caller's inputs; values in MATERIALS are guide data, not measurements of a particular batch or print",
+    "a printed part's inter-layer strength and strain are lower than in-plane: the datasheet filaments carry this per direction; any other material in a layered process needs a sourced process_factor",
+    "a pass has no extra margin: the guide's own examples design to half the permissible strain",
+    "small deflection is assumed: when the deflection exceeds about a tenth of the arm length a warning is given and the closed form overestimates force and strain accuracy",
+    "hook-face geometry, wall deflection at the root and mould release are not checked",
+    "the model, not the part: print a coupon and measure the force and the strain at failure"
+  ]
+}
