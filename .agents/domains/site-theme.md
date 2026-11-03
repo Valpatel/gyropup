@@ -10,7 +10,8 @@ on `body`, void panels for the motto and the status strip, a glowing status dot 
 colour wins), and corner brackets as an `::after` 10 px inside the main panels' edges (clear of their rounded
 corners). A bracket is never part of a panel's background, so the contrast scan still sees what is behind text.
 Page stylesheets (`web/*.css`, `designer/**/*.css`, the inline `<style>` blocks and the app bar's CSS in
-`designer/kit/appnav.js`) use `var(--gp-*)`, or a local alias of one (`--ink`, `--text`, `--sb-ink`, ...). `*-rgb`, `--gp-shadow` and `--gp-hi` are RGB triples for `rgb(var(--gp-…) / alpha)`.
+`designer/kit/appnav.js`) use `var(--gp-*)`, or a local alias of one (`--ink`, `--text`, `--sb-ink`, ...).
+`*-rgb`, `--gp-shadow` and `--gp-hi` are RGB triples for `rgb(var(--gp-…) / alpha)`.
 
 `web/theme.js` is a classic script loaded first in `<head>`, then `web/theme.css`, on every page; the build fails if a
 built page does not. It sets `data-theme` on `<html>` from `localStorage['gyropup-theme']` before anything paints,
