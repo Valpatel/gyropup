@@ -1,0 +1,452 @@
+{
+ "what": "Gyropup as drawn today: the P3 body, both five-bar legs at the 300 mm stance, the turret at pan 0, tilt 0. Bought parts are envelopes.",
+ "frame": "robot: x forward, y left, z up (mm), origin on the hip axis between the legs",
+ "stance_mm": 300.0,
+ "regenerate": ".venv/bin/python tools/robot_view.py",
+ "groups": {
+  "battery": {
+   "color": "#fdb913",
+   "members": [
+    "item.battery_front",
+    "item.battery_rear"
+   ]
+  },
+  "bay_doors": {
+   "color": "#d98c26",
+   "members": [
+    "bay_door_front",
+    "bay_door_rear"
+   ]
+  },
+  "brackets": {
+   "color": "#454a52",
+   "members": [
+    "post_1",
+    "post_2",
+    "post_3",
+    "post_4",
+    "riser",
+    "plate_post_1",
+    "plate_post_2",
+    "plate_post_3",
+    "plate_post_4",
+    "dcdc_bracket",
+    "bay_rail_l",
+    "bay_rail_r",
+    "adapter_plate_front",
+    "adapter_plate_rear",
+    "ear_bracket_l",
+    "ear_bracket_r",
+    "d435_cradle_front",
+    "d435_cradle_rear"
+   ]
+  },
+  "bus_bars": {
+   "color": "#c8743a",
+   "members": [
+    "bus_bar_1",
+    "bus_insulator_1",
+    "bus_bar_2",
+    "bus_insulator_2"
+   ]
+  },
+  "cameras": {
+   "color": "#2a2d33",
+   "members": [
+    "d435_front",
+    "d435_rear",
+    "eyes_board"
+   ]
+  },
+  "compute": {
+   "color": "#5a6b7c",
+   "members": [
+    "item.j501_carrier",
+    "item.agx_module",
+    "item.agx_spreader",
+    "item.agx_cooler",
+    "item.j501_standoff_15_16.5",
+    "item.j501_standoff_165_16.5",
+    "item.j501_standoff_15_146.5",
+    "item.j501_standoff_165_146.5",
+    "item.lidar_box",
+    "item.lidar_coil"
+   ]
+  },
+  "deck": {
+   "color": "#33383f",
+   "members": [
+    "deck"
+   ]
+  },
+  "ear_pods": {
+   "color": "#3b4049",
+   "members": [
+    "ear_pod_l",
+    "ear_pod_r"
+   ]
+  },
+  "electronics": {
+   "color": "#2b6cb0",
+   "members": [
+    "item.plate_vesc_r",
+    "item.plate_vesc_l",
+    "item.plate_main_switch",
+    "item.plate_shunt",
+    "item.power_dcdc",
+    "item.plate_mrbf_block",
+    "item.plate_fuses",
+    "item.plate_mcu_board",
+    "item.plate_buck_5v",
+    "item.vn100",
+    "item.battery_adapter_front",
+    "item.battery_adapter_rear"
+   ]
+  },
+  "frame": {
+   "color": "#b4bac4",
+   "members": [
+    "cheek_left",
+    "cheek_right",
+    "belly_plate",
+    "bay_floor",
+    "bay_side_l",
+    "bay_side_r"
+   ]
+  },
+  "frame_inner": {
+   "color": "#b4bac4",
+   "members": [
+    "floor_tray",
+    "compute_pallet",
+    "turret_plate",
+    "power_plate"
+   ]
+  },
+  "front_link_l": {
+   "color": "#f5b82e",
+   "members": [
+    "L.front_link"
+   ]
+  },
+  "front_link_r": {
+   "color": "#f5b82e",
+   "members": [
+    "R.front_link"
+   ]
+  },
+  "hardware": {
+   "color": "#26282c",
+   "members": [
+    "turret_plate_nuts",
+    "isolator_1",
+    "isolator_2",
+    "isolator_3",
+    "isolator_4",
+    "bay_skid_1",
+    "bay_skid_2",
+    "bay_skid_3",
+    "bay_skid_4",
+    "spacers",
+    "spacer_screws",
+    "frame_screws_left",
+    "cheek_nuts_left",
+    "frame_screws_right",
+    "cheek_nuts_right"
+   ]
+  },
+  "hip_frame_l": {
+   "color": "#5f6670",
+   "members": [
+    "L.hip_frame"
+   ]
+  },
+  "hip_frame_r": {
+   "color": "#5f6670",
+   "members": [
+    "R.hip_frame"
+   ]
+  },
+  "hub_l": {
+   "color": "#4a5058",
+   "members": [
+    "L.wheel_hub"
+   ]
+  },
+  "hub_r": {
+   "color": "#4a5058",
+   "members": [
+    "R.wheel_hub"
+   ]
+  },
+  "leg_hardware_l": {
+   "color": "#8f969f",
+   "members": [
+    "L.apex_spacer",
+    "L.bearing_61812_front",
+    "L.bearing_61812_rear",
+    "L.knee_bearing_front_in",
+    "L.knee_bearing_front_out",
+    "L.knee_pin_front",
+    "L.knee_washer_front",
+    "L.knee_spacer_front",
+    "L.knee_bearing_rear_in",
+    "L.knee_bearing_rear_out",
+    "L.knee_pin_rear",
+    "L.knee_washer_rear",
+    "L.knee_spacer_rear",
+    "L.eye_sleeve_front",
+    "L.knee_nut_upper_front",
+    "L.eye_sleeve_rear",
+    "L.knee_nut_upper_rear",
+    "L.apex_61812",
+    "L.apex_circlip",
+    "L.stop_posts",
+    "L.screws_lugs",
+    "L.screws_links",
+    "L.screws_outputs",
+    "L.screws_wheel",
+    "L.washers_wheel"
+   ]
+  },
+  "leg_hardware_r": {
+   "color": "#8f969f",
+   "members": [
+    "R.apex_spacer",
+    "R.bearing_61812_front",
+    "R.bearing_61812_rear",
+    "R.knee_bearing_front_in",
+    "R.knee_bearing_front_out",
+    "R.knee_pin_front",
+    "R.knee_washer_front",
+    "R.knee_spacer_front",
+    "R.knee_bearing_rear_in",
+    "R.knee_bearing_rear_out",
+    "R.knee_pin_rear",
+    "R.knee_washer_rear",
+    "R.knee_spacer_rear",
+    "R.eye_sleeve_front",
+    "R.knee_nut_upper_front",
+    "R.eye_sleeve_rear",
+    "R.knee_nut_upper_rear",
+    "R.apex_61812",
+    "R.apex_circlip",
+    "R.stop_posts",
+    "R.screws_lugs",
+    "R.screws_links",
+    "R.screws_outputs",
+    "R.screws_wheel",
+    "R.washers_wheel"
+   ]
+  },
+  "lidar": {
+   "color": "#15171b",
+   "members": [
+    "item.vlp16_window"
+   ]
+  },
+  "lidar_housing": {
+   "color": "#9aa1aa",
+   "members": [
+    "item.vlp16_housing"
+   ]
+  },
+  "motors_l": {
+   "color": "#2a2d33",
+   "members": [
+    "L.motor_front",
+    "L.motor_rear"
+   ]
+  },
+  "motors_r": {
+   "color": "#2a2d33",
+   "members": [
+    "R.motor_front",
+    "R.motor_rear"
+   ]
+  },
+  "output_adapters_l": {
+   "color": "#c9ced6",
+   "members": [
+    "L.output_adapter_front",
+    "L.output_adapter_rear"
+   ]
+  },
+  "output_adapters_r": {
+   "color": "#c9ced6",
+   "members": [
+    "R.output_adapter_front",
+    "R.output_adapter_rear"
+   ]
+  },
+  "shell": {
+   "color": "#cdd1db",
+   "members": [
+    "shell_side_l_front",
+    "shell_side_l_rear",
+    "shell_side_r_front",
+    "shell_side_r_rear",
+    "shell_front",
+    "shell_rear",
+    "shell_door",
+    "shell_hatch",
+    "fan_duct",
+    "eyes_clip"
+   ]
+  },
+  "stops_l": {
+   "color": "#c8382f",
+   "members": [
+    "L.stop_sleeve_1",
+    "L.stop_sleeve_2",
+    "L.stop_sleeve_3",
+    "L.stop_sleeve_4"
+   ]
+  },
+  "stops_r": {
+   "color": "#c8382f",
+   "members": [
+    "R.stop_sleeve_1",
+    "R.stop_sleeve_2",
+    "R.stop_sleeve_3",
+    "R.stop_sleeve_4"
+   ]
+  },
+  "turret_barrel": {
+   "color": "#e8892b",
+   "members": [
+    "turret.hopper_flap",
+    "turret.barrel"
+   ]
+  },
+  "turret_bought": {
+   "color": "#3a3f47",
+   "members": [
+    "turret.compute",
+    "turret.eth_jack",
+    "turret.xt30_input",
+    "turret.input_fuses",
+    "turret.pan_servo",
+    "turret.pan_clamp",
+    "turret.cradle_plate_l",
+    "turret.cradle_plate_r",
+    "turret.stop_lug",
+    "turret.base_board",
+    "turret.turret_board",
+    "turret.dt_receptacle",
+    "turret.dt_plug",
+    "turret.tilt_servo",
+    "turret.flywheel_motor_l",
+    "turret.flywheel_motor_r",
+    "turret.cartridge_board",
+    "turret.esc_l",
+    "turret.esc_r",
+    "turret.feed_motor",
+    "turret.laser"
+   ]
+  },
+  "turret_dark": {
+   "color": "#3b3f46",
+   "members": [
+    "turret.flywheel_tyre",
+    "turret.flywheel_tyre_2",
+    "turret.dial",
+    "turret.bumper_ring"
+   ]
+  },
+  "turret_frame": {
+   "color": "#b8bec7",
+   "members": [
+    "turret.pan_base",
+    "turret.base_board_carrier",
+    "turret.pan_ring",
+    "turret.pan_spacer",
+    "turret.pan_pinion",
+    "turret.tilt_yoke",
+    "turret.cradle",
+    "turret.horn_boss",
+    "turret.pivot_spacer",
+    "turret.cartridge_body",
+    "turret.flywheel",
+    "turret.flywheel_2",
+    "turret.laser_mount",
+    "turret.ring_carrier",
+    "turret.ring_driver",
+    "turret.board_bay",
+    "turret.board_bay_lid",
+    "turret.compute_tray",
+    "turret.compute_shell"
+   ]
+  },
+  "turret_hardware": {
+   "color": "#3a3f47",
+   "members": [
+    "turret.pan_bearing",
+    "turret.pan_bearing_inner",
+    "turret.circlip_50",
+    "turret.slip_ring",
+    "turret.slip_ring_rotor",
+    "turret.ring_coupling",
+    "turret.ring_leads_rotor",
+    "turret.base_board_screws",
+    "turret.base_carrier_screws",
+    "turret.base_board_inserts",
+    "turret.base_carrier_inserts",
+    "turret.index_magnet",
+    "turret.hall_switch",
+    "turret.tilt_bearing",
+    "turret.tilt_bearing_inner",
+    "turret.shoulder_screw",
+    "turret.ct_thumbscrew",
+    "turret.laser_screws",
+    "turret.laser_inserts",
+    "turret.hopper_inserts"
+   ]
+  },
+  "turret_hopper": {
+   "color": "#9cc9e8",
+   "members": [
+    "turret.hopper",
+    "turret.hopper_lid"
+   ]
+  },
+  "tyre_l": {
+   "color": "#1b1d21",
+   "members": [
+    "L.wheel_tyre"
+   ]
+  },
+  "tyre_r": {
+   "color": "#1b1d21",
+   "members": [
+    "R.wheel_tyre"
+   ]
+  },
+  "upper_links_l": {
+   "color": "#f5b82e",
+   "members": [
+    "L.upper_link_front",
+    "L.upper_link_rear"
+   ]
+  },
+  "upper_links_r": {
+   "color": "#f5b82e",
+   "members": [
+    "R.upper_link_front",
+    "R.upper_link_rear"
+   ]
+  },
+  "wheel_link_l": {
+   "color": "#e9a21f",
+   "members": [
+    "L.wheel_link"
+   ]
+  },
+  "wheel_link_r": {
+   "color": "#e9a21f",
+   "members": [
+    "R.wheel_link"
+   ]
+  }
+ }
+}
