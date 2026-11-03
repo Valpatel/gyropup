@@ -1,0 +1,37 @@
+{
+  "about": "Gyropup's pronunciation key: what a written word or name is turned into before it is spoken. One file for every voice: designer/character/pronounce.js (the browser and the live Piper sidecar requests), tools/pronunciation.py (tools/tts_server.py and the clip renderer tools/render-voice.py). Matching is case-insensitive and whole-word; possessives and plurals ('s, s', s) keep their ending; URLs, e-mail addresses and domain names with a common top-level domain (path and query included) are never changed; a word is bounded by anything but an ASCII or Latin letter, digit or underscore. 'say' is a plain respelling sent to every engine. Stress is set by how it is split: a space makes separate words, each stressed ('gyro pup'); a hyphen joins syllables into one word stressed on its first part ('sigh-an'). Measured with espeak (Piper); browser voices get the same plain text, not checked by ear. Never use capitals for stress: espeak spells an all-caps word letter by letter. See designer/character/README.md.",
+  "version": 1,
+  "protect": "(?:[a-z][a-z0-9+.-]*://|www\\.)[^\\t\\n\\v\\f\\r \\u00a0\\u1680\\u2000-\\u200a\\u2028\\u2029\\u202f\\u205f\\u3000\\ufeff<>\\\"']+|[a-z0-9._%+-]+@[a-z0-9-]+(?:\\.[a-z0-9-]+)+|(?:[a-z0-9-]+\\.)+(?:com|net|org|io|dev|ai|app|co|edu|gov|info|me|tv|uk|us|ca|au|de|eu)(?![a-z0-9-])(?:[:/?#][^\\t\\n\\v\\f\\r \\u00a0\\u1680\\u2000-\\u200a\\u2028\\u2029\\u202f\\u205f\\u3000\\ufeff<>\\\"']*)?",
+  "entries": [
+    { "match": "Gyropup", "say": "gyro pup", "why": "The owner: two words, so it is said 'gyro pup'. espeak runs it together as one word, JYE-ruh-pup (dʒˈaɪɹəpˌʌp); 'gyro pup' gives dʒˈaɪɹoʊ pˈʌp." },
+    { "match": "Tritium", "say": "Trittium", "why": "Said TRIT-ee-um. espeak says TRY-tee-um (tɹˈaɪɾiəm); 'Trittium' gives tɹˈɪɾiəm." },
+    { "match": "cyan", "say": "sigh-an", "why": "Stress on the first syllable, SIGH-an. espeak stresses the second (saɪˈæn); the hyphen joins the syllables and stresses the first (sˈaɪæn)." },
+    { "match": "Aww", "say": "aw", "why": "espeak says 'aw-uh' (ˈɔːwə) for the double w; 'aw' is ˈɔː." },
+    { "match": "Bullseye", "say": "bulls-eye", "why": "espeak says 'bull-sigh' (bˈʊlsaɪ); 'bulls-eye' gives bˈʊlzˈaɪ." },
+    { "match": "Zzz", "say": "snore", "why": "espeak spells it out, 'zee zee zee'. No plain spelling makes espeak buzz, so the sleepy line says 'snore' (the owner may prefer another word)." }
+  ],
+  "examples": [
+    ["Hi! I am Gyropup!", "Hi! I am gyro pup!"],
+    ["GYROPUP and gyropup", "gyro pup and gyro pup"],
+    ["Gyropup's turret", "gyro pup's turret"],
+    ["Gyropup’s eyes", "gyro pup’s eyes"],
+    ["Two Gyropups", "Two gyro pups"],
+    ["The Gyropups' legs", "The gyro pups' legs"],
+    ["Gyropup-style", "gyro pup-style"],
+    ["(Gyropup)", "(gyro pup)"],
+    ["Gyropupper and supergyropup", "Gyropupper and supergyropup"],
+    ["Visit gyropup.com or https://github.com/Valpatel/gyropup today, Gyropup.", "Visit gyropup.com or https://github.com/Valpatel/gyropup today, gyro pup."],
+    ["Mail hello@gyropup.com", "Mail hello@gyropup.com"],
+    ["gyropup.com:8080/Gyropup?q=Gyropup", "gyropup.com:8080/Gyropup?q=Gyropup"],
+    ["I am Gyropup.Want to play? Gyropup.Tritium.cyan", "I am gyro pup.Want to play? gyro pup.Trittium.sigh-an"],
+    ["https://x.com/a\u00a0Gyropup", "https://x.com/a\u00a0gyro pup"],
+    ["éGyropup and Gyropupé", "éGyropup and Gyropupé"],
+    ["Gyropup×2 and 3÷Gyropup", "gyro pup×2 and 3÷gyro pup"],
+    ["gyro pup stays gyro pup", "gyro pup stays gyro pup"],
+    ["Go Tritium! I am the team pup.", "Go Trittium! I am the team pup."],
+    ["My eyes glow cyan. Pretty cool, right?", "My eyes glow sigh-an. Pretty cool, right?"],
+    ["Aww, so close!", "aw, so close!"],
+    ["Zzz... just kidding!", "snore... just kidding!"],
+    ["Bullseye!", "bulls-eye!"]
+  ]
+}
