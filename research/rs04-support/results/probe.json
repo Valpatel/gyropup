@@ -71,7 +71,8 @@
         "cad/studies.py": "35149401f3a753024568eba0b34765419ed535d42c5bf19a11544d13cad8f823",
         "cad/test_body.py": "5875a19bc2b3591721dc466d2b598b3b7cdf5dbfba22cdcde1c2017bcae66b27",
         "cad/test_leg_loads.py": "0ed04011ea672aa8bc387af272ddfa1783ec4fa1f379fde1e3dfbd9201867b51",
-        "cad/turret.py": "e4003ceac5d33838ccda718d2fb6f5c66171bd7040c3b219b7fab7dd3da3fd0b",
+        "cad/test_turret_solids.py": "5fce0394631ca5f5fb8868b6b8ecbc5ea10db6541764b8c04fb590072710b056",
+        "cad/turret.py": "dc59be9a71f62e8e5aa18bd48b5a01550b82f41ac4037d9f0e74bb1720f8fee7",
         "cad/turret_assembly.py": "480799c724c799954a520c1ecd9c0b4d383cce752efdac4f3c3f6a6da7aaf2e3",
         "cad/turret_base_board.py": "153e49871e0a3359478cd34a50daf7e44f4497970097475c829dbbcdacda90ba",
         "cad/turret_boards.py": "c7a115d2fe3cefddf46b0dd521e21076e1f7721235df3e7bd22fadb6e165707b",
@@ -128,12 +129,12 @@
     "context": {
       "research/rs04-support/probe.py": "0345d86dda8b233e94e349e2ef5f81b2e5c637ba8d6598e844e1e726e7525210",
       "research/rs04-support/README.md": "ea422e1538cc137fb04d4b497df2527cbadf7155421062aac4979f1910a2af21",
-      "exports/leg/rs04-mounting-fit/checks.json": "8c181f8be4254b1744fae368d9f48429b9c7d94f8a4d0cf43604eb6402acf6fa"
+      "exports/leg/rs04-mounting-fit/checks.json": "88d512aa86301d26205fed3515aabdabe98ed4e32f561975e069dc6c36a8b783"
     },
     "toolkit_commit": "2ad426943ce2c7232875e105e50810849f9a3e5e"
   },
   "baseline": {
-    "receipt_sha256": "8c181f8be4254b1744fae368d9f48429b9c7d94f8a4d0cf43604eb6402acf6fa",
+    "receipt_sha256": "88d512aa86301d26205fed3515aabdabe98ed4e32f561975e069dc6c36a8b783",
     "engineering_pass": false,
     "counts": {
       "pass": 322,
@@ -389,7 +390,7 @@
   "candidate_rings": {
     "od118-id80-t2.032": {
       "shape_sha256": "07a5b402c29eec62ae73edd579b7405724a39aede9a878ae3984d012098d49ba",
-      "step_sha256": "1d3137cdce01e20954e8bf3b0b7405fda229ebb635205dd5f7456fdabf050e84",
+      "step_sha256": "a0f4106dd04146eab60ad9feba5c2b470b0990ab8b9e6a8596f46c2b279f01d3",
       "bbox_mm": [
         -59.0,
         -59.0,
@@ -404,8 +405,8 @@
         "candidates": 21,
         "kernel_queries": 21,
         "cache_hits": 0,
-        "broad_phase_s": 22.4517,
-        "narrow_phase_s": 47.6954,
+        "broad_phase_s": 22.1636,
+        "narrow_phase_s": 47.6846,
         "states": {
           "apart": 20,
           "touching": 1,
@@ -415,7 +416,7 @@
           "unchecked": 0
         }
       },
-      "elapsed_s": 97.38274449389428,
+      "elapsed_s": 95.55277145584114,
       "outside_d_mm": 118.0,
       "inside_d_mm": 80.0,
       "thickness_mm": 2.032,
@@ -1319,7 +1320,7 @@
     },
     "od118-id80-t3.175": {
       "shape_sha256": "7d78b323c68f58bfb1380fd902cabcede29a37b003010d9c5bcac060d17b2fe0",
-      "step_sha256": "beed46d57aa60819f0fb67a51103ae653564b60ee12e85629eb398ac4643c23c",
+      "step_sha256": "c63a9cd5e0fd62444d5b6d3a11302b377e4880310d88cbce9278f0534ea2f799",
       "bbox_mm": [
         -59.0,
         -59.0,
@@ -1334,8 +1335,8 @@
         "candidates": 21,
         "kernel_queries": 21,
         "cache_hits": 0,
-        "broad_phase_s": 23.0016,
-        "narrow_phase_s": 48.7374,
+        "broad_phase_s": 22.2055,
+        "narrow_phase_s": 47.7427,
         "states": {
           "apart": 20,
           "touching": 1,
@@ -1345,7 +1346,7 @@
           "unchecked": 0
         }
       },
-      "elapsed_s": 98.15410290611908,
+      "elapsed_s": 96.16157978307456,
       "outside_d_mm": 118.0,
       "inside_d_mm": 80.0,
       "thickness_mm": 3.175,
@@ -2249,7 +2250,7 @@
     },
     "od118-id94-t2.032": {
       "shape_sha256": "3f1781bb1b8616e13942ac5a781dcc6379382da38d95fce24b4cafaaa58aa032",
-      "step_sha256": "495588d24d78d456e338d743919091dd3d2b3d32c8c0695c2465f11185e6604b",
+      "step_sha256": "050d9c16dc8c512999f19fde5ec7d21823f107c77b9a54129cce098f375e9e5a",
       "bbox_mm": [
         -59.0,
         -59.0,
@@ -2264,8 +2265,8 @@
         "candidates": 21,
         "kernel_queries": 21,
         "cache_hits": 0,
-        "broad_phase_s": 22.6731,
-        "narrow_phase_s": 61.6485,
+        "broad_phase_s": 22.2499,
+        "narrow_phase_s": 61.1564,
         "states": {
           "apart": 20,
           "touching": 1,
@@ -2275,7 +2276,7 @@
           "unchecked": 0
         }
       },
-      "elapsed_s": 111.11165658803657,
+      "elapsed_s": 109.71679717791267,
       "outside_d_mm": 118.0,
       "inside_d_mm": 94.0,
       "thickness_mm": 2.032,
@@ -3179,7 +3180,7 @@
     },
     "od118-id94-t3.175": {
       "shape_sha256": "0f97e9477d87e23ef1c8907f2fb81f0ff059b9b53f181aeb13641ecd81e6ca63",
-      "step_sha256": "6fb492ee4b62af3ce1d47ed61fc5b1285cce32d5d209e5972c903496239ebd24",
+      "step_sha256": "16d1ddc5d0e7bc44a533724d053b5144496beeab10d14b0dc9238f795b2d3044",
       "bbox_mm": [
         -59.0,
         -59.0,
@@ -3194,8 +3195,8 @@
         "candidates": 21,
         "kernel_queries": 21,
         "cache_hits": 0,
-        "broad_phase_s": 23.1484,
-        "narrow_phase_s": 61.2042,
+        "broad_phase_s": 22.2962,
+        "narrow_phase_s": 60.8992,
         "states": {
           "apart": 20,
           "touching": 1,
@@ -3205,7 +3206,7 @@
           "unchecked": 0
         }
       },
-      "elapsed_s": 111.92626797384582,
+      "elapsed_s": 110.03512469795533,
       "outside_d_mm": 118.0,
       "inside_d_mm": 94.0,
       "thickness_mm": 3.175,
@@ -4109,7 +4110,7 @@
     },
     "od120-id80-t2.032": {
       "shape_sha256": "f46646285f774639c871427aff74ee83bf78efdfc75de2ebdfedf296c30df495",
-      "step_sha256": "e52c090d92c8872b6297b3a4e9ba348bb1ea8110e9b1c9f8cd613b1afca4e670",
+      "step_sha256": "89bab6a0dd2d3efb05a7ca7355296dc61148d806a2f66cddc18ce2036a0ee7b2",
       "bbox_mm": [
         -60.0,
         -60.0,
@@ -4124,8 +4125,8 @@
         "candidates": 21,
         "kernel_queries": 21,
         "cache_hits": 0,
-        "broad_phase_s": 22.6339,
-        "narrow_phase_s": 47.9243,
+        "broad_phase_s": 22.6744,
+        "narrow_phase_s": 48.5684,
         "states": {
           "apart": 20,
           "touching": 1,
@@ -4135,7 +4136,7 @@
           "unchecked": 0
         }
       },
-      "elapsed_s": 96.9005013119895,
+      "elapsed_s": 97.8230780318845,
       "outside_d_mm": 120.0,
       "inside_d_mm": 80.0,
       "thickness_mm": 2.032,
@@ -5039,7 +5040,7 @@
     },
     "od120-id80-t3.175": {
       "shape_sha256": "6a14e3068349ef1640519544877c9a874698a2e6629c8e8061561cd9d8eb12c7",
-      "step_sha256": "5d24f4b6cb2edbb442fe4afc74de56e1c9f581edb5f2f0082c5aef72aba2f7f2",
+      "step_sha256": "d9c1dacdb429c5f62f6f6363bced2a37f9f1dda7285a3981776cc9886731fd05",
       "bbox_mm": [
         -60.0,
         -60.0,
@@ -5054,8 +5055,8 @@
         "candidates": 21,
         "kernel_queries": 21,
         "cache_hits": 0,
-        "broad_phase_s": 22.5976,
-        "narrow_phase_s": 47.8096,
+        "broad_phase_s": 22.8223,
+        "narrow_phase_s": 48.6596,
         "states": {
           "apart": 20,
           "touching": 1,
@@ -5065,7 +5066,7 @@
           "unchecked": 0
         }
       },
-      "elapsed_s": 96.73996177199297,
+      "elapsed_s": 98.15042565506883,
       "outside_d_mm": 120.0,
       "inside_d_mm": 80.0,
       "thickness_mm": 3.175,
@@ -5969,7 +5970,7 @@
     },
     "od120-id94-t2.032": {
       "shape_sha256": "92bd76002422dfb24486b9f3619559f061657f118e49cb685d01b6ba7f56baeb",
-      "step_sha256": "16fe1212b817aaad257f054a4213e96f0109c7dd06ae17a09d3fcb9aec4fb336",
+      "step_sha256": "90fe54936c090d8a421c75b84ae02643588d5385487fb47e6f1d5e4c4392344c",
       "bbox_mm": [
         -60.0,
         -60.0,
@@ -5984,8 +5985,8 @@
         "candidates": 21,
         "kernel_queries": 21,
         "cache_hits": 0,
-        "broad_phase_s": 23.203,
-        "narrow_phase_s": 62.8991,
+        "broad_phase_s": 22.5486,
+        "narrow_phase_s": 61.3069,
         "states": {
           "apart": 20,
           "touching": 1,
@@ -5995,7 +5996,7 @@
           "unchecked": 0
         }
       },
-      "elapsed_s": 113.13206583587453,
+      "elapsed_s": 110.14084752602503,
       "outside_d_mm": 120.0,
       "inside_d_mm": 94.0,
       "thickness_mm": 2.032,
@@ -6899,7 +6900,7 @@
     },
     "od120-id94-t3.175": {
       "shape_sha256": "bfc67451ef0bb8ac029e8286d5b6f43945d66067e69fe4172818b525dacc14a5",
-      "step_sha256": "56c4d75c675c63cb209d2156f06ef5900e6f5f73cd7b51e8b21fedf5ca4bd884",
+      "step_sha256": "0ac4f0cd328cbd7f07b97877fbac1d65498879c36ce5f1d2ebecac7e35fc1a38",
       "bbox_mm": [
         -60.0,
         -60.0,
@@ -6914,8 +6915,8 @@
         "candidates": 21,
         "kernel_queries": 21,
         "cache_hits": 0,
-        "broad_phase_s": 23.5603,
-        "narrow_phase_s": 61.9534,
+        "broad_phase_s": 22.1473,
+        "narrow_phase_s": 60.5854,
         "states": {
           "apart": 20,
           "touching": 1,
@@ -6925,7 +6926,7 @@
           "unchecked": 0
         }
       },
-      "elapsed_s": 112.69501926796511,
+      "elapsed_s": 108.67913765786216,
       "outside_d_mm": 120.0,
       "inside_d_mm": 94.0,
       "thickness_mm": 3.175,
@@ -9307,7 +9308,8 @@
         "cad/studies.py": "35149401f3a753024568eba0b34765419ed535d42c5bf19a11544d13cad8f823",
         "cad/test_body.py": "5875a19bc2b3591721dc466d2b598b3b7cdf5dbfba22cdcde1c2017bcae66b27",
         "cad/test_leg_loads.py": "0ed04011ea672aa8bc387af272ddfa1783ec4fa1f379fde1e3dfbd9201867b51",
-        "cad/turret.py": "e4003ceac5d33838ccda718d2fb6f5c66171bd7040c3b219b7fab7dd3da3fd0b",
+        "cad/test_turret_solids.py": "5fce0394631ca5f5fb8868b6b8ecbc5ea10db6541764b8c04fb590072710b056",
+        "cad/turret.py": "dc59be9a71f62e8e5aa18bd48b5a01550b82f41ac4037d9f0e74bb1720f8fee7",
         "cad/turret_assembly.py": "480799c724c799954a520c1ecd9c0b4d383cce752efdac4f3c3f6a6da7aaf2e3",
         "cad/turret_base_board.py": "153e49871e0a3359478cd34a50daf7e44f4497970097475c829dbbcdacda90ba",
         "cad/turret_boards.py": "c7a115d2fe3cefddf46b0dd521e21076e1f7721235df3e7bd22fadb6e165707b",
@@ -9364,7 +9366,7 @@
     "context": {
       "research/rs04-support/probe.py": "0345d86dda8b233e94e349e2ef5f81b2e5c637ba8d6598e844e1e726e7525210",
       "research/rs04-support/README.md": "ea422e1538cc137fb04d4b497df2527cbadf7155421062aac4979f1910a2af21",
-      "exports/leg/rs04-mounting-fit/checks.json": "8c181f8be4254b1744fae368d9f48429b9c7d94f8a4d0cf43604eb6402acf6fa"
+      "exports/leg/rs04-mounting-fit/checks.json": "88d512aa86301d26205fed3515aabdabe98ed4e32f561975e069dc6c36a8b783"
     },
     "toolkit_commit": "2ad426943ce2c7232875e105e50810849f9a3e5e"
   }
