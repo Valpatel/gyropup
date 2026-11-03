@@ -49,9 +49,10 @@ try{
   for(const [index,[width,height]]of viewports.entries()){
     await page.setViewportSize({width,height});await page.emulateMedia({colorScheme:index%2?'dark':'light'});
     await page.goto(url);await ready();const state=await inspect();
-    assert.equal(state.theme,'light','Gyropup follows the main site palette in either OS scheme');
-    assert.equal(state.root.color,'rgb(23, 61, 60)');assert.match(state.root.font,/Inter/);
-    assert.equal(state.background,'d9edf3');assert.ok(state.scrollWidth<=width&&state.canvas.height>120);
+    const scheme=index%2?'dark':'light';
+    assert.equal(state.theme,scheme,'Gyropup follows the main site theme (web/theme.js), which follows the OS scheme');
+    assert.equal(state.root.color,scheme==='light'?'rgb(23, 61, 60)':'rgb(241, 233, 216)');assert.match(state.root.font,/Inter/);
+    assert.equal(state.background,scheme==='light'?'d9edf3':'1b3440');assert.ok(state.scrollWidth<=width&&state.canvas.height>120);
     assert.ok(state.points.every(p=>p.slice(0,2).every(n=>Math.abs(n)<1.01)),'Model stays in its canvas');
     assert.ok(state.buttons.every(b=>b.minimum>=44),JSON.stringify(state.buttons));
     assert.ok(contrast(state.button.color,state.button.background)>=4.5);

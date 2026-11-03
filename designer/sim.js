@@ -54,7 +54,12 @@ const state = { transition: null, height: 0.6, pitch: 0, rollMM: 0, speed: 0, wh
 const terrain = new THREE.Group();
 stage.root.add(terrain);
 // an outdoor yard: ground that takes light (headlight pools, the laser dot) and a few props
-const yard = new THREE.Mesh(new THREE.CircleGeometry(18, 72), new THREE.MeshStandardMaterial({ color: 0xb8cba0, roughness: 1 }));
+// The yard's grass follows the page's theme (--gp-stage-ground in web/theme.css), as the stage's sky does.
+const yardColor = () => getComputedStyle(document.documentElement).getPropertyValue('--gp-stage-ground').trim() || '#b8cba0';
+const yard = new THREE.Mesh(new THREE.CircleGeometry(18, 72), new THREE.MeshStandardMaterial({ color: yardColor(), roughness: 1 }));
+const repaintYard = () => { if (!state.bench) yard.material.color.set(yardColor()); };
+document.addEventListener('gyropup:themechange', repaintYard);
+matchMedia('(prefers-color-scheme: dark)').addEventListener?.('change', repaintYard);
 yard.rotation.x = -Math.PI / 2;
 yard.position.y = 0.0004;
 yard.receiveShadow = true;
@@ -231,7 +236,7 @@ function leaveBench() {
   bench?.exit();
   stage.setSceneLight(daylight);
   stage.setSceneBackground();
-  yard.material.color.setHex(0xb8cba0);
+  yard.material.color.set(yardColor());
   document.body.classList.remove('bench-mode');
   for (const s of robotSections) if (s !== replayPanel) s.hidden = false;
   for (const el of [runSel, demoBtn, $('#alive')]) el.style.display = '';

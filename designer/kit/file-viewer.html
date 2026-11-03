@@ -2,6 +2,8 @@
 <html lang="en" data-file-theme="light">
 <head>
   <meta charset="utf-8">
+  <script src="/web/theme.js"></script>
+  <link rel="stylesheet" href="/web/theme.css">
   <meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover">
   <meta name="color-scheme" content="dark light">
   <title>3D parts viewer · Gyropup</title>
@@ -18,7 +20,9 @@
   <script type="module">
     const host=document.querySelector('#file-viewer'),fallback=host.querySelector('.file-bootstrap');
     const requestedTheme=new URLSearchParams(location.search).get('theme');
-    const theme=['light','dark','auto'].includes(requestedTheme)?requestedTheme:document.documentElement.dataset.fileTheme;
+    // The site's theme (web/theme.js) unless the link asks for one; a ?theme= link keeps its own.
+    const followSite=!['light','dark','auto'].includes(requestedTheme);
+    const theme=followSite?(window.gyropupTheme?.current()??document.documentElement.dataset.fileTheme):requestedTheme;
     document.documentElement.dataset.fileTheme=theme==='auto'?(matchMedia('(prefers-color-scheme: dark)').matches?'dark':'light'):theme;
     fallback.querySelector('button').addEventListener('click',()=>location.reload());
     // The original remains downloadable even when the entry graph cannot load.
@@ -32,6 +36,11 @@
       const {createFileViewer}=await import('./file-viewer.js');
       window.__fileViewer=createFileViewer(host,{file:new URLSearchParams(location.search).get('file'),back:new URLSearchParams(location.search).get('back')||'/designer/build.html',theme});
       fallback.remove();
+      if(followSite){
+        const {THEME_TOGGLE}=await import('./appnav.js');
+        host.querySelector('.file-nav')?.insertAdjacentHTML('beforeend',THEME_TOGGLE);window.gyropupTheme?.sync();
+        document.addEventListener('gyropup:themechange',e=>{document.documentElement.dataset.fileTheme=e.detail.theme;window.__fileViewer?.setTheme(e.detail.theme);});
+      }
     }catch(error){
       fallback.querySelector('p').textContent='The 3D viewer could not start. Retry to load its renderer and controls.';
       fallback.querySelector('button').hidden=false;document.body.dataset.viewerError=String(error?.message||error);
