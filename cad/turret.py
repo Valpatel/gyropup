@@ -1630,7 +1630,10 @@ def bought_parts(G):
         ring_z(TUBE['socket_d'] / 2, TUBE['id'] / 2, rg['stub_top'] - 0.01, k0 + 6.0))          # free, then squeezed in the socket
     out['ring_coupling'] = (tube, 'pan', 1.0, TUBE['note'] + ', coupling the rotor to the driver')
     rl, zl = LEADS['d'] / 2, LEADS['z_run']
-    leads = cyl_z(rl, rg['top'] + 0.3, zl + rl, 0.0, -LEADS['r']).union(cyl_y(rl, -G.arm_y[1] - 3.0, -LEADS['r'], 0.0, zl))
+    # the bend is a ball of the bundle's radius: two equal cylinders whose axes meet (the vertical run's end tangent to
+    # the horizontal run's top) give OCCT an invalid solid, which cad-agent's gates refuse (#61)
+    leads = (cyl_z(rl, rg['top'] + 0.3, zl, 0.0, -LEADS['r']).union(cyl_y(rl, -G.arm_y[1] - 3.0, -LEADS['r'], 0.0, zl))
+             .union(cq.Workplane('XY').sphere(rl).translate((0.0, -LEADS['r'], zl))))
     out['ring_leads_rotor'] = (leads, 'pan', 0.0, 'the ring\'s rotor leads, a Ø7.5 bundle (12 x 26 AWG + 2 x 17 AWG): beside the coupling, up '
                                'through the driver and the yoke\'s slot, along the bridge and through the -y arm\'s window to the bay')
     out['base_board'] = (base_board_service.board(), 'base', 30.0,
