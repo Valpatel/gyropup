@@ -72,9 +72,9 @@
       "cad/wheel_fit.py": "57c75e2462fb6f3606b81e4baac284dcac9a7b67bb47183f425d8bb8f730febd",
       "catalog/alternates.json": "9d5da650878fefa12654cdedae841d2daf22c1101c7f038018a75b8921d5ee3b",
       "catalog/body.json": "91a27038348a4e8e4beb3ede92c5c84a073d4728cd73e14f66d3e3226ab9b52b",
-      "catalog/designed-media-validation.json": "f30f0021eb4ac34f0c72b3e9e609b2ab3b54a1d0a3f0fa52981924b819ec73c6",
+      "catalog/designed-media-validation.json": "7f934fba41f6f7d1ebe532ef630a4bf07a79c28eb6f8d47daef0ed9342cab6b4",
       "catalog/hardware.json": "af0f7f3bdce4ee93649e278106d00a93fe2ebea3569c057f1d2a04fe4b360015",
-      "catalog/images.json": "b66d5707f6ce19c1fd778804fa4e34aa0a03eea76770be82bf7a82532c2e0ae4",
+      "catalog/images.json": "3a46d12d250a55ac563d6c96945afad4a3639f504c828227625c8bcfc938adcc",
       "catalog/index.json": "5e77d00c8ab4961f5da0bb2d5692a23170b9f4143e05d850d7b33fe36d70f334",
       "catalog/interfaces.json": "3889bc34503444f389e7951d74944f37b7e57b0b2b3be68ed596b959e83a46af",
       "catalog/leg_actuators.json": "b8ed3125cca22e9936b929fa1529395b1dead7a9585c21c63995bb294fa31bc5",
@@ -99,7 +99,7 @@
     },
     "toolkit_sources_sha256": "c2941322d5f3d000d3777b0047567211d06855861fa5e14229d7d7519fef3ed3"
   },
-  "input_fingerprint": "389b76e135483976a4b0c832f7af074829783f499240f2cae6a501fd5037f99e",
+  "input_fingerprint": "32d451b04f2d8e1770717dbbbb9636bfa0485f82ebe2e66cf340d431b84bc230",
   "context_files": {
     "tools/check-carrier-connector-support.py": "ddaef1821bb40721ef7f91f02e04b697c7fbc754829ae1eff17647329345838a",
     "tools/check-carrier-connector-inputs.py": "20b4f98e5cef0067d921e645b44fd0809ae2bffee1f1055351e7188623ef0c45",
@@ -6361,11 +6361,11 @@
     "C2/C3/servo parking, actual retained tails/junctions and added protection board remain incomplete.",
     "Wire-exit and tool corridors are explicit design reservations, not detailed cable/tool models."
   ],
-  "elapsed_seconds": 85.323,
+  "elapsed_seconds": 90.441,
   "public_artifact_sha256": {
-    "carrier-support-candidate.step": "363ee8d815e45285d865e1cb8c5983e71dec30df99e1fdc0597f2cd0ecc88696",
-    "C3-support-candidate.step": "0593e1b48e71b4192833da414645ed3cc43e0b94e21cda183732a4e92aacb549",
-    "C3-support-layout.step": "f08058c1d912e439e2e06a341865591499383f009e4326ece530240678f73aa9"
+    "carrier-support-candidate.step": "721224ec7f4e924f22a65d29cb7bc2f3731446257e006e80d96f4ec8aeea41e8",
+    "C3-support-candidate.step": "6fff031ef0413d80810e60d0ec3b5c5926eee9b9599f9908cab9dfdcc35a5737",
+    "C3-support-layout.step": "ee8fc1243682f83d3401685109c9b794d90e70cd003ffd31eea4d6daf5980361"
   },
   "public_geometry_note": "Independently authored dimension representation; not manufacturer CAD; no threads or flexible clip geometry."
 }

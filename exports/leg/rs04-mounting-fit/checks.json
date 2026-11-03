@@ -14483,9 +14483,9 @@
         "cad/wheel_fit.py": "57c75e2462fb6f3606b81e4baac284dcac9a7b67bb47183f425d8bb8f730febd",
         "catalog/alternates.json": "9d5da650878fefa12654cdedae841d2daf22c1101c7f038018a75b8921d5ee3b",
         "catalog/body.json": "91a27038348a4e8e4beb3ede92c5c84a073d4728cd73e14f66d3e3226ab9b52b",
-        "catalog/designed-media-validation.json": "f30f0021eb4ac34f0c72b3e9e609b2ab3b54a1d0a3f0fa52981924b819ec73c6",
+        "catalog/designed-media-validation.json": "7f934fba41f6f7d1ebe532ef630a4bf07a79c28eb6f8d47daef0ed9342cab6b4",
         "catalog/hardware.json": "af0f7f3bdce4ee93649e278106d00a93fe2ebea3569c057f1d2a04fe4b360015",
-        "catalog/images.json": "b66d5707f6ce19c1fd778804fa4e34aa0a03eea76770be82bf7a82532c2e0ae4",
+        "catalog/images.json": "3a46d12d250a55ac563d6c96945afad4a3639f504c828227625c8bcfc938adcc",
         "catalog/index.json": "5e77d00c8ab4961f5da0bb2d5692a23170b9f4143e05d850d7b33fe36d70f334",
         "catalog/interfaces.json": "3889bc34503444f389e7951d74944f37b7e57b0b2b3be68ed596b959e83a46af",
         "catalog/leg_actuators.json": "b8ed3125cca22e9936b929fa1529395b1dead7a9585c21c63995bb294fa31bc5",
@@ -34908,7 +34908,7 @@
         "volume_cm3": 1014.7
       },
       "files": {
-        "step": "9c9c6e29e4f3326478b3e14cc1f724207ebfcb6c1ed82adb0768605f2025d782",
+        "step": "87d898246f30ec37dfb0565c17fd34c4b3a4536c2dc235e2cc0426f556274df9",
         "stl": "6a909a9a5e4688be534e9ddbe6459d71aa275d2f591c72a3ca430ec62ab2f402"
       }
     },
@@ -34926,7 +34926,7 @@
         "volume_cm3": 278.096
       },
       "files": {
-        "step": "1f5642adb1d7f641bd6d686e4fcab023bbe9fb43540406c76661dbe4d7725630",
+        "step": "e6e95232976ebc96341a88c7fbfce0e480987ad36781c3b2d5d7121090bc2f50",
         "stl": "c59170b74cefde6b44714f604e8cf3e785cc468df2bea228f96e6906ffb46999"
       }
     },
@@ -34944,7 +34944,7 @@
         "volume_cm3": 162.045
       },
       "files": {
-        "step": "bbc26ada9ce31beb2c08b5f1d03792e46f0cd3f57cd13245c572919ba0c39278",
+        "step": "0b2981203d424d6df13065eef4bff4f9249d662c609187552401118465e55ad2",
         "stl": "1830ff4c1c9dc2314295d3d601b238c857c774abaf108c6619fdd9901b1da2cd"
       }
     }
