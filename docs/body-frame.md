@@ -6,6 +6,8 @@ with the lidar and the turret's riser, the compute pallet, and the power plate t
 from `exports/body/body.json`, `mass.json`, `fea/summary.json` and `leg-loads.json`; regenerate them with
 `cad/build_body.py`, `cad/body_legloads.py` and `cad/body_studies.py`. Orders: docs/body-orders.md. Electrics:
 docs/body-electrical.md. Hazards: docs/body-safety.md. Decisions D43-D45, D54-D56. Written 2026-10-27.
+The pictures draw the turret from its CAD and the VLP-16 as it looks, where the layout keeps envelopes for the mass
+ledger and the checks (a Ø172 can for the turret): run `tools/body_pictures.py` after `cad/build_body.py`.
 
 ![The P1 frame with both legs](../exports/body/body-p1-iso.png)
 

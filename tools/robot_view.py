@@ -43,7 +43,6 @@ BODY_GROUPS = [
                              'd435_cradle_')),
     ('frame', '#b4bac4', ('cheek_', 'floor_tray', 'belly_plate', 'compute_pallet', 'power_plate', 'turret_plate', 'bay_')),
     ('battery', '#fdb913', ('item.battery_front', 'item.battery_rear')),
-    ('lidar', '#2a2d33', ('item.vlp16',)),
     ('compute', '#5a6b7c', ('item.j501', 'item.agx', 'item.lidar_')),
     ('electronics', '#2b6cb0', ('item.plate_', 'item.power_', 'item.vn100', 'item.battery_adapter')),
 ]
@@ -63,7 +62,12 @@ LEG_GROUPS = [                                   # per leg: <group>_l, <group>_r
 TURRET_GROUPS = {'barrel': ('#e8892b', ('barrel', 'hopper_flap')), 'hopper': ('#9cc9e8', ('hopper', 'hopper_lid')),
                  'dark': ('#3b3f46', ('flywheel_tyre', 'bumper_ring', 'pan_clamp', 'dial'))}
 TURRET_FRAME, TURRET_BOUGHT = ('frame', '#b8bec7'), ('bought', '#3a3f47')
-SKIP_ITEMS = ('turret',)                         # the layout's turret envelope: the real turret stands in its place
+# The layout's envelopes for the turret (a Ø172 can the turret's mass, cad/body_layout.py) and the VLP-16 (a plain
+# cylinder) stay in the layout for the mass ledger, keep-outs and checks; the pictures draw the turret's CAD and a
+# VLP-16 shaped like one instead.
+SKIP_ITEMS = ('turret', 'vlp16')
+LIDAR = {'window': ('lidar', '#15171b'), 'housing': ('lidar_housing', '#9aa1aa'), 'window_half_h': 14.0, 'gland_r': 8.0,
+         'gland_z': 12.7}
 
 # the exploded picture: each leg straight out along y (+ left, - right), its wheel further; the turret up with the head
 LEG_OUT = {'tyre': 330, 'hub': 330}
@@ -109,6 +113,48 @@ def turret_shapes(face_z, pan_x):
     return out
 
 
+def _vlp16_spec():
+    cat = json.loads((R / 'catalog/sensors_compute.json').read_text())
+    return next(c for c in cat if c['id'] == 'velodyne-vlp-16')['specs']
+
+
+def lidar_shapes(envelope):
+    """The VLP-16 in the layout's envelope (its cylinder on the deck), drawn as it looks: an aluminium base and cap and,
+    between them, the dark window band round its optical centre (catalog/sensors_compute.json), with the cable gland out
+    to +y as sim/robot_v2.py draws it. [(group, colour, name, shape)]."""
+    b = _v(envelope).BoundingBox()
+    x, y, r, z0, h = (b.xmin + b.xmax) / 2, (b.ymin + b.ymax) / 2, b.xlen / 2, b.zmin, b.zlen
+    oc = _vlp16_spec()['optical_center_above_base_mm']
+    w0, w1 = z0 + oc - LIDAR['window_half_h'], z0 + oc + LIDAR['window_half_h']
+    cyl = lambda rr, za, zb: cq.Workplane('XY').workplane(offset=za).center(x, y).circle(rr).extrude(zb - za).val()
+    groove = lambda zc: cq.Workplane('XY').workplane(offset=zc - 0.6).center(x, y).circle(r + 1).circle(r - 1.2).extrude(1.2).val()
+    housing = cyl(r, z0, w0).fuse(cyl(r, w1, z0 + h))
+    for k in range(3):                                   # the cap's cooling grooves
+        housing = housing.cut(groove(z0 + h - 5.0 - 4.0 * k))
+    gland = (cq.Workplane('XZ').workplane(offset=-(y + r - 2.0)).center(x, z0 + LIDAR['gland_z'])
+             .circle(LIDAR['gland_r']).extrude(-(LIDAR['gland_z'] + 2.0)).val())
+    window = cyl(r - 1.5, w0, w1)
+    return [(*LIDAR['housing'], 'vlp16_housing', housing.fuse(gland)), (*LIDAR['window'], 'vlp16_window', window)]
+
+
+def visual_items(items, tm):
+    """The layout's items for a picture: the turret and VLP-16 envelopes replaced by their drawn shapes, one item per
+    colour group ({'name', 'shape', 'rgb'}), named turret_<group> and vlp16_<part> (cad/body_views.py's exploded offsets
+    match them by those prefixes)."""
+    out = []
+    for it in items:
+        if it['name'] == 'turret':
+            groups = {}
+            for g, c, n, s in turret_shapes(tm['face_z'], tm['pan_x']):
+                groups.setdefault((g, c), []).append(s)
+            out += [{'name': f'turret_{g}', 'shape': cq.Compound.makeCompound(ss), 'rgb': _rgb(c)} for (g, c), ss in groups.items()]
+        elif it['name'] == 'vlp16':
+            out += [{'name': n, 'shape': s, 'rgb': _rgb(c)} for _, c, n, s in lidar_shapes(it['shape'])]
+        else:
+            out.append(it)
+    return out
+
+
 def collect():
     """Every part of the robot: [(group, colour, source name, shape, exploded offset (mm))]."""
     import body_params as bp
@@ -132,6 +178,9 @@ def collect():
         g, c = _group(part, LEG_GROUPS)
         sign = 1.0 if side == 'L' else -1.0
         rows.append((f'{g}_{side.lower()}', c, n, _v(s), (0.0, sign * LEG_OUT.get(g, LEG_OUT_REST), 0.0)))
+    vlp16 = next(it for it in L['items'] if it['name'] == 'vlp16')
+    for g, c, n, s in lidar_shapes(vlp16['shape']):
+        rows.append((g, c, f'item.{n}', s, bv.offset('item.vlp16')))
     tm = bp.tm()
     for g, c, n, s in turret_shapes(tm['face_z'], tm['pan_x']):
         rows.append((f'turret_{g}', c, f'turret.{n}', s, (0.0, 0.0, TURRET_UP)))

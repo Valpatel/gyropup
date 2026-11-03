@@ -10,12 +10,15 @@ No complete leg is released for printing.
 at the 300 mm stance and the turret, with bought parts as envelopes. Its STEP files are what `cad-agent view` shows.
 [`../tools/leg_cables.py`](../tools/leg_cables.py) checks the wheel harness's route along the five-bar over the leg's
 range ([`../exports/leg/cables.json`](../exports/leg/cables.json), [`../exports/leg/cables.png`](../exports/leg/cables.png)).
-Both live in `tools/` because receipts pin this folder's sources.
+[`../tools/body_pictures.py`](../tools/body_pictures.py) redraws the body's pictures (`exports/body/`) with the turret
+and the VLP-16 drawn, not as the layout's envelopes; run it after `build_body.py`. All three live in `tools/` because
+receipts pin this folder's sources.
 
 ```
 .venv/bin/python tools/robot_view.py   # exports/robot/*.step + robot.json, cad/assembly.png, cad/exploded.png
 .venv/bin/cad-agent view                # the 3D assembly, at /_cadagent/kit/viewer.html
 .venv/bin/python tools/leg_cables.py    # add --clash to sweep the cable against the leg's parts
+.venv/bin/python tools/body_pictures.py # exports/body/*.png and views/*.png with the turret and the VLP-16 drawn
 ```
 
 | Assembled, standing | Exploded |
