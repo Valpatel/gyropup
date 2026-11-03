@@ -4,6 +4,7 @@ import copy
 import importlib.util
 import io
 import json
+import re
 from pathlib import Path
 import tempfile
 import unittest
@@ -291,6 +292,51 @@ class PublishedArchiveTests(unittest.TestCase):
             self.assertEqual(set(archive.namelist()), set(expected))
             for name, path in expected.items():
                 self.assertEqual(archive.read(name), path.read_bytes(), name)
+
+
+# The docs that quote the retained slice: each states the job receipt's own estimate (time, grams, filament).
+SLICE_DOCS = ('docs/rs04-fit-job.md', 'docs/mechanical-readiness.md')
+GRAMS = re.compile(r'(\d+\.\d+) g\b')
+SLICE_QUOTE = re.compile(r'(\d+) h (\d+) min (\d+) s, ([\d.]+) g and ([\d.]+) m')
+
+
+def slice_quote_problems(text, metrics):
+    """What a doc's quotes of the slice get wrong against the receipt's metrics (none quoted is a problem too)."""
+    quotes = SLICE_QUOTE.findall(text)
+    if not quotes:
+        return ['no slice estimate quoted as "H h M min S s, G g and F m"']
+    secs = round(metrics['minutes'] * 60)
+    want = (secs // 3600, secs % 3600 // 60, secs % 60, metrics['grams'], metrics['filament_m'])
+    return [f'{q} != {want}' for q in quotes
+            if (int(q[0]), int(q[1]), int(q[2]), float(q[3]), float(q[4])) != want]
+
+
+class SliceQuotes(unittest.TestCase):
+    def test_docs_quote_the_receipts_estimate(self):
+        metrics = json.loads((ROOT / 'exports/leg/rs04-fit-job/job.json').read_text())['metrics']
+        for doc in SLICE_DOCS:
+            with self.subTest(doc=doc):
+                self.assertEqual(slice_quote_problems((ROOT / doc).read_text(), metrics), [])
+
+    def test_every_line_linking_the_job_quotes_its_grams(self):
+        """Beyond SLICE_DOCS: any Markdown line that links the fit job and gives a gram figure gives the receipt's."""
+        grams = json.loads((ROOT / 'exports/leg/rs04-fit-job/job.json').read_text())['metrics']['grams']
+        bad = []
+        for md in ROOT.rglob('*.md'):
+            rel = md.relative_to(ROOT).as_posix()
+            if rel.startswith(('node_modules/', 'dist/', 'docs/archive/', '.agents/')):
+                continue
+            for n, line in enumerate(md.read_text(errors='replace').splitlines(), 1):
+                if 'rs04-fit-job' in line:
+                    bad += [f'{rel}:{n}: {g} g' for g in GRAMS.findall(line) if float(g) != grams]
+        self.assertEqual(bad, [])
+
+    def test_a_wrong_or_missing_quote_is_caught(self):
+        metrics = {'minutes': 392.7687174479167, 'grams': 172.41, 'filament_m': 65.16}
+        self.assertEqual(slice_quote_problems('6 h 32 min 46 s, 172.41 g and 65.16 m', metrics), [])
+        self.assertTrue(slice_quote_problems('6 h 32 min 46 s, 172.44 g and 65.16 m', metrics))
+        self.assertTrue(slice_quote_problems('6 h 33 min 0 s, 172.41 g and 65.16 m', metrics))
+        self.assertTrue(slice_quote_problems('about 6 h 33 min / 172.44 g', metrics))
 
 
 if __name__ == '__main__':
