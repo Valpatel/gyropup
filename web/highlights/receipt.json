@@ -8,7 +8,7 @@
     "seconds": 22,
     "audio": false
   },
-  "source_revision": "ac711c4fef43604f2a1b0950aea09f061e0f9dde",
+  "source_revision": "2336aa3d651468cba4828f3f59cfbd1c7369f636",
   "source_hashes": {
     "designer/cadrig.js": "a2cb4029ef786e0793c5eb0018e0aa8d919d829bde8c5d378c1b1480c457faaf",
     "designer/character/eyes.js": "3348578a121b75ab7425c3b6591e864b41b09512e67b642832e6c6b683d2e11b",
@@ -163,7 +163,7 @@
     "exports/sim/v2/rig/manifest.json": "0f394643875bcdff247c8f285f2d0d10499104a1073088ce37c4b5f1b337086f",
     "exports/sim/v2/summary.json": "297a40dc891e3bbb1f1985d7db461021446b5041b33969fdc33b63a4b573ceac",
     "tools/capture-highlights.mjs": "2865634d7d05047ecbd73ca75350026ac293f484243e58ad411897135326f0fd",
-    "tools/check-highlights.py": "f86e5d6cc691d26ef00d106a22d3b7de0a8ad97435505608e4b7946fe2c4d15b",
+    "tools/check-highlights.py": "45d9408f3d434874a9e7b3e11f0a02567b74a47f978146d4abc00352d3098e31",
     "tools/encode-highlights.py": "71e20bb2b9e186d2cbdfaf2bb619e80d93029e84f567eccfccfe9dee1da9d235",
     "web/icon.svg": "0a1ba64971063f63310e5edd529874329cceb5d4adbbf95888e325accc95a303",
     "web/model-links.css": "1a01e37f2bc7e74b7a79bc7b4416eb1a8e701039328809db061bf2ad7e20de05",
@@ -420,7 +420,7 @@
       "bytes": 1857481
     },
     "gyropup-highlights.webm": {
-      "sha256": "ed2965e36c0a4a41485530000c1f1017ea3b550dbc854daf994cf5f9e050519b",
+      "sha256": "7766804e85efb471dc07fcdd6cdb0d962396cd0e8b79939b04fee20f3fc04bc7",
       "bytes": 1478016
     },
     "gyropup-highlights.webp": {

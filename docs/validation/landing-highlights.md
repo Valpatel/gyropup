@@ -155,8 +155,8 @@ untouched. Earlier diagnostic captures remain in their separate directories.
 `tools/encode-highlights.py` uses lossless intermediate segments, the repository's
 Inter font, and two encodings of the same edit. Outputs live in `web/highlights/`:
 
-- H.264 High 3.1, YUV420P, 720p30, fast-start MP4: 1,834,385 bytes.
-- VP9 Profile 0, YUV420P, 720p30, WebM: 1,464,316 bytes.
+- H.264 High 3.1, YUV420P, 720p30, fast-start MP4: 1,857,481 bytes.
+- VP9 Profile 0, YUV420P, 720p30, WebM: 1,478,016 bytes.
 - A 32,516-byte WebP poster from reel frame 30, with the same framing and lower third.
 - Source, edit, capture and output receipts, including the pinned leg report.
 
