@@ -119,13 +119,20 @@ CONNECT_TOL = Tolerances(touch_mm=0.05, volume_check_mm3=0.2)    # parts drawn o
 AMMO_D = (22.2, 22.8)          # D67: any Rival-compatible round 22.2-22.8 mm (1.6-2.0 g: the mass is the launch ceiling's)
 
 
+# Every file the turret's geometry is built from: cad/turret.py, every cad/ module it imports (and they import), and the
+# data files they read when imported. cad/test_turret_gate_sources.py walks the imports and fails on one missing
+# here (cad/turret_snaps.py was, from #131 until the review of PR #181).
+GEOMETRY_SOURCES = ('cad/turret.py', 'cad/turret_base_board.py', 'cad/turret_boards.py', 'cad/turret_snaps.py', 'cad/gmi.py',
+                    'cad/interfaces.json', 'catalog/interfaces.json', 'catalog/materials.json')
+
+
 def geometry_fingerprint():
-    """What the gates depend on: the CAD source, the settled pile and the toolkit's gate code. A stored result is
-    current when this matches."""
+    """What the gates depend on: the CAD source (GEOMETRY_SOURCES), the settled pile and the toolkit's gate code. A
+    stored result is current when this matches."""
     import cadagent.gates as cg
     h = hashlib.sha256()
     gdir = Path(cg.__file__).parent
-    for f in [R / 'cad' / 'turret.py', R / 'cad' / 'turret_base_board.py', R / 'cad' / 'turret_boards.py', Path(__file__), PILE, LAUNCH] + sorted(gdir.glob('*.py')):
+    for f in [R / s for s in GEOMETRY_SOURCES] + [Path(__file__), PILE, LAUNCH] + sorted(gdir.glob('*.py')):
         h.update(f.read_bytes() if f.exists() else b'-')
     return h.hexdigest()[:16]
 
@@ -543,11 +550,13 @@ def fastener_specs(T):
 def fasteners(T, asm, cache):
     """cadagent.gates.fasteners on the screws cad/turret.py places with their receivers (GATED_SCREWS): seat, stack,
     holes, engagement in the modelled insert, tip, length, and the hex key's straight reach. The steps: the screws go in
-    before the cartridge board and its ESCs (the board's front edge is over the front hopper lug)."""
+    before the cartridge board and its ESCs (the board's front edge is over the front hopper lug), and before the
+    hopper lid snaps on (#131: its latch at 60 deg is over the 45 deg lug, so the lid comes off to reach that screw;
+    the gate reports it as a service-access warning)."""
     steps = [{'order': 1, 'fit': 'hopper', 'onto': 'cartridge_body', 'fasteners': ['hopper_screws'], 'tool': 'hex 2.5'},
              {'order': 2, 'fit': 'laser_mount', 'onto': 'cartridge_body', 'fasteners': ['laser_foot_screws'], 'tool': 'hex 2.5'},
              {'order': 3, 'fit': 'esc_l', 'onto': 'cartridge_body'}, {'order': 4, 'fit': 'esc_r', 'onto': 'cartridge_body'},
-             {'order': 5, 'fit': 'cartridge_board', 'onto': 'cartridge_body'}]
+             {'order': 5, 'fit': 'cartridge_board', 'onto': 'cartridge_body'}, {'order': 6, 'fit': 'hopper_lid', 'onto': 'hopper'}]
     return fastener_gate(asm, fastener_specs(T), steps=steps, tools=TOOLS, tol=CONNECT_TOL, cache=cache,
                          out=VERDICTS / 'fasteners.json')
 

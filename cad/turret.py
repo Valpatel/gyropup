@@ -37,7 +37,8 @@ laser-cut 6061-T6 from SendCutSend, D40/D48: the pan clamp, the two cradle plate
   cartridge_body (PA6-CF)  dial housing, drop chute, flywheel cage (motors hang under its top plate), barrel socket
   flywheel (PA6-CF)        hub on the X2216's prop adapter; flywheel_tyre (TPU 95A) Ø38 tyre bonded over it (D68)
   dial (PETG)              8 pockets, stirring cone, on the feed servo's horn
-  hopper, hopper_lid, hopper_flap (PETG, translucent)  30 balls; fill port with a sprung flap for the dock spout
+  hopper, hopper_lid, hopper_flap (PETG, translucent)  30 balls; fill port with a sprung flap for the dock spout; the lid
+                           held by three snap latches on the hopper's rim (cad/turret_snaps.py, #131)
   barrel (PETG, orange tip)  Ø30 x 100, bore = ball + 1.5, two chronograph gates
   laser_mount (PETG)       ring with three M3 boresight screws, on the cartridge's top over the barrel
   bumper_ring (TPU 95A)    around the pan base
@@ -60,6 +61,7 @@ R = Path(__file__).resolve().parents[1]
 sys.path.insert(0, str(R / 'cad'))
 import gmi  # noqa: E402
 import turret_base_board as base_board_service  # noqa: E402
+import turret_snaps as snaps  # noqa: E402
 
 FAST = gmi.FAST
 BED = gmi.STD['print']['bed_mm']
@@ -741,8 +743,10 @@ def board_bay(G):
     """The turret-board bay, printed PETG on its back: a 58 x 57 tray with 1.2 mm walls (TB) out to y -118, screwed to the -y
     yoke arm's outer face with 4 x M3 x 8 flat heads (countersunk in its 3 mm back, into inserts in the arm, beside and
     under the arm's lightening window; fit them before the boards), 4 bosses with M3 inserts for the level-0 board,
-    and a window in the back for the ring's rotor leads, which come through the arm's window. The open face takes a
-    snap lid (not modelled)."""
+    and a window in the back for the ring's rotor leads, which come through the arm's window. The open face takes the
+    snap lid (board_bay_lid): a 30 deg ridge on the outside of the top and of the bottom wall, by the rim, catches its
+    two latches (bay_ridges; cad/turret_snaps.py). Printed on its back, the open face up, so the ridges stand out of a
+    wall that grows upwards: their back faces overhang 30 deg from the vertical, no support."""
     a1 = G.arm_y[1]
     X, (z0, z1), Y, w, t = TB['x'], TB['z'], TB['y_out'], TB['wall'], TB['back']
     s = box(-X, X, -Y, -a1, z0, z1).cut(box(-X + w, X - w, -Y - 1, -a1 - t, z0 + w, z1 - w))
@@ -756,20 +760,198 @@ def board_bay(G):
         s = s.cut(cq.Workplane('XZ').circle(3.3).workplane(offset=-1.8).circle(1.7).loft().translate((x, -a1 - t - 0.01, z)))   # countersink
     rl = LEADS['d'] / 2 + 1.5
     s = s.cut(box(-11.0, 11.0, -a1 - t - 1, -a1 + 0.1, LEADS['z_run'] - rl, LEADS['z_run'] + rl))   # the rotor leads come in
+    return s.union(bay_ridges(G))
+
+
+# ---- the snap latches of the two lids (#131): every size in cad/turret_snaps.py, drawn in its (s, n) frame: s past the
+# seat plane in the closing direction, n out from the caught wall's outer face (snaps.profile())
+
+def _sn_extrude_x(pts, x0, x1, y_seat, z_wall):
+    """An (s, n) polygon on the bay's top wall, extruded along x: y = y_seat + s (the lid closes towards +y), z =
+    z_wall + n."""
+    return cq.Workplane('YZ', origin=(x0, 0, 0)).polyline([(y_seat + s, z_wall + n) for s, n in pts]).close().extrude(x1 - x0)
+
+
+def _sn_revolve(pts, a0, a1, r_wall, z_seat):
+    """An (s, n) polygon on the hopper's outer wall, revolved about the z axis from a0 to a1 (deg): r = r_wall + n, z =
+    z_seat - s (the lid closes downwards)."""
+    w = cq.Workplane('XZ').polyline([(r_wall + n, z_seat - s) for s, n in pts]).close().revolve(a1 - a0, (0, 0, 0), (0, 1, 0))
+    return w.rotate((0, 0, 0), (0, 0, 1), a0)
+
+
+def _barb_pts():
+    """The barb in (s, n), run 0.5 into the tongue so the two fuse."""
+    b = snaps.profile()['barb']
+    return b + [(b[-1][0], snaps.TONGUE_N + 0.5), (b[0][0], snaps.TONGUE_N + 0.5)]
+
+
+def bay_sweep_flip(G, s):
+    """The bay's bottom latch and ridge are the top ones turned 180 deg about the bay's axis (y, through x 0 and the
+    bay's mid-height): the lid goes on either way up."""
+    zc = sum(TB['z']) / 2
+    return s.rotate((0, 0, zc), (0, 1, zc), 180.0)
+
+
+def bay_latch_x(G):
+    """The top latch's x extents: the root block's, the tongue's (root face to its free end) and the barb's."""
+    B = snaps.BAY
+    xr = B['x_root']
+    x_tip = xr + B['L'] + B['barb_w'] / 2
+    return {'root': (xr - B['root_w'], xr), 'tongue': (xr, x_tip), 'barb': (x_tip - B['barb_w'], x_tip),
+            'ridge': (x_tip - B['barb_w'] - B['ridge_extra'], x_tip + B['ridge_extra'])}
+
+
+def bay_ridges(G):
+    """The two ridges on the bay's top and bottom walls that the lid's latches catch (snaps.profile()['ridge'])."""
+    Y, z1 = TB['y_out'], TB['z'][1]
+    x0, x1 = bay_latch_x(G)['ridge']
+    top = _sn_extrude_x(snaps.profile()['ridge'], x0, x1, -Y, z1 - 0.01)
+    return top.union(bay_sweep_flip(G, top))
+
+
+def bay_latch(G):
+    """One latch of the bay lid, on its top edge: a tongue h thick (in z) lying in the lid's plane outside the bay's top
+    wall, from a root block on the plate's edge along x to a barb that hooks the wall's ridge; the root's inside
+    corner rounded to 0.6 h. The tongue bends in z, in the bed plane of the lid's print (along the layers)."""
+    B = snaps.BAY
+    Y, z1 = TB['y_out'], TB['z'][1]
+    xs = bay_latch_x(G)
+    s0, s1 = snaps.tongue_s(B)
+    zi, zo = z1 + snaps.TONGUE_N, z1 + snaps.TONGUE_N + B['h']
+    tongue = box(*xs['tongue'], -Y + s0, -Y + s1, zi, zo)
+    zb = zo + B['root_out']
+    root = (box(*xs['root'], -Y + s0, -Y, z1 - 1.0, zb)                                # on the plate's edge ...
+            .union(box(*xs['root'], -Y - 0.01, -Y + s1, z1 + snaps.WALL_CLEAR, zb)))     # ... and outside the wall
+    s = root.union(tongue)
+    sm = -Y + (s0 + s1) / 2
+    s = s.edges(cq.selectors.NearestToPointSelector((xs['root'][1], sm, zi))).fillet(B['root_r'])
+    if B['root_out'] > 0:
+        s = s.edges(cq.selectors.NearestToPointSelector((xs['root'][1], sm, zo))).fillet(B['root_r'])
+    return s.union(_sn_extrude_x(_barb_pts(), *xs['barb'], -Y, z1))
+
+
+def hopper_latch_angles(G):
+    """Each hopper latch's angles (deg): the root block's start, the root face, the barb's centre and the tongue's free
+    end, from its footprint's centre in snaps.HOPPER['centres_deg'] (the tongue runs anticlockwise from its root)."""
+    Hs = snaps.HOPPER
+    r_mid = G.dial_wall_r + HOPPER_WALL + snaps.TONGUE_N + Hs['h'] / 2
+    deg = lambda mm: math.degrees(mm / r_mid)
+    span = deg(Hs['root_w'] + Hs['L'] + Hs['barb_w'] / 2)
+    out = []
+    for c in Hs['centres_deg']:
+        a0 = c - span / 2
+        root = a0 + deg(Hs['root_w'])
+        barb = root + deg(Hs['L'])
+        out.append({'start': a0, 'root': root, 'barb': barb, 'end': barb + deg(Hs['barb_w'] / 2),
+                    'barb_half': deg(Hs['barb_w'] / 2), 'ridge_half': deg(Hs['barb_w'] / 2 + Hs['ridge_extra'])})
+    return out
+
+
+def hopper_ridges(G):
+    """The three ridges on the hopper's outer wall, just under its top edge, that the lid's latches catch. The lid's
+    spigot sits 0.1 mm inside the wall over their whole height, so the wall cannot give under a barb."""
+    r_w = G.dial_wall_r + HOPPER_WALL
+    s = None
+    for a in hopper_latch_angles(G):
+        r = _sn_revolve([(sv, n - 0.01) for sv, n in snaps.profile()['ridge']], a['barb'] - a['ridge_half'], a['barb'] + a['ridge_half'],
+                        r_w, G.hopper_top)
+        s = r if s is None else s.union(r)
     return s
+
+
+def hopper_latch(G, a):
+    """One latch of the hopper lid (angles from hopper_latch_angles): a curved tongue h thick (radially) lying in the
+    lid's plane outside the hopper's wall, from a root block on the disc's rim round to a barb that hooks the wall's
+    ridge; the root's inside corner rounded to 0.6 h. The tongue bends radially, in the bed plane of the lid's print
+    (upside down: along the layers)."""
+    Hs = snaps.HOPPER
+    r_w, z1 = G.dial_wall_r + HOPPER_WALL, G.hopper_top
+    s0, s1 = snaps.tongue_s(Hs)
+    n_o = snaps.TONGUE_N + Hs['h']
+    ri, ro = r_w + snaps.TONGUE_N, r_w + n_o
+    tongue = _sn_revolve([(s0, snaps.TONGUE_N), (s1, snaps.TONGUE_N), (s1, n_o), (s0, n_o)], a['root'], a['end'], r_w, z1)
+    n_b = n_o + Hs['root_out']
+    block = _sn_revolve([(s0, -1.5), (0.0, -1.5), (0.0, snaps.WALL_CLEAR), (s1, snaps.WALL_CLEAR), (s1, n_b), (s0, n_b)],
+                        a['start'], a['root'], r_w, z1)
+    s = block.union(tongue)
+    t, zm = math.radians(a['root']), z1 - (s0 + s1) / 2
+    for r in ((ri, ro) if Hs['root_out'] > 0 else (ri,)):
+        s = s.edges(cq.selectors.NearestToPointSelector((r * math.cos(t), r * math.sin(t), zm))).fillet(Hs['root_r'])
+    return s.union(_sn_revolve(_barb_pts(), a['barb'] - a['barb_half'], a['barb'] + a['barb_half'], r_w, z1))
+
+
+def hopper_key(G):
+    """The hopper lid's rotation key (snaps.KEY): the tab on the lid's spigot and the notch in the hopper's rim it
+    drops into, clear by KEY['clear'] round it (cad/turret_snaps.py)."""
+    K, z1 = snaps.KEY, G.hopper_top
+    tab = box(K['r_in'], K['r_out'], -K['w'] / 2, K['w'] / 2, z1 - K['depth'], z1 + 0.01)
+    c = K['clear']
+    notch = box(G.dial_wall_r - 0.5, G.dial_wall_r + HOPPER_WALL + 0.5, -K['w'] / 2 - c, K['w'] / 2 + c, z1 - K['depth'] - c, z1 + 0.5)
+    turn = lambda s: s.rotate((0, 0, 0), (0, 0, 1), K['deg'])
+    return turn(tab), turn(notch)
+
+
+def _print_pose(s, rot):
+    """A part turned by its MADE print rotation and set on the bed: centred on x and y, its underside at z 0."""
+    if rot:
+        s = s.rotate((0, 0, 0), rot[0], rot[1])
+    bb = s.val().BoundingBox()
+    return s.translate((-(bb.xmin + bb.xmax) / 2, -(bb.ymin + bb.ymax) / 2, -bb.zmin))
+
+
+def snap_coupon_regions(G):
+    """The pieces of the parents each snap coupon keeps (build frames): one latch of each lid with the plate, spigot
+    or pad round it, and the stretch of wall with its ridge. One pair per lid: its latches are copies."""
+    a = hopper_latch_angles(G)[0]
+    r_w, zs = G.dial_wall_r + HOPPER_WALL, G.hopper_top
+    reg = lambda z0, z1: _sn_revolve([(zs - z1, 45.0 - r_w), (zs - z0, 45.0 - r_w), (zs - z0, 60.0 - r_w), (zs - z1, 60.0 - r_w)],
+                                     a['start'] - 4.0, a['end'] + 4.0, r_w, zs)
+    x = bay_latch_x(G)
+    x0, x1 = x['root'][0] - 3.0, x['ridge'][1] + 3.0
+    Y, z1 = TB['y_out'], TB['z'][1]
+    s_hi = snaps.HOPPER['s_hi']
+    return {'hopper_lid': reg(G.hopper_top - s_hi - 1.0, G.hopper_top + snaps.PLATE_T + snaps.LID_LUG_PROUD + 1.0),
+            'hopper': reg(G.hopper_top - s_hi - 3.0, G.hopper_top + 0.5),
+            'board_bay_lid': box(x0, x1, -Y - 3.0, -Y + snaps.BAY['s_hi'] + 1.0, z1 - 10.0, z1 + 8.0),
+            'board_bay': box(x0, x1, -Y - 0.5, -Y + 14.0, z1 - 10.0, z1 + 8.0)}
+
+
+def snap_coupons(G):
+    """A printable coupon per snap (#131), cut from the parent parts (the latch from its lid, the ridge with its wall)
+    and turned to the parent's print orientation (MADE), on the bed. Each pair snaps together as the real joint does:
+    push it on and pull it off on a scale for the forces at the low and the high bound, cycle it past the expected
+    cycles (research/snap-fits/summary.json), and print it in the same filament and settings as the parts.
+    summary.json's 'coupon' per lid holds the pass bands (each latch's pull-off between the share of the required
+    retention and of the hand limit, its push-on under the hand limit's share), the cycles and what to look for, and
+    which way to turn the undercut if a band is missed; research/snap-fits/snaps.py coupon_verdict() reads a
+    measurement against them."""
+    rot = {m[0]: m[5] for m in MADE}
+    parents = {'hopper_lid': hopper_lid, 'hopper': hopper, 'board_bay_lid': board_bay_lid, 'board_bay': board_bay}
+    return {f'coupon_{name}': _print_pose(parents[name](G).intersect(region), rot[name])
+            for name, region in snap_coupon_regions(G).items()}
 
 
 TILT_POCKET_DEPTH = SERVO['H'] + SERVO['bump'] + 1.0       # 34.9 (15 until 2026-10-27: the servo stood 19 mm proud)
 
 
-def board_bay_lid(G):
-    """The board bay's lid, printed PETG flat: a 2 mm plate over the bay's open face with a 1.5 mm lip inside its walls
-    and two snap bumps (est.), so the boards are closed in and the bay reads as the -y arm's pod."""
-    a1 = G.arm_y[1]
+def board_bay_lid(G, latches=True):
+    """The board bay's lid, printed PETG flat (the plate on the bed): a 2 mm plate over the bay's open face with a 1.5 mm
+    lip inside its walls, held by two snap latches, one on its top edge and one on its bottom edge (bay_latch;
+    cad/turret_snaps.py, checked by cad-agent snapfit in research/snap-fits/): push it on, pull it off by the latches,
+    no tool. The same latch turned 180 deg, so it goes on either way up. Behind each ridge a pad on the lip, 4 mm deep,
+    backs the bay's 1.2 mm wall, so the wall cannot give under the barb (1.3 mm clear of the boards' envelope).
+    latches=False: the lid as it was, for the tests' control."""
     X, (z0, z1), Y, w = TB['x'], TB['z'], TB['y_out'], TB['wall']
-    s = box(-X, X, -Y - 2.0, -Y, z0, z1)
-    lip = box(-X + w, X - w, -Y + 0.01, -Y + 1.5, z0 + w, z1 - w).cut(box(-X + w + 1.5, X - w - 1.5, -Y - 1, -Y + 2.5, z0 + w + 1.5, z1 - w - 1.5))
-    return s.union(lip)
+    s = box(-X, X, -Y - snaps.PLATE_T, -Y, z0, z1)
+    # the lip stood 0.01 mm off the plate until #131 (two solids); latches=False keeps that, as the part was
+    lip_y0 = -Y - 0.01 if latches else -Y + 0.01
+    lip = box(-X + w, X - w, lip_y0, -Y + 1.5, z0 + w, z1 - w).cut(box(-X + w + 1.5, X - w - 1.5, -Y - 1, -Y + 2.5, z0 + w + 1.5, z1 - w - 1.5))
+    s = s.union(lip)
+    if latches:
+        x0, x1 = bay_latch_x(G)['ridge']
+        top = bay_latch(G).union(box(x0, x1, -Y - 0.01, -Y + snaps.BACKING_DEPTH, z1 - w - snaps.BAY_PAD_T, z1 - w))
+        s = s.union(top).union(bay_sweep_flip(G, top))
+    return s
 
 
 def tilt_yoke(G):
@@ -1344,8 +1526,10 @@ def baffle(G):
 def hopper(G):
     """The hopper, printed PETG (translucent, so the balls show): a Ø102 tube from the dial housing to z = 100 in the
     cartridge frame (30 balls with the dial's pockets: sim/turret_feed.py fills it in physics), the exit baffle in its bottom (see baffle()), three lugs
-    that screw to the housing (M3), and two Ø5 holes for the hopper-full IR beam near the top. Printed standing on its
-    bottom rim and the baffle."""
+    that screw to the housing (M3), two Ø5 holes for the hopper-full IR beam near the top, and three ridges round the
+    outside of its top edge that the lid's latches catch (hopper_ridges; cad/turret_snaps.py), and a notch in its rim at
+    the front for the lid's key (hopper_key). Printed standing on its bottom rim and the baffle: the ridges' undersides
+    overhang 30 deg from the vertical, no support."""
     r_in, r_out = G.dial_wall_r, G.dial_wall_r + HOPPER_WALL
     z0, z1 = G.housing_top, G.hopper_top
     s = ring_z(r_out, r_in, z0, z1).union(baffle(G))
@@ -1355,20 +1539,33 @@ def hopper(G):
         s = s.union(lug)
         s = s.cut(through_z(x, y, FAST['M3']['clear'], z0 - 1, z0 + 4))
     s = s.cut(cyl_y(2.5, -r_out - 1, r_out + 1, 0, z1 - 6))
-    return s
+    return s.union(hopper_ridges(G)).cut(hopper_key(G)[1])
 
 
-def hopper_lid(G):
-    """Lid, printed PETG: a 2 mm disc with a spigot into the hopper, a Ø32 fill port where the dock's spout pushes the
-    sprung flap open, and two hinge lugs for the flap (Ø2 steel pin, torsion spring)."""
+def hopper_lid(G, latches=True, key=True):
+    """Lid, printed PETG upside down: a 2 mm disc with a spigot into the hopper, a Ø32 fill port where the dock's spout
+    pushes the sprung flap open, two hinge lugs for the flap (Ø2 steel pin, torsion spring), and three snap latches
+    round the rim (hopper_latch; cad/turret_snaps.py, checked by cad-agent snapfit in research/snap-fits/) that hold it
+    on, with the 30 balls behind it, in a fall at the -25 deg tilt stop (not upside down: cad/turret_snaps.py
+    load_cases, INVERTED_REASON). Push it on, pull it off by the latches. A tab on the spigot (hopper_key) drops into
+    a notch in the hopper's rim, so it goes on one way only, the fill port over the spout. The latches sit at the
+    front and 120 deg either side, their tops 2.5 mm below the hinge lugs', so upside down the turret lands on the lugs
+    and the flap, never on a latch (snaps.LATCH_DROP); the lid prints on the lugs.
+    latches=False: the lid as it was (a slip-fit spigot, nothing holding it), for the tests' control; key=False: no
+    tab, for the key's control."""
     z1 = G.hopper_top
     r = G.dial_wall_r + 2.0
-    s = cyl_z(r, z1, z1 + 2).union(ring_z(G.dial_wall_r - 0.1, G.dial_wall_r - 2.1, z1 - 4, z1 + 0.01))
+    s = cyl_z(r, z1, z1 + 2).union(ring_z(G.dial_wall_r - 0.1, G.dial_wall_r - 2.1, z1 - snaps.BACKING_DEPTH, z1 + 0.01))
     s = s.cut(sector_z(12.0, G.dial_wall_r - 3, 30, 150, z1 - 1, z1 + 1.0)).cut(sector_z(12.0, G.dial_wall_r - 3, 210, 330, z1 - 1, z1 + 1.0))
     s = s.cut(cyl_z(16.0, z1 - 5, z1 + 4, FILL_PORT[0], 0))
     for y in (-12.0, 9.0):
-        s = s.union(box(FILL_PORT[0] - 22, FILL_PORT[0] - 16, y, y + 3, z1 + 2 - 0.01, z1 + 9))
+        s = s.union(box(FILL_PORT[0] - 22, FILL_PORT[0] - 16, y, y + 3, z1 + 2 - 0.01, z1 + snaps.PLATE_T + snaps.LID_LUG_PROUD))
     s = s.cut(cyl_y(1.05, -15, 15, FILL_PORT[0] - 19, z1 + 6))
+    if latches:
+        for a in hopper_latch_angles(G):
+            s = s.union(hopper_latch(G, a))
+        if key:
+            s = s.union(hopper_key(G)[0])
     return s
 
 
@@ -1801,16 +1998,16 @@ MADE = [
     ('flywheel', flywheel, 'tilt', 'pa6-cf', 2, ((1, 0, 0), 180), 'PA6-CF on its top face; on the X2216\'s prop adapter: washer + M5 nylon-insert nut; bore reamed to 5.00'),
     ('flywheel_tyre', flywheel_tyre, 'tilt', 'tpu95', 2, None, 'TPU 95A tyre'),
     ('dial', dial, 'tilt', 'petg', 1, None, 'PETG; 4 x M3 x 8 down into the feed servo\'s horn, from the top'),
-    ('hopper', hopper, 'tilt', 'petg', 1, None, 'translucent PETG; 3 x M3 to the housing'),
-    ('hopper_lid', hopper_lid, 'tilt', 'petg', 1, ((1, 0, 0), 180), 'PETG'),
+    ('hopper', hopper, 'tilt', 'petg', 1, None, 'translucent PETG standing; 3 x M3 to the housing; three ridges for the lid\'s latches, the notch for its key'),
+    ('hopper_lid', hopper_lid, 'tilt', 'petg', 1, ((1, 0, 0), 180), 'PETG upside down (the latches in the bed plane), on the flap\'s hinge lugs and the latches: supports under the disc only; three snap latches onto the hopper\'s ridges, push on, pull off; keyed, goes on one way'),
     ('hopper_flap', hopper_flap, 'tilt', 'petg', 1, None, 'PETG; Ø2 pin + torsion spring'),
     ('barrel', barrel, 'tilt', 'petg', 1, ((0, 1, 0), -90), 'PETG standing; last 15 mm blaze orange'),
     ('laser_mount', laser_mount, 'tilt', 'petg', 1, None, 'PETG; 3 x M3 boresight, 2 x M3 x 10 to the socket pad'),
     ('bumper_ring', bumper_ring, 'base', 'tpu95', 1, None, 'TPU 95A; 5 x M3 with washers'),
     ('ring_carrier', ring_carrier, 'base', 'pa6-cf', 1, ((1, 0, 0), 180), 'PA6-CF on its top face; 3 x M3 x 10 flat heads up into the base; 3 x M3 inserts for the ring'),
     ('ring_driver', ring_driver, 'pan', 'pa6-cf', 1, ((1, 0, 0), 180), 'PA6-CF on its top face; in the turntable\'s bore (ribs + CA)'),
-    ('board_bay', board_bay, 'pan', 'petg', 1, ((1, 0, 0), -90), 'PETG on its back; 4 x M3 x 8 flat heads to the -y yoke arm; 4 x M3 inserts for the boards'),
-    ('board_bay_lid', board_bay_lid, 'pan', 'petg', 1, ((1, 0, 0), 90), 'PETG flat; snaps into the bay\'s open face'),
+    ('board_bay', board_bay, 'pan', 'petg', 1, ((1, 0, 0), -90), 'PETG on its back; 4 x M3 x 8 flat heads to the -y yoke arm; 4 x M3 inserts for the boards; two ridges for the lid\'s latches'),
+    ('board_bay_lid', board_bay_lid, 'pan', 'petg', 1, ((1, 0, 0), 90), 'PETG flat (the latches in the bed plane); two snap latches onto the bay\'s ridges, push on, pull off'),
     # D66: the compute plinth under the pan base (the J4012, its input and fuses)
     ('compute_tray', compute_tray, 'base', 'pa6-cf', 1, None, 'PA6-CF flat; 4 x M5 x 16 down into the head\'s inserts (first), 4 x M4 inserts for the shell'),
     ('compute_shell', compute_shell, 'base', 'petg', 1, ((1, 0, 0), 180), 'PETG upside down; 4 x M4 x 10 down into the tray, 4 x M5 inserts for the pan base'),
