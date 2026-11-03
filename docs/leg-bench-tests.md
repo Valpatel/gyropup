@@ -51,7 +51,7 @@ what the simulation assumes or predicts, and how it passes.
 | B2 | rotor inertia at the output (ARMATURE) | 0.0243 kg m^2 (3e-4 x 9^2, an estimate) |
 | B3 | stop sleeve rate (STOP_K) and travel | 238 N/mm at the post (856 N m/rad at r 60 mm), 7.8 mm before steel |
 | B4 | preload per M5 in the hub joint (HUB_PRELOAD_N) | 1200 N |
-| B5 | tyre contact (TYRE_SOLREF) | solref 0.0141 0.5 (about 100-250 N/mm) |
+| B5 | tyre contact (TYRE_SOLREF) | solref 0.0141 0.5 (D69's 10 x 2.125 air tyre at 30-35 psi: about 60 N/mm) |
 | B6 | the packs' resistance (rig/run.py --r-int) | 0.10 ohm (an estimate: two 5S3P packs in series, D65) |
 <!-- /gen:assumes -->
 
@@ -85,7 +85,7 @@ compares the run with this very prediction, and "measured only" needs the load p
 | S1 stand-up | follows the prediction within 15 mm | 15 mm | (the run itself) |
 | S1 stand-up | peak motor torque <= 22 N m | 22 | 16.5 |
 | S1 stand-up | no oscillation over 5 mm peak to peak in the hold | 5 mm p-p | 0.1 |
-| S1 stand-up | load plate 160-210 N steady (18.75 kg carried: about 184 N) | 160 to 210 | (measured only) |
+| S1 stand-up | load plate within 25 N of the carried weight, steady (at 18.75 kg: 184 N) | carried weight +- 25 N | (measured only) |
 | S1 stand-up | VBUS inside 32-45 V | 32 to 45 | 37.8-38.0 |
 | S2 squat | follows the prediction within 15 mm (the model is right) | 15 mm | (the run itself) |
 | S2 squat | tracks the command within 35 mm (the VMC lags a 0.5 Hz squat by design: 28 mm predicted) | 35 mm | 28.1 |

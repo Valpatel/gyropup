@@ -116,7 +116,7 @@
     },
     {
      "id": "S1",
-     "what": "load plate 160-210 N steady (18.75 kg carried: about 184 N)",
+     "what": "load plate within 25 N of the carried weight, steady (at 18.75 kg: 184 N)",
      "ok": null,
      "value": "not measured",
      "limit": null

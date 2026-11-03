@@ -2,8 +2,8 @@
  "meta": {
   "backend": "sim",
   "test": "jump",
-  "started": "2026-11-02T19:43:17",
-  "commit": "537aea7",
+  "started": "2026-11-02T20:06:02",
+  "commit": "903f80c",
   "half_mass_kg": 18.75,
   "rate_hz": 500.0,
   "latency_ticks": 1,
@@ -184,5 +184,5 @@
   "settle_s": 0.20399999999999996
  },
  "prediction_from": "exports/rig/predictions.json (18.75 kg, the rig's controller)",
- "plot": "exports/rig/runs/2026-11-02-194319-sim-jump-prediction.png"
+ "plot": "exports/rig/runs/2026-11-02-200603-sim-jump-prediction.png"
 }
