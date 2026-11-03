@@ -1,6 +1,23 @@
-<p align="center"><img src="docs/hero.jpg" alt="Gyropup, built leg first: one five-bar leg v2 on two RS-04s beside the foam-ball turret on its bench stand" width="100%"></p>
+<div align="center">
+
+<img src="docs/img/hero/gyropup.svg" alt="Gyropup drawn from its real CAD: the body is traced, both wheel-legs slide in, the foam-ball turret drops on top, and the robot balances" width="100%">
 
 # Gyropup
+
+**A research robot that balances on two wheel-legs, with a foam-ball turret, designed and simulated in the open.**
+
+[![Licence: MIT](https://img.shields.io/badge/licence-MIT-287d8d)](LICENSE)
+[![Website](https://img.shields.io/badge/site-gyropup.com-bd3a12)](https://gyropup.com)
+[![Status: CAD and simulation](https://img.shields.io/badge/status-CAD_and_simulation-526863)](#status)
+[![Program tracker #31](https://img.shields.io/badge/tracker-%2331-173d3c)](https://github.com/Valpatel/gyropup/issues/31)
+
+[Website & playground](https://gyropup.com) · [Documentation map](docs/README.md) · [Prototype warning](docs/prototype-safety.md) · [Contributing](CONTRIBUTING.md)
+
+<sub>The banner is drawn from the robot's own STEP files (<code>exports/asm_*.step</code>) with hidden lines removed, by the <a href="https://github.com/mvalancy/mvalancy/tree/main/tools/hero">README banner generator</a>.</sub>
+
+</div>
+
+## What it is
 
 A research project exploring a self-balancing wheel-legged robot and a foam-ball turret, with a live browser playground and an open engineering notebook.
 
@@ -12,9 +29,9 @@ playground does not control physical hardware.
 with children and families is an aspiration, not a qualified use of today's designs. Read the
 [prototype warning](docs/prototype-safety.md).
 
-Start with the [documentation map](docs/README.md), [live program tracker #31](https://github.com/Valpatel/gyropup/issues/31),
-or [contributor orientation](CONTRIBUTING.md). Agents reading the public website can use
-[/llms.txt](https://gyropup.com/llms.txt) and the [public reading guide](docs/agent-guide.md).
+<p align="center"><img src="docs/hero.jpg" alt="Gyropup, built leg first: one five-bar leg v2 on two RS-04s beside the foam-ball turret on its bench stand" width="100%"></p>
+
+## Build order
 
 **One design, built in this order** (decisions D36-D38 in [docs/decisions.yaml](docs/decisions.yaml)):
 
@@ -24,6 +41,8 @@ or [contributor orientation](CONTRIBUTING.md). Agents reading the public website
 3. **The body** around two legs: the Orin compute, the battery and the electronics inside one printed shell, the
    lights on the hips beside the turret, the eyes on the face.
 
+## Status
+
 **Status:** CAD and simulation; no assembled robot yet and no print release. Current interactive pages share the
 v2 robot and detailed turret. Historical reports and recordings retain their own geometry, loads and limitations;
 they do not establish physical fit, safe operation or qualification of the current design.
@@ -31,10 +50,18 @@ they do not establish physical fit, safe operation or qualification of the curre
 **Weight ceiling:** 100 lb (45.36 kg) for the complete robot. The current CAD estimate is 37.5 kg (83 lb);
 [the weight budget](docs/design-weight-budget.md) distinguishes that estimate and existing tested loads from the new ceiling.
 
+## Start here
+
+Start with the [documentation map](docs/README.md), [live program tracker #31](https://github.com/Valpatel/gyropup/issues/31),
+or [contributor orientation](CONTRIBUTING.md). Agents reading the public website can use
+[/llms.txt](https://gyropup.com/llms.txt) and the [public reading guide](docs/agent-guide.md).
+
 **Website & playground:** [gyropup.com](https://gyropup.com). The same landing page,
 simulator and engineering portal run locally: `nvm use && npm ci && npm run dev`.
 Reviewed changes on `main` publish automatically through Cloudflare Pages.
 [Development, deployment and browser checks](docs/site-deployment.md).
+
+## Repository map
 
 | Folder | What is in it |
 |---|---|
@@ -48,6 +75,8 @@ Reviewed changes on `main` publish automatically through Cloudflare Pages.
 
 The tooling that compared many designs and parts lives on in [cad-agent](https://github.com/Valpatel/cad-agent) as a
 generic comparison framework; the version that was here is at the git tag `explorer-snapshot-2026-10-26`.
+
+## Licence
 
 **Licence:** [MIT](LICENSE), covering the code, CAD sources, generated models, docs and data in this repository.
 Bought parts' vendor CAD (STEP files from McMaster-Carr, RobStride, Seeed and others) is not in the repository and is

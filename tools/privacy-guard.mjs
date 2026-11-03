@@ -23,6 +23,7 @@ export const PUBLIC_REPOS = {
   'valpatel/cad-agent': 'the public CAD toolkit',
   'mvalancy/moxie-robot-saver': 'the public Moxie simulator the character and HUD code adapt',
   'mvalancy/j501-agx-orin': 'the public J501 enclosure project',
+  'mvalancy/mvalancy': "the public profile repository whose tools/hero draws the README banner",
 };
 const OWNERS = ['valpatel', 'mvalancy', 'graphdone'];
 
