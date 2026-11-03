@@ -103,6 +103,14 @@ def check(clash=False):
     lengths = [x['length_mm'] for x in rows]
     need = 10 * CONDUCTOR_OD['wheel']
     tightest = min(x['min_bend_radius_mm'] for x in rows)
+    # Where the tightest bend is, from the route itself: next to the last three waypoints (the turn off the rear upper
+    # link into the body) at how many stances, and how far apart those waypoints are.
+    n_end, gaps = 0, []
+    for x in rows:
+        wp, at = x['_r']['waypoints'], np.asarray(x['_r']['tightest_at'])
+        n_end += int(np.argmin(np.linalg.norm(wp - at, axis=1))) >= len(wp) - 3
+        gaps.append(np.linalg.norm(np.diff(wp[-3:], axis=0), axis=1))
+    gaps = np.array(gaps)
     res = {
         'leg': 'five-bar (leg v2, cad/fivebar.py): l1 {l1:.0f} mm, l2 {l2:.0f} mm, motors {D:.0f} mm apart'.format(**fb.P),
         'wheel': {
@@ -114,10 +122,12 @@ def check(clash=False):
             'length_mm': {'min': min(lengths), 'max': max(lengths), 'slack_needed_mm': round(max(lengths) - min(lengths), 1),
                           'note': 'the spread over the stances: what the knee wrap and the loop at the hip must give'},
             'bend_radius': {'min_mm': tightest, 'needed_mm': need, 'ok': tightest >= need,
-                            'note': 'the drawn spline\'s tightest bend, against 10 x the 18 AWG conductor (rule 3, flexing). At every '
-                                    'stance it is where the route turns off the rear upper link\'s edge into the body '
-                                    '(fivebar.cable()\'s last three waypoints, 5 mm then 35 mm apart): the drawn route '
-                                    'needs a wider turn there before it is a harness drawing'},
+                            'note': 'the drawn spline\'s tightest bend, against 10 x the 18 AWG conductor (rule 3, flexing). At '
+                                    f'{n_end} of {len(rows)} stances it is next to fivebar.cable()\'s last three waypoints, '
+                                    'where the route turns off the rear upper link\'s edge into the body (the waypoints are '
+                                    f'{gaps[:, 0].min():.1f} to {gaps[:, 0].max():.1f} mm, then {gaps[:, 1].min():.1f} to '
+                                    f'{gaps[:, 1].max():.1f} mm apart): the drawn route needs a wider turn there before it '
+                                    'is a harness drawing'},
             'lead_length': {'botwheel_lead_mm': 300, 'route_max_mm': max(lengths),
                             'note': 'the BotWheel\'s own lead is 300 mm; the route ends where it enters the body, so the '
                                     'run on to the motor driver inside is extra'},
@@ -161,7 +171,7 @@ def _plot(rows, path):
         ax.plot(s[:, 0], s[:, 2], color='#00a0c0', lw=2, label='wheel harness')
         ax.scatter(*x['tightest_at_mm'][0::2], color='#ff2a6d', zorder=5, s=22, label='tightest bend')
         ax.set_aspect('equal')
-        ax.set_title(f"height {x['height_mm']:.0f} mm: {x['length_mm']:.0f} mm, bend r {x['min_bend_radius_mm']:.0f} mm", fontsize=10)
+        ax.set_title(f"height {x['height_mm']:.0f} mm: {x['length_mm']:.0f} mm, bend r {x['min_bend_radius_mm']:.1f} mm", fontsize=10)
         ax.grid(alpha=0.3)
         ax.set_xlim(-260, 260)
         ax.set_ylim(-500, 120)

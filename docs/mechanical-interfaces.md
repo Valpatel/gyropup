@@ -89,7 +89,7 @@ Cables, rev 0.2 (the serial leg's `cad/cables.py`, since replaced; see the note 
 > **Five-bar leg (leg v2), 2026-11-02.** `tools/leg_cables.py` checks the wheel harness along the five-bar's drawn route
 > (the spline `fivebar.cable` sweeps: along the wheel link, round the rear knee, along the rear upper link into the body) and writes
 > `exports/leg/cables.json` and `exports/leg/cables.png`. The serial leg's `cad/cables.py` and its pictures are history
-> (its `exports/cables.*` were removed with this change; git keeps them). The route is 555 to 613 mm long over the stances (59 mm of slack for the
+> (its old `exports/cables.*` pictures are no longer in `exports/`; git history keeps them, and running `cad/cables.py` again writes them back). The route is 555 to 613 mm long over the stances (59 mm of slack for the
 > knee wrap and the hip loop). Its tightest bend is 7.5 mm, where it turns off the rear upper link into the body, against
 > the 20 mm rule 3 asks for. The swept Ø9 cable also runs 107 to 124 mm³ into the rear upper link at every stance
 > (`--clash`). Both are open on the drawn route, which is still a route to try on the rig.
