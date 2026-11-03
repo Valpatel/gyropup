@@ -1,6 +1,6 @@
 {
   "schema": 1,
-  "date": "2026-11-02",
+  "date": "2026-11-03",
   "command": "python tools/part-media-generation.py --render --check",
   "generator_sha256": "6c19b49a02b756d6f58d2b78062c30b38d3197239b2af635c3df2485ca6abeb8",
   "renderer": {
@@ -105,67 +105,67 @@
     },
     "body/bay_skid": {
       "geometry": "exports/body/bay_skid.stl",
-      "geometry_sha256": "12c2f659c2d6735f62875fe5f179256f2db866f4b416c342bf6cfcff342579f9",
+      "geometry_sha256": "bec7d243517751f734a74f0131217ecb51105e1ffc958c32cd3ac4f12b223913",
       "image": "exports/thumbs/body--bay_skid.png",
-      "image_sha256": "436c59aec7395c5138a7246923dce892ab0e8152f5348f329c3fa4df02e70b28"
+      "image_sha256": "c973cceb0d7a1fc226cb764a21971d025a7dec8f1aba4eefb951d4fd7b41adcb"
     },
     "body/cheek": {
       "geometry": "exports/body/sendcutsend/cheek_5052-H32_0.187in_x2.step",
-      "geometry_sha256": "73cf01270a32a11e5bb3c46464ff763237907b8f0d427ab663a8b3d95a9e5fe2",
+      "geometry_sha256": "a449496eab2127cfae01ab4db43dc9440f3b243ac30aa40e0697a0845ed6c7c2",
       "image": "exports/thumbs/body--cheek.png",
       "image_sha256": "fa57b242d856533cf58f3d2a956703384a5d8369db305c884ccfd670ea323255"
     },
     "body/floor_tray": {
       "geometry": "exports/body/sendcutsend/floor_tray_5052-H32_0.125in_x1.step",
-      "geometry_sha256": "8c945c0b7f8d70d35161b8ab9c426c723d16868262b4c2f39ea3db42eb5158d6",
+      "geometry_sha256": "b6aa5ae994687a6d43cd8a37632c13de5cea63bdecf6d0a5eb45db2d5af6dcf8",
       "image": "exports/thumbs/body--floor_tray.png",
       "image_sha256": "4a05cbc5ab4ae745e0ead45b65e0234e84110eeab422281f501d55f6007e8c51"
     },
     "body/belly_plate": {
       "geometry": "exports/body/sendcutsend/belly_plate_6061-T6_0.100in_x1.step",
-      "geometry_sha256": "2af3b469e66fd083802420616e860e9f4c128dd4ddf4e608d2b987b7651b5dbd",
+      "geometry_sha256": "f5f5b5f03dd9e6a2f18f76cb2f13569778088b29584b6e5cf10c60e2af5986b2",
       "image": "exports/thumbs/body--belly_plate.png",
       "image_sha256": "74db8771e5034161419248fa65885d8410fc5915f4b555de90f1282c16998656"
     },
     "body/deck": {
       "geometry": "exports/body/sendcutsend/deck_5052-H32_0.100in_x1.step",
-      "geometry_sha256": "af6723fcdffe488c7bb9acbdc74c65e4205400176975ef773aa53701d579f646",
+      "geometry_sha256": "ba668e30cef5506e4357753fd1436379ab8e19a1f47c3d8d88359b0d66ca50a8",
       "image": "exports/thumbs/body--deck.png",
       "image_sha256": "569851ef144c87a9afe8a8d18efdda7eda8f9a5971c754fb6b1220fb88d713f4"
     },
     "body/compute_pallet": {
       "geometry": "exports/body/sendcutsend/compute_pallet_6061-T6_0.125in_x1.step",
-      "geometry_sha256": "668d7b7b483c289845797c19880990e9920b55ae4699ddc589461272968068ad",
+      "geometry_sha256": "6a97a7c64d58c0a1cf4c314e548c2181155522aad486b8bf669d2346f249935f",
       "image": "exports/thumbs/body--compute_pallet.png",
       "image_sha256": "d38d931a34fcb4dc8258a2fbc1670e1505fab7f0b17869932ed0f4c8337f50d8"
     },
     "body/turret_plate": {
       "geometry": "exports/body/sendcutsend/turret_plate_6061-T6_0.125in_x1.step",
-      "geometry_sha256": "1516d23c858f0114ace2a96f26446d2cd6088dfea345740bfd1d43ef8b13a049",
+      "geometry_sha256": "bdea93875338959f426c2901705b4f8ab3cde9e08e4282a5468ed3cd296f651f",
       "image": "exports/thumbs/body--turret_plate.png",
       "image_sha256": "815f5a5630d4d519061ef4bf86d44a74cb240b5df0a246a86b2115faad9fd757"
     },
     "body/power_plate": {
       "geometry": "exports/body/sendcutsend/power_plate_5052-H32_0.100in_x1.step",
-      "geometry_sha256": "33f884326386ea4ec1ab7f41b4099cc78ca587ce1f9a38ac7dd05d2c66ec25ef",
+      "geometry_sha256": "68d6cf079a77e656fcdd10bc0a088905cca9a13c9784dff9b640aa98034190d9",
       "image": "exports/thumbs/body--power_plate.png",
       "image_sha256": "68dd6653d5a0f2c70685b94d1bd2611f8f3bdec2d9fce3b87fbab8fd7c3b3dd5"
     },
     "body/bus_bar": {
       "geometry": "exports/body/sendcutsend/bus_bar_C110_0.125in_x2.step",
-      "geometry_sha256": "09aa2f488c7b2c3bec9f8588c51cd15dbb78d92160bdcd088fe4458aaf655235",
+      "geometry_sha256": "03492d7840f2c0c98d9b8104acba4dc0b22b7fb56738cb2822688efc76acf450",
       "image": "exports/thumbs/body--bus_bar.png",
       "image_sha256": "68abf889615eb28a5c33176167d3b5b3cb57f405d08589dd0fe313e6ead011b4"
     },
     "body/bay_floor": {
       "geometry": "exports/body/sendcutsend/bay_floor_5052-H32_0.063in_x1.step",
-      "geometry_sha256": "6042248d9d98f28d61a692c8f0f6176658f398b428edd391a72435c871f4a020",
+      "geometry_sha256": "056ce82a5b4e6918e595df052b64a3b64646f0baad6d577df6735368c8975dc2",
       "image": "exports/thumbs/body--bay_floor.png",
       "image_sha256": "aa96d0148970a73baf7250a3f62ae45ab7373a303a8736b1d79ba24bc28d10d0"
     },
     "body/bay_side": {
       "geometry": "exports/body/sendcutsend/bay_side_5052-H32_0.063in_x2.step",
-      "geometry_sha256": "b890a0524cfabb61896863b0fb1e91ef800bdb5fea26c39ee53c3e983b833c31",
+      "geometry_sha256": "1abd8ba38e1c571c1c9cd92f3ea081ec70c6722ef489a227b04514cb82f1b6f3",
       "image": "exports/thumbs/body--bay_side.png",
       "image_sha256": "f3c7177850984037b84127eaebf2968e775cac27f1c52f92e459fc0b284c6d69"
     },
