@@ -14439,7 +14439,7 @@
         "cad/build_leg.py": "a14fdb153b6cc5734cc42c6efc8090ef3bf5e36e3d2e017e620ad66957ed8097",
         "cad/build_rig.py": "c286adb59bae681147f84a38b97e8caaa73ad8eb8f55a3748ff0b738e85a3956",
         "cad/build_turret.py": "0c363fd32f13595a0c2ec85a013513a0a40b8c393d42f99131ae2cc75e9853e6",
-        "cad/build_turret_box.py": "c2bd9e5cf04c62bfcceea3c7cfd110d6e3e6c7f753e2577b23a1e293583944c7",
+        "cad/build_turret_box.py": "3735b2146d110d12579f37c3955be68ba347c2da6b17b3643bfe8cb803a940ef",
         "cad/cables.py": "3f55bc5744775773a2deb211ba2540a56a256075ff08a1fa0e05cbca89e40785",
         "cad/check_base_board_interfaces.py": "db511119bbcfac161ed10af4204dd5e219001d36572686014406fb35c13d569e",
         "cad/check_base_board_print.py": "13374e961abacca1ba5e79508dca654e7d4919eb81e773046a84292645ae2bdb",
@@ -14464,9 +14464,10 @@
         "cad/studies.py": "35149401f3a753024568eba0b34765419ed535d42c5bf19a11544d13cad8f823",
         "cad/test_body.py": "5875a19bc2b3591721dc466d2b598b3b7cdf5dbfba22cdcde1c2017bcae66b27",
         "cad/test_leg_loads.py": "0ed04011ea672aa8bc387af272ddfa1783ec4fa1f379fde1e3dfbd9201867b51",
-        "cad/test_turret_snaps.py": "4a6bc44f1d70576ca63def1e8d128fd5366d279ea5dd4eebef441b0316b82337",
+        "cad/test_turret_gate_sources.py": "6e68480774e65bfd5ac18701a7eefad7c301fde48668b8caa579452ec9ddfaa9",
+        "cad/test_turret_snaps.py": "e10b6320b1936a90344730bd15bc6e21836ba2f95405b0467d56a6dfee705c7e",
         "cad/test_turret_solids.py": "61eee61b68461574f75c316fa16d4d566ab097f862fadd6ee2b0b175655c0d48",
-        "cad/turret.py": "9c2cb35633f45fa74a7c696339675eb91375adbd874753247237eef6313e809b",
+        "cad/turret.py": "11311d5af6c991f547a275f2bbf009710a3fe24b04f797a4669d3dc7c2fc0f42",
         "cad/turret_assembly.py": "480799c724c799954a520c1ecd9c0b4d383cce752efdac4f3c3f6a6da7aaf2e3",
         "cad/turret_base_board.py": "153e49871e0a3359478cd34a50daf7e44f4497970097475c829dbbcdacda90ba",
         "cad/turret_boards.py": "c7a115d2fe3cefddf46b0dd521e21076e1f7721235df3e7bd22fadb6e165707b",
@@ -14474,13 +14475,13 @@
         "cad/turret_carrier_interfaces.py": "9d6dd70ef106195f0f70783458b5c93a30c257af623f1d3be28caec85212d743",
         "cad/turret_carrier_support.py": "ce4badb9b9314fc3a03ab187c5b2ba21b1a8a865c6c38a4637221071176110de",
         "cad/turret_dossier.py": "d9a08a49fa719534f2f1a14699f84057236eaf7a9be909e35f89ceacc87a15d9",
-        "cad/turret_gates.py": "55f0ad744d549e6221e438b901d274b0fbb1f1d2c0e7a694d7ab59cf909403b3",
+        "cad/turret_gates.py": "f8febeab83811036f52ca1a401da9b7a57765d07cadada651b576c82de84cb82",
         "cad/turret_lidar.py": "2101a2ca20558d8b231fd9004d864c7b385b5a9bd4cdb102249477c0384713e9",
         "cad/turret_motion.py": "36f2be781776126b7c63bd27103f4ff24644d76568d8f793a2e68b5aeab6e260",
         "cad/turret_mount.py": "f5ecdf09c9dc86c377072725bacde60f9a79277686b480132248a38e807c7fb9",
         "cad/turret_orders.py": "eaaaae1668a186b7438f0dd394d5b27e1bee7c0ef4901bc880f806f7d4e60480",
-        "cad/turret_print.py": "18560dedb2caaf70b4a34aa2257a5c6bfa15c777351dde77fc24559d201c78be",
-        "cad/turret_snaps.py": "c373eaa3d7d7fdb9f7653791445d33bfc7952d7afefbe70d1eb8604d9b2cd7e7",
+        "cad/turret_print.py": "ba22a6d5fdb80ae553af83fad41520d2585942e5f963ea26b9fe9c80febb9206",
+        "cad/turret_snaps.py": "258ab007c305a2c9f961cabfa44d5245cbe4aeb0e0a98988090533bf37487c72",
         "cad/turret_stand.py": "21f8300694982e68de8ef20e6d7e143a9ae8a356f836f47e50f1b2ab91b10126",
         "cad/turret_studies.py": "708f5ed6d385d924caaed802a04b724e03eda8872749a5454d46644ebfc19e11",
         "cad/wheel_fit.py": "57c75e2462fb6f3606b81e4baac284dcac9a7b67bb47183f425d8bb8f730febd",
@@ -34911,7 +34912,7 @@
         "volume_cm3": 1014.7
       },
       "files": {
-        "step": "e253cf965c25699c062493965bb034a8fc47d1f1e022e693a9e3458bf5af2785",
+        "step": "ee28c71a929bf6a165918eae12e929d6d036fc9d5e5d09bd608d8c9b9085cc43",
         "stl": "6a909a9a5e4688be534e9ddbe6459d71aa275d2f591c72a3ca430ec62ab2f402"
       }
     },
@@ -34929,7 +34930,7 @@
         "volume_cm3": 278.096
       },
       "files": {
-        "step": "eaf5c4f160a4d56a333c4c33d22481cc08682483547c30f485f0e99c176038b2",
+        "step": "6ba55aae7fc744db2ccd3a37c435d2ace9f71283605f3c73fec4dfcf18138566",
         "stl": "c59170b74cefde6b44714f604e8cf3e785cc468df2bea228f96e6906ffb46999"
       }
     },
@@ -34947,7 +34948,7 @@
         "volume_cm3": 162.045
       },
       "files": {
-        "step": "f37c928b3e6f0bb9cb4e9d64d4568c96d5b65e4d2af4ba570af63d91c95745a1",
+        "step": "fdb77fa906d7289231b4d0b86c114036a4d99146171ad32be47b294fbf6be4de",
         "stl": "1830ff4c1c9dc2314295d3d601b238c857c774abaf108c6619fdd9901b1da2cd"
       }
     }
