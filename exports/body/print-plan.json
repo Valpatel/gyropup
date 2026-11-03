@@ -214,17 +214,17 @@
    "qty": 4,
    "size_mm": [
     149,
-    24,
-    50
+    30,
+    68
    ],
    "fits": true,
    "placement": "straight",
-   "grams_each": 59,
-   "grams": 236,
-   "hours": 47.7,
-   "cost_usd": 9.91,
+   "grams_each": 63,
+   "grams": 253,
+   "hours": 51.2,
+   "cost_usd": 10.63,
    "infill": "2 mm walls, 40 % gyroid",
-   "how": "crush pad (#19): TPU 95A HF gyroid lattice, 50 mm free, 30 mm stroke, 600 N plateau, on 3M VHB tape (no screw: under the packs there is 1 mm); the robot sits on these"
+   "how": "crush pad (#19): TPU 95A HF gyroid lattice, 50 mm free, 30 mm stroke, 600 N plateau, on 3M VHB tape, its solid lip under the side plate's two low M3 x 10 (#26); the robot sits on these"
   }
  },
  "by_material": {
@@ -247,14 +247,14 @@
    "parts": 4
   },
   "tpu95-gyroid": {
-   "grams": 236,
-   "hours": 47.7,
-   "cost_usd": 9.91,
+   "grams": 253,
+   "hours": 51.2,
+   "cost_usd": 10.63,
    "parts": 4
   }
  },
  "too_big": [],
- "total_hours": 94.0,
- "total_grams": 1018,
+ "total_hours": 97.5,
+ "total_grams": 1035,
  "note": "body P0-P2: hours are rough (grams / density / a strength-holding rate)"
 }

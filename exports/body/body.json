@@ -462,7 +462,7 @@
  },
  "print": {
   "too_big": [],
-  "hours": 94.0,
+  "hours": 97.5,
   "parts": {
    "post": {
     "material": "pa6-cf",
@@ -673,17 +673,17 @@
     "qty": 4,
     "size_mm": [
      149,
-     24,
-     50
+     30,
+     68
     ],
     "fits": true,
     "placement": "straight",
-    "grams_each": 59,
-    "grams": 236,
-    "hours": 47.7,
-    "cost_usd": 9.91,
+    "grams_each": 63,
+    "grams": 253,
+    "hours": 51.2,
+    "cost_usd": 10.63,
     "infill": "2 mm walls, 40 % gyroid",
-    "how": "crush pad (#19): TPU 95A HF gyroid lattice, 50 mm free, 30 mm stroke, 600 N plateau, on 3M VHB tape (no screw: under the packs there is 1 mm); the robot sits on these"
+    "how": "crush pad (#19): TPU 95A HF gyroid lattice, 50 mm free, 30 mm stroke, 600 N plateau, on 3M VHB tape, its solid lip under the side plate's two low M3 x 10 (#26); the robot sits on these"
    }
   }
  },
@@ -725,10 +725,10 @@
    "bay_door_front": 65.5,
    "adapter_plate_rear": 31.4,
    "bay_door_rear": 65.5,
-   "bay_skid_1": 59.0,
-   "bay_skid_2": 59.0,
-   "bay_skid_3": 59.0,
-   "bay_skid_4": 59.0,
+   "bay_skid_1": 63.3,
+   "bay_skid_2": 63.3,
+   "bay_skid_3": 63.3,
+   "bay_skid_4": 63.3,
    "spacers": 0.0,
    "spacer_screws": 0.0,
    "frame_screws_left": 0.0,
@@ -755,7 +755,7 @@
    "d435_rear": 0.0,
    "eyes_board": 0.0
   },
-  "frame_total": 5253.6
+  "frame_total": 5270.8
  },
  "internal_clashes": [],
  "shell": {
@@ -844,7 +844,7 @@
   "deck_holes_note": "two \u00d85.5 holes for the plate's end screws: drilled by hand in the P1 deck (spot through the plate's PEM nuts with an M5 transfer punch, the plate held on the riser's four screws), cut in a Rev B deck"
  },
  "integrity": {
-  "joints": 71,
+  "joints": 75,
   "screws": 183,
   "joints_with_problems": [
    "belly_flange_left",
@@ -1920,22 +1920,22 @@
  "mass": {
   "P1": {
    "stage": "P1",
-   "total_kg": 34.74,
+   "total_kg": 34.94,
    "com_mm": [
     3.2,
     -1.1,
-    -77.4
+    -77.9
    ],
    "groups_kg": {
-    "legs": 22.546,
-    "frame": 4.846,
+    "legs": 22.674,
+    "frame": 4.91,
     "compute": 1.513,
     "power": 1.739,
     "deck": 0.83,
     "battery": 3.27
    },
-   "legs_kg": 22.55,
-   "body_and_head_kg": 12.2,
+   "legs_kg": 22.67,
+   "body_and_head_kg": 12.26,
    "budget": {
     "robot_kg": 37.0,
     "legs_kg_each": 10.85,
@@ -1946,7 +1946,7 @@
     "com_y_mm": 5.0,
     "basis": "D71 (37.0 kg as built, 37.5 kg design; it replaces D69's 35.0 / 35.5 kg); legs 2 x 10.85 kg (leg.json + D53 stops + the D69 wheel at its listed 3.53 kg + the clamp hardware), body and head 15.3 kg"
    },
-   "leg_extra": "leg.json 9943 g (published with the stops in)",
+   "leg_extra": "leg.json 10007 g (published with the stops in)",
    "levers": [
     {
      "key": "shell_2mm",
@@ -2132,23 +2132,23 @@
   },
   "P3": {
    "stage": "P3",
-   "total_kg": 38.56,
+   "total_kg": 38.75,
    "com_mm": [
     0.4,
     -1.0,
-    -39.7
+    -40.4
    ],
    "groups_kg": {
-    "legs": 22.546,
-    "frame": 4.98,
+    "legs": 22.674,
+    "frame": 5.044,
     "shell": 1.11,
     "compute": 1.513,
     "power": 1.739,
     "deck": 3.403,
     "battery": 3.27
    },
-   "legs_kg": 22.55,
-   "body_and_head_kg": 16.02,
+   "legs_kg": 22.67,
+   "body_and_head_kg": 16.08,
    "budget": {
     "robot_kg": 37.0,
     "legs_kg_each": 10.85,
@@ -2159,7 +2159,7 @@
     "com_y_mm": 5.0,
     "basis": "D71 (37.0 kg as built, 37.5 kg design; it replaces D69's 35.0 / 35.5 kg); legs 2 x 10.85 kg (leg.json + D53 stops + the D69 wheel at its listed 3.53 kg + the clamp hardware), body and head 15.3 kg"
    },
-   "leg_extra": "leg.json 9943 g (published with the stops in)",
+   "leg_extra": "leg.json 10007 g (published with the stops in)",
    "levers": [
     {
      "key": "shell_2mm",
@@ -2344,18 +2344,18 @@
    ],
    "gate": {
     "ceiling_kg": 37.0,
-    "gap_kg": 1.56,
+    "gap_kg": 1.75,
     "open_scheduled_g": -500,
-    "with_scheduled_levers_kg": 38.06,
-    "body_and_head_with_levers_kg": 15.52,
-    "leg_each_kg": 11.275,
+    "with_scheduled_levers_kg": 38.25,
+    "body_and_head_with_levers_kg": 15.58,
+    "leg_each_kg": 11.335,
     "pass": false,
     "on_call_next": [
      "cheeks_rev_b",
      "alu_standoffs",
      "cooler_34mm"
     ],
-    "margin_kg": -1.06,
+    "margin_kg": -1.25,
     "on_call_open_g": -2301,
     "rule": "the P3 ledger with every scheduled lever taken (the open ones at the plan's grams) under the 37.0 kg ceiling, each leg under 10.85 kg and the body and head under 15.3 kg (D71); over it, the on-call levers go in order before the next order, each with the user's or the coordinator's word"
    }
