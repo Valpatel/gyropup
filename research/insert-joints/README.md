@@ -21,6 +21,24 @@ python3 research/insert-joints/test_inventory.py       # the checks, kernel-free
 python3 research/insert-joints/inventory.py --cad-agent ../cad-agent/src   # optional: the same sums through cadagent
 ```
 
+## Phase 2: the joints through cad-agent
+
+`phase2.py` runs `joints.json` through cad-agent v0.18.2's insert and limiter checks and sets each result beside this
+inventory's figure. The output is [phase2.md](phase2.md) and `phase2.json`, with a tolerance for each check and a
+reason for each disagreement. Of 271 comparisons on 41 joints, 196 agree. The main differences:
+
+- The toolkit wants every pilot 0.2-0.3 mm over the maker's hole.
+- The PETG pull-out figures here are 1.19-1.41 x its band.
+- The TM riser's pull-out margin falls from 2.34 to 1.78.
+- The wheel bolts' 1.8 N m is over its 1.37 N m.
+- It caps 14 joints at 0.14-0.44 N m, where a printed part is clamped on the insert's end.
+
+```sh
+python3 research/insert-joints/phase2.py --cad-agent PATH   # regenerate (a cad-agent checkout at v0.18.2)
+python3 research/insert-joints/phase2.py --check            # exit 1 when stale against joints.json or the generator
+python3 research/insert-joints/test_phase2.py               # the checks, toolkit-free (CI: the mechanism suite)
+```
+
 ## What it covers
 
 Every joint where a screw goes into a heat-set insert, and every printed part that metal clamps. That is the legs,
