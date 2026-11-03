@@ -9,7 +9,7 @@ html[data-prototype-notice-open=true]{overflow:hidden}
 .prototype-notice-footer [hidden]{display:none!important}
 /* A full-screen stage keeps its bottom controls; its header reopens the complete notice. */
 body[data-prototype-fullscreen=true][data-prototype-enhanced=true]>.prototype-notice-footer{display:none}
-.prototype-notice-dialog{width:min(660px,calc(100vw - 24px));max-width:none;max-height:calc(100vh - 24px);max-height:calc(100dvh - 24px);padding:0;margin:auto;border:2px solid var(--gp-line-yellow);border-radius:22px;background:var(--gp-page);box-shadow:0 28px 100px rgb(var(--gp-shadow) / 0.667),0 0 0 6px #ffc34218;overflow:hidden}
+.prototype-notice-dialog{width:min(660px,calc(100vw - 24px));max-width:none;max-height:calc(100vh - 24px);max-height:calc(100dvh - 24px);padding:0;margin:auto;border:2px solid #f5b632;border-radius:22px;background:var(--gp-page);box-shadow:0 28px 100px rgb(var(--gp-shadow) / 0.667),0 0 0 6px #ffc34218;overflow:hidden}
 .prototype-notice-dialog[open]{display:flex;flex-direction:column}
 .prototype-notice-dialog::backdrop{background:#07171fe8;backdrop-filter:blur(7px)}
 .prototype-notice-heading{position:relative;display:flex;align-items:center;gap:20px;padding:30px 28px 24px;flex:none;background:radial-gradient(ellipse at 0 100%,#294650 0,transparent 70%),#132a34;color:#fff}

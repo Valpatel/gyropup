@@ -1,6 +1,6 @@
 /* The reel is a player; navigation stays in the section's simulator link. */
 .play-section{grid-template-columns:minmax(0,.8fr) minmax(0,1.2fr);gap:40px;background:linear-gradient(145deg,var(--gp-soft),var(--gp-soft-2))}
-.highlight-card{min-width:0;margin:0;overflow:hidden;border:1px solid var(--gp-text-2);border-radius:18px;background:linear-gradient(145deg,#213e49,#132d37);color:#fffaf2;box-shadow:inset 0 1px 0 rgb(var(--gp-hi) / 0.149),0 18px 34px rgb(var(--gp-shadow) / 0.125),0 3px 7px rgb(var(--gp-shadow) / 0.082)}
+.highlight-card{min-width:0;margin:0;overflow:hidden;border:1px solid #46626a;border-radius:18px;background:linear-gradient(145deg,#213e49,#132d37);color:#fffaf2;box-shadow:inset 0 1px 0 #ffffff26,0 18px 34px #17343c20,0 3px 7px #17343c15}
 .highlight-heading{display:flex;align-items:center;justify-content:space-between;gap:12px;padding:17px 20px;font-size:12px;font-weight:650;line-height:1.5}
 .highlight-length{flex:none;color:#c0d8d9;font:10px/1.5 'JetBrains Mono',monospace}
 .highlight-screen{position:relative;width:100%;aspect-ratio:16/9;background:var(--gp-sky-a);overflow:hidden}
@@ -9,15 +9,15 @@
 .highlight-screen video{opacity:0}
 .highlight-card[data-ready="true"] .highlight-screen video{opacity:1}
 .highlight-card[data-ready="true"] .highlight-poster{visibility:hidden}
-.highlight-progress{height:3px;background:rgb(var(--gp-card-rgb) / 0.082)}
+.highlight-progress{height:3px;background:#ffffff15}
 .highlight-progress span{display:block;width:0;height:100%;background:#8dd6c9}
 .highlight-controls{display:flex;align-items:center;gap:9px;padding:14px 18px 0}
 .highlight-controls[hidden],.highlight-controls button[hidden]{display:none}
-.highlight-controls button{display:inline-flex;align-items:center;justify-content:center;gap:8px;min-width:44px;min-height:44px;padding:10px 14px;border:1px solid var(--gp-note);border-radius:100px;font:650 12px/1.2 var(--font);cursor:pointer;transition:background .15s,border-color .15s;color:#fffaf2;background:rgb(var(--gp-card-rgb) / 0.031)}
-.highlight-controls .highlight-toggle{min-width:98px;background:var(--gp-mint);color:var(--gp-ink-teal);border-color:var(--gp-card-2);box-shadow:inset 0 1px 0 rgb(var(--gp-hi) / 0.6),0 2px 5px rgb(var(--gp-shadow) / 0.2)}
-.highlight-controls .highlight-toggle:hover{background:var(--gp-soft)}
-.highlight-controls .highlight-restart:hover:enabled{background:rgb(var(--gp-card-rgb) / 0.086);border-color:var(--gp-line-3)}
-.highlight-controls button:focus-visible{outline:3px solid var(--gp-line-yellow);outline-offset:3px}
+.highlight-controls button{display:inline-flex;align-items:center;justify-content:center;gap:8px;min-width:44px;min-height:44px;padding:10px 14px;border:1px solid #67828a;border-radius:100px;font:650 12px/1.2 var(--font);cursor:pointer;transition:background .15s,border-color .15s;color:#fffaf2;background:#ffffff08}
+.highlight-controls .highlight-toggle{min-width:98px;background:#d0eee3;color:#193e3e;border-color:#e4fff4;box-shadow:inset 0 1px 0 #fff9,0 2px 5px #071e3433}
+.highlight-controls .highlight-toggle:hover{background:#e3fff3}
+.highlight-controls .highlight-restart:hover:enabled{background:#ffffff16;border-color:#a5c4c8}
+.highlight-controls button:focus-visible{outline:3px solid #f4c269;outline-offset:3px}
 .highlight-controls button:disabled{opacity:.48;cursor:default}
 .highlight-toggle-icon{width:12px;font-size:12px;text-align:center}
 .highlight-restart>span:first-child{font-size:22px;line-height:18px;font-weight:400}
@@ -28,7 +28,7 @@
 .highlight-caption .highlight-status{color:#b7cdd1;font-size:11px}
 .highlight-footage{display:inline-flex;align-items:center;min-height:44px;color:#d0eee3;font-size:12px;text-underline-offset:4px}
 .highlight-footage:hover{color:#fffaf2}
-.highlight-footage:focus-visible{outline:3px solid var(--gp-line-yellow);outline-offset:3px}
+.highlight-footage:focus-visible{outline:3px solid #f4c269;outline-offset:3px}
 .highlight-card[data-state="error"] .highlight-status{color:#ffd49c}
 .highlight-noscript{padding:0 20px 18px;margin:0;font-size:12px;line-height:1.7}
 @media(max-width:1050px){.play-section{gap:28px}.highlight-heading{padding:15px;flex-wrap:wrap;gap:3px 12px}.highlight-controls{padding:12px 13px 0;gap:7px}.highlight-caption{padding:12px 15px 16px}}
