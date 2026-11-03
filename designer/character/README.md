@@ -86,10 +86,13 @@ the live sidecar (`tools/tts_server.py` applies it to every line it is sent, `--
 
 - `match`: the written word or phrase (or a list of them). Case-insensitive, whole words only: `Gyropup's`,
   `Gyropup’s`, `Gyropups` and `Gyropups'` keep their ending (`gyro pup's`), while `Gyropupper`, `gyropup.com`, URLs
-  and e-mail addresses (the key's `protect` pattern) are left alone. The longest match wins.
+  and e-mail addresses and domain names with a common top-level domain, path and query included (the key's `protect`
+  pattern), are left alone. A word is bounded by anything but an ASCII or Latin letter, digit or underscore, so
+  `éGyropup` is left alone too, while `Gyropup.Want` (a missing space) is still changed. The longest match wins.
 - `say`: a plain respelling, sent as text to every engine. It is applied in one pass, so applying the key twice is
   the same as once (`gyro pup` stays `gyro pup`); the sidecar can safely re-apply it to text `talk.js` already did.
-- **Stress:** set by how `say` is split, which both Piper (espeak) and browser voices honour. A space makes separate
+- **Stress:** set by how `say` is split, measured with espeak (Piper's front end); browser voices get the same plain
+  text, which is the one form every engine accepts, but they have not been checked by ear. A space makes separate
   words, each stressed: `gyro pup` is dʒˈaɪɹoʊ pˈʌp where `Gyropup` was dʒˈaɪɹəpˌʌp. A hyphen joins syllables into
   one word stressed on its first part: `sigh-an` is sˈaɪæn where `cyan` was saɪˈæn. Never capitals: espeak spells an
   all-caps word (`gyro PUP` is "gyro P U P"). Not SSML (Piper reads text, most browsers ignore or read the tags), and
@@ -98,8 +101,9 @@ the live sidecar (`tools/tts_server.py` applies it to every line it is sent, `--
 
 To add an entry: add it, check the stress with `python3 tools/pronunciation.py --show` (espeak's phonemes for each
 entry as written and as said; needs Piper), add an example to `examples` (both test suites run them), then
-`python3 tools/render-voice.py` re-renders exactly the lines it changes. Bump `version` only when the key's rules
-change (it is part of every clip's hash, so it re-renders the whole set).
+`python3 tools/render-voice.py` re-renders exactly the lines it changes. Any change to an entry or a matching rule
+that alters how a line is spoken already changes that line's hash (the spoken text is part of it). `version` is
+also part of every hash: bump it only to record the whole set again.
 
 ## Services and fallbacks
 

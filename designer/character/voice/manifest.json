@@ -13,8 +13,8 @@
  },
  "engine": "piper-tts 1.4.2",
  "encoding": "MP3 VBR V5 (libmp3lame -q:a 5), mono, 22.05 kHz",
- "total_bytes": 1740222,
- "seconds": 270.3,
+ "total_bytes": 1739959,
+ "seconds": 270.4,
  "lines": {
   "I promise to aim for the legs!": {
    "clip": "ea153f8728b8bf76.mp3",
@@ -66,11 +66,11 @@
    "sha256": "316089334669f594a6b61caa4647f1930197da5cb2feeb4987face85b26512c7"
   },
   "Bullseye!": {
-   "clip": "c9811a823a8e3b7d.mp3",
-   "spoken": "Bullseye!",
-   "seconds": 0.65,
-   "bytes": 5043,
-   "sha256": "c8e34bfe2804b3089286feaff3d25310e8a0b3240adb08ee28c0f2cc6eb02d32"
+   "clip": "5caa8ead644d51dd.mp3",
+   "spoken": "bulls-eye!",
+   "seconds": 0.69,
+   "bytes": 4780,
+   "sha256": "1b0a552a351bbe055107204fbdba3baf48dcc84dc9f38c53e7331f3013340cbb"
   },
   "Got it! Arf!": {
    "clip": "83d1c0800291a213.mp3",

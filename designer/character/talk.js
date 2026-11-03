@@ -65,8 +65,9 @@ async function fetchT(url, init = {}, ms = 1500) {
 
 // The recorded voice: designer/character/voice/manifest.json maps each fixed line to its clip. Fetched once, on the
 // first spoken line; without it every line is spoken live.
-let clipsLoading = null;
+let clipsLoading = null, clipsRetryAt = 0;
 function recorded() {
+  if (!clipsLoading && performance.now() < clipsRetryAt) return Promise.resolve(new Map());   // failed lately: speak live
   clipsLoading ??= (async () => {
     try {
       const url = new URL('./voice/manifest.json', import.meta.url);
@@ -77,7 +78,7 @@ function recorded() {
       return new Map(Object.entries(lines).map(([line, c]) => [line, new URL(c.clip, url).href]));   // clips are named by content
     } catch (e) {
       console.warn('[talk] no recorded voice, speaking live:', e.message);
-      clipsLoading = null;                                     // try again on the next line
+      clipsLoading = null; clipsRetryAt = performance.now() + 60000;   // try again in a minute, not before every line
       return new Map();
     }
   })();

@@ -16,6 +16,7 @@ gives the same text as once.
 from __future__ import annotations
 
 import json
+import os
 import re
 import sys
 from functools import lru_cache
@@ -23,7 +24,8 @@ from pathlib import Path
 
 KEY_PATH = Path(__file__).resolve().parent.parent / 'designer' / 'character' / 'pronunciation.json'
 SUFFIX = "'s|’s|s'|s’|s"       # keep in step with pronounce.js
-WORD = 'A-Za-z0-9_'
+WORD = r'A-Za-z0-9_\u00C0-\u024F'   # Latin letters too: never inside another word
+SPACE = r'\t\n\v\f\r \u00a0\u1680\u2000-\u200a\u2028\u2029\u202f\u205f\u3000\ufeff'   # JavaScript's \s, spelled out so both sides split text the same
 
 
 def load_key(path: Path | str = KEY_PATH) -> dict:
@@ -48,9 +50,9 @@ class Pronouncer:
             for m in ([e['match']] if isinstance(e['match'], str) else e['match']):
                 self.say[_norm(m)] = e['say']
         alts = sorted(self.say, key=len, reverse=True)
-        body = '|'.join(r'\s+'.join(re.escape(w) for w in m.split(' ')) for m in alts)
+        body = '|'.join(f'[{SPACE}]+'.join(re.escape(w) for w in m.split(' ')) for m in alts)
         self.words = re.compile(rf'(^|[^{WORD}])({body})({SUFFIX})?(?![{WORD}])', re.I | re.A) if alts else None
-        self.protect = re.compile(key['protect'], re.I | re.A) if key.get('protect') else None
+        self.protect = re.compile(key['protect'], re.I | re.A)   # its whitespace is spelled out (SPACE), as in JS if key.get('protect') else None
 
     def _words(self, text: str) -> str:
         if not self.words:
@@ -80,12 +82,12 @@ def pronounce(text: str) -> str:
 
 
 def _show() -> int:
-    try:
-        from piper import PiperVoice
-    except ImportError:
-        sys.exit('--show needs piper-tts (python3 -m pip install --user piper-tts), or run it with the python that has it')
-    voice = Path.home() / '.local' / 'share' / 'piper-voices' / 'en_US-hfc_female-medium.onnx'
-    v = PiperVoice.load(str(voice))
+    """espeak's phonemes for every entry, as written and as said, with the sidecar's voice (its flags and environment)."""
+    import tts_server                               # here, not at the top: tts_server imports this module
+    a = tts_server.settings([])
+    tts_server.need_piper(a)                        # or re-run this script under a python that has Piper
+    from piper import PiperVoice
+    v = PiperVoice.load(str(tts_server.find_voice(a.voice, [Path(d).expanduser() for d in a.voices_dir.split(os.pathsep) if d])))
     ph = lambda t: ' | '.join(''.join(s) for s in v.phonemize(t))   # noqa: E731
     for e in load_key()['entries']:
         for m in ([e['match']] if isinstance(e['match'], str) else e['match']):

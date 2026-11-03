@@ -10,7 +10,8 @@
 // changed; all entries are replaced in one pass, so applying the key twice gives the same text as once.
 
 const SUFFIX = "'s|’s|s'|s’|s";      // keep in step with tools/pronunciation.py
-const WORD = 'A-Za-z0-9_';
+const WORD = String.raw`A-Za-z0-9_\u00C0-\u024F`;   // Latin letters too: never inside another word
+const SPACE = String.raw`\t\n\v\f\r \u00a0\u1680\u2000-\u200a\u2028\u2029\u202f\u205f\u3000\ufeff`;   // \s, spelled out so tools/pronunciation.py splits text the same
 const norm = s => String(s).trim().toLowerCase().replace(/\s+/g, ' ');
 const escape = s => s.replace(/[.*+?^${}()|[\]\\]/g, '\\$&');
 
@@ -22,7 +23,7 @@ export function compileKey(key) {
     for (const m of [].concat(e.match)) say.set(norm(m), e.say);
   }
   const alts = [...say.keys()].sort((a, b) => b.length - a.length);
-  const body = alts.map(m => m.split(' ').map(escape).join('\\s+')).join('|');
+  const body = alts.map(m => m.split(' ').map(escape).join(`[${SPACE}]+`)).join('|');
   const words = alts.length ? new RegExp(`(^|[^${WORD}])(${body})(${SUFFIX})?(?![${WORD}])`, 'gi') : null;
   const protect = key?.protect ? new RegExp(key.protect, 'gi') : null;
   const apply = text => words ? text.replace(words, (_, pre, m, suf) => pre + say.get(norm(m)) + (suf ?? '')) : text;
