@@ -192,6 +192,9 @@ class _It:
         self.box = (b.xmin, b.xmax, b.ymin, b.ymax, b.zmin, b.zmax)
 
 
+PAD_WASHER = 0.8      # mm: 91116A120 (washer_m3_large, M3 oversized Ø9, 0.7-0.9 thick) under the lip screws' heads (#26)
+
+
 def bay_joints():
     """The battery bay (cad/body_battery.py, D65)."""
     import body_battery as bb
@@ -208,9 +211,9 @@ def bay_joints():
                        note='a side plate into the floor\'s flange nuts'))
         for n in sorted(set(v for (sd, _), v in ps.items() if sd == side)):
             xs = [x for (sd, x), v in ps.items() if sd == side and v == n]
-            J.append(Joint(f'bay_pad_{n}', 'M3', 10.0, 'socket', [_z(x, sy * (g['side_out'] + bb.LIP['t'] + 0.5), g['z_floor'] + 12.0) for x in xs],
+            J.append(Joint(f'bay_pad_{n}', 'M3', 10.0, 'socket', [_z(x, sy * (g['side_out'] + bb.LIP['t'] + PAD_WASHER), g['z_floor'] + 12.0) for x in xs],
                            (0.0, -sy, 0.0), (f'bay_skid_{n}', f'bay_side_{side}', 'bay_floor'), ('pem', 'bay_floor'), pem='S-M3-0',
-                           bom='turret_screw_m3x10', washer=0.8, washer_bom='washer_m3_large',
+                           bom='turret_screw_m3x10', washer=PAD_WASHER, washer_bom='washer_m3_large',
                            note='#26: a crush pad\'s lip held by the side plate\'s low screws into the floor\'s nuts (a Ø9 M3 washer on the TPU; ' + bb.LIP_SCREWS + ')'))
         J.append(Joint(f'bay_side_{side}_high', 'M3', 6.0, 'button', [_z(x, sy * g['side_out'], g['z_belly'] - bb.RAIL_H / 2) for x in bb.SIDE_SCREWS_X],
                        (0.0, -sy, 0.0), (f'bay_side_{side}',), ('insert', f'bay_rail_{side}'), bom='screw_m3x6',
