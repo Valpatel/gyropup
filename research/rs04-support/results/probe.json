@@ -72,9 +72,9 @@
         "cad/test_body.py": "5875a19bc2b3591721dc466d2b598b3b7cdf5dbfba22cdcde1c2017bcae66b27",
         "cad/test_leg_loads.py": "0ed04011ea672aa8bc387af272ddfa1783ec4fa1f379fde1e3dfbd9201867b51",
         "cad/test_turret_gate_sources.py": "6e68480774e65bfd5ac18701a7eefad7c301fde48668b8caa579452ec9ddfaa9",
-        "cad/test_turret_snaps.py": "e10b6320b1936a90344730bd15bc6e21836ba2f95405b0467d56a6dfee705c7e",
+        "cad/test_turret_snaps.py": "29740c97981f741013afd41888a4efe019d7a576c984ed20df30883ce2c54c17",
         "cad/test_turret_solids.py": "61eee61b68461574f75c316fa16d4d566ab097f862fadd6ee2b0b175655c0d48",
-        "cad/turret.py": "11311d5af6c991f547a275f2bbf009710a3fe24b04f797a4669d3dc7c2fc0f42",
+        "cad/turret.py": "5fd7e8dd555a8b3b5743017faf4200eae41fad1c0a7a7da696a18ef75bcdc068",
         "cad/turret_assembly.py": "480799c724c799954a520c1ecd9c0b4d383cce752efdac4f3c3f6a6da7aaf2e3",
         "cad/turret_base_board.py": "153e49871e0a3359478cd34a50daf7e44f4497970097475c829dbbcdacda90ba",
         "cad/turret_boards.py": "c7a115d2fe3cefddf46b0dd521e21076e1f7721235df3e7bd22fadb6e165707b",
@@ -87,8 +87,8 @@
         "cad/turret_motion.py": "36f2be781776126b7c63bd27103f4ff24644d76568d8f793a2e68b5aeab6e260",
         "cad/turret_mount.py": "f5ecdf09c9dc86c377072725bacde60f9a79277686b480132248a38e807c7fb9",
         "cad/turret_orders.py": "eaaaae1668a186b7438f0dd394d5b27e1bee7c0ef4901bc880f806f7d4e60480",
-        "cad/turret_print.py": "ba22a6d5fdb80ae553af83fad41520d2585942e5f963ea26b9fe9c80febb9206",
-        "cad/turret_snaps.py": "258ab007c305a2c9f961cabfa44d5245cbe4aeb0e0a98988090533bf37487c72",
+        "cad/turret_print.py": "7b1f0cfe1b2d47e047cea1aae664d43b3dc71f9f9d48703e523840055a44f755",
+        "cad/turret_snaps.py": "c6ab02cb5e0c34e89defc49f66297823442fe781307126b49c5f4f065045eccd",
         "cad/turret_stand.py": "21f8300694982e68de8ef20e6d7e143a9ae8a356f836f47e50f1b2ab91b10126",
         "cad/turret_studies.py": "708f5ed6d385d924caaed802a04b724e03eda8872749a5454d46644ebfc19e11",
         "cad/wheel_fit.py": "57c75e2462fb6f3606b81e4baac284dcac9a7b67bb47183f425d8bb8f730febd",
@@ -132,12 +132,12 @@
     "context": {
       "research/rs04-support/probe.py": "0345d86dda8b233e94e349e2ef5f81b2e5c637ba8d6598e844e1e726e7525210",
       "research/rs04-support/README.md": "ea422e1538cc137fb04d4b497df2527cbadf7155421062aac4979f1910a2af21",
-      "exports/leg/rs04-mounting-fit/checks.json": "5d542feb2ec087fdd3d15866d8c68479fad4d0cbfe07fa4b96a1516596fac31a"
+      "exports/leg/rs04-mounting-fit/checks.json": "9e821e01f8afa423d2d5c3c7613303876da1d222e7183e402985f3a9b192a106"
     },
     "toolkit_commit": "2ad426943ce2c7232875e105e50810849f9a3e5e"
   },
   "baseline": {
-    "receipt_sha256": "5d542feb2ec087fdd3d15866d8c68479fad4d0cbfe07fa4b96a1516596fac31a",
+    "receipt_sha256": "9e821e01f8afa423d2d5c3c7613303876da1d222e7183e402985f3a9b192a106",
     "engineering_pass": false,
     "counts": {
       "pass": 322,
@@ -393,7 +393,7 @@
   "candidate_rings": {
     "od118-id80-t2.032": {
       "shape_sha256": "07a5b402c29eec62ae73edd579b7405724a39aede9a878ae3984d012098d49ba",
-      "step_sha256": "609c2d9e38bd19c4a9933bf66352d00fd37b07888f84e9a078361fd6cffc9905",
+      "step_sha256": "cbebc871139b806f982057be320319784508d41b283b4484c10a7fa000c8c2a5",
       "bbox_mm": [
         -59.0,
         -59.0,
@@ -408,8 +408,8 @@
         "candidates": 21,
         "kernel_queries": 21,
         "cache_hits": 0,
-        "broad_phase_s": 22.3918,
-        "narrow_phase_s": 47.6891,
+        "broad_phase_s": 21.996,
+        "narrow_phase_s": 47.5211,
         "states": {
           "apart": 20,
           "touching": 1,
@@ -419,7 +419,7 @@
           "unchecked": 0
         }
       },
-      "elapsed_s": 96.08499795105308,
+      "elapsed_s": 95.10984778194688,
       "outside_d_mm": 118.0,
       "inside_d_mm": 80.0,
       "thickness_mm": 2.032,
@@ -1323,7 +1323,7 @@
     },
     "od118-id80-t3.175": {
       "shape_sha256": "7d78b323c68f58bfb1380fd902cabcede29a37b003010d9c5bcac060d17b2fe0",
-      "step_sha256": "6d1923ab558d341bbfdbb31c8a4d545f781b088738ebc1120fa1cac889f34811",
+      "step_sha256": "a58e3b4268145849d1d3e0a763376672647ea838093c603ab10f76a491a5f522",
       "bbox_mm": [
         -59.0,
         -59.0,
@@ -1338,8 +1338,8 @@
         "candidates": 21,
         "kernel_queries": 21,
         "cache_hits": 0,
-        "broad_phase_s": 22.1678,
-        "narrow_phase_s": 47.5269,
+        "broad_phase_s": 21.9878,
+        "narrow_phase_s": 47.4975,
         "states": {
           "apart": 20,
           "touching": 1,
@@ -1349,7 +1349,7 @@
           "unchecked": 0
         }
       },
-      "elapsed_s": 95.56989023298956,
+      "elapsed_s": 95.07366737700067,
       "outside_d_mm": 118.0,
       "inside_d_mm": 80.0,
       "thickness_mm": 3.175,
@@ -2253,7 +2253,7 @@
     },
     "od118-id94-t2.032": {
       "shape_sha256": "3f1781bb1b8616e13942ac5a781dcc6379382da38d95fce24b4cafaaa58aa032",
-      "step_sha256": "39b8bc7605a0901e9f3bf5dbd7579038b9f9167eae5d1136417d78110e060180",
+      "step_sha256": "0ebbb3e1bb76a01a0fee29132f917938be099f1bfb0cd6870e99dcb8250f9050",
       "bbox_mm": [
         -59.0,
         -59.0,
@@ -2268,8 +2268,8 @@
         "candidates": 21,
         "kernel_queries": 21,
         "cache_hits": 0,
-        "broad_phase_s": 22.2381,
-        "narrow_phase_s": 60.6103,
+        "broad_phase_s": 21.9708,
+        "narrow_phase_s": 60.6504,
         "states": {
           "apart": 20,
           "touching": 1,
@@ -2279,7 +2279,7 @@
           "unchecked": 0
         }
       },
-      "elapsed_s": 109.47535799001344,
+      "elapsed_s": 108.24679366801865,
       "outside_d_mm": 118.0,
       "inside_d_mm": 94.0,
       "thickness_mm": 2.032,
@@ -3183,7 +3183,7 @@
     },
     "od118-id94-t3.175": {
       "shape_sha256": "0f97e9477d87e23ef1c8907f2fb81f0ff059b9b53f181aeb13641ecd81e6ca63",
-      "step_sha256": "812dc35fa3160d2545da5c589db13ce5422803ce50e59f31d9301bec2db13137",
+      "step_sha256": "5b9e98450681f6dd780dd7cde3928783e91cecd76a7cc5e5d8633ac2fbc2e832",
       "bbox_mm": [
         -59.0,
         -59.0,
@@ -3198,8 +3198,8 @@
         "candidates": 21,
         "kernel_queries": 21,
         "cache_hits": 0,
-        "broad_phase_s": 22.3821,
-        "narrow_phase_s": 60.3622,
+        "broad_phase_s": 22.247,
+        "narrow_phase_s": 60.8184,
         "states": {
           "apart": 20,
           "touching": 1,
@@ -3209,7 +3209,7 @@
           "unchecked": 0
         }
       },
-      "elapsed_s": 108.8958396059461,
+      "elapsed_s": 108.93891558097675,
       "outside_d_mm": 118.0,
       "inside_d_mm": 94.0,
       "thickness_mm": 3.175,
@@ -4113,7 +4113,7 @@
     },
     "od120-id80-t2.032": {
       "shape_sha256": "f46646285f774639c871427aff74ee83bf78efdfc75de2ebdfedf296c30df495",
-      "step_sha256": "a6fb2a0a11450ac7af6dbfa2d00aa514ce6bbd9085c4743b77f8e8872c2f44d3",
+      "step_sha256": "f79b45797823e24f9c54658e3e192a418b5a84a5996171abce99e16873a26e69",
       "bbox_mm": [
         -60.0,
         -60.0,
@@ -4128,8 +4128,8 @@
         "candidates": 21,
         "kernel_queries": 21,
         "cache_hits": 0,
-        "broad_phase_s": 22.2032,
-        "narrow_phase_s": 47.5982,
+        "broad_phase_s": 22.1096,
+        "narrow_phase_s": 47.8103,
         "states": {
           "apart": 20,
           "touching": 1,
@@ -4139,7 +4139,7 @@
           "unchecked": 0
         }
       },
-      "elapsed_s": 95.69108098302968,
+      "elapsed_s": 95.72363300295547,
       "outside_d_mm": 120.0,
       "inside_d_mm": 80.0,
       "thickness_mm": 2.032,
@@ -5043,7 +5043,7 @@
     },
     "od120-id80-t3.175": {
       "shape_sha256": "6a14e3068349ef1640519544877c9a874698a2e6629c8e8061561cd9d8eb12c7",
-      "step_sha256": "c67cbd80e37ec4b940c9bf16c97c7641a70f9eaa0a6ed34b0676c226b1db6bfa",
+      "step_sha256": "08eafb6b03d6133f8bb271dbdebca8445984445dabe424dc352b64bc878a9abd",
       "bbox_mm": [
         -60.0,
         -60.0,
@@ -5058,8 +5058,8 @@
         "candidates": 21,
         "kernel_queries": 21,
         "cache_hits": 0,
-        "broad_phase_s": 22.0318,
-        "narrow_phase_s": 47.1014,
+        "broad_phase_s": 22.2588,
+        "narrow_phase_s": 48.1162,
         "states": {
           "apart": 20,
           "touching": 1,
@@ -5069,7 +5069,7 @@
           "unchecked": 0
         }
       },
-      "elapsed_s": 94.69008425413631,
+      "elapsed_s": 96.39630664419383,
       "outside_d_mm": 120.0,
       "inside_d_mm": 80.0,
       "thickness_mm": 3.175,
@@ -5973,7 +5973,7 @@
     },
     "od120-id94-t2.032": {
       "shape_sha256": "92bd76002422dfb24486b9f3619559f061657f118e49cb685d01b6ba7f56baeb",
-      "step_sha256": "6792157c1c2e2a044bf4b7c5f12ea571eaf6ad7356e5a9af76342bc7bc112866",
+      "step_sha256": "bbb000d19735f5b41c08af02ec466eaa3d321fa8c1bc0ba5000c97b7a2680c95",
       "bbox_mm": [
         -60.0,
         -60.0,
@@ -5988,8 +5988,8 @@
         "candidates": 21,
         "kernel_queries": 21,
         "cache_hits": 0,
-        "broad_phase_s": 22.2003,
-        "narrow_phase_s": 60.7435,
+        "broad_phase_s": 21.5841,
+        "narrow_phase_s": 60.0221,
         "states": {
           "apart": 20,
           "touching": 1,
@@ -5999,7 +5999,7 @@
           "unchecked": 0
         }
       },
-      "elapsed_s": 108.91460983199067,
+      "elapsed_s": 107.30480569205247,
       "outside_d_mm": 120.0,
       "inside_d_mm": 94.0,
       "thickness_mm": 2.032,
@@ -6903,7 +6903,7 @@
     },
     "od120-id94-t3.175": {
       "shape_sha256": "bfc67451ef0bb8ac029e8286d5b6f43945d66067e69fe4172818b525dacc14a5",
-      "step_sha256": "914e6bb69b2e6a376ae65713643b5bba5225d87f88d8cf5844e5c264bdf82bc5",
+      "step_sha256": "11f26f871aa6aeaf0e641dcac5b8dd9c939cb63f91e2608a4487ba4732cc4276",
       "bbox_mm": [
         -60.0,
         -60.0,
@@ -6918,8 +6918,8 @@
         "candidates": 21,
         "kernel_queries": 21,
         "cache_hits": 0,
-        "broad_phase_s": 22.2173,
-        "narrow_phase_s": 60.3439,
+        "broad_phase_s": 21.9483,
+        "narrow_phase_s": 60.2826,
         "states": {
           "apart": 20,
           "touching": 1,
@@ -6929,7 +6929,7 @@
           "unchecked": 0
         }
       },
-      "elapsed_s": 108.55528646986932,
+      "elapsed_s": 107.78961020801216,
       "outside_d_mm": 120.0,
       "inside_d_mm": 94.0,
       "thickness_mm": 3.175,
@@ -9312,9 +9312,9 @@
         "cad/test_body.py": "5875a19bc2b3591721dc466d2b598b3b7cdf5dbfba22cdcde1c2017bcae66b27",
         "cad/test_leg_loads.py": "0ed04011ea672aa8bc387af272ddfa1783ec4fa1f379fde1e3dfbd9201867b51",
         "cad/test_turret_gate_sources.py": "6e68480774e65bfd5ac18701a7eefad7c301fde48668b8caa579452ec9ddfaa9",
-        "cad/test_turret_snaps.py": "e10b6320b1936a90344730bd15bc6e21836ba2f95405b0467d56a6dfee705c7e",
+        "cad/test_turret_snaps.py": "29740c97981f741013afd41888a4efe019d7a576c984ed20df30883ce2c54c17",
         "cad/test_turret_solids.py": "61eee61b68461574f75c316fa16d4d566ab097f862fadd6ee2b0b175655c0d48",
-        "cad/turret.py": "11311d5af6c991f547a275f2bbf009710a3fe24b04f797a4669d3dc7c2fc0f42",
+        "cad/turret.py": "5fd7e8dd555a8b3b5743017faf4200eae41fad1c0a7a7da696a18ef75bcdc068",
         "cad/turret_assembly.py": "480799c724c799954a520c1ecd9c0b4d383cce752efdac4f3c3f6a6da7aaf2e3",
         "cad/turret_base_board.py": "153e49871e0a3359478cd34a50daf7e44f4497970097475c829dbbcdacda90ba",
         "cad/turret_boards.py": "c7a115d2fe3cefddf46b0dd521e21076e1f7721235df3e7bd22fadb6e165707b",
@@ -9327,8 +9327,8 @@
         "cad/turret_motion.py": "36f2be781776126b7c63bd27103f4ff24644d76568d8f793a2e68b5aeab6e260",
         "cad/turret_mount.py": "f5ecdf09c9dc86c377072725bacde60f9a79277686b480132248a38e807c7fb9",
         "cad/turret_orders.py": "eaaaae1668a186b7438f0dd394d5b27e1bee7c0ef4901bc880f806f7d4e60480",
-        "cad/turret_print.py": "ba22a6d5fdb80ae553af83fad41520d2585942e5f963ea26b9fe9c80febb9206",
-        "cad/turret_snaps.py": "258ab007c305a2c9f961cabfa44d5245cbe4aeb0e0a98988090533bf37487c72",
+        "cad/turret_print.py": "7b1f0cfe1b2d47e047cea1aae664d43b3dc71f9f9d48703e523840055a44f755",
+        "cad/turret_snaps.py": "c6ab02cb5e0c34e89defc49f66297823442fe781307126b49c5f4f065045eccd",
         "cad/turret_stand.py": "21f8300694982e68de8ef20e6d7e143a9ae8a356f836f47e50f1b2ab91b10126",
         "cad/turret_studies.py": "708f5ed6d385d924caaed802a04b724e03eda8872749a5454d46644ebfc19e11",
         "cad/wheel_fit.py": "57c75e2462fb6f3606b81e4baac284dcac9a7b67bb47183f425d8bb8f730febd",
@@ -9372,7 +9372,7 @@
     "context": {
       "research/rs04-support/probe.py": "0345d86dda8b233e94e349e2ef5f81b2e5c637ba8d6598e844e1e726e7525210",
       "research/rs04-support/README.md": "ea422e1538cc137fb04d4b497df2527cbadf7155421062aac4979f1910a2af21",
-      "exports/leg/rs04-mounting-fit/checks.json": "5d542feb2ec087fdd3d15866d8c68479fad4d0cbfe07fa4b96a1516596fac31a"
+      "exports/leg/rs04-mounting-fit/checks.json": "9e821e01f8afa423d2d5c3c7613303876da1d222e7183e402985f3a9b192a106"
     },
     "toolkit_commit": "2ad426943ce2c7232875e105e50810849f9a3e5e"
   }
