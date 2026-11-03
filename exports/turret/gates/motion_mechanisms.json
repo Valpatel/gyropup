@@ -365,22 +365,22 @@
         ],
         "intended_contacts_touching": {},
         "collisions": [],
-        "min_clearance_mm": 2.136001,
+        "min_clearance_mm": 1.862938,
         "at": {
-          "gap_mm": 2.136001,
+          "gap_mm": 1.862938,
           "pair": [
             "cartridge_body",
             "flywheel_tyre_m"
           ],
           "pose": "wheel_r=0deg",
           "point_a": [
-            36.002631,
-            -9.40864,
-            117.0
+            39.415025,
+            -39.824608,
+            117.5
           ],
           "point_b": [
-            35.584809,
-            -10.031476,
+            38.622903,
+            -39.054489,
             119.0
           ]
         },
@@ -778,22 +778,22 @@
       ],
       "intended_contacts_touching": {},
       "collisions": [],
-      "min_clearance_mm": 2.136001,
+      "min_clearance_mm": 1.862938,
       "at": {
-        "gap_mm": 2.136001,
+        "gap_mm": 1.862938,
         "pair": [
           "cartridge_body",
           "flywheel_tyre_m"
         ],
         "pose": "wheel_r=0deg",
         "point_a": [
-          36.002631,
-          -9.40864,
-          117.0
+          39.415025,
+          -39.824608,
+          117.5
         ],
         "point_b": [
-          35.584809,
-          -10.031476,
+          38.622903,
+          -39.054489,
           119.0
         ]
       },
@@ -817,9 +817,9 @@
     "groups": 5,
     "poses": 61,
     "pair_queries": 373,
-    "kernel_queries": 96,
+    "kernel_queries": 128,
     "memo_hits": 13,
-    "cache_hits": 264,
-    "seconds": 56.04
+    "cache_hits": 232,
+    "seconds": 62.78
   }
 }

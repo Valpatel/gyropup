@@ -1,17 +1,17 @@
 {
  "toolkit": "cadagent.gates (connectivity, containment, relation table, fasteners, motion)",
- "fingerprint": "1432c61b9714e16d",
+ "fingerprint": "1c284a26f7d0d2a4",
  "pile": "exports/turret/feed/pile.json",
  "verdicts": "exports/turret/gates",
  "seconds": {
-  "connectivity": 15.7,
-  "hopper": 1358.0,
-  "path": 24.2,
-  "sweep": 1.7,
-  "ammo_range": 26.4,
-  "fasteners": 10.2,
-  "motion_mechanisms": 56.7,
-  "motion_aim": 723.2
+  "connectivity": 23.0,
+  "hopper": 0.1,
+  "path": 35.2,
+  "sweep": 26.6,
+  "ammo_range": 36.2,
+  "fasteners": 12.0,
+  "motion_mechanisms": 64.6,
+  "motion_aim": 1680.7
  },
  "ok": true,
  "gates": {
@@ -20,7 +20,7 @@
    "status": "warn",
    "counts": {
     "pass": 29,
-    "warn": 61,
+    "warn": 70,
     "fail": 0
    },
    "findings": [
@@ -30,9 +30,54 @@
      "message": "barrel and cartridge_body are in contact (touching, 228 mm2) but no interface, joint, fastener, contains or intended overlap declares it"
     },
     {
-     "id": "contact:base_board|pan_base",
+     "id": "contact:base_board|base_board_carrier",
      "status": "warn",
-     "message": "base_board and pan_base are in contact (touching, 93.9 mm2) but no interface, joint, fastener, contains or intended overlap declares it"
+     "message": "base_board and base_board_carrier are in contact (touching, 93.9 mm2) but no interface, joint, fastener, contains or intended overlap declares it"
+    },
+    {
+     "id": "contact:base_board|base_board_inserts",
+     "status": "warn",
+     "message": "base_board and base_board_inserts are in contact (touching, 37.8 mm2) but no interface, joint, fastener, contains or intended overlap declares it"
+    },
+    {
+     "id": "contact:base_board|base_board_screws",
+     "status": "warn",
+     "message": "base_board and base_board_screws are in contact (touching, 62.9 mm2) but no interface, joint, fastener, contains or intended overlap declares it"
+    },
+    {
+     "id": "contact:base_board_carrier|base_board_inserts",
+     "status": "warn",
+     "message": "base_board_carrier and base_board_inserts are in contact (overlapping, 113.2 mm3 shared) but no interface, joint, fastener, contains or intended overlap declares it"
+    },
+    {
+     "id": "contact:base_board_carrier|base_carrier_inserts",
+     "status": "warn",
+     "message": "base_board_carrier and base_carrier_inserts are in contact (touching, 33.7 mm2) but no interface, joint, fastener, contains or intended overlap declares it"
+    },
+    {
+     "id": "contact:base_board_carrier|base_carrier_screws",
+     "status": "warn",
+     "message": "base_board_carrier and base_carrier_screws are in contact (touching, 58.7 mm2) but no interface, joint, fastener, contains or intended overlap declares it"
+    },
+    {
+     "id": "contact:base_board_carrier|pan_base",
+     "status": "warn",
+     "message": "base_board_carrier and pan_base are in contact (touching, 445 mm2) but no interface, joint, fastener, contains or intended overlap declares it"
+    },
+    {
+     "id": "contact:base_board_inserts|base_board_screws",
+     "status": "warn",
+     "message": "base_board_inserts and base_board_screws are in contact (overlapping, 38.01 mm3 shared) but no interface, joint, fastener, contains or intended overlap declares it"
+    },
+    {
+     "id": "contact:base_carrier_inserts|base_carrier_screws",
+     "status": "warn",
+     "message": "base_carrier_inserts and base_carrier_screws are in contact (overlapping, 43.2 mm3 shared) but no interface, joint, fastener, contains or intended overlap declares it"
+    },
+    {
+     "id": "contact:base_carrier_inserts|pan_base",
+     "status": "warn",
+     "message": "base_carrier_inserts and pan_base are in contact (overlapping, 113.2 mm3 shared) but no interface, joint, fastener, contains or intended overlap declares it"
     },
     {
      "id": "contact:board_bay|board_bay_lid",
@@ -78,51 +123,6 @@
      "id": "contact:cartridge_body|feed_motor",
      "status": "warn",
      "message": "cartridge_body and feed_motor are in contact (touching, 445 mm2) but no interface, joint, fastener, contains or intended overlap declares it"
-    },
-    {
-     "id": "contact:cartridge_body|flywheel_motor_l",
-     "status": "warn",
-     "message": "cartridge_body and flywheel_motor_l are in contact (touching, 459 mm2) but no interface, joint, fastener, contains or intended overlap declares it"
-    },
-    {
-     "id": "contact:cartridge_body|flywheel_motor_r",
-     "status": "warn",
-     "message": "cartridge_body and flywheel_motor_r are in contact (touching, 459 mm2) but no interface, joint, fastener, contains or intended overlap declares it"
-    },
-    {
-     "id": "contact:cartridge_body|hopper",
-     "status": "warn",
-     "message": "cartridge_body and hopper are in contact (touching, 716 mm2) but no interface, joint, fastener, contains or intended overlap declares it"
-    },
-    {
-     "id": "contact:cartridge_body|hopper_inserts",
-     "status": "warn",
-     "message": "cartridge_body and hopper_inserts are in contact (touching, 215 mm2) but no interface, joint, fastener, contains or intended overlap declares it"
-    },
-    {
-     "id": "contact:cartridge_body|laser_inserts",
-     "status": "warn",
-     "message": "cartridge_body and laser_inserts are in contact (touching, 143 mm2) but no interface, joint, fastener, contains or intended overlap declares it"
-    },
-    {
-     "id": "contact:cartridge_body|laser_mount",
-     "status": "warn",
-     "message": "cartridge_body and laser_mount are in contact (touching, 288 mm2) but no interface, joint, fastener, contains or intended overlap declares it"
-    },
-    {
-     "id": "contact:circlip_50|pan_ring",
-     "status": "warn",
-     "message": "circlip_50 and pan_ring are in contact (overlapping, 0.05161 mm3 shared) but no interface, joint, fastener, contains or intended overlap declares it"
-    },
-    {
-     "id": "contact:circlip_50|pan_spacer",
-     "status": "warn",
-     "message": "circlip_50 and pan_spacer are in contact (touching, 596 mm2) but no interface, joint, fastener, contains or intended overlap declares it"
-    },
-    {
-     "id": "contact:compute|compute_shell",
-     "status": "warn",
-     "message": "compute and compute_shell are in contact (touching, 160 mm2) but no interface, joint, fastener, contains or intended overlap declares it"
     }
    ],
    "floating": [],

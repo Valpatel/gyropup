@@ -25,7 +25,7 @@
       "status": "pass",
       "message": "cavity hopper_cavity is registered on hopper",
       "evidence": {
-        "cavity_volume_mm3": 638369.006134
+        "cavity_volume_mm3": 638364.129303
       }
     },
     {
@@ -47,9 +47,15 @@
               1.1,
               0.0,
               225.0
-            ]
+            ],
+            "volume_integration": {
+              "method": "adaptive BRepGProp GK, requested relative errors 1e-6 and 1e-8",
+              "error_basis": "max(OCCT summed absolute face-error estimates, refinement delta); not a rigorous bound",
+              "max_estimated_error_mm3": 0.00689851469360292,
+              "max_refinement_delta_mm3": 0.00689851469360292
+            }
           },
-          "cached": false
+          "cached": true
         },
         "cavity_box": [
           -97.1,
@@ -92,10 +98,14 @@
           "gap_mm": 0.0,
           "overlap_mm3": 6205.876995,
           "a_outside_b_mm3": 0.0,
-          "b_outside_a_mm3": 632163.129143,
+          "b_outside_a_mm3": 632158.252303,
           "contained": "a_in_b",
           "wall_mm": 0.0,
           "witness": {
+            "overlap_centroid_estimate": {
+              "method": "Gauss centroid refinements 1e-6 and 1e-8; approximate witness only",
+              "refinement_delta_mm": 1.7763568394002505e-15
+            },
             "overlap_centroid": [
               -13.816457,
               14.159287,
@@ -109,6 +119,12 @@
               25.559287,
               157.8
             ],
+            "volume_integration": {
+              "method": "adaptive BRepGProp GK, requested relative errors 1e-6 and 1e-8",
+              "error_basis": "max(OCCT summed absolute face-error estimates, refinement delta); not a rigorous bound",
+              "max_estimated_error_mm3": 0.00689851469360292,
+              "max_refinement_delta_mm3": 0.00689851469360292
+            },
             "inner_point": [
               -13.816457,
               14.159287,
@@ -120,7 +136,7 @@
               135.0
             ]
           },
-          "cached": false
+          "cached": true
         },
         "outside_mm3": 0.0,
         "clearance_mm": 0.0
@@ -139,6 +155,12 @@
           "gap_mm": 2.2,
           "overlap_mm3": 0.0,
           "witness": {
+            "volume_integration": {
+              "method": "adaptive BRepGProp GK, requested relative errors 1e-6 and 1e-8",
+              "error_basis": "max(OCCT summed absolute face-error estimates, refinement delta); not a rigorous bound",
+              "max_estimated_error_mm3": 0.0005760649562268536,
+              "max_refinement_delta_mm3": 0.0005471471813507378
+            },
             "point_a": [
               -13.816457,
               14.159287,
@@ -150,7 +172,7 @@
               160.0
             ]
           },
-          "cached": false
+          "cached": true
         }
       }
     },
@@ -165,12 +187,16 @@
         "relation": {
           "state": "contains",
           "gap_mm": 0.0,
-          "overlap_mm3": 6205.514499,
+          "overlap_mm3": 6205.514496,
           "a_outside_b_mm3": 0.362499,
-          "b_outside_a_mm3": 632163.491638,
+          "b_outside_a_mm3": 632158.614804,
           "contained": "a_in_b",
           "wall_mm": 0.0,
           "witness": {
+            "overlap_centroid_estimate": {
+              "method": "Gauss centroid refinements 1e-6 and 1e-8; approximate witness only",
+              "refinement_delta_mm": 4.425117160418799e-10
+            },
             "overlap_centroid": [
               -32.460316,
               34.348593,
@@ -184,6 +210,12 @@
               45.748125,
               157.8
             ],
+            "volume_integration": {
+              "method": "adaptive BRepGProp GK, requested relative errors 1e-6 and 1e-8",
+              "error_basis": "max(OCCT summed absolute face-error estimates, refinement delta); not a rigorous bound",
+              "max_estimated_error_mm3": 0.006913568126037717,
+              "max_refinement_delta_mm3": 0.006913568126037717
+            },
             "inner_point": [
               -32.459848,
               34.348125,
@@ -195,7 +227,7 @@
               135.0
             ]
           },
-          "cached": false
+          "cached": true
         },
         "outside_mm3": 0.362499,
         "clearance_mm": 0.0
@@ -214,6 +246,12 @@
           "gap_mm": 6.345985,
           "overlap_mm3": 0.0,
           "witness": {
+            "volume_integration": {
+              "method": "adaptive BRepGProp GK, requested relative errors 1e-6 and 1e-8",
+              "error_basis": "max(OCCT summed absolute face-error estimates, refinement delta); not a rigorous bound",
+              "max_estimated_error_mm3": 0.0005760649562268536,
+              "max_refinement_delta_mm3": 0.0005471471813507378
+            },
             "point_a": [
               -29.441123,
               41.020359,
@@ -225,7 +263,7 @@
               160.0
             ]
           },
-          "cached": false
+          "cached": true
         }
       }
     },
@@ -242,10 +280,14 @@
           "gap_mm": 0.0,
           "overlap_mm3": 6205.876995,
           "a_outside_b_mm3": 0.0,
-          "b_outside_a_mm3": 632163.129135,
+          "b_outside_a_mm3": 632158.252311,
           "contained": "a_in_b",
           "wall_mm": 0.0,
           "witness": {
+            "overlap_centroid_estimate": {
+              "method": "Gauss centroid refinements 1e-6 and 1e-8; approximate witness only",
+              "refinement_delta_mm": 0.0
+            },
             "overlap_centroid": [
               -62.070229,
               33.733355,
@@ -259,6 +301,12 @@
               45.133355,
               157.8
             ],
+            "volume_integration": {
+              "method": "adaptive BRepGProp GK, requested relative errors 1e-6 and 1e-8",
+              "error_basis": "max(OCCT summed absolute face-error estimates, refinement delta); not a rigorous bound",
+              "max_estimated_error_mm3": 0.00689851469360292,
+              "max_refinement_delta_mm3": 0.00689851469360292
+            },
             "inner_point": [
               -62.070229,
               33.733355,
@@ -270,7 +318,7 @@
               135.0
             ]
           },
-          "cached": false
+          "cached": true
         },
         "outside_mm3": 0.0,
         "clearance_mm": 0.0
@@ -289,6 +337,12 @@
           "gap_mm": 7.105667,
           "overlap_mm3": 0.0,
           "witness": {
+            "volume_integration": {
+              "method": "adaptive BRepGProp GK, requested relative errors 1e-6 and 1e-8",
+              "error_basis": "max(OCCT summed absolute face-error estimates, refinement delta); not a rigorous bound",
+              "max_estimated_error_mm3": 0.0005760649562268536,
+              "max_refinement_delta_mm3": 0.0005471471813507378
+            },
             "point_a": [
               -65.046362,
               40.868632,
@@ -300,7 +354,7 @@
               160.0
             ]
           },
-          "cached": false
+          "cached": true
         }
       }
     },
@@ -317,10 +371,14 @@
           "gap_mm": 0.0,
           "overlap_mm3": 6205.876995,
           "a_outside_b_mm3": 0.0,
-          "b_outside_a_mm3": 632163.12913,
+          "b_outside_a_mm3": 632158.252315,
           "contained": "a_in_b",
           "wall_mm": 0.0,
           "witness": {
+            "overlap_centroid_estimate": {
+              "method": "Gauss centroid refinements 1e-6 and 1e-8; approximate witness only",
+              "refinement_delta_mm": 0.0
+            },
             "overlap_centroid": [
               -82.179687,
               14.15769,
@@ -334,6 +392,12 @@
               25.55769,
               157.8
             ],
+            "volume_integration": {
+              "method": "adaptive BRepGProp GK, requested relative errors 1e-6 and 1e-8",
+              "error_basis": "max(OCCT summed absolute face-error estimates, refinement delta); not a rigorous bound",
+              "max_estimated_error_mm3": 0.00689851469360292,
+              "max_refinement_delta_mm3": 0.00689851469360292
+            },
             "inner_point": [
               -82.179687,
               14.15769,
@@ -345,7 +409,7 @@
               135.0
             ]
           },
-          "cached": false
+          "cached": true
         },
         "outside_mm3": 0.0,
         "clearance_mm": 0.0
@@ -364,6 +428,12 @@
           "gap_mm": 6.806345,
           "overlap_mm3": 0.0,
           "witness": {
+            "volume_integration": {
+              "method": "adaptive BRepGProp GK, requested relative errors 1e-6 and 1e-8",
+              "error_basis": "max(OCCT summed absolute face-error estimates, refinement delta); not a rigorous bound",
+              "max_estimated_error_mm3": 0.0005760649562268536,
+              "max_refinement_delta_mm3": 0.0005471471813507378
+            },
             "point_a": [
               -89.181856,
               17.058083,
@@ -375,7 +445,7 @@
               160.0
             ]
           },
-          "cached": false
+          "cached": true
         }
       }
     },
@@ -392,10 +462,14 @@
           "gap_mm": 0.0,
           "overlap_mm3": 6205.876995,
           "a_outside_b_mm3": 0.0,
-          "b_outside_a_mm3": 632163.129122,
+          "b_outside_a_mm3": 632158.252319,
           "contained": "a_in_b",
           "wall_mm": 0.0,
           "witness": {
+            "overlap_centroid_estimate": {
+              "method": "Gauss centroid refinements 1e-6 and 1e-8; approximate witness only",
+              "refinement_delta_mm": 0.0
+            },
             "overlap_centroid": [
               -82.718701,
               -14.693597,
@@ -409,6 +483,12 @@
               -3.293597,
               157.8
             ],
+            "volume_integration": {
+              "method": "adaptive BRepGProp GK, requested relative errors 1e-6 and 1e-8",
+              "error_basis": "max(OCCT summed absolute face-error estimates, refinement delta); not a rigorous bound",
+              "max_estimated_error_mm3": 0.00689851469360292,
+              "max_refinement_delta_mm3": 0.00689851469360292
+            },
             "inner_point": [
               -82.718701,
               -14.693597,
@@ -420,7 +500,7 @@
               135.0
             ]
           },
-          "cached": false
+          "cached": true
         },
         "outside_mm3": 0.0,
         "clearance_mm": 0.0
@@ -439,6 +519,12 @@
           "gap_mm": 6.345985,
           "overlap_mm3": 0.0,
           "witness": {
+            "volume_integration": {
+              "method": "adaptive BRepGProp GK, requested relative errors 1e-6 and 1e-8",
+              "error_basis": "max(OCCT summed absolute face-error estimates, refinement delta); not a rigorous bound",
+              "max_estimated_error_mm3": 0.0005760649562268536,
+              "max_refinement_delta_mm3": 0.0005471471813507378
+            },
             "point_a": [
               -89.46292,
               -17.547876,
@@ -450,7 +536,7 @@
               160.0
             ]
           },
-          "cached": false
+          "cached": true
         }
       }
     },
@@ -467,10 +553,14 @@
           "gap_mm": 0.0,
           "overlap_mm3": 6205.876995,
           "a_outside_b_mm3": 0.0,
-          "b_outside_a_mm3": 632163.129131,
+          "b_outside_a_mm3": 632158.252311,
           "contained": "a_in_b",
           "wall_mm": 0.0,
           "witness": {
+            "overlap_centroid_estimate": {
+              "method": "Gauss centroid refinements 1e-6 and 1e-8; approximate witness only",
+              "refinement_delta_mm": 1.4210854715202004e-14
+            },
             "overlap_centroid": [
               -61.701753,
               -35.019104,
@@ -484,6 +574,12 @@
               -23.619104,
               157.8
             ],
+            "volume_integration": {
+              "method": "adaptive BRepGProp GK, requested relative errors 1e-6 and 1e-8",
+              "error_basis": "max(OCCT summed absolute face-error estimates, refinement delta); not a rigorous bound",
+              "max_estimated_error_mm3": 0.00689851469360292,
+              "max_refinement_delta_mm3": 0.00689851469360292
+            },
             "inner_point": [
               -61.701753,
               -35.019104,
@@ -495,7 +591,7 @@
               135.0
             ]
           },
-          "cached": false
+          "cached": true
         },
         "outside_mm3": 0.0,
         "clearance_mm": 0.0
@@ -514,6 +610,12 @@
           "gap_mm": 6.40768,
           "overlap_mm3": 0.0,
           "witness": {
+            "volume_integration": {
+              "method": "adaptive BRepGProp GK, requested relative errors 1e-6 and 1e-8",
+              "error_basis": "max(OCCT summed absolute face-error estimates, refinement delta); not a rigorous bound",
+              "max_estimated_error_mm3": 0.0005760649562268536,
+              "max_refinement_delta_mm3": 0.0005471471813507378
+            },
             "point_a": [
               -64.383245,
               -41.872495,
@@ -525,7 +627,7 @@
               160.0
             ]
           },
-          "cached": false
+          "cached": true
         }
       }
     },
@@ -542,10 +644,14 @@
           "gap_mm": 0.0,
           "overlap_mm3": 6205.876995,
           "a_outside_b_mm3": 0.0,
-          "b_outside_a_mm3": 632163.129137,
+          "b_outside_a_mm3": 632158.252306,
           "contained": "a_in_b",
           "wall_mm": 0.0,
           "witness": {
+            "overlap_centroid_estimate": {
+              "method": "Gauss centroid refinements 1e-6 and 1e-8; approximate witness only",
+              "refinement_delta_mm": 0.0
+            },
             "overlap_centroid": [
               -33.856067,
               -34.904281,
@@ -559,6 +665,12 @@
               -23.504281,
               157.8
             ],
+            "volume_integration": {
+              "method": "adaptive BRepGProp GK, requested relative errors 1e-6 and 1e-8",
+              "error_basis": "max(OCCT summed absolute face-error estimates, refinement delta); not a rigorous bound",
+              "max_estimated_error_mm3": 0.00689851469360292,
+              "max_refinement_delta_mm3": 0.00689851469360292
+            },
             "inner_point": [
               -33.856067,
               -34.904281,
@@ -570,7 +682,7 @@
               135.0
             ]
           },
-          "cached": false
+          "cached": true
         },
         "outside_mm3": 0.0,
         "clearance_mm": 0.0
@@ -589,6 +701,12 @@
           "gap_mm": 6.370989,
           "overlap_mm3": 0.0,
           "witness": {
+            "volume_integration": {
+              "method": "adaptive BRepGProp GK, requested relative errors 1e-6 and 1e-8",
+              "error_basis": "max(OCCT summed absolute face-error estimates, refinement delta); not a rigorous bound",
+              "max_estimated_error_mm3": 0.0005760649562268536,
+              "max_refinement_delta_mm3": 0.0005471471813507378
+            },
             "point_a": [
               -31.100228,
               -41.705119,
@@ -600,7 +718,7 @@
               160.0
             ]
           },
-          "cached": false
+          "cached": true
         }
       }
     },
@@ -617,10 +735,14 @@
           "gap_mm": 0.0,
           "overlap_mm3": 6205.876995,
           "a_outside_b_mm3": 0.0,
-          "b_outside_a_mm3": 632163.129142,
+          "b_outside_a_mm3": 632158.252303,
           "contained": "a_in_b",
           "wall_mm": 0.0,
           "witness": {
+            "overlap_centroid_estimate": {
+              "method": "Gauss centroid refinements 1e-6 and 1e-8; approximate witness only",
+              "refinement_delta_mm": 1.7763568394002505e-15
+            },
             "overlap_centroid": [
               -13.820313,
               -14.15769,
@@ -634,6 +756,12 @@
               -2.75769,
               157.8
             ],
+            "volume_integration": {
+              "method": "adaptive BRepGProp GK, requested relative errors 1e-6 and 1e-8",
+              "error_basis": "max(OCCT summed absolute face-error estimates, refinement delta); not a rigorous bound",
+              "max_estimated_error_mm3": 0.00689851469360292,
+              "max_refinement_delta_mm3": 0.00689851469360292
+            },
             "inner_point": [
               -13.820313,
               -14.15769,
@@ -645,7 +773,7 @@
               135.0
             ]
           },
-          "cached": false
+          "cached": true
         },
         "outside_mm3": 0.0,
         "clearance_mm": 0.0
@@ -664,6 +792,12 @@
           "gap_mm": 2.2,
           "overlap_mm3": 0.0,
           "witness": {
+            "volume_integration": {
+              "method": "adaptive BRepGProp GK, requested relative errors 1e-6 and 1e-8",
+              "error_basis": "max(OCCT summed absolute face-error estimates, refinement delta); not a rigorous bound",
+              "max_estimated_error_mm3": 0.0005760649562268536,
+              "max_refinement_delta_mm3": 0.0005471471813507378
+            },
             "point_a": [
               -13.820313,
               -14.15769,
@@ -675,7 +809,7 @@
               160.0
             ]
           },
-          "cached": false
+          "cached": true
         }
       }
     },

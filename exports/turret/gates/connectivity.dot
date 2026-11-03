@@ -5,6 +5,11 @@ graph connectivity {
   subgraph cluster_0 {
     label="static frame"; style=rounded; color=gray60;
     "base_board";
+    "base_board_carrier";
+    "base_board_inserts";
+    "base_board_screws";
+    "base_carrier_inserts";
+    "base_carrier_screws";
     "bumper_ring";
     "compute";
     "compute_shell";
@@ -178,7 +183,16 @@ graph connectivity {
   "ball#8" -- "dial" [color=gray60];
   "ball#9" -- "dial" [color=gray60];
   "barrel" -- "cartridge_body" [color=orange, label="undeclared"];
-  "base_board" -- "pan_base" [color=orange, label="undeclared"];
+  "base_board" -- "base_board_carrier" [color=orange, label="undeclared"];
+  "base_board" -- "base_board_inserts" [color=orange, label="undeclared"];
+  "base_board" -- "base_board_screws" [color=orange, label="undeclared"];
+  "base_board_carrier" -- "base_board_inserts" [color=orange, label="undeclared"];
+  "base_board_carrier" -- "base_carrier_inserts" [color=orange, label="undeclared"];
+  "base_board_carrier" -- "base_carrier_screws" [color=orange, label="undeclared"];
+  "base_board_carrier" -- "pan_base" [color=orange, label="undeclared"];
+  "base_board_inserts" -- "base_board_screws" [color=orange, label="undeclared"];
+  "base_carrier_inserts" -- "base_carrier_screws" [color=orange, label="undeclared"];
+  "base_carrier_inserts" -- "pan_base" [color=orange, label="undeclared"];
   "board_bay" -- "board_bay_lid" [color=orange, label="undeclared"];
   "board_bay" -- "tilt_yoke" [color=orange, label="undeclared"];
   "board_bay" -- "turret_board" [color=orange, label="undeclared"];
