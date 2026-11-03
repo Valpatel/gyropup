@@ -7,9 +7,11 @@
  *   SITE_URL=http://127.0.0.1:8879 npm run test:empty-space
  *   node tools/test-empty-space.mjs --report         # every page's worst gap per size, worst first; never fails
  *   node tools/test-empty-space.mjs --pages=/,/site/ --sizes=iphone-13 --schemes=light
+ *   node tools/test-empty-space.mjs --controls       # only the planted defects, with what was found
  *
- * Before the site, the measures run on planted defects (a tall empty band crossed by hairline rules, a blank picture,
- * a blank canvas, a squeezed link column) and must catch each one, so a broken measure cannot pass every page.
+ * Before the site, the measures run on planted defects (a tall empty band crossed by rules, hairlines, three nested
+ * bordered boxes, a near-empty <svg> and an invisible button; a blank picture; a blank canvas; a picture that never
+ * loads; a squeezed link column with inline markup) and must catch each one, so a broken measure cannot pass every page.
  * On a failure it saves a screenshot with the finding outlined in test-results/empty-space/, and it writes every
  * page's numbers to test-results/empty-space/results.json. */
 import { mkdir, readdir, writeFile } from 'node:fs/promises';
@@ -19,7 +21,7 @@ import { createSiteServer } from './serve-site.mjs';
 import { acknowledgePrototypeNotice } from './test-prototype-session.mjs';
 import { sitePages } from './site-walls.mjs';
 import {
-  BUSY_EDGES, EDGE_STEP, FLAT_SHARE, FLAT_TOLERANCE, MEDIA_MIN, MIN_THICKNESS, NARROW_SHARE, SCHEMES, SIZES, WORDS_PER_LINE,
+  BUSY_EDGES, EDGE_STEP, FLAT_SHARE, RULE_RUN, FLAT_TOLERANCE, MEDIA_MIN, MIN_THICKNESS, NARROW_SHARE, SCHEMES, SIZES, WORDS_PER_LINE,
   paintedPixels, scanLayout,
 } from './site-empty-space.mjs';
 
@@ -88,13 +90,22 @@ async function scrollThrough(page) {
   await settle(page, 500);
 }
 
-const pixels = async (analysis, png, jobs) => analysis.evaluate(paintedPixels, { png: png.toString('base64'), jobs, busyEdges: BUSY_EDGES, edgeStep: EDGE_STEP, flatTolerance: FLAT_TOLERANCE });
+const pixels = async (analysis, png, jobs) => analysis.evaluate(paintedPixels, { png: png.toString('base64'), jobs, busyEdges: BUSY_EDGES, edgeStep: EDGE_STEP, flatTolerance: FLAT_TOLERANCE, ruleRun: RULE_RUN });
 const slug = s => s.replace(/^\/|\/$/g, '').replace(/[^a-z0-9]+/gi, '-') || 'home';
 
-/** Elements that stay on screen (fixed, sticky) would cover a band in a screenshot: hide them while it is taken. */
+/** Elements that stay on screen (fixed, or sticky and stuck to an edge) would cover a band in a screenshot: hide them
+ * while it is taken. A sticky element in its place in the flow (a table's first column) stays. */
 const hideFloating = page => page.evaluate(() => {
   if (document.documentElement.scrollHeight <= innerHeight + 1) return;  // nothing scrolls under them
-  for (const el of document.querySelectorAll('body *')) if (/fixed|sticky/.test(getComputedStyle(el).position)) el.dataset.esHidden = el.style.visibility || '-', el.style.visibility = 'hidden';
+  for (const el of document.querySelectorAll('body *')) {
+    const s = getComputedStyle(el);
+    if (s.position === 'sticky') {
+      const r = el.getBoundingClientRect(), top = parseFloat(s.top), bottom = parseFloat(s.bottom);
+      if (!(Math.abs(r.top - top) < 1.5 || Math.abs(innerHeight - r.bottom - bottom) < 1.5)) continue;
+    } else if (s.position !== 'fixed') continue;
+    el.dataset.esHidden = el.style.visibility || '-';
+    el.style.visibility = 'hidden';
+  }
 });
 const showFloating = page => page.evaluate(() => {
   for (const el of document.querySelectorAll('[data-es-hidden]')) { el.style.visibility = el.dataset.esHidden === '-' ? '' : el.dataset.esHidden; delete el.dataset.esHidden; }
@@ -133,7 +144,7 @@ async function audit(page, analysis, size, scheme, route) {
     if (gap.size > worst.size) worst = { ...gap, quiet: band.quiet };
     if (gap.size >= limit && band.quiet >= limit) {
       const file = await evidence(page, `gap-${tag}-${gap.from}.png`, [0, at + band.from, scan.vw, band.quiet]);
-      findings.push({ kind: 'gap', at, from: gap.from, to: gap.to, text: `${band.quiet}px blank (${(band.quiet / vh).toFixed(2)} of the screen; limit ${size.limit}) at ${gap.from}-${gap.to}px, scrolled to ${at}px, between ${gap.above} and ${gap.below}, under "${gap.heading}"`, file });
+      findings.push({ kind: 'gap', at, from: gap.from, to: gap.to, quiet: band.quiet, text: `${band.quiet}px blank (${(band.quiet / vh).toFixed(2)} of the screen; limit ${size.limit}) at ${gap.from}-${gap.to}px, scrolled to ${at}px, between ${gap.above} and ${gap.below}, under "${gap.heading}"`, file });
     }
     await showFloating(page);
   }
@@ -177,6 +188,8 @@ async function audit(page, analysis, size, scheme, route) {
 const analysisContext = await browser.newContext();
 const newAnalysis = () => analysisContext.newPage();
 
+const controlFindings = [];
+
 /** Planted defects on a real page: each must be found, so the measures are tested on every run. */
 async function controls() {
   const size = SIZES[0], context = await contextFor(size), page = await context.newPage(), analysis = await newAnalysis();
@@ -189,11 +202,15 @@ async function controls() {
       const solid = (() => { const c = document.createElement('canvas'); c.width = c.height = 4; const g = c.getContext('2d'); g.fillStyle = '#8fb7c4'; g.fillRect(0, 0, 4, 4); return c.toDataURL(); })();
       after.insertAdjacentHTML('afterend', `<div id="planted" style="padding:0 20px">
         <p>Planted: the paragraph above the empty band.</p>
-        <div id="planted-gap" style="height:55vh;position:relative"><hr style="margin:20vh 0 0"><svg width="2" height="300" style="position:absolute;left:30%;top:0"><rect width="2" height="300" fill="#333"/></svg></div>
+        <div id="planted-gap" style="height:55vh;position:relative"><hr style="position:absolute;top:20vh;left:0;right:0;margin:0"><svg width="2" height="300" style="position:absolute;left:30%;top:0"><rect width="2" height="300" fill="#333"/></svg>
+          <div style="position:absolute;inset:0 0 0 45%;border:1px solid #222;padding:6px"><div style="height:100%;border:1px solid #777;padding:6px"><div style="height:100%;border:1px solid #bbb"></div></div></div>
+          <svg width="300" height="90%" style="position:absolute;left:0;top:5%;opacity:.98" aria-hidden="true"><circle cx="4" cy="4" r="3" fill="#888"/></svg>
+          <button type="button" aria-label="planted invisible button" style="position:absolute;inset:0;background:none;border:0;opacity:.01"></button></div>
         <p>Planted: the paragraph below the empty band.</p>
         <p><img id="planted-blank" src="${solid}" width="300" height="200" alt="planted blank picture"></p>
         <p><canvas id="planted-canvas" width="280" height="160" style="background:#eee8dc"></canvas></p>
-        <div style="display:flex;gap:16px;align-items:flex-start"><a id="planted-column" href="#planted" style="width:60px;font:700 13px/1.4 sans-serif">Explore the design ↗</a><div style="flex:1"></div></div>
+        <p><img id="planted-missing" src="/planted-missing-picture.png" width="300" height="200" alt="planted missing picture" style="display:block;width:300px;height:200px"></p>
+        <div style="display:flex;gap:16px;align-items:flex-start"><a id="planted-column" href="#planted" style="width:60px;font:700 13px/1.4 sans-serif">Explore the <b>design</b> ↗</a><div style="flex:1"></div></div>
         <p>Planted: the end.</p></div>`);
       // a full-height hairline down the whole page must not hide any gap
       document.body.insertAdjacentHTML('beforeend', `<svg id="planted-rule" width="2" height="${document.documentElement.scrollHeight}" style="position:absolute;left:12px;top:0"><rect width="2" height="100%" fill="#555"/></svg>`);
@@ -204,12 +221,15 @@ async function controls() {
       await settle(page, 300);
       const gap = await page.evaluate(() => { const r = document.getElementById('planted-gap').getBoundingClientRect(); return [r.top + scrollY, r.bottom + scrollY]; });
       const { findings } = await audit(page, analysis, size, `control-${scheme}`, '/');
+      controlFindings.push({ scheme, gap, findings: findings.map(f => `${f.kind}: ${f.text}`) });
       const has = (kind, test) => findings.some(f => f.kind === kind && test(f));
-      if (!has('gap', f => f.from <= gap[0] + 30 && f.to >= gap[1] - 30)) failed.push(`${scheme}: the planted ${Math.round(gap[1] - gap[0])}px empty band (crossed by a rule and a hairline) was not found`);
+      if (!has('gap', f => f.from <= gap[0] + 30 && f.to >= gap[1] - 30 && f.quiet >= 0.9 * (gap[1] - gap[0]))) failed.push(`${scheme}: the planted ${Math.round(gap[1] - gap[0])}px empty band (crossed by a rule, hairlines, three nested bordered boxes, a near-empty svg and an invisible button) was not found`);
       if (!has('blank', f => f.name.includes('#planted-blank'))) failed.push(`${scheme}: the planted flat picture was not found`);
       if (!has('blank', f => f.name.includes('#planted-canvas'))) failed.push(`${scheme}: the planted blank canvas was not found`);
+      if (!has('blank', f => f.name.includes('#planted-missing') && f.text.includes('never loaded'))) failed.push(`${scheme}: the planted picture that never loads was not found`);
       if (!has('column', f => f.name.includes('#planted-column'))) failed.push(`${scheme}: the planted one-word-a-line link column was not found`);
-      if (has('gap', f => f.from < gap[0] - 200 && f.to > gap[1] + 200)) failed.push(`${scheme}: the planted hairline was not ignored`);
+      // The paragraphs either side are content: the band found must stop at them.
+      if (has('gap', f => f.from < gap[0] - 200 && f.to > gap[1] + 200)) failed.push(`${scheme}: the planted band was found running through the paragraphs around it`);
     }
   } finally { await context.close(); await analysis.close(); }
   return failed;
@@ -220,11 +240,12 @@ try {
   const files = (await readdir(dist, { recursive: true })).map(f => f.split(path.sep).join('/'));
   const all = sitePages(files);
   if (all.length < 60) throw new Error(`only ${all.length} pages found in dist/: run npm run build first`);
-  const pages = arg('pages') ? arg('pages').split(',') : all;
-  if (!report && !arg('pages')) {
+  const pages = arg('pages') ? arg('pages').split(',') : process.argv.includes('--controls') ? [] : all;
+  if (!report && !arg('pages') || process.argv.includes('--controls')) {
     const failed = await controls();
     for (const f of failed) problems.push(`empty-space control ${f}`);
-    console.log(`empty-space controls: ${failed.length ? `${failed.length} planted defects missed` : 'the planted gap, blank picture, blank canvas and squeezed column were each caught, in light and dark'}`);
+    if (process.argv.includes('--controls')) console.log(JSON.stringify(controlFindings, null, 1));
+    console.log(`empty-space controls: ${failed.length ? `${failed.length} planted defects missed` : 'the planted gap, blank picture, blank canvas, missing picture and squeezed column were each caught, in light and dark'}`);
   }
   // Every (size, page) is a job; a few workers share them, each with a context per size.
   const jobs = sizes.flatMap(size => pages.map(route => ({ size, route })));
