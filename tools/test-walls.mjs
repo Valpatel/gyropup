@@ -13,6 +13,7 @@ import { readdir, readFile } from 'node:fs/promises';
 import path from 'node:path';
 import { chromium, webkit } from '@playwright/test';
 import { createSiteServer } from './serve-site.mjs';
+import { renderTimeline } from './timeline.mjs';
 import { acknowledgePrototypeNotice } from './test-prototype-session.mjs';
 import { VIEWPORT, VISUAL, WALL_CLEARED, WALL_LIMIT, longestStretch, plantedScript, sitePages } from './site-walls.mjs';
 
@@ -82,6 +83,24 @@ try {
       if (wall.worst < WALL_CLEARED) problems.push(`walls ${route}: ${where}, under ${WALL_CLEARED}px: remove it from ${BACKLOG} and lower "left"`);
       else if (wall.worst > backlog.pages[route] * GROWTH) problems.push(`walls ${route}: ${where}, more than ${Math.round((GROWTH - 1) * 100)}% over the ${backlog.pages[route]}px recorded in ${BACKLOG}; a page on the backlog may not grow`);
     } else if (wall.worst > WALL_LIMIT) problems.push(`walls ${route}: ${where}; the limit is ${WALL_LIMIT}px. Lead with a diagram, a render, a chart from the page's own table or a status strip, or fold long evidence into <details>`);
+  }
+  // The change list on / and Progress, planted with this build's history but with the newest five changes text-only
+  // (a pull request that ends on receipt, fit-job or probe commits, as #181 did): the open list must still end on a
+  // picture, so neither page grows a wall whatever the git history looks like.
+  if (!report && !process.env.SITE_URL) {
+    const { events } = JSON.parse(await readFile(path.join(dist, 'site/timeline.json'), 'utf8'));
+    const quiet = events.map((e, i) => i < 5 ? { ...e, image: null } : e);
+    const planted = await context.newPage();
+    for (const [route, file, options] of [['/', 'index.html', { compact: true, show: 4 }], ['/designer/progress.html', 'designer/progress.html', { show: 5, more: quiet.length }]]) {
+      const html = (await readFile(path.join(dist, file), 'utf8')).replace(/<section id="changes"[\s\S]*?<\/section>/, renderTimeline(quiet, options));
+      await planted.route(base + route, r => r.fulfill({ status: 200, contentType: 'text/html', body: html }));
+      await planted.goto(base + route, { waitUntil: 'load' });
+      await planted.waitForFunction(() => !/progress/.test(location.pathname) || document.body.dataset.ready === '1', null, { timeout: 30000 })
+        .catch(() => problems.push(`walls ${route} with a text-only timeline: the report did not finish loading`));
+      await planted.evaluate(() => document.fonts.ready);
+      const wall = await planted.evaluate(longestStretch, VISUAL);
+      if (wall.worst > WALL_LIMIT) problems.push(`walls ${route} with the newest five changes text-only: ${wall.worst}px with nothing to look at, after "${wall.after}"; the change list must end on a picture (tools/timeline.mjs)`);
+    }
   }
   await context.close();
 } finally {

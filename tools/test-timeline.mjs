@@ -91,24 +91,32 @@ test('the open list ends on a picture; the text-only changes after it fold away,
   assert.doesNotMatch(renderTimeline(events, { show: 2, compact: true }), /<details/, 'with nothing after the picture, nothing folds');
 });
 
-test('a run of text-only changes at the top (data-only commits) folds even with no picture among them', () => {
+test('a run of text-only changes at the top (data-only commits) folds in place, and the next picture is shown open', () => {
   const ev = (n, image) => ({ sha: String(n).repeat(40).slice(0, 40), date: '2026-11-01T00:00:00Z', pr: n, label: `L${n}`, subsystems: [], decisions: [],
     image: image ? { file: 'exports/x.png', before: false } : null, kinds: { records: 1 } });
-  const open = html => html.split('<details')[0].match(/pull\/\d+/g);
+  // The cards outside any fold, in page order, and the order of every card on the page.
+  const outside = html => html.replace(/<details[\s\S]*?<\/details>/g, '').match(/pull\/\d+/g);
+  const order = html => html.match(/pull\/\d+(?=")/g);
   // receipt, fit-job and probe commits on top, then pictured changes: the case that tripped tools/test-walls.mjs on #181
-  const events = [ev(1), ev(2), ev(3), ev(4), ev(5), ev(6, true), ev(7, true)];
+  const events = [ev(1), ev(2), ev(3), ev(4), ev(5), ev(6, true), ev(7, true), ev(8)];
+  const all = events.map(e => `pull/${e.pr}`);
   const progress = renderTimeline(events, { show: 5, more: events.length });
-  assert.deepEqual(open(progress), ['pull/1', 'pull/2']);
-  assert.match(progress, /<summary>5 earlier changes</);
+  assert.deepEqual(outside(progress), ['pull/1', 'pull/6'], 'the newest change, then the next one with a picture');
+  assert.match(progress, /<summary>4 changes without a picture<\/summary><ol class="tl-list">.*pull\/2".*pull\/5".*<\/ol><\/details><ol class="tl-list">.*pull\/6"/s);
+  assert.match(progress, /<summary>2 earlier changes</);
+  assert.deepEqual(order(progress), all, 'every change is on Progress once, in order');
   const home = renderTimeline(events, { show: 4, compact: true });
-  assert.deepEqual(open(home), ['pull/1', 'pull/2']);
-  assert.match(home, /<summary>2 earlier changes</);
-  // every change is still on the page, open or folded
-  for (const n of [1, 2, 3, 4, 5, 6, 7]) assert.match(progress, new RegExp(`pull/${n}"`));
-  // with no pictures at all, the same: two open, the rest folded
-  const none = renderTimeline(events.map(e => ({ ...e, image: null })), { show: 5, more: 6 });
-  assert.equal(open(none).length, 2);
-  assert.match(none, /<summary>5 earlier changes</);
+  assert.deepEqual(outside(home), ['pull/1', 'pull/6'], 'the home page reaches past its four for the picture');
+  assert.deepEqual(order(home), all.slice(0, 6));
+  assert.doesNotMatch(home, /earlier change/);
+  // One text-only change on top needs no fold: the picture right after it is simply shown.
+  const one = renderTimeline([ev(1), ev(2, true), ev(3)], { show: 4, compact: true });
+  assert.deepEqual(outside(one), ['pull/1', 'pull/2']);
+  assert.doesNotMatch(one, /without a picture/);
+  // With no picture anywhere there is nothing to end on: the newest stays open and the rest fold.
+  const none = renderTimeline(events.map(e => ({ ...e, image: null })), { show: 5, more: 8 });
+  assert.deepEqual(outside(none), ['pull/1']);
+  assert.match(none, /<summary>7 earlier changes</);
 });
 
 test('subsystems come from paths', () => {
