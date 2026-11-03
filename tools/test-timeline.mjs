@@ -10,7 +10,7 @@ import { parseHTML } from 'linkedom';
 import { chromium, webkit } from '@playwright/test';
 import { createSiteServer } from './serve-site.mjs';
 import { acknowledgePrototypeNotice } from './test-prototype-session.mjs';
-import { DESIGN_PATHS, collectTimeline, decisionChanges, gitIn, imagePaths, renderTimeline, shorten, subsystemOf } from './timeline.mjs';
+import { DESIGN_PATHS, SYNTHETIC_MERGE, changeUnits, collectTimeline, decisionChanges, gitIn, imagePaths, renderTimeline, shorten, subsystemOf } from './timeline.mjs';
 import { shortDate } from './status-board.mjs';
 
 const root = path.resolve(import.meta.dirname, '..');
@@ -30,6 +30,29 @@ test('labels: the first clause, capitalised, no merge boilerplate, cut at a word
   assert.equal(shorten('Merge body/program (#17): P0 shunt in the + lead (#11), fuse board on 10S (#12)'), 'P0 shunt in the + lead (#11), fuse board on 10S');
   const long = shorten('a '.repeat(80));
   assert.ok(long.length <= 84 && long.endsWith('…'));
+});
+
+test('CI\'s synthetic merge is opened into the pull request\'s commits, never shown as "Merge <sha> into <sha>"', () => {
+  const h = c => c.repeat(40);
+  const synth = `Merge ${h('a')} into ${h('b')}`;
+  assert.ok(SYNTHETIC_MERGE.test(synth));
+  for (const s of ['Merge pull request #12 from fork/topic', "Merge branch 'dev' into fix/x", `Merge ${h('a').slice(7)} into ${h('b')}`, `${synth} (edited)`])
+    assert.ok(!SYNTHETIC_MERGE.test(s), s);
+  // A fake history: base B0, the pull request's commits P1 and P2, and CI's merge M of P2 into B0.
+  const rec = (sha, parents, date, subject) => [sha, parents, date, subject, ''].join('\x1f') + '\x1e';
+  const logs = {
+    HEAD: rec('M', 'B0 P2', '2026-11-03T10:00:00Z', synth) + rec('B0', 'B', '2026-11-01T10:00:00Z', 'Body: the base'),
+    'B0..P2': rec('P2', 'P1', '2026-11-02T12:00:00Z', 'Rig: the second step') + rec('P1', 'B0', '2026-11-02T11:00:00Z', 'Rig: the first step'),
+  };
+  const fake = args => {
+    if (args.includes('--merges')) return ''; // the pull request's branch carries no pull-request merges of its own
+    return logs[args.at(-1)] ?? '';
+  };
+  const units = changeUnits(fake, 'HEAD');
+  assert.deepEqual(units.map(u => u.sha), ['P2', 'P1', 'B0']);
+  assert.ok(units.every(u => !SYNTHETIC_MERGE.test(u.subject)));
+  // Without the rule this merge would have been one unit with the synthetic subject.
+  assert.ok(!units.some(u => u.sha === 'M'));
 });
 
 test('decisions: added ones are new, edited ones revised, from the diff’s context', () => {
@@ -78,9 +101,12 @@ test('subsystems come from paths', () => {
 
 // Read again here, by its own commands: the merges that carry pull requests (a release from dev into main, a sync back)
 // are opened up, so each change is a pull request's merge or a direct commit, never a release.
+// CI's own merge of a pull request into its base ("Merge <sha> into <sha>") is opened the same way.
 const isIntegration = sha => {
-  const [p1, p2] = git('show', '-s', '--format=%P', sha).toString().trim().split(' ');
-  return !!p2 && /^Merge pull request #\d+ /m.test(git('log', '--first-parent', '--merges', '--format=%s', `${p1}..${p2}`).toString());
+  const [parents, subject] = git('show', '-s', '--format=%P%x1f%s', sha).toString().trim().split('\x1f');
+  const [p1, p2] = parents.split(' ');
+  return !!p2 && (/^Merge [0-9a-f]{40} into [0-9a-f]{40}$/.test(subject)
+    || /^Merge pull request #\d+ /m.test(git('log', '--first-parent', '--merges', '--format=%s', `${p1}..${p2}`).toString()));
 };
 /** The generator's rule, written out again: what a commit changed against its first parent decides if it shows. */
 const designChange = sha => {
