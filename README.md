@@ -1,10 +1,10 @@
 <div align="center">
 
-<img src="docs/img/hero/gyropup.svg" alt="Gyropup drawn from its real CAD: the body is traced, both wheel-legs slide in, the foam-ball turret drops on top, and the robot balances" width="100%">
+<img src="docs/img/hero/gyropup.svg" alt="Gyropup drawn from its real CAD: the body is traced, both wheel-legs slide in, the foam-ball turret drops on top, and the model sways gently" width="100%">
 
 # Gyropup
 
-**A research robot that balances on two wheel-legs, with a foam-ball turret, designed and simulated in the open.**
+**A research robot designed to balance on two wheel-legs, with a foam-ball turret: CAD and simulation in the open.**
 
 [![Licence: MIT](https://img.shields.io/badge/licence-MIT-287d8d)](LICENSE)
 [![Website](https://img.shields.io/badge/site-gyropup.com-bd3a12)](https://gyropup.com)
@@ -13,7 +13,7 @@
 
 [Website & playground](https://gyropup.com) · [Documentation map](docs/README.md) · [Prototype warning](docs/prototype-safety.md) · [Contributing](CONTRIBUTING.md)
 
-<sub>The banner is drawn from the robot's own STEP files (<code>exports/asm_*.step</code>) with hidden lines removed, by the <a href="https://github.com/mvalancy/mvalancy/tree/main/tools/hero">README banner generator</a>.</sub>
+<sub>The banner is drawn from the robot's own STEP files (<code>exports/asm_*.step</code>) with hidden lines removed, by the <a href="https://github.com/mvalancy/mvalancy/tree/ac04a7d37406b490a28affa494bf4d1d4f8a44d7/tools/hero">README banner generator</a>.</sub>
 
 </div>
 
