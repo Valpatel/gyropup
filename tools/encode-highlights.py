@@ -115,7 +115,7 @@ def main():
                                  h264=h264, vp9=vp9, intermediate='FFV1 yuv420p; both encodings from identical segments',
                                  poster_frame=30, font='designer/kit/vendor/fonts/inter.woff2'),
                    limitations=['Browser motion is illustrative, with integrated live projectiles; not a new full-robot physics result.',
-                                'Leg footage retains its historical 16.25 kg / 48.1 V / BotWheel / 60 N m baseline.',
+                                'Leg footage is the single-leg MuJoCo rig at 18.75 kg / 36 V / 10 in hub motor / 60 N m cap, recorded with its report.',
                                 'E1 is static load scaling of the recorded study (cad-agent v0.6.0 record), with a failed strength target; not transient dynamics.',
                                 'No new solver runs. Reproducible recipe and source identity, not a promise of cross-host identical encoded bytes.'],
                    outputs=outputs)

@@ -2,7 +2,7 @@
 
 Issue [104](https://github.com/Valpatel/gyropup/issues/104) replaces the old
 target-practice snapshot with a 22-second edit of current browser footage and
-explicitly labelled engineering studies (the leg-rig jump is historical). The public turret is the 48-part model
+explicitly labelled engineering studies. The public turret is the 48-part model
 shared by the landing character and simulator; the Orin bench adds 18 enclosure
 and adapter parts. The full-robot body remains an interim export. Current demo
 movement is scripted browser motion with projectile integration, not a newly
@@ -13,18 +13,20 @@ solved whole-robot physics run.
 | 0–4 s | Current turret close-up | Actual public CAD, with a camera orbit and aim change |
 | 4–7 s | Feed and flywheel inspection | Actual simulator callbacks and emitted balls, transparent shells |
 | 7–13 s | Target practice | Three actual projectile hits and three target knockdowns |
-| 13–16 s | Isolated leg-rig jump | Archived MuJoCo study, 16.25 kg per leg, 48.1 V, 60 N·m cap |
+| 13–16 s | Isolated leg-rig jump | MuJoCo single-leg rig on the current leg, 18.75 kg per leg, 36 V, 60 N·m cap |
 | 16–19 s | Hip-frame E1 | Static load scaling of the recorded study (cad-agent v0.6.0 record), not transient dynamics |
 | 19–22 s | Current robot | Current turret on the interim body, moving in the browser demo |
 
-The leg movie belongs to the report at
-`ae919f7211f236f398ff77cc25d00c2017c1ab9c`, not today's 18.75 kg / 36 V report.
+The leg movie and its report were recorded together at
+`e7b512870a39259a04a4930e2908af84001bc84e` (issue 8: 18.75 kg, 36 V, the 10 in
+hub-motor wheel). Until then the reel carried the 16.25 kg / 48.1 V clip of
+`ae919f7211f236f398ff77cc25d00c2017c1ab9c`, labelled as archived.
 E1 retains its 37.5 kg baseline, deformation ×16, SF 1.60 at the 4 mm gate mesh
 (1.40 at 3 mm) versus required 2.00, and static-load labels. Its entire native frame is preserved with side bars;
 the failed strength target is neither cropped nor covered. These are prototype
-demonstrations, not physical testing or a print/safety release. The separate
-Progress leg-gallery mismatch is tracked in
-[issue 106](https://github.com/Valpatel/gyropup/issues/106).
+demonstrations, not physical testing or a print/safety release. The Progress
+leg gallery's movies were re-recorded in the same run, so they now show the report
+they sit beside ([issue 106](https://github.com/Valpatel/gyropup/issues/106), section 1).
 
 ## Capture and encode
 
@@ -145,7 +147,7 @@ Inter font, and two encodings of the same edit. Outputs live in `web/highlights/
 - H.264 High 3.1, YUV420P, 720p30, fast-start MP4: 1,834,385 bytes.
 - VP9 Profile 0, YUV420P, 720p30, WebM: 1,464,316 bytes.
 - A 32,516-byte WebP poster from reel frame 30, with the same framing and lower third.
-- Source, edit, capture and output receipts, including the historical leg report.
+- Source, edit, capture and output receipts, including the pinned leg report.
 
 Each movie contains 660 frames and no audio. The player fetches only its supported
 encoding near the viewport, pauses offscreen or when the tab is hidden, and keeps
@@ -197,10 +199,10 @@ resumes.
 ## Validation
 
 `npm run test:highlight-media` checks source/output identity, mandatory input
-membership, historical report binding, codec/profile/raster/frame count, full
+membership, pinned leg-report binding, codec/profile/raster/frame count, full
 decode, MP4 atom order, transfer budgets, moving model pixels in every segment,
 equivalent H.264/VP9 pixels, retained E1 labels and the matching poster. Fault
-controls reject missing or changed sources, wrong historical baselines, incorrect
+controls reject missing or changed sources, wrong leg baselines, incorrect
 static labeling, changed output bytes and frozen frames. No CAD solver runs.
 
 `npm run test:highlights` checks actual decoded moving pixels, MIME types, one
