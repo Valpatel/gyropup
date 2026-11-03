@@ -105,10 +105,11 @@ The browser frames were recaptured on 2026-11-03 (UTC) for
 [PR 185](https://github.com/Valpatel/gyropup/pull/185), the recorded voice and pronunciation key. That PR moves
 Gyropup's fixed lines from `designer/character/talk.js` and `designer/sim.js` into `designer/character/lines.js` and
 adds `designer/character/pronounce.js`, so the guard rejected the old capture's source hashes; the footage has no
-audio and shows the same scenes. The capture ran from `7ce66843bcb6e2d54e2e63354bddb22d3e48765f`, served assets
-`84664b13a79a66d752ef`, through an owned `serve-site.mjs --ephemeral` listener, closed afterwards. The recorder
+audio and shows the same scenes. The capture was repeated after the PR's review changed `talk.js` and
+`pronounce.js` again; the final one ran from `11e7b4a5d4b4634c74cf87286bd2636fa43129d0`, served assets
+`ac1eb29a9928b2f418db`, through an owned `serve-site.mjs --ephemeral` listener, closed afterwards. The recorder
 produced all 480 frames and its shot and knockdown assertions passed. The unchanged encoder and guard produced and
-passed both companions (MP4 1,856,984 bytes, WebM 1,477,051), the poster and the receipts. The leg and E1 inserts
+passed both companions (MP4 1,859,253 bytes, WebM 1,477,100), the poster and the receipts. The leg and E1 inserts
 are unchanged. The previous capture's note follows.
 
 The reel was re-encoded with new frames on 2026-11-03 (UTC) for issue

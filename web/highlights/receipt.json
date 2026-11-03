@@ -8,14 +8,14 @@
     "seconds": 22,
     "audio": false
   },
-  "source_revision": "7ce66843bcb6e2d54e2e63354bddb22d3e48765f",
+  "source_revision": "11e7b4a5d4b4634c74cf87286bd2636fa43129d0",
   "source_hashes": {
     "designer/cadrig.js": "a2cb4029ef786e0793c5eb0018e0aa8d919d829bde8c5d378c1b1480c457faaf",
     "designer/character/eyes.js": "3348578a121b75ab7425c3b6591e864b41b09512e67b642832e6c6b683d2e11b",
     "designer/character/lines.js": "f8ed47cb08ed12fa508830a4143d49400bf3b245002d5d29f547f844ad75a613",
-    "designer/character/pronounce.js": "19f15bee5db5a40ac799506332ac8a7c274a45199db34bdbdcad71ae984dfbe4",
+    "designer/character/pronounce.js": "5f186d4f0ae5b8ff1be87fccf948371c203932b9f2d55e3aed679c62593e32f1",
     "designer/character/talk.css": "de4e533d2c1c147bfe15331e96be02fedf68aeb015fd24d978c97f8e2de376f8",
-    "designer/character/talk.js": "778ede215a0b7d650da9d34c4f4592abf118a1ea607ab315d6cc6b59ac5b2e42",
+    "designer/character/talk.js": "4a4d0c0f961e6325381fa7a95a82d05836a49af08be1215e33d04e0b976ec21a",
     "designer/current_turret.js": "f0ae7c297c53d5508e2ad2989f514f9269ba2a43b4ef542ead6afc9553735b8c",
     "designer/kit/appnav.js": "1f4630c749cdb3344faa8d7a7461acf70b6ab47cf7be5444533c99b753912e45",
     "designer/kit/hud.css": "aeac277ae41f294f3642488c654816e9a9e1180158b4ea61f0db81958e5891ae",
@@ -418,23 +418,23 @@
   ],
   "outputs": {
     "gyropup-highlights.mp4": {
-      "sha256": "22abff9947acdec474ec3a1a7af91a018dc376cc0531ad7248b6e1a06f8c7d0b",
-      "bytes": 1856984
+      "sha256": "7e3dbad798ae29c5d773776832fe9d5799f77aab901acfe3071f627ffbc14b1b",
+      "bytes": 1859253
     },
     "gyropup-highlights.webm": {
-      "sha256": "38a843a580411946a674f00f99658e5251abd616e0f7191b30cc09d6c13a0a37",
-      "bytes": 1477051
+      "sha256": "fbec7cc21b9e99ac0338f18009c50a84bae70231691c77390013f79fb671ed65",
+      "bytes": 1477100
     },
     "gyropup-highlights.webp": {
-      "sha256": "ae1ec5d1d515f475a6ec032fbb5bef1196be718bb191c522d6b39b2ed65ab396",
-      "bytes": 32646
+      "sha256": "5c49f52a2f19b8853db809c1022232a40e8840fb976f6457219eeda618f3d449",
+      "bytes": 32656
     },
     "capture-receipt.json": {
-      "sha256": "c8e6b3e532963025cf3704b71b54883a863d40b8d991d78e99f24571924f83bb",
-      "bytes": 114652
+      "sha256": "18f4a1e06603f4b271d4009ac5f78ceb7feaddb8f592240d00852db5691f0ea8",
+      "bytes": 114653
     },
     "capture-frames.json": {
-      "sha256": "c357bf84b529107db436c2a0d931eb21dd23fb054b25e325dcf7596f91969408",
+      "sha256": "2bf14d54e6ad65c462d5eadd6496c18411cba5efa73c5942110ef84c80efeacc",
       "bytes": 100989
     }
   }
