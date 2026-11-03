@@ -1,17 +1,17 @@
 {
  "toolkit": "cadagent.gates (connectivity, containment, relation table, fasteners, motion)",
- "fingerprint": "604b4d462acb976e",
+ "fingerprint": "547ce79317b313f7",
  "pile": "exports/turret/feed/pile.json",
  "verdicts": "exports/turret/gates",
  "seconds": {
-  "connectivity": 8.1,
+  "connectivity": 0.3,
   "hopper": 0.1,
-  "path": 6.2,
-  "sweep": 31.7,
-  "ammo_range": 8.0,
-  "fasteners": 12.7,
-  "motion_mechanisms": 9.1,
-  "motion_aim": 1492.9
+  "path": 6.1,
+  "sweep": 2.5,
+  "ammo_range": 7.7,
+  "fasteners": 11.6,
+  "motion_mechanisms": 1.8,
+  "motion_aim": 4.7
  },
  "ok": true,
  "gates": {
@@ -82,7 +82,7 @@
     {
      "id": "contact:board_bay|board_bay_lid",
      "status": "warn",
-     "message": "board_bay and board_bay_lid are in contact (touching, 599 mm2) but no interface, joint, fastener, contains or intended overlap declares it"
+     "message": "board_bay and board_bay_lid are in contact (touching, 646 mm2) but no interface, joint, fastener, contains or intended overlap declares it"
     },
     {
      "id": "contact:board_bay|tilt_yoke",
@@ -176,13 +176,19 @@
   },
   "fasteners": {
    "ok": true,
-   "status": "pass",
+   "status": "warn",
    "counts": {
-    "pass": 35,
-    "warn": 0,
+    "pass": 34,
+    "warn": 1,
     "fail": 0
    },
-   "findings": []
+   "findings": [
+    {
+     "id": "fastener:hopper_screws#0:tool",
+     "status": "warn",
+     "message": "the hex 2.5 reaches the head at step 1, but hopper_lid (fitted later) must come off before it can be removed"
+    }
+   ]
   },
   "motion_mechanisms": {
    "ok": true,
