@@ -83,7 +83,7 @@ box-shadow:0 0 0 2px rgba(6,6,9,.75),0 0 12px rgba(252,238,10,.45)}
 .fea-label.on{outline:2px solid var(--cyan);outline-offset:2px}
 .fea-load{position:absolute;left:0;top:0;padding:1px 6px;border-radius:4px;background:rgba(6,6,9,.78);color:#ff5c8d;font:600 10px var(--font-mono);
 border:1px solid rgba(255,42,109,.5);white-space:nowrap;transform:translate(-50%,-140%)}
-.fea-tip{position:fixed;z-index:6;pointer-events:none;background:rgba(14,14,20,.95);border:1px solid var(--hairline);border-radius:6px;
+.fea-tip{position:fixed;z-index:6;pointer-events:none;background:rgb(var(--gp-card-rgb,255 255 255) / .97);border:1px solid var(--hairline);border-radius:6px;
 padding:6px 9px;font:11px/1.5 var(--font-mono);color:var(--text-dim);max-width:270px;box-shadow:0 4px 18px rgba(0,0,0,.5)}
 .fea-tip b{color:var(--text);font-weight:600} .fea-tip .bad{color:var(--magenta)} .fea-tip .dim{color:var(--muted)}
 .fea-spots{display:grid;gap:6px}

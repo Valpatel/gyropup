@@ -1,11 +1,11 @@
 /* The reel is a player; navigation stays in the section's simulator link. */
-.play-section{grid-template-columns:minmax(0,.8fr) minmax(0,1.2fr);gap:40px;background:linear-gradient(145deg,#edf4e7,#e0ebd8)}
+.play-section{grid-template-columns:minmax(0,.8fr) minmax(0,1.2fr);gap:40px;background:linear-gradient(145deg,var(--gp-soft),var(--gp-soft-2))}
 .highlight-card{min-width:0;margin:0;overflow:hidden;border:1px solid #46626a;border-radius:18px;background:linear-gradient(145deg,#213e49,#132d37);color:#fffaf2;box-shadow:inset 0 1px 0 #ffffff26,0 18px 34px #17343c20,0 3px 7px #17343c15}
 .highlight-heading{display:flex;align-items:center;justify-content:space-between;gap:12px;padding:17px 20px;font-size:12px;font-weight:650;line-height:1.5}
 .highlight-length{flex:none;color:#c0d8d9;font:10px/1.5 'JetBrains Mono',monospace}
-.highlight-screen{position:relative;width:100%;aspect-ratio:16/9;background:#d8e9ee;overflow:hidden}
+.highlight-screen{position:relative;width:100%;aspect-ratio:16/9;background:var(--gp-sky-a);overflow:hidden}
 .highlight-screen video,.highlight-poster{position:absolute;inset:0;display:block;width:100%;height:100%;object-fit:contain}
-.highlight-poster{color:#234652;font-size:13px;line-height:1.5}
+.highlight-poster{color:var(--gp-sky-ink);font-size:13px;line-height:1.5}
 .highlight-screen video{opacity:0}
 .highlight-card[data-ready="true"] .highlight-screen video{opacity:1}
 .highlight-card[data-ready="true"] .highlight-poster{visibility:hidden}

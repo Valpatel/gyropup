@@ -46,7 +46,10 @@ export function createStage(container, opts = {}) {
   const scene = new THREE.Scene();
   // A transparent canvas leaves the CSS sky bright at dusk. Keep sky and lit
   // geometry on the same eased daylight level in every playground.
-  const sky = { day: new THREE.Color(0xe8efdc), night: new THREE.Color(0x081319) };
+  // The day sky follows the page's theme (--gp-stage-sky in web/theme.css) until a caller sets its own background.
+  const pageSky = () => getComputedStyle(document.documentElement).getPropertyValue('--gp-stage-sky').trim() || '#e8efdc';
+  let followPage = true;
+  const sky = { day: new THREE.Color(pageSky()), night: new THREE.Color(0x081319) };
   scene.background = sky.day.clone();
   const camera = new THREE.PerspectiveCamera(38, 1, 0.05, 50);   // near/far are set from the model size in frame()
   const controls = new OrbitControls(camera, renderer.domElement);
@@ -83,7 +86,7 @@ export function createStage(container, opts = {}) {
 
   /** Viewer palette: keep the product's smooth zoom, fitting and sky dimming. */
   function setPalette({accent:nextAccent=accent,grid:nextGrid=0x0e7490,glow:nextGlow=0x00f0ff,background}={}) {
-    if(background!==undefined){sky.day.set(background);scene.background.copy(sky.day);}
+    if(background!==undefined){followPage=false;sky.day.set(background);scene.background.copy(sky.day);}
     rim.color.set(nextAccent);
     const replacement=new THREE.GridHelper(1,52,nextAccent,nextGrid);
     grid.geometry.dispose();grid.geometry=replacement.geometry;
@@ -139,6 +142,10 @@ export function createStage(container, opts = {}) {
     pad.material.opacity = light.base.pad * (0.45 + 0.55 * s);
   }
   applyLight();
+  const onPageTheme = () => { if (followPage) { sky.day.set(pageSky()); applyLight(); } };
+  const scheme = matchMedia('(prefers-color-scheme: dark)');
+  document.addEventListener('gyropup:themechange', onPageTheme);
+  scheme.addEventListener?.('change', onPageTheme);
 
   const insets = { left: 0, right: 0, top: 0, bottom: 0 };
   const size = () => [container.clientWidth || window.innerWidth, container.clientHeight || window.innerHeight];
@@ -230,7 +237,8 @@ export function createStage(container, opts = {}) {
 
   return {
     renderer, scene, camera, controls, root, frame, setInsets, fitView, setPalette,
-    setSceneBackground(day = 0xe8efdc, night = 0x081319) { sky.day.set(day); sky.night.set(night); applyLight(); },
+    /** No arguments: the page's own sky again (it follows the theme); otherwise a fixed day/night pair. */
+    setSceneBackground(day, night = 0x081319) { followPage = day === undefined; sky.day.set(followPage ? pageSky() : day); sky.night.set(night); applyLight(); },
     setSceneLight(v, immediate = false) { light.level = Math.max(0, Math.min(1, v)); if (immediate) { light.current = light.level; applyLight(); } },
     onFrame(cb) { callbacks.push(cb); },
     start() { if (!running && !disposed) { running = true; frameId = requestAnimationFrame(tick); } },
@@ -238,6 +246,7 @@ export function createStage(container, opts = {}) {
     dispose() {
       if (disposed) return;
       disposed = true; running = false; cancelAnimationFrame(frameId);
+      document.removeEventListener('gyropup:themechange', onPageTheme); scheme.removeEventListener?.('change', onPageTheme);
       observer.disconnect(); wheelZoom.dispose(); controls.dispose(); callbacks.length = 0;
       for(const object of [ground,grid,pad]){object.geometry.dispose();object.material.map?.dispose();object.material.dispose();}
       renderer.dispose(); renderer.forceContextLoss(); renderer.domElement.remove();
