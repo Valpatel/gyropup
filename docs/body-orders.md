@@ -34,7 +34,7 @@ How to order:
 
 ## 2. Bought parts, by seller
 
-### McMaster-Carr (mcmaster.com): $171.69
+### McMaster-Carr (mcmaster.com): $176.50
 
 | Task | Part | Used | Order | Price | Line | For | Backup |
 |---|---|---|---|---|---|---|---|
@@ -48,6 +48,7 @@ How to order:
 | T2 | [91239A224](https://www.mcmaster.com/91239A224/): Black-oxide class 10.9 button head hex drive screw, ISO 7380, M5 x 0.8 x 10 mm (tray, bell | 16 | 1 x 100-pack | $11.79 | $11.79 | P1: 1 plate post 1 foot, 1 plate post 1 head, 1 plate post 2 foot, 1 plate post 2 head, 1 plate post | McMaster-Carr $12.06 ([link](https://www.mcmaster.com/91239A228/)): M5 x 12 of the same series |
 | T2 | [91239A228](https://www.mcmaster.com/91239A228/): Black-oxide class 10.9 button head hex drive screw, ISO 7380, M5 x 0.8 x 12 mm (the hip fr | 40 | 1 x 100-pack | $12.06 | $12.06 | P1: 6 hip frame left, 4 tray flange left, 4 belly flange left, 6 hip frame right, 4 tray flange righ | McMaster-Carr $11.79 ([link](https://www.mcmaster.com/91239A224/)): M5 x 10 of the same series (engages 5.3 mm: only if the 12 is out) |
 | T2 | [91290A115](https://www.mcmaster.com/91290A115/): Black-Oxide Alloy Steel Socket Head Screw, US Origin, M3 x 0.5 mm Thread Size, 10 mm Long | 8 | 1 x 100-pack | $13.23 | $13.23 | P1: 2 bay pad 1, 2 bay pad 2, 2 bay pad 3, 2 bay pad 4 (cad/body_joints.py) | Belmetric $0.14 ([link](https://belmetric.com/m3x0-5-socket-head-cap-screw-din-912-class-12-9/)): in stock |
+| T2 | [91116A120](https://www.mcmaster.com/91116A120/): 18-8 Stainless Steel Oversized Washer, for M3 Screw, 3.2mm ID, 9.0mm OD, 0.7mm to 0.9mm Th | 8 | 1 x 100-pack | $4.81 | $4.81 | P1: 2 bay pad 1 (washer), 2 bay pad 2 (washer), 2 bay pad 3 (washer), 2 bay pad 4 (washer) (cad/body | Belmetric $0.08 ([link](https://belmetric.com/fender-washer-a2-stainless-din-9021/)): in stock |
 | T2 | [95947A065](https://www.mcmaster.com/95947A065/): Lightweight aluminium female-threaded hex standoff, 6 mm hex, M4 x 31 mm (the spine: betwe | 8 | 8 | $1.46 | $11.68 | the spine: between the cheeks in the hip frames' bolt rows | McMaster-Carr $1.35 ([link](https://www.mcmaster.com/95947A062/)): M4 x 30 of the same series, with a printed 1 mm washer at one end |
 | T2 | [95947A048](https://www.mcmaster.com/95947A048/): Lightweight aluminium female-threaded hex standoff, 6 mm hex, M3 x 16 mm (the J501 carrier | 4 | 4 | $0.81 | $3.24 | the J501 carrier on the compute pallet | McMaster-Carr $0.81 ([link](https://www.mcmaster.com/95947A051/)): M3 x 19 of the same series (the carrier 3 mm higher) |
 | T2 | [91294A126](https://www.mcmaster.com/91294A126/): Black-Oxide Alloy Steel Hex-Drive Flat Head Screw, 90 Degree Countersink, M3 x 0.5 mm Thre | 4 | 1 x 100-pack | $5.45 | $5.45 | the carrier standoffs up through the pallet's countersinks | Belmetric $0.18 ([link](https://belmetric.com/m3x0-5-flat-head-cap-screw-steel-10-9-din-7991/)): in stock |
@@ -185,7 +186,7 @@ How to order:
 |---|---|---|---|---|---|---|---|
 | T5 | [0997005.WXN](https://il.farnell.com/littelfuse/0997005-wxn/auto-blade-fuse-5a-58v/dp/2748834): Littelfuse MINI 58V blade fuse 5 A (DDR-60L-12 input; the 24 V J501 and turret branches) | 2 | 2 | $0.98 | $1.96 | the INA228's VBUS sense lead (W32, 22 AWG); one spare | Dasenic $0.39 ([link](https://www.dasenic.com/product/littelfuse-0997005wxn)): 17,902 in stock, $0.3878 at 25+ (search result, 2026-10-27) |
 
-**Bought parts: $1621.83** (whole packs at the first seller's price; shipping and tax extra).
+**Bought parts: $1626.64** (whole packs at the first seller's price; shipping and tax extra).
 
 ## 3. Listed, not in this order
 
@@ -223,9 +224,9 @@ How to order:
 | bay_door_front | 1 | petg | 128 x 102 x 4 | 66 | 2.6 | PETG; two knurled M3 x 10 thumbscrews into the rails' ends |
 | adapter_plate_rear | 1 | pa6-cf | 102 x 72 x 4 | 31 | 2.1 | PA6-CF; four M4 x 12 up into the belly's nuts; the adapter's screws into inserts set on arrival |
 | bay_door_rear | 1 | petg | 128 x 102 x 4 | 66 | 2.6 | PETG; two knurled M3 x 10 thumbscrews into the rails' ends |
-| bay_skid | 4 | tpu95-gyroid | 149 x 30 x 68 | 63 | 51.2 | crush pad (#19): TPU 95A HF gyroid lattice, 50 mm free, 30 mm stroke, 600 N plateau, on 3M VHB tape, its solid lip under the side plate's two low M3 x 10 (#26); the robot sits on these |
+| bay_skid | 4 | tpu95-gyroid | 149 x 30 x 68 | 64 | 51.7 | crush pad (#19): TPU 95A HF gyroid lattice, 50 mm free, 30 mm stroke, 600 N plateau, on 3M VHB tape, its solid lip under the side plate's two low M3 x 10 (#26); the robot sits on these |
 
-By material: pa6-cf 0.57 kg, 37.2 h, $45.32; tpu95 0.01 kg, 0.9 h, $0.35; petg 0.21 kg, 8.2 h, $2.91; tpu95-gyroid 0.25 kg, 51.2 h, $10.63. STLs beside the plan in `exports/body/`.
+By material: pa6-cf 0.57 kg, 37.2 h, $45.32; tpu95 0.01 kg, 0.9 h, $0.35; petg 0.21 kg, 8.2 h, $2.91; tpu95-gyroid 0.26 kg, 51.7 h, $10.75. STLs beside the plan in `exports/body/`.
 
 ## 6. The P2 cart (the head: order it once P1 balances on its tether)
 
@@ -259,10 +260,10 @@ The shell and the tub's printed parts are in `exports/body/shell/` with their ow
 
 | | |
 |---|---|
-| Bought (section 2) | $1621.83 |
+| Bought (section 2) | $1626.64 |
 | SendCutSend (section 1, instant prices) | $578.17 |
-| Filament used (section 5) | $59.21 |
-| **Body P0 + P1** | **$2259.21** |
+| Filament used (section 5) | $59.33 |
+| **Body P0 + P1** | **$2264.14** |
 | P2 cart (section 6) | $62.72 |
 | P3 cart (section 6b) | $84.03 |
 

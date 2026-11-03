@@ -1470,6 +1470,44 @@
    ]
   },
   {
+   "key": "washer_m3_large",
+   "id": "mcmaster-91116a120",
+   "qty": 8,
+   "for": "P1: 2 bay pad 1 (washer), 2 bay pad 2 (washer), 2 bay pad 3 (washer), 2 bay pad 4 (washer) (cad/body_joints.py)",
+   "vendor": "McMaster-Carr",
+   "part_number": "91116A120",
+   "name": "18-8 Stainless Steel Oversized Washer, for M3 Screw, 3.2mm ID, 9.0mm OD, 0.7mm to 0.9mm Thick",
+   "mass_g_each": 0.355,
+   "price_usd_each": 0.0481,
+   "url": "https://www.mcmaster.com/91116A120/",
+   "pack_qty": 100,
+   "sellers": [
+    {
+     "seller": "McMaster-Carr",
+     "url": "https://www.mcmaster.com/91116A120/",
+     "in_stock": null,
+     "ships_from": "US",
+     "price_usd": 4.81,
+     "pack_qty": 100
+    },
+    {
+     "seller": "Belmetric",
+     "url": "https://belmetric.com/fender-washer-a2-stainless-din-9021/",
+     "stock": "in stock",
+     "read_on": "2026-10-27",
+     "seller_pn": "WFE3X9SS",
+     "price_usd": 0.08
+    },
+    {
+     "seller": "Aspen Fasteners",
+     "url": "https://www.aspenfasteners.com/m3-din-9021-iso-7093-metric-fender-washers-a2-stainless-steel/",
+     "stock": "Contact Support for Availability Info",
+     "read_on": "2026-10-27",
+     "seller_pn": "ME380-3"
+    }
+   ]
+  },
+  {
    "key": "standoff_m4x31_ff",
    "id": "mcmaster-95947a065",
    "qty": 8,
@@ -2552,7 +2590,7 @@
    ]
   }
  ],
- "price_usd_known": 1621.83,
+ "price_usd_known": 1626.64,
  "p2_usd": 62.72,
  "made_to_order_estimate_usd": 459.0,
  "p3_usd": 84.03,

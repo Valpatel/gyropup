@@ -1008,13 +1008,13 @@
     "bay_floor"
    ],
    "bom": "turret_screw_m3x10",
-   "note": "#26: a crush pad's lip held by the side plate's low screws into the floor's nuts (an M3 washer on the TPU)",
+   "note": "#26: a crush pad's lip held by the side plate's low screws into the floor's nuts (a \u00d89 M3 washer on the TPU; snug, medium-strength threadlocker (TPU 95A in the clamp creeps))",
    "screw_part": null,
    "grip_mm": [
-    6.75
+    7.05
    ],
    "engagement_mm": [
-    3.96
+    3.71
    ],
    "problems": []
   },
@@ -1033,13 +1033,13 @@
     "bay_floor"
    ],
    "bom": "turret_screw_m3x10",
-   "note": "#26: a crush pad's lip held by the side plate's low screws into the floor's nuts (an M3 washer on the TPU)",
+   "note": "#26: a crush pad's lip held by the side plate's low screws into the floor's nuts (a \u00d89 M3 washer on the TPU; snug, medium-strength threadlocker (TPU 95A in the clamp creeps))",
    "screw_part": null,
    "grip_mm": [
-    6.75
+    7.05
    ],
    "engagement_mm": [
-    3.96
+    3.71
    ],
    "problems": []
   },
@@ -1129,13 +1129,13 @@
     "bay_floor"
    ],
    "bom": "turret_screw_m3x10",
-   "note": "#26: a crush pad's lip held by the side plate's low screws into the floor's nuts (an M3 washer on the TPU)",
+   "note": "#26: a crush pad's lip held by the side plate's low screws into the floor's nuts (a \u00d89 M3 washer on the TPU; snug, medium-strength threadlocker (TPU 95A in the clamp creeps))",
    "screw_part": null,
    "grip_mm": [
-    6.75
+    7.05
    ],
    "engagement_mm": [
-    3.96
+    3.71
    ],
    "problems": []
   },
@@ -1154,13 +1154,13 @@
     "bay_floor"
    ],
    "bom": "turret_screw_m3x10",
-   "note": "#26: a crush pad's lip held by the side plate's low screws into the floor's nuts (an M3 washer on the TPU)",
+   "note": "#26: a crush pad's lip held by the side plate's low screws into the floor's nuts (a \u00d89 M3 washer on the TPU; snug, medium-strength threadlocker (TPU 95A in the clamp creeps))",
    "screw_part": null,
    "grip_mm": [
-    6.75
+    7.05
    ],
    "engagement_mm": [
-    3.96
+    3.71
    ],
    "problems": []
   },
@@ -2408,13 +2408,13 @@
     "bay_floor"
    ],
    "bom": "turret_screw_m3x10",
-   "note": "#26: a crush pad's lip held by the side plate's low screws into the floor's nuts (an M3 washer on the TPU)",
+   "note": "#26: a crush pad's lip held by the side plate's low screws into the floor's nuts (a \u00d89 M3 washer on the TPU; snug, medium-strength threadlocker (TPU 95A in the clamp creeps))",
    "screw_part": null,
    "grip_mm": [
-    6.75
+    7.05
    ],
    "engagement_mm": [
-    3.96
+    3.71
    ],
    "problems": []
   },
@@ -2433,13 +2433,13 @@
     "bay_floor"
    ],
    "bom": "turret_screw_m3x10",
-   "note": "#26: a crush pad's lip held by the side plate's low screws into the floor's nuts (an M3 washer on the TPU)",
+   "note": "#26: a crush pad's lip held by the side plate's low screws into the floor's nuts (a \u00d89 M3 washer on the TPU; snug, medium-strength threadlocker (TPU 95A in the clamp creeps))",
    "screw_part": null,
    "grip_mm": [
-    6.75
+    7.05
    ],
    "engagement_mm": [
-    3.96
+    3.71
    ],
    "problems": []
   },
@@ -2529,13 +2529,13 @@
     "bay_floor"
    ],
    "bom": "turret_screw_m3x10",
-   "note": "#26: a crush pad's lip held by the side plate's low screws into the floor's nuts (an M3 washer on the TPU)",
+   "note": "#26: a crush pad's lip held by the side plate's low screws into the floor's nuts (a \u00d89 M3 washer on the TPU; snug, medium-strength threadlocker (TPU 95A in the clamp creeps))",
    "screw_part": null,
    "grip_mm": [
-    6.75
+    7.05
    ],
    "engagement_mm": [
-    3.96
+    3.71
    ],
    "problems": []
   },
@@ -2554,13 +2554,13 @@
     "bay_floor"
    ],
    "bom": "turret_screw_m3x10",
-   "note": "#26: a crush pad's lip held by the side plate's low screws into the floor's nuts (an M3 washer on the TPU)",
+   "note": "#26: a crush pad's lip held by the side plate's low screws into the floor's nuts (a \u00d89 M3 washer on the TPU; snug, medium-strength threadlocker (TPU 95A in the clamp creeps))",
    "screw_part": null,
    "grip_mm": [
-    6.75
+    7.05
    ],
    "engagement_mm": [
-    3.96
+    3.71
    ],
    "problems": []
   },
@@ -3376,6 +3376,26 @@
    "eyes_board",
    "eyes_clip",
    "clamped between the clip and the face round its window"
+  ],
+  [
+   "bay_skid_1",
+   "bay_floor",
+   "3M VHB tape (and its lip's two screws, #26)"
+  ],
+  [
+   "bay_skid_2",
+   "bay_floor",
+   "3M VHB tape (and its lip's two screws, #26)"
+  ],
+  [
+   "bay_skid_3",
+   "bay_floor",
+   "3M VHB tape (and its lip's two screws, #26)"
+  ],
+  [
+   "bay_skid_4",
+   "bay_floor",
+   "3M VHB tape (and its lip's two screws, #26)"
   ],
   [
    "cheek_nuts_right",

@@ -3498,7 +3498,7 @@
     "splice_application": "https://www.te.com/commerce/DocumentDelivery/DDEController?Action=srchrtrv&DocFormat=pdf&DocLang=English&DocNm=114-2157&DocType=Specification+Or+Standard&PartCntxt=320559",
     "wire": "https://www.remingtonindustries.com/content/PTFE%20Hook%20Up%20Wire%20Data%20Sheet.pdf"
   },
-  "seconds": 30.37,
+  "seconds": 32.11,
   "runtime": {
     "cadquery": "2.8.0",
     "OCP": "7.9.3.1"
@@ -3508,13 +3508,13 @@
     "files": {
       "cad/assembly.py": "6e328b8342bde8e2d63abf972a5bff7a2e14389f000d903ec0e1d6bcb7498864",
       "cad/assembly_checks.py": "33ee6454e3477586e2a2dc7af2901e60678ca61a567152d5d7e987bfde104122",
-      "cad/body_battery.py": "3cabcad481d6712e9030a60bd7e37bb4f72a646d3477b89a471c9b86456d20c1",
-      "cad/body_bom.py": "cd7f7bfc9d9b81a1c9e49be93bcd05e32457ccf52d148fdf407b0fb107382d35",
+      "cad/body_battery.py": "6603a6abcb13af8308391d1fa0647f382eab065c324995365937827437a5156d",
+      "cad/body_bom.py": "e0d5bc81fbd109becf3eade173441bc4fb99c68ff5ff84e5f81e2982042d5b31",
       "cad/body_frame.py": "7605925a5a4cd5d1726431311e0a2e3de3a6518e9a4891bfbeac077a46b47437",
       "cad/body_fuse_board.py": "b705420639121f67e085d47d697dc05d7316737b0fcb7ad06bb3483e8ff01f2d",
       "cad/body_guards.py": "cc9f220ca9d4708eb81b86396d483115f03fe7a7be2f3bdfd8c5a998f521ffb8",
-      "cad/body_joints.py": "45a8c795f2a5dbcd349f4b2c92c52083cfc5b209389645d824b43708ccc252c3",
-      "cad/body_layout.py": "ed3717d6e879b0f84b2695822b8855513f755a908a90d5ca34f4f1903d883379",
+      "cad/body_joints.py": "3248153de3f3f4ff6366dcb9aae212b97b78e62a17369dab5458d49cdfc26b92",
+      "cad/body_layout.py": "254ade41aef5a46d918bd07b77d51665bd0ab571856dfe7df34604936554ca93",
       "cad/body_legloads.py": "795ba8985155d2fea01a5463f737c3cccb1ce3c0082951eee05374ea172bc1cf",
       "cad/body_params.py": "b53d6cf1425ff36fae8c427d7df9a8c07da02b6402219b1c4992c173db8f2cbd",
       "cad/body_sections.py": "8a4c3d3d395605b297e851cea7a54c4d290df509b5fe5754a1bef335adc62963",
@@ -3553,7 +3553,7 @@
       "cad/rig_views.py": "6c06380d63be63c3a2aa32644bb52a5c24b5d1771a113686deea524705d63dbe",
       "cad/rs04_lug_checks.py": "02a75e6dd5d28c6c8c149141d100d1386125197f5edfb34143565c72d8a8dfb5",
       "cad/studies.py": "35149401f3a753024568eba0b34765419ed535d42c5bf19a11544d13cad8f823",
-      "cad/test_body.py": "f4b35bf4e55532b3c0f0f294a95f2f356858a36cd89b8baf62ca222fe3171599",
+      "cad/test_body.py": "5875a19bc2b3591721dc466d2b598b3b7cdf5dbfba22cdcde1c2017bcae66b27",
       "cad/test_leg_loads.py": "0ed04011ea672aa8bc387af272ddfa1783ec4fa1f379fde1e3dfbd9201867b51",
       "cad/turret.py": "e4003ceac5d33838ccda718d2fb6f5c66171bd7040c3b219b7fab7dd3da3fd0b",
       "cad/turret_assembly.py": "480799c724c799954a520c1ecd9c0b4d383cce752efdac4f3c3f6a6da7aaf2e3",
@@ -3604,13 +3604,13 @@
   "source_sha256": {
     "cad/assembly.py": "6e328b8342bde8e2d63abf972a5bff7a2e14389f000d903ec0e1d6bcb7498864",
     "cad/assembly_checks.py": "33ee6454e3477586e2a2dc7af2901e60678ca61a567152d5d7e987bfde104122",
-    "cad/body_battery.py": "3cabcad481d6712e9030a60bd7e37bb4f72a646d3477b89a471c9b86456d20c1",
-    "cad/body_bom.py": "cd7f7bfc9d9b81a1c9e49be93bcd05e32457ccf52d148fdf407b0fb107382d35",
+    "cad/body_battery.py": "6603a6abcb13af8308391d1fa0647f382eab065c324995365937827437a5156d",
+    "cad/body_bom.py": "e0d5bc81fbd109becf3eade173441bc4fb99c68ff5ff84e5f81e2982042d5b31",
     "cad/body_frame.py": "7605925a5a4cd5d1726431311e0a2e3de3a6518e9a4891bfbeac077a46b47437",
     "cad/body_fuse_board.py": "b705420639121f67e085d47d697dc05d7316737b0fcb7ad06bb3483e8ff01f2d",
     "cad/body_guards.py": "cc9f220ca9d4708eb81b86396d483115f03fe7a7be2f3bdfd8c5a998f521ffb8",
-    "cad/body_joints.py": "45a8c795f2a5dbcd349f4b2c92c52083cfc5b209389645d824b43708ccc252c3",
-    "cad/body_layout.py": "ed3717d6e879b0f84b2695822b8855513f755a908a90d5ca34f4f1903d883379",
+    "cad/body_joints.py": "3248153de3f3f4ff6366dcb9aae212b97b78e62a17369dab5458d49cdfc26b92",
+    "cad/body_layout.py": "254ade41aef5a46d918bd07b77d51665bd0ab571856dfe7df34604936554ca93",
     "cad/body_legloads.py": "795ba8985155d2fea01a5463f737c3cccb1ce3c0082951eee05374ea172bc1cf",
     "cad/body_params.py": "b53d6cf1425ff36fae8c427d7df9a8c07da02b6402219b1c4992c173db8f2cbd",
     "cad/body_sections.py": "8a4c3d3d395605b297e851cea7a54c4d290df509b5fe5754a1bef335adc62963",
@@ -3649,7 +3649,7 @@
     "cad/rig_views.py": "6c06380d63be63c3a2aa32644bb52a5c24b5d1771a113686deea524705d63dbe",
     "cad/rs04_lug_checks.py": "02a75e6dd5d28c6c8c149141d100d1386125197f5edfb34143565c72d8a8dfb5",
     "cad/studies.py": "35149401f3a753024568eba0b34765419ed535d42c5bf19a11544d13cad8f823",
-    "cad/test_body.py": "f4b35bf4e55532b3c0f0f294a95f2f356858a36cd89b8baf62ca222fe3171599",
+    "cad/test_body.py": "5875a19bc2b3591721dc466d2b598b3b7cdf5dbfba22cdcde1c2017bcae66b27",
     "cad/test_leg_loads.py": "0ed04011ea672aa8bc387af272ddfa1783ec4fa1f379fde1e3dfbd9201867b51",
     "cad/turret.py": "e4003ceac5d33838ccda718d2fb6f5c66171bd7040c3b219b7fab7dd3da3fd0b",
     "cad/turret_assembly.py": "480799c724c799954a520c1ecd9c0b4d383cce752efdac4f3c3f6a6da7aaf2e3",
@@ -3688,7 +3688,7 @@
     "catalog/wheel_motors.json": "e92baa60e433e177d87450145943c32bd6b60bebb97e1c1746354aa00f2dbc99",
     "designs/default.json": "3dc7d04d0d6eeec81decefa360f3904b093f19515d6944910c2cb20c976db211"
   },
-  "input_fingerprint": "d332866180b40b06c05c7e10c8bea8016701b5ead46be9e697f2697c4bf445ab",
+  "input_fingerprint": "389b76e135483976a4b0c832f7af074829783f499240f2cae6a501fd5037f99e",
   "relation_tolerances": {
     "touch_mm": 0.01,
     "overlap_mm3": 1e-06,
@@ -7441,8 +7441,8 @@
     "Base and carrier changes require renewed structural, print and physical-fit qualification."
   ],
   "artifact_sha256": {
-    "carrier-wiring-candidate.step": "f7d347a021d2e708b8f0b67ae978a2e08920296f632db75fce20c2344ab77137",
-    "pan-base-wiring-candidate.step": "5f967739195d86bdddaa8d765fd4fd3dba69394e7f07bf46f00b9a0717ac2dd4",
-    "carrier-wiring-layout.step": "7516faa0cac3e1c20927ae11ecc84072872b91d81332fb18e4dae4abd2040526"
+    "carrier-wiring-candidate.step": "4651870d1d1d28c9d358c6f63984db1f9ea9773f50f442a7d95823e0c0684645",
+    "pan-base-wiring-candidate.step": "b2fca757d10aa97868ca80296700da5eaaba5615440c201f7d34eb27909d8840",
+    "carrier-wiring-layout.step": "3c88f6a241087c9211a06867c98e2fdbce2d4871a473beb299dcf91b9134657a"
   }
 }

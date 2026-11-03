@@ -1,22 +1,22 @@
 {
  "P1": {
   "stage": "P1",
-  "total_kg": 34.94,
+  "total_kg": 34.95,
   "com_mm": [
    3.2,
    -1.1,
-   -77.9
+   -78.0
   ],
   "groups_kg": {
    "legs": 22.674,
-   "frame": 4.91,
+   "frame": 4.92,
    "compute": 1.513,
    "power": 1.739,
    "deck": 0.83,
    "battery": 3.27
   },
   "legs_kg": 22.67,
-  "body_and_head_kg": 12.26,
+  "body_and_head_kg": 12.27,
   "rows": [
    {
     "group": "legs",
@@ -1143,44 +1143,44 @@
    {
     "group": "frame",
     "name": "frame.bay_skid_1",
-    "mass_g": 63.3,
+    "mass_g": 64.0,
     "com_mm": [
-     -75.5,
-     37.6,
-     -244.6
+     -75.6,
+     37.8,
+     -244.5
     ],
     "basis": "CAD (sheet and printed solids)"
    },
    {
     "group": "frame",
     "name": "frame.bay_skid_2",
-    "mass_g": 63.3,
+    "mass_g": 64.0,
     "com_mm": [
-     75.5,
-     37.6,
-     -244.6
+     75.6,
+     37.8,
+     -244.5
     ],
     "basis": "CAD (sheet and printed solids)"
    },
    {
     "group": "frame",
     "name": "frame.bay_skid_3",
-    "mass_g": 63.3,
+    "mass_g": 64.0,
     "com_mm": [
-     -75.5,
-     -37.6,
-     -244.6
+     -75.6,
+     -37.8,
+     -244.5
     ],
     "basis": "CAD (sheet and printed solids)"
    },
    {
     "group": "frame",
     "name": "frame.bay_skid_4",
-    "mass_g": 63.3,
+    "mass_g": 64.0,
     "com_mm": [
-     75.5,
-     -37.6,
-     -244.6
+     75.6,
+     -37.8,
+     -244.5
     ],
     "basis": "CAD (sheet and printed solids)"
    },
@@ -1473,13 +1473,13 @@
    {
     "group": "frame",
     "name": "bay_pads_solid_lips",
-    "mass_g": 46.6,
+    "mass_g": 54.5,
     "com_mm": [
      0.0,
      0.0,
      -221.6
     ],
-    "basis": "CAD: the pads' webs and lips are solid TPU, not lattice (#26)"
+    "basis": "CAD: the pads' webs, their chamfers and lips are solid TPU, not lattice (#26)"
    },
    {
     "group": "power",
@@ -1711,7 +1711,7 @@
  },
  "P3": {
   "stage": "P3",
-  "total_kg": 38.75,
+  "total_kg": 38.76,
   "com_mm": [
    0.4,
    -1.0,
@@ -1719,7 +1719,7 @@
   ],
   "groups_kg": {
    "legs": 22.674,
-   "frame": 5.044,
+   "frame": 5.055,
    "shell": 1.11,
    "compute": 1.513,
    "power": 1.739,
@@ -1727,7 +1727,7 @@
    "battery": 3.27
   },
   "legs_kg": 22.67,
-  "body_and_head_kg": 16.08,
+  "body_and_head_kg": 16.09,
   "rows": [
    {
     "group": "legs",
@@ -2865,44 +2865,44 @@
    {
     "group": "frame",
     "name": "frame.bay_skid_1",
-    "mass_g": 63.3,
+    "mass_g": 64.0,
     "com_mm": [
-     -75.5,
-     37.6,
-     -244.6
+     -75.6,
+     37.8,
+     -244.5
     ],
     "basis": "CAD (sheet and printed solids)"
    },
    {
     "group": "frame",
     "name": "frame.bay_skid_2",
-    "mass_g": 63.3,
+    "mass_g": 64.0,
     "com_mm": [
-     75.5,
-     37.6,
-     -244.6
+     75.6,
+     37.8,
+     -244.5
     ],
     "basis": "CAD (sheet and printed solids)"
    },
    {
     "group": "frame",
     "name": "frame.bay_skid_3",
-    "mass_g": 63.3,
+    "mass_g": 64.0,
     "com_mm": [
-     -75.5,
-     -37.6,
-     -244.6
+     -75.6,
+     -37.8,
+     -244.5
     ],
     "basis": "CAD (sheet and printed solids)"
    },
    {
     "group": "frame",
     "name": "frame.bay_skid_4",
-    "mass_g": 63.3,
+    "mass_g": 64.0,
     "com_mm": [
-     75.5,
-     -37.6,
-     -244.6
+     75.6,
+     -37.8,
+     -244.5
     ],
     "basis": "CAD (sheet and printed solids)"
    },
@@ -3360,13 +3360,13 @@
    {
     "group": "frame",
     "name": "bay_pads_solid_lips",
-    "mass_g": 46.6,
+    "mass_g": 54.5,
     "com_mm": [
      0.0,
      0.0,
      -221.6
     ],
-    "basis": "CAD: the pads' webs and lips are solid TPU, not lattice (#26)"
+    "basis": "CAD: the pads' webs, their chamfers and lips are solid TPU, not lattice (#26)"
    },
    {
     "group": "power",
@@ -3674,10 +3674,10 @@
   ],
   "gate": {
    "ceiling_kg": 37.0,
-   "gap_kg": 1.75,
+   "gap_kg": 1.76,
    "open_scheduled_g": -500,
-   "with_scheduled_levers_kg": 38.25,
-   "body_and_head_with_levers_kg": 15.58,
+   "with_scheduled_levers_kg": 38.26,
+   "body_and_head_with_levers_kg": 15.59,
    "leg_each_kg": 11.335,
    "pass": false,
    "on_call_next": [
@@ -3685,7 +3685,7 @@
     "alu_standoffs",
     "cooler_34mm"
    ],
-   "margin_kg": -1.25,
+   "margin_kg": -1.26,
    "on_call_open_g": -2301,
    "rule": "the P3 ledger with every scheduled lever taken (the open ones at the plan's grams) under the 37.0 kg ceiling, each leg under 10.85 kg and the body and head under 15.3 kg (D71); over it, the on-call levers go in order before the next order, each with the user's or the coordinator's word"
   }

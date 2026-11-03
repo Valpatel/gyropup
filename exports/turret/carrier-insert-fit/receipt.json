@@ -1,17 +1,17 @@
 {
   "schema": "gyropup.carrier-insert-fit/1",
-  "source_revision": "7c968900b5ecb7b903d960da1a42af0f3f5306d3",
+  "source_revision": "df492b452c1e0b931c1471858d3ea5255e023415",
   "inputs": {
     "files": {
       "cad/assembly.py": "6e328b8342bde8e2d63abf972a5bff7a2e14389f000d903ec0e1d6bcb7498864",
       "cad/assembly_checks.py": "33ee6454e3477586e2a2dc7af2901e60678ca61a567152d5d7e987bfde104122",
-      "cad/body_battery.py": "3cabcad481d6712e9030a60bd7e37bb4f72a646d3477b89a471c9b86456d20c1",
-      "cad/body_bom.py": "cd7f7bfc9d9b81a1c9e49be93bcd05e32457ccf52d148fdf407b0fb107382d35",
+      "cad/body_battery.py": "6603a6abcb13af8308391d1fa0647f382eab065c324995365937827437a5156d",
+      "cad/body_bom.py": "e0d5bc81fbd109becf3eade173441bc4fb99c68ff5ff84e5f81e2982042d5b31",
       "cad/body_frame.py": "7605925a5a4cd5d1726431311e0a2e3de3a6518e9a4891bfbeac077a46b47437",
       "cad/body_fuse_board.py": "b705420639121f67e085d47d697dc05d7316737b0fcb7ad06bb3483e8ff01f2d",
       "cad/body_guards.py": "cc9f220ca9d4708eb81b86396d483115f03fe7a7be2f3bdfd8c5a998f521ffb8",
-      "cad/body_joints.py": "45a8c795f2a5dbcd349f4b2c92c52083cfc5b209389645d824b43708ccc252c3",
-      "cad/body_layout.py": "ed3717d6e879b0f84b2695822b8855513f755a908a90d5ca34f4f1903d883379",
+      "cad/body_joints.py": "3248153de3f3f4ff6366dcb9aae212b97b78e62a17369dab5458d49cdfc26b92",
+      "cad/body_layout.py": "254ade41aef5a46d918bd07b77d51665bd0ab571856dfe7df34604936554ca93",
       "cad/body_legloads.py": "795ba8985155d2fea01a5463f737c3cccb1ce3c0082951eee05374ea172bc1cf",
       "cad/body_params.py": "b53d6cf1425ff36fae8c427d7df9a8c07da02b6402219b1c4992c173db8f2cbd",
       "cad/body_sections.py": "8a4c3d3d395605b297e851cea7a54c4d290df509b5fe5754a1bef335adc62963",
@@ -50,7 +50,7 @@
       "cad/rig_views.py": "6c06380d63be63c3a2aa32644bb52a5c24b5d1771a113686deea524705d63dbe",
       "cad/rs04_lug_checks.py": "02a75e6dd5d28c6c8c149141d100d1386125197f5edfb34143565c72d8a8dfb5",
       "cad/studies.py": "35149401f3a753024568eba0b34765419ed535d42c5bf19a11544d13cad8f823",
-      "cad/test_body.py": "f4b35bf4e55532b3c0f0f294a95f2f356858a36cd89b8baf62ca222fe3171599",
+      "cad/test_body.py": "5875a19bc2b3591721dc466d2b598b3b7cdf5dbfba22cdcde1c2017bcae66b27",
       "cad/test_leg_loads.py": "0ed04011ea672aa8bc387af272ddfa1783ec4fa1f379fde1e3dfbd9201867b51",
       "cad/turret.py": "e4003ceac5d33838ccda718d2fb6f5c66171bd7040c3b219b7fab7dd3da3fd0b",
       "cad/turret_assembly.py": "480799c724c799954a520c1ecd9c0b4d383cce752efdac4f3c3f6a6da7aaf2e3",
@@ -696,10 +696,10 @@
   ],
   "files": {
     "base-anchor.3mf": "6c2a09c805a503e327404999aba049bd897911074f535795d627955cb870a615",
-    "base-anchor.step": "913bfc0bd664ec4af126f3e8879466f0e377409242c10073eda3a6212c952232",
+    "base-anchor.step": "80f214a5cc1e1151aa70c940378a813fdf7167aae0f708ce8ad7b424469493cc",
     "base-anchor.stl": "ce29f74ad434979e27b0025e5bb06cfcc07bd5ded646b1a483fc5f211352d8d7",
     "carrier-boss.3mf": "b46b7c50eb099ea07d1e05f0551bef47ffe4c697ffbdcf0cd5af2d954d619bd2",
-    "carrier-boss.step": "783900d5123736306a8149b552abeceb45bb4515766514fb6561e469b60f8cc6",
+    "carrier-boss.step": "faccb8525da3e027e3f980fed22cb64a4467d0293debb683559f163f57d88824",
     "carrier-boss.stl": "374fcbef1209f1ea25dfa195dcf7106e197ecbbaf919842c50a924967da563d3",
     "measurements.csv": "763fce59e411c8a81f168694643a536181d41c1891dffa0eec1f62ad4f8f8820"
   }
