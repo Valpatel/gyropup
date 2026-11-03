@@ -28,6 +28,13 @@
     body:has(#hud.panel-collapsed) .gp-dock { bottom: 12px; }
     .hud-hint { display: none; }
   }
+  /* on a phone the title takes the first row and the controls the second, so neither is cut short (#hud raises these
+     over the bar rules the 3D kit adds at run time) */
+  @media(max-width:480px) {
+    #hud #topbar { flex-wrap: wrap; justify-content: flex-end; row-gap: 6px; padding: 8px 12px; }
+    #hud #topbar h1 { flex: 1 1 calc(100% - 24px); overflow: visible; text-overflow: clip; }
+    #hud #topbar .spacer { display: none; }
+  }
   @media(max-height:450px) {
     body .gp-bubble { max-width: min(260px, calc(50vw - 24px)); }
   }

@@ -33,6 +33,11 @@ test('the light and dark sets name the same tokens, and the two dark blocks are 
   for (const [name, value] of Object.entries(light)) assert.match(value, /^#[0-9a-f]{6}$|^\d+ \d+ \d+$/, name);
   assert.match(css, /^:root\{[^}]*color-scheme:light\}/m);
   assert.match(css, /^:root\[data-theme=dark\]\{[^}]*color-scheme:dark\}/m);
+  // The dark theme's decorative layer, written twice like the tokens: the same rules for the system and the button.
+  const media = css.match(/^@media\(prefers-color-scheme:dark\)\{(:root:not\(\[data-theme=light\]\) body\{.*)\}$/m)?.[1];
+  const chosen = css.match(/^(:root\[data-theme=dark\] body\{.*)$/m)?.[1];
+  assert.ok(media && chosen, 'the two decorative blocks');
+  assert.equal(media.replaceAll(':root:not([data-theme=light]) ', ''), chosen.replaceAll(':root[data-theme=dark] ', ''));
 });
 
 // Text on the surfaces it is used on: 4.5:1 for text, 3:1 for the focus ring.
@@ -236,9 +241,9 @@ test('the WebGL scenes and the file viewer follow the theme, and diagrams are dr
   const viewer = await open('/designer/kit/file-viewer.html?file=/exports/barrel.stl', { scheme: 'dark', width: 390, height: 844 });
   await viewer.page.waitForFunction(() => window.__fileViewer?.root.dataset.state === 'ready', null, { timeout: 60000 });
   const look = () => viewer.page.evaluate(() => ({ theme: window.__fileViewer.root.dataset.fileTheme, canvas: window.__fileViewer.stage.scene.background.getHexString() }));
-  assert.deepEqual(await look(), { theme: 'dark', canvas: '1b3440' });
+  assert.deepEqual(await look(), { theme: 'dark', canvas: '10101a' });
   await viewer.page.locator('.file-nav .theme-toggle').click();
-  assert.deepEqual(await look(), { theme: 'light', canvas: 'd9edf3' });
+  assert.deepEqual(await look(), { theme: 'light', canvas: 'dceeff' });
   assert.ok(await viewer.page.evaluate(() => document.documentElement.scrollWidth <= innerWidth));
   await viewer.context.close();
   // A Mermaid diagram on a design note, redrawn when the theme changes.

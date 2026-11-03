@@ -1,7 +1,7 @@
 {
  "about": "Pass/fail for the rig's runs (docs/leg-prototype-plan.md section 5, S1-S6; docs/leg-bench-tests.md). rig/compare.py applies them to a run's log. 'from_s'/'to_s' are seconds into the run; 'after' names the event a window starts at ('land': the controller's touchdown estimate, 'contact': the first wheel contact, 'cut': the power cut). A check with 'needs' is skipped when the run has no such signal (the load plate, the ToF).",
  "reproduce": {
-  "about": "Task T7: the simulation backend running the rig's controller at the rig's rate reproduces exports/leg/rig-results.json (stand-up and squat peaks within 5 %, the jump height within 10 mm). The same configuration as the reference: 13.1 kg, an ideal 54 V bus, no measurement latency.",
+  "about": "Task T7: the simulation backend running the rig's controller at the rig's rate reproduces exports/leg/rig-results.json (stand-up and squat peaks within 5 %, the jump height within 10 mm). The same configuration as the reference: its own half_mass_kg and bus_v (18.75 kg and 36 V since D71), an ideal bus, no measurement latency.",
   "peaks_within_pct": {
    "stand_up": 5,
    "squat": 5
@@ -37,13 +37,13 @@
      "tol": 0.015
     },
     {
-     "what": "peak motor torque <= 18 N m",
+     "what": "peak motor torque <= 22 N m",
      "kind": "max_abs",
      "signal": [
       "tau_f",
       "tau_r"
      ],
-     "max": 18.0
+     "max": 22.0
     },
     {
      "what": "no oscillation over 5 mm peak to peak in the hold",
@@ -53,13 +53,12 @@
      "from_s": 2.0
     },
     {
-     "what": "load plate 120-170 N steady (14.75 kg carried: about 145 N)",
+     "what": "load plate within 25 N of the carried weight, steady (at 18.75 kg: 184 N)",
      "kind": "range",
      "signal": "force_n",
-     "min": 120.0,
-     "max": 170.0,
      "from_s": 2.0,
-     "needs": "force_n"
+     "needs": "force_n",
+     "around_weight_n": 25.0
     },
     {
      "what": "VBUS inside 32-45 V",
@@ -81,7 +80,7 @@
      "from_s": 0.5
     },
     {
-     "what": "tracks the command within 35 mm (the VMC lags a 0.5 Hz squat by design: 26 mm predicted)",
+     "what": "tracks the command within 35 mm (the VMC lags a 0.5 Hz squat by design: 28 mm predicted)",
      "kind": "track",
      "signal": "L",
      "ref": "L_cmd",
@@ -89,13 +88,13 @@
      "from_s": 0.5
     },
     {
-     "what": "peak motor torque <= 18 N m",
+     "what": "peak motor torque <= 22 N m",
      "kind": "max_abs",
      "signal": [
       "tau_f",
       "tau_r"
      ],
-     "max": 18.0
+     "max": 22.0
     },
     {
      "what": "VBUS under 45 V (regeneration)",
@@ -116,10 +115,10 @@
      "to_event": "land"
     },
     {
-     "what": "jump height 200-320 mm",
+     "what": "jump height 140-250 mm",
      "kind": "jump",
-     "min": 200.0,
-     "max": 320.0
+     "min": 140.0,
+     "max": 250.0
     },
     {
      "what": "motor torque feedback <= 70 N m",

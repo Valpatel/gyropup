@@ -51,8 +51,8 @@ try{
     await page.goto(url);await ready();const state=await inspect();
     const scheme=index%2?'dark':'light';
     assert.equal(state.theme,scheme,'Gyropup follows the main site theme (web/theme.js), which follows the OS scheme');
-    assert.equal(state.root.color,scheme==='light'?'rgb(23, 61, 60)':'rgb(241, 233, 216)');assert.match(state.root.font,/Inter/);
-    assert.equal(state.background,scheme==='light'?'d9edf3':'1b3440');assert.ok(state.scrollWidth<=width&&state.canvas.height>120);
+    assert.equal(state.root.color,scheme==='light'?'rgb(29, 35, 80)':'rgb(238, 242, 248)');assert.match(state.root.font,/Inter/);
+    assert.equal(state.background,scheme==='light'?'dceeff':'10101a');assert.ok(state.scrollWidth<=width&&state.canvas.height>120);
     assert.ok(state.points.every(p=>p.slice(0,2).every(n=>Math.abs(n)<1.01)),'Model stays in its canvas');
     assert.ok(state.buttons.every(b=>b.minimum>=44),JSON.stringify(state.buttons));
     assert.ok(contrast(state.button.color,state.button.background)>=4.5);
@@ -69,7 +69,7 @@ try{
   const popupPromise=page.waitForEvent('popup');await page.evaluate(url=>window.open(url,'_blank'),url);const popup=await popupPromise;
   popup.on('pageerror',error=>errors.push(error.message));await popup.bringToFront();
   try{await ready(popup);}catch(error){console.error('Popup readiness',await popup.evaluate(()=>({visibility:document.visibilityState,state:window.__fileViewer?.root.dataset.state,message:document.querySelector('.file-status')?.textContent,bootstrap:document.body.dataset.viewerError})));throw error;}
-  assert.equal((await inspect(popup)).root.color,'rgb(23, 61, 60)');await popup.close();assert.ok(popup.isClosed());await page.bringToFront();
+  assert.equal((await inspect(popup)).root.color,'rgb(29, 35, 80)');await popup.close();assert.ok(popup.isClosed());await page.bringToFront();
   await page.getByRole('button',{name:'Top',exact:true}).click();
   assert.ok(await page.evaluate(()=>window.__fileViewer.stage.camera.position.clone().sub(window.__fileViewer.stage.controls.target).normalize().y)>.99);
   const before=await page.evaluate(()=>window.__fileViewer.stage.camera.position.distanceTo(window.__fileViewer.stage.controls.target));
