@@ -48,11 +48,21 @@ MATERIALS = {
 INSERTS = {'insert_m3': 'mcmaster-94459A140', 'insert_m5': 'mcmaster-94459A775',
            'turret_insert_m4': 'mcmaster-94459A160', 'turret_insert_m3_short': 'mcmaster-94459A130'}
 AXES = {'print-z': 'upright', 'layer-plane': 'lying'}
+# a limit joints.json records that the toolkit's fix ladder does not know (typed here from the joint's notes)
+CONSTRAINTS = {
+    'leg.wheel_botwheel': {'washer_outside_max_mm': 12.0,
+                           'source': "joints.json leg.wheel_botwheel.notes: on PCD 36 a washer must stay inside the hub's "
+                                     'Ø48 bore (r 24), so its outside is at most 2 x (24 - 18) = 12 mm; the Ø18 DIN 9021 '
+                                     'does not fit, the Ø11 DIN 433 does'},
+}
+BAMBU_PA6CF_XY_MPA = 102.0   # typed from catalog/materials.json pa6-cf tensile_mpa, for the along-layer error only
 ASSUMED = [
     "screw class 12.9 (check_joint's default) where joints.json names none; it sets only the screw's own ceiling",
     'the insert flush with the joint face (recess 0), as inventory.py assumes and its preload-vs-pullout check asks',
     "a head joints.json does not size is the toolkit's default ISO 4762 socket head",
     'the worst tension load per insert in joints.json is the separating load (pull_n)',
+    "a printed hole comes out 0.25 mm under the drawn pilot (the middle of cad-agent's CAD_ALLOWANCE_MM, 0.2-0.3 mm, "
+    "which it adds for that reason): the melt volume is taken at that as-printed hole, and the drawn hole is recorded",
 ]
 TOL = {
     'class': 'the same class (pass, warn or fail; or the same clamp path)',
@@ -259,28 +269,36 @@ def insert_joint(j, doc, tk):
                      f"the deepest of {', '.join(f'{k} {v:g}' for k, v in rules.items())}, so {r_['limit']:g} mm" +
                      (f"; {hole['depth']:g} mm is between the two" if inv != r_['verdict'] else '')))
         if ins.volume_mm3 and ins.cad_bore_mm:
+            shrink = sum(tk.mi.CAD_ALLOWANCE_MM) / 2.0
+            printed = hole['d'] - shrink
             si = {'insert_volume_m3': {'value': sig(ins.volume_mm3 * MM ** 3), 'source': f'cad-agent INSERTS[{key!r}].volume_mm3 '
                                        "(McMaster's STEP)"},
-                  'hole_diameter_m': {'value': sig(hole['d'] * MM), 'source': jf(jid, 'hole.d')},
+                  'hole_diameter_m': {'value': sig(printed * MM), 'source': f"{jf(jid, 'hole.d')} ({hole['d']:g} mm "
+                                      f"drawn) less {shrink:g} mm: as printed (cad-agent CAD_ALLOWANCE_MM, its middle)"},
                   'bore_diameter_m': {'value': sig(ins.cad_bore_mm * MM), 'source': f'cad-agent INSERTS[{key!r}].cad_bore_mm'},
                   'length_m': {'value': sig(ins.length_mm * MM), 'source': f'cad-agent INSERTS[{key!r}].length_mm'},
                   'depth_m': {'value': sig(hole['depth'] * MM), 'source': jf(jid, 'hole.depth')}}
-            disp = tk.fi.insert_displaced_volume(ins.volume_mm3 * MM ** 3, hole['d'] * MM, ins.cad_bore_mm * MM,
-                                                 ins.length_mm * MM)
-            pocket = tk.fi.overflow_volume(hole['d'] * MM, hole['depth'] * MM, ins.length_mm * MM)
+            vol = {}
+            for name, dh in (('printed', printed), ('drawn', hole['d'])):
+                vol[name] = (tk.fi.insert_displaced_volume(ins.volume_mm3 * MM ** 3, dh * MM, ins.cad_bore_mm * MM,
+                                                           ins.length_mm * MM),
+                             tk.fi.overflow_volume(dh * MM, hole['depth'] * MM, ins.length_mm * MM))
+            disp, pocket = vol['printed']
             tv = 'pass' if disp <= pocket else 'warn'
+            tv_drawn = 'pass' if vol['drawn'][0] <= vol['drawn'][1] else 'warn'
             inv = inv_class(finding_level(j, 'pilot-below-spirol'))
             C.append(cmp('melt volume', TOL['class'], {'verdict': inv, 'finding': 'pilot-below-spirol (note)' if inv != 'pass'
                                                        else None},
-                         {'verdict': tv, 'displaced_m3': sig(disp), 'pocket_m3': sig(pocket),
+                         {'verdict': tv, 'hole_mm': sig(printed), 'displaced_m3': sig(disp), 'pocket_m3': sig(pocket),
+                          'as_drawn': {'hole_mm': hole['d'], 'verdict': tv_drawn, 'displaced_m3': sig(vol['drawn'][0]),
+                                       'pocket_m3': sig(vol['drawn'][1])},
                           'functions': ['insert_displaced_volume', 'overflow_volume']}, inv == tv,
                          None if inv == tv else
-                         f"inventory.py notes a pilot under L + 2 pitches as short of room for the melt; the toolkit's "
-                         f"volumes from McMaster's STEP give {disp / MM ** 3:.1f} mm3 displaced against a "
-                         f"{pocket / MM ** 3:.1f} mm3 pocket" + (" (below 0: the insert's metal and empty bore are less "
-                                                                 "than the hole it fills, so the knurl's valleys stay "
-                                                                 "partly empty and no melt needs the pocket)"
-                                                                 if disp < 0 else ''), si=si))
+                         f"at the as-printed hole ({printed:g} mm: the drawn {hole['d']:g} less {shrink:g}) McMaster's "
+                         f"STEP volumes give {disp / MM ** 3:.1f} mm3 displaced against a {pocket / MM ** 3:.1f} mm3 "
+                         'pocket, ' + ('so the toolkit passes what inventory.py notes from its L + 2 pitches rule '
+                                       f"({I['length_mm'] + 2 * I['pitch_mm']:g} mm deep)" if tv == 'pass' else
+                                       'so the toolkit warns where inventory.py does not'), si=si))
         else:
             notes.append(f"melt volume: the toolkit has no STEP volume for {key} (cad-agent INSERTS)")
 
@@ -335,15 +353,22 @@ def insert_joint(j, doc, tk):
                                 "strength (cadagent.mechanical.inserts.shear_strength)"},
           'calibration': {'value': {k: sig(v) for k, v in cap['c'].items()}, 'source': f"c fitted on '{cap['calibrated_on']}' "
                           '(cadagent.mechanical.inserts.calibration)'}}
-    band = {k: tk.fi.insert_shear_force(D * MM, ins.length_mm * MM, cap['shear_strength_pa'], cap['c'][k])
-            for k in ('low', 'mid', 'high')}
-    assert all(abs(band[k] - cap['pull_out'][k]) < 1e-6 * band[k] for k in band), (jid, 'capacity() != formula')
+    sheet = {k: tk.fi.insert_shear_force(D * MM, ins.length_mm * MM, cap['shear_strength_pa'], cap['c'][k])
+             for k in ('low', 'mid', 'high')}
+    assert all(abs(sheet[k] - cap['pull_out'][k]) < 1e-6 * sheet[k] for k in sheet), (jid, 'capacity() != formula')
+    # the toolkit's sheet scaled to the inventory's own across-layer basis (1 for PETG; below 1 for PA6-CF)
+    z_inv = doc['basis']['pullout']['materials'][j['material']]['z_mpa']
+    scale = z_inv / tk.mi.PRINTED[mat].strength('across')
+    si['basis_scale'] = {'value': sig(scale), 'source': f"joints.json basis.pullout.materials.{j['material']}.z_mpa "
+                         f"({z_inv:g}) / {mat}'s across-layer strength ({tk.mi.PRINTED[mat].strength('across'):g} MPa)"}
+    band = {k: v * scale for k, v in sheet.items()}
     est = j['pullout_est_n']
     tau_inv = doc['basis']['pullout']['materials'][j['material']]['tau_mpa']
     inside = band['low'] <= est <= band['high']
     C.append(cmp('pull-out capacity', TOL['band'], {'value_n': est, 'field': 'pullout_est_n', 'tau_mpa': tau_inv,
                                                     'diameter_mm': hole['d'], 'length_mm': I['length_mm']},
                  {'low_n': sig(band['low']), 'mid_n': sig(band['mid']), 'high_n': sig(band['high']),
+                  'sheet_n': {k: sig(v) for k, v in sheet.items()}, 'basis_scale': sig(scale),
                   'function': 'insert_shear_force', 'calibrated_on': cap['calibrated_on'],
                   'outside_fit': cap['outside_fit'] or None}, inside,
                  None if inside else
@@ -351,9 +376,11 @@ def insert_joint(j, doc, tk):
                  f"as a mean shear on the hole ({tau_inv:g} MPa x pi x {hole['d']:g} x {I['length_mm']:g} mm"
                  + (', scaled to humid PA6-CF' if j['material'] == 'pa6-cf' else '') +
                  f"); the toolkit fits c to {cap['calibrated_on']} tests on each test filament's datasheet and applies "
-                 f"it to {mat}'s ({cap['shear_strength_pa'] / 1e6:g} MPa shear) on the knurl ({D:g} mm), so a "
-                 'filament weaker across its layers than the tested one comes out lower',
+                 f"it to {mat}'s ({cap['shear_strength_pa'] / 1e6:g} MPa shear) on {D:g} mm ({basis}), so a "
+                 'filament weaker across its layers than the tested one comes out lower; '
+                 f"{est / band['mid']:.2f} x its mid, {est / band['high']:.2f} x its high end",
                  ratio=est / band['mid'], si=si))
+    C[-1]['ratio_to_high'] = sig(est / band['high'], 4)
     if pull:
         cap_inv = j['capacity_n']
         sf_inv, sf_tk = cap_inv / pull, band['low'] / pull
@@ -363,7 +390,9 @@ def insert_joint(j, doc, tk):
                      {'sf_low': sig(sf_tk, 3), 'low_n': sig(band['low']), 'verdict': row(res, 'pull-out')['verdict']}, same,
                      None if same else
                      f"inventory.py's capacity {cap_inv:g} N gives {sf_inv:.2f}; the toolkit holds the load to its low "
-                     f"end, {band['low']:.0f} N, which gives {sf_tk:.2f}"))
+                     f"end, {band['low']:.0f} N, which gives {sf_tk:.2f}"
+                     + (f" ({sheet['low']:.0f} N and {sheet['low'] / pull:.2f} on {mat}'s own sheet, scaled by "
+                        f"{scale:.3f} to the inventory's across-layer basis)" if abs(scale - 1) > 1e-6 else '')))
 
     # the torque the documents give: the preload it makes, and whether it is safe for the insert
     if j.get('torque_nm') and set_screw:
@@ -417,22 +446,30 @@ def insert_joint(j, doc, tk):
             'torque_out_nm': {a: sig(b) for a, b in cap['torque_out'].items()},
             'confidence': cap['confidence']}
     if res.get('fixes') and cmat:
-        only['fixes'] = fixes(res)
+        only['fixes'] = fixes(res, tk, jid, f'M{ins.diameter_mm:g}')
     return {'id': jid, 'status': 'evaluated', 'kind': 'insert',
             'call': {'function': 'cadagent.mechanical.inserts.check_joint', 'units': 'mm, N, N m (its docstring)',
                      'kwargs': clean(kw), 'sources': src},
             'comparisons': C, 'toolkit_only': clean(only), 'not_compared': notes}
 
 
-def fixes(res):
-    """The toolkit's fix ladder (#292) when the printed part's bearing sets the torque: each option, what it allows."""
-    out = []
+def fixes(res, tk, jid, thread):
+    """The toolkit's fix ladder (#292) when the printed part's bearing sets the torque: each option, what it allows,
+    and whether it fits a limit joints.json records (CONSTRAINTS; otherwise not checked against the geometry)."""
+    out, limit = [], CONSTRAINTS.get(jid, {})
     for f in res['fixes']['options']:
         o = {'fix': f['fix'], 'what': f.get('what'), 'named': f['named']}
         if 'allowed_nm' in f:
             o.update(allowed_nm=sig(f['allowed_nm']), preload_n=sig(f['preload_n']), governed_by=f['governed_by'])
         if f.get('why'):
             o['why'] = f['why']
+        washers = [v for k, v in (f.get('set') or {}).items() if k in ('head_washer', 'insert_washer') and v]
+        if limit.get('washer_outside_max_mm') and washers:
+            od = max(tk.mi.washer(w, thread)['d2_mm'] for w in washers)
+            o['fits'] = od <= limit['washer_outside_max_mm']
+            if not o['fits']:
+                o['conflict'] = (f"its Ø{od:g} washer is over the Ø{limit['washer_outside_max_mm']:g} mm this joint "
+                                 f"allows ({limit['source']})")
         out.append(o)
     return out
 
@@ -466,10 +503,42 @@ def clamp_joint(j, doc, tk):
     if j.get('torque_nm'):
         kw['torque_nm'], src['torque_nm'] = j['torque_nm'], jf(jid, 'torque_nm')
     res = tk.mi.check_clamp(**kw)
-    C = [head_bearing(j, doc, res['torque']['preload_caps_n']['head_bearing'], res['head']['on_plastic'])]
+    k = res['torque']['nut_factor']
+    d = j['d_mm'] * MM
+    cap_n, face = res['torque']['preload_caps_n']['head_bearing'], res['head']['on_plastic']
+    allowed, gov, din = res['torque']['allowed_nm'], res['torque']['governed_by'], None
+    if kw.get('head_washer'):
+        # the joint's own washer, which the toolkit's tables lack: its real face through the toolkit's formulas, with
+        # the friction of a head turning on a steel washer (the stand-in run's nut factor)
+        area = tk.fl.bearing_area(c['bearing_od_mm'] * MM, c['bearing_id_mm'] * MM)
+        strength = tk.mi.bearing_strength(mat)
+        cap_n = strength / tk.mi.MARGIN * area
+        face = {'area_mm2': area / MM ** 2,
+                'text': f"the joint's own Ø{c['bearing_od_mm']:g} washer on a Ø{c['bearing_id_mm']:g} hole "
+                        f"({area / MM ** 2:.2f} mm2, bearing_area), pressed flat, at {strength / 1e6:g} / "
+                        f"{tk.mi.MARGIN:g} MPa"}
+        ceil = {'screw': res['torque']['ceilings']['screw'], 'head_bearing': k['low'] * d * cap_n}
+        gov = min(ceil, key=ceil.get)
+        allowed = ceil[gov]
+        need = worst_tension(j)
+        lo, hi = allowed / (k['high'] * d), allowed / (k['low'] * d)
+        din = {'washer': f"Ø{c['bearing_od_mm']:g} (joints.json clamp.bearing_od_mm)", 'area_m2': sig(area),
+               'bearing_strength_pa': sig(strength), 'preload_cap_n': sig(cap_n), 'allowed_nm': sig(allowed),
+               'governed_by': gov, 'preload_at_allowed_n': {'low': sig(lo), 'high': sig(hi)}, 'need_n': need,
+               'stand_in_run': {'allowed_nm': sig(res['torque']['allowed_nm']),
+                                'preload_cap_n': sig(res['torque']['preload_caps_n']['head_bearing']),
+                                'washer': 'iso7089'}}
+        ladder = fixes(res, tk, jid, thread) if res.get('fixes') else []
+        fitting = [f for f in ladder if f['named'] and f.get('fits', True)]
+        if need and lo < need:
+            din['owner_note'] = (f"At the toolkit's {allowed:.2f} N m the preload is {lo:.0f}-{hi:.0f} N against the "
+                                 f"{need:g} N a screw the flange needs (joints.json loads): not assured. "
+                                 + (f"The toolkit's {fitting[0]['fix']} would allow {fitting[0]['allowed_nm']:.2f} N m"
+                                    if fitting else "No fix in the toolkit's ladder fits the joint (see fixes)")
+                                 + ", so the torque, the washer and the joint's need are an owner decision")
+    C = [head_bearing(j, doc, cap_n, face)]
     if j.get('torque_nm'):
-        T, d = j['torque_nm'], j['d_mm'] * MM
-        k = res['torque']['nut_factor']
+        T = j['torque_nm']
         lo, hi = T / (k['high'] * d), T / (k['low'] * d)
         ok = lo <= j['preload_n'] <= hi
         C.append(cmp('preload at torque', TOL['band'], {'preload_n': j['preload_n'], 'nut_factor': doc['basis']['nut_factor']},
@@ -477,26 +546,28 @@ def clamp_joint(j, doc, tk):
                       'function': "nut_factor (the toolkit's thread and collar friction bands)"}, ok,
                      None if ok else f"K 0.2 against the toolkit's {k['low']:.3f}-{k['high']:.3f} for this thread and collar",
                      ratio=j['preload_n'] / ((lo + hi) / 2)))
-        r_ = row(res, 'tightening torque')
-        k_lo = res['torque']['nut_factor']['low']
+        tv = 'pass' if T <= allowed * (1 + 1e-9) else 'warn' if T <= tk.mi.MARGIN * allowed else 'fail'
         inv_flag = any(f['code'] in FLAG_CODES for f in j['findings'])
-        same = inv_flag == (r_['verdict'] != 'pass')
+        same = inv_flag == (tv != 'pass')
         C.append(cmp('tightening torque', TOL['flag'],
                      {'torque_nm': T, 'flagged': inv_flag, 'findings': [f['code'] for f in j['findings'] if f['code'] in FLAG_CODES],
                       'torque_at_sustained_nm': c.get('torque_at_sustained_nm')},
-                     {'allowed_nm': sig(res['torque']['allowed_nm']), 'governed_by': res['torque']['governed_by'],
-                      'verdict': r_['verdict']}, same,
+                     {'allowed_nm': sig(allowed), 'governed_by': gov, 'verdict': tv}, same,
                      None if same else
-                     (f"the toolkit allows {res['torque']['allowed_nm']:.2f} N m ({res['torque']['governed_by'].replace('_', ' ')}): "
-                      f"it takes the least nut factor ({k_lo:.3f}), where a torque makes the most preload, and its "
-                      f"compressive strength / 2; inventory.py's screen passes {c.get('torque_at_sustained_nm')} N m at "
-                      'K 0.2 and 25 MPa'),
-                     ratio=T / res['torque']['allowed_nm']))
+                     (f"the toolkit allows {allowed:.2f} N m ({gov.replace('_', ' ')}): it takes the least nut factor "
+                      f"({k['low']:.3f}), where a torque makes the most preload, and its compressive strength / 2; "
+                      f"inventory.py's screen passes {c.get('torque_at_sustained_nm')} N m at K 0.2 and 25 MPa"
+                      + (f". {din['owner_note']}" if din and din.get('owner_note') else '')),
+                     ratio=T / allowed))
     only = {'verdict': res['verdict'], 'rows': {r['check']: r['verdict'] for r in res['checks']},
-            'allowed_torque_nm': sig(res['torque']['allowed_nm']), 'governed_by': res['torque']['governed_by'],
+            'allowed_torque_nm': sig(allowed), 'governed_by': gov,
             'preload_caps_n': {a: sig(b) for a, b in res['torque']['preload_caps_n'].items()}}
+    if din:
+        only['own_washer'] = din
+        if din.get('owner_note'):
+            only['owner_note'] = din['owner_note']
     if res.get('fixes'):
-        only['fixes'] = fixes(res)
+        only['fixes'] = fixes(res, tk, jid, thread)
     return {'id': jid, 'status': 'evaluated', 'kind': 'clamp',
             'call': {'function': 'cadagent.mechanical.inserts.check_clamp', 'units': 'mm, N, N m (its docstring)',
                      'kwargs': clean(kw), 'sources': src},
@@ -504,6 +575,41 @@ def clamp_joint(j, doc, tk):
 
 
 # ---------------------------------------------------------------------------------------------------- the document
+
+def materials(doc, tk):
+    """The material mapping, with which way each stand-in sheet errs against the inventory's own basis."""
+    out = {}
+    for k, (key, why) in MATERIALS.items():
+        z_inv = doc['basis']['pullout']['materials'][k]['z_mpa']
+        sheet = tk.mi.PRINTED[key]
+        across = sheet.strength('across') / z_inv
+        e = {'toolkit': key, 'why': why, 'across_mpa': {'toolkit': sheet.strength('across'), 'inventory': z_inv},
+             'across_ratio': sig(across, 4)}
+        if abs(across - 1) > 1e-6:
+            dry = tk.mi.PRINTED[key.replace('-wet', '-dry')]
+            along_inv = BAMBU_PA6CF_XY_MPA * sheet.strength('along') / dry.strength('along')
+            e['along_ratio'] = sig(sheet.strength('along') / along_inv, 4)
+            e['errs'] = (f"the stand-in sheet is {across:.2f} x the inventory's humid across-layer basis "
+                         f"({sheet.strength('across'):g} / {z_inv:g} MPa) and about {e['along_ratio']:.2f} x along the "
+                         f"layers ({sheet.strength('along'):g} against Bambu's {BAMBU_PA6CF_XY_MPA:g} MPa x "
+                         f"{sheet.strength('along'):g} / {dry.strength('along'):g} wet / dry = {along_inv:.1f}): the "
+                         'unsafe side. The pull-out bands and margins here are scaled by '
+                         f"{1 / across:.3f} to the inventory's basis; the torque-out, torque ceilings and bearing caps "
+                         'are the sheet\'s own and read that much high')
+        out[k] = e
+    return out
+
+
+def flat_heads(doc):
+    """Joints the toolkit sees as a flat head on solid plastic although joints.json records otherwise."""
+    cs = [j['id'] for j in doc['joints'] if 'countersunk' in ((j.get('clamp') or {}).get('stack') or '')]
+    gy = [j['id'] for j in doc['joints'] if 'gyroid' in ((j.get('clamp') or {}).get('stack') or '')
+          and (j['clamp'].get('printed_mm') or 0) > 0]
+    return [f"countersunk heads ({', '.join(cs)}) reach the toolkit as a flat socket head on solid plastic: their "
+            'head-bearing rows do not model the cone',
+            f"a 40 % gyroid clamped part ({', '.join(gy)}) reaches the toolkit as solid plastic: its bearing and "
+            'clamped-on-insert ceilings read high']
+
 
 def document(joints_path: Path, tk: Toolkit, tag: str, commit: str):
     doc = json.loads(joints_path.read_text())
@@ -534,8 +640,8 @@ def document(joints_path: Path, tk: Toolkit, tag: str, commit: str):
                         'summary': doc['summary']},
         'toolkit': {'repo': 'Valpatel/cad-agent', 'tag': tag, 'commit': commit, 'modules': list(MODULES),
                     'material_status': tk.mi.STATUS, 'margin': tk.mi.MARGIN},
-        'mapping': {'materials': {k: {'toolkit': v[0], 'why': v[1]} for k, v in MATERIALS.items()},
-                    'inserts': INSERTS, 'axes': AXES, 'assumed': ASSUMED},
+        'mapping': {'materials': materials(doc, tk), 'inserts': INSERTS, 'axes': AXES,
+                    'assumed': ASSUMED + flat_heads(doc), 'constraints': CONSTRAINTS},
         'tolerances': TOL,
         'summary': {'joints': len(out), 'evaluated': sum(e['status'] == 'evaluated' for e in out),
                     'skipped': sum(e['status'] == 'skipped' for e in out), 'comparisons': len(allc),
@@ -583,9 +689,12 @@ def markdown(doc):
     for (check, _), items in sorted(groups.items(), key=lambda kv: (kv[0][0], -len(kv[1]))):
         ids = ', '.join(f'`{i}`' for i, _ in items)
         c = items[0][1]
-        ratio = (f" Ratio inventory / toolkit {min(x['ratio'] for _, x in items):g}"
-                 + (f"-{max(x['ratio'] for _, x in items):g}" if len(items) > 1 else '') + '.'
-                 if all('ratio' in x for _, x in items) else '')
+        def span(key):
+            v = [x[key] for _, x in items]
+            return f'{min(v):g}' + (f'-{max(v):g}' if len(v) > 1 and min(v) != max(v) else '')
+        ratio = (f" Inventory / toolkit: {span('ratio')} x its mid, {span('ratio_to_high')} x its high end."
+                 if all('ratio_to_high' in x for _, x in items) else
+                 f" Ratio inventory / toolkit {span('ratio')}." if all('ratio' in x for _, x in items) else '')
         L.append(f"- **{check}** ({len(items)}: {ids}). `{items[0][0]}`: {short(c['why'])}{ratio}")
     L += ['', '## What only the toolkit checks', '']
     over = [(e, c) for e in doc['joints'] for c in e.get('comparisons', [])
@@ -602,10 +711,24 @@ def markdown(doc):
             gov.setdefault(o['governed_by'], []).append((e['id'], o))
     for g, items in sorted(gov.items()):
         tq = [o['allowed_torque_nm'] for _, o in items]
-        named = [(i, next((f for f in o.get('fixes') or [] if f['named']), None)) for i, o in items]
+        named = [(i, next((f for f in o.get('fixes') or [] if f['named'] and f.get('fits', True)), None))
+                 for i, o in items]
         L.append(f"- **{g.replace('_', ' ')}** sets the most torque on {len(items)} joints ({min(tq):.2f}-{max(tq):.2f} N m)"
                  + (': ' + '; '.join(f"`{i}` {f['fix']} {f['allowed_nm']:.2f} N m" for i, f in named if f)
                     if any(f for _, f in named) else '') + '.')
+    L.append('')
+    notes = [(e['id'], e['toolkit_only']['owner_note']) for e in doc['joints']
+             if (e.get('toolkit_only') or {}).get('owner_note')]
+    for i, n in notes:
+        L.append(f"- **Owner decision, `{i}`:** {n}.")
+    for e in doc['joints']:
+        for f in (e.get('toolkit_only') or {}).get('fixes') or []:
+            if f.get('conflict'):
+                L.append(f"- `{e['id']}`: the toolkit's {f['fix']} does not fit: {f['conflict']}.")
+    L.append('')
+    L.append('The fix ladder is checked against a joint\'s geometry only where joints.json records a limit '
+             '(`mapping.constraints`). What the toolkit sees differently from joints.json is listed in `mapping.assumed`, '
+             'and which way the PA6-CF stand-in errs in `mapping.materials`.')
     L.append('')
     L.append('Per joint in `phase2.json` (`toolkit_only`): every row, the preload caps, the torque-out band and the '
              "toolkit's fix ladder (a larger head, a washer, a large washer, a limiter) where the plastic sets the torque.")

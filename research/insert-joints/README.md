@@ -25,13 +25,14 @@ python3 research/insert-joints/inventory.py --cad-agent ../cad-agent/src   # opt
 
 `phase2.py` runs `joints.json` through cad-agent v0.18.2's insert and limiter checks and sets each result beside this
 inventory's figure. The output is [phase2.md](phase2.md) and `phase2.json`, with a tolerance for each check and a
-reason for each disagreement. Of 271 comparisons on 41 joints, 196 agree. The main differences:
+reason for each disagreement. Of 271 comparisons on 41 joints, 203 agree. The main differences:
 
 - The toolkit wants every pilot 0.2-0.3 mm over the maker's hole.
-- The PETG pull-out figures here are 1.19-1.41 x its band.
-- The TM riser's pull-out margin falls from 2.34 to 1.78.
-- The wheel bolts' 1.8 N m is over its 1.37 N m.
-- It caps 14 joints at 0.14-0.44 N m, where a printed part is clamped on the insert's end.
+- The PETG pull-out figures here are 1.08-1.27 x the toolkit's high end.
+- On the toolkit's low end, scaled to this inventory's PA6-CF basis, the TM riser's pull-out margin is 1.58, not 2.34.
+- The wheel bolts' 1.8 N m is over the toolkit's 1.18 N m on their DIN 433 washer. At 1.18 N m the preload does not
+  assure the 1331 N the flange needs: an owner decision.
+- The toolkit caps 14 joints at 0.14-0.44 N m, where a printed part is clamped on the insert's end.
 
 ```sh
 python3 research/insert-joints/phase2.py --cad-agent PATH   # regenerate (a cad-agent checkout at v0.18.2)

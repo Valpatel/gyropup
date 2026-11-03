@@ -123,7 +123,8 @@ def handcalc(doc):
                 if not 1e6 < v['shear_strength_pa'] < 1e8:
                     bad.append(f"{e['id']}: shear strength {v['shear_strength_pa']} is not in pascals")
                 for k in ('low', 'mid', 'high'):
-                    f = v['calibration'][k] * v['shear_strength_pa'] * math.pi * v['outer_diameter_m'] * v['length_m']
+                    f = (v['calibration'][k] * v['shear_strength_pa'] * math.pi * v['outer_diameter_m'] * v['length_m']
+                         * v['basis_scale'])
                     if abs(f - tk[f'{k}_n']) > 1e-4 * f:
                         bad.append(f"{e['id']} pull-out {k}: c tau pi D L = {f:.1f} N, recorded {tk[f'{k}_n']}")
             if c['check'] == 'melt volume':
@@ -133,6 +134,17 @@ def handcalc(doc):
                     if abs(x - rec) > 1e-4 * abs(x) + 1e-12:
                         bad.append(f"{e['id']} melt {name}: {x:.4g} m3 by hand, recorded {rec}")
     return bad
+
+
+# the counts per check this release gives (v0.18.2); a change is a finding to explain, not to paste over
+BY_CHECK = {
+    'pilot diameter': {'agree': 0, 'disagree': 38}, 'pilot depth': {'agree': 34, 'disagree': 0},
+    'melt volume': {'agree': 19, 'disagree': 5}, 'screw tip': {'agree': 13, 'disagree': 9},
+    'boss': {'agree': 19, 'disagree': 0}, 'insert axis': {'agree': 38, 'disagree': 0},
+    'clamp path': {'agree': 24, 'disagree': 0}, 'pull-out capacity': {'agree': 25, 'disagree': 13},
+    'pull-out margin': {'agree': 16, 'disagree': 2}, 'preload at torque': {'agree': 5, 'disagree': 0},
+    'tightening torque': {'agree': 4, 'disagree': 1}, 'head bearing preload': {'agree': 6, 'disagree': 0},
+}
 
 
 def comparison(doc, jid, check):
@@ -175,13 +187,21 @@ class Phase2(unittest.TestCase):
         self.assertAlmostEqual(si['length_m'], 7.9e-3)
         self.assertAlmostEqual(si['shear_strength_pa'], 12.75e6)         # half PA6-CF20 wet's 25.5 MPa across
         low = 0.5067196392044561 * 12.75e6 * math.pi * 7.11e-3 * 7.9e-3  # c low: CNC Kitchen's PETG / PolyLite PETG
-        self.assertAlmostEqual(low, 1140.05, places=1)
-        self.assertAlmostEqual(c['toolkit']['low_n'], low, delta=0.01)
+        self.assertAlmostEqual(low, 1140.05, places=1)                    # on the Polymaker sheet
+        self.assertAlmostEqual(si['basis_scale'], 22.67 / 25.5, places=5)  # to the inventory's humid basis
+        self.assertAlmostEqual(c['toolkit']['sheet_n']['low'], low, delta=0.01)
+        self.assertAlmostEqual(c['toolkit']['low_n'], low * 22.67 / 25.5, delta=0.01)
         m = comparison(self.doc, 'body.bus_insulator', 'melt volume')
-        disp = 42.13e-9 - math.pi / 4 * (4.0e-3 ** 2 - 2.35e-3 ** 2) * 5.7e-3
-        self.assertAlmostEqual(disp * 1e9, -4.775, places=3)               # mm3: less metal than the hole it fills
+        disp = 42.13e-9 - math.pi / 4 * (3.75e-3 ** 2 - 2.35e-3 ** 2) * 5.7e-3   # the 4.0 pilot printed 0.25 small
+        self.assertAlmostEqual(disp * 1e9, 3.898, places=3)
         self.assertAlmostEqual(m['toolkit']['displaced_m3'], disp, delta=1e-13)
-        self.assertAlmostEqual(m['toolkit']['pocket_m3'], math.pi / 4 * 4.0e-3 ** 2 * (6.5e-3 - 5.7e-3), delta=1e-13)
+        self.assertAlmostEqual(m['toolkit']['pocket_m3'], math.pi / 4 * 3.75e-3 ** 2 * (6.5e-3 - 5.7e-3), delta=1e-13)
+        self.assertAlmostEqual(m['toolkit']['as_drawn']['displaced_m3'] * 1e9, -4.775, places=3)
+        w = next(e for e in self.doc['joints'] if e['id'] == 'leg.wheel_botwheel')['toolkit_only']['own_washer']
+        area = math.pi / 4 * (11.0 ** 2 - 6.6 ** 2)                        # the DIN 433 on the 6.6 hole, mm2
+        self.assertAlmostEqual(w['area_m2'] * 1e6, area, places=2)
+        self.assertAlmostEqual(w['preload_cap_n'], 54.7e6 / 2 * area * 1e-6, delta=0.5)
+        self.assertAlmostEqual(w['allowed_nm'], 1.18, delta=0.01)
         h = comparison(self.doc, 'leg.upper_link_hub', 'head bearing preload')
         self.assertAlmostEqual(h['inventory']['preload_n'], 25.0 * 33.0, places=0)   # 25 MPa on 33 mm2
         area = math.pi / 4 * (8.03 ** 2 - 5.5 ** 2)                        # ISO 4762 M5 dw min on the 5.5 hole
@@ -191,6 +211,33 @@ class Phase2(unittest.TestCase):
         k = t['toolkit']['nut_factor']
         self.assertAlmostEqual(t['toolkit']['high_n'], 1.5 / (k['low'] * 5e-3), delta=0.01)
         self.assertAlmostEqual(t['toolkit']['low_n'], 1.5 / (k['high'] * 5e-3), delta=0.01)
+
+    def test_by_check_golden(self):
+        """The counts per check, fixed: a generator that regenerates but reads a field wrongly moves them."""
+        self.assertEqual(self.doc['summary']['by_check'], BY_CHECK)
+
+    def test_joint_goldens(self):
+        """Inputs and verdicts of a few joints, fixed by hand from joints.json and the toolkit's rules."""
+        call = {e['id']: e['call']['kwargs'] for e in self.doc['joints'] if e['status'] == 'evaluated'}
+        self.assertEqual(call['body.post_m3']['axis'], 'lying')            # joints.json axis layer-plane
+        self.assertEqual(call['leg.hip_frame_mount']['axis'], 'upright')   # print-z
+        self.assertEqual(call['body.post_m3']['head_mm'], 5.6)             # clamp.bearing_od_mm (a pan head)
+        self.assertEqual(call['leg.wheel_botwheel']['head_washer'], 'iso7089')
+        self.assertEqual(call['body.riser_top_tm']['clamped'],
+                         {'material': 'pa6-cf20-polymaker-wet', 'thickness_mm': 4.5})
+        self.assertEqual(call['body.post_m5']['clamped'], {'material': 'metal'})
+        m = comparison(self.doc, 'body.riser_top_tm', 'pull-out margin')
+        self.assertAlmostEqual(m['toolkit']['sf_low'], 1.58, places=2)     # its low end, on the inventory's basis
+        self.assertEqual(m['status'], 'disagree')
+        d = comparison(self.doc, 'body.bay_rail_side', 'pilot depth')    # 6.5 deep: under L + 2 pitches, a note
+        self.assertEqual((d['inventory']['verdict'], d['toolkit']['verdict'], d['status']), ('warn', 'warn', 'agree'))
+        t = comparison(self.doc, 'leg.hip_frame_mount', 'tightening torque')
+        self.assertTrue(t['inventory']['flagged'])                          # preload-vs-pullout
+        self.assertEqual(t['toolkit']['governed_by'], 'insert_face')
+        a = comparison(self.doc, 'body.post_m3', 'insert axis')
+        self.assertEqual((a['inventory']['verdict'], a['toolkit']['verdict']), ('warn', 'warn'))
+        h = comparison(self.doc, 'body.post_m3', 'head bearing preload')
+        self.assertAlmostEqual(h['toolkit']['area_mm2'], math.pi / 4 * (5.6 ** 2 - 3.4 ** 2), places=2)
 
     def test_markdown_from_json(self):
         md = p2.OUT_MD.read_text()

@@ -1,7 +1,7 @@
 {
  "schema": 1,
  "generator": "research/insert-joints/phase2.py",
- "generator_sha256": "50423c58b8b6a9aaffba53f8b360950034d06892777f41dcfe2e174d4d62b1ce",
+ "generator_sha256": "d700d54d03d2c0e495e362ff82d6b60f7d3b239b9f028a315d646c132f7c783d",
  "issue": "Valpatel/gyropup#137, phase 2",
  "status": "screen, not qualification: the toolkit set beside inventory.py; nothing printed or tested",
  "joints_json": {
@@ -37,11 +37,23 @@
   "materials": {
    "petg": {
     "toolkit": "petg-bambu-basic",
-    "why": "catalog/materials.json petg is Bambu Lab PETG Basic, the same sheet (Z 35 MPa)"
+    "why": "catalog/materials.json petg is Bambu Lab PETG Basic, the same sheet (Z 35 MPa)",
+    "across_mpa": {
+     "toolkit": 35,
+     "inventory": 35.0
+    },
+    "across_ratio": 1.0
    },
    "pa6-cf": {
     "toolkit": "pa6-cf20-polymaker-wet",
-    "why": "catalog/materials.json pa6-cf is Bambu Lab PA6-CF, which the toolkit's table lacks; inventory.py takes it humid with Polymaker's wet / dry ratio, so Polymaker's PA6-CF20 wet sheet stands in"
+    "why": "catalog/materials.json pa6-cf is Bambu Lab PA6-CF, which the toolkit's table lacks; inventory.py takes it humid with Polymaker's wet / dry ratio, so Polymaker's PA6-CF20 wet sheet stands in",
+    "across_mpa": {
+     "toolkit": 25.5,
+     "inventory": 22.67
+    },
+    "across_ratio": 1.125,
+    "along_ratio": 1.072,
+    "errs": "the stand-in sheet is 1.12 x the inventory's humid across-layer basis (25.5 / 22.67 MPa) and about 1.07 x along the layers (54.7 against Bambu's 102 MPa x 54.7 / 109.3 wet / dry = 51.0): the unsafe side. The pull-out bands and margins here are scaled by 0.889 to the inventory's basis; the torque-out, torque ceilings and bearing caps are the sheet's own and read that much high"
    }
   },
   "inserts": {
@@ -58,8 +70,17 @@
    "screw class 12.9 (check_joint's default) where joints.json names none; it sets only the screw's own ceiling",
    "the insert flush with the joint face (recess 0), as inventory.py assumes and its preload-vs-pullout check asks",
    "a head joints.json does not size is the toolkit's default ISO 4762 socket head",
-   "the worst tension load per insert in joints.json is the separating load (pull_n)"
-  ]
+   "the worst tension load per insert in joints.json is the separating load (pull_n)",
+   "a printed hole comes out 0.25 mm under the drawn pilot (the middle of cad-agent's CAD_ALLOWANCE_MM, 0.2-0.3 mm, which it adds for that reason): the melt volume is taken at that as-printed hole, and the drawn hole is recorded",
+   "countersunk heads (turret.pan_base_carrier_tabs, turret.yoke_board_bay) reach the toolkit as a flat socket head on solid plastic: their head-bearing rows do not model the cone",
+   "a 40 % gyroid clamped part (body.riser_top_tm, turret.plinth_columns) reaches the toolkit as solid plastic: its bearing and clamped-on-insert ceilings read high"
+  ],
+  "constraints": {
+   "leg.wheel_botwheel": {
+    "washer_outside_max_mm": 12.0,
+    "source": "joints.json leg.wheel_botwheel.notes: on PCD 36 a washer must stay inside the hub's Ø48 bore (r 24), so its outside is at most 2 x (24 - 18) = 12 mm; the Ø18 DIN 9021 does not fit, the Ø11 DIN 433 does"
+   }
+  }
  },
  "tolerances": {
   "class": "the same class (pass, warn or fail; or the same clamp path)",
@@ -73,8 +94,8 @@
   "evaluated": 41,
   "skipped": 5,
   "comparisons": 271,
-  "agree": 196,
-  "disagree": 75,
+  "agree": 203,
+  "disagree": 68,
   "by_check": {
    "pilot diameter": {
     "agree": 0,
@@ -85,8 +106,8 @@
     "disagree": 0
    },
    "melt volume": {
-    "agree": 12,
-    "disagree": 12
+    "agree": 19,
+    "disagree": 5
    },
    "screw tip": {
     "agree": 13,
@@ -222,8 +243,15 @@
      },
      "toolkit": {
       "verdict": "pass",
-      "displaced_m3": -2.70235e-08,
-      "pocket_m3": 9.97267e-08,
+      "hole_mm": 6.15,
+      "displaced_m3": -7.55644e-09,
+      "pocket_m3": 9.20877e-08,
+      "as_drawn": {
+       "hole_mm": 6.4,
+       "verdict": "pass",
+       "displaced_m3": -2.70235e-08,
+       "pocket_m3": 9.97267e-08
+      },
       "functions": [
        "insert_displaced_volume",
        "overflow_volume"
@@ -236,8 +264,8 @@
        "source": "cad-agent INSERTS['mcmaster-94459A775'].volume_mm3 (McMaster's STEP)"
       },
       "hole_diameter_m": {
-       "value": 0.0064,
-       "source": "joints.json leg.hip_frame_mount.hole.d"
+       "value": 0.00615,
+       "source": "joints.json leg.hip_frame_mount.hole.d (6.4 mm drawn) less 0.25 mm: as printed (cad-agent CAD_ALLOWANCE_MM, its middle)"
       },
       "bore_diameter_m": {
        "value": 0.00396,
@@ -329,15 +357,21 @@
       "length_mm": 7.9
      },
      "toolkit": {
-      "low_n": 1140.05,
-      "mid_n": 1918.74,
-      "high_n": 2394.13,
+      "low_n": 1013.53,
+      "mid_n": 1705.8,
+      "high_n": 2128.43,
+      "sheet_n": {
+       "low": 1140.05,
+       "mid": 1918.74,
+       "high": 2394.13
+      },
+      "basis_scale": 0.88902,
       "function": "insert_shear_force",
       "calibrated_on": "pooled",
       "outside_fit": null
      },
      "status": "agree",
-     "ratio": 0.8735,
+     "ratio": 0.9825,
      "si": {
       "outer_diameter_m": {
        "value": 0.00711,
@@ -358,8 +392,13 @@
         "high": 1.06412
        },
        "source": "c fitted on 'pooled' (cadagent.mechanical.inserts.calibration)"
+      },
+      "basis_scale": {
+       "value": 0.88902,
+       "source": "joints.json basis.pullout.materials.pa6-cf.z_mpa (22.67) / pa6-cf20-polymaker-wet's across-layer strength (25.5 MPa)"
       }
-     }
+     },
+     "ratio_to_high": 0.7874
     },
     {
      "check": "pull-out margin",
@@ -371,8 +410,8 @@
       "load_n": 851
      },
      "toolkit": {
-      "sf_low": 1.34,
-      "low_n": 1140.05,
+      "sf_low": 1.19,
+      "low_n": 1013.53,
       "verdict": "warn"
      },
      "status": "agree"
@@ -736,12 +775,12 @@
       "basis": "25 MPa sustained (basis.bearing) x clamp.bearing_area_mm2 60.8 (Ø11 on Ø6.6)"
      },
      "toolkit": {
-      "preload_n": 1928.0,
-      "area_mm2": 70.49,
-      "face": "an ISO 7089 washer (11.57 x 1.4 mm at its least) on the ISO 4762 socket head (9.38 mm), on a 6.6 mm hole: 1.09 of its 1.09 mm overhang bears (all of it bears; a beam on the plastic, which spreads it 7.81 mm), 70.49 mm^2, as a 11.56 mm face"
+      "preload_n": 1663.0,
+      "area_mm2": 60.82,
+      "face": "the joint's own Ø11 washer on a Ø6.6 hole (60.82 mm2, bearing_area), pressed flat, at 54.7 / 2 MPa"
      },
      "status": "agree",
-     "ratio": 0.7885
+     "ratio": 0.9138
     },
     {
      "check": "preload at torque",
@@ -772,13 +811,13 @@
       "torque_at_sustained_nm": 1.82
      },
      "toolkit": {
-      "allowed_nm": 1.3659,
+      "allowed_nm": 1.17861,
       "governed_by": "head_bearing",
       "verdict": "warn"
      },
      "status": "disagree",
-     "ratio": 1.318,
-     "why": "the toolkit allows 1.37 N m (head bearing): it takes the least nut factor (0.118), where a torque makes the most preload, and its compressive strength / 2; inventory.py's screen passes 1.82 N m at K 0.2 and 25 MPa"
+     "ratio": 1.527,
+     "why": "the toolkit allows 1.18 N m (head bearing): it takes the least nut factor (0.118), where a torque makes the most preload, and its compressive strength / 2; inventory.py's screen passes 1.82 N m at K 0.2 and 25 MPa. At the toolkit's 1.18 N m the preload is 649-1663 N against the 1331 N a screw the flange needs (joints.json loads): not assured. No fix in the toolkit's ladder fits the joint (see fixes), so the torque, the washer and the joint's need are an owner decision"
     }
    ],
    "toolkit_only": {
@@ -788,12 +827,32 @@
      "head bearing": "warn",
      "preload kept": "warn"
     },
-    "allowed_torque_nm": 1.3659,
+    "allowed_torque_nm": 1.17861,
     "governed_by": "head_bearing",
     "preload_caps_n": {
      "screw": 14639.8,
      "head_bearing": 1927.79
     },
+    "own_washer": {
+     "washer": "Ø11 (joints.json clamp.bearing_od_mm)",
+     "area_m2": 6.08212e-05,
+     "bearing_strength_pa": 54700000.0,
+     "preload_cap_n": 1663.46,
+     "allowed_nm": 1.17861,
+     "governed_by": "head_bearing",
+     "preload_at_allowed_n": {
+      "low": 649.144,
+      "high": 1663.46
+     },
+     "need_n": 1331,
+     "stand_in_run": {
+      "allowed_nm": 1.3659,
+      "preload_cap_n": 1927.79,
+      "washer": "iso7089"
+     },
+     "owner_note": "At the toolkit's 1.18 N m the preload is 649-1663 N against the 1331 N a screw the flange needs (joints.json loads): not assured. No fix in the toolkit's ladder fits the joint (see fixes), so the torque, the washer and the joint's need are an owner decision"
+    },
+    "owner_note": "At the toolkit's 1.18 N m the preload is 649-1663 N against the 1331 N a screw the flange needs (joints.json loads): not assured. No fix in the toolkit's ladder fits the joint (see fixes), so the torque, the washer and the joint's need are an owner decision",
     "fixes": [
      {
       "fix": "larger head",
@@ -813,7 +872,9 @@
       "named": true,
       "allowed_nm": 2.37099,
       "preload_n": 3346.36,
-      "governed_by": "head_bearing"
+      "governed_by": "head_bearing",
+      "fits": false,
+      "conflict": "its Ø18 washer is over the Ø12 mm this joint allows (joints.json leg.wheel_botwheel.notes: on PCD 36 a washer must stay inside the hub's Ø48 bore (r 24), so its outside is at most 2 x (24 - 18) = 12 mm; the Ø18 DIN 9021 does not fit, the Ø11 DIN 433 does)"
      },
      {
       "fix": "limiter",
@@ -937,8 +998,15 @@
      },
      "toolkit": {
       "verdict": "pass",
-      "displaced_m3": -2.70235e-08,
-      "pocket_m3": 9.97267e-08,
+      "hole_mm": 6.15,
+      "displaced_m3": -7.55644e-09,
+      "pocket_m3": 9.20877e-08,
+      "as_drawn": {
+       "hole_mm": 6.4,
+       "verdict": "pass",
+       "displaced_m3": -2.70235e-08,
+       "pocket_m3": 9.97267e-08
+      },
       "functions": [
        "insert_displaced_volume",
        "overflow_volume"
@@ -951,8 +1019,8 @@
        "source": "cad-agent INSERTS['mcmaster-94459A775'].volume_mm3 (McMaster's STEP)"
       },
       "hole_diameter_m": {
-       "value": 0.0064,
-       "source": "joints.json body.post_m5.hole.d"
+       "value": 0.00615,
+       "source": "joints.json body.post_m5.hole.d (6.4 mm drawn) less 0.25 mm: as printed (cad-agent CAD_ALLOWANCE_MM, its middle)"
       },
       "bore_diameter_m": {
        "value": 0.00396,
@@ -1045,15 +1113,21 @@
       "length_mm": 7.9
      },
      "toolkit": {
-      "low_n": 1140.05,
-      "mid_n": 1918.74,
-      "high_n": 2394.13,
+      "low_n": 1013.53,
+      "mid_n": 1705.8,
+      "high_n": 2128.43,
+      "sheet_n": {
+       "low": 1140.05,
+       "mid": 1918.74,
+       "high": 2394.13
+      },
+      "basis_scale": 0.88902,
       "function": "insert_shear_force",
       "calibrated_on": "pooled",
       "outside_fit": null
      },
      "status": "agree",
-     "ratio": 0.8735,
+     "ratio": 0.9825,
      "si": {
       "outer_diameter_m": {
        "value": 0.00711,
@@ -1074,8 +1148,13 @@
         "high": 1.06412
        },
        "source": "c fitted on 'pooled' (cadagent.mechanical.inserts.calibration)"
+      },
+      "basis_scale": {
+       "value": 0.88902,
+       "source": "joints.json basis.pullout.materials.pa6-cf.z_mpa (22.67) / pa6-cf20-polymaker-wet's across-layer strength (25.5 MPa)"
       }
-     }
+     },
+     "ratio_to_high": 0.7874
     },
     {
      "check": "pull-out margin",
@@ -1087,8 +1166,8 @@
       "load_n": 290.0
      },
      "toolkit": {
-      "sf_low": 3.93,
-      "low_n": 1140.05,
+      "sf_low": 3.49,
+      "low_n": 1013.53,
       "verdict": "pass"
      },
      "status": "agree"
@@ -1291,15 +1370,21 @@
       "length_mm": 5.7
      },
      "toolkit": {
-      "low_n": 546.065,
-      "mid_n": 919.045,
-      "high_n": 1146.75,
+      "low_n": 485.463,
+      "mid_n": 817.049,
+      "high_n": 1019.48,
+      "sheet_n": {
+       "low": 546.065,
+       "mid": 919.045,
+       "high": 1146.75
+      },
+      "basis_scale": 0.88902,
       "function": "insert_shear_force",
       "calibrated_on": "pooled",
       "outside_fit": null
      },
      "status": "agree",
-     "ratio": 0.8226,
+     "ratio": 0.9253,
      "si": {
       "outer_diameter_m": {
        "value": 0.00472,
@@ -1320,8 +1405,13 @@
         "high": 1.06412
        },
        "source": "c fitted on 'pooled' (cadagent.mechanical.inserts.calibration)"
+      },
+      "basis_scale": {
+       "value": 0.88902,
+       "source": "joints.json basis.pullout.materials.pa6-cf.z_mpa (22.67) / pa6-cf20-polymaker-wet's across-layer strength (25.5 MPa)"
       }
-     }
+     },
+     "ratio_to_high": 0.7416
     },
     {
      "check": "pull-out margin",
@@ -1333,8 +1423,8 @@
       "load_n": 20
      },
      "toolkit": {
-      "sf_low": 27.3,
-      "low_n": 546.065,
+      "sf_low": 24.3,
+      "low_n": 485.463,
       "verdict": "pass"
      },
      "status": "agree"
@@ -1525,8 +1615,15 @@
      },
      "toolkit": {
       "verdict": "pass",
-      "displaced_m3": -2.70235e-08,
-      "pocket_m3": 9.97267e-08,
+      "hole_mm": 6.15,
+      "displaced_m3": -7.55644e-09,
+      "pocket_m3": 9.20877e-08,
+      "as_drawn": {
+       "hole_mm": 6.4,
+       "verdict": "pass",
+       "displaced_m3": -2.70235e-08,
+       "pocket_m3": 9.97267e-08
+      },
       "functions": [
        "insert_displaced_volume",
        "overflow_volume"
@@ -1539,8 +1636,8 @@
        "source": "cad-agent INSERTS['mcmaster-94459A775'].volume_mm3 (McMaster's STEP)"
       },
       "hole_diameter_m": {
-       "value": 0.0064,
-       "source": "joints.json body.plate_post.hole.d"
+       "value": 0.00615,
+       "source": "joints.json body.plate_post.hole.d (6.4 mm drawn) less 0.25 mm: as printed (cad-agent CAD_ALLOWANCE_MM, its middle)"
       },
       "bore_diameter_m": {
        "value": 0.00396,
@@ -1632,15 +1729,21 @@
       "length_mm": 7.9
      },
      "toolkit": {
-      "low_n": 1140.05,
-      "mid_n": 1918.74,
-      "high_n": 2394.13,
+      "low_n": 1013.53,
+      "mid_n": 1705.8,
+      "high_n": 2128.43,
+      "sheet_n": {
+       "low": 1140.05,
+       "mid": 1918.74,
+       "high": 2394.13
+      },
+      "basis_scale": 0.88902,
       "function": "insert_shear_force",
       "calibrated_on": "pooled",
       "outside_fit": null
      },
      "status": "agree",
-     "ratio": 0.8735,
+     "ratio": 0.9825,
      "si": {
       "outer_diameter_m": {
        "value": 0.00711,
@@ -1661,8 +1764,13 @@
         "high": 1.06412
        },
        "source": "c fitted on 'pooled' (cadagent.mechanical.inserts.calibration)"
+      },
+      "basis_scale": {
+       "value": 0.88902,
+       "source": "joints.json basis.pullout.materials.pa6-cf.z_mpa (22.67) / pa6-cf20-polymaker-wet's across-layer strength (25.5 MPa)"
       }
-     }
+     },
+     "ratio_to_high": 0.7874
     },
     {
      "check": "pull-out margin",
@@ -1674,8 +1782,8 @@
       "load_n": 37
      },
      "toolkit": {
-      "sf_low": 30.8,
-      "low_n": 1140.05,
+      "sf_low": 27.4,
+      "low_n": 1013.53,
       "verdict": "pass"
      },
      "status": "agree"
@@ -1805,8 +1913,15 @@
      },
      "toolkit": {
       "verdict": "pass",
-      "displaced_m3": -2.70235e-08,
-      "pocket_m3": 1.31897e-07,
+      "hole_mm": 6.15,
+      "displaced_m3": -7.55644e-09,
+      "pocket_m3": 1.21793e-07,
+      "as_drawn": {
+       "hole_mm": 6.4,
+       "verdict": "pass",
+       "displaced_m3": -2.70235e-08,
+       "pocket_m3": 1.31897e-07
+      },
       "functions": [
        "insert_displaced_volume",
        "overflow_volume"
@@ -1819,8 +1934,8 @@
        "source": "cad-agent INSERTS['mcmaster-94459A775'].volume_mm3 (McMaster's STEP)"
       },
       "hole_diameter_m": {
-       "value": 0.0064,
-       "source": "joints.json body.riser_feet.hole.d"
+       "value": 0.00615,
+       "source": "joints.json body.riser_feet.hole.d (6.4 mm drawn) less 0.25 mm: as printed (cad-agent CAD_ALLOWANCE_MM, its middle)"
       },
       "bore_diameter_m": {
        "value": 0.00396,
@@ -1913,15 +2028,21 @@
       "length_mm": 7.9
      },
      "toolkit": {
-      "low_n": 1140.05,
-      "mid_n": 1918.74,
-      "high_n": 2394.13,
+      "low_n": 1013.53,
+      "mid_n": 1705.8,
+      "high_n": 2128.43,
+      "sheet_n": {
+       "low": 1140.05,
+       "mid": 1918.74,
+       "high": 2394.13
+      },
+      "basis_scale": 0.88902,
       "function": "insert_shear_force",
       "calibrated_on": "pooled",
       "outside_fit": null
      },
      "status": "agree",
-     "ratio": 0.8735,
+     "ratio": 0.9825,
      "si": {
       "outer_diameter_m": {
        "value": 0.00711,
@@ -1942,8 +2063,13 @@
         "high": 1.06412
        },
        "source": "c fitted on 'pooled' (cadagent.mechanical.inserts.calibration)"
+      },
+      "basis_scale": {
+       "value": 0.88902,
+       "source": "joints.json basis.pullout.materials.pa6-cf.z_mpa (22.67) / pa6-cf20-polymaker-wet's across-layer strength (25.5 MPa)"
       }
-     }
+     },
+     "ratio_to_high": 0.7874
     },
     {
      "check": "pull-out margin",
@@ -1955,8 +2081,8 @@
       "load_n": 782
      },
      "toolkit": {
-      "sf_low": 1.46,
-      "low_n": 1140.05,
+      "sf_low": 1.3,
+      "low_n": 1013.53,
       "verdict": "warn"
      },
      "status": "agree"
@@ -2085,8 +2211,15 @@
      },
      "toolkit": {
       "verdict": "pass",
-      "displaced_m3": -2.70235e-08,
-      "pocket_m3": 1.64067e-07,
+      "hole_mm": 6.15,
+      "displaced_m3": -7.55644e-09,
+      "pocket_m3": 1.51499e-07,
+      "as_drawn": {
+       "hole_mm": 6.4,
+       "verdict": "pass",
+       "displaced_m3": -2.70235e-08,
+       "pocket_m3": 1.64067e-07
+      },
       "functions": [
        "insert_displaced_volume",
        "overflow_volume"
@@ -2099,8 +2232,8 @@
        "source": "cad-agent INSERTS['mcmaster-94459A775'].volume_mm3 (McMaster's STEP)"
       },
       "hole_diameter_m": {
-       "value": 0.0064,
-       "source": "joints.json body.riser_top_tm.hole.d"
+       "value": 0.00615,
+       "source": "joints.json body.riser_top_tm.hole.d (6.4 mm drawn) less 0.25 mm: as printed (cad-agent CAD_ALLOWANCE_MM, its middle)"
       },
       "bore_diameter_m": {
        "value": 0.00396,
@@ -2171,15 +2304,21 @@
       "length_mm": 7.9
      },
      "toolkit": {
-      "low_n": 1140.05,
-      "mid_n": 1918.74,
-      "high_n": 2394.13,
+      "low_n": 1013.53,
+      "mid_n": 1705.8,
+      "high_n": 2128.43,
+      "sheet_n": {
+       "low": 1140.05,
+       "mid": 1918.74,
+       "high": 2394.13
+      },
+      "basis_scale": 0.88902,
       "function": "insert_shear_force",
       "calibrated_on": "pooled",
       "outside_fit": null
      },
      "status": "agree",
-     "ratio": 0.8735,
+     "ratio": 0.9825,
      "si": {
       "outer_diameter_m": {
        "value": 0.00711,
@@ -2200,8 +2339,13 @@
         "high": 1.06412
        },
        "source": "c fitted on 'pooled' (cadagent.mechanical.inserts.calibration)"
+      },
+      "basis_scale": {
+       "value": 0.88902,
+       "source": "joints.json basis.pullout.materials.pa6-cf.z_mpa (22.67) / pa6-cf20-polymaker-wet's across-layer strength (25.5 MPa)"
       }
-     }
+     },
+     "ratio_to_high": 0.7874
     },
     {
      "check": "pull-out margin",
@@ -2213,12 +2357,12 @@
       "load_n": 640
      },
      "toolkit": {
-      "sf_low": 1.78,
-      "low_n": 1140.05,
+      "sf_low": 1.58,
+      "low_n": 1013.53,
       "verdict": "warn"
      },
      "status": "disagree",
-     "why": "inventory.py's capacity 1500 N gives 2.34; the toolkit holds the load to its low end, 1140 N, which gives 1.78"
+     "why": "inventory.py's capacity 1500 N gives 2.34; the toolkit holds the load to its low end, 1014 N, which gives 1.58 (1140 N and 1.78 on pa6-cf20-polymaker-wet's own sheet, scaled by 0.889 to the inventory's across-layer basis)"
     },
     {
      "check": "head bearing preload",
@@ -2412,15 +2556,21 @@
       "length_mm": 5.7
      },
      "toolkit": {
-      "low_n": 546.065,
-      "mid_n": 919.045,
-      "high_n": 1146.75,
+      "low_n": 485.463,
+      "mid_n": 817.049,
+      "high_n": 1019.48,
+      "sheet_n": {
+       "low": 546.065,
+       "mid": 919.045,
+       "high": 1146.75
+      },
+      "basis_scale": 0.88902,
       "function": "insert_shear_force",
       "calibrated_on": "pooled",
       "outside_fit": null
      },
      "status": "agree",
-     "ratio": 0.8226,
+     "ratio": 0.9253,
      "si": {
       "outer_diameter_m": {
        "value": 0.00472,
@@ -2441,8 +2591,13 @@
         "high": 1.06412
        },
        "source": "c fitted on 'pooled' (cadagent.mechanical.inserts.calibration)"
+      },
+      "basis_scale": {
+       "value": 0.88902,
+       "source": "joints.json basis.pullout.materials.pa6-cf.z_mpa (22.67) / pa6-cf20-polymaker-wet's across-layer strength (25.5 MPa)"
       }
-     }
+     },
+     "ratio_to_high": 0.7416
     }
    ],
    "toolkit_only": {
@@ -2567,8 +2722,15 @@
      },
      "toolkit": {
       "verdict": "pass",
-      "displaced_m3": -4.77535e-09,
-      "pocket_m3": 1.00531e-08,
+      "hole_mm": 3.75,
+      "displaced_m3": 3.89839e-09,
+      "pocket_m3": 8.83573e-09,
+      "as_drawn": {
+       "hole_mm": 4.0,
+       "verdict": "pass",
+       "displaced_m3": -4.77535e-09,
+       "pocket_m3": 1.00531e-08
+      },
       "functions": [
        "insert_displaced_volume",
        "overflow_volume"
@@ -2581,8 +2743,8 @@
        "source": "cad-agent INSERTS['mcmaster-94459A140'].volume_mm3 (McMaster's STEP)"
       },
       "hole_diameter_m": {
-       "value": 0.004,
-       "source": "joints.json body.bus_insulator.hole.d"
+       "value": 0.00375,
+       "source": "joints.json body.bus_insulator.hole.d (4 mm drawn) less 0.25 mm: as printed (cad-agent CAD_ALLOWANCE_MM, its middle)"
       },
       "bore_diameter_m": {
        "value": 0.00235,
@@ -2597,7 +2759,7 @@
        "source": "joints.json body.bus_insulator.hole.depth"
       }
      },
-     "why": "inventory.py notes a pilot under L + 2 pitches as short of room for the melt; the toolkit's volumes from McMaster's STEP give -4.8 mm3 displaced against a 10.1 mm3 pocket (below 0: the insert's metal and empty bore are less than the hole it fills, so the knurl's valleys stay partly empty and no melt needs the pocket)"
+     "why": "at the as-printed hole (3.75 mm: the drawn 4 less 0.25) McMaster's STEP volumes give 3.9 mm3 displaced against a 8.8 mm3 pocket, so the toolkit passes what inventory.py notes from its L + 2 pitches rule (6.7 mm deep)"
     },
     {
      "check": "screw tip",
@@ -2678,6 +2840,12 @@
       "low_n": 749.502,
       "mid_n": 979.211,
       "high_n": 1085.69,
+      "sheet_n": {
+       "low": 749.502,
+       "mid": 979.211,
+       "high": 1085.69
+      },
+      "basis_scale": 1.0,
       "function": "insert_shear_force",
       "calibrated_on": "petg",
       "outside_fit": null
@@ -2704,9 +2872,14 @@
         "high": 0.734008
        },
        "source": "c fitted on 'petg' (cadagent.mechanical.inserts.calibration)"
+      },
+      "basis_scale": {
+       "value": 1.0,
+       "source": "joints.json basis.pullout.materials.petg.z_mpa (35) / petg-bambu-basic's across-layer strength (35 MPa)"
       }
      },
-     "why": "above the band: inventory.py takes CNC Kitchen's PETG test as a mean shear on the hole (16.29 MPa x pi x 4 x 5.7 mm); the toolkit fits c to petg tests on each test filament's datasheet and applies it to petg-bambu-basic's (17.5 MPa shear) on the knurl (4.72 mm), so a filament weaker across its layers than the tested one comes out lower"
+     "why": "above the band: inventory.py takes CNC Kitchen's PETG test as a mean shear on the hole (16.29 MPa x pi x 4 x 5.7 mm); the toolkit fits c to petg tests on each test filament's datasheet and applies it to petg-bambu-basic's (17.5 MPa shear) on 4.72 mm (the knurl's crests), so a filament weaker across its layers than the tested one comes out lower; 1.19 x its mid, 1.07 x its high end",
+     "ratio_to_high": 1.075
     },
     {
      "check": "pull-out margin",
@@ -2848,8 +3021,15 @@
      },
      "toolkit": {
       "verdict": "pass",
-      "displaced_m3": -4.77535e-09,
-      "pocket_m3": 1.00531e-08,
+      "hole_mm": 3.75,
+      "displaced_m3": 3.89839e-09,
+      "pocket_m3": 8.83573e-09,
+      "as_drawn": {
+       "hole_mm": 4.0,
+       "verdict": "pass",
+       "displaced_m3": -4.77535e-09,
+       "pocket_m3": 1.00531e-08
+      },
       "functions": [
        "insert_displaced_volume",
        "overflow_volume"
@@ -2862,8 +3042,8 @@
        "source": "cad-agent INSERTS['mcmaster-94459A140'].volume_mm3 (McMaster's STEP)"
       },
       "hole_diameter_m": {
-       "value": 0.004,
-       "source": "joints.json body.bay_rail_side.hole.d"
+       "value": 0.00375,
+       "source": "joints.json body.bay_rail_side.hole.d (4 mm drawn) less 0.25 mm: as printed (cad-agent CAD_ALLOWANCE_MM, its middle)"
       },
       "bore_diameter_m": {
        "value": 0.00235,
@@ -2878,7 +3058,7 @@
        "source": "joints.json body.bay_rail_side.hole.depth"
       }
      },
-     "why": "inventory.py notes a pilot under L + 2 pitches as short of room for the melt; the toolkit's volumes from McMaster's STEP give -4.8 mm3 displaced against a 10.1 mm3 pocket (below 0: the insert's metal and empty bore are less than the hole it fills, so the knurl's valleys stay partly empty and no melt needs the pocket)"
+     "why": "at the as-printed hole (3.75 mm: the drawn 4 less 0.25) McMaster's STEP volumes give 3.9 mm3 displaced against a 8.8 mm3 pocket, so the toolkit passes what inventory.py notes from its L + 2 pitches rule (6.7 mm deep)"
     },
     {
      "check": "screw tip",
@@ -2956,15 +3136,21 @@
       "length_mm": 5.7
      },
      "toolkit": {
-      "low_n": 546.065,
-      "mid_n": 919.045,
-      "high_n": 1146.75,
+      "low_n": 485.463,
+      "mid_n": 817.049,
+      "high_n": 1019.48,
+      "sheet_n": {
+       "low": 546.065,
+       "mid": 919.045,
+       "high": 1146.75
+      },
+      "basis_scale": 0.88902,
       "function": "insert_shear_force",
       "calibrated_on": "pooled",
       "outside_fit": null
      },
      "status": "agree",
-     "ratio": 0.8226,
+     "ratio": 0.9253,
      "si": {
       "outer_diameter_m": {
        "value": 0.00472,
@@ -2985,8 +3171,13 @@
         "high": 1.06412
        },
        "source": "c fitted on 'pooled' (cadagent.mechanical.inserts.calibration)"
+      },
+      "basis_scale": {
+       "value": 0.88902,
+       "source": "joints.json basis.pullout.materials.pa6-cf.z_mpa (22.67) / pa6-cf20-polymaker-wet's across-layer strength (25.5 MPa)"
       }
-     }
+     },
+     "ratio_to_high": 0.7416
     }
    ],
    "toolkit_only": {
@@ -3114,8 +3305,15 @@
      },
      "toolkit": {
       "verdict": "pass",
-      "displaced_m3": -4.77535e-09,
-      "pocket_m3": 2.26195e-08,
+      "hole_mm": 3.75,
+      "displaced_m3": 3.89839e-09,
+      "pocket_m3": 1.98804e-08,
+      "as_drawn": {
+       "hole_mm": 4.0,
+       "verdict": "pass",
+       "displaced_m3": -4.77535e-09,
+       "pocket_m3": 2.26195e-08
+      },
       "functions": [
        "insert_displaced_volume",
        "overflow_volume"
@@ -3128,8 +3326,8 @@
        "source": "cad-agent INSERTS['mcmaster-94459A140'].volume_mm3 (McMaster's STEP)"
       },
       "hole_diameter_m": {
-       "value": 0.004,
-       "source": "joints.json body.bay_rail_door.hole.d"
+       "value": 0.00375,
+       "source": "joints.json body.bay_rail_door.hole.d (4 mm drawn) less 0.25 mm: as printed (cad-agent CAD_ALLOWANCE_MM, its middle)"
       },
       "bore_diameter_m": {
        "value": 0.00235,
@@ -3222,15 +3420,21 @@
       "length_mm": 5.7
      },
      "toolkit": {
-      "low_n": 546.065,
-      "mid_n": 919.045,
-      "high_n": 1146.75,
+      "low_n": 485.463,
+      "mid_n": 817.049,
+      "high_n": 1019.48,
+      "sheet_n": {
+       "low": 546.065,
+       "mid": 919.045,
+       "high": 1146.75
+      },
+      "basis_scale": 0.88902,
       "function": "insert_shear_force",
       "calibrated_on": "pooled",
       "outside_fit": null
      },
      "status": "agree",
-     "ratio": 0.8226,
+     "ratio": 0.9253,
      "si": {
       "outer_diameter_m": {
        "value": 0.00472,
@@ -3251,8 +3455,13 @@
         "high": 1.06412
        },
        "source": "c fitted on 'pooled' (cadagent.mechanical.inserts.calibration)"
+      },
+      "basis_scale": {
+       "value": 0.88902,
+       "source": "joints.json basis.pullout.materials.pa6-cf.z_mpa (22.67) / pa6-cf20-polymaker-wet's across-layer strength (25.5 MPa)"
       }
-     }
+     },
+     "ratio_to_high": 0.7416
     },
     {
      "check": "pull-out margin",
@@ -3264,8 +3473,8 @@
       "load_n": 74
      },
      "toolkit": {
-      "sf_low": 7.38,
-      "low_n": 546.065,
+      "sf_low": 6.56,
+      "low_n": 485.463,
       "verdict": "pass"
      },
      "status": "agree"
@@ -3442,8 +3651,15 @@
      },
      "toolkit": {
       "verdict": "pass",
-      "displaced_m3": -4.77535e-09,
-      "pocket_m3": 2.26195e-08,
+      "hole_mm": 3.75,
+      "displaced_m3": 3.89839e-09,
+      "pocket_m3": 1.98804e-08,
+      "as_drawn": {
+       "hole_mm": 4.0,
+       "verdict": "pass",
+       "displaced_m3": -4.77535e-09,
+       "pocket_m3": 2.26195e-08
+      },
       "functions": [
        "insert_displaced_volume",
        "overflow_volume"
@@ -3456,8 +3672,8 @@
        "source": "cad-agent INSERTS['mcmaster-94459A140'].volume_mm3 (McMaster's STEP)"
       },
       "hole_diameter_m": {
-       "value": 0.004,
-       "source": "joints.json body.d435_cradle.hole.d"
+       "value": 0.00375,
+       "source": "joints.json body.d435_cradle.hole.d (4 mm drawn) less 0.25 mm: as printed (cad-agent CAD_ALLOWANCE_MM, its middle)"
       },
       "bore_diameter_m": {
        "value": 0.00235,
@@ -3550,15 +3766,21 @@
       "length_mm": 5.7
      },
      "toolkit": {
-      "low_n": 546.065,
-      "mid_n": 919.045,
-      "high_n": 1146.75,
+      "low_n": 485.463,
+      "mid_n": 817.049,
+      "high_n": 1019.48,
+      "sheet_n": {
+       "low": 546.065,
+       "mid": 919.045,
+       "high": 1146.75
+      },
+      "basis_scale": 0.88902,
       "function": "insert_shear_force",
       "calibrated_on": "pooled",
       "outside_fit": null
      },
      "status": "agree",
-     "ratio": 0.8226,
+     "ratio": 0.9253,
      "si": {
       "outer_diameter_m": {
        "value": 0.00472,
@@ -3579,8 +3801,13 @@
         "high": 1.06412
        },
        "source": "c fitted on 'pooled' (cadagent.mechanical.inserts.calibration)"
+      },
+      "basis_scale": {
+       "value": 0.88902,
+       "source": "joints.json basis.pullout.materials.pa6-cf.z_mpa (22.67) / pa6-cf20-polymaker-wet's across-layer strength (25.5 MPa)"
       }
-     }
+     },
+     "ratio_to_high": 0.7416
     },
     {
      "check": "pull-out margin",
@@ -3592,8 +3819,8 @@
       "load_n": 11
      },
      "toolkit": {
-      "sf_low": 49.6,
-      "low_n": 546.065,
+      "sf_low": 44.1,
+      "low_n": 485.463,
       "verdict": "pass"
      },
      "status": "agree"
@@ -3774,23 +4001,30 @@
       "finding": "pilot-below-spirol (note)"
      },
      "toolkit": {
-      "verdict": "pass",
-      "displaced_m3": -4.77535e-09,
-      "pocket_m3": 3.76991e-09,
+      "verdict": "warn",
+      "hole_mm": 3.75,
+      "displaced_m3": 3.89839e-09,
+      "pocket_m3": 3.3134e-09,
+      "as_drawn": {
+       "hole_mm": 4.0,
+       "verdict": "pass",
+       "displaced_m3": -4.77535e-09,
+       "pocket_m3": 3.76991e-09
+      },
       "functions": [
        "insert_displaced_volume",
        "overflow_volume"
       ]
      },
-     "status": "disagree",
+     "status": "agree",
      "si": {
       "insert_volume_m3": {
        "value": 4.213e-08,
        "source": "cad-agent INSERTS['mcmaster-94459A140'].volume_mm3 (McMaster's STEP)"
       },
       "hole_diameter_m": {
-       "value": 0.004,
-       "source": "joints.json body.eyes_clip.hole.d"
+       "value": 0.00375,
+       "source": "joints.json body.eyes_clip.hole.d (4 mm drawn) less 0.25 mm: as printed (cad-agent CAD_ALLOWANCE_MM, its middle)"
       },
       "bore_diameter_m": {
        "value": 0.00235,
@@ -3804,8 +4038,7 @@
        "value": 0.006,
        "source": "joints.json body.eyes_clip.hole.depth"
       }
-     },
-     "why": "inventory.py notes a pilot under L + 2 pitches as short of room for the melt; the toolkit's volumes from McMaster's STEP give -4.8 mm3 displaced against a 3.8 mm3 pocket (below 0: the insert's metal and empty bore are less than the hole it fills, so the knurl's valleys stay partly empty and no melt needs the pocket)"
+     }
     },
     {
      "check": "screw tip",
@@ -3886,6 +4119,12 @@
       "low_n": 749.502,
       "mid_n": 979.211,
       "high_n": 1085.69,
+      "sheet_n": {
+       "low": 749.502,
+       "mid": 979.211,
+       "high": 1085.69
+      },
+      "basis_scale": 1.0,
       "function": "insert_shear_force",
       "calibrated_on": "petg",
       "outside_fit": null
@@ -3912,9 +4151,14 @@
         "high": 0.734008
        },
        "source": "c fitted on 'petg' (cadagent.mechanical.inserts.calibration)"
+      },
+      "basis_scale": {
+       "value": 1.0,
+       "source": "joints.json basis.pullout.materials.petg.z_mpa (35) / petg-bambu-basic's across-layer strength (35 MPa)"
       }
      },
-     "why": "above the band: inventory.py takes CNC Kitchen's PETG test as a mean shear on the hole (16.29 MPa x pi x 4 x 5.7 mm); the toolkit fits c to petg tests on each test filament's datasheet and applies it to petg-bambu-basic's (17.5 MPa shear) on the knurl (4.72 mm), so a filament weaker across its layers than the tested one comes out lower"
+     "why": "above the band: inventory.py takes CNC Kitchen's PETG test as a mean shear on the hole (16.29 MPa x pi x 4 x 5.7 mm); the toolkit fits c to petg tests on each test filament's datasheet and applies it to petg-bambu-basic's (17.5 MPa shear) on 4.72 mm (the knurl's crests), so a filament weaker across its layers than the tested one comes out lower; 1.19 x its mid, 1.07 x its high end",
+     "ratio_to_high": 1.075
     },
     {
      "check": "pull-out margin",
@@ -4107,8 +4351,15 @@
      },
      "toolkit": {
       "verdict": "pass",
-      "displaced_m3": -2.70235e-08,
-      "pocket_m3": 1.47982e-07,
+      "hole_mm": 6.15,
+      "displaced_m3": -7.55644e-09,
+      "pocket_m3": 1.36646e-07,
+      "as_drawn": {
+       "hole_mm": 6.4,
+       "verdict": "pass",
+       "displaced_m3": -2.70235e-08,
+       "pocket_m3": 1.47982e-07
+      },
       "functions": [
        "insert_displaced_volume",
        "overflow_volume"
@@ -4121,8 +4372,8 @@
        "source": "cad-agent INSERTS['mcmaster-94459A775'].volume_mm3 (McMaster's STEP)"
       },
       "hole_diameter_m": {
-       "value": 0.0064,
-       "source": "joints.json turret.plinth_columns.hole.d"
+       "value": 0.00615,
+       "source": "joints.json turret.plinth_columns.hole.d (6.4 mm drawn) less 0.25 mm: as printed (cad-agent CAD_ALLOWANCE_MM, its middle)"
       },
       "bore_diameter_m": {
        "value": 0.00396,
@@ -4218,6 +4469,12 @@
       "low_n": 1564.78,
       "mid_n": 2044.35,
       "high_n": 2266.66,
+      "sheet_n": {
+       "low": 1564.78,
+       "mid": 2044.35,
+       "high": 2266.66
+      },
+      "basis_scale": 1.0,
       "function": "insert_shear_force",
       "calibrated_on": "petg",
       "outside_fit": null
@@ -4244,9 +4501,14 @@
         "high": 0.734008
        },
        "source": "c fitted on 'petg' (cadagent.mechanical.inserts.calibration)"
+      },
+      "basis_scale": {
+       "value": 1.0,
+       "source": "joints.json basis.pullout.materials.petg.z_mpa (35) / petg-bambu-basic's across-layer strength (35 MPa)"
       }
      },
-     "why": "above the band: inventory.py takes CNC Kitchen's PETG test as a mean shear on the hole (16.29 MPa x pi x 6.4 x 7.9 mm); the toolkit fits c to petg tests on each test filament's datasheet and applies it to petg-bambu-basic's (17.5 MPa shear) on the knurl (7.11 mm), so a filament weaker across its layers than the tested one comes out lower"
+     "why": "above the band: inventory.py takes CNC Kitchen's PETG test as a mean shear on the hole (16.29 MPa x pi x 6.4 x 7.9 mm); the toolkit fits c to petg tests on each test filament's datasheet and applies it to petg-bambu-basic's (17.5 MPa shear) on 7.11 mm (the knurl's crests), so a filament weaker across its layers than the tested one comes out lower; 1.27 x its mid, 1.14 x its high end",
+     "ratio_to_high": 1.141
     },
     {
      "check": "pull-out margin",
@@ -4495,15 +4757,21 @@
       "length_mm": 6.4
      },
      "toolkit": {
-      "low_n": 727.438,
-      "mid_n": 1224.3,
-      "high_n": 1527.64,
+      "low_n": 646.706,
+      "mid_n": 1088.43,
+      "high_n": 1358.1,
+      "sheet_n": {
+       "low": 727.438,
+       "mid": 1224.3,
+       "high": 1527.64
+      },
+      "basis_scale": 0.88902,
       "function": "insert_shear_force",
       "calibrated_on": "pooled",
       "outside_fit": null
      },
      "status": "agree",
-     "ratio": 0.9704,
+     "ratio": 1.091,
      "si": {
       "outer_diameter_m": {
        "value": 0.0056,
@@ -4524,8 +4792,13 @@
         "high": 1.06412
        },
        "source": "c fitted on 'pooled' (cadagent.mechanical.inserts.calibration)"
+      },
+      "basis_scale": {
+       "value": 0.88902,
+       "source": "joints.json basis.pullout.materials.pa6-cf.z_mpa (22.67) / pa6-cf20-polymaker-wet's across-layer strength (25.5 MPa)"
       }
-     }
+     },
+     "ratio_to_high": 0.8748
     }
    ],
    "toolkit_only": {
@@ -4697,23 +4970,30 @@
       "finding": "pilot-below-spirol (note)"
      },
      "toolkit": {
-      "verdict": "pass",
-      "displaced_m3": -4.77535e-09,
-      "pocket_m3": 3.76991e-09,
+      "verdict": "warn",
+      "hole_mm": 3.75,
+      "displaced_m3": 3.89839e-09,
+      "pocket_m3": 3.3134e-09,
+      "as_drawn": {
+       "hole_mm": 4.0,
+       "verdict": "pass",
+       "displaced_m3": -4.77535e-09,
+       "pocket_m3": 3.76991e-09
+      },
       "functions": [
        "insert_displaced_volume",
        "overflow_volume"
       ]
      },
-     "status": "disagree",
+     "status": "agree",
      "si": {
       "insert_volume_m3": {
        "value": 4.213e-08,
        "source": "cad-agent INSERTS['mcmaster-94459A140'].volume_mm3 (McMaster's STEP)"
       },
       "hole_diameter_m": {
-       "value": 0.004,
-       "source": "joints.json turret.pan_base_clamp_ears.hole.d"
+       "value": 0.00375,
+       "source": "joints.json turret.pan_base_clamp_ears.hole.d (4 mm drawn) less 0.25 mm: as printed (cad-agent CAD_ALLOWANCE_MM, its middle)"
       },
       "bore_diameter_m": {
        "value": 0.00235,
@@ -4727,8 +5007,7 @@
        "value": 0.006,
        "source": "joints.json turret.pan_base_clamp_ears.hole.depth"
       }
-     },
-     "why": "inventory.py notes a pilot under L + 2 pitches as short of room for the melt; the toolkit's volumes from McMaster's STEP give -4.8 mm3 displaced against a 3.8 mm3 pocket (below 0: the insert's metal and empty bore are less than the hole it fills, so the knurl's valleys stay partly empty and no melt needs the pocket)"
+     }
     },
     {
      "check": "screw tip",
@@ -4784,15 +5063,21 @@
       "length_mm": 5.7
      },
      "toolkit": {
-      "low_n": 546.065,
-      "mid_n": 919.045,
-      "high_n": 1146.75,
+      "low_n": 485.463,
+      "mid_n": 817.049,
+      "high_n": 1019.48,
+      "sheet_n": {
+       "low": 546.065,
+       "mid": 919.045,
+       "high": 1146.75
+      },
+      "basis_scale": 0.88902,
       "function": "insert_shear_force",
       "calibrated_on": "pooled",
       "outside_fit": null
      },
      "status": "agree",
-     "ratio": 0.8226,
+     "ratio": 0.9253,
      "si": {
       "outer_diameter_m": {
        "value": 0.00472,
@@ -4813,8 +5098,13 @@
         "high": 1.06412
        },
        "source": "c fitted on 'pooled' (cadagent.mechanical.inserts.calibration)"
+      },
+      "basis_scale": {
+       "value": 0.88902,
+       "source": "joints.json basis.pullout.materials.pa6-cf.z_mpa (22.67) / pa6-cf20-polymaker-wet's across-layer strength (25.5 MPa)"
       }
-     }
+     },
+     "ratio_to_high": 0.7416
     },
     {
      "check": "pull-out margin",
@@ -4826,8 +5116,8 @@
       "load_n": 77
      },
      "toolkit": {
-      "sf_low": 7.09,
-      "low_n": 546.065,
+      "sf_low": 6.3,
+      "low_n": 485.463,
       "verdict": "pass"
      },
      "status": "agree"
@@ -4956,8 +5246,15 @@
      },
      "toolkit": {
       "verdict": "pass",
-      "displaced_m3": -4.77535e-09,
-      "pocket_m3": 1.63363e-08,
+      "hole_mm": 3.75,
+      "displaced_m3": 3.89839e-09,
+      "pocket_m3": 1.43581e-08,
+      "as_drawn": {
+       "hole_mm": 4.0,
+       "verdict": "pass",
+       "displaced_m3": -4.77535e-09,
+       "pocket_m3": 1.63363e-08
+      },
       "functions": [
        "insert_displaced_volume",
        "overflow_volume"
@@ -4970,8 +5267,8 @@
        "source": "cad-agent INSERTS['mcmaster-94459A140'].volume_mm3 (McMaster's STEP)"
       },
       "hole_diameter_m": {
-       "value": 0.004,
-       "source": "joints.json turret.pan_base_carrier_tabs.hole.d"
+       "value": 0.00375,
+       "source": "joints.json turret.pan_base_carrier_tabs.hole.d (4 mm drawn) less 0.25 mm: as printed (cad-agent CAD_ALLOWANCE_MM, its middle)"
       },
       "bore_diameter_m": {
        "value": 0.00235,
@@ -5042,15 +5339,21 @@
       "length_mm": 5.7
      },
      "toolkit": {
-      "low_n": 546.065,
-      "mid_n": 919.045,
-      "high_n": 1146.75,
+      "low_n": 485.463,
+      "mid_n": 817.049,
+      "high_n": 1019.48,
+      "sheet_n": {
+       "low": 546.065,
+       "mid": 919.045,
+       "high": 1146.75
+      },
+      "basis_scale": 0.88902,
       "function": "insert_shear_force",
       "calibrated_on": "pooled",
       "outside_fit": null
      },
      "status": "agree",
-     "ratio": 0.8226,
+     "ratio": 0.9253,
      "si": {
       "outer_diameter_m": {
        "value": 0.00472,
@@ -5071,8 +5374,13 @@
         "high": 1.06412
        },
        "source": "c fitted on 'pooled' (cadagent.mechanical.inserts.calibration)"
+      },
+      "basis_scale": {
+       "value": 0.88902,
+       "source": "joints.json basis.pullout.materials.pa6-cf.z_mpa (22.67) / pa6-cf20-polymaker-wet's across-layer strength (25.5 MPa)"
       }
-     }
+     },
+     "ratio_to_high": 0.7416
     }
    ],
    "toolkit_only": {
@@ -5239,8 +5547,15 @@
      },
      "toolkit": {
       "verdict": "pass",
-      "displaced_m3": -4.77535e-09,
-      "pocket_m3": 1.13097e-08,
+      "hole_mm": 3.75,
+      "displaced_m3": 3.89839e-09,
+      "pocket_m3": 9.9402e-09,
+      "as_drawn": {
+       "hole_mm": 4.0,
+       "verdict": "pass",
+       "displaced_m3": -4.77535e-09,
+       "pocket_m3": 1.13097e-08
+      },
       "functions": [
        "insert_displaced_volume",
        "overflow_volume"
@@ -5253,8 +5568,8 @@
        "source": "cad-agent INSERTS['mcmaster-94459A140'].volume_mm3 (McMaster's STEP)"
       },
       "hole_diameter_m": {
-       "value": 0.004,
-       "source": "joints.json turret.base_board_carrier.hole.d"
+       "value": 0.00375,
+       "source": "joints.json turret.base_board_carrier.hole.d (4 mm drawn) less 0.25 mm: as printed (cad-agent CAD_ALLOWANCE_MM, its middle)"
       },
       "bore_diameter_m": {
        "value": 0.00235,
@@ -5269,7 +5584,7 @@
        "source": "joints.json turret.base_board_carrier.hole.depth"
       }
      },
-     "why": "inventory.py notes a pilot under L + 2 pitches as short of room for the melt; the toolkit's volumes from McMaster's STEP give -4.8 mm3 displaced against a 11.3 mm3 pocket (below 0: the insert's metal and empty bore are less than the hole it fills, so the knurl's valleys stay partly empty and no melt needs the pocket)"
+     "why": "at the as-printed hole (3.75 mm: the drawn 4 less 0.25) McMaster's STEP volumes give 3.9 mm3 displaced against a 9.9 mm3 pocket, so the toolkit passes what inventory.py notes from its L + 2 pitches rule (6.7 mm deep)"
     },
     {
      "check": "insert axis",
@@ -5295,15 +5610,21 @@
       "length_mm": 5.7
      },
      "toolkit": {
-      "low_n": 546.065,
-      "mid_n": 919.045,
-      "high_n": 1146.75,
+      "low_n": 485.463,
+      "mid_n": 817.049,
+      "high_n": 1019.48,
+      "sheet_n": {
+       "low": 546.065,
+       "mid": 919.045,
+       "high": 1146.75
+      },
+      "basis_scale": 0.88902,
       "function": "insert_shear_force",
       "calibrated_on": "pooled",
       "outside_fit": null
      },
      "status": "agree",
-     "ratio": 0.8226,
+     "ratio": 0.9253,
      "si": {
       "outer_diameter_m": {
        "value": 0.00472,
@@ -5324,8 +5645,13 @@
         "high": 1.06412
        },
        "source": "c fitted on 'pooled' (cadagent.mechanical.inserts.calibration)"
+      },
+      "basis_scale": {
+       "value": 0.88902,
+       "source": "joints.json basis.pullout.materials.pa6-cf.z_mpa (22.67) / pa6-cf20-polymaker-wet's across-layer strength (25.5 MPa)"
       }
-     }
+     },
+     "ratio_to_high": 0.7416
     }
    ],
    "toolkit_only": {
@@ -5453,15 +5779,21 @@
       "length_mm": 6.4
      },
      "toolkit": {
-      "low_n": 727.438,
-      "mid_n": 1224.3,
-      "high_n": 1527.64,
+      "low_n": 646.706,
+      "mid_n": 1088.43,
+      "high_n": 1358.1,
+      "sheet_n": {
+       "low": 727.438,
+       "mid": 1224.3,
+       "high": 1527.64
+      },
+      "basis_scale": 0.88902,
       "function": "insert_shear_force",
       "calibrated_on": "pooled",
       "outside_fit": null
      },
      "status": "agree",
-     "ratio": 0.9704,
+     "ratio": 1.091,
      "si": {
       "outer_diameter_m": {
        "value": 0.0056,
@@ -5482,8 +5814,13 @@
         "high": 1.06412
        },
        "source": "c fitted on 'pooled' (cadagent.mechanical.inserts.calibration)"
+      },
+      "basis_scale": {
+       "value": 0.88902,
+       "source": "joints.json basis.pullout.materials.pa6-cf.z_mpa (22.67) / pa6-cf20-polymaker-wet's across-layer strength (25.5 MPa)"
       }
-     }
+     },
+     "ratio_to_high": 0.8748
     },
     {
      "check": "pull-out margin",
@@ -5495,8 +5832,8 @@
       "load_n": 15
      },
      "toolkit": {
-      "sf_low": 48.5,
-      "low_n": 727.438,
+      "sf_low": 43.1,
+      "low_n": 646.706,
       "verdict": "pass"
      },
      "status": "agree"
@@ -5630,15 +5967,21 @@
       "length_mm": 4.3
      },
      "toolkit": {
-      "low_n": 410.199,
-      "mid_n": 690.377,
-      "high_n": 861.426,
+      "low_n": 364.675,
+      "mid_n": 613.759,
+      "high_n": 765.825,
+      "sheet_n": {
+       "low": 410.199,
+       "mid": 690.377,
+       "high": 861.426
+      },
+      "basis_scale": 0.88902,
       "function": "insert_shear_force",
       "calibrated_on": "pooled",
       "outside_fit": null
      },
      "status": "agree",
-     "ratio": 0.8256,
+     "ratio": 0.9287,
      "si": {
       "outer_diameter_m": {
        "value": 0.0047,
@@ -5659,8 +6002,13 @@
         "high": 1.06412
        },
        "source": "c fitted on 'pooled' (cadagent.mechanical.inserts.calibration)"
+      },
+      "basis_scale": {
+       "value": 0.88902,
+       "source": "joints.json basis.pullout.materials.pa6-cf.z_mpa (22.67) / pa6-cf20-polymaker-wet's across-layer strength (25.5 MPa)"
       }
-     }
+     },
+     "ratio_to_high": 0.7443
     }
    ],
    "toolkit_only": {
@@ -5824,15 +6172,21 @@
       "length_mm": 6.4
      },
      "toolkit": {
-      "low_n": 727.438,
-      "mid_n": 1224.3,
-      "high_n": 1527.64,
+      "low_n": 646.706,
+      "mid_n": 1088.43,
+      "high_n": 1358.1,
+      "sheet_n": {
+       "low": 727.438,
+       "mid": 1224.3,
+       "high": 1527.64
+      },
+      "basis_scale": 0.88902,
       "function": "insert_shear_force",
       "calibrated_on": "pooled",
       "outside_fit": null
      },
      "status": "agree",
-     "ratio": 0.9704,
+     "ratio": 1.091,
      "si": {
       "outer_diameter_m": {
        "value": 0.0056,
@@ -5853,8 +6207,13 @@
         "high": 1.06412
        },
        "source": "c fitted on 'pooled' (cadagent.mechanical.inserts.calibration)"
+      },
+      "basis_scale": {
+       "value": 0.88902,
+       "source": "joints.json basis.pullout.materials.pa6-cf.z_mpa (22.67) / pa6-cf20-polymaker-wet's across-layer strength (25.5 MPa)"
       }
-     }
+     },
+     "ratio_to_high": 0.8748
     },
     {
      "check": "pull-out margin",
@@ -5866,8 +6225,8 @@
       "load_n": 174
      },
      "toolkit": {
-      "sf_low": 4.18,
-      "low_n": 727.438,
+      "sf_low": 3.72,
+      "low_n": 646.706,
       "verdict": "pass"
      },
      "status": "agree"
@@ -6039,23 +6398,30 @@
       "finding": "pilot-below-spirol (note)"
      },
      "toolkit": {
-      "verdict": "pass",
-      "displaced_m3": -4.77535e-09,
-      "pocket_m3": 3.76991e-09,
+      "verdict": "warn",
+      "hole_mm": 3.75,
+      "displaced_m3": 3.89839e-09,
+      "pocket_m3": 3.3134e-09,
+      "as_drawn": {
+       "hole_mm": 4.0,
+       "verdict": "pass",
+       "displaced_m3": -4.77535e-09,
+       "pocket_m3": 3.76991e-09
+      },
       "functions": [
        "insert_displaced_volume",
        "overflow_volume"
       ]
      },
-     "status": "disagree",
+     "status": "agree",
      "si": {
       "insert_volume_m3": {
        "value": 4.213e-08,
        "source": "cad-agent INSERTS['mcmaster-94459A140'].volume_mm3 (McMaster's STEP)"
       },
       "hole_diameter_m": {
-       "value": 0.004,
-       "source": "joints.json turret.ring_carrier.hole.d"
+       "value": 0.00375,
+       "source": "joints.json turret.ring_carrier.hole.d (4 mm drawn) less 0.25 mm: as printed (cad-agent CAD_ALLOWANCE_MM, its middle)"
       },
       "bore_diameter_m": {
        "value": 0.00235,
@@ -6069,8 +6435,7 @@
        "value": 0.006,
        "source": "joints.json turret.ring_carrier.hole.depth"
       }
-     },
-     "why": "inventory.py notes a pilot under L + 2 pitches as short of room for the melt; the toolkit's volumes from McMaster's STEP give -4.8 mm3 displaced against a 3.8 mm3 pocket (below 0: the insert's metal and empty bore are less than the hole it fills, so the knurl's valleys stay partly empty and no melt needs the pocket)"
+     }
     },
     {
      "check": "insert axis",
@@ -6096,15 +6461,21 @@
       "length_mm": 5.7
      },
      "toolkit": {
-      "low_n": 546.065,
-      "mid_n": 919.045,
-      "high_n": 1146.75,
+      "low_n": 485.463,
+      "mid_n": 817.049,
+      "high_n": 1019.48,
+      "sheet_n": {
+       "low": 546.065,
+       "mid": 919.045,
+       "high": 1146.75
+      },
+      "basis_scale": 0.88902,
       "function": "insert_shear_force",
       "calibrated_on": "pooled",
       "outside_fit": null
      },
      "status": "agree",
-     "ratio": 0.8226,
+     "ratio": 0.9253,
      "si": {
       "outer_diameter_m": {
        "value": 0.00472,
@@ -6125,8 +6496,13 @@
         "high": 1.06412
        },
        "source": "c fitted on 'pooled' (cadagent.mechanical.inserts.calibration)"
+      },
+      "basis_scale": {
+       "value": 0.88902,
+       "source": "joints.json basis.pullout.materials.pa6-cf.z_mpa (22.67) / pa6-cf20-polymaker-wet's across-layer strength (25.5 MPa)"
       }
-     }
+     },
+     "ratio_to_high": 0.7416
     }
    ],
    "toolkit_only": {
@@ -6244,23 +6620,30 @@
       "finding": "pilot-below-spirol (note)"
      },
      "toolkit": {
-      "verdict": "pass",
-      "displaced_m3": -4.77535e-09,
-      "pocket_m3": 3.76991e-09,
+      "verdict": "warn",
+      "hole_mm": 3.75,
+      "displaced_m3": 3.89839e-09,
+      "pocket_m3": 3.3134e-09,
+      "as_drawn": {
+       "hole_mm": 4.0,
+       "verdict": "pass",
+       "displaced_m3": -4.77535e-09,
+       "pocket_m3": 3.76991e-09
+      },
       "functions": [
        "insert_displaced_volume",
        "overflow_volume"
       ]
      },
-     "status": "disagree",
+     "status": "agree",
      "si": {
       "insert_volume_m3": {
        "value": 4.213e-08,
        "source": "cad-agent INSERTS['mcmaster-94459A140'].volume_mm3 (McMaster's STEP)"
       },
       "hole_diameter_m": {
-       "value": 0.004,
-       "source": "joints.json turret.yoke_board_bay.hole.d"
+       "value": 0.00375,
+       "source": "joints.json turret.yoke_board_bay.hole.d (4 mm drawn) less 0.25 mm: as printed (cad-agent CAD_ALLOWANCE_MM, its middle)"
       },
       "bore_diameter_m": {
        "value": 0.00235,
@@ -6274,8 +6657,7 @@
        "value": 0.006,
        "source": "joints.json turret.yoke_board_bay.hole.depth"
       }
-     },
-     "why": "inventory.py notes a pilot under L + 2 pitches as short of room for the melt; the toolkit's volumes from McMaster's STEP give -4.8 mm3 displaced against a 3.8 mm3 pocket (below 0: the insert's metal and empty bore are less than the hole it fills, so the knurl's valleys stay partly empty and no melt needs the pocket)"
+     }
     },
     {
      "check": "screw tip",
@@ -6331,15 +6713,21 @@
       "length_mm": 5.7
      },
      "toolkit": {
-      "low_n": 546.065,
-      "mid_n": 919.045,
-      "high_n": 1146.75,
+      "low_n": 485.463,
+      "mid_n": 817.049,
+      "high_n": 1019.48,
+      "sheet_n": {
+       "low": 546.065,
+       "mid": 919.045,
+       "high": 1146.75
+      },
+      "basis_scale": 0.88902,
       "function": "insert_shear_force",
       "calibrated_on": "pooled",
       "outside_fit": null
      },
      "status": "agree",
-     "ratio": 0.8226,
+     "ratio": 0.9253,
      "si": {
       "outer_diameter_m": {
        "value": 0.00472,
@@ -6360,8 +6748,13 @@
         "high": 1.06412
        },
        "source": "c fitted on 'pooled' (cadagent.mechanical.inserts.calibration)"
+      },
+      "basis_scale": {
+       "value": 0.88902,
+       "source": "joints.json basis.pullout.materials.pa6-cf.z_mpa (22.67) / pa6-cf20-polymaker-wet's across-layer strength (25.5 MPa)"
       }
-     }
+     },
+     "ratio_to_high": 0.7416
     },
     {
      "check": "pull-out margin",
@@ -6373,8 +6766,8 @@
       "load_n": 12
      },
      "toolkit": {
-      "sf_low": 45.5,
-      "low_n": 546.065,
+      "sf_low": 40.5,
+      "low_n": 485.463,
       "verdict": "pass"
      },
      "status": "agree"
@@ -6545,23 +6938,30 @@
       "finding": "pilot-below-spirol (note)"
      },
      "toolkit": {
-      "verdict": "pass",
-      "displaced_m3": -4.77535e-09,
-      "pocket_m3": 3.76991e-09,
+      "verdict": "warn",
+      "hole_mm": 3.75,
+      "displaced_m3": 3.89839e-09,
+      "pocket_m3": 3.3134e-09,
+      "as_drawn": {
+       "hole_mm": 4.0,
+       "verdict": "pass",
+       "displaced_m3": -4.77535e-09,
+       "pocket_m3": 3.76991e-09
+      },
       "functions": [
        "insert_displaced_volume",
        "overflow_volume"
       ]
      },
-     "status": "disagree",
+     "status": "agree",
      "si": {
       "insert_volume_m3": {
        "value": 4.213e-08,
        "source": "cad-agent INSERTS['mcmaster-94459A140'].volume_mm3 (McMaster's STEP)"
       },
       "hole_diameter_m": {
-       "value": 0.004,
-       "source": "joints.json turret.board_bay_boards.hole.d"
+       "value": 0.00375,
+       "source": "joints.json turret.board_bay_boards.hole.d (4 mm drawn) less 0.25 mm: as printed (cad-agent CAD_ALLOWANCE_MM, its middle)"
       },
       "bore_diameter_m": {
        "value": 0.00235,
@@ -6575,8 +6975,7 @@
        "value": 0.006,
        "source": "joints.json turret.board_bay_boards.hole.depth"
       }
-     },
-     "why": "inventory.py notes a pilot under L + 2 pitches as short of room for the melt; the toolkit's volumes from McMaster's STEP give -4.8 mm3 displaced against a 3.8 mm3 pocket (below 0: the insert's metal and empty bore are less than the hole it fills, so the knurl's valleys stay partly empty and no melt needs the pocket)"
+     }
     },
     {
      "check": "boss",
@@ -6627,6 +7026,12 @@
       "low_n": 749.502,
       "mid_n": 979.211,
       "high_n": 1085.69,
+      "sheet_n": {
+       "low": 749.502,
+       "mid": 979.211,
+       "high": 1085.69
+      },
+      "basis_scale": 1.0,
       "function": "insert_shear_force",
       "calibrated_on": "petg",
       "outside_fit": null
@@ -6653,9 +7058,14 @@
         "high": 0.734008
        },
        "source": "c fitted on 'petg' (cadagent.mechanical.inserts.calibration)"
+      },
+      "basis_scale": {
+       "value": 1.0,
+       "source": "joints.json basis.pullout.materials.petg.z_mpa (35) / petg-bambu-basic's across-layer strength (35 MPa)"
       }
      },
-     "why": "above the band: inventory.py takes CNC Kitchen's PETG test as a mean shear on the hole (16.29 MPa x pi x 4 x 5.7 mm); the toolkit fits c to petg tests on each test filament's datasheet and applies it to petg-bambu-basic's (17.5 MPa shear) on the knurl (4.72 mm), so a filament weaker across its layers than the tested one comes out lower"
+     "why": "above the band: inventory.py takes CNC Kitchen's PETG test as a mean shear on the hole (16.29 MPa x pi x 4 x 5.7 mm); the toolkit fits c to petg tests on each test filament's datasheet and applies it to petg-bambu-basic's (17.5 MPa shear) on 4.72 mm (the knurl's crests), so a filament weaker across its layers than the tested one comes out lower; 1.19 x its mid, 1.07 x its high end",
+     "ratio_to_high": 1.075
     }
    ],
    "toolkit_only": {
@@ -6772,8 +7182,15 @@
      },
      "toolkit": {
       "verdict": "pass",
-      "displaced_m3": -4.77535e-09,
-      "pocket_m3": 1.00531e-08,
+      "hole_mm": 3.75,
+      "displaced_m3": 3.89839e-09,
+      "pocket_m3": 8.83573e-09,
+      "as_drawn": {
+       "hole_mm": 4.0,
+       "verdict": "pass",
+       "displaced_m3": -4.77535e-09,
+       "pocket_m3": 1.00531e-08
+      },
       "functions": [
        "insert_displaced_volume",
        "overflow_volume"
@@ -6786,8 +7203,8 @@
        "source": "cad-agent INSERTS['mcmaster-94459A140'].volume_mm3 (McMaster's STEP)"
       },
       "hole_diameter_m": {
-       "value": 0.004,
-       "source": "joints.json turret.cradle_plates.hole.d"
+       "value": 0.00375,
+       "source": "joints.json turret.cradle_plates.hole.d (4 mm drawn) less 0.25 mm: as printed (cad-agent CAD_ALLOWANCE_MM, its middle)"
       },
       "bore_diameter_m": {
        "value": 0.00235,
@@ -6802,7 +7219,7 @@
        "source": "joints.json turret.cradle_plates.hole.depth"
       }
      },
-     "why": "inventory.py notes a pilot under L + 2 pitches as short of room for the melt; the toolkit's volumes from McMaster's STEP give -4.8 mm3 displaced against a 10.1 mm3 pocket (below 0: the insert's metal and empty bore are less than the hole it fills, so the knurl's valleys stay partly empty and no melt needs the pocket)"
+     "why": "at the as-printed hole (3.75 mm: the drawn 4 less 0.25) McMaster's STEP volumes give 3.9 mm3 displaced against a 8.8 mm3 pocket, so the toolkit passes what inventory.py notes from its L + 2 pitches rule (6.7 mm deep)"
     },
     {
      "check": "screw tip",
@@ -6858,15 +7275,21 @@
       "length_mm": 5.7
      },
      "toolkit": {
-      "low_n": 546.065,
-      "mid_n": 919.045,
-      "high_n": 1146.75,
+      "low_n": 485.463,
+      "mid_n": 817.049,
+      "high_n": 1019.48,
+      "sheet_n": {
+       "low": 546.065,
+       "mid": 919.045,
+       "high": 1146.75
+      },
+      "basis_scale": 0.88902,
       "function": "insert_shear_force",
       "calibrated_on": "pooled",
       "outside_fit": null
      },
      "status": "agree",
-     "ratio": 0.8226,
+     "ratio": 0.9253,
      "si": {
       "outer_diameter_m": {
        "value": 0.00472,
@@ -6887,8 +7310,13 @@
         "high": 1.06412
        },
        "source": "c fitted on 'pooled' (cadagent.mechanical.inserts.calibration)"
+      },
+      "basis_scale": {
+       "value": 0.88902,
+       "source": "joints.json basis.pullout.materials.pa6-cf.z_mpa (22.67) / pa6-cf20-polymaker-wet's across-layer strength (25.5 MPa)"
       }
-     }
+     },
+     "ratio_to_high": 0.7416
     },
     {
      "check": "pull-out margin",
@@ -6900,8 +7328,8 @@
       "load_n": 47
      },
      "toolkit": {
-      "sf_low": 11.6,
-      "low_n": 546.065,
+      "sf_low": 10.3,
+      "low_n": 485.463,
       "verdict": "pass"
      },
      "status": "agree"
@@ -7025,23 +7453,30 @@
       "finding": "pilot-below-spirol (note)"
      },
      "toolkit": {
-      "verdict": "pass",
-      "displaced_m3": -4.77535e-09,
-      "pocket_m3": 3.76991e-09,
+      "verdict": "warn",
+      "hole_mm": 3.75,
+      "displaced_m3": 3.89839e-09,
+      "pocket_m3": 3.3134e-09,
+      "as_drawn": {
+       "hole_mm": 4.0,
+       "verdict": "pass",
+       "displaced_m3": -4.77535e-09,
+       "pocket_m3": 3.76991e-09
+      },
       "functions": [
        "insert_displaced_volume",
        "overflow_volume"
       ]
      },
-     "status": "disagree",
+     "status": "agree",
      "si": {
       "insert_volume_m3": {
        "value": 4.213e-08,
        "source": "cad-agent INSERTS['mcmaster-94459A140'].volume_mm3 (McMaster's STEP)"
       },
       "hole_diameter_m": {
-       "value": 0.004,
-       "source": "joints.json turret.cartridge_board.hole.d"
+       "value": 0.00375,
+       "source": "joints.json turret.cartridge_board.hole.d (4 mm drawn) less 0.25 mm: as printed (cad-agent CAD_ALLOWANCE_MM, its middle)"
       },
       "bore_diameter_m": {
        "value": 0.00235,
@@ -7055,8 +7490,7 @@
        "value": 0.006,
        "source": "joints.json turret.cartridge_board.hole.depth"
       }
-     },
-     "why": "inventory.py notes a pilot under L + 2 pitches as short of room for the melt; the toolkit's volumes from McMaster's STEP give -4.8 mm3 displaced against a 3.8 mm3 pocket (below 0: the insert's metal and empty bore are less than the hole it fills, so the knurl's valleys stay partly empty and no melt needs the pocket)"
+     }
     },
     {
      "check": "insert axis",
@@ -7082,15 +7516,21 @@
       "length_mm": 5.7
      },
      "toolkit": {
-      "low_n": 546.065,
-      "mid_n": 919.045,
-      "high_n": 1146.75,
+      "low_n": 485.463,
+      "mid_n": 817.049,
+      "high_n": 1019.48,
+      "sheet_n": {
+       "low": 546.065,
+       "mid": 919.045,
+       "high": 1146.75
+      },
+      "basis_scale": 0.88902,
       "function": "insert_shear_force",
       "calibrated_on": "pooled",
       "outside_fit": null
      },
      "status": "agree",
-     "ratio": 0.8226,
+     "ratio": 0.9253,
      "si": {
       "outer_diameter_m": {
        "value": 0.00472,
@@ -7111,8 +7551,13 @@
         "high": 1.06412
        },
        "source": "c fitted on 'pooled' (cadagent.mechanical.inserts.calibration)"
+      },
+      "basis_scale": {
+       "value": 0.88902,
+       "source": "joints.json basis.pullout.materials.pa6-cf.z_mpa (22.67) / pa6-cf20-polymaker-wet's across-layer strength (25.5 MPa)"
       }
-     }
+     },
+     "ratio_to_high": 0.7416
     }
    ],
    "toolkit_only": {
@@ -7229,8 +7674,15 @@
      },
      "toolkit": {
       "verdict": "pass",
-      "displaced_m3": -4.77535e-09,
-      "pocket_m3": 1.00531e-08,
+      "hole_mm": 3.75,
+      "displaced_m3": 3.89839e-09,
+      "pocket_m3": 8.83573e-09,
+      "as_drawn": {
+       "hole_mm": 4.0,
+       "verdict": "pass",
+       "displaced_m3": -4.77535e-09,
+       "pocket_m3": 1.00531e-08
+      },
       "functions": [
        "insert_displaced_volume",
        "overflow_volume"
@@ -7243,8 +7695,8 @@
        "source": "cad-agent INSERTS['mcmaster-94459A140'].volume_mm3 (McMaster's STEP)"
       },
       "hole_diameter_m": {
-       "value": 0.004,
-       "source": "joints.json turret.laser_foot.hole.d"
+       "value": 0.00375,
+       "source": "joints.json turret.laser_foot.hole.d (4 mm drawn) less 0.25 mm: as printed (cad-agent CAD_ALLOWANCE_MM, its middle)"
       },
       "bore_diameter_m": {
        "value": 0.00235,
@@ -7259,7 +7711,7 @@
        "source": "joints.json turret.laser_foot.hole.depth"
       }
      },
-     "why": "inventory.py notes a pilot under L + 2 pitches as short of room for the melt; the toolkit's volumes from McMaster's STEP give -4.8 mm3 displaced against a 10.1 mm3 pocket (below 0: the insert's metal and empty bore are less than the hole it fills, so the knurl's valleys stay partly empty and no melt needs the pocket)"
+     "why": "at the as-printed hole (3.75 mm: the drawn 4 less 0.25) McMaster's STEP volumes give 3.9 mm3 displaced against a 8.8 mm3 pocket, so the toolkit passes what inventory.py notes from its L + 2 pitches rule (6.7 mm deep)"
     },
     {
      "check": "insert axis",
@@ -7300,15 +7752,21 @@
       "length_mm": 5.7
      },
      "toolkit": {
-      "low_n": 546.065,
-      "mid_n": 919.045,
-      "high_n": 1146.75,
+      "low_n": 485.463,
+      "mid_n": 817.049,
+      "high_n": 1019.48,
+      "sheet_n": {
+       "low": 546.065,
+       "mid": 919.045,
+       "high": 1146.75
+      },
+      "basis_scale": 0.88902,
       "function": "insert_shear_force",
       "calibrated_on": "pooled",
       "outside_fit": null
      },
      "status": "agree",
-     "ratio": 0.8226,
+     "ratio": 0.9253,
      "si": {
       "outer_diameter_m": {
        "value": 0.00472,
@@ -7329,8 +7787,13 @@
         "high": 1.06412
        },
        "source": "c fitted on 'pooled' (cadagent.mechanical.inserts.calibration)"
+      },
+      "basis_scale": {
+       "value": 0.88902,
+       "source": "joints.json basis.pullout.materials.pa6-cf.z_mpa (22.67) / pa6-cf20-polymaker-wet's across-layer strength (25.5 MPa)"
       }
-     }
+     },
+     "ratio_to_high": 0.7416
     }
    ],
    "toolkit_only": {
@@ -7485,15 +7948,21 @@
       "length_mm": 5.7
      },
      "toolkit": {
-      "low_n": 546.065,
-      "mid_n": 919.045,
-      "high_n": 1146.75,
+      "low_n": 485.463,
+      "mid_n": 817.049,
+      "high_n": 1019.48,
+      "sheet_n": {
+       "low": 546.065,
+       "mid": 919.045,
+       "high": 1146.75
+      },
+      "basis_scale": 0.88902,
       "function": "insert_shear_force",
       "calibrated_on": "pooled",
       "outside_fit": null
      },
      "status": "agree",
-     "ratio": 0.8226,
+     "ratio": 0.9253,
      "si": {
       "outer_diameter_m": {
        "value": 0.00472,
@@ -7514,8 +7983,13 @@
         "high": 1.06412
        },
        "source": "c fitted on 'pooled' (cadagent.mechanical.inserts.calibration)"
+      },
+      "basis_scale": {
+       "value": 0.88902,
+       "source": "joints.json basis.pullout.materials.pa6-cf.z_mpa (22.67) / pa6-cf20-polymaker-wet's across-layer strength (25.5 MPa)"
       }
-     }
+     },
+     "ratio_to_high": 0.7416
     },
     {
      "check": "pull-out margin",
@@ -7527,12 +8001,12 @@
       "load_n": 333
      },
      "toolkit": {
-      "sf_low": 1.64,
-      "low_n": 546.065,
+      "sf_low": 1.46,
+      "low_n": 485.463,
       "verdict": "warn"
      },
      "status": "disagree",
-     "why": "inventory.py's capacity 756 N gives 2.27; the toolkit holds the load to its low end, 546 N, which gives 1.64"
+     "why": "inventory.py's capacity 756 N gives 2.27; the toolkit holds the load to its low end, 485 N, which gives 1.46 (546 N and 1.64 on pa6-cf20-polymaker-wet's own sheet, scaled by 0.889 to the inventory's across-layer basis)"
     }
    ],
    "toolkit_only": {
@@ -7720,15 +8194,21 @@
       "length_mm": 6.4
      },
      "toolkit": {
-      "low_n": 727.438,
-      "mid_n": 1224.3,
-      "high_n": 1527.64,
+      "low_n": 646.706,
+      "mid_n": 1088.43,
+      "high_n": 1358.1,
+      "sheet_n": {
+       "low": 727.438,
+       "mid": 1224.3,
+       "high": 1527.64
+      },
+      "basis_scale": 0.88902,
       "function": "insert_shear_force",
       "calibrated_on": "pooled",
       "outside_fit": null
      },
      "status": "agree",
-     "ratio": 0.9704,
+     "ratio": 1.091,
      "si": {
       "outer_diameter_m": {
        "value": 0.0056,
@@ -7749,8 +8229,13 @@
         "high": 1.06412
        },
        "source": "c fitted on 'pooled' (cadagent.mechanical.inserts.calibration)"
+      },
+      "basis_scale": {
+       "value": 0.88902,
+       "source": "joints.json basis.pullout.materials.pa6-cf.z_mpa (22.67) / pa6-cf20-polymaker-wet's across-layer strength (25.5 MPa)"
       }
-     }
+     },
+     "ratio_to_high": 0.8748
     },
     {
      "check": "pull-out margin",
@@ -7762,8 +8247,8 @@
       "load_n": 188
      },
      "toolkit": {
-      "sf_low": 3.87,
-      "low_n": 727.438,
+      "sf_low": 3.44,
+      "low_n": 646.706,
       "verdict": "pass"
      },
      "status": "agree"
@@ -7937,23 +8422,30 @@
       "finding": "pilot-below-spirol (note)"
      },
      "toolkit": {
-      "verdict": "pass",
-      "displaced_m3": -4.77535e-09,
-      "pocket_m3": 3.76991e-09,
+      "verdict": "warn",
+      "hole_mm": 3.75,
+      "displaced_m3": 3.89839e-09,
+      "pocket_m3": 3.3134e-09,
+      "as_drawn": {
+       "hole_mm": 4.0,
+       "verdict": "pass",
+       "displaced_m3": -4.77535e-09,
+       "pocket_m3": 3.76991e-09
+      },
       "functions": [
        "insert_displaced_volume",
        "overflow_volume"
       ]
      },
-     "status": "disagree",
+     "status": "agree",
      "si": {
       "insert_volume_m3": {
        "value": 4.213e-08,
        "source": "cad-agent INSERTS['mcmaster-94459A140'].volume_mm3 (McMaster's STEP)"
       },
       "hole_diameter_m": {
-       "value": 0.004,
-       "source": "joints.json turret.hopper_lugs.hole.d"
+       "value": 0.00375,
+       "source": "joints.json turret.hopper_lugs.hole.d (4 mm drawn) less 0.25 mm: as printed (cad-agent CAD_ALLOWANCE_MM, its middle)"
       },
       "bore_diameter_m": {
        "value": 0.00235,
@@ -7967,8 +8459,7 @@
        "value": 0.006,
        "source": "joints.json turret.hopper_lugs.hole.depth"
       }
-     },
-     "why": "inventory.py notes a pilot under L + 2 pitches as short of room for the melt; the toolkit's volumes from McMaster's STEP give -4.8 mm3 displaced against a 3.8 mm3 pocket (below 0: the insert's metal and empty bore are less than the hole it fills, so the knurl's valleys stay partly empty and no melt needs the pocket)"
+     }
     },
     {
      "check": "insert axis",
@@ -7994,15 +8485,21 @@
       "length_mm": 5.7
      },
      "toolkit": {
-      "low_n": 546.065,
-      "mid_n": 919.045,
-      "high_n": 1146.75,
+      "low_n": 485.463,
+      "mid_n": 817.049,
+      "high_n": 1019.48,
+      "sheet_n": {
+       "low": 546.065,
+       "mid": 919.045,
+       "high": 1146.75
+      },
+      "basis_scale": 0.88902,
       "function": "insert_shear_force",
       "calibrated_on": "pooled",
       "outside_fit": null
      },
      "status": "agree",
-     "ratio": 0.8226,
+     "ratio": 0.9253,
      "si": {
       "outer_diameter_m": {
        "value": 0.00472,
@@ -8023,8 +8520,13 @@
         "high": 1.06412
        },
        "source": "c fitted on 'pooled' (cadagent.mechanical.inserts.calibration)"
+      },
+      "basis_scale": {
+       "value": 0.88902,
+       "source": "joints.json basis.pullout.materials.pa6-cf.z_mpa (22.67) / pa6-cf20-polymaker-wet's across-layer strength (25.5 MPa)"
       }
-     }
+     },
+     "ratio_to_high": 0.7416
     }
    ],
    "toolkit_only": {
@@ -8142,8 +8644,15 @@
      },
      "toolkit": {
       "verdict": "pass",
-      "displaced_m3": -2.70235e-08,
-      "pocket_m3": 1.96236e-07,
+      "hole_mm": 6.15,
+      "displaced_m3": -7.55644e-09,
+      "pocket_m3": 1.81205e-07,
+      "as_drawn": {
+       "hole_mm": 6.4,
+       "verdict": "pass",
+       "displaced_m3": -2.70235e-08,
+       "pocket_m3": 1.96236e-07
+      },
       "functions": [
        "insert_displaced_volume",
        "overflow_volume"
@@ -8156,8 +8665,8 @@
        "source": "cad-agent INSERTS['mcmaster-94459A775'].volume_mm3 (McMaster's STEP)"
       },
       "hole_diameter_m": {
-       "value": 0.0064,
-       "source": "joints.json stand.tm.hole.d"
+       "value": 0.00615,
+       "source": "joints.json stand.tm.hole.d (6.4 mm drawn) less 0.25 mm: as printed (cad-agent CAD_ALLOWANCE_MM, its middle)"
       },
       "bore_diameter_m": {
        "value": 0.00396,
@@ -8238,6 +8747,12 @@
       "low_n": 1564.78,
       "mid_n": 2044.35,
       "high_n": 2266.66,
+      "sheet_n": {
+       "low": 1564.78,
+       "mid": 2044.35,
+       "high": 2266.66
+      },
+      "basis_scale": 1.0,
       "function": "insert_shear_force",
       "calibrated_on": "petg",
       "outside_fit": null
@@ -8264,9 +8779,14 @@
         "high": 0.734008
        },
        "source": "c fitted on 'petg' (cadagent.mechanical.inserts.calibration)"
+      },
+      "basis_scale": {
+       "value": 1.0,
+       "source": "joints.json basis.pullout.materials.petg.z_mpa (35) / petg-bambu-basic's across-layer strength (35 MPa)"
       }
      },
-     "why": "above the band: inventory.py takes CNC Kitchen's PETG test as a mean shear on the hole (16.29 MPa x pi x 6.4 x 7.9 mm); the toolkit fits c to petg tests on each test filament's datasheet and applies it to petg-bambu-basic's (17.5 MPa shear) on the knurl (7.11 mm), so a filament weaker across its layers than the tested one comes out lower"
+     "why": "above the band: inventory.py takes CNC Kitchen's PETG test as a mean shear on the hole (16.29 MPa x pi x 6.4 x 7.9 mm); the toolkit fits c to petg tests on each test filament's datasheet and applies it to petg-bambu-basic's (17.5 MPa shear) on 7.11 mm (the knurl's crests), so a filament weaker across its layers than the tested one comes out lower; 1.27 x its mid, 1.14 x its high end",
+     "ratio_to_high": 1.141
     }
    ],
    "toolkit_only": {
@@ -8396,6 +8916,12 @@
       "low_n": 563.018,
       "mid_n": 735.573,
       "high_n": 815.558,
+      "sheet_n": {
+       "low": 563.018,
+       "mid": 735.573,
+       "high": 815.558
+      },
+      "basis_scale": 1.0,
       "function": "insert_shear_force",
       "calibrated_on": "petg",
       "outside_fit": null
@@ -8422,9 +8948,14 @@
         "high": 0.734008
        },
        "source": "c fitted on 'petg' (cadagent.mechanical.inserts.calibration)"
+      },
+      "basis_scale": {
+       "value": 1.0,
+       "source": "joints.json basis.pullout.materials.petg.z_mpa (35) / petg-bambu-basic's across-layer strength (35 MPa)"
       }
      },
-     "why": "above the band: inventory.py takes CNC Kitchen's PETG test as a mean shear on the hole (16.29 MPa x pi x 4 x 4.3 mm); the toolkit fits c to petg tests on each test filament's datasheet and applies it to petg-bambu-basic's (17.5 MPa shear) on the knurl (4.7 mm), so a filament weaker across its layers than the tested one comes out lower"
+     "why": "above the band: inventory.py takes CNC Kitchen's PETG test as a mean shear on the hole (16.29 MPa x pi x 4 x 4.3 mm); the toolkit fits c to petg tests on each test filament's datasheet and applies it to petg-bambu-basic's (17.5 MPa shear) on 4.7 mm (the knurl's crests), so a filament weaker across its layers than the tested one comes out lower; 1.20 x its mid, 1.08 x its high end",
+     "ratio_to_high": 1.079
     }
    ],
    "toolkit_only": {
@@ -8539,8 +9070,15 @@
      },
      "toolkit": {
       "verdict": "pass",
-      "displaced_m3": -4.77535e-09,
-      "pocket_m3": 2.89027e-08,
+      "hole_mm": 3.75,
+      "displaced_m3": 3.89839e-09,
+      "pocket_m3": 2.54027e-08,
+      "as_drawn": {
+       "hole_mm": 4.0,
+       "verdict": "pass",
+       "displaced_m3": -4.77535e-09,
+       "pocket_m3": 2.89027e-08
+      },
       "functions": [
        "insert_displaced_volume",
        "overflow_volume"
@@ -8553,8 +9091,8 @@
        "source": "cad-agent INSERTS['mcmaster-94459A140'].volume_mm3 (McMaster's STEP)"
       },
       "hole_diameter_m": {
-       "value": 0.004,
-       "source": "joints.json stand.corners.hole.d"
+       "value": 0.00375,
+       "source": "joints.json stand.corners.hole.d (4 mm drawn) less 0.25 mm: as printed (cad-agent CAD_ALLOWANCE_MM, its middle)"
       },
       "bore_diameter_m": {
        "value": 0.00235,
@@ -8619,6 +9157,12 @@
       "low_n": 749.502,
       "mid_n": 979.211,
       "high_n": 1085.69,
+      "sheet_n": {
+       "low": 749.502,
+       "mid": 979.211,
+       "high": 1085.69
+      },
+      "basis_scale": 1.0,
       "function": "insert_shear_force",
       "calibrated_on": "petg",
       "outside_fit": null
@@ -8645,9 +9189,14 @@
         "high": 0.734008
        },
        "source": "c fitted on 'petg' (cadagent.mechanical.inserts.calibration)"
+      },
+      "basis_scale": {
+       "value": 1.0,
+       "source": "joints.json basis.pullout.materials.petg.z_mpa (35) / petg-bambu-basic's across-layer strength (35 MPa)"
       }
      },
-     "why": "above the band: inventory.py takes CNC Kitchen's PETG test as a mean shear on the hole (16.29 MPa x pi x 4 x 5.7 mm); the toolkit fits c to petg tests on each test filament's datasheet and applies it to petg-bambu-basic's (17.5 MPa shear) on the knurl (4.72 mm), so a filament weaker across its layers than the tested one comes out lower"
+     "why": "above the band: inventory.py takes CNC Kitchen's PETG test as a mean shear on the hole (16.29 MPa x pi x 4 x 5.7 mm); the toolkit fits c to petg tests on each test filament's datasheet and applies it to petg-bambu-basic's (17.5 MPa shear) on 4.72 mm (the knurl's crests), so a filament weaker across its layers than the tested one comes out lower; 1.19 x its mid, 1.07 x its high end",
+     "ratio_to_high": 1.075
     }
    ],
    "toolkit_only": {
@@ -8758,6 +9307,12 @@
       "low_n": 1564.78,
       "mid_n": 2044.35,
       "high_n": 2266.66,
+      "sheet_n": {
+       "low": 1564.78,
+       "mid": 2044.35,
+       "high": 2266.66
+      },
+      "basis_scale": 1.0,
       "function": "insert_shear_force",
       "calibrated_on": "petg",
       "outside_fit": null
@@ -8784,9 +9339,14 @@
         "high": 0.734008
        },
        "source": "c fitted on 'petg' (cadagent.mechanical.inserts.calibration)"
+      },
+      "basis_scale": {
+       "value": 1.0,
+       "source": "joints.json basis.pullout.materials.petg.z_mpa (35) / petg-bambu-basic's across-layer strength (35 MPa)"
       }
      },
-     "why": "above the band: inventory.py takes CNC Kitchen's PETG test as a mean shear on the hole (16.29 MPa x pi x 6.4 x 7.9 mm); the toolkit fits c to petg tests on each test filament's datasheet and applies it to petg-bambu-basic's (17.5 MPa shear) on the knurl (7.11 mm), so a filament weaker across its layers than the tested one comes out lower"
+     "why": "above the band: inventory.py takes CNC Kitchen's PETG test as a mean shear on the hole (16.29 MPa x pi x 6.4 x 7.9 mm); the toolkit fits c to petg tests on each test filament's datasheet and applies it to petg-bambu-basic's (17.5 MPa shear) on 7.11 mm (the knurl's crests), so a filament weaker across its layers than the tested one comes out lower; 1.27 x its mid, 1.14 x its high end",
+     "ratio_to_high": 1.141
     }
    ],
    "toolkit_only": {
@@ -8914,6 +9474,12 @@
       "low_n": 563.018,
       "mid_n": 735.573,
       "high_n": 815.558,
+      "sheet_n": {
+       "low": 563.018,
+       "mid": 735.573,
+       "high": 815.558
+      },
+      "basis_scale": 1.0,
       "function": "insert_shear_force",
       "calibrated_on": "petg",
       "outside_fit": null
@@ -8940,9 +9506,14 @@
         "high": 0.734008
        },
        "source": "c fitted on 'petg' (cadagent.mechanical.inserts.calibration)"
+      },
+      "basis_scale": {
+       "value": 1.0,
+       "source": "joints.json basis.pullout.materials.petg.z_mpa (35) / petg-bambu-basic's across-layer strength (35 MPa)"
       }
      },
-     "why": "above the band: inventory.py takes CNC Kitchen's PETG test as a mean shear on the hole (16.29 MPa x pi x 4 x 4.3 mm); the toolkit fits c to petg tests on each test filament's datasheet and applies it to petg-bambu-basic's (17.5 MPa shear) on the knurl (4.7 mm), so a filament weaker across its layers than the tested one comes out lower"
+     "why": "above the band: inventory.py takes CNC Kitchen's PETG test as a mean shear on the hole (16.29 MPa x pi x 4 x 4.3 mm); the toolkit fits c to petg tests on each test filament's datasheet and applies it to petg-bambu-basic's (17.5 MPa shear) on 4.7 mm (the knurl's crests), so a filament weaker across its layers than the tested one comes out lower; 1.20 x its mid, 1.08 x its high end",
+     "ratio_to_high": 1.079
     }
    ],
    "toolkit_only": {
@@ -9099,6 +9670,12 @@
       "low_n": 998.444,
       "mid_n": 1304.45,
       "high_n": 1446.29,
+      "sheet_n": {
+       "low": 998.444,
+       "mid": 1304.45,
+       "high": 1446.29
+      },
+      "basis_scale": 1.0,
       "function": "insert_shear_force",
       "calibrated_on": "petg",
       "outside_fit": null
@@ -9125,9 +9702,14 @@
         "high": 0.734008
        },
        "source": "c fitted on 'petg' (cadagent.mechanical.inserts.calibration)"
+      },
+      "basis_scale": {
+       "value": 1.0,
+       "source": "joints.json basis.pullout.materials.petg.z_mpa (35) / petg-bambu-basic's across-layer strength (35 MPa)"
       }
      },
-     "why": "above the band: inventory.py takes CNC Kitchen's PETG test as a mean shear on the hole (16.29 MPa x pi x 5.6 x 6.4 mm); the toolkit fits c to petg tests on each test filament's datasheet and applies it to petg-bambu-basic's (17.5 MPa shear) on the knurl (5.6 mm), so a filament weaker across its layers than the tested one comes out lower"
+     "why": "above the band: inventory.py takes CNC Kitchen's PETG test as a mean shear on the hole (16.29 MPa x pi x 5.6 x 6.4 mm); the toolkit fits c to petg tests on each test filament's datasheet and applies it to petg-bambu-basic's (17.5 MPa shear) on 5.6 mm (the maker's hole: the knurl's diameter was not read, so the shear cylinder is taken at the hole, smaller than the knurl (the capacity comes out low, the boss rule a floor)), so a filament weaker across its layers than the tested one comes out lower; 1.41 x its mid, 1.27 x its high end",
+     "ratio_to_high": 1.268
     },
     {
      "check": "preload at torque",
@@ -9361,6 +9943,12 @@
       "low_n": 998.444,
       "mid_n": 1304.45,
       "high_n": 1446.29,
+      "sheet_n": {
+       "low": 998.444,
+       "mid": 1304.45,
+       "high": 1446.29
+      },
+      "basis_scale": 1.0,
       "function": "insert_shear_force",
       "calibrated_on": "petg",
       "outside_fit": null
@@ -9387,9 +9975,14 @@
         "high": 0.734008
        },
        "source": "c fitted on 'petg' (cadagent.mechanical.inserts.calibration)"
+      },
+      "basis_scale": {
+       "value": 1.0,
+       "source": "joints.json basis.pullout.materials.petg.z_mpa (35) / petg-bambu-basic's across-layer strength (35 MPa)"
       }
      },
-     "why": "above the band: inventory.py takes CNC Kitchen's PETG test as a mean shear on the hole (16.29 MPa x pi x 5.6 x 6.4 mm); the toolkit fits c to petg tests on each test filament's datasheet and applies it to petg-bambu-basic's (17.5 MPa shear) on the knurl (5.6 mm), so a filament weaker across its layers than the tested one comes out lower"
+     "why": "above the band: inventory.py takes CNC Kitchen's PETG test as a mean shear on the hole (16.29 MPa x pi x 5.6 x 6.4 mm); the toolkit fits c to petg tests on each test filament's datasheet and applies it to petg-bambu-basic's (17.5 MPa shear) on 5.6 mm (the maker's hole: the knurl's diameter was not read, so the shear cylinder is taken at the hole, smaller than the knurl (the capacity comes out low, the boss rule a floor)), so a filament weaker across its layers than the tested one comes out lower; 1.41 x its mid, 1.27 x its high end",
+     "ratio_to_high": 1.268
     }
    ],
    "toolkit_only": {
@@ -9565,8 +10158,15 @@
      },
      "toolkit": {
       "verdict": "pass",
-      "displaced_m3": -4.77535e-09,
-      "pocket_m3": 3.51858e-08,
+      "hole_mm": 3.75,
+      "displaced_m3": 3.89839e-09,
+      "pocket_m3": 3.09251e-08,
+      "as_drawn": {
+       "hole_mm": 4.0,
+       "verdict": "pass",
+       "displaced_m3": -4.77535e-09,
+       "pocket_m3": 3.51858e-08
+      },
       "functions": [
        "insert_displaced_volume",
        "overflow_volume"
@@ -9579,8 +10179,8 @@
        "source": "cad-agent INSERTS['mcmaster-94459A140'].volume_mm3 (McMaster's STEP)"
       },
       "hole_diameter_m": {
-       "value": 0.004,
-       "source": "joints.json rig.pod_lid.hole.d"
+       "value": 0.00375,
+       "source": "joints.json rig.pod_lid.hole.d (4 mm drawn) less 0.25 mm: as printed (cad-agent CAD_ALLOWANCE_MM, its middle)"
       },
       "bore_diameter_m": {
        "value": 0.00235,
@@ -9676,6 +10276,12 @@
       "low_n": 749.502,
       "mid_n": 979.211,
       "high_n": 1085.69,
+      "sheet_n": {
+       "low": 749.502,
+       "mid": 979.211,
+       "high": 1085.69
+      },
+      "basis_scale": 1.0,
       "function": "insert_shear_force",
       "calibrated_on": "petg",
       "outside_fit": null
@@ -9702,9 +10308,14 @@
         "high": 0.734008
        },
        "source": "c fitted on 'petg' (cadagent.mechanical.inserts.calibration)"
+      },
+      "basis_scale": {
+       "value": 1.0,
+       "source": "joints.json basis.pullout.materials.petg.z_mpa (35) / petg-bambu-basic's across-layer strength (35 MPa)"
       }
      },
-     "why": "above the band: inventory.py takes CNC Kitchen's PETG test as a mean shear on the hole (16.29 MPa x pi x 4 x 5.7 mm); the toolkit fits c to petg tests on each test filament's datasheet and applies it to petg-bambu-basic's (17.5 MPa shear) on the knurl (4.72 mm), so a filament weaker across its layers than the tested one comes out lower"
+     "why": "above the band: inventory.py takes CNC Kitchen's PETG test as a mean shear on the hole (16.29 MPa x pi x 4 x 5.7 mm); the toolkit fits c to petg tests on each test filament's datasheet and applies it to petg-bambu-basic's (17.5 MPa shear) on 4.72 mm (the knurl's crests), so a filament weaker across its layers than the tested one comes out lower; 1.19 x its mid, 1.07 x its high end",
+     "ratio_to_high": 1.075
     }
    ],
    "toolkit_only": {
@@ -9945,6 +10556,12 @@
       "low_n": 998.444,
       "mid_n": 1304.45,
       "high_n": 1446.29,
+      "sheet_n": {
+       "low": 998.444,
+       "mid": 1304.45,
+       "high": 1446.29
+      },
+      "basis_scale": 1.0,
       "function": "insert_shear_force",
       "calibrated_on": "petg",
       "outside_fit": null
@@ -9971,9 +10588,14 @@
         "high": 0.734008
        },
        "source": "c fitted on 'petg' (cadagent.mechanical.inserts.calibration)"
+      },
+      "basis_scale": {
+       "value": 1.0,
+       "source": "joints.json basis.pullout.materials.petg.z_mpa (35) / petg-bambu-basic's across-layer strength (35 MPa)"
       }
      },
-     "why": "above the band: inventory.py takes CNC Kitchen's PETG test as a mean shear on the hole (16.29 MPa x pi x 5.6 x 6.4 mm); the toolkit fits c to petg tests on each test filament's datasheet and applies it to petg-bambu-basic's (17.5 MPa shear) on the knurl (5.6 mm), so a filament weaker across its layers than the tested one comes out lower"
+     "why": "above the band: inventory.py takes CNC Kitchen's PETG test as a mean shear on the hole (16.29 MPa x pi x 5.6 x 6.4 mm); the toolkit fits c to petg tests on each test filament's datasheet and applies it to petg-bambu-basic's (17.5 MPa shear) on 5.6 mm (the maker's hole: the knurl's diameter was not read, so the shear cylinder is taken at the hole, smaller than the knurl (the capacity comes out low, the boss rule a floor)), so a filament weaker across its layers than the tested one comes out lower; 1.41 x its mid, 1.27 x its high end",
+     "ratio_to_high": 1.268
     }
    ],
    "toolkit_only": {
