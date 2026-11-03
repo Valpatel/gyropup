@@ -115,6 +115,11 @@ jobs:
               npm run test:loading-sim
               npm run test:loading-portal
               npm run test:loading-hero
+          # Every page at a phone, an iPhone, a tablet, a small laptop and a desktop, light and dark: no large blank
+          # band while scrolling, no blank picture box, no text squeezed to a word a line (tools/site-empty-space.mjs).
+          - suite: layout
+            commands: |
+              npm run test:empty-space
           - suite: build-portal
             commands: |
               npm run test:build-portal

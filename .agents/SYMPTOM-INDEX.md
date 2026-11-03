@@ -19,6 +19,7 @@
 | A fastener support ray crosses a factory recess, or an old torque value has no joint-validation source | [Axial support is not a contact model](inbox/2026-10-30-axial-support-is-not-a-contact-model.md) |
 | Repeated exact relation queries stall without checkpoints, or a broad-phase bound is presented as measured clearance | [Batch relations with explicit distance bounds](inbox/2026-10-31-batch-relations-with-explicit-distance-bounds.md) |
 | Entry warning loses focus, hides controls, or changes saved audio/scene state | [Prototype notice](domains/prototype-notice.md) |
+| A page shows large blank stretches on a phone, or a full-page screenshot shows empty picture boxes | [Empty space is measured per screen](inbox/2026-11-03-empty-space-is-measured-per-screen.md) |
 | Motto or landing graphics feel cheesy despite passing layout checks | [Gyropup visual character](domains/brand-presentation.md) |
 | A motor, wheel, feed dial or flap orbits outside its assembly while animating; static bounds still pass | [Rendered mechanism frames](domains/rendered-mechanisms.md) |
 | Upper links move while output adapters or their screws remain fixed to the robot body | [Output-adapter ownership](inbox/2026-10-29-output-adapters-belong-to-upper-links.md) |
