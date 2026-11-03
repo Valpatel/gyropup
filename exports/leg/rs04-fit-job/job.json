@@ -43,7 +43,7 @@
       "cad/print_slicing.py": "13fd25fe32e75e0c66dbe8af132fd4d70fb030defb14d88a96f9ff77cbaf07bd",
       "cad/print_provenance.py": "db0d9cdc14e0d0363899d82c03eb31cb63ea0d7718fedcf127a5545f8f6bec88",
       "cad/rs04_lug_checks.py": "02a75e6dd5d28c6c8c149141d100d1386125197f5edfb34143565c72d8a8dfb5",
-      "exports/leg/rs04-mounting-fit/checks.json": "8c181f8be4254b1744fae368d9f48429b9c7d94f8a4d0cf43604eb6402acf6fa",
+      "exports/leg/rs04-mounting-fit/checks.json": "88d512aa86301d26205fed3515aabdabe98ed4e32f561975e069dc6c36a8b783",
       "exports/leg/rs04-mounting-fit/coupon_frame_ring_nom.stl": "1830ff4c1c9dc2314295d3d601b238c857c774abaf108c6619fdd9901b1da2cd"
     },
     "toolkit_helpers": {
@@ -1221,7 +1221,7 @@
       "slicer_payload_sha256": "b7f803605b7df175570e58c994bd8bfd12467b3aa2756cce32a931c670f3e5a9"
     }
   },
-  "source_commit": "a5e496a0fdae5d4110ac4c416d55fdba686743a6",
+  "source_commit": "ea0f07b85bbef4d44a51e65a151e83d9c3565c37",
   "geometry": {
     "bounds_mm": [
       [
@@ -1252,7 +1252,7 @@
   },
   "metrics": {
     "grams": 172.41,
-    "minutes": 392.7687174479167,
+    "minutes": 392.8011067708333,
     "filament_m": 65.16,
     "exit_code": 0,
     "return_code": 0,
@@ -1284,19 +1284,19 @@
       "bytes": 44072
     },
     "Metadata/plate_1.gcode.md5": {
-      "sha256": "78703369616d6901663f87f27860de4f5e8a6f3cb1f3339f3d35052d73a751d0",
+      "sha256": "d609ce6ea556f6d541f15ad16753de05c0ab44e6e4288f0ac26ec464eafbebe1",
       "bytes": 32
     },
     "Metadata/plate_1.gcode": {
-      "sha256": "dec0176ec6dd8fbbf9e8ad3fb9b690e2fa54a2d2293763cd459024066eef723e",
-      "bytes": 11590017
+      "sha256": "9fc052e17ede1c9f174e192c51b0a5b8c61ee601faa17798dde1e718013baca4",
+      "bytes": 11590337
     },
     "Metadata/_rels/model_settings.config.rels": {
       "sha256": "5ea2c0f459aec4d25341abd431edee7890c8d2fd02efbaed4b073d04cfa11440",
       "bytes": 255
     },
     "Metadata/model_settings.config": {
-      "sha256": "748ff1351ddfa094c00e1a135b675803616ea4d16921ac68a6f669c367c1a9fa",
+      "sha256": "086693f5a69f709709a7d9bd395a7573d01e5f2c515cec34ee2b865ae324a1b7",
       "bytes": 1508
     },
     "Metadata/cut_information.xml": {
@@ -1304,8 +1304,8 @@
       "bytes": 139
     },
     "Metadata/slice_info.config": {
-      "sha256": "d2dc937363e97ccd1f2fbe1d5f80a77e86416abec74cc1e2b4754ab7f80bec2b",
-      "bytes": 1680
+      "sha256": "fb266c02ed296fca0d6b1cddfd9a2a990ebf35c35aeb65cd776900ef8ecd1e12",
+      "bytes": 1709
     },
     "Metadata/filament_sequence.json": {
       "sha256": "9e457664577459536d7512bf553066895dba22502a17ad79789ee272d2d569ba",
@@ -1876,7 +1876,7 @@
           "max_commanded_feed_mm_s": 98.26086666666667
         },
         "Floating vertical shell": {
-          "moves": 5755,
+          "moves": 5759,
           "layer_z_mm": [
             1.2,
             1.4,
@@ -1949,11 +1949,11 @@
     "slice/exit-code.json": "124fd50cb6d223cdd18fedc166d00af7254199b6e6dedf9be82f71db87af6d01",
     "slice/filament.json": "0d2b91e9d7f31661688294b60c19e3fb922f1fde5d2f219ee16d85f190cb3374",
     "slice/machine.json": "44b41d9e562c8b9a7223ec87dd1c7e37271549983ea572f09a81f62a9b76d9af",
-    "slice/out/plate_1.gcode": "dec0176ec6dd8fbbf9e8ad3fb9b690e2fa54a2d2293763cd459024066eef723e",
-    "slice/out/result.json": "1da5d67e88a8ae9bf9ad265ed127d0af046a30d663e63b84126f27ec78485236",
-    "slice/out/sliced.3mf": "119c2addad228865c175ab1b74dbb836233edc74ae04af2bb838d5b629574e13",
+    "slice/out/plate_1.gcode": "9fc052e17ede1c9f174e192c51b0a5b8c61ee601faa17798dde1e718013baca4",
+    "slice/out/result.json": "cd0790b0047e902e2ca8add062b1c7281991e9588e164eb54bdc18ab43104b18",
+    "slice/out/sliced.3mf": "789a13685c97ddeba9a6e73df8b54b077c9a6bd7d16c00a84cf32b061b3633fb",
     "slice/process.json": "9591ffa2ff4d223ebc859b1901766aabf71caf7cfdcf93719dcc77484b12a345",
-    "slice/slicer.log": "47a7c34dfdc8fe29c6813bd3195b0f75405d50711f2be1cab2c8718823a509cc",
+    "slice/slicer.log": "71bde007fd830ed2e114976fae88f1c29aa20548c48c8783b673f8aef03d4601",
     "source.stl": "1830ff4c1c9dc2314295d3d601b238c857c774abaf108c6619fdd9901b1da2cd"
   }
 }
