@@ -1,5 +1,5 @@
-[2026-11-03 08:46:45.674536] [0x00007b23fc317900] [trace]   Initializing StaticPrintConfigs
-[2026-11-03 08:46:47.997137] [0x00007b23fc317900] [error]   error_code 65544, description: Wayland: Failed to connect to display
+[2026-11-03 09:52:52.667648] [0x00007fb8dd133900] [trace]   Initializing StaticPrintConfigs
+[2026-11-03 09:52:54.968880] [0x00007fb8dd133900] [error]   error_code 65544, description: Wayland: Failed to connect to display
 
-[2026-11-03 08:46:47.997160] [0x00007b23fc317900] [error]   glfwInit return error, code 65544
+[2026-11-03 09:52:54.968898] [0x00007fb8dd133900] [error]   glfwInit return error, code 65544
 
