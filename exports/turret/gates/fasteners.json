@@ -258,8 +258,8 @@
           {
             "part": "hopper_lid",
             "state": "overlapping",
-            "overlap_mm3": 28.922755,
-            "from_head_mm": 52.4163
+            "overlap_mm3": 113.097336,
+            "from_head_mm": 44.0
           }
         ],
         "clear": true,
@@ -1291,8 +1291,8 @@
           {
             "part": "hopper_lid",
             "state": "overlapping",
-            "overlap_mm3": 28.922755,
-            "from_head_mm": 52.4163
+            "overlap_mm3": 113.097336,
+            "from_head_mm": 44.0
           }
         ],
         "clear": true,
