@@ -3605,24 +3605,29 @@
   "mass_g_with_balls": 2573.4,
   "pan_ring_kg": 0.07790000000000001
  },
- "refreshed": {
-  "parts": [
-   "tilt_yoke"
-  ],
-  "why": "the tilt yoke relieved for the CT latch head (#61, #178)",
-  "masses": {
-   "tilt_kg": 0.7611275,
-   "pan_kg": 1.30594,
-   "total_kg": 2.573000000000001,
-   "cartridge_kg": 0.6398900000000001,
-   "com_mm": [
-    -3.7876730378572385,
-    -2.7567009243912595,
-    49.26230566011541
+ "refreshed": [
+  {
+   "parts": [
+    "tilt_yoke"
    ],
-   "pan_group_com_z_mm": 122.94014890026575,
-   "mass_g_with_balls": 2573.4,
-   "pan_ring_kg": 0.07790000000000001
+   "why": "the tilt yoke relieved for the CT latch head (#61, #178)",
+   "masses": {
+    "tilt_kg": 0.7611275,
+    "pan_kg": 1.30594,
+    "total_kg": 2.573000000000001,
+    "cartridge_kg": 0.6398900000000001,
+    "com_mm": [
+     -3.7876730378572385,
+     -2.7567009243912595,
+     49.26230566011541
+    ],
+    "pan_group_com_z_mm": 122.94014890026575,
+    "mass_g_with_balls": 2573.4,
+    "pan_ring_kg": 0.07790000000000001
+   },
+   "commit": "4bcd8e09dc8dd4641b31d28b7dcef0002a546ce8",
+   "turret_py_sha256": "71a663ea426e583d1fcbef1f36c2e0d8ff63a7a68462914724565015914ff5b4",
+   "cad_agent": "0.6.0"
   }
- }
+ ]
 }

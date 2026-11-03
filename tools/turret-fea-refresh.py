@@ -6,9 +6,10 @@
 cad/turret_studies.py re-solves every part (28 studies, hours on the compute hosts) and writes summary.json only on a
 full run; `--only` exports a part's study files but leaves the summary as it was. When one part's geometry changes,
 this runs `turret_studies.run(only=parts)` and replaces just those parts' results in the committed summary, then
-rebuilds the verdict and the table the same way run() does (merge() mirrors it; tools/test-turret-fea-refresh.py checks
-the two agree). The other parts keep their recorded results, and the masses those were solved with stay in `masses`;
-the refreshed parts' masses go in `refreshed`, with the parts and the reason.
+rebuilds the verdict and the table the same way run() does (verdict() and table() mirror it; the test evaluates
+run()'s own expressions from cad/turret_studies.py's source and checks the two agree). The other parts keep their
+recorded results, and the masses those were solved with stay in `masses`. Each refresh appends to `refreshed`: the
+parts, the reason, the masses it solved with, the commit, the SHA-256 of cad/turret.py and the cad-agent version.
 """
 import argparse
 import json
@@ -38,30 +39,50 @@ def table(results):
              'governs': (r['layer_aware'] or {}).get('governs'), 'verdict_sf': r['verdict_sf'], 'ok': r['ok']} for r in results]
 
 
-def merge(old, new, parts, why):
-    """old's results with the named parts' replaced by new's, in old's order (a part new to the summary goes last)."""
+def merge(old, new, parts, why, provenance=None):
+    """old's results with the named parts' replaced by new's. Each new (part, case) takes the place of the old one; a
+    case new to a part goes after that part's last result, and a part new to the summary goes last. An old case the
+    re-solve no longer makes is dropped."""
     parts = list(parts)
     fresh = [r for r in new['results'] if r['part'] in parts]
     if {r['part'] for r in fresh} != set(parts):
         raise ValueError(f'no new results for {sorted(set(parts) - {r["part"] for r in fresh})}')
-    out, placed = [], False
+    by_key = {(r['part'], r['case']): r for r in fresh}
+    out, used = [], set()
     for r in old['results']:
-        if r['part'] in parts:
-            if not placed:
-                out.extend(fresh)
-                placed = True
+        k = (r['part'], r['case'])
+        if r['part'] not in parts:
+            out.append(r)
+        elif k in by_key:
+            out.append(by_key[k])
+            used.add(k)
+    for r in fresh:                         # cases or parts the record did not have
+        k = (r['part'], r['case'])
+        if k in used:
             continue
-        out.append(r)
-    if not placed:
-        out.extend(fresh)
+        last = max((i for i, o in enumerate(out) if o['part'] == r['part']), default=len(out) - 1)
+        out.insert(last + 1, r)
+        used.add(k)
     if new['mesh_mm'] != old['mesh_mm']:
         raise ValueError(f'mesh {new["mesh_mm"]} mm differs from the record\'s {old["mesh_mm"]} mm')
     merged = dict(old)
     merged['results'] = out
     merged['verdict'] = verdict(out)
     merged['table'] = table(out)
-    merged['refreshed'] = {'parts': parts, 'why': why, 'masses': new['masses']}
+    prior = old.get('refreshed', [])
+    prior = [prior] if isinstance(prior, dict) else list(prior)
+    merged['refreshed'] = prior + [dict({'parts': parts, 'why': why, 'masses': new['masses']}, **(provenance or {}))]
     return merged
+
+
+def provenance():
+    """What this refresh ran on: the commit, cad/turret.py's SHA-256 and the cad-agent version."""
+    import hashlib
+    import subprocess
+    from importlib.metadata import version
+    return {'commit': subprocess.check_output(['git', 'rev-parse', 'HEAD'], cwd=ROOT, text=True).strip(),
+            'turret_py_sha256': hashlib.sha256((ROOT / 'cad/turret.py').read_bytes()).hexdigest(),
+            'cad_agent': version('cad-agent')}
 
 
 def main():
@@ -76,7 +97,7 @@ def main():
     import turret_studies as ts
     old = json.loads(SUMMARY.read_text())
     new = ts.run(a.mesh, anim=not a.no_anim, only=a.parts)
-    merged = merge(old, new, a.parts, a.why)
+    merged = merge(old, new, a.parts, a.why, provenance())
     SUMMARY.write_text(json.dumps(merged, indent=1, default=lambda o: o.tolist() if isinstance(o, np.ndarray) else str(o)) + '\n')
     for r in merged['results']:
         if r['part'] in a.parts:
