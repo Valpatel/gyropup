@@ -166,19 +166,34 @@ function eventHTML(e, i) {
     + `<h3 class="tl-label">${esc(e.label)} <span class="tl-ref">${link}</span></h3>${decisions}${pictures}</div></li>`;
 }
 
-/** The timeline's HTML: the newest `show` changes; on Progress, the rest folded below. Where the rest fold away, the
- * open list ends on a change with a picture: text-only changes after the last picture go into the fold, so the open
- * list never trails into a wall of text (tools/site-walls.mjs). */
+/** Text-only changes left open above the fold when none of the newest `show` has a picture. */
+export const TEXT_ONLY_OPEN = 1;
+
+/** The timeline's HTML: the newest `show` changes, then `more` folded below. The open list ends on a change with a
+ * picture whenever the history has one, on Progress and on the home page alike, so it never trails into a wall of text
+ * (tools/site-walls.mjs):
+ *  - text-only changes after the last picture among the newest `show` go into the fold;
+ *  - when none of the newest `show` has a picture (a pull request that ends on receipt, fit-job or probe commits), the
+ *    newest TEXT_ONLY_OPEN stay open, the rest of that text-only run folds in place under "N changes without a
+ *    picture", and the next change with a picture is shown open after it, even past `show`.
+ * With no picture anywhere there is nothing to end on: the newest stays open and the rest fold. Every change keeps its
+ * place in the order, and on Progress every change is on the page, open or folded. */
 export function renderTimeline(events, { show = 6, more = 0, compact = false } = {}) {
   if (!events.length) return `<section id="changes" class="timeline" aria-labelledby="changes-title"><h2 id="changes-title">What changed</h2><p class="tl-empty">The change history is not available in this build.</p></section>`;
-  if (more) { const last = events.slice(0, show).findLastIndex(e => e.image); if (last >= 0) { more += show - last - 1; show = last + 1; } }
-  const shown = events.slice(0, show), folded = events.slice(show, show + more);
+  const last = events.slice(0, show).findLastIndex(e => e.image);
+  const lead = Math.min(show, TEXT_ONLY_OPEN), anchor = last >= 0 ? -1 : events.findIndex((e, i) => i >= lead && e.image);
+  // The open list runs to `open`; `quiet` is the text-only run folded in place before the anchor.
+  const open = last >= 0 ? last + 1 : anchor >= 0 ? anchor + 1 : lead;
+  const quiet = anchor >= 0 ? events.slice(lead, anchor) : [];
+  const list = (from, to) => from < to ? `<ol class="tl-list">${events.slice(from, to).map((e, i) => eventHTML(e, from + i)).join('')}</ol>` : '';
+  const fold = (from, to, summary) => `<details class="tl-more"><summary>${summary}</summary>${list(from, to)}</details>`;
+  const folded = events.slice(open, Math.max(open, show + more));
   const span = `from ${shortDate(events.at(-1).date)} to ${shortDate(events[0].date)}`;
   return `<section id="changes" class="timeline${compact ? ' is-compact' : ''}" aria-labelledby="changes-title" data-generated="tools/timeline.mjs">`
     + `<div class="tl-heading"><p class="eyebrow"><span class="status-dot"></span> FROM THE GIT HISTORY</p><h2 id="changes-title">What changed, <span>and when.</span></h2>`
     + `<p class="tl-lede">The last ${events.length} design changes, ${span}: CAD, models, renders, records and decisions, newest first. Where a change re-rendered a part, its before and after.</p></div>`
-    + `<ol class="tl-list">${shown.map(eventHTML).join('')}</ol>`
-    + (folded.length ? `<details class="tl-more"><summary>${folded.length} earlier changes</summary><ol class="tl-list">${folded.map((e, i) => eventHTML(e, i + shown.length)).join('')}</ol></details>` : '')
+    + (quiet.length ? list(0, lead) + fold(lead, anchor, `${quiet.length} ${quiet.length === 1 ? 'change' : 'changes'} without a picture`) + list(anchor, open) : list(0, open))
+    + (folded.length ? fold(open, open + folded.length, `${count(folded.length, 'earlier change')}`) : '')
     + (compact ? `<a class="tl-all" href="/designer/progress.html#changes">Every change on Progress →</a>` : '')
     + `</section>`;
 }
