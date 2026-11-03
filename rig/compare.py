@@ -20,6 +20,7 @@ from rig import log as runlog
 
 R = Path(__file__).resolve().parents[1]
 CRITERIA = json.loads((R / 'rig' / 'criteria.json').read_text())
+G_STD = 9.81                          # m/s^2: a carried mass's weight on the load plate
 PRED_FILE = R / 'exports' / 'rig' / 'predictions.json'
 REF_FILE = R / 'exports' / 'leg' / 'rig-results.json'
 
@@ -101,8 +102,9 @@ def metrics(a: dict, test: str) -> dict:
     return m
 
 
-def judge(test: str, a: dict, pred: Optional[dict] = None) -> list:
-    """[{what, ok, value, limit}] for the test's checks; ok None when the run cannot show it."""
+def judge(test: str, a: dict, pred: Optional[dict] = None, half_mass: Optional[float] = None) -> list:
+    """[{what, ok, value, limit}] for the test's checks; ok None when the run cannot show it. half_mass: the kg the run
+    carried (its --half-mass), for the checks given around the carried weight ('around_weight_n')."""
     spec = CRITERIA['tests'].get(test)
     if not spec:
         return []
@@ -127,6 +129,20 @@ def judge(test: str, a: dict, pred: Optional[dict] = None) -> list:
         elif k == 'pp':
             v = float(np.ptp(a[sig][w]))
             row.update(value=round(v * 1000, 2), limit=c['max'] * 1000, ok=v <= c['max'])
+        elif k == 'range' and c.get('around_weight_n') is not None:
+            # the carried weight +- the tolerance: the rig is judged at the mass it carried, not at the design mass
+            x = a[sig][w]
+            x = x[np.isfinite(x)]
+            if half_mass is None:
+                row['value'] = 'no carried mass given'
+            elif not len(x):
+                row['value'] = 'not measured'
+            else:
+                wt = half_mass * G_STD
+                lo_lim, hi_lim = wt - c['around_weight_n'], wt + c['around_weight_n']
+                lo, hi = float(np.min(x)), float(np.max(x))
+                row.update(value=[round(lo, 2), round(hi, 2)], limit=[round(lo_lim, 1), round(hi_lim, 1)],
+                           ok=lo >= lo_lim and hi <= hi_lim)
         elif k == 'range':
             x = a[sig][w]
             x = x[np.isfinite(x)]
@@ -270,7 +286,7 @@ def main(argv=None):
     doc, arr = runlog.load(a.run)
     test = doc['meta']['test']
     pred = prediction(test)
-    verdict = judge(test, arr, pred)
+    verdict = judge(test, arr, pred, doc['meta'].get('half_mass_kg'))
     doc['verdict'] = verdict
     doc['metrics'] = metrics(arr, test)
     if pred:
