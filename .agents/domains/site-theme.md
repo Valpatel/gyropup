@@ -8,8 +8,8 @@ surfaces, cyan hairlines, green/amber/magenta status. The dark theme's decorativ
 `web/theme.css`, written twice like the token block (`tools/test-theme.mjs` checks the copies match): a hairline grid
 on `body`, void panels for the motto and the status strip, a glowing status dot (in `:where()`, so a page's own dot
 colour wins), and corner brackets as an `::after` 10 px inside the main panels' edges (clear of their rounded
-corners). A bracket is never part of a panel's background, so the contrast scan still sees what is behind text. Page stylesheets (`web/*.css`, `designer/**/*.css`, the inline `<style>`
-blocks and the app bar's CSS in `designer/kit/appnav.js`) use `var(--gp-*)`, or a local alias of one (`--ink`,
+corners). A bracket is never part of a panel's background, so the contrast scan still sees what is behind text.
+Page stylesheets (`web/*.css`, `designer/**/*.css`, the inline `<style>` blocks and the app bar's CSS in `designer/kit/appnav.js`) use `var(--gp-*)`, or a local alias of one (`--ink`,
 `--text`, `--sb-ink`, ...). `*-rgb`, `--gp-shadow` and `--gp-hi` are RGB triples for `rgb(var(--gp-…) / alpha)`.
 
 `web/theme.js` is a classic script loaded first in `<head>`, then `web/theme.css`, on every page; the build fails if a
