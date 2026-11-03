@@ -54,9 +54,9 @@
       "cad/test_body.py": "5875a19bc2b3591721dc466d2b598b3b7cdf5dbfba22cdcde1c2017bcae66b27",
       "cad/test_leg_loads.py": "0ed04011ea672aa8bc387af272ddfa1783ec4fa1f379fde1e3dfbd9201867b51",
       "cad/test_turret_gate_sources.py": "6e68480774e65bfd5ac18701a7eefad7c301fde48668b8caa579452ec9ddfaa9",
-      "cad/test_turret_snaps.py": "e10b6320b1936a90344730bd15bc6e21836ba2f95405b0467d56a6dfee705c7e",
+      "cad/test_turret_snaps.py": "29740c97981f741013afd41888a4efe019d7a576c984ed20df30883ce2c54c17",
       "cad/test_turret_solids.py": "61eee61b68461574f75c316fa16d4d566ab097f862fadd6ee2b0b175655c0d48",
-      "cad/turret.py": "11311d5af6c991f547a275f2bbf009710a3fe24b04f797a4669d3dc7c2fc0f42",
+      "cad/turret.py": "5fd7e8dd555a8b3b5743017faf4200eae41fad1c0a7a7da696a18ef75bcdc068",
       "cad/turret_assembly.py": "480799c724c799954a520c1ecd9c0b4d383cce752efdac4f3c3f6a6da7aaf2e3",
       "cad/turret_base_board.py": "153e49871e0a3359478cd34a50daf7e44f4497970097475c829dbbcdacda90ba",
       "cad/turret_boards.py": "c7a115d2fe3cefddf46b0dd521e21076e1f7721235df3e7bd22fadb6e165707b",
@@ -69,8 +69,8 @@
       "cad/turret_motion.py": "36f2be781776126b7c63bd27103f4ff24644d76568d8f793a2e68b5aeab6e260",
       "cad/turret_mount.py": "f5ecdf09c9dc86c377072725bacde60f9a79277686b480132248a38e807c7fb9",
       "cad/turret_orders.py": "eaaaae1668a186b7438f0dd394d5b27e1bee7c0ef4901bc880f806f7d4e60480",
-      "cad/turret_print.py": "ba22a6d5fdb80ae553af83fad41520d2585942e5f963ea26b9fe9c80febb9206",
-      "cad/turret_snaps.py": "258ab007c305a2c9f961cabfa44d5245cbe4aeb0e0a98988090533bf37487c72",
+      "cad/turret_print.py": "7b1f0cfe1b2d47e047cea1aae664d43b3dc71f9f9d48703e523840055a44f755",
+      "cad/turret_snaps.py": "c6ab02cb5e0c34e89defc49f66297823442fe781307126b49c5f4f065045eccd",
       "cad/turret_stand.py": "21f8300694982e68de8ef20e6d7e143a9ae8a356f836f47e50f1b2ab91b10126",
       "cad/turret_studies.py": "708f5ed6d385d924caaed802a04b724e03eda8872749a5454d46644ebfc19e11",
       "cad/wheel_fit.py": "57c75e2462fb6f3606b81e4baac284dcac9a7b67bb47183f425d8bb8f730febd",
@@ -103,7 +103,7 @@
     },
     "toolkit_sources_sha256": "c2941322d5f3d000d3777b0047567211d06855861fa5e14229d7d7519fef3ed3"
   },
-  "input_fingerprint": "a977fb7e7327d0409fecbcb110e3ee0d3e2691c09936c4874a70e8d38e9de764",
+  "input_fingerprint": "a5a59c4ee3cdc73753aa52e2c8472290a4620196a879a481aa5bef3795dc8f5e",
   "context_files": {
     "tools/check-carrier-connector-pose.py": "cb06cb16943f5ee60b98ebe9b630d437aba395db58936028eb21f0a28e711346",
     "tools/check-carrier-connector-inputs.py": "20b4f98e5cef0067d921e645b44fd0809ae2bffee1f1055351e7188623ef0c45",
@@ -5513,5 +5513,5 @@
     "C2 released-source reservations are not a complete parked harness; module withdrawal is not checked.",
     "Upper head, remote hardware and all cable paths are not included; no whole-turret motion claim."
   ],
-  "elapsed_seconds": 61.108
+  "elapsed_seconds": 60.288
 }

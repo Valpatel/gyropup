@@ -2,10 +2,10 @@
   "schema": "cadagent.gate/1",
   "gate": "fasteners",
   "pass": true,
-  "status": "warn",
+  "status": "pass",
   "counts": {
-    "pass": 34,
-    "warn": 1,
+    "pass": 35,
+    "warn": 0,
     "fail": 0
   },
   "checks": [
@@ -231,11 +231,10 @@
     },
     {
       "id": "fastener:hopper_screws#0:tool",
-      "status": "warn",
-      "message": "the hex 2.5 reaches the head at step 1, but hopper_lid (fitted later) must come off before it can be removed",
+      "status": "pass",
+      "message": "the hex 2.5 reaches the head at step 1",
       "parts": [
-        "hopper_screws#0",
-        "hopper_lid"
+        "hopper_screws#0"
       ],
       "evidence": {
         "tool": "hex 2.5",
@@ -254,14 +253,7 @@
         },
         "start_t_mm": -3.0,
         "blocked": [],
-        "service_blocked": [
-          {
-            "part": "hopper_lid",
-            "state": "overlapping",
-            "overlap_mm3": 113.097336,
-            "from_head_mm": 44.0
-          }
-        ],
+        "service_blocked": [],
         "clear": true,
         "present_count": 92
       }
@@ -1261,45 +1253,7 @@
       }
     }
   ],
-  "findings": [
-    {
-      "id": "fastener:hopper_screws#0:tool",
-      "status": "warn",
-      "message": "the hex 2.5 reaches the head at step 1, but hopper_lid (fitted later) must come off before it can be removed",
-      "parts": [
-        "hopper_screws#0",
-        "hopper_lid"
-      ],
-      "evidence": {
-        "tool": "hex 2.5",
-        "step": 1,
-        "step_fit": "hopper",
-        "envelope": {
-          "segments": [
-            {
-              "d": 3.0,
-              "length": 60.0
-            }
-          ],
-          "start": "head",
-          "offset_mm": 0.0,
-          "swing": null
-        },
-        "start_t_mm": -3.0,
-        "blocked": [],
-        "service_blocked": [
-          {
-            "part": "hopper_lid",
-            "state": "overlapping",
-            "overlap_mm3": 113.097336,
-            "from_head_mm": 44.0
-          }
-        ],
-        "clear": true,
-        "present_count": 92
-      }
-    }
-  ],
+  "findings": [],
   "exclusions": [],
   "limits": {
     "seat_tol_mm": 0.05,
@@ -1368,7 +1322,7 @@
       "tool": "hex 2.5",
       "step": 1,
       "tool_clear": true,
-      "status": "warn",
+      "status": "pass",
       "failed": [],
       "body": "tilt"
     },

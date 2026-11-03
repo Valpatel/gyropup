@@ -170,7 +170,7 @@
                 "volume_integration": {
                   "method": "adaptive BRepGProp GK, requested relative errors 1e-6 and 1e-8",
                   "error_basis": "max(OCCT summed absolute face-error estimates, refinement delta); not a rigorous bound",
-                  "max_estimated_error_mm3": 3.6829013496212444e-05,
+                  "max_estimated_error_mm3": 3.644016908784425e-05,
                   "max_refinement_delta_mm3": 4.547473508864641e-13
                 },
                 "point_a": [
@@ -1031,6 +1031,12 @@
         "state": "touching",
         "contact_area_mm2": 645.84,
         "witness": {
+          "volume_integration": {
+            "method": "adaptive BRepGProp GK, requested relative errors 1e-6 and 1e-8",
+            "error_basis": "max(OCCT summed absolute face-error estimates, refinement delta); not a rigorous bound",
+            "max_estimated_error_mm3": 5.440923611682297e-06,
+            "max_refinement_delta_mm3": 7.275957614183426e-12
+          },
           "point_a": [
             -29.0,
             -118.0,
@@ -1040,13 +1046,7 @@
             -29.0,
             -118.0,
             128.0
-          ],
-          "volume_integration": {
-            "method": "adaptive BRepGProp GK, requested relative errors 1e-6 and 1e-8",
-            "error_basis": "max(OCCT summed absolute face-error estimates, refinement delta); not a rigorous bound",
-            "max_estimated_error_mm3": 5.440923611682297e-06,
-            "max_refinement_delta_mm3": 7.275957614183426e-12
-          }
+          ]
         }
       }
     },
@@ -1093,6 +1093,12 @@
         "state": "touching",
         "contact_area_mm2": 176.624445,
         "witness": {
+          "volume_integration": {
+            "method": "adaptive BRepGProp GK, requested relative errors 1e-6 and 1e-8",
+            "error_basis": "max(OCCT summed absolute face-error estimates, refinement delta); not a rigorous bound",
+            "max_estimated_error_mm3": 3.6029683963324894e-06,
+            "max_refinement_delta_mm3": 0.0
+          },
           "point_a": [
             25.0,
             -76.81,
@@ -1102,13 +1108,7 @@
             25.0,
             -76.81,
             121.5
-          ],
-          "volume_integration": {
-            "method": "adaptive BRepGProp GK, requested relative errors 1e-6 and 1e-8",
-            "error_basis": "max(OCCT summed absolute face-error estimates, refinement delta); not a rigorous bound",
-            "max_estimated_error_mm3": 3.6029683963324894e-06,
-            "max_refinement_delta_mm3": 0.0
-          }
+          ]
         }
       }
     },
@@ -2164,7 +2164,7 @@
           "volume_integration": {
             "method": "adaptive BRepGProp GK, requested relative errors 1e-6 and 1e-8",
             "error_basis": "max(OCCT summed absolute face-error estimates, refinement delta); not a rigorous bound",
-            "max_estimated_error_mm3": 0.00033473177751636363,
+            "max_estimated_error_mm3": 0.00033373418761315106,
             "max_refinement_delta_mm3": 3.270106390118599e-05
           }
         }
@@ -2195,7 +2195,7 @@
           "volume_integration": {
             "method": "adaptive BRepGProp GK, requested relative errors 1e-6 and 1e-8",
             "error_basis": "max(OCCT summed absolute face-error estimates, refinement delta); not a rigorous bound",
-            "max_estimated_error_mm3": 0.0003321080325302022,
+            "max_estimated_error_mm3": 0.000331042325952992,
             "max_refinement_delta_mm3": 3.270106390118599e-05
           }
         }
@@ -3280,6 +3280,12 @@
         "state": "touching",
         "contact_area_mm2": 645.84,
         "witness": {
+          "volume_integration": {
+            "method": "adaptive BRepGProp GK, requested relative errors 1e-6 and 1e-8",
+            "error_basis": "max(OCCT summed absolute face-error estimates, refinement delta); not a rigorous bound",
+            "max_estimated_error_mm3": 5.440923611682297e-06,
+            "max_refinement_delta_mm3": 7.275957614183426e-12
+          },
           "point_a": [
             -29.0,
             -118.0,
@@ -3289,13 +3295,7 @@
             -29.0,
             -118.0,
             128.0
-          ],
-          "volume_integration": {
-            "method": "adaptive BRepGProp GK, requested relative errors 1e-6 and 1e-8",
-            "error_basis": "max(OCCT summed absolute face-error estimates, refinement delta); not a rigorous bound",
-            "max_estimated_error_mm3": 5.440923611682297e-06,
-            "max_refinement_delta_mm3": 7.275957614183426e-12
-          }
+          ]
         }
       }
     },
@@ -3342,6 +3342,12 @@
         "state": "touching",
         "contact_area_mm2": 176.624445,
         "witness": {
+          "volume_integration": {
+            "method": "adaptive BRepGProp GK, requested relative errors 1e-6 and 1e-8",
+            "error_basis": "max(OCCT summed absolute face-error estimates, refinement delta); not a rigorous bound",
+            "max_estimated_error_mm3": 3.6029683963324894e-06,
+            "max_refinement_delta_mm3": 0.0
+          },
           "point_a": [
             25.0,
             -76.81,
@@ -3351,13 +3357,7 @@
             25.0,
             -76.81,
             121.5
-          ],
-          "volume_integration": {
-            "method": "adaptive BRepGProp GK, requested relative errors 1e-6 and 1e-8",
-            "error_basis": "max(OCCT summed absolute face-error estimates, refinement delta); not a rigorous bound",
-            "max_estimated_error_mm3": 3.6029683963324894e-06,
-            "max_refinement_delta_mm3": 0.0
-          }
+          ]
         }
       }
     },
@@ -4413,7 +4413,7 @@
           "volume_integration": {
             "method": "adaptive BRepGProp GK, requested relative errors 1e-6 and 1e-8",
             "error_basis": "max(OCCT summed absolute face-error estimates, refinement delta); not a rigorous bound",
-            "max_estimated_error_mm3": 0.00033473177751636363,
+            "max_estimated_error_mm3": 0.00033373418761315106,
             "max_refinement_delta_mm3": 3.270106390118599e-05
           }
         }
@@ -4444,7 +4444,7 @@
           "volume_integration": {
             "method": "adaptive BRepGProp GK, requested relative errors 1e-6 and 1e-8",
             "error_basis": "max(OCCT summed absolute face-error estimates, refinement delta); not a rigorous bound",
-            "max_estimated_error_mm3": 0.0003321080325302022,
+            "max_estimated_error_mm3": 0.000331042325952992,
             "max_refinement_delta_mm3": 3.270106390118599e-05
           }
         }
@@ -7353,7 +7353,7 @@
           "volume_integration": {
             "method": "adaptive BRepGProp GK, requested relative errors 1e-6 and 1e-8",
             "error_basis": "max(OCCT summed absolute face-error estimates, refinement delta); not a rigorous bound",
-            "max_estimated_error_mm3": 0.00033364148181383576,
+            "max_estimated_error_mm3": 0.0003325364173363536,
             "max_refinement_delta_mm3": 3.27278976328671e-05
           }
         },
@@ -7650,8 +7650,8 @@
           "volume_integration": {
             "method": "adaptive BRepGProp GK, requested relative errors 1e-6 and 1e-8",
             "error_basis": "max(OCCT summed absolute face-error estimates, refinement delta); not a rigorous bound",
-            "max_estimated_error_mm3": 0.00033327210156425496,
-            "max_refinement_delta_mm3": 0.00016915082233026624
+            "max_estimated_error_mm3": 0.0003322424969744679,
+            "max_refinement_delta_mm3": 0.00016915076412260532
           }
         },
         "rigid": false,
@@ -7802,8 +7802,8 @@
           "volume_integration": {
             "method": "adaptive BRepGProp GK, requested relative errors 1e-6 and 1e-8",
             "error_basis": "max(OCCT summed absolute face-error estimates, refinement delta); not a rigorous bound",
-            "max_estimated_error_mm3": 0.00033397187082964577,
-            "max_refinement_delta_mm3": 6.498761649709195e-05
+            "max_estimated_error_mm3": 0.0003329512673033074,
+            "max_refinement_delta_mm3": 6.498750008177012e-05
           }
         },
         "rigid": false,
@@ -7916,7 +7916,7 @@
           "volume_integration": {
             "method": "adaptive BRepGProp GK, requested relative errors 1e-6 and 1e-8",
             "error_basis": "max(OCCT summed absolute face-error estimates, refinement delta); not a rigorous bound",
-            "max_estimated_error_mm3": 0.00033251895042085515,
+            "max_estimated_error_mm3": 0.00033147923203258176,
             "max_refinement_delta_mm3": 3.270106390118599e-05
           }
         },
@@ -8137,7 +8137,7 @@
           "volume_integration": {
             "method": "adaptive BRepGProp GK, requested relative errors 1e-6 and 1e-8",
             "error_basis": "max(OCCT summed absolute face-error estimates, refinement delta); not a rigorous bound",
-            "max_estimated_error_mm3": 0.00033262901361588026,
+            "max_estimated_error_mm3": 0.00033154951648585717,
             "max_refinement_delta_mm3": 3.270106390118599e-05
           }
         },
@@ -8251,8 +8251,8 @@
           "volume_integration": {
             "method": "adaptive BRepGProp GK, requested relative errors 1e-6 and 1e-8",
             "error_basis": "max(OCCT summed absolute face-error estimates, refinement delta); not a rigorous bound",
-            "max_estimated_error_mm3": 0.0003335087947445773,
-            "max_refinement_delta_mm3": 0.00010172983456868678
+            "max_estimated_error_mm3": 0.00033248743489537163,
+            "max_refinement_delta_mm3": 0.00010172971815336496
           }
         },
         "rigid": false,
@@ -8327,7 +8327,7 @@
           "volume_integration": {
             "method": "adaptive BRepGProp GK, requested relative errors 1e-6 and 1e-8",
             "error_basis": "max(OCCT summed absolute face-error estimates, refinement delta); not a rigorous bound",
-            "max_estimated_error_mm3": 0.0003321080325302022,
+            "max_estimated_error_mm3": 0.000331042325952992,
             "max_refinement_delta_mm3": 3.270106390118599e-05
           }
         },
@@ -8365,8 +8365,8 @@
           "volume_integration": {
             "method": "adaptive BRepGProp GK, requested relative errors 1e-6 and 1e-8",
             "error_basis": "max(OCCT summed absolute face-error estimates, refinement delta); not a rigorous bound",
-            "max_estimated_error_mm3": 0.00033242690314611825,
-            "max_refinement_delta_mm3": 5.389432772062719e-05
+            "max_estimated_error_mm3": 0.00033137331257697254,
+            "max_refinement_delta_mm3": 5.38943859282881e-05
           }
         },
         "rigid": false,
@@ -8441,8 +8441,8 @@
           "volume_integration": {
             "method": "adaptive BRepGProp GK, requested relative errors 1e-6 and 1e-8",
             "error_basis": "max(OCCT summed absolute face-error estimates, refinement delta); not a rigorous bound",
-            "max_estimated_error_mm3": 0.00042369591392343864,
-            "max_refinement_delta_mm3": 0.00042369591392343864
+            "max_estimated_error_mm3": 0.0004236957975081168,
+            "max_refinement_delta_mm3": 0.0004236957975081168
           }
         },
         "rigid": false,
@@ -8479,8 +8479,8 @@
           "volume_integration": {
             "method": "adaptive BRepGProp GK, requested relative errors 1e-6 and 1e-8",
             "error_basis": "max(OCCT summed absolute face-error estimates, refinement delta); not a rigorous bound",
-            "max_estimated_error_mm3": 0.0003368354155099951,
-            "max_refinement_delta_mm3": 0.0003368354155099951
+            "max_estimated_error_mm3": 0.00033683529909467325,
+            "max_refinement_delta_mm3": 0.00033683529909467325
           }
         },
         "rigid": false,
@@ -8593,7 +8593,7 @@
           "volume_integration": {
             "method": "adaptive BRepGProp GK, requested relative errors 1e-6 and 1e-8",
             "error_basis": "max(OCCT summed absolute face-error estimates, refinement delta); not a rigorous bound",
-            "max_estimated_error_mm3": 0.00033399947962171764,
+            "max_estimated_error_mm3": 0.00033294024559362865,
             "max_refinement_delta_mm3": 3.270106390118599e-05
           }
         },
@@ -9224,6 +9224,12 @@
         "gap_mm": 0.0,
         "contact_area_mm2": 645.84,
         "witness": {
+          "volume_integration": {
+            "method": "adaptive BRepGProp GK, requested relative errors 1e-6 and 1e-8",
+            "error_basis": "max(OCCT summed absolute face-error estimates, refinement delta); not a rigorous bound",
+            "max_estimated_error_mm3": 5.440923611682297e-06,
+            "max_refinement_delta_mm3": 7.275957614183426e-12
+          },
           "point_a": [
             -29.0,
             -118.0,
@@ -9233,13 +9239,7 @@
             -29.0,
             -118.0,
             128.0
-          ],
-          "volume_integration": {
-            "method": "adaptive BRepGProp GK, requested relative errors 1e-6 and 1e-8",
-            "error_basis": "max(OCCT summed absolute face-error estimates, refinement delta); not a rigorous bound",
-            "max_estimated_error_mm3": 5.440923611682297e-06,
-            "max_refinement_delta_mm3": 7.275957614183426e-12
-          }
+          ]
         },
         "rigid": true,
         "declared_by": [],
@@ -9282,6 +9282,12 @@
         "gap_mm": 0.0,
         "contact_area_mm2": 176.624445,
         "witness": {
+          "volume_integration": {
+            "method": "adaptive BRepGProp GK, requested relative errors 1e-6 and 1e-8",
+            "error_basis": "max(OCCT summed absolute face-error estimates, refinement delta); not a rigorous bound",
+            "max_estimated_error_mm3": 3.6029683963324894e-06,
+            "max_refinement_delta_mm3": 0.0
+          },
           "point_a": [
             25.0,
             -76.81,
@@ -9291,13 +9297,7 @@
             25.0,
             -76.81,
             121.5
-          ],
-          "volume_integration": {
-            "method": "adaptive BRepGProp GK, requested relative errors 1e-6 and 1e-8",
-            "error_basis": "max(OCCT summed absolute face-error estimates, refinement delta); not a rigorous bound",
-            "max_estimated_error_mm3": 3.6029683963324894e-06,
-            "max_refinement_delta_mm3": 0.0
-          }
+          ]
         },
         "rigid": true,
         "declared_by": [],
@@ -10432,7 +10432,7 @@
           "volume_integration": {
             "method": "adaptive BRepGProp GK, requested relative errors 1e-6 and 1e-8",
             "error_basis": "max(OCCT summed absolute face-error estimates, refinement delta); not a rigorous bound",
-            "max_estimated_error_mm3": 0.00033473177751636363,
+            "max_estimated_error_mm3": 0.00033373418761315106,
             "max_refinement_delta_mm3": 3.270106390118599e-05
           }
         },
@@ -10461,7 +10461,7 @@
           "volume_integration": {
             "method": "adaptive BRepGProp GK, requested relative errors 1e-6 and 1e-8",
             "error_basis": "max(OCCT summed absolute face-error estimates, refinement delta); not a rigorous bound",
-            "max_estimated_error_mm3": 0.0003321080325302022,
+            "max_estimated_error_mm3": 0.000331042325952992,
             "max_refinement_delta_mm3": 3.270106390118599e-05
           }
         },
@@ -12292,6 +12292,12 @@
       "contact_area_mm2": 645.84,
       "overlap_mm3": null,
       "witness": {
+        "volume_integration": {
+          "method": "adaptive BRepGProp GK, requested relative errors 1e-6 and 1e-8",
+          "error_basis": "max(OCCT summed absolute face-error estimates, refinement delta); not a rigorous bound",
+          "max_estimated_error_mm3": 5.440923611682297e-06,
+          "max_refinement_delta_mm3": 7.275957614183426e-12
+        },
         "point_a": [
           -29.0,
           -118.0,
@@ -12301,13 +12307,7 @@
           -29.0,
           -118.0,
           128.0
-        ],
-        "volume_integration": {
-          "method": "adaptive BRepGProp GK, requested relative errors 1e-6 and 1e-8",
-          "error_basis": "max(OCCT summed absolute face-error estimates, refinement delta); not a rigorous bound",
-          "max_estimated_error_mm3": 5.440923611682297e-06,
-          "max_refinement_delta_mm3": 7.275957614183426e-12
-        }
+        ]
       }
     },
     {
@@ -12346,6 +12346,12 @@
       "contact_area_mm2": 176.624445,
       "overlap_mm3": null,
       "witness": {
+        "volume_integration": {
+          "method": "adaptive BRepGProp GK, requested relative errors 1e-6 and 1e-8",
+          "error_basis": "max(OCCT summed absolute face-error estimates, refinement delta); not a rigorous bound",
+          "max_estimated_error_mm3": 3.6029683963324894e-06,
+          "max_refinement_delta_mm3": 0.0
+        },
         "point_a": [
           25.0,
           -76.81,
@@ -12355,13 +12361,7 @@
           25.0,
           -76.81,
           121.5
-        ],
-        "volume_integration": {
-          "method": "adaptive BRepGProp GK, requested relative errors 1e-6 and 1e-8",
-          "error_basis": "max(OCCT summed absolute face-error estimates, refinement delta); not a rigorous bound",
-          "max_estimated_error_mm3": 3.6029683963324894e-06,
-          "max_refinement_delta_mm3": 0.0
-        }
+        ]
       }
     },
     {
@@ -13285,7 +13285,7 @@
         "volume_integration": {
           "method": "adaptive BRepGProp GK, requested relative errors 1e-6 and 1e-8",
           "error_basis": "max(OCCT summed absolute face-error estimates, refinement delta); not a rigorous bound",
-          "max_estimated_error_mm3": 0.00033473177751636363,
+          "max_estimated_error_mm3": 0.00033373418761315106,
           "max_refinement_delta_mm3": 3.270106390118599e-05
         }
       }
@@ -13312,7 +13312,7 @@
         "volume_integration": {
           "method": "adaptive BRepGProp GK, requested relative errors 1e-6 and 1e-8",
           "error_basis": "max(OCCT summed absolute face-error estimates, refinement delta); not a rigorous bound",
-          "max_estimated_error_mm3": 0.0003321080325302022,
+          "max_estimated_error_mm3": 0.000331042325952992,
           "max_refinement_delta_mm3": 3.270106390118599e-05
         }
       }
@@ -13931,9 +13931,9 @@
   "relation_stats": {
     "parts": 97,
     "pairs": 4656,
-    "candidates": 326,
+    "candidates": 328,
     "states": {
-      "apart": 188,
+      "apart": 190,
       "touching": 66,
       "overlapping": 72,
       "contains": 0,
