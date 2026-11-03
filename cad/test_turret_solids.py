@@ -51,3 +51,25 @@ def test_the_check_catches_the_old_bend():
            .union(cq.Workplane('XY').sphere(rl).translate((0.0, -r, zl))))
     assert not _valid(old)
     assert _valid(new)
+
+
+def test_the_latch_head_clears_the_yoke_to_the_stop(turret):
+    """cad-agent's motion gate found the CT latch's Ø16 head 1.7 mm into the yoke's bridge from -22.9 deg on (#61): the
+    bridge is relieved by the head's sweep, so the cradle reaches its -25 deg stop and 2 deg past it with the head clear."""
+    for tilt in (0.0, -12.5, -22.9, -25.0, -27.0):
+        posed = turret.posed(0.0, tilt, names=['ct_thumbscrew', 'tilt_yoke'], robot=False)
+        common = posed['ct_thumbscrew'].val().intersect(posed['tilt_yoke'].val())
+        assert common.Volume() < 1e-6, f'the latch head is in the yoke at tilt {tilt} deg'
+
+
+def test_the_relief_is_needed_and_small(turret):
+    """The control: the bridge without the relief is hit at the stop; the relief stays a small notch on the front edge."""
+    G = turret.G
+    b0, b1 = G.bridge_z
+    a1 = G.arm_y[1]
+    bridge = tu.box(-20, 20, -a1, a1, b0, b1)
+    head = tu.thumb_solid(G).translate((-G.tilt_x, 0, G.path_t)).rotate((0, 0, G.tilt_t), (0, 1, G.tilt_t), tu.TILT_STOP_DEG)
+    assert head.intersect(bridge).val().Volume() > 10.0
+    cut = tu.thumb_sweep(G, clear=1.0, to_deg=-(tu.TILT_STOP_DEG + 2.0)).intersect(bridge).val()
+    bb = cut.BoundingBox()
+    assert cut.Volume() < 500.0 and b1 - bb.zmin < 5.0 and bb.xmin > 10.0     # <= 5 mm into the 12 mm bridge's front top
