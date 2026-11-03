@@ -25,7 +25,7 @@
 
 [Website & playground](https://gyropup.com) · [Documentation map](docs/README.md) · [Prototype warning](docs/prototype-safety.md) · [Contributing](CONTRIBUTING.md)
 
-<sub>The banner is drawn from the project's own CadQuery code (<code>cad/build_leg.py</code>, <code>cad/turret.py</code>, <code>cad/turret_stand.py</code>) with hidden lines removed, set as in the image below (which predates the compute plinth under the turret's pan base, decision D66), by the <a href="https://github.com/mvalancy/mvalancy/tree/9a878ce602d8a5256027c9f4367d2ae5ea4784da/tools/hero">README banner generator</a>.</sub>
+<sub>The banner is drawn from the project's own CadQuery code (<code>cad/build_leg.py</code>, <code>cad/turret.py</code>, <code>cad/turret_stand.py</code>) with hidden lines removed, set as the project's own <code>tools/readme_hero.py</code> sets it, by the <a href="https://github.com/mvalancy/mvalancy/tree/9a878ce602d8a5256027c9f4367d2ae5ea4784da/tools/hero">README banner generator</a>.</sub>
 
 </div>
 
@@ -40,8 +40,6 @@ playground does not control physical hardware.
 **Gyropup prototypes are unsafe, are for research purposes only, and will not be offered for sale.** Future play
 with children and families is an aspiration, not a qualified use of today's designs. Read the
 [prototype warning](docs/prototype-safety.md).
-
-<p align="center"><img src="docs/hero.jpg" alt="Gyropup, built leg first: one five-bar leg v2 on two RS-04s beside the foam-ball turret on its bench stand" width="100%"></p>
 
 ## Build order
 
