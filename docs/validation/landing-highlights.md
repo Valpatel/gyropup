@@ -19,8 +19,8 @@ solved whole-robot physics run.
 
 The leg movie belongs to the report at
 `ae919f7211f236f398ff77cc25d00c2017c1ab9c`, not today's 18.75 kg / 36 V report.
-E1 retains its 37.5 kg baseline, deformation ×16, SF 1.63 at the 4 mm gate mesh
-(1.41 at 3 mm) versus required 2.00, and static-load labels. Its entire native frame is preserved with side bars;
+E1 retains its 37.5 kg baseline, deformation ×16, SF 1.60 at the 4 mm gate mesh
+(1.40 at 3 mm) versus required 2.00, and static-load labels. Its entire native frame is preserved with side bars;
 the failed strength target is neither cropped nor covered. These are prototype
 demonstrations, not physical testing or a print/safety release. The separate
 Progress leg-gallery mismatch is tracked in
