@@ -1,6 +1,6 @@
 {
   "schema": "gyropup.carrier-insert-fit/1",
-  "source_revision": "06ef3ad7ca6571028ef1acb603296357f6b2ee47",
+  "source_revision": "2b2d6045962de4686acf1a786729dbaccec5043b",
   "inputs": {
     "files": {
       "cad/assembly.py": "6e328b8342bde8e2d63abf972a5bff7a2e14389f000d903ec0e1d6bcb7498864",
@@ -69,7 +69,7 @@
       "cad/turret_mount.py": "f5ecdf09c9dc86c377072725bacde60f9a79277686b480132248a38e807c7fb9",
       "cad/turret_orders.py": "eaaaae1668a186b7438f0dd394d5b27e1bee7c0ef4901bc880f806f7d4e60480",
       "cad/turret_print.py": "7b1f0cfe1b2d47e047cea1aae664d43b3dc71f9f9d48703e523840055a44f755",
-      "cad/turret_snaps.py": "c6ab02cb5e0c34e89defc49f66297823442fe781307126b49c5f4f065045eccd",
+      "cad/turret_snaps.py": "2690467173047aa8d479d96ce6d6eeb041e3c9edc2ae9805c4121baf5049e87e",
       "cad/turret_stand.py": "21f8300694982e68de8ef20e6d7e143a9ae8a356f836f47e50f1b2ab91b10126",
       "cad/turret_studies.py": "708f5ed6d385d924caaed802a04b724e03eda8872749a5454d46644ebfc19e11",
       "cad/wheel_fit.py": "57c75e2462fb6f3606b81e4baac284dcac9a7b67bb47183f425d8bb8f730febd",
@@ -700,10 +700,10 @@
   ],
   "files": {
     "base-anchor.3mf": "6c2a09c805a503e327404999aba049bd897911074f535795d627955cb870a615",
-    "base-anchor.step": "50b3cfdfc076305a97fb8a1e58916158c6b94de238237828a2410d36b0190b6d",
+    "base-anchor.step": "1542092573c581090a81165d6b0174f19f6e2c4ad459226c3fdb0a5d2f756393",
     "base-anchor.stl": "ce29f74ad434979e27b0025e5bb06cfcc07bd5ded646b1a483fc5f211352d8d7",
     "carrier-boss.3mf": "b46b7c50eb099ea07d1e05f0551bef47ffe4c697ffbdcf0cd5af2d954d619bd2",
-    "carrier-boss.step": "04a60b7d193c0992b248c0113e7b023fc682ca924d9c50043dd9851fd40a381c",
+    "carrier-boss.step": "d06b60c43e9de2d216386524bfb70f86f4bdfc527d557e7b2dd3b74bcfb9c6ef",
     "carrier-boss.stl": "374fcbef1209f1ea25dfa195dcf7106e197ecbbaf919842c50a924967da563d3",
     "measurements.csv": "763fce59e411c8a81f168694643a536181d41c1891dffa0eec1f62ad4f8f8820"
   }

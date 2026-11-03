@@ -1,6 +1,6 @@
 {
   "schema": 1,
-  "source_revision": "06ef3ad7ca6571028ef1acb603296357f6b2ee47",
+  "source_revision": "2b2d6045962de4686acf1a786729dbaccec5043b",
   "source_hashes": {
     "cad/turret.py": "5fd7e8dd555a8b3b5743017faf4200eae41fad1c0a7a7da696a18ef75bcdc068",
     "cad/gmi.py": "dab034a3ee939a7b5f4a6fbae5b8ba7371d2113c5380a8450733650c2d02deae",

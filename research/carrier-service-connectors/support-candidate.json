@@ -70,7 +70,7 @@
       "cad/turret_mount.py": "f5ecdf09c9dc86c377072725bacde60f9a79277686b480132248a38e807c7fb9",
       "cad/turret_orders.py": "eaaaae1668a186b7438f0dd394d5b27e1bee7c0ef4901bc880f806f7d4e60480",
       "cad/turret_print.py": "7b1f0cfe1b2d47e047cea1aae664d43b3dc71f9f9d48703e523840055a44f755",
-      "cad/turret_snaps.py": "c6ab02cb5e0c34e89defc49f66297823442fe781307126b49c5f4f065045eccd",
+      "cad/turret_snaps.py": "2690467173047aa8d479d96ce6d6eeb041e3c9edc2ae9805c4121baf5049e87e",
       "cad/turret_stand.py": "21f8300694982e68de8ef20e6d7e143a9ae8a356f836f47e50f1b2ab91b10126",
       "cad/turret_studies.py": "708f5ed6d385d924caaed802a04b724e03eda8872749a5454d46644ebfc19e11",
       "cad/wheel_fit.py": "57c75e2462fb6f3606b81e4baac284dcac9a7b67bb47183f425d8bb8f730febd",
@@ -103,7 +103,7 @@
     },
     "toolkit_sources_sha256": "c2941322d5f3d000d3777b0047567211d06855861fa5e14229d7d7519fef3ed3"
   },
-  "input_fingerprint": "a5a59c4ee3cdc73753aa52e2c8472290a4620196a879a481aa5bef3795dc8f5e",
+  "input_fingerprint": "1d49fc10b66a44c55165aee256ffe487273eb0c7e13ea028c311e60672335159",
   "context_files": {
     "tools/check-carrier-connector-support.py": "ddaef1821bb40721ef7f91f02e04b697c7fbc754829ae1eff17647329345838a",
     "tools/check-carrier-connector-inputs.py": "20b4f98e5cef0067d921e645b44fd0809ae2bffee1f1055351e7188623ef0c45",
@@ -6365,11 +6365,11 @@
     "C2/C3/servo parking, actual retained tails/junctions and added protection board remain incomplete.",
     "Wire-exit and tool corridors are explicit design reservations, not detailed cable/tool models."
   ],
-  "elapsed_seconds": 84.325,
+  "elapsed_seconds": 84.124,
   "public_artifact_sha256": {
-    "carrier-support-candidate.step": "7bf1b8b62a6dec3b10285ad6737725fecd96652c34c7ba0d1ff8a07e58edfa59",
-    "C3-support-candidate.step": "75eba3ae216c2411687f1cffd649905ff201e22c629987d0b1a621276abc5d9e",
-    "C3-support-layout.step": "6f4c156a9e9841cac345f5b6c7c5863cc89cc836306c5754a3fffb50c5617a62"
+    "carrier-support-candidate.step": "21be1713f57e52a06c68d08131a21ed198ebb1693a3fcd0bf69b6d5d88986933",
+    "C3-support-candidate.step": "f5100deca5859161a9d7b095a1f000c080c306e67de053c9ae5bb7b39e350a42",
+    "C3-support-layout.step": "f8fb34992763b033e68620d1daeaf58ead5428acc9a71fde2369a06edc8ee4ad"
   },
   "public_geometry_note": "Independently authored dimension representation; not manufacturer CAD; no threads or flexible clip geometry."
 }

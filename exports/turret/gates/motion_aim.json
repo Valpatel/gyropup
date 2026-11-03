@@ -283,9 +283,9 @@
     "groups": 1,
     "poses": 210,
     "pair_queries": 17151,
-    "kernel_queries": 210,
+    "kernel_queries": 0,
     "memo_hits": 6205,
-    "cache_hits": 10736,
-    "seconds": 50.463
+    "cache_hits": 10946,
+    "seconds": 2.257
   }
 }

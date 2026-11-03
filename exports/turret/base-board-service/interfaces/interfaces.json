@@ -3498,7 +3498,7 @@
     "splice_application": "https://www.te.com/commerce/DocumentDelivery/DDEController?Action=srchrtrv&DocFormat=pdf&DocLang=English&DocNm=114-2157&DocType=Specification+Or+Standard&PartCntxt=320559",
     "wire": "https://www.remingtonindustries.com/content/PTFE%20Hook%20Up%20Wire%20Data%20Sheet.pdf"
   },
-  "seconds": 31.29,
+  "seconds": 31.14,
   "runtime": {
     "cadquery": "2.8.0",
     "OCP": "7.9.3.1"
@@ -3572,7 +3572,7 @@
       "cad/turret_mount.py": "f5ecdf09c9dc86c377072725bacde60f9a79277686b480132248a38e807c7fb9",
       "cad/turret_orders.py": "eaaaae1668a186b7438f0dd394d5b27e1bee7c0ef4901bc880f806f7d4e60480",
       "cad/turret_print.py": "7b1f0cfe1b2d47e047cea1aae664d43b3dc71f9f9d48703e523840055a44f755",
-      "cad/turret_snaps.py": "c6ab02cb5e0c34e89defc49f66297823442fe781307126b49c5f4f065045eccd",
+      "cad/turret_snaps.py": "2690467173047aa8d479d96ce6d6eeb041e3c9edc2ae9805c4121baf5049e87e",
       "cad/turret_stand.py": "21f8300694982e68de8ef20e6d7e143a9ae8a356f836f47e50f1b2ab91b10126",
       "cad/turret_studies.py": "708f5ed6d385d924caaed802a04b724e03eda8872749a5454d46644ebfc19e11",
       "cad/wheel_fit.py": "57c75e2462fb6f3606b81e4baac284dcac9a7b67bb47183f425d8bb8f730febd",
@@ -3672,7 +3672,7 @@
     "cad/turret_mount.py": "f5ecdf09c9dc86c377072725bacde60f9a79277686b480132248a38e807c7fb9",
     "cad/turret_orders.py": "eaaaae1668a186b7438f0dd394d5b27e1bee7c0ef4901bc880f806f7d4e60480",
     "cad/turret_print.py": "7b1f0cfe1b2d47e047cea1aae664d43b3dc71f9f9d48703e523840055a44f755",
-    "cad/turret_snaps.py": "c6ab02cb5e0c34e89defc49f66297823442fe781307126b49c5f4f065045eccd",
+    "cad/turret_snaps.py": "2690467173047aa8d479d96ce6d6eeb041e3c9edc2ae9805c4121baf5049e87e",
     "cad/turret_stand.py": "21f8300694982e68de8ef20e6d7e143a9ae8a356f836f47e50f1b2ab91b10126",
     "cad/turret_studies.py": "708f5ed6d385d924caaed802a04b724e03eda8872749a5454d46644ebfc19e11",
     "cad/wheel_fit.py": "57c75e2462fb6f3606b81e4baac284dcac9a7b67bb47183f425d8bb8f730febd",
@@ -3696,7 +3696,7 @@
     "catalog/wheel_motors.json": "e92baa60e433e177d87450145943c32bd6b60bebb97e1c1746354aa00f2dbc99",
     "designs/default.json": "3dc7d04d0d6eeec81decefa360f3904b093f19515d6944910c2cb20c976db211"
   },
-  "input_fingerprint": "a5a59c4ee3cdc73753aa52e2c8472290a4620196a879a481aa5bef3795dc8f5e",
+  "input_fingerprint": "1d49fc10b66a44c55165aee256ffe487273eb0c7e13ea028c311e60672335159",
   "relation_tolerances": {
     "touch_mm": 0.01,
     "overlap_mm3": 1e-06,
@@ -7449,8 +7449,8 @@
     "Base and carrier changes require renewed structural, print and physical-fit qualification."
   ],
   "artifact_sha256": {
-    "carrier-wiring-candidate.step": "2423c8407de5f9955825c50b867fcb145366f110de29ba2ea9b538476c48d318",
-    "pan-base-wiring-candidate.step": "7c02da157a60a07b4921f6f82662a0bface07b6e1743a734c96359fd55571ce0",
-    "carrier-wiring-layout.step": "87f73a21dcbd0615cf6b5280e962f59a541c5e6de88a3c275ca631a0a30a5534"
+    "carrier-wiring-candidate.step": "19b4d8475a960412db6d57ba6fa98ada8dd149aeae05dba5ac5def7e551dfa39",
+    "pan-base-wiring-candidate.step": "112d86a19b12339c8328d4dbd2ff0a8c82dd9e8b97b01d4c8e68188e3a9c5db5",
+    "carrier-wiring-layout.step": "1daf268979b26ef52f7e7f9df521ff33477f12499db8c1f9cf4e005a698f0eff"
   }
 }
