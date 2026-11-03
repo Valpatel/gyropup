@@ -1,11 +1,11 @@
 {
  "schema": 1,
- "what": "The print-ready hip frame's strength cases (tools/hip-frame-study.py: cad/leg_studies.py's hip-frame studies unchanged, with the stress resolved against the print's layers) on cad-agent v0.6.0 at the record's 4 mm mesh and at 3 mm, for PR #148 (issue #29). The 4 mm values equal exports/leg/fea/summary.json's. The E1 movie's caption gives both (tools/render-hip-frame-e1.py).",
+ "what": "The print-ready hip frame's strength cases (tools/hip-frame-study.py: cad/leg_studies.py's hip-frame studies unchanged, with the stress resolved against the print's layers) on cad-agent v0.6.0 at the record's 4 mm mesh and at 3 mm, on the regenerated rig results (issue #8; first for PR #148, issue #29). The 4 mm values equal exports/leg/fea/summary.json's. The E1 movie's caption gives both (tools/render-hip-frame-e1.py).",
  "host": "recording mechanical compute host: aarch64, conda-forge gmsh 4.15.2",
  "meshes": {
   "4.0": {
    "schema": 1,
-   "source_revision": "a18b73ee738ec66eefaca14be68f05852ced108f",
+   "source_revision": "a0140a39bef0cdd66694f1c7f722c64c852cde70",
    "source_dirty": false,
    "params": {},
    "hip": {
@@ -26,19 +26,19 @@
     {
      "part": "hip_frame",
      "case": "R1",
-     "safety_factor": 1.6,
+     "safety_factor": 1.62,
      "target": 1.2,
      "ok": true,
-     "von_mises_design_mpa": 11.31,
+     "von_mises_design_mpa": 11.22,
      "design_peak_at_mm": [
       -84.3,
       -26.8,
       -63.4
      ],
-     "max_displacement_mm": 1.3442,
-     "load_from": "the rig's landings (drop_150, the capped jump): knees at 574 N, as 945 N on the axle at 342 mm (statics on the 1605 N spike gives 975), plus 10 % fore-aft and 10 % sideways; both upper links' pin forces, the out-of-plane moment 77% rear / 73% front",
+     "max_displacement_mm": 1.3348,
+     "load_from": "the rig's landings (drop_150, the capped jump): knees at 574 N, as 938 N on the axle at 342 mm (statics on the 1761 N spike gives 1078), plus 10 % fore-aft and 10 % sideways; both upper links' pin forces, the out-of-plane moment 77% rear / 73% front",
      "material_id": "pa6_cf_z",
-     "seconds": 162.1,
+     "seconds": 1144.5,
      "mesh": {
       "nodes": 43880,
       "tets": 193849,
@@ -56,27 +56,27 @@
        -26.8,
        -63.0
       ],
-      "von_mises_mpa": 11.31,
+      "von_mises_mpa": 11.22,
       "stress_mpa": [
        [
-        3.57,
-        -1.55,
-        -1.15
+        3.54,
+        -1.53,
+        -1.14
        ],
        [
-        -1.55,
-        9.79,
-        5.07
+        -1.53,
+        9.72,
+        5.03
        ],
        [
-        -1.15,
-        5.07,
-        3.43
+        -1.14,
+        5.03,
+        3.41
        ]
       ],
       "principal_mpa": [
-       12.98,
-       3.21,
+       12.89,
+       3.18,
        0.6
       ],
       "principal_dirs": [
@@ -88,7 +88,7 @@
        [
         0.975,
         0.221,
-        0.011
+        0.01
        ],
        [
         0.097,
@@ -99,54 +99,54 @@
      },
      "layers": {
       "y": {
-       "sf": 1.34,
+       "sf": 1.35,
        "governed_by": "bond",
-       "sf_bond": 1.34,
-       "sf_bulk": 3.61,
+       "sf_bond": 1.35,
+       "sf_bulk": 3.64,
        "at_mm": [
         -74.2,
         -26.1,
         -63.4
        ],
-       "sigma_n_mpa": 10.42,
-       "tau_n_mpa": 5.01,
+       "sigma_n_mpa": 10.35,
+       "tau_n_mpa": 4.97,
        "at_isotropic_peak": {
-        "sigma_n_mpa": 9.79,
-        "tau_n_mpa": 5.3
+        "sigma_n_mpa": 9.72,
+        "tau_n_mpa": 5.26
        }
       },
       "z": {
-       "sf": 1.44,
+       "sf": 1.45,
        "governed_by": "bond",
-       "sf_bond": 1.44,
-       "sf_bulk": 3.61,
+       "sf_bond": 1.45,
+       "sf_bulk": 3.64,
        "at_mm": [
         -119.8,
         -25.2,
         45.1
        ],
-       "sigma_n_mpa": 7.24,
-       "tau_n_mpa": 5.97,
+       "sigma_n_mpa": 7.19,
+       "tau_n_mpa": 5.93,
        "at_isotropic_peak": {
-        "sigma_n_mpa": 3.43,
-        "tau_n_mpa": 5.2
+        "sigma_n_mpa": 3.41,
+        "tau_n_mpa": 5.16
        }
       },
       "x": {
-       "sf": 1.89,
+       "sf": 1.91,
        "governed_by": "bond",
-       "sf_bond": 1.89,
-       "sf_bulk": 3.61,
+       "sf_bond": 1.91,
+       "sf_bulk": 3.64,
        "at_mm": [
         -97.0,
         -1.7,
         -41.8
        ],
-       "sigma_n_mpa": 2.28,
-       "tau_n_mpa": 5.37,
+       "sigma_n_mpa": 2.26,
+       "tau_n_mpa": 5.33,
        "at_isotropic_peak": {
-        "sigma_n_mpa": 3.57,
-        "tau_n_mpa": 1.93
+        "sigma_n_mpa": 3.54,
+        "tau_n_mpa": 1.91
        }
       }
      },
@@ -167,7 +167,7 @@
      "max_displacement_mm": 1.3055,
      "load_from": "standing: 2.5 x 184 N vertical, 0.5 g of a 38 kg robot sideways; both upper links' pin forces, the out-of-plane moment 73% rear / 72% front",
      "material_id": "pa6_cf_z",
-     "seconds": 166.3,
+     "seconds": 3806.3,
      "mesh": {
       "nodes": 43880,
       "tets": 193849,
@@ -296,7 +296,7 @@
      "max_displacement_mm": 0.7205,
      "load_from": "a motor at its cap into a stop: 60 N m, 1038 N on the front motor's knee-out post, in its ear past the motor's ring (10.5 mm above the frame's face), the pin bearing as a contact (2053 N by the mouth, 1015 N back at depth), the motor's hub and lugs taking it back",
      "material_id": "pa6_cf_z",
-     "seconds": 139.4,
+     "seconds": 2682.6,
      "mesh": {
       "nodes": 43998,
       "tets": 194504,
@@ -425,7 +425,7 @@
      "max_displacement_mm": 0.6467,
      "load_from": "a motor at its cap into a stop: 60 N m, 1038 N on the front motor's knee-in post, between the motors (10.5 mm above the frame's face), the pin bearing as a contact (2053 N by the mouth, 1015 N back at depth), the motor's hub and lugs taking it back",
      "material_id": "pa6_cf_z",
-     "seconds": 111.6,
+     "seconds": 5192.1,
      "mesh": {
       "nodes": 43988,
       "tets": 194427,
@@ -542,19 +542,19 @@
     {
      "part": "hip_frame",
      "case": "R3o",
-     "safety_factor": 1.0,
+     "safety_factor": 1.01,
      "target": 1.0,
      "ok": true,
-     "von_mises_design_mpa": 18.08,
+     "von_mises_design_mpa": 17.96,
      "design_peak_at_mm": [
       111.9,
       -1.8,
       56.6
      ],
-     "max_displacement_mm": 1.4687,
-     "load_from": "rig 'power_off' (no motor damping): folded onto the stops, 122 N m on a stop post and 1831 N on the axle (quasi-static: the knees' real force matches statics), plus 10 % sideways: 122 N m, 2115 N on the front motor's knee-out post, in its ear past the motor's ring (10.5 mm above the frame's face), the pin bearing as a contact (4184 N by the mouth, 2069 N back at depth), the motor's hub and lugs taking it back",
+     "max_displacement_mm": 1.4591,
+     "load_from": "rig 'power_off' (no motor damping): folded onto the stops, 122 N m on a stop post and 1812 N on the axle (quasi-static: the knees' real force matches statics), plus 10 % sideways: 122 N m, 2101 N on the front motor's knee-out post, in its ear past the motor's ring (10.5 mm above the frame's face), the pin bearing as a contact (4157 N by the mouth, 2056 N back at depth), the motor's hub and lugs taking it back",
      "material_id": "pa6_cf_z",
-     "seconds": 139.1,
+     "seconds": 2664.0,
      "mesh": {
       "nodes": 43998,
       "tets": 194504,
@@ -572,28 +572,28 @@
        -4.4,
        58.6
       ],
-      "von_mises_mpa": 18.08,
+      "von_mises_mpa": 17.96,
       "stress_mpa": [
        [
-        -15.0,
+        -14.9,
         -0.39,
-        7.33
+        7.28
        ],
        [
         -0.39,
         -1.21,
-        1.15
+        1.14
        ],
        [
-        7.33,
-        1.15,
-        -3.78
+        7.28,
+        1.14,
+        -3.75
        ]
       ],
       "principal_mpa": [
        0.33,
-       -1.66,
-       -18.66
+       -1.65,
+       -18.54
       ],
       "principal_dirs": [
        [
@@ -615,17 +615,17 @@
      },
      "layers": {
       "y": {
-       "sf": 0.94,
+       "sf": 0.95,
        "governed_by": "bond",
-       "sf_bond": 0.94,
-       "sf_bulk": 2.26,
+       "sf_bond": 0.95,
+       "sf_bulk": 2.27,
        "at_mm": [
         94.5,
         -65.7,
         65.1
        ],
-       "sigma_n_mpa": 16.03,
-       "tau_n_mpa": 6.18,
+       "sigma_n_mpa": 15.93,
+       "tau_n_mpa": 6.14,
        "at_isotropic_peak": {
         "sigma_n_mpa": -1.21,
         "tau_n_mpa": 1.21
@@ -635,34 +635,34 @@
        "sf": 1.09,
        "governed_by": "bond",
        "sf_bond": 1.09,
-       "sf_bulk": 2.26,
+       "sf_bulk": 2.27,
        "at_mm": [
         95.1,
         -64.3,
         63.0
        ],
-       "sigma_n_mpa": 8.73,
-       "tau_n_mpa": 8.2,
+       "sigma_n_mpa": 8.67,
+       "tau_n_mpa": 8.15,
        "at_isotropic_peak": {
-        "sigma_n_mpa": -3.78,
-        "tau_n_mpa": 7.42
+        "sigma_n_mpa": -3.75,
+        "tau_n_mpa": 7.37
        }
       },
       "x": {
-       "sf": 1.15,
+       "sf": 1.16,
        "governed_by": "bond",
-       "sf_bond": 1.15,
-       "sf_bulk": 2.26,
+       "sf_bond": 1.16,
+       "sf_bulk": 2.27,
        "at_mm": [
         95.7,
         -64.3,
         64.5
        ],
-       "sigma_n_mpa": 9.08,
-       "tau_n_mpa": 7.42,
+       "sigma_n_mpa": 9.02,
+       "tau_n_mpa": 7.37,
        "at_isotropic_peak": {
-        "sigma_n_mpa": -15.0,
-        "tau_n_mpa": 7.34
+        "sigma_n_mpa": -14.9,
+        "tau_n_mpa": 7.29
        }
       }
      },
@@ -730,18 +730,18 @@
     "version": "0.6.0",
     "commit": "50d4921a5ab26c7750a869ed41c9a4346ef1379c"
    },
-   "seconds": 781.1,
+   "seconds": 16101.3,
    "inputs_sha256": {
-    "cad/fivebar.py": "b9ae1e31295fa832e774aba5c9324b1dbcadce6f2cd1ced42f4209e03b8bf28d",
+    "cad/fivebar.py": "356fc1e55529674afd3f96d1ae2e96913c2b43058fba565b584c2c460f41f02d",
     "cad/leg_studies.py": "69f15273d1111c9db4a63faa444cdbf0d6e3f5e8b107f986384b2158066acf35",
     "sim/leg_rig.py": "4526bcc60b89f88ebd7839bec98f0b2676240bc267ee58a67907acbab051cc27",
-    "exports/leg/rig-results.json": "ab96804f920942c0fda5398dc1f6bebf2fca39846babcd204170994a8c090452",
+    "exports/leg/rig-results.json": "171a1d4f2195468a235313fce29e5dde1272499b0d0934e22ad2bab5564ba902",
     "exports/leg/fea/summary.json": "ab8a61b8fb54351e786e8d1437aaf94ffde34b39f77b98f75a5215e4fc0ff2a0"
    }
   },
   "3.0": {
    "schema": 1,
-   "source_revision": "a18b73ee738ec66eefaca14be68f05852ced108f",
+   "source_revision": "a0140a39bef0cdd66694f1c7f722c64c852cde70",
    "source_dirty": false,
    "params": {},
    "hip": {
@@ -762,19 +762,19 @@
     {
      "part": "hip_frame",
      "case": "R1",
-     "safety_factor": 1.36,
+     "safety_factor": 1.37,
      "target": 1.2,
      "ok": true,
-     "von_mises_design_mpa": 13.3,
+     "von_mises_design_mpa": 13.21,
      "design_peak_at_mm": [
       -120.0,
       -25.2,
       45.0
      ],
-     "max_displacement_mm": 1.3456,
-     "load_from": "the rig's landings (drop_150, the capped jump): knees at 574 N, as 945 N on the axle at 342 mm (statics on the 1605 N spike gives 975), plus 10 % fore-aft and 10 % sideways; both upper links' pin forces, the out-of-plane moment 77% rear / 73% front",
+     "max_displacement_mm": 1.3362,
+     "load_from": "the rig's landings (drop_150, the capped jump): knees at 574 N, as 938 N on the axle at 342 mm (statics on the 1761 N spike gives 1078), plus 10 % fore-aft and 10 % sideways; both upper links' pin forces, the out-of-plane moment 77% rear / 73% front",
      "material_id": "pa6_cf_z",
-     "seconds": 241.1,
+     "seconds": 2952.6,
      "mesh": {
       "nodes": 68229,
       "tets": 317422,
@@ -792,28 +792,28 @@
        -25.1,
        45.5
       ],
-      "von_mises_mpa": 13.3,
+      "von_mises_mpa": 13.21,
       "stress_mpa": [
        [
-        3.03,
+        3.01,
         -0.82,
-        1.24
+        1.23
        ],
        [
         -0.82,
-        5.37,
-        -7.1
+        5.34,
+        -7.05
        ],
        [
-        1.24,
-        -7.1,
-        8.08
+        1.23,
+        -7.05,
+        8.02
        ]
       ],
       "principal_mpa": [
-       14.15,
-       2.84,
-       -0.51
+       14.05,
+       2.82,
+       -0.5
       ],
       "principal_dirs": [
        [
@@ -835,54 +835,54 @@
      },
      "layers": {
       "y": {
-       "sf": 1.34,
+       "sf": 1.35,
        "governed_by": "bond",
-       "sf_bond": 1.34,
-       "sf_bulk": 3.07,
+       "sf_bond": 1.35,
+       "sf_bulk": 3.09,
        "at_mm": [
         -120.0,
         -25.2,
         45.0
        ],
-       "sigma_n_mpa": 5.37,
-       "tau_n_mpa": 7.15,
+       "sigma_n_mpa": 5.34,
+       "tau_n_mpa": 7.1,
        "at_isotropic_peak": {
-        "sigma_n_mpa": 5.37,
-        "tau_n_mpa": 7.15
+        "sigma_n_mpa": 5.34,
+        "tau_n_mpa": 7.1
        }
       },
       "z": {
-       "sf": 1.22,
+       "sf": 1.23,
        "governed_by": "bond",
-       "sf_bond": 1.22,
-       "sf_bulk": 3.07,
+       "sf_bond": 1.23,
+       "sf_bulk": 3.09,
        "at_mm": [
         -120.0,
         -25.2,
         45.0
        ],
-       "sigma_n_mpa": 8.08,
-       "tau_n_mpa": 7.21,
+       "sigma_n_mpa": 8.02,
+       "tau_n_mpa": 7.16,
        "at_isotropic_peak": {
-        "sigma_n_mpa": 8.08,
-        "tau_n_mpa": 7.21
+        "sigma_n_mpa": 8.02,
+        "tau_n_mpa": 7.16
        }
       },
       "x": {
-       "sf": 1.86,
+       "sf": 1.87,
        "governed_by": "bond",
-       "sf_bond": 1.86,
-       "sf_bulk": 3.07,
+       "sf_bond": 1.87,
+       "sf_bulk": 3.09,
        "at_mm": [
         95.8,
         -7.5,
         -57.6
        ],
-       "sigma_n_mpa": 6.49,
-       "tau_n_mpa": 4.22,
+       "sigma_n_mpa": 6.44,
+       "tau_n_mpa": 4.18,
        "at_isotropic_peak": {
-        "sigma_n_mpa": 3.03,
-        "tau_n_mpa": 1.48
+        "sigma_n_mpa": 3.01,
+        "tau_n_mpa": 1.47
        }
       }
      },
@@ -903,7 +903,7 @@
      "max_displacement_mm": 1.3052,
      "load_from": "standing: 2.5 x 184 N vertical, 0.5 g of a 38 kg robot sideways; both upper links' pin forces, the out-of-plane moment 73% rear / 72% front",
      "material_id": "pa6_cf_z",
-     "seconds": 201.8,
+     "seconds": 1910.0,
      "mesh": {
       "nodes": 68229,
       "tets": 317422,
@@ -1032,7 +1032,7 @@
      "max_displacement_mm": 0.727,
      "load_from": "a motor at its cap into a stop: 60 N m, 1038 N on the front motor's knee-out post, in its ear past the motor's ring (10.5 mm above the frame's face), the pin bearing as a contact (2053 N by the mouth, 1015 N back at depth), the motor's hub and lugs taking it back",
      "material_id": "pa6_cf_z",
-     "seconds": 167.8,
+     "seconds": 1741.3,
      "mesh": {
       "nodes": 68264,
       "tets": 317593,
@@ -1161,7 +1161,7 @@
      "max_displacement_mm": 0.6482,
      "load_from": "a motor at its cap into a stop: 60 N m, 1038 N on the front motor's knee-in post, between the motors (10.5 mm above the frame's face), the pin bearing as a contact (2053 N by the mouth, 1015 N back at depth), the motor's hub and lugs taking it back",
      "material_id": "pa6_cf_z",
-     "seconds": 141.2,
+     "seconds": 5740.8,
      "mesh": {
       "nodes": 68315,
       "tets": 318050,
@@ -1278,19 +1278,19 @@
     {
      "part": "hip_frame",
      "case": "R3o",
-     "safety_factor": 0.98,
+     "safety_factor": 0.99,
      "target": 1.0,
      "ok": false,
-     "von_mises_design_mpa": 18.41,
+     "von_mises_design_mpa": 18.29,
      "design_peak_at_mm": [
       111.2,
       -2.2,
       56.4
      ],
-     "max_displacement_mm": 1.4818,
-     "load_from": "rig 'power_off' (no motor damping): folded onto the stops, 122 N m on a stop post and 1831 N on the axle (quasi-static: the knees' real force matches statics), plus 10 % sideways: 122 N m, 2115 N on the front motor's knee-out post, in its ear past the motor's ring (10.5 mm above the frame's face), the pin bearing as a contact (4184 N by the mouth, 2069 N back at depth), the motor's hub and lugs taking it back",
+     "max_displacement_mm": 1.4721,
+     "load_from": "rig 'power_off' (no motor damping): folded onto the stops, 122 N m on a stop post and 1812 N on the axle (quasi-static: the knees' real force matches statics), plus 10 % sideways: 122 N m, 2101 N on the front motor's knee-out post, in its ear past the motor's ring (10.5 mm above the frame's face), the pin bearing as a contact (4157 N by the mouth, 2056 N back at depth), the motor's hub and lugs taking it back",
      "material_id": "pa6_cf_z",
-     "seconds": 142.2,
+     "seconds": 1305.3,
      "mesh": {
       "nodes": 68264,
       "tets": 317593,
@@ -1308,28 +1308,28 @@
        -65.1,
        63.5
       ],
-      "von_mises_mpa": 18.41,
+      "von_mises_mpa": 18.29,
       "stress_mpa": [
        [
-        4.88,
-        4.08,
-        -1.86
+        4.85,
+        4.05,
+        -1.85
        ],
        [
-        4.08,
-        19.96,
-        -4.25
+        4.05,
+        19.82,
+        -4.22
        ],
        [
-        -1.86,
-        -4.25,
-        5.06
+        -1.85,
+        -4.22,
+        5.02
        ]
       ],
       "principal_mpa": [
-       22.21,
-       4.58,
-       3.1
+       22.07,
+       4.55,
+       3.08
       ],
       "principal_dirs": [
        [
@@ -1354,51 +1354,51 @@
        "sf": 0.81,
        "governed_by": "bond",
        "sf_bond": 0.81,
-       "sf_bulk": 2.22,
+       "sf_bulk": 2.23,
        "at_mm": [
         94.7,
         -66.7,
         64.0
        ],
-       "sigma_n_mpa": 19.96,
-       "tau_n_mpa": 5.89,
+       "sigma_n_mpa": 19.82,
+       "tau_n_mpa": 5.85,
        "at_isotropic_peak": {
-        "sigma_n_mpa": 19.96,
-        "tau_n_mpa": 5.89
+        "sigma_n_mpa": 19.82,
+        "tau_n_mpa": 5.85
        }
       },
       "z": {
        "sf": 1.01,
        "governed_by": "bond",
        "sf_bond": 1.01,
-       "sf_bulk": 2.22,
+       "sf_bulk": 2.23,
        "at_mm": [
         96.7,
         -3.7,
         42.9
        ],
-       "sigma_n_mpa": 15.69,
-       "tau_n_mpa": 5.12,
+       "sigma_n_mpa": 15.59,
+       "tau_n_mpa": 5.09,
        "at_isotropic_peak": {
-        "sigma_n_mpa": 5.06,
-        "tau_n_mpa": 4.64
+        "sigma_n_mpa": 5.02,
+        "tau_n_mpa": 4.61
        }
       },
       "x": {
        "sf": 0.93,
        "governed_by": "bond",
        "sf_bond": 0.93,
-       "sf_bulk": 2.22,
+       "sf_bulk": 2.23,
        "at_mm": [
         95.5,
         -64.5,
         63.4
        ],
-       "sigma_n_mpa": 11.13,
-       "tau_n_mpa": 9.27,
+       "sigma_n_mpa": 11.06,
+       "tau_n_mpa": 9.21,
        "at_isotropic_peak": {
-        "sigma_n_mpa": 4.88,
-        "tau_n_mpa": 4.48
+        "sigma_n_mpa": 4.85,
+        "tau_n_mpa": 4.45
        }
       }
      },
@@ -1466,23 +1466,23 @@
     "version": "0.6.0",
     "commit": "50d4921a5ab26c7750a869ed41c9a4346ef1379c"
    },
-   "seconds": 955.9,
+   "seconds": 13845.0,
    "inputs_sha256": {
-    "cad/fivebar.py": "b9ae1e31295fa832e774aba5c9324b1dbcadce6f2cd1ced42f4209e03b8bf28d",
+    "cad/fivebar.py": "356fc1e55529674afd3f96d1ae2e96913c2b43058fba565b584c2c460f41f02d",
     "cad/leg_studies.py": "69f15273d1111c9db4a63faa444cdbf0d6e3f5e8b107f986384b2158066acf35",
     "sim/leg_rig.py": "4526bcc60b89f88ebd7839bec98f0b2676240bc267ee58a67907acbab051cc27",
-    "exports/leg/rig-results.json": "ab96804f920942c0fda5398dc1f6bebf2fca39846babcd204170994a8c090452",
+    "exports/leg/rig-results.json": "171a1d4f2195468a235313fce29e5dde1272499b0d0934e22ad2bab5564ba902",
     "exports/leg/fea/summary.json": "ab8a61b8fb54351e786e8d1437aaf94ffde34b39f77b98f75a5215e4fc0ff2a0"
    }
   }
  },
  "provenance": {
   "4.0": {
-   "run": "f3-hfm4",
+   "run": "f5-hfm4",
    "command": "python tools/hip-frame-study.py --mesh 4 --out build/hip-frame/pr-m4",
    "rc": 0,
    "host_role": "recording mechanical compute host: aarch64, conda-forge gmsh (the host that made the committed leg and turret records)",
-   "source_revision": "a18b73ee738ec66eefaca14be68f05852ced108f",
+   "source_revision": "a0140a39bef0cdd66694f1c7f722c64c852cde70",
    "source_dirty": false,
    "toolkit": {
     "version": "0.6.0",
@@ -1502,15 +1502,15 @@
     "pyamg": "5.3.0",
     "matplotlib": "3.11.2"
    },
-   "started_utc": "2026-11-02T02:04:01Z",
-   "finished_utc": "2026-11-02T02:17:07Z"
+   "started_utc": "2026-11-03T05:59:25Z",
+   "finished_utc": "2026-11-03T10:27:51Z"
   },
   "3.0": {
-   "run": "f3-hfm3",
+   "run": "f5-hfm3",
    "command": "python tools/hip-frame-study.py --mesh 3 --out build/hip-frame/pr-m3",
    "rc": 0,
    "host_role": "recording mechanical compute host: aarch64, conda-forge gmsh (the host that made the committed leg and turret records)",
-   "source_revision": "a18b73ee738ec66eefaca14be68f05852ced108f",
+   "source_revision": "a0140a39bef0cdd66694f1c7f722c64c852cde70",
    "source_dirty": false,
    "toolkit": {
     "version": "0.6.0",
@@ -1530,8 +1530,8 @@
     "pyamg": "5.3.0",
     "matplotlib": "3.11.2"
    },
-   "started_utc": "2026-11-02T02:17:08Z",
-   "finished_utc": "2026-11-02T02:33:09Z"
+   "started_utc": "2026-11-03T10:27:54Z",
+   "finished_utc": "2026-11-03T14:18:44Z"
   }
  }
 }
