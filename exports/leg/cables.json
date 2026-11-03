@@ -113,7 +113,7 @@
    "min_mm": 7.5,
    "needed_mm": 20.0,
    "ok": false,
-   "note": "the drawn spline's tightest bend, against 10 x the 18 AWG conductor (rule 3, flexing). At every stance it is where the route turns off the rear upper link's edge into the body (fivebar.cable()'s last three waypoints, 5 mm then 35 mm apart): the drawn route needs a wider turn there before it is a harness drawing"
+   "note": "the drawn spline's tightest bend, against 10 x the 18 AWG conductor (rule 3, flexing). At 7 of 7 stances it is at fivebar.cable()'s third waypoint from the end, where the route turns off the rear upper link's edge into the body (the waypoints either side are 10.1 and 35.4 mm from it, at the closest): the drawn route needs a wider turn there before it is a harness drawing"
   },
   "lead_length": {
    "botwheel_lead_mm": 300,
