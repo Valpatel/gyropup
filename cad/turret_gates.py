@@ -119,13 +119,20 @@ CONNECT_TOL = Tolerances(touch_mm=0.05, volume_check_mm3=0.2)    # parts drawn o
 AMMO_D = (22.2, 22.8)          # D67: any Rival-compatible round 22.2-22.8 mm (1.6-2.0 g: the mass is the launch ceiling's)
 
 
+# Every file the turret's geometry is built from: cad/turret.py, every cad/ module it imports (and they import), and the
+# data files they read when imported. cad/test_turret_gate_sources.py walks the imports and fails on one missing
+# here (cad/turret_snaps.py was, from #131 until the review of PR #181).
+GEOMETRY_SOURCES = ('cad/turret.py', 'cad/turret_base_board.py', 'cad/turret_boards.py', 'cad/turret_snaps.py', 'cad/gmi.py',
+                    'cad/interfaces.json', 'catalog/interfaces.json', 'catalog/materials.json')
+
+
 def geometry_fingerprint():
-    """What the gates depend on: the CAD source, the settled pile and the toolkit's gate code. A stored result is
-    current when this matches."""
+    """What the gates depend on: the CAD source (GEOMETRY_SOURCES), the settled pile and the toolkit's gate code. A
+    stored result is current when this matches."""
     import cadagent.gates as cg
     h = hashlib.sha256()
     gdir = Path(cg.__file__).parent
-    for f in [R / 'cad' / 'turret.py', R / 'cad' / 'turret_base_board.py', R / 'cad' / 'turret_boards.py', Path(__file__), PILE, LAUNCH] + sorted(gdir.glob('*.py')):
+    for f in [R / s for s in GEOMETRY_SOURCES] + [Path(__file__), PILE, LAUNCH] + sorted(gdir.glob('*.py')):
         h.update(f.read_bytes() if f.exists() else b'-')
     return h.hexdigest()[:16]
 
