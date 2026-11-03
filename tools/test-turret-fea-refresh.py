@@ -61,6 +61,20 @@ class Refresh(unittest.TestCase):
         self.assertEqual([r['why'] for r in twice['refreshed']][-2:], ['one', 'two'])
         self.assertEqual(twice['refreshed'][-1]['commit'], 'b')
 
+    def test_provenance_names_the_imported_toolkit(self):
+        """provenance() reads the cad-agent tree it is given (version from its pyproject, its git commit), not the
+        venv's metadata: a fake package in a git-less folder gets a source hash and its own version."""
+        import tempfile, types
+        with tempfile.TemporaryDirectory() as d:
+            pkg = Path(d) / 'src' / 'cadagent'
+            pkg.mkdir(parents=True)
+            (pkg / '__init__.py').write_text('x = 1\n')
+            (Path(d) / 'pyproject.toml').write_text('[project]\nname = "cad-agent"\nversion = "9.8.7"\n')
+            p = refresh.provenance(types.SimpleNamespace(__file__=str(pkg / '__init__.py')))
+        self.assertEqual(p['cad_agent'], '9.8.7')
+        self.assertTrue(p['cad_agent_tree'].startswith('sha256:'))
+        self.assertEqual(len(p['turret_py_sha256']), 64)
+
     def test_controls(self):
         """A part with no new results, or a different mesh, is refused."""
         new = {'mesh_mm': SUMMARY['mesh_mm'], 'masses': {}, 'results': []}

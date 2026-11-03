@@ -3627,7 +3627,8 @@
    },
    "commit": "4bcd8e09dc8dd4641b31d28b7dcef0002a546ce8",
    "turret_py_sha256": "71a663ea426e583d1fcbef1f36c2e0d8ff63a7a68462914724565015914ff5b4",
-   "cad_agent": "0.6.0"
+   "cad_agent": "0.6.0",
+   "cad_agent_tree": "50d4921a5ab26c7750a869ed41c9a4346ef1379c"
   }
  ]
 }
