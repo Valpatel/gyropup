@@ -76,7 +76,7 @@ SKIP = {
     'leg.stop_posts': 'no screw: steel pins in blind holes since D53, which no insert or limiter check covers',
     'body.battery_adapter': "the adapter's insert pattern is not published, so joints.json records no insert, hole or "
                             'load per screw to check',
-    'body.printed_clamps': "a group of 18 body joints with no stack per joint in joints.json ('see notes'); the body's "
+    'body.printed_clamps': "a group of {n} body joints with no stack per joint in joints.json ('see notes'); the body's "
                            'own joint check (exports/body/integrity.json) carries them',
     'leg.knee_eye_sleeves': 'the clamp is all steel (washer, sleeves, nut): joints.json records no printed thickness '
                             'beside the sleeves, so the limiter checks have no plastic to set them against',
@@ -617,7 +617,7 @@ def document(joints_path: Path, tk: Toolkit, tag: str, commit: str):
     for j in doc['joints']:
         jid = j['id']
         if jid in SKIP:
-            out.append({'id': jid, 'status': 'skipped', 'reason': SKIP[jid]})
+            out.append({'id': jid, 'status': 'skipped', 'reason': SKIP[jid].format(n=len(j.get('joints') or []))})
         elif j.get('insert'):
             out.append(insert_joint(j, doc, tk))
         elif (j.get('clamp') or {}).get('bearing_od_mm') and (j['clamp'].get('printed_mm') or 0) > 0:
