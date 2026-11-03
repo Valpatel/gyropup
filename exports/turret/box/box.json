@@ -388,7 +388,7 @@
    "file": "exports/turret/gates.json",
    "verdicts": "exports/turret/gates",
    "toolkit": "cadagent.gates (connectivity, containment, relation table, fasteners, motion)",
-   "fingerprint": "1c284a26f7d0d2a4",
+   "fingerprint": "1432c61b9714e16d",
    "ok": true,
    "gates": {
     "connectivity": {
@@ -396,7 +396,7 @@
      "status": "warn",
      "counts": {
       "pass": 29,
-      "warn": 70,
+      "warn": 61,
       "fail": 0
      }
     },
@@ -522,7 +522,7 @@
    "how": "the BRepExtrema distance between the intake shroud and each leg (the deck cut round it, under the deck plate) and anything of the deck below its plate at each TM insert (none: the inserts are wholly in the 8 mm deck)"
   },
   "tipping": {
-   "total_kg": 4.3,
+   "total_kg": 4.29,
    "com_height_mm": 191,
    "tip_angle_deg": 25,
    "push_to_tip_n": 10.3,
@@ -623,8 +623,8 @@
    ],
    "hard_stop_deg": 173.5,
    "encoder_counts_per_turret_deg": 34.1,
-   "inertia_kg_m2": 0.00478,
-   "accel_at_cap_deg_s2": 52807,
+   "inertia_kg_m2": 0.00476,
+   "accel_at_cap_deg_s2": 53038,
    "time_to_full_slew_ms": 1.7
   },
   "tilt": {
@@ -634,10 +634,10 @@
     -25.0,
     0.0
    ],
-   "group_mass_g": 761,
-   "com_ahead_mm": -7.2,
-   "holding_nm": -0.05,
-   "margin": 55.0
+   "group_mass_g": 757,
+   "com_ahead_mm": -7.6,
+   "holding_nm": -0.06,
+   "margin": 52.1
   },
   "flight_level": {
    "rows": [
@@ -684,7 +684,7 @@
   }
  },
  "masses_g": {
-  "turret_with_balls": 2573,
+  "turret_with_balls": 2561,
   "adapter": 357,
   "j501_printed": 368.2,
   "j501_inside_est": 1000.0
@@ -696,7 +696,7 @@
   "source": "J501_DIR/cad/parameters.json",
   "parameters_git": {
    "state": "committed",
-   "head": "240be82ec5420e989dbfad07d76ab62ea3e83a50",
+   "head": "fefc79dc056ad010b8fcf5fb69ed2cf4cf9361c3",
    "branch": "rev0.9-g48r",
    "tags_at_head": [],
    "file": "cad/parameters.json"
