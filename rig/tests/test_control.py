@@ -192,11 +192,18 @@ def test_tyre_press_goes_limp_if_the_carriage_is_not_held():
     assert ctl.abort and 'not held' in ctl.abort and cmds[-1][1].stop
 
 
-def test_the_motors_need_the_carried_mass():
-    """On the motors the feed-forward is the mass carried: rig.run refuses --backend can without --half-mass, before
-    opening the bus (the design mass is not the rig's ballast)."""
-    from rig.run import main
-    assert main(['--backend', 'can', '--test', 'stand_up', '--yes']) == 2
+def test_the_motors_need_the_carried_mass(monkeypatch):
+    """On the motors the feed-forward is the mass carried: rig.run refuses --backend can without --half-mass, or with a
+    mass no leg carries (a slipped decimal point, nan, inf), before opening the bus. run_can is stubbed: if a guard
+    regressed, this test must not drive a real bus."""
+    import rig.run as rr
+    reached = []
+    monkeypatch.setattr(rr, 'run_can', lambda a: reached.append(a.half_mass) or 0)
+    for extra in ([], ['--half-mass', '151'], ['--half-mass', 'nan'], ['--half-mass', 'inf'], ['--half-mass', '2']):
+        assert rr.main(['--backend', 'can', '--test', 'stand_up', '--yes'] + extra) == 2, extra
+    assert reached == []
+    assert rr.main(['--backend', 'can', '--test', 'stand_up', '--yes', '--half-mass', '15.1']) == 0
+    assert reached == [15.1]
 
 
 def test_the_load_plate_is_judged_at_the_carried_weight():

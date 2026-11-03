@@ -36,6 +36,7 @@ DESIGN_KG = 18.75                     # D71: half the 37.5 kg design mass, a leg
 RIG_TESTS = ('stand_up', 'squat', 'jump', 'drop_150', 'power_off', 'power_off_damped', 'tyre_press')
 BUMPER_CONTACT_M = 0.140              # the bottom bumpers meet the carriage at this leg length (cad/build_rig.py)
 DYNAMIC = ('jump', 'jump_peak', 'drop_150')
+HALF_MASS_CAN_KG = (5.0, 25.0)         # kg: the masses rig.run accepts on the motors (a plausible leg load, not a typo)
 DROP_RIG_S = 8.0                      # s: on the rig the operator pulls the drop pin once the leg holds 300 mm
 
 
@@ -348,6 +349,11 @@ def main(argv=None):
                   'exports/rig/rig.json, or the scale reading under the foot: docs/motor-day.md)')
             return 2
         a.half_mass = DESIGN_KG
+    if a.backend == 'can' and not (math.isfinite(a.half_mass) and HALF_MASS_CAN_KG[0] <= a.half_mass <= HALF_MASS_CAN_KG[1]):
+        # a mistyped mass (151 for 15.1, nan, inf) commands the full cap from the first tick: refuse it before the bus opens
+        print(f'refused: --half-mass {a.half_mass} kg is outside {HALF_MASS_CAN_KG[0]:g}-{HALF_MASS_CAN_KG[1]:g} kg '
+              '(the motor-day stand is about 11.9 kg, the rig 15.1 kg at its 14.75 kg ballast, the design mass 18.75 kg)')
+        return 2
     if a.reproduce:
         rep = reproduce(a.rate)
         print('T7 acceptance:', 'PASS' if rep['all_ok'] else 'FAIL')
