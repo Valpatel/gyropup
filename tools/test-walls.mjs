@@ -87,12 +87,15 @@ try {
   // The change list on / and Progress, planted with this build's history but with the newest five changes text-only
   // (a pull request that ends on receipt, fit-job or probe commits, as #181 did): the open list must still end on a
   // picture, so neither page grows a wall whatever the git history looks like.
-  if (!report && !process.env.SITE_URL) {
+  // It serves the two pages from the local dist/, so it runs against SITE_URL too, as in CI.
+  if (!report) {
     const { events } = JSON.parse(await readFile(path.join(dist, 'site/timeline.json'), 'utf8'));
     const quiet = events.map((e, i) => i < 5 ? { ...e, image: null } : e);
     const planted = await context.newPage();
     for (const [route, file, options] of [['/', 'index.html', { compact: true, show: 4 }], ['/designer/progress.html', 'designer/progress.html', { show: 5, more: quiet.length }]]) {
-      const html = (await readFile(path.join(dist, file), 'utf8')).replace(/<section id="changes"[\s\S]*?<\/section>/, renderTimeline(quiet, options));
+      const built = await readFile(path.join(dist, file), 'utf8'), changes = /<section id="changes"[\s\S]*?<\/section>/;
+      if (!changes.test(built)) { problems.push(`walls ${file}: no <section id="changes"> to plant a text-only timeline into`); continue; }
+      const html = built.replace(changes, renderTimeline(quiet, options));
       await planted.route(base + route, r => r.fulfill({ status: 200, contentType: 'text/html', body: html }));
       await planted.goto(base + route, { waitUntil: 'load' });
       await planted.waitForFunction(() => !/progress/.test(location.pathname) || document.body.dataset.ready === '1', null, { timeout: 30000 })

@@ -38,6 +38,8 @@
 .tl-more>summary{display:inline-flex;align-items:center;min-height:44px;margin-left:112px;padding:8px 14px;border:1px solid var(--gp-line-2);border-radius:999px;background:var(--gp-soft);cursor:pointer;font-weight:650;font-size:13px}
 .tl-more[open]>summary{margin-bottom:16px}
 .tl-more .tl-list::before{background:var(--gp-line)}
+/* The picture shown after a folded text-only run continues the rail; only the newest list fades from the accent. */
+.tl-more+.tl-list::before{background:var(--gp-line)}
 .tl-all{display:inline-block;margin-left:112px;font-weight:650;font-size:13px}
 .tl-empty{color:var(--tl-muted)}
 /* New items arrive: each change slides in as it comes into view (web/timeline.js); reduced motion keeps them still. */
