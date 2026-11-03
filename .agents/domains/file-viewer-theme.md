@@ -2,8 +2,8 @@
 
 The shared cad-agent viewer exposes `theme` / `setTheme` and `--file-*` tokens
 (upstream issue #73 / PR #75). Gyropup owns its palette in
-`web/file-viewer-theme.css`: the landing page's cream, deep teal, rust and local
-Inter font, and a Gyropup dark set (deep green, cream ink, the dark sky canvas).
+`web/file-viewer-theme.css`: the site's light set (warm white, navy ink, sky canvas, local Inter font)
+and its dark set (the valpatel.com void, light ink, cyan focus and accent).
 The standalone HTML follows the site's theme (`web/theme.js`: the system setting or
 the reader's stored choice) and switches with the header's theme button. It links the
 consumer stylesheet after the generic stylesheet, and returns to the build portal when
