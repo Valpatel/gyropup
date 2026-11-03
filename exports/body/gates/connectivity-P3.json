@@ -4,8 +4,8 @@
   "pass": false,
   "status": "fail",
   "counts": {
-    "pass": 112,
-    "warn": 28,
+    "pass": 120,
+    "warn": 32,
     "fail": 4
   },
   "checks": [
@@ -97,6 +97,102 @@
       "parts": [
         "bay_door_rear",
         "bay_rail_r"
+      ],
+      "evidence": {
+        "axes": []
+      }
+    },
+    {
+      "id": "fastener:bay_pad_1:bay_side_l",
+      "status": "pass",
+      "message": "fastener bay_pad_1:bay_side_l has no solid; its axis reaches bay_side_l and bay_floor over its length",
+      "parts": [
+        "bay_floor",
+        "bay_side_l"
+      ],
+      "evidence": {
+        "axes": []
+      }
+    },
+    {
+      "id": "fastener:bay_pad_1:bay_skid_1",
+      "status": "pass",
+      "message": "fastener bay_pad_1:bay_skid_1 has no solid; its axis reaches bay_skid_1 and bay_floor over its length",
+      "parts": [
+        "bay_floor",
+        "bay_skid_1"
+      ],
+      "evidence": {
+        "axes": []
+      }
+    },
+    {
+      "id": "fastener:bay_pad_2:bay_side_l",
+      "status": "pass",
+      "message": "fastener bay_pad_2:bay_side_l has no solid; its axis reaches bay_side_l and bay_floor over its length",
+      "parts": [
+        "bay_floor",
+        "bay_side_l"
+      ],
+      "evidence": {
+        "axes": []
+      }
+    },
+    {
+      "id": "fastener:bay_pad_2:bay_skid_2",
+      "status": "pass",
+      "message": "fastener bay_pad_2:bay_skid_2 has no solid; its axis reaches bay_skid_2 and bay_floor over its length",
+      "parts": [
+        "bay_floor",
+        "bay_skid_2"
+      ],
+      "evidence": {
+        "axes": []
+      }
+    },
+    {
+      "id": "fastener:bay_pad_3:bay_side_r",
+      "status": "pass",
+      "message": "fastener bay_pad_3:bay_side_r has no solid; its axis reaches bay_side_r and bay_floor over its length",
+      "parts": [
+        "bay_floor",
+        "bay_side_r"
+      ],
+      "evidence": {
+        "axes": []
+      }
+    },
+    {
+      "id": "fastener:bay_pad_3:bay_skid_3",
+      "status": "pass",
+      "message": "fastener bay_pad_3:bay_skid_3 has no solid; its axis reaches bay_skid_3 and bay_floor over its length",
+      "parts": [
+        "bay_floor",
+        "bay_skid_3"
+      ],
+      "evidence": {
+        "axes": []
+      }
+    },
+    {
+      "id": "fastener:bay_pad_4:bay_side_r",
+      "status": "pass",
+      "message": "fastener bay_pad_4:bay_side_r has no solid; its axis reaches bay_side_r and bay_floor over its length",
+      "parts": [
+        "bay_floor",
+        "bay_side_r"
+      ],
+      "evidence": {
+        "axes": []
+      }
+    },
+    {
+      "id": "fastener:bay_pad_4:bay_skid_4",
+      "status": "pass",
+      "message": "fastener bay_pad_4:bay_skid_4 has no solid; its axis reaches bay_skid_4 and bay_floor over its length",
+      "parts": [
+        "bay_floor",
+        "bay_skid_4"
       ],
       "evidence": {
         "axes": []
@@ -1585,6 +1681,68 @@
       }
     },
     {
+      "id": "contact:bay_side_l|bay_skid_1",
+      "status": "warn",
+      "message": "bay_side_l and bay_skid_1 are in contact (touching, 2.85e+03 mm2) but no interface, joint, fastener, contains or intended overlap declares it",
+      "parts": [
+        "bay_side_l",
+        "bay_skid_1"
+      ],
+      "evidence": {
+        "state": "touching",
+        "contact_area_mm2": 2848.271394,
+        "witness": {
+          "point_a": [
+            -123.3,
+            51.2004,
+            -209.6402
+          ],
+          "point_b": [
+            -123.3,
+            51.2004,
+            -209.6402
+          ],
+          "volume_integration": {
+            "method": "adaptive BRepGProp GK, requested relative errors 1e-6 and 1e-8",
+            "error_basis": "max(OCCT summed absolute face-error estimates, refinement delta); not a rigorous bound",
+            "max_estimated_error_mm3": 6.85280009103498e-08,
+            "max_refinement_delta_mm3": 0.0
+          }
+        }
+      }
+    },
+    {
+      "id": "contact:bay_side_l|bay_skid_2",
+      "status": "warn",
+      "message": "bay_side_l and bay_skid_2 are in contact (touching, 2.85e+03 mm2) but no interface, joint, fastener, contains or intended overlap declares it",
+      "parts": [
+        "bay_side_l",
+        "bay_skid_2"
+      ],
+      "evidence": {
+        "state": "touching",
+        "contact_area_mm2": 2848.271394,
+        "witness": {
+          "volume_integration": {
+            "method": "adaptive BRepGProp GK, requested relative errors 1e-6 and 1e-8",
+            "error_basis": "max(OCCT summed absolute face-error estimates, refinement delta); not a rigorous bound",
+            "max_estimated_error_mm3": 6.85588169180732e-08,
+            "max_refinement_delta_mm3": 0.0
+          },
+          "point_a": [
+            61.7,
+            51.2004,
+            -209.6402
+          ],
+          "point_b": [
+            61.7,
+            51.2004,
+            -209.6402
+          ]
+        }
+      }
+    },
+    {
       "id": "contact:bay_side_l|belly_plate",
       "status": "warn",
       "message": "bay_side_l and belly_plate are in contact (touching, 496 mm2) but no interface, joint, fastener, contains or intended overlap declares it",
@@ -1612,6 +1770,68 @@
             49.6002,
             -93.04
           ]
+        }
+      }
+    },
+    {
+      "id": "contact:bay_side_r|bay_skid_3",
+      "status": "warn",
+      "message": "bay_side_r and bay_skid_3 are in contact (touching, 2.85e+03 mm2) but no interface, joint, fastener, contains or intended overlap declares it",
+      "parts": [
+        "bay_side_r",
+        "bay_skid_3"
+      ],
+      "evidence": {
+        "state": "touching",
+        "contact_area_mm2": 2848.271394,
+        "witness": {
+          "volume_integration": {
+            "method": "adaptive BRepGProp GK, requested relative errors 1e-6 and 1e-8",
+            "error_basis": "max(OCCT summed absolute face-error estimates, refinement delta); not a rigorous bound",
+            "max_estimated_error_mm3": 6.856020851970792e-08,
+            "max_refinement_delta_mm3": 0.0
+          },
+          "point_a": [
+            -123.3,
+            -51.2004,
+            -209.6402
+          ],
+          "point_b": [
+            -123.3,
+            -51.2004,
+            -209.6402
+          ]
+        }
+      }
+    },
+    {
+      "id": "contact:bay_side_r|bay_skid_4",
+      "status": "warn",
+      "message": "bay_side_r and bay_skid_4 are in contact (touching, 2.85e+03 mm2) but no interface, joint, fastener, contains or intended overlap declares it",
+      "parts": [
+        "bay_side_r",
+        "bay_skid_4"
+      ],
+      "evidence": {
+        "state": "touching",
+        "contact_area_mm2": 2848.271394,
+        "witness": {
+          "point_a": [
+            61.7,
+            -51.2004,
+            -209.6402
+          ],
+          "point_b": [
+            61.7,
+            -51.2004,
+            -209.6402
+          ],
+          "volume_integration": {
+            "method": "adaptive BRepGProp GK, requested relative errors 1e-6 and 1e-8",
+            "error_basis": "max(OCCT summed absolute face-error estimates, refinement delta); not a rigorous bound",
+            "max_estimated_error_mm3": 6.85400187104731e-08,
+            "max_refinement_delta_mm3": 0.0
+          }
         }
       }
     },
@@ -1709,7 +1929,7 @@
           "volume_integration": {
             "method": "adaptive BRepGProp GK, requested relative errors 1e-6 and 1e-8",
             "error_basis": "max(OCCT summed absolute face-error estimates, refinement delta); not a rigorous bound",
-            "max_estimated_error_mm3": 0.0012787890369285653,
+            "max_estimated_error_mm3": 0.001265502131021289,
             "max_refinement_delta_mm3": 4.547473508864641e-13
           }
         }
@@ -1747,7 +1967,7 @@
           "volume_integration": {
             "method": "adaptive BRepGProp GK, requested relative errors 1e-6 and 1e-8",
             "error_basis": "max(OCCT summed absolute face-error estimates, refinement delta); not a rigorous bound",
-            "max_estimated_error_mm3": 0.0012787891552051842,
+            "max_estimated_error_mm3": 0.0012655024670189844,
             "max_refinement_delta_mm3": 9.094947017729282e-13
           }
         }
@@ -2233,7 +2453,7 @@
           "volume_integration": {
             "method": "adaptive BRepGProp GK, requested relative errors 1e-6 and 1e-8",
             "error_basis": "max(OCCT summed absolute face-error estimates, refinement delta); not a rigorous bound",
-            "max_estimated_error_mm3": 0.0012337253238400186,
+            "max_estimated_error_mm3": 0.0012204797617127229,
             "max_refinement_delta_mm3": 2.2737367544323206e-13
           },
           "point_a": [
@@ -2264,7 +2484,7 @@
           "volume_integration": {
             "method": "adaptive BRepGProp GK, requested relative errors 1e-6 and 1e-8",
             "error_basis": "max(OCCT summed absolute face-error estimates, refinement delta); not a rigorous bound",
-            "max_estimated_error_mm3": 0.0012337253212493368,
+            "max_estimated_error_mm3": 0.0012204796688545902,
             "max_refinement_delta_mm3": 2.2737367544323206e-13
           },
           "point_a": [
@@ -2517,6 +2737,68 @@
       }
     },
     {
+      "id": "contact:bay_side_l|bay_skid_1",
+      "status": "warn",
+      "message": "bay_side_l and bay_skid_1 are in contact (touching, 2.85e+03 mm2) but no interface, joint, fastener, contains or intended overlap declares it",
+      "parts": [
+        "bay_side_l",
+        "bay_skid_1"
+      ],
+      "evidence": {
+        "state": "touching",
+        "contact_area_mm2": 2848.271394,
+        "witness": {
+          "point_a": [
+            -123.3,
+            51.2004,
+            -209.6402
+          ],
+          "point_b": [
+            -123.3,
+            51.2004,
+            -209.6402
+          ],
+          "volume_integration": {
+            "method": "adaptive BRepGProp GK, requested relative errors 1e-6 and 1e-8",
+            "error_basis": "max(OCCT summed absolute face-error estimates, refinement delta); not a rigorous bound",
+            "max_estimated_error_mm3": 6.85280009103498e-08,
+            "max_refinement_delta_mm3": 0.0
+          }
+        }
+      }
+    },
+    {
+      "id": "contact:bay_side_l|bay_skid_2",
+      "status": "warn",
+      "message": "bay_side_l and bay_skid_2 are in contact (touching, 2.85e+03 mm2) but no interface, joint, fastener, contains or intended overlap declares it",
+      "parts": [
+        "bay_side_l",
+        "bay_skid_2"
+      ],
+      "evidence": {
+        "state": "touching",
+        "contact_area_mm2": 2848.271394,
+        "witness": {
+          "volume_integration": {
+            "method": "adaptive BRepGProp GK, requested relative errors 1e-6 and 1e-8",
+            "error_basis": "max(OCCT summed absolute face-error estimates, refinement delta); not a rigorous bound",
+            "max_estimated_error_mm3": 6.85588169180732e-08,
+            "max_refinement_delta_mm3": 0.0
+          },
+          "point_a": [
+            61.7,
+            51.2004,
+            -209.6402
+          ],
+          "point_b": [
+            61.7,
+            51.2004,
+            -209.6402
+          ]
+        }
+      }
+    },
+    {
       "id": "contact:bay_side_l|belly_plate",
       "status": "warn",
       "message": "bay_side_l and belly_plate are in contact (touching, 496 mm2) but no interface, joint, fastener, contains or intended overlap declares it",
@@ -2544,6 +2826,68 @@
             49.6002,
             -93.04
           ]
+        }
+      }
+    },
+    {
+      "id": "contact:bay_side_r|bay_skid_3",
+      "status": "warn",
+      "message": "bay_side_r and bay_skid_3 are in contact (touching, 2.85e+03 mm2) but no interface, joint, fastener, contains or intended overlap declares it",
+      "parts": [
+        "bay_side_r",
+        "bay_skid_3"
+      ],
+      "evidence": {
+        "state": "touching",
+        "contact_area_mm2": 2848.271394,
+        "witness": {
+          "volume_integration": {
+            "method": "adaptive BRepGProp GK, requested relative errors 1e-6 and 1e-8",
+            "error_basis": "max(OCCT summed absolute face-error estimates, refinement delta); not a rigorous bound",
+            "max_estimated_error_mm3": 6.856020851970792e-08,
+            "max_refinement_delta_mm3": 0.0
+          },
+          "point_a": [
+            -123.3,
+            -51.2004,
+            -209.6402
+          ],
+          "point_b": [
+            -123.3,
+            -51.2004,
+            -209.6402
+          ]
+        }
+      }
+    },
+    {
+      "id": "contact:bay_side_r|bay_skid_4",
+      "status": "warn",
+      "message": "bay_side_r and bay_skid_4 are in contact (touching, 2.85e+03 mm2) but no interface, joint, fastener, contains or intended overlap declares it",
+      "parts": [
+        "bay_side_r",
+        "bay_skid_4"
+      ],
+      "evidence": {
+        "state": "touching",
+        "contact_area_mm2": 2848.271394,
+        "witness": {
+          "point_a": [
+            61.7,
+            -51.2004,
+            -209.6402
+          ],
+          "point_b": [
+            61.7,
+            -51.2004,
+            -209.6402
+          ],
+          "volume_integration": {
+            "method": "adaptive BRepGProp GK, requested relative errors 1e-6 and 1e-8",
+            "error_basis": "max(OCCT summed absolute face-error estimates, refinement delta); not a rigorous bound",
+            "max_estimated_error_mm3": 6.85400187104731e-08,
+            "max_refinement_delta_mm3": 0.0
+          }
         }
       }
     },
@@ -2641,7 +2985,7 @@
           "volume_integration": {
             "method": "adaptive BRepGProp GK, requested relative errors 1e-6 and 1e-8",
             "error_basis": "max(OCCT summed absolute face-error estimates, refinement delta); not a rigorous bound",
-            "max_estimated_error_mm3": 0.0012787890369285653,
+            "max_estimated_error_mm3": 0.001265502131021289,
             "max_refinement_delta_mm3": 4.547473508864641e-13
           }
         }
@@ -2679,7 +3023,7 @@
           "volume_integration": {
             "method": "adaptive BRepGProp GK, requested relative errors 1e-6 and 1e-8",
             "error_basis": "max(OCCT summed absolute face-error estimates, refinement delta); not a rigorous bound",
-            "max_estimated_error_mm3": 0.0012787891552051842,
+            "max_estimated_error_mm3": 0.0012655024670189844,
             "max_refinement_delta_mm3": 9.094947017729282e-13
           }
         }
@@ -3165,7 +3509,7 @@
           "volume_integration": {
             "method": "adaptive BRepGProp GK, requested relative errors 1e-6 and 1e-8",
             "error_basis": "max(OCCT summed absolute face-error estimates, refinement delta); not a rigorous bound",
-            "max_estimated_error_mm3": 0.0012337253238400186,
+            "max_estimated_error_mm3": 0.0012204797617127229,
             "max_refinement_delta_mm3": 2.2737367544323206e-13
           },
           "point_a": [
@@ -3196,7 +3540,7 @@
           "volume_integration": {
             "method": "adaptive BRepGProp GK, requested relative errors 1e-6 and 1e-8",
             "error_basis": "max(OCCT summed absolute face-error estimates, refinement delta); not a rigorous bound",
-            "max_estimated_error_mm3": 0.0012337253212493368,
+            "max_estimated_error_mm3": 0.0012204796688545902,
             "max_refinement_delta_mm3": 2.2737367544323206e-13
           },
           "point_a": [
@@ -4883,6 +5227,8 @@
         },
         "rigid": true,
         "declared_by": [
+          "fastener:bay_pad_1:bay_side_l",
+          "fastener:bay_pad_2:bay_side_l",
           "fastener:bay_side_l_low:bay_side_l"
         ]
       },
@@ -4913,6 +5259,8 @@
         },
         "rigid": true,
         "declared_by": [
+          "fastener:bay_pad_3:bay_side_r",
+          "fastener:bay_pad_4:bay_side_r",
           "fastener:bay_side_r_low:bay_side_r"
         ]
       },
@@ -4943,6 +5291,7 @@
         },
         "rigid": true,
         "declared_by": [
+          "fastener:bay_pad_1:bay_skid_1",
           "fastener:hold:bay_skid_1|bay_floor"
         ]
       },
@@ -4954,6 +5303,12 @@
         "gap_mm": 0.0,
         "contact_area_mm2": 3354.1092,
         "witness": {
+          "volume_integration": {
+            "method": "adaptive BRepGProp GK, requested relative errors 1e-6 and 1e-8",
+            "error_basis": "max(OCCT summed absolute face-error estimates, refinement delta); not a rigorous bound",
+            "max_estimated_error_mm3": 6.665482429069612e-06,
+            "max_refinement_delta_mm3": 0.0
+          },
           "point_a": [
             1.0,
             24.5502,
@@ -4963,16 +5318,11 @@
             1.0,
             24.5502,
             -221.6402
-          ],
-          "volume_integration": {
-            "method": "adaptive BRepGProp GK, requested relative errors 1e-6 and 1e-8",
-            "error_basis": "max(OCCT summed absolute face-error estimates, refinement delta); not a rigorous bound",
-            "max_estimated_error_mm3": 6.665482429069612e-06,
-            "max_refinement_delta_mm3": 0.0
-          }
+          ]
         },
         "rigid": true,
         "declared_by": [
+          "fastener:bay_pad_2:bay_skid_2",
           "fastener:hold:bay_skid_2|bay_floor"
         ]
       },
@@ -4984,6 +5334,12 @@
         "gap_mm": 0.0,
         "contact_area_mm2": 3354.1092,
         "witness": {
+          "volume_integration": {
+            "method": "adaptive BRepGProp GK, requested relative errors 1e-6 and 1e-8",
+            "error_basis": "max(OCCT summed absolute face-error estimates, refinement delta); not a rigorous bound",
+            "max_estimated_error_mm3": 6.665482429069612e-06,
+            "max_refinement_delta_mm3": 0.0
+          },
           "point_a": [
             -150.0,
             -24.5502,
@@ -4993,16 +5349,11 @@
             -150.0,
             -24.5502,
             -221.6402
-          ],
-          "volume_integration": {
-            "method": "adaptive BRepGProp GK, requested relative errors 1e-6 and 1e-8",
-            "error_basis": "max(OCCT summed absolute face-error estimates, refinement delta); not a rigorous bound",
-            "max_estimated_error_mm3": 6.665482429069612e-06,
-            "max_refinement_delta_mm3": 0.0
-          }
+          ]
         },
         "rigid": true,
         "declared_by": [
+          "fastener:bay_pad_3:bay_skid_3",
           "fastener:hold:bay_skid_3|bay_floor"
         ]
       },
@@ -5033,6 +5384,7 @@
         },
         "rigid": true,
         "declared_by": [
+          "fastener:bay_pad_4:bay_skid_4",
           "fastener:hold:bay_skid_4|bay_floor"
         ]
       },
@@ -5158,6 +5510,64 @@
       },
       {
         "a": "bay_side_l",
+        "b": "bay_skid_1",
+        "kind": "contact",
+        "state": "touching",
+        "gap_mm": 0.0,
+        "contact_area_mm2": 2848.271394,
+        "witness": {
+          "point_a": [
+            -123.3,
+            51.2004,
+            -209.6402
+          ],
+          "point_b": [
+            -123.3,
+            51.2004,
+            -209.6402
+          ],
+          "volume_integration": {
+            "method": "adaptive BRepGProp GK, requested relative errors 1e-6 and 1e-8",
+            "error_basis": "max(OCCT summed absolute face-error estimates, refinement delta); not a rigorous bound",
+            "max_estimated_error_mm3": 6.85280009103498e-08,
+            "max_refinement_delta_mm3": 0.0
+          }
+        },
+        "rigid": true,
+        "declared_by": [],
+        "undeclared": true
+      },
+      {
+        "a": "bay_side_l",
+        "b": "bay_skid_2",
+        "kind": "contact",
+        "state": "touching",
+        "gap_mm": 0.0,
+        "contact_area_mm2": 2848.271394,
+        "witness": {
+          "volume_integration": {
+            "method": "adaptive BRepGProp GK, requested relative errors 1e-6 and 1e-8",
+            "error_basis": "max(OCCT summed absolute face-error estimates, refinement delta); not a rigorous bound",
+            "max_estimated_error_mm3": 6.85588169180732e-08,
+            "max_refinement_delta_mm3": 0.0
+          },
+          "point_a": [
+            61.7,
+            51.2004,
+            -209.6402
+          ],
+          "point_b": [
+            61.7,
+            51.2004,
+            -209.6402
+          ]
+        },
+        "rigid": true,
+        "declared_by": [],
+        "undeclared": true
+      },
+      {
+        "a": "bay_side_l",
         "b": "belly_plate",
         "kind": "contact",
         "state": "touching",
@@ -5180,6 +5590,64 @@
             49.6002,
             -93.04
           ]
+        },
+        "rigid": true,
+        "declared_by": [],
+        "undeclared": true
+      },
+      {
+        "a": "bay_side_r",
+        "b": "bay_skid_3",
+        "kind": "contact",
+        "state": "touching",
+        "gap_mm": 0.0,
+        "contact_area_mm2": 2848.271394,
+        "witness": {
+          "volume_integration": {
+            "method": "adaptive BRepGProp GK, requested relative errors 1e-6 and 1e-8",
+            "error_basis": "max(OCCT summed absolute face-error estimates, refinement delta); not a rigorous bound",
+            "max_estimated_error_mm3": 6.856020851970792e-08,
+            "max_refinement_delta_mm3": 0.0
+          },
+          "point_a": [
+            -123.3,
+            -51.2004,
+            -209.6402
+          ],
+          "point_b": [
+            -123.3,
+            -51.2004,
+            -209.6402
+          ]
+        },
+        "rigid": true,
+        "declared_by": [],
+        "undeclared": true
+      },
+      {
+        "a": "bay_side_r",
+        "b": "bay_skid_4",
+        "kind": "contact",
+        "state": "touching",
+        "gap_mm": 0.0,
+        "contact_area_mm2": 2848.271394,
+        "witness": {
+          "point_a": [
+            61.7,
+            -51.2004,
+            -209.6402
+          ],
+          "point_b": [
+            61.7,
+            -51.2004,
+            -209.6402
+          ],
+          "volume_integration": {
+            "method": "adaptive BRepGProp GK, requested relative errors 1e-6 and 1e-8",
+            "error_basis": "max(OCCT summed absolute face-error estimates, refinement delta); not a rigorous bound",
+            "max_estimated_error_mm3": 6.85400187104731e-08,
+            "max_refinement_delta_mm3": 0.0
+          }
         },
         "rigid": true,
         "declared_by": [],
@@ -5513,7 +5981,7 @@
           "volume_integration": {
             "method": "adaptive BRepGProp GK, requested relative errors 1e-6 and 1e-8",
             "error_basis": "max(OCCT summed absolute face-error estimates, refinement delta); not a rigorous bound",
-            "max_estimated_error_mm3": 0.0013161825095448806,
+            "max_estimated_error_mm3": 0.0013025927267480012,
             "max_refinement_delta_mm3": 2.9103830456733704e-11
           }
         },
@@ -5580,7 +6048,7 @@
           "volume_integration": {
             "method": "adaptive BRepGProp GK, requested relative errors 1e-6 and 1e-8",
             "error_basis": "max(OCCT summed absolute face-error estimates, refinement delta); not a rigorous bound",
-            "max_estimated_error_mm3": 0.0012787890369285653,
+            "max_estimated_error_mm3": 0.001265502131021289,
             "max_refinement_delta_mm3": 4.547473508864641e-13
           }
         },
@@ -5648,7 +6116,7 @@
           "volume_integration": {
             "method": "adaptive BRepGProp GK, requested relative errors 1e-6 and 1e-8",
             "error_basis": "max(OCCT summed absolute face-error estimates, refinement delta); not a rigorous bound",
-            "max_estimated_error_mm3": 0.0012787891552051842,
+            "max_estimated_error_mm3": 0.0012655024670189844,
             "max_refinement_delta_mm3": 9.094947017729282e-13
           }
         },
@@ -5743,7 +6211,7 @@
           "volume_integration": {
             "method": "adaptive BRepGProp GK, requested relative errors 1e-6 and 1e-8",
             "error_basis": "max(OCCT summed absolute face-error estimates, refinement delta); not a rigorous bound",
-            "max_estimated_error_mm3": 0.001316182992516404,
+            "max_estimated_error_mm3": 0.0013025927698913503,
             "max_refinement_delta_mm3": 2.9103830456733704e-11
           }
         },
@@ -7669,7 +8137,7 @@
           "volume_integration": {
             "method": "adaptive BRepGProp GK, requested relative errors 1e-6 and 1e-8",
             "error_basis": "max(OCCT summed absolute face-error estimates, refinement delta); not a rigorous bound",
-            "max_estimated_error_mm3": 0.0012337253238400186,
+            "max_estimated_error_mm3": 0.0012204797617127229,
             "max_refinement_delta_mm3": 2.2737367544323206e-13
           },
           "point_a": [
@@ -7698,7 +8166,7 @@
           "volume_integration": {
             "method": "adaptive BRepGProp GK, requested relative errors 1e-6 and 1e-8",
             "error_basis": "max(OCCT summed absolute face-error estimates, refinement delta); not a rigorous bound",
-            "max_estimated_error_mm3": 0.0012337253212493368,
+            "max_estimated_error_mm3": 0.0012204796688545902,
             "max_refinement_delta_mm3": 2.2737367544323206e-13
           },
           "point_a": [
@@ -8085,6 +8553,106 @@
         ]
       },
       {
+        "a": "bay_side_l",
+        "b": "bay_floor",
+        "kind": "fastener",
+        "fastener": "bay_pad_1:bay_side_l",
+        "measured": "axis reaches both",
+        "rigid": true,
+        "declared_by": [
+          "fastener:bay_pad_1:bay_side_l",
+          "fastener:bay_pad_2:bay_side_l",
+          "fastener:bay_side_l_low:bay_side_l"
+        ]
+      },
+      {
+        "a": "bay_skid_1",
+        "b": "bay_floor",
+        "kind": "fastener",
+        "fastener": "bay_pad_1:bay_skid_1",
+        "measured": "axis reaches both",
+        "rigid": true,
+        "declared_by": [
+          "fastener:bay_pad_1:bay_skid_1",
+          "fastener:hold:bay_skid_1|bay_floor"
+        ]
+      },
+      {
+        "a": "bay_side_l",
+        "b": "bay_floor",
+        "kind": "fastener",
+        "fastener": "bay_pad_2:bay_side_l",
+        "measured": "axis reaches both",
+        "rigid": true,
+        "declared_by": [
+          "fastener:bay_pad_1:bay_side_l",
+          "fastener:bay_pad_2:bay_side_l",
+          "fastener:bay_side_l_low:bay_side_l"
+        ]
+      },
+      {
+        "a": "bay_skid_2",
+        "b": "bay_floor",
+        "kind": "fastener",
+        "fastener": "bay_pad_2:bay_skid_2",
+        "measured": "axis reaches both",
+        "rigid": true,
+        "declared_by": [
+          "fastener:bay_pad_2:bay_skid_2",
+          "fastener:hold:bay_skid_2|bay_floor"
+        ]
+      },
+      {
+        "a": "bay_side_r",
+        "b": "bay_floor",
+        "kind": "fastener",
+        "fastener": "bay_pad_3:bay_side_r",
+        "measured": "axis reaches both",
+        "rigid": true,
+        "declared_by": [
+          "fastener:bay_pad_3:bay_side_r",
+          "fastener:bay_pad_4:bay_side_r",
+          "fastener:bay_side_r_low:bay_side_r"
+        ]
+      },
+      {
+        "a": "bay_skid_3",
+        "b": "bay_floor",
+        "kind": "fastener",
+        "fastener": "bay_pad_3:bay_skid_3",
+        "measured": "axis reaches both",
+        "rigid": true,
+        "declared_by": [
+          "fastener:bay_pad_3:bay_skid_3",
+          "fastener:hold:bay_skid_3|bay_floor"
+        ]
+      },
+      {
+        "a": "bay_side_r",
+        "b": "bay_floor",
+        "kind": "fastener",
+        "fastener": "bay_pad_4:bay_side_r",
+        "measured": "axis reaches both",
+        "rigid": true,
+        "declared_by": [
+          "fastener:bay_pad_3:bay_side_r",
+          "fastener:bay_pad_4:bay_side_r",
+          "fastener:bay_side_r_low:bay_side_r"
+        ]
+      },
+      {
+        "a": "bay_skid_4",
+        "b": "bay_floor",
+        "kind": "fastener",
+        "fastener": "bay_pad_4:bay_skid_4",
+        "measured": "axis reaches both",
+        "rigid": true,
+        "declared_by": [
+          "fastener:bay_pad_4:bay_skid_4",
+          "fastener:hold:bay_skid_4|bay_floor"
+        ]
+      },
+      {
         "a": "bay_rail_l",
         "b": "belly_plate",
         "kind": "fastener",
@@ -8125,6 +8693,8 @@
         "measured": "axis reaches both",
         "rigid": true,
         "declared_by": [
+          "fastener:bay_pad_1:bay_side_l",
+          "fastener:bay_pad_2:bay_side_l",
           "fastener:bay_side_l_low:bay_side_l"
         ]
       },
@@ -8147,6 +8717,8 @@
         "measured": "axis reaches both",
         "rigid": true,
         "declared_by": [
+          "fastener:bay_pad_3:bay_side_r",
+          "fastener:bay_pad_4:bay_side_r",
           "fastener:bay_side_r_low:bay_side_r"
         ]
       },
@@ -8345,6 +8917,7 @@
         "measured": "axis reaches both",
         "rigid": true,
         "declared_by": [
+          "fastener:bay_pad_1:bay_skid_1",
           "fastener:hold:bay_skid_1|bay_floor"
         ]
       },
@@ -8356,6 +8929,7 @@
         "measured": "axis reaches both",
         "rigid": true,
         "declared_by": [
+          "fastener:bay_pad_2:bay_skid_2",
           "fastener:hold:bay_skid_2|bay_floor"
         ]
       },
@@ -8367,6 +8941,7 @@
         "measured": "axis reaches both",
         "rigid": true,
         "declared_by": [
+          "fastener:bay_pad_3:bay_skid_3",
           "fastener:hold:bay_skid_3|bay_floor"
         ]
       },
@@ -8378,6 +8953,7 @@
         "measured": "axis reaches both",
         "rigid": true,
         "declared_by": [
+          "fastener:bay_pad_4:bay_skid_4",
           "fastener:hold:bay_skid_4|bay_floor"
         ]
       },
@@ -9557,6 +10133,60 @@
     {
       "parts": [
         "bay_side_l",
+        "bay_skid_1"
+      ],
+      "state": "touching",
+      "contact_area_mm2": 2848.271394,
+      "overlap_mm3": null,
+      "witness": {
+        "point_a": [
+          -123.3,
+          51.2004,
+          -209.6402
+        ],
+        "point_b": [
+          -123.3,
+          51.2004,
+          -209.6402
+        ],
+        "volume_integration": {
+          "method": "adaptive BRepGProp GK, requested relative errors 1e-6 and 1e-8",
+          "error_basis": "max(OCCT summed absolute face-error estimates, refinement delta); not a rigorous bound",
+          "max_estimated_error_mm3": 6.85280009103498e-08,
+          "max_refinement_delta_mm3": 0.0
+        }
+      }
+    },
+    {
+      "parts": [
+        "bay_side_l",
+        "bay_skid_2"
+      ],
+      "state": "touching",
+      "contact_area_mm2": 2848.271394,
+      "overlap_mm3": null,
+      "witness": {
+        "volume_integration": {
+          "method": "adaptive BRepGProp GK, requested relative errors 1e-6 and 1e-8",
+          "error_basis": "max(OCCT summed absolute face-error estimates, refinement delta); not a rigorous bound",
+          "max_estimated_error_mm3": 6.85588169180732e-08,
+          "max_refinement_delta_mm3": 0.0
+        },
+        "point_a": [
+          61.7,
+          51.2004,
+          -209.6402
+        ],
+        "point_b": [
+          61.7,
+          51.2004,
+          -209.6402
+        ]
+      }
+    },
+    {
+      "parts": [
+        "bay_side_l",
         "belly_plate"
       ],
       "state": "touching",
@@ -9579,6 +10209,60 @@
           49.6002,
           -93.04
         ]
+      }
+    },
+    {
+      "parts": [
+        "bay_side_r",
+        "bay_skid_3"
+      ],
+      "state": "touching",
+      "contact_area_mm2": 2848.271394,
+      "overlap_mm3": null,
+      "witness": {
+        "volume_integration": {
+          "method": "adaptive BRepGProp GK, requested relative errors 1e-6 and 1e-8",
+          "error_basis": "max(OCCT summed absolute face-error estimates, refinement delta); not a rigorous bound",
+          "max_estimated_error_mm3": 6.856020851970792e-08,
+          "max_refinement_delta_mm3": 0.0
+        },
+        "point_a": [
+          -123.3,
+          -51.2004,
+          -209.6402
+        ],
+        "point_b": [
+          -123.3,
+          -51.2004,
+          -209.6402
+        ]
+      }
+    },
+    {
+      "parts": [
+        "bay_side_r",
+        "bay_skid_4"
+      ],
+      "state": "touching",
+      "contact_area_mm2": 2848.271394,
+      "overlap_mm3": null,
+      "witness": {
+        "point_a": [
+          61.7,
+          -51.2004,
+          -209.6402
+        ],
+        "point_b": [
+          61.7,
+          -51.2004,
+          -209.6402
+        ],
+        "volume_integration": {
+          "method": "adaptive BRepGProp GK, requested relative errors 1e-6 and 1e-8",
+          "error_basis": "max(OCCT summed absolute face-error estimates, refinement delta); not a rigorous bound",
+          "max_estimated_error_mm3": 6.85400187104731e-08,
+          "max_refinement_delta_mm3": 0.0
+        }
       }
     },
     {
@@ -9664,7 +10348,7 @@
         "volume_integration": {
           "method": "adaptive BRepGProp GK, requested relative errors 1e-6 and 1e-8",
           "error_basis": "max(OCCT summed absolute face-error estimates, refinement delta); not a rigorous bound",
-          "max_estimated_error_mm3": 0.0012787890369285653,
+          "max_estimated_error_mm3": 0.001265502131021289,
           "max_refinement_delta_mm3": 4.547473508864641e-13
         }
       }
@@ -9698,7 +10382,7 @@
         "volume_integration": {
           "method": "adaptive BRepGProp GK, requested relative errors 1e-6 and 1e-8",
           "error_basis": "max(OCCT summed absolute face-error estimates, refinement delta); not a rigorous bound",
-          "max_estimated_error_mm3": 0.0012787891552051842,
+          "max_estimated_error_mm3": 0.0012655024670189844,
           "max_refinement_delta_mm3": 9.094947017729282e-13
         }
       }
@@ -10120,7 +10804,7 @@
         "volume_integration": {
           "method": "adaptive BRepGProp GK, requested relative errors 1e-6 and 1e-8",
           "error_basis": "max(OCCT summed absolute face-error estimates, refinement delta); not a rigorous bound",
-          "max_estimated_error_mm3": 0.0012337253238400186,
+          "max_estimated_error_mm3": 0.0012204797617127229,
           "max_refinement_delta_mm3": 2.2737367544323206e-13
         },
         "point_a": [
@@ -10147,7 +10831,7 @@
         "volume_integration": {
           "method": "adaptive BRepGProp GK, requested relative errors 1e-6 and 1e-8",
           "error_basis": "max(OCCT summed absolute face-error estimates, refinement delta); not a rigorous bound",
-          "max_estimated_error_mm3": 0.0012337253212493368,
+          "max_estimated_error_mm3": 0.0012204796688545902,
           "max_refinement_delta_mm3": 2.2737367544323206e-13
         },
         "point_a": [
@@ -10205,6 +10889,6 @@
   "relation_stats": {
     "parts": 93,
     "pairs": 4278,
-    "candidates": 206
+    "candidates": 214
   }
 }
