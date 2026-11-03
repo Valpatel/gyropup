@@ -900,16 +900,7 @@ CABLE_OUT_R = 90.0                                        # where the cable leav
 
 
 def cable(phi1: float, phi2: float):
-    """The wheel's cable at a pose: a Ø CABLE_D tube swept along cable_points() (cad/cables.py checks the route's length
-    and bends over the leg's range)."""
-    pts = cable_points(phi1, phi2)
-    path = cq.Workplane('XY').spline([(p.x, p.y, p.z) for p in pts], includeCurrent=False)
-    prof = cq.Workplane(cq.Plane(origin=pts[0], xDir=cq.Vector(1, 0, 0), normal=(pts[1] - pts[0]).normalized())).circle(CABLE_D / 2)
-    return prof.sweep(path, transition='round')
-
-
-def cable_points(phi1: float, phi2: float):
-    """The wheel's cable's waypoints at a pose (the spline cable() sweeps), clipped along the outside of the loop: out of the hub's inner end
+    """The wheel's cable at a pose, as a swept tube clipped along the outside of the loop: out of the hub's inner end
     at the axle, out under the apex eye, along the wheel link's outer edge, round the outside of the rear knee (on the
     bisector of the knee's outside angle, clear of both eyes at any knee angle), along the rear upper link's outer edge,
     and into the body 90 mm from the hip axis (past the stop posts and the frame's edge). The wrap at the knee and the
@@ -957,7 +948,9 @@ def cable_points(phi1: float, phi2: float):
            on(D, d_u, l1 - CABLE_OUT_R - 10.0, n_u, upper_half_width(CABLE_OUT_R + 10.0) + r, P['upper_t'] / 2),
            on(D, d_u, l1 - CABLE_OUT_R - 5.0, n_u, upper_half_width(CABLE_OUT_R + 5.0) + r, -20.0),
            on(D, d_u, l1 - CABLE_OUT_R, n_u, upper_half_width(CABLE_OUT_R) + r, -60.0)]
-    return pts
+    path = cq.Workplane('XY').spline([(p.x, p.y, p.z) for p in pts], includeCurrent=False)
+    prof = cq.Workplane(cq.Plane(origin=pts[0], xDir=cq.Vector(1, 0, 0), normal=(pts[1] - pts[0]).normalized())).circle(CABLE_D / 2)
+    return prof.sweep(path, transition='round')
 
 
 def cable_check(heights=(105, 130, 170, 220, 270, 320, 370, 390), min_mm3=5.0):

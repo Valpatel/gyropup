@@ -2,13 +2,14 @@
 frame, shell and layout items), both five-bar legs at the 300 mm stance (cad/body_frame.legs, the RS-04s as envelopes)
 and the turret (cad/turret.py) on its riser, placed as sim/robot_v2.py places it.
 
-    .venv/bin/python cad/robot_view.py          # exports/robot/*.step + robot.json, cad/assembly.png, cad/exploded.png
-    .venv/bin/python cad/robot_view.py --no-render
+    .venv/bin/python tools/robot_view.py          # exports/robot/*.step + robot.json, cad/assembly.png, cad/exploded.png
+    .venv/bin/python tools/robot_view.py --no-render
 
 `cad-agent view` reads exports/robot/*.step (cad-agent.yaml, cad.view), and so does the cad-agent site's Gyropup model.
 Parts are merged into about forty groups (a STEP each) so the web model stays light: fasteners, bearings and pins go in
 one hardware group per leg. Bought parts are envelopes (the vendors' STEP files are not redistributed). This replaces
-the serial-leg assembly that cad/build.py exported as exports/asm_*.step (rev 0.1, historical).
+the serial-leg assembly that cad/build.py exported as exports/asm_*.step (rev 0.1, historical). It lives in tools/, not
+cad/: it draws nothing new, and receipts pin cad/'s sources (tools/test-rs04-lug-stacks.py and the carrier checks).
 """
 from __future__ import annotations
 
@@ -82,7 +83,7 @@ def _group(name, groups):
     for g, colour, prefixes in groups:
         if name.startswith(prefixes):
             return g, colour
-    raise KeyError(f'{name}: no group takes it (add it to robot_view.py)')
+    raise KeyError(f'{name}: no group takes it (add it to tools/robot_view.py)')
 
 
 def _turret_group(name):
@@ -153,7 +154,7 @@ def export(rows):
     record = {'what': 'Gyropup as drawn today: the P3 body, both five-bar legs at the 300 mm stance, the turret at pan 0, '
                       'tilt 0. Bought parts are envelopes.',
               'frame': 'robot: x forward, y left, z up (mm), origin on the hip axis between the legs',
-              'stance_mm': STANCE_MM, 'regenerate': '.venv/bin/python cad/robot_view.py',
+              'stance_mm': STANCE_MM, 'regenerate': '.venv/bin/python tools/robot_view.py',
               'groups': {g: {'color': d['color'], 'members': d['members']} for g, d in sorted(groups.items())}}
     (OUT / 'robot.json').write_text(json.dumps(record, indent=1) + '\n')
     return groups

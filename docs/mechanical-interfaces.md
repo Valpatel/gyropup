@@ -79,12 +79,20 @@ From `cad/studies.py` (FEA, quadratic tetrahedra, about 3 mm mesh) under the sim
   - A printed yoke bent 10 mm (safety factor 0.26).
   - The first motor plate's thin tab neck failed (safety factor 0.84).
 
-Cables (`cad/cables.py`, `exports/cables.json`, `exports/cables.png`):
+Cables, rev 0.2 (the serial leg's `cad/cables.py`, since replaced; see the note after this list):
 - The wheel harness runs inside the thigh and shin boxes with service loops at the knee and the hip.
 - **Loop slack:** 16.3 mm at the knee and 36.7 mm at the hip.
 - **Loop radius:** 46.6 mm, against the 20 mm minimum for loose 18 AWG conductors.
 - **Clearance:** at least 6.0 mm from every moving part over the whole range.
 - **Extension:** the route is 616 mm long, so the BotWheel's 300 mm lead needs about a 470 mm extension.
+
+> **Five-bar leg (leg v2), 2026-11-02.** `tools/leg_cables.py` checks the wheel harness along the five-bar's drawn route
+> (the spline `fivebar.cable` sweeps: along the wheel link, round the rear knee, along the rear upper link into the body) and writes
+> `exports/leg/cables.json` and `exports/leg/cables.png`. The serial leg's `cad/cables.py` and its pictures are history
+> (its `exports/cables.*` were removed with this change; git keeps them). The route is 555 to 613 mm long over the stances (59 mm of slack for the
+> knee wrap and the hip loop). Its tightest bend is 7.5 mm, where it turns off the rear upper link into the body, against
+> the 20 mm rule 3 asks for. The swept Ø9 cable also runs 107 to 124 mm³ into the rear upper link at every stance
+> (`--clash`). Both are open on the drawn route, which is still a route to try on the rig.
 
 **Open: weight.** The made parts (chassis and both legs) come to about 6.9 kg, which puts the robot at about 22 kg in the physics model. The next pass:
 - The yoke (950 g each) as a pocketed or welded frame.

@@ -6,7 +6,7 @@ cad:
   title: Gyropup
   printer: {name: Bambu Lab P1S, bed_mm: [256, 256, 256]}
   view:
-    # the whole robot as drawn today (P3 body, five-bar legs, turret): cad/robot_view.py writes exports/robot/*.step
+    # the whole robot as drawn today (P3 body, five-bar legs, turret): tools/robot_view.py writes exports/robot/*.step
     parts: false
     extra: [{glob: "exports/robot/*.step"}]
     colors: {battery: "#fdb913", bay_doors: "#d98c26", brackets: "#454a52", bus_bars: "#c8743a", cameras: "#2a2d33",
