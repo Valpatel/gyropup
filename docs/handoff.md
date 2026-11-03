@@ -6,8 +6,9 @@ before resuming; this file intentionally does not duplicate changing branch or p
 
 - [Documentation map](README.md): human entry points and grouped engineering notes.
 - [Contributor orientation](../CONTRIBUTING.md): repository workflow and the role of `AGENTS.md` and `.agents/`.
-- [Mechanical integration #61](https://github.com/Valpatel/gyropup/issues/61) and
-  [carrier packaging #96](https://github.com/Valpatel/gyropup/issues/96): remaining physical qualification work.
+- [Program #31](https://github.com/Valpatel/gyropup/issues/31): the program tracker, the owner's actions and decisions,
+  and the ordered work list. [Turret print readiness #61](https://github.com/Valpatel/gyropup/issues/61) and
+  [the turret carrier #66](https://github.com/Valpatel/gyropup/issues/66) hold the remaining turret qualification work.
 - [Website development](site-deployment.md): build, production revision verification and preview ownership.
 - [Historical draft inventory](archive/2026-10-31-unmerged-drafts.md): exact body, rig and CAN source references,
   evidence limits and unresolved acceptance ownership. Resume relevant work from current `dev`.

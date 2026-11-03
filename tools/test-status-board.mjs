@@ -134,6 +134,12 @@ test('mass against D71: the P3 ledger, each leg and the body and head', () => {
   const one = collectStatus({ ...real, json: p => { const v = real.json(p); return p === 'exports/body/mass.json' ? { ...v, P3: { ...v.P3, rows: v.P3.rows.map((row, i) => i ? row : { ...row, basis: 'weighed, kitchen scale' }) } } : v; } });
   assert.equal(one.summary.mass.weighed, weighed + 1);
   assert.match(renderBoard(one), new RegExp(`${weighed + 1} of ${p3.rows.length} rows weighed`));
+  // The Under/Over wording is the ledger's, not this repo's current state: a ledger at, under and over the gate.
+  const at = total => collectStatus({ ...real, json: p => { const v = real.json(p); return p === 'exports/body/mass.json' ? { ...v, P3: { ...v.P3, total_kg: total } } : v; } });
+  const verdict = total => text(parseHTML(`<div>${renderBoard(at(total))}</div>`).document.querySelector('.sb-mass')).match(/(Under|Over) D71’s 37\.0 kg as-built gate/)?.[1];
+  assert.equal(verdict(p3.budget.robot_kg), 'Under', 'at the gate is under it');
+  assert.equal(verdict(p3.budget.robot_kg - 0.5), 'Under');
+  assert.equal(verdict(p3.budget.robot_kg + 0.01), 'Over');
   // the board's kilograms: two decimals, trailing zeros dropped, always one (37.0, 36.77, 11.28 for the ledger's 11.275)
   const kg = v => { const t = Number(v).toFixed(2).replace(/\.?0+$/, ''); return t.includes('.') ? t : `${t}.0`; };
   assert.equal(meter(progress, 'leg', 'mass').value, `${kg(p3.gate.leg_each_kg)} kg`);
