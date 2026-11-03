@@ -183,25 +183,25 @@
     },
     "turret/pan_clamp": {
       "geometry": "exports/turret/component-preview/pan_clamp.step",
-      "geometry_sha256": "63dbd61b68ad90cb7cd2578a17fdf76b74e105977b9c842c08f22c44e004a908",
+      "geometry_sha256": "bcc52548efbc5d73303f175d4f3261b50f51599c0cb292845db44d398cc535ef",
       "image": "exports/thumbs/turret--pan_clamp.png",
       "image_sha256": "40a5ddfbae8a29cccf85a8baa2a50818cafe3ed45cce7c28c44306013de0ac2f"
     },
     "turret/cradle_plate_l": {
       "geometry": "exports/turret/component-preview/cradle_plate_l.step",
-      "geometry_sha256": "21cfd437b2482e3e6c78a0c158bf688ca4c0196693fcb03c46c55e039d0af843",
+      "geometry_sha256": "44bb3a784a51fb8c4225bf9676d4fa9ca760806f5bc554c680231b67221e4c8a",
       "image": "exports/thumbs/turret--cradle_plate_l.png",
       "image_sha256": "e6d0094a74fcd18e35c245bc22139df896501c7b2626594c9ebc3456ba3a55e5"
     },
     "turret/cradle_plate_r": {
       "geometry": "exports/turret/component-preview/cradle_plate_r.step",
-      "geometry_sha256": "934fa0b16b2e73c15feebdf900cc0484343e57fb1e625c9460ac976fa3430ec5",
+      "geometry_sha256": "27d0e4d381c652922f9d6b6261b57e80b834659ecd63b0c5cd812ac51ad56934",
       "image": "exports/thumbs/turret--cradle_plate_r.png",
       "image_sha256": "b6c8754e9231b5ff34cc8885f016612cea491b37902a8d0baa85675b2984a330"
     },
     "turret/stop_lug": {
       "geometry": "exports/turret/component-preview/stop_lug.step",
-      "geometry_sha256": "70508bb5ee089c163c750c5b6e19e24b1893317662af9f293739784b93a09f85",
+      "geometry_sha256": "466fac5b8eb10b909411cd5f7a129499deaf572527a4dbc6c91d077ddf38abb7",
       "image": "exports/thumbs/turret--stop_lug.png",
       "image_sha256": "597deb86a1f5ceeb5944441c9c3410e01372aa54219bcf85eca99ad4f09dd23b"
     }
