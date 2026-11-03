@@ -1,9 +1,9 @@
 {
  "issue": 131,
  "generator": "research/snap-fits/snaps.py",
- "generator_sha256": "84f4c0214722465a862705e5bea2bde1fbc40bfe5690e4b7b2fbd34e278f12ae",
+ "generator_sha256": "3f2b9c5197661b7ac3ba1a2d252285d7d498fe596cbd4afd8c4bfcd1481ab2af",
  "constants": "cad/turret_snaps.py",
- "constants_sha256": "258ab007c305a2c9f961cabfa44d5245cbe4aeb0e0a98988090533bf37487c72",
+ "constants_sha256": "c6ab02cb5e0c34e89defc49f66297823442fe781307126b49c5f4f065045eccd",
  "spec": {
   "file": "research/snap-fits/snaps.yaml",
   "sha256": "d5f804dcb107832228c8da4460e0f2b19aed6dd2b64834f6d77ddb8b3d50ee39"
@@ -92,7 +92,7 @@
      ],
      180
     ],
-    "how": "upside down: the tongues lie in the bed plane; it stands on the flap's hinge lugs and the three latches, all 7 mm proud of the disc, so only the disc prints on supports (cad/turret_print.py) and none touches a latch; the barbs' return faces overhang 30 deg from the vertical"
+    "how": "upside down: the tongues lie in the bed plane; it stands on the flap's hinge lugs, 7 mm proud of the disc; the disc and the latches' tops (2.5 mm below the lugs) print on supports (cad/turret_print.py), which touch only those top faces, the tongues' edges across their width; the barbs' return faces overhang 30 deg from the vertical"
    },
    "catch_print": {
     "rotation": null,
@@ -105,8 +105,8 @@
     "thickness_mm": 2.0,
     "width_mm": 24.0,
     "tongue_s_mm": [
-     -9.0,
-     15.0
+     -6.5,
+     17.5
     ],
     "undercut_mm": 1.0,
     "root_radius_mm": 1.2,
@@ -142,9 +142,9 @@
      "required_n": 12.969987095990417,
      "source": "cad/turret_studies.py R-fall (FALL_G 30, the TM design load of docs/cad-plan.md section 5); the hopper axis leans 25 deg at the stop (cad/turret.py tilt_min)",
      "status": "design",
-     "retained_n": 14.510176698817066,
+     "retained_n": 14.2339130314903,
      "held": true,
-     "pull_off_needed_n": 38.27874288242738
+     "pull_off_needed_n": 39.02168868137685
     },
     {
      "case": "R-fall down: upright, 30 g along the hopper's axis away from the lid",
@@ -152,7 +152,7 @@
      "force_n": 0.0,
      "required_n": 0.0,
      "basis": "presses the balls onto the dial, away from the lid",
-     "retained_n": 14.510176698817066,
+     "retained_n": 14.2339130314903,
      "held": true,
      "pull_off_needed_n": 0.0
     },
@@ -162,7 +162,7 @@
      "force_n": 0.0,
      "required_n": 0.0,
      "basis": "across the hopper's axis: the balls bear on the wall, not the lid",
-     "retained_n": 14.510176698817066,
+     "retained_n": 14.2339130314903,
      "held": true,
      "pull_off_needed_n": 0.0
     },
@@ -172,7 +172,7 @@
      "force_n": 0.0,
      "required_n": 0.0,
      "basis": "along the barrel, across the hopper's axis (0.039 N s a shot, research/turret-launcher-study.md)",
-     "retained_n": 14.510176698817066,
+     "retained_n": 14.2339130314903,
      "held": true,
      "pull_off_needed_n": 0.0
     },
@@ -185,10 +185,10 @@
      "required_n": 30.689604,
      "source": "cad/turret_studies.py R-fall (FALL_G 30)",
      "status": "excluded",
-     "reason": "excluded: the latches do not hold it, and need not. Upside down, the turret lands on its top, and the hopper lid is its top (the highest point of the posed turret at tilt 0 and -25: cad/test_turret_snaps.py): the ground holds the lid on while the balls stop against it. Left is a landing with the lid hanging free (the robot on its back with the turret over an edge): a detent that holds the case's load at the low bound pulls off at the high bound with a fixed multiple of it (the modulus bounds x the friction bounds, research/snap-fits/summary.json), over the 50 N a hand gives; a lock with a release would be a tool or a catch to find on every refill. If it opens, 30 foam rounds spill: no hazard, no damage, a refill.",
-     "retained_n": 14.510176698817066,
+     "reason": "excluded: the latches do not hold it, and need not. Upside down, the turret lands on its top: the flap's hinge lugs on the lid and the flap between them, at every tilt from 0 to the -25 deg stop. Every latch stands at least 1 mm below them there (FIRST_CONTACT_MARGIN; cad/test_turret_snaps.py test_no_latch_is_first_contact), so the ground pushes the lid on through its lugs and its disc, never through a tongue, while the balls stop against it. Left is a landing with the lid hanging free (the robot on its back with the turret over an edge): a detent that holds the case's load at the low bound pulls off at the high bound with a fixed multiple of it (the modulus bounds x the friction bounds, research/snap-fits/summary.json), over the 50 N a hand gives; a lock with a release would be a tool or a catch to find on every refill. If it opens, 30 foam rounds spill: no hazard, no damage, a refill.",
+     "retained_n": 14.2339130314903,
      "held": false,
-     "pull_off_needed_n": 90.57522200948709
+     "pull_off_needed_n": 92.33318153515783
     }
    ],
    "curved_beam": {
@@ -199,10 +199,10 @@
     "basis": "Castigliano, circular cantilever with a radial tip load (r_mid = the hopper wall + TONGUE_N + h / 2)"
    },
    "twist": {
-    "offset_mm": 0.066025403784439,
+    "offset_mm": 2.433974596215561,
     "beta": 0.31583340366190843,
-    "extra_deflection": 1.4292737421375577e-05,
-    "k_retention": 0.999985707466858,
+    "extra_deflection": 0.01942340499486083,
+    "k_retention": 0.9809466754444797,
     "basis": "Roark: a thin rectangle in torsion, J = beta b h^3; Poisson ratio 0.40 (estimate, the most twist)"
    },
    "per_latch": {
@@ -210,14 +210,14 @@
     "allowable": 0.00770503597122302,
     "combined_strain_low": 0.00489851058386695,
     "combined_strain_high": 0.005145231840574481,
-    "retention_low_n": 4.836725566272356,
+    "retention_low_n": 4.744637677163433,
     "pull_off_high_n": 14.274784776111181,
     "push_on_high_n": 14.274784776111183,
     "shear_mpa": 0.582248335863094,
     "bending_mpa": 1.9330437717650557,
     "block_twist_mpa": 3.1012109523631715,
     "block_peel_mpa": 5.806212061711888,
-    "tongue_twist_mpa": 3.8434880936603446
+    "tongue_twist_mpa": 3.182058907498418
    },
    "coupon": {
     "per_latch": true,
@@ -227,12 +227,12 @@
     ],
     "push_on_max_n": 16.666666666666668,
     "predicted_n": {
-     "retention_low": 4.836725566272356,
+     "retention_low": 4.744637677163433,
      "pull_off_high": 14.274784776111181,
      "push_on_high": 14.274784776111183
     },
     "margins": {
-     "retention": 0.11875028027613,
+     "retention": 0.09745005343070967,
      "pull_off": 0.14351291343332917,
      "push_on": 0.14351291343332906
     },
@@ -249,6 +249,7 @@
     "undercut": {
      "now_mm": 1.0,
      "step_mm": 0.1,
+     "min_mm": 0.6,
      "max_by_strain_mm": 1.497509968445412
     },
     "return_deg": {
@@ -283,10 +284,10 @@
     },
     {
      "check": "retention, all latches, low bound",
-     "value": 14.510176698817066,
+     "value": 14.2339130314903,
      "limit": 12.969987095990417,
      "pass": true,
-     "detail": "3 x 4.84 N (friction 0.35, the lowest data-sheet modulus, x 1.000 for the barb 0.07 mm off the tongue's centre line) vs 12.97 N = 1.2 x 10.81 N"
+     "detail": "3 x 4.74 N (friction 0.35, the lowest data-sheet modulus, x 0.981 for the barb 2.43 mm off the tongue's centre line) vs 12.97 N = 1.2 x 10.81 N"
     },
     {
      "check": "load cases: every included case held",
@@ -298,7 +299,7 @@
      ],
      "limit": true,
      "pass": true,
-     "detail": "R-fall sideways (forward fall) at the -25 deg tilt stop: 12.97 N; R-fall down: upright, 30 g along the hopper's axis away from the lid: 0.00 N; R-fall sideways with the barrel level (tilt 0): 0.00 N; recoil: 0.00 N vs 14.51 N held"
+     "detail": "R-fall sideways (forward fall) at the -25 deg tilt stop: 12.97 N; R-fall down: upright, 30 g along the hopper's axis away from the lid: 0.00 N; R-fall sideways with the barrel level (tilt 0): 0.00 N; recoil: 0.00 N vs 14.23 N held"
     },
     {
      "check": "pull-off, all latches, high bound",
@@ -337,10 +338,10 @@
     },
     {
      "check": "tongue twisted at its root, across the layers",
-     "value": 3.8434880936603446,
+     "value": 3.182058907498418,
      "limit": 5.0,
      "pass": true,
-     "detail": "115.1 N mm on the 24.00 x 2 tongue: 3.84 MPa vs 10 / 2 (SF 2)"
+     "detail": "95.3 N mm on the 24.00 x 2 tongue: 3.18 MPa vs 10 / 2 (SF 2)"
     },
     {
      "check": "tongue bent out of its plane",
@@ -495,6 +496,7 @@
     "undercut": {
      "now_mm": 1.0,
      "step_mm": 0.1,
+     "min_mm": 0.6,
      "max_by_strain_mm": 1.2689747472793567
     },
     "return_deg": {

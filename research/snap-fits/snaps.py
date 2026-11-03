@@ -205,6 +205,11 @@ def hand_latch(lat: dict) -> dict:
             'allowable': m['allowable'], **{k_: v for k_, v in anchor(lat, p_hi, pull).items() if k_ != 'section_mm'}}
 
 
+# The shallowest undercut a coupon may prescribe: the force goes as u h^3, so the print's +-0.1 mm moves it by
+# +-0.1 / u; at 0.6 mm that is +-17 % (0.3 mm would be +-33 %). Under it the return angle is the knob.
+UNDERCUT_MIN = 0.6
+
+
 def coupon(part: str, lat: dict, load: dict, per: dict, comb_hi: float, allow: float) -> dict:
     """The coupon's protocol for one latch: what to measure, the band it must fall in, and the knob. A coupon pull
     measures the latch's retention at the real friction and modulus, so its pull-off must be at least its share of
@@ -227,7 +232,7 @@ def coupon(part: str, lat: dict, load: dict, per: dict, comb_hi: float, allow: f
             'cycles': 2 * lat['cycles'],
             'inspect': 'after the cycles: no whitening at the root\'s corner, no split between layers at the root '
                        'block\'s foot or under the barb, the pull-off still in the band',
-            'undercut': {'now_mm': u, 'step_mm': 0.1, 'max_by_strain_mm': u * allow / comb_hi},
+            'undercut': {'now_mm': u, 'step_mm': 0.1, 'min_mm': UNDERCUT_MIN, 'max_by_strain_mm': u * allow / comb_hi},
             'return_deg': {'now': ts.RETURN_DEG,
                            'use': 'when no step of the undercut lands both forces in their bands: steeper holds more '
                                   'for the same push'}}
@@ -235,17 +240,19 @@ def coupon(part: str, lat: dict, load: dict, per: dict, comb_hi: float, allow: f
 
 def coupon_verdict(cp: dict, pull_n: float, push_n: float) -> dict:
     """A measured coupon (one latch's pull-off and push-on, N) read against its band (coupon()): pass, or the
-    undercut to print next, or 'return angle' when no 0.1 mm step of the undercut lands both, or 'redesign' when
-    the undercut it needs passes the strain's limit."""
+    undercut to print next, or 'return angle' when no 0.1 mm step of the undercut from min_mm up lands both (a
+    shallower undercut would leave the force to the print's tolerance), or 'redesign' when the undercut it needs
+    passes the strain's limit."""
     lo, hi = cp['pull_off_band_n']
     pmax = cp['push_on_max_n']
     u, step, umax = cp['undercut']['now_mm'], cp['undercut']['step_mm'], cp['undercut']['max_by_strain_mm']
+    umin = cp['undercut']['min_mm']
     if lo <= pull_n <= hi and push_n <= pmax:
         return {'pass': True, 'action': 'pass', 'undercut_mm': u}
     # the forces go with the undercut: the steps that land the pull in [lo, hi] and the push under pmax, the nearest
     # to the undercut now, 10 % inside both edges where a step lands there
     k_lo, k_hi = lo / pull_n, min(hi / pull_n, pmax / push_n)
-    steps = [round(u + i * step, 3) for i in range(-int(round(u / step)) + 1, 40)]
+    steps = [x for x in (round(u + i * step, 3) for i in range(-int(round(u / step)) + 1, 40)) if x >= umin - 1e-9]
     ok = [x for x in steps if k_lo <= x / u <= k_hi]
     if not ok:
         return {'pass': False, 'action': 'return angle', 'undercut_mm': None}

@@ -237,6 +237,22 @@ class Snaps(unittest.TestCase):
         self.assertEqual(v(cp, 0.4 * lo, 0.4 * lo)['action'], 'redesign')
         self.assertEqual(v(cp, 1.01 * lo, 1.05 * cp['push_on_max_n'])['action'], 'return angle')
 
+    def test_coupon_verdict_undercut_floor(self):
+        """A coupon that pulls far too hard is never sent below UNDERCUT_MIN (0.6 mm): there the print's +-0.1 mm
+        would move its force by +-17 %, at 0.3 mm by +-33 %. The return angle is the knob instead. Control: without the
+        floor the same coupon is sent to 0.3 mm."""
+        cp = self.summary['lids']['hopper_lid']['coupon']
+        lo, hi = cp['pull_off_band_n']
+        self.assertEqual(cp['undercut']['min_mm'], sn.UNDERCUT_MIN)
+        self.assertEqual(sn.UNDERCUT_MIN, 0.6)
+        hard = 3.0 * hi
+        v = sn.coupon_verdict(cp, hard, hard)
+        self.assertEqual((v['action'], v['undercut_mm']), ('return angle', None))
+        mid = sn.coupon_verdict(cp, 1.4 * hi, 1.4 * hi)                 # a step at or over the floor still lands it
+        self.assertTrue(mid['action'] == 'undercut' and mid['undercut_mm'] >= sn.UNDERCUT_MIN, mid)
+        floorless = dict(cp, undercut=dict(cp['undercut'], min_mm=0.0))
+        self.assertLess(sn.coupon_verdict(floorless, hard, hard)['undercut_mm'], sn.UNDERCUT_MIN)
+
     def test_curved_beam_golden(self):
         """The arc's Castigliano factors for the hopper's tongue (L 26 on r 53.2) by hand, and their limits: a short
         arc is a straight beam."""

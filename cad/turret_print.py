@@ -65,8 +65,9 @@ PARTS = [
     ('flywheel', 'flywheel.stl', 'pa6-cf', 2, SOLID, False, 'on its top face (the flange seat flat on the bed)', 'ream the bore to 5.00'),
     ('dial', 'dial.stl', 'petg', 1, PETG, True, 'on its bottom, cone up', ''),
     ('hopper', 'hopper.stl', 'petg-clear', 1, PETG, False, 'upright, on its bottom rim and the baffle', 'translucent PETG so the balls show'),
-    ('hopper_lid', 'hopper_lid.stl', 'petg', 1, PETG, True, 'upside down, on the flap\'s hinge lugs and the three latches (all 7 mm '
-     'proud of the disc, their tongues in the bed plane): supports under the disc only, from the plate; none touches a latch',
+    ('hopper_lid', 'hopper_lid.stl', 'petg', 1, PETG, True, 'upside down, on the flap\'s hinge lugs (7 mm proud of the disc; the '
+     'latches\' tongues in the bed plane, their tops 2.5 mm below the lugs\'): supports under the disc and under the '
+     'latches\' top faces, from the plate',
      'the fill flap is not fitted on the bench; the latches (#131) snap onto the hopper\'s ridges; the key on the spigot '
      'goes into the notch at the hopper\'s front'),
     ('barrel', 'barrel.stl', 'petg', 1, PETG, True, 'standing on its socket end', 'change to blaze orange for the last 15 mm (a filament change at that layer)'),

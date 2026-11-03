@@ -7,7 +7,7 @@ its checks run anywhere.
 Two lids, both PETG, both opened again and again:
   board_bay_lid  two latches, one on its top edge and one on its bottom edge (the same latch turned 180 deg about the
                  bay's axis, so the lid fits either way up); dust cover, opened for board service
-  hopper_lid     three latches round the rim (60, 180 and 300 deg); holds the 30 balls in when the robot falls
+  hopper_lid     three latches round the rim (0, 120 and 240 deg); holds the 30 balls in when the robot falls
 
 Each latch is a cantilever tongue lying in the lid's plane, outside the wall it catches, with a barb on its free end
 that hooks a ridge on the outside of that wall. The lids print flat (the bay lid on its plate, the hopper lid upside
@@ -107,17 +107,25 @@ def root_section(lat):
 # strain at the root's corner, the strain passed the allowable at the high friction bound, and twisted the root
 # block's layers to 9 MPa against 10: research/snap-fits/test_snaps.py keeps them as the control. Now the tongues are
 # wider (b 24 and 12.5 against 8.6), the hopper's thinner and the root blocks bigger.
-# The hopper's latches: centres_deg are the middles of their footprints (root block to barb), 60 deg either side of the
-# fill flap's hinge at the back: each, with its ridge, stays more than 8 deg clear of the hopper-full beam's holes at
-# 90 and 270 deg (its emitter and receiver sit outside them; cad/test_turret_snaps.py) and of the cartridge board in
-# front. The hopper's tongues run down its wall to s 15, past the barb: the width that keeps the out-of-plane bending
-# and the tongue's twist (an arc's tip lies inside its root's tangent) low.
-# The hopper lid prints upside down standing on the fill flap's hinge lugs, LID_LUG_PROUD above its disc: its tongues
-# run up to the same height (s_lo), so they and their root blocks stand on the bed with the lugs and no support
-# touches a latch (the disc between them still prints on supports).
+# The hopper's latches: centres_deg are the middles of their footprints (root block to barb): one at the front, over
+# the key, and two 120 deg round, none at the back. Upside down the turret lands on its top, and the latches must not
+# be what it lands on (INVERTED_REASON): tilted back towards the -25 deg stop the lid's back rises first, and a latch
+# there stood 6 mm above everything else (the review of PR #181), so the back is left to the flap's hinge lugs. Each
+# latch, with its ridge, stays more than 8 deg clear of the hopper-full beam's holes at 90 and 270 deg (its emitter and
+# receiver sit outside them) and clear of the cartridge board in front (cad/test_turret_snaps.py).
+# The tongues are b 24 wide along the closing direction (the width that keeps the out-of-plane bending and the
+# tongue's twist low: an arc's tip lies inside its root's tangent) and their tops stand LATCH_DROP below the lugs'
+# tops, so over the whole tilt range the lugs and the flap meet the ground first (FIRST_CONTACT_MARGIN; tested).
+# The hopper lid prints upside down on those lugs; the disc, the root blocks' and the tongues' tops print on supports.
+# Those top faces are the tongues' edges across their width: the pull bends the tongue's inner and outer faces, not
+# them.
 LID_LUG_PROUD = 7.0     # the flap's hinge lugs above the hopper lid's disc (cad/turret.py hopper_lid)
-HOPPER = {'part': 'hopper_lid', 'catch': 'hopper', 'n': 3, 'centres_deg': (60.0, 180.0, 300.0),
-          'L': 26.0, 'h': 2.0, 's_lo': -(PLATE_T + LID_LUG_PROUD), 's_hi': 15.0, 'barb_w': 5.0, 'ridge_extra': 1.5,
+LATCH_DROP = 2.5        # the hopper latches' tops below the lugs' tops
+FIRST_CONTACT_MARGIN = 1.0   # mm: every latch at least this far below the turret's top, upside down, at every tilt
+_HOPPER_B = 24.0
+HOPPER = {'part': 'hopper_lid', 'catch': 'hopper', 'n': 3, 'centres_deg': (0.0, 120.0, 240.0),
+          'L': 26.0, 'h': 2.0, 's_lo': -(PLATE_T + LID_LUG_PROUD - LATCH_DROP),
+          's_hi': -(PLATE_T + LID_LUG_PROUD - LATCH_DROP) + _HOPPER_B, 'barb_w': 5.0, 'ridge_extra': 1.5,
           'root_w': 8.0, 'root_out': 3.0,
           'curved': True,         # its tongues are arcs round the hopper: research/snap-fits/snaps.py corrects the straight beam
           'cycles': 2000, 'cycles_basis': 'opened for every manual refill: about 5 a day of play, 200 days a year, 2 years (est)'}
@@ -125,6 +133,9 @@ BAY = {'part': 'board_bay_lid', 'catch': 'board_bay', 'n': 2,
        'L': 32.5, 'h': 3.0, 's_lo': -PLATE_T, 's_hi': 10.5, 'barb_w': 6.0, 'ridge_extra': 1.5,
        'root_w': 12.0, 'root_out': 0.0, 'x_root': -14.0,
        'cycles': 100, 'cycles_basis': 'opened for board service and bring-up: about 100 over the turret\'s life (est)'}
+# FA7E3C4: the hopper latches as reviewed at fa7e3c4 (60, 180 and 300 deg, up to the lugs' height), the control for
+# the first-contact test: their back latch is the turret's top at the -25 deg stop.
+FA7E3C4 = dict(HOPPER, centres_deg=(60.0, 180.0, 300.0), s_lo=-(PLATE_T + LID_LUG_PROUD), s_hi=15.0)
 OLD = {'hopper_lid': dict(HOPPER, L=27.5, h=3.0, s_lo=-PLATE_T, s_hi=profile()['barb_s'][1], root_w=6.0, root_out=0.0),
        'board_bay_lid': dict(BAY, L=25.0, h=2.5, s_lo=-PLATE_T, s_hi=profile()['barb_s'][1], root_w=5.0, root_out=0.0,
                              x_root=-15.0)}
@@ -135,25 +146,27 @@ OLD = {'hopper_lid': dict(HOPPER, L=27.5, h=3.0, s_lo=-PLATE_T, s_hi=profile()['
 BACKING_DEPTH = 4.0     # s; the hopper lid's spigot is G.hopper_top - 4 .. G.hopper_top
 # The hopper lid goes on one way only: a tab on its spigot drops into a notch in the hopper's rim, so the fill port
 # sits over the dock's spout and the barbs over their ridges. Turned any other way the tab stands on the rim and the
-# lid stands depth proud, unlatched and plainly not seated (cad/test_turret_snaps.py). At 0 deg (the front), in the
-# free arc between the latches at 300 and 60 deg; inside the wall's outer face, so nothing shows outside it.
+# lid stands depth proud, unlatched and plainly not seated (cad/test_turret_snaps.py). At 0 deg (the front), under the
+# front latch's tongue, which stands outside the wall clear of the notch; inside the wall's outer face, so nothing
+# shows outside it.
 KEY = {'deg': 0.0, 'w': 4.0, 'depth': 3.0, 'r_in': 48.0, 'r_out': 50.4, 'clear': 0.3}
 BAY_PAD_T = 1.0         # the bay lid's pads, inside the walls: 1.3 clear of the level-2 board's envelope
 HOPPER_WALL_R = 50.7    # the hopper's outside radius (cad/turret.py Geo.dial_wall_r + HOPPER_WALL), checked by the CAD
 # Each part's print orientation: the rotation is cad/turret.py MADE's (checked there). Both lids lie with the tongues in
 # the bed plane, so they bend along the layers; both catch parts print with the closing direction vertical.
 PRINT = {'hopper_lid': {'rotation': [[1, 0, 0], 180], 'how': 'upside down: the tongues lie in the bed plane; it stands on the '
-                                                              'flap\'s hinge lugs and the three latches, all 7 mm proud of the '
-                                                              'disc, so only the disc prints on supports (cad/turret_print.py) '
-                                                              'and none touches a latch; the barbs\' return faces overhang 30 '
-                                                              'deg from the vertical'},
+                                                              'flap\'s hinge lugs, 7 mm proud of the disc; the disc and the '
+                                                              'latches\' tops (2.5 mm below the lugs) print on supports '
+                                                              '(cad/turret_print.py), which touch only those top faces, the '
+                                                              'tongues\' edges across their width; the barbs\' return faces '
+                                                              'overhang 30 deg from the vertical'},
          'hopper': {'rotation': None, 'how': 'standing on its bottom rim and the baffle: the ridges\' undersides overhang 30 deg '
                                              'from the vertical'},
          'board_bay_lid': {'rotation': [[1, 0, 0], 90], 'how': 'flat, the plate on the bed: the tongues lie in the bed plane; '
                                                                'the barbs\' return faces overhang 30 deg from the vertical'},
          'board_bay': {'rotation': [[1, 0, 0], -90], 'how': 'on its back, the open face up: the ridges\' back faces overhang '
                                                            '30 deg from the vertical'}}
-for _L in (HOPPER, BAY, *OLD.values()):
+for _L in (HOPPER, BAY, FA7E3C4, *OLD.values()):
     _L['root_r'] = round(ROOT_RATIO * _L['h'], 3)
 
 # ---- the loads (N): what each lid must hold and the most a hand should need
@@ -218,14 +231,16 @@ def hopper_inverted_load():
             'source': 'cad/turret_studies.py R-fall (FALL_G 30)'}
 
 
-INVERTED_REASON = ('excluded: the latches do not hold it, and need not. Upside down, the turret lands on its top, and '
-                   'the hopper lid is its top (the highest point of the posed turret at tilt 0 and -25: '
-                   'cad/test_turret_snaps.py): the ground holds the lid on while the balls stop against it. Left is a '
-                   'landing with the lid hanging free (the robot on its back with the turret over an edge): a detent '
-                   'that holds the case\'s load at the low bound pulls off at the high bound with a fixed multiple of '
-                   'it (the modulus bounds x the friction bounds, research/snap-fits/summary.json), over the 50 N a '
-                   'hand gives; a lock with a release would be a tool or a catch to find on every refill. If it opens, '
-                   '30 foam rounds spill: no hazard, no damage, a refill.')
+INVERTED_REASON = ('excluded: the latches do not hold it, and need not. Upside down, the turret lands on its top: the '
+                   'flap\'s hinge lugs on the lid and the flap between them, at every tilt from 0 to the -25 deg stop. '
+                   'Every latch stands at least 1 mm below them there (FIRST_CONTACT_MARGIN; '
+                   'cad/test_turret_snaps.py test_no_latch_is_first_contact), so the ground pushes the lid on through '
+                   'its lugs and its disc, never through a tongue, while the balls stop against it. Left is a landing '
+                   'with the lid hanging free (the robot on its back with the turret over an edge): a detent that '
+                   'holds the case\'s load at the low bound pulls off at the high bound with a fixed multiple of it '
+                   '(the modulus bounds x the friction bounds, research/snap-fits/summary.json), over the 50 N a hand '
+                   'gives; a lock with a release would be a tool or a catch to find on every refill. If it opens, 30 '
+                   'foam rounds spill: no hazard, no damage, a refill.')
 
 
 def load_cases(part):

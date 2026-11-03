@@ -1548,8 +1548,9 @@ def hopper_lid(G, latches=True, key=True):
     round the rim (hopper_latch; cad/turret_snaps.py, checked by cad-agent snapfit in research/snap-fits/) that hold it
     on, with the 30 balls behind it, in a fall at the -25 deg tilt stop (not upside down: cad/turret_snaps.py
     load_cases, INVERTED_REASON). Push it on, pull it off by the latches. A tab on the spigot (hopper_key) drops into
-    a notch in the hopper's rim, so it goes on one way only, the fill port over the spout. The latches stand as tall
-    as the hinge lugs, so the lid prints on all of them and no support touches a latch.
+    a notch in the hopper's rim, so it goes on one way only, the fill port over the spout. The latches sit at the
+    front and 120 deg either side, their tops 2.5 mm below the hinge lugs', so upside down the turret lands on the lugs
+    and the flap, never on a latch (snaps.LATCH_DROP); the lid prints on the lugs.
     latches=False: the lid as it was (a slip-fit spigot, nothing holding it), for the tests' control; key=False: no
     tab, for the key's control."""
     z1 = G.hopper_top
