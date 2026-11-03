@@ -2,15 +2,22 @@
 // same tabs as the project site, so every page of the app shares one navigation.
 //   mountAppNav({ root: '../', current: 'simulate' })   // root: path from this page to the project root
 const NAV_CSS = `
-.appnav{position:fixed;top:0;left:0;right:0;z-index:50;display:flex;align-items:center;gap:8px;padding:0 24px;height:64px;background:rgba(255,250,242,.97);backdrop-filter:blur(12px);border-bottom:1px solid #d9ddcf;font-family:'Inter',system-ui,sans-serif;color:#263e35}
-.appnav .brand{font-weight:800;letter-spacing:-.8px;margin-right:auto;white-space:nowrap;display:flex;align-items:center;gap:8px;color:#263e35;text-decoration:none;font-size:22px}
-.appnav .brand img{width:28px;height:28px}.appnav .brand small{display:block;font:9px/1.2 'Inter',system-ui,sans-serif;letter-spacing:0;color:#626e64}.appnav .nav-links{display:flex;align-items:center;gap:4px}
-.appnav a.tab{font:600 12px 'Inter',system-ui,sans-serif;color:#526457;text-decoration:none;padding:12px 14px;border-radius:30px;white-space:nowrap}
-.appnav a.tab:hover{color:#ad421b;background:#f5ead8}.appnav a.tab.on{color:#a93c14;background:#f4e7d3}
-.appnav .menu-toggle{display:none;align-items:center;justify-content:center;min-height:44px;border:1px solid #cbd3c1;border-radius:24px;background:#fffaf2;padding:10px 17px;color:#263e35;font:600 12px 'Inter',system-ui,sans-serif;cursor:pointer}
-body.has-appnav{--appnav-h:64px}.appnav a:focus-visible,.appnav button:focus-visible{outline:3px solid #187a79;outline-offset:3px}
-@media(max-width:760px){.appnav{height:56px;padding-left:max(16px,env(safe-area-inset-left));padding-right:max(16px,env(safe-area-inset-right))}.appnav .brand{font-size:21px}.appnav .menu-toggle{display:flex}.appnav .nav-links{display:none;position:absolute;top:56px;left:0;right:0;background:#fffaf2;box-shadow:0 12px 20px #263e3515;padding:12px 16px 18px;grid-template-columns:repeat(2,minmax(0,1fr));border-bottom:1px solid #d9ddcf}.appnav.menu-open .nav-links{display:grid}.appnav a.tab{min-height:44px}body.has-appnav{--appnav-h:56px}}
+.appnav{position:fixed;top:0;left:0;right:0;z-index:50;display:flex;align-items:center;gap:8px;padding:0 24px;height:64px;background:rgb(var(--gp-page-rgb) / 0.97);backdrop-filter:blur(12px);border-bottom:1px solid var(--gp-line);font-family:'Inter',system-ui,sans-serif;color:var(--gp-ink)}
+.appnav .brand{font-weight:800;letter-spacing:-.8px;margin-right:auto;white-space:nowrap;display:flex;align-items:center;gap:8px;color:var(--gp-ink);text-decoration:none;font-size:22px}
+.appnav .brand img{width:28px;height:28px}.appnav .brand small{display:block;font:9px/1.2 'Inter',system-ui,sans-serif;letter-spacing:0;color:var(--gp-muted)}.appnav .nav-links{display:flex;align-items:center;gap:4px}
+.appnav a.tab{font:600 12px 'Inter',system-ui,sans-serif;color:var(--gp-muted-2);text-decoration:none;padding:12px 14px;border-radius:30px;white-space:nowrap}
+.appnav a.tab:hover{color:var(--gp-link);background:var(--gp-peach-3)}.appnav a.tab.on{color:var(--gp-link);background:var(--gp-peach-3)}
+.appnav .menu-toggle{display:none;align-items:center;justify-content:center;min-height:44px;border:1px solid var(--gp-line-2);border-radius:24px;background:var(--gp-page);padding:10px 17px;color:var(--gp-ink);font:600 12px 'Inter',system-ui,sans-serif;cursor:pointer}
+body.has-appnav{--appnav-h:64px}.appnav a:focus-visible,.appnav button:focus-visible{outline:3px solid var(--gp-teal);outline-offset:3px}
+@media(max-width:760px){.appnav{height:56px;padding-left:max(16px,env(safe-area-inset-left));padding-right:max(16px,env(safe-area-inset-right))}.appnav .brand{font-size:21px}.appnav .menu-toggle{display:flex;order:2}.appnav .nav-links{display:none;position:absolute;top:56px;left:0;right:0;background:var(--gp-page);box-shadow:0 12px 20px rgb(var(--gp-shadow) / 0.082);padding:12px 16px 18px;grid-template-columns:repeat(2,minmax(0,1fr));border-bottom:1px solid var(--gp-line)}.appnav.menu-open .nav-links{display:grid}.appnav a.tab{min-height:44px}body.has-appnav{--appnav-h:56px}}
+.appnav .theme-toggle{margin-left:4px}
+/* on a phone the Menu button stays at the top right, with the theme button just before it */
 `;
+
+// The theme button (web/theme.js handles every .theme-toggle on the page; hidden until that script shows it).
+export const THEME_TOGGLE = '<button type="button" class="theme-toggle" aria-pressed="false" aria-label="Dark theme" hidden>'
+  + '<svg class="sun" viewBox="0 0 24 24" aria-hidden="true"><circle cx="12" cy="12" r="4"/><path d="M12 2v2M12 20v2M4.9 4.9l1.4 1.4M17.7 17.7l1.4 1.4M2 12h2M20 12h2M4.9 19.1l1.4-1.4M17.7 6.3l1.4-1.4"/></svg>'
+  + '<svg class="moon" viewBox="0 0 24 24" aria-hidden="true"><path d="M20 14.5A8 8 0 0 1 9.5 4a8 8 0 1 0 10.5 10.5z"/></svg></button>';
 
 // root must be a plain relative path (../../, ./, designer/): it goes into links and the nav.json URL
 const ROOT_OK = /^(?:\.\.?\/)*(?:[A-Za-z0-9_-][A-Za-z0-9._-]*\/)*$/;
@@ -42,7 +49,8 @@ export async function mountAppNav({ root = '../', current = '' } = {}) {
     + '<button type="button" class="menu-toggle" aria-expanded="false" aria-controls="portal-nav-links">Menu ☰</button>'
     + '<div class="nav-links" id="portal-nav-links">'
     + cfg.nav.filter((n) => href(n?.href) !== null).map((n) => `<a class="tab${(n.id ?? n.href) === current ? ' on' : ''}" `
-      + `${(n.id ?? n.href) === current ? 'aria-current="page" ' : ''}href="${esc(href(n.href))}">${esc(n.title)}</a>`).join('') + '</div>';
+      + `${(n.id ?? n.href) === current ? 'aria-current="page" ' : ''}href="${esc(href(n.href))}">${esc(n.title)}</a>`).join('') + '</div>'
+    + THEME_TOGGLE;
   const menu = nav.querySelector('.menu-toggle');
   const setMenu = open => { nav.classList.toggle('menu-open', open); menu.setAttribute('aria-expanded', String(open)); };
   menu.addEventListener('click', () => setMenu(!nav.classList.contains('menu-open')));
@@ -50,6 +58,7 @@ export async function mountAppNav({ root = '../', current = '' } = {}) {
   nav.querySelectorAll('a').forEach(a => a.addEventListener('click', () => setMenu(false)));
   document.body.prepend(nav);
   document.body.classList.add('has-appnav');
+  globalThis.gyropupTheme?.sync();
   // Optional generated navigation must never hold the robot/report bootstrap.
   // Render useful local links immediately; refresh the configuration in the background.
   const abort = new AbortController(), timeout = setTimeout(() => abort.abort(), 4000);

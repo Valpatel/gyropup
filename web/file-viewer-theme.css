@@ -1,6 +1,6 @@
 @import url('/designer/kit/vendor/fonts/fonts.css');
 
-/* Gyropup's consumer palette. The reusable viewer remains product-neutral. */
+/* Gyropup's consumer palette, light and dark (the site's theme, web/theme.js). The reusable viewer remains product-neutral. */
 :root,.file-viewer{--file-font:'Inter',system-ui,sans-serif}
 :root[data-file-theme=light],.file-viewer[data-file-theme=light]{
   --file-background:#fffdf5;--file-canvas:#d9edf3;--file-surface:#fffaf2;
@@ -9,12 +9,19 @@
   --file-focus:#187a79;--file-error:#a62b19;--file-accent:#28736c;
   --file-grid:#819d8e;--file-glow:#48778b;
 }
+:root[data-file-theme=dark],.file-viewer[data-file-theme=dark]{
+  --file-background:#15211b;--file-canvas:#1b3440;--file-surface:#1c2c24;
+  --file-text:#f1e9d8;--file-muted:#a9b5aa;--file-border:#6f8577;
+  --file-control:#1a2922;--file-control-hover:#26392f;--file-control-text:#f1e9d8;
+  --file-focus:#63d6cc;--file-error:#f0a595;--file-accent:#63d6cc;
+  --file-grid:#4d6458;--file-glow:#4f7d8a;
+}
 .file-title h1{font-weight:750;letter-spacing:-.025em}
 .file-header{padding-top:14px;padding-bottom:14px}
 .file-link,.file-tools button,.file-tools select{border-radius:24px;font-weight:600}
-.file-viewer[data-file-theme=light] .file-link[download]{background:#bd3a12;border-color:#bd3a12;color:#fff}
-.file-viewer[data-file-theme=light] .file-link[download]:hover{background:#a33010}
+.file-viewer:is([data-file-theme=light],[data-file-theme=dark]) .file-link[download]{background:#bd3a12;border-color:#bd3a12;color:#fff}
+.file-viewer:is([data-file-theme=light],[data-file-theme=dark]) .file-link[download]:hover{background:#a33010}
 .file-controls{padding-top:12px;padding-bottom:max(12px,env(safe-area-inset-bottom))}
-.file-status{box-shadow:0 12px 32px #173d3c20}
+.file-status{box-shadow:0 12px 32px rgb(var(--gp-shadow,23 61 60) / .125)}
 @media(max-width:480px){.file-header{padding:10px}.file-nav{gap:4px}.file-nav .file-link{font-size:13px;padding:8px 10px}.file-controls{padding:8px 10px max(8px,env(safe-area-inset-bottom))}}
 @media(max-height:450px){.file-header{padding:5px 8px}.file-controls{padding:5px 8px}}

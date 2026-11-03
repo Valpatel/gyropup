@@ -99,6 +99,18 @@ practice recorded three shots, three hits and three knockdowns. The unchanged en
 guard produced and passed both companions, the poster and the receipts. The leg insert is
 unchanged. The previous capture's note follows.
 
+The browser frames were recaptured on 2026-11-03 (UTC) for
+[PR 166](https://github.com/Valpatel/gyropup/pull/166), the site's dark theme, from
+`cb5c453da1c9c9872160fec31d5d0e830a161786`, served assets `5bdb57e4c82e65c941f1`. That PR
+moves the simulator's stylesheets, stage, app bar and notice onto colour tokens and adds
+`web/theme.js` and `web/theme.css` to every page, so the guard rejected the old capture's
+source hashes. The recorder runs in the light theme (its browser context sets no colour
+scheme), so the footage shows the same light pages as before. It produced all 480 frames
+through a test-owned `serve-site.mjs --ephemeral` listener, closed afterwards; the mechanism
+emitted nine shots, and target practice recorded three shots, three hits and three
+knockdowns. The unchanged encoder and guard produced and passed both companions, the poster
+and the receipts. The leg and E1 inserts are unchanged.
+
 Raw frames and validation output for this capture are retained locally under
 `build/motor-fit-highlights-release/`. Capture used an owned, temporary
 `createSiteServer` listener, closed after validation, with `CAPTURE_OUTPUT` set to

@@ -51,6 +51,7 @@
 | Sheet thickness or dimensional bounds change after STL export without a CAD edit | [Tessellation bounds versus stock dimensions](inbox/2026-10-29-tessellated-bounds-are-not-stock-dimensions.md) |
 | Part status moves to another row after sorting, retries duplicate controls, or a model preview loses its original download | [Parts retain their identity when their table changes](domains/build-portal.md) |
 | A newly integrated CAD viewer opens but disposal throws or its animation keeps running after removal | [Parts retain their identity when their table changes](domains/build-portal.md) |
+| A page or panel stays light in the dark theme, light text vanishes on a pale panel, the theme flashes on load, or a 3D sky/diagram ignores the theme button | [Light and dark themes from one token file](domains/site-theme.md) |
 | The 3D file viewer looks unrelated to the main site or its controls lose contrast | [Original-file viewer theme](domains/file-viewer-theme.md) |
 | Phone status checkboxes remain reachable but their part names disappear, despite sticky cell styling | [Sticky identity and the scroll wrapper](inbox/2026-10-29-sticky-part-identity-needs-the-scroll-wrapper.md) |
 | Wheel tests fail after a fixed sleep under software rendering | [Wait for rendered camera targets](inbox/2026-10-29-camera-tests-must-wait-for-rendered-targets.md) |

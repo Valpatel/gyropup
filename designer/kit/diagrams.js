@@ -2,7 +2,7 @@
 const SELECTOR = 'pre > code.language-mermaid, pre.mermaid';
 const runtimeURL = new URL('./vendor/mermaid/mermaid.min.js', import.meta.url);
 let runtimePromise, queue = Promise.resolve(), sequence = 0;
-const records = new WeakMap();
+const records = new WeakMap(), figures = new WeakMap();
 function updateOverflowHint(figure) {
   const view = figure.querySelector('.cad-diagram-view'), hint = figure.querySelector('.cad-diagram-hint');
   if (view && hint) hint.hidden = figure.dataset.state !== 'ready' || view.scrollWidth <= view.clientWidth + 1;
@@ -45,7 +45,7 @@ function prepare(node) {
   const details = document.createElement('details'), summary = document.createElement('summary'); summary.textContent = 'Diagram source';
   const pre = document.createElement('pre'); pre.textContent = source; details.append(summary, pre);
   figure.append(status, hint, view, retry, details); original.replaceWith(figure);
-  const record = {figure, status, view, retry, source, running: null}; records.set(node, record);
+  const record = {figure, status, view, retry, source, running: null, drawn: {}}; records.set(node, record); figures.set(figure, record);
   retry.addEventListener('click', () => render(record));
   return record;
 }
@@ -56,11 +56,14 @@ function render(record) {
   status.hidden = false; status.textContent = 'Drawing diagram…'; retry.hidden = true;
   const task = async () => {
     let scratch;
+    const theme = figure.dataset.theme;
     try {
+      // The same diagram already drawn in this theme (the page's theme went back and forth): show that drawing.
+      if (record.drawn[theme]) { view.innerHTML = record.drawn[theme]; figure.dataset.state = 'ready'; status.hidden = true; updateOverflowHint(figure); return; }
       const mermaid = await runtime();
       if (!figure.isConnected) return;
       // A generic font avoids asynchronous webfont swaps changing Mermaid's label measurements.
-      mermaid.initialize({startOnLoad: false, securityLevel: 'strict', theme: figure.dataset.theme === 'dark' ? 'dark' : 'default',
+      mermaid.initialize({startOnLoad: false, securityLevel: 'strict', theme: theme === 'dark' ? 'dark' : 'default',
         fontFamily: 'Arial, sans-serif', suppressErrorRendering: true});
       scratch = document.createElement('div'); scratch.style.cssText = 'position:absolute;left:-100000px;top:0;';
       document.body.append(scratch);
@@ -72,15 +75,31 @@ function render(record) {
       // Preserve legible labels on phones; contain scrolling inside the diagram instead of shrinking to unreadable text.
       rendered.style.width = `${rendered.viewBox.baseVal.width}px`;
       bindFunctions?.(view); figure.dataset.state = 'ready'; status.hidden = true; updateOverflowHint(figure);
+      record.drawn[theme] = view.innerHTML; // securityLevel strict: drawings carry no click bindings to lose
     } catch {
       if (!figure.isConnected) return;
       view.replaceChildren(); figure.dataset.state = 'error'; updateOverflowHint(figure); status.textContent = 'This diagram could not be drawn. Retry or open its source.'; retry.hidden = false;
     } finally {
       scratch?.remove(); figure.setAttribute('aria-busy', 'false'); record.running = null;
     }
+    // The page changed theme while this one was drawing: draw it again in the new theme.
+    if (figure.isConnected && figure.dataset.theme !== theme && figure.dataset.state === 'ready') render(record);
   };
   record.running = queue.then(task, task); queue = record.running.catch(() => {}); return record.running;
 }
+/** Redraw diagrams whose page theme changed (web/theme.js, or the system setting); each theme is drawn once. */
+export function refreshDiagramThemes(root = document) {
+  const list = [...(root.matches?.('.cad-diagram') ? [root] : []), ...root.querySelectorAll('.cad-diagram')];
+  return Promise.all(list.map(figure => {
+    const record = figures.get(figure);
+    const theme = themeFor(figure.parentElement || figure);
+    if (!record || figure.dataset.theme === theme) return null;
+    figure.dataset.theme = theme;
+    return figure.dataset.state === 'ready' ? render(record) : null;
+  }));
+}
+document.addEventListener('gyropup:themechange', () => refreshDiagramThemes());
+matchMedia('(prefers-color-scheme: dark)').addEventListener?.('change', () => refreshDiagramThemes());
 export function renderDiagrams(root = document) {
   const nodes = [...(root.matches?.(SELECTOR) ? [root] : []), ...root.querySelectorAll(SELECTOR)];
   return Promise.all(nodes.map(node => render(prepare(node))));
