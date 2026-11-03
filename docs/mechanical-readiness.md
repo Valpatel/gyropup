@@ -1,10 +1,10 @@
 # Mechanical readiness and integration plan
 
-> **Status guide — 2026-10-31:** The priority is the two ordered motor families: four RS-04 leg actuators and the Amazon PRO3115-900KV flywheel motors. Separate unpowered fit jobs are available; no complete turret or leg is released for fabrication or operation. The integration table below is historical. Current ownership and acceptance are tracked in [program #31](https://github.com/Valpatel/gyropup/issues/31) and [mechanical #61](https://github.com/Valpatel/gyropup/issues/61).
+> **Status guide — 2026-10-31:** The priority is the two ordered motor families: four RS-04 leg actuators and the Amazon PRO3115-900KV flywheel motors. Separate unpowered fit jobs are available; no complete turret or leg is released for fabrication or operation. The integration table below is historical. Current ownership and acceptance are tracked in [program #31](https://github.com/Valpatel/gyropup/issues/31); the turret's print readiness is [#61](https://github.com/Valpatel/gyropup/issues/61) and the carrier is [#66](https://github.com/Valpatel/gyropup/issues/66).
 
 This is the component review entry point for the first physical turret and the complete Gyropup assembly. It supersedes blanket “print now” statements in older planning documents until their referenced geometry, hardware assumptions and checks are reconciled. It does not declare physical fit or safe operation.
 
-Program tracker: [issue #61](https://github.com/Valpatel/gyropup/issues/61). The user requested a deliberate component-by-component review, hardware-complete models across legs and turret, consistent landing geometry, and a final repository state containing only `dev` and `main` branches.
+Program tracker: [issue #31](https://github.com/Valpatel/gyropup/issues/31). The user requested a deliberate component-by-component review, hardware-complete models across legs and turret, consistent landing geometry, and a final repository state containing only `dev` and `main` branches.
 
 ```mermaid
 flowchart TB
@@ -28,7 +28,7 @@ flowchart TB
 | Interface | Available evidence and job | Still required |
 | --- | --- | --- |
 | Ordered 3115-900KV flywheel motor | [Exact listing, sample survey and sliced shaft gauge](ordered-turret-motor.md); all eight size labels survive the 0.4 mm slice, about 28 minutes / 8.5 g | Delivered-part dimensions, calibrated printed widths, mounting and shaft/retention design; the older SunnySky cartridge is a different motor |
-| RS-04 leg mounting | [Corrected parent geometry](rs04-mounting-fit.md) and [retained unpowered coupon job](rs04-fit-job.md), about 6 h 33 min / 172.44 g | Inspect the unsupported roofs and all screw seats, measure the actual stack, resolve motor-side support/load spreading ([support-ring comparison](rs04-support-study.md)) and establish tightening/preload limits |
+| RS-04 leg mounting | [Corrected parent geometry](rs04-mounting-fit.md) and [retained unpowered coupon job](rs04-fit-job.md), 6 h 32 min 46 s, 172.41 g and 65.16 m | Inspect the unsupported roofs and all screw seats, measure the actual stack, resolve motor-side support/load spreading ([support-ring comparison](rs04-support-study.md)) and establish tightening/preload limits |
 
 Both packages retain resolved profiles, executable toolpaths, source identities,
 inspection images and blank measurement records. Slicer estimates and valid solids
@@ -131,7 +131,7 @@ Cad-agent v0.4.2 is released at `2ad4269`, with validated-solid and aggregate vo
 
 When returning to the carrier, its acceptance steps are:
 
-1. Complete [issue96's shared packaging contract](https://github.com/Valpatel/gyropup/issues/96): actual component, terminal, PCB and thermal space, plus a noncircular assembly/removal order. PR97 and PR103 published the paper/source contract; actual component allocation and complete installation remain open.
+1. Complete the carrier's shared packaging contract ([#66](https://github.com/Valpatel/gyropup/issues/66), which took over #96): actual component, terminal, PCB and thermal space, plus a noncircular assembly/removal order. PR97 and PR103 published the paper/source contract; actual component allocation and complete installation remain open.
 2. Finish actual disconnects, junctions, solder-side insulation, strain relief, connector parking and bend-qualified cable routes. Validate the retained module and all remaining obstacles through the released rigid-module API, including prerequisite bumper/tool access.
 3. Resolve detailed-thread mating, heat-setting access and physical measurements using the separate source-bound specimens. Preserve failed and absent observations; a nominal coupon model is not a measured fit.
 4. Renew affected base/support structural and print evidence before a scoped unpowered assembly trial. Proceed to the pan drive and tilt assembly only after this carrier checkpoint is coherent.
