@@ -98,7 +98,7 @@ class Snaps(unittest.TestCase):
         for s in ts.spec()['snaps']:
             lat = ts.LATCHES[s['name'].split('-latch')[0]]
             self.assertEqual((s['length_mm'], s['section']['rect']['thickness_mm'], s['undercut_mm']), (lat['L'], lat['h'], ts.UNDERCUT))
-            self.assertAlmostEqual(s['section']['rect']['width_mm'], ts.tongue_width(), places=4)
+            self.assertAlmostEqual(s['section']['rect']['width_mm'], ts.tongue_width(lat), places=4)
             self.assertEqual(s['root_radius_mm'], round(0.6 * lat['h'], 3))
             self.assertEqual((s['material'], s['orientation'], s['repeated']), ('petg-bambu-basic', 'along', True))
 
@@ -129,18 +129,118 @@ class Snaps(unittest.TestCase):
         self.assertTrue(self.summary['pass'])
 
     def test_load_golden(self):
-        """The hopper lid's load by hand: 30 balls x 1.83 g + the lid's 25 g bound, at 30 g x sin 25 deg."""
-        f = (30 * 1.83 + 25.0) / 1000 * 9.81 * 30 * math.sin(math.radians(25))
-        self.assertAlmostEqual(f, 9.938, places=3)
+        """The hopper lid's load by hand: 30 balls x 1.83 g + the lid's 32 g bound, at 30 g x sin 25 deg."""
+        f = (30 * 1.83 + 32.0) / 1000 * 9.81 * 30 * math.sin(math.radians(25))
+        self.assertAlmostEqual(f, 10.808, places=3)
         lid = self.summary['lids']['hopper_lid']
         self.assertAlmostEqual(lid['load']['force_n'], f, places=9)
         self.assertAlmostEqual(lid['load']['required_n'], 1.2 * f, places=9)
-        self.assertAlmostEqual(self.summary['lids']['board_bay_lid']['load']['force_n'], 11.5 / 1000 * 9.81 * 30, places=9)
+        self.assertAlmostEqual(self.summary['lids']['board_bay_lid']['load']['force_n'], 14.5 / 1000 * 9.81 * 30, places=9)
+
+    def test_load_cases(self):
+        """Each lid's declared cases are what summary.json weighed: one design case (the load), every included case
+        held, and the one excluded case (the hopper upside down) not held, with its reason, which says no detent of
+        these latches holds it and pulls off by hand: the pull-off it would take is over the hand limit."""
+        for part, lid in self.summary['lids'].items():
+            cases = lid['load_cases']
+            declared = ts.load_cases(part)
+            self.assertEqual([(c['case'], c['status']) for c in cases], [(c['case'], c['status']) for c in declared])
+            design = [c for c in cases if c['status'] == 'design']
+            self.assertEqual(len(design), 1)
+            self.assertAlmostEqual(design[0]['required_n'], lid['load']['required_n'], places=9)
+            held = lid['latches'] * lid['per_latch']['retention_low_n']
+            for c in cases:
+                self.assertAlmostEqual(c['retained_n'], held, places=9)
+                if c['status'] == 'excluded':
+                    self.assertTrue(c['reason'] and not c['held'] and c['pull_off_needed_n'] > ts.HAND_N, c['case'])
+                else:
+                    self.assertTrue(c['held'] and c['required_n'] <= design[0]['required_n'] + 1e-9, c['case'])
+        excluded = [c['case'] for lid in self.summary['lids'].values() for c in lid['load_cases'] if c['status'] == 'excluded']
+        self.assertEqual(excluded, [ts.hopper_inverted_load()['case']])
+        up = self.summary['lids']['hopper_lid']['load_cases'][-1]
+        f = (30 * 1.83 + 32.0) / 1000 * 9.81 * 30
+        self.assertAlmostEqual(up['required_n'], 1.2 * f, places=9)                            # 30.7 N
+        lid = self.summary['lids']['hopper_lid']['per_latch']
+        self.assertAlmostEqual(up['pull_off_needed_n'], 1.2 * f * lid['pull_off_high_n'] / lid['retention_low_n'], places=9)
+
+    def test_combined_strain_golden(self):
+        """The strain at the root's corner by hand: eps = u h / (0.67 L^2), in-plane x k_strain, out-of-plane
+        eps x k_force x W/P x h / b, at each friction bound; under the allowable at the high one."""
+        for part, lid in self.summary['lids'].items():
+            lat = ts.LATCHES[part]
+            eps = ts.UNDERCUT * lat['h'] / (0.67 * lat['L'] ** 2)
+            k = lid['curved_beam']
+            b = lat['s_hi'] - lat['s_lo']
+            for mu, key in ((0.35, 'combined_strain_low'), (0.60, 'combined_strain_high')):
+                t30 = math.tan(math.radians(30))
+                w = (mu + t30) / (1 - mu * t30)
+                self.assertAlmostEqual(lid['per_latch'][key], eps * (k['k_strain'] + k['k_force'] * w * lat['h'] / b), places=12)
+            self.assertLess(lid['per_latch']['combined_strain_high'], lid['per_latch']['allowable'])
+
+    def test_root_anchor_golden(self):
+        """The hopper's root block by hand: Roark's rectangle 8 x 6.3 (a/c 1.27: alpha 0.2194) twisted by p L, plus
+        p as a shear; peeled by pull L (6 M / (c a^2)) plus the pull."""
+        lid = self.summary['lids']['hopper_lid']
+        lat = ts.HOPPER
+        a, c = 8.0, 1.3 + 2.0 + 3.0
+        self.assertEqual(lid['arm']['root_block_mm'], [a, c])
+        alpha = 0.208 + (0.231 - 0.208) * (a / c - 1.0) / 0.5
+        pull = lid['per_latch']['pull_off_high_n']
+        t30 = math.tan(math.radians(30))
+        p = pull / ((0.6 + t30) / (1 - 0.6 * t30))
+        self.assertAlmostEqual(lid['per_latch']['block_twist_mpa'], p * lat['L'] / (alpha * a * c * c) + p / (a * c), places=9)
+        self.assertAlmostEqual(lid['per_latch']['block_peel_mpa'], 6 * pull * lat['L'] / (c * a * a) + pull / (a * c), places=9)
+
+    def test_hand_alone_agrees(self):
+        """hand_latch (the closed form alone, for sizes the toolkit was not run on) gives summary.json's numbers for
+        the current sizes, and its material is the toolkit's."""
+        for part, lid in self.summary['lids'].items():
+            h = sn.hand_latch(ts.LATCHES[part])
+            per = lid['per_latch']
+            for k, kp in (('retention_low_n',) * 2, ('pull_off_high_n',) * 2, ('push_on_high_n',) * 2,
+                          ('twist_mpa', 'block_twist_mpa'), ('peel_mpa', 'block_peel_mpa'), ('tongue_twist_mpa',) * 2,
+                          ('allowable',) * 2):
+                self.assertAlmostEqual(h[k], per[kp], places=9, msg=f'{part} {k}')
+            self.assertAlmostEqual(h['combined_high'], per['combined_strain_high'], places=12)
+        for s in self.result['snaps']:
+            m = s['material']
+            self.assertEqual((m['secant_mpa'], m['retention_secant_mpa']),
+                             (sn.HAND_MATERIAL['secant_mpa'], sn.HAND_MATERIAL['retention_secant_mpa']))
+
+    def test_coupon_bands(self):
+        """Each coupon's bands: the pull-off between the latch's share of the required retention and of the hand
+        limit, the push-on under the latter; the predictions inside; the undercut's room by the strain."""
+        for part, lid in self.summary['lids'].items():
+            cp, n = lid['coupon'], lid['latches']
+            self.assertEqual(cp['pull_off_band_n'], [lid['load']['required_n'] / n, ts.HAND_N / n])
+            lo, hi = cp['pull_off_band_n']
+            pr = cp['predicted_n']
+            self.assertTrue(lo <= pr['retention_low'] and pr['pull_off_high'] <= hi and pr['push_on_high'] <= cp['push_on_max_n'])
+            self.assertEqual(cp['cycles'], 2 * ts.LATCHES[part]['cycles'])
+            self.assertGreater(cp['undercut']['max_by_strain_mm'], ts.UNDERCUT)
+            h = ts.LATCHES[part]['h']
+            self.assertAlmostEqual(cp['print_tolerance']['force_factor'][1], 1.1 * (h + 0.1) ** 3 / h ** 3, places=12)
+
+    def test_coupon_verdict(self):
+        """A measured coupon read against the hopper's bands: in band, pass; under, a deeper undercut; over, a
+        shallower one; a pull-off too low for any step the strain allows, redesign; a push-on over its limit with a
+        pull-off already at the band's foot, the return angle."""
+        cp = self.summary['lids']['hopper_lid']['coupon']
+        lo, hi = cp['pull_off_band_n']
+        v = sn.coupon_verdict
+        self.assertEqual(v(cp, (lo + hi) / 2, (lo + hi) / 2)['action'], 'pass')
+        under = v(cp, 0.8 * lo, 0.8 * lo)
+        self.assertEqual((under['action'], under['undercut_mm'] > ts.UNDERCUT), ('undercut', True))
+        over = v(cp, 1.15 * hi, 1.15 * hi)
+        self.assertEqual((over['action'], over['undercut_mm'] < ts.UNDERCUT), ('undercut', True))
+        self.assertTrue(lo <= 1.15 * hi * over['undercut_mm'] / ts.UNDERCUT <= hi)
+        self.assertEqual(v(cp, 0.4 * lo, 0.4 * lo)['action'], 'redesign')
+        self.assertEqual(v(cp, 1.01 * lo, 1.05 * cp['push_on_max_n'])['action'], 'return angle')
 
     def test_curved_beam_golden(self):
-        """The arc's Castigliano factors for the hopper's tongue (L 27.5 on r 53.7) by hand, and their limits: a short
+        """The arc's Castigliano factors for the hopper's tongue (L 26 on r 53.2) by hand, and their limits: a short
         arc is a straight beam."""
-        phi = 27.5 / 53.7
+        phi = 26.0 / 53.2
         k_force = (phi ** 3 / 3) / (phi / 2 - math.sin(2 * phi) / 4)
         k = self.summary['lids']['hopper_lid']['curved_beam']
         self.assertAlmostEqual(k['k_force'], k_force, places=9)
@@ -164,7 +264,9 @@ class Snaps(unittest.TestCase):
         # the return faces are one line apart by PLAY along s
         at = lambda p, q, n: p[0] + (q[0] - p[0]) * (n - p[1]) / (q[1] - p[1])
         self.assertAlmostEqual(at(b0, b1, 0.7) - at(r2, r3, 0.7), ts.PLAY)
-        self.assertAlmostEqual(P['tongue_s'][1], b3[0])
+        self.assertAlmostEqual(P['barb_s'][1], b3[0])
+        for lat in ts.LATCHES.values():                                  # every tongue carries its whole barb
+            self.assertTrue(lat['s_lo'] <= -ts.PLATE_T and lat['s_hi'] >= b3[0])
 
     def test_public_text(self):
         """No local paths in the committed files (the toolkit is named by tag and commit only)."""
@@ -197,7 +299,7 @@ class Controls(unittest.TestCase):
     def test_stale_yaml(self):
         with tempfile.TemporaryDirectory() as tmp:
             y = Path(tmp) / 'snaps.yaml'
-            y.write_text(sn.SPEC.read_text().replace('length_mm: 27.5', 'length_mm: 30.0', 1))
+            y.write_text(sn.SPEC.read_text().replace('length_mm: 26.0', 'length_mm: 30.0', 1))
             self.assertIn('snaps.yaml does not match cad/turret_snaps.py', sn.stale(spec=y))
 
     def test_stale_constants(self):
@@ -238,6 +340,28 @@ class Controls(unittest.TestCase):
         lid = sn.lid_summary('hopper_lid', r)
         failed = {c['check'] for c in lid['checks'] if not c['pass']}
         self.assertEqual(failed, {'pull-off, all latches, high bound', 'push-on, all latches, high bound'})
+
+    def test_old_sizing_fails(self):
+        """The sizes the review of PR #181 failed (ts.OLD): the strain at the root's corner, with the out-of-plane
+        bending, over the allowable at the high bound on both lids (0.96 % and 0.91 % against 0.77 %), and the root
+        blocks' layers twisted past half the interlaminar strength (the hopper's 9.2 MPa by hand against the review's
+        FE, p90 8.7 MPa: the hand model reads a little high)."""
+        for part, lat in ts.OLD.items():
+            h = sn.hand_latch(lat)
+            self.assertGreater(h['combined_high'], h['allowable'], part)
+            self.assertLess(h['strain'] * sn.curved(lat)['k_strain'], h['allowable'], part)     # in-plane alone passed
+            self.assertGreater(h['twist_mpa'], ts.PETG_SHEAR_MPA / 2, part)
+        self.assertTrue(8.7 <= sn.hand_latch(ts.OLD['hopper_lid'])['twist_mpa'] <= 10.0)
+
+    def test_an_unheld_case_included_fails(self):
+        """Declared as included, the upside-down case fails the load-case row: the exclusion is what lets it pass."""
+        orig = ts.load_cases
+        try:
+            ts.load_cases = lambda part: [dict(c, status='included') for c in orig(part)]
+            lid = sn.lid_summary('hopper_lid', self.result)
+        finally:
+            ts.load_cases = orig
+        self.assertEqual({c['check'] for c in lid['checks'] if not c['pass']}, {'load cases: every included case held'})
 
     def test_softer_arm_fails_retention(self):
         """The same hopper latch 25 % softer at the low bound no longer holds the fall."""

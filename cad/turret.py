@@ -813,16 +813,20 @@ def bay_latch(G):
     """One latch of the bay lid, on its top edge: a tongue h thick (in z) lying in the lid's plane outside the bay's top
     wall, from a root block on the plate's edge along x to a barb that hooks the wall's ridge; the root's inside
     corner rounded to 0.6 h. The tongue bends in z, in the bed plane of the lid's print (along the layers)."""
-    B, P = snaps.BAY, snaps.profile()
+    B = snaps.BAY
     Y, z1 = TB['y_out'], TB['z'][1]
     xs = bay_latch_x(G)
-    s0, s1 = P['tongue_s']
+    s0, s1 = snaps.tongue_s(B)
     zi, zo = z1 + snaps.TONGUE_N, z1 + snaps.TONGUE_N + B['h']
     tongue = box(*xs['tongue'], -Y + s0, -Y + s1, zi, zo)
-    root = (box(*xs['root'], -Y + s0, -Y, z1 - 1.0, zo)                                # on the plate's edge ...
-            .union(box(*xs['root'], -Y - 0.01, -Y + s1, z1 + snaps.WALL_CLEAR, zo)))     # ... and outside the wall
+    zb = zo + B['root_out']
+    root = (box(*xs['root'], -Y + s0, -Y, z1 - 1.0, zb)                                # on the plate's edge ...
+            .union(box(*xs['root'], -Y - 0.01, -Y + s1, z1 + snaps.WALL_CLEAR, zb)))     # ... and outside the wall
     s = root.union(tongue)
-    s = s.edges(cq.selectors.NearestToPointSelector((xs['root'][1], -Y + s1 / 2, zi))).fillet(B['root_r'])
+    sm = -Y + (s0 + s1) / 2
+    s = s.edges(cq.selectors.NearestToPointSelector((xs['root'][1], sm, zi))).fillet(B['root_r'])
+    if B['root_out'] > 0:
+        s = s.edges(cq.selectors.NearestToPointSelector((xs['root'][1], sm, zo))).fillet(B['root_r'])
     return s.union(_sn_extrude_x(_barb_pts(), *xs['barb'], -Y, z1))
 
 
@@ -860,18 +864,31 @@ def hopper_latch(G, a):
     lid's plane outside the hopper's wall, from a root block on the disc's rim round to a barb that hooks the wall's
     ridge; the root's inside corner rounded to 0.6 h. The tongue bends radially, in the bed plane of the lid's print
     (upside down: along the layers)."""
-    Hs, P = snaps.HOPPER, snaps.profile()
+    Hs = snaps.HOPPER
     r_w, z1 = G.dial_wall_r + HOPPER_WALL, G.hopper_top
-    s0, s1 = P['tongue_s']
-    ri, ro = r_w + snaps.TONGUE_N, r_w + snaps.TONGUE_N + Hs['h']
-    tongue = _sn_revolve([(s0, snaps.TONGUE_N), (s1, snaps.TONGUE_N), (s1, snaps.TONGUE_N + Hs['h']), (s0, snaps.TONGUE_N + Hs['h'])],
-                         a['root'], a['end'], r_w, z1)
-    block = _sn_revolve([(s0, -1.5), (0.0, -1.5), (0.0, snaps.WALL_CLEAR), (s1, snaps.WALL_CLEAR), (s1, snaps.TONGUE_N + Hs['h']),
-                         (s0, snaps.TONGUE_N + Hs['h'])], a['start'], a['root'], r_w, z1)
+    s0, s1 = snaps.tongue_s(Hs)
+    n_o = snaps.TONGUE_N + Hs['h']
+    ri, ro = r_w + snaps.TONGUE_N, r_w + n_o
+    tongue = _sn_revolve([(s0, snaps.TONGUE_N), (s1, snaps.TONGUE_N), (s1, n_o), (s0, n_o)], a['root'], a['end'], r_w, z1)
+    n_b = n_o + Hs['root_out']
+    block = _sn_revolve([(s0, -1.5), (0.0, -1.5), (0.0, snaps.WALL_CLEAR), (s1, snaps.WALL_CLEAR), (s1, n_b), (s0, n_b)],
+                        a['start'], a['root'], r_w, z1)
     s = block.union(tongue)
-    t = math.radians(a['root'])
-    s = s.edges(cq.selectors.NearestToPointSelector((ri * math.cos(t), ri * math.sin(t), z1 - s1 / 2))).fillet(Hs['root_r'])
+    t, zm = math.radians(a['root']), z1 - (s0 + s1) / 2
+    for r in ((ri, ro) if Hs['root_out'] > 0 else (ri,)):
+        s = s.edges(cq.selectors.NearestToPointSelector((r * math.cos(t), r * math.sin(t), zm))).fillet(Hs['root_r'])
     return s.union(_sn_revolve(_barb_pts(), a['barb'] - a['barb_half'], a['barb'] + a['barb_half'], r_w, z1))
+
+
+def hopper_key(G):
+    """The hopper lid's rotation key (snaps.KEY): the tab on the lid's spigot and the notch in the hopper's rim it
+    drops into, clear by KEY['clear'] round it (cad/turret_snaps.py)."""
+    K, z1 = snaps.KEY, G.hopper_top
+    tab = box(K['r_in'], K['r_out'], -K['w'] / 2, K['w'] / 2, z1 - K['depth'], z1 + 0.01)
+    c = K['clear']
+    notch = box(G.dial_wall_r - 0.5, G.dial_wall_r + HOPPER_WALL + 0.5, -K['w'] / 2 - c, K['w'] / 2 + c, z1 - K['depth'] - c, z1 + 0.5)
+    turn = lambda s: s.rotate((0, 0, 0), (0, 0, 1), K['deg'])
+    return turn(tab), turn(notch)
 
 
 def _print_pose(s, rot):
@@ -892,17 +909,22 @@ def snap_coupon_regions(G):
     x = bay_latch_x(G)
     x0, x1 = x['root'][0] - 3.0, x['ridge'][1] + 3.0
     Y, z1 = TB['y_out'], TB['z'][1]
-    return {'hopper_lid': reg(G.hopper_top - 8.0, G.hopper_top + 3.0),
-            'hopper': reg(G.hopper_top - 15.0, G.hopper_top + 0.5),
-            'board_bay_lid': box(x0, x1, -Y - 3.0, -Y + 9.0, z1 - 10.0, z1 + 6.0),
-            'board_bay': box(x0, x1, -Y - 0.5, -Y + 14.0, z1 - 10.0, z1 + 6.0)}
+    s_hi = snaps.HOPPER['s_hi']
+    return {'hopper_lid': reg(G.hopper_top - s_hi - 1.0, G.hopper_top + snaps.PLATE_T + snaps.LID_LUG_PROUD + 1.0),
+            'hopper': reg(G.hopper_top - s_hi - 3.0, G.hopper_top + 0.5),
+            'board_bay_lid': box(x0, x1, -Y - 3.0, -Y + snaps.BAY['s_hi'] + 1.0, z1 - 10.0, z1 + 8.0),
+            'board_bay': box(x0, x1, -Y - 0.5, -Y + 14.0, z1 - 10.0, z1 + 8.0)}
 
 
 def snap_coupons(G):
     """A printable coupon per snap (#131), cut from the parent parts (the latch from its lid, the ridge with its wall)
     and turned to the parent's print orientation (MADE), on the bed. Each pair snaps together as the real joint does:
     push it on and pull it off on a scale for the forces at the low and the high bound, cycle it past the expected
-    cycles (research/snap-fits/summary.json), and print it in the same filament and settings as the parts."""
+    cycles (research/snap-fits/summary.json), and print it in the same filament and settings as the parts.
+    summary.json's 'coupon' per lid holds the pass bands (each latch's pull-off between the share of the required
+    retention and of the hand limit, its push-on under the hand limit's share), the cycles and what to look for, and
+    which way to turn the undercut if a band is missed; research/snap-fits/snaps.py coupon_verdict() reads a
+    measurement against them."""
     rot = {m[0]: m[5] for m in MADE}
     parents = {'hopper_lid': hopper_lid, 'hopper': hopper, 'board_bay_lid': board_bay_lid, 'board_bay': board_bay}
     return {f'coupon_{name}': _print_pose(parents[name](G).intersect(region), rot[name])
@@ -1505,8 +1527,9 @@ def hopper(G):
     """The hopper, printed PETG (translucent, so the balls show): a Ø102 tube from the dial housing to z = 100 in the
     cartridge frame (30 balls with the dial's pockets: sim/turret_feed.py fills it in physics), the exit baffle in its bottom (see baffle()), three lugs
     that screw to the housing (M3), two Ø5 holes for the hopper-full IR beam near the top, and three ridges round the
-    outside of its top edge that the lid's latches catch (hopper_ridges; cad/turret_snaps.py). Printed standing on its
-    bottom rim and the baffle: the ridges' undersides overhang 30 deg from the vertical, no support."""
+    outside of its top edge that the lid's latches catch (hopper_ridges; cad/turret_snaps.py), and a notch in its rim at
+    the front for the lid's key (hopper_key). Printed standing on its bottom rim and the baffle: the ridges' undersides
+    overhang 30 deg from the vertical, no support."""
     r_in, r_out = G.dial_wall_r, G.dial_wall_r + HOPPER_WALL
     z0, z1 = G.housing_top, G.hopper_top
     s = ring_z(r_out, r_in, z0, z1).union(baffle(G))
@@ -1516,26 +1539,32 @@ def hopper(G):
         s = s.union(lug)
         s = s.cut(through_z(x, y, FAST['M3']['clear'], z0 - 1, z0 + 4))
     s = s.cut(cyl_y(2.5, -r_out - 1, r_out + 1, 0, z1 - 6))
-    return s.union(hopper_ridges(G))
+    return s.union(hopper_ridges(G)).cut(hopper_key(G)[1])
 
 
-def hopper_lid(G, latches=True):
+def hopper_lid(G, latches=True, key=True):
     """Lid, printed PETG upside down: a 2 mm disc with a spigot into the hopper, a Ø32 fill port where the dock's spout
     pushes the sprung flap open, two hinge lugs for the flap (Ø2 steel pin, torsion spring), and three snap latches
     round the rim (hopper_latch; cad/turret_snaps.py, checked by cad-agent snapfit in research/snap-fits/) that hold it
-    on, with the 30 balls behind it, in a fall at the -25 deg tilt stop. Push it on, pull it off by the latches.
-    latches=False: the lid as it was (a slip-fit spigot, nothing holding it), for the tests' control."""
+    on, with the 30 balls behind it, in a fall at the -25 deg tilt stop (not upside down: cad/turret_snaps.py
+    load_cases, INVERTED_REASON). Push it on, pull it off by the latches. A tab on the spigot (hopper_key) drops into
+    a notch in the hopper's rim, so it goes on one way only, the fill port over the spout. The latches stand as tall
+    as the hinge lugs, so the lid prints on all of them and no support touches a latch.
+    latches=False: the lid as it was (a slip-fit spigot, nothing holding it), for the tests' control; key=False: no
+    tab, for the key's control."""
     z1 = G.hopper_top
     r = G.dial_wall_r + 2.0
     s = cyl_z(r, z1, z1 + 2).union(ring_z(G.dial_wall_r - 0.1, G.dial_wall_r - 2.1, z1 - snaps.BACKING_DEPTH, z1 + 0.01))
     s = s.cut(sector_z(12.0, G.dial_wall_r - 3, 30, 150, z1 - 1, z1 + 1.0)).cut(sector_z(12.0, G.dial_wall_r - 3, 210, 330, z1 - 1, z1 + 1.0))
     s = s.cut(cyl_z(16.0, z1 - 5, z1 + 4, FILL_PORT[0], 0))
     for y in (-12.0, 9.0):
-        s = s.union(box(FILL_PORT[0] - 22, FILL_PORT[0] - 16, y, y + 3, z1 + 2 - 0.01, z1 + 9))
+        s = s.union(box(FILL_PORT[0] - 22, FILL_PORT[0] - 16, y, y + 3, z1 + 2 - 0.01, z1 + snaps.PLATE_T + snaps.LID_LUG_PROUD))
     s = s.cut(cyl_y(1.05, -15, 15, FILL_PORT[0] - 19, z1 + 6))
     if latches:
         for a in hopper_latch_angles(G):
             s = s.union(hopper_latch(G, a))
+        if key:
+            s = s.union(hopper_key(G)[0])
     return s
 
 
@@ -1968,8 +1997,8 @@ MADE = [
     ('flywheel', flywheel, 'tilt', 'pa6-cf', 2, ((1, 0, 0), 180), 'PA6-CF on its top face; on the X2216\'s prop adapter: washer + M5 nylon-insert nut; bore reamed to 5.00'),
     ('flywheel_tyre', flywheel_tyre, 'tilt', 'tpu95', 2, None, 'TPU 95A tyre'),
     ('dial', dial, 'tilt', 'petg', 1, None, 'PETG; 4 x M3 x 8 down into the feed servo\'s horn, from the top'),
-    ('hopper', hopper, 'tilt', 'petg', 1, None, 'translucent PETG standing; 3 x M3 to the housing; three ridges for the lid\'s latches'),
-    ('hopper_lid', hopper_lid, 'tilt', 'petg', 1, ((1, 0, 0), 180), 'PETG upside down (the latches in the bed plane), on the flap\'s hinge lugs: supports under the disc; three snap latches onto the hopper\'s ridges, push on, pull off'),
+    ('hopper', hopper, 'tilt', 'petg', 1, None, 'translucent PETG standing; 3 x M3 to the housing; three ridges for the lid\'s latches, the notch for its key'),
+    ('hopper_lid', hopper_lid, 'tilt', 'petg', 1, ((1, 0, 0), 180), 'PETG upside down (the latches in the bed plane), on the flap\'s hinge lugs and the latches: supports under the disc only; three snap latches onto the hopper\'s ridges, push on, pull off; keyed, goes on one way'),
     ('hopper_flap', hopper_flap, 'tilt', 'petg', 1, None, 'PETG; Ø2 pin + torsion spring'),
     ('barrel', barrel, 'tilt', 'petg', 1, ((0, 1, 0), -90), 'PETG standing; last 15 mm blaze orange'),
     ('laser_mount', laser_mount, 'tilt', 'petg', 1, None, 'PETG; 3 x M3 boresight, 2 x M3 x 10 to the socket pad'),

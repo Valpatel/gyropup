@@ -3,37 +3,37 @@
   "snaps": [
     {
       "name": "hopper_lid-latch-mu-low",
-      "strain": 0.005920809177254224,
+      "strain": 0.004415790868144484,
       "deflection_mm": 1.0,
       "rows": [
         {
           "check": "root strain",
-          "value": 0.005920809177254224,
+          "value": 0.004415790868144484,
           "limit": 0.00770503597122302,
           "pass": true,
-          "detail": "0.59 % at 1.000 mm deflection vs 0.77 % allowed"
+          "detail": "0.44 % at 1.000 mm deflection vs 0.77 % allowed"
         },
         {
           "check": "root radius",
-          "value": 1.8,
+          "value": 1.2,
           "limit": 0.381,
           "pass": true,
-          "detail": "R 1.80 mm (minimum 0.38 mm); R/h 0.60"
+          "detail": "R 1.20 mm (minimum 0.38 mm); R/h 0.60"
         },
         {
           "check": "retention force",
-          "value": 4.703784716655038,
-          "limit": 3.9751,
+          "value": 4.610928715911215,
+          "limit": 4.3233,
           "pass": true,
-          "detail": "4.7 N to pull apart vs 4.0 N required (upper bound: the lowest edition's datasheet modulus)"
+          "detail": "4.6 N to pull apart vs 4.3 N required (upper bound: the lowest edition's datasheet modulus)"
         }
       ],
       "warnings": [],
-      "deflection_force_n": 7.706531468876506,
-      "retention_deflection_force_n": 4.047315087971114,
-      "mating_force_n": 8.956521583767813,
+      "deflection_force_n": 7.554399146733333,
+      "retention_deflection_force_n": 3.9674182569175063,
+      "mating_force_n": 8.779713582351492,
       "self_locking": false,
-      "separation_force_n": 4.703784716655038,
+      "separation_force_n": 4.610928715911215,
       "pass": true,
       "limits": [
         "closed-form small-deflection beam theory (Covestro/Bayer method): no large deflection, contact, creep or fatigue",
@@ -93,37 +93,37 @@
     },
     {
       "name": "hopper_lid-latch-mu-high",
-      "strain": 0.005920809177254224,
+      "strain": 0.004415790868144484,
       "deflection_mm": 1.0,
       "rows": [
         {
           "check": "root strain",
-          "value": 0.005920809177254224,
+          "value": 0.004415790868144484,
           "limit": 0.00770503597122302,
           "pass": true,
-          "detail": "0.59 % at 1.000 mm deflection vs 0.77 % allowed"
+          "detail": "0.44 % at 1.000 mm deflection vs 0.77 % allowed"
         },
         {
           "check": "root radius",
-          "value": 1.8,
+          "value": 1.2,
           "limit": 0.381,
           "pass": true,
-          "detail": "R 1.80 mm (minimum 0.38 mm); R/h 0.60"
+          "detail": "R 1.20 mm (minimum 0.38 mm); R/h 0.60"
         },
         {
           "check": "mating force",
-          "value": 13.882233726911451,
+          "value": 13.6081887221076,
           "limit": 16.6667,
           "pass": true,
-          "detail": "13.9 N to assemble vs 16.7 N allowed (upper bound: the highest edition's datasheet modulus)"
+          "detail": "13.6 N to assemble vs 16.7 N allowed (upper bound: the highest edition's datasheet modulus)"
         }
       ],
       "warnings": [],
-      "deflection_force_n": 7.706531468876506,
-      "retention_deflection_force_n": 4.047315087971114,
-      "mating_force_n": 13.882233726911451,
+      "deflection_force_n": 7.554399146733333,
+      "retention_deflection_force_n": 3.9674182569175063,
+      "mating_force_n": 13.6081887221076,
       "self_locking": false,
-      "separation_force_n": 7.290669511255654,
+      "separation_force_n": 7.1467465950637035,
       "pass": true,
       "limits": [
         "closed-form small-deflection beam theory (Covestro/Bayer method): no large deflection, contact, creep or fatigue",
@@ -183,37 +183,37 @@
     },
     {
       "name": "board_bay_lid-latch-mu-low",
-      "strain": 0.005970149253731343,
+      "strain": 0.0042391592334187055,
       "deflection_mm": 1.0,
       "rows": [
         {
           "check": "root strain",
-          "value": 0.005970149253731343,
+          "value": 0.0042391592334187055,
           "limit": 0.00770503597122302,
           "pass": true,
-          "detail": "0.60 % at 1.000 mm deflection vs 0.77 % allowed"
+          "detail": "0.42 % at 1.000 mm deflection vs 0.77 % allowed"
         },
         {
           "check": "root radius",
-          "value": 1.5,
+          "value": 1.8,
           "limit": 0.381,
           "pass": true,
-          "detail": "R 1.50 mm (minimum 0.38 mm); R/h 0.60"
+          "detail": "R 1.80 mm (minimum 0.38 mm); R/h 0.60"
         },
         {
           "check": "retention force",
-          "value": 3.6231119547846387,
-          "limit": 2.0307,
+          "value": 4.149835844320094,
+          "limit": 2.5604,
           "pass": true,
-          "detail": "3.6 N to pull apart vs 2.0 N required (upper bound: the lowest edition's datasheet modulus)"
+          "detail": "4.1 N to pull apart vs 2.6 N required (upper bound: the lowest edition's datasheet modulus)"
         }
       ],
       "warnings": [],
-      "deflection_force_n": 5.935991542288557,
-      "retention_deflection_force_n": 3.117463184079602,
-      "mating_force_n": 6.898802215274858,
+      "deflection_force_n": 6.798959232060001,
+      "retention_deflection_force_n": 3.5706764312257557,
+      "mating_force_n": 7.901742224116345,
       "self_locking": false,
-      "separation_force_n": 3.6231119547846387,
+      "separation_force_n": 4.149835844320094,
       "pass": true,
       "limits": [
         "closed-form small-deflection beam theory (Covestro/Bayer method): no large deflection, contact, creep or fatigue",
@@ -273,37 +273,37 @@
     },
     {
       "name": "board_bay_lid-latch-mu-high",
-      "strain": 0.005970149253731343,
+      "strain": 0.0042391592334187055,
       "deflection_mm": 1.0,
       "rows": [
         {
           "check": "root strain",
-          "value": 0.005970149253731343,
+          "value": 0.0042391592334187055,
           "limit": 0.00770503597122302,
           "pass": true,
-          "detail": "0.60 % at 1.000 mm deflection vs 0.77 % allowed"
+          "detail": "0.42 % at 1.000 mm deflection vs 0.77 % allowed"
         },
         {
           "check": "root radius",
-          "value": 1.5,
+          "value": 1.8,
           "limit": 0.381,
           "pass": true,
-          "detail": "R 1.50 mm (minimum 0.38 mm); R/h 0.60"
+          "detail": "R 1.80 mm (minimum 0.38 mm); R/h 0.60"
         },
         {
           "check": "mating force",
-          "value": 10.69285479775413,
+          "value": 12.247369849896842,
           "limit": 25.0,
           "pass": true,
-          "detail": "10.7 N to assemble vs 25.0 N allowed (upper bound: the highest edition's datasheet modulus)"
+          "detail": "12.2 N to assemble vs 25.0 N allowed (upper bound: the highest edition's datasheet modulus)"
         }
       ],
       "warnings": [],
-      "deflection_force_n": 5.935991542288557,
-      "retention_deflection_force_n": 3.117463184079602,
-      "mating_force_n": 10.69285479775413,
+      "deflection_force_n": 6.798959232060001,
+      "retention_deflection_force_n": 3.5706764312257557,
+      "mating_force_n": 12.247369849896842,
       "self_locking": false,
-      "separation_force_n": 5.615671944144256,
+      "separation_force_n": 6.4320719355573335,
       "pass": true,
       "limits": [
         "closed-form small-deflection beam theory (Covestro/Bayer method): no large deflection, contact, creep or fatigue",

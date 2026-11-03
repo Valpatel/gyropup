@@ -1,8 +1,9 @@
 """The turret lids' snap latches (#131 wave 1) in the CAD: they exist with the sizes research/snap-fits/snaps.yaml
 declares to cad-agent, each lid seats with no interference, each barb catches its ridge by the declared undercut
 once the lid lifts past the play, and the controls (the lids as they were, the catch parts without ridges) hold
-nothing. Also the backing behind the thin walls, the hopper-full beam's keep-out, the mass bounds the loads use, the
-print orientations, the coupons and the neighbours.
+nothing. Also the backing behind the thin walls, the hopper lid's rotation key, the hopper-full beam's keep-out, the
+mass bounds the loads use, the print orientations (no support on a latch), the coupons, the neighbours and the hopper
+lid as the turret's top (the reason R-fall up is excluded).
 
     .venv/bin/python -m pytest cad/test_turret_snaps.py -q
 """
@@ -75,7 +76,7 @@ def _measure_hopper(P):
     a = tu.hopper_latch_angles(G)[0]
     mid = (a['root'] + a['barb']) / 2
     ri, ro, zb, zt = _section_hopper(lid, mid, r0=r_w + 0.5)                   # the tongue, clear of the disc's rim (0.4)
-    pieces = _pieces_angles(lid, r_w + 0.25, z1 - ts.tongue_width() + ts.PLATE_T + 0.1, z1 - 0.1)
+    pieces = _pieces_angles(lid, r_w + 0.25, z1 - ts.HOPPER['s_hi'] + 0.1, z1 - 0.1)
     root_face, barb = pieces[0][1], pieces[1]
     r_mid = r_w + ts.TONGUE_N + ts.HOPPER['h'] / 2
     tip = _section_hopper(lid, a['barb'], z1=z1 - 0.1, r0=r_w + 0.01)[0]       # the barb's tip
@@ -221,7 +222,7 @@ def test_the_hopper_full_beam_keeps_clear(P):
     G = P['G']
     r_w = G.dial_wall_r + tu.HOPPER_WALL
     for c in (90.0, 270.0):
-        keep = tu.sector_z(r_w + 0.01, 70.0, c - 8.0, c + 8.0, G.hopper_top - 20, G.hopper_top + 3.0)
+        keep = tu.sector_z(r_w + 0.01, 70.0, c - 8.0, c + 8.0, G.hopper_top - ts.HOPPER['s_hi'] - 5.0, G.hopper_top + 12.0)
         assert _vol(keep, P['hopper_lid']) == pytest.approx(_vol(keep, P['hopper_lid_old']), abs=1e-6)   # the disc's rim only
         assert _vol(keep, P['hopper']) == 0.0
 
@@ -253,13 +254,96 @@ def test_print_orientation(P):
         r = rot[part]
         w = v if r is None else _rotate(v, r[0], r[1])
         assert abs(abs(w[2]) - 1.0) < 1e-9, part
-    # the bay lid lies on its plate; the hopper lid stands on the flap's hinge lugs, so the print plan supports it
+    # the bay lid lies on its plate; the hopper lid stands on the flap's hinge lugs and its three latches (their tops
+    # level with the lugs), so the print plan supports its disc
     bed = lambda part: tu._print_pose(P[part], rot[part]).val().intersect(tu.box(-200, 200, -200, 200, -0.001, 0.01).val()).Volume()
     assert bed('board_bay_lid') > 20.0
     import turret_print
     plan = {p[0]: p for p in turret_print.PARTS}
-    assert bed('hopper_lid') < 1.0 and plan['hopper_lid'][5] is True
+    lugs = 2 * 6.0 * 3.0 * 0.011
+    assert bed('hopper_lid') > lugs + 3 * 0.011 * 15.0 and plan['hopper_lid'][5] is True
     assert plan['board_bay_lid'][5] is False and plan['board_bay'][5] is False and plan['hopper'][5] is False
+
+
+def _posed_with(part_shape, piece, rot):
+    """piece moved as part_shape is by _print_pose (turned by rot, then set on the bed)."""
+    if rot:
+        part_shape, piece = (s.rotate((0, 0, 0), rot[0], rot[1]) for s in (part_shape, piece))
+    bb = part_shape.val().BoundingBox()
+    return piece.translate((-(bb.xmin + bb.xmax) / 2, -(bb.ymin + bb.ymax) / 2, -bb.zmin))
+
+
+def _downward_faces(shape, steep=0.7):
+    """(z min, z max, normal z) of the faces that look down more steeply than 45 deg from the vertical (these need
+    support unless they lie on the bed)."""
+    out = []
+    for f in shape.val().Faces():
+        nz = f.normalAt(f.Center()).z
+        if nz < -steep:
+            bb = f.BoundingBox()
+            out.append((bb.zmin, bb.zmax, nz))
+    return out
+
+
+@pytest.mark.parametrize('part', ['hopper_lid', 'board_bay_lid'])
+def test_no_support_touches_a_latch(P, part):
+    """In the lid's print pose every face of a latch that looks down lies on the bed: the hopper lid's tongues and root
+    blocks run up to its hinge lugs' height, so where the lid stands on the lugs they stand on the bed too, and the
+    supports under its disc meet no latch (nor the tongue's face that the pull bends in tension). The barbs' return
+    faces look down 30 deg from the vertical and print without. Control: the latches as they were, ending at the
+    disc's top, hang over the bed and look down there."""
+    G = P['G']
+    rot = {m[0]: m[5] for m in tu.MADE}[part]
+    latches = [tu.hopper_latch(G, a) for a in tu.hopper_latch_angles(G)] if part == 'hopper_lid' else [tu.bay_latch(G)]
+    for latch in latches:
+        posed = _posed_with(P[part], latch, rot)
+        down = _downward_faces(posed)
+        assert down and all(z1 < 1e-6 for z0, z1, nz in down), down
+    if part == 'hopper_lid':
+        old_snaps = dict(ts.HOPPER)
+        try:
+            ts.HOPPER.update(s_lo=-ts.PLATE_T)
+            hung = _posed_with(P[part], tu.hopper_latch(G, tu.hopper_latch_angles(G)[0]), rot)
+        finally:
+            ts.HOPPER.clear()
+            ts.HOPPER.update(old_snaps)
+        assert any(z0 > ts.LID_LUG_PROUD - 0.01 for z0, z1, nz in _downward_faces(hung))
+
+
+# ------------------------------------------------------------------------------------------------ the rotation key
+
+def test_the_lid_goes_on_one_way(P):
+    """Seated as built, the key's tab sits in the hopper's notch with no interference. Turned any other way (every
+    10 deg, the 120 and 240 where its latches line up with the ridges among them) the lid meets the hopper (the tab on
+    the rim, and off the ridges' angles the root blocks on the ridges): it cannot seat. Control: without the tab the
+    lid seats flush at 120 and 240 deg, latched with the fill port 120 deg off the spout."""
+    G, lid, hop = P['G'], P['hopper_lid'], P['hopper']
+    K = ts.KEY
+    assert _vol(lid, hop) == 0.0
+    tab, notch = tu.hopper_key(G)
+    wall = tu.ring_z(G.dial_wall_r + tu.HOPPER_WALL, G.dial_wall_r, G.hopper_top - 10.0, G.hopper_top)
+    assert _vol(tab, hop) == 0.0 and _vol(tab, wall) > 1.0          # in the wall's thickness, where the notch is
+    turn = lambda s, deg: s.rotate((0, 0, 0), (0, 0, 1), deg)
+    for deg in range(30, 360, 30):
+        assert _vol(turn(tab, deg), hop) > 1.0, deg                 # the tab alone lands on the rim
+    for deg in range(10, 360, 10):
+        assert _vol(turn(lid, deg), hop) > 1.0, deg
+    bare = tu.hopper_lid(G, key=False)
+    for deg in (120, 240):
+        assert _vol(turn(bare, deg), hop) == 0.0, deg
+    # the tab stays inside the wall's outer face, in the free arc between the latches
+    assert math.hypot(K['r_out'], K['w'] / 2) < G.dial_wall_r + tu.HOPPER_WALL
+    spans = [(a['start'], a['end']) for a in tu.hopper_latch_angles(G)]
+    assert all(not (a0 - 5 <= K['deg'] % 360 <= a1 + 5) for a0, a1 in spans)
+
+
+def test_the_hopper_lid_is_the_turrets_top(turret):
+    """R-fall up is excluded because upside down the turret lands on its top, the hopper lid (cad/turret_snaps.py
+    INVERTED_REASON): at tilt 0 and at the -25 deg stop nothing stands higher."""
+    for tilt in (0.0, -25.0):
+        posed = turret.posed(0.0, tilt, robot=False)
+        top = max(s.val().BoundingBox().zmax for s in posed.values())
+        assert posed['hopper_lid'].val().BoundingBox().zmax == pytest.approx(top, abs=1e-6), tilt
 
 
 def test_coupons(P):

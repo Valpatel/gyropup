@@ -8,30 +8,30 @@ snaps:
     orientation: along
     repeated: true
     design: 1
-    length_mm: 27.5
+    length_mm: 26.0
     undercut_mm: 1.0
     section:
       rect:
-        width_mm: 8.5837
-        thickness_mm: 3.0
-    root_radius_mm: 1.8
+        width_mm: 24.0
+        thickness_mm: 2.0
+    root_radius_mm: 1.2
     lead_deg: 30.0
     return_deg: 30.0
     friction: 0.35
-    min_retention_n: 3.9751
+    min_retention_n: 4.3233
   - name: hopper_lid-latch-mu-high
     material: petg-bambu-basic
     process: fdm
     orientation: along
     repeated: true
     design: 1
-    length_mm: 27.5
+    length_mm: 26.0
     undercut_mm: 1.0
     section:
       rect:
-        width_mm: 8.5837
-        thickness_mm: 3.0
-    root_radius_mm: 1.8
+        width_mm: 24.0
+        thickness_mm: 2.0
+    root_radius_mm: 1.2
     lead_deg: 30.0
     return_deg: 30.0
     friction: 0.6
@@ -42,30 +42,30 @@ snaps:
     orientation: along
     repeated: true
     design: 1
-    length_mm: 25.0
+    length_mm: 32.5
     undercut_mm: 1.0
     section:
       rect:
-        width_mm: 8.5837
-        thickness_mm: 2.5
-    root_radius_mm: 1.5
+        width_mm: 12.5
+        thickness_mm: 3.0
+    root_radius_mm: 1.8
     lead_deg: 30.0
     return_deg: 30.0
     friction: 0.35
-    min_retention_n: 2.0307
+    min_retention_n: 2.5604
   - name: board_bay_lid-latch-mu-high
     material: petg-bambu-basic
     process: fdm
     orientation: along
     repeated: true
     design: 1
-    length_mm: 25.0
+    length_mm: 32.5
     undercut_mm: 1.0
     section:
       rect:
-        width_mm: 8.5837
-        thickness_mm: 2.5
-    root_radius_mm: 1.5
+        width_mm: 12.5
+        thickness_mm: 3.0
+    root_radius_mm: 1.8
     lead_deg: 30.0
     return_deg: 30.0
     friction: 0.6

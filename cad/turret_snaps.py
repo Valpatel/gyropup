@@ -11,14 +11,17 @@ Two lids, both PETG, both opened again and again:
 
 Each latch is a cantilever tongue lying in the lid's plane, outside the wall it catches, with a barb on its free end
 that hooks a ridge on the outside of that wall. The lids print flat (the bay lid on its plate, the hopper lid upside
-down), so every tongue lies in the bed plane and bends in it: the bending stress runs along the layers ('along'),
-and no layer line crosses the root. The barb and the ridge are both 30 deg ramps (lead and return), so the lid pushes
-on and pulls off by hand with no tool and no release to find: a detent, not a lock. Both ramps print without support
-(30 deg from the vertical on every part).
+down), so every tongue lies in the bed plane and bends in it: the bending stress runs along the layers ('along').
+The root is not all along the layers, though: each tongue is wider (along the closing direction, the print's z) than
+the plate it springs from is thick, so its root block hands the tongue's moment to the plate across layer lines, as
+a twist and a peel of the block's layers. research/snap-fits/snaps.py checks both by hand, with the tongue's own
+bending out of its plane (the pull at the barb) added to its in-plane strain at the root's corner. The barb and the
+ridge are both 30 deg ramps (lead and return), so the lid pushes on and pulls off by hand with no tool and no release
+to find: a detent, not a lock. Both ramps print without support (30 deg from the vertical on every part).
 
 The profile is the same on every latch, drawn in (s, n): s is the depth past the seat plane in the closing direction
 (the bay's rim, the hopper's top edge; the lid's plate is s -2..0) and n the distance out from the caught wall's outer
-face. Only the tongue's length, thickness and the number of latches differ.
+face. The tongue's length, thickness, width (its s extent) and root block and the number of latches differ.
 
 Material: Bambu PETG, declared as cad-agent's 'petg-bambu-basic'. The print plan uses Bambu PETG HF
 (cad/turret_print.py FILAMENT['petg']) and the catalogue lists PETG Basic (catalog/materials.json 'petg'); Basic's two
@@ -71,49 +74,86 @@ def profile():
     b2 = b1 + BARB_LAND
     b3 = b2 + (TONGUE_N - WALL_CLEAR) / _t(LEAD_DEG)
     barb = [(b0, TONGUE_N), (b1, WALL_CLEAR), (b2, WALL_CLEAR), (b3, TONGUE_N)]
-    return {'ridge': ridge, 'barb': barb, 'ridge_s': (s0, s_end), 'tongue_s': (-PLATE_T, b3),
+    # where the barb bears on the ridge as it holds and as it is pulled off: the return face at the ridge's mid-height
+    contact = ret_line((WALL_CLEAR + RIDGE_H) / 2)
+    return {'ridge': ridge, 'barb': barb, 'ridge_s': (s0, s_end), 'barb_s': (b0, b3), 'contact_s': contact,
             'lead_travel': (TONGUE_N - WALL_CLEAR) / _t(LEAD_DEG)}
 
 
-def tongue_width():
+def tongue_s(lat):
+    """The tongue's s extent: from s_lo (at or above the plate's top, -PLATE_T) to s_hi (at or past the barb's end)."""
+    return lat['s_lo'], lat['s_hi']
+
+
+def tongue_width(lat):
     """b: the tongue's size across its bending plane, along the closing direction (the print's z on both lids)."""
-    s0, s1 = profile()['tongue_s']
+    s0, s1 = tongue_s(lat)
     return s1 - s0
+
+
+def root_section(lat):
+    """The root block's section where it leaves the plate (a layer plane, s 0): root_w along the tongue by c across
+    it, from the barb's clearance off the wall to the block's outer face (the tongue's outer face + root_out)."""
+    return lat['root_w'], TONGUE_N - WALL_CLEAR + lat['h'] + lat['root_out']
 
 
 # ---- the latches. L: the root (the root block's face) to the barb's centre, along the tongue (for the hopper's
 # curved tongues, the arc at the tongue's mid-thickness); h: the tongue's thickness in the lid's plane (the bending
-# thickness); barb_w: the barb's and the ridge's width along the tongue, the ridge 1.5 longer each side.
+# thickness); s_lo..s_hi: the tongue's extent along the closing direction (b = s_hi - s_lo, its width: wide, so the
+# pull at the barb bends it little out of its plane); barb_w: the barb's and the ridge's width along the tongue, the
+# ridge 1.5 longer each side; root_w: the root block along the tongue, root_out: the block's thickness outside the
+# tongue's outer face (both size the block's layers against the twist and the peel; snaps.py).
+# The sizes until the review of PR #181 (OLD) bent the tongues out of their plane enough that, added to the in-plane
+# strain at the root's corner, the strain passed the allowable at the high friction bound, and twisted the root
+# block's layers to 9 MPa against 10: research/snap-fits/test_snaps.py keeps them as the control. Now the tongues are
+# wider (b 24 and 12.5 against 8.6), the hopper's thinner and the root blocks bigger.
 # The hopper's latches: centres_deg are the middles of their footprints (root block to barb), 60 deg either side of the
-# fill flap's hinge at the back: each stays 10 deg or more clear of the hopper-full beam's holes at 90 and 270 deg
-# (its emitter and receiver sit outside them) and of the cartridge board in front.
+# fill flap's hinge at the back: each, with its ridge, stays more than 8 deg clear of the hopper-full beam's holes at
+# 90 and 270 deg (its emitter and receiver sit outside them; cad/test_turret_snaps.py) and of the cartridge board in
+# front. The hopper's tongues run down its wall to s 15, past the barb: the width that keeps the out-of-plane bending
+# and the tongue's twist (an arc's tip lies inside its root's tangent) low.
+# The hopper lid prints upside down standing on the fill flap's hinge lugs, LID_LUG_PROUD above its disc: its tongues
+# run up to the same height (s_lo), so they and their root blocks stand on the bed with the lugs and no support
+# touches a latch (the disc between them still prints on supports).
+LID_LUG_PROUD = 7.0     # the flap's hinge lugs above the hopper lid's disc (cad/turret.py hopper_lid)
 HOPPER = {'part': 'hopper_lid', 'catch': 'hopper', 'n': 3, 'centres_deg': (60.0, 180.0, 300.0),
-          'L': 27.5, 'h': 3.0, 'barb_w': 5.0, 'ridge_extra': 1.5, 'root_w': 6.0,
+          'L': 26.0, 'h': 2.0, 's_lo': -(PLATE_T + LID_LUG_PROUD), 's_hi': 15.0, 'barb_w': 5.0, 'ridge_extra': 1.5,
+          'root_w': 8.0, 'root_out': 3.0,
+          'curved': True,         # its tongues are arcs round the hopper: research/snap-fits/snaps.py corrects the straight beam
           'cycles': 2000, 'cycles_basis': 'opened for every manual refill: about 5 a day of play, 200 days a year, 2 years (est)'}
 BAY = {'part': 'board_bay_lid', 'catch': 'board_bay', 'n': 2,
-       'L': 25.0, 'h': 2.5, 'barb_w': 6.0, 'ridge_extra': 1.5, 'root_w': 5.0, 'x_root': -15.0,
+       'L': 32.5, 'h': 3.0, 's_lo': -PLATE_T, 's_hi': 10.5, 'barb_w': 6.0, 'ridge_extra': 1.5,
+       'root_w': 12.0, 'root_out': 0.0, 'x_root': -14.0,
        'cycles': 100, 'cycles_basis': 'opened for board service and bring-up: about 100 over the turret\'s life (est)'}
+OLD = {'hopper_lid': dict(HOPPER, L=27.5, h=3.0, s_lo=-PLATE_T, s_hi=profile()['barb_s'][1], root_w=6.0, root_out=0.0),
+       'board_bay_lid': dict(BAY, L=25.0, h=2.5, s_lo=-PLATE_T, s_hi=profile()['barb_s'][1], root_w=5.0, root_out=0.0,
+                             x_root=-15.0)}
 # The catch walls are thin (the hopper's 1.6, the bay's 1.2), so the lid backs each from inside over the ridge: the
 # hopper lid's spigot (4 deep, 0.1 inside the wall) and two pads on the bay lid's lip behind the bay's ridges. Through
 # the pull-off the barb's contact runs from the ridge's back face up to its top (s 1.9 + PLAY) while the lid lifts
 # lead_travel: the backing reaches it all the way (cad/test_turret_snaps.py).
 BACKING_DEPTH = 4.0     # s; the hopper lid's spigot is G.hopper_top - 4 .. G.hopper_top
+# The hopper lid goes on one way only: a tab on its spigot drops into a notch in the hopper's rim, so the fill port
+# sits over the dock's spout and the barbs over their ridges. Turned any other way the tab stands on the rim and the
+# lid stands depth proud, unlatched and plainly not seated (cad/test_turret_snaps.py). At 0 deg (the front), in the
+# free arc between the latches at 300 and 60 deg; inside the wall's outer face, so nothing shows outside it.
+KEY = {'deg': 0.0, 'w': 4.0, 'depth': 3.0, 'r_in': 48.0, 'r_out': 50.4, 'clear': 0.3}
 BAY_PAD_T = 1.0         # the bay lid's pads, inside the walls: 1.3 clear of the level-2 board's envelope
-HOPPER['curved'] = True  # its tongues are arcs round the hopper: research/snap-fits/snaps.py corrects the straight beam
 HOPPER_WALL_R = 50.7    # the hopper's outside radius (cad/turret.py Geo.dial_wall_r + HOPPER_WALL), checked by the CAD
 # Each part's print orientation: the rotation is cad/turret.py MADE's (checked there). Both lids lie with the tongues in
 # the bed plane, so they bend along the layers; both catch parts print with the closing direction vertical.
 PRINT = {'hopper_lid': {'rotation': [[1, 0, 0], 180], 'how': 'upside down: the tongues lie in the bed plane; it stands on the '
-                                                              'flap\'s hinge lugs, 7 mm proud of the disc, so the disc and the '
-                                                              'latches print on supports (cad/turret_print.py); the barbs\' '
-                                                              'return faces overhang 30 deg from the vertical'},
+                                                              'flap\'s hinge lugs and the three latches, all 7 mm proud of the '
+                                                              'disc, so only the disc prints on supports (cad/turret_print.py) '
+                                                              'and none touches a latch; the barbs\' return faces overhang 30 '
+                                                              'deg from the vertical'},
          'hopper': {'rotation': None, 'how': 'standing on its bottom rim and the baffle: the ridges\' undersides overhang 30 deg '
                                              'from the vertical'},
          'board_bay_lid': {'rotation': [[1, 0, 0], 90], 'how': 'flat, the plate on the bed: the tongues lie in the bed plane; '
                                                                'the barbs\' return faces overhang 30 deg from the vertical'},
          'board_bay': {'rotation': [[1, 0, 0], -90], 'how': 'on its back, the open face up: the ridges\' back faces overhang '
                                                            '30 deg from the vertical'}}
-for _L in (HOPPER, BAY):
+for _L in (HOPPER, BAY, *OLD.values()):
     _L['root_r'] = round(ROOT_RATIO * _L['h'], 3)
 
 # ---- the loads (N): what each lid must hold and the most a hand should need
@@ -126,8 +166,8 @@ SF_RETENTION = 1.2      # cad/turret_studies.py TARGETS['sf_rare'], the turret's
 HAND_N = 50.0           # cad/turret_studies.py PUSH_N: the hand load the turret's structure is checked for (E-push)
 # Masses the latches must hold, upper bounds checked against the CAD (cad/test_turret_snaps.py): each part solid
 # (PETG at 1.25 g/cm3; printed at 40 % infill inside 2 mm walls it is lighter), the fill flap with its pin and spring
-HOPPER_LID_G = 25.0     # hopper_lid + hopper_flap solid (23.7 g), + 1 g for the Ø2 pin and the torsion spring
-BAY_LID_G = 11.5        # board_bay_lid solid (10.9 g)
+HOPPER_LID_G = 32.0     # hopper_lid + hopper_flap solid (30.1 g), + 1 g for the Ø2 pin and the torsion spring
+BAY_LID_G = 14.5        # board_bay_lid solid (13.95 g)
 # PETG's friction is not in the guide's Table 3. Its polyester neighbour PBT is 0.35-0.40 against steel; the table's
 # factor for a plastic on itself is 1.0-2.0 (1.5 for PP, POM and PA). The bounds: 0.35 for retention (the least that
 # holds) and 0.40 x 1.5 = 0.60 for the push and the pull (the most a hand must give). A coupon decides.
@@ -139,6 +179,7 @@ FRICTION = {'low': 0.35, 'high': 0.60,
 # layer-aware PETG allowables of the turret's FEA (cad/turret_studies.py LAYER_ALLOW['petg']): along the layers, and
 # interlaminar shear (0.5 x the 20 MPa across)
 PETG_ALONG_MPA = 29.0
+PETG_ACROSS_MPA = 20.0
 PETG_SHEAR_MPA = 10.0
 
 
@@ -147,7 +188,8 @@ def hopper_load():
     part with 30 g straight down or sideways (cad/turret_studies.py); straight down presses the balls onto the dial,
     away from the lid. Sideways, the hopper's axis leans 25 deg forward at the stop, so a forward fall drives the balls
     and the lid along it towards the lid with 30 g x sin 25 deg = 12.7 g. Recoil (0.039 N s a shot, along the barrel,
-    research/turret-launcher-study.md) acts across the hopper's axis: nothing towards the lid."""
+    research/turret-launcher-study.md) acts across the hopper's axis: nothing towards the lid. Upside down (R-fall up)
+    is excluded, with its reason: load_cases()."""
     n_g = FALL_G * math.sin(math.radians(TILT_DEG))
     m_g = BALLS * BALL_G + HOPPER_LID_G
     f = m_g / 1000 * G0 * n_g
@@ -165,6 +207,46 @@ def bay_load():
     return {'case': 'R-fall sideways, along the lid\'s normal', 'accel_g': FALL_G, 'mass_g': BAY_LID_G,
             'force_n': f, 'sf': SF_RETENTION, 'required_n': SF_RETENTION * f,
             'source': 'cad/turret_studies.py R-fall (FALL_G 30)'}
+
+
+def hopper_inverted_load():
+    """R-fall with the turret upside down: 30 g along the hopper's axis, the balls and the lid towards the lid."""
+    m_g = BALLS * BALL_G + HOPPER_LID_G
+    f = m_g / 1000 * G0 * FALL_G
+    return {'case': 'R-fall up: upside down, 30 g along the hopper\'s axis towards the lid', 'accel_g': FALL_G,
+            'mass_g': m_g, 'force_n': f, 'sf': SF_RETENTION, 'required_n': SF_RETENTION * f,
+            'source': 'cad/turret_studies.py R-fall (FALL_G 30)'}
+
+
+INVERTED_REASON = ('excluded: the latches do not hold it, and need not. Upside down, the turret lands on its top, and '
+                   'the hopper lid is its top (the highest point of the posed turret at tilt 0 and -25: '
+                   'cad/test_turret_snaps.py): the ground holds the lid on while the balls stop against it. Left is a '
+                   'landing with the lid hanging free (the robot on its back with the turret over an edge): a detent '
+                   'that holds the case\'s load at the low bound pulls off at the high bound with a fixed multiple of '
+                   'it (the modulus bounds x the friction bounds, research/snap-fits/summary.json), over the 50 N a '
+                   'hand gives; a lock with a release would be a tool or a catch to find on every refill. If it opens, '
+                   '30 foam rounds spill: no hazard, no damage, a refill.')
+
+
+def load_cases(part):
+    """Every load case the lid was weighed against: 'design' (the one its latches are sized for), 'included' (held,
+    no more than the design case) and 'excluded' (not held, with the reason). research/snap-fits/snaps.py checks
+    each against the latches' retention."""
+    if part == 'hopper_lid':
+        return [dict(hopper_load(), status='design'),
+                {'case': 'R-fall down: upright, 30 g along the hopper\'s axis away from the lid', 'status': 'included',
+                 'force_n': 0.0, 'required_n': 0.0, 'basis': 'presses the balls onto the dial, away from the lid'},
+                {'case': 'R-fall sideways with the barrel level (tilt 0)', 'status': 'included', 'force_n': 0.0,
+                 'required_n': 0.0, 'basis': 'across the hopper\'s axis: the balls bear on the wall, not the lid'},
+                {'case': 'recoil', 'status': 'included', 'force_n': 0.0, 'required_n': 0.0,
+                 'basis': 'along the barrel, across the hopper\'s axis (0.039 N s a shot, '
+                          'research/turret-launcher-study.md)'},
+                dict(hopper_inverted_load(), status='excluded', reason=INVERTED_REASON)]
+    return [dict(bay_load(), status='design'),
+            {'case': 'R-fall in any other direction', 'status': 'included', 'force_n': bay_load()['force_n'],
+             'required_n': bay_load()['required_n'],
+             'basis': 'the lid\'s own mass at 30 g: its component along the lid\'s normal is at most the design '
+                      'case\'s (the bay holds no loose load against the lid)'}]
 
 
 LOADS = {'hopper_lid': hopper_load, 'board_bay_lid': bay_load}
@@ -185,7 +267,7 @@ def spec():
         for mu in ('low', 'high'):
             s = {'name': snap_name(part, mu), 'material': MATERIAL, 'process': PROCESS, 'orientation': ORIENTATION,
                  'repeated': True, 'design': 1, 'length_mm': lat['L'], 'undercut_mm': UNDERCUT,
-                 'section': {'rect': {'width_mm': round(tongue_width(), 4), 'thickness_mm': lat['h']}},
+                 'section': {'rect': {'width_mm': round(tongue_width(lat), 4), 'thickness_mm': lat['h']}},
                  'root_radius_mm': lat['root_r'], 'lead_deg': LEAD_DEG, 'return_deg': RETURN_DEG,
                  'friction': FRICTION[mu]}
             if mu == 'low':

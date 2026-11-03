@@ -100,7 +100,7 @@ ROLE = {
     'flywheel_tyre': 'TPU tyre: the 22.7 mm ball is squeezed between two of them and leaves at nearly their surface speed.',
     'dial': 'The feed dial: 8 pockets on the feed servo\'s horn. Each 45 deg step drops one ball through the exit hole; parked, a spoke covers the hole.',
     'hopper': 'Clear tube over the dial: 30 balls fall into the pockets by gravity; the cone on the dial stirs them.',
-    'hopper_lid': 'The hopper lid, with the fill port for the dock\'s spout; three snap latches hold it on.',
+    'hopper_lid': 'The hopper lid, with the fill port for the dock\'s spout; three snap latches hold it on, and a key sets it on one way.',
     'hopper_flap': 'Sprung flap over the fill port: the dock\'s spout pushes it open.',
     'barrel': '100 mm barrel, bore 2 mm over the ball after the wheels: it only guides. Two IR gates 60 mm apart time every shot. Blaze-orange tip.',
     'laser_mount': 'Holds the aiming laser over the barrel, parallel to it (three boresight set screws), on the cartridge\'s top: it comes off with the cartridge, so it stays boresighted to its own barrel.',
