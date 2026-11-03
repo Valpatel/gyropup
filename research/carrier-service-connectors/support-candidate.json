@@ -53,8 +53,8 @@
       "cad/studies.py": "35149401f3a753024568eba0b34765419ed535d42c5bf19a11544d13cad8f823",
       "cad/test_body.py": "5875a19bc2b3591721dc466d2b598b3b7cdf5dbfba22cdcde1c2017bcae66b27",
       "cad/test_leg_loads.py": "0ed04011ea672aa8bc387af272ddfa1783ec4fa1f379fde1e3dfbd9201867b51",
-      "cad/test_turret_solids.py": "5fce0394631ca5f5fb8868b6b8ecbc5ea10db6541764b8c04fb590072710b056",
-      "cad/turret.py": "dc59be9a71f62e8e5aa18bd48b5a01550b82f41ac4037d9f0e74bb1720f8fee7",
+      "cad/test_turret_solids.py": "61eee61b68461574f75c316fa16d4d566ab097f862fadd6ee2b0b175655c0d48",
+      "cad/turret.py": "71a663ea426e583d1fcbef1f36c2e0d8ff63a7a68462914724565015914ff5b4",
       "cad/turret_assembly.py": "480799c724c799954a520c1ecd9c0b4d383cce752efdac4f3c3f6a6da7aaf2e3",
       "cad/turret_base_board.py": "153e49871e0a3359478cd34a50daf7e44f4497970097475c829dbbcdacda90ba",
       "cad/turret_boards.py": "c7a115d2fe3cefddf46b0dd521e21076e1f7721235df3e7bd22fadb6e165707b",
@@ -73,9 +73,9 @@
       "cad/wheel_fit.py": "57c75e2462fb6f3606b81e4baac284dcac9a7b67bb47183f425d8bb8f730febd",
       "catalog/alternates.json": "9d5da650878fefa12654cdedae841d2daf22c1101c7f038018a75b8921d5ee3b",
       "catalog/body.json": "91a27038348a4e8e4beb3ede92c5c84a073d4728cd73e14f66d3e3226ab9b52b",
-      "catalog/designed-media-validation.json": "7f934fba41f6f7d1ebe532ef630a4bf07a79c28eb6f8d47daef0ed9342cab6b4",
+      "catalog/designed-media-validation.json": "4c6267a8d997057edce1cfc2fbf1d738d8731ca03a981b90f6999a15a554b889",
       "catalog/hardware.json": "af0f7f3bdce4ee93649e278106d00a93fe2ebea3569c057f1d2a04fe4b360015",
-      "catalog/images.json": "3a46d12d250a55ac563d6c96945afad4a3639f504c828227625c8bcfc938adcc",
+      "catalog/images.json": "0822b53a545f95ca449026432f69568afc6157461a7d5a86e2e539ec93f4889b",
       "catalog/index.json": "5e77d00c8ab4961f5da0bb2d5692a23170b9f4143e05d850d7b33fe36d70f334",
       "catalog/interfaces.json": "3889bc34503444f389e7951d74944f37b7e57b0b2b3be68ed596b959e83a46af",
       "catalog/leg_actuators.json": "b8ed3125cca22e9936b929fa1529395b1dead7a9585c21c63995bb294fa31bc5",
@@ -100,7 +100,7 @@
     },
     "toolkit_sources_sha256": "c2941322d5f3d000d3777b0047567211d06855861fa5e14229d7d7519fef3ed3"
   },
-  "input_fingerprint": "b85e5837c355841b2d11e0e8c86f09ce606561bfa6a9b705b0aac8bac9fec6fd",
+  "input_fingerprint": "e766562efb4bfac4b3bda4488f3a7de512c3d55958a9659d91bba57676e21f2b",
   "context_files": {
     "tools/check-carrier-connector-support.py": "ddaef1821bb40721ef7f91f02e04b697c7fbc754829ae1eff17647329345838a",
     "tools/check-carrier-connector-inputs.py": "20b4f98e5cef0067d921e645b44fd0809ae2bffee1f1055351e7188623ef0c45",
@@ -6362,11 +6362,11 @@
     "C2/C3/servo parking, actual retained tails/junctions and added protection board remain incomplete.",
     "Wire-exit and tool corridors are explicit design reservations, not detailed cable/tool models."
   ],
-  "elapsed_seconds": 83.616,
+  "elapsed_seconds": 88.78,
   "public_artifact_sha256": {
-    "carrier-support-candidate.step": "61aa2ef4079afb4e74afbd6c868cabf7ad44b3541e1c4c52fe0dcd9482c79cfb",
-    "C3-support-candidate.step": "bf834af06e9c9a81dd04e0deb3dea71d4ae234376fbc4d77f584308163788e93",
-    "C3-support-layout.step": "3c0babf65bae716a4b23ebee8e168a93896ae63517cd6bba4f87de3d0f1a2344"
+    "carrier-support-candidate.step": "825c885089c9b3c0a83846e2bd43c567f494526e6daabba5c01a3e10845faef0",
+    "C3-support-candidate.step": "4c81a810f5d9156dbe5eac3c0aff75f9ea543f642f19bdb55f0ddc549a90dbaa",
+    "C3-support-layout.step": "4c4d3d767c0257bdd16b8653d7494d4d5af64924deeb848c4c1f594d36535a79"
   },
   "public_geometry_note": "Independently authored dimension representation; not manufacturer CAD; no threads or flexible clip geometry."
 }

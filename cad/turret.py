@@ -1015,26 +1015,29 @@ def tilt_yoke(G):
     # the CT latch's knurled head (Ø16, under the cradle's rail) swings down past the bridge's front top edge as the
     # cradle depresses: from about -22.9 deg it would cut 1.7 mm into the bridge, short of the -25 deg stop (cad-agent's
     # motion gate, #61). Relieve the bridge by the head's sweep to the stop plus 2 deg, 1 mm clear all round.
-    return s.cut(thumb_sweep(G, clear=1.0, to_deg=-(TILT_STOP_DEG + 2.0)))
+    return s.cut(thumb_sweep(G, clear=1.0, to_deg=G.tilt_min - 2.0))
 
 
-TILT_STOP_DEG = 25.0                                    # the hard stop's depression (deg; the lug on the -y arm's sectors)
 
 
-def thumb_solid(G, clear=0.0):
-    """The CT latch thumbscrew's head and collar in the tilt (C) frame, each radius grown by clear (mm)."""
+def thumb_solid(G, clear=0.0, round_edge=0.0):
+    """The CT latch thumbscrew's head and collar in the tilt (C) frame, each radius grown by clear (mm). round_edge
+    fillets the head's bottom edge: with round_edge = clear the grown head still clears the real one by clear there, and
+    the notch it sweeps has an R(clear) floor instead of a sharp re-entrant corner (#178 review)."""
     lx, ly = ct_points(G)[1]
     z0r = G.rail_z[0] - RAIL_DEEP['dz']
     hd, hh = THUMB['head']
     cd, ch = THUMB['collar']
-    return (cyl_z(cd / 2 + clear, z0r - ch, z0r + 0.01, lx, ly)
-            .union(cyl_z(hd / 2 + clear, z0r - ch - hh - clear, z0r - ch + 0.01, lx, ly)))
+    head = cyl_z(hd / 2 + clear, z0r - ch - hh - clear, z0r - ch + 0.01, lx, ly)
+    if round_edge:
+        head = head.edges('<Z').fillet(round_edge)
+    return cyl_z(cd / 2 + clear, z0r - ch, z0r + 0.01, lx, ly).union(head)
 
 
 def thumb_sweep(G, clear=1.0, to_deg=-27.0, step=1.0):
     """The latch head's swept volume in the pan frame from tilt 0 to to_deg (as Turret.pose_shape poses the tilt frame):
-    the union of its poses every step degrees, each grown by clear."""
-    t = thumb_solid(G, clear).translate((-G.tilt_x, 0, G.path_t))
+    the union of its poses every step degrees, each grown by clear, the head's bottom edge rounded by clear."""
+    t = thumb_solid(G, clear, round_edge=clear).translate((-G.tilt_x, 0, G.path_t))
     n = max(1, math.ceil(abs(to_deg) / step))
     out = None
     for i in range(n + 1):
@@ -1827,7 +1830,8 @@ def bought_parts(G):
     out['ring_coupling'] = (tube, 'pan', 1.0, TUBE['note'] + ', coupling the rotor to the driver')
     rl, zl = LEADS['d'] / 2, LEADS['z_run']
     # the bend is a ball of the bundle's radius: two equal cylinders whose axes meet (the vertical run's end tangent to
-    # the horizontal run's top) give OCCT an invalid solid, which cad-agent's gates refuse (#61)
+    # the horizontal run's top) give OCCT an invalid solid, which cad-agent's gates refuse (#61). It is a zero-radius
+    # corner in the model only: the real bundle bends on its own minimum radius, which this envelope does not check
     leads = (cyl_z(rl, rg['top'] + 0.3, zl, 0.0, -LEADS['r']).union(cyl_y(rl, -G.arm_y[1] - 3.0, -LEADS['r'], 0.0, zl))
              .union(cq.Workplane('XY').sphere(rl).translate((0.0, -LEADS['r'], zl))))
     out['ring_leads_rotor'] = (leads, 'pan', 0.0, 'the ring\'s rotor leads, a Ø7.5 bundle (12 x 26 AWG + 2 x 17 AWG): beside the coupling, up '
