@@ -3498,7 +3498,7 @@
     "splice_application": "https://www.te.com/commerce/DocumentDelivery/DDEController?Action=srchrtrv&DocFormat=pdf&DocLang=English&DocNm=114-2157&DocType=Specification+Or+Standard&PartCntxt=320559",
     "wire": "https://www.remingtonindustries.com/content/PTFE%20Hook%20Up%20Wire%20Data%20Sheet.pdf"
   },
-  "seconds": 30.46,
+  "seconds": 31.58,
   "runtime": {
     "cadquery": "2.8.0",
     "OCP": "7.9.3.1"
@@ -3555,7 +3555,8 @@
       "cad/studies.py": "35149401f3a753024568eba0b34765419ed535d42c5bf19a11544d13cad8f823",
       "cad/test_body.py": "5875a19bc2b3591721dc466d2b598b3b7cdf5dbfba22cdcde1c2017bcae66b27",
       "cad/test_leg_loads.py": "0ed04011ea672aa8bc387af272ddfa1783ec4fa1f379fde1e3dfbd9201867b51",
-      "cad/turret.py": "e4003ceac5d33838ccda718d2fb6f5c66171bd7040c3b219b7fab7dd3da3fd0b",
+      "cad/test_turret_solids.py": "5fce0394631ca5f5fb8868b6b8ecbc5ea10db6541764b8c04fb590072710b056",
+      "cad/turret.py": "dc59be9a71f62e8e5aa18bd48b5a01550b82f41ac4037d9f0e74bb1720f8fee7",
       "cad/turret_assembly.py": "480799c724c799954a520c1ecd9c0b4d383cce752efdac4f3c3f6a6da7aaf2e3",
       "cad/turret_base_board.py": "153e49871e0a3359478cd34a50daf7e44f4497970097475c829dbbcdacda90ba",
       "cad/turret_boards.py": "c7a115d2fe3cefddf46b0dd521e21076e1f7721235df3e7bd22fadb6e165707b",
@@ -3651,7 +3652,8 @@
     "cad/studies.py": "35149401f3a753024568eba0b34765419ed535d42c5bf19a11544d13cad8f823",
     "cad/test_body.py": "5875a19bc2b3591721dc466d2b598b3b7cdf5dbfba22cdcde1c2017bcae66b27",
     "cad/test_leg_loads.py": "0ed04011ea672aa8bc387af272ddfa1783ec4fa1f379fde1e3dfbd9201867b51",
-    "cad/turret.py": "e4003ceac5d33838ccda718d2fb6f5c66171bd7040c3b219b7fab7dd3da3fd0b",
+    "cad/test_turret_solids.py": "5fce0394631ca5f5fb8868b6b8ecbc5ea10db6541764b8c04fb590072710b056",
+    "cad/turret.py": "dc59be9a71f62e8e5aa18bd48b5a01550b82f41ac4037d9f0e74bb1720f8fee7",
     "cad/turret_assembly.py": "480799c724c799954a520c1ecd9c0b4d383cce752efdac4f3c3f6a6da7aaf2e3",
     "cad/turret_base_board.py": "153e49871e0a3359478cd34a50daf7e44f4497970097475c829dbbcdacda90ba",
     "cad/turret_boards.py": "c7a115d2fe3cefddf46b0dd521e21076e1f7721235df3e7bd22fadb6e165707b",
@@ -3688,7 +3690,7 @@
     "catalog/wheel_motors.json": "e92baa60e433e177d87450145943c32bd6b60bebb97e1c1746354aa00f2dbc99",
     "designs/default.json": "3dc7d04d0d6eeec81decefa360f3904b093f19515d6944910c2cb20c976db211"
   },
-  "input_fingerprint": "32d451b04f2d8e1770717dbbbb9636bfa0485f82ebe2e66cf340d431b84bc230",
+  "input_fingerprint": "b85e5837c355841b2d11e0e8c86f09ce606561bfa6a9b705b0aac8bac9fec6fd",
   "relation_tolerances": {
     "touch_mm": 0.01,
     "overlap_mm3": 1e-06,
@@ -7441,8 +7443,8 @@
     "Base and carrier changes require renewed structural, print and physical-fit qualification."
   ],
   "artifact_sha256": {
-    "carrier-wiring-candidate.step": "cad4b40cdae4bfacc35bd795c0c9217571a0f1da62fbb81a2b9b283514383947",
-    "pan-base-wiring-candidate.step": "22c7d608996aabd6abc94fded5278b2cc09858a2baf0e7fb6b917a614957e44a",
-    "carrier-wiring-layout.step": "637e48549abc117f6e65724d87c04c79c9a89cc36d9a254e2ff302be87ee301a"
+    "carrier-wiring-candidate.step": "98dd614d93bceb2c707d168554aecce47371284fc702a6242960c5da61a914b8",
+    "pan-base-wiring-candidate.step": "8e4b537d199088a4b34d165fb8820d8f2ebbc5bbb64e57ee3e4993364cda4445",
+    "carrier-wiring-layout.step": "a16ba5c0332c99c62bc55c20b47f6e8953785d0e28ff444ec97ae9f09e894de1"
   }
 }

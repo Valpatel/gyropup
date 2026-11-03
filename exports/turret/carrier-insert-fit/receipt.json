@@ -1,6 +1,6 @@
 {
   "schema": "gyropup.carrier-insert-fit/1",
-  "source_revision": "e25a5d29a20e299b587564f91732d0976c1496e6",
+  "source_revision": "a6f6ab875aeec5d467d17826f282bbb44877a3bf",
   "inputs": {
     "files": {
       "cad/assembly.py": "6e328b8342bde8e2d63abf972a5bff7a2e14389f000d903ec0e1d6bcb7498864",
@@ -52,7 +52,8 @@
       "cad/studies.py": "35149401f3a753024568eba0b34765419ed535d42c5bf19a11544d13cad8f823",
       "cad/test_body.py": "5875a19bc2b3591721dc466d2b598b3b7cdf5dbfba22cdcde1c2017bcae66b27",
       "cad/test_leg_loads.py": "0ed04011ea672aa8bc387af272ddfa1783ec4fa1f379fde1e3dfbd9201867b51",
-      "cad/turret.py": "e4003ceac5d33838ccda718d2fb6f5c66171bd7040c3b219b7fab7dd3da3fd0b",
+      "cad/test_turret_solids.py": "5fce0394631ca5f5fb8868b6b8ecbc5ea10db6541764b8c04fb590072710b056",
+      "cad/turret.py": "dc59be9a71f62e8e5aa18bd48b5a01550b82f41ac4037d9f0e74bb1720f8fee7",
       "cad/turret_assembly.py": "480799c724c799954a520c1ecd9c0b4d383cce752efdac4f3c3f6a6da7aaf2e3",
       "cad/turret_base_board.py": "153e49871e0a3359478cd34a50daf7e44f4497970097475c829dbbcdacda90ba",
       "cad/turret_boards.py": "c7a115d2fe3cefddf46b0dd521e21076e1f7721235df3e7bd22fadb6e165707b",
@@ -696,10 +697,10 @@
   ],
   "files": {
     "base-anchor.3mf": "6c2a09c805a503e327404999aba049bd897911074f535795d627955cb870a615",
-    "base-anchor.step": "72b5fde2c02546c6f6b82ace5f0d7d9e84ec6dfcfa866f6dc11b275db0b4d8a2",
+    "base-anchor.step": "9f8c6ac69f2c6f8002d6252013cd94de5f389bf06422b75f513635897ff81d18",
     "base-anchor.stl": "ce29f74ad434979e27b0025e5bb06cfcc07bd5ded646b1a483fc5f211352d8d7",
     "carrier-boss.3mf": "b46b7c50eb099ea07d1e05f0551bef47ffe4c697ffbdcf0cd5af2d954d619bd2",
-    "carrier-boss.step": "d0e0b716183c873dd232bd47536237cd2996cbf346cb166b9897a81cc2a6d06a",
+    "carrier-boss.step": "382ec5aeb1dddc480defe69f5db3154299d96dec18a234ea62874120dcab56b3",
     "carrier-boss.stl": "374fcbef1209f1ea25dfa195dcf7106e197ecbbaf919842c50a924967da563d3",
     "measurements.csv": "763fce59e411c8a81f168694643a536181d41c1891dffa0eec1f62ad4f8f8820"
   }
