@@ -99,6 +99,14 @@ practice recorded three shots, three hits and three knockdowns. The unchanged en
 guard produced and passed both companions, the poster and the receipts. The leg insert is
 unchanged. The previous capture's note follows.
 
+The browser frames were recaptured again on 2026-11-03 (UTC) for
+[PR 173](https://github.com/Valpatel/gyropup/pull/173), the site's new light and dark themes. The capture
+ran from `0b0c8b6e7586fb674e97253299433af85d36e6ef`, served assets `50ab399d7d38a12d556a`. That PR changes the
+colour tokens in `web/theme.css`, which the guard binds, so it rejected the old capture. The recorder still runs
+in the light theme. All 480 frames came through an owned, temporary `createSiteServer` listener, closed afterwards.
+The unchanged encoder and guard produced and passed both companions, the poster and the receipts. The leg and E1
+inserts are unchanged. The previous capture's note follows.
+
 The browser frames were recaptured on 2026-11-03 (UTC) for
 [PR 166](https://github.com/Valpatel/gyropup/pull/166), the site's dark theme, from
 `cb5c453da1c9c9872160fec31d5d0e830a161786`, served assets `5bdb57e4c82e65c941f1`. That PR

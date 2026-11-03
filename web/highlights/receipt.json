@@ -8,7 +8,7 @@
     "seconds": 22,
     "audio": false
   },
-  "source_revision": "cb5c453da1c9c9872160fec31d5d0e830a161786",
+  "source_revision": "0b0c8b6e7586fb674e97253299433af85d36e6ef",
   "source_hashes": {
     "designer/cadrig.js": "a2cb4029ef786e0793c5eb0018e0aa8d919d829bde8c5d378c1b1480c457faaf",
     "designer/character/eyes.js": "3348578a121b75ab7425c3b6591e864b41b09512e67b642832e6c6b683d2e11b",
@@ -170,7 +170,7 @@
     "web/model-links.js": "ffb3fc044b2ce527840b0209c13074c3c7ccb187fd7bf47ff9b971311e643e2c",
     "web/prototype-notice.css": "9454789c6427d72af28f35611c58b3fad45fea9c0fb14051bec76e0bc4013078",
     "web/prototype-notice.js": "370598d683904c2b656052fa0c5d42dac758e6d3e1289a049a38abfeda3647a1",
-    "web/theme.css": "982a7cf721af368bc0a50e855be64525951027db3cc744fb322478560ed3e1ec",
+    "web/theme.css": "2495f47062a72293aeb029a17961546eefc39f242d681e9ff7d0a119c79986c5",
     "web/theme.js": "55be43b5feb7f737dbabcc4987af243a74547f760073a05a8457c0d3e1496fb1"
   },
   "segments": [
@@ -416,23 +416,23 @@
   ],
   "outputs": {
     "gyropup-highlights.mp4": {
-      "sha256": "733eb9303b1834800089c71101d8ce52c700d685cb5ab25b3d1b359f85d1eb82",
-      "bytes": 1841524
+      "sha256": "281ed5aebc0e2e35ed94a812dd864e5df8759dd4476704f6507fee5f3a194778",
+      "bytes": 1860823
     },
     "gyropup-highlights.webm": {
-      "sha256": "0ac57bdc0461482cba6c7e199f8cf94393fb9faafb13893fdac9cf75f7ca5381",
-      "bytes": 1463178
+      "sha256": "6de982b031c6cd099101016d3e65192be00461fd45c3ac902327d3e0e3072117",
+      "bytes": 1481688
     },
     "gyropup-highlights.webp": {
-      "sha256": "a826b033ee34a943516c30c7d1e0e5ca3dcc8e7ea8bada2b027c26035b2acb04",
-      "bytes": 32584
+      "sha256": "bf6d43afdae1280a2767053252e4686cc64e54011bea856960be72f51f25c4d9",
+      "bytes": 32560
     },
     "capture-receipt.json": {
-      "sha256": "60639c5cf8047e100c3155615e47b5333c1bbc0eaae4fd70f9f2a1bac11f91cf",
-      "bytes": 114162
+      "sha256": "4e57a36ebb2f8e8c36f859de1810b1b1582500f642219b6a0edee31bb36dd2f4",
+      "bytes": 114163
     },
     "capture-frames.json": {
-      "sha256": "3b0a4ecc7cda2f298ab46fdb2914d50bb8036ba40321eeef1f34133cadbd3947",
+      "sha256": "f6cc18ecb57c014cf166ffb136b1e3a01bda694274679f67c5edf31e6da61f71",
       "bytes": 100989
     }
   }

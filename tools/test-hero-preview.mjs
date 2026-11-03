@@ -99,7 +99,7 @@ await acknowledgePrototypeNotice(context);
    for(const k of ['x','y','w','h'])assert.ok(Math.abs(c.poster[k]-c.canvas[k])<.1,`Poster/canvas ${k} at${width}dpr${dpr}: ${JSON.stringify(c)}`);
    assert.ok(c.silhouetteIoU>.94,`First visible silhouette aligns ${width}dpr${dpr}: ${JSON.stringify(c)}`);
    assert.ok(c.meanColorError<8,`Same robot pose/lighting ${width}dpr${dpr}: ${JSON.stringify(c)}`);
-   assert.match(c.background,/217, 237, 243/,'Cool blue background contrasts with the yellow robot');
+   assert.match(c.background,/220, 238, 255/,'Cool blue background contrasts with the yellow robot');
    assert.ok(await page.evaluate(()=>document.documentElement.scrollWidth<=innerWidth+1));
    const controls=await page.locator('.hero-controls').evaluate(e=>[...e.querySelectorAll('button,summary')].map(b=>{const r=b.getBoundingClientRect();return{w:r.width,h:r.height,x:r.x,right:r.right};}));
    for(const b of controls)assert.ok(b.w>=44&&b.h>=44&&b.x>=0&&b.right<=width,`Reachable control ${width}: ${JSON.stringify(b)}`);

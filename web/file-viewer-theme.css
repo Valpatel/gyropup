@@ -3,18 +3,18 @@
 /* Gyropup's consumer palette, light and dark (the site's theme, web/theme.js). The reusable viewer remains product-neutral. */
 :root,.file-viewer{--file-font:'Inter',system-ui,sans-serif}
 :root[data-file-theme=light],.file-viewer[data-file-theme=light]{
-  --file-background:#fffdf5;--file-canvas:#d9edf3;--file-surface:#fffaf2;
-  --file-text:#173d3c;--file-muted:#526863;--file-border:#819384;
-  --file-control:#fffdf5;--file-control-hover:#e2efda;--file-control-text:#173d3c;
-  --file-focus:#187a79;--file-error:#a62b19;--file-accent:#28736c;
-  --file-grid:#819d8e;--file-glow:#48778b;
+  --file-background:#fffbf3;--file-canvas:#dceeff;--file-surface:#fffdf8;
+  --file-text:#1d2350;--file-muted:#4f5677;--file-border:#7f86a2;
+  --file-control:#fffdf8;--file-control-hover:#dcf6e9;--file-control-text:#1d2350;
+  --file-focus:#1570c4;--file-error:#a62b19;--file-accent:#0a5fa3;
+  --file-grid:#7aa6cc;--file-glow:#4b7c9a;
 }
 :root[data-file-theme=dark],.file-viewer[data-file-theme=dark]{
-  --file-background:#15211b;--file-canvas:#1b3440;--file-surface:#1c2c24;
-  --file-text:#f1e9d8;--file-muted:#a9b5aa;--file-border:#6f8577;
-  --file-control:#1a2922;--file-control-hover:#26392f;--file-control-text:#f1e9d8;
-  --file-focus:#63d6cc;--file-error:#f0a595;--file-accent:#63d6cc;
-  --file-grid:#4d6458;--file-glow:#4f7d8a;
+  --file-background:#0a0a0f;--file-canvas:#10101a;--file-surface:#0e0e14;
+  --file-text:#eef2f8;--file-muted:#98a2b5;--file-border:#2b7480;
+  --file-control:#12121a;--file-control-hover:#1a1a2e;--file-control-text:#eef2f8;
+  --file-focus:#00f0ff;--file-error:#ff6b8f;--file-accent:#4fe6f2;
+  --file-grid:#1e3a44;--file-glow:#00b8c8;
 }
 .file-title h1{font-weight:750;letter-spacing:-.025em}
 .file-header{padding-top:14px;padding-bottom:14px}
