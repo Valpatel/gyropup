@@ -9,7 +9,8 @@ this runs `turret_studies.run(only=parts)` and replaces just those parts' result
 rebuilds the verdict and the table the same way run() does (verdict() and table() mirror it; the test evaluates
 run()'s own expressions from cad/turret_studies.py's source and checks the two agree). The other parts keep their
 recorded results, and the masses those were solved with stay in `masses`. Each refresh appends to `refreshed`: the
-parts, the reason, the masses it solved with, the commit, the SHA-256 of cad/turret.py and the cad-agent version.
+parts, the reason, the masses it solved with, the commit, the SHA-256 of cad/turret.py and the cad-agent actually
+imported (its version and tree).
 """
 import argparse
 import json
@@ -75,14 +76,26 @@ def merge(old, new, parts, why, provenance=None):
     return merged
 
 
-def provenance():
-    """What this refresh ran on: the commit, cad/turret.py's SHA-256 and the cad-agent version."""
+def provenance(cadagent_module):
+    """What this refresh runs on: the commit, cad/turret.py's SHA-256, and the cad-agent that is actually imported
+    (its checkout's git commit, else the SHA-256 of its source files) with its version from that tree's pyproject,
+    not the venv's metadata, which can name another install. Taken before the solve, so a failure costs nothing."""
     import hashlib
+    import re
     import subprocess
-    from importlib.metadata import version
+    src = Path(cadagent_module.__file__).resolve().parent
+    try:
+        toolkit = subprocess.check_output(['git', 'rev-parse', 'HEAD'], cwd=src, text=True, stderr=subprocess.DEVNULL).strip()
+    except (subprocess.CalledProcessError, FileNotFoundError):
+        h = hashlib.sha256()
+        for f in sorted(src.rglob('*.py')):
+            h.update(f.relative_to(src).as_posix().encode() + b'\0' + f.read_bytes())
+        toolkit = 'sha256:' + h.hexdigest()
+    pyproject = src.parent.parent / 'pyproject.toml'
+    m = re.search(r'^version\s*=\s*"([^"]+)"', pyproject.read_text(), re.M) if pyproject.exists() else None
     return {'commit': subprocess.check_output(['git', 'rev-parse', 'HEAD'], cwd=ROOT, text=True).strip(),
             'turret_py_sha256': hashlib.sha256((ROOT / 'cad/turret.py').read_bytes()).hexdigest(),
-            'cad_agent': version('cad-agent')}
+            'cad_agent': m.group(1) if m else None, 'cad_agent_tree': toolkit}
 
 
 def main():
@@ -94,10 +107,12 @@ def main():
     a = ap.parse_args()
     sys.path.insert(0, str(ROOT / 'cad'))
     import numpy as np
+    import cadagent
     import turret_studies as ts
     old = json.loads(SUMMARY.read_text())
+    prov = provenance(cadagent)
     new = ts.run(a.mesh, anim=not a.no_anim, only=a.parts)
-    merged = merge(old, new, a.parts, a.why, provenance())
+    merged = merge(old, new, a.parts, a.why, prov)
     SUMMARY.write_text(json.dumps(merged, indent=1, default=lambda o: o.tolist() if isinstance(o, np.ndarray) else str(o)) + '\n')
     for r in merged['results']:
         if r['part'] in a.parts:
