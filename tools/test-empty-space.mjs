@@ -10,8 +10,9 @@
  *   node tools/test-empty-space.mjs --controls       # only the planted defects, with what was found
  *
  * Before the site, the measures run on planted defects (a tall empty band crossed by rules, hairlines, three nested
- * bordered boxes, a near-empty <svg> and an invisible button; a blank picture; a blank canvas; a picture that never
- * loads; a squeezed link column with inline markup) and must catch each one, so a broken measure cannot pass every page.
+ * bordered boxes, a near-empty <svg> with a background and a hit area, a chart box with only a background, and an
+ * invisible button; a blank picture; a blank canvas; a picture that never loads; a squeezed link column with inline
+ * markup) and must catch each one, so a broken measure cannot pass every page.
  * On a failure it saves a screenshot with the finding outlined in test-results/empty-space/, and it writes every
  * page's numbers to test-results/empty-space/results.json. */
 import { mkdir, readdir, writeFile } from 'node:fs/promises';
@@ -204,7 +205,8 @@ async function controls() {
         <p>Planted: the paragraph above the empty band.</p>
         <div id="planted-gap" style="height:55vh;position:relative"><hr style="position:absolute;top:20vh;left:0;right:0;margin:0"><svg width="2" height="300" style="position:absolute;left:30%;top:0"><rect width="2" height="300" fill="#333"/></svg>
           <div style="position:absolute;inset:0 0 0 45%;border:1px solid #222;padding:6px"><div style="height:100%;border:1px solid #777;padding:6px"><div style="height:100%;border:1px solid #bbb"></div></div></div>
-          <svg width="300" height="90%" style="position:absolute;left:0;top:5%;opacity:.98" aria-hidden="true"><circle cx="4" cy="4" r="3" fill="#888"/></svg>
+          <svg width="300" height="90%" style="position:absolute;left:0;top:5%;opacity:.98" aria-hidden="true"><rect width="100%" height="100%" fill="#f4efe4"/><rect width="100%" height="100%" fill="transparent"/><circle cx="4" cy="4" r="3" fill="#888"/></svg>
+          <div data-visual style="position:absolute;left:0;top:5%;width:40%;height:90%"><div style="height:100%;background:#f4efe4"></div></div>
           <button type="button" aria-label="planted invisible button" style="position:absolute;inset:0;background:none;border:0;opacity:.01"></button></div>
         <p>Planted: the paragraph below the empty band.</p>
         <p><img id="planted-blank" src="${solid}" width="300" height="200" alt="planted blank picture"></p>
@@ -223,7 +225,7 @@ async function controls() {
       const { findings } = await audit(page, analysis, size, `control-${scheme}`, '/');
       controlFindings.push({ scheme, gap, findings: findings.map(f => `${f.kind}: ${f.text}`) });
       const has = (kind, test) => findings.some(f => f.kind === kind && test(f));
-      if (!has('gap', f => f.from <= gap[0] + 30 && f.to >= gap[1] - 30 && f.quiet >= 0.9 * (gap[1] - gap[0]))) failed.push(`${scheme}: the planted ${Math.round(gap[1] - gap[0])}px empty band (crossed by a rule, hairlines, three nested bordered boxes, a near-empty svg and an invisible button) was not found`);
+      if (!has('gap', f => f.from <= gap[0] + 30 && f.to >= gap[1] - 30 && f.quiet >= 0.9 * (gap[1] - gap[0]))) failed.push(`${scheme}: the planted ${Math.round(gap[1] - gap[0])}px empty band (crossed by a rule, hairlines, three nested bordered boxes, a near-empty svg with a background and a hit area, a background-only chart and an invisible button) was not found`);
       if (!has('blank', f => f.name.includes('#planted-blank'))) failed.push(`${scheme}: the planted flat picture was not found`);
       if (!has('blank', f => f.name.includes('#planted-canvas'))) failed.push(`${scheme}: the planted blank canvas was not found`);
       if (!has('blank', f => f.name.includes('#planted-missing') && f.text.includes('never loaded'))) failed.push(`${scheme}: the planted picture that never loads was not found`);

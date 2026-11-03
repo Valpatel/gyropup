@@ -11,7 +11,8 @@
  *           can see: text, <img>, <video>, <canvas>, <iframe>, form controls, boxes painted with a picture (a
  *           background url()), the painted shapes inside an <svg>, the painted parts of a chart drawn in HTML
  *           ([data-visual], a rendered diagram) and buttons with a fill or a border. A whole <svg>, chart or button
- *           box does not count by itself, so a decorative layer stretched over a section cannot hide a gap. Borders,
+ *           box does not count by itself, nor does a shape or part that is its background (80 % of its box or more)
+ *           or a hit area with no visible paint, so a decorative layer stretched over a section cannot hide a gap. Borders,
  *           rules, flat fills, gradients and the dark theme's graph-paper grid are not content, and neither is
  *           anything thinner than MIN_THICKNESS. The page is measured from its top, so a fixed or sticky header
  *           counts where a reader first meets it (on a page that does not scroll, like the simulator, the fixed layer
@@ -126,17 +127,28 @@ export function scanLayout({ minThickness, narrowShare, wordsPerLine, mediaMin, 
   };
   // Inside an <svg>, its painted shapes, not its whole box: a near-empty or decorative <svg> stretched over a section
   // must not fill it. (Its <text> is text, above.)
+  // A shape with no visible fill or stroke (a hit area) is not content, and neither is one that covers most of its box
+  // (a background): the same rule as a flat fill elsewhere.
+  const clear = (paint, opacity) => paint === 'none' || /^(transparent|rgba\(.*,\s*0\))$/.test(paint) || parseFloat(opacity) === 0;
+  const background = (r, box) => r.width * r.height >= 0.8 * box.width * box.height;
   for (const svg of document.body.querySelectorAll('svg')) {
     if (svg.parentElement.closest('svg') || !seen(svg)) continue;
+    const box = svg.getBoundingClientRect();
     for (const shape of svg.querySelectorAll('path, rect, circle, ellipse, line, polyline, polygon, image, use, foreignObject')) {
-      const s = css(shape);
-      if (s.fill === 'none' && s.stroke === 'none' || !seen(shape)) continue;
-      add(shape, shape.getBoundingClientRect(), svg);
+      const s = css(shape), r = shape.getBoundingClientRect();
+      if (clear(s.fill, s.fillOpacity) && clear(s.stroke, s.strokeOpacity) || !seen(shape) || shape.tagName !== 'image' && background(r, box)) continue;
+      add(shape, r, svg);
     }
   }
   // A chart drawn in HTML ([data-visual], a rendered diagram): its painted parts, not its whole box. A painted button.
-  for (const box of document.body.querySelectorAll('[data-visual], .cad-diagram'))
-    for (const el of box.querySelectorAll('*')) if (!el.closest('svg') && seen(el) && painted(el)) add(el, el.getBoundingClientRect(), el.parentElement);
+  for (const box of document.body.querySelectorAll('[data-visual], .cad-diagram')) {
+    const whole = box.getBoundingClientRect();
+    for (const el of box.querySelectorAll('*')) {
+      if (el.closest('svg') || !seen(el) || !painted(el)) continue;
+      const r = el.getBoundingClientRect();
+      if (!background(r, whole)) add(el, r, el.parentElement);
+    }
+  }
   for (const el of document.body.querySelectorAll('button')) if (seen(el) && painted(el)) add(el, el.getBoundingClientRect(), el.parentElement);
   // Pictures and controls.
   const MEDIA = 'img, video, canvas, iframe, object, embed, input:not([type=hidden]), select, textarea, progress, meter';
