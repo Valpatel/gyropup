@@ -41,7 +41,8 @@ BODY_GROUPS = [
     ('hardware', '#26282c', ('spacer', 'frame_screws_', 'cheek_nuts_', 'turret_plate_nuts', 'isolator_', 'bay_skid_')),
     ('brackets', '#454a52', ('post_', 'riser', 'plate_post_', 'dcdc_bracket', 'bay_rail_', 'adapter_plate_', 'ear_bracket_',
                              'd435_cradle_')),
-    ('frame', '#b4bac4', ('cheek_', 'floor_tray', 'belly_plate', 'compute_pallet', 'power_plate', 'turret_plate', 'bay_')),
+    ('frame_inner', '#b4bac4', ('floor_tray', 'compute_pallet', 'power_plate', 'turret_plate')),     # inside the shell
+    ('frame', '#b4bac4', ('cheek_', 'belly_plate', 'bay_')),
     ('battery', '#fdb913', ('item.battery_front', 'item.battery_rear')),
     ('compute', '#5a6b7c', ('item.j501', 'item.agx', 'item.lidar_')),
     ('electronics', '#2b6cb0', ('item.plate_', 'item.power_', 'item.vn100', 'item.battery_adapter')),
@@ -62,6 +63,9 @@ LEG_GROUPS = [                                   # per leg: <group>_l, <group>_r
 TURRET_GROUPS = {'barrel': ('#e8892b', ('barrel', 'hopper_flap')), 'hopper': ('#9cc9e8', ('hopper', 'hopper_lid')),
                  'dark': ('#3b3f46', ('flywheel_tyre', 'bumper_ring', 'pan_clamp', 'dial'))}
 TURRET_FRAME, TURRET_BOUGHT = ('frame', '#b8bec7'), ('bought', '#3a3f47')
+TURRET_HARDWARE = ('hardware', '#3a3f47')       # its bought fasteners and small parts: one group, so a web copy can leave it out
+TURRET_HARDWARE_WORDS = ('screw', 'insert', 'circlip', 'magnet', 'hall_switch', 'slip_ring', 'ring_coupling', 'ring_leads',
+                         'bearing', 'thumbscrew')
 # The layout's envelopes for the turret (a Ø172 can the turret's mass, cad/body_layout.py) and the VLP-16 (a plain
 # cylinder) stay in the layout for the mass ledger, keep-outs and checks; the pictures draw the turret's CAD and a
 # VLP-16 shaped like one instead.
@@ -109,7 +113,8 @@ def turret_shapes(face_z, pan_x):
             sh = _v(T.pose_shape(local, T.frame[name], 0.0, 0.0, robot=True)).translate(cq.Vector(pan_x, 0, 0))
             out.append((*_turret_group(name), name if k == 0 else f'{name}_{k + 1}', sh))
     for name, (shape, frame, _, _) in T.bought.items():
-        out.append((*TURRET_BOUGHT, name, _v(T.pose_shape(shape, frame, 0.0, 0.0, robot=True)).translate(cq.Vector(pan_x, 0, 0))))
+        group = TURRET_HARDWARE if any(w in name for w in TURRET_HARDWARE_WORDS) else TURRET_BOUGHT
+        out.append((*group, name, _v(T.pose_shape(shape, frame, 0.0, 0.0, robot=True)).translate(cq.Vector(pan_x, 0, 0))))
     return out
 
 
