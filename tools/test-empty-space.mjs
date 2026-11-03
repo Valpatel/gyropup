@@ -205,7 +205,7 @@ async function controls() {
         <p>Planted: the paragraph above the empty band.</p>
         <div id="planted-gap" style="height:55vh;position:relative"><hr style="position:absolute;top:20vh;left:0;right:0;margin:0"><svg width="2" height="300" style="position:absolute;left:30%;top:0"><rect width="2" height="300" fill="#333"/></svg>
           <div style="position:absolute;inset:0 0 0 45%;border:1px solid #222;padding:6px"><div style="height:100%;border:1px solid #777;padding:6px"><div style="height:100%;border:1px solid #bbb"></div></div></div>
-          <svg width="300" height="90%" style="position:absolute;left:0;top:5%;opacity:.98" aria-hidden="true"><rect width="100%" height="100%" fill="#f4efe4"/><rect width="100%" height="100%" fill="transparent"/><circle cx="4" cy="4" r="3" fill="#888"/></svg>
+          <svg width="300" height="90%" style="position:absolute;left:0;top:5%;opacity:.98" aria-hidden="true"><rect width="100%" height="100%" fill="#f4efe4"/><rect width="60%" height="100%" fill="transparent"/><circle cx="4" cy="4" r="3" fill="#888"/></svg>
           <div data-visual style="position:absolute;left:0;top:5%;width:40%;height:90%"><div style="height:100%;background:#f4efe4"></div></div>
           <button type="button" aria-label="planted invisible button" style="position:absolute;inset:0;background:none;border:0;opacity:.01"></button></div>
         <p>Planted: the paragraph below the empty band.</p>

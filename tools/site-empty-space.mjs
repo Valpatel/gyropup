@@ -127,8 +127,8 @@ export function scanLayout({ minThickness, narrowShare, wordsPerLine, mediaMin, 
   };
   // Inside an <svg>, its painted shapes, not its whole box: a near-empty or decorative <svg> stretched over a section
   // must not fill it. (Its <text> is text, above.)
-  // A shape with no visible fill or stroke (a hit area) is not content, and neither is one that covers most of its box
-  // (a background): the same rule as a flat fill elsewhere.
+  // A shape with no visible fill or stroke (a hit area) is not content, and neither is a filled, unstroked one that
+  // covers most of its box (a background): the same rule as a flat fill elsewhere.
   const clear = (paint, opacity) => paint === 'none' || /^(transparent|rgba\(.*,\s*0\))$/.test(paint) || parseFloat(opacity) === 0;
   const background = (r, box) => r.width * r.height >= 0.8 * box.width * box.height;
   for (const svg of document.body.querySelectorAll('svg')) {
@@ -136,7 +136,9 @@ export function scanLayout({ minThickness, narrowShare, wordsPerLine, mediaMin, 
     const box = svg.getBoundingClientRect();
     for (const shape of svg.querySelectorAll('path, rect, circle, ellipse, line, polyline, polygon, image, use, foreignObject')) {
       const s = css(shape), r = shape.getBoundingClientRect();
-      if (clear(s.fill, s.fillOpacity) && clear(s.stroke, s.strokeOpacity) || !seen(shape) || shape.tagName !== 'image' && background(r, box)) continue;
+      const fill = !clear(s.fill, s.fillOpacity), stroke = !clear(s.stroke, s.strokeOpacity);
+      // a filled shape with no stroke over most of the svg is its background; a stroked drawing across it is not
+      if (!fill && !stroke || !seen(shape) || shape.tagName !== 'image' && fill && !stroke && background(r, box)) continue;
       add(shape, r, svg);
     }
   }
