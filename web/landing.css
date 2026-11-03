@@ -203,3 +203,17 @@
 .rm-node rect{fill:var(--gp-card-2);stroke:var(--gp-line-3)}.rm-node text,.rm-robot text{text-anchor:middle;fill:var(--gp-ink-teal)}
 .rm-robot rect{fill:var(--gp-butter);stroke:#d2a53c}.rm-robot text{font-weight:800}.rm-note{fill:var(--gp-muted-2);font:600 11px 'JetBrains Mono',monospace}
 @media(max-width:760px){.roadmap-map{display:none}}
+/* Section rhythm (tools/test-empty-space.mjs): one step of space at each end of a section, sized by the screen. A join
+   between two sections is two steps, so a step stays near a fourteenth of the screen's height: 28 px on a phone, 56 px on
+   a desktop. The fixed 100 px (64 px on phones) it replaces left a fifth to a third of a phone screen blank at each join.
+   The playground card ends on the build band's own colour change, so half a step is enough there. The closing card's
+   inner space follows the same step, the same at its top and bottom. */
+:root{--gp-step:clamp(28px,min(4vw,7vh),56px)}
+.section:not(.closing){padding-block:var(--gp-step)}
+.loop{margin-top:var(--gp-step)}
+.loop,.missions,.closing{margin-bottom:var(--gp-step)}
+.play-section{margin-bottom:calc(var(--gp-step) / 2)}
+.closing{padding-block:var(--gp-step)}
+.site-footer{padding-top:min(36px,var(--gp-step))}
+/* Phones: a build step's picture, words and link all sit beside its number, not the link under the number. */
+@media(max-width:760px){.build-steps article>:not(.step-number){grid-column:2}}
