@@ -72,6 +72,7 @@ jobs:
               python3 research/carrier-insert-fit/test_guards.py
               python3 research/insert-joints/test_inventory.py
               python3 research/insert-joints/test_phase2.py
+              python3 research/snap-fits/test_snaps.py
               python3 research/leg-preprint/test_screen.py
               python3 tools/test-turret-fea-refresh.py
               npm run test:turret

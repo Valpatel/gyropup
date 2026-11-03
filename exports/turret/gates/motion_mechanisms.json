@@ -817,9 +817,9 @@
     "groups": 5,
     "poses": 61,
     "pair_queries": 373,
-    "kernel_queries": 64,
+    "kernel_queries": 0,
     "memo_hits": 13,
-    "cache_hits": 296,
-    "seconds": 7.217
+    "cache_hits": 360,
+    "seconds": 0.05
   }
 }
