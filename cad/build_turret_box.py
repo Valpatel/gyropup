@@ -100,7 +100,7 @@ ROLE = {
     'flywheel_tyre': 'TPU tyre: the 22.7 mm ball is squeezed between two of them and leaves at nearly their surface speed.',
     'dial': 'The feed dial: 8 pockets on the feed servo\'s horn. Each 45 deg step drops one ball through the exit hole; parked, a spoke covers the hole.',
     'hopper': 'Clear tube over the dial: 30 balls fall into the pockets by gravity; the cone on the dial stirs them.',
-    'hopper_lid': 'The hopper lid, with the fill port for the dock\'s spout.',
+    'hopper_lid': 'The hopper lid, with the fill port for the dock\'s spout; three snap latches hold it on.',
     'hopper_flap': 'Sprung flap over the fill port: the dock\'s spout pushes it open.',
     'barrel': '100 mm barrel, bore 2 mm over the ball after the wheels: it only guides. Two IR gates 60 mm apart time every shot. Blaze-orange tip.',
     'laser_mount': 'Holds the aiming laser over the barrel, parallel to it (three boresight set screws), on the cartridge\'s top: it comes off with the cartridge, so it stays boresighted to its own barrel.',
@@ -136,7 +136,7 @@ ROLE = {
     'compute_shell': 'The compute plinth\'s wall: four columns take the pan base; tabs hold the Jetson down; vents beside it; the XT30 input and the Ethernet jack on the back.',
     'xt30_input': 'The turret\'s one power input, 12-54 V: a FLEXVOLT pack on its stand, or Gyropup\'s battery bus.',
     'eth_jack': 'Ethernet to Gyropup\'s J501.',
-    'board_bay_lid': 'Closes the turret-board bay on the yoke\'s -y arm.',
+    'board_bay_lid': 'Closes the turret-board bay on the yoke\'s -y arm; two snap latches, no tool.',
     'pod_wago': 'WAGO lever connectors: 24 V to the DT12 power pins, the pendant loop to its safety pins.',
 }
 TITLE = {'pan_base': 'Pan base', 'pan_clamp': 'Bearing clamp', 'pan_ring': 'Pan ring (63 T)', 'pan_pinion': 'Pan pinion (21 T)',
