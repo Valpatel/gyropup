@@ -1,28 +1,30 @@
-"""Cable routing for the leg, checked over the leg's whole range of motion (docs/mechanical-interfaces.md, rules).
+"""The wheel harness through the five-bar leg (leg v2, cad/fivebar.py), checked over the leg's range of motion
+(docs/mechanical-interfaces.md, cable rules).
 
 Harnesses (left leg; the right is the mirror image):
-  wheel   the wheel motor's phases (3 x 18 AWG) and hall/encoder lead. It leaves the middle of the wheel's boss, goes
-          through the wheel adapter into the shin box, up inside it to a port on the shin's back face near the knee,
-          across the knee in a service loop to a port on the thigh's back face, up inside the thigh to a port near
-          the hip, across the hip in a second loop into the yoke below and behind the axis (the spacer posts are all
-          above it), round the back of the hip motor plate and along the hip motor to the cable pass in the wall. The BotWheel's own lead is 300 mm, so an extension joins it at the shin port (its JST WPJ
-          3-pin and JWPF 8-pin waterproof connectors sit inside the shin's top end).
-  hip     the hip motor's power (XT30) and CAN (GH1.25): its connectors are on the rear cover, inboard, so the lead
-          goes straight through the body wall's cable pass; it never crosses a moving joint.
-  knee    the knee motor's power and CAN: from its rear cover (outboard) up and over under the yoke deck to the
-          cable pass; fixed to the yoke, so it never crosses a moving joint either.
+  wheel        the BotWheel's phases (3 x 18 AWG) and hall/encoder lead, sleeved together (fivebar.CABLE_D). Its route is
+               fivebar.cable_points(): out of the hub's inner end at the axle, out under the apex eye, along the wheel
+               link's outer edge, round the outside of the rear knee, along the rear upper link's outer edge, and into
+               the body 90 mm from the hip axis, past the stop posts and the hip frame's edge. The wrap at the knee and
+               the loop where it leaves the rear upper link take the joints' swing.
+  front, rear  each RS-04's power (XT30) and CAN leave its rear cover on the hip frame. The motors do not move with the
+               links, so neither lead crosses a moving joint.
 
-Checks over the whole range (stand to full crouch, with the look-up lean): the length change across each joint
-(the service loop must take it), the loop's bend radius against each conductor's minimum, and the clearance from
-every part the cable does not ride on. Writes exports/cables.json and exports/cables.png (side views of the
-routes at three poses).
+For each stance from crouch to tall (fivebar.stance) it measures the wheel harness's length along its route (the spread
+is what the knee wrap and the hip loop must give) and its tightest bend against 10 x the conductor's OD (rule 3).
+With --clash it also sweeps the cable and lists the parts it runs into (fivebar.cable_check, a few minutes of CAD).
+Writes exports/cables.json and exports/cables.png (side views at three stances).
+
+The route is a drawn spline to try on the rig, not a measured cable: a real harness finds its own path, and the
+clips (rule 4) are not drawn. This replaced the serial leg's check (wheel harness inside the thigh and shin boxes,
+rev 0.1); that leg's numbers stay in docs/mechanical-interfaces.md's rev 0.2 results.
 """
 from __future__ import annotations
 
+import argparse
 import json
 import math
 import os
-import subprocess
 import sys
 from pathlib import Path
 
@@ -32,160 +34,121 @@ R = Path(__file__).resolve().parents[1]
 sys.path.insert(0, str(R / 'cad'))
 sys.path.insert(0, str(R))
 
-import leg  # noqa: E402
+import fivebar as fb  # noqa: E402
 
-CABLES = leg.STD['cables']
-# the thickest single conductor in each harness sets the flexing bend radius (rule 3: 10 x OD)
-CONDUCTOR_OD = {'wheel': 2.0, 'hip': 3.2, 'knee': 3.2}      # 18 AWG silicone; 14 AWG silicone
-CP_Z = 20.0          # the cable pass through the yoke wall plate and the tray wall: (x = -40, z = 20), Ø18 grommet
-
-
-def rot_y(p, c, ang):
-    """Rotate points p (N x 3) about the axis through c along +y by ang (the same sense as the CAD's rotate)."""
-    p = np.asarray(p, float) - c
-    ca, sa = math.cos(ang), math.sin(ang)
-    # CadQuery's rotate about +y: x' = x cos + z sin, z' = -x sin + z cos
-    out = np.stack([p[:, 0] * ca + p[:, 2] * sa, p[:, 1], -p[:, 0] * sa + p[:, 2] * ca], axis=1)
-    return out + c
+CONDUCTOR_OD = {'wheel': 2.0}           # 18 AWG silicone phase wire, the thickest single conductor in the harness
+SAMPLES = 2000                          # points along the route (by length) for its bends
+CLASH_HEIGHTS = (105, 130, 170, 220, 270, 320, 370, 390)
 
 
-def route(S, L, hip, knee):
-    """Waypoints of the wheel harness in the robot frame at a pose (hip, knee in radians, the CAD's sense)."""
-    a, b = L['thigh'], L['shin']
-    yt, ys = sum(S.y['thigh']) / 2, sum(S.y['shin']) / 2
-    xb = -leg.LINK_W / 2 + 6                                   # inside the box, near its back wall
-    kc = leg.STD['KC']['hub_od'] / 2
-    shin_pts = np.array([[0, S.y['wheel_mount'], -a - b], [0, S.y['shin'][1] - 4, -a - b], [xb, ys, -a - b + 30],
-                         [xb, ys, -a - kc - 18], [-leg.LINK_W / 2 - 4, ys, -a - kc - 18]])          # ... out of the shin port
-    thigh_pts = np.array([[-leg.LINK_W / 2 - 4, yt, -a + kc + 18], [xb, yt, -a + kc + 18],
-                          [xb, yt, -36 - 18], [-leg.LINK_W / 2 - 4, yt, -36 - 18]])                  # ... out of the hip port
-    # into the yoke below and behind the axis (the posts are all above it), round the back of the hip motor plate,
-    # along the hip motor and into the low cable pass in the yoke's wall plate
-    yoke_pts = np.array([[-72, S.y['hip_plate'][1] + 6, -35], [-72, S.y['hip_plate'][0] - 6, -35],
-                         [-62, S.y['bracket'][1] + 2, CP_Z], [-40, S.y['bracket'][0], CP_Z]])
-    # shin points: knee rotation then hip; thigh points: hip; yoke points: fixed to the body
-    sp = rot_y(rot_y(shin_pts, np.array([0, 0, -a]), knee), np.zeros(3), hip)
-    tp = rot_y(thigh_pts, np.zeros(3), hip)
-    return {'shin': sp, 'thigh': tp, 'yoke': yoke_pts}
+def heights(n=7):
+    """n stances from just above the lowest the stops allow to just under the highest (mm, hip line to axle)."""
+    lo = -fb.fk(*fb.stop_angles()[0::2])['E'][1]
+    hi = -fb.fk(*fb.stop_angles()[1::2])['E'][1]
+    lo, hi = math.ceil(lo + 2.0), math.floor(hi - 2.0)
+    return [round(lo + (hi - lo) * k / (n - 1), 1) for k in range(n)]
 
 
-def poses(L, n=7):
-    from sim.controller import hip_for, knee_for
-    a, b = L['thigh'] / 1000, L['shin'] / 1000
-    lo, hi = math.radians(L['kneeMinDeg']), math.radians(L['kneeMaxDeg'])
-    hmin = math.sqrt(a * a + b * b - 2 * a * b * math.cos(lo))
-    hmax = math.sqrt(a * a + b * b - 2 * a * b * math.cos(hi))
-    out = []
-    for k in range(n):
-        h = hmin + (hmax - hmin) * k / (n - 1)
-        for look in (0.0, 0.35):                               # the look-up lean adds to the hip angle
-            out.append((k / (n - 1), look, hip_for(a, b, h) + look, knee_for(a, b, h) - math.pi))
-    return out
+def route(h):
+    """The harness at a stance: the joint positions (x, z), the waypoints, points sampled along the spline (mm), its
+    length and its tightest bend (OCC's curvature along the spline, SAMPLES points by length)."""
+    import cadquery as cq
+    phi = fb.stance(h)
+    if phi is None:
+        raise ValueError(f'no stance at {h} mm')
+    _, j = fb.link_frames(*phi)
+    pts = fb.cable_points(*phi)
+    edge = cq.Edge.makeSpline([cq.Vector(p.x, p.y, p.z) for p in pts])
+    ts = np.linspace(0.0, 1.0, SAMPLES)
+    samples = np.array([edge.positionAt(t).toTuple() for t in ts])
+    k = np.array([edge.curvatureAt(t) for t in ts])
+    i = int(np.argmax(k))
+    return {'phi': phi, 'joints': j, 'waypoints': np.array([p.toTuple() for p in pts]), 'samples': samples,
+            'length': float(edge.Length()), 'min_bend_r': float(1.0 / k[i]) if k[i] > 0 else math.inf, 'tightest_at': samples[i]}
 
 
-def check(design: Path):
-    L = json.loads(subprocess.run(['node', str(R / 'tools/derive.mjs'), str(design)], capture_output=True, text=True, check=True).stdout)['layout']
-    d = json.loads(design.read_text())
-    parts, meta, bought, S, _ = leg.leg_parts(L, d['parts']['leg_actuator'], d['parts']['leg_actuator'], d['parts']['wheel_motor'])
-    a = L['thigh']
-    knee_cross, hip_cross, samples = [], [], []
-    for frac, look, hip, knee in poses(L):
-        r = route(S, L, hip, knee)
-        knee_cross.append(float(np.linalg.norm(r['shin'][-1] - r['thigh'][0])))     # straight distance between the ports
-        hip_cross.append(float(np.linalg.norm(r['thigh'][-1] - r['yoke'][0])))
-        samples.append((frac, look, hip, knee, r))
-    # a loose loop around each joint: its radius is set by the ports' distance from the axis
-    kc = leg.STD['KC']['hub_od'] / 2
-    knee_r = math.hypot(leg.LINK_W / 2 + 4, kc + 18)
-    hip_r = math.hypot(leg.LINK_W / 2 + 4, 36 + 18)
+def check(clash=False):
+    rows = []
+    for h in heights():
+        r = route(h)
+        rmin, at = r['min_bend_r'], r['tightest_at']
+        rows.append({'height_mm': h, 'phi_deg': [round(math.degrees(v), 1) for v in r['phi']], 'length_mm': round(r['length'], 1),
+                     'min_bend_radius_mm': round(rmin, 1), 'tightest_at_mm': [round(float(v), 1) for v in at], '_r': r})
+    lengths = [x['length_mm'] for x in rows]
+    need = 10 * CONDUCTOR_OD['wheel']
+    tightest = min(x['min_bend_radius_mm'] for x in rows)
     res = {
+        'leg': 'five-bar (leg v2, cad/fivebar.py): l1 {l1:.0f} mm, l2 {l2:.0f} mm, motors {D:.0f} mm apart'.format(**fb.P),
         'wheel': {
-            'route': 'wheel boss -> wheel adapter -> inside the shin -> shin port -> knee loop -> thigh port -> inside the thigh -> hip port -> hip loop -> under the yoke deck -> body cable pass',
-            'knee': {'port_distance_mm': round(knee_r, 1), 'straight_min_mm': round(min(knee_cross), 1), 'straight_max_mm': round(max(knee_cross), 1),
-                     'slack_needed_mm': round(max(knee_cross) - min(knee_cross), 1),
-                     'loop': f'a loose loop of about {round(max(knee_cross) + 20)} mm between the ports, around the knee hub'},
-            'hip': {'port_distance_mm': round(hip_r, 1), 'straight_min_mm': round(min(hip_cross), 1), 'straight_max_mm': round(max(hip_cross), 1),
-                    'slack_needed_mm': round(max(hip_cross) - min(hip_cross), 1),
-                    'loop': f'a loose loop of about {round(max(hip_cross) + 20)} mm between the thigh port and the yoke clip'},
-            'bend_radius': {'loop_radius_mm': round(min(knee_r, hip_r), 1), 'needed_mm': 10 * CONDUCTOR_OD['wheel'],
-                            'ok': min(knee_r, hip_r) >= 10 * CONDUCTOR_OD['wheel'],
-                            'note': 'conductors loose (not a stiff jacketed cable) through the loops; a jacketed 10 mm cable would need 75-100 mm'},
-            'lead_length': {'botwheel_lead_mm': 300, 'path_mm': None, 'extension': None},
+            'route': 'hub (inner end, at the axle) -> under the apex eye -> along the wheel link\'s outer edge -> round the '
+                     'outside of the rear knee -> along the rear upper link\'s outer edge -> into the body 90 mm from the '
+                     'hip axis (fivebar.cable_points)',
+            'cable_d_mm': fb.CABLE_D,
+            'stances': [{k: v for k, v in x.items() if k != '_r'} for x in rows],
+            'length_mm': {'min': min(lengths), 'max': max(lengths), 'slack_needed_mm': round(max(lengths) - min(lengths), 1),
+                          'note': 'the spread over the stances: what the knee wrap and the loop at the hip must give'},
+            'bend_radius': {'min_mm': tightest, 'needed_mm': need, 'ok': tightest >= need,
+                            'note': 'the drawn spline\'s tightest bend, against 10 x the 18 AWG conductor (rule 3, flexing). At every '
+                                    'stance it is where the route turns off the rear upper link\'s edge into the body '
+                                    '(fivebar.cable_points\' last three waypoints, 5 mm then 35 mm apart): the drawn route '
+                                    'needs a wider turn there before it is a harness drawing'},
+            'lead_length': {'botwheel_lead_mm': 300, 'route_max_mm': max(lengths),
+                            'note': 'the BotWheel\'s own lead is 300 mm; the route ends where it enters the body, so the '
+                                    'run on to the motor driver inside is extra'},
         },
-        'hip': {'route': 'rear cover connectors -> body wall cable pass', 'crosses_joint': False},
-        'knee': {'route': 'rear cover connectors (outboard) -> up the knee plate -> under the yoke deck -> body cable pass', 'crosses_joint': False},
+        'front': {'route': 'rear cover (XT30 + CAN) on the hip frame -> into the body', 'crosses_joint': False},
+        'rear': {'route': 'rear cover (XT30 + CAN) on the hip frame -> into the body', 'crosses_joint': False},
+        'limits': 'a drawn route, not a measured cable: clips are not drawn, and the rig decides (docs/mechanical-interfaces.md)',
     }
-    # the harness length at the standing pose, to size the extension from the BotWheel's 300 mm lead
-    stand = [s for s in samples if s[0] == 1.0 and s[1] == 0.0][0][4]
-    pts = np.vstack([stand['shin'], stand['thigh'], stand['yoke']])
-    path = float(np.sum(np.linalg.norm(np.diff(pts, axis=0), axis=1))) + 2 * 20       # plus the two loops' extra
-    res['wheel']['lead_length'].update(path_mm=round(path), extension=f'{round(path - 300 + 150, -1):.0f} mm extension (to the driver in the body, with 150 mm spare), joined inside the shin top')
-    # clearance from parts the cable does not ride inside: sample the joint-crossing loops against the meshes
-    import trimesh
-    meshes = {}
-    for name in ('knee_crank', 'pushrod', 'yoke_bracket', 'hip_motor_plate', 'knee_motor_plate', 'posts'):
-        shp = parts.get(name) if name in parts else bought.get(name)
-        if shp is None:
-            continue
-        vs, fs = shp.val().tessellate(0.5, 0.3)
-        meshes[name] = trimesh.Trimesh([(v.x, v.y, v.z) for v in vs], fs)
-    import leg as _leg
-    worst = {}
-    for frac, look, hip, knee, r in samples:
-        segs = [r['shin'][-1], r['thigh'][0], r['thigh'][-1], r['yoke'][0]]
-        line = np.vstack([np.linspace(segs[0], segs[1], 12), np.linspace(segs[2], segs[3], 12)])
-        for name, m in meshes.items():
-            mp = _leg.pose(_shape_of(name, parts, bought), name, math.radians(0) + hip, knee, a, leg.PARAMS['crank_r']) if name in ('knee_crank', 'pushrod') else None
-            mm = m
-            if mp is not None:
-                vs, fs = mp.val().tessellate(0.5, 0.3)
-                mm = trimesh.Trimesh([(v.x, v.y, v.z) for v in vs], fs)
-            dist = trimesh.proximity.ProximityQuery(mm).signed_distance(line)
-            dmin = float(-dist.max())                          # trimesh: positive inside, so the clearance is -max
-            if name not in worst or dmin < worst[name]['clearance_mm']:
-                worst[name] = {'clearance_mm': round(dmin, 1), 'at': {'height': round(frac, 2), 'look_up': look}}
-    res['wheel']['clearance'] = worst
-    res['wheel']['clearance_ok'] = all(v['clearance_mm'] >= 5 for v in worst.values())
+    if clash:
+        hits = fb.cable_check(CLASH_HEIGHTS)
+        res['wheel']['clash'] = {'heights_mm': list(CLASH_HEIGHTS), 'hits': {str(h): v for h, v in hits.items()},
+                                 'ok': not any(hits.values()),
+                                 'note': 'parts the swept Ø{:.0f} cable runs into (> 5 mm3), motors and the hub left out'.format(fb.CABLE_D)}
     exports = Path(os.environ['GYROPUP_EXPORTS']).resolve() if os.environ.get('GYROPUP_EXPORTS') else R / 'exports'
-    out = exports / 'cables.json'
-    out.write_text(json.dumps(res, indent=1) + '\n')
-    _plot(samples, S, L, exports / 'cables.png')
+    (exports / 'cables.json').write_text(json.dumps(res, indent=1) + '\n')
+    _plot(rows, exports / 'cables.png')
     return res
 
 
-def _shape_of(name, parts, bought):
-    return parts.get(name) if name in parts else bought.get(name)
-
-
-def _plot(samples, S, L, path):
+def _plot(rows, path):
     import matplotlib
     matplotlib.use('Agg')
     import matplotlib.pyplot as plt
-    a, b = L['thigh'], L['shin']
-    fig, axs = plt.subplots(1, 3, figsize=(12, 5), dpi=110)
-    picks = [s for s in samples if s[1] == 0.0]
-    for ax, s in zip(axs, (picks[0], picks[len(picks) // 2], picks[-1])):
-        frac, look, hip, knee, r = s
-        knee_pt = rot_y(np.array([[0, 0, -a]]), np.zeros(3), hip)[0]
-        wheel_pt = rot_y(rot_y(np.array([[0, 0, -a - b]]), np.array([0, 0, -a]), knee), np.zeros(3), hip)[0]
-        ax.plot([0, knee_pt[0], wheel_pt[0]], [0, knee_pt[2], wheel_pt[2]], color='#f5b82e', lw=10, solid_capstyle='round', alpha=0.6, label='thigh and shin')
-        ax.add_patch(plt.Circle((wheel_pt[0], wheel_pt[2]), L['wheelR'], fill=False, color='#333'))
-        ax.add_patch(plt.Circle((0, 0), 50, fill=False, color='#888', ls='--'))
-        pts = np.vstack([r['shin'], r['thigh'], r['yoke']])
-        ax.plot(pts[:, 0], pts[:, 2], color='#00a0c0', lw=2, label='wheel harness')
-        ax.scatter([r['shin'][-1][0], r['thigh'][0][0], r['thigh'][-1][0]], [r['shin'][-1][2], r['thigh'][0][2], r['thigh'][-1][2]], color='#ff2a6d', zorder=5, s=18, label='ports (loops between)')
-        ax.set_aspect('equal'); ax.set_title(f'height {frac:.0%}'); ax.grid(alpha=0.3)
-        ax.set_xlim(-250, 250); ax.set_ylim(-480, 150)
+    picks = (rows[0], rows[len(rows) // 2], rows[-1])
+    fig, axs = plt.subplots(1, 3, figsize=(12, 5.2), dpi=96)
+    wheel_r = (fb.gmi.motor_interface(fb.WHEEL)['od'] or 171.3) / 2
+    for ax, x in zip(axs, picks):
+        r = x['_r']
+        j = r['joints']
+        for a, b in (('A', 'C'), ('B', 'D')):
+            ax.plot([j[a][0], j[b][0]], [j[a][1], j[b][1]], color='#f5b82e', lw=9, solid_capstyle='round', alpha=0.75)
+        for a, b in (('C', 'E'), ('D', 'E')):
+            ax.plot([j[a][0], j[b][0]], [j[a][1], j[b][1]], color='#e9a21f', lw=7, solid_capstyle='round', alpha=0.75)
+        ax.plot([], [], color='#f5b82e', lw=6, label='upper links (on the motors)')
+        ax.plot([], [], color='#e9a21f', lw=5, label='front and wheel links (to the axle)')
+        for m in ('A', 'B'):
+            ax.add_patch(plt.Circle(j[m], 60, fill=False, color='#888', ls='--'))
+        ax.add_patch(plt.Circle(j['E'], wheel_r, fill=False, color='#333'))
+        s = r['samples']
+        ax.plot(s[:, 0], s[:, 2], color='#00a0c0', lw=2, label='wheel harness')
+        ax.scatter(*x['tightest_at_mm'][0::2], color='#ff2a6d', zorder=5, s=22, label='tightest bend')
+        ax.set_aspect('equal')
+        ax.set_title(f"height {x['height_mm']:.0f} mm: {x['length_mm']:.0f} mm, bend r {x['min_bend_radius_mm']:.0f} mm", fontsize=10)
+        ax.grid(alpha=0.3)
+        ax.set_xlim(-260, 260)
+        ax.set_ylim(-500, 120)
     axs[0].legend(loc='lower left', fontsize=7)
-    fig.suptitle('Wheel harness through the leg (side view, x forward, z up); dashed: the hip motor')
+    fig.suptitle('Wheel harness along the five-bar leg (side view, x forward, z up); dashed: the two hip motors')
     fig.savefig(path, bbox_inches='tight')
     plt.close(fig)
 
 
 if __name__ == '__main__':
-    r = check(Path(sys.argv[1]).resolve() if len(sys.argv) > 1 else R / 'designs/default.json')
-    w = r['wheel']
-    print('knee loop slack', w['knee']['slack_needed_mm'], 'mm; hip loop slack', w['hip']['slack_needed_mm'], 'mm')
+    ap = argparse.ArgumentParser(description=__doc__.split('\n\n')[0])
+    ap.add_argument('--clash', action='store_true', help='also sweep the cable and list the parts it runs into (slow)')
+    w = check(clash=ap.parse_args().clash)['wheel']
+    print('length', w['length_mm'])
     print('bend radius', w['bend_radius'])
-    print('lead', w['lead_length'])
-    print('clearance', w['clearance'], 'ok' if w['clearance_ok'] else 'TOO CLOSE')
+    if 'clash' in w:
+        print('clash', 'none' if w['clash']['ok'] else w['clash']['hits'])
