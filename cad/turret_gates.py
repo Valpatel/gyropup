@@ -543,11 +543,13 @@ def fastener_specs(T):
 def fasteners(T, asm, cache):
     """cadagent.gates.fasteners on the screws cad/turret.py places with their receivers (GATED_SCREWS): seat, stack,
     holes, engagement in the modelled insert, tip, length, and the hex key's straight reach. The steps: the screws go in
-    before the cartridge board and its ESCs (the board's front edge is over the front hopper lug)."""
+    before the cartridge board and its ESCs (the board's front edge is over the front hopper lug), and before the
+    hopper lid snaps on (#131: its latch at 60 deg is over the 45 deg lug, so the lid comes off to reach that screw;
+    the gate reports it as a service-access warning)."""
     steps = [{'order': 1, 'fit': 'hopper', 'onto': 'cartridge_body', 'fasteners': ['hopper_screws'], 'tool': 'hex 2.5'},
              {'order': 2, 'fit': 'laser_mount', 'onto': 'cartridge_body', 'fasteners': ['laser_foot_screws'], 'tool': 'hex 2.5'},
              {'order': 3, 'fit': 'esc_l', 'onto': 'cartridge_body'}, {'order': 4, 'fit': 'esc_r', 'onto': 'cartridge_body'},
-             {'order': 5, 'fit': 'cartridge_board', 'onto': 'cartridge_body'}]
+             {'order': 5, 'fit': 'cartridge_board', 'onto': 'cartridge_body'}, {'order': 6, 'fit': 'hopper_lid', 'onto': 'hopper'}]
     return fastener_gate(asm, fastener_specs(T), steps=steps, tools=TOOLS, tol=CONNECT_TOL, cache=cache,
                          out=VERDICTS / 'fasteners.json')
 
