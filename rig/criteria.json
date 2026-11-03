@@ -37,13 +37,13 @@
      "tol": 0.015
     },
     {
-     "what": "peak motor torque <= 18 N m",
+     "what": "peak motor torque <= 22 N m",
      "kind": "max_abs",
      "signal": [
       "tau_f",
       "tau_r"
      ],
-     "max": 18.0
+     "max": 22.0
     },
     {
      "what": "no oscillation over 5 mm peak to peak in the hold",
@@ -53,11 +53,11 @@
      "from_s": 2.0
     },
     {
-     "what": "load plate 120-170 N steady (14.75 kg carried: about 145 N)",
+     "what": "load plate 160-210 N steady (18.75 kg carried: about 184 N)",
      "kind": "range",
      "signal": "force_n",
-     "min": 120.0,
-     "max": 170.0,
+     "min": 160.0,
+     "max": 210.0,
      "from_s": 2.0,
      "needs": "force_n"
     },
@@ -81,7 +81,7 @@
      "from_s": 0.5
     },
     {
-     "what": "tracks the command within 35 mm (the VMC lags a 0.5 Hz squat by design: 26 mm predicted)",
+     "what": "tracks the command within 35 mm (the VMC lags a 0.5 Hz squat by design: 28 mm predicted)",
      "kind": "track",
      "signal": "L",
      "ref": "L_cmd",
@@ -89,13 +89,13 @@
      "from_s": 0.5
     },
     {
-     "what": "peak motor torque <= 18 N m",
+     "what": "peak motor torque <= 22 N m",
      "kind": "max_abs",
      "signal": [
       "tau_f",
       "tau_r"
      ],
-     "max": 18.0
+     "max": 22.0
     },
     {
      "what": "VBUS under 45 V (regeneration)",
@@ -116,10 +116,10 @@
      "to_event": "land"
     },
     {
-     "what": "jump height 200-320 mm",
+     "what": "jump height 140-250 mm",
      "kind": "jump",
-     "min": 200.0,
-     "max": 320.0
+     "min": 140.0,
+     "max": 250.0
     },
     {
      "what": "motor torque feedback <= 70 N m",

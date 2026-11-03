@@ -6,7 +6,7 @@
     python -m rig.run --backend can --iface can0 --test stand_up     # the rig itself (pendant held, ARM typed)
     python -m rig.run --backend can --test jump --cap 12 --half-mass 11.09   # a lower cap (docs/motor-day.md, PLA)
     python -m rig.run --reproduce        # T7: every scenario as sim/leg_rig.py ran it -> exports/rig/reproduction.json
-    python -m rig.run --predict          # the rig as built: 14.75 kg, the FLEXVOLT pack, a tick of latency, at 500 Hz
+    python -m rig.run --predict          # the rig as built: D71's 18.75 kg, the FLEXVOLT pack, a tick of latency, at 500 Hz
                                          # -> exports/rig/predictions.json (the numbers docs/leg-bench-tests.md quotes)
 
 Every run writes exports/rig/runs/<stamp>-<backend>-<test>.npz/.json (rig/log.py) and its verdict (rig/compare.py).
@@ -31,7 +31,7 @@ from rig.bus import Pack  # noqa: E402
 from rig.log import RunLog  # noqa: E402
 
 OUT = R / 'exports' / 'rig'
-DESIGN_KG = 14.75                     # half the 29.5 kg robot of the body plan (coordinator, 2026-10-27)
+DESIGN_KG = 18.75                     # D71: half the 37.5 kg design mass, a leg's own parts and wheel included
 REF_KG = 13.1                         # what exports/leg/rig-results.json was run at
 RIG_TESTS = ('stand_up', 'squat', 'jump', 'drop_150', 'power_off', 'power_off_damped', 'tyre_press')
 BUMPER_CONTACT_M = 0.140              # the bottom bumpers meet the carriage at this leg length (cad/build_rig.py)
