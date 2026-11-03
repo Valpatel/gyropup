@@ -1,19 +1,31 @@
 <div align="center">
 
-<img src="docs/img/hero/gyropup.svg" alt="The name Gyropup grows from a graph-paper sketch while the robot is drawn from its real CAD: the body is traced, both wheel-legs slide in, the foam-ball turret drops on top, and the model sways gently" width="100%">
+<img src="docs/img/hero/gyropup.svg" alt="The name Gyropup grows from a graph-paper sketch while the current CAD is drawn: the bench stand is traced, the foam-ball turret drops onto it on its compute plinth, leg v2 slides in beside it (two RS-04 motors side by side at the hip, two orange links meeting at the wheel), then the turret head sweeps left and right, nods and holds a lock-on" width="100%">
 
 # Gyropup
 
 **A research robot designed to balance on two wheel-legs, with a foam-ball turret: CAD and simulation in the open.**
 
+[![Firmware](https://github.com/Valpatel/gyropup/actions/workflows/body-firmware.yml/badge.svg?branch=main)](https://github.com/Valpatel/gyropup/actions/workflows/body-firmware.yml)
+[![Playground and presentation](https://github.com/Valpatel/gyropup/actions/workflows/web-scene.yml/badge.svg?branch=main)](https://github.com/Valpatel/gyropup/actions/workflows/web-scene.yml)
 [![Licence: MIT](https://img.shields.io/badge/licence-MIT-287d8d)](LICENSE)
-[![Website](https://img.shields.io/badge/site-gyropup.com-bd3a12)](https://gyropup.com)
-[![Status: CAD and simulation](https://img.shields.io/badge/status-CAD_and_simulation-526863)](#status)
-[![Program tracker #31](https://img.shields.io/badge/tracker-%2331-173d3c)](https://github.com/Valpatel/gyropup/issues/31)
+[![Site](https://img.shields.io/website?url=https%3A%2F%2Fgyropup.com&label=gyropup.com&up_message=live)](https://gyropup.com)
+[![Last commit](https://img.shields.io/github/last-commit/Valpatel/gyropup/dev)](https://github.com/Valpatel/gyropup/commits/dev)
+[![Stars](https://img.shields.io/github/stars/Valpatel/gyropup?style=flat&logo=github)](https://github.com/Valpatel/gyropup/stargazers)
+[![PRs welcome](https://img.shields.io/badge/PRs-welcome-ec4899)](CONTRIBUTING.md)
+
+[![Designed with cad-agent](https://img.shields.io/badge/designed_with-cad--agent-f97316)](https://github.com/Valpatel/cad-agent)
+[![CAD: CadQuery · OpenCASCADE](https://img.shields.io/badge/CAD-CadQuery_·_OpenCASCADE-0ea5e9)](cad/)
+[![Simulation: MuJoCo](https://img.shields.io/badge/simulation-MuJoCo-8b5cf6)](sim/)
+[![Actuators: RobStride RS-04](https://img.shields.io/badge/actuators-RobStride_RS--04-bd3a12)](cad/fivebar.py)
+[![Leg: five-bar v2](https://img.shields.io/badge/leg-five--bar_v2-e8892b)](cad/fivebar.py)
+[![Printed: PA6-CF · PETG · TPU](https://img.shields.io/badge/printed-PA6--CF_·_PETG_·_TPU-526863)](docs/turret-print.md)
+[![Status: CAD and simulation](https://img.shields.io/badge/status-CAD_and_simulation-173d3c)](#status)
+[![Program tracker #31](https://img.shields.io/badge/tracker-%2331-0f766e)](https://github.com/Valpatel/gyropup/issues/31)
 
 [Website & playground](https://gyropup.com) · [Documentation map](docs/README.md) · [Prototype warning](docs/prototype-safety.md) · [Contributing](CONTRIBUTING.md)
 
-<sub>The banner is drawn from the robot's own STEP files (<code>exports/asm_*.step</code>) with hidden lines removed, by the <a href="https://github.com/mvalancy/mvalancy/tree/326f25920d36fb6ed16c007132e23cb4bb4933dc/tools/hero">README banner generator</a>.</sub>
+<sub>The banner is drawn from the project's own CadQuery code (<code>cad/build_leg.py</code>, <code>cad/turret.py</code>, <code>cad/turret_stand.py</code>) with hidden lines removed, set as in the image below, by the <a href="https://github.com/mvalancy/mvalancy/tree/95cba21cebd47925fef2319d6377cdd450299199/tools/hero">README banner generator</a>.</sub>
 
 </div>
 
