@@ -852,7 +852,39 @@ def tilt_yoke(G):
         # the heads sit 6 mm above the bridge's underside, so an M4 x 12 keeps 6 mm (1.5 d) in the turntable's insert and
         # stops 2 mm off its 8 mm pilot's floor (an M4 x 10 kept 4 mm, 1.0 d: #137)
         s = s.cut(through_z(x, y, FAST['M4']['clear'], b0 - 1, b1 + 1)).cut(cyl_z(4.0, b0 + 6.0, b1 + 1, x, y))
-    return s
+    # the CT latch's knurled head (Ø16, under the cradle's rail) swings down past the bridge's front top edge as the
+    # cradle depresses: from about -22.9 deg it would cut 1.7 mm into the bridge, short of the -25 deg stop (cad-agent's
+    # motion gate, #61). Relieve the bridge by the head's sweep to the stop plus 2 deg, 1 mm clear all round.
+    return s.cut(thumb_sweep(G, clear=1.0, to_deg=G.tilt_min - 2.0))
+
+
+
+
+def thumb_solid(G, clear=0.0, round_edge=0.0):
+    """The CT latch thumbscrew's head and collar in the tilt (C) frame, each radius grown by clear (mm). round_edge
+    fillets the head's bottom edge: with round_edge = clear the grown head still clears the real one by clear there, and
+    the notch it sweeps has an R(clear) floor instead of a sharp re-entrant corner (#178 review)."""
+    lx, ly = ct_points(G)[1]
+    z0r = G.rail_z[0] - RAIL_DEEP['dz']
+    hd, hh = THUMB['head']
+    cd, ch = THUMB['collar']
+    head = cyl_z(hd / 2 + clear, z0r - ch - hh - clear, z0r - ch + 0.01, lx, ly)
+    if round_edge:
+        head = head.edges('<Z').fillet(round_edge)
+    return cyl_z(cd / 2 + clear, z0r - ch, z0r + 0.01, lx, ly).union(head)
+
+
+def thumb_sweep(G, clear=1.0, to_deg=-27.0, step=1.0):
+    """The latch head's swept volume in the pan frame from tilt 0 to to_deg (as Turret.pose_shape poses the tilt frame):
+    the union of its poses every step degrees, each grown by clear, the head's bottom edge rounded by clear."""
+    t = thumb_solid(G, clear, round_edge=clear).translate((-G.tilt_x, 0, G.path_t))
+    n = max(1, math.ceil(abs(to_deg) / step))
+    out = None
+    for i in range(n + 1):
+        a = to_deg * i / n
+        p = t.rotate((0, 0, G.tilt_t), (0, 1, G.tilt_t), -a)
+        out = p if out is None else out.union(p)
+    return out
 
 
 # ------------------------------------------------------------------------------------------------ tilting parts (C frame)
@@ -1630,7 +1662,11 @@ def bought_parts(G):
         ring_z(TUBE['socket_d'] / 2, TUBE['id'] / 2, rg['stub_top'] - 0.01, k0 + 6.0))          # free, then squeezed in the socket
     out['ring_coupling'] = (tube, 'pan', 1.0, TUBE['note'] + ', coupling the rotor to the driver')
     rl, zl = LEADS['d'] / 2, LEADS['z_run']
-    leads = cyl_z(rl, rg['top'] + 0.3, zl + rl, 0.0, -LEADS['r']).union(cyl_y(rl, -G.arm_y[1] - 3.0, -LEADS['r'], 0.0, zl))
+    # the bend is a ball of the bundle's radius: two equal cylinders whose axes meet (the vertical run's end tangent to
+    # the horizontal run's top) give OCCT an invalid solid, which cad-agent's gates refuse (#61). It is a zero-radius
+    # corner in the model only: the real bundle bends on its own minimum radius, which this envelope does not check
+    leads = (cyl_z(rl, rg['top'] + 0.3, zl, 0.0, -LEADS['r']).union(cyl_y(rl, -G.arm_y[1] - 3.0, -LEADS['r'], 0.0, zl))
+             .union(cq.Workplane('XY').sphere(rl).translate((0.0, -LEADS['r'], zl))))
     out['ring_leads_rotor'] = (leads, 'pan', 0.0, 'the ring\'s rotor leads, a Ø7.5 bundle (12 x 26 AWG + 2 x 17 AWG): beside the coupling, up '
                                'through the driver and the yoke\'s slot, along the bridge and through the -y arm\'s window to the bay')
     out['base_board'] = (base_board_service.board(), 'base', 30.0,
@@ -1710,11 +1746,7 @@ def bought_parts(G):
     feed = servo_envelope(G, (0.0, 0.0, 0.0), '+z').rotate((0, 0, 0), (0, 0, 1), 90).translate((0, 0, G.feed_face))
     out['feed_motor'] = (feed, 'tilt', SERVO['mass_g'], 'Feetech STS3215 12 V (bus ID 3) under the dial floor, horn up through it; '
                                                      '4 x M2 x 6 countersunk from above; the dial on its horn')
-    (lx, ly) = ct_points(G)[1]
-    z0r = G.rail_z[0] - RAIL_DEEP['dz']                                                     # the rail is deeper there
-    hd, hh = THUMB['head']
-    cd, ch = THUMB['collar']
-    thumb = cyl_z(cd / 2, z0r - ch, z0r + 0.01, lx, ly).union(cyl_z(hd / 2, z0r - ch - hh, z0r - ch + 0.01, lx, ly))
+    thumb = thumb_solid(G)                                                                  # under the rail, deeper there
     out['ct_thumbscrew'] = (thumb, 'tilt', THUMB['mass_g'], 'DIN 464 knurled thumbscrew M4 x 12 (McMaster 92581A250), the CT latch, under the rail')
     out['laser'] = (cyl_x(LASER['d'] / 2, LASER_X[0] - 2, LASER_X[0] - 2 + LASER['L'], LASER_Y, LASER_Z), 'tilt', LASER['mass_g'],
                     LASER['name'] + ' (D42): over the barrel, in its holder on the cartridge')
