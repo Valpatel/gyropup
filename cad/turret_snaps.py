@@ -117,8 +117,9 @@ def root_section(lat):
 # tongue's twist low: an arc's tip lies inside its root's tangent) and their tops stand LATCH_DROP below the lugs'
 # tops, so over the whole tilt range the lugs and the flap meet the ground first (FIRST_CONTACT_MARGIN; tested).
 # The hopper lid prints upside down on those lugs; the disc, the root blocks' and the tongues' tops print on supports.
-# Those top faces are the tongues' edges across their width: the pull bends the tongue's inner and outer faces, not
-# them.
+# Those top faces are the tongues' edges across their width, lightly loaded: the pull bends the tongue's inner and
+# outer faces; at its top edge only the out-of-plane bending peaks, at 1.93 MPa (about 0.07 %; per_latch
+# bending_mpa in research/snap-fits/summary.json).
 LID_LUG_PROUD = 7.0     # the flap's hinge lugs above the hopper lid's disc (cad/turret.py hopper_lid)
 LATCH_DROP = 2.5        # the hopper latches' tops below the lugs' tops
 FIRST_CONTACT_MARGIN = 1.0   # mm: every latch at least this far below the turret's top, upside down, at every tilt
@@ -235,7 +236,10 @@ INVERTED_REASON = ('excluded: the latches do not hold it, and need not. Upside d
                    'flap\'s hinge lugs on the lid and the flap between them, at every tilt from 0 to the -25 deg stop. '
                    'Every latch stands at least 1 mm below them there (FIRST_CONTACT_MARGIN; '
                    'cad/test_turret_snaps.py test_no_latch_is_first_contact), so the ground pushes the lid on through '
-                   'its lugs and its disc, never through a tongue, while the balls stop against it. Left is a landing '
+                   'its lugs and its disc, not through a tongue, while the balls stop against it. That holds for a '
+                   'square landing (no roll). Rolled about 4 deg or more, a side latch at 120 or 240 deg becomes the '
+                   'top (the lugs sit about 12 mm off the roll axis, those latches about 48 mm), and an off-square '
+                   'landing on it can break that latch: a printed part to replace, not a hazard. Left is a landing '
                    'with the lid hanging free (the robot on its back with the turret over an edge): a detent that '
                    'holds the case\'s load at the low bound pulls off at the high bound with a fixed multiple of it '
                    '(the modulus bounds x the friction bounds, research/snap-fits/summary.json), over the 50 N a hand '

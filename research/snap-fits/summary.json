@@ -3,7 +3,7 @@
  "generator": "research/snap-fits/snaps.py",
  "generator_sha256": "3f2b9c5197661b7ac3ba1a2d252285d7d498fe596cbd4afd8c4bfcd1481ab2af",
  "constants": "cad/turret_snaps.py",
- "constants_sha256": "c6ab02cb5e0c34e89defc49f66297823442fe781307126b49c5f4f065045eccd",
+ "constants_sha256": "2690467173047aa8d479d96ce6d6eeb041e3c9edc2ae9805c4121baf5049e87e",
  "spec": {
   "file": "research/snap-fits/snaps.yaml",
   "sha256": "d5f804dcb107832228c8da4460e0f2b19aed6dd2b64834f6d77ddb8b3d50ee39"
@@ -185,7 +185,7 @@
      "required_n": 30.689604,
      "source": "cad/turret_studies.py R-fall (FALL_G 30)",
      "status": "excluded",
-     "reason": "excluded: the latches do not hold it, and need not. Upside down, the turret lands on its top: the flap's hinge lugs on the lid and the flap between them, at every tilt from 0 to the -25 deg stop. Every latch stands at least 1 mm below them there (FIRST_CONTACT_MARGIN; cad/test_turret_snaps.py test_no_latch_is_first_contact), so the ground pushes the lid on through its lugs and its disc, never through a tongue, while the balls stop against it. Left is a landing with the lid hanging free (the robot on its back with the turret over an edge): a detent that holds the case's load at the low bound pulls off at the high bound with a fixed multiple of it (the modulus bounds x the friction bounds, research/snap-fits/summary.json), over the 50 N a hand gives; a lock with a release would be a tool or a catch to find on every refill. If it opens, 30 foam rounds spill: no hazard, no damage, a refill.",
+     "reason": "excluded: the latches do not hold it, and need not. Upside down, the turret lands on its top: the flap's hinge lugs on the lid and the flap between them, at every tilt from 0 to the -25 deg stop. Every latch stands at least 1 mm below them there (FIRST_CONTACT_MARGIN; cad/test_turret_snaps.py test_no_latch_is_first_contact), so the ground pushes the lid on through its lugs and its disc, not through a tongue, while the balls stop against it. That holds for a square landing (no roll). Rolled about 4 deg or more, a side latch at 120 or 240 deg becomes the top (the lugs sit about 12 mm off the roll axis, those latches about 48 mm), and an off-square landing on it can break that latch: a printed part to replace, not a hazard. Left is a landing with the lid hanging free (the robot on its back with the turret over an edge): a detent that holds the case's load at the low bound pulls off at the high bound with a fixed multiple of it (the modulus bounds x the friction bounds, research/snap-fits/summary.json), over the 50 N a hand gives; a lock with a release would be a tool or a catch to find on every refill. If it opens, 30 foam rounds spill: no hazard, no damage, a refill.",
      "retained_n": 14.2339130314903,
      "held": false,
      "pull_off_needed_n": 92.33318153515783
