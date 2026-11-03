@@ -440,3 +440,41 @@ def test_the_design_half_mass_is_one_number():
     assert float(re.search(r'^DESIGN_HALF_MASS = ([\d.]+)', hil, re.M).group(1)) == hm
     fw = (R / 'firmware' / 'balance' / 'include' / 'gp' / 'gp_model.h').read_text()
     assert abs(float(re.search(r'#define GP_RIG_HALF_MASS_KG ([\d.]+)f', fw).group(1)) - hm) < 1e-6
+
+
+# #26: the crush pads' lips. A low side-plate screw that does not pass through a lip (x 0) seats its head on the side
+# plate: no lip under a Ø5.5 socket head there (the integrity check models no heads, so this checks it on the solids).
+def test_the_pad_lips_clear_the_heads_they_do_not_take():
+    import cadquery as cq
+    import body_battery as bb
+    g = bb.geometry()
+    pads = bb.skids()
+    taken = bb.pad_screws()
+    free = [(side, x) for side in ('l', 'r') for x in bb.SIDE_SCREWS_X if (side, x) not in taken]
+    assert free == [('l', 0.0), ('r', 0.0)]
+    for side, x in free:
+        sy = 1.0 if side == 'l' else -1.0
+        y0 = sy * g['side_out']
+        head = cq.Workplane('XY').cylinder(3.0, 2.75, direct=(0, sy, 0)).translate((x, y0 + sy * 1.5, g['z_floor'] + 12.0))
+        for i, s in enumerate(pads):
+            common = s.intersect(head).vals()
+            assert not common or common[0].Volume() < 1e-6, f'bay_skid_{i + 1} under the {side} screw head at x {x}'
+    # the control: the archived lip (to x +-1) does reach under that head
+    head = cq.Workplane('XY').cylinder(3.0, 2.75, direct=(0, 1, 0)).translate((0.0, g['side_out'] + 1.5, g['z_floor'] + 12.0))
+    old_lip = cq.Workplane('XY').box(149.0, bb.LIP['t'], bb.LIP['h'], centered=False).translate(
+        (-150.0, g['side_out'], g['z_floor']))
+    assert old_lip.intersect(head).val().Volume() > 5.0
+
+
+def test_the_pad_web_prints_without_support():
+    """The web under the floor's edge is carried by a 45 deg chamfer down to the lattice, so the upright print has no
+    flat ledge; the chamfer's lowest point stays above the 30 mm stroke."""
+    import body_battery as bb
+    g = bb.geometry()
+    for b in bb.pad_boxes():
+        x0, x1, yi, yo, zt = bb.pad_web_chamfer(b)
+        w = abs(yo - yi)
+        assert 5.0 < w < 7.0
+        assert (zt - w) - g['z_bottom'] > bb.PAD['stroke'] + 5.0       # its foot over the ground, above the stroke
+        web, lip = bb.pad_retention_boxes(b)
+        assert web[0] == x0 and web[1] == x1 and abs(zt - web[4]) < 1e-9

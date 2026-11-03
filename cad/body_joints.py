@@ -65,6 +65,7 @@ class Joint:
     stage: str = 'P1'
     until: str = None
     washer: float = 0.0               # a washer under the head (mm)
+    washer_bom: str = ''              # the washer's catalogue key, when the parts list should order it
     screw_part: str = None            # the screws' own modelled part, if any (joined to the stack)
     bom: str = None                   # the BOM line the screws come from (catalog/body.json key)
     note: str = ''
@@ -209,8 +210,8 @@ def bay_joints():
             xs = [x for (sd, x), v in ps.items() if sd == side and v == n]
             J.append(Joint(f'bay_pad_{n}', 'M3', 10.0, 'socket', [_z(x, sy * (g['side_out'] + bb.LIP['t'] + 0.5), g['z_floor'] + 12.0) for x in xs],
                            (0.0, -sy, 0.0), (f'bay_skid_{n}', f'bay_side_{side}', 'bay_floor'), ('pem', 'bay_floor'), pem='S-M3-0',
-                           bom='turret_screw_m3x10', washer=0.5,
-                           note='#26: a crush pad\'s lip held by the side plate\'s low screws into the floor\'s nuts (an M3 washer on the TPU)'))
+                           bom='turret_screw_m3x10', washer=0.8, washer_bom='washer_m3_large',
+                           note='#26: a crush pad\'s lip held by the side plate\'s low screws into the floor\'s nuts (a Ø9 M3 washer on the TPU; ' + bb.LIP_SCREWS + ')'))
         J.append(Joint(f'bay_side_{side}_high', 'M3', 6.0, 'button', [_z(x, sy * g['side_out'], g['z_belly'] - bb.RAIL_H / 2) for x in bb.SIDE_SCREWS_X],
                        (0.0, -sy, 0.0), (f'bay_side_{side}',), ('insert', f'bay_rail_{side}'), bom='screw_m3x6',
                        note='a side plate into its rail\'s inserts'))
@@ -296,7 +297,8 @@ def holds():
          ('ear_pod_l', 'ear_bracket_l', 'the SSC1\'s 5/16-18 foot bolt into the nut held in the bracket\'s shelf'),
          ('ear_pod_r', 'ear_bracket_r', 'the SSC1\'s 5/16-18 foot bolt into the nut held in the bracket\'s shelf'),
          ('eyes_board', 'eyes_clip', 'clamped between the clip and the face round its window'),
-
+         ('bay_skid_1', 'bay_floor', '3M VHB tape (and its lip\'s two screws, #26)'), ('bay_skid_2', 'bay_floor', '3M VHB tape (and its lip\'s two screws, #26)'),
+         ('bay_skid_3', 'bay_floor', '3M VHB tape (and its lip\'s two screws, #26)'), ('bay_skid_4', 'bay_floor', '3M VHB tape (and its lip\'s two screws, #26)'),
          ('cheek_nuts_right', 'cheek_right', 'PEM SS-M5-0 pressed by SendCutSend'),
          ('turret_plate_nuts', 'turret_plate', 'PEM SS-M5-0 pressed by SendCutSend'),
          ]

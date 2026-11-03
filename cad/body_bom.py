@@ -156,6 +156,8 @@ def joint_hardware(stage):
             continue
         n = len(j.at)
         add(j.bom, n, f'{n} {j.name.replace("_", " ")}')
+        if j.washer_bom:
+            add(j.washer_bom, n, f'{n} {j.name.replace("_", " ")} (washer)')
         kind = j.receiver[0]
         if kind == 'insert':
             add(f'insert_{j.thread.lower()}', n, f'{n} {j.name.replace("_", " ")}')
