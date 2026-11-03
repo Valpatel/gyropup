@@ -296,6 +296,7 @@ class PublishedArchiveTests(unittest.TestCase):
 
 # The docs that quote the retained slice: each states the job receipt's own estimate (time, grams, filament).
 SLICE_DOCS = ('docs/rs04-fit-job.md', 'docs/mechanical-readiness.md')
+GRAMS = re.compile(r'(\d+\.\d+) g\b')
 SLICE_QUOTE = re.compile(r'(\d+) h (\d+) min (\d+) s, ([\d.]+) g and ([\d.]+) m')
 
 
@@ -316,6 +317,19 @@ class SliceQuotes(unittest.TestCase):
         for doc in SLICE_DOCS:
             with self.subTest(doc=doc):
                 self.assertEqual(slice_quote_problems((ROOT / doc).read_text(), metrics), [])
+
+    def test_every_line_linking_the_job_quotes_its_grams(self):
+        """Beyond SLICE_DOCS: any Markdown line that links the fit job and gives a gram figure gives the receipt's."""
+        grams = json.loads((ROOT / 'exports/leg/rs04-fit-job/job.json').read_text())['metrics']['grams']
+        bad = []
+        for md in ROOT.rglob('*.md'):
+            rel = md.relative_to(ROOT).as_posix()
+            if rel.startswith(('node_modules/', 'dist/', 'docs/archive/', '.agents/')):
+                continue
+            for n, line in enumerate(md.read_text(errors='replace').splitlines(), 1):
+                if 'rs04-fit-job' in line:
+                    bad += [f'{rel}:{n}: {g} g' for g in GRAMS.findall(line) if float(g) != grams]
+        self.assertEqual(bad, [])
 
     def test_a_wrong_or_missing_quote_is_caught(self):
         metrics = {'minutes': 392.7687174479167, 'grams': 172.41, 'filament_m': 65.16}

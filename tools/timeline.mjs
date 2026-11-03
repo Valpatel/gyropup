@@ -51,7 +51,8 @@ export function shorten(title, max = 84) {
 }
 
 /** The merge commit GitHub makes for a pull request's CI run ("Merge <head sha> into <base sha>"): not a change of
- * its own. It is opened like a release, so a preview built on it shows the pull request's commits, not that subject. */
+ * its own. It is opened like a release, so a preview built on it shows the pull request's commits, not that subject.
+ * After the merge, dev shows the same change as one "Merge pull request #N" unit: a preview's list is finer, not other. */
 export const SYNTHETIC_MERGE = /^Merge [0-9a-f]{40} into [0-9a-f]{40}$/;
 
 /** The units of change, newest first: the first-parent line of `head`, with every merge of an integration line (a

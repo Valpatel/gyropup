@@ -8,9 +8,8 @@ investigation uses engineering `fa459d09aebe416be21edc1c11ceb37fe41c3f7e`,
 including the reviewed PR86 C3 support. No CAD, circuit, vendor geometry or
 generated receipt changed. The electrical and mechanical authors must accept a
 complete component, terminal, thermal and service contract before generating a
-new candidate. [Issue96](https://github.com/Valpatel/gyropup/issues/96) tracks that
-work; [issue85](https://github.com/Valpatel/gyropup/issues/85) still tracks the
-incomplete carrier service.
+new candidate. [#66](https://github.com/Valpatel/gyropup/issues/66) tracks that
+work and the incomplete carrier service; it took over #96 and #85.
 
 The preferred architecture retains the complete PAN electronics with the
 removable carrier. The existing control PCB remains occupied. A separately fixed
