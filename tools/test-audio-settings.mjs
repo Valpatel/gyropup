@@ -98,6 +98,11 @@ await acknowledgePrototypeNotice(context);
    await page.reload({waitUntil:'networkidle'});await page.waitForFunction(()=>window.__sim?.talk || window.__talk);
    assert.equal(await page.evaluate(()=>{const t=window.__sim?.talk || window.__talk,s=window.__sim?.sfx || window.__sfx;return t.audio.muted && t.audio.voiceVolume===0 && s.volume===.3;}),true,'Saved volume and voice preference survive reload');
    if(design==='talk') {
+    for(const width of [390,320]){
+     await page.setViewportSize({width,height:width===390?844:568});await page.waitForTimeout(100);
+     const title=await page.locator('#topbar h1').evaluate(h=>({text:h.textContent,scroll:h.scrollWidth,client:h.clientWidth,right:h.getBoundingClientRect().right}));
+     assert.ok(title.scroll<=title.client && title.right<=width,`Talk demo title "${title.text}" is not cut short at ${width}px: ${JSON.stringify(title)}`);
+    }
     await page.setViewportSize({width:320,height:568});await page.waitForTimeout(100);
     assert.equal(await page.locator('#topbar').evaluate(el=>el.scrollWidth<=el.clientWidth && [...el.querySelectorAll('button')].every(button=>{const r=button.getBoundingClientRect();return r.x>=0 && r.right<=innerWidth && r.height>=44;})),true,'Talk demo master controls fit a 320px phone');
     await page.setViewportSize({width:1200,height:900});

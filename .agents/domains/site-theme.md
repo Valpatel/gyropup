@@ -2,9 +2,16 @@
 
 `web/theme.css` holds every page colour as a `--gp-*` token: a light set on `:root`, and one dark set written twice
 (under `@media (prefers-color-scheme: dark)` on `:root:not([data-theme=light])`, and on `:root[data-theme=dark]`).
-The two dark blocks must stay identical. Page stylesheets (`web/*.css`, `designer/**/*.css`, the inline `<style>`
-blocks and the app bar's CSS in `designer/kit/appnav.js`) use `var(--gp-*)`, or a local alias of one (`--ink`,
-`--text`, `--sb-ink`, ...). `*-rgb`, `--gp-shadow` and `--gp-hi` are RGB triples for `rgb(var(--gp-…) / alpha)`.
+The two dark blocks must stay identical. The light set is the friendly, bright look: warm white, navy ink, sunny
+yellow, sky blue, coral and mint. The dark set is valpatel.com's mission-control look: the void `#0a0a0f` and its
+surfaces, cyan hairlines, green/amber/magenta status. The dark theme's decorative layer sits at the end of
+`web/theme.css`, written twice like the token block (`tools/test-theme.mjs` checks the copies match): a hairline grid
+on `body`, void panels for the motto and the status strip, a glowing status dot (in `:where()`, so a page's own dot
+colour wins), and corner brackets as an `::after` 10 px inside the main panels' edges (clear of their rounded
+corners). A bracket is never part of a panel's background, so the contrast scan still sees what is behind text.
+Page stylesheets (`web/*.css`, `designer/**/*.css`, the inline `<style>` blocks and the app bar's CSS in
+`designer/kit/appnav.js`) use `var(--gp-*)`, or a local alias of one (`--ink`, `--text`, `--sb-ink`, ...).
+`*-rgb`, `--gp-shadow` and `--gp-hi` are RGB triples for `rgb(var(--gp-…) / alpha)`.
 
 `web/theme.js` is a classic script loaded first in `<head>`, then `web/theme.css`, on every page; the build fails if a
 built page does not. It sets `data-theme` on `<html>` from `localStorage['gyropup-theme']` before anything paints,
@@ -23,7 +30,7 @@ Canvas and drawings:
   background (`setPalette({background})`, `setSceneBackground(day)`); `setSceneBackground()` with no arguments returns
   to the page sky. `designer/sim.js` paints the yard from `--gp-stage-ground`.
 - The landing hero's canvas is transparent over the `.hero-scene` gradient (sky tokens). Its light value is exact:
-  `tools/test-hero-preview.mjs` checks `217, 237, 243`.
+  `tools/test-hero-preview.mjs` checks `220, 238, 255`.
 - The file viewer follows the site theme unless a `?theme=` query is given (see `file-viewer-theme.md`).
 - Mermaid is drawn in the browser (`designer/kit/diagrams.js`), so each diagram is drawn in the page's theme and drawn
   again, once per theme, when it changes (`refreshDiagramThemes`). The figure frames in `diagrams.css` are literal,

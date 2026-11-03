@@ -1194,8 +1194,8 @@
   {
    "key": "screw_m3x6",
    "id": "mcmaster-91290a111",
-   "qty": 28,
-   "for": "P1: 4 power dcdc, 5 bay side l low, 5 bay side l high, 5 bay side r low, 5 bay side r high (cad/body_joints.py); 4 the J501 carrier onto its standoffs",
+   "qty": 20,
+   "for": "P1: 4 power dcdc, 1 bay side l low, 5 bay side l high, 1 bay side r low, 5 bay side r high (cad/body_joints.py); 4 the J501 carrier onto its standoffs",
    "vendor": "McMaster-Carr",
    "part_number": "91290A111",
    "name": "Black-Oxide Alloy Steel Socket Head Screw, US Origin, M3 x 0.5 mm Thread Size, 6 mm Long",
@@ -1435,6 +1435,75 @@
      "price_usd": 11.79,
      "pack_qty": 100,
      "seller_pn": "91239A224"
+    }
+   ]
+  },
+  {
+   "key": "turret_screw_m3x10",
+   "id": "mcmaster-91290a115",
+   "qty": 8,
+   "for": "P1: 2 bay pad 1, 2 bay pad 2, 2 bay pad 3, 2 bay pad 4 (cad/body_joints.py)",
+   "vendor": "McMaster-Carr",
+   "part_number": "91290A115",
+   "name": "Black-Oxide Alloy Steel Socket Head Screw, US Origin, M3 x 0.5 mm Thread Size, 10 mm Long",
+   "mass_g_each": null,
+   "price_usd_each": 0.1323,
+   "url": "https://www.mcmaster.com/91290A115/",
+   "pack_qty": 100,
+   "sellers": [
+    {
+     "seller": "McMaster-Carr",
+     "url": "https://www.mcmaster.com/91290A115/",
+     "in_stock": null,
+     "ships_from": "US",
+     "price_usd": 13.23,
+     "pack_qty": 100
+    },
+    {
+     "seller": "Belmetric",
+     "url": "https://belmetric.com/m3x0-5-socket-head-cap-screw-din-912-class-12-9/",
+     "stock": "in stock",
+     "read_on": "2026-10-27",
+     "seller_pn": "BSH3X10",
+     "price_usd": 0.14
+    }
+   ]
+  },
+  {
+   "key": "washer_m3_large",
+   "id": "mcmaster-91116a120",
+   "qty": 8,
+   "for": "P1: 2 bay pad 1 (washer), 2 bay pad 2 (washer), 2 bay pad 3 (washer), 2 bay pad 4 (washer) (cad/body_joints.py)",
+   "vendor": "McMaster-Carr",
+   "part_number": "91116A120",
+   "name": "18-8 Stainless Steel Oversized Washer, for M3 Screw, 3.2mm ID, 9.0mm OD, 0.7mm to 0.9mm Thick",
+   "mass_g_each": 0.355,
+   "price_usd_each": 0.0481,
+   "url": "https://www.mcmaster.com/91116A120/",
+   "pack_qty": 100,
+   "sellers": [
+    {
+     "seller": "McMaster-Carr",
+     "url": "https://www.mcmaster.com/91116A120/",
+     "in_stock": null,
+     "ships_from": "US",
+     "price_usd": 4.81,
+     "pack_qty": 100
+    },
+    {
+     "seller": "Belmetric",
+     "url": "https://belmetric.com/fender-washer-a2-stainless-din-9021/",
+     "stock": "in stock",
+     "read_on": "2026-10-27",
+     "seller_pn": "WFE3X9SS",
+     "price_usd": 0.08
+    },
+    {
+     "seller": "Aspen Fasteners",
+     "url": "https://www.aspenfasteners.com/m3-din-9021-iso-7093-metric-fender-washers-a2-stainless-steel/",
+     "stock": "Contact Support for Availability Info",
+     "read_on": "2026-10-27",
+     "seller_pn": "ME380-3"
     }
    ]
   },
@@ -2521,7 +2590,7 @@
    ]
   }
  ],
- "price_usd_known": 1608.6,
+ "price_usd_known": 1626.64,
  "p2_usd": 62.72,
  "made_to_order_estimate_usd": 459.0,
  "p3_usd": 84.03,

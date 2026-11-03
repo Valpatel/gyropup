@@ -282,10 +282,10 @@
     "joints": 2,
     "groups": 1,
     "poses": 210,
-    "pair_queries": 15570,
-    "kernel_queries": 2577,
-    "memo_hits": 5100,
-    "cache_hits": 7893,
-    "seconds": 722.527
+    "pair_queries": 16991,
+    "kernel_queries": 4957,
+    "memo_hits": 6175,
+    "cache_hits": 5859,
+    "seconds": 1491.072
   }
 }

@@ -43,7 +43,7 @@
       "cad/print_slicing.py": "13fd25fe32e75e0c66dbe8af132fd4d70fb030defb14d88a96f9ff77cbaf07bd",
       "cad/print_provenance.py": "db0d9cdc14e0d0363899d82c03eb31cb63ea0d7718fedcf127a5545f8f6bec88",
       "cad/rs04_lug_checks.py": "02a75e6dd5d28c6c8c149141d100d1386125197f5edfb34143565c72d8a8dfb5",
-      "exports/leg/rs04-mounting-fit/checks.json": "1e45925d33964b3da543869bac182569a47f51309954ba2a61b6bac02a29b75e",
+      "exports/leg/rs04-mounting-fit/checks.json": "7510239724db6f9f89d7408674a3e5e7bca27ff0ebc14a8d92934fb9682d4804",
       "exports/leg/rs04-mounting-fit/coupon_frame_ring_nom.stl": "1830ff4c1c9dc2314295d3d601b238c857c774abaf108c6619fdd9901b1da2cd"
     },
     "toolkit_helpers": {
@@ -1221,7 +1221,7 @@
       "slicer_payload_sha256": "b7f803605b7df175570e58c994bd8bfd12467b3aa2756cce32a931c670f3e5a9"
     }
   },
-  "source_commit": "82bc5bdc80e46ccdbd867938a781d921d3af085c",
+  "source_commit": "cb7169fbc6da470451bf5a706ec209bbc8b56878",
   "geometry": {
     "bounds_mm": [
       [
@@ -1252,7 +1252,7 @@
   },
   "metrics": {
     "grams": 172.41,
-    "minutes": 392.7687174479167,
+    "minutes": 392.80087890625,
     "filament_m": 65.16,
     "exit_code": 0,
     "return_code": 0,
@@ -1268,7 +1268,7 @@
       "bytes": 438
     },
     "3D/3dmodel.model": {
-      "sha256": "6e73c2418a6fc1f58a5b20d463d7198390227db75288b601f7f92a1d15610753",
+      "sha256": "d9cfccc412c7badb3f62bc062fbf97fd7e3cecc820937b91ea086b37f28dfed0",
       "bytes": 1570
     },
     "3D/_rels/3dmodel.model.rels": {
@@ -1284,19 +1284,19 @@
       "bytes": 44072
     },
     "Metadata/plate_1.gcode.md5": {
-      "sha256": "78703369616d6901663f87f27860de4f5e8a6f3cb1f3339f3d35052d73a751d0",
+      "sha256": "31a7775e9176c2e6748ced9d16dd5576180b229ee1be3a98f9352262480b7889",
       "bytes": 32
     },
     "Metadata/plate_1.gcode": {
-      "sha256": "dec0176ec6dd8fbbf9e8ad3fb9b690e2fa54a2d2293763cd459024066eef723e",
-      "bytes": 11590017
+      "sha256": "5e0efa3c26a01c667ac6a46c0655231d6e5dc161b028fd04c86bec36acdc03e5",
+      "bytes": 11590056
     },
     "Metadata/_rels/model_settings.config.rels": {
       "sha256": "5ea2c0f459aec4d25341abd431edee7890c8d2fd02efbaed4b073d04cfa11440",
       "bytes": 255
     },
     "Metadata/model_settings.config": {
-      "sha256": "5b880014c06e997f9f3f3913c9b82ba3c4441f9c1301f6ba91711380a372ad86",
+      "sha256": "a376d897b78c40b592c19eaca3ce7380054bcd110bd688ec04ba0cda7a1d4254",
       "bytes": 1508
     },
     "Metadata/cut_information.xml": {
@@ -1304,8 +1304,8 @@
       "bytes": 139
     },
     "Metadata/slice_info.config": {
-      "sha256": "188b5a503e04c466889956f7df3c1f9b701b439beeae45bbf763d8dac485de23",
-      "bytes": 1708
+      "sha256": "7273d9f696317d133e78eaaf6e514f1a42d93eaf77c070033418ec28331cd242",
+      "bytes": 1679
     },
     "Metadata/filament_sequence.json": {
       "sha256": "9e457664577459536d7512bf553066895dba22502a17ad79789ee272d2d569ba",
@@ -1949,11 +1949,11 @@
     "slice/exit-code.json": "124fd50cb6d223cdd18fedc166d00af7254199b6e6dedf9be82f71db87af6d01",
     "slice/filament.json": "0d2b91e9d7f31661688294b60c19e3fb922f1fde5d2f219ee16d85f190cb3374",
     "slice/machine.json": "44b41d9e562c8b9a7223ec87dd1c7e37271549983ea572f09a81f62a9b76d9af",
-    "slice/out/plate_1.gcode": "dec0176ec6dd8fbbf9e8ad3fb9b690e2fa54a2d2293763cd459024066eef723e",
-    "slice/out/result.json": "f6700b4ea75a0c8f61bdaf532afe758cd7bb33fd2c28285ba27c14f9d3774342",
-    "slice/out/sliced.3mf": "9d5f4cedcf1fa46f579a485188afe920d92d2772f1de1141c2abd32b593893a3",
+    "slice/out/plate_1.gcode": "5e0efa3c26a01c667ac6a46c0655231d6e5dc161b028fd04c86bec36acdc03e5",
+    "slice/out/result.json": "76a7215844050e88ef4aaccbf79b84193cd98af4e61849358e086dac0321e87a",
+    "slice/out/sliced.3mf": "3c4b8118a6de22ebf2a6e9d5276e5edd3d479f2a9afa54733e3138e3a947faa9",
     "slice/process.json": "9591ffa2ff4d223ebc859b1901766aabf71caf7cfdcf93719dcc77484b12a345",
-    "slice/slicer.log": "3123c714742005cf29297d09539cfe34f7e47d912cdde34fa16fed1a8a7d2105",
+    "slice/slicer.log": "6bc8e3f42b87dfdc39701693da03f065bc7c8ccb5d0038d3fd70d17859c316a4",
     "source.stl": "1830ff4c1c9dc2314295d3d601b238c857c774abaf108c6619fdd9901b1da2cd"
   }
 }

@@ -1,7 +1,7 @@
 /* Diagrams own their horizontal overflow; source stays available only on request. */
-.cad-diagram{margin:1.4rem 0;max-width:100%;min-width:0;padding:1rem;border:1px solid #c8d2cc;border-radius:12px;background:#fff;color:#263e35;font:14px/1.5 system-ui,sans-serif;color-scheme:light}
+.cad-diagram{margin:1.4rem 0;max-width:100%;min-width:0;padding:1rem;border:1px solid #ded6c4;border-radius:12px;background:#fff;color:#1d2350;font:14px/1.5 system-ui,sans-serif;color-scheme:light}
 /* A diagram drawn in Mermaid's dark theme, on the dark page (designer/kit/diagrams.js follows the page's theme). */
-.cad-diagram[data-theme=dark]{background:#1c2c24;color:#f1e9d8;border-color:#3d5246;color-scheme:dark}
+.cad-diagram[data-theme=dark]{background:#0e0e14;color:#eef2f8;border-color:#183039;color-scheme:dark}
 .cad-diagram-view{overflow:auto;max-width:100%;min-height:80px;overscroll-behavior-x:contain}
 .cad-diagram-view svg{display:block;height:auto;max-width:none!important;margin:auto}
 .cad-diagram-status{margin:0;min-height:24px}.cad-diagram-status[hidden],.cad-diagram [hidden]{display:none!important}

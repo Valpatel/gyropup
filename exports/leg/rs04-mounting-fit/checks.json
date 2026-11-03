@@ -2138,12 +2138,12 @@
         "contact_area_mm2": 18.307631,
         "witness": {
           "point_a": [
-            32.938254,
+            39.538254,
             -9.5,
             -36.145913
           ],
           "point_b": [
-            32.938254,
+            39.538254,
             -9.5,
             -36.145913
           ],
@@ -11748,12 +11748,12 @@
         "contact_area_mm2": 18.307631,
         "witness": {
           "point_a": [
-            -25.565869,
+            -32.165869,
             15.6,
             45.55046
           ],
           "point_b": [
-            -25.565869,
+            -32.165869,
             15.6,
             45.55046
           ],
@@ -12368,12 +12368,12 @@
         "contact_area_mm2": 18.307631,
         "witness": {
           "point_a": [
-            36.653981,
+            30.053981,
             15.6,
             48.811264
           ],
           "point_b": [
-            36.653981,
+            30.053981,
             15.6,
             48.811264
           ],
@@ -14417,13 +14417,13 @@
       "files": {
         "cad/assembly.py": "6e328b8342bde8e2d63abf972a5bff7a2e14389f000d903ec0e1d6bcb7498864",
         "cad/assembly_checks.py": "33ee6454e3477586e2a2dc7af2901e60678ca61a567152d5d7e987bfde104122",
-        "cad/body_battery.py": "57c4a208dd175ef243445960c712a02966570f8ec70718a97bdc19c9568a0822",
-        "cad/body_bom.py": "cd7f7bfc9d9b81a1c9e49be93bcd05e32457ccf52d148fdf407b0fb107382d35",
+        "cad/body_battery.py": "6603a6abcb13af8308391d1fa0647f382eab065c324995365937827437a5156d",
+        "cad/body_bom.py": "e0d5bc81fbd109becf3eade173441bc4fb99c68ff5ff84e5f81e2982042d5b31",
         "cad/body_frame.py": "7605925a5a4cd5d1726431311e0a2e3de3a6518e9a4891bfbeac077a46b47437",
         "cad/body_fuse_board.py": "b705420639121f67e085d47d697dc05d7316737b0fcb7ad06bb3483e8ff01f2d",
         "cad/body_guards.py": "cc9f220ca9d4708eb81b86396d483115f03fe7a7be2f3bdfd8c5a998f521ffb8",
-        "cad/body_joints.py": "78b96a277de30729bdaa121db7d20657c37ef933e710bafb3ee36738d6a40504",
-        "cad/body_layout.py": "4e1cf2600565ab01ab9e4d18e488c990c8d43fd4858fcdd2e379105d7f7e2a4a",
+        "cad/body_joints.py": "3248153de3f3f4ff6366dcb9aae212b97b78e62a17369dab5458d49cdfc26b92",
+        "cad/body_layout.py": "254ade41aef5a46d918bd07b77d51665bd0ab571856dfe7df34604936554ca93",
         "cad/body_legloads.py": "795ba8985155d2fea01a5463f737c3cccb1ce3c0082951eee05374ea172bc1cf",
         "cad/body_params.py": "b53d6cf1425ff36fae8c427d7df9a8c07da02b6402219b1c4992c173db8f2cbd",
         "cad/body_sections.py": "8a4c3d3d395605b297e851cea7a54c4d290df509b5fe5754a1bef335adc62963",
@@ -14462,9 +14462,10 @@
         "cad/rig_views.py": "6c06380d63be63c3a2aa32644bb52a5c24b5d1771a113686deea524705d63dbe",
         "cad/rs04_lug_checks.py": "02a75e6dd5d28c6c8c149141d100d1386125197f5edfb34143565c72d8a8dfb5",
         "cad/studies.py": "35149401f3a753024568eba0b34765419ed535d42c5bf19a11544d13cad8f823",
-        "cad/test_body.py": "8a9d3167ef2b94c9361e0d3be591a8ebbc268c7a6b191f111ce9a1838750e4c8",
+        "cad/test_body.py": "5875a19bc2b3591721dc466d2b598b3b7cdf5dbfba22cdcde1c2017bcae66b27",
         "cad/test_leg_loads.py": "0ed04011ea672aa8bc387af272ddfa1783ec4fa1f379fde1e3dfbd9201867b51",
-        "cad/turret.py": "e4003ceac5d33838ccda718d2fb6f5c66171bd7040c3b219b7fab7dd3da3fd0b",
+        "cad/test_turret_solids.py": "61eee61b68461574f75c316fa16d4d566ab097f862fadd6ee2b0b175655c0d48",
+        "cad/turret.py": "71a663ea426e583d1fcbef1f36c2e0d8ff63a7a68462914724565015914ff5b4",
         "cad/turret_assembly.py": "480799c724c799954a520c1ecd9c0b4d383cce752efdac4f3c3f6a6da7aaf2e3",
         "cad/turret_base_board.py": "153e49871e0a3359478cd34a50daf7e44f4497970097475c829dbbcdacda90ba",
         "cad/turret_boards.py": "c7a115d2fe3cefddf46b0dd521e21076e1f7721235df3e7bd22fadb6e165707b",
@@ -14483,9 +14484,9 @@
         "cad/wheel_fit.py": "57c75e2462fb6f3606b81e4baac284dcac9a7b67bb47183f425d8bb8f730febd",
         "catalog/alternates.json": "9d5da650878fefa12654cdedae841d2daf22c1101c7f038018a75b8921d5ee3b",
         "catalog/body.json": "91a27038348a4e8e4beb3ede92c5c84a073d4728cd73e14f66d3e3226ab9b52b",
-        "catalog/designed-media-validation.json": "f30f0021eb4ac34f0c72b3e9e609b2ab3b54a1d0a3f0fa52981924b819ec73c6",
+        "catalog/designed-media-validation.json": "4c6267a8d997057edce1cfc2fbf1d738d8731ca03a981b90f6999a15a554b889",
         "catalog/hardware.json": "af0f7f3bdce4ee93649e278106d00a93fe2ebea3569c057f1d2a04fe4b360015",
-        "catalog/images.json": "b66d5707f6ce19c1fd778804fa4e34aa0a03eea76770be82bf7a82532c2e0ae4",
+        "catalog/images.json": "0822b53a545f95ca449026432f69568afc6157461a7d5a86e2e539ec93f4889b",
         "catalog/index.json": "5e77d00c8ab4961f5da0bb2d5692a23170b9f4143e05d850d7b33fe36d70f334",
         "catalog/interfaces.json": "3889bc34503444f389e7951d74944f37b7e57b0b2b3be68ed596b959e83a46af",
         "catalog/leg_actuators.json": "b8ed3125cca22e9936b929fa1529395b1dead7a9585c21c63995bb294fa31bc5",
@@ -34908,7 +34909,7 @@
         "volume_cm3": 1014.7
       },
       "files": {
-        "step": "1f18595afe3076a36240c7f4d343098a1644ceb4ff777af761954627dec3c19a",
+        "step": "5c0eeb492ca3560765ed69903142fef02ecfd20ea010664e81076e6018d3a6ea",
         "stl": "6a909a9a5e4688be534e9ddbe6459d71aa275d2f591c72a3ca430ec62ab2f402"
       }
     },
@@ -34926,7 +34927,7 @@
         "volume_cm3": 278.096
       },
       "files": {
-        "step": "60109937084636733614bbac512b59099370f2467ef92f741a478a25bd950379",
+        "step": "2f7d9185ddc48d49586257950d128fcadbd965350148a7fa9162565ceab76f82",
         "stl": "c59170b74cefde6b44714f604e8cf3e785cc468df2bea228f96e6906ffb46999"
       }
     },
@@ -34944,7 +34945,7 @@
         "volume_cm3": 162.045
       },
       "files": {
-        "step": "bd1a191cb8a55695760eb972085415c8889de6b398fb0cff9baad50a63e4814f",
+        "step": "3ced730aaa19c90de18bf93d41a28522a98a64d646b8cbb88a2aecc8932d81c3",
         "stl": "1830ff4c1c9dc2314295d3d601b238c857c774abaf108c6619fdd9901b1da2cd"
       }
     }

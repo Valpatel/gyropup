@@ -50,9 +50,15 @@ export function shorten(title, max = 84) {
   return cut.slice(0, cut.lastIndexOf(' ')).replace(/[,:;(]+$/, '') + '…';
 }
 
+/** The merge commit GitHub makes for a pull request's CI run ("Merge <head sha> into <base sha>"): not a change of
+ * its own. It is opened like a release, so a preview built on it shows the pull request's commits, not that subject.
+ * After the merge, dev shows the same change as one "Merge pull request #N" unit: a preview's list is finer, not other. */
+export const SYNTHETIC_MERGE = /^Merge [0-9a-f]{40} into [0-9a-f]{40}$/;
+
 /** The units of change, newest first: the first-parent line of `head`, with every merge of an integration line (a
  * release from dev into main, or a sync back) opened into the merges and commits it carries, each once. A merge is an
- * integration merge when the line it brings in has pull-request merges of its own; a feature branch that merged its
+ * integration merge when the line it brings in has pull-request merges of its own, or when it is CI's synthetic merge
+ * (SYNTHETIC_MERGE); a feature branch that merged its
  * base in stays one change. Returns [{ sha, date, subject, body }]. */
 export function changeUnits(git, head = 'HEAD') {
   const seen = new Set(), units = [];
@@ -63,7 +69,8 @@ export function changeUnits(git, head = 'HEAD') {
       if (seen.has(sha)) continue;
       seen.add(sha);
       const [p1, p2] = parents.split(' ');
-      if (p2 && /^Merge pull request #\d+ /m.test(git(['log', '--first-parent', '--merges', '--format=%s', `${p1}..${p2}`]))) { walk([`${p1}..${p2}`]); continue; }
+      if (p2 && (SYNTHETIC_MERGE.test(subject)
+        || /^Merge pull request #\d+ /m.test(git(['log', '--first-parent', '--merges', '--format=%s', `${p1}..${p2}`])))) { walk([`${p1}..${p2}`]); continue; }
       if (!p1) continue; // the first commit has nothing to compare against
       units.push({ sha, date, subject, body: body || '' });
     }
