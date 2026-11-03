@@ -9,6 +9,7 @@ import { buildRobot, kneeFor } from './robot3d.js';
 import { buildRobotV2 } from './robot_v2.js';
 import { loadCadRig } from './cadrig.js';
 import { createEyes, eyesGlyph } from './character/eyes.js';
+import { INTRO, DEFAULT_INTRO } from './character/lines.js';   // spoken lines: one source with their voice clips
 import { BALL, BALL_SPIN, ballMesh, createBalls } from './turret3d.js';
 import { evaluate, indexCatalog, legPose, effectiveDesign, resolvePart } from './model.js';
 import { createSfx } from './sfx.js';
@@ -598,19 +599,8 @@ async function startReplay(key) {
 // Frame the robot and every target in the part of the screen the panels leave free: from behind and above the robot,
 // a little to the side, so the balls fly away from the camera towards the targets.
 // Activity hints are optional banter: never interrupt a question or greet again on every loop.
-const INTRO = {
-  stand: ['Hi! Watch me balance!', 'Hello! Standing still is harder than it looks!'],
-  squat: ['Hi! Squats, here we go!', 'Hello! Down... and up!'],
-  push: ['Hi! Go on, give me a shove!', 'Hello! Push me, I dare you!'],
-  drive: ['Hi! Zoom zoom, here I go!', 'Hello! Time for a drive!'],
-  slope: ['Hi! Uphill, here I come!', 'Hello! A hill? No problem... I hope.'],
-  curb: ['Hi! A kerb ahead. Hup!', 'Hello! Watch me hop this step!'],
-  recoil: ['Hi! Brace for recoil!', 'Hello! Big burst coming, hold on!'],
-  look: ['Hi! What is up there?', 'Hello! Let me look up at the sky!'],
-  targets: ['Hi! Target practice time! I promise to aim for the legs!', 'Hello! Five targets? Easy peasy!', 'Hi! Safety glasses on? Let us knock them down!'],
-};
 function introLine(R) {
-  const lines = INTRO[R.run.scenario ?? R.key?.split('/').pop()] ?? ['Hi! Watch this!'];
+  const lines = INTRO[R.run.scenario ?? R.key?.split('/').pop()] ?? DEFAULT_INTRO;
   const line = lines[(R.introCount = (R.introCount ?? -1) + 1) % lines.length];
   try { talk?.announce?.(line, { mood: 'happy' }); } catch { /* the voice is optional */ }
 
