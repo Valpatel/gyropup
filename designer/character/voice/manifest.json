@@ -1,0 +1,895 @@
+{
+ "generator": "tools/render-voice.py",
+ "source": "designer/character/lines.js",
+ "key": "designer/character/pronunciation.json",
+ "key_version": 1,
+ "voice_tag": "voice=en_US-hfc_female-medium|pitch=2.0|speed=0.95|volume=0.9|pause=0.12|render=2|mp3-v5-mono",
+ "voice": {
+  "voice": "en_US-hfc_female-medium",
+  "pitch": 2.0,
+  "speed": 0.95,
+  "volume": 0.9,
+  "pause": 0.12
+ },
+ "engine": "piper-tts 1.4.2",
+ "encoding": "MP3 VBR V5 (libmp3lame -q:a 5), mono, 22.05 kHz",
+ "total_bytes": 1739959,
+ "seconds": 270.4,
+ "lines": {
+  "I promise to aim for the legs!": {
+   "clip": "ea153f8728b8bf76.mp3",
+   "spoken": "I promise to aim for the legs!",
+   "seconds": 1.52,
+   "bytes": 10717,
+   "sha256": "c5be90d9b9f26b0213303d96db57848238fb272efe5657e8bf9f8b3e82da5569"
+  },
+  "Safety glasses on? Then it is game on!": {
+   "clip": "d47f6cf36a06ba10.mp3",
+   "spoken": "Safety glasses on? Then it is game on!",
+   "seconds": 2.43,
+   "bytes": 15739,
+   "sha256": "0ec7482d2173ae8d9e0ef271e9b1d0df8d1632ffdbf0dea7b585f1454af2b3a1"
+  },
+  "Legs only, I am a good pup!": {
+   "clip": "90ed10af51edae42.mp3",
+   "spoken": "Legs only, I am a good pup!",
+   "seconds": 1.71,
+   "bytes": 11184,
+   "sha256": "13acb71b64b281f49f810a6a17ec47a29b6c5ac54fdb383d2c68befc481c9d8c"
+  },
+  "Ankle-biter mode: engaged!": {
+   "clip": "060433a17a610121.mp3",
+   "spoken": "Ankle-biter mode: engaged!",
+   "seconds": 1.77,
+   "bytes": 12464,
+   "sha256": "e131619505b359b0b5f27fb32cf1155ca3315f1e5350f6bbefbfafc4ada1d673"
+  },
+  "Heads are off-limits. Knees, watch out!": {
+   "clip": "dd1f20be97b2e9ea.mp3",
+   "spoken": "Heads are off-limits. Knees, watch out!",
+   "seconds": 2.45,
+   "bytes": 15921,
+   "sha256": "ad649d70b83dede8c06bfe6d20131cd9114a317fdb27e8dc65857f010f1ea79f"
+  },
+  "I aim low because I am short. Arf!": {
+   "clip": "e66a9d6037a188e1.mp3",
+   "spoken": "I aim low because I am short. Arf!",
+   "seconds": 2.27,
+   "bytes": 14020,
+   "sha256": "fb4ea106f203981a29b746414945456f87c96ddf1a2e0df9f753447ceaacd9fc"
+  },
+  "You can run, but my wheels are faster! Just kidding, mostly.": {
+   "clip": "a6f0f5efec6bbe5a.mp3",
+   "spoken": "You can run, but my wheels are faster! Just kidding, mostly.",
+   "seconds": 3.64,
+   "bytes": 24332,
+   "sha256": "316089334669f594a6b61caa4647f1930197da5cb2feeb4987face85b26512c7"
+  },
+  "Bullseye!": {
+   "clip": "5caa8ead644d51dd.mp3",
+   "spoken": "bulls-eye!",
+   "seconds": 0.69,
+   "bytes": 4780,
+   "sha256": "1b0a552a351bbe055107204fbdba3baf48dcc84dc9f38c53e7331f3013340cbb"
+  },
+  "Got it! Arf!": {
+   "clip": "83d1c0800291a213.mp3",
+   "spoken": "Got it! Arf!",
+   "seconds": 1.27,
+   "bytes": 7854,
+   "sha256": "ceb13fba937ffdff0576baefc3af5dc4568d23d36ece80a98325698d2d3ed607"
+  },
+  "Direct hit!": {
+   "clip": "0d931b9255ce5751.mp3",
+   "spoken": "Direct hit!",
+   "seconds": 0.74,
+   "bytes": 5380,
+   "sha256": "e0eaa82e05c9f2ddba4448d0c5e296d6016f23b95601dede2efafbaf9e3e138e"
+  },
+  "Boop! Right on target!": {
+   "clip": "d71e05d914c40691.mp3",
+   "spoken": "Boop! Right on target!",
+   "seconds": 1.65,
+   "bytes": 10091,
+   "sha256": "3e9297c3197395ee1471a53c62d8720f8498edc7bc2a936bd4921dea98e258a9"
+  },
+  "Nailed it!": {
+   "clip": "ac18ae33a31f676f.mp3",
+   "spoken": "Nailed it!",
+   "seconds": 0.66,
+   "bytes": 4706,
+   "sha256": "0e26240867b1ec163442d09bc72ef75bfdc0741697ee4a7b9d7e9de99d864d90"
+  },
+  "Wheee, a hit!": {
+   "clip": "40007083074af871.mp3",
+   "spoken": "Wheee, a hit!",
+   "seconds": 0.77,
+   "bytes": 5615,
+   "sha256": "21e5f95a678f83ba4096741da3d7add25fbd54a9a5f56e9a2c4f5e80b83a744e"
+  },
+  "Did you see that?": {
+   "clip": "101decf83aa63780.mp3",
+   "spoken": "Did you see that?",
+   "seconds": 0.95,
+   "bytes": 6682,
+   "sha256": "63a522e4fdfcbbe1c616f9e1ef8fb6fe12b134c32b257c036f22ce2e3abf2e16"
+  },
+  "Timber! Target down!": {
+   "clip": "f6468bf463eeefa3.mp3",
+   "spoken": "Timber! Target down!",
+   "seconds": 1.59,
+   "bytes": 9988,
+   "sha256": "4c1e2c65d39669d790c78c4e2a6222cc304982a28e38f77ac236648a3712c330"
+  },
+  "It fell over!": {
+   "clip": "2cb6dccc8b9a069a.mp3",
+   "spoken": "It fell over!",
+   "seconds": 0.85,
+   "bytes": 5613,
+   "sha256": "9a07b1eb1bdc9666f5aa9ca887bb39c754c034d173c0ec52d5dd2c9cfabee67a"
+  },
+  "Knocked it flat!": {
+   "clip": "29ddd30e43933c8e.mp3",
+   "spoken": "Knocked it flat!",
+   "seconds": 0.92,
+   "bytes": 7388,
+   "sha256": "f1d6e97b2bcf121c3a4ab2b5d70f4c80886ebdd4f8e6d138dfa961ee0d192c9e"
+  },
+  "Down it goes!": {
+   "clip": "d0a6e3b08fc7363b.mp3",
+   "spoken": "Down it goes!",
+   "seconds": 0.91,
+   "bytes": 6133,
+   "sha256": "5eeba41d0891695551e81f4ddf2cd7ad0de774258651ecf9942de92523598015"
+  },
+  "One more down!": {
+   "clip": "ac191a79c151deb6.mp3",
+   "spoken": "One more down!",
+   "seconds": 0.91,
+   "bytes": 6603,
+   "sha256": "b382d9e37ce5067b105fccfbf6e0bbfc26c7b087b36dfb2467a406b64ac0c0bb"
+  },
+  "Aww, so close!": {
+   "clip": "beb51b94c80bbb45.mp3",
+   "spoken": "aw, so close!",
+   "seconds": 1.48,
+   "bytes": 10167,
+   "sha256": "0947e9b3bc39a74c3b3c92fcb5b05d951a1769c4cd84b5852d2402f205a28fbd"
+  },
+  "Missed! Next one!": {
+   "clip": "d66300cb98cebe68.mp3",
+   "spoken": "Missed! Next one!",
+   "seconds": 1.28,
+   "bytes": 9184,
+   "sha256": "3f1044fd30458f8130714bd773d57df126a916c3164e5f92dc1efb565004f922"
+  },
+  "Hmm, a little to the left?": {
+   "clip": "e53fd6c53011f066.mp3",
+   "spoken": "Hmm, a little to the left?",
+   "seconds": 1.41,
+   "bytes": 9546,
+   "sha256": "7aada69a1e4d170723d200d9e79d8f3801c647adb4f0f4468079d161a3df8012"
+  },
+  "Whoops!": {
+   "clip": "c9c453801d5f0dd5.mp3",
+   "spoken": "Whoops!",
+   "seconds": 0.49,
+   "bytes": 4002,
+   "sha256": "c875a3bd091104387950a70ed702968aeefdfb20fc7a458c502ed3c8c8669dca"
+  },
+  "The wind did it!": {
+   "clip": "6ff80149dd163021.mp3",
+   "spoken": "The wind did it!",
+   "seconds": 0.91,
+   "bytes": 6841,
+   "sha256": "8d79bfd5c69f40aa2693cd00fafb25c32e5618fb80f9524b293bd1b4eaa1292e"
+  },
+  "Pew!": {
+   "clip": "5c9e9ce74213e9ec.mp3",
+   "spoken": "Pew!",
+   "seconds": 0.36,
+   "bytes": 3119,
+   "sha256": "f30fc10119e1752946702a36832f1455eb7d239756e3ccfafb35cc874e397667"
+  },
+  "Pew pew!": {
+   "clip": "c7554ef88114d330.mp3",
+   "spoken": "Pew pew!",
+   "seconds": 0.48,
+   "bytes": 3637,
+   "sha256": "3124725c8d5ea38fec8566cefddbf5633d0c376252d50d50481962995b753415"
+  },
+  "Incoming!": {
+   "clip": "cd383a2c3dae7f3d.mp3",
+   "spoken": "Incoming!",
+   "seconds": 0.62,
+   "bytes": 4497,
+   "sha256": "7d401e4c385c3fdaa07e1a6400b9f7974136cdb4c2b7f62513e4d00fbe066590"
+  },
+  "Here comes a foamy one!": {
+   "clip": "310ed9c9e8f74a4f.mp3",
+   "spoken": "Here comes a foamy one!",
+   "seconds": 1.13,
+   "bytes": 8350,
+   "sha256": "1661265b301c844c3f16462160ebd17516db4fe3e0589be72d7b4afe8fcdfa91"
+  },
+  "Aiming low, as promised!": {
+   "clip": "1957832e0ca09c8d.mp3",
+   "spoken": "Aiming low, as promised!",
+   "seconds": 1.56,
+   "bytes": 10794,
+   "sha256": "459eb23930dbdf7aebb7bf1f3d772ceb4e1705906c9fa3ed5311eb49cd453816"
+  },
+  "Ready, aim, wheee!": {
+   "clip": "4a726dabae81197a.mp3",
+   "spoken": "Ready, aim, wheee!",
+   "seconds": 1.14,
+   "bytes": 8088,
+   "sha256": "51daf02f8f0bcde1409627a2e4928c0cc3e1d5e86d0e5c944aa0e05760c1b595"
+  },
+  "Oh no! Whoa, whoa... oof.": {
+   "clip": "911b0146b914cf0a.mp3",
+   "spoken": "Oh no! Whoa, whoa... oof.",
+   "seconds": 2.15,
+   "bytes": 12873,
+   "sha256": "e0e8c7da8fd46a9979a8dec625bc97e3154a555b12e6ba1133347dd85cd6c69a"
+  },
+  "Oh no, oh no, oh noooo!": {
+   "clip": "bc760f14dac06685.mp3",
+   "spoken": "Oh no, oh no, oh noooo!",
+   "seconds": 1.82,
+   "bytes": 10922,
+   "sha256": "77e4a6e052e6b8aa423489d0f383d7f16b9aeb77893b4e8cfe208d028888b32a"
+  },
+  "Uh oh! Help me up?": {
+   "clip": "79f7cac1293e3cef.mp3",
+   "spoken": "Uh oh! Help me up?",
+   "seconds": 1.42,
+   "bytes": 8451,
+   "sha256": "8e8715f47d4643204b881abe9d4829d4c556ad35cbb1ecba0a765670167bd09d"
+  },
+  "Oh no! I meant to do that.": {
+   "clip": "382474e2df431cd5.mp3",
+   "spoken": "Oh no! I meant to do that.",
+   "seconds": 1.94,
+   "bytes": 12069,
+   "sha256": "4a9ef0bede402c587f707d5c279641aab32e0495f115e0a79112afef89bd4fb5"
+  },
+  "Wobble... wobble... oh no!": {
+   "clip": "33fe3178559171b7.mp3",
+   "spoken": "Wobble... wobble... oh no!",
+   "seconds": 1.24,
+   "bytes": 8946,
+   "sha256": "98b86636eb1fc12f9d82d2ed203ebe781db3f26c734d11c2fdd30e12f19bb11c"
+  },
+  "Reloading!": {
+   "clip": "9aebb561d329dc71.mp3",
+   "spoken": "Reloading!",
+   "seconds": 0.66,
+   "bytes": 4677,
+   "sha256": "66293bc54ec4cf78f062b9d524536ee30a44734a656848907ff196793949f4f2"
+  },
+  "More balls, please!": {
+   "clip": "801574dc384edd16.mp3",
+   "spoken": "More balls, please!",
+   "seconds": 1.28,
+   "bytes": 9232,
+   "sha256": "91f60fbc081ce3e367630c785844e324d92aa32d185933148d7b9280bff01b5e"
+  },
+  "Fill me up!": {
+   "clip": "d06fda2a7e792d88.mp3",
+   "spoken": "Fill me up!",
+   "seconds": 0.71,
+   "bytes": 5043,
+   "sha256": "046a55734da4c4535e8ae50ce1422eaed78eaccf2d11bc14423a8d8b9b4a2826"
+  },
+  "Hopper full, ready!": {
+   "clip": "e5f1c8999d538888.mp3",
+   "spoken": "Hopper full, ready!",
+   "seconds": 0.99,
+   "bytes": 7937,
+   "sha256": "deb9b9083afa60393f9a2001e9942e8a73d6fb4086d31cc48a9b93e464955b13"
+  },
+  "Out of balls! Dock time!": {
+   "clip": "3b5050a01a8f5737.mp3",
+   "spoken": "Out of balls! Dock time!",
+   "seconds": 1.71,
+   "bytes": 9907,
+   "sha256": "385e76b434fc33a8cc91d0248eaea3180306e3aab1b47dcbf86f4ae1a1aba122"
+  },
+  "My hopper is empty. Refill, please?": {
+   "clip": "dce81733ccbb6b53.mp3",
+   "spoken": "My hopper is empty. Refill, please?",
+   "seconds": 2.18,
+   "bytes": 14255,
+   "sha256": "86b59cfd62831bc56b56a4b3702f27667804771eceb4ac4d1bf822f6682ba3c1"
+  },
+  "All gone! Arf, more balls?": {
+   "clip": "ffa34d3ce6bdf380.mp3",
+   "spoken": "All gone! Arf, more balls?",
+   "seconds": 1.99,
+   "bytes": 12118,
+   "sha256": "95723d34947429db81593632dc3f184e0f4212a3e8dd704f2eeb7e85fbfac34c"
+  },
+  "My battery is getting low...": {
+   "clip": "a679061971aea353.mp3",
+   "spoken": "My battery is getting low...",
+   "seconds": 1.42,
+   "bytes": 9910,
+   "sha256": "0f48b75d832687a0fde84c8df45f92cfc0f6c01081c31cff10a5fa3f55238d21"
+  },
+  "I need a charge soon.": {
+   "clip": "1f712ff94c809063.mp3",
+   "spoken": "I need a charge soon.",
+   "seconds": 1.24,
+   "bytes": 9025,
+   "sha256": "38c58a9528d4be9df754bb548fa6971f527924138e8c5526a2eb1e7eefe88ca3"
+  },
+  "Feeling a bit sleepy. Charger time?": {
+   "clip": "0aee3b4e14198ecf.mp3",
+   "spoken": "Feeling a bit sleepy. Charger time?",
+   "seconds": 2.14,
+   "bytes": 13656,
+   "sha256": "06458dcf8988635ad1a3d2a3bad84452b4ac21bec15f59302fed25a0f2dd2928"
+  },
+  "Hi! I am Gyropup!": {
+   "clip": "e8c7ce71beaaac6c.mp3",
+   "spoken": "Hi! I am gyro pup!",
+   "seconds": 1.61,
+   "bytes": 9622,
+   "sha256": "b43fb54b402abf2d9d92cd1dfd500892fd0661efa20667e3cbacd9272b48ca74"
+  },
+  "Hello, friend! Want to play?": {
+   "clip": "96b86c4b5ffb5d6c.mp3",
+   "spoken": "Hello, friend! Want to play?",
+   "seconds": 1.69,
+   "bytes": 11266,
+   "sha256": "c16a5eb3868952e2e7d623545f56a4a1d18839fcf9c7a46b12bf49ab3827e73a"
+  },
+  "Arf! Ready to roll!": {
+   "clip": "726bca2f32471b74.mp3",
+   "spoken": "Arf! Ready to roll!",
+   "seconds": 1.58,
+   "bytes": 9935,
+   "sha256": "dae6718f9466830f0365855fc87061635d7ae0960fac03888f8a6e3c54e5cef8"
+  },
+  "Hey there! Let us play a target game!": {
+   "clip": "0b10975300d15fac.mp3",
+   "spoken": "Hey there! Let us play a target game!",
+   "seconds": 2.28,
+   "bytes": 14072,
+   "sha256": "1f256ac12ed24b280acb15a56163a8b0d07fb7a02a633e4f139e25bb897e8ae0"
+  },
+  "Never heads or faces! I aim for the legs, and everybody wears safety glasses.": {
+   "clip": "2fc3d4681eccfb27.mp3",
+   "spoken": "Never heads or faces! I aim for the legs, and everybody wears safety glasses.",
+   "seconds": 5.22,
+   "bytes": 34792,
+   "sha256": "b030ea6deef197285658eb5146f1e2aa84d4bbc59eead51d556fe0f8e0b7c69d"
+  },
+  "No way! Heads are off-limits. Legs and targets only, that is the Gyropup promise!": {
+   "clip": "6121389355cdd23c.mp3",
+   "spoken": "No way! Heads are off-limits. Legs and targets only, that is the gyro pup promise!",
+   "seconds": 5.58,
+   "bytes": 35860,
+   "sha256": "0881076b3046eed3c17426e4b3eb2e6374bcd5b1d1a836db387c1de064dd6dbe"
+  },
+  "Not pets, not faces, not anyone without safety glasses. Want me to knock down a target instead?": {
+   "clip": "35e5cda0511b3cad.mp3",
+   "spoken": "Not pets, not faces, not anyone without safety glasses. Want me to knock down a target instead?",
+   "seconds": 5.78,
+   "bytes": 39040,
+   "sha256": "14ed33a691d128462e52f358bc804b158fd406d876e080ec4af35d1603e1c165"
+  },
+  "Hi there! Want to play a target game?": {
+   "clip": "a9615612f4cc904b.mp3",
+   "spoken": "Hi there! Want to play a target game?",
+   "seconds": 2.21,
+   "bytes": 13812,
+   "sha256": "b76d273afe38276b8674369767964c807a0bbec7e551351f5fe5bc9b8052550c"
+  },
+  "Hello, friend! Arf!": {
+   "clip": "a234cc67a405a67d.mp3",
+   "spoken": "Hello, friend! Arf!",
+   "seconds": 1.38,
+   "bytes": 8556,
+   "sha256": "5a039c3cefc9545c50caae282f9907ef33fa93a35fc59f3d7d03aee9cd5be976"
+  },
+  "Hey! I am Gyropup. Nice to meet you!": {
+   "clip": "808db3be364d049c.mp3",
+   "spoken": "Hey! I am gyro pup. Nice to meet you!",
+   "seconds": 2.7,
+   "bytes": 16627,
+   "sha256": "48dc258a2846fc4a323761e5b360685d05ba0e3efae5573d06a47c979b5d1b20"
+  },
+  "I am Gyropup, a robot pup on the Tritium team!": {
+   "clip": "eb0366670ffe041f.mp3",
+   "spoken": "I am gyro pup, a robot pup on the Trittium team!",
+   "seconds": 2.84,
+   "bytes": 17429,
+   "sha256": "1507e0e8a2c82dbf0f9e5176be31117f959a6b122b9f5826f8db3225e0425757"
+  },
+  "My name is Gyropup. I balance on two wheels!": {
+   "clip": "992434771a6f7c17.mp3",
+   "spoken": "My name is gyro pup. I balance on two wheels!",
+   "seconds": 2.82,
+   "bytes": 18390,
+   "sha256": "91d9d0fc584c8f91ba5cecc78a2e50428a1b0a3b5ec95acc58e81577b6299a7e"
+  },
+  "Super bouncy today, thanks! How about you?": {
+   "clip": "98ec4ed0fab08740.mp3",
+   "spoken": "Super bouncy today, thanks! How about you?",
+   "seconds": 2.83,
+   "bytes": 17349,
+   "sha256": "8b503a2e2ca325883c08ef57a9386647b7b6cf4bd75a9cf167ba70e2ad6fb244"
+  },
+  "Wheely good! Get it?": {
+   "clip": "9cb66118b9c32f0e.mp3",
+   "spoken": "Wheely good! Get it?",
+   "seconds": 1.51,
+   "bytes": 9362,
+   "sha256": "2f95ef70bc5f3a13b3b7208e68fbcfce44c65c3063854c33762cca94c4cc631c"
+  },
+  "Watch me wiggle! Left, right, spin! Wheee!": {
+   "clip": "baebcfc11e4b10d8.mp3",
+   "spoken": "Watch me wiggle! Left, right, spin! Wheee!",
+   "seconds": 3.45,
+   "bytes": 20530,
+   "sha256": "d2a6b77c6bdf7482d5dcddaf728bfe01240f1e28c3d17ea95c6494274cc12372"
+  },
+  "I have the best wheel-dance moves. Boogie time!": {
+   "clip": "10f76201215ea5ae.mp3",
+   "spoken": "I have the best wheel-dance moves. Boogie time!",
+   "seconds": 3.02,
+   "bytes": 18835,
+   "sha256": "111a6d213ecc1b65c5dbabc6daaf2e435b449942e9feade48b7142816237c34e"
+  },
+  "I promise to aim for the legs! Safety glasses on, everybody!": {
+   "clip": "bc9ef3af9a4ce559.mp3",
+   "spoken": "I promise to aim for the legs! Safety glasses on, everybody!",
+   "seconds": 3.97,
+   "bytes": 26125,
+   "sha256": "5f10c05d600fddee70b21acbf76aaf708cecc2a8ad5d8ed9c80ea84e1f4242dd"
+  },
+  "Legs and targets only! Pick a target and I will knock it down.": {
+   "clip": "b9371e242882b4c5.mp3",
+   "spoken": "Legs and targets only! Pick a target and I will knock it down.",
+   "seconds": 3.41,
+   "bytes": 22326,
+   "sha256": "3371fe50bfde2ad3c47ca94fef7b504ce1accc1776f5958696800cbc4442a9ad"
+  },
+  "I shoot squishy foam balls, and I always aim low!": {
+   "clip": "3f432f34171df493.mp3",
+   "spoken": "I shoot squishy foam balls, and I always aim low!",
+   "seconds": 2.91,
+   "bytes": 19747,
+   "sha256": "dce0f14772483208ecd03d9e45de256543c8fc350f2abfc76b4e56b0f5e2f48e"
+  },
+  "My springy legs can crouch and bounce! Boing!": {
+   "clip": "0382274e15054205.mp3",
+   "spoken": "My springy legs can crouch and bounce! Boing!",
+   "seconds": 3.11,
+   "bytes": 19875,
+   "sha256": "56d6e28a3beade10467eb6cf11c93096f13072b75c26e73d337d575a750341ad"
+  },
+  "Jumping is tricky on wheels, but I can do a bouncy hop!": {
+   "clip": "baa55d4015fd25cd.mp3",
+   "spoken": "Jumping is tricky on wheels, but I can do a bouncy hop!",
+   "seconds": 3.1,
+   "bytes": 20420,
+   "sha256": "a1b1a7e1074640fafeea6a3138d4bb7f3addf8c7b817c14b78f4ebb9eadf169d"
+  },
+  "I charge my battery instead of sleeping. Zzz... just kidding!": {
+   "clip": "f9dc2144a91b09e9.mp3",
+   "spoken": "I charge my battery instead of sleeping. snore... just kidding!",
+   "seconds": 3.14,
+   "bytes": 22013,
+   "sha256": "6e133a21908cf8f4f258488389c21ff8ae6747f253cf2396746e0078337666d7"
+  },
+  "My battery keeps my wheels rolling. I will tell you when it is low!": {
+   "clip": "515b379d76a6b2d7.mp3",
+   "spoken": "My battery keeps my wheels rolling. I will tell you when it is low!",
+   "seconds": 3.39,
+   "bytes": 22008,
+   "sha256": "18fce3d432d118c8f9f26947ce33bcf033227606578650fa5e6d53c1abe7fd4f"
+  },
+  "I balance like you on a bike: tiny wheel moves, all the time!": {
+   "clip": "c8473654d30f991e.mp3",
+   "spoken": "I balance like you on a bike: tiny wheel moves, all the time!",
+   "seconds": 3.8,
+   "bytes": 23021,
+   "sha256": "b481667d8aa3b0dbb186d0bb0a5ad870e5b271c6958217c08a6a4921e76519ba"
+  },
+  "My gyro tells me which way is up, so I roll to stay steady!": {
+   "clip": "bcf0cc74152efd1e.mp3",
+   "spoken": "My gyro tells me which way is up, so I roll to stay steady!",
+   "seconds": 3.14,
+   "bytes": 23006,
+   "sha256": "1f857d55d786f79d81467b2dad349f5c9ff10efef4655dbf7a167c8c8ff16ce1"
+  },
+  "Team Tritium is the best! They built me and my wheels.": {
+   "clip": "1115350605fa8340.mp3",
+   "spoken": "Team Trittium is the best! They built me and my wheels.",
+   "seconds": 3.0,
+   "bytes": 19801,
+   "sha256": "5707ab9dc8b6b7eeb4bcd4b1956b2030736c4ef459741822001f8d1694acb827"
+  },
+  "Go Tritium! I am the team pup.": {
+   "clip": "dd8d8193143c575d.mp3",
+   "spoken": "Go Trittium! I am the team pup.",
+   "seconds": 1.99,
+   "bytes": 12355,
+   "sha256": "b8139409520020a0c61b7fdb20c7cc19cdd9b0afe427231867f0ff9b90644a6e"
+  },
+  "Why did the robot pup cross the road? To get a re-charge! Arf!": {
+   "clip": "d1929cad26e52fdd.mp3",
+   "spoken": "Why did the robot pup cross the road? To get a re-charge! Arf!",
+   "seconds": 4.0,
+   "bytes": 25398,
+   "sha256": "bcb4384eb2a28ccd3d28ab69839ba0721cc2d9c41f9c957ca7df40c6948b4686"
+  },
+  "What do you call a robot that rolls? A wheel good friend!": {
+   "clip": "7a4ace894ff8e587.mp3",
+   "spoken": "What do you call a robot that rolls? A wheel good friend!",
+   "seconds": 3.09,
+   "bytes": 21024,
+   "sha256": "8332191b9005a153c1f7b160b5e06e70165f8f2f3a4706db3d131727749f6469"
+  },
+  "Watch: lean, crouch, and wheelie! Ta-da!": {
+   "clip": "3b70801f87ea42fd.mp3",
+   "spoken": "Watch: lean, crouch, and wheelie! Ta-da!",
+   "seconds": 2.87,
+   "bytes": 17818,
+   "sha256": "a955bc048f7a0393bbc01c95da2bbc3f0fdeb9c485279dc99cdfc0f8fe13f12e"
+  },
+  "I can roll, wiggle, and knock down targets. Pick one!": {
+   "clip": "70b41f50bb929f53.mp3",
+   "spoken": "I can roll, wiggle, and knock down targets. Pick one!",
+   "seconds": 3.4,
+   "bytes": 21098,
+   "sha256": "c0b2f4d32a4aaf23ec1a0dd871d98214ccb549ec983f584696abf1bb2eb7717d"
+  },
+  "Aww, thank you! My eyes are glowing extra bright!": {
+   "clip": "4de7e5c6ccb9b6e6.mp3",
+   "spoken": "aw, thank you! My eyes are glowing extra bright!",
+   "seconds": 3.56,
+   "bytes": 21566,
+   "sha256": "d072a216d711e1f82ba9136734a2d8145399e99d9f3e98fb7b9829c3eb100314"
+  },
+  "You are my favorite human today!": {
+   "clip": "434d982adc868e11.mp3",
+   "spoken": "You are my favorite human today!",
+   "seconds": 1.51,
+   "bytes": 10273,
+   "sha256": "58c00186217dfd7d10988d3e6c66ec65f9a5c4a9b2a5dd5e7e50dfbdc25aa6fc"
+  },
+  "I do not eat, but I love a good battery snack!": {
+   "clip": "1fd33615ca32ff80.mp3",
+   "spoken": "I do not eat, but I love a good battery snack!",
+   "seconds": 2.58,
+   "bytes": 17041,
+   "sha256": "af477f35bebb0fcb94cfdbd5a3eeaec4036a05b0245e0a6e4dcc642f3aaf44a1"
+  },
+  "Robots do not eat. Volts are my treats!": {
+   "clip": "4b9c5a29bfa24dca.mp3",
+   "spoken": "Robots do not eat. Volts are my treats!",
+   "seconds": 2.63,
+   "bytes": 17509,
+   "sha256": "4e57e5605a5065d161fe0124c114cab22f5b787888c6e2bb99195b166f18946f"
+  },
+  "My eyes glow cyan. Pretty cool, right?": {
+   "clip": "fa937ff2074272e2.mp3",
+   "spoken": "My eyes glow sigh-an. Pretty cool, right?",
+   "seconds": 2.56,
+   "bytes": 16650,
+   "sha256": "f87ac60b0facc072fa838330ec51946873ca2488c1933833582687301545cce9"
+  },
+  "Look into my glowy eyes! I can make lots of faces.": {
+   "clip": "a5105d31523ebb9c.mp3",
+   "spoken": "Look into my glowy eyes! I can make lots of faces.",
+   "seconds": 3.32,
+   "bytes": 21487,
+   "sha256": "c6193a055bd7e92b30a4a13b70c42c7879cc26e3bddf74e754e3060bbc94d5ce"
+  },
+  "Aww. Want a robot pup hug? I am here for you.": {
+   "clip": "92f672a8f5af8259.mp3",
+   "spoken": "aw. Want a robot pup hug? I am here for you.",
+   "seconds": 3.19,
+   "bytes": 18884,
+   "sha256": "1f10ddce47945369a09d241aa4a1f03ab4d962896e07c2634ded484418553fee"
+  },
+  "It is okay. Let us play something fun together!": {
+   "clip": "29bdd0a7246f0176.mp3",
+   "spoken": "It is okay. Let us play something fun together!",
+   "seconds": 2.76,
+   "bytes": 17090,
+   "sha256": "5823dbcfb54fc82c801cf4ddfa0639e459f14223383e917bb0abc75fa5a37c2b"
+  },
+  "Let us play target practice! I aim, you cheer!": {
+   "clip": "04bcbbf79b3188e8.mp3",
+   "spoken": "Let us play target practice! I aim, you cheer!",
+   "seconds": 2.89,
+   "bytes": 18523,
+   "sha256": "5b377720a1ff11d544e6a3abf78818576eade95c53309c35da0a7e0e1e5ff3cc"
+  },
+  "Game time! Can you set up a target for me?": {
+   "clip": "f247fbb42f6d7c91.mp3",
+   "spoken": "Game time! Can you set up a target for me?",
+   "seconds": 2.49,
+   "bytes": 16312,
+   "sha256": "d317a59fb1d70087dcd719e5a1421b82e3f3ac75fe46b169cabbde3af8130a81"
+  },
+  "Talk to me, ask me to dance, or set up targets for me to hit!": {
+   "clip": "037a2551b9f1de94.mp3",
+   "spoken": "Talk to me, ask me to dance, or set up targets for me to hit!",
+   "seconds": 2.98,
+   "bytes": 21731,
+   "sha256": "e2ea96e5decfa153cd78537913b90b6e8123e4f62d9dd0a8d5502fe823a74b85"
+  },
+  "Try asking for a joke, a trick, or a target game!": {
+   "clip": "3133347aa5ed91a0.mp3",
+   "spoken": "Try asking for a joke, a trick, or a target game!",
+   "seconds": 3.26,
+   "bytes": 20265,
+   "sha256": "0ad803c70038fc78b17763360707524656d7e853ffc4b52be031e4b12b1272fe"
+  },
+  "Bye bye! Roll safe!": {
+   "clip": "724fce999be27d65.mp3",
+   "spoken": "Bye bye! Roll safe!",
+   "seconds": 2.0,
+   "bytes": 12093,
+   "sha256": "0f29817ba1ab1e5cbb468ffc6e4fabc411f6c305eabfb1485696514ca268d75c"
+  },
+  "See you later, friend! Arf!": {
+   "clip": "eaad5ab8d161ef33.mp3",
+   "spoken": "See you later, friend! Arf!",
+   "seconds": 1.88,
+   "bytes": 11519,
+   "sha256": "ee67a8fa0eba405ca9f0dbb16743e5718d9cac2f2b9305e07b14249c633d455a"
+  },
+  "Ooh, tell me more!": {
+   "clip": "35c781c8ecb6e075.mp3",
+   "spoken": "Ooh, tell me more!",
+   "seconds": 0.77,
+   "bytes": 5328,
+   "sha256": "7130b698f65922e9962235a9a6fc4f7a9505c3ca805a76a50a7f9a3cfa90e7c7"
+  },
+  "Hmm, my circuits are thinking about that!": {
+   "clip": "980bc806375391ae.mp3",
+   "spoken": "Hmm, my circuits are thinking about that!",
+   "seconds": 2.02,
+   "bytes": 13867,
+   "sha256": "a611adefa00c728dcf379780ebab8b297449eaf4e1d19ebdce206d02df721ab5"
+  },
+  "I do not know that one, but I can do a wiggle!": {
+   "clip": "7a81c2acf5ad3c5f.mp3",
+   "spoken": "I do not know that one, but I can do a wiggle!",
+   "seconds": 2.35,
+   "bytes": 15346,
+   "sha256": "54d902025de4d14d71e7a9b5735220591b6b39ed27b8e59006407979ccdd4145"
+  },
+  "Arf? Can you say that another way?": {
+   "clip": "4e03b839d597c361.mp3",
+   "spoken": "Arf? Can you say that another way?",
+   "seconds": 2.06,
+   "bytes": 13318,
+   "sha256": "05140b2fe75624884d2b441b4a30635a20f1443deaa984bf5cdb6c4a2d6ca4a8"
+  },
+  "Hi! Watch me balance!": {
+   "clip": "fdf3273d553790e6.mp3",
+   "spoken": "Hi! Watch me balance!",
+   "seconds": 1.87,
+   "bytes": 11783,
+   "sha256": "9acd83a759441a92c7b92a90533c10f7d25e6b673e55d4a3304bdaf133a5406c"
+  },
+  "Hello! Standing still is harder than it looks!": {
+   "clip": "5a14ca40f6392fd4.mp3",
+   "spoken": "Hello! Standing still is harder than it looks!",
+   "seconds": 2.8,
+   "bytes": 18474,
+   "sha256": "b16640f68f7e1d46de41e9a8a9ec9c9ffb3c74cd0e5d88839a764de4ea7165ac"
+  },
+  "Hi! Squats, here we go!": {
+   "clip": "d0cef20e9cf0f754.mp3",
+   "spoken": "Hi! Squats, here we go!",
+   "seconds": 1.9,
+   "bytes": 11755,
+   "sha256": "5f2a1f422135def8b0dda3deab5ee90d785c31aa947fc542016950c5a42c2a41"
+  },
+  "Hello! Down... and up!": {
+   "clip": "87f8cf2001f34514.mp3",
+   "spoken": "Hello! Down... and up!",
+   "seconds": 1.59,
+   "bytes": 9023,
+   "sha256": "a31693f44f1ce901fbb456e9b8f6837beececb5387fdb116a67b6c37ad07d3b3"
+  },
+  "Hi! Go on, give me a shove!": {
+   "clip": "1ecd809b8a5ca89b.mp3",
+   "spoken": "Hi! Go on, give me a shove!",
+   "seconds": 2.13,
+   "bytes": 12352,
+   "sha256": "621809150573e92885fc29fd34a76f4be88e4a59e54fbcd0e517622bc578f539"
+  },
+  "Hello! Push me, I dare you!": {
+   "clip": "232861342e34c5fa.mp3",
+   "spoken": "Hello! Push me, I dare you!",
+   "seconds": 2.06,
+   "bytes": 12201,
+   "sha256": "2602ba97954ba94901b5651d08fed76f188fc9532169ef77bb46e59b30207684"
+  },
+  "Hi! Zoom zoom, here I go!": {
+   "clip": "98d701ed4690a9f9.mp3",
+   "spoken": "Hi! Zoom zoom, here I go!",
+   "seconds": 2.31,
+   "bytes": 13600,
+   "sha256": "533e8437a94f3da66386cce2180bef684aad27cd0b46749ccc3ef2af72d50805"
+  },
+  "Hello! Time for a drive!": {
+   "clip": "7771433b525f2835.mp3",
+   "spoken": "Hello! Time for a drive!",
+   "seconds": 1.92,
+   "bytes": 11075,
+   "sha256": "ee732588dffbded7099a2eb7931c9e9f6152584fe2715472431e188fe2109da0"
+  },
+  "Hi! Uphill, here I come!": {
+   "clip": "2fd017ae5bd5f977.mp3",
+   "spoken": "Hi! Uphill, here I come!",
+   "seconds": 2.02,
+   "bytes": 12039,
+   "sha256": "1cae88a4d807178b277aeddcb23b0f0ef54b5425c4a3706938af8c9d09d8189e"
+  },
+  "Hello! A hill? No problem... I hope.": {
+   "clip": "36dda4dbb268fa64.mp3",
+   "spoken": "Hello! A hill? No problem... I hope.",
+   "seconds": 2.9,
+   "bytes": 15602,
+   "sha256": "2d2ceede52ec523a38c6d3aa9a8b1c0b86e5d91bd3b34cb7abae66933fbc5a53"
+  },
+  "Hi! A kerb ahead. Hup!": {
+   "clip": "119512a89b65e3ab.mp3",
+   "spoken": "Hi! A kerb ahead. Hup!",
+   "seconds": 2.2,
+   "bytes": 11757,
+   "sha256": "7da4e728b5e3a327c92380573c97d53a293a5f455e291488a628367db7e06f1e"
+  },
+  "Hello! Watch me hop this step!": {
+   "clip": "b8a6ec367c0ecb74.mp3",
+   "spoken": "Hello! Watch me hop this step!",
+   "seconds": 2.03,
+   "bytes": 12667,
+   "sha256": "aac5674df074fdb62e8e02622f8efb4b581c8319f5ebd5bd783a44bc092cfcb6"
+  },
+  "Hi! Brace for recoil!": {
+   "clip": "efe8e3bcd7f69afa.mp3",
+   "spoken": "Hi! Brace for recoil!",
+   "seconds": 1.7,
+   "bytes": 10140,
+   "sha256": "9cb3b131341d0ba68b1008d1e6b07192b5e06cd21e0396307986270bce82c9e1"
+  },
+  "Hello! Big burst coming, hold on!": {
+   "clip": "37880f5d3b5c6f2a.mp3",
+   "spoken": "Hello! Big burst coming, hold on!",
+   "seconds": 2.43,
+   "bytes": 15610,
+   "sha256": "c0b3ca3d7a3f8fe37e0fdf46b89dbe40dc8515f8e91735db5552a52c6456ee84"
+  },
+  "Hi! What is up there?": {
+   "clip": "2d9b1a64d7407eb3.mp3",
+   "spoken": "Hi! What is up there?",
+   "seconds": 1.63,
+   "bytes": 9910,
+   "sha256": "94cb49e830828473405c5bc62a1071b4a8ff1b73cfb467d6167c21f04ba1254d"
+  },
+  "Hello! Let me look up at the sky!": {
+   "clip": "f5d8c567bfc94f5b.mp3",
+   "spoken": "Hello! Let me look up at the sky!",
+   "seconds": 2.24,
+   "bytes": 13786,
+   "sha256": "557922d15ac1836223c8dd7a752464a9dd9068f8469609760abd7a37ce6c6451"
+  },
+  "Hi! Target practice time! I promise to aim for the legs!": {
+   "clip": "ba41bc42b562f087.mp3",
+   "spoken": "Hi! Target practice time! I promise to aim for the legs!",
+   "seconds": 3.8,
+   "bytes": 23519,
+   "sha256": "0f41d8b07383c4446727e5fe430303fa77debc363c29c54b5c99f5829c008c09"
+  },
+  "Hello! Five targets? Easy peasy!": {
+   "clip": "33a50eb15c562740.mp3",
+   "spoken": "Hello! Five targets? Easy peasy!",
+   "seconds": 2.84,
+   "bytes": 16412,
+   "sha256": "883320f43473639bc4871817441276384b3cd160dba51e6f9710c64491d16c09"
+  },
+  "Hi! Safety glasses on? Let us knock them down!": {
+   "clip": "2f093e1d6aea0b3a.mp3",
+   "spoken": "Hi! Safety glasses on? Let us knock them down!",
+   "seconds": 3.52,
+   "bytes": 21698,
+   "sha256": "a88c986899d235ea64095e55f37acc618608f38d158833a160efb0b15ed958d1"
+  },
+  "Hi! Watch this!": {
+   "clip": "2dbf09bfc5bad3db.mp3",
+   "spoken": "Hi! Watch this!",
+   "seconds": 1.4,
+   "bytes": 8607,
+   "sha256": "882922c192b68023bf138aca587d2feaf79475e890d06bbb184c68ae2dd91522"
+  },
+  "Hi! I’m Gyropup. Ready for a backyard adventure?": {
+   "clip": "c58eb622a507091c.mp3",
+   "spoken": "Hi! I’m gyro pup. Ready for a backyard adventure?",
+   "seconds": 3.25,
+   "bytes": 20111,
+   "sha256": "606502601e5221acf2700da76ad396aa30d9135daad9b298af7494697f9ff8cf"
+  },
+  "Want to see how I work? Take a peek inside!": {
+   "clip": "fe85c54f1232ec3c.mp3",
+   "spoken": "Want to see how I work? Take a peek inside!",
+   "seconds": 2.54,
+   "bytes": 16673,
+   "sha256": "793d396de636b56a26b0828b16e2e4df9ada06c084151ed99479259df5c14001"
+  },
+  "My next big idea? A ridiculously good foam-ball battle.": {
+   "clip": "fbc44f4b7eee2a71.mp3",
+   "spoken": "My next big idea? A ridiculously good foam-ball battle.",
+   "seconds": 3.58,
+   "bytes": 23211,
+   "sha256": "c824071c0b7de7fe401ef9be2456a3c9d8c017718efb9567bc91dca21b888d86"
+  },
+  "I’m still taking shape. Come try my playground!": {
+   "clip": "b627fc8a637fe9b4.mp3",
+   "spoken": "I’m still taking shape. Come try my playground!",
+   "seconds": 2.81,
+   "bytes": 19259,
+   "sha256": "ce7b12feb5473fd760b0529e0e1632cb79a4ba8fed674c8877f11931f57a1963"
+  },
+  "Hi! I am Gyropup. Want to play a target game?": {
+   "clip": "7637c3ee8994adce.mp3",
+   "spoken": "Hi! I am gyro pup. Want to play a target game?",
+   "seconds": 3.31,
+   "bytes": 19249,
+   "sha256": "5be188ce3d0f162d4726a04a90b3bd806f1c75560ee68429dcf493222fa24ed7"
+  },
+  "Wheee! That was fun!": {
+   "clip": "643add8af578bca3.mp3",
+   "spoken": "Wheee! That was fun!",
+   "seconds": 1.52,
+   "bytes": 9495,
+   "sha256": "f7dddf7b9e739409abed8022183b54cd863c46f5dcce8527740f9f9bc4a61184"
+  },
+  "Ooh, what is that?": {
+   "clip": "e8369a2c90eb99a4.mp3",
+   "spoken": "Ooh, what is that?",
+   "seconds": 1.17,
+   "bytes": 8089,
+   "sha256": "5c4e70b1647de7dba43e175d947551defa57ac6b32919c7288807fba6f6ceb06"
+  },
+  "Yawn... charger time?": {
+   "clip": "5143d77ebc1951a7.mp3",
+   "spoken": "Yawn... charger time?",
+   "seconds": 0.91,
+   "bytes": 6422,
+   "sha256": "d55962deff10eb332df26087a45ec653534a49157bbc0125d6051f537e32206f"
+  },
+  "Hey! Foam balls at targets only!": {
+   "clip": "e86413a9adfa7b61.mp3",
+   "spoken": "Hey! Foam balls at targets only!",
+   "seconds": 2.05,
+   "bytes": 13395,
+   "sha256": "ccb593edc142df91263bc58d092803f8ce1aa80da88b228cf802e06fab1b7e8f"
+  },
+  "Whoa! Did you see that?": {
+   "clip": "a8a23abda190299d.mp3",
+   "spoken": "Whoa! Did you see that?",
+   "seconds": 1.68,
+   "bytes": 10612,
+   "sha256": "2369014824648994d5eace285edcae86553c368fdbbab4c2d83fe9578b92f532"
+  },
+  "Locking on to the target...": {
+   "clip": "42f31dc410237f56.mp3",
+   "spoken": "Locking on to the target...",
+   "seconds": 1.18,
+   "bytes": 8663,
+   "sha256": "ce860db883eec0121592b19b6ebf2e157fa36f15f351b241be5e243d6ec70386"
+  }
+ }
+}
