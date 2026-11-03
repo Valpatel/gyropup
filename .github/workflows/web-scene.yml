@@ -50,6 +50,8 @@ jobs:
           GYROPUP_PRIVATE_NAMES: ${{ secrets.GYROPUP_PRIVATE_NAMES }}
         run: npm run test:privacy
   browser-validation:
+    # A stable check name per suite (the default name embeds the whole command list), so main's protection can require it.
+    name: browser-validation (${{ matrix.suite }})
     runs-on: ubuntu-24.04
     timeout-minutes: 20
     strategy:
@@ -94,6 +96,7 @@ jobs:
               npm run test:timeline
               npm run test:doc-pages
               npm run test:walls
+              npm run test:theme
               npm run test:highlights
               npm run test:highlight-integration
               npm run test:markdown
