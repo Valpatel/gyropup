@@ -1,6 +1,6 @@
 <div align="center">
 
-<img src="docs/img/hero/gyropup.svg" alt="Gyropup drawn from its real CAD: the body is traced, both wheel-legs slide in, the foam-ball turret drops on top, and the model sways gently" width="100%">
+<img src="docs/img/hero/gyropup.svg" alt="The name Gyropup grows from a graph-paper sketch while the robot is drawn from its real CAD: the body is traced, both wheel-legs slide in, the foam-ball turret drops on top, and the model sways gently" width="100%">
 
 # Gyropup
 
@@ -13,7 +13,7 @@
 
 [Website & playground](https://gyropup.com) · [Documentation map](docs/README.md) · [Prototype warning](docs/prototype-safety.md) · [Contributing](CONTRIBUTING.md)
 
-<sub>The banner is drawn from the robot's own STEP files (<code>exports/asm_*.step</code>) with hidden lines removed, by the <a href="https://github.com/mvalancy/mvalancy/tree/ac04a7d37406b490a28affa494bf4d1d4f8a44d7/tools/hero">README banner generator</a>.</sub>
+<sub>The banner is drawn from the robot's own STEP files (<code>exports/asm_*.step</code>) with hidden lines removed, by the <a href="https://github.com/mvalancy/mvalancy/tree/326f25920d36fb6ed16c007132e23cb4bb4933dc/tools/hero">README banner generator</a>.</sub>
 
 </div>
 
