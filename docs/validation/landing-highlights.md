@@ -101,6 +101,17 @@ practice recorded three shots, three hits and three knockdowns. The unchanged en
 guard produced and passed both companions, the poster and the receipts. The leg insert is
 unchanged. The previous capture's note follows.
 
+The reel was re-encoded with new frames on 2026-11-03 (UTC) for issue
+[8](https://github.com/Valpatel/gyropup/issues/8). That branch re-runs the leg rig on the current leg,
+re-solves the leg FEA record and re-exports the E1 field against it, so the guard rejected the old receipt's
+summary, field and leg-clip hashes. The leg insert is now the 18.75 kg / 36 V jump that was recorded with its
+report (`e7b512870a39259a04a4930e2908af84001bc84e`). Its captions say so; it is no longer the archived
+16.25 kg clip. The E1 movie's pixels are unchanged (SF 1.60 / 1.40). The frames were captured from
+`5ee1a8f2f1db9c76af4dd269f9dc8ae67336b824`, served assets `a5c8d9fdb4678f6a1601`. All 480 frames came through
+an owned `serve-site.mjs --ephemeral` listener, closed afterwards. The mechanism emitted nine shots, and target
+practice recorded three shots, three hits and three knockdowns. The encoder and guard produced and passed both
+companions (MP4 1,857,481 bytes, WebM 1,478,016), the poster and the receipts. The previous capture's note follows.
+
 The browser frames were recaptured again on 2026-11-03 (UTC) for
 [PR 173](https://github.com/Valpatel/gyropup/pull/173), the site's new light and dark themes. The capture
 ran from `0b0c8b6e7586fb674e97253299433af85d36e6ef`, served assets `50ab399d7d38a12d556a`. That PR changes the
