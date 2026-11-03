@@ -12,7 +12,7 @@ const loadingPhase = text => { if (loadingMessage) loadingMessage.textContent = 
 async function showRobot() {
   let renderer;
   try {
-    const [THREE, { OrbitControls }, { buildRobotV2 }, { createEyes }, { mountTalk }, { createSfx }] = await Promise.all([
+    const [THREE, { OrbitControls }, { buildRobotV2 }, { createEyes }, { mountTalk, LINES }, { createSfx }] = await Promise.all([
       import('three'), import('three/addons/controls/OrbitControls.js'),
       import('../designer/robot_v2.js'), import('../designer/character/eyes.js'),
       import('../designer/character/talk.js'), import('../designer/sfx.js'),
@@ -101,12 +101,7 @@ async function showRobot() {
       if (!visible) talk.stop();
     }).observe(preview);
     document.addEventListener('visibilitychange', () => { if (document.hidden) talk.stop(); });
-    const lines = [
-      ['Hi! I’m Gyropup. Ready for a backyard adventure?', 'happy'],
-      ['Want to see how I work? Take a peek inside!', 'curious'],
-      ['My next big idea? A ridiculously good foam-ball battle.', 'happy'],
-      ['I’m still taking shape. Come try my playground!', 'curious'],
-    ];
+    const lines = LINES.LANDING;   // designer/character/lines.js: each has a recorded clip
     let line = 0, activeTime = 0, nextLine = 3, previous = performance.now();
     const revealedAt = previous;
     renderer.setAnimationLoop(now => {

@@ -35,6 +35,8 @@ from http.server import BaseHTTPRequestHandler, ThreadingHTTPServer
 from pathlib import Path
 from urllib.parse import parse_qs, urlparse
 
+from pronunciation import pronounce   # names espeak says wrongly (designer/character/pronunciation.json)
+
 DEFAULT_VOICE = 'en_US-hfc_female-medium'
 DEFAULT_PITCH = 2.0          # semitones up: a pup, not a newsreader
 DEFAULT_SPEED = 0.95         # a touch slower than Piper's pace once lifted: easy for kids to follow
@@ -42,8 +44,6 @@ DATA = Path(os.environ.get('XDG_DATA_HOME') or Path.home() / '.local' / 'share')
 CACHE = Path(os.environ.get('XDG_CACHE_HOME') or Path.home() / '.cache')
 MAX_CHARS = 1000
 RENDER = 2                   # bump when render() changes, so lines cached by the old one are not served
-# names espeak says wrongly: Gyropup is "JYE-roh-pup", Tritium "TRIT-ee-um"
-RESPELL = {'gyropup': 'Gyro-pup', 'tritium': 'Trittium'}
 LOCAL = re.compile(r'^https?://(localhost|127(\.\d+){3}|\[::1\]|0\.0\.0\.0|10(\.\d+){3}|192\.168(\.\d+){2}'
                    r'|172\.(1[6-9]|2\d|3[01])(\.\d+){2}|100\.(6[4-9]|[7-9]\d|1[01]\d|12[0-7])(\.\d+){2}'   # + Tailscale
                    r'|[\w.-]+\.(local|lan|ts\.net))(:\d+)?$', re.I)
@@ -80,14 +80,14 @@ def need_piper(a: argparse.Namespace):
         pass
     if not os.environ.get('GYROPUP_TTS_REEXEC'):
         here = os.path.realpath(sys.executable)
-        for c in ([a.python] if a.python else [f'python3.{m}' for m in range(14, 8, -1)] + ['python3']):
+        for c in ([a.python] if getattr(a, 'python', None) else [f'python3.{m}' for m in range(14, 8, -1)] + ['python3']):
             exe = c if os.sep in c else shutil.which(c)
             if not exe or os.path.realpath(exe) == here:
                 continue
             if subprocess.run([exe, '-c', 'import piper'], capture_output=True).returncode == 0:
                 print(f'[tts] {sys.executable} has no piper; running under {exe}', file=sys.stderr, flush=True)
                 os.environ['GYROPUP_TTS_REEXEC'] = '1'
-                os.execv(exe, [exe, os.path.abspath(__file__), *sys.argv[1:]])
+                os.execv(exe, [exe, os.path.abspath(sys.argv[0]), *sys.argv[1:]])   # this script or the clip renderer
     sys.exit('[tts] Piper is not installed for any python3 on PATH: python3 -m pip install --user piper-tts '
              '(or point GYROPUP_TTS_PYTHON at a venv that has it)')
 
@@ -105,8 +105,10 @@ def find_voice(name: str, dirs: list[Path]) -> Path:
 
 def clean(text: str) -> str:
     text = re.sub(r'[\x00-\x1f\x7f]+', ' ', text)
-    text = re.sub(r'\s+', ' ', text).strip()[:MAX_CHARS]
-    return re.sub(r'\b(' + '|'.join(RESPELL) + r')\b', lambda m: RESPELL[m.group(1).lower()], text, flags=re.I)
+    # The pronunciation key is applied here, so --say and every caller get it; it is idempotent, so text talk.js has
+    # already passed through the same key comes out unchanged. The cache is keyed by this text, so a key change
+    # re-renders exactly the lines it changes.
+    return pronounce(re.sub(r'\s+', ' ', text).strip()[:MAX_CHARS])
 
 
 class Voice:

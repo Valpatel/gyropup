@@ -21,6 +21,7 @@
     "test:viewers": "node tools/test-portal-viewers.mjs",
     "test:file-viewer-theme": "node tools/test-file-viewer-theme.mjs",
     "test:audio": "node tools/test-audio-settings.mjs",
+    "test:voice": "python3 tools/test-pronunciation.py && node --test tools/test-pronunciation.mjs && python3 tools/render-voice.py --check",
     "test:hero": "node tools/test-hero-preview.mjs",
     "test:demo": "node tools/test-live-demo.mjs",
     "test:models": "node tools/test-current-model.mjs",

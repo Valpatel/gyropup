@@ -63,6 +63,57 @@ await acknowledgePrototypeNotice(context);
   assert.equal(await page.evaluate(()=>window.talk.audio.muted && window.talk.audio.voiceVolume===0 && localStorage.getItem('gyropup.muted')==='1'),true);
  } finally {release?.();await context.close();}
 }
+// Fixed lines play their recorded clip; any other line is spoken live through the pronunciation key, while the bubble
+// keeps the written text (designer/character/pronunciation.json, voice/manifest.json).
+async function pronunciation() {
+ const context=await browser.newContext({reducedMotion:'reduce'});await context.addInitScript(browserVoice);
+ await acknowledgePrototypeNotice(context);
+ await context.addInitScript(()=>{
+  window.remoteAudio={started:0};
+  class AudioContext {
+   state='running';destination={};resume(){return Promise.resolve();}decodeAudioData(){return Promise.resolve({});}
+   createGain(){return {gain:{value:0},connect(){return this;}};}
+   createBufferSource(){return {playbackRate:{value:1},connect(node){return node;},start(){window.remoteAudio.started++;},stop(){this.onended?.();}};}
+  }
+  Object.defineProperty(window,'AudioContext',{value:AudioContext,configurable:true});
+ });
+ const page=await context.newPage();page.on('pageerror',e=>errors.push(e.message));
+ const html=`<!doctype html><script type="importmap">{"imports":{"three":"/designer/kit/vendor/three/three.module.min.js"}}</script><script type="module">
+ import { mountTalk } from '/designer/character/talk.js';
+ window.talk=mountTalk({stage:{onFrame(){}},getHead:()=>null,audio:{enabled:true,volume:.4},dock:false});
+ await window.talk.detect();window.audioReady=true;</script>`;
+ const requests=[];
+ await page.route('**/*',async route=>{
+  const url=new URL(route.request().url());requests.push(url.pathname+url.search);
+  if(url.pathname==='/')return route.fulfill({contentType:'text/html',body:html});
+  if(url.pathname.startsWith('/designer/'))return route.fulfill({contentType:url.pathname.endsWith('.css')?'text/css':url.pathname.endsWith('.mp3')?'audio/mpeg':'text/javascript',body:await readFile(new URL(url.pathname.slice(1),root))});
+  if(url.pathname==='/tts')return route.fulfill({contentType:'audio/wav',body:Buffer.from([0])});
+  throw new Error('Unexpected speech request: '+url.href);
+ });
+ const manifest=JSON.parse(await readFile(new URL('designer/character/voice/manifest.json',root),'utf8'));
+ const bubble=()=>page.evaluate(()=>document.querySelector('.gp-bubble .gp-text').textContent);
+ try {
+  await page.goto('https://speech.example.test');await page.waitForFunction(()=>window.audioReady);
+  await page.evaluate(()=>window.talk.setMuted(false));
+  // A fixed line: its clip, no live voice at all.
+  assert.equal(await page.evaluate(()=>window.talk.say('Hi! I am Gyropup!')),true);
+  assert.equal(await bubble(),'Hi! I am Gyropup!');
+  assert.ok(requests.includes('/designer/character/voice/'+manifest.lines['Hi! I am Gyropup!'].clip),'Fixed line plays its recorded clip');
+  assert.equal(manifest.lines['Hi! I am Gyropup!'].spoken,'Hi! I am gyro pup!');
+  assert.equal(requests.filter(r=>r.startsWith('/tts')).length+await page.evaluate(()=>window.audioTest.spoken.length),0,'No live speech for a recorded line');
+  // A live line through the sidecar: the request carries the key's text, the bubble the written one.
+  await page.evaluate(()=>Object.assign(window.talk.services.tts,{ok:true,base:location.origin}));
+  assert.equal(await page.evaluate(()=>window.talk.say("Gyropup's turret is ready, see gyropup.com")),true);
+  assert.equal(await bubble(),"Gyropup's turret is ready, see gyropup.com");
+  const tts=requests.filter(r=>r.startsWith('/tts')).map(r=>new URL(r,'https://x.test').searchParams.get('text'));
+  assert.deepEqual(tts,["gyro pup's turret is ready, see gyropup.com"],'Sidecar is sent the pronounced text');
+  // The same live line through browser speech.
+  await page.evaluate(()=>{window.talk.services.tts.ok=false;});
+  assert.equal(await page.evaluate(()=>window.talk.say('Two Gyropups, one Tritium team')),true);
+  assert.equal(await bubble(),'Two Gyropups, one Tritium team');
+  assert.equal(await page.evaluate(()=>window.audioTest.active.text),'Two gyro pups, one Trittium team','Browser speech is sent the pronounced text');
+ } finally {await context.close();}
+}
 async function siteControls() {
  const context=await browser.newContext({viewport:{width:1200,height:900}});await context.addInitScript(browserVoice);
 await acknowledgePrototypeNotice(context);
@@ -114,7 +165,8 @@ await acknowledgePrototypeNotice(context);
 }
 try {
  await remoteVoice();
+ await pronunciation();
  if(process.env.AUDIO_UNIT_ONLY!=='1')await siteControls();
  assert.deepEqual(errors,[]);
- console.log(`PASS ${engine.name()}: shared speech gain, immediate browser/Piper cancellation, pending response invalidation, independent saved voice mute${process.env.AUDIO_UNIT_ONLY==='1'?' (isolated voice adapter)':' and robot/bench/talk-demo controls'}`);
+ console.log(`PASS ${engine.name()}: recorded clips for fixed lines, pronounced live speech, shared speech gain, immediate browser/Piper cancellation, pending response invalidation, independent saved voice mute${process.env.AUDIO_UNIT_ONLY==='1'?' (isolated voice adapter)':' and robot/bench/talk-demo controls'}`);
 } finally {await browser.close();}

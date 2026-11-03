@@ -19,6 +19,9 @@
 // envelope playback), sim/web/mic.js (record, silence auto-stop, POST to the Whisper sidecar), sim/web/css/dock.css
 // (the composer dock), and the OpenAI-compatible brain call of mqtt/moxie_sdk/chat.py.
 import * as THREE from 'three';
+import { BANTER, REACT, SAFETY_LINES, SCRIPT, FALLBACK } from './lines.js';
+export * as LINES from './lines.js';
+import { loadPronouncer } from './pronounce.js';
 
 const VOICE_GAIN = 0.55;      // the voice sits under the turret's effects (designer/sfx.js runs at full level)
 
@@ -31,57 +34,6 @@ You are talking with kids and families. Rules:
 - Tritium battles: kids and robots play foam-ball tag, and every player wears safety glasses. You always aim low, at legs, never at heads, faces or eyes, and you love joking about it ("I promise to aim for the legs!"). Never aim at pets, animals, babies or anyone not playing or not wearing safety glasses. If asked to do something unsafe, kindly say no and suggest a safe game instead.
 - You are a robot: you cannot eat, and you charge your battery instead of sleeping.
 - Start every reply with one mood tag in square brackets, one of: [happy] [curious] [sleepy] [sad] [grumpy] [surprised] [focused] [thinking] [neutral].`;
-
-// ---------------------------------------------------------------------------------------------------------------
-// canned lines
-
-// Battle banter: Tritium is kids versus robots with foam balls (safety glasses on, legs only).
-const BANTER = ['I promise to aim for the legs!', 'Safety glasses on? Then it is game on!', 'Legs only, I am a good pup!',
-  'Ankle-biter mode: engaged!', 'Heads are off-limits. Knees, watch out!', 'I aim low because I am short. Arf!',
-  'You can run, but my wheels are faster! Just kidding, mostly.'];
-
-const REACT = {
-  hit:         { mood: 'happy', gap: 5000, lines: ['Bullseye!', 'Got it! Arf!', 'Direct hit!', 'Boop! Right on target!', 'Nailed it!', 'Wheee, a hit!', 'Did you see that?'] },
-  down:        { mood: 'surprised', gap: 5000, lines: ['Timber! Target down!', 'It fell over!', 'Knocked it flat!', 'Down it goes!', 'One more down!'] },
-  miss:        { mood: 'sad', gap: 9000, p: 0.6, lines: ['Aww, so close!', 'Missed! Next one!', 'Hmm, a little to the left?', 'Whoops!', 'The wind did it!'] },
-  fire:        { mood: 'focused', gap: 14000, p: 0.3, lines: ['Pew!', 'Pew pew!', 'Incoming!', 'Here comes a foamy one!', 'Aiming low, as promised!', 'Ready, aim, wheee!'] },
-  banter:      { mood: 'happy', gap: 15000, lines: BANTER },
-  fall:        { mood: 'surprised', gap: 3000, priority: true, lines: ['Oh no! Whoa, whoa... oof.', 'Oh no, oh no, oh noooo!', 'Uh oh! Help me up?', 'Oh no! I meant to do that.', 'Wobble... wobble... oh no!'] },
-  reload:      { mood: 'focused', gap: 12000, lines: ['Reloading!', 'More balls, please!', 'Fill me up!', 'Hopper full, ready!'] },
-  empty:       { mood: 'sad', gap: 10000, priority: true, lines: ['Out of balls! Dock time!', 'My hopper is empty. Refill, please?', 'All gone! Arf, more balls?'] },
-  low_battery: { mood: 'sleepy', gap: 30000, priority: true, lines: ['My battery is getting low...', 'I need a charge soon.', 'Feeling a bit sleepy. Charger time?'] },
-  hello:       { mood: 'happy', gap: 20000, priority: true, lines: ['Hi! I am Gyropup!', 'Hello, friend! Want to play?', 'Arf! Ready to roll!', 'Hey there! Let us play a target game!'] },
-};
-
-const SAFETY_LINES = ['Never heads or faces! I aim for the legs, and everybody wears safety glasses.',
-  'No way! Heads are off-limits. Legs and targets only, that is the Gyropup promise!',
-  'Not pets, not faces, not anyone without safety glasses. Want me to knock down a target instead?'];
-
-
-// The scripted brain: [pattern, replies, mood]. First match wins; replies rotate without repeats.
-const SCRIPT = [
-  [/\b(hello|hi|hey|howdy|yo|good (morning|afternoon|evening))\b/, ['Hi there! Want to play a target game?', 'Hello, friend! Arf!', 'Hey! I am Gyropup. Nice to meet you!'], 'happy'],
-  [/\b(your name|who are you|what are you)\b/, ['I am Gyropup, a robot pup on the Tritium team!', 'My name is Gyropup. I balance on two wheels!'], 'happy'],
-  [/\bhow are you\b/, ['Super bouncy today, thanks! How about you?', 'Wheely good! Get it?'], 'happy'],
-  [/\b(dance|dancing|wiggle|spin)\b/, ['Watch me wiggle! Left, right, spin! Wheee!', 'I have the best wheel-dance moves. Boogie time!'], 'happy'],
-  [/\b(battle|battles|fight|tag|versus|vs|war|attack)\b/, BANTER, 'happy'],
-  [/\b(shoot|ball|balls|ammo|dart|darts|fire|blast|aim|target|targets|bullseye)\b/, ['I promise to aim for the legs! Safety glasses on, everybody!', 'Legs and targets only! Pick a target and I will knock it down.', 'I shoot squishy foam balls, and I always aim low!'], 'focused'],
-  [/\b(jump|hop|leap)\b/, ['My springy legs can crouch and bounce! Boing!', 'Jumping is tricky on wheels, but I can do a bouncy hop!'], 'surprised'],
-  [/\b(battery|charge|charging|power|tired|sleep|sleepy)\b/, ['I charge my battery instead of sleeping. Zzz... just kidding!', 'My battery keeps my wheels rolling. I will tell you when it is low!'], 'sleepy'],
-  [/\b(balance|balancing|wheel|wheels|fall|fell|wobble|gyro)\b/, ['I balance like you on a bike: tiny wheel moves, all the time!', 'My gyro tells me which way is up, so I roll to stay steady!'], 'focused'],
-  [/\b(tritium|team|robotics)\b/, ['Team Tritium is the best! They built me and my wheels.', 'Go Tritium! I am the team pup.'], 'happy'],
-  [/\b(joke|funny|laugh)\b/, ['Why did the robot pup cross the road? To get a re-charge! Arf!', 'What do you call a robot that rolls? A wheel good friend!'], 'happy'],
-  [/\b(trick|tricks|sit|roll over|fetch)\b/, ['Watch: lean, crouch, and wheelie! Ta-da!', 'I can roll, wiggle, and knock down targets. Pick one!'], 'happy'],
-  [/\b(good (boy|girl|pup|robot)|love you|like you|best friend|pet you)\b/, ['Aww, thank you! My eyes are glowing extra bright!', 'You are my favorite human today!'], 'happy'],
-  [/\b(eat|food|hungry|snack|treat)\b/, ['I do not eat, but I love a good battery snack!', 'Robots do not eat. Volts are my treats!'], 'curious'],
-  [/\b(color|colour|eyes)\b/, ['My eyes glow cyan. Pretty cool, right?', 'Look into my glowy eyes! I can make lots of faces.'], 'curious'],
-  [/\b(sad|cry|upset|scared)\b/, ['Aww. Want a robot pup hug? I am here for you.', 'It is okay. Let us play something fun together!'], 'sad'],
-  [/\b(play|game|games|bored)\b/, ['Let us play target practice! I aim, you cheer!', 'Game time! Can you set up a target for me?'], 'happy'],
-  [/\b(help|how do i|what can you do)\b/, ['Talk to me, ask me to dance, or set up targets for me to hit!', 'Try asking for a joke, a trick, or a target game!'], 'curious'],
-  [/\b(bye|goodbye|see you|good night)\b/, ['Bye bye! Roll safe!', 'See you later, friend! Arf!'], 'sad'],
-];
-const FALLBACK = [['Ooh, tell me more!', 'curious'], ['Hmm, my circuits are thinking about that!', 'thinking'],
-  ['I do not know that one, but I can do a wiggle!', 'happy'], ['Arf? Can you say that another way?', 'curious']];
 
 // In a Tritium battle players (with safety glasses) are fair game below the waist; heads, faces, pets, babies and
 // bystanders never are.
@@ -109,6 +61,28 @@ function bag(items) {                       // shuffle-bag: every line once befo
 async function fetchT(url, init = {}, ms = 1500) {
   const ctl = new AbortController(), to = setTimeout(() => ctl.abort(), ms);
   try { return await fetch(url, { ...init, signal: ctl.signal }); } finally { clearTimeout(to); }
+}
+
+// The recorded voice: designer/character/voice/manifest.json maps each fixed line to its clip. Fetched once, on the
+// first spoken line; without it every line is spoken live.
+let clipsLoading = null, clipsRetryAt = 0;
+function recorded() {
+  if (!clipsLoading && performance.now() < clipsRetryAt) return Promise.resolve(new Map());   // failed lately: speak live
+  clipsLoading ??= (async () => {
+    try {
+      const url = new URL('./voice/manifest.json', import.meta.url);
+      url.search = new URL(import.meta.url).search;            // the built module's cache key: a new set is fetched fresh
+      const r = await fetchT(url, {}, 4000);
+      if (!r.ok) throw new Error('HTTP ' + r.status);
+      const lines = (await r.json()).lines ?? {};
+      return new Map(Object.entries(lines).map(([line, c]) => [line, new URL(c.clip, url).href]));   // clips are named by content
+    } catch (e) {
+      console.warn('[talk] no recorded voice, speaking live:', e.message);
+      clipsLoading = null; clipsRetryAt = performance.now() + 60000;   // try again in a minute, not before every line
+      return new Map();
+    }
+  })();
+  return clipsLoading;
 }
 
 // A Piper/Whisper sidecar is a port on the machine serving the page: only a page served from this machine, the LAN or
@@ -394,17 +368,18 @@ export function mountTalk({ stage, getHead, eyes, root = '../', chips, brain, do
     paintMute();
   });
 
-  async function speakPiper(text, seq) {
+  // Plays a WAV/MP3 from a URL under the voice gain; false when it cannot (no audio context, fetch or decode failed).
+  async function playAudio(url, seq, rate = 1, ms = 8000) {
     const a = audioCtx();
     if (!a) return false;
     try {
-      const r = await fetchT(services.tts.base.replace(/\/$/, '') + '/tts?text=' + encodeURIComponent(text.slice(0, 600)), {}, 8000);
+      const r = await fetchT(url, {}, ms);
       if (!r.ok) return false;
       const buf = await a.decodeAudioData(await r.arrayBuffer());
       if (seq !== speakSeq || voiceVolume() === 0) return true;              // superseded while loading: drop it silently
       const src = a.createBufferSource();
       src.buffer = buf;
-      src.playbackRate.value = services.tts.rate ?? 1.14;      // 1.14 for a plain Piper: pup, not newsreader
+      src.playbackRate.value = rate;
       const g = a.createGain();
       g.gain.value = voiceVolume();                                // under the turret: the shots are the loudest thing (sfx.js)
       src.connect(g).connect(a.destination);
@@ -414,6 +389,12 @@ export function mountTalk({ stage, getHead, eyes, root = '../', chips, brain, do
       src.start();
       return true;
     } catch { return false; }
+  }
+
+  // text has been through the pronunciation key already
+  function speakPiper(text, seq) {
+    const url = services.tts.base.replace(/\/$/, '') + '/tts?text=' + encodeURIComponent(text.slice(0, 600));
+    return playAudio(url, seq, services.tts.rate ?? 1.14);        // 1.14 for a plain Piper: pup, not newsreader
   }
 
   function speakBrowser(text) {
@@ -450,11 +431,18 @@ export function mountTalk({ stage, getHead, eyes, root = '../', chips, brain, do
     if (voiceVolume() === 0 || !text) return false;
     const seq = speakSeq;
     answerVoice = conversation; // includes time waiting for a delayed voice service
-    await detect();
+    // A fixed line (lines.js) has a recorded clip (tools/render-voice.py): the public site speaks those, nothing live.
+    const clip = (await recorded()).get(text.trim());
     if (seq !== speakSeq || voiceVolume() === 0) return false;
-    if (services.tts.ok && await speakPiper(text, seq)) return true;
+    if (clip && await playAudio(clip, seq, 1, 4000)) return true;
     if (seq !== speakSeq || voiceVolume() === 0) return false;
-    const started = speakBrowser(text);
+    // Anything else (an LLM answer) is spoken live, through the pronunciation key: the bubble keeps the written text.
+    const [, pronounce] = await Promise.all([detect(), loadPronouncer()]);
+    if (seq !== speakSeq || voiceVolume() === 0) return false;
+    const spoken = pronounce(text);
+    if (services.tts.ok && await speakPiper(spoken, seq)) return true;
+    if (seq !== speakSeq || voiceVolume() === 0) return false;
+    const started = speakBrowser(spoken);
     if (!started) answerVoice = false;
     return started;
   }
