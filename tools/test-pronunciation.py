@@ -90,6 +90,12 @@ class Key(unittest.TestCase):
             with self.assertRaises(ValueError):
                 P.load_key(bad)
 
+    def test_key_without_protect(self):
+        # protect is optional on both sides (pronounce.js accepts a key without it too)
+        key = {'entries': [{'match': 'Gyropup', 'say': 'gyro pup'}]}
+        self.assertEqual(P.Pronouncer(key)('Gyropup.com'), 'gyro pup.com')
+        self.assertEqual(node_pronounce(key, ['Gyropup.com']), ['gyro pup.com'])
+
     def test_sidecar_applies_key_once(self):
         self.assertEqual(tts_server.clean('Hi! I am \n Gyropup!'), 'Hi! I am gyro pup!')
         self.assertEqual(tts_server.clean(tts_server.clean("Gyropup's day")), "gyro pup's day")

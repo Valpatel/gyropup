@@ -10,7 +10,7 @@
 // changed; all entries are replaced in one pass, so applying the key twice gives the same text as once.
 
 const SUFFIX = "'s|’s|s'|s’|s";      // keep in step with tools/pronunciation.py
-const WORD = String.raw`A-Za-z0-9_\u00C0-\u024F`;   // Latin letters too: never inside another word
+const WORD = String.raw`A-Za-z0-9_\u00C0-\u00D6\u00D8-\u00F6\u00F8-\u024F`;   // Latin letters too (not × or ÷): never inside another word
 const SPACE = String.raw`\t\n\v\f\r \u00a0\u1680\u2000-\u200a\u2028\u2029\u202f\u205f\u3000\ufeff`;   // \s, spelled out so tools/pronunciation.py splits text the same
 const norm = s => String(s).trim().toLowerCase().replace(/\s+/g, ' ');
 const escape = s => s.replace(/[.*+?^${}()|[\]\\]/g, '\\$&');

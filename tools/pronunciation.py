@@ -24,7 +24,7 @@ from pathlib import Path
 
 KEY_PATH = Path(__file__).resolve().parent.parent / 'designer' / 'character' / 'pronunciation.json'
 SUFFIX = "'s|’s|s'|s’|s"       # keep in step with pronounce.js
-WORD = r'A-Za-z0-9_\u00C0-\u024F'   # Latin letters too: never inside another word
+WORD = r'A-Za-z0-9_\u00C0-\u00D6\u00D8-\u00F6\u00F8-\u024F'   # Latin letters too (not × or ÷): never inside another word
 SPACE = r'\t\n\v\f\r \u00a0\u1680\u2000-\u200a\u2028\u2029\u202f\u205f\u3000\ufeff'   # JavaScript's \s, spelled out so both sides split text the same
 
 
@@ -52,7 +52,8 @@ class Pronouncer:
         alts = sorted(self.say, key=len, reverse=True)
         body = '|'.join(f'[{SPACE}]+'.join(re.escape(w) for w in m.split(' ')) for m in alts)
         self.words = re.compile(rf'(^|[^{WORD}])({body})({SUFFIX})?(?![{WORD}])', re.I | re.A) if alts else None
-        self.protect = re.compile(key['protect'], re.I | re.A)   # its whitespace is spelled out (SPACE), as in JS if key.get('protect') else None
+        # its whitespace is spelled out (SPACE), as in JS, so re.A changes nothing there
+        self.protect = re.compile(key['protect'], re.I | re.A) if key.get('protect') else None
 
     def _words(self, text: str) -> str:
         if not self.words:
