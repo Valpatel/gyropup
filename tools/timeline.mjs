@@ -169,14 +169,15 @@ function eventHTML(e, i) {
 /** Text-only changes left open above the fold when none of the newest `show` has a picture. */
 export const TEXT_ONLY_OPEN = 1;
 
-/** The timeline's HTML: the newest `show` changes, then `more` folded below. The open list always ends on a change
- * with a picture, on Progress and on the home page alike, so it never trails into a wall of text
+/** The timeline's HTML: the newest `show` changes, then `more` folded below. The open list ends on a change with a
+ * picture whenever the history has one, on Progress and on the home page alike, so it never trails into a wall of text
  * (tools/site-walls.mjs):
  *  - text-only changes after the last picture among the newest `show` go into the fold;
  *  - when none of the newest `show` has a picture (a pull request that ends on receipt, fit-job or probe commits), the
  *    newest TEXT_ONLY_OPEN stay open, the rest of that text-only run folds in place under "N changes without a
  *    picture", and the next change with a picture is shown open after it, even past `show`.
- * Every change keeps its place in the order, and on Progress every change is on the page, open or folded. */
+ * With no picture anywhere there is nothing to end on: the newest stays open and the rest fold. Every change keeps its
+ * place in the order, and on Progress every change is on the page, open or folded. */
 export function renderTimeline(events, { show = 6, more = 0, compact = false } = {}) {
   if (!events.length) return `<section id="changes" class="timeline" aria-labelledby="changes-title"><h2 id="changes-title">What changed</h2><p class="tl-empty">The change history is not available in this build.</p></section>`;
   const last = events.slice(0, show).findLastIndex(e => e.image);
