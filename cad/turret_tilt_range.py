@@ -108,8 +108,11 @@ def nearest(trees, others, reach):
     return out
 
 
+IGNORED: set = set()   # --ignore A:B pairs, to find what limits the tilt next (e.g. at the pans away from a known limiter)
+
+
 def skip(a, b):
-    return frozenset((a, b)) == tu.STOP_PAIR or frozenset((a, b)) in tu.DESIGNED_CONTACTS or frozenset((a, b)) in tu.SKIP_PAIRS
+    return frozenset((a, b)) in IGNORED or frozenset((a, b)) == tu.STOP_PAIR or frozenset((a, b)) in tu.DESIGNED_CONTACTS or frozenset((a, b)) in tu.SKIP_PAIRS
 
 
 def at_tilt(T, C, tilt, pans, reach):
@@ -223,7 +226,11 @@ def main():
     ap.add_argument('--step', type=float, default=2.5)
     ap.add_argument('--pan-step', type=float, default=10.0)
     ap.add_argument('--margin', type=float, default=3.0)
+    ap.add_argument('--ignore', action='append', default=[], metavar='A:B',
+                    help='leave a pair out (repeatable), to find the next limiter; recorded in the result')
+    ap.add_argument('--out', default='tilt-range.json', help='result file name under exports/turret/')
     a = ap.parse_args()
+    IGNORED.update(frozenset(x.split(':')) for x in a.ignore)
     t0 = time.time()
     L = tu.derive(R / 'designs/default.json')
     T = tu.Turret(L)
@@ -241,7 +248,7 @@ def main():
     res = {'what': 'the reachable tilt range above level (cad/turret_tilt_range.py, #201)',
            'frame': 'tilt + = muzzle up (cad/turret.py); pans in deg about the pan axis',
            'stops_now_deg': [G.tilt_min, G.tilt_max], 'margin_mm': a.margin, 'contact_mm': CONTACT_MM,
-           'pans_deg': pans, 'step_deg': a.step, 'sampling_mm': 1.2, 'rangefinder': RANGEFINDER,
+           'ignored_pairs': sorted(a.ignore), 'pans_deg': pans, 'step_deg': a.step, 'sampling_mm': 1.2, 'rangefinder': RANGEFINDER,
            'per_tilt': summary, 'stop_room': stop_room(G)}
     below = lambda t: max(0.0, t - a.step)
     if within is not None:
@@ -257,7 +264,7 @@ def main():
     res['rangefinder_on_cradle_at_0'] = [[round(d, 2), a_, b] for d, a_, b, _ in same[:6]]
     res['seconds'] = round(time.time() - t0)
     OUT.mkdir(parents=True, exist_ok=True)
-    (OUT / 'tilt-range.json').write_text(json.dumps(res, indent=1) + '\n')
+    (OUT / a.out).write_text(json.dumps(res, indent=1) + '\n')
     print(json.dumps({k: res[k] for k in ('last_tilt_with_margin_deg', 'margin_ended_by', 'first_contact_deg', 'contact_by', 'stop_room',
                                           'rangefinder_on_cradle_at_0', 'seconds')}, indent=1))
 
