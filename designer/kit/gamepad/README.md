@@ -128,5 +128,5 @@ indices), which is a fact of the API rather than copied code.
 
 ## Moving it to its own repository
 
-Copy this folder. It imports nothing outside itself; `demo.html` and `gamepad.test.mjs` run as they are
+Copy this folder. It imports nothing outside itself; `demo.html` (drop its two `/web/theme.*` lines, which only the Gyropup site needs) and `gamepad.test.mjs` run as they are
 (`node --test gamepad.test.mjs`, or serve the folder and open `demo.html`). Keep `LICENSE` with it.
