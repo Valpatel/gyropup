@@ -320,7 +320,7 @@ def test_configure_refuses_a_value_that_does_not_read_back():
 
 def test_a_lower_cap_is_written_to_the_motor_and_clipped_by_the_laptop():
     """rig/run.py --cap (docs/motor-day.md: the PLA leg at 12 N m): the start-up writes it in place of the rig's 60 and
-    reads it back, the motor enforces it, and the laptop clips to it too. Above 60 is refused."""
+    reads it back, the motor enforces it, and the laptop clips to it too. Above the build's every-day cap is refused."""
     from rig import leg_control as lc
     from rig.run import cap_setup
     config, limits = cap_setup(12.0, 5.0)
@@ -329,11 +329,14 @@ def test_a_lower_cap_is_written_to_the_motor_and_clipped_by_the_laptop():
     assert P.RIG_CONFIG['limit_torque'] == 60.0                                        # the rig's own setting is untouched
     # no --cap: the leg build's every-day cap (exports/leg/limits.json), the PLA bench leg's unless --build robot
     assert cap_setup(None)[0]['limit_torque'] == 12.0 and cap_setup(None)[1].cap == 12.0
-    assert cap_setup(None, build='robot')[0]['limit_torque'] == lc.LEG_CAP and cap_setup(None, build='robot')[1].cap == lc.LEG_CAP
+    robot = lc.ll.load()['profiles']['robot']['everyday_nm']                    # the firmware rig profile's for that leg
+    assert robot == 61.0
+    assert cap_setup(None, build='robot')[0]['limit_torque'] == robot and cap_setup(None, build='robot')[1].cap == robot
+    assert cap_setup(30.0, None, 'robot')[1].cap == 30.0
     for bad in (0.0, -5.0, 12.5, 60.0, 120.0):
         with pytest.raises(ValueError):
             cap_setup(bad)                                                    # the PLA bench leg: 12 N m at most
-    for bad in (0.0, 60.5, 120.0):
+    for bad in (0.0, 61.5, 69.0, 120.0):
         with pytest.raises(ValueError):
             cap_setup(bad, build='robot')
     with pytest.raises(ValueError):

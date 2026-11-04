@@ -87,10 +87,12 @@ export function createLegLimits({ table = null } = {}) {
       out = next;
       return { ...next, limited };
     },
-    // a pose -> the same pose with each leg inside the window at its lean (robot.info: hMin, hMax in mm)
+    // a pose -> the same pose with each leg inside the window at its lean (robot.info: hMin, hMax in mm). The window is
+    // the five-bar's (v2): the legacy serial-leg view (no info.v2) keeps its own reach. The playground's legs follow
+    // their pose exactly, so the commanded lean is the measured one (the firmware clamps at both).
     fit({ height, pitch = 0, rollMM = 0 }, info) {
       const hMin = info?.hMin, hMax = info?.hMax;
-      const w = window && Number.isFinite(hMin) && Number.isFinite(hMax) ? windowAt(window, pitch) : null;
+      const w = window && info?.v2 && Number.isFinite(hMin) && Number.isFinite(hMax) ? windowAt(window, pitch) : null;
       if (!w) return { height, pitch, rollMM, windowed: false };
       const lo = Math.max(hMin, w[0] * 1000), hi = Math.min(hMax, w[1] * 1000);
       const h = hMin + (hMax - hMin) * height;

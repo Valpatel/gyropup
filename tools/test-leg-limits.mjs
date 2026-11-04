@@ -11,7 +11,7 @@ const model = await readFile(new URL('firmware/balance/include/gp/gp_model.h', r
 const control = await readFile(new URL('firmware/balance/src/core/gp_control.c', root), 'utf8');
 const manifest = JSON.parse(await readFile(new URL('exports/sim/v2/rig/manifest.json', root), 'utf8'));
 const [hMin, hMax] = manifest.fivebar.h_range_mm;
-const info = {hMin, hMax};
+const info = {hMin, hMax, v2: true};
 const table = limits.command.window;
 const def = (name) => Number(model.match(new RegExp(`#define ${name} (-?[0-9.]+)f`))[1]);
 
@@ -56,6 +56,8 @@ test('fit keeps both legs inside the window at any pose the sliders or a gamepad
   assert.ok(back.windowed && Math.abs(hMin + (hMax - hMin) * back.height - windowAt(table, -0.35)[1] * 1000) < 1e-9);
   // upright, mid height, level: untouched
   assert.deepEqual(L.fit({height: 0.6, pitch: 0, rollMM: 0}, info), {height: 0.6, pitch: 0, rollMM: 0, windowed: false});
+  // the legacy serial-leg robot (robot3d.js: no info.v2, up to 390.5 mm) is not held to the five-bar's window
+  assert.deepEqual(L.fit({height: 1, pitch: -0.3, rollMM: 0}, {hMin: 150, hMax: 390.5}), {height: 1, pitch: -0.3, rollMM: 0, windowed: false});
 });
 
 test('step slews toward the targets no faster than the firmware', () => {

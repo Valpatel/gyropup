@@ -22,13 +22,18 @@ void gp_guard_limits(uint8_t build, gp_torque_limits *t);
 float gp_guard_approach(float d, float everyday_nm);
 
 /* One motor's torque with its soft stops at lo and hi (rad; + torque and + speed towards hi): inside the margin no
- * torque into a stop; inside the zone, faster than gp_guard_approach() towards a stop brakes. */
+ * torque into a stop; anywhere, faster than gp_guard_approach() towards a stop brakes. */
 float gp_guard_soft_stop(float tau, float phi, float omega, float lo, float hi, float everyday_nm);
 
 /* The leg lengths (m) the controller may be commanded at a lean (rad, + = wheel forward): between the window's rows,
  * linear; past its ends, the end rows. */
 void gp_guard_window(float lean, float *L_min, float *L_max);
-float gp_guard_clamp_L(float L, float lean);
+/* L clamped to the overlap of the windows at the commanded lean and the leg's measured lean */
+float gp_guard_clamp_L(float L, float lean, float lean_measured);
+
+/* The least angle (rad) between a link pair of the five-bar that lines up at a dead point (each knee, the apex); 0
+ * where the lower links cannot meet (sim/leg_limits.py dead_point_margin). */
+float gp_guard_dead_margin(float phi1, float phi2);
 
 /* true while a motor's angle is no further past a hard stop than GP_LIM_ANGLE_WINDOW_RAD */
 bool gp_guard_angle_ok(float phi, float lo, float hi);

@@ -201,7 +201,7 @@ def faults(test: str = 'squat', at: float = 1.0) -> dict:
 
 
 def run_hil(test: str, half_mass: float, rate: float, pack: Pack, plot: bool = False, tag: str = 'hil',
-            cap: Optional[float] = None):
+            cap: Optional[float] = None, build: str = 'pla_bench'):
     from rig.can_bus import Calibration, CanBus, MotorCal
     from rig.hil import HilLink
     from rig.sim_bus import SimBus
@@ -211,7 +211,7 @@ def run_hil(test: str, half_mass: float, rate: float, pack: Pack, plot: bool = F
     cal = Calibration(MotorCal(1, -1, fo + 0.05), MotorCal(2, -1, ro - 0.05), 'HIL: both motors reversed, zero offset')
     sim = SimBus(test, half_mass=half_mass, tick=1 / rate, cap=sc.cap, pack=pack, latency_ticks=0)
     link = HilLink(sim, cal, cut_at=0.6 if test.startswith('power_off') else None)
-    config = cap_setup(cap)[0] if cap is not None else None       # --cap: the software motors take it as the real ones do
+    config = cap_setup(cap, build=build)[0] if cap is not None else None   # --cap: the software motors take it as the real ones do
     bus = CanBus(link.port, cal, tick=1 / rate, realtime=False, clock=link.clock, after_exchange=link.advance, config=config)
     link.begin()
     c = min(sc.cap or lc.LEG_PEAK, cap) if cap is not None else (sc.cap or lc.LEG_PEAK)
@@ -233,10 +233,12 @@ BUILDS = ('pla_bench', 'robot')     # exports/leg/limits.json profiles: the leg 
 
 
 def build_cap(build: str) -> float:
-    """The every-day cap of a leg build (sim/leg_limits.py), at most the rig's 60 N m (D38)."""
+    """The every-day cap of a leg build (sim/leg_limits.py): the firmware's rig profile built for the same leg
+    (cmake -DGP_RIG_BUILD) runs the same number outside a jump's push. The laptop has no push peak: its jumps run at
+    this cap too."""
     if build not in BUILDS:
         raise ValueError(f'--build {build}: one of {", ".join(BUILDS)}')
-    return min(lc.LEG_CAP, float(lc.ll.load()['profiles'][build]['everyday_nm']))
+    return float(lc.ll.load()['profiles'][build]['everyday_nm'])
 
 
 def cap_setup(cap: Optional[float], rate_limit: Optional[float] = None, build: str = 'pla_bench') -> tuple:
@@ -350,7 +352,8 @@ def main(argv=None):
     ap.add_argument('--rate-limit', type=float, help='N m per tick the command may change (the first hanging tests: 5)')
     ap.add_argument('--build', choices=BUILDS, default='pla_bench',
                     help='the leg on the rig (exports/leg/limits.json): its every-day cap is the default --cap and the most '
-                         'allowed (pla_bench 12 N m; robot 60, the rig\'s own limit)')
+                         'allowed (pla_bench 12 N m; robot 61, the firmware rig profile\'s every-day cap for that leg; '
+                         'the laptop has no jump-push peak)')
     ap.add_argument('--cap', type=float, help='N m: the motors\' limit_torque and the laptop\'s clip, at most the build\'s')
     ap.add_argument('--no-node', action='store_true', help='CAN without the rig node: bench tests only, never with the leg on the rig')
     ap.add_argument('--yes', action='store_true')
@@ -388,11 +391,11 @@ def main(argv=None):
         inj = (a.inject.split('@')[0], float(a.inject.split('@')[1])) if a.inject else None
         o = run_sim(a.test, a.half_mass, a.rate, pack, a.latency, contact_truth=a.contact_truth, tag=a.tag, plot=a.plot,
                     video=(OUT / 'runs' / f'{a.test}.mp4') if a.video else None, inject=inj,
-                    limits=cap_setup(a.cap, a.rate_limit)[1] if (a.rate_limit or a.cap is not None) else None)
+                    limits=cap_setup(a.cap, a.rate_limit, a.build)[1] if (a.rate_limit or a.cap is not None) else None)
         print(json.dumps({k: v for k, v in o['results'].items() if k not in ('series', 'rig')}, indent=1))
         return 0
     if a.backend == 'hil':
-        o = run_hil(a.test, a.half_mass, a.rate, pack, a.plot, cap=a.cap)
+        o = run_hil(a.test, a.half_mass, a.rate, pack, a.plot, cap=a.cap, build=a.build)
         print(json.dumps({k: v for k, v in o['results'].items() if k not in ('series', 'rig')}, indent=1))
         print('timing', o['bus'].timing.summary())
         return 0

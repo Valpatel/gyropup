@@ -8,7 +8,8 @@ Jacobian, each torque clipped to the RS-04's torque-speed line and the firmware 
 on the motor joints (sim/leg_rig.py's), passive: they act with the motors off too.
 
 With guard on (the default), the firmware's protections (docs/leg-protection.md): each leg's commanded length is
-clamped to the reach window at its lean, and each motor's torque goes through the soft stops before the clip.
+clamped to the reach window at its commanded and its measured lean, and each motor's torque goes through the soft
+stops before the clip.
 """
 from __future__ import annotations
 
@@ -213,7 +214,7 @@ class ControllerV2(Controller):
             L, th, dL, dth, J = rb.leg_state(data, side)
             L_cmd = rb.height_m(h0 + sgn * self.dh)
             if self.guard:
-                L_cmd = ll.clamp_L(L_cmd, lean_cmd)
+                L_cmd = ll.clamp_L(L_cmd, lean_cmd, th)     # inside the stops at the commanded lean and the measured one
             F = g.kp_L * (L_cmd - L) - g.kd_L * dL + ff
             T = g.kp_th * (lean_cmd - th) - g.kd_th * dth
             uL = np.array([math.sin(th), -math.cos(th)])

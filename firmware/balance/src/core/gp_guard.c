@@ -3,6 +3,7 @@
 
 #include <math.h>
 
+#include "gp/gp_fivebar.h"
 #define GP_LIMITS_TABLES
 #include "gp/gp_limits.h"
 
@@ -32,9 +33,6 @@ float gp_guard_soft_stop(float tau, float phi, float omega, float lo, float hi, 
 {
     const float sgn[2] = {1.0f, -1.0f}, d[2] = {hi - phi, phi - lo}; /* towards hi: +, towards lo: - */
     for (int k = 0; k < 2; k++) {
-        if (d[k] >= GP_LIM_SOFT_ZONE_RAD) {
-            continue;
-        }
         if (d[k] < GP_LIM_SOFT_MARGIN_RAD && tau * sgn[k] > 0.0f) {
             tau = 0.0f;
         }
@@ -67,11 +65,33 @@ void gp_guard_window(float lean, float *L_min, float *L_max)
     *L_max = gp_lim_window[n - 1][2];
 }
 
-float gp_guard_clamp_L(float L, float lean)
+float gp_guard_clamp_L(float L, float lean, float lean_measured)
 {
-    float lo, hi;
+    float lo, hi, lo2, hi2;
     gp_guard_window(lean, &lo, &hi);
+    gp_guard_window(lean_measured, &lo2, &hi2);
+    lo = fmaxf(lo, lo2);
+    hi = fminf(hi, hi2);
     return L < lo ? lo : (L > hi ? hi : L);
+}
+
+static float pair_margin(gp_v2 u, gp_v2 v) /* how far two links are from lining up (rad): 0 straight or folded */
+{
+    const float c = (u.x * v.x + u.z * v.z) / (sqrtf(u.x * u.x + u.z * u.z) * sqrtf(v.x * v.x + v.z * v.z));
+    const float a = acosf(fmaxf(-1.0f, fminf(1.0f, c)));
+    return fminf(a, 3.14159265358979f - a);
+}
+
+float gp_guard_dead_margin(float phi1, float phi2)
+{
+    gp_fb_joints j;
+    if (!gp_fb_fk(phi1, phi2, &j)) {
+        return 0.0f;
+    }
+    const gp_v2 ac = {j.C.x - j.A.x, j.C.z - j.A.z}, ce = {j.E.x - j.C.x, j.E.z - j.C.z};
+    const gp_v2 bd = {j.D.x - j.B.x, j.D.z - j.B.z}, de = {j.E.x - j.D.x, j.E.z - j.D.z};
+    const gp_v2 ec = {j.C.x - j.E.x, j.C.z - j.E.z}, ed = {j.D.x - j.E.x, j.D.z - j.E.z};
+    return fminf(pair_margin(ac, ce), fminf(pair_margin(bd, de), pair_margin(ec, ed)));
 }
 
 bool gp_guard_angle_ok(float phi, float lo, float hi)

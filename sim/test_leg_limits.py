@@ -74,29 +74,70 @@ def test_the_jump_sweep_shows_speed_not_torque_limits_the_jump():
     assert capped['motor_peak_nm'] == 60.0 and capped['jump_mm'] < 0.7 * runs[60.0]['jump_mm']
 
 
-def test_soft_stops_never_push_further_into_a_stop_and_leave_mid_range_alone():
+def test_soft_stops_never_push_further_into_a_stop_and_leave_a_motor_that_could_stop_in_time_alone():
     lo, hi = math.radians(-97.0), math.radians(3.0)
-    m, z = math.radians(ll.SOFT_MARGIN_DEG), math.radians(ll.SOFT_ZONE_DEG)
+    m = math.radians(ll.SOFT_MARGIN_DEG)
     rnd = random.Random(7)
+    untouched = 0
     for _ in range(20000):
         T = rnd.choice((PLA['everyday_nm'], ROBOT['everyday_nm']))
         tau, w = rnd.uniform(-T, T), rnd.uniform(-16.0, 16.0)
         phi = rnd.uniform(lo - 0.05, hi + 0.05)
         out = ll.soft_stop(tau, phi, w, lo, hi, T)
-        if lo + z <= phi <= hi - z:
+        if lo + m <= phi <= hi - m and w <= ll.approach_limit(hi - phi - m, T) and -w <= ll.approach_limit(phi - lo - m, T):
             assert out == tau
+            untouched += 1
         if hi - phi < m:
             assert out <= 0.0                            # nothing towards hi: zeroed, or a brake away from it
         if phi - lo < m:
             assert out >= 0.0
         assert abs(out) <= max(abs(tau), T) + 1e-9
+    assert untouched > 5000
 
 
 def test_the_approach_limit_meets_the_stop_with_the_energy_it_takes_at_the_every_day_torque():
-    T = ROBOT['everyday_nm']
-    w = ll.approach_limit(0.0, T)
-    assert 0.5 * ll.J_MOTOR_KG_M2 * w * w == pytest.approx(T * T / (2 * ll.STOP_K_NM_PER_RAD))
-    assert ll.approach_limit(0.1, T) > w
+    J = D['soft_stop']['j_kg_m2']
+    assert ll.j_leg() == J
+    for p in (ROBOT, PLA):
+        T = p['everyday_nm']
+        w = ll.approach_limit(0.0, T)
+        assert 0.5 * J * w * w == pytest.approx(T * T / (2 * ll.STOP_K_NM_PER_RAD))   # its peak: w sqrt(k J) = T
+        assert w * math.sqrt(ll.STOP_K_NM_PER_RAD * J) == pytest.approx(T)
+        assert ll.approach_limit(0.1, T) > w
+    # the robot's leg at its fastest (the jump's 12.8 rad/s) must start braking well outside the old 10 deg zone
+    assert D['soft_stop']['brake_from_no_load_deg']['robot'] > 12.0
+
+
+def test_the_soft_stops_assume_the_whole_leg_behind_a_stop_not_the_rotor_alone():
+    inn = D['inertia']
+    worst = max(v['kg_m2'] for v in inn['worst'].values())
+    assert inn['bound_kg_m2'] >= worst and inn['bound_kg_m2'] - worst < 0.0011
+    assert worst > 4 * inn['rotor_and_upper_link_kg_m2']          # the lower links and the 4 kg wheel dominate
+    assert all(v['kg_m2'] <= worst for v in inn['at_stops'].values()) and len(inn['at_stops']) == 4
+    assert D['soft_stop']['j_kg_m2'] == inn['bound_kg_m2']
+
+
+def test_a_free_swing_into_each_stop_meets_it_at_no_more_than_its_build_s_every_day_torque():
+    runs = D['free_swing']
+    assert len(runs) == 16                                          # 2 builds x 2 motors x 2 stops, guarded and not
+    for r in runs:
+        if r['soft_stops']:
+            # the stop's peak: the contact (at most the every-day torque) plus the hanging leg's own weight on it
+            assert r['peak_stop_nm'] <= r['drive_nm'] + 10.0, r
+            assert r['contact_rad_s'] <= D['soft_stop']['contact_rad_s'][r['build']] * 1.15 + 0.3, r
+    worse = [(a, b) for a in runs for b in runs if a['soft_stops'] and not b['soft_stops'] and
+             (a['build'], a['motor'], a['stop']) == (b['build'], b['motor'], b['stop'])]
+    assert len(worse) == 8 and all(b['peak_stop_nm'] > a['peak_stop_nm'] for a, b in worse)
+
+
+def test_the_peak_also_holds_at_the_hips_and_the_knee_base_is_the_record_s():
+    fea = json.loads(ll.FEA.read_text())
+    assert ll.r1_knee_force(fea) == ROBOT['knee_capacity']['at_n'] == 574.0
+    hip = ROBOT['hip_capacity']
+    assert hip['row'] == 'hip_frame R1' and hip['n'] == pytest.approx(574.0 * hip['sf'] / hip['target'], abs=0.1)
+    at = {r['cap_nm']: r for r in D['jump_sweep']['at_limits']}[ROBOT['peak_nm']]
+    assert max(at['hip_push_n'], at['hip_after_n']) <= hip['n']
+    assert any(r['case'] == 'R1 (hip force)' for r in ROBOT['peak_rows'])
 
 
 def test_every_commanded_pose_is_reachable_inside_the_stops_and_away_from_dead_points():
@@ -115,7 +156,26 @@ def test_every_commanded_pose_is_reachable_inside_the_stops_and_away_from_dead_p
     assert ll.fb.stance(375.0, math.degrees(-0.35)) is None                   # it is out of the five-bar's reach
 
 
-def test_the_stops_alone_allow_no_crossed_or_unreachable_pose():
+def test_the_stops_alone_allow_no_crossed_or_unreachable_pose_but_their_squeeze_can_reach_a_dead_point():
     s = D['stop_box']
     assert s['unreachable'] == 0 and s['crossed'] == 0
     assert s['dead_point_min_deg'] < D['command']['dead_point_min_deg']       # but they do reach near a dead point
+    assert D['dead_limp_deg'] < s['dead_point_min_deg']                       # so the dead-point limp never trips inside them
+    # the knee-in/knee-in corner: one motor 4 deg past its stop (the sleeve's squeeze at 61 N m is 4.1) is a dead point
+    fo, fi, ro, ri = ll.fb.stop_angles()
+    squeeze = math.degrees(ROBOT['everyday_nm'] / ll.STOP_K_NM_PER_RAD)
+    assert squeeze > 4.0
+    assert ll.dead_point_margin(fi - math.radians(4.0), ri) < 0.5
+    assert ll.dead_point_margin(fi - math.radians(2.5), ri) < D['dead_limp_deg']    # the limp trips before it
+
+
+def test_the_window_overlap_keeps_a_lagging_lean_inside_the_stops():
+    tab = D['command']['window']
+    lo_f, hi_f = math.radians(-97.0), math.radians(3.0)
+    lo_r, hi_r = -math.pi - hi_f, -math.pi - lo_f
+    for lean_cmd in (-0.35, -0.2, 0.0, 0.1):
+        for err in (-0.1, -0.05, 0.05, 0.1):
+            for L in (0.05, 0.25, 0.5):
+                Lc = ll.clamp_L(L, lean_cmd, lean_cmd + err, tab)
+                q = ll.fb.stance(Lc * 1000.0, math.degrees(lean_cmd + err))
+                assert q is not None and lo_f <= q[0] <= hi_f and lo_r <= q[1] <= hi_r

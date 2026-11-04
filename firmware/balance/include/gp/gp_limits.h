@@ -26,14 +26,14 @@
 #define GP_LIM_RMS_TAU_S 30.2f          /* the mean square's time constant: the winding's R_wc x C_w */
 #define GP_LIM_JUMP_HOT 0.8f              /* no jump while a motor's rms is over this share of GP_LIM_RMS_NM */
 
-/* the soft stops (sim/leg_limits.py soft_stop): no torque into a stop inside the margin; inside the zone, approaching
- * faster than the stop takes at the every-day torque brakes with kd x the excess */
+/* the soft stops (sim/leg_limits.py soft_stop): no torque into a stop inside the margin; anywhere, approaching a stop
+ * faster than it could be met at the every-day torque brakes with kd x the excess */
 #define GP_LIM_SOFT_MARGIN_RAD 0.034906585f
-#define GP_LIM_SOFT_ZONE_RAD 0.174532925f
 #define GP_LIM_SOFT_KD 20.0f
 #define GP_LIM_STOP_K 856.0f           /* N m/rad: the TPU sleeve at the motor (sim/leg_rig.py) */
-#define GP_LIM_J_MOTOR 0.0278f          /* kg m^2: the rotor reflected + the upper link */
+#define GP_LIM_J_MOTOR 0.16f          /* kg m^2: the leg at a motor, worst pose (limits.json inertia) */
 #define GP_LIM_ANGLE_WINDOW_RAD 0.176801853f   /* a motor this far past a hard stop: limp */
+#define GP_LIM_DEAD_LIMP_RAD 0.0523598776f      /* a measured leg this close to a dead point: limp */
 
 /* the commanded leg length by lean (rad, + = wheel forward): inside the stops by the soft margin and at least
  * 25 deg from a dead point */

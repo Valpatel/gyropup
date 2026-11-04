@@ -57,10 +57,11 @@ def test_the_soft_stop_takes_the_torque_out_of_each_motors_own_stops():
     rb = _rb(mid_f, ri - m)
     assert c2.soft_stop(rb, None, 'motor_r_r', 30.0, 0.0) == 0.0
     assert c2.soft_stop(rb, None, 'motor_f_r', 30.0, 0.0) == 30.0
-    # racing into a stop from inside the zone: braked away from it, never past the every-day torque
+    # racing into a stop 5 deg away: braked away from it, never past the every-day torque (the limit there is 8.1 rad/s
+    # for the whole leg's 0.16 kg m^2 at 60 N m)
     rb = _rb(fi + math.radians(5.0), mid_r)
-    assert c2.soft_stop(rb, None, 'motor_f_l', -20.0, -15.0) == -20.0           # slow enough for the stop: untouched
-    assert c2.soft_stop(rb, None, 'motor_f_l', -20.0, -25.0) == 60.0            # too fast: full brake, away from it
+    assert c2.soft_stop(rb, None, 'motor_f_l', -20.0, -6.0) == -20.0            # slow enough for the stop: untouched
+    assert c2.soft_stop(rb, None, 'motor_f_l', -20.0, -15.0) == 60.0            # too fast: full brake, away from it
 
 
 def test_the_soft_stop_uses_the_robot_every_day_torque_when_the_model_has_no_cap():

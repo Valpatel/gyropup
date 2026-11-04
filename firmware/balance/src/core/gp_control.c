@@ -190,8 +190,9 @@ void gp_ctl_step(gp_ctl *c, const gp_sense *s, const gp_cmd *cmd, const gp_leg_c
             o->L_cmd[side] = p->L;
         } else {
             const float L_want = lc->mode == GP_LEG_LENGTH ? lc->L : gp_ctl_height_m(h0 + sgn * c->dh);
-            /* never a length the five-bar cannot reach at this lean, or one at a stop or near a dead point */
-            const float L_cmd = gp_guard_clamp_L(L_want, lean_cmd);
+            /* never a length the five-bar cannot reach at this lean, or one at a stop or near a dead point: at the lean
+             * asked for and at the one the leg is at, which lags it */
+            const float L_cmd = gp_guard_clamp_L(L_want, lean_cmd, p->th);
             if (L_cmd != L_want) {
                 o->windowed |= (uint8_t)(1u << side);
             }

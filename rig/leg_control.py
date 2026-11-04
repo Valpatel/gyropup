@@ -174,6 +174,8 @@ class Limits:
     sit_to: float = 0.150         # m: the sit-down's end
     soft_stops: bool = True       # sim/leg_limits.py soft_stop on each motor (docs/leg-protection.md): no torque into a
                                   # stop inside 2 deg of it, braking when it approaches one faster than the stop takes
+    dead_limp_deg: float = ll.DEAD_LIMP_DEG   # a measured pose this close to a five-bar dead point: limp (the stops
+                                  # alone leave 6.1 deg; past the knee-in stops, squeezed, the margin can reach 0)
 
 
 @dataclass
@@ -270,6 +272,9 @@ class LegController:
         L = polar(tk.f.phi, tk.r.phi, tk.f.w, tk.r.w)[0]
         if not lim.L_min <= L <= lim.L_max:
             return f'limp: leg {L * 1000:.0f} mm outside {lim.L_min * 1000:.0f}-{lim.L_max * 1000:.0f}'
+        dp = ll.dead_point_margin(tk.f.phi, tk.r.phi)
+        if dp is None or dp < lim.dead_limp_deg:
+            return f'limp: the five-bar {0.0 if dp is None else dp:.1f} deg from a dead point'
         return None
 
     def update(self, tk) -> Command:

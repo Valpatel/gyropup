@@ -290,17 +290,20 @@ static void test_guard(void)
         {61.0f, 10.0f, 0.034907f, 0.0f, 0.0f},        /* 1 deg from the knee-out stop: nothing more into it */
         {61.0f, -10.0f, 0.034907f, 0.0f, -10.0f},     /* away from it: allowed */
         {61.0f, 10.0f, -0.034907f, 0.0f, 10.0f},      /* 5 deg away: outside the margin */
-        {61.0f, 10.0f, -0.034907f, 14.0f, 10.0f},     /* 14 rad/s at 5 deg: the robot's stop takes it */
-        {12.0f, 10.0f, -0.034907f, 14.0f, -12.0f},    /* the PLA leg's does not: brake at its cap */
+        {61.0f, 10.0f, -0.034907f, 14.0f, -61.0f},    /* 14 rad/s at 5 deg: the whole leg (0.16 kg m^2) would hit at 3x */
+        {12.0f, 10.0f, -0.034907f, 14.0f, -12.0f},    /* the PLA leg's: brake at its cap */
         {12.0f, 5.0f, -1.640609f, -15.0f, 12.0f},     /* towards the knee-in stop, 3 deg off */
-        {12.0f, 5.0f, -0.698132f, 15.0f, 5.0f},       /* mid-range: untouched */
-        {61.0f, -30.0f, 0.043633f, 13.0f, -30.0f},    /* already braking harder than the guard would */
+        {12.0f, 5.0f, -0.698132f, 15.0f, -12.0f},     /* the PLA leg mid-range at 15 rad/s cannot stop in time: brake */
+        {12.0f, 5.0f, -0.698132f, 5.0f, 5.0f},        /* ... at 5 rad/s it can: untouched */
+        {61.0f, 10.0f, -0.698132f, 15.7f, 10.0f},     /* the robot's leg mid-range even at no-load speed: untouched */
+        {61.0f, -30.0f, 0.043633f, 13.0f, -61.0f},    /* past the margin at 13 rad/s: a full brake */
     };
     for (unsigned k = 0; k < sizeof g / sizeof g[0]; k++) {
         NEAR(gp_guard_soft_stop(g[k].tau, g[k].phi, g[k].w, lo, hi, g[k].T), g[k].want, 1e-4);
     }
-    NEAR(gp_guard_approach(0.0f, 61.0f), 12.504622, 1e-4);
-    NEAR(gp_guard_approach(0.05f, 61.0f), 19.385304, 1e-4);
+    NEAR(gp_guard_approach(0.0f, 61.0f), 5.212343, 1e-4);   /* contact: 61 N m on the sleeve, 2.17 J */
+    NEAR(gp_guard_approach(0.05f, 61.0f), 8.080440, 1e-4);
+    NEAR(gp_guard_approach(0.0f, 12.0f), 1.025379, 1e-4);
     /* the rear motor's stops run -183 .. -83 deg: at its knee-in stop (-83) no more torque towards it */
     NEAR(gp_guard_soft_stop(8.0f, GP_FB_STOP_REAR_IN - d1, 0.0f, GP_FB_STOP_REAR_OUT, GP_FB_STOP_REAR_IN, 61.0f), 0.0, 0);
 
@@ -314,11 +317,24 @@ static void test_guard(void)
         NEAR(b, wv[k].hi, 1e-4);
     }
     /* every height the controller has, upright, is inside the window; full height leaning back 0.35 rad is not */
-    NEAR(gp_guard_clamp_L(GP_H_MAX_M, 0.0f), GP_H_MAX_M, 0);
-    NEAR(gp_guard_clamp_L(GP_H_MIN_M, 0.0f), GP_H_MIN_M, 0);
-    NEAR(gp_guard_clamp_L(GP_SIT_L_ROBOT_M, 0.0f), GP_SIT_L_ROBOT_M, 0);
-    NEAR(gp_guard_clamp_L(GP_JUMP_CROUCH_L_M, 0.0f), GP_JUMP_CROUCH_L_M, 0);
-    NEAR(gp_guard_clamp_L(GP_H_MAX_M, -0.35f), 0.343, 1e-4);
+    NEAR(gp_guard_clamp_L(GP_H_MAX_M, 0.0f, 0.0f), GP_H_MAX_M, 0);
+    NEAR(gp_guard_clamp_L(GP_H_MIN_M, 0.0f, 0.0f), GP_H_MIN_M, 0);
+    NEAR(gp_guard_clamp_L(GP_SIT_L_ROBOT_M, 0.0f, 0.0f), GP_SIT_L_ROBOT_M, 0);
+    NEAR(gp_guard_clamp_L(GP_JUMP_CROUCH_L_M, 0.0f, 0.0f), GP_JUMP_CROUCH_L_M, 0);
+    NEAR(gp_guard_clamp_L(GP_H_MAX_M, -0.35f, -0.35f), 0.343, 1e-4);
+    /* (Python) a lean lagging its command: the overlap of both windows, either way round */
+    NEAR(gp_guard_clamp_L(0.375f, -0.2f, -0.25f), 0.359, 1e-4);
+    NEAR(gp_guard_clamp_L(0.375f, -0.25f, -0.2f), 0.359, 1e-4);
+    NEAR(gp_guard_clamp_L(0.11f, 0.0f, 0.3f), 0.191, 1e-4);
+
+    /* (Python) dead_point_margin, rad: the knee-in/knee-in corner at the stops, 2.5 and 4 deg past the front's */
+    NEAR(gp_guard_dead_margin(GP_FB_STOP_FRONT_IN, GP_FB_STOP_REAR_IN), 0.106698, 2e-4);
+    NEAR(gp_guard_dead_margin(GP_FB_STOP_FRONT_IN - 2.5f * d1, GP_FB_STOP_REAR_IN), 0.041014, 2e-4);
+    CHECK(gp_guard_dead_margin(GP_FB_STOP_FRONT_IN - 2.5f * d1, GP_FB_STOP_REAR_IN) < GP_LIM_DEAD_LIMP_RAD);
+    CHECK(gp_guard_dead_margin(GP_FB_STOP_FRONT_IN, GP_FB_STOP_REAR_IN) > GP_LIM_DEAD_LIMP_RAD);
+    NEAR(gp_guard_dead_margin(GP_FB_STOP_FRONT_IN - 4.0f * d1, GP_FB_STOP_REAR_IN), 0.0, 1e-3);
+    NEAR(gp_guard_dead_margin(-0.8879823f, -2.2536103f), 1.428651, 2e-4);   /* the 300 mm stance */
+    NEAR(gp_guard_dead_margin(GP_FB_STOP_FRONT_OUT, GP_FB_STOP_REAR_OUT), 0.400550, 2e-4);
     /* every window pose is one the five-bar reaches inside its stops */
     for (int k = 0; k <= 40; k++) {
         const float lean = -0.5f + 0.025f * (float)k;
@@ -733,6 +749,15 @@ static void test_supervisor(void)
     tick(3);
     CHECK(A.reason != GP_R_JOINT_RANGE);
     TP.angle[0] = phr[0];
+    /* squeezed into both knee-in stops: inside the angle window, but 2.5 deg from the five-bar's dead point: limp */
+    boot_and_stand(36.0f);
+    TP.angle[0] = GP_FB_STOP_FRONT_IN - 2.5f * 0.0174532925f;
+    TP.angle[1] = GP_FB_STOP_REAR_IN;
+    CHECK(gp_guard_angle_ok(TP.angle[0], GP_FB_STOP_FRONT_IN, GP_FB_STOP_FRONT_OUT));
+    tick(3);
+    CHECK(A.mode == GP_MODE_LIMP && A.reason == GP_R_JOINT_RANGE);
+    TP.angle[0] = phr[0];
+    TP.angle[1] = phr[1];
 
     /* a motor that stops answering: limp after 3 ticks, torque off */
     boot_and_stand(36.0f);

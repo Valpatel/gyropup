@@ -481,11 +481,19 @@ static void check_limp(gp_app *a)
         if (L < GP_L_MIN_M || L > GP_L_MAX_M) { limp(a, GP_R_LEG_WINDOW); return; }
     }
     /* each motor within its stops, give or take the sleeve's squeeze at the fault torque: past that a stop post is
-     * broken or a zero has slipped, and the five-bar may be crossed or folded through a dead point */
+     * broken or a zero has slipped */
     for (int i = 0; i < 4; i++) {
         const bool front = i % 2 == 0;
         if (!gp_guard_angle_ok(a->mot[i].phi, front ? GP_FB_STOP_FRONT_IN : GP_FB_STOP_REAR_OUT,
                                front ? GP_FB_STOP_FRONT_OUT : GP_FB_STOP_REAR_IN)) {
+            limp(a, GP_R_JOINT_RANGE);
+            return;
+        }
+    }
+    /* and each leg away from a dead point: the stops alone leave 6.1 deg, but at the knee-in/knee-in corner the
+     * sleeves' squeeze (4.1 deg at 61 N m) takes that to 0 four degrees past a stop, well inside the window above */
+    for (int s = 0; s < 2; s++) {
+        if (gp_guard_dead_margin(a->mot[2 * s].phi, a->mot[2 * s + 1].phi) < GP_LIM_DEAD_LIMP_RAD) {
             limp(a, GP_R_JOINT_RANGE);
             return;
         }
