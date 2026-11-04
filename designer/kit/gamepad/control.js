@@ -27,6 +27,7 @@ export function createGamepadControl({ actions, storageKey = 'gamepad-control-v1
   const holds = new Set(), down = new Set(), up = new Set();
   const listeners = new Map();
   let suspended = 0, capture = null, frame = 0, running = false;
+  let afterCapture = null;   // the input that finished a capture: actions stay suspended until it is let go
 
   const emit = (type, payload) => { for (const fn of [...(listeners.get(type) ?? [])]) { try { fn(payload); } catch (err) { console.error(err); } } };
   const on = (type, fn) => {
@@ -51,6 +52,11 @@ export function createGamepadControl({ actions, storageKey = 'gamepad-control-v1
   }
 
   function stepCapture(list) {
+    if (afterCapture) {
+      const { index, input } = afterCapture, pad = list.find((p) => p.index === index);
+      const still = pad && (BUTTONS.includes(input) ? pad.buttons[input].pressed : Math.abs(pad.axes[input]) >= 0.25);
+      if (!still) { afterCapture = null; suspended -= 1; }
+    }
     if (!capture) return;
     const c = capture;
     for (const pad of list) {
@@ -74,7 +80,10 @@ export function createGamepadControl({ actions, storageKey = 'gamepad-control-v1
   function finishCapture(result) {
     const c = capture;
     if (!c) return;
-    capture = null; suspended -= 1;
+    capture = null;
+    // Keep the actions suspended until the captured input is released, so the press that rebinds never also
+    // drives the page (even when the caller resumes in the same frame).
+    if (result) afterCapture = { index: result.index, input: result.button ?? result.axis }; else suspended -= 1;
     c.resolve(result);
   }
 
@@ -110,6 +119,7 @@ export function createGamepadControl({ actions, storageKey = 'gamepad-control-v1
      */
     capture({ kinds = ['button', 'axis'], timeoutMs = 10000, axisThreshold = 0.6 } = {}) {
       if (capture) finishCapture(null);
+      if (afterCapture) { afterCapture = null; suspended -= 1; }
       const blocked = new Set();
       for (const pad of pads.pads()) {
         for (const b of BUTTONS) if (pad.buttons[b].pressed) blocked.add(`${pad.index}:${b}`);
@@ -129,6 +139,6 @@ export function createGamepadControl({ actions, storageKey = 'gamepad-control-v1
     canRumble: () => pads.pads().some((p) => pads.canRumble(p.index)),
     /** Rumble every pad that supports it; returns how many accepted the effect. */
     rumble: (effect) => pads.pads().filter((p) => pads.rumble(p.index, effect)).length,
-    destroy() { this.stop(); if (capture) finishCapture(null); pads.destroy(); listeners.clear(); },
+    destroy() { this.stop(); if (capture) finishCapture(null); afterCapture = null; pads.destroy(); listeners.clear(); },
   };
 }

@@ -118,6 +118,18 @@ try {
   await pad('button', 0, 'RB', 0);
   await pad('button', 0, 'Y', 0);
   await until(() => !window.__sim.gun.armHeld && window.__sim.gun.queue.length === 0);
+  // losing focus disarms, and ARM stays off until it is let go and pressed again (hold-to-run)
+  await pad('button', 0, 'Y', 1);
+  await until(() => window.__sim.gun.armHeld);
+  await page.evaluate(() => window.dispatchEvent(new Event('blur')));
+  await until(() => !window.__sim.gun.armHeld);
+  await page.evaluate(() => new Promise((r) => { let n = 0; const f = () => (++n > 8 ? r() : requestAnimationFrame(f)); requestAnimationFrame(f); }));
+  assert.equal(await sim(() => window.__sim.gun.armHeld), false, 'Still held after blur: ARM does not come back by itself');
+  await pad('button', 0, 'Y', 0); await seen('Y', false);
+  await pad('button', 0, 'Y', 1);
+  await until(() => window.__sim.gun.armHeld);
+  await pad('button', 0, 'Y', 0);
+  await until(() => !window.__sim.gun.armHeld);
   // a pad unplugged while ARM is held disarms
   await pad('button', 0, 'Y', 1);
   await until(() => window.__sim.gun.armHeld);
@@ -130,7 +142,7 @@ try {
   await pad('button', 0, 'A', 1);
   await until(() => !!window.__sim.state.jump);
   await pad('button', 0, 'A', 0);
-  await until(() => window.__sim.state.robot.group.position.y > 0.08);
+  await until(() => window.__sim.state.robot.group.position.y > 0.12);   // wheels clear: the hip's rise plus the tuck
   await until(() => !window.__sim.state.jump && window.__sim.state.robot.group.position.y === 0);
 
   // ---- Menu: the settings dialog, live diagram, actions suspended, rebind persisted, reset

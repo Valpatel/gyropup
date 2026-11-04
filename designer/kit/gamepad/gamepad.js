@@ -153,6 +153,13 @@ export function createGamepads({ source = defaultSource, tuning = DEFAULT_TUNING
     return Array.from(pads).filter((p) => p && p.connected !== false);
   }
 
+  // A pad that leaves releases whatever it was holding first (a held ARM must not stay held).
+  function drop(index, entry) {
+    known.delete(index);
+    for (const name of BUTTONS) if (entry.snapshot.buttons[name].pressed) emit('button', { index, button: name, pressed: false, value: 0, pad: entry.snapshot });
+    emit('disconnect', { index, id: entry.snapshot.id });
+  }
+
   function poll() {
     if (destroyed) return [];
     const seen = new Set();
@@ -163,7 +170,7 @@ export function createGamepads({ source = defaultSource, tuning = DEFAULT_TUNING
       const snapshot = readPad({ index, axes: raw.axes, buttons: raw.buttons, id: raw.id, mapping: raw.mapping,
         timestamp: raw.timestamp, connected: raw.connected }, current);
       const before = known.get(index);
-      if (before && before.snapshot.id !== snapshot.id) { known.delete(index); emit('disconnect', { index, id: before.snapshot.id }); }
+      if (before && before.snapshot.id !== snapshot.id) drop(index, before);
       const previous = known.get(index)?.snapshot;
       known.set(index, { snapshot, raw });
       if (!previous) emit('connect', snapshot);
@@ -172,13 +179,7 @@ export function createGamepads({ source = defaultSource, tuning = DEFAULT_TUNING
         if (was !== now) emit('button', { index, button: name, pressed: now, value: snapshot.buttons[name].value, pad: snapshot });
       }
     }
-    for (const [index, entry] of [...known]) {
-      if (seen.has(index)) continue;
-      known.delete(index);
-      // A pad that vanished releases whatever it was holding (a held ARM must not stay held).
-      for (const name of BUTTONS) if (entry.snapshot.buttons[name].pressed) emit('button', { index, button: name, pressed: false, value: 0, pad: entry.snapshot });
-      emit('disconnect', { index, id: entry.snapshot.id });
-    }
+    for (const [index, entry] of [...known]) if (!seen.has(index)) drop(index, entry);
     const pads = [...known.values()].map((e) => e.snapshot).sort((a, b) => a.index - b.index);
     emit('frame', pads);
     return pads;

@@ -57,7 +57,7 @@ Names: buttons `A B X Y LB RB LT RT View Menu LS RS Up Down Left Right Guide`; a
 an axis or a pair. Each action reads whichever connected pad pushes it furthest, so a second pad works without setup.
 
 Rebinding (`control.capture({ kinds })`) ignores anything already held when it starts, suspends the actions meanwhile
-(so the press that rebinds never also drives the page) and resolves with `{ type: 'button', button }`,
+and until the captured input is released (so the press that rebinds never also drives the page) and resolves with `{ type: 'button', button }`,
 `{ type: 'axis', axis, sign }` or `null` (cancel or timeout). The dialog uses it: for an axis action, push the stick
 the way that means "more" (the sign sets `invert`), or press a button for "more" and then one for "less".
 
@@ -72,8 +72,11 @@ exponent, keeping the direction. Tuning persists with the bindings; `control.res
 
 - Polling only reads state. It never calls `preventDefault`, never takes focus and adds no keyboard or mouse
   listeners, so a page's keyboard and mouse controls keep working beside it.
-- A pad that disconnects releases everything it held. A page that implements a hold-to-run control (like an ARM
-  button) should also release it on `visibilitychange` and `blur`, because animation frames stop in a hidden tab.
+- A pad that disconnects (or whose slot another pad takes) releases everything it held first. A page that
+  implements a hold-to-run control (like an ARM button) should also release it when the tab is hidden (animation
+  frames, and so polling, stop) and on window `blur` (another window has the user's attention, and some browsers stop
+  updating pads for unfocused pages), and keep it released until the pad reports that button let go, so it must be
+  pressed again; the playground does this.
 - Pads with `mapping !== 'standard'` are read by index on a best-effort basis and flagged `standard: false`; the
   dialog says so.
 - Browsers expose a pad only after a button press on the page, and only in a secure context (https or localhost).
@@ -99,7 +102,7 @@ standard-mapping support, dead zones, remapping and hot-plug.
 |---|---|---|---|---|---|---|---|---|
 | [gamecontroller.js](https://github.com/alvaromontoro/gamecontroller.js) 1.5.0 | MIT | 2023-03 | 213 kB package, none | global script (`window.gameControl`) | yes | one per-axis threshold | no / no | events; vibration |
 | [joypad.js](https://github.com/ArunMichaelDsouza/joypad.js) 2.3.5 | MIT | 2023-03 | 2.1 MB package, none | UMD | yes | one per-axis movement threshold | no / no | events; vibration |
-| [joymap](https://github.com/diegodoumecq/joymap) 2.3.0 | MIT | 2026-06 | 338 kB package, lodash + fast-memoize | CommonJS build (needs a bundler) | yes | one press threshold for all inputs | yes / no | yes; rumble |
+| [joymap](https://github.com/diegodoumecq/joymap) 2.3.0 | MIT | 2026-06 | 338 kB package, lodash + fast-memoize | ES module build with bare `lodash/fp` imports (needs a bundler or an import map plus vendored lodash) | yes | one press threshold for all inputs | yes / no | yes; rumble |
 | [gameinputjs](https://github.com/lunarcloud/gameinputjs) 13.3.2 | MIT | 2026-11 | 1.2 MB package (≈150 kB source + controller database and images), none | ES modules | own schema plus a model database | radial, per-stick override | no / no | yes; rumble |
 | [gamepad.js](https://github.com/neogeek/gamepad.js) | MIT | 2020-08 | small, none | ES/UMD | yes | threshold | event binding / no | yes |
 | [Controller.js](https://github.com/samiare/Controller.js), [HTML5 Gamepad Controller Library](https://github.com/kallaspriit/HTML5-JavaScript-Gamepad-Controller-Library) | no licence | 2022, 2014 | — | — | — | — | — | not usable |
@@ -118,7 +121,8 @@ pads to the W3C standard mapping, the polling and naming layer is about two hund
 for beyond that (radial dead zones with a response curve and per-axis inversion, an action-binding layer persisted
 in localStorage with reset, a rebind flow and a settings UI) is missing from every candidate, so it would be ours in
 any case. Of the MIT input layers, gamecontroller.js and joypad.js have been unchanged since 2023, are global or UMD
-scripts and only offer an axial threshold; joymap needs a bundler and lodash; gameinputjs is active and the closest
+scripts and only offer an axial threshold; joymap's ES build imports lodash by bare name, so it needs a bundler or an
+import map with lodash vendored beside it; gameinputjs is active and the closest
 match, but it would add about 150 kB, a second input schema and a controller database to cover what the standard
 mapping already provides, with a single maintainer and thirteen major versions of API churn. A dependency-free core
 is also the easiest to lift into its own repository. For the diagram, the one maintained MIT viewer has artwork with

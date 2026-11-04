@@ -87,7 +87,7 @@ export function createBindings({ actions, storageKey = 'gamepad-bindings-v1', st
     map = defaults(); tuning = null;
     if (stored && typeof stored === 'object' && stored.version === 1) {
       for (const [name, binding] of Object.entries(stored.bindings ?? {})) {
-        if (actions[name] && validBinding(binding, actions[name].kind)) map[name] = binding === null ? null : structuredClone(binding);
+        if (Object.hasOwn(actions, name) && validBinding(binding, actions[name].kind)) map[name] = binding === null ? null : structuredClone(binding);
       }
       if (stored.tuning && typeof stored.tuning === 'object') tuning = stored.tuning;
     }
@@ -104,7 +104,7 @@ export function createBindings({ actions, storageKey = 'gamepad-bindings-v1', st
     actions,
     get: (name) => (name ? structuredClone(map[name] ?? null) : get()),
     set(name, binding) {
-      if (!actions[name]) throw new Error(`Unknown action: ${name}`);
+      if (!Object.hasOwn(actions, name)) throw new Error(`Unknown action: ${name}`);
       if (!validBinding(binding, actions[name].kind)) throw new Error(`Invalid binding for ${name}`);
       map[name] = binding === null ? null : structuredClone(binding);
       save();

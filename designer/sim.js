@@ -788,8 +788,9 @@ function shoot() {
 const D2R = Math.PI / 180;
 const within = (control, v) => Math.min(+control.input.max, Math.max(+control.input.min, Number.isFinite(+v) ? +v : 0));
 // The live hop is a kinematic illustration. Its apex is the single-leg rig's simulated jump at the motor cap
-// (exports/leg/rig-results.json, scenario "jump": 151.9 mm at 60 N m; tools/test-gamepad.mjs checks the match).
-const JUMP = { apexM: 0.152, crouchS: 0.3, crouchH: 0.12, pushS: 0.12, tuckH: 0.55, landS: 0.2, landH: 0.25, recoverS: 0.45 };
+// (exports/leg/rig-results.json, scenario "jump": the hip rises 151.9 mm above standing at 60 N m; the test checks
+// the match). The legs tuck in the air (the rig tucks to about 266 mm), so the wheels clear the ground by more.
+const JUMP = { apexM: 0.152, crouchS: 0.3, crouchH: 0.12, pushS: 0.12, tuckH: 0.52, landS: 0.2, landH: 0.25, recoverS: 0.45 };
 const command = {
   height: (v) => { state.height = within(sh, v); },
   pitchDeg: (v) => { state.pitch = within(pitchSlider, v) * D2R; },
@@ -819,19 +820,28 @@ const command = {
   },
   reload: () => reloadRobot(),
 };
-// The hop's height and lift at time t (s) from the start, or null when it is over.
+// The hop's leg height (0..1) and lift (m, wheels above the ground) at J.t seconds from the start, or null when it
+// is over. In the air the hip follows a ballistic arc whose top is JUMP.apexM above the standing hip; the lift is
+// what is left after the (tucking) legs, so it is the wheels' clearance, not the hip's rise.
 function jumpPose(J) {
-  const g = 9.81, v0 = Math.sqrt(2 * g * JUMP.apexM), flightS = 2 * v0 / g;
-  const ease = (x) => { x = Math.min(1, Math.max(0, x)); return x * x * (3 - 2 * x); };
+  const info = state.robot?.info ?? {}, hMin = (info.hMin ?? 150) / 1000, hMax = (info.hMax ?? 375) / 1000;
+  const leg = (h) => hMin + (hMax - hMin) * h;                      // hip above the axle (m) at a height setting
+  const g = 9.81, ease = (x) => { x = Math.min(1, Math.max(0, x)); return x * x * (3 - 2 * x); };
   const lerp = (a, b, x) => a + (b - a) * ease(x);
   let t = J.t;
   if (t < JUMP.crouchS) return { height: lerp(J.from, JUMP.crouchH, t / JUMP.crouchS), lift: 0 };
   t -= JUMP.crouchS;
   if (t < JUMP.pushS) return { height: lerp(JUMP.crouchH, 1, t / JUMP.pushS), lift: 0 };
   t -= JUMP.pushS;
-  if (t < flightS) return { height: lerp(1, JUMP.tuckH, t / flightS), lift: Math.max(0, v0 * t - g * t * t / 2) };
-  t -= flightS;
-  if (t < JUMP.landS) return { height: lerp(JUMP.tuckH, JUMP.landH, t / JUMP.landS), lift: 0 };
+  if (J.landedAt === undefined) {
+    const rise = Math.max(0.001, leg(J.from) + JUMP.apexM - leg(1)), v0 = Math.sqrt(2 * g * rise), apexT = v0 / g;
+    const height = lerp(1, JUMP.tuckH, t / apexT);
+    const lift = leg(1) + v0 * t - g * t * t / 2 - leg(height);
+    if (t <= apexT || lift > 0) return { height, lift: Math.max(0, lift) };
+    J.landedAt = t; J.landFrom = height;                             // touchdown: the wheels are back on the ground
+  }
+  t -= J.landedAt;
+  if (t < JUMP.landS) return { height: lerp(J.landFrom, JUMP.landH, t / JUMP.landS), lift: 0 };
   t -= JUMP.landS;
   if (t < JUMP.recoverS) return { height: lerp(JUMP.landH, J.from, t / JUMP.recoverS), lift: 0 };
   return null;

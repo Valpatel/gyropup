@@ -37,6 +37,7 @@ export function mountGamepadConfig(control, { title = 'Gamepad', parent = docume
       <p class="gpad-status" role="status" aria-live="polite"></p>
       <button type="button" class="gpad-close" aria-label="Close gamepad settings">✕</button></div>
     ${intro ? `<p class="gpad-intro">${esc(intro)}</p>` : ''}
+    <p class="gpad-announce" aria-live="assertive"></p>
     <div class="gpad-grid"><div class="gpad-view"></div>
       <div class="gpad-side">
         <section class="gpad-block"><h3>Controls</h3><table class="gpad-actions"><tbody></tbody></table></section>
@@ -51,6 +52,8 @@ export function mountGamepadConfig(control, { title = 'Gamepad', parent = docume
   const body = dialog.querySelector('.gpad-actions tbody');
   const tuningBox = dialog.querySelector('.gpad-tuning');
   const rumbleBtn = dialog.querySelector('[data-rumble]');
+  const announcer = dialog.querySelector('.gpad-announce');
+  const announce = (text) => { announcer.textContent = text; };   // rebind prompts and results, for screen readers
   let release = null, pending = null, holdover = null;
 
   // ---- the action table, with a rebind button per action
@@ -59,7 +62,7 @@ export function mountGamepadConfig(control, { title = 'Gamepad', parent = docume
     const tr = document.createElement('tr');
     tr.dataset.action = name;
     tr.innerHTML = `<th scope="row">${esc(action.label ?? name)}${action.hold ? ' <small>(hold)</small>' : ''}</th>
-      <td class="gpad-binding"></td><td><button type="button" class="gpad-btn gpad-rebind">Change</button></td>`;
+      <td class="gpad-binding"></td><td><button type="button" class="gpad-btn gpad-rebind" aria-label="Change the binding for ${esc(action.label ?? name)}">Change</button></td>`;
     tr.title = action.help ?? '';
     tr.querySelector('.gpad-rebind').onclick = () => (pending?.name === name ? cancelRebind() : rebind(name));
     body.append(tr);
@@ -81,6 +84,7 @@ export function mountGamepadConfig(control, { title = 'Gamepad', parent = docume
     const action = control.actions[name], tr = rows[name], cell = tr.querySelector('.gpad-binding');
     tr.classList.add('capturing'); tr.querySelector('.gpad-rebind').textContent = 'Cancel';
     cell.textContent = action.kind === 'button' ? 'Press a button…' : 'Push a stick the way that means “more”, or press a button…';
+    announce(`${action.label ?? name}: ${cell.textContent}`);
     diagram.highlight(bindingInputs(control.bindings.get(name)));
     const me = pending = { name, capture: control.capture({ kinds: action.kind === 'button' ? ['button'] : ['button', 'axis'] }) };
     const first = await me.capture.promise;
@@ -90,6 +94,7 @@ export function mountGamepadConfig(control, { title = 'Gamepad', parent = docume
     else if (first?.type === 'axis') binding = { axis: first.axis, ...(first.sign < 0 ? { invert: true } : {}) };
     else if (first?.type === 'button') {
       cell.textContent = `${LABELS[first.button]} = more. Now press the button for “less” (or wait to leave it out)…`;
+      announce(cell.textContent);
       me.capture = control.capture({ kinds: ['button'], timeoutMs: 4000 });
       const second = await me.capture.promise;
       if (pending !== me) return;
@@ -99,6 +104,7 @@ export function mountGamepadConfig(control, { title = 'Gamepad', parent = docume
     if (binding) control.bindings.set(name, binding);
     diagram.highlight([]);
     paintBindings();
+    announce(`${action.label ?? name}: ${binding ? describeBinding(binding) : 'unchanged'}`);
   }
   function cancelRebind() {
     if (!pending) return;
@@ -143,11 +149,13 @@ export function mountGamepadConfig(control, { title = 'Gamepad', parent = docume
   dialog.addEventListener('close', () => finishClose());
 
   // ---- live state
+  let lastStatus = '';
   function paintStatus(list) {
     const pads = list ?? control.pads();
-    status.textContent = pads.length
+    const text = pads.length
       ? pads.map((p) => `${p.index + 1}: ${p.id.replace(/\s*\(.*$/, '') || 'gamepad'}${p.standard ? '' : ' (non-standard layout: buttons may differ)'}`).join(' · ')
       : 'No gamepad yet: connect one and press any button';
+    if (text !== lastStatus) { status.textContent = lastStatus = text; }   // a live region: write only on change
     const rumble = control.canRumble();
     rumbleBtn.disabled = !rumble;
     rumbleBtn.title = rumble ? 'Rumble every connected pad that supports it' : 'This browser or pad does not support rumble';

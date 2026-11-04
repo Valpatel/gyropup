@@ -82,10 +82,11 @@ test('hot-plug: connect, several pads, disconnect releases held buttons', () => 
   pads.poll();
   assert.deepEqual(log, ['+0', '+1', '0:Y:down', '0:Y:up', '-0']);
   assert.deepEqual(pads.pads().map((p) => p.index), [1]);
-  // the same slot reused by a different controller is a disconnect and a connect
-  list = [fakePad(1, { id: 'Other pad' })];
+  // the same slot reused by a different controller releases what the old one held, then disconnects and connects
+  b.press('A'); pads.poll();
+  list = [null, fakePad(1, { id: 'Other pad' })];
   log.length = 0; pads.poll();
-  assert.deepEqual(log, ['-1', '+1']);
+  assert.deepEqual(log, ['1:A:up', '-1', '+1']);
   pads.destroy();
 });
 
@@ -145,6 +146,10 @@ test('bindings persist, survive corrupt storage and reset to defaults', () => {
   const mixed = createBindings({ actions: ACTIONS, storageKey: 'k', storage });
   assert.deepEqual(mixed.get('jump'), { button: 'A' });           // wrong kind: default kept
   assert.deepEqual(mixed.get('drive'), { axis: 'RightY' });
+  storage.setItem('k', JSON.stringify({ version: 1, bindings: { constructor: { button: 'A' }, toString: null } }));
+  const proto = createBindings({ actions: ACTIONS, storageKey: 'k', storage });
+  assert.equal(Object.hasOwn(proto.get(), 'constructor'), false, 'inherited names are not actions');
+  assert.throws(() => proto.set('constructor', { button: 'A' }));
   const blocked = { getItem() { throw new Error('denied'); }, setItem() { throw new Error('full'); }, removeItem() { throw new Error('denied'); } };
   const safe = createBindings({ actions: ACTIONS, storageKey: 'k', storage: blocked });
   safe.set('jump', { button: 'X' }); safe.reset();
@@ -205,6 +210,21 @@ test('capture ignores inputs already held and reports the next one', async () =>
   const s = control.capture({ kinds: ['axis'] });
   control.poll();
   assert.deepEqual(await s.promise, { type: 'axis', axis: 'RightX', sign: -1, index: 0 });
+  // the press that finished a capture does not also fire its action, even after the caller resumes
+  const events = [];
+  control.on('action', (e) => events.push(`${e.name}:${e.pressed}`));
+  a.axes[2] = 0; control.poll();
+  const j = control.capture({ kinds: ['button'] });
+  a.press('A'); control.poll();
+  assert.deepEqual(await j.promise, { type: 'button', button: 'A', index: 0 });
+  control.poll(); control.poll();
+  assert.deepEqual(events, [], 'the rebind press is not a jump');
+  assert.ok(control.suspended);
+  a.release('A'); control.poll();
+  assert.ok(!control.suspended);
+  a.press('A'); control.poll();
+  assert.deepEqual(events, ['jump:true']);
+  a.release('A'); control.poll();
   const cancelled = control.capture();
   cancelled.cancel();
   assert.equal(await cancelled.promise, null);

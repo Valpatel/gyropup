@@ -21,6 +21,7 @@
 .gpad-head h2 { margin: 0; font: 600 13px var(--gpad-mono); letter-spacing: .12em; text-transform: uppercase; }
 .gpad-status { margin: 0; flex: 1; min-width: 0; color: var(--gpad-dim); font: 12px var(--gpad-mono); overflow-wrap: anywhere; }
 .gpad-intro { margin: 10px 16px 0; color: var(--gpad-dim); }
+.gpad-announce { position: absolute; width: 1px; height: 1px; margin: -1px; padding: 0; overflow: hidden; clip-path: inset(50%); white-space: nowrap; }
 .gpad-close { flex: none; width: 44px; height: 44px; border: 1px solid var(--gpad-line); border-radius: 8px; background: var(--gpad-bg-2);
   color: var(--gpad-fg); font-size: 16px; cursor: pointer; }
 .gpad-grid { display: grid; grid-template-columns: minmax(0, 1fr) minmax(0, 1.15fr); gap: 16px; padding: 14px 16px 16px; overflow: auto; }

@@ -70,7 +70,10 @@ export function mountSimGamepad({ stage, panel, topbar, before, sim, storageKey 
   // ---- apply the pad once a frame, after the simulator's own frame
   const last = { drive: 0, turn: 0 };
   const claim = () => { if (sim.demo.on || sim.state.replay) sim.takeControl(); };
-  const releaseArm = () => { if (sim.gun.armHeld) sim.command.arm(false); sim.bench()?.api.pad?.({}); };
+  // Hidden tab or another window focused: drop ARM, and keep it dropped until the pad reports ARM let go. A
+  // hold-to-run control must be pressed again, not resume from a press made before the page lost focus.
+  let armLatched = false;
+  const releaseArm = () => { armLatched = true; if (sim.gun.armHeld) sim.command.arm(false); sim.bench()?.api.pad?.({}); };
   document.addEventListener('visibilitychange', () => { if (document.hidden) releaseArm(); });
   window.addEventListener('blur', releaseArm);
 
@@ -78,7 +81,8 @@ export function mountSimGamepad({ stage, panel, topbar, before, sim, storageKey 
     if (hintUntil && performance.now() >= hintUntil) { hintUntil = 0; paint(); }
     if (control.pressed('menu')) { openSettings(); return; }
     const bench = sim.bench();
-    const armHeld = control.held('arm');
+    if (armLatched && !control.held('arm')) armLatched = false;
+    const armHeld = control.held('arm') && !armLatched;
     if (bench) {
       if (sim.gun.armHeld) sim.command.arm(false);
       bench.api.pad?.({ pan: -control.value('pan'), tilt: control.value('tilt'), arm: armHeld, trigger: control.held('fire') });
