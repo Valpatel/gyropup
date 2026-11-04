@@ -34,8 +34,8 @@
     "Without --cap, rig.run runs at the 60 N m cap: never on the PLA leg (docs/motor-day.md)."
   ],
   "references": [
-    {"file": "exports/leg/thermal/motor_thermal.json", "pointer": "/bench", "pending": "#195", "what": "the PLA bench thermal limits: the face limit and the continuous torque per room temperature"},
-    {"file": "docs/motor-thermal.md", "pending": "#195", "what": "the motor heat model"},
+    {"file": "exports/leg/thermal/motor_thermal.json", "pointer": "/bench", "what": "the PLA bench thermal limits: the face limit and the continuous torque per room temperature"},
+    {"file": "docs/motor-thermal.md", "what": "the motor heat model"},
     {"file": "docs/motor-day.md", "what": "the motor-day test ladder and the PLA cap"},
     {"file": "docs/leg-bench-tests.md", "what": "C1-C6 commissioning"}
   ],

@@ -122,6 +122,10 @@ compares the run with this very prediction, and "measured only" needs the load p
   - a torque screwdriver, 1-6 N m, for the M5s into printed parts;
   - the 2-25 N m wrench for everything else.
   - Step the torque up; never back off and re-tighten within a step.
+- **Temperatures** (the [motor thermal model](motor-thermal.md)'s acceptance, section 7): each RS-04's own reported
+  temperature and `boardTemp` from the CAN log, a thermocouple on a motor's case and one on the hip frame's mounting
+  face, and the room. A 30-minute hold at a known torque, logged at 1 Hz, re-fits the model
+  (`python3 sim/motor_thermal.py --fit <log.csv>`).
 
 ## B0: the fit coupons
 
@@ -384,6 +388,8 @@ arms and refuses above it.
 - Read the verdict the runner prints.
 - Look at the overlay PNG next to the run's log: the run, the prediction and the limits.
 - Before the next run: the motors' temperatures (in the log) under 60 C; the screws' paint marks unbroken; nothing
-  on the bumpers.
+  on the bumpers. **On a PLA hip frame the cases stay under 50 C** (its face runs a few kelvin under the case, and
+  PLA softens at about 55 C): [the motor thermal model](motor-thermal.md#5-the-pla-bench-motor-day) gives the
+  continuous torque that holds it (about 8 N m a motor in a 25 C room) and how long the PLA cap may be held.
 - Anything off-limits stops the series. Write down what happened in `exports/rig/runs/notes.md`, under the run's
   file name.
