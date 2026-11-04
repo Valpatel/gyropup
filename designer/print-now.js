@@ -29,7 +29,8 @@ export function parseCsv(text) {
   return body.map((r) => Object.fromEntries(head.map((h, j) => [h, r[j] ?? ''])));
 }
 
-const label = (key) => key.replace(/_pla$/, '').replace(/_/g, ' ').replace(/^./, (c) => c.toUpperCase());
+const NAMES = { coupon_frame_ring_nom: 'Motor seat fit coupon' };   // the one coupon printed on its own, before the C1 batch
+const label = (key) => NAMES[key] || key.replace(/_pla$/, '').replace(/_/g, ' ').replace(/^./, (c) => c.toUpperCase());
 const hours = (min) => `${(min / 60).toFixed(1)} h`;
 
 // One line per print step: rows that share an `order` (the C1 coupons) become one line with every file listed.
