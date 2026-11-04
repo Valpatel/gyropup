@@ -24,6 +24,8 @@
     "test:voice": "python3 tools/test-pronunciation.py && node --test tools/test-pronunciation.mjs && python3 tools/render-voice.py --check",
     "test:hero": "node tools/test-hero-preview.mjs",
     "test:demo": "node tools/test-live-demo.mjs",
+    "test:rs04": "node --test designer/kit/rs04/rs04.test.mjs && python3 -m unittest rig.tests.test_rs04_vectors rig.tests.test_rs04_bridge",
+    "test:motor-tool": "node tools/test-motor-tool.mjs",
     "test:models": "node tools/test-current-model.mjs",
     "test:legs": "python3 tools/test-leg-attachments.py && node tools/test-leg-attachment-motion.mjs",
     "test:notice": "node tools/test-prototype-notice.mjs",

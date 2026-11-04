@@ -23,7 +23,7 @@ LIMITS = ('limit_torque_nm', 'jog_torque_nm', 'jog_speed_rad_s', 'jog_kp_max', '
 
 
 def names() -> List[str]:
-    return sorted(p.stem for p in DIR.glob('*.json'))
+    return sorted(p.stem for p in DIR.glob('*.json') if p.stem != 'index')
 
 
 def load(name: Optional[str] = None) -> dict:

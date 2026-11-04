@@ -156,6 +156,9 @@ The planned bench supply (Mean Well LRS-600-36, 36 V: the robot's bus, D65) feed
 the motor's XT30. Fit the CAN lead and its terminators only as part of a released
 bench setup; this planned procedure is not evidence of readiness.
 
+C1-C5 can also be done in the browser with the [RS-04 motor tool](rs04-motor-tool.md) (`python -m rig.rs04_bridge
+--iface can0`): scan, set id, the profile's settings, save, and the watchdog check, under the PLA bench profile's limits.
+
 | Step | Do | Pass |
 |---|---|---|
 | C1 | `sudo ip link set can0 up type can bitrate 1000000`; with the power off, measure H to L at the far end | 60 ohm (two 120 ohm terminators); the link is up in `ip -details link show can0` |
