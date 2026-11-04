@@ -8,7 +8,7 @@
     "seconds": 22,
     "audio": false
   },
-  "source_revision": "00f3126e40884fe4faad05ee6edc79b53a1d7a3c",
+  "source_revision": "613ac34f18671593f36f20daabf5514f1ba58e99",
   "source_hashes": {
     "designer/cadrig.js": "a2cb4029ef786e0793c5eb0018e0aa8d919d829bde8c5d378c1b1480c457faaf",
     "designer/character/eyes.js": "3348578a121b75ab7425c3b6591e864b41b09512e67b642832e6c6b683d2e11b",
@@ -32,7 +32,7 @@
     "designer/kit/vendor/three/addons/geometries/RoundedBoxGeometry.js": "d20aeaf7077c459a8d952d215738d7b44fba028440bb862d84b622a34f0c80bb",
     "designer/kit/vendor/three/addons/loaders/STLLoader.js": "896d006a48b8f125385a485ccae154dadee801a953f0b45ceffe7ddd8a29ca93",
     "designer/kit/vendor/three/three.module.min.js": "3e690ac7d180b0aadf0891bea39eec643e29e2d3e75c99b18689518665f69ba6",
-    "designer/leg_limits.js": "f421fcd16da2af1920f7790b74c22820bb22a41f1d6a14d4645a012932ac318e",
+    "designer/leg_limits.js": "141eacceaa8cd1b187790a66b3b8be985198c1dd5f1fcaeb82b0d8db1b191b35",
     "designer/model.js": "2d655315f9d2acc9e1d02292c1225bd447528cbe64c2e3d737ab6f0b51d771a5",
     "designer/robot3d.js": "ca84400fbeed7953d033b93e0f0bfcd7fbec393331930f57e54c8d49df96f194",
     "designer/robot_actions.css": "8c42900dc9001bd08877f5781eca5efe69ef3b2d1b5973ca90497f40f720b2fc",
@@ -52,7 +52,7 @@
     "exports/leg/fea/hip-frame-e1-media/video-receipt.json": "06f7431bfb893c3d4f5d30444d77d5b3b8a2cb3a4f13bbd193b459e63560f939",
     "exports/leg/fea/media.json": "dbe019e1df2edc47bc8dbb8aa8066ec859cc203fedbbf0aab79a89e75a22a17b",
     "exports/leg/fea/summary.json": "1488c5f62b90fd44162140ba1cb7adf8f52135a727cd37b6f08f4d2794000a39",
-    "exports/leg/limits.json": "2b186b26c1038901fa47b6832fda75c0513c6233d7b9f064a10d6fb14a72d593",
+    "exports/leg/limits.json": "e0fa77fda711aa8e8db73ec392e4ebc428fb57b06ec69ba953dd4c29bfac4d08",
     "exports/leg/rig_jump.mp4": "3e5188b87059d75c23e5eb48f32510aa5b4e4c5726e66ef3c43e86b15d28bc9c",
     "exports/sim/turret_box/barrel.stl": "ccb797222e64719fb8ba4a67ab236e6f9ba3b88ede36926a88cc917961bcde31",
     "exports/sim/turret_box/base_board.stl": "a3fd2d3a202337f01b3b45ad035b560fcbde07ebac8910b048ed94873d82fa20",
@@ -420,23 +420,23 @@
   ],
   "outputs": {
     "gyropup-highlights.mp4": {
-      "sha256": "8e5dea4e0253dfd25c74780a44c0d12b9255535e2207f5667fe1b3c7080393d4",
-      "bytes": 1858105
+      "sha256": "d023246439b15297036eb2b6e1ef8402ef7ee50327649c47f6a9ef9d8e65f756",
+      "bytes": 1860113
     },
     "gyropup-highlights.webm": {
-      "sha256": "50097e7e0dc00d703273afa414563ef5817c7e413a4e095f69aab9db9ac8caf4",
-      "bytes": 1472734
+      "sha256": "43458ccda4a7b2bd430625c98ffd7324af31e1a9c86190c6a19feccde9e09845",
+      "bytes": 1477836
     },
     "gyropup-highlights.webp": {
-      "sha256": "e18bfb2d76a13127d632c7bb1c88d905f05ca640d6e11efab8bcc0e1476d33b0",
-      "bytes": 32722
+      "sha256": "6908c52c4dfc8ca6ffc6913de0d2eee1e66d93a44e79ab69384a7d27eb437a2f",
+      "bytes": 32548
     },
     "capture-receipt.json": {
-      "sha256": "c54115d39181f6a2bf7970b3d4a137459e6a721d85c4a25740e29863a7dd198a",
-      "bytes": 115125
+      "sha256": "1efa0b55ec929ab70f72b5925a8252d5cd8e37ad62595ab06b3eb4e182ce72fa",
+      "bytes": 115123
     },
     "capture-frames.json": {
-      "sha256": "22b52e98fbddab0f4ecb0560a6bc2ba81e5285dd912246e42ff0f69d722e8ab5",
+      "sha256": "df2d40bfb47c7b4414ec5e32deaf9f51de5a29cdd3dd61965c64bd6c006f2ecf",
       "bytes": 100989
     }
   }

@@ -101,6 +101,18 @@ practice recorded three shots, three hits and three knockdowns. The unchanged en
 guard produced and passed both companions, the poster and the receipts. The leg insert is
 unchanged. The previous capture's note follows.
 
+The browser frames were recaptured again on 2026-11-04 (UTC) for
+[PR 204](https://github.com/Valpatel/gyropup/pull/204) after its review. The review applies the playground's reach
+window to the v2 robot only (the legacy serial-leg view keeps its own reach), and the soft stops now use the whole
+leg's inertia, so `designer/leg_limits.js` and `exports/leg/limits.json` changed and the guard rejected the earlier
+capture. The demo runs the v2 robot inside those limits, so the footage shows the same scenes. The capture ran from
+`613ac34f18671593f36f20daabf5514f1ba58e99`, served assets `8269e01942b7c677d648`, through an owned
+`serve-site.mjs --ephemeral` listener, closed afterwards. The recorder produced all 480 frames and its shot and
+knockdown assertions passed. The unchanged encoder and guard produced and passed both companions (MP4 1,860,113
+bytes, WebM 1,477,836), the poster and the receipts. The leg and E1 inserts are unchanged. The reel must be
+recaptured again once this branch merges dev after the gamepad and tilt-range PRs (#205, #207), which change the
+same simulator. The previous capture's note follows.
+
 The browser frames were recaptured on 2026-11-04 (UTC) for
 [PR 204](https://github.com/Valpatel/gyropup/pull/204), the leg's over-command protection. That PR routes the
 playground's live pose through `designer/leg_limits.js` (the firmware's command rates and the legs' reach window,
