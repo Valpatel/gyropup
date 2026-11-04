@@ -8,7 +8,7 @@
     "seconds": 22,
     "audio": false
   },
-  "source_revision": "1fc6135a559066737085df7f840010a7d34e4ae0",
+  "source_revision": "9e19d556b0c1f9ee4e0470438e488cf2446f72fd",
   "source_hashes": {
     "designer/cadrig.js": "a2cb4029ef786e0793c5eb0018e0aa8d919d829bde8c5d378c1b1480c457faaf",
     "designer/character/eyes.js": "3348578a121b75ab7425c3b6591e864b41b09512e67b642832e6c6b683d2e11b",
@@ -18,11 +18,11 @@
     "designer/character/talk.js": "4a4d0c0f961e6325381fa7a95a82d05836a49af08be1215e33d04e0b976ec21a",
     "designer/current_turret.js": "f0ae7c297c53d5508e2ad2989f514f9269ba2a43b4ef542ead6afc9553735b8c",
     "designer/kit/appnav.js": "1f4630c749cdb3344faa8d7a7461acf70b6ab47cf7be5444533c99b753912e45",
-    "designer/kit/gamepad/bindings.js": "85cf6f47a09ef403ec1b60eb18408b77aa1d5c39e389ae60c5ba13a8815802f6",
-    "designer/kit/gamepad/config-ui.js": "3aaff343a81063f789c17cfe421aab8d095ba978dac9e143812f9cc1bc57d5cc",
-    "designer/kit/gamepad/control.js": "c01fb2d6d157eb5147139739a32da285d4d324781511810e5843da54ab725325",
+    "designer/kit/gamepad/bindings.js": "26df0b097a7c8e824da0652e2b23bd2c9dbbf74bdb9b67d2c20fae1107ec80e4",
+    "designer/kit/gamepad/config-ui.js": "0bbd455b73efd6ae0c093a13c54eb752760807dd08c34641bb114fa4ff614722",
+    "designer/kit/gamepad/control.js": "0d1354cafb4088f9a2da9b6c8641b81eb51126f5365a531a56021e956ee3930b",
     "designer/kit/gamepad/diagram.js": "09416a3f31ee0e659a3bbbafa6ba5b63609cdbc22ef459456ec4a09dca9eeb37",
-    "designer/kit/gamepad/gamepad.js": "ccb954edbd38884e6d85bd5d85b9e55cbf40982603a922e56cf7cb938296f22c",
+    "designer/kit/gamepad/gamepad.js": "86e3a2c3c6fb1f75286cfc38c454293d264d0e23cf98515b6c1f27b1c54f7073",
     "designer/kit/gamepad/index.js": "7fc398896d82c5184b1488d8b27ae73c89653fd7ea4c1d8765c1c5ee4c15eefc",
     "designer/kit/hud.css": "aeac277ae41f294f3642488c654816e9a9e1180158b4ea61f0db81958e5891ae",
     "designer/kit/loading.css": "da20076647bed183307a18908c57432699386de2005444fa37a072b70d1ac2f2",
@@ -46,8 +46,8 @@
     "designer/sfx.js": "90db82703cb9d32c106992c1d67610056a319048d4030db77490642ce8c4dc55",
     "designer/sim-layout.css": "e2b76ffb77863adea51210749efb4e27641b8d8adc08bdc74608ff3da7173970",
     "designer/sim.html": "a70ed754168974b085e9e09de6b8672ac7b0d97ee5498a60195ef40fad5aa8c8",
-    "designer/sim.js": "94e70acf7cab7086317276b5bafa71683f3d6119ec4bf770709d37cdb7fcf975",
-    "designer/sim_gamepad.js": "1a8a73743ad997b967490162c48579be762dbbc4f532223ce01898ca850b5d07",
+    "designer/sim.js": "ae528d37e53509bec89e0f3ea40838f992b183f84bab7e4c2cf52979e9644265",
+    "designer/sim_gamepad.js": "6c4867ed61d50e17e8a1fab6ebc46529ff9849dcecfdaf6c7f49ebb41f27af9d",
     "designer/turret3d.js": "e5144b01c1db071ac8921e416fcbc8e3a208a59a466bcd00cd5a86ddfa26b107",
     "designer/turret_bench.css": "77d4ab36125c5df22db86fafdc10a6d21470cee86c5e4201e50a3df7d9e79dc8",
     "designer/turret_bench.js": "6ffc90391becbb5f95540649503b62f1800277a619eab9ccd5b8df7e315c00c7",
@@ -425,23 +425,23 @@
   ],
   "outputs": {
     "gyropup-highlights.mp4": {
-      "sha256": "97fdaa29e052c984b2db8a891638b2a8cf6966396618b1c53e556a04e97751bd",
-      "bytes": 1858351
+      "sha256": "4e785cb867fadab5038cb5797c3338f4c6b3fee81c956ded358ec73fd3332882",
+      "bytes": 1858018
     },
     "gyropup-highlights.webm": {
-      "sha256": "2c58c8b2a18f381dd91426874249682f4303cbec35695505aef34d811ca7fe3a",
-      "bytes": 1480101
+      "sha256": "2342c1d96b3a1176379baceb5b5bc86c4e01facff2e1f357459ead233946154a",
+      "bytes": 1485943
     },
     "gyropup-highlights.webp": {
-      "sha256": "e18bfb2d76a13127d632c7bb1c88d905f05ca640d6e11efab8bcc0e1476d33b0",
-      "bytes": 32722
+      "sha256": "13e89d1799601372d065e25823c5dedf328f98b41972cb403c58382f3881ff29",
+      "bytes": 32610
     },
     "capture-receipt.json": {
-      "sha256": "e95f99b9f7ecb8cc9e139b3050e7d75c14ee0d71c85cb4c12d4b23e66aaa63be",
+      "sha256": "04bf3fcfce9fad114e2d845435bdbaa94191540371ffa9383629ba2de44f4cc7",
       "bytes": 116375
     },
     "capture-frames.json": {
-      "sha256": "ce0fd1a8bfffbf66e07210435b266a626ce1c2e2e97be5d6f1bd27261e913743",
+      "sha256": "82f20a074f3d590f3a1516fe9dd5649ebd360afa62dec2e6a87657aa99bbf581",
       "bytes": 100989
     }
   }
