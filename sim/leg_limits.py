@@ -64,6 +64,11 @@ STOP_K_NM_PER_RAD = 856.0
 J_MOTOR_KG_M2 = 0.0243 + 0.0035   # armature + the upper link about its hub (0.65 kg, centre 55 mm, its own ~0.0015)
 
 
+def load() -> dict:
+    """exports/leg/limits.json, as committed."""
+    return json.loads(OUT.read_text())
+
+
 # ----------------------------------------------------------------------------------- torque per build profile
 
 def _row(part, case, t0, sf, target, why):
@@ -234,7 +239,7 @@ def box_survey(n: int = 120) -> dict:
             Ls.append(math.hypot(*j['E']))
             m = dead_point_margin(p1, p2)
             if m < worst[0]:
-                worst = (m, (_deg(p1), _deg(p2)))
+                worst = (m, [_deg(p1), _deg(p2)])
     return {'unreachable': unreachable, 'crossed': crossed, 'L_mm': [round(min(Ls), 1), round(max(Ls), 1)],
             'dead_point_min_deg': round(worst[0], 1), 'dead_point_min_at_deg': worst[1]}
 

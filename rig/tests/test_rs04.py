@@ -327,10 +327,17 @@ def test_a_lower_cap_is_written_to_the_motor_and_clipped_by_the_laptop():
     assert config['limit_torque'] == 12.0 and limits.cap == 12.0 and limits.rate == 5.0
     assert {k: v for k, v in config.items() if k != 'limit_torque'} == {k: v for k, v in P.RIG_CONFIG.items() if k != 'limit_torque'}
     assert P.RIG_CONFIG['limit_torque'] == 60.0                                        # the rig's own setting is untouched
-    assert cap_setup(None)[0]['limit_torque'] == lc.LEG_CAP and cap_setup(None)[1].cap == lc.LEG_CAP
-    for bad in (0.0, -5.0, 60.5, 120.0):
+    # no --cap: the leg build's every-day cap (exports/leg/limits.json), the PLA bench leg's unless --build robot
+    assert cap_setup(None)[0]['limit_torque'] == 12.0 and cap_setup(None)[1].cap == 12.0
+    assert cap_setup(None, build='robot')[0]['limit_torque'] == lc.LEG_CAP and cap_setup(None, build='robot')[1].cap == lc.LEG_CAP
+    for bad in (0.0, -5.0, 12.5, 60.0, 120.0):
         with pytest.raises(ValueError):
-            cap_setup(bad)
+            cap_setup(bad)                                                    # the PLA bench leg: 12 N m at most
+    for bad in (0.0, 60.5, 120.0):
+        with pytest.raises(ValueError):
+            cap_setup(bad, build='robot')
+    with pytest.raises(ValueError):
+        cap_setup(None, build='pla')
     vb, bus, emu = rig_bus(ids=(1,))
     m = bus.motor(1)
     assert P.configure(m, config)['limit_torque'] == 12.0
@@ -343,8 +350,10 @@ def test_a_forgotten_cap_does_not_raise_a_lower_limit_held_in_the_motors():
     """rig/run.py cap_guard: motors saved at 10 N m (docs/motor-day.md L1) are not raised to 60 by a run without --cap."""
     from rig.run import cap_guard
     vb, bus, emu = rig_bus()
-    assert cap_guard(bus, (1, 2), None) is None                                      # the rig's 60: nothing to protect
+    assert cap_guard(bus, (1, 2), None, 'robot') is None                             # the rig's 60: nothing to protect
     bus.motor(2).write_check('limit_torque', 10.0)
-    why = cap_guard(bus, (1, 2), None)
+    why = cap_guard(bus, (1, 2), None, 'robot')
     assert why and '2 at 10 N m' in why and '1 at' not in why
     assert cap_guard(bus, (1, 2), 12.0) is None and cap_guard(bus, (1, 2), 60.0) is None   # said on purpose
+    why = cap_guard(bus, (1, 2), None)                                              # the PLA bench leg's 12 is still over 10
+    assert why and '2 at 10 N m' in why

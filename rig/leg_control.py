@@ -34,6 +34,7 @@ for _p in (R, R / 'cad'):
         sys.path.insert(0, str(_p))
 import fivebar as fb  # noqa: E402
 from sim.leg_control import Gains, clip_motor, polar, vmc_from_state  # noqa: E402,F401  (the controller, simulator-free)
+from sim import leg_limits as ll  # noqa: E402  (the soft stops and the build's caps: exports/leg/limits.json)
 
 G = 9.81
 LEG_PEAK = 120.0                  # N m, RS-04 peak (catalog/leg_actuators.json)
@@ -171,6 +172,8 @@ class Limits:
     miss_max: int = 3             # ticks in a row without both motors' feedback -> limp
     sit_s: float = 0.3            # the sit-down's duration (plan 3.3)
     sit_to: float = 0.150         # m: the sit-down's end
+    soft_stops: bool = True       # sim/leg_limits.py soft_stop on each motor (docs/leg-protection.md): no torque into a
+                                  # stop inside 2 deg of it, braking when it approaches one faster than the stop takes
 
 
 @dataclass
@@ -219,10 +222,13 @@ class LegController:
         # opens, and the controller keeps standing until the motors fall silent
         self.external_cut = external_cut
 
-    def _limit(self, tau_f: float, tau_r: float, cap: Optional[float], w=(0.0, 0.0)):
+    def _limit(self, tau_f: float, tau_r: float, cap: Optional[float], w=(0.0, 0.0), phi=None):
         c = min(self.lim.cap, cap if cap else LEG_PEAK)
         out = []
-        for t, p, om in zip((tau_f, tau_r), self.prev, w):
+        fo, fi, ro, ri = fb.stop_angles()
+        for t, p, om, ph, (lo, hi) in zip((tau_f, tau_r), self.prev, w, phi or (None, None), ((fi, fo), (ro, ri))):
+            if self.lim.soft_stops and ph is not None:
+                t = ll.soft_stop(t, ph, om, lo, hi, c)
             t = max(-c, min(c, t))
             if self.lim.regen_w and t * om < 0 and abs(om) > 1e-3:
                 b = self.lim.regen_w / abs(om)
@@ -297,7 +303,7 @@ class LegController:
         pol = polar(tk.f.phi, tk.r.phi, tk.f.w, tk.r.w)
         L_cmd = self.L_abort + (self.lim.sit_to - self.L_abort) * smooth(dt / self.lim.sit_s)
         tau = vmc_tick(tk, L_cmd, 0.0, ff=self.ff, g=self.g)
-        f, r = self._limit(float(tau[0]), float(tau[1]), self.sc.cap, (tk.f.w, tk.r.w))
+        f, r = self._limit(float(tau[0]), float(tau[1]), self.sc.cap, (tk.f.w, tk.r.w), (tk.f.phi, tk.r.phi))
         if dt > self.lim.sit_s + 0.2:
             self.done = True
         return Command(f, r, stop=self.done, phase='sitdown', L_cmd=L_cmd, abort=self.abort)
@@ -324,7 +330,7 @@ class LegController:
             if not slow and (L > 0.31 or (state.get('t_push') and t - state['t_push'] > 0.35)):
                 state['pushed'] = True
             state.setdefault('t_push', t)
-            f, r = self._limit(float(tau[0]), float(tau[1]), sc.cap, (tk.f.w, tk.r.w))
+            f, r = self._limit(float(tau[0]), float(tau[1]), sc.cap, (tk.f.w, tk.r.w), (tk.f.phi, tk.r.phi))
             return Command(f, r, phase='push', contact=True)
         if mode == 'off':
             self.powered = False
@@ -337,7 +343,7 @@ class LegController:
                 return self._aborting(tk)
             F = press_force(t)
             tau = vmc_tick(tk, None, 0.0, force=F, g=self.g)
-            f, r = self._limit(float(tau[0]), float(tau[1]), sc.cap, (tk.f.w, tk.r.w))
+            f, r = self._limit(float(tau[0]), float(tau[1]), sc.cap, (tk.f.w, tk.r.w), (tk.f.phi, tk.r.phi))
             return Command(f, r, phase=f'press {F:.0f} N', contact=True)
         jump = sc.name in ('jump', 'jump_peak')
         if self.contact_truth and 'contact' in tk.extra:
@@ -346,7 +352,7 @@ class LegController:
             contact = self.flight.contact(t, bool(state.get('pushed')), L, pol[2], L_cmd / 1000) if jump else True
         g = self.g if (contact or not jump or not state.get('pushed')) else TUCK
         tau = vmc_tick(tk, L_cmd / 1000, 0.0, ff=self.ff if contact or not state.get('pushed') else 0.0, g=g)
-        f, r = self._limit(float(tau[0]), float(tau[1]), sc.cap, (tk.f.w, tk.r.w))
+        f, r = self._limit(float(tau[0]), float(tau[1]), sc.cap, (tk.f.w, tk.r.w), (tk.f.phi, tk.r.phi))
         phase = 'air' if not contact else ('land' if state.get('pushed') else 'track')
         return Command(f, r, phase=phase, L_cmd=L_cmd / 1000, contact=contact)
 

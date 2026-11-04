@@ -34,6 +34,7 @@ R = Path(__file__).resolve().parents[1]
 sys.path.insert(0, str(R / 'cad'))
 import fivebar as fb  # noqa: E402
 from sim.leg_control import Gains, clip_motor, polar, vmc_from_state  # noqa: E402  (the controller, simulator-free)
+from sim import leg_limits  # noqa: E402  (the soft stops: exports/leg/limits.json, docs/leg-protection.md)
 
 OUT = R / 'exports' / 'leg'
 G = 9.81
@@ -384,9 +385,15 @@ def run(sc: Scenario, half_mass: float, video: Path | None = None, meshes: dict 
             contact = wheel_force(m, d, leg)[1] > 1.0
             gg = g if (contact or sc.name not in ('jump', 'jump_peak') or not state.get('pushed')) else Gains(kp_L=3000, kd_L=260)   # tuck
             tau = vmc(leg, d, L_cmd / 1000, 0.0, ff=ff if contact or not state.get('pushed') else 0.0, g=gg)
+        fo, fi, ro, ri = fb.stop_angles()
         for i, (n, a) in enumerate((('motor_f', 'motor_f'), ('motor_r', 'motor_r'))):
             om = d.qvel[leg.v[n]]
-            d.ctrl[leg.a[a]] = float(tau[i]) if mode == 'off' else clip_motor(float(tau[i]), om, LEG_PEAK, LEG_OMEGA, sc.cap)
+            if mode == 'off':
+                d.ctrl[leg.a[a]] = float(tau[i])
+            else:                                     # the soft stops (sim/leg_limits.py), as the rig and the firmware
+                lo, hi = (fi, fo) if i == 0 else (ro, ri)
+                t = leg_limits.soft_stop(float(tau[i]), leg.phi(d)[i], om, lo, hi, sc.cap or LEG_PEAK)
+                d.ctrl[leg.a[a]] = clip_motor(t, om, LEG_PEAK, LEG_OMEGA, sc.cap)
         d.ctrl[leg.a['wheel']] = 0.0
         p1, p2 = leg.phi(d)
         fo, fi, ro, ri = fb.stop_angles()
