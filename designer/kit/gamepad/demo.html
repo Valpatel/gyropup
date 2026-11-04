@@ -1,0 +1,74 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<!-- The Gyropup site requires every page to load its theme first; outside the site these two lines can go. -->
+<script src="/web/theme.js"></script>
+<link rel="stylesheet" href="/web/theme.css">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Gamepad component demo</title>
+<link rel="stylesheet" href="gamepad.css">
+<style>
+  :root { color-scheme: light dark; }
+  body { margin: 0; padding: 20px; font: 14px/1.45 system-ui, sans-serif; background: Canvas; color: CanvasText; }
+  main { max-width: 900px; margin: 0 auto; display: grid; gap: 16px; grid-template-columns: minmax(0, 1fr) minmax(0, 1fr); }
+  @media (max-width: 700px) { main { grid-template-columns: minmax(0, 1fr); } }
+  h1 { grid-column: 1 / -1; margin: 0; font-size: 20px; }
+  p { margin: 0; }
+  table { width: 100%; border-collapse: collapse; font: 13px ui-monospace, monospace; }
+  td, th { padding: 4px 6px; border-bottom: 1px solid color-mix(in srgb, CanvasText 22%, Canvas); text-align: left; }
+  meter { width: 100%; }
+  #log { height: 140px; overflow: auto; margin: 0; padding: 6px; border: 1px solid color-mix(in srgb, CanvasText 22%, Canvas); border-radius: 6px; font: 12px ui-monospace, monospace; }
+</style>
+</head>
+<body>
+<main>
+  <h1>Gamepad component demo</h1>
+  <section>
+    <p id="status" role="status">Connect a controller and press any button.</p>
+    <div id="diagram"></div>
+    <p><button type="button" class="gpad-btn" id="settings">Settings (or press Menu)</button></p>
+  </section>
+  <section>
+    <table><thead><tr><th>action</th><th>binding</th><th>value</th></tr></thead><tbody id="actions"></tbody></table>
+    <h2 style="font-size:14px">Events</h2>
+    <pre id="log" aria-live="off"></pre>
+  </section>
+</main>
+<script type="module">
+  import { createGamepadControl, createDiagram, describeBinding, mountGamepadConfig } from './index.js';
+  const actions = {
+    moveX: { label: 'Move right / left', kind: 'axis', default: { axis: 'LeftX' } },
+    moveY: { label: 'Move forward / back', kind: 'axis', default: { axis: 'LeftY', invert: true } },
+    throttle: { label: 'Throttle', kind: 'axis', default: { positive: 'RT', negative: 'LT' } },
+    jump: { label: 'Jump', kind: 'button', default: { button: 'A' } },
+    boost: { label: 'Boost', kind: 'button', hold: true, default: { button: 'RB' } },
+    menu: { label: 'Settings', kind: 'button', default: { button: 'Menu' } },
+  };
+  const control = createGamepadControl({ actions, storageKey: 'gamepad-demo-v1' });
+  const config = mountGamepadConfig(control, { title: 'Demo gamepad' });
+  const diagram = createDiagram({ title: 'Demo gamepad' });
+  document.getElementById('diagram').append(diagram.element);
+  const rows = Object.fromEntries(Object.entries(actions).map(([name, a]) => {
+    const tr = document.createElement('tr');
+    tr.innerHTML = `<td>${a.label}</td><td></td><td><meter min="-1" max="1" value="0"></meter></td>`;
+    document.getElementById('actions').append(tr);
+    return [name, tr];
+  }));
+  const log = (text) => { const el = document.getElementById('log'); el.textContent = `${text}\n${el.textContent}`.slice(0, 4000); };
+  control.on('connect', (p) => log(`connected ${p.index}: ${p.id}${p.standard ? '' : ' (non-standard mapping)'}`));
+  control.on('disconnect', (p) => log(`disconnected ${p.index}`));
+  control.on('action', (e) => { log(`${e.name} ${e.pressed ? 'pressed' : 'released'}`); if (e.name === 'menu' && e.pressed) config.open(); if (e.name === 'jump' && e.pressed) control.rumble({ duration: 80 }); });
+  control.on('frame', (pads) => {
+    diagram.update(pads[0] ?? null);
+    document.getElementById('status').textContent = pads.length ? pads.map((p) => `${p.index + 1}: ${p.id}`).join(' · ') : 'Connect a controller and press any button.';
+    for (const [name, tr] of Object.entries(rows)) {
+      tr.children[1].textContent = describeBinding(control.bindings.get(name));
+      tr.querySelector('meter').value = control.value(name);
+    }
+  });
+  document.getElementById('settings').onclick = () => config.open();
+  window.__gamepadDemo = { control, config };
+</script>
+</body>
+</html>

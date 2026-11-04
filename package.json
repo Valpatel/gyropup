@@ -18,6 +18,7 @@
     "test:camera": "node tools/test-camera-controls.mjs",
     "test:interactions": "node tools/test-turret-interactions.mjs",
     "test:robot": "node tools/test-robot-controls.mjs",
+    "test:gamepad": "node --test designer/kit/gamepad/gamepad.test.mjs && node tools/test-gamepad.mjs",
     "test:viewers": "node tools/test-portal-viewers.mjs",
     "test:file-viewer-theme": "node tools/test-file-viewer-theme.mjs",
     "test:audio": "node tools/test-audio-settings.mjs",

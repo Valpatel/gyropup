@@ -87,6 +87,7 @@ jobs:
               npm run test:rs04
               npm run test:motor-tool
               npm run test:robot
+              npm run test:gamepad
               npm run test:sim
               npm run test:demo
           - suite: presentation
