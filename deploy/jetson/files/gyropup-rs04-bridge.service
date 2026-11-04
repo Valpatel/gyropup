@@ -1,0 +1,34 @@
+# Gyropup: the RS-04 configuration bridge (rig/rs04_bridge.py) on the robot (deploy/jetson, installed by install.sh).
+# Listens on 127.0.0.1 only. LAN mode is a drop-in (install.sh --lan) and needs a token. The interface and the build
+# profile are in /etc/gyropup/rs04-bridge.env.
+[Unit]
+Description=Gyropup RS-04 configuration bridge (SocketCAN to the browser tool)
+After=network.target
+StartLimitIntervalSec=0
+
+[Service]
+Type=simple
+User=gyropup-bridge
+Group=gyropup-bridge
+WorkingDirectory=@CHECKOUT@
+Environment=IFACE=can0 PROFILE=pla-bench PORT=8765 PYTHONDONTWRITEBYTECODE=1 PYTHONUNBUFFERED=1
+EnvironmentFile=-/etc/gyropup/rs04-bridge.env
+ExecStart=/usr/bin/python3 -m rig.rs04_bridge --iface ${IFACE} --profile ${PROFILE} --port ${PORT} $BRIDGE_LAN
+Restart=on-failure
+RestartSec=5
+NoNewPrivileges=yes
+ProtectSystem=strict
+ProtectHome=read-only
+PrivateTmp=yes
+PrivateDevices=yes
+ProtectKernelTunables=yes
+ProtectKernelModules=yes
+ProtectControlGroups=yes
+RestrictAddressFamilies=AF_UNIX AF_INET AF_INET6 AF_CAN
+RestrictNamespaces=yes
+LockPersonality=yes
+CapabilityBoundingSet=
+AmbientCapabilities=
+
+[Install]
+WantedBy=multi-user.target

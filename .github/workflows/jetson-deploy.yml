@@ -1,0 +1,43 @@
+# The robot Jetson's deployment (deploy/jetson): install.sh's dry run, a staged install, idempotence, stable names, LAN
+# mode, shellcheck; the hardware folders' records (hardware/README.md) and the RS-04 inventory. No Jetson is needed.
+name: jetson-deploy
+
+on:
+  pull_request:
+    paths:
+      - 'deploy/**'
+      - 'hardware/**'
+      - 'rig/rs04*.py'
+      - 'rig/tests/test_rs04_inventory.py'
+      - 'tools/check-hardware.py'
+      - 'tools/test_check_hardware.py'
+      - 'firmware/balance/include/**'   # the hardware configs' sourced values
+      - 'firmware/balance/src/**'
+      - 'exports/motor-day/**'
+      - 'exports/leg/thermal/**'
+      - 'docs/purchases.md'
+      - '.github/workflows/jetson-deploy.yml'
+  push:
+    branches: [main]
+
+permissions:
+  contents: read
+
+jobs:
+  deploy-dry-run:
+    runs-on: ubuntu-24.04
+    timeout-minutes: 5
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-python@v5
+        with:
+          python-version: '3.10'   # JetPack 6's Python: the bridge and the checks must run on it
+      - name: install.sh (dry run, staged install, idempotence, names, LAN mode, shellcheck)
+        run: python3 deploy/jetson/test_install.py -v
+      - name: The hardware folders and the RS-04 inventory
+        run: |
+          python3 tools/check-hardware.py
+          python3 -m unittest tools/test_check_hardware.py -v
+          python3 -m unittest rig.tests.test_rs04_inventory -v
+      - name: The RS-04 bridge and profiles on JetPack's Python
+        run: python3 -m unittest rig.tests.test_rs04_vectors rig.tests.test_rs04_bridge -v

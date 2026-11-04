@@ -1,0 +1,30 @@
+{
+  "schema": "gyropup.inventory/1",
+  "component": "RobStride RS-04 actuator",
+  "folder": "hardware/actuators/rs04",
+  "about": "The RS-04 units in hand. Each record is filled from the motor tool's config export (python -m rig.rs04_inventory add <export.json>); fields stay null until the owner has scanned that unit. Never type a serial in by hand.",
+  "ordered": [
+    {"date": "2026-10-27", "count": 4, "seller": "Seeed Studio", "source": "docs/purchases.md"}
+  ],
+  "arrived": [
+    {"date": "2026-11-03", "count": 4, "source": "the owner, 2026-11-03: \"we have 4 of the motors\""}
+  ],
+  "fields": {
+    "uid": "the 8-byte unique id the motor answers a scan with (hex): the unit's serial",
+    "can_id": "the CAN id it was given (1-4; 127 out of the box)",
+    "joint": "left-front, left-rear, right-front or right-rear (docs/body-firmware.md: ids 1-4)",
+    "firmware": "the firmware version it reports",
+    "zero_offset_rad": "add_offset (0x702B) after the zero was set, as exported",
+    "zero_pose": "the pose its zero was set at, as the tool names it",
+    "mass_g": "measured on a scale, in grams (catalog/leg_actuators.json carries the datasheet's 1510 g until then)",
+    "profile": "the build profile its stored settings came from, with its version",
+    "exported": "when the export the record came from was taken",
+    "notes": "anything else: damage, a fault seen, a swap"
+  },
+  "units": [
+    {"unit": 1, "uid": null, "can_id": null, "joint": null, "firmware": null, "zero_offset_rad": null, "zero_pose": null, "mass_g": null, "profile": null, "exported": null, "notes": ""},
+    {"unit": 2, "uid": null, "can_id": null, "joint": null, "firmware": null, "zero_offset_rad": null, "zero_pose": null, "mass_g": null, "profile": null, "exported": null, "notes": ""},
+    {"unit": 3, "uid": null, "can_id": null, "joint": null, "firmware": null, "zero_offset_rad": null, "zero_pose": null, "mass_g": null, "profile": null, "exported": null, "notes": ""},
+    {"unit": 4, "uid": null, "can_id": null, "joint": null, "firmware": null, "zero_offset_rad": null, "zero_pose": null, "mass_g": null, "profile": null, "exported": null, "notes": ""}
+  ]
+}

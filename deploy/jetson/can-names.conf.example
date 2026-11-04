@@ -1,0 +1,10 @@
+# Stable names for the robot's USB CAN adapters (deploy/jetson). Copy to /etc/gyropup/can-names.conf, fill in from
+# `sudo deploy/jetson/install.sh --list-can`, and run install.sh again.
+#
+# One adapter a line: NAME  path=<ID_PATH>  or  NAME  serial=<ID_SERIAL_SHORT>
+#   NAME: at most 15 characters, letters, digits, '_' and '-'; must not start with "can" + a digit (kernel names)
+#   path=: the USB port the adapter is plugged into (stays the same while it stays in that port)
+#   serial=: the adapter's own serial number, when it reports one
+#
+# can_legs_a  path=platform-3610000.usb-usb-0:1.2:1.0
+# can_legs_b  serial=0000ABCD

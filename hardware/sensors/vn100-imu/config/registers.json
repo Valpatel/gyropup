@@ -1,0 +1,24 @@
+{
+  "schema": "gyropup.config/1",
+  "component": "VectorNav VN-100 Rugged",
+  "version": 1,
+  "about": "The register writes the balance firmware sends at every boot, in order, first at 115200 baud and again at 921600 in case the sensor is already there. Volatile: nothing is saved in the sensor. Each is checked against the firmware's source by tools/check-hardware.py.",
+  "boot": {
+    "ascii_output_off": "VNWRG,06,0",
+    "binary_output": "VNWRG,75,3,1,01,0028",
+    "baud": "VNWRG,05,921600"
+  },
+  "meaning": {
+    "ascii_output_off": "register 6, asynchronous ASCII output: off",
+    "binary_output": "register 75, binary output 1: async mode 3 (both serial ports), rate divisor 1 (800 Hz), group 1, fields 0x0028 (YawPitchRoll, AngularRate)",
+    "baud": "register 5, serial baud rate: 921600"
+  },
+  "sources": {
+    "boot.ascii_output_off": {"contains": "firmware/balance/src/mcu/board.c"},
+    "boot.binary_output": {"contains": "firmware/balance/src/mcu/board.c"},
+    "boot.baud": {"contains": "firmware/balance/src/mcu/board.c"}
+  },
+  "changes": [
+    {"version": 1, "date": "2026-11-03", "what": "first record (issue #210)"}
+  ]
+}
