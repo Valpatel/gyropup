@@ -1,0 +1,22 @@
+{
+  "schema": "gyropup.inventory/1",
+  "component": "VectorNav VN-100 Rugged",
+  "folder": "hardware/sensors/vn100-imu",
+  "about": "The owner's own unit, not bought for the project. Fill the serial and firmware from the sensor (register 3 serial number, register 4 firmware version) when it is on the bench; never by hand from memory.",
+  "ordered": [],
+  "arrived": [],
+  "held": [
+    {"count": 1, "source": "docs/body-plan.md and docs/cad-plan.md: the user's"}
+  ],
+  "fields": {
+    "unit": "1",
+    "model": "as the sensor reports it (register 1)",
+    "serial": "register 3",
+    "firmware": "register 4",
+    "port": "the serial port the harness uses (1 or 2)",
+    "notes": ""
+  },
+  "units": [
+    {"unit": 1, "model": null, "serial": null, "firmware": null, "port": null, "notes": ""}
+  ]
+}

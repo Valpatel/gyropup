@@ -8,7 +8,7 @@
     "seconds": 22,
     "audio": false
   },
-  "source_revision": "c77dc0906bfe949027141f435238293d5cd8e532",
+  "source_revision": "38cbb857ce5ba7c4fe29d2ec88b60ace3e97e0a4",
   "source_hashes": {
     "designer/cadrig.js": "a2cb4029ef786e0793c5eb0018e0aa8d919d829bde8c5d378c1b1480c457faaf",
     "designer/character/eyes.js": "3348578a121b75ab7425c3b6591e864b41b09512e67b642832e6c6b683d2e11b",
@@ -18,6 +18,12 @@
     "designer/character/talk.js": "4a4d0c0f961e6325381fa7a95a82d05836a49af08be1215e33d04e0b976ec21a",
     "designer/current_turret.js": "f0ae7c297c53d5508e2ad2989f514f9269ba2a43b4ef542ead6afc9553735b8c",
     "designer/kit/appnav.js": "1f4630c749cdb3344faa8d7a7461acf70b6ab47cf7be5444533c99b753912e45",
+    "designer/kit/gamepad/bindings.js": "26df0b097a7c8e824da0652e2b23bd2c9dbbf74bdb9b67d2c20fae1107ec80e4",
+    "designer/kit/gamepad/config-ui.js": "0bbd455b73efd6ae0c093a13c54eb752760807dd08c34641bb114fa4ff614722",
+    "designer/kit/gamepad/control.js": "0d1354cafb4088f9a2da9b6c8641b81eb51126f5365a531a56021e956ee3930b",
+    "designer/kit/gamepad/diagram.js": "09416a3f31ee0e659a3bbbafa6ba5b63609cdbc22ef459456ec4a09dca9eeb37",
+    "designer/kit/gamepad/gamepad.js": "86e3a2c3c6fb1f75286cfc38c454293d264d0e23cf98515b6c1f27b1c54f7073",
+    "designer/kit/gamepad/index.js": "7fc398896d82c5184b1488d8b27ae73c89653fd7ea4c1d8765c1c5ee4c15eefc",
     "designer/kit/hud.css": "aeac277ae41f294f3642488c654816e9a9e1180158b4ea61f0db81958e5891ae",
     "designer/kit/loading.css": "da20076647bed183307a18908c57432699386de2005444fa37a072b70d1ac2f2",
     "designer/kit/loading.js": "3890e96c2cdc1905a1c612be312aaabc6de09b3ea9f41c513c01108f7f159ada",
@@ -40,10 +46,11 @@
     "designer/sfx.js": "90db82703cb9d32c106992c1d67610056a319048d4030db77490642ce8c4dc55",
     "designer/sim-layout.css": "e2b76ffb77863adea51210749efb4e27641b8d8adc08bdc74608ff3da7173970",
     "designer/sim.html": "a70ed754168974b085e9e09de6b8672ac7b0d97ee5498a60195ef40fad5aa8c8",
-    "designer/sim.js": "bc0736070b2b786bfdb15fd34bf4f1e6d745a1c176837d041722cc96699f1f82",
+    "designer/sim.js": "6fbe9c9c74394d1e610427f84f29a1106534f630c84547adcc26a01c4f179aaa",
+    "designer/sim_gamepad.js": "6c4867ed61d50e17e8a1fab6ebc46529ff9849dcecfdaf6c7f49ebb41f27af9d",
     "designer/turret3d.js": "e5144b01c1db071ac8921e416fcbc8e3a208a59a466bcd00cd5a86ddfa26b107",
     "designer/turret_bench.css": "77d4ab36125c5df22db86fafdc10a6d21470cee86c5e4201e50a3df7d9e79dc8",
-    "designer/turret_bench.js": "2c7c14ae024d451015e8559216f1b5bfc8ab814ed76b82eac645fa4d616318ad",
+    "designer/turret_bench.js": "6ffc90391becbb5f95540649503b62f1800277a619eab9ccd5b8df7e315c00c7",
     "designer/turret_reload.js": "37b75f1250ca341e710abb9443d0e0120abe48e827efbc86b740db7b55a326e9",
     "exports/leg/fea/hip-frame-e1-media/field-receipt.json": "eb4eac465394f49a24215d1d39b21a72665cde3e319db0c2d380478c05030f2a",
     "exports/leg/fea/hip-frame-e1-media/hip-frame-e1.mp4": "2cf4b003483267f1a3a1d1170854689777bdd952bb303789b4075819125a422c",
@@ -418,23 +425,23 @@
   ],
   "outputs": {
     "gyropup-highlights.mp4": {
-      "sha256": "df8911a0ed923d6a767b0d76d5528295be8bcd67a135a53051c88d8ee890badf",
-      "bytes": 1860644
+      "sha256": "b2377ce671705c51349ed3b94412f5c18db3df44e2eba29167b77b2ac673e666",
+      "bytes": 1860766
     },
     "gyropup-highlights.webm": {
-      "sha256": "fc638bb8777a55ca8cfcec5432e5d53fb1be19f042cb9dc8f52e9c75382aba26",
-      "bytes": 1477633
+      "sha256": "ca2ad808feaf026459b6bf200cd40d665346e3b6cca358bba8495a337349b7a7",
+      "bytes": 1477978
     },
     "gyropup-highlights.webp": {
-      "sha256": "13e89d1799601372d065e25823c5dedf328f98b41972cb403c58382f3881ff29",
-      "bytes": 32610
+      "sha256": "a07f9c3eb55a824f5092f43002a87f71aca831ee1a759f10b02ae3d28e1a4a00",
+      "bytes": 32566
     },
     "capture-receipt.json": {
-      "sha256": "33c347f81d25536b79d1cab21f2b4431054fef40b410cc1c84afd74194ce14d6",
-      "bytes": 114653
+      "sha256": "18f760710d85d2ece59a5b9164485316debc91ee82f05bd788aaec25b20c8bf6",
+      "bytes": 116376
     },
     "capture-frames.json": {
-      "sha256": "ef11563ea5011337df14452da61396ddcfae3a6e85b89aeca08232340ee5c2fd",
+      "sha256": "c85aa3e39567b72df79c9907e4ee2c042036829128458b1f5cc2a0ec30dbb58e",
       "bytes": 100989
     }
   }

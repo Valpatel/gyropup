@@ -126,7 +126,13 @@ for (const file of documents) {
   docs.push({title,file});
 }
 const decisions = YAML.parse(await read(config.decisions));
-const notebook = `<h1>The design notebook.</h1><p class="doc-lede">Follow the decisions, research, and work behind Gyropup. These are evolving engineering notes, not finished product specifications.</p><div class="notebook-links"><a href="/designer/progress.html">Progress & test reports ↗</a><a href="/designer/build.html">Parts & build files ↗</a><a href="#decisions">Decisions ↓</a></div><h2 id="documents">Documents</h2><ul class="document-list">${docs.map(d=>`<li><a href="${pagePath(d.file)}">${esc(d.title)}</a><small>${esc(d.file)}</small></li>`).join('')}</ul><h2 id="decisions">Design decisions</h2>${decisions.slice().reverse().map(d=>`<details class="decision"><summary><span>${esc(d.id)}</span> ${esc(d.title)}</summary><p>${esc(d.decision)}</p><p>${esc(d.why)}</p><small>${esc(d.date)} · ${esc(d.status)}</small></details>`).join('')}`;
+// The per-component hardware folders (hardware/README.md) and the deployment are many short pages: one fold, so the
+// notebook's list does not grow with every component.
+const folded = (f) => /^(hardware|deploy)\//.test(f) && !f.startsWith('hardware/carrier-');
+const docItem = (d) => `<li><a href="${pagePath(d.file)}">${esc(d.title)}</a><small>${esc(d.file)}</small></li>`;
+const hw = docs.filter(d => folded(d.file));
+const hardwareFold = hw.length ? `<details class="decision" id="hardware-folders"><summary>Hardware folders and deployment (${hw.length} pages)</summary><ul class="document-list">${hw.map(docItem).join('')}</ul></details>` : '';
+const notebook = `<h1>The design notebook.</h1><p class="doc-lede">Follow the decisions, research, and work behind Gyropup. These are evolving engineering notes, not finished product specifications.</p><div class="notebook-links"><a href="/designer/progress.html">Progress & test reports ↗</a><a href="/designer/build.html">Parts & build files ↗</a><a href="#decisions">Decisions ↓</a></div><h2 id="documents">Documents</h2><ul class="document-list">${docs.filter(d=>!folded(d.file)).map(docItem).join('')}</ul>${hardwareFold}<h2 id="decisions">Design decisions</h2>${decisions.slice().reverse().map(d=>`<details class="decision"><summary><span>${esc(d.id)}</span> ${esc(d.title)}</summary><p>${esc(d.decision)}</p><p>${esc(d.why)}</p><small>${esc(d.date)} · ${esc(d.status)}</small></details>`).join('')}`;
 await writeFile(path.join(out,'site/index.html'), frame('Design notebook', notebook).replace("root:'../../'", "root:'../'"));
 // Static equivalents of local file listings keep the existing Build page's file links working.
 const directories = new Map();

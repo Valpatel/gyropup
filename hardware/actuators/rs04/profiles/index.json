@@ -1,0 +1,5 @@
+{
+  "schema": "gyropup.rs04-profile-index/1",
+  "about": "The RS-04 build profiles the motor tool offers, in menu order (rig/tests/test_rs04_vectors.py keeps it in step with the files).",
+  "profiles": ["pla-bench", "final"]
+}

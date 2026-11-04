@@ -11,7 +11,7 @@ for research purposes only, and will not be offered for sale.
 | Explore the project | [Website](https://gyropup.com), [browser playground](https://gyropup.com/designer/sim.html) |
 | See published progress and evidence | [Progress](https://gyropup.com/designer/progress.html), [Build and downloads](https://gyropup.com/designer/build.html) |
 | Find current work and remaining blockers | [Program #31](https://github.com/Valpatel/gyropup/issues/31), [turret print readiness #61](https://github.com/Valpatel/gyropup/issues/61), [the turret carrier #66](https://github.com/Valpatel/gyropup/issues/66) |
-| Prepare for the ordered motors | [RS-04 mounting candidate](rs04-mounting-fit.md), [support-ring comparison](rs04-support-study.md), [3115-900KV survey and gauge](ordered-turret-motor.md), [purchase ledger](purchases.md) |
+| Prepare for the ordered motors | [RS-04 motor tool](rs04-motor-tool.md), [RS-04 mounting candidate](rs04-mounting-fit.md), [support-ring comparison](rs04-support-study.md), [3115-900KV survey and gauge](ordered-turret-motor.md), [purchase ledger](purchases.md) |
 | Read with an agent or HTTP client | [Public reading guide](agent-guide.md), [llms.txt](https://gyropup.com/llms.txt) |
 | Contribute or resume work | [Contributor orientation](../CONTRIBUTING.md), then the relevant GitHub issue and PR |
 
@@ -26,12 +26,15 @@ not establish mechanical readiness. Older plans remain available for context and
 - [Mechanical review criteria and baseline history](mechanical-readiness.md), [interface standard](mechanical-interfaces.md),
   [print-source provenance](print-source-provenance.md).
 - Leg: [current RS-04 mounting fit](rs04-mounting-fit.md), [unpowered fit job](rs04-fit-job.md), [motor thermal model](motor-thermal.md), [historical prototype plan](leg-prototype-plan.md), [bench tests](leg-bench-tests.md),
+  [RS-04 motor tool](rs04-motor-tool.md),
   [rig assembly](leg-rig-assembly.md), [wiring](leg-rig-wiring.md), [safety](leg-rig-safety.md).
 - Turret: [ordered motor interface](ordered-turret-motor.md), [prototype plan](turret-prototype-plan.md), [next plan](turret-next-plan.md),
   [assembly](turret-assembly.md), [wiring](turret-wiring.md), [bench tests](turret-bench-tests.md),
   [physics](turret-physics.md).
 - Body: [plan](body-plan.md), [next plan](body-next-plan.md), [frame](body-frame.md),
   [electrical](body-electrical.md), [thermal](body-thermal.md), [safety](body-safety.md).
+- Hardware: [one folder per component](../hardware/README.md) (references, interfaces, config, inventory, bring-up),
+  [the robot computer's deployment](../deploy/jetson/README.md), the [RS-04 bring-up checklist](../hardware/actuators/rs04/bring-up.md).
 - Carrier: [packaging evidence](../hardware/carrier-packaging/README.md),
   [protection candidate](../hardware/carrier-pan-protection/README.md), [service connectors](carrier-service-connectors.md),
   [insert-fit specimens](../research/carrier-insert-fit/README.md). Physical fit, wiring and printed strength remain open.
