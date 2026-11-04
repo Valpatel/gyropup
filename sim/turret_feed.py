@@ -1,6 +1,7 @@
 """The ball feed in physics: 30 Rival balls in the hopper, the dial stepping them to the exit, at every pose.
 
     .venv/bin/python sim/turret_feed.py [--quick] [--video]
+    .venv/bin/python sim/turret_feed.py --elevated [--quick]     # muzzle up, +10 .. +40 deg (#201)
 
 MuJoCo, in the cartridge frame of cad/turret.py (x along the barrel, z up through the dial axis; metres), with the
 CAD's own numbers (cad/turret.py Geo): the dial-housing floor with its exit opening under the front pocket, the
@@ -377,9 +378,44 @@ def write_pile(seed=0, n_balls=30):
     return out
 
 
+# above level (#201, D77): the feed at the elevations a raised upper stop could allow, before the stop is moved
+ELEVATED_POSES = [(10, 0, 0), (20, 0, 0), (30, 0, 0), (40, 0, 0), (20, -10, 0), (30, 0, 15)]
+
+
+def elevated(quick=False):
+    """Feeding and parking with the muzzle up (tilt +10 .. +40 deg, and the body's lean on top): does each step still
+    hand exactly one ball to the tyres, does the chute's last stretch (it runs uphill above level) still carry the ball
+    to the nip, and does a parked dial still hold? Writes exports/turret/feed/feed-elevated.json."""
+    G, tu = geo()
+    res = {'what': 'the feed above level (sim/turret_feed.py --elevated, #201)', 'feeding': [], 'parked': []}
+    poses = ELEVATED_POSES[:2] if quick else ELEVATED_POSES
+    for pose in poses:
+        for mu in ((0.7,) if quick else (0.4, 0.7, 1.0)):
+            for rate in ((3.0,) if quick else (3.0, 8.0)):
+                r = feed_test(G, tu, pose, mu, rate, seed=int(abs(pose[0]) + 10 * mu))
+                res['feeding'].append(r)
+                print(f"feed  tilt {pose[0]:+4} pitch {pose[1]:4} roll {pose[2]:4} mu {mu} {rate:3.0f}/s: fed {r['fed']}/{r['balls']}, "
+                      f"doubles {r['double_feeds']}, empty steps {r['empty_steps_before_dry']}, latency max {r['latency_ms_max']} ms, escaped {r['escaped']}")
+        for powered in (True, False):
+            r = park_test(G, tu, pose, 0.7, powered)
+            res['parked'].append(r)
+            print(f"park  tilt {pose[0]:+4} {'powered' if powered else 'motor off'}: {r['balls_left']} balls left, {r['escaped']} escaped")
+    feeds = res['feeding']
+    res['verdict'] = {'double_feeds': sum(r['double_feeds'] for r in feeds), 'empty_steps_before_dry': sum(r['empty_steps_before_dry'] for r in feeds),
+                      'balls_fed': [r['fed'] for r in feeds], 'parked_leaks': sum(r['balls_left'] for r in res['parked']),
+                      'latency_ms_max': max((r['latency_ms_max'] or 0) for r in feeds), 'cases': len(feeds) + len(res['parked'])}
+    OUT.mkdir(parents=True, exist_ok=True)
+    (OUT / 'feed-elevated.json').write_text(json.dumps(res, indent=1) + '\n')
+    print('verdict', res['verdict'])
+    return res
+
+
 def main():
     if '--pile' in sys.argv:
         write_pile()
+        return
+    if '--elevated' in sys.argv:
+        elevated('--quick' in sys.argv)
         return
     ap = argparse.ArgumentParser()
     ap.add_argument('--quick', action='store_true')
