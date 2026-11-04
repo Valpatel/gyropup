@@ -6,6 +6,9 @@ follows the height command (plus the roll-levelling difference between the sides
 commands; a gravity feed-forward holds the robot's weight. The force goes to the two motors through the five-bar's
 Jacobian, each torque clipped to the RS-04's torque-speed line and the firmware cap. The TPU stops are spring torques
 on the motor joints (sim/leg_rig.py's), passive: they act with the motors off too.
+
+With guard on (the default), the firmware's protections (docs/leg-protection.md): each leg's commanded length is
+clamped to the reach window at its lean, and each motor's torque goes through the soft stops before the clip.
 """
 from __future__ import annotations
 
@@ -22,6 +25,7 @@ sys.path.insert(0, str(R / 'cad'))
 import fivebar as fb  # noqa: E402
 from sim.controller import Command, Controller, Gains, clip_torque  # noqa: E402
 from sim import leg_rig as lr  # noqa: E402
+from sim import leg_limits as ll  # noqa: E402
 
 G = 9.81
 SIDES = ('l', 'r')
@@ -128,9 +132,20 @@ class LegGains:
     kd_th: float = 14.0
 
 
+def soft_stop(rb: RobotV2, data, name: str, tau: float, omega: float) -> float:
+    """sim/leg_limits.py soft_stop on a leg motor (name motor_f_l etc.) against its hard stops, at the every-day torque."""
+    fo, fi, ro, ri = rb.stops
+    side = name[-1]
+    p1, p2 = rb.phi(data, side)
+    phi, lo, hi = (p1, fi, fo) if name.startswith('motor_f') else (p2, ro, ri)
+    everyday = rb.leg_cap or ll.load()['profiles']['robot']['everyday_nm']
+    return ll.soft_stop(tau, phi, omega, lo, hi, everyday)
+
+
 @dataclass
 class ControllerV2(Controller):
     leg: LegGains = field(default_factory=LegGains)
+    guard: bool = True            # the window and the soft stops of sim/leg_limits.py, as gp_control.c runs them
 
     def control(self, data, cmd: Command, dt: float):
         rb, m = self.robot, self.robot.m
@@ -197,6 +212,8 @@ class ControllerV2(Controller):
         for side, sgn in (('l', -1.0), ('r', 1.0)):
             L, th, dL, dth, J = rb.leg_state(data, side)
             L_cmd = rb.height_m(h0 + sgn * self.dh)
+            if self.guard:
+                L_cmd = ll.clamp_L(L_cmd, lean_cmd)
             F = g.kp_L * (L_cmd - L) - g.kd_L * dL + ff
             T = g.kp_th * (lean_cmd - th) - g.kd_th * dth
             uL = np.array([math.sin(th), -math.cos(th)])
@@ -210,6 +227,8 @@ class ControllerV2(Controller):
             if name.startswith('wheel'):
                 c = clip_torque(t, omega, rb.wheel_peak, rb.wheel_omega)
             else:
+                if self.guard:
+                    t = soft_stop(rb, data, name, t, omega)
                 c = lr.clip_motor(t, omega, rb.leg_peak, rb.leg_omega, rb.leg_cap)
             if abs(c) < abs(t) - 1e-9:
                 self.saturation[name] += 1

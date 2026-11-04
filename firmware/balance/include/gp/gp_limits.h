@@ -22,7 +22,7 @@
 #define GP_LIM_PLA_MOTOR_NM 12.0f      /* each RS-04's limit_torque (0x700B), written at boot */
 
 #define GP_LIM_PEAK_MAX_S 0.35f
-#define GP_LIM_RMS_NM 28.5f             /* the continuous limit: PENDING #195: the RS-04 stall table's rated row */
+#define GP_LIM_RMS_NM 28.5f             /* the continuous limit: the RS-04 stall table's rated row */
 #define GP_LIM_RMS_TAU_S 30.2f          /* the mean square's time constant: the winding's R_wc x C_w */
 #define GP_LIM_JUMP_HOT 0.8f              /* no jump while a motor's rms is over this share of GP_LIM_RMS_NM */
 

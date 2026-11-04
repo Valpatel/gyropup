@@ -43,7 +43,7 @@ import fivebar as fb  # noqa: E402
 OUT = R / 'exports' / 'leg' / 'limits.json'
 FEA = R / 'exports' / 'leg' / 'fea' / 'summary.json'
 DERATING = R / 'exports' / 'motor-day' / 'derating.json'
-THERMAL = R / 'exports' / 'leg' / 'thermal' / 'motor_thermal.json'   # issue #195's model, once merged
+THERMAL = R / 'exports' / 'leg' / 'thermal' / 'motor_thermal.json'   # the motor heat model (#195)
 SWEEP_CAPS = (30.0, 45.0, 60.0, 75.0, 90.0, 105.0, 120.0)
 HALF_MASS = 18.75                 # kg a leg carries at D71's design mass
 RS04_PEAK = 120.0                 # N m (catalog/leg_actuators.json, manual 1.3)
@@ -145,17 +145,30 @@ def push_limited_peak(sweep: list, cap_n: float) -> dict:
 
 
 def thermal_inputs() -> dict:
+    """The continuous limit and its time constant from the motor heat model (sim/motor_thermal.py, merged in #195), and
+    what it says about each build's frame; the manual's numbers if the model's file is absent."""
     if THERMAL.exists():
         d = json.loads(THERMAL.read_text())
-        i = d['inputs']
-        rated = i['stall_rated_nm']['v']
         cal = d.get('calibration', {})
-        r_wc, c_w = cal.get('R_wc', R_WC_K_PER_W), cal.get('C_w', C_W_J_PER_K)
-        return {'rms_nm': rated, 'tau_s': round(r_wc * c_w, 1), 'source': 'exports/leg/thermal/motor_thermal.json (sim/motor_thermal.py)',
-                'pending': False}
-    return {'rms_nm': STALL_RATED_NM, 'tau_s': round(R_WC_K_PER_W * C_W_J_PER_K, 1), 'pending': True,
+        r_wc, c_w = cal.get('r_wc_k_per_w', R_WC_K_PER_W), cal.get('c_w_j_per_k', C_W_J_PER_K)
+        rec = {r['option']: r for r in d.get('recommendation', {}).get('rows', [])}
+        hot = d.get('hot_day', {})
+        b = rec.get('B_pa6cf', {})
+        passing = [o for o, r in rec.items() if r.get('pass_winding') and r.get('pass_face')]
+        bench = d.get('bench', {})
+        lim25 = next((x for x in bench.get('limits', []) if x.get('room_c') == 25.0), None)
+        cap_run = bench.get('runs', {}).get('cap', {})
+        return {'rms_nm': d['inputs']['stall_rated_nm']['v'], 'tau_s': round(r_wc * c_w, 1), 'pending': False,
+                'source': "exports/leg/thermal/motor_thermal.json (sim/motor_thermal.py, #195): the RS-04 manual 1.3 item 14 "
+                          "stall table's rated row, and the winding's fitted R_wc x C_w",
+                'frame': {'case': hot.get('case'), 'ambient_c': hot.get('ambient_c'), 'target_winding_c': d['recommendation']['target_winding_c'],
+                          'pa6cf_winding_c': b.get('winding_c'), 'pa6cf_face_c': b.get('face_c'), 'pa6cf_face_limit_c': b.get('face_limit_c'),
+                          'options_passing': passing},
+                'bench': {'face_limit_c': bench.get('face_limit_c'), 'hold_nm_25c': lim25 and lim25['torque_nm'],
+                          'cap_nm': bench.get('cap_nm'), 'cap_face_limit_min': cap_run.get('t_face_limit_s') and round(cap_run['t_face_limit_s'] / 60)}}
+    return {'rms_nm': STALL_RATED_NM, 'tau_s': round(R_WC_K_PER_W * C_W_J_PER_K, 1), 'pending': True, 'frame': None, 'bench': None,
             'source': "RS-04 manual 1.3 item 14 (the stall table's rated row) and the winding's fitted R_wc x C_w, as the motor "
-                      'heat model takes them (sim/motor_thermal.py, PR #195, not yet merged: re-run this when it is)'}
+                      'heat model takes them (sim/motor_thermal.py, #195: absent here, re-run when it is present)'}
 
 
 def torque_profiles(fea: dict, derating: dict, sweep: list) -> dict:
@@ -182,7 +195,11 @@ def torque_profiles(fea: dict, derating: dict, sweep: list) -> dict:
              'everyday_nm': float(everyday), 'peak_nm': float(peak), 'rms_nm': th['rms_nm'], 'rms_tau_s': th['tau_s'],
              'peak_max_s': 0.35, 'motor_limit_torque_nm': float(peak),
              'everyday_governing': day_w, 'peak_governing': pk_w, 'everyday_rows': day, 'peak_rows': pk, 'knee_capacity': knees,
-             'rms_source': th['source'], 'rms_pending': th['pending'],
+             'rms_source': th['source'], 'rms_pending': th['pending'], 'thermal_frame': th['frame'],
+             'rms_note': "the motor's own continuous rating: the heat model finds the PA6-CF hip frame insulates the motor so that "
+                         'even driving and balancing (under 20 N m rms) overheats it on a hot day, a design fix (an aluminium frame '
+                         "plate, #195's options C or E), not a torque cap below the standing torque; the firmware's motor "
+                         'temperature sit (80 C) and jump refusal (70 C) cover it until then',
              'source': 'exports/leg/fea/summary.json (cad/leg_studies.py), the jump sweep below'}
     bench = {'title': 'PLA bench leg on the boom stand (docs/motor-day.md)',
              'everyday_nm': float(pla), 'peak_nm': float(pla), 'rms_nm': th['rms_nm'], 'rms_tau_s': th['tau_s'],
@@ -190,7 +207,8 @@ def torque_profiles(fea: dict, derating: dict, sweep: list) -> dict:
              'first_failure': {'cap_nm': nxt, 'row': first,
                                'note': f'at {nxt:g} N m the weakest PLA row falls under its every-day target' if nxt else None},
              'rms_note': 'the PLA face, not the motor, sets the continuous limit on the bench: stop when a motor case passes 50 C '
-                         '(sim/motor_thermal.py bench limits, PR #195); the firmware cannot see the case temperature',
+                         '(sim/motor_thermal.py bench limits, #195); the firmware cannot see the case temperature',
+             'thermal_bench': th['bench'],
              'source': 'exports/motor-day/derating.json (tools/motor_day.py: PLA strength 25 MPa, every-day targets at the stand mass)'}
     return {'pla_bench': bench, 'robot': robot}
 
@@ -264,6 +282,20 @@ def command_window(leans=None, margin_deg: float = SOFT_MARGIN_DEG, dead_min: fl
         ok = [L / 1000.0 for L in range(90, 400) if pose_ok(L / 1000.0, lean, math.radians(margin_deg), dead_min)]
         out.append([lean, round(min(ok), 3), round(max(ok), 3)] if ok else [lean, None, None])
     return out
+
+
+_TABLE = None
+
+
+def clamp_L(L_m: float, lean: float, table: list | None = None) -> float:
+    """A commanded leg length clamped to the window at its lean (C: gp_guard_clamp_L), from the committed file."""
+    global _TABLE
+    if table is None:
+        if _TABLE is None:
+            _TABLE = load()['command']['window']
+        table = _TABLE
+    lo, hi = window_at(table, lean)
+    return min(hi, max(lo, L_m))
 
 
 def window_at(table: list, lean: float):
