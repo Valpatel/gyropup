@@ -257,7 +257,7 @@ def test_every_fuse_protects_its_wire():
 
 def test_no_live_pins_on_the_body():
     """Every connector on the body's side of a lead that is live with the pack in is a socket (hazard 11, D58): the
-    bus branch leads (XT60H-F, the turret's XT30U-F) and the 12 V ones (XT30U-F); the devices' leads carry the
+    bus branch leads (XT60H-F, the turret's DT06 plug with sockets) and the 12 V ones (XT30U-F); the devices' leads carry the
     pins. The bay's XT90-S: its female is on the bay's lead, the robot's male is dead with the packs out.
     The order buys the sockets the wire list needs."""
     import re
@@ -273,7 +273,8 @@ def test_no_live_pins_on_the_body():
     assert not bad, bad
     ends = {r['id']: r['termination'] for r in w['wires']}
     assert all('XT60H-F' in ends[k] for k in ('W10', 'W11', 'W12', 'W13', 'W14', 'W15')), ends
-    assert all('XT30U-F' in ends[k] for k in ('W21', 'W24', 'W34')), ends
+    assert all('XT30U-F' in ends[k] for k in ('W21', 'W24')), ends
+    assert all('DT06' in ends[k] for k in ('W34', 'W36')), ends            # D76: the plug's sockets on the body's side
     f = R / 'exports' / 'body' / 'bom.json'
     if f.exists():
         bom = json.loads(f.read_text())

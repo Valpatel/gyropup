@@ -238,7 +238,7 @@ connector.
 
 | # | Run | Conductors | Gauge | Length | Strain relief |
 |---|---|---|---|---|---|
-| C1 | stand (D76): the dock's leads -> 20 A MINI 58 V -> rocker -> DT06 pins 1-2 (+) and 3-4 (-), paralleled at the plug | 2 | 14 AWG (the dock's own 12 AWG to the fuse) | 250 mm (est) | the -y wall's harness notch |
+| C1 | stand (D76): the dock's leads -> 20 A MINI 58 V -> rocker -> DT06 pins 1-2 (+) and 3-4 (-), paralleled at the plug | 2 | 14 AWG (the dock's own 12 AWG to the fuse), spliced to 18 AWG tails for the size-16 sockets | 250 mm (est) | the -y wall's harness notch |
 | C1b | stand: the pendant socket (TB3M mini-XLR, pins 1-2) -> DT06 pins 7-8; USB-CAN H/L -> pins 5-6 | 2 pairs | 24 AWG twisted | 250 mm | same |
 | C2 | DT04 -> base: pins 1-2 (+BUS) -> **10 A MINI 58 V in-line holder** -> base board, pins 3-4 (GND) -> base board (D8 and D14 across BUS and GND at its input pads); DT04 pins 5-6 (CAN) -> base board; 7 <- base board's 12 V PAN through F4 (in line); 8 -> the 555's VCC | 2 + 4 | 18 / 24 AWG | 120 mm round the housing (est) | a tie to the housing at 60 mm |
 | C3 | base board -> the ring's stator plug (the ring's own 250 mm leads, 28 AWG, end in their receptacle) | 12 | 24 AWG tails | 60 mm | a tie at the board |

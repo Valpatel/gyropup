@@ -5,8 +5,9 @@ D76 (2026-11-03, supersedes D66): the turret carries no computer of its own. Sta
 it over the stand's USB-CAN lead (an optional second variation); the turret's Feather M4 CAN and its hardware arm chain
 stay in the turret. The power is one DeWalt FLEXVOLT DCB609 in 20 V mode (15-20.5 V, kept from D66): the pack slides
 into the stand's back onto a 20 V MAX dock adapter fixed under the top plate, as onto a drill, and rests on the floor;
-its leads go through the stand's 20 A MINI fuse (58 V type) and the rocker switch, then on a 14 AWG lead into the DT06
-plug's pins 1-4 (the turret's DT12; not through the terminal board, which carries the signals). The pan base's foot stands on the top plate (no compute plinth). The
+its leads go through the stand's 20 A MINI fuse (58 V type) and the rocker switch, then on a 14 AWG pair spliced to 18 AWG
+tails, paralleled into the DT06 plug's pins 1-2 and 3-4 (its size-16 sockets take 16-20 AWG; the plug takes the turret's
+DT12; not through the terminal board, which carries the signals). The pan base's foot stands on the top plate (no compute plinth). The
 bench supply (Mean Well LRS-350-24 and the XT60E-M inlet) is gone; the box bench (cad/build_turret_box.py) keeps its own.
 
 Turret frame (cad/turret.py): x forward, y left, z up, origin on the pan axis at the TM mounting face. The stand's top

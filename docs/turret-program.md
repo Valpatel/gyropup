@@ -424,3 +424,7 @@ Newest last. One entry per agent run: what it did, what it proved, what is next.
     The lidar table (cad/turret_lidar.py, 143 mm) is to be rerun at the new height.
   - For the main session: the 3D page's turret is now on its plinth on the J501 box; the stand scene (FLEXVOLT dock)
     is in exports/turret/bench/ (cad/build_turret.py) and has no page of its own yet.
+  - 2026-11-03, D76 (issue #192) supersedes D66's plinth: the owner moved the computer off the turret ("Turret runs off
+    the orin AGX on the robot or an Orin NX on a desktop (optional 2nd variation)"). The pan base stands on the TM face
+    again (86 mm lower, about 0.8 kg lighter), the power comes back on the DT12's pins 1-4, and the Feather M4 CAN stays
+    its controller (research/turret-controller-survey.md).

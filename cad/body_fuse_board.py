@@ -16,7 +16,7 @@ the board's + bus), not in the pack's negative lead. The INA228's inputs may not
 low-side switch, opening the switch drags the - bus up to the + bus while the INA228's inputs stay at the pack's -:
 its input protection would then carry the robot's load current round the open switch. On the high side its inputs sit
 0-41 V (D65: 10S) above its ground whether the switch is on or off. D65 (two DCB609 packs, 10S, 30-41 V, no charge
-port) and D66 (the turret on its own fused branch; one TRACO 12 V converter for the J501 and the rail) set the
+port) and D66 (the turret on its own fused branch, D76 into its DT12; one TRACO 12 V converter for the J501 and the rail) set the
 holders of section HOLDERS.
 """
 from __future__ import annotations
@@ -112,8 +112,8 @@ P3_WIRES = [
       f'MINI 58V {h["fuse_a"]:g} A (board {h["ref"]})', 'was: from a + bus tap through an inline holder') for h in HOLDERS if h['wire'] in _LOAD] + [
     ('W16', 'fuse board J8 (M4 stud)', 'TRACO TEP 150-4812WI Vin+', 18, 'red', 'ring M4 / ferrule', 'MINI 58V 10 A (board F7)',
      '150 W out: about 5.6 A in at 30 V, plus its inrush; was: the DDR-120C-24\'s input'),
-    ('W22', 'fuse board J9 (M4 stud)', 'stop relay, pole B (in); pole B (out) to the turret\'s XT30 (W34)', 16, 'red', 'ring M4 / screw terminal',
-     'MINI 58V 7.5 A (board F8)', 'D66: the turret on the 10S bus, about 40 W, bursts to about 140 W (4.7 A at 30 V); the radio stop still '
+    ('W22', 'fuse board J9 (M4 stud)', 'stop relay, pole B (in); pole B (out) to the turret\'s DT06 pins 1, 2 (W34)', 16, 'red', 'ring M4 / screw terminal',
+     'MINI 58V 7.5 A (board F8)', 'D66, D76: the turret on the 10S bus, about 33 W on average, up to 4.8 A at 30 V in a burst (no computer of its own); the radio stop still '
      'cuts it (pole B, the G2RL-2: see docs/body-fuse-board.md 1 for its DC rating); was: the 24 V rail'),
     ('W40', 'TRACO TEP 150-4812WI +V', 'fuse board J14 12V IN (M4 stud)', 14, 'red', 'ferrule / ring M4', '(the converter\'s 12.5 A limit)',
      'new: the 12 V rail into the board\'s two holders (W21, W43 start there)'),

@@ -7,11 +7,13 @@ values (mm, degrees). The design gates are `cad/turret_gates.py` (the turret's p
 `cad/gates.py`), stored in `exports/turret/gates.json` and enforced by `cad/build_turret_box.py`, which will not build
 the 3D page's scene from a model that fails them or from a stale result.
 
-Since D66 the turret is a robot of its own: its own Jetson and power input in a compute plinth under the pan base
-(section 7), on Gyropup's head or on its own stand with a FLEXVOLT pack (section 8).
+Since D76 (2026-11-03, superseding D66's compute plinth) the turret carries no computer: on Gyropup the J501 (AGX Orin)
+runs its vision and aiming over CAN; standing alone, an Orin NX on a desk does, over the stand's USB-CAN lead (section 7).
+Its own controller is still the Feather M4 CAN. The pan base stands straight on Gyropup's TM face or on its own stand
+with a FLEXVOLT pack (section 8).
 
-Frames: T, the turret frame (origin on the pan axis at the pan base's mounting face, z up; the compute plinth is below
-it, z -86 to 0); C, the cartridge frame (x along the
+Frames: T, the turret frame (origin on the pan axis at the pan base's mounting face, which is the TM face, z up);
+C, the cartridge frame (x along the
 barrel, the dial axis at x = y = 0, the ball path at z = 0). At tilt 0, C sits 125 mm (`path_t`) over the mounting
 face and 48 mm (`tilt_x`) behind the pan axis; the tilt axis is at C (48, y, 15), over the pan axis.
 
@@ -28,7 +30,7 @@ launch ceiling and the toolkit's gate code, and `cad/build_turret_box.py` refuse
 
 | Gate | What it proves | Pass |
 |---|---|---|
-| `connectivity` | the whole turret at home as one `Assembly` (T frame): every part grounded (at `compute_tray`) through contacts, fasteners and joints measured to hold; each moving body (pan, pinion, tilt, dial, each flywheel, the fill flap) held by its joint (9 revolute joints within 1 mm; the mesh a `gear` interface within 0.5 mm); the laser held by its modelled set screws | no floating part, every joint holds; undeclared contacts are warnings |
+| `connectivity` | the whole turret at home as one `Assembly` (T frame): every part grounded (at `pan_base`) through contacts, fasteners and joints measured to hold; each moving body (pan, pinion, tilt, dial, each flywheel, the fill flap) held by its joint (9 revolute joints within 1 mm; the mesh a `gear` interface within 0.5 mm); the laser held by its modelled set screws | no floating part, every joint holds; undeclared contacts are warnings |
 | `hopper` | the 30 balls of the physics-settled pile (`contains` in the hopper's registered `@cavity`: the Ø dial-wall cylinder from the floor to the lid, less every tilt-frame solid, the dial parked): each inside, none in the hopper's wall, none through another, each resting on the cavity or a ball below it | 0.5 mm^3 outside or shared at most (the settle's soft contacts), touching at 0.1 mm |
 | `path` | a ball every 2 mm from the exit pocket round the chute, through the nip and the barrel to the muzzle, each inside the path's `@cavity` (the ball's free space, the tyres left in: they squeeze by design) | cadagent's defaults (0.001 mm^3) |
 | `sweep` | the relation table on the posed turret: the hopper's balls against every part that moves relative to them (base, pinion, pan frame) at 8 pans x 5 tilts | no shared volume |
@@ -55,9 +57,9 @@ dossier lint run by `cad-agent gates`, and `cad-agent check` failing on a failin
 |---|---|
 | `dossier/project.yaml` | the requirements (R1-R19, each with its source and how it is verified), the interfaces between sections, the gates' declarations (ground, free parts, intended overlaps, ignored pairs, tools) |
 | `dossier/sections/S1-base.yaml` .. `S8-stand.yaml` | each section's purpose, requirements, interfaces, decisions (with the alternatives rejected) and a card per part: its function, interfaces, material, screws, checks |
-| `dossier/decisions.yaml` | the turret's project decisions (D40, D48, D66-D68, D70) and the dossier's own (T0.1-T0.8) |
+| `dossier/decisions.yaml` | the turret's project decisions (D40, D48, D66-D68, D70, D76) and the dossier's own (T0.1-T0.8) |
 | `dossier/gate-declarations.yaml` | what the schema cannot say yet: the hopper's `contains` with `closed_by`, the screws' thread overlaps |
-| `cad/turret_dossier.py` | the registry build: every part at home in T (the stand under the plinth), the hopper's cavity, the joints, the gated screws, the build order -> `exports/dossier-geometry.json` |
+| `cad/turret_dossier.py` | the registry build: every part at home in T (the stand under the pan base), the hopper's cavity, the joints, the gated screws, the build order -> `exports/dossier-geometry.json` |
 | `exports/gates/*.json`, `*.md` | the verdicts: connectivity, containment, fasteners, motion, assembly, wall, the dossier lint; and the turret's own `turret-path`, `turret-ammo` |
 
 ```
@@ -103,7 +105,8 @@ ring passes power and signals), 3:1 off an STS3215, at up to the servo's rate, w
 - Index: a hall switch on the turntable 3.5 mm over a magnet on the base (760 G, 4 x the A1120's operate point).
 - Clear the DT12 plug's 30 mm withdrawal path with the turret parked.
 
-**Interfaces.** TM face (z 0) to the compute plinth's top (4 x M5 x 16 into inserts in its columns; section 7); the 61810's outer race in the base (clamped by `pan_clamp`), its inner race
+**Interfaces.** The foot (z 0 to 5) on the TM face: 4 x M5 x 16 into the head's (or the stand's) inserts, 2 x Ø5 dowels
+(D76; D66's plinth stood between them); the 61810's outer race in the base (clamped by `pan_clamp`), its inner race
 on the turntable's journal (DIN 471-50 circlip below); the yoke bolts to the turntable's top (z 69, 4 x M4 into
 inserts); the slip ring's stator in the ring carrier under the base, its rotor turned by the driver in the turntable's
 bore (section 6).
@@ -112,7 +115,7 @@ bore (section 6).
 
 | Part | Material, process | Held by |
 |---|---|---|
-| `pan_base` | PA6-CF, printed on its foot, 4 walls 40 % gyroid | 4 x M5 x 16 into the plinth's column inserts, 2 x Ø5 dowels |
+| `pan_base` | PA6-CF, printed on its foot, 4 walls 40 % gyroid | 4 x M5 x 16 into the TM face's inserts, 2 x Ø5 dowels |
 | `pan_clamp` | 6061-T6 0.125 in, SendCutSend | 3 x M3 into inserts in the base; clamps the 61810 outer race |
 | `pan_bearing` | 61810-2RS, bought | outer race in the base's housing under the clamp |
 | `pan_ring` (turntable) | PA6-CF, printed upside down (teeth on the bed), solid | its journal through the inner race, DIN 471-50 circlip |
@@ -251,7 +254,7 @@ hardware's, not the firmware's (D68).
   warm, 0.15 mm tyre runout, the tyres' growth at speed, the feed's entry offsets. The densest accepted round stays
   under ASTM F963's 2,500 J/m² (D68's safety basis).
 - The flywheels run from a fixed regulated rail whose no-load speed is the ceiling; no firmware setting can exceed it.
-  The rail must be reachable from both supplies (D66): one DCB609 in 20 V mode (15-20.5 V under load) and Gyropup's
+  The rail must be reachable from both supplies (D66, D76): one DCB609 in 20 V mode (15-20.5 V under load) and Gyropup's
   10S bus (30-42 V).
 - Every rating holds at the ceiling: the motors' voltage, current and speed, the ESCs' voltage, the tyre and the hub
   at speed.
@@ -393,71 +396,52 @@ base, the robot's harness).
 **Checks.** `connectivity` (the rotor turned by the coupling; the leads part of the ring), the clash sweep at every pan
 (the leads 2.37 mm under the rails at full depression), docs/turret-wiring.md for the pin map.
 
-## 7. Compute and power (D66)
+## 7. Compute (D76) and power
 
-**Function.** Make the turret a robot of its own: its own computer, one power input that takes both the stand's
-battery and Gyropup's bus, and its fuses, all inside the turret, so it can be built, tested and played with before
-Gyropup walks, and a fault in one robot does not take the other down.
+**Function.** Run the turret from a computer it does not carry. D66 put a Jetson Orin NX in a compute plinth under the
+pan base so the turret was a robot of its own; on 2026-11-03 the owner moved the computer off it (D76):
+
+> "Turret runs off the orin AGX on the robot or an Orin NX on a desktop (optional 2nd variation). Turret has something
+> like an ESP32 for it's control system? Some standard turret controler common drone thing or similar."
 
 **Requirements.**
-- Compute: a Jetson Orin NX 16 GB (the user's choice) on Seeed's reComputer Mini carrier (88 x 56 x 17 mm board,
-  12-54 V on an XT30), up to 40 W in its top power mode (10-40 W), cooled by a fan and heat sink sold for the NX on
-  that carrier; Ethernet to the J501, CAN to the turret's own MCU through the slip ring.
-- Input: one XT30, 12-54 V: one DCB609 in 20 V mode on the stand (15-20.5 V, down to 15 V when empty), Gyropup's 10S
-  bus on the robot (30-41 V, 42 V full; D65), each through its own 58 V fuse (D55).
-- Nothing hung outside: the computer, its cooling, the input, the fuses and the leads in pockets with mounts.
-- The interface to Gyropup unchanged in kind: the TM bolt pattern (4 x M5 on 80 x 80, 2 x Ø5 dowels), the XT30
-  branch, Ethernet, the dry safety loop (DT12, as before).
+- On Gyropup: the J501 (AGX Orin) runs the vision and aiming, with the body's depth cameras, over CAN on the DT12
+  (pins 5-6 to the J501's can1). Power on the DT12's pins 1-4 from the body's fused turret branch (7.5 A MINI 58 V,
+  through the stop relay's pole B).
+- Standing alone (optional, the second variation): an Orin NX on a desk over the stand's USB-CAN (gs_usb) lead; the
+  same frames, so the firmware does not change. A USB camera on the desk if it is to aim by sight.
+- On the turret: one controller, the Feather M4 CAN (research/turret-controller-survey.md: adopt what is built), and the
+  head branch's 10 A MINI 58 V fuse in an in-line holder. The hardware arm chain (D7, D9, D10, D47), the trimmed
+  flywheel rail's 105 fps ceiling (D68) and the barrel never above level hold whatever any computer does.
+- The interface to Gyropup unchanged in kind: the TM bolt pattern (4 x M5 on 80 x 80, 2 x Ø5 dowels), the Ø45 TM cable
+  hole, the DT12 (power, CAN, the dry safety loop).
 
 **The power budget** is under *Power* below (sim/turret_power.py, with section 4's D68 flywheels).
 
-**Interfaces.** The plinth's underside carries the TM pattern (4 x M5 x 16 down into the head's or the stand's
-inserts, 2 x Ø5 dowels); its top carries the pan base (4 x M5 x 16 into inserts in the plinth's four columns); the
-XT30 input and the RJ-45 jack in the -x wall (the operator's side); CAN and power to the slip ring's stator leads
-above the J4012; the head's Ø45 TM cable hole is no longer used (the plinth's floor closes it).
-
-**Parts.**
-
-| Part | Material, process | Held by | Price |
-|---|---|---|---|
-| `compute_tray` | PA6-CF, flat, 4 walls 40 % gyroid; Ø156 x 10 | 4 x M5 x 16 into the head (put in first), 2 x Ø5 dowels; 4 x M4 inserts for the shell | printed |
-| `compute_shell` | PETG, upside down; Ø156 ring, 2.5 mm wall, 4 columns, vents | 4 x M4 x 10 down into the tray; 4 x M5 inserts take the pan base | printed |
-| `compute` | Seeed reComputer Mini J4012 with Extension (NX 16 GB, carrier, extension with RJ-45 and CAN, fan and heat sink, 128 GB NVMe), 95 x 63 x 66.7, 462 g | between the tray's locating ribs, held down by the shell's four tabs | US$999 Seeed (backup: Switch Science, the same kit; or the carrier US$89 + extension US$59 at Seeed with an NX module) |
-| `eth_jack` | Adafruit 909 panel RJ-45 (25 cm to the J4012's port) | 2 x 4-40 through its ears in the wall | US$4.95 Adafruit / Digi-Key |
-| `xt30_input` | Amass XT30U-F on 14 AWG | its housing clamped in the wall's pocket | body.json xt30_f |
-| `input_fuses` | 2 x Bussmann HHM inline MINI holders, 20 A and 5 A Littelfuse MINI 58 V | clipped to the tray beside the J4012 | body.json (D55) |
+**Interfaces.** The pan base's foot carries the TM pattern (section 1); the DT12 pigtail leaves through the Ø45 TM
+hole. No ports on the turret: the XT30 input, the RJ-45 jack and the plinth's two input fuses went with the plinth.
 
 **Decisions.**
-- *The reComputer Mini J4012 with Extension kit, not the bare carrier:* it is the one listing that brings the NX
-  16 GB with a fan and heat sink sold for it on that carrier (Seeed sells no Mini cooler alone), and its extension
-  board has the RJ-45 and the CAN the turret needs. Rejected: the bare carrier with a dev-kit heat sink (no cooler
-  sold for the NX on this carrier; it would be our guess at 40 W), a USB Ethernet dongle instead of the extension
-  (one more part hanging on a port).
-- *A plinth under the pan base*, not the computer inside the pan base: the J4012 is 95 x 63 x 67 and the pan base's
-  middle is the slip ring's; around the ring there is no 95 mm chord inside r 72. The plinth is round (Ø156, inside
-  the bumper's Ø172) so the turret still reads as one body; it adds 86 mm of height and about 0.8 kg (J4012 462 g,
-  the plinth about 280 g printed, the jacks and fuses). Rejected: a square box (corners outside the bumper, a separate
-  box look), the computer in Gyropup's head (D66: the turret must stand alone).
-- *A tray and a shell*, not one printed box: the tray goes on first with short M5s (the head's inserts at the TM
-  pattern), the shell's columns then take the pan base's M5s at the same positions. One box would need 90 mm
-  through-bolts (none at a listed price we could read) or screws under the columns that cannot be reached.
-- *Ports on the -x side*, the operator's side and away from the barrel's arc; the vents on the +-y walls beside the
-  J4012's long sides (43 mm of air each side), **behind the pan axis only**: on Gyropup's J501 box the J501's fan blows
-  up (J501 94da39d; the adapter was drawn for a fan blowing down), so the adapter's "intake shroud" is in fact its
-  exhaust duct and throws the J501's hot air out of the deck's front mouth. The plinth breathes from behind, about
-  90 mm from the mouth and above the plume's start; the J501's own vents are all below the mouth's floor
-  (cad/build_turret_box.py `exhaust_check`, in the box scene's checks). To prove on the bench: both computers at full
-  load, the J501's intake and the J4012's within 3 K of the room.
+- *No computer on the turret* (D76). The plinth stood 86 mm under the pan base and weighed about 0.8 kg (the J4012
+  462 g, the printed tray and shell about 280 g, the jacks and fuses). It put the turret's centre of mass 135 mm over
+  the TM face against the head's 100 mm budget and left the head's D2 fall case at a safety factor of 1.21 (2.0
+  required). Gyropup already carries an AGX Orin with the depth cameras the aiming needs. Rejected: keeping the plinth
+  (the height, the mass and the D2 failure), a smaller computer inside the pan base (no 95 mm chord round the slip
+  ring inside r 72, and a second computer on one robot).
+- *The Feather M4 CAN stays the controller*, not an ESP32 or a drone or gimbal board: the firmware, its tests, the
+  pin map and D47's reviewed arm-chain interfaces are built on it; CAN is native with a transceiver on the board; it
+  has no radio. The survey (research/turret-controller-survey.md) found the off-the-shelf "turret controllers" are
+  camera-gimbal (SimpleBGC, STorM32) and flight controllers (ArduPilot): wrong actuators, no feed, chronograph or arm
+  chain. Revisit the ESP32-S3 + CAN Pal for a cost pass, its radio disabled.
 
-**Checks.** `connectivity` (the base group one body: the J4012 on the tray and under the tabs, the jack and the XT30
-fastened through the wall); the clash sweep (the DT12 plug 3 mm outside the shell); the box scene (the plinth on
-the J501 box's deck); the airflow of the J4012 in the plinth is open (bench test: the module's temperature at 40 W
-with the shell on).
+**Checks.** `connectivity` (the base group grounded at the pan base); the clash sweep (the DT12 plug's withdrawal
+path); the box scene (the pan base on the J501 box's deck); the head's D2 fall case and the turret's tip and
+depression checks with the lighter, lower turret (cad/body_studies.py, cad/turret_studies.py).
 
-### Power (D66, D68)
+### Power (D66, D68, D76)
 
-**Rails** (docs/turret-wiring.md 4 has every part). The XT30 feeds the J4012 directly (20 A MINI 58 V main, 5 A MINI 58 V
-branch) and the head branch through a 10 A MINI 58 V to the base board: **BUS**, 15-42 V. On the base board BUS makes
+**Rails** (docs/turret-wiring.md 4 has every part). The DT12's pins 1-4 feed the head branch through a 10 A MINI 58 V
+(in an in-line holder) to the base board: **BUS**, 15-42 V. On the base board BUS makes
 12 V PAN (Pololu D36V50F12) for the pan servo and goes up the slip ring on three paralleled circuits each way (1, 2, 11
 and 3, 4, 12: the pair D41 kept for a camera is now the third power pair). In the bay, level 0: the bank (2 x 470 uF
 63 V), a P6KE51A clamp and the flywheel rail, **RAIL**: a TDK i6A4W, always on, trimmed per turret to ~11.31 V
@@ -478,20 +462,21 @@ rail). *The tilt servo and the logic on their own Pololu D36V50F12 / D36V28F5* (
 rail: a servo on a per-turret trim would change with every turret; a second i6A4W would be $47 for ~25 W. *The bank:
 Panasonic EEU-FR1J471B*, 470 uF 63 V (Digi-Key $1.54, Newark $2.13), replacing the 35 V parts.
 
-**Budget** (sim/turret_power.py; "play": the servos moving and the J4012 at 48 W; "worst": every servo at its 50 %
+**Budget** (sim/turret_power.py; "play": the servos moving; "worst": every servo at its 50 %
 torque cap at once; the ring's busiest circuit carries 42 % of the three; a spin-up by its 100 ms peak, a burst by its
 worst 1 s RMS):
 
 | | 15 V (pack empty) | 20.5 V (pack full) | 30 V (bus) | 42 V (bus full) |
 |---|---|---|---|---|
-| Input: spin-up (800 ms) peak, play / worst | 11.2 / 13.1 A | 7.9 / 9.1 A | 5.2 / 6.1 A | 3.7 / 4.3 A |
-| Input: 8 shots at 10/s, play / worst | 11.3 / 13.7 A | 8.0 / 9.7 A | 5.2 / 6.3 A | 3.7 / 4.4 A |
-| Input: game average, J4012 at 25 / 48 W | 3.9 / 5.4 A (58 / 81 W) | 2.8 / 3.9 A | 1.9 / 2.7 A | 1.4 / 1.9 A |
+| Input: spin-up (800 ms) peak, play / worst | 7.7 / 9.6 A | 5.4 / 6.7 A | 3.6 / 4.4 A | 2.6 / 3.2 A |
+| Input: 8 shots at 10/s, play / worst | 8.4 / 10.5 A | 6.0 / 7.5 A | 3.8 / 4.8 A | 2.7 / 3.4 A |
+| Input: game average | 2.2 A (33 W) | 1.6 A | 1.1 A | 0.8 A |
 | Ring, busiest circuit: spin-up / burst, play | **3.0 / 3.3 A** | **2.1 / 2.4 A** | 1.4 / 1.5 A | 1.0 / 1.1 A |
 | Ring, game average a circuit | 0.64 A | 0.47 A | 0.32 A | 0.23 A |
 
 The flywheels draw ~85 W at the top of the 800 ms ramp (100 ms), ~37 W holding speed and up to ~270 W for ~10 ms in a
-shot's recovery; the J4012 up to 48 W. **The slip ring (2 A a circuit) holds on the bus at the firmware's 800 ms and
+shot's recovery. Since D76 no computer draws from the input (D66's J4012 took 25-48 W, which put the
+input at 11.2-13.7 A at 15 V). **The slip ring (2 A a circuit) holds on the bus at the firmware's 800 ms and
 10/s, with every servo at its cap; on the stand's pack it does not.** So the firmware runs a stand profile from BUS_V
 (the Feather's A0: BUS through 182 k / 10 k): a 1.0 s ramp and bursts of at most 4/s at 20.5 V, 1.6 s and 2/s at 18 V,
 2.4 s and 1/s at 15 V, which hold the busiest circuit at 1.8-2.0 A in play (2.4-2.6 A if every servo hit its cap at
@@ -505,10 +490,10 @@ with a DC rating of 15 A at 20.5 V or more was found in stock (the 20 A rockers 
 battery switch: it switches the pack itself and never breaks a load's pulse. The firmware's supply profile
 (firmware/turret/config.py, D70) is implemented and tested: the ring sets it, the switch no longer does.
 
-**Run time** on one DCB609 (about 160 Wh in 20 V mode): ~5 h idle (the J4012 at 25 W, nothing moving: ~32 W), ~2.8 h
-at the game average (58 W), ~2.0 h with the J4012 flat out (81 W).
+**Run time** on one DCB609 (about 160 Wh in 20 V mode): ~4.8 h at the game average (33 W) without the J4012 (D66's
+plinth: ~2.8 h at 58 W, ~2.0 h flat out at 81 W). The desk's Orin NX runs from its own supply.
 
-## 8. The stand and its battery (D66)
+## 8. The stand and its battery (D66, D76)
 
 **Function.** Carry the turret on its own and power it from one FLEXVOLT pack, with the hold-to-run pendant, for the
 bench and for play without Gyropup.
@@ -516,8 +501,9 @@ bench and for play without Gyropup.
 **Parts and decisions.** `stand_box` (PETG, 200 x 200 x 150, printed upside down) and `stand_bottom`
 (cad/turret_stand.py): the turret's TM pattern on the top plate (M5 inserts); the DCB609 slides in from the back
 onto a 20 V MAX dock adapter (12 AWG; Walmart US$12.95, Etsy US$13.50) fixed under the top plate, as onto a drill,
-and rests on two ribs on the floor; its leads go through a 20 A MINI 58 V fuse and the power switch to an XT30 lead
-out of the top plate's rear notch to the plinth. The pendant's socket and the rocker stay on the front panel; the
+and rests on two ribs on the floor; its leads go through a 20 A MINI 58 V fuse and the power switch, as a 14 AWG
+pair, into the DT06 plug's pins 1-4 that takes the turret's DT12 (D76; under D66 an XT30 lead went out of the top
+plate's rear notch to the plinth). The desk's Orin NX plugs into the USB-CAN adapter. The pendant's socket and the rocker stay on the front panel; the
 terminal board moves to the +y wall; the USB-CAN adapter sits beside the pack. *Rejected:* the dock on the top plate
 behind the turret (in the barrel's arc at pan 180, and the turret then stands on a narrower stand), a 24 V mains supply (the turret is meant
 to run untethered).
@@ -549,3 +535,4 @@ dimensioned drawing when the switch arrives (bluesea.com refuses a plain fetch),
 | 2 Tilt, 1 Base | 2026-10-28 | the assembly gate: the stop lug, on the -y plate, meets the yoke's upper stop sector 8 mm before the cradle seats; the base board sits in a closed pocket of the pan base (no straight path in or out) | open: the lug fitted after the cradle is hung (a route and screw access in the 4 mm stop gap), the base board's pocket opened on one side | assembly | both open |
 | all | 2026-10-28 | the wall gate (0.8 mm, two lines): sliver skins 0.002-0.2 mm in cartridge_body, ring_carrier, pan_ring, pan_base, compute_shell, laser_mount, tilt_yoke, cradle; dial, hopper, hopper_lid, pivot_spacer 0.6-0.75 | open (exports/gates/wall.json on turret/dossier) | wall | open |
 | 8 Stand | 2026-10-28 | the USB-CAN adapter floated 10 mm up | on the floor against the wall on a VHB pad | connectivity | |
+| 7 Compute, 1 Base, 8 Stand | 2026-11-03 | the owner: the turret stands too tall on its compute plinth | D76: no plinth, no J4012; the pan base on the TM face, the power back on the DT12's pins 1-4, the stand's pack lead into the DT06; the Feather stays (survey) | `connectivity`, sweep, the head's D2 case, tip and depression | |

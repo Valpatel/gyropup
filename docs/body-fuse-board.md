@@ -53,13 +53,14 @@ the wheels: **the VESCs' battery current limit at 20 A** (VESC Tool, "Battery Cu
 stay higher, the battery current at low speed is a fraction of it). The 30 A fuses stay (the fuse's own derating puts
 its continuous load at 22-24 A at 40-60 C).
 
-**The turret's feed (D66): 7.5 A, not 10 A, through the stop relay's pole B.** The turret takes about 40 W and bursts
-to about 140 W: 4.7 A at 30 V, 3.4 A at 41 V. The stop relay is the Omron G2RL-2 (DPDT): rated 8 A at 30 V DC
+**The turret's feed (D66, D76): 7.5 A, not 10 A, through the stop relay's pole B.** Since D76 the turret carries no
+computer (D66's took about 40 W): its head takes about 33 W on average and, at the firmware's 800 ms spin-up and 10/s
+with every servo at its torque cap, up to 4.8 A (1 s RMS) at 30 V and 3.4 A at 42 V (sim/turret_power.py). The stop relay is the Omron G2RL-2 (DPDT): rated 8 A at 30 V DC
 resistive and 8 A carry at 70 C (5 A at 85 C). Its maximum switching capacity curve for the 2-pole type (Omron's
 datasheet, engineering data) holds 8 A to about 39 V and falls steeply above: read off the curve, about 6 A at 41 V
 and about 1 A at 55 V, for resistive loads. The turret's 3.4 A at 41 V is inside it, with no margin to spare, and
 Omron gives no DC endurance above 30 V. A 10 A fuse would let the contact carry past its 8 A rating in an overload;
-the 7.5 A MINI 58V keeps it under (Littelfuse derates a 7.5 A fuse to 6.0 A at 40 C: the 4.7 A burst is inside that).
+the 7.5 A MINI 58V keeps it under (Littelfuse derates a 7.5 A fuse to 6.0 A at 40 C: the 4.8 A burst is inside that).
 The relay opens with the turret's safety loop (pole A) at the same instant, which stops the flywheels, so the current
 it breaks is mostly the reComputer's idle draw. Two things to measure at the P2 bring-up (B12/B15): the inrush when
 the relay closes onto the turret's input capacitance (the 7.5 A fuse's I2t is 68 A2s; if it blows or the contact
@@ -318,8 +319,8 @@ standoffs are printed (about 26 g of PETG). The bare INA228 (ina228_ic, LCSC C28
 - **W5** the packs' - straight to the switch's IN-; **W6 goes**. **W8, W9 go** (D65: no charge port).
 - **W10-W15** from their M4 studs (J2-J7) with #8 rings (was: + bus taps through inline holders).
 - **W16** J8 (F7, 10 A) to the TRACO TEP 150-4812WI's Vin+ (18 AWG): 150 W out is about 5.6 A in at 30 V.
-- **W22** J9 (F8, 7.5 A) to the stop relay's pole B, then **W34** from pole B to the turret's XT30 (16 AWG; D66): the
-  radio stop still cuts the turret's power.
+- **W22** J9 (F8, 7.5 A) to the stop relay's pole B, then **W34** from pole B to the turret's DT06 plug, pins 1-2 (16 AWG; D76,
+  D66's XT30 went with the turret's plinth): the radio stop still cuts the turret's power.
 - **W40** the TRACO's +V to J14 (14 AWG, 12.5 A); **W21** J12 (F11, 10 A) to the J501's DC-IN at 12 V (16 AWG,
   XT30U-F); **W43** (new) J13 (F12, 7.5 A) to the rest of the 12 V rail (16 AWG): the lidar box, the SSC1 lights, the
   eyes, the 5 V buck, about 40 W. **W17, W24-W27 go** with the DDR-60L-12.

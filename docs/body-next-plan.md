@@ -426,6 +426,9 @@ docs/body-orders.md 4).
 
 ## 9. D65 and D66 in the body (2026-10-27; issues #10, #12, #13)
 
+*2026-11-03, D76 (issue #192): the turret's plinth and computer are gone; its pan base is back on the riser's TM face
+and its power and CAN come back on the DT12 (W34 to pins 1-2, W36 the J501's can1 to pins 5-6).*
+
 - **The battery bay** (cad/body_battery.py): the two DCB609 packs hang from their rail adapters under the belly, out
   through two end doors on thumbscrews; 132 mm deep; the robot sits on its skids under a 139 mm leg (H_RANGE 160-375).
 - **One converter**, TRACO TEP 150-4812WI (12 V 150 W, 18-75 V), for the J501 and the 12 V rail; the DDR-120C-24 and

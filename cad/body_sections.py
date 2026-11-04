@@ -56,7 +56,7 @@ TEXT = {
             'the floor tray: the power plate\'s four printed posts (M5 inserts both ends); the tray slot (x 40..135) for the cables',
             'the legs: four XT60H-F sockets for the RS-04 pigtails; the wheels\' VESCs under the plate',
             'the J501: 12 V on an XT30 (W21); CAN bus C (the MCU)',
-            'the turret (D66): its XT30 on a 7.5 A branch of the bus through the stop relay\'s pole B; its dry safety loop',
+            'the turret (D66, D76): its DT12 on one DT06 plug: a 7.5 A branch of the bus through the stop relay\'s pole B, CAN bus D from the J501, its dry safety loop',
         ],
         'decisions': [
             ('D65', 'Two DCB609 FLEXVOLT packs in 20 V mode, in series (10S3P)',
@@ -130,7 +130,7 @@ TEXT = {
         ],
         'interfaces': [
             'the frame: the deck on its four posts (M5 x 12 into inserts)',
-            'the turret (D66): its pan base on the riser\'s TM pattern; its XT30, Ethernet and safety loop through the grommet',
+            'the turret (D76): its pan base on the riser\'s TM pattern; its DT12 harness (power, CAN, safety loop) through the grommet',
             'the J501: the fan duct from 2 mm over the fan to the turret plate\'s opening',
         ],
         'decisions': [
@@ -279,11 +279,12 @@ def main():
           '- the main path 8 AWG (MRBF 80 A); the packs\' own adapter leads 10 AWG (unfused, as every pack lead: kept to 300 mm)',
           '- the branches: RS-04 14 AWG on 20 A, VESCs 12 AWG on 30 A (their battery limit 20 A), the converter 18 AWG on '
           '10 A, the turret 16 AWG on 7.5 A, the J501 16 AWG on 10 A, the 12 V loads 16 AWG on 7.5 A, the INA228\'s VBUS 22 AWG on 5 A',
-          '- CAN: A and B the legs, C the wheels and the J501 (1 Mbit/s each, twisted 22 AWG)', '',
+          '- CAN: A and B the legs, C the wheels and the J501, D the J501\'s can1 to the turret (D76) (1 Mbit/s each, twisted pairs)', '',
           '| | Choice | Why | Turned down |', '|---|---|---|---|',
           '| D58 | Sockets on every live end of the body | a child touching a plug touches no live pin | pins on the body |',
           '| this page | W33, the frame bond, 14 AWG | a chafed + lead ahead of its branch fuse puts the MRBF\'s let-through on it | 18 AWG |',
           '| D66 | The turret on its own 10 A bus branch through the stop relay | it is its own robot; the radio stop still cuts it | the shared 24 V converter (D45) |',
+          '| D76 | The turret without a computer: power, CAN and the safety loop on its DT12 | the J501 aims it; D66\'s plinth stood 86 mm and 0.8 kg | D66\'s compute plinth, its XT30 and Ethernet |',
           '']
     # mass
     gate = g3.get('gate') or {}
@@ -295,7 +296,7 @@ def main():
           f"D71's {gate.get('ceiling_kg')} kg ceiling (37.5 kg design mass, 18.75 kg a leg): a margin of {gate.get('margin_kg'):+.2f} kg, "
           f"{'pass' if gate.get('pass') else 'OVER'}. The wheels are D69's 10 in hub motors at the listed 3.53 kg each; the battery "
           f"group is {(g3.get('groups_kg') or {}).get('battery')} kg (two DCB609 at DeWalt US's 1565 g each). The head is "
-          + (f"the turret as its own robot (D66) at {tur.mass_g / 1000:.2f} kg with 30 balls, from {tur.basis.split(';')[0]}, "
+          + (f"the turret (D76: no computer of its own) at {tur.mass_g / 1000:.2f} kg with 30 balls, from {tur.basis.split(';')[0]}, "
              f"{tur.mass_g / 1000 - 1.70:+.2f} kg on the 1.70 kg head budget" if tur is not None else 'the 1.70 kg head budget')
           + '. The on-call levers stay listed as margin (D71), none taken without the user\'s or the coordinator\'s word:', '',
           '| # | Lever | g | Stage |', '|---|---|---|---|']

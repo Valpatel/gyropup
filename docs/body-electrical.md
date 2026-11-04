@@ -5,8 +5,8 @@ The P0 power system of Gyropup's body as built from `cad/body_wiring.py` (the wi
 `exports/body/bom.json` (what to buy, by catalogue key). It is the build package for milestone M5's power skid: a
 person with the parts and a crimper can build and test it from this page and
 [the wiring diagram](../exports/body/wiring.svg). Decisions: D65 (the two DeWalt packs, the 10S bus; it replaces D43
-and D54), D55 (the protection and the switch), D60 (the fuse board, P3), D66 (the turret's own branch). Rewritten
-2026-10-27 for D65.
+and D54), D55 (the protection and the switch), D60 (the fuse board, P3), D66 (the turret's own branch), D76 (the turret
+without its computer: the power and CAN on its DT12). Rewritten 2026-10-27 for D65.
 
 ![Power and CAN wiring](../exports/body/wiring.svg)
 
@@ -79,7 +79,7 @@ The holders are rated 32 V by Eaton; the fuse does the interrupting (1 kA at 58 
 
 Red +, black -, white sense or signal, green the frame bond. Silicone wire throughout (BNTECHGO, 200 °C, 600 V). Lengths
 are cut to the plate in P0 and recorded. **Every live end on the body is a socket** (D58, hazard 11): the bus branch
-leads end in XT60H-F (the turret's in XT30U-F) and the 12 V ones in XT30U-F; the devices' leads carry the pins (the RS-04 pigtails'
+leads end in XT60H-F (the turret's in the DT06 plug's sockets) and the 12 V ones in XT30U-F; the devices' leads carry the pins (the RS-04 pigtails'
 XT60H-M are the leg's, the VESC leads', the J501's and the lidar box's adapter leads' are in this order). The table is
 written by `cad/body_wiring.py` from its wire list; `cad/test_body.py` checks that no body-side lead ends in a pin.
 
@@ -134,8 +134,8 @@ written by `cad/body_wiring.py` from its wire list; `cad/test_body.py` checks th
   jack; in P3 the SSC1 pods (25.6 W) and the eyes, switched on after the lidar has spun up. About 100 W at the most:
   two thirds of its rating. It replaces the DDR-120C-24 (which starts at 33.6 V, inside the 10S range) and the
   DDR-60L-12 (D65).
-- **The turret** (D66) is not on a rail: its own robot takes 30-41 V from the bus on a 7.5 A branch (W22) through the
-  stop relay's pole B (W34) and makes its own rails.
+- **The turret** (D66, D76) is not on a rail: it takes 30-41 V from the bus on a 7.5 A branch (W22) through the
+  stop relay's pole B (W34, into its DT12's pins 1-2) and makes its own rails.
 - **5 V** (Pololu D36V28F5 from the 12 V, 3.2 A): the Nucleo (E5V), three CAN Pal, the VN-100, the radio receiver;
   about 1 A in all.
 
@@ -151,7 +151,8 @@ chafed through to the aluminium blows its fuse instead of leaving the frame live
 | B | MCU FDCAN2 (CAN Pal 2, 120 Ohm on) | RS-04 right front → RS-04 right rear (120 Ohm at its plug) | 1 Mbit/s, the right leg |
 | C | MCU FDCAN3 (CAN Pal 3, 120 Ohm on) | VESC left → VESC right → J501 can0 (its own 120 Ohm on) | 1 Mbit/s: wheels, the computer |
 
-The turret (D66) talks to the J501 over Ethernet, not CAN.
+Bus D is the turret (D76): the J501 aims it over CAN through the DT12's pins 5-6 (D66's Ethernet link went with
+its own Jetson).
 
 All 1 Mbit/s classic CAN (the RS-04s and the VESCs speak it; the G474's FDCAN runs it), 22 AWG twisted by hand at
 about 30 twists a metre, 120 Ohm at both ends of each bus and nowhere else (the CAN Pal's switch, the J501's built-in
@@ -165,7 +166,7 @@ The radio stop (D37, D55): the ER3C-i receiver (failsafe: no pulses) drives one 
 No contactor, no e-stop button on the robot (D37): the radio stop sits the robot down, and the main switch on the
 belly is the hard off for a person standing at the robot. The stop relay, its MOSFET (a logic-level N-channel on
 MCU_RUN), the flyback diode and the 12 V-to-3.3 V divider for the sense sit on the MCU carrier's protoboard. The
-turret (D66) plugs in with its XT30 (power through pole B), its RJ45 to the J501 and its safety loop on pole A: plug it
+turret (D76) plugs in with one DT06 plug on its DT12: power through pole B, CAN to the J501 and its safety loop on pole A: plug it
 only with the stop relay open (its input capacitors charge through the plug otherwise; B15 measures the inrush on the
 7.5 A fuse and the G2RL-2's contact).
 
@@ -191,7 +192,7 @@ so the firmware's cut-off and current limit (docs/body-firmware.md 5) are tested
 6. **MCU**: the INA228 reads the pack within 0.2 V of a meter and the current within 0.1 A at a 2 A dummy load on the
    12 V rail (high side: discharge reads negative); switching the main switch off and on with the INA228 wired leaves
    it reading (the check of step 4); with the transmitter switched off the stop relay opens within 0.5 s (the
-   receiver's failsafe), the turret's safety loop reads open and its XT30 dead, and the MCU logs the stop; MCU_RUN low
+   receiver's failsafe), the turret's safety loop reads open and its power pins dead, and the MCU logs the stop; MCU_RUN low
    opens it too.
 7. **The firmware's windows on a bench supply** in place of the packs (current-limited, 30-45 V): warn at 35.0 V, no
    jump under 34.0, sit at 32.0, the latched cut-off at 30.0 V under load, the over-charge latch at 44.0 V, no arming
