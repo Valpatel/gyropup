@@ -32,7 +32,7 @@
     "test:loading-portal": "node tools/test-loading-portal.mjs",
     "test:loading-hero": "node tools/test-loading-hero.mjs",
     "test:part-media": "node --test tools/test-part-media.mjs",
-    "test:build-portal": "node --test tools/test-model-links.mjs && node tools/test-build-portal.mjs",
+    "test:build-portal": "node --test tools/test-model-links.mjs tools/test-print-now.mjs && node tools/test-build-portal.mjs",
     "test:study-media": "python3 tools/test-study-media.py && node tools/test-study-media.mjs",
     "test:diagrams": "node tools/test-diagrams.mjs",
     "test:carrier-inspection": "node --test tools/test-hosted-navigation.mjs && node tools/test-carrier-inspection.mjs && CARRIER_INSPECTION_CASE=c3-support node tools/test-carrier-inspection.mjs",
