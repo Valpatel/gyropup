@@ -3498,7 +3498,7 @@
     "splice_application": "https://www.te.com/commerce/DocumentDelivery/DDEController?Action=srchrtrv&DocFormat=pdf&DocLang=English&DocNm=114-2157&DocType=Specification+Or+Standard&PartCntxt=320559",
     "wire": "https://www.remingtonindustries.com/content/PTFE%20Hook%20Up%20Wire%20Data%20Sheet.pdf"
   },
-  "seconds": 48.19,
+  "seconds": 39.43,
   "runtime": {
     "cadquery": "2.8.0",
     "OCP": "7.9.3.1"
@@ -3578,9 +3578,9 @@
       "cad/wheel_fit.py": "57c75e2462fb6f3606b81e4baac284dcac9a7b67bb47183f425d8bb8f730febd",
       "catalog/alternates.json": "9d5da650878fefa12654cdedae841d2daf22c1101c7f038018a75b8921d5ee3b",
       "catalog/body.json": "91a27038348a4e8e4beb3ede92c5c84a073d4728cd73e14f66d3e3226ab9b52b",
-      "catalog/designed-media-validation.json": "0adccfaf39c8f8a3e5a816fb836ec3fe6296ed1edc170c0acfd1b686fac0421d",
+      "catalog/designed-media-validation.json": "52f98a0dd0723711dddb82d990bf7c07e764d2124a8b4c56c5409b286d79cd81",
       "catalog/hardware.json": "af0f7f3bdce4ee93649e278106d00a93fe2ebea3569c057f1d2a04fe4b360015",
-      "catalog/images.json": "e560b14db4b3c8b6ddbe71166cd8bd855db80f2e99a1da11c7ace6f83a748987",
+      "catalog/images.json": "8b0884736da827e5a058c0fd884ad3d5dfc9bd6bb99e7af3b64e5a62801583b2",
       "catalog/index.json": "5e77d00c8ab4961f5da0bb2d5692a23170b9f4143e05d850d7b33fe36d70f334",
       "catalog/interfaces.json": "3889bc34503444f389e7951d74944f37b7e57b0b2b3be68ed596b959e83a46af",
       "catalog/leg_actuators.json": "b8ed3125cca22e9936b929fa1529395b1dead7a9585c21c63995bb294fa31bc5",
@@ -3678,9 +3678,9 @@
     "cad/wheel_fit.py": "57c75e2462fb6f3606b81e4baac284dcac9a7b67bb47183f425d8bb8f730febd",
     "catalog/alternates.json": "9d5da650878fefa12654cdedae841d2daf22c1101c7f038018a75b8921d5ee3b",
     "catalog/body.json": "91a27038348a4e8e4beb3ede92c5c84a073d4728cd73e14f66d3e3226ab9b52b",
-    "catalog/designed-media-validation.json": "0adccfaf39c8f8a3e5a816fb836ec3fe6296ed1edc170c0acfd1b686fac0421d",
+    "catalog/designed-media-validation.json": "52f98a0dd0723711dddb82d990bf7c07e764d2124a8b4c56c5409b286d79cd81",
     "catalog/hardware.json": "af0f7f3bdce4ee93649e278106d00a93fe2ebea3569c057f1d2a04fe4b360015",
-    "catalog/images.json": "e560b14db4b3c8b6ddbe71166cd8bd855db80f2e99a1da11c7ace6f83a748987",
+    "catalog/images.json": "8b0884736da827e5a058c0fd884ad3d5dfc9bd6bb99e7af3b64e5a62801583b2",
     "catalog/index.json": "5e77d00c8ab4961f5da0bb2d5692a23170b9f4143e05d850d7b33fe36d70f334",
     "catalog/interfaces.json": "3889bc34503444f389e7951d74944f37b7e57b0b2b3be68ed596b959e83a46af",
     "catalog/leg_actuators.json": "b8ed3125cca22e9936b929fa1529395b1dead7a9585c21c63995bb294fa31bc5",
@@ -3696,7 +3696,7 @@
     "catalog/wheel_motors.json": "e92baa60e433e177d87450145943c32bd6b60bebb97e1c1746354aa00f2dbc99",
     "designs/default.json": "3dc7d04d0d6eeec81decefa360f3904b093f19515d6944910c2cb20c976db211"
   },
-  "input_fingerprint": "dbff0ba839735848d9941db90ba244ef0ff43ca2ca4ffc12d443ca84b437abb7",
+  "input_fingerprint": "356cd3d89bc6b74c87da33d1482eef0d3340084595299525ff4d626533cd88d3",
   "relation_tolerances": {
     "touch_mm": 0.01,
     "overlap_mm3": 1e-06,
@@ -7449,8 +7449,8 @@
     "Base and carrier changes require renewed structural, print and physical-fit qualification."
   ],
   "artifact_sha256": {
-    "carrier-wiring-candidate.step": "942bf923ed268bf98c8726fa374c91ea03115e277a82e4c494213a2f59eaadd7",
-    "pan-base-wiring-candidate.step": "4b3243c51b5291da2af024dc0ee0bf9cfef233557a2dd35109f467714ff7fb29",
-    "carrier-wiring-layout.step": "443a424a79964e80fd3e88d3e0a82f5b76d94c94f34b068314f8155b5a610326"
+    "carrier-wiring-candidate.step": "c62b8ecb42061feddecc00fff37b888a6673c7a97a7029ea00c576cbfa3ab929",
+    "pan-base-wiring-candidate.step": "715a0fbf7553681b352536105cfd7323555d52cef453fae9f753b96eea7f9eea",
+    "carrier-wiring-layout.step": "d02cfcf5cbb3af04da25c807a039d2cb2be6f83d2dfa9a164fd747c8dab3e3e2"
   }
 }

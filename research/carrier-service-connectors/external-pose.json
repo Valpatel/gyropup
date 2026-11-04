@@ -76,9 +76,9 @@
       "cad/wheel_fit.py": "57c75e2462fb6f3606b81e4baac284dcac9a7b67bb47183f425d8bb8f730febd",
       "catalog/alternates.json": "9d5da650878fefa12654cdedae841d2daf22c1101c7f038018a75b8921d5ee3b",
       "catalog/body.json": "91a27038348a4e8e4beb3ede92c5c84a073d4728cd73e14f66d3e3226ab9b52b",
-      "catalog/designed-media-validation.json": "0adccfaf39c8f8a3e5a816fb836ec3fe6296ed1edc170c0acfd1b686fac0421d",
+      "catalog/designed-media-validation.json": "52f98a0dd0723711dddb82d990bf7c07e764d2124a8b4c56c5409b286d79cd81",
       "catalog/hardware.json": "af0f7f3bdce4ee93649e278106d00a93fe2ebea3569c057f1d2a04fe4b360015",
-      "catalog/images.json": "e560b14db4b3c8b6ddbe71166cd8bd855db80f2e99a1da11c7ace6f83a748987",
+      "catalog/images.json": "8b0884736da827e5a058c0fd884ad3d5dfc9bd6bb99e7af3b64e5a62801583b2",
       "catalog/index.json": "5e77d00c8ab4961f5da0bb2d5692a23170b9f4143e05d850d7b33fe36d70f334",
       "catalog/interfaces.json": "3889bc34503444f389e7951d74944f37b7e57b0b2b3be68ed596b959e83a46af",
       "catalog/leg_actuators.json": "b8ed3125cca22e9936b929fa1529395b1dead7a9585c21c63995bb294fa31bc5",
@@ -103,7 +103,7 @@
     },
     "toolkit_sources_sha256": "c2941322d5f3d000d3777b0047567211d06855861fa5e14229d7d7519fef3ed3"
   },
-  "input_fingerprint": "dbff0ba839735848d9941db90ba244ef0ff43ca2ca4ffc12d443ca84b437abb7",
+  "input_fingerprint": "356cd3d89bc6b74c87da33d1482eef0d3340084595299525ff4d626533cd88d3",
   "context_files": {
     "tools/check-carrier-connector-pose.py": "cb06cb16943f5ee60b98ebe9b630d437aba395db58936028eb21f0a28e711346",
     "tools/check-carrier-connector-inputs.py": "20b4f98e5cef0067d921e645b44fd0809ae2bffee1f1055351e7188623ef0c45",
@@ -5513,5 +5513,5 @@
     "C2 released-source reservations are not a complete parked harness; module withdrawal is not checked.",
     "Upper head, remote hardware and all cable paths are not included; no whole-turret motion claim."
   ],
-  "elapsed_seconds": 97.064
+  "elapsed_seconds": 85.649
 }
