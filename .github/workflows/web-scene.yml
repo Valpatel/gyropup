@@ -75,6 +75,7 @@ jobs:
               python3 research/snap-fits/test_snaps.py
               python3 research/leg-preprint/test_screen.py
               python3 tools/test-turret-fea-refresh.py
+              python3 cad/test_motor_thermal.py
               npm run test:turret
               npm run test:camera
               npm run test:models
