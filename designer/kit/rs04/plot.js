@@ -19,7 +19,8 @@ export function createStrip(parent, { title, unit = '', windowS = 10, min = null
     dirty = true;
   }
   function setLimits(l) { lims = l; dirty = true; }
-  function clear() { pts.length = 0; out.textContent = '–'; dirty = true; }
+  function clear() { pts.length = 0; out.textContent = '–'; dirty = true; later(); }
+  const later = () => globalThis.requestAnimationFrame?.(() => draw());
 
   function draw() {
     if (!dirty || !canvas.isConnected) return;
@@ -38,7 +39,14 @@ export function createStrip(parent, { title, unit = '', windowS = 10, min = null
     const t1 = pts.length ? pts[pts.length - 1][0] : 0, t0 = t1 - windowS;
     const x = t => ((t - t0) / windowS) * w, y = v => h - ((v - lo) / (hi - lo)) * h;
     g.strokeStyle = css.getPropertyValue('--rs04-grid') || '#8884'; g.lineWidth = 1;
-    g.beginPath(); g.moveTo(0, y(0)); g.lineTo(w, y(0)); g.stroke();
+    g.beginPath(); g.moveTo(0, y(0)); g.lineTo(w, y(0));
+    for (let s = Math.ceil(t0 / 2) * 2; s <= t1; s += 2) { g.moveTo(x(s), 0); g.lineTo(x(s), h); }   // a line every 2 s
+    g.stroke();
+    if (!pts.length) {
+      g.fillStyle = css.getPropertyValue('--rs04-dim') || '#888'; g.font = '12px system-ui, sans-serif';
+      g.textAlign = 'center'; g.textBaseline = 'middle';
+      g.fillText(`no data yet: the last ${windowS} s show here`, w / 2, h / 2 - 12);
+    }
     for (const l of lims) {
       g.strokeStyle = css.getPropertyValue('--rs04-limit') || '#d33'; g.setLineDash([4, 4]);
       g.beginPath(); g.moveTo(0, y(l.value)); g.lineTo(w, y(l.value)); g.stroke(); g.setLineDash([]);
@@ -48,5 +56,6 @@ export function createStrip(parent, { title, unit = '', windowS = 10, min = null
     pts.forEach(([t, v], i) => (i ? g.lineTo(x(t), y(v)) : g.moveTo(x(t), y(v))));
     g.stroke();
   }
+  later();
   return { push, clear, draw, setLimits, element: box };
 }

@@ -48,7 +48,7 @@ uses); the tool names the pose in its confirmation. A zero on a bare motor is fo
 | Rule | Page (`guard.js`) | Bridge (`rs04_guard.py`) | Motor |
 |---|---|---|---|
 | Nothing enables without the arm step (two checks ticked, then **Arm**) and fresh read-backs: run mode 0, `limit_torque` at the jog torque, `canTimeout` on | yes | yes | |
-| Jog frames inside the profile's jog torque, speed, Kp and Kd; the page keeps the target within (jog torque - Kd x jog speed) / Kp of the motor's angle, so Kp x error + Kd x speed stays at the jog torque | yes | gains and feed-forward | `limit_torque` at the jog torque while armed (that it clips MIT torque is assumed, not measured) |
+| Jog frames inside the profile's jog torque, speed, Kp and Kd; the target never runs more than jog torque / Kp ahead of the joint, it is never dragged after a joint that sinks, and 0.5 s off target stops the motor | yes | gains and feed-forward | `limit_torque` at the jog torque while armed caps the sum with the Kd term (that it clips MIT torque is assumed, not measured) |
 | STOP while arming cancels the arm: the page never enables after it | yes | stops on `stop_all` | |
 | A new id must be 1-127 | yes | yes | |
 | No write over the profile's cap, never `canTimeout` 0, only MIT mode, no current/speed/position commands, nothing written to an armed motor, no bit-rate or protocol change | yes | yes | |

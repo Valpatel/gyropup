@@ -81,7 +81,7 @@ class Guard:
                 return False, 'not-confirmed', f'motor {motor}: read {name} back just before arming'
         if c['run_mode'][0] != 0:
             return False, 'mode', f'motor {motor} is in run_mode {c["run_mode"][0]:g}: the tool runs MIT (0) only'
-        if not c['limit_torque'][0] <= self.lim['jog_torque_nm'] + 1e-6:      # NaN fails too
+        if not 0 <= c['limit_torque'][0] <= self.lim['jog_torque_nm'] + 1e-6:      # NaN and negatives fail too
             return False, 'jog-torque', (f'motor {motor} holds limit_torque {c["limit_torque"][0]:g} N m: over the '
                                          f'profile\'s jog torque {self.lim["jog_torque_nm"]:g} N m')
         to = c['canTimeout'][0]

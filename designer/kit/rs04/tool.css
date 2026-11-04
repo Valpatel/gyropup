@@ -5,7 +5,7 @@
   --rs04-accent: #0b6bcb; --rs04-stop: #c8102e; --rs04-emu: #1f5fa8; --rs04-hw: #a33a00; --rs04-ok: #1c7c3a;
   --rs04-grid: #9aa3ad55; --rs04-limit: #c8102e; --rs04-trace: #0b6bcb;
   font: 14px/1.45 system-ui, -apple-system, "Segoe UI", sans-serif; color: var(--rs04-ink); background: var(--rs04-bg);
-  display: grid; grid-template-rows: auto 1fr auto; min-height: 100vh; margin: 0;
+  display: grid; grid-template-rows: auto auto auto; align-content: start; margin: 0;
 }
 @media (prefers-color-scheme: dark) {
   .rs04-tool { --rs04-bg: #101317; --rs04-panel: #171b21; --rs04-ink: #e6e9ee; --rs04-dim: #9aa3ad; --rs04-line: #2b323b;
@@ -38,7 +38,7 @@
 .rs04-body { display: grid; grid-template-columns: minmax(14rem, 18rem) 1fr; gap: 1rem; padding: 1rem; }
 @media (max-width: 760px) { .rs04-body { grid-template-columns: 1fr; } }
 .rs04-side, .rs04-main, .rs04-footer { background: var(--rs04-panel); border: 1px solid var(--rs04-line); border-radius: 10px; padding: .9rem; }
-.rs04-footer { margin: 0 1rem 7rem; }
+.rs04-footer { margin: 0 1rem 1rem; }
 .rs04-note { color: var(--rs04-dim); font-size: .85rem; margin: .4rem 0; }
 .rs04-motors { list-style: none; margin: .6rem 0 0; padding: 0; display: grid; gap: .4rem; }
 .rs04-motors button { width: 100%; text-align: left; display: grid; gap: .1rem; }

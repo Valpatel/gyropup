@@ -43,7 +43,7 @@ export function createGuard(limits, { clock = () => performance.now() / 1000 } =
     for (const name of ['run_mode', 'limit_torque', 'canTimeout'])
       if (!c[name] || now - c[name][1] > CONFIRM_S) return no('not-confirmed', `motor ${motor}: read ${name} back just before arming`);
     if (c.run_mode[0] !== 0) return no('mode', `motor ${motor} is in run_mode ${g(c.run_mode[0])}: the tool runs MIT (0) only`);
-    if (!(c.limit_torque[0] <= lim.jog_torque_nm + 1e-6))      // NaN fails too
+    if (!(c.limit_torque[0] >= 0 && c.limit_torque[0] <= lim.jog_torque_nm + 1e-6))      // NaN and negatives fail too
       return no('jog-torque', `motor ${motor} holds limit_torque ${g(c.limit_torque[0])} N m: over the profile's jog torque ${g(lim.jog_torque_nm)} N m`);
     const to = c.canTimeout[0];
     if (!(to >= 1 && to <= lim.can_timeout_max_ticks))

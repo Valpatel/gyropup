@@ -90,6 +90,7 @@ export function mountMotorTool(root, { profiles, joints = [], poses = [], transp
     while (logBox.children.length > 200) logBox.lastChild.remove();
     return li;
   }
+  log('not connected: choose a transport, then Connect (every frame, refusal and STOP is logged here)');
   const busy = async (what, fn) => {
     try { return await fn(); } catch (e) {
       log(`${what}: ${e instanceof Refused ? 'refused, ' : ''}${e.message}`, e instanceof Refused ? 'refused' : 'error');
@@ -189,7 +190,7 @@ export function mountMotorTool(root, { profiles, joints = [], poses = [], transp
       stopAll(e.key === 'Escape' ? 'Esc' : 'Space');
     }
   };
-  const onHide = () => { if (document.hidden && jog) stopAll('the tab was hidden'); };
+  const onHide = () => { if (document.hidden && (jog || arming)) stopAll('the tab was hidden'); };
   document.addEventListener('keydown', onKey, true);
   document.addEventListener('visibilitychange', onHide);
   const onUnload = () => { try { client?.stopAll(); } catch { /* closing */ } };
@@ -448,15 +449,19 @@ export function mountMotorTool(root, { profiles, joints = [], poses = [], transp
     jog.inflight = true;
     try { await jogOnce(); } finally { if (jog) jog.inflight = false; }
   }
+  const LAG_MS = 500;   // off the target by the jog torque's worth of error for this long: stop
   async function jogOnce() {
     const now = performance.now(), dt = Math.min(0.1, (now - jog.last) / 1000), l = profile.limits;
     jog.last = now;
     jog.target += jog.dir * l.jog_speed_rad_s * dt;
     const j = jog, at = client.last.get(j.id);
-    // The commanded torque is Kp * error + Kd * speed error. Keep the error where it stays inside the jog torque
-    // without counting on the motor's own limit_torque clip (assumed, not measured).
-    const errMax = Math.max(0.01, (l.jog_torque_nm - l.jog_kd_max * l.jog_speed_rad_s) / l.jog_kp_max);
-    if (at) j.target = Math.min(at.p + errMax, Math.max(at.p - errMax, j.target));
+    // The commanded torque is Kp x error + Kd x speed error. While jogging, the target never runs more than
+    // jog torque / Kp ahead of the joint, so the Kp term stays at the jog torque (no wind-up); the Kd term adds at most
+    // Kd x the speed error, which the overspeed stop bounds. The cap on the sum is the motor's limit_torque, read back
+    // at the jog torque before arming: that it clips MIT torque is the manual's behaviour, assumed and not measured.
+    // Holding (no button), the target stays put: a joint that sinks under a load is stopped below, never followed.
+    const errMax = l.jog_torque_nm / l.jog_kp_max;
+    if (at && j.dir !== 0) j.target = Math.min(at.p + errMax, Math.max(at.p - errMax, j.target));
     const fb = await client.mit(j.id, j.target, j.dir * l.jog_speed_rad_s, l.jog_kp_max, l.jog_kd_max, 0).catch((e) => {
       if (jog === j) stopAll(`jog frame failed: ${e.message}`);
       return null;
@@ -464,6 +469,13 @@ export function mountMotorTool(root, { profiles, joints = [], poses = [], transp
     if (fb && jog === j) {
       if (fb.mode !== 2) stopAll(`motor ${j.id} left run mode (${P.MODES[fb.mode]}${fb.faults ? ', ' + P.feedbackFaultNames(fb.faults).join(', ') : ''})`);
       else if (overspeed(fb)) stopAll(`motor ${j.id} reached ${fb.v.toFixed(2)} rad/s, past the jog speed`);
+      else {
+        const err = Math.abs(fb.p - j.target);
+        if (err <= errMax * 0.95) j.lagSince = null;
+        else if ((j.lagSince ??= now) && now - j.lagSince > LAG_MS)
+          stopAll(`motor ${j.id} was ${err.toFixed(3)} rad off its target for ${LAG_MS / 1000} s: a load over the jog torque, or a stall`);
+      }
+      if (jog !== j) return;
       jogState.textContent = `ARMED: motor ${j.id}, target ${j.target.toFixed(3)} rad, at ${fb.p.toFixed(3)} rad, ${fb.t.toFixed(2)} N m`;
     }
   }

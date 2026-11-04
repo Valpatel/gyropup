@@ -130,6 +130,19 @@ try {
   const moved = await emuMotor(page);
   assert.ok(moved.angle > 0.2 && moved.angle < 1.2, `the jog moved the motor at about 1 rad/s for 0.6 s: ${moved.angle}`);
   await page.screenshot({ path: path.join(out, 'armed.png') });
+  // a load over the jog torque while holding: the joint sinks, the target stays, and the tool stops it
+  const sink = await page.evaluate(async () => {
+    const tool = window.gyropupMotorTool, m = tool.client.transport.bus.motors[0];
+    m.load = () => 6.0;                  // 6 N m against a 3 N m jog torque (and limit_torque 3 in the motor)
+    const t0 = performance.now();
+    while (tool.armed.length && performance.now() - t0 < 3000) await new Promise(r => setTimeout(r, 10));
+    const r = { armed: tool.armed, mode: m.mode, ms: performance.now() - t0 };
+    m.load = null;
+    return r;
+  });
+  assert.deepEqual([sink.armed, sink.mode], [[], 0], 'a sinking joint is stopped');
+  assert.ok(sink.ms < 1500, `it stopped within about 0.5 s of sinking past the jog torque's error: ${sink.ms} ms`);
+  await waitLog(page, /STOP \(motor 1 (was [0-9.]+ rad off its target for 0\.5 s|reached -?[0-9.]+ rad\/s, past the jog speed)/);
   await stopVisible(page);
   await page.locator('body').press('Space');
   await waitLog(page, /STOP \(Space\): stop sent to motors 1, 127/);

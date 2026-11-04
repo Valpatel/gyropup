@@ -3467,6 +3467,40 @@
      "op": "in",
      "frame": {
       "id": 285213181,
+      "data": "0b700000000080bf"
+     }
+    },
+    {
+     "op": "out",
+     "frame": {
+      "id": 50396417,
+      "data": "0000000000000000"
+     },
+     "ext": true,
+     "ok": false,
+     "code": "jog-torque"
+    },
+    {
+     "op": "in",
+     "frame": {
+      "id": 285213181,
+      "data": "0b700000000080ff"
+     }
+    },
+    {
+     "op": "out",
+     "frame": {
+      "id": 50396417,
+      "data": "0000000000000000"
+     },
+     "ext": true,
+     "ok": false,
+     "code": "jog-torque"
+    },
+    {
+     "op": "in",
+     "frame": {
+      "id": 285213181,
       "data": "0b70000000004040"
      }
     },
