@@ -1,7 +1,7 @@
 group,item,qty,vendor,part_number,price_usd_each,cost_usd,when,url,note
 filament,"Bambu Lab PLA Basic, 1 kg spool",6,Bambu Lab,,14.99,89.94,Phase 1,https://us.store.bambulab.com/products/pla-basic-filament,4.69 kg sliced + 10 %
 filament,"Bambu Lab TPU 95A HF, 1 kg spool",1,Bambu Lab,,41.99,41.99,Phase 1,https://us.store.bambulab.com/products/tpu-95a-hf,0.06 kg sliced + 10 %
-leg,RobStride RS-04,2,RobStride,RS-04,255.0,,later,,in hand (arriving 2026-11-02)
+leg,RobStride RS-04,2,RobStride,RS-04,255.0,,later,,in hand (arrived: Phase 0 checks them)
 leg,ODrive Robotics BotWheel (BW0124),1,ODrive Robotics,BotWheel (BW0124),134.5,,later,,later: the printed foot stands in on day one (other vendors)
 leg,"Output adapter, machined 6061-T6 (exports/leg/cnc/output_adapter.step, README.md)",2,JLCCNC (instant price on upload),,,,order now (5-10 days),https://jlccnc.com/,replaces the PLA stand-ins before any cap above the PLA cap
 leg,"Structural epoxy, two-part, metal to plastic (D74)",1,owner's choice,,,,Phase 3,,"the stop pins, the knee-eye sleeves, the RS-04 dowels; not an anaerobic retainer on plastic"
