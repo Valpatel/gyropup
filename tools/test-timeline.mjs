@@ -268,7 +268,9 @@ test('no overflow from 320 to 1440 px; changes slide in, and stay put with reduc
   // Laid out at rest: with motion, a change that has not come into view yet waits 14 px to the left.
   for (const route of ['/', '/designer/progress.html']) for (const [width, height] of [[320, 640], [390, 844], [768, 1024], [1440, 1000]]) {
     const { context, page, errors } = await open(route, { width, height, reducedMotion: 'reduce' });
-    if (route.includes('progress')) await page.locator('#changes .tl-more > summary').click();
+    // Progress can fold twice: the text-only run before the anchor and the earlier changes (tools/timeline.mjs). Open
+    // every fold, so all of them are laid out and checked, whatever the newest commits happen to be.
+    if (route.includes('progress')) for (const summary of await page.locator('#changes .tl-more > summary').all()) await summary.click();
     const out = await page.evaluate(() => {
       const box = document.querySelector('#changes').getBoundingClientRect();
       return { page: document.documentElement.scrollWidth - innerWidth,
