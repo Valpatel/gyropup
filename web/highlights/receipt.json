@@ -8,7 +8,7 @@
     "seconds": 22,
     "audio": false
   },
-  "source_revision": "c77dc0906bfe949027141f435238293d5cd8e532",
+  "source_revision": "d7f591b127657c53c8c14941eb836f0ff02bb62a",
   "source_hashes": {
     "designer/cadrig.js": "a2cb4029ef786e0793c5eb0018e0aa8d919d829bde8c5d378c1b1480c457faaf",
     "designer/character/eyes.js": "3348578a121b75ab7425c3b6591e864b41b09512e67b642832e6c6b683d2e11b",
@@ -40,8 +40,8 @@
     "designer/sfx.js": "90db82703cb9d32c106992c1d67610056a319048d4030db77490642ce8c4dc55",
     "designer/sim-layout.css": "e2b76ffb77863adea51210749efb4e27641b8d8adc08bdc74608ff3da7173970",
     "designer/sim.html": "a70ed754168974b085e9e09de6b8672ac7b0d97ee5498a60195ef40fad5aa8c8",
-    "designer/sim.js": "bc0736070b2b786bfdb15fd34bf4f1e6d745a1c176837d041722cc96699f1f82",
-    "designer/turret3d.js": "e5144b01c1db071ac8921e416fcbc8e3a208a59a466bcd00cd5a86ddfa26b107",
+    "designer/sim.js": "561d756a68bd45dafd488f5c4c704fc1088e5464ceace6a803dfb99cea0054bd",
+    "designer/turret3d.js": "3c51dbcd06ea553128e98843685880f41da2f1897cf928d31a8af401e8dd1cbe",
     "designer/turret_bench.css": "77d4ab36125c5df22db86fafdc10a6d21470cee86c5e4201e50a3df7d9e79dc8",
     "designer/turret_bench.js": "2c7c14ae024d451015e8559216f1b5bfc8ab814ed76b82eac645fa4d616318ad",
     "designer/turret_reload.js": "37b75f1250ca341e710abb9443d0e0120abe48e827efbc86b740db7b55a326e9",
@@ -164,6 +164,7 @@
     "exports/sim/v2/rig/link__wheel_link.stl": "40f5f626880d1b9a75d4b83cf644cdc7ea1446a51a0eb6180f5776db600349fd",
     "exports/sim/v2/rig/manifest.json": "0f394643875bcdff247c8f285f2d0d10499104a1073088ce37c4b5f1b337086f",
     "exports/sim/v2/summary.json": "297a40dc891e3bbb1f1985d7db461021446b5041b33969fdc33b63a4b573ceac",
+    "exports/turret/limits.json": "ce874d1e908a81cac904058746130e536797bbb13be4d5e08d7b0d2998cadb33",
     "tools/capture-highlights.mjs": "2865634d7d05047ecbd73ca75350026ac293f484243e58ad411897135326f0fd",
     "tools/check-highlights.py": "45d9408f3d434874a9e7b3e11f0a02567b74a47f978146d4abc00352d3098e31",
     "tools/encode-highlights.py": "71e20bb2b9e186d2cbdfaf2bb619e80d93029e84f567eccfccfe9dee1da9d235",
@@ -418,23 +419,23 @@
   ],
   "outputs": {
     "gyropup-highlights.mp4": {
-      "sha256": "df8911a0ed923d6a767b0d76d5528295be8bcd67a135a53051c88d8ee890badf",
-      "bytes": 1860644
+      "sha256": "5313c5d66c7360120204ab650fc83decf6abe0e216789816a84208c37a77c251",
+      "bytes": 1860395
     },
     "gyropup-highlights.webm": {
-      "sha256": "fc638bb8777a55ca8cfcec5432e5d53fb1be19f042cb9dc8f52e9c75382aba26",
-      "bytes": 1477633
+      "sha256": "ed085d803614dd559b0f3733e0e605cbbc6a269c17472a89eb8dec7d2cec3171",
+      "bytes": 1482289
     },
     "gyropup-highlights.webp": {
-      "sha256": "13e89d1799601372d065e25823c5dedf328f98b41972cb403c58382f3881ff29",
-      "bytes": 32610
+      "sha256": "aa2f9c3d4c911539038964a9394f3319ec38bd253a523d97fb2ebcf1207fdfc6",
+      "bytes": 32548
     },
     "capture-receipt.json": {
-      "sha256": "33c347f81d25536b79d1cab21f2b4431054fef40b410cc1c84afd74194ce14d6",
-      "bytes": 114653
+      "sha256": "0e2a45c9dd29846a5b31cdde4e8161c25d61bdcce7cff8fb57fd96dc28d86df4",
+      "bytes": 114893
     },
     "capture-frames.json": {
-      "sha256": "ef11563ea5011337df14452da61396ddcfae3a6e85b89aeca08232340ee5c2fd",
+      "sha256": "fa3001b454b18a07cfd47864bacd0d3de5bb877b1cd3caee248b1d132b14924f",
       "bytes": 100989
     }
   }

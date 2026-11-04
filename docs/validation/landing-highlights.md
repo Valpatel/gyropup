@@ -101,6 +101,16 @@ practice recorded three shots, three hits and three knockdowns. The unchanged en
 guard produced and passed both companions, the poster and the receipts. The leg insert is
 unchanged. The previous capture's note follows.
 
+The browser frames were recaptured on 2026-11-04 (UTC) for
+[PR 207](https://github.com/Valpatel/gyropup/pull/207), the turret's tilt range taken from its hard stops (D77). That
+PR changes `designer/turret3d.js` and `designer/sim.js` and adds the served `exports/turret/limits.json`, so the guard
+rejected the old capture's source hashes; the stops themselves are unchanged (0 and -25 deg), so the footage shows the
+same scenes. The capture ran from `d7f591b127657c53c8c14941eb836f0ff02bb62a`, served assets `e10410232c4eff542de9`,
+through an owned `serve-site.mjs --ephemeral` listener, closed afterwards. The recorder produced all 480 frames and its
+shot and knockdown assertions passed. The unchanged encoder and guard produced and passed both companions (MP4
+1,860,395 bytes, WebM 1,482,289), the poster and the receipts. The leg and E1 inserts are unchanged. The previous
+capture's note follows.
+
 The browser frames were recaptured on 2026-11-03 (UTC) for
 [PR 185](https://github.com/Valpatel/gyropup/pull/185), the recorded voice and pronunciation key. That PR moves
 Gyropup's fixed lines from `designer/character/talk.js` and `designer/sim.js` into `designer/character/lines.js` and
