@@ -1,0 +1,32 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>RS-04 motor tool · Gyropup</title>
+<script src="/web/theme.js"></script><link rel="stylesheet" href="/web/theme.css">
+<link rel="icon" href="/web/icon.svg">
+<link rel="stylesheet" href="kit/rs04/tool.css">
+<style>
+  body { margin: 0; }
+  /* the tool in the site's colours (web/theme.css), light and dark */
+  body .rs04-tool { --rs04-bg: var(--gp-page); --rs04-panel: var(--gp-card); --rs04-ink: var(--gp-ink); --rs04-dim: var(--gp-muted);
+    --rs04-line: var(--gp-line-2); --rs04-accent: var(--gp-link); --rs04-emu: var(--gp-teal); --rs04-hw: var(--gp-accent-fill);
+    --rs04-ok: var(--gp-good); --rs04-trace: var(--gp-teal); --rs04-stop: #c8102e; }
+  .gp-intro { margin: 0; padding: .5rem 1rem; font: 13px/1.4 system-ui, sans-serif; background: #fff3cd; color: #4d3800; border-bottom: 1px solid #e0c56e; }
+  .gp-intro a { color: inherit; }
+</style>
+</head>
+<body>
+<!-- Gyropup's RS-04 configuration tool: the reusable tool is designer/kit/rs04/ (MIT); this page gives it Gyropup's
+     build profiles (hardware/actuators/rs04/profiles/), its four leg joints (docs/body-firmware.md) and the zero pose
+     (rig/calibrate.py). On the public site it offers the emulator only; served by the bridge (rig/rs04_bridge.py,
+     ?bridge=1) it talks to the real bus. -->
+<p class="gp-intro" data-test="intro">Gyropup's leg-motor tool. On gyropup.com it runs software motors only. For real
+  motors, run <code>python -m rig.rs04_bridge --iface can0</code> on the computer with the CAN adapter and open the
+  address it prints. <a href="/site/pages/docs-rs04-motor-tool-md.html" data-test="readme-link">How it works</a> ·
+  <a href="/">Gyropup</a></p>
+<div id="tool"></div>
+<script type="module" src="motor-tool.js"></script>
+</body>
+</html>

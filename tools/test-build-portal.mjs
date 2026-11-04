@@ -204,5 +204,19 @@ try{
  await notice.evaluate(()=>window.noticeIdentity={viewer:window.__fileViewer,model:window.__fileViewer.model,scene:window.__fileViewer.stage.scene});await reopen.click();await notice.locator('#prototype-notice-dialog[open]').waitFor();await notice.locator('#prototype-notice-ack').click();
  assert.equal(await notice.evaluate(()=>window.noticeIdentity.viewer===window.__fileViewer&&window.noticeIdentity.model===window.__fileViewer.model&&window.noticeIdentity.scene===window.__fileViewer.stage.scene&&document.activeElement===document.querySelector('.file-nav .prototype-notice-reopen')&&sessionStorage.getItem('gyropup.prototype-notice')==='2026-10-29-v1'),true);
  await notice.screenshot({path:`${out}/${engine.name()}-viewer-phone-notice.png`});await firstEntry.close();
+ // The home page's "What to print now" deep link lands on the card at phone and desktop widths (the card fills in after
+ // the jump; scroll anchoring once left it 1,500 px above the screen on a phone), and every file has a download and a preview.
+ for(const [width,height] of [[390,844],[1280,900]]){
+  const deepContext=await browser.newContext({viewport:{width,height}});await deepContext.addInitScript(()=>sessionStorage.setItem('gyropup.prototype-notice','2026-10-29-v1'));
+  const deep=await deepContext.newPage();deep.on('pageerror',error=>errors.push(error.message));await deep.setViewportSize({width,height});
+  await deep.goto(base+'/designer/build.html#print-now');await deep.waitForFunction(()=>document.getElementById('print-now')?.dataset.ready==='1');
+  await deep.evaluate(()=>new Promise(resolve=>requestAnimationFrame(()=>requestAnimationFrame(resolve))));
+  const box=await deep.locator('#print-now').evaluate(el=>{const r=el.getBoundingClientRect();return{top:r.top,bottom:r.bottom};});
+  assert.ok(box.top>=0&&box.top<height*0.5,`#print-now starts on screen at ${width} px (top ${Math.round(box.top)})`);
+  const card=await deep.locator('#print-now').evaluate(el=>({rows:el.querySelectorAll('li[data-order]').length,downloads:el.querySelectorAll('a[download][href$=".stl"],a[download][href$=".3mf"]').length,previews:el.querySelectorAll('a[data-model-preview]').length}));
+  assert.ok(card.rows>=10,'the print list has its steps');assert.ok(card.downloads>=card.rows,'every step has a file');
+  await deep.waitForFunction(n=>document.querySelectorAll('#print-now a[data-model-preview]').length>=n,card.downloads);
+  await deepContext.close();
+ }
  assert.deepEqual(errors,[]);await writeFile(`${out}/${engine.name()}-report.json`,JSON.stringify({base,version,shared,printedKey,summaries,sticky,publishedModels:inventory.files.length,errors},null,2));console.log(`PASS ${engine.name()}: sortable semantic tables, fixed totals, shared persistent checklists, print status, atomic import/export, denied storage, ${inventory.files.length} original/preview mappings, real STL/STEP/3MF controls and stage disposal, and four phone layouts`);
 }finally{await browser.close();}

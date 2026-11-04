@@ -62,6 +62,7 @@ jobs:
             commands: |
               python3 tools/test-print-provenance.py
               python3 tools/test-rs04-lug-stacks.py
+              python3 tools/test-rs04-dowel-protrusion.py
               python3 tools/test-rs04-support-probe.py
               python3 research/thread-mating-2026-10-29/test_wrapper.py
               python3 tools/test-base-board-interfaces.py
@@ -75,6 +76,7 @@ jobs:
               python3 research/snap-fits/test_snaps.py
               python3 research/leg-preprint/test_screen.py
               python3 tools/test-turret-fea-refresh.py
+              python3 sim/test_motor_thermal.py
               npm run test:turret
               npm run test:camera
               npm run test:models
@@ -82,6 +84,8 @@ jobs:
           - suite: playground
             commands: |
               npm run test:interactions
+              npm run test:rs04
+              npm run test:motor-tool
               npm run test:robot
               npm run test:gamepad
               npm run test:sim
