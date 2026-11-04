@@ -1,0 +1,67 @@
+/* Gamepad settings dialog and controller diagram. Override the --gpad-* properties to theme it; by default it
+   follows a page's --surface/--text/--hairline/--cyan tokens when they exist. MIT licensed (LICENSE). */
+.gpad-config, .gpad-diagram {
+  --gpad-bg: var(--surface, #0e171b);
+  --gpad-bg-2: var(--surface-2, #16242a);
+  --gpad-fg: var(--text, #e6f1f3);
+  --gpad-dim: var(--text-dim, #9fb4ba);
+  --gpad-line: var(--hairline, #2d454d);
+  --gpad-accent: var(--cyan, #2fd3e6);
+  --gpad-warn: var(--gp-bad, #e0823d);
+  --gpad-font: var(--font-ui, system-ui, sans-serif);
+  --gpad-mono: var(--font-mono, ui-monospace, monospace);
+}
+.gpad-config { width: min(920px, calc(100vw - 24px)); max-height: calc(100dvh - 24px); padding: 0; border: 1px solid var(--gpad-line);
+  border-radius: 12px; background: var(--gpad-bg); color: var(--gpad-fg); font: 13px/1.4 var(--gpad-font); box-shadow: 0 18px 60px rgb(0 0 0 / .45); }
+.gpad-config::backdrop { background: rgb(0 0 0 / .45); }
+.gpad-config[open] { display: flex; flex-direction: column; }
+.gpad-head { display: flex; align-items: center; gap: 12px; padding: 12px 16px; border-bottom: 1px solid var(--gpad-line); }
+.gpad-head h2 { margin: 0; font: 600 13px var(--gpad-mono); letter-spacing: .12em; text-transform: uppercase; }
+.gpad-status { margin: 0; flex: 1; min-width: 0; color: var(--gpad-dim); font: 12px var(--gpad-mono); overflow-wrap: anywhere; }
+.gpad-intro { margin: 10px 16px 0; color: var(--gpad-dim); }
+.gpad-close { flex: none; width: 44px; height: 44px; border: 1px solid var(--gpad-line); border-radius: 8px; background: var(--gpad-bg-2);
+  color: var(--gpad-fg); font-size: 16px; cursor: pointer; }
+.gpad-grid { display: grid; grid-template-columns: minmax(0, 1fr) minmax(0, 1.15fr); gap: 16px; padding: 14px 16px 16px; overflow: auto; }
+@media (max-width: 720px) { .gpad-grid { grid-template-columns: minmax(0, 1fr); } }
+.gpad-view { align-self: start; }
+.gpad-block { margin: 0 0 14px; }
+.gpad-block h3 { margin: 0 0 6px; font: 600 11px var(--gpad-mono); letter-spacing: .12em; text-transform: uppercase; color: var(--gpad-dim); }
+.gpad-actions { width: 100%; border-collapse: collapse; }
+.gpad-actions th, .gpad-actions td { padding: 5px 4px; border-bottom: 1px solid var(--gpad-line); text-align: left; vertical-align: middle; }
+.gpad-actions th { font-weight: 600; }
+.gpad-actions th small { color: var(--gpad-dim); font-weight: 400; }
+.gpad-actions td:last-child { text-align: right; width: 1%; }
+.gpad-actions tr.capturing td.gpad-binding { color: var(--gpad-accent); }
+.gpad-binding { font: 12px var(--gpad-mono); }
+.gpad-warn { color: var(--gpad-warn); }
+.gpad-btn { min-height: 36px; padding: 6px 12px; border: 1px solid var(--gpad-line); border-radius: 6px; background: var(--gpad-bg-2);
+  color: var(--gpad-fg); font: 600 11px var(--gpad-mono); letter-spacing: .08em; text-transform: uppercase; cursor: pointer; }
+.gpad-btn:hover:not(:disabled), .gpad-close:hover { border-color: var(--gpad-accent); color: var(--gpad-accent); }
+.gpad-btn:disabled { opacity: .5; cursor: default; }
+.gpad-btn:focus-visible, .gpad-close:focus-visible, .gpad-config input:focus-visible { outline: 2px solid var(--gpad-accent); outline-offset: 2px; }
+.gpad-slider { display: grid; grid-template-columns: 1fr auto; gap: 2px 8px; margin: 0 0 8px; }
+.gpad-slider output { font: 12px var(--gpad-mono); color: var(--gpad-dim); }
+.gpad-slider input { grid-column: 1 / -1; width: 100%; accent-color: var(--gpad-accent); }
+.gpad-inverts { display: flex; flex-wrap: wrap; gap: 4px 14px; margin: 4px 0 0; padding: 6px 8px; border: 1px solid var(--gpad-line); border-radius: 6px; }
+.gpad-inverts legend { padding: 0 4px; color: var(--gpad-dim); font: 11px var(--gpad-mono); }
+.gpad-inverts input { accent-color: var(--gpad-accent); }
+.gpad-foot { display: flex; flex-wrap: wrap; gap: 8px; }
+
+/* the diagram */
+.gpad-diagram { display: block; width: 100%; height: auto; max-width: 460px; margin: 0 auto; }
+.gpad-diagram .gpad-body { fill: var(--gpad-bg-2); stroke: var(--gpad-line); stroke-width: 2; }
+.gpad-diagram .gpad-shape { fill: var(--gpad-bg); stroke: var(--gpad-line); stroke-width: 1.5; transition: fill .06s, stroke .06s; }
+.gpad-diagram .gpad-well { fill: var(--gpad-bg); stroke: var(--gpad-line); stroke-width: 1; opacity: .8; }
+.gpad-diagram .gpad-dot { fill: var(--gpad-dim); }
+.gpad-diagram .gpad-dpad-hub { fill: var(--gpad-bg); }
+.gpad-diagram .gpad-label { fill: var(--gpad-dim); font: 600 12px var(--gpad-mono); text-anchor: middle; pointer-events: none; }
+.gpad-diagram .gpad-label--small { font-size: 9px; }
+.gpad-diagram .gpad-fill { fill: var(--gpad-accent); opacity: .55; }
+.gpad-diagram .gpad-face--a .gpad-label { fill: #5fbf55; } .gpad-diagram .gpad-face--b .gpad-label { fill: #e5534b; }
+.gpad-diagram .gpad-face--x .gpad-label { fill: #4c8ee8; } .gpad-diagram .gpad-face--y .gpad-label { fill: #e3b341; }
+.gpad-diagram .on > .gpad-shape, .gpad-diagram .gpad-stick.on > .gpad-shape { fill: var(--gpad-accent); stroke: var(--gpad-accent); }
+.gpad-diagram .on .gpad-label { fill: var(--gpad-bg); }
+.gpad-diagram .gpad-stick.moved > .gpad-shape:first-child { stroke: var(--gpad-accent); }
+.gpad-diagram .focus > .gpad-shape { stroke: var(--gpad-warn); stroke-width: 3; }
+.gpad-diagram--idle { opacity: .55; }
+@media (prefers-reduced-motion: reduce) { .gpad-diagram .gpad-shape { transition: none; } }
