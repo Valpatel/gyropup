@@ -11,7 +11,7 @@ project, or lifted out into its own repository, as it is. MIT licensed ([LICENSE
 | `control.js` | `createGamepadControl()`: the one object a page uses. `value(name)`, `held(name)`, `pressed(name)`, `released(name)` after each poll; `'action'` events; rebind `capture()`; `suspend()`; tuning; rumble |
 | `config-ui.js` | `mountGamepadConfig(control)`: a native `<dialog>` with a live controller diagram, every action with a **Change** (rebind) button, dead-zone / full-scale / curve / trigger sliders, per-axis invert, rumble test and reset |
 | `diagram.js` | `createDiagram()`: the live Xbox-layout controller drawing in SVG (pressed buttons light up, sticks move, triggers fill) |
-| `gamepad.css` | Dialog and diagram styles. Theme with the `--gpad-*` custom properties; by default they follow a page's `--surface`, `--text`, `--hairline` and `--cyan` tokens |
+| `gamepad.css` | Dialog and diagram styles. Theme with the `--gpad-*` custom properties; by default they follow a page's `--surface-1`, `--surface-2`, `--text`, `--text-dim`, `--hairline` and `--cyan` tokens, or the browser's light or dark system colours |
 | `demo.html` | A small working page: plug in a controller and open it |
 | `gamepad.test.mjs` | Unit tests for the logic (`node --test designer/kit/gamepad/gamepad.test.mjs`) |
 

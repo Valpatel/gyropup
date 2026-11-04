@@ -1,13 +1,15 @@
 /* Gamepad settings dialog and controller diagram. Override the --gpad-* properties to theme it; by default it
    follows a page's --surface/--text/--hairline/--cyan tokens when they exist. MIT licensed (LICENSE). */
 .gpad-config, .gpad-diagram {
-  --gpad-bg: var(--surface, #0e171b);
-  --gpad-bg-2: var(--surface-2, #16242a);
-  --gpad-fg: var(--text, #e6f1f3);
-  --gpad-dim: var(--text-dim, #9fb4ba);
-  --gpad-line: var(--hairline, #2d454d);
-  --gpad-accent: var(--cyan, #2fd3e6);
-  --gpad-warn: var(--gp-bad, #e0823d);
+  /* Defaults follow a page's HUD tokens (--surface-1/-2, --text, --text-dim, --hairline, --cyan); without them, the
+     browser's own light or dark system colours, so text and background always come from the same set. */
+  --gpad-bg: var(--surface-1, Canvas);
+  --gpad-bg-2: var(--surface-2, color-mix(in srgb, CanvasText 6%, Canvas));
+  --gpad-fg: var(--text, CanvasText);
+  --gpad-dim: var(--text-dim, color-mix(in srgb, CanvasText 70%, Canvas));
+  --gpad-line: var(--hairline, color-mix(in srgb, CanvasText 25%, Canvas));
+  --gpad-accent: var(--cyan, LinkText);
+  --gpad-warn: var(--gp-bad, #c2410c);
   --gpad-font: var(--font-ui, system-ui, sans-serif);
   --gpad-mono: var(--font-mono, ui-monospace, monospace);
 }
@@ -57,8 +59,8 @@
 .gpad-diagram .gpad-label { fill: var(--gpad-dim); font: 600 12px var(--gpad-mono); text-anchor: middle; pointer-events: none; }
 .gpad-diagram .gpad-label--small { font-size: 9px; }
 .gpad-diagram .gpad-fill { fill: var(--gpad-accent); opacity: .55; }
-.gpad-diagram .gpad-face--a .gpad-label { fill: #5fbf55; } .gpad-diagram .gpad-face--b .gpad-label { fill: #e5534b; }
-.gpad-diagram .gpad-face--x .gpad-label { fill: #4c8ee8; } .gpad-diagram .gpad-face--y .gpad-label { fill: #e3b341; }
+.gpad-diagram .gpad-face--a .gpad-label { fill: #3a9d3a; } .gpad-diagram .gpad-face--b .gpad-label { fill: #d9443d; }
+.gpad-diagram .gpad-face--x .gpad-label { fill: #3b7be0; } .gpad-diagram .gpad-face--y .gpad-label { fill: #c99a1e; }
 .gpad-diagram .on > .gpad-shape, .gpad-diagram .gpad-stick.on > .gpad-shape { fill: var(--gpad-accent); stroke: var(--gpad-accent); }
 .gpad-diagram .on .gpad-label { fill: var(--gpad-bg); }
 .gpad-diagram .gpad-stick.moved > .gpad-shape:first-child { stroke: var(--gpad-accent); }

@@ -6,17 +6,16 @@
 <title>Gamepad component demo</title>
 <link rel="stylesheet" href="gamepad.css">
 <style>
-  :root { color-scheme: light dark; --surface: Canvas; --surface-2: color-mix(in srgb, CanvasText 6%, Canvas); --text: CanvasText;
-    --text-dim: color-mix(in srgb, CanvasText 65%, Canvas); --hairline: color-mix(in srgb, CanvasText 22%, Canvas); --cyan: #0a8fa3; }
-  body { margin: 0; padding: 20px; font: 14px/1.45 system-ui, sans-serif; background: var(--surface); color: var(--text); }
+  :root { color-scheme: light dark; }
+  body { margin: 0; padding: 20px; font: 14px/1.45 system-ui, sans-serif; background: Canvas; color: CanvasText; }
   main { max-width: 900px; margin: 0 auto; display: grid; gap: 16px; grid-template-columns: minmax(0, 1fr) minmax(0, 1fr); }
   @media (max-width: 700px) { main { grid-template-columns: minmax(0, 1fr); } }
   h1 { grid-column: 1 / -1; margin: 0; font-size: 20px; }
   p { margin: 0; }
   table { width: 100%; border-collapse: collapse; font: 13px ui-monospace, monospace; }
-  td, th { padding: 4px 6px; border-bottom: 1px solid var(--hairline); text-align: left; }
+  td, th { padding: 4px 6px; border-bottom: 1px solid color-mix(in srgb, CanvasText 22%, Canvas); text-align: left; }
   meter { width: 100%; }
-  #log { height: 140px; overflow: auto; margin: 0; padding: 6px; border: 1px solid var(--hairline); border-radius: 6px; font: 12px ui-monospace, monospace; }
+  #log { height: 140px; overflow: auto; margin: 0; padding: 6px; border: 1px solid color-mix(in srgb, CanvasText 22%, Canvas); border-radius: 6px; font: 12px ui-monospace, monospace; }
 </style>
 </head>
 <body>
