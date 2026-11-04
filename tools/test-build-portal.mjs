@@ -207,7 +207,8 @@ try{
  // The home page's "What to print now" deep link lands on the card at phone and desktop widths (the card fills in after
  // the jump; scroll anchoring once left it 1,500 px above the screen on a phone), and every file has a download and a preview.
  for(const [width,height] of [[390,844],[1280,900]]){
-  const deep=await context.newPage();deep.on('pageerror',error=>errors.push(error.message));await deep.setViewportSize({width,height});
+  const deepContext=await browser.newContext({viewport:{width,height}});await deepContext.addInitScript(()=>sessionStorage.setItem('gyropup.prototype-notice','2026-10-29-v1'));
+  const deep=await deepContext.newPage();deep.on('pageerror',error=>errors.push(error.message));await deep.setViewportSize({width,height});
   await deep.goto(base+'/designer/build.html#print-now');await deep.waitForFunction(()=>document.getElementById('print-now')?.dataset.ready==='1');
   await deep.evaluate(()=>new Promise(resolve=>requestAnimationFrame(()=>requestAnimationFrame(resolve))));
   const box=await deep.locator('#print-now').evaluate(el=>{const r=el.getBoundingClientRect();return{top:r.top,bottom:r.bottom};});
@@ -215,7 +216,7 @@ try{
   const card=await deep.locator('#print-now').evaluate(el=>({rows:el.querySelectorAll('li[data-order]').length,downloads:el.querySelectorAll('a[download][href$=".stl"],a[download][href$=".3mf"]').length,previews:el.querySelectorAll('a[data-model-preview]').length}));
   assert.ok(card.rows>=10,'the print list has its steps');assert.ok(card.downloads>=card.rows,'every step has a file');
   await deep.waitForFunction(n=>document.querySelectorAll('#print-now a[data-model-preview]').length>=n,card.downloads);
-  await deep.close();
+  await deepContext.close();
  }
  assert.deepEqual(errors,[]);await writeFile(`${out}/${engine.name()}-report.json`,JSON.stringify({base,version,shared,printedKey,summaries,sticky,publishedModels:inventory.files.length,errors},null,2));console.log(`PASS ${engine.name()}: sortable semantic tables, fixed totals, shared persistent checklists, print status, atomic import/export, denied storage, ${inventory.files.length} original/preview mappings, real STL/STEP/3MF controls and stage disposal, and four phone layouts`);
 }finally{await browser.close();}
