@@ -216,7 +216,7 @@ class Bridge:
             log('refused a websocket from origin', headers.get('origin'))
             writer.write(http_response(403, 'Forbidden', b'origin not allowed'))
             return
-        if self.token is not None and not hmac.compare_digest(query.get('token', [''])[0], self.token):
+        if self.token is not None and not hmac.compare_digest(query.get('token', [''])[0].encode(), self.token.encode()):
             log('refused a websocket without the token')
             writer.write(http_response(403, 'Forbidden', b'token required'))
             return

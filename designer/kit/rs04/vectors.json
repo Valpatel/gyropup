@@ -3798,11 +3798,106 @@
      "code": "ok"
     },
     {
+     "op": "out",
+     "frame": {
+      "id": 117505282,
+      "data": "0000000000000000"
+     },
+     "ext": true,
+     "ok": false,
+     "code": "bad-id"
+    },
+    {
+     "op": "out",
+     "frame": {
+      "id": 134085890,
+      "data": "0000000000000000"
+     },
+     "ext": true,
+     "ok": false,
+     "code": "bad-id"
+    },
+    {
+     "op": "out",
+     "frame": {
+      "id": 125893890,
+      "data": "0000000000000000"
+     },
+     "ext": true,
+     "ok": false,
+     "code": "bad-id"
+    },
+    {
      "op": "stop_targets",
      "ids": [
       2,
       127
      ]
+    }
+   ],
+   "a NaN read-back does not arm": [
+    {
+     "op": "in",
+     "frame": {
+      "id": 510,
+      "data": "0000000000000000"
+     }
+    },
+    {
+     "op": "arm",
+     "ids": [
+      1
+     ],
+     "ok": true,
+     "code": "ok"
+    },
+    {
+     "op": "in",
+     "frame": {
+      "id": 285213181,
+      "data": "0570000000000000"
+     }
+    },
+    {
+     "op": "in",
+     "frame": {
+      "id": 285213181,
+      "data": "0b7000000000c07f"
+     }
+    },
+    {
+     "op": "in",
+     "frame": {
+      "id": 285213181,
+      "data": "28700000d0070000"
+     }
+    },
+    {
+     "op": "out",
+     "frame": {
+      "id": 50396417,
+      "data": "0000000000000000"
+     },
+     "ext": true,
+     "ok": false,
+     "code": "jog-torque"
+    },
+    {
+     "op": "in",
+     "frame": {
+      "id": 285213181,
+      "data": "0b70000000004040"
+     }
+    },
+    {
+     "op": "out",
+     "frame": {
+      "id": 50396417,
+      "data": "0000000000000000"
+     },
+     "ext": true,
+     "ok": true,
+     "code": "ok"
     }
    ]
   }

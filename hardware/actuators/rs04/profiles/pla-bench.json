@@ -1,10 +1,10 @@
 {
   "schema": "gyropup.rs04-profile/1",
   "id": "pla-bench",
-  "version": 1,
+  "version": 2,
   "title": "PLA bench leg (motor day)",
   "default": true,
-  "about": "The limits the RS-04 configuration tool (designer/motor-tool.html) and its bridge (rig/rs04_bridge.py) enforce on the PLA bench leg. A number with a 'sources' entry is consumed from that file and checked against it by rig/tests/test_rs04_profiles.py: change the source, never only this copy.",
+  "about": "The limits the RS-04 configuration tool (designer/motor-tool.html) and its bridge (rig/rs04_bridge.py) enforce on the PLA bench leg. A number with a 'sources' entry is consumed from that file and checked against it by rig/tests/test_rs04_vectors.py: change the source, never only this copy.",
   "limits": {
     "limit_torque_nm": 12.0,
     "jog_torque_nm": 3.0,
@@ -18,18 +18,18 @@
     "limits.limit_torque_nm": {"json": "exports/motor-day/derating.json", "pointer": "/pla_cap_nm", "what": "the PLA leg's cap from the motor-day derating (docs/motor-day.md)"},
     "limits.can_timeout_ticks": {"c_define": "firmware/balance/include/gp/gp_config.h", "name": "GP_RS04_CAN_TIMEOUT", "what": "0.1 s without a frame and the motor drops to reset"},
     "limits.can_timeout_max_ticks": {"c_define": "firmware/balance/include/gp/gp_config.h", "name": "GP_RS04_CAN_TIMEOUT", "what": "the tool never sets a longer watchdog than the firmware's"},
-    "motor_config.limit_torque": {"json": "exports/motor-day/derating.json", "pointer": "/pla_cap_nm", "what": "the cap stored in the motor"},
     "motor_config.canTimeout": {"c_define": "firmware/balance/include/gp/gp_config.h", "name": "GP_RS04_CAN_TIMEOUT", "what": "stored in the motor"}
   },
   "jog_basis": "The jog limits are the tool's own, chosen for a motor on the bench or a leg in the air: 3 N m is a quarter of the cap and half the continuous torque of the thermal model's bench limit (see references), 1 rad/s is a slow swing an operator can stop by hand on a bare motor, Kp 20 N m/rad reaches the jog torque at 0.15 rad (8.6 deg) of error.",
   "motor_config": {
     "run_mode": 0,
-    "limit_torque": 12.0,
+    "limit_torque": 10.0,
     "canTimeout": 2000,
     "zero_sta": 1,
     "damper": 0
   },
   "notes": [
+    "The motor powers up at limit_torque 10 N m, as the motor-day ladder's step L1 saves it (docs/motor-day.md: L1-L3 run at 10); the 12 N m cap is the ceiling the tool lets you write for L4-L7, never stored by Write and read back.",
     "Stop a session when a motor's case passes the bench face limit, and plan held torques under the continuous limit for the room's temperature: both are in the motor heat model's bench section (references: exports/leg/thermal/motor_thermal.json, /bench; docs/motor-thermal.md section 5). This profile does not copy those numbers.",
     "Without --cap, rig.run runs at the 60 N m cap: never on the PLA leg (docs/motor-day.md)."
   ],
@@ -40,6 +40,7 @@
     {"file": "docs/leg-bench-tests.md", "what": "C1-C6 commissioning"}
   ],
   "changes": [
-    {"version": 1, "date": "2026-11-03", "what": "first profile (issue #206)"}
+    {"version": 1, "date": "2026-11-03", "what": "first profile (issue #206)"},
+    {"version": 2, "date": "2026-11-03", "what": "stores limit_torque 10, as motor-day step L1 does (review of PR #209)"}
   ]
 }

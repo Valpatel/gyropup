@@ -156,8 +156,10 @@ The planned bench supply (Mean Well LRS-600-36, 36 V: the robot's bus, D65) feed
 the motor's XT30. Fit the CAN lead and its terminators only as part of a released
 bench setup; this planned procedure is not evidence of readiness.
 
-C1-C5 can also be done in the browser with the [RS-04 motor tool](rs04-motor-tool.md) (`python -m rig.rs04_bridge
---iface can0`): scan, set id, the profile's settings, save, and the watchdog check, under the PLA bench profile's limits.
+C1-C4 can also be done in the browser with the [RS-04 motor tool](rs04-motor-tool.md) (`python -m rig.rs04_bridge
+--iface can0`): scan, set id, the profile's settings and save, under the PLA bench profile's limits. C5 cannot: it
+waits for the motor to drop to reset with no frames, and the tool sends one every 100 ms. Use the command line for
+C5 and C6.
 
 | Step | Do | Pass |
 |---|---|---|

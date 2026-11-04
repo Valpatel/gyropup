@@ -4,7 +4,7 @@
   "version": 1,
   "title": "Final build (machined adapters, metal links)",
   "default": false,
-  "about": "The limits the RS-04 configuration tool and its bridge enforce on the final build's legs. The cap is the firmware's until the per-build caps of issue #202 land; then this profile consumes theirs. A number with a 'sources' entry is checked against its source by rig/tests/test_rs04_profiles.py.",
+  "about": "The limits the RS-04 configuration tool and its bridge enforce on the final build's legs. The cap is the firmware's until the per-build caps of issue #202 land; then this profile consumes theirs. A number with a 'sources' entry is checked against its source by rig/tests/test_rs04_vectors.py.",
   "limits": {
     "limit_torque_nm": 60.0,
     "jog_torque_nm": 5.0,

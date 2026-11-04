@@ -91,7 +91,7 @@ try {
   await page.click(t('apply-profile'));
   await waitLog(page, /motor 1: pla-bench settings written and read back/);
   assert.deepEqual(Object.fromEntries(Object.entries((await emuMotor(page)).params).filter(([k]) => ['run_mode', 'limit_torque', 'canTimeout', 'zero_sta', 'damper'].includes(k))),
-    { run_mode: 0, limit_torque: 12, canTimeout: 2000, zero_sta: 1, damper: 0 });
+    { run_mode: 0, limit_torque: 10, canTimeout: 2000, zero_sta: 1, damper: 0 });
   await page.selectOption(t('pose'), 'knee-out-bare');
   await page.click(t('zero'));
   await confirm(page, /Upper link on its bare knee-out stop post[\s\S]*TPU sleeve is not on yet[\s\S]*rig\/calibrate\.py/);
@@ -104,6 +104,16 @@ try {
   assert.equal((await emuMotor(page)).mode, 0, 'not enabled without the arm step');
   await page.check(t('check-0'));
   await page.check(t('check-1'));
+  // STOP while the arm step's read-backs are in flight cancels it: the motor never enables
+  const race = await page.evaluate(async () => {
+    document.querySelector('[data-test="arm"]').click();
+    document.body.dispatchEvent(new KeyboardEvent('keydown', { key: ' ', code: 'Space', bubbles: true }));
+    await new Promise(r => setTimeout(r, 1000));
+    const tool = window.gyropupMotorTool;
+    return { armed: tool.armed, mode: tool.client.transport.bus.motors[0].mode };
+  });
+  assert.deepEqual(race, { armed: [], mode: 0 }, 'STOP during the arm step leaves the motor disabled');
+  await waitLog(page, /motor 1 not armed: STOP came first/);
   await page.click(t('arm'));
   await page.waitForFunction(() => document.querySelector('[data-test="jog-state"]').dataset.armed === 'true');
   const armed = await emuMotor(page);
@@ -140,6 +150,7 @@ try {
   assert.match(cfg.uid, /^[0-9a-f]{16}$/);
   assert.equal(cfg.params.limit_torque, 3, 'the jog torque is still in the motor (volatile)');
   assert.ok(cfg.unsaved.includes('zero'));
+  assert.equal(cfg.zero.pose, 'Upper link on its bare knee-out stop post', 'the export names the zero pose (the inventory records it)');
   assert.equal(await page.locator(`${t('diff')} tr[data-param="limit_torque"]`).getAttribute('data-same'), 'false', 'the profile diff flags the jog torque');
   cfg.params.damper = 1;
   await page.fill(t('import-text'), JSON.stringify(cfg));

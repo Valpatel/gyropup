@@ -7,7 +7,7 @@ checked against the same scenarios in designer/kit/rs04/vectors.json (python -m 
     ok, code, why = g.check(cid, data, ext)  # every frame a client asks to send; refused frames are not sent
     g.arm([1, 2]); g.disarm()
 
-The rules (hardware/actuators/rs04/README.md has them for people):
+The rules (docs/rs04-motor-tool.md has them for people):
   - Only the RS-04's own 29-bit frames; never the bit-rate or protocol changes (types 23 and 25).
   - A motor is enabled or sent motion (MIT frames) only after an explicit arm, and only if in this session it answered
     a get-id as an RS-04 and read back, within CONFIRM_S, run_mode 0 (MIT), limit_torque at or under the profile's jog
@@ -24,6 +24,7 @@ from typing import Callable, Dict, Iterable, Optional, Set, Tuple
 
 from rig import rs04 as P
 
+MAX_MOTOR_ID = 127        # a motor's CAN id is 1..127 (rig/rs04.py); 0 is broadcast, 0xFD the host
 CONFIRM_S = 10.0          # a read-back older than this does not allow an enable: re-read just before arming
 COMMANDS = ('iq_ref', 'spd_ref', 'loc_ref')     # mode commands that would move a motor outside the MIT limits
 
@@ -80,11 +81,11 @@ class Guard:
                 return False, 'not-confirmed', f'motor {motor}: read {name} back just before arming'
         if c['run_mode'][0] != 0:
             return False, 'mode', f'motor {motor} is in run_mode {c["run_mode"][0]:g}: the tool runs MIT (0) only'
-        if c['limit_torque'][0] > self.lim['jog_torque_nm'] + 1e-6:
+        if not c['limit_torque'][0] <= self.lim['jog_torque_nm'] + 1e-6:      # NaN fails too
             return False, 'jog-torque', (f'motor {motor} holds limit_torque {c["limit_torque"][0]:g} N m: over the '
                                          f'profile\'s jog torque {self.lim["jog_torque_nm"]:g} N m')
         to = c['canTimeout'][0]
-        if to < 1 or to > self.lim['can_timeout_max_ticks']:
+        if not 1 <= to <= self.lim['can_timeout_max_ticks']:
             return False, 'watchdog', f'motor {motor} has canTimeout {to:g}: it must be on (1..{self.lim["can_timeout_max_ticks"]})'
         return True, 'ok', ''
 
@@ -122,6 +123,8 @@ class Guard:
             return False, 'armed', f'motor {m} is armed: disarm before writing, zeroing, renumbering or saving'
         if k == P.SET_ID:
             new = req.fields['new_id']
+            if not 1 <= new <= MAX_MOTOR_ID:
+                return False, 'bad-id', f'id {new} is not a motor id (1..{MAX_MOTOR_ID})'
             if new in self.seen and new != m:
                 return False, 'id-taken', f'id {new} already answers on this bus'
             self.seen.discard(m)                  # it answers as `new` from now on (its id reply adds that)

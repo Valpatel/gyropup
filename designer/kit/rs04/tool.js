@@ -44,7 +44,7 @@ export function mountMotorTool(root, { profiles, joints = [], poses = [], transp
   let profile = profiles.find(p => p.default) || profiles[0];
   let client = null, transport = null;
   const motors = new Map();            // id -> { id, uid, firmware, params, dirty: Set, telemetry }
-  let selected = null, jog = null, polling = null, stopped = false;
+  let selected = null, jog = null, polling = null, stopped = false, stopEpoch = 0;
 
   // ---------------------------------------------------------------- layout
   root.classList.add('rs04-tool');
@@ -138,8 +138,12 @@ export function mountMotorTool(root, { profiles, joints = [], poses = [], transp
     const lim = transport.hello?.limits;
     if (lim && JSON.stringify(lim) !== JSON.stringify(profile.limits)) {
       const other = profiles.find(p => JSON.stringify(p.limits) === JSON.stringify(lim));
-      log(`the bridge enforces profile ${transport.hello.profile}: the page follows it`, 'warn');
-      if (other) { profile = other; profileSel.value = other.id; await setProfile(other.id); }
+      if (other) {
+        log(`the bridge enforces profile ${transport.hello.profile}: the page follows it`, 'warn');
+        profile = other; profileSel.value = other.id; await setProfile(other.id);
+      } else {
+        log(`the bridge enforces limits (profile ${transport.hello.profile}) that match none of this page's profiles: both apply, so a request either side refuses is not sent`, 'warn');
+      }
     }
     client = createClient(transport, { limits: profile.limits });
     transport.onClose?.((why) => disconnect(`the connection closed (${why})`));
@@ -170,6 +174,7 @@ export function mountMotorTool(root, { profiles, joints = [], poses = [], transp
 
   // ---------------------------------------------------------------- STOP
   function stopAll(why) {
+    stopEpoch++;                         // an arm() in flight sees this and gives up (it never enables after a STOP)
     if (jog) { clearInterval(jog.timer); jog = null; renderJog(); }
     if (!client) return;
     const ids = client.stopAll();
@@ -242,6 +247,7 @@ export function mountMotorTool(root, { profiles, joints = [], poses = [], transp
     strips[k] = createStrip(telemetry, { title, unit, digits });
   let lastVbus = 0, frameRaf = null, pollCount = 0;
   let polling_now = false, arming = false;
+  const overspeed = (fb) => Math.abs(fb.v) > profile.limits.jog_speed_rad_s * 1.5 + 0.3;
   async function poll() {
     if (!client || selected == null || document.hidden || polling_now || arming) return;
     polling_now = true;
@@ -261,8 +267,9 @@ export function mountMotorTool(root, { profiles, joints = [], poses = [], transp
       const f = client.faults.get(id), names = [...P.feedbackFaultNames(fb.faults), ...(f ? P.faultFrameNames(f.fault, f.warning) : [])];
       faultBox.textContent = names.length ? `Faults: ${names.join(', ')}` : 'No faults';
       faultBox.dataset.bad = String(names.length > 0);
-      if (jog && Math.abs(fb.v) > profile.limits.jog_speed_rad_s * 1.5 + 0.3) stopAll(`motor ${id} reached ${fb.v.toFixed(2)} rad/s, past the jog speed`);
     }
+    const jf = jog && client.last.get(jog.id);    // the armed motor, whichever is selected
+    if (jf && jf.at > now - 0.5 && overspeed(jf)) stopAll(`motor ${jog.id} reached ${jf.v.toFixed(2)} rad/s, past the jog speed`);
     if (++pollCount % 10 === 0) renderMotors();
     if (!frameRaf) frameRaf = requestAnimationFrame(() => { frameRaf = null; Object.values(strips).forEach(s => s.draw()); });
   }
@@ -353,7 +360,7 @@ export function mountMotorTool(root, { profiles, joints = [], poses = [], transp
     const got = await busy(`motor ${m.id} setid`, () => client.setId(m.id, newId));
     if (got == null) return;
     motors.delete(m.id);
-    const n = motor(got); Object.assign(n, { uid: m.uid, firmware: m.firmware, params: m.params, dirty: new Set([...m.dirty, 'CAN id']) });
+    const n = motor(got); Object.assign(n, { uid: m.uid, firmware: m.firmware, params: m.params, zero: m.zero, dirty: new Set([...m.dirty, 'CAN id']) });
     log(`motor ${m.id} is now CAN id ${got}${j ? ` (${j.name})` : ''}: save to keep it`);
     selected = got; renderMotors(); renderSelected(); renderParams();
   }
@@ -377,6 +384,7 @@ export function mountMotorTool(root, { profiles, joints = [], poses = [], transp
     if (!(await busy(`motor ${id} zero`, () => client.zero(id)))) return;
     const at = await busy(`motor ${id} mechPos`, () => client.read(id, 'mechPos'));
     motor(id).dirty.add('zero');
+    motor(id).zero = { pose: pose.name, at: new Date().toISOString() };
     log(`motor ${id}: zero set at "${pose.name}"; it reads ${at?.toFixed(4)} rad now. Save to keep it.`);
     renderMotors();
   }
@@ -410,15 +418,23 @@ export function mountMotorTool(root, { profiles, joints = [], poses = [], transp
     if (!checkBoxes.every(c => c.querySelector('input').checked)) { log('tick both checks before arming', 'warn'); return; }
     const id = selected, l = profile.limits;
     arming = true;
+    const epoch = stopEpoch, c = client;
+    const cancelled = () => stopEpoch !== epoch || client !== c;
     const ok = await busy(`arm motor ${id}`, async () => {
-      await client.stop(id);
-      await client.writeCheck(id, 'run_mode', 0);
-      await client.writeCheck(id, 'canTimeout', l.can_timeout_ticks);
-      await client.writeCheck(id, 'limit_torque', l.jog_torque_nm);
-      client.arm([id]);
-      const fb = await client.enable(id);
-      return fb;
+      await c.stop(id);
+      await c.writeCheck(id, 'run_mode', 0);
+      await c.writeCheck(id, 'canTimeout', l.can_timeout_ticks);
+      await c.writeCheck(id, 'limit_torque', l.jog_torque_nm);
+      if (cancelled()) return null;      // STOP (or a disconnect) while the read-backs ran: never arm
+      c.arm([id]);
+      return c.enable(id);
     });
+    if (cancelled()) {                   // STOP landed during the enable: the motor may have enabled, so stop it again
+      arming = false;
+      try { c.disarm([id]); c.stop(id).catch(() => null); } catch { /* gone */ }
+      log(`motor ${id} not armed: STOP came first`, 'stop');
+      return;
+    }
     if (!ok || !client) { arming = false; client?.disarm([id]); return; }
     stopped = false;
     jog = { id, target: ok.p, dir: 0, timer: null, last: performance.now() };
@@ -436,14 +452,18 @@ export function mountMotorTool(root, { profiles, joints = [], poses = [], transp
     const now = performance.now(), dt = Math.min(0.1, (now - jog.last) / 1000), l = profile.limits;
     jog.last = now;
     jog.target += jog.dir * l.jog_speed_rad_s * dt;
-    const j = jog;
+    const j = jog, at = client.last.get(j.id);
+    // The commanded torque is Kp * error + Kd * speed error. Keep the error where it stays inside the jog torque
+    // without counting on the motor's own limit_torque clip (assumed, not measured).
+    const errMax = Math.max(0.01, (l.jog_torque_nm - l.jog_kd_max * l.jog_speed_rad_s) / l.jog_kp_max);
+    if (at) j.target = Math.min(at.p + errMax, Math.max(at.p - errMax, j.target));
     const fb = await client.mit(j.id, j.target, j.dir * l.jog_speed_rad_s, l.jog_kp_max, l.jog_kd_max, 0).catch((e) => {
       if (jog === j) stopAll(`jog frame failed: ${e.message}`);
       return null;
     });
     if (fb && jog === j) {
       if (fb.mode !== 2) stopAll(`motor ${j.id} left run mode (${P.MODES[fb.mode]}${fb.faults ? ', ' + P.feedbackFaultNames(fb.faults).join(', ') : ''})`);
-      else if (Math.abs(fb.p - j.target) > 0.5) j.target = fb.p + Math.sign(j.target - fb.p) * 0.5;   // never wind up past what the torque can follow
+      else if (overspeed(fb)) stopAll(`motor ${j.id} reached ${fb.v.toFixed(2)} rad/s, past the jog speed`);
       jogState.textContent = `ARMED: motor ${j.id}, target ${j.target.toFixed(3)} rad, at ${fb.p.toFixed(3)} rad, ${fb.t.toFixed(2)} N m`;
     }
   }
@@ -475,7 +495,7 @@ export function mountMotorTool(root, { profiles, joints = [], poses = [], transp
     const fb = client?.last.get(m.id), j = jointOf(m.id);
     return { schema: CONFIG_SCHEMA, exported: new Date().toISOString(), uid: m.uid, can_id: m.id, joint: j?.key ?? null,
       firmware: m.firmware, profile: { id: profile.id, version: profile.version },
-      angle_at_export_rad: fb ? Number(fb.p.toFixed(5)) : null, unsaved: [...m.dirty],
+      angle_at_export_rad: fb ? Number(fb.p.toFixed(5)) : null, zero: m.zero ?? null, unsaved: [...m.dirty],
       params: Object.fromEntries(Object.entries(m.params).filter(([, v]) => v != null)) };
   }
   async function exportConfig() {

@@ -178,7 +178,16 @@ def guard_scenarios():
         'renumbering': [
             ('in', P.encode_id_reply(127, uid)), ('in', P.encode_id_reply(1, uid)),
             ('out', P.pack_set_id(127, 1)), ('out', P.pack_set_id(127, 2)), ('in', P.encode_id_reply(2, uid)),
-            ('out', P.pack_set_id(1, 127)), ('stop_targets', None),
+            ('out', P.pack_set_id(1, 127)),
+            ('out', (P.can_id(P.SET_ID, (0 << 8) | 0xFD, 2), bytes(8))),        # id 0 (broadcast): refused
+            ('out', (P.can_id(P.SET_ID, (0xFD << 8) | 0xFD, 2), bytes(8))),     # the host's id: refused
+            ('out', (P.can_id(P.SET_ID, (0x80 << 8) | 0xFD, 2), bytes(8))),     # over 127: refused
+            ('stop_targets', None),
+        ],
+        'a NaN read-back does not arm': [
+            ('in', P.encode_id_reply(1, uid)), ('arm', [1]),
+            rb(1, 'run_mode', 0), rb(1, 'limit_torque', float('nan')), rb(1, 'canTimeout', 2000),
+            ('out', P.pack_enable(1)), rb(1, 'limit_torque', 3.0), ('out', P.pack_enable(1)),
         ],
     }
     out = {}

@@ -3,6 +3,7 @@
 // are checked against the scenarios in vectors.json. MIT licensed (LICENSE in this folder).
 import * as P from './protocol.js';
 
+export const MAX_MOTOR_ID = 127;   // a motor's CAN id is 1..127 (rig/rs04.py); 0 is broadcast, 0xFD the host
 export const CONFIRM_S = 10.0;
 const COMMANDS = ['iq_ref', 'spd_ref', 'loc_ref'];
 const OK = Object.freeze({ ok: true, code: 'ok', why: '' });
@@ -42,10 +43,10 @@ export function createGuard(limits, { clock = () => performance.now() / 1000 } =
     for (const name of ['run_mode', 'limit_torque', 'canTimeout'])
       if (!c[name] || now - c[name][1] > CONFIRM_S) return no('not-confirmed', `motor ${motor}: read ${name} back just before arming`);
     if (c.run_mode[0] !== 0) return no('mode', `motor ${motor} is in run_mode ${g(c.run_mode[0])}: the tool runs MIT (0) only`);
-    if (c.limit_torque[0] > lim.jog_torque_nm + 1e-6)
+    if (!(c.limit_torque[0] <= lim.jog_torque_nm + 1e-6))      // NaN fails too
       return no('jog-torque', `motor ${motor} holds limit_torque ${g(c.limit_torque[0])} N m: over the profile's jog torque ${g(lim.jog_torque_nm)} N m`);
     const to = c.canTimeout[0];
-    if (to < 1 || to > lim.can_timeout_max_ticks)
+    if (!(to >= 1 && to <= lim.can_timeout_max_ticks))
       return no('watchdog', `motor ${motor} has canTimeout ${g(to)}: it must be on (1..${lim.can_timeout_max_ticks})`);
     return OK;
   }
@@ -91,6 +92,7 @@ export function createGuard(limits, { clock = () => performance.now() / 1000 } =
     if (armed.has(m)) return no('armed', `motor ${m} is armed: disarm before writing, zeroing, renumbering or saving`);
     if (k === P.SET_ID) {
       const nw = req.fields.new_id;
+      if (!(nw >= 1 && nw <= MAX_MOTOR_ID)) return no('bad-id', `id ${nw} is not a motor id (1..${MAX_MOTOR_ID})`);
       if (seen.has(nw) && nw !== m) return no('id-taken', `id ${nw} already answers on this bus`);
       seen.delete(m); confirmed.delete(m);
       return OK;
