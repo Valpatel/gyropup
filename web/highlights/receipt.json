@@ -8,7 +8,7 @@
     "seconds": 22,
     "audio": false
   },
-  "source_revision": "c77dc0906bfe949027141f435238293d5cd8e532",
+  "source_revision": "00f3126e40884fe4faad05ee6edc79b53a1d7a3c",
   "source_hashes": {
     "designer/cadrig.js": "a2cb4029ef786e0793c5eb0018e0aa8d919d829bde8c5d378c1b1480c457faaf",
     "designer/character/eyes.js": "3348578a121b75ab7425c3b6591e864b41b09512e67b642832e6c6b683d2e11b",
@@ -32,6 +32,7 @@
     "designer/kit/vendor/three/addons/geometries/RoundedBoxGeometry.js": "d20aeaf7077c459a8d952d215738d7b44fba028440bb862d84b622a34f0c80bb",
     "designer/kit/vendor/three/addons/loaders/STLLoader.js": "896d006a48b8f125385a485ccae154dadee801a953f0b45ceffe7ddd8a29ca93",
     "designer/kit/vendor/three/three.module.min.js": "3e690ac7d180b0aadf0891bea39eec643e29e2d3e75c99b18689518665f69ba6",
+    "designer/leg_limits.js": "f421fcd16da2af1920f7790b74c22820bb22a41f1d6a14d4645a012932ac318e",
     "designer/model.js": "2d655315f9d2acc9e1d02292c1225bd447528cbe64c2e3d737ab6f0b51d771a5",
     "designer/robot3d.js": "ca84400fbeed7953d033b93e0f0bfcd7fbec393331930f57e54c8d49df96f194",
     "designer/robot_actions.css": "8c42900dc9001bd08877f5781eca5efe69ef3b2d1b5973ca90497f40f720b2fc",
@@ -40,7 +41,7 @@
     "designer/sfx.js": "90db82703cb9d32c106992c1d67610056a319048d4030db77490642ce8c4dc55",
     "designer/sim-layout.css": "e2b76ffb77863adea51210749efb4e27641b8d8adc08bdc74608ff3da7173970",
     "designer/sim.html": "a70ed754168974b085e9e09de6b8672ac7b0d97ee5498a60195ef40fad5aa8c8",
-    "designer/sim.js": "bc0736070b2b786bfdb15fd34bf4f1e6d745a1c176837d041722cc96699f1f82",
+    "designer/sim.js": "567cb1f93ec3250c40baa98b5954ffbf01995b20e0d1d9bf718deb462f1de3db",
     "designer/turret3d.js": "e5144b01c1db071ac8921e416fcbc8e3a208a59a466bcd00cd5a86ddfa26b107",
     "designer/turret_bench.css": "77d4ab36125c5df22db86fafdc10a6d21470cee86c5e4201e50a3df7d9e79dc8",
     "designer/turret_bench.js": "2c7c14ae024d451015e8559216f1b5bfc8ab814ed76b82eac645fa4d616318ad",
@@ -51,6 +52,7 @@
     "exports/leg/fea/hip-frame-e1-media/video-receipt.json": "06f7431bfb893c3d4f5d30444d77d5b3b8a2cb3a4f13bbd193b459e63560f939",
     "exports/leg/fea/media.json": "dbe019e1df2edc47bc8dbb8aa8066ec859cc203fedbbf0aab79a89e75a22a17b",
     "exports/leg/fea/summary.json": "1488c5f62b90fd44162140ba1cb7adf8f52135a727cd37b6f08f4d2794000a39",
+    "exports/leg/limits.json": "2b186b26c1038901fa47b6832fda75c0513c6233d7b9f064a10d6fb14a72d593",
     "exports/leg/rig_jump.mp4": "3e5188b87059d75c23e5eb48f32510aa5b4e4c5726e66ef3c43e86b15d28bc9c",
     "exports/sim/turret_box/barrel.stl": "ccb797222e64719fb8ba4a67ab236e6f9ba3b88ede36926a88cc917961bcde31",
     "exports/sim/turret_box/base_board.stl": "a3fd2d3a202337f01b3b45ad035b560fcbde07ebac8910b048ed94873d82fa20",
@@ -418,23 +420,23 @@
   ],
   "outputs": {
     "gyropup-highlights.mp4": {
-      "sha256": "df8911a0ed923d6a767b0d76d5528295be8bcd67a135a53051c88d8ee890badf",
-      "bytes": 1860644
+      "sha256": "8e5dea4e0253dfd25c74780a44c0d12b9255535e2207f5667fe1b3c7080393d4",
+      "bytes": 1858105
     },
     "gyropup-highlights.webm": {
-      "sha256": "fc638bb8777a55ca8cfcec5432e5d53fb1be19f042cb9dc8f52e9c75382aba26",
-      "bytes": 1477633
+      "sha256": "50097e7e0dc00d703273afa414563ef5817c7e413a4e095f69aab9db9ac8caf4",
+      "bytes": 1472734
     },
     "gyropup-highlights.webp": {
-      "sha256": "13e89d1799601372d065e25823c5dedf328f98b41972cb403c58382f3881ff29",
-      "bytes": 32610
+      "sha256": "e18bfb2d76a13127d632c7bb1c88d905f05ca640d6e11efab8bcc0e1476d33b0",
+      "bytes": 32722
     },
     "capture-receipt.json": {
-      "sha256": "33c347f81d25536b79d1cab21f2b4431054fef40b410cc1c84afd74194ce14d6",
-      "bytes": 114653
+      "sha256": "c54115d39181f6a2bf7970b3d4a137459e6a721d85c4a25740e29863a7dd198a",
+      "bytes": 115125
     },
     "capture-frames.json": {
-      "sha256": "ef11563ea5011337df14452da61396ddcfae3a6e85b89aeca08232340ee5c2fd",
+      "sha256": "22b52e98fbddab0f4ecb0560a6bc2ba81e5285dd912246e42ff0f69d722e8ab5",
       "bytes": 100989
     }
   }
