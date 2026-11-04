@@ -25,7 +25,7 @@ HOLE_R = (2.45, 2.70)           # mm: the frame's printed Ø5 dowel hole (2.5 + 
 SEATS = {'exports/leg/hip_frame.step': 4, 'exports/leg/rs04-mounting-fit/hip_frame.step': 4,
          'exports/rig/bench/coupon_frame_ring_nom.step': 2, 'exports/leg/rs04-mounting-fit/coupon_frame_ring_nom.step': 2}
 DRILL_OUT = 13.0                # mm, full diameter: docs/motor-day.md Phase 0.3 has the 12 mm holes drilled to this by hand
-PROUD_BAND = (2.5, 3.5)         # mm the page accepts, after the drill-out
+PROUD_BAND = (2.0, 3.5)         # mm the page accepts, after the drill-out (2.0: a 135 deg point, a chamfered dowel)
 DOC = ROOT / 'docs/motor-day.md'
 
 
@@ -133,9 +133,9 @@ class DowelProtrusion(unittest.TestCase):
         text = DOC.read_text()
         phase0 = text.split('## Phase 0', 1)[1].split('## Phase 1', 1)[0]
         step3 = text.split('#### 3. ', 1)[1].split('#### 4. ', 1)[0]           # generated from tools/motor_day.py STEPS
-        nominal = f'{self.dowel - DRILL_OUT:.1f} mm proud ({PROUD_BAND[0]:g} to {PROUD_BAND[1]:g}'
+        nominal = f'{self.dowel - DRILL_OUT:.1f} mm proud ({PROUD_BAND[0]:.1f} to {PROUD_BAND[1]:.1f}'
         for name, sec in (('Phase 0.3', phase0), ('assembly step 3', step3)):
-            self.assertTrue(f'to {DRILL_OUT:g} mm deep' in sec, f'{name} no longer drills the dowel holes to {DRILL_OUT:g} mm')
+            self.assertTrue(re.search(rf'\b{DRILL_OUT:g} mm (deep|down)', sec), f'{name} no longer drills the dowel holes to {DRILL_OUT:g} mm')
             self.assertTrue(nominal in sec, f'{name} does not ask for "{nominal}"')
         self.assertLess(PROUD_BAND[1], self.limit)
         for f in SEATS:

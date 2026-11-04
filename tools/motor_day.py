@@ -689,7 +689,8 @@ STEPS = [   # (title, parts added (prefixes), lift (mm along x, y, z) per prefix
      'Heat-set the six M5 inserts. Press the two 61812s in from the motor side onto their lip (the C1 coupon says how tight '
      'PLA comes out). Drill the four Ø5 dowel holes to 13 mm deep with a 5.2 mm drill, as in Phase 0.3. With the epoxy, '
      'bond the four stop pins, and the four Ø5 x 16 dowels pushed to the bottom; wipe the squeeze-out flush with the seat '
-     'face. After the cure, check each dowel stands 3.0 mm proud (2.5 to 3.5). Each motor on its two dowels (into the '
+     'face, and hold each dowel square to the face (a small square against it) while the epoxy sets. After the cure, '
+     'check each dowel stands 3.0 mm proud (2.0 to 3.5). Each motor on its two dowels (into the '
      'case\'s two locating holes) and ten M4 x 20, snug only: the lug torque is not established (#116).'),
     ('Upper links and adapters (bench)', ['leg_output_adapter', 'leg_screws_outputs', 'leg_eye_sleeve', 'leg_upper_link',
                                           'leg_screws_links'],
