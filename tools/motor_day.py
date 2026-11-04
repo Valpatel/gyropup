@@ -687,8 +687,9 @@ STEPS = [   # (title, parts added (prefixes), lift (mm along x, y, z) per prefix
      {'leg_bearing_61812': (0, -25, 0), 'leg_motor': (0, -70, 0), 'leg_screws_lugs': (0, 40, 0), 'leg_stop_posts': (0, 40, 0)},
      (0.85, 1.0, 0.55),
      'Heat-set the six M5 inserts. Press the two 61812s in from the motor side onto their lip (the C1 coupon says how tight '
-     'PLA comes out). Bond the four stop pins with the epoxy and let it cure. Each motor on its two Ø5 dowels and ten '
-     'M4 x 20, snug only: the lug torque is not established (#116).'),
+     'PLA comes out). Bond the four stop pins with the epoxy and let it cure. Each motor on its two Ø5 dowels (or on its '
+     'own two pins, with no dowels, if Phase 0.3 found pins on the case) and ten M4 x 20, snug only: the lug torque is not '
+     'established (#116).'),
     ('Upper links and adapters (bench)', ['leg_output_adapter', 'leg_screws_outputs', 'leg_eye_sleeve', 'leg_upper_link',
                                           'leg_screws_links'],
      {'leg_output_adapter': (0, 50, 0), 'leg_screws_outputs': (0, 80, 0), 'leg_eye_sleeve': (0, 70, 0),
@@ -1011,7 +1012,10 @@ def write_doc(ctx):
                 L.append(f"| **{r['order']}** | **C1 bore coupons** ({ph[phase]}) | C1N | | "
                          '`exports/rig/bench/coupon_*_m01/nom/p01.stl` | solid | C1MIN | C1G | the leg\'s press-fit bores at '
                          '-0.1 / 0 / +0.1 mm: print them as one batch and pick the offset that fits '
-                         '([sheets](../research/leg-preprint/sheets/)) |')
+                         '([sheets](../research/leg-preprint/sheets/)). If a coupon other than `nom` fits, change the CAD '
+                         'before print 4: `PRINT_HOLE_COMP` for the sleeve and dowel holes; `KC`, `AC` and `STOP_HOLE_PLAY` '
+                         'for the bearing seats and stop-pin holes (`cad/fivebar.py`; the [print package](leg-print-package.md) '
+                         'C1 row). Then regenerate the leg\'s files |')
             continue
         name = key.replace('_', ' ').replace(' pla', ' (PLA)')
         L.append(f"| **{r['order']}** | **{name}** ({ph[phase]}) | {qty} | {items.get(key, '')} | [{Path(f).name}](../{f}) | "
@@ -1302,6 +1306,16 @@ def main():
     names.update({o['key']: (o['name'], o['qty'], o['day_one']) for o in other_leg})
     names.update({k: (v[0], v[1], v[2]) for k, v in STAND_ITEMS.items()})
     names['screw_m5x30'] = (names['screw_m5x30'][0], names['screw_m5x30'][1], names['screw_m5x30'][2])
+    if a.no_render:                             # keep the pictures already rendered: only if no item number has moved
+        steps, rendered = _load(OUT / 'steps' / 'steps.json', []), _load(OUT / 'drawings' / 'sheets.json', {})
+        sheets = rendered.get('sheets') or []
+        if not steps or not sheets:
+            raise SystemExit('--no-render needs the rendered steps and drawings (steps/steps.json, drawings/sheets.json)')
+        if rendered.get('items') != items:
+            moved = sorted(k for k in set(items) | set(rendered.get('items') or {}) if items.get(k) != (rendered.get('items') or {}).get(k))
+            raise SystemExit(f'the BOM item numbers changed since the steps and drawings were rendered ({moved}): render again')
+        for r, (title, *_, how) in zip(steps, STEPS):     # the words may change without a new picture
+            r['title'], r['how'] = title, how
     bom = [{'item': items[k], 'key': k, 'qty': v[1], 'part': v[0], 'source': v[2]} for k, v in names.items() if k in items]
     bom.sort(key=lambda r: r['item'])
     write_csv(OUT / 'bom.csv', bom, ['item', 'key', 'qty', 'part', 'source'])
@@ -1318,16 +1332,8 @@ def main():
     if not a.no_render:
         steps = render_steps(P, items)
         sheets = drawings(P, items, names, _rev(), meta, fm)
-        (OUT / 'steps' / 'steps.json').write_text(json.dumps(steps, indent=1) + '\n')
         (OUT / 'drawings' / 'sheets.json').write_text(json.dumps({'items': items, 'sheets': sheets}, indent=1) + '\n')
-    else:                                       # keep the pictures already rendered: only if no item number has moved
-        steps, rendered = _load(OUT / 'steps' / 'steps.json', []), _load(OUT / 'drawings' / 'sheets.json', {})
-        sheets = rendered.get('sheets') or []
-        if not steps or not sheets:
-            raise SystemExit('--no-render needs the rendered steps and drawings (steps/steps.json, drawings/sheets.json)')
-        if rendered.get('items') != items:
-            moved = sorted(k for k in set(items) | set(rendered.get('items') or {}) if items.get(k) != (rendered.get('items') or {}).get(k))
-            raise SystemExit(f'the BOM item numbers changed since the steps and drawings were rendered ({moved}): render again')
+    (OUT / 'steps' / 'steps.json').write_text(json.dumps(steps, indent=1) + '\n')
     write_doc({'slices': slices, 'der': der, 'stand': stand, 'steps': steps, 'sheets': sheets, 'mc': mc, 'other': other,
                'meta': meta, 'items': items, 'queue': queue})
     files = [(f'exports/motor-day/{n}', n) for n in ('bom.csv', 'prints.csv', 'mcmaster.csv', 'other-vendors.csv',

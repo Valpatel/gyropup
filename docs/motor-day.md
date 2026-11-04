@@ -96,7 +96,7 @@ Sliced in Bambu Studio for a P1S, 0.4 mm nozzle, 0.20 mm layers, Bambu PLA Basic
 |---|---|---|---|---|---|---|---|---|
 | **1** | **coupon frame ring nom** (Phase 0) | 1 |  | [coupon_frame_ring_nom.stl](../exports/rig/bench/coupon_frame_ring_nom.stl) | solid | 3.6 h | 202 g | the RS-04 seat cut from the hip frame, as printed in it: the motor's unpowered fit (Phase 0.3) |
 | **2** | **output adapter (PLA)** (Phase 0) | 1 | 6 | [output_adapter.stl](../exports/leg/cnc/output_adapter.stl) | solid | 1.9 h | 70 g | the first of the two, printed before the leg: the motor's output fit (Phase 0.4). The motor face down (the three Ø6 pin sockets open on the bed); tap the eight face M5 holes by hand (M5 x 0.8 tap) before assembly step 4 |
-| **3** | **C1 bore coupons** (Coupons) | 20 | | `exports/rig/bench/coupon_*_m01/nom/p01.stl` | solid | 12.3 h | 544 g | the leg's press-fit bores at -0.1 / 0 / +0.1 mm: print them as one batch and pick the offset that fits ([sheets](../research/leg-preprint/sheets/)) |
+| **3** | **C1 bore coupons** (Coupons) | 20 | | `exports/rig/bench/coupon_*_m01/nom/p01.stl` | solid | 12.3 h | 544 g | the leg's press-fit bores at -0.1 / 0 / +0.1 mm: print them as one batch and pick the offset that fits ([sheets](../research/leg-preprint/sheets/)). If a coupon other than `nom` fits, change the CAD before print 4: `PRINT_HOLE_COMP` for the sleeve and dowel holes; `KC`, `AC` and `STOP_HOLE_PLAY` for the bearing seats and stop-pin holes (`cad/fivebar.py`; the [print package](leg-print-package.md) C1 row). Then regenerate the leg's files |
 | **4** | **hip frame** (Leg and stand) | 1 | 1 | [hip_frame.3mf](../exports/leg/hip_frame.3mf) | solid | 19.3 h | 1261 g | the web's outer face down, turned 45 deg (249 mm of the 256 mm bed: brim 3 mm at most); keep the stop-pin holes' lead-ins clean |
 | **5** | **output adapter (PLA)** (Leg and stand) | 1 | 6 | [output_adapter.stl](../exports/leg/cnc/output_adapter.stl) | solid | 1.9 h | 70 g | the second, as the first; if Phase 0.4 needed the pin sockets opened with a 6.0 mm drill, open this one's the same way before it goes on; tap the eight face M5 holes |
 | **6** | **upper link** (Leg and stand) | 2 | 2 | [upper_link.3mf](../exports/leg/upper_link.3mf) | solid | 14.2 h | 963 g | the outer face down; the knee-eye sleeve holes open on the bed |
@@ -216,7 +216,7 @@ Drill the end plate through the printed template (six Ø5.5 and the two lead slo
 
 ![step 3](../exports/motor-day/steps/step-03.png)
 
-Heat-set the six M5 inserts. Press the two 61812s in from the motor side onto their lip (the C1 coupon says how tight PLA comes out). Bond the four stop pins with the epoxy and let it cure. Each motor on its two Ø5 dowels and ten M4 x 20, snug only: the lug torque is not established (#116).
+Heat-set the six M5 inserts. Press the two 61812s in from the motor side onto their lip (the C1 coupon says how tight PLA comes out). Bond the four stop pins with the epoxy and let it cure. Each motor on its two Ø5 dowels (or on its own two pins, with no dowels, if Phase 0.3 found pins on the case) and ten M4 x 20, snug only: the lug torque is not established (#116).
 
 #### 4. Upper links and adapters (bench)
 
