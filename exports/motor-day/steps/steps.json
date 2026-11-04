@@ -69,7 +69,7 @@
    19,
    30
   ],
-  "how": "Heat-set the six M5 inserts. Press the two 61812s in from the motor side onto their lip (the C1 coupon says how tight PLA comes out). Bond the four stop pins with the epoxy and let it cure. Each motor on its two \u00d85 dowels and ten M4 x 20, snug only: the lug torque is not established (#116).",
+  "how": "Heat-set the six M5 inserts. Press the two 61812s in from the motor side onto their lip (the C1 coupon says how tight PLA comes out). Bond the four stop pins with the epoxy and let it cure. Each motor on its two \u00d85 dowels (or on its own two pins, with no dowels, if Phase 0.3 found pins on the case) and ten M4 x 20, snug only: the lug torque is not established (#116).",
   "picture": "exports/motor-day/steps/step-03.png"
  },
  {
