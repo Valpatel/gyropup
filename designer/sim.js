@@ -16,9 +16,11 @@ import { createSfx } from './sfx.js';
 import { createRobotActions } from './robot_actions.js';
 import { createLoadingStatus } from './kit/loading.js';
 import { createDataReader } from './kit/portal-data.js';
+import { createLegLimits } from './leg_limits.js';   // the firmware's command rates and reach (docs/leg-protection.md)
 
 const $ = (s) => document.querySelector(s);
 const dataReader = createDataReader(fetch);
+const legLimits = createLegLimits(); legLimits.load('../');
 const getJson = u => dataReader.json(u);
 const STORE = 'gyropup-design-v1';
 const startupMessage = text => { const message=$('#sim-startup .gp-loading-message'); if(message)message.textContent=text; };
@@ -1060,7 +1062,8 @@ stage.onFrame((t, dt) => {
   syncLiveControls();
   poseProps(null);
   poseLiveTargets(motionDt);
-  let height = state.height, pitch = state.pitch;
+  const cmd = legLimits.step(state, motionDt, state.robot.info);                    // sliders and gamepad: the robot's rates
+  let height = cmd.height, pitch = cmd.pitch;
   const liveTime = demo.on ? demo.t : t;
   if (state.alive) {
     height = Math.min(1, Math.max(0, height + 0.025 * Math.sin(liveTime * 1.3)));         // breathing bob
@@ -1069,9 +1072,9 @@ stage.onFrame((t, dt) => {
       if (Math.random() < dt * 0.15) { const n = ['neutral', 'happy', 'curious', 'thinking', 'neutral'][Math.floor(Math.random() * 5)]; eyes.set(n); eyeChips.mark(n); }
     }
   }
-  pitch += -state.speed * 0.05;                                                       // lean into the drive
-  state.wheel += (state.speed / state.robot.info.wheelR * 1000) * motionDt;
-  const p = state.robot.setPose({ height, pitch, rollMM: state.rollMM, wheel: state.wheel });
+  pitch += -cmd.speed * 0.05;                                                         // lean into the drive
+  state.wheel += (cmd.speed / state.robot.info.wheelR * 1000) * motionDt;
+  const p = state.robot.setPose({ ...legLimits.fit({ height, pitch, rollMM: cmd.rollMM }, state.robot.info), wheel: state.wheel });
   if (state.robot.turret) {
     state.robot.turret.setAim(gun.pan, Math.max(gun.tilt, -tiltLimit(gun.pan)), pitch);
     const now = performance.now() / 1000;
@@ -1079,14 +1082,14 @@ stage.onFrame((t, dt) => {
     state.robot.turret.updateLaser([...propMeshes.values()], gun.laserOn);
     const legSpeed = dt > 0 ? ((height - (state.prevHeight ?? height)) / dt) * 3 : 0;   // live pose: the height's rate (~rad/s)
     state.prevHeight = height;
-    sfx.motion({ wheelSpeed: paused ? 0 : state.speed, legSpeed: paused ? 0 : legSpeed, servoSpeed: paused ? 0 : dt > 0 ? Math.hypot(gun.pan - prevTurret.pan, gun.tilt - prevTurret.tilt) / dt : 0 });
+    sfx.motion({ wheelSpeed: paused ? 0 : cmd.speed, legSpeed: paused ? 0 : legSpeed, servoSpeed: paused ? 0 : dt > 0 ? Math.hypot(gun.pan - prevTurret.pan, gun.tilt - prevTurret.tilt) / dt : 0 });
     prevTurret.pan = gun.pan; prevTurret.tilt = gun.tilt;
     while (!paused && gun.queue.length && gun.queue[0] <= now) { gun.queue.shift(); if (!shoot()) { gun.queue = []; break; } }
     state.robot.turret.step(motionDt);
   }
   stepLiveBalls(motionDt);
   stepBits(motionDt);
-  state.robot.group.position.z += state.speed * motionDt;
+  state.robot.group.position.z += cmd.speed * motionDt;
   if (!demo.on && Math.abs(state.robot.group.position.z) > 2.5) state.robot.group.position.z *= -0.98;
   blendTransition(motionDt);
   eyes.step(t, dt);
