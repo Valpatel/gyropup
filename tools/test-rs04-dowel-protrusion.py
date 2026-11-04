@@ -3,7 +3,7 @@
 
 The case has two Ø5 locating holes on its Ø106 lug circle and no pins of its own (owner, 2026-11-03; the vendor STEP has
 them 4.5 deep: catalog/interfaces.json). A Ø5 x 16 dowel (catalog/hardware.json dowel_5x16) bonded to the bottom of the
-frame's hole stands its length less the hole's depth proud of the seat face. It must stay at least 0.5 mm short of the
+frame's hole stands its length less the hole's depth proud of the seat face. It must stay more than 0.5 mm short of the
 case hole's floor, or the case can sit on the dowels and not on its face.
 
 The hole depths are read from the exported STEP files' own B-rep (plain text, no CAD kernel), so this runs anywhere:
@@ -19,11 +19,13 @@ from pathlib import Path
 
 ROOT = Path(__file__).resolve().parents[1]
 CLEARANCE = 0.5                 # mm the dowel must stay short of the case hole's floor
-HOLE_R = (2.55, 2.60)           # mm: the frame's printed Ø5 dowel hole (2.5 + PRINT_HOLE_COMP / 2 + 0.015 = 2.5775)
+HOLE_R = (2.45, 2.70)           # mm: the frame's printed Ø5 dowel hole (2.5 + PRINT_HOLE_COMP / 2 + 0.015 = 2.5775 today),
+                                # between the M4 clearance (2.25) and an M5 clearance (2.75)
 # The parts the motor's case seats on, each with its two dowel holes per motor
 SEATS = {'exports/leg/hip_frame.step': 4, 'exports/leg/rs04-mounting-fit/hip_frame.step': 4,
          'exports/rig/bench/coupon_frame_ring_nom.step': 2, 'exports/leg/rs04-mounting-fit/coupon_frame_ring_nom.step': 2}
 DRILL_OUT = 13.0                # mm, full diameter: docs/motor-day.md Phase 0.3 has the 12 mm holes drilled to this by hand
+PROUD_BAND = (2.5, 3.5)         # mm the page accepts, after the drill-out
 DOC = ROOT / 'docs/motor-day.md'
 
 
@@ -56,6 +58,8 @@ def dowel_holes(path: Path) -> list:
             continue
         r = refs(args)
         bounds, surf = r[:-1], r[-1]
+        if surf not in E:                                  # a complex entity, which the regex does not read
+            raise AssertionError(f'{path.name}: face surface #{surf} is not a simple entity: extend the parser')
         if E[surf][0] != 'CYLINDRICAL_SURFACE':
             continue
         place, radius = refs(E[surf][1])[0], numbers(E[surf][1])[-1]
@@ -80,6 +84,8 @@ def dowel_holes(path: Path) -> list:
             off = [loc[k] - h['loc'][k] for k in range(3)]
             along = sum(off[k] * h['d'][k] for k in range(3))
             if math.sqrt(max(0.0, sum(c * c for c in off) - along * along)) < 0.05:
+                if sum(d[k] * h['d'][k] for k in range(3)) < 0:            # the same axis, the other way round
+                    t0, t1 = -t1, -t0
                 h['t0'], h['t1'] = min(h['t0'], t0 + along), max(h['t1'], t1 + along)
                 break
         else:
@@ -108,7 +114,8 @@ class DowelProtrusion(unittest.TestCase):
     def test_holes_found(self):
         for f, n in SEATS.items():
             depths = dowel_holes(ROOT / f)
-            self.assertEqual(len(depths), n, f'{f}: {len(depths)} dowel holes, expected {n}')
+            self.assertEqual(len(depths), n, f'{f}: {len(depths)} dowel holes of radius {HOLE_R[0]}-{HOLE_R[1]} mm, expected '
+                             f'{n}: has the printed hole size moved out of HOLE_R?')
 
     @unittest.expectedFailure
     def test_cad_holes_leave_clearance(self):
@@ -123,8 +130,14 @@ class DowelProtrusion(unittest.TestCase):
 
     def test_motor_day_build_leaves_clearance(self):
         """The motor-day build drills the holes to DRILL_OUT first (Phase 0.3, assembly step 3)."""
-        phase0 = DOC.read_text().split('## Phase 0', 1)[1].split('## Phase 1', 1)[0]
-        self.assertTrue(f'to {DRILL_OUT:g} mm deep' in phase0, 'Phase 0.3 no longer drills the dowel holes out: check this test')
+        text = DOC.read_text()
+        phase0 = text.split('## Phase 0', 1)[1].split('## Phase 1', 1)[0]
+        step3 = text.split('#### 3. ', 1)[1].split('#### 4. ', 1)[0]           # generated from tools/motor_day.py STEPS
+        nominal = f'{self.dowel - DRILL_OUT:.1f} mm proud ({PROUD_BAND[0]:g} to {PROUD_BAND[1]:g}'
+        for name, sec in (('Phase 0.3', phase0), ('assembly step 3', step3)):
+            self.assertTrue(f'to {DRILL_OUT:g} mm deep' in sec, f'{name} no longer drills the dowel holes to {DRILL_OUT:g} mm')
+            self.assertTrue(nominal in sec, f'{name} does not ask for "{nominal}"')
+        self.assertLess(PROUD_BAND[1], self.limit)
         for f in SEATS:
             for depth in dowel_holes(ROOT / f):
                 proud = round(self.dowel - max(depth, DRILL_OUT), 2)
