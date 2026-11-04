@@ -412,7 +412,8 @@ pan base so the turret was a robot of its own; on 2026-11-03 the owner moved the
   same frames, so the firmware does not change. A USB camera on the desk if it is to aim by sight.
 - On the turret: one controller, the Feather M4 CAN (research/turret-controller-survey.md: adopt what is built), and the
   head branch's 10 A MINI 58 V fuse in an in-line holder. The hardware arm chain (D7, D9, D10, D47), the trimmed
-  flywheel rail's 105 fps ceiling (D68) and the barrel never above level hold whatever any computer does.
+  flywheel rail's 105 fps ceiling (D68) and the mechanical tilt stops hold whatever any computer does (D76 leaves the
+  stops and the tilt range as they are).
 - The interface to Gyropup unchanged in kind: the TM bolt pattern (4 x M5 on 80 x 80, 2 x Ø5 dowels), the Ø45 TM cable
   hole, the DT12 (power, CAN, the dry safety loop).
 

@@ -56,7 +56,7 @@ Its radio must then stay disabled in firmware and on the bench.
 | Standing alone | the turret's Orin NX | optional: an Orin NX on a desk, over the stand's USB-CAN lead (and a USB camera on the desk if it is to aim by sight) |
 | Onboard controller | the Feather M4 CAN | unchanged: the Feather M4 CAN |
 | Power in | XT30 on the plinth, 12-54 V | the DT12's pins 1-4 (as before D66): the body's fused turret branch, or the stand's fused DCB609 |
-| Hardware arm chain, 105 fps rail, barrel never above level | in the turret | unchanged, in the turret |
+| Hardware arm chain, 105 fps rail, the mechanical tilt stops | in the turret | unchanged, in the turret (D76 does not move the stops or the tilt range) |
 
 Sources:
 [Adafruit CAN Pal](https://www.adafruit.com/product/5708),
