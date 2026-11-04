@@ -43,7 +43,7 @@
       "cad/print_slicing.py": "13fd25fe32e75e0c66dbe8af132fd4d70fb030defb14d88a96f9ff77cbaf07bd",
       "cad/print_provenance.py": "db0d9cdc14e0d0363899d82c03eb31cb63ea0d7718fedcf127a5545f8f6bec88",
       "cad/rs04_lug_checks.py": "02a75e6dd5d28c6c8c149141d100d1386125197f5edfb34143565c72d8a8dfb5",
-      "exports/leg/rs04-mounting-fit/checks.json": "70e160da39a3f1a43912f811af5320aef8c1186537b3e3ed70d3dfbf8016a62a",
+      "exports/leg/rs04-mounting-fit/checks.json": "8e1ecc838923ae52c96767d330c35c1d42508e895c2b6c594163dc8ebc38a0d7",
       "exports/leg/rs04-mounting-fit/coupon_frame_ring_nom.stl": "1830ff4c1c9dc2314295d3d601b238c857c774abaf108c6619fdd9901b1da2cd"
     },
     "toolkit_helpers": {
@@ -1221,7 +1221,7 @@
       "slicer_payload_sha256": "b7f803605b7df175570e58c994bd8bfd12467b3aa2756cce32a931c670f3e5a9"
     }
   },
-  "source_commit": "9f9096dba357acb2936aa2d76dbc1cdaa816a5ea",
+  "source_commit": "b85d5ba55a4f928ef9a86bdca8e837f8cc7a16eb",
   "geometry": {
     "bounds_mm": [
       [
@@ -1252,7 +1252,7 @@
   },
   "metrics": {
     "grams": 172.41,
-    "minutes": 392.80087890625,
+    "minutes": 392.7687174479167,
     "filament_m": 65.16,
     "exit_code": 0,
     "return_code": 0,
@@ -1268,7 +1268,7 @@
       "bytes": 438
     },
     "3D/3dmodel.model": {
-      "sha256": "d9cfccc412c7badb3f62bc062fbf97fd7e3cecc820937b91ea086b37f28dfed0",
+      "sha256": "5f7bd8ab0a5a3487b54e2582acc96578627642ed39183f8793a10da370503cec",
       "bytes": 1570
     },
     "3D/_rels/3dmodel.model.rels": {
@@ -1284,19 +1284,19 @@
       "bytes": 44072
     },
     "Metadata/plate_1.gcode.md5": {
-      "sha256": "31a7775e9176c2e6748ced9d16dd5576180b229ee1be3a98f9352262480b7889",
+      "sha256": "78703369616d6901663f87f27860de4f5e8a6f3cb1f3339f3d35052d73a751d0",
       "bytes": 32
     },
     "Metadata/plate_1.gcode": {
-      "sha256": "5e0efa3c26a01c667ac6a46c0655231d6e5dc161b028fd04c86bec36acdc03e5",
-      "bytes": 11590056
+      "sha256": "dec0176ec6dd8fbbf9e8ad3fb9b690e2fa54a2d2293763cd459024066eef723e",
+      "bytes": 11590017
     },
     "Metadata/_rels/model_settings.config.rels": {
       "sha256": "5ea2c0f459aec4d25341abd431edee7890c8d2fd02efbaed4b073d04cfa11440",
       "bytes": 255
     },
     "Metadata/model_settings.config": {
-      "sha256": "d5b484fe599bc70eb7a3625488f73716551a35dc0848b11be169686990bad371",
+      "sha256": "263ca4e245da7fce40b24e9632ee90ace6f3ffa183b99eabdf7b56b45bc3f334",
       "bytes": 1508
     },
     "Metadata/cut_information.xml": {
@@ -1304,7 +1304,7 @@
       "bytes": 139
     },
     "Metadata/slice_info.config": {
-      "sha256": "03df67cbd986d6963423dfaa46079c447999889f89d96cea4176a533246749fa",
+      "sha256": "63f50a3e5a5552c8fb2cad98549ce185fd793db1921ff0065478c09bcfd601d3",
       "bytes": 1679
     },
     "Metadata/filament_sequence.json": {
@@ -1949,11 +1949,11 @@
     "slice/exit-code.json": "124fd50cb6d223cdd18fedc166d00af7254199b6e6dedf9be82f71db87af6d01",
     "slice/filament.json": "0d2b91e9d7f31661688294b60c19e3fb922f1fde5d2f219ee16d85f190cb3374",
     "slice/machine.json": "44b41d9e562c8b9a7223ec87dd1c7e37271549983ea572f09a81f62a9b76d9af",
-    "slice/out/plate_1.gcode": "5e0efa3c26a01c667ac6a46c0655231d6e5dc161b028fd04c86bec36acdc03e5",
-    "slice/out/result.json": "f63821f8b748d2e299552a85851e3bf2219fca13768f7c79c4e1a15dc8e7bdb4",
-    "slice/out/sliced.3mf": "a23d5cb6ad2de835c70a6e6729a71048c2a52fe924705ffddb3d62e522918c4e",
+    "slice/out/plate_1.gcode": "dec0176ec6dd8fbbf9e8ad3fb9b690e2fa54a2d2293763cd459024066eef723e",
+    "slice/out/result.json": "2fde3ead7da4d7f14f31ad94df0ae239d618fe43adcd83e4f6a9d74c8432bd6e",
+    "slice/out/sliced.3mf": "d4ec966cddb5a11973d9cb6a5f4f29f3a6608c3a62aa129c59f0365c466cdbb7",
     "slice/process.json": "9591ffa2ff4d223ebc859b1901766aabf71caf7cfdcf93719dcc77484b12a345",
-    "slice/slicer.log": "d4e17e6cad7fbc9da0f7bb668ea5c971ef745581142f061fd2a68709be091cbe",
+    "slice/slicer.log": "dddb799de9129ac8bc6d7adaa6774ba882f7ae443f4e533cb6b340c4a96b10ac",
     "source.stl": "1830ff4c1c9dc2314295d3d601b238c857c774abaf108c6619fdd9901b1da2cd"
   }
 }
