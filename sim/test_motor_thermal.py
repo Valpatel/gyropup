@@ -1,9 +1,9 @@
 #!/usr/bin/env python3
-"""Checks of the RS-04 motor thermal model (cad/motor_thermal.py, issue #194): golden vectors for its equations, a hand
+"""Checks of the RS-04 motor thermal model (sim/motor_thermal.py, issue #194): golden vectors for its equations, a hand
 check of a calibration case, the network solver against closed forms, the bench re-fit on a synthetic log, and the
 committed JSON and page against a fresh run. Standard library only (CadQuery only for the geometry cross-check).
 
-    python3 cad/test_motor_thermal.py            # or: .venv/bin/python -m pytest cad/test_motor_thermal.py -q
+    python3 sim/test_motor_thermal.py            # or: .venv/bin/python -m pytest sim/test_motor_thermal.py -q
 """
 import json
 import math
@@ -94,8 +94,10 @@ class Solver(unittest.TestCase):
         held, face = mt.leg_network(cal, 'B_pa6cf', {'tau': tau, 'rpm': 0.0}, 2.0, 25.0)
         T = held.steady()
         self.assertAlmostEqual(T['X'], mt.copper_loss(tau, T['W']) * cal['r_wc'], delta=0.05)
-        turning, _ = mt.leg_network(cal, 'B_pa6cf', {'tau': tau, 'rpm': 0.0}, 1.0, 25.0)
-        self.assertAlmostEqual(turning.steady()['X'], 0.0, places=6)
+        turning, _ = mt.leg_network(cal, 'B_pa6cf', {'tau': tau, 'rpm': 30.0}, 1.0, 25.0)   # a turning motor: f = 1
+        Tt = turning.steady()
+        self.assertAlmostEqual(Tt['X'], 0.0, places=6)
+        self.assertGreater(Tt['C'], T['C'])                                   # its drag loss warms the case
 
 
 class Calibration(unittest.TestCase):
@@ -115,12 +117,35 @@ class Calibration(unittest.TestCase):
         self.assertLess(abs(c['rating_b']['winding_c'] - 145.0), 5.0)
         self.assertLess(c['overload_rms_log_error'], 0.25)
 
+    def test_emissivity_bound_is_the_conservative_end(self):
+        """The fit's emissivity sits at its bound; any less emissive test plate gives a lower R_wc and cooler windings."""
+        c = M['calibration']
+        for s in M['calibration_spread']:
+            if s['eps_fixed'] is not None:
+                self.assertLess(s['r_wc_k_per_w'], c['r_wc_k_per_w'])
+                self.assertLess(s['worst_winding_c']['B_pa6cf'], M['results'][M['worst_case']]['B_pa6cf']['steady']['winding_c'])
+
     def test_stall_ceiling_is_the_firmware(self):
         """The heat alone would allow more than the stall table's 28.5 N m: the locked-rotor protection is the limit,
         and every robot case holds under it."""
         self.assertLess(M['calibration']['stall_rated_model_winding_c'], 145.0)
         for c in M['loads']['cases'].values():
             self.assertLess(max(c['tau_front'], c['tau_rear']), mt.v('stall_rated_nm'))
+
+
+class Inputs(unittest.TestCase):
+    def test_horizontal_plates_use_area_over_perimeter(self):
+        """Incropera 9.30-9.32: L = A / P; the tray 320 x 254 mm gives 70.8 mm."""
+        tray = [s for s in mt.v('body_surfaces') if s[0].startswith('tray')][0]
+        self.assertAlmostEqual(tray[2], 0.320 * 0.254 / (2 * (0.320 + 0.254)), places=9)
+        self.assertAlmostEqual(tray[2], 0.0708, places=4)
+
+    def test_drive_force_at_the_contact_patch(self):
+        """A fore-aft tyre force on a hub-motor wheel adds its moment about the axle: the driving case's torque is
+        above the vertical load's alone at the same leg length (recorded by loads(), at_axle=False)."""
+        d = M['loads']['cases']['drive']
+        self.assertGreater(max(d['tau_front'], d['tau_rear']), 18.0)
+        self.assertGreater(d['tau_front'], d['tau_rear'])
 
 
 class Results(unittest.TestCase):
@@ -180,7 +205,7 @@ class Geometry(unittest.TestCase):
     def test_inputs_match_the_cad(self):
         """The model's leg geometry is what cad/fivebar.py draws (skipped without CadQuery)."""
         try:
-            sys.path.insert(0, str(HERE.parent))
+            sys.path.insert(0, str(HERE.parent / 'cad'))
             import fivebar as fb
         except ImportError:
             self.skipTest('CadQuery not installed')
@@ -197,8 +222,8 @@ class Regeneration(unittest.TestCase):
     def test_committed_json_and_page_are_current(self):
         """exports/leg/thermal/motor_thermal.json and docs/motor-thermal.md equal a fresh run on the JSON's own loads."""
         m = mt._plain(mt.model(M['loads']))
-        self.assertEqual(m, M, 'stale JSON: run .venv/bin/python cad/motor_thermal.py')
-        self.assertEqual(mt.DOC.read_text(), mt.render(m), 'stale page: run .venv/bin/python cad/motor_thermal.py')
+        self.assertEqual(m, M, 'stale JSON: run .venv/bin/python sim/motor_thermal.py')
+        self.assertEqual(mt.DOC.read_text(), mt.render(m), 'stale page: run .venv/bin/python sim/motor_thermal.py')
 
 
 if __name__ == '__main__':

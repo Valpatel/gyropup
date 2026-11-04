@@ -125,7 +125,7 @@ compares the run with this very prediction, and "measured only" needs the load p
 - **Temperatures** (the [motor thermal model](motor-thermal.md)'s acceptance, section 7): each RS-04's own reported
   temperature and `boardTemp` from the CAN log, a thermocouple on a motor's case and one on the hip frame's mounting
   face, and the room. A 30-minute hold at a known torque, logged at 1 Hz, re-fits the model
-  (`python3 cad/motor_thermal.py --fit <log.csv>`).
+  (`python3 sim/motor_thermal.py --fit <log.csv>`).
 
 ## B0: the fit coupons
 

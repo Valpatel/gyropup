@@ -1,8 +1,8 @@
 """The RS-04 leg motors' thermal model (issue #194): their losses, how the heat reaches the hip frame, the body and the
 air, and which hip frame keeps them cool enough.
 
-    .venv/bin/python cad/motor_thermal.py           # -> exports/leg/thermal/motor_thermal.json and docs/motor-thermal.md
-    python3 cad/motor_thermal.py --check            # recompute from the JSON's recorded loads (no CAD): exit 1 if stale
+    .venv/bin/python sim/motor_thermal.py           # -> exports/leg/thermal/motor_thermal.json and docs/motor-thermal.md
+    python3 sim/motor_thermal.py --check            # recompute from the JSON's recorded loads (no CAD): exit 1 if stale
 
 Pattern as cad/body_thermal.py: one script writes generated JSON (and here the page that reads it); regenerate, never
 edit. The thermal core is the standard library only, so the check and the tests run anywhere; only `loads()` reads the
@@ -134,12 +134,12 @@ INPUTS = {
                       'src': 'CAD docs/body-sections.md: 2 x 492 g cheeks (5052 3/16 in), the tray 753 g (5052 1/8 in), the '
                              'belly 247 g (6061 0.100 in)'},
     'body_surfaces': {'v': [('cheek faces, open share', 'vert', 0.181, 4 * 0.184 * 0.181 * 0.35),
-                            ('tray underside, open share', 'down', 0.254, 0.320 * 0.254 * 0.6),
-                            ('belly top, open share', 'up', 0.116, 0.320 * 0.116 * 0.3)],
-                      'src': 'CAD dimensions (docs/body-frame.md); the open shares (35 %, 60 %, 30 %) assumed: the motors '
+                            ('tray underside, open share', 'down', 0.320 * 0.254 / (2 * (0.320 + 0.254)), 0.320 * 0.254 * 0.6),
+                            ('belly top, open share', 'up', 0.320 * 0.116 / (2 * (0.320 + 0.116)), 0.320 * 0.116 * 0.3)],
+                      'src': 'CAD dimensions (docs/body-frame.md; length: a vertical face\'s height, a horizontal one\'s area / perimeter, Incropera 9.30-9.32); the open shares (35 %, 60 %, 30 %) assumed: the motors '
                              'and frames cover the cheeks\' outer faces, the gap between them is 31 mm and closed, the '
                              'battery bay hangs under the belly'},
-    'tray_top_m2': {'v': 0.320 * 0.254 * 0.7,
+    'tray_top_m2': {'v': 0.320 * 0.254 * 0.7, 'L_m': 0.320 * 0.254 / (2 * (0.320 + 0.254)),
                     'src': 'CAD: the tray\'s top in the body\'s air (70 % open: the pallet, the power plate on posts)'},
     'body_air': {'v': {'rise_k': 2.59, 'mcp_w_per_k': 6.84, 'budget_k': 3.0},
                  'src': 'exports/body/thermal/hand_model.json (cad/body_thermal.py, P1 deck): the cooler\'s inlet 2.59 K over '
@@ -201,9 +201,10 @@ def h_radiation(eps, t_s, t_a):
 
 
 def spreading_resistance(k, t, a_source, a_plate, h_eff):
-    """Song, Lee & Au (1994): a centred source on a finite plate cooled on its far face with h_eff; the spreading part
-    only (K/W). As cad-agent's cadagent.thermal.heatsink.PlateFin._spread (v0.18.1), copied: gyropup's CI does not
-    install cad-agent."""
+    """Song, Lee & Au (1994): a centred source on a finite plate cooled on its far face with h_eff, K/W: the
+    spreading AND the 1D conduction t / (k A_plate) (psi contains it: a source as large as the plate gives exactly
+    t / (k A)), not the film. As cad-agent's cadagent.thermal.heatsink.PlateFin._spread (v0.18.1), copied: gyropup's CI
+    does not install cad-agent (whose resistance() adds t / (k A) a second time: negligible for thin bases)."""
     a, b = math.sqrt(a_source / math.pi), math.sqrt(a_plate / math.pi)
     eps, tau = a / b, t / b
     bi = h_eff * b / k
@@ -219,7 +220,7 @@ def plate_to_air(k, t, a_source, w, h, t_p, t_a, eps, faces=2.0, exposed=1.0):
     hp = h_vertical(h, t_p, t_a) + h_radiation(eps, t_p, t_a)
     ap = w * h
     h_eff = faces * exposed * hp
-    return spreading_resistance(k, t, a_source, ap, h_eff) + t / (k * ap) + 1 / (h_eff * ap)
+    return spreading_resistance(k, t, a_source, ap, h_eff) + 1 / (h_eff * ap)
 
 
 # ------------------------------------------------------------------------------------------------------ the losses
@@ -414,7 +415,7 @@ def test_rig(cal, tau, rpm, plate_m, eps_plate, stall_f=1.0, t_amb=25.0):
 
     def g_cp(T):
         hp = h_vertical(h, T['P'], T['amb']) + h_radiation(eps_plate, T['P'], T['amb'])
-        r = 1 / (hc * a_face) + spreading_resistance(al['k'], t, a_face, w * h, 2 * hp) + t / (al['k'] * w * h)
+        r = 1 / (hc * a_face) + spreading_resistance(al['k'], t, a_face, w * h, 2 * hp)
         return 1 / r
     net.link('C', 'P', g_cp)
     net.link('P', 'amb', lambda T: 2 * w * h * (h_vertical(h, T['P'], T['amb']) + h_radiation(eps_plate, T['P'], T['amb']))
@@ -434,7 +435,7 @@ def bisect(f, lo, hi, n=60):
     return (lo + hi) / 2
 
 
-def calibrate(t_plate=None):
+def calibrate(t_plate=None, eps_fixed=None):
     """Fit R_wc and the test plates' emissivity to the two continuous ratings (the winding at 145 C in both), then C_w
     to the overload table (50-110 N m, least squares in log time). Returns the fit and its residuals."""
     lim = v('winding_limit_c')
@@ -452,8 +453,10 @@ def calibrate(t_plate=None):
         T = test_rig(dict(base, r_wc=r), rb['tau'], rb['rpm'], rb['plate_m'], eps).steady()
         return hot(T) - lim
     lo_e, hi_e = 0.05, 0.95
-    e_lo, e_hi = err_b(lo_e), err_b(hi_e)
-    if (e_lo > 0) != (e_hi > 0):
+    e_lo, e_hi = (0.0, 0.0) if eps_fixed else (err_b(lo_e), err_b(hi_e))
+    if eps_fixed:
+        eps, bound = eps_fixed, f'emissivity fixed at {eps_fixed}: R_wc from the first rating alone'
+    elif (e_lo > 0) != (e_hi > 0):
         eps = bisect(err_b, lo_e, hi_e, 30)
         bound = None
     else:
@@ -541,13 +544,13 @@ def add_body(net, n_motors, t_amb):
         tb, ta = T['B'], T['amb']
         tot = 0.0
         for _, kind, L, a in v('body_surfaces'):
-            hc = h_vertical(L, tb, ta) if kind == 'vert' else h_horizontal(L / 2, tb, ta, kind)
+            hc = h_vertical(L, tb, ta) if kind == 'vert' else h_horizontal(L, tb, ta, kind)
             tot += a * (hc + h_radiation(eps, tb, ta))
         return tot / n_motors
     net.link('B', 'amb', g)
     net.fixed['body_air'] = t_amb + v('body_air')['rise_k']
     a_top = v('tray_top_m2')
-    net.link('B', 'body_air', lambda T: a_top * (h_horizontal(0.254 / 2, T['B'], T['body_air'], 'up')
+    net.link('B', 'body_air', lambda T: a_top * (h_horizontal(INPUTS['tray_top_m2']['L_m'], T['B'], T['body_air'], 'up')
                                                 + h_radiation(eps, T['B'], T['body_air'])) / n_motors)
     return net
 
@@ -586,14 +589,14 @@ def add_al_plate(net, mount, eps=None, post_k=None):
     net.node('F0', w * h * t * al['rho'] * al['cp'])
 
     def g_air(T):
-        hp = h_vertical(h, T['F0'], T['amb']) + h_radiation(al['eps'], T['F0'], T['amb'])
-        return hp * (open_inner + open_outer)
+        # the outer (leg-side) face sees the room; the inner face looks at the cheek 57 mm away, a bare aluminium sheet
+        # near the plate's temperature: convection only there (its radiation to the cheek left out: conservative)
+        hcv = h_vertical(h, T['F0'], T['amb'])
+        return hcv * (open_inner + open_outer) + h_radiation(al['eps'], T['F0'], T['amb']) * open_outer
 
     def g_cp(T):
-        hp = h_vertical(h, T['F0'], T['amb']) + h_radiation(al['eps'], T['F0'], T['amb'])
-        h_eff = hp * (open_inner + open_outer) / (w * h)
-        return 1 / (1 / (v('h_contact_metal') * a_face) + spreading_resistance(al['k'], t, a_face, w * h, h_eff)
-                    + t / (al['k'] * w * h))
+        h_eff = g_air(T) / (w * h)
+        return 1 / (1 / (v('h_contact_metal') * a_face) + spreading_resistance(al['k'], t, a_face, w * h, h_eff))
     net.link('C', 'F0', g_cp)
     net.link('F0', 'amb', g_air)
     if mount == 'body':
@@ -622,7 +625,7 @@ def leg_network(cal, option, P, stall_f, t_amb, mount='body', n_motors=4):
     printed = option in ('A_pla', 'B_pa6cf', 'D_pa6cf_pad')
     plate_kw = {'eps': v('plate_black')['eps'], 'post_k': v('plate_black')['spacer_k']} if option == 'E_al_plate_black_iso' else {}
     add_motor(net, cal, P, stall_f=stall_f, exposure=v('can_side_exposed')['printed' if printed else 'plate'],
-              rear_free=(mount != 'body'))
+              rear_free=False)                     # the cheek, or the stand's plywood, 2 mm behind its rear cover
     if mount == 'body':
         add_body(net, n_motors, t_amb)
     if printed:
@@ -653,7 +656,9 @@ def loads():
     f_axle = (m - m_wheel) * G0                     # the wheel's own weight is not the motors' (the links' is: conservative)
 
     def taus(h, fx=0.0, fz=f_axle):
-        pf = lr.pin_forces(*fb.stance(h, 0.0), (fx, fz), at_axle=True)
+        # at the contact patch: the wheel is a hub motor whose stator is fixed to the wheel link, so a fore-aft tyre
+        # force's moment about the axle reaches the leg (the vertical load gives the same torques either way)
+        pf = lr.pin_forces(*fb.stance(h, 0.0), (fx, fz), at_axle=False)
         return abs(float(pf['tau_front'])), abs(float(pf['tau_rear']))
 
     def dtau_dfx(h):
@@ -805,19 +810,35 @@ def model(ld):
         tl = bench_limit(cal, room)
         bench['limits'].append({'room_c': room, 'torque_nm': round(tl, 1), 'current_arms': round(current_arms(tl), 2),
                                 'current_apk': round(current_arms(tl) * math.sqrt(2), 1)})
+    # the same with the case bare and shaded (eps_case and can_side_exposed at the low ends of their ranges): the
+    # limit to use until the bench fit has measured the case's convection
+    saved = {k: copy.deepcopy(INPUTS[k]['v']) for k in ('eps_case', 'can_side_exposed')}
+    try:
+        INPUTS['eps_case']['v'] = INPUTS['eps_case']['range'][0]
+        INPUTS['can_side_exposed']['v'] = dict(saved['can_side_exposed'], printed=INPUTS['can_side_exposed']['range'][0])
+        bench['limits_low'] = []
+        for room in (20.0, 25.0, 30.0):
+            tl = bench_limit(cal, room)
+            bench['limits_low'].append({'room_c': room, 'torque_nm': round(tl, 1), 'current_arms': round(current_arms(tl), 2),
+                                        'current_apk': round(current_arms(tl) * math.sqrt(2), 1)})
+        bench['hold_low'] = run_case(cal, 'A_pla', b['hold_nm'], 0.0, True, t_amb, mount='stand', t_end=2.0)['steady']
+    finally:
+        for k, x in saved.items():
+            INPUTS[k]['v'] = x
     crouch = max(ld['cases']['crouch']['tau_front'], ld['cases']['crouch']['tau_rear'])
     for name, tau in (('cap', b['cap_nm']), ('hold', b['hold_nm']), ('robot_crouch', crouch)):
         bench['runs'][name] = run_case(cal, 'A_pla', tau, 0.0, True, t_amb, mount='stand')
     # the plates' thickness the calibration assumed: the fit and the worst case again at its range's ends
     spread = []
-    for tp in INPUTS['test_plate_t_m']['range']:
-        cf = calibrate(t_plate=tp)
+    for tp, ef in [(tp, None) for tp in INPUTS['test_plate_t_m']['range']] + [(None, 0.1), (None, 0.5)]:
+        cf = calibrate(t_plate=tp, eps_fixed=ef)
         cl = cal_of(cf)
-        spread.append({'t_test_plate_m': tp, 'r_wc_k_per_w': cf['r_wc_k_per_w'], 'eps_test_plate': cf['eps_test_plate'],
+        spread.append({'t_test_plate_m': cf['t_test_plate_m'], 'eps_fixed': ef,
+                       'rating_b_miss_k': round(cf['rating_b']['winding_c'] - v('winding_limit_c'), 1), 'r_wc_k_per_w': cf['r_wc_k_per_w'], 'eps_test_plate': cf['eps_test_plate'],
                        'c_w_j_per_k': cf['c_w_j_per_k'],
                        'worst_winding_c': {o: run_case(cl, o, max(wc['tau_front'], wc['tau_rear']), wc['rpm'], wc['stall'],
                                                        t_amb, t_end=2.0)['steady']['winding_c'] for o in ('B_pa6cf', 'E_al_plate_black_iso')}})
-    return {'about': 'RS-04 leg motor thermal model (issue #194); generated by cad/motor_thermal.py: regenerate, never edit',
+    return {'about': 'RS-04 leg motor thermal model (issue #194); generated by sim/motor_thermal.py: regenerate, never edit',
             'inputs': {k: {'v': _plain(x['v']), 'src': x['src'], **({'range': list(x['range'])} if 'range' in x else {})}
                        for k, x in INPUTS.items()},
             'loads': ld, 'calibration': cal_fit, 'calibration_spread': spread, 'options': OPTIONS, 'results': results,
@@ -981,13 +1002,13 @@ def render(m):
     w = L.append
     w('# RS-04 leg motors: heat into the hip frame and the body')
     w('')
-    w('<!-- Generated by cad/motor_thermal.py from exports/leg/thermal/motor_thermal.json: regenerate, never edit. -->')
+    w('<!-- Generated by sim/motor_thermal.py from exports/leg/thermal/motor_thermal.json: regenerate, never edit. -->')
     w('')
     w('The owner asked on 2026-11-03 for "a model for motor heat dissipation into the body so we make sure we properly '
       'heat sink them" ([issue #194](https://github.com/Valpatel/gyropup/issues/194)). This page is that model\'s '
       'output: each leg motor\'s losses in the robot\'s duty cases, where the heat goes, the temperatures for five hip '
       'frame options, a limit for the PLA bench legs, and what to log on the first powered runs to correct it. Numbers: '
-      '`cad/motor_thermal.py` → `exports/leg/thermal/motor_thermal.json`; tests: `cad/test_motor_thermal.py`. It is a '
+      '`sim/motor_thermal.py` → `exports/leg/thermal/motor_thermal.json`; tests: `sim/test_motor_thermal.py`. It is a '
       'lumped model calibrated on the manufacturer\'s ratings, not a measurement: the bench logs in section 7 are its '
       'acceptance.')
     w('')
@@ -1010,11 +1031,14 @@ def render(m):
       f'cheeks (D) cools the windings as well as a plate but runs the body frame at {rows["D_pa6cf_pad"]["body_c"]:.0f} °C '
       f'and puts {rows["D_pa6cf_pad"]["into_body_air_w"]:.0f} W into the body\'s air.')
     lim25 = next(x for x in bn['limits'] if x['room_c'] == 25.0)
-    w(f'- **PLA bench:** keep each motor under **{lim25["torque_nm"]:.1f} N m ({lim25["current_arms"]:.1f} A rms, '
-      f'{lim25["current_apk"]:.1f} A peak)** held, at a 25 °C room, and the PLA face stays under '
-      f'{bn["face_limit_c"]:.0f} °C indefinitely. At the PLA cap ({bn["cap_nm"]:.0f} N m) held without a break it '
-      f'passes {bn["face_limit_c"]:.0f} °C after **{fmt_t(bn["runs"]["cap"]["t_face_limit_s"])}**; the stand\'s own hold '
-      f'({bn["hold_nm"]:.1f} N m) settles at {bn["runs"]["hold"]["steady"]["face_c"]:.0f} °C.')
+    low25 = next(x for x in bn['limits_low'] if x['room_c'] == 25.0)
+    w(f'- **PLA bench: stop when a motor\'s case passes {bn["face_limit_c"]:.0f} °C** (the PLA face runs a few kelvin under '
+      f'it). In a 25 °C room the face stays under {bn["face_limit_c"]:.0f} °C indefinitely below **{lim25["torque_nm"]:.1f} '
+      f'N m ({lim25["current_arms"]:.1f} A rms)** held per motor, or **{low25["torque_nm"]:.1f} N m '
+      f'({low25["current_arms"]:.1f} A rms)** if the case turns out bare and shaded; the stand\'s own hold '
+      f'({bn["hold_nm"]:.1f} N m) settles at {bn["runs"]["hold"]["steady"]["face_c"]:.0f} °C (or '
+      f'{bn["hold_low"]["face_c"]:.0f} °C). At the PLA cap ({bn["cap_nm"]:.0f} N m) held without a break it passes '
+      f'{bn["face_limit_c"]:.0f} °C after **{fmt_t(bn["runs"]["cap"]["t_face_limit_s"])}**.')
     w('')
     w('## 1. The heat path')
     w('')
@@ -1062,9 +1086,22 @@ def render(m):
       f'{cal["eps_test_plate"]} ({cal["t_test_plate_m"] * 1000:.0f} mm plates assumed)'
       + (f' — {cal["bound"]}: the second rating comes out {cal["rating_b"]["winding_c"] - 145:.1f} K high' if cal['bound'] else '')
       + f', and **C_w = {cal["c_w_j_per_k"]} J/K** for the winding from the overload table (rms error '
-      f'{cal["overload_rms_log_error"]} in log time over 50-110 N m). With the spec book\'s 0.16 ohm line resistance '
-      'the two continuous ratings agree with each other to a few kelvin: the resistance and the torque constant are '
-      'consistent with the ratings.')
+      f'{cal["overload_rms_log_error"]} in log time over 50-110 N m). The emissivity is not known (GB/T 30549-2014 '
+      'was not read): the fit runs to the bound because the smaller plate\'s rating asks for a plate that sheds well. '
+      'That bound is the conservative end for the windings here: a less emissive test plate would mean a better heat '
+      'path inside the motor (a lower R_wc) and cooler windings in every case below:')
+    w('')
+    sp = m['calibration_spread']
+    w('| Test plates | R_wc, K/W | The 220 x 200 rating misses by | Worst case\'s winding, B / E (25 °C) |')
+    w('|---|---|---|---|')
+    for x in sp:
+        lab = (f'{x["t_test_plate_m"] * 1000:.0f} mm, emissivity fitted ({x["eps_test_plate"]})' if x['eps_fixed'] is None
+               else f'{x["t_test_plate_m"] * 1000:.0f} mm, emissivity fixed at {x["eps_fixed"]}')
+        w(f'| {lab} | {x["r_wc_k_per_w"]} | {x["rating_b_miss_k"]:+.1f} K | {x["worst_winding_c"]["B_pa6cf"]:.0f} / '
+          f'{x["worst_winding_c"]["E_al_plate_black_iso"]:.0f} °C |')
+    w(f'| **{cal["t_test_plate_m"] * 1000:.0f} mm, fitted ({cal["eps_test_plate"]}): used** | {cal["r_wc_k_per_w"]} | '
+      f'{cal["rating_b"]["winding_c"] - 145:+.1f} K | {res[wk]["B_pa6cf"]["steady"]["winding_c"]:.0f} / '
+      f'{res[wk]["E_al_plate_black_iso"]["steady"]["winding_c"]:.0f} °C |')
     w('')
     w('| N m (50 rpm) | ' + ' | '.join(str(o['tau_nm']) for o in cal['overload']) + ' |')
     w('|---|' + '---|' * len(cal['overload']))
@@ -1083,11 +1120,6 @@ def render(m):
       'leaves the modelled winding at '
       f'{cal["stall_rated_model_winding_c"]} °C: a locked-rotor protection (fault bit 14) acts on the current. Treat '
       '**28.5 N m per motor as the holding ceiling** whatever the temperature; every case below holds well under it.')
-    sp = m['calibration_spread']
-    w(f'- The test plates\' thickness is not known: at {sp[0]["t_test_plate_m"] * 1000:.0f} and '
-      f'{sp[1]["t_test_plate_m"] * 1000:.0f} mm the fit gives R_wc {sp[0]["r_wc_k_per_w"]} and {sp[1]["r_wc_k_per_w"]} '
-      f'K/W and the worst case\'s winding moves by '
-      f'{max(abs(s["worst_winding_c"]["B_pa6cf"] - res[wk]["B_pa6cf"]["steady"]["winding_c"]) for s in sp):.1f} K.')
     w('')
     w('## 3. The duty cases: torque, current and loss per motor')
     w('')
@@ -1103,7 +1135,7 @@ def render(m):
         w(f'| {c["title"]} | {c["tau_front"]} | {c["tau_rear"]} | {r["current_arms"]} | {r["loss_w"]} |')
     j = ld['cases']['jumps']['jump']
     w('')
-    w(f'The jumps are the rig\'s jump at the 60 N m cap ({j["window_s"]} s from crouch to landing, '
+    w(f'The jumps are the rig\'s jump at the 60 N m cap ({j["window_s"]} s from standing at 300 mm through the crouch, push and landing, '
       f'{j["int_tau2_front"]:.0f} N²m²s of torque squared on the front motor) every '
       f'{I["jump_period_s"]["v"]:.0f} s, as an rms torque; each jump\'s own pulse adds at most {m["jump_pulse_k"]} K to '
       'the winding over that mean. Driving and balancing are an assumed fore-aft force at the tyre '
@@ -1151,14 +1183,23 @@ def render(m):
     w('')
     w('## 5. The PLA bench (motor day)')
     w('')
-    w(f'The motor-day leg: a PLA hip frame on the stand\'s plywood end plate (no metal behind the motors), '
-      f'{bn["stand_kg"]} kg at the foot, the firmware capped at {bn["cap_nm"]:.0f} N m. Agents run no powered tests: '
-      'these are the limits for the owner\'s runs.')
+    rc = bn['runs']['cap']['steady']
+    w(f'The motor-day leg: a PLA hip frame on the stand\'s plywood end plate (no metal behind the motors; the rear '
+      f'covers face the plywood 2 mm away and lose nothing there), {bn["stand_kg"]} kg at the foot, the firmware capped '
+      f'at {bn["cap_nm"]:.0f} N m. Agents run no powered tests: these are the limits for the owner\'s runs.')
     w('')
-    w('| Room | Continuous limit per motor (PLA face <= 50 °C) |')
-    w('|---|---|')
-    for x in bn['limits']:
-        w(f'| {x["room_c"]:.0f} °C | {x["torque_nm"]:.1f} N m = {x["current_arms"]:.2f} A rms ({x["current_apk"]:.1f} A peak) |')
+    w(f'**The rule that does not depend on the model\'s assumptions: stop when a motor\'s case passes '
+      f'{bn["face_limit_c"]:.0f} °C.** PLA conducts almost nothing, so the face runs a few kelvin under the case '
+      f'({rc["case_c"] - rc["face_c"]:.0f} K at the cap\'s steady state); a thermocouple on the case (or the motor\'s '
+      'own temperature, once the bench fit has related the two) is the stop. Stopping when the cases pass 40 °C is '
+      'inside it. The torques below are for planning a session:')
+    w('')
+    w('| Room | Continuous limit per motor (PLA face <= 50 °C) | The same with the case bare and shaded (`eps_case` 0.3, '
+      '`can_side_exposed` 0.3) |')
+    w('|---|---|---|')
+    for x, y in zip(bn['limits'], bn['limits_low']):
+        w(f'| {x["room_c"]:.0f} °C | {x["torque_nm"]:.1f} N m = {x["current_arms"]:.2f} A rms ({x["current_apk"]:.1f} A peak) | '
+          f'{y["torque_nm"]:.1f} N m = {y["current_arms"]:.2f} A rms ({y["current_apk"]:.1f} A peak) |')
     w('')
     w('| Held torque per motor, from cold at 25 °C | Face after 10 min | 30 min | 1 h | Steady face | Face passes 50 °C after |')
     w('|---|---|---|---|---|---|')
@@ -1169,14 +1210,11 @@ def render(m):
         w(f'| {label} | {tr["600"]["face_c"]:.0f} °C | {tr["1800"]["face_c"]:.0f} °C | {tr["3600"]["face_c"]:.0f} °C | '
           f'{r["steady"]["face_c"]:.0f} °C | {fmt_t(r["t_face_limit_s"])} |')
     w('')
-    rc = bn['runs']['cap']['steady']
     l30 = next(x for x in bn['limits'] if x['room_c'] == 30.0)
-    w(f'The face follows the motor\'s case a few kelvin behind it (PLA conducts almost nothing: '
-      f'{rc["case_c"] - rc["face_c"]:.0f} K at the cap\'s steady state), so **the case thermocouple is a safe stand-in: '
-      'stop when the case passes 50 °C**, and a rule of stopping when the cases pass 40 °C is inside the limit. A warm '
-      f'room cuts the margin: at 30 °C the limit is {l30["torque_nm"]:.1f} N m, '
+    w(f'A warm room or a bare case cuts the margin: at 30 °C the limit is {l30["torque_nm"]:.1f} N m, '
       + ('under' if bn['hold_nm'] > l30['torque_nm'] else 'over')
-      + f' the stand\'s own hold of {bn["hold_nm"]} N m.')
+      + f' the stand\'s own hold of {bn["hold_nm"]} N m, and with a bare, shaded case the hold settles at '
+      f'{bn["hold_low"]["face_c"]:.0f} °C even at 25 °C. The first logged hold (section 7) settles which column applies.')
     w('')
     w('## 6. Recommendation')
     w('')
@@ -1201,10 +1239,13 @@ def render(m):
         h_radiation(I['plate_black']['v']['eps'], tp, ta)
     w(f'- The metal face takes the case\'s heat into a plate that sees the open air on both sides. Anodising takes it '
       f'from {hc_ + hb:.1f} to {hc_ + hk:.1f} W/m²K at {tp:.0f} °C (convection {hc_:.1f}, radiation {hb:.1f} bare, '
-      f'{hk:.1f} black): that is what lets E drop the aluminium spacers into the body and still match C.')
-    w('- The plain plate on aluminium spacers (C) cools the windings about as well but sends its heat into the body '
-      'frame; the gap pad (D) does too. The body frame has little open area and is the floor of the shell the J501 '
-      'cooler breathes from, and the battery bay hangs under it: keep the motors\' heat out of it.')
+      f'{hk:.1f} black): that is what lets E drop the aluminium spacers into the body and stay within '
+      f'{rows[ch]["winding_c"] - rows["C_al_plate"]["winding_c"]:.0f} K of C\'s winding.')
+    w(f'- The plain plate on aluminium spacers (C) runs the windings {rows[ch]["winding_c"] - rows["C_al_plate"]["winding_c"]:.0f} K '
+      f'cooler but puts {rows["C_al_plate"]["into_body_air_w"]:.0f} W into the body\'s air against E\'s '
+      f'{rows[ch]["into_body_air_w"]:.0f}, with the body frame at {rows["C_al_plate"]["body_c"]:.0f} °C; the gap pad (D) does too. '
+      'The body frame has little open area and is the floor of the shell the J501 cooler breathes from, and the '
+      'battery bay hangs under it: keep the motors\' heat out of it.')
     tb = min(res[k]['B_pa6cf']['t_face_limit_s'] or 1e9 for k in res)
     w(f'- The printed frames (A, B) fail on the face: PA6-CF\'s preloaded lug joint would sit at '
       f'{res["crouch"]["B_pa6cf"]["steady"]["face_c"]:.0f} °C in a long crouch at 25 °C. They warm slowly: B reaches its {rows["B_pa6cf"]["face_limit_c"]:.0f} °C after {fmt_t(tb)} in the worst case '
@@ -1226,7 +1267,7 @@ def render(m):
     w('The most useful run: hold a known torque (the stand\'s hold) for 30 minutes from cold, then 20 minutes off. '
       'Save it as CSV with the columns `' + ', '.join(FIT_COLUMNS) + '` and run')
     w('')
-    w('    python3 cad/motor_thermal.py --fit bench-run.csv            # option A on the stand; --option/--mount for others')
+    w('    python3 sim/motor_thermal.py --fit bench-run.csv            # option A on the stand; --option/--mount for others')
     w('')
     w('It fits three numbers, one reading each: the case\'s convection (`can_air_factor`, to the case thermocouple), '
       'the face contact (`h_contact_polymer`, to the face thermocouple) and R_wc (to the motor\'s own reading), and '
@@ -1290,7 +1331,7 @@ def main(argv=None):
         old = json.loads(OUT.read_text())
         m = _plain(model(old['loads']))
         ok = m == old and DOC.read_text() == render(m)
-        print('motor thermal model: ' + ('current' if ok else 'STALE: run .venv/bin/python cad/motor_thermal.py'))
+        print('motor thermal model: ' + ('current' if ok else 'STALE: run .venv/bin/python sim/motor_thermal.py'))
         return 0 if ok else 1
     m = _plain(model(loads()))
     OUT.parent.mkdir(parents=True, exist_ok=True)
