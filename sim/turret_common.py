@@ -4,10 +4,19 @@ from __future__ import annotations
 
 import importlib
 import importlib.util
+import json
 import sys
 from pathlib import Path
 
 R = Path(__file__).resolve().parents[1]
+LIMITS_JSON = R / 'exports' / 'turret' / 'limits.json'
+
+
+def tilt_stops_deg(path: Path = LIMITS_JSON) -> tuple:
+    """(lowest, highest) barrel tilt in deg, + = muzzle up: the turret's hard stops, as cad/turret_limits.py writes them
+    from the CAD (D77). Every sim takes its tilt range from here."""
+    t = json.loads(Path(path).read_text())['tilt_deg']
+    return float(t['min']), float(t['max'])
 
 
 def cad_turret():

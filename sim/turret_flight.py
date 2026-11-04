@@ -232,10 +232,17 @@ def drop_at(v0, spec, d, elev_rad=0.0, h0=None, cd=None):
     return float(f['cross'][d][0, 1])
 
 
-def elevation_for(v0, spec, d, z_target, h0=None, lo=-0.6, hi=0.0):
-    """The barrel elevation (rad, <= 0: never above horizontal) that puts the ball at height z_target at range d, or
-    None if even a level shot lands short/low."""
+def elevation_for(v0, spec, d, z_target, h0=None, lo=None, hi=None):
+    """The barrel elevation (rad, + = up) that puts the ball at height z_target at range d, on the low (direct) arc, or
+    None if even the highest the stops allow lands short/low. lo/hi default to the turret's hard stops
+    (exports/turret/limits.json, D77: the stops, not a level-only rule)."""
     h0 = FLIGHT['muzzle_height_m'] if h0 is None else h0
+    st_lo, st_hi = (math.radians(a) for a in tc.tilt_stops_deg())
+    lo = st_lo if lo is None else lo
+    hi = st_hi if hi is None else hi
+    # the height at range rises with elevation up to the direct arc's top; past ~0.6 rad the drag makes it fall
+    # again, so search the low arc only
+    hi = min(hi, 0.6)
     z_level = drop_at(v0, spec, d, hi, h0)
     if np.isnan(z_level) or z_level < z_target:
         return None
@@ -345,7 +352,7 @@ def study(quick=False, seed=3):
                                           for d in RANGES_M if not np.isnan(fr['cross'][d][0, 0])}
             nom[f'{fps}_fps_cd_{cd}']['lands_at_m'] = round(float(fr['landed'][0, 0]), 2) if not np.isnan(fr['landed'][0, 0]) else None
     res['nominal_drop'] = nom
-    # the aiming solution: tilt for a 0.30 m target at each range, from 0.55 m, and the reach (never above horizontal)
+    # the aiming solution: tilt for a 0.30 m target at each range, from 0.55 m, and the reach (within the hard stops)
     aim = {}
     for d in RANGES_M:
         el = elevation_for(55 * tl.FPS, spec_n, d, 0.30)

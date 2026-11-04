@@ -44,6 +44,8 @@ R = Path(__file__).resolve().parents[1]
 sys.path.insert(0, str(R / 'sim'))
 import turret_common as tc  # noqa: E402
 
+TILT_STOPS = tc.tilt_stops_deg()   # (lowest, highest) deg, + = muzzle up: the hard stops (exports/turret/limits.json)
+
 OUT = R / 'exports' / 'turret' / 'e2e'
 MESH_DIR = R / 'build' / 'turret_e2e_meshes'
 # The committed world names its meshes relative to itself (MuJoCo resolves meshdir against the model file), never by an
@@ -131,7 +133,7 @@ def world_xml(T, tu, groups, balls_n, fluidcoef, targets_xml):
         {pan}
         <geom type="sphere" size="0.01" pos="0 0 {G.turntable_z[1] / 1000}" mass="{sum(tu.NOT_MODELLED_G.values()) / 1000}" rgba="0.2 0.2 0.2 0.3" contype="0" conaffinity="0"/>
         <body name="tilt">
-          <joint name="tilt" type="hinge" axis="0 1 0" pos="0 0 {G.tilt_t / 1000}" range="0 {math.radians(25.5)}" damping="0.01"/>
+          <joint name="tilt" type="hinge" axis="0 1 0" pos="0 0 {G.tilt_t / 1000}" range="{-math.radians(TILT_STOPS[1] + 0.5):.4g} {math.radians(-TILT_STOPS[0] + 0.5):.4g}" damping="0.01"/>
           {tilt}
           <geom type="sphere" size="0.03" pos="{-G.tilt_x / 1000} 0 {(G.path_t + 50) / 1000}" mass="{hopper_balls}" rgba="1 0.5 0.1 0.25" contype="0" conaffinity="0"/>
           <site name="muzzle" pos="{mz / 1000} 0 {G.path_t / 1000}" size="0.004" rgba="0 1 0 1"/>
@@ -235,8 +237,8 @@ class Video:
 
 
 def aim_solution(tf, spec, rng_m, h_target, v_muzzle):
-    """The barrel depression (deg, >= 0 down) that puts the ball at h_target at rng_m from MOUNT_Z + the muzzle height
-    over the TM face at tilt 0 (G.path_t); None if even a level shot is low (never above horizontal)."""
+    """The barrel depression (deg, + = down, - = up) that puts the ball at h_target at rng_m from MOUNT_Z + the muzzle
+    height over the TM face at tilt 0 (G.path_t); None if even the upper hard stop's elevation is low."""
     el = tf.elevation_for(v_muzzle, spec, rng_m, h_target, h0=MOUNT_Z + 0.121)
     return None if el is None else -math.degrees(el)
 

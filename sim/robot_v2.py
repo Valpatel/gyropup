@@ -53,7 +53,9 @@ BODY_X = bp.BODY_X                                  # the floor tray and deck (m
 BUS_V = 36.0                                        # D65: two DCB609 packs in series, 10S, 36 V nominal: the motors' speed lines
 GAP = 5.0                                           # kept between the lidar and any part of the turret, at any pan/tilt
 EAR = {'size': (61.0, 50.8, 50.8), 'x': (-10.0, 51.0), 'top': 193.0}   # SSC1 pod (x, y, z) on each side wall (docs/body-plan.md 1.9)
-TILT_STOP_DEG = 25.0                                # cad/turret.py's hard stops: 0 .. -25 deg (here + = barrel down)
+_LIMITS = json.loads((R / 'exports' / 'turret' / 'limits.json').read_text())['tilt_deg']   # cad/turret_limits.py (D77)
+TILT_STOP_DEG = -float(_LIMITS['min'])               # the lower hard stop as a depression (here + = barrel down)
+TILT_UP_STOP_DEG = float(_LIMITS['max'])             # the upper hard stop, + = muzzle up
 PAN_STOP_DEG = 170.0
 REF_H = 300.0                                       # the model's joints are zero standing at this leg length
 import body_battery as _bb  # noqa: E402
@@ -752,7 +754,7 @@ def build():
         {_inertial(tb['pan'], pan_o)}
         {''.join(vis(p['file'], p['color']) for p in tgroups['pan'])}
         <body name="turret_tilt" pos="0 0 {tz - pan_o[2]:.4f}">
-          <joint name="turret_tilt" type="hinge" axis="0 1 0" range="-0.01 {math.radians(TILT_STOP_DEG):.4f}" damping="0.05" frictionloss="0.02" armature="0.001"/>
+          <joint name="turret_tilt" type="hinge" axis="0 1 0" range="{-math.radians(TILT_UP_STOP_DEG) - 0.01:.4g} {math.radians(TILT_STOP_DEG):.4f}" damping="0.05" frictionloss="0.02" armature="0.001"/>
           {_inertial(tb['tilt'], (pan_o[0], 0.0, tz))}
           {''.join(vis(p['file'], p['color']) for p in tgroups['tilt'])}
           <geom type="box" size="0.1 0.06 0.06" pos="0.04 0 0" contype="2" conaffinity="1" rgba="0 0 0 0" mass="0"/>
