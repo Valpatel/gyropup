@@ -1,0 +1,48 @@
+{
+  "schema": "gyropup.config/1",
+  "component": "Flipsky 75100 wheel drive",
+  "version": 1,
+  "about": "What each wheel's 75100 is set to in VESC Tool for the robot. Values with a 'sources' entry are read from that file and checked by tools/check-hardware.py; the rest are hand settings from the docs named in 'from'. Change the source, never only this copy.",
+  "can": {
+    "id_left": 10,
+    "id_right": 11,
+    "bitrate": 1000000,
+    "status_1_hz": 500,
+    "status_4_hz": 50,
+    "status_5_hz": 50,
+    "app_can_timeout_s": 0.1
+  },
+  "limits": {
+    "firmware_current_max_a": 25.0,
+    "motor_current_max_a": 30.0,
+    "motor_current_continuous_a": 10.0,
+    "battery_current_max_a": 20.0
+  },
+  "motor": {
+    "type": "FOC",
+    "sensor": "hall, with interpolation",
+    "pole_pairs": 15,
+    "erpm_max": 15000,
+    "regen_current_a": -15.0,
+    "phase_filter": "off on firmware 5.3 or later"
+  },
+  "sources": {
+    "can.id_left": {"c_define": "firmware/balance/include/gp/gp_config.h", "name": "GP_VESC_ID_LEFT"},
+    "can.id_right": {"c_define": "firmware/balance/include/gp/gp_config.h", "name": "GP_VESC_ID_RIGHT"},
+    "limits.firmware_current_max_a": {"c_define": "firmware/balance/include/gp/gp_config.h", "name": "GP_WHEEL_CURRENT_MAX_A"}
+  },
+  "from": {
+    "can": "docs/body-firmware.md 4.2: status 1 at 500 Hz, 4/5 at 50 Hz, the app's CAN timeout 0.1 s (the wheels freewheel when the MCU stops talking)",
+    "limits.firmware_current_max_a": "the firmware clamps its command to this; docs/body-firmware.md 4.2 also asks for motor and battery limits of 25 A in VESC Tool",
+    "limits.motor_current_max_a": "D69: 30 A motor maximum, 10 A continuous",
+    "limits.battery_current_max_a": "docs/body-electrical.md W14: 20 A in VESC Tool (the fuse board's FL1 holders carry 22 A)",
+    "motor": "docs/wheel-change-plan.md W6: FOC, halls, 15 pole pairs, regen -15 A, ERPM 15,000; the phase filter note is catalog/motor_drivers.json's"
+  },
+  "open": [
+    "battery current: 20 A (wiring table) or 25 A (firmware section); B13 settles it",
+    "the regen limit is matched to the firmware's GP_REGEN_I_A at B13"
+  ],
+  "changes": [
+    {"version": 1, "date": "2026-11-03", "what": "first record of the settings (issue #210)"}
+  ]
+}

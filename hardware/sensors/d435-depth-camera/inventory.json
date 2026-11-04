@@ -1,0 +1,14 @@
+{
+  "schema": "gyropup.inventory/1",
+  "component": "RealSense D435",
+  "folder": "hardware/sensors/d435-depth-camera",
+  "about": "The owner's own cameras (docs/body-plan.md: the user has D415/D435 units); two are planned. Fill the model and serial from rs-enumerate-devices when they are connected.",
+  "ordered": [],
+  "arrived": [],
+  "held": [{"count": 2, "source": "docs/body-plan.md: two, front and rear, from the user's D415/D435 cameras"}],
+  "fields": {"unit": "1 front, 2 rear", "model": "D435 or D415, as rs-enumerate-devices reports it", "serial": "from rs-enumerate-devices", "firmware": "from rs-enumerate-devices", "notes": ""},
+  "units": [
+    {"unit": 1, "position": "front", "model": null, "serial": null, "firmware": null, "notes": ""},
+    {"unit": 2, "position": "rear", "model": null, "serial": null, "firmware": null, "notes": ""}
+  ]
+}
