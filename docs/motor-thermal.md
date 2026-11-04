@@ -9,7 +9,7 @@ The owner asked on 2026-11-03 for "a model for motor heat dissipation into the b
 - **The printed frames insulate the motors.** A PA6-CF hip frame (today's design) leaves each motor to cool itself: in the worst case (driving and balancing at 260 mm: 0.25 g rms fore-aft at the tyre (assumed), 35 °C room) the winding settles at **143 °C** (target 120) and the frame's face at **116 °C** (PA6-CF limit taken 80).
 - **Recommended: option E** (the 6061 plate of C, black anodised (eps 0.85), on G10 spacers: its heat to the open air, not into the body): winding 112 °C, plate 92 °C, body frame 51 °C in the same case; the body's air gets 4.6 W (the cooler's inlet 3.3 K over the room, D61's budget 3).
 - **Do not use the body as the heat sink.** The body frame has the mass to soak up a few minutes of heat but little open area, inside a shell that the J501's cooler breathes from: a gap pad from the rear covers to the cheeks (D) cools the windings as well as a plate but runs the body frame at 86 °C and puts 22 W into the body's air.
-- **PLA bench: stop when a motor's case passes 50 °C** (the PLA face runs a few kelvin under it). In a 25 °C room the face stays under 50 °C indefinitely below **6.8 N m (3.2 A rms)** held per motor, or **4.0 N m (1.9 A rms)** if the case turns out bare and shaded; the stand's own hold (7.5 N m) settles at 53 °C (or 69 °C). At the PLA cap (12 N m) held without a break it passes 50 °C after **64 min**.
+- **PLA bench: stop when a motor's case passes 50 °C** (the PLA face runs a few kelvin under it). In a 25 °C room the face stays under 50 °C indefinitely below **6.1 N m (2.9 A rms)** held per motor, or **3.1 N m (1.5 A rms)** if the case turns out bare and shaded; the stand's own hold (7.5 N m) settles at 56 °C (or 75 °C). At the PLA cap (12 N m) held without a break it passes 50 °C after **62 min**.
 
 ## 1. The heat path
 
@@ -115,17 +115,17 @@ The motor-day leg: a PLA hip frame on the stand's plywood end plate (no metal be
 
 | Room | Continuous limit per motor (PLA face <= 50 °C) | The same with the case bare and shaded (`eps_case` 0.3, `can_side_exposed` 0.3) |
 |---|---|---|
-| 20 °C | 7.9 N m = 3.77 A rms (5.3 A peak) | 5.1 N m = 2.45 A rms (3.5 A peak) |
-| 25 °C | 6.8 N m = 3.24 A rms (4.6 A peak) | 4.0 N m = 1.88 A rms (2.7 A peak) |
-| 30 °C | 5.5 N m = 2.60 A rms (3.7 A peak) | 2.2 N m = 1.07 A rms (1.5 A peak) |
+| 20 °C | 7.2 N m = 3.44 A rms (4.9 A peak) | 4.3 N m = 2.07 A rms (2.9 A peak) |
+| 25 °C | 6.1 N m = 2.91 A rms (4.1 A peak) | 3.1 N m = 1.46 A rms (2.1 A peak) |
+| 30 °C | 4.8 N m = 2.28 A rms (3.2 A peak) | 0.5 N m = 0.24 A rms (0.3 A peak) |
 
 | Held torque per motor, from cold at 25 °C | Face after 10 min | 30 min | 1 h | Steady face | Face passes 50 °C after |
 |---|---|---|---|---|---|
-| the PLA cap, 12 N m | 29 °C | 38 °C | 49 °C | 78 °C | 64 min |
-| the stand's hold, 7.5 N m | 27 °C | 31 °C | 37 °C | 53 °C | 222 min |
-| the robot's crouch, 16.79 N m (not for PLA) | 31 °C | 48 °C | 68 °C | 118 °C | 33 min |
+| the PLA cap, 12 N m | 29 °C | 38 °C | 49 °C | 84 °C | 62 min |
+| the stand's hold, 7.5 N m | 27 °C | 31 °C | 37 °C | 56 °C | 180 min |
+| the robot's crouch, 16.79 N m (not for PLA) | 32 °C | 48 °C | 70 °C | 130 °C | 32 min |
 
-A warm room or a bare case cuts the margin: at 30 °C the limit is 5.5 N m, under the stand's own hold of 7.5 N m, and with a bare, shaded case the hold settles at 69 °C even at 25 °C. The first logged hold (section 7) settles which column applies.
+A warm room or a bare case cuts the margin: at 30 °C the limit is 4.8 N m, under the stand's own hold of 7.5 N m, and with a bare, shaded case the hold settles at 75 °C even at 25 °C. The first logged hold (section 7) settles which column applies.
 
 ## 6. Recommendation
 
@@ -167,9 +167,9 @@ The worst case (drive, 25 °C), steady winding / face °C for B (PA6-CF) and E (
 | `c_mix_j_per_kgk` | 550.0 - 720.0 | 133 / 107 | 133 / 107 | 102 / 82 | 102 / 82 |
 | `i_noload_arms` | 0.7 - 2.0 | 133 / 107 | 133 / 107 | 102 / 82 | 102 / 82 |
 | `r_driver_ohm` | 0.002 - 0.008 | 132 / 106 | 136 / 110 | 101 / 81 | 104 / 84 |
-| `drive_fx_g` | 0.1 - 0.4 | 101 / 84 | 200 / 153 | 80 / 67 | 147 / 111 |
+| `drive_fx_g` | 0.1 - 0.4 | 116 / 94 | 168 / 131 | 90 / 74 | 126 / 98 |
 
-E's warmest winding across these ranges is 147 °C (`drive_fx_g` at its high end), at 25 °C; B's coolest is 101 °C (`drive_fx_g`). The driving force is the largest lever and an assumption: log the motors' torque while driving and balancing (section 7) before trusting the hot-day margin. The case's emissivity and how much of it is shaded move the printed frames most; the bench fit measures those. The heat capacity and the no-load current do not move a steady state of a held leg (they shape the transients and the jumps).
+E's warmest winding across these ranges is 126 °C (`drive_fx_g` at its high end), at 25 °C; B's coolest is 116 °C (`can_side_exposed`). The driving force is the largest lever and an assumption: log the motors' torque while driving and balancing (section 7) before trusting the hot-day margin. The case's emissivity and how much of it is shaded move the printed frames most; the bench fit measures those. The heat capacity and the no-load current do not move a steady state of a held leg (they shape the transients and the jumps).
 
 ## 9. Inputs and their sources
 

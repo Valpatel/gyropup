@@ -146,6 +146,21 @@ class Inputs(unittest.TestCase):
         d = M['loads']['cases']['drive']
         self.assertGreater(max(d['tau_front'], d['tau_rear']), 18.0)
         self.assertGreater(d['tau_front'], d['tau_rear'])
+        for i, key in enumerate(('tau_front', 'tau_rear')):     # the recorded parts rebuild the case (the sensitivity uses them)
+            self.assertAlmostEqual(math.hypot(d['tau_static'][i], d['dtau_dfx'][i] * d['fx_n']), d[key], delta=0.01)
+
+    def test_stand_blocks_the_whole_rear_face(self):
+        """On the stand the plywood covers the whole O94 rear face; on the robot the cheek covers its overlap only: the
+        stand's case sheds less at the same temperature."""
+        cal = mt.cal_of(M['calibration'])
+        T = {'C': 70.0, 'amb': 25.0}
+        g = {}
+        for mount in ('stand', 'body'):
+            net, _ = mt.leg_network(cal, 'A_pla', {'tau': 8.0, 'rpm': 0.0}, 2.0, 25.0, mount)
+            g[mount] = [f(T) for a, b, f in net.links if (a, b) == ('C', 'amb')][0]
+        hf = mt.h_vertical(mt.v('rear_cover_d_m'), 70.0, 25.0) + mt.h_radiation(mt.v('eps_case'), 70.0, 25.0)
+        self.assertAlmostEqual(g['body'] - g['stand'],
+                               hf * (mt.can_areas()['rear_face'] - mt.v('rear_overlap_m2')), places=9)
 
 
 class Results(unittest.TestCase):

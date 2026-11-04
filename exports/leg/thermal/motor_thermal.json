@@ -406,7 +406,8 @@
   },
   "tray_top_m2": {
    "v": 0.056896,
-   "src": "CAD: the tray's top in the body's air (70 % open: the pallet, the power plate on posts)"
+   "src": "CAD: the tray's top in the body's air (70 % open: the pallet, the power plate on posts)",
+   "L_m": 0.07080139372822299
   },
   "body_air": {
    "v": {
@@ -465,7 +466,16 @@
     "tau_front": 18.27,
     "tau_rear": 17.04,
     "rpm": 0.0,
-    "stall": true
+    "stall": true,
+    "tau_static": [
+     16.43,
+     16.43
+    ],
+    "dtau_dfx": [
+     0.173829,
+     0.098354
+    ],
+    "fx_n": 45.98
    },
    "jumps": {
     "title": "A jump every 10 s (the rig's jump at the 60 N m cap), standing between",
@@ -2057,32 +2067,32 @@
   "limits": [
    {
     "room_c": 20.0,
-    "torque_nm": 7.9,
-    "current_arms": 3.77,
-    "current_apk": 5.3
+    "torque_nm": 7.2,
+    "current_arms": 3.44,
+    "current_apk": 4.9
    },
    {
     "room_c": 25.0,
-    "torque_nm": 6.8,
-    "current_arms": 3.24,
-    "current_apk": 4.6
+    "torque_nm": 6.1,
+    "current_arms": 2.91,
+    "current_apk": 4.1
    },
    {
     "room_c": 30.0,
-    "torque_nm": 5.5,
-    "current_arms": 2.6,
-    "current_apk": 3.7
+    "torque_nm": 4.8,
+    "current_arms": 2.28,
+    "current_apk": 3.2
    }
   ],
   "runs": {
    "cap": {
     "tau_nm": 12.0,
     "current_arms": 5.71,
-    "loss_w": 12.1,
+    "loss_w": 12.3,
     "steady": {
-     "winding_c": 90.0,
-     "case_c": 81.9,
-     "face_c": 78.1
+     "winding_c": 97.0,
+     "case_c": 88.8,
+     "face_c": 84.4
     },
     "transient": {
      "60": {
@@ -2093,36 +2103,36 @@
      "300": {
       "winding_c": 34.2,
       "case_c": 27.9,
-      "face_c": 26.3
+      "face_c": 26.4
      },
      "600": {
-      "winding_c": 37.2,
+      "winding_c": 37.3,
       "case_c": 30.8,
       "face_c": 28.6
      },
      "1200": {
-      "winding_c": 42.8,
-      "case_c": 36.2,
-      "face_c": 33.1
+      "winding_c": 42.9,
+      "case_c": 36.3,
+      "face_c": 33.2
      },
      "1800": {
-      "winding_c": 47.7,
-      "case_c": 41.0,
-      "face_c": 37.5
+      "winding_c": 48.0,
+      "case_c": 41.2,
+      "face_c": 37.6
      },
      "3600": {
-      "winding_c": 59.8,
-      "case_c": 52.7,
-      "face_c": 48.6
+      "winding_c": 60.7,
+      "case_c": 53.6,
+      "face_c": 49.3
      },
      "7200": {
-      "winding_c": 74.9,
-      "case_c": 67.4,
-      "face_c": 63.2
+      "winding_c": 77.5,
+      "case_c": 69.9,
+      "face_c": 65.4
      }
     },
     "face_limit_c": 50.0,
-    "t_face_limit_s": 3868,
+    "t_face_limit_s": 3726,
     "t_winding_target_s": null
    },
    "hold": {
@@ -2130,9 +2140,9 @@
     "current_arms": 3.57,
     "loss_w": 5.6,
     "steady": {
-     "winding_c": 57.7,
-     "case_c": 54.9,
-     "face_c": 52.9
+     "winding_c": 61.2,
+     "case_c": 58.3,
+     "face_c": 56.1
     },
     "transient": {
      "60": {
@@ -2147,42 +2157,42 @@
      },
      "600": {
       "winding_c": 30.4,
-      "case_c": 27.9,
+      "case_c": 28.0,
       "face_c": 26.8
      },
      "1200": {
       "winding_c": 33.1,
-      "case_c": 30.6,
+      "case_c": 30.7,
       "face_c": 29.1
      },
      "1800": {
-      "winding_c": 35.5,
-      "case_c": 33.0,
+      "winding_c": 35.6,
+      "case_c": 33.1,
       "face_c": 31.3
      },
      "3600": {
-      "winding_c": 41.5,
-      "case_c": 38.9,
-      "face_c": 36.8
+      "winding_c": 41.9,
+      "case_c": 39.3,
+      "face_c": 37.1
      },
      "7200": {
-      "winding_c": 49.1,
-      "case_c": 46.4,
-      "face_c": 44.3
+      "winding_c": 50.2,
+      "case_c": 47.5,
+      "face_c": 45.3
      }
     },
     "face_limit_c": 50.0,
-    "t_face_limit_s": 13306,
+    "t_face_limit_s": 10778,
     "t_winding_target_s": null
    },
    "robot_crouch": {
     "tau_nm": 16.79,
     "current_arms": 8.0,
-    "loss_w": 24.7,
+    "loss_w": 25.5,
     "steady": {
-     "winding_c": 143.6,
-     "case_c": 125.4,
-     "face_c": 118.4
+     "winding_c": 156.7,
+     "case_c": 137.8,
+     "face_c": 129.9
     },
     "transient": {
      "60": {
@@ -2197,59 +2207,59 @@
      },
      "600": {
       "winding_c": 48.6,
-      "case_c": 35.5,
-      "face_c": 31.4
+      "case_c": 35.6,
+      "face_c": 31.5
      },
      "1200": {
-      "winding_c": 59.0,
-      "case_c": 45.4,
-      "face_c": 39.8
+      "winding_c": 59.2,
+      "case_c": 45.6,
+      "face_c": 39.9
      },
      "1800": {
-      "winding_c": 68.4,
-      "case_c": 54.3,
-      "face_c": 47.8
+      "winding_c": 68.9,
+      "case_c": 54.8,
+      "face_c": 48.1
      },
      "3600": {
-      "winding_c": 91.5,
-      "case_c": 76.1,
-      "face_c": 68.5
+      "winding_c": 93.4,
+      "case_c": 77.9,
+      "face_c": 69.9
      },
      "7200": {
-      "winding_c": 119.7,
-      "case_c": 102.7,
-      "face_c": 95.1
+      "winding_c": 125.2,
+      "case_c": 108.1,
+      "face_c": 99.7
      }
     },
     "face_limit_c": 50.0,
-    "t_face_limit_s": 1972,
-    "t_winding_target_s": 7260
+    "t_face_limit_s": 1940,
+    "t_winding_target_s": 6430
    }
   },
   "limits_low": [
    {
     "room_c": 20.0,
-    "torque_nm": 5.1,
-    "current_arms": 2.45,
-    "current_apk": 3.5
+    "torque_nm": 4.3,
+    "current_arms": 2.07,
+    "current_apk": 2.9
    },
    {
     "room_c": 25.0,
-    "torque_nm": 4.0,
-    "current_arms": 1.88,
-    "current_apk": 2.7
+    "torque_nm": 3.1,
+    "current_arms": 1.46,
+    "current_apk": 2.1
    },
    {
     "room_c": 30.0,
-    "torque_nm": 2.2,
-    "current_arms": 1.07,
-    "current_apk": 1.5
+    "torque_nm": 0.5,
+    "current_arms": 0.24,
+    "current_apk": 0.3
    }
   ],
   "hold_low": {
-   "winding_c": 74.8,
-   "case_c": 71.8,
-   "face_c": 68.6
+   "winding_c": 81.3,
+   "case_c": 78.3,
+   "face_c": 74.7
   }
  },
  "sensitivity": [
@@ -2504,22 +2514,22 @@
    ],
    "lo": {
     "B_pa6cf": [
-     100.9,
-     83.8
+     115.7,
+     94.5
     ],
     "E_al_plate_black_iso": [
-     80.0,
-     66.7
+     90.2,
+     73.8
     ]
    },
    "hi": {
     "B_pa6cf": [
-     200.0,
-     153.0
+     167.8,
+     131.1
     ],
     "E_al_plate_black_iso": [
-     147.1,
-     111.4
+     125.6,
+     97.5
     ]
    }
   }
