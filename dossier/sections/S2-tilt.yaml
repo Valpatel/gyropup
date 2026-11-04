@@ -3,7 +3,7 @@
 id: S2-tilt
 title: Tilt yoke and cradle
 purpose: Hold the cartridge on a horizontal axis over the pan axis and tilt it 0 to -25 deg off an STS3215, with hard stops
-  at both ends so the barrel never points above level
+  at both ends that are its range (D77: the real mechanical stops, not a never-above-level rule)
 requirements:
 - R3
 - R9
@@ -202,7 +202,7 @@ parts:
   - gate:motion
   - turret-fea
 - id: stop_lug
-  function: 'The tilt hard stop: rests on the yoke''s sectors at 0 and -25 deg, so the barrel never points above level'
+  function: 'The tilt hard stop: rests on the yoke''s sectors at 0 and -25 deg, the ends of the tilt range (D77)'
   interfaces:
   - I-stop-lug
   - I-tilt-stop

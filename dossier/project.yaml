@@ -20,10 +20,10 @@ requirements:
   checks:
   - gate:motion
 - id: R3
-  text: 'Tilt 0 to -25 deg between hard stops: the barrel never points above level'
+  text: 'Tilt between hard stops (now 0 to -25 deg; exports/turret/limits.json): the range is the real mechanical stops (D77)'
   source:
-    kind: standard
-    ref: kid-safety rule S5 (study 6.3)
+    kind: user
+    ref: 'D77 (2026-11-03): "The limits should be real mechanical stops." It superseded kid-safety rule S5 (study 6.3)'
   verify_by: analysis
   checks:
   - gate:motion

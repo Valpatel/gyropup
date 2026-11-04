@@ -15,8 +15,8 @@ This page is the contract between the two. The simulator holds the robot to it (
 | Data | CAN-FD (the J501's second port) and USB to the Jetson | Aiming and firing commands come from the Jetson; the balance controller never waits on the payload |
 | Safety line | The robot's e-stop and dead-man signal go to the payload; it must not spin up or fire when either is open | Kid safety (D19): muzzle-energy cap, no aiming above a set height, wireless e-stop |
 | Mounting | Head plate with a bolt pattern centred on the axle (to be fixed with the turret project) | Heat-set inserts in the printed head plate, or a SendCutSend aluminium plate |
-| Aiming laser | Green, mounted beside the barrel, Class 1 or low-power Class 2 (≤ 1 mW) | Shown in the simulator; it follows the never-above-horizontal rule, so it never reaches eye height from a robot this size |
-| Range | Knee-height targets out to about 4.7 m with foam balls at 21.3 m/s (70 fps) without aiming upwards; the `targets` scenario knocks all five down at 3.0–4.2 m | Gyropup stands tall to shoot; a higher muzzle reaches further |
+| Aiming laser | Mounted beside the barrel; the module specified is a red 650 nm, < 1 mW Class 2 (Quarton VLM-650-03 LPT, docs/turret-sections.md) | Shown in the simulator. Since D77 the barrel may point above level, so the beam can reach eye height: Class 2 relies on the blink reflex, which is not reliable for children. Open item for the owner (#201): a Class 1 module, or the laser switched off above level |
+| Range | Knee-height targets out to about 4.7 m with foam balls at 21.3 m/s (70 fps) with a level barrel (further with it raised, within the stops, D77); the `targets` scenario knocks all five down at 3.0–4.2 m | Gyropup stands tall to shoot; a higher muzzle reaches further |
 | Reload | The dock pours counted balls into the hopper (D18; research/turret-launcher-study.md §8.4) | Gyropup sits down onto the dock, so the hopper's fill flap sits at a repeatable height and position |
 
 Changes to these numbers are made here and in `designs/*.json` (`head_payload`), then the suite is re-run

@@ -3,7 +3,7 @@
 Written 2026-10-27 by the planner (Fable 5.1) for the next turret implementer (Opus), from a read of main ab5b263 (the
 v0 package: docs/turret-prototype-plan.md T0-T5 and T7-T9 done, the order sheets, the print files, the FEA, the wiring
 as reviewed under D47, the firmware and its simulated bench) and of the J501 project's working tree (~/Code/j501-agx,
-read only). The rules stand: the barrel never points above level (the hard stop); at most 70 fps, held by the fixed
+read only). The rules then: the barrel never above level (the hard stop; D77 replaced this with the real mechanical stops); at most 70 fps, held by the fixed
 12 V flywheel rail; nothing spins or feeds unless the safety line is held; parts off the shelf with a listed price,
 printed, or ordered online at an instant price (D40). Scratch work for this page (the cradle FEA re-read, its pictures)
 is in /mnt/storage-10tb/claude-scratch/gyropup/turret-planner/.

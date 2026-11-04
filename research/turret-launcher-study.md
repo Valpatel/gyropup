@@ -386,6 +386,10 @@ start at 5–10 m only above 300 fps.
 
 ### 6.3 Making the turret physically unable to aim high
 
+*Superseded by D77 (2026-11-03): the owner removed the never-above-horizontal rule; the tilt is limited by the
+turret's real mechanical stops, which move to the range the mechanism reaches (#201). Layers 1-3 below were the
+means of that rule and are not carried forward; layer 4's head-zone prediction (S5) stands as its own rule.*
+
 The body leans, so a body-frame limit alone is not enough (S5). Layers, from mechanical to software:
 
 1. **A hard tilt stop** on the yoke at 0° body frame, and a cradle that cannot reach above it even with the servo off.
@@ -417,7 +421,8 @@ The body leans, so a body-frame limit alone is not enough (S5). Layers, from mec
 
 - The FDA advises that laser pointers "are not toys and should not be used by minors except under the direct
   supervision of an adult" (via [Wikipedia](https://en.wikipedia.org/wiki/Laser_safety)). Gyropup's laser is part of
-  a supervised game, and it never points above horizontal.
+  a supervised game. (It was written when the barrel never pointed above horizontal; since D77 it can, so the
+  laser's class matters at eye height: docs/head-payload.md, #201.)
 - **Recommendation:** buy a module with a stated class from a maker that certifies it. One example is the Picotronic
   520 nm, 1 mW, Class 2, 12–24 V, Ø12 × 40 mm module (16 g, €319.90;
   [Picotronic](https://shop.picotronic.de/en/p/70146981)). Cheap modules sold as "< 1 mW" have unverified output, so

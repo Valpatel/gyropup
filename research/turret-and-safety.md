@@ -45,7 +45,8 @@ It ends with a recommended turret, its mass, power and cost budget, and a list o
   - Short darts at a default of 70 fps.
   - A hard cap of 80 fps (24.4 m/s, 0.30 J). The cap is enforced by flywheel speed and checked on every shot by a
     muzzle chronograph.
-  - The barrel never points above horizontal in the world frame.
+  - ~~The barrel never points above horizontal in the world frame.~~ Superseded by D77 (2026-11-03): the owner
+    removed this rule; the tilt is limited by the turret's real mechanical stops (exports/turret/limits.json).
   - The turret only fires at worn targets, never at faces.
 - **Recommended turret:**
   - Launcher: brushless flywheels with a Neutron solenoid pusher and a 15-round Talon magazine.
@@ -421,7 +422,10 @@ a toy. They are still the best published, kid-specific energy limits, so Gyropup
      - A muzzle chronograph on every shot. Any shot over 80 fps locks the launcher out until a human resets it.
 2. **Rate of fire.** At most 3 darts/s and a 5-dart burst limit in the kids' game (a design choice), with a magazine of
    15. The solenoid makes each dart countable.
-3. **Elevation.** The barrel must never point above horizontal in the world frame.
+3. **Elevation.** *Superseded by D77 (2026-11-03): the owner removed the never-above-horizontal rule ("an odd
+   restriction that doesn't make sense and doesn't make this safer. The limits should be real mechanical stops"). The
+   tilt now runs between the turret's mechanical hard stops. The head-zone prediction below still stands as its own
+   rule.* The original recommendation: the barrel must never point above horizontal in the world frame.
    - Gyropup balances by leaning, so the body pitch changes all the time. A tilt limit relative to the body is not
      enough. Measure the limit with the turret's own IMU in the world frame.
    - Add a mechanical hard stop that holds even at the robot's worst-case forward lean.

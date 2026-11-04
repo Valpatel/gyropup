@@ -15,7 +15,8 @@ check and an estimate, and flags the ones that change the Turret API (`cad/turre
 `cad/turret_assembly.py`, `cad/turret_motion.py`, `cad/turret_lidar.py`, `cad/turret_studies.py` and
 `tools/part_images.py` all build on it.
 
-Hard rules stand and are not relaxed anywhere below: the barrel never points above horizontal; muzzle speed at most
+Hard rules stand and are not relaxed anywhere below: the barrel only between its mechanical hard stops (D77 replaced
+"never above horizontal"); muzzle speed at most
 70 fps (21.3 m/s), held physically by a fixed 12 V flywheel rail (motor KV x rail x tyre diameter inside the cap);
 nothing spins or feeds unless the safety line is held. Parts rule D40: off the shelf with a listed price and a buy
 link, printed (PA6-CF, PETG, TPU on the P1S's 256 mm bed), or ordered online at an instant price. No quotes.
@@ -117,7 +118,7 @@ stop.
 | Feed | 100 balls per pose at 3/s, poses level / -25 deg / panning 60 deg/s: 0 doubles, <= 1 jam per 100 (a step that needs a reverse), <= 5 % empty steps after the dither; parked and shaken: 0 balls out |
 | Wheels, ceiling | at 100 % throttle on the 12 V rail: no-load eRPM <= 1.10 x KV x 12 V; 20 balls all <= 66 fps on both chronographs |
 | Wheels, set speed | 50 balls at the set speed: mean within +-2 fps of the set value, SD <= 1.5 fps |
-| Aim | pan and tilt reach the commanded angles within 0.5 deg (one-sided approach); a 90 deg pan in <= 1.2 s; tilt never above 0 deg at any command; homing within 7 s at 50 random power-ups |
+| Aim | pan and tilt reach the commanded angles within 0.5 deg (one-sided approach); a 90 deg pan in <= 1.2 s; tilt never past its hard stops at any command (exports/turret/limits.json); homing within 7 s at 50 random power-ups |
 | Hit | 20 shots each at paper targets at 2 and 4 m: 68 % radius <= 1.5 cm and <= 5 cm; 20 g hinged plates at 2 and 4 m: every plate down |
 | Safety line and ring | only the genuine 1 kHz train arms; every fault (open, short to GND, short to +24 V, DC, 300 Hz, 3 kHz, 50 Hz hum) disarms within 25 ms; release: ESC rail off <= 25 ms, brake closed at +10 +-3 ms, wheels <= 5 % by +50 ms; 20 releases during feeding: no ball above 20 fps; the trip latches on a simulated 1.3 ms gate pair and only the button clears it; the ring: <= 60 mOhm per paralleled pair, no dropout > 100 us at 15 rpm with 5 A, 0 bus-off in 1 h of 1,000 frames/s |
 | Temperature | after 100 balls in 2 min then 10 min at speed: ESCs <= 80 C, motors <= 70 C, flywheel regulator <= 60 C, servos <= 60 C, ring body <= 20 K over ambient |

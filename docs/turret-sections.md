@@ -16,7 +16,7 @@ barrel, the dial axis at x = y = 0, the ball path at z = 0). At tilt 0, C sits 1
 face and 48 mm (`tilt_x`) behind the pan axis; the tilt axis is at C (48, y, 15), over the pan axis.
 
 The parts rule (D40): every part is bought at a listed price, printed, or cut at an instant online price. Kid safety
-is a hard rule: the barrel never above level (hard stops at 0 and -25 deg), at most 105 fps by the hardware (D68: about 100 fps for a Hasbro round, under ASTM F963's 2,500 J/m2; eye protection recommended, as Hasbro does), and
+is a hard rule: the barrel only between its mechanical hard stops (D77; now 0 and -25 deg, exports/turret/limits.json), at most 105 fps by the hardware (D68: about 100 fps for a Hasbro round, under ASTM F963's 2,500 J/m2; eye protection recommended, as Hasbro does), and
 nothing spins unless the ARM line is held.
 
 ## The design gates (all sections)
@@ -147,7 +147,8 @@ a wider face (the ring's face sets the mesh), a metal pinion against a printed r
 ## 2. Tilt yoke and cradle
 
 **Function.** Hold the cartridge on a horizontal axis over the pan axis and tilt it 0 to -25 deg (muzzle down) off an
-STS3215 directly, with hard stops at both ends so the barrel can never point above level.
+STS3215 directly, with hard stops at both ends. The upper stop sat at 0 deg for the old "never above level" rule; D77
+replaced that rule with the real mechanical range, and the stop moves to it (#201, cad/turret_tilt_range.py).
 
 **Requirements.**
 - Tilt axis at C (48, 15): the tilting group's centre of mass 8.5 mm behind it with 30 balls, 5.2 mm empty, so an

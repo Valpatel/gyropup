@@ -7,7 +7,7 @@ must meet. It follows docs/turret-prototype-plan.md section 5 with the v0 number
 firmware or CAN and writes those files (its `--sim` mode rehearses every test against a simulated turret and writes to
 `exports/turret/bench/sim/`, which is never evidence).
 
-**The safety rules hold in every test:** the barrel never above horizontal (the hard stop at 0°); every ball at or
+**The safety rules hold in every test:** the barrel only between its hard stops (exports/turret/limits.json, D77); every ball at or
 under 66 fps on the bench (the hard cap is 70); nothing spins or feeds unless the pendant is held; never 24 V on the ESC
 side, not even for a test. Wear eye protection; the muzzle points into a catch box or at the targets.
 

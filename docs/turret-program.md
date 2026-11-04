@@ -17,7 +17,8 @@ A foam-ball turret (Nerf Rival-size balls) for Gyropup that:
 3. **is awesome with Nerf balls**: it feeds every time, fires accurately at a kid-safe speed, sounds and looks great,
    and is easy to reload and to service.
 
-Hard rules: the barrel never points above horizontal (kid safety, docs/head-payload.md); muzzle speed at or under
+Hard rules: the barrel tilts only between its mechanical hard stops (D77 replaced the old "never above horizontal"
+rule with them, exports/turret/limits.json); muzzle speed at or under
 70 fps (21.3 m/s) for balls; nothing spins or feeds unless the safety line (the bench pendant now, the radio stop on
 the robot) is held; private fleet details stay out of public repos.
 
