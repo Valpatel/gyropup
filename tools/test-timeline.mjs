@@ -268,7 +268,7 @@ test('no overflow from 320 to 1440 px; changes slide in, and stay put with reduc
   // Laid out at rest: with motion, a change that has not come into view yet waits 14 px to the left.
   for (const route of ['/', '/designer/progress.html']) for (const [width, height] of [[320, 640], [390, 844], [768, 1024], [1440, 1000]]) {
     const { context, page, errors } = await open(route, { width, height, reducedMotion: 'reduce' });
-    if (route.includes('progress')) await page.locator('#changes .tl-more > summary').click();
+    if (route.includes('progress')) for (const fold of await page.locator('#changes .tl-more > summary').all()) await fold.click();   // every fold: a text-only run and the earlier changes
     const out = await page.evaluate(() => {
       const box = document.querySelector('#changes').getBoundingClientRect();
       return { page: document.documentElement.scrollWidth - innerWidth,
