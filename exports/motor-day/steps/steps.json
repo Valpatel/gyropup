@@ -69,7 +69,7 @@
    19,
    30
   ],
-  "how": "Heat-set the six M5 inserts. Press the two 61812s in from the motor side onto their lip (the C1 coupon says how tight PLA comes out). Bond the four stop pins with the epoxy and let it cure. Each motor on its two \u00d85 dowels (or on its own two pins, with no dowels, if Phase 0.3 found pins on the case) and ten M4 x 20, snug only: the lug torque is not established (#116).",
+  "how": "Heat-set the six M5 inserts. Press the two 61812s in from the motor side onto their lip (the C1 coupon says how tight PLA comes out). Drill the four \u00d85 dowel holes deeper with a 5.2 mm drill, its tip 14.5 mm in (the same tape mark as Phase 0.3), so a dowel stops 13 mm down. With the epoxy, bond the four stop pins, and the four \u00d85 x 16 dowels pushed to the bottom; wipe the squeeze-out flush with the seat face, and hold each dowel square to the face (a small square against it) while the epoxy sets. After the cure, check each dowel stands 3.0 mm proud (2.0 to 3.5). Each motor on its two dowels (into the case's two locating holes) and ten M4 x 20, snug only: the lug torque is not established (#116).",
   "picture": "exports/motor-day/steps/step-03.png"
  },
  {
