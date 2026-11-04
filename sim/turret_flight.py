@@ -240,8 +240,8 @@ def elevation_for(v0, spec, d, z_target, h0=None, lo=None, hi=None):
     st_lo, st_hi = (math.radians(a) for a in tc.tilt_stops_deg())
     lo = st_lo if lo is None else lo
     hi = st_hi if hi is None else hi
-    # the height at range rises with elevation up to the direct arc's top; past ~0.6 rad the drag makes it fall
-    # again, so search the low arc only
+    # the bisection needs the height at range to rise with elevation: keep to the direct arc, at most 0.6 rad (34 deg),
+    # the bracket sim/turret.py's solver uses
     hi = min(hi, 0.6)
     z_level = drop_at(v0, spec, d, hi, h0)
     if np.isnan(z_level) or z_level < z_target:
