@@ -1,6 +1,6 @@
 # Motor day: the first leg in PLA, to a first jump
 
-The four RS-04 leg motors arrive on 2026-11-02. This page is the plan for using them: check them, print one leg in
+The four RS-04 leg motors have arrived. This page is the plan for using them: check them, print one leg in
 PLA, order its hardware, put it together and work up to a jump. PLA is not strong enough for the robot. Here it only
 has to survive a slow, capped test ladder, and the caps below are set so it should.
 
@@ -15,7 +15,7 @@ print files, drawings).
 
 ```mermaid
 flowchart LR
-  A["Phase 0<br/>unbox + check<br/>(unpowered)"] --> B["Phase 1<br/>print PLA<br/>coupons first"]
+  A["Phase 0<br/>unbox, measure,<br/>2 printed fit checks"] --> B["Phase 1<br/>print PLA<br/>in the listed order"]
   A --> C["Phase 2<br/>order hardware<br/>McMaster next day"]
   A --> E0["Bench spin-up<br/>one motor, 36 V<br/>current-limited"]
   B --> D["Phase 3<br/>assemble<br/>on the bench"]
@@ -49,36 +49,67 @@ The boom is two 2x4 rails, 1.54 m from the pivot to the hip. Its parts and dimen
 
 ## Phase 0: when the motors arrive (unpowered first)
 
+The motors have arrived. Phase 0 checks them unpowered against the drawing, then fits them to the first two prints
+(Phase 1, prints 1 and 2) before the leg is printed.
+
 | # | Check | How | OK when |
 |---|---|---|---|
 | 0.1 | Inventory | Four RS-04s, their leads and connectors, against [purchases.md](purchases.md). Photograph each label (serial, firmware) | 4 motors, no transit damage, output turns freely by hand with a light, even cogging |
-| 0.2 | Weigh and measure | Scale; calipers on the output flange, the mounting lugs and the dowel holes | mass within 5 % of 1,420 g; the dimensions the [mounting-fit record](rs04-mounting-fit.md) lists |
-| 0.3 | Unpowered fit on a printed lug coupon | Print `coupon_frame_ring_nom` (the RS-04 seat cut from the hip frame, see Phase 1); offer the motor up to it with the two Ø5 dowels and two M4 x 20 by hand | the dowels enter, the motor face sits flat (0.05 mm feeler does not enter), screws start by hand. Write the result on #116 |
-| 0.4 | Bench spin-up, one motor | [Leg rig safety](leg-rig-safety.md) rule 4: bench supply at 36 V, **current limit 2 A**, motor clamped to the bench, nothing on the output. Then C1-C5 in [the bench tests](leg-bench-tests.md#c1-c6-commissioning-one-motor-on-the-bench-supply) | the motor answers on CAN (id 127), takes ids 1-4, reports `limit_torque` as set; a 1 rad slow move at 2 N m and back |
+| 0.2 | Weigh and measure | A scale under one bare motor; calipers on the output and the case (the table below) | each line of the table below written in; mass within 5 % of 1,420 g (the manual) or of 1,510 g (the spec sheet). Write the readings on #116 |
+| 0.3 | Case fit: the frame-ring coupon (print 1) | `coupon_frame_ring_nom` is the ring of the hip frame that the motor's case bolts to. It has 10 x M4 clearance holes on Ø106, counterbored from the bed face. It also has two Ø5 holes on the same circle, for the steel dowels (item 20, Ø5 x 16) that go into the case's two Ø5 locating features. The vendor STEP models those as holes 4.5 deep; the drawing's callout reads like pins. Look at the case first. If it has holes, push the two dowels into the coupon dry (no epoxy). If it has pins, leave the dowels out. Offer the case face up to the coupon, then start the ten M4 x 20 (item 19) by hand | the dowels (or the case's pins) enter, the case face sits flat on the coupon (a 0.05 mm feeler does not enter), all ten M4 start by hand and run down without force. If items 19 and 20 have not come: any M4 x 20, not longer (20 leaves 4.4 mm in the case's 5 mm of thread), and a Ø5 drill shank in each dowel hole |
+| 0.4 | Output fit: the first PLA output adapter (print 2) | Press the adapter's motor face onto the output flange by hand, the three Ø6 pins into its three sockets. Then the nine M5 x 25 (item 22) through its counterbores into the output's M5 holes, by hand | all three Ø6 pins enter their sockets without force; the adapter's face sits flat on the flange (a 0.05 mm feeler does not enter); all nine M5 start by hand. If item 22 has not come: any M5 x 25, not longer (25 leaves 6 mm in the output's 6.5 mm of thread) |
+| 0.5 | Bench spin-up, one motor | [Leg rig safety](leg-rig-safety.md) rule 4: bench supply at 36 V, **current limit 2 A**, motor clamped to the bench, nothing on the output. Then C1-C5 in [the bench tests](leg-bench-tests.md#c1-c6-commissioning-one-motor-on-the-bench-supply) | the motor answers on CAN (id 127), takes ids 1-4, reports `limit_torque` as set; a 1 rad slow move at 2 N m and back |
+
+**If the pins bind in 0.4.** None of the C1 bore coupons has a Ø6 socket (they cover the leg's bearing seats, the
+knee-eye sleeve bores, the stop-pin holes and the Ø5 dowel holes), so there is no coupon offset to pick for these.
+The PLA adapter is the machined part's file: its three sockets are Ø6.00 (the H7 size), 3.5 deep, with no allowance
+for a printed hole coming out small and no lead-in where they open on the bed. Open each socket by hand with a 6.0 mm
+drill until the drill's full diameter is 3.5 mm in. The drill's point is about 1.8 mm long, so its tip goes about
+5.5 mm deep: mark the drill at 5.5 mm with tape. There is solid PLA behind the socket's floor at that depth; do not
+go through. Take the bed's flare off the mouths with a deburring tool. Do the same to the second adapter (print 5)
+before it goes on.
+
+**Measured on arrival** (0.2). Fill in the blanks; the design values are from the [RS-04 drawing and
+STEP](../research/actuator-interfaces.md#robstride-rs-04-swap-candidate).
+
+| Quantity | Design | Measured |
+|---|---|---|
+| Output pins: count, size, where | 3 x Ø6 (0/-0.01), on Ø35.86, between the 9 x M5 on Ø36 | **3 x Ø6, on the output between the M5 holes** (owner, 2026-11-03) |
+| Neighbouring output pins, centre to centre | 31.06 mm (35.86 x sin 60°): calipers across two pins' outsides read 37.06 | |
+| Output pins, standing proud | 3 ± 0.25 mm | |
+| Output flange: diameter, and proud of the case face | about Ø49.8; 0.5 ± 0.3 mm | |
+| Output M5 holes: count, circle | 9 x M5, 6.5 deep minimum, on Ø36 | |
+| Case front: screw holes | 10 x M4, 5 deep minimum, on Ø106 | |
+| Case front: locating features | 2 x Ø5 on Ø106, opposite each other (3° and 183°): holes 4.5 deep in the STEP; the drawing's callout reads like pins | holes or pins? |
+| Case outside diameter | Ø120 | |
+| Mass, one bare motor | 1,420 ± 20 g (manual); 1,510 g (spec sheet) | Owner, 2026-11-03: the 4 motors in their boxes weigh 7 kg together (1.75 kg each, boxed). The owner estimates 1.5–1.6 kg bare (spec 1.51 kg); weighing one bare motor is still to do. |
 
 C1-C5 need a USB-CAN adapter on SocketCAN, two 120 ohm terminators and an XT30 lead (Phase 2, "other vendors").
-Without them, Phase 0 stops at 0.3.
+Without them, Phase 0 stops at 0.4.
 
 ## Phase 1: what to print (PLA)
 
 <!-- gen:prints -->
-Sliced in Bambu Studio for a P1S, 0.4 mm nozzle, 0.20 mm layers, Bambu PLA Basic (TPU 95A HF for the sleeves). "Solid" is what the FEA assumes: 4 walls and 100 % infill. Times are the slicer's estimates.
+Sliced in Bambu Studio for a P1S, 0.4 mm nozzle, 0.20 mm layers, Bambu PLA Basic (TPU 95A HF for the sleeves). "Solid" is what the FEA assumes: 4 walls and 100 % infill. Times are the slicer's estimates. **Print them in this order**, top to bottom; "Item" is the BOM number the drawings and assembly steps use.
 
-| | Part | Qty | File | Settings | Time (all) | PLA (all) | Bed face, what to watch |
-|---|---|---|---|---|---|---|---|
-|  | **coupon frame ring nom** (Phase 0) | 1 | [coupon_frame_ring_nom.stl](../exports/rig/bench/coupon_frame_ring_nom.stl) | solid | 3.6 h | 202 g | the RS-04 seat cut from the hip frame, as printed in it: the motor's unpowered fit (Phase 0.3) |
-| | **C1 bore coupons** (Coupons) | 20 | `exports/rig/bench/coupon_*_m01/nom/p01.stl` | solid | 12.3 h | 544 g | the leg's press-fit bores at -0.1 / 0 / +0.1 mm: print them first and pick the offset that fits ([sheets](../research/leg-preprint/sheets/)) |
-| 1 | **hip frame** (Leg and stand) | 1 | [hip_frame.3mf](../exports/leg/hip_frame.3mf) | solid | 19.3 h | 1261 g | the web's outer face down, turned 45 deg (249 mm of the 256 mm bed: brim 3 mm at most); keep the stop-pin holes' lead-ins clean |
-| 2 | **upper link** (Leg and stand) | 2 | [upper_link.3mf](../exports/leg/upper_link.3mf) | solid | 14.2 h | 963 g | the outer face down; the knee-eye sleeve holes open on the bed |
-| 3 | **front link** (Leg and stand) | 1 | [front_link.3mf](../exports/leg/front_link.3mf) | solid | 8.1 h | 526 g | the inner face down, turned 45 deg; add tree supports from the bed only (never in the bearing seats) by hand: the time and grams here are without them (the slicer's auto-arrange refuses the 247 mm part with supports on) |
-| 4 | **wheel link** (Leg and stand) | 1 | [wheel_link.3mf](../exports/leg/wheel_link.3mf) | solid | 10.7 h | 734 g | the outer face down; the outer knee seat opens on the bed |
-| 5 | **apex spacer** (Leg and stand) | 1 | [apex_spacer.3mf](../exports/leg/apex_spacer.3mf) | solid | 0.3 h | 15 g | the inner face down |
-| 6 | **output adapter pla** (Leg and stand) | 2 | [output_adapter.stl](../exports/leg/cnc/output_adapter.stl) | solid | 3.7 h | 140 g | day-one stand-in for the machined 6061 adapter: the motor face down; tap the eight M5 holes by hand (M5 x 0.8 tap) |
-| 7 | **foot** (Leg and stand) | 1 | [foot.stl](../exports/motor-day/parts/foot.stl) | foot | 7.4 h | 246 g | the outer face down (nut pockets open on the bed), the boss up; stands in for the BotWheel |
-| 8 | **stop sleeve** (Leg and stand) | 4 | [stop_sleeve.3mf](../exports/leg/stop_sleeve.3mf) | tpu | 1.7 h | 63 g | TPU 95A, cap down |
-| 9 | **drill template** (Leg and stand) | 1 | [drill_template.stl](../exports/motor-day/parts/drill_template.stl) | jig | 1.0 h | 61 g | flat; lay it on the plywood end plate to drill the six M5 holes and mark the two lead slots |
+| Print | Part | Qty | Item | File | Settings | Time | Filament | Bed face, what to watch |
+|---|---|---|---|---|---|---|---|---|
+| **1** | **coupon frame ring nom** (Phase 0) | 1 |  | [coupon_frame_ring_nom.stl](../exports/rig/bench/coupon_frame_ring_nom.stl) | solid | 3.6 h | 202 g | the RS-04 seat cut from the hip frame, as printed in it: the motor's unpowered fit (Phase 0.3) |
+| **2** | **output adapter (PLA)** (Phase 0) | 1 | 6 | [output_adapter.stl](../exports/leg/cnc/output_adapter.stl) | solid | 1.9 h | 70 g | the first of the two, printed before the leg: the motor's output fit (Phase 0.4). The motor face down (the three Ø6 pin sockets open on the bed); tap the eight face M5 holes by hand (M5 x 0.8 tap) before assembly step 4 |
+| **3** | **C1 bore coupons** (Coupons) | 20 | | `exports/rig/bench/coupon_*_m01/nom/p01.stl` | solid | 12.3 h | 544 g | the leg's press-fit bores at -0.1 / 0 / +0.1 mm: print them as one batch and pick the offset that fits ([sheets](../research/leg-preprint/sheets/)). If a coupon other than `nom` fits, change the CAD before print 4: `PRINT_HOLE_COMP` for the sleeve and dowel holes; `KC`, `AC` and `STOP_HOLE_PLAY` for the bearing seats and stop-pin holes (`cad/fivebar.py`; the [print package](leg-print-package.md) C1 row). Then regenerate the leg's files (`cad/build_leg.py`, then `tools/motor_day.py --slice` for the times and grams) |
+| **4** | **hip frame** (Leg and stand) | 1 | 1 | [hip_frame.3mf](../exports/leg/hip_frame.3mf) | solid | 19.3 h | 1261 g | the web's outer face down, turned 45 deg (249 mm of the 256 mm bed: brim 3 mm at most); keep the stop-pin holes' lead-ins clean |
+| **5** | **output adapter (PLA)** (Leg and stand) | 1 | 6 | [output_adapter.stl](../exports/leg/cnc/output_adapter.stl) | solid | 1.9 h | 70 g | the second, as the first; if Phase 0.4 needed the pin sockets opened with a 6.0 mm drill, open this one's the same way before it goes on; tap the eight face M5 holes |
+| **6** | **upper link** (Leg and stand) | 2 | 2 | [upper_link.3mf](../exports/leg/upper_link.3mf) | solid | 14.2 h | 963 g | the outer face down; the knee-eye sleeve holes open on the bed |
+| **7** | **wheel link** (Leg and stand) | 1 | 4 | [wheel_link.3mf](../exports/leg/wheel_link.3mf) | solid | 10.7 h | 734 g | the outer face down; the outer knee seat opens on the bed |
+| **8** | **front link** (Leg and stand) | 1 | 3 | [front_link.3mf](../exports/leg/front_link.3mf) | solid | 8.1 h | 526 g | the inner face down, turned 45 deg; add tree supports from the bed only (never in the bearing seats) by hand: the time and grams here are without them (the slicer's auto-arrange refuses the 247 mm part with supports on) |
+| **9** | **apex spacer** (Leg and stand) | 1 | 5 | [apex_spacer.3mf](../exports/leg/apex_spacer.3mf) | solid | 0.3 h | 15 g | the inner face down |
+| **10** | **foot** (Leg and stand) | 1 | 7 | [foot.stl](../exports/motor-day/parts/foot.stl) | foot | 7.4 h | 246 g | the outer face down (nut pockets open on the bed), the boss up; stands in for the BotWheel |
+| **11** | **stop sleeve** (Leg and stand) | 4 | 8 | [stop_sleeve.3mf](../exports/leg/stop_sleeve.3mf) | tpu | 1.7 h | 63 g TPU | TPU 95A, cap down |
+| **12** | **drill template** (Leg and stand) | 1 | 9 | [drill_template.stl](../exports/motor-day/parts/drill_template.stl) | jig | 1.0 h | 61 g | flat; lay it on the plywood end plate to drill the six M5 holes and mark the two lead slots |
 
-**Total:** 82.3 h of printing, 4.69 kg of PLA and 63 g of TPU. On one printer, start the hip frame first: it is the longest and the motors need it first. Every file, with these settings in `prints.csv`, is in the bundle.
+**Total:** 82.3 h of printing, 4.69 kg of PLA and 63 g of TPU: the two Phase 0 fit checks 5.5 h, the coupons 12.3 h, the leg and stand 64.5 h. Every file, with these settings and this order in `prints.csv`, is in the bundle.
+
+**On one printer, print in the order above.** Prints 1 and 2 are the two fit checks (Phase 0.3 and 0.4). Fit each to a motor as it comes off the bed. The coupon is cut from the hip frame round one motor, and the first adapter is the same file as the second. So a misfit shows up before the hip frame (19.3 h) and the second adapter are printed. Print 3, the coupons, shows how the leg's bores come out in PLA. Start the hip frame 17.8 h in, once both fits have passed and the coupon offsets are picked. It is the longest print, and the motors go on it first. The drill template is last only because the leg does not need it. Print it sooner if you want to build the boom (assembly steps 1 and 2) while the leg prints.
 
 **PLA limits on the bench.** PLA softens at about 55 °C and the RS-04s bolt straight to the hip frame: feel the motor cases, and stop above 40 °C. PLA creeps under a clamp: re-torque the M5s before each session.
 <!-- /gen:prints -->
@@ -119,7 +150,7 @@ Part numbers from `catalog/hardware.json` (picked and read with the mcmaster-par
 |---|---|---|---|---|---|---|
 | filament | [Bambu Lab PLA Basic, 1 kg spool](https://us.store.bambulab.com/products/pla-basic-filament) | 6 | Bambu Lab | $14.99 | Phase 1 | 4.69 kg sliced + 10 % |
 | filament | [Bambu Lab TPU 95A HF, 1 kg spool](https://us.store.bambulab.com/products/tpu-95a-hf) | 1 | Bambu Lab | $41.99 | Phase 1 | 0.06 kg sliced + 10 % |
-| leg | RobStride RS-04 | 2 | RobStride | $255.00 | later | in hand (arriving 2026-11-02) |
+| leg | RobStride RS-04 | 2 | RobStride | $255.00 | later | in hand (arrived: Phase 0 checks them) |
 | leg | ODrive Robotics BotWheel (BW0124) | 1 | ODrive Robotics | $134.50 | later | later: the printed foot stands in on day one (other vendors) |
 | leg | [Output adapter, machined 6061-T6 (exports/leg/cnc/output_adapter.step, README.md)](https://jlccnc.com/) | 2 | JLCCNC (instant price on upload) | - | order now (5-10 days) | replaces the PLA stand-ins before any cap above the PLA cap |
 | leg | Structural epoxy, two-part, metal to plastic (D74) | 1 | owner's choice | - | Phase 3 | the stop pins, the knee-eye sleeves, the RS-04 dowels; not an anaerobic retainer on plastic |
@@ -185,7 +216,7 @@ Drill the end plate through the printed template (six Ø5.5 and the two lead slo
 
 ![step 3](../exports/motor-day/steps/step-03.png)
 
-Heat-set the six M5 inserts. Press the two 61812s in from the motor side onto their lip (the C1 coupon says how tight PLA comes out). Bond the four stop pins with the epoxy and let it cure. Each motor on its two Ø5 dowels and ten M4 x 20, snug only: the lug torque is not established (#116).
+Heat-set the six M5 inserts. Press the two 61812s in from the motor side onto their lip (the C1 coupon says how tight PLA comes out). Bond the four stop pins with the epoxy and let it cure. Each motor on its two Ø5 dowels (or on its own two pins, with no dowels, if Phase 0.3 found pins on the case) and ten M4 x 20, snug only: the lug torque is not established (#116).
 
 #### 4. Upper links and adapters (bench)
 
@@ -303,7 +334,7 @@ flowchart LR
 | Rung | What | Cap | How | Pass when |
 |---|---|---|---|---|
 | L0 | Unpowered | - | Fold and stretch the leg by hand from stop to stop; the boom swings freely; the foot lands on the mat at the stance with the boom level. | no rub; no part touches another |
-| L1 | Commission each motor | 2 A bench limit | Phase 0.4 (C1-C5) on all four motors, then C6: ids 1 front, 2 rear on this leg. C4 saves the rig's 60 N m; then `python -m rig.rs04 --id N param limit_torque 10` and `--id N save`, so a motor powers up at 10. | the motor reads back 10 after a power cycle |
+| L1 | Commission each motor | 2 A bench limit | Phase 0.5 (C1-C5) on all four motors, then C6: ids 1 front, 2 rear on this leg. C4 saves the rig's 60 N m; then `python -m rig.rs04 --id N param limit_torque 10` and `--id N save`, so a motor powers up at 10. | the motor reads back 10 after a power cycle |
 | L2 | Zero on the bare stops | 10 N m | The boom propped on the floor stop, the foot in the air. `python -m rig.calibrate`, one link at a time onto its stop pins by hand. | the 142 deg between the posts; no creak at the stop pins |
 | L3 | In-air sweeps | 10 N m | `python -m rig.run --backend can --test squat --cap 10 --damper 0 --half-mass KG --rate-limit 5` with the foot in the air (boom propped). | smooth; the knees and the adapters do not click; motor cases under 40 °C |
 | L4 | Stand up | 12 N m | `--test stand_up --cap 12 --damper 0 --half-mass KG`, the foot on the mat. | holds 300 mm; peak motor torque about 8 N m (sim) |
