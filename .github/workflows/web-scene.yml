@@ -84,6 +84,8 @@ jobs:
           - suite: playground
             commands: |
               npm run test:interactions
+              npm run test:rs04
+              npm run test:motor-tool
               npm run test:robot
               npm run test:sim
               npm run test:demo

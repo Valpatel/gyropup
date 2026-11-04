@@ -1,0 +1,82 @@
+/* The RS-04 configuration tool (tool.js). Self-contained: light and dark from the system, no fonts to load.
+   MIT licensed (LICENSE in this folder). */
+.rs04-tool {
+  --rs04-bg: #f6f7f9; --rs04-panel: #fff; --rs04-ink: #17191c; --rs04-dim: #5b636e; --rs04-line: #d5d9df;
+  --rs04-accent: #0b6bcb; --rs04-stop: #c8102e; --rs04-emu: #1f5fa8; --rs04-hw: #a33a00; --rs04-ok: #1c7c3a;
+  --rs04-grid: #9aa3ad55; --rs04-limit: #c8102e; --rs04-trace: #0b6bcb;
+  font: 14px/1.45 system-ui, -apple-system, "Segoe UI", sans-serif; color: var(--rs04-ink); background: var(--rs04-bg);
+  display: grid; grid-template-rows: auto auto auto; align-content: start; margin: 0;
+}
+@media (prefers-color-scheme: dark) {
+  .rs04-tool { --rs04-bg: #101317; --rs04-panel: #171b21; --rs04-ink: #e6e9ee; --rs04-dim: #9aa3ad; --rs04-line: #2b323b;
+    --rs04-accent: #4ea1ff; --rs04-emu: #4ea1ff; --rs04-hw: #ff8a3d; --rs04-trace: #4ea1ff; }
+}
+.rs04-tool h2 { font-size: 1.05rem; margin: 0 0 .5rem; }
+.rs04-tool h3 { font-size: .95rem; margin: 1.2rem 0 .4rem; }
+.rs04-tool button, .rs04-tool select, .rs04-tool input, .rs04-tool textarea {
+  font: inherit; color: inherit; background: var(--rs04-panel); border: 1px solid var(--rs04-line); border-radius: 6px; padding: .35rem .6rem;
+}
+.rs04-tool button { cursor: pointer; }
+.rs04-tool button:disabled { opacity: .5; cursor: default; }
+.rs04-tool button:focus-visible, .rs04-tool select:focus-visible, .rs04-tool input:focus-visible { outline: 2px solid var(--rs04-accent); outline-offset: 1px; }
+.rs04-tool .rs04-primary { background: var(--rs04-accent); color: #fff; border-color: transparent; }
+
+.rs04-bar { position: sticky; top: 0; z-index: 5; display: flex; gap: .75rem; align-items: center; flex-wrap: wrap;
+  padding: .6rem 1rem; background: var(--rs04-panel); border-bottom: 1px solid var(--rs04-line); }
+.rs04-bar-controls { display: flex; gap: .6rem; align-items: center; flex-wrap: wrap; flex: 1; }
+.rs04-limits { color: var(--rs04-dim); font-size: .85rem; }
+.rs04-conn { font-weight: 700; letter-spacing: .02em; padding: .45rem .7rem; border-radius: 6px; border: 2px solid currentColor; }
+.rs04-conn[data-kind="none"], .rs04-conn[data-kind="connecting"] { color: var(--rs04-dim); }
+.rs04-conn[data-kind="emulator"] { color: var(--rs04-emu); background: color-mix(in srgb, var(--rs04-emu) 12%, transparent); }
+.rs04-conn[data-kind="hardware"] { color: #fff; background: var(--rs04-hw); border-color: var(--rs04-hw); }
+.rs04-stop { position: fixed; right: 1rem; bottom: 1rem; z-index: 20; min-width: 9rem; min-height: 5rem;
+  background: var(--rs04-stop) !important; color: #fff !important; border: 3px solid #fff !important; border-radius: 12px !important;
+  box-shadow: 0 4px 18px #0006; display: grid; place-items: center; }
+.rs04-stop strong { font-size: 1.6rem; letter-spacing: .08em; }
+.rs04-stop small { opacity: .9; }
+
+.rs04-body { display: grid; grid-template-columns: minmax(14rem, 18rem) 1fr; gap: 1rem; padding: 1rem; }
+@media (max-width: 760px) { .rs04-body { grid-template-columns: 1fr; } }
+.rs04-side, .rs04-main, .rs04-footer { background: var(--rs04-panel); border: 1px solid var(--rs04-line); border-radius: 10px; padding: .9rem; }
+.rs04-footer { margin: 0 1rem 1rem; }
+.rs04-note { color: var(--rs04-dim); font-size: .85rem; margin: .4rem 0; }
+.rs04-motors { list-style: none; margin: .6rem 0 0; padding: 0; display: grid; gap: .4rem; }
+.rs04-motors button { width: 100%; text-align: left; display: grid; gap: .1rem; }
+.rs04-motors li[aria-current="true"] button { border-color: var(--rs04-accent); box-shadow: inset 3px 0 0 var(--rs04-accent); }
+.rs04-motors small { color: var(--rs04-dim); font-size: .78rem; overflow-wrap: anywhere; }
+.rs04-bad { color: var(--rs04-stop) !important; font-weight: 600; }
+.rs04-joint { color: var(--rs04-dim); }
+
+.rs04-tabs { display: flex; gap: .3rem; flex-wrap: wrap; border-bottom: 1px solid var(--rs04-line); margin-bottom: .8rem; }
+.rs04-tabs button { border: 0; border-bottom: 3px solid transparent; border-radius: 0; background: none; }
+.rs04-tabs button[aria-selected="true"] { border-bottom-color: var(--rs04-accent); font-weight: 600; }
+.rs04-row { display: flex; gap: .5rem; flex-wrap: wrap; align-items: center; margin: .4rem 0; }
+.rs04-strips { display: grid; grid-template-columns: repeat(auto-fill, minmax(16rem, 1fr)); gap: .6rem; }
+.rs04-strip { margin: 0; border: 1px solid var(--rs04-line); border-radius: 8px; padding: .4rem .5rem; }
+.rs04-strip figcaption { display: flex; justify-content: space-between; font-size: .85rem; }
+.rs04-strip output { font-variant-numeric: tabular-nums; font-weight: 600; }
+.rs04-strip canvas { display: block; width: 100%; height: 90px; }
+.rs04-faults { margin: .6rem 0; font-weight: 600; color: var(--rs04-ok); }
+.rs04-faults[data-bad="true"] { color: var(--rs04-stop); }
+.rs04-table-wrap { overflow-x: auto; }
+.rs04-params, .rs04-diff { border-collapse: collapse; width: 100%; font-size: .85rem; }
+.rs04-params th, .rs04-params td, .rs04-diff th, .rs04-diff td { text-align: left; padding: .25rem .4rem; border-bottom: 1px solid var(--rs04-line); }
+.rs04-params input { width: 7rem; padding: .2rem .4rem; }
+.rs04-val { font-variant-numeric: tabular-nums; }
+.rs04-diff tr[data-same="false"] td { color: var(--rs04-stop); font-weight: 600; }
+.rs04-unsaved { background: color-mix(in srgb, var(--rs04-hw) 14%, transparent); border-left: 4px solid var(--rs04-hw); padding: .4rem .6rem; }
+.rs04-check { display: block; margin: .3rem 0; }
+.rs04-arm { background: var(--rs04-hw) !important; color: #fff !important; border-color: transparent !important; font-weight: 700; }
+.rs04-jogstate[data-armed="true"] { color: var(--rs04-hw); font-weight: 700; }
+.rs04-jog { min-width: 8rem; min-height: 3rem; touch-action: none; user-select: none; }
+.rs04-tool textarea { width: 100%; box-sizing: border-box; font-family: ui-monospace, monospace; font-size: .8rem; }
+.rs04-log { list-style: none; margin: 0; padding: 0; max-height: 14rem; overflow: auto; font-size: .82rem; font-family: ui-monospace, monospace; }
+.rs04-log li { padding: .1rem 0; border-bottom: 1px dotted var(--rs04-line); }
+.rs04-log li[data-level="error"], .rs04-log li[data-level="refused"], .rs04-log li[data-level="stop"] { color: var(--rs04-stop); }
+.rs04-log li[data-level="warn"] { color: var(--rs04-hw); }
+.rs04-log time { color: var(--rs04-dim); }
+.rs04-dialog { max-width: 34rem; border: 1px solid var(--rs04-line); border-radius: 10px; background: var(--rs04-panel); color: var(--rs04-ink); }
+.rs04-dialog::backdrop { background: #0008; }
+.rs04-dialog menu { display: flex; gap: .5rem; justify-content: flex-end; padding: 0; }
+.rs04-profile-info { margin-top: 1rem; border-top: 1px solid var(--rs04-line); }
+.rs04-profile-info ul { padding-left: 1.2rem; color: var(--rs04-dim); font-size: .85rem; }
