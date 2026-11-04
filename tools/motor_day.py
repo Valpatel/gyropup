@@ -687,9 +687,9 @@ STEPS = [   # (title, parts added (prefixes), lift (mm along x, y, z) per prefix
      {'leg_bearing_61812': (0, -25, 0), 'leg_motor': (0, -70, 0), 'leg_screws_lugs': (0, 40, 0), 'leg_stop_posts': (0, 40, 0)},
      (0.85, 1.0, 0.55),
      'Heat-set the six M5 inserts. Press the two 61812s in from the motor side onto their lip (the C1 coupon says how tight '
-     'PLA comes out). Bond the four stop pins with the epoxy and let it cure. Each motor on its two Ø5 dowels (or on its '
-     'own two pins, with no dowels, if Phase 0.3 found pins on the case) and ten M4 x 20, snug only: the lug torque is not '
-     'established (#116).'),
+     'PLA comes out). Drill the four Ø5 dowel holes to 13 mm deep, as in Phase 0.3. Bond the four Ø5 x 16 dowels in them, '
+     'pushed to the bottom (3.0 mm proud), and the four stop pins, with the epoxy, and let it cure. Each motor on its two '
+     'dowels (into the case\'s two locating holes) and ten M4 x 20, snug only: the lug torque is not established (#116).'),
     ('Upper links and adapters (bench)', ['leg_output_adapter', 'leg_screws_outputs', 'leg_eye_sleeve', 'leg_upper_link',
                                           'leg_screws_links'],
      {'leg_output_adapter': (0, 50, 0), 'leg_screws_outputs': (0, 80, 0), 'leg_eye_sleeve': (0, 70, 0),
