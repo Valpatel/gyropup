@@ -28,7 +28,7 @@ item,key,qty,part,source
 27,nut_m6_nyloc,4,"High-Strength Steel Nylon-Insert Locknut, Zinc Plated, M6 x 1 mm Thread Size",McMaster 94645A205
 28,screw_m5x30,6,"Black-Oxide Alloy Steel Socket Head Screw, US Origin, M5 x 0.8 mm Thread Size, 30 mm Long",McMaster 91290A254
 29,washer_m5_large,6,"18-8 Stainless Steel Oversized Washer, for M5 Screw, 5.3mm ID, 15.0mm OD, 1.0mm to 1.4mm Thick",McMaster 91116A140
-30,robstride-rs-04,2,RobStride RS-04,in hand (arriving 2026-11-02)
+30,robstride-rs-04,2,RobStride RS-04,in hand (arrived: Phase 0 checks them)
 31,odrive-botwheel,1,ODrive Robotics BotWheel (BW0124),later: the printed foot stands in on day one (other vendors)
 32,end_plate,1,"End plate, 300 x 260 plywood (drill through the template)","plywood, cut"
 33,cleat,2,"Cleat, 2x4 x 260","lumber, cut"

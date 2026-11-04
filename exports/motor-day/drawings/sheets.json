@@ -1,0 +1,124 @@
+{
+ "items": {
+  "hip_frame": 1,
+  "upper_link": 2,
+  "front_link": 3,
+  "wheel_link": 4,
+  "apex_spacer": 5,
+  "output_adapter_pla": 6,
+  "foot": 7,
+  "stop_sleeve": 8,
+  "drill_template": 9,
+  "bearing_61812": 10,
+  "bearing_6301": 11,
+  "circlip_60": 12,
+  "knee_pin": 13,
+  "nut_m10_nyloc": 14,
+  "washer_m12_thin": 15,
+  "knee_spacer": 16,
+  "eye_sleeve": 17,
+  "stop_pin": 18,
+  "screw_m4x20": 19,
+  "dowel_5x16": 20,
+  "dowel_5x20": 21,
+  "screw_m5x25": 22,
+  "screw_m5x40": 23,
+  "insert_m5": 24,
+  "screw_m6x40": 25,
+  "washer_m6_din433": 26,
+  "nut_m6_nyloc": 27,
+  "screw_m5x30": 28,
+  "washer_m5_large": 29,
+  "robstride-rs-04": 30,
+  "odrive-botwheel": 31,
+  "end_plate": 32,
+  "cleat": 33,
+  "rail": 34,
+  "cross_member": 35,
+  "upright": 36,
+  "brace": 37,
+  "base": 38,
+  "pivot_bolt": 39,
+  "floor_stop": 40,
+  "stop_pad": 41,
+  "stop_board": 42,
+  "tether": 43,
+  "mat": 44
+ },
+ "step_parts": [
+  [
+   "base",
+   "upright",
+   "brace",
+   "stop_board",
+   "floor_stop",
+   "stop_pad",
+   "mat"
+  ],
+  [
+   "rail",
+   "cleat",
+   "cross_member",
+   "end_plate",
+   "pivot_bolt"
+  ],
+  [
+   "leg_hip_frame",
+   "leg_bearing_61812_front",
+   "leg_bearing_61812_rear",
+   "leg_motor",
+   "leg_screws_lugs",
+   "leg_stop_posts"
+  ],
+  [
+   "leg_output_adapter",
+   "leg_screws_outputs",
+   "leg_eye_sleeve",
+   "leg_upper_link",
+   "leg_screws_links"
+  ],
+  [
+   "leg_front_link",
+   "leg_wheel_link",
+   "leg_knee"
+  ],
+  [
+   "leg_apex_61812",
+   "leg_apex_spacer",
+   "leg_apex_circlip",
+   "foot",
+   "leg_screws_wheel",
+   "leg_washers_wheel"
+  ],
+  [
+   "leg_stop_sleeve"
+  ]
+ ],
+ "sheets": [
+  {
+   "number": "MD-01",
+   "title": "Hip module",
+   "png": "exports/motor-day/drawings/MD-01.png"
+  },
+  {
+   "number": "MD-02",
+   "title": "Upper link and adapter",
+   "png": "exports/motor-day/drawings/MD-02.png"
+  },
+  {
+   "number": "MD-03",
+   "title": "Lower links, knees, apex and foot",
+   "png": "exports/motor-day/drawings/MD-03.png"
+  },
+  {
+   "number": "MD-04",
+   "title": "Foot (BotWheel stand-in)",
+   "png": "exports/motor-day/drawings/MD-04.png"
+  },
+  {
+   "number": "MD-05",
+   "title": "Boom stand",
+   "png": "exports/motor-day/drawings/MD-05.png"
+  }
+ ]
+}
