@@ -687,9 +687,12 @@ STEPS = [   # (title, parts added (prefixes), lift (mm along x, y, z) per prefix
      {'leg_bearing_61812': (0, -25, 0), 'leg_motor': (0, -70, 0), 'leg_screws_lugs': (0, 40, 0), 'leg_stop_posts': (0, 40, 0)},
      (0.85, 1.0, 0.55),
      'Heat-set the six M5 inserts. Press the two 61812s in from the motor side onto their lip (the C1 coupon says how tight '
-     'PLA comes out). Bond the four stop pins with the epoxy and let it cure. Each motor on its two Ø5 dowels (or on its '
-     'own two pins, with no dowels, if Phase 0.3 found pins on the case) and ten M4 x 20, snug only: the lug torque is not '
-     'established (#116).'),
+     'PLA comes out). Drill the four Ø5 dowel holes deeper with a 5.2 mm drill, its tip 14.5 mm in (the same tape mark '
+     'as Phase 0.3), so a dowel stops 13 mm down. With the epoxy, '
+     'bond the four stop pins, and the four Ø5 x 16 dowels pushed to the bottom; wipe the squeeze-out flush with the seat '
+     'face, and hold each dowel square to the face (a small square against it) while the epoxy sets. After the cure, '
+     'check each dowel stands 3.0 mm proud (2.0 to 3.5). Each motor on its two dowels (into the '
+     'case\'s two locating holes) and ten M4 x 20, snug only: the lug torque is not established (#116).'),
     ('Upper links and adapters (bench)', ['leg_output_adapter', 'leg_screws_outputs', 'leg_eye_sleeve', 'leg_upper_link',
                                           'leg_screws_links'],
      {'leg_output_adapter': (0, 50, 0), 'leg_screws_outputs': (0, 80, 0), 'leg_eye_sleeve': (0, 70, 0),
@@ -1013,7 +1016,7 @@ def write_doc(ctx):
                          '`exports/rig/bench/coupon_*_m01/nom/p01.stl` | solid | C1MIN | C1G | the leg\'s press-fit bores at '
                          '-0.1 / 0 / +0.1 mm: print them as one batch and pick the offset that fits '
                          '([sheets](../research/leg-preprint/sheets/)). If a coupon other than `nom` fits, change the CAD '
-                         'before print 4: `PRINT_HOLE_COMP` for the sleeve and dowel holes; `KC`, `AC` and `STOP_HOLE_PLAY` '
+                         'before print 4: `PRINT_HOLE_COMP` for the sleeve holes (the RS-04 dowel holes are drilled out: Phase 0.3); `KC`, `AC` and `STOP_HOLE_PLAY` '
                          'for the bearing seats and stop-pin holes (`cad/fivebar.py`; the [print package](leg-print-package.md) '
                          'C1 row). Then regenerate the leg\'s files (`cad/build_leg.py`, then `tools/motor_day.py --slice` '
                          'for the times and grams) |')
