@@ -56,7 +56,7 @@ The motors have arrived. Phase 0 checks them unpowered against the drawing, then
 |---|---|---|---|
 | 0.1 | Inventory | Four RS-04s, their leads and connectors, against [purchases.md](purchases.md). Photograph each label (serial, firmware) | 4 motors, no transit damage, output turns freely by hand with a light, even cogging |
 | 0.2 | Weigh and measure | A scale under one bare motor; calipers on the output and the case (the table below) | each line of the table below written in; mass within 5 % of 1,420 g (the manual) or of 1,510 g (the spec sheet). Write the readings on #116 |
-| 0.3 | Case fit: the frame-ring coupon (print 1) | `coupon_frame_ring_nom` is the hip frame's motor seat cut from the frame: 10 x M4 clearance holes on Ø106, counterbored from the bed face, and two Ø5 holes on the same Ø106 circle for the steel dowels (item 20, Ø5 x 16) that enter the case's two Ø5 locating holes. On the drawing the case has holes there, not pins. Push the two dowels into the coupon dry (no epoxy), offer the motor's case face up to it, then the ten M4 x 20 (item 19) by hand | the dowels enter the case's locating holes, the case face sits flat on the coupon (a 0.05 mm feeler does not enter), all ten M4 start by hand and run down without force. If items 19 and 20 have not come: any M4 x 20, not longer (20 leaves 4.4 mm in the case's 5 mm of thread), and a Ø5 drill shank in each dowel hole |
+| 0.3 | Case fit: the frame-ring coupon (print 1) | `coupon_frame_ring_nom` is the ring of the hip frame that the motor's case bolts to. It has 10 x M4 clearance holes on Ø106, counterbored from the bed face. It also has two Ø5 holes on the same circle, for the steel dowels (item 20, Ø5 x 16) that go into the case's two Ø5 locating features. The vendor STEP models those as holes 4.5 deep; the drawing's callout reads like pins. Look at the case first. If it has holes, push the two dowels into the coupon dry (no epoxy). If it has pins, leave the dowels out. Offer the case face up to the coupon, then start the ten M4 x 20 (item 19) by hand | the dowels (or the case's pins) enter, the case face sits flat on the coupon (a 0.05 mm feeler does not enter), all ten M4 start by hand and run down without force. If items 19 and 20 have not come: any M4 x 20, not longer (20 leaves 4.4 mm in the case's 5 mm of thread), and a Ø5 drill shank in each dowel hole |
 | 0.4 | Output fit: the first PLA output adapter (print 2) | Press the adapter's motor face onto the output flange by hand, the three Ø6 pins into its three sockets. Then the nine M5 x 25 (item 22) through its counterbores into the output's M5 holes, by hand | all three Ø6 pins enter their sockets without force; the adapter's face sits flat on the flange (a 0.05 mm feeler does not enter); all nine M5 start by hand. If item 22 has not come: any M5 x 25, not longer (25 leaves 6 mm in the output's 6.5 mm of thread) |
 | 0.5 | Bench spin-up, one motor | [Leg rig safety](leg-rig-safety.md) rule 4: bench supply at 36 V, **current limit 2 A**, motor clamped to the bench, nothing on the output. Then C1-C5 in [the bench tests](leg-bench-tests.md#c1-c6-commissioning-one-motor-on-the-bench-supply) | the motor answers on CAN (id 127), takes ids 1-4, reports `limit_torque` as set; a 1 rad slow move at 2 N m and back |
 
@@ -64,8 +64,10 @@ The motors have arrived. Phase 0 checks them unpowered against the drawing, then
 knee-eye sleeve bores, the stop-pin holes and the Ø5 dowel holes), so there is no coupon offset to pick for these.
 The PLA adapter is the machined part's file: its three sockets are Ø6.00 (the H7 size), 3.5 deep, with no allowance
 for a printed hole coming out small and no lead-in where they open on the bed. Open each socket by hand with a 6.0 mm
-drill, 3.5 mm deep and not through, and take the bed's flare off the mouths with a deburring tool; do the same to the
-second adapter (print 5) before it goes on.
+drill until the drill's full diameter is 3.5 mm in. The drill's point is about 1.8 mm long, so its tip goes about
+5.5 mm deep: mark the drill at 5.5 mm with tape. There is solid PLA behind the socket's floor at that depth; do not
+go through. Take the bed's flare off the mouths with a deburring tool. Do the same to the second adapter (print 5)
+before it goes on.
 
 **Measured on arrival** (0.2). Fill in the blanks; the design values are from the [RS-04 drawing and
 STEP](../research/actuator-interfaces.md#robstride-rs-04-swap-candidate).
@@ -78,9 +80,9 @@ STEP](../research/actuator-interfaces.md#robstride-rs-04-swap-candidate).
 | Output flange: diameter, and proud of the case face | about Ø49.8; 0.5 ± 0.3 mm | |
 | Output M5 holes: count, circle | 9 x M5, 6.5 deep minimum, on Ø36 | |
 | Case front: screw holes | 10 x M4, 5 deep minimum, on Ø106 | |
-| Case front: locating holes | 2 x Ø5 on Ø106, opposite each other (3° and 183°) | |
+| Case front: locating features | 2 x Ø5 on Ø106, opposite each other (3° and 183°): holes 4.5 deep in the STEP; the drawing's callout reads like pins | holes or pins? |
 | Case outside diameter | Ø120 | |
-| Mass, one bare motor | 1,420 ± 20 g (manual); 1,510 g (spec sheet) | Owner, 2026-11-03: 4 boxed motors weigh 7 kg, so about 1.5–1.6 kg each with leads (spec 1.51 kg); a bare-motor weighing is still to do. |
+| Mass, one bare motor | 1,420 ± 20 g (manual); 1,510 g (spec sheet) | Owner, 2026-11-03: the 4 motors in their boxes weigh 7 kg together (1.75 kg each, boxed). The owner estimates 1.5–1.6 kg bare (spec 1.51 kg); weighing one bare motor is still to do. |
 
 C1-C5 need a USB-CAN adapter on SocketCAN, two 120 ohm terminators and an XT30 lead (Phase 2, "other vendors").
 Without them, Phase 0 stops at 0.4.
@@ -107,7 +109,7 @@ Sliced in Bambu Studio for a P1S, 0.4 mm nozzle, 0.20 mm layers, Bambu PLA Basic
 
 **Total:** 82.3 h of printing, 4.69 kg of PLA and 63 g of TPU: the two Phase 0 fit checks 5.5 h, the coupons 12.3 h, the leg and stand 64.5 h. Every file, with these settings and this order in `prints.csv`, is in the bundle.
 
-**On one printer, print in the order above.** Prints 1 and 2 are the motor's two fit checks (Phase 0.3 and 0.4): fit each to a motor as it comes off the bed. The coupon is the hip frame's motor seat cut from it and the first adapter is the same file as the second, so a misfit shows up before the hip frame (19.3 h) and the second adapter. Then the coupons (print 3), which say how the leg's bores come out in PLA. The hip frame starts 17.8 h in, once both fits have passed and the coupons are picked: it is the longest, and the motors go on it first. The drill template is last only because the leg does not need it: print it sooner to build the boom (assembly steps 1 and 2) while the leg prints.
+**On one printer, print in the order above.** Prints 1 and 2 are the two fit checks (Phase 0.3 and 0.4). Fit each to a motor as it comes off the bed. The coupon is cut from the hip frame round one motor, and the first adapter is the same file as the second. So a misfit shows up before the hip frame (19.3 h) and the second adapter are printed. Print 3, the coupons, shows how the leg's bores come out in PLA. Start the hip frame 17.8 h in, once both fits have passed and the coupon offsets are picked. It is the longest print, and the motors go on it first. The drill template is last only because the leg does not need it. Print it sooner if you want to build the boom (assembly steps 1 and 2) while the leg prints.
 
 **PLA limits on the bench.** PLA softens at about 55 °C and the RS-04s bolt straight to the hip frame: feel the motor cases, and stop above 40 °C. PLA creeps under a clamp: re-torque the M5s before each session.
 <!-- /gen:prints -->
@@ -148,7 +150,7 @@ Part numbers from `catalog/hardware.json` (picked and read with the mcmaster-par
 |---|---|---|---|---|---|---|
 | filament | [Bambu Lab PLA Basic, 1 kg spool](https://us.store.bambulab.com/products/pla-basic-filament) | 6 | Bambu Lab | $14.99 | Phase 1 | 4.69 kg sliced + 10 % |
 | filament | [Bambu Lab TPU 95A HF, 1 kg spool](https://us.store.bambulab.com/products/tpu-95a-hf) | 1 | Bambu Lab | $41.99 | Phase 1 | 0.06 kg sliced + 10 % |
-| leg | RobStride RS-04 | 2 | RobStride | $255.00 | later | in hand (arriving 2026-11-02) |
+| leg | RobStride RS-04 | 2 | RobStride | $255.00 | later | in hand (arrived: Phase 0 checks them) |
 | leg | ODrive Robotics BotWheel (BW0124) | 1 | ODrive Robotics | $134.50 | later | later: the printed foot stands in on day one (other vendors) |
 | leg | [Output adapter, machined 6061-T6 (exports/leg/cnc/output_adapter.step, README.md)](https://jlccnc.com/) | 2 | JLCCNC (instant price on upload) | - | order now (5-10 days) | replaces the PLA stand-ins before any cap above the PLA cap |
 | leg | Structural epoxy, two-part, metal to plastic (D74) | 1 | owner's choice | - | Phase 3 | the stop pins, the knee-eye sleeves, the RS-04 dowels; not an anaerobic retainer on plastic |

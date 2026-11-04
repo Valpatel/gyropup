@@ -108,6 +108,14 @@ PRINT_ORDER = [
 def print_queue() -> list:
     """PRINT_ORDER with each row's file, recipe and note from PRINTS; every print's copies are in it exactly once."""
     by = {p[0]: p for p in PRINTS}
+    steps = list(dict.fromkeys(r[0] for r in PRINT_ORDER))
+    if steps != list(range(1, len(steps) + 1)) or [r[0] for r in PRINT_ORDER] != sorted(r[0] for r in PRINT_ORDER):
+        raise SystemExit(f'PRINT_ORDER steps must run 1, 2, 3 ... in order, each in one run of rows: {steps}')
+    for step, key, _, phase, _ in PRINT_ORDER:
+        if phase not in ('0', '1a', '1b'):
+            raise SystemExit(f'PRINT_ORDER step {step} ({key}): phase {phase!r} is not 0, 1a or 1b')
+        if sum(1 for r in PRINT_ORDER if r[0] == step) > 1 and key not in C1:
+            raise SystemExit(f'PRINT_ORDER step {step} is shared; only the C1 coupons share one')
     out = []
     for step, key, qty, phase, how in PRINT_ORDER:
         _, f, _, recipe, _, how0 = by[key]
@@ -490,7 +498,7 @@ SUBS = {   # what a builder may already have that does the same job (the CAD's n
 }
 
 DAY_ONE_CHANGES = {   # leg BOM key -> (replacement key or None, why)
-    'robstride-rs-04': (None, 'in hand (arriving 2026-11-02)'),
+    'robstride-rs-04': (None, 'in hand (arrived: Phase 0 checks them)'),
     'odrive-botwheel': (None, 'later: the printed foot stands in on day one (other vendors)'),
     'screw_m6x30': ('screw_m6x40', 'the foot is 24 mm thick: M6 x 40 through it into a nylon-insert nut'),
 }
@@ -1015,13 +1023,13 @@ def write_doc(ctx):
     doc_t += (f"\n\n**Total:** {_h(tot['min'])} of printing, {tot['pla_g'] / 1000:.2f} kg of PLA and {tot['tpu_g']:.0f} g of TPU: "
               f"the two Phase 0 fit checks {_h(by_phase['0'])}, the coupons {_h(by_phase['1a'])}, the leg and stand "
               f"{_h(by_phase['1b'])}. Every file, with these settings and this order in `prints.csv`, is in the bundle.\n\n"
-              '**On one printer, print in the order above.** Prints 1 and 2 are the motor\'s two fit checks (Phase 0.3 and '
-              '0.4): fit each to a motor as it comes off the bed. The coupon is the hip frame\'s motor seat cut from it and the '
-              'first adapter is the same file as the second, so a misfit shows up before the hip frame '
-              f"({_h(hip)}) and the second adapter. Then the coupons (print 3), which say how the leg's bores come out in PLA. "
-              f"The hip frame starts {_h(before)} in, once both fits have passed and the coupons are picked: it is the "
-              'longest, and the motors go on it first. The drill template is last only because the leg does not need it: '
-              'print it sooner to build the boom (assembly steps 1 and 2) while the leg prints.\n\n'
+              '**On one printer, print in the order above.** Prints 1 and 2 are the two fit checks (Phase 0.3 and 0.4). '
+              'Fit each to a motor as it comes off the bed. The coupon is cut from the hip frame round one motor, and the '
+              f"first adapter is the same file as the second. So a misfit shows up before the hip frame ({_h(hip)}) and the "
+              "second adapter are printed. Print 3, the coupons, shows how the leg's bores come out in PLA. "
+              f"Start the hip frame {_h(before)} in, once both fits have passed and the coupon offsets are picked. It is the "
+              'longest print, and the motors go on it first. The drill template is last only because the leg does not need '
+              'it. Print it sooner if you want to build the boom (assembly steps 1 and 2) while the leg prints.\n\n'
               '**PLA limits on the bench.** PLA softens at about 55 °C and the RS-04s bolt straight to the hip frame: '
               'feel the motor cases, and stop above 40 °C. PLA creeps under a clamp: re-torque the M5s before each session.')
     doc = _fill(doc, 'prints', doc_t)
@@ -1311,14 +1319,15 @@ def main():
         steps = render_steps(P, items)
         sheets = drawings(P, items, names, _rev(), meta, fm)
         (OUT / 'steps' / 'steps.json').write_text(json.dumps(steps, indent=1) + '\n')
-        (OUT / 'drawings' / 'sheets.json').write_text(json.dumps(sheets, indent=1) + '\n')
-    else:                                       # keep the pictures already rendered (the item numbers must not have moved)
-        steps, sheets = _load(OUT / 'steps' / 'steps.json', []), _load(OUT / 'drawings' / 'sheets.json', [])
+        (OUT / 'drawings' / 'sheets.json').write_text(json.dumps({'items': items, 'sheets': sheets}, indent=1) + '\n')
+    else:                                       # keep the pictures already rendered: only if no item number has moved
+        steps, rendered = _load(OUT / 'steps' / 'steps.json', []), _load(OUT / 'drawings' / 'sheets.json', {})
+        sheets = rendered.get('sheets') or []
         if not steps or not sheets:
             raise SystemExit('--no-render needs the rendered steps and drawings (steps/steps.json, drawings/sheets.json)')
-        moved = [r['step'] for r in steps if any(item_of(n, items) not in r['items'] for n in r['adds'] if item_of(n, items))]
-        if moved:
-            raise SystemExit(f'the item numbers moved since the pictures were rendered (steps {moved}): render again')
+        if rendered.get('items') != items:
+            moved = sorted(k for k in set(items) | set(rendered.get('items') or {}) if items.get(k) != (rendered.get('items') or {}).get(k))
+            raise SystemExit(f'the BOM item numbers changed since the steps and drawings were rendered ({moved}): render again')
     write_doc({'slices': slices, 'der': der, 'stand': stand, 'steps': steps, 'sheets': sheets, 'mc': mc, 'other': other,
                'meta': meta, 'items': items, 'queue': queue})
     files = [(f'exports/motor-day/{n}', n) for n in ('bom.csv', 'prints.csv', 'mcmaster.csv', 'other-vendors.csv',
