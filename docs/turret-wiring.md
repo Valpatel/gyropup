@@ -4,19 +4,21 @@
 
 The electrics of the foam-ball turret as built for the bench (docs/decisions.yaml D42): every connector and its pinout,
 every conductor's gauge and length, the fuses, the hardware arm chain (the safety pulses across the slip ring, the
-overspeed trip, the phase-short brake), the current budget, and the boards laid out part by part. Since D66 the turret
-has one input, an XT30 in its compute plinth (12-54 V in principle; in use one DCB609 in 20 V mode on the stand,
-15-20.5 V, or Gyropup's 10S bus, 30-42 V), shared by its Jetson (J4012) and, through the slip ring, the head; since D68
+overspeed trip, the phase-short brake), the current budget, and the boards laid out part by part. Since D76
+(2026-11-03, superseding D66's Jetson and its compute plinth) the turret carries no computer: its Feather M4 CAN takes
+commands over CAN from Gyropup's J501, or standing alone from an Orin NX on a desk through the stand's USB-CAN lead. Its
+one input is the DT12's pins 1-4 (one DCB609 in 20 V mode on the stand, 15-20.5 V, or Gyropup's 10S bus, 30-42 V),
+through the head branch's 10 A fuse and the slip ring to the head; since D68
 the flywheels run from a trimmed TDK i6A4W rail. Sections 4 and 5 have the rails and the budget
 (`sim/turret_power.py`). Part numbers are the catalogue keys of `exports/turret/bench/bom.json`; the order sheets are
 `exports/turret/bench/orders/`. The physics numbers are docs/turret-physics.md's (v0 sections).
 
 ```
- BENCH STAND (fixed)            | PLINTH + BASE (fixed)            | SLIP RING | TURRET (pans)                       | CT  | CARTRIDGE (tilts,
- DCB609 (20 V mode) in its dock | XT30 in: 20 A main, 5 A J4012    | stator    | rotor -> the board bay (-y arm):    |     | lifts off)
- 20 A fuse, rocker, XT30 lead   | J4012 (Jetson); 10 A head fuse   | -> rotor  |  L0 i6A4W RAIL (trimmed), bank      |     | 2 x AM32 ESC
+ BENCH STAND (fixed)            | BASE (fixed)                     | SLIP RING | TURRET (pans)                       | CT  | CARTRIDGE (tilts,
+ DCB609 (20 V mode) in its dock | DT12 in: BUS on pins 1-4 (D76)   | stator    | rotor -> the board bay (-y arm):    |     | lifts off)
+ 20 A fuse, rocker -> DT06 1-4  | 10 A head fuse (in-line)         | -> rotor  |  L0 i6A4W RAIL (trimmed), bank      |     | 2 x AM32 ESC
  mini-XLR <- pendant            | DT04-12PA receptacle (-y pad)    |           |  L1 2815 RAIL->FLY, 12 V AUX, 5 V   |     | cartridge board:
- USB-CAN <- laptop              | base board (+x): 12 V PAN,       |           |     opto, one-shots                 |     |  6 brake FETs and
+ USB-CAN <- desk Orin NX/laptop | base board (+x): 12 V PAN,       |           |     opto, one-shots                 |     |  6 brake FETs and
  terminal board (70 x 50)       |  the 555 pulse oscillator        |           |  L2 Feather M4 CAN, trip latch,     |     |  their driver,
  DT06-12SA plug                 | pan servo (STS3215, ID 1)        |           |     ARM gate, servo bus buffer      |     |  gate comparator
                                 | index magnet                     |           |                                     |     | feed servo (ID 3)
@@ -37,8 +39,9 @@ The cartridge (CT) is unplugged by hand: two Micro-Fit connectors on a short pig
    pan and tilt stay live (D7). **The tilt servo has its own 12 V AUX regulator again** (a D36V50F12, U15, level 1):
    the rail is set to each turret's motors, and the servo's supply must not move with it. The D24V150F12 that made a
    fixed 12 V for both is gone (13.3-40 V in: not enough for a 42 V bus, and no trim).
-2. **The fuses (D66): a 20 A MINI 58 V on the plinth's XT30, a 5 A MINI 58 V branch to the J4012, and a 10 A MINI
-   58 V (`fuse_mini58_10a`) in an in-line holder in the head branch to the base board.** The 10 A protects the slip
+2. **The fuses (D76): the supply's own (the stand's 20 A MINI 58 V, or the body's F8 7.5 A), and a 10 A MINI 58 V
+   (`fuse_mini58_10a`) in an in-line holder in the lead from the DT12 to the base board.** (D66's plinth fuses, 20 A on
+   its XT30 and 5 A to the J4012, went with the plinth.) The 10 A protects the slip
    ring's three paralleled +BUS circuits and everything after it against a short; their 2 A ratings are held by the
    firmware's spin-up ramp and burst rate (section 5), not by the fuse. The stand's pack has its own 20 A MINI 58 V.
    No PCB blade holder fits: a blade fuse standing in its holder is 15-25 mm tall, against 11 mm under the base board
@@ -82,8 +85,8 @@ stand's harness (`te-dt06-12sa-kit`). Size-16 contacts, 13 A each.
 
 | Pin | Signal | Wire |
 |---|---|---|
-| 1, 2 | spare | +24 V until D66: the turret's power now comes in on the plinth's XT30 (section 4) |
-| 3, 4 | spare | GND until D66 |
+| 1, 2 | +BUS | 18 AWG, paralleled: the supply (D76; spare under D66, when the power came in on the plinth's XT30) |
+| 3, 4 | GND | 18 AWG, paralleled |
 | 5, 6 | CAN_H, CAN_L | 24 AWG twisted pair; terminated by the Feather's own 120 R on the turret and the USB-CAN's on the stand |
 | 7, 8 | SAFETY_A, SAFETY_B | 24 AWG twisted pair: the pendant's dry loop (closed = run) |
 | 9-12 | spare | |
@@ -106,7 +109,7 @@ the body's to order, with its build pack):
 
 | Pin | The body's end | Wire | On the turret (unchanged) |
 |---|---|---|---|
-| 1-4 | spare (D66: the power is the body's XT30 branch from the 10S bus, below) | | |
+| 1, 2 / 3, 4 | +BUS / GND: the body's turret branch from the 10S bus (below; D76) | 16 AWG to the pigtail, 18 AWG paralleled in the DT06 | the 10 A head fuse, then D8 |
 | 5, 6 | CAN_H, CAN_L to the J501's can1; **one** 120 R at the body's end (the J501's own if can1 has one, else one on the body's terminal strip, never both) | 24 AWG twisted pair | the Feather's own 120 R terminates the turret's end |
 | 7, 8 | SAFETY_A, SAFETY_B: **the STOP relay's signal pole**, a dry contact, closed = run | 24 AWG twisted pair | 12 V PAN through F4 (MF-R010) to the 555 (section 3.1) |
 | 9-12 | spare | | |
@@ -120,24 +123,23 @@ firmware: no 1 kHz edges, one-shot A drops ARM within 16-21 ms, the 2815 removes
 servo, and the phase-short brake closes 5-14 ms after that (sections 3.1, 3.3). Separately, the firmware zeroes the
 throttle within 200 ms of the host's last heartbeat.
 
-**The power (D66)** is the body's XT30 branch from the 10S bus (30-42 V) with its own 58 V fuse (D55), into the
-plinth's XT30; the turret's Jetson (J4012) is on the same input. The turret does not need that branch cut on a stop:
+**The power (D76)** is the body's turret branch from the 10S bus (30-42 V) with its own 58 V fuse (D55, F8 7.5 A),
+on the DT12's pins 1-4 (D66 brought it to an XT30 on the plinth instead). The turret does not need that branch cut on a stop:
 its own arm chain removes FLY and brakes the wheels within ~30 ms of the contact opening (above), with no help from the
-body. A body that cuts it anyway (as the old STOP relay's second pole cut the 24 V branch) also stops the turret's
-Jetson, and the barrel rises to its 0 deg stop by itself (the tilting group's centre is 8 mm behind the tilt axis);
-the switch then closes onto the bay's 940 uF and the J4012's input capacitance and must take that inrush (or the branch
+body. A body that cuts it anyway (as the STOP relay's pole B does) stops the whole turret, and the barrel rises to its 0 deg stop by itself (the tilting group's centre is 8 mm behind the tilt axis);
+the switch then closes onto the bay's 940 uF and must take that inrush (or the branch
 gets an NTC in series). That is the body's call (docs/body-plan.md, not changed here).
 
-**Plug the XT30 only with the branch off** (42 V onto the bank arcs at the pins). On the bus the turret draws at most
-5.2 A for 0.1 s (a spin-up at 30 V with the J4012 at 48 W and the servos moving), 6.1 A with every servo at its torque
-cap, and 2.7 A on average with the J4012 flat out (section 5).
+**Plug the DT12 only with the branch off** (42 V onto the bank arcs at the pins). On the bus the turret draws at most
+3.6 A for 0.1 s (a spin-up at 30 V with the servos moving), 4.4 A with every servo at its torque cap, and 1.1 A on
+average (section 5).
 
 **BUS from the supply to each ESC phase:**
 
 | # | From | To | Through |
 |---|---|---|---|
-| 1 | the supply: the stand's DCB609 (its 20 A MINI 58 V and the rocker), or the body's 10S branch (its 58 V fuse) | the plinth's XT30 | the XT30 lead |
-| 2 | the XT30 | the J4012 and the head branch | the plinth's 20 A MINI 58 V; the J4012 through its own 5 A MINI 58 V |
+| 1 | the supply: the stand's DCB609 (its 20 A MINI 58 V and the rocker), or the body's 10S branch (F8, 7.5 A) | the DT12's pins 1-4 | the stand's or the body's lead into the DT06 plug |
+| 2 | the DT12 (pins 1-2 +BUS, 3-4 GND) | the head branch | the DT04's 18 AWG tails |
 | 3 | the head branch | the base board | the 10 A MINI 58 V (`fuse_mini58_10a` in `littelfuse-0fhm0001zxj`), then D8 (1N5408: a reversed supply blows the fuse) and D14 (P6KE51A clamp) at the input pads |
 | 4 | the base board | 12 V PAN | the D36V50F12 (U2): the pan servo, and the 555's loop through F4 |
 | 5 | the base board | the bay (level 0) | the ring's stator Micro-Fit, circuits 1, 2, 11 (+BUS) and 3, 4, 12 (GND) in parallel, the rotor Micro-Fit at level 2 |
@@ -171,8 +173,8 @@ other two at 60 (each circuit is 2 x 250 mm of the ring's 28 AWG, 0.107 Ohm, plu
 D68 flywheels' **800 ms spin-up** puts 1.4 A on the busiest circuit at 30 V and 1.0 A at 42 V, and 8 shots at 10/s
 1.5 A RMS at 30 V: within 2 A with every servo moving. On the stand's pack the current doubles: the same spin-up is
 3.0 A a circuit at 15 V and 2.1 A at 20.5 V, so on BUS_V under 24 V the firmware stretches the ramp and slows the
-bursts (the stand profile, section 5). Why the camera pair went to power: since D66 the turret's computer sits in the
-plinth under the ring, and a camera on the head could not reach it over two 2 A circuits anyway (USB needs four
+bursts (the stand profile, section 5). Why the camera pair went to power (D70): a camera on the head could not reach a
+computer over two 2 A circuits anyway (since D76 the computer is the J501 in the body, or an Orin NX on a desk) (USB needs four
 conductors and more bandwidth than these contacts are rated for); with two power pairs, holding the wheels at speed
 while aiming and feeding at 15 V (about 4 A) would already fill both to 2 A.
 
@@ -236,9 +238,9 @@ connector.
 
 | # | Run | Conductors | Gauge | Length | Strain relief |
 |---|---|---|---|---|---|
-| C1 | stand (D66): the dock's leads -> 20 A MINI 58 V -> rocker -> the XT30 lead out of the top plate's rear notch to the plinth | 2 | 14 AWG (the dock's own 12 AWG to the fuse) | 250 mm (est) | the top plate's notch |
+| C1 | stand (D76): the dock's leads -> 20 A MINI 58 V -> rocker -> DT06 pins 1-2 (+) and 3-4 (-), paralleled at the plug | 2 | 14 AWG (the dock's own 12 AWG to the fuse) | 250 mm (est) | the -y wall's harness notch |
 | C1b | stand: the pendant socket (TB3M mini-XLR, pins 1-2) -> DT06 pins 7-8; USB-CAN H/L -> pins 5-6 | 2 pairs | 24 AWG twisted | 250 mm | same |
-| C2 | plinth -> base: the head branch from the 20 A fuse -> **10 A MINI 58 V in-line holder** -> base board (D8 and D14 across BUS and GND at its input pads); DT04 pins 5-6 (CAN) -> base board; 7 <- base board's 12 V PAN through F4 (in line); 8 -> the 555's VCC | 2 + 4 | 18 / 24 AWG | 120 mm round the housing (est) | a tie to the housing at 60 mm |
+| C2 | DT04 -> base: pins 1-2 (+BUS) -> **10 A MINI 58 V in-line holder** -> base board, pins 3-4 (GND) -> base board (D8 and D14 across BUS and GND at its input pads); DT04 pins 5-6 (CAN) -> base board; 7 <- base board's 12 V PAN through F4 (in line); 8 -> the 555's VCC | 2 + 4 | 18 / 24 AWG | 120 mm round the housing (est) | a tie to the housing at 60 mm |
 | C3 | base board -> the ring's stator plug (the ring's own 250 mm leads, 28 AWG, end in their receptacle) | 12 | 24 AWG tails | 60 mm | a tie at the board |
 | C4 | the ring's rotor leads -> level 2 (up the Ø40 bore beside the coupling, through the driver's crescent, the yoke's slot and the -y arm's window) | 12 | 28 AWG (the ring's) | 160 mm | tied to the driver's crescent |
 | C5 | level 0/1 -> CT power receptacle on the cradle's -y rail (through the 40 mm tilt loop) | 6 | 18 AWG PTFE | 220 mm | a tie at the yoke arm, one at the cradle rail |
@@ -257,8 +259,7 @@ level 2: a third ground circuit beside 3-4, for the TTL and pulse references. 5 
 (the clash sweep checks the Ø7.5 bundle the CAD draws for the ring's rotor leads).
 
 **The BUS path, end to end** (the acceptance trace): the DCB609 -> the dock -> the stand's 20 A MINI 58 V -> the
-rocker -> the XT30 lead -> the plinth's XT30 -> its 20 A MINI 58 V -> (the J4012 through its 5 A) -> the head branch's
-10 A MINI 58 V in-line fuse -> the base board (D8, D14; the D36V50F12 for 12 V PAN; the rest straight on) -> the ring's
+rocker -> the DT06 plug's pins 1-2 -> the DT04 receptacle -> the head branch's 10 A MINI 58 V in-line fuse -> the base board (D8, D14; the D36V50F12 for 12 V PAN; the rest straight on) -> the ring's
 stator plug pins 1, 2, 11 -> ring circuits 1, 2, 11 -> the rotor plug on level 2 -> level 0: the bank and D13 -> (a) the
 TDK i6A4W -> RAIL -> the Pololu 2815 on level 1 (ON = ARM) -> FLY -> CT power pins 1-3 -> the pigtail -> each AM32
 ESC's + -> its three phases -> the motor; (b) the D36V50F12 on level 1 -> 12 V AUX -> the tilt servo; (c) the D36V28F5
@@ -440,23 +441,23 @@ terminator switched on).
   inputs, and the firmware holds the DShot pins low while ARM_IN is low.
 - **A reversed supply:** D8 (1N5408 across BUS and GND right after the head branch's 10 A fuse: 1000 V, 200 A for
   8.3 ms) conducts and the fuse blows; the Pololu regulators have their own reverse protection, the i6A4W and the bank
-  have none. The J4012's branch is the plinth's: D8 does not cover it (its carrier's own protection is not published).
+  have none.
 - **Overvoltage (D66):** every part on BUS is rated 50 V or more (section 4). D13 (level 0) and D14 (the base board's
   input) are P6KE51A: 43.6 V standoff (nothing at a full 42 V bus), conducting from 48.5 V, under the Pololus' 50 V and
   the i6A4W's 53 V. A fast, energetic spike still clamps near 70 V: the source (the stand's pack, the body's branch) must
-  not ring past 50 V; plug the XT30 with the branch off.
+  not ring past 50 V; plug the DT12 with the branch off.
 - **The cartridge's plugs** go in and out only with the stand's rocker off: a pulled signal plug floats both gates
   high together and takes the brake driver's 5 V with it.
 
 ## 4. Power rails and protection
 
-Since D66 the turret has one input and, since D68, a trimmed flywheel rail. The net names: **BUS** (the input after the
+Since D66 the turret has one input (the DT12's pins 1-4 since D76) and, since D68, a trimmed flywheel rail. The net names: **BUS** (the input after the
 head branch's fuse, across the ring), **RAIL** (the TDK i6A4W's trimmed output, always on), **FLY** (RAIL through the
 2815 while ARM is held), **12 V AUX**, **12 V PAN**, **5 V**, **3.3 V**.
 
 | Rail | Where | Source | Feeds | Protection |
 |---|---|---|---|---|
-| Input | the plinth | the XT30 (D66): one DCB609 in 20 V mode on the stand (15 V empty under load, 20.5 V full) or Gyropup's 10S bus (30 V near empty, 42 V full) | the J4012, the head branch | the plinth's **20 A MINI 58 V**; the J4012 on its own **5 A MINI 58 V** |
+| Input | the DT12 (pins 1-4) | D76: one DCB609 in 20 V mode on the stand (15 V empty under load, 20.5 V full) or Gyropup's 10S bus (30 V near empty, 42 V full) | the head branch | the supply's own: the stand's **20 A MINI 58 V**, the body's **F8 7.5 A** |
 | BUS | the base board, the ring, the bay | the input, through the head branch's fuse | U2 (12 V PAN); ring circuits 1, 2, 11 to the bay: the bank, U3, U5, U15 | **10 A MINI 58 V** (`fuse_mini58_10a`) in the in-line holder (`littelfuse-0fhm0001zxj`); D8 (1N5408) for a reversed supply; D14 and D13 (P6KE51A) clamps |
 | 12 V PAN | base board | D36V50F12 (U2, `pololu-d36v50f12-4095`) | the pan STS3215; the 555 through the pendant loop | MF-R300 (`bourns-mf-r300`) to the servo; F4 MF-R010 (0.1 A) to the pendant loop |
 | RAIL | level 0 | TDK i6A4W020A033V-001-R (U3, `tdk-lambda-i6a4w020a033v-001-r`), always on; ~11.31 V, trimmed per turret to 10.8-11.9 V by R59-R65 (bench test 4.1) | the 2815 only | D9 TVS (P6KE15A, 12.8 V standoff); the i6A4W's own 27 A over-current limit |
@@ -501,34 +502,36 @@ The feed servo stays on FLY (10.8-11.9 V, inside the STS3215's 6-12.6 V): it mus
 
 ## 5. Current budget (sim/turret_power.py, `exports/turret/e2e/power.json`, `power.png`)
 
-The model: the supply behind its source resistance (est 60 mOhm for the pack, 40 for the bus branch) -> the plinth's
-node (the J4012, constant power; the pan servo's U2) -> the head branch -> the ring's three +BUS and three GND circuits
+The model: the supply behind its source resistance (est 60 mOhm for the pack, 40 for the bus branch) -> the turret's
+input node (D76: no J4012 on it; the pan servo's U2) -> the head branch -> the ring's three +BUS and three GND circuits
 (2 x 250 mm of 28 AWG each, 0.107 Ohm, plus a 10-60 mOhm contact) -> the 940 uF bank -> the i6A4W (95.5 % at 15 V in,
 93 % at 42 V, plus 1 W, est), U15 and U5 -> the D68 flywheels (two X2216 1400 KV on AM32's 10 A, a PI speed loop on the
 firmware's 800 ms ramp; 8 shots at 10/s, each taking the launch model's 5.7 % of the wheels' speed). Loads: **play**,
-the pan, tilt and feed servos moving (0.6 A each at 12 V), the J4012 at 48 W (40 W module + 8 W carrier, fan, SSD: est),
-the logic at 5 W; **worst**, every servo that can move at its 50 % torque cap at once (1.5 A each: 2.7 A stall, est).
+the pan, tilt and feed servos moving (0.6 A each at 12 V), the logic at 5 W; **worst**, every servo that can move at its 50 % torque cap at once (1.5 A each: 2.7 A stall, est).
 The ring's busiest circuit carries 42 % of the ring's current (its contact at 10 mOhm, the other two at 60). A spin-up is
 judged by its 100 ms peak (the ramp's top lasts ~0.2 s); a burst by its worst 1 s RMS (each shot's recovery pulse, both
 ESCs at 10 A on the rail, lasts ~10 ms); the ring's 2 A and the stand switch's rating are heating ratings.
 
 | At the turret's input | 15 V (pack empty) | 20.5 V (pack full) | 30 V (bus low) | 42 V (bus full) |
 |---|---|---|---|---|
-| Spin-up, 800 ms ramp: peak (100 ms), play / worst | 11.2 / 13.1 A | 7.9 / 9.1 A | 5.2 / 6.1 A | 3.7 / 4.3 A |
-| 8 shots at 10/s: 1 s RMS, play / worst | 11.3 / 13.7 A | 8.0 / 9.7 A | 5.2 / 6.3 A | 3.7 / 4.4 A |
-| A shot's recovery pulse (~10 ms), worst | 24.6 A | 20.7 A | 12.8 A | 9.0 A |
-| Wheels held at speed, nothing moving, J4012 at 25 W | 4.8 A | 3.4 A | 2.3 A | 1.7 A |
-| **Game average** (est: ARM held 30 s a minute, 4 spin-ups, 4 bursts of 8, aiming 30 % of the time), J4012 at 25 W | **3.9 A** (58 W) | **2.8 A** | **1.9 A** | **1.4 A** |
-| Game average, J4012 flat out at 48 W | 5.4 A (81 W) | 3.9 A | 2.7 A | 1.9 A |
-| The flywheels: the i6A4W's input, spin-up peak (100 ms) / a recovery pulse / holding speed | 85 / 215 / 37 W | 85 / 269 / 37 W | 86 / 272 / 38 W | 87 / 275 / 38 W |
-| The bank's lowest (a recovery pulse, worst) | 11.6 V: the rail dips under 11.31 V for a few ms a shot (only ever slower) | 17.1 V | 28.2 V | 40.7 V |
-| The head branch's 10 A fuse: peak (100 ms), worst | 10.4 A (MINI: 135 % takes over 0.75 s) | 6.9 A | 4.5 A | 3.2 A |
+| Spin-up, 800 ms ramp: peak (100 ms), play / worst | 7.7 / 9.6 A | 5.4 / 6.7 A | 3.6 / 4.4 A | 2.6 / 3.2 A |
+| 8 shots at 10/s: 1 s RMS, play / worst | 8.4 / 10.5 A | 6.0 / 7.5 A | 3.8 / 4.8 A | 2.7 / 3.4 A |
+| A shot's recovery pulse (~10 ms), worst | 22.2 A | 18.0 A | 11.2 A | 7.8 A |
+| Wheels held at speed, nothing moving | 3.1 A | 2.2 A | 1.5 A | 1.1 A |
+| **Game average** (est: ARM held 30 s a minute, 4 spin-ups, 4 bursts of 8, aiming 30 % of the time) | **2.2 A** (33 W) | **1.6 A** | **1.1 A** | **0.8 A** |
+| The flywheels: the i6A4W's input, spin-up peak (100 ms) / a recovery pulse / holding speed | 85 / 220 / 37 W | 85 / 269 / 37 W | 86 / 272 / 38 W | 87 / 275 / 38 W |
+| The bank's lowest (a recovery pulse, worst) | 11.6 V: the rail dips under 11.31 V for a few ms a shot (only ever slower) | 17.3 V | 28.2 V | 40.8 V |
+| The head branch's 10 A fuse: peak (100 ms), worst | 10.2 A (MINI: 135 % takes over 0.75 s) | 6.9 A | 4.5 A | 3.2 A |
+
+Since D76 the turret's input carries only the head: D66's J4012 (25 W typical, 48 W flat out) is gone from the input
+node, so the input currents above are lower than D66's (the game average at 15 V was 3.9-5.4 A). The ring and the head
+branch carry what they did.
 
 | The ring's busiest circuit (2 A rating) | 15 V | 20.5 V | 30 V | 42 V |
 |---|---|---|---|---|
 | Spin-up, 800 ms: peak (100 ms), play / worst | **3.0** / 3.5 A | **2.1** / 2.4 A | 1.4 / 1.6 A | 1.0 / 1.1 A |
 | 8 shots at 10/s: 1 s RMS, play / worst | **3.3** / 3.9 A | **2.4** / 2.8 A | 1.5 / 1.8 A | 1.1 / 1.3 A |
-| A recovery pulse (~10 ms), worst | 8.2 A | 7.2 A | 4.4 A | 3.1 A |
+| A recovery pulse (~10 ms), worst | 8.6 A | 7.1 A | 4.4 A | 3.1 A |
 | Game average, a circuit | 0.64 A | 0.47 A | 0.32 A | 0.23 A |
 
 **On the robot (the 10S bus) everything holds at the firmware's 800 ms and 10/s**, with every servo at its cap. **On

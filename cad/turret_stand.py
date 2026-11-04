@@ -5,8 +5,8 @@ D76 (2026-11-03, supersedes D66): the turret carries no computer of its own. Sta
 it over the stand's USB-CAN lead (an optional second variation); the turret's Feather M4 CAN and its hardware arm chain
 stay in the turret. The power is one DeWalt FLEXVOLT DCB609 in 20 V mode (15-20.5 V, kept from D66): the pack slides
 into the stand's back onto a 20 V MAX dock adapter fixed under the top plate, as onto a drill, and rests on the floor;
-its leads go through the stand's 20 A MINI fuse (58 V type) and the rocker switch to the terminal board, which puts it on
-the DT06 plug's pins 1-4 (the turret's DT12). The pan base's foot stands on the top plate (no compute plinth). The
+its leads go through the stand's 20 A MINI fuse (58 V type) and the rocker switch, then on a 14 AWG lead into the DT06
+plug's pins 1-4 (the turret's DT12; not through the terminal board, which carries the signals). The pan base's foot stands on the top plate (no compute plinth). The
 bench supply (Mean Well LRS-350-24 and the XT60E-M inlet) is gone; the box bench (cad/build_turret_box.py) keeps its own.
 
 Turret frame (cad/turret.py): x forward, y left, z up, origin on the pan axis at the TM mounting face. The stand's top
@@ -171,7 +171,7 @@ def bought():
                       'VHB pad (it floated 10 mm up: cadagent connectivity, 2026-10-28)')
     bx, bz, by = BOARD_ON_WALL['x'], BOARD_ON_WALL['z'], BOARD_ON_WALL['y']
     out['terminal_board'] = (_box(bx[0], bx[1], by - 1.6, by, bz[0], bz[1]), 30.0,
-                             '70 x 50 board on the +y wall: the pack\'s fuse and switch to the DT12 plug\'s pins 1-4 (D76), the pendant loop to its pins 7-8')
+                             '70 x 50 board on the +y wall: the pendant loop and CAN to the DT06 plug (the pack\'s power runs fuse -> rocker -> the plug\'s pins 1-4, D76)')
     zt = -TOP - DOCK['H']
     out['dock'] = (_box(DOCK_X0, DOCK_X0 + DOCK['L'], -DOCK['W'] / 2, DOCK['W'] / 2, zt, -TOP), DOCK['mass_g'],
                    'DeWalt 20 V MAX dock adapter, 12 AWG leads (a FLEXVOLT runs in its 20 V mode in it)')
