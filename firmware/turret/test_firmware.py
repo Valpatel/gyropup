@@ -6,7 +6,8 @@ end on the simulated turret (sim_turret.py). Writes exports/turret/firmware/firm
 Protocols    STS3215 packets and sign-magnitude fields; DShot frames (bidirectional checksum), eRPM telemetry and its
              GCR line code, EDT frames; every CAN frame packs into 8 bytes and back
 Numbers      95 fps on Ø38 = 15,286 rpm = 107,002 eRPM; the limit 114,730 eRPM (D68: n_astm); Ø36 refused
-Safety       the tilt never above level at any command, through homing, the stray-ball depression and the lift rule;
+Safety       the tilt inside the hard stops (and they equal the CAD's, exports/turret/limits.json) at any command,
+             through homing, the stray-ball depression and the lift rule;
              no spin and no dial step without ARM, the 1 kHz train, a fresh heartbeat and the host's re-arm; zero
              throttle in the same millisecond a condition is lost; the 800 ms ramp never steps, nor does a new set
              speed while spinning; no DShot frame while the ESCs are unpowered; SAFE within 100 ms of
@@ -178,9 +179,14 @@ def t_tilt(out):
     h.run(20.0, lambda: bool(h.events(M.EV_BURST_DONE)))
     h.send('AIM', pan_cdeg=int((h.fw.pan_deg() or 0) * 100), tilt_cdeg=500, rate=90)
     h.run(1.0)
-    check(out, 'tilt_never_above_level', rig.hw.tilt_max_seen <= 0.05 and h.fw.tilt_cmd <= 0.0,
-          max_true_tilt_deg=round(rig.hw.tilt_max_seen, 3), clamped_commands=h.fw.tilt_clamped,
+    check(out, 'tilt_within_stops', rig.hw.tilt_max_seen <= C.TILT_MAX_DEG + 0.05 and h.fw.tilt_cmd <= C.TILT_MAX_DEG,
+          max_true_tilt_deg=round(rig.hw.tilt_max_seen, 3), upper_stop_deg=C.TILT_MAX_DEG, clamped_commands=h.fw.tilt_clamped,
           lifts=len(h.events(M.EV_LIFT)))
+    # the firmware's range is the CAD's hard stops, as cad/turret_limits.py exports them (D77): a stop moved in the CAD
+    # must move here too
+    stops = json.loads((R / 'exports' / 'turret' / 'limits.json').read_text())['tilt_deg']
+    check(out, 'tilt_range_is_the_cad_stops', (C.TILT_MIN_DEG, C.TILT_MAX_DEG) == (stops['min'], stops['max']),
+          firmware_deg=[C.TILT_MIN_DEG, C.TILT_MAX_DEG], cad_stops_deg=[stops['min'], stops['max']])
 
 
 def t_arm_conditions(out):

@@ -614,7 +614,7 @@ class TurretFirmware:
         else:
             want = self.tilt_goal
         pan = self.pan_deg() or 0.0
-        want = min(C.TILT_MAX_DEG, max(C.TILT_MIN_DEG, self.cfg.min_tilt(pan), want))   # never above level
+        want = min(C.TILT_MAX_DEG, max(C.TILT_MIN_DEG, self.cfg.min_tilt(pan), want))   # inside the hard stops and the mount's table
         if self.tilt_cmd is None or abs(want - self.tilt_cmd) > 0.05 or t - self.tilt_written_t > 1.0:
             spd = int(min(C.AIM_RATE_CAP, self.rate if self.state != 'HOMING' else C.AIM_RATE_CAP) / C.DEG_PER_COUNT)
             if spd != self.tilt_speed_reg and self.master.write(C.ID_TILT, sts.R_GOAL_SPEED, sts.u16(spd)):

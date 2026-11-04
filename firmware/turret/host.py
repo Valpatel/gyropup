@@ -508,8 +508,8 @@ class TurretHost:
     # ---------------------------------------------------------------- aim, fire, laser, people near
     def aim(self, pan: float, tilt: float = 0.0, rate: Optional[float] = None, wait: bool = False,
             timeout: Optional[float] = None, absolute: bool = False) -> dict:
-        """Aim at `pan` (deg; the nearest turn of it unless `absolute`) and `tilt` (deg, never above level: clamped to
-        [the mount's table at that pan, 0]), at `rate` deg/s capped at 90, or 50 while people are near."""
+        """Aim at `pan` (deg; the nearest turn of it unless `absolute`) and `tilt` (deg, + = up: clamped to [the mount's
+        table at that pan, the upper hard stop]), at `rate` deg/s capped at 90, or 50 while people are near."""
         with self.lock:
             tt = self.tt
             cur = tt.pan()

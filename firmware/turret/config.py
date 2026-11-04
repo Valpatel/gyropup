@@ -35,7 +35,7 @@ SERVO_NO_LOAD_CPS = 3072       # 45 rpm at 12 V = 270 deg/s of the servo's outpu
 
 # drive modes (register 33, EEPROM, set once with the setup tool and only verified by the firmware):
 #   pan  : step mode (3): every move one relative step from the unwrapped angle; continuous pan has no window
-#   tilt : position mode (0), its angle limits = the tilt range, so the servo itself refuses a goal above level
+#   tilt : position mode (0), its angle limits = the tilt range, so the servo itself refuses a goal past a stop
 #   feed : step mode (3): the dial steps forward for ever
 MODE_POSITION, MODE_STEP = 0, 3
 SERVO_MODE = {ID_PAN: MODE_STEP, ID_TILT: MODE_POSITION, ID_FEED: MODE_STEP}
@@ -45,7 +45,9 @@ STEP_REF = 'present'           # what a step-mode step is relative to: 'present'
 PAN_RATIO = 3.0                # servo turns per pan turn
 PAN_PER_COUNT = DEG_PER_COUNT / PAN_RATIO
 PAN_SPEED_MAX = 90.0           # deg/s: the servo's 45 rpm through 3:1
-TILT_MAX_DEG = 0.0             # the barrel never points above level: every tilt goal clamps to <= 0
+TILT_MAX_DEG = 0.0             # the upper hard stop: every tilt goal clamps into [TILT_MIN_DEG, TILT_MAX_DEG]. D77 dropped
+#                                the old "never above level" rule; both numbers are the CAD's stops and must equal
+#                                exports/turret/limits.json (cad/turret_limits.py; test_firmware.py checks it)
 TILT_MIN_DEG = -25.0           # the lower hard stop
 TILT_ZERO_COUNT = 2048         # tilt servo count at 0 deg (assembly step 8: the cradle on its 0 deg stop)
 TILT_SIGN = -1                 # counts per degree of tilt: -1 = counts rise as the barrel depresses (assembly)

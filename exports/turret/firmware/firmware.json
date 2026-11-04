@@ -31,10 +31,22 @@
    "arms_on_38": true,
    "pass_": true
   },
-  "tilt_never_above_level": {
+  "tilt_within_stops": {
    "max_true_tilt_deg": -0.0,
+   "upper_stop_deg": 0.0,
    "clamped_commands": 4,
    "lifts": 2,
+   "pass_": true
+  },
+  "tilt_range_is_the_cad_stops": {
+   "firmware_deg": [
+    -25.0,
+    0.0
+   ],
+   "cad_stops_deg": [
+    -25.0,
+    0.0
+   ],
    "pass_": true
   },
   "no_spin_without_arm": {
