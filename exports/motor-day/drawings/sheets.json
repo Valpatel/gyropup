@@ -1,0 +1,27 @@
+[
+ {
+  "number": "MD-01",
+  "title": "Hip module",
+  "png": "exports/motor-day/drawings/MD-01.png"
+ },
+ {
+  "number": "MD-02",
+  "title": "Upper link and adapter",
+  "png": "exports/motor-day/drawings/MD-02.png"
+ },
+ {
+  "number": "MD-03",
+  "title": "Lower links, knees, apex and foot",
+  "png": "exports/motor-day/drawings/MD-03.png"
+ },
+ {
+  "number": "MD-04",
+  "title": "Foot (BotWheel stand-in)",
+  "png": "exports/motor-day/drawings/MD-04.png"
+ },
+ {
+  "number": "MD-05",
+  "title": "Boom stand",
+  "png": "exports/motor-day/drawings/MD-05.png"
+ }
+]

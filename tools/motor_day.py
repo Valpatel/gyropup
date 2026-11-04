@@ -72,14 +72,51 @@ PRINTS = [
      'time and grams here are without them (the slicer\'s auto-arrange refuses the 247 mm part with supports on)'),
     ('wheel_link', 'exports/leg/wheel_link.3mf', 1, 'solid', '1b', 'the outer face down; the outer knee seat opens on the bed'),
     ('apex_spacer', 'exports/leg/apex_spacer.3mf', 1, 'solid', '1b', 'the inner face down'),
-    ('output_adapter_pla', 'exports/leg/cnc/output_adapter.stl', 2, 'solid', '1b',
-     'day-one stand-in for the machined 6061 adapter: the motor face down; tap the eight M5 holes by hand (M5 x 0.8 tap)'),
+    ('output_adapter_pla', 'exports/leg/cnc/output_adapter.stl', 2, 'solid', '0',
+     'day-one stand-in for the machined 6061 adapter: the motor face down; tap the eight face M5 holes by hand (M5 x 0.8 tap) '
+     'before assembly step 4'),
     ('foot', 'exports/motor-day/parts/foot.stl', 1, 'foot', '1b',
      'the outer face down (nut pockets open on the bed), the boss up; stands in for the BotWheel'),
     ('stop_sleeve', 'exports/leg/stop_sleeve.3mf', 4, 'tpu', '1b', 'TPU 95A, cap down'),
     ('drill_template', 'exports/motor-day/parts/drill_template.stl', 1, 'jig', '1b',
      'flat; lay it on the plywood end plate to drill the six M5 holes and mark the two lead slots'),
 ]
+
+# The order to print them in (docs/motor-day.md Phase 1): (step, key, qty, phase, what to watch, or None for PRINTS').
+# The two Phase 0 fit checks come first: the frame-ring coupon is the hip frame's motor seat cut from it, and the first
+# output adapter is the same file as the second, so a misfit shows before the 19 h frame and the second adapter.
+PRINT_ORDER = [
+    (1, 'coupon_frame_ring_nom', 1, '0', None),
+    (2, 'output_adapter_pla', 1, '0',
+     'the first of the two, printed before the leg: the motor\'s output fit (Phase 0.4). The motor face down (the three '
+     'Ø6 pin sockets open on the bed); tap the eight face M5 holes by hand (M5 x 0.8 tap) before assembly step 4'),
+    *[(3, k, 1, '1a', None) for k in C1],
+    (4, 'hip_frame', 1, '1b', None),
+    (5, 'output_adapter_pla', 1, '1b',
+     'the second, as the first; if Phase 0.4 needed the pin sockets opened with a 6.0 mm drill, open this one\'s '
+     'the same way before it goes on; tap the eight face M5 holes'),
+    (6, 'upper_link', 2, '1b', None),
+    (7, 'wheel_link', 1, '1b', None),
+    (8, 'front_link', 1, '1b', None),
+    (9, 'apex_spacer', 1, '1b', None),
+    (10, 'foot', 1, '1b', None),
+    (11, 'stop_sleeve', 4, '1b', None),
+    (12, 'drill_template', 1, '1b', None),
+]
+
+
+def print_queue() -> list:
+    """PRINT_ORDER with each row's file, recipe and note from PRINTS; every print's copies are in it exactly once."""
+    by = {p[0]: p for p in PRINTS}
+    out = []
+    for step, key, qty, phase, how in PRINT_ORDER:
+        _, f, _, recipe, _, how0 = by[key]
+        out.append({'order': step, 'key': key, 'qty': qty, 'phase': phase, 'file': f, 'recipe': recipe, 'how': how or how0})
+    for key, _, qty, *_ in PRINTS:
+        n = sum(r['qty'] for r in out if r['key'] == key)
+        if n != qty:
+            raise SystemExit(f'PRINT_ORDER prints {n} of {key}, PRINTS lists {qty}')
+    return out
 
 # ------------------------------------------------------------------------------------------------- the stand
 
@@ -943,31 +980,48 @@ def write_doc(ctx):
     # ---- prints
     ph = {'0': 'Phase 0', '1a': 'Coupons', '1b': 'Leg and stand'}
     tot = {'pla_g': 0, 'tpu_g': 0, 'min': 0}
+    by_phase = {p: 0 for p in ph}
     L = ['Sliced in Bambu Studio for a P1S, 0.4 mm nozzle, 0.20 mm layers, Bambu PLA Basic (TPU 95A HF for the sleeves). '
-         '"Solid" is what the FEA assumes: 4 walls and 100 % infill. Times are the slicer\'s estimates.', '',
-         '| | Part | Qty | File | Settings | Time (all) | PLA (all) | Bed face, what to watch |', '|---|---|---|---|---|---|---|---|']
+         '"Solid" is what the FEA assumes: 4 walls and 100 % infill. Times are the slicer\'s estimates. **Print them in '
+         'this order**, top to bottom; "Item" is the BOM number the drawings and assembly steps use.', '',
+         '| Print | Part | Qty | Item | File | Settings | Time | Filament | Bed face, what to watch |',
+         '|---|---|---|---|---|---|---|---|---|']
     c1 = {'min': 0, 'g': 0, 'n': 0}
-    for key, f, qty, recipe, phase, how in PRINTS:
+    queue = ctx['queue']
+    for r in queue:
+        key, qty, recipe, phase, f = r['key'], r['qty'], r['recipe'], r['phase'], r['file']
         s = slices.get(key) or {}
         mins, g = (s.get('minutes') or 0) * qty, (s.get('grams') or 0) * qty
         tot['min'] += mins
+        by_phase[phase] += mins
         tot['tpu_g' if recipe == 'tpu' else 'pla_g'] += g
         if key in C1:
             c1['min'] += mins
             c1['g'] += g
-            c1['n'] += 1
+            c1['n'] += qty
+            if c1['n'] == 1:
+                L.append(f"| **{r['order']}** | **C1 bore coupons** ({ph[phase]}) | C1N | | "
+                         '`exports/rig/bench/coupon_*_m01/nom/p01.stl` | solid | C1MIN | C1G | the leg\'s press-fit bores at '
+                         '-0.1 / 0 / +0.1 mm: print them as one batch and pick the offset that fits '
+                         '([sheets](../research/leg-preprint/sheets/)) |')
             continue
-        it = items.get(key, '')
-        L.append(f"| {it} | **{key.replace('_', ' ')}** ({ph[phase]}) | {qty} | [{Path(f).name}](../{f}) | {recipe} | {_h(mins)} | "
-                 f"{g:.0f} g | {how} |")
-        if key == 'coupon_frame_ring_nom':
-            L.append(f"| | **C1 bore coupons** (Coupons) | {c1['n'] or len(C1)} | `exports/rig/bench/coupon_*_m01/nom/p01.stl` | solid | "
-                     f"C1MIN | C1G | the leg's press-fit bores at -0.1 / 0 / +0.1 mm: print them first and pick the offset "
-                     f"that fits ([sheets](../research/leg-preprint/sheets/)) |")
-    doc_t = '\n'.join(L).replace('C1MIN', _h(c1['min'])).replace('C1G', f"{c1['g']:.0f} g")
-    doc_t += (f"\n\n**Total:** {_h(tot['min'])} of printing, {tot['pla_g'] / 1000:.2f} kg of PLA and {tot['tpu_g']:.0f} g of TPU. "
-              'On one printer, start the hip frame first: it is the longest and the motors need it first. '
-              'Every file, with these settings in `prints.csv`, is in the bundle.\n\n'
+        name = key.replace('_', ' ').replace(' pla', ' (PLA)')
+        L.append(f"| **{r['order']}** | **{name}** ({ph[phase]}) | {qty} | {items.get(key, '')} | [{Path(f).name}](../{f}) | "
+                 f"{recipe} | {_h(mins)} | {g:.0f} g{' TPU' if recipe == 'tpu' else ''} | {r['how']} |")
+    doc_t = '\n'.join(L).replace('C1N', str(c1['n'])).replace('C1MIN', _h(c1['min'])).replace('C1G', f"{c1['g']:.0f} g")
+    first = next(r for r in queue if r['key'] == 'hip_frame')['order']
+    before = sum(((slices.get(r['key']) or {}).get('minutes') or 0) * r['qty'] for r in queue if r['order'] < first)
+    hip = (slices.get('hip_frame') or {}).get('minutes') or 0
+    doc_t += (f"\n\n**Total:** {_h(tot['min'])} of printing, {tot['pla_g'] / 1000:.2f} kg of PLA and {tot['tpu_g']:.0f} g of TPU: "
+              f"the two Phase 0 fit checks {_h(by_phase['0'])}, the coupons {_h(by_phase['1a'])}, the leg and stand "
+              f"{_h(by_phase['1b'])}. Every file, with these settings and this order in `prints.csv`, is in the bundle.\n\n"
+              '**On one printer, print in the order above.** Prints 1 and 2 are the motor\'s two fit checks (Phase 0.3 and '
+              '0.4): fit each to a motor as it comes off the bed. The coupon is the hip frame\'s motor seat cut from it and the '
+              'first adapter is the same file as the second, so a misfit shows up before the hip frame '
+              f"({_h(hip)}) and the second adapter. Then the coupons (print 3), which say how the leg's bores come out in PLA. "
+              f"The hip frame starts {_h(before)} in, once both fits have passed and the coupons are picked: it is the "
+              'longest, and the motors go on it first. The drill template is last only because the leg does not need it: '
+              'print it sooner to build the boom (assembly steps 1 and 2) while the leg prints.\n\n'
               '**PLA limits on the bench.** PLA softens at about 55 °C and the RS-04s bolt straight to the hip frame: '
               'feel the motor cases, and stop above 40 °C. PLA creeps under a clamp: re-torque the M5s before each session.')
     doc = _fill(doc, 'prints', doc_t)
@@ -1062,7 +1116,7 @@ def write_doc(ctx):
     lad = [
         ('L0', 'Unpowered', '-', 'Fold and stretch the leg by hand from stop to stop; the boom swings freely; the foot lands '
          'on the mat at the stance with the boom level.', 'no rub; no part touches another'),
-        ('L1', 'Commission each motor', '2 A bench limit', 'Phase 0.4 (C1-C5) on all four motors, then C6: ids 1 front, 2 rear on this leg. '
+        ('L1', 'Commission each motor', '2 A bench limit', 'Phase 0.5 (C1-C5) on all four motors, then C6: ids 1 front, 2 rear on this leg. '
          'C4 saves the rig\'s 60 N m; then `python -m rig.rs04 --id N param limit_torque 10` and `--id N save`, so a motor '
          'powers up at 10.', 'the motor reads back 10 after a power cycle'),
         ('L2', 'Zero on the bare stops', '10 N m', 'The boom propped on the floor stop, the foot in the air. '
@@ -1243,21 +1297,30 @@ def main():
     bom = [{'item': items[k], 'key': k, 'qty': v[1], 'part': v[0], 'source': v[2]} for k, v in names.items() if k in items]
     bom.sort(key=lambda r: r['item'])
     write_csv(OUT / 'bom.csv', bom, ['item', 'key', 'qty', 'part', 'source'])
-    write_csv(OUT / 'prints.csv', [{**p, 'item': items.get(p['key'], '')} for p in prints],
-              ['item', 'key', 'qty', 'phase', 'file', 'recipe', 'filament', 'settings', 'minutes_each', 'grams_each', 'how'])
+    by_key = {p['key']: p for p in prints}
+    queue = print_queue()
+    write_csv(OUT / 'prints.csv', [{**by_key[q['key']], **q, 'item': items.get(q['key'], '')} for q in queue],
+              ['order', 'item', 'key', 'qty', 'phase', 'file', 'recipe', 'filament', 'settings', 'minutes_each', 'grams_each', 'how'])
     write_csv(OUT / 'mcmaster.csv', [{**m, 'item': items.get(m['key'])} for m in mc],
               ['item', 'key', 'mcmaster', 'name', 'qty', 'pack_qty', 'packs', 'price_usd_each', 'cost_usd', 'price_checked', 'url',
                'substitute', 'for'])
     write_csv(OUT / 'other-vendors.csv', other, ['group', 'item', 'qty', 'vendor', 'part_number', 'price_usd_each', 'cost_usd',
                                                 'when', 'url', 'note'])
     (OUT / 'stand.json').write_text(json.dumps({'geometry': meta, 'foot': fm, 'masses': stand}, indent=1) + '\n')
-    steps, sheets = [], []
     if not a.no_render:
         steps = render_steps(P, items)
         sheets = drawings(P, items, names, _rev(), meta, fm)
         (OUT / 'steps' / 'steps.json').write_text(json.dumps(steps, indent=1) + '\n')
+        (OUT / 'drawings' / 'sheets.json').write_text(json.dumps(sheets, indent=1) + '\n')
+    else:                                       # keep the pictures already rendered (the item numbers must not have moved)
+        steps, sheets = _load(OUT / 'steps' / 'steps.json', []), _load(OUT / 'drawings' / 'sheets.json', [])
+        if not steps or not sheets:
+            raise SystemExit('--no-render needs the rendered steps and drawings (steps/steps.json, drawings/sheets.json)')
+        moved = [r['step'] for r in steps if any(item_of(n, items) not in r['items'] for n in r['adds'] if item_of(n, items))]
+        if moved:
+            raise SystemExit(f'the item numbers moved since the pictures were rendered (steps {moved}): render again')
     write_doc({'slices': slices, 'der': der, 'stand': stand, 'steps': steps, 'sheets': sheets, 'mc': mc, 'other': other,
-               'meta': meta, 'items': items})
+               'meta': meta, 'items': items, 'queue': queue})
     files = [(f'exports/motor-day/{n}', n) for n in ('bom.csv', 'prints.csv', 'mcmaster.csv', 'other-vendors.csv',
                                                     'derating.json', 'stand.json', 'sim.json', 'slices.json')]
     for key, fpath, *_ in PRINTS:
