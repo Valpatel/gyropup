@@ -1015,7 +1015,8 @@ def write_doc(ctx):
                          '([sheets](../research/leg-preprint/sheets/)). If a coupon other than `nom` fits, change the CAD '
                          'before print 4: `PRINT_HOLE_COMP` for the sleeve and dowel holes; `KC`, `AC` and `STOP_HOLE_PLAY` '
                          'for the bearing seats and stop-pin holes (`cad/fivebar.py`; the [print package](leg-print-package.md) '
-                         'C1 row). Then regenerate the leg\'s files |')
+                         'C1 row). Then regenerate the leg\'s files (`cad/build_leg.py`, then `tools/motor_day.py --slice` '
+                         'for the times and grams) |')
             continue
         name = key.replace('_', ' ').replace(' pla', ' (PLA)')
         L.append(f"| **{r['order']}** | **{name}** ({ph[phase]}) | {qty} | {items.get(key, '')} | [{Path(f).name}](../{f}) | "
@@ -1314,7 +1315,9 @@ def main():
         if rendered.get('items') != items:
             moved = sorted(k for k in set(items) | set(rendered.get('items') or {}) if items.get(k) != (rendered.get('items') or {}).get(k))
             raise SystemExit(f'the BOM item numbers changed since the steps and drawings were rendered ({moved}): render again')
-        for r, (title, *_, how) in zip(steps, STEPS):     # the words may change without a new picture
+        if len(steps) != len(STEPS) or rendered.get('step_parts') != [list(st[1]) for st in STEPS]:
+            raise SystemExit('the assembly steps or their parts changed since they were rendered: render again')
+        for r, (title, *_, how) in zip(steps, STEPS):     # only the words may change without a new picture
             r['title'], r['how'] = title, how
     bom = [{'item': items[k], 'key': k, 'qty': v[1], 'part': v[0], 'source': v[2]} for k, v in names.items() if k in items]
     bom.sort(key=lambda r: r['item'])
@@ -1332,7 +1335,8 @@ def main():
     if not a.no_render:
         steps = render_steps(P, items)
         sheets = drawings(P, items, names, _rev(), meta, fm)
-        (OUT / 'drawings' / 'sheets.json').write_text(json.dumps({'items': items, 'sheets': sheets}, indent=1) + '\n')
+        (OUT / 'drawings' / 'sheets.json').write_text(json.dumps({'items': items, 'step_parts': [list(st[1]) for st in STEPS],
+                                                                  'sheets': sheets}, indent=1) + '\n')
     (OUT / 'steps' / 'steps.json').write_text(json.dumps(steps, indent=1) + '\n')
     write_doc({'slices': slices, 'der': der, 'stand': stand, 'steps': steps, 'sheets': sheets, 'mc': mc, 'other': other,
                'meta': meta, 'items': items, 'queue': queue})
