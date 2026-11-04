@@ -210,6 +210,25 @@ try {
   const apex = +(await readFile(new URL('../designer/sim.js', import.meta.url), 'utf8')).match(/apexM: ([0-9.]+)/)[1];
   assert.ok(Math.abs(apex * 1000 - rig.scenarios.jump.jump_height_mm) < 5,
     `The live hop (${apex * 1000} mm) matches the rig's jump (${rig.scenarios.jump.jump_height_mm} mm); update JUMP.apexM in designer/sim.js`);
+  // From every start height the hip tops out JUMP.apexM above where it stood, and the wheels leave the ground
+  // without the legs snapping (jumpPose run on its own, with the v2 leg range).
+  const simSrc = await readFile(new URL('../designer/sim.js', import.meta.url), 'utf8');
+  const jumpSrc = simSrc.match(/const JUMP = \{[^}]*\};/)[0], at = simSrc.indexOf('function jumpPose');
+  let depth = 0, end = simSrc.indexOf('{', at);
+  for (; end < simSrc.length; end++) { if (simSrc[end] === '{') depth++; if (simSrc[end] === '}' && --depth === 0) break; }
+  const jumpPose = new Function('state', `${jumpSrc}\n${simSrc.slice(at, end + 1)}\nreturn jumpPose;`)({ robot: { info: { hMin: 150, hMax: 375 } } });
+  const legM = (h) => 0.15 + 0.225 * h, dt = 1 / 2000;
+  for (const from of [0, 0.2, 0.4, 0.6, 1]) {
+    let top = 0, lift = 0, rate = 0, prev = null;
+    for (const J = { t: 0, from }; ; J.t += dt) {
+      const p = jumpPose(J); if (!p) break;
+      top = Math.max(top, legM(p.height) + p.lift); lift = Math.max(lift, p.lift);
+      if (prev) rate = Math.max(rate, Math.abs(legM(p.height) - legM(prev.height)) / dt);
+      prev = p;
+    }
+    assert.ok(Math.abs((top - legM(from)) - apex) < 0.002, `hop from ${from}: hip apex ${((top - legM(from)) * 1000).toFixed(1)} mm above standing`);
+    assert.ok(lift > 0.1 && rate < 3, `hop from ${from}: wheels ${(lift * 1000).toFixed(0)} mm up, legs at most ${rate.toFixed(2)} m/s`);
+  }
 
   // ---- the kit's own demo page
   const demo = await context.newPage();
