@@ -22,10 +22,13 @@ function loadCss() {
  * isOpen, destroy() }
  *
  * While it is open the controller's actions are suspended (so a menu press never also drives the page);
- * closeButtons (default ['Menu']) close it from the pad, and the suspension lasts until that button is released.
+ * closeButtons (default ['Menu'], or a function returning button names) close it from the pad, and the suspension
+ * lasts until that button is released.
  */
 export function mountGamepadConfig(control, { title = 'Gamepad', parent = document.body, closeButtons = ['Menu'], css = true, intro = '' } = {}) {
   if (css) loadCss();
+  // closeButtons may be a function, so a page can follow its own (rebindable) menu action.
+  const closers = () => { try { return (typeof closeButtons === 'function' ? closeButtons() : closeButtons) ?? []; } catch { return []; } };
   const id = `gpad-config-${++serial}`;
   const dialog = document.createElement('dialog');
   dialog.className = 'gpad-config';
@@ -151,7 +154,7 @@ export function mountGamepadConfig(control, { title = 'Gamepad', parent = docume
   }
   const offFrame = control.on('frame', (list) => { if (dialog.open) { diagram.update(list[0] ?? null); paintStatus(list); } });
   const offButton = control.on('button', ({ button, pressed }) => {
-    if (dialog.open && pressed && !pending && closeButtons.includes(button)) close(true);
+    if (dialog.open && pressed && !pending && closers().includes(button)) close(true);
   });
   const offHold = control.on('frame', (list) => {
     if (!holdover) return;

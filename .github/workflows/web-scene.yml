@@ -83,6 +83,7 @@ jobs:
             commands: |
               npm run test:interactions
               npm run test:robot
+              npm run test:gamepad
               npm run test:sim
               npm run test:demo
           - suite: presentation

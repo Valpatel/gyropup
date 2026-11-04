@@ -51,7 +51,7 @@ if (phone.matches || matchMedia('(pointer: coarse)').matches) {
   stage.renderer.setPixelRatio(Math.min(window.devicePixelRatio, 1.5));
   stage.renderer.shadowMap.enabled = false;
 }
-const state = { transition: null, height: 0.6, pitch: 0, rollMM: 0, speed: 0, wheel: 0, alive: true, design: null, robot: null, result: null, replay: null };
+const state = { transition: null, height: 0.6, pitch: 0, rollMM: 0, speed: 0, turn: 0, yaw: 0, jump: null, wheel: 0, alive: true, design: null, robot: null, result: null, replay: null };
 const terrain = new THREE.Group();
 stage.root.add(terrain);
 // an outdoor yard: ground that takes light (headlight pools, the laser dot) and a few props
@@ -68,9 +68,10 @@ stage.root.add(yard);
 const balls = createBalls(stage.root);
 // laserMode: 'auto' (on while getting ready to fire, off between targets and at the start), 'on' or 'off'
 const gun = { pan: 0, tilt: -0.05, mag: BALL.hopper, capacity: BALL.hopper, queue: [], attached: true, showFov: false, lastShot: -1, laserMode: 'auto', laserOn: false,
-              armedUntil: 0, headlights: true };
+              armedUntil: 0, headlights: true, armHeld: false };
 const sfx = createSfx();
 let talk = null;            // speech bubbles and voice (character/talk.js), when loaded
+let gamepad = null;         // Xbox-layout gamepad control (sim_gamepad.js on kit/gamepad/), when loaded
 const reactionMood = mood => { if (!talk?.isBusy()) eyes.set(mood); };
 const react = (ev) => { try { talk?.react?.(ev); } catch { /* the voice is optional */ } };
 
@@ -170,6 +171,9 @@ function setDemo(on, cancelPending = true) {
   demo.anchor = state.robot?.group.position.z ?? 0;
   demo.t = 0; demo.nextShot = 0; demo.cycle = 0; demo.phase = 'Meet Gyropup'; demo.reloaded = false;
   state.speed = 0; gun.queue = [];
+  // The tour starts facing its targets: no turn, heading or hop carried over from driving.
+  state.turn = 0; state.yaw = 0; state.jump = null;
+  if (state.robot) { state.robot.group.position.x = 0; state.robot.group.rotation.set(0, 0, 0); }
   state.robot?.setPresentation?.('current');
   state.robot?.setExplode?.(0);
   beginTransition();
@@ -679,10 +683,16 @@ function renderSummary() {
 // ---- panel
 const panel = $('#panel');
 const pose = section(panel, 'Pose', { note: 'legs keep the wheels under the hips' });
-const sh = slider(pose, { label: 'Height', min: 0, max: 1, step: 0.01, value: state.height, fmt: (v) => `${Math.round(v * 100)}%`, onInput: (v) => { takeControl(); state.height = v; } });
-const pitchSlider = slider(pose, { label: 'Body pitch', min: -20, max: 20, step: 0.5, value: 0, unit: '°', onInput: (v) => { takeControl(); state.pitch = v * Math.PI / 180; } });
-const rollSlider = slider(pose, { label: 'Leg difference (lean sideways)', min: -80, max: 80, step: 1, value: 0, unit: ' mm', onInput: (v) => { takeControl(); state.rollMM = v; } });
-const driveSlider = slider(pose, { label: 'Drive speed', min: -1.5, max: 1.5, step: 0.05, value: 0, unit: ' m/s', fmt: (v) => `${v.toFixed(2)} m/s`, onInput: (v) => { takeControl(); state.speed = v; } });
+const sh = slider(pose, { label: 'Height', min: 0, max: 1, step: 0.01, value: state.height, fmt: (v) => `${Math.round(v * 100)}%`, onInput: (v) => { takeControl(); command.height(v); } });
+const pitchSlider = slider(pose, { label: 'Body pitch', min: -20, max: 20, step: 0.5, value: 0, unit: '°', onInput: (v) => { takeControl(); command.pitchDeg(v); } });
+const rollSlider = slider(pose, { label: 'Leg difference (lean sideways)', min: -80, max: 80, step: 1, value: 0, unit: ' mm', onInput: (v) => { takeControl(); command.rollMM(v); } });
+const driveSlider = slider(pose, { label: 'Drive speed', min: -1.5, max: 1.5, step: 0.05, value: 0, unit: ' m/s', fmt: (v) => `${v.toFixed(2)} m/s`, onInput: (v) => { takeControl(); command.speed(v); } });
+const turnSlider = slider(pose, { label: 'Turn rate (+ = right)', min: -90, max: 90, step: 1, value: 0, unit: '°/s', onInput: (v) => { takeControl(); command.turnDeg(v); } });
+const jumpBtn = document.createElement('button');
+jumpBtn.type = 'button'; jumpBtn.className = 'hud-btn'; jumpBtn.textContent = 'JUMP';
+jumpBtn.title = 'Crouch, push off and land: an illustrative hop to the simulated leg rig\'s apex, not a physics result';
+jumpBtn.onclick = () => command.jump();
+pose.appendChild(jumpBtn);
 
 const replaySec = section(panel, 'Replay', { note: 'physics run from MuJoCo' });
 const replayPanel = replaySec.parentElement;
@@ -699,8 +709,8 @@ replaySec.appendChild(playBtn);
 const tele = readouts(section(panel, 'Telemetry', { note: 'static, from the design' }));
 const gunSec = section(panel, 'Turret', { note: 'removable head payload' });
 const gunInfo = readouts(gunSec);
-const panSlider = slider(gunSec, { label: 'Pan', min: -180, max: 180, step: 1, value: 0, unit: '°', onInput: (v) => { takeControl(); gun.pan = v * Math.PI / 180; } });
-const tiltSlider = slider(gunSec, { label: 'Tilt (never above horizontal)', min: -20, max: 0, step: 0.5, value: -3, unit: '°', onInput: (v) => { takeControl(); gun.tilt = v * Math.PI / 180; } });
+const panSlider = slider(gunSec, { label: 'Pan', min: -180, max: 180, step: 1, value: 0, unit: '°', onInput: (v) => { takeControl(); command.panDeg(v); } });
+const tiltSlider = slider(gunSec, { label: 'Tilt (never above horizontal)', min: -20, max: 0, step: 0.5, value: -3, unit: '°', onInput: (v) => { takeControl(); command.tiltDeg(v); } });
 const gunRow = document.createElement('div');
 gunRow.className = 'hud-chips';
 for (const [label, fn] of [['FIRE', () => queueShots(1)], ['BURST 8', () => queueShots(8)],
@@ -771,6 +781,60 @@ function shoot() {
   if (gun.mag === 0) react('empty');
   renderGun();
   return true;
+}
+
+// ---- the commands every input uses: the panel's sliders, the gamepad (sim_gamepad.js) and tests. Each clamps to
+// its slider's range (and the turret's deck limit), so no input can command what the sliders cannot.
+const D2R = Math.PI / 180;
+const within = (control, v) => Math.min(+control.input.max, Math.max(+control.input.min, Number.isFinite(+v) ? +v : 0));
+// The live hop is a kinematic illustration. Its apex is the single-leg rig's simulated jump at the motor cap
+// (exports/leg/rig-results.json, scenario "jump": 151.9 mm at 60 N m; tools/test-gamepad.mjs checks the match).
+const JUMP = { apexM: 0.152, crouchS: 0.3, crouchH: 0.12, pushS: 0.12, tuckH: 0.55, landS: 0.2, landH: 0.25, recoverS: 0.45 };
+const command = {
+  height: (v) => { state.height = within(sh, v); },
+  pitchDeg: (v) => { state.pitch = within(pitchSlider, v) * D2R; },
+  rollMM: (v) => { state.rollMM = within(rollSlider, v); },
+  speed: (v) => { state.speed = within(driveSlider, v); },
+  turnDeg: (v) => { state.turn = within(turnSlider, v); },
+  panDeg: (v) => { gun.pan = within(panSlider, v) * D2R; },
+  tiltDeg: (v) => { gun.tilt = Math.max(within(tiltSlider, v) * D2R, -tiltLimit(gun.pan)); },
+  jump() {
+    if (!state.robot || state.bench || state.jump) return false;    // one hop at a time: the legs own the height
+    takeControl();
+    state.jump = { t: 0, from: state.height };
+    sfx.chirp?.();
+    return true;
+  },
+  // ARM is held, as on the robot (D68): while held the flywheels and laser come up; letting go stops the feed.
+  arm(on) {
+    if (on && (!state.robot?.turret || !gun.attached || state.bench)) return;
+    if (on && (demo.on || state.replay)) takeControl();
+    gun.armHeld = !!on;
+    if (!on) { gun.queue = []; gun.armedUntil = 0; }
+  },
+  fire(n = 1, { needArm = false } = {}) {
+    if (needArm && !gun.armHeld) return false;
+    queueShots(n);
+    return true;
+  },
+  reload: () => reloadRobot(),
+};
+// The hop's height and lift at time t (s) from the start, or null when it is over.
+function jumpPose(J) {
+  const g = 9.81, v0 = Math.sqrt(2 * g * JUMP.apexM), flightS = 2 * v0 / g;
+  const ease = (x) => { x = Math.min(1, Math.max(0, x)); return x * x * (3 - 2 * x); };
+  const lerp = (a, b, x) => a + (b - a) * ease(x);
+  let t = J.t;
+  if (t < JUMP.crouchS) return { height: lerp(J.from, JUMP.crouchH, t / JUMP.crouchS), lift: 0 };
+  t -= JUMP.crouchS;
+  if (t < JUMP.pushS) return { height: lerp(JUMP.crouchH, 1, t / JUMP.pushS), lift: 0 };
+  t -= JUMP.pushS;
+  if (t < flightS) return { height: lerp(1, JUMP.tuckH, t / flightS), lift: Math.max(0, v0 * t - g * t * t / 2) };
+  t -= flightS;
+  if (t < JUMP.landS) return { height: lerp(JUMP.tuckH, JUMP.landH, t / JUMP.landS), lift: 0 };
+  t -= JUMP.landS;
+  if (t < JUMP.recoverS) return { height: lerp(JUMP.landH, J.from, t / JUMP.recoverS), lift: 0 };
+  return null;
 }
 
 const eyePanel = section(panel, 'Eyes', { note: 'DualEye screens' });
@@ -919,7 +983,7 @@ function syncLiveControls() {
   // Update on animation frames, after input callbacks have stored the player's choice.
   // Programmatic set() paints the control without dispatching another input event.
   for (const [control, value] of [[sh,state.height],[pitchSlider,state.pitch*180/Math.PI],
-    [rollSlider,state.rollMM],[driveSlider,state.speed],[panSlider,gun.pan*180/Math.PI],[tiltSlider,gun.tilt*180/Math.PI]]) {
+    [rollSlider,state.rollMM],[driveSlider,state.speed],[turnSlider,state.turn],[panSlider,gun.pan*180/Math.PI],[tiltSlider,gun.tilt*180/Math.PI]]) {
     const step = +control.input.step, rounded = Math.round(value/step)*step;
     if (Math.abs(control.get()-rounded) > step/10) control.set(rounded);
   }
@@ -972,6 +1036,7 @@ stage.onFrame((t, dt) => {
     if (dot < 0) for (let k = 3; k < 7; k++) qp[k] = A[k] - (B[k] + A[k]) * w;   // shortest path between orientations
     const n = Math.hypot(qp[3], qp[4], qp[5], qp[6]) || 1;
     for (let k = 3; k < 7; k++) qp[k] /= n;
+    state.robot.group.rotation.set(0, 0, 0);                  // recorded frames carry their own heading
     state.robot.setFromQpos(qp, R.run.qpos_layout);
     if (R.playing) scrub.set(i);
     R.qpos = qp;
@@ -1060,10 +1125,15 @@ stage.onFrame((t, dt) => {
   syncLiveControls();
   poseProps(null);
   poseLiveTargets(motionDt);
-  let height = state.height, pitch = state.pitch;
+  let height = state.height, pitch = state.pitch, lift = 0;
+  if (state.jump) {                                                                     // a hop owns the legs until it lands
+    state.jump.t += motionDt;
+    const hop = jumpPose(state.jump);
+    if (hop) { height = hop.height; lift = hop.lift; } else state.jump = null;
+  }
   const liveTime = demo.on ? demo.t : t;
   if (state.alive) {
-    height = Math.min(1, Math.max(0, height + 0.025 * Math.sin(liveTime * 1.3)));         // breathing bob
+    if (!state.jump) height = Math.min(1, Math.max(0, height + 0.025 * Math.sin(liveTime * 1.3)));         // breathing bob
     pitch += 0.012 * Math.sin(liveTime * 0.7) + 0.006 * Math.sin(liveTime * 2.3);                 // balance sway
     if (!talk?.isBusy() && (!state.lastExpr || performance.now() - state.lastExpr > 9000)) {             // an occasional mood
       if (Math.random() < dt * 0.15) { const n = ['neutral', 'happy', 'curious', 'thinking', 'neutral'][Math.floor(Math.random() * 5)]; eyes.set(n); eyeChips.mark(n); }
@@ -1075,7 +1145,7 @@ stage.onFrame((t, dt) => {
   if (state.robot.turret) {
     state.robot.turret.setAim(gun.pan, Math.max(gun.tilt, -tiltLimit(gun.pan)), pitch);
     const now = performance.now() / 1000;
-    setLaser(!paused && (gun.laserMode === 'on' || (gun.laserMode === 'auto' && gun.attached && (gun.queue.length > 0 || now < gun.armedUntil))));
+    setLaser(!paused && (gun.laserMode === 'on' || (gun.laserMode === 'auto' && gun.attached && (gun.armHeld || gun.queue.length > 0 || now < gun.armedUntil))));
     state.robot.turret.updateLaser([...propMeshes.values()], gun.laserOn);
     const legSpeed = dt > 0 ? ((height - (state.prevHeight ?? height)) / dt) * 3 : 0;   // live pose: the height's rate (~rad/s)
     state.prevHeight = height;
@@ -1086,8 +1156,15 @@ stage.onFrame((t, dt) => {
   }
   stepLiveBalls(motionDt);
   stepBits(motionDt);
-  state.robot.group.position.z += state.speed * motionDt;
-  if (!demo.on && Math.abs(state.robot.group.position.z) > 2.5) state.robot.group.position.z *= -0.98;
+  // Drive along the heading; + turn is to the right (clockwise seen from above). With no turn this is the old
+  // straight run along z.
+  const body = state.robot.group;
+  state.yaw -= state.turn * D2R * motionDt;
+  body.rotation.y = state.yaw;
+  body.position.x += Math.sin(state.yaw) * state.speed * motionDt;
+  body.position.z += Math.cos(state.yaw) * state.speed * motionDt;
+  body.position.y = lift;
+  if (!demo.on) for (const k of ['x', 'z']) if (Math.abs(body.position[k]) > 2.5) body.position[k] *= -0.98;
   blendTransition(motionDt);
   eyes.step(t, dt);
   eyes.draw();
@@ -1123,7 +1200,7 @@ robotActions = createRobotActions({ parent: $('#stage-overlay'), onDemo: toggleD
   }, onFire: queueShots, onReload: reloadRobot, onLayout: updateInsets });
 $('#robot-actions').inert = true;
 paintRobotActions();
-window.__sim = { state, stage, eyes, gun, demo, sfx, balls, get talk() { return talk; }, get props() { return propMeshes; }, get liveTargets() { return liveTargetMotion; }, setHeight: (v) => { state.height = v; sh.set(v); }, bench: () => bench };
+window.__sim = { state, stage, eyes, gun, demo, sfx, balls, command, tiltLimitDeg: (pan = gun.pan) => tiltLimit(pan) * 180 / Math.PI, get gamepad() { return gamepad; }, get talk() { return talk; }, get props() { return propMeshes; }, get liveTargets() { return liveTargetMotion; }, setHeight: (v) => { state.height = v; sh.set(v); }, bench: () => bench };
 sel.onchange = () => loadDesign(sel.value);
 runSel.onchange = () => { stopDemoAutomation(); if (!runSel.value) takeControl(); else startReplay(runSel.value); };
 await loadDesign(sel.value);
@@ -1148,6 +1225,11 @@ try {
   try { chose = localStorage.getItem('gyropup.dockCollapsed'); } catch { /* storage blocked */ }
   if (phone.matches && chose === null) talk?.dock?.collapse(true);
 } catch (err) { console.warn('talk unavailable', err); }
+// A standard (Xbox-layout) gamepad drives the same commands as the panel. Optional: the page works without it.
+try {
+  gamepad = (await import('./sim_gamepad.js')).mountSimGamepad({ stage, panel: $('#panel'), topbar: $('#topbar'), before: soundBtn,
+    sim: { state, gun, demo, command, sliders: { drive: driveSlider, turn: turnSlider }, bench: () => (state.bench ? bench : null), takeControl, toggleDemo } });
+} catch (err) { console.warn('gamepad unavailable', err); }
 // the orbit hint: worded for touch on a touch screen; it fades after a few seconds or the first drag, pinch or scroll
 {
   const hint = $('.hud-hint');
