@@ -604,29 +604,29 @@
    },
    "loads": [
     {
-     "case": "R: 30 g sideways, the whole turret (2.5734 kg) with its centre 135.3 mm above the TM face (exports/turret/mount.json com_mm, from the TM face), 30 mm further down at the feet (the riser's 80 x 80 legs)",
-     "per_insert_n": 782,
+     "case": "R: 30 g sideways, the whole turret (1.7568 kg) with its centre 96.9 mm above the TM face (exports/turret/mount.json com_mm, from the TM face), 30 mm further down at the feet (the riser's 80 x 80 legs)",
+     "per_insert_n": 410,
      "tension": true,
-     "source": "exports/turret/mount.json mass_kg, com_mm; cad/turret.py PLINTH; cad/body_params.py RISER_H"
+     "source": "exports/turret/mount.json mass_kg, com_mm; cad/turret.py FRAME_T_ABOVE_TM; cad/body_params.py RISER_H"
     }
    ],
    "pullout_repo_n": 1500,
-   "notes": "The turret's hand check (hand_checks.tm_bolts) gives 640 N a bolt at the TM face; 30 mm lower, each foot sees 782 N. Body joints: riser.",
+   "notes": "The turret's hand check (hand_checks.tm_bolts) gives 313 N a bolt at the TM face; 30 mm lower, each foot sees 410 N. Body joints: riser.",
    "boss_ratio": 2.53,
    "boss_wall_mm": 5.45,
    "thread_engaged_mm": 7.9,
    "tip_clear_mm": 1.71,
    "pullout_est_n": 1676,
    "capacity_n": 1500,
-   "sf_pullout": 1.92,
+   "sf_pullout": 3.66,
    "findings": [
     {
      "code": "pullout-margin",
-     "level": "owner",
-     "text": "pull-out estimate 1500 N / 782 N = 1.92"
+     "level": "check",
+     "text": "pull-out estimate 1500 N / 410 N = 3.66: qualify with the B4 pull-out coupon in this material and orientation"
     }
    ],
-   "verdict": "owner"
+   "verdict": "check"
   },
   {
    "id": "body.riser_top_tm",
@@ -644,17 +644,17 @@
    "boss_mm": null,
    "axis": "print-z",
    "orientation": "riser printed on its top face",
-   "screw": "M5 x 16, 4 off down through the compute plinth's 10 mm tray (Ø9.5 x 5.5 counterbores, D66)",
+   "screw": "M5 x 16, 4 off down through the pan base's 5 mm foot (D76: no compute plinth)",
    "screw_side": "open end (from above)",
    "mating_hole_mm": 5.5,
-   "tip_depth_mm": 11.5,
+   "tip_depth_mm": 11.0,
    "stack": {
-    "head_seat_mm": 4.5,
+    "head_seat_mm": 5.0,
     "screw_mm": 16.0
    },
    "clamp": {
-    "stack": "4.5 mm printed PA6-CF tray under each head (40 % gyroid per docs/turret-sections.md)",
-    "printed_mm": 4.5,
+    "stack": "5 mm printed PA6-CF foot under each head (40 % gyroid inside 4 walls)",
+    "printed_mm": 5.0,
     "limiter": null,
     "material": "PA6-CF",
     "bearing": "Ø8.5 socket head",
@@ -664,32 +664,21 @@
    },
    "loads": [
     {
-     "case": "R: 30 g sideways, the whole turret (2.5734 kg) with its centre 135.3 mm above the TM face (exports/turret/mount.json com_mm, from the TM face)",
-     "per_insert_n": 640,
+     "case": "R: 30 g sideways, the whole turret (1.7568 kg) with its centre 96.9 mm above the TM face (exports/turret/mount.json com_mm, from the TM face)",
+     "per_insert_n": 313,
      "tension": true,
-     "source": "exports/turret/mount.json mass_kg, com_mm; cad/turret.py PLINTH (hand_checks.tm_bolts gives 640 N)"
+     "source": "exports/turret/mount.json mass_kg, com_mm; cad/turret.py FRAME_T_ABOVE_TM (hand_checks.tm_bolts gives 313 N)"
     }
    ],
    "pullout_repo_n": 1500,
-   "notes": "exports/turret/mount.json (the turret's contract with the robot) asks the head for 12.5 mm bolt holes; the riser cuts 13. Its dowel holes are 9.5 deep against the contract's 8.5 mm. The pilots stand on the legs (solid Ø18 under each bolt), the dowel holes on Ø12 bosses under the ring.",
+   "notes": "exports/turret/mount.json (the turret's contract with the robot) asks the head for 12 mm bolt holes; the riser cuts 13. Its dowel holes are 12.5 deep against the contract's 12.5 mm. The pilots stand on the legs (solid Ø18 under each bolt), the dowel holes on Ø12 bosses under the ring.",
    "thread_engaged_mm": 7.9,
-   "tip_clear_mm": 1.5,
+   "tip_clear_mm": 2.0,
    "pullout_est_n": 1676,
    "capacity_n": 1500,
-   "sf_pullout": 2.34,
-   "findings": [
-    {
-     "code": "pullout-margin",
-     "level": "check",
-     "text": "pull-out estimate 1500 N / 640 N = 2.34: qualify with the B4 pull-out coupon in this material and orientation"
-    },
-    {
-     "code": "tm-com-budget",
-     "level": "owner",
-     "text": "the turret's centre is 135.3 mm above the TM face against D71's \"at most 100 mm\"; the body's D2 turret fall at 135 mm gives the deck SF 1.21 against 2: raise the budget and strengthen the deck under the riser, or lower the turret (the plinth is 86 mm)"
-    }
-   ],
-   "verdict": "owner"
+   "sf_pullout": 4.79,
+   "findings": [],
+   "verdict": "ok"
   },
   {
    "id": "body.dcdc_bracket",
@@ -1119,103 +1108,6 @@
    "verdict": "check"
   },
   {
-   "id": "turret.plinth_columns",
-   "assembly": "turret",
-   "where": "compute plinth shell's four column tops (PETG): the pan base's TM",
-   "qty_robot": 4,
-   "insert": "insert_m5",
-   "d_mm": 5,
-   "material": "petg",
-   "infill": "not in exports/turret/print/print.json yet",
-   "hole": {
-    "d": 6.4,
-    "depth": 12.5
-   },
-   "boss_mm": 15.0,
-   "axis": "print-z",
-   "orientation": "shell printed upside down",
-   "screw": "M5 x 16, 4 off through the pan base's 5 mm foot",
-   "screw_side": "open end (from above)",
-   "mating_hole_mm": 5.5,
-   "tip_depth_mm": 11.0,
-   "stack": {
-    "head_seat_mm": 5.0,
-    "screw_mm": 16.0
-   },
-   "clamp": {
-    "stack": "5 mm PA6-CF foot (40 % gyroid) under each head",
-    "printed_mm": 5.0,
-    "limiter": null,
-    "material": "PA6-CF",
-    "bearing": "Ø8.5 socket head",
-    "bearing_od_mm": 8.5,
-    "bearing_id_mm": 5.5,
-    "bearing_area_mm2": 33.0
-   },
-   "loads": [
-    {
-     "case": "R: 30 g sideways on the turret above the plinth (1.74 kg, centre 96 mm above the columns' tops; estimate)",
-     "per_insert_n": 308,
-     "tension": true,
-     "source": "exports/turret/mount.json and turret.json masses; plinth centroids estimated (inventory.py)"
-    }
-   ],
-   "pullout_repo_n": 1500,
-   "notes": "The column is solid PETG to z -16 under the 12.5 mm pilot. The hand check's 640 N is the whole turret at the TM face; the plinth and the J4012 (831 g) hang below these columns, so the part above them is lighter and its centre higher.",
-   "boss_ratio": 2.11,
-   "boss_wall_mm": 3.94,
-   "thread_engaged_mm": 7.9,
-   "tip_clear_mm": 1.5,
-   "pullout_est_n": 2587,
-   "capacity_n": 1500,
-   "sf_pullout": 4.87,
-   "findings": [
-    {
-     "code": "pan-base-dowels",
-     "level": "owner",
-     "text": "the pan base's TM dowel holes (cad/turret.py pan_base: TM_DOWELS at r 52) meet no hole in the plinth's top (compute_shell() cuts none), but the bench BOM buys hw_plinth_dowels (16 mm pins, D66): the pan base is then located only by its M5s in clearance. Add dowel bosses to the plinth's top, or drop the pins"
-    }
-   ],
-   "verdict": "owner"
-  },
-  {
-   "id": "turret.plinth_tray_m4",
-   "assembly": "turret",
-   "where": "compute plinth tray (PA6-CF): the shell's four feet",
-   "qty_robot": 4,
-   "insert": "turret_insert_m4",
-   "d_mm": 4,
-   "material": "pa6-cf",
-   "infill": "40 % gyroid (docs/turret-sections.md)",
-   "hole": {
-    "d": 5.6,
-    "depth": 8.0
-   },
-   "axis": "print-z",
-   "orientation": "tray printed flat",
-   "screw": "M4 x 10 (BOM hw_plinth_m4) down through the shell's 5 mm PETG foot",
-   "screw_side": "open end (from above)",
-   "mating_hole_mm": 4.5,
-   "tip_depth_mm": 5.0,
-   "stack": {
-    "head_seat_mm": 5.0,
-    "screw_mm": 10.0
-   },
-   "clamp": {
-    "stack": "5 mm PETG foot",
-    "printed_mm": 5.0,
-    "limiter": null
-   },
-   "loads": [],
-   "notes": "The shell foot is \"y - 6.0, y + 6.0, zt, zt + 5.0)\" (5 mm).",
-   "thread_engaged_mm": 5.0,
-   "tip_clear_mm": 3.0,
-   "pullout_est_n": 1188,
-   "capacity_n": 1188,
-   "findings": [],
-   "verdict": "ok"
-  },
-  {
    "id": "turret.pan_base_clamp_ears",
    "assembly": "turret",
    "where": "pan base housing ears (PA6-CF): the 61810's clamp ring",
@@ -1245,7 +1137,7 @@
    "loads": [
     {
      "case": "R: 30 g with the turret upside down (the pan group on the ring)",
-     "per_insert_n": 77,
+     "per_insert_n": 78,
      "tension": true,
      "source": "exports/turret/fea/summary.json hand_checks.journal_lip"
     }
@@ -1256,7 +1148,7 @@
    "tip_clear_mm": 1.17,
    "pullout_est_n": 756,
    "capacity_n": 700,
-   "sf_pullout": 9.09,
+   "sf_pullout": 8.97,
    "findings": [
     {
      "code": "pilot-below-spirol",
@@ -1445,7 +1337,7 @@
    "loads": [
     {
      "case": "R: 30 g sideways on the yoke and all it carries",
-     "per_insert_n": 174,
+     "per_insert_n": 178,
      "tension": true,
      "source": "exports/turret/fea/summary.json hand_checks.yoke_inserts"
     }
@@ -1456,7 +1348,7 @@
    "tip_clear_mm": 2.0,
    "pullout_est_n": 1188,
    "capacity_n": 1100,
-   "sf_pullout": 6.32,
+   "sf_pullout": 6.18,
    "findings": [],
    "verdict": "ok"
   },
@@ -1614,7 +1506,7 @@
    "loads": [
     {
      "case": "R: 30 g sideways, the frame pulling one plate's foot",
-     "per_insert_n": 47,
+     "per_insert_n": 48,
      "tension": true,
      "source": "exports/turret/fea/summary.json hand_checks.plate_inserts"
     }
@@ -1625,7 +1517,7 @@
    "tip_clear_mm": 1.67,
    "pullout_est_n": 756,
    "capacity_n": 700,
-   "sf_pullout": 14.89,
+   "sf_pullout": 14.58,
    "findings": [
     {
      "code": "pilot-below-spirol",
@@ -1863,7 +1755,7 @@
   {
    "id": "stand.tm",
    "assembly": "turret stand",
-   "where": "stand top plate (PETG, 3 walls 20 % gyroid): the plinth's TM",
+   "where": "stand top plate (PETG, 3 walls 20 % gyroid): the pan base's TM",
    "qty_robot": 4,
    "insert": "insert_m5",
    "d_mm": 5,
@@ -1876,17 +1768,17 @@
    "boss_mm": 14.0,
    "axis": "print-z",
    "orientation": "printed upside down",
-   "screw": "M5 x 16, 4 off through the plinth tray",
+   "screw": "M5 x 16, 4 off through the pan base's foot (D76)",
    "screw_side": "open end",
    "mating_hole_mm": 5.5,
-   "tip_depth_mm": 11.5,
+   "tip_depth_mm": 11.0,
    "clamp": null,
    "loads": [],
    "notes": "Bench duty.",
    "boss_ratio": 1.97,
    "boss_wall_mm": 3.44,
    "thread_engaged_mm": 7.9,
-   "tip_clear_mm": 2.5,
+   "tip_clear_mm": 3.0,
    "pullout_est_n": 2587,
    "capacity_n": 2587,
    "findings": [
@@ -1978,7 +1870,7 @@
    "tip_depth_mm": 7.0,
    "clamp": null,
    "loads": [],
-   "notes": "Through pilot: the insert fills the 8 mm deck and the screw ends 1 mm short of its underside. With the D66 plinth's M5 x 16 instead, the tip would stand 3.5 mm below the deck.",
+   "notes": "Through pilot: the insert fills the 8 mm deck and the screw ends 1 mm short of its underside. The bench's M5 x 16 (the robot's TM screws) would stand 3.5 mm below the deck: the box keeps its own M5 x 12.",
    "thread_engaged_mm": 7.0,
    "pullout_est_n": 2587,
    "capacity_n": 2587,
@@ -2251,18 +2143,6 @@
    "text": "the 4 mm adapter plates cannot hold an M3 insert: the shortest catalogue M3 (94459A130) is 4.3 mm long and asks 5.1 mm of material, and the belly plate sits on the plate's top face. Options: bosses on the plate's underside at the adapter's measured pattern (>= 6.5 mm for 94459A140), M3 screws up into PEM nuts or nuts above, or a thicker plate where the adapter sits"
   },
   {
-   "joint": "body.riser_feet",
-   "code": "pullout-margin",
-   "level": "owner",
-   "text": "pull-out estimate 1500 N / 782 N = 1.92"
-  },
-  {
-   "joint": "body.riser_top_tm",
-   "code": "tm-com-budget",
-   "level": "owner",
-   "text": "the turret's centre is 135.3 mm above the TM face against D71's \"at most 100 mm\"; the body's D2 turret fall at 135 mm gives the deck SF 1.21 against 2: raise the budget and strengthen the deck under the riser, or lower the turret (the plinth is 86 mm)"
-  },
-  {
    "joint": "leg.hip_frame_mount",
    "code": "pullout-margin",
    "level": "owner",
@@ -2293,12 +2173,6 @@
    "text": "3.65 mm of thread engaged = 0.91 d: cad/rig_hardware.py (tof_arm_screw min_engage) sets 3.5 mm, the body checks ask 1.2 d; a 2 mm longer screw fits"
   },
   {
-   "joint": "turret.plinth_columns",
-   "code": "pan-base-dowels",
-   "level": "owner",
-   "text": "the pan base's TM dowel holes (cad/turret.py pan_base: TM_DOWELS at r 52) meet no hole in the plinth's top (compute_shell() cuts none), but the bench BOM buys hw_plinth_dowels (16 mm pins, D66): the pan base is then located only by its M5s in clearance. Add dowel bosses to the plinth's top, or drop the pins"
-  },
-  {
    "joint": "body.post_m5",
    "code": "preload-vs-pullout",
    "level": "check",
@@ -2311,10 +2185,10 @@
    "text": "put an M5 washer under each ear bracket nyloc on the 2 mm PETG wall and tighten snug (no torque is stated)"
   },
   {
-   "joint": "body.riser_top_tm",
+   "joint": "body.riser_feet",
    "code": "pullout-margin",
    "level": "check",
-   "text": "pull-out estimate 1500 N / 640 N = 2.34: qualify with the B4 pull-out coupon in this material and orientation"
+   "text": "pull-out estimate 1500 N / 410 N = 3.66: qualify with the B4 pull-out coupon in this material and orientation"
   },
   {
    "joint": "leg.hip_frame_lugs",
@@ -2372,16 +2246,16 @@
   }
  ],
  "summary": {
-  "families": 46,
-  "inserts_on_robot": 151,
+  "families": 44,
+  "inserts_on_robot": 143,
   "verdicts": {
-   "owner": 8,
-   "check": 8,
+   "owner": 5,
+   "check": 9,
    "ok": 9,
    "note": 21
   },
   "fix": 0,
-  "owner": 9,
+  "owner": 6,
   "check": 12
  },
  "bindings": [
@@ -2607,18 +2481,8 @@
   },
   {
    "file": "cad/turret.py",
-   "pattern": "^PLINTH = \\{'h': ([\\d.]+), ",
-   "value": 86.0,
-   "lines": 1
-  },
-  {
-   "file": "cad/turret.py",
-   "literal": "z0 = -P['h']"
-  },
-  {
-   "file": "cad/turret.py",
-   "pattern": "^PLINTH = \\{'h': [\\d.]+, 'r': [\\d.]+, 'wall': [\\d.]+, 'tray_t': ([\\d.]+),",
-   "value": 10.0,
+   "pattern": "^FRAME_T_ABOVE_TM = ([\\d.]+)",
+   "value": 0.0,
    "lines": 1
   },
   {
@@ -2629,7 +2493,7 @@
   },
   {
    "file": "cad/turret_studies.py",
-   "literal": "h_face = M['com_mm'][2] + tu.PLINTH['h']",
+   "literal": "h_face = M['com_mm'][2] + tu.FRAME_T_ABOVE_TM",
    "present": true
   },
   {
@@ -2641,12 +2505,6 @@
   {
    "file": "cad/body_frame.py",
    "literal": "RISER_FEET = [(40.0, 40.0), (-40.0, 40.0), (-40.0, -40.0), (40.0, -40.0)]"
-  },
-  {
-   "file": "cad/turret.py",
-   "pattern": "^J4012 = \\{'L': [\\d.]+, 'W': [\\d.]+, 'H': ([\\d.]+),",
-   "value": 66.7,
-   "lines": 1
   },
   {
    "file": "cad/body_params.py",
@@ -2721,7 +2579,7 @@
   {
    "file": "cad/body_frame.py",
    "pattern": "^RISER_DOWEL_DEPTH = ([\\d.]+)",
-   "value": 9.5,
+   "value": 12.5,
    "lines": 1
   },
   {
@@ -2730,25 +2588,17 @@
   },
   {
    "file": "cad/turret.py",
-   "pattern": "^PLINTH = \\{'h': [\\d.]+, 'r': [\\d.]+, 'wall': [\\d.]+, 'tray_t': ([\\d.]+),",
-   "value": 10.0,
+   "pattern": "self\\.foot_t = ([\\d.]+)",
+   "value": 5.0,
    "lines": 1
   },
   {
    "file": "cad/turret.py",
-   "pattern": "'cbore': \\([\\d.]+, ([\\d.]+)\\)",
-   "value": 5.5,
-   "lines": 1
+   "literal": "s = s.cut(through_z(x, y, FAST['M5']['clear'], -1, 60)).cut(cyl_z(5.0, t - 0.01, 60, x, y))"
   },
   {
    "file": "cad/turret.py",
-   "pattern": "'xt30_y': -30\\.0, 'dowel_depth': ([\\d.]+)\\}",
-   "value": 8.0,
-   "lines": 1
-  },
-  {
-   "file": "cad/turret.py",
-   "literal": "s = s.cut(through_z(x, y, 5.0, z0 - 1, z0 + P['dowel_depth']))"
+   "literal": "s = s.cut(cyl_z(2.5, -1, t - 1.0, x, y))"
   },
   {
    "file": "cad/body_frame.py",
@@ -2904,58 +2754,6 @@
   {
    "file": "cad/turret.py",
    "literal": "self.bore = ball_d + 1.5"
-  },
-  {
-   "file": "cad/turret.py",
-   "pattern": "self\\.foot_t = ([\\d.]+)",
-   "value": 5.0,
-   "lines": 1
-  },
-  {
-   "file": "cad/turret.py",
-   "pattern": "'col_r': ([\\d.]+), 'cbore'",
-   "value": 7.5,
-   "lines": 1
-  },
-  {
-   "file": "cad/turret.py",
-   "literal": "def insert_hole(x, y, z_top, size='M3', depth=INSERT_DEPTH):"
-  },
-  {
-   "file": "cad/turret.py",
-   "pattern": "s = s\\.cut\\(insert_hole\\(x, y, 0\\.0, 'M5'(?:, ([\\d.]+))?\\)\\)",
-   "value": 12.5,
-   "lines": 1
-  },
-  {
-   "file": "cad/turret.py",
-   "pattern": "\\.cut\\(cyl_z\\(4\\.0, zt \\+ 5\\.0, -([\\d.]+), x, y\\)\\)\\s+# hollow under the insert",
-   "value": 16.0,
-   "lines": 1
-  },
-  {
-   "file": "cad/turret.py",
-   "block": "def compute_shell(G):"
-  },
-  {
-   "file": "exports/turret/bench/bom.json",
-   "bom_for": "hw_plinth_dowels",
-   "value": 16.0
-  },
-  {
-   "file": "cad/turret.py",
-   "pattern": "s = s\\.cut\\(insert_hole\\(fx, fy, z1, 'M4'(?:, ([\\d.]+))?\\)\\)",
-   "value": 8.0,
-   "lines": 1
-  },
-  {
-   "file": "cad/turret.py",
-   "literal": "y - 6.0, y + 6.0, zt, zt + 5.0)"
-  },
-  {
-   "file": "exports/turret/bench/bom.json",
-   "bom_for": "hw_plinth_m4",
-   "value": 10.0
   },
   {
    "file": "cad/turret.py",

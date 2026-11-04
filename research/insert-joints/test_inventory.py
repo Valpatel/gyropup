@@ -113,7 +113,9 @@ class Inventory(unittest.TestCase):
         m = json.loads((inv.ROOT / 'exports/turret/mount.json').read_text())
         arm = (m['com_mm'][2] - m['envelope']['lowest_z_mm']) / 1000.0
         self.assertAlmostEqual(j['loads'][0]['per_insert_n'], m['mass_kg'] * inv.G0 * 30.0 * arm / 0.160, delta=1.0)
-        self.assertEqual(joint(self.doc, 'body.riser_feet')['verdict'], 'owner')   # SF < 2 on the feet
+        # D76: without the plinth the feet's pull-out SF is 3.7 (it was 1.9, an owner decision, at 135 mm and 2.57 kg)
+        self.assertEqual(joint(self.doc, 'body.riser_feet')['verdict'], 'check')
+        self.assertGreater(joint(self.doc, 'body.riser_feet')['sf_pullout'], 2.0)
 
     def test_control_riser_unfixed(self):
         """The riser's pilots back at 9.5 and 8 mm: the screws bottom and both contract depths fail again."""
