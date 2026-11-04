@@ -28,14 +28,14 @@ firmware's torque is the whole command. The layers, outermost first:
 | Measured joint range | the 95-395 mm length window only | A motor could be measured well past its hard stop (a broken stop post, a slipped zero) and still be driven | `gp_guard_angle_ok` (`gp_guard.c:77`, `gp_app.c:489`): a motor more than 10.13° past a stop (the TPU sleeve's squeeze at the R3 fault torque, 121.5 N m on 856 N m/rad, plus 2°) limps, reason 17 | host supervisor test (joint range) |
 | Torque cap, firmware | `gp_config.h`: one `GP_RS04_LIMIT_TORQUE` 60 N m, D33's, on every build including the PLA bench leg | The PLA leg's own limit (12 N m, the motor-day derating) lived only in the rig laptop's `--cap`; the robot had no reason for 60 and no peak/continuous split | `gp_limits.h` (generated) per build: robot 61 every day / 69 in the jump's push only (at most `GP_JUMP_PUSH_MAX_S` 0.35 s), PLA bench 12 / 12. `gp_app.c:947` picks the cap each tick, `gp_control.c:211` clips to it; an unset cap falls back to the PLA's, never to "no cap". The rig profile's build is a CMake option, `-DGP_RIG_BUILD=pla_bench\|robot`, PLA by default | host suite run for both rig builds (CI: `body-firmware.yml`) |
 | Torque cap, in the motor | `limit_torque` 60 written and read back at boot | as above | `limit_torque` = the build's `GP_LIM_*_MOTOR_NM` (robot 69, PLA 12), written and read back (`gp_app.c:311, 345`): the motor's own backstop if the firmware misbehaves | host supervisor test (limit_torque readback) |
-| Continuous / RMS | none in firmware (the rig laptop sits over 80 °C winding: `rig/leg_control.py:165`) | A long crouch or repeated jumps could hold the peak far past the motor's rated torque | Each motor's running mean square torque (time constant 30.2 s: the winding's R_wc × C_w): over 28.5 N m rms the cap drops to 28.5 until it is under 0.9 of it (`gp_app.c:1010, 948`). No jump while a motor's rms is over 0.8 of it or its reported temperature over 70 °C (refusal 6); a motor over 80 °C sits the robot (reason 18). PENDING #195's heat model | host supervisor tests (rms hot, temperature) |
+| Continuous / RMS | none in firmware (the rig laptop sits over 80 °C winding: `rig/leg_control.py:165`) | A long crouch or repeated jumps could hold the peak far past the motor's rated torque | Each motor's running mean square torque (time constant 30.2 s: the winding's R_wc × C_w): over 28.5 N m rms the cap drops to 28.5 until it is under 0.9 of it (`gp_app.c:1010, 948`). No jump while a motor's rms is over 0.8 of it or its reported temperature over 70 °C (refusal 6); a motor over 80 °C sits the robot (reason 18). Numbers from the motor heat model ([motor-thermal.md](motor-thermal.md)) | host supervisor tests (rms hot, temperature) |
 | Jump gate | voltage, people, link, standing, height 0 (`gp_app.c:529`) | A stuck jump request could chain jumps back to back | No jump within 1 s of the last landing (refusal 7, `gp_app.c:536`) | host supervisor test (cooldown) |
 | Bus current | 30 A continuous, 80 A for 0.5 s, the push at `s(V) × 72 A` (`gp_app.c:245`), the regen clamp | none for the leg (it caps the push's power, not its torque) | nothing | existing HIL |
 | Radio stop, heartbeat, CAN timeout | stop relay sensed in 2 ms, a fast sit; heartbeat sit at 2.2 s; each RS-04 drops to reset 0.1 s after its last frame (`GP_RS04_CAN_TIMEOUT`) | none | nothing | existing HIL |
 | Hard stops | TPU-sleeved stop posts, 856 N m/rad at the motor; FEA `stop_post` E3 (SF 2.11 at 60 N m), R3 (1.04 at 121.5 N m) | Impact energy was never compared with what the stop takes | The soft stop's approach limit is that comparison: at the every-day torque a stop is met with T²/2k, 2.17 J on the robot (12.5 rad/s), 0.08 J on the PLA leg (2.46 rad/s); faster approaches are braked | `test_the_approach_limit_meets_the_stop...` |
 | Rig laptop (`rig/run.py`) | `--cap` 1-60 N m, default 60 | Without `--cap` the PLA bench leg ran at 60 N m | `--build pla_bench\|robot` (PLA by default): without `--cap` the build's every-day cap; no higher `--cap` accepted; soft stops in the limiter | `rig/tests/test_rs04.py`, `rig/tests/test_control.py` |
-| Browser playground | sliders and the gamepad set the pose directly | The 3D pup could be asked for poses and rates the real leg cannot make | `designer/leg_limits.js`: the firmware's rates and the reach window, clamping. **Not yet called from `designer/sim.js`** (see section 5) | `tools/test-leg-limits.mjs` |
-| Python robot sim (`sim/controller_v2.py`) | the controller the firmware ports | no window or soft stops yet | nothing (section 5) | |
+| Browser playground | sliders and the gamepad set the pose directly | The 3D pup could be asked for poses and rates the real leg cannot make | `designer/leg_limits.js`: the firmware's rates and the reach window, clamping; `designer/sim.js`'s live frame loop takes its pose from it | `tools/test-leg-limits.mjs`, `npm run test:robot`, `test:sim`, `test:demo` |
+| Python robot sim (`sim/controller_v2.py`) | the controller the firmware ports | no window or soft stops | `guard=True` (default): each leg's commanded length through `leg_limits.clamp_L`, each leg motor's torque through the soft stops before the clip | `sim/test_controller_v2_guard.py`; the robot's scenario suite (`tools/simulate.py --v2`) |
 
 The stops alone already rule out a crossed or unreachable leg: a survey of the whole stop box finds every pose
 reachable and none crossed, but the stops let the leg reach within 6.1° of a dead point (at both knee-in stops, leg
@@ -68,9 +68,14 @@ adapter 1,350. The landing's gearbox torque (79 N m, the leg back-driving the mo
 
 Continuous: **28.5 N m rms** over a 30.2 s time constant, the RS-04 manual's stall table rated row (section 1.3, item
 14; the spec sheet's 40 N m at 50 rpm is a moving rating). The time constant is the winding's R_wc 0.4113 K/W × C_w
-73.4 J/K, as the motor heat model on branch `thermal/rs04-motor-heat` takes them
-([PR #195](https://github.com/Valpatel/gyropup/pull/195), **pending**: `sim/leg_limits.py` reads its
-`exports/leg/thermal/motor_thermal.json` once it merges, and the numbers here are re-derived then).
+73.4 J/K, read from the motor heat model's `exports/leg/thermal/motor_thermal.json`
+([motor-thermal.md](motor-thermal.md), #195).
+
+That model also says the frame, not this limit, is what heats the robot's motors: in today's PA6-CF hip frame a
+motor driving and balancing on a 35 °C day (under 20 N m rms, below this cap) settles at a 143 °C winding against its
+120 °C target and a 116 °C frame face against the 80 °C allowed; only its aluminium-plate options pass. No torque cap
+below the standing torque can fix that, so the rms limit stays the motor's own rating, and until the frame changes
+the firmware's motor temperature rules (no jump over 70 °C, a sit over 80 °C) are the protection.
 
 ### The PLA bench leg (docs/motor-day.md)
 
@@ -81,7 +86,7 @@ firmware cannot see the case temperature, so that stays on the bench checklist.
 
 | Build | Every day | Peak (push only, ≤ 0.35 s) | RS-04 `limit_torque` | RMS | Governing |
 |---|---|---|---|---|---|
-| robot | 61 N m | 69 N m | 69 N m | 28.5 N m (pending #195) | hip_frame E3o; front_link R1 |
+| robot | 61 N m | 69 N m | 69 N m | 28.5 N m (the motor's rating; the frame's heat is a design fix) | hip_frame E3o; front_link R1 |
 | pla_bench | 12 N m | 12 N m | 12 N m | the 50 °C case rule | motor-day derating; first failure wheel_link R1w at 15 |
 
 ## 3. What the 120 N m motor buys
@@ -128,11 +133,9 @@ Re-run them when the FEA summary, the motor-day derating, the stops or the motor
 
 ## 5. Not done
 
-- The playground's `designer/leg_limits.js` is not yet called from `designer/sim.js`: the landing highlights reel
-  hash-binds `sim.js`, and the gamepad PR changes the same loop and re-records the reel. The hook is
-  `const cmd = legLimits.step(state, motionDt, state.robot.info)` before the bob, `cmd.*` for the pose and the drive,
-  and `legLimits.fit(...)` into `setPose`.
-- The Python robot sim (`sim/controller_v2.py`) has neither the window nor the soft stops.
-- The HIL (`firmware/balance/hil/`) was not re-run for this change; its results predate the per-build cap.
-- The RMS limit and its time constant are pending #195.
-- The firmware cannot see the PLA leg's motor-face temperature.
+- The HIL (`firmware/balance/hil/`) was not re-run for this change; its results predate the per-build cap. It needs
+  the bench's MCU and emulators.
+- The firmware cannot see the PLA leg's motor-face temperature: on the bench, stop when a motor case passes 50 °C
+  (6.1 N m held indefinitely in a 25 °C room; the 12 N m cap held reaches it in about 62 minutes,
+  [motor-thermal.md](motor-thermal.md)).
+- The robot's hip frame runs its motors too hot (above): a frame decision, not a limit.
