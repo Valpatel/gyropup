@@ -1,36 +1,18 @@
 {
  "too_big": [],
- "print_hours": 58.8,
- "printed_g": 1462,
+ "print_hours": 61.0,
+ "printed_g": 1156,
  "stand_mm": [
   200.0,
   200.0,
   150.0
  ],
- "note": "printed_g and print_hours are print-plan.json's (the slicer's where sliced); sliced is cad/turret_print.py's own total",
- "sliced": {
-  "grams": 1281.4,
-  "hours": 49.3,
-  "by_material": {
-   "pa6-cf": {
-    "grams": 627.4,
-    "hours": 31.0
-   },
-   "petg": {
-    "grams": 604.1,
-    "hours": 16.0
-   },
-   "petg-clear": {
-    "grams": 41.0,
-    "hours": 1.7
-   },
-   "tpu95": {
-    "grams": 8.9,
-    "hours": 0.6
-   }
-  },
-  "file": "exports/turret/print/print.json"
- },
+ "note": "printed_g and print_hours mix current sliced estimates with rough estimates; sliced includes only accepted current rows",
+ "pictures": [
+  "turret-bench-level-iso.png",
+  "turret-bench-level-front.png",
+  "turret-bench-aimed-iso.png"
+ ],
  "orders": {
   "sellers": [
    "Waveshare",
@@ -45,7 +27,6 @@
    "McMaster-Carr",
    "VXB Bearings",
    "SendCutSend",
-   "Seeed Studio",
    "The Power Tool Store",
    "Caldwell",
    "AbleNet",
@@ -53,14 +34,12 @@
    "Out of Darts",
    "IWISS",
    "FYSETC",
-   "RockAuto",
-   "Pyrodrone",
    "Newark",
+   "RockAuto",
    "LCSC",
-   "Jameco",
-   "Farnell"
+   "Jameco"
   ],
-  "grand_total_usd": 3016.18,
-  "lines": 151
+  "grand_total_usd": 2000.1,
+  "lines": 146
  }
 }
