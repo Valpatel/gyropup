@@ -2,7 +2,7 @@
 # cad/turret_dossier.py registers (exports/dossier-geometry.json). The design story is docs/turret-sections.md.
 id: S1-base
 title: Base and pan drive
-purpose: Carry the turret on the plinth and turn it continuously, 3:1 off an STS3215, with an absolute index at pan 0
+purpose: Carry the turret on the TM face and turn it continuously, 3:1 off an STS3215, with an absolute index at pan 0
 requirements:
 - R2
 - R9
@@ -130,10 +130,10 @@ interfaces:
   owner: S1-base
 parts:
 - id: pan_base
-  function: 'Carries the turret on the plinth''s top (the TM face): holds the 61810''s outer race, the pan servo, the DT receptacle,
+  function: 'Carries the turret on the TM face (the head's riser or the stand, D76): holds the 61810''s outer race, the pan servo, the DT receptacle,
     the bumper''s tabs and the slip ring''s carrier'
   interfaces:
-  - I-plinth-base
+  - I-stand-tm
   - I-pan-outer
   - I-clamp-base
   - I-pan-servo

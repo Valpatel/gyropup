@@ -1,11 +1,12 @@
-"""The turret's power from its one XT30 input (D66), with the D68 flywheels: every supply, the ring, the stand's rocker.
+"""The turret's power from its one input (the DT12's pins 1-4 since D76), with the D68 flywheels: every supply, the ring,
+the stand's rocker.
 
     .venv/bin/python sim/turret_power.py      # writes exports/turret/e2e/power.json and power.png (~2 min: run it on a GB10)
 
 The chain (docs/turret-wiring.md 4, docs/turret-sections.md 7): a supply (one DCB609 in 20 V mode on the stand, 15 V
 empty under load to 20.5 V full; or Gyropup's 10S bus, 30 V near empty to 42 V full) behind its source resistance (the
-pack or bus, the leads, the fuses, the rocker, the XT30: est) -> the plinth's input node. On that node: the J4012 (a
-constant power, up to 48 W: 40 W module + 8 W carrier, fan and SSD, est), and the head branch through its 10 A fuse to
+pack or bus, the leads, the fuses, the rocker, the DT12: est) -> the turret's input node. On that node, since D76, only
+the head branch (D66's J4012, a constant 25-48 W on this node, is gone: its load is kept in the model at 0 W), through its 10 A fuse to
 the base board, which takes the pan servo's 12 V (D36V50F12, 90 %) and sends the rest up the slip ring's three
 paralleled +BUS circuits and back on three GND circuits (each circuit 2 x 250 mm of the ring's 28 AWG leads, 0.107 Ohm,
 plus a contact of 10 or 60 mOhm) to the bay's bank (2 x 470 uF 63 V). On the bank: the flywheel rail (TDK i6A4W, buck
@@ -59,12 +60,12 @@ PLAN = {
     'esc_eff': 0.95, 'esc_i_limit': 10.0, 'ramp_s': 0.8,
     'servo': {'v': 12.0, 'cap_a': 1.5, 'move_a': 0.6, 'hold_a': 0.15, 'reg_eff': 0.90},
     'logic_w': {'typical': 3.0, 'peak': 5.0},
-    'j4012_w': {'typical': 25.0, 'peak': 48.0},
+    'j4012_w': {'typical': 0.0, 'peak': 0.0},                 # D76: no computer on the turret (D66's J4012: 25 / 48 W)
     # D70: the stand's switch is DC-rated for 15 A or more: a Blue Sea 6006 battery switch (48 V DC, 275 A continuous)
     # replaces the Bulgin R13244AAAA rocker (10 A 28 V DC), which the 800 ms / 10/s case put at 11-14 A on the empty pack
     'rocker': {'part': 'blue-sea-6006', 'rating_a': 275.0, 'rating_v': 48.0, 'was': {'part': 'bulgin-r13244aaaa', 'rating_a': 10.0}},
     'game_per_min': {'arm_s': 30.0, 'spinups': 4, 'bursts': 4, 'shots_per_burst': 8, 'aim_moving_frac': 0.3, 'feed_step_s': 0.1},
-    'source': 'D66 (the input), D68 (the flywheels: X2216 1400 KV, the trimmed ~11.31 V rail, AM32 10 A, the 800 ms ramp); '
+    'source': 'D66, D76 (the input), D68 (the flywheels: X2216 1400 KV, the trimmed ~11.31 V rail, AM32 10 A, the 800 ms ramp); '
               'docs/turret-wiring.md 4-5; the converters\' data sheets; est where marked',
 }
 

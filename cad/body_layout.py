@@ -404,6 +404,13 @@ WHEEL_CONNECTORS_G = 45.0       # D69: a DTP 4-way and a DT 6-way pair a wheel, 
 HARNESS_G = 400.0                # every wire and connector of the body (est; docs/body-electrical.md lists them)
 LEG_STOPS_EXTRA_G = 200.0        # per leg: the hip frame's 13 mm flanges and the stop redesign (main cdda86d, 2026-10-27: 'roughly
                                  # 0.2 kg' over leg.json's 9.28 kg; D53 says 204 g) until exports/leg/leg.json carries them
+# The RS-04's mass in the ledger: 1.51 kg, RobStride's spec PDF (research/actuator-interfaces.md: the manual says 1.42 kg,
+# which exports/leg/bom.json carries from catalog/leg_actuators.json). The owner weighed four boxed motors at 7 kg on
+# 2026-11-03 and judged "more likely 1.51kg + some extra cables". The leg's own record keeps 1.42 until the leg is rebuilt;
+# the ledger adds the difference at each motor (leg_rows).
+RS04_LEDGER_G = 1510.0
+RS04_BASIS = ('RobStride RS-04 spec PDF, 1.51 kg (the manual\'s 1.42 kg is in exports/leg/bom.json); the owner weighed four boxed '
+              'motors at 7 kg, 2026-11-03: "more likely 1.51kg + some extra cables"')
 LEG_TOTAL_BEFORE_STOPS_G = 9282  # leg.json's mass_g.total that the 0.2 kg was announced against: once the leg publishes another
                                  # total (its stops and the strength fixes in), the ledger takes that total as it is
 
@@ -546,7 +553,7 @@ def leg_rows(h_mm=300.0):
     legs = bf.legs(h_mm)
     bom = {r['key']: r for r in json.loads((R / 'exports/leg/bom.json').read_text())['per_leg']}
     each = lambda k: bom[k]['mass_g_each'] if k in bom else 0.0
-    bought = {'motor_front': each('robstride-rs-04'), 'motor_rear': each('robstride-rs-04'),
+    bought = {'motor_front': RS04_LEDGER_G, 'motor_rear': RS04_LEDGER_G,
               'wheel_tyre': wheel_g() * D69_WHEEL['rotor_share'], 'wheel_hub': wheel_g() * (1 - D69_WHEEL['rotor_share']),
               'bearing_61812_front': each('bearing_61812'), 'bearing_61812_rear': each('bearing_61812'),
               'apex_61812': 2 * each('bearing_61812'), 'knee_bearing_front_in': each('bearing_6301'), 'knee_bearing_front_out': each('bearing_6301'),
@@ -580,7 +587,7 @@ def leg_rows(h_mm=300.0):
                                                               'screw_m5x25', 'screw_m5x30', 'insert_m5') if k in bom}
     for side, sy in (('L', 1.0), ('R', -1.0)):
         rows.append((f'{side}.small_hardware', sum(rest.values()), (0.0, sy * (bp.y_off() + 30.0), 0.0)))
-    extra = leg_stops_extra_g()[0]
+    extra = leg_stops_extra_g()[0] + 2 * (RS04_LEDGER_G - each('robstride-rs-04'))   # the RS-04 at 1.51 kg, not the BOM's
     if wheel_is_d69_override():                           # D69's wheel in place of the BotWheel leg.json counts
         extra += wheel_g() - each('odrive-botwheel')
     for side, sy in (('L', 1.0), ('R', -1.0)):            # to leg.json's total (its own count of every part)
@@ -641,7 +648,7 @@ def ledger(L=None, parts=None, stage='P3'):
         groups.setdefault(group, 0.0)
         groups[group] += g
     for n, g, c in leg_rows():
-        add('legs', n, g, c, 'CAD (printed PA6-CF solids) and exports/leg/bom.json')
+        add('legs', n, g, c, RS04_BASIS if n.endswith(('.motor_front', '.motor_rear')) else 'CAD (printed PA6-CF solids) and exports/leg/bom.json')
     for n, g, c, grp in frame_rows(parts, stage):
         add(grp, n, g, c, 'CAD (sheet and printed solids)' if grp == 'frame' else 'CAD (cad/body_shell.py, printed)')
     for it in L['items']:
