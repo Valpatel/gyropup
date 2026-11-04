@@ -74,6 +74,10 @@ int gp_host_set(const char *key, float v)
     else if (!strcmp(key, "sit_L")) cfg.sit_L = v;
     else if (!strcmp(key, "wheel_dir_left")) cfg.wheel_dir[0] = (int8_t)v;
     else if (!strcmp(key, "wheel_dir_right")) cfg.wheel_dir[1] = (int8_t)v;
+    else if (!strcmp(key, "build")) { /* the leg build's torque limits (gp_limits.h): 0 the PLA bench leg, 1 the robot's */
+        gp_guard_limits((uint8_t)v, &cfg.lim);
+        cfg.ctl.cap_nm = cfg.ctl.everyday_nm = cfg.lim.everyday_nm;
+    }
     else return 0;
     return 1;
 }

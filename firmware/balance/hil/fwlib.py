@@ -42,7 +42,8 @@ class Snapshot(C.Structure):
                 + [('phi', F * 4), ('w', F * 4), ('misses', U * 4)]
                 + [(n, U) for n in ('tx_drops', 'can_rx', 'imu_packets', 'imu_crc_errors', 'cutoff')]
                 + [(n, F) for n in ('vload', 'iavg', 'ilimit', 'bus_scale', 'push_ilimit', 'push_scale')]
-                + [('overcharge', U), ('vhigh', F), ('regen_scale', F)])
+                + [('overcharge', U), ('vhigh', F), ('regen_scale', F)]
+                + [('cap_nm', F), ('rms_max_nm', F), ('build', U), ('guarded', U), ('windowed', U)])
 
 
 def library_candidates() -> list:

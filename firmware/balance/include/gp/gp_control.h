@@ -29,6 +29,9 @@ typedef struct {
     gp_leg_gains tuck;  /* in the air after a jump's push */
     float leg_ff_n;     /* the weight each leg holds up, N */
     float theta_trim;   /* rad added to the estimated pendulum angle (calibrated on the robot, B13) */
+    float cap_nm;       /* each leg motor's torque cap now: the build's every-day cap, its peak in a jump's push, less
+                         * when a motor's rms is over its limit (the supervisor sets it every tick; gp_limits.h) */
+    float everyday_nm;  /* the build's every-day cap: the soft stops brake with at most this */
 } gp_ctl_params;
 
 /* sim/controller.py Command */
@@ -75,6 +78,8 @@ typedef struct {
     gp_fb_polar leg[2];
     bool leg_ok[2];
     uint8_t clipped;  /* bit per output that the torque limit cut: 0-3 legs (LF LR RF RR), 4-5 wheels */
+    uint8_t guarded;  /* bit per leg motor (LF LR RF RR) whose torque a soft stop changed (gp_guard.h) */
+    uint8_t windowed; /* bit per leg (L R) whose commanded length the lean's window clamped */
 } gp_ctl_out;
 
 typedef struct {

@@ -20,6 +20,9 @@ jobs:
           arm-none-eabi-gcc --version | head -1
           cmake --version | head -1
 
+      - name: The leg limits header is current (exports/leg/limits.json, docs/leg-protection.md)
+        run: python3 firmware/balance/tools/gen_limits.py --check
+
       - name: MCU firmware (STM32 HAL fetched at configure time)
         run: |
           cmake -S firmware/balance -B build/fw-mcu -DCMAKE_TOOLCHAIN_FILE="$PWD/firmware/balance/cmake/arm-none-eabi.cmake"
@@ -31,6 +34,12 @@ jobs:
           cmake -S firmware/balance -B build/fw-host
           cmake --build build/fw-host -j
           ctest --test-dir build/fw-host --output-on-failure
+
+      - name: Host unit tests with the rig built for the robot's leg (-DGP_RIG_BUILD=robot)
+        run: |
+          cmake -S firmware/balance -B build/fw-host-robot -DGP_RIG_BUILD=robot
+          cmake --build build/fw-host-robot -j
+          ctest --test-dir build/fw-host-robot --output-on-failure
 
       - uses: actions/upload-artifact@v4
         with:

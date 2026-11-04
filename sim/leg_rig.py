@@ -364,6 +364,8 @@ def run(sc: Scenario, half_mass: float, video: Path | None = None, meshes: dict 
     joint = {'knee_f': 0.0, 'knee_r': 0.0, 'hip_f': 0.0, 'hip_r': 0.0, 'apex': 0.0}   # the joints' real forces, every step: in a landing
     jb = {'knee_f': m.body('lower_f').id, 'knee_r': m.body('lower_r').id,  # the links' own inertia takes much of the axle's
           'hip_f': m.body('upper_f').id, 'hip_r': m.body('upper_r').id}    # spike, so statics on the axle force overstates them
+    phases = {}                                      # the same peaks per phase of a jump: 'push' (the motors at their cap,
+                                                     # the legs mid-range) and 'after' (the flight and the landing)
     for k in range(steps):
         t = k * m.opt.timestep
         L_cmd, mode = command(sc, t, state)
@@ -404,6 +406,16 @@ def run(sc: Scenario, half_mass: float, video: Path | None = None, meshes: dict 
             joint[n] = max(joint[n], float(np.linalg.norm(d.cfrc_int[b][3:6])))
         fa = [d.efc_force[i] for i in range(d.nefc) if d.efc_type[i] == mujoco.mjtConstraint.mjCNSTR_EQUALITY]
         joint['apex'] = max(joint['apex'], float(np.linalg.norm(fa)) if fa else 0.0)   # the apex's connect: the lower links' push
+        if sc.name.startswith('jump'):
+            ph = phases.setdefault('push' if mode == 'push' else 'after' if state.get('pushed') else 'crouch', {})
+            for n in gear:
+                v = leg.v[n]
+                ph['gearbox_nm'] = max(ph.get('gearbox_nm', 0.0), abs(float(d.actuator_force[leg.a[n]] - m.dof_armature[v] * d.qacc[v]
+                                                                             - m.dof_damping[v] * d.qvel[v])))
+            for n, b in jb.items():
+                ph[n + '_n'] = max(ph.get(n + '_n', 0.0), float(np.linalg.norm(d.cfrc_int[b][3:6])))
+            ph['apex_n'] = max(ph.get('apex_n', 0.0), float(np.linalg.norm(fa)) if fa else 0.0)
+            ph['motor_nm'] = max(ph.get('motor_nm', 0.0), *(abs(float(d.actuator_force[leg.a[n]])) for n in gear))
         if k % 4 == 0:
             rec.append(sample(m, d, leg, t, state))
         if vw and k % every == 0:
@@ -415,6 +427,8 @@ def run(sc: Scenario, half_mass: float, video: Path | None = None, meshes: dict 
     res['peak_gearbox_nm'] = round(max(gear.values()), 1)          # the rotor's inertia shows here, not in the motor torque
     res['gearbox_over_peak_ms'] = round(max(over.values()) * 1000, 1)
     res['peak_joint_force_n'] = {k: round(v, 1) for k, v in joint.items()}          # dynamic, every step
+    if phases:
+        res['phase_peaks'] = {k: {n: round(v, 1) for n, v in ph.items()} for k, ph in phases.items()}
     return res
 
 

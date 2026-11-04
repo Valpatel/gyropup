@@ -6,6 +6,7 @@
 #include <string.h>
 
 #include "gp/gp_config.h"
+#include "gp/gp_limits.h"
 #include "gp/gp_model.h"
 #include "gp/gp_rs04.h"
 
@@ -83,6 +84,11 @@ void gp_config_default(gp_config *c, uint8_t profile)
     }
     c->ctl.tuck = (gp_leg_gains){GP_TUCK_KP_L, GP_TUCK_KD_L, c->ctl.legs.kp_th, c->ctl.legs.kd_th};
     c->ctl.theta_trim = 0.0f;
+    /* the torque limits of the leg it drives: the robot's own leg, or on the rig the build's (the PLA bench leg unless
+     * built with -DGP_RIG_BUILD=robot): the weakest leg is the default */
+    gp_guard_limits(profile == GP_PROFILE_ROBOT ? (uint8_t)GP_BUILD_ROBOT : (uint8_t)GP_RIG_BUILD, &c->lim);
+    c->ctl.cap_nm = c->lim.everyday_nm;
+    c->ctl.everyday_nm = c->lim.everyday_nm;
 }
 
 void gp_app_init(gp_app *a, const gp_config *cfg, uint32_t now_us)
@@ -99,6 +105,7 @@ void gp_app_init(gp_app *a, const gp_config *cfg, uint32_t now_us)
     a->bus_scale = 1.0f;
     a->regen_scale = 1.0f;
     a->ilimit = cfg->i_peak;
+    a->cap_now = cfg->lim.everyday_nm;
 }
 
 /* ======================================================================================== receiving */
@@ -301,7 +308,7 @@ static void boot_request(gp_app *a, int i)
     switch (a->mot[i].boot_step) {
     case B_STOP: gp_rs04_stop(id, false, &f); break;
     case B_W_MODE: gp_rs04_write_u8(id, GP_RS04_P_RUN_MODE, 0, &f); break;
-    case B_W_LIMIT: gp_rs04_write_f32(id, GP_RS04_P_LIMIT_TORQUE, GP_RS04_LIMIT_TORQUE, &f); break;
+    case B_W_LIMIT: gp_rs04_write_f32(id, GP_RS04_P_LIMIT_TORQUE, a->cfg.lim.motor_nm, &f); break;
     case B_W_TIMEOUT: gp_rs04_write_u32(id, GP_RS04_P_CAN_TIMEOUT, GP_RS04_CAN_TIMEOUT, &f); break;
     case B_W_ZERO: gp_rs04_write_u8(id, GP_RS04_P_ZERO_STA, 1, &f); break;
     case B_R_MODE: gp_rs04_read(id, GP_RS04_P_RUN_MODE, &f); break;
@@ -335,7 +342,7 @@ static void boot_reply(gp_app *a, int i, const gp_rs04_msg *msg)
         }
         ok = p->ok;
         if (s == B_R_MODE) bad = p->raw[0] != 0;
-        if (s == B_R_LIMIT) bad = fabsf(gp_rs04_param_f32(p) - GP_RS04_LIMIT_TORQUE) > 0.01f;
+        if (s == B_R_LIMIT) bad = fabsf(gp_rs04_param_f32(p) - a->cfg.lim.motor_nm) > 0.01f;
         if (s == B_R_TIMEOUT) bad = gp_rs04_param_u32(p) != GP_RS04_CAN_TIMEOUT;
         if (s == B_R_ZERO) bad = p->raw[0] != 1;
         if (s == B_R_VBUS) m->vbus = gp_rs04_param_f32(p);
@@ -473,6 +480,16 @@ static void check_limp(gp_app *a)
         const float L = leg_length(a, s);
         if (L < GP_L_MIN_M || L > GP_L_MAX_M) { limp(a, GP_R_LEG_WINDOW); return; }
     }
+    /* each motor within its stops, give or take the sleeve's squeeze at the fault torque: past that a stop post is
+     * broken or a zero has slipped, and the five-bar may be crossed or folded through a dead point */
+    for (int i = 0; i < 4; i++) {
+        const bool front = i % 2 == 0;
+        if (!gp_guard_angle_ok(a->mot[i].phi, front ? GP_FB_STOP_FRONT_IN : GP_FB_STOP_REAR_OUT,
+                               front ? GP_FB_STOP_FRONT_OUT : GP_FB_STOP_REAR_IN)) {
+            limp(a, GP_R_JOINT_RANGE);
+            return;
+        }
+    }
     if (a->have_vbus && a->vbus > GP_VBUS_OVER_V) { limp(a, GP_R_OVERVOLT); return; }
     if (a->cfg.imu_required && a->mode != GP_MODE_ARMING) {
         if (!imu_fresh(a)) { limp(a, GP_R_IMU); return; }
@@ -500,6 +517,15 @@ static void update_flags(gp_app *a)
     a->people = people;
 }
 
+static float motor_temp_max(const gp_app *a)
+{
+    float t = -1e9f;
+    for (int i = 0; i < 4; i++) {
+        if (a->mot[i].have) t = fmaxf(t, a->mot[i].temp_c);
+    }
+    return t;
+}
+
 static uint8_t jump_refusal(const gp_app *a)
 {
     if (a->mode != GP_MODE_RUN) return GP_J_NOT_RUNNING;
@@ -507,6 +533,8 @@ static uint8_t jump_refusal(const gp_app *a)
     if (a->people) return GP_J_PEOPLE;
     if (!vbus_fresh(a) || a->cutoff || a->overcharge || gp_jump_scale(a->vrest) <= 0.0f) return GP_J_VOLTAGE;
     if (a->sp.jump_height == 0) return GP_J_HEIGHT_ZERO;
+    if (a->jumped && since(a, a->t_jump_end) < (uint32_t)(GP_JUMP_GAP_S * 1e6f)) return GP_J_COOLDOWN;
+    if (a->rms_max > GP_LIM_JUMP_HOT * a->cfg.lim.rms_nm || motor_temp_max(a) > GP_MOTOR_TEMP_JUMP_C) return GP_J_HOT;
     return GP_J_OK;
 }
 
@@ -603,6 +631,7 @@ static void supervise(gp_app *a)
         else if (!link_ok(a) && since(a, a->t_link) >= GP_HEARTBEAT_LOST_US + GP_HEARTBEAT_HOLD_US) why = GP_R_LINK;
         else if (link_ok(a) && !a->sp.run) why = GP_R_JETSON;
         else if (a->people && since(a, a->t_people) >= GP_PEOPLE_SIT_US) why = GP_R_PEOPLE;
+        else if (motor_temp_max(a) > GP_MOTOR_TEMP_SIT_C) why = GP_R_MOTOR_HOT;
         if (why != GP_R_NONE) {
             if (a->mode == GP_MODE_JUMP && (a->jump_phase == GP_JP_PUSH || a->jump_phase == GP_JP_AIR)) {
                 a->stop_pending = true; /* finish the flight and land first; a push is cut short */
@@ -723,6 +752,8 @@ static void jump_legs(gp_app *a, gp_leg_cmd leg[2], bool *wheels)
     case GP_JP_RECOVER:
         if (tp >= GP_JUMP_RECOVER_S) {
             a->jump_phase = GP_JP_NONE;
+            a->t_jump_end = a->now;
+            a->jumped = true;
             a->ctl.height = gp_ctl_height_frac(normal_L(a));
             set_mode(a, GP_MODE_RUN);
             return; /* this tick's legs come from RUN's law */
@@ -909,6 +940,14 @@ void gp_app_tick(gp_app *a, uint32_t now_us, const gp_inputs *in, gp_outputs *ou
         }
     }
     const bool drive = a->mode == GP_MODE_RUN || a->mode == GP_MODE_JUMP || a->mode == GP_MODE_SIT || a->mode == GP_MODE_SETTLE;
+    /* the leg motors' cap: the build's peak in a jump's push only (GP_JUMP_PUSH_MAX_S at most, the legs mid-range),
+     * else its every-day cap; while a motor's rms torque is over its limit, the rms limit */
+    if (a->rms_max > a->cfg.lim.rms_nm) a->hot = true;
+    else if (a->rms_max < 0.9f * a->cfg.lim.rms_nm) a->hot = false;
+    a->cap_now = a->mode == GP_MODE_JUMP && a->jump_phase == GP_JP_PUSH ? a->cfg.lim.peak_nm : a->cfg.lim.everyday_nm;
+    if (a->hot) a->cap_now = fminf(a->cap_now, a->cfg.lim.rms_nm);
+    a->ctl.p.cap_nm = a->cap_now;
+    a->ctl.p.everyday_nm = a->cfg.lim.everyday_nm;
     gp_ctl_step(&a->ctl, &s, &cmd, leg, wheels, &a->out);
 
     /* the motors */
@@ -964,6 +1003,11 @@ void gp_app_tick(gp_app *a, uint32_t now_us, const gp_inputs *in, gp_outputs *ou
     if (!drive && a->mode != GP_MODE_ARMING) {
         memset(a->out.tau, 0, sizeof a->out.tau);
         memset(a->out.wheel, 0, sizeof a->out.wheel);
+    }
+    /* each motor's rms torque, of what it was told (zero when idle: it cools) */
+    a->rms_max = 0.0f;
+    for (int i = 0; i < 4; i++) {
+        a->rms_max = fmaxf(a->rms_max, gp_guard_rms(&a->tau_ms[i], drive ? a->out.tau[i / 2][i % 2] : 0.0f, GP_DT));
     }
     tx_state(a);
     a->mcu_run = a->mode == GP_MODE_ARMING || a->mode == GP_MODE_RUN || a->mode == GP_MODE_JUMP;
@@ -1033,4 +1077,9 @@ void gp_app_snapshot(const gp_app *a, gp_snapshot *s)
     s->overcharge = a->overcharge;
     s->vhigh = a->vhigh;
     s->regen_scale = a->regen_scale;
+    s->cap_nm = a->cap_now;
+    s->rms_max_nm = a->rms_max;
+    s->build = a->cfg.lim.build;
+    s->guarded = a->out.guarded;
+    s->windowed = a->out.windowed;
 }
