@@ -29,7 +29,7 @@ lan=""
 names=""
 list=0
 
-usage() { sed -n '2,24p' "$0" | sed 's/^# \{0,1\}//'; }
+usage() { awk 'NR == 1 { next } /^#/ { sub(/^# ?/, ""); print; next } { exit }' "$0"; }
 die() { echo "install.sh: $*" >&2; exit 2; }
 
 while [ $# -gt 0 ]; do
@@ -71,7 +71,7 @@ root="${root%/}/"
 live=0
 if [ "$root" = "/" ] && [ "$dry" = 0 ]; then
   live=1
-  [ "$(id -u)" = 0 ] || die "installing on this system needs root: sudo $0 $* (or --dry-run, or --root DIR)"
+  [ "$(id -u)" = 0 ] || die "installing on this system needs root: run it again with sudo (or --dry-run, or --root DIR)"
 fi
 [ -n "$names" ] || names="${root}etc/gyropup/can-names.conf"
 
@@ -109,17 +109,19 @@ remove() {
 }
 
 # ---------------------------------------------------------------------------------------------- stable names
-valid_name() { [[ "$1" =~ ^[A-Za-z][A-Za-z0-9_-]{0,14}$ ]] && ! [[ "$1" =~ ^can[0-9]+$ ]]; }
+# No "-": systemd escapes it in the device unit gyropup-can@.service binds to, so a hyphenated name never comes up.
+valid_name() { [[ "$1" =~ ^[A-Za-z][A-Za-z0-9_]{0,14}$ ]] && ! [[ "$1" =~ ^can[0-9]+$ ]]; }
 name_rules="# Gyropup (deploy/jetson/install.sh): stable names for USB CAN adapters, from /etc/gyropup/can-names.conf.
 # Generated: edit can-names.conf and run install.sh again."
 if [ -f "$names" ]; then
-  seen=" "
-  while read -r name match rest; do
+  seen=" " seen_match=" "
+  while read -r name match rest || [ -n "${name:-}" ]; do     # the last line counts without a newline too
     case "$name" in ''|'#'*) continue ;; esac
     [ -z "${rest:-}" ] || die "$names: one name and one match a line: '$name $match $rest'"
-    valid_name "$name" || die "$names: '$name' is not a usable interface name (1-15 of A-Z a-z 0-9 _ -, a letter first, not canN)"
+    valid_name "$name" || die "$names: '$name' is not a usable interface name (1-15 of A-Z a-z 0-9 _, a letter first, not canN)"
     case "$seen" in *" $name "*) die "$names: '$name' is named twice" ;; esac
-    seen="$seen$name "
+    case "$seen_match" in *" $match "*) die "$names: '$match' is given two names" ;; esac
+    seen="$seen$name " seen_match="$seen_match$match "
     key="${match%%=*}" value="${match#*=}"
     [[ "$value" =~ ^[A-Za-z0-9._:+-]+$ ]] || die "$names: '$match' has characters a udev match cannot take"
     case "$key" in
@@ -180,7 +182,8 @@ if [ "$live" = 1 ]; then
   if [ "$changed" -gt 0 ]; then
     systemctl daemon-reload
     udevadm control --reload
-    udevadm trigger --subsystem-match=net --action=add
+    udevadm trigger --subsystem-match=net --attr-match=type=280 --action=add   # CAN interfaces only
+    echo "note: a new or changed name applies when the adapter is next plugged in (unplug it and plug it back)"
   fi
   if [ "$enable_bridge" = 1 ]; then
     systemctl enable --now gyropup-rs04-bridge.service

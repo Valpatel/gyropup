@@ -32,14 +32,17 @@ and never overwritten. CI runs its dry run, a staged install, the idempotence, t
 | `/etc/gyropup/rs04-bridge.env` | `IFACE`, `PROFILE` (`pla-bench`), `PORT` (yours to edit) |
 
 The Jetson's own CAN controllers (mttcan, on the module) are left alone: on the J501 the robot's bus C is its `can0`
-(docs/body-electrical.md 4), which the Jetson's software brings up itself.
+(docs/body-electrical.md 4). Nothing configures it yet: that belongs to the robot's own software, which is not
+written (below).
 
 ## Stable names
 
 A USB adapter is `can0`, `can1`… in the order it appears, after the module's own ports. To give each a fixed name,
 run `sudo deploy/jetson/install.sh --list-can`, copy [`can-names.conf.example`](can-names.conf.example) to
 `/etc/gyropup/can-names.conf`, name each adapter by its USB port (`path=`) or its serial (`serial=`), and run
-install.sh again. Then set `IFACE=` in `/etc/gyropup/rs04-bridge.env` to that name.
+install.sh again; a new name applies when the adapter is next plugged in. Name the PCAN-USB `rs04`: that is the
+bridge's default interface (`IFACE=rs04` in `/etc/gyropup/rs04-bridge.env`), never `can0`, which on the J501 is the
+module's own port on bus C. Names use letters, digits and `_` only.
 
 ## The RS-04 bridge on the robot
 

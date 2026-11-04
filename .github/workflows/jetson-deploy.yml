@@ -13,9 +13,11 @@ on:
       - 'tools/test_check_hardware.py'
       - 'firmware/balance/include/**'   # the hardware configs' sourced values
       - 'firmware/balance/src/**'
-      - 'exports/motor-day/**'
-      - 'exports/leg/thermal/**'
-      - 'docs/purchases.md'
+      - 'docs/**'                       # the folders' links point into these
+      - 'references/**'
+      - 'catalog/**'
+      - 'designer/kit/rs04/**'
+      - 'exports/**'
       - '.github/workflows/jetson-deploy.yml'
   push:
     branches: [main]

@@ -11,7 +11,7 @@ Type=simple
 User=gyropup-bridge
 Group=gyropup-bridge
 WorkingDirectory=@CHECKOUT@
-Environment=IFACE=can0 PROFILE=pla-bench PORT=8765 PYTHONDONTWRITEBYTECODE=1 PYTHONUNBUFFERED=1
+Environment=IFACE=rs04 PROFILE=pla-bench PORT=8765 PYTHONDONTWRITEBYTECODE=1 PYTHONUNBUFFERED=1
 EnvironmentFile=-/etc/gyropup/rs04-bridge.env
 ExecStart=/usr/bin/python3 -m rig.rs04_bridge --iface ${IFACE} --profile ${PROFILE} --port ${PORT} $BRIDGE_LAN
 Restart=on-failure

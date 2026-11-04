@@ -64,7 +64,7 @@ CAN id, joint, firmware, zero offset) from the motor tool's Config → Export. M
 
 | Unit | uid | CAN id | Joint | Firmware | Zero | Mass |
 |---|---|---|---|---|---|---|
-| 1-4 | not scanned yet | 127 (factory) | not assigned | – | not set | – |
+| 1-4 | not scanned yet | not scanned (a new motor answers at 127) | not assigned | – | not set | – |
 
 ## Bring-up and tests
 

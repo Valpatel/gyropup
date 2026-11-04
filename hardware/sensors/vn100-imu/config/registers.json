@@ -14,9 +14,9 @@
     "baud": "register 5, serial baud rate: 921600"
   },
   "sources": {
-    "boot.ascii_output_off": {"contains": "firmware/balance/src/mcu/board.c"},
-    "boot.binary_output": {"contains": "firmware/balance/src/mcu/board.c"},
-    "boot.baud": {"contains": "firmware/balance/src/mcu/board.c"}
+    "boot.ascii_output_off": {"contains": "firmware/balance/src/mcu/board.c", "count": 2},
+    "boot.binary_output": {"contains": "firmware/balance/src/mcu/board.c", "count": 2},
+    "boot.baud": {"contains": "firmware/balance/src/mcu/board.c", "count": 1}
   },
   "changes": [
     {"version": 1, "date": "2026-11-03", "what": "first record (issue #210)"}

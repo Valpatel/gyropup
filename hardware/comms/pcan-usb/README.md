@@ -49,5 +49,7 @@ The adapter's part of the [RS-04 bring-up](../../actuators/rs04/bring-up.md), st
 
 ## Open questions
 
-- The exact model (isolated or not) and its serial: `sudo deploy/jetson/install.sh --list-can` shows the serial.
+- The exact model (isolated or not) and its serial. `sudo deploy/jetson/install.sh --list-can` shows a USB serial
+  only if the adapter reports one; a PCAN-USB may not (it has a device number set by PEAK's tools instead), so
+  name it by its USB port (`path=`) and read the serial from its label.
 - A GH1.25-to-D-Sub 9 lead for the RS-04 is not in the repository yet.

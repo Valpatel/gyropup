@@ -98,6 +98,11 @@ class InstallTests(unittest.TestCase):
         self.assertIn('update     /etc/systemd/system/gyropup-can@.service', p.stdout)
         self.assertIn('done: 1 change(s)', p.stdout)
 
+    def test_help_is_the_header_only(self):
+        p = run('--help')
+        self.assertIn('What it installs', p.stdout)
+        self.assertNotIn('set -euo', p.stdout)
+
     def test_stable_names(self):
         conf = self.root / 'names.conf'
         conf.write_text('# the leg buses\ncan_legs_a  path=platform-3610000.usb-usb-0:1.2:1.0\ncan_legs_b serial=0000ABCD\n')
@@ -105,8 +110,12 @@ class InstallTests(unittest.TestCase):
         rules = (self.root / 'etc/udev/rules.d/70-gyropup-can-names.rules').read_text()
         self.assertIn('ENV{ID_PATH}=="platform-3610000.usb-usb-0:1.2:1.0", NAME="can_legs_a"', rules)
         self.assertIn('ENV{ID_SERIAL_SHORT}=="0000ABCD", NAME="can_legs_b"', rules)
+        conf.write_text('rs04 serial=00001234')               # no newline at the end: the line still counts
+        self.stage('--names', str(conf))
+        rules = (self.root / 'etc/udev/rules.d/70-gyropup-can-names.rules').read_text()
+        self.assertIn('ENV{ID_SERIAL_SHORT}=="00001234", NAME="rs04"', rules)
         for bad in ('can0 path=x', 'a_name_that_is_far_too_long path=x', 'legs path=x"; RUN+="/bin/sh', 'legs mac=x',
-                    'legs path=x\nlegs path=y'):
+                    'legs path=x\nlegs path=y', 'legs-a path=x', 'legs path=x\nlegs_b path=x'):
             conf.write_text(bad + '\n')
             p = run('--root', str(self.root), '--checkout', str(REPO), '--names', str(conf), ok=False)
             self.assertEqual(p.returncode, 2, bad)

@@ -38,7 +38,8 @@ def source_problems(rel, d: dict) -> list:
 
     {"c_define": file, "name": NAME}   the #define's number (decimal, float or hex)
     {"json": file, "pointer": "/a/b"}   the value at that JSON pointer
-    {"contains": file, "text": "..."}   the file holds that text verbatim (for strings sent at boot)
+    {"contains": file, "text": "...", "count": n}   the file holds that text verbatim (n times, when given: a
+                                        string sent twice must still be sent twice)
     """
     out = []
     for path, src in d.get('sources', {}).items():
@@ -56,11 +57,17 @@ def source_problems(rel, d: dict) -> list:
         text = f.read_text()
         if 'contains' in src:
             want = src.get('text', have)
-            if want not in text:
-                out.append(f'{rel}: {path}: {f.relative_to(ROOT)} no longer contains {want!r}')
+            n = text.count(want)
+            if n == 0 or ('count' in src and n != src['count']):
+                out.append(f'{rel}: {path}: {f.relative_to(ROOT)} contains {want!r} {n} time(s)'
+                           + (f', not {src["count"]}' if 'count' in src else ''))
             continue
         if 'json' in src:
-            got = _pointer(json.loads(text), src['pointer'])
+            try:
+                got = _pointer(json.loads(text), src['pointer'])
+            except (KeyError, IndexError, TypeError, ValueError):
+                out.append(f'{rel}: {path}: {src["pointer"]} does not resolve in {f.relative_to(ROOT)}')
+                continue
         else:
             m = re.search(rf'^#define\s+{re.escape(src["name"])}\s+(-?0[xX][0-9a-fA-F]+[uUlL]*|[-+0-9.eE]+[fFuUlL]*)\b', text, re.M)
             if not m:

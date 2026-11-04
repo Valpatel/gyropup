@@ -45,8 +45,9 @@ are listed here and left alone.
 ## The skeleton every component folder keeps
 
 `tools/check-hardware.py` checks it in CI (workflow `jetson-deploy`): every folder under a category has these, every
-JSON file parses and names a `gyropup.*` schema, every relative link resolves, every sourced config value still
-matches its source, and this map lists the folder.
+JSON file parses and names a `gyropup.*` schema, every relative link resolves, every sourced value in a
+`gyropup.config/1` file still matches its source, and this map lists the folder. The RS-04 profiles
+(`gyropup.rs04-profile/1`) are checked the same way by `python -m rig.rs04_profiles` and `rig/tests/test_rs04_vectors.py`.
 
 | Part | What goes in it |
 |---|---|

@@ -47,6 +47,14 @@ class Sources(unittest.TestCase):
         self.assertIn('boot.nothing', out)
         self.assertIn('does not exist', out)
 
+    def test_counts_and_a_dangling_pointer(self):
+        d = {'b': {'s': 'VNWRG,75,3,1,01,0028', 'p': 1}, 'sources': {
+            'b.s': {'contains': 'firmware/balance/src/mcu/board.c', 'count': 3},
+            'b.p': {'json': 'exports/motor-day/derating.json', 'pointer': '/no/such/key'}}}
+        out = ' '.join(ch.source_problems('x', d))
+        self.assertIn('2 time(s), not 3', out)
+        self.assertIn('/no/such/key does not resolve', out)
+
 
 class Skeleton(unittest.TestCase):
     def test_a_bare_folder_and_a_bad_inventory_are_reported(self):

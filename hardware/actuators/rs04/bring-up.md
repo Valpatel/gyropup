@@ -32,9 +32,9 @@ flowchart TD
 | # | Do | You should see | Record |
 |---|---|---|---|
 | 1 | Supply off. Measure between CAN H and L at the motor's plug | about 60 ohm (two 120 ohm in parallel) | |
-| 2 | Plug in the PCAN-USB. `ip -details link show can0` | a `can` link from the `peak_usb` driver | |
-| 3 | `sudo ip link set can0 up type can bitrate 1000000` | `state ERROR-ACTIVE` in `ip -details link show can0` | |
-| 4 | `python3 -m rig.rs04_bridge --iface can0` and open `http://127.0.0.1:8765/` | the tool, an orange **REAL HARDWARE** banner after **Connect** | |
+| 2 | Plug in the PCAN-USB. `ip -details link show type can` | a `can` link from the `peak_usb` driver (`can0` on a laptop with no other CAN) | its name |
+| 3 | Laptop: `sudo ip link set can0 up type can bitrate 1000000`. Jetson with [deploy/jetson](../../../deploy/jetson/README.md): already up at 1 Mbit/s | `state ERROR-ACTIVE` in `ip -details link show <name>` | |
+| 4 | Laptop: `python3 -m rig.rs04_bridge --iface can0`. Jetson: `sudo systemctl start gyropup-rs04-bridge` (its interface is `rs04`, the name to give the PCAN-USB in `can-names.conf`); never `can0`, the module's bus C. Then open `http://127.0.0.1:8765/` (from a laptop: through `ssh -L`) | the tool, an orange **REAL HARDWARE** banner after **Connect** | |
 | 5 | Power one motor, **Scan bus** | CAN id 127, its 16-hex-digit uid and firmware version | |
 | 6 | **Config → Export this motor's config** | a JSON file named after its uid | keep it: the as-delivered settings |
 | 7 | **Setup → Set id** to its joint, confirm | the motor is now CAN id 1, 2, 3 or 4 | |

@@ -16,7 +16,7 @@
     "firmware": "the firmware version it reports",
     "zero_offset_rad": "add_offset (0x702B) after the zero was set, as exported",
     "zero_pose": "the pose its zero was set at, as the tool names it",
-    "mass_g": "measured on a scale, in grams (catalog/leg_actuators.json carries the datasheet's 1510 g until then)",
+    "mass_g": "measured on a scale, in grams (catalog/leg_actuators.json: 1420 g in its specs, 1510 g in its notes from the PDF; the scale settles it)",
     "profile": "the build profile its stored settings came from, with its version",
     "exported": "when the export the record came from was taken",
     "notes": "anything else: damage, a fault seen, a swap"
