@@ -1,0 +1,15 @@
+{
+ "what": "the turret's joint limits from its hard stops (cad/turret_limits.py; D77)",
+ "source": "cad/turret.py Geo.tilt_min, Geo.tilt_max (the stop lug on the yoke's stop sectors), CONTINUOUS_PAN",
+ "tilt_deg": {
+  "min": -25.0,
+  "max": 0.0,
+  "positive": "muzzle up",
+  "stops": "hard: the cradle's aluminium stop lug on the -y arm's printed sectors (D48)"
+ },
+ "pan": {
+  "continuous": true,
+  "stop_deg": null
+ },
+ "decision": "D77"
+}

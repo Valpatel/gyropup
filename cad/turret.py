@@ -246,7 +246,11 @@ class Geo:
         self.plate_y = (self.cheek_y[1] - PLATE['rebate'], self.cheek_y[1] - PLATE['rebate'] + SHEET['al6061']['thickness_mm'])
         self.foot_z = (self.rail_z[1] - PLATE['foot_h'], self.rail_z[1])
         self.stop_r = (24.0, 32.0)
+        # the tilt hard stops (deg, + = muzzle up): the stop lug on the yoke's sectors. D77 (2026-11-03) dropped the
+        # "never above horizontal" rule; the upper stop stays at 0 until it moves to the range cad/turret_tilt_range.py
+        # finds (#201, after #196). exports/turret/limits.json (cad/turret_limits.py) carries both to the sims
         self.tilt_min = -25.0
+        self.tilt_max = 0.0
         # pan stack (T frame, mount face z = 0)
         self.foot_t = 5.0
         self.brg_z = 40.0                                        # bottom of the 61810
@@ -994,7 +998,7 @@ def tilt_yoke(G):
     # hard stops on the -y arm's inner face; the cradle's aluminium lug (D48) sits at -90 deg at tilt 0 and sweeps to
     # -115 at -25. The sectors stand YOKE_STOP_PROUD (3.0) off the arm: 1.5 mm onto the lug, 1.0 mm from the -y plate
     w = STOP_HALF_DEG
-    up_face, low_face = -90 + w, -90 + G.tilt_min - w
+    up_face, low_face = -90 + G.tilt_max + w, -90 + G.tilt_min - w
     # each sector clipped to the arm's width: their far ends overhung the arm's edges (never loaded) and left slivers
     # where the faceted arcs crossed them (zero-volume elements in the FEA mesh)
     clip = box(-20.0, 20.0, -a0 - 1.0, -a0 + YOKE_STOP_PROUD + 1.0, b0, zt + 40.0)
