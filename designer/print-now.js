@@ -69,13 +69,18 @@ export async function mountPrintNow(host, fetchImpl = fetch) {
   if (!host) return;
   const links = `<p class="print-now-links"><a href="${PLAN}">The motor-day plan (fit checks, assembly, tests) ↗</a>`
     + `<a href="${ZIP}" download>All print files (.zip)</a><a href="${CSV}" download>prints.csv</a></p>`;
-  let body = '', fits = 0;
+  let body = '', fits = 0, ok = false;
+  // Did the reader scroll while the list loaded? Watch their input, not scrollY: scroll anchoring moves scrollY by itself.
+  let moved = false;
+  const onInput = () => { moved = true; };
+  const INPUT = ['wheel', 'touchmove', 'keydown', 'pointerdown'];
+  for (const t of INPUT) globalThis.addEventListener?.(t, onInput, { passive: true, once: true });
   try {
     const res = await fetchImpl(CSV, { cache: 'no-cache' });
     if (!res.ok) throw new Error(`HTTP ${res.status}`);
     const list = steps(parseCsv(await res.text()));
     if (!list.length) throw new Error('no rows');
-    fits = list.filter((x) => x.fit).length;
+    fits = list.filter((x) => x.fit).length; ok = true;
     const tot = list.reduce((a, s) => ({ m: a.m + s.minutes, g: a.g + s.grams, t: a.t + s.tpu }), { m: 0, g: 0, t: 0 });
     body = `<ol class="print-now-list">`
       + list.map((s) => `<li data-order="${s.order}"><span class="num">${s.order}</span><span class="pn-part">${esc(name(s))}`
@@ -87,11 +92,13 @@ export async function mountPrintNow(host, fetchImpl = fetch) {
     body = '<p class="dim">The print list could not be loaded just now; the plan and the package above have every file.</p>';
   }
   host.innerHTML = `<div class="sec">Print these now: the first leg in PLA</div>`
-    + `<p class="lede">The RS-04 motors are in. Print in this order: ${fits ? `the ${fits === 1 ? 'fit check' : `${fits} fit checks`} first, then ` : ''}`
-    + `the rest; start the hip frame once the fits pass. The plan says what to check after each print.</p>${links}${body}`;
+    + `<p class="lede">The RS-04 motors are in. ${ok
+      ? `Print in this order: ${fits ? `the ${fits === 1 ? 'fit check' : `${fits} fit checks`} first, then ` : ''}the rest; start the hip frame once the fits pass. `
+      : ''}The plan says what to check after each print.</p>${links}${body}`;
   host.dataset.ready = '1';
   // The card fills in after the browser has already jumped to #print-now; on a phone the card is ~1,500 px tall and
   // scroll anchoring keeps the content below it still, so the deep link would land past the card. Jump again.
   const loc = globalThis.location;
-  if (loc && loc.hash === `#${host.id}` && typeof host.scrollIntoView === 'function') host.scrollIntoView({ block: 'start' });
+  for (const t of INPUT) globalThis.removeEventListener?.(t, onInput);
+  if (!moved && loc && loc.hash === `#${host.id}` && typeof host.scrollIntoView === 'function') host.scrollIntoView({ block: 'start' });
 }

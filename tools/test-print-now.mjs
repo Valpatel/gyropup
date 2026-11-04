@@ -53,6 +53,7 @@ test('the card renders a row per step and survives a failed fetch', async () => 
     assert.match(bad.innerHTML, /docs-motor-day-md\.html/);
     assert.match(bad.innerHTML, /motor-day-package\.zip/);
     assert.doesNotMatch(bad.innerHTML, /<ol/);
+    assert.doesNotMatch(bad.innerHTML, /Print in this order/, 'no order sentence without a list');
     assert.equal(bad.dataset.ready, '1');
   }
 });
