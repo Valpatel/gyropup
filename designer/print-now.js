@@ -37,9 +37,11 @@ const hours = (min) => `${(min / 60).toFixed(1)} h`;
 export function steps(rows) {
   const by = new Map();
   for (const r of rows) {
-    const n = Number(r.order); if (!Number.isFinite(n)) continue;
+    if (String(r.order ?? '').trim() === '') continue;                      // Number('') is 0: never a step 0
+    const n = Number(r.order); if (!Number.isFinite(n) || n < 1) continue;
     const qty = Number(r.qty) || 1, min = Number(r.minutes_each) || 0, g = Number(r.grams_each) || 0;
-    const s = by.get(n) || { order: n, items: [], minutes: 0, grams: 0, tpu: 0, phase: r.phase };
+    const s = by.get(n) || { order: n, items: [], minutes: 0, grams: 0, tpu: 0, fit: false };
+    if (String(r.phase).trim() === '0') s.fit = true;                        // Phase 0: the fit checks
     s.items.push({ key: r.key, qty, file: r.file, how: r.how });
     s.minutes += qty * min;
     if (r.recipe === 'tpu') s.tpu += qty * g; else s.grams += qty * g;
@@ -67,16 +69,17 @@ export async function mountPrintNow(host, fetchImpl = fetch) {
   if (!host) return;
   const links = `<p class="print-now-links"><a href="${PLAN}">The motor-day plan (fit checks, assembly, tests) ↗</a>`
     + `<a href="${ZIP}" download>All print files (.zip)</a><a href="${CSV}" download>prints.csv</a></p>`;
-  let body = '';
+  let body = '', fits = 0;
   try {
     const res = await fetchImpl(CSV, { cache: 'no-cache' });
     if (!res.ok) throw new Error(`HTTP ${res.status}`);
     const list = steps(parseCsv(await res.text()));
     if (!list.length) throw new Error('no rows');
+    fits = list.filter((x) => x.fit).length;
     const tot = list.reduce((a, s) => ({ m: a.m + s.minutes, g: a.g + s.grams, t: a.t + s.tpu }), { m: 0, g: 0, t: 0 });
     body = `<ol class="print-now-list">`
       + list.map((s) => `<li data-order="${s.order}"><span class="num">${s.order}</span><span class="pn-part">${esc(name(s))}`
-        + `${s.order <= 2 ? ' <span class="tag info">fit check</span>' : ''}</span><span class="pn-t">${hours(s.minutes)}</span>`
+        + `${s.fit ? ' <span class="tag info">fit check</span>' : ''}</span><span class="pn-t">${hours(s.minutes)}</span>`
         + `<span class="pn-g">${s.tpu ? `${Math.round(s.tpu)} g TPU` : `${Math.round(s.grams)} g`}</span><span class="pn-f">${files(s)}</span></li>`).join('')
       + `<li class="pn-tot"><span></span><span class="pn-part">Total</span><span class="pn-t">${hours(tot.m)}</span>`
       + `<span class="pn-g">${(tot.g / 1000).toFixed(2)} kg PLA${tot.t ? ` + ${Math.round(tot.t)} g TPU` : ''}</span><span></span></li></ol>`;
@@ -84,7 +87,11 @@ export async function mountPrintNow(host, fetchImpl = fetch) {
     body = '<p class="dim">The print list could not be loaded just now; the plan and the package above have every file.</p>';
   }
   host.innerHTML = `<div class="sec">Print these now: the first leg in PLA</div>`
-    + `<p class="lede">The RS-04 motors are in. Print in this order: the two fit checks first, then the coupons, then the hip frame `
-    + `once both fits pass. The plan says what to check after each print.</p>${links}${body}`;
+    + `<p class="lede">The RS-04 motors are in. Print in this order: ${fits ? `the ${fits === 1 ? 'fit check' : `${fits} fit checks`} first, then ` : ''}`
+    + `the rest; start the hip frame once the fits pass. The plan says what to check after each print.</p>${links}${body}`;
   host.dataset.ready = '1';
+  // The card fills in after the browser has already jumped to #print-now; on a phone the card is ~1,500 px tall and
+  // scroll anchoring keeps the content below it still, so the deep link would land past the card. Jump again.
+  const loc = globalThis.location;
+  if (loc && loc.hash === `#${host.id}` && typeof host.scrollIntoView === 'function') host.scrollIntoView({ block: 'start' });
 }
