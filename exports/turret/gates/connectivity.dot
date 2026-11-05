@@ -11,21 +11,15 @@ graph connectivity {
     "base_carrier_inserts";
     "base_carrier_screws";
     "bumper_ring";
-    "compute";
-    "compute_shell";
-    "compute_tray" [peripheries=2];
     "dt_plug" [style="rounded,dashed"];
     "dt_receptacle";
-    "eth_jack";
     "index_magnet";
-    "input_fuses";
-    "pan_base";
+    "pan_base" [peripheries=2];
     "pan_bearing";
     "pan_clamp";
     "pan_servo";
     "ring_carrier";
     "slip_ring";
-    "xt30_input";
   }
   subgraph cluster_1 {
     label="body dial"; style=rounded; color=gray60;
@@ -210,13 +204,6 @@ graph connectivity {
   "cartridge_body" -- "laser_mount" [color=orange, label="undeclared"];
   "circlip_50" -- "pan_ring" [color=orange, label="undeclared"];
   "circlip_50" -- "pan_spacer" [color=orange, label="undeclared"];
-  "compute" -- "compute_shell" [color=orange, label="undeclared"];
-  "compute" -- "compute_tray" [color=orange, label="undeclared"];
-  "compute_shell" -- "compute_tray" [color=orange, label="undeclared"];
-  "compute_shell" -- "eth_jack" [color=orange, label="undeclared"];
-  "compute_shell" -- "pan_base" [color=orange, label="undeclared"];
-  "compute_shell" -- "xt30_input" [color=orange, label="undeclared"];
-  "compute_tray" -- "input_fuses" [color=orange, label="undeclared"];
   "cradle" -- "cradle_plate_l" [color=orange, label="undeclared"];
   "cradle" -- "cradle_plate_r" [color=orange, label="undeclared"];
   "cradle" -- "ct_thumbscrew" [color=orange, label="undeclared"];

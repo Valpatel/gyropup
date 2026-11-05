@@ -38,12 +38,6 @@
           "gap_mm": 0.0,
           "overlap_mm3": 0.0,
           "witness": {
-            "volume_integration": {
-              "method": "adaptive BRepGProp GK, requested relative errors 1e-6 and 1e-8",
-              "error_basis": "max(OCCT summed absolute face-error estimates, refinement delta); not a rigorous bound",
-              "max_estimated_error_mm3": 0.007115298416465521,
-              "max_refinement_delta_mm3": 0.007115298416465521
-            },
             "point_a": [
               -3.144918,
               19.970769,
@@ -53,9 +47,15 @@
               -3.144918,
               19.970769,
               160.0
-            ]
+            ],
+            "volume_integration": {
+              "method": "adaptive BRepGProp GK, requested relative errors 1e-6 and 1e-8",
+              "error_basis": "max(OCCT summed absolute face-error estimates, refinement delta); not a rigorous bound",
+              "max_estimated_error_mm3": 0.007115298416465521,
+              "max_refinement_delta_mm3": 0.007115298416465521
+            }
           },
-          "cached": true
+          "cached": false
         },
         "cavity_box": [
           -97.1,
@@ -136,7 +136,7 @@
               135.0
             ]
           },
-          "cached": true
+          "cached": false
         },
         "outside_mm3": 0.0,
         "clearance_mm": 0.0
@@ -172,7 +172,7 @@
               "max_refinement_delta_mm3": 3.270106390118599e-05
             }
           },
-          "cached": true
+          "cached": false
         }
       }
     },
@@ -227,7 +227,7 @@
               135.0
             ]
           },
-          "cached": true
+          "cached": false
         },
         "outside_mm3": 0.362499,
         "clearance_mm": 0.0
@@ -246,12 +246,6 @@
           "gap_mm": 6.345985,
           "overlap_mm3": 0.0,
           "witness": {
-            "volume_integration": {
-              "method": "adaptive BRepGProp GK, requested relative errors 1e-6 and 1e-8",
-              "error_basis": "max(OCCT summed absolute face-error estimates, refinement delta); not a rigorous bound",
-              "max_estimated_error_mm3": 0.000331042325952992,
-              "max_refinement_delta_mm3": 3.270106390118599e-05
-            },
             "point_a": [
               -29.441123,
               41.020359,
@@ -261,9 +255,15 @@
               -27.760704,
               44.73456,
               160.0
-            ]
+            ],
+            "volume_integration": {
+              "method": "adaptive BRepGProp GK, requested relative errors 1e-6 and 1e-8",
+              "error_basis": "max(OCCT summed absolute face-error estimates, refinement delta); not a rigorous bound",
+              "max_estimated_error_mm3": 0.000331042325952992,
+              "max_refinement_delta_mm3": 3.270106390118599e-05
+            }
           },
-          "cached": true
+          "cached": false
         }
       }
     },
@@ -318,7 +318,7 @@
               135.0
             ]
           },
-          "cached": true
+          "cached": false
         },
         "outside_mm3": 0.0,
         "clearance_mm": 0.0
@@ -354,7 +354,7 @@
               "max_refinement_delta_mm3": 3.270106390118599e-05
             }
           },
-          "cached": true
+          "cached": false
         }
       }
     },
@@ -409,7 +409,7 @@
               135.0
             ]
           },
-          "cached": true
+          "cached": false
         },
         "outside_mm3": 0.0,
         "clearance_mm": 0.0
@@ -445,7 +445,7 @@
               "max_refinement_delta_mm3": 3.270106390118599e-05
             }
           },
-          "cached": true
+          "cached": false
         }
       }
     },
@@ -500,7 +500,7 @@
               135.0
             ]
           },
-          "cached": true
+          "cached": false
         },
         "outside_mm3": 0.0,
         "clearance_mm": 0.0
@@ -536,7 +536,7 @@
               "max_refinement_delta_mm3": 3.270106390118599e-05
             }
           },
-          "cached": true
+          "cached": false
         }
       }
     },
@@ -591,7 +591,7 @@
               135.0
             ]
           },
-          "cached": true
+          "cached": false
         },
         "outside_mm3": 0.0,
         "clearance_mm": 0.0
@@ -627,7 +627,7 @@
               "max_refinement_delta_mm3": 3.270106390118599e-05
             }
           },
-          "cached": true
+          "cached": false
         }
       }
     },
@@ -682,7 +682,7 @@
               135.0
             ]
           },
-          "cached": true
+          "cached": false
         },
         "outside_mm3": 0.0,
         "clearance_mm": 0.0
@@ -718,7 +718,7 @@
               "max_refinement_delta_mm3": 3.270106390118599e-05
             }
           },
-          "cached": true
+          "cached": false
         }
       }
     },
@@ -773,7 +773,7 @@
               135.0
             ]
           },
-          "cached": true
+          "cached": false
         },
         "outside_mm3": 0.0,
         "clearance_mm": 0.0
@@ -792,12 +792,6 @@
           "gap_mm": 2.2,
           "overlap_mm3": 0.0,
           "witness": {
-            "volume_integration": {
-              "method": "adaptive BRepGProp GK, requested relative errors 1e-6 and 1e-8",
-              "error_basis": "max(OCCT summed absolute face-error estimates, refinement delta); not a rigorous bound",
-              "max_estimated_error_mm3": 0.000331042325952992,
-              "max_refinement_delta_mm3": 3.270106390118599e-05
-            },
             "point_a": [
               -13.820313,
               -14.15769,
@@ -807,9 +801,15 @@
               -13.820313,
               -14.15769,
               160.0
-            ]
+            ],
+            "volume_integration": {
+              "method": "adaptive BRepGProp GK, requested relative errors 1e-6 and 1e-8",
+              "error_basis": "max(OCCT summed absolute face-error estimates, refinement delta); not a rigorous bound",
+              "max_estimated_error_mm3": 0.000331042325952992,
+              "max_refinement_delta_mm3": 3.270106390118599e-05
+            }
           },
-          "cached": true
+          "cached": false
         }
       }
     },
