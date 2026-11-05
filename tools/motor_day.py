@@ -723,7 +723,8 @@ STEPS = [   # (title, parts added (prefixes), lift (mm along x, y, z) per prefix
 
 def step_visuals():
     """JSON-stable inputs that determine a step picture, excluding editable prose."""
-    return json.loads(json.dumps([st[1:4] for st in STEPS]))
+    # Prefix matching uses the first entry, so lift-map order is part of the picture.
+    return json.loads(json.dumps([[st[1], list(st[2].items()), st[3]] for st in STEPS]))
 
 
 def require_rendered_steps(steps, rendered, items):

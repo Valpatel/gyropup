@@ -45,6 +45,20 @@ class RenderInputs(unittest.TestCase):
         with self.assertRaisesRegex(SystemExit, 'camera'):
             self.check()
 
+    def test_reordered_overlapping_lift_prefixes_are_rejected(self):
+        lift = self.module['STEPS'][2][2]
+        lift.clear()
+        lift.update({'leg_': (1, 0, 0), 'leg_motor': (2, 0, 0)})
+        self.rendered['step_visuals'] = self.module['step_visuals']()
+        before = next(v for key, v in lift.items() if 'leg_motor_front'.startswith(key))
+        pairs = list(lift.items())
+        lift.clear()
+        lift.update(reversed(pairs))
+        after = next(v for key, v in lift.items() if 'leg_motor_front'.startswith(key))
+        self.assertNotEqual(before, after, 'first-prefix renderer really changes the exploded pose')
+        with self.assertRaisesRegex(SystemExit, 'explode offsets'):
+            self.check()
+
     def test_editable_prose_does_not_require_new_pictures(self):
         row = self.module['STEPS'][2]
         self.module['STEPS'][2] = ('New title', *row[1:4], 'New instructions')
