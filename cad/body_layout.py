@@ -414,15 +414,13 @@ RS04_BASIS = ('RobStride RS-04 spec PDF, 1.51 kg (the manual\'s 1.42 kg is in ex
 LEG_TOTAL_BEFORE_STOPS_G = 9282  # leg.json's mass_g.total that the 0.2 kg was announced against: once the leg publishes another
                                  # total (its stops and the strength fixes in), the ledger takes that total as it is
 
-# D71 (docs/decisions.yaml, 2026-10-28): the robot is designed for 37.5 kg (18.75 kg a leg) in every strength case and held
-# under 37.0 kg as built (it replaces D69's 35.5 / 35.0 kg and D57's 32.5 / 32.0 kg); the on-call savings levers stay
-# listed as margin. The sub-budgets split the 37.0 kg: each leg is leg.json with D53's stops (9.48 kg) plus the D69
-# wheel's 1.33 kg over the BotWheel and 40 g for the foot's clamp hardware (10.85 kg); the body and head get the rest
-# (15.3 kg). cad/test_body.py gates every commit on it.
-BUDGET = {'robot_kg': 37.0, 'legs_kg_each': 10.85, 'body_and_head_kg': 15.3, 'design_mass_kg': 37.5, 'design_half_mass_kg': 18.75,
-          'com_x_mm': 10.0, 'com_y_mm': 5.0,
-          'basis': 'D71 (37.0 kg as built, 37.5 kg design; it replaces D69\'s 35.0 / 35.5 kg); legs 2 x 10.85 kg (leg.json + D53 stops '
-                   '+ the D69 wheel at its listed 3.53 kg + the clamp hardware), body and head 15.3 kg'}
+# D79 (docs/decisions.yaml, 2026-11-04): there is no mass budget. The owner took out D71's weight budget, its gate and its
+# margin ("take out the weight budget"): the ledger (ledger()) is information, the robot's total and each part's mass, and
+# the sim, the jump and the strength checks read it. What stays from D71 is the design mass the strength cases and the rig
+# were run at (37.5 kg, 18.75 kg a leg): cad/body_legloads.py, firmware/balance and the HIL read it from here.
+BUDGET = {'design_mass_kg': 37.5, 'design_half_mass_kg': 18.75, 'com_x_mm': 10.0, 'com_y_mm': 5.0,
+          'basis': 'D79: no mass budget (D71\'s 37.0 kg gate and sub-budgets are gone); the strength cases and the rig at D71\'s '
+                   '37.5 kg design mass, 18.75 kg a leg'}
 
 # D69's wheel: a 10 in hoverboard-class hub motor with a 10 x 2.125 pneumatic tyre. exports/leg/bom.json still lists the
 # ODrive BotWheel (2.2 kg) until the leg workstream's foot change lands (issue #25); until then the ledger puts this wheel
@@ -435,8 +433,8 @@ D69_WHEEL = {'key': 'hoverboard-10in-36v-350w', 'mass_g': 3530.0, 'od_mm': 254.0
              'basis': 'D69 wheel: e-gizmo 230300029 lists 3.53 kg with the 10 x 2.125 pneumatic tyre (research/air-tyre-hub-wheels.md 3); '
                       'weigh two before the foot is cut (docs/wheel-change-plan.md W1)'}
 
-# The mass levers of docs/body-next-plan.md 2.3, in its order: scheduled for P2/P3, then on call when the ledger crosses
-# the ceiling (D57). grams < 0 saves mass. 'taken' says how the ledger shows the lever done (a check on the CAD), so the
+# The mass levers of docs/body-next-plan.md 2.3, in its order: scheduled for P2/P3, then on call. D79 took out the ceiling
+# they were held against (D57, D71): they stay listed as savings the owner may take. grams < 0 saves mass. 'taken' says how the ledger shows the lever done (a check on the CAD), so the
 # status is never typed by hand: (key, n, grams, cost_usd, stage, kind, what, taken-check name)
 LEVERS = [
     ('shell_2mm', 1, -240, 0.0, 'P3', 'scheduled', 'shell panels in 2 mm PETG with 1.6 mm ribs instead of 3 mm (PA6-CF at the ear-pod bosses)', 'shell_from_cad'),
@@ -520,26 +518,6 @@ def levers(parts=None, L=None) -> list:
         out.append({'key': key, 'n': n, 'grams': g, 'cost_usd': usd, 'stage': stage, 'kind': kind, 'what': what,
                     'status': 'taken' if taken else 'open'})
     return out
-
-
-def gate(led: dict) -> dict:
-    """D69's gate on a P3 ledger: the ledger as it is, and with every scheduled lever not yet in the CAD taken (their
-    grams as the plan states them), against the ceiling (BUDGET): the robot, each leg, the body and head."""
-    open_g = sum(l['grams'] for l in led['levers'] if l['kind'] == 'scheduled' and l['status'] == 'open')
-    proj = led['total_kg'] + open_g / 1000.0
-    proj_bh = led['body_and_head_kg'] + open_g / 1000.0
-    b = BUDGET
-    legs_each = led['legs_kg'] / 2
-    return {'ceiling_kg': b['robot_kg'], 'gap_kg': round(led['total_kg'] - b['robot_kg'], 3),
-            'open_scheduled_g': open_g, 'with_scheduled_levers_kg': round(proj, 3),
-            'body_and_head_with_levers_kg': round(proj_bh, 3), 'leg_each_kg': round(legs_each, 3),
-            'pass': proj <= b['robot_kg'] + 1e-9 and proj_bh <= b['body_and_head_kg'] + 1e-9 and legs_each <= b['legs_kg_each'] + 1e-9,
-            'on_call_next': [l['key'] for l in led['levers'] if l['kind'] == 'on call' and l['status'] == 'open'][:3],
-            'margin_kg': round(b['robot_kg'] - proj, 3),
-            'on_call_open_g': sum(l['grams'] for l in led['levers'] if l['kind'] == 'on call' and l['status'] == 'open'),
-            'rule': f"the P3 ledger with every scheduled lever taken (the open ones at the plan's grams) under the {b['robot_kg']} kg "
-                    f"ceiling, each leg under {b['legs_kg_each']} kg and the body and head under {b['body_and_head_kg']} kg (D71); "
-                    'over it, the on-call levers go in order before the next order, each with the user\'s or the coordinator\'s word'}
 
 
 def leg_rows(h_mm=300.0):
@@ -674,9 +652,7 @@ def ledger(L=None, parts=None, stage='P3'):
     legs_g = groups.get('legs', 0.0)
     out = {'stage': stage, 'total_kg': round(m / 1000, 2), 'com_mm': [round(v, 1) for v in com], 'groups_kg': {k: round(v / 1000, 3) for k, v in groups.items()},
            'legs_kg': round(legs_g / 1000, 2), 'body_and_head_kg': round((m - legs_g) / 1000, 2), 'rows': rows,
-           'budget': dict(BUDGET), 'leg_extra': leg_stops_extra_g()[1], 'levers': levers(parts, L)}
-    if stage == 'P3':
-        out['gate'] = gate(out)
+           'design': dict(BUDGET), 'leg_extra': leg_stops_extra_g()[1], 'levers': levers(parts, L)}
     return out
 
 
@@ -732,8 +708,7 @@ if __name__ == '__main__':
         print('  ', b)
     if a.ledger:
         led = write_ledger()
-        g = led['P3']['gate']
-        print(f"P1 {led['P1']['total_kg']} kg, P3 {led['P3']['total_kg']} kg (ceiling {g['ceiling_kg']}, gap {g['gap_kg']:+.3f}); "
-              f"with the open scheduled levers {g['with_scheduled_levers_kg']} kg: {'pass' if g['pass'] else 'OVER'}")
+        print(f"P1 {led['P1']['total_kg']} kg, P3 {led['P3']['total_kg']} kg (D79: no budget; legs {led['P3']['legs_kg']} kg, "
+              f"body and head {led['P3']['body_and_head_kg']} kg)")
         for l in led['P3']['levers']:
             print(f"   {l['n']:2} {l['key']:15} {l['grams']:+5} g  {l['stage']} {l['kind']:9} {l['status']}")

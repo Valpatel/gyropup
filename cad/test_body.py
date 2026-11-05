@@ -298,19 +298,14 @@ def test_body_loads_from_the_mount_plane():
 import pytest  # noqa: E402
 
 
-def test_the_mass_ledger_under_the_ceiling():
-    """D71: the robot is designed for 37.5 kg and held under 37.0 kg as built. The P3 ledger, with every scheduled lever
-    of docs/body-next-plan.md 2.3 that is not in the CAD yet taken at its planned grams, stays under 37.0 kg, each leg
-    under 10.85 and the body and head under 15.3; once every scheduled lever is in the CAD the ledger itself must be."""
+def test_the_mass_ledger_is_information():
+    """D79: there is no mass budget (the owner took out D71's gate). The ledger only has to be whole: a total, the legs
+    and the body and head adding up to it, and D71's design mass (37.5 kg, 18.75 kg a leg) for the strength cases."""
     m = json.loads((R / 'exports' / 'body' / 'mass.json').read_text())['P3']
-    g = m['gate']
-    open_ = [l['key'] for l in m['levers'] if l['kind'] == 'scheduled' and l['status'] == 'open']
-    print(f"\nmass ledger P3 {m['total_kg']} kg (ceiling {g['ceiling_kg']}, gap {g['gap_kg']:+.3f} kg); legs {g['leg_each_kg']} kg each; "
-          f"with the open scheduled levers {open_} ({g['open_scheduled_g']} g): {g['with_scheduled_levers_kg']} kg")
-    assert m['budget']['robot_kg'] == 37.0 and m['budget']['design_mass_kg'] == 37.5 and m['budget']['legs_kg_each'] == 10.85
-    assert g['pass'], g
-    if not open_:
-        assert m['total_kg'] <= g['ceiling_kg'], (m['total_kg'], g)
+    print(f"\nmass ledger P3 {m['total_kg']} kg; legs {m['legs_kg']} kg, body and head {m['body_and_head_kg']} kg")
+    assert 'gate' not in m and 'budget' not in m
+    assert abs(m['legs_kg'] + m['body_and_head_kg'] - m['total_kg']) < 0.02, m['total_kg']
+    assert m['design']['design_mass_kg'] == 37.5
 
 
 def test_the_ledger_carries_the_d69_wheel():
@@ -321,20 +316,7 @@ def test_the_ledger_carries_the_d69_wheel():
     w = {r['name']: r['mass_g'] for r in m['rows'] if r['name'].endswith(('wheel_tyre', 'wheel_hub'))}
     assert abs(w['L.wheel_tyre'] + w['L.wheel_hub'] - bl.wheel_g()) < 1.0, w
     assert bl.wheel_g() > 2200.0                       # heavier than the BotWheel it replaces (a weighed wheel may differ)
-    assert m['budget']['design_half_mass_kg'] == 18.75
-
-
-def test_the_gate_catches_a_ledger_over_the_ceiling():
-    """The gate itself: a ledger over 37.0 kg with every scheduled lever taken fails it, as does a leg over 10.85 kg; the
-    open scheduled levers' grams count toward it."""
-    import body_layout as bl
-    taken = [dict(l, status='taken') for l in bl.levers()]
-    assert not bl.gate({'total_kg': 37.05, 'body_and_head_kg': 15.2, 'legs_kg': 21.6, 'levers': taken})['pass']
-    assert not bl.gate({'total_kg': 36.9, 'body_and_head_kg': 15.2, 'legs_kg': 21.72, 'levers': taken})['pass']     # 10.86 a leg
-    assert bl.gate({'total_kg': 36.9, 'body_and_head_kg': 15.25, 'legs_kg': 21.6, 'levers': taken})['pass']
-    opened = [dict(l, status='open') for l in bl.levers()]                    # -705 g still to come
-    assert bl.gate({'total_kg': 37.6, 'body_and_head_kg': 15.9, 'legs_kg': 21.6, 'levers': opened})['pass']
-    assert not bl.gate({'total_kg': 37.8, 'body_and_head_kg': 16.1, 'legs_kg': 21.6, 'levers': opened})['pass']
+    assert m['design']['design_half_mass_kg'] == 18.75
 
 
 def test_lidar_ahead_of_the_pan_axis_by_143():

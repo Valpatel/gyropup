@@ -454,7 +454,8 @@
   title: "The design mass is 37.5 kg (18.75 kg a leg), with a 37.0 kg as-built gate; the body's own savings are taken as margin"
   decision: "The robot is designed and strength-checked at 37.5 kg, 18.75 kg a leg. The as-built mass ledger must stay at or under 37.0 kg. This replaces D69's 35.5 kg / 35.0 kg. The body takes its listed savings levers (lighter cheeks, aluminium deck standoffs, the smaller cooler, a 1 m lidar cable, the packs weighed: about 0.8-1.0 kg) as margin, not as a reason to lower the design mass. The packs stay the user's DCB609 9 Ah (D65) and the wheels stay 10 in (D69). The leg's strength cases, the rig predictions and the robot sim re-run at 18.75 kg a leg. The lowest controlled leg length is 185 mm, so the body's 50 mm TPU crush pads (600 N plateau, 30 mm stroke) keep every motors-off fall under 3,000 N (worst 2,724 N)."
   why: "The ledger with D65's packs and D69's 3.53 kg wheels is 36.25 kg after the scheduled savings (body/program 205b807, issue #10), and the turret as its own robot (D66: Orin NX, its own converter) weighs 2.55 kg against the 1.70 kg head budget: about 37.1 kg in all. D69's 35.0 kg ceiling came from a ledger taken before the packs. The alternatives cost what the user asked for: 6 Ah packs lose a third of the energy, and the 8.5 in wheel saves only 0.46 kg. The RS-04 has the torque (it stands at about 18 N m against 40 rated), so the honest answer is to design for the real mass and keep the levers as margin."
-  status: decided
+  status: superseded
+  superseded_by: D79
   source: {kind: user, quote: "Usage limits reset, full steam ahead, finish our plans and get this ready for first prototype manufacturing."}
   alternatives: [keep 35.0 kg and swap to 6 Ah packs (-1.0 kg, 2/3 the energy), the 8.5 in wheel (-0.46 kg), a 36.1 kg ceiling at 18.3 kg a leg (does not cover the turret)]
 - id: D72
@@ -497,3 +498,11 @@
   status: decided
   source: {kind: user, quote: "there is a big problem with our CAD: the turret is mounted on an Orin NX it seems or other big chunky thing and the turret is too tall? / Turret runs off the orin AGX on the robot or an Orin NX on a desktop (optional 2nd variation). Turret has something like an ESP32 for it's control system? Some standard turret controler common drone thing or similar.", ref: "[controller survey](research/turret-controller-survey.md)"}
   alternatives: ["keep D66's Orin NX plinth (86 mm taller, about 0.8 kg, D2 SF 1.21)", "an ESP32-S3 with a CAN Pal transceiver (new pin map, firmware port and D47 review; a radio beside the arm chain)", "an off-the-shelf gimbal or flight controller: SimpleBGC 32-bit, STorM32, a Matek H743 on ArduPilot (wrong actuators, no feed or chronograph)", "the Orin NX inside the pan base (no 95 mm chord round the slip ring)"]
+- id: D79
+  date: "2026-11-04"
+  title: "No mass budget: the ledger is information (D71's gate, sub-budgets and margin are gone)"
+  decision: "The robot has no mass budget. D71's 37.0 kg as-built gate, its sub-budgets (10.85 kg a leg, 15.3 kg for the body and head), its margin and the turret's 2.6 kg ceiling are removed, with the checks and tests that failed on mass over a budget (cad/body_layout.py gate(), cad/test_body.py, the turret's mount.json and turret.json, the status board's mass meters). The mass ledger stays as information: the robot's total, the legs, the body and head, and every part's mass and centre (exports/body/mass.json), because the sim, the jump and the strength checks use the real masses. The strength cases and the leg rig keep the 37.5 kg design mass (18.75 kg a leg) they were run at; the body's TM checks keep their 1.70 kg / 100 mm design point. D72's 100 lb product ceiling is unchanged."
+  why: "The owner asked for it. The ledger was over D71's gate with the RS-04 carried at its 1.51 kg (38.31 kg, 37.81 kg with the scheduled savings), and a gate that fails on mass blocks work the owner has already accepted. The masses still matter where physics uses them, so the ledger stays."
+  status: decided
+  source: {kind: user, quote: "take out the weight budget."}
+  alternatives: ["keep D71's 37.0 kg gate and take the on-call savings", "raise the gate to the ledger's mass"]

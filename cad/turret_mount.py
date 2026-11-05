@@ -270,10 +270,8 @@ def mount(T) -> dict:
             'com_off_pan_axis_mm': round(math.hypot(c_b[0], c_b[1]), 1),
             'com_above_tm_face_mm': round(c_b[2], 1),
             'com_above_deck_on_riser_mm': round(c_b[2] + RISER_H, 1),
-            'budget': f'D71: the turret is at most {MASS_CEILING_KG} kg on Gyropup with a full hopper (the robot\'s 37.5 kg design '
-                      f'mass covers it; it was D49\'s 1.70 kg head budget); the centre at most {COM_BUDGET_MM:g} mm above the TM face',
-            'ceiling_kg': MASS_CEILING_KG, 'margin_g': round(MASS_CEILING_KG * 1000 - m_b, 1),
-            'within_ceiling': m_b <= MASS_CEILING_KG * 1000,
+            'budget': f'D79: no mass ceiling (the owner took out D71\'s weight budget); the body\'s TM checks take the head at '
+                      f'1.70 kg or more, the centre at most {COM_BUDGET_MM:g} mm above the TM face, or the real one when higher',
             'com_budget_mm': COM_BUDGET_MM, 'com_margin_mm': round(COM_BUDGET_MM - c_b[2], 1),
             'com_within_budget': c_b[2] <= COM_BUDGET_MM,
             'source': 'cad/turret.py mass_properties() (printed parts by the printed-part model, bought parts at their catalogue '
@@ -319,8 +317,7 @@ def mount(T) -> dict:
             'round_trip': 'cad/turret_mount.py --check reads this file back against cad/turret.py\'s TM_BOLTS, TM_DOWELS, TM_HOLE'}
 
 
-MASS_CEILING_KG = 2.6          # D71 (the coordinator, 2026-10-28): the turret's ceiling on Gyropup, 30 balls in
-COM_BUDGET_MM = 100.0          # D71: its centre at most this far above the TM face (reported, not raised: an owner decision)
+COM_BUDGET_MM = 100.0          # the TM's design point (cad/body_params.py tm()): a centre over it is reported, not raised
 
 
 def check(path: Path = OUT) -> list:
@@ -348,13 +345,11 @@ def write(T, path: Path = OUT) -> dict:
     path.parent.mkdir(parents=True, exist_ok=True)
     path.write_text(json.dumps(m, indent=1, ensure_ascii=False) + '\n')
     bad = check(path)
-    if not m['mass']['within_ceiling']:
-        bad.append(f"mass: {m['mass']['with_30_balls']['mass_g']} g with 30 balls, over D71's {MASS_CEILING_KG} kg ceiling")
     if bad:
         raise AssertionError('mount.json does not round-trip: ' + '; '.join(bad))
     if not m['mass']['com_within_budget']:                 # an owner decision (#137): written in the file, not raised
-        print(f"mount.json: the centre is {m['mass']['com_above_tm_face_mm']} mm above the TM face, over D71's "
-              f"{COM_BUDGET_MM:g} mm budget (com_within_budget false)")
+        print(f"mount.json: the centre is {m['mass']['com_above_tm_face_mm']} mm above the TM face, over the TM's "
+              f"{COM_BUDGET_MM:g} mm design point (com_within_budget false)")
     print(f"mount.json: {m['mass']['with_30_balls']['mass_g'] / 1000:.3f} kg with balls, {m['mass']['empty']['mass_g'] / 1000:.3f} empty, "
           f"centre {m['com_mm']}; the TM pattern round-trips -> {_rel(path)}")
     return m

@@ -1515,15 +1515,12 @@
     "basis": "estimate (two Deutsch pairs with contacts and wedgelocks, at the belly box's side gland)"
    }
   ],
-  "budget": {
-   "robot_kg": 37.0,
-   "legs_kg_each": 10.85,
-   "body_and_head_kg": 15.3,
+  "design": {
    "design_mass_kg": 37.5,
    "design_half_mass_kg": 18.75,
    "com_x_mm": 10.0,
    "com_y_mm": 5.0,
-   "basis": "D71 (37.0 kg as built, 37.5 kg design; it replaces D69's 35.0 / 35.5 kg); legs 2 x 10.85 kg (leg.json + D53 stops + the D69 wheel at its listed 3.53 kg + the clamp hardware), body and head 15.3 kg"
+   "basis": "D79: no mass budget (D71's 37.0 kg gate and sub-budgets are gone); the strength cases and the rig at D71's 37.5 kg design mass, 18.75 kg a leg"
   },
   "leg_extra": "leg.json 10007 g (published with the stops in)",
   "levers": [
@@ -3479,15 +3476,12 @@
     "basis": "estimate (M3/M5 screws, nuts, inserts of the shell and tub)"
    }
   ],
-  "budget": {
-   "robot_kg": 37.0,
-   "legs_kg_each": 10.85,
-   "body_and_head_kg": 15.3,
+  "design": {
    "design_mass_kg": 37.5,
    "design_half_mass_kg": 18.75,
    "com_x_mm": 10.0,
    "com_y_mm": 5.0,
-   "basis": "D71 (37.0 kg as built, 37.5 kg design; it replaces D69's 35.0 / 35.5 kg); legs 2 x 10.85 kg (leg.json + D53 stops + the D69 wheel at its listed 3.53 kg + the clamp hardware), body and head 15.3 kg"
+   "basis": "D79: no mass budget (D71's 37.0 kg gate and sub-budgets are gone); the strength cases and the rig at D71's 37.5 kg design mass, 18.75 kg a leg"
   },
   "leg_extra": "leg.json 10007 g (published with the stops in)",
   "levers": [
@@ -3671,23 +3665,6 @@
     "what": "two DCB606 FLEXVOLT 6.0 Ah in the same bay and adapters (about 1.0 kg lighter the pair, 2/3 the energy: masses to read from DeWalt)",
     "status": "open"
    }
-  ],
-  "gate": {
-   "ceiling_kg": 37.0,
-   "gap_kg": 1.31,
-   "open_scheduled_g": -500,
-   "with_scheduled_levers_kg": 37.81,
-   "body_and_head_with_levers_kg": 14.77,
-   "leg_each_kg": 11.515,
-   "pass": false,
-   "on_call_next": [
-    "cheeks_rev_b",
-    "alu_standoffs",
-    "cooler_34mm"
-   ],
-   "margin_kg": -0.81,
-   "on_call_open_g": -2301,
-   "rule": "the P3 ledger with every scheduled lever taken (the open ones at the plan's grams) under the 37.0 kg ceiling, each leg under 10.85 kg and the body and head under 15.3 kg (D71); over it, the on-call levers go in order before the next order, each with the user's or the coordinator's word"
-  }
+  ]
  }
 }

@@ -640,7 +640,7 @@ def build(repo):
         d2_target = (body_fea.get('targets') or {}).get('sf_turret_fall')
         d2_txt = (f"; the body's D2 turret fall at {d2_at.group(1)} mm gives the deck SF {d2['sf_by_part']} against {d2_target:g}"
                   if d2_at and d2.get('sf_by_part') is not None and d2_target else '')
-        tm_findings.append(('tm-com-budget', 'owner', f"the turret's centre is {com_tm:.1f} mm above the TM face against D71's "
+        tm_findings.append(('tm-com-budget', 'owner', f"the turret's centre is {com_tm:.1f} mm above the TM face against the TM design point's "
                             f"\"at most {budget:g} mm\"{d2_txt}: raise the budget and strengthen the deck under the riser, or "
                             "lower the turret"))
 

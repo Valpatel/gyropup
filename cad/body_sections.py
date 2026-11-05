@@ -113,9 +113,11 @@ TEXT = {
             ('D44', 'Two bent 3/16 in 5052 cheeks on eight M4 standoffs in the hip frames\' bolt rows',
              'the standoffs carry each leg\'s roll moment straight across to the other frame', 'a one-piece 36 mm U (SendCutSend '
              'cannot bend a channel whose base is under twice its flanges); 1/8 in cheeks (SF 0.6 in the landing)'),
-            ('D71', 'The design mass 37.5 kg, 18.75 kg a leg; a 37.0 kg ledger gate (it replaces D69\'s 35.5 / 35.0 and D57\'s 32.5 / 32.0 kg)',
-             'the leg\'s loads scale with mass; the gate keeps the robot honest against them; D65\'s packs, D69\'s hub wheels and '
-             'D66\'s turret computer are heavier', 'designing to the 26.8 kg estimate; D69\'s 35.0 kg (set before the packs were in)'),
+            ('D71', 'The design mass 37.5 kg, 18.75 kg a leg (its 37.0 kg ledger gate is gone: D79)',
+             'the leg\'s loads scale with mass; D65\'s packs and D69\'s hub wheels are heavier',
+             'designing to the 26.8 kg estimate; D69\'s 35.0 kg (set before the packs were in)'),
+            ('D79', 'No mass budget: the ledger is information', 'the owner, 2026-11-04: "take out the weight budget"; the sim, '
+             'the jump and the strength checks read the real masses', 'D71\'s 37.0 kg gate with its sub-budgets and margin'),
             ('this page', 'The tray and belly into the cheeks\' flange nuts with M5 x 12 (was x 10)', 'the integrity check: an '
              'M5 x 10 engaged 2.8 mm of the SS-M5-0\'s thread under the 3.2 mm tray', '-'),
         ],
@@ -239,10 +241,8 @@ def main():
          f"{', '.join(s.get('joints_with_problems') or []) or 'none'}; floating parts: {s.get('floating') or 'none'}; "
          f"interference between body parts: {s.get('clashes')}; cad-agent's connectivity gate (issue #14): "
          f"{', '.join(f'{k} ' + ('pass' if v else 'FAIL') for k, v in (s.get('connectivity_pass') or {}).items()) or 'not run'}.", '',
-         f"**Mass (P3, the ledger):** {g3.get('total_kg')} kg against the {(g3.get('budget') or {}).get('robot_kg')} kg gate (D71): "
-         + ', '.join(f'{k} {v} kg' for k, v in (g3.get('groups_kg') or {}).items()) + '. '
-         f"With the scheduled levers {((g3.get('gate') or {}).get('with_scheduled_levers_kg'))} kg: "
-         f"{'passes' if (g3.get('gate') or {}).get('pass') else 'over: section 6'}.", '']
+         f"**Mass (P3, the ledger; D79: no budget):** {g3.get('total_kg')} kg: "
+         + ', '.join(f'{k} {v} kg' for k, v in (g3.get('groups_kg') or {}).items()) + '.', '']
     for k, title, _ in SECTIONS:
         t = TEXT[k]
         num = {'power': 1, 'frame': 2, 'head': 3, 'shell': 4}[k]
@@ -287,18 +287,17 @@ def main():
           '| D76 | The turret without a computer: power, CAN and the safety loop on its DT12 | the J501 aims it; D66\'s plinth stood 86 mm and 0.8 kg | D66\'s compute plinth, its XT30 and Ethernet |',
           '']
     # mass
-    gate = g3.get('gate') or {}
     tur = next((it for it in L['raw']['items'] if it.name == 'turret'), None)     # the head as the ledger carries it
-    lv = {l['key']: l for l in (g3.get('levers') or [])}
     oc = [l for l in (g3.get('levers') or []) if l['kind'] == 'on call' and l['status'] == 'open']
-    o += ['## 6. The mass gate (D71)', '',
-          f"The P3 ledger is {g3.get('total_kg')} kg; with every scheduled lever {gate.get('with_scheduled_levers_kg')} kg against "
-          f"D71's {gate.get('ceiling_kg')} kg ceiling (37.5 kg design mass, 18.75 kg a leg): a margin of {gate.get('margin_kg'):+.2f} kg, "
-          f"{'pass' if gate.get('pass') else 'OVER'}. The wheels are D69's 10 in hub motors at the listed 3.53 kg each; the battery "
-          f"group is {(g3.get('groups_kg') or {}).get('battery')} kg (two DCB609 at DeWalt US's 1565 g each). The head is "
-          + (f"the turret (D76: no computer of its own) at {tur.mass_g / 1000:.2f} kg with 30 balls, from {tur.basis.split(';')[0]}, "
-             f"{tur.mass_g / 1000 - 1.70:+.2f} kg on the 1.70 kg head budget" if tur is not None else 'the 1.70 kg head budget')
-          + '. The on-call levers stay listed as margin (D71), none taken without the user\'s or the coordinator\'s word:', '',
+    o += ['## 6. The mass ledger (D79: no budget)', '',
+          f"The P3 ledger is {g3.get('total_kg')} kg: legs {g3.get('legs_kg')} kg, body and head {g3.get('body_and_head_kg')} kg. "
+          "D79 (the owner, 2026-11-04: \"take out the weight budget\") removed D71's 37.0 kg gate, its sub-budgets and its margin; "
+          "the ledger is information, and the sim, the jump and the strength checks read it. The strength cases and the rig "
+          "were run at D71's 37.5 kg design mass (18.75 kg a leg). The wheels are D69's 10 in hub motors at the listed 3.53 kg each; "
+          f"the battery group is {(g3.get('groups_kg') or {}).get('battery')} kg (two DCB609 at DeWalt US's 1565 g each). The head is "
+          + (f"the turret (D76: no computer of its own) at {tur.mass_g / 1000:.2f} kg with 30 balls, from {tur.basis.split(';')[0]}"
+             if tur is not None else 'the 1.70 kg head load')
+          + '. The on-call savings stay listed, none taken without the owner\'s word:', '',
           '| # | Lever | g | Stage |', '|---|---|---|---|']
     o += [f"| {l['n']} | {l['what']} | {l['grams']} | {l['stage']} |" for l in oc]
     o += ['']

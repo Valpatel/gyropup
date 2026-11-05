@@ -7583,15 +7583,12 @@
  "turret_mass": {
   "with_30_balls_g": 1756.8,
   "empty_g": 1701.9,
-  "ceiling_kg": 2.6,
-  "margin_g": 843.2,
-  "within_ceiling": true,
   "com_mm": [
    -5.1,
    -4.6,
    96.9
   ],
-  "decision": "D71 (the 37.5 kg robot covers the turret as its own robot, D66)"
+  "decision": "D79: no mass budget (the owner took out D71's weight budget); the ledger is information"
  },
  "price_usd_known": {
   "turret": 795.79,

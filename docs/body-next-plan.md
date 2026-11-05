@@ -469,6 +469,9 @@ is edited.
 
 ### 10.2 The mass gate (issue #10; D71 replaces D69's numbers)
 
+**D79 (2026-11-04): the gate is gone.** The owner: "take out the weight budget." D71's 37.0 kg gate, its sub-budgets and
+its margin are removed; the ledger (`exports/body/mass.json`) stays as information. What follows is the history.
+
 **D71 (main e899d28):** 37.5 kg design (18.75 kg a leg), 37.0 kg as built. P3 is 36.75 kg, 36.25 kg with the scheduled
 levers: a 0.75 kg margin, and the test passes. The turret's 2.55 kg head (D66) would use about 0.85 kg of it. What
 follows is the state under D69.

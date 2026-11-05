@@ -166,15 +166,13 @@ AMMO_SIDE_BY_SIDE = [
 
 
 def turret_mass(T):
-    """D71: the turret's mass on Gyropup against its 2.6 kg ceiling (cad/turret.py mass_properties: printed parts by the
-    printed-part model, bought parts at their catalogue masses, the not-modelled allowance), with and without the
-    hopper's 30 balls."""
-    import turret_mount as tm
+    """The turret's mass (cad/turret.py mass_properties: printed parts by the printed-part model, bought parts at their
+    catalogue masses, the not-modelled allowance), with and without the hopper's 30 balls. Information only: D79 took out
+    D71's 2.6 kg ceiling."""
     _, m_b, c_b = tu.mass_properties(T, with_balls=True)
     _, m_e, _ = tu.mass_properties(T, with_balls=False)
-    return {'with_30_balls_g': round(m_b, 1), 'empty_g': round(m_e, 1), 'ceiling_kg': tm.MASS_CEILING_KG,
-            'margin_g': round(tm.MASS_CEILING_KG * 1000 - m_b, 1), 'within_ceiling': m_b <= tm.MASS_CEILING_KG * 1000,
-            'com_mm': [round(c, 1) for c in c_b], 'decision': 'D71 (the 37.5 kg robot covers the turret as its own robot, D66)'}
+    return {'with_30_balls_g': round(m_b, 1), 'empty_g': round(m_e, 1), 'com_mm': [round(c, 1) for c in c_b],
+            'decision': 'D79: no mass budget (the owner took out D71\'s weight budget); the ledger is information'}
 
 
 def ammo_side_by_side():
