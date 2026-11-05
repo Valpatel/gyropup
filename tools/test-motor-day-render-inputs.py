@@ -24,6 +24,11 @@ class RenderInputs(unittest.TestCase):
     def check(self):
         self.module['require_rendered_steps'](self.rows, self.rendered, self.items)
 
+    def test_retained_steps_and_drawing_metadata_match_source(self):
+        rendered = json.loads((ROOT / 'exports/motor-day/drawings/sheets.json').read_text())
+        steps = json.loads((ROOT / 'exports/motor-day/steps/steps.json').read_text())
+        self.module['require_rendered_steps'](steps, rendered, rendered['items'])
+
     def test_json_round_trip_of_actual_step_inputs_passes(self):
         self.check()
 

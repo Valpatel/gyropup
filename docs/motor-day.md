@@ -273,7 +273,7 @@ Generated from the same CAD with hidden-line views, balloons keyed to the BOM it
 <!-- gen:derating -->
 Every day-one run lands, so the landings are held to the everyday target (2), not the rare-event 1.2 the robot's record uses. A power cut is a fault: target 1. How the numbers are made:
 
-- **Material:** cad-agent's PLA row (25 MPa, "Bambu PLA Basic: Z (layer) strength used") against each row's humid PA6-CF strength (40.8 MPa in the layers, 18.1 across) or 6061 for the adapter. The FEA is linear, so a row's factor scales with the strength.
+- **Material:** cad-agent's PLA row (25 MPa, "Bambu PLA Basic TDS V3.0: E is the Z tensile modulus (X-Y 2580 MPa); the strength is an allowable below the Z tensile strength of 31 MPa") against each row's humid PA6-CF strength (40.8 MPa in the layers, 18.1 across) or 6061 for the adapter. The FEA is linear, so a row's factor scales with the strength.
 - **Loads:** the rig's controller and MuJoCo model at each cap, at 11.1 kg (`tools/motor_day_sim.py`), against the loads the record's cases were run at (knee 574 N and hip 564 N in a landing, axle 1761 N on the wheel link, the motors' 60 and 120 N m). A landing case takes its worst joint; a power cut also its backdriven hub torque.
 - **Mass:** the simulation has one mass; the stand weighs about 11.9 kg at the foot and its inertia is about 10.6 kg there. The simulated forces are scaled by the larger over the simulated mass (x 1.07).
 - **Not in it:** PLA is brittle (it cracks without warning, where PA6-CF whitens first), creeps, and softens at 55 °C. No margin is added for these: the ladder adds them by stepping up slowly and inspecting after each rung.

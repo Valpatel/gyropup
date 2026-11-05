@@ -2,8 +2,8 @@
  "pla": {
   "name": "PLA",
   "strength_mpa": 25,
-  "E_mpa": 2700,
-  "note": "Bambu PLA Basic: Z (layer) strength used",
+  "E_mpa": 2060,
+  "note": "Bambu PLA Basic TDS V3.0: E is the Z tensile modulus (X-Y 2580 MPa); the strength is an allowable below the Z tensile strength of 31 MPa",
   "from": "cadagent.fea.MATERIALS[\"pla\"]"
  },
  "record": {
