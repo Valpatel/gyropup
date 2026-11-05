@@ -720,6 +720,24 @@ STEPS = [   # (title, parts added (prefixes), lift (mm along x, y, z) per prefix
 ]
 
 
+
+def step_visuals():
+    """JSON-stable inputs that determine a step picture, excluding editable prose."""
+    return json.loads(json.dumps([st[1:4] for st in STEPS]))
+
+
+def require_rendered_steps(steps, rendered, items):
+    """Reject stale pictures before --no-render reuses their steps and drawings."""
+    if not steps or not rendered.get('sheets'):
+        raise SystemExit('--no-render needs the rendered steps and drawings (steps/steps.json, drawings/sheets.json)')
+    if rendered.get('items') != items:
+        moved = sorted(k for k in set(items) | set(rendered.get('items') or {})
+                       if items.get(k) != (rendered.get('items') or {}).get(k))
+        raise SystemExit(f'the BOM item numbers changed since the steps and drawings were rendered ({moved}): render again')
+    if len(steps) != len(STEPS) or rendered.get('step_visuals') != step_visuals():
+        raise SystemExit('the assembly steps, parts, explode offsets or camera changed since they were rendered: render again')
+
+
 def render_steps(P, items):
     from cadagent.render import Renderer
     import build_rig as br
@@ -1314,13 +1332,7 @@ def main():
     if a.no_render:                             # keep the pictures already rendered: only if no item number has moved
         steps, rendered = _load(OUT / 'steps' / 'steps.json', []), _load(OUT / 'drawings' / 'sheets.json', {})
         sheets = rendered.get('sheets') or []
-        if not steps or not sheets:
-            raise SystemExit('--no-render needs the rendered steps and drawings (steps/steps.json, drawings/sheets.json)')
-        if rendered.get('items') != items:
-            moved = sorted(k for k in set(items) | set(rendered.get('items') or {}) if items.get(k) != (rendered.get('items') or {}).get(k))
-            raise SystemExit(f'the BOM item numbers changed since the steps and drawings were rendered ({moved}): render again')
-        if len(steps) != len(STEPS) or rendered.get('step_parts') != [list(st[1]) for st in STEPS]:
-            raise SystemExit('the assembly steps or their parts changed since they were rendered: render again')
+        require_rendered_steps(steps, rendered, items)
         for r, (title, *_, how) in zip(steps, STEPS):     # only the words may change without a new picture
             r['title'], r['how'] = title, how
     bom = [{'item': items[k], 'key': k, 'qty': v[1], 'part': v[0], 'source': v[2]} for k, v in names.items() if k in items]
@@ -1339,7 +1351,7 @@ def main():
     if not a.no_render:
         steps = render_steps(P, items)
         sheets = drawings(P, items, names, _rev(), meta, fm)
-        (OUT / 'drawings' / 'sheets.json').write_text(json.dumps({'items': items, 'step_parts': [list(st[1]) for st in STEPS],
+        (OUT / 'drawings' / 'sheets.json').write_text(json.dumps({'items': items, 'step_visuals': step_visuals(),
                                                                   'sheets': sheets}, indent=1) + '\n')
     (OUT / 'steps' / 'steps.json').write_text(json.dumps(steps, indent=1) + '\n')
     write_doc({'slices': slices, 'der': der, 'stand': stand, 'steps': steps, 'sheets': sheets, 'mc': mc, 'other': other,
