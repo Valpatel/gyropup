@@ -45,11 +45,6 @@ const ready=()=>page.waitForFunction(()=>document.body.dataset.ready==='1');
 const allOpen=async id=>page.locator('#'+id).evaluate(el=>{for(let node=el;node;node=node.parentElement)if(node.tagName==='DETAILS'&&!node.open)return false;return true;});
 try {
  await page.goto(base+'/designer/progress.html');await ready();
- assert.equal(await page.locator('#rig video').count(),7);
- assert.match(await page.locator('#rig [data-rig-media-state]').innerText(),/Recorded leg simulation · 18\.75 kg · 36 V/);
- assert.ok((await page.locator('#rig video').evaluateAll(videos=>videos.map(v=>v.src))).every(src=>src.startsWith('blob:')),'Playback uses the bytes whose hashes were checked');
- const rigVideo=page.locator('#rig video').first();await rigVideo.evaluate(video=>video.play());
- await page.waitForFunction(()=>document.querySelector('#rig video').currentTime>0.05);await rigVideo.evaluate(video=>video.pause());
  await page.waitForFunction(()=>document.querySelector('#fea-media').dataset.state==='ready');
  assert.match(await page.locator('#updated').innerText(),new RegExp(progress.updated));
  assert.equal(await page.locator('#current-focus').innerText(),progress.focus);
@@ -74,6 +69,14 @@ try {
  }
  // Native keyboard activation and media continuity across disclosure changes.
  await page.setViewportSize({width:390,height:844});
+ await page.getByText('The leg on its test rig',{exact:true}).click();
+ assert.equal(await page.locator('#rig video').count(),7);
+ assert.match(await page.locator('#rig [data-rig-media-state]').innerText(),/Recorded leg simulation · 18\.75 kg · 36 V/);
+ assert.ok((await page.locator('#rig video').evaluateAll(videos=>videos.map(v=>v.src))).every(src=>src.startsWith('blob:')),'Playback uses the bytes whose hashes were checked');
+ const rigVideo=page.locator('#rig video').first();await rigVideo.evaluate(video=>video.play());
+ await page.waitForFunction(()=>document.querySelector('#rig video').currentTime>0.05);await rigVideo.evaluate(video=>video.pause());
+ await page.locator('#rig').screenshot({path:out+'/rig-390.png'});
+ await page.getByText('The leg on its test rig',{exact:true}).click();
  const movie=await page.locator('#feavid').elementHandle();
  const archive=page.locator('#archive > summary');await archive.focus();await archive.press('Enter');assert.equal(await page.locator('#archive').evaluate(e=>e.open),true);
  const day=page.locator('#history details').first(),summary=day.locator(':scope > summary');await summary.focus();await summary.press('Space');assert.ok(await day.locator('li').first().isVisible());
@@ -111,7 +114,7 @@ try {
   if(fault==='report')await probe.route('**/exports/leg/rig-results.json*',route=>route.fulfill({contentType:'application/json',body:JSON.stringify({...rigReport,half_mass_kg:20})}));
   if(fault==='receipt')await probe.route('**/exports/leg/rig-media.json*',route=>route.fulfill({status:404,body:'not recorded'}));
   if(fault==='movie')await probe.route('**/exports/leg/rig_jump.mp4*',route=>route.fulfill({contentType:'video/mp4',body:Buffer.from('wrong movie bytes')}));
-  await probe.goto(base+'/designer/progress.html');await probe.waitForFunction(()=>document.body.dataset.ready==='1');
+  await probe.goto(base+'/designer/progress.html#rig');await probe.waitForFunction(()=>document.body.dataset.ready==='1');
   const note=await probe.locator('#rig [data-rig-media-state="unavailable"]').innerText();
   assert.match(note,/Recorded movies unavailable/);
   assert.match(note,fault==='report'?/different report/:fault==='receipt'?/provenance is unavailable/:/movie identity does not match/);
@@ -123,7 +126,7 @@ try {
  }
  // A completed retry revokes old Blob URLs. A late older request cannot replace the newer unavailable state.
  await page.addInitScript(()=>{window.__rigRevoked=[];const revoke=URL.revokeObjectURL.bind(URL);URL.revokeObjectURL=url=>{window.__rigRevoked.push(url);revoke(url);};});
- await page.goto(base+'/designer/progress.html');await ready();
+ await page.goto(base+'/designer/progress.html#rig');await ready();
  const originalBlobs=await page.locator('#rig video').evaluateAll(videos=>videos.map(v=>v.src));
  await page.evaluate(()=>window.__portalLoads.rig.retry());
  assert.deepEqual((await page.evaluate(()=>window.__rigRevoked)).sort(),originalBlobs.sort());
