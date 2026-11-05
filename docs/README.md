@@ -43,7 +43,7 @@ not establish mechanical readiness. Older plans remain available for context and
 - Body: [plan](body-plan.md), [next plan](body-next-plan.md), [frame](body-frame.md),
   [electrical](body-electrical.md), [thermal](body-thermal.md), [safety](body-safety.md).
 - Hardware: [one folder per component](../hardware/README.md) (references, interfaces, config, inventory, bring-up),
-  [the robot computer's deployment](../deploy/jetson/README.md), the [RS-04 bring-up checklist](../hardware/actuators/rs04/bring-up.md).
+  [the robot computer's deployment](../hardware/deploy/jetson/README.md), the [RS-04 bring-up checklist](../hardware/actuators/rs04/bring-up.md).
 - Carrier: [packaging evidence](../hardware/carrier-packaging/README.md),
   [protection candidate](../hardware/carrier-pan-protection/README.md), [service connectors](carrier-service-connectors.md),
   [insert-fit specimens](../research/carrier-insert-fit/README.md). Physical fit, wiring and printed strength remain open.

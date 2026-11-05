@@ -29,7 +29,7 @@ The D-Sub 9 pinout, termination and isolation: [interfaces.md](interfaces.md).
 
 ## Config and profiles
 
-The bit rate and interface set-up are the deployment's: [deploy/jetson](../../../deploy/jetson/README.md) brings up any
+The bit rate and interface set-up are the deployment's: [hardware/deploy/jetson](../../deploy/jetson/README.md) brings up any
 `peak_usb` or `gs_usb` interface at 1 Mbit/s (`/etc/gyropup/can.env`) and can give it a stable name by USB port or
 serial (`can-names.conf`). By hand: `sudo ip link set can0 up type can bitrate 1000000`.
 
@@ -49,7 +49,7 @@ The adapter's part of the [RS-04 bring-up](../../actuators/rs04/bring-up.md), st
 
 ## Open questions
 
-- The exact model (isolated or not) and its serial. `sudo deploy/jetson/install.sh --list-can` shows a USB serial
+- The exact model (isolated or not) and its serial. `sudo hardware/deploy/jetson/install.sh --list-can` shows a USB serial
   only if the adapter reports one; a PCAN-USB may not (it has a device number set by PEAK's tools instead), so
   name it by its USB port (`path=`) and read the serial from its label.
 - A GH1.25-to-D-Sub 9 lead for the RS-04 is not in the repository yet.

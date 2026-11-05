@@ -23,7 +23,7 @@ flowchart LR
 A browser cannot open a PEAK adapter: Linux drives it as a SocketCAN interface (the mainline `peak_usb` driver). So
 the page talks over a websocket to a small bridge, `rig/rs04_bridge.py`, built on the same `rig/rs04.py` and
 `rig/canio.py` the bench scripts use. The bridge is standard-library Python and serves the page itself. It is the
-service the robot's Jetson will run: [deploy/jetson](../deploy/jetson/README.md) installs it. The motors' own folder,
+service the robot's Jetson will run: [hardware/deploy/jetson](../hardware/deploy/jetson/README.md) installs it. The motors' own folder,
 with the inventory and the [bring-up checklist](../hardware/actuators/rs04/bring-up.md), is
 [hardware/actuators/rs04](../hardware/actuators/rs04/README.md).
 

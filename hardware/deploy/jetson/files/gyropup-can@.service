@@ -1,4 +1,4 @@
-# Gyropup: bring a CAN interface up at the robot's bit rate when it appears (deploy/jetson, installed by install.sh).
+# Gyropup: bring a CAN interface up at the robot's bit rate when it appears (hardware/deploy/jetson, installed by install.sh).
 # Started by the udev rule 80-gyropup-can.rules for every SocketCAN interface of a USB adapter (peak_usb, gs_usb).
 [Unit]
 Description=Gyropup CAN interface %i at the configured bit rate
