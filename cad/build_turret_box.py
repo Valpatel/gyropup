@@ -131,11 +131,6 @@ ROLE = {
     'pod_pendant': ('Mini-XLR socket (Switchcraft TB3M) for the hold-to-run pendant: the safety line. Nothing spins or feeds unless it '
                     'is held; it is keyed, so no headphone plug can close the loop.'),
     'pod_usb': 'USB-CAN adapter: the J501 talks CAN to the turret\'s MCU through it.',
-    'compute': 'The turret\'s own computer (D66): a Jetson Orin NX 16 GB on Seeed\'s reComputer Mini carrier, with its own fan. Ethernet to the J501, CAN to the turret\'s MCU.',
-    'compute_tray': 'The compute plinth\'s floor: bolts to the head\'s TM pattern (4 x M5) and holds the Jetson between locating ribs.',
-    'compute_shell': 'The compute plinth\'s wall: four columns take the pan base; tabs hold the Jetson down; vents beside it; the XT30 input and the Ethernet jack on the back.',
-    'xt30_input': 'The turret\'s one power input, 12-54 V: a FLEXVOLT pack on its stand, or Gyropup\'s battery bus.',
-    'eth_jack': 'Ethernet to Gyropup\'s J501.',
     'board_bay_lid': 'Closes the turret-board bay on the yoke\'s -y arm; two snap latches, no tool.',
     'pod_wago': 'WAGO lever connectors: 24 V to the DT12 power pins, the pendant loop to its safety pins.',
 }
@@ -149,15 +144,13 @@ TITLE = {'pan_base': 'Pan base', 'pan_clamp': 'Bearing clamp', 'pan_ring': 'Pan 
          'intake_shroud': 'Exhaust duct', 'pod_cover': 'Pod cover', 'pod_xt60': '24 V in (XT60)', 'pod_switch': 'Power switch',
          'pod_fuse': 'Fuse', 'pod_pendant': 'Pendant socket', 'pod_usb': 'USB-CAN', 'pod_wago': 'Wiring', 'base': 'J501 base',
          'cover': 'J501 lid', 'front_no_gmsl': 'J501 front plate',
-         'compute': 'Jetson Orin NX (reComputer Mini)', 'compute_tray': 'Compute plinth floor', 'compute_shell': 'Compute plinth',
-         'xt30_input': 'Power in (XT30)', 'eth_jack': 'Ethernet', 'input_fuses': 'Fuses', 'board_bay': 'Board bay', 'board_bay_lid': 'Board bay lid', 'rear_io': 'J501 rear plate', 'side_hatch': 'J501 side hatch'}
+         'board_bay': 'Board bay', 'board_bay_lid': 'Board bay lid', 'rear_io': 'J501 rear plate', 'side_hatch': 'J501 side hatch'}
 # the parts the callouts name (the rest are listed when clicked)
 CALLOUTS = ['hopper', 'dial', 'feed_motor', 'cartridge_body', 'flywheel_tyre', 'barrel', 'laser', 'cradle', 'tilt_servo', 'tilt_yoke',
-            'pan_ring', 'pan_pinion', 'pan_servo', 'pan_bearing', 'pan_base', 'dt_receptacle', 'compute', 'compute_shell', 'box_deck',
+            'pan_ring', 'pan_pinion', 'pan_servo', 'pan_bearing', 'pan_base', 'dt_receptacle', 'box_deck',
             'intake_shroud', 'pod_pendant', 'cover']
 # exploded view: how far each part moves (box frame at pan = tilt = 0, mm)
-EXPLODE = {'compute_tray': (0, 0, 70), 'compute': (0, 0, 120), 'input_fuses': (0, 0, 120), 'compute_shell': (0, 0, 210),
-           'eth_jack': (-40, 0, 210), 'xt30_input': (-40, 0, 210), 'board_bay': (0, -40, 195), 'board_bay_lid': (0, -70, 195),
+EXPLODE = {'board_bay': (0, -40, 195), 'board_bay_lid': (0, -70, 195),
            'box_deck': (0, 0, 60), 'intake_shroud': (0, 0, 28), 'pod_cover': (0, 0, 48), 'lid_screw': (0, 0, 120), 'pod_': (0, 0, 60),
            'bumper_ring': (0, 0, 75), 'pan_base': (0, 0, 95), 'pan_servo': (0, 0, 95), 'dt_receptacle': (0, -30, 95), 'dt_plug': (0, -75, 95),
            'pan_bearing': (0, 0, 125), 'pan_clamp': (0, 0, 145), 'pan_pinion': (0, 0, 120), 'pan_ring': (0, 0, 165), 'tilt_yoke': (0, 0, 195),
@@ -166,10 +159,6 @@ EXPLODE = {'compute_tray': (0, 0, 70), 'compute': (0, 0, 120), 'input_fuses': (0
            'cartridge_board': (0, 0, 330), 'dial': (0, 0, 300), 'hopper': (0, 0, 350), 'hopper_lid': (0, 0, 390), 'hopper_flap': (0, 0, 400),
            'barrel': (70, 0, 250), 'laser_mount': (40, 0, 270), 'laser': (40, 0, 270), 'laser_screws': (40, 0, 270)}
 
-
-# the turret's own parts move 220 mm more, over the compute plinth's (D66)
-EXPLODE = {k: (v if (k.startswith(('compute', 'input_fuses', 'eth_jack', 'xt30_input', 'box_deck', 'intake_shroud', 'pod_', 'lid_screw')))
-               else (v[0], v[1], v[2] + 220)) for k, v in EXPLODE.items()}
 
 
 def explode_of(name):
@@ -445,7 +434,7 @@ def ball_path_check():
         return None
     d = json.loads(f.read_text())
     deck = next((o for o in d.get('obstacles', []) if o.get('name') == 'deck and box'), None)
-    current = deck is not None and abs(deck['lo'][2] + tb.Z_TM + tu.PLINTH['h']) < 0.01
+    current = deck is not None and abs(deck['lo'][2] + tb.Z_TM + tu.FRAME_T_ABOVE_TM) < 0.01
     ko = [abs(p) for p in d.get('keep_out_fire_pan_deg') or []]
     return {'file': 'exports/turret/lidar/box.json', 'current': current, 'margin_mm': d.get('margin_mm'),
             'limited_pan_window_deg': d.get('limited_pan_window_deg'), 'clear': current and d.get('limited_pan_window_deg') is None,
@@ -460,23 +449,20 @@ def exhaust_check(T):
     whose duct carries it forward and out of the deck's front mouth (the shroud is still named intake_shroud). What must
     hold so nothing breathes it back: the J501's own intakes (its lid and panel vents) all below the mouth's floor (the
     plume rises away from them), the front corners walled (the plume cannot curl round into the side gaps that feed the
-    roof's cells), and the turret plinth's vents behind the pan axis, far from the mouth and above it."""
+    roof's cells), and no part of the turret in the plume's keep-out ahead of the mouth (D76: the turret has no computer
+    of its own to breathe, so D66's plinth-vent rule is gone)."""
     E = json.loads((tb.J501_DIR / 'cad' / 'parameters.json').read_text())['enclosure']
     mouth_z = (tb.SH_Z0 + tb.SH_FLOOR_T, tb.DECK_Z0)
     intakes_top = max(E['lid_vent_z'][1], E['panel_vent_z'][1])
-    vent_x = tu.VENT_X1 + tu.PLINTH['vent'][0] / 2                          # the plinth's frontmost vent edge (turret frame = box x)
-    vz0 = T.mount_z - tu.PLINTH['h'] + tu.PLINTH['tray_t'] + tu.J4012['H'] / 2 - tu.PLINTH['vent'][1] / 2
     out = {'mouth_x_mm': round(tb.FRONT_X, 1), 'mouth_z_mm': [round(z, 1) for z in mouth_z], 'mouth_w_mm': round(2 * tb.MOUTH_HALF, 1),
            'j501_intakes_top_z_mm': intakes_top, 'intakes_below_mouth_mm': round(mouth_z[0] - intakes_top, 1),
-           'plinth_vents_behind_mouth_mm': round(tb.FRONT_X - vent_x, 1), 'plinth_vents_from_z_mm': round(vz0, 1),
            'fan_blows': 'up (exhaust through the lid grille; J501 thermal.fan.note)'}
     out['plume'] = plume_clearance(T, mouth_z)
-    out['ok'] = out['intakes_below_mouth_mm'] > 0 and out['plinth_vents_behind_mouth_mm'] >= 80.0 and out['plume']['ok']
+    out['ok'] = out['intakes_below_mouth_mm'] > 0 and out['plume']['ok']
     out['note'] = (f'the J501 exhaust leaves the deck\'s front mouth ({out["mouth_w_mm"]} mm wide, z {out["mouth_z_mm"][0]}-{out["mouth_z_mm"][1]}), '
-                   f'{out["intakes_below_mouth_mm"]} mm above the J501\'s highest intake vent, with the front corners walled; the plinth '
-                   f'breathes {out["plinth_vents_behind_mouth_mm"]} mm behind the mouth; no part of the turret comes within '
+                   f'{out["intakes_below_mouth_mm"]} mm above the J501\'s highest intake vent, with the front corners walled; no part of the turret comes within '
                    f'{out["plume"]["least_mm"]} mm of the plume\'s keep-out ahead of the mouth at any pan or tilt. To prove on the bench: the '
-                   'J501\'s intake and the J4012\'s within 3 K of the room with both at full load (bench_proof)')
+                   'J501\'s intake within 3 K of the room at full load with the turret on (bench_proof)')
     return out
 
 
@@ -546,7 +532,7 @@ def main():
     for f in SCENE.glob('*.stl'):
         f.unlink()
     tg.stored()                                                    # fail fast: the design gates pass and are current
-    T = tu.Turret({'bodyTop': tb.Z_TM - 20.0 - tu.SADDLE_T})        # the compute plinth on the deck, the TM face on it (D66)
+    T = tu.Turret({'bodyTop': tb.Z_TM - 20.0 - tu.SADDLE_T})        # the pan base on the deck's TM face (D76: no plinth)
     G = T.G
     g = tb.J.get('git') or {}
     print(f'turret on the box: TM face {tb.Z_TM:.0f} mm above the desk ({tb.GAP:.0f} mm gap + {tb.DECK_T:.0f} mm deck over the J501 '
@@ -588,7 +574,7 @@ def main():
         parts.append(e)
         return tris
 
-    zt = T.mount_z                                                   # the turret's TM face: on the compute plinth (D66)
+    zt = T.mount_z                                                   # the turret's TM face: the deck's top (D76)
     tz = zt + G.tilt_t
     pan_o, tilt_o = (0.0, 0.0, zt), (0.0, 0.0, tz)
     # the scene's tilt frame has its origin on the tilt axis: a point of the cartridge frame C (the parts' build frame:

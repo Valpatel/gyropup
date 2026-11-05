@@ -12,11 +12,10 @@ What no file holds (the harness's pinout, the safety contact's rating) is writte
 Every block names its source. The body reads it (cad/body_params.py `tm()`, branch body/program): the top-level
 `mass_kg` and `com_mm` are the turret with its 30 balls at pan 0, tilt 0.
 
-The file's frame is the TM frame: x forward, y left, z up, mm, the origin on the pan axis in the TM face (the compute
-plinth tray's underside, the riser's top, D66). cad/turret.py builds the turret in its frame T, whose origin is the pan
-base's foot: since D66 that stands the plinth's height (PLINTH['h'], `frame_t_above_face_mm`) above the TM face, so every
-z here is frame T's plus that (issue #137: until then the file said T's origin was in the TM face, and the centre, the
-DT12 and the aim heights read 86 mm low). On the robot the body puts the origin on its deck's centre line,
+The file's frame is the TM frame: x forward, y left, z up, mm, the origin on the pan axis in the TM face (the pan
+base's foot, the riser's top). cad/turret.py builds the turret in its frame T, whose origin is the pan base's foot, so
+every z here is frame T's plus `frame_t_above_face_mm` (cad/turret.py FRAME_T_ABOVE_TM): 0 since D76 removed the compute
+plinth, 86 mm while D66's plinth stood under the pan base (issue #137). On the robot the body puts the origin on its deck's centre line,
 `lidar_clearance.made_for.lidar_to_pan_mm` behind the lidar's axis and `riser.height_mm` above the deck.
 
 After writing, the file is read back and its TM pattern compared with cad/turret.py's TM_BOLTS, TM_DOWELS and TM_HOLE
@@ -46,7 +45,7 @@ BACKSHELL = {'y': 22.0, 'down': 35.0}   # the 90 deg backshell as cad/turret.py 
 # docs/turret-wiring.md 1.1 (the TM connector) and 4 (the protection behind it); on the robot pins 7-8 are the body's
 # STOP contact instead of the pendant's loop (docs/turret-next-plan.md 3.2 item 3, D52)
 HARNESS = [
-    {'pins': [1, 2], 'signal': '+24 V', 'wire': '18 AWG PTFE, paralleled'},
+    {'pins': [1, 2], 'signal': '+BUS (D76: the body\'s 10S turret branch, 30-42 V; the stand\'s DCB609, 15-20.5 V)', 'wire': '18 AWG PTFE, paralleled'},
     {'pins': [3, 4], 'signal': 'GND', 'wire': '18 AWG, paralleled'},
     {'pins': [5, 6], 'signal': 'CAN_H, CAN_L', 'wire': '24 AWG twisted pair'},
     {'pins': [7, 8], 'signal': 'SAFETY_A, SAFETY_B', 'wire': '24 AWG twisted pair: the dry safety loop, closed = run'},
@@ -87,7 +86,7 @@ def dt_boxes(G, dz: float = 0.0) -> dict:
     the 90 deg backshell turning the harness down), the 30 mm withdrawal box clashes() sweeps against the fixed parts,
     and the backshell's own path out (which the clash sweep leaves out: it is all below the turret, the body's side).
     Built on +y and flipped to the -y pad, as the CAD does: x and y change sign, so the boxes are written on -y. In frame
-    T, or `dz` higher (the TM frame: dz = PLINTH['h'])."""
+    T, or `dz` higher (the TM frame: dz = FRAME_T_ABOVE_TM)."""
     f, pl, sw = tu.DT['flange'], tu.DT['plug'], tu.DT['sweep']
     y0 = G.dt_y + f[1]                                     # the flange's outer face, where the plug seats
     zc, hx = tu.DT_Z + dz, pl[0] / 2
@@ -166,18 +165,18 @@ def _length(line, default: float) -> float:
 
 def mount(T) -> dict:
     """mount.json's content for the turret T (cad/turret.py Turret, any L): built in frame T, written in the TM frame
-    (frame T's heights + PLINTH['h']: the TM face is the plinth tray's underside, D66)."""
+    (frame T's heights + FRAME_T_ABOVE_TM: 0 since D76, the TM face is the pan base's foot)."""
     G = T.G
-    dz = tu.PLINTH['h']                                                            # frame T's origin above the TM face
+    dz = tu.FRAME_T_ABOVE_TM                                                       # frame T's origin above the TM face
     up = lambda c: [c[0], c[1], c[2] + dz]
     cfg, cm = _fw('config'), _fw('can_msgs')
     bom, power, dyn, lid = _read(BOM_JSON), _read(POWER_JSON), _read(DYNAMICS_JSON), _read(LIDAR_JSON)
     screw_l = _length(_bom_line(bom, 'hw_tm_screws'), 16.0)                        # screw_m5x16 (pan_base(): 4 x M5 x 16)
     dowel_l = _length(_bom_line(bom, 'hw_tm_dowels'), 16.0)                        # dowel_5x16
-    # the TM face's screws and pins go through the plinth's tray (compute_tray): the heads on the counterbores' floors,
-    # the pins in blind holes from below
-    head_seat = tu.PLINTH['tray_t'] - tu.PLINTH['cbore'][1]
-    dowel_in_tray = tu.PLINTH['dowel_depth']
+    # the TM face's screws and pins go through the pan base's foot (pan_base(), D76): the heads on the foot's top, in its
+    # Ø10 counterbores, the pins in the foot's blind holes from below (foot_t - 1 deep)
+    head_seat = G.foot_t
+    dowel_in_foot = G.foot_t - 1.0
     caps = _bom_line(bom, 'el_capacitors')
     n_caps = caps['qty'] if caps else 2
 
@@ -210,8 +209,7 @@ def mount(T) -> dict:
                               'lidar_d_mm': L.get('d'), 'gap_to_bumper_mm': L.get('gap_to_bumper_mm'), 'margin_mm': lid.get('margin_mm'),
                               'ball': lid.get('ball'),
                               'frame': f'cad/turret_lidar.py\'s: its heights are against frame T (the pan base\'s foot, {dz:g} mm above '
-                                       'the TM face since D66), not this file\'s TM frame; re-running the study against the TM face is '
-                                       'an open follow-up (issue #137)'},
+                                       'the TM face since D76), the same as this file\'s TM frame'},
                  'limited_pan_window_deg': lid.get('limited_pan_window_deg'), 'worst': lid.get('worst'),
                  'worst_row': {'min_tilt_deg': worst, 'pans_deg': [min(at), max(at)] if at else None},
                  'firmware_default': 'firmware/turret/config.py ROBOT_DEPRESSION: the same table, which the firmware holds for '
@@ -225,16 +223,9 @@ def mount(T) -> dict:
           'dowels_mm': [list(p) for p in tu.TM_DOWELS], 'dowel_d_mm': 5.0,
           'dowel_pin': f'Ø5 x {dowel_l:g}, {len(tu.TM_DOWELS)} off: not symmetric, the turret goes on one way only',
           'hole_d_mm': tu.TM_HOLE, 'hole_use': 'unused on the robot: the harness leaves by the DT12, nothing passes the hole',
-          'foot_d_mm': round(2 * tu.PLINTH['r'], 2), 'foot_t_mm': tu.PLINTH['tray_t'],
-          'foot': 'D66: the compute plinth\'s floor (cad/turret.py compute_tray) flat on the head\'s TM face, no centre opening; '
-                  f'the pan base sits {tu.PLINTH["h"]:g} mm above on the plinth\'s columns',
-          'plinth': {'height_mm': tu.PLINTH['h'], 'd_mm': 2 * tu.PLINTH['r'], 'decision': 'D66: the turret\'s own Jetson (reComputer Mini J4012) inside',
-                     'ports_side': '-x (the turret\'s back): the XT30 power input (12-54 V; the 10S bus through the body\'s fused branch) '
-                                   'and the RJ-45 (Ethernet to the J501)',
-                     'xt30_mm': [round(-math.sqrt(tu.PLINTH['r'] ** 2 - tu.PLINTH['xt30_y'] ** 2), 1), tu.PLINTH['xt30_y'], round(30.0 + tu.PLINTH['tray_t'], 1)],
-                     'rj45_mm': [round(-math.sqrt(tu.PLINTH['r'] ** 2 - tu.PLINTH['eth_y'] ** 2), 1), tu.PLINTH['eth_y'], round(30.0 + tu.PLINTH['tray_t'], 1)],
-                     'ports_frame': 'x, y on the pan axis, z above the head\'s TM face',
-                     'mass_g_est': 780},
+          'foot_d_mm': round(2 * G.base_r, 2), 'foot_t_mm': G.foot_t,
+          'foot': 'D76: the pan base\'s foot (cad/turret.py pan_base) flat on the head\'s TM face, its Ø65 centre opening '
+                  'over the Ø45 TM hole; no compute plinth (D66 superseded)',
           'bumper_r_mm': G.bumper_r[1], 'bumper_lug_r_mm': tu.BUMPER_LUG[1], 'bumper_z_mm': [z + dz for z in G.bumper_z],
           'source': 'cad/turret.py TM_BOLTS, TM_DOWELS, TM_HOLE, Geo.base_r / foot_t / bumper_r, pan_base(); the screw and pin '
                     f'lengths from {_rel(BOM_JSON)} (hw_tm_screws, hw_tm_dowels)'}
@@ -244,11 +235,10 @@ def mount(T) -> dict:
              'screw_head_seat_above_face_mm': round(head_seat, 1),
              'screw_tip_below_face_mm': round(screw_l - head_seat, 1),
              'bolt_hole_depth_min_mm': round(screw_l - head_seat + 1.0, 1),
-             'dowel_holes': f'2 x Ø5 H7 (reamed), at least {dowel_l - dowel_in_tray + 0.5:g} mm deep: {dowel_in_tray:g} mm of each '
-                            f'{dowel_l:g} mm pin is in the plinth\'s tray',
-             'source': 'docs/body-plan.md 1.1 (D41); the depths from the screw and pin lengths and cad/turret.py compute_tray() '
-                       f'(D66: the M5 heads on Ø{tu.PLINTH["cbore"][0]:g} x {tu.PLINTH["cbore"][1]:g} counterbores\' floors in the '
-                       f'{tu.PLINTH["tray_t"]:g} mm tray, the dowel holes {dowel_in_tray:g} mm into it from below)'}
+             'dowel_holes': f'2 x Ø5 H7 (reamed), at least {dowel_l - dowel_in_foot + 0.5:g} mm deep: {dowel_in_foot:g} mm of each '
+                            f'{dowel_l:g} mm pin is in the pan base\'s foot',
+             'source': 'docs/body-plan.md 1.1 (D41); the depths from the screw and pin lengths and cad/turret.py pan_base() '
+                       f'(D76: the M5 heads on the {G.foot_t:g} mm foot\'s top, the dowel holes {dowel_in_foot:g} mm into it from below)'}
     dt12 = {'receptacle': 'TE Deutsch DT04-12PA-L012 flange receptacle (te-dt04-12pa-l012)',
             'plug': 'DT06-12SA with its W12S wedge (te-dt06-12sa-kit), a 1011-248-1205 90 deg backshell turning the harness down',
             'side': '-y: the turret\'s right, which is the robot\'s right (the base does not pan)',
@@ -262,12 +252,13 @@ def mount(T) -> dict:
                           'backshell_withdrawal': 'the backshell\'s 30 mm path out: below the TM face, the body\'s side (riser, deck, '
                                                   'grommet); not in the turret\'s clash sweep'},
             'plug_check': plug,
-            'plug_in_with': 'the turret parked and the body\'s 24 V branch off',
-            'source': 'cad/turret.py DT, DT_Z (in frame T) + PLINTH h, Geo.dt_y, bought_parts() (dt_receptacle, dt_plug), '
+            'plug_in_with': 'the turret parked and the body\'s turret branch off (the stop relay open)',
+            'source': 'cad/turret.py DT, DT_Z (in frame T) + FRAME_T_ABOVE_TM, Geo.dt_y, bought_parts() (dt_receptacle, dt_plug), '
                       'clashes() (the sweep box); docs/turret-wiring.md 1.1'}
     harness = {'connector': 'DT12 (above)', 'pins': HARNESS,
-               'in_the_turret': 'a 5 A MINI fuse (littelfuse-0297005-wxnv) in its in-line holder in the lead to the base board, '
-                                'and D8 (1N5822) after it: a reversed supply blows the fuse',
+               'in_the_turret': 'the 10 A MINI 58 V (fuse_mini58_10a) in its in-line holder (littelfuse-0fhm0001zxj) in the lead '
+                                'from the DT12 to the base board, then D8 (1N5408): a reversed supply blows the fuse (D76: the power '
+                                'is on pins 1-4 again, as before D66)',
                'safety_contact': 'across pins 7-8: a dry contact, closed = run, rated for 12 V at 2 mA (the base 555\'s pulse loop); '
                                  'opens on the radio stop, on the receiver\'s failsafe and when the robot sits (D37, D52)',
                'source': 'docs/turret-wiring.md 1.1, 3.1 and 4; docs/turret-next-plan.md 3.2 item 3'}
@@ -279,10 +270,8 @@ def mount(T) -> dict:
             'com_off_pan_axis_mm': round(math.hypot(c_b[0], c_b[1]), 1),
             'com_above_tm_face_mm': round(c_b[2], 1),
             'com_above_deck_on_riser_mm': round(c_b[2] + RISER_H, 1),
-            'budget': f'D71: the turret is at most {MASS_CEILING_KG} kg on Gyropup with a full hopper (the robot\'s 37.5 kg design '
-                      f'mass covers it; it was D49\'s 1.70 kg head budget); the centre at most {COM_BUDGET_MM:g} mm above the TM face',
-            'ceiling_kg': MASS_CEILING_KG, 'margin_g': round(MASS_CEILING_KG * 1000 - m_b, 1),
-            'within_ceiling': m_b <= MASS_CEILING_KG * 1000,
+            'budget': f'D79: no mass ceiling (the owner took out D71\'s weight budget); the body\'s TM checks take the head at '
+                      f'1.70 kg or more, the centre at most {COM_BUDGET_MM:g} mm above the TM face, or the real one when higher',
             'com_budget_mm': COM_BUDGET_MM, 'com_margin_mm': round(COM_BUDGET_MM - c_b[2], 1),
             'com_within_budget': c_b[2] <= COM_BUDGET_MM,
             'source': 'cad/turret.py mass_properties() (printed parts by the printed-part model, bought parts at their catalogue '
@@ -296,8 +285,8 @@ def mount(T) -> dict:
           'bank_uf': 1000 * n_caps,
           'bank': f'{n_caps} x 1000 uF 35 V low ESR ({caps["key"] if caps else "panasonic-eeu-fr1v102"}) across the ring\'s +24 V on '
                   f'the turret boards\' level 1 (the power model in {_rel(POWER_JSON)} assumed 3 x 1,000 uF)',
-          'hot_plug': 'plug and unplug the DT12 only with the body\'s 24 V branch off: the bank charges through the pins otherwise',
-          'body_side': 'the body\'s 24 V branch with its own fuse, and the STOP relay\'s second pole in it (D52)',
+          'hot_plug': 'plug and unplug the DT12 only with the body\'s turret branch off: the bank charges through the pins otherwise',
+          'body_side': 'the body\'s turret branch (F8, 7.5 A MINI 58 V) through the stop relay\'s pole B (D52), on DT12 pins 1-4 (D76)',
           'source': f'{_rel(POWER_JSON)} (ramp_sweep at the firmware\'s RAMP_S, verdict), firmware/turret/config.py RAMP_S, '
                     f'docs/turret-wiring.md 4-5 (the game average <= 1.5 A at the ring, the bank), docs/head-payload.md (40 W '
                     f'average), {_rel(BOM_JSON)} (el_capacitors)'}
@@ -316,10 +305,10 @@ def mount(T) -> dict:
     aim = {'pan': 'continuous (the slip ring), at most 90 deg/s (the servo through 3:1)', 'pan_rate_max_deg_s': cfg.PAN_SPEED_MAX,
            'tilt_deg': [cfg.TILT_MIN_DEG, cfg.TILT_MAX_DEG], 'tilt_rule': 'never above level: the hard stop at 0 and every goal clamped to <= 0',
            'tilt_axis_above_tm_mm': G.tilt_t + dz, 'ball_path_above_tm_mm': G.path_t + dz, 'muzzle_ahead_of_pan_axis_mm': G.barrel_x1 - G.tilt_x,
-           'fps_max': cfg.CAP_FPS, 'source': 'firmware/turret/config.py, cad/turret.py Geo (tilt_t, path_t in frame T) + PLINTH h'}
+           'fps_max': cfg.CAP_FPS, 'source': 'firmware/turret/config.py, cad/turret.py Geo (tilt_t, path_t in frame T) + FRAME_T_ABOVE_TM'}
     return {'what': 'the turret\'s interface for the body (docs/turret-next-plan.md 3.1, task N5)',
-            'frame': 'the TM frame: x forward, y left, z up (mm), the origin on the pan axis in the TM face (the compute plinth '
-                     'tray\'s underside, D66); cad/turret.py\'s frame T (the pan base\'s foot) is frame_t_above_face_mm above it',
+            'frame': 'the TM frame: x forward, y left, z up (mm), the origin on the pan axis in the TM face (the pan base\'s '
+                     'foot, D76); cad/turret.py\'s frame T (the pan base\'s foot) is frame_t_above_face_mm above it',
             'frame_t_above_face_mm': dz,
             'written_by': 'cad/build_turret.py through cad/turret_mount.py, from the CAD as built',
             'mass_kg': round(m_b / 1000.0, 4), 'com_mm': _r(c_b, 1),
@@ -328,8 +317,7 @@ def mount(T) -> dict:
             'round_trip': 'cad/turret_mount.py --check reads this file back against cad/turret.py\'s TM_BOLTS, TM_DOWELS, TM_HOLE'}
 
 
-MASS_CEILING_KG = 2.6          # D71 (the coordinator, 2026-10-28): the turret's ceiling on Gyropup, 30 balls in
-COM_BUDGET_MM = 100.0          # D71: its centre at most this far above the TM face (reported, not raised: an owner decision)
+COM_BUDGET_MM = 100.0          # the TM's design point (cad/body_params.py tm()): a centre over it is reported, not raised
 
 
 def check(path: Path = OUT) -> list:
@@ -337,9 +325,9 @@ def check(path: Path = OUT) -> list:
     m = json.loads(Path(path).read_text())
     G = tu.Geo()
     want = {('tm', 'bolts_mm'): [list(p) for p in tu.TM_BOLTS], ('tm', 'dowels_mm'): [list(p) for p in tu.TM_DOWELS],
-            ('tm', 'hole_d_mm'): tu.TM_HOLE, ('tm', 'foot_d_mm'): 2 * tu.PLINTH['r'],
-            ('dt12', 'centre_above_tm_mm'): tu.DT_Z + tu.PLINTH['h'], ('dt12', 'pad_face_y_mm'): -G.dt_y,
-            ('dt12', 'withdrawal_mm'): tu.DT['sweep'], (None, 'frame_t_above_face_mm'): tu.PLINTH['h']}
+            ('tm', 'hole_d_mm'): tu.TM_HOLE, ('tm', 'foot_d_mm'): 2 * G.base_r,
+            ('dt12', 'centre_above_tm_mm'): tu.DT_Z + tu.FRAME_T_ABOVE_TM, ('dt12', 'pad_face_y_mm'): -G.dt_y,
+            ('dt12', 'withdrawal_mm'): tu.DT['sweep'], (None, 'frame_t_above_face_mm'): tu.FRAME_T_ABOVE_TM}
     bad = []
     for (blk, key), v in want.items():
         got = (m.get(blk) or {}).get(key) if blk else m.get(key)
@@ -357,13 +345,11 @@ def write(T, path: Path = OUT) -> dict:
     path.parent.mkdir(parents=True, exist_ok=True)
     path.write_text(json.dumps(m, indent=1, ensure_ascii=False) + '\n')
     bad = check(path)
-    if not m['mass']['within_ceiling']:
-        bad.append(f"mass: {m['mass']['with_30_balls']['mass_g']} g with 30 balls, over D71's {MASS_CEILING_KG} kg ceiling")
     if bad:
         raise AssertionError('mount.json does not round-trip: ' + '; '.join(bad))
     if not m['mass']['com_within_budget']:                 # an owner decision (#137): written in the file, not raised
-        print(f"mount.json: the centre is {m['mass']['com_above_tm_face_mm']} mm above the TM face, over D71's "
-              f"{COM_BUDGET_MM:g} mm budget (com_within_budget false)")
+        print(f"mount.json: the centre is {m['mass']['com_above_tm_face_mm']} mm above the TM face, over the TM's "
+              f"{COM_BUDGET_MM:g} mm design point (com_within_budget false)")
     print(f"mount.json: {m['mass']['with_30_balls']['mass_g'] / 1000:.3f} kg with balls, {m['mass']['empty']['mass_g'] / 1000:.3f} empty, "
           f"centre {m['com_mm']}; the TM pattern round-trips -> {_rel(path)}")
     return m

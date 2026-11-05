@@ -6,18 +6,18 @@
  "status": "screen, not qualification: the toolkit set beside inventory.py; nothing printed or tested",
  "joints_json": {
   "path": "research/insert-joints/joints.json",
-  "sha256": "28c6439cd9a739475ca27a8c496d3b2fd13c84efc6ab8665a2a3268e14b812eb",
+  "sha256": "9e4a1fac4600a5d2c1eb8bb008843ef7e2ac69329556c36694a2395a443812e5",
   "summary": {
-   "families": 46,
-   "inserts_on_robot": 151,
+   "families": 44,
+   "inserts_on_robot": 143,
    "verdicts": {
-    "owner": 8,
-    "check": 8,
+    "owner": 5,
+    "check": 9,
     "ok": 9,
     "note": 21
    },
    "fix": 0,
-   "owner": 9,
+   "owner": 6,
    "check": 12
   }
  },
@@ -73,7 +73,7 @@
    "the worst tension load per insert in joints.json is the separating load (pull_n)",
    "a printed hole comes out 0.25 mm under the drawn pilot (the middle of cad-agent's CAD_ALLOWANCE_MM, 0.2-0.3 mm, which it adds for that reason): the melt volume is taken at that as-printed hole, and the drawn hole is recorded",
    "countersunk heads (turret.pan_base_carrier_tabs, turret.yoke_board_bay) reach the toolkit as a flat socket head on solid plastic: their head-bearing rows do not model the cone",
-   "a 40 % gyroid clamped part (body.riser_top_tm, turret.plinth_columns) reaches the toolkit as solid plastic: its bearing and clamped-on-insert ceilings read high"
+   "a 40 % gyroid clamped part (body.riser_top_tm) reaches the toolkit as solid plastic: its bearing and clamped-on-insert ceilings read high"
   ],
   "constraints": {
    "leg.wheel_botwheel": {
@@ -90,48 +90,48 @@
   "pct25": "within 25 % (the preload scatter the toolkit's nut-factor band gives, insert_limited_torque's limits)"
  },
  "summary": {
-  "joints": 46,
-  "evaluated": 41,
+  "joints": 44,
+  "evaluated": 39,
   "skipped": 5,
-  "comparisons": 271,
-  "agree": 203,
-  "disagree": 68,
+  "comparisons": 255,
+  "agree": 192,
+  "disagree": 63,
   "by_check": {
    "pilot diameter": {
     "agree": 0,
-    "disagree": 38
+    "disagree": 36
    },
    "pilot depth": {
-    "agree": 34,
+    "agree": 32,
     "disagree": 0
    },
    "melt volume": {
-    "agree": 19,
+    "agree": 18,
     "disagree": 5
    },
    "screw tip": {
-    "agree": 13,
-    "disagree": 9
+    "agree": 12,
+    "disagree": 8
    },
    "boss": {
-    "agree": 19,
+    "agree": 18,
     "disagree": 0
    },
    "insert axis": {
-    "agree": 38,
+    "agree": 36,
     "disagree": 0
    },
    "clamp path": {
-    "agree": 24,
+    "agree": 22,
     "disagree": 0
    },
    "pull-out capacity": {
-    "agree": 25,
-    "disagree": 13
+    "agree": 24,
+    "disagree": 12
    },
    "pull-out margin": {
     "agree": 16,
-    "disagree": 2
+    "disagree": 1
    },
    "preload at torque": {
     "agree": 5,
@@ -142,7 +142,7 @@
     "disagree": 1
    },
    "head bearing preload": {
-    "agree": 6,
+    "agree": 5,
     "disagree": 0
    }
   }
@@ -1833,7 +1833,7 @@
      "axis": "upright",
      "hole_mm": 6.4,
      "through": false,
-     "pull_n": 782,
+     "pull_n": 410,
      "head": "button",
      "hole_depth_mm": 12.0,
      "boss_outside_mm": 18.0,
@@ -2075,15 +2075,15 @@
      "check": "pull-out margin",
      "tolerance": "the same side of a safety factor of 2 (inventory: its capacity / the load; toolkit: its low capacity / the load, against its margin of 2)",
      "inventory": {
-      "sf": 1.92,
+      "sf": 3.66,
       "capacity_n": 1500,
       "field": "capacity_n",
-      "load_n": 782
+      "load_n": 410
      },
      "toolkit": {
-      "sf_low": 1.3,
+      "sf_low": 2.47,
       "low_n": 1013.53,
-      "verdict": "warn"
+      "verdict": "pass"
      },
      "status": "agree"
     }
@@ -2101,13 +2101,13 @@
      "tightening torque": "pass",
      "insert thread": "pass",
      "insert face": "pass",
-     "pull-out": "warn"
+     "pull-out": "pass"
     },
     "allowed_torque_nm": 1.26254,
     "governed_by": "insert_face",
     "preload_caps_n": {
      "screw": 10317.8,
-     "insert_thread": 3102.39,
+     "insert_thread": 3474.39,
      "insert_face": 1977.21
     },
     "torque_out_nm": {
@@ -2132,14 +2132,14 @@
      "axis": "upright",
      "hole_mm": 6.4,
      "through": false,
-     "pull_n": 640,
+     "pull_n": 313,
      "head": "socket",
      "hole_depth_mm": 13.0,
      "clearance_mm": 5.5,
-     "screw_depth_mm": 11.5,
+     "screw_depth_mm": 11.0,
      "clamped": {
       "material": "pa6-cf20-polymaker-wet",
-      "thickness_mm": 4.5
+      "thickness_mm": 5.0
      }
     },
     "sources": {
@@ -2254,16 +2254,16 @@
      "tolerance": "the same class (pass, warn or fail; or the same clamp path)",
      "inventory": {
       "verdict": "pass",
-      "tip_mm": 11.5,
-      "clear_mm": 1.5
+      "tip_mm": 11.0,
+      "clear_mm": 2.0
      },
      "toolkit": {
       "verdict": "warn",
-      "tip_mm": 11.5,
+      "tip_mm": 11.0,
       "limit_mm": 13.0
      },
      "status": "disagree",
-     "why": "the tip (11.5 mm) passes the insert's end (7.9 mm) into the room left below it for the melt, which the toolkit warns of (the melt may have filled it and the screw then bottoms); inventory.py checks only the floor, 1.5 mm away"
+     "why": "the tip (11 mm) passes the insert's end (7.9 mm) into the room left below it for the melt, which the toolkit warns of (the melt may have filled it and the screw then bottoms); inventory.py checks only the floor, 2 mm away"
     },
     {
      "check": "insert axis",
@@ -2351,18 +2351,17 @@
      "check": "pull-out margin",
      "tolerance": "the same side of a safety factor of 2 (inventory: its capacity / the load; toolkit: its low capacity / the load, against its margin of 2)",
      "inventory": {
-      "sf": 2.34,
+      "sf": 4.79,
       "capacity_n": 1500,
       "field": "capacity_n",
-      "load_n": 640
+      "load_n": 313
      },
      "toolkit": {
-      "sf_low": 1.58,
+      "sf_low": 3.24,
       "low_n": 1013.53,
-      "verdict": "warn"
+      "verdict": "pass"
      },
-     "status": "disagree",
-     "why": "inventory.py's capacity 1500 N gives 2.34; the toolkit holds the load to its low end, 1014 N, which gives 1.58 (1140 N and 1.78 on pa6-cf20-polymaker-wet's own sheet, scaled by 0.889 to the inventory's across-layer basis)"
+     "status": "agree"
     },
     {
      "check": "head bearing preload",
@@ -2394,7 +2393,7 @@
      "insert thread": "pass",
      "insert face": "pass",
      "clamped on insert": "pass",
-     "pull-out": "warn",
+     "pull-out": "pass",
      "head bearing": "pass",
      "preload kept": "warn"
     },
@@ -2403,7 +2402,7 @@
     "preload_caps_n": {
      "screw": 10317.8,
      "head_bearing": 735.302,
-     "insert_thread": 3244.39,
+     "insert_thread": 3571.39,
      "insert_face": 1977.21,
      "clamped_on_insert": 436.102
     },
@@ -2427,21 +2426,21 @@
       "fix": "washer",
       "what": "an ISO 7089 washer between the part and the insert and one under the head",
       "named": true,
-      "allowed_nm": 0.84033,
-      "preload_n": 1316.0,
+      "allowed_nm": 0.841262,
+      "preload_n": 1317.46,
       "governed_by": "clamped_on_washer"
      },
      {
       "fix": "large washer",
       "what": "an ISO 7093-1 washer between the part and the insert and one under the head",
       "named": true,
-      "allowed_nm": 1.09921,
-      "preload_n": 1721.42,
+      "allowed_nm": 1.09977,
+      "preload_n": 1722.3,
       "governed_by": "clamped_on_washer"
      },
      {
       "fix": "limiter",
-      "what": "a spirol-cl6000-m5 compression limiter, 5 mm long, standing proud of the plastic",
+      "what": "a spirol-cl6000-m5 compression limiter, 6 mm long, standing proud of the plastic",
       "named": true,
       "allowed_nm": 0.791627,
       "preload_n": 1239.73,
@@ -2449,7 +2448,7 @@
      },
      {
       "fix": "limiter",
-      "what": "a spirol-cl8000-m5 compression limiter, 5 mm long, standing proud of the plastic",
+      "what": "a spirol-cl8000-m5 compression limiter, 6 mm long, standing proud of the plastic",
       "named": true,
       "allowed_nm": 0.791627,
       "preload_n": 1239.73,
@@ -4258,629 +4257,6 @@
    "reason": "a group of 22 body joints with no stack per joint in joints.json ('see notes'); the body's own joint check (exports/body/integrity.json) carries them"
   },
   {
-   "id": "turret.plinth_columns",
-   "status": "evaluated",
-   "kind": "insert",
-   "call": {
-    "function": "cadagent.mechanical.inserts.check_joint",
-    "units": "mm, N, N m (its docstring)",
-    "kwargs": {
-     "insert": "mcmaster-94459A775",
-     "material": "petg-bambu-basic",
-     "axis": "upright",
-     "hole_mm": 6.4,
-     "through": false,
-     "pull_n": 308,
-     "head": "socket",
-     "hole_depth_mm": 12.5,
-     "boss_outside_mm": 15.0,
-     "clearance_mm": 5.5,
-     "screw_depth_mm": 11.0,
-     "clamped": {
-      "material": "pa6-cf20-polymaker-wet",
-      "thickness_mm": 5.0
-     }
-    },
-    "sources": {
-     "insert": "joints.json turret.plinth_columns.insert (94459A775)",
-     "material": "joints.json turret.plinth_columns.material (petg; see mapping.materials)",
-     "axis": "joints.json turret.plinth_columns.axis",
-     "hole_mm": "joints.json turret.plinth_columns.hole.d",
-     "through": "joints.json turret.plinth_columns.hole.through",
-     "pull_n": "joints.json turret.plinth_columns.loads (worst per_insert_n in tension)",
-     "head": "joints.json turret.plinth_columns.clamp.bearing",
-     "hole_depth_mm": "joints.json turret.plinth_columns.hole.depth",
-     "boss_outside_mm": "joints.json turret.plinth_columns.boss_mm",
-     "clearance_mm": "joints.json turret.plinth_columns.mating_hole_mm",
-     "screw_depth_mm": "joints.json turret.plinth_columns.tip_depth_mm",
-     "clamped": "joints.json turret.plinth_columns.clamp.material (PA6-CF); thickness joints.json turret.plinth_columns.clamp.printed_mm"
-    }
-   },
-   "comparisons": [
-    {
-     "check": "pilot diameter",
-     "tolerance": "the same class (pass, warn or fail; or the same clamp path)",
-     "inventory": {
-      "verdict": "pass",
-      "field": "hole.d",
-      "value_mm": 6.4,
-      "rule_mm": [
-       6.15,
-       6.4
-      ]
-     },
-     "toolkit": {
-      "verdict": "warn",
-      "value_mm": 6.4,
-      "rule_mm": [
-       6.6,
-       6.7
-      ]
-     },
-     "status": "disagree",
-     "why": "the toolkit wants the CAD pilot 6.6-6.7 mm: the maker's 6.4 mm hole plus CNC Kitchen's 0.2-0.3 mm allowance, as a printed hole comes out about 0.25 mm small. inventory.py holds it to the maker's maximum (6.4 mm, no more than 0.25 under) as drawn. The fit specimens (research/carrier-insert-fit) settle which the printer needs"
-    },
-    {
-     "check": "pilot depth",
-     "tolerance": "the same class (pass, warn or fail; or the same clamp path)",
-     "inventory": {
-      "verdict": "pass",
-      "field": "hole.depth",
-      "value_mm": 12.5,
-      "rule_mm": 9.5,
-      "rule": "L + 2 pitches (Spirol)"
-     },
-     "toolkit": {
-      "verdict": "pass",
-      "value_mm": 12.5,
-      "rule_mm": 9.5,
-      "rules_mm": {
-       "maker's least material thickness": 8.6,
-       "L + 1 mm (ruthex, CNC Kitchen)": 8.9,
-       "L + 2 pitches (SPIROL)": 9.5
-      }
-     },
-     "status": "agree"
-    },
-    {
-     "check": "melt volume",
-     "tolerance": "the same class (pass, warn or fail; or the same clamp path)",
-     "inventory": {
-      "verdict": "pass",
-      "finding": null
-     },
-     "toolkit": {
-      "verdict": "pass",
-      "hole_mm": 6.15,
-      "displaced_m3": -7.55644e-09,
-      "pocket_m3": 1.36646e-07,
-      "as_drawn": {
-       "hole_mm": 6.4,
-       "verdict": "pass",
-       "displaced_m3": -2.70235e-08,
-       "pocket_m3": 1.47982e-07
-      },
-      "functions": [
-       "insert_displaced_volume",
-       "overflow_volume"
-      ]
-     },
-     "status": "agree",
-     "si": {
-      "insert_volume_m3": {
-       "value": 1.2982e-07,
-       "source": "cad-agent INSERTS['mcmaster-94459A775'].volume_mm3 (McMaster's STEP)"
-      },
-      "hole_diameter_m": {
-       "value": 0.00615,
-       "source": "joints.json turret.plinth_columns.hole.d (6.4 mm drawn) less 0.25 mm: as printed (cad-agent CAD_ALLOWANCE_MM, its middle)"
-      },
-      "bore_diameter_m": {
-       "value": 0.00396,
-       "source": "cad-agent INSERTS['mcmaster-94459A775'].cad_bore_mm"
-      },
-      "length_m": {
-       "value": 0.0079,
-       "source": "cad-agent INSERTS['mcmaster-94459A775'].length_mm"
-      },
-      "depth_m": {
-       "value": 0.0125,
-       "source": "joints.json turret.plinth_columns.hole.depth"
-      }
-     }
-    },
-    {
-     "check": "screw tip",
-     "tolerance": "the same class (pass, warn or fail; or the same clamp path)",
-     "inventory": {
-      "verdict": "pass",
-      "tip_mm": 11.0,
-      "clear_mm": 1.5
-     },
-     "toolkit": {
-      "verdict": "warn",
-      "tip_mm": 11.0,
-      "limit_mm": 12.5
-     },
-     "status": "disagree",
-     "why": "the tip (11 mm) passes the insert's end (7.9 mm) into the room left below it for the melt, which the toolkit warns of (the melt may have filled it and the screw then bottoms); inventory.py checks only the floor, 1.5 mm away"
-    },
-    {
-     "check": "boss",
-     "tolerance": "the same class (pass, warn or fail; or the same clamp path); warn and fail taken together",
-     "inventory": {
-      "verdict": "pass",
-      "ratio": 2.11,
-      "insert_od_mm": 7.11,
-      "od_basis": "McMaster STEP bounding box (catalog/hardware.json cad.bbox_mm)"
-     },
-     "toolkit": {
-      "verdict": "pass",
-      "wall_mm": 4.3,
-      "limit": {
-       "least_wall_mm": 2.6,
-       "least_outside_mm": 11.6,
-       "full_outside_mm": 14.22
-      },
-      "knurl_mm": 7.11,
-      "knurl_basis": "the knurl's crests"
-     },
-     "status": "agree"
-    },
-    {
-     "check": "insert axis",
-     "tolerance": "the same class (pass, warn or fail; or the same clamp path)",
-     "inventory": {
-      "verdict": "pass",
-      "axis": "print-z"
-     },
-     "toolkit": {
-      "verdict": "pass",
-      "axis": "upright"
-     },
-     "status": "agree"
-    },
-    {
-     "check": "clamp path",
-     "tolerance": "the same class (pass, warn or fail; or the same clamp path)",
-     "inventory": {
-      "path": "through-insert",
-      "mating_hole_mm": 5.5,
-      "insert_od_mm": 7.11
-     },
-     "toolkit": {
-      "path": "through-insert",
-      "function": "insert_clamp_path",
-      "why": "flush, the insert's end bears on the clamped part: the clamp goes through the insert, and the knurl carries only what pulls the parts apart"
-     },
-     "status": "agree"
-    },
-    {
-     "check": "pull-out capacity",
-     "tolerance": "the inventory's value inside the toolkit's low-high band",
-     "inventory": {
-      "value_n": 2587,
-      "field": "pullout_est_n",
-      "tau_mpa": 16.29,
-      "diameter_mm": 6.4,
-      "length_mm": 7.9
-     },
-     "toolkit": {
-      "low_n": 1564.78,
-      "mid_n": 2044.35,
-      "high_n": 2266.66,
-      "sheet_n": {
-       "low": 1564.78,
-       "mid": 2044.35,
-       "high": 2266.66
-      },
-      "basis_scale": 1.0,
-      "function": "insert_shear_force",
-      "calibrated_on": "petg",
-      "outside_fit": null
-     },
-     "status": "disagree",
-     "ratio": 1.265,
-     "si": {
-      "outer_diameter_m": {
-       "value": 0.00711,
-       "source": "cad-agent INSERTS['mcmaster-94459A775'] (the knurl's crests)"
-      },
-      "length_m": {
-       "value": 0.0079,
-       "source": "cad-agent INSERTS['mcmaster-94459A775'].length_mm"
-      },
-      "shear_strength_pa": {
-       "value": 17500000.0,
-       "source": "half petg-bambu-basic's across-layer strength (cadagent.mechanical.inserts.shear_strength)"
-      },
-      "calibration": {
-       "value": {
-        "low": 0.50672,
-        "mid": 0.66202,
-        "high": 0.734008
-       },
-       "source": "c fitted on 'petg' (cadagent.mechanical.inserts.calibration)"
-      },
-      "basis_scale": {
-       "value": 1.0,
-       "source": "joints.json basis.pullout.materials.petg.z_mpa (35) / petg-bambu-basic's across-layer strength (35 MPa)"
-      }
-     },
-     "why": "above the band: inventory.py takes CNC Kitchen's PETG test as a mean shear on the hole (16.29 MPa x pi x 6.4 x 7.9 mm); the toolkit fits c to petg tests on each test filament's datasheet and applies it to petg-bambu-basic's (17.5 MPa shear) on 7.11 mm (the knurl's crests), so a filament weaker across its layers than the tested one comes out lower; 1.27 x its mid, 1.14 x its high end",
-     "ratio_to_high": 1.141
-    },
-    {
-     "check": "pull-out margin",
-     "tolerance": "the same side of a safety factor of 2 (inventory: its capacity / the load; toolkit: its low capacity / the load, against its margin of 2)",
-     "inventory": {
-      "sf": 4.87,
-      "capacity_n": 1500,
-      "field": "capacity_n",
-      "load_n": 308
-     },
-     "toolkit": {
-      "sf_low": 5.08,
-      "low_n": 1564.78,
-      "verdict": "pass"
-     },
-     "status": "agree"
-    },
-    {
-     "check": "head bearing preload",
-     "tolerance": "within 25 % (the preload scatter the toolkit's nut-factor band gives, insert_limited_torque's limits)",
-     "inventory": {
-      "preload_n": 825.0,
-      "basis": "25 MPa sustained (basis.bearing) x clamp.bearing_area_mm2 33 (Ø8.5 on Ø5.5)"
-     },
-     "toolkit": {
-      "preload_n": 735.3,
-      "area_mm2": 26.88,
-      "face": "the ISO 4762 socket head (8.03 mm on a 5.5 mm hole: 26.88 mm^2); the fillet under the head (up to 5.7 mm) is wider than the hole, so it rides on the hole's edge: chamfer it to at least 5.7 mm across"
-     },
-     "status": "agree",
-     "ratio": 1.122
-    }
-   ],
-   "toolkit_only": {
-    "verdict": "warn",
-    "rows": {
-     "hole diameter": "warn",
-     "hole depth": "pass",
-     "melt volume": "pass",
-     "screw tip": "warn",
-     "boss wall": "pass",
-     "clamp path": "pass",
-     "tightening torque": "pass",
-     "insert thread": "pass",
-     "insert face": "pass",
-     "clamped on insert": "pass",
-     "pull-out": "pass",
-     "head bearing": "pass",
-     "preload kept": "warn"
-    },
-    "allowed_torque_nm": 0.442011,
-    "governed_by": "clamped_on_insert",
-    "preload_caps_n": {
-     "screw": 10317.8,
-     "head_bearing": 735.302,
-     "insert_thread": 3576.39,
-     "insert_face": 1977.21,
-     "clamped_on_insert": 436.102
-    },
-    "torque_out_nm": {
-     "low": 3.64979,
-     "mid": 6.99438,
-     "high": 11.3639
-    },
-    "confidence": "low: 3 results from two groups, SPIROL's two M6 results read off a bar chart and CNC Kitchen's M3 (3 samples, the insert's length assumed)",
-    "fixes": [
-     {
-      "fix": "larger head",
-      "what": "an ISO 7380-1 button head: a 8.74 mm bearing face, against 8.03 mm",
-      "named": false,
-      "allowed_nm": 0.442011,
-      "preload_n": 436.102,
-      "governed_by": "clamped_on_insert",
-      "why": "does not lift it: clamped on insert still sets 436 N"
-     },
-     {
-      "fix": "washer",
-      "what": "an ISO 7089 washer between the part and the insert and one under the head",
-      "named": true,
-      "allowed_nm": 0.841262,
-      "preload_n": 1317.46,
-      "governed_by": "clamped_on_washer"
-     },
-     {
-      "fix": "large washer",
-      "what": "an ISO 7093-1 washer between the part and the insert and one under the head",
-      "named": true,
-      "allowed_nm": 1.09977,
-      "preload_n": 1722.3,
-      "governed_by": "clamped_on_washer"
-     },
-     {
-      "fix": "limiter",
-      "what": "a spirol-cl6000-m5 compression limiter, 6 mm long, standing proud of the plastic",
-      "named": true,
-      "allowed_nm": 0.791627,
-      "preload_n": 1239.73,
-      "governed_by": "insert_face"
-     },
-     {
-      "fix": "limiter",
-      "what": "a spirol-cl8000-m5 compression limiter, 6 mm long, standing proud of the plastic",
-      "named": true,
-      "allowed_nm": 0.791627,
-      "preload_n": 1239.73,
-      "governed_by": "insert_face"
-     }
-    ]
-   },
-   "not_compared": []
-  },
-  {
-   "id": "turret.plinth_tray_m4",
-   "status": "evaluated",
-   "kind": "insert",
-   "call": {
-    "function": "cadagent.mechanical.inserts.check_joint",
-    "units": "mm, N, N m (its docstring)",
-    "kwargs": {
-     "insert": "mcmaster-94459A160",
-     "material": "pa6-cf20-polymaker-wet",
-     "axis": "upright",
-     "hole_mm": 5.6,
-     "through": false,
-     "pull_n": 0.0,
-     "head": "socket",
-     "hole_depth_mm": 8.0,
-     "clearance_mm": 4.5,
-     "screw_depth_mm": 5.0,
-     "clamped": {
-      "material": "petg-bambu-basic",
-      "thickness_mm": 5.0
-     }
-    },
-    "sources": {
-     "insert": "joints.json turret.plinth_tray_m4.insert (94459A160)",
-     "material": "joints.json turret.plinth_tray_m4.material (pa6-cf; see mapping.materials)",
-     "axis": "joints.json turret.plinth_tray_m4.axis",
-     "hole_mm": "joints.json turret.plinth_tray_m4.hole.d",
-     "through": "joints.json turret.plinth_tray_m4.hole.through",
-     "pull_n": "no tension load recorded: 0",
-     "head": "assumed: the toolkit's default socket head",
-     "hole_depth_mm": "joints.json turret.plinth_tray_m4.hole.depth",
-     "clearance_mm": "joints.json turret.plinth_tray_m4.mating_hole_mm",
-     "screw_depth_mm": "joints.json turret.plinth_tray_m4.tip_depth_mm",
-     "clamped": "joints.json turret.plinth_tray_m4.clamp.stack (PETG); thickness joints.json turret.plinth_tray_m4.clamp.printed_mm"
-    }
-   },
-   "comparisons": [
-    {
-     "check": "pilot diameter",
-     "tolerance": "the same class (pass, warn or fail; or the same clamp path)",
-     "inventory": {
-      "verdict": "pass",
-      "field": "hole.d",
-      "value_mm": 5.6,
-      "rule_mm": [
-       5.35,
-       5.6
-      ]
-     },
-     "toolkit": {
-      "verdict": "warn",
-      "value_mm": 5.6,
-      "rule_mm": [
-       5.8,
-       5.9
-      ]
-     },
-     "status": "disagree",
-     "why": "the toolkit wants the CAD pilot 5.8-5.9 mm: the maker's 5.6 mm hole plus CNC Kitchen's 0.2-0.3 mm allowance, as a printed hole comes out about 0.25 mm small. inventory.py holds it to the maker's maximum (5.6 mm, no more than 0.25 under) as drawn. The fit specimens (research/carrier-insert-fit) settle which the printer needs"
-    },
-    {
-     "check": "pilot depth",
-     "tolerance": "the same class (pass, warn or fail; or the same clamp path)",
-     "inventory": {
-      "verdict": "pass",
-      "field": "hole.depth",
-      "value_mm": 8.0,
-      "rule_mm": 7.8,
-      "rule": "L + 2 pitches (Spirol)"
-     },
-     "toolkit": {
-      "verdict": "pass",
-      "value_mm": 8.0,
-      "rule_mm": 7.8,
-      "rules_mm": {
-       "maker's least material thickness": 7.1,
-       "L + 1 mm (ruthex, CNC Kitchen)": 7.4,
-       "L + 2 pitches (SPIROL)": 7.8
-      }
-     },
-     "status": "agree"
-    },
-    {
-     "check": "screw tip",
-     "tolerance": "the same class (pass, warn or fail; or the same clamp path)",
-     "inventory": {
-      "verdict": "pass",
-      "tip_mm": 5.0,
-      "clear_mm": 3.0
-     },
-     "toolkit": {
-      "verdict": "pass",
-      "tip_mm": 5.0,
-      "limit_mm": 8.0
-     },
-     "status": "agree"
-    },
-    {
-     "check": "insert axis",
-     "tolerance": "the same class (pass, warn or fail; or the same clamp path)",
-     "inventory": {
-      "verdict": "pass",
-      "axis": "print-z"
-     },
-     "toolkit": {
-      "verdict": "pass",
-      "axis": "upright"
-     },
-     "status": "agree"
-    },
-    {
-     "check": "clamp path",
-     "tolerance": "the same class (pass, warn or fail; or the same clamp path)",
-     "inventory": {
-      "path": "through-insert",
-      "mating_hole_mm": 4.5,
-      "insert_od_mm": 6.31
-     },
-     "toolkit": {
-      "path": "through-insert",
-      "function": "insert_clamp_path",
-      "why": "flush, the insert's end bears on the clamped part: the clamp goes through the insert, and the knurl carries only what pulls the parts apart"
-     },
-     "status": "agree"
-    },
-    {
-     "check": "pull-out capacity",
-     "tolerance": "the inventory's value inside the toolkit's low-high band",
-     "inventory": {
-      "value_n": 1188,
-      "field": "pullout_est_n",
-      "tau_mpa": 10.55,
-      "diameter_mm": 5.6,
-      "length_mm": 6.4
-     },
-     "toolkit": {
-      "low_n": 646.706,
-      "mid_n": 1088.43,
-      "high_n": 1358.1,
-      "sheet_n": {
-       "low": 727.438,
-       "mid": 1224.3,
-       "high": 1527.64
-      },
-      "basis_scale": 0.88902,
-      "function": "insert_shear_force",
-      "calibrated_on": "pooled",
-      "outside_fit": null
-     },
-     "status": "agree",
-     "ratio": 1.091,
-     "si": {
-      "outer_diameter_m": {
-       "value": 0.0056,
-       "source": "cad-agent INSERTS['mcmaster-94459A160'] (the maker's hole: the knurl's diameter was not read, so the shear cylinder is taken at the hole, smaller than the knurl (the capacity comes out low, the boss rule a floor))"
-      },
-      "length_m": {
-       "value": 0.0064,
-       "source": "cad-agent INSERTS['mcmaster-94459A160'].length_mm"
-      },
-      "shear_strength_pa": {
-       "value": 12750000.0,
-       "source": "half pa6-cf20-polymaker-wet's across-layer strength (cadagent.mechanical.inserts.shear_strength)"
-      },
-      "calibration": {
-       "value": {
-        "low": 0.50672,
-        "mid": 0.852825,
-        "high": 1.06412
-       },
-       "source": "c fitted on 'pooled' (cadagent.mechanical.inserts.calibration)"
-      },
-      "basis_scale": {
-       "value": 0.88902,
-       "source": "joints.json basis.pullout.materials.pa6-cf.z_mpa (22.67) / pa6-cf20-polymaker-wet's across-layer strength (25.5 MPa)"
-      }
-     },
-     "ratio_to_high": 0.8748
-    }
-   ],
-   "toolkit_only": {
-    "verdict": "warn",
-    "rows": {
-     "hole diameter": "warn",
-     "hole depth": "pass",
-     "screw tip": "pass",
-     "boss wall": "warn",
-     "calibration": "warn",
-     "clamp path": "pass",
-     "tightening torque": "pass",
-     "insert thread": "pass",
-     "insert face": "pass",
-     "clamped on insert": "pass",
-     "head bearing": "pass",
-     "preload kept": "warn"
-    },
-    "allowed_torque_nm": 0.235447,
-    "governed_by": "clamped_on_insert",
-    "preload_caps_n": {
-     "screw": 6386.52,
-     "head_bearing": 579.803,
-     "insert_thread": 1966.78,
-     "insert_face": 1082.0,
-     "clamped_on_insert": 287.689
-    },
-    "torque_out_nm": {
-     "low": 1.33638,
-     "mid": 3.29913,
-     "high": 6.03225
-    },
-    "confidence": "none for this family: no printed test in it with a datasheet in the table (SPIROL's printed polycarbonate and glass-filled PA6 set the torque ratio only); the lowest c of any family",
-    "fixes": [
-     {
-      "fix": "larger head",
-      "what": "an ISO 7380-1 button head: a 6.84 mm bearing face, against 6.53 mm",
-      "named": false,
-      "allowed_nm": 0.235447,
-      "preload_n": 287.689,
-      "governed_by": "clamped_on_insert",
-      "why": "does not lift it: clamped on insert still sets 288 N"
-     },
-     {
-      "fix": "washer",
-      "what": "an ISO 7089 washer between the part and the insert and one under the head",
-      "named": true,
-      "allowed_nm": 0.547079,
-      "preload_n": 1055.3,
-      "governed_by": "clamped_on_washer"
-     },
-     {
-      "fix": "large washer",
-      "what": "an ISO 7093-1 washer between the part and the insert and one under the head",
-      "named": true,
-      "allowed_nm": 0.569984,
-      "preload_n": 1099.49,
-      "governed_by": "insert_face"
-     },
-     {
-      "fix": "limiter",
-      "what": "a spirol-cl6000-m4 compression limiter, 6 mm long, standing proud of the plastic",
-      "named": true,
-      "allowed_nm": 0.244234,
-      "preload_n": 471.121,
-      "governed_by": "insert_face"
-     },
-     {
-      "fix": "limiter",
-      "what": "a spirol-cl8000-m4 compression limiter, 6 mm long, standing proud of the plastic",
-      "named": true,
-      "allowed_nm": 0.244234,
-      "preload_n": 471.121,
-      "governed_by": "insert_face"
-     }
-    ]
-   },
-   "not_compared": [
-    "melt volume: the toolkit has no STEP volume for mcmaster-94459A160 (cad-agent INSERTS)"
-   ]
-  },
-  {
    "id": "turret.pan_base_clamp_ears",
    "status": "evaluated",
    "kind": "insert",
@@ -4893,7 +4269,7 @@
      "axis": "upright",
      "hole_mm": 4.0,
      "through": false,
-     "pull_n": 77,
+     "pull_n": 78,
      "head": "socket",
      "hole_depth_mm": 6.0,
      "clearance_mm": 3.4,
@@ -5110,13 +4486,13 @@
      "check": "pull-out margin",
      "tolerance": "the same side of a safety factor of 2 (inventory: its capacity / the load; toolkit: its low capacity / the load, against its margin of 2)",
      "inventory": {
-      "sf": 9.09,
+      "sf": 8.97,
       "capacity_n": 700,
       "field": "capacity_n",
-      "load_n": 77
+      "load_n": 78
      },
      "toolkit": {
-      "sf_low": 6.3,
+      "sf_low": 6.22,
       "low_n": 485.463,
       "verdict": "pass"
      },
@@ -5142,7 +4518,7 @@
     "governed_by": "insert_face",
     "preload_caps_n": {
      "screw": 3659.94,
-     "insert_thread": 1346.46,
+     "insert_thread": 1345.46,
      "insert_face": 1043.86
     },
     "torque_out_nm": {
@@ -6048,7 +5424,7 @@
      "axis": "upright",
      "hole_mm": 5.6,
      "through": false,
-     "pull_n": 174,
+     "pull_n": 178,
      "head": "socket",
      "hole_depth_mm": 8.0,
      "clearance_mm": 4.5,
@@ -6219,13 +5595,13 @@
      "check": "pull-out margin",
      "tolerance": "the same side of a safety factor of 2 (inventory: its capacity / the load; toolkit: its low capacity / the load, against its margin of 2)",
      "inventory": {
-      "sf": 6.32,
+      "sf": 6.18,
       "capacity_n": 1100,
       "field": "capacity_n",
-      "load_n": 174
+      "load_n": 178
      },
      "toolkit": {
-      "sf_low": 3.72,
+      "sf_low": 3.63,
       "low_n": 646.706,
       "verdict": "pass"
      },
@@ -6254,7 +5630,7 @@
     "preload_caps_n": {
      "screw": 6386.52,
      "head_bearing": 480.971,
-     "insert_thread": 2186.13,
+     "insert_thread": 2182.13,
      "insert_face": 1082.0,
      "clamped_on_insert": 238.65
     },
@@ -7104,7 +6480,7 @@
      "axis": "lying",
      "hole_mm": 4.0,
      "through": false,
-     "pull_n": 47,
+     "pull_n": 48,
      "head": "button",
      "hole_depth_mm": 6.5,
      "clearance_mm": 3.4,
@@ -7322,13 +6698,13 @@
      "check": "pull-out margin",
      "tolerance": "the same side of a safety factor of 2 (inventory: its capacity / the load; toolkit: its low capacity / the load, against its margin of 2)",
      "inventory": {
-      "sf": 14.9,
+      "sf": 14.6,
       "capacity_n": 700,
       "field": "capacity_n",
-      "load_n": 47
+      "load_n": 48
      },
      "toolkit": {
-      "sf_low": 10.3,
+      "sf_low": 10.1,
       "low_n": 485.463,
       "verdict": "pass"
      },
@@ -7355,7 +6731,7 @@
     "governed_by": "insert_face",
     "preload_caps_n": {
      "screw": 3659.94,
-     "insert_thread": 1376.46,
+     "insert_thread": 1375.46,
      "insert_face": 1043.86
     },
     "torque_out_nm": {
@@ -8569,7 +7945,7 @@
      "hole_depth_mm": 14.0,
      "boss_outside_mm": 14.0,
      "clearance_mm": 5.5,
-     "screw_depth_mm": 11.5,
+     "screw_depth_mm": 11.0,
      "clamped": {
       "material": "metal"
      }
@@ -8687,16 +8063,16 @@
      "tolerance": "the same class (pass, warn or fail; or the same clamp path)",
      "inventory": {
       "verdict": "pass",
-      "tip_mm": 11.5,
-      "clear_mm": 2.5
+      "tip_mm": 11.0,
+      "clear_mm": 3.0
      },
      "toolkit": {
       "verdict": "warn",
-      "tip_mm": 11.5,
+      "tip_mm": 11.0,
       "limit_mm": 14.0
      },
      "status": "disagree",
-     "why": "the tip (11.5 mm) passes the insert's end (7.9 mm) into the room left below it for the melt, which the toolkit warns of (the melt may have filled it and the screw then bottoms); inventory.py checks only the floor, 2.5 mm away"
+     "why": "the tip (11 mm) passes the insert's end (7.9 mm) into the room left below it for the melt, which the toolkit warns of (the melt may have filled it and the screw then bottoms); inventory.py checks only the floor, 3 mm away"
     },
     {
      "check": "boss",

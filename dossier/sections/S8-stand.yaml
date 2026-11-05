@@ -1,7 +1,7 @@
 # The turret's dossier (cad-agent: docs/dossier.md in the toolkit). Hand-edited YAML; joined by id to the geometry
 # cad/turret_dossier.py registers (exports/dossier-geometry.json). The design story is docs/turret-sections.md.
 id: S8-stand
-title: The stand and its battery (D66)
+title: The stand and its battery (D66, D76)
 purpose: Carry the turret on its own and power it from one FLEXVOLT pack, with the hold-to-run pendant, for the bench and
   for play without Gyropup
 requirements:

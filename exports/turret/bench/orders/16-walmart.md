@@ -1,4 +1,4 @@
-# Order 17: Walmart
+# Order 16: Walmart
 
 3 lines, **$67.10** before shipping and tax (whole packs). Prices as the catalogue read them (the date is per line in `catalog/*.json`); check the cart against this sheet. Each line has a backup seller in the last column.
 

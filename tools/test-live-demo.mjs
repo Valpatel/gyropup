@@ -18,7 +18,7 @@ try{
  await page.goto(base+'/designer/sim.html?sound=0',{waitUntil:'networkidle'});
  await page.waitForFunction(()=>document.body.dataset.ready==='1'&&window.__sim.talk);
  const initial=await page.evaluate(()=>{const s=window.__sim;window.liveIdentity={scene:s.stage.scene,robot:s.state.robot,talk:s.talk};return {demo:s.demo.on,replay:!!s.state.replay,presentation:s.state.robot.presentation,speed:s.state.robot.turret.launchSpeed};});
- assert.equal(initial.demo,true);assert.equal(initial.replay,false);assert.equal(initial.presentation.mode,'current');assert.equal(initial.speed,15.85);
+ assert.equal(initial.demo,true);assert.equal(initial.replay,false);assert.equal(initial.presentation.mode,'current');assert.equal(initial.speed,28.96);
  assert.equal(requests.some(u=>/\/exports\/sim\/v2\/(targets|stand|drive)\.json/.test(u)),false,'Default demo does not silently fetch recorded activities');
  await page.evaluate(()=>{
   const s=window.__sim;
@@ -85,7 +85,7 @@ try{
   await action('play').click();assert.equal(await page.evaluate(()=>window.__sim.state.replay.playing),false);
   await page.selectOption('#robot-actions select','demo');
   await page.waitForFunction(()=>window.__sim.demo.on&&!window.__sim.state.replay&&window.__sim.state.robot.presentation.mode==='current');
-  assert.equal(await page.evaluate(()=>window.__sim.state.robot.turret.launchSpeed),15.85);
+  assert.equal(await page.evaluate(()=>window.__sim.state.robot.turret.launchSpeed),28.96);
   assert.equal(await page.evaluate(()=>{const s=window.__sim,k=window.liveIdentity;return s.stage.scene===k.scene&&s.state.robot===k.robot&&s.talk===k.talk;}),true);
  }
  // Loading an older recording must not reclaim control after a newer live choice.

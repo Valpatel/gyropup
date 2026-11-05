@@ -28,7 +28,7 @@ flowchart TB
 | Interface | Available evidence and job | Still required |
 | --- | --- | --- |
 | Ordered 3115-900KV flywheel motor | [Exact listing, sample survey and sliced shaft gauge](ordered-turret-motor.md); all eight size labels survive the 0.4 mm slice, about 28 minutes / 8.5 g | Delivered-part dimensions, calibrated printed widths, mounting and shaft/retention design; the older SunnySky cartridge is a different motor |
-| RS-04 leg mounting | [Corrected parent geometry](rs04-mounting-fit.md) and [retained unpowered coupon job](rs04-fit-job.md), 6 h 32 min 48 s, 172.41 g and 65.16 m | Inspect the unsupported roofs and all screw seats, measure the actual stack, resolve motor-side support/load spreading ([support-ring comparison](rs04-support-study.md)) and establish tightening/preload limits |
+| RS-04 leg mounting | [Corrected parent geometry](rs04-mounting-fit.md) and [retained unpowered coupon job](rs04-fit-job.md), 6 h 32 min 46 s, 172.41 g and 65.16 m | Inspect the unsupported roofs and all screw seats, measure the actual stack, resolve motor-side support/load spreading ([support-ring comparison](rs04-support-study.md)) and establish tightening/preload limits |
 
 Both packages retain resolved profiles, executable toolpaths, source identities,
 inspection images and blank measurement records. Slicer estimates and valid solids
@@ -61,7 +61,7 @@ The sources also disagree about motor KV, flywheel size and launch target. Freez
 5. **Cartridge, launcher and barrel interfaces.** Verify motor mounting stack, shaft/hub/washer/nut engagement, rotating versus fixed ownership, removable cartridge datums, retention and guarded clearances against the chosen hardware.
 6. **Feed and reload hardware.** Hopper, lid, flap, dial, chute and sensors: wall thickness, print seams, serviceability and ammunition clearances. Separate simulated feed success from real foam-ball trials.
 7. **Electronics and harness integration.** Mount all boards/connectors/ESCs and reserve cables, strain relief, plugs and thermal/service space. Keep the physical stop/ARM design and wiring review explicit.
-8. **Bench mount and robot interface.** Stand stability, mounting face, plinth/compute/battery service path and body deck interface; verify the assembled mass/centre of mass and load assumptions.
+8. **Bench mount and robot interface.** Stand stability, mounting face, battery service path (D76: no compute plinth) and body deck interface; verify the assembled mass/centre of mass and load assumptions.
 9. **Legs, wheels and body.** Audit every link, bearing, adapter, shaft, clamp, stop, fastener and battery mount; close known strength/tyre-clearance/ballast issues and measurements before calling the full robot complete.
 10. **Unified export and presentation.** Generate the permitted public meshes from the reviewed assembly. Show the same current robot in the landing page and all playgrounds; retain historical replay geometry with its historical data.
 

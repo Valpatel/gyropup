@@ -84,13 +84,6 @@ The cartridge down onto the cradle's two dowels, the knurled thumbscrew up into 
 
 | Line | Part | Part number | Qty |
 |---|---|---|---|
-| fuse main | Littelfuse MINI 58V blade fuse 20 A (the RS-04 branches) | Littelfuse 0997020.WXN | 1 |
-| fuse compute | Littelfuse MINI 58V blade fuse 5 A (DDR-60L-12 input; the 24 V J501 and turret branches) | Littelfuse 0997005.WXN | 1 |
-| plinth inserts m5 | Heat-Set Threaded Inserts for Plastic, Standard, Brass, M5 x 0.8 mm Thread Size, 7.9 mm Installed Length | McMaster-Carr 94459A775 | 4 |
-| plinth screws m5 | Black-Oxide Alloy Steel Socket Head Screw, US Origin, M5 x 0.8 mm Thread Size, 16 mm Long | McMaster-Carr 91290A232 | 4 |
-| plinth dowels | Dowel Pin, 52100 Alloy Steel, 5 mm Diameter, 16 mm Long | McMaster-Carr 91595A352 | 2 |
-| plinth m4 | Black-Oxide Alloy Steel Socket Head Screw, US Origin, M4 x 0.7 mm Thread Size, 10 mm Long | McMaster-Carr 91290A144 | 4 |
-| plinth inserts m4 | Heat-Set Threaded Inserts for Plastic, Standard, Brass, M4 x 0.7 mm Thread Size, 6.4 mm Installed Length | McMaster-Carr 94459A160 | 4 |
 | tm screws | Black-Oxide Alloy Steel Socket Head Screw, US Origin, M5 x 0.8 mm Thread Size, 16 mm Long | McMaster-Carr 91290A232 | 4 |
 | tm dowels | Dowel Pin, 52100 Alloy Steel, 5 mm Diameter, 16 mm Long | McMaster-Carr 91595A352 | 2 |
 | screw m2x10 | Black-Oxide Alloy Steel Socket Head Screw, US Origin, M2 x 0.4 mm Thread Size, 10 mm Long | McMaster-Carr 91290A017 | 4 |

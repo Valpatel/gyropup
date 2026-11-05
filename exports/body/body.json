@@ -491,10 +491,10 @@
     ],
     "fits": true,
     "placement": "straight",
-    "grams_each": 174,
-    "grams": 174,
+    "grams_each": 175,
+    "grams": 175,
     "hours": 11.4,
-    "cost_usd": 13.93,
+    "cost_usd": 13.97,
     "infill": "100 %",
     "how": "PA6-CF, 100 % solid, printed on its top face; 8 x M5 inserts, 2 x \u00d85 dowels"
    },
@@ -699,7 +699,7 @@
    "post_2": 43.5,
    "post_3": 43.5,
    "post_4": 43.5,
-   "riser": 174.1,
+   "riser": 174.7,
    "turret_plate": 134.5,
    "turret_plate_nuts": 0.0,
    "isolator_1": 2.1,
@@ -755,7 +755,7 @@
    "d435_rear": 0.0,
    "eyes_board": 0.0
   },
-  "frame_total": 5273.6
+  "frame_total": 5274.2
  },
  "internal_clashes": [],
  "shell": {
@@ -1778,8 +1778,8 @@
      -18.0,
      -153.08,
      -78.08,
-     337.0,
-     365.0
+     251.0,
+     279.0
     ],
     "mass_g": 0,
     "basis": "",
@@ -1815,14 +1815,14 @@
      -86.0,
      86.0,
      246.0,
-     516.6
+     446.0
     ],
-    "mass_g": 2573.4,
-    "basis": "exports/turret/mount.json (the budget when larger); 2.573 kg, its centre 135.3 mm above the TM face (turret.json: 2.573 kg with 30 balls)",
+    "mass_g": 1756.8,
+    "basis": "exports/turret/mount.json (the budget when larger); 1.757 kg, its centre 100.0 mm above the TM face (turret.json: 1.757 kg with 30 balls)",
     "group": "deck",
     "stage": "P2",
     "catalog": "",
-    "note": "the foam-ball turret on the riser (P1: a dummy of its 2.57 kg)",
+    "note": "the foam-ball turret on the riser (P1: a dummy of its 1.76 kg)",
     "keepout": false
    },
    {
@@ -1920,31 +1920,28 @@
  "mass": {
   "P1": {
    "stage": "P1",
-   "total_kg": 34.95,
+   "total_kg": 35.31,
    "com_mm": [
     3.2,
     -1.1,
-    -78.0
+    -77.2
    ],
    "groups_kg": {
-    "legs": 22.674,
-    "frame": 4.92,
+    "legs": 23.034,
+    "frame": 4.921,
     "compute": 1.513,
     "power": 1.739,
     "deck": 0.83,
     "battery": 3.27
    },
-   "legs_kg": 22.67,
+   "legs_kg": 23.03,
    "body_and_head_kg": 12.27,
-   "budget": {
-    "robot_kg": 37.0,
-    "legs_kg_each": 10.85,
-    "body_and_head_kg": 15.3,
+   "design": {
     "design_mass_kg": 37.5,
     "design_half_mass_kg": 18.75,
     "com_x_mm": 10.0,
     "com_y_mm": 5.0,
-    "basis": "D71 (37.0 kg as built, 37.5 kg design; it replaces D69's 35.0 / 35.5 kg); legs 2 x 10.85 kg (leg.json + D53 stops + the D69 wheel at its listed 3.53 kg + the clamp hardware), body and head 15.3 kg"
+    "basis": "D79: no mass budget (D71's 37.0 kg gate and sub-budgets are gone); the strength cases and the rig at D71's 37.5 kg design mass, 18.75 kg a leg"
    },
    "leg_extra": "leg.json 10007 g (published with the stops in)",
    "levers": [
@@ -2132,32 +2129,29 @@
   },
   "P3": {
    "stage": "P3",
-   "total_kg": 38.76,
+   "total_kg": 38.31,
    "com_mm": [
-    0.4,
+    1.3,
     -1.0,
-    -40.4
+    -50.7
    ],
    "groups_kg": {
-    "legs": 22.674,
-    "frame": 5.055,
+    "legs": 23.034,
+    "frame": 5.056,
     "shell": 1.11,
     "compute": 1.513,
     "power": 1.739,
-    "deck": 3.403,
+    "deck": 2.587,
     "battery": 3.27
    },
-   "legs_kg": 22.67,
-   "body_and_head_kg": 16.09,
-   "budget": {
-    "robot_kg": 37.0,
-    "legs_kg_each": 10.85,
-    "body_and_head_kg": 15.3,
+   "legs_kg": 23.03,
+   "body_and_head_kg": 15.27,
+   "design": {
     "design_mass_kg": 37.5,
     "design_half_mass_kg": 18.75,
     "com_x_mm": 10.0,
     "com_y_mm": 5.0,
-    "basis": "D71 (37.0 kg as built, 37.5 kg design; it replaces D69's 35.0 / 35.5 kg); legs 2 x 10.85 kg (leg.json + D53 stops + the D69 wheel at its listed 3.53 kg + the clamp hardware), body and head 15.3 kg"
+    "basis": "D79: no mass budget (D71's 37.0 kg gate and sub-budgets are gone); the strength cases and the rig at D71's 37.5 kg design mass, 18.75 kg a leg"
    },
    "leg_extra": "leg.json 10007 g (published with the stops in)",
    "levers": [
@@ -2341,24 +2335,31 @@
      "what": "two DCB606 FLEXVOLT 6.0 Ah in the same bay and adapters (about 1.0 kg lighter the pair, 2/3 the energy: masses to read from DeWalt)",
      "status": "open"
     }
-   ],
-   "gate": {
-    "ceiling_kg": 37.0,
-    "gap_kg": 1.76,
-    "open_scheduled_g": -500,
-    "with_scheduled_levers_kg": 38.26,
-    "body_and_head_with_levers_kg": 15.59,
-    "leg_each_kg": 11.335,
-    "pass": false,
-    "on_call_next": [
-     "cheeks_rev_b",
-     "alu_standoffs",
-     "cooler_34mm"
-    ],
-    "margin_kg": -1.26,
-    "on_call_open_g": -2301,
-    "rule": "the P3 ledger with every scheduled lever taken (the open ones at the plan's grams) under the 37.0 kg ceiling, each leg under 10.85 kg and the body and head under 15.3 kg (D71); over it, the on-call levers go in order before the next order, each with the user's or the coordinator's word"
-   }
+   ]
   }
- }
+ },
+ "pictures": [
+  "body-p1-iso.png",
+  "body-p1-front.png",
+  "body-p1-side.png",
+  "body-p1-rear.png",
+  "body-frame-iso.png",
+  "body-spine-iso.png",
+  "body-p3-iso.png",
+  "body-p3-front.png",
+  "body-p3-rear.png",
+  "body-p3-side.png",
+  "body-p1-crouch-side.png",
+  "body-p1-tall-side.png",
+  "flat-cheek.png",
+  "flat-floor_tray.png",
+  "flat-belly_plate.png",
+  "flat-deck.png",
+  "flat-compute_pallet.png",
+  "flat-turret_plate.png",
+  "flat-power_plate.png",
+  "flat-bus_bar.png",
+  "flat-bay_floor.png",
+  "flat-bay_side.png"
+ ]
 }

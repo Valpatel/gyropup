@@ -1,12 +1,14 @@
-"""The foam-ball turret's stand: the turret as a robot of its own (D66), on its own battery, or on the bench before
-Gyropup can carry it.
+"""The foam-ball turret's stand: the turret on its own battery, on the bench before Gyropup can carry it, or as the
+standalone variation (D76).
 
-D66 (2026-10-27): the turret carries its own Jetson (the compute plinth under its pan base) and takes one XT30 input,
-12-54 V. On the stand that is one DeWalt FLEXVOLT DCB609 in 20 V mode (15-20.5 V): the pack slides into the stand's
-back onto a 20 V MAX dock adapter fixed under the top plate, as onto a drill, and rests on the floor; its leads go
-through the stand's 20 A MINI fuse (58 V type) and the rocker switch to an XT30 lead out of the top plate's rear notch
-to the plinth's XT30 input. The bench supply (Mean Well LRS-350-24 and the XT60E-M inlet) is gone; the box bench
-(cad/build_turret_box.py) keeps its own.
+D76 (2026-11-03, supersedes D66): the turret carries no computer of its own. Standing alone, an Orin NX on a desk drives
+it over the stand's USB-CAN lead (an optional second variation); the turret's Feather M4 CAN and its hardware arm chain
+stay in the turret. The power is one DeWalt FLEXVOLT DCB609 in 20 V mode (15-20.5 V, kept from D66): the pack slides
+into the stand's back onto a 20 V MAX dock adapter fixed under the top plate, as onto a drill, and rests on the floor;
+its leads go through the stand's 20 A MINI fuse (58 V type) and the rocker switch, then on a 14 AWG pair spliced to 18 AWG
+tails, paralleled into the DT06 plug's pins 1-2 and 3-4 (its size-16 sockets take 16-20 AWG; the plug takes the turret's
+DT12; not through the terminal board, which carries the signals). The pan base's foot stands on the top plate (no compute plinth). The
+bench supply (Mean Well LRS-350-24 and the XT60E-M inlet) is gone; the box bench (cad/build_turret_box.py) keeps its own.
 
 Turret frame (cad/turret.py): x forward, y left, z up, origin on the pan axis at the TM mounting face. The stand's top
 is that face (z = 0); the stand is a printed PETG box under it:
@@ -37,7 +39,7 @@ import gmi
 import turret as tu
 
 FAST = gmi.FAST
-W, D, H = 200.0, 200.0, 150.0         # x (front-back) x y (left-right) x height (mm): the FLEXVOLT inside (D66)
+W, D, H = 200.0, 200.0, 150.0         # x (front-back) x y (left-right) x height (mm): the FLEXVOLT inside (D66, D76)
 WALL, TOP, BOT = 4.0, 6.0, 4.0
 BOSS_R = 6.0
 
@@ -98,8 +100,6 @@ def stand_box():
         s = s.cut(_cyl_z(FAST['M5']['insert_pilot'] / 2, -TOP - 8.0, 0.1, x, y))
     for (x, y) in tu.TM_DOWELS:
         s = s.cut(_cyl_z(2.5 - 0.03, -TOP - 1, 0.1, x, y))
-    # the XT30 lead to the plinth leaves through a notch in the top plate's rear edge (no TM cable hole: the plinth closes it)
-    s = s.cut(_box(x0 - 1, x0 + WALL + 10.0, -8.0, 8.0, -TOP - 1, 0.1))
     # the pack's opening in the back wall, and the dock's cradle under the top plate (two side rails and a front stop;
     # the adapter is screwed up into the plate with 2 x M3 through its base, drilled to suit on arrival)
     s = s.cut(_box(x0 - 1, x0 + WALL + 1, -PACK['W'] / 2 - 2.0, PACK['W'] / 2 + 2.0, -H - 1, -H + 4.0 + PACK['H'] + 2.0))
@@ -109,7 +109,7 @@ def stand_box():
     s = s.union(_box(dx0 + DOCK['L'], dx0 + DOCK['L'] + 3.0, -DOCK['W'] / 2 - 3.0, DOCK['W'] / 2 + 3.0, -TOP - 12.0, -TOP + 0.5))
     # the dock's two M3 inserts from below: the short 94459A130 (4.3 mm) in 5.3 mm pilots, 0.7 mm of plate over them (the
     # 5.7 mm 94459A140 cannot seat in the 6 mm plate; the 4 mm pilots took neither, #137). The pilots sit inside the
-    # plinth's seat, so the screws stop at the adapter's base + 5 mm and the inserts go in flat (PARTS' note)
+    # pan base's seat, so the screws stop at the adapter's base + 5 mm and the inserts go in flat (PARTS' note)
     for dy in (-15.0, 15.0):
         s = s.cut(_cyl_z(FAST['M3']['insert_pilot'] / 2, -TOP - 0.01, -TOP + 5.3, dx0 + DOCK['L'] / 2, dy))
     # the terminal board's bosses on the +y wall
@@ -172,7 +172,7 @@ def bought():
                       'VHB pad (it floated 10 mm up: cadagent connectivity, 2026-10-28)')
     bx, bz, by = BOARD_ON_WALL['x'], BOARD_ON_WALL['z'], BOARD_ON_WALL['y']
     out['terminal_board'] = (_box(bx[0], bx[1], by - 1.6, by, bz[0], bz[1]), 30.0,
-                             '70 x 50 board on the +y wall: the pack\'s fuse and switch to the XT30 lead, the pendant loop to the DT12 plug')
+                             '70 x 50 board on the +y wall: the pendant loop and CAN to the DT06 plug (the pack\'s power runs fuse -> rocker -> the plug\'s pins 1-4, D76)')
     zt = -TOP - DOCK['H']
     out['dock'] = (_box(DOCK_X0, DOCK_X0 + DOCK['L'], -DOCK['W'] / 2, DOCK['W'] / 2, zt, -TOP), DOCK['mass_g'],
                    'DeWalt 20 V MAX dock adapter, 12 AWG leads (a FLEXVOLT runs in its 20 V mode in it)')
@@ -189,7 +189,7 @@ def bought():
 
 
 PARTS = {'stand_box': ('petg', 1, 'printed PETG upside down; 4 x M5 + 4 x M3 inserts for the bottom, 2 x M3 x 4.3 (94459A130) for the dock '
-                           '(set with a flat tip, the top face on a flat plate, then check the plinth seat flat; the dock adapter\'s '
+                           '(set with a flat tip, the top face on a flat plate, then check the pan base\'s seat flat; the dock adapter\'s '
                            'M3s no longer than its base + 5 mm: 0.7 mm of plate over the pilots), 4 x M3 for the board', ((1, 0, 0), 180)),
          'stand_bottom': ('petg', 1, 'printed PETG flat; 4 x M3 x 8 into the corner bosses; 4 rubber feet; two ribs the pack slides on', None)}
 

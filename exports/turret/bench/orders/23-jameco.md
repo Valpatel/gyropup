@@ -1,4 +1,4 @@
-# Order 25: Jameco
+# Order 23: Jameco
 
 1 lines, **$0.99** before shipping and tax (whole packs). Prices as the catalogue read them (the date is per line in `catalog/*.json`); check the cart against this sheet. Each line has a backup seller in the last column.
 

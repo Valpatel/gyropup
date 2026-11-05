@@ -36,7 +36,9 @@ export async function buildCurrentTurret(root, { color = 0xf5b82e } = {}) {
     else turret.tilt.add(group);
   }
   const loader=new STLLoader(), parts=[];
-  await Promise.all(manifest.parts.filter(p=>JOINTS.has(p.group)).map(async entry=>{
+  // Four at a time: each part's timeout then covers its own transfer, not its wait behind 60 others on a slow link.
+  const entries=manifest.parts.filter(p=>JOINTS.has(p.group));let next=0;
+  await Promise.all(Array.from({length:4},async()=>{while(next<entries.length){const entry=entries[next++];
     const bytes=await reader.bytes(source+entry.file+(entry.sha256?`?v=${entry.sha256}`:''),{label:'Turret part '+entry.name});
     validateSTLBytes(bytes);const geometry=validateGeometry(loader.parse(bytes));
     geometry.applyMatrix4(TO_PAGE);
@@ -50,7 +52,7 @@ export async function buildCurrentTurret(root, { color = 0xf5b82e } = {}) {
     mesh.userData.part=entry; mesh.castShadow=opacity>=1; mesh.receiveShadow=true;
     groups[entry.group].add(mesh);
     parts.push({entry,mesh,group:groups[entry.group],explode:point(entry.explode??[0,0,0])});
-  }));
+  }}));
   const balls=[];
   for(const [centers,parent] of [[manifest.pockets,groups.dial],[manifest.pile.slice(0,30-manifest.pockets.length),groups.tilt]]) {
     for(const center of centers) {const {g}=ballMesh();g.position.copy(point(center));parent.add(g);balls.push({g,home:g.position.clone(),parent});}

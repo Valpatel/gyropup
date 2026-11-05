@@ -32,10 +32,10 @@
    ],
    "fits": true,
    "placement": "straight",
-   "grams_each": 174,
-   "grams": 174,
+   "grams_each": 175,
+   "grams": 175,
    "hours": 11.4,
-   "cost_usd": 13.93,
+   "cost_usd": 13.97,
    "infill": "100 %",
    "how": "PA6-CF, 100 % solid, printed on its top face; 8 x M5 inserts, 2 x \u00d85 dowels"
   },
@@ -229,9 +229,9 @@
  },
  "by_material": {
   "pa6-cf": {
-   "grams": 566,
+   "grams": 567,
    "hours": 37.2,
-   "cost_usd": 45.32,
+   "cost_usd": 45.36,
    "parts": 14
   },
   "tpu95": {
@@ -255,6 +255,6 @@
  },
  "too_big": [],
  "total_hours": 98.0,
- "total_grams": 1038,
+ "total_grams": 1039,
  "note": "body P0-P2: hours are rough (grams / density / a strength-holding rate)"
 }

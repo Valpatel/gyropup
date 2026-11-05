@@ -39,11 +39,33 @@
   - option: The turret's compute in Gyropup's head (the J501)
     rejected: the turret could not stand alone
   title: The turret is its own robot
-  status: decided
+  status: superseded
+  superseded_by: D76
   date: '2026-10-27'
   source:
     kind: user
     quote: To keep things simple the turret could have it's own ... jetson mini carrier board?
+- id: D76
+  decision: 'The turret carries no computer: on Gyropup the J501 (AGX Orin) runs its vision and aiming over CAN; standing
+    alone, an Orin NX on a desk drives it over the stand''s USB-CAN lead (optional). The Feather M4 CAN stays its controller,
+    under the hardware arm chain and the 105 fps rail. The pan base bolts straight onto the TM face; power and CAN come in on
+    the DT12'
+  why: 'The compute plinth made the turret 86 mm taller and 0.8 kg heavier and failed the body''s turret-fall case (SF 1.21
+    against 2.0). The robot already carries an AGX Orin, and the Feather already runs the turret''s hardware'
+  alternatives:
+  - option: Keep the Orin NX plinth (D66)
+    rejected: too tall and heavy on Gyropup; the owner chose the AGX
+  - option: An ESP32-S3 with a CAN transceiver
+    rejected: re-pins and re-reviews D47's arm chain for no gain the turret needs; its radio would be a new command path
+  - option: An off-the-shelf gimbal or flight controller (SimpleBGC 32-bit, a Matek H743 on ArduPilot)
+    rejected: made for brushless gimbal motors or aircraft; neither drives the STS3215 bus, the chronograph or the feed
+  title: The turret runs off Gyropup's AGX Orin, or an Orin NX on a desk
+  status: decided
+  date: '2026-11-03'
+  source:
+    kind: user
+    quote: Turret runs off the orin AGX on the robot or an Orin NX on a desktop (optional 2nd variation). Turret has something
+      like an ESP32 for it's control system? Some standard turret controler common drone thing or similar.
 - id: D67
   decision: The ammo is standard Hasbro Nerf Rival rounds; off-brand rounds of 22.2-22.8 mm and 1.6-2.0 g are fine
   why: Sold everywhere, kids already have them, and the turret's physics was sized on them
@@ -118,10 +140,11 @@
   date: '2026-10-28'
   author: turret-dossier agent
 - id: T0.3
-  decision: The stand (cad/turret_stand.py) is registered under the plinth, at its top on the TM face (T z -86)
-  why: Section 8 has parts to check, and the turret is built and tested on its stand first (D66)
+  decision: The stand (cad/turret_stand.py) is registered under the pan base, its top on the TM face (T z 0; T z -86 under
+    D66's plinth until D76)
+  why: Section 8 has parts to check, and the turret is built and tested on its stand first (D66, D76)
   alternatives:
-  - option: The head's TM ring under the plinth
+  - option: The head's TM ring under the pan base
     rejected: it belongs to the body's build (cad/build.py)
   - option: No stand in the geometry
     rejected: section 8 would have no shapes and could never reach gated

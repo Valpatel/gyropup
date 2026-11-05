@@ -1,17 +1,17 @@
 {
  "toolkit": "cadagent.gates (connectivity, containment, relation table, fasteners, motion)",
- "fingerprint": "0d15369f63dc0bbe",
+ "fingerprint": "9b4a2f2753096b4a",
  "pile": "exports/turret/feed/pile.json",
  "verdicts": "exports/turret/gates",
  "seconds": {
-  "connectivity": 0.3,
-  "hopper": 0.1,
-  "path": 6.0,
-  "sweep": 2.5,
-  "ammo_range": 7.7,
-  "fasteners": 11.8,
-  "motion_mechanisms": 1.9,
-  "motion_aim": 4.1
+  "connectivity": 155.4,
+  "hopper": 2385.6,
+  "path": 59.7,
+  "sweep": 52.2,
+  "ammo_range": 67.6,
+  "fasteners": 20.0,
+  "motion_mechanisms": 158.7,
+  "motion_aim": 5471.3
  },
  "ok": true,
  "gates": {
@@ -20,7 +20,7 @@
    "status": "warn",
    "counts": {
     "pass": 29,
-    "warn": 70,
+    "warn": 63,
     "fail": 0
    },
    "findings": [

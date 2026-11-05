@@ -2023,8 +2023,8 @@
     }
   ],
   "source_sha256": {
-    "cad/turret_boards.py": "c7a115d2fe3cefddf46b0dd521e21076e1f7721235df3e7bd22fadb6e165707b",
-    "catalog/turret.json": "036b39b5e923169713b20907fd1a113bf9044e3b201d9fcd2c4f2fcbbabdc367",
+    "cad/turret_boards.py": "aa6ce27963e5c18058400afc57663af64b0a92a0cbd0c7095abed78f9f4721c7",
+    "catalog/turret.json": "4e0ab8a62f75e4da60e50e84dcddc85d2e462ffc0949bacdcdf60d7f4aade9f7",
     "docs/base-board-interfaces.md": "32a4d63c33ee79dad2753a7be1d8dc6b60ea557a8a842370f5f1ca5680e6d7b8",
     "docs/carrier-service-connectors.md": "f73db1114d1d807002ff454b5cb9ae1c7d94c1e29af89567b640e36f17966ec7",
     "hardware/carrier-packaging/front-reference-contract.json": "06956af049dafbeaf44bb9b0a739cde0b4ce099f0a6795758bebc77ced918b48",

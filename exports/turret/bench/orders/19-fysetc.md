@@ -1,4 +1,4 @@
-# Order 20: FYSETC
+# Order 19: FYSETC
 
 1 lines, **$8.00** before shipping and tax (whole packs). Prices as the catalogue read them (the date is per line in `catalog/*.json`); check the cart against this sheet. Each line has a backup seller in the last column.
 

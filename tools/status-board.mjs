@@ -191,13 +191,14 @@ function printMeter(r, file, released) {
   };
 }
 
-function massMeter({ label, kg: mass, limit, file, basis, note }) {
+// D79 (the owner, 2026-11-04): no mass budget. A mass meter is information: the ledger's figure, grey (not weighed), no limit.
+function massMeter({ label, kg: mass, file, note }) {
   return {
-    id: 'mass', label, value: `${kg(mass)} kg`, unit: `of ${kg(limit)} kg`,
-    state: mass <= limit ? 'pass' : 'fail',
-    bar: bar(limit, [{ k: mass <= limit ? 'pass' : 'fail', n: Math.min(mass, limit) }]),
-    note: note || `${basis}: ${mass <= limit ? `${kg(limit - mass)} kg under` : `${kg(mass - limit)} kg over`}`,
-    source: SOURCE(file), data: { kg: mass, limit },
+    id: 'mass', label, value: `${kg(mass)} kg`, unit: 'CAD ledger',
+    state: 'unknown',
+    bar: bar(1, [{ k: 'unknown', n: 1 }]),
+    note,
+    source: SOURCE(file), data: { kg: mass },
   };
 }
 
@@ -239,7 +240,7 @@ export function collectStatus(r) {
       meters.push({ id: 'layers', label: 'Pre-print screen', value: '—', unit: 'no record yet', state: 'unknown', bar: bar(1, [{ k: 'unknown', n: 1 }]), note: 'No pre-print screen in this revision (research/leg-preprint/screen.json)', source: null, data: null });
     }
     meters.push(jointMeter(r, ['leg']));
-    meters.push(massMeter({ label: 'Mass, each leg', kg: mass.gate.leg_each_kg, limit: mass.budget.legs_kg_each, file: 'exports/body/mass.json', basis: 'D71’s leg budget, P3 ledger' }));
+    meters.push(massMeter({ label: 'Mass, each leg', kg: mass.legs_kg / 2, file: 'exports/body/mass.json', note: 'P3 ledger; no budget (D79)' }));
     const job = r.json('exports/leg/rs04-fit-job/job.json');
     meters.push(printMeter(r, 'exports/leg/print-plan.json', job.qualification.full_leg_print_released === true));
     const sheets = ['exports/leg/rs04-fit-job/measurements.csv'];
@@ -295,8 +296,8 @@ export function collectStatus(r) {
           source: SOURCE('exports/body/integrity.json'), data: { ...integrity, connectivity: conn.status },
         },
         jointMeter(r, ['body', 'body / turret']),
-        massMeter({ label: 'Mass, body and head', kg: mass.body_and_head_kg, limit: mass.budget.body_and_head_kg, file: 'exports/body/mass.json',
-          note: `P3 ledger against D71’s ${kg(mass.budget.body_and_head_kg)} kg budget; ${kg(mass.gate.body_and_head_with_levers_kg)} kg with the scheduled savings` }),
+        massMeter({ label: 'Mass, body and head', kg: mass.body_and_head_kg, file: 'exports/body/mass.json',
+          note: 'P3 ledger; no budget (D79)' }),
         printMeter(r, 'exports/body/print-plan.json', null),
       ] });
   }
@@ -406,7 +407,7 @@ export function collectStatus(r) {
   const fea = all.filter(m => m.id === 'fea').map(m => m.data);
   const benchRows = all.filter(m => m.id === 'bench' && m.data?.rows).reduce((a, m) => ({ rows: a.rows + m.data.rows, measured: a.measured + m.data.measured }), { rows: 0, measured: 0 });
   const summary = {
-    mass: { kg: mass.total_kg, gate: mass.budget.robot_kg, design: mass.budget.design_mass_kg, ceiling, weighed: mass.rows.filter(row => WEIGHED.test(row.basis || '')).length, rows: mass.rows.length, file: 'exports/body/mass.json' },
+    mass: { kg: mass.total_kg, design: mass.design.design_mass_kg, ceiling, weighed: mass.rows.filter(row => WEIGHED.test(row.basis || '')).length, rows: mass.rows.length, file: 'exports/body/mass.json' },
     fea: { studies: fea.reduce((n, c) => n + c.studies, 0), pass: fea.reduce((n, c) => n + c.pass, 0), below: fea.reduce((n, c) => n + c.below, 0), under1: fea.reduce((n, c) => n + c.under1, 0) },
     gates: panels.find(p => p.id === 'turret').meters[0].data,
     fixes: jointCount(r.json(inventory), r.json(inventory).joints.map(j => j.assembly)).findings.fix,
@@ -450,9 +451,9 @@ export function renderBoard({ panels, summary }, { compact = false, heading = 'h
   const massPct = v => num(v / s.mass.ceiling * 100, 3);
   const strip = `<div class="sb-strip" data-visual>`
     + `<div class="sb-stat sb-mass"><p class="sb-stat-label">Robot mass, P3 ledger</p><p class="sb-stat-value"><b>${kg(s.mass.kg)}</b> kg</p>`
-    + `<span class="sb-scale" aria-hidden="true"><i class="sb-fill" style="--w:${massPct(s.mass.kg)}%"></i><i class="sb-tick" style="--x:${massPct(s.mass.gate)}%"></i><i class="sb-tick is-design" style="--x:${massPct(s.mass.design)}%"></i><i class="sb-tick is-end" style="--x:100%"></i></span>`
-    + `<p class="sb-ticks"><span class="is-gate">${kg(s.mass.gate)} as-built gate</span><span class="is-design">${kg(s.mass.design)} design mass</span><span class="is-end">${kg(s.mass.ceiling)} ceiling</span></p>`
-    + `<p class="sb-stat-note">${s.mass.kg <= s.mass.gate ? 'Under' : 'Over'} D71’s ${kg(s.mass.gate)} kg as-built gate; the product ceiling is ${kg(s.mass.ceiling)} kg (D72).${s.mass.weighed ? ` ${s.mass.weighed} of ${s.mass.rows} rows weighed.` : ' A CAD ledger: nothing weighed yet.'}</p></div>`
+    + `<span class="sb-scale" aria-hidden="true"><i class="sb-fill" style="--w:${massPct(s.mass.kg)}%"></i><i class="sb-tick is-design" style="--x:${massPct(s.mass.design)}%"></i><i class="sb-tick is-end" style="--x:100%"></i></span>`
+    + `<p class="sb-ticks"><span class="is-design">${kg(s.mass.design)} design mass</span><span class="is-end">${kg(s.mass.ceiling)} ceiling</span></p>`
+    + `<p class="sb-stat-note">No mass budget (D79): the ledger is information; the product ceiling is ${kg(s.mass.ceiling)} kg (D72).${s.mass.weighed ? ` ${s.mass.weighed} of ${s.mass.rows} rows weighed.` : ' A CAD ledger: nothing weighed yet.'}</p></div>`
     + `<div class="sb-stat"><p class="sb-stat-label">Strength studies on target</p><p class="sb-stat-value"><b>${s.fea.pass}</b> of ${s.fea.studies}</p><span class="sb-bar" aria-hidden="true"><i data-k="pass" style="--w:${num(s.fea.pass / s.fea.studies * 100, 3)}%"></i><i data-k="warn" style="--w:${num(s.fea.below / s.fea.studies * 100, 3)}%"></i><i data-k="fail" style="--w:${num(s.fea.under1 / s.fea.studies * 100, 3)}%"></i></span><p class="sb-stat-note">${s.fea.below} below target, ${s.fea.under1} under 1.0, across the leg, turret and body.</p></div>`
     + `<div class="sb-stat"><p class="sb-stat-label">Insert-joint fixes open</p><p class="sb-stat-value"><b>${s.fixes}</b></p><p class="sb-stat-note">Clear corrections the joint inventory found; the CAD fixes clear them when they land.</p></div>`
     + `<div class="sb-stat${s.bench.measured ? '' : ' sb-unknown'}"><p class="sb-stat-label">Bench rows measured</p><p class="sb-stat-value"><b>${s.bench.measured}</b> of ${s.bench.rows}</p><span class="sb-bar" aria-hidden="true"><i data-k="pass" style="--w:${num(s.bench.measured / s.bench.rows * 100, 3)}%"></i><i data-k="unknown" style="--w:${num((s.bench.rows - s.bench.measured) / s.bench.rows * 100, 3)}%"></i></span><p class="sb-stat-note">${s.bench.measured ? `${s.bench.rows - s.bench.measured} rows of the coupon and gauge sheets still blank.` : 'Coupons and gauges are designed and sliced; no sheet has a reading yet.'}</p></div>`
