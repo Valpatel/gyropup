@@ -14,7 +14,8 @@ await mkdir(out, {recursive:true});
 const page = await browser.newPage({viewport:{width:1280,height:900}}), errors=[];
 await acknowledgePrototypeNotice(page);
 page.on('pageerror', e => errors.push(e.message));
-await page.addInitScript(() => localStorage.setItem('gyropup.probe','off'));
+// 80 box meshes and the site's own assets overflow the default 250-entry Resource Timing buffer that the mesh check reads.
+await page.addInitScript(() => {localStorage.setItem('gyropup.probe','off');performance.setResourceTimingBufferSize(2000);});
 const sub=(a,b)=>a.map((x,i)=>x-b[i]), dot=(a,b)=>a.reduce((s,x,i)=>s+x*b[i],0);
 const cross=(a,b)=>[a[1]*b[2]-a[2]*b[1],a[2]*b[0]-a[0]*b[2],a[0]*b[1]-a[1]*b[0]];
 function rotate(point,joint,deg) {
@@ -96,13 +97,14 @@ try {
     m.world.updateWorldMatrix(true,true);
     const point=o=>{const p=o.position.clone();o.getWorldPosition(p);m.world.worldToLocal(p);return [p.z*1000,p.x*1000,p.y*1000];};
     return {muzzle:point(m.muzzle),laser:point(m.laserOrigin),gateDistance:m.gates[0].position.distanceTo(m.gates[1].position)*1000,
-      pocket:point(m.pocketBalls[0]),pathStart:[m.path[0].z*1000,m.path[0].x*1000,m.path[0].y*1000+281],
+      pocket:point(m.pocketBalls[0]),pathStart:[m.path[0].z*1000,m.path[0].x*1000,m.path[0].y*1000+285],
       owners:Object.fromEntries(m.parts.map(p=>[p.e.name,Object.entries(m.groups).find(([,g])=>g===p.mesh.parent)?.[0]]))};
   });
-  assert.deepEqual(attachments.muzzle.map(x=>Math.round(x*100)/100),[147,0,266]);
-  assert.deepEqual(attachments.laser.map(x=>Math.round(x*100)/100),[78.5,-32,266]);
+  assert.deepEqual(attachments.muzzle.map(x=>Math.round(x*100)/100),[150,0,270]);
+  assert.deepEqual(attachments.laser.map(x=>Math.round(x*100)/100),[84.5,0,299.5]);
   assert.ok(Math.abs(attachments.gateDistance-60)<.001,'Optical gates match CAD 22/82mm positions');
-  assert.ok(Math.hypot(...sub(attachments.pocket,attachments.pathStart))<.02,'Pocket reaches actual chute at zero dial angle');
+  // The pockets are the settled MuJoCo pile (sim/turret_feed.py --pile, rerun with the D76 gates): 0.02 mm under the exit.
+  assert.ok(Math.hypot(...sub(attachments.pocket,attachments.pathStart))<.05,'Pocket reaches actual chute at zero dial angle');
   for(const motor of ['feed_motor','flywheel_motor_l','flywheel_motor_r']) assert.equal(attachments.owners[motor],'tilt');
   await page.evaluate(()=>{
     const api=window.__sim.bench().api;api.aim(35,-15);api.reload();api.arm(true);api.fire(6);
@@ -140,5 +142,5 @@ try {
   await writeFile(`${out}/${engine.name()}-trace.json`,JSON.stringify(trace));
   await writeFile(`${out}/contract.json`,JSON.stringify(fixture.contract));
   await writeFile(`${out}/${engine.name()}-summary.json`,JSON.stringify({components:66,poses:samples.length,liveFrames:live.length,maxErrorMm:worst.error,worst:worst.worst,speed,attachments},null,2));
-  console.log(`PASS ${engine.name()}: 66 components × ${samples.length} poses; ${live.length} real firing frames; max ${worst.error.toFixed(6)}mm; negative pivot control rejected; CAD attachments, configured launch speed, 5 phone layouts`);
+  console.log(`PASS ${engine.name()}: ${Object.keys(fixture.contract.components).length} components × ${samples.length} poses; ${live.length} real firing frames; max ${worst.error.toFixed(6)}mm; negative pivot control rejected; CAD attachments, configured launch speed, 5 phone layouts`);
 } finally {await browser.close();}

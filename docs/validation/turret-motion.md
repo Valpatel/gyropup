@@ -6,18 +6,18 @@ The 2026-10-28 live defect was invisible in a zero-angle assembly: wheel and dia
 
 ## Independent reference and coverage
 
-`tools/reference-turret-motion.py` regenerates the reference using the pinned Git snapshot and cad-agent's pose generator. `tests/fixtures/turret-motion-reference.json` records independently audited mechanical datums in box millimetres, rather than copying the corrected display manifest. Datum sources at revision `3eb32ba649a2b0b66dd80c4a2dfb3179b0697f20`:
+`tools/reference-turret-motion.py` regenerates the reference using the pinned Git snapshot and cad-agent's pose generator. `tests/fixtures/turret-motion-reference.json` records independently audited mechanical datums in box millimetres, rather than copying the corrected display manifest. Datum sources at revision `4769888bf0334608ff997faeff5e663d96a1a70d` (PR 196: the D76 turret straight on the box deck, a full build; until then the October snapshot `3eb32ba649a2b0b66dd80c4a2dfb3179b0697f20`):
 
 | Joint | Assembly-home pivot (mm) | Source / ownership |
 | --- | --- | --- |
-| Pan | 0, 0, 141 | Box TM face; carries pan and tilt |
-| Tilt | 0, 0, 281 | TM + `Geo.tilt_t`; carries cartridge and motor housings |
-| Feed dial | -48, 0, 281 | Cartridge origin minus `Geo.tilt_x` |
-| Left / right wheel | 23, ±26.5125, 281 | `Geo.wheel_x - Geo.tilt_x`, ±`Geo.wheel_y` |
-| Fill flap | -87, 0, 372 | `FILL_PORT.x - 19 - Geo.tilt_x`; hopper top + 6 |
-| Pan pinion | -52.65, 0, 141 | Pan servo shaft; gear ratio -3 |
+| Pan | 0, 0, 145 | Box TM face (`turret_box.Z_TM`); carries pan and tilt |
+| Tilt | 0, 0, 285 | TM + `Geo.path_t` + `Geo.tilt_c` (140); carries cartridge and motor housings |
+| Feed dial | -48, 0, 285 | Cartridge origin minus `Geo.tilt_x` |
+| Left / right wheel | 25, ±25.81, 285 | `Geo.wheel_x - Geo.tilt_x`, ±`Geo.wheel_y` |
+| Fill flap | -87, 0, 376 | `FILL_PORT.x - 19 - Geo.tilt_x`; hopper top + 6 |
+| Pan pinion | -52.65, 0, 145 | Pan servo shaft; gear ratio -3 |
 
-Reference landmarks are four affinely independent actual STL vertices per component. Their assembled rest positions come from the pinned, pre-fix export, whose zero-angle solid positions were correct; their ownership and physical axes are audited separately against CAD source. The fixture keeps vertex indices so browser tests capture those same actual vertices after the complete Three.js parent transform. Changing a mesh requires a new independently reviewed reference; do not bless a failing renderer by copying its positions into the fixture.
+Reference landmarks are four affinely independent actual STL vertices per component. Their assembled rest positions come from the pinned full-build export (each mesh in its group frame, placed by the audited pivots; the generator asserts the scene's own frames agree); their ownership and physical axes are audited separately against CAD source. The fixture keeps vertex indices so browser tests capture those same actual vertices after the complete Three.js parent transform. Changing a mesh requires a new independently reviewed reference; do not bless a failing renderer by copying its positions into the fixture.
 
 The test covers every exported component, 46 home/isolated/intermediate/end/compound poses, stationary motor housings, and normal live firing under combined pan and tilt. It deliberately displaces a shaft and requires rejection. It separately checks ball-pocket/chute alignment, actual barrel and laser front faces, CAD chronograph spacing (22/82 mm from the shoulder), configured launch speed, older robot CAD laser attachments, and phone layouts. `tools/test-turret-frames.py` checks all mesh vertices for finiteness, file integrity and bounds, actual rotor centering and reproducible coordinate regeneration.
 

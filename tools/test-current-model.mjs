@@ -32,7 +32,7 @@ async function fingerprint(key){return page.evaluate(key=>{const r=key==='sim'?w
 try{
   await page.goto(base+'/designer/sim.html?run=none&demo=0&sound=0',{waitUntil:'networkidle'});
   await page.waitForFunction(()=>document.body.dataset.ready==='1'&&window.__sim.state.robot?.presentation);
-  const initial=await fingerprint('sim');names=initial.parts.map(p=>p.name);assert.equal(names.length,48);
+  const initial=await fingerprint('sim');names=initial.parts.map(p=>p.name);assert.equal(names.length,62);
   assert.equal(initial.presentation.turretId,'turret-box-v2');assert.match(initial.massBasis,/not rerun/);
   const requests=await page.evaluate(()=>performance.getEntriesByType('resource').map(e=>e.name));
   assert.ok(!requests.some(u=>/\/v2\/rig\/turret_.*\.stl/.test(u)),'No archived turret downloads on current startup');
@@ -45,7 +45,7 @@ try{
         // Independent body TM datum (inspected deck and pan-bearing STL),
         // expressed in audited box assembly frame. Do NOT strip the turret root:
         // doing so would hide an incorrect full-robot mounting position.
-        return[v.z*1000-bodyMount[0],v.x*1000-bodyMount[1],v.y*1000-bodyMount[2]+141];
+        return[v.z*1000-bodyMount[0],v.x*1000-bodyMount[1],v.y*1000-bodyMount[2]+145];
       });}return{id,angles_deg:angles,components};
     };
     window.currentAngles=(wrap=false)=>{const phase=x=>wrap?((x*deg)%360+360)%360:x*deg;return{pan:t.pan.rotation.y*deg,tilt:-t.tilt.rotation.x*deg,pinion:m.groups.pinion.rotation.y*deg,dial:phase(m.groups.dial.rotation.y),wheel_l:phase(m.groups.wheel_l.rotation.y),wheel_r:phase(-m.groups.wheel_r.rotation.y),flap:-m.groups.flap.rotation.x*deg};};
@@ -85,7 +85,7 @@ try{
     const rejoined=m.parts.every(p=>p.mesh.position.length()<1e-12),flapClosed=Math.abs(m.groups.flap.rotation.x)<1e-12;
     return{checks,exploded,rejoined,flapClosed,live,rawOperationAngles};
   });
-  for(const c of connected.checks){assert.ok(c.gap<.00002,'Visible barrel mouth matches effect frame');assert.ok(c.origin<1e-9,'Ball starts at the visible muzzle');assert.ok(Math.abs(c.speed-15.85)<1e-9,'Current configured launch speed');}
+  for(const c of connected.checks){assert.ok(c.gap<.00002,'Visible barrel mouth matches effect frame');assert.ok(c.origin<1e-9,'Ball starts at the visible muzzle');assert.ok(Math.abs(c.speed-28.96)<1e-9,'Current configured launch speed');}
   assert.ok(connected.exploded&&connected.rejoined&&connected.flapClosed);
   for(const s of connected.live){const e=error(s);assert.ok(e.max<.02,`${s.id}: ${e.worst} ${e.max}mm`);}
   const emission=await page.evaluate(()=>{
@@ -114,9 +114,9 @@ try{
     await r.setPresentation('recorded');await r.setPresentation('current');return{stale,recorded,current};
   });
   assert.equal(transitions.stale,'current');assert.equal(transitions.recorded.id,'v2-recorded-turret');assert.ok(transitions.recorded.hidden&&transitions.current.shown);
-  assert.ok(Math.abs(transitions.recorded.muzzle[2]-.194)<1e-9);assert.ok(Math.abs(transitions.current.muzzle[2]-.147)<1e-9);
+  assert.ok(Math.abs(transitions.recorded.muzzle[2]-.194)<1e-9);assert.ok(Math.abs(transitions.current.muzzle[2]-.150)<1e-9);
   assert.ok(Math.abs(transitions.recorded.tilt[1]-.123)<1e-9);assert.ok(Math.abs(transitions.current.tilt[1]-.140)<1e-9);
-  assert.equal(transitions.current.speed,15.85);assert.equal(transitions.recorded.speed,21.3);
+  assert.equal(transitions.current.speed,28.96);assert.equal(transitions.recorded.speed,21.3);
   await page.screenshot({path:`${out}/${engine.name()}-current.png`});
   for(const [route,key,ready] of [['/','hero',()=>window.__heroPreview],['/designer/character/talk-demo.html','talk',()=>window.__talkDemo]]){
     await page.goto(base+route,{waitUntil:'networkidle'});await page.waitForFunction(ready);const actual=await fingerprint(key);
