@@ -12,10 +12,10 @@
       "cad/body_fuse_board.py": "6c60c3c4598ecb902e0d7c245499bef44bb0813f19239d2b6b74d206ad0ba173",
       "cad/body_guards.py": "cc9f220ca9d4708eb81b86396d483115f03fe7a7be2f3bdfd8c5a998f521ffb8",
       "cad/body_joints.py": "3248153de3f3f4ff6366dcb9aae212b97b78e62a17369dab5458d49cdfc26b92",
-      "cad/body_layout.py": "1cf34c1b9a00d45bd15112a5c21140f1811c1719963edf05468a8596acebb6d9",
+      "cad/body_layout.py": "6a9fc62bdcb9573c55e36e1d4002a22ad0c760da8f64680d05fba8c90b4b1052",
       "cad/body_legloads.py": "795ba8985155d2fea01a5463f737c3cccb1ce3c0082951eee05374ea172bc1cf",
       "cad/body_params.py": "f5bf6b1f747899423e37b9a53daf5ff479cdd64ca13e28b0971e57832b6d28ee",
-      "cad/body_sections.py": "202721858dc166174f31b4244bece3c498294eedca5410ef7c255164ec47903f",
+      "cad/body_sections.py": "285c46db5e855207aee2ac8d8ad8beb12fb3010a206ab325535443cd2b181d40",
       "cad/body_sheet.py": "0950557bacfd897cff8ca0c9e54fdfecb3f87b7bd9b5e272ffe8804ca39d96cb",
       "cad/body_shell.py": "d0eef072563c1a56087b99717d247f5377f4f75482ee87a2677b44f9af683510",
       "cad/body_studies.py": "0896064e679ff9eebd078416ec7885f96208a48a0cda4c7b75bf63fedfc85e04",
@@ -27,7 +27,7 @@
       "cad/build_body.py": "66f932ea53965b41341ebae92b41e5abeb28dc2e22755c3c0c7b303b58529952",
       "cad/build_leg.py": "a14fdb153b6cc5734cc42c6efc8090ef3bf5e36e3d2e017e620ad66957ed8097",
       "cad/build_rig.py": "c286adb59bae681147f84a38b97e8caaa73ad8eb8f55a3748ff0b738e85a3956",
-      "cad/build_turret.py": "b5ff5d1b2c20d683e57a4f261ad163e58e89f4a9f3b8f8ec7a6a673e6c483b8e",
+      "cad/build_turret.py": "acaee55eb47ebea07b9055708b36d292406a7218f313606f46d45c628d1824b4",
       "cad/build_turret_box.py": "fb4b541c3cfa64d0e307787b28359d3417d623f275be97247233f63a14912445",
       "cad/cables.py": "3f55bc5744775773a2deb211ba2540a56a256075ff08a1fa0e05cbca89e40785",
       "cad/check_base_board_interfaces.py": "db511119bbcfac161ed10af4204dd5e219001d36572686014406fb35c13d569e",
@@ -51,7 +51,7 @@
       "cad/rig_views.py": "6c06380d63be63c3a2aa32644bb52a5c24b5d1771a113686deea524705d63dbe",
       "cad/rs04_lug_checks.py": "02a75e6dd5d28c6c8c149141d100d1386125197f5edfb34143565c72d8a8dfb5",
       "cad/studies.py": "35149401f3a753024568eba0b34765419ed535d42c5bf19a11544d13cad8f823",
-      "cad/test_body.py": "bdfbd780771dea823828f9c0eff83de144a7f27b352fc06263af9da63120b610",
+      "cad/test_body.py": "2e953367006578289090318bcbeb32725c55b2dbd33b4211fecdc023cdcfc6fe",
       "cad/test_leg_loads.py": "0ed04011ea672aa8bc387af272ddfa1783ec4fa1f379fde1e3dfbd9201867b51",
       "cad/test_turret_gate_sources.py": "6e68480774e65bfd5ac18701a7eefad7c301fde48668b8caa579452ec9ddfaa9",
       "cad/test_turret_snaps.py": "29740c97981f741013afd41888a4efe019d7a576c984ed20df30883ce2c54c17",
@@ -67,7 +67,7 @@
       "cad/turret_gates.py": "1611bc3665bc0a52601e06f36f42bd708238fe0e06d9b2ad94fadff02d2d3d46",
       "cad/turret_lidar.py": "b6cf3dde565ebafca2abec133bf2592dfdff00eecbd23259c4600cdea5ce1034",
       "cad/turret_motion.py": "36f2be781776126b7c63bd27103f4ff24644d76568d8f793a2e68b5aeab6e260",
-      "cad/turret_mount.py": "42fd591df332417e94942e53b09bcc6ad55c8c0769a2b85f3f3c0560f83be6a5",
+      "cad/turret_mount.py": "e6aa413791622df3c40b02482fc9b9a23cc2497024f8a5e5862289737de8a57b",
       "cad/turret_orders.py": "eaaaae1668a186b7438f0dd394d5b27e1bee7c0ef4901bc880f806f7d4e60480",
       "cad/turret_print.py": "bdf5112a83380f7589c88ad1e901b4576bda9a898c84691e9d9e027e37f869cc",
       "cad/turret_snaps.py": "2690467173047aa8d479d96ce6d6eeb041e3c9edc2ae9805c4121baf5049e87e",
@@ -103,7 +103,7 @@
     },
     "toolkit_sources_sha256": "c2941322d5f3d000d3777b0047567211d06855861fa5e14229d7d7519fef3ed3"
   },
-  "input_fingerprint": "356cd3d89bc6b74c87da33d1482eef0d3340084595299525ff4d626533cd88d3",
+  "input_fingerprint": "355248f09f0851f99a003f1fb1b7c3d3b76887eae0303e5ee03e20c6c157e515",
   "context_files": {
     "tools/check-carrier-connector-inputs.py": "20b4f98e5cef0067d921e645b44fd0809ae2bffee1f1055351e7188623ef0c45",
     "research/carrier-service-connectors/private-inputs.json": "db7318f705e1966a93b07bacbab153eaa5fa9bc03a3d6a8114fff3a573382348"
@@ -366,5 +366,5 @@
     "No latch flexure, crimped terminal, lead diameter/bend or physical-fit qualification.",
     "Exact male terminal and servo mating connector CAD remain missing."
   ],
-  "elapsed_seconds": 6.839
+  "elapsed_seconds": 6.828
 }
