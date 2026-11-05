@@ -20,8 +20,8 @@ The leg movie and its report were recorded together at
 `e7b512870a39259a04a4930e2908af84001bc84e` (issue 8: 18.75 kg, 36 V, the 10 in
 hub-motor wheel). Until then the reel carried the 16.25 kg / 48.1 V clip of
 `ae919f7211f236f398ff77cc25d00c2017c1ab9c`, labelled as archived.
-E1 retains its 37.5 kg baseline, deformation ×16, SF 1.63 at the 4 mm gate mesh
-(1.41 at 3 mm) versus required 2.00, and static-load labels. Its entire native frame is preserved with side bars;
+E1 retains its 37.5 kg baseline, deformation ×16, SF 1.60 at the 4 mm gate mesh
+(1.40 at 3 mm) versus required 2.00, and static-load labels. Its entire native frame is preserved with side bars;
 the failed strength target is neither cropped nor covered. These are prototype
 demonstrations, not physical testing or a print/safety release. The Progress
 leg gallery's movies were re-recorded in the same run, so they now show the report

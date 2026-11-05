@@ -31,6 +31,6 @@ still reject in both themes. Pixel/media thresholds and two-frame settling are
 unchanged. The held-resource control fails if an SDK upgrade removes the flag.
 
 Limits: the control demonstrates the failure class, not the identity of the old
-CI request. Core model/report readiness remains required. A timeout is never
-counted as a measured view. This is a product-specific layout harness, not a new
+CI request. Core model/report readiness remains required. No readiness timeout is a
+successful validation. This is a product-specific layout harness, not a new
 network availability or universal font-rendering guarantee.
