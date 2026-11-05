@@ -95,13 +95,12 @@ to 7-8; the robot's radio stop output (designed separately) will too. Twisted pa
 
 ### 2.4 Power rails
 
-*Rewritten for D66 (one XT30 input, its own Jetson) and D68 (the trimmed flywheel rail); the build's detail is
-docs/turret-wiring.md 4.*
+*Rewritten for D66 and D68 (the trimmed flywheel rail), then D76 (2026-11-03: no computer on the turret, the power on
+the DT12's pins 1-4); the build's detail is docs/turret-wiring.md 4.*
 
 | Rail | Source | Feeds | Fuse / protection | Part |
 |---|---|---|---|---|
-| Input (plinth) | one XT30, 12-54 V in principle: one DCB609 in 20 V mode on the stand (15-20.5 V) or Gyropup's 10S bus (30-42 V) | the J4012 (Jetson, up to 48 W) directly; the head branch | 20 A MINI 58 V main; 5 A MINI 58 V to the J4012 | XT30, Bussmann HHM holders (body.json) |
-| BUS (head branch) | the input | the base board (pan servo's regulator), and across the ring's circuits 1, 2, 11 (+) and 3, 4, 12 (GND) to the bay | 10 A MINI 58 V; 1N5408 reverse crowbar; P6KE51A clamps at the base and the bay; 2 x 470 uF 63 V on level 0 | `fuse_mini58_10a`, `diode-1n5408g`, `tvs-p6ke51a`, `panasonic-eeu-fr1j471b` |
+| BUS (head branch) | the DT12's pins 1-4 (D76): one DCB609 in 20 V mode on the stand (15-20.5 V, its 20 A fuse in the stand) or Gyropup's 10S bus (30-42 V, the body's 7.5 A turret branch) | the base board (pan servo's regulator), and across the ring's circuits 1, 2, 11 (+) and 3, 4, 12 (GND) to the bay | 10 A MINI 58 V; 1N5408 reverse crowbar; P6KE51A clamps at the base and the bay; 2 x 470 uF 63 V on level 0 | `fuse_mini58_10a`, `diode-1n5408g`, `tvs-p6ke51a`, `panasonic-eeu-fr1j471b` |
 | 12 V pan (base) | Pololu D36V50F12 (13.3-50 V in, 4.5 A) | STS3215 pan servo (2.7 A stall, est); the 555's pendant loop | MF-R300 | Pololu 4095, $39.95 |
 | *(the rails above are on the fixed side; those below are on the turret, fed by the ring)* | | | | |
 | RAIL (flywheel, turret) | TDK i6A4W020A033V-001-R (9-53 V in, 20 A, 250 W), always on, trimmed per turret to ~11.31 V (10.8-11.9 V) by a resistor string on its TRIM pin | the safety switch only | P6KE15A; its own 27 A limit | $47.46 Digi-Key, Newark backup |
@@ -116,25 +115,24 @@ trimmed rail: the ESCs only ever see it, and no firmware setting can raise it. T
 own regulators so the rail's per-turret trim never moves their supply. Every part on the bus is rated 50 V or more.
 The plan's 24 V dial rail and C610 are gone (the feed is an STS3215 since D42).
 
-### 2.5 Current budget (sim/turret_power.py, D66/D68)
+### 2.5 Current budget (sim/turret_power.py, D68, D76)
 
 The flywheel pair holds 19.4 J at the 95 fps set speed (15,286 rpm); the firmware's 800 ms ramp peaks at ~85 W into
 the rail converter (100 ms), holding speed takes ~37 W, a shot's recovery pulse (both ESCs at their 10 A limit) up to
-~270 W for ~10 ms. "Play": the servos moving, the J4012 at 48 W; "worst": every servo at its 50 % torque cap at once.
+~270 W for ~10 ms. "Play": the servos moving; "worst": every servo at its 50 % torque cap at once.
 
 | | 15 V (pack empty) | 20.5 V (pack full) | 30 V (bus) | 42 V (bus full) |
 |---|---|---|---|---|
-| Input, spin-up peak (100 ms), play / worst | 11.2 / 13.1 A | 7.9 / 9.1 A | 5.2 / 6.1 A | 3.7 / 4.3 A |
-| Input, 8 shots at 10/s (1 s RMS), play / worst | 11.3 / 13.7 A | 8.0 / 9.7 A | 5.2 / 6.3 A | 3.7 / 4.4 A |
-| Input, game average (J4012 at 25 W / 48 W) | 3.9 / 5.4 A | 2.8 / 3.9 A | 1.9 / 2.7 A | 1.4 / 1.9 A |
+| Input, spin-up peak (100 ms), play / worst | 7.7 / 9.6 A | 5.4 / 6.7 A | 3.6 / 4.4 A | 2.6 / 3.2 A |
+| Input, 8 shots at 10/s (1 s RMS), play / worst | 8.4 / 10.5 A | 6.0 / 7.5 A | 3.8 / 4.8 A | 2.7 / 3.4 A |
+| Input, game average | 2.2 A | 1.6 A | 1.1 A | 0.8 A |
 | Ring's busiest circuit (of 3), spin-up / burst, play | 3.0 / 3.3 A | 2.1 / 2.4 A | 1.4 / 1.5 A | 1.0 / 1.1 A |
 | Ring, game average a circuit | 0.64 A | 0.47 A | 0.32 A | 0.23 A |
 
 On the 10S bus the ring (2 A a circuit) holds at 800 ms and 10/s with margin. On the stand's pack it does not, so the
 firmware runs a stand profile from BUS_V: a 1.0 s ramp and bursts of at most 4/s at 20.5 V, 1.6 s and 2/s at 18 V,
-2.4 s and 1/s at 15 V (docs/turret-wiring.md 5). The stand's rocker (10 A 28 V DC) is within its rating on that profile
-in play (8.7 A at 15 V) and with the J4012 in its 25 W mode at the worst coincidence (9.3 A); at 800 ms and 10/s on an
-empty pack it would carry 11-14 A. Section 2.6 below is the D41 plan's reasoning at 24 V; its numbers are superseded by
+2.4 s and 1/s at 15 V (docs/turret-wiring.md 5). The stand's switch is the Blue Sea 6006 (D70, 275 A 48 V DC); without
+D66's J4012 the input carries 7.7-10.5 A at 800 ms and 10/s on an empty pack (D66: 11-14 A). Section 2.6 below is the D41 plan's reasoning at 24 V; its numbers are superseded by
 this table.
 
 ### 2.6 Holding the peaks inside the ring's rating

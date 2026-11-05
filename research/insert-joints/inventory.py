@@ -599,68 +599,39 @@ def build(repo):
                 ': the posts are pins (D53)' + ('' if any(stop_src) else '; cad/rig_assembly.py is fixed, regenerate the page'))]
         if stop_stale else [])
 
-    # ================================================================== the TM's sideways-fall load, from the TM face (D66)
-    # cad/turret.py's frame T has its origin at the pan base's foot. Since D66 the plinth's tray sits PLINTH['h'] below
-    # that (compute_tray: z0 = -P['h']), on the riser: the real TM face. mount.json writes its heights from that face
-    # (its TM frame, frame_t_above_face_mm); a file without that key is in frame T (before #137).
-    ph = repo.num('cad/turret.py', r"^PLINTH = \{'h': ([\d.]+), ")
-    repo.has('cad/turret.py', "z0 = -P['h']")
-    tray_t_ = repo.num('cad/turret.py', r"^PLINTH = \{'h': [\d.]+, 'r': [\d.]+, 'wall': [\d.]+, 'tray_t': ([\d.]+),")
+    # ================================================================== the TM's sideways-fall load, from the TM face (D76)
+    # cad/turret.py's frame T has its origin at the pan base's foot, FRAME_T_ABOVE_TM above the TM face: 0 since D76 removed
+    # D66's compute plinth (86 mm), so the pan base's foot is on the riser again. mount.json writes its heights from that
+    # face (its TM frame, frame_t_above_face_mm); a file without that key is in frame T (before #137).
+    ph = repo.num('cad/turret.py', r"^FRAME_T_ABOVE_TM = ([\d.]+)")
     fall_g = repo.num('cad/turret_studies.py', r'^FALL_G = ([\d.]+)')
-    hc_from_face = repo.present('cad/turret_studies.py', "h_face = M['com_mm'][2] + tu.PLINTH['h']")
+    hc_from_face = repo.present('cad/turret_studies.py', "h_face = M['com_mm'][2] + tu.FRAME_T_ABOVE_TM")
     tm_m, tm_z = mount['mass_kg'], mount['com_mm'][2]
     frame_dz = mount.get('frame_t_above_face_mm')
-    if frame_dz is not None and abs(frame_dz - ph) > 0.01:
-        raise Stale(f"exports/turret/mount.json: frame_t_above_face_mm {frame_dz:g} but PLINTH h {ph:g}; regenerate it")
-    below_face = max(0.0, -mount['envelope']['lowest_z_mm'])        # how far the turret reaches below the file's origin
-    if frame_dz is not None and below_face > 1:
-        # half migrated: the frame key says the TM face but the envelope is still frame T's, so the 86 mm would count twice
-        raise Stale(f"exports/turret/mount.json: frame_t_above_face_mm {frame_dz:g} (the TM frame) but envelope.lowest_z_mm "
-                    f"{-below_face:g} (frame T's): the file is half migrated; regenerate it (cad/turret_mount.py)")
+    if frame_dz is None or abs(frame_dz - ph) > 0.01:
+        raise Stale(f"exports/turret/mount.json: frame_t_above_face_mm {frame_dz} but cad/turret.py FRAME_T_ABOVE_TM {ph:g}; regenerate it")
+    below_face = max(0.0, -mount['envelope']['lowest_z_mm'])        # how far the turret reaches below the TM face
+    if below_face > 1:
+        # nothing of the turret may hang below the TM face (D76: the pan base's foot is the face)
+        raise Stale(f"exports/turret/mount.json: envelope.lowest_z_mm {-below_face:g}: the turret reaches below its TM face "
+                    "(the pan base's foot since D76); update research/insert-joints/inventory.py or the turret")
     tm_arm = 2 * abs(mount['tm']['bolts_mm'][0][0]) / 1000.0         # the 80 mm pattern: two bolts in tension at 80 mm (as the hand check)
-    com_tm = tm_z + below_face            # the plinth's underside is the lowest point, and it sits on the riser
-    tm_zT = com_tm - ph                   # the centre in frame T (the plinth's centroids below are in frame T)
+    com_tm = tm_z
     budget = float(re.search(r'centre at most ([\d.]+) mm above the TM face', mount['mass']['budget']).group(1))
     f_side = tm_m * G0 * fall_g
-    if below_face > 1 and abs(below_face - ph) > 0.5:
-        raise Stale(f"exports/turret/mount.json: the turret reaches {below_face:g} mm below frame T but the plinth is {ph:g}: "
-                    "the TM face is no longer the plinth's underside; update research/insert-joints/inventory.py")
     t_riser_top = f_side * com_tm / 1000.0 / (2 * tm_arm)
     riser_h = repo.num('cad/body_params.py', r'^RISER_H = ([\d.]+)')
     repo.has('cad/body_frame.py', 'RISER_FEET = [(40.0, 40.0), (-40.0, 40.0), (-40.0, -40.0), (40.0, -40.0)]')
     t_riser_feet = f_side * (com_tm + riser_h) / 1000.0 / (2 * tm_arm)
-    # the part above the plinth's columns: the turret less the plinth and what it holds (turret.json masses; the
-    # centroids are estimates: the tray at its mid-thickness, the shell at mid-height, the J4012 on the tray, the
-    # ports at mount.json's port height, the fuses on the tray)
-    tj = repo.json('exports/turret/turret.json')
-    j_h = repo.num('cad/turret.py', r"^J4012 = \{'L': [\d.]+, 'W': [\d.]+, 'H': ([\d.]+),")
-    port_z = mount['tm']['plinth']['xt30_mm'][2]
-    zt_ = -ph + tray_t_
-    below = [(tj['parts']['compute_tray']['mass_g_each'], -ph + tray_t_ / 2), (tj['parts']['compute_shell']['mass_g_each'], zt_ / 2),
-             (tj['bought']['compute']['mass_g'], zt_ + j_h / 2), (tj['bought']['eth_jack']['mass_g'], -ph + port_z),
-             (tj['bought']['xt30_input']['mass_g'], -ph + port_z), (tj['bought']['input_fuses']['mass_g'], zt_ + 5.0)]
-    m_below = sum(m for m, _ in below)
-    m_up = tm_m * 1000.0 - m_below
-    z_up = (tm_m * 1000.0 * tm_zT - sum(m * z for m, z in below)) / m_up
-    t_columns = m_up / 1000.0 * G0 * fall_g * z_up / 1000.0 / (2 * tm_arm)
     hc_tm = turret_hc['tm_bolts']['tension_per_bolt_n']
     tm_case = (f"R: {fall_g:g} g sideways, the whole turret ({tm_m:g} kg) with its centre {com_tm:.1f} mm above the TM face "
-               + (f"(mount.json's {tm_z:g} in frame T + the {below_face:g} the turret reaches below it)" if below_face > 1
-                  else "(exports/turret/mount.json com_mm, from the TM face)"))
+               "(exports/turret/mount.json com_mm, from the TM face)")
     tm_findings = []
     if not hc_from_face or abs(hc_tm - t_riser_top) > 0.02 * t_riser_top:
         tm_findings.append(('tm-hand-check', 'fix', f"exports/turret/fea/summary.json hand_checks.tm_bolts gives {hc_tm:g} N a bolt, "
                             f"the TM face's centre {com_tm:.1f} mm gives {t_riser_top:.0f} N: "
                             + ('cad/turret_studies.py measures the lever in frame T' if not hc_from_face
                                else 'refresh the hand checks (cad/turret_studies.py --hand-checks)')))
-    if below_face > 1:
-        tm_findings.append(('tm-com-datum', 'fix', f"exports/turret/mount.json says frame T's origin is \"in the TM face\", but since D66 it reaches {below_face:g} mm below it "
-                            f"(envelope.lowest_z_mm): the origin is the pan base's foot and the plinth's tray is at z -{ph:g} (compute_tray z0 = -P['h']). Its centre "
-                            f"z {tm_z:g} is {com_tm:.1f} mm above the real TM face. hand_checks.tm_bolts uses {tm_z:g} "
-                            f"({hc_tm:g} N a bolt), and cad/body_params.tm() takes max({tm_z:g}, {budget:g}) = {max(tm_z, budget):g} "
-                            f"(com_above_deck_on_riser_mm {mount['mass'].get('com_above_deck_on_riser_mm')}). Fix cad/turret_mount.py "
-                            "(and turret_studies' tm_bolts) to measure from the plinth's underside, then re-run the body's riser "
-                            "and deck studies"))
     if com_tm > budget:
         # the body's turret fall (cad/body_studies.py D2) takes its centre from mount.json: say what it gives there
         body_fea = repo.json('exports/body/fea/summary.json')
@@ -669,9 +640,9 @@ def build(repo):
         d2_target = (body_fea.get('targets') or {}).get('sf_turret_fall')
         d2_txt = (f"; the body's D2 turret fall at {d2_at.group(1)} mm gives the deck SF {d2['sf_by_part']} against {d2_target:g}"
                   if d2_at and d2.get('sf_by_part') is not None and d2_target else '')
-        tm_findings.append(('tm-com-budget', 'owner', f"the turret's centre is {com_tm:.1f} mm above the TM face against D71's "
+        tm_findings.append(('tm-com-budget', 'owner', f"the turret's centre is {com_tm:.1f} mm above the TM face against the TM design point's "
                             f"\"at most {budget:g} mm\"{d2_txt}: raise the budget and strengthen the deck under the riser, or "
-                            f"lower the turret (the plinth is {ph:g} mm)"))
+                            "lower the turret"))
 
     # ================================================================== BODY (P3)
     f = integ.pop('post_m5')
@@ -727,7 +698,7 @@ def build(repo):
         clamp={'stack': 'turret plate + deck (aluminium)', 'printed_mm': 0, 'limiter': 'n/a'},
         loads=[{'case': tm_case + f", {riser_h:g} mm further down at the feet (the riser's 80 x 80 legs)",
                 'per_insert_n': r(t_riser_feet, 0), 'tension': True,
-                'source': 'exports/turret/mount.json mass_kg, com_mm; cad/turret.py PLINTH; cad/body_params.py RISER_H'}],
+                'source': 'exports/turret/mount.json mass_kg, com_mm; cad/turret.py FRAME_T_ABOVE_TM; cad/body_params.py RISER_H'}],
         pullout_repo_n=turret_hc['tm_bolts']['m5_insert_pullout_n_est'],
         notes=f"The turret's hand check (hand_checks.tm_bolts) gives {hc_tm:g} N a bolt at the TM face; {riser_h:g} mm lower, "
               f"each foot sees {t_riser_feet:.0f} N. Body joints: " + ', '.join(f['joints']) + '.')
@@ -736,26 +707,26 @@ def build(repo):
     repo.has('cad/body_frame.py', "s = s.cut(cyl_z(3.2, H - RISER_TM_PILOT, H + 1.0, x, y))")
     riser_dowel = repo.num('cad/body_frame.py', r'^RISER_DOWEL_DEPTH = ([\d.]+)')
     repo.has('cad/body_frame.py', "s = s.cut(cyl_z(2.5 - 0.03, H - RISER_DOWEL_DEPTH, H + 1.0, x, y))")
-    plinth_t = repo.num('cad/turret.py', r"^PLINTH = \{'h': [\d.]+, 'r': [\d.]+, 'wall': [\d.]+, 'tray_t': ([\d.]+),")
-    plinth_cb = repo.num('cad/turret.py', r"'cbore': \([\d.]+, ([\d.]+)\)")
+    foot_t = repo.num('cad/turret.py', r'self\.foot_t = ([\d.]+)')
+    repo.has('cad/turret.py', "s = s.cut(through_z(x, y, FAST['M5']['clear'], -1, 60)).cut(cyl_z(5.0, t - 0.01, 60, x, y))")
     tm_len = float(mount['tm']['bolt_screw'].split('x')[1].split(',')[0])
-    tip_tray = tm_len - (plinth_t - plinth_cb)
+    tip_foot = tm_len - foot_t
     pin_l = float(mount['tm']['dowel_pin'].split('x')[1].split(',')[0])
-    tray_dowel = repo.num('cad/turret.py', r"'xt30_y': -30\.0, 'dowel_depth': ([\d.]+)\}")
-    repo.has('cad/turret.py', "s = s.cut(through_z(x, y, 5.0, z0 - 1, z0 + P['dowel_depth']))")
+    foot_dowel = foot_t - 1.0
+    repo.has('cad/turret.py', "s = s.cut(cyl_z(2.5, -1, t - 1.0, x, y))")
     bolt_min = mount['riser']['bolt_hole_depth_min_mm']
     dowel_min = float(re.search(r'at least ([\d.]+) mm', mount['riser']['dowel_holes']).group(1))
     add(id='body.riser_top_tm', assembly='body / turret', where="turret riser's top ring: the TM face's 4 M5 inserts",
         qty_robot=4, insert='insert_m5', d_mm=5, material='pa6-cf', infill='100 %',
         hole={'d': fast['M5']['insert_pilot'], 'depth': riser_top}, boss_mm=None, axis='print-z',
-        orientation='riser printed on its top face', screw=f"{mount['tm']['bolt_screw']} down through the compute plinth's "
-        f"{plinth_t:g} mm tray (Ø9.5 x {plinth_cb:g} counterbores, D66)", screw_side='open end (from above)',
-        mating_hole_mm=fast['M5']['clear'], tip_depth_mm=tip_tray, stack={'head_seat_mm': plinth_t - plinth_cb, 'screw_mm': tm_len},
-        clamp={'stack': f"{plinth_t - plinth_cb:g} mm printed PA6-CF tray under each head (40 % gyroid per docs/turret-sections.md)",
-               'printed_mm': plinth_t - plinth_cb, 'limiter': None, 'material': 'PA6-CF', 'bearing': 'Ø8.5 socket head',
+        orientation='riser printed on its top face', screw=f"{mount['tm']['bolt_screw']} down through the pan base's "
+        f"{foot_t:g} mm foot (D76: no compute plinth)", screw_side='open end (from above)',
+        mating_hole_mm=fast['M5']['clear'], tip_depth_mm=tip_foot, stack={'head_seat_mm': foot_t, 'screw_mm': tm_len},
+        clamp={'stack': f"{foot_t:g} mm printed PA6-CF foot under each head (40 % gyroid inside 4 walls)",
+               'printed_mm': foot_t, 'limiter': None, 'material': 'PA6-CF', 'bearing': 'Ø8.5 socket head',
                'bearing_od_mm': HEAD_D[('socket', 5)], 'bearing_id_mm': fast['M5']['clear']},
         loads=[{'case': tm_case, 'per_insert_n': r(t_riser_top, 0), 'tension': True,
-                'source': 'exports/turret/mount.json mass_kg, com_mm; cad/turret.py PLINTH (hand_checks.tm_bolts gives '
+                'source': 'exports/turret/mount.json mass_kg, com_mm; cad/turret.py FRAME_T_ABOVE_TM (hand_checks.tm_bolts gives '
                           f'{hc_tm:g} N)'}],
         pullout_repo_n=turret_hc['tm_bolts']['m5_insert_pullout_n_est'],
         notes=f"exports/turret/mount.json (the turret's contract with the robot) asks the head for "
@@ -764,12 +735,12 @@ def build(repo):
               f"Ø{2 * repo.num('cad/body_frame.py', r'^RISER_LEG_R = ([\d.]+)'):g} under each bolt), the dowel holes on "
               f"Ø{2 * repo.num('cad/body_frame.py', r'^RISER_DOWEL_BOSS = \(([\d.]+), [\d.]+\)'):g} bosses under the ring.",
         extra=tm_findings + ([('contract-depth', 'fix', f"riser TM pilots {riser_top:g} deep vs mount.json bolt_hole_depth_min_mm "
-                               f"{bolt_min:g} (and the tip at {tip_tray:g} with the D66 tray): deepen to >= {tip_tray + 1.5:g}, "
-                               f"or use M5 x 12 (tip {12 - (plinth_t - plinth_cb):g}, 1.5 d engaged)")]
-                             if riser_top < max(bolt_min, tip_tray + TIP_ROOM) else [])
+                               f"{bolt_min:g} (and the tip at {tip_foot:g} through the pan base's foot): deepen to >= {tip_foot + 1.5:g}, "
+                               f"or use M5 x 12 (tip {12 - foot_t:g}, 1.5 d engaged)")]
+                             if riser_top < max(bolt_min, tip_foot + TIP_ROOM) else [])
         + ([('contract-dowel', 'fix', f"riser dowel holes {riser_dowel:g} deep vs mount.json's {dowel_min:g}; a {pin_l:g} mm pin "
-             f"goes {tray_dowel:g} into the D66 tray, so it needs at least {pin_l - tray_dowel + 0.5:g} in the riser")]
-           if riser_dowel < max(pin_l - tray_dowel + 0.5, dowel_min) else []))
+             f"goes {foot_dowel:g} into the pan base's foot, so it needs at least {pin_l - foot_dowel + 0.5:g} in the riser")]
+           if riser_dowel < max(pin_l - foot_dowel + 0.5, dowel_min) else []))
 
     f = integ.pop('dcdc_bracket')
     dcdc_note = repo.present('cad/body_frame.py', "two M4 x 10 down into the tray\\'s nuts; the converter on four M3 x 8")
@@ -910,53 +881,6 @@ def build(repo):
     ins_depth = repo.num('cad/turret.py', r'^INSERT_DEPTH = ([\d.]+)')
     ball_d = repo.num('cad/turret.py', r'def __init__\(self, ball_d: float = ([\d.]+),')
     repo.has('cad/turret.py', 'self.bore = ball_d + 1.5')
-    foot_t = repo.num('cad/turret.py', r'self\.foot_t = ([\d.]+)')
-    col_r = repo.num('cad/turret.py', r"'col_r': ([\d.]+), 'cbore'")
-    repo.has('cad/turret.py', "def insert_hole(x, y, z_top, size='M3', depth=INSERT_DEPTH):")
-    col_depth = repo.opt('cad/turret.py', r"s = s\.cut\(insert_hole\(x, y, 0\.0, 'M5'(?:, ([\d.]+))?\)\)", ins_depth)
-    col_hollow = repo.num('cad/turret.py', r"\.cut\(cyl_z\(4\.0, zt \+ 5\.0, -([\d.]+), x, y\)\)\s+# hollow under the insert")
-    shell_src = repo.block('cad/turret.py', 'def compute_shell(G):')
-    col_tip = tm_len - foot_t
-    col_extra = []
-    if col_depth < col_tip + TIP_ROOM:
-        col_extra.append(('screw-bottoms-fix', 'fix', f"deepen the column pilots {col_depth:g} -> {col_tip + 1.5:g} (solid to "
-                          f"{col_hollow:g}), or use M5 x 12 (tip {12 - foot_t:g}, {12 - foot_t:g} mm engaged)"))
-    if 'TM_DOWELS' not in shell_src:
-        col_extra.append(('pan-base-dowels', 'owner', f"the pan base's TM dowel holes (cad/turret.py pan_base: TM_DOWELS at r "
-                          f"{abs(mount['tm']['dowels_mm'][0][0]):g}) meet no hole in the plinth's top (compute_shell() cuts none), but "
-                          f"the bench BOM buys hw_plinth_dowels ({repo.bom_len('exports/turret/bench/bom.json', 'hw_plinth_dowels'):g} mm pins, D66): "
-                          "the pan base is then located only by its M5s in clearance. Add dowel bosses to the plinth's top, or drop "
-                          "the pins"))
-    add(id='turret.plinth_columns', assembly='turret', where="compute plinth shell's four column tops (PETG): the pan base's TM",
-        qty_robot=4, insert='insert_m5', d_mm=5, material='petg', infill='not in exports/turret/print/print.json yet',
-        hole={'d': fast['M5']['insert_pilot'], 'depth': col_depth}, boss_mm=2 * col_r, axis='print-z',
-        orientation='shell printed upside down', screw=f"{mount['tm']['bolt_screw']} through the pan base's {foot_t:g} mm foot",
-        screw_side='open end (from above)', mating_hole_mm=fast['M5']['clear'], tip_depth_mm=col_tip,
-        stack={'head_seat_mm': foot_t, 'screw_mm': tm_len},
-        clamp={'stack': f"{foot_t:g} mm PA6-CF foot (40 % gyroid) under each head", 'printed_mm': foot_t, 'limiter': None,
-               'material': 'PA6-CF', 'bearing': 'Ø8.5 socket head', 'bearing_od_mm': HEAD_D[('socket', 5)],
-               'bearing_id_mm': fast['M5']['clear']},
-        loads=[{'case': f"R: {fall_g:g} g sideways on the turret above the plinth ({m_up / 1000:.2f} kg, centre {z_up:.0f} mm above "
-                        f"the columns' tops; estimate)", 'per_insert_n': r(t_columns, 0), 'tension': True,
-                'source': 'exports/turret/mount.json and turret.json masses; plinth centroids estimated (inventory.py)'}],
-        pullout_repo_n=turret_hc['tm_bolts']['m5_insert_pullout_n_est'],
-        notes=f"The column is solid PETG to z -{col_hollow:g} under the {col_depth:g} mm pilot. The hand check's "
-              f"{hc_tm:g} N is the whole turret at the TM face; the plinth and the J4012 ({m_below:.0f} g) hang below "
-              "these columns, so the part above them is lighter and its centre higher.",
-        extra=col_extra)
-    tray_depth = repo.opt('cad/turret.py', r"s = s\.cut\(insert_hole\(fx, fy, z1, 'M4'(?:, ([\d.]+))?\)\)", ins_depth)
-    shell_foot = 5.0
-    repo.has('cad/turret.py', 'y - 6.0, y + 6.0, zt, zt + 5.0)')
-    m4_plinth = repo.bom_len('exports/turret/bench/bom.json', 'hw_plinth_m4')
-    add(id='turret.plinth_tray_m4', assembly='turret', where="compute plinth tray (PA6-CF): the shell's four feet",
-        qty_robot=4, insert='turret_insert_m4', d_mm=4, material='pa6-cf', infill='40 % gyroid (docs/turret-sections.md)',
-        hole={'d': fast['M4']['insert_pilot'], 'depth': tray_depth}, axis='print-z', orientation='tray printed flat',
-        screw=f"M4 x {m4_plinth:g} (BOM hw_plinth_m4) down through the shell's {shell_foot:g} mm PETG foot",
-        screw_side='open end (from above)', mating_hole_mm=fast['M4']['clear'], tip_depth_mm=m4_plinth - shell_foot,
-        stack={'head_seat_mm': shell_foot, 'screw_mm': m4_plinth},
-        clamp={'stack': f'{shell_foot:g} mm PETG foot', 'printed_mm': shell_foot, 'limiter': None}, loads=[],
-        notes='The shell foot is ' + q('y - 6.0, y + 6.0, zt, zt + 5.0)') + f' ({shell_foot:g} mm).')
-
     hz = repo.num('cad/turret.py', r"s = s\.cut\(insert_hole\(x, y, hz1, 'M3', ([\d.]+)\)\)")
     clamp_t = repo.num('cad/turret.py', r'^CLAMP_T = ([\d.]+)')
     up = turret_hc['journal_lip']['force_n']
@@ -1112,12 +1036,12 @@ def build(repo):
     # ------------------------------------------------------------------ stand, box (bench furniture)
     top = repo.num('cad/turret_stand.py', r'^WALL, TOP, BOT = [\d.]+, ([\d.]+), [\d.]+')
     dock = repo.num('cad/turret_stand.py', r"s = s\.cut\(_cyl_z\(FAST\['M3'\]\['insert_pilot'\] / 2, -TOP - 0\.01, -TOP \+ ([\d.]+), dx0")
-    add(id='stand.tm', assembly='turret stand', where="stand top plate (PETG, 3 walls 20 % gyroid): the plinth's TM",
+    add(id='stand.tm', assembly='turret stand', where="stand top plate (PETG, 3 walls 20 % gyroid): the pan base's TM",
         qty_robot=4, insert='insert_m5', d_mm=5, material='petg', infill='3 walls, 20 % gyroid',
         hole={'d': fast['M5']['insert_pilot'], 'depth': top + repo.num('cad/turret_stand.py', r"s = s\.cut\(_cyl_z\(FAST\['M5'\]\['insert_pilot'\] / 2, -TOP - ([\d.]+), 0\.1, x, y\)\)")},
         boss_mm=2 * repo.num('cad/turret_stand.py', r's = s\.union\(_cyl_z\(([\d.]+), -TOP - 8\.0, -TOP \+ 0\.01, x, y\)\)'),
-        axis='print-z', orientation='printed upside down', screw=mount['tm']['bolt_screw'] + ' through the plinth tray',
-        screw_side='open end', mating_hole_mm=fast['M5']['clear'], tip_depth_mm=tip_tray, clamp=None, loads=[],
+        axis='print-z', orientation='printed upside down', screw=mount['tm']['bolt_screw'] + " through the pan base's foot (D76)",
+        screw_side='open end', mating_hole_mm=fast['M5']['clear'], tip_depth_mm=tip_foot, clamp=None, loads=[],
         notes='Bench duty.')
     dock_ins = 'turret_insert_m3_short' if repo.present('cad/build_turret.py', "('turret_insert_m3_short', 2),       # the dock adapter's") else 'insert_m3'
     add(id='stand.dock', assembly='turret stand', where="stand top plate underside: the dock adapter's 2 x M3", qty_robot=2,
@@ -1139,8 +1063,8 @@ def build(repo):
         'depth': deck_t, 'through': True}, axis='print-z', orientation='deck printed upside down',
         screw='M5 x 12 buttons through the 5 mm foot (cad/turret_box.py)', screw_side='open end', mating_hole_mm=fast['M5']['clear'],
         tip_depth_mm=repo.num('cad/turret_box.py', r'^TM_SCREW_LEN = ([\d.]+)') - foot_t, clamp=None, loads=[],
-        notes='Through pilot: the insert fills the 8 mm deck and the screw ends 1 mm short of its underside. With the D66 '
-              'plinth\'s M5 x 16 instead, the tip would stand 3.5 mm below the deck.')
+        notes='Through pilot: the insert fills the 8 mm deck and the screw ends 1 mm short of its underside. The bench\'s '
+              'M5 x 16 (the robot\'s TM screws) would stand 3.5 mm below the deck: the box keeps its own M5 x 12.')
     add(id='box.small', assembly='J501 box', where='box shroud tabs (M3 x 4.3 from below) and pod bosses (M3)', qty_robot=10,
         insert='turret_insert_m3_short', d_mm=3, material='petg', infill='see exports/turret/box',
         hole={'d': fast['M3']['insert_pilot'], 'depth': repo.num('cad/turret_box.py', r"DECK_Z0 - 0\.1, DECK_Z0 \+ ([\d.]+), x, y\)\)")},

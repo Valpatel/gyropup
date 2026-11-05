@@ -43,7 +43,7 @@ python3 research/insert-joints/test_phase2.py               # the checks, toolki
 ## What it covers
 
 Every joint where a screw goes into a heat-set insert, and every printed part that metal clamps. That is the legs,
-the body (P3, from `exports/body/integrity.json`), the turret and its plinth, and the bench furniture: the stand, the
+the body (P3, from `exports/body/integrity.json`), the turret, and the bench furniture: the stand, the
 J501 box and the leg rig. Each joint records:
 
 - the insert, its pilot (diameter, depth, blind or through), the boss around it, and the part's material and infill;
@@ -90,10 +90,9 @@ recorded and needs no action unless the duty changes.
   `exports/body/leg-loads.json`, `exports/leg/fea/summary.json` and the turret's hand checks.
 - The hip-frame row tension treats the flange as rigid (M / (3 x 140 mm)). The wheel bolt tension takes the moment
   about the flange's centre. Neither is a contact or preload model.
-- The TM bolts' 30 g load is taken about the plinth's underside, the real TM face since D66: the turret's height
-  above frame T's origin plus the 86 mm the turret reaches below it (`mount.json` `envelope.lowest_z_mm`). The load
-  on the plinth's columns uses the turret less the plinth and the J4012. Their masses are catalogued, but their
-  centroids are estimates.
+- The TM bolts' 30 g load is taken about the TM face, which is the pan base's foot again since D76 (frame T's origin;
+  D66's plinth put the face 86 mm lower): the centre's height from `mount.json` `com_mm`, checked against
+  `frame_t_above_face_mm` and `envelope.lowest_z_mm`.
 - `--cad-agent` places the screw from the stack's geometry (head seat and screw length) where a joint records it
   (`stack`). Elsewhere it is given this inventory's own tip depth, so it re-checks only the subtraction.
 - Nothing here changes the CAD. Fixes that need `cad/` or `catalog/` edits are listed for a CAD-host regeneration.

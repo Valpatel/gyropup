@@ -102,6 +102,19 @@ guard produced and passed both companions, the poster and the receipts. The leg 
 unchanged. The previous capture's note follows.
 
 The browser frames were recaptured on 2026-11-05 (UTC) for
+[PR 196](https://github.com/Valpatel/gyropup/pull/196) (D76: the turret without its own computer). Its box scene
+(`exports/sim/turret_box`) was regenerated on the current turret, with the turret straight on the box deck. Dev's
+scene had not been rebuilt since the stop lug, the cradle plates, the base-board carrier and its inserts and screws,
+the bay lid, the horn boss, the pivot spacer and the hopper and laser inserts went in. It now carries 80 parts (62 of
+them the turret's moving and base groups) against 66 and 48, so the guard's snapshot counts were reviewed against
+the new frames and raised. The box was then rebuilt after the lidar study's box run it reads (its ball-path check
+had said stale; the meshes did not change), and `designer/current_turret.js` now fetches the turret's parts four at a
+time. The capture ran from `022627ae781ce7cf7d07669f282522397ecfa2a3`, served assets `34c5d0e6fdbb356188df`, through an
+owned `serve-site.mjs --ephemeral` listener, closed afterwards. The recorder produced all 480 frames, and the unchanged
+encoder and guard produced and passed both companions (MP4 1,874,211 bytes, WebM 1,494,072), the poster and the
+receipts. The previous capture's note follows.
+
+The browser frames were recaptured on 2026-11-05 (UTC) for
 [PR 204](https://github.com/Valpatel/gyropup/pull/204) after it merged dev (the gamepad, #205, and the hardware
 folders, #213) and took the owner's decisions: the playground's turn is now clamped to what the outer wheel and the
 legs take at the speed, and the leg limits were regenerated (61 N m everywhere, the inertia bound over a locked

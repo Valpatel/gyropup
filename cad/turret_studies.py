@@ -588,10 +588,10 @@ def hand_checks(G, M):
                           'allowable_mpa': round(0.5 * MATERIALS['pa6_cf_z'].strength_mpa, 1), 'sf': round(0.5 * MATERIALS['pa6_cf_z'].strength_mpa / tau, 1),
                           'note': 'shear allowable taken as half the across-layer tensile strength'}
     # the TM bolts: the sideways fall's moment over the 80 x 80 pattern, two bolts in tension. The lever is the centre's
-    # height above the TM face: frame T's origin is the pan base's foot, PLINTH['h'] above the face since D66 (#137: it
-    # used the centre in frame T, 86 mm short)
+    # height above the TM face: frame T's origin is the pan base's foot, FRAME_T_ABOVE_TM above the face (0 since D76;
+    # 86 mm on D66's plinth, #137)
     F_side = M['total_kg'] * G0 * FALL_G
-    h_face = M['com_mm'][2] + tu.PLINTH['h']
+    h_face = M['com_mm'][2] + tu.FRAME_T_ABOVE_TM
     mom = F_side * h_face / 1000
     T_bolt = mom / (0.080 * 2)
     out['tm_bolts'] = {'case': 'R: 30 g sideways on the whole turret', 'com_above_tm_face_mm': round(h_face, 1),

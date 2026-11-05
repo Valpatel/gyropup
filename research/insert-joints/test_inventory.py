@@ -88,8 +88,8 @@ class Inventory(unittest.TestCase):
 
     def test_known_findings(self):
         d = self.doc
-        self.assertIn('tm-com-budget', codes(d, 'body.riser_top_tm'))             # the owner's: 135 mm against D71's 100
-        self.assertIn('pan-base-dowels', codes(d, 'turret.plinth_columns'))
+        self.assertNotIn('tm-com-budget', codes(d, 'body.riser_top_tm'))          # D76: the plinth gone, under D71's 100 mm
+        self.assertNotIn('turret.plinth_columns', {j['id'] for j in d['joints']})   # D76: no compute plinth
         self.assertNotIn('printed-clamp-crush', codes(d, 'leg.wheel_botwheel'))   # D74: DIN 433 washers, 1.8 N m
         self.assertIn('printed-clamp-crush', codes(d, 'leg.upper_link_hub'))
         self.assertIn('engagement-low', codes(d, 'rig.pendant_clip'))
@@ -100,7 +100,7 @@ class Inventory(unittest.TestCase):
     def test_fixed_joints_pass(self):
         """#137's clear fixes outside the leg are in the CAD: none of these families has a fix-level finding left (the
         leg's, leg.wheel_botwheel and leg.stop_posts, belong to the leg's print-readiness work)."""
-        fixed = ('body.riser_top_tm', 'turret.plinth_columns', 'stand.dock', 'turret.pan_ring_yoke', 'rig.pod_lid',
+        fixed = ('body.riser_top_tm', 'stand.tm', 'stand.dock', 'turret.pan_ring_yoke', 'rig.pod_lid',
                  'body.dcdc_bracket', 'body.bus_insulator', 'body.bay_rail_door', 'body.printed_clamps', 'turret.cradle_plates')
         for jid in fixed:
             self.assertEqual([f['code'] for f in joint(self.doc, jid)['findings'] if f['level'] == 'fix'], [], jid)
@@ -108,75 +108,51 @@ class Inventory(unittest.TestCase):
         self.assertEqual(joint(self.doc, 'stand.dock')['insert'], 'turret_insert_m3_short')
 
     def test_tm_load_from_the_tm_face(self):
-        """The TM bolts' 30 g load is taken about the plinth's underside (D66), not frame T's origin."""
+        """The TM bolts' 30 g load is taken about the TM face (the pan base's foot since D76)."""
         j = joint(self.doc, 'body.riser_top_tm')
         m = json.loads((inv.ROOT / 'exports/turret/mount.json').read_text())
         arm = (m['com_mm'][2] - m['envelope']['lowest_z_mm']) / 1000.0
         self.assertAlmostEqual(j['loads'][0]['per_insert_n'], m['mass_kg'] * inv.G0 * 30.0 * arm / 0.160, delta=1.0)
-        self.assertEqual(joint(self.doc, 'body.riser_feet')['verdict'], 'owner')   # SF < 2 on the feet
+        # D76: without the plinth the feet's pull-out SF is 3.7 (it was 1.9, an owner decision, at 135 mm and 2.57 kg)
+        self.assertEqual(joint(self.doc, 'body.riser_feet')['verdict'], 'check')
+        self.assertGreater(joint(self.doc, 'body.riser_feet')['sf_pullout'], 2.0)
 
     def test_control_riser_unfixed(self):
         """The riser's pilots back at 9.5 and 8 mm: the screws bottom and both contract depths fail again."""
         d = generate({'cad/body_frame.py': [('RISER_TM_PILOT = 13.0', 'RISER_TM_PILOT = 9.5'),
-                                            ('RISER_DOWEL_DEPTH = 9.5', 'RISER_DOWEL_DEPTH = 8.0')]})
+                                            ('RISER_DOWEL_DEPTH = 12.5', 'RISER_DOWEL_DEPTH = 8.0')]})
         fixes = {f['code'] for f in joint(d, 'body.riser_top_tm')['findings'] if f['level'] == 'fix'}
         self.assertEqual(fixes, {'screw-bottoms', 'contract-depth', 'contract-dowel'})
 
-    def _mount_in_frame_t(self):
-        """Edits that turn the committed mount.json back into frame T (the file before #137)."""
+    def test_control_mount_without_its_frame_stops_generation(self):
+        """A mount.json without frame_t_above_face_mm (before #137) or with D66's 86 mm stops generation."""
         m = json.loads((inv.ROOT / 'exports/turret/mount.json').read_text())
         dz = m['frame_t_above_face_mm']
-        com = lambda c: '"com_mm": [\n' + ',\n'.join('  ' + json.dumps(v) for v in c) + '\n ]'
-        low = m['envelope']['lowest_z_mm']
-        return [(com(m['com_mm']), com(m['com_mm'][:2] + [round(m['com_mm'][2] - dz, 1)])),
-                (f'"frame_t_above_face_mm": {json.dumps(dz)},\n', ''),
-                (f'"lowest_z_mm": {json.dumps(low)}', f'"lowest_z_mm": {json.dumps(round(low - dz, 2))}')]
-
-    def test_control_mount_in_frame_t(self):
-        """mount.json in frame T (as before #137): the datum finding comes back, the bolt load does not change."""
-        before = joint(self.doc, 'body.riser_top_tm')['loads'][0]['per_insert_n']
-        d = generate({'exports/turret/mount.json': self._mount_in_frame_t()})
-        self.assertIn('tm-com-datum', codes(d, 'body.riser_top_tm'))
-        self.assertEqual(joint(d, 'body.riser_top_tm')['loads'][0]['per_insert_n'], before)
-
-    def test_control_a_datum_that_is_not_the_plinth_stops_generation(self):
-        m = (inv.ROOT / 'exports/turret/mount.json').read_text()
+        self.assertEqual(dz, 0.0)
         with self.assertRaises(inv.Stale):
-            generate({'exports/turret/mount.json': [('"lowest_z_mm": 0.0', '"lowest_z_mm": -8.0')]})
-        self.assertIn('"frame_t_above_face_mm": 86.0', m)
+            generate({'exports/turret/mount.json': [(f'"frame_t_above_face_mm": {json.dumps(dz)},\n', '')]})
         with self.assertRaises(inv.Stale):
-            generate({'exports/turret/mount.json': [('"frame_t_above_face_mm": 86.0', '"frame_t_above_face_mm": 80.0')]})
+            generate({'exports/turret/mount.json': [(f'"frame_t_above_face_mm": {json.dumps(dz)}', '"frame_t_above_face_mm": 86.0')]})
 
-    def test_control_a_half_migrated_mount_stops_generation(self):
-        """The TM frame's key with frame T's envelope would count the plinth's 86 mm twice: generation stops."""
+    def test_control_a_turret_below_its_face_stops_generation(self):
+        """Nothing of the turret may reach below the TM face (the pan base's foot, D76)."""
         m = json.loads((inv.ROOT / 'exports/turret/mount.json').read_text())
-        dz = m['frame_t_above_face_mm']
         low = m['envelope']['lowest_z_mm']
         with self.assertRaises(inv.Stale):
-            generate({'exports/turret/mount.json': [(f'"lowest_z_mm": {json.dumps(low)}', f'"lowest_z_mm": {json.dumps(round(low - dz, 2))}')]})
+            generate({'exports/turret/mount.json': [(f'"lowest_z_mm": {json.dumps(low)}', '"lowest_z_mm": -8.0')]})
 
     def test_control_hand_check_in_frame_t(self):
         """A hand check that still takes the lever from frame T is caught: the source line and its number."""
-        d = generate({'cad/turret_studies.py': [("h_face = M['com_mm'][2] + tu.PLINTH['h']", "h_face = M['com_mm'][2]")]})
+        d = generate({'cad/turret_studies.py': [("h_face = M['com_mm'][2] + tu.FRAME_T_ABOVE_TM", "h_face = M['com_mm'][2]")]})
         self.assertIn('tm-hand-check', codes(d, 'body.riser_top_tm'))
         s = json.loads((inv.ROOT / 'exports/turret/fea/summary.json').read_text())
         n = s['hand_checks']['tm_bolts']['tension_per_bolt_n']
         d = generate({'exports/turret/fea/summary.json': [(f'"tension_per_bolt_n": {n},', f'"tension_per_bolt_n": {round(n * 0.4)},')]})
         self.assertIn('tm-hand-check', codes(d, 'body.riser_top_tm'))
 
-    def test_control_plinth_column_pilot_from_its_own_call(self):
-        """The columns' depth is read from compute_shell's insert_hole() call: back at INSERT_DEPTH, the screws bottom."""
-        d = generate({'cad/turret.py': [("s = s.cut(insert_hole(x, y, 0.0, 'M5', 12.5))", "s = s.cut(insert_hole(x, y, 0.0, 'M5'))")]})
-        c = codes(d, 'turret.plinth_columns')
-        self.assertIn('screw-bottoms', c)
-        self.assertIn('screw-bottoms-fix', c)
-        self.assertEqual(joint(d, 'turret.plinth_columns')['hole']['depth'], 8.0)
-
-    def test_control_shallow_yoke_and_tray_pilots(self):
-        d = generate({'cad/turret.py': [("s = s.cut(insert_hole(x, y, z1, 'M4'))", "s = s.cut(insert_hole(x, y, z1, 'M4', 5.0))"),
-                                        ("s = s.cut(insert_hole(fx, fy, z1, 'M4'))", "s = s.cut(insert_hole(fx, fy, z1, 'M4', 4.0))")]})
+    def test_control_shallow_yoke_pilots(self):
+        d = generate({'cad/turret.py': [("s = s.cut(insert_hole(x, y, z1, 'M4'))", "s = s.cut(insert_hole(x, y, z1, 'M4', 5.0))")]})
         self.assertIn('pilot-shorter-than-insert', codes(d, 'turret.pan_ring_yoke'))
-        self.assertIn('pilot-shorter-than-insert', codes(d, 'turret.plinth_tray_m4'))
 
     def test_control_yoke_screw_and_bom_must_agree(self):
         with self.assertRaises(inv.Stale):

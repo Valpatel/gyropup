@@ -7,7 +7,7 @@ dossier/sections/*.yaml) is joined to by id:
               frame (mm, the TM mounting face at z = 0, robot=False), the mirrored flywheel pair (flywheel_m,
               flywheel_tyre_m), the rotor's leads merged into the rotor (turret_gates.MERGED); the 30 balls of the
               physics-settled pile (exports/turret/feed/pile.json) as one free part `ball`; the stand (cad/turret_stand.py)
-              under the compute plinth (D66: the turret on its own, as it is built and tested first)
+              under the pan base (D76: the turret on its own, as it is built and tested first; no compute plinth)
   cavity      hopper_cavity on the hopper (turret_gates.hopper_cavity: the dial wall's cylinder from the floor to the lid,
               less every tilt-frame solid, the dial parked)
   joints      the aim (I-pan carrying I-tilt), the mechanisms on the cartridge (I-feed, I-wheel-l, I-wheel-r, I-flap), the
@@ -58,12 +58,11 @@ SECTIONS = {
     'S5-barrel': ['barrel', 'laser_mount', 'laser', 'laser_screws', 'laser_inserts'],
     'S6-wiring': ['slip_ring', 'slip_ring_rotor', 'ring_carrier', 'ring_driver', 'ring_coupling', 'board_bay',
                   'board_bay_lid', 'turret_board', 'base_board', 'base_board_carrier', 'base_board_inserts', 'base_carrier_inserts', 'dt_receptacle', 'dt_plug'],
-    'S7-compute': ['compute_tray', 'compute_shell', 'compute', 'eth_jack', 'xt30_input', 'input_fuses'],
     'S8-stand': ['stand_box', 'stand_bottom', 'stand_foot', 'dock', 'pack', 'terminal_board', 'usb_can',
                  'panel_switch', 'panel_pendant'],
 }
 SECTION_OF = {p: s for s, ps in SECTIONS.items() for p in ps}
-GROUNDED = 'compute_tray'          # the plinth's floor: bolted to the head's TM face, or to the stand's top
+GROUNDED = 'pan_base'              # D76: the pan base's foot, bolted to the head's TM face or to the stand's top
 FREE = {'ball': 'a loose round of the physics-settled hopper load (sim/turret_feed.py --pile); held by the hopper\'s cavity',
         'dt_plug': 'the robot harness\'s plug, a separate cable plugged into the receptacle (absent on the stand)'}
 
@@ -138,8 +137,8 @@ def register(reg, T, pile):
     # place (OCCT), which would change their content hashes if they ran first
     reg.add_cavity('hopper', 'hopper_cavity', lambda: tg.hopper_cavity(T, park))
 
-    # the stand under the plinth: its top (z 0 in turret_stand) carries the plinth's floor (D66)
-    down = (0.0, 0.0, -tu.PLINTH['h'])
+    # the stand under the pan base: its top (z 0 in turret_stand) carries the pan base's foot (D76)
+    down = (0.0, 0.0, -tu.FRAME_T_ABOVE_TM)
     for name, s in ts.parts().items():
         reg.add_part(name, _shape(s), section='S8-stand', place=down)
     bought = ts.bought()
@@ -195,7 +194,7 @@ def register(reg, T, pile):
 # The build order, read from the top: the cartridge is built on the bench first; then each group below it meets it from
 # below (+Z), which for cadagent's straight-line check is the same relative motion as lowering the upper group onto it
 # (the cartridge onto the cradle's rails, the cradle into the yoke, the yoke onto the turntable, the turntable into the
-# base, the base onto the plinth, the plinth onto the stand). Each step: (part, onto, the direction it moves to its
+# base, the base onto the stand). Each step: (part, onto, the direction it moves to its
 # seat, {tool, fasteners}). cadagent fits one part at a time along a straight line, so a part fitted inside a group
 # before the group meets the next (the tilt bearing, pressed into the arm before the cradle goes in), a cable (the rotor's
 # leads) and the poured load are not straight insertions here: their steps fail, and docs/turret-sections.md says why.
@@ -268,14 +267,8 @@ ASSEMBLY = [
     ('ring_carrier', 'pan_base', '+Z', {}),
     ('bumper_ring', 'pan_base', '+Z', {}),
     ('dt_receptacle', 'pan_base', '+Y', {}),
-    # the plinth under the base, then the stand under the plinth
-    ('compute_shell', 'pan_base', '+Z', {}),
-    ('compute', 'compute_shell', '+Z', {}),
-    ('input_fuses', 'compute_shell', '+Z', {}),
-    ('eth_jack', 'compute_shell', '+X', {}),
-    ('xt30_input', 'compute_shell', '+X', {}),
-    ('compute_tray', 'compute_shell', '+Z', {}),
-    ('stand_box', 'compute_tray', '+Z', {}),
+    # the stand under the base (D76: no compute plinth between them)
+    ('stand_box', 'pan_base', '+Z', {}),
     ('dock', 'stand_box', '+Z', {}),
     ('terminal_board', 'stand_box', '+Z', {}),
     ('usb_can', 'stand_box', '+Z', {}),

@@ -1,4 +1,4 @@
-# Order 14: The Power Tool Store
+# Order 13: The Power Tool Store
 
 1 lines, **$259.00** before shipping and tax (whole packs). Prices as the catalogue read them (the date is per line in `catalog/*.json`); check the cart against this sheet. Each line has a backup seller in the last column.
 

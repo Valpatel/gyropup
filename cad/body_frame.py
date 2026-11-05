@@ -584,13 +584,13 @@ RISER_FOOT_T = 4.0
 RISER_TOP_T = 9.0
 RISER_FOOT_PILOT = 12.0     # the feet's insert pilots: an M5 x 16 through the turret plate and deck reaches 10.3 mm in
 # The TM face's receivers, against the turret's contract (exports/turret/mount.json riser: bolt_hole_depth_min_mm,
-# dowel_holes). D66 put the compute plinth's 10 mm tray on the riser: its M5 x 16 heads sit on 5.5 mm counterbores'
-# floors 4.5 mm above the face, so each tip ends 11.5 mm down (the contract asks 12.5); its dowel holes are 8 deep from
-# below, so a 16 mm pin needs 8.5 in the riser. The legs are solid Ø18 under the bolts (the foot pilots reach z 12), and
-# the dowels, between the legs, get a boss under the 9 mm ring (issue #137).
-RISER_TM_PILOT = 13.0       # M5 insert pilots from the top: 1.5 mm past the M5 x 16's tip, 5 mm of PA6-CF over the foot pilot
-RISER_DOWEL_DEPTH = 9.5     # Ø5 dowel holes: a 16 mm pin pressed to the bottom stands 6.5 proud, 1.5 short of the tray hole's end
-RISER_DOWEL_BOSS = (6.0, 2.5)   # under the ring at each dowel: radius, depth below the ring (a 2 mm floor under the hole)
+# dowel_holes). D76 put the pan base's 5 mm foot back on the riser (D66's 10 mm plinth tray is gone): its M5 x 16 heads
+# sit on the foot's top, 5 mm above the face, so each tip ends 11 mm down (the contract asks 12); its dowel holes are
+# 4 deep from below, so a 16 mm pin needs 12 in the riser (12.5 asked). The legs are solid Ø18 under the bolts (the
+# foot pilots reach z 12), and the dowels, between the legs, get a boss under the 9 mm ring (issue #137).
+RISER_TM_PILOT = 13.0       # M5 insert pilots from the top: 2 mm past the M5 x 16's tip, 5 mm of PA6-CF over the foot pilot
+RISER_DOWEL_DEPTH = 12.5    # Ø5 dowel holes: a 16 mm pin pressed to the bottom stands 3.5 proud, 0.5 short of the foot hole's end
+RISER_DOWEL_BOSS = (6.0, 5.5)   # under the ring at each dowel: radius, depth below the ring (a 2 mm floor under the hole)
 
 
 def riser():

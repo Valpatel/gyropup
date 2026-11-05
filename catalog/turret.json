@@ -8794,8 +8794,8 @@
    "https://wiki.seeedstudio.com/recomputer_jetson_mini_getting_started/"
   ],
   "confidence": "seller page",
-  "used_for": "the turret's own computer (D66), in the compute plinth under the pan base",
-  "qty_per_robot": 1,
+  "used_for": "the optional desk variation's computer (D76): an Orin NX on a desk drives the standing-alone turret over the stand's USB-CAN lead; not on the turret and not in its bench parts list (D66 had it in the compute plinth under the pan base)",
+  "qty_per_robot": 0,
   "notes": "Bought as the J4012 kit, not the bare carrier: it is the only listing that brings the NX 16 GB with a fan and heat sink sold for it on this carrier (Seeed sells no Mini cooler on its own), and the extension board carries the RJ-45 the J501 link needs. Backup: the same kit at Switch Science (out of stock), or the parts from Seeed (carrier US$89 + extension US$59) with an NX 16 GB module (Arrow, about US$699, 24 weeks) and a cooler to choose then. Seeed's product pages answer a bot check; the accessories page was read in Chrome."
  },
  {
@@ -8839,8 +8839,8 @@
    "https://www.adafruit.com/product/909"
   ],
   "confidence": "product page",
-  "used_for": "the turret's Ethernet port to the J501 (D66), in the compute plinth's wall",
-  "qty_per_robot": 1,
+  "used_for": "unused since D76 (D66: the turret's Ethernet port to the J501, in the compute plinth's wall); kept for the record",
+  "qty_per_robot": 0,
   "notes": ""
  },
  {

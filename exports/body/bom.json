@@ -1010,8 +1010,8 @@
   {
    "key": "xt30_f",
    "id": "amass-xt30u-f-8",
-   "qty": 4,
-   "for": "sockets on the robot: the J501 (W21), the lidar box (W24), the turret (W34); one spare",
+   "qty": 3,
+   "for": "sockets on the robot: the J501 (W21), the lidar box (W24); one spare (D76: the turret takes its power on the DT06 plug)",
    "vendor": "Amass",
    "part_number": "XT30U-F 8-pack",
    "name": "Amass XT30U female, 8-pack (the robot's live ends: the 24 V and 12 V branch leads; D58)",

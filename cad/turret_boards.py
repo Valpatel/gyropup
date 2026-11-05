@@ -116,7 +116,7 @@ BOARDS = {
         ('R24-R26 D3 C14 C15', group(12.0, 6.0, 6.0), 26.5, 30.0, False, 'the brake\'s RC and its fast release, U12\'s decoupling, ARM\'s 100 k pull-down'),
         ('pigtail pads', 'pad strip', 8.0, 41.0, False, 'from the two CT plugs: FLY x 3, GND x 3, ARM, +5 V, GATE_1/2, SIG_GND, ESC_L/R, FEED_TTL'),
     ]),
-    'stand': ((70.0, 50.0), [(2.0, 2.0), (68.0, 2.0), (2.0, 48.0), (68.0, 48.0)], 30.0, 'the stand\'s terminal board on the bottom plate\'s four bosses (signals only: since D66 the pack\'s power runs dock -> 20 A fuse -> rocker -> XT30 lead, not through this board)', [
+    'stand': ((70.0, 50.0), [(2.0, 2.0), (68.0, 2.0), (2.0, 48.0), (68.0, 48.0)], 30.0, 'the stand\'s terminal board on the bottom plate\'s four bosses (signals only: the pack\'s power runs dock -> 20 A fuse -> rocker -> the DT06 plug\'s pins 1-4, D76, not through this board)', [
         ('pendant pads', 'pad strip', 10.0, 25.0, False, 'the pendant socket\'s (TB3M mini-XLR) pins 1 and 2 to DT06 pins 7 and 8 (the dry loop)'),
         ('CAN pads', 'pad strip', 10.0, 10.0, False, 'the USB-CAN\'s H and L to DT06 pins 5 and 6, twisted; the 120 R is on the USB-CAN'),
     ]),

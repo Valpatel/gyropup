@@ -112,14 +112,15 @@ test('insert joints: each panel counts its assemblies’ joints by verdict, and 
   assert.equal(text(strip.querySelector('.sb-stat-value')), String(inventory.findings.filter(f => f.level === 'fix').length));
 });
 
-test('mass against D71: the P3 ledger, each leg and the body and head', () => {
+test('mass as information (D79): the P3 ledger, each leg and the body and head', () => {
   const p3 = json('exports/body/mass.json').P3;
-  assert.equal(p3.budget.robot_kg, 37.0); assert.equal(p3.budget.design_mass_kg, 37.5);
-  assert.match(readFileSync(path.join(root, 'docs/decisions.yaml'), 'utf8'), /id: D71[\s\S]*?37\.0 kg as-built gate/);
+  assert.equal(p3.budget, undefined); assert.equal(p3.gate, undefined); assert.equal(p3.design.design_mass_kg, 37.5);
+  assert.match(readFileSync(path.join(root, 'docs/decisions.yaml'), 'utf8'), /id: D79[\s\S]*?take out the weight budget/);
   const strip = progress.querySelector('.sb-mass');
   assert.equal(text(strip.querySelector('.sb-stat-value')), `${p3.total_kg} kg`);
-  // the verdict follows the ledger: Under at or below the gate, Over above it (the ledger moves as the CAD does)
-  assert.match(text(strip), new RegExp(`${p3.total_kg <= p3.budget.robot_kg ? 'Under' : 'Over'} D71’s 37\\.0 kg as-built gate`));
+  // no budget, so no Under/Over verdict and no gate tick (D79)
+  assert.match(text(strip), /No mass budget \(D79\)/);
+  assert.doesNotMatch(text(strip), /as-built gate|Under|Over/);
   const d72 = Number(readFileSync(path.join(root, 'docs/decisions.yaml'), 'utf8').match(/- id: D72\n[\s\S]*?\(([\d.]+) kg\)/)[1]);
   assert.match(text(strip), new RegExp(`ceiling is ${d72.toFixed(2)} kg \\(D72\\)`));
   assert.equal(published.summary.mass.ceiling, d72);
@@ -134,24 +135,12 @@ test('mass against D71: the P3 ledger, each leg and the body and head', () => {
   const one = collectStatus({ ...real, json: p => { const v = real.json(p); return p === 'exports/body/mass.json' ? { ...v, P3: { ...v.P3, rows: v.P3.rows.map((row, i) => i ? row : { ...row, basis: 'weighed, kitchen scale' }) } } : v; } });
   assert.equal(one.summary.mass.weighed, weighed + 1);
   assert.match(renderBoard(one), new RegExp(`${weighed + 1} of ${p3.rows.length} rows weighed`));
-  // The Under/Over wording is the ledger's, not this repo's current state: a ledger at, under and over the gate.
-  const at = total => collectStatus({ ...real, json: p => { const v = real.json(p); return p === 'exports/body/mass.json' ? { ...v, P3: { ...v.P3, total_kg: total } } : v; } });
-  const gateText = p3.budget.robot_kg.toFixed(1).replace('.', '\\.');
-  const verdict = total => {
-    const strip = text(parseHTML(`<div>${renderBoard(at(total))}</div>`).document.querySelector('.sb-mass'));
-    const m = strip.match(new RegExp(`(Under|Over) D71’s ${gateText} kg as-built gate`));
-    assert.ok(m, `no Under/Over wording at ${total} kg: ${strip}`);
-    return m[1];
-  };
-  assert.equal(verdict(p3.budget.robot_kg), 'Under', 'at the gate is under it');
-  assert.equal(verdict(p3.budget.robot_kg - 0.5), 'Under');
-  assert.equal(verdict(p3.budget.robot_kg + 0.01), 'Over');
   // the board's kilograms: two decimals, trailing zeros dropped, always one (37.0, 36.77, 11.28 for the ledger's 11.275)
   const kg = v => { const t = Number(v).toFixed(2).replace(/\.?0+$/, ''); return t.includes('.') ? t : `${t}.0`; };
-  assert.equal(meter(progress, 'leg', 'mass').value, `${kg(p3.gate.leg_each_kg)} kg`);
-  assert.equal(meter(progress, 'leg', 'mass').unit, `of ${kg(p3.budget.legs_kg_each)} kg`);
+  assert.equal(meter(progress, 'leg', 'mass').value, `${kg(p3.legs_kg / 2)} kg`);
+  assert.equal(meter(progress, 'leg', 'mass').unit, 'CAD ledger');
   assert.equal(meter(progress, 'body', 'mass').value, `${kg(p3.body_and_head_kg)} kg`);
-  assert.equal(meter(progress, 'body', 'mass').state, p3.body_and_head_kg <= p3.budget.body_and_head_kg ? 'pass' : 'fail');
+  for (const panel of ['leg', 'body']) assert.equal(meter(progress, panel, 'mass').state, 'unknown', 'a mass is information, never a pass or a fail');
 });
 
 test('the leg’s pre-print screen, print plans and release flags', () => {

@@ -1614,7 +1614,7 @@
   "problems": []
  },
  "stand": {
-  "title": "the stand's terminal board on the bottom plate's four bosses (signals only: since D66 the pack's power runs dock -> 20 A fuse -> rocker -> XT30 lead, not through this board)",
+  "title": "the stand's terminal board on the bottom plate's four bosses (signals only: the pack's power runs dock -> 20 A fuse -> rocker -> the DT06 plug's pins 1-4, D76, not through this board)",
   "size_mm": [
    70.0,
    50.0
