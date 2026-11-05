@@ -109,6 +109,15 @@
   .lead { font: 12px var(--font-mono); color: var(--text); } .lead.none { color: var(--muted); }
   .print-history-note { margin:12px 0 18px; padding:16px 18px; border:1px solid var(--gp-line-yellow); border-left:4px solid #a45b12; border-radius:10px; background:var(--gp-cream); color:var(--gp-ink); font-size:14px; line-height:1.6; overflow-wrap:anywhere; }
   .print-history-note p { margin:8px 0 0; } .print-history-note a { color:var(--gp-brown); text-decoration:underline; }
+  .print-now { margin: 6px 0 22px; }
+  .print-now-links { display: flex; flex-wrap: wrap; gap: 8px 18px; margin: 0 0 10px; font-size: 14px; }
+  .print-now-list { list-style: none; margin: 0; padding: 0; background: rgb(var(--gp-card-rgb) / 0.94); border: 1px solid var(--hairline); border-radius: 8px; font-size: 13px; }
+  .print-now-list li { display: grid; grid-template-columns: 30px minmax(0, 2fr) 64px 96px minmax(0, 1.6fr); gap: 4px 12px; padding: 7px 12px; border-bottom: 1px solid var(--hairline); align-items: baseline; }
+  .print-now-list li:last-child { border-bottom: 0; }
+  .print-now-list .pn-t, .print-now-list .pn-g { font-family: var(--font-mono); text-align: right; white-space: nowrap; }
+  .print-now-list .pn-tot { font-weight: 600; }
+  .print-now-list .pn-f a { overflow-wrap: anywhere; } .print-now-list summary { cursor: pointer; color: var(--text-dim); }
+  @media (max-width: 760px) { .print-now-list li { grid-template-columns: 26px minmax(0, 1fr) auto; } .print-now-list .pn-g { grid-column: 3; } .print-now-list .pn-t { grid-column: 3; grid-row: 1; } .print-now-list .pn-f { grid-column: 2 / -1; } }
   .print-history-total { display:block; color:var(--text); margin:12px 0 0; font-size:14px; line-height:1.6; }
   .queue h3 { font-size: 14px; margin: 18px 0 8px; } .queue h3 .dim { font-weight: 400; font-size: 12px; }
   .lbl { display: none; color: var(--muted); font: 10px var(--font-mono); letter-spacing: .06em; text-transform: uppercase; margin-right: 4px; }
@@ -142,7 +151,8 @@
   <div id="build-loading"><div class="gp-loading" role="status" aria-live="polite" aria-busy="true" data-state="loading"><span class="gp-loading-icon" aria-hidden="true"></span><span class="gp-loading-message">Loading parts lists and print plans…</span></div></div>
   <div class="summary" id="summary">Parts and print totals appear after the published data is ready.</div>
   <p class="lede">Plan the first prototype: choose workstreams, compare suppliers, and follow the print queues. Prices are recorded estimates before shipping and tax. Design files and quantities update as the project progresses.</p>
-  <nav class="portal-jumps" aria-label="Build sections"><a href="#streams">Workstreams</a><a href="#sellers">Suppliers</a><a href="#made">Made parts</a><a href="#materials">Filament</a><a href="#queue">Print queues</a></nav>
+  <nav class="portal-jumps" aria-label="Build sections"><a href="#print-now">Print now</a><a href="#streams">Workstreams</a><a href="#sellers">Suppliers</a><a href="#made">Made parts</a><a href="#materials">Filament</a><a href="#queue">Print queues</a></nav>
+  <section id="print-now" class="print-now" aria-label="Print these now"></section>
   <div class="status" id="streams"></div>
 
   <div id="progress-tools"></div>
@@ -166,6 +176,7 @@
 <footer class="portal-footer">Created by <a href="https://valpatel.com">Valpatel Software LLC</a>. © 2026. All rights reserved. Repository materials retain their stated licenses.</footer>
 </main>
 <script type="module">
+  import('./print-now.js').then((m)=>m.mountPrintNow(document.getElementById('print-now'))).catch((e)=>console.warn('Print list failed:',e.message));
   try{await import('./build.js');}catch(error){
     console.warn('Page startup failed:',error.message);
     // Only a failed bootstrap reloads. Data/model retries above retain the existing scene.

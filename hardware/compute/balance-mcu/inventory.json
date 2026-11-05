@@ -1,0 +1,10 @@
+{
+  "schema": "gyropup.inventory/1",
+  "component": "Balance MCU board (Nucleo-G474RE) and its 3 CAN Pal transceivers",
+  "folder": "hardware/compute/balance-mcu",
+  "about": "None ordered yet (docs/purchases.md). One board and three transceivers per robot.",
+  "ordered": [],
+  "arrived": [],
+  "fields": {"unit": "1", "board": "Nucleo-G474RE or WeAct", "uid": "the G474's 96-bit unique id, read over SWD", "firmware": "the git sha it was flashed from", "notes": ""},
+  "units": []
+}

@@ -126,6 +126,18 @@ recaptured again once this branch merges dev after the gamepad and tilt-range PR
 same simulator. The previous capture's note follows.
 
 The browser frames were recaptured on 2026-11-03 (UTC) for
+[PR 205](https://github.com/Valpatel/gyropup/pull/205), gamepad control in the playground. That PR routes the
+panel's sliders through a shared command layer in `designer/sim.js`, adds a turn rate and a hop, loads
+`designer/sim_gamepad.js` and the `designer/kit/gamepad/` modules, and gives `designer/turret_bench.js` a pad
+input, so the guard rejected the old capture's source hashes; no pad is connected during capture and the scenes are
+the same. The capture was repeated after each round of the PR's review changed `sim.js` (the hop) and the kit; the
+final one ran from `38cbb857ce5ba7c4fe29d2ec88b60ace3e97e0a4`, served assets `4f9a2c8b9ed456227a26`, through an owned
+`serve-site.mjs --ephemeral` listener, closed afterwards. The recorder produced all 480 frames; the mechanism
+emitted nine shots, and target practice recorded three shots, three hits and three knockdowns. The unchanged
+encoder and guard produced and passed both companions (MP4 1,860,766 bytes, WebM 1,477,978), the poster
+and the receipts. The leg and E1 inserts are unchanged. The previous capture's note follows.
+
+The browser frames were recaptured on 2026-11-03 (UTC) for
 [PR 185](https://github.com/Valpatel/gyropup/pull/185), the recorded voice and pronunciation key. That PR moves
 Gyropup's fixed lines from `designer/character/talk.js` and `designer/sim.js` into `designer/character/lines.js` and
 adds `designer/character/pronounce.js`, so the guard rejected the old capture's source hashes; the footage has no

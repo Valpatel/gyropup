@@ -1359,8 +1359,9 @@ export async function createTurretBench({ stage, sfx, panel, root = '../', onLay
     const motionDt = paused ? 0 : dtReal;
     const dt = motionDt * S.timeScale;
     // aim: keys slew the command; the servos follow at their top speeds
-    const kp = (S.keys.has('arrowleft') || S.keys.has('a') ? 1 : 0) - (S.keys.has('arrowright') || S.keys.has('d') ? 1 : 0);
-    const kt = (S.keys.has('arrowup') || S.keys.has('w') ? 1 : 0) - (S.keys.has('arrowdown') || S.keys.has('s') ? 1 : 0);
+    // a gamepad's right stick (sim_gamepad.js) adds its deflection, -1..1, to the keys
+    const kp = Math.max(-1, Math.min(1, (S.keys.has('arrowleft') || S.keys.has('a') ? 1 : 0) - (S.keys.has('arrowright') || S.keys.has('d') ? 1 : 0) + (S.padAim?.pan ?? 0)));
+    const kt = Math.max(-1, Math.min(1, (S.keys.has('arrowup') || S.keys.has('w') ? 1 : 0) - (S.keys.has('arrowdown') || S.keys.has('s') ? 1 : 0) + (S.padAim?.tilt ?? 0)));
     if (kp || kt) {
       S.panCmd = clamp(S.panCmd + kp * 60 * D2R * dtReal, lim.pan_deg[0] * D2R, lim.pan_deg[1] * D2R);
       S.tiltCmd = clamp(S.tiltCmd + kt * 15 * D2R * dtReal, -tiltMax(S.panCmd) * D2R, 0);
@@ -1524,7 +1525,7 @@ export async function createTurretBench({ stage, sfx, panel, root = '../', onLay
     callLayer.hidden = true;
     for (const s of secs) s.hidden = true;
     document.body.classList.remove('tb-mode');
-    S.arm.clear(); S.trigger = false; S.keys.clear();
+    S.arm.clear(); S.trigger = false; S.keys.clear(); S.padAim = null; S.padTrigger = false;
     if (S.wasArmed) { S.wasArmed = false; if (S.rpm > 0.05 * fl.rpm) sfx.turret.brake(); }
     S.rpm = 0;
     sfx.turret.stop();
@@ -1558,6 +1559,13 @@ export async function createTurretBench({ stage, sfx, panel, root = '../', onLay
       state: S, poseMechanism, get mechanism() { return { scene, world, groups, parts, pocketBalls, pileBalls, path, gates, muzzle, laserOrigin: laserO, refill }; },
       get prediction(){return {points:arcPts.map(p=>p.clone()),arc:arcLine,impact,laser};},
       get targets() { return { plates, cans, resetting: !!targetReset }; }, arm(on) { if (on && !S.reloading) S.arm.add('api'); else S.arm.delete('api'); }, fire(n = 1) { if(!S.reloading)S.queue += n; },
+      // A gamepad: aim rates (-1..1; + pan = left, + tilt = up), ARM held, trigger held. ARM is a hold, like the pendant.
+      pad({ pan = 0, tilt = 0, arm = false, trigger = false } = {}) {
+        const unit = v => Math.max(-1, Math.min(1, Number.isFinite(+v) ? +v : 0));
+        S.padAim = { pan: unit(pan), tilt: unit(tilt) };
+        if (arm && !S.reloading && S.active) S.arm.add('pad'); else S.arm.delete('pad');
+        if (!!trigger !== !!S.padTrigger) { S.padTrigger = !!trigger; pullTrigger(S.padTrigger); }
+      },
       aim(panDeg, tiltDeg) { S.panCmd = panDeg * D2R; S.tiltCmd = tiltDeg * D2R; S.pan = S.panCmd; S.tilt = S.tiltCmd; panSl.set(panDeg); tiltSl.set(tiltDeg); },
       view: setView, journey: (i = 0) => { startJourney(); if (i && S.journey) gotoStep(i); }, select: (name) => select(parts.find((p) => p.e.part === name) ?? null, true),
       labels(on) { S.labels = on; labelsT.checked = on; }, airflow(on) { S.airflow = on; flowGroup.visible = on; }, antennas(on) { S.antennas = on; antennas.visible = on; },

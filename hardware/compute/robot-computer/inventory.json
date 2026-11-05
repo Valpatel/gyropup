@@ -1,0 +1,11 @@
+{
+  "schema": "gyropup.inventory/1",
+  "component": "Robot computer: Seeed J501 with a Jetson AGX Orin 32GB (which Jetson is open)",
+  "folder": "hardware/compute/robot-computer",
+  "about": "The owner's J501 (docs/cad-plan.md: the user has it). Fill the module, serial and JetPack from the unit (cat /etc/nv_tegra_release, the module's label) when it is set up.",
+  "ordered": [],
+  "arrived": [],
+  "held": [{"count": 1, "source": "docs/cad-plan.md: the user has the J501; docs/body-orders.md: listed, not ordered"}],
+  "fields": {"unit": "1", "module": "AGX Orin 32GB or AGX Thor, as installed", "serial": "from the module's label or the unit", "jetpack": "the installed JetPack / L4T release", "notes": ""},
+  "units": [{"unit": 1, "module": null, "serial": null, "jetpack": null, "notes": ""}]
+}

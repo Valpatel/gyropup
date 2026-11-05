@@ -1,0 +1,30 @@
+{
+  "schema": "gyropup.config/1",
+  "component": "DCB609 pair, 10S",
+  "version": 1,
+  "about": "The battery limits the balance firmware enforces for two DCB609s in series (D65). Every value is read from firmware/balance/include/gp/gp_config.h and checked by tools/check-hardware.py: change the firmware, then this copy.",
+  "pack": {"cells": 10, "nominal_v": 36.0, "full_v": 41.0, "r_pack_ohm": 0.1},
+  "resting_v": {"warn": 35.0, "warn_clear": 35.3, "sit": 32.0, "no_stand_below": 33.0, "no_arm_above": 42.0, "no_jump_below": 34.0},
+  "loaded_v": {"cutoff": 30.0, "regen_start": 41.5, "regen_zero": 42.5, "overcharge_latch": 44.0},
+  "current_a": {"bus_continuous": 30.0, "bus_peak": 80.0, "regen_allowance": 15.0},
+  "sources": {
+    "pack.cells": {"c_define": "firmware/balance/include/gp/gp_config.h", "name": "GP_CELLS"},
+    "pack.nominal_v": {"c_define": "firmware/balance/include/gp/gp_config.h", "name": "GP_PACK_NOMINAL_V"},
+    "pack.full_v": {"c_define": "firmware/balance/include/gp/gp_config.h", "name": "GP_PACK_FULL_V"},
+    "pack.r_pack_ohm": {"c_define": "firmware/balance/include/gp/gp_config.h", "name": "GP_R_PACK_OHM"},
+    "resting_v.warn": {"c_define": "firmware/balance/include/gp/gp_config.h", "name": "GP_UVLO_WARN_V"},
+    "resting_v.warn_clear": {"c_define": "firmware/balance/include/gp/gp_config.h", "name": "GP_UVLO_WARN_CLEAR_V"},
+    "resting_v.sit": {"c_define": "firmware/balance/include/gp/gp_config.h", "name": "GP_UVLO_SIT_V"},
+    "resting_v.no_stand_below": {"c_define": "firmware/balance/include/gp/gp_config.h", "name": "GP_UVLO_STAND_V"},
+    "resting_v.no_arm_above": {"c_define": "firmware/balance/include/gp/gp_config.h", "name": "GP_ARM_MAX_V"},
+    "resting_v.no_jump_below": {"c_define": "firmware/balance/include/gp/gp_config.h", "name": "GP_JUMP_MIN_V"},
+    "loaded_v.cutoff": {"c_define": "firmware/balance/include/gp/gp_config.h", "name": "GP_CUTOFF_V"},
+    "loaded_v.regen_start": {"c_define": "firmware/balance/include/gp/gp_config.h", "name": "GP_REGEN_START_V"},
+    "loaded_v.regen_zero": {"c_define": "firmware/balance/include/gp/gp_config.h", "name": "GP_REGEN_ZERO_V"},
+    "loaded_v.overcharge_latch": {"c_define": "firmware/balance/include/gp/gp_config.h", "name": "GP_OVERCHARGE_V"},
+    "current_a.bus_continuous": {"c_define": "firmware/balance/include/gp/gp_config.h", "name": "GP_BUS_I_CONT_A"},
+    "current_a.bus_peak": {"c_define": "firmware/balance/include/gp/gp_config.h", "name": "GP_BUS_I_PEAK_A"},
+    "current_a.regen_allowance": {"c_define": "firmware/balance/include/gp/gp_config.h", "name": "GP_REGEN_I_A"}
+  },
+  "changes": [{"version": 1, "date": "2026-11-03", "what": "first record (issue #210)"}]
+}
