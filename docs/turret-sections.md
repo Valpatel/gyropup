@@ -439,6 +439,14 @@ plug and backshell hang outside the riser, so nothing passes the Ø45 TM hole (m
 path); the box scene (the pan base on the J501 box's deck); the head's D2 fall case and the turret's tip and
 depression checks with the lighter, lower turret (cad/body_studies.py, cad/turret_studies.py).
 
+**Open: the J501 exhaust keep-out (owner's call).** Without the plinth the turret sits 86 mm lower, inside the box
+scene's plume keep-out ahead of the deck's mouth (exports/turret/box/box.json `checks.exhaust`, 10 mm required; on
+dev the plinth's tray cleared it by 12.5 mm). From the posed solids: the bumper ring is 4.5 mm from it at level and to
+-10 deg tilt, the barrel touches it from -15 deg down at pan 0 and +-30 deg, and the board bay is inside it at pan
++-60 deg at every tilt. The keep-out is a conservative box, not a flow result. The choices: accept it and let N17's
+thermometer test decide (the J501's intake within 3 K of the room at full load with the turret on), keep the front
+pans off the plume on the box, or put a spacer under the pan base.
+
 ### Power (D66, D68, D76)
 
 **Rails** (docs/turret-wiring.md 4 has every part). The DT12's pins 1-4 feed the head branch through a 10 A MINI 58 V

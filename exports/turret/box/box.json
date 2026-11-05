@@ -296,12 +296,12 @@
   "muzzle_outside_deck_mm": -28.8,
   "ball_path": {
    "file": "exports/turret/lidar/box.json",
-   "current": false,
+   "current": true,
    "margin_mm": 10.0,
    "limited_pan_window_deg": null,
-   "clear": false,
+   "clear": true,
    "no_fire_from_pan_deg": 120.0,
-   "note": "stale: rerun .venv/bin/python cad/turret_lidar.py --scene box, then this build"
+   "note": "every pan and tilt clear of the deck, the box and upright antennas by the margin; no firing within 60 deg of straight back (the operator's side)"
   },
   "airflow": {
    "mouth_mm": [
