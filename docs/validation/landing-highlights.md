@@ -107,10 +107,11 @@ The browser frames were recaptured on 2026-11-05 (UTC) for
 scene had not been rebuilt since the stop lug, the cradle plates, the base-board carrier and its inserts and screws,
 the bay lid, the horn boss, the pivot spacer and the hopper and laser inserts went in. It now carries 80 parts (62 of
 them the turret's moving and base groups) against 66 and 48, so the guard's snapshot counts were reviewed against
-the new frames and raised. The capture ran from `e8cbad503c3b2c79d5b65a2e8dbad300704add8f`, served assets
-`781a2f57ce7f4e829679`, through an owned `serve-site.mjs --ephemeral` listener, closed afterwards. The recorder
-produced all 480 frames, and the unchanged encoder and guard produced and passed both companions (MP4 1,875,972
-bytes, WebM 1,496,409), the poster and the receipts. The previous capture's note follows.
+the new frames and raised. The box was then rebuilt after the lidar study's box run it reads (its ball-path check
+had said stale; the meshes did not change), and the capture ran from `4769888bf0334608ff997faeff5e663d96a1a70d`, served
+assets `842915f69e0f430fd266`, through an owned `serve-site.mjs --ephemeral` listener, closed afterwards. The recorder
+produced all 480 frames, and the unchanged encoder and guard produced and passed both companions (MP4 1,876,865
+bytes, WebM 1,495,766), the poster and the receipts. The previous capture's note follows.
 
 The browser frames were recaptured on 2026-11-05 (UTC) for
 [PR 204](https://github.com/Valpatel/gyropup/pull/204) after it merged dev (the gamepad, #205, and the hardware
