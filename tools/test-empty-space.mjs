@@ -15,7 +15,7 @@
  * markup) and must catch each one, so a broken measure cannot pass every page.
  * On a failure it saves a screenshot with the finding outlined in test-results/empty-space/, and it writes every
  * page's numbers to test-results/empty-space/results.json. */
-import { mkdir, readdir, writeFile } from 'node:fs/promises';
+import { mkdir, readFile, readdir, writeFile } from 'node:fs/promises';
 import path from 'node:path';
 import { chromium, devices } from '@playwright/test';
 import { createSiteServer } from './serve-site.mjs';
@@ -25,6 +25,10 @@ import {
   BUSY_EDGES, EDGE_STEP, FLAT_SHARE, RULE_RUN, FLAT_TOLERANCE, MEDIA_MIN, MIN_THICKNESS, NARROW_SHARE, SCHEMES, SIZES, WORDS_PER_LINE,
   paintedPixels, scanLayout,
 } from './site-empty-space.mjs';
+
+// Playwright 1.56.1 also waits on global document.fonts.ready during screenshots.
+// This harness instead awaits real rendered fonts below; held-resource controls fail if this pinned flag stops working.
+process.env.PW_TEST_SCREENSHOT_NO_FONTS_READY = '1';
 
 const root = path.resolve(import.meta.dirname, '..');
 const out = path.join(root, 'test-results/empty-space');
@@ -59,12 +63,38 @@ async function contextFor(size) {
 
 /** Open a page and wait for what draws itself: diagrams, the portal reports, fonts. */
 async function load(page, route) {
-  await page.goto(base + route, { waitUntil: 'load' });
+  await page.goto(base + route, { waitUntil: 'domcontentloaded' });
   await page.waitForFunction(() => !document.querySelector('pre.mermaid, pre > code.language-mermaid') &&
     [...document.querySelectorAll('.cad-diagram')].every(f => f.dataset.state === 'ready' || f.dataset.state === 'error')
     && (!/^\/designer\/(progress|build|sim)\.html$/.test(location.pathname) || document.body.dataset.ready === '1'), null, { timeout: 30000 })
     .catch(() => problems.push(`empty-space ${route}: diagrams or reports did not finish loading`));
-  await page.evaluate(() => document.fonts.ready);
+  // The styles selecting the rendered fonts must be available, including same-origin @imports.
+  await page.waitForFunction(() => {
+    const ready = sheet => {
+      if (!sheet) return false;
+      if (sheet.disabled) return true;
+      return [...sheet.cssRules].every(rule => rule.type !== CSSRule.IMPORT_RULE
+        || (rule.media.mediaText && !matchMedia(rule.media.mediaText).matches) || ready(rule.styleSheet));
+    };
+    return [...document.querySelectorAll('link[rel~="stylesheet"], style')].every(element =>
+      element.disabled || (element.media && !matchMedia(element.media).matches) || ready(element.sheet));
+  }, null, { timeout: 30000 });
+  // FontFaceSet.ready can wait for document load even when only an unrelated image is pending.
+  // Load the actual rendered text fonts explicitly, including the characters selecting Unicode subsets.
+  await page.waitForFunction(async () => {
+    const used = new Map(), walker = document.createTreeWalker(document.body, NodeFilter.SHOW_TEXT);
+    for (let node = walker.nextNode(); node; node = walker.nextNode()) {
+      const element = node.parentElement;
+      if (!node.textContent.trim() || !element?.getClientRects().length) continue;
+      const style = getComputedStyle(element);
+      if (style.visibility === 'hidden' || style.display === 'none') continue;
+      const font = style.font || `${style.fontStyle} ${style.fontWeight} ${style.fontSize} ${style.fontFamily}`;
+      if (!used.has(font)) used.set(font, new Set());
+      for (const character of node.textContent) used.get(font).add(character);
+    }
+    await Promise.all([...used].map(([font, characters]) => document.fonts.load(font, [...characters].join(''))));
+    return document.fonts.status === 'loaded';
+  }, null, { timeout: 30000 });
 }
 
 /** Wait (up to `ms`) for the pictures on screen to load, then for two frames. */
@@ -191,8 +221,59 @@ const newAnalysis = () => analysisContext.newPage();
 
 const controlFindings = [];
 
+/** A stalled small badge must not block measurement; a held primary picture must still fail. */
+async function readinessControls() {
+  const size = SIZES[0];
+  for (const kind of ['badge', 'primary', 'font']) {
+    const primary = kind === 'primary', delayedFont = kind === 'font';
+    const context = await contextFor(size), page = await context.newPage(), analysis = await newAnalysis();
+    let release, releaseFont, releaseCss, signalHeld, signalFont, signalCss, timer, held = 0;
+    const gate = new Promise(resolve => { release = resolve; });
+    const fontGate = new Promise(resolve => { releaseFont = resolve; });
+    const cssGate = new Promise(resolve => { releaseCss = resolve; });
+    const requested = new Promise(resolve => { signalHeld = resolve; });
+    const fontRequested = new Promise(resolve => { signalFont = resolve; });
+    const cssRequested = new Promise(resolve => { signalCss = resolve; });
+    const bounded = promise => Promise.race([promise, new Promise((_, reject) => { timer = setTimeout(() => reject(new Error('Readiness control resource was not requested')), 2000); })]).finally(() => clearTimeout(timer));
+    const route = '/__layout-readiness-control';
+    await page.route(base + route, request => request.fulfill({ contentType: 'text/html', body:
+      `<!doctype html><meta name="viewport" content="width=device-width"><style>body{margin:16px;font:16px/1.5 system-ui}img{display:block}</style>${delayedFont ? '<link rel="stylesheet" href="/__layout-held.css">' : ''}<h1>Ready content</h1>`
+      + `<img src="/__layout-held.svg" width="${primary ? 340 : 64}" height="${primary ? 220 : 20}" alt="${primary ? 'primary picture' : 'status badge'}">`
+      + `<p>${'Visible document content remains available while the resource is pending. '.repeat(80)}</p>` }));
+    await page.route(base + '/__layout-held.svg', async request => { held++; signalHeld(); await gate; await request.abort(); });
+    await page.route(base + '/__layout-held.css', async request => { signalCss(); await cssGate; await request.fulfill({ contentType: 'text/css', body: '@font-face{font-family:LayoutControl;src:url(/__layout-held.woff2)}body{font-family:LayoutControl}' }); });
+    await page.route(base + '/__layout-held.woff2', async request => { signalFont(); await fontGate; await request.fulfill({ contentType: 'font/woff2', body: await readFile(path.join(root, 'designer/kit/vendor/fonts/inter.woff2')) }); });
+    page.setDefaultNavigationTimeout(2000);
+    try {
+      let loaded = false;
+      const loading = load(page, route).then(() => { loaded = true; });
+      loading.catch(() => {}); // The finally block also closes an incomplete page after a failed barrier.
+      if (delayedFont) {
+        await bounded(cssRequested);
+        await page.waitForFunction(() => document.readyState === 'interactive');
+        if (loaded) throw new Error('Layout measurement did not wait for its font stylesheet');
+        releaseCss();
+        await bounded(fontRequested);
+        const pending = await page.evaluate(() => [...document.fonts].some(font => font.family === 'LayoutControl' && font.status === 'loading'));
+        if (!pending || loaded) throw new Error('Layout measurement did not wait for its actual rendered font');
+        releaseFont();
+      }
+      await loading;
+      await bounded(requested);
+      if (delayedFont && !await page.evaluate(() => [...document.fonts].some(font => font.family === 'LayoutControl' && font.status === 'loaded') && document.fonts.check('16px LayoutControl', 'Ready content'))) throw new Error('The rendered control font was not loaded');
+      await settle(page);
+      const result = await audit(page, analysis, size, 'light', route);
+      if (held !== 1 || await page.locator('img').evaluate(image => image.complete)) throw new Error('Readiness measurement did not occur while the image was held');
+      const missing = result.findings.some(f => f.kind === 'blank' && f.text.includes('never loaded'));
+      if (primary ? !missing : result.findings.length > 0) throw new Error(`Readiness control ${primary ? 'accepted a missing primary picture' : 'could not measure content with a pending badge'}`);
+    } finally { clearTimeout(timer); release(); releaseFont(); releaseCss(); await context.close(); await analysis.close(); }
+  }
+  console.log('empty-space readiness controls: pending badge permits measurement, primary image is rejected, actual delayed font is awaited');
+}
+
 /** Planted defects on a real page: each must be found, so the measures are tested on every run. */
 async function controls() {
+  await readinessControls();
   const size = SIZES[0], context = await contextFor(size), page = await context.newPage(), analysis = await newAnalysis();
   const failed = [];
   try {

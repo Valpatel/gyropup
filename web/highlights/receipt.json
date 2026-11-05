@@ -8,7 +8,7 @@
     "seconds": 22,
     "audio": false
   },
-  "source_revision": "022627ae781ce7cf7d07669f282522397ecfa2a3",
+  "source_revision": "cd7d4a29b8e2cc47b5b852590730c23c869f363c",
   "source_hashes": {
     "designer/cadrig.js": "a2cb4029ef786e0793c5eb0018e0aa8d919d829bde8c5d378c1b1480c457faaf",
     "designer/character/eyes.js": "3348578a121b75ab7425c3b6591e864b41b09512e67b642832e6c6b683d2e11b",
@@ -47,7 +47,7 @@
     "designer/sfx.js": "90db82703cb9d32c106992c1d67610056a319048d4030db77490642ce8c4dc55",
     "designer/sim-layout.css": "e2b76ffb77863adea51210749efb4e27641b8d8adc08bdc74608ff3da7173970",
     "designer/sim.html": "a70ed754168974b085e9e09de6b8672ac7b0d97ee5498a60195ef40fad5aa8c8",
-    "designer/sim.js": "7c10a243d2c8e72dd013e4fb18f39742d48dd633f29afaca42ac924c5084d3e2",
+    "designer/sim.js": "5042c0347f73092ce308beaf8fb7b1cb6c5e6b5183c066e05ca7c1de629ed591",
     "designer/sim_gamepad.js": "6c4867ed61d50e17e8a1fab6ebc46529ff9849dcecfdaf6c7f49ebb41f27af9d",
     "designer/turret3d.js": "e5144b01c1db071ac8921e416fcbc8e3a208a59a466bcd00cd5a86ddfa26b107",
     "designer/turret_bench.css": "77d4ab36125c5df22db86fafdc10a6d21470cee86c5e4201e50a3df7d9e79dc8",
@@ -187,7 +187,7 @@
     "exports/sim/v2/rig/link__wheel_link.stl": "40f5f626880d1b9a75d4b83cf644cdc7ea1446a51a0eb6180f5776db600349fd",
     "exports/sim/v2/rig/manifest.json": "0f394643875bcdff247c8f285f2d0d10499104a1073088ce37c4b5f1b337086f",
     "exports/sim/v2/summary.json": "297a40dc891e3bbb1f1985d7db461021446b5041b33969fdc33b63a4b573ceac",
-    "tools/capture-highlights.mjs": "2865634d7d05047ecbd73ca75350026ac293f484243e58ad411897135326f0fd",
+    "tools/capture-highlights.mjs": "d1f9fc709ede8629e34c1dec4f4a3da4b317cff28ab6d4cec864a655f30cb624",
     "tools/check-highlights.py": "b21a6dd97482734e403ac95393a088fe51589551d213c16c34e8d08f4156da16",
     "tools/encode-highlights.py": "71e20bb2b9e186d2cbdfaf2bb619e80d93029e84f567eccfccfe9dee1da9d235",
     "web/icon.svg": "0a1ba64971063f63310e5edd529874329cceb5d4adbbf95888e325accc95a303",
@@ -390,7 +390,7 @@
     "current_model": "48-part current turret; interim full-robot body"
   },
   "encoding": {
-    "ffmpeg": "ffmpeg version 6.1.1-3ubuntu5 Copyright (c) 2000-2023 the FFmpeg developers",
+    "ffmpeg": "ffmpeg version 6.1.1-3ubuntu5+esm15 Copyright (c) 2000-2023 the FFmpeg developers",
     "h264": [
       "-c:v",
       "libx264",
@@ -441,23 +441,23 @@
   ],
   "outputs": {
     "gyropup-highlights.mp4": {
-      "sha256": "9bcbd40ec55e6c612ed97633968191ed408c6a621b4c5bfc683924b6236d6f86",
-      "bytes": 1874211
+      "sha256": "ff8c9a9483c828d1993d8e7144f34b84c5adbc6d6f8e9d199af76f234d3e2eb4",
+      "bytes": 1874166
     },
     "gyropup-highlights.webm": {
-      "sha256": "7e0cf3f8d420c47437f5dfef244f4088bf28c3ad794727322b43b0c41aa1f8db",
-      "bytes": 1494072
+      "sha256": "73807123aafcbc6e8662e928e52bb393a3cd448f6d437fe4fde8d87c139958c0",
+      "bytes": 1491922
     },
     "gyropup-highlights.webp": {
-      "sha256": "dee2dffded23680169be0bed0cc733941c892c4cbaf6b2612cc2f64dac3bc95b",
-      "bytes": 33006
+      "sha256": "f59c7c91fffe7134703fa383a69a0b6ce778416c455f8c906fdde87f926fda07",
+      "bytes": 33082
     },
     "capture-receipt.json": {
-      "sha256": "48ea3b5eb8553bd25e33dd174b068c84583648fdc247feb96ca87a528668a7e1",
-      "bytes": 122060
+      "sha256": "98107f8878b4fc2669bd13f3b9c0e7b1d8adde61501f26ccfe9bc71e3180a24d",
+      "bytes": 122063
     },
     "capture-frames.json": {
-      "sha256": "043ef23b783717f924914aff79b39925f9436665c375d6f1ea5f75bdf6a119cc",
+      "sha256": "46bac9c7f396bec4c9844f2bd94b12bb3bc2394705594ef80b289959882d268d",
       "bytes": 100989
     }
   }
