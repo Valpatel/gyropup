@@ -6,4 +6,12 @@ Keep three recent entries, a concise current focus and the source-bound static d
 
 The agent Markdown route includes all collapsed content. Check every entry title, original report/download links and the static-analysis meaning. The default featured case is hip-frame E1, with its failed safety factor and historical load baseline; other stills are not promised animations. See [structural media](structural-media.md) for scientific provenance and playback checks.
 
+The leg-rig movies use `exports/leg/rig-media.json` and the shared published
+`designer/rig-media.js` matcher. Verify raw report and clip bytes before attaching
+playback; keep the numerical table usable when a recording is unavailable. Use
+`node tools/rig-media.mjs --check` to compare all retained files with the immutable
+producer commit. `--record <full-sha>` refuses working files that differ from that
+producer. Never pair clips using only scenario filenames. See [the identity
+incident](../inbox/2026-11-05-recorded-rig-movies-need-their-report-identity.md).
+
 Run `npm run test:progress`, `test:study-media`, `test:build-portal`, `test:loading-portal` and `test:markdown` for relevant changes. Use Chrome/CI Chromium and WebKit for disclosure, media and phone checks; inspect actual phone/desktop screenshots. Shared loading-status wrappers must not leave empty grid cells. Evidence: [the progress incident](../inbox/2026-10-29-progress-needs-a-short-current-view.md).

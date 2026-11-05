@@ -102,6 +102,9 @@ test('progress and build expose their data, tables, prices, and original downloa
   assert.match(md, /WebM alternative/);
   assert.match(md, /static load scaling, not elapsed physical time/i);
   assert.match(md, /does not validate the 100 lb design target/);
+  assert.match(md, /Recorded leg simulation · 18\.75 kg · 36 V/);
+  assert.match(md, /e7b512870a39259a04a4930e2908af84001bc84e/);
+  assert.ok(!md.includes('blob:'), 'Markdown retains original movie downloads');
   const build = await read('designer/build.md');
   assert.ok(!build.includes('Reading the parts lists'));
   const { document } = parseHTML(await renderPortal(await read('designer/build.html'), 'designer/build.html', out));
@@ -126,6 +129,7 @@ test('a changed published status changes Markdown; local unpublished data is nev
     await mkdir(path.join(fixture, 'docs'), { recursive: true });
     await mkdir(path.join(fixture,'site'));await writeFile(path.join(fixture,'site/models.json'),JSON.stringify({files:[]}));
     await cp(path.join(out, 'designer/progress.js'), path.join(fixture, 'designer/progress.js'));
+    await cp(path.join(out, 'designer/rig-media.js'), path.join(fixture, 'designer/rig-media.js'));
     await mkdir(path.join(fixture,'designer/kit'),{recursive:true});
     await cp(path.join(out,'designer/kit/portal-data.js'),path.join(fixture,'designer/kit/portal-data.js'));
     await cp(path.join(out,'designer/kit/study-media.js'),path.join(fixture,'designer/kit/study-media.js'));
@@ -137,6 +141,16 @@ test('a changed published status changes Markdown; local unpublished data is nev
     assert.ok(markdown.includes('Changed current data'));
     assert.ok(!markdown.includes('bench tests next'), 'must not fall back to the checkout data');
     await mkdir(path.join(fixture,'exports/leg'),{recursive:true});
+    const rig = JSON.parse(await read('exports/leg/rig-results.json'));
+    rig.half_mass_kg = 20;
+    await writeFile(path.join(fixture,'exports/leg/rig-results.json'),JSON.stringify(rig));
+    await cp(path.join(out,'exports/leg/rig-media.json'),path.join(fixture,'exports/leg/rig-media.json'));
+    const stale = htmlToMarkdown(await renderPortal(source,'designer/progress.html',fixture),'designer/progress.html');
+    assert.match(stale,/Recorded movies belong to a different report/);
+    assert.ok(!stale.includes('Original movie'), 'mismatched recording must not become a Markdown download gallery');
+    assert.match(stale,/20 kg/, 'numerical results survive an unavailable movie gallery');
+    await rm(path.join(fixture,'exports/leg/rig-results.json'));
+    await rm(path.join(fixture,'exports/leg/rig-media.json'));
     await writeFile(path.join(fixture,'exports/leg/leg.json'),'<html>Not a report</html>');
     await assert.rejects(renderPortal(source,'designer/progress.html',fixture),/Incomplete Markdown data snapshot/);
     await rm(path.join(fixture,'exports/leg/leg.json'));

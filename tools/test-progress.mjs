@@ -1,7 +1,37 @@
 /** The real Progress page must surface current evidence without a wall of logs. */
 import assert from 'node:assert/strict';
-import {mkdtemp,writeFile} from 'node:fs/promises';
+import {mkdtemp,writeFile,readFile,mkdir,rm} from 'node:fs/promises';
+import {execFileSync} from 'node:child_process';
+import path from 'node:path';
+import {fileURLToPath} from 'node:url';
 import {chromium,webkit} from '@playwright/test';
+import {prepareRigMedia} from '../designer/rig-media.js';
+import {recordRigMedia,verifyRigFiles} from './rig-media.mjs';
+const root=path.resolve(path.dirname(fileURLToPath(import.meta.url)),'..');
+const reportBytes=await readFile(path.join(root,'exports/leg/rig-results.json'));
+const rigRecord=JSON.parse(await readFile(path.join(root,'exports/leg/rig-media.json'),'utf8'));
+const rigReport=JSON.parse(reportBytes);
+assert.equal(rigRecord.producer_revision,'e7b512870a39259a04a4930e2908af84001bc84e','Known producer of all seven retained clips');
+assert.equal((await verifyRigFiles(root,{historical:true})).clips.length,7,'Every report/movie byte matches its actual producer');
+for(const mutate of [r=>r.clips.pop(),r=>r.clips[0].path='../private.mp4',r=>r.clips[0].path=r.clips[1].path,
+ r=>r.clips[0].scenario=r.clips[1].scenario,r=>r.report.path='elsewhere.json',r=>r.producer_revision='main']){
+ const altered=structuredClone(rigRecord);mutate(altered);let reads=0;
+ await assert.rejects(prepareRigMedia(reportBytes,altered,async()=>{reads++;return new ArrayBuffer(0);}));
+ assert.equal(reads,0,'Invalid membership/paths cannot initiate clip reads');
+}
+// A recording command cannot bless changed working pixels merely by recomputing their hashes.
+const fixture=await mkdtemp('/tmp/gyropup-rig-record-control-');
+try{
+ await mkdir(path.join(fixture,'exports/leg'),{recursive:true});
+ for(const file of [rigRecord.report.path,...rigRecord.clips.map(c=>c.path)])await writeFile(path.join(fixture,file),await readFile(path.join(root,file)));
+ const git=(...args)=>execFileSync('git',args,{cwd:fixture,encoding:'utf8'}).trim();
+ git('init','-q');git('add','exports');git('-c','user.name=Test','-c','user.email=test@example.invalid','commit','-qm','Recorded fixture');
+ const revision=git('rev-parse','HEAD');await recordRigMedia(fixture,revision);
+ const before=await readFile(path.join(fixture,'exports/leg/rig-media.json'));
+ await writeFile(path.join(fixture,rigRecord.clips[0].path),'different pixels');
+ await assert.rejects(recordRigMedia(fixture,revision),/movie identity/);
+ assert.deepEqual(await readFile(path.join(fixture,'exports/leg/rig-media.json')),before,'Failed recording leaves the previous receipt unchanged');
+}finally{await rm(fixture,{recursive:true,force:true});}
 const base=(process.env.SITE_URL||'http://127.0.0.1:8982').replace(/\/$/,'');
 const engine=process.env.PLAYWRIGHT_BROWSER==='webkit'?webkit:chromium;
 const out=await mkdtemp('/tmp/gyropup-progress-'+engine.name()+'-');
@@ -15,6 +45,11 @@ const ready=()=>page.waitForFunction(()=>document.body.dataset.ready==='1');
 const allOpen=async id=>page.locator('#'+id).evaluate(el=>{for(let node=el;node;node=node.parentElement)if(node.tagName==='DETAILS'&&!node.open)return false;return true;});
 try {
  await page.goto(base+'/designer/progress.html');await ready();
+ assert.equal(await page.locator('#rig video').count(),7);
+ assert.match(await page.locator('#rig [data-rig-media-state]').innerText(),/Recorded leg simulation · 18\.75 kg · 36 V/);
+ assert.ok((await page.locator('#rig video').evaluateAll(videos=>videos.map(v=>v.src))).every(src=>src.startsWith('blob:')),'Playback uses the bytes whose hashes were checked');
+ const rigVideo=page.locator('#rig video').first();await rigVideo.evaluate(video=>video.play());
+ await page.waitForFunction(()=>document.querySelector('#rig video').currentTime>0.05);await rigVideo.evaluate(video=>video.pause());
  await page.waitForFunction(()=>document.querySelector('#fea-media').dataset.state==='ready');
  assert.match(await page.locator('#updated').innerText(),new RegExp(progress.updated));
  assert.equal(await page.locator('#current-focus').innerText(),progress.focus);
@@ -65,6 +100,42 @@ try {
  const md=await context.request.get(base+'/designer/progress.md');assert.ok(md.ok());const text=await md.text();
  for(const entry of progress.log)assert.ok(text.includes(entry.title),entry.title+' retained in Markdown');
  assert.ok(text.includes(progress.updated));assert.ok(/static load scaling, not elapsed physical time/i.test(text),'Markdown preserves static-analysis meaning');
+ assert.match(text,/Recorded leg simulation/);assert.match(text,/18\.75 kg/);assert.match(text,/36 V/);
+ assert.ok(text.includes(rigRecord.producer_revision),'Markdown identifies the actual recorded report');
+ for(const clip of rigRecord.clips)assert.ok(text.includes(clip.path),'Markdown retains original movie downloads: '+clip.scenario);
+ assert.doesNotMatch(text,/blob:/,'Static Markdown never publishes ephemeral browser URLs');
+ // The real consumer must retain numerical evidence while refusing mismatched or missing movie identities.
+ for(const fault of ['report','receipt','movie']){
+  const probe=await context.newPage();
+  await probe.addInitScript(()=>{window.__rigBlobs=[];const create=URL.createObjectURL.bind(URL);URL.createObjectURL=value=>{const url=create(value);window.__rigBlobs.push(url);return url;};});
+  if(fault==='report')await probe.route('**/exports/leg/rig-results.json*',route=>route.fulfill({contentType:'application/json',body:JSON.stringify({...rigReport,half_mass_kg:20})}));
+  if(fault==='receipt')await probe.route('**/exports/leg/rig-media.json*',route=>route.fulfill({status:404,body:'not recorded'}));
+  if(fault==='movie')await probe.route('**/exports/leg/rig_jump.mp4*',route=>route.fulfill({contentType:'video/mp4',body:Buffer.from('wrong movie bytes')}));
+  await probe.goto(base+'/designer/progress.html');await probe.waitForFunction(()=>document.body.dataset.ready==='1');
+  const note=await probe.locator('#rig [data-rig-media-state="unavailable"]').innerText();
+  assert.match(note,/Recorded movies unavailable/);
+  assert.match(note,fault==='report'?/different report/:fault==='receipt'?/provenance is unavailable/:/movie identity does not match/);
+  assert.equal(await probe.locator('#rig video').count(),0,'Unverified media cannot receive a source');
+  assert.equal(await probe.locator('#rigtable tbody tr').count(),7,'Numerical evidence remains usable');
+  if(fault==='report')assert.match(await probe.locator('#riglede').innerText(),/20 kg/);
+  assert.equal(await probe.evaluate(()=>window.__rigBlobs.length),0,'No unverified playback bytes were exposed');
+  await probe.close();
+ }
+ // A completed retry revokes old Blob URLs. A late older request cannot replace the newer unavailable state.
+ await page.addInitScript(()=>{window.__rigRevoked=[];const revoke=URL.revokeObjectURL.bind(URL);URL.revokeObjectURL=url=>{window.__rigRevoked.push(url);revoke(url);};});
+ await page.goto(base+'/designer/progress.html');await ready();
+ const originalBlobs=await page.locator('#rig video').evaluateAll(videos=>videos.map(v=>v.src));
+ await page.evaluate(()=>window.__portalLoads.rig.retry());
+ assert.deepEqual((await page.evaluate(()=>window.__rigRevoked)).sort(),originalBlobs.sort());
+ let held,requests=0;const intercepted=new Promise(resolve=>held={resolve});
+ await page.route('**/exports/leg/rig-media.json*',route=>{if(++requests===1){held.route=route;held.resolve();return;}return route.fulfill({status:404,body:'newer unavailable record'});});
+ await page.evaluate(()=>{window.__olderRigRetry=window.__portalLoads.rig.retry();});await intercepted;
+ await page.evaluate(()=>window.__portalLoads.rig.retry());
+ assert.equal(await page.locator('#rig [data-rig-media-state="unavailable"]').count(),1);
+ await held.route.fulfill({contentType:'application/json',body:JSON.stringify(rigRecord)});
+ await page.evaluate(()=>window.__olderRigRetry);
+ assert.equal(await page.locator('#rig video').count(),0,'Late old receipt cannot replace newer unavailable media');
+ await page.unroute('**/exports/leg/rig-media.json*');
  assert.deepEqual(errors,[]);assert.deepEqual(await json('/version.json'),version,'One published revision throughout');
  await writeFile(out+'/report.json',JSON.stringify({base,version,cases,entries:progress.log.length,errors},null,2));
  console.log(`PASS ${engine.name()}: ${cases.length} layouts; featured real E1; three latest entries; dated archive; keyboard/retry/deep links; complete Markdown. ${out}`);

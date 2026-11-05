@@ -11,11 +11,13 @@ import { SITE_CACHE_CONTROL, versionSiteAssets } from './site-cache.mjs';
 import { collectStatus, createReader, renderBoard, shallowHistory } from './status-board.mjs';
 import { collectTimeline, gitIn, imagePaths, renderTimeline, subsystemOf } from './timeline.mjs';
 import { OPEN_FOLDS, enhanceDocument } from './doc-page.mjs';
+import { verifyRigFiles } from './rig-media.mjs';
 const root = path.resolve(import.meta.dirname, '..');
 const out = path.join(root, 'dist');
 const read = (p) => readFile(path.join(root, p), 'utf8');
 const esc = (s) => String(s ?? '').replace(/[&<>"']/g, c => ({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[c]));
 const config = YAML.parse(await read('cad-agent.yaml')).cad.site;
+await verifyRigFiles(root); // SHA checks on the actual report/movie bytes, before publishing the bundle.
 await rm(out, { recursive: true, force: true });
 await mkdir(out, { recursive: true });
 // Only repository assets, never local credentials, untracked runs or vendor downloads.
