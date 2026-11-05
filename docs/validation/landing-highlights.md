@@ -101,6 +101,43 @@ practice recorded three shots, three hits and three knockdowns. The unchanged en
 guard produced and passed both companions, the poster and the receipts. The leg insert is
 unchanged. The previous capture's note follows.
 
+The browser frames were recaptured on 2026-11-05 (UTC) for
+[PR 204](https://github.com/Valpatel/gyropup/pull/204) after it merged dev (the gamepad, #205, and the hardware
+folders, #213) and took the owner's decisions: the playground's turn is now clamped to what the outer wheel and the
+legs take at the speed, and the leg limits were regenerated (61 N m everywhere, the inertia bound over a locked
+wheel). `designer/sim.js`, `designer/leg_limits.js` and `exports/leg/limits.json` changed, so the guard rejected the
+earlier capture. No pad is connected during capture and the demo drives and turns slowly, inside the limits, so the
+scenes are the same. The capture ran from `cf010ee8b6ff90e35297c65a9fa84815865b7cb8`, served assets
+`b269e7b8c430ecf23b52`, through an owned `serve-site.mjs --ephemeral` listener, closed afterwards. The recorder
+produced all 480 frames and its shot and knockdown assertions passed. The unchanged encoder and guard produced and
+passed both companions (MP4 1,857,928 bytes, WebM 1,476,460), the poster and the receipts. The leg and E1 inserts are
+unchanged. The tilt-range PR (#207) changes the same simulator and will need its own recapture when it lands. The
+previous capture's note follows.
+
+The browser frames were recaptured again on 2026-11-04 (UTC) for
+[PR 204](https://github.com/Valpatel/gyropup/pull/204) after its review. The review applies the playground's reach
+window to the v2 robot only (the legacy serial-leg view keeps its own reach), and the soft stops now use the whole
+leg's inertia, so `designer/leg_limits.js` and `exports/leg/limits.json` changed and the guard rejected the earlier
+capture. The demo runs the v2 robot inside those limits, so the footage shows the same scenes. The capture ran from
+`613ac34f18671593f36f20daabf5514f1ba58e99`, served assets `8269e01942b7c677d648`, through an owned
+`serve-site.mjs --ephemeral` listener, closed afterwards. The recorder produced all 480 frames and its shot and
+knockdown assertions passed. The unchanged encoder and guard produced and passed both companions (MP4 1,860,113
+bytes, WebM 1,477,836), the poster and the receipts. The leg and E1 inserts are unchanged. The reel must be
+recaptured again once this branch merges dev after the gamepad and tilt-range PRs (#205, #207), which change the
+same simulator. The previous capture's note follows.
+
+The browser frames were recaptured on 2026-11-04 (UTC) for
+[PR 204](https://github.com/Valpatel/gyropup/pull/204), the leg's over-command protection. That PR routes the
+playground's live pose through `designer/leg_limits.js` (the firmware's command rates and the legs' reach window,
+read from `exports/leg/limits.json`), so `designer/sim.js` changed and the guard rejected the old capture. The
+demo's motions are inside those limits, so the footage shows the same scenes. The capture ran from
+`00f3126e40884fe4faad05ee6edc79b53a1d7a3c`, served assets `2c98a1bfc4f63b49894d`, through an owned
+`serve-site.mjs --ephemeral` listener, closed afterwards. The recorder produced all 480 frames and its shot and
+knockdown assertions passed. The unchanged encoder and guard produced and passed both companions (MP4 1,858,105
+bytes, WebM 1,472,734), the poster and the receipts. The leg and E1 inserts are unchanged. The reel must be
+recaptured again once this branch merges dev after the gamepad and tilt-range PRs (#205, #207), which change the
+same simulator. The previous capture's note follows.
+
 The browser frames were recaptured on 2026-11-03 (UTC) for
 [PR 205](https://github.com/Valpatel/gyropup/pull/205), gamepad control in the playground. That PR routes the
 panel's sliders through a shared command layer in `designer/sim.js`, adds a turn rate and a hop, loads

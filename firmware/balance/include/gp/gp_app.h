@@ -11,6 +11,7 @@
 #define GP_APP_H
 
 #include "gp/gp_control.h"
+#include "gp/gp_guard.h"
 #include "gp/gp_ina228.h"
 #include "gp/gp_jetson.h"
 #include "gp/gp_types.h"
@@ -49,6 +50,8 @@ enum { /* why the robot last sat or limped (STATUS b6) */
     GP_R_IMU = 14,
     GP_R_FALLEN = 15,
     GP_R_ARM_TIMEOUT = 16,
+    GP_R_JOINT_RANGE = 17,  /* a motor measured past its hard stop by more than the stop's squeeze (gp_limits.h) */
+    GP_R_MOTOR_HOT = 18,    /* a motor's reported temperature over GP_MOTOR_TEMP_SIT_C */
 };
 
 enum { /* why a jump was refused (FAULTS b6) */
@@ -58,6 +61,8 @@ enum { /* why a jump was refused (FAULTS b6) */
     GP_J_NOT_RUNNING = 3,
     GP_J_LINK = 4,
     GP_J_HEIGHT_ZERO = 5,
+    GP_J_HOT = 6,       /* a motor's rms torque over GP_LIM_JUMP_HOT of its limit, or its temperature over GP_MOTOR_TEMP_JUMP_C */
+    GP_J_COOLDOWN = 7,  /* within GP_JUMP_GAP_S of the last jump's end */
 };
 
 enum { GP_JP_NONE = 0, GP_JP_CROUCH, GP_JP_PUSH, GP_JP_AIR, GP_JP_LAND, GP_JP_RECOVER };
@@ -82,6 +87,7 @@ typedef struct {
     float r_pack;           /* ohm, the resting-voltage estimate */
     float i_cont, i_peak;   /* A: the bus current limit (GP_BUS_I_CONT_A, GP_BUS_I_PEAK_A) */
     float sit_L;            /* m */
+    gp_torque_limits lim;   /* the leg build's torque limits (gp_limits.h): the robot's, or GP_RIG_BUILD's on the rig */
     gp_ctl_params ctl;
 } gp_config;
 
@@ -118,6 +124,8 @@ typedef struct {
     float push_ilimit, push_scale;           /* the jump push's bus current limit and its factor on the legs */
     uint32_t overcharge;                     /* the 4.4 V a cell latch */
     float vhigh, regen_scale;                /* the over-charge latch's filtered bus; the regen clamp's factor now */
+    float cap_nm, rms_max_nm;                /* the leg motors' cap now; the highest motor rms torque */
+    uint32_t build, guarded, windowed;       /* the leg build (gp_limits.h); this tick's soft-stop and window bits */
 } gp_snapshot;
 
 typedef struct {
@@ -172,6 +180,13 @@ typedef struct {
     uint32_t t_jump, t_phase, jumps, jumps_refused;
     float jump_from, jump_v_target, jump_scale;
     bool stop_pending;
+    uint32_t t_jump_end;
+    bool jumped;
+    /* the leg guards (docs/leg-protection.md) */
+    float tau_ms[4];      /* each motor's mean square torque over GP_LIM_RMS_TAU_S */
+    float rms_max;        /* the highest rms now */
+    bool hot;             /* rms over its limit: the cap is the rms limit until it falls under 0.9 of it */
+    float cap_now;
     /* diagnostics */
     uint32_t tx_drops, can_rx;
     uint8_t seq_status;

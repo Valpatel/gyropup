@@ -34,6 +34,7 @@ R = Path(__file__).resolve().parents[1]
 sys.path.insert(0, str(R / 'cad'))
 import fivebar as fb  # noqa: E402
 from sim.leg_control import Gains, clip_motor, polar, vmc_from_state  # noqa: E402  (the controller, simulator-free)
+from sim import leg_limits  # noqa: E402  (the soft stops: exports/leg/limits.json, docs/leg-protection.md)
 
 OUT = R / 'exports' / 'leg'
 G = 9.81
@@ -364,6 +365,8 @@ def run(sc: Scenario, half_mass: float, video: Path | None = None, meshes: dict 
     joint = {'knee_f': 0.0, 'knee_r': 0.0, 'hip_f': 0.0, 'hip_r': 0.0, 'apex': 0.0}   # the joints' real forces, every step: in a landing
     jb = {'knee_f': m.body('lower_f').id, 'knee_r': m.body('lower_r').id,  # the links' own inertia takes much of the axle's
           'hip_f': m.body('upper_f').id, 'hip_r': m.body('upper_r').id}    # spike, so statics on the axle force overstates them
+    phases = {}                                      # the same peaks per phase of a jump: 'push' (the motors at their cap,
+                                                     # the legs mid-range) and 'after' (the flight and the landing)
     for k in range(steps):
         t = k * m.opt.timestep
         L_cmd, mode = command(sc, t, state)
@@ -382,9 +385,15 @@ def run(sc: Scenario, half_mass: float, video: Path | None = None, meshes: dict 
             contact = wheel_force(m, d, leg)[1] > 1.0
             gg = g if (contact or sc.name not in ('jump', 'jump_peak') or not state.get('pushed')) else Gains(kp_L=3000, kd_L=260)   # tuck
             tau = vmc(leg, d, L_cmd / 1000, 0.0, ff=ff if contact or not state.get('pushed') else 0.0, g=gg)
+        fo, fi, ro, ri = fb.stop_angles()
         for i, (n, a) in enumerate((('motor_f', 'motor_f'), ('motor_r', 'motor_r'))):
             om = d.qvel[leg.v[n]]
-            d.ctrl[leg.a[a]] = float(tau[i]) if mode == 'off' else clip_motor(float(tau[i]), om, LEG_PEAK, LEG_OMEGA, sc.cap)
+            if mode == 'off':
+                d.ctrl[leg.a[a]] = float(tau[i])
+            else:                                     # the soft stops (sim/leg_limits.py), as the rig and the firmware
+                lo, hi = (fi, fo) if i == 0 else (ro, ri)
+                t = leg_limits.soft_stop(float(tau[i]), leg.phi(d)[i], om, lo, hi, sc.cap or LEG_PEAK)
+                d.ctrl[leg.a[a]] = clip_motor(t, om, LEG_PEAK, LEG_OMEGA, sc.cap)
         d.ctrl[leg.a['wheel']] = 0.0
         p1, p2 = leg.phi(d)
         fo, fi, ro, ri = fb.stop_angles()
@@ -404,6 +413,16 @@ def run(sc: Scenario, half_mass: float, video: Path | None = None, meshes: dict 
             joint[n] = max(joint[n], float(np.linalg.norm(d.cfrc_int[b][3:6])))
         fa = [d.efc_force[i] for i in range(d.nefc) if d.efc_type[i] == mujoco.mjtConstraint.mjCNSTR_EQUALITY]
         joint['apex'] = max(joint['apex'], float(np.linalg.norm(fa)) if fa else 0.0)   # the apex's connect: the lower links' push
+        if sc.name.startswith('jump'):
+            ph = phases.setdefault('push' if mode == 'push' else 'after' if state.get('pushed') else 'crouch', {})
+            for n in gear:
+                v = leg.v[n]
+                ph['gearbox_nm'] = max(ph.get('gearbox_nm', 0.0), abs(float(d.actuator_force[leg.a[n]] - m.dof_armature[v] * d.qacc[v]
+                                                                             - m.dof_damping[v] * d.qvel[v])))
+            for n, b in jb.items():
+                ph[n + '_n'] = max(ph.get(n + '_n', 0.0), float(np.linalg.norm(d.cfrc_int[b][3:6])))
+            ph['apex_n'] = max(ph.get('apex_n', 0.0), float(np.linalg.norm(fa)) if fa else 0.0)
+            ph['motor_nm'] = max(ph.get('motor_nm', 0.0), *(abs(float(d.actuator_force[leg.a[n]])) for n in gear))
         if k % 4 == 0:
             rec.append(sample(m, d, leg, t, state))
         if vw and k % every == 0:
@@ -415,6 +434,8 @@ def run(sc: Scenario, half_mass: float, video: Path | None = None, meshes: dict 
     res['peak_gearbox_nm'] = round(max(gear.values()), 1)          # the rotor's inertia shows here, not in the motor torque
     res['gearbox_over_peak_ms'] = round(max(over.values()) * 1000, 1)
     res['peak_joint_force_n'] = {k: round(v, 1) for k, v in joint.items()}          # dynamic, every step
+    if phases:
+        res['phase_peaks'] = {k: {n: round(v, 1) for n, v in ph.items()} for k, ph in phases.items()}
     return res
 
 

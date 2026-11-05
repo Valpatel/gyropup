@@ -1159,8 +1159,9 @@ def write_doc(ctx):
                     f"a hop of up to about {x['jump_mm']:.0f} mm; inspect the weakest rows' corners (above) with a lamp"))
     L = ['Each rung runs only after the one before it passed and the leg was inspected. In every `rig.run` command:', '',
          '- `--cap` is the cap in both places: `rig.run` writes it to both motors\' `limit_torque` at start-up, reads it back '
-         '(it stops if a motor does not take it) and clips its own commands to it. **Without `--cap` the rig runs at 60 N m: '
-         'never on the PLA leg.**',
+         '(it stops if a motor does not take it) and clips its own commands to it. Without `--cap` it runs at the leg build\'s '
+         'every-day cap (`--build`, default `pla_bench`: the PLA cap, and no higher `--cap` is accepted); the robot leg\'s '
+         '61 N m needs `--build robot` (docs/leg-protection.md). The laptop also runs the soft stops.',
          '- `--damper 0` keeps the RS-04\'s power-off anti-backdrive protection on (the factory default), so a power cut is '
          'damped.',
          f"- `--half-mass KG`: KG is the scale's reading under the foot from assembly step 7 (about {ms['stand_scale_kg']:.1f}). "

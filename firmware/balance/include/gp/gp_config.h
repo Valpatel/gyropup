@@ -11,7 +11,9 @@
 
 /* ---------------------------------------------------------------- the leg motors (RS-04, rig/rs04.py) */
 #define GP_RS04_HOST 0xFDu              /* the motors' CAN_MASTER (manual 3.3) */
-#define GP_RS04_LIMIT_TORQUE 60.0f      /* N m: D38's cap, written into every motor at boot (limit_torque, 0x700B) */
+/* each motor's limit_torque (0x700B) and the firmware's caps come from the leg build: gp_limits.h (generated) */
+#define GP_MOTOR_TEMP_SIT_C 80.0f       /* C, a motor's reported temperature: sit (rig Limits.temp_max; it warns at 135, trips at 145) */
+#define GP_MOTOR_TEMP_JUMP_C 70.0f      /* C: no jump over this */
 #define GP_RS04_CAN_TIMEOUT 2000u       /* 1/20000 s: 0.1 s without a frame and the motor drops to reset (0x7028) */
 #define GP_RS04_V_RAIL 14.955f          /* rad/s: a reported speed this close to the 16-bit field's +-15 is its rail */
 #define GP_MISS_MAX 3u                  /* ticks in a row without a motor's feedback -> limp (rig Limits.miss_max) */
@@ -101,6 +103,7 @@
 #define GP_JUMP_MIN_AIR_S 0.12f         /* rig/leg_control.py Flight */
 #define GP_JUMP_LAND_DL -0.60f          /* m/s */
 #define GP_JUMP_RECOVER_S 0.5f
+#define GP_JUMP_GAP_S 1.0f              /* s from one jump's end to the next jump: a stuck request does not chain jumps */
 
 /* ---------------------------------------------------------------- CAN ids on bus C (docs/body-firmware.md 4) */
 #define GP_ID_JET_SETPOINT 0x110u       /* Jetson -> MCU, 100 Hz */

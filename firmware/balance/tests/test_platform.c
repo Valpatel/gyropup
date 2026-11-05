@@ -35,7 +35,7 @@ static void feedback(int m, gp_can_frame *r)
     put_be16(r->data, gp_rs04_f2u(TP.angle[m], -GP_RS04_P_MAX, GP_RS04_P_MAX));
     put_be16(r->data + 2, gp_rs04_f2u(0.0f, -GP_RS04_V_MAX, GP_RS04_V_MAX));
     put_be16(r->data + 4, gp_rs04_f2u(0.0f, -GP_RS04_T_MAX, GP_RS04_T_MAX));
-    put_be16(r->data + 6, 300);
+    put_be16(r->data + 6, (uint16_t)(TP.temp_c[m] > 0.0f ? TP.temp_c[m] * 10.0f : 300.0f));
 }
 
 void tp_answer(gp_app *a, uint32_t now)
