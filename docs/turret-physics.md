@@ -59,7 +59,7 @@ the hopper agitator is the feed's open item. The research default of 65 fps is n
 out at 59.5 fps at 100 % throttle on the 12 V rail with Ø36 tyres, so the usable set speeds are 50-57 fps, and more range means a
 different ceiling (section 4) or a taller stance. A shot takes ~245 ms from the dial command to the muzzle (dial step ~100 ms, the drop and the chute ~130 ms, the nip
 5 ms, the bore 7 ms). Level from the 0.55 m muzzle the 55 fps ball lands at 5.0 m and can reach a 0.30 m-high target out to 3.5 m (4.1 m
-at 65 fps, 4.4 m at 70 fps; 5.0-6.2 m if the robot stands 0.3 m taller), because the barrel never points up. It knocks over any hinged
+at 65 fps, 4.4 m at 70 fps; 5.0-6.2 m if the robot stands 0.3 m taller), with the barrel level; it may aim up to its +12 deg stop and fires up to +10 (D77), which reaches further. It knocks over any hinged
 plate up to ~0.5 kg at 4 m and carries 0.26 J (0.42 J at the cap: 84 % of EN 71-1's resilient limit, 41 % of ASTM's energy density; a
 stock Rival blaster at 97 fps is 0.81 J). Recoil is 0.030 N s per shot and moves the aim 1.2 mrad; the biggest aim movers are the printed
 pan gear's backlash (7.6 mrad), the tilt servo's backlash (8.7 mrad) and firing while panning at 90 deg/s (14.5 mrad, 8.7 cm at 6 m).

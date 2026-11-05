@@ -143,7 +143,7 @@ requirements:
     ref: D68; firmware/turret tests
   verify_by: test
 - id: R19
-  text: Show the aim with a laser parallel to the bore, under 1 mW (Class 2)
+  text: Show the aim with a laser parallel to the bore, under 1 mW (a labelled Class 2 at most), lit only while armed
   source:
     kind: derived
     ref: docs/turret-sections.md 5

@@ -127,8 +127,8 @@ Tick with a link to the evidence (file, picture, result JSON). Unticked = open.
       hold 47.6, world-frame 21.9; pan 90 deg in 1.2 s with a margin of 10.0 at the 50 % torque cap, yaw 104; the
       pinion (16 mm face, full-round roots) SF 2.52 at the cap and 1.26 at stall by FEA of one tooth.
 - [x] Clearances and stops over the whole pan/tilt range, including the lidar in front and the DT12 harness. The
-      turret itself is clear: no overlap and nothing moving within 1 mm but the lug on the yoke's stops at 0 and -25 deg,
-      at pans 0-350 every 10 deg x tilts 0, -5, -12.5, -20, -25 (exports/turret/clash-sweep.json); every degree of pans
+      turret itself is clear: no overlap and nothing moving within 1 mm but the lug on the yoke's stops at +12 and -25 deg,
+      at pans 0-350 every 10 deg x tilts +12, +6, 0, -5, -12.5, -20, -25 (exports/turret/clash-sweep.json); every degree of pans
       130-230 at full depression, the nearest part to the pan pinion is the rail frame at 5.38 mm
       (exports/turret/t1-fine-checks.json, cad/turret.py pinion_check). Over the lidar at the body's 143 mm
       (cad/turret_lidar.py, the 30 mm riser): limited only within pan +-26 deg, to -16.5 deg at worst

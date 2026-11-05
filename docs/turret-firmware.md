@@ -58,7 +58,7 @@ availability (docs/turret-prototype-plan.md section 0). For the firmware:
 | D12 | ARM_IN | the arm chain's output through 100 k (read only; interrupt EXTINT 6) |
 | A1 | TRIP_IN | the trip latch (read only), **polled**: A1 shares EXTINT 5 with D11 |
 | A3 | PULSE_MON | the 4N35's output through 100 k: interrupt (EXTINT 9) on falling edges (the opto turning on: the fast edge); the train's period (0.85-1.15 ms), the release, the ring-drop counter. Not A4: A4 shares EXTINT 4 with D10 |
-| A5 | LASER_EN | through the 2N7000 (Quarton VLM-650-03 LPT, Class 2); not D13, which also lights the red LED and which the bootloader pulses on a reset (the laser would flash) |
+| A5 | LASER_EN | through the 2N7000 (the green pointer module, Class 2 at most; lit only while armed); not D13, which also lights the red LED and which the bootloader pulses on a reset (the laser would flash) |
 | A2 | HOPPER_BEAM | v1 (not fitted in v0) |
 | SDA | NEOPIXEL | v1 (not fitted in v0); SCL spare |
 | A0 | BUS_V | BUS (the XT30's 12-54 V, D66) through R20 182 k / R21 10 k (19.2 : 1: 0.78 V at 15 V, 2.81 V at 54 V); it sets the supply profile (section 4, D70) |
@@ -103,7 +103,7 @@ BOOT -> HOMING -> IDLE <-> ARMED -> SPIN_UP -> READY <-> FIRING
 The pan servo's 12-bit angle covers one servo turn, 120 deg of pan through 63:21, so at power-up the pan is known
 only modulo 120 deg. Reference implementation: firmware/turret/homing.py (ported line for line).
 
-1. Tilt to the 0 deg stop first: then nothing can meet the lidar or the deck while the pan searches.
+1. Tilt to level (0 deg) first: clear at every pan, so nothing can meet the lidar or the deck while the pan searches.
 2. Sweep in +pan at 60 deg/s (the direction the index was calibrated in) until the hall's window has been crossed:
    its two edges are timestamped by the interrupt, the servo position by its reads (100 Hz), and the window's centre
    comes from interpolating the reads at the edge times. The centre sits half the switch's hysteresis past the magnet
@@ -241,8 +241,9 @@ hung ball releases two.
   closer than 1 deg, goes 1 deg under first and comes back, unless the + flank is known engaged. homing.py's tracker
   turns its direction after 3 counts, while the turntable changes flank only after the full backlash (15 counts), so
   the firmware tracks the flank itself.
-- **Laser.** On at least 0.35 s before the first shot at a target (the simulator's rule). The laser (Class 2, under
-  1 mW) and the servos stay live when the safety line is released (D7); only the wheels and the dial lose power. Pan
+- **Laser.** On at least 0.35 s before the first shot at a target (the simulator's rule), and only in an armed state: the
+  host's LASER request lights it while armed, and it goes out on disarming (D77: the barrel can point above level). The
+  laser (a green pointer module, Class 2 at most, under 1 mW) and the servos stay powered when the safety line is released (D7); only the wheels and the dial lose power. Pan
   and tilt are capped at 100 deg/s (the pan servo tops out at 90).
 
 ## 6. CAN message set

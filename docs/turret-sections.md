@@ -18,7 +18,7 @@ barrel, the dial axis at x = y = 0, the ball path at z = 0). At tilt 0, C sits 1
 face and 48 mm (`tilt_x`) behind the pan axis; the tilt axis is at C (48, y, 15), over the pan axis.
 
 The parts rule (D40): every part is bought at a listed price, printed, or cut at an instant online price. Kid safety
-is a hard rule: the barrel only between its mechanical hard stops (D77; now 0 and -25 deg, exports/turret/limits.json), at most 105 fps by the hardware (D68: about 100 fps for a Hasbro round, under ASTM F963's 2,500 J/m2; eye protection recommended, as Hasbro does), and
+is a hard rule: the barrel only between its mechanical hard stops (D77; +12 and -25 deg, exports/turret/limits.json; no shot above the feed's +10 deg), at most 105 fps by the hardware (D68: about 100 fps for a Hasbro round, under ASTM F963's 2,500 J/m2; eye protection recommended, as Hasbro does), and
 nothing spins unless the ARM line is held.
 
 ## The design gates (all sections)
@@ -149,14 +149,15 @@ a wider face (the ring's face sets the mesh), a metal pinion against a printed r
 
 ## 2. Tilt yoke and cradle
 
-**Function.** Hold the cartridge on a horizontal axis over the pan axis and tilt it 0 to -25 deg (muzzle down) off an
+**Function.** Hold the cartridge on a horizontal axis over the pan axis and tilt it +12 (muzzle up) to -25 deg (muzzle down) off an
 STS3215 directly, with hard stops at both ends. The upper stop sat at 0 deg for the old "never above level" rule; D77
 replaced that rule with the real mechanical range, and the stop moves to it (#201, cad/turret_tilt_range.py).
 
 **Requirements.**
 - Tilt axis at C (48, 15): the tilting group's centre of mass 8.5 mm behind it with 30 balls, 5.2 mm empty, so an
-  unpowered barrel rises onto the 0 deg stop and never drops onto the lidar ahead.
-- Stops: 0 and -25 deg, metal on printed sectors, taking the servo's stall torque.
+  unpowered barrel rises onto the +12 deg stop and never drops onto the lidar ahead.
+- Stops: +12 and -25 deg, metal on printed sectors, taking the servo's stall torque. The +12 is the mechanism's: the feed
+  servo under the dial comes 3 mm from the fixed pan pinion at +14.75 (cad/turret_tilt_range.py, D77).
 - FEA targets: 1.2 on the rare cases (falls), 2.0 on the everyday ones (a push on the muzzle), layer-aware.
 
 **Interfaces.** The yoke's bridge on the turntable (4 x M4 x 10, heads 6 mm down in the 12 mm bridge); the tilt servo
@@ -358,7 +359,8 @@ safety line over 105 fps), and show the aim with a laser parallel to the bore.
 **Parts.** `barrel` (PETG, standing; Ø30 x 100, bore 24.7 from the nip on, the last 15 mm blaze orange),
 `laser_mount` (PETG: a ring over the barrel on a foot that sits on the barrel socket's pad on the cartridge's top,
 2 x M3 x 10 into the pad's inserts; a Ø6 hole through the foot over the barrel's set screw for the hex key), `laser`
-(Quarton VLM-650-03, < 1 mW, Class 2) 29.5 mm above the bore's axis and on its plane, held by `laser_screws` (three
+(a green pointer module, its class from its label and Class 2 at most, docs/head-payload.md; drawn as the Ø7 Quarton
+VLM-650-03 envelope until it is chosen) 29.5 mm above the bore's axis and on its plane, held by `laser_screws` (three
 McMaster 93285A115 M3 x 6 nylon-tip set screws at 120 deg, modelled: their tips on the laser, their threads in the
 ring), 2 mm clear of the ring's bore.
 
