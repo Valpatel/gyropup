@@ -41,10 +41,11 @@ def test_the_robot_leg_every_day_cap_is_its_weakest_every_day_row():
         assert r['nm'] == pytest.approx(r['at_nm'] * r['sf'] / r['target'], abs=0.06)
 
 
-def test_the_peak_is_the_push_only_and_never_past_the_motor_or_a_rare_row():
-    assert ROBOT['everyday_nm'] <= ROBOT['peak_nm'] <= 120.0
-    assert ROBOT['peak_nm'] == math.floor(min(r['nm'] for r in ROBOT['peak_rows']))
-    assert ROBOT['motor_limit_torque_nm'] == ROBOT['peak_nm']
+def test_the_push_runs_the_every_day_cap_and_the_rare_rows_would_allow_more():
+    # D78 (the owner, 2026-11-04): 61 N m everywhere, the push and each motor's own limit_torque too
+    assert ROBOT['peak_nm'] == ROBOT['everyday_nm'] == ROBOT['motor_limit_torque_nm']
+    assert ROBOT['everyday_nm'] <= ROBOT['push_allows_nm'] <= 120.0
+    assert ROBOT['push_allows_nm'] == math.floor(min(r['nm'] for r in ROBOT['peak_rows']))
     assert ROBOT['peak_max_s'] == 0.35                  # GP_JUMP_PUSH_MAX_S: the push's own time limit
     knee = ROBOT['knee_capacity']['weakest']['n']
     at = {r['cap_nm']: r for r in D['jump_sweep']['at_limits']}
@@ -87,9 +88,11 @@ def test_soft_stops_never_push_further_into_a_stop_and_leave_a_motor_that_could_
         if lo + m <= phi <= hi - m and w <= ll.approach_limit(hi - phi - m, T) and -w <= ll.approach_limit(phi - lo - m, T):
             assert out == tau
             untouched += 1
-        if hi - phi < m:
-            assert out <= 0.0                            # nothing towards hi: zeroed, or a brake away from it
-        if phi - lo < m:
+        # nothing towards hi inside its margin: zeroed, or a brake away from it; unless the motor is racing away from hi
+        # towards lo faster than lo's approach limit, where the brake is towards hi and only slows it (and vice versa)
+        if hi - phi < m and -w <= ll.approach_limit(phi - lo - m, T):
+            assert out <= 0.0
+        if phi - lo < m and w <= ll.approach_limit(hi - phi - m, T):
             assert out >= 0.0
         assert abs(out) <= max(abs(tau), T) + 1e-9
     assert untouched > 5000
@@ -110,8 +113,9 @@ def test_the_approach_limit_meets_the_stop_with_the_energy_it_takes_at_the_every
 
 def test_the_soft_stops_assume_the_whole_leg_behind_a_stop_not_the_rotor_alone():
     inn = D['inertia']
-    worst = max(v['kg_m2'] for v in inn['worst'].values())
-    assert inn['bound_kg_m2'] >= worst and inn['bound_kg_m2'] - worst < 0.0011
+    worst = max(v['kg_m2'] for k in ('worst', 'worst_wheel_locked') for v in inn[k].values())
+    assert inn['bound_kg_m2'] >= worst and inn['bound_kg_m2'] - worst < 0.0011       # the wheel free or locked
+    assert max(v['kg_m2'] for v in inn['worst_wheel_locked'].values()) > max(v['kg_m2'] for v in inn['worst'].values())
     assert worst > 4 * inn['rotor_and_upper_link_kg_m2']          # the lower links and the 4 kg wheel dominate
     assert all(v['kg_m2'] <= worst for v in inn['at_stops'].values()) and len(inn['at_stops']) == 4
     assert D['soft_stop']['j_kg_m2'] == inn['bound_kg_m2']
@@ -179,3 +183,12 @@ def test_the_window_overlap_keeps_a_lagging_lean_inside_the_stops():
                 Lc = ll.clamp_L(L, lean_cmd, lean_cmd + err, tab)
                 q = ll.fb.stance(Lc * 1000.0, math.degrees(lean_cmd + err))
                 assert q is not None and lo_f <= q[0] <= hi_f and lo_r <= q[1] <= hi_r
+
+
+def test_the_turn_limit_comes_from_the_leg_and_wheel_limits():
+    y = D['yaw']
+    assert y == ll.yaw_limits(D['profiles']['robot']['everyday_nm'], D['command']['window'])
+    # the outer leg at the every-day torque would allow far more than the inner wheel keeping half its load
+    assert y['a_leg_m_s2'] > y['a_tip_half_m_s2'] and y['a_lat_m_s2'] <= y['a_tip_half_m_s2']
+    assert 500.0 < y['leg_force_cap_n'] < 530.0 and y['leg_ff_n'] == pytest.approx(159.5, abs=0.1)
+    assert y['a_tip_half_m_s2'] == pytest.approx(9.81 * y['half_track_m'] / (2 * y['com_h_m']), abs=0.01)

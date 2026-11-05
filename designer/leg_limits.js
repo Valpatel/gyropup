@@ -3,11 +3,12 @@
 //
 //   const limits = createLegLimits();            // the rates at once; the reach table once load() has read it
 //   limits.load('../');                          // exports/leg/limits.json (python -m sim.leg_limits)
-//   const cmd = limits.step(state, dt, robot.info); // the targets in state -> { height, pitch, rollMM, speed }, slewed
+//   const cmd = limits.step(state, dt, robot.info); // the targets in state -> { height, pitch, rollMM, speed, turn }
 //   robot.setPose({ ...limits.fit({ height, pitch, rollMM: cmd.rollMM }, robot.info), wheel });
 //
 // Both inputs feed state.height (0..1), state.pitch (rad, nose-down +), state.rollMM (left leg longer +) and
-// state.speed (m/s). step() moves the output toward them no faster than the firmware does; fit() then keeps each leg's
+// state.speed (m/s), state.turn (deg/s, + = right). step() moves the output toward them no faster than the firmware
+// does and holds the turn to what the outer wheel and the legs take at the speed; fit() then keeps each leg's
 // length inside the commanded window at that lean: inside the hard stops by the soft margin and away from the
 // five-bar's dead points (the firmware's gp_guard_clamp_L). It clamps; nothing is refused, as on the robot.
 //
@@ -48,8 +49,24 @@ export function windowAt(table, lean) {
   return [z[1], z[2]];
 }
 
-export function createLegLimits({ table = null } = {}) {
-  let window = table, out = null;
+// The largest |yaw rate| (rad/s) at a ground speed (m/s): the outer wheel inside vmax, the lateral acceleration inside
+// a_lat (sim/leg_limits.py yaw_rate_limit; yaw is limits.json's yaw block)
+export function yawLimitRadS(speed, yaw, vmax = vmaxMPerS) {
+  const v = Math.abs(speed);
+  let w = Math.max(0, vmax - v) / yaw.half_track_m;
+  if (v > 1e-6) w = Math.min(w, yaw.a_lat_m_s2 / v);
+  return w;
+}
+
+export function createLegLimits({ table = null, yaw = null } = {}) {
+  let window = table, out = null, yawLim = yaw;
+  // a turn (deg/s) inside what the v2 robot's outer wheel and legs take at a speed (m/s): the firmware's
+  // gp_guard_yaw_rate; the legacy view, or before load(), unclamped
+  const turnAt = (turn, speed, info) => {
+    if (!yawLim || !info?.v2) return turn;
+    const w = yawLimitRadS(speed, yawLim) * 180 / Math.PI;
+    return clamp(turn, -w, w);
+  };
   const api = {
     get ready() { return !!window; },
     get window() { return window; },
@@ -62,6 +79,7 @@ export function createLegLimits({ table = null } = {}) {
         const w = d?.command?.window;
         if (!Array.isArray(w) || !w.some((row) => Array.isArray(row) && row[1] != null)) throw new Error('no command window');
         window = w;
+        if (d?.yaw?.half_track_m > 0 && d?.yaw?.a_lat_m_s2 > 0) yawLim = d.yaw;
       } catch (e) { console.warn('leg limits: the reach table could not be read; rates only', e); }
       return api;
     },
@@ -76,16 +94,17 @@ export function createLegLimits({ table = null } = {}) {
         speed: clamp(finite(target.speed, 0), -vmaxMPerS, vmaxMPerS),
         turn: finite(target.turn, 0),
       };
-      if (!out || !(dt > 0)) { out = out || { ...t }; return { ...out, limited: false }; }
+      if (!out || !(dt > 0)) { out = out || { ...t, turn: turnAt(t.turn, t.speed, info) }; return { ...out, limited: false }; }
       const span = info?.hMax - info?.hMin > 0 ? info.hMax - info.hMin : (RATES.hMaxM - RATES.hMinM) * 1000;   // this robot's 0..1 in mm
       const next = {
         height: toward(out.height, t.height, legRateMMPerS * dt / span),
         pitch: toward(out.pitch, t.pitch, RATES.leanRadPerS * dt),
         rollMM: toward(out.rollMM, t.rollMM, 2 * legRateMMPerS * dt),   // one leg up, the other down: each at the rate
         speed: toward(out.speed, t.speed, RATES.accelMPerS2 * dt),
-        turn: t.turn,
       };
-      const limited = next.height !== t.height || next.pitch !== t.pitch || next.rollMM !== t.rollMM || next.speed !== t.speed;
+      next.turn = turnAt(t.turn, Math.max(Math.abs(next.speed), Math.abs(t.speed)), info);
+      const limited = next.height !== t.height || next.pitch !== t.pitch || next.rollMM !== t.rollMM || next.speed !== t.speed
+        || next.turn !== t.turn;
       out = next;
       return { ...next, limited };
     },

@@ -8,8 +8,8 @@ Jacobian, each torque clipped to the RS-04's torque-speed line and the firmware 
 on the motor joints (sim/leg_rig.py's), passive: they act with the motors off too.
 
 With guard on (the default), the firmware's protections (docs/leg-protection.md): each leg's commanded length is
-clamped to the reach window at its commanded and its measured lean, and each motor's torque goes through the soft
-stops before the clip.
+clamped to the reach window at its commanded and its measured lean, each motor's torque goes through the soft
+stops before the clip, and the commanded turn is clamped to what the outer wheel and the legs take at the speed.
 """
 from __future__ import annotations
 
@@ -201,7 +201,11 @@ class ControllerV2(Controller):
         u = float(-self.K @ s)
         mujoco.mj_objectVelocity(m, data, mujoco.mjtObj.mjOBJ_BODY, rb.base, vel, 0)
         yaw_rate = float(vel[2])
-        tau_yaw = self.gains.yaw_kp_per_nm * rb.wheel_peak * (cmd.yaw_rate - yaw_rate)
+        yaw_cmd = cmd.yaw_rate
+        if self.guard:                                      # the turn the outer wheel and the legs take at this speed
+            yaw_cmd = ll.clamp_yaw(yaw_cmd, max(abs(self.v_cmd), abs(v)), vmax)
+        self.yaw_cmd = yaw_cmd
+        tau_yaw = self.gains.yaw_kp_per_nm * rb.wheel_peak * (yaw_cmd - yaw_rate)
         lim = self.gains.yaw_share * rb.wheel_peak
         tau_yaw = max(-lim, min(lim, tau_yaw))
 

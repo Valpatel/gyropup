@@ -73,7 +73,7 @@ typedef struct {
 typedef struct {
     float tau[2][2];  /* leg motors, N m, the five-bar's sense */
     float wheel[2];   /* N m, + rolls forward */
-    float theta, theta_dot, x_err, v, v_cmd, u, tau_yaw;
+    float theta, theta_dot, x_err, v, v_cmd, u, tau_yaw, yaw_cmd; /* yaw_cmd: the turn asked for after gp_guard_yaw_rate */
     float L_cmd[2];
     gp_fb_polar leg[2];
     bool leg_ok[2];

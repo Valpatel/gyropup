@@ -167,7 +167,9 @@ void gp_ctl_step(gp_ctl *c, const gp_sense *s, const gp_cmd *cmd, const gp_leg_c
     c->x_err = clampf(c->x_err + (v - c->v_cmd) * dt, -0.3f, 0.3f); /* x - x_ref, the reference kept within 0.3 m */
     const float u = -(K[0] * c->x_err + K[1] * theta + K[2] * (v - c->v_cmd) + K[3] * theta_dot);
     const float ylim = GP_G_YAW_SHARE * GP_WHEEL_PEAK_NM;
-    const float tau_yaw = clampf(GP_G_YAW_KP_PER_NM * GP_WHEEL_PEAK_NM * (cmd->yaw_rate - s->yaw_rate), -ylim, ylim);
+    /* the turn asked for, inside what the outer wheel and the legs take at this speed (gp_guard_yaw_rate) */
+    const float yaw_cmd = gp_guard_yaw_rate(cmd->yaw_rate, fmaxf(fabsf(c->v_cmd), fabsf(v)), vmax);
+    const float tau_yaw = clampf(GP_G_YAW_KP_PER_NM * GP_WHEEL_PEAK_NM * (yaw_cmd - s->yaw_rate), -ylim, ylim);
 
     /* the legs: a virtual spring-damper each, the feed-forward, the five-bar's Jacobian */
     const float leg_omega = GP_LEG_W_PER_V * vbus;
@@ -233,4 +235,5 @@ void gp_ctl_step(gp_ctl *c, const gp_sense *s, const gp_cmd *cmd, const gp_leg_c
     o->v_cmd = c->v_cmd;
     o->u = u;
     o->tau_yaw = tau_yaw;
+    o->yaw_cmd = yaw_cmd;
 }

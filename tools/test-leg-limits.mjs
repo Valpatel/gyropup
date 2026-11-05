@@ -3,7 +3,7 @@
 import assert from 'node:assert/strict';
 import test from 'node:test';
 import {readFile} from 'node:fs/promises';
-import {createLegLimits, windowAt, RATES, legRateMMPerS, vmaxMPerS} from '../designer/leg_limits.js';
+import {createLegLimits, windowAt, yawLimitRadS, RATES, legRateMMPerS, vmaxMPerS} from '../designer/leg_limits.js';
 
 const root = new URL('../', import.meta.url);
 const limits = JSON.parse(await readFile(new URL('exports/leg/limits.json', root), 'utf8'));
@@ -63,7 +63,7 @@ test('fit keeps both legs inside the window at any pose the sliders or a gamepad
 test('step slews toward the targets no faster than the firmware', () => {
   const L = createLegLimits({table});
   assert.deepEqual(L.step({height: 0.2, pitch: 0, rollMM: 0, speed: 0}, 0.016, info),
-                   {height: 0.2, pitch: 0, rollMM: 0, speed: 0, limited: false});        // the first frame is the start
+                   {height: 0.2, pitch: 0, rollMM: 0, speed: 0, turn: 0, limited: false});        // the first frame is the start
   const dt = 1 / 60;
   let out;
   for (let k = 0; k < 60; k++) out = L.step({height: 1, pitch: 0.35, rollMM: 80, speed: 9}, dt, info);
@@ -75,6 +75,23 @@ test('step slews toward the targets no faster than the firmware', () => {
   assert.ok(Math.abs(out.speed - vmaxMPerS) < 1e-9 && Math.abs(out.height - 1) < 1e-9 && !out.limited);
   // a paused frame (dt 0) holds
   assert.deepEqual(L.step({height: 0, pitch: 0, rollMM: 0, speed: 0}, 0, info), {...out, limited: false});
+});
+
+test('the turn is held to what the outer wheel and the legs take at the speed (gp_guard_yaw_rate)', () => {
+  const yaw = limits.yaw, D = 180 / Math.PI;
+  assert.ok(Math.abs(yawLimitRadS(0, yaw) - vmaxMPerS / yaw.half_track_m) < 1e-9);
+  assert.ok(Math.abs(yawLimitRadS(1, yaw) - yaw.a_lat_m_s2) < 1e-9);
+  for (const [v, w] of Object.entries(yaw.at_speed_rad_s_36v)) assert.ok(Math.abs(yawLimitRadS(Number(v), yaw) - w) < 0.006, v);
+  const L = createLegLimits({table, yaw});
+  const dt = 1 / 60;
+  let out = L.step({height: 0.6, pitch: 0, rollMM: 0, speed: 0, turn: 90}, dt, info);
+  assert.equal(out.turn, 90);                                        // the slider's 90 deg/s at a stand: untouched
+  for (let k = 0; k < 120; k++) out = L.step({height: 0.6, pitch: 0, rollMM: 0, speed: 1.5, turn: 90}, dt, info);
+  assert.ok(Math.abs(out.turn - yaw.a_lat_m_s2 / 1.5 * D) < 1e-9 && out.limited, 'full drive and full turn: a_lat');
+  for (let k = 0; k < 240; k++) out = L.step({height: 0.6, pitch: 0, rollMM: 0, speed: -9, turn: -400}, dt, info);
+  assert.ok(Math.abs(out.speed + vmaxMPerS) < 1e-9 && out.turn === 0, 'at vmax the outer wheel has nothing left');
+  // the legacy view keeps its own turn
+  assert.equal(createLegLimits({table, yaw}).step({speed: 1.5, turn: 90}, 0, {hMin: 150, hMax: 390.5}).turn, 90);
 });
 
 test('load reads the table from the served file and keeps the rates when it cannot', async () => {

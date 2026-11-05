@@ -94,6 +94,22 @@ float gp_guard_dead_margin(float phi1, float phi2)
     return fminf(pair_margin(ac, ce), fminf(pair_margin(bd, de), pair_margin(ec, ed)));
 }
 
+float gp_guard_yaw_limit(float v, float vmax)
+{
+    v = fabsf(v);
+    float w = fmaxf(0.0f, vmax - v) / GP_LIM_YAW_HALF_TRACK_M;
+    if (v > 1e-6f) {
+        w = fminf(w, GP_LIM_YAW_A_LAT / v);
+    }
+    return w;
+}
+
+float gp_guard_yaw_rate(float yaw_rate, float v, float vmax)
+{
+    const float w = gp_guard_yaw_limit(v, vmax);
+    return yaw_rate < -w ? -w : (yaw_rate > w ? w : yaw_rate);
+}
+
 bool gp_guard_angle_ok(float phi, float lo, float hi)
 {
     return phi >= lo - GP_LIM_ANGLE_WINDOW_RAD && phi <= hi + GP_LIM_ANGLE_WINDOW_RAD;

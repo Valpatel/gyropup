@@ -21,25 +21,25 @@ firmware's torque is the whole command. The layers, outermost first:
 
 | Layer | What existed (file:line) | Gap | What was added | Test |
 |---|---|---|---|---|
-| Command clamp: height, lean, speed, turn | `gp_control.c:145-164`: height 0..1 slewed at 0.6/s, lean (look) clamped -0.1..0.35 rad at 0.5 rad/s, speed clamped to half the wheels' no-load speed, 1.5 m/s² | Out-of-range commands were clamped, not refused (kept). Yaw rate is unclamped (its torque is: `tau_yaw` to a share of the wheel peak) | Nothing: clamping is right for a balancing robot (a refusal would drop the command mid-stride). The playground gets the same rates: `designer/leg_limits.js` | `tools/test-leg-limits.mjs` checks the rates against `gp_model.h` |
+| Command clamp: height, lean, speed, turn | `gp_control.c:145-164`: height 0..1 slewed at 0.6/s, lean (look) clamped -0.1..0.35 rad at 0.5 rad/s, speed clamped to half the wheels' no-load speed, 1.5 m/s² | Out-of-range commands were clamped, not refused (kept). The yaw rate was unclamped (only its torque was: `tau_yaw` to a share of the wheel peak), so a fast turn at speed could take the outer wheel past the speed clamp or tip load off the inner wheel | Clamping stays (a refusal would drop the command mid-stride). The turn is now clamped too (`gp_guard_yaw_rate`, `gp_control.c:171`), to what the outer wheel and the legs take at the speed: section 2, the turn. The playground gets the same rates and turn: `designer/leg_limits.js` | `tools/test-leg-limits.mjs` checks the rates against `gp_model.h`; host `test_guard` (yaw); `sim/test_controller_v2_guard.py` |
 | Commanded reach (five-bar workspace) | `gp_config.h:30`: a *measured* leg outside 95-395 mm limps | The *commanded* length was never checked against the lean: full height leaning back 0.35 rad (375 mm) is outside the five-bar's reach, so the leg's spring would have driven a motor into a stop or toward a dead point | `gp_guard_clamp_L` (`gp_guard.c:68`, called at `gp_control.c:195`): each leg's commanded length is clamped to the overlap of the windows at its commanded and its measured lean (the spring acts along the measured leg, which lags its command), each the window that keeps both motors 2° inside their stops and 25° from a dead point (0.107-0.383 m upright, 0.207-0.343 m at ±0.35 rad; 21 rows, `gp_lim_window`) | `sim/test_leg_limits.py::test_every_commanded_pose_is_reachable...`, host `test_guard` |
 | Five-bar singularity, controller output | `gp_control.c:55, 128`: a leg whose Jacobian fails gets no torque | none on output; the command side was the gap above, and the sleeves' squeeze (below) | the window's 25° dead-point margin at both leans; a measured pose under 3° from a dead point limps, reason 17 (`gp_guard_dead_margin`, `gp_guard.c:85`, `gp_app.c:496`; `rig/leg_control.py` too) | as above; host `test_guard` (dead margin) and supervisor test (dead point) |
-| Soft joint limits | none: only the TPU-sleeved hard stops (D38: front +3/-97°, rear -183/-83°) | A spring command near a stop pushed straight into it at the full cap | `gp_guard_soft_stop` (`gp_guard.c:32`, `gp_control.c:208`): inside 2° of a stop no torque goes into it; anywhere, an approach faster than the stop can absorb at the every-day torque (`approach_limit = sqrt(w_c² + 2 (T/J) d)`, `w_c = T / sqrt(k J)`) brakes at 20 N m s/rad of the excess, never more than the every-day torque. J is the whole leg's inertia at the motor, worst pose (below). Same rule in `sim/leg_limits.py:366` (`soft_stop`), `rig/leg_control.py:225` and `sim/leg_rig.py:395` | `test_soft_stops_never_push_further...` (20,000 random states), `rig/tests/test_control.py::test_the_soft_stops...`, host `test_guard` |
+| Soft joint limits | none: only the TPU-sleeved hard stops (D38: front +3/-97°, rear -183/-83°) | A spring command near a stop pushed straight into it at the full cap | `gp_guard_soft_stop` (`gp_guard.c:32`, `gp_control.c:208`): inside 2° of a stop no torque goes into it; anywhere, an approach faster than the stop can absorb at the every-day torque (`approach_limit = sqrt(w_c² + 2 (T/J) d)`, `w_c = T / sqrt(k J)`) brakes at 20 N m s/rad of the excess, never more than the every-day torque. J is the whole leg's inertia at the motor, worst pose (below). Same rule in `sim/leg_limits.py:366` (`soft_stop`), `rig/leg_control.py` (`LegController._limit`) and `sim/leg_rig.py` (`run`) | `test_soft_stops_never_push_further...` (20,000 random states), `rig/tests/test_control.py::test_the_soft_stops...`, host `test_guard` |
 | Measured joint range | the 95-395 mm length window only | A motor could be measured well past its hard stop (a broken stop post, a slipped zero) and still be driven | `gp_guard_angle_ok` (`gp_guard.c:77`, `gp_app.c:489`): a motor more than 10.13° past a stop (the TPU sleeve's squeeze at the R3 fault torque, 121.5 N m on 856 N m/rad, plus 2°) limps, reason 17 | host supervisor test (joint range) |
-| Torque cap, firmware | `gp_config.h`: one `GP_RS04_LIMIT_TORQUE` 60 N m, D33's, on every build including the PLA bench leg | The PLA leg's own limit (12 N m, the motor-day derating) lived only in the rig laptop's `--cap`; the robot had no reason for 60 and no peak/continuous split | `gp_limits.h` (generated) per build: robot 61 every day / 69 in the jump's push only (at most `GP_JUMP_PUSH_MAX_S` 0.35 s), PLA bench 12 / 12. `gp_app.c:947` picks the cap each tick, `gp_control.c:211` clips to it; an unset cap falls back to the PLA's, never to "no cap". The rig profile's build is a CMake option, `-DGP_RIG_BUILD=pla_bench\|robot`, PLA by default | host suite run for both rig builds (CI: `body-firmware.yml`) |
-| Torque cap, in the motor | `limit_torque` 60 written and read back at boot | as above | `limit_torque` = the build's `GP_LIM_*_MOTOR_NM` (robot 69, PLA 12), written and read back (`gp_app.c:311, 345`): the motor's own backstop if the firmware misbehaves | host supervisor test (limit_torque readback) |
+| Torque cap, firmware | `gp_config.h`: one `GP_RS04_LIMIT_TORQUE` 60 N m, D33's, on every build including the PLA bench leg | The PLA leg's own limit (12 N m, the motor-day derating) lived only in the rig laptop's `--cap`; the robot had no reason for 60 and no peak/continuous split | `gp_limits.h` (generated) per build: robot 61, PLA bench 12, the jump's push included (the push's rare rows would allow 69 on the robot: section 2; the owner chose one number, D78). `gp_app.c:947` picks the cap each tick, `gp_control.c:211` clips to it; an unset cap falls back to the PLA's, never to "no cap". The rig profile's build is a CMake option, `-DGP_RIG_BUILD=pla_bench\|robot`, PLA by default | host suite run for both rig builds (CI: `body-firmware.yml`) |
+| Torque cap, in the motor | `limit_torque` 60 written and read back at boot | as above | `limit_torque` = the build's `GP_LIM_*_MOTOR_NM` (robot 61, PLA 12; the RS-04 tool's `final` and `pla-bench` profiles check theirs against the same file), written and read back (`gp_app.c:311, 345`): the motor's own backstop if the firmware misbehaves | host supervisor test (limit_torque readback) |
 | Continuous / RMS | none in firmware (the rig laptop sits over 80 °C winding: `rig/leg_control.py:165`) | A long crouch or repeated jumps could hold the peak far past the motor's rated torque | Each motor's running mean square torque (time constant 30.2 s: the winding's R_wc × C_w): over 28.5 N m rms the cap drops to 28.5 until it is under 0.9 of it (`gp_app.c:1010, 948`). No jump while a motor's rms is over 0.8 of it or its reported temperature over 70 °C (refusal 6); a motor over 80 °C sits the robot (reason 18). Numbers from the motor heat model ([motor-thermal.md](motor-thermal.md)) | host supervisor tests (rms hot, temperature) |
 | Jump gate | voltage, people, link, standing, height 0 (`gp_app.c:529`) | A stuck jump request could chain jumps back to back | No jump within 1 s of the last landing (refusal 7, `gp_app.c:536`) | host supervisor test (cooldown) |
 | Bus current | 30 A continuous, 80 A for 0.5 s, the push at `s(V) × 72 A` (`gp_app.c:245`), the regen clamp | none for the leg (it caps the push's power, not its torque) | nothing | existing HIL |
 | Radio stop, heartbeat, CAN timeout | stop relay sensed in 2 ms, a fast sit; heartbeat sit at 2.2 s; each RS-04 drops to reset 0.1 s after its last frame (`GP_RS04_CAN_TIMEOUT`) | none | nothing | existing HIL |
-| Hard stops | TPU-sleeved stop posts, 856 N m/rad at the motor; FEA `stop_post` E3 (SF 2.11 at 60 N m), R3 (1.04 at 121.5 N m) | Impact energy was never compared with what the stop takes | The soft stop's approach limit is that comparison: with the whole leg behind the motor (0.16 kg m², below) a stop is met at no more than the every-day torque, T²/2k: 2.17 J on the robot (5.21 rad/s), 0.08 J on the PLA leg (1.03 rad/s); faster approaches are braked. A MuJoCo free swing into each stop at the every-day torque meets it at 5.8-6.0 rad/s and 38.7-39.4 N m on the robot, 0.89-0.93 rad/s and 6.0-6.2 N m on the PLA leg; without the soft stops, 48-53 rad/s and 357-367 N m, and 21-22 rad/s and 140-148 N m | `test_the_approach_limit_meets_the_stop...`, `test_a_free_swing_into_each_stop...` |
+| Hard stops | TPU-sleeved stop posts, 856 N m/rad at the motor; FEA `stop_post` E3 (SF 2.11 at 60 N m), R3 (1.04 at 121.5 N m) | Impact energy was never compared with what the stop takes | The soft stop's approach limit is that comparison: with the whole leg behind the motor (0.169 kg m², below) a stop is met at no more than the every-day torque, T²/2k: 2.17 J on the robot (5.07 rad/s), 0.08 J on the PLA leg (1.00 rad/s); faster approaches are braked. A MuJoCo free swing into each stop at the every-day torque, both motors on the RS-04's torque-speed line at 36 V, meets it at 5.6-5.7 rad/s and 37.5-38.1 N m on the robot, 0.85-0.90 rad/s and 5.7-5.8 N m on the PLA leg (fleet job 138 on cpu-a). Without the soft stops, 18-19 rad/s and 129-136 N m on the robot, past the stop post's R3 fault case (121.5 N m), and 17-18 rad/s and 116-123 N m on the PLA leg | `test_the_approach_limit_meets_the_stop...`, `test_a_free_swing_into_each_stop...` |
 | Rig laptop (`rig/run.py`) | `--cap` 1-60 N m, default 60 | Without `--cap` the PLA bench leg ran at 60 N m | `--build pla_bench\|robot` (PLA by default) on the CAN, sim and HIL paths: without `--cap` the build's every-day cap (12, or the robot leg's 61, the same as the firmware's rig profile built for it outside a jump's push; the laptop has no push peak); no higher `--cap` accepted; soft stops and the dead-point limp in the limiter | `rig/tests/test_rs04.py`, `rig/tests/test_control.py` |
 | Browser playground | sliders and the gamepad set the pose directly | The 3D pup could be asked for poses and rates the real leg cannot make | `designer/leg_limits.js`: the firmware's rates and the reach window, clamping; `designer/sim.js`'s live frame loop takes its pose from it | `tools/test-leg-limits.mjs`, `npm run test:robot`, `test:sim`, `test:demo` |
 | Python robot sim (`sim/controller_v2.py`) | the controller the firmware ports | no window or soft stops | `guard=True` (default): each leg's commanded length through `leg_limits.clamp_L`, each leg motor's torque through the soft stops before the clip | `sim/test_controller_v2_guard.py`; the robot's scenario suite (`tools/simulate.py --v2`) |
 
 Rigid stops would rule out a crossed or unreachable leg: a survey of the whole stop box finds every pose reachable
 and none crossed, but the stops let the leg reach within 6.1° of a dead point (at both knee-in stops, leg 392 mm). The
-TPU sleeves are not rigid: at the every-day 61 N m one squeezes 4.1° (4.6° at 69 N m), and at that knee-in corner a
+TPU sleeves are not rigid: at the every-day 61 N m one squeezes 4.1°, and at that knee-in corner a
 motor 2.5° past its stop leaves 2.3° and 4.0° past leaves none, inside the 10.13° angle window. So the commanded
 window has its own 25° margin at both leans, and a measured pose under 3° from a dead point limps (the margin over
 the knees and the apex, from the five-bar's forward kinematics each tick).
@@ -48,10 +48,11 @@ the knees and the apex, from the five-bar's forward kinematics each tick).
 through the five-bar, so the soft stops' J is not the rotor and upper link (0.0278 kg m²) but the whole leg's inertia
 at that motor: `inertia_survey` in `sim/leg_limits.py` takes the rig model's MuJoCo mass matrix over a 41 × 41 grid of
 the stop box, on the velocity field of one motor turning (the knees solved from the five-bar's closure, the other
-motor and the hips held, the wheel free to spin on its bearing). The worst pose is 0.159 kg m² (front motor at -34.5°,
-rear at -83°; rear motor at -97°, -145.5°); near the stops 0.126-0.143, at a 300 mm stance 0.141. The soft stops use
-the bound, **0.16 kg m²**, 5.8 times the old figure. Braking from the motor's no-load speed (15.7 rad/s) at the
-every-day torque then takes 18.5° on the robot and 95.9° on the PLA leg, so the approach limit applies anywhere, not
+motor and the hips held), with the wheel free to spin on its bearing and with it locked to its link (the hub motor
+holding, braking or shorted). The worst pose is 0.159 kg m² with the wheel free and **0.169** locked (front motor at
+-34.5°, rear at -83°); near the stops 0.127-0.151, at a 300 mm stance 0.141. The soft stops use the bound over both,
+**0.169 kg m²**, 6.1 times the old figure. Braking from the motor's no-load speed (15.7 rad/s) at the every-day torque
+then takes 19.5° on the robot and 101° on the PLA leg, so the approach limit applies anywhere, not
 only near a stop; far from a stop it allows more than the motor can make. A leg loaded through its wheel (on the floor
 under the body) meets a stop with the body behind it: that is the landing and power-cut cases, the FEA's R1 and R3
 rows (section 2), not the soft stops'.
@@ -76,10 +77,12 @@ Every day, any pose (from `exports/leg/fea/summary.json`, 18.75 kg a leg):
 
 So the every-day cap is **61 N m**, set by the hip frame's stop ear, not by the motor or the adapter.
 
-The peak, in the jump's push only, is set by the knees: the jump's knee force rises with the cap (section 3), and the
+The jump's push runs the same **61 N m** (the owner's decision, 2026-11-04, D78), and each RS-04's own `limit_torque` is
+61 too. The push alone could take more, set by the knees: the jump's knee force rises with the cap (section 3), and the
 weakest knee-driven rare row is the front link's R1, SF 1.38 at 574 N, so 660 N at SF 1.2 (the 574 N is read from the FEA record's R1 case). The sweep reaches 660 N at
-**69 N m**. The hips carry the push too: the hip frame's R1 is SF 1.62 at the same 574 N, so 775 N at SF 1.2, and the
-push at 69 N m puts 648 N on the hip bearing (SF 1.44); the hips would govern only at 82.8 N m. The other peak rows sit higher: the RS-04's own 120, upper_link R2 135, the AO-L hub dowels 189, the 6061
+69 N m (`push_allows_nm`), for 3.7 mm more jump; that headroom is kept, not used. The hips carry the push too: the hip
+frame's R1 is SF 1.62 at the same 574 N, so 775 N at SF 1.2; the push at 69 N m put 648 N on the hip bearing
+(SF 1.44, fleet job 133 on cpu-c), and the hips would govern only at 82.8 N m. The other peak rows sit higher: the RS-04's own 120, upper_link R2 135, the AO-L hub dowels 189, the 6061
 adapter 1,350. The landing's gearbox torque (79 N m, the leg back-driving the motors) does not grow with the cap.
 
 Continuous: **28.5 N m rms** over a 30.2 s time constant, the RS-04 manual's stall table rated row (section 1.3, item
@@ -102,8 +105,29 @@ firmware cannot see the case temperature, so that stays on the bench checklist.
 
 | Build | Every day | Peak (push only, ≤ 0.35 s) | RS-04 `limit_torque` | RMS | Governing |
 |---|---|---|---|---|---|
-| robot | 61 N m | 69 N m | 69 N m | 28.5 N m (the motor's rating; the frame's heat is a design fix) | hip_frame E3o; front_link R1 |
+| robot | 61 N m | 61 N m (the rare rows would allow 69) | 61 N m | 28.5 N m (the motor's rating; the frame's heat is a design fix) | hip_frame E3o |
 | pla_bench | 12 N m | 12 N m | 12 N m | the 50 °C case rule | motor-day derating; first failure wheel_link R1w at 15 |
+
+### The turn (yaw rate)
+
+The firmware clamps the commanded yaw rate (`gp_guard_yaw_rate`; `sim/leg_limits.py` `yaw_limits` derives the numbers
+into `limits.json` `yaw`) at the larger of the commanded and the measured ground speed v:
+
+- **The outer wheel**: v + ω W/2 stays inside the speed clamp's vmax (half the wheel's no-load speed: the headroom the
+  balance keeps on each wheel). W = 433.7 mm (`exports/body/sim-v2.json`). Turning in place, 10.1 rad/s at 36 V; at
+  vmax, no turn.
+- **The lateral acceleration** v ω: the outer leg carries its share m g/2 (159.5 N, `GP_ROBOT_LEG_FF_N`) plus the load
+  transfer m a h/W (m 36.75 kg, h 0.502 m: the hips at full height, above the centre of mass). At the every-day 61 N m
+  the leg holds 514 N along its length at its worst upright pose (215 mm, the five-bar's Jacobian), so 8.3 m/s². The
+  inner wheel keeping at least half its load (a ≤ g (W/2) / 2h, a tip-over margin of 2) allows 2.12 m/s²: that
+  governs, **2.11 m/s²**.
+
+| Speed (m/s) | 0 | 0.5 | 1.0 | 1.5 | 2.0 |
+|---|---|---|---|---|---|
+| Largest turn (rad/s, 36 V) | 10.1 | 4.22 | 2.11 | 1.41 | 0.90 |
+
+The scenario suite's drive (0.8 rad/s at 1 m/s) and the playground's demo are inside it. The playground's turn slider
+(90°/s, 1.57 rad/s) is clamped above about 1.35 m/s. The leg rig is one leg on a rail and has no turn.
 
 ## 3. What the 120 N m motor buys
 
@@ -115,7 +139,7 @@ The rig's jump (`sim/leg_rig.py`, 18.75 kg a leg, 36 V), each cap applied to bot
 | 45 | 130.9 | 43.6 / 70.5 | 433 / 526 | 11.7 |
 | **60** | **151.9** | 57.4 / 77.3 | 574 / 569 | 12.7 |
 | 61 (every day) | 152.5 | 58.2 / 76.9 | 584 / 564 | 12.7 |
-| 69 (peak) | 156.2 | 65.7 / 79.3 | 659 / 577 | 12.8 |
+| 69 (what the push rows allow) | 156.2 | 65.7 / 79.3 | 659 / 577 | 12.8 |
 | 75 | 159.1 | 71.2 / 79.6 | 715 / 579 | 13.0 |
 | 90 | 161.1 | 85.1 / 79.1 | 857 / 575 | 12.9 |
 | 105 | 158.3 | 99.2 / 78.8 | 998 / 573 | 12.9 |

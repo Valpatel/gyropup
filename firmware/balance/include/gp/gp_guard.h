@@ -35,6 +35,13 @@ float gp_guard_clamp_L(float L, float lean, float lean_measured);
  * where the lower links cannot meet (sim/leg_limits.py dead_point_margin). */
 float gp_guard_dead_margin(float phi1, float phi2);
 
+/* The largest |yaw rate| (rad/s) at a ground speed v (m/s; the larger of the commanded and the measured): the outer
+ * wheel inside vmax (the speed clamp's) and the lateral acceleration inside GP_LIM_YAW_A_LAT (sim/leg_limits.py
+ * yaw_rate_limit). */
+float gp_guard_yaw_limit(float v, float vmax);
+/* a commanded yaw rate clamped to it (never refused) */
+float gp_guard_yaw_rate(float yaw_rate, float v, float vmax);
+
 /* true while a motor's angle is no further past a hard stop than GP_LIM_ANGLE_WINDOW_RAD */
 bool gp_guard_angle_ok(float phi, float lo, float hi);
 

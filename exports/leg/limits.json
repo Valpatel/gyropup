@@ -26,11 +26,13 @@
   "robot": {
    "title": "PA6-CF printed links and hip frame (D33, D38), CNC 6061 output adapters (D46): today's record",
    "everyday_nm": 61.0,
-   "peak_nm": 69.0,
+   "peak_nm": 61.0,
    "rms_nm": 28.5,
    "rms_tau_s": 30.2,
    "peak_max_s": 0.35,
-   "motor_limit_torque_nm": 69.0,
+   "motor_limit_torque_nm": 61.0,
+   "push_allows_nm": 69.0,
+   "peak_note": "the every-day cap in the push too, by the owner's decision (D78, 2026-11-04): the push rows would allow 69 N m for 8 N m more and about 4 mm of jump",
    "everyday_governing": {
     "part": "hip_frame",
     "case": "E3o",
@@ -274,22 +276,22 @@
   "margin_deg": 2.0,
   "kd_nm_s_per_rad": 20.0,
   "stop_k_nm_per_rad": 856.0,
-  "j_kg_m2": 0.16,
+  "j_kg_m2": 0.169,
   "contact_rad_s": {
-   "pla_bench": 1.03,
-   "robot": 5.21
+   "pla_bench": 1.0,
+   "robot": 5.07
   },
   "stop_energy_j": {
    "pla_bench": 0.08,
    "robot": 2.17
   },
   "brake_from_no_load_deg": {
-   "pla_bench": 95.9,
-   "robot": 18.5
+   "pla_bench": 101.2,
+   "robot": 19.5
   }
  },
  "inertia": {
-  "bound_kg_m2": 0.16,
+  "bound_kg_m2": 0.169,
   "rotor_and_upper_link_kg_m2": 0.0278,
   "worst": {
    "motor_f": {
@@ -307,30 +309,46 @@
     ]
    }
   },
+  "worst_wheel_locked": {
+   "motor_f": {
+    "kg_m2": 0.1689,
+    "at_deg": [
+     -34.5,
+     -83.0
+    ]
+   },
+   "motor_r": {
+    "kg_m2": 0.1596,
+    "at_deg": [
+     -97.0,
+     -145.5
+    ]
+   }
+  },
   "at_stops": {
    "motor_f hi": {
-    "kg_m2": 0.1414,
+    "kg_m2": 0.1508,
     "at_deg": [
      0.5,
      -83.0
     ]
    },
    "motor_f lo": {
-    "kg_m2": 0.1255,
+    "kg_m2": 0.1334,
     "at_deg": [
      -94.5,
      -183.0
     ]
    },
    "motor_r hi": {
-    "kg_m2": 0.1266,
+    "kg_m2": 0.1274,
     "at_deg": [
      3.0,
      -85.5
     ]
    },
    "motor_r lo": {
-    "kg_m2": 0.1426,
+    "kg_m2": 0.144,
     "at_deg": [
      -97.0,
      -180.5
@@ -341,7 +359,7 @@
    "motor_f": 0.1412,
    "motor_r": 0.1424
   },
-  "basis": "sim/leg_rig.py model: the rotor, upper link, lower links and wheel, the hips and the other motor held, the wheel free on its bearing; the other motor free or the hips moving would lower it. A loaded leg (the wheel on the ground) adds the body: that is the landing and power-cut cases (R1, R3), not this one"
+  "basis": "sim/leg_rig.py model: the rotor, upper link, lower links and wheel, the hips and the other motor held, the wheel free on its bearing or locked to its link (the bound covers both; near the stops the larger of the two); the other motor free or the hips moving would lower it. A loaded leg (the wheel on the ground) adds the body: that is the landing and power-cut cases (R1, R3), not this one"
  },
  "free_swing": [
   {
@@ -350,8 +368,8 @@
    "stop": "hi",
    "soft_stops": true,
    "drive_nm": 61.0,
-   "contact_rad_s": 5.76,
-   "peak_stop_nm": 39.4
+   "contact_rad_s": 5.56,
+   "peak_stop_nm": 37.9
   },
   {
    "build": "robot",
@@ -359,8 +377,8 @@
    "stop": "hi",
    "soft_stops": false,
    "drive_nm": 61.0,
-   "contact_rad_s": 47.95,
-   "peak_stop_nm": 357.4
+   "contact_rad_s": 18.05,
+   "peak_stop_nm": 135.8
   },
   {
    "build": "robot",
@@ -368,8 +386,8 @@
    "stop": "lo",
    "soft_stops": true,
    "drive_nm": 61.0,
-   "contact_rad_s": 5.95,
-   "peak_stop_nm": 38.7
+   "contact_rad_s": 5.68,
+   "peak_stop_nm": 37.5
   },
   {
    "build": "robot",
@@ -377,8 +395,8 @@
    "stop": "lo",
    "soft_stops": false,
    "drive_nm": 61.0,
-   "contact_rad_s": 52.51,
-   "peak_stop_nm": 367.0
+   "contact_rad_s": 19.01,
+   "peak_stop_nm": 129.1
   },
   {
    "build": "robot",
@@ -386,8 +404,8 @@
    "stop": "hi",
    "soft_stops": true,
    "drive_nm": 61.0,
-   "contact_rad_s": 5.96,
-   "peak_stop_nm": 39.1
+   "contact_rad_s": 5.69,
+   "peak_stop_nm": 37.7
   },
   {
    "build": "robot",
@@ -395,8 +413,8 @@
    "stop": "hi",
    "soft_stops": false,
    "drive_nm": 61.0,
-   "contact_rad_s": 51.2,
-   "peak_stop_nm": 359.4
+   "contact_rad_s": 18.94,
+   "peak_stop_nm": 128.9
   },
   {
    "build": "robot",
@@ -404,8 +422,8 @@
    "stop": "lo",
    "soft_stops": true,
    "drive_nm": 61.0,
-   "contact_rad_s": 5.79,
-   "peak_stop_nm": 39.4
+   "contact_rad_s": 5.57,
+   "peak_stop_nm": 38.1
   },
   {
    "build": "robot",
@@ -413,8 +431,8 @@
    "stop": "lo",
    "soft_stops": false,
    "drive_nm": 61.0,
-   "contact_rad_s": 48.05,
-   "peak_stop_nm": 364.5
+   "contact_rad_s": 18.06,
+   "peak_stop_nm": 135.7
   },
   {
    "build": "pla_bench",
@@ -422,8 +440,8 @@
    "stop": "hi",
    "soft_stops": true,
    "drive_nm": 12.0,
-   "contact_rad_s": 0.89,
-   "peak_stop_nm": 6.0
+   "contact_rad_s": 0.85,
+   "peak_stop_nm": 5.7
   },
   {
    "build": "pla_bench",
@@ -431,53 +449,53 @@
    "stop": "hi",
    "soft_stops": false,
    "drive_nm": 12.0,
-   "contact_rad_s": 20.81,
-   "peak_stop_nm": 148.4
+   "contact_rad_s": 17.15,
+   "peak_stop_nm": 122.3
   },
   {
    "build": "pla_bench",
    "motor": "motor_f",
-   "stop": "lo",
-   "soft_stops": true,
-   "drive_nm": 12.0,
-   "contact_rad_s": 0.93,
-   "peak_stop_nm": 6.0
-  },
-  {
-   "build": "pla_bench",
-   "motor": "motor_f",
-   "stop": "lo",
-   "soft_stops": false,
-   "drive_nm": 12.0,
-   "contact_rad_s": 21.74,
-   "peak_stop_nm": 140.2
-  },
-  {
-   "build": "pla_bench",
-   "motor": "motor_r",
-   "stop": "hi",
-   "soft_stops": true,
-   "drive_nm": 12.0,
-   "contact_rad_s": 0.93,
-   "peak_stop_nm": 6.0
-  },
-  {
-   "build": "pla_bench",
-   "motor": "motor_r",
-   "stop": "hi",
-   "soft_stops": false,
-   "drive_nm": 12.0,
-   "contact_rad_s": 21.87,
-   "peak_stop_nm": 147.1
-  },
-  {
-   "build": "pla_bench",
-   "motor": "motor_r",
    "stop": "lo",
    "soft_stops": true,
    "drive_nm": 12.0,
    "contact_rad_s": 0.89,
-   "peak_stop_nm": 6.2
+   "peak_stop_nm": 5.7
+  },
+  {
+   "build": "pla_bench",
+   "motor": "motor_f",
+   "stop": "lo",
+   "soft_stops": false,
+   "drive_nm": 12.0,
+   "contact_rad_s": 18.23,
+   "peak_stop_nm": 116.4
+  },
+  {
+   "build": "pla_bench",
+   "motor": "motor_r",
+   "stop": "hi",
+   "soft_stops": true,
+   "drive_nm": 12.0,
+   "contact_rad_s": 0.9,
+   "peak_stop_nm": 5.7
+  },
+  {
+   "build": "pla_bench",
+   "motor": "motor_r",
+   "stop": "hi",
+   "soft_stops": false,
+   "drive_nm": 12.0,
+   "contact_rad_s": 18.19,
+   "peak_stop_nm": 117.6
+  },
+  {
+   "build": "pla_bench",
+   "motor": "motor_r",
+   "stop": "lo",
+   "soft_stops": true,
+   "drive_nm": 12.0,
+   "contact_rad_s": 0.85,
+   "peak_stop_nm": 5.8
   },
   {
    "build": "pla_bench",
@@ -485,13 +503,33 @@
    "stop": "lo",
    "soft_stops": false,
    "drive_nm": 12.0,
-   "contact_rad_s": 20.72,
-   "peak_stop_nm": 148.0
+   "contact_rad_s": 17.14,
+   "peak_stop_nm": 122.5
   }
  ],
  "angle_window_deg": 10.13,
  "dead_limp_deg": 3.0,
  "jump_hot_share": 0.8,
+ "yaw": {
+  "half_track_m": 0.21685,
+  "a_lat_m_s2": 2.11,
+  "a_lat_governing": "the inner wheel keeping half its load",
+  "a_leg_m_s2": 8.34,
+  "a_tip_half_m_s2": 2.12,
+  "leg_force_cap_n": 514.2,
+  "leg_force_cap_at_mm": 215,
+  "leg_ff_n": 159.5,
+  "mass_kg": 36.7543,
+  "com_h_m": 0.502,
+  "turn_in_place_rad_s_36v": 10.12,
+  "at_speed_rad_s_36v": {
+   "0.5": 4.22,
+   "1": 2.11,
+   "1.5": 1.41,
+   "2": 0.9
+  },
+  "source": "firmware/balance/include/gp/gp_model.h (mass, wheel, heights, feed-forward), exports/body/sim-v2.json (track)"
+ },
  "stop_box": {
   "unreachable": 0,
   "crossed": 0,
@@ -762,23 +800,6 @@
     "L_range_mm": [
      154.9,
      337.6
-    ]
-   },
-   {
-    "cap_nm": 69.0,
-    "jump_mm": 156.2,
-    "peak_motor_speed_rad_s": 12.8,
-    "gearbox_push_nm": 65.7,
-    "gearbox_after_nm": 79.3,
-    "knee_push_n": 658.9,
-    "knee_after_n": 577.4,
-    "hip_push_n": 647.6,
-    "hip_after_n": 546.7,
-    "apex_push_n": 664.0,
-    "axle_peak_n": 1668.4,
-    "L_range_mm": [
-     154.9,
-     338.0
     ]
    }
   ],

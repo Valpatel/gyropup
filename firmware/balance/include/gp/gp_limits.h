@@ -13,8 +13,8 @@
 
 /* PA6-CF printed links and hip frame (D33, D38), CNC 6061 output adapters (D46): today's record: every day: hip_frame E3o; peak: front_link R1 (knee force) */
 #define GP_LIM_ROBOT_EVERYDAY_NM 61.0f   /* any pose: the cap outside the jump's push */
-#define GP_LIM_ROBOT_PEAK_NM 69.0f       /* the jump's push only, at most GP_LIM_PEAK_MAX_S */
-#define GP_LIM_ROBOT_MOTOR_NM 69.0f      /* each RS-04's limit_torque (0x700B), written at boot */
+#define GP_LIM_ROBOT_PEAK_NM 61.0f       /* the jump's push only, at most GP_LIM_PEAK_MAX_S */
+#define GP_LIM_ROBOT_MOTOR_NM 61.0f      /* each RS-04's limit_torque (0x700B), written at boot */
 
 /* PLA bench leg on the boom stand (docs/motor-day.md): the motor-day derating's PLA cap; first failure wheel_link R1w 1.83 at 15 N m */
 #define GP_LIM_PLA_EVERYDAY_NM 12.0f   /* any pose: the cap outside the jump's push */
@@ -31,9 +31,14 @@
 #define GP_LIM_SOFT_MARGIN_RAD 0.034906585f
 #define GP_LIM_SOFT_KD 20.0f
 #define GP_LIM_STOP_K 856.0f           /* N m/rad: the TPU sleeve at the motor (sim/leg_rig.py) */
-#define GP_LIM_J_MOTOR 0.16f          /* kg m^2: the leg at a motor, worst pose (limits.json inertia) */
+#define GP_LIM_J_MOTOR 0.169f          /* kg m^2: the leg at a motor, worst pose (limits.json inertia) */
 #define GP_LIM_ANGLE_WINDOW_RAD 0.176801853f   /* a motor this far past a hard stop: limp */
 #define GP_LIM_DEAD_LIMP_RAD 0.0523598776f      /* a measured leg this close to a dead point: limp */
+
+/* the turn (sim/leg_limits.py yaw_limits): the outer wheel inside the speed clamp's vmax, the lateral acceleration
+ * inside 2.11 m/s^2 (the inner wheel keeping half its load) */
+#define GP_LIM_YAW_HALF_TRACK_M 0.21685f
+#define GP_LIM_YAW_A_LAT 2.11f
 
 /* the commanded leg length by lean (rad, + = wheel forward): inside the stops by the soft margin and at least
  * 25 deg from a dead point */

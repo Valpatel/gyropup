@@ -393,6 +393,75 @@ def angle_window(profile: dict) -> float:
     return t_fault / STOP_K_NM_PER_RAD + math.radians(ANGLE_WINDOW_EXTRA_DEG)
 
 
+# ----------------------------------------------------------------------------------- the turn (yaw rate)
+
+MODEL_H = R / 'firmware' / 'balance' / 'include' / 'gp' / 'gp_model.h'
+SIM_V2 = R / 'exports' / 'body' / 'sim-v2.json'
+G = 9.81
+
+
+def _model_define(name: str) -> float:
+    m = re.search(rf'#define {name} ([-0-9.e]+)f?', MODEL_H.read_text())
+    if not m:
+        raise ValueError(f'{MODEL_H.name}: no #define {name}')
+    return float(m.group(1))
+
+
+def yaw_limits(everyday_nm: float, table: list | None = None) -> dict:
+    """The turn the robot may be commanded at a speed (C: gp_guard_yaw_rate), from the wheel and leg limits:
+
+    * the outer wheel: |v| + |w| W/2 at most the speed clamp's vmax (GP_G_SPEED_MARGIN of the wheel's no-load
+      speed), the headroom the balance keeps on each wheel;
+    * the lateral acceleration |v w|: the outer leg's load m g/2 + m a h/W at most what the leg holds at the every-day
+      torque (the five-bar's Jacobian over the upright window), and the inner wheel keeping at least half its load
+      (a <= g (W/2) / 2h, the tip-over margin of 2); the lower of the two.
+
+    h is the hips' height at full height, above the centre of mass (conservative); m the whole robot."""
+    track = json.loads(SIM_V2.read_text())['track_mm'] / 1000.0
+    mass = _model_define('GP_MODEL_MASS_KG')
+    r = _model_define('GP_WHEEL_R_M')
+    ff = _model_define('GP_ROBOT_LEG_FF_N')
+    h = _model_define('GP_H_MAX_M') + r
+    table = table if table is not None else command_window()
+    lo, hi = window_at(table, 0.0)
+    cap, at = None, None
+    for L in range(round(lo * 1000), round(hi * 1000) + 1):
+        q = fb.stance(float(L), 0.0)
+        J = fb.jacobian(*q)
+        f = everyday_nm / (max(abs(J[1][0]), abs(J[1][1])) / 1000.0)
+        if cap is None or f < cap:
+            cap, at = f, L
+    a_leg = (cap - ff) * track / (mass * h)
+    a_tip = G * (track / 2) / (2 * h)
+    a_lat = math.floor(min(a_leg, a_tip) * 100) / 100
+    vmax = _model_define('GP_G_SPEED_MARGIN') * _model_define('GP_WHEEL_W_PER_V') * 36.0 * r
+    return {'half_track_m': round(track / 2, 5), 'a_lat_m_s2': a_lat,
+            'a_lat_governing': 'the inner wheel keeping half its load' if a_tip <= a_leg else "the outer leg at the every-day torque",
+            'a_leg_m_s2': round(a_leg, 2), 'a_tip_half_m_s2': round(a_tip, 2),
+            'leg_force_cap_n': round(cap, 1), 'leg_force_cap_at_mm': at, 'leg_ff_n': round(ff, 1), 'mass_kg': mass,
+            'com_h_m': round(h, 3),
+            'turn_in_place_rad_s_36v': round(vmax / (track / 2), 2),
+            'at_speed_rad_s_36v': {f'{v:g}': round(yaw_rate_limit(v, vmax, track / 2, a_lat), 2) for v in (0.5, 1.0, 1.5, 2.0)},
+            'source': 'firmware/balance/include/gp/gp_model.h (mass, wheel, heights, feed-forward), exports/body/sim-v2.json (track)'}
+
+
+def yaw_rate_limit(v: float, vmax: float, half_track: float, a_lat: float) -> float:
+    """The largest |yaw rate| (rad/s) at ground speed v (the larger of the commanded and the measured): the outer wheel
+    inside vmax and the lateral acceleration inside a_lat (C: gp_guard_yaw_rate)."""
+    v = abs(v)
+    w = max(0.0, vmax - v) / half_track
+    if v > 1e-6:
+        w = min(w, a_lat / v)
+    return w
+
+
+def clamp_yaw(yaw_rate: float, v: float, vmax: float, yaw: dict | None = None) -> float:
+    """A commanded yaw rate clamped (never refused) to yaw_rate_limit."""
+    y = yaw or load()['yaw']
+    w = yaw_rate_limit(v, vmax, y['half_track_m'], y['a_lat_m_s2'])
+    return max(-w, min(w, yaw_rate))
+
+
 # ----------------------------------------------------------------------------------- the jump sweep (MuJoCo)
 
 def jump_sweep(caps=SWEEP_CAPS, half_mass: float = HALF_MASS, motor_peak: float | None = None) -> list:
@@ -592,6 +661,7 @@ def build(sweep: dict | None = None, inertia: dict | None = None, swing: list | 
         'angle_window_deg': round(math.degrees(win), 2),
         'dead_limp_deg': DEAD_LIMP_DEG,
         'jump_hot_share': JUMP_HOT_SHARE,
+        'yaw': yaw_limits(prof['robot']['everyday_nm'], table),
         'stop_box': survey,
         'command': {'dead_point_min_deg': DEAD_POINT_MIN_DEG, 'margin_deg': SOFT_MARGIN_DEG, 'window': table,
                     'columns': ['lean rad (+ = wheel forward)', 'L_min m', 'L_max m']},
@@ -612,7 +682,8 @@ def main():
         global _J
         inertia = inertia_survey()
         _J = inertia['bound_kg_m2']                 # the soft stops in the sweep below run on the new bound
-        print(f"inertia at a motor: worst {max(v['kg_m2'] for v in inertia['worst'].values())} kg m^2 -> bound {_J}", flush=True)
+        print(f"inertia at a motor: worst {max(v['kg_m2'] for v in inertia['worst'].values())} kg m^2 (wheel free), "
+              f"{max(v['kg_m2'] for v in inertia['worst_wheel_locked'].values())} (locked) -> bound {_J}", flush=True)
         runs = jump_sweep()
         prof = torque_profiles(json.loads(FEA.read_text()), json.loads(DERATING.read_text()), runs)['robot']
         sweep = {'runs': runs, 'at_limits': jump_sweep(sorted({prof['everyday_nm'], prof['peak_nm']})),
@@ -623,7 +694,7 @@ def main():
     OUT.write_text(json.dumps(data, indent=1) + '\n')
     rb, pl = data['profiles']['robot'], data['profiles']['pla_bench']
     print(f"-> {OUT.relative_to(R)}: robot every day {rb['everyday_nm']:g} N m ({rb['everyday_governing']['part']} {rb['everyday_governing']['case']}), "
-          f"peak {rb['peak_nm']:g} N m ({rb['peak_governing']['part']} {rb['peak_governing']['case']}), rms {rb['rms_nm']:g} N m; PLA bench {pl['everyday_nm']:g} N m")
+          f"peak {rb['peak_nm']:g} N m (the push rows would allow {rb['push_allows_nm']:g}: {rb['peak_governing']['part']} {rb['peak_governing']['case']}), rms {rb['rms_nm']:g} N m; PLA bench {pl['everyday_nm']:g} N m")
 
 
 if __name__ == '__main__':

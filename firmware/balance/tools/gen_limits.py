@@ -73,6 +73,12 @@ def generate(d: dict) -> str:
     w(f'#define GP_LIM_ANGLE_WINDOW_RAD {f(math.radians(d["angle_window_deg"]))}   /* a motor this far past a hard stop: limp */')
     w(f'#define GP_LIM_DEAD_LIMP_RAD {f(math.radians(d["dead_limp_deg"]))}      /* a measured leg this close to a dead point: limp */')
     w('')
+    y = d['yaw']
+    w('/* the turn (sim/leg_limits.py yaw_limits): the outer wheel inside the speed clamp\'s vmax, the lateral acceleration')
+    w(f' * inside {y["a_lat_m_s2"]:g} m/s^2 ({y["a_lat_governing"]}) */')
+    w(f'#define GP_LIM_YAW_HALF_TRACK_M {f(y["half_track_m"])}')
+    w(f'#define GP_LIM_YAW_A_LAT {f(y["a_lat_m_s2"])}')
+    w('')
     w(f'/* the commanded leg length by lean (rad, + = wheel forward): inside the stops by the soft margin and at least')
     w(f' * {d["command"]["dead_point_min_deg"]:g} deg from a dead point */')
     w(f'#define GP_LIM_WIN_N {len(win)}')

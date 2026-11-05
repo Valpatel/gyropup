@@ -270,6 +270,7 @@ static void test_guard(void)
     gp_guard_limits(GP_BUILD_ROBOT, &t);
     NEAR(t.everyday_nm, GP_LIM_ROBOT_EVERYDAY_NM, 0);
     NEAR(t.motor_nm, t.peak_nm, 0); /* the motors' own limit lets the push through, and nothing more */
+    NEAR(t.peak_nm, t.everyday_nm, 0); /* D78 (2026-11-04): the every-day cap in the push too */
     CHECK(t.peak_nm >= t.everyday_nm && t.peak_nm <= GP_LEG_PEAK_NM && t.rms_nm < t.everyday_nm);
     gp_guard_limits(GP_BUILD_PLA_BENCH, &t);
     NEAR(t.everyday_nm, 12.0, 0); /* docs/motor-day.md: the PLA cap */
@@ -290,7 +291,7 @@ static void test_guard(void)
         {61.0f, 10.0f, 0.034907f, 0.0f, 0.0f},        /* 1 deg from the knee-out stop: nothing more into it */
         {61.0f, -10.0f, 0.034907f, 0.0f, -10.0f},     /* away from it: allowed */
         {61.0f, 10.0f, -0.034907f, 0.0f, 10.0f},      /* 5 deg away: outside the margin */
-        {61.0f, 10.0f, -0.034907f, 14.0f, -61.0f},    /* 14 rad/s at 5 deg: the whole leg (0.16 kg m^2) would hit at 3x */
+        {61.0f, 10.0f, -0.034907f, 14.0f, -61.0f},    /* 14 rad/s at 5 deg: the whole leg (0.169 kg m^2) would hit at 3x */
         {12.0f, 10.0f, -0.034907f, 14.0f, -12.0f},    /* the PLA leg's: brake at its cap */
         {12.0f, 5.0f, -1.640609f, -15.0f, 12.0f},     /* towards the knee-in stop, 3 deg off */
         {12.0f, 5.0f, -0.698132f, 15.0f, -12.0f},     /* the PLA leg mid-range at 15 rad/s cannot stop in time: brake */
@@ -301,9 +302,9 @@ static void test_guard(void)
     for (unsigned k = 0; k < sizeof g / sizeof g[0]; k++) {
         NEAR(gp_guard_soft_stop(g[k].tau, g[k].phi, g[k].w, lo, hi, g[k].T), g[k].want, 1e-4);
     }
-    NEAR(gp_guard_approach(0.0f, 61.0f), 5.212343, 1e-4);   /* contact: 61 N m on the sleeve, 2.17 J */
-    NEAR(gp_guard_approach(0.05f, 61.0f), 8.080440, 1e-4);
-    NEAR(gp_guard_approach(0.0f, 12.0f), 1.025379, 1e-4);
+    NEAR(gp_guard_approach(0.0f, 61.0f), 5.071654, 1e-4);   /* contact: 61 N m on the sleeve, 2.17 J */
+    NEAR(gp_guard_approach(0.05f, 61.0f), 7.862337, 1e-4);
+    NEAR(gp_guard_approach(0.0f, 12.0f), 0.997702, 1e-4);
     /* the rear motor's stops run -183 .. -83 deg: at its knee-in stop (-83) no more torque towards it */
     NEAR(gp_guard_soft_stop(8.0f, GP_FB_STOP_REAR_IN - d1, 0.0f, GP_FB_STOP_REAR_OUT, GP_FB_STOP_REAR_IN, 61.0f), 0.0, 0);
 
@@ -326,6 +327,20 @@ static void test_guard(void)
     NEAR(gp_guard_clamp_L(0.375f, -0.2f, -0.25f), 0.359, 1e-4);
     NEAR(gp_guard_clamp_L(0.375f, -0.25f, -0.2f), 0.359, 1e-4);
     NEAR(gp_guard_clamp_L(0.11f, 0.0f, 0.3f), 0.191, 1e-4);
+
+    /* (Python) yaw_rate_limit at 36 V (vmax 2.194402 m/s), rad/s: the outer wheel at a stand, the lateral acceleration
+     * at 1 and 1.5 m/s, the outer wheel again near top speed, none past it */
+    {
+        const float vm = GP_G_SPEED_MARGIN * GP_WHEEL_W_PER_V * 36.0f * GP_WHEEL_R_M;
+        NEAR(gp_guard_yaw_limit(0.0f, vm), 10.119449, 1e-3);
+        NEAR(gp_guard_yaw_limit(1.0f, vm), 2.11, 1e-4);
+        NEAR(gp_guard_yaw_limit(-1.5f, vm), 1.406667, 1e-4);
+        NEAR(gp_guard_yaw_limit(2.0f, vm), 0.896484, 1e-3);
+        NEAR(gp_guard_yaw_limit(2.3f, vm), 0.0, 0);
+        NEAR(gp_guard_yaw_rate(5.0f, 1.0f, vm), 2.11, 1e-4);
+        NEAR(gp_guard_yaw_rate(-5.0f, 1.0f, vm), -2.11, 1e-4);
+        NEAR(gp_guard_yaw_rate(0.8f, 1.0f, vm), 0.8, 1e-6);   /* the drive scenario's turn: untouched */
+    }
 
     /* (Python) dead_point_margin, rad: the knee-in/knee-in corner at the stops, 2.5 and 4 deg past the front's */
     NEAR(gp_guard_dead_margin(GP_FB_STOP_FRONT_IN, GP_FB_STOP_REAR_IN), 0.106698, 2e-4);
