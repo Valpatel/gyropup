@@ -126,7 +126,7 @@ try {
  }
  // A completed retry revokes old Blob URLs. A late older request cannot replace the newer unavailable state.
  await page.addInitScript(()=>{window.__rigRevoked=[];const revoke=URL.revokeObjectURL.bind(URL);URL.revokeObjectURL=url=>{window.__rigRevoked.push(url);revoke(url);};});
- await page.goto(base+'/designer/progress.html#rig');await ready();
+ await page.goto(base+'/designer/progress.html?rig-retry-probe#rig');await ready();
  const originalBlobs=await page.locator('#rig video').evaluateAll(videos=>videos.map(v=>v.src));
  await page.evaluate(()=>window.__portalLoads.rig.retry());
  assert.deepEqual((await page.evaluate(()=>window.__rigRevoked)).sort(),originalBlobs.sort());
