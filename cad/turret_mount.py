@@ -123,13 +123,13 @@ def _envelope(T, tol: float = 0.1, dz: float = 0.0) -> dict:
     """The turret's extent (built in frame T, its heights written `dz` higher: the TM frame), the robot's DT06 plug
     apart: the lowest point and the top (bounding boxes),
     and the largest radius from the pan axis of the fixed parts and of the parts that pan and tilt (their surfaces
-    tessellated to `tol`, plus `tol`), the tilting ones at tilt 0 and -25 deg; each with the part that sets it."""
+    tessellated to `tol`, plus `tol`), the tilting ones at both hard stops and level; each with the part that sets it."""
     ext = {'lowest': (1e9, None), 'top': (-1e9, None), 'fixed_r': (0.0, None), 'swept_r': (0.0, None)}
     for name in T.local:
         if name == 'dt_plug':
             continue
         fr = T.frame[name]
-        for tilt in ((0.0, T.G.tilt_min) if fr == 'tilt' else (0.0,)):
+        for tilt in ((T.G.tilt_max, 0.0, T.G.tilt_min) if fr == 'tilt' else (0.0,)):
             s = T.pose_shape(T.local[name], fr, 0.0, tilt, robot=False)
             v = s.val() if hasattr(s, 'val') else s
             bb = v.BoundingBox()
@@ -303,7 +303,7 @@ def mount(T) -> dict:
               'rate_max_per_s': cfg.RATE_MAX, 'mean_force_at_3_per_s_n': (rc.get('mean_force_in_burst_n') or {}).get('3_per_s'),
               'source': f'{_rel(DYNAMICS_JSON)} recoil (docs/turret-physics.md 8)'}
     aim = {'pan': 'continuous (the slip ring), at most 90 deg/s (the servo through 3:1)', 'pan_rate_max_deg_s': cfg.PAN_SPEED_MAX,
-           'tilt_deg': [cfg.TILT_MIN_DEG, cfg.TILT_MAX_DEG], 'tilt_rule': 'never above level: the hard stop at 0 and every goal clamped to <= 0',
+           'tilt_deg': [cfg.TILT_MIN_DEG, cfg.TILT_MAX_DEG], 'tilt_rule': 'D77: the mechanical hard stops only; every goal clamps into them, and firing stops above the feed\'s qualified elevation (exports/turret/limits.json fire_tilt_max_deg)',
            'tilt_axis_above_tm_mm': G.tilt_t + dz, 'ball_path_above_tm_mm': G.path_t + dz, 'muzzle_ahead_of_pan_axis_mm': G.barrel_x1 - G.tilt_x,
            'fps_max': cfg.CAP_FPS, 'source': 'firmware/turret/config.py, cad/turret.py Geo (tilt_t, path_t in frame T) + FRAME_T_ABOVE_TM'}
     return {'what': 'the turret\'s interface for the body (docs/turret-next-plan.md 3.1, task N5)',

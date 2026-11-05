@@ -407,7 +407,7 @@ def test_no_new_clash(turret):
     (their mates touch only at the seats: zero volume)."""
     names = ('hopper_lid', 'hopper', 'board_bay_lid', 'board_bay')
     for pan in (0.0, 90.0, 180.0, 270.0):
-        for tilt in (0.0, -25.0):
+        for tilt in (turret.G.tilt_max, 0.0, turret.G.tilt_min):
             posed = turret.posed(pan, tilt, robot=False)
             for n in names:
                 a = posed[n].val()

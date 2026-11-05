@@ -93,7 +93,7 @@ ROLE = {
     'pan_clamp': 'Aluminium ring (SendCutSend, 3.2 mm 6061-T6): clamps the pan bearing\'s outer race into the base (5 x M3).',
     'pan_ring': 'The turntable: a 63-tooth gear on the bearing\'s inner race; the yoke bolts on top. It turns without a stop: power and signals cross on the slip ring.',
     'pan_pinion': '21-tooth pinion on the pan servo\'s horn. 63 / 21 = 3, so the servo turns three times for every turn of the turret.',
-    'tilt_yoke': 'Two arms up to the tilt axis: the tilt servo on the left, a bearing on the right, hard stops at 0 and -25 deg (it cannot point above level).',
+    'tilt_yoke': 'Two arms up to the tilt axis: the tilt servo on the left, a bearing on the right, hard stops at +12 and -25 deg (D77: the mechanism\'s own limits).',
     'cradle': 'Swings on the tilt axis. Its two rails carry the ball cartridge (2 dowels + a thumbscrew) and the laser.',
     'cartridge_body': 'One printed block: the dial housing, the drop chute, the flywheel cage and the barrel socket. It lifts off the cradle as a unit.',
     'flywheel': 'Flywheel hub on the X2216\'s prop adapter (a washer and an M5 nut). Two of them spin opposite ways.',
@@ -343,7 +343,7 @@ def mechanics(T, rows, groups):
     tg = groups['tilt']
     tilt_axis_x = 0.0
     hold = tg.mass * G0 * (tg.com[0] - tilt_axis_x)
-    tilt = {'servo_stall_nm': sv['stall_torque_nm'], 'max_deg_s': sv['no_load_speed_deg_per_s'], 'range_deg': [G.tilt_min, 0.0],
+    tilt = {'servo_stall_nm': sv['stall_torque_nm'], 'max_deg_s': sv['no_load_speed_deg_per_s'], 'range_deg': [G.tilt_min, G.tilt_max],
             'group_mass_g': round(tg.mass * 1000), 'com_ahead_mm': round(tg.com[0] * 1000, 1), 'holding_nm': round(hold, 2),
             'margin': round(sv['stall_torque_nm'] / max(abs(hold), 1e-6), 1)}
     # the pan group's inertia about the pan axis (with the tilt group at tilt 0), and the torque to reach full slew fast
@@ -364,13 +364,43 @@ def mechanics(T, rows, groups):
 
 def sweep(T, pts_pan, pts_tilt, pans=np.arange(-170, 171, 5.0), tilts=np.arange(0.0, -25.01, -2.5)):
     """The moving parts against the deck (outside the turret's own base) and against upright antennas on the J501's
-    bulkheads, over pan x tilt. Points are in their groups' frames (mm)."""
+    bulkheads, over pan x tilt. Points are in their groups' frames (mm). The depression table walks down from level; the
+    tilts above level up to the upper stop (D77) are checked for the deck and the antennas too (the rear drops as the
+    muzzle rises), each pan's highest clear one in antenna_tilt_up_deg."""
     G = T.G
+    up_tilts = [float(t) for t in np.arange(2.5, G.tilt_max + 1e-6, 2.5)] + ([float(G.tilt_max)] if G.tilt_max % 2.5 else [])
     ants = tb.antennas()
     deck_gap, worst = 1e9, None
     ant_min = {a[0]: 1e9 for a in ants}
     blocked = {}                                     # pan -> the deepest tilt that clears every antenna by 3 mm
+    up_ok = {}                                       # pan -> the highest tilt above level that clears them by 3 mm
+
+    def pose(pan, tilt):
+        p_pan = rot_z(pts_pan, math.radians(pan)) + [0, 0, T.mount_z]
+        p_t = rot_y(pts_tilt, math.radians(-tilt)) + [0, 0, G.tilt_t]
+        return np.concatenate([p_pan, rot_z(p_t, math.radians(pan)) + [0, 0, T.mount_z]])
+
     for pan in pans:
+        top = 0.0
+        for tilt in up_tilts:
+            p = pose(pan, tilt)
+            r = np.hypot(p[:, 0], p[:, 1])
+            over = (r > G.base_r) & (p[:, 0] > tb.DECK_X[0]) & (p[:, 0] < tb.DECK_X[1]) & (np.abs(p[:, 1]) < tb.SIDE_Y)
+            if over.any():
+                g = float((p[over, 2] - tb.Z_TM).min())
+                if g < deck_gap:
+                    deck_gap, worst = g, (float(pan), float(tilt))
+            clear = True
+            for name, b, t, d in ants:
+                dxy = np.clip(np.hypot(p[:, 0] - b[0], p[:, 1] - b[1]) - d / 2, 0.0, None)
+                dz = np.clip(p[:, 2] - t[2], 0.0, None) + np.clip(b[2] - p[:, 2], 0.0, None)
+                dist = float(np.sqrt(dxy ** 2 + dz ** 2).min())
+                ant_min[name] = min(ant_min[name], dist)
+                clear = clear and dist >= 3.0
+            if not clear:
+                break
+            top = tilt
+        up_ok[float(pan)] = top
         ok_tilt, still_clear = None, True
         p_pan = rot_z(pts_pan, math.radians(pan)) + [0, 0, T.mount_z]
         for tilt in tilts:
@@ -407,6 +437,8 @@ def sweep(T, pts_pan, pts_tilt, pans=np.arange(-170, 171, 5.0), tilts=np.arange(
     return {'deck_min_gap_mm': round(deck_gap, 1), 'deck_worst_pose_deg': worst,
             'antenna_min_gap_mm': {k: round(v, 1) for k, v in ant_min.items()},
             'antenna_tilt_max_deg': table,
+            'antenna_tilt_up_deg': [[p, v] for p, v in up_ok.items()],
+            'antenna_limited_up_pans_deg': [p for p, v in up_ok.items() if v < G.tilt_max - 1e-6],
             'antenna_limited_pans_deg': sectors,
             'note': 'antennas: upright swivel dipoles on all four RP-SMA bulkheads (none chosen yet: ' + tb.ANTENNA['note'] + ')'}
 
@@ -864,8 +896,9 @@ def main():
            'pivots': {'pan': list(pan_o), 'tilt': [0.0, 0.0, G.tilt_t], 'pinion': [G.servo_pan_xy[0], G.servo_pan_xy[1], zt],
                       'pinion_ratio': -G.gear['z_ring'] / G.gear['z_pinion'], 'dial': list(dial_o), 'wheel_l': list(wheel['wheel_l']),
                       'wheel_r': list(wheel['wheel_r']), 'flap': list(flap_hinge)},
-           'limits': {'pan_deg': [-170.0, 170.0], 'tilt_deg': [G.tilt_min, 0.0], 'pan_rate_deg_s': mech['pan']['max_deg_s'],
-                      'tilt_rate_deg_s': mech['tilt']['max_deg_s']},
+           'limits': {'pan_deg': [-170.0, 170.0], 'tilt_deg': [G.tilt_min, G.tilt_max], 'pan_rate_deg_s': mech['pan']['max_deg_s'],
+                      'tilt_rate_deg_s': mech['tilt']['max_deg_s'],
+                      'fire_tilt_max_deg': json.loads((R / 'exports' / 'turret' / 'limits.json').read_text())['fire_tilt_max_deg']},
            'muzzle': tf(G.barrel_x1, 0.0, 0.0), 'laser': tf(tu.LASER_X[0] - 2 + tu.LASER['L'], tu.LASER_Y, tu.LASER_Z),
            'ball_path': path, 'pockets': pockets, 'pile': pile, 'ball_r': rb, 'dial_park_deg': fd['park_deg'],
            'antennas': [{'name': n, 'base': list(b), 'top': list(t), 'd': d} for n, b, t, d in tb.antennas()],

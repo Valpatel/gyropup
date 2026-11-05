@@ -151,9 +151,9 @@ def register(reg, T, pile):
               samples=SAMPLES['I-pan'],
               intended_contacts=[('pan_bearing_inner', 'pan_bearing'), ('slip_ring_rotor', 'slip_ring'),
                                  ('pan_spacer', 'pan_bearing'), ('ring_coupling', 'slip_ring')])
-    # tilt 0 to -25 deg (muzzle down) = a turn of 0..25 deg about +y at the tilt axis
+    # tilt between the hard stops, +12 (muzzle up) to -25 deg (muzzle down) = a turn of -12..25 deg about +y at the tilt axis
     reg.joint('I-tilt', 'revolute', parts=('cartridge_body', 'pan_ring'), axis=((0, 0, G.tilt_t), (0, 1, 0)),
-              range_deg=(0, -G.tilt_min), samples=SAMPLES['I-tilt'],
+              range_deg=(-G.tilt_max, -G.tilt_min), samples=SAMPLES['I-tilt'],
               intended_contacts=[('horn_boss', 'tilt_servo'), ('stop_lug', 'tilt_yoke'), ('shoulder_screw', 'tilt_yoke'),
                                  ('tilt_bearing_inner', 'tilt_bearing'), ('shoulder_screw', 'tilt_bearing'),
                                  ('pivot_spacer', 'tilt_bearing'), ('pivot_spacer', 'tilt_yoke')])

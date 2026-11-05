@@ -70,8 +70,8 @@ STEPS = [
      'face, and the MR126 into the -y arm\'s seat. The cradle between the arms: the horn boss between the +y plate and the servo\'s horn, '
      '4 x M3 x 14 flat heads from the plate\'s inner face into the horn (snug: 1.8 mm of thread); on the -y side the pivot spacer, its land '
      'against the bearing, and the ISO 7379 shoulder screw through the arm, the bearing and the spacer into the plate\'s tapped hole (snug, '
-     'about 0.15 N m, a drop of CA gel on the thread). Check the 0 and -25 deg stops by hand before anything else: the lug meets the '
-     'yoke\'s two sectors, and the barrel cannot be pushed above level.'),
+     'about 0.15 N m, a drop of CA gel on the thread). Check the +12 and -25 deg stops by hand before anything else: the lug meets the '
+     'yoke\'s two sectors, and the barrel cannot be pushed past either.'),
     ('The laser', ['laser_mount', 'laser'], {'laser_mount': -30, 'laser': -30}, (0.7, -1.0, 0.4),
      'The mount on the cradle\'s tab: 2 x M3 x 10 up through it; the laser in the mount on three nylon-tip M3 set screws '
      '(boresight them on the bench).'),

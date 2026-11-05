@@ -18,7 +18,8 @@ docs/body-plan.md section 1.5: the lidar 5 mm from the turret's bumper, the sim'
 and anything that turns): when that file reaches main it is the one source and this constant goes. It was 147.65 here
 (the bumper's R 86 + the lidar's 51.65 + a 10 mm gap).
 
-What is checked, for pan -180..180 deg (2 deg steps) and tilt 0..-25 deg (0.5 deg steps):
+What is checked, for pan -180..180 deg (2 deg steps) and tilt 0..-25 deg (0.5 deg steps), and above level up to the
+upper hard stop (D77; the rear of the cradle drops as the muzzle rises, so each pan's highest clear tilt is found too):
   - every part that pans or tilts (sampled over its surface every ~1.2 mm, so flat faces count, not just their
     corners), against the lidar's cylinder (VLP-16: Ø103.3 x 71.7, Velodyne VLP-16 user manual), at least `margin`;
   - the ball's path from the muzzle: a ball of the largest Rival size (Ø22.8) along the barrel's axis turned down a
@@ -147,13 +148,13 @@ def ring_bound(rho, z, ob):
     return np.hypot(h, v)
 
 
-def prune(T, clouds, obstacles, margin, tilt_min):
+def prune(T, clouds, obstacles, margin, tilt_min, tilt_max=0.0):
     """The moving parts' points that can come within margin + 2 mm of an obstacle at some pan and tilt (the rest are
     dropped: at least the margin away whatever the pose). Tilting parts are bounded at seven tilts, less the arc a
     point can sweep between them."""
     G = T.G
     out = {}
-    samples = np.linspace(tilt_min, 0.0, 7)
+    samples = np.linspace(tilt_min, tilt_max, 7 + int(math.ceil(tilt_max / 4.0)))
     step = math.radians(abs(samples[1] - samples[0]))
     for name, (fr, P) in clouds.items():
         if fr == 'base' or not obstacles:
@@ -176,33 +177,49 @@ def prune(T, clouds, obstacles, margin, tilt_min):
     return out
 
 
-def study(T, clouds, obstacles, margin, pans, tilts, ball=True):
+def study(T, clouds, obstacles, margin, pans, tilts, ball=True, up_tilts=()):
     """For every pan, the deepest tilt (most negative) at which every moving part keeps `margin` from every obstacle
     and, with `ball`, the ball's path from the muzzle keeps it from the obstacles marked 'ball'. Tilts are checked from
-    0 down and the first failure ends a pan's search (clearance shrinks as the barrel drops)."""
-    near = prune(T, clouds, obstacles, margin, min(tilts))
+    0 down and the first failure ends a pan's search (clearance shrinks as the barrel drops). With `up_tilts` (rising
+    from level to the upper stop) the same for the highest tilt above level: the rear of the cradle drops as the muzzle
+    rises, so a part behind the tilt axis can come down onto an obstacle when the turret faces away from it."""
+    near = prune(T, clouds, obstacles, margin, min(tilts), max([0.0, *up_tilts]))
+
+    def nearest(pan, tilt):
+        dmin, who = 1e9, None
+        for name, (frame, P) in near.items():
+            Q = pose_points(T, P, frame, pan, tilt)
+            for ob in obstacles:
+                d = float(obstacle_distance(Q, ob).min())
+                if d < dmin:
+                    dmin, who = d, f'{name} / {ob["name"]}'
+        if ball:
+            bp, br = ball_path(T, pan, tilt)
+            for ob in obstacles:
+                if ob.get('ball', True):
+                    d = float(obstacle_distance(bp, ob).min()) - br
+                    if d < dmin:
+                        dmin, who = d, f'ball path / {ob["name"]}'
+        return dmin, who
+
     rows = []
     for pan in pans:
         best, last = None, None
         for tilt in tilts:
-            dmin, who = 1e9, None
-            for name, (frame, P) in near.items():
-                Q = pose_points(T, P, frame, pan, tilt)
-                for ob in obstacles:
-                    d = float(obstacle_distance(Q, ob).min())
-                    if d < dmin:
-                        dmin, who = d, f'{name} / {ob["name"]}'
-            if ball:
-                bp, br = ball_path(T, pan, tilt)
-                for ob in obstacles:
-                    if ob.get('ball', True):
-                        d = float(obstacle_distance(bp, ob).min()) - br
-                        if d < dmin:
-                            dmin, who = d, f'ball path / {ob["name"]}'
+            dmin, who = nearest(pan, tilt)
             if dmin < margin:
                 break
             best, last = tilt, (who, round(dmin, 1))
-        rows.append({'pan': pan, 'max_depression_deg': best if best is not None else 'none: blocked at tilt 0', 'closest_at_limit': last})
+        row = {'pan': pan, 'max_depression_deg': best if best is not None else 'none: blocked at tilt 0', 'closest_at_limit': last}
+        if up_tilts and best is not None:
+            top, at_top = 0.0, last
+            for tilt in up_tilts:
+                dmin, who = nearest(pan, tilt)
+                if dmin < margin:
+                    break
+                top, at_top = tilt, (who, round(dmin, 1))
+            row.update({'max_elevation_deg': top, 'closest_at_up_limit': at_top})
+        rows.append(row)
     return rows, {k: len(P) for k, (_, P) in near.items()}
 
 
@@ -253,6 +270,7 @@ def main():
         clouds[name] = (fr, surface_points(T.local[name]))
     npts = sum(len(P) for _, P in clouds.values())
     tilts = [round(-0.5 * k, 1) for k in range(int(-G.tilt_min / 0.5) + 1)]
+    up_tilts = [round(0.5 * k, 1) for k in range(1, int(round(G.tilt_max / 0.5)) + 1)]
     pans = [float(p) for p in range(-180, 181, 2)]
     if a.scene == 'robot':
         obstacles = scene_robot(a.x, a.top)
@@ -260,7 +278,7 @@ def main():
         obstacles = scene_box()
     static = {f'{k} / {ob["name"]}': round(float(obstacle_distance(P, ob).min()), 1) for k, (fr, P) in clouds.items() if fr == 'base'
               for ob in obstacles if ob['kind'] == 'cyl'}
-    rows, kept = study(T, clouds, obstacles, a.margin, pans, tilts)
+    rows, kept = study(T, clouds, obstacles, a.margin, pans, tilts, up_tilts=up_tilts)
     limited = [r for r in rows if r['max_depression_deg'] != G.tilt_min]
     worst = max((r for r in limited if isinstance(r['max_depression_deg'], float)), key=lambda r: r['max_depression_deg'], default=None)
     window = [min(r['pan'] for r in limited), max(r['pan'] for r in limited)] if limited else None
@@ -269,15 +287,20 @@ def main():
     for p in range(-180, 181, 5):
         near = [r['max_depression_deg'] for r in rows if abs(r['pan'] - p) <= 5.0]
         near = [v if isinstance(v, float) else 0.0 for v in near]
-        table.append({'pan_deg': p, 'min_tilt_deg': max(near) if near else G.tilt_min})
+        up = [r.get('max_elevation_deg', 0.0) for r in rows if abs(r['pan'] - p) <= 5.0]
+        table.append({'pan_deg': p, 'min_tilt_deg': max(near) if near else G.tilt_min,
+                      'max_tilt_deg': min(up) if up else G.tilt_max})
+    up_limited = [r['pan'] for r in rows if r.get('max_elevation_deg', G.tilt_max) < G.tilt_max]
     res = {'scene': a.scene, 'obstacles': obstacles, 'margin_mm': a.margin, 'ball': {'d_mm': BALL_MAX_D, 'wild_deg': WILD_DEG, 'slowest_m_s': SLOW_MS},
            'turret': {'tilt_axis_above_tm_mm': G.tilt_t, 'ball_path_above_tm_mm': G.path_t, 'muzzle_ahead_of_pan_axis_mm': G.barrel_x1 - G.tilt_x,
-                      'tilt_range_deg': [G.tilt_min, 0.0]},
-           'fixed_parts_to_obstacles_mm': static, 'limited_pan_window_deg': window, 'worst': worst, 'firmware_table': table,
+                      'tilt_range_deg': [G.tilt_min, G.tilt_max]},
+           'fixed_parts_to_obstacles_mm': static, 'limited_pan_window_deg': window, 'worst': worst,
+           'elevation_limited_pans_deg': [min(up_limited), max(up_limited)] if up_limited else None, 'firmware_table': table,
            'keep_out_fire_pan_deg': keep_out_fire(pans, a.scene), 'per_pan': rows,
            'points': {'sampled': npts, 'near_enough_to_check': kept},
            'how': 'surface samples of every panning and tilting part (~1.2 mm apart), the ones that can come within the margin at some '
-                  'pose kept (a lower bound over pan and tilt), and the ball path; the limit is the deepest tilt in 0.5 deg steps that keeps the margin',
+                  'pose kept (a lower bound over pan and tilt), and the ball path; the limit is the deepest tilt in 0.5 deg steps that keeps the margin, '
+                  'and above level the highest up to the upper stop',
            'seconds': round(time.time() - t0)}
     if a.scene == 'robot':
         res['lidar'] = {**LIDAR, 'centre_x_mm': round(obstacles[0]['x'], 1), 'top_above_tm_mm': a.top, 'base_above_tm_mm': round(a.top - LIDAR['h'], 1),
@@ -319,14 +342,17 @@ def plots(T, res, name):
     val = lambda v: v if isinstance(v, float) else 2.0
     fig, ax = plt.subplots(figsize=(9, 4.2), dpi=130)
     ax.plot([r['pan'] for r in rows], [val(r['max_depression_deg']) for r in rows], color='#c2410c', lw=2)
+    if any('max_elevation_deg' in r for r in rows):
+        ax.plot([r['pan'] for r in rows], [r.get('max_elevation_deg', 0.0) for r in rows], color='#1d4ed8', lw=2, label='highest allowed')
     ax.axhline(G.tilt_min, color='#64748b', lw=1, ls='--')
+    ax.axhline(G.tilt_max, color='#64748b', lw=1, ls='--')
     ax.axhline(0.0, color='#64748b', lw=1)
     for p in res.get('keep_out_fire_pan_deg', []):
         ax.axvspan(p - 1, p + 1, color='#dc2626', alpha=0.08, lw=0)
     ax.set_xlim(-180, 180)
-    ax.set_ylim(G.tilt_min - 2, 2)
+    ax.set_ylim(G.tilt_min - 2, G.tilt_max + 2)
     ax.set_xlabel('pan (deg, 0 = forward)')
-    ax.set_ylabel('deepest allowed tilt (deg)')
+    ax.set_ylabel('allowed tilt (deg): deepest and highest')
     if name == 'lidar':
         L = res['lidar']
         title = (f"Depression limit over the VLP-16 (centre {L['centre_x_mm']:.0f} mm ahead, top {L['top_above_tm_mm']:+.1f} mm; "
@@ -334,7 +360,8 @@ def plots(T, res, name):
     else:
         title = f"Depression limit on the Orin box (deck, antennas; margin {res['margin_mm']:.0f} mm); red: no firing (the operator's side)"
     ax.set_title(title, fontsize=9)
-    ax.fill_between([r['pan'] for r in rows], [val(r['max_depression_deg']) for r in rows], 2, color='#16a34a', alpha=0.12, label='allowed')
+    ax.fill_between([r['pan'] for r in rows], [val(r['max_depression_deg']) for r in rows], [r.get('max_elevation_deg', 0.0) for r in rows],
+                    color='#16a34a', alpha=0.12, label='allowed')
     ax.legend(loc='lower right', fontsize=8)
     ax.grid(alpha=0.3)
     fig.tight_layout()

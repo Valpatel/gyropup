@@ -28,7 +28,7 @@ against 276 MPa yield.
 
 Loads (masses from cad/turret.py's mass_properties at run time, written to summary.json):
   E-cap    everyday: the pan servo at its firmware cap, 50 % of its 2.94 N m stall, through the 21:63 gears
-  E-push   everyday: a hand pushes the muzzle up or down with 50 N; the cradle's lug meets the 0 or -25 deg stop
+  E-push   everyday: a hand pushes the muzzle up or down with 50 N; the cradle's lug meets the upper (+12) or -25 deg stop
            (a push sideways back-drives the pan servo at its cap: E-cap)
   R-stall  rare: the pan servo at its own torque ceiling, 80 % of its stall (EEPROM register 16, set with the setup tool
            and verified by the firmware at every init: firmware/turret/config.py PAN_MAX_TORQUE): what it can push if
@@ -253,12 +253,15 @@ def run(mesh, anim=True, only=None):
           True, f'30 g sideways (+y): {W30:.0f} N pulls the tilt servo off the arm, on its 4 M2 screw heads')
     lever = (G.barrel_x1 - G.tilt_x) / np.mean(G.stop_r)
     F_stop = PUSH_N * lever
+    # the push is square to the barrel, which rests on the upper stop at G.tilt_max (D77): (-sin, cos) of that tilt in x, z
+    push = (-PUSH_N * math.sin(math.radians(G.tilt_max)), PUSH_N * math.cos(math.radians(G.tilt_max)))
+    sd = _stop_dir(G, upper=True)
     study('tilt_yoke', 'E-push-up', yoke, 'pa6_cf_xy',
-          lambda st: (st.fix(base_fix), st.force(_sel_stop(G, zt, upper=True), (_stop_dir(G, upper=True)[0] * F_stop, 0, _stop_dir(G, upper=True)[1] * F_stop)),
+          lambda st: (st.fix(base_fix), st.force(_sel_stop(G, zt, upper=True), (sd[0] * F_stop, 0, sd[1] * F_stop)),
                       # the pivot carries the rest (the cradle in balance), all of it on this arm's bore (conservative)
-                      st.force(mr_bore, (-F_stop * _stop_dir(G, upper=True)[0], 0, PUSH_N - F_stop * _stop_dir(G, upper=True)[1]), probe=False)),
-          False, f'{PUSH_N:.0f} N up at the muzzle ({G.barrel_x1 - G.tilt_x:.0f} mm from the tilt axis) holds the cradle on the 0 deg stop: '
-                 f'{F_stop:.0f} N on the stop sector at r {np.mean(G.stop_r):.0f}')
+                      st.force(mr_bore, (push[0] - F_stop * sd[0], 0, push[1] - F_stop * sd[1]), probe=False)),
+          False, f'{PUSH_N:.0f} N square to the barrel at the muzzle ({G.barrel_x1 - G.tilt_x:.0f} mm from the tilt axis) holds the cradle '
+                 f'on the {G.tilt_max:+g} deg upper stop: {F_stop:.0f} N on the stop sector at r {np.mean(G.stop_r):.0f}')
 
     # ---------------------------------------------------------------- the turntable (pan_ring, T frame)
     z0g, z1g = G.turntable_z
@@ -399,7 +402,7 @@ def run(mesh, anim=True, only=None):
           lambda st: (st.fix(held), st.force(latch, (0, 0, T_latch)), st.force(cross_top, (0, 0, -C_rear), probe=False)),
           False, f'{PUSH_N:.0f} N up at the muzzle ({arm_push:.0f} mm from the tilt axis) reaches the frame through the cartridge as '
                  f'{T_latch:.0f} N up at the CT thumbscrew and {C_rear:.0f} N down on the rails\' rear cross bar (the dowels only '
-                 f'locate); the plates hold the frame (the lug on the -y plate holds the 0 deg stop)')
+                 f'locate); the plates hold the frame (the lug on the -y plate holds the upper stop)')
     # each cheek plate (SendCutSend 6061-T6, 0.125 in), held at its joint at the tilt axis and loaded at its foot's three
     # screws with the cartridge's whole 30 g load (the two plates share it: one carrying all of it is the bound). The joint
     # is what clamps the plate: on the +y plate the horn boss's Ø20 face and its 4 x M3 x 14; on the -y plate the pivot
@@ -532,9 +535,9 @@ def run(mesh, anim=True, only=None):
 
 def _stop_dir(G, upper=True):
     """Unit (x, z) direction of the force the cradle's lug puts on a yoke stop face (tangential at the stop radius):
-    the lug sits at -90 deg; pushing the nose up turns it towards the upper stop at -90 + w."""
+    the lug sits at -90 deg at tilt 0; pushing the nose up turns it towards the upper stop's face at -90 + tilt_max + w."""
     w = tu.STOP_HALF_DEG
-    a = math.radians(-90 + w if upper else -90 + G.tilt_min - w)
+    a = math.radians(-90 + G.tilt_max + w if upper else -90 + G.tilt_min - w)
     # tangent pointing the way the lug moves into the stop
     t = (-math.sin(a), math.cos(a)) if upper else (math.sin(a), -math.cos(a))
     return t
@@ -542,7 +545,7 @@ def _stop_dir(G, upper=True):
 
 def _stop_face(f, zt, G, upper=True):
     w = tu.STOP_HALF_DEG
-    a = math.radians(-90 + w) if upper else math.radians(-90 + G.tilt_min - w)
+    a = math.radians(-90 + G.tilt_max + w) if upper else math.radians(-90 + G.tilt_min - w)
     r = np.mean(G.stop_r)
     px, pz = r * math.cos(a), zt + r * math.sin(a)
     return abs(f.center[0] - px) < 2.0 and abs(f.center[2] - pz) < 2.5
