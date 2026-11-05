@@ -15,16 +15,30 @@ python tools/motor_day.py
 python tools/motor_day.py --no-render
 ```
 
-All nine source-guard controls passed. The normal generator rendered seven steps and five drawings, rebuilt the
-PDF/package, and the subsequent no-render replay accepted its actual receipt. The job exited 0 after 116 seconds.
-Outputs were fetched with `fleet-run fetch 156 <destination> --outputs-only`; no metadata was backfilled onto old pixels.
-The final retained-record integration check brings the local suite to ten passing tests.
+Nine source-guard controls passed. The generator genuinely rendered seven steps and five drawings, and its
+subsequent no-render replay accepted the actual visual receipt. The job exited 0 after 116 seconds. Outputs were
+fetched with `fleet-run fetch 156 <destination> --outputs-only`; no visual metadata was backfilled onto old pixels.
+The retained-record integration check brings the local guard suite to ten passing tests.
 
-The toolkit’s PLA row now reports the sourced Z modulus of **2060 MPa**, replacing 2700 MPa, and a fuller material
-note. Its strength remains 25 MPa, the derating verdicts remain unchanged, and the generated day-one cap remains
-**12 N·m**. New foot/drill-template meshes have the same bounds, enclosed volume and unique vertices at 0.0001 mm
-as the previous exports, with different triangulation bytes; CAD sources are unchanged. STEP/3MF headers and
-rendered source stamps reflect the real regeneration.
+## Fresh visuals and the preserved print snapshot
 
-The hip-module sheet and motor step were visually inspected for labels, source stamp and the existing unqualified
-status. These are documentation-generation checks, not physical fit, printing, loading or motor qualification.
+Only the fresh step/drawing PNGs, drawing PDF and ordered visual-input metadata are adopted from that run.
+The renderer builds its scene from unchanged CAD functions, independently of the re-exported print meshes.
+The hip-module sheet and motor step were inspected for labels, source stamp and the existing unqualified status.
+
+The normal generator also re-exported foot/drill-template mesh bytes while retaining their old slice records.
+Those new bytes did **not** match the recorded SHA-256 identities, even though bounds, enclosed volumes and
+unique vertices at 0.0001 mm matched. That is a generation/provenance limitation, not proof of a new slice.
+The attempted full regenerated package is **not** published as a coherent print package.
+
+All original print geometry, all 30 mesh/slice relationships, derating data and the old ZIP are preserved
+byte-for-byte. The ZIP remains an earlier snapshot, with its original text, pictures and source stamps; its
+historical status is stated beside the download. The repository’s retained PLA record stays at 2700 MPa modulus,
+25 MPa strength and a 12 N·m cap. The unrelated newer material-row description from the rendering environment is
+not adopted. No new print package, material qualification or physical test is claimed.
+
+The existing print-provenance harness now checks every actual motor-day slice record against its source bytes.
+It rejects the two stale identities from the initially collected full export and passes the preserved snapshot.
+Future full package regeneration must reslice changed source bytes or preserve the validated source snapshot;
+the normal producer does not yet make this transaction atomic. These checks do not establish physical fit,
+printing, load capacity or safe powered operation.
