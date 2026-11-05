@@ -57,6 +57,15 @@ async function contextFor(size) {
   const { defaultBrowserType, ...device } = size.device ? devices[size.device] : {};
   const context = await browser.newContext({ ...device, ...size.context, colorScheme: 'light', reducedMotion: 'reduce' });
   await acknowledgePrototypeNotice(context);
+  await context.addInitScript(() => {
+    window.__emptySpaceStylesheets = new WeakMap();
+    const record = (event, state) => {
+      const element = event.target;
+      if (element?.localName === 'style' || (element?.localName === 'link' && element.relList.contains('stylesheet'))) window.__emptySpaceStylesheets.set(element, state);
+    };
+    document.addEventListener('load', event => record(event, 'loaded'), true);
+    document.addEventListener('error', event => record(event, 'error'), true);
+  });
   await context.route('https://cad-agent.gyropup.com/**', route => route.abort());
   return context;
 }
@@ -68,16 +77,17 @@ async function load(page, route) {
     [...document.querySelectorAll('.cad-diagram')].every(f => f.dataset.state === 'ready' || f.dataset.state === 'error')
     && (!/^\/designer\/(progress|build|sim)\.html$/.test(location.pathname) || document.body.dataset.ready === '1'), null, { timeout: 30000 })
     .catch(() => problems.push(`empty-space ${route}: diagrams or reports did not finish loading`));
-  // The styles selecting the rendered fonts must be available, including same-origin @imports.
+  // Native stylesheet load includes its imports and works for CSS whose rules are opaque to this origin.
   await page.waitForFunction(() => {
-    const ready = sheet => {
-      if (!sheet) return false;
-      if (sheet.disabled) return true;
-      return [...sheet.cssRules].every(rule => rule.type !== CSSRule.IMPORT_RULE
-        || (rule.media.mediaText && !matchMedia(rule.media.mediaText).matches) || ready(rule.styleSheet));
-    };
-    return [...document.querySelectorAll('link[rel~="stylesheet"], style')].every(element =>
-      element.disabled || (element.media && !matchMedia(element.media).matches) || ready(element.sheet));
+    const states = window.__emptySpaceStylesheets;
+    if (!states) throw new Error('Stylesheet readiness observer is missing');
+    return [...document.querySelectorAll('link[rel~="stylesheet"], style')].every(element => {
+      if (element.disabled || (element.media && !matchMedia(element.media).matches)) return true;
+      const state = states.get(element);
+      if (state === 'error') throw new Error(`Stylesheet failed to load: ${element.href || 'inline imports'}`);
+      // Inline rules are parsed synchronously; importing styles and linked sheets require their real load event.
+      return element.localName === 'style' && !/@import/i.test(element.textContent) ? !!element.sheet : state === 'loaded';
+    });
   }, null, { timeout: 30000 });
   // FontFaceSet.ready can wait for document load even when only an unrelated image is pending.
   // Load the actual rendered text fonts explicitly, including the characters selecting Unicode subsets.
@@ -224,8 +234,8 @@ const controlFindings = [];
 /** A stalled small badge must not block measurement; a held primary picture must still fail. */
 async function readinessControls() {
   const size = SIZES[0];
-  for (const kind of ['badge', 'primary', 'font']) {
-    const primary = kind === 'primary', delayedFont = kind === 'font';
+  for (const kind of ['badge', 'primary', 'font', 'stylesheet-error']) {
+    const primary = kind === 'primary', delayedFont = kind === 'font', failedStyle = kind === 'stylesheet-error';
     const context = await contextFor(size), page = await context.newPage(), analysis = await newAnalysis();
     let release, releaseFont, releaseCss, signalHeld, signalFont, signalCss, timer, held = 0;
     const gate = new Promise(resolve => { release = resolve; });
@@ -236,24 +246,32 @@ async function readinessControls() {
     const cssRequested = new Promise(resolve => { signalCss = resolve; });
     const bounded = promise => Promise.race([promise, new Promise((_, reject) => { timer = setTimeout(() => reject(new Error('Readiness control resource was not requested')), 2000); })]).finally(() => clearTimeout(timer));
     const route = '/__layout-readiness-control';
+    const cssUrl = 'https://layout-styles.example.test/control.css';
     await page.route(base + route, request => request.fulfill({ contentType: 'text/html', body:
-      `<!doctype html><meta name="viewport" content="width=device-width"><style>body{margin:16px;font:16px/1.5 system-ui}img{display:block}</style>${delayedFont ? '<link rel="stylesheet" href="/__layout-held.css">' : ''}<h1>Ready content</h1>`
+      `<!doctype html><meta name="viewport" content="width=device-width"><style>body{margin:16px;font:16px/1.5 system-ui}img{display:block}</style>${delayedFont ? `<style id="font-style">@import url(${cssUrl});</style>` : failedStyle ? `<link rel="stylesheet" href="${cssUrl}">` : ''}<h1>Ready content</h1>`
       + `<img src="/__layout-held.svg" width="${primary ? 340 : 64}" height="${primary ? 220 : 20}" alt="${primary ? 'primary picture' : 'status badge'}">`
       + `<p>${'Visible document content remains available while the resource is pending. '.repeat(80)}</p>` }));
     await page.route(base + '/__layout-held.svg', async request => { held++; signalHeld(); await gate; await request.abort(); });
-    await page.route(base + '/__layout-held.css', async request => { signalCss(); await cssGate; await request.fulfill({ contentType: 'text/css', body: '@font-face{font-family:LayoutControl;src:url(/__layout-held.woff2)}body{font-family:LayoutControl}' }); });
+    await page.route(cssUrl, async request => { signalCss(); await cssGate; await request.fulfill({ status: failedStyle ? 404 : 200, contentType: 'text/css', body: `@font-face{font-family:LayoutControl;src:url(${base}/__layout-held.woff2)}body{font-family:LayoutControl}` }); });
     await page.route(base + '/__layout-held.woff2', async request => { signalFont(); await fontGate; await request.fulfill({ contentType: 'font/woff2', body: await readFile(path.join(root, 'designer/kit/vendor/fonts/inter.woff2')) }); });
     page.setDefaultNavigationTimeout(2000);
     try {
       let loaded = false;
       const loading = load(page, route).then(() => { loaded = true; });
       loading.catch(() => {}); // The finally block also closes an incomplete page after a failed barrier.
-      if (delayedFont) {
+      if (delayedFont || failedStyle) {
         await bounded(cssRequested);
         await page.waitForFunction(() => document.readyState === 'interactive');
         if (loaded) throw new Error('Layout measurement did not wait for its font stylesheet');
         releaseCss();
+        if (failedStyle) {
+          let failure; try { await loading; } catch (error) { failure = error; }
+          if (!failure?.message.includes('Stylesheet failed to load')) throw new Error('A failed stylesheet was accepted as ready');
+          continue;
+        }
         await bounded(fontRequested);
+        const opaque = await page.locator('#font-style').evaluate(element => { try { void element.sheet.cssRules[0].styleSheet.cssRules; return false; } catch (error) { return error.name === 'SecurityError'; } });
+        if (!opaque) throw new Error('The stylesheet control did not exercise opaque CSS');
         const pending = await page.evaluate(() => [...document.fonts].some(font => font.family === 'LayoutControl' && font.status === 'loading'));
         if (!pending || loaded) throw new Error('Layout measurement did not wait for its actual rendered font');
         releaseFont();
@@ -268,7 +286,7 @@ async function readinessControls() {
       if (primary ? !missing : result.findings.length > 0) throw new Error(`Readiness control ${primary ? 'accepted a missing primary picture' : 'could not measure content with a pending badge'}`);
     } finally { clearTimeout(timer); release(); releaseFont(); releaseCss(); await context.close(); await analysis.close(); }
   }
-  console.log('empty-space readiness controls: pending badge permits measurement, primary image is rejected, actual delayed font is awaited');
+  console.log('empty-space readiness controls: pending badge permits measurement, primary image is rejected, actual imported font is awaited, stylesheet error fails readiness');
 }
 
 /** Planted defects on a real page: each must be found, so the measures are tested on every run. */
