@@ -201,7 +201,7 @@ def faults(test: str = 'squat', at: float = 1.0) -> dict:
 
 
 def run_hil(test: str, half_mass: float, rate: float, pack: Pack, plot: bool = False, tag: str = 'hil',
-            cap: Optional[float] = None):
+            cap: Optional[float] = None, build: str = 'pla_bench'):
     from rig.can_bus import Calibration, CanBus, MotorCal
     from rig.hil import HilLink
     from rig.sim_bus import SimBus
@@ -211,7 +211,7 @@ def run_hil(test: str, half_mass: float, rate: float, pack: Pack, plot: bool = F
     cal = Calibration(MotorCal(1, -1, fo + 0.05), MotorCal(2, -1, ro - 0.05), 'HIL: both motors reversed, zero offset')
     sim = SimBus(test, half_mass=half_mass, tick=1 / rate, cap=sc.cap, pack=pack, latency_ticks=0)
     link = HilLink(sim, cal, cut_at=0.6 if test.startswith('power_off') else None)
-    config = cap_setup(cap)[0] if cap is not None else None       # --cap: the software motors take it as the real ones do
+    config = cap_setup(cap, build=build)[0] if cap is not None else None   # --cap: the software motors take it as the real ones do
     bus = CanBus(link.port, cal, tick=1 / rate, realtime=False, clock=link.clock, after_exchange=link.advance, config=config)
     link.begin()
     c = min(sc.cap or lc.LEG_PEAK, cap) if cap is not None else (sc.cap or lc.LEG_PEAK)
@@ -229,29 +229,45 @@ def run_hil(test: str, half_mass: float, rate: float, pack: Pack, plot: bool = F
     return {'results': res, 'log': log, 'paths': paths, 'bus': bus}
 
 
-def cap_setup(cap: Optional[float], rate_limit: Optional[float] = None) -> tuple:
-    """(the motors' start-up settings, the laptop's limits) for a run capped at `cap` N m (None: the rig's 60).
+BUILDS = ('pla_bench', 'robot')     # exports/leg/limits.json profiles: the leg on the rig (docs/leg-protection.md)
+
+
+def build_cap(build: str) -> float:
+    """The every-day cap of a leg build (sim/leg_limits.py): the firmware's rig profile built for the same leg
+    (cmake -DGP_RIG_BUILD) runs the same number outside a jump's push. The laptop has no push peak: its jumps run at
+    this cap too."""
+    if build not in BUILDS:
+        raise ValueError(f'--build {build}: one of {", ".join(BUILDS)}')
+    return float(lc.ll.load()['profiles'][build]['everyday_nm'])
+
+
+def cap_setup(cap: Optional[float], rate_limit: Optional[float] = None, build: str = 'pla_bench') -> tuple:
+    """(the motors' start-up settings, the laptop's limits) for a run capped at `cap` N m (None: the leg build's
+    every-day cap; the PLA bench leg's unless --build robot says the leg on the rig is the robot's).
 
     One number sets both caps: the motors' limit_torque, written and read back at start-up (rig/rs04.py configure), and
-    the laptop's clip. A lower cap is how a weaker leg runs (docs/motor-day.md: PLA); a higher one is refused."""
+    the laptop's clip. A lower cap is how a weaker leg runs (docs/motor-day.md: PLA); a higher one than the build's is
+    refused, so a forgotten flag never runs a printed leg at the robot's torque."""
     from rig import rs04 as P
-    c = lc.LEG_CAP if cap is None else float(cap)
-    if not 0.0 < c <= lc.LEG_CAP:
-        raise ValueError(f'--cap {c:g}: the rig runs at 0 < cap <= {lc.LEG_CAP:g} N m (D38)')
+    top = build_cap(build)
+    c = top if cap is None else float(cap)
+    if not 0.0 < c <= top:
+        raise ValueError(f'--cap {c:g}: the {build} leg runs at 0 < cap <= {top:g} N m (exports/leg/limits.json)')
     return {**P.RIG_CONFIG, 'limit_torque': c}, lc.Limits(rate=rate_limit, cap=c)
 
 
-def cap_guard(rs04_bus, ids, cap: Optional[float]) -> Optional[str]:
-    """Why a run must not start, or None. Without --cap the start-up writes the rig's 60 N m; a motor that holds a lower
-    limit (a weaker leg's, docs/motor-day.md) is not raised by a forgotten flag: the operator must say --cap 60."""
+def cap_guard(rs04_bus, ids, cap: Optional[float], build: str = 'pla_bench') -> Optional[str]:
+    """Why a run must not start, or None. Without --cap the start-up writes the build's every-day cap; a motor that holds
+    a lower limit (a weaker leg's, docs/motor-day.md) is not raised by a forgotten flag: the operator must say --cap."""
     if cap is not None:
         return None
     from rig import rs04 as P
+    top = build_cap(build)
     held = {i: P.Motor(rs04_bus, i).read('limit_torque') for i in ids}
-    low = {i: v for i, v in held.items() if v < lc.LEG_CAP - 1e-6}
+    low = {i: v for i, v in held.items() if v < top - 1e-6}
     if low:
-        return (f"motor(s) {', '.join(f'{i} at {v:g} N m' for i, v in low.items())} hold a lower limit_torque than the rig's "
-                f'{lc.LEG_CAP:g}: pass --cap (the lower one for a printed leg, or --cap {lc.LEG_CAP:g} to raise it on purpose)')
+        return (f"motor(s) {', '.join(f'{i} at {v:g} N m' for i, v in low.items())} hold a lower limit_torque than the "
+                f'{build} leg\'s {top:g}: pass --cap (the lower one for a weaker leg, or --cap {top:g} to raise it on purpose)')
     return None
 
 
@@ -262,10 +278,10 @@ def run_can(a) -> int:
     if a.test not in RIG_TESTS:
         print(f'{a.test} is not a rig test (the motors are capped at 60 N m)')
         return 2
-    config, limits = cap_setup(a.cap, a.rate_limit)
+    config, limits = cap_setup(a.cap, a.rate_limit, a.build)
     cal = Calibration.load()
     bus = CanBus(SocketCan(a.iface), cal, tick=1 / a.rate, require_node=not a.no_node, damper=a.damper, config=config)
-    why = cap_guard(bus.bus, (cal.front.id, cal.rear.id), a.cap)
+    why = cap_guard(bus.bus, (cal.front.id, cal.rear.id), a.cap, a.build)
     if why:
         print(f'refused: {why}')
         bus.close()
@@ -334,7 +350,11 @@ def main(argv=None):
     ap.add_argument('--iface', default='can0')
     ap.add_argument('--damper', type=int, choices=(0, 1))
     ap.add_argument('--rate-limit', type=float, help='N m per tick the command may change (the first hanging tests: 5)')
-    ap.add_argument('--cap', type=float, help='N m: the motors\' limit_torque and the laptop\'s clip, at most 60 (default 60)')
+    ap.add_argument('--build', choices=BUILDS, default='pla_bench',
+                    help='the leg on the rig (exports/leg/limits.json): its every-day cap is the default --cap and the most '
+                         'allowed (pla_bench 12 N m; robot 61, the firmware rig profile\'s every-day cap for that leg; '
+                         'the laptop has no jump-push peak)')
+    ap.add_argument('--cap', type=float, help='N m: the motors\' limit_torque and the laptop\'s clip, at most the build\'s')
     ap.add_argument('--no-node', action='store_true', help='CAN without the rig node: bench tests only, never with the leg on the rig')
     ap.add_argument('--yes', action='store_true')
     ap.add_argument('--inject', help='simulation only: a fault kind@seconds (rig/faults.py), e.g. run@1.0')
@@ -371,11 +391,11 @@ def main(argv=None):
         inj = (a.inject.split('@')[0], float(a.inject.split('@')[1])) if a.inject else None
         o = run_sim(a.test, a.half_mass, a.rate, pack, a.latency, contact_truth=a.contact_truth, tag=a.tag, plot=a.plot,
                     video=(OUT / 'runs' / f'{a.test}.mp4') if a.video else None, inject=inj,
-                    limits=cap_setup(a.cap, a.rate_limit)[1] if (a.rate_limit or a.cap is not None) else None)
+                    limits=cap_setup(a.cap, a.rate_limit, a.build)[1] if (a.rate_limit or a.cap is not None) else None)
         print(json.dumps({k: v for k, v in o['results'].items() if k not in ('series', 'rig')}, indent=1))
         return 0
     if a.backend == 'hil':
-        o = run_hil(a.test, a.half_mass, a.rate, pack, a.plot, cap=a.cap)
+        o = run_hil(a.test, a.half_mass, a.rate, pack, a.plot, cap=a.cap, build=a.build)
         print(json.dumps({k: v for k, v in o['results'].items() if k not in ('series', 'rig')}, indent=1))
         print('timing', o['bus'].timing.summary())
         return 0

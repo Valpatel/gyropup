@@ -322,10 +322,6 @@
   "turret_bought": {
    "color": "#3a3f47",
    "members": [
-    "turret.compute",
-    "turret.eth_jack",
-    "turret.xt30_input",
-    "turret.input_fuses",
     "turret.pan_servo",
     "turret.pan_clamp",
     "turret.cradle_plate_l",
@@ -373,9 +369,7 @@
     "turret.ring_carrier",
     "turret.ring_driver",
     "turret.board_bay",
-    "turret.board_bay_lid",
-    "turret.compute_tray",
-    "turret.compute_shell"
+    "turret.board_bay_lid"
    ]
   },
   "turret_hardware": {

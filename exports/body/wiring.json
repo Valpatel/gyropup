@@ -170,7 +170,7 @@
    "colour": "red",
    "termination": "lug M6 / screw terminal",
    "fuse": "MINI 58V 7.5 A",
-   "why": "D66: the turret's own robot on the bus (its Orin NX ~40 W, flywheel bursts to ~140 W: 4.7 A at 30 V); 7.5 A keeps the G2RL-2's contact under its 8 A (about 6 A breaking at 41 V: docs/body-fuse-board.md); the stop relay cuts it"
+   "why": "D66, D76: the turret on the bus (no computer of its own since D76: ~33 W on average, up to 4.8 A at 30 V in a burst); 7.5 A keeps the G2RL-2's contact under its 8 A (about 6 A breaking at 41 V: docs/body-fuse-board.md); the stop relay cuts it"
   },
   {
    "id": "W18",
@@ -195,10 +195,10 @@
   {
    "id": "W20",
    "from": "- bus tap 5",
-   "to": "TRACO Vin-, the turret's XT30U-F -",
+   "to": "TRACO Vin-, the turret's DT06 pins 3, 4 (GND)",
    "awg": 16,
    "colour": "black",
-   "termination": "lug M6 / ferrule / XT30",
+   "termination": "lug M6 / ferrule / DT06 sockets",
    "fuse": "-",
    "why": "returns"
   },
@@ -335,22 +335,22 @@
   {
    "id": "W34",
    "from": "stop relay, pole B (out)",
-   "to": "the turret's XT30U-F +",
+   "to": "the turret's DT06 pins 1, 2 (+BUS)",
    "awg": 16,
    "colour": "red",
-   "termination": "screw terminal / XT30U-F",
+   "termination": "screw terminal / DT06 sockets",
    "fuse": "MINI 58V 7.5 A (W22)",
-   "why": "dead whenever the stop relay is open; the turret's lead carries the XT30U-M"
+   "why": "dead whenever the stop relay is open; spliced to two 18 AWG tails for the size-16 sockets (D76: D66's XT30 went with the turret's plinth)"
   },
   {
    "id": "W36",
-   "from": "J501 Ethernet (its second port or a switch)",
-   "to": "the turret's RJ45",
-   "awg": null,
+   "from": "J501 can1",
+   "to": "the turret's DT06 pins 5, 6 (CAN_H, CAN_L)",
+   "awg": 24,
    "colour": "blue",
-   "termination": "Cat 6, 0.5 m",
+   "termination": "twisted pair / DT06 sockets",
    "fuse": "-",
-   "why": "D66: the turret's link (it had can1)"
+   "why": "D76: the J501 aims the turret over CAN bus D (D66 had Ethernet to the turret's own Jetson)"
   },
   {
    "id": "W37",
@@ -451,6 +451,14 @@
     "J501 can0 (its own 120 Ohm on)"
    ],
    "note": "1 Mbit/s: wheels, the computer"
+  },
+  {
+   "bus": "D",
+   "master": "J501 can1 (its own 120 Ohm on)",
+   "nodes": [
+    "the turret's Feather M4 CAN (its own 120 Ohm), through the DT12 pins 5, 6 (W36)"
+   ],
+   "note": "1 Mbit/s: the turret's 0x300 frames (D76)"
   }
  ],
  "stop": "The radio stop (D37, D55): the ER3C-i receiver (failsafe: no pulses) drives one Pololu RC relay switch; its contact feeds the coil of the stop relay (Omron G2RL-2, DPDT, 12 V), whose other end goes to ground through the MCU's MOSFET. The relay holds only while the radio says run AND the MCU says run. Pole A is the turret's dry safety loop (TM pins 7, 8: the turret cuts its flywheels and dial in 20 ms), pole B is in the turret's bus branch (W22, W34: the independent cut); the MCU senses the coil voltage and sits the robot down when the radio drops, and opens the relay itself when the robot sits. The main switch is the hard off."

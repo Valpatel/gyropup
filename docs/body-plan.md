@@ -97,7 +97,7 @@ so the bolts see mostly shear and the bottom row's tension in a landing (≤ 0.4
 
 **Loads (standing, lights off):** 4 × RS-04 at ~10 W = 40 W; Orin AGX + J501 ~40 W (15-40 W module modes, 60 W
 system max); VLP-16 8 W; 2 × D435 7 W; VESCs and wheels balancing ~10 W; MCU, IMU, eyes ~3 W: **~110 W**. Playing:
-plus the turret (D66: its own robot on a bus branch, ~40 W average, flywheel bursts to ~140 W) and the SSC1 pods
+plus the turret (D66, D76: on a bus branch, ~33 W average with no computer of its own, up to ~150 W in a burst) and the SSC1 pods
 25.6 W: **~190 W**. Peaks: a jump's push draws about 70 A for 0.3 s (the leg rig's HIL at 16.25 kg a leg).
 
 **Decision (D65, the user's): two DeWalt DCB609 FLEXVOLT 9.0 Ah packs in 20 V mode, in series: 10S3P, 36 V nominal,

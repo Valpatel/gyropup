@@ -144,7 +144,7 @@ How to order:
 |---|---|---|---|---|---|---|---|
 | T5 | [XT60H-F](https://www.pyrodrone.com/products/amass-xt60h-connector-5pcs-female): Amass XT60H female, 5-pack (the robot's live ends: the charge port and the 48 V branch lea | 6 | 2 x 5-pack | $3.99 | $7.98 | sockets on the robot, no live pins (D58, hazard 11): the six bus branch leads' ends (W10-W15) | RaceDayQuads $0.99 ([link](https://www.racedayquads.com/products/xt60-connector-1pc-choose-your-version)): available (single) |
 | T5 | [XT60H-M 5-pack](https://www.pyrodrone.com/products/xt60h-male-xt60-upgrade-amass): Amass XT60H male, 5-pack (the devices' end: the VESC leads; D58) | 2 | 1 x 5-pack | $3.99 | $3.99 | the two VESC leads' plugs (the devices carry the pins; the RS-04 pigtails' XT60H-M come with the leg | RaceDayQuads $0.99 ([link](https://www.racedayquads.com/products/xt60-connector-1pc-choose-your-version)): available (single) |
-| T5 | [XT30U-F 8-pack](https://www.pyrodrone.com/products/yellow-xt30u-f-8-pack-female-battery): Amass XT30U female, 8-pack (the robot's live ends: the 24 V and 12 V branch leads; D58) | 4 | 1 x 8-pack | $2.99 | $2.99 | sockets on the robot: the J501 (W21), the lidar box (W24), the turret (W34); one spare | RaceDayQuads $0.99 ([link](https://www.racedayquads.com/products/xt30-connector-male-or-female)): available (single) |
+| T5 | [XT30U-F 8-pack](https://www.pyrodrone.com/products/yellow-xt30u-f-8-pack-female-battery): Amass XT30U female, 8-pack (the robot's live ends: the 24 V and 12 V branch leads; D58) | 3 | 1 x 8-pack | $2.99 | $2.99 | sockets on the robot: the J501 (W21), the lidar box (W24); one spare (D76: the turret takes its powe | RaceDayQuads $0.99 ([link](https://www.racedayquads.com/products/xt30-connector-male-or-female)): available (single) |
 | T5 | [XT30U-M 8-pack](https://www.pyrodrone.com/products/yellow-xt30u-m-8-pack-male-device): Amass XT30U male, 8-pack (the devices' end: the J501 and lidar box adapter leads; D58) | 4 | 1 x 8-pack | $2.99 | $2.99 | the devices' pins: the J501's DC-IN and the lidar box's adapter leads, two spare | RaceDayQuads $0.99 ([link](https://www.racedayquads.com/products/xt30-connector-male-or-female)): available (single) |
 
 ### RadioMaster (radiomasterrc.com): $16.99
@@ -213,7 +213,7 @@ How to order:
 | Part | Qty | Material | Size (mm) | g each | Hours | How |
 |---|---|---|---|---|---|---|
 | post | 4 | pa6-cf | 22 x 22 x 120 | 44 | 11.4 | PA6-CF, 100 % solid, printed standing; 2 x M5 inserts |
-| riser | 1 | pa6-cf | 144 x 144 x 30 | 174 | 11.4 | PA6-CF, 100 % solid, printed on its top face; 8 x M5 inserts, 2 x Ø5 dowels |
+| riser | 1 | pa6-cf | 144 x 144 x 30 | 175 | 11.4 | PA6-CF, 100 % solid, printed on its top face; 8 x M5 inserts, 2 x Ø5 dowels |
 | isolator | 4 | tpu95 | 16 x 16 x 13 | 2 | 0.9 | TPU 95A: the pallet's isolator foot, neck and cap |
 | plate_post | 4 | pa6-cf | 16 x 16 x 42 | 11 | 2.8 | PA6-CF, 100 %; M5 inserts both ends; printed standing |
 | bus_insulator | 2 | petg | 110 x 20 x 16 | 38 | 3.0 | PETG, 100 % (never a carbon-filled filament: carbon conducts, and the plate is bonded to the - bus); 4 x M3 inserts; test: > 10 MOhm at 50 V from every lug screw to the plate before power |
@@ -226,7 +226,7 @@ How to order:
 | bay_door_rear | 1 | petg | 128 x 102 x 4 | 66 | 2.6 | PETG; two knurled M3 x 10 thumbscrews into the rails' ends |
 | bay_skid | 4 | tpu95-gyroid | 149 x 30 x 68 | 64 | 51.7 | crush pad (#19): TPU 95A HF gyroid lattice, 50 mm free, 30 mm stroke, 600 N plateau, on 3M VHB tape, its solid lip under the side plate's two low M3 x 10 (#26); the robot sits on these |
 
-By material: pa6-cf 0.57 kg, 37.2 h, $45.32; tpu95 0.01 kg, 0.9 h, $0.35; petg 0.21 kg, 8.2 h, $2.91; tpu95-gyroid 0.26 kg, 51.7 h, $10.75. STLs beside the plan in `exports/body/`.
+By material: pa6-cf 0.57 kg, 37.2 h, $45.36; tpu95 0.01 kg, 0.9 h, $0.35; petg 0.21 kg, 8.2 h, $2.91; tpu95-gyroid 0.26 kg, 51.7 h, $10.75. STLs beside the plan in `exports/body/`.
 
 ## 6. The P2 cart (the head: order it once P1 balances on its tether)
 
@@ -262,8 +262,8 @@ The shell and the tub's printed parts are in `exports/body/shell/` with their ow
 |---|---|
 | Bought (section 2) | $1626.64 |
 | SendCutSend (section 1, instant prices) | $578.17 |
-| Filament used (section 5) | $59.33 |
-| **Body P0 + P1** | **$2264.14** |
+| Filament used (section 5) | $59.37 |
+| **Body P0 + P1** | **$2264.18** |
 | P2 cart (section 6) | $62.72 |
 | P3 cart (section 6b) | $84.03 |
 

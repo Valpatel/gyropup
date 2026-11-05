@@ -1,0 +1,10 @@
+{
+  "schema": "gyropup.inventory/1",
+  "component": "INA228 bus monitor (Adafruit 5832 or the fuse board's U1)",
+  "folder": "hardware/power/ina228-monitor",
+  "about": "None ordered yet (docs/purchases.md). One per robot.",
+  "ordered": [],
+  "arrived": [],
+  "fields": {"unit": "1", "board": "Adafruit 5832 or the fuse board", "shunt": "Blue Sea or the fuse board's 1 mOhm", "device_id": "register 3Fh as read", "notes": ""},
+  "units": []
+}

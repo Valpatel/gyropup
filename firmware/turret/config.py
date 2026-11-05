@@ -137,10 +137,10 @@ SPIN_HOLD_S = 3.0              # after a burst the wheels stay at speed this lon
 DSHOT_RATE_HZ = 1000           # DShot300 frames (and eRPM telemetry back) per wheel
 
 # ---------------------------------------------------------------- D70: the supply-voltage profile (the stand)
-# The turret takes 12-54 V on its XT30 (D66). On Gyropup's 10S bus (30-41 V) the ring's three power pairs stay within
+# The turret takes 12-54 V on its DT12's pins 1-4 (D76; D66 had an XT30). On Gyropup's 10S bus (30-41 V) the ring's three power pairs stay within
 # 2 A a circuit at the 800 ms ramp and the full rate; on the stand's one DCB609 (15-20.5 V) the same spin-up and bursts
-# would put 2.1-3.3 A on a circuit and 11-14 A through the rocker. So the ramp stretches and the burst rate drops with
-# BUS_V (docs/turret-wiring.md section 5, sim/turret_power.py 'stand_profile'; play loads, the J4012 at 48 W):
+# would put 2.1-3.3 A on a circuit (and 8-10 A at the input). So the ramp stretches and the burst rate drops with
+# BUS_V (docs/turret-wiring.md section 5, sim/turret_power.py 'stand_profile'; play loads):
 #   BUS_V >= 24 V     0.8 s ramp, the full rate (RATE_MAX)
 #   >= 20.5 V         1.0 s, at most 4/s (so RATE_MAX's 3/s)
 #   >= 18 V           1.6 s, at most 2/s

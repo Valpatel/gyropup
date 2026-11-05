@@ -168,3 +168,7 @@ The battery bay's door was narrowed after the sweep found it 23.7 mm from the kn
   to read (bom.json `to_source`).
 - The leg's mass after its stop redesign (+0.2 kg a leg is in the ledger until exports/leg/leg.json carries it).
 - The P3 shell, guards and thermal (T7), the sim on the real body (T4), the firmware (T9), the dock (T10).
+- The leg motors' heat ([motor thermal model](motor-thermal.md)): the frame is a poor heat sink for them (little open
+  area; the tray is the floor of the air the J501 cooler draws). The rear covers sit 2.0 mm from the cheeks' outer
+  faces, so a few watts a motor reach the cheeks across that still air with any hip frame; do not close that gap with
+  a thermal pad. The recommended heat path is a black-anodised 6061 web with a thermal break to the cheek.

@@ -3177,28 +3177,28 @@
   },
   "journal_lip": {
    "case": "R: 30 g with the turret upside down",
-   "force_n": 384,
+   "force_n": 389,
    "shear_area_mm2": 886,
-   "shear_mpa": 0.43,
+   "shear_mpa": 0.44,
    "allowable_mpa": 9.1,
-   "sf": 20.9,
+   "sf": 20.7,
    "note": "shear allowable taken as half the across-layer tensile strength"
   },
   "tm_bolts": {
    "case": "R: 30 g sideways on the whole turret",
-   "com_above_tm_face_mm": 135.3,
-   "moment_nm": 102.4,
-   "tension_per_bolt_n": 640,
+   "com_above_tm_face_mm": 96.9,
+   "moment_nm": 50.1,
+   "tension_per_bolt_n": 313,
    "m5_insert_pullout_n_est": 1500,
-   "sf": 2.3,
+   "sf": 4.8,
    "note": "M5 heat-set insert in PA6-CF/PETG: ~1.5 kN pull-out (est, CNC Kitchen tests)"
   },
   "yoke_inserts": {
    "case": "R: 30 g sideways on the yoke and all it carries",
-   "moment_nm": 19.5,
-   "tension_per_insert_n": 174,
+   "moment_nm": 20.0,
+   "tension_per_insert_n": 178,
    "m4_insert_pullout_n_est": 1100,
-   "sf": 6.3
+   "sf": 6.2
   },
   "board_bay": {
    "case": "R: 30 g down on the bay",
@@ -3211,9 +3211,9 @@
    "case": "R: 30 g sideways, the cradle pulled off the horn (all of it on this side)",
    "engagement_mm": 1.8,
    "threads_engaged": 3.6,
-   "tension_per_screw_n": 47,
+   "tension_per_screw_n": 48,
    "strip_n_per_screw_est": 1252,
-   "sf": 26.6,
+   "sf": 26.2,
    "note": "the screw tips stop 0.7 mm short of the flange's back (the servo's face)"
   },
   "lug_screws": {
@@ -3227,9 +3227,9 @@
   },
   "pivot_land": {
    "case": "R: 30 g sideways (-y), the cradle into the MR126 through the land",
-   "force_n": 188,
+   "force_n": 191,
    "contact_on_race_mm2": 8.0,
-   "stress_mpa": 23.4,
+   "stress_mpa": 23.8,
    "allowable_mpa_est": 40.0,
    "sf": 1.7,
    "shoulder_step_preload_max_n": 124,
@@ -3237,22 +3237,22 @@
   },
   "plate_r_out_of_plane": {
    "case": "R: 30 g sideways, the -y plate pinned at its pivot, the frame holding its foot",
-   "force_n": 188,
+   "force_n": 191,
    "lever_mm": 30.1,
    "section_mm": [
     44.0,
     3.175
    ],
-   "stress_mpa": 76.7,
+   "stress_mpa": 77.9,
    "yield_mpa": 276,
-   "sf": 3.6,
+   "sf": 3.5,
    "note": "cradle_plate_r R-fall-out clamps the pivot as if it carried the moment (a bound on the plate)"
   },
   "plate_inserts": {
    "case": "R: 30 g sideways, the frame pulling one plate's foot",
-   "tension_per_insert_n": 47,
+   "tension_per_insert_n": 48,
    "m3_insert_pullout_n_est": 700,
-   "sf": 14.9,
+   "sf": 14.6,
    "note": "the other plate takes the same load in bearing on the rebate's face"
   },
   "pivot_thread": {
@@ -3592,17 +3592,17 @@
   }
  ],
  "hand_checks_masses": {
-  "tilt_kg": 0.7611275,
-  "pan_kg": 1.30634,
-  "total_kg": 2.5734000000000004,
-  "cartridge_kg": 0.6398900000000001,
+  "tilt_kg": 0.7713275000000002,
+  "pan_kg": 1.3211400000000002,
+  "total_kg": 1.7568000000000004,
+  "cartridge_kg": 0.6500899999999998,
   "com_mm": [
-   -3.7844774054068573,
-   -2.7628596125330063,
-   49.267047649332525
+   -5.052433042080601,
+   -4.577189951159715,
+   96.93668742368294
   ],
-  "pan_group_com_z_mm": 122.9274633325152,
-  "mass_g_with_balls": 2573.4,
+  "pan_group_com_z_mm": 123.57121773075967,
+  "mass_g_with_balls": 1756.8,
   "pan_ring_kg": 0.07790000000000001
  },
  "refreshed": [

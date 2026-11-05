@@ -5,8 +5,8 @@ The P0 power system of Gyropup's body as built from `cad/body_wiring.py` (the wi
 `exports/body/bom.json` (what to buy, by catalogue key). It is the build package for milestone M5's power skid: a
 person with the parts and a crimper can build and test it from this page and
 [the wiring diagram](../exports/body/wiring.svg). Decisions: D65 (the two DeWalt packs, the 10S bus; it replaces D43
-and D54), D55 (the protection and the switch), D60 (the fuse board, P3), D66 (the turret's own branch). Rewritten
-2026-10-27 for D65.
+and D54), D55 (the protection and the switch), D60 (the fuse board, P3), D66 (the turret's own branch), D76 (the turret
+without its computer: the power and CAN on its DT12). Rewritten 2026-10-27 for D65.
 
 ![Power and CAN wiring](../exports/body/wiring.svg)
 
@@ -79,7 +79,7 @@ The holders are rated 32 V by Eaton; the fuse does the interrupting (1 kA at 58 
 
 Red +, black -, white sense or signal, green the frame bond. Silicone wire throughout (BNTECHGO, 200 °C, 600 V). Lengths
 are cut to the plate in P0 and recorded. **Every live end on the body is a socket** (D58, hazard 11): the bus branch
-leads end in XT60H-F (the turret's in XT30U-F) and the 12 V ones in XT30U-F; the devices' leads carry the pins (the RS-04 pigtails'
+leads end in XT60H-F (the turret's in the DT06 plug's sockets) and the 12 V ones in XT30U-F; the devices' leads carry the pins (the RS-04 pigtails'
 XT60H-M are the leg's, the VESC leads', the J501's and the lidar box's adapter leads' are in this order). The table is
 written by `cad/body_wiring.py` from its wire list; `cad/test_body.py` checks that no body-side lead ends in a pin.
 
@@ -100,10 +100,10 @@ written by `cad/body_wiring.py` from its wire list; `cad/test_body.py` checks th
 | W14 | + bus tap 4 | VESC left (Flipsky 75100) + | 12 | red | lug M6 / XT60H-F | MINI 58V 30 A | the wheel: its battery current limit 20 A in VESC Tool (the fuse board's FL1 holders carry 22 A); its own lead carries the XT60H-M |
 | W15 | + bus tap 4 | VESC right + | 12 | red | lug M6 / XT60H-F | MINI 58V 30 A | as W14 |
 | W16 | + bus tap 5 | TRACO TEP 150-4812WI Vin+ | 18 | red | lug M6 / ferrule | MINI 58V 10 A | 150 W out: 5.6 A in at 30 V |
-| W22 | + bus tap 5 | stop relay, pole B (in): the turret's branch | 16 | red | lug M6 / screw terminal | MINI 58V 7.5 A | D66: the turret's own robot on the bus (its Orin NX ~40 W, flywheel bursts to ~140 W: 4.7 A at 30 V); 7.5 A keeps the G2RL-2's contact under its 8 A (about 6 A breaking at 41 V: docs/body-fuse-board.md); the stop relay cuts it |
+| W22 | + bus tap 5 | stop relay, pole B (in): the turret's branch | 16 | red | lug M6 / screw terminal | MINI 58V 7.5 A | D66, D76: the turret on the bus (no computer of its own since D76: ~33 W on average, up to 4.8 A at 30 V in a burst); 7.5 A keeps the G2RL-2's contact under its 8 A (about 6 A breaking at 41 V: docs/body-fuse-board.md); the stop relay cuts it |
 | W18 | - bus taps 2-3 | RS-04 x 4 (XT60H) | 14 | black | lug M6 / XT60H-F | - | returns, one per motor (the - of W10-W13's plugs) |
 | W19 | - bus tap 4 | VESC left, right - | 12 | black | lug M6 / XT60H-F | - | returns (the - of W14-W15's plugs) |
-| W20 | - bus tap 5 | TRACO Vin-, the turret's XT30U-F - | 16 | black | lug M6 / ferrule / XT30 | - | returns |
+| W20 | - bus tap 5 | TRACO Vin-, the turret's DT06 pins 3, 4 (GND) | 16 | black | lug M6 / ferrule / DT06 sockets | - | returns |
 | W21 | TRACO +V | J501 DC-IN (XT30) | 16 | red | ferrule / XT30U-F | MINI 10 A (inline) | the J501 at 12 V (12-36 V in): 60 W peak, 5 A; its DC-IN adapter lead carries the XT30U-M |
 | W43 | TRACO +V | 12 V loads: lidar box, buck, jack, lights, eyes | 16 | red | ferrule / Wago 221 | MINI 58V 7.5 A (inline) | about 40 W: the VLP-16 8 W (3 A at spin-up), the SSC1 pods, the eyes, the 5 V buck |
 | W23 | TRACO -V | J501 return; star point | 16 | black | ferrule / XT30U-F | - | one tie from -V to the - bus (the CAN reference) |
@@ -117,8 +117,8 @@ written by `cad/body_wiring.py` from its wire list; `cad/test_body.py` checks th
 | W31 | shunt sense - (load side screw) | INA228 IN- | 22 | white | ring / screw terminal | - | the INA228's own 15 mOhm shunt is removed |
 | W32 | + bus tap 5 | INA228 VBUS | 22 | red | lug M6 / ring | MINI 58V 5 A (its own inline holder) | pack voltage, 85 V input; 22 AWG carries 7 A |
 | W33 | frame (a tray PEM stud) | - bus star point | 14 | green | ring M5 / lug M6 | - | a + short to the frame blows a fuse, not leaves it live; 14 AWG: a + lead chafed ahead of its branch fuse puts the MRBF's let-through on it |
-| W34 | stop relay, pole B (out) | the turret's XT30U-F + | 16 | red | screw terminal / XT30U-F | MINI 58V 7.5 A (W22) | dead whenever the stop relay is open; the turret's lead carries the XT30U-M |
-| W36 | J501 Ethernet (its second port or a switch) | the turret's RJ45 | None | blue | Cat 6, 0.5 m | - | D66: the turret's link (it had can1) |
+| W34 | stop relay, pole B (out) | the turret's DT06 pins 1, 2 (+BUS) | 16 | red | screw terminal / DT06 sockets | MINI 58V 7.5 A (W22) | dead whenever the stop relay is open; spliced to two 18 AWG tails for the size-16 sockets (D76: D66's XT30 went with the turret's plinth) |
+| W36 | J501 can1 | the turret's DT06 pins 5, 6 (CAN_H, CAN_L) | 24 | blue | twisted pair / DT06 sockets | - | D76: the J501 aims the turret over CAN bus D (D66 had Ethernet to the turret's own Jetson) |
 | W37 | stop relay, pole A (closed = run) | the turret's safety loop (SAFETY_A, SAFETY_B) | 22 | white | twisted pair | - | the turret's dry safety loop (12 V at 2 mA; D41 D7: it cuts the flywheels and the dial in hardware) |
 | W38 | stop relay coil, + side | MCU STOP sense (divider 12 V to 3.3 V) | 22 | white | GH | - | 12 V on the coil = the radio says run: the MCU sits the robot down when it drops (D37) |
 | W39 | 12 V loads (W43) via the RC switch's contact | stop relay coil, + side | 22 | red | solder / screw terminal | (W43's 7.5 A) | the coil (12 V, 33 mA) is fed only while the radio says run; its - side through the MCU's MOSFET (MCU_RUN), a diode across it |
@@ -134,8 +134,8 @@ written by `cad/body_wiring.py` from its wire list; `cad/test_body.py` checks th
   jack; in P3 the SSC1 pods (25.6 W) and the eyes, switched on after the lidar has spun up. About 100 W at the most:
   two thirds of its rating. It replaces the DDR-120C-24 (which starts at 33.6 V, inside the 10S range) and the
   DDR-60L-12 (D65).
-- **The turret** (D66) is not on a rail: its own robot takes 30-41 V from the bus on a 7.5 A branch (W22) through the
-  stop relay's pole B (W34) and makes its own rails.
+- **The turret** (D66, D76) is not on a rail: it takes 30-41 V from the bus on a 7.5 A branch (W22) through the
+  stop relay's pole B (W34, into its DT12's pins 1-2) and makes its own rails.
 - **5 V** (Pololu D36V28F5 from the 12 V, 3.2 A): the Nucleo (E5V), three CAN Pal, the VN-100, the radio receiver;
   about 1 A in all.
 
@@ -150,8 +150,10 @@ chafed through to the aluminium blows its fuse instead of leaving the frame live
 | A | MCU FDCAN1 (CAN Pal 1, 120 Ohm on) | RS-04 left front → RS-04 left rear (120 Ohm at its plug) | 1 Mbit/s, the left leg |
 | B | MCU FDCAN2 (CAN Pal 2, 120 Ohm on) | RS-04 right front → RS-04 right rear (120 Ohm at its plug) | 1 Mbit/s, the right leg |
 | C | MCU FDCAN3 (CAN Pal 3, 120 Ohm on) | VESC left → VESC right → J501 can0 (its own 120 Ohm on) | 1 Mbit/s: wheels, the computer |
+| D | J501 can1 (its own 120 Ohm on) | the turret's Feather M4 CAN (its own 120 Ohm), through the DT12 pins 5, 6 (W36) | 1 Mbit/s: the turret's 0x300 frames (D76) |
 
-The turret (D66) talks to the J501 over Ethernet, not CAN.
+Bus D is the turret (D76): the J501 aims it over CAN through the DT12's pins 5-6 (D66's Ethernet link went with
+its own Jetson).
 
 All 1 Mbit/s classic CAN (the RS-04s and the VESCs speak it; the G474's FDCAN runs it), 22 AWG twisted by hand at
 about 30 twists a metre, 120 Ohm at both ends of each bus and nowhere else (the CAN Pal's switch, the J501's built-in
@@ -165,7 +167,7 @@ The radio stop (D37, D55): the ER3C-i receiver (failsafe: no pulses) drives one 
 No contactor, no e-stop button on the robot (D37): the radio stop sits the robot down, and the main switch on the
 belly is the hard off for a person standing at the robot. The stop relay, its MOSFET (a logic-level N-channel on
 MCU_RUN), the flyback diode and the 12 V-to-3.3 V divider for the sense sit on the MCU carrier's protoboard. The
-turret (D66) plugs in with its XT30 (power through pole B), its RJ45 to the J501 and its safety loop on pole A: plug it
+turret (D76) plugs in with one DT06 plug on its DT12: power through pole B, CAN to the J501 and its safety loop on pole A: plug it
 only with the stop relay open (its input capacitors charge through the plug otherwise; B15 measures the inrush on the
 7.5 A fuse and the G2RL-2's contact).
 
@@ -191,7 +193,7 @@ so the firmware's cut-off and current limit (docs/body-firmware.md 5) are tested
 6. **MCU**: the INA228 reads the pack within 0.2 V of a meter and the current within 0.1 A at a 2 A dummy load on the
    12 V rail (high side: discharge reads negative); switching the main switch off and on with the INA228 wired leaves
    it reading (the check of step 4); with the transmitter switched off the stop relay opens within 0.5 s (the
-   receiver's failsafe), the turret's safety loop reads open and its XT30 dead, and the MCU logs the stop; MCU_RUN low
+   receiver's failsafe), the turret's safety loop reads open and its power pins dead, and the MCU logs the stop; MCU_RUN low
    opens it too.
 7. **The firmware's windows on a bench supply** in place of the packs (current-limited, 30-45 V): warn at 35.0 V, no
    jump under 34.0, sit at 32.0, the latched cut-off at 30.0 V under load, the over-charge latch at 44.0 V, no arming

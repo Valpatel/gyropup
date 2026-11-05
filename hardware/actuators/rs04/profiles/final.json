@@ -1,0 +1,44 @@
+{
+  "schema": "gyropup.rs04-profile/1",
+  "id": "final",
+  "version": 2,
+  "title": "Final build (machined adapters, metal links)",
+  "default": false,
+  "about": "The limits the RS-04 configuration tool and its bridge enforce on the final build's legs. The cap is the robot leg's per-build cap (exports/leg/limits.json, docs/leg-protection.md): 61 N m every day, in the jump's push and as each motor's own limit_torque (D78). A number with a 'sources' entry is checked against its source by rig/tests/test_rs04_vectors.py.",
+  "limits": {
+    "limit_torque_nm": 61.0,
+    "jog_torque_nm": 5.0,
+    "jog_speed_rad_s": 2.0,
+    "jog_kp_max": 40.0,
+    "jog_kd_max": 2.0,
+    "can_timeout_ticks": 2000,
+    "can_timeout_max_ticks": 2000
+  },
+  "sources": {
+    "limits.limit_torque_nm": {"json": "exports/leg/limits.json", "pointer": "/profiles/robot/motor_limit_torque_nm", "what": "the robot leg's cap (D78), written into every motor at boot (gp_app.c, GP_LIM_ROBOT_MOTOR_NM)"},
+    "limits.can_timeout_ticks": {"c_define": "firmware/balance/include/gp/gp_config.h", "name": "GP_RS04_CAN_TIMEOUT", "what": "0.1 s without a frame and the motor drops to reset"},
+    "limits.can_timeout_max_ticks": {"c_define": "firmware/balance/include/gp/gp_config.h", "name": "GP_RS04_CAN_TIMEOUT", "what": "the tool never sets a longer watchdog than the firmware's"},
+    "motor_config.limit_torque": {"json": "exports/leg/limits.json", "pointer": "/profiles/robot/motor_limit_torque_nm", "what": "the cap stored in the motor"},
+    "motor_config.canTimeout": {"c_define": "firmware/balance/include/gp/gp_config.h", "name": "GP_RS04_CAN_TIMEOUT", "what": "stored in the motor"}
+  },
+  "jog_basis": "The jog limits are the tool's own, for a configuration jog on the robot with its legs in the air: 5 N m and 2 rad/s, Kp 40 N m/rad reaches the jog torque at 0.125 rad.",
+  "motor_config": {
+    "run_mode": 0,
+    "limit_torque": 61.0,
+    "canTimeout": 2000,
+    "zero_sta": 1,
+    "damper": 0
+  },
+  "notes": [
+    "The firmware writes its own limit_torque and canTimeout into every motor at boot (gp_rs04.c), whatever the motor has stored.",
+    "Not for the PLA leg: its parts are rated for the pla-bench cap only."
+  ],
+  "references": [
+    {"file": "docs/body-firmware.md", "what": "the balance firmware: motor ids, buses and boot configuration"},
+    {"file": "docs/leg-protection.md", "what": "the over-command audit and the per-build caps"}
+  ],
+  "changes": [
+    {"version": 1, "date": "2026-11-03", "what": "first profile (issue #206)"},
+    {"version": 2, "date": "2026-11-04", "what": "the robot leg's 61 N m from exports/leg/limits.json (#202, D78)"}
+  ]
+}

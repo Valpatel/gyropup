@@ -116,18 +116,19 @@ requirements:
     ref: D40
   verify_by: inspection
 - id: R15
-  text: The turret carries its own Jetson Orin NX 16 GB and takes one XT30 input, 12-54 V
+  text: The turret carries no computer of its own; its Feather M4 CAN takes aim and fire commands over CAN from Gyropup's J501
+    or, standing alone, from an Orin NX on a desk; power and CAN come in on the DT12
   source:
     kind: user
-    quote: I would use a jetson orin nx 16gb.
-    ref: D66
+    quote: Turret runs off the orin AGX on the robot or an Orin NX on a desktop (optional 2nd variation).
+    ref: D76
   verify_by: inspection
 - id: R16
   text: The turret stands alone on one DCB609 FLEXVOLT in 20 V mode, with the hold-to-run pendant
   source:
     kind: user
     quote: They can combined of course, but would basically be two independent robots
-    ref: D66
+    ref: D66, D76
   verify_by: inspection
 - id: R17
   text: Every slip-ring circuit carries at most 2 A, on the bus and on the stand's pack
@@ -246,14 +247,6 @@ interfaces:
   datum: under the dial floor
   description: 4 x M2 x 6 countersunk from above; its face in a 0.75 mm pocket.
   owner: S3-feed
-- id: I-plinth-base
-  between:
-  - pan_base
-  - compute_shell
-  kind: fastened
-  datum: the TM face, T z 0
-  description: 4 x M5 x 16 into inserts in the shell's four columns.
-  owner: S1-base
 - id: I-carrier
   between:
   - ring_carrier
@@ -298,12 +291,12 @@ interfaces:
   owner: S6-wiring
 - id: I-stand-tm
   between:
-  - compute_tray
+  - pan_base
   - stand_box
   kind: fastened
-  datum: the stand's top plate (the TM pattern), T z -86
-  description: 4 x M5 x 16 down into the stand's inserts, 2 x Ø5 dowels (as on the head).
-  owner: S7-compute
+  datum: the stand's top plate (the TM pattern), T z 0
+  description: 4 x M5 x 16 down through the pan base's foot into the stand's inserts, 2 x Ø5 dowels (as on the head; D76).
+  owner: S8-stand
 - id: I-hopper-seat
   between:
   - hopper
@@ -332,7 +325,7 @@ decisions: decisions.yaml
 gates:
   touch_tol_mm: 0.05
   grounded:
-  - compute_tray
+  - pan_base
   free_parts:
   - part: ball
     reason: a loose round of the physics-settled hopper load (sim/turret_feed.py --pile); held by the hopper's cavity

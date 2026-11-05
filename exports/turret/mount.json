@@ -1,13 +1,13 @@
 {
  "what": "the turret's interface for the body (docs/turret-next-plan.md 3.1, task N5)",
- "frame": "the TM frame: x forward, y left, z up (mm), the origin on the pan axis in the TM face (the compute plinth tray's underside, D66); cad/turret.py's frame T (the pan base's foot) is frame_t_above_face_mm above it",
- "frame_t_above_face_mm": 86.0,
+ "frame": "the TM frame: x forward, y left, z up (mm), the origin on the pan axis in the TM face (the pan base's foot, D76); cad/turret.py's frame T (the pan base's foot) is frame_t_above_face_mm above it",
+ "frame_t_above_face_mm": 0.0,
  "written_by": "cad/build_turret.py through cad/turret_mount.py, from the CAD as built",
- "mass_kg": 2.5734,
+ "mass_kg": 1.7568,
  "com_mm": [
-  -3.8,
-  -2.8,
-  135.3
+  -5.1,
+  -4.6,
+  96.9
  ],
  "tm": {
   "bolts_mm": [
@@ -44,32 +44,14 @@
   "dowel_pin": "Ø5 x 16, 2 off: not symmetric, the turret goes on one way only",
   "hole_d_mm": 45.0,
   "hole_use": "unused on the robot: the harness leaves by the DT12, nothing passes the hole",
-  "foot_d_mm": 156.0,
-  "foot_t_mm": 10.0,
-  "foot": "D66: the compute plinth's floor (cad/turret.py compute_tray) flat on the head's TM face, no centre opening; the pan base sits 86 mm above on the plinth's columns",
-  "plinth": {
-   "height_mm": 86.0,
-   "d_mm": 156.0,
-   "decision": "D66: the turret's own Jetson (reComputer Mini J4012) inside",
-   "ports_side": "-x (the turret's back): the XT30 power input (12-54 V; the 10S bus through the body's fused branch) and the RJ-45 (Ethernet to the J501)",
-   "xt30_mm": [
-    -72.0,
-    -30.0,
-    40.0
-   ],
-   "rj45_mm": [
-    -72.0,
-    30.0,
-    40.0
-   ],
-   "ports_frame": "x, y on the pan axis, z above the head's TM face",
-   "mass_g_est": 780
-  },
+  "foot_d_mm": 144.0,
+  "foot_t_mm": 5.0,
+  "foot": "D76: the pan base's foot (cad/turret.py pan_base) flat on the head's TM face, its Ø65 centre opening over the Ø45 TM hole; no compute plinth (D66 superseded)",
   "bumper_r_mm": 86.0,
   "bumper_lug_r_mm": 87.5,
   "bumper_z_mm": [
-   92.0,
-   106.0
+   6.0,
+   20.0
   ],
   "source": "cad/turret.py TM_BOLTS, TM_DOWELS, TM_HOLE, Geo.base_r / foot_t / bumper_r, pan_base(); the screw and pin lengths from exports/turret/bench/bom.json (hw_tm_screws, hw_tm_dowels)"
  },
@@ -78,11 +60,11 @@
   "decision": "D41: a printed riser on the top deck, open sides",
   "top_ring": "solid under the four bolts and the two dowels; nothing of it inside the DT plug boxes (dt12.boxes)",
   "inserts": "4 x M5 heat-set, pilots Ø6.4, at least bolt_hole_depth_min_mm deep",
-  "screw_head_seat_above_face_mm": 4.5,
-  "screw_tip_below_face_mm": 11.5,
-  "bolt_hole_depth_min_mm": 12.5,
-  "dowel_holes": "2 x Ø5 H7 (reamed), at least 8.5 mm deep: 8 mm of each 16 mm pin is in the plinth's tray",
-  "source": "docs/body-plan.md 1.1 (D41); the depths from the screw and pin lengths and cad/turret.py compute_tray() (D66: the M5 heads on Ø9.5 x 5.5 counterbores' floors in the 10 mm tray, the dowel holes 8 mm into it from below)"
+  "screw_head_seat_above_face_mm": 5.0,
+  "screw_tip_below_face_mm": 11.0,
+  "bolt_hole_depth_min_mm": 12.0,
+  "dowel_holes": "2 x Ø5 H7 (reamed), at least 12.5 mm deep: 4 mm of each 16 mm pin is in the pan base's foot",
+  "source": "docs/body-plan.md 1.1 (D41); the depths from the screw and pin lengths and cad/turret.py pan_base() (D76: the M5 heads on the 5 mm foot's top, the dowel holes 4 mm into it from below)"
  },
  "dt12": {
   "receptacle": "TE Deutsch DT04-12PA-L012 flange receptacle (te-dt04-12pa-l012)",
@@ -91,9 +73,9 @@
   "centre_mm": [
    0.0,
    -73.0,
-   105.0
+   19.0
   ],
-  "centre_above_tm_mm": 105.0,
+  "centre_above_tm_mm": 19.0,
   "pad_face_y_mm": -73.0,
   "flange_face_y_mm": -78.08,
   "plug_axis": [
@@ -107,48 +89,48 @@
     "min_mm": [
      -22.0,
      -123.08,
-     91.0
+     5.0
     ],
     "max_mm": [
      22.0,
      -78.08,
-     119.0
+     33.0
     ]
    },
    "plug_backshell": {
     "min_mm": [
      -22.0,
      -123.08,
-     56.0
+     -30.0
     ],
     "max_mm": [
      22.0,
      -101.08,
-     105.0
+     19.0
     ]
    },
    "withdrawal_sweep": {
     "min_mm": [
      -22.0,
      -153.08,
-     91.0
+     5.0
     ],
     "max_mm": [
      22.0,
      -123.08,
-     119.0
+     33.0
     ]
    },
    "backshell_withdrawal": {
     "min_mm": [
      -22.0,
      -153.08,
-     56.0
+     -30.0
     ],
     "max_mm": [
      22.0,
      -101.08,
-     105.0
+     19.0
     ]
    }
   },
@@ -163,8 +145,8 @@
    "volume_mm3": 89320.0,
    "cad_volume_mm3": 89320.0
   },
-  "plug_in_with": "the turret parked and the body's 24 V branch off",
-  "source": "cad/turret.py DT, DT_Z (in frame T) + PLINTH h, Geo.dt_y, bought_parts() (dt_receptacle, dt_plug), clashes() (the sweep box); docs/turret-wiring.md 1.1"
+  "plug_in_with": "the turret parked and the body's turret branch off (the stop relay open)",
+  "source": "cad/turret.py DT, DT_Z (in frame T) + FRAME_T_ABOVE_TM, Geo.dt_y, bought_parts() (dt_receptacle, dt_plug), clashes() (the sweep box); docs/turret-wiring.md 1.1"
  },
  "harness": {
   "connector": "DT12 (above)",
@@ -174,7 +156,7 @@
      1,
      2
     ],
-    "signal": "+24 V",
+    "signal": "+BUS (D76: the body's 10S turret branch, 30-42 V; the stand's DCB609, 15-20.5 V)",
     "wire": "18 AWG PTFE, paralleled"
    },
    {
@@ -212,35 +194,35 @@
     "wire": null
    }
   ],
-  "in_the_turret": "a 5 A MINI fuse (littelfuse-0297005-wxnv) in its in-line holder in the lead to the base board, and D8 (1N5822) after it: a reversed supply blows the fuse",
+  "in_the_turret": "the 10 A MINI 58 V (fuse_mini58_10a) in its in-line holder (littelfuse-0fhm0001zxj) in the lead from the DT12 to the base board, then D8 (1N5408): a reversed supply blows the fuse (D76: the power is on pins 1-4 again, as before D66)",
   "safety_contact": "across pins 7-8: a dry contact, closed = run, rated for 12 V at 2 mA (the base 555's pulse loop); opens on the radio stop, on the receiver's failsafe and when the robot sits (D37, D52)",
   "source": "docs/turret-wiring.md 1.1, 3.1 and 4; docs/turret-next-plan.md 3.2 item 3"
  },
  "mass": {
   "pose": "pan 0, tilt 0 (the centre turns with pan about the pan axis)",
   "with_30_balls": {
-   "mass_g": 2573.4,
+   "mass_g": 1756.8,
    "com_mm": [
-    -3.8,
-    -2.8,
-    135.3
+    -5.1,
+    -4.6,
+    96.9
    ]
   },
   "empty": {
-   "mass_g": 2518.5,
+   "mass_g": 1701.9,
    "com_mm": [
-    -2.8,
-    -2.8,
-    132.6
+    -3.7,
+    -4.7,
+    94.5
    ]
   },
   "with_30_balls_at_tilt_min": {
    "tilt_deg": -25.0,
-   "mass_g": 2573.4,
+   "mass_g": 1756.8,
    "com_mm": [
-    -2.9,
-    -2.8,
-    136.0
+    -3.5,
+    -4.6,
+    98.1
    ]
   },
   "balls": {
@@ -248,33 +230,30 @@
    "mass_g": 54.9,
    "note": "30 Rival rounds x 1.83 g"
   },
-  "com_off_pan_axis_mm": 4.7,
-  "com_above_tm_face_mm": 135.3,
-  "com_above_deck_on_riser_mm": 165.3,
-  "budget": "D71: the turret is at most 2.6 kg on Gyropup with a full hopper (the robot's 37.5 kg design mass covers it; it was D49's 1.70 kg head budget); the centre at most 100 mm above the TM face",
-  "ceiling_kg": 2.6,
-  "margin_g": 26.6,
-  "within_ceiling": true,
+  "com_off_pan_axis_mm": 6.8,
+  "com_above_tm_face_mm": 96.9,
+  "com_above_deck_on_riser_mm": 126.9,
+  "budget": "D79: no mass ceiling (the owner took out D71's weight budget); the body's TM checks take the head at 1.70 kg or more, the centre at most 100 mm above the TM face, or the real one when higher",
   "com_budget_mm": 100.0,
-  "com_margin_mm": -35.3,
-  "com_within_budget": false,
+  "com_margin_mm": 3.1,
+  "com_within_budget": true,
   "source": "cad/turret.py mass_properties() (printed parts by the printed-part model, bought parts at their catalogue masses, the not-modelled allowance at the turntable)"
  },
  "power": {
   "supply_v": 24.0,
   "ramp_s": 0.8,
-  "ring_peak_a": 7.28,
+  "ring_peak_a": 7.16,
   "time_to_95pct_speed_s": 0.76,
   "stepped_start_a": null,
   "never_stepped": "the firmware always ramps the flywheels (config.RAMP_S); a stepped start (stepped_start_a) is never used on the robot",
-  "burst_peak_a": 9.66,
-  "burst_rms_a": 3.65,
+  "burst_peak_a": 9.64,
+  "burst_rms_a": 3.63,
   "game_average_a": 1.5,
   "average_w_budget": 40.0,
   "bank_uf": 2000,
   "bank": "2 x 1000 uF 35 V low ESR (panasonic-eeu-fr1j471b) across the ring's +24 V on the turret boards' level 1 (the power model in exports/turret/e2e/power.json assumed 3 x 1,000 uF)",
-  "hot_plug": "plug and unplug the DT12 only with the body's 24 V branch off: the bank charges through the pins otherwise",
-  "body_side": "the body's 24 V branch with its own fuse, and the STOP relay's second pole in it (D52)",
+  "hot_plug": "plug and unplug the DT12 only with the body's turret branch off: the bank charges through the pins otherwise",
+  "body_side": "the body's turret branch (F8, 7.5 A MINI 58 V) through the stop relay's pole B (D52), on DT12 pins 1-4 (D76)",
   "source": "exports/turret/e2e/power.json (ramp_sweep at the firmware's RAMP_S, verdict), firmware/turret/config.py RAMP_S, docs/turret-wiring.md 4-5 (the game average <= 1.5 A at the ring, the bank), docs/head-payload.md (40 W average), exports/turret/bench/bom.json (el_capacitors)"
  },
  "can": {
@@ -319,7 +298,7 @@
     "wild_deg": 2.0,
     "slowest_m_s": 11.0
    },
-   "frame": "cad/turret_lidar.py's: its heights are against frame T (the pan base's foot, 86 mm above the TM face since D66), not this file's TM frame; re-running the study against the TM face is an open follow-up (issue #137)"
+   "frame": "cad/turret_lidar.py's: its heights are against frame T (the pan base's foot, 0 mm above the TM face since D76), the same as this file's TM frame"
   },
   "limited_pan_window_deg": [
    -26.0,
@@ -364,17 +343,17 @@
    0.0
   ],
   "tilt_rule": "never above level: the hard stop at 0 and every goal clamped to <= 0",
-  "tilt_axis_above_tm_mm": 226.0,
-  "ball_path_above_tm_mm": 211.0,
+  "tilt_axis_above_tm_mm": 140.0,
+  "ball_path_above_tm_mm": 125.0,
   "muzzle_ahead_of_pan_axis_mm": 150.0,
   "fps_max": 105.0,
-  "source": "firmware/turret/config.py, cad/turret.py Geo (tilt_t, path_t in frame T) + PLINTH h"
+  "source": "firmware/turret/config.py, cad/turret.py Geo (tilt_t, path_t in frame T) + FRAME_T_ABOVE_TM"
  },
  "envelope": {
-  "lowest_z_mm": 0.0,
-  "lowest_by": "compute_tray",
+  "lowest_z_mm": -0.0,
+  "lowest_by": "ring_carrier",
   "nothing_below_face": true,
-  "top_z_mm": 349.2,
+  "top_z_mm": 263.2,
   "top_by": "hopper_lid",
   "fixed_r_mm": 100.1,
   "fixed_r_by": "dt_receptacle",

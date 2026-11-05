@@ -9,6 +9,8 @@
 #include "gp/gp_config.h"
 #include "gp/gp_control.h"
 #include "gp/gp_fivebar.h"
+#include "gp/gp_guard.h"
+#include "gp/gp_limits.h"
 #include "gp/gp_ina228.h"
 #include "gp/gp_jetson.h"
 #include "gp/gp_model.h"
@@ -258,6 +260,137 @@ static void test_control(void)
     s.roll = 0.1f;
     for (int k = 0; k < 100; k++) gp_ctl_step(&c, &s, &cmd, leg, true, &o);
     CHECK(o.L_cmd[0] < o.L_cmd[1]);
+}
+
+
+/* ------------------------------------------------------------------------------------------- the leg guards */
+static void test_guard(void)
+{
+    gp_torque_limits t;
+    gp_guard_limits(GP_BUILD_ROBOT, &t);
+    NEAR(t.everyday_nm, GP_LIM_ROBOT_EVERYDAY_NM, 0);
+    NEAR(t.motor_nm, t.peak_nm, 0); /* the motors' own limit lets the push through, and nothing more */
+    NEAR(t.peak_nm, t.everyday_nm, 0); /* D78 (2026-11-04): the every-day cap in the push too */
+    CHECK(t.peak_nm >= t.everyday_nm && t.peak_nm <= GP_LEG_PEAK_NM && t.rms_nm < t.everyday_nm);
+    gp_guard_limits(GP_BUILD_PLA_BENCH, &t);
+    NEAR(t.everyday_nm, 12.0, 0); /* docs/motor-day.md: the PLA cap */
+    NEAR(t.motor_nm, 12.0, 0);
+    gp_guard_limits(7, &t); /* an unknown build is the weakest */
+    CHECK(t.build == GP_BUILD_PLA_BENCH && t.motor_nm == 12.0f);
+    NEAR(GP_LIM_PEAK_MAX_S, GP_JUMP_PUSH_MAX_S, 0); /* the peak lasts no longer than the push it is for */
+    /* robot and rig profiles: the robot's leg always; the rig the PLA bench leg unless built for the robot's */
+    gp_config cfg;
+    gp_config_default(&cfg, GP_PROFILE_ROBOT);
+    CHECK(cfg.lim.build == GP_BUILD_ROBOT && cfg.ctl.cap_nm == cfg.lim.everyday_nm);
+    gp_config_default(&cfg, GP_PROFILE_RIG);
+    CHECK(cfg.lim.build == GP_RIG_BUILD);
+
+    /* (Python) sim/leg_limits.py soft_stop on the front motor (stops -97 / +3 deg) */
+    const float lo = GP_FB_STOP_FRONT_IN, hi = GP_FB_STOP_FRONT_OUT, d1 = 0.0174532925f;
+    const struct { float T, tau, phi, w, want; } g[] = {
+        {61.0f, 10.0f, 0.034907f, 0.0f, 0.0f},        /* 1 deg from the knee-out stop: nothing more into it */
+        {61.0f, -10.0f, 0.034907f, 0.0f, -10.0f},     /* away from it: allowed */
+        {61.0f, 10.0f, -0.034907f, 0.0f, 10.0f},      /* 5 deg away: outside the margin */
+        {61.0f, 10.0f, -0.034907f, 14.0f, -61.0f},    /* 14 rad/s at 5 deg: the whole leg (0.169 kg m^2) would hit at 3x */
+        {12.0f, 10.0f, -0.034907f, 14.0f, -12.0f},    /* the PLA leg's: brake at its cap */
+        {12.0f, 5.0f, -1.640609f, -15.0f, 12.0f},     /* towards the knee-in stop, 3 deg off */
+        {12.0f, 5.0f, -0.698132f, 15.0f, -12.0f},     /* the PLA leg mid-range at 15 rad/s cannot stop in time: brake */
+        {12.0f, 5.0f, -0.698132f, 5.0f, 5.0f},        /* ... at 5 rad/s it can: untouched */
+        {61.0f, 10.0f, -0.698132f, 15.7f, 10.0f},     /* the robot's leg mid-range even at no-load speed: untouched */
+        {61.0f, -30.0f, 0.043633f, 13.0f, -61.0f},    /* past the margin at 13 rad/s: a full brake */
+    };
+    for (unsigned k = 0; k < sizeof g / sizeof g[0]; k++) {
+        NEAR(gp_guard_soft_stop(g[k].tau, g[k].phi, g[k].w, lo, hi, g[k].T), g[k].want, 1e-4);
+    }
+    NEAR(gp_guard_approach(0.0f, 61.0f), 5.071654, 1e-4);   /* contact: 61 N m on the sleeve, 2.17 J */
+    NEAR(gp_guard_approach(0.05f, 61.0f), 7.862337, 1e-4);
+    NEAR(gp_guard_approach(0.0f, 12.0f), 0.997702, 1e-4);
+    /* the rear motor's stops run -183 .. -83 deg: at its knee-in stop (-83) no more torque towards it */
+    NEAR(gp_guard_soft_stop(8.0f, GP_FB_STOP_REAR_IN - d1, 0.0f, GP_FB_STOP_REAR_OUT, GP_FB_STOP_REAR_IN, 61.0f), 0.0, 0);
+
+    /* (Python) the commanded window by lean (sim/leg_limits.py window_at) */
+    const struct { float lean, lo, hi; } wv[] = {{-0.35f, 0.207f, 0.343f}, {-0.12f, 0.1366f, 0.3744f}, {0.0f, 0.107f, 0.383f},
+                                                 {0.33f, 0.2006f, 0.3466f}, {0.6f, 0.258f, 0.317f}, {-0.6f, 0.258f, 0.317f}};
+    for (unsigned k = 0; k < sizeof wv / sizeof wv[0]; k++) {
+        float a, b;
+        gp_guard_window(wv[k].lean, &a, &b);
+        NEAR(a, wv[k].lo, 1e-4);
+        NEAR(b, wv[k].hi, 1e-4);
+    }
+    /* every height the controller has, upright, is inside the window; full height leaning back 0.35 rad is not */
+    NEAR(gp_guard_clamp_L(GP_H_MAX_M, 0.0f, 0.0f), GP_H_MAX_M, 0);
+    NEAR(gp_guard_clamp_L(GP_H_MIN_M, 0.0f, 0.0f), GP_H_MIN_M, 0);
+    NEAR(gp_guard_clamp_L(GP_SIT_L_ROBOT_M, 0.0f, 0.0f), GP_SIT_L_ROBOT_M, 0);
+    NEAR(gp_guard_clamp_L(GP_JUMP_CROUCH_L_M, 0.0f, 0.0f), GP_JUMP_CROUCH_L_M, 0);
+    NEAR(gp_guard_clamp_L(GP_H_MAX_M, -0.35f, -0.35f), 0.343, 1e-4);
+    /* (Python) a lean lagging its command: the overlap of both windows, either way round */
+    NEAR(gp_guard_clamp_L(0.375f, -0.2f, -0.25f), 0.359, 1e-4);
+    NEAR(gp_guard_clamp_L(0.375f, -0.25f, -0.2f), 0.359, 1e-4);
+    NEAR(gp_guard_clamp_L(0.11f, 0.0f, 0.3f), 0.191, 1e-4);
+
+    /* (Python) yaw_rate_limit at 36 V (vmax 2.194402 m/s), rad/s: the outer wheel at a stand, the lateral acceleration
+     * at 1 and 1.5 m/s, the outer wheel again near top speed, none past it */
+    {
+        const float vm = GP_G_SPEED_MARGIN * GP_WHEEL_W_PER_V * 36.0f * GP_WHEEL_R_M;
+        NEAR(gp_guard_yaw_limit(0.0f, vm), 10.119449, 1e-3);
+        NEAR(gp_guard_yaw_limit(1.0f, vm), 2.11, 1e-4);
+        NEAR(gp_guard_yaw_limit(-1.5f, vm), 1.406667, 1e-4);
+        NEAR(gp_guard_yaw_limit(2.0f, vm), 0.896484, 1e-3);
+        NEAR(gp_guard_yaw_limit(2.3f, vm), 0.0, 0);
+        NEAR(gp_guard_yaw_rate(5.0f, 1.0f, vm), 2.11, 1e-4);
+        NEAR(gp_guard_yaw_rate(-5.0f, 1.0f, vm), -2.11, 1e-4);
+        NEAR(gp_guard_yaw_rate(0.8f, 1.0f, vm), 0.8, 1e-6);   /* the drive scenario's turn: untouched */
+    }
+
+    /* (Python) dead_point_margin, rad: the knee-in/knee-in corner at the stops, 2.5 and 4 deg past the front's */
+    NEAR(gp_guard_dead_margin(GP_FB_STOP_FRONT_IN, GP_FB_STOP_REAR_IN), 0.106698, 2e-4);
+    NEAR(gp_guard_dead_margin(GP_FB_STOP_FRONT_IN - 2.5f * d1, GP_FB_STOP_REAR_IN), 0.041014, 2e-4);
+    CHECK(gp_guard_dead_margin(GP_FB_STOP_FRONT_IN - 2.5f * d1, GP_FB_STOP_REAR_IN) < GP_LIM_DEAD_LIMP_RAD);
+    CHECK(gp_guard_dead_margin(GP_FB_STOP_FRONT_IN, GP_FB_STOP_REAR_IN) > GP_LIM_DEAD_LIMP_RAD);
+    NEAR(gp_guard_dead_margin(GP_FB_STOP_FRONT_IN - 4.0f * d1, GP_FB_STOP_REAR_IN), 0.0, 1e-3);
+    NEAR(gp_guard_dead_margin(-0.8879823f, -2.2536103f), 1.428651, 2e-4);   /* the 300 mm stance */
+    NEAR(gp_guard_dead_margin(GP_FB_STOP_FRONT_OUT, GP_FB_STOP_REAR_OUT), 0.400550, 2e-4);
+    /* every window pose is one the five-bar reaches inside its stops */
+    for (int k = 0; k <= 40; k++) {
+        const float lean = -0.5f + 0.025f * (float)k;
+        float a, b, phi[2];
+        gp_guard_window(lean, &a, &b);
+        for (int e = 0; e < 2; e++) {
+            CHECK(gp_fb_stance(e ? b : a, lean, phi));
+            CHECK(phi[0] <= GP_FB_STOP_FRONT_OUT && phi[0] >= GP_FB_STOP_FRONT_IN);
+            CHECK(phi[1] <= GP_FB_STOP_REAR_IN && phi[1] >= GP_FB_STOP_REAR_OUT);
+        }
+    }
+    /* the measured-angle window: the sleeve's squeeze at the fault torque and 2 deg */
+    CHECK(gp_guard_angle_ok(hi + 0.17f, lo, hi));
+    CHECK(!gp_guard_angle_ok(hi + 0.18f, lo, hi));
+    CHECK(!gp_guard_angle_ok(lo - 0.18f, lo, hi));
+    /* rms: a held 30 N m reaches 30 after a few time constants; zero decays */
+    float ms = 0.0f, r = 0.0f;
+    for (int k = 0; k < (int)(5.0f * GP_LIM_RMS_TAU_S / GP_DT); k++) r = gp_guard_rms(&ms, 30.0f, GP_DT);
+    NEAR(r, 30.0, 0.15);
+
+    /* the law: full height leaning back as far as it can is clamped to the window, and the soft stop shows */
+    gp_config_default(&cfg, GP_PROFILE_ROBOT);
+    gp_ctl c;
+    gp_ctl_init(&c, &cfg.ctl);
+    gp_ctl_reset(&c, 1.0f);
+    gp_sense s;
+    stance_sense(&s, 0.34f);
+    gp_cmd cmd = {1.0f, 0, 0, 0.35f, 0, 0};
+    gp_leg_cmd leg[2] = {{GP_LEG_TRACK, false, 0, 0, 1}, {GP_LEG_TRACK, false, 0, 0, 1}};
+    gp_ctl_out o;
+    for (int k = 0; k < 1000; k++) gp_ctl_step(&c, &s, &cmd, leg, false, &o);
+    CHECK(o.windowed == 3u);
+    float wl, wh;
+    gp_guard_window(-0.35f, &wl, &wh);
+    NEAR(o.L_cmd[0], wh, 1e-4);
+    /* a commanded push into the knee-out stops (the shortest leg) at the stop: no torque into them */
+    stance_sense(&s, 0.1016f);
+    leg[0] = leg[1] = (gp_leg_cmd){GP_LEG_FORCE, false, 0, -2000.0f, 0};
+    gp_ctl_step(&c, &s, &cmd, leg, false, &o);
+    CHECK(o.guarded != 0u);
+    CHECK(o.tau[0][0] <= 1e-6f && o.tau[0][1] >= -1e-6f); /* front: + is towards its knee-out stop; rear: - */
 }
 
 /* ------------------------------------------------------------------------------------------- the supervisor */
@@ -534,6 +667,113 @@ static void test_supervisor(void)
     tick(100);
     CHECK(A.mode == GP_MODE_SIT && A.reason == GP_R_LINK);
 
+    /* the leg build's torque (docs/leg-protection.md): the rig profile writes the PLA bench leg's limit_torque into every
+     * motor and reads it back; the cap is the every-day one outside a jump's push and the peak inside it */
+    boot_and_stand(41.0f);
+    {
+        bool found = false;
+        for (int p = 0; p < TP_PARAMS; p++) {
+            if (TP.pidx[0][p] == GP_RS04_P_LIMIT_TORQUE) {
+                float v;
+                memcpy(&v, TP.pval[0][p], 4);
+                NEAR(v, A.cfg.lim.motor_nm, 0);
+                found = true;
+            }
+        }
+        CHECK(found);
+        CHECK(A.cfg.lim.build == GP_RIG_BUILD);
+    }
+    /* a rig built for the robot's leg: the same, at the robot's numbers; a jump's push runs at the peak only */
+    {
+        gp_config cfg = A.cfg;
+        gp_guard_limits(GP_BUILD_ROBOT, &cfg.lim);
+        cfg.ctl.cap_nm = cfg.ctl.everyday_nm = cfg.lim.everyday_nm;
+        memset(&TP, 0, sizeof TP);
+        float phi[2];
+        gp_fb_stance(0.30f, 0.0f, phi);
+        for (int i = 0; i < 4; i++) TP.angle[i] = phi[i % 2];
+        now = 0; seq = 0; jump_seq = 0; env.run = false;
+        gp_app_init(&A, &cfg, now);
+        tick(100);
+        env.run = true;
+        tick(50);
+        CHECK(A.mode == GP_MODE_RUN);
+        NEAR(A.cap_now, GP_LIM_ROBOT_EVERYDAY_NM, 0);
+        jump_seq = 1;
+        float cap_push = 0.0f, cap_other = 0.0f;
+        /* the motors' angles are fixed here: the push ends on time and the leg stays in the air phase */
+        for (int k = 0; k < 1500; k++) {
+            tick(1);
+            if (A.jump_phase == GP_JP_PUSH) cap_push = fmaxf(cap_push, A.cap_now);
+            else cap_other = fmaxf(cap_other, A.cap_now);
+        }
+        NEAR(cap_push, GP_LIM_ROBOT_PEAK_NM, 0);
+        NEAR(cap_other, GP_LIM_ROBOT_EVERYDAY_NM, 0);
+        CHECK(A.mode == GP_MODE_JUMP && A.jump_phase == GP_JP_AIR && A.jumps == 1);
+        /* the next jump waits GP_JUMP_GAP_S from the last one's end (as the recovery records it) */
+        gp_app_init(&A, &cfg, now); /* a power cycle: the fixed angles never land */
+        env.run = false;
+        tick(100);
+        env.run = true;
+        tick(50);
+        CHECK(A.mode == GP_MODE_RUN);
+        A.jumped = true;
+        A.t_jump_end = now;
+        jump_seq = 2;
+        tick(20);
+        CHECK(A.mode == GP_MODE_RUN && A.jump_refusal == GP_J_COOLDOWN);
+        tick((int)(GP_JUMP_GAP_S * 1000.0f));
+        jump_seq = 3;
+        tick(20);
+        CHECK(A.mode == GP_MODE_JUMP && A.jumps == 1); /* counted since the power cycle */
+    }
+    /* a motor's rms torque: over 0.8 of its limit no jump; over the limit the cap is the rms limit until it falls
+     * under 0.9 of it */
+    boot_and_stand(41.0f);
+    A.tau_ms[1] = (0.85f * A.cfg.lim.rms_nm) * (0.85f * A.cfg.lim.rms_nm);
+    jump_seq = 1;
+    tick(20);
+    CHECK(A.mode == GP_MODE_RUN && A.jump_refusal == GP_J_HOT);
+    A.tau_ms[1] = (1.1f * A.cfg.lim.rms_nm) * (1.1f * A.cfg.lim.rms_nm);
+    tick(2); /* the cap is chosen on the rms the tick before */
+    CHECK(A.hot);
+    NEAR(A.cap_now, fminf(A.cfg.lim.everyday_nm, A.cfg.lim.rms_nm), 0);
+    A.tau_ms[1] = 0.0f;
+    tick(2);
+    CHECK(!A.hot);
+    NEAR(A.cap_now, A.cfg.lim.everyday_nm, 0);
+    /* a motor reporting over 70 C: no jump; over 80 C: sit */
+    boot_and_stand(36.0f);
+    TP.temp_c[3] = 75.0f;
+    tick(5);
+    jump_seq = 1;
+    tick(20);
+    CHECK(A.mode == GP_MODE_RUN && A.jump_refusal == GP_J_HOT);
+    TP.temp_c[3] = 85.0f;
+    tick(5);
+    CHECK(A.mode == GP_MODE_SIT && A.reason == GP_R_MOTOR_HOT);
+    /* a motor measured well past its stop (a broken post, a slipped zero): limp */
+    boot_and_stand(36.0f);
+    TP.angle[0] = GP_FB_STOP_FRONT_IN - GP_LIM_ANGLE_WINDOW_RAD - 0.02f;
+    tick(3);
+    CHECK(A.mode == GP_MODE_LIMP && (A.reason == GP_R_JOINT_RANGE || A.reason == GP_R_LEG_WINDOW));
+    boot_and_stand(36.0f);
+    TP.angle[0] = GP_FB_STOP_FRONT_IN - 0.5f * GP_LIM_ANGLE_WINDOW_RAD; /* the sleeve squeezed: not a fault */
+    float phr[2];
+    gp_fb_stance(0.30f, 0.0f, phr);
+    tick(3);
+    CHECK(A.reason != GP_R_JOINT_RANGE);
+    TP.angle[0] = phr[0];
+    /* squeezed into both knee-in stops: inside the angle window, but 2.5 deg from the five-bar's dead point: limp */
+    boot_and_stand(36.0f);
+    TP.angle[0] = GP_FB_STOP_FRONT_IN - 2.5f * 0.0174532925f;
+    TP.angle[1] = GP_FB_STOP_REAR_IN;
+    CHECK(gp_guard_angle_ok(TP.angle[0], GP_FB_STOP_FRONT_IN, GP_FB_STOP_FRONT_OUT));
+    tick(3);
+    CHECK(A.mode == GP_MODE_LIMP && A.reason == GP_R_JOINT_RANGE);
+    TP.angle[0] = phr[0];
+    TP.angle[1] = phr[1];
+
     /* a motor that stops answering: limp after 3 ticks, torque off */
     boot_and_stand(36.0f);
     TP.mute[2] = true;
@@ -552,6 +792,7 @@ int main(void)
     test_vn100();
     test_ina228();
     test_control();
+    test_guard();
     test_supervisor();
     printf("%d checks, %d failed\n", checks, fails);
     return fails ? 1 : 0;

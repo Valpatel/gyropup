@@ -1,0 +1,11 @@
+{
+  "schema": "gyropup.inventory/1",
+  "component": "Velodyne VLP-16",
+  "folder": "hardware/sensors/vlp16-lidar",
+  "about": "The owner's own unit (docs/body-plan.md: the user's). Fill the serial from its label or web page when it is on the bench.",
+  "ordered": [],
+  "arrived": [],
+  "held": [{"count": 1, "source": "docs/body-plan.md: the user's; docs/body-orders.md: listed, not ordered"}],
+  "fields": {"unit": "1", "serial": "from its label or web page", "firmware": "from its web page", "notes": ""},
+  "units": [{"unit": 1, "serial": null, "firmware": null, "notes": ""}]
+}

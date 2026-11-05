@@ -68,7 +68,7 @@ class GateFailure(RuntimeError):
 TILT_MOVERS = {'dial': 'dial', 'flywheel': 'wheel_l', 'flywheel_tyre': 'wheel_l', 'flywheel_m': 'wheel_r',
                'flywheel_tyre_m': 'wheel_r', 'hopper_flap': 'flap'}
 TILT_FAMILY = ('tilt', 'dial', 'wheel_l', 'wheel_r', 'flap')
-GROUNDED = ['compute_tray']                  # the plinth's floor, bolted to the head's TM face (or the stand)
+GROUNDED = ['pan_base']                      # D76: the pan base's foot, bolted to the head's TM face (or the stand)
 FREE = {'ball': 'a loose round: the settled hopper load (sim/turret_feed.py --pile), held by the hopper\'s cavity',
         'dt_plug': 'the robot\'s harness plug: a separate cable, plugged into the receptacle (absent on the stand)'}
 # one bought part drawn as two solids for colour: merged into one node for the gates (a disjoint two-solid compound)

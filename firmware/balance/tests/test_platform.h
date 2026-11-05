@@ -16,6 +16,7 @@ typedef struct {
     uint8_t mode[4], fault_bits[4];
     bool mute[4];
     float torque[4];
+    float temp_c[4];   /* the temperature each reports (0: 30 C) */
     uint16_t pidx[4][TP_PARAMS];
     uint8_t pval[4][TP_PARAMS][4];
     gp_can_frame last_status;

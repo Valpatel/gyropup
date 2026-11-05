@@ -1,0 +1,14 @@
+{
+  "schema": "gyropup.inventory/1",
+  "component": "DeWalt DCB609 FLEXVOLT 9.0 Ah",
+  "folder": "hardware/power/dcb609-packs",
+  "about": "D71 records the packs as the user's own; docs/body-orders.md still lists 2 to buy. Each record gets its date code and a measured resistance at B12. The dock adapters are not counted here: none is recorded as bought.",
+  "ordered": [],
+  "arrived": [],
+  "held": [{"count": 2, "source": "docs/decisions.yaml D71: the user's DCB609 9 Ah packs (to confirm against docs/body-orders.md)"}],
+  "fields": {"unit": "1 front, 2 rear", "date_code": "from the pack's label", "resting_v": "measured", "r_ohm": "measured at B12", "notes": ""},
+  "units": [
+    {"unit": 1, "date_code": null, "resting_v": null, "r_ohm": null, "notes": ""},
+    {"unit": 2, "date_code": null, "resting_v": null, "r_ohm": null, "notes": ""}
+  ]
+}

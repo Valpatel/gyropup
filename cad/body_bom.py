@@ -307,7 +307,7 @@ def build():
             L('xt60h_f', 6, 'sockets on the robot, no live pins (D58, hazard 11): the six bus branch leads\' ends (W10-W15)'),
             L('xt60h_m', 2, 'the two VESC leads\' plugs (the devices carry the pins; the RS-04 pigtails\' XT60H-M come with the leg\'s '
                             'pigtails, docs/body-next-plan.md 5.1 item 5)'),
-            L('xt30_f', 4, 'sockets on the robot: the J501 (W21), the lidar box (W24), the turret (W34); one spare'),
+            L('xt30_f', 3, 'sockets on the robot: the J501 (W21), the lidar box (W24); one spare (D76: the turret takes its power on the DT06 plug)'),
             L('xt30_m', 4, 'the devices\' pins: the J501\'s DC-IN and the lidar box\'s adapter leads, two spare'),
             L('gh_lead_2p_300', 8, 'CAN and I2C leads to the transceivers and the INA228'),
         ],

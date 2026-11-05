@@ -426,6 +426,9 @@ docs/body-orders.md 4).
 
 ## 9. D65 and D66 in the body (2026-10-27; issues #10, #12, #13)
 
+*2026-11-03, D76 (issue #192): the turret's plinth and computer are gone; its pan base is back on the riser's TM face
+and its power and CAN come back on the DT12 (W34 to pins 1-2, W36 the J501's can1 to pins 5-6).*
+
 - **The battery bay** (cad/body_battery.py): the two DCB609 packs hang from their rail adapters under the belly, out
   through two end doors on thumbscrews; 132 mm deep; the robot sits on its skids under a 139 mm leg (H_RANGE 160-375).
 - **One converter**, TRACO TEP 150-4812WI (12 V 150 W, 18-75 V), for the J501 and the 12 V rail; the DDR-120C-24 and
@@ -465,6 +468,9 @@ sim (sim/robot_v2.py `use_d69_wheel()`), the legs' loads (cad/body_legloads.py) 
 is edited.
 
 ### 10.2 The mass gate (issue #10; D71 replaces D69's numbers)
+
+**D79 (2026-11-04): the gate is gone.** The owner: "take out the weight budget." D71's 37.0 kg gate, its sub-budgets and
+its margin are removed; the ledger (`exports/body/mass.json`) stays as information. What follows is the history.
 
 **D71 (main e899d28):** 37.5 kg design (18.75 kg a leg), 37.0 kg as built. P3 is 36.75 kg, 36.25 kg with the scheduled
 levers: a 0.75 kg margin, and the test passes. The turret's 2.55 kg head (D66) would use about 0.85 kg of it. What

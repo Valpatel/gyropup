@@ -234,3 +234,19 @@ def test_the_load_plate_is_judged_at_the_carried_weight():
     assert row(compare.judge('stand_up', a, None, 15.1))['ok'] is True
     assert row(compare.judge('stand_up', a, None, 18.75))['ok'] is False
     assert row(compare.judge('stand_up', a, None, None))['ok'] is None
+
+
+def test_the_soft_stops_take_the_torque_out_of_a_stop_and_brake_a_fast_approach():
+    """docs/leg-protection.md: the laptop's limiter runs sim/leg_limits.py soft_stop on each motor before its cap, as
+    the firmware does (gp_guard.c): 1 deg from the front's knee-out stop no torque into it; the rear's mirrors."""
+    fo, fi, ro, ri = lc.fb.stop_angles()
+    ctl = lc.LegController('squat', ff_n=150.0, limits=lc.Limits(cap=12.0))
+    mid = (fo + fi) / 2, (ro + ri) / 2
+    f, r = ctl._limit(10.0, -10.0, None, (0.0, 0.0), (fo - math.radians(1), ro + math.radians(1)))
+    assert f == 0.0 and r == 0.0                         # front + is towards knee-out; rear - is towards its knee-out
+    f, r = ctl._limit(10.0, -10.0, None, (0.0, 0.0), mid)
+    assert (f, r) == (10.0, -10.0)
+    f, _ = ctl._limit(5.0, 0.0, None, (14.0, 0.0), (fo - math.radians(5), mid[1]))
+    assert f == -12.0                                    # 14 rad/s at 5 deg is more than the PLA leg's stop takes: brake
+    off = lc.LegController('squat', ff_n=150.0, limits=lc.Limits(cap=12.0, soft_stops=False))
+    assert off._limit(10.0, 0.0, None, (0.0, 0.0), (fo - math.radians(1), mid[1]))[0] == 10.0

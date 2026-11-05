@@ -328,7 +328,7 @@ def turret_plug_box() -> dict:
     """The turret's DT06-12SA plug and its withdrawal, as a box in the robot frame (x0, x1, y0, y1, z0, z1): from
     exports/turret/mount.json's dt12 boxes (the plug body and its 30 mm withdrawal, in the TM frame) when the file exists,
     else from cad/turret.py's receptacle (DT, DT_Z, the base's -y pad at dt_y; DT_Z is in the turret's frame T, whose
-    origin is the pan base's foot, PLINTH['h'] above the TM face since D66): the plug 44 x 28 standing from the flange
+    origin is the pan base's foot, FRAME_T_ABOVE_TM above the TM face: 0 since D76): the plug 44 x 28 standing from the flange
     face and sweeping 30 mm further out to withdraw. Nothing of the body may enter it (B6 keeps the shell out of it)."""
     import sys
     t = tm()
@@ -346,9 +346,9 @@ def turret_plug_box() -> dict:
     pl, f = tu.DT['plug'], tu.DT['flange']
     y_in = -(G.dt_y + f[1])                                           # the flange's outer face: where the plug seats
     y_out = y_in - pl[1] - tu.DT['sweep']
-    zc = t['face_z'] + tu.PLINTH['h'] + tu.DT_Z                       # frame T's DT_Z, from the TM face (#137)
+    zc = t['face_z'] + tu.FRAME_T_ABOVE_TM + tu.DT_Z                  # frame T's DT_Z, from the TM face (#137)
     return {'box': (t['pan_x'] - pl[0] / 2, t['pan_x'] + pl[0] / 2, y_out, y_in, zc - pl[2] / 2, zc + pl[2] / 2),
-            'source': 'cad/turret.py DT, DT_Z + PLINTH h and Geo.dt_y (until exports/turret/mount.json, N5)'}
+            'source': 'cad/turret.py DT, DT_Z + FRAME_T_ABOVE_TM and Geo.dt_y (until exports/turret/mount.json, N5)'}
 
 
 # ------------------------------------------------------------------------------------------- the lidar (VLP-16)

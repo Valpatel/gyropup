@@ -43,7 +43,7 @@
       "cad/print_slicing.py": "13fd25fe32e75e0c66dbe8af132fd4d70fb030defb14d88a96f9ff77cbaf07bd",
       "cad/print_provenance.py": "db0d9cdc14e0d0363899d82c03eb31cb63ea0d7718fedcf127a5545f8f6bec88",
       "cad/rs04_lug_checks.py": "02a75e6dd5d28c6c8c149141d100d1386125197f5edfb34143565c72d8a8dfb5",
-      "exports/leg/rs04-mounting-fit/checks.json": "70e160da39a3f1a43912f811af5320aef8c1186537b3e3ed70d3dfbf8016a62a",
+      "exports/leg/rs04-mounting-fit/checks.json": "465cbb8b06dfff115b61034c5981b0d9441c08c9ec33569534792a18c7df8a75",
       "exports/leg/rs04-mounting-fit/coupon_frame_ring_nom.stl": "1830ff4c1c9dc2314295d3d601b238c857c774abaf108c6619fdd9901b1da2cd"
     },
     "toolkit_helpers": {
@@ -1221,7 +1221,7 @@
       "slicer_payload_sha256": "b7f803605b7df175570e58c994bd8bfd12467b3aa2756cce32a931c670f3e5a9"
     }
   },
-  "source_commit": "9f9096dba357acb2936aa2d76dbc1cdaa816a5ea",
+  "source_commit": "e982bd530977936a0e4fed510a7de0a041d30214",
   "geometry": {
     "bounds_mm": [
       [
@@ -1252,7 +1252,7 @@
   },
   "metrics": {
     "grams": 172.41,
-    "minutes": 392.80087890625,
+    "minutes": 392.7687174479167,
     "filament_m": 65.16,
     "exit_code": 0,
     "return_code": 0,
@@ -1268,7 +1268,7 @@
       "bytes": 438
     },
     "3D/3dmodel.model": {
-      "sha256": "d9cfccc412c7badb3f62bc062fbf97fd7e3cecc820937b91ea086b37f28dfed0",
+      "sha256": "8416de506aa7c26321236194ba8d0fecaa860c0d52bab2fde0a732f97f8da9a1",
       "bytes": 1570
     },
     "3D/_rels/3dmodel.model.rels": {
@@ -1284,19 +1284,19 @@
       "bytes": 44072
     },
     "Metadata/plate_1.gcode.md5": {
-      "sha256": "31a7775e9176c2e6748ced9d16dd5576180b229ee1be3a98f9352262480b7889",
+      "sha256": "78703369616d6901663f87f27860de4f5e8a6f3cb1f3339f3d35052d73a751d0",
       "bytes": 32
     },
     "Metadata/plate_1.gcode": {
-      "sha256": "5e0efa3c26a01c667ac6a46c0655231d6e5dc161b028fd04c86bec36acdc03e5",
-      "bytes": 11590056
+      "sha256": "dec0176ec6dd8fbbf9e8ad3fb9b690e2fa54a2d2293763cd459024066eef723e",
+      "bytes": 11590017
     },
     "Metadata/_rels/model_settings.config.rels": {
       "sha256": "5ea2c0f459aec4d25341abd431edee7890c8d2fd02efbaed4b073d04cfa11440",
       "bytes": 255
     },
     "Metadata/model_settings.config": {
-      "sha256": "d5b484fe599bc70eb7a3625488f73716551a35dc0848b11be169686990bad371",
+      "sha256": "9ca292b30aed4f2a3db0290bbcfdf9b582fc71c1fe601d756e2f31f0e2850b0f",
       "bytes": 1508
     },
     "Metadata/cut_information.xml": {
@@ -1304,8 +1304,8 @@
       "bytes": 139
     },
     "Metadata/slice_info.config": {
-      "sha256": "03df67cbd986d6963423dfaa46079c447999889f89d96cea4176a533246749fa",
-      "bytes": 1679
+      "sha256": "458791a11512c7188266a38d7f666c1f2aa1dba46b3ad232af0d16dd0ccc933b",
+      "bytes": 1690
     },
     "Metadata/filament_sequence.json": {
       "sha256": "9e457664577459536d7512bf553066895dba22502a17ad79789ee272d2d569ba",
@@ -1949,11 +1949,11 @@
     "slice/exit-code.json": "124fd50cb6d223cdd18fedc166d00af7254199b6e6dedf9be82f71db87af6d01",
     "slice/filament.json": "0d2b91e9d7f31661688294b60c19e3fb922f1fde5d2f219ee16d85f190cb3374",
     "slice/machine.json": "44b41d9e562c8b9a7223ec87dd1c7e37271549983ea572f09a81f62a9b76d9af",
-    "slice/out/plate_1.gcode": "5e0efa3c26a01c667ac6a46c0655231d6e5dc161b028fd04c86bec36acdc03e5",
-    "slice/out/result.json": "f63821f8b748d2e299552a85851e3bf2219fca13768f7c79c4e1a15dc8e7bdb4",
-    "slice/out/sliced.3mf": "a23d5cb6ad2de835c70a6e6729a71048c2a52fe924705ffddb3d62e522918c4e",
+    "slice/out/plate_1.gcode": "dec0176ec6dd8fbbf9e8ad3fb9b690e2fa54a2d2293763cd459024066eef723e",
+    "slice/out/result.json": "7b21091d20df63ed61950686d0d2d4419f4542eb7dd8a21851a4583e7b59fda2",
+    "slice/out/sliced.3mf": "f292eca9459bb450bc02ab6cf53ce1e3dd0601bb51d772235733afe30757e205",
     "slice/process.json": "9591ffa2ff4d223ebc859b1901766aabf71caf7cfdcf93719dcc77484b12a345",
-    "slice/slicer.log": "d4e17e6cad7fbc9da0f7bb668ea5c971ef745581142f061fd2a68709be091cbe",
+    "slice/slicer.log": "4db1c2c1ba0030d6c26d79986f1220328de904f180fe072c03a2633f3616a780",
     "source.stl": "1830ff4c1c9dc2314295d3d601b238c857c774abaf108c6619fdd9901b1da2cd"
   }
 }

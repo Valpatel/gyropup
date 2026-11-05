@@ -138,12 +138,12 @@ def handcalc(doc):
 
 # the counts per check this release gives (v0.18.2); a change is a finding to explain, not to paste over
 BY_CHECK = {
-    'pilot diameter': {'agree': 0, 'disagree': 38}, 'pilot depth': {'agree': 34, 'disagree': 0},
-    'melt volume': {'agree': 19, 'disagree': 5}, 'screw tip': {'agree': 13, 'disagree': 9},
-    'boss': {'agree': 19, 'disagree': 0}, 'insert axis': {'agree': 38, 'disagree': 0},
-    'clamp path': {'agree': 24, 'disagree': 0}, 'pull-out capacity': {'agree': 25, 'disagree': 13},
-    'pull-out margin': {'agree': 16, 'disagree': 2}, 'preload at torque': {'agree': 5, 'disagree': 0},
-    'tightening torque': {'agree': 4, 'disagree': 1}, 'head bearing preload': {'agree': 6, 'disagree': 0},
+    'pilot diameter': {'agree': 0, 'disagree': 36}, 'pilot depth': {'agree': 32, 'disagree': 0},
+    'melt volume': {'agree': 18, 'disagree': 5}, 'screw tip': {'agree': 12, 'disagree': 8},
+    'boss': {'agree': 18, 'disagree': 0}, 'insert axis': {'agree': 36, 'disagree': 0},
+    'clamp path': {'agree': 22, 'disagree': 0}, 'pull-out capacity': {'agree': 24, 'disagree': 12},
+    'pull-out margin': {'agree': 16, 'disagree': 1}, 'preload at torque': {'agree': 5, 'disagree': 0},
+    'tightening torque': {'agree': 4, 'disagree': 1}, 'head bearing preload': {'agree': 5, 'disagree': 0},
 }
 
 
@@ -223,12 +223,12 @@ class Phase2(unittest.TestCase):
         self.assertEqual(call['leg.hip_frame_mount']['axis'], 'upright')   # print-z
         self.assertEqual(call['body.post_m3']['head_mm'], 5.6)             # clamp.bearing_od_mm (a pan head)
         self.assertEqual(call['leg.wheel_botwheel']['head_washer'], 'iso7089')
-        self.assertEqual(call['body.riser_top_tm']['clamped'],
-                         {'material': 'pa6-cf20-polymaker-wet', 'thickness_mm': 4.5})
+        self.assertEqual(call['body.riser_top_tm']['clamped'],            # D76: the pan base's 5 mm foot (the plinth's tray was 4.5)
+                         {'material': 'pa6-cf20-polymaker-wet', 'thickness_mm': 5.0})
         self.assertEqual(call['body.post_m5']['clamped'], {'material': 'metal'})
         m = comparison(self.doc, 'body.riser_top_tm', 'pull-out margin')
-        self.assertAlmostEqual(m['toolkit']['sf_low'], 1.58, places=2)     # its low end, on the inventory's basis
-        self.assertEqual(m['status'], 'disagree')
+        self.assertAlmostEqual(m['toolkit']['sf_low'], 3.24, places=2)     # its low end: 1014 N / 313 N (D76; 1.58 at 640 N)
+        self.assertEqual(m['status'], 'agree')
         d = comparison(self.doc, 'body.bay_rail_side', 'pilot depth')    # 6.5 deep: under L + 2 pitches, a note
         self.assertEqual((d['inventory']['verdict'], d['toolkit']['verdict'], d['status']), ('warn', 'warn', 'agree'))
         t = comparison(self.doc, 'leg.hip_frame_mount', 'tightening torque')

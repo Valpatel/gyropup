@@ -1,0 +1,10 @@
+{
+  "schema": "gyropup.inventory/1",
+  "component": "Turret electronics (Feather M4 CAN and its boards)",
+  "folder": "hardware/turret/turret-controller",
+  "about": "None of the controller's parts are recorded as bought (docs/purchases.md). The flywheel motor order is recorded in docs/ordered-turret-motor.md, its pack count unknown, so it is not counted here.",
+  "ordered": [],
+  "arrived": [],
+  "fields": {"unit": "1", "feather_serial": "the SAMD51's serial number, read over USB", "firmware": "the git sha it was flashed from", "notes": ""},
+  "units": []
+}

@@ -7,6 +7,8 @@
 #define GP_MODEL_TABLES
 #include "gp/gp_model.h"
 #include "gp/gp_config.h"
+#include "gp/gp_guard.h"
+#include "gp/gp_limits.h"
 
 static float clampf(float v, float lo, float hi)
 {
@@ -165,10 +167,15 @@ void gp_ctl_step(gp_ctl *c, const gp_sense *s, const gp_cmd *cmd, const gp_leg_c
     c->x_err = clampf(c->x_err + (v - c->v_cmd) * dt, -0.3f, 0.3f); /* x - x_ref, the reference kept within 0.3 m */
     const float u = -(K[0] * c->x_err + K[1] * theta + K[2] * (v - c->v_cmd) + K[3] * theta_dot);
     const float ylim = GP_G_YAW_SHARE * GP_WHEEL_PEAK_NM;
-    const float tau_yaw = clampf(GP_G_YAW_KP_PER_NM * GP_WHEEL_PEAK_NM * (cmd->yaw_rate - s->yaw_rate), -ylim, ylim);
+    /* the turn asked for, inside what the outer wheel and the legs take at this speed (gp_guard_yaw_rate) */
+    const float yaw_cmd = gp_guard_yaw_rate(cmd->yaw_rate, fmaxf(fabsf(c->v_cmd), fabsf(v)), vmax);
+    const float tau_yaw = clampf(GP_G_YAW_KP_PER_NM * GP_WHEEL_PEAK_NM * (yaw_cmd - s->yaw_rate), -ylim, ylim);
 
     /* the legs: a virtual spring-damper each, the feed-forward, the five-bar's Jacobian */
     const float leg_omega = GP_LEG_W_PER_V * vbus;
+    /* an unset cap is never "no cap": the weakest build's */
+    const float everyday = c->p.everyday_nm > 0.0f ? c->p.everyday_nm : GP_LIM_PLA_EVERYDAY_NM;
+    const float cap = c->p.cap_nm > 0.0f ? fminf(c->p.cap_nm, GP_LEG_PEAK_NM) : everyday;
     const float lean_cmd = -(c->look + cmd->kick); /* the body leans back on its legs: the wheels move forward */
     for (int side = 0; side < 2; side++) {
         const float sgn = side == GP_LEFT ? -1.0f : 1.0f;
@@ -184,7 +191,13 @@ void gp_ctl_step(gp_ctl *c, const gp_sense *s, const gp_cmd *cmd, const gp_leg_c
             F = lc->F;
             o->L_cmd[side] = p->L;
         } else {
-            const float L_cmd = lc->mode == GP_LEG_LENGTH ? lc->L : gp_ctl_height_m(h0 + sgn * c->dh);
+            const float L_want = lc->mode == GP_LEG_LENGTH ? lc->L : gp_ctl_height_m(h0 + sgn * c->dh);
+            /* never a length the five-bar cannot reach at this lean, or one at a stop or near a dead point: at the lean
+             * asked for and at the one the leg is at, which lags it */
+            const float L_cmd = gp_guard_clamp_L(L_want, lean_cmd, p->th);
+            if (L_cmd != L_want) {
+                o->windowed |= (uint8_t)(1u << side);
+            }
             o->L_cmd[side] = L_cmd;
             F = g->kp_L * (L_cmd - p->L) - g->kd_L * p->dL + c->p.leg_ff_n * lc->ff_scale;
         }
@@ -192,8 +205,14 @@ void gp_ctl_step(gp_ctl *c, const gp_sense *s, const gp_cmd *cmd, const gp_leg_c
         float tau[2];
         gp_fb_vmc(p, F, T, tau);
         for (int m = 0; m < 2; m++) {
-            const float t = gp_clip_motor(tau[m], s->dphi[side][m], GP_LEG_PEAK_NM, leg_omega, GP_LEG_CAP_NM);
-            if (fabsf(t) < fabsf(tau[m]) - 1e-6f) {
+            const float lo = m == GP_FRONT ? GP_FB_STOP_FRONT_IN : GP_FB_STOP_REAR_OUT;
+            const float hi = m == GP_FRONT ? GP_FB_STOP_FRONT_OUT : GP_FB_STOP_REAR_IN;
+            const float soft = gp_guard_soft_stop(tau[m], s->phi[side][m], s->dphi[side][m], lo, hi, everyday);
+            if (soft != tau[m]) {
+                o->guarded |= (uint8_t)(1u << (2 * side + m));
+            }
+            const float t = gp_clip_motor(soft, s->dphi[side][m], GP_LEG_PEAK_NM, leg_omega, cap);
+            if (fabsf(t) < fabsf(soft) - 1e-6f) {
                 o->clipped |= (uint8_t)(1u << (2 * side + m));
             }
             o->tau[side][m] = t;
@@ -216,4 +235,5 @@ void gp_ctl_step(gp_ctl *c, const gp_sense *s, const gp_cmd *cmd, const gp_leg_c
     o->v_cmd = c->v_cmd;
     o->u = u;
     o->tau_yaw = tau_yaw;
+    o->yaw_cmd = yaw_cmd;
 }
