@@ -6,7 +6,7 @@ import path from 'node:path';
 import {fileURLToPath} from 'node:url';
 import {chromium,webkit} from '@playwright/test';
 import {prepareRigMedia} from '../designer/rig-media.js';
-import {recordRigMedia,verifyRigFiles} from './rig-media.mjs';
+import {recordRigMedia,verifyRigFiles,producerRigRecord} from './rig-media.mjs';
 const root=path.resolve(path.dirname(fileURLToPath(import.meta.url)),'..');
 const reportBytes=await readFile(path.join(root,'exports/leg/rig-results.json'));
 const rigRecord=JSON.parse(await readFile(path.join(root,'exports/leg/rig-media.json'),'utf8'));
@@ -14,7 +14,8 @@ const rigReport=JSON.parse(reportBytes);
 assert.equal(rigRecord.producer_revision,'e7b512870a39259a04a4930e2908af84001bc84e','Known producer of all seven retained clips');
 assert.equal((await verifyRigFiles(root,{historical:true})).clips.length,7,'Every report/movie byte matches its actual producer');
 for(const mutate of [r=>r.clips.pop(),r=>r.clips[0].path='../private.mp4',r=>r.clips[0].path=r.clips[1].path,
- r=>r.clips[0].scenario=r.clips[1].scenario,r=>r.report.path='elsewhere.json',r=>r.producer_revision='main']){
+ r=>r.clips[0].scenario=r.clips[1].scenario,r=>r.report.path='elsewhere.json',r=>r.producer_revision='main',
+ r=>r.clips[0].companion.path='../elsewhere.webm',r=>r.clips[0].companion.source_sha256='0'.repeat(64)]){
  const altered=structuredClone(rigRecord);mutate(altered);let reads=0;
  await assert.rejects(prepareRigMedia(reportBytes,altered,async()=>{reads++;return new ArrayBuffer(0);}));
  assert.equal(reads,0,'Invalid membership/paths cannot initiate clip reads');
@@ -26,10 +27,11 @@ try{
  for(const file of [rigRecord.report.path,...rigRecord.clips.map(c=>c.path)])await writeFile(path.join(fixture,file),await readFile(path.join(root,file)));
  const git=(...args)=>execFileSync('git',args,{cwd:fixture,encoding:'utf8'}).trim();
  git('init','-q');git('add','exports');git('-c','user.name=Test','-c','user.email=test@example.invalid','commit','-qm','Recorded fixture');
- const revision=git('rev-parse','HEAD');await recordRigMedia(fixture,revision);
+ const revision=git('rev-parse','HEAD');assert.equal((await producerRigRecord(fixture,revision)).clips.length,7);
+ await writeFile(path.join(fixture,'exports/leg/rig-media.json'),JSON.stringify({...rigRecord,producer_revision:revision}));
  const before=await readFile(path.join(fixture,'exports/leg/rig-media.json'));
  await writeFile(path.join(fixture,rigRecord.clips[0].path),'different pixels');
- await assert.rejects(recordRigMedia(fixture,revision),/movie identity/);
+ await assert.rejects(recordRigMedia(fixture,revision),/movie\/report identity/);
  assert.deepEqual(await readFile(path.join(fixture,'exports/leg/rig-media.json')),before,'Failed recording leaves the previous receipt unchanged');
 }finally{await rm(fixture,{recursive:true,force:true});}
 const base=(process.env.SITE_URL||'http://127.0.0.1:8982').replace(/\/$/,'');
@@ -74,7 +76,11 @@ try {
  assert.match(await page.locator('#rig [data-rig-media-state]').innerText(),/Recorded leg simulation · 18\.75 kg · 36 V/);
  assert.ok((await page.locator('#rig video').evaluateAll(videos=>videos.map(v=>v.src))).every(src=>src.startsWith('blob:')),'Playback uses the bytes whose hashes were checked');
  const rigVideo=page.locator('#rig video').first();await rigVideo.evaluate(video=>video.play());
- await page.waitForFunction(()=>document.querySelector('#rig video').currentTime>0.05);await rigVideo.evaluate(video=>video.pause());
+ await page.waitForFunction(()=>{const v=document.querySelector('#rig video');return Number.isFinite(v.duration)&&v.duration>0&&v.currentTime>0.05;});
+ const decoded=await rigVideo.evaluate(v=>({time:v.currentTime,frames:v.getVideoPlaybackQuality().totalVideoFrames}));
+ await page.waitForFunction(before=>{const v=document.querySelector('#rig video');return v.currentTime>before.time+.2&&v.getVideoPlaybackQuality().totalVideoFrames>before.frames;},decoded);
+ assert.equal(await rigVideo.evaluate(v=>v.dataset.rigFormat===(v.canPlayType('video/mp4; codecs="avc1.64001f"')?'mp4':'webm')),true,'Actual decoded playback uses the supported verified format');
+ await rigVideo.evaluate(video=>video.pause());
  await page.locator('#rig').screenshot({path:out+'/rig-390.png'});
  await page.getByText('The leg on its test rig',{exact:true}).click();
  const movie=await page.locator('#feavid').elementHandle();
@@ -108,16 +114,17 @@ try {
  for(const clip of rigRecord.clips)assert.ok(text.includes(clip.path),'Markdown retains original movie downloads: '+clip.scenario);
  assert.doesNotMatch(text,/blob:/,'Static Markdown never publishes ephemeral browser URLs');
  // The real consumer must retain numerical evidence while refusing mismatched or missing movie identities.
- for(const fault of ['report','receipt','movie']){
+ for(const fault of ['report','receipt','movie','companion']){
   const probe=await context.newPage();
   await probe.addInitScript(()=>{window.__rigBlobs=[];const create=URL.createObjectURL.bind(URL);URL.createObjectURL=value=>{const url=create(value);window.__rigBlobs.push(url);return url;};});
   if(fault==='report')await probe.route('**/exports/leg/rig-results.json*',route=>route.fulfill({contentType:'application/json',body:JSON.stringify({...rigReport,half_mass_kg:20})}));
   if(fault==='receipt')await probe.route('**/exports/leg/rig-media.json*',route=>route.fulfill({status:404,body:'not recorded'}));
   if(fault==='movie')await probe.route('**/exports/leg/rig_jump.mp4*',route=>route.fulfill({contentType:'video/mp4',body:Buffer.from('wrong movie bytes')}));
+  if(fault==='companion')await probe.route('**/exports/leg/rig_jump.webm*',route=>route.fulfill({contentType:'video/webm',body:Buffer.from('wrong companion bytes')}));
   await probe.goto(base+'/designer/progress.html#rig');await probe.waitForFunction(()=>document.body.dataset.ready==='1');
   const note=await probe.locator('#rig [data-rig-media-state="unavailable"]').innerText();
   assert.match(note,/Recorded movies unavailable/);
-  assert.match(note,fault==='report'?/different report/:fault==='receipt'?/provenance is unavailable/:/movie identity does not match/);
+  assert.match(note,fault==='report'?/different report/:fault==='receipt'?/provenance is unavailable/:fault==='companion'?/companion identity does not match/:/movie identity does not match/);
   assert.equal(await probe.locator('#rig video').count(),0,'Unverified media cannot receive a source');
   assert.equal(await probe.locator('#rigtable tbody tr').count(),7,'Numerical evidence remains usable');
   if(fault==='report')assert.match(await probe.locator('#riglede').innerText(),/20 kg/);
