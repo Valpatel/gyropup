@@ -159,7 +159,7 @@ def validate_bindings(receipt, capture, frame_manifest, out=OUT, raw_frames=None
     turret_manifest = read(ROOT / 'exports/sim/turret_box/manifest.json')
     bench_names = sorted(p['name'] for p in turret_manifest['parts'])
     current_names = sorted(p['name'] for p in turret_manifest['parts'] if p['group'] in TURRET_GROUPS)
-    require(len(bench_names) == 66 and len(current_names) == 48, 'Review reel against the changed public turret snapshot')
+    require(len(bench_names) == 80 and len(current_names) == 62, 'Review reel against the changed public turret snapshot')
     for name, count in CAPTURE_COUNTS.items():
         shot = shots[name]
         require(shot['frames'] == count and len(shot['observations']) == count, f'Wrong capture count: {name}')
