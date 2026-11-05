@@ -141,6 +141,6 @@ try {
   await writeFile(`${out}/capture-version.json`,JSON.stringify(version));
   await writeFile(`${out}/${engine.name()}-trace.json`,JSON.stringify(trace));
   await writeFile(`${out}/contract.json`,JSON.stringify(fixture.contract));
-  await writeFile(`${out}/${engine.name()}-summary.json`,JSON.stringify({components:66,poses:samples.length,liveFrames:live.length,maxErrorMm:worst.error,worst:worst.worst,speed,attachments},null,2));
+  await writeFile(`${out}/${engine.name()}-summary.json`,JSON.stringify({components:Object.keys(fixture.contract.components).length,poses:samples.length,liveFrames:live.length,maxErrorMm:worst.error,worst:worst.worst,speed,attachments},null,2));
   console.log(`PASS ${engine.name()}: ${Object.keys(fixture.contract.components).length} components × ${samples.length} poses; ${live.length} real firing frames; max ${worst.error.toFixed(6)}mm; negative pivot control rejected; CAD attachments, configured launch speed, 5 phone layouts`);
 } finally {await browser.close();}
