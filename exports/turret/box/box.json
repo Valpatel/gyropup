@@ -1,16 +1,16 @@
 {
  "checks": {
   "clearance": {
-   "deck_min_gap_mm": 135.5,
+   "deck_min_gap_mm": 49.5,
    "deck_worst_pose_deg": [
     -160.0,
     -25.0
    ],
    "antenna_min_gap_mm": {
-    "antenna_left_46.5": 110.5,
-    "antenna_left_145.5": 110.5,
-    "antenna_right_46.5": 110.5,
-    "antenna_right_145.5": 110.5
+    "antenna_left_46.5": 24.5,
+    "antenna_left_145.5": 24.5,
+    "antenna_right_46.5": 24.5,
+    "antenna_right_145.5": 24.5
    },
    "antenna_tilt_max_deg": [
     [
@@ -296,12 +296,12 @@
   "muzzle_outside_deck_mm": -28.8,
   "ball_path": {
    "file": "exports/turret/lidar/box.json",
-   "current": true,
+   "current": false,
    "margin_mm": 10.0,
    "limited_pan_window_deg": null,
-   "clear": true,
+   "clear": false,
    "no_fire_from_pan_deg": 120.0,
-   "note": "every pan and tilt clear of the deck, the box and upright antennas by the margin; no firing within 60 deg of straight back (the operator's side)"
+   "note": "stale: rerun .venv/bin/python cad/turret_lidar.py --scene box, then this build"
   },
   "airflow": {
    "mouth_mm": [
@@ -388,7 +388,7 @@
    "file": "exports/turret/gates.json",
    "verdicts": "exports/turret/gates",
    "toolkit": "cadagent.gates (connectivity, containment, relation table, fasteners, motion)",
-   "fingerprint": "1432c61b9714e16d",
+   "fingerprint": "9b4a2f2753096b4a",
    "ok": true,
    "gates": {
     "connectivity": {
@@ -396,7 +396,7 @@
      "status": "warn",
      "counts": {
       "pass": 29,
-      "warn": 61,
+      "warn": 63,
       "fail": 0
      }
     },
@@ -474,8 +474,6 @@
    "mouth_w_mm": 158.0,
    "j501_intakes_top_z_mm": 88,
    "intakes_below_mouth_mm": 12.0,
-   "plinth_vents_behind_mouth_mm": 94.5,
-   "plinth_vents_from_z_mm": 170.3,
    "fan_blows": "up (exhaust through the lid grille; J501 thermal.fan.note)",
    "plume": {
     "keep_out": {
@@ -489,18 +487,18 @@
       217.0
      ]
     },
-    "least_mm": 12.5,
+    "least_mm": 0.0,
     "nearest": {
-     "part": "compute_tray",
+     "part": "barrel",
      "pan_deg": 0.0,
-     "tilt_deg": 0.0
+     "tilt_deg": -25.0
     },
     "required_mm": 10.0,
-    "ok": true,
+    "ok": false,
     "how": "the J501 fan blows up into the shroud, whose duct throws the plume forward out of the deck's mouth, where it rises: the box ahead of the mouth is kept clear of the turret at every pan of the grid, level and fully depressed"
    },
-   "ok": true,
-   "note": "the J501 exhaust leaves the deck's front mouth (158.0 mm wide, z 100.0-137.0), 12.0 mm above the J501's highest intake vent, with the front corners walled; the plinth breathes 94.5 mm behind the mouth; no part of the turret comes within 12.5 mm of the plume's keep-out ahead of the mouth at any pan or tilt. To prove on the bench: the J501's intake and the J4012's within 3 K of the room with both at full load (bench_proof)"
+   "ok": false,
+   "note": "the J501 exhaust leaves the deck's front mouth (158.0 mm wide, z 100.0-137.0), 12.0 mm above the J501's highest intake vent, with the front corners walled; no part of the turret comes within 0.0 mm of the plume's keep-out ahead of the mouth at any pan or tilt. To prove on the bench: the J501's intake within 3 K of the room at full load with the turret on (bench_proof)"
   },
   "shroud_fit": {
    "legs_mm": {
@@ -522,11 +520,11 @@
    "how": "the BRepExtrema distance between the intake shroud and each leg (the deck cut round it, under the deck plate) and anything of the deck below its plate at each TM insert (none: the inserts are wholly in the 8 mm deck)"
   },
   "tipping": {
-   "total_kg": 4.29,
-   "com_height_mm": 191,
-   "tip_angle_deg": 25,
-   "push_to_tip_n": 10.3,
-   "push_height_mm": 371,
+   "total_kg": 3.48,
+   "com_height_mm": 151,
+   "tip_angle_deg": 31,
+   "push_to_tip_n": 10.8,
+   "push_height_mm": 285,
    "note": "J501: 368 g printed (its slice report) + 1.0 kg Orin, carrier and cooler (est); a sideways push at the tilt axis that lifts the box off its narrow edge"
   },
   "overspeed": {
@@ -623,8 +621,8 @@
    ],
    "hard_stop_deg": 173.5,
    "encoder_counts_per_turret_deg": 34.1,
-   "inertia_kg_m2": 0.00476,
-   "accel_at_cap_deg_s2": 53038,
+   "inertia_kg_m2": 0.00491,
+   "accel_at_cap_deg_s2": 51513,
    "time_to_full_slew_ms": 1.7
   },
   "tilt": {
@@ -634,10 +632,10 @@
     -25.0,
     0.0
    ],
-   "group_mass_g": 757,
-   "com_ahead_mm": -7.6,
+   "group_mass_g": 771,
+   "com_ahead_mm": -7.7,
    "holding_nm": -0.06,
-   "margin": 52.1
+   "margin": 50.5
   },
   "flight_level": {
    "rows": [
@@ -678,13 +676,13 @@
      14.6
     ]
    ],
-   "from_height_m": 0.656,
-   "lands_m": 6.65,
+   "from_height_m": 0.57,
+   "lands_m": 6.26,
    "note": "a level shot from the bench (the box on a 0.3 m crate): [range m, time s, drop mm, speed m/s]; drag as a sphere, Cd 0.5"
   }
  },
  "masses_g": {
-  "turret_with_balls": 2561,
+  "turret_with_balls": 1757,
   "adapter": 357,
   "j501_printed": 368.2,
   "j501_inside_est": 1000.0
@@ -696,7 +694,7 @@
   "source": "J501_DIR/cad/parameters.json",
   "parameters_git": {
    "state": "committed",
-   "head": "fefc79dc056ad010b8fcf5fb69ed2cf4cf9361c3",
+   "head": "240be82ec5420e989dbfad07d76ab62ea3e83a50",
    "branch": "rev0.9-g48r",
    "tags_at_head": [],
    "file": "cad/parameters.json"
