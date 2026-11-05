@@ -8,7 +8,7 @@
     "seconds": 22,
     "audio": false
   },
-  "source_revision": "38cbb857ce5ba7c4fe29d2ec88b60ace3e97e0a4",
+  "source_revision": "cf010ee8b6ff90e35297c65a9fa84815865b7cb8",
   "source_hashes": {
     "designer/cadrig.js": "a2cb4029ef786e0793c5eb0018e0aa8d919d829bde8c5d378c1b1480c457faaf",
     "designer/character/eyes.js": "3348578a121b75ab7425c3b6591e864b41b09512e67b642832e6c6b683d2e11b",
@@ -38,6 +38,7 @@
     "designer/kit/vendor/three/addons/geometries/RoundedBoxGeometry.js": "d20aeaf7077c459a8d952d215738d7b44fba028440bb862d84b622a34f0c80bb",
     "designer/kit/vendor/three/addons/loaders/STLLoader.js": "896d006a48b8f125385a485ccae154dadee801a953f0b45ceffe7ddd8a29ca93",
     "designer/kit/vendor/three/three.module.min.js": "3e690ac7d180b0aadf0891bea39eec643e29e2d3e75c99b18689518665f69ba6",
+    "designer/leg_limits.js": "81fd036758493d9f8a80a9ccc4c0986868a32dde1e3f4641dad82204ebb27d70",
     "designer/model.js": "2d655315f9d2acc9e1d02292c1225bd447528cbe64c2e3d737ab6f0b51d771a5",
     "designer/robot3d.js": "ca84400fbeed7953d033b93e0f0bfcd7fbec393331930f57e54c8d49df96f194",
     "designer/robot_actions.css": "8c42900dc9001bd08877f5781eca5efe69ef3b2d1b5973ca90497f40f720b2fc",
@@ -46,7 +47,7 @@
     "designer/sfx.js": "90db82703cb9d32c106992c1d67610056a319048d4030db77490642ce8c4dc55",
     "designer/sim-layout.css": "e2b76ffb77863adea51210749efb4e27641b8d8adc08bdc74608ff3da7173970",
     "designer/sim.html": "a70ed754168974b085e9e09de6b8672ac7b0d97ee5498a60195ef40fad5aa8c8",
-    "designer/sim.js": "6fbe9c9c74394d1e610427f84f29a1106534f630c84547adcc26a01c4f179aaa",
+    "designer/sim.js": "7c10a243d2c8e72dd013e4fb18f39742d48dd633f29afaca42ac924c5084d3e2",
     "designer/sim_gamepad.js": "6c4867ed61d50e17e8a1fab6ebc46529ff9849dcecfdaf6c7f49ebb41f27af9d",
     "designer/turret3d.js": "e5144b01c1db071ac8921e416fcbc8e3a208a59a466bcd00cd5a86ddfa26b107",
     "designer/turret_bench.css": "77d4ab36125c5df22db86fafdc10a6d21470cee86c5e4201e50a3df7d9e79dc8",
@@ -58,6 +59,7 @@
     "exports/leg/fea/hip-frame-e1-media/video-receipt.json": "06f7431bfb893c3d4f5d30444d77d5b3b8a2cb3a4f13bbd193b459e63560f939",
     "exports/leg/fea/media.json": "dbe019e1df2edc47bc8dbb8aa8066ec859cc203fedbbf0aab79a89e75a22a17b",
     "exports/leg/fea/summary.json": "1488c5f62b90fd44162140ba1cb7adf8f52135a727cd37b6f08f4d2794000a39",
+    "exports/leg/limits.json": "4376ffbd691b91d35ac49f02b7bc32d50ddbae29dc28ebef1b08e0da55a92bf4",
     "exports/leg/rig_jump.mp4": "3e5188b87059d75c23e5eb48f32510aa5b4e4c5726e66ef3c43e86b15d28bc9c",
     "exports/sim/turret_box/barrel.stl": "ccb797222e64719fb8ba4a67ab236e6f9ba3b88ede36926a88cc917961bcde31",
     "exports/sim/turret_box/base_board.stl": "a3fd2d3a202337f01b3b45ad035b560fcbde07ebac8910b048ed94873d82fa20",
@@ -425,23 +427,23 @@
   ],
   "outputs": {
     "gyropup-highlights.mp4": {
-      "sha256": "b2377ce671705c51349ed3b94412f5c18db3df44e2eba29167b77b2ac673e666",
-      "bytes": 1860766
+      "sha256": "2d62981a59e1d6bab14de6f1fb249dfc8f42619b871cf61c78c7b61127689243",
+      "bytes": 1857928
     },
     "gyropup-highlights.webm": {
-      "sha256": "ca2ad808feaf026459b6bf200cd40d665346e3b6cca358bba8495a337349b7a7",
-      "bytes": 1477978
+      "sha256": "6037d3535a6682ac0d1d072f553171205a19400bd9b3fabedf0c421fdb224af0",
+      "bytes": 1476460
     },
     "gyropup-highlights.webp": {
-      "sha256": "a07f9c3eb55a824f5092f43002a87f71aca831ee1a759f10b02ae3d28e1a4a00",
-      "bytes": 32566
+      "sha256": "e18bfb2d76a13127d632c7bb1c88d905f05ca640d6e11efab8bcc0e1476d33b0",
+      "bytes": 32722
     },
     "capture-receipt.json": {
-      "sha256": "18f760710d85d2ece59a5b9164485316debc91ee82f05bd788aaec25b20c8bf6",
-      "bytes": 116376
+      "sha256": "474505269882d3d4fffdbf52a3766126d9eea6f30941c099d0563191b5d6faa5",
+      "bytes": 116848
     },
     "capture-frames.json": {
-      "sha256": "c85aa3e39567b72df79c9907e4ee2c042036829128458b1f5cc2a0ec30dbb58e",
+      "sha256": "500372d917d2c62e6769287bbefa53d6b15e176846d237bb8ada16e301f87c13",
       "bytes": 100989
     }
   }

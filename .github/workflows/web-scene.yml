@@ -117,6 +117,7 @@ jobs:
             commands: |
               npm run test:part-media
               npm run test:portal-data
+              npm run test:leg-limits
               npm run test:loading-sim
               npm run test:loading-portal
               npm run test:loading-hero
