@@ -185,6 +185,15 @@ def test_the_window_overlap_keeps_a_lagging_lean_inside_the_stops():
                 assert q is not None and lo_f <= q[0] <= hi_f and lo_r <= q[1] <= hi_r
 
 
+def test_the_turn_clamps_h_is_above_the_robots_centre():
+    """The turn clamp takes h as the hips' height at full height (com_h_m, 0.502 m). That is conservative only while the
+    whole robot's centre of mass is at or below the hips. The P3 mass ledger is taken at a 300 mm stance; a longer leg
+    only lowers the centre, so its height at full height is at most com_h_m plus the ledger's z (hips at z = 0)."""
+    z = json.loads((R / 'exports/body/mass.json').read_text())['P3']['com_mm'][2] / 1000.0
+    assert D['yaw']['com_h_m'] == pytest.approx(0.502, abs=1e-3)
+    assert z <= 0.0, f'the centre of mass is {z * 1000:.1f} mm above the hips: the turn clamp\'s h is no longer conservative'
+
+
 def test_the_turn_limit_comes_from_the_leg_and_wheel_limits():
     y = D['yaw']
     assert y == ll.yaw_limits(D['profiles']['robot']['everyday_nm'], D['command']['window'])
