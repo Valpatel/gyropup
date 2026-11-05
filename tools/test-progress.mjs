@@ -127,6 +127,13 @@ try {
  const originalBlobs=await page.locator('#rig video').evaluateAll(videos=>videos.map(v=>v.src));
  await page.evaluate(()=>window.__portalLoads.rig.retry());
  assert.deepEqual((await page.evaluate(()=>window.__rigRevoked)).sort(),originalBlobs.sort());
+ await page.route('**/exports/leg/rig-results.json*',route=>route.fulfill({status:404,body:'report removed'}));
+ await page.evaluate(()=>window.__portalLoads.rig.retry());
+ assert.equal(await page.locator('#rig video').count(),0,'A missing report on retry cannot retain previous playback');
+ assert.match(await page.locator('#rig [data-rig-media-state="unavailable"]').innerText(),/numerical report is missing/);
+ await page.unroute('**/exports/leg/rig-results.json*');
+ await page.evaluate(()=>window.__portalLoads.rig.retry());
+ assert.equal(await page.locator('#rig video').count(),7,'Restored report recovers the verified recordings');
  let held,requests=0;const intercepted=new Promise(resolve=>held={resolve});
  await page.route('**/exports/leg/rig-media.json*',route=>{if(++requests===1){held.route=route;held.resolve();return;}return route.fulfill({status:404,body:'newer unavailable record'});});
  await page.evaluate(()=>{window.__olderRigRetry=window.__portalLoads.rig.retry();});await intercepted;

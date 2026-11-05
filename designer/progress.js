@@ -217,13 +217,19 @@ if (leg) {
 return !!leg;
 }),
 sectionLoad('rig','riglede','Leg test results',async isCurrent=>{
-const rigBytes = await reader.bytes(`${LEG}rig-results.json`,{optional:true,label:'Leg test results'});
-if(!isCurrent())return false;
-const rig = rigBytes ? JSON.parse(new TextDecoder().decode(rigBytes)) : null;
-if(rig && (!isRecord(rig)||!isRecord(rig.model)||!isRecord(rig.scenarios)))throw new Error('Leg test results have an unexpected format.');
+disposeRigMedia();disposeRigMedia=()=>{};
+$('rig').innerHTML='<p data-rig-media-state="checking" style="grid-column:1/-1">Checking recorded movie identities…</p>';
+let rigBytes,rig;
+try {
+  rigBytes=await reader.bytes(`${LEG}rig-results.json`,{optional:true,label:'Leg test results'});
+  if(!isCurrent())return false;
+  rig=rigBytes?JSON.parse(new TextDecoder().decode(rigBytes)):null;
+  if(rig && (!isRecord(rig)||!isRecord(rig.model)||!isRecord(rig.scenarios)))throw new Error('Leg test results have an unexpected format.');
+} catch(error) {
+  if(isCurrent())$('rig').innerHTML='<p data-rig-media-state="unavailable" style="grid-column:1/-1">Recorded movies unavailable: the numerical report could not be read.</p>';
+  throw error;
+}
 if (rig) {
-  disposeRigMedia();disposeRigMedia=()=>{};
-  $('rig').innerHTML='<p data-rig-media-state="checking" style="grid-column:1/-1">Checking recorded movie identities…</p>';
   const S = rig.scenarios;
   $('riglede').innerHTML = `One leg on a vertical rail carrying half the robot (<b>${rig.half_mass_kg} kg</b>), RS-04s capped at <b>${rig.model.leg_cap_nm} N·m</b>`
     + ` (peak ${rig.model.leg_peak_nm}), the stops as stiff as their TPU sleeves. The leg is driven like a RoboMaster balance robot's: a virtual spring on the hip-to-axle line.`;
@@ -249,7 +255,7 @@ if (rig) {
     $('rig').innerHTML=`<p data-rig-media-state="unavailable" style="grid-column:1/-1">Recorded movies unavailable: ${esc(error.message)} Numerical results remain available above. `
       + `<a href="${esc(reportURL)}">${recorded?'Recorded source report':'Current numerical report'}</a>.</p>`;
   }
-}
+} else $('rig').innerHTML='<p data-rig-media-state="unavailable" style="grid-column:1/-1">Recorded movies unavailable: the numerical report is missing.</p>';
 
 
 return !!rig;
