@@ -1,6 +1,5 @@
 """Exercise the real no-render guard without importing CAD or modifying retained images."""
 import ast
-import copy
 import json
 from pathlib import Path
 import unittest
