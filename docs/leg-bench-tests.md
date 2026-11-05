@@ -122,6 +122,10 @@ compares the run with this very prediction, and "measured only" needs the load p
   - a torque screwdriver, 1-6 N m, for the M5s into printed parts;
   - the 2-25 N m wrench for everything else.
   - Step the torque up; never back off and re-tighten within a step.
+- **Temperatures** (the [motor thermal model](motor-thermal.md)'s acceptance, section 7): each RS-04's own reported
+  temperature and `boardTemp` from the CAN log, a thermocouple on a motor's case and one on the hip frame's mounting
+  face, and the room. A 30-minute hold at a known torque, logged at 1 Hz, re-fits the model
+  (`python3 sim/motor_thermal.py --fit <log.csv>`).
 
 ## B0: the fit coupons
 
@@ -155,6 +159,12 @@ the measured joint and its tightening procedure before commissioning.
 The planned bench supply (Mean Well LRS-600-36, 36 V: the robot's bus, D65) feeds
 the motor's XT30. Fit the CAN lead and its terminators only as part of a released
 bench setup; this planned procedure is not evidence of readiness.
+
+C2-C4 can also be done in the browser with the [RS-04 motor tool](rs04-motor-tool.md) (`python -m rig.rs04_bridge
+--iface can0`): scan, set id, the profile's settings and save, under the PLA bench profile's limits. Under that
+profile C4 stores `limit_torque` 10 N m, not 60 (motor-day step L1), so its read-back shows 10. C1 is a meter and
+`ip link`; C5 cannot be done in the tool (it waits for the motor to drop to reset with no frames, and the tool sends
+one every 100 ms): use the command line for C5 and C6.
 
 | Step | Do | Pass |
 |---|---|---|
@@ -379,6 +389,8 @@ arms and refuses above it.
 - Read the verdict the runner prints.
 - Look at the overlay PNG next to the run's log: the run, the prediction and the limits.
 - Before the next run: the motors' temperatures (in the log) under 60 C; the screws' paint marks unbroken; nothing
-  on the bumpers.
+  on the bumpers. **On a PLA hip frame the cases stay under 50 C** (its face runs a few kelvin under the case, and
+  PLA softens at about 55 C): [the motor thermal model](motor-thermal.md#5-the-pla-bench-motor-day) gives the
+  continuous torque that holds it (about 8 N m a motor in a 25 C room) and how long the PLA cap may be held.
 - Anything off-limits stops the series. Write down what happened in `exports/rig/runs/notes.md`, under the run's
   file name.

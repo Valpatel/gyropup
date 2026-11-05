@@ -1,0 +1,20 @@
+{
+  "schema": "gyropup.inventory/1",
+  "component": "10 in hoverboard-class hub motor (D69)",
+  "folder": "hardware/actuators/wheel-hub-motor",
+  "about": "None ordered yet: W1 buys two and measures them. Add an 'ordered' row (and docs/purchases.md) when they are bought, an 'arrived' row and one unit record per motor when they come.",
+  "ordered": [],
+  "arrived": [],
+  "fields": {
+    "unit": "1, 2…",
+    "side": "left or right",
+    "seller": "where it was bought",
+    "mass_g": "measured, with the tyre",
+    "kv_rpm_v": "measured (drill test and VESC Tool)",
+    "r_ohm": "phase resistance from VESC Tool",
+    "l_uh": "phase inductance from VESC Tool",
+    "hall_order": "as VESC Tool's hall detection found it",
+    "notes": ""
+  },
+  "units": []
+}

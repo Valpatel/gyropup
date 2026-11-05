@@ -1,0 +1,17 @@
+{
+  "schema": "gyropup.inventory/1",
+  "component": "Flipsky 75100 (single) VESC",
+  "folder": "hardware/drives/flipsky-75100",
+  "about": "None ordered yet (docs/body-orders.md lists 2 on the leg workstream's order; docs/purchases.md has none). Add rows when they are bought and arrive; one unit record per drive.",
+  "ordered": [],
+  "arrived": [],
+  "fields": {
+    "unit": "1, 2…",
+    "can_id": "10 (left) or 11 (right), as set in VESC Tool",
+    "serial": "from VESC Tool's firmware page or the label, as read: never typed from memory",
+    "firmware": "the VESC firmware version",
+    "vesc_xml": "the path of its exported VESC Tool configuration, once saved in this folder",
+    "notes": ""
+  },
+  "units": []
+}

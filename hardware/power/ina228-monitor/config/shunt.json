@@ -1,0 +1,26 @@
+{
+  "schema": "gyropup.config/1",
+  "component": "INA228 bus monitor",
+  "version": 1,
+  "about": "How the balance firmware sets the INA228 for each shunt. Values with a 'sources' entry are checked against the firmware by tools/check-hardware.py.",
+  "i2c": {"address": 64},
+  "builds": {
+    "fuse_board": {"shunt_ohm": 0.001, "adcrange": 0, "full_scale_a": 163.84, "shunt_cal": 4096, "build_flag": "the default"},
+    "blue_sea": {"shunt_ohm": 0.000333, "adcrange": 1, "full_scale_a": 122.9, "shunt_cal": 4096, "build_flag": "GP_SHUNT=blue_sea"}
+  },
+  "adc": {
+    "mode": "0xF: continuous bus, shunt and temperature",
+    "conversion_us": {"vbus": 150, "vshunt": 280, "temperature": 50},
+    "averaging": 4,
+    "set_every_ms": 1.92
+  },
+  "sources": {
+    "i2c.address": {"c_define": "firmware/balance/include/gp/gp_ina228.h", "name": "GP_INA228_ADDR"},
+    "builds.fuse_board.shunt_ohm": {"c_define": "firmware/balance/include/gp/gp_ina228.h", "name": "GP_SHUNT_FUSE_BOARD_OHM"},
+    "builds.blue_sea.shunt_ohm": {"c_define": "firmware/balance/include/gp/gp_ina228.h", "name": "GP_SHUNT_BLUE_SEA_OHM"},
+    "builds.fuse_board.shunt_cal": {"contains": "firmware/balance/include/gp/gp_ina228.h", "text": "CURRENT_LSB 312.5 uA, SHUNT_CAL 4096"},
+    "builds.blue_sea.shunt_cal": {"contains": "firmware/balance/include/gp/gp_ina228.h", "text": "-> +-122.9 A, SHUNT_CAL 4096"},
+    "adc.averaging": {"contains": "firmware/balance/src/core/gp_ina228.c", "text": "AVG 4 (1)"}
+  },
+  "changes": [{"version": 1, "date": "2026-11-03", "what": "first record (issue #210)"}]
+}
