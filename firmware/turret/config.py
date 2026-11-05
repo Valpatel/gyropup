@@ -45,12 +45,18 @@ STEP_REF = 'present'           # what a step-mode step is relative to: 'present'
 PAN_RATIO = 3.0                # servo turns per pan turn
 PAN_PER_COUNT = DEG_PER_COUNT / PAN_RATIO
 PAN_SPEED_MAX = 90.0           # deg/s: the servo's 45 rpm through 3:1
-TILT_MAX_DEG = 0.0             # the upper hard stop: every tilt goal clamps into [TILT_MIN_DEG, TILT_MAX_DEG]. D77 dropped
-#                                the old "never above level" rule; both numbers are the CAD's stops and must equal
-#                                exports/turret/limits.json (cad/turret_limits.py; test_firmware.py checks it)
+TILT_MAX_DEG = 12.0            # the upper hard stop: every tilt goal clamps into [TILT_MIN_DEG, TILT_MAX_DEG]. D77: the
+#                                limits are the mechanism's (cad/turret.py Geo.tilt_max); both numbers are the CAD's stops
+#                                and must equal exports/turret/limits.json (cad/turret_limits.py; test_firmware.py checks it)
 TILT_MIN_DEG = -25.0           # the lower hard stop
-TILT_ZERO_COUNT = 2048         # tilt servo count at 0 deg (assembly step 8: the cradle on its 0 deg stop)
+FIRE_TILT_MAX_DEG = 10.0       # no shot above this tilt (the barrel may still aim up to the stop): the gravity feed was shown
+#                                to feed as at level up to here (sim/turret_feed.py --elevated; limits.json
+#                                fire_tilt_max_deg, checked by test_firmware.py). A simulated figure until the bench feed test
+TILT_ZERO_COUNT = 2048         # tilt servo count at 0 deg (level). Assembly step 8 holds the cradle on its upper stop, where
+#                                the count is TILT_STOP_COUNT, and sets the servo's offset so it reads that there
+
 TILT_SIGN = -1                 # counts per degree of tilt: -1 = counts rise as the barrel depresses (assembly)
+TILT_STOP_COUNT = TILT_ZERO_COUNT + TILT_SIGN * int(round(TILT_MAX_DEG / DEG_PER_COUNT))   # the count on the upper stop
 AIM_RATE_CAP = 100.0           # deg/s, pan and tilt, armed or not (D7)
 AIM_TOL_DEG = 0.5              # 'reached' for the settle rule and test 6.3
 SETTLE_RATE = 10.0             # fire only below this pan rate ...

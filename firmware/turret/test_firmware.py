@@ -6,7 +6,8 @@ end on the simulated turret (sim_turret.py). Writes exports/turret/firmware/firm
 Protocols    STS3215 packets and sign-magnitude fields; DShot frames (bidirectional checksum), eRPM telemetry and its
              GCR line code, EDT frames; every CAN frame packs into 8 bytes and back
 Numbers      95 fps on Ø38 = 15,286 rpm = 107,002 eRPM; the limit 114,730 eRPM (D68: n_astm); Ø36 refused
-Safety       the tilt inside the hard stops (and they equal the CAD's, exports/turret/limits.json) at any command,
+Safety       the tilt inside the hard stops (and they equal the CAD's, exports/turret/limits.json) at any command, no shot
+             above the feed's firing limit (limits.json fire_tilt_max_deg),
              through homing, the stray-ball depression and the lift rule;
              no spin and no dial step without ARM, the 1 kHz train, a fresh heartbeat and the host's re-arm; zero
              throttle in the same millisecond a condition is lost; the 800 ms ramp never steps, nor does a new set
@@ -169,7 +170,7 @@ def t_tilt(out):
     rig = SimRig(seed=21, hopper=5)
     h = Host(rig)
     h.boot()
-    for tilt in (10.0, 0.5, 0.0, -5.0, -30.0, 3.0):
+    for tilt in (10.0, 20.0, 0.5, 0.0, -5.0, -30.0, 3.0):
         h.send('AIM', pan_cdeg=int((h.fw.pan_deg() or 0) * 100), tilt_cdeg=int(tilt * 100), rate=90)
         h.run(1.0)
     h.arm_up()
@@ -184,9 +185,58 @@ def t_tilt(out):
           lifts=len(h.events(M.EV_LIFT)))
     # the firmware's range is the CAD's hard stops, as cad/turret_limits.py exports them (D77): a stop moved in the CAD
     # must move here too
-    stops = json.loads((R / 'exports' / 'turret' / 'limits.json').read_text())['tilt_deg']
-    check(out, 'tilt_range_is_the_cad_stops', (C.TILT_MIN_DEG, C.TILT_MAX_DEG) == (stops['min'], stops['max']),
-          firmware_deg=[C.TILT_MIN_DEG, C.TILT_MAX_DEG], cad_stops_deg=[stops['min'], stops['max']])
+    lim = json.loads((R / 'exports' / 'turret' / 'limits.json').read_text())
+    stops = lim['tilt_deg']
+    check(out, 'tilt_range_is_the_cad_stops', (C.TILT_MIN_DEG, C.TILT_MAX_DEG) == (stops['min'], stops['max'])
+          and C.FIRE_TILT_MAX_DEG == lim['fire_tilt_max_deg'] <= C.TILT_MAX_DEG,
+          firmware_deg=[C.TILT_MIN_DEG, C.TILT_MAX_DEG], cad_stops_deg=[stops['min'], stops['max']],
+          fire_tilt_max_deg=C.FIRE_TILT_MAX_DEG, limits_fire_tilt_max_deg=lim['fire_tilt_max_deg'])
+
+
+def t_fire_ceiling(out):
+    """D77: aimed between the firing limit and the upper stop, a burst holds and ends with no shot; aimed just under
+    the limit, it fires."""
+    rig = SimRig(seed=27, hopper=10)
+    h = Host(rig)
+    h.boot()
+    h.arm_up()
+    high = (C.FIRE_TILT_MAX_DEG + C.TILT_MAX_DEG) / 2
+    h.send('AIM', pan_cdeg=int((h.fw.pan_deg() or 0) * 100), tilt_cdeg=int(high * 100), rate=90)
+    h.run(1.5)
+    t0 = h.hw.t
+    h.send('FIRE', balls=2, rate_d=30, fps_d=0, req=1)
+    h.run(12.0, lambda: bool(h.events(M.EV_BURST_DONE, t0)))
+    above = [f for _, f in h.shots(t0) if not f['flags'] & M.S_STRAY]
+    ended = bool(h.events(M.EV_BURST_DONE, t0))
+    h.arm_up()
+    low = C.FIRE_TILT_MAX_DEG - 2.0
+    h.send('AIM', pan_cdeg=int((h.fw.pan_deg() or 0) * 100), tilt_cdeg=int(low * 100), rate=90)
+    h.run(1.5)
+    t1 = h.hw.t
+    h.send('FIRE', balls=2, rate_d=30, fps_d=0, req=2)
+    h.run(15.0, lambda: bool(h.events(M.EV_BURST_DONE, t1)))
+    below = [f for _, f in h.shots(t1) if not f['flags'] & M.S_STRAY]
+    check(out, 'no_shot_above_fire_limit', not above and ended and len(below) >= 1,
+          aimed_high_deg=high, shots_high=len(above), burst_ended=ended, aimed_low_deg=low, shots_low=len(below),
+          fire_tilt_max_deg=C.FIRE_TILT_MAX_DEG)
+
+
+def t_laser_interlock(out):
+    """The aiming laser is lit only while armed: asked for while disarmed it stays dark, it lights on arming, and it goes
+    out when the ARM line drops (D77: the barrel can point above level)."""
+    rig = SimRig(seed=29, hopper=0)
+    h = Host(rig)
+    h.boot()
+    h.send('LASER', on=1)
+    h.run(0.3)
+    dark_disarmed = not rig.hw.laser_on
+    h.arm_up()
+    lit_armed = rig.hw.laser_on
+    h.arm = False
+    h.run(1.0)
+    out_after = not rig.hw.laser_on
+    check(out, 'laser_only_when_armed', dark_disarmed and lit_armed and out_after,
+          dark_when_disarmed=dark_disarmed, lit_when_armed=lit_armed, out_after_disarm=out_after, state_after=h.fw.state)
 
 
 def t_arm_conditions(out):
@@ -567,7 +617,7 @@ def main():
     ap.add_argument('--out', default=str(R / 'exports' / 'turret' / 'firmware'))
     a = ap.parse_args()
     out = {}
-    for fn in (t_protocols, t_numbers, t_tilt, t_arm_conditions, t_ramp_and_guard, t_set_point_ramps, t_supply_profile,
+    for fn in (t_protocols, t_numbers, t_tilt, t_fire_ceiling, t_laser_interlock, t_arm_conditions, t_ramp_and_guard, t_set_point_ramps, t_supply_profile,
                t_pan_torque_ceiling, t_overspeed, t_aim_disarmed, t_feed_release, t_host_bridge):
         fn(out)
     ok = all(v['pass_'] for v in out.values())

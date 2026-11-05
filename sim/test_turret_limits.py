@@ -98,3 +98,15 @@ def test_flight_solver_aims_up_within_a_raised_stop_and_not_past_it():
     lo, hi = (math.radians(a) for a in tc.tilt_stops_deg())
     el = tf.elevation_for(v0, spec, 2, 0.30, h0=h0)
     assert el is not None and lo <= el <= hi
+
+
+def test_firing_limit_is_one_number_inside_the_stops():
+    """D77: the barrel aims up to its stop; no shot above the feed's qualified elevation. One figure, from the feed study
+    through limits.json, in the game sim and the firmware reference alike."""
+    fire = LIMITS['fire_tilt_max_deg']
+    assert LIMITS['tilt_deg']['min'] < 0.0 <= fire <= LIMITS['tilt_deg']['max']
+    assert game().FIRE_TILT_MAX_DEG == fire
+    feed = json.loads((R / 'exports' / 'turret' / 'feed' / 'feed-elevated.json').read_text())
+    assert min(feed['fire_tilt_max_deg'], LIMITS['tilt_deg']['max']) == fire
+    cfg = (R / 'firmware' / 'turret' / 'config.py').read_text()
+    assert f'FIRE_TILT_MAX_DEG = {fire!r}' in cfg.replace('  ', ' ').replace('  ', ' ')

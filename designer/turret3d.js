@@ -12,12 +12,14 @@ const D2R = Math.PI / 180;
 /** The tilt joint's hard stops (rad, + = muzzle up, relative to the body): the CAD's stop lug on the yoke's sectors, as
  *  exports/turret/limits.json (cad/turret_limits.py) gives them. D77 replaced the old rule that kept the barrel at or below
  *  level with these. The values here are the CAD's as this file was written; setTiltStops() puts the exported numbers in. */
-export const TILT_STOPS = { min: -25 * D2R, max: 0 };
+export const TILT_STOPS = { min: -25 * D2R, max: 12 * D2R, fire: 10 * D2R };   // fire: no shot above it (the feed's limit)
 /** Take the stops from exports/turret/limits.json's contents; an invalid file leaves them as they were. */
 export function setTiltStops(limits) {
   const lo = limits?.tilt_deg?.min, hi = limits?.tilt_deg?.max;
   if (!Number.isFinite(lo) || !Number.isFinite(hi) || !(lo < hi)) return false;
   TILT_STOPS.min = lo * D2R; TILT_STOPS.max = hi * D2R;
+  const fire = limits.fire_tilt_max_deg;
+  TILT_STOPS.fire = Number.isFinite(fire) ? Math.min(hi, fire) * D2R : TILT_STOPS.max;
   return true;
 }
 
@@ -101,7 +103,7 @@ export function buildTurret(color = 0xe8892b) {
   }
   const muzzle = new THREE.Object3D();
   muzzle.position.z = 160 * M;
-  // the aiming laser, beside the barrel (the specified module is a < 1 mW Class 2 red dot: docs/turret-sections.md 5)
+  // the aiming laser, beside the barrel (a green pointer module, Class 2 at most by its label: docs/head-payload.md)
   const laserBody = new THREE.Mesh(new THREE.CylinderGeometry(7 * M, 7 * M, 40 * M, 16), mat(0x1d2025));
   laserBody.rotation.x = Math.PI / 2;
   laserBody.position.set(-26 * M, -8 * M, 118 * M);

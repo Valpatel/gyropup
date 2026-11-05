@@ -48,6 +48,8 @@ def stop_limits_deg(path: Path = LIMITS_JSON) -> tuple:
 
 
 TILT_MIN_DEG, TILT_MAX_DEG = stop_limits_deg()
+# no shot above this tilt (the barrel may still aim up to the stop): the feed's qualified elevation, as the firmware
+FIRE_TILT_MAX_DEG = float(json.loads(LIMITS_JSON.read_text()).get('fire_tilt_max_deg', TILT_MAX_DEG))
 
 
 def joint_tilt(elev: float, pitch: float, stops_deg: tuple = None) -> tuple:
@@ -227,7 +229,8 @@ class TurretController:
         elev += self.correction[target.name][0]
         pan += self.correction[target.name][1]
         tilt, inside = joint_tilt(elev, pitch)
-        self.in_range = reachable and inside
+        # -tilt + ... : the joint's + is barrel down, so -tilt is the tilt relative to the body, + up (the firmware's sign)
+        self.in_range = reachable and inside and math.degrees(-tilt) <= FIRE_TILT_MAX_DEG + 1e-9
         if not self.in_range:
             self.unreachable.add(target.name)                       # past a stop: track it at the stop, hold fire
         self.blocked = self.tilt_max is not None and tilt > self.tilt_limit(pan) - self.lim_margin

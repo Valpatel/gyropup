@@ -330,7 +330,9 @@ def park_test(G, tu, pose, mu, powered=True, seed=0, n_balls=30):
             'escaped': len(F.escaped), 'dial_turned_deg': round(turned, 2)}
 
 
-POSES = [(0, 0, 0), (-25, 0, 0), (0, -10, 0), (-25, 10, 0), (0, 0, 15), (-25, 0, -15), (-12.5, 10, 15)]
+# (tilt, pitch, roll) deg; tilt + = muzzle up. The quick run (the committed feed.json) takes the first three: level, the lower
+# stop and the upper stop (D77, cad/turret.py Geo.tilt_max = +12)
+POSES = [(0, 0, 0), (-25, 0, 0), (12, 0, 0), (0, -10, 0), (-25, 10, 0), (0, 0, 15), (-25, 0, -15), (-12.5, 10, 15), (12, -10, 0)]
 
 
 def write_pile(seed=0, n_balls=30):
@@ -379,7 +381,25 @@ def write_pile(seed=0, n_balls=30):
 
 
 # above level (#201, D77): the feed at the elevations a raised upper stop could allow, before the stop is moved
-ELEVATED_POSES = [(10, 0, 0), (20, 0, 0), (30, 0, 0), (40, 0, 0), (20, -10, 0), (30, 0, 15)]
+# level first: the firing limit (fire_limit) compares every raised case with the same friction and rate at level
+ELEVATED_POSES = [(0, 0, 0), (5, 0, 0), (10, 0, 0), (12, 0, 0), (15, 0, 0), (20, 0, 0), (30, 0, 0), (10, -10, 0), (10, 0, 15)]
+
+
+def fire_limit(feeding):
+    """The highest tested tilt above level (no lean) up to which the feed works as it does at level: every friction and
+    rate case feeds at least as many balls, less one, as the same case at level, at that tilt and every lower one, with
+    no double feed. Failures that level shares (a sticky ball at the fast rate) do not count against elevation.
+    (deg, or 0.0 if the first raised tilt already falls short)."""
+    key = lambda r: (r['mu'], r['rate_hz'])
+    level = {key(r): r['fed'] for r in feeding if (r['pose']['tilt'], r['pose']['pitch'], r['pose']['roll']) == (0, 0, 0)}
+    tilts = sorted({r['pose']['tilt'] for r in feeding if r['pose']['tilt'] > 0 and not r['pose']['pitch'] and not r['pose']['roll']})
+    best = 0.0
+    for t in tilts:
+        rows = [r for r in feeding if (r['pose']['tilt'], r['pose']['pitch'], r['pose']['roll']) == (t, 0, 0)]
+        if not rows or any(key(r) not in level or r['fed'] < level[key(r)] - 1 or r['double_feeds'] for r in rows):
+            break
+        best = float(t)
+    return best
 
 
 def elevated(quick=False):
@@ -404,6 +424,8 @@ def elevated(quick=False):
     res['verdict'] = {'double_feeds': sum(r['double_feeds'] for r in feeds), 'empty_steps_before_dry': sum(r['empty_steps_before_dry'] for r in feeds),
                       'balls_fed': [r['fed'] for r in feeds], 'parked_leaks': sum(r['balls_left'] for r in res['parked']),
                       'latency_ms_max': max((r['latency_ms_max'] or 0) for r in feeds), 'cases': len(feeds) + len(res['parked'])}
+    res['fire_tilt_max_deg'] = fire_limit(feeds)
+    res['fire_tilt_max_how'] = fire_limit.__doc__.split('\n\n')[0].replace('\n    ', ' ').strip()
     OUT.mkdir(parents=True, exist_ok=True)
     (OUT / 'feed-elevated.json').write_text(json.dumps(res, indent=1) + '\n')
     print('verdict', res['verdict'])
@@ -427,7 +449,7 @@ def main():
     res = {'geometry': {'ball_mm': G.ball, 'bore_mm': G.bore, 'pockets': G.n_pockets, 'pitch_r_mm': G.rp, 'baffle': tu.BAFFLE,
                         'opening': 'x from the hub + 2 mm to the wall, |y| < bore/2 (the CAD chute torus cuts a U-shaped slot there)'},
            'feeding': [], 'parked': []}
-    poses = POSES[:2] if a.quick else POSES
+    poses = POSES[:3] if a.quick else POSES
     mus = [0.7] if a.quick else [0.4, 0.7, 1.0]
     for pose in poses:
         for mu in mus:

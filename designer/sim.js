@@ -985,7 +985,7 @@ function stepDemo(dt) {
       const dx = target.pos[1] - origin.x, dz = target.pos[0] - origin.z, distance = Math.hypot(dx,dz);
       const speed = state.robot.turret.launchSpeed ?? BALL.speed;
       gun.pan = Math.atan2(dx,dz);
-      gun.tilt = Math.min(TILT_STOPS.max, Math.atan2(target.pos[2] - origin.y + 9.81 * distance * distance / (2 * speed * speed), distance));
+      gun.tilt = Math.min(TILT_STOPS.fire, Math.atan2(target.pos[2] - origin.y + 9.81 * distance * distance / (2 * speed * speed), distance));
     }
     if (target && demo.t >= demo.nextShot && time > 10.8 && gun.mag > 0 && !gun.queue.length) {
       scheduleShots(1); demo.nextShot = demo.t + 1.25;
