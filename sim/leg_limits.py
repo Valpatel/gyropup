@@ -12,7 +12,8 @@ What is in it:
   motor torque T0 with factor SF carries T0 x SF / target at its target. Three numbers per profile:
   - `everyday_nm`: any pose, any time, including a motor driving its link into a stop post (E2, E3, E3o, E3i, the
     stop pin's bearing): the firmware's cap outside the jump's push;
-  - `peak_nm`: the jump's push only (the legs mid-range, at least 15 deg from every stop, at most
+  - `peak_nm`: the jump's push only (D78, 2026-11-04: the every-day cap; `push_allows_nm` is what the push rows
+    would allow) (the legs mid-range, at least 15 deg from every stop, at most
     GP_JUMP_PUSH_MAX_S): the rare-event rows the push loads (a stalled leg at full torque R2, the hub's dowels, and
     the knees and links through the push's joint forces from the jump sweep), and the RS-04's own 120 N m peak;
   - `rms_nm`: the continuous limit, a mean square over the winding's time constant: the RS-04's stall table rated
@@ -59,6 +60,7 @@ SOFT_MARGIN_DEG = 2.0             # no torque into a stop inside this (the robot
 DEAD_POINT_MIN_DEG = 25.0         # the commanded pose's least angle from a dead point (D38's 33 at 130 mm, 30 at 380)
 ANGLE_WINDOW_EXTRA_DEG = 2.0      # beyond the stop's squeeze at the fault torque: the measured-angle window
 DEAD_LIMP_DEG = 3.0               # a measured pose this close to a dead point: limp (the stops alone leave 6.1 deg)
+PEAK_IS_EVERYDAY = True           # D78 (the owner, 2026-11-04): no push window above the every-day cap
 JUMP_HOT_SHARE = 0.8              # no jump while a motor's rms torque is over this share of the rms limit
 SOFT_KD = 20.0                    # N m s/rad of approach speed over the limit: the soft stop's brake
 # The stop as the leg rig's MuJoCo model has it (sim/leg_rig.py): the TPU sleeve's rotational stiffness at the motor.
@@ -223,7 +225,10 @@ def torque_profiles(fea: dict, derating: dict, sweep: list) -> dict:
     pk_w = min(pk, key=lambda r: r['nm'])
     th = thermal_inputs()
     everyday = math.floor(day_w['nm'])
-    peak = max(everyday, math.floor(pk_w['nm']))
+    # The owner's decision (D78, 2026-11-04): the every-day cap everywhere, the jump's push and each motor's own
+    # limit_torque too. The rare-event rows would allow more in the push (push_allows_nm); that headroom is kept.
+    push_allows = max(everyday, math.floor(pk_w['nm']))
+    peak = everyday if PEAK_IS_EVERYDAY else push_allows
     rows = derating['caps']
     caps = sorted(float(c) for c in rows)
     pla = derating['pla_cap_nm']
@@ -231,7 +236,9 @@ def torque_profiles(fea: dict, derating: dict, sweep: list) -> dict:
     first = rows[f'{nxt}']['worst'] if nxt is not None else None
     robot = {'title': "PA6-CF printed links and hip frame (D33, D38), CNC 6061 output adapters (D46): today's record",
              'everyday_nm': float(everyday), 'peak_nm': float(peak), 'rms_nm': th['rms_nm'], 'rms_tau_s': th['tau_s'],
-             'peak_max_s': 0.35, 'motor_limit_torque_nm': float(peak),
+             'peak_max_s': 0.35, 'motor_limit_torque_nm': float(peak), 'push_allows_nm': float(push_allows),
+             'peak_note': 'the every-day cap in the push too, by the owner\'s decision (D78, 2026-11-04): the push rows would '
+                          f'allow {push_allows} N m for {push_allows - everyday} N m more and about 4 mm of jump',
              'everyday_governing': day_w, 'peak_governing': pk_w, 'everyday_rows': day, 'peak_rows': pk, 'knee_capacity': knees, 'hip_capacity': hip,
              'rms_source': th['source'], 'rms_pending': th['pending'], 'thermal_frame': th['frame'],
              'rms_note': "the motor's own continuous rating: the heat model finds the PA6-CF hip frame insulates the motor so that "
@@ -443,9 +450,10 @@ def _put(mujoco, m, d, leg, p1, p2, rail=0.6):
     return True
 
 
-def _j_eff(mujoco, m, d, leg, motor: str) -> float:
-    """The inertia (kg m^2) one motor drives with the other motor and the hips held and the wheel free to spin: the
-    mass matrix on the five-bar's one-motor velocity field (the knees from the apex's closure), less the wheel's spin."""
+def _j_eff(mujoco, m, d, leg, motor: str, wheel_free: bool = True) -> float:
+    """The inertia (kg m^2) one motor drives with the other motor and the hips held: the mass matrix on the five-bar's
+    one-motor velocity field (the knees from the apex's closure); with the wheel free to spin, less the wheel's spin,
+    and with it locked to its link (the hub motor holding, braking or shorted), all of it."""
     import numpy as np
     rows = [k for k in range(d.nefc) if d.efc_type[k] == mujoco.mjtConstraint.mjCNSTR_EQUALITY]
     Jc = d.efc_J.reshape(d.nefc, m.nv)[rows]
@@ -458,6 +466,8 @@ def _j_eff(mujoco, m, d, leg, motor: str) -> float:
         return float('nan')
     Mv, e, Me = np.zeros(m.nv), np.zeros(m.nv), np.zeros(m.nv)
     mujoco.mj_mulM(m, d, Mv, v)
+    if not wheel_free:
+        return float(v @ Mv)
     e[leg.v['wheel']] = 1.0
     mujoco.mj_mulM(m, d, Me, e)
     return float(v @ Mv) - float(e @ Mv) ** 2 / float(e @ Me)
@@ -465,10 +475,10 @@ def _j_eff(mujoco, m, d, leg, motor: str) -> float:
 
 def inertia_survey(n: int = 41) -> dict:
     """Each motor's inertia over the whole stop box (n x n poses), the worst near each of its stops and the bound the
-    soft stops use: the worst anywhere, rounded up to the next 0.001 kg m^2."""
+    soft stops use: the worst anywhere with the wheel free or locked, rounded up to the next 0.001 kg m^2."""
     mujoco, lr, m, d, leg = _rig()
     fo, fi, ro, ri = fb.stop_angles()
-    worst, near = {}, {}
+    worst, near, locked = {}, {}, {}
     near_band = math.radians(SOFT_MARGIN_DEG + 1.0)
     for a in [fi + (fo - fi) * k / (n - 1) for k in range(n)]:
         for b in [ro + (ri - ro) * k / (n - 1) for k in range(n)]:
@@ -480,23 +490,31 @@ def inertia_survey(n: int = 41) -> dict:
                     continue
                 if J > worst.get(motor, (0,))[0]:
                     worst[motor] = (J, [_deg(a), _deg(b)])
+                Jl = _j_eff(mujoco, m, d, leg, motor, wheel_free=False)
+                if Jl > locked.get(motor, (0,))[0]:
+                    locked[motor] = (Jl, [_deg(a), _deg(b)])
+                J = max(J, Jl)
                 for side, dist in (('lo', phi - lo), ('hi', hi - phi)):
                     if dist <= near_band and J > near.get((motor, side), (0,))[0]:
                         near[(motor, side)] = (J, [_deg(a), _deg(b)])
-    top = max(v[0] for v in worst.values())
+    top = max(v[0] for v in list(worst.values()) + list(locked.values()))
     _put(mujoco, m, d, leg, *fb.stance(300.0))
     return {'bound_kg_m2': math.ceil(top * 1000) / 1000, 'rotor_and_upper_link_kg_m2': round(J_ROTOR_LINK_KG_M2, 4),
             'worst': {k: {'kg_m2': round(v[0], 4), 'at_deg': v[1]} for k, v in worst.items()},
+            'worst_wheel_locked': {k: {'kg_m2': round(v[0], 4), 'at_deg': v[1]} for k, v in locked.items()},
             'at_stops': {f'{k[0]} {k[1]}': {'kg_m2': round(v[0], 4), 'at_deg': v[1]} for k, v in sorted(near.items())},
             'stance_300mm': {mo: round(_j_eff(mujoco, m, d, leg, mo), 4) for mo in ('motor_f', 'motor_r')},
             'basis': 'sim/leg_rig.py model: the rotor, upper link, lower links and wheel, the hips and the other motor held, '
-                     'the wheel free on its bearing; the other motor free or the hips moving would lower it. A loaded leg '
+                     'the wheel free on its bearing or locked to its link (the bound covers both; near the stops the larger '
+                     'of the two); the other motor free or the hips moving would lower it. A loaded leg '
                      '(the wheel on the ground) adds the body: that is the landing and power-cut cases (R1, R3), not this one'}
 
 
 def free_swing(profiles: dict, J: float, t_end: float = 1.2) -> list:
     """Each motor driven at its build's every-day torque from its far stop into the near one, the carriage held up and
-    the other motor holding its angle, with the soft stops and without: the stop's peak torque and the contact speed."""
+    the other motor holding its angle, with the soft stops and without: the stop's peak torque and the contact speed.
+    Both motors follow the RS-04's torque-speed line at 36 V (sim/leg_control.py clip_motor, as the jump sweep)."""
+    from sim import leg_control as lc
     mujoco, lr, m, d, leg = _rig()
     fo, fi, ro, ri = fb.stop_angles()
     dt = m.opt.timestep
@@ -520,8 +538,9 @@ def free_swing(profiles: dict, J: float, t_end: float = 1.2) -> list:
                         tau = sgn * T
                         if guard:
                             tau = soft_stop(tau, ph, om, lo, hi, T, J=J)
-                        tau_o = max(-T, min(T, 400.0 * (other - ph_o) - 20.0 * d.qvel[leg.v[om_name]]))
-                        d.ctrl[leg.a[motor]] = max(-T, min(T, tau))
+                        om_o = d.qvel[leg.v[om_name]]
+                        tau_o = lc.clip_motor(400.0 * (other - ph_o) - 20.0 * om_o, om_o, RS04_PEAK, NO_LOAD_RAD_S, T)
+                        d.ctrl[leg.a[motor]] = lc.clip_motor(tau, om, RS04_PEAK, NO_LOAD_RAD_S, T)
                         d.ctrl[leg.a[om_name]] = tau_o
                         d.ctrl[leg.a['wheel']] = 0.0
                         for n, phn, l_, h_ in (('motor_f', p1, fi, fo), ('motor_r', p2, ro, ri)):

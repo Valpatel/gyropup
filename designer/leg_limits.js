@@ -74,6 +74,7 @@ export function createLegLimits({ table = null } = {}) {
         pitch: finite(target.pitch, 0),
         rollMM: finite(target.rollMM, 0),
         speed: clamp(finite(target.speed, 0), -vmaxMPerS, vmaxMPerS),
+        turn: finite(target.turn, 0),
       };
       if (!out || !(dt > 0)) { out = out || { ...t }; return { ...out, limited: false }; }
       const span = info?.hMax - info?.hMin > 0 ? info.hMax - info.hMin : (RATES.hMaxM - RATES.hMinM) * 1000;   // this robot's 0..1 in mm
@@ -82,6 +83,7 @@ export function createLegLimits({ table = null } = {}) {
         pitch: toward(out.pitch, t.pitch, RATES.leanRadPerS * dt),
         rollMM: toward(out.rollMM, t.rollMM, 2 * legRateMMPerS * dt),   // one leg up, the other down: each at the rate
         speed: toward(out.speed, t.speed, RATES.accelMPerS2 * dt),
+        turn: t.turn,
       };
       const limited = next.height !== t.height || next.pitch !== t.pitch || next.rollMM !== t.rollMM || next.speed !== t.speed;
       out = next;
