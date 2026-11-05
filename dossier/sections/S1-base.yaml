@@ -130,7 +130,7 @@ interfaces:
   owner: S1-base
 parts:
 - id: pan_base
-  function: 'Carries the turret on the TM face (the head's riser or the stand, D76): holds the 61810''s outer race, the pan servo, the DT receptacle,
+  function: 'Carries the turret on the TM face (the head''s riser or the stand, D76): holds the 61810''s outer race, the pan servo, the DT receptacle,
     the bumper''s tabs and the slip ring''s carrier'
   interfaces:
   - I-stand-tm
