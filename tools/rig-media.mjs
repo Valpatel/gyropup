@@ -26,13 +26,16 @@ function frameHashes(file, pixelFormat) {
 }
 function decoded(file) {
   const info=JSON.parse(command('ffprobe',['-v','error','-select_streams','v:0','-show_frames','-show_entries',
-    'stream=codec_name,profile,level,width,height,pix_fmt,r_frame_rate,color_range,color_space,color_transfer,color_primaries:frame=best_effort_timestamp_time','-of','json',file]));
+    'stream=codec_name,profile,level,width,height,pix_fmt,r_frame_rate,color_range,color_space,color_transfer,color_primaries,duration:format=duration:frame=best_effort_timestamp_time','-of','json',file]));
   requireValid(info.streams?.length===1 && info.frames?.length>1, 'Missing complete decoded video stream.');
   const stream=info.streams[0], times=info.frames.map(f=>Number(f.best_effort_timestamp_time));
   const hashes=frameHashes(file,'yuv420p');
   requireValid(hashes.length===times.length && hashes.every(hash=>/^[0-9a-f]{64}$/.test(hash)), 'Incomplete decoded frame hashes.');
   requireValid(times.every((t,i)=>Number.isFinite(t) && (i===0 || t>times[i-1])), 'Invalid decoded frame timing.');
-  return {stream,times,hashes};
+  const duration=Number(info.format?.duration);
+  requireValid(Number.isFinite(duration) && duration>0, 'Missing finite positive container duration.');
+  if(stream.duration!=null)requireValid(Number.isFinite(Number(stream.duration)) && Math.abs(Number(stream.duration)-duration)<=0.001001, 'Stream/container duration differs.');
+  return {stream,times,hashes,duration};
 }
 
 export async function compareRigPixels(original, companion) {
@@ -54,9 +57,12 @@ export async function compareRigPixels(original, companion) {
     && rgbA.every((hash,i)=>/^[0-9a-f]{64}$/.test(hash)&&hash===rgbB[i]), 'Companion interpreted RGB pixels differ from the original.');
   const [n,d]=a.stream.r_frame_rate.split('/').map(Number),fps=n/d;
   requireValid(Number.isFinite(fps) && fps>0, 'Invalid recorded frame rate.');
+  for(const movie of [a,b])requireValid(Math.abs(movie.duration-(movie.times.at(-1)-movie.times[0]+1/fps))<=0.001001,
+    'Container duration differs from decoded frame timing.');
+  requireValid(Math.abs(a.duration-b.duration)<=0.001001, 'Companion container duration differs.');
   return {width:a.stream.width,height:a.stream.height,pixel_format:a.stream.pix_fmt,frame_rate:a.stream.r_frame_rate,
     color:{original_range:a.stream.color_range??'unspecified',companion_range:b.stream.color_range??'unspecified',space:a.stream.color_space??'unspecified',transfer:a.stream.color_transfer??'unspecified',primaries:a.stream.color_primaries??'unspecified'},
-    frames:a.hashes.length,duration_s:a.times.at(-1)-a.times[0]+1/fps,max_timestamp_delta_s:maxTime,
+    frames:a.hashes.length,duration_s:a.duration,companion_duration_s:b.duration,max_timestamp_delta_s:maxTime,
     comparison:'Every decoded YUV420P and interpreted RGB24 frame SHA-256 matches; zero pixel error',
     decoded_frame_sequence_sha256:await rigDigest(new TextEncoder().encode(a.hashes.join('\n')+'\n')),
     rgb_frame_sequence_sha256:await rigDigest(new TextEncoder().encode(rgbA.join('\n')+'\n'))};
