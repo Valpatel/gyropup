@@ -414,13 +414,13 @@ pan base so the turret was a robot of its own; on 2026-11-03 the owner moved the
   head branch's 10 A MINI 58 V fuse in an in-line holder. The hardware arm chain (D7, D9, D10, D47), the trimmed
   flywheel rail's 105 fps ceiling (D68) and the mechanical tilt stops hold whatever any computer does (D76 leaves the
   stops and the tilt range as they are).
-- The interface to Gyropup unchanged in kind: the TM bolt pattern (4 x M5 on 80 x 80, 2 x Ø5 dowels), the Ø45 TM cable
-  hole, the DT12 (power, CAN, the dry safety loop).
+- The interface to Gyropup unchanged in kind: the TM bolt pattern (4 x M5 on 80 x 80, 2 x Ø5 dowels), the Ø45 TM centre
+  hole (unused on the robot), the DT12 (power, CAN, the dry safety loop).
 
 **The power budget** is under *Power* below (sim/turret_power.py, with section 4's D68 flywheels).
 
-**Interfaces.** The pan base's foot carries the TM pattern (section 1); the DT12 pigtail leaves through the Ø45 TM
-hole. No ports on the turret: the XT30 input, the RJ-45 jack and the plinth's two input fuses went with the plinth.
+**Interfaces.** The pan base's foot carries the TM pattern (section 1); the DT12's receptacle sits on the pan base's -y pad and its
+plug and backshell hang outside the riser, so nothing passes the Ø45 TM hole (mount.json `tm.hole_use`). No ports on the turret: the XT30 input, the RJ-45 jack and the plinth's two input fuses went with the plinth.
 
 **Decisions.**
 - *No computer on the turret* (D76). The plinth stood 86 mm under the pan base and weighed about 0.8 kg (the J4012

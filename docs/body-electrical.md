@@ -150,6 +150,7 @@ chafed through to the aluminium blows its fuse instead of leaving the frame live
 | A | MCU FDCAN1 (CAN Pal 1, 120 Ohm on) | RS-04 left front → RS-04 left rear (120 Ohm at its plug) | 1 Mbit/s, the left leg |
 | B | MCU FDCAN2 (CAN Pal 2, 120 Ohm on) | RS-04 right front → RS-04 right rear (120 Ohm at its plug) | 1 Mbit/s, the right leg |
 | C | MCU FDCAN3 (CAN Pal 3, 120 Ohm on) | VESC left → VESC right → J501 can0 (its own 120 Ohm on) | 1 Mbit/s: wheels, the computer |
+| D | J501 can1 (its own 120 Ohm on) | the turret's Feather M4 CAN (its own 120 Ohm), through the DT12 pins 5, 6 (W36) | 1 Mbit/s: the turret's 0x300 frames (D76) |
 
 Bus D is the turret (D76): the J501 aims it over CAN through the DT12's pins 5-6 (D66's Ethernet link went with
 its own Jetson).

@@ -62,7 +62,7 @@ and about 1 A at 55 V, for resistive loads. The turret's 3.4 A at 41 V is inside
 Omron gives no DC endurance above 30 V. A 10 A fuse would let the contact carry past its 8 A rating in an overload;
 the 7.5 A MINI 58V keeps it under (Littelfuse derates a 7.5 A fuse to 6.0 A at 40 C: the 4.8 A burst is inside that).
 The relay opens with the turret's safety loop (pole A) at the same instant, which stops the flywheels, so the current
-it breaks is mostly the reComputer's idle draw. Two things to measure at the P2 bring-up (B12/B15): the inrush when
+it breaks is mostly the turret's board idle draw (D76: no computer of its own). Two things to measure at the P2 bring-up (B12/B15): the inrush when
 the relay closes onto the turret's input capacitance (the 7.5 A fuse's I2t is 68 A2s; if it blows or the contact
 pits, the turret needs its own soft start, or pole B's job goes to a DC-rated relay or a high-side MOSFET driven from
 the coil line), and the contact after a hundred stops.
