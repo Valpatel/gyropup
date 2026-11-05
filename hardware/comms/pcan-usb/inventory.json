@@ -2,7 +2,7 @@
   "schema": "gyropup.inventory/1",
   "component": "PEAK PCAN-USB",
   "folder": "hardware/comms/pcan-usb",
-  "about": "The owner's adapter (2026-11-03: \"probably a PEAK Pcan\"). Fill the model and serial from its label or deploy/jetson/install.sh --list-can.",
+  "about": "The owner's adapter (2026-11-03: \"probably a PEAK Pcan\"). Fill the model and serial from its label or hardware/deploy/jetson/install.sh --list-can.",
   "ordered": [],
   "arrived": [],
   "held": [{"count": 1, "source": "the owner, 2026-11-03: the adapter for the motor tool"}],

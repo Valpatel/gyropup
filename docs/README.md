@@ -4,6 +4,14 @@ Gyropup is at the CAD and simulation stage. There is no assembled robot or print
 [prototype warning](prototype-safety.md) applies to every design and download: these prototypes are unsafe,
 for research purposes only, and will not be offered for sale.
 
+[![Explore the robot, build and inspect, understand the design, or contribute](img/navigation/project-map.svg)](https://gyropup.com/docs/img/navigation/project-map.svg)
+
+[Open the interactive map](https://gyropup.com/docs/img/navigation/project-map.svg). Every path also appears as
+an ordinary link below; the map remains readable with animation disabled.
+
+**Owner report, 2026-11-05:** first motors in hand; main motor holder and motor adapter printed.
+[Physical progress](physical-progress.md) records the limits of that observation.
+
 ## Choose an entry point
 
 | Purpose | Start here |
@@ -35,12 +43,14 @@ not establish mechanical readiness. Older plans remain available for context and
 - Body: [plan](body-plan.md), [next plan](body-next-plan.md), [frame](body-frame.md),
   [electrical](body-electrical.md), [thermal](body-thermal.md), [safety](body-safety.md).
 - Hardware: [one folder per component](../hardware/README.md) (references, interfaces, config, inventory, bring-up),
-  [the robot computer's deployment](../deploy/jetson/README.md), the [RS-04 bring-up checklist](../hardware/actuators/rs04/bring-up.md).
+  [the robot computer's deployment](../hardware/deploy/jetson/README.md), the [RS-04 bring-up checklist](../hardware/actuators/rs04/bring-up.md).
 - Carrier: [packaging evidence](../hardware/carrier-packaging/README.md),
   [protection candidate](../hardware/carrier-pan-protection/README.md), [service connectors](carrier-service-connectors.md),
   [insert-fit specimens](../research/carrier-insert-fit/README.md). Physical fit, wiring and printed strength remain open.
 
 ## Sources, parts and recorded evidence
+
+- [Recovery audit, 2026-11-05](validation/recovery-2026-11-05.md): every open issue, branch and preserved worktree.
 
 - [Parts catalog format](../catalog/SCHEMA.md), [purchases](purchases.md),
   [supplier audit](../research/supply/turret-carrier-2026-10-29.md), [part-image provenance](part-image-provenance.md).

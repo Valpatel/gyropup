@@ -1,8 +1,8 @@
-"""deploy/jetson/install.sh without a Jetson: a dry run changes nothing, a staged install writes the expected files, a
+"""hardware/deploy/jetson/install.sh without a Jetson: a dry run changes nothing, a staged install writes the expected files, a
 second run changes nothing (idempotent), the owner's settings are never overwritten, stable names are generated and
 checked, LAN mode is opt-in with a token, and shellcheck has nothing to say (when it is installed).
 
-    python3 deploy/jetson/test_install.py
+    python3 hardware/deploy/jetson/test_install.py
 """
 from __future__ import annotations
 
@@ -15,7 +15,7 @@ import unittest
 from pathlib import Path
 
 HERE = Path(__file__).resolve().parent
-REPO = HERE.parents[1]
+REPO = HERE.parents[2]
 SCRIPT = HERE / 'install.sh'
 
 
@@ -58,7 +58,8 @@ class InstallTests(unittest.TestCase):
         self.assertIn('needs root', p.stderr)
 
     def test_staged_install_and_idempotence(self):
-        p = self.stage()
+        # The default checkout must follow the installed script's new source location.
+        p = run('--root', str(self.root))
         want = ['etc/gyropup/can.env', 'etc/gyropup/rs04-bridge.env', 'etc/modules-load.d/gyropup-can.conf',
                 'etc/systemd/system/gyropup-can@.service', 'etc/systemd/system/gyropup-rs04-bridge.service',
                 'etc/sysusers.d/gyropup.conf', 'etc/udev/rules.d/70-gyropup-can-names.rules',

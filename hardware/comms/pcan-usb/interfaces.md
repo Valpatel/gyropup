@@ -8,7 +8,7 @@ flowchart LR
 
 | Item | Value | Source |
 |---|---|---|
-| Host | USB, Linux `peak_usb` (SocketCAN), a `can` link named `can0` or as `can-names.conf` says | `deploy/jetson/`; `rig/rs04_bridge.py` |
+| Host | USB, Linux `peak_usb` (SocketCAN), a `can` link named `can0` or as `can-names.conf` says | `hardware/deploy/jetson/`; `rig/rs04_bridge.py` |
 | CAN connector | D-Sub 9 male, the CiA 303-1 convention: pin 2 CAN_L, pin 7 CAN_H, pin 3 GND (check the adapter's own manual) | general CAN practice; the manual is not kept |
 | Termination | none built in: a 120 ohm at each end of the bus | the RS-04 bring-up, step 1 |
 | Bit rate | 1 Mbit/s classic CAN for the RS-04s and the robot's buses | `rig/rs04.py`; docs/body-electrical.md 4 |
