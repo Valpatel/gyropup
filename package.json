@@ -31,6 +31,7 @@
     "test:legs": "python3 tools/test-leg-attachments.py && node tools/test-leg-attachment-motion.mjs",
     "test:notice": "node tools/test-prototype-notice.mjs",
     "test:portal-data": "node --test tools/test-portal-data.mjs",
+    "test:leg-limits": "node --test tools/test-leg-limits.mjs",
     "test:loading-sim": "node tools/test-loading-sim.mjs",
     "test:loading-portal": "node tools/test-loading-portal.mjs",
     "test:loading-hero": "node tools/test-loading-hero.mjs",

@@ -35,11 +35,11 @@ Power on the bus through an XT30 on the motor's lead (the robot adapts it to XT6
 ## Config and profiles
 
 [`profiles/`](profiles/) holds the build profiles as versioned JSON: `pla-bench` (the default: a 12 N m cap from
-[the motor-day derating](../../../docs/motor-day.md), 10 N m stored as motor-day step L1 does, a 3 N m jog) and `final` (the firmware's 60 N m until the
-per-build caps of [issue #202](https://github.com/Valpatel/gyropup/issues/202) land). Each holds the limits the motor tool and its bridge
+[the motor-day derating](../../../docs/motor-day.md), 10 N m stored as motor-day step L1 does, a 3 N m jog) and `final` (the robot leg's 61 N m, the
+per-build cap of [issue #202](https://github.com/Valpatel/gyropup/issues/202)). Each holds the limits the motor tool and its bridge
 enforce and the settings a configured motor holds (`motor_config`). Every number taken from elsewhere names its
-source and is checked against it (`python -m rig.rs04_profiles`). The firmware still writes its own cap from
-`gp_config.h` at boot; reading the profiles there belongs to issue #202.
+source and is checked against it (`python -m rig.rs04_profiles`). The firmware writes the same cap at boot, from
+`gp_limits.h`, generated from the same [`exports/leg/limits.json`](../../../exports/leg/limits.json) both profiles' caps are checked against.
 
 **Heat:** the PLA bench's limits are the motor heat model's ([`motor_thermal.json`](../../../exports/leg/thermal/motor_thermal.json),
 `/bench`, and [docs/motor-thermal.md](../../../docs/motor-thermal.md), from [PR #195](https://github.com/Valpatel/gyropup/pull/195)): stop when a motor's case passes
@@ -76,5 +76,4 @@ C1-C6 and the [motor-day ladder](../../../docs/motor-day.md). Software checks: `
 ## Open questions
 
 - No unit has been scanned: firmware versions, uids and the as-delivered parameters are unknown.
-- The firmware's cap and the profiles' come from different places until issue #202 lands.
 - The manual leaves byte 7 of the type 23-25 frames and the byte order of the type-21 fault words open (`rig/rs04.py`).

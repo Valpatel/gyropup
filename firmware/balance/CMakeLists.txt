@@ -10,10 +10,23 @@ set(CMAKE_C_STANDARD 11)
 set(CMAKE_C_STANDARD_REQUIRED ON)
 set(CMAKE_EXPORT_COMPILE_COMMANDS ON)
 
+# The leg build the rig profile drives (gp_limits.h): the PLA bench leg unless told (-DGP_RIG_BUILD=robot for the
+# PA6-CF + 6061 leg). The robot profile always drives the robot's own leg.
+set(GP_RIG_BUILD "pla_bench" CACHE STRING "the rig profile's leg build: pla_bench or robot")
+set_property(CACHE GP_RIG_BUILD PROPERTY STRINGS pla_bench robot)
+if(GP_RIG_BUILD STREQUAL "robot")
+    add_compile_definitions(GP_RIG_BUILD=1)
+elseif(GP_RIG_BUILD STREQUAL "pla_bench")
+    add_compile_definitions(GP_RIG_BUILD=0)
+else()
+    message(FATAL_ERROR "GP_RIG_BUILD must be pla_bench or robot, not ${GP_RIG_BUILD}")
+endif()
+
 set(GP_CORE_SOURCES
     src/core/gp_app.c
     src/core/gp_control.c
     src/core/gp_fivebar.c
+    src/core/gp_guard.c
     src/core/gp_ina228.c
     src/core/gp_jetson.c
     src/core/gp_rs04.c
