@@ -4,6 +4,8 @@
 | --- | --- |
 | A motor-day picture refresh changes STL bytes while keeping old slice estimates | [Preserve the independent mesh/slice snapshot](inbox/2026-11-05-picture-refresh-can-change-retained-slice-inputs.md) |
 | `motor_day --no-render` keeps stale pictures after an explode-offset or camera edit | [Bind all step visual inputs before reuse](inbox/2026-11-05-render-reuse-needs-explode-and-camera-inputs.md) |
+| Layout checks time out on a small pending resource despite visible content and loaded fonts | [Measure after real font readiness, not global load](inbox/2026-11-05-layout-readiness-must-wait-for-fonts-not-global-load.md) |
+| `?sound=0` is briefly ignored while talk mounts and an optional import is delayed | [Apply the audio query before mounting consumers](inbox/2026-11-05-audio-query-must-precede-optional-imports.md) |
 | Pages rejects a relocated Wrangler file with “custom paths” unsupported | [Find the config through the command working directory](inbox/2026-11-05-pages-deploy-needs-config-working-directory.md) |
 | A README image works on GitHub but is broken on the site's README page | [README images must use `src`, not `srcset`](inbox/2026-11-02-readme-images-need-src-not-srcset.md) |
 | A browser reports an untrusted certificate while a DNS firewall names a blocked domain or name server | [Failing-path evidence and domain-age limits](inbox/2026-10-30-dns-filter-warnings-need-the-failing-path.md), [public HTTPS receipt](../docs/validation/public-https.md) |
