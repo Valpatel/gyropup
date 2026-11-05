@@ -23,7 +23,35 @@ Retries revoke old URLs, and an older asynchronous result cannot replace a newer
 state. Refine the existing Progress and Markdown harnesses with wrong-report,
 wrong-video, missing-receipt and stale-retry controls.
 
+The exact bundled Chromium playback check subsequently exposed the known AVC
+codec limitation: installed Chrome and WebKit played the original High31 clips,
+while bundled Chromium rejected them. Follow the [codec lesson](2026-10-29-chrome-and-chromium-do-not-share-video-codecs.md),
+preserve the originals, and derive lossless VP9 companions. Conversion provenance
+records the committed converter, exact arguments and FFmpeg version separately
+from the original e7 producer. Compare every decoded YUV420P and interpreted RGB24
+frame, dimensions, frame count, colour metadata and ordered timestamps. WebM's
+millisecond timebase permits at most 1.001 ms timestamp/duration rounding.
+
+Independent review of `2e62ef4` found that correct frame timestamps do not prove
+correct container duration. A 20-frame 2-second fixture with only WebM Duration
+changed to 20 seconds passed. `370540a` probes actual format/stream duration and
+rejects that same counterexample. Fleet173 on cpu-b passed all 675 original and
+companion frames, plus honestly rehashed different-scenario, frozen-frame and
+false-duration controls. This was conversion evidence, not a new simulation.
+
+Cross-platform rechecking of that receipt found the YUV sequence digest and every
+other field identical, but the recorded RGB conversion fingerprint differed
+between ARM and x86 (`585c0a…` versus `ac8535…` for stand_up). Fresh original versus
+companion RGB equality passed on both. The portable receipt therefore keeps the
+canonical YUV sequence digest; every host still freshly compares each pair of RGB
+frames, without treating a stored swscale conversion fingerprint as portable.
+No pixel or timing comparison is removed. Regenerate receipts using the corrected
+committed converter; never relabel old conversion provenance.
+
 Limits: matching retained bytes establishes the report/movie relationship, not
 the physical accuracy of the simulation or a hardware qualification. Large media
-needs a separate loading design; these seven retained clips total about 345 kB.
+needs a separate loading design; the seven original MP4s total about 345 kB and
+their lossless VP9 companions about 7 MB. Select the codec once before fetching,
+verify that selected representation and pass the choice to playback; do not make
+AVC-capable phones download both. Publication/Markdown checks still verify both.
 The receipt is not a signature or a substitute for independent source review.

@@ -10,6 +10,12 @@ import {rigDigest,prepareRigMedia} from '../designer/rig-media.js';
 const root=path.resolve(import.meta.dirname,'..');
 const receipt=JSON.parse(await readFile(path.join(root,'exports/leg/rig-media.json')));
 
+test('publication checks both actual formats even if a browser selects only one',async()=>{
+  const report=await readFile(path.join(root,receipt.report.path)),clip=receipt.clips[0];
+  for(const file of [clip.path,clip.companion.path])
+    await assert.rejects(prepareRigMedia(report,receipt,p=>p===file?Buffer.from('wrong bytes'):readFile(path.join(root,p))),/identity does not match/);
+});
+
 test('every retained companion preserves all original decoded pixels and timing',async()=>{
   assert.equal((await verifyRigFiles(root,{historical:true,decode:true})).clips.length,7);
 });

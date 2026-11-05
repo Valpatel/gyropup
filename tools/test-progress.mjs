@@ -41,12 +41,16 @@ const browser=await engine.launch(engine===chromium?{channel:process.env.PLAYWRI
 const context=await browser.newContext({viewport:{width:390,height:844},reducedMotion:'reduce'});
 await context.addInitScript(()=>{sessionStorage.setItem('gyropup.prototype-notice','2026-10-29-v1');localStorage.setItem('gyropup.probe','off');});
 const errors=[],cases=[],page=await context.newPage();page.on('pageerror',e=>errors.push(e.message));
+const rigRequests=[];page.on('request',r=>{if(/\/exports\/leg\/rig_[a-z_]+\.(mp4|webm)(?:\?|$)/.test(r.url()))rigRequests.push(r.url());});
 const json=async path=>{const r=await context.request.get(base+path);assert.ok(r.ok());return r.json();};
 const version=await json('/version.json'),progress=await json('/docs/progress.json');
 const ready=()=>page.waitForFunction(()=>document.body.dataset.ready==='1');
 const allOpen=async id=>page.locator('#'+id).evaluate(el=>{for(let node=el;node;node=node.parentElement)if(node.tagName==='DETAILS'&&!node.open)return false;return true;});
 try {
  await page.goto(base+'/designer/progress.html');await ready();
+ const selectedFormat=await page.evaluate(()=>document.createElement('video').canPlayType('video/mp4; codecs="avc1.64001f"')?'mp4':'webm');
+ assert.equal(rigRequests.length,7,'Only one verified representation of each movie is fetched');
+ assert.ok(rigRequests.every(url=>new URL(url).pathname.endsWith('.'+selectedFormat)),'Unselected companion/original downloads are not requested');
  await page.waitForFunction(()=>document.querySelector('#fea-media').dataset.state==='ready');
  assert.match(await page.locator('#updated').innerText(),new RegExp(progress.updated));
  assert.equal(await page.locator('#current-focus').innerText(),progress.focus);
@@ -114,17 +118,17 @@ try {
  for(const clip of rigRecord.clips)assert.ok(text.includes(clip.path),'Markdown retains original movie downloads: '+clip.scenario);
  assert.doesNotMatch(text,/blob:/,'Static Markdown never publishes ephemeral browser URLs');
  // The real consumer must retain numerical evidence while refusing mismatched or missing movie identities.
- for(const fault of ['report','receipt','movie','companion']){
+ for(const fault of ['report','receipt','movie','unsupported']){
   const probe=await context.newPage();
   await probe.addInitScript(()=>{window.__rigBlobs=[];const create=URL.createObjectURL.bind(URL);URL.createObjectURL=value=>{const url=create(value);window.__rigBlobs.push(url);return url;};});
   if(fault==='report')await probe.route('**/exports/leg/rig-results.json*',route=>route.fulfill({contentType:'application/json',body:JSON.stringify({...rigReport,half_mass_kg:20})}));
   if(fault==='receipt')await probe.route('**/exports/leg/rig-media.json*',route=>route.fulfill({status:404,body:'not recorded'}));
-  if(fault==='movie')await probe.route('**/exports/leg/rig_jump.mp4*',route=>route.fulfill({contentType:'video/mp4',body:Buffer.from('wrong movie bytes')}));
-  if(fault==='companion')await probe.route('**/exports/leg/rig_jump.webm*',route=>route.fulfill({contentType:'video/webm',body:Buffer.from('wrong companion bytes')}));
+  if(fault==='unsupported')await probe.addInitScript(()=>{HTMLMediaElement.prototype.canPlayType=()=>'';});
+  if(fault==='movie')await probe.route(`**/exports/leg/rig_jump.${selectedFormat}*`,route=>route.fulfill({contentType:selectedFormat==='mp4'?'video/mp4':'video/webm',body:Buffer.from('wrong selected movie bytes')}));
   await probe.goto(base+'/designer/progress.html#rig');await probe.waitForFunction(()=>document.body.dataset.ready==='1');
   const note=await probe.locator('#rig [data-rig-media-state="unavailable"]').innerText();
   assert.match(note,/Recorded movies unavailable/);
-  assert.match(note,fault==='report'?/different report/:fault==='receipt'?/provenance is unavailable/:fault==='companion'?/companion identity does not match/:/movie identity does not match/);
+  assert.match(note,fault==='report'?/different report/:fault==='receipt'?/provenance is unavailable/:fault==='unsupported'?/does not support either/:/(movie|companion) identity does not match/);
   assert.equal(await probe.locator('#rig video').count(),0,'Unverified media cannot receive a source');
   assert.equal(await probe.locator('#rigtable tbody tr').count(),7,'Numerical evidence remains usable');
   if(fault==='report')assert.match(await probe.locator('#riglede').innerText(),/20 kg/);

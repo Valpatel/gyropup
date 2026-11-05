@@ -64,8 +64,7 @@ export async function compareRigPixels(original, companion) {
     color:{original_range:a.stream.color_range??'unspecified',companion_range:b.stream.color_range??'unspecified',space:a.stream.color_space??'unspecified',transfer:a.stream.color_transfer??'unspecified',primaries:a.stream.color_primaries??'unspecified'},
     frames:a.hashes.length,duration_s:a.duration,companion_duration_s:b.duration,max_timestamp_delta_s:maxTime,
     comparison:'Every decoded YUV420P and interpreted RGB24 frame SHA-256 matches; zero pixel error',
-    decoded_frame_sequence_sha256:await rigDigest(new TextEncoder().encode(a.hashes.join('\n')+'\n')),
-    rgb_frame_sequence_sha256:await rigDigest(new TextEncoder().encode(rgbA.join('\n')+'\n'))};
+    decoded_frame_sequence_sha256:await rigDigest(new TextEncoder().encode(a.hashes.join('\n')+'\n'))};
 }
 
 export async function producerRigRecord(directory, revision) {

@@ -245,7 +245,11 @@ if (rig) {
   let mediaRecord;
   try {
     mediaRecord=await getJson(`${LEG}rig-media.json`,{optional:true,label:'Recorded leg movie identities'});
-    const recorded=await prepareRigMedia(rigBytes,mediaRecord,file=>reader.bytes('../'+file,{label:'Recorded leg movie'}));
+    const probe=document.createElement('video');
+    if(typeof probe.canPlayType==='function'&&!probe.canPlayType('video/mp4; codecs="avc1.64001f"')&&!probe.canPlayType('video/webm; codecs="vp9"'))
+      throw new Error('This browser does not support either recorded movie format.');
+    const format=typeof probe.canPlayType==='function'?(probe.canPlayType('video/mp4; codecs="avc1.64001f"')?'mp4':'webm'):'all';
+    const recorded=await prepareRigMedia(rigBytes,mediaRecord,file=>reader.bytes('../'+file,{label:'Recorded leg movie'}),{format});
     if(!isCurrent())return false;
     disposeRigMedia=mountRigMedia($('rig'),recorded);
   } catch(error) {
