@@ -27,11 +27,11 @@ await mkdir(out, { recursive: true });
 const sourceTracked=execFileSync('git',['ls-files','-z'],{cwd:root}).toString().split('\0').filter(Boolean);
 const published=publicationFiles(sourceTracked);
 const tracked=[...published.keys()];
-const roots = ['designer/', 'exports/', 'catalog/', 'designs/', 'docs/', 'research/', 'cad/', 'sim/', 'hardware/', 'firmware/', 'web/'];
+const roots = ['designer/', 'exports/', 'catalog/', 'designs/', 'docs/', 'research/', 'cad/', 'sim/', 'hardware/', 'firmware/'];
 // The public repository's dossier sources keep their former unpublished-site boundary.
 const dossierSource = file => file === 'docs/dossier' || file.startsWith('docs/dossier/');
 for (const file of tracked) {
-  if (!roots.some(r => file.startsWith(r)) || dossierSource(file) || ['docs/handoff.md', 'designer/home.html'].includes(file) || /(?:^|\/)(?:AGENTS|CLAUDE)\.md$/.test(file)) continue;
+  if ((!roots.some(r => file.startsWith(r))&&!file.startsWith('web/')) || dossierSource(file) || ['docs/handoff.md', 'designer/home.html'].includes(file) || /(?:^|\/)(?:AGENTS|CLAUDE)\.md$/.test(file)) continue;
   const dest = path.join(out, file); await mkdir(path.dirname(dest), { recursive: true });
   if ((await stat(sourceFile(file))).size > 25 * 1024 * 1024) throw new Error(`Cloudflare file limit: ${file}`);
   await cp(sourceFile(file), dest);

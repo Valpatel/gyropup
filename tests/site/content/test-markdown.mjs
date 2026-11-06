@@ -83,8 +83,9 @@ test('public entry guides resolve inside the bundle and keep unpublished reposit
   assert.match(discovery, /version\.json/);
   assert.match(discovery, /markdown-pages\.json/);
   for (const file of ['AGENTS.md', '.agents', 'CONTRIBUTING.md', '.github/CONTRIBUTING.md', 'docs/handoff.md',
+    'web/index.html', 'web/index.md', 'web/highlights/index.html', 'web/highlights/index.md',
     'docs/dossier', 'site/pages/docs-dossier-readme-md.html', 'site/pages/docs-dossier-readme-md.md']) {
-    await assert.rejects(stat(path.join(out, file)), { code: 'ENOENT' });
+    await assert.rejects(stat(path.join(out, file)), { code: 'ENOENT' }, 'Unpublished source or generated index must stay absent: '+file);
   }
   const models = JSON.parse(await read('site/models.json')).files;
   assert.ok(!models.some(model => model.path === '/docs/dossier' || model.path.startsWith('/docs/dossier/')),
