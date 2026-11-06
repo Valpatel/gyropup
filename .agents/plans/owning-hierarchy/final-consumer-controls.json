@@ -25,5 +25,14 @@
     "expected_failures_retained": 1,
     "scope": "Only four actual source-file paths changed to hardware/exports; all geometric measurements/assertions and expected failure remain unchanged.",
     "outside_geometry92_and_media191": true
+  },
+  "thermal_generator_links": {
+    "actual_old_render_mismatch": true,
+    "corrected_actual_render_byte_equal_to_canonical_page": true,
+    "existing_tests": 23,
+    "skips_retained": 1,
+    "exit": 0,
+    "scope": "Only two emitted href strings changed to ../body/; regeneration equality and all numerical assertions remain unchanged.",
+    "outside_geometry92_and_media191": true
   }
 }
