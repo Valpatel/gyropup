@@ -24,8 +24,10 @@ await mkdir(out, { recursive: true });
 // New web source is copied explicitly; all evidence and downloadable files must be committed.
 const tracked = execFileSync('git', ['ls-files', '-z'], { cwd: root }).toString().split('\0').filter(Boolean);
 const roots = ['designer/', 'exports/', 'catalog/', 'designs/', 'docs/', 'research/', 'cad/', 'sim/', 'hardware/', 'firmware/'];
+// The public repository's dossier sources keep their former unpublished-site boundary.
+const dossierSource = file => file === 'docs/dossier' || file.startsWith('docs/dossier/');
 for (const file of tracked) {
-  if (!roots.some(r => file.startsWith(r)) || ['docs/handoff.md', 'designer/home.html'].includes(file) || /(?:^|\/)(?:AGENTS|CLAUDE)\.md$/.test(file)) continue;
+  if (!roots.some(r => file.startsWith(r)) || dossierSource(file) || ['docs/handoff.md', 'designer/home.html'].includes(file) || /(?:^|\/)(?:AGENTS|CLAUDE)\.md$/.test(file)) continue;
   const dest = path.join(out, file); await mkdir(path.dirname(dest), { recursive: true });
   if ((await stat(path.join(root, file))).size > 25 * 1024 * 1024) throw new Error(`Cloudflare file limit: ${file}`);
   await cp(path.join(root, file), dest);
@@ -86,12 +88,12 @@ const nav = [
   {id:'docs',title:'Design notes',href:'site/'}, {id:'repo',title:'GitHub ↗',href:'https://github.com/Valpatel/gyropup'},
 ];
 await writeFile(path.join(out, 'site/nav.json'), JSON.stringify({title:'Gyropup',nav},null,2));
-const models=tracked.filter(file=>roots.some(root=>file.startsWith(root))&&/\.(?:stl|step|stp|3mf)$/i.test(file)).sort();
+const models=tracked.filter(file=>roots.some(root=>file.startsWith(root))&&!dossierSource(file)&&/\.(?:stl|step|stp|3mf)$/i.test(file)).sort();
 await writeFile(path.join(out,'site/models.json'),JSON.stringify({files:models.map(file=>({path:'/'+file,format:file.split('.').pop().toLowerCase(),preview:'/designer/kit/file-viewer.html?file='+encodeURIComponent('/'+file)}))},null,2));
 const publishedModels=new Set(models.map(file=>'/'+file));
 const slug = p => p.toLowerCase().replace(/[^a-z0-9]+/g,'-');
 const documents = tracked.filter(p => /^(docs|research|hardware)\/.*\.md$/.test(p)
-  && p !== 'docs/handoff.md' && !/(?:^|\/)(?:AGENTS|CLAUDE)\.md$/.test(p));
+  && !dossierSource(p) && p !== 'docs/handoff.md' && !/(?:^|\/)(?:AGENTS|CLAUDE)\.md$/.test(p));
 documents.push('README.md', 'catalog/SCHEMA.md');
 const pagePath = p => `/site/pages/${slug(p)}.html`;
 function frame(title, body) {
@@ -115,7 +117,7 @@ for (const file of documents) {
     if (/^(?:[a-z][a-z\d+.-]*:|\/\/)/i.test(url)) return all;
     const [pathname, ...hash] = url.split('#');
     const resolved = pathname.startsWith('/') ? pathname.slice(1) : path.posix.normalize(path.posix.join(path.posix.dirname(file), pathname));
-    const published = roots.some(r => resolved.startsWith(r)) && resolved !== 'docs/handoff.md';
+    const published = roots.some(r => resolved.startsWith(r)) && !dossierSource(resolved) && resolved !== 'docs/handoff.md';
     const exists = tracked.includes(resolved) || tracked.some(f => f.startsWith(resolved.replace(/\/$/, '')+'/'));
     const target = documents.includes(resolved) ? pagePath(resolved) : published && exists ? '/' + resolved : `https://github.com/Valpatel/gyropup/blob/main/${resolved}`;
     return `${attr}="${esc(target)}${hash.length ? '#'+esc(hash.join('#')) : ''}"`;
@@ -139,7 +141,7 @@ const notebook = `<h1>The design notebook.</h1><p class="doc-lede">Follow the de
 await writeFile(path.join(out,'site/index.html'), frame('Design notebook', notebook).replace("root:'../../'", "root:'../'"));
 // Static equivalents of local file listings keep the existing Build page's file links working.
 const directories = new Map();
-for (const file of tracked.filter(f => roots.some(r => f.startsWith(r)) && !['docs/handoff.md', 'designer/home.html'].includes(f))) {
+for (const file of tracked.filter(f => roots.some(r => f.startsWith(r)) && !dossierSource(f) && !['docs/handoff.md', 'designer/home.html'].includes(f))) {
   let parent = path.posix.dirname(file), entry = path.posix.basename(file);
   while (parent !== '.') {
     if (!directories.has(parent)) directories.set(parent, []);
