@@ -6,13 +6,13 @@
 
 **A research robot designed to balance on two wheel-legs, with a foam-ball turret: CAD and simulation in the open.**
 
-[![Firmware](https://github.com/Valpatel/gyropup/actions/workflows/body-firmware.yml/badge.svg?branch=main)](https://github.com/Valpatel/gyropup/actions/workflows/body-firmware.yml)
-[![Playground and presentation](https://github.com/Valpatel/gyropup/actions/workflows/web-scene.yml/badge.svg?branch=main)](https://github.com/Valpatel/gyropup/actions/workflows/web-scene.yml)
-[![Licence: MIT](https://img.shields.io/badge/licence-MIT-287d8d)](LICENSE)
-[![Site](https://img.shields.io/website?url=https%3A%2F%2Fgyropup.com&label=gyropup.com&up_message=live)](https://gyropup.com)
-[![Last commit](https://img.shields.io/github/last-commit/Valpatel/gyropup/dev)](https://github.com/Valpatel/gyropup/commits/dev)
-[![Stars](https://img.shields.io/github/stars/Valpatel/gyropup?style=flat&logo=github)](https://github.com/Valpatel/gyropup/stargazers)
-[![PRs welcome](https://img.shields.io/badge/PRs-welcome-ec4899)](CONTRIBUTING.md)
+[<img class="repo-badge" src="https://github.com/Valpatel/gyropup/actions/workflows/body-firmware.yml/badge.svg?branch=main" alt="Firmware" width="158" height="20" style="width:158px;height:20px;object-fit:contain;padding:0;border-radius:0">](https://github.com/Valpatel/gyropup/actions/workflows/body-firmware.yml)
+[<img class="repo-badge" src="https://github.com/Valpatel/gyropup/actions/workflows/web-scene.yml/badge.svg?branch=main" alt="Playground and presentation" width="236" height="20" style="width:236px;height:20px;object-fit:contain;padding:0;border-radius:0">](https://github.com/Valpatel/gyropup/actions/workflows/web-scene.yml)
+[<img class="repo-badge" src="https://img.shields.io/badge/licence-MIT-287d8d" alt="Licence: MIT" width="78" height="20" style="width:78px;height:20px;object-fit:contain;padding:0;border-radius:0">](LICENSE)
+[<img class="repo-badge" src="https://img.shields.io/website?url=https%3A%2F%2Fgyropup.com&amp;label=gyropup.com&amp;up_message=live" alt="Site" width="112" height="20" style="width:112px;height:20px;object-fit:contain;padding:0;border-radius:0">](https://gyropup.com)
+[<img class="repo-badge" src="https://img.shields.io/github/last-commit/Valpatel/gyropup/dev" alt="Last commit" width="116" height="20" style="width:116px;height:20px;object-fit:contain;padding:0;border-radius:0">](https://github.com/Valpatel/gyropup/commits/dev)
+[<img class="repo-badge" src="https://img.shields.io/github/stars/Valpatel/gyropup?style=flat&amp;logo=github" alt="Stars" width="71" height="20" style="width:71px;height:20px;object-fit:contain;padding:0;border-radius:0">](https://github.com/Valpatel/gyropup/stargazers)
+[<img class="repo-badge" src="https://img.shields.io/badge/PRs-welcome-ec4899" alt="PRs welcome" width="90" height="20" style="width:90px;height:20px;object-fit:contain;padding:0;border-radius:0">](CONTRIBUTING.md)
 
 [Website & playground](https://gyropup.com) · [Documentation map](docs/README.md) · [Prototype warning](docs/prototype-safety.md) · [Contributing](CONTRIBUTING.md)
 
