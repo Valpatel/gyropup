@@ -420,6 +420,21 @@
           "href": "https://github.com/Valpatel/gyropup/pull/224"
         }
       ]
+    },
+    {
+      "time": "2026-11-05",
+      "title": "Reference fixtures and contributor guidance have owning homes",
+      "text": "Three motion-reference fixtures move beside their tools with identical bytes and datums; contributor guidance uses GitHub’s .github discovery. This increment reduces the tracked root from 28 to 26 entries. Further hierarchy work remains separate; no model, fit, run or manufacturing qualification changes.",
+      "links": [
+        {
+          "title": "Root cleanup and remaining preflights",
+          "href": "https://github.com/Valpatel/gyropup/issues/219"
+        },
+        {
+          "title": "Contributor orientation",
+          "href": "https://github.com/Valpatel/gyropup/blob/main/.github/CONTRIBUTING.md"
+        }
+      ]
     }
   ],
   "shopping": {

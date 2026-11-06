@@ -3,7 +3,7 @@ import assert from 'node:assert/strict';
 import {readFile,writeFile,mkdir} from 'node:fs/promises';
 import {createHash} from 'node:crypto';
 import {chromium,webkit} from '@playwright/test';
-const fixture=JSON.parse(await readFile(new URL('../tests/fixtures/leg-attachment-motion.json',import.meta.url)));
+const fixture=JSON.parse(await readFile(new URL('./fixtures/leg-attachment-motion.json',import.meta.url)));
 const base=(process.env.SITE_URL||'http://127.0.0.1:8890').replace(/\/$/,''),out=process.env.TEST_OUTPUT||'/tmp/gyropup-leg-attachment-motion';
 const engine=process.env.PLAYWRIGHT_BROWSER==='webkit'?webkit:chromium;
 const browser=await engine.launch(engine===chromium?{channel:process.env.PLAYWRIGHT_CHANNEL==='chromium'?undefined:'chrome',headless:true,

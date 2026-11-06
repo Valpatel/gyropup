@@ -110,3 +110,19 @@ measurements. The narrow correction retains actual load-returned faces and
 native loading/error checks, with a real failed-font negative. See the
 [rendered-readiness incident](2026-11-05-layout-readiness-must-wait-for-fonts-not-global-load.md).
 Fresh corrected-source full coverage remains the acceptance condition.
+
+## Supply every historical and browser input to a validation command
+
+On 2026-11-05, release-prep fleet 196 at c4154dd6 built successfully but the existing Progress historical-converter guard stopped before browser launch: the shallow command fetched original producer e7b512870a39259a04a4930e2908af84001bc84e but omitted recorded converter e93b3bbce57ee36fc966e8ba4513f05273a75967. Full-history git show of that converter matches its recorded SHA. The corrected command fetches both actual receipt pins; no source, receipt or guard changes.
+
+Fleet 197 then genuinely passed the Progress consumer (21 layouts, actual verified movies/negative controls, 37 log entries, no page errors), but the following doc-pages global hook failed because PLAYWRIGHT_CHANNEL=chromium had been scoped only to the preceding subprocess. No doc-pages assertion ran and later checks were not reached. The remaining checks use an exported supported-browser choice and the same source/limits; Progress is not rerun. Both original attempts remain FAILED overall.
+
+Corrective rule: enumerate every immutable producer/converter history input from the committed receipt before shallow validation, and apply the intended browser environment to every consumer in a command batch. Preserve missing-input and setup failures separately from actual assertions. Existing guards correctly refused unavailable prerequisites; do not weaken or reseal them. Record which assertions actually ran, retain products/screenshots on failure and rerun only the uncovered checks. This is a command-recipe correction, not a product or physical qualification result.
+
+The later release #232 layout job 127696765197 was cancelled at the same
+20-minute global ceiling after 8m40s browser setup. Its controls passed but its
+retained artifact has no final results.json, so no completed coverage count is
+claimed. The layout-only unchanged-head replacement 127703807998 used 21-second
+setup and completed all 1,520 unique views with zero findings in 701 seconds.
+Source, thresholds and limits stayed unchanged; only that completed execution
+provided passing coverage.

@@ -95,4 +95,4 @@ def generate():
 
 
 if __name__ == '__main__':
-    (ROOT / 'tests/fixtures/leg-attachment-motion.json').write_text(json.dumps(generate(), indent=2) + '\n')
+    (ROOT / 'tools/fixtures/leg-attachment-motion.json').write_text(json.dumps(generate(), indent=2) + '\n')
