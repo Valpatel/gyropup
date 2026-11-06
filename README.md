@@ -1,6 +1,10 @@
 <div align="center">
 
-<img src="docs/img/hero/gyropup.svg" alt="The name Gyropup grows from a graph-paper sketch while the current CAD is drawn: the bench stand is traced, the foam-ball turret drops onto it on its compute plinth, leg v2 slides in beside it (two RS-04 motors side by side at the hip, two orange links meeting at the wheel), then the turret head sweeps left and right, nods and holds a lock-on" width="100%">
+<p>
+<a href="https://gyropup.com/docs/img/navigation/project-map.svg"><img src="docs/img/navigation/project-map.svg" width="640" height="240" style="max-width:100%;height:auto;padding:0" alt="An illustrated learning loop: sources, virtual and physical tests, review and reuse connect cad-agent with Gyropup."></a><br>
+An illustrated learning loop. <a href="docs/program/physical-progress.md">Follow the real build evidence.</a><br>
+<a href="https://gyropup.com/designer/sim.html">Play</a> · <a href="https://gyropup.com/designer/build.html">Build</a> · <a href="docs/README.md#design-and-qualification">Understand</a> · <a href=".github/CONTRIBUTING.md">Contribute</a>
+</p>
 
 # Gyropup
 
@@ -16,10 +20,12 @@
 
 [Website & playground](https://gyropup.com) · [Documentation map](docs/README.md) · [Prototype warning](docs/guide/prototype-safety.md) · [Contributing](.github/CONTRIBUTING.md)
 
-<sub>Project artwork generated from Gyropup CAD · <a href="https://github.com/mvalancy/mvalancy/tree/9a878ce602d8a5256027c9f4367d2ae5ea4784da/tools/hero">generator credit</a></sub>
-
 <details>
-<summary>How the banner was made</summary>
+<summary>Original CAD artwork and generator</summary>
+
+[Open the original CAD artwork](docs/img/hero/gyropup.svg).
+
+<sub>Project artwork generated from Gyropup CAD · <a href="https://github.com/mvalancy/mvalancy/tree/9a878ce602d8a5256027c9f4367d2ae5ea4784da/tools/hero">generator credit</a></sub>
 
 The original banner used the project's CadQuery code at `cad/build_leg.py`, `cad/turret.py` and
 `cad/turret_stand.py`, with hidden lines removed and placement from `tools/readme_hero.py`.
@@ -33,14 +39,9 @@ Their current homes are [leg building](hardware/cad/builders/build_leg.py),
 
 ## Explore Gyropup
 
-<p>
-<a href="docs/README.md"><img src="docs/img/navigation/project-map.svg" width="640" height="224" style="max-width:100%;height:auto;padding:0" alt="Four paths into Gyropup: play, build, understand and contribute"></a><br>
-<a href="https://gyropup.com/designer/sim.html">Playground</a> · <a href="https://gyropup.com/designer/build.html">Build and downloads</a> · <a href="docs/README.md">Engineering notes</a> · <a href=".github/CONTRIBUTING.md">Contribute</a>
-</p>
-
-A research project exploring a self-balancing wheel-legged robot and a foam-ball turret. The design combines
-hub-motor wheels, two five-bar legs driven by RobStride RS-04 actuators, and a pan/tilt turret for Rival-size foam
-balls. CAD, simulation, component libraries and evidence are developed in the open. The playground runs in your browser.
+Gyropup is a research robot with wheel-legs and a foam-ball turret. It evolves with cad-agent through good sources,
+virtual and real testing, independent review and methods worth reusing. CAD, simulation and evidence are developed
+in the open; the playground runs in your browser.
 
 **Physical progress, owner report 2026-11-05:** first motors in hand; main motor holder and motor adapter printed.
 [The dated record](docs/program/physical-progress.md) keeps received/printed status separate from measured fit, installation
