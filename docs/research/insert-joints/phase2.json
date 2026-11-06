@@ -1,12 +1,12 @@
 {
  "schema": 1,
- "generator": "research/insert-joints/phase2.py",
- "generator_sha256": "cae9ded5fc0c379bd9e870f4bca16325bd0bb5f52bd0c7fa3adc9b85266fbc7f",
+ "generator": "docs/research/insert-joints/phase2.py",
+ "generator_sha256": "8404d9077f0021841076eb59a6bd044bc52a6af94cfbdfa060f52dc04b6de2be",
  "issue": "Valpatel/gyropup#137, phase 2",
  "status": "screen, not qualification: the toolkit set beside inventory.py; nothing printed or tested",
  "joints_json": {
-  "path": "research/insert-joints/joints.json",
-  "sha256": "9e4a1fac4600a5d2c1eb8bb008843ef7e2ac69329556c36694a2395a443812e5",
+  "path": "docs/research/insert-joints/joints.json",
+  "sha256": "7705635df81ff0932fd4932e576f6004ded467c62ba0955fbe9ebfe93d0d8983",
   "summary": {
    "families": 44,
    "inserts_on_robot": 143,

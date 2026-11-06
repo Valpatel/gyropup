@@ -1,6 +1,6 @@
 {
  "schema": 1,
- "generator": "research/insert-joints/inventory.py",
+ "generator": "docs/research/insert-joints/inventory.py",
  "status": "screen, not qualification: no part printed or tested for this inventory",
  "basis": {
   "nut_factor": 0.2,
@@ -374,13 +374,13 @@
      "case": "rare (jump_peak): axle 1776.3 N at 24.8 mm + 10 % grip at the tyre: 68 N m on 4 x M6 at PCD 36",
      "per_insert_n": 1331,
      "tension": true,
-     "source": "exports/body/leg-loads.json"
+     "source": "hardware/exports/body/leg-loads.json"
     },
     {
      "case": "fault (power_off): 64 N m",
      "per_insert_n": 1267,
      "tension": true,
-     "source": "exports/body/leg-loads.json"
+     "source": "hardware/exports/body/leg-loads.json"
     }
    ],
    "notes": "Keeping the flange closed needs about 1331 N a screw; the plastic under a bare Ø10 head holds 1108 N at 25 MPa, so no torque satisfies both. A DIN 9021 washer (catalog/hardware.json lists 8 for these screws) does not fit: on PCD 36 its Ø18 reaches r 27, past the hub's Ø48 bore. A DIN 433 (Ø11) reaches r 23.5 and fits (0.5 mm inside the bore, 1.5 mm outside the Ø22 cable hole): 61 mm2 holds 1521 N at 25 MPa (1.82 N m), 1.14 x the need.",
@@ -2260,873 +2260,873 @@
  },
  "bindings": [
   {
-   "file": "cad/studies.py",
+   "file": "hardware/cad/analysis/studies.py",
    "pattern": "'washer_mpa': ([\\d.]+),",
    "value": 25.0,
    "lines": 1
   },
   {
-   "file": "cad/studies.py",
+   "file": "hardware/cad/analysis/studies.py",
    "pattern": "'bearing_mpa': ([\\d.]+),",
    "value": 40.0,
    "lines": 1
   },
   {
-   "file": "cad/fivebar.py",
+   "file": "hardware/cad/legs/fivebar.py",
    "pattern": "'thread': 'M5', 'pilot_depth': ([\\d.]+), 'boss_r'",
    "value": 11.0,
    "lines": 1
   },
   {
-   "file": "cad/fivebar.py",
+   "file": "hardware/cad/legs/fivebar.py",
    "pattern": "'pilot_depth': [\\d.]+, 'boss_r': ([\\d.]+), 'boss_len'",
    "value": 7.0,
    "lines": 1
   },
   {
-   "file": "cad/fivebar.py",
+   "file": "hardware/cad/legs/fivebar.py",
    "pattern": "^FLANGE_T, FLANGE_X = ([\\d.]+), ",
    "value": 13.0,
    "lines": 1
   },
   {
-   "file": "cad/fivebar.py",
+   "file": "hardware/cad/legs/fivebar.py",
    "pattern": "\\(zf \\+ FLANGE_T / 2 \\+ (1\\.5)\\)\\) for s in \\(1, -1\\)",
    "value": 1.5,
    "lines": 1
   },
   {
-   "file": "cad/rig_assembly.py",
+   "file": "hardware/cad/rig/rig_assembly.py",
    "pattern": "'\\| Plate to hip frame \\(M5 x 16 into heat-set inserts\\) \\| the B4 torque \\(([\\d.]+) N m until B4\\) \\|'",
    "value": 1.5,
    "lines": 1
   },
   {
-   "file": "cad/fivebar.py",
+   "file": "hardware/cad/legs/fivebar.py",
    "pattern": "^HUB_HEAD_CB = \\(([\\d.]+), [\\d.]+\\)",
    "value": 10.0,
    "lines": 1
   },
   {
-   "file": "cad/fivebar.py",
+   "file": "hardware/cad/legs/fivebar.py",
    "pattern": "^HUB_HEAD_CB = \\([\\d.]+, ([\\d.]+)\\)",
    "value": 5.5,
    "lines": 1
   },
   {
-   "file": "cad/fivebar.py",
+   "file": "hardware/cad/legs/fivebar.py",
    "pattern": "'upper_t': ([\\d.]+), 'upper_w0'",
    "value": 30.0,
    "lines": 1
   },
   {
-   "file": "cad/leg_studies.py",
+   "file": "hardware/cad/legs/leg_studies.py",
    "pattern": "^HUB_PRELOAD_N = ([\\d.]+)",
    "value": 1200.0,
    "lines": 1
   },
   {
-   "file": "cad/rig_assembly.py",
+   "file": "hardware/cad/rig/rig_assembly.py",
    "pattern": "'\\| Upper link to adapter \\(M5 x 40 into tapped 6061, heads on the printed link\\) \\| the B4 torque \\(([\\d.]+) N m until B4\\) \\|'",
    "value": 1.5,
    "lines": 1
   },
   {
-   "file": "cad/fivebar.py",
+   "file": "hardware/cad/legs/fivebar.py",
    "pattern": "^LUG_CB = ([\\d.]+)",
    "value": 8.5,
    "lines": 1
   },
   {
-   "file": "cad/fivebar.py",
+   "file": "hardware/cad/legs/fivebar.py",
    "literal": "# 24.1 mm frame - 8.5 mm counterbore = 15.6 mm nominal grip;"
   },
   {
-   "file": "cad/fivebar.py",
+   "file": "hardware/cad/legs/fivebar.py",
    "pattern": "\\(10 x M4 on PCD ([\\d.]+)\\)",
    "value": 106.0,
    "lines": 1
   },
   {
-   "file": "cad/fivebar.py",
+   "file": "hardware/cad/legs/fivebar.py",
    "literal": "RS04_LUG0, RS04_DOWELS = -15.0, (3.0, 183.0)"
   },
   {
-   "file": "cad/fivebar.py",
+   "file": "hardware/cad/legs/fivebar.py",
    "pattern": "web = web\\.cut\\(ycyl\\(2\\.5 \\+ PRINT_HOLE_COMP / 2 \\+ [\\d.]+, yf0 - 1, yf0 \\+ ([\\d.]+), x, z\\)\\)",
    "value": 12.0,
    "lines": 1
   },
   {
-   "file": "cad/fivebar.py",
+   "file": "hardware/cad/legs/fivebar.py",
    "pattern": "^EYE_SLEEVE = \\(([\\d.]+), [\\d.]+, [\\d.]+\\)",
    "value": 18.0,
    "lines": 1
   },
   {
-   "file": "cad/fivebar.py",
+   "file": "hardware/cad/legs/fivebar.py",
    "pattern": "^EYE_SLEEVE = \\([\\d.]+, ([\\d.]+), [\\d.]+\\)",
    "value": 12.0,
    "lines": 1
   },
   {
-   "file": "cad/fivebar.py",
+   "file": "hardware/cad/legs/fivebar.py",
    "pattern": "^EYE_SLEEVE = \\([\\d.]+, [\\d.]+, ([\\d.]+)\\)",
    "value": 20.0,
    "lines": 1
   },
   {
-   "file": "cad/rig_assembly.py",
+   "file": "hardware/cad/rig/rig_assembly.py",
    "pattern": "'\\| Knee nut \\(M10 nyloc onto the steel sleeves\\) \\| ([\\d.]+) N m \\|'",
    "value": 20.0,
    "lines": 1
   },
   {
-   "file": "cad/fivebar.py",
+   "file": "hardware/cad/legs/fivebar.py",
    "pattern": "'wheel_t': ([\\d.]+), 'wheel_w0'",
    "value": 26.0,
    "lines": 1
   },
   {
-   "file": "cad/fivebar.py",
+   "file": "hardware/cad/legs/fivebar.py",
    "pattern": "^WHEEL_RECESS_PLAY = ([\\d.]+)",
    "value": 0.2,
    "lines": 1
   },
   {
-   "file": "cad/rig_assembly.py",
+   "file": "hardware/cad/rig/rig_assembly.py",
    "pattern": "'\\| Wheel \\(M6 x 30 into the BotWheel, on DIN 433 washers\\) \\| ([\\d.]+) N m, threadlocker \\|'",
    "value": 1.8,
    "lines": 1
   },
   {
-   "file": "cad/fivebar.py",
+   "file": "hardware/cad/legs/fivebar.py",
    "pattern": "y\\['tyre'\\] = \\(y\\['wheel_boss'\\] \\+ ([\\d.]+), y\\['wheel_boss'\\] \\+ [\\d.]+ \\+ [\\d.]+\\)",
    "value": 7.5,
    "lines": 1
   },
   {
-   "file": "cad/fivebar.py",
+   "file": "hardware/cad/legs/fivebar.py",
    "pattern": "y\\['tyre'\\] = \\(y\\['wheel_boss'\\] \\+ [\\d.]+, y\\['wheel_boss'\\] \\+ [\\d.]+ \\+ ([\\d.]+)\\)",
    "value": 44.6,
    "lines": 1
   },
   {
-   "file": "cad/fivebar.py",
+   "file": "hardware/cad/legs/fivebar.py",
    "literal": "k = k.cut(ycyl(gmi.clear('M6') / 2, h1 - 1, y1 + 1, l2 + x, z))"
   },
   {
-   "file": "cad/fivebar.py",
+   "file": "hardware/cad/legs/fivebar.py",
    "pattern": "k = k\\.cut\\(ycyl\\(([\\d.]+), h1 - 1, y1 \\+ 1, l2\\)\\)\\s+# the cable",
    "value": 11.0,
    "lines": 1
   },
   {
-   "file": "cad/fivebar.py",
+   "file": "hardware/cad/legs/fivebar.py",
    "pattern": "k = k\\.cut\\(ycyl\\(([\\d.]+), h0 - 1, h1 - 0\\.01, l2\\)\\)\\s+# Ø48 bore",
    "value": 24.0,
    "lines": 1
   },
   {
-   "file": "cad/fivebar.py",
+   "file": "hardware/cad/legs/fivebar.py",
    "literal": "its 4 x M6 x 40",
    "present": false
   },
   {
-   "file": "catalog/hardware.json",
+   "file": "hardware/catalog/hardware.json",
    "literal": "the BotWheel's stator flange, 4 x M6 from inside the wheel link (4 per leg)",
    "present": false
   },
   {
-   "file": "cad/fivebar.py",
+   "file": "hardware/cad/legs/fivebar.py",
    "pattern": "^WHEEL_WASHER = \\([\\d.]+, ([\\d.]+), [\\d.]+\\)",
    "value": 11.0,
    "lines": 1
   },
   {
-   "file": "cad/fivebar.py",
+   "file": "hardware/cad/legs/fivebar.py",
    "pattern": "^WHEEL_WASHER = \\(([\\d.]+), [\\d.]+, [\\d.]+\\)",
    "value": 6.4,
    "lines": 1
   },
   {
-   "file": "cad/fivebar.py",
+   "file": "hardware/cad/legs/fivebar.py",
    "pattern": "^WHEEL_WASHER = \\([\\d.]+, [\\d.]+, ([\\d.]+)\\)",
    "value": 1.6,
    "lines": 1
   },
   {
-   "file": "cad/rig_assembly.py",
+   "file": "hardware/cad/rig/rig_assembly.py",
    "literal": "the B4 torque into the M8 insert, 5 N m until B4",
    "present": false
   },
   {
-   "file": "cad/rig_assembly.py",
+   "file": "hardware/cad/rig/rig_assembly.py",
    "literal": "Stop posts (M8 into heat-set inserts)",
    "present": false
   },
   {
-   "file": "docs/leg-rig-assembly.md",
+   "file": "docs/legs/leg-rig-assembly.md",
    "literal": "the B4 torque into the M8 insert, 5 N m until B4",
    "present": false
   },
   {
-   "file": "docs/leg-rig-assembly.md",
+   "file": "docs/legs/leg-rig-assembly.md",
    "literal": "Stop posts (M8 into heat-set inserts)",
    "present": false
   },
   {
-   "file": "cad/rig_assembly.py",
+   "file": "hardware/cad/rig/rig_assembly.py",
    "literal": "Stop posts (Ø16 pins bonded in blind holes, D53, D74)"
   },
   {
-   "file": "cad/turret.py",
+   "file": "hardware/cad/turret/turret.py",
    "pattern": "^FRAME_T_ABOVE_TM = ([\\d.]+)",
    "value": 0.0,
    "lines": 1
   },
   {
-   "file": "cad/turret_studies.py",
+   "file": "hardware/cad/turret/turret_studies.py",
    "pattern": "^FALL_G = ([\\d.]+)",
    "value": 30.0,
    "lines": 1
   },
   {
-   "file": "cad/turret_studies.py",
+   "file": "hardware/cad/turret/turret_studies.py",
    "literal": "h_face = M['com_mm'][2] + tu.FRAME_T_ABOVE_TM",
    "present": true
   },
   {
-   "file": "cad/body_params.py",
+   "file": "hardware/cad/body/body_params.py",
    "pattern": "^RISER_H = ([\\d.]+)",
    "value": 30.0,
    "lines": 1
   },
   {
-   "file": "cad/body_frame.py",
+   "file": "hardware/cad/body/body_frame.py",
    "literal": "RISER_FEET = [(40.0, 40.0), (-40.0, 40.0), (-40.0, -40.0), (40.0, -40.0)]"
   },
   {
-   "file": "cad/body_params.py",
+   "file": "hardware/cad/body/body_params.py",
    "pattern": "^POST_W = ([\\d.]+)",
    "value": 22.0,
    "lines": 1
   },
   {
-   "file": "cad/body_frame.py",
+   "file": "hardware/cad/body/body_frame.py",
    "pattern": "s = s\\.cut\\(cyl_z\\(3\\.2, -1\\.0, ([\\d.]+)\\)\\)\\.cut\\(cyl_z\\(3\\.2, h - 11\\.0, h \\+ 1\\.0\\)\\)",
    "value": 11.0,
    "lines": 1
   },
   {
-   "file": "cad/body_frame.py",
+   "file": "hardware/cad/body/body_frame.py",
    "pattern": "it carries (\\d+) N at",
    "value": 290.0,
    "lines": 1
   },
   {
-   "file": "cad/body_frame.py",
+   "file": "hardware/cad/body/body_frame.py",
    "pattern": "^POST_M3_PILOT = ([\\d.]+)",
    "value": 8.0,
    "lines": 1
   },
   {
-   "file": "cad/body_frame.py",
+   "file": "hardware/cad/body/body_frame.py",
    "pattern": "core = core\\.cut\\(box\\(-([\\d.]+), 4\\.5, \\*sorted\\(\\(sy \\* w / 2",
    "value": 4.5,
    "lines": 1
   },
   {
-   "file": "cad/body_frame.py",
+   "file": "hardware/cad/body/body_frame.py",
    "pattern": "^PLATE_POST_W = ([\\d.]+)",
    "value": 16.0,
    "lines": 1
   },
   {
-   "file": "cad/body_frame.py",
+   "file": "hardware/cad/body/body_frame.py",
    "pattern": "return s\\.cut\\(cyl_z\\(3\\.2, -1\\.0, ([\\d.]+)\\)\\)\\.cut\\(cyl_z\\(3\\.2, h - 11\\.0",
    "value": 11.0,
    "lines": 1
   },
   {
-   "file": "cad/body_frame.py",
+   "file": "hardware/cad/body/body_frame.py",
    "pattern": "^RISER_FOOT_PILOT = ([\\d.]+)",
    "value": 12.0,
    "lines": 1
   },
   {
-   "file": "cad/body_frame.py",
+   "file": "hardware/cad/body/body_frame.py",
    "pattern": "s = s\\.cut\\(cyl_z\\(([\\d.]+), -1\\.0, RISER_FOOT_PILOT, x, y\\)\\)",
    "value": 3.2,
    "lines": 1
   },
   {
-   "file": "cad/body_frame.py",
+   "file": "hardware/cad/body/body_frame.py",
    "pattern": "^RISER_LEG_R = ([\\d.]+)",
    "value": 9.0,
    "lines": 1
   },
   {
-   "file": "cad/body_frame.py",
+   "file": "hardware/cad/body/body_frame.py",
    "pattern": "^RISER_TM_PILOT = ([\\d.]+)",
    "value": 13.0,
    "lines": 1
   },
   {
-   "file": "cad/body_frame.py",
+   "file": "hardware/cad/body/body_frame.py",
    "literal": "s = s.cut(cyl_z(3.2, H - RISER_TM_PILOT, H + 1.0, x, y))"
   },
   {
-   "file": "cad/body_frame.py",
+   "file": "hardware/cad/body/body_frame.py",
    "pattern": "^RISER_DOWEL_DEPTH = ([\\d.]+)",
    "value": 12.5,
    "lines": 1
   },
   {
-   "file": "cad/body_frame.py",
+   "file": "hardware/cad/body/body_frame.py",
    "literal": "s = s.cut(cyl_z(2.5 - 0.03, H - RISER_DOWEL_DEPTH, H + 1.0, x, y))"
   },
   {
-   "file": "cad/turret.py",
+   "file": "hardware/cad/turret/turret.py",
    "pattern": "self\\.foot_t = ([\\d.]+)",
    "value": 5.0,
    "lines": 1
   },
   {
-   "file": "cad/turret.py",
+   "file": "hardware/cad/turret/turret.py",
    "literal": "s = s.cut(through_z(x, y, FAST['M5']['clear'], -1, 60)).cut(cyl_z(5.0, t - 0.01, 60, x, y))"
   },
   {
-   "file": "cad/turret.py",
+   "file": "hardware/cad/turret/turret.py",
    "literal": "s = s.cut(cyl_z(2.5, -1, t - 1.0, x, y))"
   },
   {
-   "file": "cad/body_frame.py",
+   "file": "hardware/cad/body/body_frame.py",
    "pattern": "^RISER_LEG_R = ([\\d.]+)",
    "value": 9.0,
    "lines": 1
   },
   {
-   "file": "cad/body_frame.py",
+   "file": "hardware/cad/body/body_frame.py",
    "pattern": "^RISER_DOWEL_BOSS = \\(([\\d.]+), [\\d.]+\\)",
    "value": 6.0,
    "lines": 1
   },
   {
-   "file": "cad/body_frame.py",
+   "file": "hardware/cad/body/body_frame.py",
    "literal": "two M4 x 10 down into the tray\\'s nuts; the converter on four M3 x 8",
    "present": false
   },
   {
-   "file": "cad/body_frame.py",
+   "file": "hardware/cad/body/body_frame.py",
    "pattern": "^DCDC_FOOT_T, DCDC_WALL_T = [\\d.]+, ([\\d.]+)",
    "value": 6.0,
    "lines": 1
   },
   {
-   "file": "cad/body_frame.py",
+   "file": "hardware/cad/body/body_frame.py",
    "literal": "note='PETG, 100 % (never a carbon-filled filament"
   },
   {
-   "file": "cad/body_frame.py",
+   "file": "hardware/cad/body/body_frame.py",
    "pattern": "s = s\\.cut\\(cyl_z\\(2\\.0, H - ([\\d.]+), H \\+ 0\\.1, u, BUS_W / 2\\)\\)",
    "value": 6.5,
    "lines": 1
   },
   {
-   "file": "cad/body_frame.py",
+   "file": "hardware/cad/body/body_frame.py",
    "pattern": "^BUS_L, BUS_W = [\\d.]+, ([\\d.]+)",
    "value": 20.0,
    "lines": 1
   },
   {
-   "file": "cad/body_battery.py",
+   "file": "hardware/cad/body/body_battery.py",
    "pattern": "^RAIL_W, RAIL_H = ([\\d.]+), [\\d.]+",
    "value": 8.0,
    "lines": 1
   },
   {
-   "file": "cad/body_battery.py",
+   "file": "hardware/cad/body/body_battery.py",
    "pattern": "^RAIL_W, RAIL_H = [\\d.]+, ([\\d.]+)",
    "value": 10.0,
    "lines": 1
   },
   {
-   "file": "cad/body_battery.py",
+   "file": "hardware/cad/body/body_battery.py",
    "pattern": "r = r\\.cut\\(_cyl_y\\(2\\.0, \\*sorted\\(\\(yo, yo - sy \\* ([\\d.]+)\\)\\), x, zc\\)\\)",
    "value": 6.5,
    "lines": 1
   },
   {
-   "file": "cad/body_battery.py",
+   "file": "hardware/cad/body/body_battery.py",
    "literal": "four M4 x 16 up into the belly\\'s nuts",
    "present": false
   },
   {
-   "file": "cad/body_battery.py",
+   "file": "hardware/cad/body/body_battery.py",
    "literal": "four M4 x 8 up into the belly\\'s nuts",
    "present": false
   },
   {
-   "file": "cad/body_battery.py",
+   "file": "hardware/cad/body/body_battery.py",
    "pattern": "r = r\\.cut\\(_cyl_x\\(2\\.0, \\*sorted\\(\\(xe, xe \\+ d \\* ([\\d.]+)\\)\\), yc, zc\\)\\)",
    "value": 7.5,
    "lines": 1
   },
   {
-   "file": "cad/body_shell.py",
+   "file": "hardware/cad/body/body_shell.py",
    "pattern": "plate = plate\\.cut\\(_hole_x\\(y, z, ([\\d.]+), \\*sorted\\(\\(sx \\* XI, sx \\* \\(XI - 7\\.5\\)\\)\\)\\)\\)",
    "value": 4.0,
    "lines": 1
   },
   {
-   "file": "cad/body_shell.py",
+   "file": "hardware/cad/body/body_shell.py",
    "pattern": "plate = plate\\.cut\\(_hole_x\\(y, z, 4\\.0, \\*sorted\\(\\(sx \\* XI, sx \\* \\(XI - ([\\d.]+)\\)\\)\\)\\)\\)",
    "value": 7.5,
    "lines": 1
   },
   {
-   "file": "cad/body_shell.py",
+   "file": "hardware/cad/body/body_shell.py",
    "pattern": "plate = plate\\.union\\(box\\(fa, fb, y - ([\\d.]+), y \\+ 4, z0 - 2, z0 \\+ 6\\)\\)",
    "value": 4.0,
    "lines": 1
   },
   {
-   "file": "cad/body_battery.py",
+   "file": "hardware/cad/body/body_battery.py",
    "pattern": "^PLATE_T = ([\\d.]+)",
    "value": 4.0,
    "lines": 1
   },
   {
-   "file": "cad/body_battery.py",
+   "file": "hardware/cad/body/body_battery.py",
    "literal": "the adapter's own screws into inserts set on arrival."
   },
   {
-   "file": "cad/body_shell.py",
+   "file": "hardware/cad/body/body_shell.py",
    "pattern": "^EYES = \\{.*'board': \\([\\d.]+, [\\d.]+, ([\\d.]+)\\)\\}",
    "value": 7.0,
    "lines": 1
   },
   {
-   "file": "cad/body_shell.py",
+   "file": "hardware/cad/body/body_shell.py",
    "pattern": "\\.center\\(y, z\\)\\.circle\\(2\\.0\\)\\.extrude\\(([\\d.]+)\\)\\)",
    "value": 6.0,
    "lines": 1
   },
   {
-   "file": "cad/body_shell.py",
+   "file": "hardware/cad/body/body_shell.py",
    "pattern": "\\.center\\(y, z\\)\\.circle\\(([\\d.]+)\\)\\.extrude\\(EYES\\['board'\\]\\[2\\] \\+ 0\\.01\\)\\)",
    "value": 4.0,
    "lines": 1
   },
   {
-   "file": "cad/body_shell.py",
+   "file": "hardware/cad/body/body_shell.py",
    "literal": "four M3 x 16 into the wall",
    "present": false
   },
   {
-   "file": "cad/body_shell.py",
+   "file": "hardware/cad/body/body_shell.py",
    "literal": "three M3 x 5 up into the turret plate",
    "present": false
   },
   {
-   "file": "cad/body_shell.py",
+   "file": "hardware/cad/body/body_shell.py",
    "literal": "The right side's service door",
    "present": false
   },
   {
-   "file": "cad/body_shell.py",
+   "file": "hardware/cad/body/body_shell.py",
    "literal": "the right front one the service door",
    "present": false
   },
   {
-   "file": "cad/turret.py",
+   "file": "hardware/cad/turret/turret.py",
    "pattern": "^INSERT_DEPTH = ([\\d.]+)",
    "value": 8.0,
    "lines": 1
   },
   {
-   "file": "cad/turret.py",
+   "file": "hardware/cad/turret/turret.py",
    "pattern": "def __init__\\(self, ball_d: float = ([\\d.]+),",
    "value": 22.7,
    "lines": 1
   },
   {
-   "file": "cad/turret.py",
+   "file": "hardware/cad/turret/turret.py",
    "literal": "self.bore = ball_d + 1.5"
   },
   {
-   "file": "cad/turret.py",
+   "file": "hardware/cad/turret/turret.py",
    "pattern": "s = s\\.cut\\(insert_hole\\(x, y, hz1, 'M3', ([\\d.]+)\\)\\)",
    "value": 6.0,
    "lines": 1
   },
   {
-   "file": "cad/turret.py",
+   "file": "hardware/cad/turret/turret.py",
    "pattern": "^CLAMP_T = ([\\d.]+)",
    "value": 3.175,
    "lines": 1
   },
   {
-   "file": "cad/turret.py",
+   "file": "hardware/cad/turret/turret.py",
    "pattern": "C\\['tab_t'\\] - 0\\.1, C\\['tab_t'\\] \\+ ([\\d.]+), x, y\\)\\)\\s+# M3 insert from below",
    "value": 7.0,
    "lines": 1
   },
   {
-   "file": "cad/turret_base_board.py",
+   "file": "hardware/cad/turret/turret_base_board.py",
    "pattern": "^INSERT_PILOT = ([\\d.]+)",
    "value": 4.0,
    "lines": 1
   },
   {
-   "file": "cad/turret_base_board.py",
+   "file": "hardware/cad/turret/turret_base_board.py",
    "pattern": "cx\\(INSERT_PILOT/2,46\\.5,([\\d.]+),y,z\\)",
    "value": 53.1,
    "lines": 1
   },
   {
-   "file": "cad/turret_base_board.py",
+   "file": "hardware/cad/turret/turret_base_board.py",
    "pattern": "cx\\(INSERT_PILOT/2,([\\d.]+),53\\.1,y,z\\)",
    "value": 46.5,
    "lines": 1
   },
   {
-   "file": "cad/turret_base_board.py",
+   "file": "hardware/cad/turret/turret_base_board.py",
    "pattern": "cx\\(INSERT_PILOT/2,47\\.9,([\\d.]+),y,z\\)",
    "value": 54.5,
    "lines": 1
   },
   {
-   "file": "cad/turret_base_board.py",
+   "file": "hardware/cad/turret/turret_base_board.py",
    "pattern": "cx\\(INSERT_PILOT/2,([\\d.]+),54\\.5,y,z\\)",
    "value": 47.9,
    "lines": 1
   },
   {
-   "file": "cad/turret_base_board.py",
+   "file": "hardware/cad/turret/turret_base_board.py",
    "pattern": "^M3_CLEAR = ([\\d.]+)",
    "value": 3.4,
    "lines": 1
   },
   {
-   "file": "cad/turret.py",
+   "file": "hardware/cad/turret/turret.py",
    "pattern": "s = s\\.cut\\(cyl_y\\(FAST\\['M4'\\]\\['insert_pilot'\\] / 2, -G\\.dt_y - 0\\.1, -G\\.dt_y \\+ ([\\d.]+), x, z\\)\\)",
    "value": 8.0,
    "lines": 1
   },
   {
-   "file": "cad/turret.py",
+   "file": "hardware/cad/turret/turret.py",
    "pattern": "s = s\\.cut\\(insert_hole\\(x, y, G\\.bumper_z\\[0\\], 'M3', ([\\d.]+)\\)\\)",
    "value": 5.5,
    "lines": 1
   },
   {
-   "file": "cad/turret.py",
+   "file": "hardware/cad/turret/turret.py",
    "pattern": "s = s\\.cut\\(insert_hole\\(x, y, z1, 'M4'(?:, ([\\d.]+))?\\)\\)",
    "value": 8.0,
    "lines": 1
   },
   {
-   "file": "cad/turret.py",
+   "file": "hardware/cad/turret/turret.py",
    "pattern": "\\.cut\\(cyl_z\\(4\\.0, b0 \\+ ([\\d.]+), b1 \\+ 1, x, y\\)\\)",
    "value": 6.0,
    "lines": 1
   },
   {
-   "file": "cad/turret.py",
+   "file": "hardware/cad/turret/turret.py",
    "pattern": "so an M4 x (\\d+) keeps \\d+ mm \\(1\\.5 d\\) in the turntable's insert",
    "value": 12.0,
    "lines": 1
   },
   {
-   "file": "cad/build_turret.py",
+   "file": "hardware/cad/builders/build_turret.py",
    "literal": "'hw_screw_m4x12': ('screw_m4x12_socket', 4),"
   },
   {
-   "file": "cad/turret.py",
+   "file": "hardware/cad/turret/turret.py",
    "pattern": "rg\\['seat'\\] - ([\\d.]+), rg\\['seat'\\] \\+ 0\\.1, x, y\\)\\)\\s+# flange screws",
    "value": 6.0,
    "lines": 1
   },
   {
-   "file": "cad/turret.py",
+   "file": "hardware/cad/turret/turret.py",
    "pattern": "-a1 - 0\\.1, -a1 \\+ ([\\d.]+), x, z\\)\\)",
    "value": 6.0,
    "lines": 1
   },
   {
-   "file": "cad/turret.py",
+   "file": "hardware/cad/turret/turret.py",
    "pattern": "y1 - 0\\.1, y1 \\+ ([\\d.]+), x, z\\)\\)\\s+# 5\\.7 mm insert",
    "value": 6.0,
    "lines": 1
   },
   {
-   "file": "cad/turret.py",
+   "file": "hardware/cad/turret/turret.py",
    "pattern": "s = s\\.union\\(cyl_y\\(([\\d.]+), y1, -a1 - t \\+ 0\\.01, x, z\\)\\)",
    "value": 5.0,
    "lines": 1
   },
   {
-   "file": "cad/turret.py",
+   "file": "hardware/cad/turret/turret.py",
    "pattern": "^INSERT_M3_SIDE = ([\\d.]+)",
    "value": 6.5,
    "lines": 1
   },
   {
-   "file": "cad/turret.py",
+   "file": "hardware/cad/turret/turret.py",
    "literal": "and their 3 x M3 inserts, put in from the rebate",
    "present": false
   },
   {
-   "file": "cad/turret.py",
+   "file": "hardware/cad/turret/turret.py",
    "literal": "'foot_holes_x': (-3.0, 33.0, 58.0, 77.0)"
   },
   {
-   "file": "cad/turret.py",
+   "file": "hardware/cad/turret/turret.py",
    "pattern": "G\\.plate_z1 \\+ cb\\['boss_h'\\] \\+ cb\\['standoff'\\], 'M3', ([\\d.]+)\\)\\)",
    "value": 6.0,
    "lines": 1
   },
   {
-   "file": "cad/turret.py",
+   "file": "hardware/cad/turret/turret.py",
    "pattern": "s = s\\.cut\\(insert_hole\\(x, y, SOCKET_PAD_Z, 'M3', ([\\d.]+)\\)\\)",
    "value": 6.5,
    "lines": 1
   },
   {
-   "file": "cad/turret.py",
+   "file": "hardware/cad/turret/turret.py",
    "pattern": "^SOCKET_PAD_Z = ([\\d.]+)",
    "value": 22.6,
    "lines": 1
   },
   {
-   "file": "cad/turret.py",
+   "file": "hardware/cad/turret/turret.py",
    "literal": "self.base_z0 = -(self.br + 3.0)"
   },
   {
-   "file": "cad/turret.py",
+   "file": "hardware/cad/turret/turret.py",
    "pattern": "bz0 - 1, (-[\\d.]+), \\*ct_latch\\)\\)\\s+# insert from below, 1 mm cap",
    "value": -8.5,
    "lines": 1
   },
   {
-   "file": "cad/turret.py",
+   "file": "hardware/cad/turret/turret.py",
    "pattern": "s = s\\.union\\(cyl_z\\(([\\d.]+), bz0, -7\\.5, \\*ct_latch\\)\\)",
    "value": 5.0,
    "lines": 1
   },
   {
-   "file": "cad/turret.py",
+   "file": "hardware/cad/turret/turret.py",
    "pattern": "the M4 x 12 keeps (\\d+) mm in the cartridge",
    "value": 5.0,
    "lines": 1
   },
   {
-   "file": "cad/turret.py",
+   "file": "hardware/cad/turret/turret.py",
    "pattern": "G\\.housing_top, 'M3', ([\\d.]+)\\)\\)",
    "value": 6.0,
    "lines": 1
   },
   {
-   "file": "cad/turret_stand.py",
+   "file": "hardware/cad/turret/turret_stand.py",
    "pattern": "^WALL, TOP, BOT = [\\d.]+, ([\\d.]+), [\\d.]+",
    "value": 6.0,
    "lines": 1
   },
   {
-   "file": "cad/turret_stand.py",
+   "file": "hardware/cad/turret/turret_stand.py",
    "pattern": "s = s\\.cut\\(_cyl_z\\(FAST\\['M3'\\]\\['insert_pilot'\\] / 2, -TOP - 0\\.01, -TOP \\+ ([\\d.]+), dx0",
    "value": 5.3,
    "lines": 1
   },
   {
-   "file": "cad/turret_stand.py",
+   "file": "hardware/cad/turret/turret_stand.py",
    "pattern": "s = s\\.cut\\(_cyl_z\\(FAST\\['M5'\\]\\['insert_pilot'\\] / 2, -TOP - ([\\d.]+), 0\\.1, x, y\\)\\)",
    "value": 8.0,
    "lines": 1
   },
   {
-   "file": "cad/turret_stand.py",
+   "file": "hardware/cad/turret/turret_stand.py",
    "pattern": "s = s\\.union\\(_cyl_z\\(([\\d.]+), -TOP - 8\\.0, -TOP \\+ 0\\.01, x, y\\)\\)",
    "value": 7.0,
    "lines": 1
   },
   {
-   "file": "cad/build_turret.py",
+   "file": "hardware/cad/builders/build_turret.py",
    "literal": "('turret_insert_m3_short', 2),       # the dock adapter's",
    "present": true
   },
   {
-   "file": "cad/turret_stand.py",
+   "file": "hardware/cad/turret/turret_stand.py",
    "pattern": "-H - 1, -H \\+ ([\\d.]+), x, y\\)\\)",
    "value": 8.0,
    "lines": 1
   },
   {
-   "file": "cad/turret_stand.py",
+   "file": "hardware/cad/turret/turret_stand.py",
    "pattern": "^BOSS_R = ([\\d.]+)",
    "value": 6.0,
    "lines": 1
   },
   {
-   "file": "cad/turret_box.py",
+   "file": "hardware/cad/turret/turret_box.py",
    "pattern": "^DECK_T = ([\\d.]+)",
    "value": 8.0,
    "lines": 1
   },
   {
-   "file": "cad/turret_box.py",
+   "file": "hardware/cad/turret/turret_box.py",
    "pattern": "^TM_PILOT_DEPTH = DECK_T \\+ ([\\d.]+)",
    "value": 0.1,
    "lines": 1
   },
   {
-   "file": "cad/turret_box.py",
+   "file": "hardware/cad/turret/turret_box.py",
    "pattern": "^TM_SCREW_LEN = ([\\d.]+)",
    "value": 12.0,
    "lines": 1
   },
   {
-   "file": "cad/turret_box.py",
+   "file": "hardware/cad/turret/turret_box.py",
    "pattern": "DECK_Z0 - 0\\.1, DECK_Z0 \\+ ([\\d.]+), x, y\\)\\)",
    "value": 5.0,
    "lines": 1
   },
   {
-   "file": "cad/rig_assembly.py",
+   "file": "hardware/cad/rig/rig_assembly.py",
    "pattern": "the contactor on its two M4 inserts \\(([\\d.]+) N m\\)",
    "value": 2.3,
    "lines": 1
   },
   {
-   "file": "cad/rig_parts.py",
+   "file": "hardware/cad/rig/rig_parts.py",
    "pattern": "FAST\\['M4'\\]\\['insert_pilot'\\] / 2, 'z', t - ([\\d.]+), t \\+ 6\\.1, [cm]\\['x'\\]",
    "value": 3.0,
    "lines": 2
   },
   {
-   "file": "cad/rig_parts.py",
+   "file": "hardware/cad/rig/rig_parts.py",
    "pattern": "FAST\\['M4'\\]\\['insert_pilot'\\] / 2, 'z', t - 3\\.0, t \\+ ([\\d.]+), [cm]\\['x'\\]",
    "value": 6.1,
    "lines": 2
   },
   {
-   "file": "cad/rig_parts.py",
+   "file": "hardware/cad/rig/rig_parts.py",
    "pattern": "s = s\\.union\\(cyl\\(([\\d.]+), 'z', t - 0\\.01, t \\+ 6\\.0, [cm]\\['x'\\]",
    "value": 5.0,
    "lines": 2
   },
   {
-   "file": "cad/rig_hardware.py",
+   "file": "hardware/cad/rig/rig_hardware.py",
    "pattern": "'clamp': \\[6\\.0\\], 'thread_in': \\{'kind': 'insert', 'depth': INSERT\\['M4'\\]\\[0\\], 'beyond': rp\\.POD\\['wall'\\] \\+ 4\\.0 - INSERT\\['M4'\\]\\[0\\]\\},\\s+'min_engage': ([\\d.]+), 'holds': \\('pendant_clip', 'pod'\\)",
    "value": 3.5,
    "lines": 1
   },
   {
-   "file": "cad/rig_hardware.py",
+   "file": "hardware/cad/rig/rig_hardware.py",
    "pattern": "'beyond': INSERT\\['M4'\\]\\[1\\]\\}, 'min_engage': ([\\d.]+),\\s+'holds': \\('carriage_plate', 'tof_arm'\\)",
    "value": 3.5,
    "lines": 1
   },
   {
-   "file": "cad/rig_parts.py",
+   "file": "hardware/cad/rig/rig_parts.py",
    "pattern": "^POD = \\{'w': [\\d.]+, 'd': [\\d.]+, 'h': [\\d.]+, 'wall': ([\\d.]+),",
    "value": 4.0,
    "lines": 1
   },
   {
-   "file": "cad/rig_parts.py",
+   "file": "hardware/cad/rig/rig_parts.py",
    "pattern": "cyl\\(FAST\\['M4'\\]\\['insert_pilot'\\] / 2, 'y', -d / 2 - 1, -d / 2 \\+ t \\+ ([\\d.]+), PENDANT_AT\\[0\\], z\\)",
    "value": 3.0,
    "lines": 1
   },
   {
-   "file": "cad/rig_parts.py",
+   "file": "hardware/cad/rig/rig_parts.py",
    "pattern": "s = box\\(-d / 2 - 4, d / 2 \\+ 4, 0\\.0, ([\\d.]+), z0 - 7\\.0, z1 \\+ 7\\.0\\)",
    "value": 6.0,
    "lines": 1
   },
   {
-   "file": "cad/rig_parts.py",
+   "file": "hardware/cad/rig/rig_parts.py",
    "literal": "PETG; 2 x M4 x 10 into the pod\\'s inserts"
   },
   {
-   "file": "cad/rig_parts.py",
+   "file": "hardware/cad/rig/rig_parts.py",
    "pattern": "s = s\\.union\\(cyl\\(([\\d.]+), 'y', -d / 2 \\+ t - 0\\.01, -d / 2 \\+ t \\+ 4\\.0, PENDANT_AT\\[0\\], z\\)\\)",
    "value": 5.0,
    "lines": 1
   },
   {
-   "file": "cad/rig_parts.py",
+   "file": "hardware/cad/rig/rig_parts.py",
    "pattern": "s = s\\.cut\\(cyl\\(([\\d.]+), 'y', -1, 7, 0\\.0, z\\)\\)",
    "value": 2.2,
    "lines": 1
   },
   {
-   "file": "cad/rig_parts.py",
+   "file": "hardware/cad/rig/rig_parts.py",
    "literal": "PETG; 4 x M3 x 10 into the pod\\'s inserts"
   },
   {
-   "file": "cad/rig_parts.py",
+   "file": "hardware/cad/rig/rig_parts.py",
    "block": "def pod():"
   },
   {
-   "file": "cad/rig_parts.py",
+   "file": "hardware/cad/rig/rig_parts.py",
    "block": "def pod_lid():"
   },
   {
-   "file": "cad/rig_parts.py",
+   "file": "hardware/cad/rig/rig_parts.py",
    "literal": "s = s.cut(cyl(FAST['M3']['insert_pilot'] / 2, 'y', d / 2 - b['pilot_depth'], d / 2 + 1.0, x, z))"
   },
   {
-   "file": "cad/rig_parts.py",
+   "file": "hardware/cad/rig/rig_parts.py",
    "literal": "for (x, z) in POD_LID_SCREWS:                                                 # M3 x 10 into the pod's corner inserts"
   },
   {
-   "file": "cad/rig_parts.py",
+   "file": "hardware/cad/rig/rig_parts.py",
    "pattern": "^POD_LID_BOSS = \\{'r': ([\\d.]+), 'len': [\\d.]+, 'pilot_depth': [\\d.]+\\}",
    "value": 5.0,
    "lines": 1
   },
   {
-   "file": "cad/rig_parts.py",
+   "file": "hardware/cad/rig/rig_parts.py",
    "pattern": "^POD_LID_BOSS = \\{'r': [\\d.]+, 'len': [\\d.]+, 'pilot_depth': ([\\d.]+)\\}",
    "value": 8.5,
    "lines": 1
   },
   {
-   "file": "cad/rig_parts.py",
+   "file": "hardware/cad/rig/rig_parts.py",
    "pattern": "    w, h, t = POD\\['w'\\], POD\\['h'\\], ([\\d.]+)\\n    s = box\\(-w, 0\\.0, 0\\.0, t, 0\\.0, h\\)",
    "value": 3.0,
    "lines": 1
   },
   {
-   "file": "cad/rig_hardware.py",
+   "file": "hardware/cad/rig/rig_hardware.py",
    "pattern": "'clamp': \\[3\\.0\\], 'thread_in': \\{'kind': 'insert', 'depth': INSERT\\['M3'\\]\\[0\\], 'beyond': INSERT\\['M3'\\]\\[1\\]\\},\\s+'min_engage': ([\\d.]+) \\* 3\\.0, 'holds': \\('pod_lid', 'pod'\\)",
    "value": 1.2,
    "lines": 1
   },
   {
-   "file": "cad/rig_parts.py",
+   "file": "hardware/cad/rig/rig_parts.py",
    "pattern": "^PLATE_T = ([\\d.]+)",
    "value": 6.35,
    "lines": 1
   },
   {
-   "file": "cad/rig_parts.py",
+   "file": "hardware/cad/rig/rig_parts.py",
    "pattern": "'y', Y_PLATE_FRONT - 1, Y_PLATE_FRONT \\+ ([\\d.]+), x, z\\)\\)",
    "value": 9.4,
    "lines": 1
   },
   {
-   "file": "cad/rig_parts.py",
+   "file": "hardware/cad/rig/rig_parts.py",
    "pattern": "'y', Y_PLATE_FRONT - 1, Y_PLATE_FRONT \\+ ([\\d.]+), x, z\\)\\)",
    "value": 9.4,
    "lines": 1
   },
   {
-   "file": "cad/rig_parts.py",
+   "file": "hardware/cad/rig/rig_parts.py",
    "pattern": "s = s\\.union\\(cyl\\(([\\d.]+), 'y', Y_PLATE_FRONT, Y_PLATE_FRONT \\+ 10\\.0, x, z\\)\\)",
    "value": 5.0,
    "lines": 1
