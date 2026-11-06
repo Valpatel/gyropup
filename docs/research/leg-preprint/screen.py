@@ -2,13 +2,13 @@
 """Pre-print screen of Gyropup's leg (issue #29): what a first print and a first load test would show, found from CAD.
 
 Kernel-free (no CadQuery, no cad-agent). It reads the repository's source constants, bound by pattern through
-research/insert-joints/inventory.py's Repo (a change to a bound line fails the check and asks for a regeneration),
+docs/research/insert-joints/inventory.py's Repo (a change to a bound line fails the check and asks for a regeneration),
 the leg's generated exports (print plan, print STLs, FEA summary, rig results), the insert-joint inventory and the
 layer-check evidence. It screens every printed leg part and every leg joint across the failure modes in README.md and
 writes screen.json, screen.md and the coupons' measurement sheets (sheets/*.csv) beside it.
 
-    python3 research/leg-preprint/screen.py           # regenerate
-    python3 research/leg-preprint/screen.py --check   # exit 1 if any output is stale
+    python3 docs/research/leg-preprint/screen.py           # regenerate
+    python3 docs/research/leg-preprint/screen.py --check   # exit 1 if any output is stale
 
 Every number is a screen with its assumption stated, not a qualification. CAD and FEA do not prove fit or strength:
 the coupons in README.md and the proof loads in issue #29 do.
@@ -36,14 +36,14 @@ LAYER_EVIDENCE = 'docs/research/fea-v060-29/evidence/leg-layer-check.json'
 ORIENT_EVIDENCE = 'docs/research/leg-preprint/evidence/orientation-screen.json'
 
 SOURCES = {
-    'bambu_tds': 'Bambu Lab PA6-CF technical data sheet V3.0 (catalog/materials.json pa6-cf source)',
+    'bambu_tds': 'Bambu Lab PA6-CF technical data sheet V3.0 (hardware/catalog/materials.json pa6-cf source)',
     'cadagent_rows': "cad-agent v0.6.0 cadagent/simulation/fea.py MATERIALS pa6_cf_xy / pa6_cf_z (humid = Polymaker "
                      "PA6-CF20 wet / dry, x0.8 print)",
     'iso286': 'ISO 286-2 tolerance grades (F7, f9, n6, m6)',
-    'din179': 'DIN 179 drill bushings: bore F7, outside n6 (catalog/hardware.json eye_sleeve tolerances)',
+    'din179': 'DIN 179 drill bushings: bore F7, outside n6 (hardware/catalog/hardware.json eye_sleeve tolerances)',
     'iso7379': 'ISO 7379 shoulder screws: shoulder f9',
     'iso5753': 'ISO 5753-1 radial internal clearance, group N',
-    'skf6301': 'SKF 6301-2RSH product page (catalog/hardware.json bearing_6301: C0 4.15 kN, da min 17.6)',
+    'skf6301': 'SKF 6301-2RSH product page (hardware/catalog/hardware.json bearing_6301: C0 4.15 kN, da min 17.6)',
     'lame': 'Lame thick-cylinder press fit, rigid steel insert: p = (delta / D) E / ((Do^2 + D^2) / (Do^2 - D^2) + nu)',
     'vdi2230': 'VDI 2230 joint diagram: preload lost = embedding x k_bolt k_clamp / (k_bolt + k_clamp)',
     'loctite638': 'Henkel LOCTITE 638 technical data sheet: "not normally recommended for use on plastics (particularly '
@@ -153,7 +153,7 @@ def print_parts(repo, mat):
     for name in plan['parts']:
         found = [d for d in ('DOWN_OUTER', 'DOWN_INNER') if f"'{name}': {d}" in text]
         if len(found) != 1:
-            raise Stale(f"cad/build_leg.py: no single ROT entry for {name}; update research/leg-preprint/screen.py")
+            raise Stale(f"hardware/cad/builders/build_leg.py: no single ROT entry for {name}; update docs/research/leg-preprint/screen.py")
         repo.has('hardware/cad/builders/build_leg.py', f"'{name}': {found[0]}")
         rot[name] = found[0]
     repo.has('hardware/cad/builders/build_leg.py', "DOWN_OUTER = ((1, 0, 0), -90)        # the part's +y face on the bed")
@@ -215,7 +215,7 @@ def layer_rows(repo, mat):
 
 
 def where(part, c, repo):
-    """A plain name for a worst corner, from the part's own frame (each part's origin and axes as cad/fivebar.py)."""
+    """A plain name for a worst corner, from the part's own frame (each part's origin and axes as hardware/cad/legs/fivebar.py)."""
     if getattr(repo, '_links', None) is None:      # bound once per repository object, not once per row
         repo._links = (repo.num('hardware/cad/legs/fivebar.py', r"'D': [\d.]+, 'l1': ([\d.]+), 'l2'"),
                        repo.num('hardware/cad/legs/fivebar.py', r"'D': [\d.]+, 'l1': [\d.]+, 'l2': ([\d.]+),"))
@@ -464,7 +464,7 @@ def joints(repo, mat, layers):
             'humid pull-out, with no measured spin-out or creep (and up to 1.0 x at assembly if the cheek misses the brass '
             'face). The sleeve keeps the '
             'preload out of the plastic; the flange root is then judged without precompression (conservative).',
-        pr2='cad/fivebar.py frame_mounts(): 6 x Ø8.1 sleeve bores through the flange and web, an M5 hex pocket on the leg face; '
+        pr2='hardware/cad/legs/fivebar.py frame_mounts(): 6 x Ø8.1 sleeve bores through the flange and web, an M5 hex pocket on the leg face; '
             f'the Ø8.1 bore leaves {(flange_t - 8.1) / 2:.2f} mm walls in the {flange_t:g} mm flange, so the bolt line gets a local boss and the '
             'frame is re-run; the rig plate and the body cheek keep their Ø5.5 holes; screws M5 x ~90 (mcmaster-parts). Mass '
             f'with a 6061 sleeve; a steel one adds {6 * sleeve_g(FRAME_GRIP, 7.85) - 6 * sleeve_g(FRAME_GRIP, 2.70):.0f} g more',
@@ -497,8 +497,8 @@ def joints(repo, mat, layers):
         pick='clamp ring',
         why='D74: the clamp spreads over the hub so the screws can carry a real preload while the plastic stays under the '
             'sustained screen and in compression across its layers. Re-torque after 24 h and after the first humid week.',
-        pr2='cad/fivebar.py upper_link(): a Ø66 / Ø41 x 4 recess at the counterbores\' floor for the ring; HUB_PRELOAD_N to the '
-            'ring preload in cad/leg_studies.py; the ring as a made-to-order part with the adapter',
+        pr2='hardware/cad/legs/fivebar.py upper_link(): a Ø66 / Ø41 x 4 recess at the counterbores\' floor for the ring; HUB_PRELOAD_N to the '
+            'ring preload in hardware/cad/legs/leg_studies.py; the ring as a made-to-order part with the adapter',
         mass_g_per_leg=2 * (HUB_RING_AREA * 4 / 1000 * 2.70 - HUB_RING_AREA * 4 / 1000 * mat['density'])))
 
     # 3. hip frame onto each RS-04
@@ -541,7 +541,7 @@ def joints(repo, mat, layers):
         pick='metal bushing',
         why='The bushing is right; its plastic seat is not. A rounder, larger stub lowers the root\'s peel; orientation does '
             'not help it (orientation screen).',
-        pr2='cad/fivebar.py: the stub\'s diameter and root fillet swept on the compute host; a 0.5 x 45 deg lead-in at the bed-face '
+        pr2='hardware/cad/legs/fivebar.py: the stub\'s diameter and root fillet swept on the compute host; a 0.5 x 45 deg lead-in at the bed-face '
             'mouth; the outer sleeve 0.1-0.2 mm proud',
         mass_g_per_leg=None))
 
@@ -564,7 +564,7 @@ def joints(repo, mat, layers):
                    key=lambda x: x['layer_sf'] / x['target'])
     ring = min((row for row in layers['rows'] if row['part'] == 'front_link'), key=lambda x: x['layer_sf'] / x['target'])
     # a 6061 hub in place of the printed one: the Ø60 journal from the hub's end (y -6) to the outer 61812's face (y 45)
-    # and the Ø64 shoulder from there to the link's inner face (y 54), both round the Ø48 bore (cad/fivebar.py Stack)
+    # and the Ø64 shoulder from there to the link's inner face (y 54), both round the Ø48 bore (hardware/cad/legs/fivebar.py Stack)
     jr = repo.num('hardware/cad/legs/fivebar.py', r"\.union\(ycyl\(([\d.]+), h0, ab1 \+ 0\.01, l2\)\)")
     sr = repo.num('hardware/cad/legs/fivebar.py', r"k = k\.union\(ycyl\(([\d.]+), ab1, h1 \+ 0\.01, l2\)\)")
     br = repo.num('hardware/cad/legs/fivebar.py', r"k = k\.cut\(ycyl\(([\d.]+), h0 - 1, h1 - 0\.01, l2\)\)")
@@ -582,7 +582,7 @@ def joints(repo, mat, layers):
             'metal bushing': 'a turned 6061 hub (journal, shoulder, circlip groove) clamped through the foot by the wheel\'s '
                              '4 x M6 (their heads then bear on metal, which also fixes the foot\'s crushed-plastic clamp); '
                              f'about +{apex_hub_g:.0f} g a leg (the Ø60 / Ø48 journal and the Ø64 shoulder in 6061 instead of '
-                             'PA6-CF, from cad/fivebar.py\'s hub)',
+                             'PA6-CF, from hardware/cad/legs/fivebar.py\'s hub)',
             'split apex collar': 'the front link\'s inner half-eye as a separate printed collar, through-bolted to the link: '
                                  'the link then prints flat, and the bolts precompress the ring\'s layers',
         },
@@ -664,7 +664,7 @@ def ik(x, z, D, l1, l2):
 
 def play_sensitivity(repo):
     """How far the wheel's axle moves for 0.1 mm of radial play at each joint and 0.1 deg at each motor, with the
-    motors held, at the leg lengths the pictures use (cad/build_leg.py: crouch 130, stand 300, tall 380)."""
+    motors held, at the leg lengths the pictures use (hardware/cad/builders/build_leg.py: crouch 130, stand 300, tall 380)."""
     D, l1, l2 = fivebar(repo)
     poses = {}
     for h in (130.0, 300.0, 380.0):
@@ -822,7 +822,7 @@ def md_table(head, rows):
 
 def markdown(doc):
     L = ['# Leg pre-print screen', '',
-         'Generated by `research/leg-preprint/screen.py` (do not edit; run the generator). A screen with its assumptions '
+         'Generated by `docs/research/leg-preprint/screen.py` (do not edit; run the generator). A screen with its assumptions '
          'stated, not a qualification: nothing here has been printed or tested. [README.md](README.md) reads it.', '']
     p = doc['parts']
     L += ['## Printed parts', '',
@@ -968,13 +968,13 @@ def final_block(fr):
     at_mass = [x for x in fr['rows'] if x['gate_now'] >= x['target'] > x['gate_at_robot_mass']]
     c4 = fr['c4']
     out = [BLOCK[0], '',
-           f"Generated by `research/leg-preprint/screen.py` from `{FINAL_GATE}` and `{FINAL_LAYER}` (cad-agent "
+           f"Generated by `docs/research/leg-preprint/screen.py` from `{FINAL_GATE}` and `{FINAL_LAYER}` (cad-agent "
            f"{fr['toolkit']}, {fr['mesh_mm']:g} mm mesh, source {fr['source_revision'][:7]}), against dev's record "
            f"(`{LAYER_EVIDENCE}`). The printed parts' rows are below.", '',
            f"- **Isotropic gate:** {gn} of {n} rows at target, against {gb} before.",
            f"- **Layer check:** {ln} of {n} rows at target, against {lb} before. It assumes the interlayer shear strength S_s = S_z / sqrt(3) = "
            f"{fr['S_s_assumed_mpa']:g} MPa; nobody has measured it.",
-           f"- **Mass basis:** the loads are the {fr['design_kg']:g} kg design robot's (`cad/leg_studies.py` ROBOT_KG). At the "
+           f"- **Mass basis:** the loads are the {fr['design_kg']:g} kg design robot's (`hardware/cad/legs/leg_studies.py` ROBOT_KG). At the "
            f"{fr['robot_kg']:g} kg this branch weighs (section 9) every SF falls by {fr['design_kg'] / fr['robot_kg']:.3f}: "
            + (' and '.join(f"{x['part']} {x['case']} {x['gate_now']:g} → **{x['gate_at_robot_mass']:g}** (target {x['target']:g})"
                            for x in at_mass)
@@ -1011,7 +1011,7 @@ def final_block(fr):
                    + ', '.join(f"{k} **{v:g}**" if v < x['target'] else f'{k} {v:g}' for k, v in x['left_out'].items()) + ' |')
     out += ['', 'The plots in the summary show these edges red. Bench test B4b (the hub on its adapter) and proof load P2 '
             '(the pins, section 7) are the physical checks.', '',
-            f"**Coupon C4's prediction** (`{C4_EVIDENCE}`, `research/leg-preprint/c4_fea.py`: the coupon itself at 1 kN, "
+            f"**Coupon C4's prediction** (`{C4_EVIDENCE}`, `docs/research/leg-preprint/c4_fea.py`: the coupon itself at 1 kN, "
             "held at its cut face 90 mm back, loaded through the knee bore at the knee boss's mid-plane):", '',
             '| Stub | Weakest direction | Predicted peel load (2 mm / 1.5 mm mesh) | Governed by | Bulk (in-layer) load |',
             '|---|---|---|---|---|']
@@ -1063,7 +1063,7 @@ def glance_block(fr):
     better = lambda b, a: sum(1 for x in rows if x[b] is not None and x[a] > x[b])
     return '\n'.join([
         GLANCE[0], '',
-        'The chart is `research/leg-preprint/figure.py`, drawn from the same rows as the table in section 8 '
+        'The chart is `docs/research/leg-preprint/figure.py`, drawn from the same rows as the table in section 8 '
         '(generated by `screen.py`).', '',
         '| | Isotropic gate | Layer check (S_s assumed) |', '|---|---|---|',
         f"| Rows at target, dev's record | {count('gate_before')} of {n} | {count('layer_before')} of {n} |",
@@ -1102,7 +1102,7 @@ def main(argv=None):
     if a.check:
         stale = [str(p.relative_to(ROOT)) for p, t in files.items() if not p.exists() or p.read_text() != t]
         if stale:
-            print('stale: ' + ', '.join(stale) + ' (run research/leg-preprint/screen.py)')
+            print('stale: ' + ', '.join(stale) + ' (run docs/research/leg-preprint/screen.py)')
             return 1
         print('leg pre-print screen: current')
         return 0

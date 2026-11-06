@@ -1,10 +1,10 @@
 #!/usr/bin/env python3
 """The turret lids' snap fits (#131 wave 1) through cad-agent's snap-fit calculator, at a pinned release.
 
-cad/turret_snaps.py holds every snap dimension cad/turret.py builds the latches from. This writes its declaration to
+hardware/cad/turret/turret_snaps.py holds every snap dimension hardware/cad/turret/turret.py builds the latches from. This writes its declaration to
 snaps.yaml, runs the toolkit's own command on it,
 
-    cad-agent snapfit research/snap-fits/snaps.yaml --output research/snap-fits/snapfit.json
+    cad-agent snapfit docs/research/snap-fits/snaps.yaml --output docs/research/snap-fits/snapfit.json
 
 and writes summary.json: the load cases each lid was weighed against (the design case, the ones it holds, the one
 it does not and why), the toolkit's rows per latch, and the checks the toolkit does not make, by hand from its
@@ -14,12 +14,12 @@ strain at the root's corner with the tongue's out-of-plane bending added to its 
 layers twisted and peeled where it leaves the plate, the barb and the ridge in shear across the layers, and the
 backing behind the thin walls. Also each lid's coupon protocol: pass bands, cycles and the knob to turn.
 
-    python3 research/snap-fits/snaps.py --cad-agent PATH        # regenerate (PATH: a cad-agent checkout at the pin)
-    python3 research/snap-fits/snaps.py --check                  # exit 1 if the committed files are stale
-    python3 research/snap-fits/snaps.py --check --cad-agent PATH # also rerun the toolkit and compare
+    python3 docs/research/snap-fits/snaps.py --cad-agent PATH        # regenerate (PATH: a cad-agent checkout at the pin)
+    python3 docs/research/snap-fits/snaps.py --check                  # exit 1 if the committed files are stale
+    python3 docs/research/snap-fits/snaps.py --check --cad-agent PATH # also rerun the toolkit and compare
 
 Run the toolkit with a Python that has PyYAML (the repository's .venv). This is a calculation, not a test: the
-coupons (cad/turret.py snap_coupons) are printed and pulled before the numbers are trusted.
+coupons (hardware/cad/turret/turret.py snap_coupons) are printed and pulled before the numbers are trusted.
 """
 from __future__ import annotations
 
@@ -50,7 +50,7 @@ RESULT = HERE / 'snapfit.json'
 SUMMARY = HERE / 'summary.json'
 CONSTANTS = (ROOT / 'hardware/cad/turret/turret_snaps.py')
 PIN = 'v0.18.2'
-COMMAND = 'cad-agent snapfit research/snap-fits/snaps.yaml --output research/snap-fits/snapfit.json'
+COMMAND = 'cad-agent snapfit docs/research/snap-fits/snaps.yaml --output docs/research/snap-fits/snapfit.json'
 
 
 def sha256(path: Path) -> str:
@@ -190,7 +190,7 @@ def combined_strain(lat: dict, strain: float, mu: float) -> dict:
 
 
 # The material's numbers as the toolkit reports them for 'petg-bambu-basic' along the layers, repeated (snapfit.json;
-# research/snap-fits/test_snaps.py checks they match): for the hand-only numbers of sizes the toolkit was not run on
+# docs/research/snap-fits/test_snaps.py checks they match): for the hand-only numbers of sizes the toolkit was not run on
 HAND_MATERIAL = {'secant_mpa': 2780.0, 'retention_secant_mpa': 1460.0, 'allowable': 0.6 * 0.7 * 51 / 2780}
 
 
@@ -404,7 +404,7 @@ def stale(spec=SPEC, result=RESULT, summary=SUMMARY, generator=Path(__file__), c
     """What makes the committed files stale, without the toolkit: a list of reasons (empty when current)."""
     why = []
     if not spec.exists() or spec.read_text() != ts.yaml_text():
-        why.append('snaps.yaml does not match cad/turret_snaps.py')
+        why.append('snaps.yaml does not match hardware/cad/turret/turret_snaps.py')
     if not result.exists() or not summary.exists():
         return why + ['snapfit.json or summary.json is missing']
     doc = json.loads(summary.read_text())
@@ -415,7 +415,7 @@ def stale(spec=SPEC, result=RESULT, summary=SUMMARY, generator=Path(__file__), c
     if doc['generator_sha256'] != sha256(generator):
         why.append('snaps.py changed since summary.json was generated')
     if doc['constants_sha256'] != sha256(constants):
-        why.append('cad/turret_snaps.py changed since summary.json was generated')
+        why.append('hardware/cad/turret/turret_snaps.py changed since summary.json was generated')
     if not why and summary.read_text() != dumps(document(result.read_text(), doc['toolkit']['tag'], doc['toolkit']['commit'])):
         why.append('summary.json does not follow from snapfit.json')
     return why
@@ -432,7 +432,7 @@ def main(argv=None):
             if run_toolkit(a.cad_agent, SPEC) != RESULT.read_text():
                 why.append(f'snapfit.json differs from a fresh run on {toolkit_id(a.cad_agent)[0]}')
         if why:
-            print('stale: ' + '; '.join(why) + ' (run python3 research/snap-fits/snaps.py --cad-agent PATH)')
+            print('stale: ' + '; '.join(why) + ' (run python3 docs/research/snap-fits/snaps.py --cad-agent PATH)')
             return 1
         print('turret lid snaps: current')
         return 0
