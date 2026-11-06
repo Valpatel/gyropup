@@ -22,9 +22,10 @@
 
 ## Explore Gyropup
 
-[![Four paths through Gyropup: explore, build, understand and contribute](docs/img/navigation/project-map.svg)](docs/README.md)
-
-[Playground](https://gyropup.com/designer/sim.html) · [Build and downloads](https://gyropup.com/designer/build.html) · [Engineering notes](docs/README.md) · [Contribute](.github/CONTRIBUTING.md)
+<p>
+<a href="docs/README.md"><img src="docs/img/navigation/project-map.svg" width="640" height="224" style="max-width:100%;height:auto;padding:0" alt="Four paths into Gyropup: play, build, understand and contribute"></a><br>
+<a href="https://gyropup.com/designer/sim.html">Playground</a> · <a href="https://gyropup.com/designer/build.html">Build and downloads</a> · <a href="docs/README.md">Engineering notes</a> · <a href=".github/CONTRIBUTING.md">Contribute</a>
+</p>
 
 A research project exploring a self-balancing wheel-legged robot and a foam-ball turret. The design combines
 hub-motor wheels, two five-bar legs driven by RobStride RS-04 actuators, and a pan/tilt turret for Rival-size foam
