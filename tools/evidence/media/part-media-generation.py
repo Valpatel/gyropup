@@ -15,15 +15,18 @@ import subprocess
 import sys
 
 ROOT = (Path(__file__).resolve().parents[3])
-CATALOG = (ROOT / 'hardware/catalog/images.json')
-RECEIPT = (ROOT / 'hardware/catalog/designed-media-validation.json')
+sys.path.insert(0, str(ROOT))
+from tools.site.source_layout import source_file
+
+CATALOG = (source_file(ROOT, 'hardware/catalog/images.json'))
+RECEIPT = (source_file(ROOT, 'hardware/catalog/designed-media-validation.json'))
 SIZE = 480
 COLOURS = {'pa6-cf': '#667384', 'petg': '#4b8fba', 'tpu95': '#424c58',
            'tpu95-gyroid': '#424c58', 'aluminium': '#aab9c9', 'copper': '#be794b'}
 
 
 def read(path):
-    return json.loads((ROOT / path).read_text())
+    return json.loads((source_file(ROOT, path)).read_text())
 
 
 def digest(path):
@@ -45,8 +48,8 @@ def sources():
     # whole-robot snapshot may predate new cheek plates and is not their geometry.
     turret_manifest = 'exports/turret/component-preview/manifest.json'
     turret = read(turret_manifest)
-    expected_sources = {'cad/turret.py', 'cad/gmi.py', 'cad/interfaces.json', 'catalog/interfaces.json',
-                        'catalog/materials.json', 'tools/export-turret-cut-previews.py'}
+    expected_sources = {'hardware/cad/turret/turret.py', 'hardware/cad/robot/gmi.py', 'hardware/cad/robot/interfaces.json', 'hardware/catalog/interfaces.json',
+                        'hardware/catalog/materials.json', 'tools/engineering/turret/export-turret-cut-previews.py'}
     expected_parts = {'pan_clamp', 'cradle_plate_l', 'cradle_plate_r', 'stop_lug'}
     if turret.get('schema') != 1 or turret.get('units') != 'mm' or set(turret['source_hashes']) != expected_sources:
         raise ValueError('Cut-part preview has incomplete input provenance')
@@ -54,7 +57,7 @@ def sources():
     if len(names) != len(expected_parts) or set(names) != expected_parts:
         raise ValueError('Cut-part preview must contain exactly the four unique current cut parts')
     for source, expected in turret['source_hashes'].items():
-        if digest(ROOT / source) != expected:
+        if digest(source_file(ROOT, source)) != expected:
             raise ValueError(f'Cut-part preview source changed: {source}; regenerate its inspection export')
     for key in read('exports/turret/bench/bom.json')['ordered_to_drawing']:
         entries = [part for part in turret['parts'] if part['name'] == key]
@@ -63,7 +66,7 @@ def sources():
         entry = entries[0]
         for extension in ('stl', 'step'):
             expected_path = f'exports/turret/component-preview/{key}.{extension}'
-            if entry[extension] != expected_path or digest(ROOT / expected_path) != entry[extension + '_sha256']:
+            if entry[extension] != expected_path or digest(source_file(ROOT, expected_path)) != entry[extension + '_sha256']:
                 raise ValueError(f'{key}: cut-part preview {extension} identity mismatch')
         if entry.get('valid_single_solid') is not True:
             raise ValueError(f'{key}: cut-part preview is not a validated single solid')
@@ -75,10 +78,10 @@ def sources():
 
 
 def check_source(key, source):
-    path = ROOT / source['source']
+    path = source_file(ROOT, source['source'])
     if not path.is_file() or not path.resolve().is_relative_to(ROOT):
         raise ValueError(f'{key}: missing or outside-repository geometry: {path}')
-    subprocess.run(['git', 'ls-files', '--error-unmatch', source['source']], cwd=ROOT,
+    subprocess.run(['git', 'ls-files', '--error-unmatch', path.relative_to(ROOT).as_posix()], cwd=ROOT,
                    check=True, stdout=subprocess.DEVNULL, stderr=subprocess.DEVNULL)
     sha = digest(path)
     if source.get('expected_sha256', sha) != sha:
@@ -134,6 +137,13 @@ def render(path, output, colour):
             'size_px': [SIZE, SIZE], 'sha256': digest(output)}
 
 
+LOCATION_INPUTS = ('tools/site/source_layout.py', 'tools/site/source-layout.json')
+
+
+def location_inputs():
+    return {name: digest(ROOT / name) for name in LOCATION_INPUTS}
+
+
 def main():
     parser = argparse.ArgumentParser(description=__doc__)
     parser.add_argument('--render', action='store_true', help='Render actual source geometry and update only the scoped catalog records')
@@ -141,6 +151,7 @@ def main():
     parser.add_argument('--date', default=datetime.now(timezone.utc).date().isoformat(), help='Date for generated evidence (YYYY-MM-DD)')
     parser.add_argument('--only', help='Limit rendering to a scoped key for diagnostics; does not write the catalog/receipt')
     args = parser.parse_args()
+    location_before = location_inputs()
     wanted = sources()
     if args.render:
         import cadquery, pyvista
@@ -151,7 +162,7 @@ def main():
                 continue
             path, sha = check_source(key, source)
             target = 'exports/thumbs/' + key.replace('/', '--') + '.png'
-            output = render(path, ROOT / target, COLOURS[source['material']])
+            output = render(path, source_file(ROOT, target), COLOURS[source['material']])
             print(f'{key}: {output["triangles"]} triangles, {target}', flush=True)
             record = {'kind': 'render', 'source_url': source['source'], 'geometry_sha256': sha,
                 'image_url': None, 'path': target, 'fetched': args.date, 'material': source['material'],
@@ -164,13 +175,15 @@ def main():
             if not records:
                 raise ValueError(f'Unknown scoped key: {args.only}')
             return
+        if location_inputs() != location_before:
+            raise ValueError('Source location inputs changed during rendering')
         items.update(records)
         # Old unscoped names must not continue showing stale PA6-CF turret/clashing assembly renders.
         for key in ['leg/output_adapter', 'rig/carriage_plate', 'turret/pan_clamp']:
             items[key.split('/')[1]] = {**records[key], 'alias_of': key}
         CATALOG.write_text(json.dumps({k: items[k] for k in sorted(items)}, indent=1) + '\n')
-        receipt = {'schema': 1, 'date': args.date, 'command': 'python tools/part-media-generation.py --render --check',
-            'generator_sha256': digest(Path(__file__)), 'renderer': {'cadquery': cadquery.__version__,
+        receipt = {'schema': 1, 'date': args.date, 'command': 'python tools/evidence/media/part-media-generation.py --render --check',
+            'generator_sha256': digest(Path(__file__)), 'location_inputs_sha256': location_before, 'renderer': {'cadquery': cadquery.__version__,
             'pyvista': pyvista.__version__, 'vtk': pyvista.vtk_version_info, 'projection': 'orthographic',
             'camera_direction': [1, -1.25, .9], 'up': [0, 0, 1], 'projected_fit_padding': 1.12, 'step_tolerance_mm': .08,
             'step_angular_tolerance_rad': .10},
@@ -183,13 +196,15 @@ def main():
         items = read('catalog/images.json'); receipt = read('catalog/designed-media-validation.json')
         if set(receipt['parts']) != set(wanted):
             raise ValueError('Receipt does not cover exactly the current body print and made-to-order requirements')
+        if receipt.get('location_inputs_sha256') != location_inputs():
+            raise ValueError('Source location contract changed: rerender before publishing its receipt')
         if receipt['generator_sha256'] != digest(Path(__file__)):
             raise ValueError('Generator changed: rerender before publishing its receipt')
         for key, source in wanted.items():
             path, sha = check_source(key, source); item = items.get(key, {})
             if item.get('source_url') != source['source'] or item.get('geometry_sha256') != sha:
                 raise ValueError(f'{key}: catalog source/geometry hash is stale')
-            target = ROOT / item['path']; data = target.read_bytes()
+            target = source_file(ROOT, item['path']); data = target.read_bytes()
             if data[:8] != b'\x89PNG\r\n\x1a\n' or struct.unpack('>II', data[16:24]) != (SIZE, SIZE):
                 raise ValueError(f'{key}: thumbnail is not a {SIZE}px square PNG')
             expected = receipt['parts'][key]

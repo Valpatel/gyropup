@@ -22,8 +22,15 @@ def digest(path):
 
 
 def inventory(directory):
-    return {p.relative_to(directory).as_posix(): {'bytes': p.stat().st_size, 'sha256': digest(p)}
-            for p in sorted(directory.rglob('*')) if p.is_file()}
+    files = {}
+    for path in sorted(directory.rglob('*')):
+        if path.is_symlink():
+            raise ValueError(f'Product contains a symlink: {path.relative_to(directory)}')
+        if path.is_file():
+            files[path.relative_to(directory).as_posix()] = {'bytes': path.stat().st_size, 'sha256': digest(path)}
+        elif not path.is_dir():
+            raise ValueError(f'Product contains a non-regular entry: {path.relative_to(directory)}')
+    return files
 
 
 def main():
@@ -37,6 +44,7 @@ def main():
     phases = []
     baseline = None
     source_before = {}
+    baseline_source_before = {}
     products = {}
     result = {'scope': 'paired static builds/Markdown/privacy only; output classification and remaining migration checks required',
               'before': args.before, 'head': args.head, 'status': 'FAILED', 'phases': phases, 'products': products}
@@ -57,6 +65,15 @@ def main():
         save()
         if completed.returncode:
             raise RuntimeError(f'{label} exited {completed.returncode}; see retained phase log')
+
+    def tracked_snapshot(checkout):
+        return {name: digest(checkout / name) for name in git('ls-files', cwd=checkout).splitlines()}
+
+    def guard_source(label, checkout, expected):
+        actual = tracked_snapshot(checkout)
+        (out / (label + '-source-final.json')).write_text(json.dumps(actual, indent=2) + '\n')
+        assert actual == expected, f'{label} tracked source changed'
+        assert not git('status', '--porcelain', cwd=checkout), f'{label} checkout is dirty'
 
     def retain(label, checkout):
         product = checkout / 'dist'
@@ -80,7 +97,9 @@ def main():
         assert git('rev-parse', '--is-shallow-repository') == 'false', 'Complete history is required before dependency setup'
         subprocess.run(['git', 'merge-base', '--is-ancestor', args.before, args.head], cwd=root, check=True)
         assert not git('status', '--porcelain')
-        source_before = {name: digest(root / name) for name in git('ls-files').splitlines()}
+        source_before = tracked_snapshot(root)
+        (out / 'after-source-initial.json').write_text(json.dumps(source_before, indent=2) + '\n')
+        assert subprocess.check_output(['git', 'show', args.before + ':package-lock.json'], cwd=root) == (root / 'package-lock.json').read_bytes(), 'Shared dependency payload requires identical lock bytes'
         assert (root / 'tools/site/build-site.mjs').is_file()
         assert (root / 'tools/site/source-layout.json').is_file()
         assert shutil.which('npm') and shutil.which('node')
@@ -90,11 +109,16 @@ def main():
         baseline = Path(tempfile.mkdtemp(prefix='gyropup-owning-before-'))
         assert not baseline.is_relative_to(Path(os.environ['FLEET_RUN_DIR']).resolve())
         run('before-checkout', ['git', 'worktree', 'add', '--detach', str(baseline), args.before])
+        assert (baseline / 'package-lock.json').read_bytes() == (root / 'package-lock.json').read_bytes()
+        baseline_source_before = tracked_snapshot(baseline)
+        (out / 'before-source-initial.json').write_text(json.dumps(baseline_source_before, indent=2) + '\n')
+        assert not git('status', '--porcelain', cwd=baseline)
         (baseline / 'node_modules').symlink_to(root / 'node_modules', target_is_directory=True)
         try:
             run('before-build', ['npm', 'run', 'build'], cwd=baseline)
         finally:
             retain('before', baseline)
+        guard_source('before', baseline, baseline_source_before)
         try:
             run('after-build', ['npm', 'run', 'build'])
         finally:
@@ -103,9 +127,9 @@ def main():
         run('after-privacy', ['npm', 'run', 'test:privacy'])
         for label, checkout in (('before', baseline), ('after', root)):
             assert inventory(checkout / 'dist') == json.loads((out / (label + '-inventory.json')).read_text())
-        assert {name: digest(root / name) for name in git('ls-files').splitlines()} == source_before
-        assert not git('status', '--porcelain')
-        result.update(status='PASS_SCOPED', source_unchanged=True, products_unchanged_after_checks=True,
+        guard_source('before', baseline, baseline_source_before)
+        guard_source('after', root, source_before)
+        result.update(status='PASS_SCOPED', candidate_source_unchanged=True, baseline_source_unchanged=True, lock_bytes_equal=True, products_unchanged_after_checks=True,
                       classification='NOT_YET_PERFORMED; retain all changed paths and inspect actual fields/bytes')
     except BaseException as error:
         result['error'] = f'{type(error).__name__}: {error}'
