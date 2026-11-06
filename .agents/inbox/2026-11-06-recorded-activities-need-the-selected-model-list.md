@@ -47,3 +47,23 @@ The separate `2f02fa5b` gamepad hop-landing timeout had no recorded jump/model/y
 state. Its cause remains unknown. The existing gamepad test now prints those
 fields on that failure and rethrows the original error, preserving the exact
 landing predicate and 15-second bound. This is diagnostics, not a hop fix.
+
+## History cards must not consume the hero startup budget
+
+The final `0f8f4e3c` presentation job128020201065 reached the unchanged cold
+highlight integration. Both auto/manual cases timed out after 90 seconds at
+150 ms / 1.6 Mbps. The actual reports show hero readiness at 61.91/61.84 seconds,
+a paused source-less video and zero movie requests, media errors or failed
+requests. The hero queue has a 60-second deadline. This was not a decoder
+failure. The same shared connection downloaded timeline before/after PNGs of
+702,025 and 698,939 bytes, plus the 698,939-byte source picture and other history
+images; native lazy loading did not keep those near-viewport downloads away.
+
+History cards display at most 240 × 165 CSS pixels. The builder now derives
+bounded 480 × 330 WebP previews using the already locked Sharp 0.35.5. Each
+preview links to its unchanged original Git blob; event membership, raw paths
+and original image bytes remain strict. The existing timeline test checks each
+actual preview against its exact original, dimensions and full-resolution link.
+The 60-second hero deadline, 90-second playback wait and shared-connection
+throttle remain unchanged. Actual cold auto/manual integration must pass on
+the new product; smaller files alone do not establish that result.

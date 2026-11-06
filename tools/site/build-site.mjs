@@ -9,7 +9,7 @@ import { addModelPreviews } from '../../software/site/assets/model-links.js';
 import { writeMarkdownSite } from './site-markdown.mjs';
 import { SITE_CACHE_CONTROL, versionSiteAssets } from './site-cache.mjs';
 import { collectStatus, createReader, renderBoard, shallowHistory } from './status-board.mjs';
-import { collectTimeline, gitIn, imagePaths, renderTimeline, subsystemOf } from './timeline.mjs';
+import { collectTimeline, gitIn, imagePaths, previewPaths, timelinePreview, renderTimeline, subsystemOf } from './timeline.mjs';
 import { OPEN_FOLDS, enhanceDocument } from './doc-page.mjs';
 import { verifyRigFiles } from '../evidence/media/rig-media.mjs';
 import {publicForSource,publicDirectoryForSource,sourceForPublic,publicationFiles,markRetiredCatalogLinks} from './source-layout.mjs';
@@ -77,8 +77,14 @@ await mkdir(path.join(out, 'site/timeline'), { recursive: true });
 for (const event of changes) {
   const img = imagePaths(event);
   if (!img) continue;
-  await writeFile(path.join(out, img.after), execFileSync('git', ['show', `${event.sha}:${event.image.file}`], { cwd: root, maxBuffer: 256 << 20 }));
-  if (img.before) await writeFile(path.join(out, img.before), execFileSync('git', ['show', `${event.sha}^1:${event.image.file}`], { cwd: root, maxBuffer: 256 << 20 }));
+  const previews = previewPaths(event);
+  for (const side of ['after', 'before']) {
+    if (!img[side]) continue;
+    const revision = side === 'before' ? `${event.sha}^1` : event.sha;
+    const original = execFileSync('git', ['show', `${revision}:${event.image.file}`], { cwd: root, maxBuffer: 256 << 20 });
+    await writeFile(path.join(out, img[side]), original);
+    await writeFile(path.join(out, previews[side]), await timelinePreview(original));
+  }
 }
 for (const [file, options] of [['index.html', { compact: true, show: 4 }], ['designer/progress.html', { show: 5, more: changes.length }]]) {
   const target = path.join(out, file), html = await readFile(target, 'utf8');

@@ -10,6 +10,7 @@
  */
 import { execFileSync } from 'node:child_process';
 import YAML from 'yaml';
+import sharp from 'sharp';
 import { shortDate } from './status-board.mjs';
 import {publicForSource} from './source-layout.mjs';
 // Timeline ownership is broader than site publication: unpublished package glue
@@ -163,12 +164,23 @@ const count = (n, noun) => `${n} ${noun}${n === 1 ? '' : 's'}`; // every noun he
 /** The published image paths for an event (the build copies git's blobs there). */
 export const imagePaths = e => e.image && { after: `/site/timeline/${e.sha.slice(0, 10)}-after.${e.image.file.split('.').pop()}`, before: e.image.before ? `/site/timeline/${e.sha.slice(0, 10)}-before.${e.image.file.split('.').pop()}` : null };
 
+// Cards render at most 240 × 165 CSS pixels. Keep a 2× preview and the exact
+// original Git blob separately, so history pictures do not starve the hero.
+export const previewPaths = e => {
+  const originals = imagePaths(e);
+  return originals && Object.fromEntries(Object.entries(originals).map(([side, file]) =>
+    [side, file && file.replace(/\.[^.]+$/, '-preview.webp')]));
+};
+export const timelinePreview = bytes => sharp(bytes)
+  .resize({ width: 480, height: 330, fit: 'inside', withoutEnlargement: true })
+  .webp({ quality: 85 }).toBuffer();
+
 function eventHTML(e, i) {
-  const img = imagePaths(e);
+  const img = imagePaths(e), preview = previewPaths(e);
   const chips = e.subsystems.map(s => `<span class="tl-chip" data-subsystem="${s}">${SUBSYSTEM_NAMES[s]}</span>`).join('') || '<span class="tl-chip">Shared records</span>';
   const kinds = KIND_WORDS.filter(([k]) => e.kinds[k]).map(([k, w]) => count(e.kinds[k], w)).join(' · ');
   const decisions = e.decisions.length ? `<ul class="tl-decisions">${e.decisions.map(d => `<li><b>${esc(d.id)}</b>${d.change === 'revised' ? ' <em>revised</em>' : ''} ${esc(d.title || '')}</li>`).join('')}</ul>` : '';
-  const pictures = img ? `<figure class="tl-pics${img.before ? ' has-before' : ''}">${img.before ? `<span class="tl-pic"><img src="${img.before}" alt="${esc(e.label)}: the render before" loading="lazy" decoding="async"><small>before</small></span><span class="tl-arrow" aria-hidden="true">→</span>` : ''}<span class="tl-pic"><img src="${img.after}" alt="${esc(e.label)}: the render ${img.before ? 'after' : 'it added'}" loading="lazy" decoding="async"><small>${img.before ? 'after' : 'new'}</small></span><figcaption>${esc(e.image.file)}</figcaption></figure>` : '';
+  const pictures = img ? `<figure class="tl-pics${img.before ? ' has-before' : ''}">${img.before ? `<a class="tl-pic" href="${img.before}" aria-label="Open full-resolution before image"><img src="${preview.before}" alt="${esc(e.label)}: the render before" loading="lazy" decoding="async"><small>before</small></a><span class="tl-arrow" aria-hidden="true">→</span>` : ''}<a class="tl-pic" href="${img.after}" aria-label="Open full-resolution ${img.before ? 'after' : 'new'} image"><img src="${preview.after}" alt="${esc(e.label)}: the render ${img.before ? 'after' : 'it added'}" loading="lazy" decoding="async"><small>${img.before ? 'after' : 'new'}</small></a><figcaption>${esc(e.image.file)}</figcaption></figure>` : '';
   const link = e.pr ? `<a href="https://github.com/Valpatel/gyropup/pull/${e.pr}">#${e.pr}</a>` : `<a href="https://github.com/Valpatel/gyropup/commit/${e.sha}">${e.sha.slice(0, 7)}</a>`;
   return `<li class="tl-event" style="--i:${i}"${img ? ' data-visual' : ''}><time datetime="${esc(e.date)}">${shortDate(e.date)}</time><div class="tl-card"><p class="tl-meta">${chips}<span class="tl-kinds">${kinds}</span></p>`
     + `<h3 class="tl-label">${esc(e.label)} <span class="tl-ref">${link}</span></h3>${decisions}${pictures}</div></li>`;

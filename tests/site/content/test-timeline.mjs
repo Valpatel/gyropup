@@ -1,6 +1,7 @@
 /** "What changed" (tools/timeline.mjs): the published timeline against git, read again here by its own commands, and
  * its layout, motion and Markdown. Browser tests use SITE_URL, or serve dist/ (run `npm run build` first). */
 import assert from 'node:assert/strict';
+import sharp from 'sharp';
 import { execFileSync } from 'node:child_process';
 import { createHash } from 'node:crypto';
 import { existsSync, readFileSync, mkdtempSync, mkdirSync, writeFileSync, renameSync, rmSync } from 'node:fs';
@@ -12,7 +13,7 @@ import { parseHTML } from 'linkedom';
 import { chromium, webkit } from '@playwright/test';
 import { createSiteServer } from '../../../tools/site/serve-site.mjs';
 import { acknowledgePrototypeNotice } from './test-prototype-session.mjs';
-import { DESIGN_PATHS, SYNTHETIC_MERGE, changeUnits, collectTimeline, decisionChanges, gitIn, imagePaths, renderTimeline, shorten, subsystemOf } from '../../../tools/site/timeline.mjs';
+import { DESIGN_PATHS, SYNTHETIC_MERGE, changeUnits, collectTimeline, decisionChanges, gitIn, imagePaths, previewPaths, renderTimeline, shorten, subsystemOf } from '../../../tools/site/timeline.mjs';
 import { shortDate } from '../../../tools/site/status-board.mjs';
 
 const root = path.resolve(import.meta.dirname, '../../..');
@@ -236,10 +237,20 @@ test('the public site, built from main, shows the same pull requests, never a re
   }
 });
 
-test('before and after renders are git’s own blobs, published under /site/timeline/', () => {
+test('before and after originals remain Git blobs and card previews derive from each exact original', async () => {
   let pairs = 0;
   for (const e of events.filter(e => e.image)) {
-    const img = imagePaths(e);
+    const img = imagePaths(e), previews = previewPaths(e);
+    for (const side of ['after', 'before']) {
+      if (!img[side]) continue;
+      const original = readFileSync(path.join(dist, img[side]));
+      const preview = readFileSync(path.join(dist, previews[side]));
+      const meta = await sharp(preview).metadata();
+      assert.equal(meta.format, 'webp');
+      assert.ok(meta.width <= 480 && meta.height <= 330, `${e.sha} ${side} card dimensions`);
+      const expected = await sharp(original).resize({ width: 480, height: 330, fit: 'inside', withoutEnlargement: true }).webp({ quality: 85 }).toBuffer();
+      assert.deepEqual(preview, expected, `${e.sha} ${side} preview belongs to its original`);
+    }
     const after = readFileSync(path.join(dist, img.after));
     assert.equal(createHash('sha1').update(after).digest('hex'), createHash('sha1').update(git('show', `${e.sha}:${e.image.file}`)).digest('hex'), `${e.sha} after`);
     if (img.before) {
@@ -262,7 +273,12 @@ test('both pages carry the timeline; the landing shows the newest and links to t
     assert.equal(text(el.querySelector('time')), shortDate(e.date));
     assert.ok(text(el.querySelector('.tl-label')).startsWith(e.label));
   }
-  for (const d of [landing, progress]) for (const img of d.querySelectorAll('#changes img')) assert.ok(existsSync(path.join(dist, img.getAttribute('src').split('?')[0])), img.getAttribute('src'));
+  for (const d of [landing, progress]) for (const img of d.querySelectorAll('#changes img')) {
+    const preview = img.getAttribute('src').split('?')[0], original = img.closest('a').getAttribute('href').split('?')[0];
+    assert.ok(existsSync(path.join(dist, preview)), preview);
+    assert.ok(existsSync(path.join(dist, original)), original);
+    assert.equal(preview, original.replace(/\.[^.]+$/, '-preview.webp'));
+  }
 });
 
 let browser, server, base;
