@@ -18,7 +18,12 @@ const activity=value=>page.selectOption('#robot-actions select',value);
 const ready=()=>page.waitForFunction(()=>document.body.dataset.ready==='1' && !!window.__sim.state.robot);
 async function model(value) {
  await page.selectOption('#design-select',value);
- await page.waitForFunction(value=>window.__sim.state.modelKey===value && !window.__sim.state.bench,value);
+ await page.waitForFunction(value=>{
+  const stem=value.split('/').pop().replace(/\.json$/, '');
+  const options=[...document.querySelector('#run-select').options].map(option=>option.value);
+  return window.__sim.state.modelKey===value && !window.__sim.state.bench
+   && ['drive','targets'].every(activity=>options.includes(`${stem}/${activity}`));
+ },value);
 }
 async function checkFreshLayout() {
  const fresh=await browser.newContext({viewport:{width:1280,height:900}});

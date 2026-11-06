@@ -53,5 +53,18 @@
     "missing_current_valid_old_rejected": true,
     "changed_manifest_digest_rejected": true,
     "manifest_fixture_meshes_not_modified": true
+  },
+  "recorded_activity_model_readiness": {
+    "old_control_status": "PASS_REPRODUCED_READINESS_RACE",
+    "old_control_script_sha256": "243d62286f35423aa06f557750c7d54a74a1f240d00a9be0bfed7cef15387ae5",
+    "corrected_control_status": "PASS_ACTUAL_NEW_MODEL_HELPER",
+    "actual_model_helper_sha256": "f9e0fc640626f7c610b8a1aebcb1f7defe0b036ae4d9d27bec5d6742aa080605",
+    "source_equals_served": true,
+    "sim_source_sha256": "5042c0347f73092ce308beaf8fb7b1cb6c5e6b5183c066e05ca7c1de629ed591",
+    "scope": "Actual model helper stays pending while the exact summary request is held; resolves only after matching model drive and targets options; actual targets replay then starts. Replay assertions, application source and timeouts unchanged.",
+    "page_errors": 0,
+    "request_failures": 0,
+    "owned_resources_closed": true,
+    "unknown_original_ci_case_retained": true
   }
 }
