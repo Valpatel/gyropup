@@ -79,12 +79,14 @@ try {
  assert.equal(await page.locator('#rig video').count(),7);
  assert.match(await page.locator('#rig [data-rig-media-state]').innerText(),/Recorded leg simulation · 18\.75 kg · 36 V/);
  assert.ok((await page.locator('#rig video').evaluateAll(videos=>videos.map(v=>v.src))).every(src=>src.startsWith('blob:')),'Playback uses the bytes whose hashes were checked');
- const rigVideo=page.locator('#rig video').first();await rigVideo.evaluate(video=>video.play());
- await page.waitForFunction(()=>{const v=document.querySelector('#rig video');return Number.isFinite(v.duration)&&v.duration>0&&v.currentTime>0.05;});
- const decoded=await rigVideo.evaluate(v=>({time:v.currentTime,frames:v.getVideoPlaybackQuality().totalVideoFrames}));
- await page.waitForFunction(before=>{const v=document.querySelector('#rig video');return v.currentTime>before.time+.2&&v.getVideoPlaybackQuality().totalVideoFrames>before.frames;},decoded);
- assert.equal(await rigVideo.evaluate(v=>v.dataset.rigFormat===(v.canPlayType('video/mp4; codecs="avc1.64001f"')?'mp4':'webm')),true,'Actual decoded playback uses the supported verified format');
- await rigVideo.evaluate(video=>video.pause());
+ for(let i=0;i<rigRecord.clips.length;i++){
+  const rigVideo=page.locator('#rig video').nth(i);await rigVideo.scrollIntoViewIfNeeded();await rigVideo.evaluate(video=>video.play());
+  await page.waitForFunction(i=>{const v=document.querySelectorAll('#rig video')[i];return Number.isFinite(v.duration)&&v.duration>0&&v.currentTime>0.05;},i);
+  const decoded=await rigVideo.evaluate(v=>({time:v.currentTime,frames:v.getVideoPlaybackQuality().totalVideoFrames}));
+  await page.waitForFunction(({i,before})=>{const v=document.querySelectorAll('#rig video')[i];return v.currentTime>before.time+.2&&v.getVideoPlaybackQuality().totalVideoFrames>before.frames;},{i,before:decoded});
+  assert.equal(await rigVideo.evaluate(v=>v.dataset.rigFormat===(v.canPlayType('video/mp4; codecs="avc1.64001f"')?'mp4':'webm')),true,'Actual decoded playback uses the supported verified format: '+rigRecord.clips[i].scenario);
+  await rigVideo.evaluate(video=>video.pause());
+ }
  await page.locator('#rig').screenshot({path:out+'/rig-390.png'});
  await page.getByText('The leg on its test rig',{exact:true}).click();
  const movie=await page.locator('#feavid').elementHandle();
