@@ -39,6 +39,11 @@ finish connection handlers next, then await the server's completed closure.
 Completed shutdown errors still require thread/transport/loop cleanup before
 being re-raised. A timed-out, incomplete shutdown must not be marked closed.
 
+The first test-only PR also exposed a CI trigger gap: `deploy-dry-run` did not
+run, because its path filter named only the inventory test although its Python
+3.10 command runs the bridge and vector tests too. Those two exact test paths
+now select the existing workflow; commands, permissions and limits stay intact.
+
 Limits: this reproduces premature test teardown, not the exact low-level stdout
 lock crash. Production bridge shutdown, physical motor behavior and hardware
 qualification are outside this change. Existing bus guards, origin/token rules
