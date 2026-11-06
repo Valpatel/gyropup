@@ -1,13 +1,13 @@
 """Gyropup's pronunciation key, the Python side: what text is sent to a voice.
 
-    from pronunciation import pronounce
+    from tools.audio.pronunciation import pronounce
     pronounce("Gyropup's turret")          # "gyro pup's turret"
 
-    python3 tools/pronunciation.py "Hi! I am Gyropup!"     # print what a voice is sent
-    python3 tools/pronunciation.py --show                  # espeak's phonemes for each entry, as written and as said (needs Piper)
+    python3 tools/audio/pronunciation.py "Hi! I am Gyropup!"     # print what a voice is sent
+    python3 tools/audio/pronunciation.py --show                  # espeak's phonemes for each entry, as written and as said (needs Piper)
 
-The key is designer/character/pronunciation.json; designer/character/pronounce.js applies the same file the same way in
-the browser (tools/test-pronunciation.mjs and tools/test-pronunciation.py run the same examples on both). The rules:
+The key is software/site/designer/character/pronunciation.json; software/site/designer/character/pronounce.js applies the same file the same way in
+the browser (tests/site/content/test-pronunciation.mjs and tests/software/audio/test-pronunciation.py run the same examples on both). The rules:
 an entry's `match` (a string or a list) is found case-insensitively as a whole word, optionally followed by 's, ’s,
 s', s’ or s, which are kept; text inside the key's `protect` pattern (URLs, e-mail addresses, domain names) is never
 changed; every entry is replaced in one pass, so a replacement is never matched again and applying the key twice

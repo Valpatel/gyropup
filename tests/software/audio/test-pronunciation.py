@@ -1,7 +1,7 @@
-"""The pronunciation key, Python side (tools/pronunciation.py, tools/tts_server.py), and its agreement with the browser
-side (designer/character/pronounce.js) on the same key file. Needs python3 and node; no Piper.
+"""The pronunciation key, Python side (tools/audio/pronunciation.py, tools/audio/tts_server.py), and its agreement with the browser
+side (software/site/designer/character/pronounce.js) on the same key file. Needs python3 and node; no Piper.
 
-    python3 tools/test-pronunciation.py
+    python3 tests/software/audio/test-pronunciation.py
 """
 from __future__ import annotations
 
@@ -114,7 +114,8 @@ class SameKeyBothSides(unittest.TestCase):
         self.assertEqual(P.KEY_PATH, (ROOT / 'software/site/designer/character/pronunciation.json'))
         js = ((ROOT / 'software/site/designer/character/pronounce.js')).read_text()
         self.assertIn("new URL('./pronunciation.json', import.meta.url)", js)
-        self.assertIn('from pronunciation import pronounce', ((TOOLS / 'audio/tts_server.py')).read_text())
+        self.assertIs(tts_server.pronounce, P.pronounce, 'the sidecar must use the actual shared key implementation')
+        self.assertEqual(Path(P.__file__).resolve(), (TOOLS / 'audio/pronunciation.py').resolve())
 
     def test_same_results(self):
         lines = json.loads(subprocess.run(['node', '--input-type=module', '-e',

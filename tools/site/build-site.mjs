@@ -55,7 +55,7 @@ await writeFile(path.join(out,'catalog/images.json'),JSON.stringify(images));
 await mkdir(path.join(out, 'site/pages'), { recursive: true });
 // The design status board: every number from a committed record, every date from git. Cloudflare Pages clones
 // shallowly, so there the build first fetches the history; anywhere else a shallow checkout shows no dates rather
-// than wrong ones (tools/status-board.mjs).
+// than wrong ones (tools/site/status-board.mjs).
 let history = !shallowHistory(root);
 if (!history && process.env.CF_PAGES) {
   // Never wait on a credential prompt: a public clone needs none, and a failed fetch only leaves the dates out.
@@ -69,9 +69,9 @@ for (const [file, options] of [['index.html', { compact: true }], ['designer/pro
   if (!html.includes('<!-- status-board -->')) throw new Error(`${file} has no <!-- status-board --> marker`);
   await writeFile(target, html.replace('<!-- status-board -->', renderBoard(status, options)));
 }
-await writeFile(path.join(out, 'site/status.json'), JSON.stringify({ generator: 'tools/status-board.mjs', history, ...status }, null, 2));
+await writeFile(path.join(out, 'site/status.json'), JSON.stringify({ generator: 'tools/site/status-board.mjs', history, ...status }, null, 2));
 // "What changed": the design changes on the integration branch, newest first, with the renders they changed before
-// and after, copied from git's own objects (tools/timeline.mjs). Without history the timeline says so.
+// and after, copied from git's own objects (tools/site/timeline.mjs). Without history the timeline says so.
 const changes = history ? collectTimeline(gitIn(root)) : [];
 await mkdir(path.join(out, 'site/timeline'), { recursive: true });
 for (const event of changes) {
@@ -85,7 +85,7 @@ for (const [file, options] of [['index.html', { compact: true, show: 4 }], ['des
   if (!html.includes('<!-- timeline -->')) throw new Error(`${file} has no <!-- timeline --> marker`);
   await writeFile(target, html.replace('<!-- timeline -->', renderTimeline(changes, options)));
 }
-await writeFile(path.join(out, 'site/timeline.json'), JSON.stringify({ generator: 'tools/timeline.mjs', history, events: changes }, null, 2));
+await writeFile(path.join(out, 'site/timeline.json'), JSON.stringify({ generator: 'tools/site/timeline.mjs', history, events: changes }, null, 2));
 const nav = [
   {id:'home', title:'Home', href:''}, {id:'simulate',title:'Play',href:'designer/sim.html'},
   {id:'progress',title:'Progress',href:'designer/progress.html'}, {id:'build',title:'Build',href:'designer/build.html'},

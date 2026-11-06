@@ -1,8 +1,8 @@
-"""Gyropup's voice: a small Piper TTS sidecar for designer/character/talk.js.
+"""Gyropup's voice: a small Piper TTS sidecar for software/site/designer/character/talk.js.
 
-    python3 tools/tts_server.py                                   # http://127.0.0.1:8081 with the default voice
-    python3 tools/tts_server.py --voice en_US-amy-medium --pitch 0
-    python3 tools/tts_server.py --say "Hi! I am Gyropup!" --out hi.wav     # one line to a WAV file, no server
+    python3 tools/audio/tts_server.py                                   # http://127.0.0.1:8081 with the default voice
+    python3 tools/audio/tts_server.py --voice en_US-amy-medium --pitch 0
+    python3 tools/audio/tts_server.py --say "Hi! I am Gyropup!" --out hi.wav     # one line to a WAV file, no server
 
     GET /health        {"ok": true, "voice": ..., "label": ..., "rate": 1, ...}  (talk.js probes this first)
     GET /tts?text=...  audio/wav, 16-bit mono; every line is cached in memory and on disk
@@ -12,7 +12,7 @@ The pup character is made here, not in the browser: Piper speaks with longer pho
 (and the formants, so it sounds smaller and younger) and brings the pace back, so every client hears the same voice.
 /health says `rate: 1` so talk.js plays it as it is. CORS answers pages from this machine or the LAN (--origins).
 
-Settings are flags or GYROPUP_TTS_* environment variables (a flag wins); see designer/character/README.md. Piper
+Settings are flags or GYROPUP_TTS_* environment variables (a flag wins); see software/site/designer/character/README.md. Piper
 (`pip install piper-tts`) runs in-process with the voice loaded once; if this python cannot import it, the server
 re-runs itself under one that can (GYROPUP_TTS_PYTHON, else a python3.x on PATH). Nothing else is needed.
 """
@@ -42,7 +42,7 @@ from http.server import BaseHTTPRequestHandler, ThreadingHTTPServer
 from pathlib import Path
 from urllib.parse import parse_qs, urlparse
 
-from tools.audio.pronunciation import pronounce   # names espeak says wrongly (designer/character/pronunciation.json)
+from tools.audio.pronunciation import pronounce   # names espeak says wrongly (software/site/designer/character/pronunciation.json)
 
 DEFAULT_VOICE = 'en_US-hfc_female-medium'
 DEFAULT_PITCH = 2.0          # semitones up: a pup, not a newsreader
@@ -58,7 +58,7 @@ LOCAL = re.compile(r'^https?://(localhost|127(\.\d+){3}|\[::1\]|0\.0\.0\.0|10(\.
 
 def settings(argv=None) -> argparse.Namespace:
     env = lambda k, d=None: os.environ.get('GYROPUP_TTS_' + k, d)   # noqa: E731
-    ap = argparse.ArgumentParser(description="Gyropup's Piper TTS sidecar for designer/character/talk.js")
+    ap = argparse.ArgumentParser(description="Gyropup's Piper TTS sidecar for software/site/designer/character/talk.js")
     ap.add_argument('--voice', default=env('VOICE', DEFAULT_VOICE), help='voice name in a voice folder, or a .onnx path')
     ap.add_argument('--speaker', default=env('SPEAKER'), help='speaker name or id, for multi-speaker voices')
     ap.add_argument('--pitch', type=float, default=float(env('PITCH', DEFAULT_PITCH)), help='semitones up (or down)')

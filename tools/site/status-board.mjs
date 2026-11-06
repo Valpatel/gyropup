@@ -1,6 +1,6 @@
 /** The design status board: one panel a subsystem, every number read from a committed record when the site is built.
- * tools/build-site.mjs writes it into the landing page and Progress (at their <!-- status-board --> markers) and
- * publishes the same data as /site/status.json. tools/test-status-board.mjs recomputes the numbers from the records on
+ * tools/site/build-site.mjs writes it into the landing page and Progress (at their <!-- status-board --> markers) and
+ * publishes the same data as /site/status.json. tests/site/content/test-status-board.mjs recomputes the numbers from the records on
  * its own, so a board that disagrees with its records fails CI.
  *
  * Honest by construction: a below-target study is amber, one under 1.0 (or a fix the records ask for) is red, and
@@ -16,7 +16,7 @@ const esc = s => String(s ?? '').replace(/[&<>"']/g, c => ({ '&': '&amp;', '<': 
 const MONTHS = ['Jan', 'Feb', 'Mar', 'Apr', 'May', 'Jun', 'Jul', 'Aug', 'Sep', 'Oct', 'Nov', 'Dec'];
 /** "1 Nov 2026" from an ISO date, in the date's own offset (git's committer date). */
 export const shortDate = iso => { const [y, m, d] = iso.slice(0, 10).split('-').map(Number); return `${d} ${MONTHS[m - 1]} ${y}`; };
-/** The notebook page the build renders a Markdown source to (tools/build-site.mjs pagePath). */
+/** The notebook page the build renders a Markdown source to (tools/site/build-site.mjs pagePath). */
 export const docPage = file => `/site/pages/${file.toLowerCase().replace(/[^a-z0-9]+/g, '-')}.html`;
 const num = (v, digits = 2) => Number(v).toFixed(digits).replace(/\.?0+$/, '');
 /** Kilograms: two decimals, trailing zeros dropped, but always one (37.0, 36.77). */
@@ -460,7 +460,7 @@ export function renderBoard({ panels, summary }, { compact = false, heading = 'h
     + `</div>`;
   const legend = `<ul class="sb-legend" aria-hidden="true">${LEGEND.map(([k, t]) => `<li data-k="${k}">${t}</li>`).join('')}</ul>`;
   const latest = s.changed ? ` The newest record changed <time datetime="${esc(s.changed.date)}">${shortDate(s.changed.date)}</time>.` : '';
-  return `<section id="board" class="status-board${compact ? ' is-compact' : ''}" aria-labelledby="board-title" data-generated="tools/status-board.mjs">`
+  return `<section id="board" class="status-board${compact ? ' is-compact' : ''}" aria-labelledby="board-title" data-generated="tools/site/status-board.mjs">`
     + `<div class="sb-heading"><div><p class="eyebrow"><span class="status-dot"></span> FROM THE RECORDS, AT BUILD</p><${heading} id="board-title">The design, <span>right now.</span></${heading}></div>`
     + `<p class="sb-lede">Every bar is read from a committed check, study or measurement sheet when the site is built. Amber and red are real shortfalls; grey is not measured yet.${latest}</p></div>`
     + strip + legend + (compact ? '<p class="sb-swipe" aria-hidden="true">Swipe for every subsystem →</p>' : '') + `<div class="sb-grid"${compact ? ' tabindex="0" role="group" aria-label="Subsystem panels"' : ''}>${panels.map(p => panelHTML(p, { compact })).join('')}</div>`

@@ -5,8 +5,8 @@
  * shortened, its subsystems come from the paths it touched, and when it changed a render the build publishes that
  * render before and after, straight from git's objects.
  *
- * tools/build-site.mjs writes the timeline into the landing page and Progress (<!-- timeline --> markers) and
- * /site/timeline.json. tools/test-timeline.mjs reads git again on its own and compares.
+ * tools/site/build-site.mjs writes the timeline into the landing page and Progress (<!-- timeline --> markers) and
+ * /site/timeline.json. tests/site/content/test-timeline.mjs reads git again on its own and compares.
  */
 import { execFileSync } from 'node:child_process';
 import YAML from 'yaml';
@@ -197,7 +197,7 @@ export function renderTimeline(events, { show = 6, more = 0, compact = false } =
   const fold = (from, to, summary) => `<details class="tl-more"><summary>${summary}</summary>${list(from, to)}</details>`;
   const folded = events.slice(open, Math.max(open, show + more));
   const span = `from ${shortDate(events.at(-1).date)} to ${shortDate(events[0].date)}`;
-  return `<section id="changes" class="timeline${compact ? ' is-compact' : ''}" aria-labelledby="changes-title" data-generated="tools/timeline.mjs">`
+  return `<section id="changes" class="timeline${compact ? ' is-compact' : ''}" aria-labelledby="changes-title" data-generated="tools/site/timeline.mjs">`
     + `<div class="tl-heading"><p class="eyebrow"><span class="status-dot"></span> FROM THE GIT HISTORY</p><h2 id="changes-title">What changed, <span>and when.</span></h2>`
     + `<p class="tl-lede">The last ${events.length} design changes, ${span}: CAD, models, renders, records and decisions, newest first. Where a change re-rendered a part, its before and after.</p></div>`
     + (quiet.length ? list(0, lead) + fold(lead, anchor, `${quiet.length} ${quiet.length === 1 ? 'change' : 'changes'} without a picture`) + list(anchor, open) : list(0, open))

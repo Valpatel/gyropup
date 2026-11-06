@@ -1,9 +1,9 @@
-/** Design-note pages without walls of text. tools/build-site.mjs renders each docs/research/hardware Markdown file with
+/** Design-note pages without walls of text. tools/site/build-site.mjs renders each docs/research/hardware Markdown file with
  * marked and then passes the HTML through enhanceDocument(), which changes how it is shown, never what it says:
  *
  * - A lead card under the title: when the note was last changed (git), how long it is, its sections as jump links,
  *   and, for a note about one subsystem, that subsystem's render and its first readings from the status board
- *   (tools/status-board.mjs), so the page opens on the real part and its real numbers.
+ *   (tools/site/status-board.mjs), so the page opens on the real part and its real numbers.
  * - Status strips: a table with a Status, Verdict, Result or State column of short values gets a bar of how many rows
  *   are in each state, counted from the table itself, above it.
  * - Folds: a long run of prose with nothing to look at keeps its opening and folds the rest into a <details> that
@@ -96,7 +96,7 @@ export function tableStates(table) {
   return { column: head[col], rows: cells.length, states };
 }
 function stripHTML({ column, rows, states }) {
-  return `<figure class="doc-strip" data-visual data-generated="tools/doc-page.mjs"><figcaption><b>${plural(rows, 'row')}</b> by ${esc(column.toLowerCase())}, counted from the table below</figcaption>`
+  return `<figure class="doc-strip" data-visual data-generated="tools/site/doc-page.mjs"><figcaption><b>${plural(rows, 'row')}</b> by ${esc(column.toLowerCase())}, counted from the table below</figcaption>`
     + `<div class="doc-strip-bar" aria-hidden="true">${states.map(s => `<i data-k="${s.kind}" style="--w:${(100 * s.n / rows).toFixed(2)}%" title="${esc(s.key)}: ${s.n}"></i>`).join('')}</div>`
     + `<ul class="doc-strip-legend">${states.map(s => `<li data-k="${s.kind}"><b>${s.n}</b> ${esc(s.key)}</li>`).join('')}</ul></figure>`;
 }
@@ -118,7 +118,7 @@ function cardHTML({ file, changed, text, sections, figures, tables, panel }) {
   const live = panel ? `<div class="doc-live"><a class="doc-live-shot" href="/designer/progress.html#board-${esc(panel.id)}"><img src="${esc(panel.image.src)}" width="${panel.image.width}" height="${panel.image.height}" alt="${esc(panel.image.alt)}" loading="lazy" decoding="async"></a>`
     + `<div><p class="doc-live-title"><b>${esc(panel.name)} today</b>, from its records${panel.changed ? ` (changed ${shortDate(panel.changed.date)})` : ''}</p><ul class="doc-meters">${panel.meters.filter(m => m.bar).slice(0, 3).map(meterHTML).join('')}</ul>`
     + `<a class="doc-live-more" href="/designer/progress.html#board-${esc(panel.id)}">The ${esc(panel.name.toLowerCase())} on the status board →</a></div></div>` : '';
-  return `<aside class="doc-card${panel ? ' has-live' : ''}" data-generated="tools/doc-page.mjs"><p class="doc-facts">${facts.map(f => `<span>${f}</span>`).join('')}</p>${jump}${live}</aside>`;
+  return `<aside class="doc-card${panel ? ' has-live' : ''}" data-generated="tools/site/doc-page.mjs"><p class="doc-facts">${facts.map(f => `<span>${f}</span>`).join('')}</p>${jump}${live}</aside>`;
 }
 
 // ---- folds --------------------------------------------------------------------------------------------------------

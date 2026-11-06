@@ -102,3 +102,5 @@
 - A help-only edit is assumed to stale every generated study: distinguish archived collection membership from actual semantic/digest contracts in [CI phase evidence](inbox/2026-11-05-ci-classification-needs-phase-evidence.md#separate-the-collection-inventory-from-each-producers-actual-freshness-contract).
 
 - `python -I` unexpectedly has `sitecustomize`/Apport: check the observed system startup identity and toolkit module origins in [CI phase evidence](inbox/2026-11-05-ci-classification-needs-phase-evidence.md#isolated-python-still-has-a-system-startup-identity).
+
+- A relocated Python module works but a test rejects an old import spelling: [check the shared runtime object and checkout origin](inbox/2026-11-05-ci-classification-needs-phase-evidence.md#check-shared-runtime-identity-instead-of-a-particular-import-spelling).
