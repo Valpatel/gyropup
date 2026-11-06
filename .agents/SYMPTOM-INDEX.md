@@ -4,6 +4,7 @@
 | --- | --- |
 | A check summary says failed but the executed phase may be provisioning, a global cancellation, or a true assertion | [Classify phases and actual attempts before changing a check](inbox/2026-11-05-ci-classification-needs-phase-evidence.md) |
 | A retrieved product omits nested `src` files, or generated engineering indexes differ only in version queries | [Verify complete retrieval and bound generated-query comparisons](inbox/2026-11-05-ci-classification-needs-phase-evidence.md#compare-generated-cache-queries-without-exempting-engineering-outputs) |
+| Production reports a new version but a changed document still has preceding-source bytes | [Verify actual version, bytes and routes together](inbox/2026-11-05-ci-classification-needs-phase-evidence.md#a-new-version-response-is-not-complete-publication-evidence) |
 | An asynchronous Playwright wait predicate returns false but polling finishes immediately | [Use synchronous acceptance polling and bounded native completion states](inbox/2026-11-05-layout-readiness-must-wait-for-fonts-not-global-load.md) |
 | A paused PR says its dependency or implementation is missing, but later commits/reports may already exist | [Resume from the actual tree and reports](inbox/2026-11-05-paused-work-needs-the-actual-head.md) |
 | A logical directory move changes public files/pages or breaks a module/service despite unchanged contents | [Map ownership, publication and import contracts before moving](inbox/2026-11-05-root-moves-need-consumer-and-publication-maps.md) |

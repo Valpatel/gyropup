@@ -14,3 +14,7 @@ downstream action cannot prove that a missing-module fixture ran.
 Limits: this is a conservative literal-reference check, not a JavaScript parser or a complete dependency graph. Computed imports, escaped/template expressions, inline HTML scripts, runtime fetches and dynamically inserted CSS still need build/browser validation. A passing module check does not establish that every application feature works.
 
 Asset copying and human document discovery are separate. Tracked `hardware/` Markdown joins `docs/` and `research/` in the notebook; keep instruction/handoff exclusions consistent. Render source-relative links into the published page set and verify original CAD downloads remain byte-identical. Large-format vector drawings need a responsive page preview; their native paper dimensions are not a phone layout. See [engineering publication checks](../inbox/2026-10-29-downloadable-cad-notes-still-need-a-usable-portal.md).
+
+## Verify the actual publication
+
+After a normal main merge, require its actual ordinary public version plus source-byte identities and canonical routes, with the same version before and after the readback. An observed new version can precede an older document response; retain that incomplete observation and require the full final check without changing source/hash expectations. Verify GitHub-specific discovery through its actual API separately from site publication. See [the observed version/byte boundary](../inbox/2026-11-05-ci-classification-needs-phase-evidence.md#a-new-version-response-is-not-complete-publication-evidence).
