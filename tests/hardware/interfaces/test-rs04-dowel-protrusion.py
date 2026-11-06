@@ -22,8 +22,8 @@ CLEARANCE = 0.5                 # mm the dowel must stay short of the case hole'
 HOLE_R = (2.45, 2.70)           # mm: the frame's printed Ø5 dowel hole (2.5 + PRINT_HOLE_COMP / 2 + 0.015 = 2.5775 today),
                                 # between the M4 clearance (2.25) and an M5 clearance (2.75)
 # The parts the motor's case seats on, each with its two dowel holes per motor
-SEATS = {'exports/leg/hip_frame.step': 4, 'exports/leg/rs04-mounting-fit/hip_frame.step': 4,
-         'exports/rig/bench/coupon_frame_ring_nom.step': 2, 'exports/leg/rs04-mounting-fit/coupon_frame_ring_nom.step': 2}
+SEATS = {'hardware/exports/leg/hip_frame.step': 4, 'hardware/exports/leg/rs04-mounting-fit/hip_frame.step': 4,
+         'hardware/exports/rig/bench/coupon_frame_ring_nom.step': 2, 'hardware/exports/leg/rs04-mounting-fit/coupon_frame_ring_nom.step': 2}
 DRILL_OUT = 13.0                # mm, full diameter: docs/motor-day.md Phase 0.3 has the 12 mm holes drilled to this by hand
 PROUD_BAND = (2.0, 3.5)         # mm the page accepts, after the drill-out (2.0: a 135 deg point, a chamfered dowel)
 DOC = (ROOT / 'docs/legs/motor-day.md')

@@ -17,5 +17,13 @@
   "no_rebuild": true,
   "owned_worktree_listener_links_removed": true,
   "date_lookup_correction": "Independent Git expectation now resolves each public record to its actual source path; date/commit/time and source coverage assertions remain unchanged.",
-  "publication_boundary_scope": "Actual publicationFiles on direct/nested simulated tracked MD/JSON/model paths in every excluded home, plus real normal-build inventory and routes; no planted-file build claimed."
+  "publication_boundary_scope": "Actual publicationFiles on direct/nested simulated tracked MD/JSON/model paths in every excluded home, plus real normal-build inventory and routes; no planted-file build claimed.",
+  "dowel_physical_source_paths": {
+    "old_exit": 1,
+    "corrected_exit": 0,
+    "actual_tests": 3,
+    "expected_failures_retained": 1,
+    "scope": "Only four actual source-file paths changed to hardware/exports; all geometric measurements/assertions and expected failure remain unchanged.",
+    "outside_geometry92_and_media191": true
+  }
 }
