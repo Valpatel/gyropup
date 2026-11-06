@@ -1,6 +1,6 @@
 """Generate explicit cut/thumbnail inputs before conservative CAD receipts; no adoption."""
 from pathlib import Path
-import argparse, hashlib, importlib.util, json, os, shutil, stat, subprocess, sys, tarfile, time, signal
+import argparse, hashlib, importlib.util, json, os, shutil, stat, subprocess, sys, tarfile, time, signal, ctypes
 ROOT=Path.cwd().resolve();OUT=Path(os.environ['FLEET_RUN_OUT']).resolve()
 sys.path.insert(0,str(ROOT));os.environ['PYTHONPATH']=str(ROOT)
 def sha(p):return hashlib.sha256(p.read_bytes()).hexdigest()
@@ -19,30 +19,50 @@ def archive(label,directory):
  with tarfile.open(OUT/(label+'.tgz'),'w:gz') as tar:
   for n in rows:tar.add(directory/n,arcname=n,recursive=False)
  save(label+'-archive.json',{'sha256':sha(OUT/(label+'.tgz')),'files':len(rows)})
-def phase(name,command,expected=0):
- start=time.monotonic();record={'command':command,'expected_exit':expected}
- print('START '+name,flush=True)
- with (OUT/(name+'.log')).open('w') as stream:
-  child=subprocess.Popen(command,cwd=ROOT,stdout=stream,stderr=subprocess.STDOUT,start_new_session=True)
-  try:
-   try:
-    record['exit']=child.wait(timeout=900)
-   except subprocess.TimeoutExpired:
-    record['timed_out']=True
-  finally:
-   # Reap owned descendants even if their leader exits before them.
-   try:os.killpg(child.pid,signal.SIGTERM)
-   except ProcessLookupError:pass
-   try:child.wait(timeout=5)
-   except subprocess.TimeoutExpired:
-    try:os.killpg(child.pid,signal.SIGKILL)
+def settle_owned_group(proc):
+    """Kill and reap our group even after its original leader has exited."""
+    signalled=False;reaped=[]
+    try:os.killpg(proc.pid,signal.SIGKILL);signalled=True
     except ProcessLookupError:pass
-    child.wait(timeout=5)
-   # The leader may already be reaped while an owned descendant remains.
-   try:os.killpg(child.pid,signal.SIGKILL)
-   except ProcessLookupError:pass
- record['seconds']=time.monotonic()-start;result['phases'][name]=record;save('result.json',result)
- print('END '+name+' '+json.dumps(record),flush=True)
+    proc.wait(timeout=5)
+    deadline=time.monotonic()+3
+    while True:
+        while True:
+            try:pid,status=os.waitpid(-proc.pid,os.WNOHANG)
+            except ChildProcessError:break
+            if pid==0:break
+            reaped.append({'pid':pid,'status':status})
+        try:os.killpg(proc.pid,0)
+        except ProcessLookupError:return {'group_gone':True,'signalled':signalled,'reaped':reaped}
+        if time.monotonic()>=deadline:return {'group_gone':False,'signalled':signalled,'reaped':reaped}
+        time.sleep(.02)
+# The fleet worker is Linux. Reap only this executor's orphaned descendants.
+libc=ctypes.CDLL(None,use_errno=True)
+assert libc.prctl(36,1,0,0,0)==0,'Linux child subreaper required'
+def interrupted(signum,frame):raise KeyboardInterrupt('received signal '+str(signum))
+for sig in (signal.SIGINT,signal.SIGTERM):signal.signal(sig,interrupted)
+processes_quiescent=True
+def phase(name,command,expected=0):
+ global processes_quiescent
+ start=time.monotonic();record={'command':command,'expected_exit':expected};child=None
+ print('START '+name,flush=True)
+ try:
+  with (OUT/(name+'.log')).open('w') as stream:
+   child=subprocess.Popen(command,cwd=ROOT,stdout=stream,stderr=subprocess.STDOUT,start_new_session=True)
+   processes_quiescent=False
+   try:
+    try:record['exit']=child.wait(timeout=900)
+    except subprocess.TimeoutExpired:record['timed_out']=True
+   except BaseException as exc:
+    record['error']=type(exc).__name__+': '+str(exc)
+    raise
+   finally:
+    cleanup=settle_owned_group(child)
+    record['process_cleanup']=cleanup;processes_quiescent=cleanup['group_gone']
+    assert processes_quiescent,'Owned group not quiescent; do not race archive/restore'
+ finally:
+  record['seconds']=time.monotonic()-start;result['phases'][name]=record;save('result.json',result)
+  print('END '+name+' '+json.dumps(record),flush=True)
  assert record.get('exit')==expected,name+' failed/incomplete; actual logs retained'
 p=argparse.ArgumentParser(description=__doc__);p.add_argument('--head',required=True);args=p.parse_args()
 result={'status':'FAILED','source':args.head,'phases':{},'scope':'genuine cut geometry and thumbnails only; no adoption or physical qualification'}
@@ -128,6 +148,11 @@ except BaseException as exc:
  raise
 finally:
  errors=[]
+ if not processes_quiescent:
+  result['status']='FAILED'
+  result['final_guard_errors']=['Owned process group not quiescent; working outputs retained without racing inventory/archive/restoration']
+  save('result.json',result)
+  raise RuntimeError(result['final_guard_errors'][0])
  if before is not None:
   try:
    current=tracked();save('tracked-after-generation.json',current)
