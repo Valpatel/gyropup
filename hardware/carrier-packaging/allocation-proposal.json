@@ -347,7 +347,7 @@
   "physical_inventory_complete": false,
   "source_sha256": {
     "hardware/carrier-packaging/allocation.py": "87c17a167ade456d404d2b318820247a0eb1f36522fdf4a3acbc2b1bbd0da014",
-    "hardware/carrier-packaging/component-inventory.json": "5efff007d97eb606516ab915b03da48449aaac530d6d4cdb42eebe9bdff643d4",
+    "hardware/carrier-packaging/component-inventory.json": "8c908bede8407c7a7f2fe02cdbb817c226dd4b01485a21fd458bbb5e9e91f10c",
     "hardware/carrier-packaging/mechanical-envelope.md": "b864e94290f451d689324aa89e69a282129f1819031429f26ce69711c8895fca",
     "hardware/carrier-packaging/terminal-contract.json": "4f1eb2c31cafc363d8ea5381293db8f9ea43dcd111f506ccf698e0599a3253ca",
     "hardware/catalog/hardware.json": "af0f7f3bdce4ee93649e278106d00a93fe2ebea3569c057f1d2a04fe4b360015"

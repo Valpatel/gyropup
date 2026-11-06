@@ -2026,7 +2026,7 @@
     "docs/electronics/base-board-interfaces.md": "daffd3eda5797ae53e543bd7cc3089a30b7865c1bba215b6c5504ce8acdf574e",
     "docs/electronics/carrier-service-connectors.md": "028e7f670d28f57fbc1a2b9885572006b43ee2a614e64af45fe623b15d03fa65",
     "docs/research/protection/carrier-practical-architecture.inputs.json": "0b6fddcf95ea8719ae215e24827ceb1c33624a0e113604e4db1afe2f95891a70",
-    "hardware/cad/turret/turret_boards.py": "8b8ba6b1f6195fa81f2d04bf862244d1da21d7fb85ca23667e80fcf03cac8ceb",
+    "hardware/cad/turret/turret_boards.py": "a10736535be770721bbd3ca59579d5854655026bbd3f4670a96d360b8f8deb71",
     "hardware/carrier-packaging/front-reference-contract.json": "06956af049dafbeaf44bb9b0a739cde0b4ce099f0a6795758bebc77ced918b48",
     "hardware/carrier-packaging/inventory.py": "1fca930629074d2d095d20867f04a0fdf9185b11d6495c40c2ffe89ba193b94c",
     "hardware/carrier-packaging/package-envelopes.json": "8b263374bc27d7c5c99ef11a136f4f8df5c49db56fd91fb4316132f467bdbb4f",
