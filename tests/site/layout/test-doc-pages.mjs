@@ -1,4 +1,4 @@
-import {publicForSource,sourceForPublic} from '../../../tools/site/source-layout.mjs';
+import {publicForSource,sourceForPublic,markRetiredCatalogLinks} from '../../../tools/site/source-layout.mjs';
 import {execFileSync} from 'node:child_process';
 /** Design-note pages (tools/doc-page.mjs): the same words as the Markdown, shown with a lead card, status strips
  * counted from the note's own tables, and folds. Browser tests use SITE_URL, or serve dist/ (run `npm run build`). */
@@ -23,6 +23,35 @@ const pages = readdirSync(path.join(dist, 'site/pages')).filter(f => f.endsWith(
 const slug = p => p.toLowerCase().replace(/[^a-z0-9]+/g, '-');
 const sources = new Map(execFileSync('git',['ls-files','-z'],{cwd:root}).toString().split('\0').filter(f=>f.endsWith('.md')&&publicForSource(f)).map(f=>[`${slug(publicForSource(f))}.html`,f]));
 const WORST = ['docs-carrier-service-connectors-md', 'docs-leg-bench-tests-md', 'docs-requirements-md', 'docs-mechanical-readiness-md', 'docs-body-fuse-board-md', 'docs-body-frame-md', 'docs-turret-bench-tests-md'];
+
+test('retired catalogue handling is limited to the two historical notes and links', () => {
+  const anchor=(file,root='https://github.com/Valpatel/gyropup/blob/main/')=>`<a href="${root}${file}"><code>${file.split('/').at(-1)}</code></a>`;
+  for(const [note,file] of [['availability-2026-10-25.md','availability.json'],['lfp-batteries.md','lfp_batteries.json']]){
+    for(const prefix of ['','docs/']){
+      const source=`${prefix}research/${note}`,link=anchor(`${prefix}catalog/${file}`);
+      const result=fragment(markRetiredCatalogLinks(link,source));
+      assert.equal(result.querySelectorAll('a').length,0);
+      assert.equal(result.querySelector('span').title,'Historical file, not part of this revision');
+      assert.equal(result.textContent,`${file} (historical file)`);
+      for(const untouched of [anchor(`${prefix}catalog/unrelated.json`),anchor(`${prefix}catalog/${file}`,'https://example.org/'),anchor(`${prefix}catalog/${file}`,'https://github.com/Valpatel/gyropup/blob/dev/')]){
+        assert.equal(markRetiredCatalogLinks(untouched,source),untouched);
+      }
+      assert.equal(markRetiredCatalogLinks(link,'docs/research/unrelated.md'),link);
+      const otherNote=note==='lfp-batteries.md'?'availability-2026-10-25.md':'lfp-batteries.md';
+      assert.equal(markRetiredCatalogLinks(link,`${prefix}research/${otherNote}`),link);
+    }
+  }
+});
+
+test('built historical notes retain the retired catalogue notice instead of a broken download', () => {
+  for(const [page,file] of [['research-availability-2026-10-25-md.html','availability.json'],['research-lfp-batteries-md.html','lfp_batteries.json']]){
+    const article=parseHTML(readFileSync(path.join(dist,'site/pages',page),'utf8')).document.querySelector('main.document article');
+    const notices=[...article.querySelectorAll('span[title="Historical file, not part of this revision"]')];
+    assert.equal(notices.length,1,page);
+    assert.equal(norm(notices[0].textContent),`catalog/${file} (historical file)`,page);
+    assert.ok(![...article.querySelectorAll('a[href]')].some(a=>a.getAttribute('href').split(/[?#]/)[0].endsWith('/'+file)),page);
+  }
+});
 
 test('status words: a scale the page can colour honestly', () => {
   for (const [w, k] of [['done', 'good'], ['pass', 'good'], ['implemented', 'good'], ['open', 'todo'], ['check', 'todo'], ['fix', 'bad'], ['fail', 'bad'],

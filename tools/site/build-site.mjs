@@ -12,7 +12,7 @@ import { collectStatus, createReader, renderBoard, shallowHistory } from './stat
 import { collectTimeline, gitIn, imagePaths, renderTimeline, subsystemOf } from './timeline.mjs';
 import { OPEN_FOLDS, enhanceDocument } from './doc-page.mjs';
 import { verifyRigFiles } from '../evidence/media/rig-media.mjs';
-import {publicForSource,sourceForPublic,publicationFiles} from './source-layout.mjs';
+import {publicForSource,sourceForPublic,publicationFiles,markRetiredCatalogLinks} from './source-layout.mjs';
 const root = path.resolve(import.meta.dirname, '../..');
 const out = path.join(root, 'dist');
 const sourceFile=p=>path.join(root,sourceForPublic(p));
@@ -127,7 +127,7 @@ for (const file of documents) {
     const target=exists?(documents.includes(resolvedPublic)?pagePath(resolvedPublic):'/'+resolvedPublic):`https://github.com/Valpatel/gyropup/blob/main/${resolvedSource}`;
     return `${attr}="${esc(target)}${hash.length ? '#'+esc(hash.join('#')) : ''}"`;
   });
-  html = html.replace(/<a href="https:\/\/github\.com\/Valpatel\/gyropup\/blob\/main\/(catalog\/(?:availability|lfp_batteries)\.json)">(.*?)<\/a>/g, '<span title="Historical file, not part of this revision">$2 (historical file)</span>');
+  html = markRetiredCatalogLinks(html,authoredSource);
   html = html.replace(/<table>/g,'<div class="table-scroll"><table>').replace(/<\/table>/g,'</table></div>');
   // Lead card, status strips and folds (tools/doc-page.mjs): the same words, shown without walls of text.
   const panel = status.panels.find(p => p.id === subsystemOf(file) && p.image) || null;
