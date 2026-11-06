@@ -55,7 +55,7 @@ class Inventory(unittest.TestCase):
 
     def test_committed_outputs_are_current(self):
         js = json.dumps(self.doc, indent=1, ensure_ascii=False) + '\n'
-        self.assertEqual((HERE / 'joints.json').read_text(), js, 'joints.json is stale: run research/insert-joints/inventory.py')
+        self.assertEqual((HERE / 'joints.json').read_text(), js, 'joints.json is stale: run docs/research/insert-joints/inventory.py')
         self.assertEqual((HERE / 'joints.md').read_text(), inv.markdown(self.doc), 'joints.md is stale')
 
     def test_formulas(self):

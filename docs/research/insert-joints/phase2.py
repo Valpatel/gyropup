@@ -8,9 +8,9 @@ the clamp path, the insert-limited torque), ``cadagent.formulas.limiters`` (bear
 clamped into metal). Each result is set beside inventory.py's own number or verdict, with a stated tolerance, and
 every disagreement says why. Writes phase2.json and phase2.md beside it.
 
-    python3 research/insert-joints/phase2.py --cad-agent PATH        # regenerate (PATH: a cad-agent checkout at the pin)
-    python3 research/insert-joints/phase2.py --check                  # exit 1 if phase2.json / phase2.md are stale
-    python3 research/insert-joints/phase2.py --check --cad-agent PATH # also regenerate in memory and compare
+    python3 docs/research/insert-joints/phase2.py --cad-agent PATH        # regenerate (PATH: a cad-agent checkout at the pin)
+    python3 docs/research/insert-joints/phase2.py --check                  # exit 1 if phase2.json / phase2.md are stale
+    python3 docs/research/insert-joints/phase2.py --check --cad-agent PATH # also regenerate in memory and compare
 
 The toolkit's formulas are SI (metres, newtons, pascals); its joint checks take millimetres, newtons and N m, as their
 docstrings say. Both are recorded with the joints.json field each input came from. This is a screen, not a
@@ -769,7 +769,7 @@ def main(argv=None):
             if fresh != OUT_JSON.read_text():
                 why.append(f'phase2.json differs from a fresh run on {tag or commit}')
         if why:
-            print('stale: ' + '; '.join(why) + ' (run python3 research/insert-joints/phase2.py --cad-agent PATH)')
+            print('stale: ' + '; '.join(why) + ' (run python3 docs/research/insert-joints/phase2.py --cad-agent PATH)')
             return 1
         print('insert-joints phase 2: current')
         return 0

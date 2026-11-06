@@ -158,7 +158,7 @@ class Phase2(unittest.TestCase):
         cls.doc, cls.joints = load()
 
     def test_current(self):
-        self.assertEqual(p2.stale(), [], 'run python3 research/insert-joints/phase2.py --cad-agent PATH')
+        self.assertEqual(p2.stale(), [], 'run python3 docs/research/insert-joints/phase2.py --cad-agent PATH')
 
     def test_bound_to_joints_and_toolkit(self):
         self.assertEqual(self.doc['joints_json']['sha256'], p2.sha256(p2.JOINTS))
