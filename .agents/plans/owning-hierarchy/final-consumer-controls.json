@@ -1,0 +1,21 @@
+{
+  "old_date_test": {
+    "exit": 1,
+    "actual_expected_source_date_mismatch": true
+  },
+  "mapped_date_test": {
+    "exit": 0,
+    "source_sha256": "c63b32ab3603c7b6c6f0cd232c1832ee39bca91b428e1eb739cf499d02af207f"
+  },
+  "publication_map_boundary_and_real_routes": {
+    "exit": 0,
+    "source_sha256": "7bd1b6e5d2001e3a529b6b33f0a7a20ce700a5c336805f835674a2af2a2eee5c",
+    "includes_bypass_and_empty_mutants": true
+  },
+  "product_source": "f07565ecc7369c5734e2dd8a1b1319601ec9ffbd",
+  "actual_site_archive_sha256": "4044b4e292d7f5c2dbb908cd8f449c8cd60fee21da9455a291b5d1c17470f615",
+  "no_rebuild": true,
+  "owned_worktree_listener_links_removed": true,
+  "date_lookup_correction": "Independent Git expectation now resolves each public record to its actual source path; date/commit/time and source coverage assertions remain unchanged.",
+  "publication_boundary_scope": "Actual publicationFiles on direct/nested simulated tracked MD/JSON/model paths in every excluded home, plus real normal-build inventory and routes; no planted-file build claimed."
+}

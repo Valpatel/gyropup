@@ -1,12 +1,17 @@
 {
   "format": 1,
-  "sourceRevision": "cd7d4a29b8e2cc47b5b852590730c23c869f363c",
-  "recipeSha256": "d1f9fc709ede8629e34c1dec4f4a3da4b317cff28ab6d4cec864a655f30cb624",
+  "sourceRevision": "f07565ecc7369c5734e2dd8a1b1319601ec9ffbd",
+  "recipeSha256": "adca00e0c9e7c895c3a911f2ed8051929fc03d85e4bb86ca1ca72bf139f1aa56",
   "width": 1280,
   "height": 720,
   "fps": 30,
   "seed": 1042026,
   "browser": "141.0.7390.37",
+  "locationContracts": {
+    "tools/site/source-layout.mjs": "9f9ba1dfd638e5fa83ecd1b49100b638f3b22db827122de742e34558dd3d7b4c",
+    "tools/site/source-layout.json": "d73f1e393fa3b0dcbde804c09024cbfca35178b83678721aed88618816369792",
+    "tests/site/content/test-prototype-session.mjs": "997a39297102005095ee42adc9c6397552e3dc550f0f42494ad554eccf4ecefb"
+  },
   "instrumentation": "Expose the existing stage callback array to the recorder; stop its RAF loop, advance its callbacks at 60Hz with a fixed performance clock and seeded random source, then explicitly render each captured frame. No model or projectile code is replaced.",
   "shots": [
     {
@@ -36,16 +41,16 @@
         "distance": 1.3205307222804197,
         "parts": [
           "pan_spacer",
-          "base_board_carrier",
           "pan_pinion",
           "tilt_yoke",
-          "pan_base",
+          "base_board_carrier",
           "pan_ring",
+          "pan_base",
           "cradle",
-          "horn_boss",
           "pivot_spacer",
-          "cartridge_body",
+          "horn_boss",
           "flywheel",
+          "cartridge_body",
           "flywheel_m",
           "flywheel_tyre",
           "flywheel_tyre_m",
@@ -66,23 +71,23 @@
           "circlip_50",
           "pan_clamp",
           "cradle_plate_l",
-          "cradle_plate_r",
           "stop_lug",
           "slip_ring",
-          "slip_ring_rotor",
-          "ring_coupling",
+          "cradle_plate_r",
           "ring_leads_rotor",
+          "ring_coupling",
+          "slip_ring_rotor",
           "base_board",
           "base_board_screws",
           "base_carrier_screws",
           "base_board_inserts",
           "base_carrier_inserts",
           "turret_board",
-          "index_magnet",
           "hall_switch",
+          "index_magnet",
           "dt_receptacle",
-          "dt_plug",
           "tilt_servo",
+          "dt_plug",
           "tilt_bearing",
           "tilt_bearing_inner",
           "shoulder_screw",
@@ -93,8 +98,8 @@
           "esc_r",
           "feed_motor",
           "ct_thumbscrew",
-          "laser_screws",
           "laser",
+          "laser_screws",
           "laser_inserts",
           "hopper_inserts",
           "box_deck",
@@ -111,10 +116,10 @@
           "lid_screw_3",
           "lid_screw_4",
           "j501_front_no_gmsl",
-          "j501_rear_io",
-          "j501_side_hatch",
           "j501_base",
-          "j501_cover"
+          "j501_cover",
+          "j501_rear_io",
+          "j501_side_hatch"
         ]
       },
       "observations": [
@@ -986,61 +991,61 @@
         ],
         "distance": 1.023311538353007,
         "parts": [
-          "pan_spacer",
-          "tilt_yoke",
-          "pan_base",
           "base_board_carrier",
-          "pan_pinion",
+          "pan_spacer",
           "pan_ring",
+          "pan_base",
+          "pan_pinion",
+          "tilt_yoke",
           "cradle",
           "horn_boss",
           "pivot_spacer",
           "cartridge_body",
           "flywheel",
           "flywheel_m",
-          "flywheel_tyre",
           "flywheel_tyre_m",
+          "flywheel_tyre",
           "dial",
           "hopper",
-          "hopper_flap",
           "hopper_lid",
+          "hopper_flap",
           "barrel",
           "laser_mount",
           "bumper_ring",
-          "ring_carrier",
           "ring_driver",
-          "board_bay",
+          "ring_carrier",
           "board_bay_lid",
+          "board_bay",
           "pan_servo",
           "pan_bearing",
           "pan_bearing_inner",
           "circlip_50",
           "pan_clamp",
-          "cradle_plate_l",
           "cradle_plate_r",
+          "cradle_plate_l",
+          "slip_ring",
           "stop_lug",
           "slip_ring_rotor",
-          "slip_ring",
           "ring_coupling",
           "ring_leads_rotor",
           "base_board",
-          "base_board_screws",
-          "base_carrier_screws",
           "base_board_inserts",
           "base_carrier_inserts",
+          "base_board_screws",
+          "base_carrier_screws",
           "turret_board",
-          "index_magnet",
           "hall_switch",
-          "dt_receptacle",
           "dt_plug",
-          "tilt_servo",
+          "dt_receptacle",
+          "index_magnet",
           "tilt_bearing",
+          "tilt_servo",
           "tilt_bearing_inner",
+          "cartridge_board",
+          "esc_l",
           "shoulder_screw",
           "flywheel_motor_l",
           "flywheel_motor_r",
-          "cartridge_board",
-          "esc_l",
           "esc_r",
           "feed_motor",
           "ct_thumbscrew",
@@ -1048,12 +1053,12 @@
           "laser_screws",
           "laser_inserts",
           "hopper_inserts",
-          "box_deck",
           "intake_shroud",
           "pod_cover",
           "pod_xt60",
-          "pod_switch",
           "pod_fuse",
+          "pod_switch",
+          "box_deck",
           "pod_pendant",
           "pod_usb",
           "pod_wago",
@@ -1061,11 +1066,11 @@
           "lid_screw_2",
           "lid_screw_3",
           "lid_screw_4",
-          "j501_base",
-          "j501_cover",
-          "j501_front_no_gmsl",
+          "j501_side_hatch",
           "j501_rear_io",
-          "j501_side_hatch"
+          "j501_front_no_gmsl",
+          "j501_base",
+          "j501_cover"
         ]
       },
       "observations": [
@@ -1708,23 +1713,23 @@
       "info": {
         "bounds": [
           -0.8200000017881394,
-          -0.035478202909558776,
-          -0.20911272088896682,
+          -0.03547735289117587,
+          -0.2090736706982652,
           0.8200000017881394,
-          0.8585129024093531,
+          0.8586018363108116,
           3.025000000372529
         ],
         "center": [
           0,
-          0.4115173497498972,
-          1.407943639741781
+          0.4115622417098178,
+          1.407963164837132
         ],
         "size": [
           1.6400000035762787,
-          0.8939911053189118,
-          3.234112721261496
+          0.8940791892019875,
+          3.234073671070794
         ],
-        "distance": 5.0964335988854055,
+        "distance": 5.096532045303544,
         "parts": [
           "pan_base",
           "base_board_carrier",
@@ -1732,14 +1737,14 @@
           "pan_spacer",
           "pan_pinion",
           "tilt_yoke",
-          "horn_boss",
           "cradle",
+          "horn_boss",
           "pivot_spacer",
           "cartridge_body",
           "flywheel",
           "flywheel_m",
-          "flywheel_tyre",
           "flywheel_tyre_m",
+          "flywheel_tyre",
           "dial",
           "hopper",
           "hopper_lid",
@@ -1749,12 +1754,12 @@
           "bumper_ring",
           "ring_carrier",
           "ring_driver",
-          "board_bay_lid",
           "board_bay",
+          "board_bay_lid",
           "pan_servo",
+          "pan_bearing",
           "pan_bearing_inner",
           "circlip_50",
-          "pan_bearing",
           "pan_clamp",
           "cradle_plate_l",
           "cradle_plate_r",
@@ -1773,18 +1778,18 @@
           "hall_switch",
           "dt_receptacle",
           "dt_plug",
-          "tilt_servo",
           "tilt_bearing",
-          "tilt_bearing_inner",
-          "shoulder_screw",
+          "tilt_servo",
           "flywheel_motor_l",
+          "shoulder_screw",
           "flywheel_motor_r",
+          "tilt_bearing_inner",
           "cartridge_board",
           "esc_l",
           "esc_r",
-          "laser",
           "feed_motor",
           "ct_thumbscrew",
+          "laser",
           "laser_screws",
           "laser_inserts",
           "hopper_inserts"
@@ -3080,8 +3085,8 @@
         "parts": [
           "pan_base",
           "base_board_carrier",
-          "pan_ring",
           "pan_spacer",
+          "pan_ring",
           "pan_pinion",
           "tilt_yoke",
           "cradle",
@@ -3092,29 +3097,29 @@
           "flywheel_m",
           "flywheel_tyre",
           "flywheel_tyre_m",
-          "hopper_flap",
+          "dial",
           "hopper",
           "hopper_lid",
-          "dial",
+          "hopper_flap",
+          "barrel",
           "laser_mount",
           "bumper_ring",
-          "barrel",
           "ring_carrier",
           "ring_driver",
           "board_bay",
           "board_bay_lid",
+          "pan_bearing",
           "pan_servo",
           "pan_bearing_inner",
-          "pan_bearing",
           "circlip_50",
-          "cradle_plate_l",
           "pan_clamp",
+          "cradle_plate_l",
           "cradle_plate_r",
           "stop_lug",
           "slip_ring",
           "slip_ring_rotor",
-          "ring_leads_rotor",
           "ring_coupling",
+          "ring_leads_rotor",
           "base_board",
           "base_board_screws",
           "base_carrier_screws",
@@ -3129,16 +3134,16 @@
           "tilt_bearing",
           "tilt_bearing_inner",
           "shoulder_screw",
-          "flywheel_motor_l",
           "flywheel_motor_r",
+          "flywheel_motor_l",
           "cartridge_board",
           "esc_l",
           "esc_r",
           "feed_motor",
           "ct_thumbscrew",
-          "laser_inserts",
           "laser",
           "laser_screws",
+          "laser_inserts",
           "hopper_inserts"
         ]
       },
@@ -3778,34 +3783,34 @@
   ],
   "inputs": {
     "/designer/sim.html": {
-      "servedSha256": "29859c701ff78d4c81fa7ddd3a410e488c6765245cc275d617c3885de1cabcf8",
-      "bytes": 15562,
+      "servedSha256": "25af59e2c536882955f48bd4dfcaf93bbf9620f775bbbea34800fd4c3f36eb01",
+      "bytes": 15635,
       "repoSha256": "a70ed754168974b085e9e09de6b8672ac7b0d97ee5498a60195ef40fad5aa8c8"
-    },
-    "/web/theme.js": {
-      "servedSha256": "55be43b5feb7f737dbabcc4987af243a74547f760073a05a8457c0d3e1496fb1",
-      "bytes": 2706,
-      "repoSha256": "55be43b5feb7f737dbabcc4987af243a74547f760073a05a8457c0d3e1496fb1"
     },
     "/web/theme.css": {
       "servedSha256": "2495f47062a72293aeb029a17961546eefc39f242d681e9ff7d0a119c79986c5",
       "bytes": 9795,
       "repoSha256": "2495f47062a72293aeb029a17961546eefc39f242d681e9ff7d0a119c79986c5"
     },
-    "/designer/turret_bench.css": {
-      "servedSha256": "77d4ab36125c5df22db86fafdc10a6d21470cee86c5e4201e50a3df7d9e79dc8",
-      "bytes": 8793,
-      "repoSha256": "77d4ab36125c5df22db86fafdc10a6d21470cee86c5e4201e50a3df7d9e79dc8"
+    "/designer/kit/hud.css": {
+      "servedSha256": "4846d31abc5a728abc9ce25fa23bb633d8b063c431d2e709fa437990933e7b19",
+      "bytes": 10537,
+      "repoSha256": "aeac277ae41f294f3642488c654816e9a9e1180158b4ea61f0db81958e5891ae"
     },
     "/designer/sim-layout.css": {
       "servedSha256": "e2b76ffb77863adea51210749efb4e27641b8d8adc08bdc74608ff3da7173970",
       "bytes": 5778,
       "repoSha256": "e2b76ffb77863adea51210749efb4e27641b8d8adc08bdc74608ff3da7173970"
     },
-    "/designer/kit/hud.css": {
-      "servedSha256": "82da0236bd41667a125458b4362d3a33360d71773992e14857271d3585614c2e",
-      "bytes": 10537,
-      "repoSha256": "aeac277ae41f294f3642488c654816e9a9e1180158b4ea61f0db81958e5891ae"
+    "/web/theme.js": {
+      "servedSha256": "55be43b5feb7f737dbabcc4987af243a74547f760073a05a8457c0d3e1496fb1",
+      "bytes": 2706,
+      "repoSha256": "55be43b5feb7f737dbabcc4987af243a74547f760073a05a8457c0d3e1496fb1"
+    },
+    "/designer/turret_bench.css": {
+      "servedSha256": "77d4ab36125c5df22db86fafdc10a6d21470cee86c5e4201e50a3df7d9e79dc8",
+      "bytes": 8793,
+      "repoSha256": "77d4ab36125c5df22db86fafdc10a6d21470cee86c5e4201e50a3df7d9e79dc8"
     },
     "/designer/kit/loading.css": {
       "servedSha256": "da20076647bed183307a18908c57432699386de2005444fa37a072b70d1ac2f2",
@@ -3817,6 +3822,11 @@
       "bytes": 8417,
       "repoSha256": "9454789c6427d72af28f35611c58b3fad45fea9c0fb14051bec76e0bc4013078"
     },
+    "/web/model-links.css": {
+      "servedSha256": "1a01e37f2bc7e74b7a79bc7b4416eb1a8e701039328809db061bf2ad7e20de05",
+      "bytes": 437,
+      "repoSha256": "1a01e37f2bc7e74b7a79bc7b4416eb1a8e701039328809db061bf2ad7e20de05"
+    },
     "/web/prototype-notice.js": {
       "servedSha256": "370598d683904c2b656052fa0c5d42dac758e6d3e1289a049a38abfeda3647a1",
       "bytes": 6090,
@@ -3827,13 +3837,8 @@
       "bytes": 3616,
       "repoSha256": "ffb3fc044b2ce527840b0209c13074c3c7ccb187fd7bf47ff9b971311e643e2c"
     },
-    "/web/model-links.css": {
-      "servedSha256": "1a01e37f2bc7e74b7a79bc7b4416eb1a8e701039328809db061bf2ad7e20de05",
-      "bytes": 437,
-      "repoSha256": "1a01e37f2bc7e74b7a79bc7b4416eb1a8e701039328809db061bf2ad7e20de05"
-    },
     "/designer/kit/vendor/fonts/fonts.css": {
-      "servedSha256": "4bd8c9248f1f3935564ed9fc4d9cb43e45e9ad98c61253adf662effc35b3f9bc",
+      "servedSha256": "7575f0851ceb8d7577a240757dca6bde4e5c5b06f0dc9e077cceaa1a86830e1c",
       "bytes": 578,
       "repoSha256": "932aa60781252a65af3910916858ecb16b4a49600fe7f3625d9b4a5299315b64"
     },
@@ -3882,35 +3887,40 @@
       "bytes": 13223,
       "repoSha256": "f0d382e1a4ef6cc6c1a5c3c1be8ce5479daefaab299e829c924b17d74a7e5457"
     },
-    "/designer/character/eyes.js": {
-      "servedSha256": "3348578a121b75ab7425c3b6591e864b41b09512e67b642832e6c6b683d2e11b",
-      "bytes": 6558,
-      "repoSha256": "3348578a121b75ab7425c3b6591e864b41b09512e67b642832e6c6b683d2e11b"
-    },
-    "/designer/character/lines.js": {
-      "servedSha256": "f8ed47cb08ed12fa508830a4143d49400bf3b245002d5d29f547f844ad75a613",
-      "bytes": 8916,
-      "repoSha256": "f8ed47cb08ed12fa508830a4143d49400bf3b245002d5d29f547f844ad75a613"
+    "/designer/kit/vendor/three/three.module.min.js": {
+      "servedSha256": "3e690ac7d180b0aadf0891bea39eec643e29e2d3e75c99b18689518665f69ba6",
+      "bytes": 670681,
+      "repoSha256": "3e690ac7d180b0aadf0891bea39eec643e29e2d3e75c99b18689518665f69ba6"
     },
     "/designer/turret3d.js": {
       "servedSha256": "e5144b01c1db071ac8921e416fcbc8e3a208a59a466bcd00cd5a86ddfa26b107",
       "bytes": 11679,
       "repoSha256": "e5144b01c1db071ac8921e416fcbc8e3a208a59a466bcd00cd5a86ddfa26b107"
     },
-    "/designer/sfx.js": {
-      "servedSha256": "90db82703cb9d32c106992c1d67610056a319048d4030db77490642ce8c4dc55",
-      "bytes": 36566,
-      "repoSha256": "90db82703cb9d32c106992c1d67610056a319048d4030db77490642ce8c4dc55"
-    },
     "/designer/model.js": {
       "servedSha256": "2d655315f9d2acc9e1d02292c1225bd447528cbe64c2e3d737ab6f0b51d771a5",
       "bytes": 25007,
       "repoSha256": "2d655315f9d2acc9e1d02292c1225bd447528cbe64c2e3d737ab6f0b51d771a5"
     },
+    "/designer/sfx.js": {
+      "servedSha256": "90db82703cb9d32c106992c1d67610056a319048d4030db77490642ce8c4dc55",
+      "bytes": 36566,
+      "repoSha256": "90db82703cb9d32c106992c1d67610056a319048d4030db77490642ce8c4dc55"
+    },
     "/designer/robot_actions.js": {
       "servedSha256": "edb5f4866e2d46fe8beb11301810ad9468660fd66587969c276e432e43530afd",
       "bytes": 3378,
       "repoSha256": "edb5f4866e2d46fe8beb11301810ad9468660fd66587969c276e432e43530afd"
+    },
+    "/designer/character/lines.js": {
+      "servedSha256": "f8ed47cb08ed12fa508830a4143d49400bf3b245002d5d29f547f844ad75a613",
+      "bytes": 8916,
+      "repoSha256": "f8ed47cb08ed12fa508830a4143d49400bf3b245002d5d29f547f844ad75a613"
+    },
+    "/designer/character/eyes.js": {
+      "servedSha256": "3348578a121b75ab7425c3b6591e864b41b09512e67b642832e6c6b683d2e11b",
+      "bytes": 6558,
+      "repoSha256": "3348578a121b75ab7425c3b6591e864b41b09512e67b642832e6c6b683d2e11b"
     },
     "/designer/kit/loading.js": {
       "servedSha256": "3890e96c2cdc1905a1c612be312aaabc6de09b3ea9f41c513c01108f7f159ada",
@@ -3922,40 +3932,35 @@
       "bytes": 3168,
       "repoSha256": "fe4924d4ce2b41957750f8bdbec0a6d24f3f032dfed5639c6c8ac4408528597c"
     },
-    "/designer/kit/vendor/three/three.module.min.js": {
-      "servedSha256": "3e690ac7d180b0aadf0891bea39eec643e29e2d3e75c99b18689518665f69ba6",
-      "bytes": 670681,
-      "repoSha256": "3e690ac7d180b0aadf0891bea39eec643e29e2d3e75c99b18689518665f69ba6"
+    "/designer/leg_limits.js": {
+      "servedSha256": "81fd036758493d9f8a80a9ccc4c0986868a32dde1e3f4641dad82204ebb27d70",
+      "bytes": 7260,
+      "repoSha256": "81fd036758493d9f8a80a9ccc4c0986868a32dde1e3f4641dad82204ebb27d70"
     },
     "/designer/kit/vendor/three/addons/geometries/RoundedBoxGeometry.js": {
       "servedSha256": "d20aeaf7077c459a8d952d215738d7b44fba028440bb862d84b622a34f0c80bb",
       "bytes": 4625,
       "repoSha256": "d20aeaf7077c459a8d952d215738d7b44fba028440bb862d84b622a34f0c80bb"
     },
-    "/designer/leg_limits.js": {
-      "servedSha256": "81fd036758493d9f8a80a9ccc4c0986868a32dde1e3f4641dad82204ebb27d70",
-      "bytes": 7260,
-      "repoSha256": "81fd036758493d9f8a80a9ccc4c0986868a32dde1e3f4641dad82204ebb27d70"
-    },
-    "/designer/kit/vendor/three/addons/loaders/STLLoader.js": {
-      "servedSha256": "896d006a48b8f125385a485ccae154dadee801a953f0b45ceffe7ddd8a29ca93",
-      "bytes": 10029,
-      "repoSha256": "896d006a48b8f125385a485ccae154dadee801a953f0b45ceffe7ddd8a29ca93"
+    "/designer/kit/vendor/three/addons/controls/OrbitControls.js": {
+      "servedSha256": "5a44a9e86a2a0fb11933eed69bc2cd33c76a496854c1aed6ed776efa87d7b064",
+      "bytes": 29868,
+      "repoSha256": "5a44a9e86a2a0fb11933eed69bc2cd33c76a496854c1aed6ed776efa87d7b064"
     },
     "/designer/current_turret.js": {
       "servedSha256": "77bab0f6cdc450dbe7703e77744708a35d3636bed7873e3e40a884726f20d6a0",
       "bytes": 7276,
       "repoSha256": "77bab0f6cdc450dbe7703e77744708a35d3636bed7873e3e40a884726f20d6a0"
     },
+    "/designer/kit/vendor/three/addons/loaders/STLLoader.js": {
+      "servedSha256": "896d006a48b8f125385a485ccae154dadee801a953f0b45ceffe7ddd8a29ca93",
+      "bytes": 10029,
+      "repoSha256": "896d006a48b8f125385a485ccae154dadee801a953f0b45ceffe7ddd8a29ca93"
+    },
     "/designer/kit/smooth_zoom.js": {
       "servedSha256": "bc03b15d77d2ebf689273be96c3007363e7ed86f94aa86c5e545811e3ac45c70",
       "bytes": 2574,
       "repoSha256": "bc03b15d77d2ebf689273be96c3007363e7ed86f94aa86c5e545811e3ac45c70"
-    },
-    "/designer/kit/vendor/three/addons/controls/OrbitControls.js": {
-      "servedSha256": "5a44a9e86a2a0fb11933eed69bc2cd33c76a496854c1aed6ed776efa87d7b064",
-      "bytes": 29868,
-      "repoSha256": "5a44a9e86a2a0fb11933eed69bc2cd33c76a496854c1aed6ed776efa87d7b064"
     },
     "/exports/leg/limits.json": {
       "servedSha256": "4376ffbd691b91d35ac49f02b7bc32d50ddbae29dc28ebef1b08e0da55a92bf4",
@@ -3992,55 +3997,55 @@
       "bytes": 25284,
       "repoSha256": "eff3d312665bf4d19e100a0f435539a7a9a24fbd085fc6e7d575d8dcbf8da326"
     },
-    "/exports/sim/turret_box/base_board_carrier.stl": {
-      "servedSha256": "2b548e9549563fe4ab77fda2e8630157487082f3e2d7272a641e3a5ea8d1dcab",
-      "bytes": 114284,
-      "repoSha256": "2b548e9549563fe4ab77fda2e8630157487082f3e2d7272a641e3a5ea8d1dcab"
-    },
     "/exports/sim/turret_box/pan_pinion.stl": {
       "servedSha256": "3a9f5dfeb4ebea914ce7ae1d7eb31f1b431bc74ff88491847f6c6c28fbd50886",
       "bytes": 164684,
       "repoSha256": "3a9f5dfeb4ebea914ce7ae1d7eb31f1b431bc74ff88491847f6c6c28fbd50886"
+    },
+    "/exports/sim/turret_box/base_board_carrier.stl": {
+      "servedSha256": "2b548e9549563fe4ab77fda2e8630157487082f3e2d7272a641e3a5ea8d1dcab",
+      "bytes": 114284,
+      "repoSha256": "2b548e9549563fe4ab77fda2e8630157487082f3e2d7272a641e3a5ea8d1dcab"
     },
     "/exports/sim/turret_box/tilt_yoke.stl": {
       "servedSha256": "bf52689fb9daeef652eeab52c84ca3be9fe100444baa0ce2b9500e379aca9f16",
       "bytes": 308184,
       "repoSha256": "bf52689fb9daeef652eeab52c84ca3be9fe100444baa0ce2b9500e379aca9f16"
     },
-    "/exports/sim/turret_box/pan_base.stl": {
-      "servedSha256": "6a2892a4351fc49f089ccec43d1bc85109d67898c3a20c8f5946b134ea685e96",
-      "bytes": 501384,
-      "repoSha256": "6a2892a4351fc49f089ccec43d1bc85109d67898c3a20c8f5946b134ea685e96"
-    },
     "/exports/sim/turret_box/pan_ring.stl": {
       "servedSha256": "9b4c5d94b99711173c3f522ea8107b91bb887a802faf08897d492e564acee3aa",
       "bytes": 374084,
       "repoSha256": "9b4c5d94b99711173c3f522ea8107b91bb887a802faf08897d492e564acee3aa"
+    },
+    "/exports/sim/turret_box/pan_base.stl": {
+      "servedSha256": "6a2892a4351fc49f089ccec43d1bc85109d67898c3a20c8f5946b134ea685e96",
+      "bytes": 501384,
+      "repoSha256": "6a2892a4351fc49f089ccec43d1bc85109d67898c3a20c8f5946b134ea685e96"
     },
     "/exports/sim/turret_box/cradle.stl": {
       "servedSha256": "3b9af8071d2da4cd4354b079526691e76a4c6e9876807119cc03ef5974264cf7",
       "bytes": 116684,
       "repoSha256": "3b9af8071d2da4cd4354b079526691e76a4c6e9876807119cc03ef5974264cf7"
     },
-    "/exports/sim/turret_box/horn_boss.stl": {
-      "servedSha256": "d38307b4d9bb70f066c767e605df089b94de0f736fc6ec459e72570d0d694128",
-      "bytes": 51284,
-      "repoSha256": "d38307b4d9bb70f066c767e605df089b94de0f736fc6ec459e72570d0d694128"
-    },
     "/exports/sim/turret_box/pivot_spacer.stl": {
       "servedSha256": "fe104a26c56743c1eab10edf5f319d9d674ca821f930a05f4b6a4df2a9d3b049",
       "bytes": 25284,
       "repoSha256": "fe104a26c56743c1eab10edf5f319d9d674ca821f930a05f4b6a4df2a9d3b049"
     },
-    "/exports/sim/turret_box/cartridge_body.stl": {
-      "servedSha256": "9732bd2596964036e2ff3fc8751214bb33b560784fd0f337cf5ca4ac906dea05",
-      "bytes": 633884,
-      "repoSha256": "9732bd2596964036e2ff3fc8751214bb33b560784fd0f337cf5ca4ac906dea05"
+    "/exports/sim/turret_box/horn_boss.stl": {
+      "servedSha256": "d38307b4d9bb70f066c767e605df089b94de0f736fc6ec459e72570d0d694128",
+      "bytes": 51284,
+      "repoSha256": "d38307b4d9bb70f066c767e605df089b94de0f736fc6ec459e72570d0d694128"
     },
     "/exports/sim/turret_box/flywheel.stl": {
       "servedSha256": "52858ae8f15913ad2b1191f13cc7e827ae0db9d8bc66d423d453b89ad8be360c",
       "bytes": 29484,
       "repoSha256": "52858ae8f15913ad2b1191f13cc7e827ae0db9d8bc66d423d453b89ad8be360c"
+    },
+    "/exports/sim/turret_box/cartridge_body.stl": {
+      "servedSha256": "9732bd2596964036e2ff3fc8751214bb33b560784fd0f337cf5ca4ac906dea05",
+      "bytes": 633884,
+      "repoSha256": "9732bd2596964036e2ff3fc8751214bb33b560784fd0f337cf5ca4ac906dea05"
     },
     "/exports/sim/turret_box/flywheel_m.stl": {
       "servedSha256": "8a22a6460e6fde03d5c6ae0b34e9083c276252008806ab31045d7f002c4e7859",
@@ -4062,16 +4067,6 @@
       "bytes": 124884,
       "repoSha256": "e698be7e0631306b427fc3932e343ee99bb1d332135a4ed612e13e81f3ebf6cc"
     },
-    "/exports/sim/turret_box/hopper_lid.stl": {
-      "servedSha256": "e2a1cb3acd52345a5e57537a326ca3d99ed266f97a236eed7d91a1ac0e1a01bd",
-      "bytes": 99284,
-      "repoSha256": "e2a1cb3acd52345a5e57537a326ca3d99ed266f97a236eed7d91a1ac0e1a01bd"
-    },
-    "/exports/sim/turret_box/barrel.stl": {
-      "servedSha256": "f39b28bb7542beaef2a533862818fed28c52217cdd953ca44711491bc6d83c97",
-      "bytes": 96784,
-      "repoSha256": "f39b28bb7542beaef2a533862818fed28c52217cdd953ca44711491bc6d83c97"
-    },
     "/exports/sim/turret_box/hopper.stl": {
       "servedSha256": "bfc369695b33b22cb73d0dbc848e45f37dcb81c4aaa83bdd723083ba5f75f4c5",
       "bytes": 91784,
@@ -4081,6 +4076,16 @@
       "servedSha256": "33d0e86edf2a1f397553f909797ba3a91cd2e1ff72d102eb9512c13a54ffbf6a",
       "bytes": 22484,
       "repoSha256": "33d0e86edf2a1f397553f909797ba3a91cd2e1ff72d102eb9512c13a54ffbf6a"
+    },
+    "/exports/sim/turret_box/hopper_lid.stl": {
+      "servedSha256": "e2a1cb3acd52345a5e57537a326ca3d99ed266f97a236eed7d91a1ac0e1a01bd",
+      "bytes": 99284,
+      "repoSha256": "e2a1cb3acd52345a5e57537a326ca3d99ed266f97a236eed7d91a1ac0e1a01bd"
+    },
+    "/exports/sim/turret_box/barrel.stl": {
+      "servedSha256": "f39b28bb7542beaef2a533862818fed28c52217cdd953ca44711491bc6d83c97",
+      "bytes": 96784,
+      "repoSha256": "f39b28bb7542beaef2a533862818fed28c52217cdd953ca44711491bc6d83c97"
     },
     "/exports/sim/turret_box/laser_mount.stl": {
       "servedSha256": "3463e2c262fbc549848f86fed6f7bfd5af17b7bb50161b36610afec818cceaf3",
@@ -4092,15 +4097,15 @@
       "bytes": 92084,
       "repoSha256": "571f14b4b00cd34765719dd0af30a6d6cea5ad5cbff7347b06227b7db3c84642"
     },
-    "/exports/sim/turret_box/ring_carrier.stl": {
-      "servedSha256": "298c0d9d8323847857b346a944cc4255ab9610620c581350529aafc7ddce82e2",
-      "bytes": 123284,
-      "repoSha256": "298c0d9d8323847857b346a944cc4255ab9610620c581350529aafc7ddce82e2"
-    },
     "/exports/sim/turret_box/ring_driver.stl": {
       "servedSha256": "5a58d45b4255dcaa5b9b7f2101cae651630e3bc9f982af7882fc31d456b472ef",
       "bytes": 45284,
       "repoSha256": "5a58d45b4255dcaa5b9b7f2101cae651630e3bc9f982af7882fc31d456b472ef"
+    },
+    "/exports/sim/turret_box/ring_carrier.stl": {
+      "servedSha256": "298c0d9d8323847857b346a944cc4255ab9610620c581350529aafc7ddce82e2",
+      "bytes": 123284,
+      "repoSha256": "298c0d9d8323847857b346a944cc4255ab9610620c581350529aafc7ddce82e2"
     },
     "/exports/sim/turret_box/board_bay.stl": {
       "servedSha256": "43fa1ceaf9cecb34e31c444ff8e674aeff63d48f7459b1e1db7b9e69f04d7ca1",
@@ -4112,15 +4117,15 @@
       "bytes": 12484,
       "repoSha256": "803f76d7100e1605db2997d4e6b493382db504210d8b31f793a40d242ce79edd"
     },
-    "/exports/sim/turret_box/pan_servo.stl": {
-      "servedSha256": "51d9bcc4ff5557c22bb4be4369caa1e7b0af160622d8ce3d75cc5e6ded628fb7",
-      "bytes": 20684,
-      "repoSha256": "51d9bcc4ff5557c22bb4be4369caa1e7b0af160622d8ce3d75cc5e6ded628fb7"
-    },
     "/exports/sim/turret_box/pan_bearing.stl": {
       "servedSha256": "b763a94ad46dae397cac58646f6d994692da70a52584937b2e518bbd55fa999e",
       "bytes": 33684,
       "repoSha256": "b763a94ad46dae397cac58646f6d994692da70a52584937b2e518bbd55fa999e"
+    },
+    "/exports/sim/turret_box/pan_servo.stl": {
+      "servedSha256": "51d9bcc4ff5557c22bb4be4369caa1e7b0af160622d8ce3d75cc5e6ded628fb7",
+      "bytes": 20684,
+      "repoSha256": "51d9bcc4ff5557c22bb4be4369caa1e7b0af160622d8ce3d75cc5e6ded628fb7"
     },
     "/exports/sim/turret_box/pan_bearing_inner.stl": {
       "servedSha256": "ab1341d036e0c77c6933671299369d005e4716bac1148a06bc9053e51fea51c3",
@@ -4147,45 +4152,40 @@
       "bytes": 25684,
       "repoSha256": "77d1cc3532f18a04717615b7bdfd67a8556d2e3066c3e6eed14302ecfaad0dd9"
     },
-    "/exports/sim/turret_box/cradle_plate_r.stl": {
-      "servedSha256": "3aa233f09bbe610a4cd897f01765851068be4c7b559242d672db5e8a87c20fc6",
-      "bytes": 87084,
-      "repoSha256": "3aa233f09bbe610a4cd897f01765851068be4c7b559242d672db5e8a87c20fc6"
-    },
     "/exports/sim/turret_box/slip_ring.stl": {
       "servedSha256": "bb272a1647f77512c9208b20926d2597457b7715ba6dd079b274431a62ed3afa",
       "bytes": 16684,
       "repoSha256": "bb272a1647f77512c9208b20926d2597457b7715ba6dd079b274431a62ed3afa"
     },
-    "/exports/sim/turret_box/slip_ring_rotor.stl": {
-      "servedSha256": "908373c88117db4a7e5db884c73a6f96c72957d24b94d4171193a3d856de2bb7",
-      "bytes": 8284,
-      "repoSha256": "908373c88117db4a7e5db884c73a6f96c72957d24b94d4171193a3d856de2bb7"
+    "/exports/sim/turret_box/cradle_plate_r.stl": {
+      "servedSha256": "3aa233f09bbe610a4cd897f01765851068be4c7b559242d672db5e8a87c20fc6",
+      "bytes": 87084,
+      "repoSha256": "3aa233f09bbe610a4cd897f01765851068be4c7b559242d672db5e8a87c20fc6"
     },
     "/exports/sim/turret_box/ring_coupling.stl": {
       "servedSha256": "cc2ffb8a1c1b12111bcfbcc3af0df1d2d5751b240c4b94c52a87d80dd0638d76",
       "bytes": 33684,
       "repoSha256": "cc2ffb8a1c1b12111bcfbcc3af0df1d2d5751b240c4b94c52a87d80dd0638d76"
     },
-    "/exports/sim/turret_box/base_board.stl": {
-      "servedSha256": "29c3f595eca8ae96b4f1b37e24ffe3877c4d1470cd5416c3ec82764692ecff7e",
-      "bytes": 40684,
-      "repoSha256": "29c3f595eca8ae96b4f1b37e24ffe3877c4d1470cd5416c3ec82764692ecff7e"
-    },
     "/exports/sim/turret_box/ring_leads_rotor.stl": {
       "servedSha256": "9640dbbde624040d393c8e4ef29d0e50686b00769138788c654df16f3fabb55a",
       "bytes": 25334,
       "repoSha256": "9640dbbde624040d393c8e4ef29d0e50686b00769138788c654df16f3fabb55a"
     },
+    "/exports/sim/turret_box/slip_ring_rotor.stl": {
+      "servedSha256": "908373c88117db4a7e5db884c73a6f96c72957d24b94d4171193a3d856de2bb7",
+      "bytes": 8284,
+      "repoSha256": "908373c88117db4a7e5db884c73a6f96c72957d24b94d4171193a3d856de2bb7"
+    },
+    "/exports/sim/turret_box/base_board.stl": {
+      "servedSha256": "29c3f595eca8ae96b4f1b37e24ffe3877c4d1470cd5416c3ec82764692ecff7e",
+      "bytes": 40684,
+      "repoSha256": "29c3f595eca8ae96b4f1b37e24ffe3877c4d1470cd5416c3ec82764692ecff7e"
+    },
     "/exports/sim/turret_box/base_board_screws.stl": {
       "servedSha256": "fa31ff6440263b92e2a607269935453ee5c929184d5e3c14a9edfa7b486ed16d",
       "bytes": 71284,
       "repoSha256": "fa31ff6440263b92e2a607269935453ee5c929184d5e3c14a9edfa7b486ed16d"
-    },
-    "/exports/sim/turret_box/base_carrier_screws.stl": {
-      "servedSha256": "6da2b3ff5f539a1aa5b8e3ce305f5c49ad8c043afb1a0d83116501ff3aaafbb2",
-      "bytes": 71284,
-      "repoSha256": "6da2b3ff5f539a1aa5b8e3ce305f5c49ad8c043afb1a0d83116501ff3aaafbb2"
     },
     "/exports/sim/turret_box/base_board_inserts.stl": {
       "servedSha256": "87a43781409aa812dbfa385d94da84f7deea5ecd98febb6fd664e43b2950e63c",
@@ -4197,35 +4197,40 @@
       "bytes": 67284,
       "repoSha256": "240d76efda2e405307a5849fe3386eefd94ca4750d0e0a97c9ff6914e21aa0ed"
     },
+    "/exports/sim/turret_box/base_carrier_screws.stl": {
+      "servedSha256": "6da2b3ff5f539a1aa5b8e3ce305f5c49ad8c043afb1a0d83116501ff3aaafbb2",
+      "bytes": 71284,
+      "repoSha256": "6da2b3ff5f539a1aa5b8e3ce305f5c49ad8c043afb1a0d83116501ff3aaafbb2"
+    },
     "/exports/sim/turret_box/turret_board.stl": {
       "servedSha256": "edb7642c55e4cc81e8b4aa04cd84d7c927d868b75c23ea257523cc0553065524",
       "bytes": 69084,
       "repoSha256": "edb7642c55e4cc81e8b4aa04cd84d7c927d868b75c23ea257523cc0553065524"
-    },
-    "/exports/sim/turret_box/index_magnet.stl": {
-      "servedSha256": "48ec57cb990e679571d72b7951c8d3fb01bf4928aa8f97c20e75695fe5cddedb",
-      "bytes": 8284,
-      "repoSha256": "48ec57cb990e679571d72b7951c8d3fb01bf4928aa8f97c20e75695fe5cddedb"
     },
     "/exports/sim/turret_box/hall_switch.stl": {
       "servedSha256": "7080d0d027e32403a036b13a2aceafb31fd228a7bf2240c1e736a771d931d95a",
       "bytes": 684,
       "repoSha256": "7080d0d027e32403a036b13a2aceafb31fd228a7bf2240c1e736a771d931d95a"
     },
+    "/exports/sim/turret_box/index_magnet.stl": {
+      "servedSha256": "48ec57cb990e679571d72b7951c8d3fb01bf4928aa8f97c20e75695fe5cddedb",
+      "bytes": 8284,
+      "repoSha256": "48ec57cb990e679571d72b7951c8d3fb01bf4928aa8f97c20e75695fe5cddedb"
+    },
     "/exports/sim/turret_box/dt_receptacle.stl": {
       "servedSha256": "ebfe5b18fc0edcdd799b69df5c191cb452b1a086c33371706ce6cbaa11050e34",
       "bytes": 2284,
       "repoSha256": "ebfe5b18fc0edcdd799b69df5c191cb452b1a086c33371706ce6cbaa11050e34"
     },
-    "/exports/sim/turret_box/dt_plug.stl": {
-      "servedSha256": "ebfbd7c35f242e6d8a123b8b6c9e0be10f66a9a45400d13a746c44c8172ec64f",
-      "bytes": 1084,
-      "repoSha256": "ebfbd7c35f242e6d8a123b8b6c9e0be10f66a9a45400d13a746c44c8172ec64f"
-    },
     "/exports/sim/turret_box/tilt_servo.stl": {
       "servedSha256": "7f04dd15414e44371eca92f74d32642b78885e4f027cd75ec45c8d6f68a25ee4",
       "bytes": 20684,
       "repoSha256": "7f04dd15414e44371eca92f74d32642b78885e4f027cd75ec45c8d6f68a25ee4"
+    },
+    "/exports/sim/turret_box/dt_plug.stl": {
+      "servedSha256": "ebfbd7c35f242e6d8a123b8b6c9e0be10f66a9a45400d13a746c44c8172ec64f",
+      "bytes": 1084,
+      "repoSha256": "ebfbd7c35f242e6d8a123b8b6c9e0be10f66a9a45400d13a746c44c8172ec64f"
     },
     "/exports/sim/turret_box/tilt_bearing.stl": {
       "servedSha256": "095ae8bd5dcc36874fdd54d54e2496183e863389c2cee141b3558118487fdf81",
@@ -4246,6 +4251,11 @@
       "servedSha256": "d008fd7ef3d29fcb8c1fabe73d73ec6865dd119a67c4d1a3c114419c4fef7d3a",
       "bytes": 67084,
       "repoSha256": "d008fd7ef3d29fcb8c1fabe73d73ec6865dd119a67c4d1a3c114419c4fef7d3a"
+    },
+    "/exports/sim/turret_box/cartridge_board.stl": {
+      "servedSha256": "498a5f4998fcf645e2ace580b27ea87d9401cfad08469a9ff7510c0fa99fdb1c",
+      "bytes": 1484,
+      "repoSha256": "498a5f4998fcf645e2ace580b27ea87d9401cfad08469a9ff7510c0fa99fdb1c"
     },
     "/exports/sim/turret_box/flywheel_motor_r.stl": {
       "servedSha256": "4717914e723fb6d623c8c708f7e52796f8c555b79227dae0fdb2abe060e4c648",
@@ -4272,60 +4282,55 @@
       "bytes": 16684,
       "repoSha256": "8cfce097d79482a47d039608e58ed20b91024cf4f7cc2156801443376de1e3b7"
     },
-    "/exports/sim/turret_box/laser_screws.stl": {
-      "servedSha256": "4d9e13c2d5d22599b8742c5c8af3943f9b4613b5c361650c4d8d03ab27b33aff",
-      "bytes": 24684,
-      "repoSha256": "4d9e13c2d5d22599b8742c5c8af3943f9b4613b5c361650c4d8d03ab27b33aff"
-    },
     "/exports/sim/turret_box/laser.stl": {
       "servedSha256": "7d7d12f633e429f93c236db0d1cffad2ea98c08cd70e7fb45b8dffaf37f5fd1f",
       "bytes": 8284,
       "repoSha256": "7d7d12f633e429f93c236db0d1cffad2ea98c08cd70e7fb45b8dffaf37f5fd1f"
     },
-    "/exports/sim/turret_box/cartridge_board.stl": {
-      "servedSha256": "498a5f4998fcf645e2ace580b27ea87d9401cfad08469a9ff7510c0fa99fdb1c",
-      "bytes": 1484,
-      "repoSha256": "498a5f4998fcf645e2ace580b27ea87d9401cfad08469a9ff7510c0fa99fdb1c"
-    },
-    "/exports/sim/turret_box/laser_inserts.stl": {
-      "servedSha256": "b62b7877f98124856d46f7f6b5f47512cce9df16f72d87cfdcf24f66e8e7ffb0",
-      "bytes": 33684,
-      "repoSha256": "b62b7877f98124856d46f7f6b5f47512cce9df16f72d87cfdcf24f66e8e7ffb0"
+    "/exports/sim/turret_box/laser_screws.stl": {
+      "servedSha256": "4d9e13c2d5d22599b8742c5c8af3943f9b4613b5c361650c4d8d03ab27b33aff",
+      "bytes": 24684,
+      "repoSha256": "4d9e13c2d5d22599b8742c5c8af3943f9b4613b5c361650c4d8d03ab27b33aff"
     },
     "/exports/sim/turret_box/hopper_inserts.stl": {
       "servedSha256": "b72ac3a4a474b7bfe044632a8b94317f57ea53a0019d94dd2f0affb691ce4efe",
       "bytes": 50484,
       "repoSha256": "b72ac3a4a474b7bfe044632a8b94317f57ea53a0019d94dd2f0affb691ce4efe"
     },
+    "/exports/sim/turret_box/laser_inserts.stl": {
+      "servedSha256": "b62b7877f98124856d46f7f6b5f47512cce9df16f72d87cfdcf24f66e8e7ffb0",
+      "bytes": 33684,
+      "repoSha256": "b62b7877f98124856d46f7f6b5f47512cce9df16f72d87cfdcf24f66e8e7ffb0"
+    },
     "/exports/sim/turret_box/box_deck.stl": {
       "servedSha256": "40ec31bfbe5450b9d8b92df6554ee83fe0600fe500be7d7d2e8e573e62fc4d08",
       "bytes": 399884,
       "repoSha256": "40ec31bfbe5450b9d8b92df6554ee83fe0600fe500be7d7d2e8e573e62fc4d08"
-    },
-    "/exports/sim/turret_box/pod_cover.stl": {
-      "servedSha256": "819092fec2275ec89d9fcdf4f79a21b9676db3c37588cfa102d3163efb4b81ed",
-      "bytes": 77484,
-      "repoSha256": "819092fec2275ec89d9fcdf4f79a21b9676db3c37588cfa102d3163efb4b81ed"
     },
     "/exports/sim/turret_box/intake_shroud.stl": {
       "servedSha256": "86117991de49ab7ae9f4536988fd50fd7f7f3627afc230b3da61e3bdc1d3cc6e",
       "bytes": 139484,
       "repoSha256": "86117991de49ab7ae9f4536988fd50fd7f7f3627afc230b3da61e3bdc1d3cc6e"
     },
+    "/exports/sim/turret_box/pod_cover.stl": {
+      "servedSha256": "819092fec2275ec89d9fcdf4f79a21b9676db3c37588cfa102d3163efb4b81ed",
+      "bytes": 77484,
+      "repoSha256": "819092fec2275ec89d9fcdf4f79a21b9676db3c37588cfa102d3163efb4b81ed"
+    },
     "/exports/sim/turret_box/pod_xt60.stl": {
       "servedSha256": "672aac85c5c1c6df2920decae5f4c62ba0f5a2f420e4f88455c2b772ebb8cd66",
       "bytes": 684,
       "repoSha256": "672aac85c5c1c6df2920decae5f4c62ba0f5a2f420e4f88455c2b772ebb8cd66"
     },
-    "/exports/sim/turret_box/pod_fuse.stl": {
-      "servedSha256": "0c8de2e53a3003d6a35a8b4080e519ee9e0ba800948fc7071d774e6290a1d7ed",
-      "bytes": 684,
-      "repoSha256": "0c8de2e53a3003d6a35a8b4080e519ee9e0ba800948fc7071d774e6290a1d7ed"
-    },
     "/exports/sim/turret_box/pod_switch.stl": {
       "servedSha256": "c1930cad5f4cf2a1f181fc23912671585c861e95a1240b1f69dd67ced354af6c",
       "bytes": 684,
       "repoSha256": "c1930cad5f4cf2a1f181fc23912671585c861e95a1240b1f69dd67ced354af6c"
+    },
+    "/exports/sim/turret_box/pod_fuse.stl": {
+      "servedSha256": "0c8de2e53a3003d6a35a8b4080e519ee9e0ba800948fc7071d774e6290a1d7ed",
+      "bytes": 684,
+      "repoSha256": "0c8de2e53a3003d6a35a8b4080e519ee9e0ba800948fc7071d774e6290a1d7ed"
     },
     "/exports/sim/turret_box/pod_pendant.stl": {
       "servedSha256": "3b8ca18e0978ce24cefc78f944f532c49838c0cf25b480220091960e5e928b74",
@@ -4367,25 +4372,25 @@
       "bytes": 400084,
       "repoSha256": "56184cb6904248d741d6d3c598fd1e29258dbc487ab02efe5a464f091251fb85"
     },
-    "/exports/sim/turret_box/j501_side_hatch.stl": {
-      "servedSha256": "abcf1d6d13cded51e6598565851ffc87fd03b0cc07377033ab5a8a82469c9fe1",
-      "bytes": 42684,
-      "repoSha256": "abcf1d6d13cded51e6598565851ffc87fd03b0cc07377033ab5a8a82469c9fe1"
+    "/exports/sim/turret_box/j501_base.stl": {
+      "servedSha256": "576d97a8df1bc494a4577942ce0b534af522c709cb9c99240d30c335b5719f50",
+      "bytes": 1175484,
+      "repoSha256": "576d97a8df1bc494a4577942ce0b534af522c709cb9c99240d30c335b5719f50"
     },
     "/exports/sim/turret_box/j501_rear_io.stl": {
       "servedSha256": "d7cb1fb9e560d0f0481c6952c7d6f9410a799cc9d1b57cca88e11590101595a5",
       "bytes": 399984,
       "repoSha256": "d7cb1fb9e560d0f0481c6952c7d6f9410a799cc9d1b57cca88e11590101595a5"
     },
-    "/exports/sim/turret_box/j501_base.stl": {
-      "servedSha256": "576d97a8df1bc494a4577942ce0b534af522c709cb9c99240d30c335b5719f50",
-      "bytes": 1175484,
-      "repoSha256": "576d97a8df1bc494a4577942ce0b534af522c709cb9c99240d30c335b5719f50"
-    },
     "/exports/sim/turret_box/j501_cover.stl": {
       "servedSha256": "7067448899fe57de12934254464bbda1161edb44063c64bd868073590f40092b",
       "bytes": 1200084,
       "repoSha256": "7067448899fe57de12934254464bbda1161edb44063c64bd868073590f40092b"
+    },
+    "/exports/sim/turret_box/j501_side_hatch.stl": {
+      "servedSha256": "abcf1d6d13cded51e6598565851ffc87fd03b0cc07377033ab5a8a82469c9fe1",
+      "bytes": 42684,
+      "repoSha256": "abcf1d6d13cded51e6598565851ffc87fd03b0cc07377033ab5a8a82469c9fe1"
     },
     "/designer/character/talk.js": {
       "servedSha256": "4a4d0c0f961e6325381fa7a95a82d05836a49af08be1215e33d04e0b976ec21a",
@@ -4417,15 +4422,15 @@
       "bytes": 12033,
       "repoSha256": "86e3a2c3c6fb1f75286cfc38c454293d264d0e23cf98515b6c1f27b1c54f7073"
     },
-    "/designer/kit/gamepad/bindings.js": {
-      "servedSha256": "26df0b097a7c8e824da0652e2b23bd2c9dbbf74bdb9b67d2c20fae1107ec80e4",
-      "bytes": 6556,
-      "repoSha256": "26df0b097a7c8e824da0652e2b23bd2c9dbbf74bdb9b67d2c20fae1107ec80e4"
-    },
     "/designer/kit/gamepad/diagram.js": {
       "servedSha256": "09416a3f31ee0e659a3bbbafa6ba5b63609cdbc22ef459456ec4a09dca9eeb37",
       "bytes": 5150,
       "repoSha256": "09416a3f31ee0e659a3bbbafa6ba5b63609cdbc22ef459456ec4a09dca9eeb37"
+    },
+    "/designer/kit/gamepad/bindings.js": {
+      "servedSha256": "26df0b097a7c8e824da0652e2b23bd2c9dbbf74bdb9b67d2c20fae1107ec80e4",
+      "bytes": 6556,
+      "repoSha256": "26df0b097a7c8e824da0652e2b23bd2c9dbbf74bdb9b67d2c20fae1107ec80e4"
     },
     "/designer/kit/gamepad/control.js": {
       "servedSha256": "0d1354cafb4088f9a2da9b6c8641b81eb51126f5365a531a56021e956ee3930b",
@@ -4442,25 +4447,20 @@
       "bytes": 14408,
       "repoSha256": "0f394643875bcdff247c8f285f2d0d10499104a1073088ce37c4b5f1b337086f"
     },
-    "/exports/sim/v2/rig/body__motor_f_l.stl": {
-      "servedSha256": "9dff6b5be5611b0bd35897070811107122b5d7dfb5c4aca363ac2233eaa98a53",
-      "bytes": 14284,
-      "repoSha256": "9dff6b5be5611b0bd35897070811107122b5d7dfb5c4aca363ac2233eaa98a53"
-    },
     "/exports/sim/v2/rig/body__motor_f_r_m.stl": {
       "servedSha256": "5ee5240182fee3fa733ed7798038fec7b43ec4b659a5e81a9242ea8c41943fea",
       "bytes": 14284,
       "repoSha256": "5ee5240182fee3fa733ed7798038fec7b43ec4b659a5e81a9242ea8c41943fea"
     },
+    "/exports/sim/v2/rig/body__motor_f_l.stl": {
+      "servedSha256": "9dff6b5be5611b0bd35897070811107122b5d7dfb5c4aca363ac2233eaa98a53",
+      "bytes": 14284,
+      "repoSha256": "9dff6b5be5611b0bd35897070811107122b5d7dfb5c4aca363ac2233eaa98a53"
+    },
     "/exports/sim/v2/rig/body__adapter_f_l.stl": {
       "servedSha256": "2cd56998c321be35f9f75a8191bbc33903bd75ce5f74bc5906e19b7085c666c3",
       "bytes": 227784,
       "repoSha256": "2cd56998c321be35f9f75a8191bbc33903bd75ce5f74bc5906e19b7085c666c3"
-    },
-    "/exports/sim/v2/rig/body__hip_frame_l.stl": {
-      "servedSha256": "095e7d351484dd8eb9cd7c49276468d6a42f7bffaa3cb96fdc25852cb36ec7a5",
-      "bytes": 519284,
-      "repoSha256": "095e7d351484dd8eb9cd7c49276468d6a42f7bffaa3cb96fdc25852cb36ec7a5"
     },
     "/exports/sim/v2/rig/body__hip_frame_r_m.stl": {
       "servedSha256": "6df3faa795a0764b213d991065f901953af241b718daac0ab76bff7830b7e1b6",
@@ -4472,35 +4472,40 @@
       "bytes": 227784,
       "repoSha256": "66e310f46f6f857928b61baa0afe0a682fa2e006f6343b28cde54302c80f4bc7"
     },
-    "/exports/sim/v2/rig/body__motor_r_r_m.stl": {
-      "servedSha256": "b0e03826d813641c37a09241abbf6faa1be0b8c26dd2e9a34ab99ad35cf39315",
-      "bytes": 14284,
-      "repoSha256": "b0e03826d813641c37a09241abbf6faa1be0b8c26dd2e9a34ab99ad35cf39315"
+    "/exports/sim/v2/rig/body__hip_frame_l.stl": {
+      "servedSha256": "095e7d351484dd8eb9cd7c49276468d6a42f7bffaa3cb96fdc25852cb36ec7a5",
+      "bytes": 519284,
+      "repoSha256": "095e7d351484dd8eb9cd7c49276468d6a42f7bffaa3cb96fdc25852cb36ec7a5"
     },
     "/exports/sim/v2/rig/body__motor_r_l.stl": {
       "servedSha256": "8a25cbf487f5b370a3a08b05cad14690cc4d32e39ab62e376530601aa7ae9365",
       "bytes": 14284,
       "repoSha256": "8a25cbf487f5b370a3a08b05cad14690cc4d32e39ab62e376530601aa7ae9365"
     },
-    "/exports/sim/v2/rig/body__adapter_r_l.stl": {
-      "servedSha256": "492252717b7aac7de9e9149076b65e74db882edc55731976d3b2c9d7e5a2a084",
-      "bytes": 227784,
-      "repoSha256": "492252717b7aac7de9e9149076b65e74db882edc55731976d3b2c9d7e5a2a084"
+    "/exports/sim/v2/rig/body__motor_r_r_m.stl": {
+      "servedSha256": "b0e03826d813641c37a09241abbf6faa1be0b8c26dd2e9a34ab99ad35cf39315",
+      "bytes": 14284,
+      "repoSha256": "b0e03826d813641c37a09241abbf6faa1be0b8c26dd2e9a34ab99ad35cf39315"
     },
-    "/exports/sim/v2/rig/body__adapter_r_r_m.stl": {
-      "servedSha256": "68a82f8f4a0c9d336b28eb9b62ec7d853cd099ebb07d66de3527641fac4327b6",
-      "bytes": 227784,
-      "repoSha256": "68a82f8f4a0c9d336b28eb9b62ec7d853cd099ebb07d66de3527641fac4327b6"
+    "/exports/sim/v2/rig/body__interim_body.stl": {
+      "servedSha256": "094c327f646b1713f7603cd04cbf6a9b90c9d2e035c77f958457465b0d56954b",
+      "bytes": 61684,
+      "repoSha256": "094c327f646b1713f7603cd04cbf6a9b90c9d2e035c77f958457465b0d56954b"
     },
     "/exports/sim/v2/rig/body__battery.stl": {
       "servedSha256": "7e599299aab982edca57e4d78c0d75dc06ee06252a5dfeda381756843b198f56",
       "bytes": 684,
       "repoSha256": "7e599299aab982edca57e4d78c0d75dc06ee06252a5dfeda381756843b198f56"
     },
-    "/exports/sim/v2/rig/body__interim_body.stl": {
-      "servedSha256": "094c327f646b1713f7603cd04cbf6a9b90c9d2e035c77f958457465b0d56954b",
-      "bytes": 61684,
-      "repoSha256": "094c327f646b1713f7603cd04cbf6a9b90c9d2e035c77f958457465b0d56954b"
+    "/exports/sim/v2/rig/body__adapter_r_r_m.stl": {
+      "servedSha256": "68a82f8f4a0c9d336b28eb9b62ec7d853cd099ebb07d66de3527641fac4327b6",
+      "bytes": 227784,
+      "repoSha256": "68a82f8f4a0c9d336b28eb9b62ec7d853cd099ebb07d66de3527641fac4327b6"
+    },
+    "/exports/sim/v2/rig/body__adapter_r_l.stl": {
+      "servedSha256": "492252717b7aac7de9e9149076b65e74db882edc55731976d3b2c9d7e5a2a084",
+      "bytes": 227784,
+      "repoSha256": "492252717b7aac7de9e9149076b65e74db882edc55731976d3b2c9d7e5a2a084"
     },
     "/exports/sim/v2/rig/body__compute.stl": {
       "servedSha256": "13e15b430207bafc9bbf87fad13ed810b724d02e553d1ff07d748398b3693710",
@@ -4512,15 +4517,15 @@
       "bytes": 684,
       "repoSha256": "dd71b89e251948f1d0f34c37f8d7d9e0110aa274baeebcaffa066c7765b2127a"
     },
-    "/exports/sim/v2/rig/body__motor_driver_r.stl": {
-      "servedSha256": "93b75f473a9f51794439c6e19d6d00352b30589e44f2b592b6514ddf3ce82eee",
-      "bytes": 684,
-      "repoSha256": "93b75f473a9f51794439c6e19d6d00352b30589e44f2b592b6514ddf3ce82eee"
-    },
     "/exports/sim/v2/rig/body__regen_clamp.stl": {
       "servedSha256": "f10586ea435172885511e3b29ba9e21d9c44b5543511767a82923a3dd5fac968",
       "bytes": 684,
       "repoSha256": "f10586ea435172885511e3b29ba9e21d9c44b5543511767a82923a3dd5fac968"
+    },
+    "/exports/sim/v2/rig/body__motor_driver_r.stl": {
+      "servedSha256": "93b75f473a9f51794439c6e19d6d00352b30589e44f2b592b6514ddf3ce82eee",
+      "bytes": 684,
+      "repoSha256": "93b75f473a9f51794439c6e19d6d00352b30589e44f2b592b6514ddf3ce82eee"
     },
     "/exports/sim/v2/rig/body__motor_driver_l.stl": {
       "servedSha256": "329693b5f2bc2abad607219e1137016ee85be416241b1fdda16189b37ca18569",
@@ -4607,25 +4612,25 @@
       "bytes": 4422,
       "repoSha256": "6945afc6b3f2237426d6e44828c3bb0e1b0e1ecdc3945fc358ce2f013c612245"
     },
-    "/exports/sim/v2/leg-attachments/output_screw_1.stl": {
-      "servedSha256": "909f3b5b626778914d966244eca544f9c0ef6b2adef30a77016a33fce3c55bf8",
-      "bytes": 25084,
-      "repoSha256": "909f3b5b626778914d966244eca544f9c0ef6b2adef30a77016a33fce3c55bf8"
-    },
     "/exports/sim/v2/leg-attachments/output_adapter.stl": {
       "servedSha256": "abadcc27e7425adcb6d3851684ffd915ea74e1a96699a262e9ad0fe15e096e6b",
       "bytes": 227784,
       "repoSha256": "abadcc27e7425adcb6d3851684ffd915ea74e1a96699a262e9ad0fe15e096e6b"
     },
-    "/exports/sim/v2/leg-attachments/output_screw_2.stl": {
-      "servedSha256": "091c5d7ace9b7e474124e599f56994ad5a89db783ed45a3d17b50a0d7855920b",
+    "/exports/sim/v2/leg-attachments/output_screw_1.stl": {
+      "servedSha256": "909f3b5b626778914d966244eca544f9c0ef6b2adef30a77016a33fce3c55bf8",
       "bytes": 25084,
-      "repoSha256": "091c5d7ace9b7e474124e599f56994ad5a89db783ed45a3d17b50a0d7855920b"
+      "repoSha256": "909f3b5b626778914d966244eca544f9c0ef6b2adef30a77016a33fce3c55bf8"
     },
     "/exports/sim/v2/leg-attachments/output_screw_3.stl": {
       "servedSha256": "04133fa91ce5b89b35abeae3e513d1ac9285c743c5bb0fbea9d91af453a51c64",
       "bytes": 25084,
       "repoSha256": "04133fa91ce5b89b35abeae3e513d1ac9285c743c5bb0fbea9d91af453a51c64"
+    },
+    "/exports/sim/v2/leg-attachments/output_screw_2.stl": {
+      "servedSha256": "091c5d7ace9b7e474124e599f56994ad5a89db783ed45a3d17b50a0d7855920b",
+      "bytes": 25084,
+      "repoSha256": "091c5d7ace9b7e474124e599f56994ad5a89db783ed45a3d17b50a0d7855920b"
     },
     "/exports/sim/v2/leg-attachments/output_screw_4.stl": {
       "servedSha256": "ec5ea7229d6ea25f1a40bbb5b5e0ea7439b2fa49ffb1ea6370cd919d4e6741fc",
@@ -4664,9 +4669,9 @@
     }
   },
   "servedVersion": {
-    "revision": "cd7d4a29b8e2cc47b5b852590730c23c869f363c",
-    "assets": "80d3fe892bb6e75fd111",
-    "history": false,
-    "built": "2026-11-05T22:48:51.443Z"
+    "revision": "f07565ecc7369c5734e2dd8a1b1319601ec9ffbd",
+    "assets": "4c4ba5e9d689388940d0",
+    "history": true,
+    "built": "2026-11-06T15:30:30.902Z"
   }
 }

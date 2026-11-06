@@ -38,13 +38,13 @@
   "slice_complete": true,
   "inputs": {
     "files": {
-      "tools/package-fit-job.py": "14363982bb97904221f6e00af78af1e64bd496660a5150825079e9657eb165a5",
-      "tools/fit-job-requirements.txt": "4f49d01ef0eb9d69cc93b6546707bea17c6898d8b8d284841aec1904c67820d4",
-      "cad/print_slicing.py": "13fd25fe32e75e0c66dbe8af132fd4d70fb030defb14d88a96f9ff77cbaf07bd",
-      "cad/print_provenance.py": "db0d9cdc14e0d0363899d82c03eb31cb63ea0d7718fedcf127a5545f8f6bec88",
-      "cad/rs04_lug_checks.py": "02a75e6dd5d28c6c8c149141d100d1386125197f5edfb34143565c72d8a8dfb5",
-      "exports/leg/rs04-mounting-fit/checks.json": "465cbb8b06dfff115b61034c5981b0d9441c08c9ec33569534792a18c7df8a75",
-      "exports/leg/rs04-mounting-fit/coupon_frame_ring_nom.stl": "1830ff4c1c9dc2314295d3d601b238c857c774abaf108c6619fdd9901b1da2cd"
+      "tools/evidence/manufacturing/package-fit-job.py": "842a0da505e8ea32d09230b887d1e6a7bf183177041e19e708668fee86219c2f",
+      "tools/evidence/manufacturing/fit-job-requirements.txt": "4f49d01ef0eb9d69cc93b6546707bea17c6898d8b8d284841aec1904c67820d4",
+      "hardware/cad/manufacturing/print_slicing.py": "61c6d39b363efec49e8d111c234c53dfbd9f2c60752bfb0cbe3d253906be1704",
+      "hardware/cad/manufacturing/print_provenance.py": "10ab9d0688273573e7d4647b1f2abea23efcfe43a1d89a0ff11330fb04cf558a",
+      "hardware/cad/legs/rs04_lug_checks.py": "c5751f8ef30f1b7ea804494e818667419dcfd05f5ac200a03f5936ae3a78d823",
+      "hardware/exports/leg/rs04-mounting-fit/checks.json": "9f01cea13904f9b892b9e13629ea0f1cbd70b018ae3fd3434af3ecd5b1522fe7",
+      "hardware/exports/leg/rs04-mounting-fit/coupon_frame_ring_nom.stl": "4b2b5efee4d0504ddf80f7efd25a679fca5be77d994928b1e2ff554e39d80a23"
     },
     "toolkit_helpers": {
       "cadagent.mesh3mf": "cf5aa2a2f6dab9d2a1e76539f158a10e38bc5e0fb72ceaabdf264178b83ce29f",
@@ -1221,7 +1221,7 @@
       "slicer_payload_sha256": "b7f803605b7df175570e58c994bd8bfd12467b3aa2756cce32a931c670f3e5a9"
     }
   },
-  "source_commit": "e982bd530977936a0e4fed510a7de0a041d30214",
+  "source_commit": "b422396fefe6c733a9d072062036ca97100b47a9",
   "geometry": {
     "bounds_mm": [
       [
@@ -1252,7 +1252,7 @@
   },
   "metrics": {
     "grams": 172.41,
-    "minutes": 392.7687174479167,
+    "minutes": 392.72698567708335,
     "filament_m": 65.16,
     "exit_code": 0,
     "return_code": 0,
@@ -1268,7 +1268,7 @@
       "bytes": 438
     },
     "3D/3dmodel.model": {
-      "sha256": "8416de506aa7c26321236194ba8d0fecaa860c0d52bab2fde0a732f97f8da9a1",
+      "sha256": "60e9bac853eb11067860a3ea766227f1f6752aa0fead34a25ed7e4ed380bbac3",
       "bytes": 1570
     },
     "3D/_rels/3dmodel.model.rels": {
@@ -1276,7 +1276,7 @@
       "bytes": 272
     },
     "3D/Objects/object_1.model": {
-      "sha256": "7497ace62bc7676ae312a57e61bacaca7282ce7b8343c26fc031140188c5813d",
+      "sha256": "5b3795d346d3a52339759b6c388dbc709a74974188401e537cadc9e7ffccb213",
       "bytes": 900785
     },
     "Metadata/project_settings.config": {
@@ -1284,19 +1284,19 @@
       "bytes": 44072
     },
     "Metadata/plate_1.gcode.md5": {
-      "sha256": "78703369616d6901663f87f27860de4f5e8a6f3cb1f3339f3d35052d73a751d0",
+      "sha256": "f94d0a52c081dfc334d08c97e1b790848a4309165c07af110786c0c6ee909ad7",
       "bytes": 32
     },
     "Metadata/plate_1.gcode": {
-      "sha256": "dec0176ec6dd8fbbf9e8ad3fb9b690e2fa54a2d2293763cd459024066eef723e",
-      "bytes": 11590017
+      "sha256": "dbc4ea31afc8b4493899d94ee0264166b6d66ce7c04880774487b91178ec869e",
+      "bytes": 11582954
     },
     "Metadata/_rels/model_settings.config.rels": {
       "sha256": "5ea2c0f459aec4d25341abd431edee7890c8d2fd02efbaed4b073d04cfa11440",
       "bytes": 255
     },
     "Metadata/model_settings.config": {
-      "sha256": "9ca292b30aed4f2a3db0290bbcfdf9b582fc71c1fe601d756e2f31f0e2850b0f",
+      "sha256": "6d190de3f7999f53c8a9632ada1018185a44629a2c170bda7e0d421eef8d40d8",
       "bytes": 1508
     },
     "Metadata/cut_information.xml": {
@@ -1304,8 +1304,8 @@
       "bytes": 139
     },
     "Metadata/slice_info.config": {
-      "sha256": "458791a11512c7188266a38d7f666c1f2aa1dba46b3ad232af0d16dd0ccc933b",
-      "bytes": 1690
+      "sha256": "b1d1ea1ffac96ff05fc02af87d22aba55a2b693c3be2e6e664910bddfbae55f3",
+      "bytes": 1679
     },
     "Metadata/filament_sequence.json": {
       "sha256": "9e457664577459536d7512bf553066895dba22502a17ad79789ee272d2d569ba",
@@ -1471,7 +1471,7 @@
       "support_deposition_moves": 0,
       "features": {
         "Inner wall": {
-          "moves": 93882,
+          "moves": 93641,
           "layer_z_mm": [
             0.2,
             0.4,
@@ -1597,7 +1597,7 @@
           "max_commanded_feed_mm_s": 98.26086666666667
         },
         "Outer wall": {
-          "moves": 31468,
+          "moves": 31446,
           "layer_z_mm": [
             0.2,
             0.4,
@@ -1724,7 +1724,7 @@
           "max_commanded_feed_mm_s": 99.0
         },
         "Gap infill": {
-          "moves": 598,
+          "moves": 599,
           "layer_z_mm": [
             0.2,
             2.0,
@@ -1734,14 +1734,14 @@
           "max_commanded_feed_mm_s": 99.0
         },
         "Bottom surface": {
-          "moves": 1419,
+          "moves": 1423,
           "layer_z_mm": [
             0.2
           ],
           "max_commanded_feed_mm_s": 87.2391
         },
         "Internal solid infill": {
-          "moves": 10262,
+          "moves": 10241,
           "layer_z_mm": [
             0.4,
             0.6,
@@ -1757,7 +1757,7 @@
           "max_commanded_feed_mm_s": 99.0
         },
         "Sparse infill": {
-          "moves": 170625,
+          "moves": 170620,
           "layer_z_mm": [
             0.8,
             1.0,
@@ -1876,7 +1876,7 @@
           "max_commanded_feed_mm_s": 98.26086666666667
         },
         "Floating vertical shell": {
-          "moves": 5755,
+          "moves": 5745,
           "layer_z_mm": [
             1.2,
             1.4,
@@ -1904,7 +1904,7 @@
           "max_commanded_feed_mm_s": 99.0
         },
         "Overhang wall": {
-          "moves": 170,
+          "moves": 164,
           "layer_z_mm": [
             8.8,
             23.2
@@ -1912,7 +1912,7 @@
           "max_commanded_feed_mm_s": 10.0
         },
         "Bridge": {
-          "moves": 1241,
+          "moves": 1252,
           "layer_z_mm": [
             8.8,
             23.2
@@ -1925,10 +1925,10 @@
     "limits": "In-plane raster direction may differ from a future parent job; no structural equivalence claim."
   },
   "files_sha256": {
-    "critical-layers.png": "e188c045166af48cd6145f63ddf207298980d55e04aa04070304230d8a2f76fd",
-    "geometry.3mf": "4d177d5e535b4360240d1fafd374c419b9b9d645ee34d6a0de6ac45a72c6db8d",
+    "critical-layers.png": "476bb8b5d7bec8ec4e32d66d5717d6ab5ec7cab8247872f97c2b7e66bd1ff37d",
+    "geometry.3mf": "9eed4bd6f32d8db34ca299ee43c42d993055c89c35d1130cc85593446b9ddbc2",
     "measurements.csv": "a425d41717706738b1a67cd3181f4b579a701e22d770688b8bd15b442ed35e2d",
-    "process-record.csv": "44ff3ad1329cc0dc674534d8e4f204dbc1c246d00d204d16c557ef2e0caea9a4",
+    "process-record.csv": "443cac5a21b7adc86ff34b71b386ffbf918ac8aaa4a32a16128292e4cd21b56c",
     "profiles/filament/Bambu PA6-CF @BBL X1C.json": "80783d20169f5dc21b8e43e90d61af54d5f5fae816339e6b17aa8ecf7b87ed15",
     "profiles/filament/Bambu PA6-CF @base.json": "66d5d1a96e005afbc1cefbeaf8182de1b83b54ba3facfd219051303af64135c6",
     "profiles/filament/fdm_filament_common.json": "8c7105b7d59a28f600c43a946f067b8b4d707b9711c0bf6b88e9166e48878548",
@@ -1949,11 +1949,11 @@
     "slice/exit-code.json": "124fd50cb6d223cdd18fedc166d00af7254199b6e6dedf9be82f71db87af6d01",
     "slice/filament.json": "0d2b91e9d7f31661688294b60c19e3fb922f1fde5d2f219ee16d85f190cb3374",
     "slice/machine.json": "44b41d9e562c8b9a7223ec87dd1c7e37271549983ea572f09a81f62a9b76d9af",
-    "slice/out/plate_1.gcode": "dec0176ec6dd8fbbf9e8ad3fb9b690e2fa54a2d2293763cd459024066eef723e",
-    "slice/out/result.json": "7b21091d20df63ed61950686d0d2d4419f4542eb7dd8a21851a4583e7b59fda2",
-    "slice/out/sliced.3mf": "f292eca9459bb450bc02ab6cf53ce1e3dd0601bb51d772235733afe30757e205",
+    "slice/out/plate_1.gcode": "dbc4ea31afc8b4493899d94ee0264166b6d66ce7c04880774487b91178ec869e",
+    "slice/out/result.json": "8df4ba95631227b97d7af258ce39aa357c2bfae5e0ed50a4150cdfd1383febc4",
+    "slice/out/sliced.3mf": "5d64be1a2d0b28223f749f8a8ee761d0b518e07b2810518e5f72855ae8831ba3",
     "slice/process.json": "9591ffa2ff4d223ebc859b1901766aabf71caf7cfdcf93719dcc77484b12a345",
-    "slice/slicer.log": "4db1c2c1ba0030d6c26d79986f1220328de904f180fe072c03a2633f3616a780",
-    "source.stl": "1830ff4c1c9dc2314295d3d601b238c857c774abaf108c6619fdd9901b1da2cd"
+    "slice/slicer.log": "3bc99a01870d3f6bf1a4d6525a0563773b57cc8788c528be71e6f0860b00a933",
+    "source.stl": "4b2b5efee4d0504ddf80f7efd25a679fca5be77d994928b1e2ff554e39d80a23"
   }
 }

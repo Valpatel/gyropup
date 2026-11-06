@@ -2,7 +2,7 @@
 import assert from 'node:assert/strict';
 import { test, before, after } from 'node:test';
 import { readFile, mkdir, mkdtemp, cp, writeFile, rm, stat } from 'node:fs/promises';
-import { spawn } from 'node:child_process';
+import { spawn, execFileSync } from 'node:child_process';
 import { once } from 'node:events';
 import { createHash } from 'node:crypto';
 import os from 'node:os';
@@ -10,7 +10,7 @@ import path from 'node:path';
 import { parseHTML } from 'linkedom';
 import { marked } from 'marked';
 import { htmlToMarkdown, renderPortal } from '../../../tools/site/site-markdown.mjs';
-import {publicDirectoryForSource} from '../../../tools/site/source-layout.mjs';
+import {publicDirectoryForSource,publicForSource,publicationFiles} from '../../../tools/site/source-layout.mjs';
 
 const root = path.resolve(import.meta.dirname, '../../..');
 const out = path.join(root, 'dist');
@@ -67,6 +67,31 @@ test('every generated HTML page advertises a current Markdown counterpart', asyn
 
 test('public entry guides and directory links resolve while unpublished sources stay excluded', async () => {
   const discovery = await read('llms.txt');
+  // Simulated tracked candidates exercise the exact map used by copy, docs,
+  // directories and models; this is not a claim that private files were built.
+  const layout=JSON.parse(await readFile(path.join(root,'tools/site/source-layout.json'),'utf8'));
+  const tracked=execFileSync('git',['ls-files','-z'],{cwd:root}).toString().split('\0').filter(Boolean);
+  const baseline=publicationFiles(tracked);
+  assert.ok(baseline.size>1000,'The publication boundary needs real positive inputs');
+  const planted=layout.unpublished.filter(p=>!p.endsWith('.md')).flatMap(home=>
+    ['private-boundary.md','private-boundary.json','private-boundary.stl','nested/private-boundary.md','nested/private-boundary.json','nested/private-boundary.step'].map(file=>home+'/'+file));
+  planted.push(...layout.unpublished.filter(p=>p.endsWith('.md')),'AGENTS.md','CLAUDE.md','docs/AGENTS.md','hardware/CLAUDE.md');
+  const assertBoundary=publish=>{
+    const actual=publish([...tracked,...planted]);
+    assert.deepEqual([...actual],[...baseline],'Unpublished inputs changed the published file set');
+    for(const source of planted)assert.equal(publicForSource(source),null,source);
+    assert.equal(layout.legacyPublicTestFiles.length,5);
+    for(const source of layout.legacyPublicTestFiles){
+      const target=layout.files.find(row=>row.source===source)?.public;
+      assert.ok(target&&actual.get(target)===source,'Keep the intentional public legacy test: '+source);
+    }
+    const sibling='docs/dossier-public-control/probe.md';
+    assert.equal(publish([sibling]).get(sibling),sibling,'A legitimate docs sibling stays eligible');
+  };
+  assertBoundary(publicationFiles);
+  assert.throws(()=>assertBoundary(files=>new Map([...publicationFiles(files),...planted.map(file=>[file,file])])),
+    /Unpublished inputs changed the published file set/,'Bypassing the filter must fail the same boundary assertion');
+  assert.throws(()=>assertBoundary(()=>new Map()),/Unpublished inputs changed the published file set/,'Empty publication cannot satisfy the exclusion proof');
   for(const [page,destinations] of [
     ['docs-mechanical-interfaces-md',['/cad/','/exports/fea/']],
     ['docs-body-firmware-md',['/firmware/balance/','/firmware/balance/hil/']],

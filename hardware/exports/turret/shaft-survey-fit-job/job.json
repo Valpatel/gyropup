@@ -39,16 +39,16 @@
   "slice_complete": true,
   "inputs": {
     "files": {
-      "tools/package-survey-fit-job.py": "a096f9b5567f46121f05d87d0d52efa5601f499ac53979e473ac60540a2b8325",
-      "tools/package-fit-job.py": "14363982bb97904221f6e00af78af1e64bd496660a5150825079e9657eb165a5",
-      "tools/fit-job-requirements.txt": "4f49d01ef0eb9d69cc93b6546707bea17c6898d8b8d284841aec1904c67820d4",
-      "cad/print_slicing.py": "13fd25fe32e75e0c66dbe8af132fd4d70fb030defb14d88a96f9ff77cbaf07bd",
-      "cad/print_provenance.py": "db0d9cdc14e0d0363899d82c03eb31cb63ea0d7718fedcf127a5545f8f6bec88",
-      "exports/turret/ordered-motor-fit/checks.json": "ad3e52f221104638cf95bd51fcdd2e3defbc972a3a19cd32a8986604308e043c",
-      "research/ordered-turret-motor/gauge.py": "f076dc805fe56b4c8f1fd5e85a95e793bf7f39e305845d83eba461164e70d2f3",
-      "research/ordered-turret-motor/seller-claims.json": "74508276b0107026bc0051ad1a76ad7aa8cc1a6abb148b4d22afa1beb7643a0c",
-      "exports/turret/ordered-motor-fit/shaft-clearance-survey.step": "1b5b33ef2603001abff19d35696d3fe13cc43cafbbe6e78243de5cd2620ef3cf",
-      "exports/turret/ordered-motor-fit/shaft-clearance-survey.stl": "f71124b175344d07a49e31be3e7f81944af43973ab6c4e3f51827ef0636dde10"
+      "tools/evidence/manufacturing/package-survey-fit-job.py": "eff93eb4405cb09f86c42cc2166cb08040a375d21cd3fac5659111310e3cc5c1",
+      "tools/evidence/manufacturing/package-fit-job.py": "842a0da505e8ea32d09230b887d1e6a7bf183177041e19e708668fee86219c2f",
+      "tools/evidence/manufacturing/fit-job-requirements.txt": "4f49d01ef0eb9d69cc93b6546707bea17c6898d8b8d284841aec1904c67820d4",
+      "hardware/cad/manufacturing/print_slicing.py": "61c6d39b363efec49e8d111c234c53dfbd9f2c60752bfb0cbe3d253906be1704",
+      "hardware/cad/manufacturing/print_provenance.py": "10ab9d0688273573e7d4647b1f2abea23efcfe43a1d89a0ff11330fb04cf558a",
+      "hardware/exports/turret/ordered-motor-fit/checks.json": "00334bdcf80dd59c026ae2916448eac95cb764e8f3b0f0f53c73261c0df0434d",
+      "docs/research/ordered-turret-motor/gauge.py": "a75f41096d3204405015d3a8dfc3c6ec097ab8855f7f99b5fe729d558979fbd1",
+      "docs/research/ordered-turret-motor/seller-claims.json": "74508276b0107026bc0051ad1a76ad7aa8cc1a6abb148b4d22afa1beb7643a0c",
+      "hardware/exports/turret/ordered-motor-fit/shaft-clearance-survey.step": "08e152eeb4b87cdcf69e7740b9474b0a099196ad76fab0ebc0dc0413e15a9926",
+      "hardware/exports/turret/ordered-motor-fit/shaft-clearance-survey.stl": "f71124b175344d07a49e31be3e7f81944af43973ab6c4e3f51827ef0636dde10"
     },
     "toolkit_helpers": {
       "cadagent.mesh3mf": "cf5aa2a2f6dab9d2a1e76539f158a10e38bc5e0fb72ceaabdf264178b83ce29f",
@@ -1215,7 +1215,7 @@
       "slicer_payload_sha256": "b7f803605b7df175570e58c994bd8bfd12467b3aa2756cce32a931c670f3e5a9"
     }
   },
-  "source_commit": "ea0f0fdce0199171f3178aaab99209216683704c",
+  "source_commit": "b422396fefe6c733a9d072062036ca97100b47a9",
   "geometry": {
     "bounds_mm": [
       [
@@ -1262,7 +1262,7 @@
       "bytes": 461
     },
     "3D/3dmodel.model": {
-      "sha256": "bbc174b2e905cc176078e936528373810dd8ea32ffe2bd883840136e8ba5069b",
+      "sha256": "a2ce91fa192c4b1b3bbbdfac7488482fbc7968bd957025da7c850bf1b8d24397",
       "bytes": 1516
     },
     "3D/_rels/3dmodel.model.rels": {
@@ -1290,7 +1290,7 @@
       "bytes": 255
     },
     "Metadata/model_settings.config": {
-      "sha256": "49030f1fd4fd4081c6b2ad95449af81df4aac8e391c368c0b202bd13357473a8",
+      "sha256": "c0f97ad34e35da0dbd5a6905bb7f56254ec0ac592ef624a5b097218301e2d460",
       "bytes": 1481
     },
     "Metadata/cut_information.xml": {
@@ -3239,10 +3239,10 @@
     "slice/filament.json": "0d2b91e9d7f31661688294b60c19e3fb922f1fde5d2f219ee16d85f190cb3374",
     "slice/machine.json": "44b41d9e562c8b9a7223ec87dd1c7e37271549983ea572f09a81f62a9b76d9af",
     "slice/out/plate_1.gcode": "a9cd08414b8d956d8adc497d0c19c1e1734cc9333405ac114d8efc1ff097d132",
-    "slice/out/result.json": "d79e660cfcee730cd65c68a31bf641cfc718df2c1d91c7d2a45450c531301271",
-    "slice/out/sliced.3mf": "7c1e872cb615a0358a2d4e74e2198e609214ee08d91fe05008607087d7d7eccd",
+    "slice/out/result.json": "336aa10e9486ba386c179b2248f10fdcbd2c4356fd408a06bed80e16cc8a5c86",
+    "slice/out/sliced.3mf": "1c768aa4eac4a958db56311987c893183ad13de1f7d51afa7681d90f11f0d889",
     "slice/process.json": "9591ffa2ff4d223ebc859b1901766aabf71caf7cfdcf93719dcc77484b12a345",
-    "slice/slicer.log": "1a02a0a83fc819066f724a5947e011fc483f464411b130be352cb538bdec49cc",
+    "slice/slicer.log": "ceac739336ad4aa69e023c046d975a2c4188c81f575874bb387c15019cf6934b",
     "source.stl": "f71124b175344d07a49e31be3e7f81944af43973ab6c4e3f51827ef0636dde10"
   }
 }

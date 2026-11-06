@@ -1,0 +1,74 @@
+{
+  "job": 228,
+  "alias": "cpu-a",
+  "source": "b422396fefe6c733a9d072062036ca97100b47a9",
+  "capture_job": 226,
+  "capture_source": "f07565ecc7369c5734e2dd8a1b1319601ec9ffbd",
+  "independent_artifact_adoption_review": "https://github.com/Valpatel/gyropup/pull/238#issuecomment-6689474691",
+  "candidate_archive_sha256": "6f820541e7a8f3f9807c09054e295c925c4eaafa7b91af1e4ce8e93c2c994e9b",
+  "fresh_source_members": 191,
+  "fresh_original_six": {
+    "capture-frames.json": {
+      "bytes": 100989,
+      "sha256": "46bac9c7f396bec4c9844f2bd94b12bb3bc2394705594ef80b289959882d268d"
+    },
+    "capture-receipt.json": {
+      "bytes": 122063,
+      "sha256": "98107f8878b4fc2669bd13f3b9c0e7b1d8adde61501f26ccfe9bc71e3180a24d"
+    },
+    "gyropup-highlights.mp4": {
+      "bytes": 1874166,
+      "sha256": "ff8c9a9483c828d1993d8e7144f34b84c5adbc6d6f8e9d199af76f234d3e2eb4"
+    },
+    "gyropup-highlights.webm": {
+      "bytes": 1491922,
+      "sha256": "73807123aafcbc6e8662e928e52bb393a3cd448f6d437fe4fde8d87c139958c0"
+    },
+    "gyropup-highlights.webp": {
+      "bytes": 33082,
+      "sha256": "f59c7c91fffe7134703fa383a69a0b6ce778416c455f8c906fdde87f926fda07"
+    },
+    "receipt.json": {
+      "bytes": 27394,
+      "sha256": "90a965ec65500c2976205fc8b6b8add440c6840a8727babe26b2128462fbef4c"
+    }
+  },
+  "adopted": {
+    "software/site/assets/highlights/capture-frames.json": {
+      "bytes": 100989,
+      "sha256": "e1323a8c1c04ef50b82baa97a0f8e140b271d18eb8e1fdf684d8cbde2b91ae86"
+    },
+    "software/site/assets/highlights/capture-receipt.json": {
+      "bytes": 122418,
+      "sha256": "77a2c926564563d0a5251f067b55013f7d364e5f1ef748f44ce3c0230b89ec3c"
+    },
+    "software/site/assets/highlights/gyropup-highlights.mp4": {
+      "bytes": 1872344,
+      "sha256": "fe406088d506f4c8bb09e42b1b1836d1859d23c2588c86bbf47d487c47189051"
+    },
+    "software/site/assets/highlights/gyropup-highlights.webm": {
+      "bytes": 1485837,
+      "sha256": "ef796cffe646672f7679bbb169389f0be3257aafaf42d175564216645be2908d"
+    },
+    "software/site/assets/highlights/gyropup-highlights.webp": {
+      "bytes": 33124,
+      "sha256": "cda2c5d9fb6415eb3b8bafed504e39e3e9306a11569cb25f6ab18f6358ee6003"
+    },
+    "software/site/assets/highlights/receipt.json": {
+      "bytes": 29822,
+      "sha256": "d61a0e4879a584b5fa9c18f288ce3c479f77f954fc7dfbfad999ca46218635c2"
+    }
+  },
+  "actual_post_adoption_command": [
+    "python3",
+    "tools/evidence/media/check-highlights.py",
+    "--frames",
+    "<retained actual fleet226 raw frames>"
+  ],
+  "limits": [
+    "Genuine simulator callbacks/raw frames and original historical leg footage; no new dynamics solve",
+    "E1 remains the recorded below-target static field with whole labels",
+    "No hardware, fit, print, mass or powered-operation qualification",
+    "Final wholeheadCI/review and dev/main/publication remain required"
+  ]
+}

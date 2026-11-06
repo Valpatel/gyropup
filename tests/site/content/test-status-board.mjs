@@ -248,7 +248,7 @@ test('each panel’s date is git’s newest commit to its records, and its recor
   for (const panel of published.panels) {
     const el = progress.querySelector(`.sb-panel[data-subsystem="${panel.id}"] .sb-when`);
     if (shallow) { assert.equal(el.dataset.changed, ''); continue; }
-    const [date, commit] = execFileSync('git', ['log', '-1', '--format=%cI %H', '--', ...panel.records], { cwd: root }).toString().trim().split(' ');
+    const [date, commit] = execFileSync('git', ['log', '-1', '--format=%cI %H', '--', ...panel.records.map(sourceForPublic)], { cwd: root }).toString().trim().split(' ');
     assert.equal(el.dataset.changed, date, panel.id);
     assert.equal(text(el.querySelector('time')), shortDate(date));
     assert.equal(el.querySelector('a').getAttribute('href'), `https://github.com/Valpatel/gyropup/commit/${commit}`);

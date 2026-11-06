@@ -1,0 +1,307 @@
+{
+  "source": "b422396fefe6c733a9d072062036ca97100b47a9",
+  "independent_artifact_adoption_review": "https://github.com/Valpatel/gyropup/pull/238#issuecomment-6689295167",
+  "archive_sha256": "3892d7fa34d987d54c1d4c8fe6d08a27f29714d737bd55329406478303302709",
+  "fresh_inputs_and_original64_checked": true,
+  "adopted": {
+    "hardware/exports/leg/rs04-fit-job/critical-layers.png": {
+      "bytes": 698939,
+      "sha256": "476bb8b5d7bec8ec4e32d66d5717d6ab5ec7cab8247872f97c2b7e66bd1ff37d"
+    },
+    "hardware/exports/leg/rs04-fit-job/geometry.3mf": {
+      "bytes": 120950,
+      "sha256": "9eed4bd6f32d8db34ca299ee43c42d993055c89c35d1130cc85593446b9ddbc2"
+    },
+    "hardware/exports/leg/rs04-fit-job/job.json": {
+      "bytes": 66736,
+      "sha256": "da373b448b42951db7cde584533385f76f2b9106e2bb47df6c2bc682539bad30"
+    },
+    "hardware/exports/leg/rs04-fit-job/measurements.csv": {
+      "bytes": 557,
+      "sha256": "a425d41717706738b1a67cd3181f4b579a701e22d770688b8bd15b442ed35e2d"
+    },
+    "hardware/exports/leg/rs04-fit-job/process-record.csv": {
+      "bytes": 412,
+      "sha256": "443cac5a21b7adc86ff34b71b386ffbf918ac8aaa4a32a16128292e4cd21b56c"
+    },
+    "hardware/exports/leg/rs04-fit-job/profiles/filament/Bambu PA6-CF @BBL X1C.json": {
+      "bytes": 1185,
+      "sha256": "80783d20169f5dc21b8e43e90d61af54d5f5fae816339e6b17aa8ecf7b87ed15"
+    },
+    "hardware/exports/leg/rs04-fit-job/profiles/filament/Bambu PA6-CF @base.json": {
+      "bytes": 1111,
+      "sha256": "66d5d1a96e005afbc1cefbeaf8182de1b83b54ba3facfd219051303af64135c6"
+    },
+    "hardware/exports/leg/rs04-fit-job/profiles/filament/fdm_filament_common.json": {
+      "bytes": 7715,
+      "sha256": "8c7105b7d59a28f600c43a946f067b8b4d707b9711c0bf6b88e9166e48878548"
+    },
+    "hardware/exports/leg/rs04-fit-job/profiles/filament/fdm_filament_pa.json": {
+      "bytes": 2228,
+      "sha256": "8b9745795aecf73476837299eff1fbcaee51ba16878ff258978b67b2d4fbe545"
+    },
+    "hardware/exports/leg/rs04-fit-job/profiles/filament/fdm_filament_template_direct_dual.json": {
+      "bytes": 2985,
+      "sha256": "e0f564b83f3ef70cce4de1401dd7cd855d6fbd834343cb8f4292f2a1ac3efc51"
+    },
+    "hardware/exports/leg/rs04-fit-job/profiles/machine/Bambu Lab P1S 0.4 nozzle template change_filament_gcode.json": {
+      "bytes": 5835,
+      "sha256": "3194e4322c3b8953a187e11a0ccc198949244065fb5caf62a67443f8acc54dde"
+    },
+    "hardware/exports/leg/rs04-fit-job/profiles/machine/Bambu Lab P1S 0.4 nozzle template layer_change_gcode.json": {
+      "bytes": 282,
+      "sha256": "f0ca694af70aec99a72501da294b8c73b8d655e8adab004325b27d2df83b98f1"
+    },
+    "hardware/exports/leg/rs04-fit-job/profiles/machine/Bambu Lab P1S 0.4 nozzle template machine_end_gcode.json": {
+      "bytes": 1517,
+      "sha256": "766999ac6456c7ddd82aa47a3dbd9ef71d1e9333483305999b3530befe22ab7d"
+    },
+    "hardware/exports/leg/rs04-fit-job/profiles/machine/Bambu Lab P1S 0.4 nozzle template machine_start_gcode.json": {
+      "bytes": 6958,
+      "sha256": "ecfedd58ee4775dec2dafe0a14c1adbcd1fe3c83d2f85e9a252cceec05d2730e"
+    },
+    "hardware/exports/leg/rs04-fit-job/profiles/machine/Bambu Lab P1S 0.4 nozzle template time_lapse_gcode.json": {
+      "bytes": 703,
+      "sha256": "af84ee5b92597644c2a27ee45a0c811b748bcc8230b7c378a16d1fd405b46f44"
+    },
+    "hardware/exports/leg/rs04-fit-job/profiles/machine/Bambu Lab P1S 0.4 nozzle.json": {
+      "bytes": 4771,
+      "sha256": "ca7de71dd2b48899ccadeeab9f9f68f866e6b2afae55caa812d0e6dec2ad83c8"
+    },
+    "hardware/exports/leg/rs04-fit-job/profiles/machine/fdm_bbl_3dp_001_common.json": {
+      "bytes": 9408,
+      "sha256": "f911d4012d803184927b48d149eb18e30e98317109424ecc988caeb9c204504a"
+    },
+    "hardware/exports/leg/rs04-fit-job/profiles/machine/fdm_machine_common.json": {
+      "bytes": 4538,
+      "sha256": "26ef8ee697849323e67d8e1a9026c175cebe3397e38c5091dddb5cd3fc52e94c"
+    },
+    "hardware/exports/leg/rs04-fit-job/profiles/process/0.20mm Standard @BBL X1C.json": {
+      "bytes": 3305,
+      "sha256": "e4d3f211b6ef87e9612c96f3ac2d18413e0610fff7eeb815a76420344a3b0a19"
+    },
+    "hardware/exports/leg/rs04-fit-job/profiles/process/fdm_process_common.json": {
+      "bytes": 6418,
+      "sha256": "5c16ba3f17a36cc8f01743245e221426b3cdceac7cc367758d6f48d86b63d8ef"
+    },
+    "hardware/exports/leg/rs04-fit-job/profiles/process/fdm_process_single_0.20.json": {
+      "bytes": 685,
+      "sha256": "cdda8d56d67f62a0faa892cb6efc605ebb5c745bf742f6ead4daaeb6627c182a"
+    },
+    "hardware/exports/leg/rs04-fit-job/profiles/process/fdm_process_single_common.json": {
+      "bytes": 1830,
+      "sha256": "05b38ac1318e465e817978b36da51754f928da0172738a20bb3a8d4a69eb4769"
+    },
+    "hardware/exports/leg/rs04-fit-job/slice/exit-code.json": {
+      "bytes": 16,
+      "sha256": "124fd50cb6d223cdd18fedc166d00af7254199b6e6dedf9be82f71db87af6d01"
+    },
+    "hardware/exports/leg/rs04-fit-job/slice/filament.json": {
+      "bytes": 7026,
+      "sha256": "0d2b91e9d7f31661688294b60c19e3fb922f1fde5d2f219ee16d85f190cb3374"
+    },
+    "hardware/exports/leg/rs04-fit-job/slice/machine.json": {
+      "bytes": 19756,
+      "sha256": "44b41d9e562c8b9a7223ec87dd1c7e37271549983ea572f09a81f62a9b76d9af"
+    },
+    "hardware/exports/leg/rs04-fit-job/slice/out/plate_1.gcode": {
+      "bytes": 11582954,
+      "sha256": "dbc4ea31afc8b4493899d94ee0264166b6d66ce7c04880774487b91178ec869e"
+    },
+    "hardware/exports/leg/rs04-fit-job/slice/out/result.json": {
+      "bytes": 3356,
+      "sha256": "8df4ba95631227b97d7af258ce39aa357c2bfae5e0ed50a4150cdfd1383febc4"
+    },
+    "hardware/exports/leg/rs04-fit-job/slice/out/sliced.3mf": {
+      "bytes": 4217585,
+      "sha256": "5d64be1a2d0b28223f749f8a8ee761d0b518e07b2810518e5f72855ae8831ba3"
+    },
+    "hardware/exports/leg/rs04-fit-job/slice/process.json": {
+      "bytes": 7490,
+      "sha256": "9591ffa2ff4d223ebc859b1901766aabf71caf7cfdcf93719dcc77484b12a345"
+    },
+    "hardware/exports/leg/rs04-fit-job/slice/slicer.log": {
+      "bytes": 317,
+      "sha256": "3bc99a01870d3f6bf1a4d6525a0563773b57cc8788c528be71e6f0860b00a933"
+    },
+    "hardware/exports/leg/rs04-fit-job/source.stl": {
+      "bytes": 583684,
+      "sha256": "4b2b5efee4d0504ddf80f7efd25a679fca5be77d994928b1e2ff554e39d80a23"
+    },
+    "hardware/exports/leg/rs04-fit-job.zip": {
+      "bytes": 9274717,
+      "sha256": "a209e69a24439ecc9c11e6bc689b2ec66c0334c012728f8712655bf55bd83793"
+    },
+    "hardware/exports/turret/shaft-survey-fit-job/critical-layers.png": {
+      "bytes": 193247,
+      "sha256": "b85cbad7a436c144b7e2db888416a39c6d6a8906136290b093aa20e3de2ee4c7"
+    },
+    "hardware/exports/turret/shaft-survey-fit-job/geometry.3mf": {
+      "bytes": 365802,
+      "sha256": "bb97363715bbce66ce527271d4d8f4ccb72ea1a4c2d5ac94abddf96e8138c5df"
+    },
+    "hardware/exports/turret/shaft-survey-fit-job/job.json": {
+      "bytes": 104772,
+      "sha256": "d2b28ca3a3ee28d73e1f92cf13d383408942d08ea156059bb443a1a563e75552"
+    },
+    "hardware/exports/turret/shaft-survey-fit-job/measurements.csv": {
+      "bytes": 367,
+      "sha256": "504ff0e6bd3d930b073e6cbc2adbf69c48557a7509a359aa47adb239173f5720"
+    },
+    "hardware/exports/turret/shaft-survey-fit-job/process-record.csv": {
+      "bytes": 408,
+      "sha256": "c0dfb235393d20aa2d6ae16389cb4992483a61bed62f9102153e814d1672b2ba"
+    },
+    "hardware/exports/turret/shaft-survey-fit-job/profiles/filament/Bambu PA6-CF @BBL X1C.json": {
+      "bytes": 1185,
+      "sha256": "80783d20169f5dc21b8e43e90d61af54d5f5fae816339e6b17aa8ecf7b87ed15"
+    },
+    "hardware/exports/turret/shaft-survey-fit-job/profiles/filament/Bambu PA6-CF @base.json": {
+      "bytes": 1111,
+      "sha256": "66d5d1a96e005afbc1cefbeaf8182de1b83b54ba3facfd219051303af64135c6"
+    },
+    "hardware/exports/turret/shaft-survey-fit-job/profiles/filament/fdm_filament_common.json": {
+      "bytes": 7715,
+      "sha256": "8c7105b7d59a28f600c43a946f067b8b4d707b9711c0bf6b88e9166e48878548"
+    },
+    "hardware/exports/turret/shaft-survey-fit-job/profiles/filament/fdm_filament_pa.json": {
+      "bytes": 2228,
+      "sha256": "8b9745795aecf73476837299eff1fbcaee51ba16878ff258978b67b2d4fbe545"
+    },
+    "hardware/exports/turret/shaft-survey-fit-job/profiles/filament/fdm_filament_template_direct_dual.json": {
+      "bytes": 2985,
+      "sha256": "e0f564b83f3ef70cce4de1401dd7cd855d6fbd834343cb8f4292f2a1ac3efc51"
+    },
+    "hardware/exports/turret/shaft-survey-fit-job/profiles/machine/Bambu Lab P1S 0.4 nozzle template change_filament_gcode.json": {
+      "bytes": 5835,
+      "sha256": "3194e4322c3b8953a187e11a0ccc198949244065fb5caf62a67443f8acc54dde"
+    },
+    "hardware/exports/turret/shaft-survey-fit-job/profiles/machine/Bambu Lab P1S 0.4 nozzle template layer_change_gcode.json": {
+      "bytes": 282,
+      "sha256": "f0ca694af70aec99a72501da294b8c73b8d655e8adab004325b27d2df83b98f1"
+    },
+    "hardware/exports/turret/shaft-survey-fit-job/profiles/machine/Bambu Lab P1S 0.4 nozzle template machine_end_gcode.json": {
+      "bytes": 1517,
+      "sha256": "766999ac6456c7ddd82aa47a3dbd9ef71d1e9333483305999b3530befe22ab7d"
+    },
+    "hardware/exports/turret/shaft-survey-fit-job/profiles/machine/Bambu Lab P1S 0.4 nozzle template machine_start_gcode.json": {
+      "bytes": 6958,
+      "sha256": "ecfedd58ee4775dec2dafe0a14c1adbcd1fe3c83d2f85e9a252cceec05d2730e"
+    },
+    "hardware/exports/turret/shaft-survey-fit-job/profiles/machine/Bambu Lab P1S 0.4 nozzle template time_lapse_gcode.json": {
+      "bytes": 703,
+      "sha256": "af84ee5b92597644c2a27ee45a0c811b748bcc8230b7c378a16d1fd405b46f44"
+    },
+    "hardware/exports/turret/shaft-survey-fit-job/profiles/machine/Bambu Lab P1S 0.4 nozzle.json": {
+      "bytes": 4771,
+      "sha256": "ca7de71dd2b48899ccadeeab9f9f68f866e6b2afae55caa812d0e6dec2ad83c8"
+    },
+    "hardware/exports/turret/shaft-survey-fit-job/profiles/machine/fdm_bbl_3dp_001_common.json": {
+      "bytes": 9408,
+      "sha256": "f911d4012d803184927b48d149eb18e30e98317109424ecc988caeb9c204504a"
+    },
+    "hardware/exports/turret/shaft-survey-fit-job/profiles/machine/fdm_machine_common.json": {
+      "bytes": 4538,
+      "sha256": "26ef8ee697849323e67d8e1a9026c175cebe3397e38c5091dddb5cd3fc52e94c"
+    },
+    "hardware/exports/turret/shaft-survey-fit-job/profiles/process/0.20mm Standard @BBL X1C.json": {
+      "bytes": 3305,
+      "sha256": "e4d3f211b6ef87e9612c96f3ac2d18413e0610fff7eeb815a76420344a3b0a19"
+    },
+    "hardware/exports/turret/shaft-survey-fit-job/profiles/process/fdm_process_common.json": {
+      "bytes": 6418,
+      "sha256": "5c16ba3f17a36cc8f01743245e221426b3cdceac7cc367758d6f48d86b63d8ef"
+    },
+    "hardware/exports/turret/shaft-survey-fit-job/profiles/process/fdm_process_single_0.20.json": {
+      "bytes": 685,
+      "sha256": "cdda8d56d67f62a0faa892cb6efc605ebb5c745bf742f6ead4daaeb6627c182a"
+    },
+    "hardware/exports/turret/shaft-survey-fit-job/profiles/process/fdm_process_single_common.json": {
+      "bytes": 1830,
+      "sha256": "05b38ac1318e465e817978b36da51754f928da0172738a20bb3a8d4a69eb4769"
+    },
+    "hardware/exports/turret/shaft-survey-fit-job/slice/exit-code.json": {
+      "bytes": 16,
+      "sha256": "124fd50cb6d223cdd18fedc166d00af7254199b6e6dedf9be82f71db87af6d01"
+    },
+    "hardware/exports/turret/shaft-survey-fit-job/slice/filament.json": {
+      "bytes": 7026,
+      "sha256": "0d2b91e9d7f31661688294b60c19e3fb922f1fde5d2f219ee16d85f190cb3374"
+    },
+    "hardware/exports/turret/shaft-survey-fit-job/slice/machine.json": {
+      "bytes": 19756,
+      "sha256": "44b41d9e562c8b9a7223ec87dd1c7e37271549983ea572f09a81f62a9b76d9af"
+    },
+    "hardware/exports/turret/shaft-survey-fit-job/slice/out/plate_1.gcode": {
+      "bytes": 580692,
+      "sha256": "a9cd08414b8d956d8adc497d0c19c1e1734cc9333405ac114d8efc1ff097d132"
+    },
+    "hardware/exports/turret/shaft-survey-fit-job/slice/out/result.json": {
+      "bytes": 3197,
+      "sha256": "336aa10e9486ba386c179b2248f10fdcbd2c4356fd408a06bed80e16cc8a5c86"
+    },
+    "hardware/exports/turret/shaft-survey-fit-job/slice/out/sliced.3mf": {
+      "bytes": 549337,
+      "sha256": "1c768aa4eac4a958db56311987c893183ad13de1f7d51afa7681d90f11f0d889"
+    },
+    "hardware/exports/turret/shaft-survey-fit-job/slice/process.json": {
+      "bytes": 7490,
+      "sha256": "9591ffa2ff4d223ebc859b1901766aabf71caf7cfdcf93719dcc77484b12a345"
+    },
+    "hardware/exports/turret/shaft-survey-fit-job/slice/slicer.log": {
+      "bytes": 317,
+      "sha256": "ceac739336ad4aa69e023c046d975a2c4188c81f575874bb387c15019cf6934b"
+    },
+    "hardware/exports/turret/shaft-survey-fit-job/source.stl": {
+      "bytes": 1879384,
+      "sha256": "f71124b175344d07a49e31be3e7f81944af43973ab6c4e3f51827ef0636dde10"
+    },
+    "hardware/exports/turret/shaft-survey-fit-job.zip": {
+      "bytes": 1787749,
+      "sha256": "7b52e4924eb5205e93982a303fb2cf5fefa1ed1eeff4d60e20147a288fd72259"
+    }
+  },
+  "sibling_ZIPs_match_all31_members": true,
+  "current_quote_correction": {
+    "files": [
+      "docs/legs/rs04-fit-job.md",
+      "docs/architecture/mechanical-readiness.md"
+    ],
+    "old": "6 h 32 min 46 s",
+    "new": "6 h 32 min 44 s",
+    "grams": 172.41,
+    "filament_m": 65.16
+  },
+  "actual_post_adoption_commands": [
+    [
+      "python",
+      "-B",
+      "tools/evidence/manufacturing/package-fit-job.py",
+      "--verify",
+      "hardware/exports/leg/rs04-fit-job"
+    ],
+    [
+      "python",
+      "-B",
+      "tools/evidence/manufacturing/package-survey-fit-job.py",
+      "--verify",
+      "hardware/exports/turret/shaft-survey-fit-job"
+    ],
+    [
+      "python",
+      "-B",
+      "tests/hardware/manufacturing/test-fit-job.py"
+    ],
+    [
+      "python",
+      "-B",
+      "tests/hardware/manufacturing/test-survey-fit-job.py"
+    ]
+  ],
+  "limits": [
+    "Genuine current-source unpowered trial packaging, not physical fit or release",
+    "Existing printer/process/material recipe retained; all qualification flags false",
+    "Lug engineering result remains322pass40warn8fail",
+    "No historical-baseline bypass or edited slice receipt"
+  ]
+}
