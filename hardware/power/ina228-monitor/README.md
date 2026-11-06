@@ -17,8 +17,8 @@ flowchart LR
 
 - TI's INA228 datasheet SBOSA20 (cited by the firmware): [ti.com/product/INA228](https://www.ti.com/product/INA228), not kept.
 - The Adafruit 5832 breakout: [adafruit.com/product/5832](https://www.adafruit.com/product/5832); the shunt and the
-  fuse board: `catalog/body.json`, [docs/body-fuse-board.md](../../../docs/body-fuse-board.md).
-- Why the shunt is on the + side: [docs/body-electrical.md](../../../docs/body-electrical.md) section 3 (issue #11).
+  fuse board: `catalog/body.json`, [docs/body-fuse-board.md](../../../docs/body/body-fuse-board.md).
+- Why the shunt is on the + side: [docs/body-electrical.md](../../../docs/body/body-electrical.md) section 3 (issue #11).
 
 ## Interfaces
 
@@ -32,7 +32,7 @@ default) with their ADC range and SHUNT_CAL, and the ADC set-up, each checked ag
 
 ## Driver
 
-[`firmware/balance/src/core/gp_ina228.c`](../../../firmware/balance/src/core/gp_ina228.c) computes the range and
+[`firmware/balance/src/core/gp_ina228.c`](../../../software/firmware/balance/src/core/gp_ina228.c) computes the range and
 SHUNT_CAL from the shunt's resistance and converts the readings; the registers are in `include/gp/gp_ina228.h`.
 
 ## Inventory
@@ -41,7 +41,7 @@ SHUNT_CAL from the shunt's resistance and converts the readings; the registers a
 
 ## Bring-up and tests
 
-Not yet. The steps are in [docs/body-electrical.md](../../../docs/body-electrical.md) (bring-up 4-6): move the shunt to
+Not yet. The steps are in [docs/body-electrical.md](../../../docs/body/body-electrical.md) (bring-up 4-6): move the shunt to
 the + lead before the INA228 is wired, then the pack within 0.2 V of a meter and the current within 0.1 A at a 2 A
 load, discharge reading negative. The battery checks of B12 follow (`docs/body-firmware.md`).
 

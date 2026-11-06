@@ -15,7 +15,7 @@ No private file contents or external absolute paths are published. These are the
 
 Generate geometry with the normal turret and stand exporters before packaging. Legacy exports without receipts are rejected. A full package rebuild uses fresh rows; `--only` validates every retained row's source identity, recipe and 3MF bytes before writing anything. A partial first build is explicitly marked partial. Changed or unbound retained rows require a full rebuild. Bench BOM generation drops stale slicer measurements rather than attaching them to new geometry.
 
-Geometry identity is separate from readiness. Receipts and generated print documentation explicitly leave mechanical/physical acceptance unqualified. Known assembly, wall, structural, hardware and measurement blockers in [mechanical readiness](mechanical-readiness.md) still apply. No new full kit or slicing result has been released by adding this guard.
+Geometry identity is separate from readiness. Receipts and generated print documentation explicitly leave mechanical/physical acceptance unqualified. Known assembly, wall, structural, hardware and measurement blockers in [mechanical readiness](../architecture/mechanical-readiness.md) still apply. No new full kit or slicing result has been released by adding this guard.
 
 Run `python3 tools/test-print-provenance.py` for source/catalogue changes, missing receipts, changed meshes, changes during export, nonstandard selected designs, mixed partial packages and stale slicer reuse. Those tests exercise packaging decisions; they do not run a CAD solve, slicer or physical print.
 

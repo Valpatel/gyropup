@@ -63,7 +63,7 @@ The existing C3 circuit assignments are retained:
 
 ## Supplied geometry is not complete internal geometry
 
-The two housing files and the female terminal each import as a valid single solid. Their bounds and exact file hashes are checked by [the bounded input probe](../tools/check-carrier-connector-inputs.py). This is input identity, not mating qualification.
+The two housing files and the female terminal each import as a valid single solid. Their bounds and exact file hashes are checked by [the bounded input probe](../../tools/evidence/interfaces/check-carrier-connector-inputs.py). This is input identity, not mating qualification.
 
 The supplied housing files close the wire-entry ends and simplify internal terminal cavities. At the drawing-derived mated length, the nominally aligned raw housing solids report about 82.50 mm³ overlap in that simplified region. The reversed-latch control also overlaps; separating the housings 16 mm clears them. The probe retains these relations with the reviewed topology and numerical-error checks. It does not remove material, waive interference or declare that the physical parts collide. External-outline placement can still be investigated, but complete mated fit and terminal insertion require more detailed source geometry or measured parts.
 
@@ -98,7 +98,7 @@ The protection candidate sees only BUS_HEAD_FUSED, GND and 12V_PAN. Its U2 A4/B4
 
 ## External C3 service-pose candidate
 
-The [external-space probe](../tools/check-carrier-connector-pose.py) places the housing array centre at turret **X84/Z34 mm**, with mating along Y and the latch facing outward +X. The module plug spans Y−16.89..0. The fixed receptacle initially spans Y−6.12..7.88. The connector stays above the installed bumper; lowering the module housing 13 mm is an explicit collision control.
+The [external-space probe](../../tools/evidence/interfaces/check-carrier-connector-pose.py) places the housing array centre at turret **X84/Z34 mm**, with mating along Y and the latch facing outward +X. The module plug spans Y−16.89..0. The fixed receptacle initially spans Y−6.12..7.88. The connector stays above the installed bumper; lowering the module housing 13 mm is an explicit collision control.
 
 | Stage | Fixed receptacle translation from its mated pose | Purpose |
 | --- | --- | --- |
@@ -124,9 +124,9 @@ The next concrete support must preserve the carrier's original fastener seats an
 
 ## Separate support candidate: access and stack, not a print recommendation
 
-[The opt-in support source](../cad/turret_carrier_support.py) adds two new mounting holes at Y±10/Z10 mm. It preserves the carrier's original PCB bosses, four insert seats and four external retainer holes. The default turret still uses the earlier carrier; this candidate must not silently replace it in fabrication exports.
+[The opt-in support source](../../hardware/cad/turret/turret_carrier_support.py) adds two new mounting holes at Y±10/Z10 mm. It preserves the carrier's original PCB bosses, four insert seats and four external retainer holes. The default turret still uses the earlier carrier; this candidate must not silently replace it in fabrication exports.
 
-[Inspect the assembled support candidate](../exports/turret/base-board-service/connectors/C3-support-layout.step). The named colours distinguish authored parts, simplified public hardware, package envelopes and connector reservations. [Support only](../exports/turret/base-board-service/connectors/C3-support-candidate.step) and [carrier candidate](../exports/turret/base-board-service/connectors/carrier-support-candidate.step) are research inspection models, not approved print files.
+[Inspect the assembled support candidate](../../hardware/exports/turret/base-board-service/connectors/C3-support-layout.step). The named colours distinguish authored parts, simplified public hardware, package envelopes and connector reservations. [Support only](../../hardware/exports/turret/base-board-service/connectors/C3-support-candidate.step) and [carrier candidate](../../hardware/exports/turret/base-board-service/connectors/carrier-support-candidate.step) are research inspection models, not approved print files.
 
 | Part / interface | Concrete candidate | Remaining qualification |
 | --- | --- | --- |
@@ -140,7 +140,7 @@ The panel's rear face follows the private model's stop faces at raw Y−0.065, t
 
 On the bench, load the two nuts through the carrier's inward-open pockets, position the support and tighten its screws **before installing the PCB**. The pockets resist nut rotation but do not retain loose nuts axially before screw engagement. Hold them during assembly. Their screws, nuts and support remain part of the rigid removable module. Replacing this support requires removing the PCB first; its straight nut-removal corridor crosses the installed board. Normal module removal does not require removing these two nuts or screws.
 
-The [bounded checker](../tools/check-carrier-connector-support.py) uses the actual newly acquired screw and nut solids, the exact private housing, the current PCB/component layout, C2 reservations and six existing straight wire exits. It preserves individual hardware identities, checks original and new driver corridors, tests the real nut inside a conservative translation sweep, and includes blocked-hole, blocked-tool and PCB-installed nut-removal controls. Public exports use separately authored hardware and a visibly labelled housing body-dimension representation. Vendor geometry stays private.
+The [bounded checker](../../tools/evidence/interfaces/check-carrier-connector-support.py) uses the actual newly acquired screw and nut solids, the exact private housing, the current PCB/component layout, C2 reservations and six existing straight wire exits. It preserves individual hardware identities, checks original and new driver corridors, tests the real nut inside a conservative translation sweep, and includes blocked-hole, blocked-tool and PCB-installed nut-removal controls. Public exports use separately authored hardware and a visibly labelled housing body-dimension representation. Vendor geometry stays private.
 
 The first load screen uses the specification's **8 N per circuit maximum mating force**, hence 96 N for twelve circuits. The fixed receptacle moves toward−Y while mating, so the supported plug receives a−Y force; extraction is the opposite direction with an unknown maximum. At the connector array centre, the mount sees a 28 mm outward lever and 24 mm vertical lever:−2,688 N·mm about Z and+2,304 N·mm about X. A static two-point reaction gives a 134.4 N axial bolt couple and 115.2 N vertical shear couple in magnitude, before preload/contact details. The conservative one-upright calculation gives about 12.8 MPa bending and 19.0 MPa torsion, or 35.4 MPa equivalent by that simplified estimate. This is not a full frame stress solution, and the torsion approximation is not a guaranteed upper bound.
 

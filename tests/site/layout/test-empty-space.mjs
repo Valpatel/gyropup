@@ -18,20 +18,20 @@
 import { mkdir, readFile, readdir, writeFile } from 'node:fs/promises';
 import path from 'node:path';
 import { chromium, devices } from '@playwright/test';
-import { createSiteServer } from './serve-site.mjs';
-import { acknowledgePrototypeNotice } from './test-prototype-session.mjs';
+import { createSiteServer } from '../../../tools/site/serve-site.mjs';
+import { acknowledgePrototypeNotice } from '../content/test-prototype-session.mjs';
 import { installRenderedReadiness, waitForRenderedText } from './test-rendered-readiness.mjs';
-import { sitePages } from './site-walls.mjs';
+import { sitePages } from '../../../tools/site/site-walls.mjs';
 import {
   BUSY_EDGES, EDGE_STEP, FLAT_SHARE, RULE_RUN, FLAT_TOLERANCE, MEDIA_MIN, MIN_THICKNESS, NARROW_SHARE, SCHEMES, SIZES, WORDS_PER_LINE,
   paintedPixels, scanLayout,
-} from './site-empty-space.mjs';
+} from '../../../tools/site/site-empty-space.mjs';
 
 // Playwright 1.56.1 also waits on global document.fonts.ready during screenshots.
 // This harness instead awaits real rendered fonts below; held-resource controls fail if this pinned flag stops working.
 process.env.PW_TEST_SCREENSHOT_NO_FONTS_READY = '1';
 
-const root = path.resolve(import.meta.dirname, '..');
+const root = path.resolve(import.meta.dirname, '../../..');
 const out = path.join(root, 'test-results/empty-space');
 const arg = name => process.argv.find(a => a.startsWith(`--${name}=`))?.split('=')[1];
 const report = process.argv.includes('--report');

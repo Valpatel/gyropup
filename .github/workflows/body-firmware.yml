@@ -1,6 +1,6 @@
-# B8: the balance firmware (firmware/balance) builds for the Nucleo-G474RE, and its control core builds and passes its
-# unit tests on the host. The HIL (firmware/balance/hil) needs MuJoCo, CadQuery and the leg rig's `rig` package, so it is
-# not run here: run it locally (docs/body-firmware.md 7).
+# B8: the balance firmware (software/firmware/balance) builds for the Nucleo-G474RE, and its control core builds and passes its
+# unit tests on the host. The HIL (software/firmware/balance/hil) needs MuJoCo, CadQuery and the leg rig's `rig` package, so it is
+# not run here: run it locally (docs/software/body-firmware.md 7).
 name: body-firmware
 
 on:
@@ -20,24 +20,24 @@ jobs:
           arm-none-eabi-gcc --version | head -1
           cmake --version | head -1
 
-      - name: The leg limits header is current (exports/leg/limits.json, docs/leg-protection.md)
-        run: python3 firmware/balance/tools/gen_limits.py --check
+      - name: The leg limits header is current (hardware/exports/leg/limits.json, docs/legs/leg-protection.md)
+        run: python3 software/firmware/balance/tools/gen_limits.py --check
 
       - name: MCU firmware (STM32 HAL fetched at configure time)
         run: |
-          cmake -S firmware/balance -B build/fw-mcu -DCMAKE_TOOLCHAIN_FILE="$PWD/firmware/balance/cmake/arm-none-eabi.cmake"
+          cmake -S software/firmware/balance -B build/fw-mcu -DCMAKE_TOOLCHAIN_FILE="$PWD/software/firmware/balance/cmake/arm-none-eabi.cmake"
           cmake --build build/fw-mcu -j
           arm-none-eabi-size build/fw-mcu/balance.elf
 
       - name: Host library and unit tests
         run: |
-          cmake -S firmware/balance -B build/fw-host
+          cmake -S software/firmware/balance -B build/fw-host
           cmake --build build/fw-host -j
           ctest --test-dir build/fw-host --output-on-failure
 
       - name: Host unit tests with the rig built for the robot's leg (-DGP_RIG_BUILD=robot)
         run: |
-          cmake -S firmware/balance -B build/fw-host-robot -DGP_RIG_BUILD=robot
+          cmake -S software/firmware/balance -B build/fw-host-robot -DGP_RIG_BUILD=robot
           cmake --build build/fw-host-robot -j
           ctest --test-dir build/fw-host-robot --output-on-failure
 

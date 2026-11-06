@@ -12,8 +12,8 @@ import { existsSync, readFileSync, readdirSync } from 'node:fs';
 import path from 'node:path';
 import { fileURLToPath } from 'node:url';
 
-export const ROOT = path.resolve(path.dirname(fileURLToPath(import.meta.url)), '..');
-export const RATCHET = 'tools/privacy-ratchet.txt';
+export const ROOT = path.resolve(path.dirname(fileURLToPath(import.meta.url)), '../..');
+export const RATCHET = 'tools/site/privacy-ratchet.txt';
 
 // The project's GitHub accounts. A repository slug under one of them must be a public repository listed here.
 // Add a slug only after checking that its repository is public.
@@ -50,14 +50,17 @@ export const KINDS = RULES.map(r => r.kind);
 export const EXEMPT = [];
 
 // Findings that are public facts, not private details. Counts are per file; a new finding in the same file still fails.
+// Relocated source and its unchanged public download are explicit identities, not broader exemptions.
 export const ALLOWED = [
-  { paths: ['catalog/sensors_compute.json', 'research/sensors-compute.md', 'site/pages/research-sensors-compute-md.html',
+  { paths: ['hardware/catalog/sensors_compute.json', 'docs/research/sensors-compute.md',
+    'catalog/sensors_compute.json', 'research/sensors-compute.md', 'site/pages/research-sensors-compute-md.html',
     'site/pages/research-sensors-compute-md.md'], counts: { 'private-ip': 1 },
     reason: "the lidar's factory-default address, quoted from the manufacturer's public manual" },
-  { paths: ['designer/kit/vendor/occt-import-js/occt-import-js.js'], counts: { 'home-path': 2 },
+  { paths: ['software/site/designer/kit/vendor/occt-import-js/occt-import-js.js',
+    'designer/kit/vendor/occt-import-js/occt-import-js.js'], counts: { 'home-path': 2 },
     reason: "Emscripten's virtual file system home for its web_user, a constant of every Emscripten build, in the "
     + 'unmodified upstream release recorded in file-viewer-sources.json' },
-  { paths: ['tools/test-service-discovery.mjs'], counts: { 'private-ip': 4, 'tailnet-name': 1 },
+  { paths: ['tests/site/platform/test-service-discovery.mjs'], counts: { 'private-ip': 4, 'tailnet-name': 1 },
     reason: 'fixture hosts for the test that proves the hosted simulator never probes private networks' },
 ];
 

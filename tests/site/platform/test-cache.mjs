@@ -4,8 +4,8 @@ import { mkdtemp, mkdir, writeFile, readFile, rm } from 'node:fs/promises';
 import os from 'node:os';
 import path from 'node:path';
 import { chromium, webkit } from '@playwright/test';
-import { createSiteServer } from './serve-site.mjs';
-import { versionSiteAssets } from './site-cache.mjs';
+import { createSiteServer } from '../../../tools/site/serve-site.mjs';
+import { versionSiteAssets } from '../../../tools/site/site-cache.mjs';
 
 const root = await mkdtemp(path.join(os.tmpdir(), 'gyropup-cache-'));
 const requests = [];

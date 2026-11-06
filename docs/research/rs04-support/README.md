@@ -2,7 +2,7 @@
 
 This is bounded research for [#116](https://github.com/Valpatel/gyropup/issues/116),
 not a revised print kit or an accepted mounting design. The original eight
-axial-stack failures remain in the [mounting receipt](../../exports/leg/rs04-mounting-fit/checks.json).
+axial-stack failures remain in the [mounting receipt](../../../hardware/exports/leg/rs04-mounting-fit/checks.json).
 Its 40 drawing-depth checks pass; the support/load-spreading problem is separate.
 
 The screw head loads 15.6 mm of printed grip, whose motor-side face partly

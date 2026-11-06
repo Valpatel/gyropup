@@ -11,7 +11,7 @@ the later executable-temperature guard rejects it. The CAD candidate remains
 failed with eight mounting-support failures. Source changes after this capture
 also make its freshness check fail, as intended.
 
-See the [cause and corrective rule](../../.agents/inbox/2026-10-30-slicer-includes-control-executed-temperatures.md).
+See the [cause and corrective rule](../../../.agents/inbox/2026-10-30-slicer-includes-control-executed-temperatures.md).
 
 The [second diagnostic slice](rejected-speed-diagnostic.zip) uses the repaired
 template resolver and correctly waits at 275°C/100°C. It remains rejected:

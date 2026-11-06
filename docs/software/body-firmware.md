@@ -2,9 +2,9 @@
 
 The firmware that balances Gyropup: C on an STM32G474RE (Nucleo-G474RE), three CAN buses, the VN-100 IMU at 800 Hz,
 a 1 kHz loop ported from the simulation's controller, and the safety behaviours a kids' robot needs (the radio stop,
-the Jetson's heartbeat, under-voltage, the jump gate, people near). Code in [`firmware/balance/`](../firmware/balance/),
-its HIL in [`firmware/balance/hil/`](../firmware/balance/hil/), CI in
-[`.github/workflows/body-firmware.yml`](../.github/workflows/body-firmware.yml). Written 2026-10-27; task B8 of
+the Jetson's heartbeat, under-voltage, the jump gate, people near). Code in [`firmware/balance/`](../../software/firmware/balance/),
+its HIL in [`firmware/balance/hil/`](../../software/firmware/balance/hil/), CI in
+[`.github/workflows/body-firmware.yml`](../../.github/workflows/body-firmware.yml). Written 2026-10-27; task B8 of
 docs/body-next-plan.md 4.1. Nothing has run on hardware yet: that is B13 (section 9).
 
 ## 1. What was shown

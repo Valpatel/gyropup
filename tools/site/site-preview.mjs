@@ -79,7 +79,7 @@ export async function previewCLI(createServer, root, args = process.argv.slice(2
   for (let i = 0; i < args.length; i++) {
     if (args[i] === '--ephemeral') temporary = true;
     else if (args[i] === '--ttl-seconds') ttlMs = Number(args[++i]) * 1000;
-    else throw new Error('Usage: node tools/serve-site.mjs [--status | --ephemeral [--ttl-seconds N]]');
+    else throw new Error('Usage: node tools/site/serve-site.mjs [--status | --ephemeral [--ttl-seconds N]]');
   }
   if (!temporary && ttlMs !== MAX_TEMPORARY_MS) throw new Error('--ttl-seconds requires --ephemeral.');
   const port = Number(process.env.PORT ?? (temporary ? 0 : SHARED_PORT));

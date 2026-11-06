@@ -1,4 +1,4 @@
-import { acknowledgePrototypeNotice } from './test-prototype-session.mjs';
+import { acknowledgePrototypeNotice } from '../content/test-prototype-session.mjs';
 /** Real vehicle controls must remain useful while the default demo is playing. */
 import assert from 'node:assert/strict';
 import { mkdir } from 'node:fs/promises';

@@ -3,7 +3,7 @@
 The owner confirmed the **Deeahdah PRO 3115-900KV** motor from
 [Amazon B0GJNX17YX](https://www.amazon.com/dp/B0GJNX17YX) on 2026-10-30.
 This is the confirmation date, not an inferred order or delivery date. The listing
-is a four-pack; the purchased pack quantity is unknown. See [purchases](../../docs/purchases.md)
+is a four-pack; the purchased pack quantity is unknown. See [purchases](../../program/purchases.md)
 and [acceptance issue #124](https://github.com/Valpatel/gyropup/issues/124).
 
 This lane establishes the exact motor's mounting, shaft and seating interfaces
@@ -18,7 +18,7 @@ mass, wire exits, and physical acceptance remain open. An unpowered fit specimen
 will not qualify rotating retention, balance, strength, electrical limits or
 thermal performance. No current full-cartridge print is released by this work.
 
-Start with the [human survey and design plan](../../docs/ordered-turret-motor.md).
+Start with the [human survey and design plan](../../turret/ordered-turret-motor.md).
 The source packet is [seller-claims.json](seller-claims.json); actual observations
 belong in a copy of [measurements.template.json](measurements.template.json).
 The [mounting-pattern survey](mount-pattern-survey.svg) is a scale-checkable

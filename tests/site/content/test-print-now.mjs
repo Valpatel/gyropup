@@ -2,9 +2,9 @@
 import { test } from 'node:test';
 import assert from 'node:assert/strict';
 import fs from 'node:fs';
-import { parseCsv, steps, mountPrintNow } from '../designer/print-now.js';
+import { parseCsv, steps, mountPrintNow } from '../../../software/site/designer/print-now.js';
 
-const csv = fs.readFileSync(new URL('../exports/motor-day/prints.csv', import.meta.url), 'utf8');
+const csv = fs.readFileSync(new URL('../../../hardware/exports/motor-day/prints.csv', import.meta.url), 'utf8');
 
 test('quoted CSV fields keep their commas and quotes', () => {
   const rows = parseCsv('a,b\n1,"x, ""y"""\n');
@@ -26,7 +26,7 @@ test('every print step from prints.csv, in order, with the plan\'s totals', () =
 });
 
 test('the card\'s totals are the ones docs/motor-day.md publishes', async () => {
-  const doc = fs.readFileSync(new URL('../docs/motor-day.md', import.meta.url), 'utf8');
+  const doc = fs.readFileSync(new URL('../../../docs/legs/motor-day.md', import.meta.url), 'utf8');
   const host = { innerHTML: '', dataset: {}, id: 'print-now' };
   await mountPrintNow(host, async () => ({ ok: true, text: async () => csv }));
   const [, h, kg, tpu] = /<li class="pn-tot">.*?class="pn-t">([\d.]+) h<.*?class="pn-g">([\d.]+) kg PLA(?: \+ (\d+) g TPU)?/.exec(host.innerHTML) || [];

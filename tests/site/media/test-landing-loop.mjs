@@ -7,11 +7,11 @@ import path from 'node:path';
 import { after, before, test } from 'node:test';
 import { parseHTML } from 'linkedom';
 import { chromium, webkit } from '@playwright/test';
-import { createSiteServer } from './serve-site.mjs';
-import { acknowledgePrototypeNotice } from './test-prototype-session.mjs';
-import { describe as describeLive, SOURCE } from '../web/cad-agent-live.js';
+import { createSiteServer } from '../../../tools/site/serve-site.mjs';
+import { acknowledgePrototypeNotice } from '../content/test-prototype-session.mjs';
+import { describe as describeLive, SOURCE } from '../../../software/site/assets/cad-agent-live.js';
 
-const root = path.resolve(import.meta.dirname, '..');
+const root = path.resolve(import.meta.dirname, '../../..');
 const read = file => readFile(path.join(root, file), 'utf8');
 const json = async file => JSON.parse(await read(file));
 const source = await read('designer/home.html');

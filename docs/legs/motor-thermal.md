@@ -230,4 +230,4 @@ E's warmest winding across these ranges is 126 °C (`drive_fx_g` at its high end
 
 Discovery (adopt or build): cad-agent's `cadagent.thermal.heatsink` has the Song-Lee-Au spreading resistance (adopted, copied: gyropup's CI does not install cad-agent) and forced-convection fins; it has no natural convection, lumped RC network or motor loss model, so those are built here (candidates to move upstream).
 
-Related: [body thermal](body-thermal.md) (the J501 cooler, whose inlet budget this uses), [body frame](body-frame.md), [RS-04 mounting fit](rs04-mounting-fit.md), [leg bench tests](leg-bench-tests.md).
+Related: [body thermal](../body/body-thermal.md) (the J501 cooler, whose inlet budget this uses), [body frame](../body/body-frame.md), [RS-04 mounting fit](rs04-mounting-fit.md), [leg bench tests](leg-bench-tests.md).

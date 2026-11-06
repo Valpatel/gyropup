@@ -4,7 +4,7 @@ import {test} from 'node:test';
 import {mkdtemp,writeFile,rm} from 'node:fs/promises';
 import {tmpdir} from 'node:os';
 import {join} from 'node:path';
-import {createSiteServer} from './serve-site.mjs';
+import {createSiteServer} from '../../../tools/site/serve-site.mjs';
 
 test('media GET, HEAD, seek ranges and cache validators',async()=>{
  const root=await mkdtemp(join(tmpdir(),'gyropup-range-'));

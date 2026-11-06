@@ -1,4 +1,4 @@
-import { acknowledgePrototypeNotice } from './test-prototype-session.mjs';
+import { acknowledgePrototypeNotice } from '../content/test-prototype-session.mjs';
 /** Public CAD/FEA/character routes must have a useful entry point and reachable phone controls. */
 import assert from 'node:assert/strict';
 import { mkdir, writeFile } from 'node:fs/promises';

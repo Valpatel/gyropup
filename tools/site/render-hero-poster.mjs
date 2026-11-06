@@ -1,4 +1,4 @@
-import { acknowledgePrototypeNotice } from './test-prototype-session.mjs';
+import { acknowledgePrototypeNotice } from '../../tests/site/content/test-prototype-session.mjs';
 /** Capture the same camera, model, lighting and pose used by the hero's first frame. */
 import {writeFile} from 'node:fs/promises';
 import {chromium} from '@playwright/test';
@@ -11,6 +11,6 @@ await acknowledgePrototypeNotice(page);
  await page.goto(base+'/',{waitUntil:'networkidle'});
  await page.waitForFunction(()=>window.__heroPreview?.capturePoster);
  const image=await page.evaluate(()=>window.__heroPreview.capturePoster(1024));
- await writeFile(new URL('../web/robot-poster.png',import.meta.url),Buffer.from(image.split(',')[1],'base64'));
+ await writeFile(new URL('../../software/site/assets/robot-poster.png', import.meta.url),Buffer.from(image.split(',')[1],'base64'));
  console.log('Rendered web/robot-poster.png from the actual hero scene at 1024×1024 with alpha.');
 }finally{await browser.close();}

@@ -5,7 +5,7 @@ owner confirmed the Deeahdah PRO3115-900KV threaded-shaft motor sold as
 [Amazon B0GJNX17YX](https://www.amazon.com/dp/B0GJNX17YX). This is the confirmation
 date, not an inferred order or delivery date. Purchased pack count and arrival
 remain unknown. The listing's four-pack does not establish how many were ordered.
-See [purchases](purchases.md) and [acceptance issue #124](https://github.com/Valpatel/gyropup/issues/124).
+See [purchases](../program/purchases.md) and [acceptance issue #124](https://github.com/Valpatel/gyropup/issues/124).
 
 The current cartridge still models **SunnySky X2216 1400KV V3**, including its
 separate prop adapter. It has not been silently relabelled as the ordered motor.
@@ -93,9 +93,9 @@ usable 5 mm shoulder. The tool is 100 × 32 × 3 mm, with 0.5 mm raised labels.
 
 | Tool | Solid model | Print-oriented mesh |
 | --- | --- | --- |
-| Shaft-clearance survey gauge | [STEP](../exports/turret/ordered-motor-fit/shaft-clearance-survey.step) | [STL](../exports/turret/ordered-motor-fit/shaft-clearance-survey.stl) |
+| Shaft-clearance survey gauge | [STEP](../../hardware/exports/turret/ordered-motor-fit/shaft-clearance-survey.step) | [STL](../../hardware/exports/turret/ordered-motor-fit/shaft-clearance-survey.stl) |
 
-The [actual CAD receipt](../exports/turret/ordered-motor-fit/checks.json) records
+The [actual CAD receipt](../../hardware/exports/turret/ordered-motor-fit/checks.json) records
 **12 passes, no warnings and no failures** for the authored tool: one valid CAD
 solid, a connected watertight STL, eight measured slot diameters/open mouths,
 a STEP round trip, and rejected wrong-width/blocked-mouth controls. These are
@@ -127,7 +127,7 @@ and the 100 × 32 × 3.5 mm overall size. Its fresh remote CAD export again pass
 all 12 geometry checks; the slice checks below are separate from those CAD screens.
 
 This uses the same declared P1S **0.4 mm hardened nozzle / Bambu PA6-CF trial-2**
-process as the [RS04 observation job](rs04-fit-job.md): 0.20 mm layers, four walls,
+process as the [RS04 observation job](../legs/rs04-fit-job.md): 0.20 mm layers, four walls,
 100% infill, textured PEI, no supports, 275°C nozzle / 100°C bed and commanded
 deposition capped at 99 mm/s. It is an experimental dimensional tool, not a
 calibrated gauge or an established printing process. Installed hardware,
@@ -138,12 +138,12 @@ Its 17 layers contain no support deposition; executable checks confirm the
 275°C / 100°C waits and 99 mm/s maximum commanded deposition feed. These are
 slicer estimates and command checks, not observed print performance.
 
-- [Complete retained job ZIP](../exports/turret/shaft-survey-fit-job.zip).
-- [Actual sliced 3MF](../exports/turret/shaft-survey-fit-job/slice/out/sliced.3mf)
-  and [matching G-code](../exports/turret/shaft-survey-fit-job/slice/out/plate_1.gcode).
-- [Job receipt and slicer estimates](../exports/turret/shaft-survey-fit-job/job.json),
-  [eight-slot blank measurement sheet](../exports/turret/shaft-survey-fit-job/measurements.csv)
-  and [blank process record](../exports/turret/shaft-survey-fit-job/process-record.csv).
+- [Complete retained job ZIP](../../hardware/exports/turret/shaft-survey-fit-job.zip).
+- [Actual sliced 3MF](../../hardware/exports/turret/shaft-survey-fit-job/slice/out/sliced.3mf)
+  and [matching G-code](../../hardware/exports/turret/shaft-survey-fit-job/slice/out/plate_1.gcode).
+- [Job receipt and slicer estimates](../../hardware/exports/turret/shaft-survey-fit-job/job.json),
+  [eight-slot blank measurement sheet](../../hardware/exports/turret/shaft-survey-fit-job/measurements.csv)
+  and [blank process record](../../hardware/exports/turret/shaft-survey-fit-job/process-record.csv).
 
 The package preserves the exact source mesh and +Z layer normal, actual placement,
 raw/resolved profiles, executable identity, logs/results and executable toolpaths.
@@ -152,7 +152,7 @@ STEP/STL previews above to inspect geometry. The sliced 3MF uses Bambu's product
 extension; the browser viewer offers its original download when that extension
 is unsupported. Inspect that machine-job archive in Bambu Studio.
 
-![Actual survey-gauge deposition at the base, plate top and raised-label layers](../exports/turret/shaft-survey-fit-job/critical-layers.png)
+![Actual survey-gauge deposition at the base, plate top and raised-label layers](../../hardware/exports/turret/shaft-survey-fit-job/critical-layers.png)
 
 The replacement's actual Z=3.2 and 3.4 mm deposition views were read directly:
 **4.8, 4.9, 5.0, 5.1, 5.2, 5.3, 5.4, 5.5 and SURVEY ONLY** are present and legible

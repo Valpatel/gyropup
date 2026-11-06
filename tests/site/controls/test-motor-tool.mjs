@@ -11,10 +11,10 @@ import { spawn } from 'node:child_process';
 import { mkdir, readFile } from 'node:fs/promises';
 import path from 'node:path';
 import { chromium } from '@playwright/test';
-import { createSiteServer } from './serve-site.mjs';
-import { acknowledgePrototypeNotice } from './test-prototype-session.mjs';
+import { createSiteServer } from '../../../tools/site/serve-site.mjs';
+import { acknowledgePrototypeNotice } from '../content/test-prototype-session.mjs';
 
-const root = path.resolve(import.meta.dirname, '..');
+const root = path.resolve(import.meta.dirname, '../../..');
 const out = process.env.TEST_OUTPUT || path.join(root, 'test-results', 'motor-tool');
 await mkdir(out, { recursive: true });
 let server, base = process.env.SITE_URL?.replace(/\/$/, '');

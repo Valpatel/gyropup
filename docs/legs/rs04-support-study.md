@@ -80,7 +80,7 @@ The full leg's frame/bearing, wheel, cable and load-case work remains open.
 
 - [Complete machine-readable comparison](../research/rs04-support/results/probe.json).
 - [Producer, method and integrity-check command](../research/rs04-support/README.md).
-- [Current parent mounting receipt](../exports/leg/rs04-mounting-fit/checks.json).
+- [Current parent mounting receipt](../../hardware/exports/leg/rs04-mounting-fit/checks.json).
 
 The complete run used frozen source `612594d`, the fresh parent receipt generated
 at `2a4b2fd`, and cad-agent v0.4.2 at `2ad4269`. The report binds the before/after

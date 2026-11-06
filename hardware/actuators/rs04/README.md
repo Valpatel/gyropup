@@ -22,10 +22,10 @@ flowchart LR
 
 - RS04 User Manual 260713 and the STEP model: RobStride's [Product_Information](https://github.com/RobStride/Product_Information)
   repository, kept locally only (no licence to redistribute): where and when, in
-  [references/vendor/robstride-rs-04/SOURCE.txt](../../../references/vendor/robstride-rs-04/SOURCE.txt).
+  [references/vendor/robstride-rs-04/SOURCE.txt](../../vendor/robstride-rs-04/SOURCE.txt).
 - RobStride's [Python_Sample](https://github.com/RobStride/Python_Sample) (MIT): the protocol cross-check.
-- Mass, torque curve and price: `catalog/leg_actuators.json`; the mounting interface: [RS-04 mounting fit](../../../docs/rs04-mounting-fit.md)
-  and [support study](../../../docs/rs04-support-study.md).
+- Mass, torque curve and price: `catalog/leg_actuators.json`; the mounting interface: [RS-04 mounting fit](../../../docs/legs/rs04-mounting-fit.md)
+  and [support study](../../../docs/legs/rs04-support-study.md).
 
 ## Interfaces
 
@@ -35,14 +35,14 @@ Power on the bus through an XT30 on the motor's lead (the robot adapts it to XT6
 ## Config and profiles
 
 [`profiles/`](profiles/) holds the build profiles as versioned JSON: `pla-bench` (the default: a 12 N m cap from
-[the motor-day derating](../../../docs/motor-day.md), 10 N m stored as motor-day step L1 does, a 3 N m jog) and `final` (the robot leg's 61 N m, the
+[the motor-day derating](../../../docs/legs/motor-day.md), 10 N m stored as motor-day step L1 does, a 3 N m jog) and `final` (the robot leg's 61 N m, the
 per-build cap of [issue #202](https://github.com/Valpatel/gyropup/issues/202)). Each holds the limits the motor tool and its bridge
 enforce and the settings a configured motor holds (`motor_config`). Every number taken from elsewhere names its
 source and is checked against it (`python -m rig.rs04_profiles`). The firmware writes the same cap at boot, from
-`gp_limits.h`, generated from the same [`exports/leg/limits.json`](../../../exports/leg/limits.json) both profiles' caps are checked against.
+`gp_limits.h`, generated from the same [`exports/leg/limits.json`](../../exports/leg/limits.json) both profiles' caps are checked against.
 
-**Heat:** the PLA bench's limits are the motor heat model's ([`motor_thermal.json`](../../../exports/leg/thermal/motor_thermal.json),
-`/bench`, and [docs/motor-thermal.md](../../../docs/motor-thermal.md), from [PR #195](https://github.com/Valpatel/gyropup/pull/195)): stop when a motor's case passes
+**Heat:** the PLA bench's limits are the motor heat model's ([`motor_thermal.json`](../../exports/leg/thermal/motor_thermal.json),
+`/bench`, and [docs/motor-thermal.md](../../../docs/legs/motor-thermal.md), from [PR #195](https://github.com/Valpatel/gyropup/pull/195)): stop when a motor's case passes
 its face limit; plan held torque under its continuous limit for the room. The `pla-bench` profile points at them and
 the motor tool reads them live.
 
@@ -50,11 +50,11 @@ the motor tool reads them live.
 
 | Where | What |
 |---|---|
-| [`rig/rs04.py`](../../../rig/rs04.py) | The protocol from the manual, a bus and motor handle, the command line (`python -m rig.rs04 scan`) |
-| [`rig/rs04_emu.py`](../../../rig/rs04_emu.py) | A software RS-04 for tests |
-| [`rig/rs04_bridge.py`](../../../rig/rs04_bridge.py), [`rig/rs04_guard.py`](../../../rig/rs04_guard.py) | The SocketCAN bridge for the browser tool and its safety rules |
-| [`designer/kit/rs04/`](../../../designer/kit/rs04/README.md) | The browser tool and its protocol port (MIT) |
-| [`firmware/balance/src/core/gp_rs04.c`](../../../firmware/balance/src/core/gp_rs04.c) | The balance firmware's driver: boot configuration and the 1 kHz MIT exchange |
+| [`rig/rs04.py`](../../../software/control/rig/rs04.py) | The protocol from the manual, a bus and motor handle, the command line (`python -m rig.rs04 scan`) |
+| [`rig/rs04_emu.py`](../../../software/control/rig/rs04_emu.py) | A software RS-04 for tests |
+| [`rig/rs04_bridge.py`](../../../software/control/rig/rs04_bridge.py), [`rig/rs04_guard.py`](../../../software/control/rig/rs04_guard.py) | The SocketCAN bridge for the browser tool and its safety rules |
+| [`designer/kit/rs04/`](../../../software/site/designer/kit/rs04/README.md) | The browser tool and its protocol port (MIT) |
+| [`firmware/balance/src/core/gp_rs04.c`](../../../software/firmware/balance/src/core/gp_rs04.c) | The balance firmware's driver: boot configuration and the 1 kHz MIT exchange |
 
 ## Inventory
 
@@ -69,8 +69,8 @@ CAN id, joint, firmware, zero offset) from the motor tool's Config → Export. M
 ## Bring-up and tests
 
 The [bring-up checklist](bring-up.md) walks through the first scan, `setid`, the profile's settings, the zero and
-`save` with the [motor tool](../../../docs/rs04-motor-tool.md). Then [bench tests](../../../docs/leg-bench-tests.md)
-C1-C6 and the [motor-day ladder](../../../docs/motor-day.md). Software checks: `npm run test:rs04`,
+`save` with the [motor tool](../../../docs/software/rs04-motor-tool.md). Then [bench tests](../../../docs/legs/leg-bench-tests.md)
+C1-C6 and the [motor-day ladder](../../../docs/legs/motor-day.md). Software checks: `npm run test:rs04`,
 `python -m pytest rig/tests/test_rs04.py`, `python -m unittest rig.tests.test_rs04_inventory`.
 
 ## Open questions

@@ -1,4 +1,4 @@
-import { acknowledgePrototypeNotice } from './test-prototype-session.mjs';
+import { acknowledgePrototypeNotice } from '../content/test-prototype-session.mjs';
 /** Master audio gates both synthesis backends without erasing voice-only preferences. */
 import assert from 'node:assert/strict';
 import { readFile } from 'node:fs/promises';
@@ -6,7 +6,7 @@ import { chromium, webkit } from '@playwright/test';
 const engine = process.env.PLAYWRIGHT_BROWSER === 'webkit' ? webkit : chromium;
 const browser = await engine.launch(engine === chromium ? {channel:process.env.PLAYWRIGHT_CHANNEL === 'chromium' ? undefined : 'chrome',headless:true,
   args:['--no-sandbox','--use-gl=angle','--use-angle=swiftshader','--enable-unsafe-swiftshader']} : {headless:true});
-const root = new URL('../',import.meta.url), base=(process.env.SITE_URL || 'http://127.0.0.1:8882').replace(/\/$/,'');
+const root = new URL('../../../', import.meta.url), base=(process.env.SITE_URL || 'http://127.0.0.1:8882').replace(/\/$/,'');
 const errors=[];
 function browserVoice() {
  localStorage.setItem('gyropup.probe','off');

@@ -7,13 +7,13 @@ unsafe, provided for research purposes only, and will not be offered for sale. R
 
 ## Reading order
 
-1. Read the [documentation map](README.md) for the engineering topics and
+1. Read the [documentation map](../README.md) for the engineering topics and
    [Progress](https://gyropup.com/designer/progress.md) for the published status and report links.
 2. Use [Build](https://gyropup.com/designer/build.md) for parts tables, original downloads and their status.
    File availability is not permission to manufacture or evidence that parts fit.
 3. Follow a report to its source inputs, revision and limitations. Read
-   [structural media](structural-study-media.md), [print provenance](print-source-provenance.md) and the
-   [weight budget](design-weight-budget.md) when describing strength, printability or mass.
+   [structural media](../validation/structural-study-media.md), [print provenance](../validation/print-source-provenance.md) and the
+   [weight budget](../architecture/design-weight-budget.md) when describing strength, printability or mass.
 4. Check [program #31](https://github.com/Valpatel/gyropup/issues/31) and the linked workstream issue for live
    work. A published page may predate an issue update or an unmerged proposal.
 

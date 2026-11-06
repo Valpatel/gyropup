@@ -9,12 +9,12 @@ import path from 'node:path';
 import { after, before, test } from 'node:test';
 import { parseHTML } from 'linkedom';
 import { chromium, webkit } from '@playwright/test';
-import { createSiteServer } from './serve-site.mjs';
+import { createSiteServer } from '../../../tools/site/serve-site.mjs';
 import { acknowledgePrototypeNotice } from './test-prototype-session.mjs';
-import { WEIGHED, collectStatus, createReader, docPage, measuredColumns, renderBoard, sheetCount, shortDate } from './status-board.mjs';
-import { ago } from '../web/status-board.js';
+import { WEIGHED, collectStatus, createReader, docPage, measuredColumns, renderBoard, sheetCount, shortDate } from '../../../tools/site/status-board.mjs';
+import { ago } from '../../../software/site/assets/status-board.js';
 
-const root = path.resolve(import.meta.dirname, '..');
+const root = path.resolve(import.meta.dirname, '../../..');
 const dist = path.join(root, 'dist');
 const json = file => JSON.parse(readFileSync(path.join(root, file), 'utf8'));
 const text = el => el.textContent.replace(/\s+/g, ' ').trim();

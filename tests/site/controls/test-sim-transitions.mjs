@@ -1,4 +1,4 @@
-import { acknowledgePrototypeNotice } from './test-prototype-session.mjs';
+import { acknowledgePrototypeNotice } from '../content/test-prototype-session.mjs';
 /** Exercise real replay switches without replacing the scene, character, or player conversation. */
 import assert from 'node:assert/strict';
 import { mkdir } from 'node:fs/promises';

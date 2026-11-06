@@ -11,7 +11,7 @@ The carrier uses a **new drilled pattern**, not those original holes. Cut an int
 | Lower right | 47.8 | 3.0 |
 | Upper right | 47.8 | 27.0 |
 
-![Custom PCB drilling dimensions](../exports/turret/base-board-service/pcb-drill-pattern.svg)
+![Custom PCB drilling dimensions](../../hardware/exports/turret/base-board-service/pcb-drill-pattern.svg)
 
 The nominal remaining board material between each hole and its closest edge is 1.4 mm. This is a drawing dimension, not an edge-strength qualification. Inspect the cut edges, deburr holes and verify copper clearance/insulation around fasteners. Carbon-filled carrier material must not be assumed electrically insulating. The 1.6 mm CAD board thickness remains an assumption to check on the actual stock, including solder and jumper-wire projection on its rear face.
 

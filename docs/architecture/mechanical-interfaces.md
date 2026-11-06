@@ -2,7 +2,7 @@
 
 **Goal:** swap motors and change leg designs without redesigning everything else. Each motor gets two **adapters**: one on its output, one on its case. They turn that motor's own bolt patterns into **standard faces**. Leg links, hip yokes, wheel mounts and the body only ever bolt to standard faces. A new motor means two new adapters. A new leg design means new links on the same faces.
 
-The numbers live in [`cad/interfaces.json`](../cad/interfaces.json), and the CAD in [`cad/`](../cad/) reads them from there. Motor-side patterns come from [`catalog/interfaces.json`](../catalog/interfaces.json), checked against drawings; [`research/actuator-interfaces.md`](../research/actuator-interfaces.md) records where each number came from. Anything not yet confirmed from a drawing is flagged ASSUMED and printed in the build report.
+The numbers live in [`cad/interfaces.json`](../../hardware/cad/robot/interfaces.json), and the CAD in [`cad/`](../../hardware/cad/) reads them from there. Motor-side patterns come from [`catalog/interfaces.json`](../../hardware/catalog/interfaces.json), checked against drawings; [`research/actuator-interfaces.md`](../research/actuator-interfaces.md) records where each number came from. Anything not yet confirmed from a drawing is flagged ASSUMED and printed in the build report.
 
 ## The modules
 
@@ -47,7 +47,7 @@ The harness definitions (waypoints on each link, cable size, and which joint eac
 
 ## Stiffness and strength targets
 
-Checked with `cadagent.fea` (linear elastic, quadratic tetrahedra) using the simulator's worst joint loads ([`exports/fea/`](../exports/fea/)):
+Checked with `cadagent.fea` (linear elastic, quadratic tetrahedra) using the simulator's worst joint loads ([`exports/fea/`](../../hardware/exports/fea/)):
 
 | Check | Target |
 |---|---|

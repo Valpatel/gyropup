@@ -4,7 +4,7 @@ import {mkdir,readFile,writeFile} from 'node:fs/promises';
 import {createHash} from 'node:crypto';
 import {execFileSync} from 'node:child_process';
 import {chromium} from '@playwright/test';
-import {acknowledgePrototypeNotice} from './test-prototype-session.mjs';
+import {acknowledgePrototypeNotice} from '../../../tests/site/content/test-prototype-session.mjs';
 const base=(process.env.SITE_URL||'http://127.0.0.1:8983').replace(/\/$/,''),out=process.env.CAPTURE_OUTPUT||'/tmp/gyropup-highlights-frames';
 const width=1280,height=720,fps=30,seed=1042026;
 const shots=[{id:'turret',seconds:4,bench:true},{id:'mechanism',seconds:3,bench:true},{id:'battle',seconds:6},{id:'character',seconds:3}];

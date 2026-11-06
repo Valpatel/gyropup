@@ -22,4 +22,4 @@ jobs:
       - name: Check exact-part acquisition, survey controls and committed gauge hashes
         env:
           PYTHONPATH: .ci/cad-agent/src
-        run: python tools/test-ordered-turret-motor.py
+        run: python tests/hardware/manufacturing/test-ordered-turret-motor.py

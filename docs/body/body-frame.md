@@ -11,7 +11,7 @@ ledger and the checks (a Ø172 can for the turret): run `tools/body_pictures.py`
 The P1 and frame pictures show the turret where it will sit. A P1 build carries a mass dummy of the turret's mass in
 its place until the turret is fitted (`cad/body_layout.py`'s turret item).
 
-![The P1 frame with both legs](../exports/body/body-p1-iso.png)
+![The P1 frame with both legs](../../hardware/exports/body/body-p1-iso.png)
 
 ## 1. The parts
 
@@ -64,15 +64,15 @@ Body loads at 15.97 kg a leg (the ledger's 31.94 kg robot when they were run; it
 
 | Case | Load | Target | SF (away from the standoffs' ends) | Max deflection | Result |
 |---|---|---|---|---|---|
-| [S1-landing](../exports/body/fea/S1-landing.mp4) | rig 'drop_150' at 15.97 kg a leg (axle 2212 N): 205 N m roll and 558 N up at the hip frame's mount plane, plus 10 % of the 2990 N ground force sideways at the contact patch on BOTH legs; the payload's inertia on the tray | 2.0 | 1.52 (4.42) | 0.0868 mm | pass |
-| [S1F-collapse](../exports/body/fea/S1F-collapse.mp4) | rig 'power_off' at 15.97 kg a leg (axle 1662 N): 275 N m roll and 964 N up at the hip frame's mount plane, plus 10 % of the 1672 N ground force sideways at the contact patch on BOTH legs (the undamped power cut, D39); pa | 1.2 | 1.7 (2.88) | 0.12 mm | pass |
-| [S1b-one-leg-bound](../exports/body/fea/S1b-one-leg-bound.mp4) | rig 'drop_150' at 15.97 kg a leg (axle 2212 N): 205 N m roll and 558 N up at the hip frame's mount plane, plus 10 % of the 2990 N ground force sideways at the contact patch on ONE leg, the other cheek clamped: every newt | 2.0 | 1.68 (2.8) | 0.0802 mm | pass |
-| [S2-twist](../exports/body/fea/S2-twist.mp4) | one leg's 80 N m roll moment (the HM budget) against the other's | 2.0 | 7.94 | 0.0156 mm; twist 0.0126 deg (target 0.1) | pass |
-| [S3-pitch](../exports/body/fea/S3-pitch.mp4) | the two motors' 60 N m caps reacted as one 120 N m couple about y, and 600 N fore-aft (the HM budget) | 2.0 | 27.34 | 0.003 mm | pass |
-| [D1-hand-front](../exports/body/fea/D1-hand-front.mp4) | 300 N down on the deck at the front (a child leaning on it) | 2.0 | 2.53 | 0.4685 mm; 0.328 mm at the load (target 0.5) | pass |
-| [D1-hand-riser](../exports/body/fea/D1-hand-riser.mp4) | 300 N down on the deck at the riser (a child leaning on it) | 2.0 | 2.89 | 0.5143 mm; 0.383 mm at the load (target 0.5) | pass |
-| [D2-turret-fall](../exports/body/fea/D2-turret-fall.mp4) | a 30 g fall of the 1.70 kg head (the turret plan's budget) at 45 deg, its centre 100 mm above the TM face: a tip-over, an abuse case like the power cut (SF >= 1.2) | 1.2 | 1.31 | 1.5506 mm | pass |
-| [T1-tray](../exports/body/fea/T1-tray.mp4) | what stands on the floor tray at 8.65 g (the body's landing peak from the rig): the compute 1.39 kg on its isolators, the power skid 1.71 kg on its posts, the deck with the lidar and turret 3.69 kg on the deck posts, the | 2.0 | 2.5 | 0.4797 mm | pass |
+| [S1-landing](../../hardware/exports/body/fea/S1-landing.mp4) | rig 'drop_150' at 15.97 kg a leg (axle 2212 N): 205 N m roll and 558 N up at the hip frame's mount plane, plus 10 % of the 2990 N ground force sideways at the contact patch on BOTH legs; the payload's inertia on the tray | 2.0 | 1.52 (4.42) | 0.0868 mm | pass |
+| [S1F-collapse](../../hardware/exports/body/fea/S1F-collapse.mp4) | rig 'power_off' at 15.97 kg a leg (axle 1662 N): 275 N m roll and 964 N up at the hip frame's mount plane, plus 10 % of the 1672 N ground force sideways at the contact patch on BOTH legs (the undamped power cut, D39); pa | 1.2 | 1.7 (2.88) | 0.12 mm | pass |
+| [S1b-one-leg-bound](../../hardware/exports/body/fea/S1b-one-leg-bound.mp4) | rig 'drop_150' at 15.97 kg a leg (axle 2212 N): 205 N m roll and 558 N up at the hip frame's mount plane, plus 10 % of the 2990 N ground force sideways at the contact patch on ONE leg, the other cheek clamped: every newt | 2.0 | 1.68 (2.8) | 0.0802 mm | pass |
+| [S2-twist](../../hardware/exports/body/fea/S2-twist.mp4) | one leg's 80 N m roll moment (the HM budget) against the other's | 2.0 | 7.94 | 0.0156 mm; twist 0.0126 deg (target 0.1) | pass |
+| [S3-pitch](../../hardware/exports/body/fea/S3-pitch.mp4) | the two motors' 60 N m caps reacted as one 120 N m couple about y, and 600 N fore-aft (the HM budget) | 2.0 | 27.34 | 0.003 mm | pass |
+| [D1-hand-front](../../hardware/exports/body/fea/D1-hand-front.mp4) | 300 N down on the deck at the front (a child leaning on it) | 2.0 | 2.53 | 0.4685 mm; 0.328 mm at the load (target 0.5) | pass |
+| [D1-hand-riser](../../hardware/exports/body/fea/D1-hand-riser.mp4) | 300 N down on the deck at the riser (a child leaning on it) | 2.0 | 2.89 | 0.5143 mm; 0.383 mm at the load (target 0.5) | pass |
+| [D2-turret-fall](../../hardware/exports/body/fea/D2-turret-fall.mp4) | a 30 g fall of the 1.70 kg head (the turret plan's budget) at 45 deg, its centre 100 mm above the TM face: a tip-over, an abuse case like the power cut (SF >= 1.2) | 1.2 | 1.31 | 1.5506 mm | pass |
+| [T1-tray](../../hardware/exports/body/fea/T1-tray.mp4) | what stands on the floor tray at 8.65 g (the body's landing peak from the rig): the compute 1.39 kg on its isolators, the power skid 1.71 kg on its posts, the deck with the lidar and turret 3.69 kg on the deck posts, the | 2.0 | 2.5 | 0.4797 mm | pass |
 
 The spine's lowest numbers are at the standoffs' ends, where a bonded hex meets the web: a corner the linear model
 makes singular (its stress rises with every mesh refinement) and the real joint does not have (the standoff is
@@ -168,7 +168,7 @@ The battery bay's door was narrowed after the sweep found it 23.7 mm from the kn
   to read (bom.json `to_source`).
 - The leg's mass after its stop redesign (+0.2 kg a leg is in the ledger until exports/leg/leg.json carries it).
 - The P3 shell, guards and thermal (T7), the sim on the real body (T4), the firmware (T9), the dock (T10).
-- The leg motors' heat ([motor thermal model](motor-thermal.md)): the frame is a poor heat sink for them (little open
+- The leg motors' heat ([motor thermal model](../legs/motor-thermal.md)): the frame is a poor heat sink for them (little open
   area; the tray is the floor of the air the J501 cooler draws). The rear covers sit 2.0 mm from the cheeks' outer
   faces, so a few watts a motor reach the cheeks across that still air with any hip frame; do not close that gap with
   a thermal pad. The recommended heat path is a black-anodised 6061 web with a thermal break to the cheek.

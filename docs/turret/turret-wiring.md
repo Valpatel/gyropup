@@ -1,6 +1,6 @@
 # Turret wiring and harness (v0, the bench build)
 
-**Carrier revision in review:** [C2 disconnect and service layout](base-board-interfaces.md) supersedes the original fixed C2 attachment/120 mm estimate for the removable carrier. It defines actual cavity identities and protected/disconnected boundaries, while marking holder voltage, DT wire/seal compatibility, D14/U2 protection and physical routing unqualified. It is an interface drawing, not a verified electrical schematic or build authorization.
+**Carrier revision in review:** [C2 disconnect and service layout](../electronics/base-board-interfaces.md) supersedes the original fixed C2 attachment/120 mm estimate for the removable carrier. It defines actual cavity identities and protected/disconnected boundaries, while marking holder voltage, DT wire/seal compatibility, D14/U2 protection and physical routing unqualified. It is an interface drawing, not a verified electrical schematic or build authorization.
 
 The electrics of the foam-ball turret as built for the bench (docs/decisions.yaml D42): every connector and its pinout,
 every conductor's gauge and length, the fuses, the hardware arm chain (the safety pulses across the slip ring, the
@@ -565,17 +565,17 @@ pictures show the components side; wire on the back. Each part's footprint inclu
 
 | Board | Picture | Parts |
 |---|---|---|
-| Base board, 50.8 x 30, on the base's +x wall | ![base](../exports/turret/wiring/board-base.png) | D36V50F12 (12 V PAN, BUS in), the NE555 on the pendant loop's 12 V with its R1, R2, C1-C3, D1 and R3 (the 1 kHz pulses), MF-R300 (pan servo), the pan servo's 3-pin, the ring plug's tails, CAN through; D8 (1N5408), D14 (P6KE51A) and F4 in the harness beside it |
-| Bay level 0, 52 x 50, parts to 13 mm | ![level 0](../exports/turret/wiring/board-level0.png) | TDK i6A4W (RAIL, always on) with its trim string R59-R65 at its TRIM pin, the bus bank (2 x 470 uF 63 V, lying) and its clamp D13, the 2N7000 laser switch with R6, R7, the 2815's TVS (D9) and Schottky (D10), the BUS and RAIL pads |
-| Bay level 1, 52 x 50, on 14 mm standoffs, parts to 11 mm | ![level 1](../exports/turret/wiring/board-level1.png) | Pololu 2815 (RAIL to FLY; slide switch OFF, glued), D36V50F12 (12 V AUX, the tilt servo), D36V28F5 (5 V), the 4N35 with R8, D2, R9 and R50, the CD74HC423E (both one-shots, on 3.3 V) with R10, R11, C6-C8, the BUS_V divider |
-| Bay level 2, 52 x 50, on 12 mm standoffs | ![level 2](../exports/turret/wiring/board-level2.png) | Feather M4 CAN, 74HC74 (the set-only trip latch) and 74HC08 (ARM, the trip's clock) on 3.3 V, the MCP120 power-up reset, 74AHCT125 (servo bus, laser gate) on 5 V, the recessed RESET, the pull-ups, R53 and the RX diode |
-| Cartridge board, 50 x 44, on four posts over the cage | ![cartridge](../exports/turret/wiring/board-cartridge.png) | 6 x IRLZ44N in a row along the front edge (phases to GND, 100 nF and 100 k at each gate), the 74HCT14 brake driver (three inverters, two gates each) and its RC, LM393 (gates), MF-R300 (feed servo), D11 (TVS), R55-R57 in the ESC and feed signals, the gates' resistors, the pigtail's pads; the two ESCs lie on the cage plate under it |
-| Stand terminal board, 70 x 50 | ![stand](../exports/turret/wiring/board-stand.png) | the pendant and CAN junctions to the DT06 plug (the pack's power runs fuse -> rocker -> XT30, not through it: D66) |
+| Base board, 50.8 x 30, on the base's +x wall | ![base](../../hardware/exports/turret/wiring/board-base.png) | D36V50F12 (12 V PAN, BUS in), the NE555 on the pendant loop's 12 V with its R1, R2, C1-C3, D1 and R3 (the 1 kHz pulses), MF-R300 (pan servo), the pan servo's 3-pin, the ring plug's tails, CAN through; D8 (1N5408), D14 (P6KE51A) and F4 in the harness beside it |
+| Bay level 0, 52 x 50, parts to 13 mm | ![level 0](../../hardware/exports/turret/wiring/board-level0.png) | TDK i6A4W (RAIL, always on) with its trim string R59-R65 at its TRIM pin, the bus bank (2 x 470 uF 63 V, lying) and its clamp D13, the 2N7000 laser switch with R6, R7, the 2815's TVS (D9) and Schottky (D10), the BUS and RAIL pads |
+| Bay level 1, 52 x 50, on 14 mm standoffs, parts to 11 mm | ![level 1](../../hardware/exports/turret/wiring/board-level1.png) | Pololu 2815 (RAIL to FLY; slide switch OFF, glued), D36V50F12 (12 V AUX, the tilt servo), D36V28F5 (5 V), the 4N35 with R8, D2, R9 and R50, the CD74HC423E (both one-shots, on 3.3 V) with R10, R11, C6-C8, the BUS_V divider |
+| Bay level 2, 52 x 50, on 12 mm standoffs | ![level 2](../../hardware/exports/turret/wiring/board-level2.png) | Feather M4 CAN, 74HC74 (the set-only trip latch) and 74HC08 (ARM, the trip's clock) on 3.3 V, the MCP120 power-up reset, 74AHCT125 (servo bus, laser gate) on 5 V, the recessed RESET, the pull-ups, R53 and the RX diode |
+| Cartridge board, 50 x 44, on four posts over the cage | ![cartridge](../../hardware/exports/turret/wiring/board-cartridge.png) | 6 x IRLZ44N in a row along the front edge (phases to GND, 100 nF and 100 k at each gate), the 74HCT14 brake driver (three inverters, two gates each) and its RC, LM393 (gates), MF-R300 (feed servo), D11 (TVS), R55-R57 in the ESC and feed signals, the gates' resistors, the pigtail's pads; the two ESCs lie on the cage plate under it |
+| Stand terminal board, 70 x 50 | ![stand](../../hardware/exports/turret/wiring/board-stand.png) | the pendant and CAN junctions to the DT06 plug (the pack's power runs fuse -> rocker -> XT30, not through it: D66) |
 
 The perfboard is SparkFun's PRT-08619 (nominally 80 x 100 mm, plated through). Its linked v1.4 design has a 78.74 x
 99.06 mm outline: the previous two-52-x-50-pieces yield is unsupported, even before allowing a cut kerf. Verify the
 nesting and received stock before ordering/cutting. Drill the corner holes to Ø3.2 at the standoff pattern (46 x 44 on
-the bay's boards; the base board's custom 44.8 x 24 pattern and cut dimensions are in [base-board-stock.md](base-board-stock.md)). The Feather goes in on its two header rows,
+the bay's boards; the base board's custom 44.8 x 24 pattern and cut dimensions are in [base-board-stock.md](../electronics/base-board-stock.md)). The Feather goes in on its two header rows,
 USB towards the bay's open face; nothing on level 2 stands taller than 8.5 mm.
 
 ## 7. Building the electrics, in order

@@ -9,9 +9,9 @@ import os from 'node:os';
 import path from 'node:path';
 import { parseHTML } from 'linkedom';
 import { marked } from 'marked';
-import { htmlToMarkdown, renderPortal } from './site-markdown.mjs';
+import { htmlToMarkdown, renderPortal } from '../../../tools/site/site-markdown.mjs';
 
-const root = path.resolve(import.meta.dirname, '..');
+const root = path.resolve(import.meta.dirname, '../../..');
 const out = path.join(root, 'dist');
 const read = file => readFile(path.join(out, file), 'utf8');
 const sha = value => createHash('sha256').update(value).digest('hex');
@@ -20,7 +20,7 @@ let server;
 let base = process.env.SITE_URL?.replace(/\/$/, '');
 before(async () => {
   if (base) return;
-  server = spawn(process.execPath, ['tools/serve-site.mjs'], { cwd: root, env: { ...process.env, PORT: '0', GYROPUP_PREVIEW_PARENT_PID: String(process.pid) }, stdio: ['ignore', 'pipe', 'inherit'] });
+  server = spawn(process.execPath, ['tools/site/serve-site.mjs'], { cwd: root, env: { ...process.env, PORT: '0', GYROPUP_PREVIEW_PARENT_PID: String(process.pid) }, stdio: ['ignore', 'pipe', 'inherit'] });
   const timeout = setTimeout(() => server.kill(), 10_000);
   try {
     const [output] = await once(server.stdout, 'data');

@@ -8,12 +8,12 @@ import path from 'node:path';
 import { after, before, test } from 'node:test';
 import { parseHTML } from 'linkedom';
 import { chromium, webkit } from '@playwright/test';
-import { createSiteServer } from './serve-site.mjs';
+import { createSiteServer } from '../../../tools/site/serve-site.mjs';
 import { acknowledgePrototypeNotice } from './test-prototype-session.mjs';
-import { DESIGN_PATHS, SYNTHETIC_MERGE, changeUnits, collectTimeline, decisionChanges, gitIn, imagePaths, renderTimeline, shorten, subsystemOf } from './timeline.mjs';
-import { shortDate } from './status-board.mjs';
+import { DESIGN_PATHS, SYNTHETIC_MERGE, changeUnits, collectTimeline, decisionChanges, gitIn, imagePaths, renderTimeline, shorten, subsystemOf } from '../../../tools/site/timeline.mjs';
+import { shortDate } from '../../../tools/site/status-board.mjs';
 
-const root = path.resolve(import.meta.dirname, '..');
+const root = path.resolve(import.meta.dirname, '../../..');
 const dist = path.join(root, 'dist');
 const git = (...args) => execFileSync('git', args, { cwd: root, maxBuffer: 64 << 20 });
 const text = el => el.textContent.replace(/\s+/g, ' ').trim();

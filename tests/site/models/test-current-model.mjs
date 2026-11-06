@@ -1,11 +1,11 @@
-import { acknowledgePrototypeNotice } from './test-prototype-session.mjs';
+import { acknowledgePrototypeNotice } from '../content/test-prototype-session.mjs';
 /** Current presentation: independent CAD frames, cross-route geometry and archive isolation. */
 import assert from 'node:assert/strict';
 import {readFile,writeFile,mkdir} from 'node:fs/promises';
 import {createHash} from 'node:crypto';
 import {chromium,webkit} from '@playwright/test';
-const fixture=JSON.parse(await readFile(new URL('./fixtures/turret-motion-reference.json',import.meta.url)));
-const mountReference=JSON.parse(await readFile(new URL('./fixtures/current-robot-mount.json',import.meta.url)));
+const fixture=JSON.parse(await readFile(new URL('../../fixtures/turret-motion-reference.json', import.meta.url)));
+const mountReference=JSON.parse(await readFile(new URL('../../fixtures/current-robot-mount.json', import.meta.url)));
 async function stlBounds(source){
   const bytes=await readFile(new URL('../'+source.file,import.meta.url));assert.equal(createHash('sha256').update(bytes).digest('hex'),source.sha256,'Independent body datum geometry is pinned');
   const lo=[Infinity,Infinity,Infinity],hi=[-Infinity,-Infinity,-Infinity];

@@ -1,4 +1,4 @@
-import { acknowledgePrototypeNotice } from './test-prototype-session.mjs';
+import { acknowledgePrototypeNotice } from '../content/test-prototype-session.mjs';
 /** User gestures and stats folding must preserve a predictable view of the simulation. */
 import assert from 'node:assert/strict';
 import { chromium, webkit } from '@playwright/test';

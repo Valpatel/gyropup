@@ -6,20 +6,20 @@ Issue #89 / parent #66. These small **unpowered fit specimens** are extracted fr
 
 Preserves the local Ø7 boss, nearby outer edge and wiring-window edge. Prints exterior face down, with the pilot vertical.
 
-[Carrier boss STEP](../../exports/turret/carrier-insert-fit/carrier-boss.step)
+[Carrier boss STEP](../../../hardware/exports/turret/carrier-insert-fit/carrier-boss.step)
 
 ### Base anchor
 
 Preserves the local anchor rail and foot. Prints foot down, with the pilot horizontal.
 
-[Base anchor STEP](../../exports/turret/carrier-insert-fit/base-anchor.step)
+[Base anchor STEP](../../../hardware/exports/turret/carrier-insert-fit/base-anchor.step)
 
 <details><summary>STL and geometry-only 3MF downloads</summary>
 
-- [Carrier boss — STL mesh](../../exports/turret/carrier-insert-fit/carrier-boss.stl)
-- [Carrier boss — geometry-only 3MF](../../exports/turret/carrier-insert-fit/carrier-boss.3mf)
-- [Base anchor — STL mesh](../../exports/turret/carrier-insert-fit/base-anchor.stl)
-- [Base anchor — geometry-only 3MF](../../exports/turret/carrier-insert-fit/base-anchor.3mf)
+- [Carrier boss — STL mesh](../../../hardware/exports/turret/carrier-insert-fit/carrier-boss.stl)
+- [Carrier boss — geometry-only 3MF](../../../hardware/exports/turret/carrier-insert-fit/carrier-boss.3mf)
+- [Base anchor — STL mesh](../../../hardware/exports/turret/carrier-insert-fit/base-anchor.stl)
+- [Base anchor — geometry-only 3MF](../../../hardware/exports/turret/carrier-insert-fit/base-anchor.3mf)
 
 These files have the same print orientation as the corresponding STEP. The 3MF packages contain geometry only; apply and inspect the recipe before slicing.
 
@@ -27,14 +27,14 @@ These files have the same print orientation as the corresponding STEP. The 3MF p
 
 Both retain the **nominal Ø4 blind pilot**, 6.5 mm hole depth and 8 mm axial stock. The bore floor leaves 1.5 mm of material. A nominal 5.74 mm insert, seated flush, leaves 0.76 mm between its tip and that floor. These are CAD dimensions, not measured print dimensions. One print orientation cannot qualify the other.
 
-The selected insert is [McMaster 94459A140](https://www.mcmaster.com/94459A140/), M3×0.5. The cached manufacturer specification from 2026-10-26 states 5.7 mm installed length, maximum hole diameter4 mm and minimum material thickness6.5 mm. The normalized manufacturer model is5.74 mm long. The source identity is recorded in the existing [component checklist](../../docs/base-board-component-checklist.md). Private manufacturer CAD is not published in this package.
+The selected insert is [McMaster 94459A140](https://www.mcmaster.com/94459A140/), M3×0.5. The cached manufacturer specification from 2026-10-26 states 5.7 mm installed length, maximum hole diameter4 mm and minimum material thickness6.5 mm. The normalized manufacturer model is5.74 mm long. The source identity is recorded in the existing [component checklist](../../electronics/base-board-component-checklist.md). Private manufacturer CAD is not published in this package.
 
 ## Use and record
 
-Download the [blank measurement sheet](../../exports/turret/carrier-insert-fit/measurements.csv) and keep each specimen associated with its row. The plan has three repeats per orientation. This is a small characterization exercise, not statistical qualification.
+Download the [blank measurement sheet](../../../hardware/exports/turret/carrier-insert-fit/measurements.csv) and keep each specimen associated with its row. The plan has three repeats per orientation. This is a small characterization exercise, not statistical qualification.
 
 1. Inspect the original STEP and the print-oriented mesh before slicing. The two shapes deliberately have different layer orientations; do not auto-orient them together.
-2. Apply and inspect the parent recipe recorded under `requested_recipe` in the [source/output receipt](../../exports/turret/carrier-insert-fit/receipt.json). The carrier uses the current solid PA6-CF recipe; the anchor uses the current pan-base recipe with 40% gyroid and support enabled. **The 3MF files contain geometry only:** no printer settings, filament profile or G-code. No slicing time or material use has been measured.
+2. Apply and inspect the parent recipe recorded under `requested_recipe` in the [source/output receipt](../../../hardware/exports/turret/carrier-insert-fit/receipt.json). The carrier uses the current solid PA6-CF recipe; the anchor uses the current pan-base recipe with 40% gyroid and support enabled. **The 3MF files contain geometry only:** no printer settings, filament profile or G-code. No slicing time or material use has been measured.
 3. Record the actual printer, nozzle, filament lot/conditioning, resolved slicer settings and support removal. Verify that the horizontal bore can be cleared of support before attempting insertion. A different support treatment is a changed test condition, not an interchangeable result.
 4. Measure the pilot and the actual insert before installation. A qualified operator must establish a controlled heat-setting method and suitable holding fixture; this package does not specify a proven temperature, dwell or installation force. Record those conditions and stop a trial if the specimen cracks, bulges, obstructs the thread or cannot seat correctly.
 5. After cooling, record seating depth and visible deformation. Keep photos and failed specimens with the same batch identifiers. Do not infer retention torque or pull strength from successful seating. A loaded-joint acceptance procedure remains separate work.

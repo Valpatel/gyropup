@@ -1,4 +1,4 @@
-import { acknowledgePrototypeNotice } from './test-prototype-session.mjs';
+import { acknowledgePrototypeNotice } from '../content/test-prototype-session.mjs';
 /** The default experience must use the current model; recordings keep their matching archived geometry. */
 import assert from 'node:assert/strict';
 import {mkdir,writeFile} from 'node:fs/promises';

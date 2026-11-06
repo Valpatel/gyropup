@@ -3,7 +3,7 @@
 This is a record of a design investigation, not fabrication approval. The current
 work is [issue #116](https://github.com/Valpatel/gyropup/issues/116) and
 [PR #117](https://github.com/Valpatel/gyropup/pull/117). Read
-[the mounting-fit note](../../docs/rs04-mounting-fit.md) for the intended geometry.
+[the mounting-fit note](../../legs/rs04-mounting-fit.md) for the intended geometry.
 
 ## First complete run: the candidate still fails
 
@@ -39,7 +39,7 @@ control and geometric diagnostics that consider all relevant manufacturer solids
 at both factory-retainer recesses. It does not change the candidate geometry,
 loosen the stack tolerances or remove any support failures.
 
-The [current complete receipt](../../exports/leg/rs04-mounting-fit/checks.json)
+The [current complete receipt](../../../hardware/exports/leg/rs04-mounting-fit/checks.json)
 reports **322 passes, 40 warnings and 8 failures**. All forty driver approaches
 pass for the declared envelope; the blocked-path control is caught. Both factory
 heads remain 0.21 mm below the mounting face. The three authored STEP models are

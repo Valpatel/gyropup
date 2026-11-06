@@ -1,6 +1,6 @@
 # Leg actuators for gyropup: what you can actually buy (checked 2026-10-25)
 
-Quasi-direct-drive (QDD) joint actuators for the hip and knee of an 8–20 kg wheel-legged biped: planetary ~6:1–10:1, integrated driver, CAN or RS485. Machine-readable data: [`catalog/leg_actuators.json`](../catalog/leg_actuators.json) (49 items, category `leg_actuator`). Each item has sources, a STEP link where one exists, and notes. Unknown numbers are `null`; "n/p" below means *not published*.
+Quasi-direct-drive (QDD) joint actuators for the hip and knee of an 8–20 kg wheel-legged biped: planetary ~6:1–10:1, integrated driver, CAN or RS485. Machine-readable data: [`catalog/leg_actuators.json`](../../hardware/catalog/leg_actuators.json) (49 items, category `leg_actuator`). Each item has sources, a STEP link where one exists, and notes. Unknown numbers are `null`; "n/p" below means *not published*.
 
 **How the data was gathered.** Official stores and Shopify product JSON, vendor GitHub repos, manuals and selection guides, Seeed, Amazon, RobotShop, aifitlab, OpenELAB and roboticscenter.ai. Prices are one unit with the driver included, before shipping and tax.
 

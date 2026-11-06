@@ -1,6 +1,6 @@
 # Printing the bench turret (v0)
 
-> **Historical full-kit print plan — not a current print package.** The archived files, settings, weights and times below predate the current carrier and mechanical changes. Their original exports lack the source receipts required by the current packaging checks. No complete turret kit has been regenerated or qualified. Consult [current mechanical readiness](mechanical-readiness.md) and [print source provenance](print-source-provenance.md) before selecting files.
+> **Historical full-kit print plan — not a current print package.** The archived files, settings, weights and times below predate the current carrier and mechanical changes. Their original exports lack the source receipts required by the current packaging checks. No complete turret kit has been regenerated or qualified. Consult [current mechanical readiness](../architecture/mechanical-readiness.md) and [print source provenance](../validation/print-source-provenance.md) before selecting files.
 >
 > The separate [carrier insert-fit specimens](../research/carrier-insert-fit/README.md) are the current bounded fit-study package. They contain geometry-only STEP/STL/3MF files and blank measurement records, with no sliced printer profile, G-code or physical-fit result. They do not qualify this archived full kit.
 
@@ -14,27 +14,27 @@ From `cad/turret_print.py`: every printed part of the bench turret and its stand
 
 | Part | Material (Bambu profile) | Copies | On the bed | Settings | g each | h each | Note |
 |---|---|---|---|---|---|---|---|
-| [stand_box](../exports/turret/print/stand_box.3mf) | petg (Bambu PETG HF @BBL P1S 0.4 nozzle) | 1 | upside down, on its top plate | 3 walls, 20% gyroid, tree supports | 377.49 | 8.4 | the stand first: it needs no decision |
-| [stand_bottom](../exports/turret/print/stand_bottom.3mf) | petg (Bambu PETG HF @BBL P1S 0.4 nozzle) | 1 | flat | 3 walls, 20% gyroid | 103.86 | 2.5 |  |
-| [pan_base](../exports/turret/print/pan_base.3mf) | pa6-cf (Bambu PA6-CF @BBL X1C) | 1 | on its foot | 4 walls, 40% gyroid, tree supports | 133.44 | 6.4 | 40 % gyroid inside 4 perimeters (the FEA case) |
-| [pan_ring](../exports/turret/print/pan_ring.3mf) | pa6-cf (Bambu PA6-CF @BBL X1C) | 1 | upside down: the gear teeth flat on the bed | 4 walls, 100% zig-zag, tree supports | 78.21 | 3.8 |  |
-| [pan_spacer](../exports/turret/print/pan_spacer.3mf) | pa6-cf (Bambu PA6-CF @BBL X1C) | 1 | on its wide end | 4 walls, 100% zig-zag | 2.62 | 0.1 |  |
-| [pan_pinion](../exports/turret/print/pan_pinion.3mf) | pa6-cf (Bambu PA6-CF @BBL X1C) | 1 | flat | 4 walls, 100% zig-zag | 7.88 | 0.6 |  |
-| [ring_carrier](../exports/turret/print/ring_carrier.3mf) | pa6-cf (Bambu PA6-CF @BBL X1C) | 1 | on its top face | 4 walls, 100% zig-zag | 29.33 | 1.2 | reprint once the ring's flange holes are measured (plan T6) |
-| [ring_driver](../exports/turret/print/ring_driver.3mf) | pa6-cf (Bambu PA6-CF @BBL X1C) | 1 | on its top face | 4 walls, 100% zig-zag | 6.83 | 0.3 |  |
-| [tilt_yoke](../exports/turret/print/tilt_yoke.3mf) | pa6-cf (Bambu PA6-CF @BBL X1C) | 1 | on its back: the layers run along the arms | 4 walls, 100% zig-zag, tree supports | 118.08 | 5.1 |  |
-| [cradle](../exports/turret/print/cradle.3mf) | pa6-cf (Bambu PA6-CF @BBL X1C) | 1 | flat, no supports | 4 walls, 100% zig-zag | 49.84 | 2.1 | the rail frame (D48): its cheeks are the two SendCutSend plates; 8 x M3 inserts in the rebates, put in from the side |
-| [horn_boss](../exports/turret/print/horn_boss.3mf) | pa6-cf (Bambu PA6-CF @BBL X1C) | 1 | on an end face | 4 walls, 100% zig-zag | 2.37 | 0.2 | between the +y plate and the tilt servo's horn (D48) |
-| [pivot_spacer](../exports/turret/print/pivot_spacer.3mf) | pa6-cf (Bambu PA6-CF @BBL X1C) | 1 | on its boss face, the land up | 4 walls, 100% zig-zag | 0.83 |  | between the -y plate and the MR126 (D48); its 1 mm land bears on the inner race only |
-| [cartridge_body](../exports/turret/print/cartridge_body.3mf) | pa6-cf (Bambu PA6-CF @BBL X1C) | 1 | on its base; supports under the floor, the chute and the cage plate | 4 walls, 100% zig-zag, tree supports | 187.58 | 10.7 | the longest print: after the motor and a servo are checked against the drawings (plan T2, T4) |
-| [flywheel](../exports/turret/print/flywheel.3mf) | pa6-cf (Bambu PA6-CF @BBL X1C) | 2 | on its top face (the flange seat flat on the bed) | 4 walls, 100% zig-zag | 5.19 | 0.2 | ream the bore to 5.00 |
-| [dial](../exports/turret/print/dial.3mf) | petg (Bambu PETG HF @BBL P1S 0.4 nozzle) | 1 | on its bottom, cone up | 5 walls, 40% gyroid, tree supports | 45.54 | 1.7 |  |
-| [hopper](../exports/turret/print/hopper.3mf) | petg-clear (Bambu PETG Translucent @BBL X1C) | 1 | upright, on its bottom rim and the baffle | 5 walls, 40% gyroid | 41.0 | 1.7 | translucent PETG so the balls show |
-| [hopper_lid](../exports/turret/print/hopper_lid.3mf) | petg (Bambu PETG HF @BBL P1S 0.4 nozzle) | 1 | upside down | 5 walls, 40% gyroid | 16.09 | 0.5 | the fill flap is not fitted on the bench |
-| [barrel](../exports/turret/print/barrel.3mf) | petg (Bambu PETG HF @BBL P1S 0.4 nozzle) | 1 | standing on its socket end | 5 walls, 40% gyroid, tree supports | 30.54 | 1.5 | change to blaze orange for the last 15 mm (a filament change at that layer) |
-| [laser_mount](../exports/turret/print/laser_mount.3mf) | petg (Bambu PETG HF @BBL P1S 0.4 nozzle) | 1 | on its foot | 5 walls, 40% gyroid | 6.19 | 0.4 |  |
-| [board_bay](../exports/turret/print/board_bay.3mf) | petg (Bambu PETG HF @BBL P1S 0.4 nozzle) | 1 | on its back | 5 walls, 40% gyroid | 24.36 | 0.9 |  |
-| [flywheel_tyre](../exports/turret/print/flywheel_tyre.3mf) | tpu95 (Bambu TPU 95A @BBL X1C) | 2 | flat | 3 walls, 100% zig-zag | 4.43 | 0.3 | Ø34 mounted (printed 4 % under the Ø28 rim): the only tyre for the X2216 (D42) |
+| [stand_box](../../hardware/exports/turret/print/stand_box.3mf) | petg (Bambu PETG HF @BBL P1S 0.4 nozzle) | 1 | upside down, on its top plate | 3 walls, 20% gyroid, tree supports | 377.49 | 8.4 | the stand first: it needs no decision |
+| [stand_bottom](../../hardware/exports/turret/print/stand_bottom.3mf) | petg (Bambu PETG HF @BBL P1S 0.4 nozzle) | 1 | flat | 3 walls, 20% gyroid | 103.86 | 2.5 |  |
+| [pan_base](../../hardware/exports/turret/print/pan_base.3mf) | pa6-cf (Bambu PA6-CF @BBL X1C) | 1 | on its foot | 4 walls, 40% gyroid, tree supports | 133.44 | 6.4 | 40 % gyroid inside 4 perimeters (the FEA case) |
+| [pan_ring](../../hardware/exports/turret/print/pan_ring.3mf) | pa6-cf (Bambu PA6-CF @BBL X1C) | 1 | upside down: the gear teeth flat on the bed | 4 walls, 100% zig-zag, tree supports | 78.21 | 3.8 |  |
+| [pan_spacer](../../hardware/exports/turret/print/pan_spacer.3mf) | pa6-cf (Bambu PA6-CF @BBL X1C) | 1 | on its wide end | 4 walls, 100% zig-zag | 2.62 | 0.1 |  |
+| [pan_pinion](../../hardware/exports/turret/print/pan_pinion.3mf) | pa6-cf (Bambu PA6-CF @BBL X1C) | 1 | flat | 4 walls, 100% zig-zag | 7.88 | 0.6 |  |
+| [ring_carrier](../../hardware/exports/turret/print/ring_carrier.3mf) | pa6-cf (Bambu PA6-CF @BBL X1C) | 1 | on its top face | 4 walls, 100% zig-zag | 29.33 | 1.2 | reprint once the ring's flange holes are measured (plan T6) |
+| [ring_driver](../../hardware/exports/turret/print/ring_driver.3mf) | pa6-cf (Bambu PA6-CF @BBL X1C) | 1 | on its top face | 4 walls, 100% zig-zag | 6.83 | 0.3 |  |
+| [tilt_yoke](../../hardware/exports/turret/print/tilt_yoke.3mf) | pa6-cf (Bambu PA6-CF @BBL X1C) | 1 | on its back: the layers run along the arms | 4 walls, 100% zig-zag, tree supports | 118.08 | 5.1 |  |
+| [cradle](../../hardware/exports/turret/print/cradle.3mf) | pa6-cf (Bambu PA6-CF @BBL X1C) | 1 | flat, no supports | 4 walls, 100% zig-zag | 49.84 | 2.1 | the rail frame (D48): its cheeks are the two SendCutSend plates; 8 x M3 inserts in the rebates, put in from the side |
+| [horn_boss](../../hardware/exports/turret/print/horn_boss.3mf) | pa6-cf (Bambu PA6-CF @BBL X1C) | 1 | on an end face | 4 walls, 100% zig-zag | 2.37 | 0.2 | between the +y plate and the tilt servo's horn (D48) |
+| [pivot_spacer](../../hardware/exports/turret/print/pivot_spacer.3mf) | pa6-cf (Bambu PA6-CF @BBL X1C) | 1 | on its boss face, the land up | 4 walls, 100% zig-zag | 0.83 |  | between the -y plate and the MR126 (D48); its 1 mm land bears on the inner race only |
+| [cartridge_body](../../hardware/exports/turret/print/cartridge_body.3mf) | pa6-cf (Bambu PA6-CF @BBL X1C) | 1 | on its base; supports under the floor, the chute and the cage plate | 4 walls, 100% zig-zag, tree supports | 187.58 | 10.7 | the longest print: after the motor and a servo are checked against the drawings (plan T2, T4) |
+| [flywheel](../../hardware/exports/turret/print/flywheel.3mf) | pa6-cf (Bambu PA6-CF @BBL X1C) | 2 | on its top face (the flange seat flat on the bed) | 4 walls, 100% zig-zag | 5.19 | 0.2 | ream the bore to 5.00 |
+| [dial](../../hardware/exports/turret/print/dial.3mf) | petg (Bambu PETG HF @BBL P1S 0.4 nozzle) | 1 | on its bottom, cone up | 5 walls, 40% gyroid, tree supports | 45.54 | 1.7 |  |
+| [hopper](../../hardware/exports/turret/print/hopper.3mf) | petg-clear (Bambu PETG Translucent @BBL X1C) | 1 | upright, on its bottom rim and the baffle | 5 walls, 40% gyroid | 41.0 | 1.7 | translucent PETG so the balls show |
+| [hopper_lid](../../hardware/exports/turret/print/hopper_lid.3mf) | petg (Bambu PETG HF @BBL P1S 0.4 nozzle) | 1 | upside down | 5 walls, 40% gyroid | 16.09 | 0.5 | the fill flap is not fitted on the bench |
+| [barrel](../../hardware/exports/turret/print/barrel.3mf) | petg (Bambu PETG HF @BBL P1S 0.4 nozzle) | 1 | standing on its socket end | 5 walls, 40% gyroid, tree supports | 30.54 | 1.5 | change to blaze orange for the last 15 mm (a filament change at that layer) |
+| [laser_mount](../../hardware/exports/turret/print/laser_mount.3mf) | petg (Bambu PETG HF @BBL P1S 0.4 nozzle) | 1 | on its foot | 5 walls, 40% gyroid | 6.19 | 0.4 |  |
+| [board_bay](../../hardware/exports/turret/print/board_bay.3mf) | petg (Bambu PETG HF @BBL P1S 0.4 nozzle) | 1 | on its back | 5 walls, 40% gyroid | 24.36 | 0.9 |  |
+| [flywheel_tyre](../../hardware/exports/turret/print/flywheel_tyre.3mf) | tpu95 (Bambu TPU 95A @BBL X1C) | 2 | flat | 3 walls, 100% zig-zag | 4.43 | 0.3 | Ø34 mounted (printed 4 % under the Ø28 rim): the only tyre for the X2216 (D42) |
 
 **Totals:** 1281.4 g of filament, 49.3 h on one printer: pa6-cf 627.4 g / 31.0 h, petg 604.1 g / 16.0 h, petg-clear 41.0 g / 1.7 h, tpu95 8.9 g / 0.6 h.
 

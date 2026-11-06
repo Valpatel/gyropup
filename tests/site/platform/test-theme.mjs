@@ -7,10 +7,10 @@ import { readFileSync, readdirSync } from 'node:fs';
 import path from 'node:path';
 import { after, before, test } from 'node:test';
 import { chromium, webkit } from '@playwright/test';
-import { createSiteServer } from './serve-site.mjs';
-import { acknowledgePrototypeNotice } from './test-prototype-session.mjs';
+import { createSiteServer } from '../../../tools/site/serve-site.mjs';
+import { acknowledgePrototypeNotice } from '../content/test-prototype-session.mjs';
 
-const root = path.resolve(import.meta.dirname, '..');
+const root = path.resolve(import.meta.dirname, '../../..');
 const dist = path.join(root, 'dist');
 const css = readFileSync(path.join(root, 'web/theme.css'), 'utf8');
 const block = re => Object.fromEntries([...css.match(re)[1].matchAll(/(--gp-[\w-]+):([^;]+)/g)].map(m => [m[1], m[2].trim()]));

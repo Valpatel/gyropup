@@ -4,7 +4,7 @@ import { readFileSync } from 'node:fs';
 import { spawnSync } from 'node:child_process';
 import { fileURLToPath } from 'node:url';
 import { test } from 'node:test';
-const root = fileURLToPath(new URL('../', import.meta.url));
+const root = fileURLToPath(new URL('../../../', import.meta.url));
 const read = name => JSON.parse(readFileSync(new URL('../' + name, import.meta.url), 'utf8'));
 const images = read('catalog/images.json');
 const report = read('catalog/vendor-media-verification.json');

@@ -5,16 +5,18 @@ import path from 'node:path';
 import { marked } from 'marked';
 import YAML from 'yaml';
 import { parseHTML } from 'linkedom';
-import { addModelPreviews } from '../web/model-links.js';
+import { addModelPreviews } from '../../software/site/assets/model-links.js';
 import { writeMarkdownSite } from './site-markdown.mjs';
 import { SITE_CACHE_CONTROL, versionSiteAssets } from './site-cache.mjs';
 import { collectStatus, createReader, renderBoard, shallowHistory } from './status-board.mjs';
 import { collectTimeline, gitIn, imagePaths, renderTimeline, subsystemOf } from './timeline.mjs';
 import { OPEN_FOLDS, enhanceDocument } from './doc-page.mjs';
-import { verifyRigFiles } from './rig-media.mjs';
-const root = path.resolve(import.meta.dirname, '..');
+import { verifyRigFiles } from '../evidence/media/rig-media.mjs';
+import {publicForSource,sourceForPublic,publicationFiles} from './source-layout.mjs';
+const root = path.resolve(import.meta.dirname, '../..');
 const out = path.join(root, 'dist');
-const read = (p) => readFile(path.join(root, p), 'utf8');
+const sourceFile=p=>path.join(root,sourceForPublic(p));
+const read = p => readFile(sourceFile(p), 'utf8');
 const esc = (s) => String(s ?? '').replace(/[&<>"']/g, c => ({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[c]));
 const config = YAML.parse(await read('cad-agent.yaml')).cad.site;
 await verifyRigFiles(root); // SHA checks on the actual report/movie bytes, before publishing the bundle.
@@ -22,19 +24,21 @@ await rm(out, { recursive: true, force: true });
 await mkdir(out, { recursive: true });
 // Only repository assets, never local credentials, untracked runs or vendor downloads.
 // New web source is copied explicitly; all evidence and downloadable files must be committed.
-const tracked = execFileSync('git', ['ls-files', '-z'], { cwd: root }).toString().split('\0').filter(Boolean);
-const roots = ['designer/', 'exports/', 'catalog/', 'designs/', 'docs/', 'research/', 'cad/', 'sim/', 'hardware/', 'firmware/'];
+const sourceTracked=execFileSync('git',['ls-files','-z'],{cwd:root}).toString().split('\0').filter(Boolean);
+const published=publicationFiles(sourceTracked);
+const tracked=[...published.keys()];
+const roots = ['designer/', 'exports/', 'catalog/', 'designs/', 'docs/', 'research/', 'cad/', 'sim/', 'hardware/', 'firmware/', 'web/'];
 // The public repository's dossier sources keep their former unpublished-site boundary.
 const dossierSource = file => file === 'docs/dossier' || file.startsWith('docs/dossier/');
 for (const file of tracked) {
   if (!roots.some(r => file.startsWith(r)) || dossierSource(file) || ['docs/handoff.md', 'designer/home.html'].includes(file) || /(?:^|\/)(?:AGENTS|CLAUDE)\.md$/.test(file)) continue;
   const dest = path.join(out, file); await mkdir(path.dirname(dest), { recursive: true });
-  if ((await stat(path.join(root, file))).size > 25 * 1024 * 1024) throw new Error(`Cloudflare file limit: ${file}`);
-  await cp(path.join(root, file), dest);
+  if ((await stat(sourceFile(file))).size > 25 * 1024 * 1024) throw new Error(`Cloudflare file limit: ${file}`);
+  await cp(sourceFile(file), dest);
 }
 for (const file of ['LICENSE', 'README.md']) await cp(path.join(root, file), path.join(out, file));
-await cp(path.join(root, 'designer/home.html'), path.join(out, 'index.html'));
-await cp(path.join(root, 'web'), path.join(out, 'web'), { recursive: true });
+await cp(sourceFile('designer/home.html'), path.join(out, 'index.html'));
+// Web assets use the same tracked source/public contract; no untracked directory copy.
 // The full local CAD workflow can use licensed vendor downloads. The shared static bundle cannot.
 // Mark the legacy rig unavailable as a whole, so its complete procedural model is used instead.
 const legacy = JSON.parse(await read('exports/links/manifest.json'));
@@ -58,7 +62,7 @@ if (!history && process.env.CF_PAGES) {
   try { execFileSync('git', ['fetch', '--quiet', '--unshallow'], { cwd: root, stdio: 'inherit', timeout: 300000, env: { ...process.env, GIT_TERMINAL_PROMPT: '0' } }); history = !shallowHistory(root); }
   catch (error) { console.warn(`Status board: could not fetch the history (${error.message}); change dates are left out.`); }
 }
-const reader = createReader(root, { git: history });
+const reader = createReader(root, { git: history, sourcePath:sourceForPublic });
 const status = collectStatus(reader);
 for (const [file, options] of [['index.html', { compact: true }], ['designer/progress.html', {}]]) {
   const target = path.join(out, file), html = await readFile(target, 'utf8');
@@ -101,6 +105,7 @@ function frame(title, body) {
 }
 const docs = [];
 for (const file of documents) {
+  const authoredSource=sourceForPublic(file);
   const source = await read(file);
   const title = source.match(/^#\s+(.+)$/m)?.[1] || file;
   // Preserve source-relative links, route published Markdown to its HTML view.
@@ -116,19 +121,19 @@ for (const file of documents) {
   html = html.replace(/(href|src)="([^"#][^"]*)"/g, (all, attr, url) => {
     if (/^(?:[a-z][a-z\d+.-]*:|\/\/)/i.test(url)) return all;
     const [pathname, ...hash] = url.split('#');
-    const resolved = pathname.startsWith('/') ? pathname.slice(1) : path.posix.normalize(path.posix.join(path.posix.dirname(file), pathname));
-    const published = roots.some(r => resolved.startsWith(r)) && !dossierSource(resolved) && resolved !== 'docs/handoff.md';
-    const exists = tracked.includes(resolved) || tracked.some(f => f.startsWith(resolved.replace(/\/$/, '')+'/'));
-    const target = documents.includes(resolved) ? pagePath(resolved) : published && exists ? '/' + resolved : `https://github.com/Valpatel/gyropup/blob/main/${resolved}`;
+    const resolvedSource=pathname.startsWith('/')?sourceForPublic(pathname.slice(1)):path.posix.normalize(path.posix.join(path.posix.dirname(authoredSource),pathname));
+    const resolvedPublic=publicForSource(resolvedSource);
+    const exists=resolvedPublic!==null&&(tracked.includes(resolvedPublic)||tracked.some(f=>f.startsWith(resolvedPublic.replace(/\/$/,'')+'/')));
+    const target=exists?(documents.includes(resolvedPublic)?pagePath(resolvedPublic):'/'+resolvedPublic):`https://github.com/Valpatel/gyropup/blob/main/${resolvedSource}`;
     return `${attr}="${esc(target)}${hash.length ? '#'+esc(hash.join('#')) : ''}"`;
   });
   html = html.replace(/<a href="https:\/\/github\.com\/Valpatel\/gyropup\/blob\/main\/(catalog\/(?:availability|lfp_batteries)\.json)">(.*?)<\/a>/g, '<span title="Historical file, not part of this revision">$2 (historical file)</span>');
   html = html.replace(/<table>/g,'<div class="table-scroll"><table>').replace(/<\/table>/g,'</table></div>');
   // Lead card, status strips and folds (tools/doc-page.mjs): the same words, shown without walls of text.
   const panel = status.panels.find(p => p.id === subsystemOf(file) && p.image) || null;
-  html = enhanceDocument(html, { file, changed: reader.changed([file]), panel }).html;
+  html = enhanceDocument(html, { file:authoredSource, changed:reader.changed([authoredSource]), panel }).html;
   await writeFile(path.join(out, pagePath(file)), frame(title, `<article>${html}</article>`));
-  docs.push({title,file});
+  docs.push({title,file,source:authoredSource});
 }
 const decisions = YAML.parse(await read(config.decisions));
 // The per-component hardware folders (hardware/README.md) and the deployment are many short pages: one fold, so the

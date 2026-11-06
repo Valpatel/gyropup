@@ -2,8 +2,8 @@
 
 Checked 2026-10-25. This extends [turret-and-safety.md](turret-and-safety.md) (read that first: launcher basics,
 recoil, toy-standard energy limits, pan/tilt, the S1–S23 safety list). It does not repeat that file's tables; where a
-number here differs from it, §0.2 says so. New parts are appended to [`catalog/turret.json`](../catalog/turret.json).
-The interface it has to fit is [docs/head-payload.md](../docs/head-payload.md).
+number here differs from it, §0.2 says so. New parts are appended to [`catalog/turret.json`](../../hardware/catalog/turret.json).
+The interface it has to fit is [docs/head-payload.md](../architecture/head-payload.md).
 
 **Conventions.** "n/p" means not published. **calc** marks my arithmetic on sourced inputs. **est** marks an
 engineering estimate that is not sourced and needs measuring. Out of Darts (OOD) and other Shopify data were read from

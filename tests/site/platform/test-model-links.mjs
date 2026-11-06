@@ -1,7 +1,7 @@
 import assert from 'node:assert/strict';
 import {test} from 'node:test';
 import {parseHTML} from 'linkedom';
-import {addModelPreviews} from '../web/model-links.js';
+import {addModelPreviews} from '../../../software/site/assets/model-links.js';
 const base='https://gyropup.com/designer/build.html';
 const published=new Set(['/exports/part.step','/exports/different.stl']);
 const apply=document=>addModelPreviews(document,{base,published});

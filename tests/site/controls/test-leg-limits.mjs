@@ -3,9 +3,9 @@
 import assert from 'node:assert/strict';
 import test from 'node:test';
 import {readFile} from 'node:fs/promises';
-import {createLegLimits, windowAt, yawLimitRadS, RATES, legRateMMPerS, vmaxMPerS} from '../designer/leg_limits.js';
+import {createLegLimits, windowAt, yawLimitRadS, RATES, legRateMMPerS, vmaxMPerS} from '../../../software/site/designer/leg_limits.js';
 
-const root = new URL('../', import.meta.url);
+const root = new URL('../../../', import.meta.url);
 const limits = JSON.parse(await readFile(new URL('exports/leg/limits.json', root), 'utf8'));
 const model = await readFile(new URL('firmware/balance/include/gp/gp_model.h', root), 'utf8');
 const control = await readFile(new URL('firmware/balance/src/core/gp_control.c', root), 'utf8');

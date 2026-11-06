@@ -16,7 +16,7 @@ The RS-04 drawing guarantees **5 mm minimum usable thread** at the ten output-si
 M4 mounting holes. Its STEP model has 7 mm drilled cylinders. That extra drill depth
 does not authorize a longer screw. The manufacturer drawing and STEP are recorded
 in [the actuator interface research](../research/actuator-interfaces.md#robstride-rs-04-swap-candidate)
-and [interface catalog](../catalog/interfaces.json).
+and [interface catalog](../../hardware/catalog/interfaces.json).
 
 | Interface | Previous nominal penetration | Candidate geometry with M4 × 20 | Candidate nominal penetration |
 | --- | --- | --- | --- |
@@ -69,11 +69,11 @@ none of these downloads is a released print job or sliced file.
 
 | Candidate part | Solid model | Print-oriented mesh |
 | --- | --- | --- |
-| Hip frame | [STEP](../exports/leg/rs04-mounting-fit/hip_frame.step) | [STL](../exports/leg/rs04-mounting-fit/hip_frame.stl) |
-| Dyno lug plate | [STEP](../exports/leg/rs04-mounting-fit/dyno_lug_plate.step) | [STL](../exports/leg/rs04-mounting-fit/dyno_lug_plate.stl) |
-| Exact parent motor-fit coupon | [STEP](../exports/leg/rs04-mounting-fit/coupon_frame_ring_nom.step) | [STL](../exports/leg/rs04-mounting-fit/coupon_frame_ring_nom.stl) |
+| Hip frame | [STEP](../../hardware/exports/leg/rs04-mounting-fit/hip_frame.step) | [STL](../../hardware/exports/leg/rs04-mounting-fit/hip_frame.stl) |
+| Dyno lug plate | [STEP](../../hardware/exports/leg/rs04-mounting-fit/dyno_lug_plate.step) | [STL](../../hardware/exports/leg/rs04-mounting-fit/dyno_lug_plate.stl) |
+| Exact parent motor-fit coupon | [STEP](../../hardware/exports/leg/rs04-mounting-fit/coupon_frame_ring_nom.step) | [STL](../../hardware/exports/leg/rs04-mounting-fit/coupon_frame_ring_nom.stl) |
 
-The [complete current receipt](../exports/leg/rs04-mounting-fit/checks.json) records
+The [complete current receipt](../../hardware/exports/leg/rs04-mounting-fit/checks.json) records
 **322 passes, 40 warnings and 8 failures**. It confirms 4.4 mm nominal penetration
 at all forty screws, valid single-solid authored models and watertight meshes.
 The driver checks cover only the declared fitting step: a 4 mm-diameter shaft,

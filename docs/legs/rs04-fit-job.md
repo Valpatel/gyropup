@@ -18,15 +18,15 @@ G-code has 121 layers, no support deposition, a maximum commanded object-deposit
 feed of 99 mm/s, and verified 275°C nozzle / 100°C bed waits before deposition.
 The source receipt remains **322 pass / 40 warn / 8 fail**.
 
-- [Complete job ZIP](../exports/leg/rs04-fit-job.zip): source mesh, resolved settings,
+- [Complete job ZIP](../../hardware/exports/leg/rs04-fit-job.zip): source mesh, resolved settings,
   raw profile templates, engine identity, logs/results, sliced 3MF, G-code and records.
-- [Actual sliced 3MF](../exports/leg/rs04-fit-job/slice/out/sliced.3mf) and
-  [standalone G-code](../exports/leg/rs04-fit-job/slice/out/plate_1.gcode).
-- [Machine-readable job receipt](../exports/leg/rs04-fit-job/job.json),
-  [blank measurement sheet](../exports/leg/rs04-fit-job/measurements.csv) and
-  [blank process record](../exports/leg/rs04-fit-job/process-record.csv).
-- Inspect the source coupon [STEP](../exports/leg/rs04-mounting-fit/coupon_frame_ring_nom.step)
-  or [STL](../exports/leg/rs04-mounting-fit/coupon_frame_ring_nom.stl) with the adjacent
+- [Actual sliced 3MF](../../hardware/exports/leg/rs04-fit-job/slice/out/sliced.3mf) and
+  [standalone G-code](../../hardware/exports/leg/rs04-fit-job/slice/out/plate_1.gcode).
+- [Machine-readable job receipt](../../hardware/exports/leg/rs04-fit-job/job.json),
+  [blank measurement sheet](../../hardware/exports/leg/rs04-fit-job/measurements.csv) and
+  [blank process record](../../hardware/exports/leg/rs04-fit-job/process-record.csv).
+- Inspect the source coupon [STEP](../../hardware/exports/leg/rs04-mounting-fit/coupon_frame_ring_nom.step)
+  or [STL](../../hardware/exports/leg/rs04-mounting-fit/coupon_frame_ring_nom.stl) with the adjacent
   geometry previews.
 
 The actual sliced 3MF contains Bambu's production extension and external object
@@ -72,7 +72,7 @@ operations. No printer was connected or started by generation.
 
 ## Inspect and measure
 
-![Actual G-code deposition at the first layer, motor counterbore roofs, outer pocket roofs and bearing-seat lip](../exports/leg/rs04-fit-job/critical-layers.png)
+![Actual G-code deposition at the first layer, motor counterbore roofs, outer pocket roofs and bearing-seat lip](../../hardware/exports/leg/rs04-fit-job/critical-layers.png)
 
 The retained critical-layer image is drawn from executable G-code, with bridge
 deposition red and overhang walls orange. The counterbore roofs bridge at Z=8.8 mm.
@@ -98,7 +98,7 @@ surface defects and photos. Physical measurements are currently absent.
 
 Use cad-agent commit `2ad426943ce2c7232875e105e50810849f9a3e5e`, its `src/`
 directory on `PYTHONPATH`, and the lightweight versions in
-[`tools/fit-job-requirements.txt`](../tools/fit-job-requirements.txt). Generation
+[`tools/fit-job-requirements.txt`](../../tools/evidence/manufacturing/fit-job-requirements.txt). Generation
 also needs Bambu Studio. The current installed build is 02.08.04.57, snap revision 8.
 Keep input/work directories visible under home; the snap cannot read ordinary
 `/tmp` or hidden project directories.

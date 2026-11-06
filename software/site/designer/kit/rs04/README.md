@@ -22,7 +22,7 @@ build step, no dependencies, nothing from the page that uses them. MIT licensed 
 ```
 
 Gyropup's page is [`designer/motor-tool.html`](../../motor-tool.html) with [`motor-tool.js`](../../motor-tool.js);
-how to run it on real motors is in [docs/rs04-motor-tool.md](../../../docs/rs04-motor-tool.md).
+how to run it on real motors is in [docs/rs04-motor-tool.md](../../../../../docs/software/rs04-motor-tool.md).
 
 | File | What it gives you |
 |---|---|

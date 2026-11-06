@@ -10,73 +10,73 @@ AM32 USB linker (the ESC settings, firmware/turret/am32_settings.md); cyanoacryl
 
 ## 1. The pan base and its inserts
 
-![step 1](../exports/turret/assembly/step-01.png)
+![step 1](../../hardware/exports/turret/assembly/step-01.png)
 
 Heat-set inserts first, with the base on its foot: 5 x M3 in the clamp ears, 3 x M3 in the carrier bosses (from below), 4 x M3 in the external carrier anchors, 4 x M4 in the DT pad. The bumper tabs' 5 short M3 wait for the robot (no bumper on the bench, D42).
 
 ## 2. The pan servo, its pinion and the DT12 receptacle
 
-![step 2](../exports/turret/assembly/step-02.png)
+![step 2](../../hardware/exports/turret/assembly/step-02.png)
 
 The STS3215 drops into its pocket, bus plugs down, on its four posts: 4 x M2 x 20 up through the foot. The pinion on its horn: 4 x M3 x 16 (heads sunk). The DT04-12PA on the pad: 4 x M4 x 10; its 12 pins and the W12P wedge with the harness to the base board.
 
 ## 3. The removable base-board module and the index magnet
 
-![step 3](../exports/turret/assembly/step-03.png)
+![step 3](../../hardware/exports/turret/assembly/step-03.png)
 
 On the bench, fit four M3 inserts in the carrier and screw the drilled PCB onto its standoffs with four M3 x 6. Fit four M3 inserts in the base anchors from +x. Connect the harness, then slide the entire module in from +x and secure it with four M3 x 8 from outside. Remove the robot bumper before service; PCB screws are accessed only on the bench. Harness disconnection access and slack remain unverified: docs/base-board-service.md. Glue the index magnet in its housing pocket.
 
 ## 4. The pan bearing and its clamp
 
-![step 4](../exports/turret/assembly/step-04.png)
+![step 4](../../hardware/exports/turret/assembly/step-04.png)
 
 The 6810-2RS pressed into its seat onto the Ø62 shoulder; the aluminium clamp ring (SendCutSend) over it: 5 x M3 x 8.
 
 ## 5. The turntable, its spacer and the circlip
 
-![step 5](../exports/turret/assembly/step-05.png)
+![step 5](../../hardware/exports/turret/assembly/step-05.png)
 
 Before it goes in: 4 x M4 inserts in its top, the hall switch glued in the pocket underneath (leads up its hole). Its journal down through the inner race, the gear in mesh with the pinion; from below, through the foot's Ø65 opening, the spacer and the DIN 471-50 circlip in its groove (circlip pliers).
 
 ## 6. The ring driver and the slip ring on its carrier
 
-![step 6](../exports/turret/assembly/step-06.png)
+![step 6](../../hardware/exports/turret/assembly/step-06.png)
 
 The driver pressed into the top of the turntable's bore (three crush ribs and a drop of CA). The ring screwed to its carrier (3 x M3 x 8 with washers), a 25 mm length of the 5/16 in tube on its rotor stub, its rotor leads gathered; from below, the ring goes up the bore, the tube into the driver's socket and the leads out through the driver's crescent; the carrier's tabs into their pockets: 3 x M3 x 10 flat heads.
 
 ## 7. The tilt yoke and the turret-board bay
 
-![step 7](../exports/turret/assembly/step-07.png)
+![step 7](../../hardware/exports/turret/assembly/step-07.png)
 
 The rotor leads through the yoke's slot, the yoke on the turntable: 4 x M4 x 12. 4 x M3 inserts in the -y arm, the bay on them: 4 x M3 x 8 flat heads; the three boards on their standoffs (12 and 14 mm); the ring's rotor plug and the hall into level 2.
 
 ## 8. The tilt servo and the cradle on its aluminium cheeks
 
-![step 8](../exports/turret/assembly/step-08.png)
+![step 8](../../hardware/exports/turret/assembly/step-08.png)
 
 The rail frame, its two aluminium plates and the stop lug go together on the bench (D48): 8 x M3 inserts into the rail frame's two rebates, put in from the side; the aluminium stop lug onto the -y plate's outer face, 2 x M3 x 6 flat heads from the plate's inner face into its tapped holes, a drop of CA gel under it; each plate into its rail's rebate, 4 x M3 x 8 button heads. Then the STS3215 into its pocket on the +y arm, 4 x M2 x 10 from the arm's inner face, and the MR126 into the -y arm's seat. The cradle between the arms: the horn boss between the +y plate and the servo's horn, 4 x M3 x 14 flat heads from the plate's inner face into the horn (snug: 1.8 mm of thread); on the -y side the pivot spacer, its land against the bearing, and the ISO 7379 shoulder screw through the arm, the bearing and the spacer into the plate's tapped hole (snug, about 0.15 N m, a drop of CA gel on the thread). Check the 0 and -25 deg stops by hand before anything else: the lug meets the yoke's two sectors, and the barrel cannot be pushed above level.
 
 ## 9. The laser
 
-![step 9](../exports/turret/assembly/step-09.png)
+![step 9](../../hardware/exports/turret/assembly/step-09.png)
 
 The mount on the cradle's tab: 2 x M3 x 10 up through it; the laser in the mount on three nylon-tip M3 set screws (boresight them on the bench).
 
 ## 10. The cartridge: feed servo, dial, flywheel motors and the cartridge board
 
-![step 10](../exports/turret/assembly/step-10.png)
+![step 10](../../hardware/exports/turret/assembly/step-10.png)
 
 On the bench, not on the turret. The feed servo (its bus ID set to 3 beforehand) up against the dial floor's underside, its horn through the floor and its length to the rear: 4 x M2 x 6 flat heads from above, flush. The dial onto the horn: 4 x M3 x 8 down through the holes in its cone (the hopper off); set the servo's zero so a pocket is centred over the exit hole and write the count down. Each X2216 with its hub: the prop adapter from its box on the bell (3 x M2), the hub's flat face on the adapter's flange, its bore reamed to 5.00 on the pilot, the washer and an M5 nylon-insert nut (snug plus a quarter turn); turn it by hand with a dial indicator on the rim: under 0.15 mm, or re-seat; then the Ø34 tyre stretched on. Each motor goes up through the opening under its shell to the plate, its leads out through the slot: 4 x M3 x 6 in the radial slots (never longer: the motor has 2.8 mm of thread). The two AM32 ESCs on the cage plate on foam tape, each motor's leads to its ESC; the cartridge board on its four posts over them (4 x M3 x 6), the brake FETs' drains to the phase leads, and the pigtail to the two CT plugs (docs/turret-wiring.md).
 
 ## 11. The barrel, the hopper and the lid
 
-![step 11](../exports/turret/assembly/step-11.png)
+![step 11](../../hardware/exports/turret/assembly/step-11.png)
 
 The barrel into its socket (a nylon-tip M3 set screw through the socket's insert), the gates' emitters and receivers in its bosses; the hopper on the housing (3 x M3 x 8: the front one through the hole in the cage plate); the lid. The fill flap and its spring wait for the dock (v1).
 
 ## 12. The cartridge on the cradle, the mount
 
-![step 12](../exports/turret/assembly/step-12.png)
+![step 12](../../hardware/exports/turret/assembly/step-12.png)
 
 The cartridge down onto the cradle's two dowels, the knurled thumbscrew up into its insert (its O-ring keeps it in the rail); the two CT plugs (2 x 3 power, 2 x 5 signal). Then the turret on its stand: 2 x Ø5 dowels, 4 x M5 x 16, and the DT12 plug (the stand's two dock inserts went in from below with a flat tip, the top face on a flat plate and the seat checked flat after; the dock adapter's M3s are no longer than its base + 5 mm). The TPU bumper ring (5 x M3 x 20 and oversized washers on the base's tabs) is for the robot (v1).
 

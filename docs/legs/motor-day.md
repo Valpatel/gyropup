@@ -7,15 +7,15 @@ has to survive a slow, capped test ladder, and the caps below are set so it shou
 Every table between `gen:` markers is written by `tools/motor_day.py` from the CAD, the catalogues and the rig
 simulation. Edit the script, not the tables.
 
-**Download everything:** [motor-day-package.zip](../exports/motor-day/motor-day-package.zip) (CSV lists, STL and 3MF
+**Download everything:** [motor-day-package.zip](../../hardware/exports/motor-day/motor-day-package.zip) (CSV lists, STL and 3MF
 print files, drawings). This ZIP retains the earlier mesh/slice snapshot and its original text and pictures.
 The step pictures and drawings on this page were refreshed on 2026-11-05; the ZIP was deliberately kept
-byte-identical to preserve its sliced-input identities. See the [picture-refresh record](validation/motor-day-render-inputs.md).
+byte-identical to preserve its sliced-input identities. See the [picture-refresh record](../validation/motor-day-render-inputs.md).
 
 > **Not a release.** On 2026-11-05 the owner reported the main motor holder and motor adapter printed;
 > their exact source revision, material and fit results were not reported. No installation, load or powered test
 > was reported. The owner runs every powered test. RS-04 mounting support (#116) and structural cases (#8)
-> remain open; PLA does not qualify them. See the [dated physical record](physical-progress.md).
+> remain open; PLA does not qualify them. See the [dated physical record](../program/physical-progress.md).
 
 ```mermaid
 flowchart LR
@@ -36,7 +36,7 @@ and 17 steps. For the first jump, the leg goes on the end of a wooden boom that 
 hopping-leg stand. The boom keeps the leg upright and in its plane, and a rope stops it rising too far.
 
 <!-- gen:stand -->
-![The PLA leg on the boom stand](../exports/motor-day/steps/step-07.png)
+![The PLA leg on the boom stand](../../hardware/exports/motor-day/steps/step-07.png)
 
 The boom is two 2x4 rails, 1.54 m from the pivot to the hip. Its parts and dimensions are on drawing MD-05 below. What it gives up:
 
@@ -58,7 +58,7 @@ The motors have arrived. Phase 0 checks them unpowered against the drawing, then
 
 | # | Check | How | OK when |
 |---|---|---|---|
-| 0.1 | Inventory | Four RS-04s, their leads and connectors, against [purchases.md](purchases.md). Photograph each label (serial, firmware) | 4 motors, no transit damage, output turns freely by hand with a light, even cogging |
+| 0.1 | Inventory | Four RS-04s, their leads and connectors, against [purchases.md](../program/purchases.md). Photograph each label (serial, firmware) | 4 motors, no transit damage, output turns freely by hand with a light, even cogging |
 | 0.2 | Weigh and measure | A scale under one bare motor; calipers on the output and the case (the table below) | each line of the table below written in; mass within 5 % of 1,420 g (the manual) or of 1,510 g (the spec sheet). Write the readings on #116 |
 | 0.3 | Case fit: the frame-ring coupon (print 1) | `coupon_frame_ring_nom` is the ring of the hip frame that the motor's case bolts to. It has 10 x M4 clearance holes on Ø106, counterbored from the bed face. It also has two Ø5 holes on the same circle for the steel dowels (item 20, Ø5 x 16). The dowels locate the case: it has two Ø5 locating holes, 4.5 deep in the vendor STEP, and no pins. The printed dowel holes are 12 deep, which leaves a dowel 4.0 mm proud: only 0.5 mm short of the case hole's floor. So first drill each dowel hole deeper with a 5.2 mm twist drill, its tip 14.5 mm in (mark the drill with tape). A Ø5 dowel then stops where the drill's point narrows to 5.0, 13 mm down. The 5.2 keeps the CAD's slip fit for the epoxy; a 5.0 drill would make the dowel a press fit, which can split the PLA. There is solid PLA behind. Push the two dowels to the bottom, dry (no epoxy). If a dowel will not slide into the case's holes by hand, do not force it: leave the dowels out, do the rest of the check and write it on #116. Offer the case face up to the coupon, then start the ten M4 x 20 (item 19) by hand. The hip frame (print 4) has the same 12 mm holes: drill its four the same way (assembly step 3) | each dowel stands 3.0 mm proud (2.0 to 3.5: the calipers' depth rod on the seat face); the dowels enter the case's holes, the case face sits flat on the coupon (a 0.05 mm feeler does not enter), all ten M4 start by hand and run down without force. If item 19 has not come: any M4 x 20, not longer (20 leaves 4.4 mm in the case's 5 mm of thread). If item 20 has not come: check the face and the screws now, and the dowels when it comes |
 | 0.4 | Output fit: the first PLA output adapter (print 2) | Press the adapter's motor face onto the output flange by hand, the three Ø6 pins into its three sockets. Then the nine M5 x 25 (item 22) through its counterbores into the output's M5 holes, by hand | all three Ø6 pins enter their sockets without force; the adapter's face sits flat on the flange (a 0.05 mm feeler does not enter); all nine M5 start by hand. If item 22 has not come: any M5 x 25, not longer (25 leaves 6 mm in the output's 6.5 mm of thread) |
@@ -99,18 +99,18 @@ Sliced in Bambu Studio for a P1S, 0.4 mm nozzle, 0.20 mm layers, Bambu PLA Basic
 
 | Print | Part | Qty | Item | File | Settings | Time | Filament | Bed face, what to watch |
 |---|---|---|---|---|---|---|---|---|
-| **1** | **coupon frame ring nom** (Phase 0) | 1 |  | [coupon_frame_ring_nom.stl](../exports/rig/bench/coupon_frame_ring_nom.stl) | solid | 3.6 h | 202 g | the RS-04 seat cut from the hip frame, as printed in it: the motor's unpowered fit (Phase 0.3) |
-| **2** | **output adapter (PLA)** (Phase 0) | 1 | 6 | [output_adapter.stl](../exports/leg/cnc/output_adapter.stl) | solid | 1.9 h | 70 g | the first of the two, printed before the leg: the motor's output fit (Phase 0.4). The motor face down (the three Ø6 pin sockets open on the bed); tap the eight face M5 holes by hand (M5 x 0.8 tap) before assembly step 4 |
+| **1** | **coupon frame ring nom** (Phase 0) | 1 |  | [coupon_frame_ring_nom.stl](../../hardware/exports/rig/bench/coupon_frame_ring_nom.stl) | solid | 3.6 h | 202 g | the RS-04 seat cut from the hip frame, as printed in it: the motor's unpowered fit (Phase 0.3) |
+| **2** | **output adapter (PLA)** (Phase 0) | 1 | 6 | [output_adapter.stl](../../hardware/exports/leg/cnc/output_adapter.stl) | solid | 1.9 h | 70 g | the first of the two, printed before the leg: the motor's output fit (Phase 0.4). The motor face down (the three Ø6 pin sockets open on the bed); tap the eight face M5 holes by hand (M5 x 0.8 tap) before assembly step 4 |
 | **3** | **C1 bore coupons** (Coupons) | 20 | | `exports/rig/bench/coupon_*_m01/nom/p01.stl` | solid | 12.3 h | 544 g | the leg's press-fit bores at -0.1 / 0 / +0.1 mm: print them as one batch and pick the offset that fits ([sheets](../research/leg-preprint/sheets/)). If a coupon other than `nom` fits, change the CAD before print 4: `PRINT_HOLE_COMP` for the sleeve holes (the RS-04 dowel holes are drilled out: Phase 0.3); `KC`, `AC` and `STOP_HOLE_PLAY` for the bearing seats and stop-pin holes (`cad/fivebar.py`; the [print package](leg-print-package.md) C1 row). Then regenerate the leg's files (`cad/build_leg.py`, then `tools/motor_day.py --slice` for the times and grams) |
-| **4** | **hip frame** (Leg and stand) | 1 | 1 | [hip_frame.3mf](../exports/leg/hip_frame.3mf) | solid | 19.3 h | 1261 g | the web's outer face down, turned 45 deg (249 mm of the 256 mm bed: brim 3 mm at most); keep the stop-pin holes' lead-ins clean |
-| **5** | **output adapter (PLA)** (Leg and stand) | 1 | 6 | [output_adapter.stl](../exports/leg/cnc/output_adapter.stl) | solid | 1.9 h | 70 g | the second, as the first; if Phase 0.4 needed the pin sockets opened with a 6.0 mm drill, open this one's the same way before it goes on; tap the eight face M5 holes |
-| **6** | **upper link** (Leg and stand) | 2 | 2 | [upper_link.3mf](../exports/leg/upper_link.3mf) | solid | 14.2 h | 963 g | the outer face down; the knee-eye sleeve holes open on the bed |
-| **7** | **wheel link** (Leg and stand) | 1 | 4 | [wheel_link.3mf](../exports/leg/wheel_link.3mf) | solid | 10.7 h | 734 g | the outer face down; the outer knee seat opens on the bed |
-| **8** | **front link** (Leg and stand) | 1 | 3 | [front_link.3mf](../exports/leg/front_link.3mf) | solid | 8.1 h | 526 g | the inner face down, turned 45 deg; add tree supports from the bed only (never in the bearing seats) by hand: the time and grams here are without them (the slicer's auto-arrange refuses the 247 mm part with supports on) |
-| **9** | **apex spacer** (Leg and stand) | 1 | 5 | [apex_spacer.3mf](../exports/leg/apex_spacer.3mf) | solid | 0.3 h | 15 g | the inner face down |
-| **10** | **foot** (Leg and stand) | 1 | 7 | [foot.stl](../exports/motor-day/parts/foot.stl) | foot | 7.4 h | 246 g | the outer face down (nut pockets open on the bed), the boss up; stands in for the BotWheel |
-| **11** | **stop sleeve** (Leg and stand) | 4 | 8 | [stop_sleeve.3mf](../exports/leg/stop_sleeve.3mf) | tpu | 1.7 h | 63 g TPU | TPU 95A, cap down |
-| **12** | **drill template** (Leg and stand) | 1 | 9 | [drill_template.stl](../exports/motor-day/parts/drill_template.stl) | jig | 1.0 h | 61 g | flat; lay it on the plywood end plate to drill the six M5 holes and mark the two lead slots |
+| **4** | **hip frame** (Leg and stand) | 1 | 1 | [hip_frame.3mf](../../hardware/exports/leg/hip_frame.3mf) | solid | 19.3 h | 1261 g | the web's outer face down, turned 45 deg (249 mm of the 256 mm bed: brim 3 mm at most); keep the stop-pin holes' lead-ins clean |
+| **5** | **output adapter (PLA)** (Leg and stand) | 1 | 6 | [output_adapter.stl](../../hardware/exports/leg/cnc/output_adapter.stl) | solid | 1.9 h | 70 g | the second, as the first; if Phase 0.4 needed the pin sockets opened with a 6.0 mm drill, open this one's the same way before it goes on; tap the eight face M5 holes |
+| **6** | **upper link** (Leg and stand) | 2 | 2 | [upper_link.3mf](../../hardware/exports/leg/upper_link.3mf) | solid | 14.2 h | 963 g | the outer face down; the knee-eye sleeve holes open on the bed |
+| **7** | **wheel link** (Leg and stand) | 1 | 4 | [wheel_link.3mf](../../hardware/exports/leg/wheel_link.3mf) | solid | 10.7 h | 734 g | the outer face down; the outer knee seat opens on the bed |
+| **8** | **front link** (Leg and stand) | 1 | 3 | [front_link.3mf](../../hardware/exports/leg/front_link.3mf) | solid | 8.1 h | 526 g | the inner face down, turned 45 deg; add tree supports from the bed only (never in the bearing seats) by hand: the time and grams here are without them (the slicer's auto-arrange refuses the 247 mm part with supports on) |
+| **9** | **apex spacer** (Leg and stand) | 1 | 5 | [apex_spacer.3mf](../../hardware/exports/leg/apex_spacer.3mf) | solid | 0.3 h | 15 g | the inner face down |
+| **10** | **foot** (Leg and stand) | 1 | 7 | [foot.stl](../../hardware/exports/motor-day/parts/foot.stl) | foot | 7.4 h | 246 g | the outer face down (nut pockets open on the bed), the boss up; stands in for the BotWheel |
+| **11** | **stop sleeve** (Leg and stand) | 4 | 8 | [stop_sleeve.3mf](../../hardware/exports/leg/stop_sleeve.3mf) | tpu | 1.7 h | 63 g TPU | TPU 95A, cap down |
+| **12** | **drill template** (Leg and stand) | 1 | 9 | [drill_template.stl](../../hardware/exports/motor-day/parts/drill_template.stl) | jig | 1.0 h | 61 g | flat; lay it on the plywood end plate to drill the six M5 holes and mark the two lead slots |
 
 **Total:** 82.3 h of printing, 4.69 kg of PLA and 63 g of TPU: the two Phase 0 fit checks 5.5 h, the coupons 12.3 h, the leg and stand 64.5 h. Every file, with these settings and this order in `prints.csv`, is in the bundle.
 
@@ -207,69 +207,69 @@ Each step's new parts in colour, lifted along the way they go in; the numbers ar
 
 #### 1. The stand: base, uprights, braces
 
-![step 1](../exports/motor-day/steps/step-01.png)
+![step 1](../../hardware/exports/motor-day/steps/step-01.png)
 
 Screw the uprights to the base (four #10 x 3 in each, from below), the braces between them and the base. Stack the floor stop under where the rails will be and top it with the rubber pad. Weight the base with sandbags.
 
 #### 2. The boom
 
-![step 2](../exports/motor-day/steps/step-02.png)
+![step 2](../../hardware/exports/motor-day/steps/step-02.png)
 
 Drill the end plate through the printed template (six Ø5.5 and the two lead slots). Screw the cleats to the plate's back through its face, then the rails to the cleats' outer faces (four screws each, glued). Join the rails' far ends with the cross member. Hang the rails between the uprights on the two carriage bolts, a fender washer each side.
 
 #### 3. Hip frame and motors (bench)
 
-![step 3](../exports/motor-day/steps/step-03.png)
+![step 3](../../hardware/exports/motor-day/steps/step-03.png)
 
 Heat-set the six M5 inserts. Press the two 61812s in from the motor side onto their lip (the C1 coupon says how tight PLA comes out). Drill the four Ø5 dowel holes deeper with a 5.2 mm drill, its tip 14.5 mm in (the same tape mark as Phase 0.3), so a dowel stops 13 mm down. With the epoxy, bond the four stop pins, and the four Ø5 x 16 dowels pushed to the bottom; wipe the squeeze-out flush with the seat face, and hold each dowel square to the face (a small square against it) while the epoxy sets. After the cure, check each dowel stands 3.0 mm proud (2.0 to 3.5). Each motor on its two dowels (into the case's two locating holes) and ten M4 x 20, snug only: the lug torque is not established (#116).
 
 #### 4. Upper links and adapters (bench)
 
-![step 4](../exports/motor-day/steps/step-04.png)
+![step 4](../../hardware/exports/motor-day/steps/step-04.png)
 
 Tap the PLA adapters' eight M5 holes. Each adapter onto its motor's output: nine M5 x 25, heads in the pockets, snug (PLA: no 6 N m). The two DIN 179 sleeves bonded end to end into each link's knee eye. Each link on its adapter: two Ø5 x 20 dowels, eight M5 x 40 at 1.0 N m. Both links swing freely to their bare stop pins.
 
 #### 5. Knees
 
-![step 5](../exports/motor-day/steps/step-05.png)
+![step 5](../../hardware/exports/motor-day/steps/step-05.png)
 
 Two 6301-2RS and the 24 mm spacer into each lower link's knee boss, a washer each side; the 12 x 90 shoulder screw from outside through the lower link and the eye sleeves; the M10 nyloc in the upper link's pocket (20 N m: steel on steel). The knees turn freely.
 
 #### 6. Apex and foot
 
-![step 6](../exports/motor-day/steps/step-06.png)
+![step 6](../../hardware/exports/motor-day/steps/step-06.png)
 
 The two 61812s into the front link's apex eye, the wheel link's hub through them with the printed spacer, the circlip. The foot's boss into the wheel link's recess, four M6 nylon-insert nuts in its pockets, four M6 x 40 from inside the hub on the DIN 433 washers at 0.9 N m (the nuts bear on printed PLA: half the PA6-CF leg's torque). The leg folds and stretches by hand from stop to stop.
 
 #### 7. Stop sleeves, then onto the boom
 
-![step 7](../exports/motor-day/steps/step-07.png)
+![step 7](../../hardware/exports/motor-day/steps/step-07.png)
 
 The TPU sleeves over the stop pins. The leg onto the end plate: six M5 x 30 with fender washers from the plate's back into the hip frame's inserts (1.5 N m), each motor's lead through its slot. Tie the tether. Put the leg's foot on the bathroom scale with the motors unpowered, the boom resting on it, and write the reading down: it is `--half-mass` in the ladder. No ballast.
 
 ### Drawings
 
-Generated from the same CAD with hidden-line views, balloons keyed to the BOM items and the parts list on each sheet. All five are in [motor-day-drawings.pdf](../exports/motor-day/drawings/motor-day-drawings.pdf).
+Generated from the same CAD with hidden-line views, balloons keyed to the BOM items and the parts list on each sheet. All five are in [motor-day-drawings.pdf](../../hardware/exports/motor-day/drawings/motor-day-drawings.pdf).
 
 **MD-01 Hip module**
 
-![MD-01](../exports/motor-day/drawings/MD-01.png)
+![MD-01](../../hardware/exports/motor-day/drawings/MD-01.png)
 
 **MD-02 Upper link and adapter**
 
-![MD-02](../exports/motor-day/drawings/MD-02.png)
+![MD-02](../../hardware/exports/motor-day/drawings/MD-02.png)
 
 **MD-03 Lower links, knees, apex and foot**
 
-![MD-03](../exports/motor-day/drawings/MD-03.png)
+![MD-03](../../hardware/exports/motor-day/drawings/MD-03.png)
 
 **MD-04 Foot (BotWheel stand-in)**
 
-![MD-04](../exports/motor-day/drawings/MD-04.png)
+![MD-04](../../hardware/exports/motor-day/drawings/MD-04.png)
 
 **MD-05 Boom stand**
 
-![MD-05](../exports/motor-day/drawings/MD-05.png)
+![MD-05](../../hardware/exports/motor-day/drawings/MD-05.png)
 <!-- /gen:assembly -->
 
 ## Phase 4: the test ladder to a first jump
@@ -312,7 +312,7 @@ Where PLA fails first, at 12 N m (the weakest rows):
 
 The hub clamp in the PLA adapter: 1000 N a screw at 1.0 N m gives about 30.4 N m of friction. The hub sees about 18 N m in the hop and up to 49 N m in a power cut: above the friction the two dowels carry it. Re-torque before each session.
 
-Full table: [derating.json](../exports/motor-day/derating.json).
+Full table: [derating.json](../../hardware/exports/motor-day/derating.json).
 <!-- /gen:derating -->
 
 <!-- gen:ladder -->

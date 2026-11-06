@@ -1,6 +1,6 @@
 # Turret dossier sources
 
-Start with the [current location and evidence guide](../turret-sections.md#the-dossier-cad-agents-process).
+Start with the [current location and evidence guide](../turret/turret-sections.md#the-dossier-cad-agents-process).
 
 - [Project requirements and interfaces](project.yaml)
 - [Section cards](sections/)

@@ -1,16 +1,16 @@
 # Printed parts (CAD)
 
-The current leg is the five-bar mechanism in [fivebar.py](fivebar.py), exported by
-[build_leg.py](build_leg.py), with arrival fixtures in [rig_bench.py](rig_bench.py).
-Start with [RS-04 mounting fit](../docs/rs04-mounting-fit.md) and the
+The current leg is the five-bar mechanism in [fivebar.py](legs/fivebar.py), exported by
+[build_leg.py](builders/build_leg.py), with arrival fixtures in [rig_bench.py](rig/rig_bench.py).
+Start with [RS-04 mounting fit](../../docs/legs/rs04-mounting-fit.md) and the
 [mechanical readiness tracker](https://github.com/Valpatel/gyropup/issues/61).
 No complete leg is released for printing.
 
-[`../tools/robot_view.py`](../tools/robot_view.py) puts the whole robot together as it is drawn today: the P3 body, both five-bar legs
+[`../tools/robot_view.py`](../../tools/engineering/robot/robot_view.py) puts the whole robot together as it is drawn today: the P3 body, both five-bar legs
 at the 300 mm stance and the turret, with bought parts as envelopes. Its STEP files are what `cad-agent view` shows.
-[`../tools/leg_cables.py`](../tools/leg_cables.py) checks the wheel harness's route along the five-bar over the leg's
+[`../tools/leg_cables.py`](../../tools/engineering/legs/leg_cables.py) checks the wheel harness's route along the five-bar over the leg's
 range ([`../exports/leg/cables.json`](../exports/leg/cables.json), [`../exports/leg/cables.png`](../exports/leg/cables.png)).
-[`../tools/body_pictures.py`](../tools/body_pictures.py) redraws the body's pictures (`exports/body/`) with the turret
+[`../tools/body_pictures.py`](../../tools/engineering/body/body_pictures.py) redraws the body's pictures (`exports/body/`) with the turret
 and the VLP-16 drawn, not as the layout's envelopes; run it after `build_body.py`. All three live in `tools/` because
 receipts pin this folder's sources.
 
@@ -23,12 +23,12 @@ receipts pin this folder's sources.
 
 | Assembled, standing | Exploded |
 |---|---|
-| ![Gyropup assembled from the current CAD: the P3 body, two five-bar legs and the turret](assembly.png) | ![Gyropup exploded: shell out, head up, bay down, legs out](exploded.png) |
+| ![Gyropup assembled from the current CAD: the P3 body, two five-bar legs and the turret](robot/assembly.png) | ![Gyropup exploded: shell out, head up, bay down, legs out](robot/exploded.png) |
 
 The serial-leg `build.py`/`leg.py` assembly and validation claims below are historical, not verification of the
 five-bar leg.
 
-[`build.py`](build.py) makes every part of a design in CadQuery: the aluminium chassis, the two leg modules ([`leg.py`](leg.py), built on the mechanical interface standard in [`gmi.py`](gmi.py) and [`../docs/mechanical-interfaces.md`](../docs/mechanical-interfaces.md)), and the printed head, face and sensor mounts. The motor interfaces come from the vendors' drawings ([`../catalog/interfaces.json`](../catalog/interfaces.json)). [`studies.py`](studies.py) runs the stiffness and strength studies, and [`cables.py`](cables.py) checked the serial leg's cable routes.
+[`build.py`](builders/build.py) makes every part of a design in CadQuery: the aluminium chassis, the two leg modules ([`leg.py`](legs/leg.py), built on the mechanical interface standard in [`gmi.py`](robot/gmi.py) and [`../docs/mechanical-interfaces.md`](../../docs/architecture/mechanical-interfaces.md)), and the printed head, face and sensor mounts. The motor interfaces come from the vendors' drawings ([`../catalog/interfaces.json`](../catalog/interfaces.json)). [`studies.py`](analysis/studies.py) runs the stiffness and strength studies, and [`cables.py`](robot/cables.py) checked the serial leg's cable routes.
 
 ```
 .venv/bin/python cad/build.py designs/default.json   # STEP + print-ready STL in exports/ (the serial leg, rev 0.1)
@@ -52,11 +52,11 @@ five-bar leg.
 
 Every part is a valid single solid; the printed ones also pass the watertight-STL and P1S bed checks (`exports/geometry-checks.json`). The CAD masses go to [`exports/mass-properties.json`](../exports/mass-properties.json), and `sim/model.py` uses them in place of the designer's estimates, together with the real hip and wheel positions from [`exports/mech-layout.json`](../exports/mech-layout.json).
 
-The stiffness studies, the cable routes and the open weight work are in [`../docs/mechanical-interfaces.md`](../docs/mechanical-interfaces.md#results-rev-02-2026-10-25). The vendor STEP files used for the clash checks stay local (`references/vendor/`, no licence to redistribute). The assembly shows bought parts as simple envelopes.
+The stiffness studies, the cable routes and the open weight work are in [`../docs/mechanical-interfaces.md`](../../docs/architecture/mechanical-interfaces.md#results-rev-02-2026-10-25). The vendor STEP files used for the clash checks stay local (`references/vendor/`, no licence to redistribute). The assembly shows bought parts as simple envelopes.
 
 ## The turret on the Orin AGX compute box
 
-[`turret_box.py`](turret_box.py) mounts the turret ([`turret.py`](turret.py)) on the lid of the J501 enclosure
+[`turret_box.py`](turret/turret_box.py) mounts the turret ([`turret.py`](turret/turret.py)) on the lid of the J501 enclosure
 (`~/Code/j501-agx`, Rev 0.9 with the tower cooler: the Seeed reComputer mini J501 heatsink, its 9215 fan under a flush
 grille in a 97 mm roof), so it can be aimed and fired from the computer that will drive it (D50). Nothing is drilled in
 the box: four legs stand on the lid's screw corners and longer screws (M3 × 40 for the J501's M3 × 16) clamp leg, lid

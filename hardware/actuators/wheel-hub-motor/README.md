@@ -2,11 +2,11 @@
 
 The two wheels: a 36 V 350 W outer-rotor hub motor of the hoverboard family with a 10 x 2.125 pneumatic tyre, one
 per leg, clamped on its D-shaft in the wheel link's foot and driven by a [Flipsky 75100](../../drives/flipsky-75100/README.md)
-on halls ([D69](../../../docs/decisions.yaml), [wheel change plan](../../../docs/wheel-change-plan.md)). **Not bought
+on halls ([D69](../../../docs/program/decisions.yaml), [wheel change plan](../../../docs/legs/wheel-change-plan.md)). **Not bought
 yet**: task W1 buys two and measures them before the foot is cut ([issue #24](https://github.com/Valpatel/gyropup/issues/24)).
 
 The ODrive BotWheel BW0124 that D69 replaced is kept only as the leg CAD's wheel geometry
-(`catalog/wheel_motors.json`, [its source](../../../references/vendor/odrive-botwheel/SOURCE.txt)); it is not on the robot.
+(`catalog/wheel_motors.json`, [its source](../../vendor/odrive-botwheel/SOURCE.txt)); it is not on the robot.
 
 ```mermaid
 flowchart LR
@@ -17,8 +17,8 @@ flowchart LR
 
 ## References
 
-- The decision and study: [D69](../../../docs/decisions.yaml), `research/air-tyre-hub-wheels.md`, the
-  [wheel change plan](../../../docs/wheel-change-plan.md) (W1-W9).
+- The decision and study: [D69](../../../docs/program/decisions.yaml), `research/air-tyre-hub-wheels.md`, the
+  [wheel change plan](../../../docs/legs/wheel-change-plan.md) (W1-W9).
 - No datasheet or listing is kept yet: W1 adds `references/vendor/hoverboard-10in/` with photos and a sketch of the
   motor in hand.
 
@@ -46,7 +46,7 @@ over CAN (`firmware/balance/src/core/gp_vesc.c`). Simulation: `sim/leg_rig.py`, 
 
 Not yet. W6 is the bench plan: one wheel on a 75100, hall detection, Kv by the drill test, Kt at stall, the
 phase-short brake, the clamp slip test, 20 min at 10 A and the tyre's stiffness
-([wheel change plan](../../../docs/wheel-change-plan.md)); results go to `docs/wheel-bench-tests.md`.
+([wheel change plan](../../../docs/legs/wheel-change-plan.md)); results go to `docs/wheel-bench-tests.md`.
 
 ## Open questions
 

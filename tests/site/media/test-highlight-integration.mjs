@@ -9,7 +9,7 @@
 import assert from 'node:assert/strict';
 import { mkdir, writeFile } from 'node:fs/promises';
 import { chromium, webkit } from '@playwright/test';
-import { assertHighlightControls } from './highlight-control-contract.mjs';
+import { assertHighlightControls } from '../../../tools/evidence/media/highlight-control-contract.mjs';
 
 const base = (process.env.SITE_URL || 'http://127.0.0.1:8899').replace(/\/$/, '');
 const out = process.env.TEST_OUTPUT || '/tmp/gyropup-highlight-integration';

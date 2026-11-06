@@ -56,7 +56,7 @@ npm run deploy
 
 `npm run deploy` builds the current checkout and uploads it to production. Commit
 and push the source first. `/version.json` records the source revision so a
-published artifact can be matched to GitHub. [`.github/wrangler.toml`](../.github/wrangler.toml) declares the output
+published artifact can be matched to GitHub. [`.github/wrangler.toml`](../../.github/wrangler.toml) declares the output
 folder relative to its own directory. The deploy script uses `wrangler --cwd .github pages deploy ../dist`
 because Pages rejects a custom `--config` path. Keep the dashboard output at `dist` relative to the repository root.
 
@@ -127,7 +127,7 @@ to declare a website healthy. Cloudflare's standard, malware and family DNS
 resolvers returned real apex addresses during the initial investigation; this
 only describes those resolvers at that time.
 
-The [2026-10-30 HTTPS investigation](validation/public-https.md) records a
+The [2026-10-30 HTTPS investigation](../validation/public-https.md) records a
 visitor's DNS-firewall block alongside successful public certificate checks.
 It includes certificate fingerprints, reproducible diagnostics and the limits
 of a newly registered domain explanation. A filter's substituted HTTPS block page can itself produce
@@ -181,7 +181,7 @@ can leave a local resolver with a negative cache briefly after creation; verify
 against a public resolver and validate normal TLS rather than redeploying.
 
 The product weight ceiling is 100 lb (45.36 kg), recorded in decision D72 and
-[the weight budget](design-weight-budget.md). Current CAD uses 37.5 kg (see D71).
+[the weight budget](../architecture/design-weight-budget.md). Current CAD uses 37.5 kg (see D71).
 The ceiling is a design requirement; existing load results retain their tested
 masses and do not establish validation at the full 100 lb ceiling. Tritium is a design requirement (D19). The Tritium,
 Graphlings, and GraphDone cards describe the integration roadmap, not a running
@@ -190,7 +190,7 @@ connected robot. GraphDone coordinates development work, not onboard control.
 The landing highlights use fresh captures of the current public turret and demo,
 plus explicitly archived leg physics and E1 static deformation inserts. The matching
 WebP poster and H.264/VP9 movies live in `web/highlights/`. Rebuild them with the
-[capture and encoding recipe](validation/landing-highlights.md); do not pair the
+[capture and encoding recipe](../validation/landing-highlights.md); do not pair the
 movie with a screenshot from another robot revision. The older `web/playground.png`
 remains an archival asset and is no longer the landing movie's poster.
 
@@ -262,4 +262,4 @@ Distinguish live production work from candidates on an engineering branch and
 physical measurements. Never use the build timestamp as the report date.
 The Progress page keeps three recent entries visible and the complete history
 in date-grouped disclosures; its Markdown route retains every entry.
-See [Progress presentation checks](validation/progress-presentation.md).
+See [Progress presentation checks](../validation/progress-presentation.md).

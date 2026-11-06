@@ -4,11 +4,11 @@ The P0 power system of Gyropup's body as built from `cad/body_wiring.py` (the wi
 `cad/body_battery.py` (the battery bay), `cad/body_layout.py` (where every part sits on the power plate) and
 `exports/body/bom.json` (what to buy, by catalogue key). It is the build package for milestone M5's power skid: a
 person with the parts and a crimper can build and test it from this page and
-[the wiring diagram](../exports/body/wiring.svg). Decisions: D65 (the two DeWalt packs, the 10S bus; it replaces D43
+[the wiring diagram](../../hardware/exports/body/wiring.svg). Decisions: D65 (the two DeWalt packs, the 10S bus; it replaces D43
 and D54), D55 (the protection and the switch), D60 (the fuse board, P3), D66 (the turret's own branch), D76 (the turret
 without its computer: the power and CAN on its DT12). Rewritten 2026-10-27 for D65.
 
-![Power and CAN wiring](../exports/body/wiring.svg)
+![Power and CAN wiring](../../hardware/exports/body/wiring.svg)
 
 ## 1. The numbers
 

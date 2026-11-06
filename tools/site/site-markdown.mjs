@@ -5,7 +5,7 @@ import { createHash } from 'node:crypto';
 import { parseHTML } from 'linkedom';
 import TurndownService from 'turndown';
 import { gfm } from 'turndown-plugin-gfm';
-import { addModelPreviews } from '../web/model-links.js';
+import { addModelPreviews } from '../../software/site/assets/model-links.js';
 
 const origin = 'https://gyropup.com';
 const digest = value => createHash('sha256').update(value).digest('hex');

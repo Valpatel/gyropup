@@ -1,4 +1,4 @@
-import { acknowledgePrototypeNotice } from './test-prototype-session.mjs';
+import { acknowledgePrototypeNotice } from '../content/test-prototype-session.mjs';
 /** Browser regression checks against the real static site (SITE_URL selects local or production). */
 import assert from 'node:assert/strict';
 import { mkdir, writeFile } from 'node:fs/promises';

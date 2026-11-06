@@ -7,10 +7,13 @@ import {readFile, writeFile, mkdtemp, mkdir, copyFile, rm} from 'node:fs/promise
 import os from 'node:os';
 import path from 'node:path';
 import {fileURLToPath} from 'node:url';
-import {prepareRigMedia, rigDigest} from '../designer/rig-media.js';
-const root = path.resolve(path.dirname(fileURLToPath(import.meta.url)), '..');
-const REPORT = 'exports/leg/rig-results.json', RECEIPT = 'exports/leg/rig-media.json', CONVERTER = 'tools/rig-media.mjs';
+import {sourceForPublic} from '../../site/source-layout.mjs';
+import {prepareRigMedia, rigDigest} from '../../../software/site/designer/rig-media.js';
+const root = path.resolve(path.dirname(fileURLToPath(import.meta.url)), '../../..');
+const REPORT = 'exports/leg/rig-results.json', RECEIPT = 'exports/leg/rig-media.json', CONVERTER = 'tools/evidence/media/rig-media.mjs';
 const SHA = /^[0-9a-f]{40}$/;
+const CONVERTER_PATHS=new Set(['tools/rig-media.mjs',CONVERTER]);
+const publicFile=(directory,file)=>path.join(directory,sourceForPublic(file));
 const requireValid = (ok, why) => {if (!ok) throw new Error(why);};
 const gitBytes = (directory, revision, file) => execFileSync('git', ['show', `${revision}:${file}`], {cwd: directory, maxBuffer: 64 << 20});
 const encodeArgs = (input, output) => ['-v','error','-nostdin','-y','-i',input,'-map','0:v:0','-an','-c:v','libvpx-vp9',
@@ -78,24 +81,24 @@ export async function producerRigRecord(directory, revision) {
     record.clips.push({scenario,path:file,sha256:await rigDigest(gitBytes(directory,revision,file))});
   }
   for (const item of [record.report,...record.clips])
-    requireValid(await rigDigest(await readFile(path.join(directory,item.path)))===item.sha256, `Recorded movie/report identity differs from producer: ${item.path}`);
+    requireValid(await rigDigest(await readFile(publicFile(directory,item.path)))===item.sha256, `Recorded movie/report identity differs from producer: ${item.path}`);
   return record;
 }
 
 export async function verifyRigFiles(directory, {historical=false,decode=false}={}) {
-  const record=JSON.parse(await readFile(path.join(directory,RECEIPT),'utf8'));
-  const media=await prepareRigMedia(await readFile(path.join(directory,REPORT)),record,file=>readFile(path.join(directory,file)));
+  const record=JSON.parse(await readFile(publicFile(directory,RECEIPT),'utf8'));
+  const media=await prepareRigMedia(await readFile(publicFile(directory,REPORT)),record,file=>readFile(publicFile(directory,file)));
   const derived=record.derivation;
   requireValid(derived?.kind==='lossless-vp9-companion' && SHA.test(derived.converter_revision)
-    && derived.converter_path===CONVERTER && /^[0-9a-f]{64}$/.test(derived.converter_sha256)
+    && CONVERTER_PATHS.has(derived.converter_path) && /^[0-9a-f]{64}$/.test(derived.converter_sha256)
     && typeof derived.ffmpeg_version==='string' && derived.ffmpeg_version.startsWith('ffmpeg version ')
     && JSON.stringify(derived.argv_template)===JSON.stringify(encodeArgs('{original}','{companion}')), 'Invalid companion conversion provenance.');
   if (historical) {
     await producerRigRecord(directory,record.producer_revision);
-    requireValid(await rigDigest(gitBytes(directory,derived.converter_revision,CONVERTER))===derived.converter_sha256, 'Historical companion converter differs.');
+    requireValid(await rigDigest(gitBytes(directory,derived.converter_revision,derived.converter_path))===derived.converter_sha256, 'Historical companion converter differs.');
   }
   if (decode) for (const clip of record.clips) {
-    const actual=await compareRigPixels(path.join(directory,clip.path),path.join(directory,clip.companion.path));
+    const actual=await compareRigPixels(publicFile(directory,clip.path),publicFile(directory,clip.companion.path));
     requireValid(JSON.stringify(actual)===JSON.stringify(clip.companion.decoded), `Recorded decoded comparison differs: ${clip.scenario}`);
   }
   return media;
@@ -112,16 +115,16 @@ export async function recordRigMedia(directory, revision) {
   const temporary=await mkdtemp(path.join(os.tmpdir(),'gyropup-rig-vp9-'));
   try {
     for (const clip of record.clips) {
-      const original=path.join(directory,clip.path),file=`exports/leg/rig_${clip.scenario}.webm`,output=path.join(temporary,clip.scenario+'.webm');
+      const original=publicFile(directory,clip.path),file=`exports/leg/rig_${clip.scenario}.webm`,output=path.join(temporary,clip.scenario+'.webm');
       command('ffmpeg',encodeArgs(original,output));
       clip.companion={path:file,source_sha256:clip.sha256,sha256:await rigDigest(await readFile(output)),decoded:await compareRigPixels(original,output)};
     }
     // All decoded comparisons pass before publishing any companion, and the receipt is written last.
     for (const clip of record.clips) {
-      const output=path.join(directory,clip.companion.path);await mkdir(path.dirname(output),{recursive:true});
+      const output=publicFile(directory,clip.companion.path);await mkdir(path.dirname(output),{recursive:true});
       await copyFile(path.join(temporary,clip.scenario+'.webm'),output);
     }
-    await writeFile(path.join(directory,RECEIPT),JSON.stringify(record,null,2)+'\n');
+    await writeFile(publicFile(directory,RECEIPT),JSON.stringify(record,null,2)+'\n');
     return record;
   } finally {await rm(temporary,{recursive:true,force:true});}
 }

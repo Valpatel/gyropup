@@ -6,9 +6,9 @@ The owner asked on 2026-11-03: "what prevents us from ripping apart the legs by 
 This page answers both. Section 1 is the audit: every layer between a command (the Jetson, a gamepad, a slider, the
 rig laptop) and the leg's plastic, what each layer already did, what was missing and what was added. Section 2 derives
 the torque each leg build may take, and section 3 answers the 120 N m question with the rig's jump at each cap.
-Decision [D78](decisions.yaml) records the result; it replaces D33's flat 60 N m cap.
+Decision [D78](../program/decisions.yaml) records the result; it replaces D33's flat 60 N m cap.
 
-Every number here is generated: `python -m sim.leg_limits` writes [exports/leg/limits.json](../exports/leg/limits.json)
+Every number here is generated: `python -m sim.leg_limits` writes [exports/leg/limits.json](../../hardware/exports/leg/limits.json)
 from the FEA summary, the motor-day derating and the five-bar's stops, and
 `python firmware/balance/tools/gen_limits.py` turns it into the firmware's `include/gp/gp_limits.h`. CI checks both
 are current (`sim/test_leg_limits.py`, `gen_limits.py --check`). These are simulated and analysed limits, not a

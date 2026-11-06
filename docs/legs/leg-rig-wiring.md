@@ -4,7 +4,7 @@ What to wire, wire by wire, for the single-leg rig (docs/leg-prototype-plan.md s
 `exports/rig/wiring.svg` (and the list behind it, `exports/rig/wiring.json`, from `tools/rig_wiring.py`); the parts and
 their part numbers are in `docs/leg-rig-orders.md`; where each part sits in the pod is `cad/rig_parts.py` `POD_PARTS`.
 
-![wiring](../exports/rig/wiring.svg)
+![wiring](../../hardware/exports/rig/wiring.svg)
 
 ## The rules
 

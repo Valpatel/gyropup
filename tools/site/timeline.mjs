@@ -11,9 +11,11 @@
 import { execFileSync } from 'node:child_process';
 import YAML from 'yaml';
 import { shortDate } from './status-board.mjs';
+import {publicForSource} from './source-layout.mjs';
+const identity=file=>publicForSource(file)||file;
 
 const esc = s => String(s ?? '').replace(/[&<>"']/g, c => ({ '&': '&amp;', '<': '&lt;', '>': '&gt;', '"': '&quot;', "'": '&#39;' }[c]));
-export const DESIGN_PATHS = ['cad', 'exports', 'hardware', 'research', 'firmware', 'docs/decisions.yaml'];
+export const DESIGN_PATHS = ['cad', 'exports', 'hardware', 'research', 'firmware', 'software/firmware', 'docs/research', 'docs/decisions.yaml', 'docs/program/decisions.yaml'];
 // Browser snapshots, logs and generated directory furniture are not design changes on their own.
 const NOT_DESIGN = /^exports\/(sim|links)\/|\.log$/;
 
@@ -26,7 +28,7 @@ export const SUBSYSTEMS = [
   ['leg', /(^|\/)leg|fivebar|rs04|hip_frame|hip-frame|upper_link|front_link|knee/],
   ['body', /body|chassis|battery|shell/],
 ];
-export const subsystemOf = file => SUBSYSTEMS.find(([, re]) => re.test(file))?.[0] ?? null;
+export const subsystemOf = file => SUBSYSTEMS.find(([, re]) => re.test(identity(file)))?.[0] ?? null;
 const RENDER = /\.(png|jpg|webp)$/;
 const GEOMETRY = /\.(step|stp|stl|3mf|dxf)$/;
 
@@ -81,26 +83,29 @@ export function changeUnits(git, head = 'HEAD') {
 
 /** Decision titles as the commit itself had them. */
 const titlesAt = (git, sha) => {
-  try { return Object.fromEntries(parseDecisions(git(['show', `${sha}:docs/decisions.yaml`])).map(d => [d.id, d.title])); } catch { return {}; }
+  for(const file of ['docs/program/decisions.yaml','docs/decisions.yaml']){
+    try{return Object.fromEntries(parseDecisions(git(['show',`${sha}:${file}`])).map(d=>[d.id,d.title]));}catch{}
+  }
+  return {};
 };
 
 /** The changes, newest first. `git(args)` runs git in the repository and returns its output. */
 export function collectTimeline(git, { limit = 40, head = 'HEAD' } = {}) {
   const events = [];
   for (const { sha, date, subject, body } of changeUnits(git, head)) {
-    const files = git(['diff', '--name-status', '--no-renames', `${sha}^1`, sha, '--', ...DESIGN_PATHS]);
-    const changes = files.trim().split('\n').filter(Boolean).map(l => { const [status, ...p] = l.split('\t'); return { status: status[0], file: p.at(-1) }; })
-      .filter(c => !NOT_DESIGN.test(c.file));
+    const files = git(['diff', '--name-status', '--find-renames', `${sha}^1`, sha, '--', ...DESIGN_PATHS]);
+    const changes = files.trim().split('\n').filter(Boolean).map(l => { const [status,...p]=l.split('\t');return {status:status[0],similarity:status,file:p.at(-1)}; })
+      .filter(c=>c.similarity!=='R100'&&!NOT_DESIGN.test(identity(c.file))); // Byte-preserved ownership moves are not new design evidence.
     if (!changes.length) continue;
     const pr = subject.match(/^Merge pull request #(\d+)/)?.[1] ?? null;
     const title = pr ? (body.trim().split('\n')[0] || subject) : subject;
-    const touched = changes.some(c => c.file === 'docs/decisions.yaml') ? decisionChanges(git(['diff', '-U60', `${sha}^1`, sha, '--', 'docs/decisions.yaml'])) : [];
+    const touched = changes.some(c => identity(c.file) === 'docs/decisions.yaml') ? decisionChanges(git(['diff', '--find-renames', '-U60', `${sha}^1`, sha, '--', 'docs/decisions.yaml', 'docs/program/decisions.yaml'])) : [];
     const kinds = {
-      cad: changes.filter(c => /^cad\//.test(c.file)).length,
+      cad: changes.filter(c => /^cad\//.test(identity(c.file))).length,
       geometry: changes.filter(c => GEOMETRY.test(c.file)).length,
       renders: changes.filter(c => RENDER.test(c.file) && !/thumbs\//.test(c.file)).length,
       records: changes.filter(c => c.status === 'A' && /\.(json|csv)$/.test(c.file)).length,
-      hardware: changes.filter(c => /^hardware\//.test(c.file)).length,
+      hardware: changes.filter(c => /^hardware\//.test(identity(c.file))).length,
       decisions: touched.length,
     };
     // A design change touched CAD, geometry, a render, hardware, a decision, or added a record.
@@ -137,7 +142,7 @@ export function decisionChanges(diff) {
 
 /** The render that best shows a change: an assembly view, then a part render, then a study's still. */
 function pickRender(changes, main) {
-  const renders = changes.filter(c => (c.status === 'A' || c.status === 'M') && RENDER.test(c.file) && /^(exports|hardware)\//.test(c.file) && !/thumbs\//.test(c.file));
+  const renders = changes.filter(c => (c.status === 'A' || c.status === 'M') && RENDER.test(c.file) && /^(exports|hardware)\//.test(identity(c.file)) && !/thumbs\//.test(c.file));
   const score = c => (/iso|exploded|side|front|stand|turret\.png|rig-/.test(c.file) ? 3 : 0) + (c.status === 'M' ? 2 : 0) + (/fea\//.test(c.file) ? 1 : 0) - (/critical-layers|flat-|board-level/.test(c.file) ? 2 : 0) + (main && subsystemOf(c.file) === main ? 2 : 0);
   return renders.sort((a, b) => score(b) - score(a) || a.file.localeCompare(b.file))[0] || null;
 }

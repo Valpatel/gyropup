@@ -2,8 +2,8 @@
 import assert from 'node:assert/strict';
 import {mkdir,writeFile} from 'node:fs/promises';
 import {chromium,webkit} from '@playwright/test';
-import {createSiteServer} from './serve-site.mjs';
-import {acknowledgePrototypeNotice} from './test-prototype-session.mjs';
+import {createSiteServer} from '../../../tools/site/serve-site.mjs';
+import {acknowledgePrototypeNotice} from '../content/test-prototype-session.mjs';
 
 const server=process.env.SITE_URL?null:createSiteServer();
 if(server)await new Promise(resolve=>server.listen(0,'127.0.0.1',resolve));

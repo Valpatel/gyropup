@@ -9,9 +9,9 @@ No part has been bought and no powered test run for this page.
 
 ## At a glance
 
-![The leg as built on this branch, standing, from cad/build_leg.py](../exports/leg/leg-stand-iso.png)
+![The leg as built on this branch, standing, from cad/build_leg.py](../../hardware/exports/leg/leg-stand-iso.png)
 
-![Each printed part's study before and now: the isotropic gate on the left, the layer check on the right](img/leg-print-ready-sf.png)
+![Each printed part's study before and now: the isotropic gate on the left, the layer check on the right](../img/leg-print-ready-sf.png)
 
 <!-- gen:glance -->
 
@@ -32,7 +32,7 @@ isotropic stress, so its red is not always the layer check's worst corner:
 
 | Upper link, knee stub (R3K) | Front link, apex ring (E1) | Wheel link, hub root (R1w) | Hip frame (E1) |
 |---|---|---|---|
-| ![upper link R3K](../exports/leg/fea/upper_link-R3K.png) | ![front link E1](../exports/leg/fea/front_link-E1.png) | ![wheel link R1w](../exports/leg/fea/wheel_link-R1w.png) | ![hip frame E1](../exports/leg/fea/hip_frame-E1.png) |
+| ![upper link R3K](../../hardware/exports/leg/fea/upper_link-R3K.png) | ![front link E1](../../hardware/exports/leg/fea/front_link-E1.png) | ![wheel link R1w](../../hardware/exports/leg/fea/wheel_link-R1w.png) | ![hip frame E1](../../hardware/exports/leg/fea/hip_frame-E1.png) |
 | red at the hub's bonded pad rim (left out of the gate: section 8); the layer check's worst corner is the knee stub, which C4 tests | the apex ring: decision 1 | the hub root, a sharp corner, so its number depends on the mesh: decision 1 | decision 2 |
 
 ## 1. Buy first (nothing is ordered yet)

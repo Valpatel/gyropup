@@ -24,8 +24,8 @@ const kg = v => { const t = num(v); return t.includes('.') ? t : `${t}.0`; };
 const plural = (n, one, many = one + 's') => `${n} ${n === 1 ? one : many}`;
 
 /** Reads records under `root`. `git` is false when the history is unavailable (a shallow clone). */
-export function createReader(root, { git = true } = {}) {
-  const abs = p => path.join(root, p);
+export function createReader(root, { git = true, sourcePath = value=>value } = {}) {
+  const abs = p => path.join(root, sourcePath(p));
   return {
     root,
     exists: p => existsSync(abs(p)),
@@ -36,7 +36,7 @@ export function createReader(root, { git = true } = {}) {
     /** The newest commit that touched any of `paths`: { date, commit } or null without history. */
     changed(paths) {
       if (!git) return null;
-      const out = execFileSync('git', ['log', '-1', '--format=%cI %H', '--', ...paths], { cwd: root }).toString().trim();
+      const out = execFileSync('git', ['log', '-1', '--format=%cI %H', '--', ...paths.map(sourcePath)], { cwd: root }).toString().trim();
       if (!out) return null;
       const [date, commit] = out.split(' ');
       return { date, commit };

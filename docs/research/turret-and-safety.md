@@ -1,11 +1,11 @@
 # Foam-dart turret and kid safety for Gyropup
 
-Checked 2026-10-25. Parts and prices are in [`catalog/turret.json`](../catalog/turret.json) (32 items, category `turret`, plus one
+Checked 2026-10-25. Parts and prices are in [`catalog/turret.json`](../../hardware/catalog/turret.json) (32 items, category `turret`, plus one
 `sensor`). The pan motor recommended below, the Damiao DM-J4310-2EC, is already in
-[`catalog/leg_actuators.json`](../catalog/leg_actuators.json).
+[`catalog/leg_actuators.json`](../../hardware/catalog/leg_actuators.json).
 
 Gyropup is a Tritium robot: kids play against it outdoors, with a foam-dart turret on its head (requirement R25 in
-[docs/requirements.md](../docs/requirements.md)). This file covers five things:
+[docs/requirements.md](../architecture/requirements.md)). This file covers five things:
 
 1. Launcher mechanisms
 2. Pan/tilt
@@ -211,7 +211,7 @@ Notes on the table:
 |---|---|---|---|---|---|---|---|
 | **Feetech STS3215 (12 V)** | 89 g (Waveshare; others list 55 g) | 30 kg·cm ≈ 2.9 N·m stall | 45 rpm (270 °/s) no-load | 6–12.6 V | TTL serial bus to 1 Mbps; 12-bit absolute magnetic, 360° | $21.99 | [Waveshare](https://www.waveshare.com/st3215-servo.htm?sku=22414) |
 | ROBOTIS XM430-W350-T | 82 g | 4.1 N·m stall at 12 V | 46 rpm at 12 V | 10–14.8 V | TTL to 4.5 Mbps; 4096 counts/rev | $310.39 | [e-manual](https://emanual.robotis.com/docs/en/dxl/x/xm430-w350/), [store](https://www.robotis.us/dynamixel-xm430-w350-t/) |
-| **Damiao DM-J4310-2EC** (already in catalog) | 306 g | 3 N·m rated / 7 N·m peak | 200 rpm no-load at 24 V | **15–32 V** (fits the 7S bus) | CAN / CAN-FD; dual 14-bit encoders, output absolute | $125 | [leg_actuators.json](../catalog/leg_actuators.json), [GitHub](https://github.com/dmBots/DM-J4310-2EC) |
+| **Damiao DM-J4310-2EC** (already in catalog) | 306 g | 3 N·m rated / 7 N·m peak | 200 rpm no-load at 24 V | **15–32 V** (fits the 7S bus) | CAN / CAN-FD; dual 14-bit encoders, output absolute | $125 | [leg_actuators.json](../../hardware/catalog/leg_actuators.json), [GitHub](https://github.com/dmBots/DM-J4310-2EC) |
 | DJI RoboMaster GM6020 | 468 g | 1.2 N·m rated | 320 rpm no-load, 132 rpm at rated torque | 24 V rated (maximum n/p) | CAN or PWM; 13-bit; **18 mm hollow shaft** | $225 (aifitlab) | [RoboMaster](https://www.robomaster.com/en-US/products/components/general/GM6020), [aifitlab](https://aifitlab.com/products/dji-robomaster-gm6020-brushless-dc-motor) |
 | Waveshare SC15 (as used in Tops76 turret) | n/p | "17 kg" | n/p | n/p | serial bus | n/p | [Tops76 BOM](https://github.com/Tops76/Dart-Turret) |
 
@@ -444,7 +444,7 @@ a toy. They are still the best published, kid-specific energy limits, so Gyropup
 
 - **Two-level stop.**
   - **Wireless e-stop:** cuts motor power for both drive and turret through hardware, and must work if the computer
-    hangs. See the `estop` items in [power_electronics.json](../catalog/power_electronics.json) and
+    hangs. See the `estop` items in [power_electronics.json](../../hardware/catalog/power_electronics.json) and
     [power-electronics.md](power-electronics.md).
   - **Turret disarm:** a separate hardware contactor on the 12 V launcher rail. It needs a held dead-man button (or a
     continuous heartbeat from the game-master remote) to stay closed. If the dead-man is released, or the link is lost

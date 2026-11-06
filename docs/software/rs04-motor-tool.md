@@ -23,9 +23,9 @@ flowchart LR
 A browser cannot open a PEAK adapter: Linux drives it as a SocketCAN interface (the mainline `peak_usb` driver). So
 the page talks over a websocket to a small bridge, `rig/rs04_bridge.py`, built on the same `rig/rs04.py` and
 `rig/canio.py` the bench scripts use. The bridge is standard-library Python and serves the page itself. It is the
-service the robot's Jetson will run: [hardware/deploy/jetson](../hardware/deploy/jetson/README.md) installs it. The motors' own folder,
-with the inventory and the [bring-up checklist](../hardware/actuators/rs04/bring-up.md), is
-[hardware/actuators/rs04](../hardware/actuators/rs04/README.md).
+service the robot's Jetson will run: [hardware/deploy/jetson](../../software/deploy/jetson/README.md) installs it. The motors' own folder,
+with the inventory and the [bring-up checklist](../../hardware/actuators/rs04/bring-up.md), is
+[hardware/actuators/rs04](../../hardware/actuators/rs04/README.md).
 
 ## First run with a PEAK PCAN-USB
 
@@ -43,7 +43,7 @@ The full bring-up checklist (four new motors, one at a time) comes with the hard
 Zeroing is done on the leg, with the upper link held on its bare knee-out stop post (the pose `rig/calibrate.py`
 uses); the tool names the pose in its confirmation. A zero on a bare motor is for commissioning only.
 
-<img src="img/rs04-motor-tool.png" alt="The motor tool with the four software leg motors: the emulator banner, the motor list, live angle, speed and torque plots during a jog, and the STOP button" width="1200" height="760">
+<img src="../img/rs04-motor-tool.png" alt="The motor tool with the four software leg motors: the emulator banner, the motor list, live angle, speed and torque plots during a jog, and the STOP button" width="1200" height="760">
 
 ## What keeps a motor safe
 
@@ -60,7 +60,7 @@ uses); the tool names the pose in its confirmation. A zero on a bare motor is fo
 | The banner says EMULATOR or REAL HARDWARE | yes | `hello` names the interface | |
 
 The limits come from the build profile, PLA bench by default (`hardware/actuators/rs04/profiles/`): a cap of 12 N m
-from [the motor-day derating](motor-day.md), a 3 N m and 1 rad/s jog, and the firmware's 0.1 s `canTimeout`. Each
+from [the motor-day derating](../legs/motor-day.md), a 3 N m and 1 rad/s jog, and the firmware's 0.1 s `canTimeout`. Each
 sourced number is checked against its source by `rig/tests/test_rs04_vectors.py`. The final build's cap is the
 firmware's 60 N m until the per-build caps of [issue #202](https://github.com/Valpatel/gyropup/issues/202) land. The
 PLA bench's thermal stop (a case temperature) and continuous torque are read live from the motor heat model's export,
@@ -68,7 +68,7 @@ not copied.
 
 ## How it is built and checked
 
-The reusable part is [`designer/kit/rs04/`](../designer/kit/rs04/README.md) (MIT, no Gyropup imports): the protocol,
+The reusable part is [`designer/kit/rs04/`](../../software/site/designer/kit/rs04/README.md) (MIT, no Gyropup imports): the protocol,
 the guard, the software motor, the client and the transports, with the adopt-or-build survey. The JavaScript is a port
 of the Python driver and is tested against vectors the Python generates (`python -m rig.rs04_vectors`): every frame
 byte for byte, every parse, the guard's verdicts on scripted sessions and a scripted emulator run.

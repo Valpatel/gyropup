@@ -8,7 +8,7 @@ import test from 'node:test';
 import {
   ALLOWED, EXEMPT, ROOT, RATCHET, baseRatchet, growthProblems, isExempt, judge, loadRatchet, parseRatchet, privateNames,
   ratchetProblems, scanDist, scanText, scanTracked, trackedFiles,
-} from './privacy-guard.mjs';
+} from '../../../tools/site/privacy-guard.mjs';
 
 const j = (...parts) => parts.join('');
 const kinds = text => scanText(text).map(f => f.kind);

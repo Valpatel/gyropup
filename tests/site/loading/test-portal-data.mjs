@@ -2,7 +2,7 @@ import assert from 'node:assert/strict';
 import test from 'node:test';
 import {createServer} from 'node:http';
 import {readFile} from 'node:fs/promises';
-import {createDataReader,validateSTLBytes} from '../designer/kit/portal-data.js';
+import {createDataReader,validateSTLBytes} from '../../../software/site/designer/kit/portal-data.js';
 
 test('HTTP readers bound both headers and body without disguising absent data', {timeout:5000}, async()=>{
   let bodyStarted=false;
@@ -28,7 +28,7 @@ test('HTTP readers bound both headers and body without disguising absent data', 
 });
 
 test('STL admission agrees with the renderer before any parser allocation',async()=>{
-  const file=await readFile(new URL('../exports/sim/turret_box/barrel.stl',import.meta.url));
+  const file=await readFile(new URL('../../../hardware/exports/sim/turret_box/barrel.stl', import.meta.url));
   assert.doesNotThrow(()=>validateSTLBytes(file.buffer.slice(file.byteOffset,file.byteOffset+file.byteLength)));
   for(const source of [' '.repeat(80)+'solid invalid\nendsolid invalid\n','SOLID invalid\n'+' '.repeat(100),'solid empty\nendsolid empty','<html>'+'.'.repeat(100)]){
     assert.throws(()=>validateSTLBytes(new TextEncoder().encode(source).buffer),/not STL|not STL geometry/);

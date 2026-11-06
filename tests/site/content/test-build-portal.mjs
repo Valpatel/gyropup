@@ -100,7 +100,7 @@ try{
  // file count or the inventory endpoint's own claim of completeness.
  assert.match(version.revision,/^[a-f0-9]{40}$/);
  const publishedRoots=['designer','exports','catalog','designs','docs','research','cad','sim','hardware','firmware'];
- const committed=execFileSync('git',['ls-tree','-rz','--name-only',version.revision,'--',...publishedRoots],{cwd:new URL('..',import.meta.url)}).toString().split('\0').filter(Boolean);
+ const committed=execFileSync('git',['ls-tree','-rz','--name-only',version.revision,'--',...publishedRoots],{cwd:new URL('../../../', import.meta.url)}).toString().split('\0').filter(Boolean);
  const expectedModels=committed.filter(file=>/\.(stl|step|stp|3mf)$/i.test(file)).map(file=>'/'+file).sort();
  assert.ok(expectedModels.length>0,'Served revision contains original CAD files');
  assert.deepEqual(inventory.files.map(file=>file.path).sort(),expectedModels,'Every committed public original appears exactly once');
@@ -131,7 +131,7 @@ try{
  const sticky=await page.locator('#made tbody tr').first().evaluate(row=>{const cell=row.querySelector('.cad-part-identity'),r=cell.getBoundingClientRect(),checks=[...row.querySelectorAll('.cad-status-check')].map(label=>{const r=label.getBoundingClientRect(),hit=document.elementFromPoint(r.x+r.width/2,r.y+r.height/2);return {x:r.x,right:r.right,height:r.height,width:r.width,reachable:label===hit||label.contains(hit)};});return {text:(cell.querySelector('b')||cell).innerText.trim(),x:r.x,right:r.right,checks};});assert.ok(sticky.text&&sticky.x>=0&&sticky.right<=160,JSON.stringify(sticky));assert.ok(sticky.checks.every(r=>r.height>=44&&r.width>=44&&r.x>=sticky.right-1&&r.right<=320&&r.reachable),JSON.stringify(sticky));await page.screenshot({path:`${out}/${engine.name()}-status-320.png`});
  // Small preparation pages must expose their primary inspection actions without
  // sideways scrolling. Page scrollWidth alone misses nested table clipping.
- const fitReceipt=JSON.parse(await readFile(new URL('../exports/turret/carrier-insert-fit/receipt.json',import.meta.url),'utf8'));
+ const fitReceipt=JSON.parse(await readFile(new URL('../../../hardware/exports/turret/carrier-insert-fit/receipt.json', import.meta.url),'utf8'));
  for(const width of [320,390,1440]){
   await page.setViewportSize({width,height:900});
   await page.goto(base+'/site/pages/research-carrier-insert-fit-readme-md.html?live=0');

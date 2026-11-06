@@ -3,7 +3,7 @@
 What runs on the robot's computer, installed by one command. Written for JetPack Linux in general (Ubuntu with
 systemd and SocketCAN), so it works on either module the robot may carry: the J501 carrier's Jetson AGX Orin
 (JetPack 6, Ubuntu 22.04, Python 3.10) or a Jetson AGX Thor (JetPack 7). **Which Jetson is the robot's computer is an
-open question for the owner** ([hardware/compute/robot-computer](../../compute/robot-computer/README.md)).
+open question for the owner** ([hardware/compute/robot-computer](../../../hardware/compute/robot-computer/README.md)).
 
 ```bash
 git clone https://github.com/Valpatel/gyropup.git /opt/gyropup     # or wherever: the units point at this checkout
@@ -47,7 +47,7 @@ module's own port on bus C. Names use letters, digits and `_` only.
 ## The RS-04 bridge on the robot
 
 The leg motors are on the balance MCU's buses A and B, not on the Jetson's CAN. Configuring them from the Jetson
-means the MCU powered off and a PCAN-USB on the leg's bus (see the [RS-04 bring-up](../../actuators/rs04/bring-up.md)).
+means the MCU powered off and a PCAN-USB on the leg's bus (see the [RS-04 bring-up](../../../hardware/actuators/rs04/bring-up.md)).
 The bridge listens on 127.0.0.1 only. From a laptop, reach it through SSH:
 `ssh -L 8765:127.0.0.1:8765 <the robot>`, then open `http://127.0.0.1:8765/` on the laptop.
 

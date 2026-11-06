@@ -3,8 +3,8 @@
 import assert from 'node:assert/strict';
 import { readFileSync } from 'node:fs';
 import test from 'node:test';
-import { compileKey } from '../designer/character/pronounce.js';
-import { fixedLines } from '../designer/character/lines.js';
+import { compileKey } from '../../../software/site/designer/character/pronounce.js';
+import { fixedLines } from '../../../software/site/designer/character/lines.js';
 
 const read = p => JSON.parse(readFileSync(new URL('../' + p, import.meta.url), 'utf8'));
 const KEY = read('designer/character/pronunciation.json');

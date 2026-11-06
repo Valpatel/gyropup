@@ -1,7 +1,7 @@
 import assert from 'node:assert/strict';
 import {test} from 'node:test';
 import {EventEmitter} from 'node:events';
-import {isDocumentReturn,classifyCancellation,trackNavigationRequests} from './hosted-navigation.mjs';
+import {isDocumentReturn,classifyCancellation,trackNavigationRequests} from '../../../tools/site/hosted-navigation.mjs';
 const base='https://gyropup.com',docPath='/site/pages/docs-carrier-service-connectors-md.html';
 test('static and enhanced returns accept only the exact document and known query',()=>{
   for(const path of [docPath,docPath.slice(0,-5)])for(const search of ['','?live=0'])

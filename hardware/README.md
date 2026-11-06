@@ -22,7 +22,7 @@ flowchart TB
 
 | Folder | Component | In hand | State |
 |---|---|---|---|
-| [actuators/rs04/](actuators/rs04/README.md) | RobStride RS-04 leg motors | 4 (arrived 2026-11-03) | profiles, inventory, [bring-up](actuators/rs04/bring-up.md), the [motor tool](../docs/rs04-motor-tool.md) |
+| [actuators/rs04/](actuators/rs04/README.md) | RobStride RS-04 leg motors | 4 (arrived 2026-11-03) | profiles, inventory, [bring-up](actuators/rs04/bring-up.md), the [motor tool](../docs/software/rs04-motor-tool.md) |
 | [actuators/wheel-hub-motor/](actuators/wheel-hub-motor/README.md) | 10 in hoverboard-class hub motors (D69) | none | to buy and measure (W1) |
 | [drives/flipsky-75100/](drives/flipsky-75100/README.md) | Flipsky 75100 VESCs for the wheels | none | VESC Tool settings recorded |
 | [sensors/vn100-imu/](sensors/vn100-imu/README.md) | VectorNav VN-100 Rugged | 1 (the owner's) | boot registers recorded |
@@ -31,12 +31,12 @@ flowchart TB
 | [power/ina228-monitor/](power/ina228-monitor/README.md) | INA228 bus monitor and its shunt | none | shunt builds recorded |
 | [power/dcb609-packs/](power/dcb609-packs/README.md) | DeWalt DCB609 packs and dock adapters | 2 (the owner's) | firmware limits recorded |
 | [compute/balance-mcu/](compute/balance-mcu/README.md) | STM32G474 balance MCU board and CAN transceivers | none | pins and buses |
-| [compute/robot-computer/](compute/robot-computer/README.md) | the robot's Jetson (J501 + AGX Orin in the design) | 1 (the owner's J501) | [hardware/deploy/jetson](deploy/jetson/README.md); which Jetson is open |
+| [compute/robot-computer/](compute/robot-computer/README.md) | the robot's Jetson (J501 + AGX Orin in the design) | 1 (the owner's J501) | [hardware/deploy/jetson](../software/deploy/jetson/README.md); which Jetson is open |
 | [comms/pcan-usb/](comms/pcan-usb/README.md) | PEAK PCAN-USB configuration adapter | 1 (the owner's) | used by the motor tool |
 | [turret/turret-controller/](turret/turret-controller/README.md) | the turret's Feather M4 CAN electronics | none | a pointer to the turret docs |
 
 **PCB projects** stay where they are, with their own layout: [fuse-board/](fuse-board/) (the generated KiCad fuse and
-shunt board, D60; its doc is [docs/body-fuse-board.md](../docs/body-fuse-board.md)),
+shunt board, D60; its doc is [docs/body-fuse-board.md](../docs/body/body-fuse-board.md)),
 [carrier-packaging/](carrier-packaging/README.md) (issue #96) and
 [carrier-pan-protection/](carrier-pan-protection/README.md) (issue #87). They are boards being designed, not components
 bought; moving them under a category would break their build scripts' paths and their links for no gain, so they
@@ -68,9 +68,9 @@ that has not run.
 2. Copy the sections above into its README and fill what the repository already knows, with sources.
 3. Add `interfaces.md` and `inventory.json` (empty `units` until one arrives), and `config/` when it holds settings.
 4. Add a row to the map above and run `python3 tools/check-hardware.py`.
-5. When it is bought, add the order to [docs/purchases.md](../docs/purchases.md) and the folder's inventory together.
+5. When it is bought, add the order to [docs/purchases.md](../docs/program/purchases.md) and the folder's inventory together.
 
 ## Deployment
 
 What runs on the robot's computer (CAN bring-up, stable adapter names, the RS-04 bridge service) is in
-[hardware/deploy/jetson](deploy/jetson/README.md), installed by one idempotent command.
+[hardware/deploy/jetson](../software/deploy/jetson/README.md), installed by one idempotent command.

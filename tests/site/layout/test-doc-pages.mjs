@@ -7,12 +7,12 @@ import { after, before, test } from 'node:test';
 import { marked } from 'marked';
 import { parseHTML } from 'linkedom';
 import { chromium, webkit } from '@playwright/test';
-import { createSiteServer } from './serve-site.mjs';
-import { acknowledgePrototypeNotice } from './test-prototype-session.mjs';
-import { SHOWN_WHOLE, enhanceDocument, isCaveat, statusKind, tableStates } from './doc-page.mjs';
-import { subsystemOf } from './timeline.mjs';
+import { createSiteServer } from '../../../tools/site/serve-site.mjs';
+import { acknowledgePrototypeNotice } from '../content/test-prototype-session.mjs';
+import { SHOWN_WHOLE, enhanceDocument, isCaveat, statusKind, tableStates } from '../../../tools/site/doc-page.mjs';
+import { subsystemOf } from '../../../tools/site/timeline.mjs';
 
-const root = path.resolve(import.meta.dirname, '..');
+const root = path.resolve(import.meta.dirname, '../../..');
 const dist = path.join(root, 'dist');
 const norm = s => s.replace(/\s+/g, ' ').trim();
 const fragment = html => parseHTML(`<!doctype html><html><body><article>${html}</article></body></html>`).document.querySelector('article');

@@ -1,10 +1,10 @@
 import assert from 'node:assert/strict';
 import { readFile } from 'node:fs/promises';
 import path from 'node:path';
-import { acknowledgePrototypeNotice } from './test-prototype-session.mjs';
+import { acknowledgePrototypeNotice } from '../content/test-prototype-session.mjs';
 import { installRenderedReadiness } from './test-rendered-readiness.mjs';
 import { loadWallPage } from './test-wall-readiness.mjs';
-import { longestStretch, VISUAL, VIEWPORT } from './site-walls.mjs';
+import { longestStretch, VISUAL, VIEWPORT } from '../../../tools/site/site-walls.mjs';
 
 /** Exercise the actual loader and measure, with real native resource requests held at bounded test barriers. */
 export async function wallReadinessControls(browser,base,root) {

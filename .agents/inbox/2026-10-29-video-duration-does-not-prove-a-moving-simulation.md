@@ -8,4 +8,4 @@ Evidence: `python3 tools/check-study-media.py` reports 288 decoded frames, 12 se
 
 Corrective rule: use an image for a still, explicit pending/error states for media, and video controls only after finite duration and playable data exist. Static deformation must be labeled as load scaling, with physical values separate from exaggerated display motion. Check actual decoded model pixels, not merely encoder success, file size, duration or changing captions. Bind clips to source, fields, report identity and output hashes; do not promote a historical load case to the current design without a new analysis.
 
-Limits: this fixes presentation. It does not clear E1's failed strength gate, validate the future 100 lb target, simulate fractures, or qualify hardware. See [structural study media](../../docs/structural-study-media.md).
+Limits: this fixes presentation. It does not clear E1's failed strength gate, validate the future 100 lb target, simulate fractures, or qualify hardware. See [structural study media](../../docs/validation/structural-study-media.md).

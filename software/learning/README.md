@@ -4,7 +4,7 @@ This folder trains a neural-network balance-and-drive controller for Gyropup wit
 runs thousands of simulated robots in parallel on the GPU and trains on the same robot model the CPU scenarios use.
 Any design file can be trained: the model is generated from `designs/<name>.json`.
 
-It is the "RL, step 1" path from [research/prior-art-toolchain.md](../research/prior-art-toolchain.md):
+It is the "RL, step 1" path from [research/prior-art-toolchain.md](../../docs/research/prior-art-toolchain.md):
 [mjlab](https://github.com/mujocolab/mjlab) (Isaac Lab's manager API on MuJoCo Warp), starting from
 [mjlab_upkie](https://github.com/MarcDcls/mjlab_upkie). Upkie has exactly Gyropup's joints: hip, knee and a driven
 wheel on each leg.

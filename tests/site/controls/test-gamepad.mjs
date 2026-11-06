@@ -2,7 +2,7 @@
 import assert from 'node:assert/strict';
 import { readFile } from 'node:fs/promises';
 import { chromium, webkit } from '@playwright/test';
-import { acknowledgePrototypeNotice } from './test-prototype-session.mjs';
+import { acknowledgePrototypeNotice } from '../content/test-prototype-session.mjs';
 
 const base = (process.env.SITE_URL || 'http://127.0.0.1:8882').replace(/\/$/, '');
 const engine = process.env.PLAYWRIGHT_BROWSER === 'webkit' ? webkit : chromium;
@@ -206,13 +206,13 @@ try {
   await until(() => !window.__sim.bench().api.state.arm.has('pad'));
 
   // ---- the live hop's apex is the leg rig's simulated jump
-  const rig = JSON.parse(await readFile(new URL('../exports/leg/rig-results.json', import.meta.url), 'utf8'));
-  const apex = +(await readFile(new URL('../designer/sim.js', import.meta.url), 'utf8')).match(/apexM: ([0-9.]+)/)[1];
+  const rig = JSON.parse(await readFile(new URL('../../../hardware/exports/leg/rig-results.json', import.meta.url), 'utf8'));
+  const apex = +(await readFile(new URL('../../../software/site/designer/sim.js', import.meta.url), 'utf8')).match(/apexM: ([0-9.]+)/)[1];
   assert.ok(Math.abs(apex * 1000 - rig.scenarios.jump.jump_height_mm) < 5,
     `The live hop (${apex * 1000} mm) matches the rig's jump (${rig.scenarios.jump.jump_height_mm} mm); update JUMP.apexM in designer/sim.js`);
   // From every start height the hip tops out JUMP.apexM above where it stood, and the wheels leave the ground
   // without the legs snapping (jumpPose run on its own, with the v2 leg range).
-  const simSrc = await readFile(new URL('../designer/sim.js', import.meta.url), 'utf8');
+  const simSrc = await readFile(new URL('../../../software/site/designer/sim.js', import.meta.url), 'utf8');
   const jumpSrc = simSrc.match(/const JUMP = \{[^}]*\};/)[0], at = simSrc.indexOf('function jumpPose');
   let depth = 0, end = simSrc.indexOf('{', at);
   for (; end < simSrc.length; end++) { if (simSrc[end] === '{') depth++; if (simSrc[end] === '}' && --depth === 0) break; }

@@ -1,7 +1,7 @@
 # Power and electronics for gyropup
 
 Prices were checked on 2026-10-25. Every part named here is in
-[`catalog/power_electronics.json`](../catalog/power_electronics.json), with 165 items, their sources and confidence.
+[`catalog/power_electronics.json`](../../hardware/catalog/power_electronics.json), with 165 items, their sources and confidence.
 "Not published" means exactly that. Numbers marked *assumption* or *example* are for illustration and must be measured on the robot.
 
 ## The short answer

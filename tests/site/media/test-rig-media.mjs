@@ -5,9 +5,9 @@ import {readFile,writeFile,mkdtemp,mkdir,copyFile,rm} from 'node:fs/promises';
 import {execFileSync} from 'node:child_process';
 import path from 'node:path';
 import os from 'node:os';
-import {verifyRigFiles} from './rig-media.mjs';
-import {rigDigest,prepareRigMedia} from '../designer/rig-media.js';
-const root=path.resolve(import.meta.dirname,'..');
+import {verifyRigFiles} from '../../../tools/evidence/media/rig-media.mjs';
+import {rigDigest,prepareRigMedia} from '../../../software/site/designer/rig-media.js';
+const root=path.resolve(import.meta.dirname, '../../..');
 const receipt=JSON.parse(await readFile(path.join(root,'exports/leg/rig-media.json')));
 
 test('publication checks both actual formats even if a browser selects only one',async()=>{

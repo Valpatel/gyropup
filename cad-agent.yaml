@@ -4,11 +4,12 @@
 cad:
   name: gyropup
   title: Gyropup
+  exports_dir: hardware/exports
   printer: {name: Bambu Lab P1S, bed_mm: [256, 256, 256]}
   view:
-    # the whole robot as drawn today (P3 body, five-bar legs, turret): tools/robot_view.py writes exports/robot/*.step
+    # the whole robot as drawn today (P3 body, five-bar legs, turret): tools/engineering/robot/robot_view.py writes exports/robot/*.step
     parts: false
-    extra: [{glob: "exports/robot/*.step"}]
+    extra: [{glob: "hardware/exports/robot/*.step"}]
     colors: {battery: "#fdb913", bay_doors: "#d98c26", brackets: "#454a52", bus_bars: "#c8743a", cameras: "#2a2d33",
              compute: "#5a6b7c", deck: "#33383f", ear_pods: "#3b4049", electronics: "#2b6cb0", frame: "#b4bac4",
              frame_inner: "#b4bac4", front_link: "#f5b82e", hardware: "#26282c", hip_frame: "#5f6670",
@@ -17,16 +18,16 @@ cad:
              turret_bought: "#3a3f47", turret_dark: "#3b3f46", turret_frame: "#b8bec7", turret_hardware: "#3a3f47",
              turret_hopper: "#9cc9e8", tyre: "#1b1d21", upper_links: "#f5b82e", wheel_link: "#e9a21f"}
   steps:
-    - {name: leg, run: cad/build_leg.py}
-  # The design process (dossier + integrity gates) covers the turret first (docs/turret-sections.md, "The dossier"). `cad-agent build`
+    - {name: leg, run: hardware/cad/builders/build_leg.py}
+  # The design process (dossier + integrity gates) covers the turret first (docs/turret/turret-sections.md, "The dossier"). `cad-agent build`
   # still builds only the leg; the turret's geometry record is built by the gates:
-  #   .venv/bin/cad-agent gates --build          # cad/turret_dossier.py -> exports/dossier-geometry.json, every gate, the lint
-  #   .venv/bin/python cad/turret_gates.py --dossier   # the turret's own gates (path, ammo range), bound to that record
+  #   .venv/bin/cad-agent gates --build          # hardware/cad/turret/turret_dossier.py -> hardware/exports/dossier-geometry.json, every gate, the lint
+  #   .venv/bin/python hardware/cad/turret/turret_gates.py --dossier   # the turret's own gates (path, ammo range), bound to that record
   #   .venv/bin/cad-agent dossier                # the lint again, now with the turret's own verdicts
   #   .venv/bin/cad-agent check                  # fails on a failing, missing or stale verdict
   dossier: docs/dossier/project.yaml
   gates:
-    build: cad/turret_dossier.py
+    build: hardware/cad/turret/turret_dossier.py
     declarations: docs/dossier/gate-declarations.yaml
     jobs: 3
     timeout_s: 14400
@@ -47,30 +48,32 @@ cad:
              samples: {I-pan: 35, I-tilt: 6, I-feed: 3, I-flap: 3, I-wheel-l: 2, I-wheel-r: 2, I-pan-drive: 13}}
     assembly: {tol: {touch_mm: 0.05, volume_check_mm3: 0.2}, max_step_mm: 2.0}
   checks:
-    - {id: turret-fea, title: Turret FEA (layer-aware SF targets), file: exports/turret/fea/summary.json,
+    - {id: turret-fea, title: Turret FEA (layer-aware SF targets), file: hardware/exports/turret/fea/summary.json,
        pass_key: verdict.all_ok}
-    - {id: turret-launch, title: Turret launch ceiling (D68), file: exports/turret/launch/launch3d.json,
+    - {id: turret-launch, title: Turret launch ceiling (D68), file: hardware/exports/turret/launch/launch3d.json,
        pass_key: [ceiling.holds, ceiling.under_astm]}
   site:
     title: Gyropup
     tagline: A friendly self-balancing wheel-legged robot for foam-ball games, built leg first
     notice: Built by autonomous systems. Work in progress; CAD and simulation await physical validation.
     accent: "#e8892b"
-    milestones: docs/milestones.yaml
-    decisions: docs/decisions.yaml
-    pages: [README.md, "docs/*.md", "research/*.md", catalog/SCHEMA.md]
+    milestones: docs/program/milestones.yaml
+    decisions: docs/program/decisions.yaml
+    pages: [README.md, "docs/*.md", "docs/architecture/*.md", "docs/body/*.md", "docs/electronics/*.md",
+            "docs/guide/*.md", "docs/legs/*.md", "docs/software/*.md", "docs/turret/*.md", "docs/validation/*.md",
+            docs/program/physical-progress.md, docs/program/purchases.md, "docs/research/*.md", hardware/catalog/SCHEMA.md]
     theme: light
-    live_reload: {watch: [designer, exports, docs, cad]}   # pages reload as these change
+    live_reload: {watch: [software/site, hardware/exports, docs, hardware/cad]}   # pages reload as these change
     nav:
       - {id: home, title: Home, href: /}
-      - {id: progress, title: Progress, href: designer/progress.html}
-      - {id: build, title: Build, href: designer/build.html}
+      - {id: progress, title: Progress, href: software/site/designer/progress.html}
+      - {id: build, title: Build, href: software/site/designer/build.html}
       - {id: overview, title: Overview, href: site/}
-      - {id: simulate, title: Simulate, href: designer/sim.html}
+      - {id: simulate, title: Simulate, href: software/site/designer/sim.html}
       - {id: decisions, title: Decisions, href: "site/#decisions"}
       - {id: docs, title: Docs, href: "site/#documents"}
       - {id: repo, title: Repository, href: "https://github.com/Valpatel/gyropup"}
     links:
-      - {title: Progress, href: designer/progress.html}
-      - {title: Simulator, href: designer/sim.html}
+      - {title: Progress, href: software/site/designer/progress.html}
+      - {title: Simulator, href: software/site/designer/sim.html}
       - {title: Architecture, href: site/pages/docs-architecture-md.html}

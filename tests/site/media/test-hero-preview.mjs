@@ -1,4 +1,4 @@
-import { acknowledgePrototypeNotice } from './test-prototype-session.mjs';
+import { acknowledgePrototypeNotice } from '../content/test-prototype-session.mjs';
 /** Exercise the visible poster-to-WebGL handoff, not merely matching CSS boxes. */
 import assert from 'node:assert/strict';
 import {mkdir,writeFile} from 'node:fs/promises';
