@@ -122,7 +122,14 @@ try:
     assert before['GYROPUP_CAD_PARAMS_sha256'] is None
     save('cad-inputs-before.json',before)
     save('toolkit-origin.json',{'revision':PIN,'module':'src/cadagent/__init__.py','source_fingerprint':before['toolkit_sources_sha256']})
-    for candidate,_ in groups.values():assert not candidate.exists()
+    original_packages=OUT/'original-packages'
+    for label,(candidate,relative) in groups.items():
+        assert not candidate.exists()
+        for name in inventory(ROOT/relative):
+            target=original_packages/relative/name;target.parent.mkdir(parents=True,exist_ok=True)
+            shutil.copyfile(ROOT/relative/name,target)
+    assert len(inventory(original_packages))==15
+    preserve('original-packages',original_packages)
     try:
         phase('interfaces-generate',[sys.executable,'-B','hardware/cad/turret/check_base_board_interfaces.py','--out',str(groups['interfaces'][0])],timeout=900)
     finally:
