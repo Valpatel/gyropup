@@ -15,16 +15,21 @@
  * markup) and must catch each one, so a broken measure cannot pass every page.
  * On a failure it saves a screenshot with the finding outlined in test-results/empty-space/, and it writes every
  * page's numbers to test-results/empty-space/results.json. */
-import { mkdir, readdir, writeFile } from 'node:fs/promises';
+import { mkdir, readFile, readdir, writeFile } from 'node:fs/promises';
 import path from 'node:path';
 import { chromium, devices } from '@playwright/test';
 import { createSiteServer } from './serve-site.mjs';
 import { acknowledgePrototypeNotice } from './test-prototype-session.mjs';
+import { installRenderedReadiness, waitForRenderedText } from './test-rendered-readiness.mjs';
 import { sitePages } from './site-walls.mjs';
 import {
   BUSY_EDGES, EDGE_STEP, FLAT_SHARE, RULE_RUN, FLAT_TOLERANCE, MEDIA_MIN, MIN_THICKNESS, NARROW_SHARE, SCHEMES, SIZES, WORDS_PER_LINE,
   paintedPixels, scanLayout,
 } from './site-empty-space.mjs';
+
+// Playwright 1.56.1 also waits on global document.fonts.ready during screenshots.
+// This harness instead awaits real rendered fonts below; held-resource controls fail if this pinned flag stops working.
+process.env.PW_TEST_SCREENSHOT_NO_FONTS_READY = '1';
 
 const root = path.resolve(import.meta.dirname, '..');
 const out = path.join(root, 'test-results/empty-space');
@@ -53,18 +58,19 @@ async function contextFor(size) {
   const { defaultBrowserType, ...device } = size.device ? devices[size.device] : {};
   const context = await browser.newContext({ ...device, ...size.context, colorScheme: 'light', reducedMotion: 'reduce' });
   await acknowledgePrototypeNotice(context);
+  await installRenderedReadiness(context);
   await context.route('https://cad-agent.gyropup.com/**', route => route.abort());
   return context;
 }
 
 /** Open a page and wait for what draws itself: diagrams, the portal reports, fonts. */
 async function load(page, route) {
-  await page.goto(base + route, { waitUntil: 'load' });
+  await page.goto(base + route, { waitUntil: 'domcontentloaded' });
   await page.waitForFunction(() => !document.querySelector('pre.mermaid, pre > code.language-mermaid') &&
     [...document.querySelectorAll('.cad-diagram')].every(f => f.dataset.state === 'ready' || f.dataset.state === 'error')
     && (!/^\/designer\/(progress|build|sim)\.html$/.test(location.pathname) || document.body.dataset.ready === '1'), null, { timeout: 30000 })
     .catch(() => problems.push(`empty-space ${route}: diagrams or reports did not finish loading`));
-  await page.evaluate(() => document.fonts.ready);
+  await waitForRenderedText(page);
 }
 
 /** Wait (up to `ms`) for the pictures on screen to load, then for two frames. */
@@ -191,8 +197,67 @@ const newAnalysis = () => analysisContext.newPage();
 
 const controlFindings = [];
 
+/** A stalled small badge must not block measurement; a held primary picture must still fail. */
+async function readinessControls() {
+  const size = SIZES[0];
+  for (const kind of ['badge', 'primary', 'font', 'stylesheet-error']) {
+    const primary = kind === 'primary', delayedFont = kind === 'font', failedStyle = kind === 'stylesheet-error';
+    const context = await contextFor(size), page = await context.newPage(), analysis = await newAnalysis();
+    let release, releaseFont, releaseCss, signalHeld, signalFont, signalCss, timer, held = 0;
+    const gate = new Promise(resolve => { release = resolve; });
+    const fontGate = new Promise(resolve => { releaseFont = resolve; });
+    const cssGate = new Promise(resolve => { releaseCss = resolve; });
+    const requested = new Promise(resolve => { signalHeld = resolve; });
+    const fontRequested = new Promise(resolve => { signalFont = resolve; });
+    const cssRequested = new Promise(resolve => { signalCss = resolve; });
+    const bounded = promise => Promise.race([promise, new Promise((_, reject) => { timer = setTimeout(() => reject(new Error('Readiness control resource was not requested')), 2000); })]).finally(() => clearTimeout(timer));
+    const route = '/__layout-readiness-control';
+    const cssUrl = 'https://layout-styles.example.test/control.css';
+    await page.route(base + route, request => request.fulfill({ contentType: 'text/html', body:
+      `<!doctype html><meta name="viewport" content="width=device-width"><style>body{margin:16px;font:16px/1.5 system-ui}img{display:block}</style>${delayedFont ? `<style id="font-style">@import url(${cssUrl});</style>` : failedStyle ? `<link rel="stylesheet" href="${cssUrl}">` : ''}<h1>Ready content</h1>`
+      + `<img src="/__layout-held.svg" width="${primary ? 340 : 64}" height="${primary ? 220 : 20}" alt="${primary ? 'primary picture' : 'status badge'}">`
+      + `<p>${'Visible document content remains available while the resource is pending. '.repeat(80)}</p>` }));
+    await page.route(base + '/__layout-held.svg', async request => { held++; signalHeld(); await gate; await request.abort(); });
+    await page.route(cssUrl, async request => { signalCss(); await cssGate; await request.fulfill({ status: failedStyle ? 404 : 200, contentType: 'text/css', body: `@font-face{font-family:LayoutControl;src:url(${base}/__layout-held.woff2)}body{font-family:LayoutControl}` }); });
+    await page.route(base + '/__layout-held.woff2', async request => { signalFont(); await fontGate; await request.fulfill({ contentType: 'font/woff2', body: await readFile(path.join(root, 'designer/kit/vendor/fonts/inter.woff2')) }); });
+    page.setDefaultNavigationTimeout(2000);
+    try {
+      let loaded = false;
+      const loading = load(page, route).then(() => { loaded = true; });
+      loading.catch(() => {}); // The finally block also closes an incomplete page after a failed barrier.
+      if (delayedFont || failedStyle) {
+        await bounded(cssRequested);
+        await page.waitForFunction(() => document.readyState === 'interactive');
+        if (loaded) throw new Error('Layout measurement did not wait for its font stylesheet');
+        releaseCss();
+        if (failedStyle) {
+          let failure; try { await loading; } catch (error) { failure = error; }
+          if (!failure?.message.includes('Stylesheet failed to load')) throw new Error('A failed stylesheet was accepted as ready');
+          continue;
+        }
+        await bounded(fontRequested);
+        const opaque = await page.locator('#font-style').evaluate(element => { try { void element.sheet.cssRules[0].styleSheet.cssRules; return false; } catch (error) { return error.name === 'SecurityError'; } });
+        if (!opaque) throw new Error('The stylesheet control did not exercise opaque CSS');
+        const pending = await page.evaluate(() => [...document.fonts].some(font => font.family === 'LayoutControl' && font.status === 'loading'));
+        if (!pending || loaded) throw new Error('Layout measurement did not wait for its actual rendered font');
+        releaseFont();
+      }
+      await loading;
+      await bounded(requested);
+      if (delayedFont && !await page.evaluate(() => [...document.fonts].some(font => font.family === 'LayoutControl' && font.status === 'loaded') && document.fonts.check('16px LayoutControl', 'Ready content'))) throw new Error('The rendered control font was not loaded');
+      await settle(page);
+      const result = await audit(page, analysis, size, 'light', route);
+      if (held !== 1 || await page.locator('img').evaluate(image => image.complete)) throw new Error('Readiness measurement did not occur while the image was held');
+      const missing = result.findings.some(f => f.kind === 'blank' && f.text.includes('never loaded'));
+      if (primary ? !missing : result.findings.length > 0) throw new Error(`Readiness control ${primary ? 'accepted a missing primary picture' : 'could not measure content with a pending badge'}`);
+    } finally { clearTimeout(timer); release(); releaseFont(); releaseCss(); await context.close(); await analysis.close(); }
+  }
+  console.log('empty-space readiness controls: pending badge permits measurement, primary image is rejected, actual imported font is awaited, stylesheet error fails readiness');
+}
+
 /** Planted defects on a real page: each must be found, so the measures are tested on every run. */
 async function controls() {
+  await readinessControls();
   const size = SIZES[0], context = await contextFor(size), page = await context.newPage(), analysis = await newAnalysis();
   const failed = [];
   try {

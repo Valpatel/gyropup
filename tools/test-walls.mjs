@@ -15,6 +15,9 @@ import { chromium, webkit } from '@playwright/test';
 import { createSiteServer } from './serve-site.mjs';
 import { renderTimeline } from './timeline.mjs';
 import { acknowledgePrototypeNotice } from './test-prototype-session.mjs';
+import { installRenderedReadiness } from './test-rendered-readiness.mjs';
+import { loadWallPage } from './test-wall-readiness.mjs';
+import { wallReadinessControls } from './test-wall-readiness-controls.mjs';
 import { VIEWPORT, VISUAL, WALL_CLEARED, WALL_LIMIT, longestStretch, plantedScript, sitePages } from './site-walls.mjs';
 
 const root = path.resolve(import.meta.dirname, '..');
@@ -53,6 +56,7 @@ const engine = process.env.PLAYWRIGHT_BROWSER === 'webkit' ? webkit : chromium;
 const browser = await engine.launch(engine === chromium ? { channel: process.env.PLAYWRIGHT_CHANNEL === 'chromium' ? undefined : process.env.PLAYWRIGHT_CHANNEL || 'chrome', headless: true } : { headless: true });
 const rows = [];
 try {
+  await wallReadinessControls(browser,base,root);
   const dist = path.join(root, 'dist');
   const files = (await readdir(dist, { recursive: true })).map(f => f.split(path.sep).join('/'));
   const pages = sitePages(files);
@@ -60,21 +64,16 @@ try {
   for (const route of listed) if (!pages.includes(route)) problems.push(`${BACKLOG}: ${route} is not a page; remove it`);
   const context = await browser.newContext({ viewport: VIEWPORT, reducedMotion: 'reduce' });
   await acknowledgePrototypeNotice(context);
+  await installRenderedReadiness(context);
   // Live cad-agent data is never fetched by a test.
   await context.route('https://cad-agent.gyropup.com/**', route => route.abort());
   const reader = await context.newPage();
-  await reader.goto(base + '/site/', { waitUntil: 'load' });
+  await loadWallPage(reader,base,'/site/');
   // The measure itself, on planted articles of known geometry, so a broken measure cannot pass every page.
   for (const [name, { got, want }] of Object.entries(await reader.evaluate(plantedScript())))
     if (Math.abs(got - want) > 1) problems.push(`walls: the planted "${name}" article measures ${got}px, not ${want}px`);
   for (const route of pages) {
-    await reader.goto(base + route, { waitUntil: 'load' });
-    await reader.waitForFunction(() => !document.querySelector('pre.mermaid, pre > code.language-mermaid') &&
-      [...document.querySelectorAll('.cad-diagram')].every(f => f.dataset.state === 'ready' || f.dataset.state === 'error')
-      // The portal pages draw their reports with script, and say when they are done.
-      && (!/^\/designer\/(progress|build|sim)\.html$/.test(location.pathname) || document.body.dataset.ready === '1'), null, { timeout: 30000 })
-      .catch(() => problems.push(`walls ${route}: diagrams or reports did not finish loading`));
-    await reader.evaluate(() => document.fonts.ready);
+    await loadWallPage(reader,base,route);
     const wall = await reader.evaluate(longestStretch, VISUAL);
     rows.push({ route, ...wall });
     if (report) continue;
@@ -97,10 +96,7 @@ try {
       if (!changes.test(built)) { problems.push(`walls ${file}: no <section id="changes"> to plant a text-only timeline into`); continue; }
       const html = built.replace(changes, renderTimeline(quiet, options));
       await planted.route(base + route, r => r.fulfill({ status: 200, contentType: 'text/html', body: html }));
-      await planted.goto(base + route, { waitUntil: 'load' });
-      await planted.waitForFunction(() => !/progress/.test(location.pathname) || document.body.dataset.ready === '1', null, { timeout: 30000 })
-        .catch(() => problems.push(`walls ${route} with a text-only timeline: the report did not finish loading`));
-      await planted.evaluate(() => document.fonts.ready);
+      await loadWallPage(planted,base,route);
       const wall = await planted.evaluate(longestStretch, VISUAL);
       if (wall.worst > WALL_LIMIT) problems.push(`walls ${route} with the newest five changes text-only: ${wall.worst}px with nothing to look at, after "${wall.after}"; the change list must end on a picture (tools/timeline.mjs)`);
     }

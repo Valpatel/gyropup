@@ -4,6 +4,7 @@ import importlib.util
 import json
 from pathlib import Path
 import shutil
+import subprocess
 import tempfile
 import unittest
 
@@ -12,6 +13,9 @@ check = importlib.util.module_from_spec(spec); spec.loader.exec_module(check)
 
 
 class StudyMedia(unittest.TestCase):
+    def test_leg_rig_companions(self):
+        subprocess.run(['node', '--test', 'tools/test-rig-media.mjs'], cwd=check.ROOT, check=True)
+
     def test_real_video_and_sources(self):
         self.assertEqual(check.validate()['decoded_frames'], 288)
 

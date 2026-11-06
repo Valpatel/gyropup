@@ -4,6 +4,8 @@ Orientation updated 2026-10-29. The live handoff is [program issue #31](https://
 with workstream issues and PRs carrying current evidence, ownership and next steps. Read their latest comments
 before resuming; this file intentionally does not duplicate changing branch or process inventories.
 
+- [Recovery audit, 2026-11-05](validation/recovery-2026-11-05.md): dated complete issue/branch inventory and preserved worktrees.
+- [Physical progress](physical-progress.md): dated owner reports, separately from fit and test qualification.
 - [Documentation map](README.md): human entry points and grouped engineering notes.
 - [Contributor orientation](../CONTRIBUTING.md): repository workflow and the role of `AGENTS.md` and `.agents/`.
 - [Program #31](https://github.com/Valpatel/gyropup/issues/31): the program tracker, the owner's actions and decisions,

@@ -11,11 +11,13 @@ import { SITE_CACHE_CONTROL, versionSiteAssets } from './site-cache.mjs';
 import { collectStatus, createReader, renderBoard, shallowHistory } from './status-board.mjs';
 import { collectTimeline, gitIn, imagePaths, renderTimeline, subsystemOf } from './timeline.mjs';
 import { OPEN_FOLDS, enhanceDocument } from './doc-page.mjs';
+import { verifyRigFiles } from './rig-media.mjs';
 const root = path.resolve(import.meta.dirname, '..');
 const out = path.join(root, 'dist');
 const read = (p) => readFile(path.join(root, p), 'utf8');
 const esc = (s) => String(s ?? '').replace(/[&<>"']/g, c => ({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[c]));
 const config = YAML.parse(await read('cad-agent.yaml')).cad.site;
+await verifyRigFiles(root); // SHA checks on the actual report/movie bytes, before publishing the bundle.
 await rm(out, { recursive: true, force: true });
 await mkdir(out, { recursive: true });
 // Only repository assets, never local credentials, untracked runs or vendor downloads.
@@ -23,12 +25,13 @@ await mkdir(out, { recursive: true });
 const tracked = execFileSync('git', ['ls-files', '-z'], { cwd: root }).toString().split('\0').filter(Boolean);
 const roots = ['designer/', 'exports/', 'catalog/', 'designs/', 'docs/', 'research/', 'cad/', 'sim/', 'hardware/', 'firmware/'];
 for (const file of tracked) {
-  if (!roots.some(r => file.startsWith(r)) || file === 'docs/handoff.md' || /(?:^|\/)(?:AGENTS|CLAUDE)\.md$/.test(file)) continue;
+  if (!roots.some(r => file.startsWith(r)) || ['docs/handoff.md', 'designer/home.html'].includes(file) || /(?:^|\/)(?:AGENTS|CLAUDE)\.md$/.test(file)) continue;
   const dest = path.join(out, file); await mkdir(path.dirname(dest), { recursive: true });
   if ((await stat(path.join(root, file))).size > 25 * 1024 * 1024) throw new Error(`Cloudflare file limit: ${file}`);
   await cp(path.join(root, file), dest);
 }
-for (const file of ['index.html', 'LICENSE', 'README.md']) await cp(path.join(root, file), path.join(out, file));
+for (const file of ['LICENSE', 'README.md']) await cp(path.join(root, file), path.join(out, file));
+await cp(path.join(root, 'designer/home.html'), path.join(out, 'index.html'));
 await cp(path.join(root, 'web'), path.join(out, 'web'), { recursive: true });
 // The full local CAD workflow can use licensed vendor downloads. The shared static bundle cannot.
 // Mark the legacy rig unavailable as a whole, so its complete procedural model is used instead.
@@ -136,7 +139,7 @@ const notebook = `<h1>The design notebook.</h1><p class="doc-lede">Follow the de
 await writeFile(path.join(out,'site/index.html'), frame('Design notebook', notebook).replace("root:'../../'", "root:'../'"));
 // Static equivalents of local file listings keep the existing Build page's file links working.
 const directories = new Map();
-for (const file of tracked.filter(f => roots.some(r => f.startsWith(r)) && f !== 'docs/handoff.md')) {
+for (const file of tracked.filter(f => roots.some(r => f.startsWith(r)) && !['docs/handoff.md', 'designer/home.html'].includes(f))) {
   let parent = path.posix.dirname(file), entry = path.posix.basename(file);
   while (parent !== '.') {
     if (!directories.has(parent)) directories.set(parent, []);

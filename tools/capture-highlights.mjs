@@ -10,7 +10,7 @@ const width=1280,height=720,fps=30,seed=1042026;
 const shots=[{id:'turret',seconds:4,bench:true},{id:'mechanism',seconds:3,bench:true},{id:'battle',seconds:6},{id:'character',seconds:3}];
 const only=process.env.CAPTURE_SHOT,limit=Number(process.env.CAPTURE_FRAMES||0);
 await mkdir(out,{recursive:true});
-const browser=await chromium.launch({channel:'chrome',headless:true,args:['--no-sandbox','--use-gl=angle','--use-angle=swiftshader','--enable-unsafe-swiftshader']});
+const browser=await chromium.launch({channel:process.env.PLAYWRIGHT_CHANNEL === 'chromium' ? undefined : 'chrome',headless:true,args:['--no-sandbox','--use-gl=angle','--use-angle=swiftshader','--enable-unsafe-swiftshader']});
 const hash=b=>createHash('sha256').update(b).digest('hex');
 const report={format:1,sourceRevision:execFileSync('git',['rev-parse','HEAD'],{encoding:'utf8'}).trim(),recipeSha256:hash(await readFile(new URL(import.meta.url))),width,height,fps,seed,
   browser:browser.version(),instrumentation:'Expose the existing stage callback array to the recorder; stop its RAF loop, advance its callbacks at 60Hz with a fixed performance clock and seeded random source, then explicitly render each captured frame. No model or projectile code is replaced.',shots:[],inputs:{}};

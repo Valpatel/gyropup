@@ -60,6 +60,7 @@ jobs:
         include:
           - suite: mechanism
             commands: |
+              python3 tools/test-motor-day-render-inputs.py
               python3 tools/test-print-provenance.py
               python3 tools/test-rs04-lug-stacks.py
               python3 tools/test-rs04-dowel-protrusion.py

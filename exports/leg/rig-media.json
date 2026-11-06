@@ -1,0 +1,248 @@
+{
+  "schema": 2,
+  "producer_revision": "e7b512870a39259a04a4930e2908af84001bc84e",
+  "report": {
+    "path": "exports/leg/rig-results.json",
+    "sha256": "171a1d4f2195468a235313fce29e5dde1272499b0d0934e22ad2bab5564ba902"
+  },
+  "clips": [
+    {
+      "scenario": "stand_up",
+      "path": "exports/leg/rig_stand_up.mp4",
+      "sha256": "75d419880a3f631b41e2fd81cd6614a59562c942579941cb75fd08118b3539ac",
+      "companion": {
+        "path": "exports/leg/rig_stand_up.webm",
+        "source_sha256": "75d419880a3f631b41e2fd81cd6614a59562c942579941cb75fd08118b3539ac",
+        "sha256": "61a7b8d44dd29cd4e4e9fbe604a5a5c1892db7b98376800df5816df1a8ad488b",
+        "decoded": {
+          "width": 960,
+          "height": 540,
+          "pixel_format": "yuv420p",
+          "frame_rate": "30/1",
+          "color": {
+            "original_range": "unspecified",
+            "companion_range": "tv",
+            "space": "unspecified",
+            "transfer": "unspecified",
+            "primaries": "unspecified"
+          },
+          "frames": 90,
+          "duration_s": 3,
+          "companion_duration_s": 3,
+          "max_timestamp_delta_s": 0.0003330000000003608,
+          "comparison": "Every decoded YUV420P and interpreted RGB24 frame SHA-256 matches; zero pixel error",
+          "decoded_frame_sequence_sha256": "8fabd2e5e4c444b1311ba7626716c06f0429102df00693b953079c8166d9f4cc"
+        }
+      }
+    },
+    {
+      "scenario": "squat",
+      "path": "exports/leg/rig_squat.mp4",
+      "sha256": "191cd7232986f2a71dccf4e5932a6bd5ae8b936e0bf612a17f34070373af0a33",
+      "companion": {
+        "path": "exports/leg/rig_squat.webm",
+        "source_sha256": "191cd7232986f2a71dccf4e5932a6bd5ae8b936e0bf612a17f34070373af0a33",
+        "sha256": "372f92c0aaddf2fa54dd7f47b691bf9a7553ac020daeea571eb960bc8671a0c7",
+        "decoded": {
+          "width": 960,
+          "height": 540,
+          "pixel_format": "yuv420p",
+          "frame_rate": "30/1",
+          "color": {
+            "original_range": "unspecified",
+            "companion_range": "tv",
+            "space": "unspecified",
+            "transfer": "unspecified",
+            "primaries": "unspecified"
+          },
+          "frames": 195,
+          "duration_s": 6.5,
+          "companion_duration_s": 6.5,
+          "max_timestamp_delta_s": 0.0003330000000003608,
+          "comparison": "Every decoded YUV420P and interpreted RGB24 frame SHA-256 matches; zero pixel error",
+          "decoded_frame_sequence_sha256": "22c2eab78b12bb9a21b9768c491cd68bdd803a14e4b9af0472df31893f58a905"
+        }
+      }
+    },
+    {
+      "scenario": "jump",
+      "path": "exports/leg/rig_jump.mp4",
+      "sha256": "3e5188b87059d75c23e5eb48f32510aa5b4e4c5726e66ef3c43e86b15d28bc9c",
+      "companion": {
+        "path": "exports/leg/rig_jump.webm",
+        "source_sha256": "3e5188b87059d75c23e5eb48f32510aa5b4e4c5726e66ef3c43e86b15d28bc9c",
+        "sha256": "146982ee13317c8de57d68f7bd056b9e6f2999336b454e1819fa97438bad17b3",
+        "decoded": {
+          "width": 960,
+          "height": 540,
+          "pixel_format": "yuv420p",
+          "frame_rate": "30/1",
+          "color": {
+            "original_range": "unspecified",
+            "companion_range": "tv",
+            "space": "unspecified",
+            "transfer": "unspecified",
+            "primaries": "unspecified"
+          },
+          "frames": 90,
+          "duration_s": 3,
+          "companion_duration_s": 3,
+          "max_timestamp_delta_s": 0.0003330000000003608,
+          "comparison": "Every decoded YUV420P and interpreted RGB24 frame SHA-256 matches; zero pixel error",
+          "decoded_frame_sequence_sha256": "0a4f97e774670b04de73c94e415764b68335e09b8e7759a99f3eaced95a2b6b5"
+        }
+      }
+    },
+    {
+      "scenario": "jump_peak",
+      "path": "exports/leg/rig_jump_peak.mp4",
+      "sha256": "f17518854f903f1718d010e5e930ce26897f294ae8194ca5091bd159ff6fa7f3",
+      "companion": {
+        "path": "exports/leg/rig_jump_peak.webm",
+        "source_sha256": "f17518854f903f1718d010e5e930ce26897f294ae8194ca5091bd159ff6fa7f3",
+        "sha256": "e733752a6f56a01d0567406dcf30057324ce5ae34f650110289e9266082d46da",
+        "decoded": {
+          "width": 960,
+          "height": 540,
+          "pixel_format": "yuv420p",
+          "frame_rate": "30/1",
+          "color": {
+            "original_range": "unspecified",
+            "companion_range": "tv",
+            "space": "unspecified",
+            "transfer": "unspecified",
+            "primaries": "unspecified"
+          },
+          "frames": 90,
+          "duration_s": 3,
+          "companion_duration_s": 3,
+          "max_timestamp_delta_s": 0.0003330000000003608,
+          "comparison": "Every decoded YUV420P and interpreted RGB24 frame SHA-256 matches; zero pixel error",
+          "decoded_frame_sequence_sha256": "a96afea54c65aa7b97dd76a004c99ddd70e437abe81af58c9b9d6bf68e00bc59"
+        }
+      }
+    },
+    {
+      "scenario": "drop_150",
+      "path": "exports/leg/rig_drop_150.mp4",
+      "sha256": "317bea1c918fc011a7aa1f992abbb27c1c7aa020c9745c7c11768b05528fb8fe",
+      "companion": {
+        "path": "exports/leg/rig_drop_150.webm",
+        "source_sha256": "317bea1c918fc011a7aa1f992abbb27c1c7aa020c9745c7c11768b05528fb8fe",
+        "sha256": "e4b95c4125f9829c4968f1795068585dde135f08e4e65cae0071f46d36916e8d",
+        "decoded": {
+          "width": 960,
+          "height": 540,
+          "pixel_format": "yuv420p",
+          "frame_rate": "30/1",
+          "color": {
+            "original_range": "unspecified",
+            "companion_range": "tv",
+            "space": "unspecified",
+            "transfer": "unspecified",
+            "primaries": "unspecified"
+          },
+          "frames": 60,
+          "duration_s": 2,
+          "companion_duration_s": 2,
+          "max_timestamp_delta_s": 0.00033300000000013874,
+          "comparison": "Every decoded YUV420P and interpreted RGB24 frame SHA-256 matches; zero pixel error",
+          "decoded_frame_sequence_sha256": "c9c1e34edb276cfc9e6a52829b57eb5ea1c0665cda5bc3da56ed8a12f0257b35"
+        }
+      }
+    },
+    {
+      "scenario": "power_off",
+      "path": "exports/leg/rig_power_off.mp4",
+      "sha256": "593e04d2e5d7077acb137f72f936ba68d10b772d0c5b618e7dfc63a8580057a9",
+      "companion": {
+        "path": "exports/leg/rig_power_off.webm",
+        "source_sha256": "593e04d2e5d7077acb137f72f936ba68d10b772d0c5b618e7dfc63a8580057a9",
+        "sha256": "b9a64c871af0e7376233f13df18dca6715e759264dfe9953854bc56809967280",
+        "decoded": {
+          "width": 960,
+          "height": 540,
+          "pixel_format": "yuv420p",
+          "frame_rate": "30/1",
+          "color": {
+            "original_range": "unspecified",
+            "companion_range": "tv",
+            "space": "unspecified",
+            "transfer": "unspecified",
+            "primaries": "unspecified"
+          },
+          "frames": 75,
+          "duration_s": 2.5,
+          "companion_duration_s": 2.5,
+          "max_timestamp_delta_s": 0.0003330000000003608,
+          "comparison": "Every decoded YUV420P and interpreted RGB24 frame SHA-256 matches; zero pixel error",
+          "decoded_frame_sequence_sha256": "c22c93002581ecc19df5d91acfde1d2e0a38a39ed87cb8b7e294d1eeeb749665"
+        }
+      }
+    },
+    {
+      "scenario": "power_off_damped",
+      "path": "exports/leg/rig_power_off_damped.mp4",
+      "sha256": "10d344d335c575e38c10d56b6e63fb27d632c182fee9160fc2b5838ab8caedae",
+      "companion": {
+        "path": "exports/leg/rig_power_off_damped.webm",
+        "source_sha256": "10d344d335c575e38c10d56b6e63fb27d632c182fee9160fc2b5838ab8caedae",
+        "sha256": "493a30f927470deddad727ac02c1623fc3eb18dde7c7c592fc454802f9631639",
+        "decoded": {
+          "width": 960,
+          "height": 540,
+          "pixel_format": "yuv420p",
+          "frame_rate": "30/1",
+          "color": {
+            "original_range": "unspecified",
+            "companion_range": "tv",
+            "space": "unspecified",
+            "transfer": "unspecified",
+            "primaries": "unspecified"
+          },
+          "frames": 75,
+          "duration_s": 2.5,
+          "companion_duration_s": 2.5,
+          "max_timestamp_delta_s": 0.0003330000000003608,
+          "comparison": "Every decoded YUV420P and interpreted RGB24 frame SHA-256 matches; zero pixel error",
+          "decoded_frame_sequence_sha256": "b755582f01f31835d34c3e38d86cbe9310a56a3b033c80f8576e0d173ec72aac"
+        }
+      }
+    }
+  ],
+  "derivation": {
+    "kind": "lossless-vp9-companion",
+    "converter_revision": "e93b3bbce57ee36fc966e8ba4513f05273a75967",
+    "converter_path": "tools/rig-media.mjs",
+    "converter_sha256": "6cb4a328e8086b67cdf2b9f689cf59301df45e006e5463ea7330396723f02e8e",
+    "ffmpeg_version": "ffmpeg version 6.1.1-3ubuntu5+esm15 Copyright (c) 2000-2023 the FFmpeg developers",
+    "argv_template": [
+      "-v",
+      "error",
+      "-nostdin",
+      "-y",
+      "-i",
+      "{original}",
+      "-map",
+      "0:v:0",
+      "-an",
+      "-c:v",
+      "libvpx-vp9",
+      "-lossless",
+      "1",
+      "-pix_fmt",
+      "yuv420p",
+      "-deadline",
+      "good",
+      "-cpu-used",
+      "4",
+      "-row-mt",
+      "1",
+      "-threads",
+      "2",
+      "-fps_mode",
+      "passthrough",
+      "{companion}"
+    ]
+  }
+}

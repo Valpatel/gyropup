@@ -2,6 +2,17 @@
 
 | Symptom | Canonical guidance |
 | --- | --- |
+| A check summary says failed but the executed phase may be provisioning, a global cancellation, or a true assertion | [Classify phases and actual attempts before changing a check](inbox/2026-11-05-ci-classification-needs-phase-evidence.md) |
+| An asynchronous Playwright wait predicate returns false but polling finishes immediately | [Use synchronous acceptance polling and bounded native completion states](inbox/2026-11-05-layout-readiness-must-wait-for-fonts-not-global-load.md) |
+| A paused PR says its dependency or implementation is missing, but later commits/reports may already exist | [Resume from the actual tree and reports](inbox/2026-11-05-paused-work-needs-the-actual-head.md) |
+| A logical directory move changes public files/pages or breaks a module/service despite unchanged contents | [Map ownership, publication and import contracts before moving](inbox/2026-11-05-root-moves-need-consumer-and-publication-maps.md) |
+| Production RS-04 shutdown returns while its reader is alive, or Python 3.12 cancellation waits on connected clients | [Runtime ownership](domains/rs04-runtime-lifecycle.md), [production shutdown incident](inbox/2026-11-06-runtime-shutdown-must-finish-before-loop-closure.md) |
+| Tests report OK, then Python aborts with `_enter_buffered_busy`, or teardown leaves daemon threads/accepted sockets alive | [Test-owned asynchronous resources](domains/test-lifecycle.md), [RS-04 shutdown incident](inbox/2026-11-06-test-close-must-finish-owned-threads.md) |
+| A motor-day picture refresh changes STL bytes while keeping old slice estimates | [Preserve the independent mesh/slice snapshot](inbox/2026-11-05-picture-refresh-can-change-retained-slice-inputs.md) |
+| `motor_day --no-render` keeps stale pictures after an explode-offset or camera edit | [Bind all step visual inputs before reuse](inbox/2026-11-05-render-reuse-needs-explode-and-camera-inputs.md) |
+| Layout checks time out on a small pending resource despite visible content and loaded fonts | [Measure after real font readiness, not global load](inbox/2026-11-05-layout-readiness-must-wait-for-fonts-not-global-load.md) |
+| `?sound=0` is briefly ignored while talk mounts and an optional import is delayed | [Apply the audio query before mounting consumers](inbox/2026-11-05-audio-query-must-precede-optional-imports.md) |
+| Pages rejects a relocated Wrangler file with “custom paths” unsupported | [Find the config through the command working directory](inbox/2026-11-05-pages-deploy-needs-config-working-directory.md) |
 | A README image works on GitHub but is broken on the site's README page | [README images must use `src`, not `srcset`](inbox/2026-11-02-readme-images-need-src-not-srcset.md) |
 | A browser reports an untrusted certificate while a DNS firewall names a blocked domain or name server | [Failing-path evidence and domain-age limits](inbox/2026-10-30-dns-filter-warnings-need-the-failing-path.md), [public HTTPS receipt](../docs/validation/public-https.md) |
 | Local services fill with old branch previews, or dependency symlinks look like unfinished work | [One shared preview and bounded test listeners](domains/site-preview.md), [incident](inbox/2026-10-29-preview-servers-need-one-owner.md) |
@@ -73,6 +84,7 @@
 - Insert coupon passes but parent fit is unknown; horizontal versus vertical pilot; geometry-only3MF confused with a sliced print → [Preserve parent specimen orientation](inbox/2026-10-29-fit-specimens-must-preserve-layer-orientation.md), `research/carrier-insert-fit/`.
 - A failed CAD receipt passes after its failed check or output manifest is deleted → [Require complete evidence membership](inbox/2026-10-29-receipt-coverage-must-not-be-optional.md), `tools/test-carrier-connector-support.py`.
 | Progress looks stale, the useful simulation is buried, or links cannot open collapsed reports | [Progress publication and readable history](domains/progress-publication.md) |
+| A leg-rig movie has the right scenario filename but may belong to an older report | [Recorded movies need report identity](inbox/2026-11-05-recorded-rig-movies-need-their-report-identity.md), [Progress publication](domains/progress-publication.md) |
 - Terminal count stays correct after a CAN bypass, return, protected feed or interface identity is corrupted → [Require complete terminal membership](inbox/2026-10-29-receipt-coverage-must-not-be-optional.md#terminal-inventories-need-membership-checks-before-counts), `hardware/carrier-packaging/test_inventory.py`.
 | A valid gauge STL and successful slice lose small raised labels | [Inspect actual small-feature deposition](inbox/2026-10-31-inspect-deposition-of-small-gauge-labels.md) |
 | A screw stack gains a layer (plinth, spacer, washer) and its screws bottom in blind insert pilots; a mount contract's centre of mass or receiving depth disagrees with the parts on either side; insert, boss, orientation or clamped-plastic margins are unknown | [Re-check the receiving pilot](inbox/2026-11-01-a-new-layer-in-a-stack-needs-the-receivers-pilot.md), `research/insert-joints/` |

@@ -6,6 +6,7 @@ import { createLoadingStatus } from './kit/loading.js';
 import { createPortalParts } from './portal-parts.js';
 import { createDataReader, isRecord } from './kit/portal-data.js';
 import { mountStudyMedia, matchingStudyMedia } from './kit/study-media.js';
+import { prepareRigMedia, mountRigMedia } from './rig-media.js';
 
 const esc = (s) => String(s ?? '').replace(/[&<>"']/g, (c) => ({ '&': '&amp;', '<': '&lt;', '>': '&gt;', '"': '&quot;', "'": '&#39;' }[c]));
 const reader=createDataReader(fetch);
@@ -13,6 +14,7 @@ const getJson=(url,options={})=>reader.json(url,{validate:isRecord,...options});
 const $ = (id) => document.getElementById(id);
 const partsUI=createPortalParts($('progress-tools'));
 const studyPlayer=mountStudyMedia($('fea-media'));
+let disposeRigMedia=()=>{};
 const tag = (ok, warn) => `<span class="tag ${ok ? 'pass' : warn ? 'warn' : 'fail'}">${ok ? 'PASS' : warn ? 'CLOSE' : 'FAIL'}</span>`;
 const LEG = '../exports/leg/';
 
@@ -215,8 +217,18 @@ if (leg) {
 return !!leg;
 }),
 sectionLoad('rig','riglede','Leg test results',async isCurrent=>{
-const rig = await getJson(`${LEG}rig-results.json`,{optional:true,validate:value=>isRecord(value)&&isRecord(value.model)&&isRecord(value.scenarios),label:'Leg test results'});
-if(!isCurrent())return false;
+disposeRigMedia();disposeRigMedia=()=>{};
+$('rig').innerHTML='<p data-rig-media-state="checking" style="grid-column:1/-1">Checking recorded movie identities…</p>';
+let rigBytes,rig;
+try {
+  rigBytes=await reader.bytes(`${LEG}rig-results.json`,{optional:true,label:'Leg test results'});
+  if(!isCurrent())return false;
+  rig=rigBytes?JSON.parse(new TextDecoder().decode(rigBytes)):null;
+  if(rig && (!isRecord(rig)||!isRecord(rig.model)||!isRecord(rig.scenarios)))throw new Error('Leg test results have an unexpected format.');
+} catch(error) {
+  if(isCurrent())$('rig').innerHTML='<p data-rig-media-state="unavailable" style="grid-column:1/-1">Recorded movies unavailable: the numerical report could not be read.</p>';
+  throw error;
+}
 if (rig) {
   const S = rig.scenarios;
   $('riglede').innerHTML = `One leg on a vertical rail carrying half the robot (<b>${rig.half_mass_kg} kg</b>), RS-04s capped at <b>${rig.model.leg_cap_nm} N·m</b>`
@@ -230,9 +242,24 @@ if (rig) {
       + `<td data-sort-value="${jf(r)??r.peak_knee_pin_n??''}">${jf(r) != null ? `${jf(r)} N <span style="color:var(--muted)">(statics ${Math.round(r.peak_knee_pin_n)})</span>` : `${r.peak_knee_pin_n} N`}</td>`
       + `<td data-sort-value="${r.peak_stop_nm??''}">${r.peak_stop_nm} N·m</td><td>${r.L_range_mm.join('-')} mm</td><td data-sort-value="${r.jump_height_mm??''}">${r.jump_height_mm != null ? r.jump_height_mm + ' mm' : '—'}</td></tr>`).join('')
     + '</tbody></table>');
-  $('rig').innerHTML = Object.values(S).map((r) => `<figure><video src="${LEG}rig_${esc(r.scenario)}.mp4" controls loop muted playsinline preload="metadata"></video>`
-    + `<figcaption><b>${esc(r.scenario)}</b> ${esc(r.title)}</figcaption></figure>`).join('');
-}
+  let mediaRecord;
+  try {
+    mediaRecord=await getJson(`${LEG}rig-media.json`,{optional:true,label:'Recorded leg movie identities'});
+    const probe=document.createElement('video');
+    if(typeof probe.canPlayType==='function'&&!probe.canPlayType('video/mp4; codecs="avc1.64001f"')&&!probe.canPlayType('video/webm; codecs="vp9"'))
+      throw new Error('This browser does not support either recorded movie format.');
+    const format=typeof probe.canPlayType==='function'?(probe.canPlayType('video/mp4; codecs="avc1.64001f"')?'mp4':'webm'):'all';
+    const recorded=await prepareRigMedia(rigBytes,mediaRecord,file=>reader.bytes('../'+file,{label:'Recorded leg movie'}),{format});
+    if(!isCurrent())return false;
+    disposeRigMedia=mountRigMedia($('rig'),recorded);
+  } catch(error) {
+    if(!isCurrent())return false;
+    const recorded=/^[0-9a-f]{40}$/.test(mediaRecord?.producer_revision);
+    const reportURL=recorded?`https://github.com/Valpatel/gyropup/blob/${mediaRecord.producer_revision}/exports/leg/rig-results.json`:`${LEG}rig-results.json`;
+    $('rig').innerHTML=`<p data-rig-media-state="unavailable" style="grid-column:1/-1">Recorded movies unavailable: ${esc(error.message)} Numerical results remain available above. `
+      + `<a href="${esc(reportURL)}">${recorded?'Recorded source report':'Current numerical report'}</a>.</p>`;
+  }
+} else $('rig').innerHTML='<p data-rig-media-state="unavailable" style="grid-column:1/-1">Recorded movies unavailable: the numerical report is missing.</p>';
 
 
 return !!rig;
