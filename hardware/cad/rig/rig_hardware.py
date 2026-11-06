@@ -14,12 +14,19 @@ SLOT['nut'] (a drop-in nut's thread length), SLOT['room'] (the groove's depth le
 """
 from __future__ import annotations
 
+# Support direct-file CLI execution as well as checkout package imports.
+if __package__ in (None, ''):
+    import sys as _checkout_sys
+    from pathlib import Path as _CheckoutPath
+    _checkout_sys.path.insert(0, str(_CheckoutPath(__file__).resolve().parents[3]))
+
+
 import math
 
 import cadquery as cq
 
-import fivebar as fb
-import rig_parts as rp
+import hardware.cad.legs.fivebar as fb
+import hardware.cad.rig.rig_parts as rp
 
 SLOT = {'lip': 3.0, 'nut': {'M4': 4.0, 'M5': 5.0, 'M6': 5.0, 'M8': 6.0}, 'room': 3.0, 'groove_w': 16.5, 'groove_d': 12.0}
 SHCS = {'M3': (5.5, 3.0), 'M4': (7.0, 4.0), 'M5': (8.5, 5.0), 'M6': (10.0, 6.0), 'M8': (13.0, 8.0), '3/8-16': (14.29, 9.53)}   # head d, k
@@ -138,7 +145,7 @@ def joints(zh_carriage: float = 0.0) -> list:
     """Every screwed joint of the rig: dicts with 'name', 'body', 'thread', 'length', 'head', 'washer', 'seat'
     (x, y, z in the deck frame; carriage ones at hip height zh_carriage), 'into' (unit vector), 'clamp' (mm, from the
     head down), 'thread_in' (kind, depth, beyond), 'holds' (two part names), 'qty' (1 per row)."""
-    import build_rig as br                                     # the layout lives there
+    import hardware.cad.builders.build_rig as br                                     # the layout lives there
     J = []
     L = SLOT['lip']
 
@@ -251,7 +258,7 @@ def screw_shapes(J: list) -> dict:
 
 def corner_brackets() -> dict:
     """The base's cast corner brackets (two per joint where both faces are free) and the post's four at its foot."""
-    import build_rig as br
+    import hardware.cad.builders.build_rig as br
     zc = br.Z_FRAME_TOP - 20.0
     inner = br.X_SIDE - 20.0
     out = {}

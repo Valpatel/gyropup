@@ -17,7 +17,7 @@ import sys
 import time
 from pathlib import Path
 
-R = Path(__file__).resolve().parents[1]
+R = (Path(__file__).resolve().parents[3])
 
 
 def main():
@@ -30,7 +30,7 @@ def main():
         out = R / 'build' / 'fea-convergence' / a.case / f'm{m:g}'
         out.mkdir(parents=True, exist_ok=True)
         t0 = time.time()
-        subprocess.run([sys.executable, str(R / 'cad' / 'body_studies.py'), '--mesh', str(m), '--only', a.case, '--no-anim'],
+        subprocess.run([sys.executable, str((R / 'hardware/cad/body/body_studies.py')), '--mesh', str(m), '--only', a.case, '--no-anim'],
                        cwd=R, env=dict(os.environ, GYROPUP_BODY_FEA_OUT=str(out)), check=True)
         res = json.loads((out / 'summary.json').read_text())['results']
         for name, r in res.items():
@@ -44,7 +44,7 @@ def main():
                          'hot_spots': hot[:5]})
             print(f"mesh {m:g}: {name} SF {r.get('sf_by_part') or r.get('safety_factor')} deck {r.get('deck_peak_mpa')} MPa "
                   f"plate {r.get('plate_peak_mpa')} MPa  hot {hot[:2]}  ({rows[-1]['wall_s']} s)", flush=True)
-    f = R / 'exports' / 'body' / 'fea' / f'{a.case}-convergence.json'
+    f = (R / 'hardware/exports/body/fea') / f'{a.case}-convergence.json'
     f.write_text(json.dumps({'case': a.case, 'meshes': a.meshes, 'rows': rows,
                              'how': 'cad/body_studies.py --only <case> --no-anim at each global mesh size (tools/fea_convergence.py)'},
                             indent=1) + '\n')

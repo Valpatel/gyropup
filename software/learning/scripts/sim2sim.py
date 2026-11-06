@@ -33,7 +33,7 @@ def _repo_relative(path: Path) -> str:
     """The model folder as a repo-relative POSIX path, so the published metrics never hold a home path (#141)."""
     path = Path(path).resolve()
     try:
-        return path.relative_to(HERE.parent).as_posix()
+        return path.relative_to((HERE.parents[1])).as_posix()
     except ValueError:
         return path.name
 

@@ -36,9 +36,9 @@ from pathlib import Path
 
 from cadagent import mcmaster as mc
 
-R = Path(__file__).resolve().parents[1]
-CATALOG = R / 'catalog/hardware.json'
-VENDOR = R / 'references/vendor/mcmaster'
+R = (Path(__file__).resolve().parents[2])
+CATALOG = (R / 'hardware/catalog/hardware.json')
+VENDOR = (R / 'hardware/vendor/mcmaster')
 CATEGORY = {'bearing': 'bearing', 'rod_end': 'bearing', 'grommet': 'wiring'}      # everything else: fastener
 
 

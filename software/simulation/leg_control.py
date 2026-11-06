@@ -6,6 +6,13 @@ Angles are the five-bar's (cad/fivebar.py): phi1 the front hip, phi2 the rear, r
 """
 from __future__ import annotations
 
+# Support direct-file CLI execution as well as checkout package imports.
+if __package__ in (None, ''):
+    import sys as _checkout_sys
+    from pathlib import Path as _CheckoutPath
+    _checkout_sys.path.insert(0, str(_CheckoutPath(__file__).resolve().parents[2]))
+
+
 import math
 import sys
 from dataclasses import dataclass
@@ -13,9 +20,9 @@ from pathlib import Path
 
 import numpy as np
 
-R = Path(__file__).resolve().parents[1]
-sys.path.insert(0, str(R / 'cad'))
-import fivebar as fb  # noqa: E402
+R = (Path(__file__).resolve().parents[2])
+sys.path.insert(0, str((R / 'hardware/cad')))
+import hardware.cad.legs.fivebar as fb  # noqa: E402
 
 
 def clip_motor(tau, omega, peak, omega_max, cap=None):

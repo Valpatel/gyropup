@@ -27,14 +27,21 @@ What it is (docs/body-safety.md, docs/body-thermal.md):
 """
 from __future__ import annotations
 
+# Support direct-file CLI execution as well as checkout package imports.
+if __package__ in (None, ''):
+    import sys as _checkout_sys
+    from pathlib import Path as _CheckoutPath
+    _checkout_sys.path.insert(0, str(_CheckoutPath(__file__).resolve().parents[3]))
+
+
 import functools
 import math
 
 import cadquery as cq
 
-import body_frame as bf
-import body_params as bp
-import body_sheet as bs
+import hardware.cad.body.body_frame as bf
+import hardware.cad.body.body_params as bp
+import hardware.cad.body.body_sheet as bs
 
 WALL_T = 2.0
 RIB_T, RIB_D = 1.6, 3.5                   # 3.5 deep: clear of the J501's plug zones (to |y| 123.5)

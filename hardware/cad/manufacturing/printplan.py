@@ -5,17 +5,24 @@
 """
 from __future__ import annotations
 
+# Support direct-file CLI execution as well as checkout package imports.
+if __package__ in (None, ''):
+    import sys as _checkout_sys
+    from pathlib import Path as _CheckoutPath
+    _checkout_sys.path.insert(0, str(_CheckoutPath(__file__).resolve().parents[3]))
+
+
 import json
 import math
 from pathlib import Path
 
 import cadquery as cq
 
-import gmi
+import hardware.cad.robot.gmi as gmi
 
-R = Path(__file__).resolve().parents[1]
+R = (Path(__file__).resolve().parents[3])
 BED = gmi.STD['print']['bed_mm']
-MATERIALS = json.loads((R / 'catalog/materials.json').read_text())
+MATERIALS = json.loads(((R / 'hardware/catalog/materials.json')).read_text())
 # volumetric rates that hold strength (0.4 mm hardened nozzle; PA6-CF slower), with travel and walls: rough hours
 RATE_CM3_H = {'pa6-cf': 14.0, 'petg': 20.0, 'tpu95': 8.0, 'pla': 24.0}
 MARGIN = 6.0

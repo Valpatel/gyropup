@@ -8,7 +8,7 @@ from pathlib import Path
 import sys
 
 HERE = Path(__file__).resolve().parent
-ROOT = HERE.parents[1]
+ROOT = (HERE.parents[2])
 CANDIDATE = ROOT / 'hardware/carrier-pan-protection'
 sys.path.insert(0, str(CANDIDATE))
 spec = importlib.util.spec_from_file_location('reviewed_pan_calculation', CANDIDATE / 'calculate.py')

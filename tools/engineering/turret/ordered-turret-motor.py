@@ -15,7 +15,7 @@ import math
 from pathlib import Path
 import re
 
-ROOT = Path(__file__).resolve().parents[1]
+ROOT = (Path(__file__).resolve().parents[3])
 ASIN = 'B0GJNX17YX'
 PART = 'Deeahdah PRO3115-900KV'
 URL = f'https://www.amazon.com/dp/{ASIN}'

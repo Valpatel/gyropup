@@ -22,30 +22,37 @@ Lists
 """
 from __future__ import annotations
 
+# Support direct-file CLI execution as well as checkout package imports.
+if __package__ in (None, ''):
+    import sys as _checkout_sys
+    from pathlib import Path as _CheckoutPath
+    _checkout_sys.path.insert(0, str(_CheckoutPath(__file__).resolve().parents[3]))
+
+
 import json
 import math
 import sys
 from pathlib import Path
 
-R = Path(__file__).resolve().parents[1]
-sys.path.insert(0, str(R / 'cad'))
-OUT = R / 'exports' / 'body' / 'bom.json'
+R = (Path(__file__).resolve().parents[3])
+sys.path.insert(0, str((R / 'hardware/cad')))
+OUT = (R / 'hardware/exports/body/bom.json')
 READ = '2026-10-27'
 
 
 def catalogue() -> dict:
     """Every catalogue item by id and by key (catalog/index.json's files, hardware.json and body.json)."""
-    files = ['hardware.json', 'body.json', *json.loads((R / 'catalog/index.json').read_text())['files']]
+    files = ['hardware.json', 'body.json', *json.loads(((R / 'hardware/catalog/index.json')).read_text())['files']]
     out = {}
     for f in dict.fromkeys(files):
-        p = R / 'catalog' / f
+        p = (R / 'hardware/catalog') / f
         if not p.exists():
             continue
         for it in json.loads(p.read_text()):
             for k in (it.get('key'), it.get('id')):
                 if k and k not in out:
                     out[k] = it
-    src = json.loads((R / 'catalog/sourcing.json').read_text())                # parts not in a catalogue file yet (as build.js)
+    src = json.loads(((R / 'hardware/catalog/sourcing.json')).read_text())                # parts not in a catalogue file yet (as build.js)
     for it in src.get('parts', []):
         for k in (it.get('key'), it.get('id')):
             if k and k not in out:
@@ -77,7 +84,7 @@ EXTRA_SELLERS = {
 }
 
 
-ALTERNATES = json.loads((R / 'catalog/alternates.json').read_text())
+ALTERNATES = json.loads(((R / 'hardware/catalog/alternates.json')).read_text())
 EXTRA_BACKUP = {        # a second source where neither the catalogue nor alternates.json has one
     'turret_screw_m3x6_flat': [{'seller': 'McMaster-Carr', 'url': 'https://www.mcmaster.com/91294A128/', 'price_usd': 5.82, 'pack_qty': 100,
                                 'seller_pn': '91294A128', 'stock': 'M3 x 8 of the same series (4.8 mm into the standoff)', 'read_on': READ}],
@@ -142,8 +149,8 @@ def joint_hardware(stage):
     """Every screw, insert and nut the joints of a stage add (cad/body_joints.py: the same joints the integrity checks
     read through the CAD, so the parts list and the checked stacks cannot disagree): {key: (qty, why)}. P1 counts the
     P0 and P1 joints; P2 and P3 only the joints that first appear there."""
-    import body_joints as bj
-    import build_body as bb
+    import hardware.cad.body.body_joints as bj
+    import hardware.cad.builders.build_body as bb
     J = bj.joints(bb._layout()['items'])
     first = {'P1': ('P0', 'P1'), 'P2': ('P2',), 'P3': ('P3',)}[stage]
     out = {}
@@ -171,7 +178,7 @@ def joint_hardware(stage):
 def hardware_counts():
     """P1's screws, inserts and nuts from the joints, and the parts that are not joints (standoffs, the grommet, the
     lug stacks' M6 screws and nuts)."""
-    import body_frame as bf
+    import hardware.cad.body.body_frame as bf
     out = joint_hardware('P1')
     out.update({
         'standoff_m4x31_ff': (len(bf.SPACERS_XZ), 'the spine: between the cheeks in the hip frames\' bolt rows'),
@@ -186,7 +193,7 @@ def hardware_counts():
     return out
 
 
-PRICES = R / 'exports' / 'body' / 'sendcutsend' / 'prices.json'      # tools/sendcutsend_quote.py: SendCutSend's instant prices
+PRICES = (R / 'hardware/exports/body/sendcutsend/prices.json')      # tools/sendcutsend_quote.py: SendCutSend's instant prices
 
 
 def p3_shell(L, cat=None):
@@ -227,7 +234,7 @@ def made_to_order(body, prices=None):
                'price_estimate_usd_each': est.get(name)}
         pr = prices.get(name) or {}
         fin = pr.get('final') or {}
-        import body_sheet
+        import hardware.cad.body.body_sheet as body_sheet
         dxf = R / s['dxf'] if s.get('dxf') else None
         sha = body_sheet.dxf_geometry_sha1(dxf) if dxf and dxf.exists() else None
         same = (pr.get('order', {}).get('qty') == s['qty'] and not pr.get('refused') and not pr.get('error')
@@ -251,7 +258,7 @@ def made_to_order(body, prices=None):
 
 def build():
     cat = catalogue()
-    body = json.loads((R / 'exports/body/body.json').read_text())
+    body = json.loads(((R / 'hardware/exports/body/body.json')).read_text())
     pending = []
 
     def L(key, qty, why, **kw):
@@ -372,11 +379,11 @@ def _line_cost(r):
     return math.ceil(r['qty'] / pack) * p
 
 
-def write_orders(bom, path=R / 'docs' / 'body-orders.md'):
+def write_orders(bom, path=(R / 'docs/body/body-orders.md')):
     """docs/body-orders.md: the order list by seller (T8), from the parts list and the print plan."""
     import collections
     from urllib.parse import urlparse
-    pp = json.loads((R / 'exports/body/print-plan.json').read_text())
+    pp = json.loads(((R / 'hardware/exports/body/print-plan.json')).read_text())
 
     def cost(r):
         s = (r.get('sellers') or [{}])[0]

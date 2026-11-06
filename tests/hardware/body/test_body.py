@@ -8,20 +8,27 @@ the track and Y_OFF print from the one constant. T2 adds the frame's own checks 
 """
 from __future__ import annotations
 
+# Support direct-file CLI execution as well as checkout package imports.
+if __package__ in (None, ''):
+    import sys as _checkout_sys
+    from pathlib import Path as _CheckoutPath
+    _checkout_sys.path.insert(0, str(_CheckoutPath(__file__).resolve().parents[3]))
+
+
 import json
 import math
 import sys
 from pathlib import Path
 
-R = Path(__file__).resolve().parents[1]
-sys.path.insert(0, str(R / 'cad'))
+R = (Path(__file__).resolve().parents[3])
+sys.path.insert(0, str((R / 'hardware/cad')))
 
-import body_params as bp  # noqa: E402
+import hardware.cad.body.body_params as bp  # noqa: E402
 
 
 def test_frame_mounts_from_the_frame():
-    import fivebar as fb
-    import gmi
+    import hardware.cad.legs.fivebar as fb
+    import hardware.cad.robot.gmi as gmi
     m = bp.frame_mounts()
     holes = m['holes']
     assert len(holes) == 6, holes
@@ -45,7 +52,7 @@ def test_frame_mounts_from_the_frame():
 
 
 def test_tm_pattern_is_the_turrets():
-    import turret as tu
+    import hardware.cad.turret.turret as tu
     t = bp.tm()
     assert t['bolts'] == [tuple(p) for p in tu.TM_BOLTS]
     assert t['dowels'] == [tuple(p) for p in tu.TM_DOWELS]
@@ -136,7 +143,7 @@ def test_track_and_y_off_print():
 
 # ------------------------------------------------------------------------------------------- T2: the frame's parts
 
-BODY_JSON = R / 'exports' / 'body' / 'body.json'
+BODY_JSON = (R / 'hardware/exports/body/body.json')
 
 
 def _body():
@@ -206,21 +213,21 @@ def test_frame_strength_cases():
     """Every strength case of cad/body_studies.py passes its target (exports/body/fea/summary.json): SF >= 2 on yield
     in the rare landings, 1.2 in the fault cases, D2 (the turret's tip-over) >= 2.0 with the mount plate (D59), the deck
     <= 0.5 mm under a hand at the load, the twist <= 0.1 deg; the loads at the design mass (D57)."""
-    s = json.loads((R / 'exports' / 'body' / 'fea' / 'summary.json').read_text())['results']
+    s = json.loads(((R / 'hardware/exports/body/fea/summary.json')).read_text())['results']
     bad = {k: (r.get('sf_by_part') or r.get('sf_away_from_spacer_ends') or r['safety_factor'], r.get('target_sf'))
            for k, r in s.items() if not r['pass'] or r.get('pass_deflection') is False or r.get('pass_twist') is False}
     assert not bad, bad
     d2 = s['D2-turret-fall']
     assert d2['target_sf'] >= 2.0, d2['target_sf']
-    loads = json.loads((R / 'exports' / 'body' / 'leg-loads.json').read_text())
-    import body_layout as bl
+    loads = json.loads(((R / 'hardware/exports/body/leg-loads.json')).read_text())
+    import hardware.cad.body.body_layout as bl
     assert loads['half_mass_kg'] >= bl.BUDGET['design_half_mass_kg'] - 1e-9, loads['half_mass_kg']      # D71: 18.75 kg a leg
 
 
 # ------------------------------------------------------------------------------------------- T5, T8: parts list, wiring
 
 def test_every_bought_line_has_a_price_and_a_backup():
-    f = R / 'exports' / 'body' / 'bom.json'
+    f = (R / 'hardware/exports/body/bom.json')
     if not f.exists():
         import pytest
         pytest.skip('exports/body/bom.json not built yet (cad/body_bom.py)')
@@ -245,7 +252,7 @@ AMPACITY_A = {8: 85, 10: 55, 12: 41, 14: 32, 16: 22, 18: 16, 22: 7}       # sili
 def test_every_fuse_protects_its_wire():
     """No fuse on a wire is larger than the wire carries (docs/body-electrical.md)."""
     import re
-    w = json.loads((R / 'exports' / 'body' / 'wiring.json').read_text())
+    w = json.loads(((R / 'hardware/exports/body/wiring.json')).read_text())
     bad = []
     for r in w['wires']:
         m = re.search(r'(\d+(?:\.\d+)?) A', r['fuse'] or '')
@@ -261,7 +268,7 @@ def test_no_live_pins_on_the_body():
     pins. The bay's XT90-S: its female is on the bay's lead, the robot's male is dead with the packs out.
     The order buys the sockets the wire list needs."""
     import re
-    w = json.loads((R / 'exports' / 'body' / 'wiring.json').read_text())
+    w = json.loads(((R / 'hardware/exports/body/wiring.json')).read_text())
     bad = []
     for r in w['wires']:
         for field in ('from', 'to', 'termination'):
@@ -275,7 +282,7 @@ def test_no_live_pins_on_the_body():
     assert all('XT60H-F' in ends[k] for k in ('W10', 'W11', 'W12', 'W13', 'W14', 'W15')), ends
     assert all('XT30U-F' in ends[k] for k in ('W21', 'W24')), ends
     assert all('DT06' in ends[k] for k in ('W34', 'W36')), ends            # D76: the plug's sockets on the body's side
-    f = R / 'exports' / 'body' / 'bom.json'
+    f = (R / 'hardware/exports/body/bom.json')
     if f.exists():
         bom = json.loads(f.read_text())
         qty = {r['key']: r['qty'] for k, rows in bom.items() if isinstance(rows, list) and not k.startswith(('not_', 'to_source', 'made_to'))
@@ -286,7 +293,7 @@ def test_no_live_pins_on_the_body():
 
 
 def test_body_loads_from_the_mount_plane():
-    f = R / 'exports' / 'body' / 'leg-loads.json'
+    f = (R / 'hardware/exports/body/leg-loads.json')
     d = json.loads(f.read_text())
     for k in ('rare_body', 'fault_body'):
         M, name = d[k]
@@ -301,7 +308,7 @@ import pytest  # noqa: E402
 def test_the_mass_ledger_is_information():
     """D79: there is no mass budget (the owner took out D71's gate). The ledger only has to be whole: a total, the legs
     and the body and head adding up to it, and D71's design mass (37.5 kg, 18.75 kg a leg) for the strength cases."""
-    m = json.loads((R / 'exports' / 'body' / 'mass.json').read_text())['P3']
+    m = json.loads(((R / 'hardware/exports/body/mass.json')).read_text())['P3']
     print(f"\nmass ledger P3 {m['total_kg']} kg; legs {m['legs_kg']} kg, body and head {m['body_and_head_kg']} kg")
     assert 'gate' not in m and 'budget' not in m
     assert abs(m['legs_kg'] + m['body_and_head_kg'] - m['total_kg']) < 0.02, m['total_kg']
@@ -311,8 +318,8 @@ def test_the_mass_ledger_is_information():
 def test_the_ledger_carries_the_d69_wheel():
     """D69: each wheel is the 10 in hub motor at its listed mass (until the leg's BOM carries it), and the design mass is
     37.5 kg (18.75 kg a leg, D71)."""
-    import body_layout as bl
-    m = json.loads((R / 'exports' / 'body' / 'mass.json').read_text())['P3']
+    import hardware.cad.body.body_layout as bl
+    m = json.loads(((R / 'hardware/exports/body/mass.json')).read_text())['P3']
     w = {r['name']: r['mass_g'] for r in m['rows'] if r['name'].endswith(('wheel_tyre', 'wheel_hub'))}
     assert abs(w['L.wheel_tyre'] + w['L.wheel_hub'] - bl.wheel_g()) < 1.0, w
     assert bl.wheel_g() > 2200.0                       # heavier than the BotWheel it replaces (a weighed wheel may differ)
@@ -378,7 +385,7 @@ def test_integrity_every_joint_and_no_floating_part():
     """cad/body_joints.py (run by cad/build_body.py): every screw's stack reads true through the CAD (the head on its face,
     the stack touching, the holes, the thread engaged, the tip clear), every part on the robot reaches the cheeks through
     cad-agent's connectivity gate (issue #14), and no two body parts interfere."""
-    f = R / 'exports' / 'body' / 'integrity.json'
+    f = (R / 'hardware/exports/body/integrity.json')
     d = json.loads(f.read_text())['summary']
     assert not d['joints_with_problems'], d['joints_with_problems']
     assert not d['floating'], d['floating']
@@ -392,10 +399,10 @@ def test_integrity_every_joint_and_no_floating_part():
 def test_pack_and_adapter_are_marked_envelopes_until_measured():
     """Issue #20: the DCB609 and its rail adapter stay labelled boxes until a real pack and adapter are measured; the
     ledger's rows say so, so nobody reads them as modelled interfaces."""
-    import body_battery as bb
+    import hardware.cad.body.body_battery as bb
     for spec in (bb.PACK, bb.ADAPTER):
         assert spec.get('envelope') and '#20' in spec.get('blocked_by', ''), spec
-    m = json.loads((R / 'exports' / 'body' / 'mass.json').read_text())['P3']
+    m = json.loads(((R / 'hardware/exports/body/mass.json')).read_text())['P3']
     rows = [r for r in m['rows'] if r['name'].startswith('battery_')]
     assert rows and all(r['basis'].startswith('ENVELOPE') for r in rows), [(r['name'], r['basis'][:40]) for r in rows]
 
@@ -404,10 +411,10 @@ def test_the_lowest_leg_is_one_number():
     """Issue #19: the crush pads' 40 mm under them needs the lowest controlled leg at 180 mm, set in the pad's spec, the
     body's sim and the firmware header: one number in all three."""
     import re
-    import body_battery as bb
-    from sim import robot_v2
+    import hardware.cad.body.body_battery as bb
+    from software.simulation import robot_v2
     h = robot_v2.H_RANGE[0]
-    fw = (R / 'firmware' / 'balance' / 'include' / 'gp' / 'gp_model.h').read_text()
+    fw = ((R / 'software/firmware/balance/include/gp/gp_model.h')).read_text()
     hf = float(re.search(r'#define GP_H_MIN_M ([\d.]+)f', fw).group(1)) * 1000
     assert h == bb.PAD['lowest_leg_mm'] == round(hf, 3), (h, bb.PAD['lowest_leg_mm'], hf)
     g = bb.geometry()
@@ -417,11 +424,11 @@ def test_the_lowest_leg_is_one_number():
 def test_the_design_half_mass_is_one_number():
     """D71: 18.75 kg a leg in the ledger's budget, the firmware generator (which reads it), the HIL and the legs' loads."""
     import re
-    import body_layout as bl
+    import hardware.cad.body.body_layout as bl
     hm = bl.BUDGET['design_half_mass_kg']
-    hil = (R / 'firmware' / 'balance' / 'hil' / 'harness.py').read_text()
+    hil = ((R / 'software/firmware/balance/hil/harness.py')).read_text()
     assert float(re.search(r'^DESIGN_HALF_MASS = ([\d.]+)', hil, re.M).group(1)) == hm
-    fw = (R / 'firmware' / 'balance' / 'include' / 'gp' / 'gp_model.h').read_text()
+    fw = ((R / 'software/firmware/balance/include/gp/gp_model.h')).read_text()
     assert abs(float(re.search(r'#define GP_RIG_HALF_MASS_KG ([\d.]+)f', fw).group(1)) - hm) < 1e-6
 
 
@@ -429,7 +436,7 @@ def test_the_design_half_mass_is_one_number():
 # plate: no lip under a Ø5.5 socket head there (the integrity check models no heads, so this checks it on the solids).
 def test_the_pad_lips_clear_the_heads_they_do_not_take():
     import cadquery as cq
-    import body_battery as bb
+    import hardware.cad.body.body_battery as bb
     g = bb.geometry()
     pads = bb.skids()
     taken = bb.pad_screws()
@@ -452,7 +459,7 @@ def test_the_pad_lips_clear_the_heads_they_do_not_take():
 def test_the_pad_web_prints_without_support():
     """The web under the floor's edge is carried by a 45 deg chamfer down to the lattice, so the upright print has no
     flat ledge; the chamfer's lowest point stays above the 30 mm stroke."""
-    import body_battery as bb
+    import hardware.cad.body.body_battery as bb
     g = bb.geometry()
     for b in bb.pad_boxes():
         x0, x1, yi, yo, zt = bb.pad_web_chamfer(b)

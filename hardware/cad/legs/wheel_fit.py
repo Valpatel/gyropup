@@ -9,20 +9,27 @@ reach. --quick: the three extreme stances only.
 """
 from __future__ import annotations
 
+# Support direct-file CLI execution as well as checkout package imports.
+if __package__ in (None, ''):
+    import sys as _checkout_sys
+    from pathlib import Path as _CheckoutPath
+    _checkout_sys.path.insert(0, str(_CheckoutPath(__file__).resolve().parents[3]))
+
+
 import argparse
 import json
 import sys
 import time
 from pathlib import Path
 
-R = Path(__file__).resolve().parents[1]
-sys.path.insert(0, str(R / 'cad'))
+R = (Path(__file__).resolve().parents[3])
+sys.path.insert(0, str((R / 'hardware/cad')))
 sys.path.insert(0, str(R))
 
-import fivebar as fb  # noqa: E402
+import hardware.cad.legs.fivebar as fb  # noqa: E402
 
-CANDIDATES = json.loads((R / 'sim' / 'wheel_candidates.json').read_text())
-OUT = R / 'exports' / 'wheels'
+CANDIDATES = json.loads(((R / 'software/simulation/wheel_candidates.json')).read_text())
+OUT = (R / 'hardware/exports/wheels')
 
 
 def patch(w: dict):

@@ -24,6 +24,13 @@ exports/print-plan.json lists every printed part: material, how many, how it lie
 """
 from __future__ import annotations
 
+# Support direct-file CLI execution as well as checkout package imports.
+if __package__ in (None, ''):
+    import sys as _checkout_sys
+    from pathlib import Path as _CheckoutPath
+    _checkout_sys.path.insert(0, str(_CheckoutPath(__file__).resolve().parents[3]))
+
+
 import json
 import math
 import os
@@ -42,24 +49,24 @@ except ImportError:                     # pragma: no cover
     def fit_mesh(path, max_faces=150_000):
         return 0
 
-R = Path(__file__).resolve().parents[1]
-sys.path.insert(0, str(R / 'cad'))
+R = (Path(__file__).resolve().parents[3])
+sys.path.insert(0, str((R / 'hardware/cad')))
 sys.path.insert(0, str(R))
-import assembly  # noqa: E402
-import electronics  # noqa: E402
-import gmi  # noqa: E402
-import leg  # noqa: E402
-import turret  # noqa: E402
+import hardware.cad.robot.assembly as assembly  # noqa: E402
+import hardware.cad.robot.electronics as electronics  # noqa: E402
+import hardware.cad.robot.gmi as gmi  # noqa: E402
+import hardware.cad.legs.leg as leg  # noqa: E402
+import hardware.cad.turret.turret as turret  # noqa: E402
 
-P = json.loads((R / 'cad/parameters.json').read_text())
-OUT = Path(os.environ['GYROPUP_EXPORTS']).resolve() if os.environ.get('GYROPUP_EXPORTS') else R / 'exports'          # GYROPUP_EXPORTS: a separate folder per optimiser trial
+P = json.loads(((R / 'hardware/cad/robot/parameters.json')).read_text())
+OUT = Path(os.environ['GYROPUP_EXPORTS']).resolve() if os.environ.get('GYROPUP_EXPORTS') else (R / 'hardware/exports')          # GYROPUP_EXPORTS: a separate folder per optimiser trial
 SHEET = 5.0          # printed chassis wall (PA6-CF)
 FLOOR_T = 4.0        # printed chassis floor
 HM_PAD = 12.0        # wall thickness under each leg's HM pattern (inside pad)
 
 
 def derive(design_path: Path) -> dict:
-    out = subprocess.run(['node', str(R / 'tools/derive.mjs'), str(design_path)], capture_output=True, text=True, check=True)
+    out = subprocess.run(['node', str((R / 'tools/engineering/robot/derive.mjs')), str(design_path)], capture_output=True, text=True, check=True)
     return json.loads(out.stdout)
 
 
@@ -224,7 +231,7 @@ def build(design_path: Path, fast: bool = False):
     a, b = L['thigh'], L['shin']
     cr = leg.PARAMS['crank_r']
     # standing pose for the assembly (60 % height), from the controller's own leg geometry
-    from sim.controller import hip_for, knee_for
+    from software.simulation.controller import hip_for, knee_for
     am, bm = a / 1000, b / 1000
     lo, hi = math.radians(L['kneeMinDeg']), math.radians(L['kneeMaxDeg'])
     hmin, hmax = (math.sqrt(am * am + bm * bm - 2 * am * bm * math.cos(g)) for g in (lo, hi))
@@ -270,7 +277,7 @@ def build(design_path: Path, fast: bool = False):
            'yoke_bracket': ((1, 0, 0), 90), 'battery_cradle': None, 'thigh': flat, 'shin': flat, 'knee_crank': flat,
            'hip_motor_plate': flat, 'knee_motor_plate': flat, 'hip_output_adapter': flat, 'knee_output_adapter': flat,
            'wheel_adapter': flat, **{n: m['print_rotation'] for n, m in TUR.meta.items()}}
-    materials = json.loads((R / 'catalog/materials.json').read_text())
+    materials = json.loads(((R / 'hardware/catalog/materials.json')).read_text())
     OUT.mkdir(exist_ok=True)
     if not fast:                                # parts from an earlier build (a removed part, an old design) must not linger
         for pat in ('*.step', '*.stl', 'view/*', 'links/*'):
@@ -414,7 +421,7 @@ def write_print_plan(plan):
 
 def load_catalog():
     cat = {}
-    for f in sorted((R / 'catalog').glob('*.json')):
+    for f in sorted(((R / 'hardware/catalog')).glob('*.json')):
         try:
             j = json.loads(f.read_text())
         except Exception:
@@ -448,7 +455,7 @@ def vendor_visual(cat_id, size, center):
     """The vendor's own model of a bought part (references/vendor/<id>/*.step, kept local) turned so its extents match
     the box the layout placed (the largest extent along the box's largest side, ...), centred on it; None if absent."""
     import itertools
-    folder = R / 'references' / 'vendor' / (cat_id or '')
+    folder = (R / 'hardware/vendor') / (cat_id or '')
     files = sorted([f for f in folder.glob('*') if f.suffix.lower() in ('.step', '.stp')]) if cat_id and folder.exists() else []
     if not files:
         return None
@@ -723,4 +730,4 @@ def _envelope(part_id):
 
 if __name__ == '__main__':
     args = [a for a in sys.argv[1:] if not a.startswith('--')]
-    build(Path(args[0]) if args else R / 'designs/default.json', fast='--fast' in sys.argv)
+    build(Path(args[0]) if args else (R / 'hardware/designs/default.json'), fast='--fast' in sys.argv)

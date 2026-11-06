@@ -32,6 +32,13 @@ whenever the reported speed sits on the rail.
 """
 from __future__ import annotations
 
+# Support direct-file CLI execution as well as checkout package imports.
+if __package__ in (None, ''):
+    import sys as _checkout_sys
+    from pathlib import Path as _CheckoutPath
+    _checkout_sys.path.insert(0, str(_CheckoutPath(__file__).resolve().parents[3]))
+
+
 import argparse
 import math
 import struct
@@ -602,13 +609,13 @@ def configure(m: Motor, config: Optional[dict] = None, damper: Optional[int] = N
 
 def _transport(a):
     if a.iface == 'emu':                                     # a software motor, for trying the commands without hardware
-        from rig.canio import VirtualBus
-        from rig.rs04_emu import EmulatedRS04
+        from software.control.rig.canio import VirtualBus
+        from software.control.rig.rs04_emu import EmulatedRS04
         vb = VirtualBus()
         for i in a.emu_ids:
             vb.attach(EmulatedRS04(i).handle)
         return vb.port()
-    from rig.canio import SocketCan
+    from software.control.rig.canio import SocketCan
     return SocketCan(a.iface)
 
 

@@ -17,16 +17,23 @@ stops' fairings wait for that merge (docs/body-next-plan.md 5.1 item 6). People-
 """
 from __future__ import annotations
 
+# Support direct-file CLI execution as well as checkout package imports.
+if __package__ in (None, ''):
+    import sys as _checkout_sys
+    from pathlib import Path as _CheckoutPath
+    _checkout_sys.path.insert(0, str(_CheckoutPath(__file__).resolve().parents[3]))
+
+
 import json
 import math
 import sys
 from pathlib import Path
 
-R = Path(__file__).resolve().parents[1]
-sys.path.insert(0, str(R / 'cad'))
-import body_params as bp  # noqa: E402
+R = (Path(__file__).resolve().parents[3])
+sys.path.insert(0, str((R / 'hardware/cad')))
+import hardware.cad.body.body_params as bp  # noqa: E402
 
-OUT = R / 'exports' / 'body' / 'shell'
+OUT = (R / 'hardware/exports/body/shell')
 SAFE, NO_FINGER = 25.0, 4.0
 
 

@@ -20,6 +20,13 @@ has no counterpart for (BENCH_SCENARIOS: B5's tyre press).
 """
 from __future__ import annotations
 
+# Support direct-file CLI execution as well as checkout package imports.
+if __package__ in (None, ''):
+    import sys as _checkout_sys
+    from pathlib import Path as _CheckoutPath
+    _checkout_sys.path.insert(0, str(_CheckoutPath(__file__).resolve().parents[3]))
+
+
 import math
 import sys
 from dataclasses import dataclass, field
@@ -28,13 +35,13 @@ from typing import Optional
 
 import numpy as np
 
-R = Path(__file__).resolve().parents[1]
-for _p in (R, R / 'cad'):
+R = (Path(__file__).resolve().parents[3])
+for _p in (R, (R / 'hardware/cad')):
     if str(_p) not in sys.path:
         sys.path.insert(0, str(_p))
-import fivebar as fb  # noqa: E402
-from sim.leg_control import Gains, clip_motor, polar, vmc_from_state  # noqa: E402,F401  (the controller, simulator-free)
-from sim import leg_limits as ll  # noqa: E402  (the soft stops and the build's caps: exports/leg/limits.json)
+import hardware.cad.legs.fivebar as fb  # noqa: E402
+from software.simulation.leg_control import Gains, clip_motor, polar, vmc_from_state  # noqa: E402,F401  (the controller, simulator-free)
+from software.simulation import leg_limits as ll  # noqa: E402  (the soft stops and the build's caps: exports/leg/limits.json)
 
 G = 9.81
 LEG_PEAK = 120.0                  # N m, RS-04 peak (catalog/leg_actuators.json)

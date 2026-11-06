@@ -16,6 +16,13 @@ Frames: the box frame of cad/turret_box.py (mm, x forward, y left, z up).
 """
 from __future__ import annotations
 
+# Support direct-file CLI execution as well as checkout package imports.
+if __package__ in (None, ''):
+    import sys as _checkout_sys
+    from pathlib import Path as _CheckoutPath
+    _checkout_sys.path.insert(0, str(_CheckoutPath(__file__).resolve().parents[3]))
+
+
 import argparse
 import hashlib
 import json
@@ -27,33 +34,33 @@ from pathlib import Path
 
 import numpy as np
 
-R = Path(__file__).resolve().parents[1]
-sys.path.insert(0, str(R / 'cad'))
+R = (Path(__file__).resolve().parents[3])
+sys.path.insert(0, str((R / 'hardware/cad')))
 import cadquery as cq  # noqa: E402
 
-import printplan  # noqa: E402
-import turret as tu  # noqa: E402
-import turret_box as tb  # noqa: E402
-import turret_gates as tg  # noqa: E402
+import hardware.cad.manufacturing.printplan as printplan  # noqa: E402
+import hardware.cad.turret.turret as tu  # noqa: E402
+import hardware.cad.turret.turret_box as tb  # noqa: E402
+import hardware.cad.turret.turret_gates as tg  # noqa: E402
 from cadagent.geometry import export_print_stl  # noqa: E402
 from cadagent.robot import Body, combine, printed_part_body, solid_mass_properties  # noqa: E402
 
-OUT = R / 'exports' / 'turret' / 'box'
-SCENE = R / 'exports' / 'sim' / 'turret_box'
-MATERIALS = json.loads((R / 'catalog/materials.json').read_text())
-CAT = {i['id']: i for i in json.loads((R / 'catalog/turret.json').read_text())}
+OUT = (R / 'hardware/exports/turret/box')
+SCENE = (R / 'hardware/exports/sim/turret_box')
+MATERIALS = json.loads(((R / 'hardware/catalog/materials.json')).read_text())
+CAT = {i['id']: i for i in json.loads(((R / 'hardware/catalog/turret.json')).read_text())}
 
 
 def _catalogue():
     """Every catalogue item by id and by key (catalog/index.json's files and catalog/sourcing.json's parts), as the
     bench's parts list (cad/build_turret.py) reads them."""
     out = {}
-    for f in dict.fromkeys(['hardware.json', *json.loads((R / 'catalog/index.json').read_text())['files']]):
-        for it in json.loads((R / 'catalog' / f).read_text()):
+    for f in dict.fromkeys(['hardware.json', *json.loads(((R / 'hardware/catalog/index.json')).read_text())['files']]):
+        for it in json.loads(((R / 'hardware/catalog') / f).read_text()):
             for k in (it.get('id'), it.get('key')):
                 if k:
                     out.setdefault(k, it)
-    for it in json.loads((R / 'catalog/sourcing.json').read_text()).get('parts', []):
+    for it in json.loads(((R / 'hardware/catalog/sourcing.json')).read_text()).get('parts', []):
         for k in (it.get('id'), it.get('key')):
             if k:
                 out.setdefault(k, it)
@@ -284,7 +291,7 @@ def flight(v0=21.3, z0=0.55, pitch_deg=0.0, cd=0.5, d=0.0227, m=0.00183, dt=2e-4
 def mechanics(T, rows, groups):
     G = T.G
     sn, sv = CAT['sunnysky-x2216-1400kv-v3']['specs'], CAT['feetech-sts3215-c018-12v']['specs']
-    l3 = json.loads((R / 'exports/turret/launch/launch3d.json').read_text())['design']          # the physics' set speed (sim/turret_launch3d.py)
+    l3 = json.loads(((R / 'hardware/exports/turret/launch/launch3d.json')).read_text())['design']          # the physics' set speed (sim/turret_launch3d.py)
     ball = {'d_mm': G.ball, 'mass_g': 1.83, 'speed_mps': round(l3['set_fps_nominal'] * 0.3048, 2), 'fps': l3['set_fps_nominal'], 'bore_mm': G.bore_out,
             'cap_fps': 105, 'target_fps': [95, 100]}                    # D68: the 105 fps physical ceiling
     ball['energy_j'] = round(0.5 * ball['mass_g'] * M * ball['speed_mps'] ** 2, 3)
@@ -429,7 +436,7 @@ def ball_path_check():
     """The 3D check of the ball's way out, cad/turret_lidar.py --scene box (every moving part and the ball's path, a
     Ø22.8 ball 2 deg low at the slowest stray speed, against the deck, the box and upright antennas, at every pan and
     tilt, 10 mm margin), when its result is for this TM height; None when it has not been run."""
-    f = R / 'exports' / 'turret' / 'lidar' / 'box.json'
+    f = (R / 'hardware/exports/turret/lidar/box.json')
     if not f.exists():
         return None
     d = json.loads(f.read_text())
@@ -713,7 +720,7 @@ def main():
     fl = mech['flywheel']
     vmax = fl['no_load_rpm'] / 60 * math.pi * fl['d_mm'] * M * fl['efficiency_assumed']
     # the physics' ceiling (sim/turret_launch3d.py: the fastest swept ball at 100 % throttle, +5 % KV, +4 % rail, runout, tyre growth)
-    l3 = json.loads((R / 'exports/turret/launch/launch3d.json').read_text())
+    l3 = json.loads(((R / 'hardware/exports/turret/launch/launch3d.json')).read_text())
     # D68: the design's trimmed rail (l3 design.supply_v) and its worst-corner ceiling over every accepted round
     dsg, cl3 = l3.get('design', {}), l3.get('ceiling', {})
     ceil = {'ceiling_fps': cl3.get('worst_corner_fps'), 'rail_v': dsg.get('supply_v')} if cl3.get('worst_corner_fps') else None

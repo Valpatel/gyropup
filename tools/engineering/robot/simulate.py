@@ -10,6 +10,13 @@ follow the parts.
 """
 from __future__ import annotations
 
+# Support direct-file CLI execution as well as checkout package imports.
+if __package__ in (None, ''):
+    import sys as _checkout_sys
+    from pathlib import Path as _CheckoutPath
+    _checkout_sys.path.insert(0, str(_CheckoutPath(__file__).resolve().parents[3]))
+
+
 import argparse
 import json
 import os
@@ -17,18 +24,18 @@ import sys
 import time
 from pathlib import Path
 
-R = Path(__file__).resolve().parents[1]
+R = (Path(__file__).resolve().parents[3])
 sys.path.insert(0, str(R))
 os.environ.setdefault('MUJOCO_GL', 'egl')
 
-from sim.model import build                     # noqa: E402
-from sim.scenarios import SCENARIOS, recoil_scenario, run          # noqa: E402
+from software.simulation.model import build                     # noqa: E402
+from software.simulation.scenarios import SCENARIOS, recoil_scenario, run          # noqa: E402
 
 
 def simulate(design: Path, only=None, video=False, v2=False) -> dict:
-    exports = Path(os.environ['GYROPUP_EXPORTS']).resolve() if os.environ.get('GYROPUP_EXPORTS') else R / 'exports'
+    exports = Path(os.environ['GYROPUP_EXPORTS']).resolve() if os.environ.get('GYROPUP_EXPORTS') else (R / 'hardware/exports')
     if v2:                                               # Gyropup v2: two five-bar legs, the turret, an interim body
-        from sim.robot_v2 import build as build_v2
+        from software.simulation.robot_v2 import build as build_v2
         info = build_v2()
         xml = R / 'build' / 'sim' / 'v2' / 'robot.xml'
         out = exports / 'sim' / 'v2'
@@ -91,7 +98,7 @@ def body_evidence(summary, info, exports):
 
 def main():
     ap = argparse.ArgumentParser()
-    ap.add_argument('design', nargs='?', default=str(R / 'designs/default.json'))
+    ap.add_argument('design', nargs='?', default=str((R / 'hardware/designs/default.json')))
     ap.add_argument('--only', nargs='+')
     ap.add_argument('--video', action='store_true')
     ap.add_argument('--all', action='store_true')
@@ -102,7 +109,7 @@ def main():
         s = simulate(None, a.only, a.video, v2=True)
         print(f"  {s['passed']}/{s['total']} scenarios pass; model {s['mass_kg']} kg")
         return 0 if s['passed'] == s['total'] else 1
-    designs = sorted((R / 'designs').glob('*.json')) if a.all else [Path(a.design)]
+    designs = sorted(((R / 'hardware/designs')).glob('*.json')) if a.all else [Path(a.design)]
     ok = True
     for d in designs:
         print(f'{d.name}:')

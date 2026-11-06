@@ -28,6 +28,13 @@ Writes exports/leg/fea/<part>-<case>.png (+ .mp4 overload video and .json for th
 """
 from __future__ import annotations
 
+# Support direct-file CLI execution as well as checkout package imports.
+if __package__ in (None, ''):
+    import sys as _checkout_sys
+    from pathlib import Path as _CheckoutPath
+    _checkout_sys.path.insert(0, str(_CheckoutPath(__file__).resolve().parents[3]))
+
+
 import argparse
 import json
 import math
@@ -37,15 +44,15 @@ from pathlib import Path
 
 import numpy as np
 
-R = Path(__file__).resolve().parents[1]
-sys.path.insert(0, str(R / 'cad'))
+R = (Path(__file__).resolve().parents[3])
+sys.path.insert(0, str((R / 'hardware/cad')))
 sys.path.insert(0, str(R))
-import fivebar as fb  # noqa: E402
-import gmi  # noqa: E402
+import hardware.cad.legs.fivebar as fb  # noqa: E402
+import hardware.cad.robot.gmi as gmi  # noqa: E402
 from cadagent.fea import MATERIALS, Study  # noqa: E402
-from sim.leg_rig import WHEEL_R, pin_forces  # noqa: E402
+from software.simulation.leg_rig import WHEEL_R, pin_forces  # noqa: E402
 
-OUT = R / 'exports' / 'leg' / 'fea'
+OUT = (R / 'hardware/exports/leg/fea')
 TARGETS = {'sf': 2.0, 'sf_rare': 1.2,
            'sf_fault': 1.0,                             # a fault (an uncontrolled power cut while standing): nothing may
                                                         # break; inspect the knees after one (D39)
@@ -89,7 +96,7 @@ def loads_at(h_mm, Fw3, lean=0.0):
 
 
 def cases():
-    rig = json.loads((R / 'exports/leg/rig-results.json').read_text())['scenarios']
+    rig = json.loads(((R / 'hardware/exports/leg/rig-results.json')).read_text())['scenarios']
     land = rig['drop_150']
     h_land = land['pose_at_peak_axle_force']['L_mm']
     # a landing's spike on the axle is mostly taken by the links' and the body's inertia: the knees' real peak force

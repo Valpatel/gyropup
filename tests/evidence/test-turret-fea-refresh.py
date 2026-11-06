@@ -7,17 +7,17 @@ import json
 from pathlib import Path
 import unittest
 
-ROOT = Path(__file__).resolve().parents[1]
-spec = importlib.util.spec_from_file_location('refresh', ROOT / 'tools/turret-fea-refresh.py')
+ROOT = (Path(__file__).resolve().parents[2])
+spec = importlib.util.spec_from_file_location('refresh', (ROOT / 'tools/engineering/turret/turret-fea-refresh.py'))
 refresh = importlib.util.module_from_spec(spec)
 spec.loader.exec_module(refresh)
-SUMMARY = json.loads((ROOT / 'exports/turret/fea/summary.json').read_text())
+SUMMARY = json.loads(((ROOT / 'hardware/exports/turret/fea/summary.json')).read_text())
 
 
 def run_expression(key):
     """The expression cad/turret_studies.py's run() assigns to summary[key], compiled from its source (no import: the
     test needs no CAD kernel). A change to run()'s verdict or table changes what this evaluates."""
-    tree = ast.parse((ROOT / 'cad/turret_studies.py').read_text())
+    tree = ast.parse(((ROOT / 'hardware/cad/turret/turret_studies.py')).read_text())
     run = next(n for n in tree.body if isinstance(n, ast.FunctionDef) and n.name == 'run')
     for node in ast.walk(run):
         if (isinstance(node, ast.Assign) and isinstance(node.targets[0], ast.Subscript)

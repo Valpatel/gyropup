@@ -11,17 +11,24 @@ tools/motor_day.py reads the loads from this file and scales the leg's FEA recor
 """
 from __future__ import annotations
 
+# Support direct-file CLI execution as well as checkout package imports.
+if __package__ in (None, ''):
+    import sys as _checkout_sys
+    from pathlib import Path as _CheckoutPath
+    _checkout_sys.path.insert(0, str(_CheckoutPath(__file__).resolve().parents[3]))
+
+
 import dataclasses
 import json
 import sys
 import time
 from pathlib import Path
 
-R = Path(__file__).resolve().parents[1]
+R = (Path(__file__).resolve().parents[3])
 sys.path.insert(0, str(R))
-from rig import leg_control as lc, run  # noqa: E402
+from software.control.rig import leg_control as lc, run  # noqa: E402
 
-OUT = R / 'exports' / 'motor-day'
+OUT = (R / 'hardware/exports/motor-day')
 JUMP_CAPS = (12.0, 15.0, 20.0, 25.0, 30.0, 40.0)   # N m at the motors (limit_torque) and in the laptop's clip
 STAND_CAP = 12.0                                    # the stand-up, squat and power-cut rungs: no rung above the
                                                     # PLA cap (tools/motor_day.py refuses a stand cap above it)
@@ -59,7 +66,7 @@ def one(test: str, cap: float | None, mass: float) -> dict:
 def floor_mass() -> float:
     """The lightest the model carries: its leg and its carriage with no ballast (sim/leg_rig.py mjcf's dummy at 0). The
     controller's feed-forward is set from the mass it is given, so it is given this, not less."""
-    from sim.leg_rig import mjcf
+    from software.simulation.leg_rig import mjcf
     info = mjcf(0.0)[1]
     return round(info['moving_kg'] + info['frame_kg'], 3)
 

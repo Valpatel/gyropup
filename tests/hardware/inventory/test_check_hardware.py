@@ -10,8 +10,8 @@ import tempfile
 import unittest
 from pathlib import Path
 
-HERE = Path(__file__).resolve().parent
-spec = importlib.util.spec_from_file_location('check_hardware', HERE / 'check-hardware.py')
+HERE = (Path(__file__).resolve().parents[3] / 'tools')
+spec = importlib.util.spec_from_file_location('check_hardware', (HERE / 'evidence/interfaces/check-hardware.py'))
 ch = importlib.util.module_from_spec(spec)
 spec.loader.exec_module(ch)
 CFG = 'firmware/balance/include/gp/gp_config.h'

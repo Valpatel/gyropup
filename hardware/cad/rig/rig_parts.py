@@ -19,13 +19,20 @@ SendCutSend from cad/build_rig.py's DXF), or a printed part (PETG, the bumpers T
 """
 from __future__ import annotations
 
+# Support direct-file CLI execution as well as checkout package imports.
+if __package__ in (None, ''):
+    import sys as _checkout_sys
+    from pathlib import Path as _CheckoutPath
+    _checkout_sys.path.insert(0, str(_CheckoutPath(__file__).resolve().parents[3]))
+
+
 import math
 from dataclasses import dataclass, field
 
 import cadquery as cq
 
-import fivebar as fb
-import gmi
+import hardware.cad.legs.fivebar as fb
+import hardware.cad.robot.gmi as gmi
 
 FAST = gmi.FAST
 

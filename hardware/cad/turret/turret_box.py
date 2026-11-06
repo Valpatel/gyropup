@@ -51,6 +51,13 @@ Parts (PETG: a bench part on a 40 C exhaust, not a robot part):
 """
 from __future__ import annotations
 
+# Support direct-file CLI execution as well as checkout package imports.
+if __package__ in (None, ''):
+    import sys as _checkout_sys
+    from pathlib import Path as _CheckoutPath
+    _checkout_sys.path.insert(0, str(_CheckoutPath(__file__).resolve().parents[3]))
+
+
 import json
 import math
 import os
@@ -60,9 +67,9 @@ from pathlib import Path
 
 import cadquery as cq
 
-import gmi
-import turret as tu
-import turret_stand as ts
+import hardware.cad.robot.gmi as gmi
+import hardware.cad.turret.turret as tu
+import hardware.cad.turret.turret_stand as ts
 
 FAST = gmi.FAST
 J501_DIR = Path(os.environ.get('J501_DIR', Path.home() / 'Code' / 'j501-agx'))

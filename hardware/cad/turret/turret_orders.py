@@ -9,13 +9,20 @@ now. Prices are the catalogue's (catalog/*.json, each with the date it was read)
 """
 from __future__ import annotations
 
+# Support direct-file CLI execution as well as checkout package imports.
+if __package__ in (None, ''):
+    import sys as _checkout_sys
+    from pathlib import Path as _CheckoutPath
+    _checkout_sys.path.insert(0, str(_CheckoutPath(__file__).resolve().parents[3]))
+
+
 import json
 import math
 import re
 from pathlib import Path
 
-R = Path(__file__).resolve().parents[1]
-BENCH = R / 'exports' / 'turret' / 'bench'
+R = (Path(__file__).resolve().parents[3])
+BENCH = (R / 'hardware/exports/turret/bench')
 OUT = BENCH / 'orders'
 # the parts rule's sellers (docs/decisions.yaml D40); a line bought elsewhere is flagged on the summary page
 D40_SELLERS = ('McMaster-Carr', 'Digi-Key', 'Mouser', 'SparkFun', 'Adafruit', 'Pololu', 'SendCutSend', 'Waveshare', 'SunnySky USA',
@@ -35,7 +42,7 @@ def slug(s: str) -> str:
 
 
 def catalogue():
-    from build_turret import _catalogue                      # every catalogue item by id and key
+    from hardware.cad.builders.build_turret import _catalogue                      # every catalogue item by id and key
     return _catalogue()
 
 
@@ -106,7 +113,7 @@ def lines_from_bom(bom: dict, cat: dict, alts: dict) -> list[dict]:
 def write(bom_path: Path = BENCH / 'bom.json') -> dict:
     bom = json.loads(bom_path.read_text())
     cat = catalogue()
-    alts = json.loads((R / 'catalog' / 'alternates.json').read_text())
+    alts = json.loads(((R / 'hardware/catalog/alternates.json')).read_text())
     rows = lines_from_bom(bom, cat, alts)
     by: dict[str, list] = {}
     for r in rows:
@@ -179,7 +186,7 @@ def write(bom_path: Path = BENCH / 'bom.json') -> dict:
 
 if __name__ == '__main__':
     import sys
-    sys.path.insert(0, str(R / 'cad'))
+    sys.path.insert(0, str((R / 'hardware/cad')))
     s = write()
     print(f"{s['lines']} lines from {len(s['sellers'])} sellers, ${s['grand_total_usd']:,.2f}; off the D40 list: {s['off_rule_sellers']}; "
           f"no backup: {s['no_backup']}")

@@ -5,6 +5,13 @@ playground read.
 """
 from __future__ import annotations
 
+# Support direct-file CLI execution as well as checkout package imports.
+if __package__ in (None, ''):
+    import sys as _checkout_sys
+    from pathlib import Path as _CheckoutPath
+    _checkout_sys.path.insert(0, str(_CheckoutPath(__file__).resolve().parents[2]))
+
+
 import json
 import math
 import random
@@ -14,9 +21,9 @@ from pathlib import Path
 
 import pytest
 
-R = Path(__file__).resolve().parents[1]
+R = (Path(__file__).resolve().parents[2])
 sys.path.insert(0, str(R))
-from sim import leg_limits as ll  # noqa: E402
+from software.simulation import leg_limits as ll  # noqa: E402
 
 D = json.loads(ll.OUT.read_text())
 ROBOT, PLA = D['profiles']['robot'], D['profiles']['pla_bench']
@@ -27,7 +34,7 @@ def test_the_committed_file_is_what_the_sources_give():
 
 
 def test_the_firmware_header_is_current():
-    out = subprocess.run([sys.executable, str(R / 'firmware' / 'balance' / 'tools' / 'gen_limits.py'), '--check'],
+    out = subprocess.run([sys.executable, str((R / 'software/firmware/balance/tools/gen_limits.py')), '--check'],
                          capture_output=True, text=True)
     assert out.returncode == 0, out.stdout + out.stderr
 
@@ -189,7 +196,7 @@ def test_the_turn_clamps_h_is_above_the_robots_centre():
     """The turn clamp takes h as the hips' height at full height (com_h_m, 0.502 m). That is conservative only while the
     whole robot's centre of mass is at or below the hips. The P3 mass ledger is taken at a 300 mm stance; a longer leg
     only lowers the centre, so its height at full height is at most com_h_m plus the ledger's z (hips at z = 0)."""
-    z = json.loads((R / 'exports/body/mass.json').read_text())['P3']['com_mm'][2] / 1000.0
+    z = json.loads(((R / 'hardware/exports/body/mass.json')).read_text())['P3']['com_mm'][2] / 1000.0
     assert D['yaw']['com_h_m'] == pytest.approx(0.502, abs=1e-3)
     assert z <= 0.0, f'the centre of mass is {z * 1000:.1f} mm above the hips: the turn clamp\'s h is no longer conservative'
 

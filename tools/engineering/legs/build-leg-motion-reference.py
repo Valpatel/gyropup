@@ -12,9 +12,9 @@ import struct
 
 from cadagent.motion_trace import required_poses
 
-ROOT = Path(__file__).resolve().parents[1]
-RIG = ROOT / 'exports/sim/v2/rig'
-ATTACHMENTS = ROOT / 'exports/sim/v2/leg-attachments'
+ROOT = (Path(__file__).resolve().parents[3])
+RIG = (ROOT / 'hardware/exports/sim/v2/rig')
+ATTACHMENTS = (ROOT / 'hardware/exports/sim/v2/leg-attachments')
 
 
 def vertices(path):
@@ -95,4 +95,4 @@ def generate():
 
 
 if __name__ == '__main__':
-    (ROOT / 'tools/fixtures/leg-attachment-motion.json').write_text(json.dumps(generate(), indent=2) + '\n')
+    ((ROOT / 'tests/fixtures/leg-attachment-motion.json')).write_text(json.dumps(generate(), indent=2) + '\n')

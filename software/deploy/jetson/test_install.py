@@ -1,8 +1,8 @@
-"""hardware/deploy/jetson/install.sh without a Jetson: a dry run changes nothing, a staged install writes the expected files, a
+"""software/deploy/jetson/install.sh without a Jetson: a dry run changes nothing, a staged install writes the expected files, a
 second run changes nothing (idempotent), the owner's settings are never overwritten, stable names are generated and
 checked, LAN mode is opt-in with a token, and shellcheck has nothing to say (when it is installed).
 
-    python3 hardware/deploy/jetson/test_install.py
+    python3 software/deploy/jetson/test_install.py
 """
 from __future__ import annotations
 
@@ -68,7 +68,7 @@ class InstallTests(unittest.TestCase):
         self.assertIn('done: 8 change(s)', p.stdout)
         unit = (self.root / 'etc/systemd/system/gyropup-rs04-bridge.service').read_text()
         self.assertIn(f'WorkingDirectory={REPO}\n', unit)
-        self.assertIn('ExecStart=/usr/bin/python3 -m rig.rs04_bridge --iface ${IFACE} --profile ${PROFILE} --port ${PORT} $BRIDGE_LAN', unit)
+        self.assertIn('ExecStart=/usr/bin/python3 -m software.control.rig.rs04_bridge --iface ${IFACE} --profile ${PROFILE} --port ${PORT} $BRIDGE_LAN', unit)
         self.assertIn('User=gyropup-bridge', unit)
         self.assertNotIn('--lan', unit.split('ExecStart=')[1].split('\n')[0])
         self.assertIn('bitrate "$BITRATE"', (self.root / 'etc/systemd/system/gyropup-can@.service').read_text())
@@ -142,7 +142,7 @@ class InstallTests(unittest.TestCase):
 
     def test_bridge_unit_runs_the_module_that_exists(self):
         unit = (HERE / 'files' / 'gyropup-rs04-bridge.service').read_text()
-        module = re.search(r'-m (rig\.\w+)', unit).group(1)
+        module = re.search(r'-m (software\.control\.rig\.\w+)', unit).group(1)
         self.assertTrue((REPO / (module.replace('.', '/') + '.py')).is_file())
 
     def test_shellcheck(self):

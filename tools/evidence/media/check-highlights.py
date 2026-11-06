@@ -9,8 +9,8 @@ from pathlib import Path
 import struct
 import subprocess
 
-ROOT = Path(__file__).resolve().parents[1]
-OUT = ROOT / 'web/highlights'
+ROOT = (Path(__file__).resolve().parents[3])
+OUT = (ROOT / 'software/site/assets/highlights')
 WIDTH, HEIGHT, FPS, FRAMES = 1280, 720, 30, 660
 # The commit that recorded rig_jump.mp4 together with the rig-results.json it shows (issue 8: 18.75 kg a leg,
 # 36 V, the 10 in hub-motor wheel). The clip used to be the 16.25 kg / 48.1 V run of ae919f7 (issue 106).
@@ -156,7 +156,7 @@ def validate_bindings(receipt, capture, frame_manifest, out=OUT, raw_frames=None
     shots = {shot['id']: shot for shot in capture['shots']}
     require(set(shots) == set(CAPTURE_COUNTS), 'Incomplete current-model capture')
     require(set(frame_manifest['shots']) == set(CAPTURE_COUNTS), 'Incomplete captured frame manifest')
-    turret_manifest = read(ROOT / 'exports/sim/turret_box/manifest.json')
+    turret_manifest = read((ROOT / 'hardware/exports/sim/turret_box/manifest.json'))
     bench_names = sorted(p['name'] for p in turret_manifest['parts'])
     current_names = sorted(p['name'] for p in turret_manifest['parts'] if p['group'] in TURRET_GROUPS)
     require(len(bench_names) == 80 and len(current_names) == 62, 'Review reel against the changed public turret snapshot')
@@ -185,7 +185,7 @@ def validate_bindings(receipt, capture, frame_manifest, out=OUT, raw_frames=None
                                 deformation_exaggeration=16, safety_factor=1.60, required=2, baseline_kg=37.5),
             'Static E1 evidence mislabeled')
     # Reuse the independent field/report closure check; no solver is imported.
-    spec = importlib.util.spec_from_file_location('study_check', ROOT / 'tools/check-study-media.py')
+    spec = importlib.util.spec_from_file_location('study_check', (ROOT / 'tools/evidence/media/check-study-media.py'))
     module = importlib.util.module_from_spec(spec); spec.loader.exec_module(module)
     module.validate(decode=False)
     require(set(receipt['outputs']) == set(MOVIES + [POSTER, 'capture-receipt.json', 'capture-frames.json']), 'Incomplete highlights outputs')
@@ -311,7 +311,7 @@ def negative_controls(receipt, capture, frames, out, decoded):
     fault('source hash', lambda r,c,f: r['source_hashes'].__setitem__('designer/current_turret.js', '0'*64))
     fault('source omission', lambda r,c,f: r['source_hashes'].pop(LEG))
     def omit_required(r, c, f):
-        path = '/exports/sim/turret_box/' + read(ROOT / 'exports/sim/turret_box/manifest.json')['parts'][0]['file']
+        path = '/exports/sim/turret_box/' + read((ROOT / 'hardware/exports/sim/turret_box/manifest.json'))['parts'][0]['file']
         c['inputs'].pop(path)
         r['source_hashes'].pop(path.lstrip('/'))
     fault('self-consistent required mesh omission', omit_required)

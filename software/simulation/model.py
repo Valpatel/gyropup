@@ -24,25 +24,25 @@ from pathlib import Path
 
 from cadagent import robot as rb
 
-R = Path(__file__).resolve().parents[1]
+R = (Path(__file__).resolve().parents[2])
 G = 9.81
 M = 0.001
 ROTOR_SHARE = 0.6        # estimate: share of a hub motor's mass that spins (outer rotor + tyre)
 LEG_HARDWARE_SHARE = 0.2  # estimate: share of the hardware allowance carried by the legs (bearings, pins)
 
 
-EXPORTS = Path(os.environ['GYROPUP_EXPORTS']).resolve() if os.environ.get('GYROPUP_EXPORTS') else R / 'exports'   # GYROPUP_EXPORTS: a separate folder per optimiser trial
+EXPORTS = Path(os.environ['GYROPUP_EXPORTS']).resolve() if os.environ.get('GYROPUP_EXPORTS') else (R / 'hardware/exports')   # GYROPUP_EXPORTS: a separate folder per optimiser trial
 
 def derive(design_path: Path) -> dict:
-    out = subprocess.run(['node', str(R / 'tools/derive.mjs'), str(design_path)], capture_output=True, text=True, check=True)
+    out = subprocess.run(['node', str((R / 'tools/engineering/robot/derive.mjs')), str(design_path)], capture_output=True, text=True, check=True)
     return json.loads(out.stdout)
 
 
 def load_catalog() -> dict:
-    idx = json.loads((R / 'catalog/index.json').read_text())
+    idx = json.loads(((R / 'hardware/catalog/index.json')).read_text())
     cat = {}
     for f in idx['files']:
-        for it in json.loads((R / 'catalog' / f).read_text()):
+        for it in json.loads(((R / 'hardware/catalog') / f).read_text()):
             cat[it['id']] = it
     return cat
 
@@ -415,7 +415,7 @@ def build(design_path: Path, out_dir: Path | None = None) -> dict:
 
 
 if __name__ == '__main__':
-    info = build(Path(sys.argv[1] if len(sys.argv) > 1 else R / 'designs/default.json'))
+    info = build(Path(sys.argv[1] if len(sys.argv) > 1 else (R / 'hardware/designs/default.json')))
     if info.get('cad_assembly_kg'):
         print(f"{info['name']}: {info['total_mass_kg']:.2f} kg in the model = the CAD assembly {info['cad_assembly_kg']:.2f} kg "
               f"{info['cad_assembly_by_kind_kg']} + the turret's budget ({'reconciles' if info['mass_reconciles'] else 'DOES NOT reconcile'}); "

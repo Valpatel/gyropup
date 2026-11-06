@@ -8,8 +8,8 @@ from pathlib import Path
 HERE = Path(__file__).resolve().parent
 ROOT = HERE.parents[1]
 CIRCUIT = ROOT / 'hardware/carrier-pan-protection/circuit_design.py'
-BOARDS = ROOT / 'cad/turret_boards.py'
-CATALOG = ROOT / 'catalog/turret.json'
+BOARDS = (ROOT / 'hardware/cad/turret/turret_boards.py')
+CATALOG = (ROOT / 'hardware/catalog/turret.json')
 SPEC = importlib.util.spec_from_file_location('retained_pan_candidate', CIRCUIT)
 D = importlib.util.module_from_spec(SPEC)
 SPEC.loader.exec_module(D)
@@ -100,7 +100,7 @@ def inventory():
             row['package_evidence_id'], row['maximum_envelope'] = matches[0]
 
     retained_offers = json.loads((ROOT / 'hardware/carrier-pan-protection/availability.json').read_text())
-    front_offers = json.loads((ROOT / 'research/protection/carrier-practical-architecture.inputs.json').read_text())
+    front_offers = json.loads(((ROOT / 'docs/research/protection/carrier-practical-architecture.inputs.json')).read_text())
     for row in rows:
         row['supplier_observation'] = None
         source = ('hardware/carrier-pan-protection/availability.json' if row['id'].startswith('P.')
@@ -125,7 +125,7 @@ def inventory():
         raise ValueError('retained legacy control inventory changed; review scope')
     return {'status': 'WIP_INVENTORY_NOT_A_FROZEN_LAYOUT',
             'source_sha256': {str(p.relative_to(ROOT)): hashlib.sha256(p.read_bytes()).hexdigest()
-                              for p in (Path(__file__), CIRCUIT, BOARDS, CATALOG, HERE / 'front-reference-contract.json', HERE / 'package-envelopes.json', HERE / 'primary-envelope-sources.json', HERE / 'terminal-contract.json', ROOT / 'docs/base-board-interfaces.md', ROOT / 'docs/carrier-service-connectors.md', ROOT / 'hardware/carrier-pan-protection/pins.md', ROOT / 'hardware/carrier-pan-protection/availability.json', ROOT / 'research/protection/carrier-practical-architecture.inputs.json')},
+                              for p in (Path(__file__), CIRCUIT, BOARDS, CATALOG, HERE / 'front-reference-contract.json', HERE / 'package-envelopes.json', HERE / 'primary-envelope-sources.json', HERE / 'terminal-contract.json', (ROOT / 'docs/electronics/base-board-interfaces.md'), (ROOT / 'docs/electronics/carrier-service-connectors.md'), ROOT / 'hardware/carrier-pan-protection/pins.md', ROOT / 'hardware/carrier-pan-protection/availability.json', (ROOT / 'docs/research/protection/carrier-practical-architecture.inputs.json'))},
             'inventory_count': len(rows), 'rows': rows,
             'package_evidence_count': sum(r['maximum_envelope'] is not None for r in rows),
             'excluded_replaced_parts': ['P.D1: V10P20 series barrier replaced by complete I.* inventory',

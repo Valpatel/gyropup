@@ -31,6 +31,13 @@ lidar-side.png (the turret over the lidar at the limit).
 """
 from __future__ import annotations
 
+# Support direct-file CLI execution as well as checkout package imports.
+if __package__ in (None, ''):
+    import sys as _checkout_sys
+    from pathlib import Path as _CheckoutPath
+    _checkout_sys.path.insert(0, str(_CheckoutPath(__file__).resolve().parents[3]))
+
+
 import argparse
 import json
 import math
@@ -40,11 +47,11 @@ from pathlib import Path
 
 import numpy as np
 
-R = Path(__file__).resolve().parents[1]
-sys.path.insert(0, str(R / 'cad'))
-import turret as tu  # noqa: E402
+R = (Path(__file__).resolve().parents[3])
+sys.path.insert(0, str((R / 'hardware/cad')))
+import hardware.cad.turret.turret as tu  # noqa: E402
 
-OUT = R / 'exports' / 'turret' / 'lidar'
+OUT = (R / 'hardware/exports/turret/lidar')
 LIDAR = {'d': 103.3, 'h': 71.7, 'model': 'Velodyne VLP-16 (Puck)', 'source': 'VLP-16 user manual: Ø103.3 x 71.7 mm'}
 DECK_BELOW_TM = 30.0                          # the turret stands on a 30 mm printed riser on the top deck (D41, 2026-10-27)
 LIDAR_TO_PAN = 143.0                          # the lidar's axis ahead of the pan axis: the body's cad/body_params.py
@@ -215,7 +222,7 @@ def scene_box():
     """The Orin AGX box (cad/turret_box.py): the deck and the box under it as one block, the four upright antennas on the
     J501's bulkheads (if fitted), in the turret's frame (z up from the pan base's foot, FRAME_T_ABOVE_TM over the deck's
     top: 0 since D76 removed the compute plinth). Run it here, not on a GB10: cad/turret_box.py reads the live J501 tree."""
-    import turret_box as tb
+    import hardware.cad.turret.turret_box as tb
     zt = tb.Z_TM + tu.FRAME_T_ABOVE_TM                              # the pan base's foot, on the deck's TM face (D76)
     obs = [{'name': 'deck and box', 'kind': 'box', 'lo': (tb.DECK_X[0], -tb.SIDE_Y, -zt), 'hi': (tb.DECK_X[1], tb.SIDE_Y, -tu.FRAME_T_ABOVE_TM), 'ball': True}]
     for name, b, t, d in tb.antennas():

@@ -14,7 +14,7 @@ from pathlib import Path
 import subprocess
 import sys
 
-ROOT = Path(__file__).resolve().parents[2]
+ROOT = (Path(__file__).resolve().parents[3])
 WIDTHS = (4.8, 4.9, 5.0, 5.1, 5.2, 5.3, 5.4, 5.5)
 SIZE = (100., 32., 3.)
 SLOT_Y = 20.
@@ -159,5 +159,5 @@ def build(out):
 
 if __name__ == '__main__':
     parser = argparse.ArgumentParser(description=__doc__)
-    parser.add_argument('--out', type=Path, default=ROOT / 'exports/turret/ordered-motor-fit')
+    parser.add_argument('--out', type=Path, default=(ROOT / 'hardware/exports/turret/ordered-motor-fit'))
     raise SystemExit(build(parser.parse_args().out))

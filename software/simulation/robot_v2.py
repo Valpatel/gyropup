@@ -22,6 +22,13 @@ the meshes; model.json turret.tilt_max_deg).
 """
 from __future__ import annotations
 
+# Support direct-file CLI execution as well as checkout package imports.
+if __package__ in (None, ''):
+    import sys as _checkout_sys
+    from pathlib import Path as _CheckoutPath
+    _checkout_sys.path.insert(0, str(_CheckoutPath(__file__).resolve().parents[2]))
+
+
 import json
 import math
 import os
@@ -31,23 +38,23 @@ from pathlib import Path
 
 import numpy as np
 
-R = Path(__file__).resolve().parents[1]
-sys.path.insert(0, str(R / 'cad'))
+R = (Path(__file__).resolve().parents[2])
+sys.path.insert(0, str((R / 'hardware/cad')))
 sys.path.insert(0, str(R))
 
 import cadquery as cq  # noqa: E402
 
-import fivebar as fb  # noqa: E402
-import gmi  # noqa: E402
+import hardware.cad.legs.fivebar as fb  # noqa: E402
+import hardware.cad.robot.gmi as gmi  # noqa: E402
 from cadagent.robot import Body, combine, cylinder_body, box_body, solid_mass_properties  # noqa: E402
-from sim import leg_rig as lr  # noqa: E402
+from software.simulation import leg_rig as lr  # noqa: E402
 
-import body_params as bp  # noqa: E402
+import hardware.cad.body.body_params as bp  # noqa: E402
 
 M = 0.001
 OUT_BUILD = R / 'build' / 'sim' / 'v2'
-OUT_RIG = R / 'exports' / 'sim' / 'v2' / 'rig'
-DESIGN = R / 'designs' / 'default.json'
+OUT_RIG = (R / 'hardware/exports/sim/v2/rig')
+DESIGN = (R / 'hardware/designs/default.json')
 Y_OFF = bp.y_off()                                  # the left module's y = 0 is the robot's y = Y_OFF (mm): the body's spine
 BODY_X = bp.BODY_X                                  # the floor tray and deck (mm)
 BUS_V = 36.0                                        # D65: two DCB609 packs in series, 10S, 36 V nominal: the motors' speed lines
@@ -56,7 +63,7 @@ EAR = {'size': (61.0, 50.8, 50.8), 'x': (-10.0, 51.0), 'top': 193.0}   # SSC1 po
 TILT_STOP_DEG = 25.0                                # cad/turret.py's hard stops: 0 .. -25 deg (here + = barrel down)
 PAN_STOP_DEG = 170.0
 REF_H = 300.0                                       # the model's joints are zero standing at this leg length
-import body_battery as _bb  # noqa: E402
+import hardware.cad.body.body_battery as _bb  # noqa: E402
 H_RANGE = (_bb.PAD['lowest_leg_mm'], 375.0)        # leg length (mm) for the controller's height 0..1. Issue #19: the bay's 50 mm
                                                     # crush pads (cad/body_battery.py PAD) need the lowest height at 185 mm (it was
                                                     # 160) to keep D69's 40 mm under them; they touch the floor under a 145 mm leg
@@ -72,8 +79,8 @@ def use_d69_wheel() -> dict:
     places the tyre's band itself)."""
     if _WHEEL:
         return _WHEEL
-    import body_layout as bl
-    from sim import wheel_study as ws
+    import hardware.cad.body.body_layout as bl
+    from software.simulation import wheel_study as ws
     if lr.WHEEL.get('mass_g') != 2200 or abs(lr.WHEEL_R - 0.08565) > 1e-4:
         # the caller has set a wheel already (sim/wheel_study.py's candidates), or the leg core now carries its own
         # wheel (#25): use it as it is, never overwrite it
@@ -92,7 +99,7 @@ def use_d69_wheel() -> dict:
 
 def pads():
     """The battery bay's crush pads (issue #19; cad/body_battery.py PAD): [(name, box mm)], and the pad's numbers."""
-    import body_battery as bb
+    import hardware.cad.body.body_battery as bb
     return [(f'pad_{i + 1}', b) for i, b in enumerate(bb.pad_boxes())], dict(bb.PAD)
 COLORS = {'body': '#9fb4c7', 'frame': '#5f6670', 'motor': '#2a2d33', 'link': '#f5b82e', 'wheel_link': '#e9a21f',
           'adapter': '#c9ced6', 'tyre': '#1b1d21', 'hub': '#4a5058', 'battery': '#fdb913', 'compute': '#5a6b7c',
@@ -102,7 +109,7 @@ COLORS = {'body': '#9fb4c7', 'frame': '#5f6670', 'motor': '#2a2d33', 'link': '#f
 
 def lidar_spec():
     """The VLP-16 from catalog/sensors_compute.json: size, optical centre, vertical field of view, mass."""
-    cat = json.loads((R / 'catalog/sensors_compute.json').read_text())
+    cat = json.loads(((R / 'hardware/catalog/sensors_compute.json')).read_text())
     s = next(c for c in cat if c['id'] == 'velodyne-vlp-16')['specs']
     return {'d': s['diameter_mm'], 'h': s['height_mm'], 'oc': s['optical_center_above_base_mm'], 'fov_v': s['fov_v_deg'],
             'mass_g': s['mass_g'], 'gland': 12.7,          # the datasheet's cable gland: <= 12.7 mm out, centred <= 12.7 up
@@ -163,7 +170,7 @@ def _hex(rgb):
 
 def ear_boxes():
     """The two SSC1 pods on their brackets (cad/body_shell.py): [(name, (x0, x1, y0, y1, z0, z1))]."""
-    import body_shell as bs3
+    import hardware.cad.body.body_shell as bs3
     out = []
     for side in ('l', 'r'):
         b = bs3._v(bs3.ear_pod(side)).BoundingBox()
@@ -174,10 +181,10 @@ def ear_boxes():
 def real_body():
     """The body as cad/body_*.py builds it: the layout's items, the frame parts, the P3 ledger, and the boxes the model
     collides with. {'L', 'parts', 'ledger', 'collide': [(name, box)], 'B', 'bay'}"""
-    import body_battery as bb
-    import body_frame as bf
-    import body_layout as bl
-    import body_shell as bs3
+    import hardware.cad.body.body_battery as bb
+    import hardware.cad.body.body_frame as bf
+    import hardware.cad.body.body_layout as bl
+    import hardware.cad.body.body_shell as bs3
     L = bl.layout()
     parts = {n: p for n, p in bf.all_parts(L['mounts']).items() if bf.on_robot(p, 'P3')}     # the robot as P3 builds it
     led = bl.ledger(L, parts, stage='P3')
@@ -204,8 +211,8 @@ def body_bodies(rb, x_p, turret_extra):
     """The base's rigid bodies from the P3 ledger, row for row (SI): frame parts from their solids, items as their
     boxes, everything else a point mass where the ledger puts it; the turret's ledger row is left out (the turret's
     groups and turret_extra stand for it). Returns [Body]."""
-    import body_layout as bl
-    mats = json.loads((R / 'catalog/materials.json').read_text())
+    import hardware.cad.body.body_layout as bl
+    mats = json.loads(((R / 'hardware/catalog/materials.json')).read_text())
     items = {it.name: it for it in rb['L']['items'] if not it.keepout}
     out = []
     for r in rb['ledger']['rows']:
@@ -252,14 +259,14 @@ def lidar_shape(lid, at):
 
 def leg_bodies():
     """Each moving group of the LEFT leg in its own link frame (SI), from the CAD solids plus datasheet masses."""
-    dens = json.loads((R / 'catalog/materials.json').read_text())['pa6-cf']['density_g_cm3']
+    dens = json.loads(((R / 'hardware/catalog/materials.json')).read_text())['pa6-cf']['density_g_cm3']
     L = fb.leg_parts()
     sm = lambda name: solid_mass_properties(L.parts[name].val(), dens, 1.0, name)
     l1, l2 = fb.P['l1'] / 1000, fb.P['l2'] / 1000
     yk = sum(fb.Y['knee_boss']) / 2000
     pin = Body(0.075 + 0.011, (l1, 0.03, 0.0), name='knee pin + nut')            # rides with the upper link
     ad = sm('output_adapter')
-    mach = json.loads((R / 'exports/leg/leg.json').read_text())['mass_g'].get('machined_parts', {}).get('output_adapter')
+    mach = json.loads(((R / 'hardware/exports/leg/leg.json')).read_text())['mass_g'].get('machined_parts', {}).get('output_adapter')
     if mach:                                                      # machined 6061 (D46): its mass, the solid's shape
         k = mach / 1000.0 / ad.mass
         ad = Body(mach / 1000.0, ad.com, tuple(tuple(v * k for v in row) for row in ad.inertia), 'output adapter (machined 6061)')
@@ -296,7 +303,7 @@ def shift_x(b: Body, dx: float) -> Body:
 def turret_groups(T):
     """The turret's fixed parts, pan link and tilt link as Bodies in the robot frame (SI) with the pan axis on x = 0,
     with the turret's shapes (build() moves both to the pan axis's place on the deck)."""
-    import turret as tu
+    import software.simulation.turret as tu
     from cadagent.robot import printed_part_body
     groups = {'base': [], 'pan': [], 'tilt': []}
     shapes = {'base': [], 'pan': [], 'tilt': []}
@@ -560,7 +567,7 @@ def export_rig(rb, lid, lid_at, turret_base, turret_groups_):
 
 def build():
     """Write the MJCF and model.json (build/sim/v2/) and the 3D page's rig (exports/sim/v2/rig/). Returns the info."""
-    import turret as tu
+    import software.simulation.turret as tu
     OUT_BUILD.mkdir(parents=True, exist_ok=True)
     design = json.loads(DESIGN.read_text())
     lid = lidar_spec()
@@ -853,7 +860,7 @@ def build():
     }
     (OUT_BUILD / 'model.json').write_text(json.dumps(info, indent=1) + '\n')
     hl = [[c[0] + s[0] / 2, c[1], c[2]] for n, s, c in sorted(ears, key=lambda e: -e[2][1])]
-    import body_layout as bl
+    import hardware.cad.body.body_layout as bl
     shell = {n: c for n, g, c, b in bl.SHELL_ITEMS}                 # the P3 ledger's eyes and front camera
     top = max(float(tpts['base'][:, 2].max()), T.mount_z + float(tpts['pan'][:, 2].max()), T.mount_z + T.G.tilt_t + float(tpts['tilt'][:, 2].max()))
     man.update({'fivebar': info['fivebar'], 'wheel_r_mm': wr * 1000, 'track_mm': info['track_mm'], 'body_top_mm': TOP,

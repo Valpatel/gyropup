@@ -5,6 +5,13 @@ not change its engineering/physical/fabrication acceptance flags to true.
 """
 from __future__ import annotations
 
+# Support direct-file CLI execution as well as checkout package imports.
+if __package__ in (None, ''):
+    import sys as _checkout_sys
+    from pathlib import Path as _CheckoutPath
+    _checkout_sys.path.insert(0, str(_CheckoutPath(__file__).resolve().parents[3]))
+
+
 import argparse
 import copy
 import importlib.util
@@ -17,15 +24,15 @@ from types import ModuleType, SimpleNamespace
 import unittest
 from unittest.mock import patch
 
-ROOT = Path(__file__).resolve().parents[1]
-sys.path.insert(0, str(ROOT / 'cad'))
-import print_provenance as provenance
+ROOT = (Path(__file__).resolve().parents[3])
+sys.path.insert(0, str((ROOT / 'hardware/cad')))
+import hardware.cad.manufacturing.print_provenance as provenance
 
-SPEC = importlib.util.spec_from_file_location('rs04_support_probe', ROOT / 'research/rs04-support/probe.py')
+SPEC = importlib.util.spec_from_file_location('rs04_support_probe', (ROOT / 'docs/research/rs04-support/probe.py'))
 PROBE = importlib.util.module_from_spec(SPEC)
 SPEC.loader.exec_module(PROBE)
 LUGS = PROBE.lugs
-DEFAULT_RECEIPT = ROOT / 'research/rs04-support/results/probe.json'
+DEFAULT_RECEIPT = (ROOT / 'docs/research/rs04-support/results/probe.json')
 RECEIPT = DEFAULT_RECEIPT
 PURE = False
 RINGS = {f'od{od:g}-id{id_:g}-t{thick:g}': (od, id_, thick)
@@ -86,10 +93,7 @@ def rotated_enclosure(bounds, angle):
 
 
 def source_files(root):
-    return {p.relative_to(root).as_posix(): provenance.digest(p)
-            for folder in ('cad', 'catalog', 'designs') for p in (root / folder).rglob('*')
-            if p.is_file() and p.suffix in ('.py', '.json')}
-
+    return {p.relative_to(root).as_posix(): provenance.digest(p) for p in provenance.source_files(root)}
 
 def strict_json(path):
     def unique(pairs):

@@ -21,6 +21,13 @@ Writes <out>/orientation-screen.json. A screening check, not a qualification: a 
 """
 from __future__ import annotations
 
+# Support direct-file CLI execution as well as checkout package imports.
+if __package__ in (None, ''):
+    import sys as _checkout_sys
+    from pathlib import Path as _CheckoutPath
+    _checkout_sys.path.insert(0, str(_CheckoutPath(__file__).resolve().parents[3]))
+
+
 import argparse
 import json
 import shutil
@@ -29,7 +36,7 @@ import sys
 import time
 from pathlib import Path
 
-ROOT = Path(__file__).resolve().parents[2]
+ROOT = (Path(__file__).resolve().parents[3])
 NORMALS = {'y': (0.0, 1.0, 0.0), 'z': (0.0, 0.0, 1.0), 'x': (1.0, 0.0, 0.0)}
 PARTS = ['upper_link', 'front_link', 'wheel_link', 'hip_frame']
 ROWS: list = []
@@ -40,14 +47,14 @@ def main():
     ap.add_argument('--out', type=Path, required=True)
     ap.add_argument('--mesh', type=float, default=4.0)
     ap.add_argument('--only', nargs='+', default=PARTS)
-    ap.add_argument('--summary', type=Path, default=ROOT / 'exports/leg/fea/summary.json')
+    ap.add_argument('--summary', type=Path, default=(ROOT / 'hardware/exports/leg/fea/summary.json'))
     a = ap.parse_args()
-    sys.path[:0] = [str(ROOT / 'cad'), str(ROOT), str(ROOT / 'research/fea-v060-29')]
+    sys.path[:0] = [str((ROOT / 'hardware/cad')), str(ROOT), str((ROOT / 'docs/research/fea-v060-29'))]
     out = a.out.resolve()
     out.mkdir(parents=True, exist_ok=True)
     import gmsh  # noqa: F401  (before CadQuery, as the compute hosts' mesher wants)
     import layer_check as lc
-    import leg_studies as ls
+    import hardware.cad.legs.leg_studies as ls
     from cadagent.simulation.fea import Study
 
     class Checked(Study):

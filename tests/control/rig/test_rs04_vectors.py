@@ -5,10 +5,17 @@ sources. The JavaScript side of the vectors is designer/kit/rs04/rs04.test.mjs.
 """
 from __future__ import annotations
 
+# Support direct-file CLI execution as well as checkout package imports.
+if __package__ in (None, ''):
+    import sys as _checkout_sys
+    from pathlib import Path as _CheckoutPath
+    _checkout_sys.path.insert(0, str(_CheckoutPath(__file__).resolve().parents[3]))
+
+
 import copy
 import unittest
 
-from rig import rs04_profiles, rs04_vectors
+from software.control.rig import rs04_profiles, rs04_vectors
 
 
 class VectorTests(unittest.TestCase):
@@ -49,10 +56,24 @@ class ProfileTests(unittest.TestCase):
             with self.assertRaises(ValueError, msg=key):
                 rs04_profiles.validate(p)
 
+    def test_source_identity_requires_the_current_owning_file(self):
+        import tempfile
+        from pathlib import Path
+        from unittest.mock import patch
+        src = rs04_profiles.load('final')['sources']['limits.limit_torque_nm']
+        with tempfile.TemporaryDirectory() as temp:
+            root = Path(temp)
+            old = root / src['json']
+            old.parent.mkdir(parents=True)
+            old.write_text('{"limit_torque_nm": 999}')
+            with patch.object(rs04_profiles, 'ROOT', root):
+                self.assertIsNone(rs04_profiles.resolve(src), 'obsolete source copy cannot rescue a missing current file')
+                self.assertNotEqual(rs04_profiles.source_file(src['json']), old)
+
     def test_pending_references_name_their_issue(self):
         for n in rs04_profiles.names():
             for ref in rs04_profiles.load(n).get('references', []):
-                if not (rs04_profiles.ROOT / ref['file']).is_file():
+                if not rs04_profiles.source_file(ref['file']).is_file():
                     self.assertRegex(ref.get('pending', ''), r'^#\d+$', ref['file'])
 
 

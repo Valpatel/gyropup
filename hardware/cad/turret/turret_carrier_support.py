@@ -6,16 +6,23 @@ by explicit private=True requests and is never returned by public_parts().
 """
 from __future__ import annotations
 
+# Support direct-file CLI execution as well as checkout package imports.
+if __package__ in (None, ''):
+    import sys as _checkout_sys
+    from pathlib import Path as _CheckoutPath
+    _checkout_sys.path.insert(0, str(_CheckoutPath(__file__).resolve().parents[3]))
+
+
 import hashlib
 import json
 import math
 from pathlib import Path
 
 import cadquery as cq
-import turret_base_board as bb
+import hardware.cad.turret.turret_base_board as bb
 
-ROOT = Path(__file__).resolve().parents[1]
-HARDWARE_RECORD = ROOT / 'research/carrier-service-connectors/support-hardware-catalog.json'
+ROOT = (Path(__file__).resolve().parents[3])
+HARDWARE_RECORD = (ROOT / 'docs/research/carrier-service-connectors/support-hardware-catalog.json')
 HOLES = ((-10., 10.), (10., 10.))  # Y/Z; separate from all original holes
 FLANGE_X = (56., 58.)
 NUT_X = (50.6, 53.)
@@ -91,7 +98,7 @@ def private_model(pn):
     entry = next(e for e in entries if e['model']==pn)
     relative = entry['cad']['file']
     path = (ROOT / relative).resolve()
-    if not path.is_relative_to((ROOT / 'references/vendor').resolve()):
+    if not path.is_relative_to((ROOT / 'hardware/vendor')):
         raise ValueError('Private hardware input escapes vendor directory')
     if not path.is_file():
         raise FileNotFoundError('Exact manufacturer input missing: '+pn)

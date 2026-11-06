@@ -10,16 +10,23 @@ integrity checks read through the CAD); and each decision with why and what was 
 """
 from __future__ import annotations
 
+# Support direct-file CLI execution as well as checkout package imports.
+if __package__ in (None, ''):
+    import sys as _checkout_sys
+    from pathlib import Path as _CheckoutPath
+    _checkout_sys.path.insert(0, str(_CheckoutPath(__file__).resolve().parents[3]))
+
+
 import json
 import math
 import sys
 from collections import defaultdict
 from pathlib import Path
 
-R = Path(__file__).resolve().parents[1]
-sys.path.insert(0, str(R / 'cad'))
-DOC = R / 'docs' / 'body-sections.md'
-EX = R / 'exports' / 'body'
+R = (Path(__file__).resolve().parents[3])
+sys.path.insert(0, str((R / 'hardware/cad')))
+DOC = (R / 'docs/body/body-sections.md')
+EX = (R / 'hardware/exports/body')
 
 
 def _j(p):
@@ -200,10 +207,10 @@ def part_rows(section, names_info, held_by):
 
 
 def main():
-    import body_frame as bf
-    import body_layout as bl
-    import body_battery as bb
-    import build_body as bbd
+    import hardware.cad.body.body_frame as bf
+    import hardware.cad.body.body_layout as bl
+    import hardware.cad.body.body_battery as bb
+    import hardware.cad.builders.build_body as bbd
     L = bbd._layout()
     parts = bf.all_parts(L['mounts'])
     body, integ, mass, fea = _j('body.json'), _j('integrity.json'), _j('mass.json'), json.loads((EX / 'fea' / 'summary.json').read_text())

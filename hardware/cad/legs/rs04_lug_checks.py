@@ -11,6 +11,13 @@ leg qualification. Declared driver access is limited to the stated fitting step.
 """
 from __future__ import annotations
 
+# Support direct-file CLI execution as well as checkout package imports.
+if __package__ in (None, ''):
+    import sys as _checkout_sys
+    from pathlib import Path as _CheckoutPath
+    _checkout_sys.path.insert(0, str(_CheckoutPath(__file__).resolve().parents[3]))
+
+
 import argparse
 import hashlib
 import json
@@ -18,8 +25,10 @@ import math
 from pathlib import Path
 import sys
 
-ROOT = Path(__file__).resolve().parents[1]
-sys.path.insert(0, str(ROOT / 'cad'))
+from hardware.cad.manufacturing.print_provenance import source_files as cad_source_files
+
+ROOT = (Path(__file__).resolve().parents[3])
+sys.path.insert(0, str((ROOT / 'hardware/cad')))
 PN = '91290A168'
 MIN_ENGAGEMENT_MM = 4.0
 DEPTH_RESERVE_MM = 0.5
@@ -101,8 +110,7 @@ def validate_receipt(data, directory, root=ROOT):
     root, directory = Path(root), Path(directory)
     inputs = data.get('source_inputs') or {}
     project = inputs.get('project') or {}
-    source_files = {p.relative_to(root).as_posix(): digest(p) for folder in ('cad', 'catalog', 'designs')
-                    for p in (root / folder).rglob('*') if p.is_file() and p.suffix in ('.py', '.json')}
+    source_files = {p.relative_to(root).as_posix(): digest(p) for p in cad_source_files(root)}
     if not source_files or project.get('files') != source_files or inputs.get('context_files') != context_inputs(root):
         raise ValueError('Source/context closure changed')
     if (inputs.get('private_files') != PRIVATE_HASHES or inputs.get('toolkit_commit') != TOOLKIT_COMMIT
@@ -299,7 +307,7 @@ def _relation_check(name, relation, parts):
 def instance_assembly(name, printed, motor, screw, seat, guaranteed_depth):
     from cadagent.gates import Assembly
     from cadagent.gates.fasteners import FastenerSpec
-    import gmi
+    import hardware.cad.robot.gmi as gmi
     placed = _valid(gmi.place(screw, seat, (0, 1, 0)), name)
     assembly = Assembly({'printed': printed, 'motor': motor, name: placed})
     spec = FastenerSpec(name, 'printed', 'motor', axes=[(seat, (0, -1, 0))], key=PN,
@@ -444,9 +452,9 @@ def factory_recess_evidence(imported, plate, rows, dyno_turn, dyno_axis_z):
 
 def geometry_checks(vendor_root, *, export_dir=None):
     import cadquery as cq
-    import fivebar as fb
-    import rig_bench as rb
-    import gmi
+    import hardware.cad.legs.fivebar as fb
+    import hardware.cad.rig.rig_bench as rb
+    import hardware.cad.robot.gmi as gmi
     from cadagent.evidence import shape_content_hash
     from cadagent.gates import relate, Tolerances
     from cadagent.gates.verdict import Check
@@ -576,7 +584,7 @@ def geometry_checks(vendor_root, *, export_dir=None):
 
 def run(vendor_root, *, export_dir=None):
     from cadagent.gates.verdict import Check, verdict
-    import print_provenance
+    import hardware.cad.manufacturing.print_provenance as print_provenance
     checks, evidence, inputs = [], {}, {}
     try:
         inputs = {'project': print_provenance.snapshot(ROOT), 'private_files': private_inputs(vendor_root),

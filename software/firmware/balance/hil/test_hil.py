@@ -17,6 +17,13 @@ GYROPUP_RIG_DIR) or the host library is not there; CI builds and unit-tests the 
 """
 from __future__ import annotations
 
+# Support direct-file CLI execution as well as checkout package imports.
+if __package__ in (None, ''):
+    import sys as _checkout_sys
+    from pathlib import Path as _CheckoutPath
+    _checkout_sys.path.insert(0, str(_CheckoutPath(__file__).resolve().parents[4]))
+
+
 import json
 import sys
 from pathlib import Path
@@ -26,14 +33,14 @@ import pytest
 HERE = Path(__file__).resolve().parent
 sys.path.insert(0, str(HERE))
 
-import fwlib  # noqa: E402
+import software.firmware.balance.hil.fwlib as fwlib  # noqa: E402
 
 if fwlib.find_library() is None:
     pytest.skip('libgp_host.so is not built (cmake -S firmware/balance -B build/fw-host && cmake --build build/fw-host)',
                 allow_module_level=True)
 try:
     import mujoco  # noqa: F401
-    import harness  # noqa: E402
+    import software.firmware.balance.hil.harness as harness  # noqa: E402
     harness.import_rig()
 except ImportError as e:  # pragma: no cover
     pytest.skip(f'the HIL needs MuJoCo and the leg rig package (legrig/program, GYROPUP_RIG_DIR): {e}', allow_module_level=True)
@@ -360,9 +367,9 @@ def test_people_near_refuses_jumps_and_sits_after_two_seconds():
 def test_bridge_carries_frames_both_ways():
     """The transport swap: devices on a VirtualBus reach another transport through a Bridge (here a second VirtualBus
     standing in for SocketCan('can0') on a USB-CAN adapter)."""
-    from rig.canio import VirtualBus
-    from rig.rs04 import pack_enable
-    from rig.rs04_emu import EmulatedRS04
+    from software.control.rig.canio import VirtualBus
+    from software.control.rig.rs04 import pack_enable
+    from software.control.rig.rs04_emu import EmulatedRS04
     devices, wire = VirtualBus(), VirtualBus()
     devices.attach(EmulatedRS04(1).handle)
     br = harness.Bridge(devices.port(), wire.port())
@@ -379,7 +386,7 @@ def test_bridge_carries_frames_both_ways():
 def test_robot_balances_like_the_simulations_controller():
     """The robot profile on sim/robot_v2.py's model (hil/sil_robot.py): stand, drive 0.5 m/s, stop, crouch, against
     sim/controller_v2.py on the same model; the leg rig cannot check the LQR, the pendulum estimate or the wheel signs."""
-    import sil_robot
+    import software.firmware.balance.hil.sil_robot as sil_robot
     if not (sil_robot.BUILD / 'robot.xml').exists():
         pytest.skip('build/sim/v2 is missing: python -m sim.robot_v2')
     res = sil_robot.summary(sil_robot.run_firmware(), sil_robot.run_python())

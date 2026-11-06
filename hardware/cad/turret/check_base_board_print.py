@@ -3,15 +3,22 @@
 No fit or strength claim: actual coupons and a renewed pan-base structural check
 remain required. The thin-plate control demonstrates this probe can reject a wall.
 """
+
+# Support direct-file CLI execution as well as checkout package imports.
+if __package__ in (None, ''):
+    import sys as _checkout_sys
+    from pathlib import Path as _CheckoutPath
+    _checkout_sys.path.insert(0, str(_CheckoutPath(__file__).resolve().parents[3]))
+
 import hashlib
 import json
 from pathlib import Path
 import cadquery as cq
 from cadagent.gates.wall import wall_gate
-import turret_base_board as bb
+import hardware.cad.turret.turret_base_board as bb
 
-ROOT=Path(__file__).resolve().parents[1]
-OUT=ROOT/'exports/turret/base-board-service'
+ROOT=(Path(__file__).resolve().parents[3])
+OUT=(ROOT / 'hardware/exports/turret/base-board-service')
 
 
 def main():

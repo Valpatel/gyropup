@@ -8,15 +8,22 @@ written order, docs/turret-assembly.md (every fastener's part number is in expor
 """
 from __future__ import annotations
 
+# Support direct-file CLI execution as well as checkout package imports.
+if __package__ in (None, ''):
+    import sys as _checkout_sys
+    from pathlib import Path as _CheckoutPath
+    _checkout_sys.path.insert(0, str(_CheckoutPath(__file__).resolve().parents[3]))
+
+
 import json
 import sys
 from pathlib import Path
 
-R = Path(__file__).resolve().parents[1]
-sys.path.insert(0, str(R / 'cad'))
-import turret as tu  # noqa: E402
+R = (Path(__file__).resolve().parents[3])
+sys.path.insert(0, str((R / 'hardware/cad')))
+import hardware.cad.turret.turret as tu  # noqa: E402
 
-OUT = R / 'exports' / 'turret' / 'assembly'
+OUT = (R / 'hardware/exports/turret/assembly')
 GREY = (0.78, 0.79, 0.81)
 
 # (title, parts added, how far each lifts in the picture (mm, along +z unless a vector), view, what holds it)
@@ -134,7 +141,7 @@ def main():
 
 def write_doc(rows):
     """docs/turret-assembly.md from the steps (regenerated with the pictures; edit STEPS, not the page)."""
-    bom = json.loads((R / 'exports/turret/bench/bom.json').read_text()) if (R / 'exports/turret/bench/bom.json').exists() else {}
+    bom = json.loads(((R / 'hardware/exports/turret/bench/bom.json')).read_text()) if ((R / 'hardware/exports/turret/bench/bom.json')).exists() else {}
     hw = [r for r in bom.get('bench_turret', []) if r['for'].startswith('hw_')]
     lines = ['# Turret assembly', '',
              'The order to build the turret in, from cad/turret_assembly.py (which draws the pictures from the CAD: the new',
@@ -151,7 +158,7 @@ def write_doc(rows):
         for r in hw:
             lines.append(f"| {r['for'][3:].replace('_', ' ')} | {r['item']} | {r.get('vendor') or ''} {r.get('part_number') or ''} | {r['qty']} |")
         lines.append('')
-    (R / 'docs' / 'turret-assembly.md').write_text('\n'.join(lines))
+    ((R / 'docs/turret/turret-assembly.md')).write_text('\n'.join(lines))
 
 
 def _items(name, shape, colour, offset):

@@ -4,14 +4,21 @@ around two legs exists, this shows the whole robot instead. Writes docs/hero.jpg
 
     .venv/bin/python tools/readme_hero.py
 """
+
+# Support direct-file CLI execution as well as checkout package imports.
+if __package__ in (None, ''):
+    import sys as _checkout_sys
+    from pathlib import Path as _CheckoutPath
+    _checkout_sys.path.insert(0, str(_CheckoutPath(__file__).resolve().parents[3]))
+
 from pathlib import Path
 import glob, os
 import numpy as np, cadquery as cq, pyvista as pv
 from PIL import Image, ImageDraw, ImageFont
 
-R = Path(__file__).resolve().parents[1]
+R = (Path(__file__).resolve().parents[3])
 import sys
-sys.path.insert(0, str(R / 'cad'))
+sys.path.insert(0, str((R / 'hardware/cad')))
 ACC = '#e8892b'
 def colour(n):
     if any(k in n for k in ('upper_link', 'front_link', 'wheel_link')): return ACC, 1.0
@@ -32,7 +39,9 @@ meshes = []
 
 def scene():
     """(name, shape) of leg v2 at a 300 mm stance and the turret on its stand, set side by side."""
-    import build_leg, turret as tu, turret_stand as ts
+    import hardware.cad.builders.build_leg as build_leg
+    import hardware.cad.turret.turret as tu
+    import hardware.cad.turret.turret_stand as ts
     out = [(n, s_.val() if hasattr(s_, 'val') else s_) for n, (s_, _) in build_leg.assembled(300.0).items() if s_ is not None]
     T = tu.Turret({'bodyTop': -(20.0 + tu.SADDLE_T)})
     shift = cq.Vector(-150.0, -400.0, -385.0 + ts.H + ts.BOT)              # the turret's stand on the same floor
@@ -106,5 +115,5 @@ d.text((x, y), 'Gyropup', font=title, fill='#f2f5f9')
 for i, t in enumerate(['Built leg first: a five-bar leg on two RS-04s,', 'and the foam-ball turret on its bench stand,', 'printed in PA6-CF, PETG and TPU.']):
     d.text((x, y + 210 + i * 62), t, font=text, fill='#aab4c2')
 d.text((x, y + 430), 'DESIGNED · SIMULATED · CHECKED WITH CAD-AGENT', font=mono, fill='#5fd3e0')
-im.save(R / 'docs' / 'hero.jpg', quality=88, optimize=True, progressive=True)
+im.save((R / 'docs/img/hero/hero.jpg'), quality=88, optimize=True, progressive=True)
 print('docs/hero.jpg', im.size)

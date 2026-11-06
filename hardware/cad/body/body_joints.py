@@ -29,6 +29,13 @@ Interference is cad/build_body.py's (body_internal_clashes at every stage): inte
 """
 from __future__ import annotations
 
+# Support direct-file CLI execution as well as checkout package imports.
+if __package__ in (None, ''):
+    import sys as _checkout_sys
+    from pathlib import Path as _CheckoutPath
+    _checkout_sys.path.insert(0, str(_CheckoutPath(__file__).resolve().parents[3]))
+
+
 import json
 import math
 import sys
@@ -36,12 +43,12 @@ from collections import defaultdict
 from dataclasses import dataclass, field
 from pathlib import Path
 
-R = Path(__file__).resolve().parents[1]
-sys.path.insert(0, str(R / 'cad'))
-import body_frame as bf  # noqa: E402
-import body_params as bp  # noqa: E402
+R = (Path(__file__).resolve().parents[3])
+sys.path.insert(0, str((R / 'hardware/cad')))
+import hardware.cad.body.body_frame as bf  # noqa: E402
+import hardware.cad.body.body_params as bp  # noqa: E402
 
-OUT = R / 'exports' / 'body' / 'integrity.json'
+OUT = (R / 'hardware/exports/body/integrity.json')
 THREAD = {'M3': {'d': 3.0, 'pitch': 0.5, 'clear': 3.4, 'nut_h': 2.4, 'nyloc_h': 4.0, 'head_r': 2.75},
           'M4': {'d': 4.0, 'pitch': 0.7, 'clear': 4.5, 'nut_h': 3.2, 'nyloc_h': 5.0, 'head_r': 3.5},
           'M5': {'d': 5.0, 'pitch': 0.8, 'clear': 5.5, 'nut_h': 4.7, 'nyloc_h': 5.0, 'head_r': 4.75},
@@ -133,7 +140,7 @@ def frame_joints():
         J.append(Joint(f'isolator_{k + 1}', 'M4', ISOLATOR_SCREW_L, 'socket', [_z(x, y, zt + hi + 0.8)], (0.0, 0.0, -1.0), (f'isolator_{k + 1}', 'floor_tray'),
                        ('pem', 'floor_tray'), pem='S-M4-0', washer=0.8, bom='screw_m4x20',
                        note='a TPU isolator (snug, not tight): an M4 x 20 and a washer through its cap and foot into the tray\'s nut'))
-    import body_layout as bl
+    import hardware.cad.body.body_layout as bl
     pt = bp.STOCK['5052-0.100']['t']
     pz = zt + bl.PLATE_H
     for k, (x, y) in enumerate(bf.PLATE_STANDOFFS):
@@ -165,7 +172,7 @@ def frame_joints():
 
 def _item_joints(items_by_name):
     """The bought parts screwed to the frame (the layout's envelopes: no hole checks in them)."""
-    import body_layout as bl
+    import hardware.cad.body.body_layout as bl
     zt = bp.z_tray_top()
     pt = bp.STOCK['5052-0.100']['t']
     pz = zt + bl.PLATE_H
@@ -197,7 +204,7 @@ PAD_WASHER = 0.8      # mm: 91116A120 (washer_m3_large, M3 oversized Ø9, 0.7-0.
 
 def bay_joints():
     """The battery bay (cad/body_battery.py, D65)."""
-    import body_battery as bb
+    import hardware.cad.body.body_battery as bb
     g = bb.geometry()
     J = []
     for side, sy in (('l', 1.0), ('r', -1.0)):
@@ -234,7 +241,7 @@ def bay_joints():
 def shell_joints():
     """The P3 shell (cad/body_shell.py): the walls and faces into the posts, the splices, the door, the hatch, the ear
     brackets, the cameras' cradles, the eyes' clip, the fan duct."""
-    import body_shell as s3
+    import hardware.cad.body.body_shell as s3
     W = s3
     post = {(x, y): f'post_{k + 1}' for k, (x, y) in enumerate(bp.POSTS)}
     J = []
@@ -284,7 +291,7 @@ def shell_joints():
 
 def joints(items=None):
     items_by_name = {i['name']: i for i in (items or [])}
-    import body_shell as bs3
+    import hardware.cad.body.body_shell as bs3
     return frame_joints() + _item_joints(items_by_name) + bay_joints() + shell_joints()
 
 
@@ -663,7 +670,7 @@ def screw_counts(J):
 
 
 def main():
-    import build_body as bb
+    import hardware.cad.builders.build_body as bb
     L = bb._layout()
     parts = bf.all_parts(L['mounts'])
     r = run(parts, L['items'])

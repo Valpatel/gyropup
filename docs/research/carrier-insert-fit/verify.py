@@ -7,7 +7,7 @@ import os
 from pathlib import Path
 import sys
 
-ROOT = Path(__file__).resolve().parents[2]
+ROOT = (Path(__file__).resolve().parents[3])
 HERE = Path(__file__).resolve().parent
 NAMES = ('carrier-boss', 'base-anchor')
 

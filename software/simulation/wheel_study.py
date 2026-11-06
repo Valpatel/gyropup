@@ -16,6 +16,13 @@ research/air-tyre-hub-wheels.md (membrane model calibrated on measured bicycle a
 """
 from __future__ import annotations
 
+# Support direct-file CLI execution as well as checkout package imports.
+if __package__ in (None, ''):
+    import sys as _checkout_sys
+    from pathlib import Path as _CheckoutPath
+    _checkout_sys.path.insert(0, str(_CheckoutPath(__file__).resolve().parents[2]))
+
+
 import argparse
 import json
 import math
@@ -24,14 +31,14 @@ import sys
 import time
 from pathlib import Path
 
-R = Path(__file__).resolve().parents[1]
+R = (Path(__file__).resolve().parents[2])
 if str(R) not in sys.path:
     sys.path.insert(0, str(R))
-sys.path.insert(0, str(R / 'cad'))       # fivebar, gmi (as sim/leg_rig.py does)
+sys.path.insert(0, str((R / 'hardware/cad')))       # fivebar, gmi (as sim/leg_rig.py does)
 os.environ.setdefault('MUJOCO_GL', 'egl')
 
-OUT = R / 'exports' / 'wheels'
-CANDIDATES = json.loads((R / 'sim' / 'wheel_candidates.json').read_text())
+OUT = (R / 'hardware/exports/wheels')
+CANDIDATES = json.loads(((R / 'software/simulation/wheel_candidates.json')).read_text())
 K_SOLID = 200.0            # N/mm, the rig's solid tyre (sim/leg_rig.py's estimate, mid-range)
 TAU_SOLID = 0.0077         # s
 
@@ -44,7 +51,7 @@ def solref_for(k_n_per_mm: float | None, damp: float = 0.5) -> str:
 
 def patch_rig(w: dict):
     """Put a candidate wheel into sim.leg_rig's module state and drop its cached mass model."""
-    from sim import leg_rig as lr
+    from software.simulation import leg_rig as lr
     spec = dict(lr.WHEEL)
     spec.update({'mass_g': w['mass_g'], 'peak_torque_nm': w['peak_torque_nm'], 'rated_torque_nm': w['rated_torque_nm'],
                  'no_load_speed_rpm': w['no_load_speed_rpm'], 'voltage_nominal_v': w['voltage_nominal_v'],
@@ -60,8 +67,8 @@ def patch_rig(w: dict):
 def rig(wheels, half_mass: float, only, v_static: float, rate: float = 500.0, r_int: float = 0.10) -> dict:
     """rig/run.py's scenarios (its controller, 500 Hz, a tick of latency, the FLEXVOLT pair) for each wheel. The leg
     carries half_mass plus the wheel's extra mass over the BotWheel, as the first sweep in #18 did."""
-    from rig import run as rr
-    from rig import leg_control as lc
+    from software.control.rig import run as rr
+    from software.control.rig import leg_control as lc
     tests = only or ['stand_up', 'squat', 'jump', 'jump_peak', 'drop_150', 'power_off', 'power_off_damped']
     out = {}
     for name in wheels:
@@ -94,7 +101,7 @@ def rig(wheels, half_mass: float, only, v_static: float, rate: float = 500.0, r_
 def _patch_cad(w: dict):
     """The candidate wheel's solid in place of fb.botwheel(): a tyre ring, a hub drum, the single-sided axle into the foot."""
     import cadquery as cq
-    import fivebar as fb
+    import hardware.cad.legs.fivebar as fb
 
     def wheel():
         od, width, hub_d, hub_w = w['od_mm'], w['tyre_width_mm'], w['hub_od_mm'], w['hub_width_mm']
@@ -112,7 +119,7 @@ def _patch_cad(w: dict):
 def fit(wheels) -> dict:
     """Geometry only (no solids): where the tyre reaches at every stance, against the hip axis, the stop posts and the
     body's belly; the track; the standing hip height. The solid clash sweep is cad/wheel_fit.py (slow)."""
-    import fivebar as fb
+    import hardware.cad.legs.fivebar as fb
     out = {}
     fo, fi, ro, ri = fb.stop_angles()
     posts = fb.stop_posts()
@@ -148,14 +155,14 @@ def fit(wheels) -> dict:
 
 def curb(wheels, heights, speed: float, video: bool = False) -> dict:
     """The full robot (sim/robot_v2.py, its balance controller) driving at a kerb of each height with each wheel."""
-    from sim import scenarios as S
-    from sim.controller import Command
+    from software.simulation import scenarios as S
+    from software.simulation.controller import Command
     out = {}
     for name in wheels:
         w = CANDIDATES[name]
         lr = patch_rig(w)
         _patch_cad(w)
-        import sim.robot_v2 as rv
+        import software.simulation.robot_v2 as rv
         info = rv.build()
         xml = R / 'build' / 'sim' / 'v2' / 'robot.xml'
         row = {'wheel': w, 'model_mass_kg': round(info['total_mass_kg'], 2), 'wheel_motor': info['wheel_motor'], 'speed_mps': speed, 'heights': {}}

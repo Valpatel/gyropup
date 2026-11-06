@@ -12,7 +12,7 @@ import re
 import sys
 from pathlib import Path
 
-ROOT = Path(__file__).resolve().parents[1]
+ROOT = (Path(__file__).resolve().parents[3])
 HW = ROOT / 'hardware'
 CATEGORIES = ('actuators', 'drives', 'sensors', 'power', 'compute', 'comms', 'turret')
 SECTIONS = ('References', 'Interfaces', 'Config and profiles', 'Driver', 'Inventory', 'Bring-up and tests', 'Open questions')

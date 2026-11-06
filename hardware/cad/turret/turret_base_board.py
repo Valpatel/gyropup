@@ -7,11 +7,18 @@ returned by the normal turret build or exported by this module.
 """
 from __future__ import annotations
 
+# Support direct-file CLI execution as well as checkout package imports.
+if __package__ in (None, ''):
+    import sys as _checkout_sys
+    from pathlib import Path as _CheckoutPath
+    _checkout_sys.path.insert(0, str(_CheckoutPath(__file__).resolve().parents[3]))
+
+
 from pathlib import Path
 import cadquery as cq
-from turret_boards import BOARDS, FP
+from hardware.cad.turret.turret_boards import BOARDS, FP
 
-ROOT = Path(__file__).resolve().parents[1]
+ROOT = (Path(__file__).resolve().parents[3])
 BOARD_SIZE = BOARDS['base'][0]
 BOARD_Z0 = 6.0
 BOARD_HOLES = tuple(sorted((x - BOARD_SIZE[0]/2, y + BOARD_Z0) for x,y in BOARDS['base'][1]))

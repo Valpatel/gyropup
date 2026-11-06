@@ -30,6 +30,13 @@ middle.
 """
 from __future__ import annotations
 
+# Support direct-file CLI execution as well as checkout package imports.
+if __package__ in (None, ''):
+    import sys as _checkout_sys
+    from pathlib import Path as _CheckoutPath
+    _checkout_sys.path.insert(0, str(_CheckoutPath(__file__).resolve().parents[3]))
+
+
 import functools
 import json
 import math
@@ -39,7 +46,7 @@ from pathlib import Path
 
 import cadquery as cq
 
-import gmi
+import hardware.cad.robot.gmi as gmi
 
 STD = gmi.STD
 MOTOR = 'robstride-rs-04'

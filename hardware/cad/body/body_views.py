@@ -12,14 +12,21 @@ Solid views are cad/build_body.py's (body-p1-*, body-p3-*). These add:
 """
 from __future__ import annotations
 
+# Support direct-file CLI execution as well as checkout package imports.
+if __package__ in (None, ''):
+    import sys as _checkout_sys
+    from pathlib import Path as _CheckoutPath
+    _checkout_sys.path.insert(0, str(_CheckoutPath(__file__).resolve().parents[3]))
+
+
 import sys
 from pathlib import Path
 
-R = Path(__file__).resolve().parents[1]
-sys.path.insert(0, str(R / 'cad'))
-import body_frame as bf  # noqa: E402
+R = (Path(__file__).resolve().parents[3])
+sys.path.insert(0, str((R / 'hardware/cad')))
+import hardware.cad.body.body_frame as bf  # noqa: E402
 
-OUT = R / 'exports' / 'body' / 'views'
+OUT = (R / 'hardware/exports/body/views')
 BIG = 2000.0
 
 
@@ -70,7 +77,7 @@ def offset(n):
 
 def main():
     from cadagent.render import Renderer
-    import build_body as bb
+    import hardware.cad.builders.build_body as bb
     OUT.mkdir(parents=True, exist_ok=True)
     L = bb._layout()
     parts = {n: p for n, p in bf.all_parts(L['mounts']).items() if p.shape is not None and bf.on_robot(p, 'P3')}

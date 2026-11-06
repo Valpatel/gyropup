@@ -20,16 +20,23 @@ body's), 'Idelchik' (I. E. Idel'chik, Handbook of Hydraulic Resistance: thin per
 """
 from __future__ import annotations
 
+# Support direct-file CLI execution as well as checkout package imports.
+if __package__ in (None, ''):
+    import sys as _checkout_sys
+    from pathlib import Path as _CheckoutPath
+    _checkout_sys.path.insert(0, str(_CheckoutPath(__file__).resolve().parents[3]))
+
+
 import json
 import math
 import sys
 from pathlib import Path
 
-R = Path(__file__).resolve().parents[1]
-sys.path.insert(0, str(R / 'cad'))
-import body_params as bp  # noqa: E402
+R = (Path(__file__).resolve().parents[3])
+sys.path.insert(0, str((R / 'hardware/cad')))
+import hardware.cad.body.body_params as bp  # noqa: E402
 
-OUT = R / 'exports' / 'body' / 'thermal'
+OUT = (R / 'hardware/exports/body/thermal')
 RHO, CP = 1.16, 1006.0                     # air at 30 C (kg/m3, J/kg K)
 M3H = 1 / 3600.0                           # m3/h -> m3/s
 BUDGET_PA = 5.0                            # D61 / the plan: the body may add at most this much back-pressure at the fan
@@ -69,7 +76,7 @@ def dp_opening(q_m3h, area_mm2, zeta):
 
 def intake_cells():
     """The deck's intake cells as cut (body_frame.intake_cells: 8 mm squares, 1.5 mm corner radius, on an 11 mm pitch)."""
-    import body_frame as bf
+    import hardware.cad.body.body_frame as bf
     cells = bf.intake_cells()
     a1 = bf.INTAKE_CELL ** 2 - (4 - math.pi) * 1.5 ** 2
     return {'n': len(cells), 'area_mm2': round(len(cells) * a1, 1), 'phi': round(a1 / bf.INTAKE_PITCH ** 2, 3),
@@ -79,7 +86,7 @@ def intake_cells():
 def rev_b_cells(pitch=10.54, r_field=None):
     """A Rev B deck's intake field: 8 mm cells on the sheet's minimum web (2.54 mm: the 0.100 in deck's thickness) over
     the fan's whole circle (blades + 2 mm), clear of the riser's feet by its foot and 3 mm (as the P1 field)."""
-    import body_frame as bf
+    import hardware.cad.body.body_frame as bf
     t = bp.tm()
     fx, fy = bp.j501_stack()['fan_xy']
     r_field = r_field or bf.INTAKE_R
@@ -102,7 +109,7 @@ def rev_b_cells(pitch=10.54, r_field=None):
 def riser_sides():
     """The riser's four open sides under its ring: between its legs (Ø18) at the feet 80 mm apart, the deck to the
     ring's underside."""
-    import body_frame as bf
+    import hardware.cad.body.body_frame as bf
     h = bp.RISER_H - bf.RISER_TOP_T
     w = 80.0 - 2 * bf.RISER_LEG_R
     return {'area_mm2': round(4 * w * h, 1), 'each_mm': [w, h]}
@@ -149,7 +156,7 @@ def model():
     q_ref = op['q_m3h']
     # the louvres each side carry half the flow; size them so the inlet adds half the 5 Pa budget at the J501's flow
     louvre_side_mm2 = area_for(q_ref / 2, BUDGET_PA / 2, LOUVRE_ZETA)            # what half the budget asks for
-    import body_shell as bs3                                                     # what the walls have (B6: one source)
+    import hardware.cad.body.body_shell as bs3                                                     # what the walls have (B6: one source)
     LV = bs3.LOUVRE
     n_slots = LV['n']
     louvre_mm2 = round(n_slots * (LV['w'] * LV['h'] - (4 - math.pi) * (LV['w'] / 2) ** 2), 1)

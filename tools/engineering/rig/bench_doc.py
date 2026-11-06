@@ -10,16 +10,23 @@ Each section runs from its marker to the matching <!-- /gen:... --> and is rewri
 """
 from __future__ import annotations
 
+# Support direct-file CLI execution as well as checkout package imports.
+if __package__ in (None, ''):
+    import sys as _checkout_sys
+    from pathlib import Path as _CheckoutPath
+    _checkout_sys.path.insert(0, str(_CheckoutPath(__file__).resolve().parents[3]))
+
+
 import json
 import re
 import sys
 from pathlib import Path
 
-R = Path(__file__).resolve().parents[1]
+R = (Path(__file__).resolve().parents[3])
 sys.path.insert(0, str(R))
-DOC = R / 'docs' / 'leg-bench-tests.md'
-PRED = R / 'exports' / 'rig' / 'predictions.json'
-CRIT = R / 'rig' / 'criteria.json'
+DOC = (R / 'docs/legs/leg-bench-tests.md')
+PRED = (R / 'hardware/exports/rig/predictions.json')
+CRIT = (R / 'software/control/rig/criteria.json')
 
 NAMES = {'stand_up': 'S1 stand-up', 'squat': 'S2 squat', 'jump': 'S3 jump', 'drop_150': 'S4 drop 150 mm',
          'power_off': 'S5 power cut, undamped', 'power_off_damped': 'S5 power cut, damped',
@@ -38,7 +45,7 @@ def fmt(v, nd=0):
 
 
 def assumes() -> str:
-    from rig.bench.fit_params import assumed
+    from software.control.rig.bench.fit_params import assumed
     a = assumed()
     if 'error' in a:
         return f'(sim/leg_rig.py could not be read: {a["error"]})'

@@ -16,6 +16,13 @@ Writes exports/leg/rig-results.json (peaks per scenario, the loads for the FEA) 
 """
 from __future__ import annotations
 
+# Support direct-file CLI execution as well as checkout package imports.
+if __package__ in (None, ''):
+    import sys as _checkout_sys
+    from pathlib import Path as _CheckoutPath
+    _checkout_sys.path.insert(0, str(_CheckoutPath(__file__).resolve().parents[2]))
+
+
 import argparse
 import functools
 import json
@@ -30,16 +37,16 @@ os.environ.setdefault('MUJOCO_GL', 'egl')
 import mujoco  # noqa: E402
 import numpy as np  # noqa: E402
 
-R = Path(__file__).resolve().parents[1]
-sys.path.insert(0, str(R / 'cad'))
-import fivebar as fb  # noqa: E402
-from sim.leg_control import Gains, clip_motor, polar, vmc_from_state  # noqa: E402  (the controller, simulator-free)
-from sim import leg_limits  # noqa: E402  (the soft stops: exports/leg/limits.json, docs/leg-protection.md)
+R = (Path(__file__).resolve().parents[2])
+sys.path.insert(0, str((R / 'hardware/cad')))
+import hardware.cad.legs.fivebar as fb  # noqa: E402
+from software.simulation.leg_control import Gains, clip_motor, polar, vmc_from_state  # noqa: E402  (the controller, simulator-free)
+from software.simulation import leg_limits  # noqa: E402  (the soft stops: exports/leg/limits.json, docs/leg-protection.md)
 
-OUT = R / 'exports' / 'leg'
+OUT = (R / 'hardware/exports/leg')
 G = 9.81
 FPS = 30
-CAT = {it['id']: it for f in ('leg_actuators.json', 'wheel_motors.json') for it in json.loads((R / 'catalog' / f).read_text())}
+CAT = {it['id']: it for f in ('leg_actuators.json', 'wheel_motors.json') for it in json.loads(((R / 'hardware/catalog') / f).read_text())}
 MOTOR = CAT[fb.MOTOR]['specs']
 # The wheel (D69): a 10 in hoverboard-class hub motor, 10 x 2.125 pneumatic tyre at 30-35 psi (docs/wheel-change-plan.md,
 # research/air-tyre-hub-wheels.md). Listed 3.53 kg; taken at 4.0 kg (the tube, a heavier tyre, margin). Its mass, radius
@@ -79,7 +86,7 @@ ARMATURE = 3.0e-4 * MOTOR['gear_ratio'] ** 2
 # tyres), tau = 7.7 ms x sqrt(200 / 60) = 14.1 ms, damping 0.5. At 50 psi (90 N/mm) the landings' axle spike is about
 # 15 % higher: run the tyres at 30-35 psi (the bench test measures k at 25-40 psi, W6)
 TYRE_SOLREF = '0.0141 0.5'
-TPU_E = json.loads((R / 'catalog/materials.json').read_text())['tpu95']['modulus_gpa'] * 1e9
+TPU_E = json.loads(((R / 'hardware/catalog/materials.json')).read_text())['tpu95']['modulus_gpa'] * 1e9
 OFF_DAMPING = 0.2 * (MOTOR['kt_nm_per_a'] / MOTOR['gear_ratio']) ** 2 / 0.15 * MOTOR['gear_ratio'] ** 2   # N m s/rad, see run()
 TPU_WALL = (fb.TPU_SLEEVE[0] - fb.TPU_SLEEVE[1]) / 2 / 1000          # m
 STOP_ARM = fb.stop_arm() / 1000                                       # m: the stop force's lever about the motor's axis
@@ -94,7 +101,7 @@ STOP_B = 0.6 * math.sqrt(STOP_K * 0.1)   # N m s/rad: ~0.3 of critical for ~0.1 
 def mass_props():
     """Body of every moving group in its own link frame (SI), from the CAD solids."""
     from cadagent.robot import Body, solid_mass_properties, cylinder_body, combine
-    mats = json.loads((R / 'catalog/materials.json').read_text())
+    mats = json.loads(((R / 'hardware/catalog/materials.json')).read_text())
     L = fb.leg_parts()
     sm = lambda name: solid_mass_properties(L.parts[name].val(), mats[L.meta[name]['material']]['density_g_cm3'], 1.0, name)
     l2 = fb.P['l2'] / 1000

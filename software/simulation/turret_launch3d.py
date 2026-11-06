@@ -28,6 +28,13 @@ within 1 %; `check_against_1d()` does that and the e2e pipeline asserts it.
 """
 from __future__ import annotations
 
+# Support direct-file CLI execution as well as checkout package imports.
+if __package__ in (None, ''):
+    import sys as _checkout_sys
+    from pathlib import Path as _CheckoutPath
+    _checkout_sys.path.insert(0, str(_CheckoutPath(__file__).resolve().parents[2]))
+
+
 import argparse
 import json
 import math
@@ -37,12 +44,12 @@ from pathlib import Path
 
 import numpy as np
 
-R = Path(__file__).resolve().parents[1]
-sys.path.insert(0, str(R / 'sim'))
-sys.path.insert(0, str(R / 'cad'))
-import turret_launch as tl  # noqa: E402  (the program agent's 1D model: MOTOR, Ball, Launcher, shot, no_load_speed, ...)
+R = (Path(__file__).resolve().parents[2])
+sys.path.insert(0, str((R / 'software/simulation')))
+sys.path.insert(0, str((R / 'hardware/cad')))
+import software.simulation.turret_launch as tl  # noqa: E402  (the program agent's 1D model: MOTOR, Ball, Launcher, shot, no_load_speed, ...)
 
-OUT = R / 'exports' / 'turret' / 'launch'
+OUT = (R / 'hardware/exports/turret/launch')
 FPS = tl.FPS
 CAP = tl.CAP
 CAP_FPS = tl.CAP_FPS
@@ -535,7 +542,7 @@ def validate_nuaa_mismatch():
     3.2 g TPU ball only ~13 cm at 15 m. Our chain: 3D launch (spin from the mismatch) -> flight (Magnus) -> drift at
     15 m; also the no-slip (Nathan) spin for comparison. Ball: est E 15 MPa (solid TPU 90A), e 0.7, mu 0.6; wheels
     Ø60 with 2.8 mm of crush (gap 14 mm, Luo 2025), 3e-5 kg m^2 each (est, an aluminium core), 24 V."""
-    import turret_flight as tf
+    import software.simulation.turret_flight as tf
     rm = tl.Ball('rm17', 16.8, 3.2, 15.0, 0.4, 0.7, 0.6)
     L = tl.launcher_for(60.0, 1 - 14.0 / 16.8, ball_d=16.8, supply_v=24.0, wheel_I=3e-5)
     w = tl.set_speed_for(rm, L, 15.7)
@@ -585,7 +592,7 @@ def study(quick=False, seed=1):
     matplotlib.use('Agg')
     import matplotlib.pyplot as plt
     try:
-        import turret_ball as tb
+        import software.simulation.turret_ball as tb
         pop = tb.population(120 if quick else 400, seed=seed)
         balls = ceiling_balls([b.launch() for b in pop])           # accepted rounds only (D67): clipped to 22.2-22.8 mm, 1.6-2.0 g
         ball_src = 'sim/turret_ball.py'
@@ -594,7 +601,7 @@ def study(quick=False, seed=1):
         balls = tl.population(120 if quick else 400, seed=seed)    # already the accepted range
         ball_src = f'sim/turret_launch.py population ({exc})'
     OUT.mkdir(parents=True, exist_ok=True)
-    import turret_common as tc
+    import software.simulation.turret_common as tc
     Gc = tc.cad_turret().Geo()
     set_bore(Gc)
     D = tl.DESIGN

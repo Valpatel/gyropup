@@ -7,7 +7,7 @@ from pathlib import Path
 import tempfile
 import unittest
 
-SPEC=importlib.util.spec_from_file_location('connector_inputs',Path(__file__).resolve().parent/'check-carrier-connector-inputs.py')
+SPEC=importlib.util.spec_from_file_location('connector_inputs',(Path(__file__).resolve().parents[3] / 'tools/evidence/interfaces/check-carrier-connector-inputs.py'))
 MOD=importlib.util.module_from_spec(SPEC);SPEC.loader.exec_module(MOD)
 
 

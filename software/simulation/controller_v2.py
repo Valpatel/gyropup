@@ -13,6 +13,13 @@ stops before the clip, and the commanded turn is clamped to what the outer wheel
 """
 from __future__ import annotations
 
+# Support direct-file CLI execution as well as checkout package imports.
+if __package__ in (None, ''):
+    import sys as _checkout_sys
+    from pathlib import Path as _CheckoutPath
+    _checkout_sys.path.insert(0, str(_CheckoutPath(__file__).resolve().parents[2]))
+
+
 import math
 import sys
 from dataclasses import dataclass, field
@@ -21,12 +28,12 @@ from pathlib import Path
 import mujoco
 import numpy as np
 
-R = Path(__file__).resolve().parents[1]
-sys.path.insert(0, str(R / 'cad'))
-import fivebar as fb  # noqa: E402
-from sim.controller import Command, Controller, Gains, clip_torque  # noqa: E402
-from sim import leg_rig as lr  # noqa: E402
-from sim import leg_limits as ll  # noqa: E402
+R = (Path(__file__).resolve().parents[2])
+sys.path.insert(0, str((R / 'hardware/cad')))
+import hardware.cad.legs.fivebar as fb  # noqa: E402
+from software.simulation.controller import Command, Controller, Gains, clip_torque  # noqa: E402
+from software.simulation import leg_rig as lr  # noqa: E402
+from software.simulation import leg_limits as ll  # noqa: E402
 
 G = 9.81
 SIDES = ('l', 'r')

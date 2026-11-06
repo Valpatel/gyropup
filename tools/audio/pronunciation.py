@@ -15,6 +15,13 @@ gives the same text as once.
 """
 from __future__ import annotations
 
+# Support direct-file CLI execution as well as checkout package imports.
+if __package__ in (None, ''):
+    import sys as _checkout_sys
+    from pathlib import Path as _CheckoutPath
+    _checkout_sys.path.insert(0, str(_CheckoutPath(__file__).resolve().parents[2]))
+
+
 import json
 import os
 import re
@@ -22,7 +29,7 @@ import sys
 from functools import lru_cache
 from pathlib import Path
 
-KEY_PATH = Path(__file__).resolve().parent.parent / 'designer' / 'character' / 'pronunciation.json'
+KEY_PATH = (Path(__file__).resolve().parents[2] / 'software/site/designer/character/pronunciation.json')
 SUFFIX = "'s|’s|s'|s’|s"       # keep in step with pronounce.js
 WORD = r'A-Za-z0-9_\u00C0-\u00D6\u00D8-\u00F6\u00F8-\u024F'   # Latin letters too (not × or ÷): never inside another word
 SPACE = r'\t\n\v\f\r \u00a0\u1680\u2000-\u200a\u2028\u2029\u202f\u205f\u3000\ufeff'   # JavaScript's \s, spelled out so both sides split text the same
@@ -84,7 +91,7 @@ def pronounce(text: str) -> str:
 
 def _show() -> int:
     """espeak's phonemes for every entry, as written and as said, with the sidecar's voice (its flags and environment)."""
-    import tts_server                               # here, not at the top: tts_server imports this module
+    import tools.audio.tts_server as tts_server                               # here, not at the top: tts_server imports this module
     a = tts_server.settings([])
     tts_server.need_piper(a)                        # or re-run this script under a python that has Piper
     from piper import PiperVoice

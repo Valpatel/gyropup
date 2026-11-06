@@ -7,7 +7,7 @@ import importlib.util
 import sys
 from pathlib import Path
 
-R = Path(__file__).resolve().parents[1]
+R = (Path(__file__).resolve().parents[2])
 
 
 def cad_turret():
@@ -18,7 +18,7 @@ def cad_turret():
         return m
     if m is not None:
         del sys.modules['turret']
-    cad = str(R / 'cad')
+    cad = str((R / 'hardware/cad'))
     while cad in sys.path:
         sys.path.remove(cad)
     sys.path.insert(0, cad)
@@ -32,7 +32,7 @@ def game_turret():
     """sim/turret.py (the game-level scene bits: targets_xml, balls_xml, Target), under its own module name."""
     if 'game_turret' in sys.modules:
         return sys.modules['game_turret']
-    spec = importlib.util.spec_from_file_location('game_turret', R / 'sim' / 'turret.py')
+    spec = importlib.util.spec_from_file_location('game_turret', (R / 'software/simulation/turret.py'))
     m = importlib.util.module_from_spec(spec)
     sys.modules['game_turret'] = m
     spec.loader.exec_module(m)
@@ -41,7 +41,7 @@ def game_turret():
 
 def sim_module(name):
     """A module from sim/ by name (turret_feed, turret_launch, ...) with sim/ on the path but cad/ kept first."""
-    sim = str(R / 'sim')
+    sim = str((R / 'software/simulation'))
     if sim not in sys.path:
         sys.path.append(sim)
     return importlib.import_module(name)

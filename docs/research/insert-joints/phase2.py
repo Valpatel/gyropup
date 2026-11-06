@@ -28,7 +28,7 @@ import sys
 from pathlib import Path
 
 HERE = Path(__file__).resolve().parent
-ROOT = HERE.parents[1]
+ROOT = (HERE.parents[2])
 JOINTS = HERE / 'joints.json'
 OUT_JSON = HERE / 'phase2.json'
 OUT_MD = HERE / 'phase2.md'

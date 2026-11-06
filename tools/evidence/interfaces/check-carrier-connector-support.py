@@ -14,8 +14,8 @@ from pathlib import Path
 import sys
 import time
 
-ROOT=Path(__file__).resolve().parents[1]
-sys.path.insert(0,str(ROOT/'cad'))
+ROOT=(Path(__file__).resolve().parents[3])
+sys.path.insert(0,str((ROOT / 'hardware/cad')))
 import print_provenance as provenance
 PUBLIC_FILES={'carrier-support-candidate.step','C3-support-candidate.step','C3-support-layout.step'}
 

@@ -7,8 +7,8 @@ import shutil
 import tempfile
 import unittest
 
-ROOT=Path(__file__).resolve().parents[1]
-sys.path.insert(0,str(ROOT/'cad'))
+ROOT=(Path(__file__).resolve().parents[3])
+sys.path.insert(0,str((ROOT / 'hardware/cad')))
 import turret_carrier_interfaces as ci
 
 
@@ -40,12 +40,12 @@ class CarrierInterfaces(unittest.TestCase):
             self.assertAlmostEqual(seated['required_geometric_lower_bound_mm'],removed['required_geometric_lower_bound_mm'])
 
     def test_receipt_is_current_and_does_not_erase_unqualified_coverage(self):
-        receipt=json.loads((ROOT/'exports/turret/base-board-service/interfaces/interfaces.json').read_text())
+        receipt=json.loads(((ROOT / 'hardware/exports/turret/base-board-service/interfaces/interfaces.json')).read_text())
         ci.validate_source_receipt(ROOT,receipt)
         for path,digest in receipt['source_sha256'].items():
             self.assertEqual(hashlib.sha256((ROOT/path).read_bytes()).hexdigest(),digest,path)
         for path,digest in receipt['artifact_sha256'].items():
-            self.assertEqual(hashlib.sha256((ROOT/'exports/turret/base-board-service/interfaces'/path).read_bytes()).hexdigest(),digest,path)
+            self.assertEqual(hashlib.sha256(((ROOT / 'hardware/exports/turret/base-board-service/interfaces')/path).read_bytes()).hexdigest(),digest,path)
         self.assertTrue(receipt['bounded_reservation_checks_pass'])
         self.assertFalse(receipt['readiness'])
         self.assertFalse(receipt['physical_fit_verified'])
@@ -75,7 +75,7 @@ class CarrierInterfaces(unittest.TestCase):
             self.assertIn('negative:withdraw_still_mated:'+kind,ids)
 
     def test_changed_deleted_or_new_geometry_dependency_rejects_receipt(self):
-        receipt=json.loads((ROOT/'exports/turret/base-board-service/interfaces/interfaces.json').read_text())
+        receipt=json.loads(((ROOT / 'hardware/exports/turret/base-board-service/interfaces/interfaces.json')).read_text())
         with tempfile.TemporaryDirectory() as tmp:
             root=Path(tmp)
             for path in receipt['inputs']['files']:

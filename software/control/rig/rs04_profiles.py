@@ -15,11 +15,22 @@ import sys
 from pathlib import Path
 from typing import Dict, List, Optional
 
-ROOT = Path(__file__).resolve().parents[1]
+ROOT = (Path(__file__).resolve().parents[3])
 DIR = ROOT / 'hardware' / 'actuators' / 'rs04' / 'profiles'
 SCHEMA = 'gyropup.rs04-profile/1'
 LIMITS = ('limit_torque_nm', 'jog_torque_nm', 'jog_speed_rad_s', 'jog_kp_max', 'jog_kd_max', 'can_timeout_ticks',
           'can_timeout_max_ticks')
+
+
+# Profile JSON retains its stable public evidence identities. Resolve each declared
+# identity to its sole current source; never fall back to an old checkout copy.
+SOURCE_FILES = {'docs/body-firmware.md': 'docs/software/body-firmware.md', 'docs/leg-bench-tests.md': 'docs/legs/leg-bench-tests.md', 'docs/leg-protection.md': 'docs/legs/leg-protection.md', 'docs/motor-day.md': 'docs/legs/motor-day.md', 'docs/motor-thermal.md': 'docs/legs/motor-thermal.md', 'exports/leg/limits.json': 'hardware/exports/leg/limits.json', 'exports/leg/thermal/motor_thermal.json': 'hardware/exports/leg/thermal/motor_thermal.json', 'firmware/balance/include/gp/gp_config.h': 'software/firmware/balance/include/gp/gp_config.h'}
+
+def source_file(identity: str) -> Path:
+    relative = Path(SOURCE_FILES.get(identity, identity))
+    if relative.is_absolute() or '..' in relative.parts:
+        raise ValueError('Profile source escapes checkout')
+    return ROOT / relative
 
 
 def names() -> List[str]:
@@ -66,7 +77,7 @@ def _pointer(doc, pointer: str):
 
 def resolve(src: dict):
     """The value a source names, or None when its file does not exist yet."""
-    f = ROOT / (src.get('json') or src.get('c_define') or '')
+    f = source_file(src.get('json') or src.get('c_define') or '')
     if not f.is_file():
         return None
     if 'json' in src:
@@ -91,7 +102,7 @@ def check(p: dict) -> List[str]:
         if abs(float(got) - float(have)) > 1e-9:
             out.append(f'{p["id"]}: {path} is {have} but its source says {got} ({src.get("json") or src.get("c_define")})')
     for ref in p.get('references', []):
-        f = ROOT / ref['file']
+        f = source_file(ref['file'])
         if not f.is_file():
             if not ref.get('pending'):
                 out.append(f'{p["id"]}: reference {ref["file"]} does not exist')

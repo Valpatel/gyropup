@@ -7,7 +7,7 @@ physical ownership before changing any joint, source revision or landmark policy
 import json,struct,subprocess,math,sys
 from pathlib import Path
 from cadagent.motion_trace import required_poses
-R=Path(__file__).resolve().parents[1];ref='4769888bf0334608ff997faeff5e663d96a1a70d';prefix='exports/sim/turret_box/'
+R=(Path(__file__).resolve().parents[3]);ref='4769888bf0334608ff997faeff5e663d96a1a70d';prefix='exports/sim/turret_box/'
 def old(name): return subprocess.check_output(['git','show',ref+':'+prefix+name],cwd=R)
 m=json.loads(old('manifest.json'))
 def joint(parent,pivot,axis,span):return dict(parent=parent,pivot=pivot,axis=axis,range_deg=span)
@@ -32,5 +32,5 @@ for e in m['parts']:
  chosen=[i0,i1,i2,i3];indices[e['name']]=chosen
  contract['components'][e['name']]=dict(joint=g if g in joints else None,points=[[a+b for a,b in zip(v[i],origin)] for i in chosen])
 fixture=dict(contract=contract,vertex_indices=indices,poses=required_poses(contract))
-(R/'tools/fixtures/turret-motion-reference.json').write_text(json.dumps(fixture,indent=2)+'\n')
+((R / 'tests/fixtures/turret-motion-reference.json')).write_text(json.dumps(fixture,indent=2)+'\n')
 print('reference:',len(indices),'components;',len(fixture['poses']),'poses')

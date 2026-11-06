@@ -5,6 +5,13 @@ the dossier's single-part sequence: a preassembled module moves as a rigid body.
 Only project-authored geometry and numerical results may be exported.
 """
 from __future__ import annotations
+
+# Support direct-file CLI execution as well as checkout package imports.
+if __package__ in (None, ''):
+    import sys as _checkout_sys
+    from pathlib import Path as _CheckoutPath
+    _checkout_sys.path.insert(0, str(_CheckoutPath(__file__).resolve().parents[3]))
+
 import argparse
 import hashlib
 import json
@@ -17,10 +24,10 @@ from cadagent.gates import Assembly, Tolerances, PairCache
 from cadagent.gates.assembly import AssemblySequenceWorld, AccessOptions, sweep_pair
 from cadagent.gates.fasteners import FastenerSpec, fastener_gate
 from cadagent.gates.verdict import Check, verdict
-import turret as tu
-import turret_base_board as bb
+import hardware.cad.turret.turret as tu
+import hardware.cad.turret.turret_base_board as bb
 
-ROOT = Path(__file__).resolve().parents[1]
+ROOT = (Path(__file__).resolve().parents[3])
 SOURCES = ['cad/turret.py','cad/turret_base_board.py','cad/turret_boards.py','cad/check_base_board_service.py',
            'catalog/hardware.json','catalog/turret.json']
 PAIR_CACHE = PairCache(ROOT / '.cadagent-cache/base-board-service')
@@ -205,5 +212,5 @@ def run(out):
 
 
 if __name__=='__main__':
-    p=argparse.ArgumentParser();p.add_argument('--out',type=Path,default=ROOT/'exports/turret/base-board-service')
+    p=argparse.ArgumentParser();p.add_argument('--out',type=Path,default=(ROOT / 'hardware/exports/turret/base-board-service'))
     raise SystemExit(run(p.parse_args().out))

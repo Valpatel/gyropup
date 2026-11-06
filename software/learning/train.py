@@ -7,6 +7,13 @@ The design is built with sim/model.py (main venv) into rl/build/<design>/ first.
 rl/logs/rsl_rl/gyropup_velocity/<date>_<design>/ (TensorBoard). Any option after the design is passed to mjlab's
 `train` (see `--help`).
 """
+
+# Support direct-file CLI execution as well as checkout package imports.
+if __package__ in (None, ''):
+    import sys as _checkout_sys
+    from pathlib import Path as _CheckoutPath
+    _checkout_sys.path.insert(0, str(_CheckoutPath(__file__).resolve().parents[2]))
+
 import os
 import sys
 from pathlib import Path
@@ -24,7 +31,7 @@ def main():
     os.environ['GYROPUP_DESIGN'] = design
     os.chdir(HERE)
     sys.path.insert(0, str(HERE))
-    from gyropup_rl.tasks import TASK
+    from software.learning.gyropup_rl.tasks import TASK
     if not any(a.startswith('--agent.run-name') for a in args):
         args += ['--agent.run-name', Path(design).stem]
     from mjlab.scripts.train import main as mjlab_train

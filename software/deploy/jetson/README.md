@@ -8,15 +8,15 @@ open question for the owner** ([hardware/compute/robot-computer](../../../hardwa
 ```bash
 git clone https://github.com/Valpatel/gyropup.git /opt/gyropup     # or wherever: the units point at this checkout
 cd /opt/gyropup
-hardware/deploy/jetson/install.sh --dry-run          # what it would change; changes nothing
-sudo hardware/deploy/jetson/install.sh               # install or update; run it again after every pull
-sudo hardware/deploy/jetson/install.sh --list-can    # the CAN adapters, their USB paths and serials
-sudo hardware/deploy/jetson/install.sh --enable-bridge   # start the RS-04 bridge now and at boot (127.0.0.1:8765)
+software/deploy/jetson/install.sh --dry-run          # what it would change; changes nothing
+sudo software/deploy/jetson/install.sh               # install or update; run it again after every pull
+sudo software/deploy/jetson/install.sh --list-can    # the CAN adapters, their USB paths and serials
+sudo software/deploy/jetson/install.sh --enable-bridge   # start the RS-04 bridge now and at boot (127.0.0.1:8765)
 ```
 
 It is idempotent: a second run reports `0 change(s)`, and the two settings files in `/etc/gyropup/` are written once
 and never overwritten. CI runs its dry run, a staged install, the idempotence, the name rules and shellcheck
-(`python3 hardware/deploy/jetson/test_install.py`, workflow `jetson-deploy`).
+(`python3 software/deploy/jetson/test_install.py`, workflow `jetson-deploy`).
 
 ## What it installs
 
@@ -27,7 +27,7 @@ and never overwritten. CI runs its dry run, a staged install, the idempotence, t
 | `/etc/systemd/system/gyropup-can@.service` | `ip link set <name> type can bitrate 1000000 restart-ms 100`, `txqueuelen 1000`, up |
 | `/etc/udev/rules.d/70-gyropup-can-names.rules` | stable names from `/etc/gyropup/can-names.conf` (by USB port or serial) |
 | `/etc/sysusers.d/gyropup.conf` | the unprivileged `gyropup-bridge` user |
-| `/etc/systemd/system/gyropup-rs04-bridge.service` | `python3 -m rig.rs04_bridge` from this checkout, hardened, restarted on failure; installed, enabled only with `--enable-bridge` |
+| `/etc/systemd/system/gyropup-rs04-bridge.service` | `python3 -m software.control.rig.rs04_bridge` from this checkout, hardened, restarted on failure; installed, enabled only with `--enable-bridge` |
 | `/etc/gyropup/can.env` | `BITRATE=1000000`, `RESTART_MS=100`, `TXQUEUELEN=1000` (yours to edit) |
 | `/etc/gyropup/rs04-bridge.env` | `IFACE`, `PROFILE` (`pla-bench`), `PORT` (yours to edit) |
 
@@ -38,7 +38,7 @@ written (below).
 ## Stable names
 
 A USB adapter is `can0`, `can1`… in the order it appears, after the module's own ports. To give each a fixed name,
-run `sudo hardware/deploy/jetson/install.sh --list-can`, copy [`can-names.conf.example`](can-names.conf.example) to
+run `sudo software/deploy/jetson/install.sh --list-can`, copy [`can-names.conf.example`](can-names.conf.example) to
 `/etc/gyropup/can-names.conf`, name each adapter by its USB port (`path=`) or its serial (`serial=`), and run
 install.sh again; a new name applies when the adapter is next plugged in. Name the PCAN-USB `rs04`: that is the
 bridge's default interface (`IFACE=rs04` in `/etc/gyropup/rs04-bridge.env`), never `can0`, which on the J501 is the
@@ -51,7 +51,7 @@ means the MCU powered off and a PCAN-USB on the leg's bus (see the [RS-04 bring-
 The bridge listens on 127.0.0.1 only. From a laptop, reach it through SSH:
 `ssh -L 8765:127.0.0.1:8765 <the robot>`, then open `http://127.0.0.1:8765/` on the laptop.
 
-**LAN mode (opt-in):** `sudo hardware/deploy/jetson/install.sh --lan` adds a drop-in that runs the bridge on every interface
+**LAN mode (opt-in):** `sudo software/deploy/jetson/install.sh --lan` adds a drop-in that runs the bridge on every interface
 with a random token (`/etc/gyropup/bridge-token`, readable by the bridge's user only); open
 `http://<the robot>:8765/?token=<the token>`. A page from any other site is refused either way. `--local` removes it.
 

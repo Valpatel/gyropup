@@ -23,6 +23,13 @@ makes real foam bridge (the Hasbro patent's concern), so the bench test plan rep
 """
 from __future__ import annotations
 
+# Support direct-file CLI execution as well as checkout package imports.
+if __package__ in (None, ''):
+    import sys as _checkout_sys
+    from pathlib import Path as _CheckoutPath
+    _checkout_sys.path.insert(0, str(_CheckoutPath(__file__).resolve().parents[2]))
+
+
 import argparse
 import json
 import math
@@ -32,9 +39,9 @@ from pathlib import Path
 
 import numpy as np
 
-R = Path(__file__).resolve().parents[1]
-sys.path.insert(0, str(R / 'cad'))
-OUT = R / 'exports' / 'turret' / 'feed'
+R = (Path(__file__).resolve().parents[2])
+sys.path.insert(0, str((R / 'hardware/cad')))
+OUT = (R / 'hardware/exports/turret/feed')
 
 BALL_M = 0.00183
 FILL_TOP = 190.0                  # mm: the fill tube above the hopper while the balls settle
@@ -42,7 +49,7 @@ TIMESTEP = 0.0005
 
 
 def geo():
-    import turret as tu
+    import software.simulation.turret as tu
     G = tu.Geo()
     return G, tu
 
@@ -369,7 +376,7 @@ def write_pile(seed=0, n_balls=30):
            'park_deg': round(math.degrees(park), 2), 'ball_d_mm': G.ball, 'seed': seed, 'balls': n_balls,
            'pockets': pockets, 'pile': pile, 'fed_or_lost': [i for i, _ in left] + [i for i, _ in f.escaped],
            'max_speed_mps_at_rest': round(speed, 4)}
-    p = R / 'exports' / 'turret' / 'feed' / 'pile.json'
+    p = (R / 'hardware/exports/turret/feed/pile.json')
     p.parent.mkdir(parents=True, exist_ok=True)
     p.write_text(json.dumps(out, indent=1) + '\n')
     print(f'pile: {len(pockets)} in pockets, {len(pile)} above, {len(out["fed_or_lost"])} fed or lost, '

@@ -14,6 +14,13 @@
 """
 from __future__ import annotations
 
+# Support direct-file CLI execution as well as checkout package imports.
+if __package__ in (None, ''):
+    import sys as _checkout_sys
+    from pathlib import Path as _CheckoutPath
+    _checkout_sys.path.insert(0, str(_CheckoutPath(__file__).resolve().parents[3]))
+
+
 import json
 import math
 import os
@@ -29,7 +36,7 @@ from mjlab.actuator import DcMotorActuatorCfg
 from mjlab.entity import EntityArticulationInfoCfg, EntityCfg
 
 RL_DIR = Path(__file__).resolve().parents[1]
-REPO = RL_DIR.parent
+REPO = (RL_DIR.parents[1])
 MAIN_PY = REPO / '.venv' / 'bin' / 'python'
 
 LEG_JOINTS = ('hip_l', 'knee_l', 'hip_r', 'knee_r')
@@ -63,7 +70,7 @@ def build_model(design: Path | None = None, force: bool = False) -> Path:
     design = Path(design or design_path()).resolve()
     out = RL_DIR / 'build' / design.stem
     xml = out / 'robot.xml'
-    sources = [design, REPO / 'sim' / 'model.py', REPO / 'tools' / 'derive.mjs']   # the design and the generator
+    sources = [design, (REPO / 'software/simulation/model.py'), (REPO / 'tools/engineering/robot/derive.mjs')]   # the design and the generator
     newest = max(f.stat().st_mtime for f in sources if f.exists())
     stale = not xml.exists() or not (out / 'model.json').exists() or xml.stat().st_mtime < newest
     if force or stale:
@@ -107,7 +114,7 @@ def load(design: str | None = None) -> GyropupSpec:
     # The standing pose from the baseline controller (sim/controller.py), computed on the full CPU model.
     sys.path.insert(0, str(REPO))
     try:
-        from sim.controller import Robot, place_standing
+        from software.simulation.controller import Robot, place_standing
     finally:
         sys.path.pop(0)
     m = mujoco.MjModel.from_xml_path(str(xml))

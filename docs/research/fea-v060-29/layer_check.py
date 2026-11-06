@@ -30,6 +30,13 @@ Writes <out>/layer-check.json. A screening check of the isotropic solve, not a q
 """
 from __future__ import annotations
 
+# Support direct-file CLI execution as well as checkout package imports.
+if __package__ in (None, ''):
+    import sys as _checkout_sys
+    from pathlib import Path as _CheckoutPath
+    _checkout_sys.path.insert(0, str(_CheckoutPath(__file__).resolve().parents[3]))
+
+
 import argparse
 import json
 import math
@@ -41,7 +48,7 @@ from pathlib import Path
 
 import numpy as np
 
-ROOT = Path(__file__).resolve().parents[2]
+ROOT = (Path(__file__).resolve().parents[3])
 LEG_NORMAL = (0.0, 1.0, 0.0)
 LEG_PARTS = ['upper_link', 'front_link', 'wheel_link', 'hip_frame']
 ROWS: list = []
@@ -49,8 +56,8 @@ ROWS: list = []
 
 def leg_judged(ls, st, part, case):
     """The elements cad/leg_studies.py takes the design stress over, for this part and case."""
-    import fivebar as fb
-    import gmi
+    import hardware.cad.legs.fivebar as fb
+    import hardware.cad.robot.gmi as gmi
     keep = ~st._touches_bc
     c = st.points[st.tets[:, :4]].mean(axis=1)
     if part == 'hip_frame' and case in ls.STOP_POST_AT:
@@ -88,7 +95,7 @@ def install(module, normal_of, judged_of):
 
 def run_leg(out, mesh, parts, cases, summary):
     import gmsh  # noqa: F401  (before CadQuery, as the compute hosts' mesher wants)
-    import leg_studies as ls
+    import hardware.cad.legs.leg_studies as ls
     install(ls, lambda part: LEG_NORMAL, lambda st, part, case: leg_judged(ls, st, part, case))
     shutil.copyfile(summary, out / 'summary.json')
     ls.OUT = out
@@ -97,7 +104,7 @@ def run_leg(out, mesh, parts, cases, summary):
 
 def run_turret(out, mesh, parts):
     import gmsh  # noqa: F401
-    import turret_studies as ts
+    import hardware.cad.turret.turret_studies as ts
     install(ts, lambda part: tuple(float(v) for v in ts.layer_normal(part)), lambda st, part, case: None)
     ts.OUT = out
     return ts.run(mesh, anim=False, only=parts)
@@ -132,10 +139,10 @@ def main():
     ap.add_argument('--mesh', type=float)
     ap.add_argument('--only', nargs='+')
     ap.add_argument('--cases', nargs='+')
-    ap.add_argument('--summary', type=Path, default=ROOT / 'exports/leg/fea/summary.json',
+    ap.add_argument('--summary', type=Path, default=(ROOT / 'hardware/exports/leg/fea/summary.json'),
                     help='leg: the record whose load shares the single-part studies take')
     a = ap.parse_args()
-    sys.path[:0] = [str(ROOT / 'cad'), str(ROOT)]
+    sys.path[:0] = [str((ROOT / 'hardware/cad')), str(ROOT)]
     out = a.out.resolve()
     out.mkdir(parents=True, exist_ok=True)
     t0 = time.time()

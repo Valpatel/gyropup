@@ -1,6 +1,13 @@
 #!/usr/bin/env python3
 """Extract nominal fit specimens. Geometry identity is not physical qualification."""
 from __future__ import annotations
+
+# Support direct-file CLI execution as well as checkout package imports.
+if __package__ in (None, ''):
+    import sys as _checkout_sys
+    from pathlib import Path as _CheckoutPath
+    _checkout_sys.path.insert(0, str(_CheckoutPath(__file__).resolve().parents[3]))
+
 import argparse
 import csv
 import hashlib
@@ -11,10 +18,10 @@ import subprocess
 import sys
 import tempfile
 
-ROOT = Path(__file__).resolve().parents[2]
+ROOT = (Path(__file__).resolve().parents[3])
 HERE = Path(__file__).resolve().parent
-sys.path.insert(0, str(ROOT / 'cad'))
-import print_provenance as provenance
+sys.path.insert(0, str((ROOT / 'hardware/cad')))
+import hardware.cad.manufacturing.print_provenance as provenance
 
 # Capture before importing CAD modules that consume source/configuration.
 INPUTS = provenance.snapshot(ROOT)
@@ -25,9 +32,9 @@ from cadagent.gates import Tolerances, relate
 from cadagent.gates.relations import RELATIONS_VERSION
 from cadagent.geometry import export_print_stl
 from cadagent.mesh3mf import write_3mf
-import turret as turret
-import turret_base_board as board
-import turret_print
+import hardware.cad.turret.turret as turret
+import hardware.cad.turret.turret_base_board as board
+import hardware.cad.turret.turret_print as turret_print
 
 TOL = Tolerances(overlap_mm3=1e-6, contain_mm3=math.nextafter(5e-7, 0.))
 SPECS = {

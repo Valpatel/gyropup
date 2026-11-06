@@ -12,8 +12,8 @@ import shutil
 import subprocess
 import tempfile
 
-ROOT = Path(__file__).resolve().parents[1]
-spec = importlib.util.spec_from_file_location('highlights_check', ROOT / 'tools/check-highlights.py')
+ROOT = (Path(__file__).resolve().parents[3])
+spec = importlib.util.spec_from_file_location('highlights_check', (ROOT / 'tools/evidence/media/check-highlights.py'))
 check = importlib.util.module_from_spec(spec); spec.loader.exec_module(check)
 
 
@@ -50,7 +50,7 @@ def main():
     frames, out = args.frames.resolve(), args.output.resolve()
     capture = check.read(frames / 'capture-receipt.json')
     manifest = frame_manifest(frames)
-    check.require(capture['recipeSha256'] == check.file_sha(ROOT / 'tools/capture-highlights.mjs'), 'Capture recipe changed since frames were made')
+    check.require(capture['recipeSha256'] == check.file_sha((ROOT / 'tools/evidence/media/capture-highlights.mjs')), 'Capture recipe changed since frames were made')
     out.mkdir(parents=True, exist_ok=True)
     source_hashes = {name: check.file_sha(check.safe_path(ROOT, name)) for name in sorted(check.expected_sources(capture))}
     historical = check.historical_leg()
@@ -59,7 +59,7 @@ def main():
     # from one another. FFmpeg decodes both final outputs in the independent check.
     with tempfile.TemporaryDirectory(prefix='gyropup-highlights-edit-') as temp:
         tmp = Path(temp); segments = []
-        font = ROOT / 'designer/kit/vendor/fonts/inter.woff2'
+        font = (ROOT / 'software/site/designer/kit/vendor/fonts/inter.woff2')
         for segment in check.SEGMENTS:
             name = segment['id']; movie = tmp / f'{name}.mkv'; segments.append(movie)
             command = ['ffmpeg', '-y', '-v', 'error', '-threads', str(args.threads), '-filter_threads', '1']

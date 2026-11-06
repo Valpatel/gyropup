@@ -31,12 +31,19 @@ pendant's button is held (the safety line of docs/head-payload.md, on the bench)
 """
 from __future__ import annotations
 
+# Support direct-file CLI execution as well as checkout package imports.
+if __package__ in (None, ''):
+    import sys as _checkout_sys
+    from pathlib import Path as _CheckoutPath
+    _checkout_sys.path.insert(0, str(_CheckoutPath(__file__).resolve().parents[3]))
+
+
 import math
 
 import cadquery as cq
 
-import gmi
-import turret as tu
+import hardware.cad.robot.gmi as gmi
+import hardware.cad.turret.turret as tu
 
 FAST = gmi.FAST
 W, D, H = 200.0, 200.0, 150.0         # x (front-back) x y (left-right) x height (mm): the FLEXVOLT inside (D66, D76)

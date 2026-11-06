@@ -17,11 +17,11 @@ import re
 import subprocess
 import zipfile
 
-ROOT = Path(__file__).resolve().parents[1]
-spec = importlib.util.spec_from_file_location('fit_job_helpers', ROOT / 'tools/package-fit-job.py')
+ROOT = (Path(__file__).resolve().parents[3])
+spec = importlib.util.spec_from_file_location('fit_job_helpers', (ROOT / 'tools/evidence/manufacturing/package-fit-job.py'))
 fit = importlib.util.module_from_spec(spec)
 spec.loader.exec_module(fit)
-SOURCE = Path('exports/turret/ordered-motor-fit')
+SOURCE = Path('hardware/exports/turret/ordered-motor-fit')
 PART = 'shaft-clearance-survey'
 # Reviewed actual 12-check geometry receipt; a changed gauge needs a new review.
 GAUGE_RECEIPT_SHA256 = 'ad3e52f221104638cf95bd51fcdd2e3defbc972a3a19cd32a8986604308e043c'

@@ -18,6 +18,13 @@ re-runs itself under one that can (GYROPUP_TTS_PYTHON, else a python3.x on PATH)
 """
 from __future__ import annotations
 
+# Support direct-file CLI execution as well as checkout package imports.
+if __package__ in (None, ''):
+    import sys as _checkout_sys
+    from pathlib import Path as _CheckoutPath
+    _checkout_sys.path.insert(0, str(_CheckoutPath(__file__).resolve().parents[2]))
+
+
 import argparse
 import hashlib
 import io
@@ -35,7 +42,7 @@ from http.server import BaseHTTPRequestHandler, ThreadingHTTPServer
 from pathlib import Path
 from urllib.parse import parse_qs, urlparse
 
-from pronunciation import pronounce   # names espeak says wrongly (designer/character/pronunciation.json)
+from tools.audio.pronunciation import pronounce   # names espeak says wrongly (designer/character/pronunciation.json)
 
 DEFAULT_VOICE = 'en_US-hfc_female-medium'
 DEFAULT_PITCH = 2.0          # semitones up: a pup, not a newsreader

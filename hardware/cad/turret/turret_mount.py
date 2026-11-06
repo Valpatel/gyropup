@@ -23,6 +23,13 @@ After writing, the file is read back and its TM pattern compared with cad/turret
 """
 from __future__ import annotations
 
+# Support direct-file CLI execution as well as checkout package imports.
+if __package__ in (None, ''):
+    import sys as _checkout_sys
+    from pathlib import Path as _CheckoutPath
+    _checkout_sys.path.insert(0, str(_CheckoutPath(__file__).resolve().parents[3]))
+
+
 import argparse
 import importlib.util
 import json
@@ -31,15 +38,15 @@ import re
 import sys
 from pathlib import Path
 
-R = Path(__file__).resolve().parents[1]
-sys.path.insert(0, str(R / 'cad'))
-import turret as tu  # noqa: E402
+R = (Path(__file__).resolve().parents[3])
+sys.path.insert(0, str((R / 'hardware/cad')))
+import hardware.cad.turret.turret as tu  # noqa: E402
 
-OUT = R / 'exports' / 'turret' / 'mount.json'
-LIDAR_JSON = R / 'exports' / 'turret' / 'lidar' / 'lidar.json'
-BOM_JSON = R / 'exports' / 'turret' / 'bench' / 'bom.json'
-POWER_JSON = R / 'exports' / 'turret' / 'e2e' / 'power.json'
-DYNAMICS_JSON = R / 'exports' / 'turret' / 'e2e' / 'dynamics.json'
+OUT = (R / 'hardware/exports/turret/mount.json')
+LIDAR_JSON = (R / 'hardware/exports/turret/lidar/lidar.json')
+BOM_JSON = (R / 'hardware/exports/turret/bench/bom.json')
+POWER_JSON = (R / 'hardware/exports/turret/e2e/power.json')
+DYNAMICS_JSON = (R / 'hardware/exports/turret/e2e/dynamics.json')
 RISER_H = 30.0                 # D41 (docs/body-plan.md 1.1): the turret on a 30 mm printed riser on the top deck
 BACKSHELL = {'y': 22.0, 'down': 35.0}   # the 90 deg backshell as cad/turret.py bought_parts() draws it (est size)
 # docs/turret-wiring.md 1.1 (the TM connector) and 4 (the protection behind it); on the robot pins 7-8 are the body's
@@ -58,7 +65,7 @@ def _fw(name: str):
     key = f'_turret_fw_{name}'
     if key in sys.modules:
         return sys.modules[key]
-    spec = importlib.util.spec_from_file_location(key, R / 'firmware' / 'turret' / f'{name}.py')
+    spec = importlib.util.spec_from_file_location(key, (R / 'software/firmware/turret') / f'{name}.py')
     mod = importlib.util.module_from_spec(spec)
     sys.modules[key] = mod                                 # a dataclass looks its module up while it is built
     spec.loader.exec_module(mod)

@@ -10,6 +10,13 @@ and both legs at 300 mm, motors as envelopes), print-plan.json, *.png.
 """
 from __future__ import annotations
 
+# Support direct-file CLI execution as well as checkout package imports.
+if __package__ in (None, ''):
+    import sys as _checkout_sys
+    from pathlib import Path as _CheckoutPath
+    _checkout_sys.path.insert(0, str(_CheckoutPath(__file__).resolve().parents[3]))
+
+
 import argparse
 import itertools
 import json
@@ -20,17 +27,17 @@ from pathlib import Path
 
 import cadquery as cq
 
-R = Path(__file__).resolve().parents[1]
-sys.path.insert(0, str(R / 'cad'))
-import body_frame as bf  # noqa: E402
-import body_params as bp  # noqa: E402
-import printplan  # noqa: E402
+R = (Path(__file__).resolve().parents[3])
+sys.path.insert(0, str((R / 'hardware/cad')))
+import hardware.cad.body.body_frame as bf  # noqa: E402
+import hardware.cad.body.body_params as bp  # noqa: E402
+import hardware.cad.manufacturing.printplan as printplan  # noqa: E402
 from cadagent.geometry import export_print_stl  # noqa: E402
 from cadagent.robot import solid_mass_properties  # noqa: E402
 
-OUT = R / 'exports' / 'body'
+OUT = (R / 'hardware/exports/body')
 SCS = OUT / 'sendcutsend'
-MATERIALS = json.loads((R / 'catalog/materials.json').read_text())
+MATERIALS = json.loads(((R / 'hardware/catalog/materials.json')).read_text())
 
 # leg parts fixed to the hip frame (checked against the body once); the rest move
 STATIC = ('hip_frame', 'output_adapter', 'motor_', 'bearing_61812', 'stop_', 'screws_lugs')
@@ -42,7 +49,7 @@ def _v(s):
 
 def _layout():
     """The layout (cad/body_layout.py): its items as shapes for the pictures and the clash sweep."""
-    import body_layout as bl
+    import hardware.cad.body.body_layout as bl
     L = bl.layout()
     items = []
     for it in L['items']:
@@ -252,8 +259,8 @@ SHELL_NAMES = set()            # the P3 shell's parts (filled by shell_checks): 
 def shell_checks(parts):
     """B6's checks of the shell (cad/body_shell.py): the J501's ports insert and withdraw through the hatch (the mated
     plugs' sweep), the ear pods' tops under the lidar's lowest beam, and the shell's parts as the clash sweep sees them."""
-    import body_layout as bl
-    import body_shell as bs3
+    import hardware.cad.body.body_layout as bl
+    import hardware.cad.body.body_shell as bs3
     SHELL_NAMES.update(n for n, p in parts.items() if p.stage == 'P3')
     pc = bs3.port_check(parts)
     return {'ports_pass': pc['pass'], 'ports': {n: {'sweep_mm3': r['sweep_interference_mm3'], 'clearance_mm3': r['clearance_interference_mm3'],
@@ -431,14 +438,14 @@ def main():
         'in_keepouts': frame_vs_keepouts(parts, lay['raw']),
         'turret_plate': turret_plate_intake(),
     }
-    import body_joints as bj                                     # the integrity checks: every screw's stack, no floating part
+    import hardware.cad.body.body_joints as bj                                     # the integrity checks: every screw's stack, no floating part
     integ = bj.run(parts, items, clashes=len(summary['internal_clashes']))
     bj.OUT.write_text(json.dumps(integ, indent=1) + '\n')
     summary['integrity'] = integ['summary']
     if not a.no_clash:
         summary['clash_sweep'] = clash_sweep(parts, items, quick=a.quick)
     if lay:
-        import body_layout as bl
+        import hardware.cad.body.body_layout as bl
         summary['layout'] = {'checks': lay['checks'], 'cell': lay['cell'],
                              'items': [{'name': i.name, 'box': [round(v, 2) for v in i.box], 'mass_g': i.mass_g, 'basis': i.basis, 'group': i.group,
                                         'stage': i.stage, 'catalog': i.catalog, 'note': i.note, 'keepout': i.keepout}

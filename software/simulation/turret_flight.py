@@ -22,6 +22,13 @@ maps these coefficients onto it, and the e2e checks the two agree on the drop at
 """
 from __future__ import annotations
 
+# Support direct-file CLI execution as well as checkout package imports.
+if __package__ in (None, ''):
+    import sys as _checkout_sys
+    from pathlib import Path as _CheckoutPath
+    _checkout_sys.path.insert(0, str(_CheckoutPath(__file__).resolve().parents[2]))
+
+
 import argparse
 import json
 import math
@@ -30,14 +37,14 @@ from pathlib import Path
 
 import numpy as np
 
-R = Path(__file__).resolve().parents[1]
-sys.path.insert(0, str(R / 'sim'))
-sys.path.insert(0, str(R / 'cad'))
-import turret_common as tc  # noqa: E402
-import turret_ball as tb  # noqa: E402
-import turret_launch as tl  # noqa: E402
+R = (Path(__file__).resolve().parents[2])
+sys.path.insert(0, str((R / 'software/simulation')))
+sys.path.insert(0, str((R / 'hardware/cad')))
+import software.simulation.turret_common as tc  # noqa: E402
+import software.simulation.turret_ball as tb  # noqa: E402
+import software.simulation.turret_launch as tl  # noqa: E402
 
-OUT = R / 'exports' / 'turret' / 'flight'
+OUT = (R / 'hardware/exports/turret/flight')
 G = 9.81
 FLIGHT = {
     'rho': 1.205, 'nu_air': 1.506e-5,
@@ -273,7 +280,7 @@ def study(quick=False, seed=3):
     matplotlib.use('Agg')
     import matplotlib.pyplot as plt
     tu = tc.cad_turret()
-    import turret_launch3d as l3
+    import software.simulation.turret_launch3d as l3
     OUT.mkdir(parents=True, exist_ok=True)
     Gc = tu.Geo()
     l3.set_bore(Gc)

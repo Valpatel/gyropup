@@ -5,14 +5,21 @@ section through its middle, the same exploded, and close-ups of the carriage fro
 """
 from __future__ import annotations
 
+# Support direct-file CLI execution as well as checkout package imports.
+if __package__ in (None, ''):
+    import sys as _checkout_sys
+    from pathlib import Path as _CheckoutPath
+    _checkout_sys.path.insert(0, str(_CheckoutPath(__file__).resolve().parents[3]))
+
+
 import sys
 from pathlib import Path
 
 import cadquery as cq
 
-sys.path.insert(0, str(Path(__file__).resolve().parent))
-import build_rig as br  # noqa: E402
-import rig_parts as rp  # noqa: E402
+sys.path.insert(0, str((Path(__file__).resolve().parents[1])))
+import hardware.cad.builders.build_rig as br  # noqa: E402
+import hardware.cad.rig.rig_parts as rp  # noqa: E402
 
 OUT = br.OUT / 'views'
 

@@ -6,6 +6,13 @@ This recipe is a new declared trial, not an established leg-print process.
 """
 from __future__ import annotations
 
+# Support direct-file CLI execution as well as checkout package imports.
+if __package__ in (None, ''):
+    import sys as _checkout_sys
+    from pathlib import Path as _CheckoutPath
+    _checkout_sys.path.insert(0, str(_CheckoutPath(__file__).resolve().parents[3]))
+
+
 import argparse
 import csv
 import hashlib
@@ -19,13 +26,13 @@ import sys
 import zipfile
 import xml.etree.ElementTree as ET
 
-ROOT = Path(__file__).resolve().parents[1]
-sys.path.insert(0, str(ROOT / 'cad'))
-import print_slicing
-import print_provenance
-import rs04_lug_checks
+ROOT = (Path(__file__).resolve().parents[3])
+sys.path.insert(0, str((ROOT / 'hardware/cad')))
+import hardware.cad.manufacturing.print_slicing as print_slicing
+import hardware.cad.manufacturing.print_provenance as print_provenance
+import hardware.cad.legs.rs04_lug_checks as rs04_lug_checks
 
-SOURCE = Path('exports/leg/rs04-mounting-fit')
+SOURCE = Path('hardware/exports/leg/rs04-mounting-fit')
 PART = 'coupon_frame_ring_nom'
 PROFILES = dict(printer='Bambu Lab P1S 0.4 nozzle', process='0.20mm Standard @BBL X1C',
                 filament='Bambu PA6-CF @BBL X1C')

@@ -30,6 +30,13 @@ with --video a few videos.
 """
 from __future__ import annotations
 
+# Support direct-file CLI execution as well as checkout package imports.
+if __package__ in (None, ''):
+    import sys as _checkout_sys
+    from pathlib import Path as _CheckoutPath
+    _checkout_sys.path.insert(0, str(_CheckoutPath(__file__).resolve().parents[2]))
+
+
 import argparse
 import copy
 import json
@@ -45,12 +52,12 @@ os.environ.setdefault('MUJOCO_GL', 'egl')
 import mujoco  # noqa: E402
 import numpy as np  # noqa: E402
 
-R = Path(__file__).resolve().parents[1]
+R = (Path(__file__).resolve().parents[2])
 sys.path.insert(0, str(R))
-from sim import leg_rig as rig  # noqa: E402
+from software.simulation import leg_rig as rig  # noqa: E402
 
 fb = rig.fb
-OUT = R / 'exports' / 'leg' / 'springs'
+OUT = (R / 'hardware/exports/leg/springs')
 G = rig.G
 DT = 0.0005
 KT_OUT = 2.1                 # N m / Arms at the output (RS-04 manual 1.3.11: 40 N m at 27 Apk = 19.1 Arms)

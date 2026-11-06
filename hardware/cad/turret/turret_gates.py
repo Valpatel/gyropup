@@ -30,6 +30,13 @@ rigid motion (Turret.pose_shape as a gp_Trsf), so a pose only changes placements
 """
 from __future__ import annotations
 
+# Support direct-file CLI execution as well as checkout package imports.
+if __package__ in (None, ''):
+    import sys as _checkout_sys
+    from pathlib import Path as _CheckoutPath
+    _checkout_sys.path.insert(0, str(_CheckoutPath(__file__).resolve().parents[3]))
+
+
 import hashlib
 import json
 import math
@@ -47,14 +54,14 @@ from cadagent.gates.containment import containment_gate
 from cadagent.gates.fasteners import FastenerOptions, FastenerSpec, fastener_gate
 from cadagent.gates.motion import motion_gate
 
-sys.path.insert(0, str(Path(__file__).resolve().parent))
-import turret as tu  # noqa: E402
+sys.path.insert(0, str((Path(__file__).resolve().parents[1])))
+import hardware.cad.turret.turret as tu  # noqa: E402
 
-R = Path(__file__).resolve().parents[1]
-PILE = R / 'exports' / 'turret' / 'feed' / 'pile.json'
-LAUNCH = R / 'exports' / 'turret' / 'launch' / 'launch3d.json'      # sim/turret_launch3d.py: the speed ceiling's corners
-OUT = R / 'exports' / 'turret' / 'gates.json'
-VERDICTS = R / 'exports' / 'turret' / 'gates'
+R = (Path(__file__).resolve().parents[3])
+PILE = (R / 'hardware/exports/turret/feed/pile.json')
+LAUNCH = (R / 'hardware/exports/turret/launch/launch3d.json')      # sim/turret_launch3d.py: the speed ceiling's corners
+OUT = (R / 'hardware/exports/turret/gates.json')
+VERDICTS = (R / 'hardware/exports/turret/gates')
 CACHE = Path(os.environ.get('CADAGENT_GATE_CACHE') or (R / '.cadagent-cache' / 'gates'))
 
 
@@ -623,8 +630,8 @@ def stored(require_current=True):
     return d
 
 
-DOSSIER_RECORD = R / 'exports' / 'dossier-geometry.json'
-DOSSIER_GATES = R / 'exports' / 'gates'
+DOSSIER_RECORD = (R / 'hardware/exports/dossier-geometry.json')
+DOSSIER_GATES = (R / 'hardware/exports/gates')
 
 
 def dossier_gates(cache=None):

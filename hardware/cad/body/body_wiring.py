@@ -25,8 +25,8 @@ from __future__ import annotations
 import json
 from pathlib import Path
 
-R = Path(__file__).resolve().parents[1]
-OUT = R / 'exports' / 'body'
+R = (Path(__file__).resolve().parents[3])
+OUT = (R / 'hardware/exports/body')
 
 PACK = {'cells': 'two DeWalt DCB609 FLEXVOLT 9.0 Ah in 20 V mode (5S3P each), in series: 10S3P', 'v_nom': 36.0, 'v_full': 41.0,
         'v_full_per_cell': 4.10, 'v_empty': 30.0, 'ah': 9.0, 'wh_rated': 360, 'peak_a': 80, 'cont_a': 30,
@@ -228,7 +228,7 @@ def svg() -> str:
     return '\n'.join(o)
 
 
-DOC = R / 'docs' / 'body-electrical.md'
+DOC = (R / 'docs/body/body-electrical.md')
 TABLE_HEAD = '| Wire | From | To | AWG | Colour | Ends | Fuse | Why |'
 
 

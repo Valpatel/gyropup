@@ -18,6 +18,13 @@ sim.leg_rig.run()'s, so a run through this bus can be compared key for key with 
 """
 from __future__ import annotations
 
+# Support direct-file CLI execution as well as checkout package imports.
+if __package__ in (None, ''):
+    import sys as _checkout_sys
+    from pathlib import Path as _CheckoutPath
+    _checkout_sys.path.insert(0, str(_CheckoutPath(__file__).resolve().parents[3]))
+
+
 import os
 import sys
 from pathlib import Path
@@ -25,16 +32,16 @@ from typing import Optional
 
 import numpy as np
 
-R = Path(__file__).resolve().parents[1]
-for p in (str(R), str(R / 'cad')):
+R = (Path(__file__).resolve().parents[3])
+for p in (str(R), str((R / 'hardware/cad'))):
     if p not in sys.path:
         sys.path.insert(0, p)
 os.environ.setdefault('MUJOCO_GL', 'egl')
 
 import mujoco  # noqa: E402
 
-from sim import leg_rig as lr  # noqa: E402
-from rig.bus import MotorBus, MotorState, Pack, Thermal, Tick  # noqa: E402
+from software.simulation import leg_rig as lr  # noqa: E402
+from software.control.rig.bus import MotorBus, MotorState, Pack, Thermal, Tick  # noqa: E402
 
 
 class SimBus(MotorBus):

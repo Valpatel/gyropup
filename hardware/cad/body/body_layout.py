@@ -15,6 +15,13 @@ Sizes are from the catalogue (catalog/*.json and catalog/body.json); masses carr
 """
 from __future__ import annotations
 
+# Support direct-file CLI execution as well as checkout package imports.
+if __package__ in (None, ''):
+    import sys as _checkout_sys
+    from pathlib import Path as _CheckoutPath
+    _checkout_sys.path.insert(0, str(_CheckoutPath(__file__).resolve().parents[3]))
+
+
 import functools
 import json
 import os
@@ -23,11 +30,11 @@ import sys
 from dataclasses import dataclass, field
 from pathlib import Path
 
-R = Path(__file__).resolve().parents[1]
-sys.path.insert(0, str(R / 'cad'))
-import body_params as bp  # noqa: E402
+R = (Path(__file__).resolve().parents[3])
+sys.path.insert(0, str((R / 'hardware/cad')))
+import hardware.cad.body.body_params as bp  # noqa: E402
 
-OUT = R / 'exports' / 'body'
+OUT = (R / 'hardware/exports/body')
 G = 9.81
 
 
@@ -98,7 +105,7 @@ def centred(cx, cy, z0, sx, sy, sz):
 @functools.lru_cache(maxsize=1)
 def catalogue():
     out = {}
-    for f in sorted((R / 'catalog').glob('*.json')):
+    for f in sorted(((R / 'hardware/catalog')).glob('*.json')):
         try:
             d = json.loads(f.read_text())
         except Exception:
@@ -137,7 +144,7 @@ FUSES = {'kind': 'provisional', 'box': (120.0, 42.0, 32.0), 'mass_g': 90.0,
 def j501_items():
     """The compute bay: the J501 carrier on its pallet, the module and cooler, the plug zones of the ports in use and
     the fan's exhaust column (keep-outs)."""
-    import body_frame as bf
+    import hardware.cad.body.body_frame as bf
     j = bp.j501()
     st = bp.j501_stack()
     W, D, T = j['pcb']
@@ -201,8 +208,8 @@ def j501_items():
 def layout(cell=None):
     """Every item placed, the keep-outs, and what the frame needs from them. Returns
     {'items': [Item], 'mounts': {part: [...]}, 'checks': [text], 'mass': {...}}."""
-    import body_battery as bb
-    import body_frame as bf
+    import hardware.cad.body.body_battery as bb
+    import hardware.cad.body.body_frame as bf
     cell = 'DCB609'
     zt = bp.z_tray_top()
     zd = bp.TOP - bp.STOCK[bp.DECK]['t']
@@ -278,7 +285,7 @@ def layout(cell=None):
     items.append(Item('vlp16', (lid['x'] - lid['d'] / 2, lid['x'] + lid['d'] / 2, -lid['d'] / 2, lid['d'] / 2, bp.TOP, bp.TOP + lid['h']), lid['mass_g'],
                       'catalogue (830 g without cable)', 'deck', 'P1', 'velodyne-vlp-16', 'VLP-16 on the deck', (0.17, 0.18, 0.2),
                       cyl=(lid['x'], 0.0, lid['d'] / 2)))
-    tj = json.loads((R / 'exports/turret/turret.json').read_text())
+    tj = json.loads(((R / 'hardware/exports/turret/turret.json')).read_text())
     hz = t['com_above_face_mm']                       # the head's centre above the TM face: mount.json's, or the budget's 100 mm when larger
     items.append(Item('turret', (t['pan_x'] - t['bumper_r'], t['pan_x'] + t['bumper_r'], -t['bumper_r'], t['bumper_r'], t['face_z'], t['face_z'] + 2 * hz),
                       1000.0 * t['mass_kg'], f"{t['mass_basis']}; {t['mass_kg']:.3f} kg, its centre {hz:.1f} mm above the TM face "
@@ -315,7 +322,7 @@ def vesc_holes(it):
 def mounts_for(items, B):
     """Holes, slots and nuts each frame part needs for the items: {part: [row]} in the rows _mount_features takes:
     (x, y, d, note) | ('slot', x, y, lx, ly, r, note) | ('pem', x, y, spec, note) | ('csk', x, y, spec, d, note)."""
-    import body_frame as bf
+    import hardware.cad.body.body_frame as bf
     m = {'tray': [], 'belly': [], 'deck': [], 'pallet': [], 'plate': [], '_bus_xy': list(BUS_XY)}
     T, BE, D, PL = m['tray'], m['belly'], m['deck'], m['plate']
     # ---- tray
@@ -331,7 +338,7 @@ def mounts_for(items, B):
         T.append((vcx + sx * 15.42, vy0 + 17.8, 2.5, 'tap M3 x 0.5: VN-100'))      # dowel holes are 3.81 from the screws: a 1.8 mm web,
                                                         # under SendCutSend's minimum, so no dowels (the firmware calibrates the mounting)
     # ---- belly: the bay's rails and adapter plates (S-M4-0 beyond the cheeks' ends), the leads' slot
-    import body_battery as bb
+    import hardware.cad.body.body_battery as bb
     for x, yc in bb.rail_holes():
         for sy in (1, -1):
             BE.append(('pem', x, sy * yc, 'S-M4-0', 'battery bay rail'))
@@ -461,13 +468,13 @@ LEVERS = [
 
 def wheel_is_d69_override() -> bool:
     """True while exports/leg/bom.json still lists the BotWheel: the ledger then carries D69's wheel in its place."""
-    keys = {r['key'] for r in json.loads((R / 'exports/leg/bom.json').read_text())['per_leg']}
+    keys = {r['key'] for r in json.loads(((R / 'hardware/exports/leg/bom.json')).read_text())['per_leg']}
     return 'odrive-botwheel' in keys
 
 
 def wheel_g() -> float:
     """One wheel's mass (g) in the ledger: D69's wheel while the leg's BOM still lists the BotWheel, else the leg's own."""
-    rows = {r['key']: r for r in json.loads((R / 'exports/leg/bom.json').read_text())['per_leg']}
+    rows = {r['key']: r for r in json.loads(((R / 'hardware/exports/leg/bom.json')).read_text())['per_leg']}
     if 'odrive-botwheel' in rows:
         return D69_WHEEL['mass_g']
     hub = next((r for k, r in rows.items() if 'hoverboard' in k or 'hub-motor' in k), None)
@@ -477,7 +484,7 @@ def wheel_g() -> float:
 def leg_stops_extra_g() -> tuple:
     """(grams a leg, basis): the stops' and flanges' mass the ledger adds to exports/leg/leg.json's total until the leg
     publishes a total with them in."""
-    total = json.loads((R / 'exports/leg/leg.json').read_text())['mass_g']['total']
+    total = json.loads(((R / 'hardware/exports/leg/leg.json')).read_text())['mass_g']['total']
     if round(total) == LEG_TOTAL_BEFORE_STOPS_G:
         return LEG_STOPS_EXTRA_G, f'leg.json {total} g + {LEG_STOPS_EXTRA_G:.0f} g announced for the stops and flanges (D53)'
     return 0.0, f'leg.json {total} g (published with the stops in)'
@@ -485,7 +492,7 @@ def leg_stops_extra_g() -> tuple:
 
 def lever_taken(check: str, parts=None, L=None) -> bool:
     """Whether a lever shows in the CAD (its check names what to look for)."""
-    import body_frame as bf
+    import hardware.cad.body.body_frame as bf
     parts = parts or {}
     if check == 'turret_plate':
         return 'turret_plate' in parts
@@ -524,12 +531,12 @@ def leg_rows(h_mm=300.0):
     """Each leg's parts at a stance (robot frame): printed parts from their solids (PA6-CF, 100 %), the machined output
     adapters and bought parts from exports/leg/leg.json and bom.json, at their posed envelopes' centres; whatever of
     leg.json's total (mass_g.total) is left over goes in at the leg's centre. Both legs; [(name, g, (x, y, z))]."""
-    import body_frame as bf
+    import hardware.cad.body.body_frame as bf
     from cadagent.robot import solid_mass_properties
     fb = bp._fivebar()
-    dens = json.loads((R / 'catalog/materials.json').read_text())['pa6-cf']['density_g_cm3']
+    dens = json.loads(((R / 'hardware/catalog/materials.json')).read_text())['pa6-cf']['density_g_cm3']
     legs = bf.legs(h_mm)
-    bom = {r['key']: r for r in json.loads((R / 'exports/leg/bom.json').read_text())['per_leg']}
+    bom = {r['key']: r for r in json.loads(((R / 'hardware/exports/leg/bom.json')).read_text())['per_leg']}
     each = lambda k: bom[k]['mass_g_each'] if k in bom else 0.0
     bought = {'motor_front': RS04_LEDGER_G, 'motor_rear': RS04_LEDGER_G,
               'wheel_tyre': wheel_g() * D69_WHEEL['rotor_share'], 'wheel_hub': wheel_g() * (1 - D69_WHEEL['rotor_share']),
@@ -539,7 +546,7 @@ def leg_rows(h_mm=300.0):
               'knee_pin_rear': each('knee_pin'), 'stop_posts': 4 * each('stop_post'), 'apex_circlip': each('circlip_60'),
               'eye_sleeve_front': 2 * each('eye_sleeve'), 'eye_sleeve_rear': 2 * each('eye_sleeve'),
               'screws_lugs': 20 * each('screw_m4x20'), 'screws_links': 16 * each('screw_m5x40'), 'screws_wheel': 4 * each('screw_m6x30')}
-    leg_json = json.loads((R / 'exports/leg/leg.json').read_text())['mass_g']
+    leg_json = json.loads(((R / 'hardware/exports/leg/leg.json')).read_text())['mass_g']
     machined = leg_json.get('machined_parts', {})
     rows = []
     for name, shape in legs.items():
@@ -591,9 +598,9 @@ SHELL_PREFIXES = ('shell_', 'ear_bracket', 'receiver_bay', 'd435_cradle', 'fan_d
 
 def frame_rows(parts, stage='P3'):
     """[(name, g, com, group)] of the made parts on the robot at a stage (frame, tub; the shell's own in 'shell')."""
-    import body_frame as bf
+    import hardware.cad.body.body_frame as bf
     from cadagent.robot import solid_mass_properties
-    mats = json.loads((R / 'catalog/materials.json').read_text())
+    mats = json.loads(((R / 'hardware/catalog/materials.json')).read_text())
     rows = []
     for n, p in parts.items():
         if not bf.on_robot(p, stage):
@@ -613,7 +620,7 @@ def frame_rows(parts, stage='P3'):
 
 def ledger(L=None, parts=None, stage='P3'):
     """The robot's mass and centre (robot frame, standing at 300 mm) by group, with every row's basis."""
-    import body_frame as bf
+    import hardware.cad.body.body_frame as bf
     L = L or layout()
     parts = parts or bf.all_parts(L['mounts'])
     order = ('P0', 'P1', 'P2', 'P3')
@@ -635,8 +642,8 @@ def ledger(L=None, parts=None, stage='P3'):
         add(it.group, it.name, it.mass_g, it.centre, it.basis)
     zt = bp.z_tray_top()
     add('frame', 'hardware', HARDWARE_G, (0.0, 0.0, 40.0), 'estimate')
-    import body_battery as bb
-    mats = json.loads((R / 'catalog/materials.json').read_text())
+    import hardware.cad.body.body_battery as bb
+    mats = json.loads(((R / 'hardware/catalog/materials.json')).read_text())
     dv = sum(bb.pad_solid_volume_mm3(p) for p in bb.pad_boxes()) / 1000.0
     add('frame', 'bay_pads_solid_lips', dv * (mats['tpu95']['density_g_cm3'] - mats[bb.PAD['material']]['density_g_cm3']),
         (0.0, 0.0, bb.geometry()['z_floor']), 'CAD: the pads\' webs, their chamfers and lips are solid TPU, not lattice (#26)')
@@ -672,7 +679,7 @@ SHELL_ITEMS = [
 def shell_items(parts):
     """The P3 shell's ledger rows: its bought parts (catalogue masses) where cad/body_shell.py puts them; the panels,
     brackets and tub come from the CAD (frame_rows), so the estimates here are only for what has no CAD."""
-    import body_shell as bs3
+    import hardware.cad.body.body_shell as bs3
     if 'shell_side_l_front' not in parts:
         return SHELL_ITEMS
     c = lambda s: tuple(round(v, 1) for v in bs3._v(s).Center().toTuple())
@@ -688,7 +695,7 @@ def shell_items(parts):
 
 def write_ledger():
     """exports/body/mass.json (P1 and P3) without the whole build: the layout, every part and the ledger."""
-    import body_frame as bf
+    import hardware.cad.body.body_frame as bf
     L = layout()
     parts = bf.all_parts(L['mounts'])
     led = {st: ledger(L, parts, stage=st) for st in ('P1', 'P3')}

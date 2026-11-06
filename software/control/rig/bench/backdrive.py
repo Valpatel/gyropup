@@ -17,6 +17,13 @@ Writes exports/rig/bench/b1-<condition>.json; rig/bench/fit_params.py turns the 
 """
 from __future__ import annotations
 
+# Support direct-file CLI execution as well as checkout package imports.
+if __package__ in (None, ''):
+    import sys as _checkout_sys
+    from pathlib import Path as _CheckoutPath
+    _checkout_sys.path.insert(0, str(_CheckoutPath(__file__).resolve().parents[4]))
+
+
 import argparse
 import json
 import statistics
@@ -24,10 +31,10 @@ import sys
 import time
 from pathlib import Path
 
-from rig import rs04 as P
+from software.control.rig import rs04 as P
 
-R = Path(__file__).resolve().parents[2]
-OUT = R / 'exports' / 'rig' / 'bench'
+R = (Path(__file__).resolve().parents[4])
+OUT = (R / 'hardware/exports/rig/bench')
 SPEEDS = (0.5, 1.0, 2.0, 4.0, 7.0, 10.0, 13.0)       # rad/s at the output (the feedback's field saturates at 15)
 
 
@@ -105,7 +112,7 @@ def main(argv=None, transport=None, out=print) -> int:
     ap.add_argument('--limit-cur', type=float, default=40.0)
     a = ap.parse_args(argv)
     if transport is None:
-        from rig.canio import SocketCan
+        from software.control.rig.canio import SocketCan
         transport = SocketCan(a.iface)
     rows = sweep(P.RS04Bus(transport), a.driver, a.speeds, limit_cur=a.limit_cur)
     OUT.mkdir(parents=True, exist_ok=True)

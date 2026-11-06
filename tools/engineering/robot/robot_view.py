@@ -13,6 +13,13 @@ cad/: it draws nothing new, and receipts pin cad/'s sources (tools/test-rs04-lug
 """
 from __future__ import annotations
 
+# Support direct-file CLI execution as well as checkout package imports.
+if __package__ in (None, ''):
+    import sys as _checkout_sys
+    from pathlib import Path as _CheckoutPath
+    _checkout_sys.path.insert(0, str(_CheckoutPath(__file__).resolve().parents[3]))
+
+
 import argparse
 import json
 import sys
@@ -20,13 +27,13 @@ from pathlib import Path
 
 import cadquery as cq
 
-R = Path(__file__).resolve().parents[1]
-sys.path.insert(0, str(R / 'cad'))
+R = (Path(__file__).resolve().parents[3])
+sys.path.insert(0, str((R / 'hardware/cad')))
 sys.path.insert(0, str(R))
-import body_frame as bf  # noqa: E402
+import hardware.cad.body.body_frame as bf  # noqa: E402
 
-OUT = R / 'exports' / 'robot'
-PICTURES = R / 'cad'
+OUT = (R / 'hardware/exports/robot')
+PICTURES = (R / 'hardware/cad')
 STANCE_MM = 300.0
 
 # group: (colour, name prefixes it takes, first match wins). Body parts are matched by their cad/body_*.py names, the
@@ -104,7 +111,7 @@ def _turret_group(name):
 def turret_shapes(face_z, pan_x):
     """The turret's parts and bought envelopes in the robot frame, at pan 0 and tilt 0: [(group, colour, name, shape)]. Placed as
     sim/robot_v2.py places it: its TM face on the riser (body_params.tm()['face_z']), its pan axis at pan_x."""
-    import turret as tu
+    import hardware.cad.turret.turret as tu
     T = tu.Turret({'bodyTop': face_z - 20.0 - tu.SADDLE_T})
     out = []
     for name, m in T.meta.items():
@@ -119,7 +126,7 @@ def turret_shapes(face_z, pan_x):
 
 
 def _vlp16_spec():
-    cat = json.loads((R / 'catalog/sensors_compute.json').read_text())
+    cat = json.loads(((R / 'hardware/catalog/sensors_compute.json')).read_text())
     return next(c for c in cat if c['id'] == 'velodyne-vlp-16')['specs']
 
 
@@ -162,9 +169,9 @@ def visual_items(items, tm):
 
 def collect():
     """Every part of the robot: [(group, colour, source name, shape, exploded offset (mm))]."""
-    import body_params as bp
-    import body_views as bv
-    import build_body as bb
+    import hardware.cad.body.body_params as bp
+    import hardware.cad.body.body_views as bv
+    import hardware.cad.builders.build_body as bb
     L = bb._layout()
     rows = []
     for n, p in bf.all_parts(L['mounts']).items():

@@ -7,6 +7,13 @@ cad/turret_gates.py and, behind it, cad/build_turret_box.py. This finds the part
 """
 from __future__ import annotations
 
+# Support direct-file CLI execution as well as checkout package imports.
+if __package__ in (None, ''):
+    import sys as _checkout_sys
+    from pathlib import Path as _CheckoutPath
+    _checkout_sys.path.insert(0, str(_CheckoutPath(__file__).resolve().parents[3]))
+
+
 import sys
 from pathlib import Path
 
@@ -14,8 +21,8 @@ import cadquery as cq
 import pytest
 from OCP.BRepCheck import BRepCheck_Analyzer
 
-sys.path.insert(0, str(Path(__file__).resolve().parent))
-import turret as tu  # noqa: E402
+sys.path.insert(0, str((Path(__file__).resolve().parents[3] / 'hardware/cad')))
+import hardware.cad.turret.turret as tu  # noqa: E402
 
 
 def _valid(shape) -> bool:

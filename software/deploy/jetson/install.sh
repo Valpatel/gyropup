@@ -2,15 +2,15 @@
 # Gyropup on the robot's Jetson (JetPack Linux: an AGX Orin on the J501 carrier or an AGX Thor): SocketCAN for USB
 # CAN adapters at 1 Mbit/s, stable adapter names, and the RS-04 configuration bridge as a systemd service.
 #
-#   sudo hardware/deploy/jetson/install.sh                  # install or update; safe to run again (it changes only what differs)
-#   hardware/deploy/jetson/install.sh --dry-run             # say what would change, change nothing (no root needed)
-#   hardware/deploy/jetson/install.sh --root /tmp/stage     # install into a staging tree (tests, images); runs no systemctl
-#   sudo hardware/deploy/jetson/install.sh --list-can       # the CAN interfaces with driver, USB path and serial (for names)
-#   sudo hardware/deploy/jetson/install.sh --enable-bridge  # also enable and start the bridge (127.0.0.1:8765)
-#   sudo hardware/deploy/jetson/install.sh --lan            # opt-in: the bridge on every interface, with a token
-#   sudo hardware/deploy/jetson/install.sh --local          # back to 127.0.0.1 only
+#   sudo software/deploy/jetson/install.sh                  # install or update; safe to run again (it changes only what differs)
+#   software/deploy/jetson/install.sh --dry-run             # say what would change, change nothing (no root needed)
+#   software/deploy/jetson/install.sh --root /tmp/stage     # install into a staging tree (tests, images); runs no systemctl
+#   sudo software/deploy/jetson/install.sh --list-can       # the CAN interfaces with driver, USB path and serial (for names)
+#   sudo software/deploy/jetson/install.sh --enable-bridge  # also enable and start the bridge (127.0.0.1:8765)
+#   sudo software/deploy/jetson/install.sh --lan            # opt-in: the bridge on every interface, with a token
+#   sudo software/deploy/jetson/install.sh --local          # back to 127.0.0.1 only
 #
-# What it installs (see hardware/deploy/jetson/README.md):
+# What it installs (see software/deploy/jetson/README.md):
 #   /etc/modules-load.d/gyropup-can.conf                  can, can_raw, peak_usb, gs_usb at boot
 #   /etc/systemd/system/gyropup-can@.service              ip link up at $BITRATE when an adapter appears
 #   /etc/udev/rules.d/70-gyropup-can-names.rules          stable names from /etc/gyropup/can-names.conf
@@ -65,7 +65,7 @@ if [ "$list" = 1 ]; then
   exit 0
 fi
 
-[ -f "$checkout/rig/rs04_bridge.py" ] || die "$checkout is not a Gyropup checkout (no rig/rs04_bridge.py)"
+[ -f "$checkout/software/control/rig/rs04_bridge.py" ] || die "$checkout is not a Gyropup checkout (no software/control/rig/rs04_bridge.py)"
 case "$checkout" in /*) ;; *) die "--checkout must be an absolute path" ;; esac
 root="${root%/}/"
 live=0
@@ -111,7 +111,7 @@ remove() {
 # ---------------------------------------------------------------------------------------------- stable names
 # No "-": systemd escapes it in the device unit gyropup-can@.service binds to, so a hyphenated name never comes up.
 valid_name() { [[ "$1" =~ ^[A-Za-z][A-Za-z0-9_]{0,14}$ ]] && ! [[ "$1" =~ ^can[0-9]+$ ]]; }
-name_rules="# Gyropup (hardware/deploy/jetson/install.sh): stable names for USB CAN adapters, from /etc/gyropup/can-names.conf.
+name_rules="# Gyropup (software/deploy/jetson/install.sh): stable names for USB CAN adapters, from /etc/gyropup/can-names.conf.
 # Generated: edit can-names.conf and run install.sh again."
 if [ -f "$names" ]; then
   seen=" " seen_match=" "
@@ -142,7 +142,7 @@ f="$here/files"
 put /etc/modules-load.d/gyropup-can.conf 644 "$(cat "$f/gyropup-can.conf")"
 put /etc/systemd/system/gyropup-can@.service 644 "$(cat "$f/gyropup-can@.service")"
 put /etc/udev/rules.d/70-gyropup-can-names.rules 644 "$name_rules"
-put /etc/udev/rules.d/80-gyropup-can.rules 644 '# Gyropup (hardware/deploy/jetson/install.sh): bring every USB CAN adapter (PEAK peak_usb, candleLight gs_usb) up at the
+put /etc/udev/rules.d/80-gyropup-can.rules 644 '# Gyropup (software/deploy/jetson/install.sh): bring every USB CAN adapter (PEAK peak_usb, candleLight gs_usb) up at the
 # configured bit rate as it appears, under its stable name if it has one. The Jetson'"'"'s own mttcan controllers are left alone.
 SUBSYSTEM=="net", ACTION=="add", ATTR{type}=="280", DRIVERS=="peak_usb|gs_usb", TAG+="systemd", ENV{SYSTEMD_WANTS}+="gyropup-can@$name.service"'
 put /etc/sysusers.d/gyropup.conf 644 "$(cat "$f/gyropup-sysusers.conf")"
@@ -153,7 +153,7 @@ put_once /etc/gyropup/rs04-bridge.env 644 "$(cat "$f/rs04-bridge.env")"
 dropin=/etc/systemd/system/gyropup-rs04-bridge.service.d/lan.conf
 token=/etc/gyropup/bridge-token
 if [ "$lan" = on ]; then
-  put "$dropin" 644 '# Gyropup (hardware/deploy/jetson/install.sh --lan): the RS-04 bridge on every interface, with a token. Remove with --local.
+  put "$dropin" 644 '# Gyropup (software/deploy/jetson/install.sh --lan): the RS-04 bridge on every interface, with a token. Remove with --local.
 [Service]
 Environment="BRIDGE_LAN=--lan --token-file /etc/gyropup/bridge-token"'
   if [ ! -f "${root}${token#/}" ]; then

@@ -15,12 +15,19 @@ firmware version string, and that canTimeout counts from the last frame addresse
 """
 from __future__ import annotations
 
+# Support direct-file CLI execution as well as checkout package imports.
+if __package__ in (None, ''):
+    import sys as _checkout_sys
+    from pathlib import Path as _CheckoutPath
+    _checkout_sys.path.insert(0, str(_CheckoutPath(__file__).resolve().parents[3]))
+
+
 import math
 import os
 import time
 from typing import Callable, List, Optional
 
-from rig import rs04 as P
+from software.control.rig import rs04 as P
 
 DEFAULTS = {'run_mode': 0, 'iq_ref': 0.0, 'spd_ref': 0.0, 'limit_torque': 120.0, 'cur_kp': 0.17, 'cur_ki': 0.012,
             'cur_filt_gain': 0.1, 'loc_ref': 0.0, 'limit_spd': 10.0, 'limit_cur': 23.0, 'iqf': 0.0, 'loc_kp': 60.0,

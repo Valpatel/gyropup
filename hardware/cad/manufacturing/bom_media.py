@@ -19,8 +19,8 @@ from __future__ import annotations
 import json
 from pathlib import Path
 
-R = Path(__file__).resolve().parents[1]
-CAT = R / 'catalog'
+R = (Path(__file__).resolve().parents[3])
+CAT = (R / 'hardware/catalog')
 
 
 def _load(name: str, default):
@@ -91,6 +91,6 @@ def enrich(lines):
 
 
 if __name__ == '__main__':                     # a quick look: the leg's last BOM, enriched
-    bom = json.loads((R / 'exports' / 'leg' / 'bom.json').read_text())['per_leg']
+    bom = json.loads(((R / 'hardware/exports/leg/bom.json')).read_text())['per_leg']
     for r in enrich(bom):
         print(f"{r['key']:28} thumb={'yes' if r['thumb'] else 'NO ':3} alternates={len(r['alternates'])}")

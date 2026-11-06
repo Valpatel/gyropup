@@ -17,7 +17,7 @@ import re
 import unittest
 from pathlib import Path
 
-ROOT = Path(__file__).resolve().parents[1]
+ROOT = (Path(__file__).resolve().parents[3])
 CLEARANCE = 0.5                 # mm the dowel must stay short of the case hole's floor
 HOLE_R = (2.45, 2.70)           # mm: the frame's printed Ø5 dowel hole (2.5 + PRINT_HOLE_COMP / 2 + 0.015 = 2.5775 today),
                                 # between the M4 clearance (2.25) and an M5 clearance (2.75)
@@ -26,7 +26,7 @@ SEATS = {'exports/leg/hip_frame.step': 4, 'exports/leg/rs04-mounting-fit/hip_fra
          'exports/rig/bench/coupon_frame_ring_nom.step': 2, 'exports/leg/rs04-mounting-fit/coupon_frame_ring_nom.step': 2}
 DRILL_OUT = 13.0                # mm, full diameter: docs/motor-day.md Phase 0.3 has the 12 mm holes drilled to this by hand
 PROUD_BAND = (2.0, 3.5)         # mm the page accepts, after the drill-out (2.0: a 135 deg point, a chamfered dowel)
-DOC = ROOT / 'docs/motor-day.md'
+DOC = (ROOT / 'docs/legs/motor-day.md')
 
 
 def step_entities(path: Path) -> dict:
@@ -94,7 +94,7 @@ def dowel_holes(path: Path) -> list:
 
 
 def case_hole_depth() -> float:
-    loc = json.loads((ROOT / 'catalog/interfaces.json').read_text())['robstride-rs-04']['case']['locating']
+    loc = json.loads(((ROOT / 'hardware/catalog/interfaces.json')).read_text())['robstride-rs-04']['case']['locating']
     m = re.search(r'([\d.]+)\s*(?:mm\s*)?deep', loc['note'])
     if not m:
         raise AssertionError(f'no locating-hole depth in catalog/interfaces.json: {loc}')
@@ -102,7 +102,7 @@ def case_hole_depth() -> float:
 
 
 def dowel_length() -> float:
-    row = next(r for r in json.loads((ROOT / 'catalog/hardware.json').read_text()) if r['key'] == 'dowel_5x16')
+    row = next(r for r in json.loads(((ROOT / 'hardware/catalog/hardware.json')).read_text()) if r['key'] == 'dowel_5x16')
     return float(row['specs']['length_mm'])
 
 

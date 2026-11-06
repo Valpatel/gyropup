@@ -19,23 +19,30 @@ What it computes (reduced, analytic models; the e2e MuJoCo scene applies the sam
 """
 from __future__ import annotations
 
+# Support direct-file CLI execution as well as checkout package imports.
+if __package__ in (None, ''):
+    import sys as _checkout_sys
+    from pathlib import Path as _CheckoutPath
+    _checkout_sys.path.insert(0, str(_CheckoutPath(__file__).resolve().parents[2]))
+
+
 import json
 import math
 import sys
 from pathlib import Path
 
-R = Path(__file__).resolve().parents[1]
-sys.path.insert(0, str(R / 'sim'))
-sys.path.insert(0, str(R / 'cad'))
+R = (Path(__file__).resolve().parents[2])
+sys.path.insert(0, str((R / 'software/simulation')))
+sys.path.insert(0, str((R / 'hardware/cad')))
 
-OUT = R / 'exports' / 'turret' / 'e2e'
+OUT = (R / 'hardware/exports/turret/e2e')
 STS3215 = {'stall_nm': 2.94, 'no_load_rad_s': 45 * 2 * math.pi / 60, 'backlash_deg': 0.5, 'resolution_deg': 360 / 4096, 'ratio': 345,
            'source': 'Feetech ST-3215-C018 datasheet (references/vendor/feetech-sts3215/ST-3215-C018.pdf): 30 kg cm, 45 rpm, backlash <= 0.5 deg, 0.088 deg/pulse; checked 2026-10-27'}
 GEAR = {'module': 1.25, 'z_ring': 63, 'z_pinion': 21, 'backlash_mm_per_flank': 0.15, 'source': 'cad/turret.py gear_profile(backlash=0.15) and Geo.gear'}
 
 
 def load_motion():
-    p = R / 'exports' / 'turret' / 'motion.json'
+    p = (R / 'hardware/exports/turret/motion.json')
     return json.loads(p.read_text()) if p.exists() else None
 
 
@@ -117,17 +124,17 @@ def aim_movers(G, rec, flight_slew, v_ball_m_s=16.76):
 
 
 def study(launch3d=None, flight=None):
-    import turret_common as tc
+    import software.simulation.turret_common as tc
     tu = tc.cad_turret()
     OUT.mkdir(parents=True, exist_ok=True)
     G = tu.Geo()
     motion = load_motion()
     if motion is None:
         raise SystemExit('run cad/turret_motion.py first (exports/turret/motion.json)')
-    l3 = launch3d or json.loads((R / 'exports' / 'turret' / 'launch' / 'launch3d.json').read_text())
-    fl = flight or json.loads((R / 'exports' / 'turret' / 'flight' / 'flight.json').read_text())
+    l3 = launch3d or json.loads(((R / 'hardware/exports/turret/launch/launch3d.json')).read_text())
+    fl = flight or json.loads(((R / 'hardware/exports/turret/flight/flight.json')).read_text())
     rec = recoil(l3['recoil'], motion, G)
-    import turret_launch as tl
+    import software.simulation.turret_launch as tl
     L = tl.launcher_for(l3['design']['wheel_d_mm'], l3['design']['crush'])
     gy = gyro(l3, motion, L.wheel_I, l3['design']['set_rpm'] * 2 * math.pi / 60)
     sm = servo_margins(motion, rec, gy)

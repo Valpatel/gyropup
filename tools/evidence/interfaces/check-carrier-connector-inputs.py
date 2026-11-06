@@ -6,6 +6,13 @@ validity and contradictory mated-volume evidence instead of waiving overlap.
 """
 from __future__ import annotations
 
+# Support direct-file CLI execution as well as checkout package imports.
+if __package__ in (None, ''):
+    import sys as _checkout_sys
+    from pathlib import Path as _CheckoutPath
+    _checkout_sys.path.insert(0, str(_CheckoutPath(__file__).resolve().parents[3]))
+
+
 import argparse
 import hashlib
 import json
@@ -13,10 +20,10 @@ from pathlib import Path
 import sys
 import time
 
-ROOT = Path(__file__).resolve().parents[1]
-MANIFEST = ROOT / 'research/carrier-service-connectors/private-inputs.json'
-sys.path.insert(0, str(ROOT / 'cad'))
-import print_provenance as provenance
+ROOT = (Path(__file__).resolve().parents[3])
+MANIFEST = (ROOT / 'docs/research/carrier-service-connectors/private-inputs.json')
+sys.path.insert(0, str((ROOT / 'hardware/cad')))
+import hardware.cad.manufacturing.print_provenance as provenance
 
 
 def private_path(entry, root=ROOT):

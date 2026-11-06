@@ -13,8 +13,8 @@ from __future__ import annotations
 import json
 from pathlib import Path
 
-R = Path(__file__).resolve().parents[1]
-OUT = R / 'exports' / 'rig'
+R = (Path(__file__).resolve().parents[3])
+OUT = (R / 'hardware/exports/rig')
 BED, GAP = 250.0, 6.0
 MACHINED = {'output_adapter'}                      # D46: machined 6061-T6, no longer printed
 

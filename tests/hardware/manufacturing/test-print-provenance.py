@@ -1,5 +1,12 @@
 #!/usr/bin/env python3
 """Adversarial print identity/transaction tests; no CAD solve or real slicer."""
+
+# Support direct-file CLI execution as well as checkout package imports.
+if __package__ in (None, ''):
+    import sys as _checkout_sys
+    from pathlib import Path as _CheckoutPath
+    _checkout_sys.path.insert(0, str(_CheckoutPath(__file__).resolve().parents[3]))
+
 import ast
 import contextlib
 import importlib.machinery
@@ -14,20 +21,20 @@ import types
 import unittest
 from unittest.mock import patch
 
-sys.path.insert(0, str(Path(__file__).resolve().parents[1] / 'cad'))
-import print_provenance as provenance
-import print_slicing
-import turret_print
-REPO = Path(__file__).resolve().parents[1]
+sys.path.insert(0, str((Path(__file__).resolve().parents[3] / 'hardware/cad')))
+import hardware.cad.manufacturing.print_provenance as provenance
+import hardware.cad.manufacturing.print_slicing as print_slicing
+import hardware.cad.turret.turret_print as turret_print
+REPO = (Path(__file__).resolve().parents[3])
 
 
 class RetainedMotorDay(unittest.TestCase):
     def test_real_slice_records_match_their_source_bytes(self):
-        rows = json.loads((REPO / 'exports/motor-day/slices.json').read_text())['parts']
+        rows = json.loads(((REPO / 'hardware/exports/motor-day/slices.json')).read_text())['parts']
         self.assertTrue(rows, 'retained slice evidence must not disappear')
         for name, row in rows.items():
             with self.subTest(part=name):
-                source = (REPO / row['file']).resolve()
+                source = provenance.retained_export_path(REPO, row['file']).resolve()
                 self.assertTrue(source.is_relative_to(REPO.resolve()))
                 self.assertEqual(hashlib.sha256(source.read_bytes()).hexdigest(), row['sha256'],
                                  f'{name}: retained slice identity differs from its input')
@@ -38,12 +45,17 @@ class PrintSources(unittest.TestCase):
         self.tmp = tempfile.TemporaryDirectory()
         self.addCleanup(self.tmp.cleanup)
         self.root = Path(self.tmp.name)
-        (self.root/'cad').mkdir()
-        (self.root/'cad/model.py').write_text('wall_mm = 3\n')
-        (self.root/'catalog').mkdir()
-        (self.root/'catalog/parts.json').write_text('{"diameter_mm":38}')
-        (self.root/'docs').mkdir()
-        self.directory = self.root/'exports/turret'
+        (self.root/'hardware/cad').mkdir(parents=True)
+        (self.root/'hardware/designs').mkdir()
+        for relative in (*provenance.FORMER_CAD_TESTS, *provenance.SOURCE_PARENTS):
+            path = self.root / relative
+            path.parent.mkdir(parents=True, exist_ok=True)
+            path.write_text('# synthetic input; no CAD or acceptance evidence\n')
+        (self.root/'hardware/cad/model.py').write_text('wall_mm = 3\n')
+        (self.root/'hardware/catalog').mkdir()
+        (self.root/'hardware/catalog/parts.json').write_text('{"diameter_mm":38}')
+        (self.root/'docs/turret').mkdir(parents=True)
+        self.directory = self.root/'hardware/exports/turret'
         self.directory.mkdir(parents=True)
         self.out = self.directory/'print'
         self.mesh = self.directory/'flywheel_tyre.stl'
@@ -99,6 +111,26 @@ class PrintSources(unittest.TestCase):
         with patch.object(turret_print, 'PARTS', self.parts):
             return provenance.current_slice_rows(self.root, rows, provenance.snapshot(self.root))
 
+    def test_moved_cad_members_and_new_domain_inputs_remain_required(self):
+        before = provenance.snapshot(self.root)
+        for relative in (*provenance.FORMER_CAD_TESTS, *provenance.SOURCE_PARENTS):
+            self.assertIn(relative, before['files'])
+            current = self.root / relative
+            raw = current.read_bytes()
+            # An obsolete copy must never rescue an absent current input.
+            old = self.root / 'cad' / current.name
+            old.parent.mkdir(exist_ok=True)
+            old.write_bytes(raw)
+            current.unlink()
+            with self.subTest(relative=relative), self.assertRaisesRegex(FileNotFoundError, relative):
+                provenance.snapshot(self.root)
+            current.write_bytes(raw)
+        nested = self.root / 'hardware/cad/legs/new_dependency.py'
+        nested.parent.mkdir()
+        nested.write_text('wall_mm = 4\n')
+        self.assertIn('hardware/cad/legs/new_dependency.py', provenance.snapshot(self.root)['files'])
+        self.assertNotEqual(provenance.snapshot(self.root), before)
+
     def test_current_mesh_and_recorded_identity(self):
         got = provenance.validate_mesh(self.root, self.mesh, self.inputs)
         self.assertEqual(got['sha256'], provenance.digest(self.mesh))
@@ -106,7 +138,7 @@ class PrintSources(unittest.TestCase):
         self.assertEqual(next(p[1] for p in turret_print.PARTS if p[0]=='flywheel_tyre'), 'flywheel_tyre.stl')
 
     def test_changed_source_or_catalogue_requires_fresh_export(self):
-        for relative in ['cad/model.py', 'catalog/parts.json', 'cad/new_module.py']:
+        for relative in ['hardware/cad/model.py', 'hardware/catalog/parts.json', 'hardware/cad/new_module.py']:
             with self.subTest(input=relative):
                 path = self.root/relative
                 before = path.read_bytes() if path.exists() else None
@@ -127,7 +159,7 @@ class PrintSources(unittest.TestCase):
     def test_changes_during_export_do_not_replace_receipt(self):
         receipt = self.directory/'print-meshes.json'
         original = receipt.read_bytes()
-        (self.root/'cad/model.py').write_text('changed during export')
+        (self.root/'hardware/cad/model.py').write_text('changed during export')
         with self.assertRaisesRegex(ValueError, 'during export'):
             provenance.write_receipt(self.root, self.directory, [self.mesh], self.inputs)
         self.assertEqual(receipt.read_bytes(), original)
@@ -165,7 +197,7 @@ class PrintSources(unittest.TestCase):
         design.write_text('{"size":1}')
         provenance.write_receipt(self.root, self.directory, [self.mesh, self.second], self.inputs,
                                  context=provenance.context_snapshot(self.root, [design]))
-        targets = {'original mesh': self.mesh, 'CAD source': self.root/'cad/model.py', 'selected design': design}
+        targets = {'original mesh': self.mesh, 'CAD source': self.root/'hardware/cad/model.py', 'selected design': design}
         for label, target in targets.items():
             with self.subTest(mutation=label):
                 original = target.read_bytes()
@@ -225,7 +257,7 @@ class PrintSources(unittest.TestCase):
         report = self.package()
         self.assertEqual(set(self.current_rows(report['parts'])), {'first', 'second'})
         # Execute the real production summary statements without a full geometry build.
-        tree = ast.parse((REPO/'cad/build_turret.py').read_text())
+        tree = ast.parse(((REPO / 'hardware/cad/builders/build_turret.py')).read_text())
         main = next(n for n in tree.body if isinstance(n, ast.FunctionDef) and n.name == 'main')
         index = next(i for i,n in enumerate(main.body) if isinstance(n, ast.Assign) and
                      any(isinstance(t, ast.Name) and t.id == 'totals' for t in n.targets))

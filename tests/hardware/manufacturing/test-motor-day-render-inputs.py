@@ -4,8 +4,8 @@ import json
 from pathlib import Path
 import unittest
 
-ROOT = Path(__file__).resolve().parents[1]
-TREE = ast.parse((ROOT / 'tools/motor_day.py').read_text())
+ROOT = (Path(__file__).resolve().parents[3])
+TREE = ast.parse(((ROOT / 'tools/evidence/manufacturing/motor_day.py')).read_text())
 STEPS_NODE = next(n for n in TREE.body if isinstance(n, ast.Assign)
                   and any(isinstance(t, ast.Name) and t.id == 'STEPS' for t in n.targets))
 FUNCTIONS = [n for n in TREE.body if isinstance(n, ast.FunctionDef)
@@ -25,8 +25,8 @@ class RenderInputs(unittest.TestCase):
         self.module['require_rendered_steps'](self.rows, self.rendered, self.items)
 
     def test_retained_steps_and_drawing_metadata_match_source(self):
-        rendered = json.loads((ROOT / 'exports/motor-day/drawings/sheets.json').read_text())
-        steps = json.loads((ROOT / 'exports/motor-day/steps/steps.json').read_text())
+        rendered = json.loads(((ROOT / 'hardware/exports/motor-day/drawings/sheets.json')).read_text())
+        steps = json.loads(((ROOT / 'hardware/exports/motor-day/steps/steps.json')).read_text())
         self.module['require_rendered_steps'](steps, rendered, rendered['items'])
 
     def test_json_round_trip_of_actual_step_inputs_passes(self):

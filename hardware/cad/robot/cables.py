@@ -19,6 +19,13 @@ routes at three poses).
 """
 from __future__ import annotations
 
+# Support direct-file CLI execution as well as checkout package imports.
+if __package__ in (None, ''):
+    import sys as _checkout_sys
+    from pathlib import Path as _CheckoutPath
+    _checkout_sys.path.insert(0, str(_CheckoutPath(__file__).resolve().parents[3]))
+
+
 import json
 import math
 import os
@@ -28,11 +35,11 @@ from pathlib import Path
 
 import numpy as np
 
-R = Path(__file__).resolve().parents[1]
-sys.path.insert(0, str(R / 'cad'))
+R = (Path(__file__).resolve().parents[3])
+sys.path.insert(0, str((R / 'hardware/cad')))
 sys.path.insert(0, str(R))
 
-import leg  # noqa: E402
+import hardware.cad.legs.leg as leg  # noqa: E402
 
 CABLES = leg.STD['cables']
 # the thickest single conductor in each harness sets the flexing bend radius (rule 3: 10 x OD)
@@ -70,7 +77,7 @@ def route(S, L, hip, knee):
 
 
 def poses(L, n=7):
-    from sim.controller import hip_for, knee_for
+    from software.simulation.controller import hip_for, knee_for
     a, b = L['thigh'] / 1000, L['shin'] / 1000
     lo, hi = math.radians(L['kneeMinDeg']), math.radians(L['kneeMaxDeg'])
     hmin = math.sqrt(a * a + b * b - 2 * a * b * math.cos(lo))
@@ -84,7 +91,7 @@ def poses(L, n=7):
 
 
 def check(design: Path):
-    L = json.loads(subprocess.run(['node', str(R / 'tools/derive.mjs'), str(design)], capture_output=True, text=True, check=True).stdout)['layout']
+    L = json.loads(subprocess.run(['node', str((R / 'tools/engineering/robot/derive.mjs')), str(design)], capture_output=True, text=True, check=True).stdout)['layout']
     d = json.loads(design.read_text())
     parts, meta, bought, S, _ = leg.leg_parts(L, d['parts']['leg_actuator'], d['parts']['leg_actuator'], d['parts']['wheel_motor'])
     a = L['thigh']
@@ -129,7 +136,7 @@ def check(design: Path):
             continue
         vs, fs = shp.val().tessellate(0.5, 0.3)
         meshes[name] = trimesh.Trimesh([(v.x, v.y, v.z) for v in vs], fs)
-    import leg as _leg
+    import hardware.cad.legs.leg as _leg
     worst = {}
     for frac, look, hip, knee, r in samples:
         segs = [r['shin'][-1], r['thigh'][0], r['thigh'][-1], r['yoke'][0]]
@@ -146,7 +153,7 @@ def check(design: Path):
                 worst[name] = {'clearance_mm': round(dmin, 1), 'at': {'height': round(frac, 2), 'look_up': look}}
     res['wheel']['clearance'] = worst
     res['wheel']['clearance_ok'] = all(v['clearance_mm'] >= 5 for v in worst.values())
-    exports = Path(os.environ['GYROPUP_EXPORTS']).resolve() if os.environ.get('GYROPUP_EXPORTS') else R / 'exports'
+    exports = Path(os.environ['GYROPUP_EXPORTS']).resolve() if os.environ.get('GYROPUP_EXPORTS') else (R / 'hardware/exports')
     out = exports / 'cables.json'
     out.write_text(json.dumps(res, indent=1) + '\n')
     _plot(samples, S, L, exports / 'cables.png')
@@ -183,7 +190,7 @@ def _plot(samples, S, L, path):
 
 
 if __name__ == '__main__':
-    r = check(Path(sys.argv[1]).resolve() if len(sys.argv) > 1 else R / 'designs/default.json')
+    r = check(Path(sys.argv[1]).resolve() if len(sys.argv) > 1 else (R / 'hardware/designs/default.json'))
     w = r['wheel']
     print('knee loop slack', w['knee']['slack_needed_mm'], 'mm; hip loop slack', w['hip']['slack_needed_mm'], 'mm')
     print('bend radius', w['bend_radius'])

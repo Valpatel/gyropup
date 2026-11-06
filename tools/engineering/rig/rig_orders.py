@@ -22,9 +22,9 @@ import re
 from collections import OrderedDict
 from pathlib import Path
 
-R = Path(__file__).resolve().parents[1]
-OUT = R / 'docs' / 'leg-rig-orders.md'
-BOM = R / 'exports' / 'rig' / 'bom.json'
+R = (Path(__file__).resolve().parents[3])
+OUT = (R / 'docs/legs/leg-rig-orders.md')
+BOM = (R / 'hardware/exports/rig/bom.json')
 EST = {'carriage_plate': (60.0, 90.0), 'output_adapter': (40.0, 40.0)}  # upload-priced: the estimate's range, each
 # more of a part another list already buys, for the bench tests (docs/leg-bench-tests.md): (key, qty, what for)
 BENCH_EXTRA = [

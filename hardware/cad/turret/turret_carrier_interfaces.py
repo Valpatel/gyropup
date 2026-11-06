@@ -4,8 +4,15 @@ Coordinates are turret T millimetres. Vendor-derived dimensions and design
 reservations are intentionally separate. No CAD kernel or network is needed.
 """
 from __future__ import annotations
+
+# Support direct-file CLI execution as well as checkout package imports.
+if __package__ in (None, ''):
+    import sys as _checkout_sys
+    from pathlib import Path as _CheckoutPath
+    _checkout_sys.path.insert(0, str(_CheckoutPath(__file__).resolve().parents[3]))
+
 from math import dist
-import print_provenance as provenance
+import hardware.cad.manufacturing.print_provenance as provenance
 
 SOURCES = {
     'amass': 'https://www.china-amass.com/public/upload/20240608/810c62b3f7ace2287989748538eb2a6b.pdf',

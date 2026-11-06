@@ -12,7 +12,7 @@ from unittest.mock import patch
 import trimesh
 from cadagent.mesh3mf import read_3mf
 
-sys.path.insert(0, str(Path(__file__).resolve().parents[1]/'cad'))
+sys.path.insert(0, str((Path(__file__).resolve().parents[3] / 'hardware/cad')))
 import print_provenance as provenance
 import turret_print
 

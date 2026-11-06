@@ -12,13 +12,20 @@ recorded results, and the masses those were solved with stay in `masses`. Each r
 parts, the reason, the masses it solved with, the commit, the SHA-256 of cad/turret.py and the cad-agent actually
 imported (its version and tree).
 """
+
+# Support direct-file CLI execution as well as checkout package imports.
+if __package__ in (None, ''):
+    import sys as _checkout_sys
+    from pathlib import Path as _CheckoutPath
+    _checkout_sys.path.insert(0, str(_CheckoutPath(__file__).resolve().parents[3]))
+
 import argparse
 import json
 from pathlib import Path
 import sys
 
-ROOT = Path(__file__).resolve().parents[1]
-SUMMARY = ROOT / 'exports/turret/fea/summary.json'
+ROOT = (Path(__file__).resolve().parents[3])
+SUMMARY = (ROOT / 'hardware/exports/turret/fea/summary.json')
 VERDICT_ON = ('the layer-aware SF for printed parts (N2), the yield SF for the aluminium parts; the isotropic columns '
               'are reported with each result')
 
@@ -94,7 +101,7 @@ def provenance(cadagent_module):
     pyproject = src.parent.parent / 'pyproject.toml'
     m = re.search(r'^version\s*=\s*"([^"]+)"', pyproject.read_text(), re.M) if pyproject.exists() else None
     return {'commit': subprocess.check_output(['git', 'rev-parse', 'HEAD'], cwd=ROOT, text=True).strip(),
-            'turret_py_sha256': hashlib.sha256((ROOT / 'cad/turret.py').read_bytes()).hexdigest(),
+            'turret_py_sha256': hashlib.sha256(((ROOT / 'hardware/cad/turret/turret.py')).read_bytes()).hexdigest(),
             'cad_agent': m.group(1) if m else None, 'cad_agent_tree': toolkit}
 
 
@@ -105,10 +112,10 @@ def main():
     ap.add_argument('--mesh', type=float, default=2.5)
     ap.add_argument('--no-anim', action='store_true')
     a = ap.parse_args()
-    sys.path.insert(0, str(ROOT / 'cad'))
+    sys.path.insert(0, str((ROOT / 'hardware/cad')))
     import numpy as np
     import cadagent
-    import turret_studies as ts
+    import hardware.cad.turret.turret_studies as ts
     old = json.loads(SUMMARY.read_text())
     prov = provenance(cadagent)
     new = ts.run(a.mesh, anim=not a.no_anim, only=a.parts)

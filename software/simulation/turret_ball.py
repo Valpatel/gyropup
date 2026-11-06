@@ -10,6 +10,13 @@ ranges; the worst corner of each sweep is what the 70 fps cap is held against, a
 """
 from __future__ import annotations
 
+# Support direct-file CLI execution as well as checkout package imports.
+if __package__ in (None, ''):
+    import sys as _checkout_sys
+    from pathlib import Path as _CheckoutPath
+    _checkout_sys.path.insert(0, str(_CheckoutPath(__file__).resolve().parents[2]))
+
+
 import json
 import math
 import sys
@@ -18,11 +25,11 @@ from pathlib import Path
 
 import numpy as np
 
-R = Path(__file__).resolve().parents[1]
-sys.path.insert(0, str(R / 'sim'))
-import turret_launch as tl  # noqa: E402
+R = (Path(__file__).resolve().parents[2])
+sys.path.insert(0, str((R / 'software/simulation')))
+import software.simulation.turret_launch as tl  # noqa: E402
 
-OUT = R / 'exports' / 'turret' / 'launch'
+OUT = (R / 'hardware/exports/turret/launch')
 CHECKED = '2026-10-27'
 
 # ------------------------------------------------------------------------------------------------ sources (checked 2026-10-27)

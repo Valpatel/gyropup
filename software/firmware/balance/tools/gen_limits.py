@@ -17,8 +17,8 @@ from pathlib import Path
 
 HERE = Path(__file__).resolve().parent
 FW = HERE.parent
-R = FW.parents[1]
-SRC = R / 'exports' / 'leg' / 'limits.json'
+R = (FW.parents[2])
+SRC = (R / 'hardware/exports/leg/limits.json')
 OUT = FW / 'include' / 'gp' / 'gp_limits.h'
 
 

@@ -24,6 +24,13 @@ What the body itself decides (docs/body-plan.md, changed where the build showed 
 """
 from __future__ import annotations
 
+# Support direct-file CLI execution as well as checkout package imports.
+if __package__ in (None, ''):
+    import sys as _checkout_sys
+    from pathlib import Path as _CheckoutPath
+    _checkout_sys.path.insert(0, str(_CheckoutPath(__file__).resolve().parents[3]))
+
+
 import functools
 import hashlib
 import json
@@ -31,7 +38,7 @@ import math
 import os
 from pathlib import Path
 
-R = Path(__file__).resolve().parents[1]
+R = (Path(__file__).resolve().parents[3])
 CACHE = R / 'build' / 'body'
 J501_DIR = Path(os.environ.get('J501_DIR', Path.home() / 'Code' / 'j501-agx'))
 IN = 25.4
@@ -126,12 +133,12 @@ def _fivebar():
     BotWheel (its foot change is the leg workstream's, issue #25): the 10 in hub motor's tyre ring, hub drum and shaft as
     sim/wheel_study.py draws them, so the body's clash sweep, views, ledger and sim all see the wheel it will have."""
     import sys
-    sys.path.insert(0, str(R / 'cad'))
+    sys.path.insert(0, str((R / 'hardware/cad')))
     if str(R) not in sys.path:
         sys.path.insert(0, str(R))
-    import fivebar
+    import hardware.cad.legs.fivebar as fivebar
     if fivebar.WHEEL == 'odrive-botwheel' and not getattr(fivebar, '_body_d69_wheel', False):
-        from sim import wheel_study as ws
+        from software.simulation import wheel_study as ws
         w = dict(ws.CANDIDATES[D69_WHEEL_KEY], **D69_WHEEL_CAD)
         ws._patch_cad(w)
         fivebar._body_d69_wheel = w
@@ -156,7 +163,7 @@ def frame_mounts() -> dict:
               and measured_holes is kept so a test can see the two agree.
     A change to the frame in cad/fivebar.py flows through here; nothing is copied."""
     fb = _fivebar()
-    src = (R / 'cad/fivebar.py', R / 'cad/gmi.py', R / 'cad/interfaces.json', R / 'catalog/interfaces.json')
+    src = ((R / 'hardware/cad/legs/fivebar.py'), (R / 'hardware/cad/robot/gmi.py'), (R / 'hardware/cad/robot/interfaces.json'), (R / 'hardware/catalog/interfaces.json'))
     key = _hash(*src)
     f = CACHE / 'frame_mounts.json'
     if f.exists():
@@ -166,7 +173,7 @@ def frame_mounts() -> dict:
     d = _measure_frame(fb, key)
     if hasattr(fb, 'frame_mounts'):                                      # the leg's own statement of the interface
         pub = fb.frame_mounts()
-        import gmi
+        import hardware.cad.robot.gmi as gmi
         d.update({'holes': sorted((round(x, 3), round(z, 3)) for x, z in pub['inserts_xz']), 'depth': pub['pilot_depth'],
                   'pilot_d': gmi.FAST[pub['thread']]['insert_pilot'], 'centre_plane_y': pub['plane_y'],
                   'source': 'fivebar.frame_mounts'})
@@ -177,7 +184,7 @@ def frame_mounts() -> dict:
 
 def _measure_frame(fb, key) -> dict:
     """The interface measured from hip_frame()'s solid: M5 pilot circles and flat faces on the centre plane."""
-    import gmi
+    import hardware.cad.robot.gmi as gmi
     yc = fb.Y['centre_plane']
     pilot = gmi.FAST['M5']['insert_pilot']
     solid = fb.hip_frame().val()
@@ -300,14 +307,14 @@ def tm() -> dict:
     is computed for that). The turret's interface file exports/turret/mount.json (docs/turret-next-plan.md N5) wins for
     the mass and centre when it exists; until then the head budget (1.70 kg, centre <= 100 mm above the face)."""
     import sys
-    sys.path.insert(0, str(R / 'cad'))
-    import turret as tu
+    sys.path.insert(0, str((R / 'hardware/cad')))
+    import hardware.cad.turret.turret as tu
     G = tu.Geo()
     out = {'bolts': [tuple(p) for p in tu.TM_BOLTS], 'dowels': [tuple(p) for p in tu.TM_DOWELS], 'hole_d': tu.TM_HOLE,
            'bolt': 'M5', 'dowel_d': 5.0, 'foot_r': G.base_r, 'bumper_r': G.bumper_r[1], 'pan_x': lidar()['x'] - LIDAR_TO_PAN,
            'face_z': TOP + RISER_H, 'mass_kg': HEAD_BUDGET['mass_kg'], 'com_above_face_mm': HEAD_BUDGET['com_above_face_mm'],
            'mass_basis': HEAD_BUDGET['basis'], 'grommet_xy': TURRET_GROMMET}
-    f = R / 'exports' / 'turret' / 'mount.json'
+    f = (R / 'hardware/exports/turret/mount.json')
     if f.exists():
         m = json.loads(f.read_text())
         mk = m.get('mass_kg') or ((m.get('mass_g') or 0) / 1000.0) or None
@@ -340,8 +347,8 @@ def turret_plug_box() -> dict:
         hi = [max(pb['max_mm'][k], sw['max_mm'][k]) for k in range(3)]
         return {'box': (t['pan_x'] + lo[0], t['pan_x'] + hi[0], lo[1], hi[1], t['face_z'] + lo[2], t['face_z'] + hi[2]),
                 'source': 'exports/turret/mount.json dt12.boxes (plug_body, withdrawal_sweep)'}
-    sys.path.insert(0, str(R / 'cad'))
-    import turret as tu
+    sys.path.insert(0, str((R / 'hardware/cad')))
+    import hardware.cad.turret.turret as tu
     G = tu.Geo()
     pl, f = tu.DT['plug'], tu.DT['flange']
     y_in = -(G.dt_y + f[1])                                           # the flange's outer face: where the plug seats
@@ -360,7 +367,7 @@ def lidar() -> dict:
     the pin's hole must stay half a die (flat) from the deck's front bend, which sets the lidar 5.2 mm back from flush
     (the plan had it flush, x = 108.35; nothing in its view changes: its -15 deg beam passes 22 mm over the deck's
     edge). The cable gland points to +y, so the pins lie fore and aft."""
-    cat = json.loads((R / 'catalog/sensors_compute.json').read_text())
+    cat = json.loads(((R / 'hardware/catalog/sensors_compute.json')).read_text())
     s = next(c for c in cat if c['id'] == 'velodyne-vlp-16')['specs']
     d = s['diameter_mm']
     m = s['mounting']
@@ -379,7 +386,7 @@ def lidar() -> dict:
 # ------------------------------------------------------------------------------------------- the J501 (read only)
 
 
-J501_SNAPSHOT = R / 'references' / 'vendor' / 'j501' / 'parameters-0.9-g48r.json'      # B10: a dated copy, so the body
+J501_SNAPSHOT = (R / 'hardware/vendor/j501/parameters-0.9-g48r.json')      # B10: a dated copy, so the body
 J501_SNAPSHOT_SOURCE = J501_SNAPSHOT.with_name('SOURCE.json')                            # builds without the J501 project
 
 

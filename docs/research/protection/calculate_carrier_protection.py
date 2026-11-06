@@ -152,7 +152,7 @@ def calculate(a):
 def receipt():
     raw = INPUT.read_bytes()
     a = json.loads(raw)
-    repo = HERE.parents[1]
+    repo = (HERE.parents[2])
     for binding in a['source_bindings']:
         data = subprocess.check_output(['git', 'show', f"{a['source_commit']}:{binding['path']}"], cwd=repo)
         if hashlib.sha256(data).hexdigest() != binding['sha256']:

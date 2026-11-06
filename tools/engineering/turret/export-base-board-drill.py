@@ -1,19 +1,26 @@
 """Dimensioned custom drilling plan from the actual PCB CAD parameters; no full build."""
+
+# Support direct-file CLI execution as well as checkout package imports.
+if __package__ in (None, ''):
+    import sys as _checkout_sys
+    from pathlib import Path as _CheckoutPath
+    _checkout_sys.path.insert(0, str(_CheckoutPath(__file__).resolve().parents[3]))
+
 import hashlib
 import json
 from pathlib import Path
 import sys
 
-ROOT = Path(__file__).resolve().parents[1]
-sys.path.insert(0, str(ROOT / 'cad'))
-import turret_base_board as board
+ROOT = (Path(__file__).resolve().parents[3])
+sys.path.insert(0, str((ROOT / 'hardware/cad')))
+import hardware.cad.turret.turret_base_board as board
 
 
 def main():
     w,h = board.BOARD_SIZE
     holes = [(y+w/2,z-board.BOARD_Z0) for y,z in board.BOARD_HOLES]
     margin = min(min(x,y,w-x,h-y)-board.PCB_MOUNT_CLEAR/2 for x,y in holes)
-    out = ROOT / 'exports/turret/base-board-service'
+    out = (ROOT / 'hardware/exports/turret/base-board-service')
     drawing = ['<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 660 460">',
                '<rect width="660" height="460" fill="#fffdf5"/>',
                '<g font-family="sans-serif" fill="#173d3c">',

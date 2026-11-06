@@ -29,7 +29,7 @@ from pathlib import Path
 sys.path.insert(0, str(Path(__file__).resolve().parent))
 import homing as hm  # noqa: E402
 
-R = Path(__file__).resolve().parents[2]
+R = (Path(__file__).resolve().parents[3])
 DT = 0.001
 
 
@@ -180,7 +180,7 @@ def main():
                'index_rechecks': sum(r['index_passes_checked'] for r in ok), 'index_recheck_worst_deg': max(r['index_worst_deg'] for r in ok) if ok else None,
                'false_rehomes': sum(1 for r in ok if r['false_rehome']),
                'pass': not fails, 'model': __doc__.split('\n\n')[1].strip()}
-    out = R / 'exports' / 'turret' / 'firmware'
+    out = (R / 'hardware/exports/turret/firmware')
     out.mkdir(parents=True, exist_ok=True)
     (out / 'homing.json').write_text(json.dumps({'summary': summary, 'failures': fails[:20], 'runs': rows[:50]}, indent=1) + '\n')
     print(json.dumps({k: v for k, v in summary.items() if k != 'model'}, indent=1))

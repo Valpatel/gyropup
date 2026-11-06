@@ -28,6 +28,13 @@ bench plan remain the proof for the hopper; this file's claims are about the dia
 """
 from __future__ import annotations
 
+# Support direct-file CLI execution as well as checkout package imports.
+if __package__ in (None, ''):
+    import sys as _checkout_sys
+    from pathlib import Path as _CheckoutPath
+    _checkout_sys.path.insert(0, str(_CheckoutPath(__file__).resolve().parents[2]))
+
+
 import argparse
 import json
 import math
@@ -40,11 +47,11 @@ from pathlib import Path
 import numpy as np
 
 os.environ.setdefault('MUJOCO_GL', 'egl')
-R = Path(__file__).resolve().parents[1]
-sys.path.insert(0, str(R / 'sim'))
-import turret_common as tc  # noqa: E402
+R = (Path(__file__).resolve().parents[2])
+sys.path.insert(0, str((R / 'software/simulation')))
+import software.simulation.turret_common as tc  # noqa: E402
 
-OUT = R / 'exports' / 'turret' / 'feed'
+OUT = (R / 'hardware/exports/turret/feed')
 TIMESTEP = None                                    # taken from sim/turret_feed.py at run time
 
 SERVO = {

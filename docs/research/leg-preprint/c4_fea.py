@@ -19,6 +19,13 @@ sleeves, no plasticity, no print voids. Writes <out>/c4-fea.json.
 """
 from __future__ import annotations
 
+# Support direct-file CLI execution as well as checkout package imports.
+if __package__ in (None, ''):
+    import sys as _checkout_sys
+    from pathlib import Path as _CheckoutPath
+    _checkout_sys.path.insert(0, str(_CheckoutPath(__file__).resolve().parents[3]))
+
+
 import argparse
 import json
 import math
@@ -27,18 +34,18 @@ import time
 from importlib.metadata import version
 from pathlib import Path
 
-ROOT = Path(__file__).resolve().parents[2]
-sys.path[:0] = [str(ROOT / 'cad'), str(ROOT)]
+ROOT = (Path(__file__).resolve().parents[3])
+sys.path[:0] = [str((ROOT / 'hardware/cad')), str(ROOT)]
 NORMAL = (0.0, 1.0, 0.0)          # the link prints flat: its layers stack along y
 LOAD_N = 1000.0
 DIRECTIONS = {'+x': (1.0, 0.0, 0.0), '-x': (-1.0, 0.0, 0.0), '+z': (0.0, 0.0, 1.0), '-z': (0.0, 0.0, -1.0)}
 
 
 def solve(shape, stub, d, mesh):
-    import fivebar as fb
-    import rig_bench as rb
+    import hardware.cad.legs.fivebar as fb
+    import hardware.cad.rig.rig_bench as rb
     from cadagent.fea import MATERIALS, Study
-    import leg_studies as ls
+    import hardware.cad.legs.leg_studies as ls
     l1 = fb.P['l1']
     cut = l1 - rb.C4_CUT_BACK
     yk = sum(fb.Y['knee_boss']) / 2
@@ -67,7 +74,7 @@ def main():
     ap.add_argument('--fine', type=float, default=1.5)
     a = ap.parse_args()
     import gmsh  # noqa: F401  (before CadQuery, as the compute hosts' mesher wants)
-    import rig_bench as rb
+    import hardware.cad.rig.rig_bench as rb
     a.out.mkdir(parents=True, exist_ok=True)
     rows = []
     for stub in ('today', 'pr2'):

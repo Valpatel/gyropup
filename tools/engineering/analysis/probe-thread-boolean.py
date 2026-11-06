@@ -18,14 +18,14 @@ from pathlib import Path
 import cadquery as cq
 import cadagent.gates.relations as relations
 
-ROOT=Path(__file__).resolve().parents[1]
+ROOT=(Path(__file__).resolve().parents[3])
 
 
 def main():
     p=argparse.ArgumentParser(description=__doc__)
-    p.add_argument('--vendor-root',type=Path,default=ROOT/'references/vendor/mcmaster')
+    p.add_argument('--vendor-root',type=Path,default=(ROOT / 'hardware/vendor/mcmaster'))
     p.add_argument('--frame',choices=('world','canonical'),default='world')
-    p.add_argument('--out',type=Path,default=ROOT/'exports/turret/base-board-service/thread-probe.json')
+    p.add_argument('--out',type=Path,default=(ROOT / 'hardware/exports/turret/base-board-service/thread-probe.json'))
     a=p.parse_args();files={pn:a.vendor_root/pn/(pn+'.norm.step') for pn in ('91290A111','94459A140')}
     for f in files.values():
         if not f.is_file():raise FileNotFoundError(f'private model required, no fallback: {f.name}')

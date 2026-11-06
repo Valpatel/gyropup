@@ -18,6 +18,13 @@ ticks. The safety line: the rig node's RUN frame, fresher than 50 ms.
 """
 from __future__ import annotations
 
+# Support direct-file CLI execution as well as checkout package imports.
+if __package__ in (None, ''):
+    import sys as _checkout_sys
+    from pathlib import Path as _CheckoutPath
+    _checkout_sys.path.insert(0, str(_CheckoutPath(__file__).resolve().parents[3]))
+
+
 import json
 import math
 import time
@@ -25,12 +32,12 @@ from dataclasses import asdict, dataclass, field
 from pathlib import Path
 from typing import Callable, Dict, Optional
 
-from rig import rs04 as P
-from rig.bus import MotorBus, MotorState, Tick
-from rig.node import HOST, NodeState, pack_host
+from software.control.rig import rs04 as P
+from software.control.rig.bus import MotorBus, MotorState, Tick
+from software.control.rig.node import HOST, NodeState, pack_host
 
-R = Path(__file__).resolve().parents[1]
-CAL_FILE = R / 'rig' / 'calibration.json'
+R = (Path(__file__).resolve().parents[3])
+CAL_FILE = (R / 'software/control/rig/calibration.json')
 V_RAIL = P.RS04.v * 0.997            # rad/s: a reported speed this close to +-15 is the field's rail, not a measurement
 
 

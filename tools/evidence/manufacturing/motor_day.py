@@ -17,6 +17,13 @@ the loads are the rig simulation's at each day-one cap (sim.json) against the lo
 """
 from __future__ import annotations
 
+# Support direct-file CLI execution as well as checkout package imports.
+if __package__ in (None, ''):
+    import sys as _checkout_sys
+    from pathlib import Path as _CheckoutPath
+    _checkout_sys.path.insert(0, str(_CheckoutPath(__file__).resolve().parents[3]))
+
+
 import argparse
 import csv
 import hashlib
@@ -30,13 +37,13 @@ from pathlib import Path
 
 import cadquery as cq
 
-R = Path(__file__).resolve().parents[1]
-sys.path.insert(0, str(R / 'cad'))
+R = (Path(__file__).resolve().parents[3])
+sys.path.insert(0, str((R / 'hardware/cad')))
 sys.path.insert(0, str(R))
-import fivebar as fb  # noqa: E402
+import hardware.cad.legs.fivebar as fb  # noqa: E402
 
-OUT = R / 'exports' / 'motor-day'
-DOC = R / 'docs' / 'motor-day.md'
+OUT = (R / 'hardware/exports/motor-day')
+DOC = (R / 'docs/legs/motor-day.md')
 WORK = R / 'work' / 'motor-day-slicer'           # gitignored; the snap slicer cannot write under /tmp or a hidden folder
 WHEEL_R = 171.3 / 2                             # the BotWheel's tyre; the foot keeps its radius, so the leg's geometry holds
 STANCE = 300.0                                  # mm, the leg's length on the stand at rest
@@ -151,7 +158,7 @@ def plate_y():
 
 
 def end_plate():
-    import rig_parts as rp
+    import hardware.cad.rig.rig_parts as rp
     y0, y1 = plate_y()
     p = _box(-PLATE[0] / 2, PLATE[0] / 2, y0, y1, -PLATE[1] / 2, PLATE[1] / 2)
     for (x, z) in fb.frame_mounts()['inserts_xz']:
@@ -164,7 +171,7 @@ def end_plate():
 def drill_template():
     """A 1.2 mm PLA sheet the size of the plate's middle: six Ø5.5 holes on the inserts and the lead slots' outlines, to
     lay on the plywood and drill through. Built flat (x, y) with z up."""
-    import rig_parts as rp
+    import hardware.cad.rig.rig_parts as rp
     t = cq.Workplane('XY').box(224.0, 184.0, 1.2).translate((0, 0, 0.6))
     for (x, z) in fb.frame_mounts()['inserts_xz']:
         t = t.cut(cq.Workplane('XY').circle(2.75).extrude(4).translate((x, z, -1)))
@@ -273,7 +280,7 @@ def _sha(p: Path) -> str:
 
 def slice_all():
     from cadagent import slicer
-    from print_slicing import engine_identity
+    from hardware.cad.manufacturing.print_slicing import engine_identity
     exe = slicer.executable()
     if not exe:
         raise SystemExit('Bambu Studio is not installed (snap install bambu-studio)')
@@ -311,11 +318,11 @@ def _load(p: Path, default=None):
 
 def record_loads() -> dict:
     """The loads the FEA record's cases were run at (cad/leg_studies.py cases(), from exports/leg/rig-results.json)."""
-    rig = _load(R / 'exports/leg/rig-results.json')['scenarios']
+    rig = _load((R / 'hardware/exports/leg/rig-results.json'))['scenarios']
 
     def peak(keys):
         return max(max(rig[n].get('peak_joint_force_n', {}).get(k, 0.0) for k in keys) for n in ('drop_150', 'jump'))
-    S = _load(R / 'exports/leg/fea/summary.json')
+    S = _load((R / 'hardware/exports/leg/fea/summary.json'))
     return {'knee_dyn_n': peak(('knee_f', 'knee_r')), 'hip_dyn_n': peak(('hip_f', 'hip_r')),
             'axle_full_n': rig['drop_150']['peak_axle_force_n'],
             'power_off_axle_n': S['cases']['R3']['Fw3'][2], 'stop_nm': S['cases']['R3']['stop_nm'], 'cap_nm': 60.0, 'peak_nm': 120.0}
@@ -417,9 +424,9 @@ def derate(sim: dict, stand: dict) -> dict:
     of the two over the simulated mass (forces in a landing go roughly with the mass)."""
     from cadagent.fea import MATERIALS
     pla = MATERIALS['pla']
-    S = _load(R / 'exports/leg/fea/summary.json')
+    S = _load((R / 'hardware/exports/leg/fea/summary.json'))
     LC = {(r['part'], r['case']): r['layer_check'] for r in
-          _load(R / 'research/leg-preprint/evidence/leg-layer-check-print-ready.json')['rows'] if r.get('layer_check')}
+          _load((R / 'docs/research/leg-preprint/evidence/leg-layer-check-print-ready.json'))['rows'] if r.get('layer_check')}
     rec = record_loads()
     runs = {(r['test'], r['cap_nm']): r for r in sim['runs']}
     caps = sorted(c for (t, c) in runs if t == 'jump')
@@ -510,8 +517,8 @@ EXTRA = [   # (key, qty, what for): parts day one adds
 
 
 def hardware_rows():
-    bom = _load(R / 'exports/leg/bom.json')['per_leg']
-    hw = {i['key']: i for i in _load(R / 'catalog/hardware.json')}
+    bom = _load((R / 'hardware/exports/leg/bom.json'))['per_leg']
+    hw = {i['key']: i for i in _load((R / 'hardware/catalog/hardware.json'))}
     rows, mc, other = [], [], []
     for b in bom:
         key, qty, why = b['key'], b['qty'], b['for']
@@ -562,8 +569,8 @@ ELEC_PHASE0 = ('usb_can_u2c', 'bench_supply_36v', 'resistor_120', 'xt30_male', '
 
 
 def other_vendor_rows(other: list, slices: dict) -> list:
-    rig = _load(R / 'catalog/rig.json')
-    mats = _load(R / 'catalog/materials.json')
+    rig = _load((R / 'hardware/catalog/rig.json'))
+    mats = _load((R / 'hardware/catalog/materials.json'))
     out = []
     g = {'pla': 0.0, 'tpu': 0.0}
     for key, f, qty, recipe, phase, _ in PRINTS:
@@ -658,7 +665,7 @@ def item_of(name: str, items: dict):
 
 def scene():
     """Every part of the leg on the stand at the stance, the BotWheel swapped for the foot: name -> shape."""
-    import build_rig as br
+    import hardware.cad.builders.build_rig as br
     P = {n: s for n, (s, _) in br.leg_parts(STANCE, 0.0, 0.0).items() if n not in ('leg_wheel_tyre', 'leg_wheel_hub')}
     sw = P['leg_screws_wheel']
     ax = sw.BoundingBox()
@@ -741,7 +748,7 @@ def require_rendered_steps(steps, rendered, items):
 
 def render_steps(P, items):
     from cadagent.render import Renderer
-    import build_rig as br
+    import hardware.cad.builders.build_rig as br
     d = OUT / 'steps'
     d.mkdir(parents=True, exist_ok=True)
     r = Renderer(d, size=(1400, 1000), subtitle='GYROPUP MOTOR DAY | THE PLA LEG ON THE BOOM STAND')
@@ -800,7 +807,7 @@ def _short(n: str) -> str:
 
 def drawings(P, items, names, rev, meta, fm):
     from matplotlib.backends.backend_pdf import PdfPages
-    import drawing_sheet as ds
+    import tools.evidence.manufacturing.drawing_sheet as ds
     d = OUT / 'drawings'
     d.mkdir(parents=True, exist_ok=True)
 
@@ -935,7 +942,7 @@ def stand_masses(P, slices, mc, meta, fm) -> dict:
 
     def add(name, m_g, y):
         rows.append((name, m_g, y - yp))
-    lp = _load(R / 'catalog/leg_actuators.json')[0]['specs']['mass_g']
+    lp = _load((R / 'hardware/catalog/leg_actuators.json'))[0]['specs']['mass_g']
     leg_prints = {k: (slices.get(k) or {}).get('grams') for k, *_ in PRINTS}
     for n, sh in P.items():
         bb = sh.BoundingBox()
@@ -1371,7 +1378,7 @@ def main():
         files.append(('exports/motor-day/drawings/motor-day-drawings.pdf', 'drawings/motor-day-drawings.pdf'))
     for r in steps:
         files.append((r['picture'], f"steps/{Path(r['picture']).name}"))
-    files.append((zip_markdown((R / 'docs/motor-day.md').read_text(), files).encode(), 'motor-day.md'))
+    files.append((zip_markdown(((R / 'docs/legs/motor-day.md')).read_text(), files).encode(), 'motor-day.md'))
     z = bundle(files)
     print(f'-> {z.relative_to(R)} ({z.stat().st_size / 1e6:.1f} MB), docs/motor-day.md; PLA cap {der["pla_cap_nm"]} N m')
 

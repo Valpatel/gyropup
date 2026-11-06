@@ -20,7 +20,7 @@ import json
 import subprocess
 from pathlib import Path
 
-ROOT = Path(__file__).resolve().parents[2]
+ROOT = (Path(__file__).resolve().parents[3])
 HERE = Path(__file__).resolve().parent
 RECORDS = {'leg': 'exports/leg/fea/summary.json', 'turret': 'exports/turret/fea/summary.json'}
 # Not regenerated: cad/studies.py's inputs (cad/gmi.py, designs/default.json, exports/sim/default) changed after this

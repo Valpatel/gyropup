@@ -5,6 +5,13 @@ No redesign, transient dynamics, other-part solve, or manufacturing qualificatio
 The published baseline summary remains unchanged. Its load-sharing result is an
 explicit input to the same individual-part setup used by cad/leg_studies.py.
 """
+
+# Support direct-file CLI execution as well as checkout package imports.
+if __package__ in (None, ''):
+    import sys as _checkout_sys
+    from pathlib import Path as _CheckoutPath
+    _checkout_sys.path.insert(0, str(_CheckoutPath(__file__).resolve().parents[3]))
+
 import hashlib
 from importlib.metadata import version
 import json
@@ -14,8 +21,8 @@ import shutil
 import subprocess
 import sys
 
-ROOT = Path(__file__).resolve().parents[1]
-OUT = ROOT / 'exports/leg/fea/hip-frame-e1-media'
+ROOT = (Path(__file__).resolve().parents[3])
+OUT = (ROOT / 'hardware/exports/leg/fea/hip-frame-e1-media')
 # The recorded E1 gate (exports/leg/fea/summary.json, regenerated on cad-agent v0.6.0 for the print-ready leg, #148,
 # issue #29). Review the visualization explicitly whenever the record changes; never relabel another case as this one.
 RECORDED_SF = 1.60
@@ -26,8 +33,8 @@ def digest(path):
 
 
 def source_hashes():
-    paths = {p for directory in ('cad', 'catalog', 'designs') for p in (ROOT / directory).rglob('*')
-             if p.is_file() and p.suffix in ('.py', '.json')}
+    from hardware.cad.manufacturing.print_provenance import source_files
+    paths = set(source_files(ROOT))
     paths.update(ROOT / p for p in ('sim/leg_rig.py', 'sim/leg_control.py',
         'exports/leg/rig-results.json', 'exports/leg/fea/summary.json', 'tools/export-hip-frame-e1.py'))
     return {p.relative_to(ROOT).as_posix(): digest(p) for p in sorted(paths)}
@@ -42,20 +49,20 @@ def main():
         committed = subprocess.check_output(['git', 'show', f'{revision}:{path}'], cwd=ROOT)
         if hashlib.sha256(committed).hexdigest() != sha:
             raise ValueError(f'Input differs from committed revision: {path}')
-    baseline = json.loads((ROOT / 'exports/leg/fea/summary.json').read_text())
+    baseline = json.loads(((ROOT / 'hardware/exports/leg/fea/summary.json')).read_text())
     original = next(r for r in baseline['results'] if r['part'] == 'hip_frame' and r['case'] == 'E1')
     if original['safety_factor'] != RECORDED_SF or original['target'] != 2.0 or original['ok'] is not False:
         raise ValueError('Recorded E1 case changed; review the visualization baseline explicitly')
     OUT.mkdir(parents=True, exist_ok=True)
     # leg_studies reads load-sharing coefficients from OUT/summary.json. Preserve
     # that input in the isolated output directory without replacing the baseline.
-    shutil.copyfile(ROOT / 'exports/leg/fea/summary.json', OUT / 'summary.json')
-    sys.path[:0] = [str(ROOT / 'cad'), str(ROOT)]
+    shutil.copyfile((ROOT / 'hardware/exports/leg/fea/summary.json'), OUT / 'summary.json')
+    sys.path[:0] = [str((ROOT / 'hardware/cad')), str(ROOT)]
     # The isolated ARM runner also requires matching libcrypto/libssl in its
     # process-local LD_PRELOAD. Import order alone is insufficient: hashlib can
     # load system OpenSSL before this point. Record actual mapped binary hashes.
     import gmsh  # noqa: F401
-    import leg_studies
+    import hardware.cad.legs.leg_studies as leg_studies
     import cadagent
     runtime = sorted({Path(line.split()[-1]) for line in Path('/proc/self/maps').read_text().splitlines()
                       if any(name in line for name in ('libgmsh', 'libcrypto.so', 'libssl.so', 'libs2n'))})

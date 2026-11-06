@@ -7,8 +7,8 @@ import math
 from pathlib import Path
 import subprocess
 
-ROOT = Path(__file__).resolve().parents[1]
-OUT = ROOT / 'exports/leg/fea/hip-frame-e1-media'
+ROOT = (Path(__file__).resolve().parents[3])
+OUT = (ROOT / 'hardware/exports/leg/fea/hip-frame-e1-media')
 FPS, SECONDS, WIDTH, HEIGHT = 24, 12, 960, 720
 # The recorded E1 gate this movie presents (exports/leg/fea/summary.json, regenerated on cad-agent v0.6.0 in issue
 # #29), read at the record's 4 mm mesh, and the same case at 3 mm from tools/hip-frame-study.py (FINER): the gate is
@@ -37,10 +37,10 @@ def main():
     fields = ROOT / receipt['fields']
     if digest(fields) != receipt['fields_sha256']:
         raise ValueError('Solved surface differs from its source receipt')
-    if digest(ROOT / 'exports/leg/fea/summary.json') != receipt['source_hashes']['exports/leg/fea/summary.json']:
+    if digest((ROOT / 'hardware/exports/leg/fea/summary.json')) != receipt['source_hashes']['exports/leg/fea/summary.json']:
         raise ValueError('Published structural report changed; review the animation baseline')
     source_hashes = {str(p.relative_to(ROOT)): digest(p) for p in
-                     (Path(__file__), OUT / 'field-receipt.json', fields, ROOT / 'exports/leg/fea/summary.json', ROOT / FINER)}
+                     (Path(__file__), OUT / 'field-receipt.json', fields, (ROOT / 'hardware/exports/leg/fea/summary.json'), ROOT / FINER)}
     finer = json.loads((ROOT / FINER).read_text())
     gate_row = next(c for c in finer['meshes'][str(GATE_MESH_MM)]['cases'] if c['case'] == 'E1')
     fine_row = next(c for c in finer['meshes'][str(FINE_MESH_MM)]['cases'] if c['case'] == 'E1')
@@ -166,7 +166,7 @@ def main():
         'fields': receipt['fields'], 'duration_seconds': SECONDS,
         'receipt': (OUT / 'video-receipt.json').relative_to(ROOT).as_posix(),
         'recorded': {k: baseline[k] for k in ('safety_factor', 'target', 'max_displacement_mm', 'von_mises_design_mpa', 'load_from')}}}}
-    (ROOT / 'exports/leg/fea/media.json').write_text(json.dumps(index, indent=2) + '\n')
+    ((ROOT / 'hardware/exports/leg/fea/media.json')).write_text(json.dumps(index, indent=2) + '\n')
     print(f'PASS: {SECONDS}s / {FPS * SECONDS} decoded frames; static field scaling only, E1 gate remains below target.')
 
 

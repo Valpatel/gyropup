@@ -2,6 +2,13 @@
 
     .venv/bin/python -m pytest cad/test_leg_loads.py -q
 """
+
+# Support direct-file CLI execution as well as checkout package imports.
+if __package__ in (None, ''):
+    import sys as _checkout_sys
+    from pathlib import Path as _CheckoutPath
+    _checkout_sys.path.insert(0, str(_CheckoutPath(__file__).resolve().parents[3]))
+
 import math
 import sys
 from pathlib import Path
@@ -9,12 +16,12 @@ from pathlib import Path
 import numpy as np
 import pytest
 
-R = Path(__file__).resolve().parents[1]
-sys.path[:0] = [str(R / 'cad'), str(R)]
+R = (Path(__file__).resolve().parents[3])
+sys.path[:0] = [str((R / 'hardware/cad')), str(R)]
 
-import fivebar as fb  # noqa: E402
-import leg_studies as ls  # noqa: E402
-from sim.leg_rig import pin_forces  # noqa: E402
+import hardware.cad.legs.fivebar as fb  # noqa: E402
+import hardware.cad.legs.leg_studies as ls  # noqa: E402
+from software.simulation.leg_rig import pin_forces  # noqa: E402
 
 
 @pytest.mark.parametrize('h, lean', [(300.0, 0.0), (342.3, 0.0), (220.0, 12.0), (180.0, -15.0)])

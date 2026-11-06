@@ -29,6 +29,13 @@ What is in it:
 """
 from __future__ import annotations
 
+# Support direct-file CLI execution as well as checkout package imports.
+if __package__ in (None, ''):
+    import sys as _checkout_sys
+    from pathlib import Path as _CheckoutPath
+    _checkout_sys.path.insert(0, str(_CheckoutPath(__file__).resolve().parents[2]))
+
+
 import argparse
 import json
 import math
@@ -36,16 +43,16 @@ import re
 import sys
 from pathlib import Path
 
-R = Path(__file__).resolve().parents[1]
-for _p in (R, R / 'cad'):
+R = (Path(__file__).resolve().parents[2])
+for _p in (R, (R / 'hardware/cad')):
     if str(_p) not in sys.path:
         sys.path.insert(0, str(_p))
-import fivebar as fb  # noqa: E402
+import hardware.cad.legs.fivebar as fb  # noqa: E402
 
-OUT = R / 'exports' / 'leg' / 'limits.json'
-FEA = R / 'exports' / 'leg' / 'fea' / 'summary.json'
-DERATING = R / 'exports' / 'motor-day' / 'derating.json'
-THERMAL = R / 'exports' / 'leg' / 'thermal' / 'motor_thermal.json'   # the motor heat model (#195)
+OUT = (R / 'hardware/exports/leg/limits.json')
+FEA = (R / 'hardware/exports/leg/fea/summary.json')
+DERATING = (R / 'hardware/exports/motor-day/derating.json')
+THERMAL = (R / 'hardware/exports/leg/thermal/motor_thermal.json')   # the motor heat model (#195)
 SWEEP_CAPS = (30.0, 45.0, 60.0, 75.0, 90.0, 105.0, 120.0)
 HALF_MASS = 18.75                 # kg a leg carries at D71's design mass
 RS04_PEAK = 120.0                 # N m (catalog/leg_actuators.json, manual 1.3)
@@ -395,8 +402,8 @@ def angle_window(profile: dict) -> float:
 
 # ----------------------------------------------------------------------------------- the turn (yaw rate)
 
-MODEL_H = R / 'firmware' / 'balance' / 'include' / 'gp' / 'gp_model.h'
-SIM_V2 = R / 'exports' / 'body' / 'sim-v2.json'
+MODEL_H = (R / 'software/firmware/balance/include/gp/gp_model.h')
+SIM_V2 = (R / 'hardware/exports/body/sim-v2.json')
 G = 9.81
 
 
@@ -467,7 +474,7 @@ def clamp_yaw(yaw_rate: float, v: float, vmax: float, yaw: dict | None = None) -
 def jump_sweep(caps=SWEEP_CAPS, half_mass: float = HALF_MASS, motor_peak: float | None = None) -> list:
     """The rig's jump (sim/leg_rig.py) at each cap. motor_peak replaces the RS-04's 120 N m peak (same no-load speed):
     what a motor rated at the cap itself would do."""
-    from sim import leg_rig as lr
+    from software.simulation import leg_rig as lr
     out = []
     keep = lr.LEG_PEAK
     for c in caps:
@@ -495,7 +502,7 @@ def jump_sweep(caps=SWEEP_CAPS, half_mass: float = HALF_MASS, motor_peak: float 
 
 def _rig(half_mass: float = HALF_MASS):
     import mujoco
-    from sim import leg_rig as lr
+    from software.simulation import leg_rig as lr
     xml, _ = lr.mjcf(half_mass)
     m = mujoco.MjModel.from_xml_string(xml)
     return mujoco, lr, m, mujoco.MjData(m), lr.Leg(m)
@@ -583,7 +590,7 @@ def free_swing(profiles: dict, J: float, t_end: float = 1.2) -> list:
     """Each motor driven at its build's every-day torque from its far stop into the near one, the carriage held up and
     the other motor holding its angle, with the soft stops and without: the stop's peak torque and the contact speed.
     Both motors follow the RS-04's torque-speed line at 36 V (sim/leg_control.py clip_motor, as the jump sweep)."""
-    from sim import leg_control as lc
+    from software.simulation import leg_control as lc
     mujoco, lr, m, d, leg = _rig()
     fo, fi, ro, ri = fb.stop_angles()
     dt = m.opt.timestep

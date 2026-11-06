@@ -24,7 +24,7 @@ from pathlib import Path
 
 import numpy as np
 
-R = Path(__file__).resolve().parents[1]
+R = (Path(__file__).resolve().parents[3])
 
 
 def ik(D, l1, l2, E, side):
@@ -103,7 +103,7 @@ def main():
         if ok:
             rows.append({'D': D, 'l1': l1, 'l2': l2, **s})
     rows.sort(key=lambda r: -r['push_n_min'])
-    out = R / 'exports' / 'leg' / 'synthesis.json'
+    out = (R / 'hardware/exports/leg/synthesis.json')
     out.parent.mkdir(parents=True, exist_ok=True)
     out.write_text(json.dumps({'tried': tried, 'feasible': len(rows), 'chosen': {'D': 150, 'l1': 150, 'l2': 250},
                                'best': rows[:a.top]}, indent=1) + '\n')

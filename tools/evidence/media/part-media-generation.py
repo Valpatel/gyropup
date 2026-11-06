@@ -14,9 +14,9 @@ import struct
 import subprocess
 import sys
 
-ROOT = Path(__file__).resolve().parents[1]
-CATALOG = ROOT / 'catalog/images.json'
-RECEIPT = ROOT / 'catalog/designed-media-validation.json'
+ROOT = (Path(__file__).resolve().parents[3])
+CATALOG = (ROOT / 'hardware/catalog/images.json')
+RECEIPT = (ROOT / 'hardware/catalog/designed-media-validation.json')
 SIZE = 480
 COLOURS = {'pa6-cf': '#667384', 'petg': '#4b8fba', 'tpu95': '#424c58',
            'tpu95-gyroid': '#424c58', 'aluminium': '#aab9c9', 'copper': '#be794b'}

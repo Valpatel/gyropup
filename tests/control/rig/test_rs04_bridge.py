@@ -5,6 +5,13 @@ the bus side, and that a closed or quiet tab stops the motors.
 """
 from __future__ import annotations
 
+# Support direct-file CLI execution as well as checkout package imports.
+if __package__ in (None, ''):
+    import sys as _checkout_sys
+    from pathlib import Path as _CheckoutPath
+    _checkout_sys.path.insert(0, str(_CheckoutPath(__file__).resolve().parents[3]))
+
+
 import asyncio
 import base64
 from concurrent.futures import ThreadPoolExecutor, TimeoutError as FutureTimeout
@@ -20,9 +27,9 @@ import time
 import unittest
 from unittest.mock import patch
 
-from rig import rs04 as P
-from rig import rs04_bridge as B
-from rig import rs04_profiles
+from software.control.rig import rs04 as P
+from software.control.rig import rs04_bridge as B
+from software.control.rig import rs04_profiles
 
 
 class Server:
@@ -413,7 +420,7 @@ class MainTests(unittest.TestCase):
         script = textwrap.dedent('''\
             import json, os, signal, threading
             from unittest.mock import patch
-            from rig import rs04_bridge as B
+            from software.control.rig import rs04_bridge as B
             entered, release, ready, stopping, returned = (threading.Event() for _ in range(5))
             transport, kind = B.make_transport('emu', [127])
             recv, close, log, bridge_type = transport.recv, transport.close, B.log, B.Bridge

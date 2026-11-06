@@ -41,8 +41,8 @@ sys.path.insert(0, str(HERE))
 import can_msgs as M  # noqa: E402
 import config as C  # noqa: E402
 
-R = HERE.parents[1]
-BENCH_OUT = R / 'exports' / 'turret' / 'bench'
+R = (HERE.parents[2])
+BENCH_OUT = (R / 'hardware/exports/turret/bench')
 SIM_OUT = BENCH_OUT / 'sim'
 SIM_MAX_S = 120.0
 
@@ -1516,7 +1516,7 @@ def t_release_feeding(tt, b, r):
 def t_mock_lidar(tt, b, r):
     boot(tt, b)
     table, lidar, used = None, {}, 'exports/turret/lidar/lidar.json firmware_table'
-    src = R / 'exports' / 'turret' / 'lidar' / 'lidar.json'
+    src = (R / 'hardware/exports/turret/lidar/lidar.json')
     if src.exists():
         try:
             d = json.loads(src.read_text())

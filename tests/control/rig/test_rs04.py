@@ -5,15 +5,22 @@ the driver and command line against the software RS-04 (no hardware).
 """
 from __future__ import annotations
 
+# Support direct-file CLI execution as well as checkout package imports.
+if __package__ in (None, ''):
+    import sys as _checkout_sys
+    from pathlib import Path as _CheckoutPath
+    _checkout_sys.path.insert(0, str(_CheckoutPath(__file__).resolve().parents[3]))
+
+
 import math
 import random
 import struct
 
 import pytest
 
-from rig import canio
-from rig import rs04 as P
-from rig.rs04_emu import EmulatedRS04
+from software.control.rig import canio
+from software.control.rig import rs04 as P
+from software.control.rig.rs04_emu import EmulatedRS04
 
 R = P.RS04
 
@@ -321,8 +328,8 @@ def test_configure_refuses_a_value_that_does_not_read_back():
 def test_a_lower_cap_is_written_to_the_motor_and_clipped_by_the_laptop():
     """rig/run.py --cap (docs/motor-day.md: the PLA leg at 12 N m): the start-up writes it in place of the rig's 60 and
     reads it back, the motor enforces it, and the laptop clips to it too. Above the build's every-day cap is refused."""
-    from rig import leg_control as lc
-    from rig.run import cap_setup
+    from software.control.rig import leg_control as lc
+    from software.control.rig.run import cap_setup
     config, limits = cap_setup(12.0, 5.0)
     assert config['limit_torque'] == 12.0 and limits.cap == 12.0 and limits.rate == 5.0
     assert {k: v for k, v in config.items() if k != 'limit_torque'} == {k: v for k, v in P.RIG_CONFIG.items() if k != 'limit_torque'}
@@ -351,7 +358,7 @@ def test_a_lower_cap_is_written_to_the_motor_and_clipped_by_the_laptop():
 
 def test_a_forgotten_cap_does_not_raise_a_lower_limit_held_in_the_motors():
     """rig/run.py cap_guard: motors saved at 10 N m (docs/motor-day.md L1) are not raised to 60 by a run without --cap."""
-    from rig.run import cap_guard
+    from software.control.rig.run import cap_guard
     vb, bus, emu = rig_bus()
     assert cap_guard(bus, (1, 2), None, 'robot') is None                             # the rig's 60: nothing to protect
     bus.motor(2).write_check('limit_torque', 10.0)

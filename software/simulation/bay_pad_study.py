@@ -21,6 +21,13 @@ This study, on D69's robot (10 in hub wheels, the ledger's mass):
 """
 from __future__ import annotations
 
+# Support direct-file CLI execution as well as checkout package imports.
+if __package__ in (None, ''):
+    import sys as _checkout_sys
+    from pathlib import Path as _CheckoutPath
+    _checkout_sys.path.insert(0, str(_CheckoutPath(__file__).resolve().parents[2]))
+
+
 import json
 import re
 import sys
@@ -30,13 +37,13 @@ from pathlib import Path
 import mujoco
 import numpy as np
 
-R = Path(__file__).resolve().parents[1]
+R = (Path(__file__).resolve().parents[2])
 sys.path.insert(0, str(R))
-sys.path.insert(0, str(R / 'cad'))
-from sim import scenarios as S  # noqa: E402
+sys.path.insert(0, str((R / 'hardware/cad')))
+from software.simulation import scenarios as S  # noqa: E402
 
 BUILD = R / 'build' / 'sim' / 'v2'
-OUT = R / 'exports' / 'body' / 'bay-pad-study.json'
+OUT = (R / 'hardware/exports/body/bay-pad-study.json')
 FALLS = ('fall_front', 'fall_back', 'fall_side')
 P_SWEEP = (450.0, 600.0, 750.0, 1000.0, 1e9)   # N a pad: the crush plateau (1e9: a linear pad, no plateau)
 C_SWEEP = (50.0, 100.0, 250.0)               # N s/m a pad

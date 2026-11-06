@@ -4,6 +4,13 @@
 These WIP part models are not a manufacturing release or current robot assembly.
 They contain no vendor CAD. Run on the CAD compute host at a pushed revision.
 """
+
+# Support direct-file CLI execution as well as checkout package imports.
+if __package__ in (None, ''):
+    import sys as _checkout_sys
+    from pathlib import Path as _CheckoutPath
+    _checkout_sys.path.insert(0, str(_CheckoutPath(__file__).resolve().parents[3]))
+
 import hashlib
 from importlib.metadata import version
 import json
@@ -12,11 +19,11 @@ from pathlib import Path
 import subprocess
 import sys
 
-ROOT = Path(__file__).resolve().parents[1]
-OUT = ROOT / 'exports/turret/component-preview'
+ROOT = (Path(__file__).resolve().parents[3])
+OUT = (ROOT / 'hardware/exports/turret/component-preview')
 SOURCES = ('cad/turret.py', 'cad/gmi.py', 'cad/interfaces.json', 'catalog/interfaces.json',
            'catalog/materials.json', 'tools/export-turret-cut-previews.py')
-sys.path.insert(0, str(ROOT / 'cad'))
+sys.path.insert(0, str((ROOT / 'hardware/cad')))
 
 
 def digest(path):
@@ -37,7 +44,7 @@ def main():
     import trimesh
     from OCP.Bnd import Bnd_Box
     from OCP.BRepBndLib import BRepBndLib
-    import turret as tu
+    import hardware.cad.turret.turret as tu
 
     def exact_bounds(solid):
         # CadQuery's default BoundingBox can include cached tessellation deflection.

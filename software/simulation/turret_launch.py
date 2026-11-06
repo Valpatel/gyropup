@@ -40,8 +40,8 @@ from pathlib import Path
 
 import numpy as np
 
-R = Path(__file__).resolve().parents[1]
-OUT = R / 'exports' / 'turret' / 'launch'
+R = (Path(__file__).resolve().parents[2])
+OUT = (R / 'hardware/exports/turret/launch')
 FPS = 0.3048
 CAP_FPS = 105.0                              # D68: no accepted ball may leave faster (0.94 J for a 1.6 g ball)
 CAP = CAP_FPS * FPS                          # 32.004 m/s

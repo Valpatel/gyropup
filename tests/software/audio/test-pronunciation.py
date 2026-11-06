@@ -5,6 +5,13 @@ side (designer/character/pronounce.js) on the same key file. Needs python3 and n
 """
 from __future__ import annotations
 
+# Support direct-file CLI execution as well as checkout package imports.
+if __package__ in (None, ''):
+    import sys as _checkout_sys
+    from pathlib import Path as _CheckoutPath
+    _checkout_sys.path.insert(0, str(_CheckoutPath(__file__).resolve().parents[3]))
+
+
 import json
 import re
 import subprocess
@@ -13,11 +20,11 @@ import tempfile
 import unittest
 from pathlib import Path
 
-TOOLS = Path(__file__).resolve().parent
+TOOLS = (Path(__file__).resolve().parents[3] / 'tools')
 ROOT = TOOLS.parent
 sys.path.insert(0, str(TOOLS))
-import pronunciation as P  # noqa: E402
-import tts_server  # noqa: E402
+import tools.audio.pronunciation as P  # noqa: E402
+import tools.audio.tts_server as tts_server  # noqa: E402
 
 KEY = P.load_key()
 FIXTURE = {'version': 9, 'protect': KEY['protect'], 'entries': [
@@ -30,7 +37,7 @@ FIXTURE = {'version': 9, 'protect': KEY['protect'], 'entries': [
 
 def node_pronounce(key: dict | None, texts: list[str]) -> list[str]:
     """The browser implementation, run by node on the same inputs (key None: the repository's key file)."""
-    js = ("import { compileKey } from " + json.dumps((ROOT / 'designer/character/pronounce.js').as_uri()) + ";"
+    js = ("import { compileKey } from " + json.dumps(((ROOT / 'software/site/designer/character/pronounce.js')).as_uri()) + ";"
           "import { readFileSync } from 'node:fs';"
           "const [key, texts] = JSON.parse(readFileSync(0, 'utf8'));"
           "const k = key ?? JSON.parse(readFileSync(" + json.dumps(str(P.KEY_PATH)) + ", 'utf8'));"
@@ -104,14 +111,14 @@ class Key(unittest.TestCase):
 
 class SameKeyBothSides(unittest.TestCase):
     def test_same_file(self):
-        self.assertEqual(P.KEY_PATH, ROOT / 'designer' / 'character' / 'pronunciation.json')
-        js = (ROOT / 'designer/character/pronounce.js').read_text()
+        self.assertEqual(P.KEY_PATH, (ROOT / 'software/site/designer/character/pronunciation.json'))
+        js = ((ROOT / 'software/site/designer/character/pronounce.js')).read_text()
         self.assertIn("new URL('./pronunciation.json', import.meta.url)", js)
-        self.assertIn('from pronunciation import pronounce', (TOOLS / 'tts_server.py').read_text())
+        self.assertIn('from pronunciation import pronounce', ((TOOLS / 'audio/tts_server.py')).read_text())
 
     def test_same_results(self):
         lines = json.loads(subprocess.run(['node', '--input-type=module', '-e',
-                                           f"const m = await import({json.dumps((ROOT / 'designer/character/lines.js').as_uri())});"
+                                           f"const m = await import({json.dumps(((ROOT / 'software/site/designer/character/lines.js')).as_uri())});"
                                            "console.log(JSON.stringify(m.fixedLines()))"],
                                           capture_output=True, text=True, check=True).stdout)
         texts = [w for w, _ in KEY['examples']] + lines + ['GyroPups’ “Gyropup” (gyropup) gyropup.net/x', 'Tritium-cyan aww zzz']

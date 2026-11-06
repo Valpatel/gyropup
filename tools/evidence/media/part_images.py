@@ -45,13 +45,13 @@ import urllib.parse
 import urllib.request
 from pathlib import Path
 
-R = Path(__file__).resolve().parents[1]
-CAT = R / 'catalog'
+R = (Path(__file__).resolve().parents[3])
+CAT = (R / 'hardware/catalog')
 IMAGES = CAT / 'images.json'
 ALTERNATES = CAT / 'alternates.json'
 SOURCING = CAT / 'sourcing.json'
-VENDOR_THUMBS = R / 'references' / 'vendor' / 'thumbs'
-RENDERS = R / 'exports' / 'thumbs'
+VENDOR_THUMBS = (R / 'hardware/vendor/thumbs')
+RENDERS = (R / 'hardware/exports/thumbs')
 TURRET_DEFAULT = R.parent / 'gyropup-turret'
 THUMB_PX = 360
 UA = ('Mozilla/5.0 (X11; Linux x86_64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/141.0.0.0 Safari/537.36')
@@ -136,14 +136,14 @@ def bom_lines(tdir: Path) -> list:
             out.append({'bom': bom, 'text': text, 'for': for_, 'keys': keys})
 
     # the leg: what the last build wrote, and what cad/build_leg.py lists now (it may have changed since)
-    for r in load(R / 'exports' / 'leg' / 'bom.json', {}).get('per_leg', []):
+    for r in load((R / 'hardware/exports/leg/bom.json'), {}).get('per_leg', []):
         add('leg', r['key'], r.get('for'), [r['key']])
     with contextlib.suppress(Exception):
-        for key, _qty, why in literal(R / 'cad' / 'build_leg.py', 'BOUGHT'):
+        for key, _qty, why in literal((R / 'hardware/cad/builders/build_leg.py'), 'BOUGHT'):
             if not any(o['bom'] == 'leg' and o['text'] == key for o in out):
                 add('leg', key, why, [key])
     # the leg's test rig and its bench (tools/rig_orders.py writes exports/rig/bom.json)
-    for lst, rows in load(R / 'exports' / 'rig' / 'bom.json', {}).items():
+    for lst, rows in load((R / 'hardware/exports/rig/bom.json'), {}).items():
         if isinstance(rows, list) and lst != 'made_to_order':
             for r in rows:
                 add('rig', r['key'], r.get('for'), [r['key']])
@@ -172,18 +172,18 @@ def printed_parts(tdir: Path) -> dict:
     """{part: {stl, material, bom}} for the leg's and the turret's made parts that have an STL: printed, and the leg's
     parts machined to order (exports/leg/cnc/cnc.json)."""
     out = {}
-    leg = load(R / 'exports' / 'leg' / 'print-plan.json', {}).get('parts', {})
+    leg = load((R / 'hardware/exports/leg/print-plan.json'), {}).get('parts', {})
     for name, p in leg.items():
-        if (R / 'exports' / 'leg' / f'{name}.stl').exists():
-            out[name] = {'stl': R / 'exports' / 'leg' / f'{name}.stl', 'material': p.get('material'), 'bom': 'leg'}
-    for name, c in load(R / 'exports' / 'leg' / 'cnc' / 'cnc.json', {}).items():
+        if ((R / 'hardware/exports/leg') / f'{name}.stl').exists():
+            out[name] = {'stl': (R / 'hardware/exports/leg') / f'{name}.stl', 'material': p.get('material'), 'bom': 'leg'}
+    for name, c in load((R / 'hardware/exports/leg/cnc/cnc.json'), {}).items():
         if (R / c['stl']).exists():
             out[name] = {'stl': R / c['stl'], 'material': 'al6061', 'bom': 'leg'}
-    for d in (R / 'exports' / 'rig', R / 'exports' / 'rig' / 'bench'):           # the rig's printed parts and bench fixtures
+    for d in ((R / 'hardware/exports/rig'), (R / 'hardware/exports/rig/bench')):           # the rig's printed parts and bench fixtures
         for name, p in load(d / 'print-plan.json', {}).get('parts', {}).items():
             if (d / f'{name}.stl').exists() and name not in out:
                 out[name] = {'stl': d / f'{name}.stl', 'material': p.get('material'), 'bom': 'rig'}
-    plans = [tdir / 'exports' / 'turret' / 'bench' / 'print-plan.json', R / 'exports' / 'turret' / 'bench' / 'print-plan.json']
+    plans = [tdir / 'exports' / 'turret' / 'bench' / 'print-plan.json', (R / 'hardware/exports/turret/bench/print-plan.json')]
     tplan = next((load(p, {}) for p in plans if p.exists()), {}).get('parts', {})
     made = {}
     tu = tdir / 'cad' / 'turret.py'
@@ -193,7 +193,7 @@ def printed_parts(tdir: Path) -> dict:
     for name in dict.fromkeys([*tplan, *made]):
         mat = (tplan.get(name) or {}).get('material') or made.get(name)
         stls = [d / f'{name}.stl' for d in (tdir / 'exports' / 'turret', tdir / 'exports' / 'turret' / 'bench',
-                                            R / 'exports' / 'turret', R / 'exports' / 'turret' / 'bench')]
+                                            (R / 'hardware/exports/turret'), (R / 'hardware/exports/turret/bench'))]
         stls = [s for s in stls if s.exists()]
         if stls:                                        # the newest build of the part, from either checkout
             out[name] = {'stl': max(stls, key=lambda s: s.stat().st_mtime), 'material': mat, 'bom': 'turret'}

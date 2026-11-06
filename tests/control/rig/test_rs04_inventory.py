@@ -4,10 +4,17 @@
 """
 from __future__ import annotations
 
+# Support direct-file CLI execution as well as checkout package imports.
+if __package__ in (None, ''):
+    import sys as _checkout_sys
+    from pathlib import Path as _CheckoutPath
+    _checkout_sys.path.insert(0, str(_CheckoutPath(__file__).resolve().parents[3]))
+
+
 import copy
 import unittest
 
-from rig import rs04_inventory as I
+from software.control.rig import rs04_inventory as I
 
 
 def export(uid='0011223344556677', can_id=1, joint='left-front', **kw):

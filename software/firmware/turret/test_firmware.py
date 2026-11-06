@@ -34,7 +34,7 @@ import dshot  # noqa: E402
 import sts  # noqa: E402
 from sim_turret import SimRig  # noqa: E402
 
-R = Path(__file__).resolve().parents[2]
+R = (Path(__file__).resolve().parents[3])
 
 
 class Host:
@@ -558,7 +558,7 @@ def t_host_bridge(out):
 
 def main():
     ap = argparse.ArgumentParser()
-    ap.add_argument('--out', default=str(R / 'exports' / 'turret' / 'firmware'))
+    ap.add_argument('--out', default=str((R / 'hardware/exports/turret/firmware')))
     a = ap.parse_args()
     out = {}
     for fn in (t_protocols, t_numbers, t_tilt, t_arm_conditions, t_ramp_and_guard, t_set_point_ramps, t_supply_profile,

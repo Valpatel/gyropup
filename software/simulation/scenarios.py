@@ -9,6 +9,13 @@ A run records:
 """
 from __future__ import annotations
 
+# Support direct-file CLI execution as well as checkout package imports.
+if __package__ in (None, ''):
+    import sys as _checkout_sys
+    from pathlib import Path as _CheckoutPath
+    _checkout_sys.path.insert(0, str(_CheckoutPath(__file__).resolve().parents[2]))
+
+
 import json
 import math
 import subprocess
@@ -19,8 +26,8 @@ from typing import Callable, List, Optional
 import mujoco
 import numpy as np
 
-from sim.controller import Command, Controller, Robot, place_standing
-from sim.turret import HOPPER, Target, TurretController, balls_xml, fluid_option, targets_xml
+from software.simulation.controller import Command, Controller, Robot, place_standing
+from software.simulation.turret import HOPPER, Target, TurretController, balls_xml, fluid_option, targets_xml
 
 FPS = 30
 
@@ -204,7 +211,7 @@ def run(xml_path: Path, info: dict, sc: Scenario, video: Optional[Path] = None, 
     model = mujoco.MjModel.from_xml_string(xml)
     data = mujoco.MjData(model)
     if info.get('kind') == 'fivebar':                 # Gyropup v2 (sim/robot_v2.py): five-bar legs, their controller
-        from sim.controller_v2 import ControllerV2 as Ctl, RobotV2 as Rob, place_standing as place
+        from software.simulation.controller_v2 import ControllerV2 as Ctl, RobotV2 as Rob, place_standing as place
     else:
         Rob, Ctl, place = Robot, Controller, place_standing
     rb = Rob(model, info)

@@ -33,6 +33,13 @@ time; the feed stepping 0.1 s a shot; the J4012 at 25 W (typical) or 48 W (flat 
 """
 from __future__ import annotations
 
+# Support direct-file CLI execution as well as checkout package imports.
+if __package__ in (None, ''):
+    import sys as _checkout_sys
+    from pathlib import Path as _CheckoutPath
+    _checkout_sys.path.insert(0, str(_CheckoutPath(__file__).resolve().parents[2]))
+
+
 import json
 import math
 import sys
@@ -40,11 +47,11 @@ from pathlib import Path
 
 import numpy as np
 
-R = Path(__file__).resolve().parents[1]
-sys.path.insert(0, str(R / 'sim'))
-import turret_common as tc  # noqa: E402
+R = (Path(__file__).resolve().parents[2])
+sys.path.insert(0, str((R / 'software/simulation')))
+import software.simulation.turret_common as tc  # noqa: E402
 
-OUT = R / 'exports' / 'turret' / 'e2e'
+OUT = (R / 'hardware/exports/turret/e2e')
 SUPPLIES = {'pack_15v': 15.0, 'pack_20v5': 20.5, 'bus_30v': 30.0, 'bus_42v': 42.0}
 SWEEP_V = {**SUPPLIES, 'pack_18v': 18.0}                 # + the pack's nominal, for the firmware's profile
 PLAN = {
@@ -258,7 +265,7 @@ def study():
     OUT.mkdir(parents=True, exist_ok=True)
     L = l3.design_launcher()
     w_set = tl.set_speed_for(tl.DESIGN['nominal'], L, tl.DESIGN['set_fps'] * tl.FPS)
-    l3j = R / 'exports' / 'turret' / 'launch' / 'launch3d.json'
+    l3j = (R / 'hardware/exports/turret/launch/launch3d.json')
     rec = json.loads(l3j.read_text())['recoil'] if l3j.exists() else {'wheel_speed_drop_pct': [5.7], 'contact_ms': 5.1}
     drop, contact_s = rec['wheel_speed_drop_pct'][0] / 100, rec['contact_ms'] / 1000
     burst = (10.0, 8, drop, contact_s)

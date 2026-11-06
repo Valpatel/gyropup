@@ -18,11 +18,18 @@ The rules (docs/rs04-motor-tool.md has them for people):
 """
 from __future__ import annotations
 
+# Support direct-file CLI execution as well as checkout package imports.
+if __package__ in (None, ''):
+    import sys as _checkout_sys
+    from pathlib import Path as _CheckoutPath
+    _checkout_sys.path.insert(0, str(_CheckoutPath(__file__).resolve().parents[3]))
+
+
 import math
 import time
 from typing import Callable, Dict, Iterable, Optional, Set, Tuple
 
-from rig import rs04 as P
+from software.control.rig import rs04 as P
 
 MAX_MOTOR_ID = 127        # a motor's CAN id is 1..127 (rig/rs04.py); 0 is broadcast, 0xFD the host
 CONFIRM_S = 10.0          # a read-back older than this does not allow an enable: re-read just before arming

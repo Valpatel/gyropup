@@ -12,6 +12,13 @@ Three spacer posts join the two motor plates above the axis, where the leg never
 """
 from __future__ import annotations
 
+# Support direct-file CLI execution as well as checkout package imports.
+if __package__ in (None, ''):
+    import sys as _checkout_sys
+    from pathlib import Path as _CheckoutPath
+    _checkout_sys.path.insert(0, str(_CheckoutPath(__file__).resolve().parents[3]))
+
+
 import json
 import math
 import os
@@ -20,7 +27,7 @@ from pathlib import Path
 
 import cadquery as cq
 
-import gmi
+import hardware.cad.robot.gmi as gmi
 
 STD = gmi.STD
 # Sizes the optimiser varies (tools/iterate.py). Defaults are the current design; GYROPUP_CAD_PARAMS names a JSON file
@@ -381,8 +388,8 @@ def clashes_for_design(design_file: str, heights=(0.0, 0.5, 1.0), min_mm3: float
     envelopes, or the vendor STEP where it is on this machine). Returns [[part, part, mm3, height], ...]."""
     import itertools
     import subprocess as sp
-    from sim.controller import hip_for, knee_for
-    R = Path(__file__).resolve().parents[1]
+    from software.simulation.controller import hip_for, knee_for
+    R = (Path(__file__).resolve().parents[3])
     d = json.loads((R / design_file if not Path(design_file).is_absolute() else Path(design_file)).read_text())
     L = json.loads(sp.run(['node', str(R / 'tools/derive.mjs'), str(R / design_file)], capture_output=True, text=True, check=True).stdout)['layout']
     parts, meta, bought, S, _ = leg_parts(L, d['parts']['leg_actuator'], d['parts']['leg_actuator'], d['parts']['wheel_motor'])

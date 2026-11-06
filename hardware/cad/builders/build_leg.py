@@ -10,6 +10,13 @@ picture, README.md with the callouts the order needs beyond the STEP, cnc.json.
 """
 from __future__ import annotations
 
+# Support direct-file CLI execution as well as checkout package imports.
+if __package__ in (None, ''):
+    import sys as _checkout_sys
+    from pathlib import Path as _CheckoutPath
+    _checkout_sys.path.insert(0, str(_CheckoutPath(__file__).resolve().parents[3]))
+
+
 import argparse
 import json
 import math
@@ -21,18 +28,18 @@ from pathlib import Path
 
 import cadquery as cq
 
-R = Path(__file__).resolve().parents[1]
-sys.path.insert(0, str(R / 'cad'))
-import fivebar as fb  # noqa: E402
-import gmi  # noqa: E402
-import printplan  # noqa: E402
+R = (Path(__file__).resolve().parents[3])
+sys.path.insert(0, str((R / 'hardware/cad')))
+import hardware.cad.legs.fivebar as fb  # noqa: E402
+import hardware.cad.robot.gmi as gmi  # noqa: E402
+import hardware.cad.manufacturing.printplan as printplan  # noqa: E402
 from cadagent.geometry import export_print_stl, flatten_to_bed  # noqa: E402
 from cadagent.robot import solid_mass_properties  # noqa: E402
 
-OUT = R / 'exports' / 'leg'
-MATERIALS = json.loads((R / 'catalog/materials.json').read_text())
-HARDWARE = {i['key']: i for i in json.loads((R / 'catalog/hardware.json').read_text())}
-CATALOG = {it['id']: it for f in ('leg_actuators.json', 'wheel_motors.json') for it in json.loads((R / 'catalog' / f).read_text())}
+OUT = (R / 'hardware/exports/leg')
+MATERIALS = json.loads(((R / 'hardware/catalog/materials.json')).read_text())
+HARDWARE = {i['key']: i for i in json.loads(((R / 'hardware/catalog/hardware.json')).read_text())}
+CATALOG = {it['id']: it for f in ('leg_actuators.json', 'wheel_motors.json') for it in json.loads(((R / 'hardware/catalog') / f).read_text())}
 
 # print orientation (rotation onto the bed), from each part's own frame
 DOWN_OUTER = ((1, 0, 0), -90)        # the part's +y face on the bed

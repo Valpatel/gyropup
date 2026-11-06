@@ -12,6 +12,13 @@ Writes exports/rig/bench/b2-motor<id>.json.
 """
 from __future__ import annotations
 
+# Support direct-file CLI execution as well as checkout package imports.
+if __package__ in (None, ''):
+    import sys as _checkout_sys
+    from pathlib import Path as _CheckoutPath
+    _checkout_sys.path.insert(0, str(_CheckoutPath(__file__).resolve().parents[4]))
+
+
 import argparse
 import json
 import sys
@@ -20,10 +27,10 @@ from pathlib import Path
 
 import numpy as np
 
-from rig import rs04 as P
+from software.control.rig import rs04 as P
 
-R = Path(__file__).resolve().parents[2]
-OUT = R / 'exports' / 'rig' / 'bench'
+R = (Path(__file__).resolve().parents[4])
+OUT = (R / 'hardware/exports/rig/bench')
 
 
 def record(bus, motor: int, tau: float = 2.0, t_push: float = 0.4, w_push: float = 8.0, t_coast: float = 1.5, dt: float = 0.002,
@@ -82,7 +89,7 @@ def main(argv=None, transport=None, out=print) -> int:
     ap.add_argument('--tau', type=float, default=2.0)
     a = ap.parse_args(argv)
     if transport is None:
-        from rig.canio import SocketCan
+        from software.control.rig.canio import SocketCan
         transport = SocketCan(a.iface)
     runs = []
     for k in range(3):                                      # three repeats: the spread is part of the answer

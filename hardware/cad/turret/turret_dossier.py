@@ -28,6 +28,13 @@ project.yaml says which; reported on Valpatel/cad-agent#39). The real bearing pa
 """
 from __future__ import annotations
 
+# Support direct-file CLI execution as well as checkout package imports.
+if __package__ in (None, ''):
+    import sys as _checkout_sys
+    from pathlib import Path as _CheckoutPath
+    _checkout_sys.path.insert(0, str(_CheckoutPath(__file__).resolve().parents[3]))
+
+
 import sys
 from pathlib import Path
 
@@ -37,12 +44,12 @@ from cadagent import dossier as cd
 from cadagent.dossier import Axis
 from cadagent.fasteners import socket_head_envelope
 
-HERE = Path(__file__).resolve().parent
+HERE = (Path(__file__).resolve().parents[1])
 if str(HERE) not in sys.path:
     sys.path.insert(0, str(HERE))
-import turret as tu            # noqa: E402
-import turret_gates as tg      # noqa: E402
-import turret_stand as ts      # noqa: E402
+import hardware.cad.turret.turret as tu            # noqa: E402
+import hardware.cad.turret.turret_gates as tg      # noqa: E402
+import hardware.cad.turret.turret_stand as ts      # noqa: E402
 
 LAYOUT = {'bodyTop': 100.0}
 

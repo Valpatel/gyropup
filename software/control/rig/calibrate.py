@@ -11,18 +11,25 @@ zero_sta = 1 is written and saved so a power-on angle reads -pi..pi.
 """
 from __future__ import annotations
 
+# Support direct-file CLI execution as well as checkout package imports.
+if __package__ in (None, ''):
+    import sys as _checkout_sys
+    from pathlib import Path as _CheckoutPath
+    _checkout_sys.path.insert(0, str(_CheckoutPath(__file__).resolve().parents[3]))
+
+
 import argparse
 import math
 import sys
 from pathlib import Path
 
-from rig import rs04 as P
-from rig.can_bus import CAL_FILE, Calibration, MotorCal
+from software.control.rig import rs04 as P
+from software.control.rig.can_bus import CAL_FILE, Calibration, MotorCal
 
-R = Path(__file__).resolve().parents[1]
-if str(R / 'cad') not in sys.path:
-    sys.path.insert(0, str(R / 'cad'))
-import fivebar as fb  # noqa: E402
+R = (Path(__file__).resolve().parents[3])
+if str((R / 'hardware/cad')) not in sys.path:
+    sys.path.insert(0, str((R / 'hardware/cad')))
+import hardware.cad.legs.fivebar as fb  # noqa: E402
 
 BARE_R = 5.0                       # mm: the ISO 7379 10 mm shoulder of a stop post without its sleeve
 TOL_DEG = 3.0
@@ -80,7 +87,7 @@ def calibrate(bus: P.RS04Bus, front_id: int = 1, rear_id: int = 2, ask=input, ou
 
 
 def check(bus: P.RS04Bus, cal: Calibration, out=print) -> tuple:
-    from rig.leg_control import polar
+    from software.control.rig.leg_control import polar
     phis = []
     for mc in (cal.front, cal.rear):
         phis.append(mc.to_leg(P.Motor(bus, mc.id).read('mechPos')))
@@ -98,7 +105,7 @@ def main(argv=None, transport=None, ask=input, out=print) -> int:
     ap.add_argument('--file', default=str(CAL_FILE))
     a = ap.parse_args(argv)
     if transport is None:
-        from rig.canio import SocketCan
+        from software.control.rig.canio import SocketCan
         transport = SocketCan(a.iface)
     bus = P.RS04Bus(transport)
     if a.check:

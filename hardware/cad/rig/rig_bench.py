@@ -27,6 +27,13 @@ Every coupon carries its variant engraved (-0.1 / 0 / +0.1, the change to the se
 """
 from __future__ import annotations
 
+# Support direct-file CLI execution as well as checkout package imports.
+if __package__ in (None, ''):
+    import sys as _checkout_sys
+    from pathlib import Path as _CheckoutPath
+    _checkout_sys.path.insert(0, str(_CheckoutPath(__file__).resolve().parents[3]))
+
+
 import json
 import math
 import sys
@@ -34,13 +41,13 @@ from pathlib import Path
 
 import cadquery as cq
 
-R = Path(__file__).resolve().parents[1]
-sys.path.insert(0, str(R / 'cad'))
-import fivebar as fb  # noqa: E402
-import gmi  # noqa: E402
-import printplan  # noqa: E402
+R = (Path(__file__).resolve().parents[3])
+sys.path.insert(0, str((R / 'hardware/cad')))
+import hardware.cad.legs.fivebar as fb  # noqa: E402
+import hardware.cad.robot.gmi as gmi  # noqa: E402
+import hardware.cad.manufacturing.printplan as printplan  # noqa: E402
 
-OUT = R / 'exports' / 'rig' / 'bench'
+OUT = (R / 'hardware/exports/rig/bench')
 FAST = gmi.FAST
 MI = gmi.motor_interface(fb.MOTOR)
 VARIANTS = (-0.1, 0.0, 0.1)
@@ -570,7 +577,7 @@ def main():
         return
     from cadagent.geometry import export_print_stl
     OUT.mkdir(parents=True, exist_ok=True)
-    mats = json.loads((R / 'catalog/materials.json').read_text())
+    mats = json.loads(((R / 'hardware/catalog/materials.json')).read_text())
     plan, report = {}, {}
     for name, (shape, mat, qty, note) in parts().items():
         s = shape.val()

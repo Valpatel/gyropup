@@ -9,6 +9,13 @@ lid as the turret's top (the reason R-fall up is excluded).
 """
 from __future__ import annotations
 
+# Support direct-file CLI execution as well as checkout package imports.
+if __package__ in (None, ''):
+    import sys as _checkout_sys
+    from pathlib import Path as _CheckoutPath
+    _checkout_sys.path.insert(0, str(_CheckoutPath(__file__).resolve().parents[3]))
+
+
 import math
 import sys
 from pathlib import Path
@@ -19,12 +26,12 @@ import yaml
 from OCP.BRepAdaptor import BRepAdaptor_Surface
 from OCP.BRepCheck import BRepCheck_Analyzer
 
-HERE = Path(__file__).resolve().parent
+HERE = (Path(__file__).resolve().parents[3] / 'hardware/cad')
 sys.path.insert(0, str(HERE))
-import turret as tu  # noqa: E402
-import turret_snaps as ts  # noqa: E402
+import hardware.cad.turret.turret as tu  # noqa: E402
+import hardware.cad.turret.turret_snaps as ts  # noqa: E402
 
-SPEC = HERE.parent / 'research' / 'snap-fits' / 'snaps.yaml'
+SPEC = (HERE.parents[1] / 'docs/research/snap-fits/snaps.yaml')
 TOL = 0.02          # mm, for sizes read off the solids
 
 
@@ -259,7 +266,7 @@ def test_print_orientation(P):
     # LATCH_DROP below them), so the print plan supports its disc and the latches' tops
     bed = lambda part: tu._print_pose(P[part], rot[part]).val().intersect(tu.box(-200, 200, -200, 200, -0.001, 0.01).val()).Volume()
     assert bed('board_bay_lid') > 20.0
-    import turret_print
+    import hardware.cad.turret.turret_print as turret_print
     plan = {p[0]: p for p in turret_print.PARTS}
     lugs = 2 * 6.0 * 3.0 * 0.011
     assert 0.5 * lugs < bed('hopper_lid') < 1.01 * lugs and plan['hopper_lid'][5] is True     # the lugs alone

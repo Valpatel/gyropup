@@ -22,6 +22,13 @@ Re-run it whenever sim/robot_v2.py's model changes (B3 puts the real body in it)
 """
 from __future__ import annotations
 
+# Support direct-file CLI execution as well as checkout package imports.
+if __package__ in (None, ''):
+    import sys as _checkout_sys
+    from pathlib import Path as _CheckoutPath
+    _checkout_sys.path.insert(0, str(_CheckoutPath(__file__).resolve().parents[4]))
+
+
 import argparse
 import hashlib
 import json
@@ -32,8 +39,8 @@ from pathlib import Path
 
 HERE = Path(__file__).resolve().parent
 FW = HERE.parent
-R = FW.parents[1]
-for p in (str(R), str(R / 'cad')):
+R = (FW.parents[2])
+for p in (str(R), str((R / 'hardware/cad'))):
     if p not in sys.path:
         sys.path.insert(0, p)
 os.environ.setdefault('MUJOCO_GL', 'egl')
@@ -57,13 +64,13 @@ def f(v: float) -> str:
 def generate() -> str:
     import mujoco
     import numpy as np
-    import fivebar as fb
-    from sim.controller import Gains
-    from sim.controller_v2 import ControllerV2, LegGains, RobotV2, place_standing
-    from sim import leg_rig as lr
-    from sim.leg_control import Gains as RigGains
-    from sim import robot_v2
-    import body_layout as bl
+    import hardware.cad.legs.fivebar as fb
+    from software.simulation.controller import Gains
+    from software.simulation.controller_v2 import ControllerV2, LegGains, RobotV2, place_standing
+    from software.simulation import leg_rig as lr
+    from software.simulation.leg_control import Gains as RigGains
+    from software.simulation import robot_v2
+    import hardware.cad.body.body_layout as bl
     global DESIGN_HALF_MASS
     robot_v2.use_d69_wheel()                    # D69's hub wheel in sim.leg_rig's state, as the model was built with it
     DESIGN_HALF_MASS = bl.BUDGET['design_half_mass_kg']

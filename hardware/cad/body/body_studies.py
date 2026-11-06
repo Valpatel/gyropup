@@ -27,6 +27,13 @@ Writes exports/body/fea/<case>.png (+ .mp4 overload video, .json for the viewer)
 """
 from __future__ import annotations
 
+# Support direct-file CLI execution as well as checkout package imports.
+if __package__ in (None, ''):
+    import sys as _checkout_sys
+    from pathlib import Path as _CheckoutPath
+    _checkout_sys.path.insert(0, str(_CheckoutPath(__file__).resolve().parents[3]))
+
+
 import argparse
 import json
 import math
@@ -37,13 +44,13 @@ from pathlib import Path
 
 import numpy as np
 
-R = Path(__file__).resolve().parents[1]
-sys.path.insert(0, str(R / 'cad'))
-import body_frame as bf  # noqa: E402
-import body_params as bp  # noqa: E402
+R = (Path(__file__).resolve().parents[3])
+sys.path.insert(0, str((R / 'hardware/cad')))
+import hardware.cad.body.body_frame as bf  # noqa: E402
+import hardware.cad.body.body_params as bp  # noqa: E402
 from cadagent.fea import Material, Study, any_of, cylinder_at, in_box, plane_at  # noqa: E402
 
-OUT = Path(os.environ.get('GYROPUP_BODY_FEA_OUT') or (R / 'exports' / 'body' / 'fea'))     # a study sweep writes elsewhere
+OUT = Path(os.environ.get('GYROPUP_BODY_FEA_OUT') or ((R / 'hardware/exports/body/fea')))     # a study sweep writes elsewhere
 AL5052 = Material('5052-H32 aluminium', 70300.0, 0.33, 193.0, 2.68, 'yield strength (ASM); used for the whole box (6061-T6 parts are stronger)')
 AL6061 = Material('6061-T6 aluminium', 68900.0, 0.33, 276.0, 2.70, 'yield strength')
 TARGETS = {'sf': 2.0, 'sf_fault': 1.2, 'deck_mm': 0.5, 'twist_deg': 0.1, 'sf_turret_fall': 2.0}    # D59: the turret's tip-over at 2.0
@@ -75,7 +82,7 @@ def rare_leg_load(kind='rare'):
     roll moment of the case's scenarios, with the largest vertical force of the same scenario (the two peaks combined),
     plus a 10 % sideways grip of the ground force at the contact patch. Returns the vertical force and the robot y of
     the line it acts on (left leg) so that it carries the roll moment."""
-    f = R / 'exports/body/leg-loads.json'
+    f = (R / 'hardware/exports/body/leg-loads.json')
     d = json.loads(f.read_text())
     fb = bp._fivebar()
     M, name = d[kind + '_body']
@@ -425,10 +432,10 @@ PLATE_CLAMP_D = 14.0        # an M5's clamped zone between the plates (about 2.8
 def body_g():
     """The body's peak load factor in a landing (g): both legs' largest vertical force at the mount plane over the
     body's own mass (the ledger's robot less its legs), plus gravity's 1 g already in it."""
-    d = json.loads((R / 'exports/body/leg-loads.json').read_text())
+    d = json.loads(((R / 'hardware/exports/body/leg-loads.json')).read_text())
     _, name = d['rare_body']
     F = d['scenarios'][name]['body']['peak_vertical_n']
-    m = json.loads((R / 'exports/body/mass.json').read_text())['P3']
+    m = json.loads(((R / 'hardware/exports/body/mass.json')).read_text())['P3']
     return round(2 * F / (m['body_and_head_kg'] * G), 2)
 
 
@@ -436,14 +443,14 @@ def tray_case(record, mesh):
     """The floor tray bearing on the cheeks' upper flanges, with what stands on it at the landing's
     load factor: the compute through its four isolators, the power skid through its four posts, the DDR-120C on its
     rail, the deck, lidar and turret through the four deck posts."""
-    import body_layout as bl
+    import hardware.cad.body.body_layout as bl
     parts = bf.frame_parts()
     zt = bf.ZT
     top = bp.z_tray_top()
     n_g = body_g()
     L = bl.layout()
     mass = {it.name: it.mass_g for it in L['items'] if not it.keepout}
-    fm = json.loads((R / 'exports/body/body.json').read_text())['mass_g']['frame_parts']          # the frame parts' CAD masses
+    fm = json.loads(((R / 'hardware/exports/body/body.json')).read_text())['mass_g']['frame_parts']          # the frame parts' CAD masses
     part_g = lambda n: fm.get(n) or 0.0
     compute = sum(g for n, g in mass.items() if n.startswith(('j501', 'agx'))) + part_g('compute_pallet')
     skid = (sum(g for n, g in mass.items() if n.startswith('plate_') or n == 'power_dcdc') + part_g('power_plate')

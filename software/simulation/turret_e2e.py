@@ -28,6 +28,13 @@ Writes exports/turret/e2e/e2e.json (checks keyed to docs/turret-program.md's che
 """
 from __future__ import annotations
 
+# Support direct-file CLI execution as well as checkout package imports.
+if __package__ in (None, ''):
+    import sys as _checkout_sys
+    from pathlib import Path as _CheckoutPath
+    _checkout_sys.path.insert(0, str(_CheckoutPath(__file__).resolve().parents[2]))
+
+
 import argparse
 import json
 import math
@@ -40,11 +47,11 @@ from pathlib import Path
 import numpy as np
 
 os.environ.setdefault('MUJOCO_GL', 'egl')
-R = Path(__file__).resolve().parents[1]
-sys.path.insert(0, str(R / 'sim'))
-import turret_common as tc  # noqa: E402
+R = (Path(__file__).resolve().parents[2])
+sys.path.insert(0, str((R / 'software/simulation')))
+import software.simulation.turret_common as tc  # noqa: E402
 
-OUT = R / 'exports' / 'turret' / 'e2e'
+OUT = (R / 'hardware/exports/turret/e2e')
 MESH_DIR = R / 'build' / 'turret_e2e_meshes'
 # The committed world names its meshes relative to itself (MuJoCo resolves meshdir against the model file), never by an
 # absolute path on the machine that built it.
@@ -498,7 +505,7 @@ def run(set_fps=95.0, mode='settled', quick=False, video=True, seed=7):
 def checks(runs, quick):
     """Pass/fail keyed to docs/turret-program.md's checklist, from the runs and the stage studies' JSON."""
     def load(p):
-        f = R / 'exports' / 'turret' / p
+        f = (R / 'hardware/exports/turret') / p
         return json.loads(f.read_text()) if f.exists() else None
     l3 = load('launch/launch3d.json')
     fl = load('flight/flight.json')

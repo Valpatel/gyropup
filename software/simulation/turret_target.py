@@ -18,6 +18,13 @@ plate in MuJoCo with the ball bodies, and the bench plan counts real knock-overs
 """
 from __future__ import annotations
 
+# Support direct-file CLI execution as well as checkout package imports.
+if __package__ in (None, ''):
+    import sys as _checkout_sys
+    from pathlib import Path as _CheckoutPath
+    _checkout_sys.path.insert(0, str(_CheckoutPath(__file__).resolve().parents[2]))
+
+
 import json
 import math
 import sys
@@ -25,12 +32,12 @@ from pathlib import Path
 
 import numpy as np
 
-R = Path(__file__).resolve().parents[1]
-sys.path.insert(0, str(R / 'sim'))
-import turret_ball as tb  # noqa: E402
-import turret_launch as tl  # noqa: E402
+R = (Path(__file__).resolve().parents[2])
+sys.path.insert(0, str((R / 'software/simulation')))
+import software.simulation.turret_ball as tb  # noqa: E402
+import software.simulation.turret_launch as tl  # noqa: E402
 
-OUT = R / 'exports' / 'turret' / 'target'
+OUT = (R / 'hardware/exports/turret/target')
 G = 9.81
 LIMITS = {
     'en71_resilient_j': {'value': 0.5, 'source': 'EN 71-1 4.17.3 (https://law.resource.org/pub/eu/toys/en.71.1.2014.html): 0.5 J for resilient projectiles', 'checked': '2026-10-25 (research/turret-and-safety.md)'},
@@ -102,7 +109,7 @@ def study(speeds_by_range=None):
     OUT.mkdir(parents=True, exist_ok=True)
     spec = tb.nominal()
     if speeds_by_range is None:
-        import turret_flight as tf
+        import software.simulation.turret_flight as tf
         speeds_by_range = tf.speed_at_ranges(tl.DESIGN['set_fps'] * tl.FPS, spec)
     res = {'limits': LIMITS, 'targets': TARGETS, 'ball': spec.__dict__,
            'impact_by_range': {f'{d:g}_m': impact(spec, v) for d, v in speeds_by_range.items()},
@@ -113,7 +120,7 @@ def study(speeds_by_range=None):
     worst = tb.worst_for_cap()
     # D67's densest accepted round (2.0 g on 22.2 mm), stiff and grippy, at its own ceiling: exports/turret/launch/launch.json
     densest = tb.BallSpec('densest-accepted', 'spec', tl.BALL_D[0], tl.BALL_M[1], tl.BALL_E[1], tl.BALL_RESTITUTION[1], tl.BALL_MU[1], 0.7, tb.RANGES['nu'])
-    lj = R / 'exports' / 'turret' / 'launch' / 'launch.json'
+    lj = (R / 'hardware/exports/turret/launch/launch.json')
     trim = json.loads(lj.read_text()).get('trim', {}) if lj.exists() else {}
     dense_v = math.sqrt(2 * trim['densest_ked_j_m2'] * densest.area_m2 / densest.m_kg) if trim.get('densest_ked_j_m2') else tl.CAP
     ft = trim.get('hasbro_full_throttle_fps', tl.TARGET_FPS[1])

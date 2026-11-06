@@ -10,6 +10,13 @@ Writes exports/rig/bench/c6-jitter-<rate>hz.json.
 """
 from __future__ import annotations
 
+# Support direct-file CLI execution as well as checkout package imports.
+if __package__ in (None, ''):
+    import sys as _checkout_sys
+    from pathlib import Path as _CheckoutPath
+    _checkout_sys.path.insert(0, str(_CheckoutPath(__file__).resolve().parents[4]))
+
+
 import argparse
 import json
 import multiprocessing as mp
@@ -17,11 +24,11 @@ import sys
 import time
 from pathlib import Path
 
-from rig import rs04 as P
-from rig.can_bus import Timing
+from software.control.rig import rs04 as P
+from software.control.rig.can_bus import Timing
 
-R = Path(__file__).resolve().parents[2]
-OUT = R / 'exports' / 'rig' / 'bench'
+R = (Path(__file__).resolve().parents[4])
+OUT = (R / 'hardware/exports/rig/bench')
 
 
 def run(bus: P.RS04Bus, ids, rate: float = 500.0, seconds: float = 20.0, clock=time.monotonic, sleep=time.sleep) -> Timing:
@@ -75,7 +82,7 @@ def main(argv=None, transport=None, out=print) -> int:
     ap.add_argument('--load', action='store_true', help='a busy process on every other core while it runs')
     a = ap.parse_args(argv)
     if transport is None:
-        from rig.canio import SocketCan
+        from software.control.rig.canio import SocketCan
         transport = SocketCan(a.iface)
     stop, hogs = mp.Event(), []
     if a.load:

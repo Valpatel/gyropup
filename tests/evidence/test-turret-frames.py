@@ -7,8 +7,8 @@ from pathlib import Path
 import struct
 import unittest
 
-ROOT = Path(__file__).resolve().parents[1]
-SCENE = ROOT / 'exports/sim/turret_box'
+ROOT = (Path(__file__).resolve().parents[2])
+SCENE = (ROOT / 'hardware/exports/sim/turret_box')
 MAN = json.loads((SCENE / 'manifest.json').read_text())
 PARTS = {p['name']: p for p in MAN['parts']}
 

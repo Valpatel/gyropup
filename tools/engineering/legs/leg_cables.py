@@ -24,6 +24,13 @@ because receipts pin cad/'s sources (tools/test-rs04-lug-stacks.py and the carri
 """
 from __future__ import annotations
 
+# Support direct-file CLI execution as well as checkout package imports.
+if __package__ in (None, ''):
+    import sys as _checkout_sys
+    from pathlib import Path as _CheckoutPath
+    _checkout_sys.path.insert(0, str(_CheckoutPath(__file__).resolve().parents[3]))
+
+
 import argparse
 import json
 import math
@@ -33,11 +40,11 @@ from pathlib import Path
 
 import numpy as np
 
-R = Path(__file__).resolve().parents[1]
-sys.path.insert(0, str(R / 'cad'))
+R = (Path(__file__).resolve().parents[3])
+sys.path.insert(0, str((R / 'hardware/cad')))
 sys.path.insert(0, str(R))
 
-import fivebar as fb  # noqa: E402
+import hardware.cad.legs.fivebar as fb  # noqa: E402
 
 CONDUCTOR_OD = {'wheel': 2.0}           # 18 AWG silicone phase wire, the thickest single conductor in the harness
 SAMPLES = 2000                          # points along the route (by length) for its bends
@@ -141,7 +148,7 @@ def check(clash=False):
         res['wheel']['clash'] = {'heights_mm': list(CLASH_HEIGHTS), 'hits': {str(h): v for h, v in hits.items()},
                                  'ok': not any(hits.values()),
                                  'note': 'parts the swept Ø{:.0f} cable runs into (> 5 mm3), motors and the hub left out'.format(fb.CABLE_D)}
-    exports = (Path(os.environ['GYROPUP_EXPORTS']).resolve() if os.environ.get('GYROPUP_EXPORTS') else R / 'exports') / 'leg'
+    exports = (Path(os.environ['GYROPUP_EXPORTS']).resolve() if os.environ.get('GYROPUP_EXPORTS') else (R / 'hardware/exports')) / 'leg'
     exports.mkdir(parents=True, exist_ok=True)
     (exports / 'cables.json').write_text(json.dumps(res, indent=1) + '\n')
     _plot(rows, exports / 'cables.png')

@@ -13,19 +13,26 @@ the knees, the apex, the wheel, the TPU sleeves, the ballast and the tethers.
 """
 from __future__ import annotations
 
+# Support direct-file CLI execution as well as checkout package imports.
+if __package__ in (None, ''):
+    import sys as _checkout_sys
+    from pathlib import Path as _CheckoutPath
+    _checkout_sys.path.insert(0, str(_CheckoutPath(__file__).resolve().parents[3]))
+
+
 import json
 import sys
 from pathlib import Path
 
 import cadquery as cq
 
-R = Path(__file__).resolve().parents[1]
-sys.path.insert(0, str(R / 'cad'))
-import build_rig as br  # noqa: E402
-import fivebar as fb  # noqa: E402
-import rig_parts as rp  # noqa: E402
+R = (Path(__file__).resolve().parents[3])
+sys.path.insert(0, str((R / 'hardware/cad')))
+import hardware.cad.builders.build_rig as br  # noqa: E402
+import hardware.cad.legs.fivebar as fb  # noqa: E402
+import hardware.cad.rig.rig_parts as rp  # noqa: E402
 
-OUT = R / 'exports' / 'rig' / 'assembly'
+OUT = (R / 'hardware/exports/rig/assembly')
 GREY = (0.78, 0.79, 0.81)
 ZH = br.zh_on_deck(300.0)
 LEG_VIEW = (0.85, 1.0, 0.55)
@@ -34,7 +41,7 @@ LEG_VIEW = (0.85, 1.0, 0.55)
 def _bare_travel() -> float:
     import math
     sys.path.insert(0, str(R))
-    from rig.calibrate import bare_stop_angles
+    from software.control.rig.calibrate import bare_stop_angles
     fo, fi, _, _ = bare_stop_angles()
     return abs(math.degrees(fi - fo))
 
@@ -274,7 +281,7 @@ def write_doc(rows):
           '| Knee nut (M10 nyloc onto the steel sleeves) | 20 N m |',
           '| Stop posts (Ø16 pins bonded in blind holes, D53, D74) | none: no thread |', '| Wheel (M6 x 30 into the BotWheel, on DIN 433 washers) | 1.8 N m, threadlocker |',
           '| Ballast posts (3/8-16) | 25 N m |', '| Contactor mounting (M4) / load terminals (M5) | 2.3 / 4 N m (TE) |', '']
-    (R / 'docs' / 'leg-rig-assembly.md').write_text('\n'.join(L))
+    ((R / 'docs/legs/leg-rig-assembly.md')).write_text('\n'.join(L))
 
 
 if __name__ == '__main__':

@@ -16,6 +16,13 @@ libmp3lame and node. --check needs only python3 and node: it recomputes the ids 
 """
 from __future__ import annotations
 
+# Support direct-file CLI execution as well as checkout package imports.
+if __package__ in (None, ''):
+    import sys as _checkout_sys
+    from pathlib import Path as _CheckoutPath
+    _checkout_sys.path.insert(0, str(_CheckoutPath(__file__).resolve().parents[2]))
+
+
 import argparse
 import hashlib
 import json
@@ -25,13 +32,13 @@ import sys
 import tempfile
 from pathlib import Path
 
-sys.path.insert(0, str(Path(__file__).resolve().parent))
-import tts_server  # noqa: E402  (stdlib only at import; Piper is loaded by Voice)
-from pronunciation import KEY_PATH, load_key  # noqa: E402
+sys.path.insert(0, str((Path(__file__).resolve().parents[1])))
+import tools.audio.tts_server as tts_server  # noqa: E402  (stdlib only at import; Piper is loaded by Voice)
+from tools.audio.pronunciation import KEY_PATH, load_key  # noqa: E402
 
-ROOT = Path(__file__).resolve().parent.parent
-LINES = ROOT / 'designer' / 'character' / 'lines.js'
-OUT = ROOT / 'designer' / 'character' / 'voice'
+ROOT = (Path(__file__).resolve().parents[2])
+LINES = (ROOT / 'software/site/designer/character/lines.js')
+OUT = (ROOT / 'software/site/designer/character/voice')
 MANIFEST = OUT / 'manifest.json'
 BUDGET = 3 * 1024 * 1024        # bytes for the whole set (about 125 lines, 1.7 MB at the time of writing)
 

@@ -5,6 +5,13 @@ committed JSON and page against a fresh run. Standard library only (CadQuery onl
 
     python3 sim/test_motor_thermal.py            # or: .venv/bin/python -m pytest sim/test_motor_thermal.py -q
 """
+
+# Support direct-file CLI execution as well as checkout package imports.
+if __package__ in (None, ''):
+    import sys as _checkout_sys
+    from pathlib import Path as _CheckoutPath
+    _checkout_sys.path.insert(0, str(_CheckoutPath(__file__).resolve().parents[2]))
+
 import json
 import math
 import sys
@@ -13,7 +20,7 @@ from pathlib import Path
 
 HERE = Path(__file__).resolve().parent
 sys.path.insert(0, str(HERE))
-import motor_thermal as mt  # noqa: E402
+import software.simulation.motor_thermal as mt  # noqa: E402
 
 M = json.loads(mt.OUT.read_text())
 
@@ -220,8 +227,8 @@ class Geometry(unittest.TestCase):
     def test_inputs_match_the_cad(self):
         """The model's leg geometry is what cad/fivebar.py draws (skipped without CadQuery)."""
         try:
-            sys.path.insert(0, str(HERE.parent / 'cad'))
-            import fivebar as fb
+            sys.path.insert(0, str((HERE.parents[1] / 'hardware/cad')))
+            import hardware.cad.legs.fivebar as fb
         except ImportError:
             self.skipTest('CadQuery not installed')
         y0, y1 = fb.Y['frame']

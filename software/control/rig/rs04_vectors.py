@@ -9,18 +9,25 @@ designer/kit/rs04/rs04.test.mjs (the JavaScript gives the same frames, values an
 """
 from __future__ import annotations
 
+# Support direct-file CLI execution as well as checkout package imports.
+if __package__ in (None, ''):
+    import sys as _checkout_sys
+    from pathlib import Path as _CheckoutPath
+    _checkout_sys.path.insert(0, str(_CheckoutPath(__file__).resolve().parents[3]))
+
+
 import argparse
 import json
 import math
 import sys
 from pathlib import Path
 
-from rig import rs04 as P
-from rig.rs04_emu import EmulatedRS04
-from rig.rs04_guard import Guard
+from software.control.rig import rs04 as P
+from software.control.rig.rs04_emu import EmulatedRS04
+from software.control.rig.rs04_guard import Guard
 
-ROOT = Path(__file__).resolve().parents[1]
-OUT = ROOT / 'designer' / 'kit' / 'rs04' / 'vectors.json'
+ROOT = (Path(__file__).resolve().parents[3])
+OUT = (ROOT / 'software/site/designer/kit/rs04/vectors.json')
 LIMITS = {'limit_torque_nm': 12.0, 'jog_torque_nm': 3.0, 'jog_speed_rad_s': 1.0, 'jog_kp_max': 20.0, 'jog_kd_max': 1.0,
           'can_timeout_ticks': 2000, 'can_timeout_max_ticks': 2000}
 

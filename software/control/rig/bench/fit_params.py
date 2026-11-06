@@ -12,6 +12,13 @@
 """
 from __future__ import annotations
 
+# Support direct-file CLI execution as well as checkout package imports.
+if __package__ in (None, ''):
+    import sys as _checkout_sys
+    from pathlib import Path as _CheckoutPath
+    _checkout_sys.path.insert(0, str(_CheckoutPath(__file__).resolve().parents[4]))
+
+
 import argparse
 import csv
 import json
@@ -20,8 +27,8 @@ from pathlib import Path
 
 import numpy as np
 
-R = Path(__file__).resolve().parents[2]
-BENCH = R / 'exports' / 'rig' / 'bench'
+R = (Path(__file__).resolve().parents[4])
+BENCH = (R / 'hardware/exports/rig/bench')
 SHEETS = BENCH / 'sheets'
 TEMPLATES = {
     'b3.csv': ['cycle', 'force_n', 'deflection_mm'],
@@ -36,7 +43,7 @@ def assumed() -> dict:
     try:
         if str(R) not in sys.path:
             sys.path.insert(0, str(R))
-        from sim import leg_rig as L
+        from software.simulation import leg_rig as L
         r = L.fb.P['stop_r'] / 1000.0
         return {'ARMATURE': L.ARMATURE, 'OFF_DAMPING': L.OFF_DAMPING, 'STOP_K': L.STOP_K, 'STOP_TRAVEL': L.STOP_TRAVEL,
                 'stop_r_m': r, 'stop_k_n_per_mm': L.STOP_K / r ** 2 / 1000.0, 'stop_travel_mm': L.STOP_TRAVEL * r * 1000.0,
@@ -60,7 +67,7 @@ def rows(name):
 
 
 def b1(sim: dict) -> dict:
-    from rig.bench.backdrive import fit
+    from software.control.rig.bench.backdrive import fit
     fr = BENCH / 'b1-friction.json'
     if not fr.exists():
         return {}

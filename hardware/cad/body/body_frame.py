@@ -16,6 +16,13 @@ printed posts; the turret's riser (printed PA6-CF) on the deck.
 """
 from __future__ import annotations
 
+# Support direct-file CLI execution as well as checkout package imports.
+if __package__ in (None, ''):
+    import sys as _checkout_sys
+    from pathlib import Path as _CheckoutPath
+    _checkout_sys.path.insert(0, str(_CheckoutPath(__file__).resolve().parents[3]))
+
+
 import functools
 import json
 import math
@@ -24,8 +31,8 @@ from dataclasses import dataclass, field
 
 import cadquery as cq
 
-import body_params as bp
-import body_sheet as bs
+import hardware.cad.body.body_params as bp
+import hardware.cad.body.body_sheet as bs
 
 T5 = bp.STOCK[bp.CHEEK]['t']             # cheek thickness
 GAP_Y = bp.SPACER_L / 2                  # the cheeks' inner (gap-side) faces at y = +-GAP_Y
@@ -385,7 +392,7 @@ def post():
     the landing's 8.65 g), M5 heat-set inserts (94459A775, Ø6.4 x 11 pilot) both ends; M3 inserts (94459A140) for the
     P3 shell in bosses: on its +-y faces at the side walls' screw heights, on its +-x faces at the front and rear
     faces' (every corner uses one of each). Printed standing: the pull-out crosses the layers (the coupon test)."""
-    import body_shell as bs3
+    import hardware.cad.body.body_shell as bs3
     h = post_height()
     w = bp.POST_W
     zt = bp.z_tray_top()
@@ -414,7 +421,7 @@ PLATE_POST_W = 16.0
 def plate_post():
     """A power-plate post (PA6-CF, 100 %): 16 mm square x PLATE_H, M5 heat-set inserts (94459A775) both ends; printed
     standing, as the deck posts."""
-    import body_layout as bl
+    import hardware.cad.body.body_layout as bl
     h, w = bl.PLATE_H, PLATE_POST_W
     s = box(-w / 2, w / 2, -w / 2, w / 2, 0.0, h).edges('|Z').fillet(2.5)
     return s.cut(cyl_z(3.2, -1.0, 11.0)).cut(cyl_z(3.2, h - 11.0, h + 1.0))
@@ -461,20 +468,20 @@ DCDC_FOOT_T, DCDC_WALL_T = 4.0, 6.0      # the upright at y -124..-118: the P3 w
 
 
 def _plate_top():
-    import body_layout as bl
+    import hardware.cad.body.body_layout as bl
     return bp.z_tray_top() + bl.PLATE_H + bp.STOCK['5052-0.100']['t']
 
 
 def dcdc_bracket_holes():
     """The converter's bracket: two M4 down into the plate's flush nuts on its inner side (robot x, y)."""
-    import body_layout as bl
+    import hardware.cad.body.body_layout as bl
     d = bl.DCDC
     return [(40.0, d['y'][1] + 3.0), (120.0, d['y'][1] + 3.0)]     # beyond the switch under the plate (x 52..112)
 
 
 def dcdc_screws():
     """The converter's four M3 through its base flange's slots into inserts in the bracket's upright (robot x, z)."""
-    import body_layout as bl
+    import hardware.cad.body.body_layout as bl
     d = bl.DCDC
     z0 = _plate_top() + DCDC_FOOT_T
     return [(x, z) for x in (d['x'][0] + 5.0, d['x'][1] - 5.0) for z in (z0 + 3.0, z0 + d['h'] - 3.0)]
@@ -485,7 +492,7 @@ def dcdc_bracket():
     ends, and an upright on its inner side its baseplate bolts to (four M3 from the carrier's side: the converter goes on
     the bracket first, then the bracket on the plate). The converter's outer face stays at |y| 121: the left ear bracket's
     nyloc nuts stand inside the wall to 122.6."""
-    import body_layout as bl
+    import hardware.cad.body.body_layout as bl
     d = bl.DCDC
     zp = _plate_top()
     x0, x1 = d['x'][0], d['x'][1]
@@ -553,7 +560,7 @@ def turret_plate_part(mounts=None) -> bs.SheetPart:
     for u in (P['end_pem_x'], L - P['end_pem_x']):
         feats.append(bs.Feature('pem', 'base', (u, W / 2), bp.PEM['SS-M5-0']['H'], spec='SS-M5-0',
                                 note='M5 x 10 ISO 7380 down through the deck into this nut'))
-    import body_shell as bs3
+    import hardware.cad.body.body_shell as bs3
     for (x, y) in bs3.duct_tabs():                       # P3: the fan duct hangs from three tapped holes
         feats.append(bs.Feature('hole', 'base', plate_t_uv(x, y), 2.5, note='tap M3 x 0.5: the fan duct\'s tab (M3 x 5 from below)'))
     for (x, y, lx, ly) in TURRET_PLATE_POCKETS:          # lightening, where neither a riser foot nor a nut needs the plate
@@ -715,13 +722,13 @@ def frame_parts(mounts=None) -> dict:
     for k, (x, y) in enumerate(ISOLATORS):
         out[f'isolator_{k + 1}'] = Part(f'isolator_{k + 1}', 'printed', iso.translate((x, y, zt)), 1, material='tpu95',
                                         colour=(0.15, 0.15, 0.17), note='TPU 95A: the pallet\'s isolator foot, neck and cap')
-    import body_layout as _bl
+    import hardware.cad.body.body_layout as _bl
     if mounts is not None:
         for name, (length, off, (x, y, z)) in din_rails(_bl.layout()['items']).items():
             out[name] = Part(name, 'printed', din_rail(length, off).translate((x, y, z)), 1, material='pa6-cf',
                              colour=(0.55, 0.57, 0.6), note='PA6-CF TS35 rail piece; 2 x M4 x 10 flat heads into the nuts below')
     # ---- the power plate (the P0 skid), its standoffs, the bus bars on their insulators
-    import body_layout as bl
+    import hardware.cad.body.body_layout as bl
     pp = power_plate_part(mounts)
     loc = pp.solid()
     out['power_plate'] = Part('power_plate', 'sheet', place_plate(loc), 1, pp, loc, pp.s['material'], colour=(0.66, 0.70, 0.75), note=pp.note)
@@ -745,7 +752,7 @@ def frame_parts(mounts=None) -> dict:
     out['dcdc_bracket'] = Part('dcdc_bracket', 'printed', dcdc_bracket(), 1, material='pa6-cf', colour=(0.25, 0.27, 0.30),
                                note='PA6-CF; two M4 x 12 down into the power plate\'s flush nuts; the converter on four M3 x 6 into the upright\'s inserts')
     # ---- the battery bay under the belly plate (D65: two DeWalt packs; cad/body_battery.py)
-    import body_battery as bb
+    import hardware.cad.body.body_battery as bb
     out.update(bb.bay_parts())
     out['spacers'] = Part('spacers', 'bought', spacers(), len(SPACERS_XZ), colour=(0.8, 0.8, 0.82), note='M4 x 31 hex standoff, 6 mm hex, female-female, aluminium (95947A065)')
     out['spacer_screws'] = Part('spacer_screws', 'bought', spacer_screws(), 2 * len(SPACERS_XZ), colour=(0.15, 0.15, 0.17), note='M4 x 10 ISO 10642 flat head')
@@ -768,7 +775,7 @@ def on_robot(p, stage) -> bool:
 
 def all_parts(mounts=None) -> dict:
     """The frame's parts and the P3 shell's (cad/body_shell.py): every part of every stage."""
-    import body_shell as bs3
+    import hardware.cad.body.body_shell as bs3
     out = frame_parts(mounts)
     out.update(bs3.shell_parts())
     return out
@@ -805,13 +812,13 @@ def legs(h_mm, lean_deg=0.0, with_bought=True):
 # ------------------------------------------------------------------------------------------- the power plate and bus bars
 
 def plate_uv(x, y):
-    import body_layout as bl
+    import hardware.cad.body.body_layout as bl
     return (x - bl.PLATE_X[0], bl.PLATE_Y[1] - y)
 
 
 def place_plate(shape):
     """Flat part (u, v, 0..t) -> robot, its underside (part z = t after the turn) on the standoffs."""
-    import body_layout as bl
+    import hardware.cad.body.body_layout as bl
     z_top = bp.z_tray_top() + bl.PLATE_H + bp.STOCK['5052-0.100']['t']
     return shape.rotate((0, 0, 0), (1, 0, 0), 180).translate((bl.PLATE_X[0], bl.PLATE_Y[1], z_top))
 
@@ -822,7 +829,7 @@ PLATE_STANDOFFS = [(44.0, -96.0), (47.0, 80.0), (145.0, -88.0), (145.0, 80.0)]  
 def power_plate_part(mounts=None) -> bs.SheetPart:
     """The power plate (5052-H32 0.100 in, flat): the P0 power skid. Four printed posts to the tray; a notch
     round the front-right deck post; PEM nuts and holes for every part on it and under it (mounts['plate'])."""
-    import body_layout as bl
+    import hardware.cad.body.body_layout as bl
     W, H = bl.PLATE_X[1] - bl.PLATE_X[0], bl.PLATE_Y[1] - bl.PLATE_Y[0]
     px, py = bp.POSTS[1]
     nx0 = px - bp.POST_W / 2 - 3.0
@@ -883,7 +890,7 @@ def bus_insulator():
 def bus_insulator_reliefs():
     """Where the VESCs' flange screws' tips stand under either insulator (its own frame): one part for both, so the
     pockets of both."""
-    import body_layout as bl
+    import hardware.cad.body.body_layout as bl
     items = bl.layout()['items']
     out = set()
     for bx, by in bl.BUS_XY:

@@ -14,17 +14,24 @@ What is excused, and why, is listed here (ALLOWED); nothing else is.
 """
 from __future__ import annotations
 
+# Support direct-file CLI execution as well as checkout package imports.
+if __package__ in (None, ''):
+    import sys as _checkout_sys
+    from pathlib import Path as _CheckoutPath
+    _checkout_sys.path.insert(0, str(_CheckoutPath(__file__).resolve().parents[3]))
+
+
 import json
 import sys
 import time
 from pathlib import Path
 
-sys.path.insert(0, str(Path(__file__).resolve().parent))
-import assembly_checks as ac  # noqa: E402
-import build_rig as br  # noqa: E402
-import fivebar as fb  # noqa: E402
-import rig_hardware as hw  # noqa: E402
-import rig_parts as rp  # noqa: E402
+sys.path.insert(0, str((Path(__file__).resolve().parents[1])))
+import hardware.cad.robot.assembly_checks as ac  # noqa: E402
+import hardware.cad.builders.build_rig as br  # noqa: E402
+import hardware.cad.legs.fivebar as fb  # noqa: E402
+import hardware.cad.rig.rig_hardware as hw  # noqa: E402
+import hardware.cad.rig.rig_parts as rp  # noqa: E402
 
 OUT = br.OUT / 'integrity.json'
 

@@ -13,7 +13,7 @@ from pathlib import Path
 import struct
 import subprocess
 
-ROOT = Path(__file__).resolve().parents[1]
+ROOT = (Path(__file__).resolve().parents[3])
 SOURCE = '3eb32ba649a2b0b66dd80c4a2dfb3179b0697f20'
 PREFIX = 'exports/sim/turret_box/'
 MANIFEST_SHA = '3500d030746bd3015e5327c00ec7ac0756189d6dfe7585afe29fef35f9c8e19f'

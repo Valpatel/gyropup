@@ -15,22 +15,29 @@ cad/build_body.py, when it is run again, still draws the envelopes: run this aft
 """
 from __future__ import annotations
 
+# Support direct-file CLI execution as well as checkout package imports.
+if __package__ in (None, ''):
+    import sys as _checkout_sys
+    from pathlib import Path as _CheckoutPath
+    _checkout_sys.path.insert(0, str(_CheckoutPath(__file__).resolve().parents[3]))
+
+
 import sys
 from pathlib import Path
 
-R = Path(__file__).resolve().parents[1]
+R = (Path(__file__).resolve().parents[3])
 sys.path.insert(0, str(R / 'tools'))
-sys.path.insert(0, str(R / 'cad'))
+sys.path.insert(0, str((R / 'hardware/cad')))
 sys.path.insert(0, str(R))
 
-import robot_view as rv  # noqa: E402
+import tools.engineering.robot.robot_view as rv  # noqa: E402
 
 
 def main():
-    import body_frame as bf
-    import body_params as bp
-    import body_views as bv
-    import build_body as bb
+    import hardware.cad.body.body_frame as bf
+    import hardware.cad.body.body_params as bp
+    import hardware.cad.body.body_views as bv
+    import hardware.cad.builders.build_body as bb
     layout = bb._layout()
     layout['items'] = rv.visual_items(layout['items'], bp.tm())
     bb._layout = lambda: layout                      # body_views.main() reads the layout through build_body._layout()

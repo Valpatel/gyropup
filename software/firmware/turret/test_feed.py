@@ -34,7 +34,7 @@ import feed as F  # noqa: E402
 import sts  # noqa: E402
 from sim_servo import SimBus, SimServo  # noqa: E402
 
-R = Path(__file__).resolve().parents[2]
+R = (Path(__file__).resolve().parents[3])
 DT = 0.001
 
 
@@ -346,7 +346,7 @@ def case_burst(seed):
 def main():
     ap = argparse.ArgumentParser()
     ap.add_argument('--seed', type=int, default=1)
-    ap.add_argument('--out', default=str(R / 'exports' / 'turret' / 'firmware'))
+    ap.add_argument('--out', default=str((R / 'hardware/exports/turret/firmware')))
     a = ap.parse_args()
     cases = {}
     for name, fn in (('stepping_3hz_jam', case_stepping_3hz_jam), ('jam_fault', case_jam_fault),

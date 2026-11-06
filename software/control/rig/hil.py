@@ -10,12 +10,19 @@ missing reply) runs against the same physics as the simulation backend.
 """
 from __future__ import annotations
 
+# Support direct-file CLI execution as well as checkout package imports.
+if __package__ in (None, ''):
+    import sys as _checkout_sys
+    from pathlib import Path as _CheckoutPath
+    _checkout_sys.path.insert(0, str(_CheckoutPath(__file__).resolve().parents[3]))
+
+
 from typing import Optional
 
-from rig import rs04 as P
-from rig.canio import VirtualBus
-from rig.node import RUN, VBUS, pack_run, pack_vbus
-from rig.rs04_emu import EmulatedRS04
+from software.control.rig import rs04 as P
+from software.control.rig.canio import VirtualBus
+from software.control.rig.node import RUN, VBUS, pack_run, pack_vbus
+from software.control.rig.rs04_emu import EmulatedRS04
 
 
 class HilLink:

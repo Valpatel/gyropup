@@ -5,6 +5,13 @@
 """
 from __future__ import annotations
 
+# Support direct-file CLI execution as well as checkout package imports.
+if __package__ in (None, ''):
+    import sys as _checkout_sys
+    from pathlib import Path as _CheckoutPath
+    _checkout_sys.path.insert(0, str(_CheckoutPath(__file__).resolve().parents[3]))
+
+
 import json
 import math
 import random
@@ -13,18 +20,18 @@ from pathlib import Path
 import numpy as np
 import pytest
 
-from rig import leg_control as lc
-from rig.bus import Pack
+from software.control.rig import leg_control as lc
+from software.control.rig.bus import Pack
 
 lr = pytest.importorskip('sim.leg_rig')
-R = Path(__file__).resolve().parents[2]
-REF = json.loads((R / 'exports' / 'leg' / 'rig-results.json').read_text())
+R = (Path(__file__).resolve().parents[3])
+REF = json.loads(((R / 'hardware/exports/leg/rig-results.json')).read_text())
 
 
 # ----------------------------------------------------------------------------------- the port is sim/leg_rig.py's
 
 def test_the_controller_is_sim_leg_controls_and_the_scenarios_sim_leg_rigs():
-    import sim.leg_control as slc
+    import software.simulation.leg_control as slc
     assert lc.vmc_from_state is slc.vmc_from_state and lc.polar is slc.polar and lc.Gains is slc.Gains
     assert lc.clip_motor is slc.clip_motor and lr.vmc_from_state is slc.vmc_from_state
     assert lc.LEG_CAP == lr.LEG_CAP and lc.LEG_PEAK == lr.LEG_PEAK
@@ -65,7 +72,7 @@ def test_polar_from_the_angles_equals_the_simulated_legs(model):
 def _run(name, rate=500.0, pack=None, latency=0, **kw):
     """rig.run's simulation of a scenario at the reference's mass, on sim/leg_rig.py's ideal bus (its BUS_V, no
     resistance) unless a pack is given: the bus the reference (exports/leg/rig-results.json) was made on."""
-    from rig.run import run_sim
+    from software.control.rig.run import run_sim
     pack = pack or Pack(REF.get('bus_v', lr.BUS_V), 0.0)
     return run_sim(name, REF['half_mass_kg'], rate, pack, latency, save=False, **kw)['results']
 
@@ -111,8 +118,8 @@ def test_at_the_simulations_own_rate_with_its_contact_the_port_is_exact():
 
 @pytest.mark.parametrize('kind', ['run', 'vbus_high', 'hot', 'window', 'silent', 'fault'])
 def test_every_fault_aborts_as_designed(kind):
-    from rig.faults import EXPECT
-    from rig.run import run_sim
+    from software.control.rig.faults import EXPECT
+    from software.control.rig.run import run_sim
     o = run_sim('squat', 14.75, 500.0, Pack(38.0, 0.10), 1, save=False, inject=(kind, 1.0))
     log = o['log']
     assert log.aborts and log.aborts[0][1].startswith(EXPECT[kind]), log.aborts
@@ -123,14 +130,14 @@ def test_every_fault_aborts_as_designed(kind):
 
 
 def test_sitdown_ends_near_150_mm():
-    from rig.run import run_sim
+    from software.control.rig.run import run_sim
     a = run_sim('squat', 14.75, 500.0, Pack(38.0, 0.10), 1, save=False, inject=('run', 2.0))['log'].arrays()
     i = np.flatnonzero(a['phase'] == 8)[0]
     assert a['L'][i] == pytest.approx(0.150, abs=0.012)
 
 
 def test_power_cut_tests_hold_until_the_cut_and_never_sit_down():
-    from rig.run import run_sim
+    from software.control.rig.run import run_sim
     o = run_sim('power_off_damped', 14.75, 500.0, Pack(38.0, 0.10), 1, save=False, inject=('run', 0.3))
     assert not o['log'].aborts                                    # the pendant's release is how the power is cut
     assert o['results']['L_range_mm'][0] < 120                     # and the leg folds once it goes
@@ -139,7 +146,7 @@ def test_power_cut_tests_hold_until_the_cut_and_never_sit_down():
 # ----------------------------------------------------------------------------------- the CAN path, without hardware
 
 def test_hil_squat_matches_the_simulation_with_one_tick_of_latency():
-    from rig.run import run_hil, run_sim
+    from software.control.rig.run import run_hil, run_sim
     h = run_hil('squat', 14.75, 500.0, Pack(38.0, 0.10))
     s = run_sim('squat', 14.75, 500.0, Pack(38.0, 0.10), 1, save=False)['results']
     for k in ('peak_motor_nm', 'peak_knee_pin_n'):
@@ -155,7 +162,7 @@ def test_hil_squat_matches_the_simulation_with_one_tick_of_latency():
 def test_hil_jump_survives_the_speed_fields_rail():
     """The push passes 15 rad/s, where the feedback's speed field saturates: the backend switches to the angle's
     rate and the jump still matches the simulation."""
-    from rig.run import run_hil, run_sim
+    from software.control.rig.run import run_hil, run_sim
     # the ideal 54 V bus: fast enough to run past the feedback's 15 rad/s field (on D65's 36 V packs it rarely is)
     h = run_hil('jump', 14.75, 500.0, Pack(54.0, 0.0))
     s = run_sim('jump', 14.75, 500.0, Pack(54.0, 0.0), 1, save=False)['results']
@@ -172,7 +179,7 @@ def _held_leg_ticks(ctl, L_of_t, t_end, dt=0.002):
     """Feed the controller a leg whose length follows L_of_t (the carriage held by the top stop: the wheel cannot move
     away), the motors reporting the commanded torque; return the commands."""
     import fivebar as fb
-    from rig.bus import MotorState, Tick
+    from software.control.rig.bus import MotorState, Tick
     out, t = [], 0.0
     while t <= t_end:
         phi1, phi2 = fb.ik(0.0, -L_of_t(t) * 1000.0)
@@ -186,7 +193,7 @@ def _held_leg_ticks(ctl, L_of_t, t_end, dt=0.002):
 
 
 def test_tyre_press_steps_the_force_through_the_leg_and_back():
-    from rig import leg_control as lc
+    from software.control.rig import leg_control as lc
     ctl = lc.LegController('tyre_press', 140.0, lc.Limits(), tick=0.002, external_cut=True)
     L = lambda t: 0.140 + (0.360 - 0.140) * lc.smooth(t / 2.0) if t < 2.0 else 0.360
     cmds = _held_leg_ticks(ctl, L, 66.0)
@@ -203,7 +210,7 @@ def test_tyre_press_steps_the_force_through_the_leg_and_back():
 
 
 def test_tyre_press_goes_limp_if_the_carriage_is_not_held():
-    from rig import leg_control as lc
+    from software.control.rig import leg_control as lc
     ctl = lc.LegController('tyre_press', 140.0, lc.Limits(), tick=0.002, external_cut=True)
     L = lambda t: (0.140 + 0.220 * lc.smooth(t / 2.0)) if t < 3.2 else min(0.390, 0.360 + 0.2 * (t - 3.2))   # it stretches
     cmds = _held_leg_ticks(ctl, L, 6.0)
@@ -214,7 +221,7 @@ def test_the_motors_need_the_carried_mass(monkeypatch):
     """On the motors the feed-forward is the mass carried: rig.run refuses --backend can without --half-mass, or with a
     mass no leg carries (a slipped decimal point, nan, inf), before opening the bus. run_can is stubbed: if a guard
     regressed, this test must not drive a real bus."""
-    import rig.run as rr
+    import software.control.rig.run as rr
     reached = []
     monkeypatch.setattr(rr, 'run_can', lambda a: reached.append(a.half_mass) or 0)
     for extra in ([], ['--half-mass', '151'], ['--half-mass', 'nan'], ['--half-mass', 'inf'], ['--half-mass', '2']):
@@ -226,7 +233,7 @@ def test_the_motors_need_the_carried_mass(monkeypatch):
 
 def test_the_load_plate_is_judged_at_the_carried_weight():
     """S1's load plate is checked against the run's own carried mass, +-25 N: a 15.1 kg rig reads about 148 N."""
-    from rig import compare
+    from software.control.rig import compare
     t = np.arange(0.0, 4.0, 0.002)
     a = {'t': t, 'L': np.full_like(t, 0.300), 'tau_f': np.full_like(t, 10.0), 'tau_r': np.full_like(t, 10.0),
          'vbus': np.full_like(t, 38.0), 'force_n': np.full_like(t, 15.1 * 9.81)}

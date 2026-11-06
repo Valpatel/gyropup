@@ -21,6 +21,13 @@ The `rig` package comes from this repository when it is importable, else from GY
 """
 from __future__ import annotations
 
+# Support direct-file CLI execution as well as checkout package imports.
+if __package__ in (None, ''):
+    import sys as _checkout_sys
+    from pathlib import Path as _CheckoutPath
+    _checkout_sys.path.insert(0, str(_CheckoutPath(__file__).resolve().parents[4]))
+
+
 import math
 import os
 import sys
@@ -29,13 +36,13 @@ from pathlib import Path
 from typing import Callable, Dict, List, Optional
 
 HERE = Path(__file__).resolve().parent
-REPO = HERE.parents[2]
-for _p in (str(REPO), str(REPO / 'cad'), str(HERE)):
+REPO = (HERE.parents[3])
+for _p in (str(REPO), str((REPO / 'hardware/cad')), str(HERE)):
     if _p not in sys.path:
         sys.path.insert(0, _p)
 os.environ.setdefault('MUJOCO_GL', 'egl')
 
-import fwlib  # noqa: E402
+import software.firmware.balance.hil.fwlib as fwlib  # noqa: E402
 
 RIG_DIR = Path(os.environ.get('GYROPUP_RIG_DIR', str(Path.home() / 'Code' / 'gyropup-legrig')))
 DESIGN_HALF_MASS = 18.75      # kg a leg (D71; cad/test_body.py checks it against cad/body_layout.py BUDGET)
@@ -47,22 +54,29 @@ R_PACK = 0.100                # ohm, as the firmware's resting-voltage estimate 
 def import_rig():
     """(sim.leg_rig, rig.hil, rig.sim_bus, rig.can_bus, rig.canio, rig.bus, rig.leg_control): this repository's
     sim.leg_rig first, so the rig's modules bind to it."""
-    from sim import leg_rig as lr                       # noqa: F401  (imported before rig.sim_bus binds `sim`)
-    from sim import robot_v2
+    from software.simulation import leg_rig as lr                       # noqa: F401  (imported before rig.sim_bus binds `sim`)
+    from software.simulation import robot_v2
     robot_v2.use_d69_wheel()                            # D69's 10 in hub wheel, as the firmware header was generated
-    from sim import leg_control  # noqa: F401
+    from software.simulation import leg_control  # noqa: F401
     try:
-        import rig.hil  # noqa: F401
+        import software.control.rig.hil
+        import software.control.rig as rig  # noqa: F401
     except ImportError:
         if not (RIG_DIR / 'rig' / 'hil.py').exists():
             raise
         sys.path.append(str(RIG_DIR))
-        import rig.hil  # noqa: F401
-    import rig.bus
-    import rig.can_bus
-    import rig.canio
-    import rig.leg_control
-    import rig.sim_bus
+        import software.control.rig.hil
+        import software.control.rig as rig  # noqa: F401
+    import software.control.rig.bus
+    import software.control.rig as rig
+    import software.control.rig.can_bus
+    import software.control.rig as rig
+    import software.control.rig.canio
+    import software.control.rig as rig
+    import software.control.rig.leg_control
+    import software.control.rig as rig
+    import software.control.rig.sim_bus
+    import software.control.rig as rig
     return lr, rig.hil, rig.sim_bus, rig.can_bus, rig.canio, rig.bus, rig.leg_control
 
 
@@ -114,7 +128,7 @@ def transport(spec: str):
     'python-can:<interface>:<channel>'."""
     kind, _, rest = spec.partition(':')
     if kind == 'socketcan':
-        from rig.canio import SocketCan
+        from software.control.rig.canio import SocketCan
         return SocketCan(rest or 'can0')
     if kind == 'python-can':
         iface, _, chan = rest.partition(':')
@@ -237,7 +251,7 @@ class Hil:
             ) -> dict:
         """Tick until the firmware runs (at most `until_running` s of firmware time), then `seconds` of plant time.
         Returns per-tick arrays (plant time, both legs' true length and lean, the rail, the firmware's state)."""
-        from sim.leg_control import polar
+        from software.simulation.leg_control import polar
         log: Dict[str, List[float]] = {k: [] for k in ('t', 'L', 'lean', 'L_r', 'lean_r', 'rail_mm', 'mode', 'flags', 'reason',
                                                        'vrest', 'vbus', 'v_oc', 'jump_phase', 'tau_f', 'tau_r', 'mcu_run',
                                                        'vload', 'cutoff', 'bus_scale', 'ibus', 'vhigh', 'overcharge',

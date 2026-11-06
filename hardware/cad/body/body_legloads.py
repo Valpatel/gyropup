@@ -16,16 +16,23 @@ the carriage) gives the same vertical force (cfrc_int), a check.
 """
 from __future__ import annotations
 
+# Support direct-file CLI execution as well as checkout package imports.
+if __package__ in (None, ''):
+    import sys as _checkout_sys
+    from pathlib import Path as _CheckoutPath
+    _checkout_sys.path.insert(0, str(_CheckoutPath(__file__).resolve().parents[3]))
+
+
 import argparse
 import json
 import sys
 import time
 from pathlib import Path
 
-R = Path(__file__).resolve().parents[1]
+R = (Path(__file__).resolve().parents[3])
 sys.path.insert(0, str(R))
-sys.path.insert(0, str(R / 'cad'))
-OUT = R / 'exports' / 'body' / 'leg-loads.json'
+sys.path.insert(0, str((R / 'hardware/cad')))
+OUT = (R / 'hardware/exports/body/leg-loads.json')
 KEYS = ('peak_motor_nm', 'peak_motor_speed_rad_s', 'peak_wheel_force_n', 'peak_axle_force_n', 'peak_knee_pin_n', 'peak_gearbox_nm',
         'peak_stop_nm', 'jump_height_mm', 'L_range_mm', 'peak_joint_force_n', 'pose_at_peak_axle_force')
 RARE = ('jump', 'jump_peak', 'drop_150')          # events the body is designed for at SF >= 2
@@ -33,12 +40,12 @@ FAULT = ('power_off',)                            # the undamped power cut (D39'
 
 
 def half_mass_from_ledger():
-    m = json.loads((R / 'exports/body/mass.json').read_text())['P3']['total_kg']
+    m = json.loads(((R / 'hardware/exports/body/mass.json')).read_text())['P3']['total_kg']
     return round(m / 2, 2)
 
 
 def design_half_mass():
-    import body_layout as bl
+    import hardware.cad.body.body_layout as bl
     return bl.BUDGET['design_half_mass_kg']
 
 
@@ -79,14 +86,14 @@ def _probe(lr, fb, log):
 
 def tyre_y_mm() -> float:
     """The tyre's centre plane in the left module's frame: D69's 10 in tyre (sim/robot_v2.py use_d69_wheel())."""
-    from sim import robot_v2
+    from software.simulation import robot_v2
     return robot_v2.use_d69_wheel()['y_mm']
 
 
 def run(half_mass: float, bus_v: float = BUS_V) -> dict:
     import math
-    from sim import leg_rig as lr
-    from sim import robot_v2
+    from software.simulation import leg_rig as lr
+    from software.simulation import robot_v2
     robot_v2.use_d69_wheel()                        # D69's 10 in hub wheel in the rig's module state (as sim/wheel_study.py)
     fb = lr.fb
     rig_v = lr.BUS_V

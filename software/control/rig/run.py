@@ -14,6 +14,13 @@ The motors are only driven while the rig node's RUN frames are fresh (the pendan
 """
 from __future__ import annotations
 
+# Support direct-file CLI execution as well as checkout package imports.
+if __package__ in (None, ''):
+    import sys as _checkout_sys
+    from pathlib import Path as _CheckoutPath
+    _checkout_sys.path.insert(0, str(_CheckoutPath(__file__).resolve().parents[3]))
+
+
 import argparse
 import json
 import math
@@ -22,15 +29,15 @@ import time
 from pathlib import Path
 from typing import Optional
 
-R = Path(__file__).resolve().parents[1]
+R = (Path(__file__).resolve().parents[3])
 if str(R) not in sys.path:
     sys.path.insert(0, str(R))
 
-from rig import compare, leg_control as lc  # noqa: E402
-from rig.bus import Pack  # noqa: E402
-from rig.log import RunLog  # noqa: E402
+from software.control.rig import compare, leg_control as lc  # noqa: E402
+from software.control.rig.bus import Pack  # noqa: E402
+from software.control.rig.log import RunLog  # noqa: E402
 
-OUT = R / 'exports' / 'rig'
+OUT = (R / 'hardware/exports/rig')
 DESIGN_KG = 18.75                     # D71: half the 37.5 kg design mass, a leg's own parts and wheel included
 # the reproduction (T7) runs at exports/leg/rig-results.json's own half_mass_kg and bus_v (18.75 kg, 36 V since D71)
 RIG_TESTS = ('stand_up', 'squat', 'jump', 'drop_150', 'power_off', 'power_off_damped', 'tyre_press')
@@ -89,12 +96,12 @@ def loop(bus, ctl, log: RunLog, duration: float, verbose: bool = False):
 def run_sim(test: str, half_mass: float, rate: float, pack: Pack, latency: int, rail_low: Optional[float] = None,
             contact_truth: bool = False, limits: Optional[lc.Limits] = None, video: Optional[Path] = None,
             tag: str = '', save: bool = True, plot: bool = False, inject: Optional[tuple] = None):
-    from rig.sim_bus import SimBus
+    from software.control.rig.sim_bus import SimBus
     sc = lc.SCENARIOS[test]
     bus = SimBus(test, half_mass=half_mass, tick=1 / rate, cap=sc.cap, rail_low=rail_low, pack=pack,
                  latency_ticks=latency, video=video)
     if inject:
-        from rig.faults import FaultBus
+        from software.control.rig.faults import FaultBus
         bus = FaultBus(bus, inject[0], inject[1])
     lim = limits or lc.Limits(cap=sc.cap or lc.LEG_PEAK)
     if limits is None and pack.r_int == 0.0:                     # sim/leg_rig.py's ideal bus (T7): no packs, so no window
@@ -121,10 +128,10 @@ def _judge(path: Path, plot: bool) -> int:
 
 def reproduce(rate: float = 500.0) -> dict:
     """T7's acceptance: sim/leg_rig.py's scenarios through the bus at the rig's rate, against rig-results.json."""
-    ref = json.loads((R / 'exports' / 'leg' / 'rig-results.json').read_text())
+    ref = json.loads(((R / 'hardware/exports/leg/rig-results.json')).read_text())
     results = {}
     for name in lc.SCENARIOS:
-        from sim import leg_rig as lr
+        from software.simulation import leg_rig as lr
         r = run_sim(name, ref['half_mass_kg'], rate, Pack(lr.BUS_V, 0.0), 0, save=False)['results']
         results[name] = {k: v for k, v in r.items() if k != 'series'}
         print(f"  {name:17} jump {r['jump_height_mm']}  motor {r['peak_motor_nm']}  wheel {r['peak_wheel_force_n']}  gearbox {r['peak_gearbox_nm']}")
@@ -167,7 +174,7 @@ def predict(half_mass: float = DESIGN_KG, rate: float = 500.0, r_int: float = 0.
 
 def faults(test: str = 'squat', at: float = 1.0) -> dict:
     """T8: every abort of the supervisor shown in the simulation, each fault injected at `at` s of `test`."""
-    from rig.faults import EXPECT, KINDS
+    from software.control.rig.faults import EXPECT, KINDS
     import numpy as np
     out = {}
     for kind in KINDS:
@@ -202,9 +209,9 @@ def faults(test: str = 'squat', at: float = 1.0) -> dict:
 
 def run_hil(test: str, half_mass: float, rate: float, pack: Pack, plot: bool = False, tag: str = 'hil',
             cap: Optional[float] = None, build: str = 'pla_bench'):
-    from rig.can_bus import Calibration, CanBus, MotorCal
-    from rig.hil import HilLink
-    from rig.sim_bus import SimBus
+    from software.control.rig.can_bus import Calibration, CanBus, MotorCal
+    from software.control.rig.hil import HilLink
+    from software.control.rig.sim_bus import SimBus
     import fivebar as fb
     sc = lc.SCENARIOS[test]
     fo, _, ro, _ = fb.stop_angles()
@@ -248,7 +255,7 @@ def cap_setup(cap: Optional[float], rate_limit: Optional[float] = None, build: s
     One number sets both caps: the motors' limit_torque, written and read back at start-up (rig/rs04.py configure), and
     the laptop's clip. A lower cap is how a weaker leg runs (docs/motor-day.md: PLA); a higher one than the build's is
     refused, so a forgotten flag never runs a printed leg at the robot's torque."""
-    from rig import rs04 as P
+    from software.control.rig import rs04 as P
     top = build_cap(build)
     c = top if cap is None else float(cap)
     if not 0.0 < c <= top:
@@ -261,7 +268,7 @@ def cap_guard(rs04_bus, ids, cap: Optional[float], build: str = 'pla_bench') -> 
     a lower limit (a weaker leg's, docs/motor-day.md) is not raised by a forgotten flag: the operator must say --cap."""
     if cap is not None:
         return None
-    from rig import rs04 as P
+    from software.control.rig import rs04 as P
     top = build_cap(build)
     held = {i: P.Motor(rs04_bus, i).read('limit_torque') for i in ids}
     low = {i: v for i, v in held.items() if v < top - 1e-6}
@@ -272,8 +279,8 @@ def cap_guard(rs04_bus, ids, cap: Optional[float], build: str = 'pla_bench') -> 
 
 
 def run_can(a) -> int:
-    from rig.can_bus import Calibration, CanBus
-    from rig.canio import SocketCan
+    from software.control.rig.can_bus import Calibration, CanBus
+    from software.control.rig.canio import SocketCan
     sc = lc.scenario_of(a.test)
     if a.test not in RIG_TESTS:
         print(f'{a.test} is not a rig test (the motors are capped at 60 N m)')

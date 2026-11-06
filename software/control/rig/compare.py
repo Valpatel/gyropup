@@ -9,6 +9,13 @@ metric is measured the same way on the prediction's log and on the run's, so the
 """
 from __future__ import annotations
 
+# Support direct-file CLI execution as well as checkout package imports.
+if __package__ in (None, ''):
+    import sys as _checkout_sys
+    from pathlib import Path as _CheckoutPath
+    _checkout_sys.path.insert(0, str(_CheckoutPath(__file__).resolve().parents[3]))
+
+
 import argparse
 import json
 from pathlib import Path
@@ -16,13 +23,13 @@ from typing import Optional
 
 import numpy as np
 
-from rig import log as runlog
+from software.control.rig import log as runlog
 
-R = Path(__file__).resolve().parents[1]
-CRITERIA = json.loads((R / 'rig' / 'criteria.json').read_text())
+R = (Path(__file__).resolve().parents[3])
+CRITERIA = json.loads(((R / 'software/control/rig/criteria.json')).read_text())
 G_STD = 9.81                          # m/s^2: a carried mass's weight on the load plate
-PRED_FILE = R / 'exports' / 'rig' / 'predictions.json'
-REF_FILE = R / 'exports' / 'leg' / 'rig-results.json'
+PRED_FILE = (R / 'hardware/exports/rig/predictions.json')
+REF_FILE = (R / 'hardware/exports/leg/rig-results.json')
 
 
 def _win(a, from_s=None, to_s=None, t0=0.0):
@@ -170,7 +177,7 @@ def judge(test: str, a: dict, pred: Optional[dict] = None, half_mass: Optional[f
                 v = float(np.nanmax(np.abs(a[sig][m_] - ref))) if m_.any() else float('nan')
                 row.update(value=round(v * 1000, 2), limit=c['tol'] * 1000, ok=bool(v <= c['tol']))
         elif k == 'press':
-            from rig.leg_control import PRESS_HOLD, PRESS_STEPS, PRESS_T0
+            from software.control.rig.leg_control import PRESS_HOLD, PRESS_STEPS, PRESS_T0
             t, errs = a['t'], []
             for i, F in enumerate(PRESS_STEPS):                    # each step's last seconds, once the force has settled
                 t1 = PRESS_T0 + (i + 1) * PRESS_HOLD

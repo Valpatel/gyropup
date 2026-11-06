@@ -9,6 +9,13 @@ released defaults; the recorded broad-phase near margin equals the touch margin.
 """
 from __future__ import annotations
 
+# Support direct-file CLI execution as well as checkout package imports.
+if __package__ in (None, ''):
+    import sys as _checkout_sys
+    from pathlib import Path as _CheckoutPath
+    _checkout_sys.path.insert(0, str(_CheckoutPath(__file__).resolve().parents[3]))
+
+
 import argparse
 from dataclasses import asdict
 import hashlib
@@ -18,9 +25,9 @@ from pathlib import Path
 import sys
 import time
 
-ROOT = Path(__file__).resolve().parents[2]
-sys.path.insert(0, str(ROOT / 'cad'))
-import rs04_lug_checks as lugs
+ROOT = (Path(__file__).resolve().parents[3])
+sys.path.insert(0, str((ROOT / 'hardware/cad')))
+import hardware.cad.legs.rs04_lug_checks as lugs
 
 MATING_Z = 25.0
 OUTPUT_Z = 25.5
@@ -56,7 +63,7 @@ def digest(path):
 
 
 def inputs(vendor_root):
-    import print_provenance
+    import hardware.cad.manufacturing.print_provenance as print_provenance
     project = print_provenance.snapshot(ROOT)
     private = lugs.private_inputs(vendor_root)
     if (private != lugs.PRIVATE_HASHES
@@ -136,16 +143,16 @@ def ring(cq, outside, inside, thickness, axes):
 
 def probe(vendor_root, out, report):
     import cadquery as cq
-    import gmi
-    import fivebar as fb
-    import rig_bench as rb
+    import hardware.cad.robot.gmi as gmi
+    import hardware.cad.legs.fivebar as fb
+    import hardware.cad.rig.rig_bench as rb
     from cadagent.evidence import shape_content_hash
     from cadagent.gates import Tolerances
     vendor_root = Path(vendor_root)
     before = inputs(vendor_root)
     report['source_inputs'] = before
     baseline = json.loads((ROOT / CONTEXT[-1]).read_text())
-    lugs.validate_receipt(baseline, ROOT / 'exports/leg/rs04-mounting-fit', ROOT)
+    lugs.validate_receipt(baseline, (ROOT / 'hardware/exports/leg/rs04-mounting-fit'), ROOT)
     report['baseline'] = {'receipt_sha256': digest(ROOT / CONTEXT[-1]),
                           'engineering_pass': baseline['pass'], 'counts': baseline['counts'],
                           'failures': [c['id'] for c in baseline['checks'] if c['status'] == 'fail'],

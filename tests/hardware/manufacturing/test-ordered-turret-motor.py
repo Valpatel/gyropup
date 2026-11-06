@@ -9,8 +9,8 @@ import tempfile
 import unittest
 import xml.etree.ElementTree as ET
 
-ROOT = Path(__file__).resolve().parents[1]
-spec = importlib.util.spec_from_file_location('ordered_motor', ROOT / 'tools/ordered-turret-motor.py')
+ROOT = (Path(__file__).resolve().parents[3])
+spec = importlib.util.spec_from_file_location('ordered_motor', (ROOT / 'tools/engineering/turret/ordered-turret-motor.py'))
 m = importlib.util.module_from_spec(spec)
 spec.loader.exec_module(m)
 
@@ -101,7 +101,7 @@ class SurveyTests(unittest.TestCase):
         self.assertTrue(all(m.sha(ROOT / p) == h for p, h in out['source_sha256'].items()))
 
     def test_committed_template_is_unknown_and_fails(self):
-        data = json.loads((ROOT / 'research/ordered-turret-motor/measurements.template.json').read_text())
+        data = json.loads(((ROOT / 'docs/research/ordered-turret-motor/measurements.template.json')).read_text())
         self.assertEqual(data, m.template())
         self.assertTrue(all(row['value'] is None for row in data['measurements'].values()))
         out = self.report(data)
@@ -182,7 +182,7 @@ class SurveyTests(unittest.TestCase):
 
 class GaugeReceiptTests(unittest.TestCase):
     def test_current_export_identity_and_real_geometry_results(self):
-        folder = ROOT / 'exports/turret/ordered-motor-fit'
+        folder = (ROOT / 'hardware/exports/turret/ordered-motor-fit')
         data = json.loads((folder / 'checks.json').read_text())
         self.assertEqual(data['schema'], 'cadagent.gate/1')
         self.assertEqual(data['gate'], 'ordered-motor-shaft-survey-gauge')
@@ -216,7 +216,7 @@ class GaugeReceiptTests(unittest.TestCase):
 
 class SheetTests(unittest.TestCase):
     def test_committed_svg_reproduces_and_physical_units_are_one_to_one(self):
-        sheet = (ROOT / 'research/ordered-turret-motor/mount-pattern-survey.svg').read_text()
+        sheet = ((ROOT / 'docs/research/ordered-turret-motor/mount-pattern-survey.svg')).read_text()
         self.assertEqual(sheet, m.survey_sheet())
         svg = ET.fromstring(sheet)
         self.assertEqual(svg.attrib['width'], '210mm')

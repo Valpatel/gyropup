@@ -7,7 +7,7 @@ from pathlib import Path
 import sys
 import unittest
 from unittest.mock import patch
-sys.path.insert(0,str(Path(__file__).resolve().parents[1]/'cad'))
+sys.path.insert(0,str((Path(__file__).resolve().parents[3] / 'hardware/cad')))
 import cadquery as cq
 from OCP.TopoDS import TopoDS_Shell,TopoDS_Solid
 from OCP.BRep import BRep_Builder

@@ -12,6 +12,13 @@ and docs/turret-print.md (what to load, in what order, on how many plates). The 
 """
 from __future__ import annotations
 
+# Support direct-file CLI execution as well as checkout package imports.
+if __package__ in (None, ''):
+    import sys as _checkout_sys
+    from pathlib import Path as _CheckoutPath
+    _checkout_sys.path.insert(0, str(_CheckoutPath(__file__).resolve().parents[3]))
+
+
 import argparse
 import json
 import fcntl
@@ -21,11 +28,11 @@ import time
 import tempfile
 from pathlib import Path
 
-R = Path(__file__).resolve().parents[1]
-sys.path.insert(0, str(R / 'cad'))
-import print_provenance as provenance  # noqa: E402
-import print_slicing  # noqa: E402
-OUT = R / 'exports' / 'turret' / 'print'
+R = (Path(__file__).resolve().parents[3])
+sys.path.insert(0, str((R / 'hardware/cad')))
+import hardware.cad.manufacturing.print_provenance as provenance  # noqa: E402
+import hardware.cad.manufacturing.print_slicing as print_slicing  # noqa: E402
+OUT = (R / 'hardware/exports/turret/print')
 WORK = R / 'build' / 'slicer' / 'turret'
 BED = (256.0, 256.0)
 PRINTER = 'Bambu Lab P1S 0.4 nozzle'
@@ -134,7 +141,7 @@ def _publish(staged: Path, document: Path, backup: Path):
     A process/host crash between directory renames can leave the backup directory.
     Do not auto-delete it: the next run stops for explicit recovery.
     """
-    doc = R / 'docs/turret-print.md'
+    doc = (R / 'docs/turret/turret-print.md')
     old_doc = doc.read_bytes() if doc.exists() else None
     had_output = OUT.exists()
     if had_output:
@@ -193,7 +200,7 @@ def _build(a, ap, stage: Path, backup: Path):
         selected = not a.only or name in a.only
         if not selected and name not in retained:
             continue
-        src = R / 'exports/turret' / mesh
+        src = (R / 'hardware/exports/turret') / mesh
         sources[name] = provenance.validate_mesh(R, src, inputs)
         over = {**settings, **PLATE, **(SUPPORT if support else {})}
         slicing[name] = None if a.no_slice else print_slicing.capture(PRINTER, PROCESS, FILAMENT[mat], over)
@@ -207,7 +214,7 @@ def _build(a, ap, stage: Path, backup: Path):
                     or (not a.no_slice and not provenance.successful_slice(row))):
                 raise ValueError(f'{name}: retained print output is stale or unbound; regenerate the full package')
             try:
-                _copy_verified(R / expected_output, output / f'{name}.3mf', row.get('sha256'))
+                _copy_verified(provenance.retained_export_path(R, expected_output), output / f'{name}.3mf', row.get('sha256'))
             except (OSError, ValueError) as exc:
                 raise ValueError(f'{name}: retained print output is stale or unbound; regenerate the full package') from exc
             rows[name] = row
@@ -244,7 +251,7 @@ def _build(a, ap, stage: Path, backup: Path):
         if provenance.snapshot(R) != inputs:
             raise ValueError('CAD inputs changed during packaging')
         for name, source in sources.items():
-            if provenance.validate_mesh(R, R / source['file'], inputs) != source:
+            if provenance.validate_mesh(R, provenance.retained_export_path(R, source['file']), inputs) != source:
                 raise ValueError(f'{name}: source receipt changed during packaging')
             if (provenance.digest(meshes / f'{name}.stl') != source['sha256']
                     or provenance.digest(output / f'{name}.3mf') != rows[name]['sha256']):

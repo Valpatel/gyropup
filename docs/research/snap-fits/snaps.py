@@ -23,6 +23,13 @@ coupons (cad/turret.py snap_coupons) are printed and pulled before the numbers a
 """
 from __future__ import annotations
 
+# Support direct-file CLI execution as well as checkout package imports.
+if __package__ in (None, ''):
+    import sys as _checkout_sys
+    from pathlib import Path as _CheckoutPath
+    _checkout_sys.path.insert(0, str(_CheckoutPath(__file__).resolve().parents[3]))
+
+
 import argparse
 import hashlib
 import json
@@ -34,14 +41,14 @@ import tempfile
 from pathlib import Path
 
 HERE = Path(__file__).resolve().parent
-ROOT = HERE.parents[1]
-sys.path.insert(0, str(ROOT / 'cad'))
-import turret_snaps as ts  # noqa: E402
+ROOT = (HERE.parents[2])
+sys.path.insert(0, str((ROOT / 'hardware/cad')))
+import hardware.cad.turret.turret_snaps as ts  # noqa: E402
 
 SPEC = HERE / 'snaps.yaml'
 RESULT = HERE / 'snapfit.json'
 SUMMARY = HERE / 'summary.json'
-CONSTANTS = ROOT / 'cad' / 'turret_snaps.py'
+CONSTANTS = (ROOT / 'hardware/cad/turret/turret_snaps.py')
 PIN = 'v0.18.2'
 COMMAND = 'cad-agent snapfit research/snap-fits/snaps.yaml --output research/snap-fits/snapfit.json'
 

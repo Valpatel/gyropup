@@ -16,8 +16,8 @@ import numpy as np
 import trimesh
 from cadagent.mesh3mf import write_3mf
 
-ROOT = Path(__file__).resolve().parents[1]
-spec = importlib.util.spec_from_file_location('fit_job', ROOT / 'tools/package-fit-job.py')
+ROOT = (Path(__file__).resolve().parents[3])
+spec = importlib.util.spec_from_file_location('fit_job', (ROOT / 'tools/evidence/manufacturing/package-fit-job.py'))
 fit = importlib.util.module_from_spec(spec)
 spec.loader.exec_module(fit)
 INSPECT = fit.sliced_inspection
@@ -233,14 +233,14 @@ class FitJobTests(unittest.TestCase):
             fit.verify_slice_identity(self.job, self.identity)
 
     def test_archived_real_205C_slice_is_rejected(self):
-        archive = ROOT / 'research/retained-fit-jobs/rejected-7b67f03.zip'
+        archive = (ROOT / 'docs/research/retained-fit-jobs/rejected-7b67f03.zip')
         with zipfile.ZipFile(archive) as z:
             gcode = z.read('slice/out/plate_1.gcode').decode()
         with self.assertRaisesRegex(ValueError, 'temperatures/waits differ'):
             fit.toolpaths(gcode, MACHINE)
 
     def test_real_temperature_correct_speed_diagnostic_is_rejected(self):
-        with zipfile.ZipFile(ROOT / 'research/retained-fit-jobs/rejected-speed-diagnostic.zip') as archive:
+        with zipfile.ZipFile((ROOT / 'docs/research/retained-fit-jobs/rejected-speed-diagnostic.zip')) as archive:
             with zipfile.ZipFile(io.BytesIO(archive.read('slice/out/sliced.3mf'))) as sliced:
                 gcode = sliced.read('Metadata/plate_1.gcode').decode()
         with self.assertRaisesRegex(ValueError, 'commanded feed exceeds'):
@@ -284,7 +284,7 @@ class FitJobTests(unittest.TestCase):
 
 class PublishedArchiveTests(unittest.TestCase):
     def test_complete_download_matches_retained_directory(self):
-        directory = ROOT / 'exports/leg/rs04-fit-job'
+        directory = (ROOT / 'hardware/exports/leg/rs04-fit-job')
         expected = {str(p.relative_to(directory.parent)): p for p in directory.rglob('*') if p.is_file()}
         self.assertIn('rs04-fit-job/job.json', expected)
         with zipfile.ZipFile(directory.with_suffix('.zip')) as archive:
@@ -313,14 +313,14 @@ def slice_quote_problems(text, metrics):
 
 class SliceQuotes(unittest.TestCase):
     def test_docs_quote_the_receipts_estimate(self):
-        metrics = json.loads((ROOT / 'exports/leg/rs04-fit-job/job.json').read_text())['metrics']
+        metrics = json.loads(((ROOT / 'hardware/exports/leg/rs04-fit-job/job.json')).read_text())['metrics']
         for doc in SLICE_DOCS:
             with self.subTest(doc=doc):
                 self.assertEqual(slice_quote_problems((ROOT / doc).read_text(), metrics), [])
 
     def test_every_line_linking_the_job_quotes_its_grams(self):
         """Beyond SLICE_DOCS: any Markdown line that links the fit job and gives a gram figure gives the receipt's."""
-        grams = json.loads((ROOT / 'exports/leg/rs04-fit-job/job.json').read_text())['metrics']['grams']
+        grams = json.loads(((ROOT / 'hardware/exports/leg/rs04-fit-job/job.json')).read_text())['metrics']['grams']
         bad = []
         for md in ROOT.rglob('*.md'):
             rel = md.relative_to(ROOT).as_posix()

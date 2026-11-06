@@ -25,6 +25,13 @@ both) and exports/fea/summary.json.
 """
 from __future__ import annotations
 
+# Support direct-file CLI execution as well as checkout package imports.
+if __package__ in (None, ''):
+    import sys as _checkout_sys
+    from pathlib import Path as _CheckoutPath
+    _checkout_sys.path.insert(0, str(_CheckoutPath(__file__).resolve().parents[3]))
+
+
 import argparse
 import glob
 import json
@@ -35,14 +42,14 @@ import sys
 import time
 from pathlib import Path
 
-R = Path(__file__).resolve().parents[1]
-sys.path.insert(0, str(R / 'cad'))
+R = (Path(__file__).resolve().parents[3])
+sys.path.insert(0, str((R / 'hardware/cad')))
 
-import gmi  # noqa: E402
-import leg  # noqa: E402
+import hardware.cad.robot.gmi as gmi  # noqa: E402
+import hardware.cad.legs.leg as leg  # noqa: E402
 from cadagent.fea import MATERIALS, Study, cylinder_at, plane_at  # noqa: E402
 
-EXPORTS = Path(os.environ['GYROPUP_EXPORTS']).resolve() if os.environ.get('GYROPUP_EXPORTS') else R / 'exports'
+EXPORTS = Path(os.environ['GYROPUP_EXPORTS']).resolve() if os.environ.get('GYROPUP_EXPORTS') else (R / 'hardware/exports')
 OUT = EXPORTS / 'fea'
 
 
@@ -128,7 +135,7 @@ def output_joint(mi: dict, design: dict) -> dict:
     """Torque the screws' friction plus the dowels can carry at a motor's output, against the motor's (capped) peak."""
     o = mi['output']
     b, dw = o['bolts'], o['dowels']
-    cat = json.loads((R / 'catalog/leg_actuators.json').read_text())
+    cat = json.loads(((R / 'hardware/catalog/leg_actuators.json')).read_text())
     items = cat if isinstance(cat, list) else cat.get('parts') or cat.get('items') or list(cat.values())
     peak = next((p['specs']['peak_torque_nm'] for p in items if isinstance(p, dict) and p.get('id') == mi['id']), 60.0)
     T = min(float(design.get('leg_torque_limit_nm') or peak), float(peak))
@@ -148,7 +155,7 @@ def output_joint(mi: dict, design: dict) -> dict:
 
 
 def run(design: Path, mesh: float, anim: bool = True, only=None):
-    out = subprocess.run(['node', str(R / 'tools/derive.mjs'), str(design)], capture_output=True, text=True, check=True)
+    out = subprocess.run(['node', str((R / 'tools/engineering/robot/derive.mjs')), str(design)], capture_output=True, text=True, check=True)
     L = json.loads(out.stdout)['layout']
     d = json.loads(design.read_text())
     hip_id = d['parts']['leg_actuator']
@@ -337,7 +344,7 @@ def run(design: Path, mesh: float, anim: bool = True, only=None):
 
 if __name__ == '__main__':
     ap = argparse.ArgumentParser()
-    ap.add_argument('design', nargs='?', default=str(R / 'designs/default.json'))
+    ap.add_argument('design', nargs='?', default=str((R / 'hardware/designs/default.json')))
     ap.add_argument('--mesh', type=float, default=4.0)
     ap.add_argument('--no-anim', action='store_true', help='skip the overload videos (the optimiser)')
     ap.add_argument('--only', nargs='+', help='study only these parts (a quick look; the summary is then partial)')

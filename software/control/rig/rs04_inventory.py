@@ -18,7 +18,7 @@ import sys
 from pathlib import Path
 from typing import List, Optional
 
-ROOT = Path(__file__).resolve().parents[1]
+ROOT = (Path(__file__).resolve().parents[3])
 FILE = ROOT / 'hardware' / 'actuators' / 'rs04' / 'inventory.json'
 SCHEMA = 'gyropup.inventory/1'
 EXPORT_SCHEMA = 'rs04-motor-config/1'

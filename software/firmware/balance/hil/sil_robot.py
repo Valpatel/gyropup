@@ -8,6 +8,13 @@ pendulum-angle estimate and every sign between the sensors and the wheels are ch
 """
 from __future__ import annotations
 
+# Support direct-file CLI execution as well as checkout package imports.
+if __package__ in (None, ''):
+    import sys as _checkout_sys
+    from pathlib import Path as _CheckoutPath
+    _checkout_sys.path.insert(0, str(_CheckoutPath(__file__).resolve().parents[4]))
+
+
 import json
 import math
 import sys
@@ -17,8 +24,8 @@ import numpy as np
 
 HERE = Path(__file__).resolve().parent
 sys.path.insert(0, str(HERE))
-import harness  # noqa: E402
-import fwlib  # noqa: E402
+import software.firmware.balance.hil.harness as harness  # noqa: E402
+import software.firmware.balance.hil.fwlib as fwlib  # noqa: E402
 
 BUILD = harness.REPO / 'build' / 'sim' / 'v2'
 SIDES = ('l', 'r')
@@ -34,7 +41,7 @@ def command(t: float):
 class Plant:
     def __init__(self):
         import mujoco
-        from sim.controller_v2 import RobotV2, place_standing
+        from software.simulation.controller_v2 import RobotV2, place_standing
         self.mj = mujoco
         self.info = json.loads((BUILD / 'model.json').read_text())
         # the INA228 reads robot_v2's BUS_V (the 10S nominal, D65), the bus the simulation's speed lines are at
@@ -68,8 +75,8 @@ class Plant:
 
 
 def run_python(seconds: float = 8.0) -> dict:
-    from sim.controller import Command
-    from sim.controller_v2 import ControllerV2
+    from software.simulation.controller import Command
+    from software.simulation.controller_v2 import ControllerV2
     p = Plant()
     ctl = ControllerV2(p.rb)
     ctl.height = 0.6
@@ -89,7 +96,7 @@ def run_python(seconds: float = 8.0) -> dict:
 
 def run_firmware(seconds: float = 8.0) -> dict:
     lr, hil, sim_bus, can_bus, canio, rbus, _ = harness.import_rig()
-    from rig.rs04_emu import EmulatedRS04
+    from software.control.rig.rs04_emu import EmulatedRS04
     p = Plant()
     rb, m, d, mj = p.rb, p.m, p.d, p.mj
     imu = m.site('imu').id

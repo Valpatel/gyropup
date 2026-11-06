@@ -18,7 +18,7 @@ import hashlib
 import json
 from pathlib import Path
 
-ROOT = Path(__file__).resolve().parents[2]
+ROOT = (Path(__file__).resolve().parents[3])
 CASES = ('R1', 'E1', 'E3o', 'E3i', 'R3o')
 
 
@@ -97,7 +97,7 @@ def main():
     ap.add_argument('--search', type=Path, required=True)
     ap.add_argument('--runs', type=Path, help='the screening runs (JSON list)')
     ap.add_argument('--host-role', default='mechanical compute host')
-    ap.add_argument('--out', type=Path, default=ROOT / 'exports/leg/fea/hip-frame-29')
+    ap.add_argument('--out', type=Path, default=(ROOT / 'hardware/exports/leg/fea/hip-frame-29'))
     a = ap.parse_args()
     a.out.mkdir(parents=True, exist_ok=True)
     rb, ra = (json.loads((d / 'result.json').read_text()) for d in (a.before, a.after))

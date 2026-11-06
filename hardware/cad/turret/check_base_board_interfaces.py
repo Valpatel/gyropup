@@ -1,5 +1,12 @@
 """Bounded candidate space checks; explicitly not a complete harness qualification."""
 from __future__ import annotations
+
+# Support direct-file CLI execution as well as checkout package imports.
+if __package__ in (None, ''):
+    import sys as _checkout_sys
+    from pathlib import Path as _CheckoutPath
+    _checkout_sys.path.insert(0, str(_CheckoutPath(__file__).resolve().parents[3]))
+
 import argparse
 import hashlib
 import json
@@ -9,17 +16,17 @@ from pathlib import Path
 import time
 from dataclasses import replace
 
-ROOT=Path(__file__).resolve().parents[1]
-import print_provenance as provenance
+ROOT=(Path(__file__).resolve().parents[3])
+import hardware.cad.manufacturing.print_provenance as provenance
 # Capture the complete CAD/config/catalog closure before geometry imports read it.
 IMPORTED_INPUTS=provenance.snapshot(ROOT)
 import cadquery as cq
 import OCP
 from cadagent.gates import Tolerances, relate
 from cadagent.gates.relations import RELATIONS_VERSION
-import turret as tu
-import turret_base_board as bb
-import turret_carrier_interfaces as ci
+import hardware.cad.turret.turret as tu
+import hardware.cad.turret.turret_base_board as bb
+import hardware.cad.turret.turret_carrier_interfaces as ci
 
 CLEARANCE_VOLUME_MM3=1e-6
 # Preserve the original total1e-6 symmetric-difference allowance by allocating
@@ -210,5 +217,5 @@ def run(out):
 
 
 if __name__=='__main__':
-    p=argparse.ArgumentParser();p.add_argument('--out',type=Path,default=ROOT/'exports/turret/base-board-service/interfaces')
+    p=argparse.ArgumentParser();p.add_argument('--out',type=Path,default=(ROOT / 'hardware/exports/turret/base-board-service/interfaces'))
     raise SystemExit(run(p.parse_args().out))

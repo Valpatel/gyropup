@@ -25,7 +25,7 @@ import json
 import sys
 from pathlib import Path
 
-R = Path(__file__).resolve().parents[1]
+R = (Path(__file__).resolve().parents[3])
 BOARD_DIR = R / 'hardware' / 'fuse-board'
 sys.path.insert(0, str(BOARD_DIR))
 import design as D  # noqa: E402
@@ -166,7 +166,7 @@ REUSED = ['the MINI 58V fuses of P0 (fuse_mini58_20a x 4, 30a x 2, 10a x 2)', 't
 def catalogue():
     out = {}
     for f in ('body.json', 'hardware.json'):
-        p = R / 'catalog' / f
+        p = (R / 'hardware/catalog') / f
         if p.exists():
             for it in json.loads(p.read_text()):
                 if isinstance(it, dict) and it.get('key'):

@@ -7,14 +7,21 @@ imported. A module left out means a stored gate result reads as current after th
 """
 from __future__ import annotations
 
+# Support direct-file CLI execution as well as checkout package imports.
+if __package__ in (None, ''):
+    import sys as _checkout_sys
+    from pathlib import Path as _CheckoutPath
+    _checkout_sys.path.insert(0, str(_CheckoutPath(__file__).resolve().parents[3]))
+
+
 import ast
 import shutil
 from pathlib import Path
 
 import pytest
 
-HERE = Path(__file__).resolve().parent
-ROOT = HERE.parent
+HERE = (Path(__file__).resolve().parents[3] / 'hardware/cad')
+ROOT = (HERE.parents[1])
 # Imported by a module of the turret but not into its geometry: (module, the function that imports it) and why
 NOT_GEOMETRY = {('turret.py', 'main', 'print_provenance'): 'the exported STLs\' provenance record, read after the parts are built'}
 
@@ -65,7 +72,7 @@ def uncovered(sources, cad: Path = HERE):
 
 @pytest.fixture(scope='module')
 def tg():
-    import turret_gates
+    import hardware.cad.turret.turret_gates as turret_gates
     return turret_gates
 
 

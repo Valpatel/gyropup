@@ -25,8 +25,8 @@ import sys
 from pathlib import Path
 
 HERE = Path(__file__).resolve().parent
-ROOT = HERE.parents[1]
-sys.path.insert(0, str(ROOT / 'research/insert-joints'))
+ROOT = (HERE.parents[2])
+sys.path.insert(0, str((ROOT / 'docs/research/insert-joints')))
 from inventory import Repo, Stale  # noqa: E402  (the bound-source reader the insert inventory uses)
 
 OUT_JSON = HERE / 'screen.json'
@@ -160,7 +160,7 @@ def print_parts(repo, mat):
     repo.has('cad/build_leg.py', "DOWN_INNER = ((1, 0, 0), 90)         # its -y face on the bed")
     rows = []
     for name, p in plan['parts'].items():
-        stl = ROOT / 'exports/leg' / f'{name}.stl'
+        stl = (ROOT / 'hardware/exports/leg') / f'{name}.stl'
         f = stl_faces(stl) if stl.exists() else None
         flags = []
         if f and f['overhang_cm2'] > f['bed_cm2']:

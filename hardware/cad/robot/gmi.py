@@ -23,14 +23,14 @@ from pathlib import Path
 
 import cadquery as cq
 
-R = Path(__file__).resolve().parents[1]
-STD = json.loads((R / 'cad/interfaces.json').read_text())
+R = (Path(__file__).resolve().parents[3])
+STD = json.loads(((R / 'hardware/cad/robot/interfaces.json')).read_text())
 FAST = STD['fasteners']
 # Printed parts (D33): sizes the optimiser may vary, overridden like leg.PARAMS by GYROPUP_CAD_PARAMS
 PRINT = dict(STD['print']['defaults'])
 if os.environ.get('GYROPUP_CAD_PARAMS'):
     PRINT.update({k: v for k, v in json.loads(Path(os.environ['GYROPUP_CAD_PARAMS']).read_text()).items() if k in PRINT})
-CAT = json.loads((R / 'catalog/interfaces.json').read_text()) if (R / 'catalog/interfaces.json').exists() else {}
+CAT = json.loads(((R / 'hardware/catalog/interfaces.json')).read_text()) if ((R / 'hardware/catalog/interfaces.json')).exists() else {}
 
 
 BRACKET_DROP = 10.0          # the yoke screws sit this far below the tab's top edge (the tab reaches 4 mm above tab_top)
@@ -315,8 +315,8 @@ def motor_body(part_id: str):
     """The motor itself, in the motor frame (output face z = 0, body towards -z): the vendor STEP when it is on this
     machine, else a stepped envelope from the drawing numbers. Returns (shape, 'step'|'envelope')."""
     f = STEP_FRAMES.get(part_id)
-    if f and (R / 'references/vendor' / part_id / f['file']).exists():
-        shape = cq.importers.importStep(str(R / 'references/vendor' / part_id / f['file']))
+    if f and ((R / 'hardware/vendor') / part_id / f['file']).exists():
+        shape = cq.importers.importStep(str((R / 'hardware/vendor') / part_id / f['file']))
         return shape.translate((0, 0, -f['output_z'])), 'step'
     mi = motor_interface(part_id)
     od, L = mi['od'] or 100.0, mi['length'] or 50.0

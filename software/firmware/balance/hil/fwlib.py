@@ -16,7 +16,7 @@ from pathlib import Path
 from typing import Iterator, Optional, Sequence, Tuple
 
 FW = Path(__file__).resolve().parents[1]
-REPO = FW.parents[1]
+REPO = (FW.parents[2])
 ROBOT, RIG = 0, 1
 BUS_A, BUS_B, BUS_C = 0, 1, 2
 MODES = ('boot', 'idle', 'arming', 'run', 'jump', 'sit', 'settle', 'limp')

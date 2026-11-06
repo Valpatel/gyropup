@@ -46,6 +46,13 @@ head_ring_tm(L) is the proposed replacement for the ring of build.py's head_sadd
 """
 from __future__ import annotations
 
+# Support direct-file CLI execution as well as checkout package imports.
+if __package__ in (None, ''):
+    import sys as _checkout_sys
+    from pathlib import Path as _CheckoutPath
+    _checkout_sys.path.insert(0, str(_CheckoutPath(__file__).resolve().parents[3]))
+
+
 import itertools
 import json
 import math
@@ -57,11 +64,11 @@ from pathlib import Path
 import cadquery as cq
 import numpy as np
 
-R = Path(__file__).resolve().parents[1]
-sys.path.insert(0, str(R / 'cad'))
-import gmi  # noqa: E402
-import turret_base_board as base_board_service  # noqa: E402
-import turret_snaps as snaps  # noqa: E402
+R = (Path(__file__).resolve().parents[3])
+sys.path.insert(0, str((R / 'hardware/cad')))
+import hardware.cad.robot.gmi as gmi  # noqa: E402
+import hardware.cad.turret.turret_base_board as base_board_service  # noqa: E402
+import hardware.cad.turret.turret_snaps as snaps  # noqa: E402
 
 FAST = gmi.FAST
 BED = gmi.STD['print']['bed_mm']
@@ -158,7 +165,7 @@ CARRIER = {'r': 32.25, 'h': 12.0, 'tab_angles': (60.0, 135.0, 300.0), 'tab_r': 3
 TUBE = {'id': 4.76, 'od': 7.94, 'socket_d': 7.64, 'note': 'soft TPV rubber tube 3/16 in ID x 5/16 in OD (McMaster 51225K24)'}
 MAGNET = {'d': 4.76, 'h': 3.18, 'r': 35.0, 'note': 'neodymium disc 3/16 x 1/8 in (McMaster 5862K102), the pan index: ~760 G at the hall\'s element 3.5 mm over it (Br 1.32 T, on-axis formula), 4x the A1120\'s highest operate point'}
 HALL = {'size': (4.1, 3.0, 1.6), 'note': 'Allegro A1120LUA-T unipolar hall switch (UA package), on the turntable'}
-DENS = {k: v['density_g_cm3'] for k, v in json.loads((R / 'catalog/materials.json').read_text()).items()}
+DENS = {k: v['density_g_cm3'] for k, v in json.loads(((R / 'hardware/catalog/materials.json')).read_text()).items()}
 PRINT_RATE_CM3_H = {'pa6-cf': 14.0, 'petg': 20.0, 'tpu95': 8.0}       # same rates as build.py's print plan
 
 
@@ -2177,7 +2184,7 @@ def turret_parts(L, ball_d=22.7, pan=0.0, tilt=0.0):
 # ------------------------------------------------------------------------------------------------ main
 
 def derive(design: Path) -> dict:
-    out = subprocess.run(['node', str(R / 'tools/derive.mjs'), str(design)], capture_output=True, text=True, check=True)
+    out = subprocess.run(['node', str((R / 'tools/engineering/robot/derive.mjs')), str(design)], capture_output=True, text=True, check=True)
     return json.loads(out.stdout)['layout']
 
 
@@ -2212,13 +2219,13 @@ def print_fit(shape, rotation):
 
 
 def main():
-    import print_provenance
+    import hardware.cad.manufacturing.print_provenance as print_provenance
     print_inputs = print_provenance.snapshot(R)
     args = [a for a in sys.argv[1:] if not a.startswith('--')]
-    design = Path(args[0]) if args else R / 'designs/default.json'
+    design = Path(args[0]) if args else (R / 'hardware/designs/default.json')
     print_context = print_provenance.context_snapshot(R, [design])
     L = derive(design)
-    out = R / 'exports' / 'turret'
+    out = (R / 'hardware/exports/turret')
     out.mkdir(parents=True, exist_ok=True)
     T = Turret(L)
     G = T.G

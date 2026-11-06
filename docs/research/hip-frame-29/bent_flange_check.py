@@ -14,6 +14,13 @@ the web or the plate's stiffness in the leg. Writes JSON to stdout.
 """
 from __future__ import annotations
 
+# Support direct-file CLI execution as well as checkout package imports.
+if __package__ in (None, ''):
+    import sys as _checkout_sys
+    from pathlib import Path as _CheckoutPath
+    _checkout_sys.path.insert(0, str(_CheckoutPath(__file__).resolve().parents[3]))
+
+
 import argparse
 import json
 import sys
@@ -21,7 +28,7 @@ from pathlib import Path
 
 import yaml
 
-ROOT = Path(__file__).resolve().parents[2]
+ROOT = (Path(__file__).resolve().parents[3])
 HOLE_D = 5.5                       # M5 clearance in the tab (as the cheeks: cad/body_frame.py)
 
 
@@ -48,9 +55,9 @@ def main():
                          "(x 93, 4 mm mesh, corrected loads), which includes the sharp corner's concentration, so an upper bound")
     a = ap.parse_args()
     prof = yaml.safe_load(a.profiles.read_text())
-    sys.path[:0] = [str(ROOT / 'cad'), str(ROOT)]
-    import body_params as bp
-    import fivebar as fb
+    sys.path[:0] = [str((ROOT / 'hardware/cad')), str(ROOT)]
+    import hardware.cad.body.body_params as bp
+    import hardware.cad.legs.fivebar as fb
 
     m = fb.frame_mounts()
     z_hole = max(z for _, z in m['inserts_xz'])                     # 70

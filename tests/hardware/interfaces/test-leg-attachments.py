@@ -9,10 +9,10 @@ import struct
 import types
 import unittest
 
-ROOT = Path(__file__).resolve().parents[1]
-OUT = ROOT / 'exports/sim/v2/leg-attachments'
+ROOT = (Path(__file__).resolve().parents[3])
+OUT = (ROOT / 'hardware/exports/sim/v2/leg-attachments')
 MAN = json.loads((OUT / 'manifest.json').read_text())
-REF = json.loads((ROOT / 'tools/fixtures/leg-attachment-motion.json').read_text())
+REF = json.loads(((ROOT / 'tests/fixtures/leg-attachment-motion.json')).read_text())
 
 
 def points(file):
@@ -30,13 +30,13 @@ class Attachments(unittest.TestCase):
         self.assertEqual(len(MAN['parts']), 10)
 
     def test_adapter_is_only_reframed_original_project_geometry(self):
-        original = points(ROOT / 'exports/sim/v2/rig/body__adapter_f_l.stl')
+        original = points((ROOT / 'hardware/exports/sim/v2/rig/body__adapter_f_l.stl'))
         current = points(OUT / 'output_adapter.stl')
         self.assertEqual(len(original), len(current))
         self.assertLess(max(abs(a-b-o) for p,q in zip(original,current) for a,b,o in zip(p,q,[75.,82.3,0.])), .00001)
 
     def test_all_nine_stock_screw_seats_match_the_adapter_interface(self):
-        hardware = next(p for p in json.loads((ROOT/'catalog/hardware.json').read_text()) if p['key']=='screw_m5x25')
+        hardware = next(p for p in json.loads(((ROOT / 'hardware/catalog/hardware.json')).read_text()) if p['key']=='screw_m5x25')
         spec=hardware['specs']
         self.assertEqual((spec['length_mm'],spec['head_d_mm'],spec['head_height_mm']),(25.,8.5,5.))
         angles = [45.,75.,105.,165.,195.,225.,285.,315.,345.]
@@ -60,7 +60,7 @@ class Attachments(unittest.TestCase):
         fb=types.SimpleNamespace(leg_parts=lambda:types.SimpleNamespace(parts={k:shape for k in ['hip_frame','upper_link','output_adapter','front_link','wheel_link']}),
             P={'D':150.},Y={'motor_out':-24.6},MOTOR='rs04',botwheel=lambda:(shape,shape),
             upper_output_screws=lambda:[(f'output_screw_{i}',shape) for i in range(1,10)])
-        tree=ast.parse((ROOT/'sim/robot_v2.py').read_text())
+        tree=ast.parse(((ROOT / 'software/simulation/robot_v2.py')).read_text())
         fn=next(n for n in tree.body if isinstance(n,ast.FunctionDef) and n.name=='export_rig')
         gmi=types.SimpleNamespace(motor_interface=lambda _: {'od':120,'length':55.7},_cyl=lambda *a:types.SimpleNamespace(union=lambda _:shape),place=lambda *a:shape)
         scope={'fb':fb,'gmi':gmi,'Y_OFF':82.3,'COLORS':dict.fromkeys(['frame','motor','adapter','lidar','link','wheel_link','tyre','hub'],'#fff'),

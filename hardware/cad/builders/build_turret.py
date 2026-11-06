@@ -9,6 +9,13 @@ The turret's own part files come from `cad/turret.py` (exports/turret/).
 """
 from __future__ import annotations
 
+# Support direct-file CLI execution as well as checkout package imports.
+if __package__ in (None, ''):
+    import sys as _checkout_sys
+    from pathlib import Path as _CheckoutPath
+    _checkout_sys.path.insert(0, str(_CheckoutPath(__file__).resolve().parents[3]))
+
+
 import argparse
 import json
 import sys
@@ -17,27 +24,27 @@ from pathlib import Path
 
 import cadquery as cq
 
-R = Path(__file__).resolve().parents[1]
-sys.path.insert(0, str(R / 'cad'))
-import printplan  # noqa: E402
-import turret as tu  # noqa: E402
-import turret_boards as tbd  # noqa: E402
-import turret_stand as ts  # noqa: E402
+R = (Path(__file__).resolve().parents[3])
+sys.path.insert(0, str((R / 'hardware/cad')))
+import hardware.cad.manufacturing.printplan as printplan  # noqa: E402
+import hardware.cad.turret.turret as tu  # noqa: E402
+import hardware.cad.turret.turret_boards as tbd  # noqa: E402
+import hardware.cad.turret.turret_stand as ts  # noqa: E402
 from cadagent.geometry import export_print_stl  # noqa: E402
 from cadagent.robot import solid_mass_properties  # noqa: E402
 
-OUT = R / 'exports' / 'turret' / 'bench'
-MATERIALS = json.loads((R / 'catalog/materials.json').read_text())
+OUT = (R / 'hardware/exports/turret/bench')
+MATERIALS = json.loads(((R / 'hardware/catalog/materials.json')).read_text())
 # every catalogue item by id and by key (catalog/index.json's files and the parts catalog/sourcing.json holds that no
 # catalogue file has yet), so a parts-list line can name its part either way
 def _catalogue():
     out = {}
-    for f in dict.fromkeys(['hardware.json', *json.loads((R / 'catalog/index.json').read_text())['files']]):
-        for it in json.loads((R / 'catalog' / f).read_text()):
+    for f in dict.fromkeys(['hardware.json', *json.loads(((R / 'hardware/catalog/index.json')).read_text())['files']]):
+        for it in json.loads(((R / 'hardware/catalog') / f).read_text()):
             for k in (it.get('id'), it.get('key')):
                 if k:
                     out.setdefault(k, it)
-    for it in json.loads((R / 'catalog/sourcing.json').read_text()).get('parts', []):
+    for it in json.loads(((R / 'hardware/catalog/sourcing.json')).read_text()).get('parts', []):
         for k in (it.get('id'), it.get('key')):
             if k:
                 out.setdefault(k, it)
@@ -193,7 +200,7 @@ TOOLS = [('waveshare-bus-servo-adapter-a', 1), ('tool-deutsch-crimper-iwd1620', 
 
 
 def main():
-    import print_provenance
+    import hardware.cad.manufacturing.print_provenance as print_provenance
     print_inputs = print_provenance.snapshot(R)
     ap = argparse.ArgumentParser()
     ap.add_argument('--no-render', action='store_true')
@@ -217,7 +224,7 @@ def main():
     for name in V1_PRINTED:                                # not printed for the bench (D42): the robot's bumper and fill flap
         plan.pop(name, None)
     # the slicer's own grams and hours where cad/turret_print.py has sliced the part in its print orientation
-    pj = R / 'exports' / 'turret' / 'print' / 'print.json'
+    pj = (R / 'hardware/exports/turret/print/print.json')
     sliced = print_provenance.current_slice_rows(R, json.loads(pj.read_text())['parts'], print_inputs) if pj.exists() else {}
     for name, r in plan.items():
         sp = sliced.get(name) or {}
@@ -255,7 +262,7 @@ def main():
     missing = sorted({r['key'] for r in rows + bench + tools if r['key'] not in CAT})
     unpriced = sorted({r['key'] for r in rows + bench + tools if r['qty'] and r.get('price_usd_each') is None and r['key'] not in drawn})
     try:
-        from bom_media import enrich                     # the pictures and alternates (catalog/images.json, alternates.json)
+        from hardware.cad.manufacturing.bom_media import enrich                     # the pictures and alternates (catalog/images.json, alternates.json)
         rows, bench, tools = enrich(rows), enrich(bench), enrich(tools)
     except ImportError:
         pass
@@ -298,11 +305,11 @@ def main():
                 r.render(f, shapes=shapes, view=vec, caption=f'The turret on its bench stand, pan {pan:.0f} deg, tilt {tilt:.0f} deg ({view})')
                 pics.append(f)
         summary['pictures'] = pics
-    import turret_orders                                  # the order sheets from bom.json and the catalogue
+    import hardware.cad.turret.turret_orders as turret_orders                                  # the order sheets from bom.json and the catalogue
     summary['orders'] = {k: v for k, v in turret_orders.write(OUT / 'bom.json').items() if k in ('grand_total_usd', 'lines', 'sellers')}
     (OUT / 'bench.json').write_text(json.dumps(summary, indent=1) + '\n')
     print_provenance.write_receipt(R, OUT, [OUT / f'{name}.stl' for name in stand], print_inputs)
-    import turret_mount                                   # the turret's interface for the body: exports/turret/mount.json
+    import hardware.cad.turret.turret_mount as turret_mount                                   # the turret's interface for the body: exports/turret/mount.json
     turret_mount.write(T)
     sl = summary.get('sliced') or {}
     print(f"bench turret: {summary['printed_g'] / 1000:.2f} kg printed, ~{summary['print_hours']} h"

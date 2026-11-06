@@ -19,6 +19,13 @@ Writes exports/turret/motion.json.
 """
 from __future__ import annotations
 
+# Support direct-file CLI execution as well as checkout package imports.
+if __package__ in (None, ''):
+    import sys as _checkout_sys
+    from pathlib import Path as _CheckoutPath
+    _checkout_sys.path.insert(0, str(_CheckoutPath(__file__).resolve().parents[3]))
+
+
 import json
 import math
 import sys
@@ -26,13 +33,13 @@ from pathlib import Path
 
 import numpy as np
 
-R = Path(__file__).resolve().parents[1]
-sys.path.insert(0, str(R / 'cad'))
-import turret as tu  # noqa: E402
+R = (Path(__file__).resolve().parents[3])
+sys.path.insert(0, str((R / 'hardware/cad')))
+import hardware.cad.turret.turret as tu  # noqa: E402
 from cadagent.fea import MATERIALS  # noqa: E402
 from cadagent.robot import Body, combine, printed_part_body, solid_mass_properties  # noqa: E402
 
-OUT = R / 'exports' / 'turret'
+OUT = (R / 'hardware/exports/turret')
 SERVO = {'stall_nm': 2.94, 'no_load_rad_s': 45 * 2 * math.pi / 60, 'source': 'catalog feetech-sts3215-c018-12v (Waveshare ST3215: 30 kg.cm, 45 rpm at 12 V)'}
 GEAR = {'ratio': 63 / 21, 'efficiency': 0.90, 'note': 'printed spur pair, dry PA6-CF on PA6-CF: 0.90 assumed'}
 BRG_FRICTION_NM = 0.02          # the 6810-2Z (shielded, light load) plus the slip ring's drag (est)

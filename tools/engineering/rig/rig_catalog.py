@@ -10,7 +10,7 @@ import sys
 from pathlib import Path
 
 D = '2026-10-27'
-OUT = Path(sys.argv[1]) if len(sys.argv) > 1 else Path(__file__).resolve().parents[1] / 'catalog' / 'rig.json'
+OUT = Path(sys.argv[1]) if len(sys.argv) > 1 else (Path(__file__).resolve().parents[3] / 'hardware/catalog/rig.json')
 items = []
 
 
@@ -321,7 +321,7 @@ BACKUPS = {
 SHARED_ALTS = {'screw-m6x30-deck': 'screw_m6x30', 'xt60e-f-panel': 'amass-xt60e-f', 'jack-3p5': 'jack-3.5mm-panel',
                'fuse-holder-5x20': 'fuse-holder-5x20-panel', 'pod-insert-m3': 'insert_m3',
                'screw-m3x10-pod': 'turret_screw_m3x10'}             # their backups are catalog/alternates.json's
-_alts = json.loads((Path(__file__).resolve().parents[1] / 'catalog' / 'alternates.json').read_text())
+_alts = json.loads(((Path(__file__).resolve().parents[3] / 'hardware/catalog/alternates.json')).read_text())
 for _it in items:
     if _it['id'] in SHARED_ALTS:
         _it['alternates'] = [dict(a) for a in _alts.get(SHARED_ALTS[_it['id']], [])]

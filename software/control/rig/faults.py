@@ -10,9 +10,16 @@ leg reported at 90 mm), silent (the motors stop answering), fault (a motor repor
 """
 from __future__ import annotations
 
+# Support direct-file CLI execution as well as checkout package imports.
+if __package__ in (None, ''):
+    import sys as _checkout_sys
+    from pathlib import Path as _CheckoutPath
+    _checkout_sys.path.insert(0, str(_CheckoutPath(__file__).resolve().parents[3]))
+
+
 import copy
 
-from rig.bus import MotorBus, Tick
+from software.control.rig.bus import MotorBus, Tick
 
 KINDS = ('run', 'vbus_high', 'vbus_low', 'hot', 'window', 'silent', 'fault')
 EXPECT = {'run': 'sitdown', 'vbus_high': 'limp', 'vbus_low': 'sitdown', 'hot': 'sitdown', 'window': 'limp',

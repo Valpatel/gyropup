@@ -46,6 +46,13 @@ hand in hand_checks() with their inputs.
 """
 from __future__ import annotations
 
+# Support direct-file CLI execution as well as checkout package imports.
+if __package__ in (None, ''):
+    import sys as _checkout_sys
+    from pathlib import Path as _CheckoutPath
+    _checkout_sys.path.insert(0, str(_CheckoutPath(__file__).resolve().parents[3]))
+
+
 import argparse
 import json
 import math
@@ -55,12 +62,12 @@ from pathlib import Path
 
 import numpy as np
 
-R = Path(__file__).resolve().parents[1]
-sys.path.insert(0, str(R / 'cad'))
-import turret as tu  # noqa: E402
+R = (Path(__file__).resolve().parents[3])
+sys.path.insert(0, str((R / 'hardware/cad')))
+import hardware.cad.turret.turret as tu  # noqa: E402
 from cadagent.fea import MATERIALS, Study  # noqa: E402
 
-OUT = R / 'exports' / 'turret' / 'fea'
+OUT = (R / 'hardware/exports/turret/fea')
 TARGETS = {'sf': 2.0, 'sf_rare': 1.2}
 G0 = 9.81
 FALL_G = 30.0
@@ -151,7 +158,7 @@ def layer_aware(st, n, allow):
 
 def masses():
     """Group masses (kg) from the build summary (exports/turret/turret.json), with the 30 balls."""
-    j = json.loads((R / 'exports/turret/turret.json').read_text())
+    j = json.loads(((R / 'hardware/exports/turret/turret.json')).read_text())
     T = tu.Turret({'bodyTop': -(20.0 + tu.SADDLE_T)})
     rows, tot, com = tu.mass_properties(T, 0.0, with_balls=True)
     grp = {'tilt': 0.0, 'pan': 0.0, 'base': 0.0}
@@ -481,7 +488,7 @@ def run(mesh, anim=True, only=None):
     # a shot's loads from the launch physics (sim/turret_launch3d.py at the design set speed, D68: 95 fps), scaled to the
     # fastest ball the hardware lets through (the chronograph's 105 fps trip): the nip's squeeze on each tyre and the
     # recoil on the cage. (It read 66 / 52 until 2026-10-28: the v0 trip over the v0 set speed, on D68's launch loads)
-    L3 = json.loads((R / 'exports/turret/launch/launch3d.json').read_text())
+    L3 = json.loads(((R / 'hardware/exports/turret/launch/launch3d.json')).read_text())
     rec = L3['recoil']
     k_fast = 105.0 / L3['design']['set_fps_nominal']
     F_sq = rec['peak_normal_per_tyre_n'] * k_fast

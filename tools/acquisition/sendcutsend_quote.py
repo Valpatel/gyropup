@@ -15,6 +15,13 @@ minimum width for tapping on a narrow bar) is recorded with the app's own words,
 """
 from __future__ import annotations
 
+# Support direct-file CLI execution as well as checkout package imports.
+if __package__ in (None, ''):
+    import sys as _checkout_sys
+    from pathlib import Path as _CheckoutPath
+    _checkout_sys.path.insert(0, str(_CheckoutPath(__file__).resolve().parents[2]))
+
+
 import argparse
 import datetime
 import json
@@ -23,7 +30,7 @@ import sys
 import time
 from pathlib import Path
 
-R = Path(__file__).resolve().parents[1]
+R = (Path(__file__).resolve().parents[2])
 APP = 'https://app.sendcutsend.com/'
 
 # SendCutSend's menus for our stock (read in the app 2026-10-27)
@@ -201,7 +208,7 @@ def quote(app: App, dxf: Path, o: dict) -> dict:
             out['refused']['hardware'] = why
         else:
             app.click('Hardware Insertion')
-            import body_params as bp
+            import hardware.cad.body.body_params as bp
             sizes = {f"{bp.PEM[k]['H']:.3f}mm": k for k in o['hw']}
             picked = {}
             for dia, spec in sizes.items():
@@ -243,19 +250,19 @@ def quote(app: App, dxf: Path, o: dict) -> dict:
 
 def main():
     ap = argparse.ArgumentParser()
-    ap.add_argument('--body', default=str(R / 'exports/body/body.json'))
-    ap.add_argument('--out', default=str(R / 'exports/body/sendcutsend/prices.json'))
+    ap.add_argument('--body', default=str((R / 'hardware/exports/body/body.json')))
+    ap.add_argument('--out', default=str((R / 'hardware/exports/body/sendcutsend/prices.json')))
     ap.add_argument('--only', nargs='*')
     ap.add_argument('--shots', help='a folder for screenshots of each step')
     a = ap.parse_args()
-    sys.path.insert(0, str(R / 'cad'))
+    sys.path.insert(0, str((R / 'hardware/cad')))
     from playwright.sync_api import sync_playwright
-    import body_frame as bf
+    import hardware.cad.body.body_frame as bf
     body = json.loads(Path(a.body).read_text())
     parts = {'cheek': bf.cheek_part, 'floor_tray': bf.tray_part, 'belly_plate': bf.belly_part, 'deck': bf.deck_part,
              'compute_pallet': bf.pallet_part, 'power_plate': bf.power_plate_part, 'bus_bar': bf.bus_bar_part,
              'turret_plate': bf.turret_plate_part}
-    import body_battery as bb
+    import hardware.cad.body.body_battery as bb
     parts.update({'bay_floor': bb.floor_part, 'bay_side': bb.side_part})
     outf = Path(a.out)
     res = json.loads(outf.read_text()) if outf.exists() else {}
@@ -266,7 +273,7 @@ def main():
                 continue
             feats = []
             if name in parts:
-                import body_layout as bl
+                import hardware.cad.body.body_layout as bl
                 sp = parts[name](bl.layout()['mounts']) if name not in ('cheek', 'bus_bar', 'turret_plate', 'bay_floor', 'bay_side') else parts[name]()
                 feats = [{'d': f.d, 'note': f.note, 'kind': f.kind} for f in sp.features]
             o = order_of(s, feats)
@@ -278,7 +285,7 @@ def main():
                 r = {'file': s['dxf'], 'error': str(e)[:400]}
             finally:
                 app.close()
-            import body_sheet
+            import hardware.cad.body.body_sheet as body_sheet
             r.update({'read_on': today, 'seller': 'SendCutSend', 'url': APP, 'order': o,
                       'dxf_sha1': body_sheet.dxf_geometry_sha1(R / s['dxf'])})     # the price is for this DXF
             res[name] = r

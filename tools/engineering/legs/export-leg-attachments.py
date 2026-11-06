@@ -5,6 +5,13 @@ The adapter is a rigid reframe of our pinned, published CAD solid. The screws
 are the existing project-authored stock-dimension envelopes, not vendor CAD.
 Run in an isolated CAD environment; no full robot build or simulation required.
 """
+
+# Support direct-file CLI execution as well as checkout package imports.
+if __package__ in (None, ''):
+    import sys as _checkout_sys
+    from pathlib import Path as _CheckoutPath
+    _checkout_sys.path.insert(0, str(_CheckoutPath(__file__).resolve().parents[3]))
+
 import argparse
 import hashlib
 import json
@@ -13,7 +20,7 @@ import struct
 import subprocess
 import sys
 
-ROOT = Path(__file__).resolve().parents[1]
+ROOT = (Path(__file__).resolve().parents[3])
 SOURCE = '31908a86a782c440e47beb0f502e3ef0fd944aa2'
 ADAPTER = 'exports/sim/v2/rig/body__adapter_f_l.stl'
 ADAPTER_SHA = '2cd56998c321be35f9f75a8191bbc33903bd75ce5f74bc5906e19b7085c666c3'
@@ -27,10 +34,10 @@ def sha(data):
 
 
 def generate(output):
-    sys.path.insert(0, str(ROOT / 'cad'))
+    sys.path.insert(0, str((ROOT / 'hardware/cad')))
     import cadquery as cq
-    import fivebar as fb
-    import gmi
+    import hardware.cad.legs.fivebar as fb
+    import hardware.cad.robot.gmi as gmi
 
     raw = subprocess.check_output(['git', 'show', f'{SOURCE}:{ADAPTER}'], cwd=ROOT)
     if sha(raw) != ADAPTER_SHA:
@@ -71,5 +78,5 @@ def generate(output):
 
 if __name__ == '__main__':
     parser = argparse.ArgumentParser(description=__doc__)
-    parser.add_argument('--output', type=Path, default=ROOT / 'exports/sim/v2/leg-attachments')
+    parser.add_argument('--output', type=Path, default=(ROOT / 'hardware/exports/sim/v2/leg-attachments'))
     generate(parser.parse_args().output)

@@ -6,6 +6,13 @@ packaging can reject stale input before loading a mesh or touching output files.
 """
 from __future__ import annotations
 
+# Support direct-file CLI execution as well as checkout package imports.
+if __package__ in (None, ''):
+    import sys as _checkout_sys
+    from pathlib import Path as _CheckoutPath
+    _checkout_sys.path.insert(0, str(_CheckoutPath(__file__).resolve().parents[3]))
+
+
 import hashlib
 import importlib.metadata
 import importlib.util
@@ -24,9 +31,39 @@ def fingerprint(value: dict) -> str:
     return hashlib.sha256(json.dumps(value, sort_keys=True, separators=(',', ':')).encode()).hexdigest()
 
 
+# The five tests lived inside cad/ before the owning-hierarchy move and were
+# already part of this conservative closure. Moving them must not drop inputs.
+FORMER_CAD_TESTS = (
+    'tests/hardware/body/test_body.py',
+    'tests/hardware/legs/test_leg_loads.py',
+    'tests/hardware/turret/test_turret_gate_sources.py',
+    'tests/hardware/turret/test_turret_snaps.py',
+    'tests/hardware/turret/test_turret_solids.py',
+)
+SOURCE_ROOTS = ('hardware/cad', 'hardware/catalog', 'hardware/designs')
+SOURCE_PARENTS = ('hardware/__init__.py',)
+
+
+def source_files(root: Path) -> list[Path]:
+    """Complete current CAD/config closure, with required roots and moved members.
+
+    Missing current inputs fail even if an obsolete cad/ copy exists. New Python
+    and JSON members under every CAD domain remain conservatively bound.
+    """
+    root = Path(root)
+    for directory in SOURCE_ROOTS:
+        if not (root / directory).is_dir():
+            raise FileNotFoundError(f'Missing current CAD input directory: {directory}')
+    required = [root / name for name in (*FORMER_CAD_TESTS, *SOURCE_PARENTS)]
+    for path in required:
+        if not path.is_file():
+            raise FileNotFoundError(f'Missing current CAD input: {path.relative_to(root)}')
+    return sorted(set(required) | {p for folder in SOURCE_ROOTS
+                  for p in (root / folder).rglob('*') if p.is_file() and p.suffix in ('.py', '.json')})
+
+
 def snapshot(root: Path) -> dict:
-    files = sorted({p for folder in ('cad', 'catalog', 'designs')
-                    for p in (root / folder).rglob('*') if p.is_file() and p.suffix in ('.py', '.json')})
+    files = source_files(root)
     inputs = {p.relative_to(root).as_posix(): digest(p) for p in files}
     override = os.environ.get('GYROPUP_CAD_PARAMS')
     # Record the effective optional parameter file, never its private absolute path.
@@ -83,9 +120,26 @@ def write_receipt(root: Path, directory: Path, meshes: list[Path], inputs: dict,
     temporary.replace(target)
 
 
+def retained_export_path(root: Path, recorded: str) -> Path:
+    """Locate a stable exports/ identity in its sole owning source directory.
+
+    This maps location only. Callers still verify the actual artifact digest and
+    the original record; it does not make a historical receipt current.
+    """
+    from pathlib import PurePosixPath
+    value = PurePosixPath(recorded)
+    if (value.is_absolute() or '..' in value.parts or '\\' in recorded
+            or not recorded.startswith('exports/') or str(value) != recorded):
+        raise ValueError('Not a canonical retained exports identity')
+    path = Path(root) / 'hardware' / value
+    if not path.resolve().is_relative_to((Path(root) / 'hardware/exports').resolve()):
+        raise ValueError('Retained export escapes its owning directory')
+    return path
+
+
 def validate_mesh(root: Path, mesh: Path, inputs: dict) -> dict:
     """Reject absent, mixed or stale exports before packaging a 3MF."""
-    if not mesh.resolve().is_relative_to((root / 'exports/turret').resolve()):
+    if not mesh.resolve().is_relative_to((root / 'hardware/exports/turret').resolve()):
         raise ValueError('Print mesh is outside the turret export tree')
     receipt = mesh.parent / 'print-meshes.json'
     if not receipt.is_file():
@@ -99,7 +153,7 @@ def validate_mesh(root: Path, mesh: Path, inputs: dict) -> dict:
     expected = data.get('meshes', {}).get(mesh.name, {}).get('sha256')
     if not mesh.is_file() or expected != digest(mesh):
         raise ValueError(f'{mesh.name}: missing or changed mesh; regenerate CAD before packaging')
-    return {'file': mesh.relative_to(root).as_posix(), 'sha256': expected,
+    return {'file': mesh.relative_to(root / 'hardware').as_posix(), 'sha256': expected,
             'fingerprint': data['fingerprint'], 'source_revision': data.get('source_revision'), 'context_files': context}
 
 
@@ -115,8 +169,8 @@ def successful_slice(row: dict) -> bool:
 
 def current_slice_rows(root: Path, rows: dict, inputs: dict) -> dict:
     """Reuse only source-bound, currently reproducible, successful slicer rows."""
-    import print_slicing
-    import turret_print
+    import hardware.cad.manufacturing.print_slicing as print_slicing
+    import hardware.cad.turret.turret_print as turret_print
     parts = {p[0]: p for p in turret_print.PARTS}
     current = {}
     for name, row in rows.items():
@@ -124,14 +178,14 @@ def current_slice_rows(root: Path, rows: dict, inputs: dict) -> dict:
             if name not in parts or not successful_slice(row) or not turret_print.metadata_matches(row, parts[name]):
                 continue
             source = row['source']
-            mesh = root / source['file']
-            output = root / 'exports/turret/print' / f'{name}.3mf'
+            mesh = retained_export_path(root, source['file'])
+            output = root / 'hardware/exports/turret/print' / f'{name}.3mf'
             identity = row['slice_inputs']
             if (not isinstance(identity, dict) or not print_slicing.current(identity)
                     or row.get('recipe_sha256') != turret_print.recipe(parts[name], identity)
                     or source != validate_mesh(root, mesh, inputs)
-                    or not output.resolve().is_relative_to((root / 'exports/turret/print').resolve())
-                    or row.get('file') != output.relative_to(root).as_posix()
+                    or not output.resolve().is_relative_to((root / 'hardware/exports/turret/print').resolve())
+                    or row.get('file') != output.relative_to(root / 'hardware').as_posix()
                     or row.get('sha256') != digest(output)):
                 continue
             current[name] = row

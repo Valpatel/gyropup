@@ -9,10 +9,10 @@ import tempfile
 import unittest
 import zipfile
 
-ROOT = Path(__file__).resolve().parents[1]
-spec = importlib.util.spec_from_file_location('survey_fit', ROOT / 'tools/package-survey-fit-job.py')
+ROOT = (Path(__file__).resolve().parents[3])
+spec = importlib.util.spec_from_file_location('survey_fit', (ROOT / 'tools/evidence/manufacturing/package-survey-fit-job.py'))
 m = importlib.util.module_from_spec(spec); spec.loader.exec_module(m)
-JOB = ROOT / 'exports/turret/shaft-survey-fit-job'
+JOB = (ROOT / 'hardware/exports/turret/shaft-survey-fit-job')
 
 
 class SourceTests(unittest.TestCase):
@@ -99,7 +99,7 @@ class RetainedTests(unittest.TestCase):
 
     def test_actual_rejected_small_text_slice_fails_label_screen(self):
         with tempfile.TemporaryDirectory() as temp:
-            archive = ROOT / 'research/ordered-turret-motor/rejected-label-slice/job-1544582.zip'
+            archive = (ROOT / 'docs/research/ordered-turret-motor/rejected-label-slice/job-1544582.zip')
             with zipfile.ZipFile(archive) as z: z.extractall(temp)
             old = Path(temp) / 'shaft-survey-fit-job'
             with self.assertRaisesRegex(ValueError, 'label glyph'):

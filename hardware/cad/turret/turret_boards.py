@@ -21,8 +21,8 @@ import json
 import sys
 from pathlib import Path
 
-R = Path(__file__).resolve().parents[1]
-OUT = R / 'exports' / 'turret' / 'wiring'
+R = (Path(__file__).resolve().parents[3])
+OUT = (R / 'hardware/exports/turret/wiring')
 HOLE_KEEPOUT = 3.2                      # around each standoff hole: the standoff's Ø5.5 and the screw head
 
 # footprints (w, h, tall) in mm: the modules and ICs, and the passive groups (the parts lying flat or standing in a

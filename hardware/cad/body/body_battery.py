@@ -27,13 +27,20 @@ The bay (one design from P1 on; the 13S2P's printed P0-P2 bay and P3 tub are gon
 """
 from __future__ import annotations
 
+# Support direct-file CLI execution as well as checkout package imports.
+if __package__ in (None, ''):
+    import sys as _checkout_sys
+    from pathlib import Path as _CheckoutPath
+    _checkout_sys.path.insert(0, str(_CheckoutPath(__file__).resolve().parents[3]))
+
+
 import functools
 import math
 import os
 
 import cadquery as cq
 
-import body_params as bp
+import hardware.cad.body.body_params as bp
 
 # The pack (the DeWalt sheet for its EU twin DCB547-XJ: 138 x 87 x 97 mm, 1.46 kg; Ace Tool lists the DCB609 at 3.2 lb.
 # DeWalt publishes no US outline: measure one pack before the bay is printed). The rail runs along L on the top face.
@@ -226,7 +233,7 @@ def rail(side):
 def floor_part():
     """The bay's floor (SendCutSend 5052-H32 0.063 in): a U with 20 mm flanges up, PEM S-M3-0 in the flanges for the side
     plates' bottom row, the skids' holes."""
-    import body_sheet as bs
+    import hardware.cad.body.body_sheet as bs
     g = geometry()
     L = g['x_in'][1] - g['x_in'][0]
     W = 2 * g['side_in'] - 0.1                                   # its flanges inside the side plates
@@ -241,7 +248,7 @@ def floor_part():
 
 def side_part():
     """A bay side plate (SendCutSend 5052-H32 0.063 in, flat; one part for both sides), three lightening windows."""
-    import body_sheet as bs
+    import hardware.cad.body.body_sheet as bs
     g = geometry()
     L = g['x_in'][1] - g['x_in'][0]
     H = g['z_belly'] - g['z_floor']
@@ -390,7 +397,7 @@ def pad_screws():
 
 def bay_parts() -> dict:
     """Every part of the bay as body_frame.Part (robot frame), from P1."""
-    import body_frame as bf
+    import hardware.cad.body.body_frame as bf
     Part = bf.Part
     out = {}
     pa6, petg, al = (0.22, 0.24, 0.27), (0.85, 0.55, 0.15), (0.66, 0.70, 0.75)

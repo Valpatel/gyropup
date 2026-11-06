@@ -20,8 +20,8 @@ from typing import Optional
 
 import numpy as np
 
-R = Path(__file__).resolve().parents[1]
-RUNS = R / 'exports' / 'rig' / 'runs'
+R = (Path(__file__).resolve().parents[3])
+RUNS = (R / 'hardware/exports/rig/runs')
 PHASES = ['', 'track', 'push', 'air', 'land', 'off', 'sitdown', 'limp', 'stopped']
 FIELDS = ('t', 'phi_f', 'phi_r', 'w_f', 'w_r', 'tau_f', 'tau_r', 'tau_cmd_f', 'tau_cmd_r', 'kd', 'temp_f', 'temp_r',
           'vbus', 'L', 'th', 'dL', 'L_cmd', 'contact', 'run', 'ok', 'phase')

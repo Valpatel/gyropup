@@ -4,15 +4,22 @@ Run with the CAD environment: python tools/test-base-board-manufacturer.py.
 Temporary files below are presence sentinels, not vendor CAD. Missing-input tests
 must return before any geometry loader, so they need no private manufacturer cache.
 """
+
+# Support direct-file CLI execution as well as checkout package imports.
+if __package__ in (None, ''):
+    import sys as _checkout_sys
+    from pathlib import Path as _CheckoutPath
+    _checkout_sys.path.insert(0, str(_CheckoutPath(__file__).resolve().parents[3]))
+
 from pathlib import Path
 import sys
 import tempfile
 import unittest
 from unittest.mock import patch
 
-sys.path.insert(0, str(Path(__file__).resolve().parents[1] / 'cad'))
-import turret_base_board as bb
-import check_base_board_service as checker
+sys.path.insert(0, str((Path(__file__).resolve().parents[3] / 'hardware/cad')))
+import hardware.cad.turret.turret_base_board as bb
+import hardware.cad.turret.check_base_board_service as checker
 
 
 class ManufacturerInputs(unittest.TestCase):

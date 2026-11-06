@@ -14,8 +14,8 @@ from pathlib import Path
 import sys
 import time
 
-ROOT=Path(__file__).resolve().parents[1]
-sys.path.insert(0,str(ROOT/'cad'))
+ROOT=(Path(__file__).resolve().parents[3])
+sys.path.insert(0,str((ROOT / 'hardware/cad')))
 import print_provenance as provenance
 SPEC=importlib.util.spec_from_file_location('connector_inputs',Path(__file__).with_name('check-carrier-connector-inputs.py'))
 source=importlib.util.module_from_spec(SPEC);SPEC.loader.exec_module(source)

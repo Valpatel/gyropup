@@ -10,6 +10,13 @@ harness slots, the controller's feed-forward masses), sendcutsend/carriage_plate
 """
 from __future__ import annotations
 
+# Support direct-file CLI execution as well as checkout package imports.
+if __package__ in (None, ''):
+    import sys as _checkout_sys
+    from pathlib import Path as _CheckoutPath
+    _checkout_sys.path.insert(0, str(_CheckoutPath(__file__).resolve().parents[3]))
+
+
 import argparse
 import json
 import math
@@ -20,18 +27,18 @@ from pathlib import Path
 import cadquery as cq
 import numpy as np
 
-R = Path(__file__).resolve().parents[1]
-sys.path.insert(0, str(R / 'cad'))
+R = (Path(__file__).resolve().parents[3])
+sys.path.insert(0, str((R / 'hardware/cad')))
 sys.path.insert(0, str(R))
-import fivebar as fb  # noqa: E402
-import gmi  # noqa: E402
-import printplan  # noqa: E402
-import rig_parts as rp  # noqa: E402
+import hardware.cad.legs.fivebar as fb  # noqa: E402
+import hardware.cad.robot.gmi as gmi  # noqa: E402
+import hardware.cad.manufacturing.printplan as printplan  # noqa: E402
+import hardware.cad.rig.rig_parts as rp  # noqa: E402
 from cadagent.geometry import export_print_stl  # noqa: E402
 
-OUT = R / 'exports' / 'rig'
+OUT = (R / 'hardware/exports/rig')
 SCS = OUT / 'sendcutsend'
-MATERIALS = json.loads((R / 'catalog/materials.json').read_text())
+MATERIALS = json.loads(((R / 'hardware/catalog/materials.json')).read_text())
 DESIGN_KG = 14.75
 STEEL = 7.85                          # g/cm3
 AL6061 = 2.70
@@ -90,7 +97,7 @@ def brace():
 
 def deck():
     """The 18 mm plywood, cut to 600 x 400 at the store, drilled 6.6 mm through at every screw that passes it."""
-    import rig_hardware as hw
+    import hardware.cad.rig.rig_hardware as hw
     s = rp.box(-300.0, 300.0, rp.Y_POST_FRONT, Y_FRONT, -rp.DECK_T, 0.0)
     for j in hw.joints():
         if j['name'].startswith(('deck_screw', 'bumper_screw')):
@@ -100,13 +107,13 @@ def deck():
 
 def rails() -> dict:
     """The two HGR15 rails on the post's front slots (rig_hardware.hg_rail: counterbored at P 60)."""
-    import rig_hardware as hw
+    import hardware.cad.rig.rig_hardware as hw
     return {f'rail_{side}': hw.hg_rail(sx * rp.BLOCK_X, rp.Y_POST_FRONT, rp.RAIL_Z0, rp.RAIL_LEN) for sx, side in ((-1, 'left'), (1, 'right'))}
 
 
 def brace_hinges() -> dict:
     """The brace's two free-angle brackets: on the post's back face and on the rear member's top."""
-    import rig_hardware as hw
+    import hardware.cad.rig.rig_hardware as hw
     (y1, z1), (y2, z2) = brace_line()
     L = math.hypot(y1 - y2, z1 - z2)
     u = (0.0, (y1 - y2) / L, (z1 - z2) / L)                     # along the brace, from its foot to the post
@@ -162,7 +169,7 @@ def fixed_parts(with_bottom_bumpers: bool = True, hardware: bool = False) -> dic
     out.update(pod_parts())
     out.update(tof_fixed())
     if hardware:
-        import rig_hardware as hw
+        import hardware.cad.rig.rig_hardware as hw
         out.update(hw.corner_brackets())
         out.update(hw.screw_shapes([j for j in hw.joints() if j['body'] == 'frame']))
     return out
@@ -171,7 +178,7 @@ def fixed_parts(with_bottom_bumpers: bool = True, hardware: bool = False) -> dic
 def carriage_parts(zh: float, n_plates: int = 1, tof: bool = True, hardware: bool = False) -> dict:
     """The parts that ride with the hip frame, at hip height zh (deck frame): the plate, the four blocks, the ballast
     posts and plates, the ToF target; hardware=True adds their screws."""
-    import rig_hardware as hw
+    import hardware.cad.rig.rig_hardware as hw
     t = (0.0, 0.0, zh)
     out = {'carriage_plate': rp.carriage_plate().translate(t)}
     for sx in (-1, 1):
@@ -431,7 +438,7 @@ def carriage_mass() -> dict:
 def leg_masses() -> dict:
     """The leg's groups from sim/leg_rig.py's mass_props (CAD solids + datasheet masses): the frame group rides the
     carriage; the rest moves. Also what the controller's feed-forward needs."""
-    from sim import leg_rig as lr
+    from software.simulation import leg_rig as lr
     mp = lr.mass_props()
     moving = mp['upper'].mass * 2 + mp['front'].mass + mp['wheel_link'].mass + mp['rotor'].mass
     return {'frame_kg': round(mp['frame'].mass, 3), 'frame_com_y_mm': round(mp['frame'].com[1] * 1000, 1), 'moving_kg': round(moving, 3),
@@ -607,7 +614,7 @@ BOUGHT = [   # (catalog/rig.json key, qty, what for)
 
 def bom() -> dict:
     cat = {}
-    p = R / 'catalog' / 'rig.json'
+    p = (R / 'hardware/catalog/rig.json')
     if p.exists():
         for it in json.loads(p.read_text()):
             cat[it.get('key') or it['id']] = it
@@ -637,7 +644,7 @@ COL = {'screw': (.16, .16, .18), 'bracket': (.70, .72, .76), 'brace_hinge': (.40
 
 def colour(n: str):
     if n.startswith('leg_'):
-        import build_leg as bl
+        import hardware.cad.builders.build_leg as bl
         return bl.colour(n[4:])
     for k, v in COL.items():
         if n.startswith(k) or k in n:
@@ -677,7 +684,7 @@ def render(jump_zh: float) -> list:
 
 def jump_apex(half_mass: float) -> dict:
     """The highest hip and the landing in a 60 N m jump at this carried mass: the rig's controller in the simulation."""
-    from rig.run import Pack, pack_for, run_sim
+    from software.control.rig.run import Pack, pack_for, run_sim
     o = run_sim('jump', half_mass, 500.0, pack_for('jump'), 1, rail_low=rp.BUMPER['contact_leg_mm'] / 1000, save=False)
     a = o['log'].arrays()
     res = o['results']
@@ -816,7 +823,7 @@ def main():
         print(f"  clearance: {c['poses']} poses, under {c['limit_mm']} mm: {len(c['under_limit'])}; closest {list(c['closest'].items())[:4]}")
     print(f'  {time.time() - t0:.0f} s')
     if not a.no_integrity:                                      # floating parts, interference over the travel, screw lengths
-        import rig_integrity
+        import hardware.cad.rig.rig_integrity as rig_integrity
         rc = rig_integrity.main([])
         if rc:
             sys.exit(rc)

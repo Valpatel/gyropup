@@ -26,6 +26,13 @@ range the sensitivity table sweeps; replace it with a bench measurement, section
 """
 from __future__ import annotations
 
+# Support direct-file CLI execution as well as checkout package imports.
+if __package__ in (None, ''):
+    import sys as _checkout_sys
+    from pathlib import Path as _CheckoutPath
+    _checkout_sys.path.insert(0, str(_CheckoutPath(__file__).resolve().parents[2]))
+
+
 import argparse
 import copy
 import json
@@ -33,9 +40,9 @@ import math
 import sys
 from pathlib import Path
 
-R = Path(__file__).resolve().parents[1]
-OUT = R / 'exports' / 'leg' / 'thermal' / 'motor_thermal.json'
-DOC = R / 'docs' / 'motor-thermal.md'
+R = (Path(__file__).resolve().parents[2])
+OUT = (R / 'hardware/exports/leg/thermal/motor_thermal.json')
+DOC = (R / 'docs/legs/motor-thermal.md')
 SIGMA = 5.670374e-8
 ZERO_C = 273.15
 G0 = 9.81
@@ -650,9 +657,9 @@ def face_limit(option):
 def loads():
     """The cases' torques from the CAD's five-bar and the rig (needs CadQuery and MuJoCo: the CAD venv). Recorded in
     the JSON; the check and the tests read them from there."""
-    sys.path[:0] = [str(R / 'cad'), str(R)]
-    import fivebar as fb
-    from sim import leg_rig as lr
+    sys.path[:0] = [str((R / 'hardware/cad')), str(R)]
+    import hardware.cad.legs.fivebar as fb
+    from software.simulation import leg_rig as lr
     m = lr.HALF_MASS
     m_wheel = lr.WHEEL['mass_g'] / 1000
     f_axle = (m - m_wheel) * G0                     # the wheel's own weight is not the motors' (the links' is: conservative)
@@ -687,7 +694,7 @@ def loads():
                       'tau_static': [round(t0[0], 4), round(t0[1], 4)], 'dtau_dfx': [round(k[0], 6), round(k[1], 6)],
                       'fx_n': round(fx, 2)}
     # jumps: the rig's jump at the 60 N m cap (exports/leg/rig-results.json, 18.75 kg), every period, standing between
-    rig = json.loads((R / 'exports' / 'leg' / 'rig-results.json').read_text())
+    rig = json.loads(((R / 'hardware/exports/leg/rig-results.json')).read_text())
     sc = rig['scenarios']['jump']
     s = sc['series']
     t = s['t']
@@ -718,7 +725,7 @@ def loads():
     out['rig_stand_check'] = {'rig_stand_up_hold_nm': abs(rig['scenarios']['stand_up']['series']['tau_f'][-1]),
                               'model_stand_nm': cases['stand']['tau_front'],
                               'note': 'the rig\'s stand_up ends holding at 300 mm; this model\'s figure is the higher (conservative)'}
-    md = json.loads((R / 'exports' / 'motor-day' / 'derating.json').read_text())
+    md = json.loads(((R / 'hardware/exports/motor-day/derating.json')).read_text())
     out['bench'] = {'cap_nm': md['pla_cap_nm'], 'hold_nm': md['stand_runs']['stand_up']['peak_motor_nm'],
                     'stand_kg': md['mass']['stand_scale_kg'],
                     'source': 'exports/motor-day/derating.json: the PLA cap (pla_cap_nm) and the motor-day stand-up\'s peak '

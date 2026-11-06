@@ -27,6 +27,13 @@ The leg's load shares come from exports/leg/fea/summary.json (copied into --out)
 """
 from __future__ import annotations
 
+# Support direct-file CLI execution as well as checkout package imports.
+if __package__ in (None, ''):
+    import sys as _checkout_sys
+    from pathlib import Path as _CheckoutPath
+    _checkout_sys.path.insert(0, str(_CheckoutPath(__file__).resolve().parents[3]))
+
+
 import argparse
 import hashlib
 import json
@@ -40,7 +47,7 @@ from pathlib import Path
 
 import numpy as np
 
-ROOT = Path(__file__).resolve().parents[1]
+ROOT = (Path(__file__).resolve().parents[3])
 LAYER_NORMALS = {'y': (0.0, 1.0, 0.0), 'z': (0.0, 0.0, 1.0), 'x': (1.0, 0.0, 0.0)}
 PRINT_NORMAL = 'y'                 # the frame prints web-down: its layers are x-z planes, stacked along y
 HF_CASES = ('E1', 'R1', 'E3o', 'E3i', 'R3o')
@@ -103,7 +110,7 @@ def toolkit_identity(cadagent) -> dict:
 
 
 def install_recorder():
-    import leg_studies
+    import hardware.cad.legs.leg_studies as leg_studies
     from cadagent.fea import Study
 
     class Recorded(Study):
@@ -121,7 +128,7 @@ def judged_mask(ls, st, case):
     keep = ~st._touches_bc
     if case in ls.STOP_POST_AT:
         px, pz = ls.STOP_POST_AT[case]
-        import fivebar as fb
+        import hardware.cad.legs.fivebar as fb
         c = st.points[st.tets[:, :4]].mean(axis=1)
         keep &= np.hypot(c[:, 0] - px, c[:, 2] - pz) > fb.STOP_PIN[0] / 2 + fb.STOP_HOLE_PLAY + ls.PIN_HOLE_BAND
     return keep
@@ -183,9 +190,9 @@ def use_params(out: Path, params: dict | None):
 def precheck(out: Path, params: dict | None) -> dict:
     """interfaces() of the variant, without the FEA (cad/fivebar.py reads GYROPUP_HIP_PARAMS when it is imported)."""
     use_params(out.resolve(), params)
-    sys.path[:0] = [str(ROOT / 'cad'), str(ROOT)]
+    sys.path[:0] = [str((ROOT / 'hardware/cad')), str(ROOT)]
     import gmsh  # noqa: F401
-    import fivebar as fb
+    import hardware.cad.legs.fivebar as fb
     return interfaces(fb, fb.leg_parts().parts['hip_frame'].val(), out.resolve())
 
 
@@ -193,11 +200,11 @@ def run_variant(out: Path, params: dict | None, cases, mesh: float, vmax: float 
                 dscale: float | None = None):
     out = out.resolve()
     use_params(out, params)
-    shutil.copyfile(ROOT / 'exports/leg/fea/summary.json', out / 'summary.json')
-    sys.path[:0] = [str(ROOT / 'cad'), str(ROOT)]
+    shutil.copyfile((ROOT / 'hardware/exports/leg/fea/summary.json'), out / 'summary.json')
+    sys.path[:0] = [str((ROOT / 'hardware/cad')), str(ROOT)]
     import gmsh  # noqa: F401  (before CadQuery, as the compute hosts' mesher wants)
     ls = install_recorder()
-    import fivebar as fb
+    import hardware.cad.legs.fivebar as fb
     from cadagent.fea import MATERIALS
     ls.OUT = out
     t0 = time.time()
@@ -240,7 +247,7 @@ def run_variant(out: Path, params: dict | None, cases, mesh: float, vmax: float 
     return res
 
 
-PA6_CF_DENSITY = json.loads((ROOT / 'catalog/materials.json').read_text())['pa6-cf']['density_g_cm3']   # g/cm3, as
+PA6_CF_DENSITY = json.loads(((ROOT / 'hardware/catalog/materials.json')).read_text())['pa6-cf']['density_g_cm3']   # g/cm3, as
                                    # build_leg's masses (not the FEA material's, which moves with the toolkit)
 BODY_ZT = 90.5                     # body_params.z_spine_top() for today's frame: the cheeks' flange faces (mm)
 CHEEK_CLEAR = 2.0                  # mm the frame's bottom stays above the cheeks' bottom flange (its inner face)
@@ -250,9 +257,9 @@ def interfaces(fb, frame, out: Path) -> dict:
     """What a variant must keep: it fits the bed (printplan.fits, in build_leg's print rotation), and the body built
     round it does not move (body_params.z_spine_top() from the frame's faces on the centre plane; the inserts are
     fivebar.frame_mounts(), which the sweep does not change)."""
-    import body_params as bp
-    import printplan
-    from build_leg import ROT
+    import hardware.cad.body.body_params as bp
+    import hardware.cad.manufacturing.printplan as printplan
+    from hardware.cad.builders.build_leg import ROT
     size, how = printplan.fits(frame, ROT['hip_frame'])
     bp.CACHE = out / 'body-cache'                       # its cache is keyed by the sources, not by GYROPUP_HIP_PARAMS
     bp.frame_mounts.cache_clear()

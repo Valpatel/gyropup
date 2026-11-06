@@ -3,9 +3,9 @@
 PCAN-USB (Linux: peak_usb), a CANable on candleLight (gs_usb) or any SocketCAN interface works the same.
 
     sudo ip link set can0 up type can bitrate 1000000
-    python -m rig.rs04_bridge --iface can0                    # then open http://127.0.0.1:8765/
-    python -m rig.rs04_bridge --iface emu --emu-ids 127       # a software motor at the factory id, no hardware
-    python -m rig.rs04_bridge --iface can0 --lan --token-file /etc/gyropup/bridge-token   # on the robot, opt-in
+    python -m software.control.rig.rs04_bridge --iface can0                    # then open http://127.0.0.1:8765/
+    python -m software.control.rig.rs04_bridge --iface emu --emu-ids 127       # a software motor at the factory id, no hardware
+    python -m software.control.rig.rs04_bridge --iface can0 --lan --token-file /etc/gyropup/bridge-token   # on the robot, opt-in
 
 It serves the tool's page (designer/motor-tool.html and designer/kit/rs04/) and nothing else of the repository, and
 takes one browser tab at a time. By default it listens on 127.0.0.1 only. --lan listens on every interface and then
@@ -18,6 +18,13 @@ stop to every motor it has seen. The motors' own canTimeout (kept on by the guar
 Standard library only (Python 3.10, JetPack 6's), so the robot needs nothing installed beyond this repository.
 """
 from __future__ import annotations
+
+# Support direct-file CLI execution as well as checkout package imports.
+if __package__ in (None, ''):
+    import sys as _checkout_sys
+    from pathlib import Path as _CheckoutPath
+    _checkout_sys.path.insert(0, str(_CheckoutPath(__file__).resolve().parents[3]))
+
 
 import argparse
 import asyncio
@@ -35,15 +42,24 @@ from pathlib import Path
 from typing import Optional
 from urllib.parse import parse_qs, urlsplit
 
-from rig import rs04 as P
-from rig import rs04_profiles
-from rig.rs04_guard import Guard
+from software.control.rig import rs04 as P
+from software.control.rig import rs04_profiles
+from software.control.rig.rs04_guard import Guard
 
-ROOT = Path(__file__).resolve().parents[1]
+ROOT = (Path(__file__).resolve().parents[3])
 PAGE = '/designer/motor-tool.html'
-SERVED = ('designer/motor-tool.html', 'designer/motor-tool.js', 'designer/kit/rs04/', 'hardware/actuators/rs04/profiles/', 'web/icon.svg',
-          'web/theme.js', 'web/theme.css',
-          'exports/motor-day/derating.json', 'exports/leg/thermal/motor_thermal.json')
+# Public tool URLs stay stable; source homes are explicitly whitelisted.
+SERVED = {
+    'designer/motor-tool.html': 'software/site/designer/motor-tool.html',
+    'designer/motor-tool.js': 'software/site/designer/motor-tool.js',
+    'designer/kit/rs04/': 'software/site/designer/kit/rs04/',
+    'hardware/actuators/rs04/profiles/': 'hardware/actuators/rs04/profiles/',
+    'web/icon.svg': 'software/site/assets/icon.svg',
+    'web/theme.js': 'software/site/assets/theme.js',
+    'web/theme.css': 'software/site/assets/theme.css',
+    'exports/motor-day/derating.json': 'hardware/exports/motor-day/derating.json',
+    'exports/leg/thermal/motor_thermal.json': 'hardware/exports/leg/thermal/motor_thermal.json',
+}
 WS_GUID = b'258EAFA5-E914-47DA-95CA-C5AB0DC85B11'
 MAX_MESSAGE = 1 << 16
 LOOPBACK = ('127.0.0.1', 'localhost', '::1')
@@ -95,9 +111,14 @@ def http_response(code: int, reason: str, body: bytes = b'', ctype: str = 'text/
 def served_file(path: str) -> Optional[Path]:
     """The file for a request path, only inside the tool's own files (never ../, never the rest of the repository)."""
     rel = path.lstrip('/')
-    if not rel or '..' in rel.split('/') or '\\' in rel or not any(rel == s or (s.endswith('/') and rel.startswith(s)) for s in SERVED):
+    if not rel or '..' in rel.split('/') or '\\' in rel:
         return None
-    f = (ROOT / rel).resolve()
+    source = next((target + rel[len(public):] if public.endswith('/') else target
+                   for public, target in SERVED.items()
+                   if rel == public or (public.endswith('/') and rel.startswith(public))), None)
+    if source is None:
+        return None
+    f = (ROOT / source).resolve()
     try:
         f.relative_to(ROOT)
     except ValueError:
@@ -323,8 +344,8 @@ class Bridge:
 
 def make_transport(iface: str, emu_ids):
     if iface == 'emu':
-        from rig.canio import VirtualBus
-        from rig.rs04_emu import EmulatedRS04
+        from software.control.rig.canio import VirtualBus
+        from software.control.rig.rs04_emu import EmulatedRS04
         vb = VirtualBus()
         motors = [EmulatedRS04(i) for i in emu_ids]
         for m in motors:
@@ -332,7 +353,7 @@ def make_transport(iface: str, emu_ids):
         port = vb.port()
         port.motors = motors
         return port, 'virtual'
-    from rig.canio import SocketCan
+    from software.control.rig.canio import SocketCan
     return SocketCan(iface), 'hardware'
 
 
@@ -417,7 +438,7 @@ async def serve(bridge: Bridge, bind: str, port: int, ready=None):
 
 
 def main(argv=None) -> int:
-    ap = argparse.ArgumentParser(prog='python -m rig.rs04_bridge', description=__doc__.split('\n\n')[0])
+    ap = argparse.ArgumentParser(prog='python -m software.control.rig.rs04_bridge', description=__doc__.split('\n\n')[0])
     ap.add_argument('--iface', default='can0', help="SocketCAN interface, or 'emu' for software motors")
     ap.add_argument('--emu-ids', type=int, nargs='*', default=[127], help='ids of the software motors (--iface emu)')
     ap.add_argument('--profile', default=None, help=f'build profile ({", ".join(rs04_profiles.names())}); the default one when omitted')

@@ -5,16 +5,23 @@ a simulated clock so they run in a moment.
 """
 from __future__ import annotations
 
+# Support direct-file CLI execution as well as checkout package imports.
+if __package__ in (None, ''):
+    import sys as _checkout_sys
+    from pathlib import Path as _CheckoutPath
+    _checkout_sys.path.insert(0, str(_CheckoutPath(__file__).resolve().parents[3]))
+
+
 import json
 import math
 from pathlib import Path
 
 import pytest
 
-from rig import canio
-from rig import rs04 as P
-from rig.bench import backdrive, fit_params, spin_down
-from rig.rs04_emu import EmulatedRS04
+from software.control.rig import canio
+from software.control.rig import rs04 as P
+from software.control.rig.bench import backdrive, fit_params, spin_down
+from software.control.rig.rs04_emu import EmulatedRS04
 
 
 class Clock:
@@ -85,7 +92,7 @@ def test_spin_down_fit_recovers_inertia_and_friction():
 # ----------------------------------------------------------------------------------- the calibration
 
 def calibration_bus(dirs=(1, -1), starts=(0.7, -1.1), error_deg=0.0):
-    from rig import calibrate as C
+    from software.control.rig import calibrate as C
     vb = canio.VirtualBus()
     emus = {1: EmulatedRS04(1, plant=None), 2: EmulatedRS04(2, plant=None)}
     for e in emus.values():
@@ -104,7 +111,7 @@ def calibration_bus(dirs=(1, -1), starts=(0.7, -1.1), error_deg=0.0):
 
 
 def test_calibrate_zeroes_on_the_bare_posts_and_finds_each_direction():
-    from rig import calibrate as C
+    from software.control.rig import calibrate as C
     bus, emus, ask, prompts, (fo, fi, ro, ri) = calibration_bus()
     lines = []
     cal = C.calibrate(bus, 1, 2, ask=ask, out=lines.append)
@@ -117,14 +124,14 @@ def test_calibrate_zeroes_on_the_bare_posts_and_finds_each_direction():
 
 
 def test_calibrate_stops_when_the_travel_disagrees_with_the_cad():
-    from rig import calibrate as C
+    from software.control.rig import calibrate as C
     bus, emus, ask, prompts, _ = calibration_bus(error_deg=5.0)
     with pytest.raises(RuntimeError, match='between the posts'):
         C.calibrate(bus, 1, 2, ask=ask, out=lambda s: None)
 
 
 def test_calibration_round_trips_through_its_file(tmp_path):
-    from rig import calibrate as C
+    from software.control.rig import calibrate as C
     bus, emus, ask, prompts, _ = calibration_bus()
     lines = []
     assert C.main(['--file', str(tmp_path / 'cal.json')], transport=bus.t, ask=ask, out=lines.append) == 0
@@ -176,7 +183,7 @@ def test_fit_params_reads_the_sheets_and_the_scripts_results(tmp_path, monkeypat
 # ----------------------------------------------------------------------------------- C6
 
 def test_jitter_counts_every_tick_and_stops_the_motors():
-    from rig.bench import jitter
+    from software.control.rig.bench import jitter
 
     class Creep(Clock):                                     # every look at the clock costs 10 us
         def __call__(self):
@@ -201,8 +208,8 @@ def test_jitter_counts_every_tick_and_stops_the_motors():
 
 def test_the_node_firmware_packs_frames_as_the_laptop_reads_them():
     import importlib.util
-    from rig import node as N
-    spec = importlib.util.spec_from_file_location('rig_frames', Path(__file__).resolve().parents[1] / 'firmware' / 'feather_rig' / 'rig_frames.py')
+    from software.control.rig import node as N
+    spec = importlib.util.spec_from_file_location('rig_frames', (Path(__file__).resolve().parents[3] / 'software/firmware/rig/feather_rig/rig_frames.py'))
     F = importlib.util.module_from_spec(spec)
     spec.loader.exec_module(F)
     assert (F.RUN, F.SENSE, F.VBUS, F.HOST, F.RUN_CLOSED) == (N.RUN, N.SENSE, N.VBUS, N.HOST, N.RUN_CLOSED)

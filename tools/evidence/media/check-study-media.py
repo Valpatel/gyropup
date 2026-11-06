@@ -10,7 +10,7 @@ from pathlib import Path
 import subprocess
 import sys
 
-ROOT = Path(__file__).resolve().parents[1]
+ROOT = (Path(__file__).resolve().parents[3])
 MEDIA = 'exports/leg/fea/hip-frame-e1-media/'
 SUMMARY = 'exports/leg/fea/summary.json'
 FINER = 'research/leg-preprint/evidence/hip-frame-print-ready.json'

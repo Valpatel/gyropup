@@ -14,13 +14,13 @@ import sys
 import tempfile
 import unittest
 
-ROOT = Path(__file__).resolve().parents[1]
-spec = importlib.util.spec_from_file_location('rs04_lug_checks', ROOT / 'cad/rs04_lug_checks.py')
+ROOT = (Path(__file__).resolve().parents[3])
+spec = importlib.util.spec_from_file_location('rs04_lug_checks', (ROOT / 'hardware/cad/legs/rs04_lug_checks.py'))
 checks = importlib.util.module_from_spec(spec)
 spec.loader.exec_module(checks)
 parser = argparse.ArgumentParser(add_help=False)
 parser.add_argument('--pure', action='store_true', help='Run control tests before the real CAD receipt exists')
-parser.add_argument('--receipt', type=Path, default=ROOT / 'exports/leg/rs04-mounting-fit/checks.json')
+parser.add_argument('--receipt', type=Path, default=(ROOT / 'hardware/exports/leg/rs04-mounting-fit/checks.json'))
 OPTIONS, REMAINING = parser.parse_known_args()
 
 
@@ -28,7 +28,7 @@ class LugStackControls(unittest.TestCase):
     def test_regenerated_assembly_does_not_restore_withdrawn_mounting_instructions(self):
         # Exercise the actual writer and its actual motor-step prose without
         # importing the CAD/rendering runtime or regenerating historical images.
-        tree = ast.parse((ROOT / 'cad/rig_assembly.py').read_text())
+        tree = ast.parse(((ROOT / 'hardware/cad/rig/rig_assembly.py')).read_text())
         steps = next(n.value for n in tree.body if isinstance(n, ast.Assign)
                      and any(isinstance(t, ast.Name) and t.id == 'STEPS' for t in n.targets))
         motor = next(row for row in steps.elts
@@ -133,8 +133,7 @@ def synthetic_receipt(directory):
             path.write_bytes(b'UNIT TEST IDENTITY SENTINEL: NOT CAD')
             files[ext] = checks.digest(path)
         artifacts[name] = {'files': files, 'stl_check': {'cad_valid': True, 'watertight': True, 'solid_count': 1}}
-    source_files = {p.relative_to(ROOT).as_posix(): checks.digest(p) for folder in ('cad', 'catalog', 'designs')
-                    for p in (ROOT / folder).rglob('*') if p.is_file() and p.suffix in ('.py', '.json')}
+    source_files = {p.relative_to(ROOT).as_posix(): checks.digest(p) for p in checks.cad_source_files(ROOT)}
     recesses = {}
     for key, (instance, _, _) in checks.RECESS_PROBES.items():
         record = {'source_step_sha256': checks.PRIVATE_HASHES[checks.PRIVATE_FILES[0]], 'representative_instance': instance,

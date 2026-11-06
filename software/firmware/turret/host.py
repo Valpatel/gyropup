@@ -54,9 +54,9 @@ import can_msgs as M  # noqa: E402
 import config as C  # noqa: E402
 from bench_host import BENCH_OUT, SIM_OUT, CanLink, SimLink, Turret  # noqa: E402
 
-R = HERE.parents[1]
-LIDAR_JSON = R / 'exports' / 'turret' / 'lidar' / 'lidar.json'
-BOX_JSON = R / 'exports' / 'turret' / 'lidar' / 'box.json'
+R = (HERE.parents[2])
+LIDAR_JSON = (R / 'hardware/exports/turret/lidar/lidar.json')
+BOX_JSON = (R / 'hardware/exports/turret/lidar/box.json')
 RATE_CAP = min(C.AIM_RATE_CAP, C.PAN_SPEED_MAX)      # 90 deg/s: the pan servo's top through 3:1
 PEOPLE_NEAR_RATE = 50.0                              # deg/s, pan and tilt, while people are near
 BEHIND = [(120.0, 240.0)]                            # no fire within 60 deg of straight back, where the operator stands
