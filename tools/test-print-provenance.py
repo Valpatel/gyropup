@@ -4,6 +4,7 @@ import ast
 import contextlib
 import importlib.machinery
 import io
+import hashlib
 import json
 import math
 from pathlib import Path
@@ -18,6 +19,18 @@ import print_provenance as provenance
 import print_slicing
 import turret_print
 REPO = Path(__file__).resolve().parents[1]
+
+
+class RetainedMotorDay(unittest.TestCase):
+    def test_real_slice_records_match_their_source_bytes(self):
+        rows = json.loads((REPO / 'exports/motor-day/slices.json').read_text())['parts']
+        self.assertTrue(rows, 'retained slice evidence must not disappear')
+        for name, row in rows.items():
+            with self.subTest(part=name):
+                source = (REPO / row['file']).resolve()
+                self.assertTrue(source.is_relative_to(REPO.resolve()))
+                self.assertEqual(hashlib.sha256(source.read_bytes()).hexdigest(), row['sha256'],
+                                 f'{name}: retained slice identity differs from its input')
 
 
 class PrintSources(unittest.TestCase):

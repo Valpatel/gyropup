@@ -8,10 +8,14 @@ Every table between `gen:` markers is written by `tools/motor_day.py` from the C
 simulation. Edit the script, not the tables.
 
 **Download everything:** [motor-day-package.zip](../exports/motor-day/motor-day-package.zip) (CSV lists, STL and 3MF
-print files, drawings).
+print files, drawings). This ZIP retains the earlier mesh/slice snapshot and its original text and pictures.
+The step pictures and drawings on this page were refreshed on 2026-11-05; the ZIP was deliberately kept
+byte-identical to preserve its sliced-input identities. See the [picture-refresh record](validation/motor-day-render-inputs.md).
 
-> **Not a release.** No part on this page has been printed, bought or run. The owner runs every powered test. The
-> RS-04 mounting support (#116) and the leg's structural cases (#29) are still open; PLA does not change that.
+> **Not a release.** On 2026-11-05 the owner reported the main motor holder and motor adapter printed;
+> their exact source revision, material and fit results were not reported. No installation, load or powered test
+> was reported. The owner runs every powered test. RS-04 mounting support (#116) and structural cases (#8)
+> remain open; PLA does not qualify them. See the [dated physical record](physical-progress.md).
 
 ```mermaid
 flowchart LR
