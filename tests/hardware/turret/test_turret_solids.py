@@ -1,9 +1,9 @@
 """Every turret part is a valid closed solid, as cad-agent's design gates require (#61).
 
 cad-agent's relation table (v0.6.0 on) refuses an invalid BREP before it computes any volume, so one bad part stops
-cad/turret_gates.py and, behind it, cad/build_turret_box.py. This finds the part by name instead.
+hardware/cad/turret/turret_gates.py and, behind it, hardware/cad/builders/build_turret_box.py. This finds the part by name instead.
 
-    .venv/bin/python -m pytest cad/test_turret_solids.py -q
+    .venv/bin/python -m pytest tests/hardware/turret/test_turret_solids.py -q
 """
 from __future__ import annotations
 

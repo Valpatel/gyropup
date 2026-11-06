@@ -1,6 +1,6 @@
-"""The leg's strength cases load each part with forces and torques that balance the wheel's (cad/leg_studies.py).
+"""The leg's strength cases load each part with forces and torques that balance the wheel's (hardware/cad/legs/leg_studies.py).
 
-    .venv/bin/python -m pytest cad/test_leg_loads.py -q
+    .venv/bin/python -m pytest tests/hardware/legs/test_leg_loads.py -q
 """
 
 # Support direct-file CLI execution as well as checkout package imports.

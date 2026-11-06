@@ -1,11 +1,11 @@
-"""The turret lids' snap latches (#131 wave 1) in the CAD: they exist with the sizes research/snap-fits/snaps.yaml
+"""The turret lids' snap latches (#131 wave 1) in the CAD: they exist with the sizes docs/research/snap-fits/snaps.yaml
 declares to cad-agent, each lid seats with no interference, each barb catches its ridge by the declared undercut
 once the lid lifts past the play, and the controls (the lids as they were, the catch parts without ridges) hold
 nothing. Also the backing behind the thin walls, the hopper lid's rotation key, the hopper-full beam's keep-out, the
 mass bounds the loads use, the print orientations (no support on a latch), the coupons, the neighbours and the hopper
 lid as the turret's top (the reason R-fall up is excluded).
 
-    .venv/bin/python -m pytest cad/test_turret_snaps.py -q
+    .venv/bin/python -m pytest tests/hardware/turret/test_turret_snaps.py -q
 """
 from __future__ import annotations
 

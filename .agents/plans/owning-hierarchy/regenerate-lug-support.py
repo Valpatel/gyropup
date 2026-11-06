@@ -1,6 +1,6 @@
 """Bounded, output-preserving lug/support regeneration; no adoption or qualification."""
 from pathlib import Path
-import argparse, hashlib, importlib.util, json, os, shutil, stat, subprocess, sys, tarfile, time
+import argparse, hashlib, importlib.util, json, os, shutil, stat, subprocess, sys, tarfile, time, signal, ctypes
 
 ROOT = Path.cwd().resolve()
 sys.path.insert(0, str(ROOT))
@@ -39,20 +39,51 @@ def preserve(label, directory):
             archive.add(directory/n, arcname=n, recursive=False)
     save(label+'-archive.json', {'sha256':sha(OUT/(label+'.tgz')),'files':len(rows)})
 
-def phase(name, command, expected=0, timeout=3600):
-    started = time.monotonic()
-    with (OUT/(name+'.log')).open('w') as stream:
-        try:
-            run = subprocess.run(command, cwd=ROOT, stdout=stream, stderr=subprocess.STDOUT,
-                                 timeout=timeout, check=False)
-            result = {'command':command,'exit':run.returncode,'seconds':time.monotonic()-started,
-                      'expected_exit':expected}
-        except subprocess.TimeoutExpired:
-            result = {'command':command,'timed_out':True,'seconds':time.monotonic()-started,
-                      'expected_exit':expected}
-    results['phases'][name] = result
-    save('result.json', results)
-    assert result.get('exit') == expected, name+': incomplete or unexpected exit; inspect retained log'
+def settle_owned_group(proc):
+    """Kill and reap our group even after its original leader has exited."""
+    signalled=False;reaped=[]
+    try:os.killpg(proc.pid,signal.SIGKILL);signalled=True
+    except ProcessLookupError:pass
+    proc.wait(timeout=5)
+    deadline=time.monotonic()+3
+    while True:
+        while True:
+            try:pid,status=os.waitpid(-proc.pid,os.WNOHANG)
+            except ChildProcessError:break
+            if pid==0:break
+            reaped.append({'pid':pid,'status':status})
+        try:os.killpg(proc.pid,0)
+        except ProcessLookupError:return {'group_gone':True,'signalled':signalled,'reaped':reaped}
+        if time.monotonic()>=deadline:return {'group_gone':False,'signalled':signalled,'reaped':reaped}
+        time.sleep(.02)
+
+libc=ctypes.CDLL(None,use_errno=True)
+assert libc.prctl(36,1,0,0,0)==0,'Linux child subreaper required'
+def interrupted(signum,frame):raise KeyboardInterrupt('received signal '+str(signum))
+for sig in (signal.SIGINT,signal.SIGTERM):signal.signal(sig,interrupted)
+processes_quiescent=True
+def phase(name,command,expected=0,timeout=3600):
+ global processes_quiescent
+ start=time.monotonic();record={'command':command,'expected_exit':expected};child=None
+ print('START '+name,flush=True)
+ try:
+  with (OUT/(name+'.log')).open('w') as stream:
+   processes_quiescent=False
+   child=subprocess.Popen(command,cwd=ROOT,stdout=stream,stderr=subprocess.STDOUT,start_new_session=True)
+   try:record['exit']=child.wait(timeout=timeout)
+   except subprocess.TimeoutExpired:record['timed_out']=True
+ except BaseException as exc:
+  record['error']=type(exc).__name__+': '+str(exc)
+  raise
+ finally:
+  # Cover every path after launch, including interruption before wait begins.
+  if child is not None:
+   cleanup=settle_owned_group(child)
+   record['process_cleanup']=cleanup;processes_quiescent=cleanup['group_gone']
+  record['seconds']=time.monotonic()-start;results['phases'][name]=record;save('result.json',results)
+  print('END '+name+' '+json.dumps(record),flush=True)
+  assert processes_quiescent,'Owned group not quiescent; do not race archive/restore'
+ assert record.get('exit')==expected,name+' failed/incomplete; actual logs retained'
 
 parser = argparse.ArgumentParser(description=__doc__)
 parser.add_argument('--head', required=True)
@@ -75,7 +106,10 @@ try:
     from hardware.cad.legs import rs04_lug_checks as lugs
     before = provenance.snapshot(ROOT)
     save('cad-inputs-before.json', before)
-    assert len(before['files']) == 92
+    frozen=json.loads((ROOT/'.agents/plans/owning-hierarchy/geometry-inputs-frozen.json').read_text())
+    assert len(before['files']) == frozen['source_members'] == 92
+    assert before['files'] == frozen['files']
+    assert provenance.fingerprint(before['files']) == frozen['source_closure_sha256']
     assert before['versions'] == {'cad-agent':'0.4.2','cadquery':'2.8.0','cadquery-ocp':'7.9.3.1.1','numpy':'2.5.4'}
     assert before['toolkit_sources_sha256'] == lugs.TOOLKIT_SOURCES
     assert before['GYROPUP_CAD_PARAMS_sha256'] is None
@@ -88,7 +122,7 @@ try:
     try:
         phase('lug-generate',[sys.executable,'-B','hardware/cad/legs/rs04_lug_checks.py','--vendor-root',str(PRIVATE),'--out',str(lug),'--export'],expected=1,timeout=5400)
     finally:
-        preserve('lug-candidate',lug)
+        if processes_quiescent:preserve('lug-candidate',lug)
     data = json.loads((lug/'checks.json').read_text())
     assert lugs.validate_receipt(data,lug,ROOT)
     assert data['counts'] == {'pass':322,'warn':40,'fail':8}
@@ -132,7 +166,7 @@ try:
     try:
         phase('support-generate',[sys.executable,'-B','docs/research/rs04-support/probe.py','--vendor-root',str(PRIVATE),'--out',str(support)],timeout=3600)
     finally:
-        preserve('support-candidate',support)
+        if processes_quiescent:preserve('support-candidate',support)
     probe = json.loads((support/'probe.json').read_text())
     assert probe['probe_complete'] is True and probe['engineering_pass'] is False
     assert probe['source_inputs'] == probe['source_inputs_after']
@@ -148,6 +182,11 @@ except BaseException as exc:
     raise
 finally:
     final_errors = []
+    if not processes_quiescent:
+        results['status']='FAILED'
+        results['final_guard_errors']=['Owned group not quiescent; preserve working outputs without racing archive/restoration']
+        save('result.json',results)
+        raise RuntimeError(results['final_guard_errors'][0])
     if initial is not None:
         # Observation must never prevent restoration of our declared temporary inputs.
         try:

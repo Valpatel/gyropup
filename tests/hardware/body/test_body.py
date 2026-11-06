@@ -1,9 +1,9 @@
 """Checks on the body's numbers and parts (milestone M5).
 
-    .venv/bin/python -m pytest cad/test_body.py -q          # or: .venv/bin/python cad/test_body.py
+    .venv/bin/python -m pytest tests/hardware/body/test_body.py -q          # or: .venv/bin/python tests/hardware/body/test_body.py
 
 T1: the three interfaces the body takes from elsewhere match their sources (the hip frame's six inserts measured from
-cad/fivebar.py's solid, the turret's TM pattern from cad/turret.py, the J501's holes from the j501-agx project), and
+hardware/cad/legs/fivebar.py's solid, the turret's TM pattern from hardware/cad/turret/turret.py, the J501's holes from the j501-agx project), and
 the track and Y_OFF print from the one constant. T2 adds the frame's own checks when exports/body/body.json exists.
 """
 from __future__ import annotations

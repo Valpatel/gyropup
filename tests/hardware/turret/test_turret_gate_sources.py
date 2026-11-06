@@ -1,9 +1,9 @@
-"""The design gates' fingerprint (cad/turret_gates.py geometry_fingerprint) covers every file the turret's geometry is
-built from: cad/turret.py, each cad/ module it imports, the modules those import, and the data files they read when
+"""The design gates' fingerprint (hardware/cad/turret/turret_gates.py geometry_fingerprint) covers every file the turret's geometry is
+built from: hardware/cad/turret/turret.py, each cad/ module it imports, the modules those import, and the data files they read when
 imported. A module left out means a stored gate result reads as current after that module changed the geometry
-(cad/turret_snaps.py was left out from #131 until the review of PR #181). Kernel-free: it reads the sources.
+(hardware/cad/turret/turret_snaps.py was left out from #131 until the review of PR #181). Kernel-free: it reads the sources.
 
-    .venv/bin/python -m pytest cad/test_turret_gate_sources.py -q
+    .venv/bin/python -m pytest tests/hardware/turret/test_turret_gate_sources.py -q
 """
 from __future__ import annotations
 
