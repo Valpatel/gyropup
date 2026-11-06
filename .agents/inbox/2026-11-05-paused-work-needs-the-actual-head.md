@@ -54,3 +54,31 @@ head. No source, decision, receipt, hardware or physical acceptance changed.
 D77's recorded owner decisions are preserved and attributed, without claiming
 this documentary audit independently verifies their original statements or
 physical behavior. Rangefinder integration remains separate proposed work.
+
+## Keep draft limits separate from the published branch
+
+On 2026-11-06 UTC (2026-11-05 local), the dossier relocation proposal incorrectly called the draft's +12/+10
+limits released behavior. Source inspection caught the branch-attribution error before implementation:
+
+```text
+git show 2a2e4853012ae16179818fea22f8f4a69b57bae1:firmware/turret/config.py
+  TILT_MAX_DEG = 0.0; TILT_MIN_DEG = -25.0
+same main, cad/turret.py:2167 / designer/turret_bench.js:485
+  tilt_range_deg [G.tilt_min, 0.0] / slider max 0
+git show eeccc07bacfca95464c703f6d730f975781f1fe0:firmware/turret/config.py
+  TILT_MAX_DEG = 12.0; TILT_MIN_DEG = -25.0; FIRE_TILT_MAX_DEG = 10.0
+PR 207 remains open/draft/unmerged
+```
+
+The dossier's R3/R10 0/-25 wording therefore does not itself show staleness against published main. Other real
+dossier problems remain: the main-source no-write reader probes returned 27 errors/two warnings and six stale
+geometric gate rows before and after the proposed move. Reader/input equality does not establish that either
+verdict is correct, current geometry is reconciled, or a physical angle is qualified.
+
+The [dated correction](https://github.com/Valpatel/gyropup/issues/219#issuecomment-6679425030) and
+[independent source check](https://github.com/Valpatel/gyropup/issues/219#issuecomment-6679458067) preserve that
+distinction. No historical report, YAML value, mechanical or firmware limit changed. Cause: correctly recovered
+draft facts were later transferred into a statement about a different branch. Corrective rule: write the exact
+branch/head beside every numerical comparison and check both immutable sources before calling it released or
+using it to diagnose stale evidence. A branch audit proves only its named branch; a matching reader result proves
+only the tested contract. Retain actual errors and physical unknowns separately.

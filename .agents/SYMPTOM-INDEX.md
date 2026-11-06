@@ -3,8 +3,11 @@
 | Symptom | Canonical guidance |
 | --- | --- |
 | A check summary says failed but the executed phase may be provisioning, a global cancellation, or a true assertion | [Classify phases and actual attempts before changing a check](inbox/2026-11-05-ci-classification-needs-phase-evidence.md) |
+| A retrieved product omits nested `src` files, or generated engineering indexes differ only in version queries | [Verify complete retrieval and bound generated-query comparisons](inbox/2026-11-05-ci-classification-needs-phase-evidence.md#compare-generated-cache-queries-without-exempting-engineering-outputs) |
+| Production reports a new version but a changed document still has preceding-source bytes | [Verify actual version, bytes and routes together](inbox/2026-11-05-ci-classification-needs-phase-evidence.md#a-new-version-response-is-not-complete-publication-evidence) |
 | An asynchronous Playwright wait predicate returns false but polling finishes immediately | [Use synchronous acceptance polling and bounded native completion states](inbox/2026-11-05-layout-readiness-must-wait-for-fonts-not-global-load.md) |
 | A paused PR says its dependency or implementation is missing, but later commits/reports may already exist | [Resume from the actual tree and reports](inbox/2026-11-05-paused-work-needs-the-actual-head.md) |
+| A draft's numeric limits are described as already released on main | [Keep each limit tied to its own branch](inbox/2026-11-05-paused-work-needs-the-actual-head.md#keep-draft-limits-separate-from-the-published-branch) |
 | A logical directory move changes public files/pages or breaks a module/service despite unchanged contents | [Map ownership, publication and import contracts before moving](inbox/2026-11-05-root-moves-need-consumer-and-publication-maps.md) |
 | Production RS-04 shutdown returns while its reader is alive, or Python 3.12 cancellation waits on connected clients | [Runtime ownership](domains/rs04-runtime-lifecycle.md), [production shutdown incident](inbox/2026-11-06-runtime-shutdown-must-finish-before-loop-closure.md) |
 | Tests report OK, then Python aborts with `_enter_buffered_busy`, or teardown leaves daemon threads/accepted sockets alive | [Test-owned asynchronous resources](domains/test-lifecycle.md), [RS-04 shutdown incident](inbox/2026-11-06-test-close-must-finish-owned-threads.md) |
@@ -13,7 +16,7 @@
 | Layout checks time out on a small pending resource despite visible content and loaded fonts | [Measure after real font readiness, not global load](inbox/2026-11-05-layout-readiness-must-wait-for-fonts-not-global-load.md) |
 | `?sound=0` is briefly ignored while talk mounts and an optional import is delayed | [Apply the audio query before mounting consumers](inbox/2026-11-05-audio-query-must-precede-optional-imports.md) |
 | Pages rejects a relocated Wrangler file with “custom paths” unsupported | [Find the config through the command working directory](inbox/2026-11-05-pages-deploy-needs-config-working-directory.md) |
-| A README image works on GitHub but is broken on the site's README page | [README images must use `src`, not `srcset`](inbox/2026-11-02-readme-images-need-src-not-srcset.md) |
+| A README image is broken, oversized, or hides its ordinary navigation links on the site | [README images must use `src`, not `srcset`](inbox/2026-11-02-readme-images-need-src-not-srcset.md) |
 | A browser reports an untrusted certificate while a DNS firewall names a blocked domain or name server | [Failing-path evidence and domain-age limits](inbox/2026-10-30-dns-filter-warnings-need-the-failing-path.md), [public HTTPS receipt](../docs/validation/public-https.md) |
 | Local services fill with old branch previews, or dependency symlinks look like unfinished work | [One shared preview and bounded test listeners](domains/site-preview.md), [incident](inbox/2026-10-29-preview-servers-need-one-owner.md) |
 | Valid supplier connector solids overlap when mated or omit wire-entry holes, contacts or latch details | [Vendor solids can omit functional cavities](inbox/2026-10-29-valid-vendor-solids-can-omit-connector-cavities.md) |

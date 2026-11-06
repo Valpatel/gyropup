@@ -4,7 +4,7 @@ Gyropup is at the CAD and simulation stage. There is no assembled robot or print
 [prototype warning](prototype-safety.md) applies to every design and download: these prototypes are unsafe,
 for research purposes only, and will not be offered for sale.
 
-[![Explore the robot, build and inspect, understand the design, or contribute](img/navigation/project-map.svg)](https://gyropup.com/docs/img/navigation/project-map.svg)
+<a href="https://gyropup.com/docs/img/navigation/project-map.svg"><img src="img/navigation/project-map.svg" width="640" height="224" style="max-width:100%;height:auto;padding:0" alt="Four paths into Gyropup: play, build, understand and contribute"></a>
 
 [Open the interactive map](https://gyropup.com/docs/img/navigation/project-map.svg). Every path also appears as
 an ordinary link below; the map remains readable with animation disabled.

@@ -64,7 +64,7 @@ test('every generated HTML page advertises a current Markdown counterpart', asyn
   assert.match(await read('_headers'), /\/\*\.md\n  Content-Type: text\/markdown; charset=utf-8/);
 });
 
-test('public entry guides resolve inside the bundle and keep operator instructions excluded', async () => {
+test('public entry guides resolve inside the bundle and keep unpublished repository sources excluded', async () => {
   const discovery = await read('llms.txt');
   for (const route of ['/site/pages/docs-readme-md.md', '/site/pages/docs-agent-guide-md.md']) {
     assert.ok(discovery.indexOf(route) < discovery.indexOf('## All public pages'), route);
@@ -82,8 +82,21 @@ test('public entry guides resolve inside the bundle and keep operator instructio
   assert.match(discovery, /historical reports and recordings, and physical qualification are separate/);
   assert.match(discovery, /version\.json/);
   assert.match(discovery, /markdown-pages\.json/);
-  for (const file of ['AGENTS.md', '.agents', 'CONTRIBUTING.md', '.github/CONTRIBUTING.md', 'docs/handoff.md']) {
+  for (const file of ['AGENTS.md', '.agents', 'CONTRIBUTING.md', '.github/CONTRIBUTING.md', 'docs/handoff.md',
+    'docs/dossier', 'site/pages/docs-dossier-readme-md.html', 'site/pages/docs-dossier-readme-md.md']) {
     await assert.rejects(stat(path.join(out, file)), { code: 'ENOENT' });
+  }
+  const models = JSON.parse(await read('site/models.json')).files;
+  assert.ok(!models.some(model => model.path === '/docs/dossier' || model.path.startsWith('/docs/dossier/')),
+    'Unpublished dossier inputs never become model downloads');
+  const { document } = parseHTML(await read('site/pages/docs-turret-sections-md.html'));
+  const sourceLinks = [...document.querySelectorAll('article a[href]')].map(link => link.getAttribute('href'));
+  for (const target of ['docs/dossier', 'docs/dossier/project.yaml']) {
+    assert.ok(sourceLinks.includes('https://github.com/Valpatel/gyropup/blob/main/' + target), target);
+    assert.ok(!sourceLinks.some(href => {
+      const url = new URL(href, 'https://gyropup.com/site/pages/docs-turret-sections-md.html');
+      return url.origin === 'https://gyropup.com' && (url.pathname === '/' + target || url.pathname.startsWith('/' + target + '/'));
+    }), 'The source guide must not offer an unpublished site route: ' + target);
   }
 });
 
