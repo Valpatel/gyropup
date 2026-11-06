@@ -59,6 +59,7 @@ parser.add_argument('--head', required=True)
 args = parser.parse_args()
 results = {'source':args.head,'status':'FAILED','phases':{},'scope':'actual bounded geometry generation only; no adoption/physical qualification'}
 initial = None
+protected_before = None
 lug = OUT/'lug-candidate'
 support = OUT/'support-candidate'
 replacement = {}
@@ -68,6 +69,8 @@ try:
     assert 'GYROPUP_CAD_PARAMS' not in os.environ
     initial = tracked()
     save('tracked-before.json', initial)
+    protected_before = inventory(ROOT/'hardware')
+    save('hardware-before.json',protected_before)
     from hardware.cad.manufacturing import print_provenance as provenance
     from hardware.cad.legs import rs04_lug_checks as lugs
     before = provenance.snapshot(ROOT)
@@ -134,7 +137,11 @@ finally:
             save('tracked-final-restored.json',final)
             assert final == initial, 'Final tracked bytes not restored'
             assert unchanged, 'Unexpected source/output mutation (declared lug input was restored)'
+            protected_after = inventory(ROOT/'hardware')
+            save('hardware-final-restored.json',protected_after)
+            assert protected_after == protected_before, 'Complete hardware path/byte set changed'
             results['final_tracked_identity_restored'] = True
+            results['complete_hardware_identity_restored'] = True
     except BaseException as exc:
         results['status'] = 'FAILED'
         results['final_guard_error'] = type(exc).__name__+': '+str(exc)
