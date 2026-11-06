@@ -126,3 +126,23 @@ claimed. The layout-only unchanged-head replacement 127703807998 used 21-second
 setup and completed all 1,520 unique views with zero findings in 701 seconds.
 Source, thresholds and limits stayed unchanged; only that completed execution
 provided passing coverage.
+
+## Compare generated cache queries without exempting engineering outputs
+
+On 2026-11-05 (2026-11-06 UTC), stage-1 root cleanup at `5fe7e12430477ef76f80fb6666ed59bd095faa3f` kept the three motion fixtures byte-identical. Fleet 201 on cpu-b genuinely built baseline `4f1441b7a1ccb84d6222ccb095fcf30d302eb795` and candidate, then failed the overbroad expectation that every published engineering-prefix byte would be unchanged. No private-input controls or browser consumers ran in that attempt.
+
+Complete retained inventories and actual products contain the same 2,973 paths. All 1,904 raw engineering records and 77 published JavaScript modules are strictly identical. The 132 changed engineering paths are generated directory `index.html` files, proven absent from tracked source in both immutable revisions. Every actual byte difference is the bounded actual-version query substitution `49bb352c2c4855d03109` to `5d22e57e5434776ee793` after `?v=`, `&v=` or `&amp;v=`. For example, `exports/motor-day/index.html` changes `/web/theme.js?v=49bb352c2c4855d03109` to `/web/theme.js?v=5d22e57e5434776ee793`.
+
+The independently checked replacement retains every raw hash comparison and checks all 132 index files individually against only those exact keys from their actual `version.json` products. Planted changes to `href="parts/"` and an unexpected asset query value are rejected. Do not ignore HTML, strip arbitrary queries, replace all hash-like strings or narrow source/receipt closures. This classification is not new CAD evidence and does not authorize regenerating/resealing receipts.
+
+## Verify fetched products against the remote inventory
+
+The initial `fleet-run fetch 201 <owned-destination> --outputs-only` omitted real product files. At tool commit `602d954e2f5d5d76dd8ac85570c6609ae1a83fe8`, `slurm/scripts/fleet-run` SHA256 `cb520154788c008a05f86d7e76d7a868a0a2a989a32282b9dc43dc920502a6f8`, its unanchored rsync `--exclude src` also excludes nested product `src` directories. Missing paths included `out/{before-dist,dist}/firmware/balance/src/{index.html,core/index.html,host/index.html,mcu/index.html}` and their raw firmware files. The remote inventories still listed those files. A retrieved subset is not a complete product.
+
+A full read-only `fleet-run fetch 201 <owned-destination> --max-mb 3072` recovered the complete owned run; the 2048 MB attempt correctly refused its 2492 MB size. Every path, size and hash in both recovered products then matched the remotely retained inventories. No product source or fleet tooling was edited to hide the omission.
+
+Corrective rule: archive complete products inside the output directory before assertions, and retain their full inventories. Fetch the archives through the existing interface, extract them and verify all expected paths/sizes/hashes before claiming complete retrieved evidence. Keep temporary baseline worktrees outside the fetched run root. A future fleet-filter fix is separate work requiring its own concrete review; this fallback does not prove the tool's exclusion semantics correct.
+
+Evidence: [failed 201 command/classification](https://github.com/Valpatel/gyropup/pull/233#issuecomment-6677525523), [complete classification and exact 202 command](https://github.com/Valpatel/gyropup/pull/233#issuecomment-6677606687). Fleet 201 remains FAILED; only the actual completed assertions of a later run can validate the previously unreached controls and consumers. No physical qualification follows.
+
+The unchanged-head replacement fleet 202 on cpu-b completed with exit 0 in 246 seconds (269 seconds total). Its strict 1,904 raw comparisons, 132 individually eligible generated-query comparisons and both planted mutations passed, then the actual stale-old/missing-current fixture control, tracked/untracked private inputs in both new homes, three real model consumers, Markdown 6/6 and privacy 10 passed / 1 expected skip all ran. Both archived products were completely retrieved and all 2,973 paths/sizes/hashes in each matched their original remote inventories. See the [completed 202 result](https://github.com/Valpatel/gyropup/pull/233#issuecomment-6677677245). This accepts those actual completed assertions without turning failed 201 into a pass.
