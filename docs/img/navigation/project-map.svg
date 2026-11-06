@@ -1,27 +1,51 @@
-<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 420 636" role="img" aria-labelledby="title desc">
-<title id="title">Explore Gyropup</title>
-<desc id="desc">Four paths through the project: explore the robot, build and inspect, understand the engineering, and contribute. Each card links to its published entry point. Equivalent text links accompany this image in the documentation map.</desc>
-<defs><linearGradient id="bg" x2="1" y2="1"><stop stop-color="#173d50"/><stop offset="1" stop-color="#0b202d"/></linearGradient><linearGradient id="card"><stop stop-color="#244b60"/><stop offset="1" stop-color="#173647"/></linearGradient></defs>
-<style>text{font-family:system-ui,sans-serif;fill:#f5f2e9}.sub{font-size:14px;fill:#bcd1d8}.label{font-size:20px;font-weight:650}.card{fill:url(#card);stroke:#57717c;stroke-width:1}.dot{fill:#ffc461;animation:pulse 4s ease-in-out infinite}.link:focus .card,.link:hover .card{stroke:#ffc461;stroke-width:2}.link:focus{outline:none}@keyframes pulse{50%{opacity:.35}}@media(prefers-reduced-motion:reduce){.dot{animation:none}}</style>
-<rect width="420" height="636" rx="25" fill="url(#bg)"/>
-<path d="M40 66H380M42 128V558" fill="none" stroke="#66808a" stroke-width="1"/>
-<text x="27" y="39" font-size="25" font-weight="700">One robot. Four ways in.</text>
-<text class="sub" x="27" y="87">Follow a path, then open its evidence.</text>
-<a class="link" href="https://gyropup.com/designer/sim.html" aria-label="Explore the robot in the browser playground">
-<rect class="card" x="62" y="111" width="334" height="105" rx="15"/><circle class="dot" cx="42" cy="146" r="5"/>
-<g transform="translate(83 132)" fill="none" stroke="#ffc461" stroke-width="2"><circle cx="11" cy="23" r="8"/><circle cx="42" cy="23" r="8"/><path d="M11 23L20 5H34L42 23M20 5L28 23L34 5"/></g>
-<text class="label" x="83" y="182">Explore the robot ↗</text><text class="sub" x="83" y="202">Playground · progress · current design</text></a>
-<a class="link" href="https://gyropup.com/designer/build.html" aria-label="Inspect build files and motor-day instructions">
-<rect class="card" x="62" y="234" width="334" height="105" rx="15"/><circle class="dot" cx="42" cy="269" r="5" style="animation-delay:1s"/>
-<g transform="translate(86 250)" fill="none" stroke="#ffc461" stroke-width="2"><path d="M0 9L17 0L34 9V28L17 37L0 28ZM0 9L17 18L34 9M17 18V37"/></g>
-<text class="label" x="83" y="305">Build and inspect ↗</text><text class="sub" x="83" y="325">Parts · print candidates · hardware</text></a>
-<a class="link" href="https://gyropup.com/site/pages/docs-readme-md.html#design-and-qualification" aria-label="Read engineering design and qualification evidence">
-<rect class="card" x="62" y="357" width="334" height="105" rx="15"/><circle class="dot" cx="42" cy="392" r="5" style="animation-delay:2s"/>
-<g transform="translate(86 377)" fill="none" stroke="#ffc461" stroke-width="2"><path d="M0 1H34V30H0ZM7 8H27M7 15H22M7 22H27"/></g>
-<text class="label" x="83" y="428">Understand the design ↗</text><text class="sub" x="83" y="448">Decisions · CAD · simulation · tests</text></a>
-<a class="link" href="https://github.com/Valpatel/gyropup/blob/main/.github/CONTRIBUTING.md" aria-label="Contribute or resume work using the contributor guide">
-<rect class="card" x="62" y="480" width="334" height="105" rx="15"/><circle class="dot" cx="42" cy="515" r="5" style="animation-delay:3s"/>
-<g transform="translate(86 500)" fill="none" stroke="#ffc461" stroke-width="2"><circle cx="4" cy="4" r="4"/><circle cx="4" cy="29" r="4"/><circle cx="29" cy="4" r="4"/><path d="M4 8V25M4 20C4 11 29 22 29 8"/></g>
-<text class="label" x="83" y="551">Contribute or resume ↗</text><text class="sub" x="83" y="571">Workflow · live issues · recovery audit</text></a>
-<text class="sub" x="27" y="615">Research prototypes · qualification remains open</text>
+<svg xmlns="http://www.w3.org/2000/svg" width="640" height="224" viewBox="0 0 640 224" role="img" aria-labelledby="title desc">
+  <title id="title">Four paths into Gyropup</title>
+  <desc id="desc">A compact circuit of four destinations: Play, Build, Understand and Contribute. Fine animated traces connect the paths. Open this SVG to follow its links, or use the ordinary links beside it. This is a navigation illustration, not a mechanical drawing.</desc>
+  <style>
+    svg{--paper:#f7f5ef;--ink:#233b40;--muted:#667c7d;--line:#ccd6d0;--accent:#c6502d;--teal:#187d7a;background:var(--paper);border-radius:12px}
+    text{font-family:system-ui,-apple-system,sans-serif;fill:var(--ink)}
+    .label{font-size:24px;font-weight:600;letter-spacing:-.7px}.index{font:11px ui-monospace,monospace;letter-spacing:1.5px;fill:var(--muted)}
+    .wire{fill:none;stroke:var(--line);stroke-width:1.2}.trace{fill:none;stroke:var(--teal);stroke-width:1.5;stroke-dasharray:8 196;animation:travel 12s linear infinite}
+    .icon{fill:none;stroke:var(--ink);stroke-width:1.7;stroke-linecap:round;stroke-linejoin:round}.accent{stroke:var(--accent)}
+    .hit{fill:transparent;stroke:transparent;stroke-width:1.5}.link:hover .hit,.link:focus .hit{fill:var(--paper);stroke:var(--teal)}.link:focus{outline:none}
+    @keyframes travel{to{stroke-dashoffset:-408}}
+    @media(prefers-color-scheme:dark){svg{--paper:#14272d;--ink:#edf0e6;--muted:#a2b5b3;--line:#365154;--accent:#f39867;--teal:#72c7bb}}
+    @media(prefers-reduced-motion:reduce){.trace{animation:none;stroke-dasharray:none;opacity:.35}}
+  </style>
+  <path class="wire" d="M16 112H624M320 16V208"/>
+  <path class="wire" d="M247 59H273L294 80M393 59H367L346 80M247 165H273L294 144M393 165H367L346 144"/>
+  <path class="trace" d="M247 59H273L294 80M346 80L367 59H393M393 165H367L346 144M294 144L273 165H247"/>
+  <g class="icon" transform="translate(320 112)">
+    <circle r="35" fill="var(--paper)"/>
+    <path d="M-13-9H13L20 14M-13-9L-20 14M-13-9L0 10L13-9M-18-16H18"/>
+    <circle cx="-20" cy="16" r="6"/><circle cx="20" cy="16" r="6"/>
+    <path class="accent" d="M-6-16V-23H9M0-23V-27"/>
+    <circle cx="0" cy="10" r="2.5" fill="var(--accent)" stroke="none"/>
+  </g>
+  <a class="link" href="https://gyropup.com/designer/sim.html" aria-label="Play: explore the robot in the browser playground">
+    <rect class="hit" x="20" y="22" width="220" height="75" rx="8"/>
+    <text class="index" x="34" y="43">01 / EXPLORE</text>
+    <g class="icon accent" transform="translate(35 58)"><path d="M1 0L17 10L1 20Z"/><path d="M24 3V17"/></g>
+    <text class="label" x="78" y="79">Play</text>
+    <path class="icon" d="M210 69L218 61M211 61H218V68"/>
+  </a>
+  <a class="link" href="https://gyropup.com/designer/build.html" aria-label="Build: inspect parts and published downloads">
+    <rect class="hit" x="400" y="22" width="220" height="75" rx="8"/>
+    <text class="index" x="414" y="43">02 / MAKE</text>
+    <g class="icon accent" transform="translate(415 57)"><path d="M0 5L11 0L22 5V18L11 24L0 18ZM0 5L11 11L22 5M11 11V24"/></g>
+    <text class="label" x="458" y="79">Build</text>
+    <path class="icon" d="M590 69L598 61M591 61H598V68"/>
+  </a>
+  <a class="link" href="https://gyropup.com/site/pages/docs-readme-md.html#design-and-qualification" aria-label="Understand: read engineering design and qualification evidence">
+    <rect class="hit" x="20" y="128" width="220" height="75" rx="8"/>
+    <text class="index" x="34" y="149">03 / INVESTIGATE</text>
+    <g class="icon accent" transform="translate(35 163)"><circle cx="9" cy="9" r="8"/><path d="M15 15L23 23M5 9H13M9 5V13"/></g>
+    <text class="label" x="78" y="185">Understand</text>
+  </a>
+  <a class="link" href="https://github.com/Valpatel/gyropup/blob/main/.github/CONTRIBUTING.md" aria-label="Contribute: follow the contributor and recovery guide">
+    <rect class="hit" x="400" y="128" width="220" height="75" rx="8"/>
+    <text class="index" x="414" y="149">04 / COLLABORATE</text>
+    <g class="icon accent" transform="translate(415 162)"><circle cx="3" cy="3" r="3"/><circle cx="3" cy="23" r="3"/><circle cx="21" cy="3" r="3"/><path d="M3 6V20M3 16C3 10 21 16 21 6"/></g>
+    <text class="label" x="458" y="185">Contribute</text>
+  </a>
 </svg>

@@ -22,7 +22,7 @@
 
 ## Explore Gyropup
 
-[![Four paths through Gyropup: explore, build, understand and contribute](docs/img/navigation/project-map.svg)](docs/README.md)
+<a href="docs/README.md"><img src="docs/img/navigation/project-map.svg" width="640" height="224" style="max-width:100%;height:auto;padding:0" alt="Four paths into Gyropup: play, build, understand and contribute"></a>
 
 [Playground](https://gyropup.com/designer/sim.html) · [Build and downloads](https://gyropup.com/designer/build.html) · [Engineering notes](docs/README.md) · [Contribute](.github/CONTRIBUTING.md)
 
