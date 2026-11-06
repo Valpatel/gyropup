@@ -62,6 +62,10 @@ Historical reports retain their own geometry, loads and limitations. The
 
 ## Work with the repository
 
+[Hardware](hardware/README.md) holds physical design and evidence; [software](software/README.md) holds firmware,
+control, simulation and the website. [Tools](tools/README.md), [tests](tests/README.md) and [docs](docs/README.md)
+have their own short maps.
+
 Start with [CONTRIBUTING.md](.github/CONTRIBUTING.md) and the [documentation map](docs/README.md).
 Run the same website locally with `nvm use && npm ci && npm run dev`.
 [Website development and deployment](docs/software/site-deployment.md) explains checks, previews and publishing.

@@ -8,6 +8,11 @@ from pathlib import Path
 import subprocess
 
 ROOT = (Path(__file__).resolve().parents[3])
+import sys
+sys.path.insert(0, str(ROOT))
+from hardware.cad import locations
+from hardware.cad.locations import artifact_identity, artifact_path
+
 OUT = (ROOT / 'hardware/exports/leg/fea/hip-frame-e1-media')
 FPS, SECONDS, WIDTH, HEIGHT = 24, 12, 960, 720
 # The recorded E1 gate this movie presents (exports/leg/fea/summary.json, regenerated on cad-agent v0.6.0 in issue
@@ -34,13 +39,13 @@ def main():
     import pyvista as pv
     from matplotlib import colormaps
     receipt = json.loads((OUT / 'field-receipt.json').read_text())
-    fields = ROOT / receipt['fields']
+    fields = artifact_path(ROOT, receipt['fields'])
     if digest(fields) != receipt['fields_sha256']:
         raise ValueError('Solved surface differs from its source receipt')
     if digest((ROOT / 'hardware/exports/leg/fea/summary.json')) != receipt['source_hashes']['exports/leg/fea/summary.json']:
         raise ValueError('Published structural report changed; review the animation baseline')
     source_hashes = {str(p.relative_to(ROOT)): digest(p) for p in
-                     (Path(__file__), OUT / 'field-receipt.json', fields, (ROOT / 'hardware/exports/leg/fea/summary.json'), ROOT / FINER)}
+                     (Path(__file__), Path(locations.__file__), OUT / 'field-receipt.json', fields, (ROOT / 'hardware/exports/leg/fea/summary.json'), ROOT / FINER)}
     finer = json.loads((ROOT / FINER).read_text())
     gate_row = next(c for c in finer['meshes'][str(GATE_MESH_MM)]['cases'] if c['case'] == 'E1')
     fine_row = next(c for c in finer['meshes'][str(FINE_MESH_MM)]['cases'] if c['case'] == 'E1')
@@ -153,7 +158,7 @@ def main():
     # Decode both encodings completely before publishing.
     for video in (movie, webm):
         subprocess.run(['ffmpeg', '-v', 'error', '-i', str(video), '-f', 'null', '-'], check=True)
-    files = {p.relative_to(ROOT).as_posix(): digest(p) for p in (movie, webm, OUT / 'hip-frame-e1-poster.png')}
+    files = {artifact_identity(ROOT, p): digest(p) for p in (movie, webm, OUT / 'hip-frame-e1-poster.png')}
     result = {'schema': 1, 'source_revision': subprocess.check_output(['git', 'rev-parse', 'HEAD'], cwd=ROOT, text=True).strip(),
         'source_hashes': source_hashes, 'outputs': files, 'ffprobe': probe, 'webm_ffprobe': webm_probe, 'decoded_all_frames': True,
         'renderer': {'pyvista': pv.__version__, 'numpy': np.__version__, 'fps': FPS, 'duration_seconds': SECONDS,
@@ -161,10 +166,10 @@ def main():
         'timeline': timeline, 'transient_simulation': False, 'qualification': 'Presentation of the reproduced static E1 field; strength gate remains failed.'}
     (OUT / 'video-receipt.json').write_text(json.dumps(result, indent=2) + '\n')
     index = {'schema': 1, 'cases': {'hip_frame/E1': {'kind': 'static-deformation', 'transient_simulation': False,
-        'video': movie.relative_to(ROOT).as_posix(), 'webm': webm.relative_to(ROOT).as_posix(),
-        'poster': (OUT / 'hip-frame-e1-poster.png').relative_to(ROOT).as_posix(),
+        'video': artifact_identity(ROOT, movie), 'webm': artifact_identity(ROOT, webm),
+        'poster': artifact_identity(ROOT, OUT / 'hip-frame-e1-poster.png'),
         'fields': receipt['fields'], 'duration_seconds': SECONDS,
-        'receipt': (OUT / 'video-receipt.json').relative_to(ROOT).as_posix(),
+        'receipt': artifact_identity(ROOT, OUT / 'video-receipt.json'),
         'recorded': {k: baseline[k] for k in ('safety_factor', 'target', 'max_displacement_mm', 'von_mises_design_mpa', 'load_from')}}}}
     ((ROOT / 'hardware/exports/leg/fea/media.json')).write_text(json.dumps(index, indent=2) + '\n')
     print(f'PASS: {SECONDS}s / {FPS * SECONDS} decoded frames; static field scaling only, E1 gate remains below target.')

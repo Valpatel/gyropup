@@ -1,5 +1,11 @@
 # Hardware: one folder per component
 
+Physical design, component specifications and generated artifacts live here in separate homes:
+[CAD](cad/README.md), [catalog](catalog/SCHEMA.md), [design inputs](designs/),
+[generated exports](exports/) and [supplier acquisition records](vendor/).
+Supplier payloads retain their original license and exclusion boundaries. Firmware and host control live in [software](../software/README.md).
+
+
 Everything the repository knows about each bought or owned component, in one place per part: where its manual is,
 how it connects, how it is configured, which code drives it, which units are in hand and how to bring it up. The
 design itself stays where it is (the catalog, the docs, the CAD); these folders point at it and hold the parts that

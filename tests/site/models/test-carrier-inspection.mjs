@@ -26,13 +26,13 @@ const c3=candidate==='c3-support';
 const contract=c3?{
   original:'/exports/turret/base-board-service/connectors/C3-support-layout.step',
   docPath:'/site/pages/docs-carrier-service-connectors-md.html',
-  receipt:'../research/carrier-service-connectors/support-candidate.json',hashes:'public_artifact_sha256',
+  receipt:'docs/research/carrier-service-connectors/support-candidate.json',hashes:'public_artifact_sha256',
   carrierName:'carrier_candidate_authored',members:34,screws:10,reservations:2,reservationColor:'a63d99',diagrams:0,
   status:/The current printed frame is not structurally qualified/,
 }: {
   original:'/exports/turret/base-board-service/interfaces/carrier-wiring-layout.step',
   docPath:'/site/pages/docs-base-board-interfaces-md.html',
-  receipt:'../exports/turret/base-board-service/interfaces/interfaces.json',hashes:'artifact_sha256',
+  receipt:'hardware/exports/turret/base-board-service/interfaces/interfaces.json',hashes:'artifact_sha256',
   carrierName:'carrier_authored',members:30,screws:8,reservations:4,reservationColor:'f25c17',diagrams:1,
   status:/readiness: false/,
 };
@@ -88,7 +88,7 @@ function assertIdentity(model){
 }
 try{
   report.version=await(await context.request.get(base+'/version.json')).json();
-  const receipt=JSON.parse(await readFile(new URL(contract.receipt,import.meta.url),'utf8'));
+  const receipt=JSON.parse(await readFile(new URL(contract.receipt,new URL('../../../',import.meta.url)),'utf8'));
   const file=await context.request.get(base+original);assert.equal(file.status(),200);
   report.stepSha256=createHash('sha256').update(await file.body()).digest('hex');
   assert.equal(report.stepSha256,receipt[contract.hashes][original.split('/').at(-1)],'Served original matches the committed geometry receipt');

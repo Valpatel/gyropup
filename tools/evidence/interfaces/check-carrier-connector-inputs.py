@@ -27,8 +27,12 @@ import hardware.cad.manufacturing.print_provenance as provenance
 
 
 def private_path(entry, root=ROOT):
-    path = (root / entry['private_file']).resolve()
-    if not path.is_relative_to((root / 'references/vendor').resolve()):
+    identity = entry['private_file']
+    prefix = next((value for value in ('references/vendor/', 'hardware/vendor/') if identity.startswith(value)), None)
+    if prefix is None or '..' in Path(identity).parts:
+        raise ValueError('Private model identity is outside the supplier namespace')
+    path = (root / 'hardware/vendor' / identity[len(prefix):]).resolve()
+    if not path.is_relative_to((root / 'hardware/vendor').resolve()):
         raise ValueError('Private model must remain in the vendor cache')
     if not path.is_file():
         raise FileNotFoundError('Exact private connector input missing: ' + entry['part'])
@@ -46,7 +50,7 @@ def validate_receipt(receipt, root=ROOT):
     for field in ('files','GYROPUP_CAD_PARAMS_sha256'):
         if recorded.get(field)!=current[field]:
             raise ValueError('Connector input closure changed: '+field)
-    paths=[root/'tools/check-carrier-connector-inputs.py',root/'research/carrier-service-connectors/private-inputs.json']
+    paths=[root/'tools/evidence/interfaces/check-carrier-connector-inputs.py',root/'docs/research/carrier-service-connectors/private-inputs.json']
     if receipt['context_files']!=provenance.context_snapshot(root,paths):
         raise ValueError('Connector probe or manifest changed')
     manifest=json.loads(paths[1].read_text())

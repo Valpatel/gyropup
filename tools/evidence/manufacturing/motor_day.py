@@ -436,7 +436,7 @@ def derate(sim: dict, stand: dict) -> dict:
     fea = [r for r in S['results'] if r['part'] != 'leg']
     out = {'pla': {'name': pla.name, 'strength_mpa': pla.strength_mpa, 'E_mpa': pla.E_mpa, 'note': pla.note,
                    'from': 'cadagent.fea.MATERIALS["pla"]'},
-           'record': {'file': 'exports/leg/fea/summary.json', 'layer_check': 'research/leg-preprint/evidence/leg-layer-check-print-ready.json',
+           'record': {'file': 'exports/leg/fea/summary.json', 'layer_check': 'docs/research/leg-preprint/evidence/leg-layer-check-print-ready.json',
                       'mesh_mm': S.get('mesh_mm'), 'loads': rec},
            'sim': {'file': 'exports/motor-day/sim.json', 'mass_kg': m_sim},
            'mass': {'sim_kg': m_sim, 'stand_scale_kg': stand['scale_reads_kg'], 'stand_effective_kg': stand['effective_mass_kg'],

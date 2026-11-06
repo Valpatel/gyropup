@@ -50,7 +50,7 @@ class FaultBus(MotorBus):
         elif k == 'hot':
             tk.f.temp_c = 90.0
         elif k == 'window':
-            import fivebar as fb
+            import hardware.cad.legs.fivebar as fb
             tk.f.phi, tk.r.phi = fb.stance(90.0)                   # past the knee-out stops: 90 mm reported
         elif k == 'silent':
             tk.f.fresh = tk.r.fresh = False

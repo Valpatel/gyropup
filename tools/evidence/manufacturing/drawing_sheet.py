@@ -358,7 +358,7 @@ class Sheet:
         ax.text(x0 + 3, y0 + h - 16, self.title, va='center', fontsize=10, weight='bold', color=INK)
         if self.subtitle:
             ax.text(x0 + 3, y0 + h - 23, self.subtitle, va='center', fontsize=6.2, color=INK)
-        rows = [('UNITS', 'mm'), ('SOURCE', self.revision), ('FROM', 'tools/motor_day.py'), ('STATUS', 'unqualified: not a release')]
+        rows = [('UNITS', 'mm'), ('SOURCE', self.revision), ('FROM', 'tools/evidence/manufacturing/motor_day.py'), ('STATUS', 'unqualified: not a release')]
         for k, (a, b) in enumerate(rows):
             yy = y0 + 15 - k * 3.6
             ax.text(x0 + 3, yy, a, fontsize=5.4, color='#5a5f68')

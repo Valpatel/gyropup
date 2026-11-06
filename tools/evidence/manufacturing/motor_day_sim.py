@@ -77,7 +77,7 @@ def main():
     rows = [one('jump', c, m) for c in JUMP_CAPS]
     rows += [one(t, STAND_CAP, m) for t in ('stand_up', 'squat', 'power_off', 'power_off_damped')]
     mass = rows[0]['rig']
-    doc = {'made_by': 'tools/motor_day_sim.py', 'controller': 'rig/leg_control.py on rig/sim_bus.py (MuJoCo, sim/leg_rig.py)',
+    doc = {'made_by': 'tools/evidence/manufacturing/motor_day_sim.py', 'controller': 'rig/leg_control.py on rig/sim_bus.py (MuJoCo, sim/leg_rig.py)',
            'rate_hz': 500.0, 'latency_ticks': 1, 'pack': 'rig/run.py pack_for (the FLEXVOLT pair at the start rule)',
            'floor_stop_leg_mm': run.BUMPER_CONTACT_M * 1000,
            'mass_kg': round(mass['moving_kg'] + mass['frame_kg'] + mass['dummy_kg'], 2), 'mass': mass,

@@ -3,6 +3,13 @@
 Run with CAD dependencies and the reviewed cad-agent v0.4.2 source on PYTHONPATH.
 Does not generate a turret or use private hardware models.
 """
+
+# Support direct-file execution without an obsolete flat CAD import directory.
+if __package__ in (None, ''):
+    import sys as _checkout_sys
+    from pathlib import Path as _CheckoutPath
+    _checkout_sys.path.insert(0, str(_CheckoutPath(__file__).resolve().parents[3]))
+
 from pathlib import Path
 import sys
 import unittest
@@ -13,7 +20,7 @@ from OCP.TopoDS import TopoDS_Shell,TopoDS_Solid
 from OCP.BRep import BRep_Builder
 from cadagent.gates import Relation
 import cadagent.gates.relations as relations
-import check_base_board_interfaces as checker
+import hardware.cad.turret.check_base_board_interfaces as checker
 
 
 def invalid_open_solid():

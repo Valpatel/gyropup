@@ -48,7 +48,7 @@ def sources():
     # whole-robot snapshot may predate new cheek plates and is not their geometry.
     turret_manifest = 'exports/turret/component-preview/manifest.json'
     turret = read(turret_manifest)
-    expected_sources = {'hardware/cad/turret/turret.py', 'hardware/cad/robot/gmi.py', 'hardware/cad/robot/interfaces.json', 'hardware/catalog/interfaces.json',
+    expected_sources = {'hardware/__init__.py', 'hardware/cad/__init__.py', 'hardware/cad/locations.py', 'hardware/cad/turret/turret.py', 'hardware/cad/robot/gmi.py', 'hardware/cad/robot/interfaces.json', 'hardware/catalog/interfaces.json',
                         'hardware/catalog/materials.json', 'tools/engineering/turret/export-turret-cut-previews.py'}
     expected_parts = {'pan_clamp', 'cradle_plate_l', 'cradle_plate_r', 'stop_lug'}
     if turret.get('schema') != 1 or turret.get('units') != 'mm' or set(turret['source_hashes']) != expected_sources:

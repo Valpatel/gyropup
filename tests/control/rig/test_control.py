@@ -178,7 +178,7 @@ def test_hil_jump_survives_the_speed_fields_rail():
 def _held_leg_ticks(ctl, L_of_t, t_end, dt=0.002):
     """Feed the controller a leg whose length follows L_of_t (the carriage held by the top stop: the wheel cannot move
     away), the motors reporting the commanded torque; return the commands."""
-    import fivebar as fb
+    import hardware.cad.legs.fivebar as fb
     from software.control.rig.bus import MotorState, Tick
     out, t = [], 0.0
     while t <= t_end:

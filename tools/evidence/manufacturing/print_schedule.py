@@ -118,7 +118,7 @@ def main():
         m['plates'] += 1
     days = round(t / 20.0, 1)                                                 # ~20 h a day of printing, round the clock
     doc = {'plates': rows, 'total_print_hours': total_h, 'calendar_days_at_20h': days, 'by_material': by_mat,
-           'machined_not_printed': sorted(MACHINED), 'made_by': 'tools/print_schedule.py'}
+           'machined_not_printed': sorted(MACHINED), 'made_by': 'tools/evidence/manufacturing/print_schedule.py'}
     (OUT / 'print-schedule.json').write_text(json.dumps(doc, indent=1) + '\n')
     mats = ', '.join(f"{m} {v['hours']} h, {v['grams'] / 1000:.2f} kg" for m, v in by_mat.items())
     L = ['# Print schedule: the first leg, its rig and the bench fixtures (Bambu P1S)\n',

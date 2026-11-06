@@ -1,4 +1,11 @@
 """Kernel-free interface guards; the separate bounded checker supplies BREP evidence."""
+
+# Support direct-file execution without an obsolete flat CAD import directory.
+if __package__ in (None, ''):
+    import sys as _checkout_sys
+    from pathlib import Path as _CheckoutPath
+    _checkout_sys.path.insert(0, str(_CheckoutPath(__file__).resolve().parents[3]))
+
 import hashlib
 import json
 from pathlib import Path
@@ -9,7 +16,7 @@ import unittest
 
 ROOT=(Path(__file__).resolve().parents[3])
 sys.path.insert(0,str((ROOT / 'hardware/cad')))
-import turret_carrier_interfaces as ci
+import hardware.cad.turret.turret_carrier_interfaces as ci
 
 
 class CarrierInterfaces(unittest.TestCase):

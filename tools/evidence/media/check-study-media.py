@@ -11,6 +11,11 @@ import subprocess
 import sys
 
 ROOT = (Path(__file__).resolve().parents[3])
+sys.path.insert(0, str(ROOT))
+from tools.site.source_layout import source_file, source_for_public
+
+VIDEO_RENDERER = 'tools/engineering/legs/render-hip-frame-e1.py'
+LOCATION_SOURCE = 'hardware/cad/locations.py'
 MEDIA = 'exports/leg/fea/hip-frame-e1-media/'
 SUMMARY = 'exports/leg/fea/summary.json'
 FINER = 'research/leg-preprint/evidence/hip-frame-print-ready.json'
@@ -44,7 +49,7 @@ def moving_model(first, loaded):
 
 def validate(root=ROOT, decode=True):
     root = Path(root)
-    read = lambda path: json.loads((root / path).read_text())
+    read = lambda path: json.loads((source_file(root, path)).read_text())
     field_receipt = read(MEDIA + 'field-receipt.json')
     video_receipt = read(MEDIA + 'video-receipt.json')
     index = read('exports/leg/fea/media.json')['cases']['hip_frame/E1']
@@ -58,10 +63,10 @@ def validate(root=ROOT, decode=True):
     # reclassified as the current mechanical design after later CAD changes.
     for path, sha in field_receipt['source_hashes'].items():
         require(historical_hash(field_receipt['source_revision'], path) == sha, f'Producer input mismatch: {path}')
-    require(digest((root / SUMMARY).read_bytes()) == field_receipt['source_hashes'][SUMMARY], 'Stale report binding')
+    require(digest((source_file(root, SUMMARY)).read_bytes()) == field_receipt['source_hashes'][SUMMARY], 'Stale report binding')
     require(field_receipt['fields'] == MEDIA + 'hip_frame-E1.json', 'Unexpected field path')
     fields = read(field_receipt['fields'])
-    require(digest((root / field_receipt['fields']).read_bytes()) == field_receipt['fields_sha256'], 'Field bytes changed')
+    require(digest((source_file(root, field_receipt['fields'])).read_bytes()) == field_receipt['fields_sha256'], 'Field bytes changed')
     require(fields['units']['length'] == 'mm' and fields['units']['stress'] == 'MPa', 'Wrong field units')
     require(fields['name'] == 'hip_frame E1' and fields['result']['safety_factor'] == baseline['safety_factor'], 'Wrong solved case')
     surface = fields['surface']
@@ -81,15 +86,15 @@ def validate(root=ROOT, decode=True):
     require(abs(maximum - baseline['max_displacement_mm']) < .0001, 'Displacement field differs from report')
     for key in ('max_displacement_mm', 'von_mises_design_mpa', 'safety_factor', 'target', 'ok'):
         require(field_receipt['reproduced'][key] == baseline[key], f'Reproduction differs: {key}')
-    expected_inputs = {'tools/render-hip-frame-e1.py', MEDIA + 'field-receipt.json', field_receipt['fields'], SUMMARY, FINER}
+    expected_inputs = {VIDEO_RENDERER, LOCATION_SOURCE, *(source_for_public(name) for name in (MEDIA + 'field-receipt.json', field_receipt['fields'], SUMMARY, FINER))}
     require(set(video_receipt['source_hashes']) == expected_inputs, 'Incomplete renderer inputs')
     for path, sha in video_receipt['source_hashes'].items():
-        require(digest((root / path).read_bytes()) == sha, f'Stale animation source: {path}')
+        require(digest((source_file(root, path)).read_bytes()) == sha, f'Stale animation source: {path}')
         require(historical_hash(video_receipt['source_revision'], path) == sha, f'Uncommitted animation source: {path}')
     expected_outputs = {MEDIA + 'hip-frame-e1.mp4', MEDIA + 'hip-frame-e1.webm', MEDIA + 'hip-frame-e1-poster.png'}
     require(set(video_receipt['outputs']) == expected_outputs, 'Incomplete rendered artifacts')
     for path, sha in video_receipt['outputs'].items():
-        require(digest((root / path).read_bytes()) == sha, f'Rendered artifact changed: {path}')
+        require(digest((source_file(root, path)).read_bytes()) == sha, f'Rendered artifact changed: {path}')
     require(index['video'] == MEDIA + 'hip-frame-e1.mp4' and index['poster'] == MEDIA + 'hip-frame-e1-poster.png'
             and index['webm'] == MEDIA + 'hip-frame-e1.webm' and index['fields'] == field_receipt['fields']
             and index['receipt'] == MEDIA + 'video-receipt.json', 'Media index paths differ')
@@ -108,7 +113,7 @@ def validate(root=ROOT, decode=True):
     result = {'historical_source': field_receipt['source_revision'], 'safety_factor': GATE_SF, 'required': 2,
               'vertices': surface['vertices'], 'triangles': surface['triangles']}
     if decode:
-        movie = root / index['video']
+        movie = source_file(root, index['video'])
         probe = json.loads(subprocess.check_output(['ffprobe','-v','error','-count_frames','-select_streams','v:0',
             '-show_entries','stream=codec_name,width,height,pix_fmt,avg_frame_rate,nb_read_frames,duration','-of','json',str(movie)]))['streams'][0]
         require(probe == video_receipt['ffprobe'], 'Decoded movie differs from receipt')
@@ -125,7 +130,7 @@ def validate(root=ROOT, decode=True):
         size = 590 * 360 * 3
         require(len(pixels) == size * 2, 'Missing independent decoded samples')
         result.update(moving_model(pixels[:size], pixels[size:])); result['decoded_frames'] = 288; result['seconds'] = 12
-        webm = root / index['webm']
+        webm = source_file(root, index['webm'])
         webm_probe = json.loads(subprocess.check_output(['ffprobe','-v','error','-count_frames','-select_streams','v:0',
             '-show_entries','stream=codec_name,width,height,pix_fmt,avg_frame_rate,nb_read_frames:format=duration','-of','json',str(webm)]))
         require(webm_probe == video_receipt['webm_ffprobe'], 'VP9 companion differs from receipt')

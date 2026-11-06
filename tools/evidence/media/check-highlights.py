@@ -5,11 +5,19 @@ import copy
 import hashlib
 import importlib.util
 import json
+from functools import lru_cache
+import sys
 from pathlib import Path
 import struct
 import subprocess
 
 ROOT = (Path(__file__).resolve().parents[3])
+sys.path.insert(0, str(ROOT))
+from tools.site.source_layout import source_file, source_for_public
+
+CAPTURE_SCRIPT = 'tools/evidence/media/capture-highlights.mjs'
+CAPTURE_LOCATIONS = ('tools/site/source-layout.mjs', 'tools/site/source-layout.json', 'tests/site/content/test-prototype-session.mjs')
+ENCODING_SOURCES = ('tools/evidence/media/encode-highlights.py', 'tools/evidence/media/check-highlights.py', 'tools/site/source_layout.py')
 OUT = (ROOT / 'software/site/assets/highlights')
 WIDTH, HEIGHT, FPS, FRAMES = 1280, 720, 30, 660
 # The commit that recorded rig_jump.mp4 together with the rig-results.json it shows (issue 8: 18.75 kg a leg,
@@ -62,6 +70,23 @@ def git_bytes(revision, path):
     return command(['git', 'show', f'{revision}:{path}'])
 
 
+@lru_cache(maxsize=None)
+def git_sha(revision, path):
+    """Cache immutable Git object hashes, never mutable working-file identities."""
+    try:
+        return sha(git_bytes(revision, path))
+    except subprocess.CalledProcessError as error:
+        raise ValueError(f'Recorded source is unavailable: {revision}:{path}') from error
+
+
+def full_revision(value):
+    return isinstance(value, str) and len(value) == 40 and all(c in '0123456789abcdef' for c in value)
+
+
+def project_path(identity):
+    return safe_path(ROOT, source_for_public(identity))
+
+
 def png_size(path):
     data = Path(path).read_bytes()
     require(data[:8] == b'\x89PNG\r\n\x1a\n', f'Not a PNG: {path}')
@@ -88,7 +113,7 @@ def required_capture_inputs():
     }
     for directory in ('exports/sim/turret_box', 'exports/sim/v2/rig', 'exports/sim/v2/leg-attachments'):
         paths.add('/' + directory + '/manifest.json')
-        manifest = read(ROOT / directory / 'manifest.json')
+        manifest = read(project_path(directory) / 'manifest.json')
         if directory.endswith('/rig'):
             # Current presentation deliberately excludes the archived turret's
             # fixed meshes; recorded modes own those meshes and their old frames.
@@ -102,11 +127,10 @@ def required_capture_inputs():
 
 def expected_sources(capture):
     paths = {name.lstrip('/') for name, item in capture['inputs'].items() if item.get('repoSha256')}
-    paths.update({'tools/capture-highlights.mjs', 'tools/encode-highlights.py', 'tools/check-highlights.py',
-                  'designer/kit/vendor/fonts/inter.woff2', LEG, E1 + 'hip-frame-e1.mp4',
+    paths.update({'designer/kit/vendor/fonts/inter.woff2', LEG, E1 + 'hip-frame-e1.mp4',
                   E1 + 'field-receipt.json', E1 + 'video-receipt.json', E1 + 'hip_frame-E1.json',
                   'exports/leg/fea/summary.json', 'exports/leg/fea/media.json'})
-    return paths
+    return {source_for_public(name) for name in paths} | {CAPTURE_SCRIPT, *CAPTURE_LOCATIONS, *ENCODING_SOURCES}
 
 
 def historical_leg():
@@ -126,33 +150,46 @@ def check_leg_report(receipt, report_bytes):
             "The leg report on disk is not the pinned clip's report; re-record the clip with it and move LEG_REVISION")
 
 
-def validate_bindings(receipt, capture, frame_manifest, out=OUT, raw_frames=None):
-    require(receipt['schema'] == 1, 'Unknown highlights receipt schema')
-    require(receipt['format'] == dict(width=WIDTH, height=HEIGHT, fps=FPS, frames=FRAMES, seconds=22, audio=False),
-            'Wrong highlights format')
-    require(receipt['segments'] == SEGMENTS, 'Edit timeline or factual captions changed')
+def validate_source_bindings(source_revision, source_hashes, capture):
+    """Validate actual captured/committed inputs before encoding and on replay."""
+    require(full_revision(source_revision) and full_revision(capture.get('sourceRevision')), 'Use immutable capture and encoding source revisions')
+    require(capture.get('servedVersion', {}).get('revision') == capture['sourceRevision'], 'Captured artifact revision differs from capture source')
+    require(set(capture.get('locationContracts', {})) == set(CAPTURE_LOCATIONS), 'Incomplete capture location inputs')
     required = required_capture_inputs()
     require(required <= set(capture['inputs']), 'Required renderer or manifest-derived mesh missing from capture')
     require(all(capture['inputs'][name].get('repoSha256') for name in required), 'Required capture input has no repository identity')
-    require(set(receipt['source_hashes']) == expected_sources(capture), 'Incomplete source closure')
-    for name, digest in receipt['source_hashes'].items():
+    require(set(source_hashes) == expected_sources(capture), 'Incomplete source closure')
+    for name, digest in source_hashes.items():
         require(file_sha(safe_path(ROOT, name)) == digest, f'Source changed: {name}')
-    require(capture['recipeSha256'] == receipt['source_hashes']['tools/capture-highlights.mjs'], 'Capture recipe changed')
+        require(git_sha(source_revision, name) == digest, f'Encoding source differs from recorded revision: {name}')
+    require(capture['recipeSha256'] == source_hashes[CAPTURE_SCRIPT], 'Capture recipe changed')
+    require(git_sha(capture['sourceRevision'], CAPTURE_SCRIPT) == capture['recipeSha256'], 'Capture recipe differs from recorded revision')
+    for name, digest in capture['locationContracts'].items():
+        require(source_hashes[name] == digest and git_sha(capture['sourceRevision'], name) == digest, f'Capture location input changed: {name}')
     require((capture['width'], capture['height'], capture['fps']) == (WIDTH, HEIGHT, FPS), 'Capture size/rate changed')
     for name, item in capture['inputs'].items():
         if item.get('repoSha256'):
-            require(receipt['source_hashes'][name.lstrip('/')] == item['repoSha256'], f'Captured source differs: {name}')
+            require(source_hashes[source_for_public(name.lstrip('/'))] == item['repoSha256'], f'Captured source differs: {name}')
+            require(git_sha(capture['sourceRevision'], source_for_public(name.lstrip('/'))) == item['repoSha256'], f'Captured source differs from recorded revision: {name}')
         # Model data and simulator modules have no static-build rewriting. Only the
         # instrumented stage gets the narrowly specified callback exposure below.
         if item.get('repoSha256') and (name.endswith(('.js', '.stl')) or name.startswith('/exports/sim/')):
             if name == '/designer/kit/stage.js':
-                data = safe_path(ROOT, name.lstrip('/')).read_bytes()
+                data = project_path(name.lstrip('/')).read_bytes()
                 needle = b'const callbacks = [];'
                 require(data.count(needle) == 1, 'Stage capture seam is no longer unique')
                 data = data.replace(needle, needle + b' window.__captureCallbacks = callbacks;')
                 require(sha(data) == item['servedSha256'], 'Stage instrumentation changed beyond callback exposure')
             else:
                 require(item['servedSha256'] == item['repoSha256'], f'Served simulation differs: {name}')
+
+
+def validate_bindings(receipt, capture, frame_manifest, out=OUT, raw_frames=None):
+    require(receipt['schema'] == 1, 'Unknown highlights receipt schema')
+    require(receipt['format'] == dict(width=WIDTH, height=HEIGHT, fps=FPS, frames=FRAMES, seconds=22, audio=False),
+            'Wrong highlights format')
+    require(receipt['segments'] == SEGMENTS, 'Edit timeline or factual captions changed')
+    validate_source_bindings(receipt.get('source_revision'), receipt['source_hashes'], capture)
     shots = {shot['id']: shot for shot in capture['shots']}
     require(set(shots) == set(CAPTURE_COUNTS), 'Incomplete current-model capture')
     require(set(frame_manifest['shots']) == set(CAPTURE_COUNTS), 'Incomplete captured frame manifest')
@@ -179,8 +216,8 @@ def validate_bindings(receipt, capture, frame_manifest, out=OUT, raw_frames=None
     battle = shots['battle']['observations'][-1]
     require(battle['shots'] >= 3 and battle['hits'] >= 2 and battle['targetsDown'] >= 2, 'Target play did not produce actual impacts')
     require(receipt['historical_leg'] == historical_leg(), 'Historical leg baseline differs from the matching video revision')
-    require(receipt['historical_leg']['video_sha256'] == receipt['source_hashes'][LEG], 'Leg clip is not its historical Git blob')
-    check_leg_report(receipt, (ROOT / receipt['historical_leg']['report']).read_bytes())
+    require(receipt['historical_leg']['video_sha256'] == receipt['source_hashes'][source_for_public(LEG)], 'Leg clip is not its historical Git blob')
+    check_leg_report(receipt, project_path(receipt['historical_leg']['report']).read_bytes())
     require(receipt['e1'] == dict(source_start_seconds=1, source_duration_seconds=3, transient_simulation=False,
                                 deformation_exaggeration=16, safety_factor=1.60, required=2, baseline_kg=37.5),
             'Static E1 evidence mislabeled')
@@ -268,9 +305,9 @@ def validate_media(out=OUT):
     # Independently compare the entire first E1 frame, including every original
     # caption, with its solved-field presentation source. A moving cropped model
     # alone would miss erased failure/baseline/exaggeration labels.
-    original_e1 = command(['ffmpeg', '-v', 'error', '-ss', '1', '-i', ROOT / E1 / 'hip-frame-e1.mp4',
+    original_e1 = command(['ffmpeg', '-v', 'error', '-ss', '1', '-i', project_path(E1 + 'hip-frame-e1.mp4'),
                            '-vf', 'fps=30,scale=240:180', '-frames:v', '1', '-f', 'rawvideo', '-pix_fmt', 'rgb24', '-'])
-    original_labels = command(['ffmpeg', '-v', 'error', '-ss', '1', '-i', ROOT / E1 / 'hip-frame-e1.mp4',
+    original_labels = command(['ffmpeg', '-v', 'error', '-ss', '1', '-i', project_path(E1 + 'hip-frame-e1.mp4'),
                                '-vf', 'fps=30,crop=960:195:0:525,scale=240:49', '-frames:v', '1',
                                '-f', 'rawvideo', '-pix_fmt', 'rgb24', '-'])
     for name in MOVIES:
@@ -308,17 +345,19 @@ def negative_controls(receipt, capture, frames, out, decoded):
         try: validate_bindings(r, c, f, out)
         except (ValueError, KeyError): rejected.append(label)
         else: raise ValueError('Negative control escaped: ' + label)
-    fault('source hash', lambda r,c,f: r['source_hashes'].__setitem__('designer/current_turret.js', '0'*64))
-    fault('source omission', lambda r,c,f: r['source_hashes'].pop(LEG))
+    fault('source hash', lambda r,c,f: r['source_hashes'].__setitem__(source_for_public('designer/current_turret.js'), '0'*64))
+    fault('source omission', lambda r,c,f: r['source_hashes'].pop(source_for_public(LEG)))
     def omit_required(r, c, f):
         path = '/exports/sim/turret_box/' + read((ROOT / 'hardware/exports/sim/turret_box/manifest.json'))['parts'][0]['file']
         c['inputs'].pop(path)
-        r['source_hashes'].pop(path.lstrip('/'))
+        r['source_hashes'].pop(source_for_public(path.lstrip('/')))
     fault('self-consistent required mesh omission', omit_required)
     def omit_module(r, c, f):
         c['inputs'].pop('/designer/current_turret.js')
-        r['source_hashes'].pop('designer/current_turret.js')
+        r['source_hashes'].pop(source_for_public('designer/current_turret.js'))
     fault('self-consistent required renderer omission', omit_module)
+    fault('capture location contract', lambda r,c,f: c['locationContracts'].__setitem__(CAPTURE_LOCATIONS[0], '0'*64))
+    fault('captured artifact revision', lambda r,c,f: c['servedVersion'].__setitem__('revision', '0'*40))
     fault('capture recipe', lambda r,c,f: c.__setitem__('recipeSha256', '0'*64))
     fault('served simulator', lambda r,c,f: c['inputs']['/designer/sim.js'].__setitem__('servedSha256', '0'*64))
     fault('stage instrumentation', lambda r,c,f: c['inputs']['/designer/kit/stage.js'].__setitem__('servedSha256', '0'*64))
@@ -326,7 +365,7 @@ def negative_controls(receipt, capture, frames, out, decoded):
     fault('wrong turret name with unchanged part count', lambda r,c,f: next(s for s in c['shots'] if s['id']=='battle')['info']['parts'].__setitem__(0, 'older_turret'))
     fault('historical load baseline', lambda r,c,f: r['historical_leg'].__setitem__('half_mass_kg', 16.25))
     def leg_report_drift(r, c, f):
-        report = json.loads((ROOT / r['historical_leg']['report']).read_bytes())
+        report = json.loads(project_path(r['historical_leg']['report']).read_bytes())
         report['half_mass_kg'] = 16.25
         check_leg_report(r, json.dumps(report).encode())
     try: leg_report_drift(copy.deepcopy(receipt), None, None)

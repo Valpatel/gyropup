@@ -308,11 +308,42 @@ class BridgeTests(unittest.TestCase):
         code, head, _ = http(self.addr, '/')
         self.assertEqual(code, 302)
         self.assertIn('Location: /designer/motor-tool.html?bridge=1', head)
-        self.assertEqual(http(self.addr, '/designer/kit/rs04/protocol.js')[0], 200)
-        self.assertEqual(http(self.addr, '/hardware/actuators/rs04/profiles/pla-bench.json')[0], 200)
+        expected = {
+            '/designer/motor-tool.html': 'software/site/designer/motor-tool.html',
+            '/designer/motor-tool.js': 'software/site/designer/motor-tool.js',
+            '/designer/kit/rs04/protocol.js': 'software/site/designer/kit/rs04/protocol.js',
+            '/hardware/actuators/rs04/profiles/pla-bench.json': 'hardware/actuators/rs04/profiles/pla-bench.json',
+            '/web/icon.svg': 'software/site/assets/icon.svg',
+            '/web/theme.js': 'software/site/assets/theme.js',
+            '/web/theme.css': 'software/site/assets/theme.css',
+            '/exports/motor-day/derating.json': 'hardware/exports/motor-day/derating.json',
+            '/exports/leg/thermal/motor_thermal.json': 'hardware/exports/leg/thermal/motor_thermal.json',
+        }
+        for public, source in expected.items():
+            code, _, body = http(self.addr, public)
+            self.assertEqual(code, 200, public)
+            self.assertEqual(body, (B.ROOT / source).read_bytes(), public + ' serves the exact owning source')
         for path in ('/rig/rs04.py', '/designer/kit/rs04/../../../rig/rs04.py', '/designer/kit/stage.js', '/.git/config',
-                     '/designer/kit/rs04/%2e%2e/x', '/etc/passwd'):
+                     '/designer/kit/rs04/%2e%2e/x', '/etc/passwd', '/software/control/rig/rs04_bridge.py',
+                     '/designer/kit/rs04-lookalike/protocol.js', '/hardware/actuators/rs04/profiles-old/pla-bench.json'):
             self.assertEqual(http(self.addr, path)[0], 404, path)
+        import tempfile
+        from pathlib import Path
+        with tempfile.TemporaryDirectory() as temporary:
+            directory = Path(temporary)
+            checkout = directory / 'checkout'
+            current = checkout / 'software/site/designer/motor-tool.js'
+            current.parent.mkdir(parents=True)
+            outside = directory / 'outside.js'
+            outside.write_bytes(b'outside-source sentinel')
+            current.symlink_to(outside)
+            old = checkout / 'designer/motor-tool.js'
+            old.parent.mkdir()
+            old.write_bytes(b'obsolete-source sentinel')
+            with patch.object(B, 'ROOT', checkout):
+                self.assertEqual(http(self.addr, '/designer/motor-tool.js')[0], 404, 'resolved symlink escape is rejected')
+                current.unlink()
+                self.assertEqual(http(self.addr, '/designer/motor-tool.js')[0], 404, 'old copy cannot rescue missing current source')
         code, head, _ = http(self.addr, '/?token=a%0d%0aSet-Cookie:x')
         self.assertNotIn('Set-Cookie', head)
 

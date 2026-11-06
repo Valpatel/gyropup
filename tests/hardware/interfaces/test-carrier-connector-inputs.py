@@ -15,7 +15,7 @@ class PrivateInputs(unittest.TestCase):
     def setUp(self):
         self.tmp=tempfile.TemporaryDirectory();self.addCleanup(self.tmp.cleanup)
         self.root=Path(self.tmp.name)
-        self.path=self.root/'references/vendor/example/part.step'
+        self.path=self.root/'hardware/vendor/example/part.step'
         self.path.parent.mkdir(parents=True);self.path.write_bytes(b'exact private model fixture')
         self.entry={'part':'fixture','private_file':'references/vendor/example/part.step',
                     'sha256':hashlib.sha256(self.path.read_bytes()).hexdigest()}
@@ -24,7 +24,8 @@ class PrivateInputs(unittest.TestCase):
         self.assertEqual(MOD.private_path(self.entry,self.root),self.path)
 
     def test_missing_exact_model_does_not_fallback(self):
-        self.path.unlink()
+        original=self.path.read_bytes();self.path.unlink()
+        old=self.root/self.entry['private_file'];old.parent.mkdir(parents=True);old.write_bytes(original)
         with self.assertRaises(FileNotFoundError):MOD.private_path(self.entry,self.root)
 
     def test_other_variant_rejected_even_at_same_path(self):
@@ -52,7 +53,7 @@ class PrivateInputs(unittest.TestCase):
         helper.unlink()
         with self.assertRaisesRegex(ValueError,'closure changed'):MOD.validate_receipt(receipt,self.root)
         helper.write_bytes(original)
-        (self.root/'cad/new_input.py').write_text('NEW_GEOMETRY=True\n')
+        (self.root/'hardware/cad/new_input.py').write_text('NEW_GEOMETRY=True\n')
         with self.assertRaisesRegex(ValueError,'closure changed'):MOD.validate_receipt(receipt,self.root)
 
 

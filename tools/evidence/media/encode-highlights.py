@@ -53,8 +53,10 @@ def main():
     check.require(capture['recipeSha256'] == check.file_sha((ROOT / 'tools/evidence/media/capture-highlights.mjs')), 'Capture recipe changed since frames were made')
     out.mkdir(parents=True, exist_ok=True)
     source_hashes = {name: check.file_sha(check.safe_path(ROOT, name)) for name in sorted(check.expected_sources(capture))}
+    source_revision = check.command(['git', 'rev-parse', 'HEAD']).decode().strip()
+    check.validate_source_bindings(source_revision, source_hashes, capture)
     historical = check.historical_leg()
-    check.require(source_hashes[check.LEG] == historical['video_sha256'], 'Leg footage differs from archived source')
+    check.require(source_hashes[check.source_for_public(check.LEG)] == historical['video_sha256'], 'Leg footage differs from archived source')
     # Temporary normalized lossless segments avoid re-encoding the two companions
     # from one another. FFmpeg decodes both final outputs in the independent check.
     with tempfile.TemporaryDirectory(prefix='gyropup-highlights-edit-') as temp:
@@ -67,10 +69,10 @@ def main():
                 command += ['-framerate', '30', '-start_number', '0', '-i', str(frames / name / '%05d.png')]
                 filters = ['setsar=1']
             elif name == 'leg':
-                command += ['-i', str(ROOT / check.LEG)]
+                command += ['-i', str(check.project_path(check.LEG))]
                 filters = ['scale=1280:720:flags=lanczos', 'setsar=1']
             else:
-                command += ['-ss', '1', '-i', str(ROOT / check.E1 / 'hip-frame-e1.mp4')]
+                command += ['-ss', '1', '-i', str(check.project_path(check.E1 + 'hip-frame-e1.mp4'))]
                 filters = ['fps=30', 'pad=1280:720:160:0:color=0x102130', 'setsar=1']
             if segment.get('title'):
                 title = tmp / f'{name}-title.txt'; subtitle = tmp / f'{name}-subtitle.txt'
@@ -105,12 +107,12 @@ def main():
     outputs = {name: dict(sha256=check.file_sha(out / name), bytes=(out / name).stat().st_size)
                for name in check.MOVIES + [check.POSTER, 'capture-receipt.json', 'capture-frames.json']}
     receipt = dict(schema=1, format=dict(width=1280, height=720, fps=30, frames=660, seconds=22, audio=False),
-                   source_revision=check.command(['git', 'rev-parse', 'HEAD']).decode().strip(),
+                   source_revision=source_revision,
                    source_hashes=source_hashes, segments=check.SEGMENTS, historical_leg=historical,
                    e1=dict(source_start_seconds=1, source_duration_seconds=3, transient_simulation=False,
                            deformation_exaggeration=16, safety_factor=1.60, required=2, baseline_kg=37.5),
-                   capture=dict(recipe='tools/capture-highlights.mjs', receipt='capture-receipt.json', frames='capture-frames.json',
-                                raw_frames_committed=False, current_model='48-part current turret; interim full-robot body'),
+                   capture=dict(recipe=check.CAPTURE_SCRIPT, receipt='capture-receipt.json', frames='capture-frames.json',
+                                raw_frames_committed=False, current_model='Current turret public snapshot; interim full-robot body'),
                    encoding=dict(ffmpeg=check.command(['ffmpeg', '-version']).decode().splitlines()[0],
                                  h264=h264, vp9=vp9, intermediate='FFV1 yuv420p; both encodings from identical segments',
                                  poster_frame=30, font='designer/kit/vendor/fonts/inter.woff2'),

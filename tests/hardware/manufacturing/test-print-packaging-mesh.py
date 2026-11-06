@@ -1,5 +1,12 @@
 #!/usr/bin/env python3
 """Small real STL→3MF round trip and mutation rejection; CAD environment required."""
+
+# Support direct-file execution without an obsolete flat CAD import directory.
+if __package__ in (None, ''):
+    import sys as _checkout_sys
+    from pathlib import Path as _CheckoutPath
+    _checkout_sys.path.insert(0, str(_CheckoutPath(__file__).resolve().parents[3]))
+
 import contextlib
 import io
 import json
@@ -13,18 +20,22 @@ import trimesh
 from cadagent.mesh3mf import read_3mf
 
 sys.path.insert(0, str((Path(__file__).resolve().parents[3] / 'hardware/cad')))
-import print_provenance as provenance
-import turret_print
+import hardware.cad.manufacturing.print_provenance as provenance
+import hardware.cad.turret.turret_print as turret_print
 
 
 class RealMeshPackaging(unittest.TestCase):
     def test_round_trip_and_changed_mesh_do_not_replace_valid_package(self):
         with tempfile.TemporaryDirectory(prefix='gyropup-real-print-') as temporary:
             root = Path(temporary)
-            (root/'cad').mkdir()
-            (root/'cad/model.py').write_text('cube_mm = 1\n')
-            (root/'docs').mkdir()
-            directory = root/'exports/turret'
+            (root/'hardware/cad').mkdir(parents=True)
+            (root/'hardware/catalog').mkdir()
+            (root/'hardware/designs').mkdir()
+            for relative in (*provenance.FORMER_CAD_TESTS, *provenance.SOURCE_PARENTS):
+                target=root/relative;target.parent.mkdir(parents=True,exist_ok=True);target.write_text('# synthetic input\n')
+            (root/'hardware/cad/model.py').write_text('cube_mm = 1\n')
+            (root/'docs/turret').mkdir(parents=True)
+            directory = root/'hardware/exports/turret'
             directory.mkdir(parents=True)
             mesh = directory/'cube.stl'
             trimesh.creation.box(extents=[1, 1, 1]).export(mesh)

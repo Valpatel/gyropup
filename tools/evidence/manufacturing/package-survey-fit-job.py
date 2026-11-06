@@ -49,13 +49,13 @@ def input_identity(root=ROOT):
     if helpers != fit.TOOLKIT_HELPERS:
         raise ValueError('Use the reviewed released cad-agent helpers')
     versions = {}
-    for line in (root / 'tools/fit-job-requirements.txt').read_text().splitlines():
+    for line in (root / 'tools/evidence/manufacturing/fit-job-requirements.txt').read_text().splitlines():
         if not line.strip() or line.startswith('#'): continue
         package, expected = line.split('==')
         versions[package] = importlib.metadata.version(package)
         if versions[package] != expected: raise ValueError('Runtime version differs: ' + package)
-    files = ['tools/package-survey-fit-job.py', 'tools/package-fit-job.py', 'tools/fit-job-requirements.txt',
-             'cad/print_slicing.py', 'cad/print_provenance.py', str(SOURCE / 'checks.json'),
+    files = ['tools/evidence/manufacturing/package-survey-fit-job.py', 'tools/evidence/manufacturing/package-fit-job.py', 'tools/evidence/manufacturing/fit-job-requirements.txt',
+             'hardware/cad/manufacturing/print_slicing.py', 'hardware/cad/manufacturing/print_provenance.py', str(SOURCE / 'checks.json'),
              *data['source_sha256'], *(str(SOURCE / p) for p in data['artifact_sha256'])]
     return {'files': {p: fit.sha(root / p) for p in files}, 'toolkit_helpers': helpers,
             'toolkit_commit': fit.TOOLKIT_COMMIT, 'runtime_packages': versions,

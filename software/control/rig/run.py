@@ -212,7 +212,7 @@ def run_hil(test: str, half_mass: float, rate: float, pack: Pack, plot: bool = F
     from software.control.rig.can_bus import Calibration, CanBus, MotorCal
     from software.control.rig.hil import HilLink
     from software.control.rig.sim_bus import SimBus
-    import fivebar as fb
+    import hardware.cad.legs.fivebar as fb
     sc = lc.SCENARIOS[test]
     fo, _, ro, _ = fb.stop_angles()
     cal = Calibration(MotorCal(1, -1, fo + 0.05), MotorCal(2, -1, ro - 0.05), 'HIL: both motors reversed, zero offset')

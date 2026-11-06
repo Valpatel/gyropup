@@ -7,7 +7,7 @@ import shutil
 import tempfile
 import unittest
 
-SPEC=importlib.util.spec_from_file_location('connector_pose',Path(__file__).with_name('check-carrier-connector-pose.py'))
+SPEC=importlib.util.spec_from_file_location('connector_pose',Path(__file__).resolve().parents[3] / 'tools/evidence/interfaces/check-carrier-connector-pose.py')
 MOD=importlib.util.module_from_spec(SPEC);SPEC.loader.exec_module(MOD)
 RECEIPT=MOD.ROOT/'docs/research/carrier-service-connectors/external-pose.json'
 

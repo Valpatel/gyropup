@@ -73,14 +73,14 @@ def input_identity(root=ROOT):
     if helpers != TOOLKIT_HELPERS:
         raise ValueError('Use the released cad-agent helpers from ' + TOOLKIT_COMMIT)
     versions = {}
-    for line in (root / 'tools/fit-job-requirements.txt').read_text().splitlines():
+    for line in (root / 'tools/evidence/manufacturing/fit-job-requirements.txt').read_text().splitlines():
         if not line.strip() or line.startswith('#'): continue
         package, expected = line.split('==')
         versions[package] = importlib.metadata.version(package)
         if versions[package] != expected:
             raise ValueError('Fit-job runtime version differs: ' + package)
-    files = ['tools/package-fit-job.py', 'tools/fit-job-requirements.txt', 'cad/print_slicing.py', 'cad/print_provenance.py',
-             'cad/rs04_lug_checks.py', str(SOURCE / 'checks.json'), str(SOURCE / (PART + '.stl'))]
+    files = ['tools/evidence/manufacturing/package-fit-job.py', 'tools/evidence/manufacturing/fit-job-requirements.txt', 'hardware/cad/manufacturing/print_slicing.py', 'hardware/cad/manufacturing/print_provenance.py',
+             'hardware/cad/legs/rs04_lug_checks.py', str(SOURCE / 'checks.json'), str(SOURCE / (PART + '.stl'))]
     return {'files': {name: sha(root / name) for name in files},
             'toolkit_helpers': helpers, 'toolkit_commit': TOOLKIT_COMMIT, 'runtime_packages': versions,
             'engineering_pass': False, 'engineering_counts': data['counts'],

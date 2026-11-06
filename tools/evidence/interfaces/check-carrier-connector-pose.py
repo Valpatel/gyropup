@@ -6,6 +6,13 @@ boxes conservatively enclose each translation segment; no sampled path can miss
 an intervening collision. No vendor-derived STEP/STL is written.
 """
 from __future__ import annotations
+
+# Support direct-file execution without an obsolete flat CAD import directory.
+if __package__ in (None, ''):
+    import sys as _checkout_sys
+    from pathlib import Path as _CheckoutPath
+    _checkout_sys.path.insert(0, str(_CheckoutPath(__file__).resolve().parents[3]))
+
 import argparse
 import importlib.util
 import json
@@ -16,7 +23,7 @@ import time
 
 ROOT=(Path(__file__).resolve().parents[3])
 sys.path.insert(0,str((ROOT / 'hardware/cad')))
-import print_provenance as provenance
+import hardware.cad.manufacturing.print_provenance as provenance
 SPEC=importlib.util.spec_from_file_location('connector_inputs',Path(__file__).with_name('check-carrier-connector-inputs.py'))
 source=importlib.util.module_from_spec(SPEC);SPEC.loader.exec_module(source)
 
@@ -37,8 +44,8 @@ def validate_receipt(receipt,root=ROOT):
         raise ValueError('External-pose input fingerprint differs')
     for key in ('files','GYROPUP_CAD_PARAMS_sha256'):
         if recorded.get(key)!=current[key]:raise ValueError('External-pose geometry input closure changed')
-    paths=[root/'tools/check-carrier-connector-pose.py',root/'tools/check-carrier-connector-inputs.py',
-           root/'research/carrier-service-connectors/private-inputs.json']
+    paths=[root/'tools/evidence/interfaces/check-carrier-connector-pose.py',root/'tools/evidence/interfaces/check-carrier-connector-inputs.py',
+           root/'docs/research/carrier-service-connectors/private-inputs.json']
     if receipt['context_files']!=provenance.context_snapshot(root,paths):
         raise ValueError('External-pose probe or private manifest changed')
     manifest=json.loads(paths[-1].read_text())
@@ -60,9 +67,9 @@ def run(output):
     from OCP.Bnd import Bnd_Box
     from cadagent.gates import Tolerances,relate
     from cadagent.gates.relations import RELATIONS_VERSION
-    import turret as tu
-    import turret_base_board as bb
-    import check_base_board_interfaces as ci
+    import hardware.cad.turret.turret as tu
+    import hardware.cad.turret.turret_base_board as bb
+    import hardware.cad.turret.check_base_board_interfaces as ci
     if RELATIONS_VERSION!='4':raise ValueError('Requires released v0.4.2 relation predicates')
     if provenance.snapshot(ROOT)!=inputs:raise ValueError('Inputs changed during imports')
     g=tu.Geo()

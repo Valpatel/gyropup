@@ -18,10 +18,11 @@ import os
 from pathlib import Path
 import subprocess
 import sys
+from hardware.cad.locations import artifact_identity
 
 ROOT = (Path(__file__).resolve().parents[3])
 OUT = (ROOT / 'hardware/exports/turret/component-preview')
-SOURCES = ('hardware/cad/turret/turret.py', 'hardware/cad/robot/gmi.py', 'hardware/cad/robot/interfaces.json', 'hardware/catalog/interfaces.json',
+SOURCES = ('hardware/__init__.py', 'hardware/cad/__init__.py', 'hardware/cad/locations.py', 'hardware/cad/turret/turret.py', 'hardware/cad/robot/gmi.py', 'hardware/cad/robot/interfaces.json', 'hardware/catalog/interfaces.json',
            'hardware/catalog/materials.json', 'tools/engineering/turret/export-turret-cut-previews.py')
 sys.path.insert(0, str((ROOT / 'hardware/cad')))
 
@@ -80,8 +81,8 @@ def main():
         stl_error = max(abs(a - b) for a, b in zip(mesh.bounds.ravel(), bounds))
         if not mesh.is_watertight or not mesh.is_winding_consistent or stl_error > .08 or len(mesh.split()) != 1:
             raise ValueError(f'{name}: STL topology or bounds differ from the authored solid')
-        rows.append({'name': name, 'stl': stl.relative_to(ROOT).as_posix(), 'stl_sha256': digest(stl),
-                     'step': step.relative_to(ROOT).as_posix(), 'step_sha256': digest(step),
+        rows.append({'name': name, 'stl': artifact_identity(ROOT, stl), 'stl_sha256': digest(stl),
+                     'step': artifact_identity(ROOT, step), 'step_sha256': digest(step),
                      'bounds_mm': bounds,
                      'volume_mm3': solid.Volume(), 'valid_single_solid': True,
                      'stock': stock, 'round_trip': {'step_bounds_max_error_mm': step_error,

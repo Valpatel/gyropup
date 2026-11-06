@@ -3,48 +3,27 @@ which share a file name, and loading the program agent's feed/launch modules by 
 from __future__ import annotations
 
 import importlib
-import importlib.util
-import sys
 from pathlib import Path
 
 R = (Path(__file__).resolve().parents[2])
 
 
 def cad_turret():
-    """cad/turret.py as a module, whatever else is on sys.path (sim/turret.py has the same name). Raises if the CAD
-    is mid-edit and will not import; callers retry."""
-    m = sys.modules.get('turret')
-    if m is not None and hasattr(m, 'Geo'):
-        return m
-    if m is not None:
-        del sys.modules['turret']
-    cad = str((R / 'hardware/cad'))
-    while cad in sys.path:
-        sys.path.remove(cad)
-    sys.path.insert(0, cad)
-    m = importlib.import_module('turret')
-    if not hasattr(m, 'Geo'):
-        raise ImportError(f'{m.__file__} is not the CAD turret module')
-    return m
+    """Load this checkout's CAD turret without colliding with the game module."""
+    module = importlib.import_module('hardware.cad.turret.turret')
+    if not hasattr(module, 'Geo'):
+        raise ImportError(f'{module.__file__} is not the CAD turret module')
+    return module
 
 
 def game_turret():
-    """sim/turret.py (the game-level scene bits: targets_xml, balls_xml, Target), under its own module name."""
-    if 'game_turret' in sys.modules:
-        return sys.modules['game_turret']
-    spec = importlib.util.spec_from_file_location('game_turret', (R / 'software/simulation/turret.py'))
-    m = importlib.util.module_from_spec(spec)
-    sys.modules['game_turret'] = m
-    spec.loader.exec_module(m)
-    return m
+    """Load the game-level scene module under its actual software namespace."""
+    return importlib.import_module('software.simulation.turret')
 
 
 def sim_module(name):
-    """A module from sim/ by name (turret_feed, turret_launch, ...) with sim/ on the path but cad/ kept first."""
-    sim = str((R / 'software/simulation'))
-    if sim not in sys.path:
-        sys.path.append(sim)
-    return importlib.import_module(name)
+    """Load a sibling simulation module through the selected checkout package."""
+    return importlib.import_module('software.simulation.' + name)
 
 
 def turret_for_physics(tu=None):

@@ -291,8 +291,11 @@ def validate_receipt(data, directory, root=ROOT):
 
 def synthetic_receipt(root, directory):
     """Schema/control fixture only; no fixture STEP or measurement is CAD evidence."""
-    (root / 'cad').mkdir()
-    (root / 'cad/model.py').write_text('# source identity sentinel\n')
+    for folder in provenance.SOURCE_ROOTS:
+        (root / folder).mkdir(parents=True)
+    for relative in (*provenance.FORMER_CAD_TESTS, *provenance.SOURCE_PARENTS):
+        path=root/relative;path.parent.mkdir(parents=True,exist_ok=True);path.write_text('# synthetic source identity\n')
+    (root / 'hardware/cad/model.py').write_text('# source identity sentinel\n')
     for name in PROBE.CONTEXT[:-1]:
         path = root / name
         path.parent.mkdir(parents=True, exist_ok=True)
@@ -510,7 +513,7 @@ class ReceiptControls(unittest.TestCase):
                        lambda d: d['source_inputs']['private_files'].clear(),
                        lambda d: d['baseline']['failures'].pop()):
             self.rejected(mutate)
-        (self.root / 'cad/new_dependency.py').write_text('# new dependency\n')
+        (self.root / 'hardware/cad/new_dependency.py').write_text('# new dependency\n')
         with self.assertRaisesRegex(ValueError, 'closure'):
             self.validate(self.receipt)
 

@@ -1,3 +1,4 @@
+import {sourceForPublic} from '../../site/source-layout.mjs';
 /** Capture actual current simulator callbacks at fixed steps; never invent a second robot rig. */
 import assert from 'node:assert/strict';
 import {mkdir,readFile,writeFile} from 'node:fs/promises';
@@ -7,13 +8,16 @@ import {chromium} from '@playwright/test';
 import {acknowledgePrototypeNotice} from '../../../tests/site/content/test-prototype-session.mjs';
 const base=(process.env.SITE_URL||'http://127.0.0.1:8983').replace(/\/$/,''),out=process.env.CAPTURE_OUTPUT||'/tmp/gyropup-highlights-frames';
 const width=1280,height=720,fps=30,seed=1042026;
+const repository=new URL('../../../',import.meta.url);
+const locationFiles=['tools/site/source-layout.mjs','tools/site/source-layout.json','tests/site/content/test-prototype-session.mjs'];
+const locationContracts=Object.fromEntries(await Promise.all(locationFiles.map(async file=>[file,createHash('sha256').update(await readFile(new URL(file,repository))).digest('hex')])));
 const shots=[{id:'turret',seconds:4,bench:true},{id:'mechanism',seconds:3,bench:true},{id:'battle',seconds:6},{id:'character',seconds:3}];
 const only=process.env.CAPTURE_SHOT,limit=Number(process.env.CAPTURE_FRAMES||0);
 await mkdir(out,{recursive:true});
 const browser=await chromium.launch({channel:process.env.PLAYWRIGHT_CHANNEL === 'chromium' ? undefined : 'chrome',headless:true,args:['--no-sandbox','--use-gl=angle','--use-angle=swiftshader','--enable-unsafe-swiftshader']});
 const hash=b=>createHash('sha256').update(b).digest('hex');
 const report={format:1,sourceRevision:execFileSync('git',['rev-parse','HEAD'],{encoding:'utf8'}).trim(),recipeSha256:hash(await readFile(new URL(import.meta.url))),width,height,fps,seed,
-  browser:browser.version(),instrumentation:'Expose the existing stage callback array to the recorder; stop its RAF loop, advance its callbacks at 60Hz with a fixed performance clock and seeded random source, then explicitly render each captured frame. No model or projectile code is replaced.',shots:[],inputs:{}};
+  browser:browser.version(),locationContracts,instrumentation:'Expose the existing stage callback array to the recorder; stop its RAF loop, advance its callbacks at 60Hz with a fixed performance clock and seeded random source, then explicitly render each captured frame. No model or projectile code is replaced.',shots:[],inputs:{}};
 report.servedVersion=await (await fetch(base+'/version.json')).json();
 try{
 for(const shot of shots.filter(s=>!only||s.id===only)){
@@ -25,7 +29,7 @@ for(const shot of shots.filter(s=>!only||s.id===only)){
  page.on('response',r=>{
   const u=new URL(r.url());if(u.origin!==new URL(base).origin||r.status()!==200)return;
   if(!/^\/(designer|exports|web)\//.test(u.pathname))return;
-  requests.push((async()=>{const bytes=await r.body();let repoSha256=null;try{repoSha256=hash(await readFile(new URL('..'+u.pathname,import.meta.url)));}catch{}
+  requests.push((async()=>{const bytes=await r.body();let repoSha256=null;try{repoSha256=hash(await readFile(new URL(sourceForPublic(u.pathname.slice(1)),repository)));}catch{}
    report.inputs[u.pathname]={servedSha256:hash(bytes),bytes:bytes.length,...(repoSha256?{repoSha256}:{})};})());
  });
  await page.route('**/designer/kit/stage.js*',async route=>{

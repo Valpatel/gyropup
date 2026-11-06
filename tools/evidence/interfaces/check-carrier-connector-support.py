@@ -6,6 +6,13 @@ bind the complete CAD/configuration closure and every additional source input.
 """
 from __future__ import annotations
 
+# Support direct-file execution without an obsolete flat CAD import directory.
+if __package__ in (None, ''):
+    import sys as _checkout_sys
+    from pathlib import Path as _CheckoutPath
+    _checkout_sys.path.insert(0, str(_CheckoutPath(__file__).resolve().parents[3]))
+
+
 import argparse
 import importlib.util
 import json
@@ -16,7 +23,7 @@ import time
 
 ROOT=(Path(__file__).resolve().parents[3])
 sys.path.insert(0,str((ROOT / 'hardware/cad')))
-import print_provenance as provenance
+import hardware.cad.manufacturing.print_provenance as provenance
 PUBLIC_FILES={'carrier-support-candidate.step','C3-support-candidate.step','C3-support-layout.step'}
 
 
@@ -41,11 +48,11 @@ def expected_check_ids():
 
 
 def context_paths(root=ROOT):
-    return [root/'tools/check-carrier-connector-support.py',
-            root/'tools/check-carrier-connector-inputs.py',
-            root/'tools/check-carrier-connector-pose.py',
-            root/'research/carrier-service-connectors/private-inputs.json',
-            root/'research/carrier-service-connectors/support-hardware-catalog.json']
+    return [root/'tools/evidence/interfaces/check-carrier-connector-support.py',
+            root/'tools/evidence/interfaces/check-carrier-connector-inputs.py',
+            root/'tools/evidence/interfaces/check-carrier-connector-pose.py',
+            root/'docs/research/carrier-service-connectors/private-inputs.json',
+            root/'docs/research/carrier-service-connectors/support-hardware-catalog.json']
 
 
 def validate_receipt(receipt,root=ROOT):
@@ -56,11 +63,11 @@ def validate_receipt(receipt,root=ROOT):
         if recorded.get(key)!=current[key]:raise ValueError('Support geometry input closure changed')
     if receipt['context_files']!=provenance.context_snapshot(root,context_paths(root)):
         raise ValueError('Support checker or supplier source changed')
-    hardware=json.loads((root/'research/carrier-service-connectors/support-hardware-catalog.json').read_text())
+    hardware=json.loads((root/'docs/research/carrier-service-connectors/support-hardware-catalog.json').read_text())
     expected={e['model']:e['private_file_sha256'][e['cad']['file']] for e in hardware}
     if receipt['private_hardware_sha256']!=expected:
         raise ValueError('Support hardware identities differ')
-    connectors=json.loads((root/'research/carrier-service-connectors/private-inputs.json').read_text())
+    connectors=json.loads((root/'docs/research/carrier-service-connectors/private-inputs.json').read_text())
     wanted={e['part']:e['sha256'] for e in connectors['parts'] if e['part'] in ('43020-1200','43025-1200')}
     if receipt['private_connector_sha256']!=wanted:
         raise ValueError('Support connector identities differ')
@@ -76,7 +83,7 @@ def validate_receipt(receipt,root=ROOT):
     if not isinstance(artifacts,dict) or set(artifacts)!=PUBLIC_FILES:
         raise ValueError('Support public artifact binding is incomplete or unexpected')
     for name,wanted in artifacts.items():
-        path=root/'exports/turret/base-board-service/connectors'/name
+        path=root/'hardware/exports/turret/base-board-service/connectors'/name
         if not path.is_file() or provenance.digest(path)!=wanted:
             raise ValueError('Support public artifact changed: '+name)
     return True
@@ -90,10 +97,10 @@ def run(output,public_out=None):
     from OCP.Bnd import Bnd_Box
     from cadagent.gates import Tolerances,relate
     from cadagent.gates.relations import RELATIONS_VERSION
-    import turret as tu
-    import turret_base_board as bb
-    import turret_carrier_support as cs
-    import check_base_board_interfaces as ci
+    import hardware.cad.turret.turret as tu
+    import hardware.cad.turret.turret_base_board as bb
+    import hardware.cad.turret.turret_carrier_support as cs
+    import hardware.cad.turret.check_base_board_interfaces as ci
     if RELATIONS_VERSION!='4':raise ValueError('Requires released v0.4.2 relation predicates')
     spec=importlib.util.spec_from_file_location('connector_inputs',context_paths()[1])
     source=importlib.util.module_from_spec(spec);spec.loader.exec_module(source)
