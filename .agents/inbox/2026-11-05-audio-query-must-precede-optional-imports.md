@@ -65,3 +65,12 @@ mute rejection as a paired negative control; a successful stressed startup alone
 would not establish the mute fix. No product source or media receipt changes for
 this test correction. The unknown CI request is not relabelled as the deliberately
 held source, and no retry-only success is accepted as its resolution.
+
+Fleet 176 at `013d727` passed the ordinary first-mount control but timed out in
+the additional stressed talk-readiness phase. That is a failed run, not passing
+validation. The injected delay consumes part of the unchanged 30-second phase,
+but this run did not record request/release times, so its particular cause is
+not established. The helper now records monotonic navigation, source gate,
+core/talk and optional-import milestones; a failure also reports pending request
+paths, readiness booleans and page errors. An instrumented unchanged-bound rerun
+can diagnose that distinction without silently increasing a timeout.
