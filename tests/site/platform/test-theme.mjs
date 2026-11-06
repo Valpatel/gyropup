@@ -1,3 +1,4 @@
+import {sourceForPublic} from '../../../tools/site/source-layout.mjs';
 /** The site's light and dark themes (web/theme.css, web/theme.js): matching token sets, contrast of the key pairs in
  * both themes, the header button and its stored choice, no flash of the wrong theme, the WebGL scenes and diagrams
  * following the page, and no sideways scrolling on a phone. Browser tests use SITE_URL, or serve dist/
@@ -11,8 +12,9 @@ import { createSiteServer } from '../../../tools/site/serve-site.mjs';
 import { acknowledgePrototypeNotice } from '../content/test-prototype-session.mjs';
 
 const root = path.resolve(import.meta.dirname, '../../..');
-const dist = path.join(root, 'dist');
-const css = readFileSync(path.join(root, 'web/theme.css'), 'utf8');
+const sourceFile=(...parts)=>path.join(root,sourceForPublic(path.join(...parts)));
+const dist = sourceFile('dist');
+const css = readFileSync(sourceFile('web/theme.css'), 'utf8');
 const block = re => Object.fromEntries([...css.match(re)[1].matchAll(/(--gp-[\w-]+):([^;]+)/g)].map(m => [m[1], m[2].trim()]));
 const light = block(/^:root\{([^}]*)\}/m);
 const darkMedia = block(/@media\(prefers-color-scheme:dark\)\{:root:not\(\[data-theme=light\]\)\{([^}]*)\}\}/);
@@ -82,7 +84,7 @@ test('every page loads web/theme.js and then web/theme.css before its other styl
     assert.ok(script >= 0 && sheet > script && sheet === firstSheet, path.relative(dist, file));
     assert.ok(head.search(/<script(?![^>]*src="\/web\/theme\.js)/) === -1 || head.search(/<script(?![^>]*src="\/web\/theme\.js)/) > script, `${path.relative(dist, file)}: theme.js is the first script`);
   }
-  const js = readFileSync(path.join(root, 'web/theme.js'), 'utf8');
+  const js = readFileSync(sourceFile('web/theme.js'), 'utf8');
   assert.doesNotMatch(js, /fetch\(|XMLHttpRequest|sendBeacon|WebSocket|import\(|navigator\.|document\.cookie|https?:/);
   assert.match(js, /localStorage/);
 });

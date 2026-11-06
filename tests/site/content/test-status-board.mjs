@@ -1,3 +1,4 @@
+import {sourceForPublic} from '../../../tools/site/source-layout.mjs';
 /** The design status board (tools/status-board.mjs) against its records, on the landing page and Progress.
  * The evidence tests count each record again here, by their own simple loops, and compare with what the built pages
  * show; a board that drifts from its records fails. Browser tests use SITE_URL, or serve dist/ (run `npm run build`
@@ -15,8 +16,9 @@ import { WEIGHED, collectStatus, createReader, docPage, measuredColumns, renderB
 import { ago } from '../../../software/site/assets/status-board.js';
 
 const root = path.resolve(import.meta.dirname, '../../..');
-const dist = path.join(root, 'dist');
-const json = file => JSON.parse(readFileSync(path.join(root, file), 'utf8'));
+const sourceFile=(...parts)=>path.join(root,sourceForPublic(path.join(...parts)));
+const dist = sourceFile('dist');
+const json = file => JSON.parse(readFileSync(sourceFile(file), 'utf8'));
 const text = el => el.textContent.replace(/\s+/g, ' ').trim();
 const page = file => parseHTML(readFileSync(path.join(dist, file), 'utf8')).document;
 const progress = page('designer/progress.html'), landing = page('index.html');
@@ -74,7 +76,7 @@ test('FEA: every study counted against its own verdict, and those under 1.0 show
 });
 
 test('turret gates: one pill a verdict file, in the counts', () => {
-  const files = readdirSync(path.join(root, 'exports/gates')).filter(f => f.endsWith('.json'));
+  const files = readdirSync(sourceFile('exports/gates')).filter(f => f.endsWith('.json'));
   const statuses = files.map(f => json(`exports/gates/${f}`).status);
   const pills = [...progress.querySelectorAll('.sb-panel[data-subsystem="turret"] .sb-gates li')];
   assert.equal(pills.length, files.length);
@@ -84,7 +86,7 @@ test('turret gates: one pill a verdict file, in the counts', () => {
   assert.equal(m.state, statuses.includes('fail') ? 'fail' : statuses.includes('warn') ? 'warn' : 'pass');
   for (const pill of pills) assert.ok(existsSync(path.join(dist, pill.querySelector('a').getAttribute('href'))), pill.textContent);
   // With no failing gate the note says so, rather than "0 to fix: ".
-  const real = createReader(root, { git: false });
+  const real = createReader(root, { git: false, sourcePath:sourceForPublic });
   const clean = collectStatus({ ...real, json: p => { const v = real.json(p); return p.startsWith('exports/gates/') && v.status === 'fail' ? { ...v, status: 'pass' } : v; } });
   const note = clean.panels.find(p => p.id === 'turret').meters.find(m => m.id === 'gates').note;
   assert.match(note, /; none to fix$/);
@@ -115,13 +117,13 @@ test('insert joints: each panel counts its assemblies’ joints by verdict, and 
 test('mass as information (D79): the P3 ledger, each leg and the body and head', () => {
   const p3 = json('exports/body/mass.json').P3;
   assert.equal(p3.budget, undefined); assert.equal(p3.gate, undefined); assert.equal(p3.design.design_mass_kg, 37.5);
-  assert.match(readFileSync(path.join(root, 'docs/decisions.yaml'), 'utf8'), /id: D79[\s\S]*?take out the weight budget/);
+  assert.match(readFileSync(sourceFile('docs/decisions.yaml'), 'utf8'), /id: D79[\s\S]*?take out the weight budget/);
   const strip = progress.querySelector('.sb-mass');
   assert.equal(text(strip.querySelector('.sb-stat-value')), `${p3.total_kg} kg`);
   // no budget, so no Under/Over verdict and no gate tick (D79)
   assert.match(text(strip), /No mass budget \(D79\)/);
   assert.doesNotMatch(text(strip), /as-built gate|Under|Over/);
-  const d72 = Number(readFileSync(path.join(root, 'docs/decisions.yaml'), 'utf8').match(/- id: D72\n[\s\S]*?\(([\d.]+) kg\)/)[1]);
+  const d72 = Number(readFileSync(sourceFile('docs/decisions.yaml'), 'utf8').match(/- id: D72\n[\s\S]*?\(([\d.]+) kg\)/)[1]);
   assert.match(text(strip), new RegExp(`ceiling is ${d72.toFixed(2)} kg \\(D72\\)`));
   assert.equal(published.summary.mass.ceiling, d72);
   // Weighed rows are counted from each row's basis, never guessed from key names.
@@ -129,7 +131,7 @@ test('mass as information (D79): the P3 ledger, each leg and the body and head',
   assert.equal(published.summary.mass.weighed, weighed);
   if (!weighed) assert.match(text(strip), /A CAD ledger: nothing weighed yet/);
   assert.ok(WEIGHED.test('weighed on the bench scale') && !WEIGHED.test('CAD volume × density') && !WEIGHED.test('estimate (to weigh first)'));
-  const real = createReader(root, { git: false });
+  const real = createReader(root, { git: false, sourcePath:sourceForPublic });
   const planned = collectStatus({ ...real, json: p => { const v = real.json(p); return p === 'exports/body/mass.json' ? { ...v, P3: { ...v.P3, to_weigh_first: ['leg'] } } : v; } });
   assert.equal(planned.summary.mass.weighed, weighed, 'a planning key does not count as a weighing');
   const one = collectStatus({ ...real, json: p => { const v = real.json(p); return p === 'exports/body/mass.json' ? { ...v, P3: { ...v.P3, rows: v.P3.rows.map((row, i) => i ? row : { ...row, basis: 'weighed, kitchen scale' }) } } : v; } });
@@ -174,17 +176,17 @@ test('measurement sheets: blank rows are "not yet measured", a filled row counts
   // Every sheet the board reads has at least one reading column it recognises, so a new unit is classified on purpose.
   for (const m of published.panels.flatMap(p => p.meters).filter(m => m.id === 'bench' && m.data?.files))
     for (const f of m.data.files) {
-      const head = readFileSync(path.join(root, f), 'utf8').split(/\r?\n/)[0].split(',');
+      const head = readFileSync(sourceFile(f), 'utf8').split(/\r?\n/)[0].split(',');
       assert.ok(measuredColumns(head).some(Boolean), `${f}: no column the board reads as a measurement`);
     }
   const sheets = ['exports/leg/rs04-fit-job/measurements.csv', ...json('research/leg-preprint/screen.json').coupons.map(c => `research/leg-preprint/sheets/${c.sheet}`)];
-  const rows = sheets.reduce((n, f) => n + readFileSync(path.join(root, f), 'utf8').trim().split('\n').length - 1, 0);
+  const rows = sheets.reduce((n, f) => n + readFileSync(sourceFile(f), 'utf8').trim().split('\n').length - 1, 0);
   const m = meter(progress, 'leg', 'bench');
   assert.equal(m.value, `0 of ${rows}`);
   assert.equal(m.state, 'unknown');
   assert.deepEqual(m.widths, [['unknown', 100]]);
   // A sheet partly filled in is being measured: not green, and not "below target" either.
-  const real = createReader(root, { git: false });
+  const real = createReader(root, { git: false, sourcePath:sourceForPublic });
   const part = collectStatus({ ...real, text: p => { const v = real.text(p); return p === 'exports/leg/rs04-fit-job/measurements.csv' ? v.replace(/\n([^,\n]+),([^,\n]*),,/, '\n$1,$2,4.71,') : v; } });
   const bench = part.panels.find(p => p.id === 'leg').meters.find(m => m.id === 'bench');
   assert.equal(bench.data.measured, 1, 'the fixture fills one reading');
@@ -195,7 +197,7 @@ test('measurement sheets: blank rows are "not yet measured", a filled row counts
 
 test('wheels, rig and electronics read their records; what is not measured is grey', () => {
   const curb = json('exports/wheels/summary_curb.json').hb10;
-  assert.match(readFileSync(path.join(root, 'docs/decisions.yaml'), 'utf8'), /the wheels stay 10 in \(D69\)/, 'the panel follows D69’s 10 in wheel');
+  assert.match(readFileSync(sourceFile('docs/decisions.yaml'), 'utf8'), /the wheels stay 10 in \(D69\)/, 'the panel follows D69’s 10 in wheel');
   const heights = Object.values(curb.heights);
   assert.equal(meter(progress, 'wheels', 'kerb').value, `${heights.filter(h => h.pass).length} of ${heights.length}`);
   assert.equal(meter(progress, 'wheels', 'bench').state, 'unknown');
@@ -214,7 +216,7 @@ test('wheels, rig and electronics read their records; what is not measured is gr
   const branches = json('hardware/fuse-board/reports/analysis.json').branches;
   assert.equal(meter(progress, 'electronics', 'copper').value, `${branches.filter(b => b.within_ipc2221_limits === true).length} of ${branches.length}`);
   assert.ok(progress.querySelector('.sb-panel[data-subsystem="wheels"] .sb-noshot'), 'no render is drawn as missing, not borrowed');
-  const runs = readdirSync(path.join(root, 'exports/rig/runs')).filter(f => f.endsWith('.json')).map(f => json(`exports/rig/runs/${f}`));
+  const runs = readdirSync(sourceFile('exports/rig/runs')).filter(f => f.endsWith('.json')).map(f => json(`exports/rig/runs/${f}`));
   assert.equal(meter(progress, 'rig', 'bench').value, String(runs.filter(r => r.meta.backend !== 'sim').length));
   const faults = Object.values(json('exports/rig/faults.json').faults);
   assert.equal(meter(progress, 'rig', 'faults').value, `${faults.filter(f => f.ok).length} of ${faults.length}`);
@@ -222,7 +224,7 @@ test('wheels, rig and electronics read their records; what is not measured is gr
   assert.equal(meter(progress, 'electronics', 'bodies').value, `${parts - new Set(audit.findings.map(f => f.footprint)).size} of ${parts}`);
   assert.equal(meter(progress, 'electronics', 'bodies').state, audit.pass ? 'pass' : 'fail');
   { // a holder with its body and its fuse both missing is one part without a body, not two
-    const real = createReader(root, { git: false });
+    const real = createReader(root, { git: false, sourcePath:sourceForPublic });
     const [a, b] = ['F1 (cad-agent:holder)', 'R1 (cad-agent:shunt)'];
     const bad = { ...audit, pass: false, findings: [{ check: 'missing_model', footprint: a, detail: 'holder.step' },
       { check: 'missing_model', footprint: a, detail: 'fuse.step' }, { check: 'no_model', footprint: b, detail: '' }] };
@@ -231,7 +233,7 @@ test('wheels, rig and electronics read their records; what is not measured is gr
     assert.equal(m.value, `${parts - 2} of ${parts}`);
     assert.equal(m.state, 'fail');
   }
-  const drc = readFileSync(path.join(root, 'hardware/fuse-board/reports/drc.rpt'), 'utf8');
+  const drc = readFileSync(sourceFile('hardware/fuse-board/reports/drc.rpt'), 'utf8');
   const found = [...drc.matchAll(/Found (\d+) (DRC violations|unconnected pads)/g)].reduce((n, m) => n + Number(m[1]), 0);
   assert.equal(meter(progress, 'electronics', 'drc').value, String(found));
   const pan = json('hardware/carrier-pan-protection/reports/calculations.json');
@@ -267,7 +269,7 @@ test('every image, model, document and source link on the board is published', (
 });
 
 test('a missing record and a shallow history are shown as such, not guessed', () => {
-  const real = createReader(root, { git: false });
+  const real = createReader(root, { git: false, sourcePath:sourceForPublic });
   const reader = { ...real, exists: p => p !== 'research/leg-preprint/screen.json' && real.exists(p) };
   const status = collectStatus(reader);
   const leg = status.panels.find(p => p.id === 'leg');

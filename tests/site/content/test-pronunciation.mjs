@@ -1,3 +1,4 @@
+import {sourceForPublic} from '../../../tools/site/source-layout.mjs';
 // The pronunciation key, browser side (designer/character/pronounce.js), and the recorded voice it feeds.
 // node --test tools/test-pronunciation.mjs   (tools/test-pronunciation.py checks the Python side gives the same text)
 import assert from 'node:assert/strict';
@@ -6,7 +7,7 @@ import test from 'node:test';
 import { compileKey } from '../../../software/site/designer/character/pronounce.js';
 import { fixedLines } from '../../../software/site/designer/character/lines.js';
 
-const read = p => JSON.parse(readFileSync(new URL('../' + p, import.meta.url), 'utf8'));
+const read = p => JSON.parse(readFileSync(new URL(sourceForPublic(p),new URL('../../../',import.meta.url)), 'utf8'));
 const KEY = read('designer/character/pronunciation.json');
 const say = compileKey(KEY);
 const FIXTURE = { version: 9, protect: KEY.protect, entries: [

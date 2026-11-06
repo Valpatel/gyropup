@@ -1,11 +1,12 @@
+import {publicForSource} from '../../../tools/site/source-layout.mjs';
 import assert from 'node:assert/strict';
 import {readFile,mkdir,writeFile} from 'node:fs/promises';
 import {execFileSync} from 'node:child_process';
 import {chromium,webkit} from '@playwright/test';
 import {acknowledgePrototypeNotice} from '../content/test-prototype-session.mjs';
 const root=new URL('../../../', import.meta.url),base=(process.env.SITE_URL||'http://127.0.0.1:8914').replace(/\/$/,'');
-const files=execFileSync('git',['ls-files','docs','research'],{cwd:root}).toString().trim().split('\n').filter(f=>f.endsWith('.md'));
-const pages=[];for(const file of files){const source=await readFile(new URL(file,root),'utf8'),count=[...source.matchAll(/^```mermaid\s*$/gm)].length;if(count)pages.push({file,count,path:'/site/pages/'+file.toLowerCase().replace(/[^a-z0-9]+/g,'-')+'.html'});}
+const files=execFileSync('git',['ls-files','docs','research'],{cwd:root}).toString().trim().split('\n').filter(f=>f.endsWith('.md')&&publicForSource(f));
+const pages=[];for(const file of files){const source=await readFile(new URL(file,root),'utf8'),count=[...source.matchAll(/^```mermaid\s*$/gm)].length;if(count)pages.push({file,count,path:'/site/pages/'+publicForSource(file).toLowerCase().replace(/[^a-z0-9]+/g,'-')+'.html'});}
 assert.equal(pages.reduce((n,p)=>n+p.count,0),11,'Inventory every currently published diagram; update explicitly when adding sources');
 const engine=process.env.PLAYWRIGHT_BROWSER==='webkit'?webkit:chromium;
 const browser=await engine.launch(engine===chromium?{channel:process.env.PLAYWRIGHT_CHANNEL==='chromium'?undefined:'chrome',headless:true}:{headless:true});

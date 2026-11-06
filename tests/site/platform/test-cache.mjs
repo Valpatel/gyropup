@@ -111,7 +111,7 @@ try {
   console.log(JSON.stringify({browser:process.env.PLAYWRIGHT_BROWSER || 'chromium',migration:'old → new → edited',firstKey,secondKey,revalidations:requests.filter(r=>r.status===304).map(r=>r.url),errors},null,2));
   await context.close();
   // Check the actual generated Cloudflare config too, not just the local server.
-  const headers = await readFile(new URL('../dist/_headers',import.meta.url),'utf8');
+  const headers = await readFile(new URL('../../../dist/_headers',import.meta.url),'utf8');
   assert.match(headers,/\/\*\n  Cache-Control: public, no-cache, max-age=0, must-revalidate\n/);
 } finally {
   await browser.close();

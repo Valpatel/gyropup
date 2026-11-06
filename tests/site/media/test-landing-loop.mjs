@@ -1,3 +1,4 @@
+import {sourceForPublic} from '../../../tools/site/source-layout.mjs';
 /** The landing page's cad-agent loop section: its numbers against the committed records, its live line, and its layout.
  * Evidence checks read the repository. Browser checks use SITE_URL, or serve dist/ (run `npm run build` first) on a
  * test-owned listener that is closed in teardown. Requests to cad-agent.gyropup.com are always intercepted. */
@@ -12,7 +13,8 @@ import { acknowledgePrototypeNotice } from '../content/test-prototype-session.mj
 import { describe as describeLive, SOURCE } from '../../../software/site/assets/cad-agent-live.js';
 
 const root = path.resolve(import.meta.dirname, '../../..');
-const read = file => readFile(path.join(root, file), 'utf8');
+const sourceFile=(...parts)=>path.join(root,sourceForPublic(path.join(...parts)));
+const read = file => readFile(sourceFile(file), 'utf8');
 const json = async file => JSON.parse(await read(file));
 const source = await read('designer/home.html');
 const { document } = parseHTML(source);
@@ -65,7 +67,7 @@ test('gates card: every turret gate verdict matches exports/gates', async () => 
   const gates = card('TURRET GATES');
   const pills = [...gates.querySelectorAll('.loop-gates li')];
   // Every verdict file is on the card: a new gate cannot leave "9 gates" stale.
-  const records = (await readdir(path.join(root, 'exports/gates'))).filter(f => f.endsWith('.json')).map(f => f.slice(0, -5)).sort();
+  const records = (await readdir(sourceFile('exports/gates'))).filter(f => f.endsWith('.json')).map(f => f.slice(0, -5)).sort();
   assert.deepEqual(Object.values(files).sort(), records);
   assert.equal(pills.length, records.length);
   let pass = 0;
@@ -116,7 +118,7 @@ let browser, server, base;
 before(async () => {
   base = process.env.SITE_URL?.replace(/\/$/, '');
   if (!base) {
-    server = createSiteServer(path.join(root, 'dist'));
+    server = createSiteServer(sourceFile('dist'));
     await new Promise(resolve => server.listen(0, '127.0.0.1', resolve));
     base = `http://127.0.0.1:${server.address().port}`;
   }

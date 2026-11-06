@@ -1,3 +1,4 @@
+import {sourceForPublic} from '../../../tools/site/source-layout.mjs';
 /** The empty-space gate: every published page, at a phone, an iPhone, a tablet, a small laptop and a desktop, in the
  * light and the dark theme, scrolled one screen at a time like a reader. It fails on a blank band taller than the
  * size's limit, a picture box painted blank, or text squeezed to one word a line. The measures and their limits are
@@ -32,7 +33,7 @@ import {
 process.env.PW_TEST_SCREENSHOT_NO_FONTS_READY = '1';
 
 const root = path.resolve(import.meta.dirname, '../../..');
-const out = path.join(root, 'test-results/empty-space');
+const out = path.join(root,'test-results/empty-space');
 const arg = name => process.argv.find(a => a.startsWith(`--${name}=`))?.split('=')[1];
 const report = process.argv.includes('--report');
 const pick = (all, name) => { const want = arg(name)?.split(','); return want ? all.filter(x => want.includes(x.name ?? x)) : all; };
@@ -43,7 +44,7 @@ const started = Date.now();
 
 let server, base = process.env.SITE_URL?.replace(/\/$/, '');
 if (!base) {
-  server = createSiteServer(path.join(root, 'dist'));
+  server = createSiteServer(path.join(root,'dist'));
   await new Promise(resolve => server.listen(0, '127.0.0.1', resolve));
   base = `http://127.0.0.1:${server.address().port}`;
 }
@@ -219,7 +220,7 @@ async function readinessControls() {
       + `<p>${'Visible document content remains available while the resource is pending. '.repeat(80)}</p>` }));
     await page.route(base + '/__layout-held.svg', async request => { held++; signalHeld(); await gate; await request.abort(); });
     await page.route(cssUrl, async request => { signalCss(); await cssGate; await request.fulfill({ status: failedStyle ? 404 : 200, contentType: 'text/css', body: `@font-face{font-family:LayoutControl;src:url(${base}/__layout-held.woff2)}body{font-family:LayoutControl}` }); });
-    await page.route(base + '/__layout-held.woff2', async request => { signalFont(); await fontGate; await request.fulfill({ contentType: 'font/woff2', body: await readFile(path.join(root, 'designer/kit/vendor/fonts/inter.woff2')) }); });
+    await page.route(base + '/__layout-held.woff2', async request => { signalFont(); await fontGate; await request.fulfill({ contentType: 'font/woff2', body: await readFile(path.join(root,sourceForPublic('designer/kit/vendor/fonts/inter.woff2'))) }); });
     page.setDefaultNavigationTimeout(2000);
     try {
       let loaded = false;
@@ -303,7 +304,7 @@ async function controls() {
 }
 
 try {
-  const dist = path.join(root, 'dist');
+  const dist = path.join(root,'dist');
   const files = (await readdir(dist, { recursive: true })).map(f => f.split(path.sep).join('/'));
   const all = sitePages(files);
   if (all.length < 60) throw new Error(`only ${all.length} pages found in dist/: run npm run build first`);

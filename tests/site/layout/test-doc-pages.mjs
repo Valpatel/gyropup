@@ -1,3 +1,5 @@
+import {publicForSource,sourceForPublic} from '../../../tools/site/source-layout.mjs';
+import {execFileSync} from 'node:child_process';
 /** Design-note pages (tools/doc-page.mjs): the same words as the Markdown, shown with a lead card, status strips
  * counted from the note's own tables, and folds. Browser tests use SITE_URL, or serve dist/ (run `npm run build`). */
 import assert from 'node:assert/strict';
@@ -19,9 +21,7 @@ const fragment = html => parseHTML(`<!doctype html><html><body><article>${html}<
 const status = JSON.parse(readFileSync(path.join(dist, 'site/status.json'), 'utf8'));
 const pages = readdirSync(path.join(dist, 'site/pages')).filter(f => f.endsWith('.html'));
 const slug = p => p.toLowerCase().replace(/[^a-z0-9]+/g, '-');
-const sources = new Map(['README.md', 'catalog/SCHEMA.md', ...['docs', 'research', 'hardware'].flatMap(function walk(dir) {
-  return readdirSync(path.join(root, dir), { withFileTypes: true }).flatMap(e => e.isDirectory() ? walk(`${dir}/${e.name}`) : e.name.endsWith('.md') ? [`${dir}/${e.name}`] : []);
-})].map(f => [`${slug(f)}.html`, f]));
+const sources = new Map(execFileSync('git',['ls-files','-z'],{cwd:root}).toString().split('\0').filter(f=>f.endsWith('.md')&&publicForSource(f)).map(f=>[`${slug(publicForSource(f))}.html`,f]));
 const WORST = ['docs-carrier-service-connectors-md', 'docs-leg-bench-tests-md', 'docs-requirements-md', 'docs-mechanical-readiness-md', 'docs-body-fuse-board-md', 'docs-body-frame-md', 'docs-turret-bench-tests-md'];
 
 test('status words: a scale the page can colour honestly', () => {

@@ -44,16 +44,16 @@ before(async () => {
     await mkdir(root); await writeFile(path.join(root, 'index.html'), text);
   }
   driver = path.join(directory, 'driver.mjs');
-  await writeFile(driver, `import {createSiteServer} from ${JSON.stringify(pathToFileURL(path.join(import.meta.dirname,'serve-site.mjs')).href)};
-import {startPreview} from ${JSON.stringify(pathToFileURL(path.join(import.meta.dirname,'site-preview.mjs')).href)};
+  await writeFile(driver, `import {createSiteServer} from ${JSON.stringify(pathToFileURL(path.join(import.meta.dirname,'../../../tools/site/serve-site.mjs')).href)};
+import {startPreview} from ${JSON.stringify(pathToFileURL(path.join(import.meta.dirname,'../../../tools/site/site-preview.mjs')).href)};
 try { await startPreview({createServer:createSiteServer, directory:process.env.ROOT,
 repository:process.env.REPOSITORY, port:Number(process.env.PORT), temporary:process.env.TEMPORARY==='1',
 ttlMs:Number(process.env.TTL || 1800000)}); } catch (error) { console.error(error.message); process.exitCode=1; }
 `);
-  cli = path.join(directory, 'cli'); await mkdir(path.join(cli,'tools'), {recursive:true});
+  cli = path.join(directory, 'cli'); await mkdir(path.join(cli,'tools/site'), {recursive:true});
   await mkdir(path.join(cli,'dist')); await writeFile(path.join(cli,'dist','index.html'),'CLI fixture');
-  for (const file of ['serve-site.mjs','site-preview.mjs','site-cache.mjs']) await cp(path.join(import.meta.dirname,file),path.join(cli,'tools',file));
-  await symlink(await realpath(path.join(import.meta.dirname,'../node_modules')),path.join(cli,'node_modules'),'dir');
+  for (const file of ['serve-site.mjs','site-preview.mjs','site-cache.mjs']) await cp(path.join(import.meta.dirname,'../../../tools/site',file),path.join(cli,'tools/site',file));
+  await symlink(await realpath(path.join(import.meta.dirname,'../../../node_modules')),path.join(cli,'node_modules'),'dir');
   execFileSync('git',['init','-q',cli]);
 });
 after(async () => {
@@ -116,7 +116,7 @@ test('temporary server exits when its actual launching parent disappears', async
 });
 
 test('CLI rejects arbitrary persistent ports and supports PORT=0 test cleanup', async () => {
-  const script=path.join(cli,'tools','serve-site.mjs');
+  const script=path.join(cli,'tools/site','serve-site.mjs');
   const wrong=child(script,{PORT:String(await freePort())}); await stopped(wrong);
   assert.equal(wrong.exitCode,1); assert.match(wrong.output,/Persistent previews use port 8899/);
   const temporary=child(script,{PORT:'0'}); await ready(temporary); await stop(temporary);
@@ -125,7 +125,7 @@ test('CLI rejects arbitrary persistent ports and supports PORT=0 test cleanup', 
 });
 
 test('CLI fixed-port ephemeral mode preserves CI startup and signal cleanup', async () => {
-  const port=await freePort(), p=child(path.join(cli,'tools','serve-site.mjs'),{PORT:String(port)},['--ephemeral']);
+  const port=await freePort(), p=child(path.join(cli,'tools/site','serve-site.mjs'),{PORT:String(port)},['--ephemeral']);
   const url=await ready(p); assert.equal(url,`http://127.0.0.1:${port}`);
   await stop(p); await assert.rejects(fetch(url));
 });
@@ -133,7 +133,7 @@ test('CLI fixed-port ephemeral mode preserves CI startup and signal cleanup', as
 test('CLI refuses to bind if its identified parent exits during module startup', async () => {
   const ownerFile=path.join(directory,'early-owner.mjs');
   await writeFile(ownerFile,`import {spawn} from 'node:child_process';
-spawn(process.execPath,[${JSON.stringify(path.join(cli,'tools','serve-site.mjs'))},'--ephemeral','--ttl-seconds','2'],
+spawn(process.execPath,[${JSON.stringify(path.join(cli,'tools/site','serve-site.mjs'))},'--ephemeral','--ttl-seconds','2'],
 {stdio:'inherit',env:{...process.env,GYROPUP_PREVIEW_PARENT_PID:String(process.pid)}}); process.exit(0);`);
   const port=await freePort(), owner=child(ownerFile,{PORT:String(port)});
   await until(()=>owner.output.includes('parent exited before startup'),'early parent exit was not detected');

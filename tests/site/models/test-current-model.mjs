@@ -1,3 +1,4 @@
+import {sourceForPublic} from '../../../tools/site/source-layout.mjs';
 import { acknowledgePrototypeNotice } from '../content/test-prototype-session.mjs';
 /** Current presentation: independent CAD frames, cross-route geometry and archive isolation. */
 import assert from 'node:assert/strict';
@@ -7,7 +8,7 @@ import {chromium,webkit} from '@playwright/test';
 const fixture=JSON.parse(await readFile(new URL('../../fixtures/turret-motion-reference.json', import.meta.url)));
 const mountReference=JSON.parse(await readFile(new URL('../../fixtures/current-robot-mount.json', import.meta.url)));
 async function stlBounds(source){
-  const bytes=await readFile(new URL('../'+source.file,import.meta.url));assert.equal(createHash('sha256').update(bytes).digest('hex'),source.sha256,'Independent body datum geometry is pinned');
+  const bytes=await readFile(new URL(sourceForPublic(source.file),new URL('../../../',import.meta.url)));assert.equal(createHash('sha256').update(bytes).digest('hex'),source.sha256,'Independent body datum geometry is pinned');
   const lo=[Infinity,Infinity,Infinity],hi=[-Infinity,-Infinity,-Infinity];
   for(let n=0;n<bytes.readUInt32LE(80);n++)for(let v=0;v<3;v++)for(let axis=0;axis<3;axis++){const x=bytes.readFloatLE(84+n*50+12+v*12+axis*4);lo[axis]=Math.min(lo[axis],x);hi[axis]=Math.max(hi[axis],x);}
   return{lo,hi};

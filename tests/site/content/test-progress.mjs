@@ -1,6 +1,7 @@
+import {sourceForPublic} from '../../../tools/site/source-layout.mjs';
 /** The real Progress page must surface current evidence without a wall of logs. */
 import assert from 'node:assert/strict';
-import {mkdtemp,writeFile,readFile,mkdir,rm} from 'node:fs/promises';
+import {mkdtemp,writeFile,readFile,mkdir,rm,rename} from 'node:fs/promises';
 import {execFileSync} from 'node:child_process';
 import path from 'node:path';
 import {fileURLToPath} from 'node:url';
@@ -8,8 +9,9 @@ import {chromium,webkit} from '@playwright/test';
 import {prepareRigMedia} from '../../../software/site/designer/rig-media.js';
 import {recordRigMedia,verifyRigFiles,producerRigRecord} from '../../../tools/evidence/media/rig-media.mjs';
 const root=path.resolve(path.dirname(fileURLToPath(import.meta.url)), '../../..');
-const reportBytes=await readFile(path.join(root,'exports/leg/rig-results.json'));
-const rigRecord=JSON.parse(await readFile(path.join(root,'exports/leg/rig-media.json'),'utf8'));
+const sourceFile=(...parts)=>path.join(root,sourceForPublic(path.join(...parts)));
+const reportBytes=await readFile(sourceFile('exports/leg/rig-results.json'));
+const rigRecord=JSON.parse(await readFile(sourceFile('exports/leg/rig-media.json'),'utf8'));
 const rigReport=JSON.parse(reportBytes);
 assert.equal(rigRecord.producer_revision,'e7b512870a39259a04a4930e2908af84001bc84e','Known producer of all seven retained clips');
 assert.equal((await verifyRigFiles(root,{historical:true})).clips.length,7,'Every report/movie byte matches its actual producer');
@@ -24,15 +26,15 @@ for(const mutate of [r=>r.clips.pop(),r=>r.clips[0].path='../private.mp4',r=>r.c
 const fixture=await mkdtemp('/tmp/gyropup-rig-record-control-');
 try{
  await mkdir(path.join(fixture,'exports/leg'),{recursive:true});
- for(const file of [rigRecord.report.path,...rigRecord.clips.map(c=>c.path)])await writeFile(path.join(fixture,file),await readFile(path.join(root,file)));
+ for(const file of [rigRecord.report.path,...rigRecord.clips.map(c=>c.path)])await writeFile(path.join(fixture,file),await readFile(sourceFile(file)));
  const git=(...args)=>execFileSync('git',args,{cwd:fixture,encoding:'utf8'}).trim();
  git('init','-q');git('add','exports');git('-c','user.name=Test','-c','user.email=test@example.invalid','commit','-qm','Recorded fixture');
- const revision=git('rev-parse','HEAD');assert.equal((await producerRigRecord(fixture,revision)).clips.length,7);
- await writeFile(path.join(fixture,'exports/leg/rig-media.json'),JSON.stringify({...rigRecord,producer_revision:revision}));
- const before=await readFile(path.join(fixture,'exports/leg/rig-media.json'));
- await writeFile(path.join(fixture,rigRecord.clips[0].path),'different pixels');
+ const revision=git('rev-parse','HEAD');await mkdir(path.join(fixture,'hardware'));await rename(path.join(fixture,'exports'),path.join(fixture,'hardware/exports'));assert.equal((await producerRigRecord(fixture,revision)).clips.length,7);
+ await writeFile(path.join(fixture,sourceForPublic('exports/leg/rig-media.json')),JSON.stringify({...rigRecord,producer_revision:revision}));
+ const before=await readFile(path.join(fixture,sourceForPublic('exports/leg/rig-media.json')));
+ await writeFile(path.join(fixture,sourceForPublic(rigRecord.clips[0].path)),'different pixels');
  await assert.rejects(recordRigMedia(fixture,revision),/movie\/report identity/);
- assert.deepEqual(await readFile(path.join(fixture,'exports/leg/rig-media.json')),before,'Failed recording leaves the previous receipt unchanged');
+ assert.deepEqual(await readFile(path.join(fixture,sourceForPublic('exports/leg/rig-media.json'))),before,'Failed recording leaves the previous receipt unchanged');
 }finally{await rm(fixture,{recursive:true,force:true});}
 const base=(process.env.SITE_URL||'http://127.0.0.1:8982').replace(/\/$/,'');
 const engine=process.env.PLAYWRIGHT_BROWSER==='webkit'?webkit:chromium;

@@ -1,3 +1,4 @@
+import {sourceForPublic} from '../../../tools/site/source-layout.mjs';
 /** Exercise the real chat module without contacting any visitor/local services. */
 import assert from 'node:assert/strict';
 import { readFile } from 'node:fs/promises';
@@ -27,7 +28,7 @@ async function check({ origin, storage = {}, brain, expected, replySource = 'scr
     const url = new URL(route.request().url());
     if (url.origin === origin && url.pathname === '/') return route.fulfill({ contentType: 'text/html', body: html });
     if (url.origin === origin && url.pathname.startsWith('/designer/')) {
-      const body = await readFile(new URL(url.pathname.slice(1), root));
+      const body = await readFile(new URL(sourceForPublic(url.pathname.slice(1)), root));
       return route.fulfill({ contentType: url.pathname.endsWith('.css') ? 'text/css' : 'text/javascript', body });
     }
     services.push(url.href);

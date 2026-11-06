@@ -1,3 +1,4 @@
+import {sourceForPublic} from '../../../tools/site/source-layout.mjs';
 import assert from 'node:assert/strict';
 import { readFile } from 'node:fs/promises';
 import path from 'node:path';
@@ -45,7 +46,7 @@ export async function wallReadinessControls(browser,base,root) {
     await page.route(base+route,r=>r.fulfill({contentType:'text/html',body:html}));
     await page.route(base+'/__wall-failed.css',r=>r.fulfill({status:404,contentType:'text/css',body:''}));
     await page.route(base+'/__wall-primary.svg',async r=>{requested();if(kind==='missing-primary')return r.fulfill({status:404,body:''});if(kind==='decode-never')return r.fulfill({contentType:'image/svg+xml',body:'<svg xmlns="http://www.w3.org/2000/svg" width="340" height="220"><rect width="340" height="220" fill="orange"/></svg>'});await gate;try{await r.abort();}catch(error){if(!closing)throw error;}});
-    await page.route(base+'/__wall-font.woff2',async r=>{requested();if(kind==='font-error')return r.fulfill({status:404,body:''});await gate;try{await r.fulfill({contentType:'font/woff2',body:await readFile(path.join(root,'designer/kit/vendor/fonts/inter.woff2'))});}catch(error){if(!closing)throw error;}});
+    await page.route(base+'/__wall-font.woff2',async r=>{requested();if(kind==='font-error')return r.fulfill({status:404,body:''});await gate;try{await r.fulfill({contentType:'font/woff2',body:await readFile(path.join(root,sourceForPublic('designer/kit/vendor/fonts/inter.woff2')))});}catch(error){if(!closing)throw error;}});
     const loading=(async()=>{await loadWallPage(page,base,route);const wall=await page.evaluate(longestStretch,VISUAL);measured=true;return wall;})();loading.catch(()=>{});
     try {
       if(font||primary)await bound(seen,30000);
