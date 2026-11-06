@@ -41,7 +41,7 @@ const browser=await engine.launch(engine===chromium?{channel:process.env.PLAYWRI
 const context=await browser.newContext({viewport:{width:390,height:844},reducedMotion:'reduce'});
 await context.addInitScript(()=>{sessionStorage.setItem('gyropup.prototype-notice','2026-10-29-v1');localStorage.setItem('gyropup.probe','off');});
 const errors=[],cases=[],page=await context.newPage();page.on('pageerror',e=>errors.push(e.message));
-const rigRequests=[];page.on('request',r=>{if(/\/exports\/leg\/rig_[a-z_]+\.(mp4|webm)(?:\?|$)/.test(r.url()))rigRequests.push(r.url());});
+const rigRequests=[];page.on('request',r=>{const p=new URL(r.url()).pathname;if(p.startsWith('/exports/leg/rig_')&&/\.(mp4|webm)$/.test(p))rigRequests.push(p);});
 const json=async path=>{const r=await context.request.get(base+path);assert.ok(r.ok());return r.json();};
 const version=await json('/version.json'),progress=await json('/docs/progress.json');
 const ready=()=>page.waitForFunction(()=>document.body.dataset.ready==='1');
@@ -49,8 +49,8 @@ const allOpen=async id=>page.locator('#'+id).evaluate(el=>{for(let node=el;node;
 try {
  await page.goto(base+'/designer/progress.html');await ready();
  const selectedFormat=await page.evaluate(()=>document.createElement('video').canPlayType('video/mp4; codecs="avc1.64001f"')?'mp4':'webm');
- assert.equal(rigRequests.length,7,'Only one verified representation of each movie is fetched');
- assert.ok(rigRequests.every(url=>new URL(url).pathname.endsWith('.'+selectedFormat)),'Unselected companion/original downloads are not requested');
+ assert.deepEqual(rigRequests.toSorted(),rigRecord.clips.map(c=>'/'+(selectedFormat==='mp4'?c.path:c.companion.path)).toSorted(),
+   'Exactly the seven receipt-selected paths are fetched, including numbered scenarios, with no unselected-format requests');
  await page.waitForFunction(()=>document.querySelector('#fea-media').dataset.state==='ready');
  assert.match(await page.locator('#updated').innerText(),new RegExp(progress.updated));
  assert.equal(await page.locator('#current-focus').innerText(),progress.focus);
@@ -115,7 +115,10 @@ try {
  assert.ok(text.includes(progress.updated));assert.ok(/static load scaling, not elapsed physical time/i.test(text),'Markdown preserves static-analysis meaning');
  assert.match(text,/Recorded leg simulation/);assert.match(text,/18\.75 kg/);assert.match(text,/36 V/);
  assert.ok(text.includes(rigRecord.producer_revision),'Markdown identifies the actual recorded report');
- for(const clip of rigRecord.clips)assert.ok(text.includes(clip.path),'Markdown retains original movie downloads: '+clip.scenario);
+ for(const clip of rigRecord.clips){
+  assert.ok(text.includes(clip.path),'Markdown retains original movie downloads: '+clip.scenario);
+  assert.ok(text.includes(clip.companion.path),'Markdown retains WebM alternatives: '+clip.scenario);
+ }
  assert.doesNotMatch(text,/blob:/,'Static Markdown never publishes ephemeral browser URLs');
  // The real consumer must retain numerical evidence while refusing mismatched or missing movie identities.
  for(const fault of ['report','receipt','movie','unsupported']){
