@@ -100,3 +100,5 @@
 | Isolated KiCad ERC raises footprint-link warnings; a verifier reports only the first stale binding; native replay leaves personal project state | [Prepare real library configuration and account for every output](inbox/2026-11-05-ci-classification-needs-phase-evidence.md#native-verification-needs-its-real-library-configuration-and-full-output-accounting) |
 
 - A help-only edit is assumed to stale every generated study: distinguish archived collection membership from actual semantic/digest contracts in [CI phase evidence](inbox/2026-11-05-ci-classification-needs-phase-evidence.md#separate-the-collection-inventory-from-each-producers-actual-freshness-contract).
+
+- `python -I` unexpectedly has `sitecustomize`/Apport: check the observed system startup identity and toolkit module origins in [CI phase evidence](inbox/2026-11-05-ci-classification-needs-phase-evidence.md#isolated-python-still-has-a-system-startup-identity).

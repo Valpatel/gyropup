@@ -1,6 +1,6 @@
 {
  "schema": 1,
- "generator": "research/leg-preprint/screen.py",
+ "generator": "docs/research/leg-preprint/screen.py",
  "status": "screen: nothing here has been printed or tested; the coupons and the proof loads decide",
  "materials": {
   "E_xy_humid": 1029.2,
@@ -15,7 +15,7 @@
   "density": 1.09,
   "washer_mpa": 25.0,
   "bearing_humid_mpa": 40.0,
-  "source": "cad-agent v0.6.0 cadagent/simulation/fea.py MATERIALS pa6_cf_xy / pa6_cf_z (humid = Polymaker PA6-CF20 wet / dry, x0.8 print); dry moduli Bambu Lab PA6-CF technical data sheet V3.0 (catalog/materials.json pa6-cf source) (X-Y 4.43 GPa, Z 2.17 GPa)"
+  "source": "cad-agent v0.6.0 cadagent/simulation/fea.py MATERIALS pa6_cf_xy / pa6_cf_z (humid = Polymaker PA6-CF20 wet / dry, x0.8 print); dry moduli Bambu Lab PA6-CF technical data sheet V3.0 (hardware/catalog/materials.json pa6-cf source) (X-Y 4.43 GPa, Z 2.17 GPa)"
  },
  "parts": {
   "bed_mm": [
@@ -243,7 +243,7 @@
   ]
  },
  "layers": {
-  "source": "research/fea-v060-29/evidence/leg-layer-check.json",
+  "source": "docs/research/fea-v060-29/evidence/leg-layer-check.json",
   "toolkit": "0.6.0",
   "mesh_mm": 4.0,
   "source_revision": "7f0dc67a54f78c029ae04beb0cd96915cda4e733",
@@ -671,7 +671,7 @@
   ]
  },
  "orientation": {
-  "source": "research/leg-preprint/evidence/orientation-screen.json",
+  "source": "docs/research/leg-preprint/evidence/orientation-screen.json",
   "toolkit": {
    "version": "0.6.0",
    "commit": "50d4921a5ab26c7750a869ed41c9a4346ef1379c"
@@ -922,7 +922,7 @@
    },
    "pick": "sleeved through-bolt",
    "why": "D74: the leg's primary load path; the 851 N fault tension is 0.57 x the insert's estimated humid pull-out, with no measured spin-out or creep (and up to 1.0 x at assembly if the cheek misses the brass face). The sleeve keeps the preload out of the plastic; the flange root is then judged without precompression (conservative).",
-   "pr2": "cad/fivebar.py frame_mounts(): 6 x Ø8.1 sleeve bores through the flange and web, an M5 hex pocket on the leg face; the Ø8.1 bore leaves 2.45 mm walls in the 13 mm flange, so the bolt line gets a local boss and the frame is re-run; the rig plate and the body cheek keep their Ø5.5 holes; screws M5 x ~90 (mcmaster-parts). Mass with a 6061 sleeve; a steel one adds 67 g more",
+   "pr2": "hardware/cad/legs/fivebar.py frame_mounts(): 6 x Ø8.1 sleeve bores through the flange and web, an M5 hex pocket on the leg face; the Ø8.1 bore leaves 2.45 mm walls in the 13 mm flange, so the bolt line gets a local boss and the frame is re-run; the rig plate and the body cheek keep their Ø5.5 holes; screws M5 x ~90 (mcmaster-parts). Mass with a 6061 sleeve; a steel one adds 67 g more",
    "mass_g_per_leg": 93.0
   },
   {
@@ -943,7 +943,7 @@
    },
    "pick": "clamp ring",
    "why": "D74: the clamp spreads over the hub so the screws can carry a real preload while the plastic stays under the sustained screen and in compression across its layers. Re-torque after 24 h and after the first humid week.",
-   "pr2": "cad/fivebar.py upper_link(): a Ø66 / Ø41 x 4 recess at the counterbores' floor for the ring; HUB_PRELOAD_N to the ring preload in cad/leg_studies.py; the ring as a made-to-order part with the adapter",
+   "pr2": "hardware/cad/legs/fivebar.py upper_link(): a Ø66 / Ø41 x 4 recess at the counterbores' floor for the ring; HUB_PRELOAD_N to the ring preload in hardware/cad/legs/leg_studies.py; the ring as a made-to-order part with the adapter",
    "mass_g_per_leg": 25.0
   },
   {
@@ -982,7 +982,7 @@
    },
    "pick": "metal bushing",
    "why": "The bushing is right; its plastic seat is not. A rounder, larger stub lowers the root's peel; orientation does not help it (orientation screen).",
-   "pr2": "cad/fivebar.py: the stub's diameter and root fillet swept on the compute host; a 0.5 x 45 deg lead-in at the bed-face mouth; the outer sleeve 0.1-0.2 mm proud",
+   "pr2": "hardware/cad/legs/fivebar.py: the stub's diameter and root fillet swept on the compute host; a 0.5 x 45 deg lead-in at the bed-face mouth; the outer sleeve 0.1-0.2 mm proud",
    "mass_g_per_leg": null
   },
   {
@@ -1015,7 +1015,7 @@
    ],
    "options": {
     "printed, bigger": "a root fillet at the Ø64 shoulder; the ring wall 6 -> 10-12 mm: lowest mass, may not reach 1.2",
-    "metal bushing": "a turned 6061 hub (journal, shoulder, circlip groove) clamped through the foot by the wheel's 4 x M6 (their heads then bear on metal, which also fixes the foot's crushed-plastic clamp); about +104 g a leg (the Ø60 / Ø48 journal and the Ø64 shoulder in 6061 instead of PA6-CF, from cad/fivebar.py's hub)",
+    "metal bushing": "a turned 6061 hub (journal, shoulder, circlip groove) clamped through the foot by the wheel's 4 x M6 (their heads then bear on metal, which also fixes the foot's crushed-plastic clamp); about +104 g a leg (the Ø60 / Ø48 journal and the Ø64 shoulder in 6061 instead of PA6-CF, from hardware/cad/legs/fivebar.py's hub)",
     "split apex collar": "the front link's inner half-eye as a separate printed collar, through-bolted to the link: the link then prints flat, and the bolts precompress the ring's layers"
    },
    "pick": "owner decision (mass)",
@@ -1334,7 +1334,7 @@
   ]
  },
  "play": {
-  "basis": "ISO 286-2 tolerance grades (F7, f9, n6, m6); DIN 179 drill bushings: bore F7, outside n6 (catalog/hardware.json eye_sleeve tolerances); ISO 7379 shoulder screws: shoulder f9; ISO 5753-1 radial internal clearance, group N; radial play = half the diametral clearance; the motors' backlash is measured on the rig (B1)",
+  "basis": "ISO 286-2 tolerance grades (F7, f9, n6, m6); DIN 179 drill bushings: bore F7, outside n6 (hardware/catalog/hardware.json eye_sleeve tolerances); ISO 7379 shoulder screws: shoulder f9; ISO 5753-1 radial internal clearance, group N; radial play = half the diametral clearance; the motors' backlash is measured on the rig (B1)",
   "poses_mm": {
    "130": {
     "phi_deg": [
@@ -1472,13 +1472,13 @@
   }
  ],
  "sources": {
-  "bambu_tds": "Bambu Lab PA6-CF technical data sheet V3.0 (catalog/materials.json pa6-cf source)",
+  "bambu_tds": "Bambu Lab PA6-CF technical data sheet V3.0 (hardware/catalog/materials.json pa6-cf source)",
   "cadagent_rows": "cad-agent v0.6.0 cadagent/simulation/fea.py MATERIALS pa6_cf_xy / pa6_cf_z (humid = Polymaker PA6-CF20 wet / dry, x0.8 print)",
   "iso286": "ISO 286-2 tolerance grades (F7, f9, n6, m6)",
-  "din179": "DIN 179 drill bushings: bore F7, outside n6 (catalog/hardware.json eye_sleeve tolerances)",
+  "din179": "DIN 179 drill bushings: bore F7, outside n6 (hardware/catalog/hardware.json eye_sleeve tolerances)",
   "iso7379": "ISO 7379 shoulder screws: shoulder f9",
   "iso5753": "ISO 5753-1 radial internal clearance, group N",
-  "skf6301": "SKF 6301-2RSH product page (catalog/hardware.json bearing_6301: C0 4.15 kN, da min 17.6)",
+  "skf6301": "SKF 6301-2RSH product page (hardware/catalog/hardware.json bearing_6301: C0 4.15 kN, da min 17.6)",
   "lame": "Lame thick-cylinder press fit, rigid steel insert: p = (delta / D) E / ((Do^2 + D^2) / (Do^2 - D^2) + nu)",
   "vdi2230": "VDI 2230 joint diagram: preload lost = embedding x k_bolt k_clamp / (k_bolt + k_clamp)",
   "loctite638": "Henkel LOCTITE 638 technical data sheet: \"not normally recommended for use on plastics (particularly thermoplastic materials where stress cracking of the plastic could result)\"; inactive surfaces want Activator 7471 / 7649; bond gaps up to about 0.25 mm",
@@ -1486,243 +1486,243 @@
  },
  "bindings": [
   {
-   "file": "cad/studies.py",
+   "file": "hardware/cad/analysis/studies.py",
    "pattern": "'washer_mpa': ([\\d.]+),",
    "value": 25.0,
    "lines": 1
   },
   {
-   "file": "cad/studies.py",
+   "file": "hardware/cad/analysis/studies.py",
    "pattern": "'bearing_mpa': ([\\d.]+),",
    "value": 40.0,
    "lines": 1
   },
   {
-   "file": "cad/fivebar.py",
+   "file": "hardware/cad/legs/fivebar.py",
    "pattern": "'D': [\\d.]+, 'l1': ([\\d.]+), 'l2'",
    "value": 150.0,
    "lines": 1
   },
   {
-   "file": "cad/fivebar.py",
+   "file": "hardware/cad/legs/fivebar.py",
    "pattern": "'D': [\\d.]+, 'l1': [\\d.]+, 'l2': ([\\d.]+),",
    "value": 250.0,
    "lines": 1
   },
   {
-   "file": "cad/fivebar.py",
+   "file": "hardware/cad/legs/fivebar.py",
    "pattern": "^FLANGE_T, FLANGE_X = ([\\d.]+), ",
    "value": 13.0,
    "lines": 1
   },
   {
-   "file": "cad/leg_studies.py",
+   "file": "hardware/cad/legs/leg_studies.py",
    "pattern": "^HUB_PRELOAD_N = ([\\d.]+)",
    "value": 1200.0,
    "lines": 1
   },
   {
-   "file": "cad/fivebar.py",
+   "file": "hardware/cad/legs/fivebar.py",
    "pattern": "\\.union\\(ycyl\\(([\\d.]+), h0, ab1 \\+ 0\\.01, l2\\)\\)",
    "value": 30.0,
    "lines": 1
   },
   {
-   "file": "cad/fivebar.py",
+   "file": "hardware/cad/legs/fivebar.py",
    "pattern": "k = k\\.union\\(ycyl\\(([\\d.]+), ab1, h1 \\+ 0\\.01, l2\\)\\)",
    "value": 32.0,
    "lines": 1
   },
   {
-   "file": "cad/fivebar.py",
+   "file": "hardware/cad/legs/fivebar.py",
    "pattern": "k = k\\.cut\\(ycyl\\(([\\d.]+), h0 - 1, h1 - 0\\.01, l2\\)\\)",
    "value": 24.0,
    "lines": 1
   },
   {
-   "file": "cad/build_leg.py",
+   "file": "hardware/cad/builders/build_leg.py",
    "literal": "'hip_frame': DOWN_OUTER"
   },
   {
-   "file": "cad/build_leg.py",
+   "file": "hardware/cad/builders/build_leg.py",
    "literal": "'upper_link': DOWN_OUTER"
   },
   {
-   "file": "cad/build_leg.py",
+   "file": "hardware/cad/builders/build_leg.py",
    "literal": "'front_link': DOWN_INNER"
   },
   {
-   "file": "cad/build_leg.py",
+   "file": "hardware/cad/builders/build_leg.py",
    "literal": "'wheel_link': DOWN_OUTER"
   },
   {
-   "file": "cad/build_leg.py",
+   "file": "hardware/cad/builders/build_leg.py",
    "literal": "'apex_spacer': DOWN_INNER"
   },
   {
-   "file": "cad/build_leg.py",
+   "file": "hardware/cad/builders/build_leg.py",
    "literal": "'stop_sleeve': DOWN_OUTER"
   },
   {
-   "file": "cad/build_leg.py",
+   "file": "hardware/cad/builders/build_leg.py",
    "literal": "DOWN_OUTER = ((1, 0, 0), -90)        # the part's +y face on the bed"
   },
   {
-   "file": "cad/build_leg.py",
+   "file": "hardware/cad/builders/build_leg.py",
    "literal": "DOWN_INNER = ((1, 0, 0), 90)         # its -y face on the bed"
   },
   {
-   "file": "cad/fivebar.py",
+   "file": "hardware/cad/legs/fivebar.py",
    "pattern": "'eye_r': ([\\d.]+), 'eye_stub_fillet'",
    "value": 20.0,
    "lines": 1
   },
   {
-   "file": "cad/fivebar.py",
+   "file": "hardware/cad/legs/fivebar.py",
    "pattern": "^PRINT_HOLE_COMP = ([\\d.]+)",
    "value": 0.125,
    "lines": 1
   },
   {
-   "file": "cad/fivebar.py",
+   "file": "hardware/cad/legs/fivebar.py",
    "literal": "u = u.cut(ycyl(EYE_SLEEVE[0] / 2 + PRINT_HOLE_COMP / 2, eye_sleeve_end(), t + 1, l1, 0))"
   },
   {
-   "file": "cad/fivebar.py",
+   "file": "hardware/cad/legs/fivebar.py",
    "pattern": "^EYE_SLEEVE = \\(([\\d.]+), ",
    "value": 18.0,
    "lines": 1
   },
   {
-   "file": "cad/fivebar.py",
+   "file": "hardware/cad/legs/fivebar.py",
    "literal": "re, fe = P['eye_r'], P['eye_stub_fillet']"
   },
   {
-   "file": "cad/fivebar.py",
+   "file": "hardware/cad/legs/fivebar.py",
    "pattern": "ycyl\\(re - ([\\d.]+), -EYE_BOSS, 0\\.01, l1, 0\\)",
    "value": 0.5,
    "lines": 1
   },
   {
-   "file": "cad/fivebar.py",
+   "file": "hardware/cad/legs/fivebar.py",
    "pattern": "^EYE_SLEEVE = \\([\\d.]+, [\\d.]+, ([\\d.]+)\\)",
    "value": 20.0,
    "lines": 1
   },
   {
-   "file": "cad/fivebar.py",
+   "file": "hardware/cad/legs/fivebar.py",
    "pattern": "^EYE_SLEEVES = (\\d+)",
    "value": 2.0,
    "lines": 1
   },
   {
-   "file": "cad/fivebar.py",
+   "file": "hardware/cad/legs/fivebar.py",
    "pattern": "'bearing': '6301-2RS', 'bearing_od': ([\\d.]+),",
    "value": 37.0,
    "lines": 1
   },
   {
-   "file": "cad/fivebar.py",
+   "file": "hardware/cad/legs/fivebar.py",
    "pattern": "'bearing_od': [\\d.]+, 'bearing_w': [\\d.]+, 'hub_od': ([\\d.]+),",
    "value": 51.0,
    "lines": 1
   },
   {
-   "file": "cad/fivebar.py",
+   "file": "hardware/cad/legs/fivebar.py",
    "pattern": "'bearing': '6301-2RS', 'bearing_od': [\\d.]+, 'bearing_w': ([\\d.]+),",
    "value": 12.0,
    "lines": 1
   },
   {
-   "file": "cad/fivebar.py",
+   "file": "hardware/cad/legs/fivebar.py",
    "pattern": "c = ycyl\\(bo / 2 \\+ ([\\d.]+), y0 - 0\\.01, y0 \\+ bw\\)",
    "value": 0.02,
    "lines": 1
   },
   {
-   "file": "cad/fivebar.py",
+   "file": "hardware/cad/legs/fivebar.py",
    "pattern": "f = f\\.cut\\(ycyl\\(AC\\['bearing_od'\\] / 2 \\+ ([\\d.]+), ao\\[0\\], e1 \\+ 1, l2\\)\\)",
    "value": 0.02,
    "lines": 1
   },
   {
-   "file": "cad/fivebar.py",
+   "file": "hardware/cad/legs/fivebar.py",
    "literal": "r_eye = AC['bearing_od'] / 2 + P['apex_wall']"
   },
   {
-   "file": "cad/fivebar.py",
+   "file": "hardware/cad/legs/fivebar.py",
    "pattern": "'apex_wall': ([\\d.]+), 'front_eye_fillet'",
    "value": 6.0,
    "lines": 1
   },
   {
-   "file": "cad/fivebar.py",
+   "file": "hardware/cad/legs/fivebar.py",
    "pattern": "web = web\\.cut\\(ycyl\\(([\\d.]+) \\+ PRINT_HOLE_COMP / 2 \\+ [\\d.]+, yf0 - 1, yf0 \\+ [\\d.]+, x, z\\)\\)",
    "value": 2.5,
    "lines": 1
   },
   {
-   "file": "cad/fivebar.py",
+   "file": "hardware/cad/legs/fivebar.py",
    "pattern": "web = web\\.cut\\(ycyl\\([\\d.]+ \\+ PRINT_HOLE_COMP / 2 \\+ ([\\d.]+), yf0 - 1, yf0 \\+ [\\d.]+, x, z\\)\\)",
    "value": 0.015,
    "lines": 1
   },
   {
-   "file": "cad/fivebar.py",
+   "file": "hardware/cad/legs/fivebar.py",
    "pattern": "web = web\\.cut\\(ycyl\\([\\d.]+ \\+ PRINT_HOLE_COMP / 2 \\+ [\\d.]+, yf0 - 1, yf0 \\+ ([\\d.]+), x, z\\)\\)",
    "value": 12.0,
    "lines": 1
   },
   {
-   "file": "cad/fivebar.py",
+   "file": "hardware/cad/legs/fivebar.py",
    "pattern": "^STOP_PIN = \\(([\\d.]+), ",
    "value": 16.0,
    "lines": 1
   },
   {
-   "file": "cad/fivebar.py",
+   "file": "hardware/cad/legs/fivebar.py",
    "pattern": "^STOP_HOLE_PLAY = ([\\d.]+)",
    "value": 0.05,
    "lines": 1
   },
   {
-   "file": "cad/fivebar.py",
+   "file": "hardware/cad/legs/fivebar.py",
    "pattern": "^STOP_PIN = \\([\\d.]+, [\\d.]+, ([\\d.]+)\\)",
    "value": 23.0,
    "lines": 1
   },
   {
-   "file": "cad/fivebar.py",
+   "file": "hardware/cad/legs/fivebar.py",
    "pattern": "\\.union\\(ycyl\\(([\\d.]+), h0, ab1 \\+ 0\\.01, l2\\)\\)",
    "value": 30.0,
    "lines": 1
   },
   {
-   "file": "cad/leg_studies.py",
+   "file": "hardware/cad/legs/leg_studies.py",
    "pattern": "^HUB_PRELOAD_N = ([\\d.]+)",
    "value": 1200.0,
    "lines": 1
   },
   {
-   "file": "cad/fivebar.py",
+   "file": "hardware/cad/legs/fivebar.py",
    "pattern": "'D': ([\\d.]+), 'l1'",
    "value": 150.0,
    "lines": 1
   },
   {
-   "file": "cad/fivebar.py",
+   "file": "hardware/cad/legs/fivebar.py",
    "pattern": "'D': [\\d.]+, 'l1': ([\\d.]+), 'l2'",
    "value": 150.0,
    "lines": 1
   },
   {
-   "file": "cad/fivebar.py",
+   "file": "hardware/cad/legs/fivebar.py",
    "pattern": "'D': [\\d.]+, 'l1': [\\d.]+, 'l2': ([\\d.]+),",
    "value": 250.0,
    "lines": 1
   },
   {
-   "file": "cad/fivebar.py",
+   "file": "hardware/cad/legs/fivebar.py",
    "literal": "E = E1 if E1[1] < E2[1] else E2"
   }
  ]

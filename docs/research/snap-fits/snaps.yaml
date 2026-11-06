@@ -1,6 +1,6 @@
-# The turret lids' snap fits (#131 wave 1). Generated from cad/turret_snaps.py, the constants cad/turret.py
-# builds the latches from: do not edit; run python3 research/snap-fits/snaps.py --cad-agent PATH.
-#   cad-agent snapfit research/snap-fits/snaps.yaml --output research/snap-fits/snapfit.json
+# The turret lids' snap fits (#131 wave 1). Generated from hardware/cad/turret/turret_snaps.py, the constants hardware/cad/turret/turret.py
+# builds the latches from: do not edit; run python3 docs/research/snap-fits/snaps.py --cad-agent PATH.
+#   cad-agent snapfit docs/research/snap-fits/snaps.yaml --output docs/research/snap-fits/snapfit.json
 snaps:
   - name: hopper_lid-latch-mu-low
     material: petg-bambu-basic
