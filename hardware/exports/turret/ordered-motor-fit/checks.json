@@ -314,11 +314,11 @@
   ],
   "physical_fit_verified": false,
   "source_sha256": {
-    "research/ordered-turret-motor/gauge.py": "f076dc805fe56b4c8f1fd5e85a95e793bf7f39e305845d83eba461164e70d2f3",
-    "research/ordered-turret-motor/seller-claims.json": "74508276b0107026bc0051ad1a76ad7aa8cc1a6abb148b4d22afa1beb7643a0c"
+    "docs/research/ordered-turret-motor/gauge.py": "a75f41096d3204405015d3a8dfc3c6ec097ab8855f7f99b5fe729d558979fbd1",
+    "docs/research/ordered-turret-motor/seller-claims.json": "74508276b0107026bc0051ad1a76ad7aa8cc1a6abb148b4d22afa1beb7643a0c"
   },
   "artifact_sha256": {
-    "shaft-clearance-survey.step": "1b5b33ef2603001abff19d35696d3fe13cc43cafbbe6e78243de5cd2620ef3cf",
+    "shaft-clearance-survey.step": "08e152eeb4b87cdcf69e7740b9474b0a099196ad76fab0ebc0dc0413e15a9926",
     "shaft-clearance-survey.stl": "f71124b175344d07a49e31be3e7f81944af43973ab6c4e3f51827ef0636dde10"
   },
   "toolkit_sha256": {
@@ -327,7 +327,7 @@
     "gates/verdict.py": "3b0a9f75114141e8bfc3a0ccc45c8bb4e2390bdf06233a8643ace07308cd91d7"
   },
   "toolkit_revision": "2ad426943ce2c7232875e105e50810849f9a3e5e",
-  "project_revision": "b812a7b975938e1ad69990514d91a47a71affb77",
+  "project_revision": "bbf33b27223dd4648763fd1ddf300278abbfe1bc",
   "dependencies": {
     "cad-agent": "0.4.2",
     "cadquery": "2.8.0",

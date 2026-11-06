@@ -104,3 +104,5 @@
 - `python -I` unexpectedly has `sitecustomize`/Apport: check the observed system startup identity and toolkit module origins in [CI phase evidence](inbox/2026-11-05-ci-classification-needs-phase-evidence.md#isolated-python-still-has-a-system-startup-identity).
 
 - A relocated Python module works but a test rejects an old import spelling: [check the shared runtime object and checkout origin](inbox/2026-11-05-ci-classification-needs-phase-evidence.md#check-shared-runtime-identity-instead-of-a-particular-import-spelling).
+
+- A post-adoption consumer fails because its toolkit is absent: [preflight every reader runtime before copying targets](inbox/2026-11-05-ci-classification-needs-phase-evidence.md#provision-every-post-adoption-reader-before-mutating-its-targets).

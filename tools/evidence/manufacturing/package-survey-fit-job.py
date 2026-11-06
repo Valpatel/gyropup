@@ -24,7 +24,8 @@ spec.loader.exec_module(fit)
 SOURCE = Path('hardware/exports/turret/ordered-motor-fit')
 PART = 'shaft-clearance-survey'
 # Reviewed actual 12-check geometry receipt; a changed gauge needs a new review.
-GAUGE_RECEIPT_SHA256 = 'ad3e52f221104638cf95bd51fcdd2e3defbc972a3a19cd32a8986604308e043c'
+# Fleet223 artifact review: https://github.com/Valpatel/gyropup/pull/238#issuecomment-6687739473
+GAUGE_RECEIPT_SHA256 = '00334bdcf80dd59c026ae2916448eac95cb764e8f3b0f0f53c73261c0df0434d'
 SCOPE = 'UNPOWERED DIMENSIONAL SURVEY ONLY; uncalibrated; no motor mounting, retention, thread gauging or powered-operation approval'
 RECIPE = {'id': 'shaft-survey-pa6cf-trial-2', 'profiles': fit.PROFILES, 'overrides': fit.OVERRIDES,
           'process_source': fit.RECIPE['id'], 'copies': 1, 'scope': SCOPE,
