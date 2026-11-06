@@ -79,6 +79,7 @@ try:
     assert before['versions'] == {'cad-agent':'0.4.2','cadquery':'2.8.0','cadquery-ocp':'7.9.3.1.1','numpy':'2.5.4'}
     assert before['toolkit_sources_sha256'] == lugs.TOOLKIT_SOURCES
     assert before['GYROPUP_CAD_PARAMS_sha256'] is None
+    assert set(inventory(PRIVATE)) == set(lugs.PRIVATE_FILES)
     assert lugs.private_inputs(PRIVATE) == lugs.PRIVATE_HASHES
     save('private-inputs.json', lugs.PRIVATE_HASHES)
     phase('lug-controls-before', [sys.executable,'-B','tests/hardware/interfaces/test-rs04-lug-stacks.py','--pure'], timeout=120)
@@ -92,6 +93,28 @@ try:
     assert lugs.validate_receipt(data,lug,ROOT)
     assert data['counts'] == {'pass':322,'warn':40,'fail':8}
     phase('lug-real-consumer',[sys.executable,'-B','tests/hardware/interfaces/test-rs04-lug-stacks.py','--receipt',str(lug/'checks.json')],timeout=120)
+    # Explicitly preserve the old/new geometric evidence even when export bytes drift.
+    import numpy as np
+    import trimesh
+    old_lug = ROOT/'hardware/exports/leg/rs04-mounting-fit'
+    old_report = json.loads((old_lug/'checks.json').read_text())
+    assert data['authored_shapes'] == old_report['authored_shapes'], 'Authored content identity changed'
+    metrics = {}
+    for part in lugs.OUTPUT_PARTS:
+        pair = []
+        meshes = []
+        for directory in (old_lug,lug):
+            mesh = trimesh.load_mesh(directory/(part+'.stl'),process=False)
+            vertices = np.unique(np.round(mesh.vertices,4),axis=0)
+            row = {'bounds_mm':np.round(mesh.bounds,4).tolist(),'volume_mm3':float(mesh.volume),
+                   'unique_vertices_0_0001_mm':len(vertices),
+                   'vertices_sha256':hashlib.sha256(vertices.tobytes()).hexdigest()}
+            pair.append(row);meshes.append(vertices)
+        metrics[part] = {'historical':pair[0],'fresh':pair[1]}
+        save('lug-old-new-geometry.json',metrics)
+        assert pair[0]['bounds_mm']==pair[1]['bounds_mm']
+        assert abs(pair[0]['volume_mm3']-pair[1]['volume_mm3']) <= max(1e-6,abs(pair[0]['volume_mm3'])*1e-9)
+        assert np.array_equal(meshes[0],meshes[1]), 'Rounded unique mesh vertices changed'
     expected = {'checks.json',*(p+'.'+ext for p in lugs.OUTPUT_PARTS for ext in ('step','stl'))}
     assert set(inventory(lug)) == expected
     # Feed the REAL completed failing lug receipt to its unchanged support consumer.
@@ -124,27 +147,40 @@ except BaseException as exc:
     results['error'] = type(exc).__name__+': '+str(exc)
     raise
 finally:
-    try:
-        if initial is not None:
+    final_errors = []
+    if initial is not None:
+        # Observation must never prevent restoration of our declared temporary inputs.
+        try:
             current = tracked()
             save('tracked-after-with-temporary-lug-input.json',current)
-            expected_current = initial | replacement
-            unchanged = current == expected_current
-            if replacement:
-                for n in replacement:
+            if current != initial | replacement:
+                final_errors.append('Unexpected source/output mutation')
+        except BaseException as exc:
+            final_errors.append('Observation: '+type(exc).__name__+': '+str(exc))
+        finally:
+            for n in replacement:
+                try:
                     shutil.copyfile(OUT/'original-lug-inputs'/Path(n).name,ROOT/n)
+                except BaseException as exc:
+                    final_errors.append('Restore '+n+': '+type(exc).__name__+': '+str(exc))
+        try:
             final = tracked()
             save('tracked-final-restored.json',final)
-            assert final == initial, 'Final tracked bytes not restored'
-            assert unchanged, 'Unexpected source/output mutation (declared lug input was restored)'
+            if final != initial:
+                final_errors.append('Final tracked bytes not restored')
+            else:
+                results['final_tracked_identity_restored'] = True
             protected_after = inventory(ROOT/'hardware')
             save('hardware-final-restored.json',protected_after)
-            assert protected_after == protected_before, 'Complete hardware path/byte set changed'
-            results['final_tracked_identity_restored'] = True
-            results['complete_hardware_identity_restored'] = True
-    except BaseException as exc:
+            if protected_after != protected_before:
+                final_errors.append('Complete hardware path/byte set changed')
+            else:
+                results['complete_hardware_identity_restored'] = True
+        except BaseException as exc:
+            final_errors.append('Final guard: '+type(exc).__name__+': '+str(exc))
+    if final_errors:
         results['status'] = 'FAILED'
-        results['final_guard_error'] = type(exc).__name__+': '+str(exc)
-        save('result.json',results)
-        raise
+        results['final_guard_errors'] = final_errors
     save('result.json',results)
+    if final_errors:
+        raise RuntimeError('; '.join(final_errors))
