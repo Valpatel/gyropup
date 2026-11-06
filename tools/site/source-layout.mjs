@@ -29,6 +29,14 @@ export function publicForSource(value){
  }
  return null;
 }
+/** Directory navigation uses only indexes the builder will actually publish. */
+export function publicDirectoryForSource(value,publishedDirectories){
+ const file=relative(value);
+ if(unpublishedSource(file))return null;
+ // The authored CAD tree is nested; its existing public listing remains flat.
+ const candidate=(file==='hardware/cad'||file==='cad')?'cad':publicForSource(file);
+ return candidate!==null&&publishedDirectories.has(candidate)?candidate:null;
+}
 export function sourceForPublic(value){
  const file=relative(value);
  if(inverse.has(file))return inverse.get(file);

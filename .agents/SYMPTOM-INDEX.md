@@ -106,3 +106,5 @@
 - A relocated Python module works but a test rejects an old import spelling: [check the shared runtime object and checkout origin](inbox/2026-11-05-ci-classification-needs-phase-evidence.md#check-shared-runtime-identity-instead-of-a-particular-import-spelling).
 
 - A post-adoption consumer fails because its toolkit is absent: [preflight every reader runtime before copying targets](inbox/2026-11-05-ci-classification-needs-phase-evidence.md#provision-every-post-adoption-reader-before-mutating-its-targets).
+
+- A moved source directory sends an existing local listing link to GitHub despite a published index: [preserve directory navigation using actual index membership](inbox/2026-11-05-root-moves-need-consumer-and-publication-maps.md#preserve-existing-directory-navigation-through-actual-published-indexes).

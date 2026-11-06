@@ -10,6 +10,7 @@ import path from 'node:path';
 import { parseHTML } from 'linkedom';
 import { marked } from 'marked';
 import { htmlToMarkdown, renderPortal } from '../../../tools/site/site-markdown.mjs';
+import {publicDirectoryForSource} from '../../../tools/site/source-layout.mjs';
 
 const root = path.resolve(import.meta.dirname, '../../..');
 const out = path.join(root, 'dist');
@@ -64,8 +65,27 @@ test('every generated HTML page advertises a current Markdown counterpart', asyn
   assert.match(await read('_headers'), /\/\*\.md\n  Content-Type: text\/markdown; charset=utf-8/);
 });
 
-test('public entry guides resolve inside the bundle and keep unpublished repository sources excluded', async () => {
+test('public entry guides and directory links resolve while unpublished sources stay excluded', async () => {
   const discovery = await read('llms.txt');
+  for(const [page,destinations] of [
+    ['docs-mechanical-interfaces-md',['/cad/','/exports/fea/']],
+    ['docs-body-firmware-md',['/firmware/balance/','/firmware/balance/hil/']],
+    ['docs-leg-print-package-md',['/research/leg-preprint/sheets/']],
+    ['hardware-actuators-rs04-readme-md',['/hardware/actuators/rs04/profiles/']],
+    ['hardware-readme-md',['/hardware/fuse-board/']],
+    ['research-leg-preprint-readme-md',['/research/leg-preprint/evidence/']],
+  ]){
+    const {document}=parseHTML(await read('site/pages/'+page+'.html'));
+    const links=[...document.querySelectorAll('article a[href]')].map(a=>a.getAttribute('href'));
+    for(const destination of destinations){
+      assert.ok(links.includes(destination),'Preserve the authored public directory link: '+page+' '+destination);
+      assert.ok((await stat(path.join(out,destination,'index.html'))).isFile(),destination);
+    }
+  }
+  assert.equal(publicDirectoryForSource('hardware/cad',new Set(['cad'])),'cad');
+  assert.equal(publicDirectoryForSource('hardware/cad',new Set()),null,'An absent public index cannot qualify the source directory');
+  for(const source of ['hardware/cad-notes','hardware/cad/turret','hardware/vendor','docs/dossier','software/control'])
+    assert.equal(publicDirectoryForSource(source,new Set(['cad','cad/turret',source])),null,source);
   for (const route of ['/site/pages/docs-readme-md.md', '/site/pages/docs-agent-guide-md.md']) {
     assert.ok(discovery.indexOf(route) < discovery.indexOf('## All public pages'), route);
     assert.ok(pages.some(page => page.markdown === route), route);

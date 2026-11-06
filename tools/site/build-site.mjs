@@ -12,7 +12,7 @@ import { collectStatus, createReader, renderBoard, shallowHistory } from './stat
 import { collectTimeline, gitIn, imagePaths, renderTimeline, subsystemOf } from './timeline.mjs';
 import { OPEN_FOLDS, enhanceDocument } from './doc-page.mjs';
 import { verifyRigFiles } from '../evidence/media/rig-media.mjs';
-import {publicForSource,sourceForPublic,publicationFiles} from './source-layout.mjs';
+import {publicForSource,publicDirectoryForSource,sourceForPublic,publicationFiles} from './source-layout.mjs';
 const root = path.resolve(import.meta.dirname, '../..');
 const out = path.join(root, 'dist');
 const sourceFile=p=>path.join(root,sourceForPublic(p));
@@ -103,6 +103,16 @@ const pagePath = p => `/site/pages/${slug(p)}.html`;
 function frame(title, body) {
   return `<!doctype html><html lang="en"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width, initial-scale=1"><script src="/web/theme.js"></script><link rel="stylesheet" href="/web/theme.css"><title>${esc(title)} · Gyropup</title><link rel="icon" href="/web/icon.svg"><link rel="stylesheet" href="/web/portal.css"><link rel="stylesheet" href="/designer/kit/diagrams.css"><link rel="stylesheet" href="/web/doc-page.css"></head><body class="docs-page"><main class="document"><a class="back" href="/site/">← Design notebook</a><p class="portal-label">BUILT BY AUTONOMOUS SYSTEMS · WORK IN PROGRESS</p>${body}<footer>Created by <a href="https://valpatel.com">Valpatel Software LLC</a>. © 2026. All rights reserved. Repository materials retain their stated licenses.</footer></main><script type="module">import {mountAppNav} from '/designer/kit/appnav.js'; mountAppNav({root:'../../',current:'docs'});</script><script>${OPEN_FOLDS}</script><script type="module">import('/designer/kit/diagrams.js').then(m=>m.observeDiagrams()).catch(()=>{document.querySelectorAll('pre.mermaid,pre:has(>code.language-mermaid)').forEach(p=>{p.classList.add('cad-diagram-boot-error');const b=document.createElement('button');b.className='cad-diagram-reload';b.textContent='Reload diagrams';b.onclick=()=>location.reload();p.after(b);});});</script></body></html>`;
 }
+// Compute the exact public index membership before rewriting authored links.
+const directories = new Map();
+for (const file of tracked.filter(f => roots.some(r => f.startsWith(r)) && !dossierSource(f) && !['docs/handoff.md', 'designer/home.html'].includes(f))) {
+  let parent = path.posix.dirname(file), entry = path.posix.basename(file);
+  while (parent !== '.') {
+    if (!directories.has(parent)) directories.set(parent, []);
+    if (!directories.get(parent).includes(entry)) directories.get(parent).push(entry);
+    entry = path.posix.basename(parent) + '/'; parent = path.posix.dirname(parent);
+  }
+}
 const docs = [];
 for (const file of documents) {
   const authoredSource=sourceForPublic(file);
@@ -122,9 +132,10 @@ for (const file of documents) {
     if (/^(?:[a-z][a-z\d+.-]*:|\/\/)/i.test(url)) return all;
     const [pathname, ...hash] = url.split('#');
     const resolvedSource=pathname.startsWith('/')?sourceForPublic(pathname.slice(1)):path.posix.normalize(path.posix.join(path.posix.dirname(authoredSource),pathname));
-    const resolvedPublic=publicForSource(resolvedSource);
-    const exists=resolvedPublic!==null&&(tracked.includes(resolvedPublic)||tracked.some(f=>f.startsWith(resolvedPublic.replace(/\/$/,'')+'/')));
-    const target=exists?(documents.includes(resolvedPublic)?pagePath(resolvedPublic):'/'+resolvedPublic):`https://github.com/Valpatel/gyropup/blob/main/${resolvedSource}`;
+    const resolvedPublic=publicForSource(resolvedSource)??publicDirectoryForSource(resolvedSource,directories);
+    const directory=resolvedPublic!==null&&directories.has(resolvedPublic);
+    const exists=resolvedPublic!==null&&(tracked.includes(resolvedPublic)||directory);
+    const target=exists?(documents.includes(resolvedPublic)?pagePath(resolvedPublic):'/'+resolvedPublic+(directory&&pathname.endsWith('/')?'/':'')):`https://github.com/Valpatel/gyropup/blob/main/${resolvedSource}`;
     return `${attr}="${esc(target)}${hash.length ? '#'+esc(hash.join('#')) : ''}"`;
   });
   html = html.replace(/<a href="https:\/\/github\.com\/Valpatel\/gyropup\/blob\/main\/(catalog\/(?:availability|lfp_batteries)\.json)">(.*?)<\/a>/g, '<span title="Historical file, not part of this revision">$2 (historical file)</span>');
@@ -145,15 +156,6 @@ const hardwareFold = hw.length ? `<details class="decision" id="hardware-folders
 const notebook = `<h1>The design notebook.</h1><p class="doc-lede">Follow the decisions, research, and work behind Gyropup. These are evolving engineering notes, not finished product specifications.</p><div class="notebook-links"><a href="/designer/progress.html">Progress & test reports ↗</a><a href="/designer/build.html">Parts & build files ↗</a><a href="#decisions">Decisions ↓</a></div><h2 id="documents">Documents</h2><ul class="document-list">${docs.filter(d=>!folded(d.file)).map(docItem).join('')}</ul>${hardwareFold}<h2 id="decisions">Design decisions</h2>${decisions.slice().reverse().map(d=>`<details class="decision"><summary><span>${esc(d.id)}</span> ${esc(d.title)}</summary><p>${esc(d.decision)}</p><p>${esc(d.why)}</p><small>${esc(d.date)} · ${esc(d.status)}</small></details>`).join('')}`;
 await writeFile(path.join(out,'site/index.html'), frame('Design notebook', notebook).replace("root:'../../'", "root:'../'"));
 // Static equivalents of local file listings keep the existing Build page's file links working.
-const directories = new Map();
-for (const file of tracked.filter(f => roots.some(r => f.startsWith(r)) && !dossierSource(f) && !['docs/handoff.md', 'designer/home.html'].includes(f))) {
-  let parent = path.posix.dirname(file), entry = path.posix.basename(file);
-  while (parent !== '.') {
-    if (!directories.has(parent)) directories.set(parent, []);
-    if (!directories.get(parent).includes(entry)) directories.get(parent).push(entry);
-    entry = path.posix.basename(parent) + '/'; parent = path.posix.dirname(parent);
-  }
-}
 for (const [dir, files] of directories) {
   if (files.includes('index.html')) continue;
   const body = `<h1>${esc(dir)}</h1><p>Published design artifacts. Return to <a href="/designer/build.html">Build</a> or <a href="/designer/progress.html">Progress</a> for context.</p><ul>${files.sort().map(f => `<li><a href="${esc(f)}">${esc(f)}</a></li>`).join('')}</ul>`;
