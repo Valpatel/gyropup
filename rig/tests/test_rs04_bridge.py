@@ -74,16 +74,24 @@ class Server:
 
         async def shutdown():
             self.server.close()
-            await self.server.wait_closed()
             tasks = [t for t in asyncio.all_tasks() if t is not asyncio.current_task()]
             for t in tasks:
                 t.cancel()
             results = await asyncio.gather(*tasks, return_exceptions=True)
+            # Python 3.12 also waits for accepted clients: finish their handlers first.
+            await self.server.wait_closed()
             for result in results:
                 if isinstance(result, BaseException) and not isinstance(result, asyncio.CancelledError):
                     raise result
         # Deliver the coroutine's result before stopping its event loop.
-        asyncio.run_coroutine_threadsafe(shutdown(), self.loop).result(timeout=5)
+        completion = asyncio.run_coroutine_threadsafe(shutdown(), self.loop)
+        cleanup_error = None
+        try:
+            completion.result(timeout=5)
+        except BaseException as exc:
+            if not completion.done():
+                raise  # Incomplete cleanup must never look like a successful close.
+            cleanup_error = exc
         self.reader_thread.join(5)
         if self.reader_thread.is_alive():
             raise TimeoutError('test bridge reader did not stop')
@@ -94,6 +102,8 @@ class Server:
             raise TimeoutError('test bridge event loop did not stop')
         self.loop.close()
         self.closed = True
+        if cleanup_error is not None:
+            raise cleanup_error
 
 
 def status(ws):
@@ -265,6 +275,23 @@ class BridgeTests(unittest.TestCase):
         self.srv.close()
         self.assertEqual(client.recv(1), b'')
         self.assert_closed()
+
+    def test_close_reports_cleanup_errors_after_finishing_resources(self):
+        entered = threading.Event()
+
+        async def failing_cleanup():
+            entered.set()
+            try:
+                await asyncio.Event().wait()
+            finally:
+                raise ValueError('deliberate cleanup failure')
+        pending = asyncio.run_coroutine_threadsafe(failing_cleanup(), self.srv.loop)
+        self.assertTrue(entered.wait(2))
+        with self.assertRaisesRegex(ValueError, 'deliberate cleanup failure'):
+            self.srv.close()
+        self.assert_closed()
+        with self.assertRaisesRegex(ValueError, 'deliberate cleanup failure'):
+            pending.result(timeout=0)
 
     def test_serves_the_tool_and_nothing_else(self):
         code, head, _ = http(self.addr, '/')

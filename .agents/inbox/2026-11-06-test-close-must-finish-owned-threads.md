@@ -31,6 +31,14 @@ sockets/listener/loop and no owned threads or pending tasks. The initial reader
 control accidentally scheduled its observation on the loop being cancelled;
 it now observes the listener from outside that cancellation domain.
 
+Cross-version validation and independent review caught a real ordering error in
+the first fix: Python 3.10 passed, but Python 3.12's `Server.wait_closed()` waited
+for still-open clients before the helper cancelled them. An unmodified live
+websocket reproduced the five-second timeout. Stop accepting first, cancel and
+finish connection handlers next, then await the server's completed closure.
+Completed shutdown errors still require thread/transport/loop cleanup before
+being re-raised. A timed-out, incomplete shutdown must not be marked closed.
+
 Limits: this reproduces premature test teardown, not the exact low-level stdout
 lock crash. Production bridge shutdown, physical motor behavior and hardware
 qualification are outside this change. Existing bus guards, origin/token rules

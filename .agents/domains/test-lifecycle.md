@@ -8,6 +8,9 @@ For a coroutine submitted to a separate loop, await its completion before
 stopping that loop. Keep the loop and transport valid until their reader has
 joined. Closing a listener does not close accepted connections: close and await
 each writer, even when cancellation interrupts an incomplete request.
+Stop accepting first, finish connection handlers, then await server closure:
+Python 3.12 includes accepted clients in that wait. Preserve resource cleanup
+when a completed shutdown reports an error, and re-raise that error afterward.
 
 Validate completion with held real resources, not retry-until-green runs. Put
 observation outside the cancellation domain being tested; always release test
