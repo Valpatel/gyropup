@@ -70,3 +70,10 @@ tracked/untracked payload, sibling-boundary, GitHub-link and complete artifact c
 integration/publication. This is not a research/reference/firmware/rig/RL move, dossier refresh or engineering
 acceptance; #31/#219 remain open. Keep the [branch-limit correction](2026-11-05-paused-work-needs-the-actual-head.md#keep-draft-limits-separate-from-the-published-branch)
 when interpreting main versus unmerged #207.
+
+
+## An ownership rename is not new design evidence
+
+On 2026-11-06, the #238 timeline consumer still independently read Git with `--no-renames` and only the former decision-file path. A byte-preserved CAD move was consequently interpreted as deleted/added design evidence by the check, while its producer already excluded `R100` changes. The owning `hardware/` prefix also misclassified new unpublished CAD package glue as electronics. These are history-consumer consequences, separate from model/source freshness.
+
+The existing timeline test now uses a real isolated Git repository: an actual R100 `cad/fivebar.py` move to its mapped owning path produces no design event, deliberately forcing the old no-renames behavior produces one, and a subsequent real CAD edit remains visible as one CAD/leg event. That focused actual test passed in1.1s using the retained219 product only to satisfy unrelated module imports; it is not a current-product browser or full-history validation. The temporary product link and owned test listener/browser were closed. Both current and historical decision paths remain checked, all timeline limits remain unchanged, and the independent full-history/current-product checks remain required. Timeline classification does not grant unpublished source a public URL.

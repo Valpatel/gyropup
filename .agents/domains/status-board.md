@@ -34,3 +34,5 @@ the heading as the fold's summary). Pictures, diagrams and strips never fold. To
 give it something to look at: a render from `exports/`, a Mermaid diagram of its order or flow (and raise the count in
 `tools/test-diagrams.mjs`), or a table with a status column. `npm run test:doc-pages` checks that every word of the
 Markdown is still on the page and that every strip agrees with its table.
+
+Ownership changes use Git rename detection: exact R100 moves are excluded from design evidence, while later actual source edits remain visible. Timeline classification maps owning CAD paths independently of publication eligibility, and decision lookup covers both historical and current program paths. The real isolated-Git rename/edit control is in the existing timeline harness; it does not replace the full current-product history comparison.

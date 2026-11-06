@@ -12,7 +12,10 @@ import { execFileSync } from 'node:child_process';
 import YAML from 'yaml';
 import { shortDate } from './status-board.mjs';
 import {publicForSource} from './source-layout.mjs';
-const identity=file=>publicForSource(file)||file;
+// Timeline ownership is broader than site publication: unpublished package glue
+// still belongs to CAD, without granting it a downloadable public alias.
+const identity=file=>publicForSource(file)||(file.startsWith('hardware/cad/') ? 'cad/'+file.slice('hardware/cad/'.length)
+  : file==='hardware/__init__.py' ? 'cad/__init__.py' : file);
 
 const esc = s => String(s ?? '').replace(/[&<>"']/g, c => ({ '&': '&amp;', '<': '&lt;', '>': '&gt;', '"': '&quot;', "'": '&#39;' }[c]));
 export const DESIGN_PATHS = ['cad', 'exports', 'hardware', 'research', 'firmware', 'software/firmware', 'docs/research', 'docs/decisions.yaml', 'docs/program/decisions.yaml'];
@@ -151,7 +154,7 @@ function pickRender(changes, main) {
 export const parseDecisions = text => YAML.parse(text);
 
 /** Run git in `root`, as text. */
-export const gitIn = root => args => execFileSync('git', args, { cwd: root, maxBuffer: 64 << 20 }).toString();
+export const gitIn = root => args => execFileSync('git', args, { cwd: root, maxBuffer: 64 << 20, stdio: ['ignore','pipe','pipe'] }).toString();
 
 const SUBSYSTEM_NAMES = { leg: 'Leg', turret: 'Turret', body: 'Body', wheels: 'Wheels', rig: 'Leg rig', electronics: 'Electronics' };
 const KIND_WORDS = [['cad', 'CAD file'], ['geometry', 'model'], ['renders', 'render'], ['records', 'new record'], ['hardware', 'hardware file'], ['decisions', 'decision']];

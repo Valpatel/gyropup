@@ -3,7 +3,9 @@
 import assert from 'node:assert/strict';
 import { execFileSync } from 'node:child_process';
 import { createHash } from 'node:crypto';
-import { existsSync, readFileSync } from 'node:fs';
+import { existsSync, readFileSync, mkdtempSync, mkdirSync, writeFileSync, renameSync, rmSync } from 'node:fs';
+import os from 'node:os';
+import { publicForSource } from '../../../tools/site/source-layout.mjs';
 import path from 'node:path';
 import { after, before, test } from 'node:test';
 import { parseHTML } from 'linkedom';
@@ -131,6 +133,30 @@ test('subsystems come from paths', () => {
   assert.equal(subsystemOf('docs/decisions.yaml'), null);
 });
 
+test('actual ownership rename stays out of design history; a subsequent CAD edit remains visible', () => {
+  const repo=mkdtempSync(path.join(os.tmpdir(),'gyropup-timeline-rename-'));
+  const invoke=args=>execFileSync('git',args,{cwd:repo,stdio:['ignore','pipe','pipe']}).toString();
+  const commit=title=>invoke(['-c','user.name=Timeline control','-c','user.email=timeline@example.invalid','commit','-m',title]);
+  try {
+    invoke(['init','-q']); mkdirSync(path.join(repo,'cad'));
+    writeFileSync(path.join(repo,'cad/fivebar.py'),'LENGTH = 100\n');
+    invoke(['add','.']);commit('Initial CAD control');
+    mkdirSync(path.join(repo,'hardware/cad/legs'),{recursive:true});
+    renameSync(path.join(repo,'cad/fivebar.py'),path.join(repo,'hardware/cad/legs/fivebar.py'));
+    invoke(['add','-A']);commit('Move unchanged CAD to its owning home');
+    assert.match(invoke(['diff','--name-status','--find-renames','HEAD^','HEAD']),/^R100\t/);
+    assert.deepEqual(collectTimeline(invoke,{limit:1}),[]);
+    // A planted old no-renames implementation would fabricate a design event.
+    const noRenames=args=>invoke(args.map(a=>a==='--find-renames'?'--no-renames':a));
+    assert.equal(collectTimeline(noRenames,{limit:1}).length,1);
+    writeFileSync(path.join(repo,'hardware/cad/legs/fivebar.py'),'LENGTH = 101\n');
+    invoke(['add','.']);commit('Change the actual CAD control');
+    const [event]=collectTimeline(invoke,{limit:1});
+    assert.equal(event.kinds.cad,1);assert.equal(event.kinds.hardware,0);
+    assert.deepEqual(event.subsystems,['leg']);
+  } finally { rmSync(repo,{recursive:true,force:true}); }
+});
+
 // Read again here, by its own commands: the merges that carry pull requests (a release from dev into main, a sync back)
 // are opened up, so each change is a pull request's merge or a direct commit, never a release.
 // CI's own merge of a pull request into its base ("Merge <sha> into <sha>") is opened the same way.
@@ -141,12 +167,13 @@ const isIntegration = sha => {
     || /^Merge pull request #\d+ /m.test(git('log', '--first-parent', '--merges', '--format=%s', `${p1}..${p2}`).toString()));
 };
 /** The generator's rule, written out again: what a commit changed against its first parent decides if it shows. */
+const designIdentity = f => publicForSource(f) || (f.startsWith('hardware/cad/') ? f.replace(/^hardware\/cad\//,'cad/') : f==='hardware/__init__.py' ? 'cad/__init__.py' : f);
 const designChange = sha => {
-  const changed = git('diff', '--name-status', '--no-renames', `${sha}^1`, sha, '--', ...DESIGN_PATHS).toString().trim().split('\n').filter(Boolean)
-    .map(l => { const [st, ...p] = l.split('\t'); return [st[0], p.at(-1)]; }).filter(([, f]) => !/^exports\/(sim|links)\/|\.log$/.test(f));
-  const decisions = /^[+-](?![+-]{2} )\s*\S/m.test(git('diff', `${sha}^1`, sha, '--', 'docs/decisions.yaml').toString());
+  const changed = git('diff', '--name-status', '--find-renames', `${sha}^1`, sha, '--', ...DESIGN_PATHS).toString().trim().split('\n').filter(Boolean)
+    .map(l => { const [st, ...p] = l.split('\t'); return [st, designIdentity(p.at(-1))]; }).filter(([st, f]) => st!=='R100' && !/^exports\/(sim|links)\/|\.log$/.test(f));
+  const decisions = /^[+-](?![+-]{2} )\s*\S/m.test(git('diff', `${sha}^1`, sha, '--', 'docs/decisions.yaml', 'docs/program/decisions.yaml').toString());
   return decisions || changed.some(([st, f]) => /^(cad|hardware)\//.test(f) || /\.(step|stp|stl|3mf|dxf)$/.test(f)
-    || (/\.(png|jpg|webp)$/.test(f) && !/thumbs\//.test(f)) || (st === 'A' && /\.(json|csv)$/.test(f)));
+    || (/\.(png|jpg|webp)$/.test(f) && !/thumbs\//.test(f)) || (st[0] === 'A' && /\.(json|csv)$/.test(f)));
 };
 
 test('every published change is a pull request or a direct commit that changed the design, newest first, with git’s date', () => {
@@ -162,8 +189,8 @@ test('every published change is a pull request or a direct commit that changed t
     assert.ok(Date.parse(date) <= last, 'newest first'); last = Date.parse(date);
     assert.ok(designChange(e.sha), `${e.sha} changed the design`);
     if (e.pr) assert.match(subject, new RegExp(`^Merge pull request #${e.pr} `));
-    const yamlDiff = git('diff', '-U60', `${e.sha}^1`, e.sha, '--', 'docs/decisions.yaml').toString();
-    const then = e.decisions.length ? git('show', `${e.sha}:docs/decisions.yaml`).toString() : '';
+    const yamlDiff = git('diff', '-U60', `${e.sha}^1`, e.sha, '--', 'docs/decisions.yaml', 'docs/program/decisions.yaml').toString();
+    const then = e.decisions.length ? ['docs/program/decisions.yaml','docs/decisions.yaml'].map(f=>{try{return git('show',`${e.sha}:${f}`).toString();}catch{return '';}}).find(Boolean) : '';
     for (const d of e.decisions) {
       if (d.change === 'new') { assert.match(yamlDiff, new RegExp(`^\\+- id: ${d.id}$`, 'm'), `${e.sha} adds ${d.id}`); assert.doesNotMatch(yamlDiff, new RegExp(`^-- id: ${d.id}$`, 'm')); }
       else assert.match(yamlDiff, new RegExp(`^[ +-]- id: ${d.id}$(\\n[ +-](?!- id:).*)*?\\n[+-]\\s*\\S`, 'm'), `${e.sha} revises ${d.id}`);
