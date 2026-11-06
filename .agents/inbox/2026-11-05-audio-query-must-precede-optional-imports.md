@@ -52,7 +52,7 @@ this does not replace a missing or slow model with a successful result.
 
 The ordinary audio suite always runs that first-mount control. Its focused
 `--startup-control` option additionally calls the **same helper**, holding the
-actual `sim.js` request for 17 seconds with bounded release and finally cleanup:
+actual `sim.js` request for a verified 17–18 seconds with bounded release and finally cleanup:
 
 ```sh
 SITE_URL=<test-owned-exact-build-url> node tools/test-audio-settings.mjs --startup-control
@@ -60,7 +60,7 @@ SITE_URL=<test-owned-exact-build-url> node tools/test-audio-settings.mjs --start
 
 This artificial delay is a focused sequencing regression, rather than an extra
 17 seconds charged to the core budget on every routine CI worker. The same
-30-second core bound still applies in the stress run. Keep the actual old-product
+30-second genuine-core budget still applies in the stress run. Keep the actual old-product
 mute rejection as a paired negative control; a successful stressed startup alone
 would not establish the mute fix. No product source or media receipt changes for
 this test correction. The unknown CI request is not relabelled as the deliberately
@@ -74,3 +74,27 @@ not established. The helper now records monotonic navigation, source gate,
 core/talk and optional-import milestones; a failure also reports pending request
 paths, readiness booleans and page errors. An instrumented unchanged-bound rerun
 can diagnose that distinction without silently increasing a timeout.
+
+
+Fleet 178 retained that failed result while recording the actual phases:
+
+```text
+navigation committed / talk wait started: 65 ms
+startup requested: 270 ms; released: 17270 ms; continued: 17273 ms
+30-second boundary: document complete; sim=true; robot=false; talk=false
+pending request: /_cadagent/changes; page errors: none
+```
+
+The verified 17-second injection left about 13 seconds of genuine core work in
+that phase. It does not establish the identity of the original CI delay, nor
+whether an uninterrupted real startup would meet its full 30-second budget.
+
+The focused stress mode now has a 48-second hard outer cap, **plus mandatory**
+checks that the actual request-to-release hold is 17–18 seconds and talk-readiness
+elapsed minus only its measured overlapping hold is at most 30 seconds. It targets
+17.5 seconds inside that window to avoid a timer-resolution boundary. Request
+continuation and subsequent network work are not excluded. A missing/unreleased
+or excessive gate cannot qualify, and the outer cap alone is never acceptance.
+The mandatory ordinary core bound remains 30 seconds, and the real held optional
+import bound remains 15 seconds. Both failed runs remain failed; this adjustment
+accounts for verified injected time rather than granting genuine startup more time.

@@ -123,13 +123,13 @@ async function firstMountSoundOverride({startupDelayMs=0}={}) {
  page.on('pageerror',e=>{errors.push(e.message);pageErrors.push(e.message);});
  page.on('request',request=>pending.set(request,new URL(request.url()).pathname));
  page.on('requestfinished',request=>pending.delete(request));page.on('requestfailed',request=>pending.delete(request));
- let release,signalHeld,timer,releaseStartup,startupTimer,startupHeldAt;
+ let release,signalHeld,timer,releaseStartup,startupTimer,startupHeldAt,startupReleasedAt,coreBudget;
  const gate=new Promise(resolve=>{release=resolve;});
  const held=new Promise(resolve=>{signalHeld=resolve;});
  const startupGate=new Promise(resolve=>{releaseStartup=resolve;});
  if(startupDelayMs)await page.route(url=>url.pathname==='/designer/sim.js',async route=>{
   startupHeldAt=performance.now();mark('startup requested');
-  startupTimer=setTimeout(()=>{mark('startup released');releaseStartup();},startupDelayMs);
+  startupTimer=setTimeout(()=>{startupReleasedAt=performance.now();mark('startup released');releaseStartup();},startupDelayMs);
   await startupGate;await route.continue();mark('startup continued');
  });
  const gamepadPath=url=>url.pathname==='/designer/sim_gamepad.js';
@@ -139,21 +139,31 @@ async function firstMountSoundOverride({startupDelayMs=0}={}) {
   mark('navigation committed');
   // Core startup precedes this optional import; its existing readiness bound is a separate phase.
   mark('talk readiness started');
-  await page.waitForFunction(()=>window.__sim?.talk,null,{timeout:30000});
+  const talkStarted=performance.now();
+  await page.waitForFunction(()=>window.__sim?.talk,null,{timeout:startupDelayMs?48000:30000});
+  const talkEnded=performance.now();
   mark('talk ready');
+  if(startupDelayMs) {
+   assert.ok(Number.isFinite(startupHeldAt) && Number.isFinite(startupReleasedAt),'The actual startup gate was requested and released');
+   const holdMs=startupReleasedAt-startupHeldAt;
+   assert.ok(holdMs>=17000 && holdMs<=18000,'The measured injected hold stays within its 17–18 second window');
+   // Exclude only the measured intersection; request continuation/network work stays in the genuine core budget.
+   const excludedMs=Math.max(0,Math.min(talkEnded,startupReleasedAt)-Math.max(talkStarted,startupHeldAt));
+   coreBudget={talkMs:talkEnded-talkStarted,holdMs,excludedMs,genuineCoreMs:talkEnded-talkStarted-excludedMs};
+   assert.ok(coreBudget.genuineCoreMs<=30000,'Actual core readiness, excluding only verified injected hold, stays within 30 seconds');
+  }
   await Promise.race([held,new Promise((_,reject)=>{timer=setTimeout(()=>reject(new Error('The gamepad import was not held')),15000);})]);
   clearTimeout(timer);
   mark('optional import held');
-  if(startupDelayMs)assert.ok(startupHeldAt && performance.now()-startupHeldAt>=startupDelayMs,'The actual startup module was held beyond the optional-import deadline');
   assert.equal(await page.evaluate(()=>!window.__sim.sfx.enabled && window.__sim.talk.audio.voiceVolume===0),true,'Query mute applies at first talk mount while optional gamepad import is held');
   assert.match(await page.locator('#topbar button').filter({hasText:/SOUND/}).textContent(),/SOUND OFF/);
   release();
   await page.waitForFunction(()=>document.body.dataset.ready==='1');
   assert.equal(await page.evaluate(()=>!window.__sim.sfx.enabled && window.__sim.talk.audio.voiceVolume===0),true,'Query mute remains after optional initialization');
-  if(startupDelayMs)console.log('audio startup timing',JSON.stringify({startupDelayMs,timeline}));
+  if(startupDelayMs)console.log('audio startup timing',JSON.stringify({startupDelayMs,coreBudget,timeline}));
  } catch(error) {
   const state=await page.evaluate(()=>({document:document.readyState,ready:document.body?.dataset.ready,sim:!!window.__sim,robot:!!window.__sim?.state?.robot,talk:!!window.__sim?.talk})).catch(()=>null);
-  console.error('audio first-mount failure',JSON.stringify({startupDelayMs,timeline,pending:[...pending.values()],state,pageErrors}));throw error;
+  console.error('audio first-mount failure',JSON.stringify({startupDelayMs,coreBudget,timeline,pending:[...pending.values()],state,pageErrors}));throw error;
  } finally {clearTimeout(timer);clearTimeout(startupTimer);releaseStartup();release();await context.close();}
 }
 async function siteControls() {
@@ -203,7 +213,8 @@ await acknowledgePrototypeNotice(context);
   }
   await firstMountSoundOverride();
   if(process.argv.includes('--startup-control')) {
-   await firstMountSoundOverride({startupDelayMs:17000});
+   // Aim inside the verified 17–18 second window rather than at a timer-resolution boundary.
+   await firstMountSoundOverride({startupDelayMs:17500});
    console.log('PASS startup control: actual startup module held beyond 15 seconds; first-mounted mute remains enforced');
   }
  } finally {await context.close();}
