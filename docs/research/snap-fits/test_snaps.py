@@ -2,13 +2,13 @@
 """Checks of the turret lids' snap fits (#131 wave 1), kernel-free and toolkit-free.
 
 Nothing here imports cadagent or a CAD kernel: it reads the committed snaps.yaml, snapfit.json (cad-agent's own
-output at the pinned release) and summary.json. snaps.yaml must be what cad/turret_snaps.py declares (the constants
-cad/turret.py builds the latches from; cad/test_turret_snaps.py measures the CAD against the same file), the toolkit's
+output at the pinned release) and summary.json. snaps.yaml must be what hardware/cad/turret/turret_snaps.py declares (the constants
+hardware/cad/turret/turret.py builds the latches from; tests/hardware/turret/test_turret_snaps.py measures the CAD against the same file), the toolkit's
 result must be bound to it and pass every row, its numbers must recompute by hand from the declared inputs, and every
 check of the summary must follow from them. Controls tamper with copies and expect each check to catch it. With
 CAD_AGENT set to a cad-agent checkout at the pin, the toolkit is run again and must give the committed JSON.
 
-    python3 research/snap-fits/test_snaps.py
+    python3 docs/research/snap-fits/test_snaps.py
 """
 import copy
 import json
@@ -87,10 +87,10 @@ class Snaps(unittest.TestCase):
         cls.result, cls.summary = load()
 
     def test_current(self):
-        self.assertEqual(sn.stale(), [], 'run python3 research/snap-fits/snaps.py --cad-agent PATH')
+        self.assertEqual(sn.stale(), [], 'run python3 docs/research/snap-fits/snaps.py --cad-agent PATH')
 
     def test_yaml_is_the_constants(self):
-        """snaps.yaml is cad/turret_snaps.py's declaration, number for number."""
+        """snaps.yaml is hardware/cad/turret/turret_snaps.py's declaration, number for number."""
         self.assertEqual(sn.SPEC.read_text(), ts.yaml_text())
         names = [s['name'] for s in ts.spec()['snaps']]
         self.assertEqual(names, ['hopper_lid-latch-mu-low', 'hopper_lid-latch-mu-high', 'board_bay_lid-latch-mu-low',
@@ -316,14 +316,14 @@ class Controls(unittest.TestCase):
         with tempfile.TemporaryDirectory() as tmp:
             y = Path(tmp) / 'snaps.yaml'
             y.write_text(sn.SPEC.read_text().replace('length_mm: 26.0', 'length_mm: 30.0', 1))
-            self.assertIn('snaps.yaml does not match cad/turret_snaps.py', sn.stale(spec=y))
+            self.assertIn('snaps.yaml does not match hardware/cad/turret/turret_snaps.py', sn.stale(spec=y))
 
     def test_stale_constants(self):
         with tempfile.TemporaryDirectory() as tmp:
             c = Path(tmp) / 'turret_snaps.py'
             shutil.copy(sn.CONSTANTS, c)
             c.write_text(c.read_text() + '\n# edited\n')
-            self.assertIn('cad/turret_snaps.py changed since summary.json was generated', sn.stale(constants=c))
+            self.assertIn('hardware/cad/turret/turret_snaps.py changed since summary.json was generated', sn.stale(constants=c))
 
     def test_stale_result(self):
         with tempfile.TemporaryDirectory() as tmp:

@@ -50,8 +50,8 @@ class Screen(unittest.TestCase):
     def test_committed_outputs_are_current(self):
         for path, text in sc.outputs(sc.Repo(sc.ROOT)).items():
             rel = path.relative_to(sc.ROOT)
-            self.assertTrue(path.exists(), f'{rel} is missing: run research/leg-preprint/screen.py')
-            self.assertEqual(path.read_text(), text, f'{rel} is stale: run research/leg-preprint/screen.py')
+            self.assertTrue(path.exists(), f'{rel} is missing: run docs/research/leg-preprint/screen.py')
+            self.assertEqual(path.read_text(), text, f'{rel} is stale: run docs/research/leg-preprint/screen.py')
 
     def test_front_link_floats_as_oriented(self):
         part = next(p for p in self.doc['parts']['parts'] if p['part'] == 'front_link')
@@ -125,7 +125,7 @@ class Screen(unittest.TestCase):
     def test_mass_basis_flags_rows_at_the_limit(self):
         repo = sc.Repo(sc.ROOT)
         fr = sc.final_record(repo, sc.materials(repo))
-        self.assertEqual(fr['design_kg'], 37.5)                                  # cad/leg_studies.py ROBOT_KG
+        self.assertEqual(fr['design_kg'], 37.5)                                  # hardware/cad/legs/leg_studies.py ROBOT_KG
         r3o = next(x for x in fr['rows'] if (x['part'], x['case']) == ('hip_frame', 'R3o'))
         self.assertGreaterEqual(r3o['gate_now'], r3o['target'])
         self.assertLess(r3o['gate_at_robot_mass'], r3o['target'])
