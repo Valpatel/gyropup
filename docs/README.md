@@ -4,10 +4,11 @@ Gyropup is at the CAD and simulation stage. There is no assembled robot or print
 [prototype warning](guide/prototype-safety.md) applies to every design and download: these prototypes are unsafe,
 for research purposes only, and will not be offered for sale.
 
-<a href="https://gyropup.com/docs/img/navigation/project-map.svg"><img src="img/navigation/project-map.svg" width="640" height="224" style="max-width:100%;height:auto;padding:0" alt="Four paths into Gyropup: play, build, understand and contribute"></a>
-
-[Open the interactive map](https://gyropup.com/docs/img/navigation/project-map.svg). Every path also appears as
-an ordinary link below; the map remains readable with animation disabled.
+<p>
+<a href="https://gyropup.com/docs/img/navigation/project-map.svg"><img src="img/navigation/project-map.svg" width="640" height="240" style="max-width:100%;height:auto;padding:0" alt="An illustrated learning loop: sources, virtual and physical tests, review and reuse connect cad-agent with Gyropup."></a><br>
+An illustrated learning loop. <a href="program/physical-progress.md">Follow the real build evidence.</a><br>
+<a href="https://gyropup.com/designer/sim.html">Play</a> · <a href="https://gyropup.com/designer/build.html">Build</a> · <a href="#design-and-qualification">Understand</a> · <a href="../.github/CONTRIBUTING.md">Contribute</a>
+</p>
 
 **Owner report, 2026-11-05:** first motors in hand; main motor holder and motor adapter printed.
 [Physical progress](program/physical-progress.md) records the limits of that observation.
@@ -66,5 +67,5 @@ not establish mechanical readiness. Older plans remain available for context and
 ## Website
 
 [Development and publishing](software/site-deployment.md) explains the static build, shared local preview and checks.
-The [design notebook](https://gyropup.com/site/) lists the full published document collection. Existing document
-paths are retained; this map groups them without moving their sources or changing download URLs.
+The [design notebook](https://gyropup.com/site/) lists the full published document collection. Published document
+and download URLs are retained; source folders group the material by domain.

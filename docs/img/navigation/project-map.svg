@@ -1,51 +1,101 @@
-<svg xmlns="http://www.w3.org/2000/svg" width="640" height="224" viewBox="0 0 640 224" role="img" aria-labelledby="title desc">
-  <title id="title">Four paths into Gyropup</title>
-  <desc id="desc">A compact circuit of four destinations: Play, Build, Understand and Contribute. Fine animated traces connect the paths. Open this SVG to follow its links, or use the ordinary links beside it. This is a navigation illustration, not a mechanical drawing.</desc>
-  <style>
-    svg{width:100%;max-width:640px;height:auto;--paper:#f7f5ef;--ink:#233b40;--muted:#667c7d;--line:#ccd6d0;--accent:#c6502d;--teal:#187d7a;background:var(--paper);border-radius:12px}
-    text{font-family:system-ui,-apple-system,sans-serif;fill:var(--ink)}
-    .label{font-size:24px;font-weight:600;letter-spacing:-.7px}.index{font:11px ui-monospace,monospace;letter-spacing:1.5px;fill:var(--muted)}
-    .wire{fill:none;stroke:var(--line);stroke-width:1.2}.trace{fill:none;stroke:var(--teal);stroke-width:1.5;stroke-dasharray:8 196;animation:travel 12s linear infinite}
-    .icon{fill:none;stroke:var(--ink);stroke-width:1.7;stroke-linecap:round;stroke-linejoin:round}.accent{stroke:var(--accent)}
-    .hit{fill:transparent;stroke:transparent;stroke-width:1.5}.link:hover .hit,.link:focus .hit{fill:var(--paper);stroke:var(--teal)}.link:focus{outline:none}
-    @keyframes travel{to{stroke-dashoffset:-408}}
-    @media(prefers-color-scheme:dark){svg{--paper:#14272d;--ink:#edf0e6;--muted:#a2b5b3;--line:#365154;--accent:#f39867;--teal:#72c7bb}}
-    @media(prefers-reduced-motion:reduce){.trace{animation:none;stroke-dasharray:none;opacity:.35}}
-  </style>
-  <path class="wire" d="M16 112H624M320 16V208"/>
-  <path class="wire" d="M247 59H273L294 80M393 59H367L346 80M247 165H273L294 144M393 165H367L346 144"/>
-  <path class="trace" d="M247 59H273L294 80M346 80L367 59H393M393 165H367L346 144M294 144L273 165H247"/>
-  <g class="icon" transform="translate(320 112)">
-    <circle r="35" fill="var(--paper)"/>
-    <path d="M-13-9H13L20 14M-13-9L-20 14M-13-9L0 10L13-9M-18-16H18"/>
-    <circle cx="-20" cy="16" r="6"/><circle cx="20" cy="16" r="6"/>
-    <path class="accent" d="M-6-16V-23H9M0-23V-27"/>
-    <circle cx="0" cy="10" r="2.5" fill="var(--accent)" stroke="none"/>
+<svg xmlns="http://www.w3.org/2000/svg" width="640" height="240" viewBox="0 0 640 240" role="img" aria-labelledby="title desc">
+<title id="title">A workshop that learns: cad-agent and Gyropup</title>
+<desc id="desc">An original sixteen-bit-inspired night workshop. Good sources feed virtual and physical tests; review returns useful methods to a reusable library. cad-agent and Gyropup evolve through that loop. This is a conceptual method illustration, not a record of completed hardware qualification. Four links lead to Play, Build, Understand and Contribute; ordinary text links accompany the image.</desc>
+<defs>
+  <clipPath id="edge"><path d="M8 0H632V8H640V232H632V240H8V232H0V8H8Z"/></clipPath>
+  <pattern id="floor" width="32" height="16" patternUnits="userSpaceOnUse"><path d="M0 15H32M16 0V15" fill="none" stroke="#60748c" stroke-opacity=".16"/></pattern>
+  <symbol id="pup" viewBox="0 0 64 64">
+    <path fill="#09132b" d="M24 4H40V8H46V16H50V34H46V38H52V42H60V46H64V58H60V62H44V58H40V44H36V38H28V44H24V58H20V62H4V58H0V46H4V42H12V38H18V34H14V16H20V8H24Z"/>
+    <path fill="#e8ac55" d="M24 8H40V12H44V20H48V30H44V34H20V30H16V20H20V12H24Z"/>
+    <path fill="#ffe0a1" d="M24 8H40V12H24ZM20 16H44V20H20Z"/>
+    <path fill="#93734f" d="M20 30H44V34H20ZM20 34H28V42H24V50H20ZM36 34H44V50H40V42H36Z"/>
+    <path fill="#d9bf83" d="M20 34H24V42H20ZM40 34H44V42H40Z"/>
+    <path fill="#243951" d="M4 46H20V58H4ZM44 46H60V58H44Z"/>
+    <path fill="#718997" d="M8 46H16V50H8ZM48 46H56V50H48Z"/>
+    <path fill="#b7d3b3" d="M8 50H16V54H8ZM48 50H56V54H48Z"/>
+    <path fill="#14364a" d="M24 20H40V28H24Z"/>
+    <path fill="#8bf5e9" d="M28 20H32V24H28ZM36 20H40V24H36Z"/>
+    <path fill="#ffe0a1" d="M30 0H34V8H30Z"/><path fill="#83d8d4" d="M34 0H42V4H34Z"/>
+  </symbol>
+  <symbol id="book" viewBox="0 0 28 24"><path fill="#0b142e" d="M0 0H12L14 3L16 0H28V22H16L14 24L12 22H0Z"/><path fill="#f1dba8" d="M3 3H11L13 5V20L11 18H3ZM16 5L18 3H25V18H18L16 20Z"/><path fill="#b2bd9b" d="M5 6H10V8H5ZM5 11H10V13H5ZM19 6H23V8H19ZM19 11H23V13H19Z"/></symbol>
+  <symbol id="cartridge" viewBox="0 0 22 22"><path fill="#111d35" d="M3 0H19V3H22V22H0V3H3Z"/><path fill="#7fbaaa" d="M3 4H19V18H3Z"/><path fill="#d3e3bc" d="M6 4H16V11H6Z"/><path fill="#345a65" d="M6 14H16V18H6Z"/></symbol>
+  <symbol id="pine" viewBox="0 0 20 42"><path d="M8 0H12V6H16V12H20V18H16V21H20V28H13V42H7V28H0V21H4V18H0V12H4V6H8Z"/></symbol>
+</defs>
+<style>
+  svg{display:block;width:100%;max-width:640px;height:auto;background:#10182f;color:#f5e7c6}
+  text{font-family:ui-monospace,"SFMono-Regular",Consolas,monospace;fill:#f5e7c6}
+  .brand{font-size:22px;font-weight:700;letter-spacing:.3px}.method{font-size:21px;font-weight:700;letter-spacing:-.3px;text-anchor:middle}.nav{font-size:20px;font-weight:600;letter-spacing:-.5px;text-anchor:middle;fill:#cadbd3}
+  .crisp{shape-rendering:crispEdges}.far{animation:drift 24s ease-in-out infinite alternate}.lamp{animation:warmth 9s ease-in-out infinite alternate}.holo{animation:hover 8s ease-in-out infinite}.signal{animation:signal 16s linear infinite}.return{animation:return 16s linear infinite}.lens{animation:review 14s ease-in-out infinite}
+  .route{fill:none;stroke:#91b7b3;stroke-width:2;stroke-linejoin:miter}.link .hit{fill:transparent}.link:hover .hit,.link:focus .hit{fill:#8ff1df;fill-opacity:.09}.link:hover .nav,.link:focus .nav{fill:#ffe0a1}.link:focus{outline:none}.link:focus .hit{stroke:#ffe0a1;stroke-width:2}
+  @keyframes drift{to{transform:translateX(-3px)}}@keyframes warmth{to{opacity:.68}}@keyframes hover{50%{transform:translateY(-2px)}}@keyframes signal{0%,8%{transform:translateX(0);opacity:0}12%{opacity:1}85%{opacity:1}95%,100%{transform:translateX(450px);opacity:0}}@keyframes return{0%,49%{opacity:0;transform:translateX(0)}54%{opacity:.65}90%{opacity:.65}100%{opacity:0;transform:translateX(-450px)}}@keyframes review{0%,70%,100%{transform:translateX(0)}35%{transform:translateX(3px)}}
+  @media(prefers-reduced-motion:reduce){.far,.lamp,.holo,.signal,.return,.lens{animation:none}.signal{opacity:.8}.return{opacity:.45}}
+</style>
+<g clip-path="url(#edge)">
+  <path fill="#10182f" d="M0 0H640V240H0Z"/>
+  <path fill="#1c2849" d="M0 45H640V147H0Z"/>
+  <g class="crisp far" fill="#28394e"><path d="M0 108H16V92H32V99H48V86H64V101H80V92H96V112H120V96H144V82H160V96H180V111H202V97H222V111H240V104H264V92H286V113H306V101H326V88H346V105H364V113H384V94H404V83H420V102H438V112H460V97H484V111H506V88H526V100H548V91H568V106H588V94H612V108H640V153H0Z"/></g>
+  <g class="crisp" fill="#57746d" opacity=".48"><use href="#pine" x="-6" y="89" width="28" height="59"/><use href="#pine" x="22" y="108" width="16" height="34"/><use href="#pine" x="589" y="100" width="21" height="44"/><use href="#pine" x="612" y="82" width="31" height="65"/></g>
+  <g class="crisp" fill="#8cabc2" opacity=".55"><path d="M14 65H17V68H14ZM108 53H111V56H108ZM181 73H184V76H181ZM283 53H286V56H283ZM469 57H472V60H469ZM590 52H593V55H590Z"/><path fill="#c4d7b8" d="M565 64H571V70H565Z"/></g>
+  <path fill="#18243f" d="M0 137H640V199H0Z"/>
+  <path fill="url(#floor)" d="M0 147H640V199H0Z"/>
+  <path class="crisp" fill="#0a1329" d="M8 155H630V163H624V176H20V166H8Z"/>
+  <path class="crisp" fill="#45556a" d="M16 148H624V156H16Z"/>
+  <path class="crisp" fill="#708879" d="M16 148H624V151H16Z"/>
+  <path class="crisp" fill="#24364f" d="M28 156H612V162H28Z"/>
+  <path class="crisp lamp" fill="#edba6a" d="M28 151H124V154H28ZM173 151H298V154H173ZM345 151H453V154H345ZM500 151H612V154H500Z"/>
+  <!-- The method is a landscape, not a dashboard: archive, two test worlds, review bench, reusable patterns. -->
+  <g class="crisp">
+    <path fill="#0a1329" d="M35 94H119V142H35Z"/><path fill="#6b736c" d="M39 90H115V96H39ZM39 135H115V141H39Z"/>
+    <path fill="#a6b99a" d="M44 101H52V130H44ZM56 105H66V130H56ZM70 99H76V130H70Z"/>
+    <path fill="#d9b77e" d="M81 104H88V130H81ZM92 108H103V130H92Z"/>
+    <path fill="#294957" d="M42 127H106V130H42Z"/>
+    <use href="#book" x="78" y="66" width="45" height="39"/>
+    <path fill="#293951" d="M53 141H104V146H53Z"/>
+    <path fill="#8ac8bc" d="M50 140H103V143H50Z"/>
+    <path fill="#f6d39a" d="M56 143H98V147H56Z"/>
   </g>
-  <a class="link" href="https://gyropup.com/designer/sim.html" aria-label="Play: explore the robot in the browser playground">
-    <rect class="hit" x="20" y="22" width="220" height="75" rx="8"/>
-    <text class="index" x="34" y="43">01 / EXPLORE</text>
-    <g class="icon accent" transform="translate(35 58)"><path d="M1 0L17 10L1 20Z"/><path d="M24 3V17"/></g>
-    <text class="label" x="78" y="79">Play</text>
-    <path class="icon" d="M210 69L218 61M211 61H218V68"/>
-  </a>
-  <a class="link" href="https://gyropup.com/designer/build.html" aria-label="Build: inspect parts and published downloads">
-    <rect class="hit" x="400" y="22" width="220" height="75" rx="8"/>
-    <text class="index" x="414" y="43">02 / MAKE</text>
-    <g class="icon accent" transform="translate(415 57)"><path d="M0 5L11 0L22 5V18L11 24L0 18ZM0 5L11 11L22 5M11 11V24"/></g>
-    <text class="label" x="458" y="79">Build</text>
-    <path class="icon" d="M590 69L598 61M591 61H598V68"/>
-  </a>
-  <a class="link" href="https://gyropup.com/site/pages/docs-readme-md.html#design-and-qualification" aria-label="Understand: read engineering design and qualification evidence">
-    <rect class="hit" x="20" y="128" width="220" height="75" rx="8"/>
-    <text class="index" x="34" y="149">03 / INVESTIGATE</text>
-    <g class="icon accent" transform="translate(35 163)"><circle cx="9" cy="9" r="8"/><path d="M15 15L23 23M5 9H13M9 5V13"/></g>
-    <text class="label" x="78" y="185">Understand</text>
-  </a>
-  <a class="link" href="https://github.com/Valpatel/gyropup/blob/main/.github/CONTRIBUTING.md" aria-label="Contribute: follow the contributor and recovery guide">
-    <rect class="hit" x="400" y="128" width="220" height="75" rx="8"/>
-    <text class="index" x="414" y="149">04 / COLLABORATE</text>
-    <g class="icon accent" transform="translate(415 162)"><circle cx="3" cy="3" r="3"/><circle cx="3" cy="23" r="3"/><circle cx="21" cy="3" r="3"/><path d="M3 6V20M3 16C3 10 21 16 21 6"/></g>
-    <text class="label" x="458" y="185">Contribute</text>
-  </a>
+  <g class="crisp">
+    <path fill="#102c42" d="M173 134H232V143H173Z"/><path fill="#5ed1ce" d="M178 132H227V135H178Z"/>
+    <path fill="#91ede0" opacity=".13" d="M183 82H224L236 132H171Z"/>
+    <g class="holo" opacity=".5"><use href="#pup" x="179" y="83" width="49" height="49"/></g>
+    <path fill="#4b8d9b" d="M173 139H232V143H173Z"/>
+    <path fill="#0a1329" d="M240 139H310V147H240Z"/>
+    <path fill="#766b5d" d="M247 132H301V140H247Z"/>
+    <use href="#pup" x="246" y="76" width="60" height="60"/>
+    <path fill="#c5b78e" d="M240 140H310V144H240Z"/>
+    <path fill="#5e8d91" d="M303 110H307V114H315V118H311V122H307V118H299V114H303Z"/>
+  </g>
+  <g class="crisp">
+    <path fill="#1d2d48" d="M355 109H451V146H355Z"/>
+    <path fill="#c2b288" d="M350 105H455V111H350Z"/>
+    <path fill="#233950" d="M358 114H448V143H358Z"/>
+    <path fill="#e6d7ad" d="M365 94H402V105H365ZM368 86H407V97H368Z"/>
+    <path fill="#86aaa1" d="M374 90H398V93H374Z"/>
+    <g class="lens"><path fill="#8ce4df" d="M416 70H434V74H438V88H434V92H416V88H412V74H416Z"/><path fill="#203851" d="M419 75H431V87H419Z"/><path fill="#c3e6db" d="M419 75H431V78H419Z"/><path fill="#bc8b57" d="M432 89H439V96H446V103H440V98H433Z"/></g>
+    <path fill="#b8cca5" d="M374 119H379V135H374ZM384 123H389V135H384ZM394 116H399V135H394Z"/>
+  </g>
+  <g class="crisp">
+    <path fill="#0a1329" d="M511 79H600V145H511Z"/>
+    <path fill="#5c7976" d="M507 76H604V82H507ZM507 112H604V117H507ZM507 142H604V148H507Z"/>
+    <use href="#cartridge" x="518" y="86" width="24" height="24"/><use href="#cartridge" x="545" y="86" width="24" height="24"/><use href="#cartridge" x="572" y="86" width="24" height="24"/>
+    <use href="#cartridge" x="525" y="119" width="24" height="24"/><use href="#book" x="559" y="120" width="37" height="24"/>
+    <path fill="#314f58" d="M510 149H599V155H510Z"/>
+  </g>
+  <!-- Quiet circulation: useful evidence returns to the library. -->
+  <path class="route" d="M122 75H156V67H310V75H345M454 75H485V67H507" opacity=".55"/>
+  <path class="route" d="M574 157V162H79V148" stroke-dasharray="3 5" opacity=".65"/>
+  <path class="crisp" fill="#93d2c3" d="M338 71H345V79H338L342 75ZM500 63H507V71H500L504 67Z"/>
+  <path class="crisp" fill="#b6e4d0" d="M111 159L105 162L111 165ZM75 152L79 146L83 152H80V158H78V152Z"/>
+  <rect class="signal crisp" x="123" y="71" width="5" height="5" fill="#ffe0a1"/>
+  <rect class="return crisp" x="570" y="160" width="4" height="4" fill="#75d8d4"/>
+  <g class="lamp" fill="#d7ab68" opacity=".8"><path d="M145 46H149V59H145Z"/><path class="crisp" d="M135 57H159V61H135ZM140 61H154V65H140Z"/><path fill="#f5ca7b" opacity=".09" d="M140 65H154L176 146H117Z"/></g>
+  <text class="brand" x="24" y="30"><tspan fill="#b4d9c5">cad-agent</tspan><tspan fill="#7798a9"> ↔ </tspan><tspan fill="#ffe0a1">Gyropup</tspan></text>
+  <path class="crisp" fill="#617d88" d="M24 40H607V42H24Z" opacity=".45"/>
+  <g class="method"><text x="80" y="185">Sources</text><text x="240" y="185">Test</text><text x="400" y="185">Review</text><text x="560" y="185">Reuse</text></g>
+  <path fill="#0b132b" d="M0 197H640V240H0Z"/><path fill="#3c5665" d="M16 197H624V199H16Z"/>
+  <a class="link" href="https://gyropup.com/designer/sim.html" aria-label="Play: explore the robot in the browser playground"><rect class="hit" x="8" y="200" width="148" height="36"/><text class="nav" x="80" y="225">Play ↗</text></a>
+  <a class="link" href="https://gyropup.com/designer/build.html" aria-label="Build: inspect parts and published downloads"><rect class="hit" x="164" y="200" width="148" height="36"/><text class="nav" x="240" y="225">Build ↗</text></a>
+  <a class="link" href="https://gyropup.com/site/pages/docs-readme-md.html#design-and-qualification" aria-label="Understand: read engineering design and qualification evidence"><rect class="hit" x="320" y="200" width="150" height="36"/><text class="nav" x="400" y="225">Understand</text></a>
+  <a class="link" href="https://github.com/Valpatel/gyropup/blob/main/.github/CONTRIBUTING.md" aria-label="Contribute: follow the contributor and recovery guide"><rect class="hit" x="478" y="200" width="154" height="36"/><text class="nav" x="560" y="225">Contribute</text></a>
+</g>
 </svg>
