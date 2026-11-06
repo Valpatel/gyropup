@@ -55,3 +55,18 @@ export function publicationFiles(sources){
  }
  return files;
 }
+
+// These two dated notes refer to catalogues retired before the ownership move.
+// Their labels remain useful history; unrelated unresolved links stay visible.
+const retiredCatalogues=new Map([
+  ['research/availability-2026-10-25.md','availability.json'],
+  ['docs/research/availability-2026-10-25.md','availability.json'],
+  ['research/lfp-batteries.md','lfp_batteries.json'],
+  ['docs/research/lfp-batteries.md','lfp_batteries.json'],
+]);
+export function markRetiredCatalogLinks(html,source){
+  const retired=retiredCatalogues.get(source);
+  if(!retired)return html;
+  return html.replace(/<a href="https:\/\/github\.com\/Valpatel\/gyropup\/blob\/main\/(?:docs\/)?catalog\/([^"/]+)">(.*?)<\/a>/g,
+    (link,file,label)=>file===retired?`<span title="Historical file, not part of this revision">${label} (historical file)</span>`:link);
+}
