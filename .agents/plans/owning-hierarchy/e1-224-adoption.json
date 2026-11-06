@@ -1,0 +1,71 @@
+{
+  "source": "99c92d4a511c16d7743e9583b129e2a178651cb8",
+  "job": 224,
+  "alias": "cpu-b",
+  "status": "PASS_SCOPED",
+  "independent_artifact_adoption_review": "https://github.com/Valpatel/gyropup/pull/238#issuecomment-6688482137",
+  "candidate_archive_sha256": "8b432d87a6ca913bb59dc78873f65d6e5d9f94bb720d9ca3b40114946a730984",
+  "fresh_six_inputs": {
+    "tools/engineering/legs/render-hip-frame-e1.py": "aa43e83bce06a79ab3c4305a122257e83d68f883fdba5fcc3b78f2282ba05748",
+    "hardware/cad/locations.py": "ce87f089e519134d47a041a933b9bf862b91917ddf03e073152d132e845c130e",
+    "hardware/exports/leg/fea/hip-frame-e1-media/field-receipt.json": "eb4eac465394f49a24215d1d39b21a72665cde3e319db0c2d380478c05030f2a",
+    "hardware/exports/leg/fea/hip-frame-e1-media/hip_frame-E1.json": "57d35cec20107572c0fa222db16cbd66e2c74e8469b09927f9ca376ab4291e58",
+    "hardware/exports/leg/fea/summary.json": "1488c5f62b90fd44162140ba1cb7adf8f52135a727cd37b6f08f4d2794000a39",
+    "docs/research/leg-preprint/evidence/hip-frame-print-ready.json": "f936de2746794bd0603585df4649653bcb97af49f72f88047fb99633dd0d9796"
+  },
+  "fresh_original_five": {
+    "hardware/exports/leg/fea/hip-frame-e1-media/hip-frame-e1-poster.png": {
+      "bytes": 297610,
+      "sha256": "aee3b8b623dd357959e49de38d8e0179261ae199dce298aeb1fa2f03f3e90a7e"
+    },
+    "hardware/exports/leg/fea/hip-frame-e1-media/hip-frame-e1.mp4": {
+      "bytes": 734607,
+      "sha256": "2cf4b003483267f1a3a1d1170854689777bdd952bb303789b4075819125a422c"
+    },
+    "hardware/exports/leg/fea/hip-frame-e1-media/hip-frame-e1.webm": {
+      "bytes": 568777,
+      "sha256": "5cdd48782539e2becef31df88d50318c8ef52a6632756ab326594105d2c59540"
+    },
+    "hardware/exports/leg/fea/hip-frame-e1-media/video-receipt.json": {
+      "bytes": 49665,
+      "sha256": "06f7431bfb893c3d4f5d30444d77d5b3b8a2cb3a4f13bbd193b459e63560f939"
+    },
+    "hardware/exports/leg/fea/media.json": {
+      "bytes": 852,
+      "sha256": "dbe019e1df2edc47bc8dbb8aa8066ec859cc203fedbbf0aab79a89e75a22a17b"
+    }
+  },
+  "adopted": {
+    "hardware/exports/leg/fea/hip-frame-e1-media/hip-frame-e1-poster.png": {
+      "bytes": 298006,
+      "sha256": "7ed8ca26851531d2e8e6f33ec24a2ad9b0ec31a7b778d2638b0257aa6f92bce1"
+    },
+    "hardware/exports/leg/fea/hip-frame-e1-media/hip-frame-e1.mp4": {
+      "bytes": 733347,
+      "sha256": "76518421335431320a7a60c58f66cb817c0f4b5b1b0e9993a62f68d87d065581"
+    },
+    "hardware/exports/leg/fea/hip-frame-e1-media/hip-frame-e1.webm": {
+      "bytes": 565510,
+      "sha256": "7b70a9fac4e3d5b961a05d3257b97329bbca16fb2b0be79bd75b3b58528d3f15"
+    },
+    "hardware/exports/leg/fea/hip-frame-e1-media/video-receipt.json": {
+      "bytes": 49815,
+      "sha256": "26cbe471527d8fad8d706e65740e9b7ee29b7e7e5b28a35599b2b73422bf2568"
+    },
+    "hardware/exports/leg/fea/media.json": {
+      "bytes": 852,
+      "sha256": "dbe019e1df2edc47bc8dbb8aa8066ec859cc203fedbbf0aab79a89e75a22a17b"
+    }
+  },
+  "post_adoption_full_decoding_command": [
+    "python3",
+    "tools/evidence/media/check-study-media.py"
+  ],
+  "limits": [
+    "No new solve or dynamics; historical field and report remain their original evidence",
+    "SF1.60 at4mm and1.40 at3mm remain below2/not converged",
+    "Historical37.5kg static baseline, not a new mass target or physical elapsed time",
+    "All original seven leg recordings and companions unchanged; no physical/print qualification",
+    "Highlights capture/encoding and whole hierarchy acceptance remain separate"
+  ]
+}

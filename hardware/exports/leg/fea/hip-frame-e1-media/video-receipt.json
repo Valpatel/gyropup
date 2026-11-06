@@ -1,17 +1,18 @@
 {
   "schema": 1,
-  "source_revision": "1f46309c4bf4deecf1c8b825bbe35c7e2e0dbd0f",
+  "source_revision": "99c92d4a511c16d7743e9583b129e2a178651cb8",
   "source_hashes": {
-    "tools/render-hip-frame-e1.py": "d5df70dadc4d838049484348f9f8ffa0846f0915b02cf3de0db53c6725688256",
-    "exports/leg/fea/hip-frame-e1-media/field-receipt.json": "eb4eac465394f49a24215d1d39b21a72665cde3e319db0c2d380478c05030f2a",
-    "exports/leg/fea/hip-frame-e1-media/hip_frame-E1.json": "57d35cec20107572c0fa222db16cbd66e2c74e8469b09927f9ca376ab4291e58",
-    "exports/leg/fea/summary.json": "1488c5f62b90fd44162140ba1cb7adf8f52135a727cd37b6f08f4d2794000a39",
-    "research/leg-preprint/evidence/hip-frame-print-ready.json": "f936de2746794bd0603585df4649653bcb97af49f72f88047fb99633dd0d9796"
+    "tools/engineering/legs/render-hip-frame-e1.py": "aa43e83bce06a79ab3c4305a122257e83d68f883fdba5fcc3b78f2282ba05748",
+    "hardware/cad/locations.py": "ce87f089e519134d47a041a933b9bf862b91917ddf03e073152d132e845c130e",
+    "hardware/exports/leg/fea/hip-frame-e1-media/field-receipt.json": "eb4eac465394f49a24215d1d39b21a72665cde3e319db0c2d380478c05030f2a",
+    "hardware/exports/leg/fea/hip-frame-e1-media/hip_frame-E1.json": "57d35cec20107572c0fa222db16cbd66e2c74e8469b09927f9ca376ab4291e58",
+    "hardware/exports/leg/fea/summary.json": "1488c5f62b90fd44162140ba1cb7adf8f52135a727cd37b6f08f4d2794000a39",
+    "docs/research/leg-preprint/evidence/hip-frame-print-ready.json": "f936de2746794bd0603585df4649653bcb97af49f72f88047fb99633dd0d9796"
   },
   "outputs": {
-    "exports/leg/fea/hip-frame-e1-media/hip-frame-e1.mp4": "2cf4b003483267f1a3a1d1170854689777bdd952bb303789b4075819125a422c",
-    "exports/leg/fea/hip-frame-e1-media/hip-frame-e1.webm": "5cdd48782539e2becef31df88d50318c8ef52a6632756ab326594105d2c59540",
-    "exports/leg/fea/hip-frame-e1-media/hip-frame-e1-poster.png": "aee3b8b623dd357959e49de38d8e0179261ae199dce298aeb1fa2f03f3e90a7e"
+    "exports/leg/fea/hip-frame-e1-media/hip-frame-e1.mp4": "76518421335431320a7a60c58f66cb817c0f4b5b1b0e9993a62f68d87d065581",
+    "exports/leg/fea/hip-frame-e1-media/hip-frame-e1.webm": "7b70a9fac4e3d5b961a05d3257b97329bbca16fb2b0be79bd75b3b58528d3f15",
+    "exports/leg/fea/hip-frame-e1-media/hip-frame-e1-poster.png": "7ed8ca26851531d2e8e6f33ec24a2ad9b0ec31a7b778d2638b0257aa6f92bce1"
   },
   "ffprobe": {
     "codec_name": "h264",
