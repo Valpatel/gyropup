@@ -57,7 +57,7 @@ export function mountRigMedia(host, media, {staticRender = false} = {}) {
       if (!staticRender) urls.push(source);
       return `<figure><video src="${esc(source)}" data-rig-format="${avc ? 'mp4' : 'webm'}" controls loop muted playsinline preload="metadata"></video>`
         + `<figcaption><b>${esc(clip.scenario)}</b> ${esc(clip.title)} · <a href="${esc(original)}">Original movie</a>`
-        + ` · <a href="${esc('../' + clip.companion.path)}">VP9 companion</a></figcaption></figure>`;
+        + ` · <a href="${esc('../' + clip.companion.path)}">WebM alternative</a></figcaption></figure>`;
     }).join('');
     host.innerHTML = `<p data-rig-media-state="verified" style="grid-column:1/-1">Recorded leg simulation · ${esc(media.report.half_mass_kg)} kg · `
       + `${esc(media.report.bus_v)} V. <a href="${reportURL}">Recorded source report</a>. Model prediction, not a hardware test.</p>` + figures;
