@@ -12,9 +12,9 @@
 [<img class="repo-badge" src="https://img.shields.io/website?url=https%3A%2F%2Fgyropup.com&amp;label=gyropup.com&amp;up_message=live" alt="Site" width="112" height="20" style="width:112px;height:20px;object-fit:contain;padding:0;border-radius:0">](https://gyropup.com)
 [<img class="repo-badge" src="https://img.shields.io/github/last-commit/Valpatel/gyropup/dev" alt="Last commit" width="116" height="20" style="width:116px;height:20px;object-fit:contain;padding:0;border-radius:0">](https://github.com/Valpatel/gyropup/commits/dev)
 [<img class="repo-badge" src="https://img.shields.io/github/stars/Valpatel/gyropup?style=flat&amp;logo=github" alt="Stars" width="71" height="20" style="width:71px;height:20px;object-fit:contain;padding:0;border-radius:0">](https://github.com/Valpatel/gyropup/stargazers)
-[<img class="repo-badge" src="https://img.shields.io/badge/PRs-welcome-ec4899" alt="PRs welcome" width="90" height="20" style="width:90px;height:20px;object-fit:contain;padding:0;border-radius:0">](CONTRIBUTING.md)
+[<img class="repo-badge" src="https://img.shields.io/badge/PRs-welcome-ec4899" alt="PRs welcome" width="90" height="20" style="width:90px;height:20px;object-fit:contain;padding:0;border-radius:0">](.github/CONTRIBUTING.md)
 
-[Website & playground](https://gyropup.com) · [Documentation map](docs/README.md) · [Prototype warning](docs/prototype-safety.md) · [Contributing](CONTRIBUTING.md)
+[Website & playground](https://gyropup.com) · [Documentation map](docs/README.md) · [Prototype warning](docs/prototype-safety.md) · [Contributing](.github/CONTRIBUTING.md)
 
 <sub>The banner is drawn from the project's own CadQuery code (<code>cad/build_leg.py</code>, <code>cad/turret.py</code>, <code>cad/turret_stand.py</code>) with hidden lines removed, set as the project's own <code>tools/readme_hero.py</code> sets it, by the <a href="https://github.com/mvalancy/mvalancy/tree/9a878ce602d8a5256027c9f4367d2ae5ea4784da/tools/hero">README banner generator</a>.</sub>
 
@@ -24,7 +24,7 @@
 
 [![Four paths through Gyropup: explore, build, understand and contribute](docs/img/navigation/project-map.svg)](docs/README.md)
 
-[Playground](https://gyropup.com/designer/sim.html) · [Build and downloads](https://gyropup.com/designer/build.html) · [Engineering notes](docs/README.md) · [Contribute](CONTRIBUTING.md)
+[Playground](https://gyropup.com/designer/sim.html) · [Build and downloads](https://gyropup.com/designer/build.html) · [Engineering notes](docs/README.md) · [Contribute](.github/CONTRIBUTING.md)
 
 A research project exploring a self-balancing wheel-legged robot and a foam-ball turret. The design combines
 hub-motor wheels, two five-bar legs driven by RobStride RS-04 actuators, and a pan/tilt turret for Rival-size foam
@@ -50,7 +50,7 @@ Historical reports retain their own geometry, loads and limitations. The
 
 ## Work with the repository
 
-Start with [CONTRIBUTING.md](CONTRIBUTING.md) and the [documentation map](docs/README.md).
+Start with [CONTRIBUTING.md](.github/CONTRIBUTING.md) and the [documentation map](docs/README.md).
 Run the same website locally with `nvm use && npm ci && npm run dev`.
 [Website development and deployment](docs/site-deployment.md) explains checks, previews and publishing.
 Agents can use the [public reading guide](docs/agent-guide.md) and [llms.txt](https://gyropup.com/llms.txt).

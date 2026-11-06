@@ -82,7 +82,7 @@ test('public entry guides resolve inside the bundle and keep operator instructio
   assert.match(discovery, /historical reports and recordings, and physical qualification are separate/);
   assert.match(discovery, /version\.json/);
   assert.match(discovery, /markdown-pages\.json/);
-  for (const file of ['AGENTS.md', '.agents', 'CONTRIBUTING.md', 'docs/handoff.md']) {
+  for (const file of ['AGENTS.md', '.agents', 'CONTRIBUTING.md', '.github/CONTRIBUTING.md', 'docs/handoff.md']) {
     await assert.rejects(stat(path.join(out, file)), { code: 'ENOENT' });
   }
 });

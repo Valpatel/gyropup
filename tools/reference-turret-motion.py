@@ -32,5 +32,5 @@ for e in m['parts']:
  chosen=[i0,i1,i2,i3];indices[e['name']]=chosen
  contract['components'][e['name']]=dict(joint=g if g in joints else None,points=[[a+b for a,b in zip(v[i],origin)] for i in chosen])
 fixture=dict(contract=contract,vertex_indices=indices,poses=required_poses(contract))
-(R/'tests/fixtures/turret-motion-reference.json').write_text(json.dumps(fixture,indent=2)+'\n')
+(R/'tools/fixtures/turret-motion-reference.json').write_text(json.dumps(fixture,indent=2)+'\n')
 print('reference:',len(indices),'components;',len(fixture['poses']),'poses')
