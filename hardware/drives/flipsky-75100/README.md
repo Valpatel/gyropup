@@ -20,7 +20,7 @@ flowchart LR
 - The product page and its dimension drawing: the flipsky.net URLs in `catalog/motor_drivers.json` (`flipsky-75100`).
   No datasheet or drawing is kept in the repository.
 - VESC firmware and VESC Tool: [vesc-project.com](https://vesc-project.com/) (GPL; nothing vendored).
-- The CAN frames the firmware uses: [docs/body-firmware.md](../../../docs/body-firmware.md), section 4.2.
+- The CAN frames the firmware uses: [docs/body-firmware.md](../../../docs/software/body-firmware.md), section 4.2.
 
 ## Interfaces
 
@@ -35,7 +35,7 @@ recorded here. The export of each drive's own VESC Tool XML belongs next to it o
 
 ## Driver
 
-[`firmware/balance/src/core/gp_vesc.c`](../../../firmware/balance/src/core/gp_vesc.c) (its header
+[`firmware/balance/src/core/gp_vesc.c`](../../../software/firmware/balance/src/core/gp_vesc.c) (its header
 `include/gp/gp_vesc.h`): SET_CURRENT out, STATUS 1-5 in, the stale-speed timeout. The hardware-in-the-loop harness
 (`firmware/balance/hil/harness.py`) plays the drives in tests.
 
@@ -45,9 +45,9 @@ recorded here. The export of each drive's own VESC Tool XML belongs next to it o
 
 ## Bring-up and tests
 
-Not yet run. The plan is the body's bring-up step B13 ([docs/body-firmware.md](../../../docs/body-firmware.md)): set
+Not yet run. The plan is the body's bring-up step B13 ([docs/body-firmware.md](../../../docs/software/body-firmware.md)): set
 the values in `config/wheel-vesc.json` in VESC Tool over USB-C, run hall detection, check each wheel's direction
-(the right one is -1 by default), then the wheel bench W6 of the [wheel change plan](../../../docs/wheel-change-plan.md).
+(the right one is -1 by default), then the wheel bench W6 of the [wheel change plan](../../../docs/legs/wheel-change-plan.md).
 
 ## Open questions
 

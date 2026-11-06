@@ -2,7 +2,7 @@
 
 2026-10-29, Gyropup issue91 / PR92, after the candidate-B circuit review. The preferred next direction is a complete LTC4359 Figure 10 front end rather than its bare controller; no circuit or geometry was changed by this comparison.
 
-**Evidence.** The [dated comparison and primary links](../../research/protection/carrier-practical-architecture.md) show a −42 V source and +55 V charged node impose 97 V externally. Bare LTC4359's −40 V input limit fails by 2 V; TI alternatives' 85/88 V differentials fail by 12/9 V. ADI Rev F Figure 10 instead uses a floating VSS return, sense resistor and clamp network for an extended reverse-input application. Its application diagram does not remove the need to check actual clamp currents, temperature and pin peaks.
+**Evidence.** The [dated comparison and primary links](../../docs/research/protection/carrier-practical-architecture.md) show a −42 V source and +55 V charged node impose 97 V externally. Bare LTC4359's −40 V input limit fails by 2 V; TI alternatives' 85/88 V differentials fail by 12/9 V. ADI Rev F Figure 10 instead uses a floating VSS return, sense resistor and clamp network for an extended reverse-input application. Its application diagram does not remove the need to check actual clamp currents, temperature and pin peaks.
 
 ```sh
 python research/protection/calculate_practical_architecture.py --check

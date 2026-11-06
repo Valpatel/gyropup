@@ -1,0 +1,22 @@
+{
+  "producer_source": "67ae1605a14a71e9f6ea6bd5e8e1bc886cc7cc44",
+  "review": "https://github.com/Valpatel/gyropup/pull/238#issuecomment-6685909967",
+  "paper": {
+    "fresh_original_closure": 28,
+    "adopted_only": {
+      "hardware/carrier-packaging/component-inventory.json": "8c908bede8407c7a7f2fe02cdbb817c226dd4b01485a21fd458bbb5e9e91f10c",
+      "hardware/carrier-packaging/allocation-proposal.json": "5cb0dd3428e993d6fa35d58b0b0b8f84dc41d958557f266d24f4bc6cc1752562"
+    },
+    "architecture_preserved": true,
+    "archive_sha256": "e0e2af7038ca5eebed9e9c5df8973193a21ece7599802a8b3bc6de4c9c6c0416",
+    "actual_tests": 31
+  },
+  "insert": {
+    "fresh_original_closure": 39,
+    "all_files_unchanged": true,
+    "copies": 0,
+    "archive_sha256": "753691cc5fec72c8417e239b7b2c218474288a73a79e41ced4979bc45f54b60b",
+    "actual_tests": 43
+  },
+  "scope": "actual producer binding/currentness; no new numerical, physical or whole-migration qualification; original receipts preserved"
+}

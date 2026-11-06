@@ -613,7 +613,7 @@ def silk(b, fps):
         text(b, {'INN': 'IN-', 'INP': 'IN+'}.get(net, net), (x, y + 1.9), 1.0)
     for i, line in enumerate(('GYROPUP FUSE BOARD REV ' + D.REV + '  2 oz  1.6 mm  D60',
                               'Littelfuse MINI FL1 holders: MINI 58V (0997) fuses only',
-                              'docs/body-fuse-board.md')):
+                              'docs/body/body-fuse-board.md')):
         text(b, line, (44.0, 34.4 - 2.2 * i), 1.2, layer=P.B_SilkS)
 
 # ======================================================================================== project, rules, libraries

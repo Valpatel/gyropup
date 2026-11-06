@@ -346,11 +346,11 @@
   "observed": "2026-10-29",
   "physical_inventory_complete": false,
   "source_sha256": {
-    "catalog/hardware.json": "af0f7f3bdce4ee93649e278106d00a93fe2ebea3569c057f1d2a04fe4b360015",
-    "hardware/carrier-packaging/allocation.py": "8528d8481124e8b621d1671c5f009a2ce94b987e1111d013c93339d40e1b25ac",
-    "hardware/carrier-packaging/component-inventory.json": "6e46793f74497215aa49c6f3bcbc67d6fa68d4a3059b20efe2b9492387d6088b",
+    "hardware/carrier-packaging/allocation.py": "87c17a167ade456d404d2b318820247a0eb1f36522fdf4a3acbc2b1bbd0da014",
+    "hardware/carrier-packaging/component-inventory.json": "8c908bede8407c7a7f2fe02cdbb817c226dd4b01485a21fd458bbb5e9e91f10c",
     "hardware/carrier-packaging/mechanical-envelope.md": "b864e94290f451d689324aa89e69a282129f1819031429f26ce69711c8895fca",
-    "hardware/carrier-packaging/terminal-contract.json": "4f1eb2c31cafc363d8ea5381293db8f9ea43dcd111f506ccf698e0599a3253ca"
+    "hardware/carrier-packaging/terminal-contract.json": "4f1eb2c31cafc363d8ea5381293db8f9ea43dcd111f506ccf698e0599a3253ca",
+    "hardware/catalog/hardware.json": "af0f7f3bdce4ee93649e278106d00a93fe2ebea3569c057f1d2a04fe4b360015"
   },
   "status": "PAPER_ALLOCATION_ONLY_NOT_COMPONENT_PLACEMENT"
 }

@@ -1,7 +1,7 @@
 # RS-04 bring-up: the first scan, ids, settings, zero and save
 
-For the four RS-04s that arrived on 2026-11-03, with the [motor tool](../../../docs/rs04-motor-tool.md) and a PEAK
-PCAN-USB on a Linux laptop (or the robot's Jetson once [hardware/deploy/jetson](../../deploy/jetson/README.md) is installed).
+For the four RS-04s that arrived on 2026-11-03, with the [motor tool](../../../docs/software/rs04-motor-tool.md) and a PEAK
+PCAN-USB on a Linux laptop (or the robot's Jetson once [hardware/deploy/jetson](../../../software/deploy/jetson/README.md) is installed).
 One motor at a time: new motors all answer at id 127, so two at once collide. Agents never power a motor; this page
 is the owner's.
 
@@ -23,7 +23,7 @@ flowchart TD
 
 - The PCAN-USB, a lead from its D-Sub 9 to the motor's GH1.25 CAN plug, and a 120 ohm terminator at each end of the
   short bus (the PCAN-USB has none built in: see [its folder](../../comms/pcan-usb/README.md)).
-- The bench supply (36 V, as [C1-C6](../../../docs/leg-bench-tests.md) plans), the motor's XT30 lead, its switch in reach.
+- The bench supply (36 V, as [C1-C6](../../../docs/legs/leg-bench-tests.md) plans), the motor's XT30 lead, its switch in reach.
 - A clear bench: the motor clamped, nothing on its output.
 - This repository checked out, and Python 3.10 or newer (nothing to install).
 
@@ -33,7 +33,7 @@ flowchart TD
 |---|---|---|---|
 | 1 | Supply off. Measure between CAN H and L at the motor's plug | about 60 ohm (two 120 ohm in parallel) | |
 | 2 | Plug in the PCAN-USB. `ip -details link show type can` | a `can` link from the `peak_usb` driver (`can0` on a laptop with no other CAN) | its name |
-| 3 | Laptop: `sudo ip link set can0 up type can bitrate 1000000`. Jetson with [hardware/deploy/jetson](../../deploy/jetson/README.md): already up at 1 Mbit/s | `state ERROR-ACTIVE` in `ip -details link show <name>` | |
+| 3 | Laptop: `sudo ip link set can0 up type can bitrate 1000000`. Jetson with [hardware/deploy/jetson](../../../software/deploy/jetson/README.md): already up at 1 Mbit/s | `state ERROR-ACTIVE` in `ip -details link show <name>` | |
 | 4 | Laptop: `python3 -m rig.rs04_bridge --iface can0`. Jetson: `sudo systemctl start gyropup-rs04-bridge` (its interface is `rs04`, the name to give the PCAN-USB in `can-names.conf`); never `can0`, the module's bus C. Then open `http://127.0.0.1:8765/` (from a laptop: through `ssh -L`) | the tool, an orange **REAL HARDWARE** banner after **Connect** | |
 | 5 | Power one motor, **Scan bus** | CAN id 127, its 16-hex-digit uid and firmware version | |
 | 6 | **Config → Export this motor's config** | a JSON file named after its uid | keep it: the as-delivered settings |

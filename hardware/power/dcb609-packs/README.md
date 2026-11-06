@@ -1,7 +1,7 @@
 # DeWalt DCB609 packs and dock adapters
 
 The robot's battery: two DeWalt DCB609 FLEXVOLT 9.0 Ah packs, each in 20 V mode, in series in two 20 V dock
-adapters: a 10S 36 V bus, 30-41 V ([D65](../../../docs/decisions.yaml); the user's packs, D71). They hang in the belly
+adapters: a 10S 36 V bus, 30-41 V ([D65](../../../docs/program/decisions.yaml); the user's packs, D71). They hang in the belly
 bay and charge on DeWalt's own chargers: the robot has no charge port and no BMS of its own.
 
 ```mermaid
@@ -18,7 +18,7 @@ flowchart LR
 - DeWalt's DCB609 page (cited in D65): [dewalt.com/en-us/product/dcb609](https://www.dewalt.com/en-us/product/dcb609/20v60v-max-flexvolt-90ah-battery).
 - The adapters: `catalog/body.json` (the body's Terrafirma 10 AWG 4-pack, 30 A) and `catalog/rig.json` (the rig's
   adapters with a switch and a 30 A fuse); `catalog/power_electronics.json` still has an old Terrafirma 60 V dock.
-- The MRBF fuse block (the main fuse): [references/vendor/blue-sea-5191-mrbf-terminal-fuse-block/SOURCE.txt](../../../references/vendor/blue-sea-5191-mrbf-terminal-fuse-block/SOURCE.txt).
+- The MRBF fuse block (the main fuse): [references/vendor/blue-sea-5191-mrbf-terminal-fuse-block/SOURCE.txt](../../vendor/blue-sea-5191-mrbf-terminal-fuse-block/SOURCE.txt).
 
 ## Interfaces
 
@@ -42,9 +42,9 @@ The firmware's battery logic in `firmware/balance/src/core/` with its limits in 
 
 ## Bring-up and tests
 
-Not yet. The bay steps are in [docs/body-electrical.md](../../../docs/body-electrical.md) section 2 (each pack's mode,
+Not yet. The bay steps are in [docs/body-electrical.md](../../../docs/body/body-electrical.md) section 2 (each pack's mode,
 then the series link); the battery checks of B12 (the pack's 0.100 ohm, the adapters' contacts after ten jumps, the
-cut-off's filter, a fresh pair's voltage) are in [docs/body-firmware.md](../../../docs/body-firmware.md).
+cut-off's filter, a fresh pair's voltage) are in [docs/body-firmware.md](../../../docs/software/body-firmware.md).
 
 ## Open questions
 

@@ -13,7 +13,7 @@ flowchart LR
 ## References
 
 - The datasheet 63-9229 Rev K (Puck Datasheets zip, Ouster's Velodyne downloads), kept locally only:
-  [references/vendor/velodyne-vlp-16/SOURCE.txt](../../../references/vendor/velodyne-vlp-16/SOURCE.txt). No official CAD
+  [references/vendor/velodyne-vlp-16/SOURCE.txt](../../vendor/velodyne-vlp-16/SOURCE.txt). No official CAD
   exists.
 - The user manual 63-9243 Rev F (cited in `docs/body-plan.md`), not kept.
 - Specs and mounting: `catalog/sensors_compute.json` (`velodyne-vlp-16`).

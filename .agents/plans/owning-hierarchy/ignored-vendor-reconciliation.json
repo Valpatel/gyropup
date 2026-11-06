@@ -1,0 +1,1907 @@
+{
+  "files": [
+    {
+      "source": "references/vendor/blue-sea-5191-mrbf-terminal-fuse-block/5191_dim.jpg",
+      "bytes": 14169,
+      "suffix": ".jpg",
+      "proposed_home": "hardware/vendor/blue-sea-5191-mrbf-terminal-fuse-block/5191_dim.jpg",
+      "action": "preserve in original owner checkout; reconcile/reacquire or explicitly stage into new run, never commit licensed/local payload",
+      "sha256": "9ddf4896a62ccbc914122ab566d011f0d55c5f493f26e73afb8375ca428ff02e",
+      "public_status": "unpublished supplier-input bundle; preserve original bytes; no implicit redistribution"
+    },
+    {
+      "source": "references/vendor/blue-sea-5191-mrbf-terminal-fuse-block/5191_mount.jpg",
+      "bytes": 23423,
+      "suffix": ".jpg",
+      "proposed_home": "hardware/vendor/blue-sea-5191-mrbf-terminal-fuse-block/5191_mount.jpg",
+      "action": "preserve in original owner checkout; reconcile/reacquire or explicitly stage into new run, never commit licensed/local payload",
+      "sha256": "6bc65171075534f00d20df0a43234e7bc44c667a8a1e316a7e7fa23230efc35e",
+      "public_status": "unpublished supplier-input bundle; preserve original bytes; no implicit redistribution"
+    },
+    {
+      "source": "references/vendor/diode-dynamics-ssc1-sport-white-pair/Stage_Series_C1_LED_Pod_Info_Guide.pdf",
+      "bytes": 270890,
+      "suffix": ".pdf",
+      "proposed_home": "hardware/vendor/diode-dynamics-ssc1-sport-white-pair/Stage_Series_C1_LED_Pod_Info_Guide.pdf",
+      "action": "preserve in original owner checkout; reconcile/reacquire or explicitly stage into new run, never commit licensed/local payload",
+      "sha256": "c0fe34d3f4eeda82c736c321a8e7271952b4c771fc3e3e74bbc7d386bbfb4953",
+      "public_status": "unpublished supplier-input bundle; preserve original bytes; no implicit redistribution"
+    },
+    {
+      "source": "references/vendor/maxon-dsr-70-30/235811-CAD-Files.zip",
+      "bytes": 16044279,
+      "suffix": ".zip",
+      "proposed_home": "hardware/vendor/maxon-dsr-70-30/235811-CAD-Files.zip",
+      "action": "preserve in original owner checkout; reconcile/reacquire or explicitly stage into new run, never commit licensed/local payload",
+      "sha256": "140a05eb78373d96de88e7dd0f9986dec0da8ca932bbec2f83a477860ea23345",
+      "public_status": "unpublished supplier-input bundle; preserve original bytes; no implicit redistribution"
+    },
+    {
+      "source": "references/vendor/maxon-dsr-70-30/235811-DSR-70-30-Operating-Instructions-En.pdf",
+      "bytes": 979551,
+      "suffix": ".pdf",
+      "proposed_home": "hardware/vendor/maxon-dsr-70-30/235811-DSR-70-30-Operating-Instructions-En.pdf",
+      "action": "preserve in original owner checkout; reconcile/reacquire or explicitly stage into new run, never commit licensed/local payload",
+      "sha256": "580183f47c20706b3f2abfbc64f75278859c7af62c8c7e3e50c9faeee8c450fc",
+      "public_status": "unpublished supplier-input bundle; preserve original bytes; no implicit redistribution"
+    },
+    {
+      "source": "references/vendor/maxon-dsr-70-30/bremschopper_70_30_zusammenbau_asm.stp",
+      "bytes": 24932130,
+      "suffix": ".stp",
+      "proposed_home": "hardware/vendor/maxon-dsr-70-30/bremschopper_70_30_zusammenbau_asm.stp",
+      "action": "preserve in original owner checkout; reconcile/reacquire or explicitly stage into new run, never commit licensed/local payload",
+      "sha256": "ecabd3f8ea53f2d9f82892cf177521a26eb2f4013d7ba3345119902382225f04",
+      "public_status": "unpublished supplier-input bundle; preserve original bytes; no implicit redistribution"
+    },
+    {
+      "source": "references/vendor/mcmaster/4668K273/4668K273.page.json",
+      "bytes": 3248,
+      "suffix": ".json",
+      "proposed_home": "hardware/vendor/mcmaster/4668K273/4668K273.page.json",
+      "action": "preserve in original owner checkout; reconcile/reacquire or explicitly stage into new run, never commit licensed/local payload",
+      "sha256": "3b8151b599694a66422c0870eed1214f693dd6e910a1c145219eab5f513d43d1",
+      "public_status": "unpublished supplier-input bundle; preserve original bytes; no implicit redistribution"
+    },
+    {
+      "source": "references/vendor/mcmaster/5972K42/5972K42.page.json",
+      "bytes": 3165,
+      "suffix": ".json",
+      "proposed_home": "hardware/vendor/mcmaster/5972K42/5972K42.page.json",
+      "action": "preserve in original owner checkout; reconcile/reacquire or explicitly stage into new run, never commit licensed/local payload",
+      "sha256": "d2fc16e53c2fb99f61709475e7b00b73f47f75d76b62ccd81b73fce3f34db451",
+      "public_status": "unpublished supplier-input bundle; preserve original bytes; no implicit redistribution"
+    },
+    {
+      "source": "references/vendor/mcmaster/5972K82/5972K82.norm.json",
+      "bytes": 603,
+      "suffix": ".json",
+      "proposed_home": "hardware/vendor/mcmaster/5972K82/5972K82.norm.json",
+      "action": "preserve in original owner checkout; reconcile/reacquire or explicitly stage into new run, never commit licensed/local payload",
+      "sha256": "f367a47b098af90660ee2a219442d1d8af924c4fd2466d30a116cb0dce32cb95",
+      "public_status": "unpublished supplier-input bundle; preserve original bytes; no implicit redistribution"
+    },
+    {
+      "source": "references/vendor/mcmaster/5972K82/5972K82.norm.step",
+      "bytes": 264450,
+      "suffix": ".step",
+      "proposed_home": "hardware/vendor/mcmaster/5972K82/5972K82.norm.step",
+      "action": "preserve in original owner checkout; reconcile/reacquire or explicitly stage into new run, never commit licensed/local payload",
+      "sha256": "446aeb5a165dfb8eb74fb0227e778b054d37246daf11013f4d65c3eb5b824c1d",
+      "public_status": "unpublished supplier-input bundle; preserve original bytes; no implicit redistribution"
+    },
+    {
+      "source": "references/vendor/mcmaster/5972K82/5972K82.page.json",
+      "bytes": 3152,
+      "suffix": ".json",
+      "proposed_home": "hardware/vendor/mcmaster/5972K82/5972K82.page.json",
+      "action": "preserve in original owner checkout; reconcile/reacquire or explicitly stage into new run, never commit licensed/local payload",
+      "sha256": "09a56053165a095abfc5a3afd6909a6090977a1c596f3913dbcf446d2e31a84d",
+      "public_status": "unpublished supplier-input bundle; preserve original bytes; no implicit redistribution"
+    },
+    {
+      "source": "references/vendor/mcmaster/5972K82/5972K82.step",
+      "bytes": 126427,
+      "suffix": ".step",
+      "proposed_home": "hardware/vendor/mcmaster/5972K82/5972K82.step",
+      "action": "preserve in original owner checkout; reconcile/reacquire or explicitly stage into new run, never commit licensed/local payload",
+      "sha256": "22f4a2f015646cea9866eaa00a7f07cd26e1e055006053e52fe807619e84c341",
+      "public_status": "unpublished supplier-input bundle; preserve original bytes; no implicit redistribution"
+    },
+    {
+      "source": "references/vendor/mcmaster/59935K53/59935K53.norm.json",
+      "bytes": 578,
+      "suffix": ".json",
+      "proposed_home": "hardware/vendor/mcmaster/59935K53/59935K53.norm.json",
+      "action": "preserve in original owner checkout; reconcile/reacquire or explicitly stage into new run, never commit licensed/local payload",
+      "sha256": "bc601d9c784ab92882c796bee8d5d70c4f990516a82c0641c0c1bc149fdc8a59",
+      "public_status": "unpublished supplier-input bundle; preserve original bytes; no implicit redistribution"
+    },
+    {
+      "source": "references/vendor/mcmaster/59935K53/59935K53.norm.step",
+      "bytes": 1231367,
+      "suffix": ".step",
+      "proposed_home": "hardware/vendor/mcmaster/59935K53/59935K53.norm.step",
+      "action": "preserve in original owner checkout; reconcile/reacquire or explicitly stage into new run, never commit licensed/local payload",
+      "sha256": "a6d035c4675bf688abe5a85386949a4fb620b99f0c2f50b85e3b1022e69f1170",
+      "public_status": "unpublished supplier-input bundle; preserve original bytes; no implicit redistribution"
+    },
+    {
+      "source": "references/vendor/mcmaster/59935K53/59935K53.page.json",
+      "bytes": 2346,
+      "suffix": ".json",
+      "proposed_home": "hardware/vendor/mcmaster/59935K53/59935K53.page.json",
+      "action": "preserve in original owner checkout; reconcile/reacquire or explicitly stage into new run, never commit licensed/local payload",
+      "sha256": "3b78aba6c2dccee479e4992d7394516d124b140c247b4c28a27f4e80dfb07036",
+      "public_status": "unpublished supplier-input bundle; preserve original bytes; no implicit redistribution"
+    },
+    {
+      "source": "references/vendor/mcmaster/59935K53/59935K53.step",
+      "bytes": 720562,
+      "suffix": ".step",
+      "proposed_home": "hardware/vendor/mcmaster/59935K53/59935K53.step",
+      "action": "preserve in original owner checkout; reconcile/reacquire or explicitly stage into new run, never commit licensed/local payload",
+      "sha256": "0499b3d1542122d626eab7e00578cb511c7672a94deadf7cc3294c08192c5076",
+      "public_status": "unpublished supplier-input bundle; preserve original bytes; no implicit redistribution"
+    },
+    {
+      "source": "references/vendor/mcmaster/6656K236/6656K236.norm.json",
+      "bytes": 608,
+      "suffix": ".json",
+      "proposed_home": "hardware/vendor/mcmaster/6656K236/6656K236.norm.json",
+      "action": "preserve in original owner checkout; reconcile/reacquire or explicitly stage into new run, never commit licensed/local payload",
+      "sha256": "26e5bf04700524eda18e47b653aa09cbcd8f76ff191184a7ad3103252af447cd",
+      "public_status": "unpublished supplier-input bundle; preserve original bytes; no implicit redistribution"
+    },
+    {
+      "source": "references/vendor/mcmaster/6656K236/6656K236.norm.step",
+      "bytes": 469416,
+      "suffix": ".step",
+      "proposed_home": "hardware/vendor/mcmaster/6656K236/6656K236.norm.step",
+      "action": "preserve in original owner checkout; reconcile/reacquire or explicitly stage into new run, never commit licensed/local payload",
+      "sha256": "77d391cd8c6f5ae62bea51b10c49fa9f2092638e750d9da1a29697292048ee58",
+      "public_status": "unpublished supplier-input bundle; preserve original bytes; no implicit redistribution"
+    },
+    {
+      "source": "references/vendor/mcmaster/6656K236/6656K236.page.json",
+      "bytes": 3049,
+      "suffix": ".json",
+      "proposed_home": "hardware/vendor/mcmaster/6656K236/6656K236.page.json",
+      "action": "preserve in original owner checkout; reconcile/reacquire or explicitly stage into new run, never commit licensed/local payload",
+      "sha256": "65f544b6a4f6d9590b642949ab5b1e8ab71f9a5039a2637ae64431916c8efee3",
+      "public_status": "unpublished supplier-input bundle; preserve original bytes; no implicit redistribution"
+    },
+    {
+      "source": "references/vendor/mcmaster/6656K236/6656K236.step",
+      "bytes": 149011,
+      "suffix": ".step",
+      "proposed_home": "hardware/vendor/mcmaster/6656K236/6656K236.step",
+      "action": "preserve in original owner checkout; reconcile/reacquire or explicitly stage into new run, never commit licensed/local payload",
+      "sha256": "f35edb0c9561b423b1fca689ac8058df48e476f49a5328d35c8c5041aa808fc6",
+      "public_status": "unpublished supplier-input bundle; preserve original bytes; no implicit redistribution"
+    },
+    {
+      "source": "references/vendor/mcmaster/7804K112/7804K112.page.json",
+      "bytes": 3247,
+      "suffix": ".json",
+      "proposed_home": "hardware/vendor/mcmaster/7804K112/7804K112.page.json",
+      "action": "preserve in original owner checkout; reconcile/reacquire or explicitly stage into new run, never commit licensed/local payload",
+      "sha256": "eea3ccacf19a2e220123c9944b66a21c0e93a174ffe79af5d7ea983f42bc5f74",
+      "public_status": "unpublished supplier-input bundle; preserve original bytes; no implicit redistribution"
+    },
+    {
+      "source": "references/vendor/mcmaster/9056K68/9056K68.page.json",
+      "bytes": 3583,
+      "suffix": ".json",
+      "proposed_home": "hardware/vendor/mcmaster/9056K68/9056K68.page.json",
+      "action": "preserve in original owner checkout; reconcile/reacquire or explicitly stage into new run, never commit licensed/local payload",
+      "sha256": "2c292a1df4449b5cb240172b4f74c3d7696f8ad58fad881d3059d737dfd58b97",
+      "public_status": "unpublished supplier-input bundle; preserve original bytes; no implicit redistribution"
+    },
+    {
+      "source": "references/vendor/mcmaster/90695A040/90695A040.norm.json",
+      "bytes": 606,
+      "suffix": ".json",
+      "proposed_home": "hardware/vendor/mcmaster/90695A040/90695A040.norm.json",
+      "action": "preserve in original owner checkout; reconcile/reacquire or explicitly stage into new run, never commit licensed/local payload",
+      "sha256": "394ef66c599b0e872750de9c40064d8226cb6f5cad67028e5cc4607aa0b2c0fd",
+      "public_status": "unpublished supplier-input bundle; preserve original bytes; no implicit redistribution"
+    },
+    {
+      "source": "references/vendor/mcmaster/90695A040/90695A040.norm.step",
+      "bytes": 425540,
+      "suffix": ".step",
+      "proposed_home": "hardware/vendor/mcmaster/90695A040/90695A040.norm.step",
+      "action": "preserve in original owner checkout; reconcile/reacquire or explicitly stage into new run, never commit licensed/local payload",
+      "sha256": "26fb14a4a7a4e53a471ffd04f057620aece521e9fb294127c326adc96a6b830f",
+      "public_status": "unpublished supplier-input bundle; preserve original bytes; no implicit redistribution"
+    },
+    {
+      "source": "references/vendor/mcmaster/90695A040/90695A040.page.json",
+      "bytes": 2075,
+      "suffix": ".json",
+      "proposed_home": "hardware/vendor/mcmaster/90695A040/90695A040.page.json",
+      "action": "preserve in original owner checkout; reconcile/reacquire or explicitly stage into new run, never commit licensed/local payload",
+      "sha256": "b35193db166c0c13aaeda3d8cc13f15dc0f0f28ea9c93a41b003d7601e5193af",
+      "public_status": "unpublished supplier-input bundle; preserve original bytes; no implicit redistribution"
+    },
+    {
+      "source": "references/vendor/mcmaster/90695A040/90695A040.step",
+      "bytes": 212868,
+      "suffix": ".step",
+      "proposed_home": "hardware/vendor/mcmaster/90695A040/90695A040.step",
+      "action": "preserve in original owner checkout; reconcile/reacquire or explicitly stage into new run, never commit licensed/local payload",
+      "sha256": "d9a32fd1a5f4029a2132817add22daac938f0a3fc76924ad98b5269b6e2008ed",
+      "public_status": "unpublished supplier-input bundle; preserve original bytes; no implicit redistribution"
+    },
+    {
+      "source": "references/vendor/mcmaster/91116A120/91116A120.norm.json",
+      "bytes": 595,
+      "suffix": ".json",
+      "proposed_home": "hardware/vendor/mcmaster/91116A120/91116A120.norm.json",
+      "action": "preserve in original owner checkout; reconcile/reacquire or explicitly stage into new run, never commit licensed/local payload",
+      "sha256": "89614926caede01d1675c4358fd096d263ed2c79872684fe366de5dbbb50e078",
+      "public_status": "unpublished supplier-input bundle; preserve original bytes; no implicit redistribution"
+    },
+    {
+      "source": "references/vendor/mcmaster/91116A120/91116A120.norm.step",
+      "bytes": 38876,
+      "suffix": ".step",
+      "proposed_home": "hardware/vendor/mcmaster/91116A120/91116A120.norm.step",
+      "action": "preserve in original owner checkout; reconcile/reacquire or explicitly stage into new run, never commit licensed/local payload",
+      "sha256": "d50b6183a9b74d197b553a80fc81689743a42270d7f9aa6ca7a999b5961979c8",
+      "public_status": "unpublished supplier-input bundle; preserve original bytes; no implicit redistribution"
+    },
+    {
+      "source": "references/vendor/mcmaster/91116A120/91116A120.page.json",
+      "bytes": 1770,
+      "suffix": ".json",
+      "proposed_home": "hardware/vendor/mcmaster/91116A120/91116A120.page.json",
+      "action": "preserve in original owner checkout; reconcile/reacquire or explicitly stage into new run, never commit licensed/local payload",
+      "sha256": "f065c75ac71be700bff4d444a7e43b24ab6a963ccf316116ad2e2f636326950d",
+      "public_status": "unpublished supplier-input bundle; preserve original bytes; no implicit redistribution"
+    },
+    {
+      "source": "references/vendor/mcmaster/91116A120/91116A120.step",
+      "bytes": 33110,
+      "suffix": ".step",
+      "proposed_home": "hardware/vendor/mcmaster/91116A120/91116A120.step",
+      "action": "preserve in original owner checkout; reconcile/reacquire or explicitly stage into new run, never commit licensed/local payload",
+      "sha256": "ffe50fb1f3b5a8f8f506411b1fe056019c3d9beac08dde9e41426a019aed2097",
+      "public_status": "unpublished supplier-input bundle; preserve original bytes; no implicit redistribution"
+    },
+    {
+      "source": "references/vendor/mcmaster/91116A140/91116A140.norm.json",
+      "bytes": 598,
+      "suffix": ".json",
+      "proposed_home": "hardware/vendor/mcmaster/91116A140/91116A140.norm.json",
+      "action": "preserve in original owner checkout; reconcile/reacquire or explicitly stage into new run, never commit licensed/local payload",
+      "sha256": "16e5d3f51dd49afeea2326d9eac7babc16e6d94dfc020780f4d2d9126bcb26c6",
+      "public_status": "unpublished supplier-input bundle; preserve original bytes; no implicit redistribution"
+    },
+    {
+      "source": "references/vendor/mcmaster/91116A140/91116A140.norm.step",
+      "bytes": 39297,
+      "suffix": ".step",
+      "proposed_home": "hardware/vendor/mcmaster/91116A140/91116A140.norm.step",
+      "action": "preserve in original owner checkout; reconcile/reacquire or explicitly stage into new run, never commit licensed/local payload",
+      "sha256": "b175627fe6cca3d93d6ab6cf5d58569afcb9df0ce38f0e439934c0ba7b6950ff",
+      "public_status": "unpublished supplier-input bundle; preserve original bytes; no implicit redistribution"
+    },
+    {
+      "source": "references/vendor/mcmaster/91116A140/91116A140.page.json",
+      "bytes": 1776,
+      "suffix": ".json",
+      "proposed_home": "hardware/vendor/mcmaster/91116A140/91116A140.page.json",
+      "action": "preserve in original owner checkout; reconcile/reacquire or explicitly stage into new run, never commit licensed/local payload",
+      "sha256": "31e6524da51c817ae86f78761241ff76ea9225c68b4c9371373aff81094f45fa",
+      "public_status": "unpublished supplier-input bundle; preserve original bytes; no implicit redistribution"
+    },
+    {
+      "source": "references/vendor/mcmaster/91116A140/91116A140.step",
+      "bytes": 33117,
+      "suffix": ".step",
+      "proposed_home": "hardware/vendor/mcmaster/91116A140/91116A140.step",
+      "action": "preserve in original owner checkout; reconcile/reacquire or explicitly stage into new run, never commit licensed/local payload",
+      "sha256": "7fb6724da95cd2b118d71d7eced1ef00690580fd395825dedad55fba837accda",
+      "public_status": "unpublished supplier-input bundle; preserve original bytes; no implicit redistribution"
+    },
+    {
+      "source": "references/vendor/mcmaster/91116A150/91116A150.norm.json",
+      "bytes": 597,
+      "suffix": ".json",
+      "proposed_home": "hardware/vendor/mcmaster/91116A150/91116A150.norm.json",
+      "action": "preserve in original owner checkout; reconcile/reacquire or explicitly stage into new run, never commit licensed/local payload",
+      "sha256": "175c9c3faf18be11195e7a777909e047775e9fb025cd43bc4331cb4a166e38fc",
+      "public_status": "unpublished supplier-input bundle; preserve original bytes; no implicit redistribution"
+    },
+    {
+      "source": "references/vendor/mcmaster/91116A150/91116A150.norm.step",
+      "bytes": 38692,
+      "suffix": ".step",
+      "proposed_home": "hardware/vendor/mcmaster/91116A150/91116A150.norm.step",
+      "action": "preserve in original owner checkout; reconcile/reacquire or explicitly stage into new run, never commit licensed/local payload",
+      "sha256": "7fe83c189f0d97f11a249eae8097d282e5bdc5fc530461956502e9728e347620",
+      "public_status": "unpublished supplier-input bundle; preserve original bytes; no implicit redistribution"
+    },
+    {
+      "source": "references/vendor/mcmaster/91116A150/91116A150.page.json",
+      "bytes": 1733,
+      "suffix": ".json",
+      "proposed_home": "hardware/vendor/mcmaster/91116A150/91116A150.page.json",
+      "action": "preserve in original owner checkout; reconcile/reacquire or explicitly stage into new run, never commit licensed/local payload",
+      "sha256": "e43ba0debd90015bb31cddee0ec50c04bc5fd630b8d5142835f239bcb5311a11",
+      "public_status": "unpublished supplier-input bundle; preserve original bytes; no implicit redistribution"
+    },
+    {
+      "source": "references/vendor/mcmaster/91116A150/91116A150.step",
+      "bytes": 33101,
+      "suffix": ".step",
+      "proposed_home": "hardware/vendor/mcmaster/91116A150/91116A150.step",
+      "action": "preserve in original owner checkout; reconcile/reacquire or explicitly stage into new run, never commit licensed/local payload",
+      "sha256": "44b4bb03b658032fbb2b31fcb9093fc5b302473a7990a74e66912e7500b7ff51",
+      "public_status": "unpublished supplier-input bundle; preserve original bytes; no implicit redistribution"
+    },
+    {
+      "source": "references/vendor/mcmaster/91290A111/91290A111.norm.json",
+      "bytes": 673,
+      "suffix": ".json",
+      "proposed_home": "hardware/vendor/mcmaster/91290A111/91290A111.norm.json",
+      "action": "preserve in original owner checkout; reconcile/reacquire or explicitly stage into new run, never commit licensed/local payload",
+      "sha256": "b67ee638df935255c98e36c440d97fd333ff0ed596ae78bbfbd03a30a7b32628",
+      "public_status": "unpublished supplier-input bundle; preserve original bytes; no implicit redistribution"
+    },
+    {
+      "source": "references/vendor/mcmaster/91290A111/91290A111.norm.step",
+      "bytes": 2992569,
+      "suffix": ".step",
+      "proposed_home": "hardware/vendor/mcmaster/91290A111/91290A111.norm.step",
+      "action": "preserve in original owner checkout; reconcile/reacquire or explicitly stage into new run, never commit licensed/local payload",
+      "sha256": "5254e828992285b42974ce077f5b1443fb8831397bcd9e653c4f5680df3b4191",
+      "public_status": "unpublished supplier-input bundle; preserve original bytes; no implicit redistribution"
+    },
+    {
+      "source": "references/vendor/mcmaster/91290A111/91290A111.page.json",
+      "bytes": 2209,
+      "suffix": ".json",
+      "proposed_home": "hardware/vendor/mcmaster/91290A111/91290A111.page.json",
+      "action": "preserve in original owner checkout; reconcile/reacquire or explicitly stage into new run, never commit licensed/local payload",
+      "sha256": "80e3742aef40bfdb3e5b5580b224ca2fbbecda5fc02e44d4c68ada11475243bf",
+      "public_status": "unpublished supplier-input bundle; preserve original bytes; no implicit redistribution"
+    },
+    {
+      "source": "references/vendor/mcmaster/91290A111/91290A111.step",
+      "bytes": 1328167,
+      "suffix": ".step",
+      "proposed_home": "hardware/vendor/mcmaster/91290A111/91290A111.step",
+      "action": "preserve in original owner checkout; reconcile/reacquire or explicitly stage into new run, never commit licensed/local payload",
+      "sha256": "7c9d68128763ecb3859f061c6ec98fc276fdd54be7701208e22646dd4410592f",
+      "public_status": "unpublished supplier-input bundle; preserve original bytes; no implicit redistribution"
+    },
+    {
+      "source": "references/vendor/mcmaster/91290A142/91290A142.norm.json",
+      "bytes": 681,
+      "suffix": ".json",
+      "proposed_home": "hardware/vendor/mcmaster/91290A142/91290A142.norm.json",
+      "action": "preserve in original owner checkout; reconcile/reacquire or explicitly stage into new run, never commit licensed/local payload",
+      "sha256": "2a12ffa83b152bee8744e70adf65a6d083d5da3712c729e14e30fb3be7b0fb16",
+      "public_status": "unpublished supplier-input bundle; preserve original bytes; no implicit redistribution"
+    },
+    {
+      "source": "references/vendor/mcmaster/91290A142/91290A142.norm.step",
+      "bytes": 1071274,
+      "suffix": ".step",
+      "proposed_home": "hardware/vendor/mcmaster/91290A142/91290A142.norm.step",
+      "action": "preserve in original owner checkout; reconcile/reacquire or explicitly stage into new run, never commit licensed/local payload",
+      "sha256": "b339b4d7133516838f139ab80254cc22505884ee98e7a7c35f6d25b35c35a4d2",
+      "public_status": "unpublished supplier-input bundle; preserve original bytes; no implicit redistribution"
+    },
+    {
+      "source": "references/vendor/mcmaster/91290A142/91290A142.page.json",
+      "bytes": 2602,
+      "suffix": ".json",
+      "proposed_home": "hardware/vendor/mcmaster/91290A142/91290A142.page.json",
+      "action": "preserve in original owner checkout; reconcile/reacquire or explicitly stage into new run, never commit licensed/local payload",
+      "sha256": "96235e1c131a1558645fefdeffef2b7fec09ccf65ab361377dc69f01433343f1",
+      "public_status": "unpublished supplier-input bundle; preserve original bytes; no implicit redistribution"
+    },
+    {
+      "source": "references/vendor/mcmaster/91290A142/91290A142.step",
+      "bytes": 908426,
+      "suffix": ".step",
+      "proposed_home": "hardware/vendor/mcmaster/91290A142/91290A142.step",
+      "action": "preserve in original owner checkout; reconcile/reacquire or explicitly stage into new run, never commit licensed/local payload",
+      "sha256": "5dccfef13299a757f07194026660b48eca85581604149d4d6270355f3b7253ea",
+      "public_status": "unpublished supplier-input bundle; preserve original bytes; no implicit redistribution"
+    },
+    {
+      "source": "references/vendor/mcmaster/91290A168/91290A168.norm.json",
+      "bytes": 670,
+      "suffix": ".json",
+      "proposed_home": "hardware/vendor/mcmaster/91290A168/91290A168.norm.json",
+      "action": "preserve in original owner checkout; reconcile/reacquire or explicitly stage into new run, never commit licensed/local payload",
+      "sha256": "1536c07d3dbb37b1690adeab0e8b6464324c157f7221ea13315b3e0d1f447827",
+      "public_status": "unpublished supplier-input bundle; preserve original bytes; no implicit redistribution"
+    },
+    {
+      "source": "references/vendor/mcmaster/91290A168/91290A168.norm.step",
+      "bytes": 3484482,
+      "suffix": ".step",
+      "proposed_home": "hardware/vendor/mcmaster/91290A168/91290A168.norm.step",
+      "action": "preserve in original owner checkout; reconcile/reacquire or explicitly stage into new run, never commit licensed/local payload",
+      "sha256": "307eceea05ccd5456991bcac212aec25db6c6462895d8b9b1911f48a2061977a",
+      "public_status": "unpublished supplier-input bundle; preserve original bytes; no implicit redistribution"
+    },
+    {
+      "source": "references/vendor/mcmaster/91290A168/91290A168.page.json",
+      "bytes": 2209,
+      "suffix": ".json",
+      "proposed_home": "hardware/vendor/mcmaster/91290A168/91290A168.page.json",
+      "action": "preserve in original owner checkout; reconcile/reacquire or explicitly stage into new run, never commit licensed/local payload",
+      "sha256": "b4611ea236efce814835b36b177955b5aaa511fafadf6c0a9dfe43afa55a977b",
+      "public_status": "unpublished supplier-input bundle; preserve original bytes; no implicit redistribution"
+    },
+    {
+      "source": "references/vendor/mcmaster/91290A168/91290A168.step",
+      "bytes": 1724118,
+      "suffix": ".step",
+      "proposed_home": "hardware/vendor/mcmaster/91290A168/91290A168.step",
+      "action": "preserve in original owner checkout; reconcile/reacquire or explicitly stage into new run, never commit licensed/local payload",
+      "sha256": "8673cceae9ae657b9f1123f3cc019893698c47f39fcc0a5c376aee0c8cc3cf71",
+      "public_status": "unpublished supplier-input bundle; preserve original bytes; no implicit redistribution"
+    },
+    {
+      "source": "references/vendor/mcmaster/91290A232/91290A232.norm.json",
+      "bytes": 676,
+      "suffix": ".json",
+      "proposed_home": "hardware/vendor/mcmaster/91290A232/91290A232.norm.json",
+      "action": "preserve in original owner checkout; reconcile/reacquire or explicitly stage into new run, never commit licensed/local payload",
+      "sha256": "375df4647ecd040ed40289a6208adaa1b0c2de94cfc73b20d1141ebff8f392a6",
+      "public_status": "unpublished supplier-input bundle; preserve original bytes; no implicit redistribution"
+    },
+    {
+      "source": "references/vendor/mcmaster/91290A232/91290A232.norm.step",
+      "bytes": 3279404,
+      "suffix": ".step",
+      "proposed_home": "hardware/vendor/mcmaster/91290A232/91290A232.norm.step",
+      "action": "preserve in original owner checkout; reconcile/reacquire or explicitly stage into new run, never commit licensed/local payload",
+      "sha256": "c619ea94292d628c9e5a5155c9047798f311629038c7f65b91afcde425aa427d",
+      "public_status": "unpublished supplier-input bundle; preserve original bytes; no implicit redistribution"
+    },
+    {
+      "source": "references/vendor/mcmaster/91290A232/91290A232.page.json",
+      "bytes": 2211,
+      "suffix": ".json",
+      "proposed_home": "hardware/vendor/mcmaster/91290A232/91290A232.page.json",
+      "action": "preserve in original owner checkout; reconcile/reacquire or explicitly stage into new run, never commit licensed/local payload",
+      "sha256": "0525a729f1f6ee3f2e5a17fcff283811e25d87ee7e35bd7db7fbb9e6548dff8c",
+      "public_status": "unpublished supplier-input bundle; preserve original bytes; no implicit redistribution"
+    },
+    {
+      "source": "references/vendor/mcmaster/91290A232/91290A232.step",
+      "bytes": 1645581,
+      "suffix": ".step",
+      "proposed_home": "hardware/vendor/mcmaster/91290A232/91290A232.step",
+      "action": "preserve in original owner checkout; reconcile/reacquire or explicitly stage into new run, never commit licensed/local payload",
+      "sha256": "1c69a0a57734c09bbddd2de1c8417c7f58ba9b89d23a3d8927112a76158159cd",
+      "public_status": "unpublished supplier-input bundle; preserve original bytes; no implicit redistribution"
+    },
+    {
+      "source": "references/vendor/mcmaster/91290A242/91290A242.norm.json",
+      "bytes": 676,
+      "suffix": ".json",
+      "proposed_home": "hardware/vendor/mcmaster/91290A242/91290A242.norm.json",
+      "action": "preserve in original owner checkout; reconcile/reacquire or explicitly stage into new run, never commit licensed/local payload",
+      "sha256": "6ac281f2d9865720b423f3e2cbb47a024d0feb5814c9d0e3b71bd6d069c81ab6",
+      "public_status": "unpublished supplier-input bundle; preserve original bytes; no implicit redistribution"
+    },
+    {
+      "source": "references/vendor/mcmaster/91290A242/91290A242.norm.step",
+      "bytes": 3439073,
+      "suffix": ".step",
+      "proposed_home": "hardware/vendor/mcmaster/91290A242/91290A242.norm.step",
+      "action": "preserve in original owner checkout; reconcile/reacquire or explicitly stage into new run, never commit licensed/local payload",
+      "sha256": "6246854cfa419d6cdb29e60116c9ceddd2cb1f7e44f00b5464548b9fd557d1fd",
+      "public_status": "unpublished supplier-input bundle; preserve original bytes; no implicit redistribution"
+    },
+    {
+      "source": "references/vendor/mcmaster/91290A242/91290A242.page.json",
+      "bytes": 2251,
+      "suffix": ".json",
+      "proposed_home": "hardware/vendor/mcmaster/91290A242/91290A242.page.json",
+      "action": "preserve in original owner checkout; reconcile/reacquire or explicitly stage into new run, never commit licensed/local payload",
+      "sha256": "ccbcb5c5be211816971b306ee4cdfdf65e2aaaba62b84db22f35f5559279dc25",
+      "public_status": "unpublished supplier-input bundle; preserve original bytes; no implicit redistribution"
+    },
+    {
+      "source": "references/vendor/mcmaster/91290A242/91290A242.step",
+      "bytes": 1794544,
+      "suffix": ".step",
+      "proposed_home": "hardware/vendor/mcmaster/91290A242/91290A242.step",
+      "action": "preserve in original owner checkout; reconcile/reacquire or explicitly stage into new run, never commit licensed/local payload",
+      "sha256": "174ea92ec6cb82f6924523ab5a28a3111c32b3ae043437d032adc22042567082",
+      "public_status": "unpublished supplier-input bundle; preserve original bytes; no implicit redistribution"
+    },
+    {
+      "source": "references/vendor/mcmaster/91290A250/91290A250.page.json",
+      "bytes": 2318,
+      "suffix": ".json",
+      "proposed_home": "hardware/vendor/mcmaster/91290A250/91290A250.page.json",
+      "action": "preserve in original owner checkout; reconcile/reacquire or explicitly stage into new run, never commit licensed/local payload",
+      "sha256": "b2435ee10dcafa0d576096958fa3207dc96d9e15b853de7cd788c4e6dab71361",
+      "public_status": "unpublished supplier-input bundle; preserve original bytes; no implicit redistribution"
+    },
+    {
+      "source": "references/vendor/mcmaster/91290A252/91290A252.page.json",
+      "bytes": 2182,
+      "suffix": ".json",
+      "proposed_home": "hardware/vendor/mcmaster/91290A252/91290A252.page.json",
+      "action": "preserve in original owner checkout; reconcile/reacquire or explicitly stage into new run, never commit licensed/local payload",
+      "sha256": "4955f16b95b855e6e258cf87218d2f430f24bf647f875f295f48f570b779dcdf",
+      "public_status": "unpublished supplier-input bundle; preserve original bytes; no implicit redistribution"
+    },
+    {
+      "source": "references/vendor/mcmaster/91290A254/91290A254.norm.json",
+      "bytes": 678,
+      "suffix": ".json",
+      "proposed_home": "hardware/vendor/mcmaster/91290A254/91290A254.norm.json",
+      "action": "preserve in original owner checkout; reconcile/reacquire or explicitly stage into new run, never commit licensed/local payload",
+      "sha256": "b93b969705ab35868feff7aec02a897ac3f7c1cce5d9d79030823d8b86a6c872",
+      "public_status": "unpublished supplier-input bundle; preserve original bytes; no implicit redistribution"
+    },
+    {
+      "source": "references/vendor/mcmaster/91290A254/91290A254.norm.step",
+      "bytes": 3539247,
+      "suffix": ".step",
+      "proposed_home": "hardware/vendor/mcmaster/91290A254/91290A254.norm.step",
+      "action": "preserve in original owner checkout; reconcile/reacquire or explicitly stage into new run, never commit licensed/local payload",
+      "sha256": "aa2cc82094e1e1c28d68912017367ea3b539eeda797ae87dc44a47ada6ed5268",
+      "public_status": "unpublished supplier-input bundle; preserve original bytes; no implicit redistribution"
+    },
+    {
+      "source": "references/vendor/mcmaster/91290A254/91290A254.page.json",
+      "bytes": 2322,
+      "suffix": ".json",
+      "proposed_home": "hardware/vendor/mcmaster/91290A254/91290A254.page.json",
+      "action": "preserve in original owner checkout; reconcile/reacquire or explicitly stage into new run, never commit licensed/local payload",
+      "sha256": "25f77af022930dfac6ca009cc60458c31ea05e048fc874d374b9aa661e731709",
+      "public_status": "unpublished supplier-input bundle; preserve original bytes; no implicit redistribution"
+    },
+    {
+      "source": "references/vendor/mcmaster/91290A254/91290A254.step",
+      "bytes": 1886294,
+      "suffix": ".step",
+      "proposed_home": "hardware/vendor/mcmaster/91290A254/91290A254.step",
+      "action": "preserve in original owner checkout; reconcile/reacquire or explicitly stage into new run, never commit licensed/local payload",
+      "sha256": "9d348fbb5c4d26eedd870710515a8aac0aba373100a5e58b2e85393f0c653fbe",
+      "public_status": "unpublished supplier-input bundle; preserve original bytes; no implicit redistribution"
+    },
+    {
+      "source": "references/vendor/mcmaster/91290A332/91290A332.page.json",
+      "bytes": 2207,
+      "suffix": ".json",
+      "proposed_home": "hardware/vendor/mcmaster/91290A332/91290A332.page.json",
+      "action": "preserve in original owner checkout; reconcile/reacquire or explicitly stage into new run, never commit licensed/local payload",
+      "sha256": "b85ac0800322a1c97c0b496232b75f1d941d89830ed56a2e96914d9a87dc6f44",
+      "public_status": "unpublished supplier-input bundle; preserve original bytes; no implicit redistribution"
+    },
+    {
+      "source": "references/vendor/mcmaster/91290A334/91290A334.norm.json",
+      "bytes": 678,
+      "suffix": ".json",
+      "proposed_home": "hardware/vendor/mcmaster/91290A334/91290A334.norm.json",
+      "action": "preserve in original owner checkout; reconcile/reacquire or explicitly stage into new run, never commit licensed/local payload",
+      "sha256": "06dcd0f28c73171a0cf3d8e0368379b0291f02e53a904445b7cc9b2f9ed2f55c",
+      "public_status": "unpublished supplier-input bundle; preserve original bytes; no implicit redistribution"
+    },
+    {
+      "source": "references/vendor/mcmaster/91290A334/91290A334.norm.step",
+      "bytes": 3414658,
+      "suffix": ".step",
+      "proposed_home": "hardware/vendor/mcmaster/91290A334/91290A334.norm.step",
+      "action": "preserve in original owner checkout; reconcile/reacquire or explicitly stage into new run, never commit licensed/local payload",
+      "sha256": "f68bd613fc3502622db92a24069ab7b8ce2c8d084cd068e736ab3cda743a7c68",
+      "public_status": "unpublished supplier-input bundle; preserve original bytes; no implicit redistribution"
+    },
+    {
+      "source": "references/vendor/mcmaster/91290A334/91290A334.page.json",
+      "bytes": 2180,
+      "suffix": ".json",
+      "proposed_home": "hardware/vendor/mcmaster/91290A334/91290A334.page.json",
+      "action": "preserve in original owner checkout; reconcile/reacquire or explicitly stage into new run, never commit licensed/local payload",
+      "sha256": "578447794d6069a40f3a50af00bfd0501eaa4f688304872c3c18c14bdf5b372d",
+      "public_status": "unpublished supplier-input bundle; preserve original bytes; no implicit redistribution"
+    },
+    {
+      "source": "references/vendor/mcmaster/91290A334/91290A334.step",
+      "bytes": 1784767,
+      "suffix": ".step",
+      "proposed_home": "hardware/vendor/mcmaster/91290A334/91290A334.step",
+      "action": "preserve in original owner checkout; reconcile/reacquire or explicitly stage into new run, never commit licensed/local payload",
+      "sha256": "75e13865292526db322f7cc57c87680478cb18e25d3e2d920d8a8d0d64c70af6",
+      "public_status": "unpublished supplier-input bundle; preserve original bytes; no implicit redistribution"
+    },
+    {
+      "source": "references/vendor/mcmaster/91290A336/91290A336.page.json",
+      "bytes": 2186,
+      "suffix": ".json",
+      "proposed_home": "hardware/vendor/mcmaster/91290A336/91290A336.page.json",
+      "action": "preserve in original owner checkout; reconcile/reacquire or explicitly stage into new run, never commit licensed/local payload",
+      "sha256": "c468a119b10150d48030003c068c169fedc779692c663f1a8d789ac78074edfa",
+      "public_status": "unpublished supplier-input bundle; preserve original bytes; no implicit redistribution"
+    },
+    {
+      "source": "references/vendor/mcmaster/91290A660/91290A660.norm.json",
+      "bytes": 676,
+      "suffix": ".json",
+      "proposed_home": "hardware/vendor/mcmaster/91290A660/91290A660.norm.json",
+      "action": "preserve in original owner checkout; reconcile/reacquire or explicitly stage into new run, never commit licensed/local payload",
+      "sha256": "36bc404b4a8b7460d1d7b17537a1a0bfe1d97e6253cd6720f67f93b7c0243eb1",
+      "public_status": "unpublished supplier-input bundle; preserve original bytes; no implicit redistribution"
+    },
+    {
+      "source": "references/vendor/mcmaster/91290A660/91290A660.norm.step",
+      "bytes": 1083759,
+      "suffix": ".step",
+      "proposed_home": "hardware/vendor/mcmaster/91290A660/91290A660.norm.step",
+      "action": "preserve in original owner checkout; reconcile/reacquire or explicitly stage into new run, never commit licensed/local payload",
+      "sha256": "a2d7364e298536188a0b54caeef10c53ec3d259519e816adf8806db00f8a47e8",
+      "public_status": "unpublished supplier-input bundle; preserve original bytes; no implicit redistribution"
+    },
+    {
+      "source": "references/vendor/mcmaster/91290A660/91290A660.page.json",
+      "bytes": 2517,
+      "suffix": ".json",
+      "proposed_home": "hardware/vendor/mcmaster/91290A660/91290A660.page.json",
+      "action": "preserve in original owner checkout; reconcile/reacquire or explicitly stage into new run, never commit licensed/local payload",
+      "sha256": "32c0ad74df03389ef3ab71502be842aed53360d2a2ff7c8e6396da7213fb7173",
+      "public_status": "unpublished supplier-input bundle; preserve original bytes; no implicit redistribution"
+    },
+    {
+      "source": "references/vendor/mcmaster/91290A660/91290A660.step",
+      "bytes": 911137,
+      "suffix": ".step",
+      "proposed_home": "hardware/vendor/mcmaster/91290A660/91290A660.step",
+      "action": "preserve in original owner checkout; reconcile/reacquire or explicitly stage into new run, never commit licensed/local payload",
+      "sha256": "5f9ac401a964fe44ef9f858510a8ca542e97c93192497a20c09d59db240bd740",
+      "public_status": "unpublished supplier-input bundle; preserve original bytes; no implicit redistribution"
+    },
+    {
+      "source": "references/vendor/mcmaster/91290A662/91290A662.page.json",
+      "bytes": 2644,
+      "suffix": ".json",
+      "proposed_home": "hardware/vendor/mcmaster/91290A662/91290A662.page.json",
+      "action": "preserve in original owner checkout; reconcile/reacquire or explicitly stage into new run, never commit licensed/local payload",
+      "sha256": "4f33b4b870dab60d0cd0bdda09d1be8086dc5692b1bac0169297df2a055e85f5",
+      "public_status": "unpublished supplier-input bundle; preserve original bytes; no implicit redistribution"
+    },
+    {
+      "source": "references/vendor/mcmaster/91290A667/91290A667.norm.json",
+      "bytes": 674,
+      "suffix": ".json",
+      "proposed_home": "hardware/vendor/mcmaster/91290A667/91290A667.norm.json",
+      "action": "preserve in original owner checkout; reconcile/reacquire or explicitly stage into new run, never commit licensed/local payload",
+      "sha256": "afa35900bc49d9632c6e35d4b7ab0cde96f10ab5a76524714a591ce5d2be44d1",
+      "public_status": "unpublished supplier-input bundle; preserve original bytes; no implicit redistribution"
+    },
+    {
+      "source": "references/vendor/mcmaster/91290A667/91290A667.norm.step",
+      "bytes": 713771,
+      "suffix": ".step",
+      "proposed_home": "hardware/vendor/mcmaster/91290A667/91290A667.norm.step",
+      "action": "preserve in original owner checkout; reconcile/reacquire or explicitly stage into new run, never commit licensed/local payload",
+      "sha256": "2cbe468b893891e128c0927ddf50295ad756782291940566e7377b36796ab296",
+      "public_status": "unpublished supplier-input bundle; preserve original bytes; no implicit redistribution"
+    },
+    {
+      "source": "references/vendor/mcmaster/91290A667/91290A667.page.json",
+      "bytes": 2511,
+      "suffix": ".json",
+      "proposed_home": "hardware/vendor/mcmaster/91290A667/91290A667.page.json",
+      "action": "preserve in original owner checkout; reconcile/reacquire or explicitly stage into new run, never commit licensed/local payload",
+      "sha256": "eb03a8569ce026a44d3136450987a779ddf16edab1cbf8f8768c78ff5c400873",
+      "public_status": "unpublished supplier-input bundle; preserve original bytes; no implicit redistribution"
+    },
+    {
+      "source": "references/vendor/mcmaster/91290A667/91290A667.step",
+      "bytes": 575578,
+      "suffix": ".step",
+      "proposed_home": "hardware/vendor/mcmaster/91290A667/91290A667.step",
+      "action": "preserve in original owner checkout; reconcile/reacquire or explicitly stage into new run, never commit licensed/local payload",
+      "sha256": "81325ca2bee068b5fa2a127587a2d106c8d9f9b48e19f8aa06e66fc2324faa2a",
+      "public_status": "unpublished supplier-input bundle; preserve original bytes; no implicit redistribution"
+    },
+    {
+      "source": "references/vendor/mcmaster/91595A352/91595A352.norm.json",
+      "bytes": 603,
+      "suffix": ".json",
+      "proposed_home": "hardware/vendor/mcmaster/91595A352/91595A352.norm.json",
+      "action": "preserve in original owner checkout; reconcile/reacquire or explicitly stage into new run, never commit licensed/local payload",
+      "sha256": "29958ddf6114559e6ea21477629a04d3279e5f1b2a49ee111b95e07cc6fe5a29",
+      "public_status": "unpublished supplier-input bundle; preserve original bytes; no implicit redistribution"
+    },
+    {
+      "source": "references/vendor/mcmaster/91595A352/91595A352.norm.step",
+      "bytes": 27965,
+      "suffix": ".step",
+      "proposed_home": "hardware/vendor/mcmaster/91595A352/91595A352.norm.step",
+      "action": "preserve in original owner checkout; reconcile/reacquire or explicitly stage into new run, never commit licensed/local payload",
+      "sha256": "5f4d03bc82cae870d85cc6fd3382ffd1a2d6855de5bd06960f1f028be3c86cca",
+      "public_status": "unpublished supplier-input bundle; preserve original bytes; no implicit redistribution"
+    },
+    {
+      "source": "references/vendor/mcmaster/91595A352/91595A352.page.json",
+      "bytes": 2033,
+      "suffix": ".json",
+      "proposed_home": "hardware/vendor/mcmaster/91595A352/91595A352.page.json",
+      "action": "preserve in original owner checkout; reconcile/reacquire or explicitly stage into new run, never commit licensed/local payload",
+      "sha256": "97f932fe5bd2d98d1f37b8bb7eb1a2982e36d79c168b77857052677b62b57f1d",
+      "public_status": "unpublished supplier-input bundle; preserve original bytes; no implicit redistribution"
+    },
+    {
+      "source": "references/vendor/mcmaster/91595A352/91595A352.step",
+      "bytes": 19695,
+      "suffix": ".step",
+      "proposed_home": "hardware/vendor/mcmaster/91595A352/91595A352.step",
+      "action": "preserve in original owner checkout; reconcile/reacquire or explicitly stage into new run, never commit licensed/local payload",
+      "sha256": "4998edc9b3a6dcf8fa2f290b60d411863cc17427b3b6597d5c8a1adc9fc22c70",
+      "public_status": "unpublished supplier-input bundle; preserve original bytes; no implicit redistribution"
+    },
+    {
+      "source": "references/vendor/mcmaster/91595A356/91595A356.page.json",
+      "bytes": 2006,
+      "suffix": ".json",
+      "proposed_home": "hardware/vendor/mcmaster/91595A356/91595A356.page.json",
+      "action": "preserve in original owner checkout; reconcile/reacquire or explicitly stage into new run, never commit licensed/local payload",
+      "sha256": "f4c7cc2bc507a1e2b25b90179793c0fae61eb6daa088f0d542f2bf2ea5704ab0",
+      "public_status": "unpublished supplier-input bundle; preserve original bytes; no implicit redistribution"
+    },
+    {
+      "source": "references/vendor/mcmaster/91595A452/91595A452.norm.json",
+      "bytes": 603,
+      "suffix": ".json",
+      "proposed_home": "hardware/vendor/mcmaster/91595A452/91595A452.norm.json",
+      "action": "preserve in original owner checkout; reconcile/reacquire or explicitly stage into new run, never commit licensed/local payload",
+      "sha256": "e3784dcd1de9cb5e8207df92d4adb70e747b3d1bf2948a8b560e28a165413297",
+      "public_status": "unpublished supplier-input bundle; preserve original bytes; no implicit redistribution"
+    },
+    {
+      "source": "references/vendor/mcmaster/91595A452/91595A452.norm.step",
+      "bytes": 27849,
+      "suffix": ".step",
+      "proposed_home": "hardware/vendor/mcmaster/91595A452/91595A452.norm.step",
+      "action": "preserve in original owner checkout; reconcile/reacquire or explicitly stage into new run, never commit licensed/local payload",
+      "sha256": "22e5c8bb432ed30ff914442128359a708a3bf62971fb7d090953fdbc20083600",
+      "public_status": "unpublished supplier-input bundle; preserve original bytes; no implicit redistribution"
+    },
+    {
+      "source": "references/vendor/mcmaster/91595A452/91595A452.page.json",
+      "bytes": 2033,
+      "suffix": ".json",
+      "proposed_home": "hardware/vendor/mcmaster/91595A452/91595A452.page.json",
+      "action": "preserve in original owner checkout; reconcile/reacquire or explicitly stage into new run, never commit licensed/local payload",
+      "sha256": "99ab275f84602be232c0f67d584440eb85964bb1dd79c2e708c07bee7ffee641",
+      "public_status": "unpublished supplier-input bundle; preserve original bytes; no implicit redistribution"
+    },
+    {
+      "source": "references/vendor/mcmaster/91595A452/91595A452.step",
+      "bytes": 19707,
+      "suffix": ".step",
+      "proposed_home": "hardware/vendor/mcmaster/91595A452/91595A452.step",
+      "action": "preserve in original owner checkout; reconcile/reacquire or explicitly stage into new run, never commit licensed/local payload",
+      "sha256": "e9a95f5ef80acb723ff7825b2143e070cc86b2f69f07c3cc6b44caf55fd4bfd6",
+      "public_status": "unpublished supplier-input bundle; preserve original bytes; no implicit redistribution"
+    },
+    {
+      "source": "references/vendor/mcmaster/92981A101/92981A101.page.json",
+      "bytes": 3018,
+      "suffix": ".json",
+      "proposed_home": "hardware/vendor/mcmaster/92981A101/92981A101.page.json",
+      "action": "preserve in original owner checkout; reconcile/reacquire or explicitly stage into new run, never commit licensed/local payload",
+      "sha256": "780ec04f697c72a17525c97ec667ce5260ae71fe62e8e2621ebb30ed92051569",
+      "public_status": "unpublished supplier-input bundle; preserve original bytes; no implicit redistribution"
+    },
+    {
+      "source": "references/vendor/mcmaster/92981A205/92981A205.norm.json",
+      "bytes": 601,
+      "suffix": ".json",
+      "proposed_home": "hardware/vendor/mcmaster/92981A205/92981A205.norm.json",
+      "action": "preserve in original owner checkout; reconcile/reacquire or explicitly stage into new run, never commit licensed/local payload",
+      "sha256": "3c1576d6d72e37eb67a9fc3c3d196bb0b361ad9a03168d03b7b974ce35b5d761",
+      "public_status": "unpublished supplier-input bundle; preserve original bytes; no implicit redistribution"
+    },
+    {
+      "source": "references/vendor/mcmaster/92981A205/92981A205.norm.step",
+      "bytes": 1923655,
+      "suffix": ".step",
+      "proposed_home": "hardware/vendor/mcmaster/92981A205/92981A205.norm.step",
+      "action": "preserve in original owner checkout; reconcile/reacquire or explicitly stage into new run, never commit licensed/local payload",
+      "sha256": "4ee8ae14fec5b26d389908c836abc9f6f1d2c6ec471114bfe2af88d942c296a8",
+      "public_status": "unpublished supplier-input bundle; preserve original bytes; no implicit redistribution"
+    },
+    {
+      "source": "references/vendor/mcmaster/92981A205/92981A205.page.json",
+      "bytes": 3179,
+      "suffix": ".json",
+      "proposed_home": "hardware/vendor/mcmaster/92981A205/92981A205.page.json",
+      "action": "preserve in original owner checkout; reconcile/reacquire or explicitly stage into new run, never commit licensed/local payload",
+      "sha256": "9f5dffdd6c673b7c9bf582175dccf082453798bfa2fa7e5c971033ca6937f966",
+      "public_status": "unpublished supplier-input bundle; preserve original bytes; no implicit redistribution"
+    },
+    {
+      "source": "references/vendor/mcmaster/92981A205/92981A205.step",
+      "bytes": 1003541,
+      "suffix": ".step",
+      "proposed_home": "hardware/vendor/mcmaster/92981A205/92981A205.step",
+      "action": "preserve in original owner checkout; reconcile/reacquire or explicitly stage into new run, never commit licensed/local payload",
+      "sha256": "a12d81a247f4bf1db7b73ca5e4e234a944c1cd165cb081d57f434cf4606b74b5",
+      "public_status": "unpublished supplier-input bundle; preserve original bytes; no implicit redistribution"
+    },
+    {
+      "source": "references/vendor/mcmaster/92981A303/92981A303.page.json",
+      "bytes": 2947,
+      "suffix": ".json",
+      "proposed_home": "hardware/vendor/mcmaster/92981A303/92981A303.page.json",
+      "action": "preserve in original owner checkout; reconcile/reacquire or explicitly stage into new run, never commit licensed/local payload",
+      "sha256": "2ae57815e71fdf70a78e18470978f8885e367175d61dde17ef6f05385b58569f",
+      "public_status": "unpublished supplier-input bundle; preserve original bytes; no implicit redistribution"
+    },
+    {
+      "source": "references/vendor/mcmaster/92981A408/92981A408.page.json",
+      "bytes": 2754,
+      "suffix": ".json",
+      "proposed_home": "hardware/vendor/mcmaster/92981A408/92981A408.page.json",
+      "action": "preserve in original owner checkout; reconcile/reacquire or explicitly stage into new run, never commit licensed/local payload",
+      "sha256": "df8eb63f969fad8403bf6a480e432433b3b311318a42d798276f6b07aa719536",
+      "public_status": "unpublished supplier-input bundle; preserve original bytes; no implicit redistribution"
+    },
+    {
+      "source": "references/vendor/mcmaster/92981A409/92981A409.page.json",
+      "bytes": 2892,
+      "suffix": ".json",
+      "proposed_home": "hardware/vendor/mcmaster/92981A409/92981A409.page.json",
+      "action": "preserve in original owner checkout; reconcile/reacquire or explicitly stage into new run, never commit licensed/local payload",
+      "sha256": "788eda217c9c89bd44285e9cc0c69823b0e33d4571d7a32a084ee3ae75d60566",
+      "public_status": "unpublished supplier-input bundle; preserve original bytes; no implicit redistribution"
+    },
+    {
+      "source": "references/vendor/mcmaster/92981A411/92981A411.norm.json",
+      "bytes": 608,
+      "suffix": ".json",
+      "proposed_home": "hardware/vendor/mcmaster/92981A411/92981A411.norm.json",
+      "action": "preserve in original owner checkout; reconcile/reacquire or explicitly stage into new run, never commit licensed/local payload",
+      "sha256": "0168c682f14c7f093014b10409bc1656f6e4709c5f075d55924313aebac41551",
+      "public_status": "unpublished supplier-input bundle; preserve original bytes; no implicit redistribution"
+    },
+    {
+      "source": "references/vendor/mcmaster/92981A411/92981A411.norm.step",
+      "bytes": 651957,
+      "suffix": ".step",
+      "proposed_home": "hardware/vendor/mcmaster/92981A411/92981A411.norm.step",
+      "action": "preserve in original owner checkout; reconcile/reacquire or explicitly stage into new run, never commit licensed/local payload",
+      "sha256": "43fb96cf68d4e838a074f2a065ec260ee281a931ac8d2c47a4e735823eaa9c7d",
+      "public_status": "unpublished supplier-input bundle; preserve original bytes; no implicit redistribution"
+    },
+    {
+      "source": "references/vendor/mcmaster/92981A411/92981A411.page.json",
+      "bytes": 2886,
+      "suffix": ".json",
+      "proposed_home": "hardware/vendor/mcmaster/92981A411/92981A411.page.json",
+      "action": "preserve in original owner checkout; reconcile/reacquire or explicitly stage into new run, never commit licensed/local payload",
+      "sha256": "1c5ec58e9d2261a7e9d4bf6a73a92449740ed22d5e2ce2be477adae1059a7f08",
+      "public_status": "unpublished supplier-input bundle; preserve original bytes; no implicit redistribution"
+    },
+    {
+      "source": "references/vendor/mcmaster/92981A411/92981A411.step",
+      "bytes": 392132,
+      "suffix": ".step",
+      "proposed_home": "hardware/vendor/mcmaster/92981A411/92981A411.step",
+      "action": "preserve in original owner checkout; reconcile/reacquire or explicitly stage into new run, never commit licensed/local payload",
+      "sha256": "2a6ffe9c786e90b31a249fce0538965d152a2c8614c1ed3f15973b1a6440290d",
+      "public_status": "unpublished supplier-input bundle; preserve original bytes; no implicit redistribution"
+    },
+    {
+      "source": "references/vendor/mcmaster/9307K884/9307K884.norm.json",
+      "bytes": 623,
+      "suffix": ".json",
+      "proposed_home": "hardware/vendor/mcmaster/9307K884/9307K884.norm.json",
+      "action": "preserve in original owner checkout; reconcile/reacquire or explicitly stage into new run, never commit licensed/local payload",
+      "sha256": "fda44016c0419ddf0d0e9b0ba227a2cb23fab3588d5848bd9febc29977a7a218",
+      "public_status": "unpublished supplier-input bundle; preserve original bytes; no implicit redistribution"
+    },
+    {
+      "source": "references/vendor/mcmaster/9307K884/9307K884.norm.step",
+      "bytes": 34913,
+      "suffix": ".step",
+      "proposed_home": "hardware/vendor/mcmaster/9307K884/9307K884.norm.step",
+      "action": "preserve in original owner checkout; reconcile/reacquire or explicitly stage into new run, never commit licensed/local payload",
+      "sha256": "b22789552b9d8e54fa7361800e18c45bd9274d2000ca97c23ccef8f62aca0e38",
+      "public_status": "unpublished supplier-input bundle; preserve original bytes; no implicit redistribution"
+    },
+    {
+      "source": "references/vendor/mcmaster/9307K884/9307K884.page.json",
+      "bytes": 2079,
+      "suffix": ".json",
+      "proposed_home": "hardware/vendor/mcmaster/9307K884/9307K884.page.json",
+      "action": "preserve in original owner checkout; reconcile/reacquire or explicitly stage into new run, never commit licensed/local payload",
+      "sha256": "546d1275ae0020af4af2feac93af1e96ef91c236f444fb0783f5b4b7c7125744",
+      "public_status": "unpublished supplier-input bundle; preserve original bytes; no implicit redistribution"
+    },
+    {
+      "source": "references/vendor/mcmaster/9307K884/9307K884.step",
+      "bytes": 30294,
+      "suffix": ".step",
+      "proposed_home": "hardware/vendor/mcmaster/9307K884/9307K884.step",
+      "action": "preserve in original owner checkout; reconcile/reacquire or explicitly stage into new run, never commit licensed/local payload",
+      "sha256": "48aca94cc0484d4b895d8379bbd52a9f81049b8de55adeee3b690ab1949f20f6",
+      "public_status": "unpublished supplier-input bundle; preserve original bytes; no implicit redistribution"
+    },
+    {
+      "source": "references/vendor/mcmaster/93475A240/93475A240.norm.json",
+      "bytes": 596,
+      "suffix": ".json",
+      "proposed_home": "hardware/vendor/mcmaster/93475A240/93475A240.norm.json",
+      "action": "preserve in original owner checkout; reconcile/reacquire or explicitly stage into new run, never commit licensed/local payload",
+      "sha256": "694bb757445ba0c6761aa8393f2f6f2011020efeea933e0043f826478940c452",
+      "public_status": "unpublished supplier-input bundle; preserve original bytes; no implicit redistribution"
+    },
+    {
+      "source": "references/vendor/mcmaster/93475A240/93475A240.norm.step",
+      "bytes": 39118,
+      "suffix": ".step",
+      "proposed_home": "hardware/vendor/mcmaster/93475A240/93475A240.norm.step",
+      "action": "preserve in original owner checkout; reconcile/reacquire or explicitly stage into new run, never commit licensed/local payload",
+      "sha256": "84f5fffa1cbe93f5df228e063f63516921ebf6d33f537c62de4740c05c99df53",
+      "public_status": "unpublished supplier-input bundle; preserve original bytes; no implicit redistribution"
+    },
+    {
+      "source": "references/vendor/mcmaster/93475A240/93475A240.page.json",
+      "bytes": 1754,
+      "suffix": ".json",
+      "proposed_home": "hardware/vendor/mcmaster/93475A240/93475A240.page.json",
+      "action": "preserve in original owner checkout; reconcile/reacquire or explicitly stage into new run, never commit licensed/local payload",
+      "sha256": "0308183962502f014e1dbe4b27696b8a4259eb1667446bafebb5c1d09cd87c12",
+      "public_status": "unpublished supplier-input bundle; preserve original bytes; no implicit redistribution"
+    },
+    {
+      "source": "references/vendor/mcmaster/93475A240/93475A240.step",
+      "bytes": 33129,
+      "suffix": ".step",
+      "proposed_home": "hardware/vendor/mcmaster/93475A240/93475A240.step",
+      "action": "preserve in original owner checkout; reconcile/reacquire or explicitly stage into new run, never commit licensed/local payload",
+      "sha256": "d35cb4ffc832351ede3db5d8e1850d669960380ddf5eb708aa5574cbd23d31f9",
+      "public_status": "unpublished supplier-input bundle; preserve original bytes; no implicit redistribution"
+    },
+    {
+      "source": "references/vendor/mcmaster/93475A270/93475A270.norm.json",
+      "bytes": 597,
+      "suffix": ".json",
+      "proposed_home": "hardware/vendor/mcmaster/93475A270/93475A270.norm.json",
+      "action": "preserve in original owner checkout; reconcile/reacquire or explicitly stage into new run, never commit licensed/local payload",
+      "sha256": "9e51093a9b638c0fe4b4c434ca59bd772128a7879c652ad2faf41fa289c05186",
+      "public_status": "unpublished supplier-input bundle; preserve original bytes; no implicit redistribution"
+    },
+    {
+      "source": "references/vendor/mcmaster/93475A270/93475A270.norm.step",
+      "bytes": 39355,
+      "suffix": ".step",
+      "proposed_home": "hardware/vendor/mcmaster/93475A270/93475A270.norm.step",
+      "action": "preserve in original owner checkout; reconcile/reacquire or explicitly stage into new run, never commit licensed/local payload",
+      "sha256": "5c79626118808082108f7fd0b27a74b9087c8295ffd2275a87a2bc0133250a71",
+      "public_status": "unpublished supplier-input bundle; preserve original bytes; no implicit redistribution"
+    },
+    {
+      "source": "references/vendor/mcmaster/93475A270/93475A270.page.json",
+      "bytes": 1745,
+      "suffix": ".json",
+      "proposed_home": "hardware/vendor/mcmaster/93475A270/93475A270.page.json",
+      "action": "preserve in original owner checkout; reconcile/reacquire or explicitly stage into new run, never commit licensed/local payload",
+      "sha256": "3cefe7248aa9a3090b5c684d9aa864305801b2c7b6484f20f857dc48699dd583",
+      "public_status": "unpublished supplier-input bundle; preserve original bytes; no implicit redistribution"
+    },
+    {
+      "source": "references/vendor/mcmaster/93475A270/93475A270.step",
+      "bytes": 33138,
+      "suffix": ".step",
+      "proposed_home": "hardware/vendor/mcmaster/93475A270/93475A270.step",
+      "action": "preserve in original owner checkout; reconcile/reacquire or explicitly stage into new run, never commit licensed/local payload",
+      "sha256": "d24e0934ae330e91d6c8893d3dd3b190a8ed8309fc12845b461060f7f9022b8f",
+      "public_status": "unpublished supplier-input bundle; preserve original bytes; no implicit redistribution"
+    },
+    {
+      "source": "references/vendor/mcmaster/94459A140/94459A140.norm.json",
+      "bytes": 608,
+      "suffix": ".json",
+      "proposed_home": "hardware/vendor/mcmaster/94459A140/94459A140.norm.json",
+      "action": "preserve in original owner checkout; reconcile/reacquire or explicitly stage into new run, never commit licensed/local payload",
+      "sha256": "c6a3e046d0cb89cb709fc5532f7cd5b9ccf7843e235946ba638aea8d354271ab",
+      "public_status": "unpublished supplier-input bundle; preserve original bytes; no implicit redistribution"
+    },
+    {
+      "source": "references/vendor/mcmaster/94459A140/94459A140.norm.step",
+      "bytes": 1662193,
+      "suffix": ".step",
+      "proposed_home": "hardware/vendor/mcmaster/94459A140/94459A140.norm.step",
+      "action": "preserve in original owner checkout; reconcile/reacquire or explicitly stage into new run, never commit licensed/local payload",
+      "sha256": "2ee42df52bf86ee05039c239b23e0d589d0587bb604ee06c28531315631158a0",
+      "public_status": "unpublished supplier-input bundle; preserve original bytes; no implicit redistribution"
+    },
+    {
+      "source": "references/vendor/mcmaster/94459A140/94459A140.page.json",
+      "bytes": 2228,
+      "suffix": ".json",
+      "proposed_home": "hardware/vendor/mcmaster/94459A140/94459A140.page.json",
+      "action": "preserve in original owner checkout; reconcile/reacquire or explicitly stage into new run, never commit licensed/local payload",
+      "sha256": "e9b62395c71051ce5969f67913a9d56676f11faa5123876477e0dbbd94c198dc",
+      "public_status": "unpublished supplier-input bundle; preserve original bytes; no implicit redistribution"
+    },
+    {
+      "source": "references/vendor/mcmaster/94459A140/94459A140.step",
+      "bytes": 1355436,
+      "suffix": ".step",
+      "proposed_home": "hardware/vendor/mcmaster/94459A140/94459A140.step",
+      "action": "preserve in original owner checkout; reconcile/reacquire or explicitly stage into new run, never commit licensed/local payload",
+      "sha256": "da9a6bec85b849cb3f8c4809b2659a770a25f27c5560b4dda072256affe3c3be",
+      "public_status": "unpublished supplier-input bundle; preserve original bytes; no implicit redistribution"
+    },
+    {
+      "source": "references/vendor/mcmaster/94459A775/94459A775.norm.json",
+      "bytes": 620,
+      "suffix": ".json",
+      "proposed_home": "hardware/vendor/mcmaster/94459A775/94459A775.norm.json",
+      "action": "preserve in original owner checkout; reconcile/reacquire or explicitly stage into new run, never commit licensed/local payload",
+      "sha256": "e340d143645e05dabb7cfd06e36aad7f26febfc5e1c553a5468d728cb77be960",
+      "public_status": "unpublished supplier-input bundle; preserve original bytes; no implicit redistribution"
+    },
+    {
+      "source": "references/vendor/mcmaster/94459A775/94459A775.norm.step",
+      "bytes": 3368033,
+      "suffix": ".step",
+      "proposed_home": "hardware/vendor/mcmaster/94459A775/94459A775.norm.step",
+      "action": "preserve in original owner checkout; reconcile/reacquire or explicitly stage into new run, never commit licensed/local payload",
+      "sha256": "774d31bbbe380df98167e8b70d73a0b4dd23da1b447f4cc6c322164546ea137e",
+      "public_status": "unpublished supplier-input bundle; preserve original bytes; no implicit redistribution"
+    },
+    {
+      "source": "references/vendor/mcmaster/94459A775/94459A775.page.json",
+      "bytes": 2366,
+      "suffix": ".json",
+      "proposed_home": "hardware/vendor/mcmaster/94459A775/94459A775.page.json",
+      "action": "preserve in original owner checkout; reconcile/reacquire or explicitly stage into new run, never commit licensed/local payload",
+      "sha256": "a45ab5e98d8cd6efe098f1eaf7463277c44002cd9f502c86c406d6fa8a80552d",
+      "public_status": "unpublished supplier-input bundle; preserve original bytes; no implicit redistribution"
+    },
+    {
+      "source": "references/vendor/mcmaster/94459A775/94459A775.step",
+      "bytes": 1783618,
+      "suffix": ".step",
+      "proposed_home": "hardware/vendor/mcmaster/94459A775/94459A775.step",
+      "action": "preserve in original owner checkout; reconcile/reacquire or explicitly stage into new run, never commit licensed/local payload",
+      "sha256": "26fbbb24b38c74bb88bd8648ac88057512fcfdcf4a3624e0fb650ae5e12cfe98",
+      "public_status": "unpublished supplier-input bundle; preserve original bytes; no implicit redistribution"
+    },
+    {
+      "source": "references/vendor/mcmaster/94459A778/94459A778.page.json",
+      "bytes": 2142,
+      "suffix": ".json",
+      "proposed_home": "hardware/vendor/mcmaster/94459A778/94459A778.page.json",
+      "action": "preserve in original owner checkout; reconcile/reacquire or explicitly stage into new run, never commit licensed/local payload",
+      "sha256": "832d0b16a63298fb9a1928cbac797df631e281ef01d242fd0abe87f8546ad13b",
+      "public_status": "unpublished supplier-input bundle; preserve original bytes; no implicit redistribution"
+    },
+    {
+      "source": "references/vendor/mcmaster/94645A102/94645A102.norm.json",
+      "bytes": 607,
+      "suffix": ".json",
+      "proposed_home": "hardware/vendor/mcmaster/94645A102/94645A102.norm.json",
+      "action": "preserve in original owner checkout; reconcile/reacquire or explicitly stage into new run, never commit licensed/local payload",
+      "sha256": "8ca9d73ce69da053ff1fdda6f58bf547fa2668c14120a2fa73937b243e7622a3",
+      "public_status": "unpublished supplier-input bundle; preserve original bytes; no implicit redistribution"
+    },
+    {
+      "source": "references/vendor/mcmaster/94645A102/94645A102.norm.step",
+      "bytes": 532676,
+      "suffix": ".step",
+      "proposed_home": "hardware/vendor/mcmaster/94645A102/94645A102.norm.step",
+      "action": "preserve in original owner checkout; reconcile/reacquire or explicitly stage into new run, never commit licensed/local payload",
+      "sha256": "d351b0276b4ab22223c7a0ab5d3f58da50afcc77dd4481c2be202d5288c1b230",
+      "public_status": "unpublished supplier-input bundle; preserve original bytes; no implicit redistribution"
+    },
+    {
+      "source": "references/vendor/mcmaster/94645A102/94645A102.page.json",
+      "bytes": 2261,
+      "suffix": ".json",
+      "proposed_home": "hardware/vendor/mcmaster/94645A102/94645A102.page.json",
+      "action": "preserve in original owner checkout; reconcile/reacquire or explicitly stage into new run, never commit licensed/local payload",
+      "sha256": "5e04e01f4eea4a005fd8cff418ecd53eeb107c3d851dc168d5b841274fb7b7d2",
+      "public_status": "unpublished supplier-input bundle; preserve original bytes; no implicit redistribution"
+    },
+    {
+      "source": "references/vendor/mcmaster/94645A102/94645A102.step",
+      "bytes": 317585,
+      "suffix": ".step",
+      "proposed_home": "hardware/vendor/mcmaster/94645A102/94645A102.step",
+      "action": "preserve in original owner checkout; reconcile/reacquire or explicitly stage into new run, never commit licensed/local payload",
+      "sha256": "aa90d12b8fb165e3d45616d099b0521a5d5710ecb33b63f242220d07cdb4f371",
+      "public_status": "unpublished supplier-input bundle; preserve original bytes; no implicit redistribution"
+    },
+    {
+      "source": "references/vendor/mcmaster/94645A205/94645A205.norm.json",
+      "bytes": 611,
+      "suffix": ".json",
+      "proposed_home": "hardware/vendor/mcmaster/94645A205/94645A205.norm.json",
+      "action": "preserve in original owner checkout; reconcile/reacquire or explicitly stage into new run, never commit licensed/local payload",
+      "sha256": "db81fe0b7964bfb6585d52fc2c66effa68a13ad9bfa2413f6b06acb928854686",
+      "public_status": "unpublished supplier-input bundle; preserve original bytes; no implicit redistribution"
+    },
+    {
+      "source": "references/vendor/mcmaster/94645A205/94645A205.norm.step",
+      "bytes": 526062,
+      "suffix": ".step",
+      "proposed_home": "hardware/vendor/mcmaster/94645A205/94645A205.norm.step",
+      "action": "preserve in original owner checkout; reconcile/reacquire or explicitly stage into new run, never commit licensed/local payload",
+      "sha256": "87a50cb7b481751fe3b9f5d061a089b5d24c9e2f6deff21a5dbe3b5c4b3f3c4d",
+      "public_status": "unpublished supplier-input bundle; preserve original bytes; no implicit redistribution"
+    },
+    {
+      "source": "references/vendor/mcmaster/94645A205/94645A205.page.json",
+      "bytes": 2085,
+      "suffix": ".json",
+      "proposed_home": "hardware/vendor/mcmaster/94645A205/94645A205.page.json",
+      "action": "preserve in original owner checkout; reconcile/reacquire or explicitly stage into new run, never commit licensed/local payload",
+      "sha256": "4fd204fbb4ddae763c43c7ede96f15aef81f8d9af9ef658925c7e976ab04d60f",
+      "public_status": "unpublished supplier-input bundle; preserve original bytes; no implicit redistribution"
+    },
+    {
+      "source": "references/vendor/mcmaster/94645A205/94645A205.step",
+      "bytes": 300378,
+      "suffix": ".step",
+      "proposed_home": "hardware/vendor/mcmaster/94645A205/94645A205.step",
+      "action": "preserve in original owner checkout; reconcile/reacquire or explicitly stage into new run, never commit licensed/local payload",
+      "sha256": "9986376178f10bab929e339d02439e781aea1248a6bad1042e54cfdd4d6282ae",
+      "public_status": "unpublished supplier-input bundle; preserve original bytes; no implicit redistribution"
+    },
+    {
+      "source": "references/vendor/mcmaster/94645A220/94645A220.norm.json",
+      "bytes": 613,
+      "suffix": ".json",
+      "proposed_home": "hardware/vendor/mcmaster/94645A220/94645A220.norm.json",
+      "action": "preserve in original owner checkout; reconcile/reacquire or explicitly stage into new run, never commit licensed/local payload",
+      "sha256": "e5b7dae6ae57d50c4dd118b2c759212ab454b2859bd002a0dff5563889d2cd61",
+      "public_status": "unpublished supplier-input bundle; preserve original bytes; no implicit redistribution"
+    },
+    {
+      "source": "references/vendor/mcmaster/94645A220/94645A220.norm.step",
+      "bytes": 556530,
+      "suffix": ".step",
+      "proposed_home": "hardware/vendor/mcmaster/94645A220/94645A220.norm.step",
+      "action": "preserve in original owner checkout; reconcile/reacquire or explicitly stage into new run, never commit licensed/local payload",
+      "sha256": "2eea1c494f771cce97f9b2eb70e96fe380ed9135643ab561f821b10d7d38ef85",
+      "public_status": "unpublished supplier-input bundle; preserve original bytes; no implicit redistribution"
+    },
+    {
+      "source": "references/vendor/mcmaster/94645A220/94645A220.page.json",
+      "bytes": 2266,
+      "suffix": ".json",
+      "proposed_home": "hardware/vendor/mcmaster/94645A220/94645A220.page.json",
+      "action": "preserve in original owner checkout; reconcile/reacquire or explicitly stage into new run, never commit licensed/local payload",
+      "sha256": "359bbca507359c10974f9b6daf79d47403cbe8e8174c1a20e83c91a97fa51353",
+      "public_status": "unpublished supplier-input bundle; preserve original bytes; no implicit redistribution"
+    },
+    {
+      "source": "references/vendor/mcmaster/94645A220/94645A220.step",
+      "bytes": 325487,
+      "suffix": ".step",
+      "proposed_home": "hardware/vendor/mcmaster/94645A220/94645A220.step",
+      "action": "preserve in original owner checkout; reconcile/reacquire or explicitly stage into new run, never commit licensed/local payload",
+      "sha256": "8363a16257e7704649a1eedecc16a9a2e8c9d6b2dd9a28a732b4496ff843b632",
+      "public_status": "unpublished supplier-input bundle; preserve original bytes; no implicit redistribution"
+    },
+    {
+      "source": "references/vendor/mcmaster/94669A155/94669A155.norm.json",
+      "bytes": 600,
+      "suffix": ".json",
+      "proposed_home": "hardware/vendor/mcmaster/94669A155/94669A155.norm.json",
+      "action": "preserve in original owner checkout; reconcile/reacquire or explicitly stage into new run, never commit licensed/local payload",
+      "sha256": "c89eeea048845a45e1c37d8d5d6265cbae69714f366dbeb5e479f65a3ccf0f40",
+      "public_status": "unpublished supplier-input bundle; preserve original bytes; no implicit redistribution"
+    },
+    {
+      "source": "references/vendor/mcmaster/94669A155/94669A155.norm.step",
+      "bytes": 38656,
+      "suffix": ".step",
+      "proposed_home": "hardware/vendor/mcmaster/94669A155/94669A155.norm.step",
+      "action": "preserve in original owner checkout; reconcile/reacquire or explicitly stage into new run, never commit licensed/local payload",
+      "sha256": "a133cf87bf6de2a1e82332c6bd8950b240a5196865b262e2b515e3bc04559a4a",
+      "public_status": "unpublished supplier-input bundle; preserve original bytes; no implicit redistribution"
+    },
+    {
+      "source": "references/vendor/mcmaster/94669A155/94669A155.page.json",
+      "bytes": 1986,
+      "suffix": ".json",
+      "proposed_home": "hardware/vendor/mcmaster/94669A155/94669A155.page.json",
+      "action": "preserve in original owner checkout; reconcile/reacquire or explicitly stage into new run, never commit licensed/local payload",
+      "sha256": "6d48ad187af3cf3a713a20482a9bd0f73494339506cbb7af3aa51297927c70c1",
+      "public_status": "unpublished supplier-input bundle; preserve original bytes; no implicit redistribution"
+    },
+    {
+      "source": "references/vendor/mcmaster/94669A155/94669A155.step",
+      "bytes": 31991,
+      "suffix": ".step",
+      "proposed_home": "hardware/vendor/mcmaster/94669A155/94669A155.step",
+      "action": "preserve in original owner checkout; reconcile/reacquire or explicitly stage into new run, never commit licensed/local payload",
+      "sha256": "f0acc14c7b92dc9c9fbf86cbd57d8d3fcd03055ce622a7596dbe8b3c79e6690a",
+      "public_status": "unpublished supplier-input bundle; preserve original bytes; no implicit redistribution"
+    },
+    {
+      "source": "references/vendor/mcmaster/94669A343/94669A343.norm.json",
+      "bytes": 600,
+      "suffix": ".json",
+      "proposed_home": "hardware/vendor/mcmaster/94669A343/94669A343.norm.json",
+      "action": "preserve in original owner checkout; reconcile/reacquire or explicitly stage into new run, never commit licensed/local payload",
+      "sha256": "48e27fde6a842f6f3f09f51759fbd4a6f72af05c78eccf1a3d467aea24e5e57f",
+      "public_status": "unpublished supplier-input bundle; preserve original bytes; no implicit redistribution"
+    },
+    {
+      "source": "references/vendor/mcmaster/94669A343/94669A343.norm.step",
+      "bytes": 38626,
+      "suffix": ".step",
+      "proposed_home": "hardware/vendor/mcmaster/94669A343/94669A343.norm.step",
+      "action": "preserve in original owner checkout; reconcile/reacquire or explicitly stage into new run, never commit licensed/local payload",
+      "sha256": "f27a92de3da91367971883a647299da88c316a0eaadd5f5288ec4a68380d8f61",
+      "public_status": "unpublished supplier-input bundle; preserve original bytes; no implicit redistribution"
+    },
+    {
+      "source": "references/vendor/mcmaster/94669A343/94669A343.page.json",
+      "bytes": 2024,
+      "suffix": ".json",
+      "proposed_home": "hardware/vendor/mcmaster/94669A343/94669A343.page.json",
+      "action": "preserve in original owner checkout; reconcile/reacquire or explicitly stage into new run, never commit licensed/local payload",
+      "sha256": "da3090aa2d1a33a6463fd8451bdb424e88e58221f46da7d8236b084ff009edb0",
+      "public_status": "unpublished supplier-input bundle; preserve original bytes; no implicit redistribution"
+    },
+    {
+      "source": "references/vendor/mcmaster/94669A343/94669A343.step",
+      "bytes": 32003,
+      "suffix": ".step",
+      "proposed_home": "hardware/vendor/mcmaster/94669A343/94669A343.step",
+      "action": "preserve in original owner checkout; reconcile/reacquire or explicitly stage into new run, never commit licensed/local payload",
+      "sha256": "bf20c7ab0788d27660d1494ace94cbcb89f67db738f6e06a34132ca1717910c9",
+      "public_status": "unpublished supplier-input bundle; preserve original bytes; no implicit redistribution"
+    },
+    {
+      "source": "references/vendor/mcmaster/96990A403/96990A403.page.json",
+      "bytes": 2045,
+      "suffix": ".json",
+      "proposed_home": "hardware/vendor/mcmaster/96990A403/96990A403.page.json",
+      "action": "preserve in original owner checkout; reconcile/reacquire or explicitly stage into new run, never commit licensed/local payload",
+      "sha256": "dd0af799442e9f03cbb80e9743665935b2e40042746ce6baaf7c922793cce2d7",
+      "public_status": "unpublished supplier-input bundle; preserve original bytes; no implicit redistribution"
+    },
+    {
+      "source": "references/vendor/mcmaster/98541A167/98541A167.page.json",
+      "bytes": 2357,
+      "suffix": ".json",
+      "proposed_home": "hardware/vendor/mcmaster/98541A167/98541A167.page.json",
+      "action": "preserve in original owner checkout; reconcile/reacquire or explicitly stage into new run, never commit licensed/local payload",
+      "sha256": "cba68e0247f4a72920a3c5c8c60d3453dc0c60a37217de5a7b12a08b8708038e",
+      "public_status": "unpublished supplier-input bundle; preserve original bytes; no implicit redistribution"
+    },
+    {
+      "source": "references/vendor/mcmaster/98541A174/98541A174.page.json",
+      "bytes": 2355,
+      "suffix": ".json",
+      "proposed_home": "hardware/vendor/mcmaster/98541A174/98541A174.page.json",
+      "action": "preserve in original owner checkout; reconcile/reacquire or explicitly stage into new run, never commit licensed/local payload",
+      "sha256": "a968416f7439d0904f2e1ba43bda2670965bce9f2944c953aed61c37b675c019",
+      "public_status": "unpublished supplier-input bundle; preserve original bytes; no implicit redistribution"
+    },
+    {
+      "source": "references/vendor/mcmaster/98689A118/98689A118.page.json",
+      "bytes": 1529,
+      "suffix": ".json",
+      "proposed_home": "hardware/vendor/mcmaster/98689A118/98689A118.page.json",
+      "action": "preserve in original owner checkout; reconcile/reacquire or explicitly stage into new run, never commit licensed/local payload",
+      "sha256": "2a454ba73965927f6fe4db7a1a5b1cb6b797105837eb71bf9de986135560d9a8",
+      "public_status": "unpublished supplier-input bundle; preserve original bytes; no implicit redistribution"
+    },
+    {
+      "source": "references/vendor/mcmaster/99067A116/99067A116.norm.json",
+      "bytes": 605,
+      "suffix": ".json",
+      "proposed_home": "hardware/vendor/mcmaster/99067A116/99067A116.norm.json",
+      "action": "preserve in original owner checkout; reconcile/reacquire or explicitly stage into new run, never commit licensed/local payload",
+      "sha256": "9f527a3cfcf239ac1b1e01461dde184e5da34ae5e564d91dda9cf394b5c897c4",
+      "public_status": "unpublished supplier-input bundle; preserve original bytes; no implicit redistribution"
+    },
+    {
+      "source": "references/vendor/mcmaster/99067A116/99067A116.norm.step",
+      "bytes": 19952378,
+      "suffix": ".step",
+      "proposed_home": "hardware/vendor/mcmaster/99067A116/99067A116.norm.step",
+      "action": "preserve in original owner checkout; reconcile/reacquire or explicitly stage into new run, never commit licensed/local payload",
+      "sha256": "ea0fd270686195d5031c0ad8eca199e1b1e1209a11c0c4076671abd13a9d8431",
+      "public_status": "unpublished supplier-input bundle; preserve original bytes; no implicit redistribution"
+    },
+    {
+      "source": "references/vendor/mcmaster/99067A116/99067A116.page.json",
+      "bytes": 1902,
+      "suffix": ".json",
+      "proposed_home": "hardware/vendor/mcmaster/99067A116/99067A116.page.json",
+      "action": "preserve in original owner checkout; reconcile/reacquire or explicitly stage into new run, never commit licensed/local payload",
+      "sha256": "f7bcd8d1af777b6b1a68cc6c1557649f8bd21884f58e3beff81b26cc6c06809d",
+      "public_status": "unpublished supplier-input bundle; preserve original bytes; no implicit redistribution"
+    },
+    {
+      "source": "references/vendor/mcmaster/99067A116/99067A116.step",
+      "bytes": 13121389,
+      "suffix": ".step",
+      "proposed_home": "hardware/vendor/mcmaster/99067A116/99067A116.step",
+      "action": "preserve in original owner checkout; reconcile/reacquire or explicitly stage into new run, never commit licensed/local payload",
+      "sha256": "9d0aef149a58dc0105338fddda6c515414c1345b25c1556862e02c1ab0931981",
+      "public_status": "unpublished supplier-input bundle; preserve original bytes; no implicit redistribution"
+    },
+    {
+      "source": "references/vendor/meanwell-ddr-120c-24/DDR-120-SPEC.PDF",
+      "bytes": 1604234,
+      "suffix": ".pdf",
+      "proposed_home": "hardware/vendor/meanwell-ddr-120c-24/DDR-120-SPEC.PDF",
+      "action": "preserve in original owner checkout; reconcile/reacquire or explicitly stage into new run, never commit licensed/local payload",
+      "sha256": "0d9b59264c0c5cbae8101d60b858e9169814921c71c067b450c312b670180327",
+      "public_status": "unpublished supplier-input bundle; preserve original bytes; no implicit redistribution"
+    },
+    {
+      "source": "references/vendor/meanwell-ddr-120c-24/DDR-120.stp",
+      "bytes": 2564599,
+      "suffix": ".stp",
+      "proposed_home": "hardware/vendor/meanwell-ddr-120c-24/DDR-120.stp",
+      "action": "preserve in original owner checkout; reconcile/reacquire or explicitly stage into new run, never commit licensed/local payload",
+      "sha256": "e1261ace94ca59e7bae854c6afc0daacfc76704484a640513665f6f58378f90e",
+      "public_status": "unpublished supplier-input bundle; preserve original bytes; no implicit redistribution"
+    },
+    {
+      "source": "references/vendor/meanwell-ddr-30l-12/DDR-30-SPEC.PDF",
+      "bytes": 689843,
+      "suffix": ".pdf",
+      "proposed_home": "hardware/vendor/meanwell-ddr-30l-12/DDR-30-SPEC.PDF",
+      "action": "preserve in original owner checkout; reconcile/reacquire or explicitly stage into new run, never commit licensed/local payload",
+      "sha256": "7f88cbe504a9688ead8c239941de58c8f1fde0b930c922461748804b9f615d72",
+      "public_status": "unpublished supplier-input bundle; preserve original bytes; no implicit redistribution"
+    },
+    {
+      "source": "references/vendor/meanwell-ddr-30l-12/DDR-30.stp",
+      "bytes": 2271184,
+      "suffix": ".stp",
+      "proposed_home": "hardware/vendor/meanwell-ddr-30l-12/DDR-30.stp",
+      "action": "preserve in original owner checkout; reconcile/reacquire or explicitly stage into new run, never commit licensed/local payload",
+      "sha256": "8ce7cd97f9bb0515062334df545a92f744aee064374aaf19cdc59c93e0bb2400",
+      "public_status": "unpublished supplier-input bundle; preserve original bytes; no implicit redistribution"
+    },
+    {
+      "source": "references/vendor/odrive-botwheel/BotWheel_Drawng.png",
+      "bytes": 340427,
+      "suffix": ".png",
+      "proposed_home": "hardware/vendor/odrive-botwheel/BotWheel_Drawng.png",
+      "action": "preserve in original owner checkout; reconcile/reacquire or explicitly stage into new run, never commit licensed/local payload",
+      "sha256": "fcbf807fb2aba9c60f6fd4a14f10b136a03b82e65ea5e52e58ba240fcca444b1",
+      "public_status": "unpublished supplier-input bundle; preserve original bytes; no implicit redistribution"
+    },
+    {
+      "source": "references/vendor/realsense-d435/D435_Solid.SLDPRT",
+      "bytes": 1771857,
+      "suffix": ".sldprt",
+      "proposed_home": "hardware/vendor/realsense-d435/D435_Solid.SLDPRT",
+      "action": "preserve in original owner checkout; reconcile/reacquire or explicitly stage into new run, never commit licensed/local payload",
+      "sha256": "4c8ad6aa34e203f3fd687b6534d4dbec580f8d7ddf75329f728d572cbc92d164",
+      "public_status": "unpublished supplier-input bundle; preserve original bytes; no implicit redistribution"
+    },
+    {
+      "source": "references/vendor/realsense-d435/RealSense-D400-Series-Datasheet-Mar-2026.pdf",
+      "bytes": 5417349,
+      "suffix": ".pdf",
+      "proposed_home": "hardware/vendor/realsense-d435/RealSense-D400-Series-Datasheet-Mar-2026.pdf",
+      "action": "preserve in original owner checkout; reconcile/reacquire or explicitly stage into new run, never commit licensed/local payload",
+      "sha256": "96cb5706bd879479bab36648bd3ec67f6338b4616d696dda55007f898182454f",
+      "public_status": "unpublished supplier-input bundle; preserve original bytes; no implicit redistribution"
+    },
+    {
+      "source": "references/vendor/robstride-rs-04/RS04.stp",
+      "bytes": 8675109,
+      "suffix": ".stp",
+      "proposed_home": "hardware/vendor/robstride-rs-04/RS04.stp",
+      "action": "preserve in original owner checkout; reconcile/reacquire or explicitly stage into new run, never commit licensed/local payload",
+      "sha256": "92859a1e85a8846881432e193c808fe03a3da49ac18ad201c2d89de1746b9082",
+      "public_status": "unpublished supplier-input bundle; preserve original bytes; no implicit redistribution"
+    },
+    {
+      "source": "references/vendor/robstride-rs-04/RS04User_Manual260713.pdf",
+      "bytes": 2061083,
+      "suffix": ".pdf",
+      "proposed_home": "hardware/vendor/robstride-rs-04/RS04User_Manual260713.pdf",
+      "action": "preserve in original owner checkout; reconcile/reacquire or explicitly stage into new run, never commit licensed/local payload",
+      "sha256": "6782bf105cf4cc945142e65356bd7a21a9fc007b008ec3616307956030d72b31",
+      "public_status": "unpublished supplier-input bundle; preserve original bytes; no implicit redistribution"
+    },
+    {
+      "source": "references/vendor/thumbs/amass-xt60e-f.jpg",
+      "bytes": 15209,
+      "suffix": ".jpg",
+      "proposed_home": "hardware/vendor/thumbs/amass-xt60e-f.jpg",
+      "action": "preserve in original owner checkout; reconcile/reacquire or explicitly stage into new run, never commit licensed/local payload",
+      "sha256": "a511049e324075943d1572e1ee7d05092d6e2f7efbc280f8cb1ea60c6279f0ef",
+      "public_status": "unpublished supplier-input bundle; preserve original bytes; no implicit redistribution"
+    },
+    {
+      "source": "references/vendor/thumbs/bearing_61810.jpg",
+      "bytes": 17792,
+      "suffix": ".jpg",
+      "proposed_home": "hardware/vendor/thumbs/bearing_61810.jpg",
+      "action": "preserve in original owner checkout; reconcile/reacquire or explicitly stage into new run, never commit licensed/local payload",
+      "sha256": "658e6fb8e16640d337ba4f6b8cc140608741f73baa66a9af3d3177bdd3f2958c",
+      "public_status": "unpublished supplier-input bundle; preserve original bytes; no implicit redistribution"
+    },
+    {
+      "source": "references/vendor/thumbs/bearing_61812.jpg",
+      "bytes": 16905,
+      "suffix": ".jpg",
+      "proposed_home": "hardware/vendor/thumbs/bearing_61812.jpg",
+      "action": "preserve in original owner checkout; reconcile/reacquire or explicitly stage into new run, never commit licensed/local payload",
+      "sha256": "f00ac31aecbb4e278e0849522622f51a0c9d8e05f5de503c6fc71a5acee83a9e",
+      "public_status": "unpublished supplier-input bundle; preserve original bytes; no implicit redistribution"
+    },
+    {
+      "source": "references/vendor/thumbs/bearing_6201.jpg",
+      "bytes": 21008,
+      "suffix": ".jpg",
+      "proposed_home": "hardware/vendor/thumbs/bearing_6201.jpg",
+      "action": "preserve in original owner checkout; reconcile/reacquire or explicitly stage into new run, never commit licensed/local payload",
+      "sha256": "e8e6d8f9a9419514a76f5b1b885a11dbc64a11e05330137923e64d2b2e57cee8",
+      "public_status": "unpublished supplier-input bundle; preserve original bytes; no implicit redistribution"
+    },
+    {
+      "source": "references/vendor/thumbs/bearing_mr126.jpg",
+      "bytes": 24412,
+      "suffix": ".jpg",
+      "proposed_home": "hardware/vendor/thumbs/bearing_mr126.jpg",
+      "action": "preserve in original owner checkout; reconcile/reacquire or explicitly stage into new run, never commit licensed/local payload",
+      "sha256": "cb6b709eed265ac43e5fe30d636352ec5f6213e3e1368561d4deefb00a6a8227",
+      "public_status": "unpublished supplier-input bundle; preserve original bytes; no implicit redistribution"
+    },
+    {
+      "source": "references/vendor/thumbs/bumper-feet-12.7.jpg",
+      "bytes": 2039,
+      "suffix": ".jpg",
+      "proposed_home": "hardware/vendor/thumbs/bumper-feet-12.7.jpg",
+      "action": "preserve in original owner checkout; reconcile/reacquire or explicitly stage into new run, never commit licensed/local payload",
+      "sha256": "6601891489bda1684570731115e969b4ee6a8e07e1f9ce44d70978491b6de457",
+      "public_status": "unpublished supplier-input bundle; preserve original bytes; no implicit redistribution"
+    },
+    {
+      "source": "references/vendor/thumbs/circlip_50.jpg",
+      "bytes": 10933,
+      "suffix": ".jpg",
+      "proposed_home": "hardware/vendor/thumbs/circlip_50.jpg",
+      "action": "preserve in original owner checkout; reconcile/reacquire or explicitly stage into new run, never commit licensed/local payload",
+      "sha256": "cc61f686b6af4f7087ab9a066d179fb5e1f0611df5497fe301222b94654a7db8",
+      "public_status": "unpublished supplier-input bundle; preserve original bytes; no implicit redistribution"
+    },
+    {
+      "source": "references/vendor/thumbs/circlip_60.jpg",
+      "bytes": 10551,
+      "suffix": ".jpg",
+      "proposed_home": "hardware/vendor/thumbs/circlip_60.jpg",
+      "action": "preserve in original owner checkout; reconcile/reacquire or explicitly stage into new run, never commit licensed/local payload",
+      "sha256": "827aea628c94e910fb9550bde7ddb0451acc95bf637885d3574694121d901b48",
+      "public_status": "unpublished supplier-input bundle; preserve original bytes; no implicit redistribution"
+    },
+    {
+      "source": "references/vendor/thumbs/dji-c610-esc.jpg",
+      "bytes": 4723,
+      "suffix": ".jpg",
+      "proposed_home": "hardware/vendor/thumbs/dji-c610-esc.jpg",
+      "action": "preserve in original owner checkout; reconcile/reacquire or explicitly stage into new run, never commit licensed/local payload",
+      "sha256": "4e7e385105c633c2a2bcb0c2edf56144346e95bb4554b32b412c5eed4e9cfd20",
+      "public_status": "unpublished supplier-input bundle; preserve original bytes; no implicit redistribution"
+    },
+    {
+      "source": "references/vendor/thumbs/dji-robomaster-m2006-p36.jpg",
+      "bytes": 5957,
+      "suffix": ".jpg",
+      "proposed_home": "hardware/vendor/thumbs/dji-robomaster-m2006-p36.jpg",
+      "action": "preserve in original owner checkout; reconcile/reacquire or explicitly stage into new run, never commit licensed/local payload",
+      "sha256": "8a310522a5de8f7894e883064239baa7364b8c0028efdd818c048bcf55dd3c45",
+      "public_status": "unpublished supplier-input bundle; preserve original bytes; no implicit redistribution"
+    },
+    {
+      "source": "references/vendor/thumbs/dji-robomaster-snail-2305.jpg",
+      "bytes": 8277,
+      "suffix": ".jpg",
+      "proposed_home": "hardware/vendor/thumbs/dji-robomaster-snail-2305.jpg",
+      "action": "preserve in original owner checkout; reconcile/reacquire or explicitly stage into new run, never commit licensed/local payload",
+      "sha256": "4bd606514296f024616cf87ca7ce992f40909f0a30abb358a6850712cbda3987",
+      "public_status": "unpublished supplier-input bundle; preserve original bytes; no implicit redistribution"
+    },
+    {
+      "source": "references/vendor/thumbs/dowel_5x16.jpg",
+      "bytes": 8975,
+      "suffix": ".jpg",
+      "proposed_home": "hardware/vendor/thumbs/dowel_5x16.jpg",
+      "action": "preserve in original owner checkout; reconcile/reacquire or explicitly stage into new run, never commit licensed/local payload",
+      "sha256": "9bb09640383d7965702abd8a4a0f84c5e505e5567b90a85776ca6d7dc6181b94",
+      "public_status": "unpublished supplier-input bundle; preserve original bytes; no implicit redistribution"
+    },
+    {
+      "source": "references/vendor/thumbs/eye_sleeve.jpg",
+      "bytes": 13826,
+      "suffix": ".jpg",
+      "proposed_home": "hardware/vendor/thumbs/eye_sleeve.jpg",
+      "action": "preserve in original owner checkout; reconcile/reacquire or explicitly stage into new run, never commit licensed/local payload",
+      "sha256": "0577dd9ccd4c5a8c0934067da99b867d2727934109189eb98575945a94293e4e",
+      "public_status": "unpublished supplier-input bundle; preserve original bytes; no implicit redistribution"
+    },
+    {
+      "source": "references/vendor/thumbs/feetech-sts3215-c018-12v.jpg",
+      "bytes": 11199,
+      "suffix": ".jpg",
+      "proposed_home": "hardware/vendor/thumbs/feetech-sts3215-c018-12v.jpg",
+      "action": "preserve in original owner checkout; reconcile/reacquire or explicitly stage into new run, never commit licensed/local payload",
+      "sha256": "5a0d317e747271fffde65c9ffb02adfbbf2f25783e4d559b0436c0fde824e66b",
+      "public_status": "unpublished supplier-input bundle; preserve original bytes; no implicit redistribution"
+    },
+    {
+      "source": "references/vendor/thumbs/fuse-5x20-5a-slow.jpg",
+      "bytes": 43770,
+      "suffix": ".jpg",
+      "proposed_home": "hardware/vendor/thumbs/fuse-5x20-5a-slow.jpg",
+      "action": "preserve in original owner checkout; reconcile/reacquire or explicitly stage into new run, never commit licensed/local payload",
+      "sha256": "e8419f7a8ba9ecc530b0587e147dd845c9bf623033f40c96ba6bd61ada50e31b",
+      "public_status": "unpublished supplier-input bundle; preserve original bytes; no implicit redistribution"
+    },
+    {
+      "source": "references/vendor/thumbs/fuse-holder-5x20-panel.jpg",
+      "bytes": 5313,
+      "suffix": ".jpg",
+      "proposed_home": "hardware/vendor/thumbs/fuse-holder-5x20-panel.jpg",
+      "action": "preserve in original owner checkout; reconcile/reacquire or explicitly stage into new run, never commit licensed/local payload",
+      "sha256": "6bef78a8428f9bcb2ea1b16e99165efc063e8af75a17c54c844313defe98db64",
+      "public_status": "unpublished supplier-input bundle; preserve original bytes; no implicit redistribution"
+    },
+    {
+      "source": "references/vendor/thumbs/insert_m3.jpg",
+      "bytes": 23849,
+      "suffix": ".jpg",
+      "proposed_home": "hardware/vendor/thumbs/insert_m3.jpg",
+      "action": "preserve in original owner checkout; reconcile/reacquire or explicitly stage into new run, never commit licensed/local payload",
+      "sha256": "ed4f926186c992fb1b196b2b62f54be68bf9a474547b63f3bcb4465b9a4aef5d",
+      "public_status": "unpublished supplier-input bundle; preserve original bytes; no implicit redistribution"
+    },
+    {
+      "source": "references/vendor/thumbs/insert_m5.jpg",
+      "bytes": 25208,
+      "suffix": ".jpg",
+      "proposed_home": "hardware/vendor/thumbs/insert_m5.jpg",
+      "action": "preserve in original owner checkout; reconcile/reacquire or explicitly stage into new run, never commit licensed/local payload",
+      "sha256": "9024bb85864892cfa5359172dad79e0f417cf930b72d12e355a77a410dddd0d9",
+      "public_status": "unpublished supplier-input bundle; preserve original bytes; no implicit redistribution"
+    },
+    {
+      "source": "references/vendor/thumbs/insert_m8.jpg",
+      "bytes": 23397,
+      "suffix": ".jpg",
+      "proposed_home": "hardware/vendor/thumbs/insert_m8.jpg",
+      "action": "preserve in original owner checkout; reconcile/reacquire or explicitly stage into new run, never commit licensed/local payload",
+      "sha256": "a7513a9ff9ca0b8a481735941206235fa98ac156c5ea811b08801f2a334a24b6",
+      "public_status": "unpublished supplier-input bundle; preserve original bytes; no implicit redistribution"
+    },
+    {
+      "source": "references/vendor/thumbs/kcd1-rocker-16a.jpg",
+      "bytes": 17858,
+      "suffix": ".jpg",
+      "proposed_home": "hardware/vendor/thumbs/kcd1-rocker-16a.jpg",
+      "action": "preserve in original owner checkout; reconcile/reacquire or explicitly stage into new run, never commit licensed/local payload",
+      "sha256": "1e6077317b5879f460831cf33ed546bc04e97d7fe3335b60a39b816343556a33",
+      "public_status": "unpublished supplier-input bundle; preserve original bytes; no implicit redistribution"
+    },
+    {
+      "source": "references/vendor/thumbs/knee_pin.jpg",
+      "bytes": 6206,
+      "suffix": ".jpg",
+      "proposed_home": "hardware/vendor/thumbs/knee_pin.jpg",
+      "action": "preserve in original owner checkout; reconcile/reacquire or explicitly stage into new run, never commit licensed/local payload",
+      "sha256": "a04821d0e633fb76af315da1389d4177620a72597e8cb44bef68bacd2e1ef2e3",
+      "public_status": "unpublished supplier-input bundle; preserve original bytes; no implicit redistribution"
+    },
+    {
+      "source": "references/vendor/thumbs/knee_pin_70.jpg",
+      "bytes": 6675,
+      "suffix": ".jpg",
+      "proposed_home": "hardware/vendor/thumbs/knee_pin_70.jpg",
+      "action": "preserve in original owner checkout; reconcile/reacquire or explicitly stage into new run, never commit licensed/local payload",
+      "sha256": "6ec1b48b383e134cdfc106e834a73af10c6d7bb350da391d58888694c97c61d9",
+      "public_status": "unpublished supplier-input bundle; preserve original bytes; no implicit redistribution"
+    },
+    {
+      "source": "references/vendor/thumbs/knee_spacer.jpg",
+      "bytes": 8653,
+      "suffix": ".jpg",
+      "proposed_home": "hardware/vendor/thumbs/knee_spacer.jpg",
+      "action": "preserve in original owner checkout; reconcile/reacquire or explicitly stage into new run, never commit licensed/local payload",
+      "sha256": "f893a0b0d267e17b38cd6d202058c064abbe98ec967ec7adabada3b717d90be1",
+      "public_status": "unpublished supplier-input bundle; preserve original bytes; no implicit redistribution"
+    },
+    {
+      "source": "references/vendor/thumbs/nut_m10_nyloc.jpg",
+      "bytes": 19084,
+      "suffix": ".jpg",
+      "proposed_home": "hardware/vendor/thumbs/nut_m10_nyloc.jpg",
+      "action": "preserve in original owner checkout; reconcile/reacquire or explicitly stage into new run, never commit licensed/local payload",
+      "sha256": "9461b1f20f8dc95d7bf97103f8577b1d4cfdb9cc2703c70ef785f88f4296cc7a",
+      "public_status": "unpublished supplier-input bundle; preserve original bytes; no implicit redistribution"
+    },
+    {
+      "source": "references/vendor/thumbs/odrive-botwheel.jpg",
+      "bytes": 18861,
+      "suffix": ".jpg",
+      "proposed_home": "hardware/vendor/thumbs/odrive-botwheel.jpg",
+      "action": "preserve in original owner checkout; reconcile/reacquire or explicitly stage into new run, never commit licensed/local payload",
+      "sha256": "773fa6a7dbfd1a2883528b266cdf6b616102dcb5f88f8d83160ab183fbedf42e",
+      "public_status": "unpublished supplier-input bundle; preserve original bytes; no implicit redistribution"
+    },
+    {
+      "source": "references/vendor/thumbs/pendant-hold-to-run.jpg",
+      "bytes": 8254,
+      "suffix": ".jpg",
+      "proposed_home": "hardware/vendor/thumbs/pendant-hold-to-run.jpg",
+      "action": "preserve in original owner checkout; reconcile/reacquire or explicitly stage into new run, never commit licensed/local payload",
+      "sha256": "a1c77eda40aa16a8aafb05f009beab816b1a1696c048313e6ef04125ef138b67",
+      "public_status": "unpublished supplier-input bundle; preserve original bytes; no implicit redistribution"
+    },
+    {
+      "source": "references/vendor/thumbs/picotronic-dd520-1-24-12x40.jpg",
+      "bytes": 9657,
+      "suffix": ".jpg",
+      "proposed_home": "hardware/vendor/thumbs/picotronic-dd520-1-24-12x40.jpg",
+      "action": "preserve in original owner checkout; reconcile/reacquire or explicitly stage into new run, never commit licensed/local payload",
+      "sha256": "094d3ffbc6d81e8367931dea9082d90b8827f80a4025229f62ef6b367e0c7b56",
+      "public_status": "unpublished supplier-input bundle; preserve original bytes; no implicit redistribution"
+    },
+    {
+      "source": "references/vendor/thumbs/proto-board-70x50.jpg",
+      "bytes": 29053,
+      "suffix": ".jpg",
+      "proposed_home": "hardware/vendor/thumbs/proto-board-70x50.jpg",
+      "action": "preserve in original owner checkout; reconcile/reacquire or explicitly stage into new run, never commit licensed/local payload",
+      "sha256": "b6c374df86c82d6bbcf3f926a611b258e7484461b715c7c4353bfc49fa1c76b1",
+      "public_status": "unpublished supplier-input bundle; preserve original bytes; no implicit redistribution"
+    },
+    {
+      "source": "references/vendor/thumbs/repeat-robotics-am32-35a-esc.jpg",
+      "bytes": 18801,
+      "suffix": ".jpg",
+      "proposed_home": "hardware/vendor/thumbs/repeat-robotics-am32-35a-esc.jpg",
+      "action": "preserve in original owner checkout; reconcile/reacquire or explicitly stage into new run, never commit licensed/local payload",
+      "sha256": "daab47dfa95ed8964739f46b1ebcac5b7196d905520624c93ce6762075284538",
+      "public_status": "unpublished supplier-input bundle; preserve original bytes; no implicit redistribution"
+    },
+    {
+      "source": "references/vendor/thumbs/robstride-rs-04.jpg",
+      "bytes": 19059,
+      "suffix": ".jpg",
+      "proposed_home": "hardware/vendor/thumbs/robstride-rs-04.jpg",
+      "action": "preserve in original owner checkout; reconcile/reacquire or explicitly stage into new run, never commit licensed/local payload",
+      "sha256": "52ba8717c5633bcf9dec2c3d57c80f3737a19b554d93fa4a9c31de7a14ba070e",
+      "public_status": "unpublished supplier-input bundle; preserve original bytes; no implicit redistribution"
+    },
+    {
+      "source": "references/vendor/thumbs/screw_m3x6.jpg",
+      "bytes": 15438,
+      "suffix": ".jpg",
+      "proposed_home": "hardware/vendor/thumbs/screw_m3x6.jpg",
+      "action": "preserve in original owner checkout; reconcile/reacquire or explicitly stage into new run, never commit licensed/local payload",
+      "sha256": "6f1a87044f9a14d4c1c6dc84c32782042c6be84ace35c5b30f50ff3a61a44748",
+      "public_status": "unpublished supplier-input bundle; preserve original bytes; no implicit redistribution"
+    },
+    {
+      "source": "references/vendor/thumbs/screw_m4x20.jpg",
+      "bytes": 10093,
+      "suffix": ".jpg",
+      "proposed_home": "hardware/vendor/thumbs/screw_m4x20.jpg",
+      "action": "preserve in original owner checkout; reconcile/reacquire or explicitly stage into new run, never commit licensed/local payload",
+      "sha256": "a35d365a74ba628a69897c3bd85eab4cd633a22baa63aa452765167835909f23",
+      "public_status": "unpublished supplier-input bundle; preserve original bytes; no implicit redistribution"
+    },
+    {
+      "source": "references/vendor/thumbs/screw_m5x30.jpg",
+      "bytes": 8665,
+      "suffix": ".jpg",
+      "proposed_home": "hardware/vendor/thumbs/screw_m5x30.jpg",
+      "action": "preserve in original owner checkout; reconcile/reacquire or explicitly stage into new run, never commit licensed/local payload",
+      "sha256": "b0274cf12c5b05dd7c9f863f0f21ca463752c3f59fcee6b2c88f9c7e436d1e8b",
+      "public_status": "unpublished supplier-input bundle; preserve original bytes; no implicit redistribution"
+    },
+    {
+      "source": "references/vendor/thumbs/screw_m5x40.jpg",
+      "bytes": 7137,
+      "suffix": ".jpg",
+      "proposed_home": "hardware/vendor/thumbs/screw_m5x40.jpg",
+      "action": "preserve in original owner checkout; reconcile/reacquire or explicitly stage into new run, never commit licensed/local payload",
+      "sha256": "407730741379e1b1a98c918989fc27a5fd804bd082b19155dcdc0c1476db7600",
+      "public_status": "unpublished supplier-input bundle; preserve original bytes; no implicit redistribution"
+    },
+    {
+      "source": "references/vendor/thumbs/screw_m6x30.jpg",
+      "bytes": 10123,
+      "suffix": ".jpg",
+      "proposed_home": "hardware/vendor/thumbs/screw_m6x30.jpg",
+      "action": "preserve in original owner checkout; reconcile/reacquire or explicitly stage into new run, never commit licensed/local payload",
+      "sha256": "4f5181e421c7e7674b2e91b19deb57586cf325fa2d2f5de0c296d246347bbc3c",
+      "public_status": "unpublished supplier-input bundle; preserve original bytes; no implicit redistribution"
+    },
+    {
+      "source": "references/vendor/thumbs/shoulder_6x12_m5.jpg",
+      "bytes": 11066,
+      "suffix": ".jpg",
+      "proposed_home": "hardware/vendor/thumbs/shoulder_6x12_m5.jpg",
+      "action": "preserve in original owner checkout; reconcile/reacquire or explicitly stage into new run, never commit licensed/local payload",
+      "sha256": "6aca1fdc7c0cab23c5ba9d14f9884be3051e6bb00d30b6b273883e3ac4894889",
+      "public_status": "unpublished supplier-input bundle; preserve original bytes; no implicit redistribution"
+    },
+    {
+      "source": "references/vendor/thumbs/stop_post.jpg",
+      "bytes": 11476,
+      "suffix": ".jpg",
+      "proposed_home": "hardware/vendor/thumbs/stop_post.jpg",
+      "action": "preserve in original owner checkout; reconcile/reacquire or explicitly stage into new run, never commit licensed/local payload",
+      "sha256": "204dd4cdf86e504def98b37f41573a0fd914d4d7649bd05436cf787c49817472",
+      "public_status": "unpublished supplier-input bundle; preserve original bytes; no implicit redistribution"
+    },
+    {
+      "source": "references/vendor/thumbs/te-dt04-12pa-l012.jpg",
+      "bytes": 8471,
+      "suffix": ".jpg",
+      "proposed_home": "hardware/vendor/thumbs/te-dt04-12pa-l012.jpg",
+      "action": "preserve in original owner checkout; reconcile/reacquire or explicitly stage into new run, never commit licensed/local payload",
+      "sha256": "5888b82e35394f719fd4bbc393e08e6be5da275089a00476cc83ac01cd3056ee",
+      "public_status": "unpublished supplier-input bundle; preserve original bytes; no implicit redistribution"
+    },
+    {
+      "source": "references/vendor/thumbs/te-dt06-12sa-kit.jpg",
+      "bytes": 7288,
+      "suffix": ".jpg",
+      "proposed_home": "hardware/vendor/thumbs/te-dt06-12sa-kit.jpg",
+      "action": "preserve in original owner checkout; reconcile/reacquire or explicitly stage into new run, never commit licensed/local payload",
+      "sha256": "17ba1e0bff9ff46cfc69026bc4416b8e5e5dff97c3ff8be09b5ea72ad8d31581",
+      "public_status": "unpublished supplier-input bundle; preserve original bytes; no implicit redistribution"
+    },
+    {
+      "source": "references/vendor/thumbs/usb-can-canable2.jpg",
+      "bytes": 13785,
+      "suffix": ".jpg",
+      "proposed_home": "hardware/vendor/thumbs/usb-can-canable2.jpg",
+      "action": "preserve in original owner checkout; reconcile/reacquire or explicitly stage into new run, never commit licensed/local payload",
+      "sha256": "3d5a0a5b1696265dc462cc1f11d24855abb98df243b7bc2439a646cee2e83d00",
+      "public_status": "unpublished supplier-input bundle; preserve original bytes; no implicit redistribution"
+    },
+    {
+      "source": "references/vendor/thumbs/washer_m12_thin.jpg",
+      "bytes": 8672,
+      "suffix": ".jpg",
+      "proposed_home": "hardware/vendor/thumbs/washer_m12_thin.jpg",
+      "action": "preserve in original owner checkout; reconcile/reacquire or explicitly stage into new run, never commit licensed/local payload",
+      "sha256": "41ff0f4a7a88cfebfe0e47c68c2f2057186ceb91fbc92a8a6affd15ca549349c",
+      "public_status": "unpublished supplier-input bundle; preserve original bytes; no implicit redistribution"
+    },
+    {
+      "source": "references/vendor/thumbs/washer_m3_large.jpg",
+      "bytes": 8045,
+      "suffix": ".jpg",
+      "proposed_home": "hardware/vendor/thumbs/washer_m3_large.jpg",
+      "action": "preserve in original owner checkout; reconcile/reacquire or explicitly stage into new run, never commit licensed/local payload",
+      "sha256": "cd0b6b2cb3bdb5cea923640ebc315559f5cf7f2ef277e1287b5f9379d41fdb4b",
+      "public_status": "unpublished supplier-input bundle; preserve original bytes; no implicit redistribution"
+    },
+    {
+      "source": "references/vendor/thumbs/worker-cheetah-rival-rounds-100.jpg",
+      "bytes": 25063,
+      "suffix": ".jpg",
+      "proposed_home": "hardware/vendor/thumbs/worker-cheetah-rival-rounds-100.jpg",
+      "action": "preserve in original owner checkout; reconcile/reacquire or explicitly stage into new run, never commit licensed/local payload",
+      "sha256": "459c812f073c921dfce90e1b9d034006a441f1d25cfa650a0ddc019586ea4b96",
+      "public_status": "unpublished supplier-input bundle; preserve original bytes; no implicit redistribution"
+    },
+    {
+      "source": "references/vendor/vectornav-vn-100-rugged/vn-100-cr-asm_v7.0.0.pdf",
+      "bytes": 53103,
+      "suffix": ".pdf",
+      "proposed_home": "hardware/vendor/vectornav-vn-100-rugged/vn-100-cr-asm_v7.0.0.pdf",
+      "action": "preserve in original owner checkout; reconcile/reacquire or explicitly stage into new run, never commit licensed/local payload",
+      "sha256": "df0bdd5d20e71c2d88bb956fff5e10fb411d452f676f2e4716211d990a65299e",
+      "public_status": "unpublished supplier-input bundle; preserve original bytes; no implicit redistribution"
+    },
+    {
+      "source": "references/vendor/vectornav-vn-100-rugged/vn100_rugged.step",
+      "bytes": 1672863,
+      "suffix": ".step",
+      "proposed_home": "hardware/vendor/vectornav-vn-100-rugged/vn100_rugged.step",
+      "action": "preserve in original owner checkout; reconcile/reacquire or explicitly stage into new run, never commit licensed/local payload",
+      "sha256": "ac218ee307d493446b93af602b35ffae4b96a8b59a5ca7d3fbef83f1416c970b",
+      "public_status": "unpublished supplier-input bundle; preserve original bytes; no implicit redistribution"
+    },
+    {
+      "source": "references/vendor/velodyne-vlp-16/63-9229_Rev-K_Puck-_Datasheet_Web.pdf",
+      "bytes": 325363,
+      "suffix": ".pdf",
+      "proposed_home": "hardware/vendor/velodyne-vlp-16/63-9229_Rev-K_Puck-_Datasheet_Web.pdf",
+      "action": "preserve in original owner checkout; reconcile/reacquire or explicitly stage into new run, never commit licensed/local payload",
+      "sha256": "02a0081ae6ebaee1816a59fdecd9df8f0d6f3a4281b2c8c24192c3725d2a0c7c",
+      "public_status": "unpublished supplier-input bundle; preserve original bytes; no implicit redistribution"
+    },
+    {
+      "source": "references/vendor/waveshare-0-71-dualeye-lcd/0.71inch-DualEye-LCD-Module-3D-File.zip",
+      "bytes": 477147,
+      "suffix": ".zip",
+      "proposed_home": "hardware/vendor/waveshare-0-71-dualeye-lcd/0.71inch-DualEye-LCD-Module-3D-File.zip",
+      "action": "preserve in original owner checkout; reconcile/reacquire or explicitly stage into new run, never commit licensed/local payload",
+      "sha256": "df599ec8c9360bed1e9a434fa4237f2ace5a4b95d12d13fa980903452250633c",
+      "public_status": "unpublished supplier-input bundle; preserve original bytes; no implicit redistribution"
+    },
+    {
+      "source": "references/vendor/waveshare-0-71-dualeye-lcd/0.71inch-DualEye-LCD-Module-details-size.jpg",
+      "bytes": 125336,
+      "suffix": ".jpg",
+      "proposed_home": "hardware/vendor/waveshare-0-71-dualeye-lcd/0.71inch-DualEye-LCD-Module-details-size.jpg",
+      "action": "preserve in original owner checkout; reconcile/reacquire or explicitly stage into new run, never commit licensed/local payload",
+      "sha256": "580ec06695fec21cc120349494d52b2f041f4b890bcf7414bec8c90eedd91f06",
+      "public_status": "unpublished supplier-input bundle; preserve original bytes; no implicit redistribution"
+    },
+    {
+      "source": "references/vendor/waveshare-0-71-dualeye-lcd/0.71inch-DualEye-LCD-Module.step",
+      "bytes": 873713,
+      "suffix": ".step",
+      "proposed_home": "hardware/vendor/waveshare-0-71-dualeye-lcd/0.71inch-DualEye-LCD-Module.step",
+      "action": "preserve in original owner checkout; reconcile/reacquire or explicitly stage into new run, never commit licensed/local payload",
+      "sha256": "afdfc1e6d538ab27a5299b8c127a7f3e03261215435249bad7e77dd53676c306",
+      "public_status": "unpublished supplier-input bundle; preserve original bytes; no implicit redistribution"
+    },
+    {
+      "source": "references/vendor/waveshare-sn65hvd230-can-board/CAN_Transiver_SN65HVD230.step",
+      "bytes": 2964736,
+      "suffix": ".step",
+      "proposed_home": "hardware/vendor/waveshare-sn65hvd230-can-board/CAN_Transiver_SN65HVD230.step",
+      "action": "preserve in original owner checkout; reconcile/reacquire or explicitly stage into new run, never commit licensed/local payload",
+      "sha256": "39bc5651d891b2399dfc4fd3bb64b300a4143495c9920c08b152e8312cf5bd47",
+      "public_status": "unpublished supplier-input bundle; preserve original bytes; no implicit redistribution"
+    },
+    {
+      "source": "references/vendor/waveshare-sn65hvd230-can-board/SN65HVD230-CAN-Board-Schematic.pdf",
+      "bytes": 55749,
+      "suffix": ".pdf",
+      "proposed_home": "hardware/vendor/waveshare-sn65hvd230-can-board/SN65HVD230-CAN-Board-Schematic.pdf",
+      "action": "preserve in original owner checkout; reconcile/reacquire or explicitly stage into new run, never commit licensed/local payload",
+      "sha256": "7f1862fb51dc0252b89cca1e81af58cc27bb59250ff78bdcf52ddb7fc3f87338",
+      "public_status": "unpublished supplier-input bundle; preserve original bytes; no implicit redistribution"
+    },
+    {
+      "source": "references/vendor/weact-stm32g474-core/WeAct-STM32G474CoreBoard_V10_Board_Shape.pdf",
+      "bytes": 1681770,
+      "suffix": ".pdf",
+      "proposed_home": "hardware/vendor/weact-stm32g474-core/WeAct-STM32G474CoreBoard_V10_Board_Shape.pdf",
+      "action": "preserve in original owner checkout; reconcile/reacquire or explicitly stage into new run, never commit licensed/local payload",
+      "sha256": "c01614196da5a1ce381dfaebffe23a22d9627fb3f2db1234a6e8b0d208f97902",
+      "public_status": "unpublished supplier-input bundle; preserve original bytes; no implicit redistribution"
+    },
+    {
+      "source": "references/vendor/weact-stm32g474-core/WeAct-STM32G47x_CoreBoard_3D.step",
+      "bytes": 5847864,
+      "suffix": ".step",
+      "proposed_home": "hardware/vendor/weact-stm32g474-core/WeAct-STM32G47x_CoreBoard_3D.step",
+      "action": "preserve in original owner checkout; reconcile/reacquire or explicitly stage into new run, never commit licensed/local payload",
+      "sha256": "e140b6b2b29df386e2294a8579ab484186ed44223990e635f0fb5766a5532adf",
+      "public_status": "unpublished supplier-input bundle; preserve original bytes; no implicit redistribution"
+    }
+  ],
+  "tracked_reference_boundary": "112 tracked files =110 SOURCE.txt and2 J501JSON; public repository facts but unpublished site inputs",
+  "local_payload_boundary": "211 ignored acquisition files170088696 bytes: vendor STEP/STP/native models, normalized/raw sidecars, drawings/images/PDF/ZIP. No implicit license to redistribute; do not commit or site-publish. Existing owner copies remain untouched. Reacquire/stage exact needed inputs under existing supplier/source terms for genuine CAD work.",
+  "normalization": "Retain distinct raw manufacturer geometry, normalized geometry/frame data, SOURCE provenance and .page/.data sidecars; verify exact provider/part/model/frame against existing catalog contracts, not just suffix. Learning-owned vendor model fixtures stay under software/learning/vendor by lifecycle, never moved merely for .stl extension.",
+  "new_home_exclusion": "exact hardware/vendor directory+descendants excluded at all five publication consumers; preserve raw/normalized/frame/SOURCE/page bundles; no member split by suffix; source-link GitHub fallback and boundary sibling controls"
+}

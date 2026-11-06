@@ -1,0 +1,91 @@
+{
+  "source": "f8aea429dd7701ac385b18a077781a20279e72aa",
+  "job": 222,
+  "alias": "cpu-b",
+  "collection_status_retained": "FAILED",
+  "independent_artifact_adoption_review": "https://github.com/Valpatel/gyropup/pull/238#issuecomment-6688082040",
+  "archive_sha256": "96e393adb783e10cd4bf065e9f1af38ec0a4c62d54a1eae6b5c710c5687613d2",
+  "fresh_geometry_members": 92,
+  "fresh_context": {
+    "tests/hardware/interfaces/test-rs04-lug-stacks.py": "b6dd4c77b62dad3c8154d9eb7f8227a4d2d778625542b48715596f49542970b0",
+    "docs/research/actuator-interfaces.md": "cb60373c321383a18a23ab3a0cdff3fd0e41c1d41e152e2828c395a731644699"
+  },
+  "fresh_original_targets": {
+    "hardware/exports/leg/rs04-mounting-fit/checks.json": {
+      "bytes": 858398,
+      "sha256": "465cbb8b06dfff115b61034c5981b0d9441c08c9ec33569534792a18c7df8a75"
+    },
+    "hardware/exports/leg/rs04-mounting-fit/coupon_frame_ring_nom.step": {
+      "bytes": 163055,
+      "sha256": "459f06268b7e02c6d3c48cb002a651e003294581312915de146b06f7f5947594"
+    },
+    "hardware/exports/leg/rs04-mounting-fit/coupon_frame_ring_nom.stl": {
+      "bytes": 583684,
+      "sha256": "1830ff4c1c9dc2314295d3d601b238c857c774abaf108c6619fdd9901b1da2cd"
+    },
+    "hardware/exports/leg/rs04-mounting-fit/dyno_lug_plate.step": {
+      "bytes": 258983,
+      "sha256": "137a96aa97782ad67f2c987e91d3f0f83291f37dfaf071dd65a8060c0c1a2f72"
+    },
+    "hardware/exports/leg/rs04-mounting-fit/dyno_lug_plate.stl": {
+      "bytes": 614884,
+      "sha256": "c59170b74cefde6b44714f604e8cf3e785cc468df2bea228f96e6906ffb46999"
+    },
+    "hardware/exports/leg/rs04-mounting-fit/hip_frame.step": {
+      "bytes": 3140679,
+      "sha256": "5ead305ad4bf56b813e9f16b17b40da15fe3d6f042d2b22a6875fa9b3e80855d"
+    },
+    "hardware/exports/leg/rs04-mounting-fit/hip_frame.stl": {
+      "bytes": 1483884,
+      "sha256": "6a909a9a5e4688be534e9ddbe6459d71aa275d2f591c72a3ca430ec62ab2f402"
+    }
+  },
+  "adopted": {
+    "hardware/exports/leg/rs04-mounting-fit/checks.json": {
+      "bytes": 860119,
+      "sha256": "9f01cea13904f9b892b9e13629ea0f1cbd70b018ae3fd3434af3ecd5b1522fe7"
+    },
+    "hardware/exports/leg/rs04-mounting-fit/coupon_frame_ring_nom.step": {
+      "bytes": 163102,
+      "sha256": "902b078c19360c9dacf762cd290efbc956efcbd5d8caa2d40c07e40df9fd8dca"
+    },
+    "hardware/exports/leg/rs04-mounting-fit/coupon_frame_ring_nom.stl": {
+      "bytes": 583684,
+      "sha256": "4b2b5efee4d0504ddf80f7efd25a679fca5be77d994928b1e2ff554e39d80a23"
+    },
+    "hardware/exports/leg/rs04-mounting-fit/dyno_lug_plate.step": {
+      "bytes": 258982,
+      "sha256": "7cd1d97654640d0d6c92b1875ede4dfd0bb8113e5a8af62c6a5825e71b6b2024"
+    },
+    "hardware/exports/leg/rs04-mounting-fit/dyno_lug_plate.stl": {
+      "bytes": 614884,
+      "sha256": "ce7b8cf46b6ff804f388fae00d2a67fcc5a36d6a53fdc49d32b90cce71630a4f"
+    },
+    "hardware/exports/leg/rs04-mounting-fit/hip_frame.step": {
+      "bytes": 3139533,
+      "sha256": "c63562aa659cc96a163717620dfd4f6193d44c9d40d72eae0e74abbfd127efd2"
+    },
+    "hardware/exports/leg/rs04-mounting-fit/hip_frame.stl": {
+      "bytes": 1483884,
+      "sha256": "f15c00497974e3f78d3fdc9ca60ef958ebff4d3537556d98c7c6828e6ec103de"
+    }
+  },
+  "actual_post_adoption_command": [
+    "python3",
+    "tests/hardware/interfaces/test-rs04-lug-stacks.py"
+  ],
+  "engineering_result": {
+    "pass": false,
+    "counts": {
+      "pass": 322,
+      "warn": 40,
+      "fail": 8
+    }
+  },
+  "limits": [
+    "Raw BREP hash equality was an extra collector assumption, not the actual receipt consumer; original failed run remains failed",
+    "Retained nonunique witness variations and triangulation changes are classified in independent review",
+    "Native Boolean comparison incomplete; no zero-difference claim",
+    "No physical, mounting, strength, tool-access or manufacturing qualification; support generation remains separate/unrun"
+  ]
+}

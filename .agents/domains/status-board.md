@@ -1,7 +1,7 @@
 # The design status board and the wall-of-text gate
 
 The owner (2026-11-01) wants diagrams, status bars and real renders that show the design and when it changes, not
-run-on agent prose. `tools/status-board.mjs` builds one panel a subsystem from committed records when the site is
+run-on agent prose. `tools/site/status-board.mjs` builds one panel a subsystem from committed records when the site is
 built and writes it into `index.html` and `designer/progress.html` at their `<!-- status-board -->` markers, plus
 `/site/status.json`. Never type a number into the board: add the record, then the reader. `npm run test:status-board`
 counts every record again on its own and fails a board that disagrees.
@@ -18,7 +18,7 @@ cad-agent's #179): the longest stretch of content with no image, diagram or `[da
 120 x 80 px. Over 1200 px fails, except pages on `tools/wall-backlog.json`, which only shrinks. Mark `data-visual`
 only on a real drawing of data or design (a bar chart, a flow diagram), never on a text card to pass the gate.
 
-"What changed" (`tools/timeline.mjs`) is the design's history from git: each merged pull request or direct commit
+"What changed" (`tools/site/timeline.mjs`) is the design's history from git: each merged pull request or direct commit
 (release and sync merges opened into the pull requests they carry, so main shows what dev shows) that changed CAD source, geometry, a render, hardware, a decision, or added a record, with git's date, the PR
 title cut to its first clause, subsystem chips from the paths, and the render it changed before and after, copied
 from git's objects to `/site/timeline/`. It sits at `<!-- timeline -->` on the landing page (newest 4) and Progress
@@ -34,3 +34,5 @@ the heading as the fold's summary). Pictures, diagrams and strips never fold. To
 give it something to look at: a render from `exports/`, a Mermaid diagram of its order or flow (and raise the count in
 `tools/test-diagrams.mjs`), or a table with a status column. `npm run test:doc-pages` checks that every word of the
 Markdown is still on the page and that every strip agrees with its table.
+
+Ownership changes use Git rename detection: exact R100 moves are excluded from design evidence, while later actual source edits remain visible. Timeline classification maps owning CAD paths independently of publication eligibility, and decision lookup covers both historical and current program paths. The real isolated-Git rename/edit control is in the existing timeline harness; it does not replace the full current-product history comparison.

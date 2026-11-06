@@ -3,7 +3,7 @@
 The robot's real-time controller: an STM32G474 running the 1 kHz balance loop, master of the three CAN buses (the
 legs' A and B, the wheels' and the computer's C), reading the [VN-100](../../sensors/vn100-imu/README.md) and the
 [INA228](../../power/ina228-monitor/README.md). The firmware is written for the **ST Nucleo-G474RE**
-([docs/body-firmware.md](../../../docs/body-firmware.md); D63 proposed); D7 still names a WeAct G474 core board as
+([docs/body-firmware.md](../../../docs/software/body-firmware.md); D63 proposed); D7 still names a WeAct G474 core board as
 assumed (open), and the WeAct is catalogued as the alternative. **Not bought yet.**
 
 ```mermaid
@@ -24,10 +24,10 @@ flowchart LR
 ## References
 
 - ST's Nucleo-G474RE user manual UM2505 and the STM32G474 reference manual, from st.com (not kept).
-- The WeAct alternative: [references/vendor/weact-stm32g474-core/SOURCE.txt](../../../references/vendor/weact-stm32g474-core/SOURCE.txt).
-- The transceiver alternative: [references/vendor/waveshare-sn65hvd230-can-board/SOURCE.txt](../../../references/vendor/waveshare-sn65hvd230-can-board/SOURCE.txt).
-- The pins, frames and buses: [docs/body-firmware.md](../../../docs/body-firmware.md); the wiring:
-  [docs/body-electrical.md](../../../docs/body-electrical.md).
+- The WeAct alternative: [references/vendor/weact-stm32g474-core/SOURCE.txt](../../vendor/weact-stm32g474-core/SOURCE.txt).
+- The transceiver alternative: [references/vendor/waveshare-sn65hvd230-can-board/SOURCE.txt](../../vendor/waveshare-sn65hvd230-can-board/SOURCE.txt).
+- The pins, frames and buses: [docs/body-firmware.md](../../../docs/software/body-firmware.md); the wiring:
+  [docs/body-electrical.md](../../../docs/body/body-electrical.md).
 
 ## Interfaces
 
@@ -43,7 +43,7 @@ Reading build profiles in the firmware belongs to [issue #202](https://github.co
 
 ## Driver
 
-[`firmware/balance/`](../../../firmware/balance/README.md): `src/core/` (the controller, the RS-04, VESC, VN-100 and
+[`firmware/balance/`](../../../software/firmware/balance/README.md): `src/core/` (the controller, the RS-04, VESC, VN-100 and
 INA228 drivers, the Jetson link), `src/mcu/board.c` (the G474's clocks, pins and peripherals), `hil/` (the
 hardware-in-the-loop harness).
 
@@ -54,7 +54,7 @@ hardware-in-the-loop harness).
 
 ## Bring-up and tests
 
-Not yet on hardware. Build and flash: [docs/body-firmware.md](../../../docs/body-firmware.md) section 7 (CMake with the
+Not yet on hardware. Build and flash: [docs/body-firmware.md](../../../docs/software/body-firmware.md) section 7 (CMake with the
 Arm toolchain, then the ST-LINK); the host and HIL tests run in CI. On the robot, step B13 checks the crystal and the
 solder bridges, then each bus.
 

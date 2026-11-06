@@ -9,6 +9,7 @@
 | A paused PR says its dependency or implementation is missing, but later commits/reports may already exist | [Resume from the actual tree and reports](inbox/2026-11-05-paused-work-needs-the-actual-head.md) |
 | A draft's numeric limits are described as already released on main | [Keep each limit tied to its own branch](inbox/2026-11-05-paused-work-needs-the-actual-head.md#keep-draft-limits-separate-from-the-published-branch) |
 | A logical directory move changes public files/pages or breaks a module/service despite unchanged contents | [Map ownership, publication and import contracts before moving](inbox/2026-11-05-root-moves-need-consumer-and-publication-maps.md) |
+| A research move turns a historical-file notice back into a broken catalogue link while text checks pass | [Check retired targets in their moved source context](inbox/2026-11-06-retired-links-need-their-moved-source-context.md) |
 | Production RS-04 shutdown returns while its reader is alive, or Python 3.12 cancellation waits on connected clients | [Runtime ownership](domains/rs04-runtime-lifecycle.md), [production shutdown incident](inbox/2026-11-06-runtime-shutdown-must-finish-before-loop-closure.md) |
 | Tests report OK, then Python aborts with `_enter_buffered_busy`, or teardown leaves daemon threads/accepted sockets alive | [Test-owned asynchronous resources](domains/test-lifecycle.md), [RS-04 shutdown incident](inbox/2026-11-06-test-close-must-finish-owned-threads.md) |
 | A motor-day picture refresh changes STL bytes while keeping old slice estimates | [Preserve the independent mesh/slice snapshot](inbox/2026-11-05-picture-refresh-can-change-retained-slice-inputs.md) |
@@ -92,3 +93,23 @@
 | A valid gauge STL and successful slice lose small raised labels | [Inspect actual small-feature deposition](inbox/2026-10-31-inspect-deposition-of-small-gauge-labels.md) |
 | A screw stack gains a layer (plinth, spacer, washer) and its screws bottom in blind insert pilots; a mount contract's centre of mass or receiving depth disagrees with the parts on either side; insert, boss, orientation or clamped-plastic margins are unknown | [Re-check the receiving pilot](inbox/2026-11-01-a-new-layer-in-a-stack-needs-the-receivers-pilot.md), `research/insert-joints/` |
 | A generated export, log or note names a home directory, compute host, LAN or tailnet address, or private repository; `npm run test:privacy` fails | [Write repository-relative paths and name machines by role](inbox/2026-11-01-generated-exports-carried-home-paths.md), `tools/privacy-ratchet.txt` |
+
+| Exact helper hash fails on one newline, or linked-worktree ancestry loses parents after a depth fetch | [Materialize exact bytes and preserve shared Git history](inbox/2026-11-05-ci-classification-needs-phase-evidence.md#materialize-exact-helper-bytes-before-expensive-setup) |
+
+| A fleet comparison worktree unexpectedly falls inside its run directory | [Select the temporary parent before setup](inbox/2026-11-05-ci-classification-needs-phase-evidence.md#select-the-temporary-worktree-parent-before-dependency-setup) |
+
+| Isolated KiCad ERC raises footprint-link warnings; a verifier reports only the first stale binding; native replay leaves personal project state | [Prepare real library configuration and account for every output](inbox/2026-11-05-ci-classification-needs-phase-evidence.md#native-verification-needs-its-real-library-configuration-and-full-output-accounting) |
+
+- A help-only edit is assumed to stale every generated study: distinguish archived collection membership from actual semantic/digest contracts in [CI phase evidence](inbox/2026-11-05-ci-classification-needs-phase-evidence.md#separate-the-collection-inventory-from-each-producers-actual-freshness-contract).
+
+- `python -I` unexpectedly has `sitecustomize`/Apport: check the observed system startup identity and toolkit module origins in [CI phase evidence](inbox/2026-11-05-ci-classification-needs-phase-evidence.md#isolated-python-still-has-a-system-startup-identity).
+
+- A relocated Python module works but a test rejects an old import spelling: [check the shared runtime object and checkout origin](inbox/2026-11-05-ci-classification-needs-phase-evidence.md#check-shared-runtime-identity-instead-of-a-particular-import-spelling).
+
+- A post-adoption consumer fails because its toolkit is absent: [preflight every reader runtime before copying targets](inbox/2026-11-05-ci-classification-needs-phase-evidence.md#provision-every-post-adoption-reader-before-mutating-its-targets).
+
+- A moved source directory sends an existing local listing link to GitHub despite a published index: [preserve directory navigation using actual index membership](inbox/2026-11-05-root-moves-need-consumer-and-publication-maps.md#preserve-existing-directory-navigation-through-actual-published-indexes).
+
+- A model key looks ready but selecting a recorded activity does nothing: [wait for the selected model recording list](inbox/2026-11-06-recorded-activities-need-the-selected-model-list.md).
+
+- A cold landing reel stays paused without a source while near-viewport history pictures download: [keep history previews out of the hero startup budget](inbox/2026-11-06-recorded-activities-need-the-selected-model-list.md#history-cards-must-not-consume-the-hero-startup-budget).

@@ -1,0 +1,675 @@
+{
+  "version": 1,
+  "baseline": "949b73c2fe589a52527ff43d65f953d3e40110e1",
+  "prefixes": [
+    {
+      "source": "hardware/carrier-pan-protection",
+      "public": "hardware/carrier-pan-protection"
+    },
+    {
+      "source": "hardware/carrier-packaging",
+      "public": "hardware/carrier-packaging"
+    },
+    {
+      "source": "software/site/designer",
+      "public": "designer"
+    },
+    {
+      "source": "software/site/assets",
+      "public": "web"
+    },
+    {
+      "source": "software/simulation",
+      "public": "sim"
+    },
+    {
+      "source": "hardware/fuse-board",
+      "public": "hardware/fuse-board"
+    },
+    {
+      "source": "hardware/actuators",
+      "public": "hardware/actuators"
+    },
+    {
+      "source": "software/firmware",
+      "public": "firmware"
+    },
+    {
+      "source": "hardware/exports",
+      "public": "exports"
+    },
+    {
+      "source": "hardware/catalog",
+      "public": "catalog"
+    },
+    {
+      "source": "hardware/designs",
+      "public": "designs"
+    },
+    {
+      "source": "hardware/compute",
+      "public": "hardware/compute"
+    },
+    {
+      "source": "hardware/sensors",
+      "public": "hardware/sensors"
+    },
+    {
+      "source": "software/deploy",
+      "public": "hardware/deploy"
+    },
+    {
+      "source": "hardware/drives",
+      "public": "hardware/drives"
+    },
+    {
+      "source": "hardware/turret",
+      "public": "hardware/turret"
+    },
+    {
+      "source": "hardware/comms",
+      "public": "hardware/comms"
+    },
+    {
+      "source": "hardware/power",
+      "public": "hardware/power"
+    },
+    {
+      "source": "docs/research",
+      "public": "research"
+    },
+    {
+      "source": "docs",
+      "public": "docs"
+    }
+  ],
+  "files": [
+    {
+      "source": "hardware/cad/README.md",
+      "public": "cad/README.md"
+    },
+    {
+      "source": "hardware/cad/robot/assembly.png",
+      "public": "cad/assembly.png"
+    },
+    {
+      "source": "hardware/cad/robot/assembly.py",
+      "public": "cad/assembly.py"
+    },
+    {
+      "source": "hardware/cad/robot/assembly_checks.py",
+      "public": "cad/assembly_checks.py"
+    },
+    {
+      "source": "hardware/cad/body/body_battery.py",
+      "public": "cad/body_battery.py"
+    },
+    {
+      "source": "hardware/cad/body/body_bom.py",
+      "public": "cad/body_bom.py"
+    },
+    {
+      "source": "hardware/cad/body/body_frame.py",
+      "public": "cad/body_frame.py"
+    },
+    {
+      "source": "hardware/cad/body/body_fuse_board.py",
+      "public": "cad/body_fuse_board.py"
+    },
+    {
+      "source": "hardware/cad/body/body_guards.py",
+      "public": "cad/body_guards.py"
+    },
+    {
+      "source": "hardware/cad/body/body_joints.py",
+      "public": "cad/body_joints.py"
+    },
+    {
+      "source": "hardware/cad/body/body_layout.py",
+      "public": "cad/body_layout.py"
+    },
+    {
+      "source": "hardware/cad/body/body_legloads.py",
+      "public": "cad/body_legloads.py"
+    },
+    {
+      "source": "hardware/cad/body/body_params.py",
+      "public": "cad/body_params.py"
+    },
+    {
+      "source": "hardware/cad/body/body_sections.py",
+      "public": "cad/body_sections.py"
+    },
+    {
+      "source": "hardware/cad/body/body_sheet.py",
+      "public": "cad/body_sheet.py"
+    },
+    {
+      "source": "hardware/cad/body/body_shell.py",
+      "public": "cad/body_shell.py"
+    },
+    {
+      "source": "hardware/cad/body/body_studies.py",
+      "public": "cad/body_studies.py"
+    },
+    {
+      "source": "hardware/cad/body/body_thermal.py",
+      "public": "cad/body_thermal.py"
+    },
+    {
+      "source": "hardware/cad/body/body_views.py",
+      "public": "cad/body_views.py"
+    },
+    {
+      "source": "hardware/cad/body/body_wiring.py",
+      "public": "cad/body_wiring.py"
+    },
+    {
+      "source": "hardware/cad/manufacturing/bom_media.py",
+      "public": "cad/bom_media.py"
+    },
+    {
+      "source": "hardware/cad/builders/build.py",
+      "public": "cad/build.py"
+    },
+    {
+      "source": "hardware/cad/builders/build_body.py",
+      "public": "cad/build_body.py"
+    },
+    {
+      "source": "hardware/cad/builders/build_leg.py",
+      "public": "cad/build_leg.py"
+    },
+    {
+      "source": "hardware/cad/builders/build_rig.py",
+      "public": "cad/build_rig.py"
+    },
+    {
+      "source": "hardware/cad/builders/build_turret.py",
+      "public": "cad/build_turret.py"
+    },
+    {
+      "source": "hardware/cad/builders/build_turret_box.py",
+      "public": "cad/build_turret_box.py"
+    },
+    {
+      "source": "hardware/cad/robot/cables.py",
+      "public": "cad/cables.py"
+    },
+    {
+      "source": "hardware/cad/turret/check_base_board_interfaces.py",
+      "public": "cad/check_base_board_interfaces.py"
+    },
+    {
+      "source": "hardware/cad/turret/check_base_board_print.py",
+      "public": "cad/check_base_board_print.py"
+    },
+    {
+      "source": "hardware/cad/turret/check_base_board_service.py",
+      "public": "cad/check_base_board_service.py"
+    },
+    {
+      "source": "hardware/cad/robot/electronics.py",
+      "public": "cad/electronics.py"
+    },
+    {
+      "source": "hardware/cad/robot/exploded.png",
+      "public": "cad/exploded.png"
+    },
+    {
+      "source": "hardware/cad/legs/fivebar.py",
+      "public": "cad/fivebar.py"
+    },
+    {
+      "source": "hardware/cad/robot/gmi.py",
+      "public": "cad/gmi.py"
+    },
+    {
+      "source": "hardware/cad/robot/interfaces.json",
+      "public": "cad/interfaces.json"
+    },
+    {
+      "source": "hardware/cad/legs/leg.py",
+      "public": "cad/leg.py"
+    },
+    {
+      "source": "hardware/cad/legs/leg_studies.py",
+      "public": "cad/leg_studies.py"
+    },
+    {
+      "source": "hardware/cad/robot/parameters.json",
+      "public": "cad/parameters.json"
+    },
+    {
+      "source": "hardware/cad/manufacturing/print_provenance.py",
+      "public": "cad/print_provenance.py"
+    },
+    {
+      "source": "hardware/cad/manufacturing/print_slicing.py",
+      "public": "cad/print_slicing.py"
+    },
+    {
+      "source": "hardware/cad/manufacturing/printplan.py",
+      "public": "cad/printplan.py"
+    },
+    {
+      "source": "hardware/cad/rig/rig_assembly.py",
+      "public": "cad/rig_assembly.py"
+    },
+    {
+      "source": "hardware/cad/rig/rig_bench.py",
+      "public": "cad/rig_bench.py"
+    },
+    {
+      "source": "hardware/cad/rig/rig_hardware.py",
+      "public": "cad/rig_hardware.py"
+    },
+    {
+      "source": "hardware/cad/rig/rig_integrity.py",
+      "public": "cad/rig_integrity.py"
+    },
+    {
+      "source": "hardware/cad/rig/rig_parts.py",
+      "public": "cad/rig_parts.py"
+    },
+    {
+      "source": "hardware/cad/rig/rig_views.py",
+      "public": "cad/rig_views.py"
+    },
+    {
+      "source": "hardware/cad/legs/rs04_lug_checks.py",
+      "public": "cad/rs04_lug_checks.py"
+    },
+    {
+      "source": "hardware/cad/analysis/studies.py",
+      "public": "cad/studies.py"
+    },
+    {
+      "source": "tests/hardware/body/test_body.py",
+      "public": "cad/test_body.py"
+    },
+    {
+      "source": "tests/hardware/legs/test_leg_loads.py",
+      "public": "cad/test_leg_loads.py"
+    },
+    {
+      "source": "tests/hardware/turret/test_turret_gate_sources.py",
+      "public": "cad/test_turret_gate_sources.py"
+    },
+    {
+      "source": "tests/hardware/turret/test_turret_snaps.py",
+      "public": "cad/test_turret_snaps.py"
+    },
+    {
+      "source": "tests/hardware/turret/test_turret_solids.py",
+      "public": "cad/test_turret_solids.py"
+    },
+    {
+      "source": "hardware/cad/turret/turret.py",
+      "public": "cad/turret.py"
+    },
+    {
+      "source": "hardware/cad/turret/turret_assembly.py",
+      "public": "cad/turret_assembly.py"
+    },
+    {
+      "source": "hardware/cad/turret/turret_base_board.py",
+      "public": "cad/turret_base_board.py"
+    },
+    {
+      "source": "hardware/cad/turret/turret_boards.py",
+      "public": "cad/turret_boards.py"
+    },
+    {
+      "source": "hardware/cad/turret/turret_box.py",
+      "public": "cad/turret_box.py"
+    },
+    {
+      "source": "hardware/cad/turret/turret_carrier_interfaces.py",
+      "public": "cad/turret_carrier_interfaces.py"
+    },
+    {
+      "source": "hardware/cad/turret/turret_carrier_support.py",
+      "public": "cad/turret_carrier_support.py"
+    },
+    {
+      "source": "hardware/cad/turret/turret_dossier.py",
+      "public": "cad/turret_dossier.py"
+    },
+    {
+      "source": "hardware/cad/turret/turret_gates.py",
+      "public": "cad/turret_gates.py"
+    },
+    {
+      "source": "hardware/cad/turret/turret_lidar.py",
+      "public": "cad/turret_lidar.py"
+    },
+    {
+      "source": "hardware/cad/turret/turret_motion.py",
+      "public": "cad/turret_motion.py"
+    },
+    {
+      "source": "hardware/cad/turret/turret_mount.py",
+      "public": "cad/turret_mount.py"
+    },
+    {
+      "source": "hardware/cad/turret/turret_orders.py",
+      "public": "cad/turret_orders.py"
+    },
+    {
+      "source": "hardware/cad/turret/turret_print.py",
+      "public": "cad/turret_print.py"
+    },
+    {
+      "source": "hardware/cad/turret/turret_snaps.py",
+      "public": "cad/turret_snaps.py"
+    },
+    {
+      "source": "hardware/cad/turret/turret_stand.py",
+      "public": "cad/turret_stand.py"
+    },
+    {
+      "source": "hardware/cad/turret/turret_studies.py",
+      "public": "cad/turret_studies.py"
+    },
+    {
+      "source": "hardware/cad/legs/wheel_fit.py",
+      "public": "cad/wheel_fit.py"
+    },
+    {
+      "source": "docs/README.md",
+      "public": "docs/README.md"
+    },
+    {
+      "source": "docs/guide/agent-guide.md",
+      "public": "docs/agent-guide.md"
+    },
+    {
+      "source": "docs/architecture/architecture.md",
+      "public": "docs/architecture.md"
+    },
+    {
+      "source": "docs/electronics/base-board-component-checklist.md",
+      "public": "docs/base-board-component-checklist.md"
+    },
+    {
+      "source": "docs/electronics/base-board-interfaces.md",
+      "public": "docs/base-board-interfaces.md"
+    },
+    {
+      "source": "docs/electronics/base-board-service.md",
+      "public": "docs/base-board-service.md"
+    },
+    {
+      "source": "docs/electronics/base-board-stock.md",
+      "public": "docs/base-board-stock.md"
+    },
+    {
+      "source": "docs/body/body-electrical.md",
+      "public": "docs/body-electrical.md"
+    },
+    {
+      "source": "docs/software/body-firmware.md",
+      "public": "docs/body-firmware.md"
+    },
+    {
+      "source": "docs/body/body-frame.md",
+      "public": "docs/body-frame.md"
+    },
+    {
+      "source": "docs/body/body-fuse-board.md",
+      "public": "docs/body-fuse-board.md"
+    },
+    {
+      "source": "docs/body/body-next-plan.md",
+      "public": "docs/body-next-plan.md"
+    },
+    {
+      "source": "docs/body/body-orders.md",
+      "public": "docs/body-orders.md"
+    },
+    {
+      "source": "docs/body/body-plan.md",
+      "public": "docs/body-plan.md"
+    },
+    {
+      "source": "docs/body/body-safety.md",
+      "public": "docs/body-safety.md"
+    },
+    {
+      "source": "docs/body/body-sections.md",
+      "public": "docs/body-sections.md"
+    },
+    {
+      "source": "docs/body/body-thermal.md",
+      "public": "docs/body-thermal.md"
+    },
+    {
+      "source": "docs/architecture/cad-plan.md",
+      "public": "docs/cad-plan.md"
+    },
+    {
+      "source": "docs/electronics/carrier-service-connectors.md",
+      "public": "docs/carrier-service-connectors.md"
+    },
+    {
+      "source": "docs/program/decisions.yaml",
+      "public": "docs/decisions.yaml"
+    },
+    {
+      "source": "docs/architecture/design-weight-budget.md",
+      "public": "docs/design-weight-budget.md"
+    },
+    {
+      "source": "docs/program/handoff.md",
+      "public": "docs/handoff.md"
+    },
+    {
+      "source": "docs/architecture/head-payload.md",
+      "public": "docs/head-payload.md"
+    },
+    {
+      "source": "docs/img/hero/hero.jpg",
+      "public": "docs/hero.jpg"
+    },
+    {
+      "source": "docs/legs/leg-bench-tests.md",
+      "public": "docs/leg-bench-tests.md"
+    },
+    {
+      "source": "docs/legs/leg-print-package.md",
+      "public": "docs/leg-print-package.md"
+    },
+    {
+      "source": "docs/legs/leg-protection.md",
+      "public": "docs/leg-protection.md"
+    },
+    {
+      "source": "docs/legs/leg-prototype-plan.md",
+      "public": "docs/leg-prototype-plan.md"
+    },
+    {
+      "source": "docs/legs/leg-rig-assembly.md",
+      "public": "docs/leg-rig-assembly.md"
+    },
+    {
+      "source": "docs/legs/leg-rig-orders.md",
+      "public": "docs/leg-rig-orders.md"
+    },
+    {
+      "source": "docs/legs/leg-rig-safety.md",
+      "public": "docs/leg-rig-safety.md"
+    },
+    {
+      "source": "docs/legs/leg-rig-sections.md",
+      "public": "docs/leg-rig-sections.md"
+    },
+    {
+      "source": "docs/legs/leg-rig-wiring.md",
+      "public": "docs/leg-rig-wiring.md"
+    },
+    {
+      "source": "docs/architecture/mechanical-interfaces.md",
+      "public": "docs/mechanical-interfaces.md"
+    },
+    {
+      "source": "docs/architecture/mechanical-readiness.md",
+      "public": "docs/mechanical-readiness.md"
+    },
+    {
+      "source": "docs/program/milestones.yaml",
+      "public": "docs/milestones.yaml"
+    },
+    {
+      "source": "docs/legs/motor-day.md",
+      "public": "docs/motor-day.md"
+    },
+    {
+      "source": "docs/legs/motor-thermal.md",
+      "public": "docs/motor-thermal.md"
+    },
+    {
+      "source": "docs/turret/ordered-turret-motor.md",
+      "public": "docs/ordered-turret-motor.md"
+    },
+    {
+      "source": "docs/validation/part-image-provenance.md",
+      "public": "docs/part-image-provenance.md"
+    },
+    {
+      "source": "docs/program/physical-progress.md",
+      "public": "docs/physical-progress.md"
+    },
+    {
+      "source": "docs/validation/print-source-provenance.md",
+      "public": "docs/print-source-provenance.md"
+    },
+    {
+      "source": "docs/program/progress.json",
+      "public": "docs/progress.json"
+    },
+    {
+      "source": "docs/guide/prototype-safety.md",
+      "public": "docs/prototype-safety.md"
+    },
+    {
+      "source": "docs/program/purchases.md",
+      "public": "docs/purchases.md"
+    },
+    {
+      "source": "docs/architecture/requirements.md",
+      "public": "docs/requirements.md"
+    },
+    {
+      "source": "docs/legs/rs04-fit-job.md",
+      "public": "docs/rs04-fit-job.md"
+    },
+    {
+      "source": "docs/software/rs04-motor-tool.md",
+      "public": "docs/rs04-motor-tool.md"
+    },
+    {
+      "source": "docs/legs/rs04-mounting-fit.md",
+      "public": "docs/rs04-mounting-fit.md"
+    },
+    {
+      "source": "docs/legs/rs04-support-study.md",
+      "public": "docs/rs04-support-study.md"
+    },
+    {
+      "source": "docs/software/site-deployment.md",
+      "public": "docs/site-deployment.md"
+    },
+    {
+      "source": "docs/validation/structural-study-media.md",
+      "public": "docs/structural-study-media.md"
+    },
+    {
+      "source": "docs/turret/turret-assembly.md",
+      "public": "docs/turret-assembly.md"
+    },
+    {
+      "source": "docs/turret/turret-bench-tests.md",
+      "public": "docs/turret-bench-tests.md"
+    },
+    {
+      "source": "docs/software/turret-firmware.md",
+      "public": "docs/turret-firmware.md"
+    },
+    {
+      "source": "docs/turret/turret-next-plan.md",
+      "public": "docs/turret-next-plan.md"
+    },
+    {
+      "source": "docs/turret/turret-physics.md",
+      "public": "docs/turret-physics.md"
+    },
+    {
+      "source": "docs/turret/turret-plan.md",
+      "public": "docs/turret-plan.md"
+    },
+    {
+      "source": "docs/turret/turret-print.md",
+      "public": "docs/turret-print.md"
+    },
+    {
+      "source": "docs/turret/turret-program.md",
+      "public": "docs/turret-program.md"
+    },
+    {
+      "source": "docs/turret/turret-prototype-plan.md",
+      "public": "docs/turret-prototype-plan.md"
+    },
+    {
+      "source": "docs/turret/turret-sections.md",
+      "public": "docs/turret-sections.md"
+    },
+    {
+      "source": "docs/turret/turret-wiring.md",
+      "public": "docs/turret-wiring.md"
+    },
+    {
+      "source": "docs/legs/wheel-change-plan.md",
+      "public": "docs/wheel-change-plan.md"
+    },
+    {
+      "source": "README.md",
+      "public": "README.md"
+    },
+    {
+      "source": "LICENSE",
+      "public": "LICENSE"
+    },
+    {
+      "source": "software/site/designer/home.html",
+      "public": "index.html"
+    },
+    {
+      "source": "hardware/README.md",
+      "public": "hardware/README.md"
+    },
+    {
+      "source": "software/simulation/__init__.py",
+      "public": "sim/__init__.py"
+    }
+  ],
+  "unpublished": [
+    "docs/dossier",
+    "docs/program/handoff.md",
+    "hardware/vendor",
+    "software/control",
+    "software/learning",
+    "tools",
+    "tests",
+    ".agents",
+    ".github",
+    "software/firmware/rig"
+  ],
+  "legacyPublicTestFiles": [
+    "tests/hardware/body/test_body.py",
+    "tests/hardware/legs/test_leg_loads.py",
+    "tests/hardware/turret/test_turret_gate_sources.py",
+    "tests/hardware/turret/test_turret_snaps.py",
+    "tests/hardware/turret/test_turret_solids.py"
+  ]
+}

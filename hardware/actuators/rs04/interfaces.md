@@ -38,7 +38,7 @@ command the same motors.
 ## Mounting
 
 Ten M4 lugs (docs/leg-bench-tests.md, C1-C6); the proposed interface, its support and preload are open in
-[the mounting-fit work](../../../docs/rs04-mounting-fit.md). `catalog/leg_actuators.json` gives 1420 g in its specs and 1510 g from the PDF in its notes; the inventory records
+[the mounting-fit work](../../../docs/legs/rs04-mounting-fit.md). `catalog/leg_actuators.json` gives 1420 g in its specs and 1510 g from the PDF in its notes; the inventory records
 the scale's reading.
 
 ## Pinout of the PC side (a PCAN-USB)

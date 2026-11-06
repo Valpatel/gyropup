@@ -1,0 +1,195 @@
+/** One static bundle for local development and Cloudflare Pages. No CAD runtime required. */
+import { readFile, writeFile, mkdir, cp, rm, stat, readdir } from 'node:fs/promises';
+import { execFileSync } from 'node:child_process';
+import path from 'node:path';
+import { marked } from 'marked';
+import YAML from 'yaml';
+import { parseHTML } from 'linkedom';
+import { addModelPreviews } from '../../software/site/assets/model-links.js';
+import { writeMarkdownSite } from './site-markdown.mjs';
+import { SITE_CACHE_CONTROL, versionSiteAssets } from './site-cache.mjs';
+import { collectStatus, createReader, renderBoard, shallowHistory } from './status-board.mjs';
+import { collectTimeline, gitIn, imagePaths, previewPaths, timelinePreview, renderTimeline, subsystemOf } from './timeline.mjs';
+import { OPEN_FOLDS, enhanceDocument } from './doc-page.mjs';
+import { verifyRigFiles } from '../evidence/media/rig-media.mjs';
+import {publicForSource,publicDirectoryForSource,sourceForPublic,publicationFiles,markRetiredCatalogLinks} from './source-layout.mjs';
+const root = path.resolve(import.meta.dirname, '../..');
+const out = path.join(root, 'dist');
+const sourceFile=p=>path.join(root,sourceForPublic(p));
+const read = p => readFile(sourceFile(p), 'utf8');
+const esc = (s) => String(s ?? '').replace(/[&<>"']/g, c => ({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[c]));
+const config = YAML.parse(await read('cad-agent.yaml')).cad.site;
+await verifyRigFiles(root); // SHA checks on the actual report/movie bytes, before publishing the bundle.
+await rm(out, { recursive: true, force: true });
+await mkdir(out, { recursive: true });
+// Only repository assets, never local credentials, untracked runs or vendor downloads.
+// New web source is copied explicitly; all evidence and downloadable files must be committed.
+const sourceTracked=execFileSync('git',['ls-files','-z'],{cwd:root}).toString().split('\0').filter(Boolean);
+const published=publicationFiles(sourceTracked);
+const tracked=[...published.keys()];
+const roots = ['designer/', 'exports/', 'catalog/', 'designs/', 'docs/', 'research/', 'cad/', 'sim/', 'hardware/', 'firmware/'];
+// The public repository's dossier sources keep their former unpublished-site boundary.
+const dossierSource = file => file === 'docs/dossier' || file.startsWith('docs/dossier/');
+for (const file of tracked) {
+  if ((!roots.some(r => file.startsWith(r))&&!file.startsWith('web/')) || dossierSource(file) || ['docs/handoff.md', 'designer/home.html'].includes(file) || /(?:^|\/)(?:AGENTS|CLAUDE)\.md$/.test(file)) continue;
+  const dest = path.join(out, file); await mkdir(path.dirname(dest), { recursive: true });
+  if ((await stat(sourceFile(file))).size > 25 * 1024 * 1024) throw new Error(`Cloudflare file limit: ${file}`);
+  await cp(sourceFile(file), dest);
+}
+for (const file of ['LICENSE', 'README.md']) await cp(path.join(root, file), path.join(out, file));
+await cp(sourceFile('designer/home.html'), path.join(out, 'index.html'));
+// Web assets use the same tracked source/public contract; no untracked directory copy.
+// The full local CAD workflow can use licensed vendor downloads. The shared static bundle cannot.
+// Mark the legacy rig unavailable as a whole, so its complete procedural model is used instead.
+const legacy = JSON.parse(await read('exports/links/manifest.json'));
+if (Object.values(legacy.links).flat().some(p => !tracked.includes('exports/links/'+p.file))) {
+  legacy.available = false;
+  legacy.note = 'Legacy preview uses the procedural model; licensed vendor meshes stay local.';
+}
+await writeFile(path.join(out,'exports/links/manifest.json'), JSON.stringify(legacy));
+const images = JSON.parse(await read('catalog/images.json'));
+for (const image of Object.values(images)) {
+  if (image.path && !tracked.includes(image.path)) image.path = null;
+}
+await writeFile(path.join(out,'catalog/images.json'),JSON.stringify(images));
+await mkdir(path.join(out, 'site/pages'), { recursive: true });
+// The design status board: every number from a committed record, every date from git. Cloudflare Pages clones
+// shallowly, so there the build first fetches the history; anywhere else a shallow checkout shows no dates rather
+// than wrong ones (tools/site/status-board.mjs).
+let history = !shallowHistory(root);
+if (!history && process.env.CF_PAGES) {
+  // Never wait on a credential prompt: a public clone needs none, and a failed fetch only leaves the dates out.
+  try { execFileSync('git', ['fetch', '--quiet', '--unshallow'], { cwd: root, stdio: 'inherit', timeout: 300000, env: { ...process.env, GIT_TERMINAL_PROMPT: '0' } }); history = !shallowHistory(root); }
+  catch (error) { console.warn(`Status board: could not fetch the history (${error.message}); change dates are left out.`); }
+}
+const reader = createReader(root, { git: history, sourcePath:sourceForPublic });
+const status = collectStatus(reader);
+for (const [file, options] of [['index.html', { compact: true }], ['designer/progress.html', {}]]) {
+  const target = path.join(out, file), html = await readFile(target, 'utf8');
+  if (!html.includes('<!-- status-board -->')) throw new Error(`${file} has no <!-- status-board --> marker`);
+  await writeFile(target, html.replace('<!-- status-board -->', renderBoard(status, options)));
+}
+await writeFile(path.join(out, 'site/status.json'), JSON.stringify({ generator: 'tools/site/status-board.mjs', history, ...status }, null, 2));
+// "What changed": the design changes on the integration branch, newest first, with the renders they changed before
+// and after, copied from git's own objects (tools/site/timeline.mjs). Without history the timeline says so.
+const changes = history ? collectTimeline(gitIn(root)) : [];
+await mkdir(path.join(out, 'site/timeline'), { recursive: true });
+for (const event of changes) {
+  const img = imagePaths(event);
+  if (!img) continue;
+  const previews = previewPaths(event);
+  for (const side of ['after', 'before']) {
+    if (!img[side]) continue;
+    const revision = side === 'before' ? `${event.sha}^1` : event.sha;
+    const original = execFileSync('git', ['show', `${revision}:${event.image.file}`], { cwd: root, maxBuffer: 256 << 20 });
+    await writeFile(path.join(out, img[side]), original);
+    await writeFile(path.join(out, previews[side]), await timelinePreview(original));
+  }
+}
+for (const [file, options] of [['index.html', { compact: true, show: 4 }], ['designer/progress.html', { show: 5, more: changes.length }]]) {
+  const target = path.join(out, file), html = await readFile(target, 'utf8');
+  if (!html.includes('<!-- timeline -->')) throw new Error(`${file} has no <!-- timeline --> marker`);
+  await writeFile(target, html.replace('<!-- timeline -->', renderTimeline(changes, options)));
+}
+await writeFile(path.join(out, 'site/timeline.json'), JSON.stringify({ generator: 'tools/site/timeline.mjs', history, events: changes }, null, 2));
+const nav = [
+  {id:'home', title:'Home', href:''}, {id:'simulate',title:'Play',href:'designer/sim.html'},
+  {id:'progress',title:'Progress',href:'designer/progress.html'}, {id:'build',title:'Build',href:'designer/build.html'},
+  {id:'docs',title:'Design notes',href:'site/'}, {id:'repo',title:'GitHub ↗',href:'https://github.com/Valpatel/gyropup'},
+];
+await writeFile(path.join(out, 'site/nav.json'), JSON.stringify({title:'Gyropup',nav},null,2));
+const models=tracked.filter(file=>roots.some(root=>file.startsWith(root))&&!dossierSource(file)&&/\.(?:stl|step|stp|3mf)$/i.test(file)).sort();
+await writeFile(path.join(out,'site/models.json'),JSON.stringify({files:models.map(file=>({path:'/'+file,format:file.split('.').pop().toLowerCase(),preview:'/designer/kit/file-viewer.html?file='+encodeURIComponent('/'+file)}))},null,2));
+const publishedModels=new Set(models.map(file=>'/'+file));
+const slug = p => p.toLowerCase().replace(/[^a-z0-9]+/g,'-');
+const documents = tracked.filter(p => /^(docs|research|hardware)\/.*\.md$/.test(p)
+  && !dossierSource(p) && p !== 'docs/handoff.md' && !/(?:^|\/)(?:AGENTS|CLAUDE)\.md$/.test(p));
+documents.push('README.md', 'catalog/SCHEMA.md');
+const pagePath = p => `/site/pages/${slug(p)}.html`;
+function frame(title, body) {
+  return `<!doctype html><html lang="en"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width, initial-scale=1"><script src="/web/theme.js"></script><link rel="stylesheet" href="/web/theme.css"><title>${esc(title)} · Gyropup</title><link rel="icon" href="/web/icon.svg"><link rel="stylesheet" href="/web/portal.css"><link rel="stylesheet" href="/designer/kit/diagrams.css"><link rel="stylesheet" href="/web/doc-page.css"></head><body class="docs-page"><main class="document"><a class="back" href="/site/">← Design notebook</a><p class="portal-label">BUILT BY AUTONOMOUS SYSTEMS · WORK IN PROGRESS</p>${body}<footer>Created by <a href="https://valpatel.com">Valpatel Software LLC</a>. © 2026. All rights reserved. Repository materials retain their stated licenses.</footer></main><script type="module">import {mountAppNav} from '/designer/kit/appnav.js'; mountAppNav({root:'../../',current:'docs'});</script><script>${OPEN_FOLDS}</script><script type="module">import('/designer/kit/diagrams.js').then(m=>m.observeDiagrams()).catch(()=>{document.querySelectorAll('pre.mermaid,pre:has(>code.language-mermaid)').forEach(p=>{p.classList.add('cad-diagram-boot-error');const b=document.createElement('button');b.className='cad-diagram-reload';b.textContent='Reload diagrams';b.onclick=()=>location.reload();p.after(b);});});</script></body></html>`;
+}
+// Compute the exact public index membership before rewriting authored links.
+const directories = new Map();
+for (const file of tracked.filter(f => roots.some(r => f.startsWith(r)) && !dossierSource(f) && !['docs/handoff.md', 'designer/home.html'].includes(f))) {
+  let parent = path.posix.dirname(file), entry = path.posix.basename(file);
+  while (parent !== '.') {
+    if (!directories.has(parent)) directories.set(parent, []);
+    if (!directories.get(parent).includes(entry)) directories.get(parent).push(entry);
+    entry = path.posix.basename(parent) + '/'; parent = path.posix.dirname(parent);
+  }
+}
+const docs = [];
+for (const file of documents) {
+  const authoredSource=sourceForPublic(file);
+  const source = await read(file);
+  const title = source.match(/^#\s+(.+)$/m)?.[1] || file;
+  // Preserve source-relative links, route published Markdown to its HTML view.
+  const headingIds = new Map();
+  const renderer = new marked.Renderer();
+  renderer.heading = function({tokens, depth}) {
+    const text = this.parser.parseInline(tokens);
+    const base = text.replace(/<[^>]*>/g, '').normalize('NFKD').replace(/[^\x00-\x7f]/g,'').replace(/[^\w\s-]/g,'').trim().toLowerCase().replace(/[-\s]+/g,'-');
+    const n = headingIds.get(base) || 0; headingIds.set(base, n+1);
+    return `<h${depth} id="${base}${n ? '-'+n : ''}">${text}</h${depth}>`;
+  };
+  let html = await marked.parse(source, {renderer});
+  html = html.replace(/(href|src)="([^"#][^"]*)"/g, (all, attr, url) => {
+    if (/^(?:[a-z][a-z\d+.-]*:|\/\/)/i.test(url)) return all;
+    const [pathname, ...hash] = url.split('#');
+    const resolvedSource=pathname.startsWith('/')?sourceForPublic(pathname.slice(1)):path.posix.normalize(path.posix.join(path.posix.dirname(authoredSource),pathname));
+    const resolvedPublic=publicForSource(resolvedSource)??publicDirectoryForSource(resolvedSource,directories);
+    const directory=resolvedPublic!==null&&directories.has(resolvedPublic);
+    const exists=resolvedPublic!==null&&(tracked.includes(resolvedPublic)||directory);
+    const target=exists?(documents.includes(resolvedPublic)?pagePath(resolvedPublic):'/'+resolvedPublic+(directory&&pathname.endsWith('/')?'/':'')):`https://github.com/Valpatel/gyropup/blob/main/${resolvedSource}`;
+    return `${attr}="${esc(target)}${hash.length ? '#'+esc(hash.join('#')) : ''}"`;
+  });
+  html = markRetiredCatalogLinks(html,authoredSource);
+  html = html.replace(/<table>/g,'<div class="table-scroll"><table>').replace(/<\/table>/g,'</table></div>');
+  // Lead card, status strips and folds (tools/doc-page.mjs): the same words, shown without walls of text.
+  const panel = status.panels.find(p => p.id === subsystemOf(file) && p.image) || null;
+  html = enhanceDocument(html, { file:authoredSource, changed:reader.changed([authoredSource]), panel }).html;
+  await writeFile(path.join(out, pagePath(file)), frame(title, `<article>${html}</article>`));
+  docs.push({title,file,source:authoredSource});
+}
+const decisions = YAML.parse(await read(config.decisions));
+// The per-component hardware folders (hardware/README.md) and the deployment are many short pages: one fold, so the
+// notebook's list does not grow with every component.
+const folded = (f) => /^(hardware|deploy)\//.test(f) && !f.startsWith('hardware/carrier-');
+const docItem = (d) => `<li><a href="${pagePath(d.file)}">${esc(d.title)}</a><small>${esc(d.file)}</small></li>`;
+const hw = docs.filter(d => folded(d.file));
+const hardwareFold = hw.length ? `<details class="decision" id="hardware-folders"><summary>Hardware folders and deployment (${hw.length} pages)</summary><ul class="document-list">${hw.map(docItem).join('')}</ul></details>` : '';
+const notebook = `<h1>The design notebook.</h1><p class="doc-lede">Follow the decisions, research, and work behind Gyropup. These are evolving engineering notes, not finished product specifications.</p><div class="notebook-links"><a href="/designer/progress.html">Progress & test reports ↗</a><a href="/designer/build.html">Parts & build files ↗</a><a href="#decisions">Decisions ↓</a></div><h2 id="documents">Documents</h2><ul class="document-list">${docs.filter(d=>!folded(d.file)).map(docItem).join('')}</ul>${hardwareFold}<h2 id="decisions">Design decisions</h2>${decisions.slice().reverse().map(d=>`<details class="decision"><summary><span>${esc(d.id)}</span> ${esc(d.title)}</summary><p>${esc(d.decision)}</p><p>${esc(d.why)}</p><small>${esc(d.date)} · ${esc(d.status)}</small></details>`).join('')}`;
+await writeFile(path.join(out,'site/index.html'), frame('Design notebook', notebook).replace("root:'../../'", "root:'../'"));
+// Static equivalents of local file listings keep the existing Build page's file links working.
+for (const [dir, files] of directories) {
+  if (files.includes('index.html')) continue;
+  const body = `<h1>${esc(dir)}</h1><p>Published design artifacts. Return to <a href="/designer/build.html">Build</a> or <a href="/designer/progress.html">Progress</a> for context.</p><ul>${files.sort().map(f => `<li><a href="${esc(f)}">${esc(f)}</a></li>`).join('')}</ul>`;
+  const depth = '../'.repeat(dir.split('/').length);
+  await writeFile(path.join(out,dir,'index.html'), frame('Design files',body).replace("root:'../../'", `root:'${depth}'`));
+}
+await writeFile(path.join(out,'404.html'), frame('Page not found', '<h1>This part is still taking shape.</h1><p>The page or file could not be found.</p><a href="/">Back to Gyropup →</a>').replace("root:'../../'", "root:'./'"));
+await writeFile(path.join(out,'_headers'), `/*\n  Cache-Control: ${SITE_CACHE_CONTROL}\n  X-Content-Type-Options: nosniff\n  Referrer-Policy: strict-origin-when-cross-origin\n/*.md\n  Content-Type: text/markdown; charset=utf-8\n/llms.txt\n  Content-Type: text/plain; charset=utf-8\n`);
+await writeFile(path.join(out,'robots.txt'),'User-agent: *\nAllow: /\nSitemap: https://gyropup.com/sitemap.xml\n');
+await writeFile(path.join(out,'sitemap.xml'), '<?xml version="1.0" encoding="UTF-8"?><urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">'+['/','/designer/sim.html','/designer/progress.html','/designer/build.html','/site/'].map(p=>`<url><loc>https://gyropup.com${p}</loc></url>`).join('')+'</urlset>');
+const revision = execFileSync('git',['rev-parse','HEAD'],{cwd:root}).toString().trim();
+// One static warning is shared by entry routes, documents and downloadable HTML.
+// Keep its text in the HTML so no-script visitors and agent Markdown see it too.
+const prototypeNotice = await read('web/prototype-notice.html');
+await rm(path.join(out, 'web/prototype-notice.html'));
+for (const file of (await readdir(out, { recursive:true })).filter(file => file.endsWith('.html'))) {
+  const target = path.join(out, file);
+  const parsed=parseHTML(await readFile(target,'utf8'));
+  addModelPreviews(parsed.document,{base:'https://gyropup.com/'+file,published:publishedModels});
+  const html=parsed.document.toString();
+  if (!html.includes('</head>') || !html.includes('</body>')) throw new Error(`Cannot add prototype notice to ${file}`);
+  // Every page takes the theme (web/theme.js before its stylesheets, so the first paint has the chosen theme).
+  if (!/<script src="\/web\/theme\.js"><\/script><link rel="stylesheet" href="\/web\/theme\.css">/.test(html.replace(/\s*\n\s*/g, ''))) throw new Error(`${file} does not load /web/theme.js and /web/theme.css first`);
+  await writeFile(target, html.replace('</head>', '<link rel="stylesheet" href="/web/prototype-notice.css"><link rel="stylesheet" href="/web/model-links.css"></head>')
+    .replace('</body>', `${prototypeNotice}<script type="module" src="/web/prototype-notice.js"></script><script type="module" src="/web/model-links.js"></script></body>`));
+}
+const assets = await versionSiteAssets(out);
+// Markdown records final HTML hashes, so asset URL migration must precede it.
+const markdownPages = await writeMarkdownSite(out);
+await writeFile(path.join(out,'version.json'),JSON.stringify({revision,assets,history,built:new Date().toISOString()},null,2));
+console.log(`Built dist: landing page, simulator, portal, ${documents.length} documents, ${markdownPages.length} Markdown pages and committed design assets. Revision ${revision.slice(0,12)}`);

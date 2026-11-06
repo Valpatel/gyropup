@@ -4,7 +4,7 @@
 
 ## Receipt
 
-The [dated audit](../../research/supply/turret-carrier-2026-10-29.md) retains the exact supplier/PDF URLs and source lines:
+The [dated audit](../../docs/research/supply/turret-carrier-2026-10-29.md) retains the exact supplier/PDF URLs and source lines:
 
 - Newark exact 0FHM0001ZXJ: 32 VDC. Littelfuse 062923-B: family maximum 32 V, bare part absent from its table.
 - Littelfuse 113020: family maximum 58 V and bare 0FHM0001ZXJ present. Littelfuse 020425: several suffixed variants explicitly 58 V, bare part absent, with remaining 32 V headings.

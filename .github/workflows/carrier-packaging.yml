@@ -4,12 +4,12 @@ on:
     paths:
       - 'hardware/carrier-packaging/**'
       - 'hardware/carrier-pan-protection/**'
-      - 'research/protection/carrier-practical-architecture.inputs.json'
-      - 'cad/turret_boards.py'
-      - 'catalog/turret.json'
-      - 'catalog/hardware.json'
-      - 'docs/base-board-interfaces.md'
-      - 'docs/carrier-service-connectors.md'
+      - 'docs/research/protection/carrier-practical-architecture.inputs.json'
+      - 'hardware/cad/turret/turret_boards.py'
+      - 'hardware/catalog/turret.json'
+      - 'hardware/catalog/hardware.json'
+      - 'docs/electronics/base-board-interfaces.md'
+      - 'docs/electronics/carrier-service-connectors.md'
       - '.github/workflows/carrier-packaging.yml'
   workflow_dispatch:
 permissions:
