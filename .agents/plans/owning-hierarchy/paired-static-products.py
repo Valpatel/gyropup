@@ -105,9 +105,14 @@ def main():
         assert shutil.which('npm') and shutil.which('node')
         result['node'] = subprocess.check_output(['node', '--version'], text=True).strip()
         result['python'] = subprocess.check_output(['python', '--version'], text=True).strip()
+        # Fleet TMPDIR belongs inside FLEET_RUN_DIR; choose and verify the
+        # external parent explicitly before spending time on dependencies.
+        baseline_parent = Path('/tmp').resolve()
+        run_directory = Path(os.environ['FLEET_RUN_DIR']).resolve()
+        assert baseline_parent.is_dir() and not baseline_parent.is_relative_to(run_directory)
+        baseline = Path(tempfile.mkdtemp(prefix='gyropup-owning-before-', dir=baseline_parent))
+        assert not baseline.resolve().is_relative_to(run_directory)
         run('dependencies', ['npm', 'ci', '--ignore-scripts'])
-        baseline = Path(tempfile.mkdtemp(prefix='gyropup-owning-before-'))
-        assert not baseline.is_relative_to(Path(os.environ['FLEET_RUN_DIR']).resolve())
         run('before-checkout', ['git', 'worktree', 'add', '--detach', str(baseline), args.before])
         assert (baseline / 'package-lock.json').read_bytes() == (root / 'package-lock.json').read_bytes()
         baseline_source_before = tracked_snapshot(baseline)

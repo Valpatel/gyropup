@@ -94,3 +94,5 @@
 | A generated export, log or note names a home directory, compute host, LAN or tailnet address, or private repository; `npm run test:privacy` fails | [Write repository-relative paths and name machines by role](inbox/2026-11-01-generated-exports-carried-home-paths.md), `tools/privacy-ratchet.txt` |
 
 | Exact helper hash fails on one newline, or linked-worktree ancestry loses parents after a depth fetch | [Materialize exact bytes and preserve shared Git history](inbox/2026-11-05-ci-classification-needs-phase-evidence.md#materialize-exact-helper-bytes-before-expensive-setup) |
+
+| A fleet comparison worktree unexpectedly falls inside its run directory | [Select the temporary parent before setup](inbox/2026-11-05-ci-classification-needs-phase-evidence.md#select-the-temporary-worktree-parent-before-dependency-setup) |
