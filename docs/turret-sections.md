@@ -50,17 +50,23 @@ both read it.
 ## The dossier (cad-agent's process)
 
 The turret is the first part of Gyropup on cad-agent's full process (the toolkit's docs/dossier.md and docs/gates.md):
-these eight sections as a YAML dossier, the geometry declared on the dossier registry, every integrity gate and the
+the section declarations as a YAML dossier, the geometry declared on the dossier registry, every integrity gate and the
 dossier lint run by `cad-agent gates`, and `cad-agent check` failing on a failing, missing or stale verdict.
 
 | File | What it holds |
 |---|---|
-| `dossier/project.yaml` | the requirements (R1-R19, each with its source and how it is verified), the interfaces between sections, the gates' declarations (ground, free parts, intended overlaps, ignored pairs, tools) |
-| `dossier/sections/S1-base.yaml` .. `S8-stand.yaml` | each section's purpose, requirements, interfaces, decisions (with the alternatives rejected) and a card per part: its function, interfaces, material, screws, checks |
-| `dossier/decisions.yaml` | the turret's project decisions (D40, D48, D66-D68, D70, D76) and the dossier's own (T0.1-T0.8) |
-| `dossier/gate-declarations.yaml` | what the schema cannot say yet: the hopper's `contains` with `closed_by`, the screws' thread overlaps |
+| [`docs/dossier/project.yaml`](dossier/project.yaml) | the requirements (R1-R19, each with its source and how it is verified), the interfaces between sections, the gates' declarations (ground, free parts, intended overlaps, ignored pairs, tools) |
+| `docs/dossier/sections/` (seven YAML files) | each section's purpose, requirements, interfaces, decisions (with the alternatives rejected) and a card per part: its function, interfaces, material, screws, checks |
+| `docs/dossier/decisions.yaml` | the turret's project decisions (D40, D48, D66-D68, D70, D76) and the dossier's own (T0.1-T0.8) |
+| `docs/dossier/gate-declarations.yaml` | what the schema cannot say yet: the hopper's `contains` with `closed_by`, the screws' thread overlaps |
 | `cad/turret_dossier.py` | the registry build: every part at home in T (the stand under the pan base), the hopper's cavity, the joints, the gated screws, the build order -> `exports/dossier-geometry.json` |
 | `exports/gates/*.json`, `*.md` | the verdicts: connectivity, containment, fasteners, motion, assembly, wall, the dossier lint; and the turret's own `turret-path`, `turret-ammo` |
+
+The [dossier source folder](dossier) now groups ten byte-preserved YAML files and a short reading map. This move
+does not refresh the historical geometry, status or gate records below. Current geometry/assembly reconciliation
+and freshly bound gate/lint evidence remain open in [program #31](https://github.com/Valpatel/gyropup/issues/31).
+Older producer comments and retained records keep their former source-path identities; this table and the project
+configuration identify the current locations.
 
 ```
 .venv/bin/cad-agent gates --build             # build the record, run every gate and the lint (heavy: run it on a CAD host with tools/gp-remote)

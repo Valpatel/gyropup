@@ -52,3 +52,21 @@ docs still has64 direct files and 136 direct tools files; 20 root entries alone 
 ## Stage 1 publication checkpoint
 
 Stage 1 completed through reviewed #233 and normal release #234: main `2a2e4853012ae16179818fea22f8f4a69b57bae1` has 26 root entries (28→26), identical fixture bytes and actual GitHub `.github/CONTRIBUTING.md` discovery. Complete fleet 202 publication/private-input/consumer checks and the [actual production readback](https://github.com/Valpatel/gyropup/pull/234#issuecomment-6678019881) provide the scoped evidence. The later stages above remain unexecuted and conditional; #219 stays open. Next is a dossier-only preflight for a possible 26→25 move, including actual toolkit/config/receipt readers, preserved bytes, unpublished-input exclusions and stale dossier facts. This does not refresh dossier engineering acceptance or authorize its regeneration by metadata editing.
+
+## Dossier reader precondition and candidate scope
+
+The [complete fleet 206 reader preflight](https://github.com/Valpatel/gyropup/issues/219#issuecomment-6679331962)
+and [independent result](https://github.com/Valpatel/gyropup/issues/219#issuecomment-6679341482) verify the ten YAML
+identities, actual input opens, unchanged semantic declarations/options and no-write protected files. Both actual
+lint results still fail with 27 errors/two warnings, and six geometric gate rows stay stale. Failed 205 remains
+failed: its first comparison rejected eight absolute gate-file locations and two embedded diagnostic locations;
+the reviewed replay maps only those exact fields and rejects target/message/line/severity/data mutations.
+
+The candidate implementation groups only those ten byte-preserved YAMLs in `docs/dossier/` and adds one short
+GitHub reading map. Root 26→25; docs total 88→99 with 64 direct files unchanged, and tools 136 direct files
+unchanged. These public-repository inputs retain their unpublished-site boundary through raw copy, model list,
+document list, source-link classification and directory-index exclusions. Exact-source review and actual
+tracked/untracked payload, sibling-boundary, GitHub-link and complete artifact controls remain required before
+integration/publication. This is not a research/reference/firmware/rig/RL move, dossier refresh or engineering
+acceptance; #31/#219 remain open. Keep the [branch-limit correction](2026-11-05-paused-work-needs-the-actual-head.md#keep-draft-limits-separate-from-the-published-branch)
+when interpreting main versus unmerged #207.

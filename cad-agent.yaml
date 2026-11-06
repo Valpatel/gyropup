@@ -24,10 +24,10 @@ cad:
   #   .venv/bin/python cad/turret_gates.py --dossier   # the turret's own gates (path, ammo range), bound to that record
   #   .venv/bin/cad-agent dossier                # the lint again, now with the turret's own verdicts
   #   .venv/bin/cad-agent check                  # fails on a failing, missing or stale verdict
-  dossier: dossier/project.yaml
+  dossier: docs/dossier/project.yaml
   gates:
     build: cad/turret_dossier.py
-    declarations: dossier/gate-declarations.yaml
+    declarations: docs/dossier/gate-declarations.yaml
     jobs: 3
     timeout_s: 14400
     # parts drawn on their seats: 0.05 mm reads as touching; 0.2 mm^3 of integration noise on large curved booleans
