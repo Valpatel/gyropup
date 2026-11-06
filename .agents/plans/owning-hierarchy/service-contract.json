@@ -1,0 +1,59 @@
+{
+  "namespace_decision": "change rig to software.control.rig; checkout-based service, no distribution packaging",
+  "working_directory": "@CHECKOUT@ (the explicitly installed checkout root, retained)",
+  "exec_start": "/usr/bin/python3 -m software.control.rig.rs04_bridge --iface ${IFACE} --profile ${PROFILE} --port ${PORT} $BRIDGE_LAN",
+  "service_template_destination": "software/deploy/jetson/files/gyropup-rs04-bridge.service",
+  "installer_destination": "software/deploy/jetson/install.sh",
+  "public_page": "/designer/motor-tool.html",
+  "bridge_public_url_source_whitelist": [
+    {
+      "public_url": "/designer/motor-tool.html",
+      "source": "software/site/designer/motor-tool.html",
+      "kind": "exact file"
+    },
+    {
+      "public_url": "/designer/motor-tool.js",
+      "source": "software/site/designer/motor-tool.js",
+      "kind": "exact file"
+    },
+    {
+      "public_url": "/designer/kit/rs04/",
+      "source": "software/site/designer/kit/rs04/",
+      "kind": "exact subtree prefix with boundary"
+    },
+    {
+      "public_url": "/hardware/actuators/rs04/profiles/",
+      "source": "hardware/actuators/rs04/profiles/",
+      "kind": "exact subtree prefix with boundary"
+    },
+    {
+      "public_url": "/web/icon.svg",
+      "source": "software/site/assets/icon.svg",
+      "kind": "exact file"
+    },
+    {
+      "public_url": "/web/theme.js",
+      "source": "software/site/assets/theme.js",
+      "kind": "exact file"
+    },
+    {
+      "public_url": "/web/theme.css",
+      "source": "software/site/assets/theme.css",
+      "kind": "exact file"
+    },
+    {
+      "public_url": "/exports/motor-day/derating.json",
+      "source": "hardware/exports/motor-day/derating.json",
+      "kind": "exact file"
+    },
+    {
+      "public_url": "/exports/leg/thermal/motor_thermal.json",
+      "source": "hardware/exports/leg/thermal/motor_thermal.json",
+      "kind": "exact file"
+    }
+  ],
+  "deny": "All unrelated source paths, new software directory URLs, encoded traversal, symlink escape, prefix-lookalikes; never serve the repository wholesale",
+  "outside_original_checkout_proof": "Stage an isolated mapped checkout and --root installation prefix; run generated module/arguments with generated WorkingDirectory from a parent test outside the original checkout, --iface emu and test-owned ephemeral listener; verify actual tool/profile reads, request whitelist and SIGINT STOP/reader join, plus 25 lifecycle/vector tests on both supported Python versions. Existing installer/checkout service remains the deployment model; no pip packaging feature.",
+  "root_discovery": "bridge new path software/control/rig/rs04_bridge.py uses its actual three-level-to-repo-root relationship (parents[3]); all other root calculations/imports enumerated from complete source map, no fallback to old source copies",
+  "source_missing_controls": "missing current firmware/profile/module path with valid old copy must reject; exact current header-derived profile identity required; original213/229 software evidence remains historical"
+}

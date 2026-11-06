@@ -1,0 +1,1608 @@
+{
+  "original_checkout_unmodified": true,
+  "paths": [
+    {
+      "original_path": "rl/README.md",
+      "status": " M",
+      "bytes": 23169,
+      "sha256": "a86338fc764058dbfd9826079ed279cdea0d60acc5b509630093252779c391c1",
+      "proposed_destination": "software/learning/README.md",
+      "action": "preserve original bytes in place; map rename for later reviewed reconciliation, never silently adopt payload"
+    },
+    {
+      "original_path": "rl/gyropup_rl/robot.py",
+      "status": " M",
+      "bytes": 11277,
+      "sha256": "5e519b56b130a988131654068f368932dd5fa49368c795d8cfd465474f50e84e",
+      "proposed_destination": "software/learning/gyropup_rl/robot.py",
+      "action": "preserve original bytes in place; map rename for later reviewed reconciliation, never silently adopt payload"
+    },
+    {
+      "original_path": "rl/gyropup_rl/velocity_env_cfg.py",
+      "status": " M",
+      "bytes": 14970,
+      "sha256": "f978a360472cef485574cbc95d50c66524e374eed5eb6c8a8240b5c569f2b853",
+      "proposed_destination": "software/learning/gyropup_rl/velocity_env_cfg.py",
+      "action": "preserve original bytes in place; map rename for later reviewed reconciliation, never silently adopt payload"
+    },
+    {
+      "original_path": "rl/results/gyropup_drive.mp4",
+      "status": " M",
+      "bytes": 1114227,
+      "sha256": "0fd034f9a018968455b3d727f48d92083a6daf0f5fce7d1ddb36a26e00d7f1b5",
+      "proposed_destination": "software/learning/results/gyropup_drive.mp4",
+      "action": "preserve original bytes in place; map rename for later reviewed reconciliation, never silently adopt payload"
+    },
+    {
+      "original_path": "rl/results/play_log.npz",
+      "status": " M",
+      "bytes": 29076,
+      "sha256": "c58ce5569f8b3cb7724097df06325a016d6540f81413efe37a4beab32a7161d0",
+      "proposed_destination": "software/learning/results/play_log.npz",
+      "action": "preserve original bytes in place; map rename for later reviewed reconciliation, never silently adopt payload"
+    },
+    {
+      "original_path": "rl/results/play_metrics.json",
+      "status": " M",
+      "bytes": 1624,
+      "sha256": "6b2ffa6afacbbd339a1e6106dfbbc53c718a75adbb1c10b336043091cddfb6ce",
+      "proposed_destination": "software/learning/results/play_metrics.json",
+      "action": "preserve original bytes in place; map rename for later reviewed reconciliation, never silently adopt payload"
+    },
+    {
+      "original_path": "rl/results/play_tracking.png",
+      "status": " M",
+      "bytes": 128384,
+      "sha256": "4cd59b683d0e4cd5bcd2911b6411f93740dee482ec948b982dcf02adb13b0a49",
+      "proposed_destination": "software/learning/results/play_tracking.png",
+      "action": "preserve original bytes in place; map rename for later reviewed reconciliation, never silently adopt payload"
+    },
+    {
+      "original_path": "rl/results/policy.json",
+      "status": " M",
+      "bytes": 3926,
+      "sha256": "b328602a3c3b062fbce90aa65c0eac4edd0823782652d978f1544aaaa26df596",
+      "proposed_destination": "software/learning/results/policy.json",
+      "action": "preserve original bytes in place; map rename for later reviewed reconciliation, never silently adopt payload"
+    },
+    {
+      "original_path": "rl/results/policy.onnx",
+      "status": " M",
+      "bytes": 194404,
+      "sha256": "f257f06ba0c97b724f55c794f040dadf7c3b595865a25e1670aff2f2ce5e554b",
+      "proposed_destination": "software/learning/results/policy.onnx",
+      "action": "preserve original bytes in place; map rename for later reviewed reconciliation, never silently adopt payload"
+    },
+    {
+      "original_path": "rl/results/run_onnx_output.txt",
+      "status": " M",
+      "bytes": 545,
+      "sha256": "81caa359956154c81006de93e254508660a6deba9e007b3341fa4cf0b43e7433",
+      "proposed_destination": "software/learning/results/run_onnx_output.txt",
+      "action": "preserve original bytes in place; map rename for later reviewed reconciliation, never silently adopt payload"
+    },
+    {
+      "original_path": "rl/results/sim2sim_drive.mp4",
+      "status": " M",
+      "bytes": 828500,
+      "sha256": "4f9172e7ee6a6a79502f62051f0ccdf283a817ccba84eaa4656017aaa29062aa",
+      "proposed_destination": "software/learning/results/sim2sim_drive.mp4",
+      "action": "preserve original bytes in place; map rename for later reviewed reconciliation, never silently adopt payload"
+    },
+    {
+      "original_path": "rl/results/sim2sim_metrics.json",
+      "status": " M",
+      "bytes": 1427,
+      "sha256": "4935db963b9aba2c0ee0bb2efddf12ae03ed040ee1c75a3743ddf50ebd7761c0",
+      "proposed_destination": "software/learning/results/sim2sim_metrics.json",
+      "action": "preserve original bytes in place; map rename for later reviewed reconciliation, never silently adopt payload"
+    },
+    {
+      "original_path": "rl/results/sim2sim_metrics_delay20ms.json",
+      "status": " M",
+      "bytes": 1428,
+      "sha256": "2b1d952e62c5f45034ba0db8737737a0db03e6458bd465104168437897a04c7e",
+      "proposed_destination": "software/learning/results/sim2sim_metrics_delay20ms.json",
+      "action": "preserve original bytes in place; map rename for later reviewed reconciliation, never silently adopt payload"
+    },
+    {
+      "original_path": "rl/results/sim2sim_metrics_delay40ms.json",
+      "status": " M",
+      "bytes": 1421,
+      "sha256": "b98e6588fe28d6e05a85f0bb79e053b330515df6500dcb867062d297735853fc",
+      "proposed_destination": "software/learning/results/sim2sim_metrics_delay40ms.json",
+      "action": "preserve original bytes in place; map rename for later reviewed reconciliation, never silently adopt payload"
+    },
+    {
+      "original_path": "rl/results/trained_model/design.json",
+      "status": " M",
+      "bytes": 3510,
+      "sha256": "911d4b9176dedccdfeccfe5ab0e01714049e6a0906a6a7a62e99c733ccce82e8",
+      "proposed_destination": "software/learning/results/trained_model/design.json",
+      "action": "preserve original bytes in place; map rename for later reviewed reconciliation, never silently adopt payload"
+    },
+    {
+      "original_path": "rl/results/trained_model/model.json",
+      "status": " M",
+      "bytes": 6234,
+      "sha256": "948e69111b6c8acd9ecb3c4c2620be7babfeffcacb3430f80b4bf9ff892e7384",
+      "proposed_destination": "software/learning/results/trained_model/model.json",
+      "action": "preserve original bytes in place; map rename for later reviewed reconciliation, never silently adopt payload"
+    },
+    {
+      "original_path": "rl/results/trained_model/robot.xml",
+      "status": " M",
+      "bytes": 11087,
+      "sha256": "016f6b59a497bf19fdc3a4053d15234b10dc26cf5cfc209c6e6afa6919291fc7",
+      "proposed_destination": "software/learning/results/trained_model/robot.xml",
+      "action": "preserve original bytes in place; map rename for later reviewed reconciliation, never silently adopt payload"
+    },
+    {
+      "original_path": "rl/results/training_curves.png",
+      "status": " M",
+      "bytes": 146576,
+      "sha256": "a95bca9ea401275dd09e3540e0745356f58422ae6d28c5634863becb43aefdbf",
+      "proposed_destination": "software/learning/results/training_curves.png",
+      "action": "preserve original bytes in place; map rename for later reviewed reconciliation, never silently adopt payload"
+    },
+    {
+      "original_path": "rl/results/training_summary.json",
+      "status": " M",
+      "bytes": 684,
+      "sha256": "eb8268aacfaa0a3a9219fa2d20677142e9cd792f96428d815447917138565889",
+      "proposed_destination": "software/learning/results/training_summary.json",
+      "action": "preserve original bytes in place; map rename for later reviewed reconciliation, never silently adopt payload"
+    },
+    {
+      "original_path": "rl/scripts/export_onnx.py",
+      "status": " M",
+      "bytes": 5425,
+      "sha256": "c5e97e78e797a9067cd385cdb531c440ec91c11775aa61ebd4ee30be3e97066d",
+      "proposed_destination": "software/learning/scripts/export_onnx.py",
+      "action": "preserve original bytes in place; map rename for later reviewed reconciliation, never silently adopt payload"
+    },
+    {
+      "original_path": "rl/scripts/play.py",
+      "status": " M",
+      "bytes": 8583,
+      "sha256": "cd1088bc1037698b25d9dfd10494cf067433dbb7fb6379b14e750212d0b24ff3",
+      "proposed_destination": "software/learning/scripts/play.py",
+      "action": "preserve original bytes in place; map rename for later reviewed reconciliation, never silently adopt payload"
+    },
+    {
+      "original_path": "rl/scripts/plot_training.py",
+      "status": " M",
+      "bytes": 5314,
+      "sha256": "60775e95c444d27729d75f7d96cc1f866b14964bae7faa1592c1808155354151",
+      "proposed_destination": "software/learning/scripts/plot_training.py",
+      "action": "preserve original bytes in place; map rename for later reviewed reconciliation, never silently adopt payload"
+    },
+    {
+      "original_path": "rl/scripts/run_onnx.py",
+      "status": " M",
+      "bytes": 2554,
+      "sha256": "27b7655347d1593ea24505dd7705921561ea934001ed2aff6608c19f84c73f31",
+      "proposed_destination": "software/learning/scripts/run_onnx.py",
+      "action": "preserve original bytes in place; map rename for later reviewed reconciliation, never silently adopt payload"
+    },
+    {
+      "original_path": "rl/scripts/sim2sim.py",
+      "status": " M",
+      "bytes": 8892,
+      "sha256": "0c2a0618ca66c5cd31645b3cc8083176b553faad0c9c940e87f527ae158d61a7",
+      "proposed_destination": "software/learning/scripts/sim2sim.py",
+      "action": "preserve original bytes in place; map rename for later reviewed reconciliation, never silently adopt payload"
+    },
+    {
+      "original_path": "references/vendor/mcmaster/91290A250/SOURCE.txt",
+      "status": "??",
+      "bytes": 369,
+      "sha256": "77925331e8dd09e1c55d0dd495b89d81e297ce5198fe7a78e2a1580e5ef02e4e",
+      "proposed_destination": "hardware/vendor/mcmaster/91290A250/SOURCE.txt",
+      "action": "preserve original bytes in place; map rename for later reviewed reconciliation, never silently adopt payload"
+    },
+    {
+      "original_path": "references/vendor/mcmaster/91290A252/SOURCE.txt",
+      "status": "??",
+      "bytes": 377,
+      "sha256": "162ef4ee63518d8c670450e23acf9cc1aa99c3e8cb2dcb554f8388d9960c13a0",
+      "proposed_destination": "hardware/vendor/mcmaster/91290A252/SOURCE.txt",
+      "action": "preserve original bytes in place; map rename for later reviewed reconciliation, never silently adopt payload"
+    },
+    {
+      "original_path": "rl/results/delay_eval.json",
+      "status": "??",
+      "bytes": 901,
+      "sha256": "4ca0a9b305356f28500c0e7d1b3f3362cdafb7095fcc681869295174ab7dab9a",
+      "proposed_destination": "software/learning/results/delay_eval.json",
+      "action": "preserve original bytes in place; map rename for later reviewed reconciliation, never silently adopt payload"
+    },
+    {
+      "original_path": "rl/results/experiments/delay_0-40ms/delay_eval.json",
+      "status": "??",
+      "bytes": 910,
+      "sha256": "18be4ddf6d8cd28951fc8cc3cd0d83e6957f743b250a9ae3df4c34ff7308b8f7",
+      "proposed_destination": "software/learning/results/experiments/delay_0-40ms/delay_eval.json",
+      "action": "preserve original bytes in place; map rename for later reviewed reconciliation, never silently adopt payload"
+    },
+    {
+      "original_path": "rl/results/experiments/delay_0-40ms/gyropup_drive.mp4",
+      "status": "??",
+      "bytes": 1102922,
+      "sha256": "a4bda3900e7e7cf4f2b457746f046feba7a549f2be8d08b96f7b3eaa6def7e12",
+      "proposed_destination": "software/learning/results/experiments/delay_0-40ms/gyropup_drive.mp4",
+      "action": "preserve original bytes in place; map rename for later reviewed reconciliation, never silently adopt payload"
+    },
+    {
+      "original_path": "rl/results/experiments/delay_0-40ms/play_log.npz",
+      "status": "??",
+      "bytes": 28452,
+      "sha256": "c7892565a345414f15e46146b278387648a2a5d76a076988ca4974c1ac4e476a",
+      "proposed_destination": "software/learning/results/experiments/delay_0-40ms/play_log.npz",
+      "action": "preserve original bytes in place; map rename for later reviewed reconciliation, never silently adopt payload"
+    },
+    {
+      "original_path": "rl/results/experiments/delay_0-40ms/play_metrics.json",
+      "status": "??",
+      "bytes": 1641,
+      "sha256": "97058913ba9dc7bcecc9afcdc47dd4e061d76f1649e76443cc020bb698eac4f8",
+      "proposed_destination": "software/learning/results/experiments/delay_0-40ms/play_metrics.json",
+      "action": "preserve original bytes in place; map rename for later reviewed reconciliation, never silently adopt payload"
+    },
+    {
+      "original_path": "rl/results/experiments/delay_0-40ms/play_tracking.png",
+      "status": "??",
+      "bytes": 117875,
+      "sha256": "a419880bc7d7cd73e258b94fc5fb4a0be47fe614f8809f147c5d7a5629e00a81",
+      "proposed_destination": "software/learning/results/experiments/delay_0-40ms/play_tracking.png",
+      "action": "preserve original bytes in place; map rename for later reviewed reconciliation, never silently adopt payload"
+    },
+    {
+      "original_path": "rl/results/experiments/delay_0-40ms/policy.json",
+      "status": "??",
+      "bytes": 3934,
+      "sha256": "96bedce7fa056a97b634d30372f268df3265292c398db25b9173ed2e6e345360",
+      "proposed_destination": "software/learning/results/experiments/delay_0-40ms/policy.json",
+      "action": "preserve original bytes in place; map rename for later reviewed reconciliation, never silently adopt payload"
+    },
+    {
+      "original_path": "rl/results/experiments/delay_0-40ms/policy.onnx",
+      "status": "??",
+      "bytes": 194404,
+      "sha256": "b3acb0bb1a3704b985a816a560279599ef5a9220442bc6b9d327593993e233cf",
+      "proposed_destination": "software/learning/results/experiments/delay_0-40ms/policy.onnx",
+      "action": "preserve original bytes in place; map rename for later reviewed reconciliation, never silently adopt payload"
+    },
+    {
+      "original_path": "rl/results/experiments/delay_0-40ms/run_onnx_output.txt",
+      "status": "??",
+      "bytes": 545,
+      "sha256": "151676275c53dbe8b2deb0b49126c76d439fa8cd5a58ad65eebb232f5b52726c",
+      "proposed_destination": "software/learning/results/experiments/delay_0-40ms/run_onnx_output.txt",
+      "action": "preserve original bytes in place; map rename for later reviewed reconciliation, never silently adopt payload"
+    },
+    {
+      "original_path": "rl/results/experiments/delay_0-40ms/sim2sim_drive.mp4",
+      "status": "??",
+      "bytes": 833450,
+      "sha256": "77afb1efd15407ab5872b1c803014a6aa65669c59fe8dc6ea3ee45e72b592c06",
+      "proposed_destination": "software/learning/results/experiments/delay_0-40ms/sim2sim_drive.mp4",
+      "action": "preserve original bytes in place; map rename for later reviewed reconciliation, never silently adopt payload"
+    },
+    {
+      "original_path": "rl/results/experiments/delay_0-40ms/sim2sim_metrics.json",
+      "status": "??",
+      "bytes": 1440,
+      "sha256": "9d2f1e8462e85f920bb032ae147ce4bbd7b29b4b0d67e354a596f0498eab1553",
+      "proposed_destination": "software/learning/results/experiments/delay_0-40ms/sim2sim_metrics.json",
+      "action": "preserve original bytes in place; map rename for later reviewed reconciliation, never silently adopt payload"
+    },
+    {
+      "original_path": "rl/results/experiments/delay_0-40ms/sim2sim_metrics_delay20ms.json",
+      "status": "??",
+      "bytes": 1441,
+      "sha256": "8b016a8eb584aeff1a8af0f9a16314a8844feb21b4a8ff4949194e52a67552d0",
+      "proposed_destination": "software/learning/results/experiments/delay_0-40ms/sim2sim_metrics_delay20ms.json",
+      "action": "preserve original bytes in place; map rename for later reviewed reconciliation, never silently adopt payload"
+    },
+    {
+      "original_path": "rl/results/experiments/delay_0-40ms/sim2sim_metrics_delay40ms.json",
+      "status": "??",
+      "bytes": 1439,
+      "sha256": "fe270e1c59f80c2e99506109b8e4254db023adb5200808fda780105b4d0801bf",
+      "proposed_destination": "software/learning/results/experiments/delay_0-40ms/sim2sim_metrics_delay40ms.json",
+      "action": "preserve original bytes in place; map rename for later reviewed reconciliation, never silently adopt payload"
+    },
+    {
+      "original_path": "rl/results/experiments/delay_0-40ms/summary.json",
+      "status": "??",
+      "bytes": 7131,
+      "sha256": "0ac7534366ddc647a52c8b48ee55cc589fe6c147e63e3ac954d805d2b08a683f",
+      "proposed_destination": "software/learning/results/experiments/delay_0-40ms/summary.json",
+      "action": "preserve original bytes in place; map rename for later reviewed reconciliation, never silently adopt payload"
+    },
+    {
+      "original_path": "rl/results/experiments/delay_0-40ms/trained_model/build_env.json",
+      "status": "??",
+      "bytes": 156,
+      "sha256": "f1e207fd1fc66bb45793b54a3a2d1cbb440b9f0c0f4e97ece897d6f2010fd1ad",
+      "proposed_destination": "software/learning/results/experiments/delay_0-40ms/trained_model/build_env.json",
+      "action": "preserve original bytes in place; map rename for later reviewed reconciliation, never silently adopt payload"
+    },
+    {
+      "original_path": "rl/results/experiments/delay_0-40ms/trained_model/design.json",
+      "status": "??",
+      "bytes": 3510,
+      "sha256": "911d4b9176dedccdfeccfe5ab0e01714049e6a0906a6a7a62e99c733ccce82e8",
+      "proposed_destination": "software/learning/results/experiments/delay_0-40ms/trained_model/design.json",
+      "action": "preserve original bytes in place; map rename for later reviewed reconciliation, never silently adopt payload"
+    },
+    {
+      "original_path": "rl/results/experiments/delay_0-40ms/trained_model/init_pose.json",
+      "status": "??",
+      "bytes": 354,
+      "sha256": "affff9968742d60775f474e79890b0d51bdb298f6dd8dd957ee4eb3db526d5f2",
+      "proposed_destination": "software/learning/results/experiments/delay_0-40ms/trained_model/init_pose.json",
+      "action": "preserve original bytes in place; map rename for later reviewed reconciliation, never silently adopt payload"
+    },
+    {
+      "original_path": "rl/results/experiments/delay_0-40ms/trained_model/model.json",
+      "status": "??",
+      "bytes": 6246,
+      "sha256": "10866ae484283fe97af235ed19558ed3e92e036cfbeb8b0160fb9bc874785ff5",
+      "proposed_destination": "software/learning/results/experiments/delay_0-40ms/trained_model/model.json",
+      "action": "preserve original bytes in place; map rename for later reviewed reconciliation, never silently adopt payload"
+    },
+    {
+      "original_path": "rl/results/experiments/delay_0-40ms/trained_model/robot.urdf",
+      "status": "??",
+      "bytes": 11879,
+      "sha256": "c7ca09d17fbada37361244420cf775a13012307a6726bf3091a13cced01440ea",
+      "proposed_destination": "software/learning/results/experiments/delay_0-40ms/trained_model/robot.urdf",
+      "action": "preserve original bytes in place; map rename for later reviewed reconciliation, never silently adopt payload"
+    },
+    {
+      "original_path": "rl/results/experiments/delay_0-40ms/trained_model/robot.xml",
+      "status": "??",
+      "bytes": 11088,
+      "sha256": "0f77fec3568f33a94ccf88ebc0db2d03d45d7225cd051f02c5b916347fde8fb1",
+      "proposed_destination": "software/learning/results/experiments/delay_0-40ms/trained_model/robot.xml",
+      "action": "preserve original bytes in place; map rename for later reviewed reconciliation, never silently adopt payload"
+    },
+    {
+      "original_path": "rl/results/experiments/delay_0-40ms/training_curves.png",
+      "status": "??",
+      "bytes": 145711,
+      "sha256": "1f288ffef23216773c112a90a321f41f956d2be52424aa2076b10727346ccc18",
+      "proposed_destination": "software/learning/results/experiments/delay_0-40ms/training_curves.png",
+      "action": "preserve original bytes in place; map rename for later reviewed reconciliation, never silently adopt payload"
+    },
+    {
+      "original_path": "rl/results/experiments/delay_0-40ms/training_summary.json",
+      "status": "??",
+      "bytes": 680,
+      "sha256": "e92c9ab76b1ed5aeab653fa18b177729293914fab70166d99cb90e2f7fcd8e77",
+      "proposed_destination": "software/learning/results/experiments/delay_0-40ms/training_summary.json",
+      "action": "preserve original bytes in place; map rename for later reviewed reconciliation, never silently adopt payload"
+    },
+    {
+      "original_path": "rl/results/run2_tail_19kg/gyropup_drive.mp4",
+      "status": "??",
+      "bytes": 1119589,
+      "sha256": "d4d26a32f7a6d093909f55115e9b78159b1c4bb60b9517210e122c4bdd9a537a",
+      "proposed_destination": "software/learning/results/run2_tail_19kg/gyropup_drive.mp4",
+      "action": "preserve original bytes in place; map rename for later reviewed reconciliation, never silently adopt payload"
+    },
+    {
+      "original_path": "rl/results/run2_tail_19kg/play_log.npz",
+      "status": "??",
+      "bytes": 28578,
+      "sha256": "b199bec04711cf15ed0203005f2aec63612aa7f04f217aa797c65f107800ba7d",
+      "proposed_destination": "software/learning/results/run2_tail_19kg/play_log.npz",
+      "action": "preserve original bytes in place; map rename for later reviewed reconciliation, never silently adopt payload"
+    },
+    {
+      "original_path": "rl/results/run2_tail_19kg/play_metrics.json",
+      "status": "??",
+      "bytes": 1612,
+      "sha256": "6654c596a6c14bb4160841d28ae16e528cc31103089ae677f72285639bca3d1c",
+      "proposed_destination": "software/learning/results/run2_tail_19kg/play_metrics.json",
+      "action": "preserve original bytes in place; map rename for later reviewed reconciliation, never silently adopt payload"
+    },
+    {
+      "original_path": "rl/results/run2_tail_19kg/play_tracking.png",
+      "status": "??",
+      "bytes": 117151,
+      "sha256": "f87fcd208147d78e820a6b8497a5eafaf131d5c5c0a3662714e698976a1a6b99",
+      "proposed_destination": "software/learning/results/run2_tail_19kg/play_tracking.png",
+      "action": "preserve original bytes in place; map rename for later reviewed reconciliation, never silently adopt payload"
+    },
+    {
+      "original_path": "rl/results/run2_tail_19kg/policy.json",
+      "status": "??",
+      "bytes": 2542,
+      "sha256": "ee635efe5f573e0544c8177965790b123417805a3c14cdb2c67a336f045c638e",
+      "proposed_destination": "software/learning/results/run2_tail_19kg/policy.json",
+      "action": "preserve original bytes in place; map rename for later reviewed reconciliation, never silently adopt payload"
+    },
+    {
+      "original_path": "rl/results/run2_tail_19kg/policy.onnx",
+      "status": "??",
+      "bytes": 194404,
+      "sha256": "92ac14b83ff13acf2ecbd2b294ef0ebe21def9d5be744b88f98d3c9c800ba010",
+      "proposed_destination": "software/learning/results/run2_tail_19kg/policy.onnx",
+      "action": "preserve original bytes in place; map rename for later reviewed reconciliation, never silently adopt payload"
+    },
+    {
+      "original_path": "rl/results/run2_tail_19kg/run_onnx_output.txt",
+      "status": "??",
+      "bytes": 515,
+      "sha256": "9e5ba955019c31f29c8e327fe1fe773f325435ded8d7aa46711ca7a07747649c",
+      "proposed_destination": "software/learning/results/run2_tail_19kg/run_onnx_output.txt",
+      "action": "preserve original bytes in place; map rename for later reviewed reconciliation, never silently adopt payload"
+    },
+    {
+      "original_path": "rl/results/run2_tail_19kg/sim2sim_drive.mp4",
+      "status": "??",
+      "bytes": 854163,
+      "sha256": "4fe5641fa75a2135de994ae8ae7289c7b834913f94b886400d0d6a44450e3d47",
+      "proposed_destination": "software/learning/results/run2_tail_19kg/sim2sim_drive.mp4",
+      "action": "preserve original bytes in place; map rename for later reviewed reconciliation, never silently adopt payload"
+    },
+    {
+      "original_path": "rl/results/run2_tail_19kg/sim2sim_metrics.json",
+      "status": "??",
+      "bytes": 1415,
+      "sha256": "2d69330bc1a3249584faf64d28056112ca360a4bdc6b80296c3333e19194632a",
+      "proposed_destination": "software/learning/results/run2_tail_19kg/sim2sim_metrics.json",
+      "action": "preserve original bytes in place; map rename for later reviewed reconciliation, never silently adopt payload"
+    },
+    {
+      "original_path": "rl/results/run2_tail_19kg/sim2sim_metrics_delay20ms.json",
+      "status": "??",
+      "bytes": 1414,
+      "sha256": "e79670f40fc1160fb53956430e7ec426e5dbb8ecd28764a5efcce342c4fe465f",
+      "proposed_destination": "software/learning/results/run2_tail_19kg/sim2sim_metrics_delay20ms.json",
+      "action": "preserve original bytes in place; map rename for later reviewed reconciliation, never silently adopt payload"
+    },
+    {
+      "original_path": "rl/results/run2_tail_19kg/sim2sim_metrics_delay40ms.json",
+      "status": "??",
+      "bytes": 1412,
+      "sha256": "4a6bb96f74095c7914f0310f5980c00c3dd0f467bcc7f5b74bfa35f1a09914f8",
+      "proposed_destination": "software/learning/results/run2_tail_19kg/sim2sim_metrics_delay40ms.json",
+      "action": "preserve original bytes in place; map rename for later reviewed reconciliation, never silently adopt payload"
+    },
+    {
+      "original_path": "rl/results/run2_tail_19kg/sim2sim_metrics_run2_policy_on_22kg.json",
+      "status": "??",
+      "bytes": 1416,
+      "sha256": "9c02d27030f852b08b7b7d364c55939034637b29c21e5aa6e31de08525e41b8f",
+      "proposed_destination": "software/learning/results/run2_tail_19kg/sim2sim_metrics_run2_policy_on_22kg.json",
+      "action": "preserve original bytes in place; map rename for later reviewed reconciliation, never silently adopt payload"
+    },
+    {
+      "original_path": "rl/results/run2_tail_19kg/trained_model/design.json",
+      "status": "??",
+      "bytes": 4081,
+      "sha256": "ed9fc76b76603840402ccdbdb6faf75726801fe88251c2029a8522ce2d2210fb",
+      "proposed_destination": "software/learning/results/run2_tail_19kg/trained_model/design.json",
+      "action": "preserve original bytes in place; map rename for later reviewed reconciliation, never silently adopt payload"
+    },
+    {
+      "original_path": "rl/results/run2_tail_19kg/trained_model/model.json",
+      "status": "??",
+      "bytes": 6515,
+      "sha256": "9a165af34a10f71e1509bc1edbbfc09cecc3bf23a185f65b6963056d7e5d8e95",
+      "proposed_destination": "software/learning/results/run2_tail_19kg/trained_model/model.json",
+      "action": "preserve original bytes in place; map rename for later reviewed reconciliation, never silently adopt payload"
+    },
+    {
+      "original_path": "rl/results/run2_tail_19kg/trained_model/robot.xml",
+      "status": "??",
+      "bytes": 11157,
+      "sha256": "29c339b1b2079c74951fd2c6e654628767a801452441e6eb2486994ed12f82be",
+      "proposed_destination": "software/learning/results/run2_tail_19kg/trained_model/robot.xml",
+      "action": "preserve original bytes in place; map rename for later reviewed reconciliation, never silently adopt payload"
+    },
+    {
+      "original_path": "rl/results/run2_tail_19kg/training_curves.png",
+      "status": "??",
+      "bytes": 142768,
+      "sha256": "20bf2028f8ee90c596e54db36b438b15857c023da186320fc68d40553764fdfe",
+      "proposed_destination": "software/learning/results/run2_tail_19kg/training_curves.png",
+      "action": "preserve original bytes in place; map rename for later reviewed reconciliation, never silently adopt payload"
+    },
+    {
+      "original_path": "rl/results/run2_tail_19kg/training_summary.json",
+      "status": "??",
+      "bytes": 645,
+      "sha256": "5305a0a9fa50daf85e27c1768091941a4bcb4ff01e4bdc940cbc258fccbcd82e",
+      "proposed_destination": "software/learning/results/run2_tail_19kg/training_summary.json",
+      "action": "preserve original bytes in place; map rename for later reviewed reconciliation, never silently adopt payload"
+    },
+    {
+      "original_path": "rl/results/run3_22kg/delay_eval.json",
+      "status": "??",
+      "bytes": 858,
+      "sha256": "0c7ae9caddc3f432c465c3b7cb79f8b254c7d42250479b9d5c84d35631083b84",
+      "proposed_destination": "software/learning/results/run3_22kg/delay_eval.json",
+      "action": "preserve original bytes in place; map rename for later reviewed reconciliation, never silently adopt payload"
+    },
+    {
+      "original_path": "rl/results/run3_22kg/gyropup_drive.mp4",
+      "status": "??",
+      "bytes": 1127743,
+      "sha256": "4458b02b309f662fbd8417ebac9eaf32f21310f207c9d80a4a09de9e7daeab16",
+      "proposed_destination": "software/learning/results/run3_22kg/gyropup_drive.mp4",
+      "action": "preserve original bytes in place; map rename for later reviewed reconciliation, never silently adopt payload"
+    },
+    {
+      "original_path": "rl/results/run3_22kg/play_log.npz",
+      "status": "??",
+      "bytes": 27850,
+      "sha256": "d3ff9c088d1299fa021b02e1a499a120844c827a4dc3da2f9320b52c0ad80261",
+      "proposed_destination": "software/learning/results/run3_22kg/play_log.npz",
+      "action": "preserve original bytes in place; map rename for later reviewed reconciliation, never silently adopt payload"
+    },
+    {
+      "original_path": "rl/results/run3_22kg/play_metrics.json",
+      "status": "??",
+      "bytes": 1610,
+      "sha256": "48002b000feda2dcb41585b50585a9d61cc4ceb3e4fb9d8c33e4e434e8d6e3e4",
+      "proposed_destination": "software/learning/results/run3_22kg/play_metrics.json",
+      "action": "preserve original bytes in place; map rename for later reviewed reconciliation, never silently adopt payload"
+    },
+    {
+      "original_path": "rl/results/run3_22kg/play_tracking.png",
+      "status": "??",
+      "bytes": 115540,
+      "sha256": "e10c8636a9554bf3d8075f965d12608ece38f566842ee6b151f939acdfb3e35e",
+      "proposed_destination": "software/learning/results/run3_22kg/play_tracking.png",
+      "action": "preserve original bytes in place; map rename for later reviewed reconciliation, never silently adopt payload"
+    },
+    {
+      "original_path": "rl/results/run3_22kg/policy.json",
+      "status": "??",
+      "bytes": 2544,
+      "sha256": "59d69af8bbdec721595befc83f9094ef7a90f71819ee934505875dcbe357085d",
+      "proposed_destination": "software/learning/results/run3_22kg/policy.json",
+      "action": "preserve original bytes in place; map rename for later reviewed reconciliation, never silently adopt payload"
+    },
+    {
+      "original_path": "rl/results/run3_22kg/policy.onnx",
+      "status": "??",
+      "bytes": 194404,
+      "sha256": "157d114e0183663bb0d11fba655a18790b0867cdb66bde1acfd37bf9017da329",
+      "proposed_destination": "software/learning/results/run3_22kg/policy.onnx",
+      "action": "preserve original bytes in place; map rename for later reviewed reconciliation, never silently adopt payload"
+    },
+    {
+      "original_path": "rl/results/run3_22kg/run_onnx_output.txt",
+      "status": "??",
+      "bytes": 515,
+      "sha256": "e1925074576d7c1544efddca7214713dc5868d6b7b8b6a08605eb3a58e3f28e7",
+      "proposed_destination": "software/learning/results/run3_22kg/run_onnx_output.txt",
+      "action": "preserve original bytes in place; map rename for later reviewed reconciliation, never silently adopt payload"
+    },
+    {
+      "original_path": "rl/results/run3_22kg/sim2sim_drive.mp4",
+      "status": "??",
+      "bytes": 855741,
+      "sha256": "bf09f59271c0dbe90d9cd19bf74fde1e7cb5b57c18c774c1f8b9d08bb08dc895",
+      "proposed_destination": "software/learning/results/run3_22kg/sim2sim_drive.mp4",
+      "action": "preserve original bytes in place; map rename for later reviewed reconciliation, never silently adopt payload"
+    },
+    {
+      "original_path": "rl/results/run3_22kg/sim2sim_metrics.json",
+      "status": "??",
+      "bytes": 1419,
+      "sha256": "3f23c1378ce135f4ec7295dec55c6adee11cdba58474dc542cd18335f1c22728",
+      "proposed_destination": "software/learning/results/run3_22kg/sim2sim_metrics.json",
+      "action": "preserve original bytes in place; map rename for later reviewed reconciliation, never silently adopt payload"
+    },
+    {
+      "original_path": "rl/results/run3_22kg/sim2sim_metrics_delay20ms.json",
+      "status": "??",
+      "bytes": 1417,
+      "sha256": "017a1e0d56ea00a3428128175ebde72cb747dacbe7c6a16b8825d60b5a00d99b",
+      "proposed_destination": "software/learning/results/run3_22kg/sim2sim_metrics_delay20ms.json",
+      "action": "preserve original bytes in place; map rename for later reviewed reconciliation, never silently adopt payload"
+    },
+    {
+      "original_path": "rl/results/run3_22kg/sim2sim_metrics_delay40ms.json",
+      "status": "??",
+      "bytes": 1417,
+      "sha256": "fb0990fdbe70dd8ee23b353b0675b4510cbbd6c78eac1b5c4c28c9c7195d64df",
+      "proposed_destination": "software/learning/results/run3_22kg/sim2sim_metrics_delay40ms.json",
+      "action": "preserve original bytes in place; map rename for later reviewed reconciliation, never silently adopt payload"
+    },
+    {
+      "original_path": "rl/results/run3_22kg/summary.json",
+      "status": "??",
+      "bytes": 6001,
+      "sha256": "c23ccfbb8c78ea8ab0c3eb59d84c61498cc2770f7878738910238c56966eda23",
+      "proposed_destination": "software/learning/results/run3_22kg/summary.json",
+      "action": "preserve original bytes in place; map rename for later reviewed reconciliation, never silently adopt payload"
+    },
+    {
+      "original_path": "rl/results/run3_22kg/trained_model/design.json",
+      "status": "??",
+      "bytes": 3510,
+      "sha256": "3c41878bdadd76752e6907f58c8236f12c1295bbdf1c58c54f7b72047bcb14e2",
+      "proposed_destination": "software/learning/results/run3_22kg/trained_model/design.json",
+      "action": "preserve original bytes in place; map rename for later reviewed reconciliation, never silently adopt payload"
+    },
+    {
+      "original_path": "rl/results/run3_22kg/trained_model/model.json",
+      "status": "??",
+      "bytes": 6164,
+      "sha256": "0321e5a8278f21871131afe20a5648b89ba681262f3a2aa04cca31c043ec49ed",
+      "proposed_destination": "software/learning/results/run3_22kg/trained_model/model.json",
+      "action": "preserve original bytes in place; map rename for later reviewed reconciliation, never silently adopt payload"
+    },
+    {
+      "original_path": "rl/results/run3_22kg/trained_model/robot.xml",
+      "status": "??",
+      "bytes": 9226,
+      "sha256": "b5c449490da140c8b50b5a04284ca665237811a21b5c5d0abc1d75f62b2455df",
+      "proposed_destination": "software/learning/results/run3_22kg/trained_model/robot.xml",
+      "action": "preserve original bytes in place; map rename for later reviewed reconciliation, never silently adopt payload"
+    },
+    {
+      "original_path": "rl/results/run3_22kg/training_curves.png",
+      "status": "??",
+      "bytes": 142949,
+      "sha256": "46d613d6aedf1dfa91feabc56401c94167981872e3b82ce22ec939288e0e8399",
+      "proposed_destination": "software/learning/results/run3_22kg/training_curves.png",
+      "action": "preserve original bytes in place; map rename for later reviewed reconciliation, never silently adopt payload"
+    },
+    {
+      "original_path": "rl/results/run3_22kg/training_summary.json",
+      "status": "??",
+      "bytes": 641,
+      "sha256": "8da8efe883475aa2dd17dccf5e1c0833f390f1fdb0bf5c6ad70fb8dfa554447f",
+      "proposed_destination": "software/learning/results/run3_22kg/training_summary.json",
+      "action": "preserve original bytes in place; map rename for later reviewed reconciliation, never silently adopt payload"
+    },
+    {
+      "original_path": "rl/results/run4_22kg_tendon/delay_eval.json",
+      "status": "??",
+      "bytes": 907,
+      "sha256": "69e46a6b5ab0942e4ab40f1698afc4afbe4e0ce8f3ca04cec810f3fe38e8a5a2",
+      "proposed_destination": "software/learning/results/run4_22kg_tendon/delay_eval.json",
+      "action": "preserve original bytes in place; map rename for later reviewed reconciliation, never silently adopt payload"
+    },
+    {
+      "original_path": "rl/results/run4_22kg_tendon/gyropup_drive.mp4",
+      "status": "??",
+      "bytes": 1109268,
+      "sha256": "32fa3367d01d567273647187712ba8105dd43b752535af471a3d925b38ed1c6b",
+      "proposed_destination": "software/learning/results/run4_22kg_tendon/gyropup_drive.mp4",
+      "action": "preserve original bytes in place; map rename for later reviewed reconciliation, never silently adopt payload"
+    },
+    {
+      "original_path": "rl/results/run4_22kg_tendon/play_log.npz",
+      "status": "??",
+      "bytes": 28582,
+      "sha256": "dcb4e5d9e745371000c5979c45923a096e7d8b2093967efbf850aee5ec3f641b",
+      "proposed_destination": "software/learning/results/run4_22kg_tendon/play_log.npz",
+      "action": "preserve original bytes in place; map rename for later reviewed reconciliation, never silently adopt payload"
+    },
+    {
+      "original_path": "rl/results/run4_22kg_tendon/play_metrics.json",
+      "status": "??",
+      "bytes": 1638,
+      "sha256": "3531e296e91546dbd36c789d19dfe6da1fc7cbdced6e679fc029382a5e8390cf",
+      "proposed_destination": "software/learning/results/run4_22kg_tendon/play_metrics.json",
+      "action": "preserve original bytes in place; map rename for later reviewed reconciliation, never silently adopt payload"
+    },
+    {
+      "original_path": "rl/results/run4_22kg_tendon/play_tracking.png",
+      "status": "??",
+      "bytes": 117692,
+      "sha256": "5cf9599ad1835d3d373ceaf2c28e70c7e3cdf85ac1f06652b467afb15ae368a3",
+      "proposed_destination": "software/learning/results/run4_22kg_tendon/play_tracking.png",
+      "action": "preserve original bytes in place; map rename for later reviewed reconciliation, never silently adopt payload"
+    },
+    {
+      "original_path": "rl/results/run4_22kg_tendon/policy.json",
+      "status": "??",
+      "bytes": 3926,
+      "sha256": "f403336dc8b8a83e5516c3939a4053dc39dfa1f410c27a8dc8ffb6c69472152f",
+      "proposed_destination": "software/learning/results/run4_22kg_tendon/policy.json",
+      "action": "preserve original bytes in place; map rename for later reviewed reconciliation, never silently adopt payload"
+    },
+    {
+      "original_path": "rl/results/run4_22kg_tendon/policy.onnx",
+      "status": "??",
+      "bytes": 194404,
+      "sha256": "48b9a8f10df9b4a63d20d384fb4e85a901252c99ccd9059b23f91b0630a0af8a",
+      "proposed_destination": "software/learning/results/run4_22kg_tendon/policy.onnx",
+      "action": "preserve original bytes in place; map rename for later reviewed reconciliation, never silently adopt payload"
+    },
+    {
+      "original_path": "rl/results/run4_22kg_tendon/run_onnx_output.txt",
+      "status": "??",
+      "bytes": 545,
+      "sha256": "70367db2ae7189b96e1ef6eb78c4a6bd48a58cb74c3a32fb8a3bb51d84237239",
+      "proposed_destination": "software/learning/results/run4_22kg_tendon/run_onnx_output.txt",
+      "action": "preserve original bytes in place; map rename for later reviewed reconciliation, never silently adopt payload"
+    },
+    {
+      "original_path": "rl/results/run4_22kg_tendon/sim2sim_drive.mp4",
+      "status": "??",
+      "bytes": 843605,
+      "sha256": "5f0a7e2206cf6acaf602a1e266dc8d03fa8f9cf777c34bafa49f7a4b56e4b5e3",
+      "proposed_destination": "software/learning/results/run4_22kg_tendon/sim2sim_drive.mp4",
+      "action": "preserve original bytes in place; map rename for later reviewed reconciliation, never silently adopt payload"
+    },
+    {
+      "original_path": "rl/results/run4_22kg_tendon/sim2sim_metrics.json",
+      "status": "??",
+      "bytes": 1422,
+      "sha256": "79c4642679bb0b62bf0fb59e9bd63daf2c77b205160a14298deea8a92096c1df",
+      "proposed_destination": "software/learning/results/run4_22kg_tendon/sim2sim_metrics.json",
+      "action": "preserve original bytes in place; map rename for later reviewed reconciliation, never silently adopt payload"
+    },
+    {
+      "original_path": "rl/results/run4_22kg_tendon/sim2sim_metrics_delay20ms.json",
+      "status": "??",
+      "bytes": 1415,
+      "sha256": "14eddf53296663d5bea6277e1a06e54f15f2a517cc2247ea57d212bcbe7d5a30",
+      "proposed_destination": "software/learning/results/run4_22kg_tendon/sim2sim_metrics_delay20ms.json",
+      "action": "preserve original bytes in place; map rename for later reviewed reconciliation, never silently adopt payload"
+    },
+    {
+      "original_path": "rl/results/run4_22kg_tendon/sim2sim_metrics_delay40ms.json",
+      "status": "??",
+      "bytes": 1419,
+      "sha256": "cb44a09796ec38412941bca75534fc129845daf563c27bcd9d27476fdaeee422",
+      "proposed_destination": "software/learning/results/run4_22kg_tendon/sim2sim_metrics_delay40ms.json",
+      "action": "preserve original bytes in place; map rename for later reviewed reconciliation, never silently adopt payload"
+    },
+    {
+      "original_path": "rl/results/run4_22kg_tendon/summary.json",
+      "status": "??",
+      "bytes": 7033,
+      "sha256": "a6a7e52549fcd78d8ae877cf13fc8f3ea6cdbcf0579b60bc5562a836d511730a",
+      "proposed_destination": "software/learning/results/run4_22kg_tendon/summary.json",
+      "action": "preserve original bytes in place; map rename for later reviewed reconciliation, never silently adopt payload"
+    },
+    {
+      "original_path": "rl/results/run4_22kg_tendon/trained_model/build_env.json",
+      "status": "??",
+      "bytes": 156,
+      "sha256": "f1e207fd1fc66bb45793b54a3a2d1cbb440b9f0c0f4e97ece897d6f2010fd1ad",
+      "proposed_destination": "software/learning/results/run4_22kg_tendon/trained_model/build_env.json",
+      "action": "preserve original bytes in place; map rename for later reviewed reconciliation, never silently adopt payload"
+    },
+    {
+      "original_path": "rl/results/run4_22kg_tendon/trained_model/design.json",
+      "status": "??",
+      "bytes": 3510,
+      "sha256": "911d4b9176dedccdfeccfe5ab0e01714049e6a0906a6a7a62e99c733ccce82e8",
+      "proposed_destination": "software/learning/results/run4_22kg_tendon/trained_model/design.json",
+      "action": "preserve original bytes in place; map rename for later reviewed reconciliation, never silently adopt payload"
+    },
+    {
+      "original_path": "rl/results/run4_22kg_tendon/trained_model/init_pose.json",
+      "status": "??",
+      "bytes": 354,
+      "sha256": "affff9968742d60775f474e79890b0d51bdb298f6dd8dd957ee4eb3db526d5f2",
+      "proposed_destination": "software/learning/results/run4_22kg_tendon/trained_model/init_pose.json",
+      "action": "preserve original bytes in place; map rename for later reviewed reconciliation, never silently adopt payload"
+    },
+    {
+      "original_path": "rl/results/run4_22kg_tendon/trained_model/model.json",
+      "status": "??",
+      "bytes": 6246,
+      "sha256": "10866ae484283fe97af235ed19558ed3e92e036cfbeb8b0160fb9bc874785ff5",
+      "proposed_destination": "software/learning/results/run4_22kg_tendon/trained_model/model.json",
+      "action": "preserve original bytes in place; map rename for later reviewed reconciliation, never silently adopt payload"
+    },
+    {
+      "original_path": "rl/results/run4_22kg_tendon/trained_model/robot.urdf",
+      "status": "??",
+      "bytes": 11879,
+      "sha256": "c7ca09d17fbada37361244420cf775a13012307a6726bf3091a13cced01440ea",
+      "proposed_destination": "software/learning/results/run4_22kg_tendon/trained_model/robot.urdf",
+      "action": "preserve original bytes in place; map rename for later reviewed reconciliation, never silently adopt payload"
+    },
+    {
+      "original_path": "rl/results/run4_22kg_tendon/trained_model/robot.xml",
+      "status": "??",
+      "bytes": 11088,
+      "sha256": "0f77fec3568f33a94ccf88ebc0db2d03d45d7225cd051f02c5b916347fde8fb1",
+      "proposed_destination": "software/learning/results/run4_22kg_tendon/trained_model/robot.xml",
+      "action": "preserve original bytes in place; map rename for later reviewed reconciliation, never silently adopt payload"
+    },
+    {
+      "original_path": "rl/results/run4_22kg_tendon/training_curves.png",
+      "status": "??",
+      "bytes": 144820,
+      "sha256": "ce251868e50e11d66406426a4baf361ac2a81cddb64009c4c78d75447a222e11",
+      "proposed_destination": "software/learning/results/run4_22kg_tendon/training_curves.png",
+      "action": "preserve original bytes in place; map rename for later reviewed reconciliation, never silently adopt payload"
+    },
+    {
+      "original_path": "rl/results/run4_22kg_tendon/training_summary.json",
+      "status": "??",
+      "bytes": 655,
+      "sha256": "a6331dbbb2d36ea93460481ef82bf74f963a1599eead559e61c2010fb673771f",
+      "proposed_destination": "software/learning/results/run4_22kg_tendon/training_summary.json",
+      "action": "preserve original bytes in place; map rename for later reviewed reconciliation, never silently adopt payload"
+    },
+    {
+      "original_path": "rl/results/run5_21kg_delay20/delay_eval.json",
+      "status": "??",
+      "bytes": 908,
+      "sha256": "79677d74d54db1375870da07915a4858527bf412a818f0e9cda9f89b46520242",
+      "proposed_destination": "software/learning/results/run5_21kg_delay20/delay_eval.json",
+      "action": "preserve original bytes in place; map rename for later reviewed reconciliation, never silently adopt payload"
+    },
+    {
+      "original_path": "rl/results/run5_21kg_delay20/gyropup_drive.mp4",
+      "status": "??",
+      "bytes": 1109903,
+      "sha256": "cb5c29fc51eea03085feb06eaf849ce15851ca99371ff7b52284bb850a9b836a",
+      "proposed_destination": "software/learning/results/run5_21kg_delay20/gyropup_drive.mp4",
+      "action": "preserve original bytes in place; map rename for later reviewed reconciliation, never silently adopt payload"
+    },
+    {
+      "original_path": "rl/results/run5_21kg_delay20/play_log.npz",
+      "status": "??",
+      "bytes": 28787,
+      "sha256": "71aa9c8f0ac49b14cca144f3d91effbe05d95610baea4d1a87b3d0833a77bb9d",
+      "proposed_destination": "software/learning/results/run5_21kg_delay20/play_log.npz",
+      "action": "preserve original bytes in place; map rename for later reviewed reconciliation, never silently adopt payload"
+    },
+    {
+      "original_path": "rl/results/run5_21kg_delay20/play_metrics.json",
+      "status": "??",
+      "bytes": 1629,
+      "sha256": "f87568897c2a737fcb442f59d23688a487dc5e52cc70c9739a8cd3d413d160ec",
+      "proposed_destination": "software/learning/results/run5_21kg_delay20/play_metrics.json",
+      "action": "preserve original bytes in place; map rename for later reviewed reconciliation, never silently adopt payload"
+    },
+    {
+      "original_path": "rl/results/run5_21kg_delay20/play_tracking.png",
+      "status": "??",
+      "bytes": 125173,
+      "sha256": "5210e0585e1fe604bc71ff0db4ad12e10f8673327696ea1eac96f3eeb354996f",
+      "proposed_destination": "software/learning/results/run5_21kg_delay20/play_tracking.png",
+      "action": "preserve original bytes in place; map rename for later reviewed reconciliation, never silently adopt payload"
+    },
+    {
+      "original_path": "rl/results/run5_21kg_delay20/policy.json",
+      "status": "??",
+      "bytes": 3926,
+      "sha256": "6574e6880c1aff4c8e2f39e94478118e70a354d2d4a0a983567adae5dbd00550",
+      "proposed_destination": "software/learning/results/run5_21kg_delay20/policy.json",
+      "action": "preserve original bytes in place; map rename for later reviewed reconciliation, never silently adopt payload"
+    },
+    {
+      "original_path": "rl/results/run5_21kg_delay20/policy.onnx",
+      "status": "??",
+      "bytes": 194404,
+      "sha256": "6317c157c3d4a2cbb65610a657626030e0c2a5617c62980c8e710526b79c5c4d",
+      "proposed_destination": "software/learning/results/run5_21kg_delay20/policy.onnx",
+      "action": "preserve original bytes in place; map rename for later reviewed reconciliation, never silently adopt payload"
+    },
+    {
+      "original_path": "rl/results/run5_21kg_delay20/run_onnx_output.txt",
+      "status": "??",
+      "bytes": 545,
+      "sha256": "51a4304f53dcba80b1d3525de015cacde672803892a96fea2737329314e257b3",
+      "proposed_destination": "software/learning/results/run5_21kg_delay20/run_onnx_output.txt",
+      "action": "preserve original bytes in place; map rename for later reviewed reconciliation, never silently adopt payload"
+    },
+    {
+      "original_path": "rl/results/run5_21kg_delay20/sim2sim_drive.mp4",
+      "status": "??",
+      "bytes": 845865,
+      "sha256": "ae8edafa6e09ffc7428b40ec72fbc316b5c4ef5e8d9221bad921b32453c608a9",
+      "proposed_destination": "software/learning/results/run5_21kg_delay20/sim2sim_drive.mp4",
+      "action": "preserve original bytes in place; map rename for later reviewed reconciliation, never silently adopt payload"
+    },
+    {
+      "original_path": "rl/results/run5_21kg_delay20/sim2sim_metrics.json",
+      "status": "??",
+      "bytes": 1427,
+      "sha256": "b5d6c237b52dd721b3a704e98add219b078fee729bf1852a688ab8a331e21139",
+      "proposed_destination": "software/learning/results/run5_21kg_delay20/sim2sim_metrics.json",
+      "action": "preserve original bytes in place; map rename for later reviewed reconciliation, never silently adopt payload"
+    },
+    {
+      "original_path": "rl/results/run5_21kg_delay20/sim2sim_metrics_delay20ms.json",
+      "status": "??",
+      "bytes": 1424,
+      "sha256": "bb130021391fb8b11384034d8745172cc645a3eda5ed5012817fa5ba184c4768",
+      "proposed_destination": "software/learning/results/run5_21kg_delay20/sim2sim_metrics_delay20ms.json",
+      "action": "preserve original bytes in place; map rename for later reviewed reconciliation, never silently adopt payload"
+    },
+    {
+      "original_path": "rl/results/run5_21kg_delay20/sim2sim_metrics_delay40ms.json",
+      "status": "??",
+      "bytes": 1441,
+      "sha256": "ff45ddf5a6e45b4616c479dc2c1c09e309ee9468e759a806a114718b0f5684d9",
+      "proposed_destination": "software/learning/results/run5_21kg_delay20/sim2sim_metrics_delay40ms.json",
+      "action": "preserve original bytes in place; map rename for later reviewed reconciliation, never silently adopt payload"
+    },
+    {
+      "original_path": "rl/results/run5_21kg_delay20/summary.json",
+      "status": "??",
+      "bytes": 7079,
+      "sha256": "35dc5584b9171b90b68cf92a914aaab6fd45abf22865d19f34955524b050e64f",
+      "proposed_destination": "software/learning/results/run5_21kg_delay20/summary.json",
+      "action": "preserve original bytes in place; map rename for later reviewed reconciliation, never silently adopt payload"
+    },
+    {
+      "original_path": "rl/results/run5_21kg_delay20/trained_model/build_env.json",
+      "status": "??",
+      "bytes": 156,
+      "sha256": "871afb66fd952164ae4d947b5f7ce0b8bc98d845295c57da71a1203bf1309fc7",
+      "proposed_destination": "software/learning/results/run5_21kg_delay20/trained_model/build_env.json",
+      "action": "preserve original bytes in place; map rename for later reviewed reconciliation, never silently adopt payload"
+    },
+    {
+      "original_path": "rl/results/run5_21kg_delay20/trained_model/design.json",
+      "status": "??",
+      "bytes": 3510,
+      "sha256": "911d4b9176dedccdfeccfe5ab0e01714049e6a0906a6a7a62e99c733ccce82e8",
+      "proposed_destination": "software/learning/results/run5_21kg_delay20/trained_model/design.json",
+      "action": "preserve original bytes in place; map rename for later reviewed reconciliation, never silently adopt payload"
+    },
+    {
+      "original_path": "rl/results/run5_21kg_delay20/trained_model/init_pose.json",
+      "status": "??",
+      "bytes": 356,
+      "sha256": "bf9f9793df2ae864904a427b2e6235b8f3afd146a622c67952d0ff68e1ccdd28",
+      "proposed_destination": "software/learning/results/run5_21kg_delay20/trained_model/init_pose.json",
+      "action": "preserve original bytes in place; map rename for later reviewed reconciliation, never silently adopt payload"
+    },
+    {
+      "original_path": "rl/results/run5_21kg_delay20/trained_model/model.json",
+      "status": "??",
+      "bytes": 6234,
+      "sha256": "948e69111b6c8acd9ecb3c4c2620be7babfeffcacb3430f80b4bf9ff892e7384",
+      "proposed_destination": "software/learning/results/run5_21kg_delay20/trained_model/model.json",
+      "action": "preserve original bytes in place; map rename for later reviewed reconciliation, never silently adopt payload"
+    },
+    {
+      "original_path": "rl/results/run5_21kg_delay20/trained_model/robot.urdf",
+      "status": "??",
+      "bytes": 11878,
+      "sha256": "db4dab4a7f8690e0af22e5ccfca7538380c6a8e6f8f79e4c3bd92a2e2bcb8d6b",
+      "proposed_destination": "software/learning/results/run5_21kg_delay20/trained_model/robot.urdf",
+      "action": "preserve original bytes in place; map rename for later reviewed reconciliation, never silently adopt payload"
+    },
+    {
+      "original_path": "rl/results/run5_21kg_delay20/trained_model/robot.xml",
+      "status": "??",
+      "bytes": 11087,
+      "sha256": "016f6b59a497bf19fdc3a4053d15234b10dc26cf5cfc209c6e6afa6919291fc7",
+      "proposed_destination": "software/learning/results/run5_21kg_delay20/trained_model/robot.xml",
+      "action": "preserve original bytes in place; map rename for later reviewed reconciliation, never silently adopt payload"
+    },
+    {
+      "original_path": "rl/results/run5_21kg_delay20/training_curves.png",
+      "status": "??",
+      "bytes": 142668,
+      "sha256": "05537f5627a6d7f9cff2272aed4619893f2ce05cbbabc684fa8bf9a3eda379bb",
+      "proposed_destination": "software/learning/results/run5_21kg_delay20/training_curves.png",
+      "action": "preserve original bytes in place; map rename for later reviewed reconciliation, never silently adopt payload"
+    },
+    {
+      "original_path": "rl/results/run5_21kg_delay20/training_summary.json",
+      "status": "??",
+      "bytes": 656,
+      "sha256": "9c8460a4ee2d5a7be8c969d713ca5c2e5f3cfe9f5c929e30368de62c24ad9add",
+      "proposed_destination": "software/learning/results/run5_21kg_delay20/training_summary.json",
+      "action": "preserve original bytes in place; map rename for later reviewed reconciliation, never silently adopt payload"
+    },
+    {
+      "original_path": "rl/results/summary.json",
+      "status": "??",
+      "bytes": 7077,
+      "sha256": "969327d48d5a954141001d9f056a7ceb280ac5fdf0ef5ed44a3987bce45e550d",
+      "proposed_destination": "software/learning/results/summary.json",
+      "action": "preserve original bytes in place; map rename for later reviewed reconciliation, never silently adopt payload"
+    },
+    {
+      "original_path": "rl/results/trained_model/build_env.json",
+      "status": "??",
+      "bytes": 156,
+      "sha256": "871afb66fd952164ae4d947b5f7ce0b8bc98d845295c57da71a1203bf1309fc7",
+      "proposed_destination": "software/learning/results/trained_model/build_env.json",
+      "action": "preserve original bytes in place; map rename for later reviewed reconciliation, never silently adopt payload"
+    },
+    {
+      "original_path": "rl/results/trained_model/init_pose.json",
+      "status": "??",
+      "bytes": 356,
+      "sha256": "bf9f9793df2ae864904a427b2e6235b8f3afd146a622c67952d0ff68e1ccdd28",
+      "proposed_destination": "software/learning/results/trained_model/init_pose.json",
+      "action": "preserve original bytes in place; map rename for later reviewed reconciliation, never silently adopt payload"
+    },
+    {
+      "original_path": "rl/results/trained_model/robot.urdf",
+      "status": "??",
+      "bytes": 11878,
+      "sha256": "db4dab4a7f8690e0af22e5ccfca7538380c6a8e6f8f79e4c3bd92a2e2bcb8d6b",
+      "proposed_destination": "software/learning/results/trained_model/robot.urdf",
+      "action": "preserve original bytes in place; map rename for later reviewed reconciliation, never silently adopt payload"
+    },
+    {
+      "original_path": "rl/results/trials/leaderboard_snapshot.json",
+      "status": "??",
+      "bytes": 18390,
+      "sha256": "f323a58a50b3f9e2760e98ccd47f0aa43f4ee3e5de48c12116c4d493c1b716df",
+      "proposed_destination": "software/learning/results/trials/leaderboard_snapshot.json",
+      "action": "preserve original bytes in place; map rename for later reviewed reconciliation, never silently adopt payload"
+    },
+    {
+      "original_path": "rl/results/trials/summary.json",
+      "status": "??",
+      "bytes": 6274,
+      "sha256": "8abfa850bcb425152eda8fd46433b94a3d917cde763435e3f00f8c8bfd6816db",
+      "proposed_destination": "software/learning/results/trials/summary.json",
+      "action": "preserve original bytes in place; map rename for later reviewed reconciliation, never silently adopt payload"
+    },
+    {
+      "original_path": "rl/results/trials/trial_00193/delay_eval.json",
+      "status": "??",
+      "bytes": 907,
+      "sha256": "2cede743169d56d085782103023a69e78a02b044f4d70849eee933686097e77f",
+      "proposed_destination": "software/learning/results/trials/trial_00193/delay_eval.json",
+      "action": "preserve original bytes in place; map rename for later reviewed reconciliation, never silently adopt payload"
+    },
+    {
+      "original_path": "rl/results/trials/trial_00193/gyropup_drive.mp4",
+      "status": "??",
+      "bytes": 1114507,
+      "sha256": "f1a4eab0946ab6528cb3e9142a7dd2684f5f90fb0ead64374fb29cc9e08fc771",
+      "proposed_destination": "software/learning/results/trials/trial_00193/gyropup_drive.mp4",
+      "action": "preserve original bytes in place; map rename for later reviewed reconciliation, never silently adopt payload"
+    },
+    {
+      "original_path": "rl/results/trials/trial_00193/play_log.npz",
+      "status": "??",
+      "bytes": 28454,
+      "sha256": "cba50c32e952215717c9ba2d6219426495f942165152a7a912b4b39a0b181c43",
+      "proposed_destination": "software/learning/results/trials/trial_00193/play_log.npz",
+      "action": "preserve original bytes in place; map rename for later reviewed reconciliation, never silently adopt payload"
+    },
+    {
+      "original_path": "rl/results/trials/trial_00193/play_metrics.json",
+      "status": "??",
+      "bytes": 1641,
+      "sha256": "109d46edf3a5ae91f2f19342b04ac99d8c20faa2b27096b5864271e5e80d7add",
+      "proposed_destination": "software/learning/results/trials/trial_00193/play_metrics.json",
+      "action": "preserve original bytes in place; map rename for later reviewed reconciliation, never silently adopt payload"
+    },
+    {
+      "original_path": "rl/results/trials/trial_00193/play_tracking.png",
+      "status": "??",
+      "bytes": 119178,
+      "sha256": "604f42f9bce4f3df29e17ca80486fae39622c3cefb3dc51dcf6f8b25483e3f58",
+      "proposed_destination": "software/learning/results/trials/trial_00193/play_tracking.png",
+      "action": "preserve original bytes in place; map rename for later reviewed reconciliation, never silently adopt payload"
+    },
+    {
+      "original_path": "rl/results/trials/trial_00193/policy.json",
+      "status": "??",
+      "bytes": 3935,
+      "sha256": "08222919ff1501b45039c60e11c18b1d953b2508a68374de85582831d64e7d19",
+      "proposed_destination": "software/learning/results/trials/trial_00193/policy.json",
+      "action": "preserve original bytes in place; map rename for later reviewed reconciliation, never silently adopt payload"
+    },
+    {
+      "original_path": "rl/results/trials/trial_00193/policy.onnx",
+      "status": "??",
+      "bytes": 194404,
+      "sha256": "1430db84aa51a49b6412b91b9e641baacd74ffaa968203bef0b0276d786ec4aa",
+      "proposed_destination": "software/learning/results/trials/trial_00193/policy.onnx",
+      "action": "preserve original bytes in place; map rename for later reviewed reconciliation, never silently adopt payload"
+    },
+    {
+      "original_path": "rl/results/trials/trial_00193/run_onnx_output.txt",
+      "status": "??",
+      "bytes": 545,
+      "sha256": "aaffd148b45d7e909b4bf1b4f2c69c4e88114f0258f46cf718a4c5c7c5073e04",
+      "proposed_destination": "software/learning/results/trials/trial_00193/run_onnx_output.txt",
+      "action": "preserve original bytes in place; map rename for later reviewed reconciliation, never silently adopt payload"
+    },
+    {
+      "original_path": "rl/results/trials/trial_00193/sim2sim_drive.mp4",
+      "status": "??",
+      "bytes": 856606,
+      "sha256": "27c88bd0e616ee4f676b7a8b4a475135d966ab0ca21e750a61ab55bd0b829e47",
+      "proposed_destination": "software/learning/results/trials/trial_00193/sim2sim_drive.mp4",
+      "action": "preserve original bytes in place; map rename for later reviewed reconciliation, never silently adopt payload"
+    },
+    {
+      "original_path": "rl/results/trials/trial_00193/sim2sim_metrics.json",
+      "status": "??",
+      "bytes": 1435,
+      "sha256": "38631f9d1d0d47f40485743074ad33fd3867e0148c16c9a1b5e6c23e4f8261be",
+      "proposed_destination": "software/learning/results/trials/trial_00193/sim2sim_metrics.json",
+      "action": "preserve original bytes in place; map rename for later reviewed reconciliation, never silently adopt payload"
+    },
+    {
+      "original_path": "rl/results/trials/trial_00193/sim2sim_metrics_delay20ms.json",
+      "status": "??",
+      "bytes": 1436,
+      "sha256": "675dba88764ab56c19957d7293f86bb50b97ef3e09d3b66db093296e2d841d1f",
+      "proposed_destination": "software/learning/results/trials/trial_00193/sim2sim_metrics_delay20ms.json",
+      "action": "preserve original bytes in place; map rename for later reviewed reconciliation, never silently adopt payload"
+    },
+    {
+      "original_path": "rl/results/trials/trial_00193/sim2sim_metrics_delay40ms.json",
+      "status": "??",
+      "bytes": 1434,
+      "sha256": "27eb394f084c9b96c885e5832a8312740705d02e06764692b81f58291c9f1d1f",
+      "proposed_destination": "software/learning/results/trials/trial_00193/sim2sim_metrics_delay40ms.json",
+      "action": "preserve original bytes in place; map rename for later reviewed reconciliation, never silently adopt payload"
+    },
+    {
+      "original_path": "rl/results/trials/trial_00193/summary.json",
+      "status": "??",
+      "bytes": 7090,
+      "sha256": "7888ce7074132a0bc153e76e527dc3bf7cc6970d8f822baa2f81f013858b2660",
+      "proposed_destination": "software/learning/results/trials/trial_00193/summary.json",
+      "action": "preserve original bytes in place; map rename for later reviewed reconciliation, never silently adopt payload"
+    },
+    {
+      "original_path": "rl/results/trials/trial_00193/trained_model/build_env.json",
+      "status": "??",
+      "bytes": 310,
+      "sha256": "e18419562ef946b24ef273c095b1c2983e095613b9f9d889583e906e55d1d16c",
+      "proposed_destination": "software/learning/results/trials/trial_00193/trained_model/build_env.json",
+      "action": "preserve original bytes in place; map rename for later reviewed reconciliation, never silently adopt payload"
+    },
+    {
+      "original_path": "rl/results/trials/trial_00193/trained_model/design.json",
+      "status": "??",
+      "bytes": 3332,
+      "sha256": "58712d8c42145387bee8c0920f51443318caabb3a4c6582482c6ab6889de8be4",
+      "proposed_destination": "software/learning/results/trials/trial_00193/trained_model/design.json",
+      "action": "preserve original bytes in place; map rename for later reviewed reconciliation, never silently adopt payload"
+    },
+    {
+      "original_path": "rl/results/trials/trial_00193/trained_model/init_pose.json",
+      "status": "??",
+      "bytes": 355,
+      "sha256": "0f64db80ba598d1617b42284ea6cf8422db7ce3a9cb554a4d495f11450a37562",
+      "proposed_destination": "software/learning/results/trials/trial_00193/trained_model/init_pose.json",
+      "action": "preserve original bytes in place; map rename for later reviewed reconciliation, never silently adopt payload"
+    },
+    {
+      "original_path": "rl/results/trials/trial_00193/trained_model/model.json",
+      "status": "??",
+      "bytes": 6290,
+      "sha256": "8505ae1937d2a72df71138e922fba59d18af09c8df294d4881e76c6f28a024d0",
+      "proposed_destination": "software/learning/results/trials/trial_00193/trained_model/model.json",
+      "action": "preserve original bytes in place; map rename for later reviewed reconciliation, never silently adopt payload"
+    },
+    {
+      "original_path": "rl/results/trials/trial_00193/trained_model/repo_commit.txt",
+      "status": "??",
+      "bytes": 8,
+      "sha256": "b37520b3ec790afd961efd88a70700ea937fe37d5081705fad5869fd8d2dfb9f",
+      "proposed_destination": "software/learning/results/trials/trial_00193/trained_model/repo_commit.txt",
+      "action": "preserve original bytes in place; map rename for later reviewed reconciliation, never silently adopt payload"
+    },
+    {
+      "original_path": "rl/results/trials/trial_00193/trained_model/robot.urdf",
+      "status": "??",
+      "bytes": 11926,
+      "sha256": "9c13dfa9f29ec278ee3c016a3bf0dd48e18e8b7786ad47ca331665f8e4023c03",
+      "proposed_destination": "software/learning/results/trials/trial_00193/trained_model/robot.urdf",
+      "action": "preserve original bytes in place; map rename for later reviewed reconciliation, never silently adopt payload"
+    },
+    {
+      "original_path": "rl/results/trials/trial_00193/trained_model/robot.xml",
+      "status": "??",
+      "bytes": 11143,
+      "sha256": "6ebf94b7e03c7b7d16d6d8f906e7baf72f0bd6adb771e288ca3b91ae6efedae8",
+      "proposed_destination": "software/learning/results/trials/trial_00193/trained_model/robot.xml",
+      "action": "preserve original bytes in place; map rename for later reviewed reconciliation, never silently adopt payload"
+    },
+    {
+      "original_path": "rl/results/trials/trial_00193/training_curves.png",
+      "status": "??",
+      "bytes": 146682,
+      "sha256": "88f0ea702acde479dc6e51da893dc2e3a73d8f861e1b933774f677b08a81b204",
+      "proposed_destination": "software/learning/results/trials/trial_00193/training_curves.png",
+      "action": "preserve original bytes in place; map rename for later reviewed reconciliation, never silently adopt payload"
+    },
+    {
+      "original_path": "rl/results/trials/trial_00193/training_summary.json",
+      "status": "??",
+      "bytes": 660,
+      "sha256": "e803dd5df9de481786e3cb97b41dfba822f81ebf09eab8dc478ad2e0b620e405",
+      "proposed_destination": "software/learning/results/trials/trial_00193/training_summary.json",
+      "action": "preserve original bytes in place; map rename for later reviewed reconciliation, never silently adopt payload"
+    },
+    {
+      "original_path": "rl/results/trials/trial_00212/delay_eval.json",
+      "status": "??",
+      "bytes": 909,
+      "sha256": "518858d9a8e18fce0c746b3f08c80c0c1c977a42cbf3b06752abf6a7534eec84",
+      "proposed_destination": "software/learning/results/trials/trial_00212/delay_eval.json",
+      "action": "preserve original bytes in place; map rename for later reviewed reconciliation, never silently adopt payload"
+    },
+    {
+      "original_path": "rl/results/trials/trial_00212/gyropup_drive.mp4",
+      "status": "??",
+      "bytes": 1126276,
+      "sha256": "471e242993a7f3a7daaa41f02ba241679833b2b03c5d6a644233ddfcf55ecef9",
+      "proposed_destination": "software/learning/results/trials/trial_00212/gyropup_drive.mp4",
+      "action": "preserve original bytes in place; map rename for later reviewed reconciliation, never silently adopt payload"
+    },
+    {
+      "original_path": "rl/results/trials/trial_00212/play_log.npz",
+      "status": "??",
+      "bytes": 29252,
+      "sha256": "08ee832672bc3c7a7dbd9f2270348fac34f831464cff435af562664a625e28ca",
+      "proposed_destination": "software/learning/results/trials/trial_00212/play_log.npz",
+      "action": "preserve original bytes in place; map rename for later reviewed reconciliation, never silently adopt payload"
+    },
+    {
+      "original_path": "rl/results/trials/trial_00212/play_metrics.json",
+      "status": "??",
+      "bytes": 1640,
+      "sha256": "db067e908b3afe66f9069fc1a6f788b96f28158fc78ed21dfb4f7e14e9fa079e",
+      "proposed_destination": "software/learning/results/trials/trial_00212/play_metrics.json",
+      "action": "preserve original bytes in place; map rename for later reviewed reconciliation, never silently adopt payload"
+    },
+    {
+      "original_path": "rl/results/trials/trial_00212/play_tracking.png",
+      "status": "??",
+      "bytes": 132147,
+      "sha256": "3d1d06294055c1289e78ce0ba9f517f80a65b26bb7ff0538e08473d397c7ed79",
+      "proposed_destination": "software/learning/results/trials/trial_00212/play_tracking.png",
+      "action": "preserve original bytes in place; map rename for later reviewed reconciliation, never silently adopt payload"
+    },
+    {
+      "original_path": "rl/results/trials/trial_00212/policy.json",
+      "status": "??",
+      "bytes": 3932,
+      "sha256": "22866be982f6e0e767275061af4d2a47cb3a4ff0112612c47df2f844ae844458",
+      "proposed_destination": "software/learning/results/trials/trial_00212/policy.json",
+      "action": "preserve original bytes in place; map rename for later reviewed reconciliation, never silently adopt payload"
+    },
+    {
+      "original_path": "rl/results/trials/trial_00212/policy.onnx",
+      "status": "??",
+      "bytes": 194404,
+      "sha256": "28ea42f56196d25d97ff85709bf7364a9a738c277888eb42a136e25a9fe83410",
+      "proposed_destination": "software/learning/results/trials/trial_00212/policy.onnx",
+      "action": "preserve original bytes in place; map rename for later reviewed reconciliation, never silently adopt payload"
+    },
+    {
+      "original_path": "rl/results/trials/trial_00212/run_onnx_output.txt",
+      "status": "??",
+      "bytes": 545,
+      "sha256": "16a72f32134ec4ee686c12738922f14814a6d3766b27fb60f1edee8d22243b0e",
+      "proposed_destination": "software/learning/results/trials/trial_00212/run_onnx_output.txt",
+      "action": "preserve original bytes in place; map rename for later reviewed reconciliation, never silently adopt payload"
+    },
+    {
+      "original_path": "rl/results/trials/trial_00212/sim2sim_drive.mp4",
+      "status": "??",
+      "bytes": 847611,
+      "sha256": "a241763e1f39502726fc3825b51a0aad6720890cf79f7697fd08eed2deaa48d2",
+      "proposed_destination": "software/learning/results/trials/trial_00212/sim2sim_drive.mp4",
+      "action": "preserve original bytes in place; map rename for later reviewed reconciliation, never silently adopt payload"
+    },
+    {
+      "original_path": "rl/results/trials/trial_00212/sim2sim_metrics.json",
+      "status": "??",
+      "bytes": 1435,
+      "sha256": "edb6d5becfb6fb81c303ae360d71e271c539a0f9b38fa3ca4de519949a62e0a4",
+      "proposed_destination": "software/learning/results/trials/trial_00212/sim2sim_metrics.json",
+      "action": "preserve original bytes in place; map rename for later reviewed reconciliation, never silently adopt payload"
+    },
+    {
+      "original_path": "rl/results/trials/trial_00212/sim2sim_metrics_delay20ms.json",
+      "status": "??",
+      "bytes": 1436,
+      "sha256": "bda72b85fdb521757c593535925c707cea983e6baa2f94607df01871334b8935",
+      "proposed_destination": "software/learning/results/trials/trial_00212/sim2sim_metrics_delay20ms.json",
+      "action": "preserve original bytes in place; map rename for later reviewed reconciliation, never silently adopt payload"
+    },
+    {
+      "original_path": "rl/results/trials/trial_00212/sim2sim_metrics_delay40ms.json",
+      "status": "??",
+      "bytes": 1435,
+      "sha256": "91569b4a496f55e8707324a4d22913166048ed9547639025bc2f3bfd71855a8a",
+      "proposed_destination": "software/learning/results/trials/trial_00212/sim2sim_metrics_delay40ms.json",
+      "action": "preserve original bytes in place; map rename for later reviewed reconciliation, never silently adopt payload"
+    },
+    {
+      "original_path": "rl/results/trials/trial_00212/summary.json",
+      "status": "??",
+      "bytes": 7091,
+      "sha256": "dfedeeb1760d656dbae0144d7d2a8d9d54f9c09da7cae3100a552a74eb9c0616",
+      "proposed_destination": "software/learning/results/trials/trial_00212/summary.json",
+      "action": "preserve original bytes in place; map rename for later reviewed reconciliation, never silently adopt payload"
+    },
+    {
+      "original_path": "rl/results/trials/trial_00212/trained_model/build_env.json",
+      "status": "??",
+      "bytes": 310,
+      "sha256": "23d1973b51657e845fe2e51d3cb1d789353bde1a5fece82818663a60400b7ca5",
+      "proposed_destination": "software/learning/results/trials/trial_00212/trained_model/build_env.json",
+      "action": "preserve original bytes in place; map rename for later reviewed reconciliation, never silently adopt payload"
+    },
+    {
+      "original_path": "rl/results/trials/trial_00212/trained_model/design.json",
+      "status": "??",
+      "bytes": 3332,
+      "sha256": "4a47b4b06544665aabfe1c7d9d2fd8db306161462950d9e9334621668a09f103",
+      "proposed_destination": "software/learning/results/trials/trial_00212/trained_model/design.json",
+      "action": "preserve original bytes in place; map rename for later reviewed reconciliation, never silently adopt payload"
+    },
+    {
+      "original_path": "rl/results/trials/trial_00212/trained_model/init_pose.json",
+      "status": "??",
+      "bytes": 356,
+      "sha256": "1efdce5ce9a5ae4b9e857c1dfa0cb4a34ce9391d09b1fff8fad1c9bcef883d0f",
+      "proposed_destination": "software/learning/results/trials/trial_00212/trained_model/init_pose.json",
+      "action": "preserve original bytes in place; map rename for later reviewed reconciliation, never silently adopt payload"
+    },
+    {
+      "original_path": "rl/results/trials/trial_00212/trained_model/model.json",
+      "status": "??",
+      "bytes": 6277,
+      "sha256": "12a5783193dc37bdd458b8a4931e941f3eec797ca609098b5a8eb0809c2fb016",
+      "proposed_destination": "software/learning/results/trials/trial_00212/trained_model/model.json",
+      "action": "preserve original bytes in place; map rename for later reviewed reconciliation, never silently adopt payload"
+    },
+    {
+      "original_path": "rl/results/trials/trial_00212/trained_model/repo_commit.txt",
+      "status": "??",
+      "bytes": 8,
+      "sha256": "b37520b3ec790afd961efd88a70700ea937fe37d5081705fad5869fd8d2dfb9f",
+      "proposed_destination": "software/learning/results/trials/trial_00212/trained_model/repo_commit.txt",
+      "action": "preserve original bytes in place; map rename for later reviewed reconciliation, never silently adopt payload"
+    },
+    {
+      "original_path": "rl/results/trials/trial_00212/trained_model/robot.urdf",
+      "status": "??",
+      "bytes": 11915,
+      "sha256": "de6b80d1e1bf4140d33e5d7f7c90cb6142904d87428ae22731041c3913efcd56",
+      "proposed_destination": "software/learning/results/trials/trial_00212/trained_model/robot.urdf",
+      "action": "preserve original bytes in place; map rename for later reviewed reconciliation, never silently adopt payload"
+    },
+    {
+      "original_path": "rl/results/trials/trial_00212/trained_model/robot.xml",
+      "status": "??",
+      "bytes": 11132,
+      "sha256": "11330d9a5402e16266efbb15b1574f713c9b05b299697b3117d3df4e9e79ef3b",
+      "proposed_destination": "software/learning/results/trials/trial_00212/trained_model/robot.xml",
+      "action": "preserve original bytes in place; map rename for later reviewed reconciliation, never silently adopt payload"
+    },
+    {
+      "original_path": "rl/results/trials/trial_00212/training_curves.png",
+      "status": "??",
+      "bytes": 147939,
+      "sha256": "96eeaaf0f4e7f2e07694cba2097d6c5226605d8eb8ebcf84e0247953bbb922ee",
+      "proposed_destination": "software/learning/results/trials/trial_00212/training_curves.png",
+      "action": "preserve original bytes in place; map rename for later reviewed reconciliation, never silently adopt payload"
+    },
+    {
+      "original_path": "rl/results/trials/trial_00212/training_summary.json",
+      "status": "??",
+      "bytes": 662,
+      "sha256": "fc0bdecb4178910b5bba9784f3999603bc95281b81edaca45e7b03ce1d536e4d",
+      "proposed_destination": "software/learning/results/trials/trial_00212/training_summary.json",
+      "action": "preserve original bytes in place; map rename for later reviewed reconciliation, never silently adopt payload"
+    },
+    {
+      "original_path": "rl/results/trials/trial_00257/delay_eval.json",
+      "status": "??",
+      "bytes": 908,
+      "sha256": "d4caa1e7e37e6da205f1f6881ee60e1e31fbdbca7281b9c8c0d71421e05eb2a3",
+      "proposed_destination": "software/learning/results/trials/trial_00257/delay_eval.json",
+      "action": "preserve original bytes in place; map rename for later reviewed reconciliation, never silently adopt payload"
+    },
+    {
+      "original_path": "rl/results/trials/trial_00257/gyropup_drive.mp4",
+      "status": "??",
+      "bytes": 1134937,
+      "sha256": "392e20a7980ba57cf85dff613f31daa4fe57a49a5b81cc48b1cb41ffc85d67ec",
+      "proposed_destination": "software/learning/results/trials/trial_00257/gyropup_drive.mp4",
+      "action": "preserve original bytes in place; map rename for later reviewed reconciliation, never silently adopt payload"
+    },
+    {
+      "original_path": "rl/results/trials/trial_00257/play_log.npz",
+      "status": "??",
+      "bytes": 29222,
+      "sha256": "571ea5c30f8a788244cfdd26e3376907498803f969c12ceed7a9c0429cd8b837",
+      "proposed_destination": "software/learning/results/trials/trial_00257/play_log.npz",
+      "action": "preserve original bytes in place; map rename for later reviewed reconciliation, never silently adopt payload"
+    },
+    {
+      "original_path": "rl/results/trials/trial_00257/play_metrics.json",
+      "status": "??",
+      "bytes": 1633,
+      "sha256": "a3386317676edcb822286b36efcabc49e5ed2b5beb0c61ebfcfeded3af5eb338",
+      "proposed_destination": "software/learning/results/trials/trial_00257/play_metrics.json",
+      "action": "preserve original bytes in place; map rename for later reviewed reconciliation, never silently adopt payload"
+    },
+    {
+      "original_path": "rl/results/trials/trial_00257/play_tracking.png",
+      "status": "??",
+      "bytes": 129856,
+      "sha256": "830045e2687f75600a896169cb401f952032dec90f3d514fe5b79ffd160b5be9",
+      "proposed_destination": "software/learning/results/trials/trial_00257/play_tracking.png",
+      "action": "preserve original bytes in place; map rename for later reviewed reconciliation, never silently adopt payload"
+    },
+    {
+      "original_path": "rl/results/trials/trial_00257/policy.json",
+      "status": "??",
+      "bytes": 3931,
+      "sha256": "dc3737d826b95c7004c59d04bdd24921ba6e1c60d841801724eff73840ae8dfa",
+      "proposed_destination": "software/learning/results/trials/trial_00257/policy.json",
+      "action": "preserve original bytes in place; map rename for later reviewed reconciliation, never silently adopt payload"
+    },
+    {
+      "original_path": "rl/results/trials/trial_00257/policy.onnx",
+      "status": "??",
+      "bytes": 194404,
+      "sha256": "5bb1561caa53e8f799c4d0f0c4f523291911b9afdd565a02e9478832d2aad039",
+      "proposed_destination": "software/learning/results/trials/trial_00257/policy.onnx",
+      "action": "preserve original bytes in place; map rename for later reviewed reconciliation, never silently adopt payload"
+    },
+    {
+      "original_path": "rl/results/trials/trial_00257/run_onnx_output.txt",
+      "status": "??",
+      "bytes": 545,
+      "sha256": "644ec09c634128ade5cdbe898a68fc8697c8bc5ea8c14aea7a6c77f9638f3896",
+      "proposed_destination": "software/learning/results/trials/trial_00257/run_onnx_output.txt",
+      "action": "preserve original bytes in place; map rename for later reviewed reconciliation, never silently adopt payload"
+    },
+    {
+      "original_path": "rl/results/trials/trial_00257/sim2sim_drive.mp4",
+      "status": "??",
+      "bytes": 854396,
+      "sha256": "79c8752005c51939f0e1e4766b9d9e6737c8b296f22ee030a2f311fa73de618e",
+      "proposed_destination": "software/learning/results/trials/trial_00257/sim2sim_drive.mp4",
+      "action": "preserve original bytes in place; map rename for later reviewed reconciliation, never silently adopt payload"
+    },
+    {
+      "original_path": "rl/results/trials/trial_00257/sim2sim_metrics.json",
+      "status": "??",
+      "bytes": 1437,
+      "sha256": "edafd4ec61be7a9b84dd6df9e863311aac980c61d39466797a1b8ed8a0511f80",
+      "proposed_destination": "software/learning/results/trials/trial_00257/sim2sim_metrics.json",
+      "action": "preserve original bytes in place; map rename for later reviewed reconciliation, never silently adopt payload"
+    },
+    {
+      "original_path": "rl/results/trials/trial_00257/sim2sim_metrics_delay20ms.json",
+      "status": "??",
+      "bytes": 1435,
+      "sha256": "eb525223e85c27f9077ff4ea9ff1cc86614477c5938e23ab587fc0aeb2031994",
+      "proposed_destination": "software/learning/results/trials/trial_00257/sim2sim_metrics_delay20ms.json",
+      "action": "preserve original bytes in place; map rename for later reviewed reconciliation, never silently adopt payload"
+    },
+    {
+      "original_path": "rl/results/trials/trial_00257/sim2sim_metrics_delay40ms.json",
+      "status": "??",
+      "bytes": 1436,
+      "sha256": "5d2172e37b33b38faeff59b6eace56b13634758d8529ffa5fc3a451bad88fe22",
+      "proposed_destination": "software/learning/results/trials/trial_00257/sim2sim_metrics_delay40ms.json",
+      "action": "preserve original bytes in place; map rename for later reviewed reconciliation, never silently adopt payload"
+    },
+    {
+      "original_path": "rl/results/trials/trial_00257/summary.json",
+      "status": "??",
+      "bytes": 7090,
+      "sha256": "e41d5ea70caea4230c1d0e3232e43a27eb3872e2d3a58edea71e51468d5e2279",
+      "proposed_destination": "software/learning/results/trials/trial_00257/summary.json",
+      "action": "preserve original bytes in place; map rename for later reviewed reconciliation, never silently adopt payload"
+    },
+    {
+      "original_path": "rl/results/trials/trial_00257/trained_model/build_env.json",
+      "status": "??",
+      "bytes": 310,
+      "sha256": "53e920387db329543cf450f71a4fb5607e74ac12a846f817b751e937688a3be8",
+      "proposed_destination": "software/learning/results/trials/trial_00257/trained_model/build_env.json",
+      "action": "preserve original bytes in place; map rename for later reviewed reconciliation, never silently adopt payload"
+    },
+    {
+      "original_path": "rl/results/trials/trial_00257/trained_model/design.json",
+      "status": "??",
+      "bytes": 3332,
+      "sha256": "418df7224172ce5d4bb1488eed4636eac311e1562181a6d8ac5ecdb3f28ae970",
+      "proposed_destination": "software/learning/results/trials/trial_00257/trained_model/design.json",
+      "action": "preserve original bytes in place; map rename for later reviewed reconciliation, never silently adopt payload"
+    },
+    {
+      "original_path": "rl/results/trials/trial_00257/trained_model/init_pose.json",
+      "status": "??",
+      "bytes": 355,
+      "sha256": "5ee1b581f744a99bfca127fb51ff4d7079a246bb74efbe729ed352b058d67325",
+      "proposed_destination": "software/learning/results/trials/trial_00257/trained_model/init_pose.json",
+      "action": "preserve original bytes in place; map rename for later reviewed reconciliation, never silently adopt payload"
+    },
+    {
+      "original_path": "rl/results/trials/trial_00257/trained_model/model.json",
+      "status": "??",
+      "bytes": 6276,
+      "sha256": "4a0630bf1bc7e6388e8ece2d7d2910fa1d47106b85e43c83d3543934b629f22f",
+      "proposed_destination": "software/learning/results/trials/trial_00257/trained_model/model.json",
+      "action": "preserve original bytes in place; map rename for later reviewed reconciliation, never silently adopt payload"
+    },
+    {
+      "original_path": "rl/results/trials/trial_00257/trained_model/repo_commit.txt",
+      "status": "??",
+      "bytes": 8,
+      "sha256": "b37520b3ec790afd961efd88a70700ea937fe37d5081705fad5869fd8d2dfb9f",
+      "proposed_destination": "software/learning/results/trials/trial_00257/trained_model/repo_commit.txt",
+      "action": "preserve original bytes in place; map rename for later reviewed reconciliation, never silently adopt payload"
+    },
+    {
+      "original_path": "rl/results/trials/trial_00257/trained_model/robot.urdf",
+      "status": "??",
+      "bytes": 11913,
+      "sha256": "b1b9e7bef64a1ecf75fc9f80c1f9f9db8cd75e8ecf73aab723cbb9c5d44e8cfe",
+      "proposed_destination": "software/learning/results/trials/trial_00257/trained_model/robot.urdf",
+      "action": "preserve original bytes in place; map rename for later reviewed reconciliation, never silently adopt payload"
+    },
+    {
+      "original_path": "rl/results/trials/trial_00257/trained_model/robot.xml",
+      "status": "??",
+      "bytes": 11126,
+      "sha256": "92122395bdcf2458a148fae08718dd0592d71da1d89d4aa735063c3f582b1d30",
+      "proposed_destination": "software/learning/results/trials/trial_00257/trained_model/robot.xml",
+      "action": "preserve original bytes in place; map rename for later reviewed reconciliation, never silently adopt payload"
+    },
+    {
+      "original_path": "rl/results/trials/trial_00257/training_curves.png",
+      "status": "??",
+      "bytes": 149147,
+      "sha256": "0590161c582f603eae9c3fc21e69c7d0b4ab72ec50797290a888c85144a2e306",
+      "proposed_destination": "software/learning/results/trials/trial_00257/training_curves.png",
+      "action": "preserve original bytes in place; map rename for later reviewed reconciliation, never silently adopt payload"
+    },
+    {
+      "original_path": "rl/results/trials/trial_00257/training_summary.json",
+      "status": "??",
+      "bytes": 661,
+      "sha256": "58cf4403ec140e1099230dd68dd706d2af95107d84b3c906209f57ff1d67a219",
+      "proposed_destination": "software/learning/results/trials/trial_00257/training_summary.json",
+      "action": "preserve original bytes in place; map rename for later reviewed reconciliation, never silently adopt payload"
+    },
+    {
+      "original_path": "rl/retrain.py",
+      "status": "??",
+      "bytes": 16846,
+      "sha256": "ae0f2a86162ea0ec600ba41e1586558cfba0e84da9de9f65a7bb0d70c971610b",
+      "proposed_destination": "software/learning/retrain.py",
+      "action": "preserve original bytes in place; map rename for later reviewed reconciliation, never silently adopt payload"
+    },
+    {
+      "original_path": "rl/scripts/eval_delay.py",
+      "status": "??",
+      "bytes": 4368,
+      "sha256": "77b33e101702abf524aa6b86643fd395f5dd33228a8ad19aaa0d4376ff59c292",
+      "proposed_destination": "software/learning/scripts/eval_delay.py",
+      "action": "preserve original bytes in place; map rename for later reviewed reconciliation, never silently adopt payload"
+    },
+    {
+      "original_path": "rl/train_trials.py",
+      "status": "??",
+      "bytes": 7675,
+      "sha256": "f8a546717851ac8d96fbb271c7c141f8a5bf2ee527ad5dd047ddb00dc02f1545",
+      "proposed_destination": "software/learning/train_trials.py",
+      "action": "preserve original bytes in place; map rename for later reviewed reconciliation, never silently adopt payload"
+    }
+  ],
+  "source_payloads_copied": false,
+  "permission_blocker_inferred": false,
+  "limits": "This maps source ownership; it does not validate unpublished training results or acquire a new hardware claim."
+}
