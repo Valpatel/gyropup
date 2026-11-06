@@ -114,27 +114,57 @@ async function pronunciation() {
   assert.equal(await page.evaluate(()=>window.audioTest.active.text),'Two gyro pups, one Trittium team','Browser speech is sent the pronounced text');
  } finally {await context.close();}
 }
-async function firstMountSoundOverride() {
+async function firstMountSoundOverride({startupDelayMs=0}={}) {
  const context=await browser.newContext({viewport:{width:1200,height:900}});
  await context.addInitScript(browserVoice);await acknowledgePrototypeNotice(context);
  await context.addInitScript(()=>{localStorage.setItem('gyropup-sfx','1');localStorage.setItem('gyropup-sfx-volume','.3');localStorage.setItem('gyropup.muted','0');});
- const page=await context.newPage();page.on('pageerror',e=>errors.push(e.message));
- let release,signalHeld,timer;
+ const page=await context.newPage(),started=performance.now(),timeline=[],pending=new Map(),pageErrors=[];
+ const mark=event=>timeline.push({event,ms:Math.round(performance.now()-started)});
+ page.on('pageerror',e=>{errors.push(e.message);pageErrors.push(e.message);});
+ page.on('request',request=>pending.set(request,new URL(request.url()).pathname));
+ page.on('requestfinished',request=>pending.delete(request));page.on('requestfailed',request=>pending.delete(request));
+ let release,signalHeld,timer,releaseStartup,startupTimer,startupHeldAt,startupReleasedAt,coreBudget;
  const gate=new Promise(resolve=>{release=resolve;});
  const held=new Promise(resolve=>{signalHeld=resolve;});
+ const startupGate=new Promise(resolve=>{releaseStartup=resolve;});
+ if(startupDelayMs)await page.route(url=>url.pathname==='/designer/sim.js',async route=>{
+  startupHeldAt=performance.now();mark('startup requested');
+  startupTimer=setTimeout(()=>{startupReleasedAt=performance.now();mark('startup released');releaseStartup();},startupDelayMs);
+  await startupGate;await route.continue();mark('startup continued');
+ });
  const gamepadPath=url=>url.pathname==='/designer/sim_gamepad.js';
- await page.route(gamepadPath,async route=>{signalHeld();await gate;await route.continue();});
+ await page.route(gamepadPath,async route=>{mark('gamepad requested');signalHeld();await gate;await route.continue();});
  try {
   await page.goto(base+'/designer/sim.html?run=none&sound=0',{waitUntil:'commit'});
+  mark('navigation committed');
+  // Core startup precedes this optional import; its existing readiness bound is a separate phase.
+  mark('talk readiness started');
+  const talkStarted=performance.now();
+  await page.waitForFunction(()=>window.__sim?.talk,null,{timeout:startupDelayMs?48000:30000});
+  const talkEnded=performance.now();
+  mark('talk ready');
+  if(startupDelayMs) {
+   assert.ok(Number.isFinite(startupHeldAt) && Number.isFinite(startupReleasedAt),'The actual startup gate was requested and released');
+   const holdMs=startupReleasedAt-startupHeldAt;
+   assert.ok(holdMs>=17000 && holdMs<=18000,'The measured injected hold stays within its 17–18 second window');
+   // Exclude only the measured intersection; request continuation/network work stays in the genuine core budget.
+   const excludedMs=Math.max(0,Math.min(talkEnded,startupReleasedAt)-Math.max(talkStarted,startupHeldAt));
+   coreBudget={talkMs:talkEnded-talkStarted,holdMs,excludedMs,genuineCoreMs:talkEnded-talkStarted-excludedMs};
+   assert.ok(coreBudget.genuineCoreMs<=30000,'Actual core readiness, excluding only verified injected hold, stays within 30 seconds');
+  }
   await Promise.race([held,new Promise((_,reject)=>{timer=setTimeout(()=>reject(new Error('The gamepad import was not held')),15000);})]);
   clearTimeout(timer);
-  await page.waitForFunction(()=>window.__sim?.talk);
+  mark('optional import held');
   assert.equal(await page.evaluate(()=>!window.__sim.sfx.enabled && window.__sim.talk.audio.voiceVolume===0),true,'Query mute applies at first talk mount while optional gamepad import is held');
   assert.match(await page.locator('#topbar button').filter({hasText:/SOUND/}).textContent(),/SOUND OFF/);
   release();
   await page.waitForFunction(()=>document.body.dataset.ready==='1');
   assert.equal(await page.evaluate(()=>!window.__sim.sfx.enabled && window.__sim.talk.audio.voiceVolume===0),true,'Query mute remains after optional initialization');
- } finally {clearTimeout(timer);release();await context.close();}
+  if(startupDelayMs)console.log('audio startup timing',JSON.stringify({startupDelayMs,coreBudget,timeline}));
+ } catch(error) {
+  const state=await page.evaluate(()=>({document:document.readyState,ready:document.body?.dataset.ready,sim:!!window.__sim,robot:!!window.__sim?.state?.robot,talk:!!window.__sim?.talk})).catch(()=>null);
+  console.error('audio first-mount failure',JSON.stringify({startupDelayMs,coreBudget,timeline,pending:[...pending.values()],state,pageErrors}));throw error;
+ } finally {clearTimeout(timer);clearTimeout(startupTimer);releaseStartup();release();await context.close();}
 }
 async function siteControls() {
  const context=await browser.newContext({viewport:{width:1200,height:900}});await context.addInitScript(browserVoice);
@@ -182,6 +212,11 @@ await acknowledgePrototypeNotice(context);
    }
   }
   await firstMountSoundOverride();
+  if(process.argv.includes('--startup-control')) {
+   // Aim inside the verified 17–18 second window rather than at a timer-resolution boundary.
+   await firstMountSoundOverride({startupDelayMs:17500});
+   console.log('PASS startup control: actual startup module held beyond 15 seconds; first-mounted mute remains enforced');
+  }
  } finally {await context.close();}
 }
 try {
