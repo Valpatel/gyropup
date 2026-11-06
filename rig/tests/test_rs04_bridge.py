@@ -7,12 +7,14 @@ from __future__ import annotations
 
 import asyncio
 import base64
+from concurrent.futures import ThreadPoolExecutor, TimeoutError as FutureTimeout
 import json
 import os
 import socket
 import threading
 import time
 import unittest
+from unittest.mock import patch
 
 from rig import rs04 as P
 from rig import rs04_bridge as B
@@ -26,6 +28,8 @@ class Server:
         self.transport, kind = B.make_transport('emu', list(ids))
         self.bridge = B.Bridge(self.transport, rs04_profiles.load('pla-bench'), 'emu', kind, token=token)
         self.addr = None
+        self.writers = set()
+        self.closed = False
         ready = threading.Event()
 
         def run():
@@ -33,32 +37,63 @@ class Server:
             self.loop.run_until_complete(self._start(ready))
             self.loop.run_forever()
 
-        threading.Thread(target=run, daemon=True).start()
-        ready.wait(5)
+        self.thread = threading.Thread(target=run, daemon=True)
+        self.thread.start()
+        if not ready.wait(5):
+            raise TimeoutError('test bridge did not start')
 
     async def _start(self, ready):
         self.bridge.loop = asyncio.get_running_loop()
-        threading.Thread(target=self.bridge.reader_thread, daemon=True).start()
-        self.server = await asyncio.start_server(self.bridge.handle, '127.0.0.1', 0)
+        self.reader_thread = threading.Thread(target=self.bridge.reader_thread, daemon=True)
+        self.reader_thread.start()
+        self.server = await asyncio.start_server(self._handle, '127.0.0.1', 0)
         self.addr = self.server.sockets[0].getsockname()
         ready.set()
+
+    async def _handle(self, reader, writer):
+        self.writers.add(writer)
+        try:
+            await self.bridge.handle(reader, writer)
+        finally:
+            # Cancellation while reading an incomplete HTTP header also owns a socket.
+            writer.close()
+            try:
+                await writer.wait_closed()
+            except (ConnectionError, OSError):
+                pass
+            self.writers.remove(writer)
 
     @property
     def motors(self):
         return self.transport.motors
 
     def close(self):
+        if self.closed:
+            return
         self.bridge.running = False
 
         async def shutdown():
             self.server.close()
+            await self.server.wait_closed()
             tasks = [t for t in asyncio.all_tasks() if t is not asyncio.current_task()]
             for t in tasks:
                 t.cancel()
-            await asyncio.gather(*tasks, return_exceptions=True)
-            self.loop.stop()
-
-        asyncio.run_coroutine_threadsafe(shutdown(), self.loop)
+            results = await asyncio.gather(*tasks, return_exceptions=True)
+            for result in results:
+                if isinstance(result, BaseException) and not isinstance(result, asyncio.CancelledError):
+                    raise result
+        # Deliver the coroutine's result before stopping its event loop.
+        asyncio.run_coroutine_threadsafe(shutdown(), self.loop).result(timeout=5)
+        self.reader_thread.join(5)
+        if self.reader_thread.is_alive():
+            raise TimeoutError('test bridge reader did not stop')
+        self.transport.close()
+        self.loop.call_soon_threadsafe(self.loop.stop)
+        self.thread.join(5)
+        if self.thread.is_alive():
+            raise TimeoutError('test bridge event loop did not stop')
+        self.loop.close()
+        self.closed = True
 
 
 def status(ws):
@@ -156,6 +191,80 @@ class BridgeTests(unittest.TestCase):
 
     def tearDown(self):
         self.srv.close()
+
+    def assert_closed(self):
+        self.assertFalse(self.srv.thread.is_alive())
+        self.assertFalse(self.srv.reader_thread.is_alive())
+        self.assertTrue(self.srv.loop.is_closed())
+        self.assertFalse(self.srv.server.is_serving())
+        self.assertFalse(self.srv.writers)
+        self.assertFalse(asyncio.all_tasks(self.srv.loop))
+
+    def test_close_waits_for_the_actual_websocket_finalizer(self):
+        w = WS(self.addr)
+        self.addCleanup(w.close)
+        w.recv()
+        entered, release = threading.Event(), threading.Event()
+        original = B.log
+
+        def held_log(*args):
+            if args == ('tab disconnected',):
+                entered.set()
+                if not release.wait(3):
+                    raise TimeoutError('test did not release the disconnect finalizer')
+            original(*args)
+
+        with patch.object(B, 'log', held_log), ThreadPoolExecutor(max_workers=1) as pool:
+            closing = pool.submit(self.srv.close)
+            try:
+                self.assertTrue(entered.wait(2), 'the real websocket finalizer was reached')
+                with self.assertRaises(FutureTimeout, msg='close returned before its disconnect log finished'):
+                    closing.result(timeout=0.05)
+            finally:
+                release.set()
+                closing.result(timeout=6)
+        self.assertEqual(w.s.recv(1), b'')
+        self.assert_closed()
+        self.srv.close()  # A completed teardown is safe to repeat.
+
+    def test_close_waits_for_the_transport_reader(self):
+        entered, release = threading.Event(), threading.Event()
+        original = self.srv.transport.recv
+
+        def held_recv(timeout):
+            entered.set()
+            if not release.wait(3):
+                raise TimeoutError('test did not release the transport reader')
+            return original(timeout)
+
+        with patch.object(self.srv.transport, 'recv', held_recv), ThreadPoolExecutor(max_workers=1) as pool:
+            self.assertTrue(entered.wait(2), 'the actual transport reader entered recv')
+            closing = pool.submit(self.srv.close)
+            try:
+                # Wait for the listener to close so this checks reader completion, not scheduling.
+                deadline = time.monotonic() + 2
+                while self.srv.server.is_serving() and time.monotonic() < deadline:
+                    time.sleep(0.001)
+                self.assertFalse(self.srv.server.is_serving(), 'shutdown reached the closed listener')
+                with self.assertRaises(FutureTimeout, msg='close returned while its reader was still blocked'):
+                    closing.result(timeout=0.05)
+            finally:
+                release.set()
+                closing.result(timeout=6)
+        self.assert_closed()
+
+    def test_close_finishes_an_incomplete_http_connection(self):
+        client = socket.create_connection(self.addr, timeout=3)
+        self.addCleanup(client.close)
+        client.sendall(b'GET / HTTP/1.1\r\n')
+
+        async def accepted():
+            while not self.srv.writers:
+                await asyncio.sleep(0)
+        asyncio.run_coroutine_threadsafe(accepted(), self.srv.loop).result(timeout=2)
+        self.srv.close()
+        self.assertEqual(client.recv(1), b'')
+        self.assert_closed()
 
     def test_serves_the_tool_and_nothing_else(self):
         code, head, _ = http(self.addr, '/')

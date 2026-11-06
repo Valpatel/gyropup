@@ -2,6 +2,7 @@
 
 | Symptom | Canonical guidance |
 | --- | --- |
+| Tests report OK, then Python aborts with `_enter_buffered_busy`, or teardown leaves daemon threads/accepted sockets alive | [Test-owned asynchronous resources](domains/test-lifecycle.md), [RS-04 shutdown incident](inbox/2026-11-06-test-close-must-finish-owned-threads.md) |
 | A README image works on GitHub but is broken on the site's README page | [README images must use `src`, not `srcset`](inbox/2026-11-02-readme-images-need-src-not-srcset.md) |
 | A browser reports an untrusted certificate while a DNS firewall names a blocked domain or name server | [Failing-path evidence and domain-age limits](inbox/2026-10-30-dns-filter-warnings-need-the-failing-path.md), [public HTTPS receipt](../docs/validation/public-https.md) |
 | Local services fill with old branch previews, or dependency symlinks look like unfinished work | [One shared preview and bounded test listeners](domains/site-preview.md), [incident](inbox/2026-10-29-preview-servers-need-one-owner.md) |
