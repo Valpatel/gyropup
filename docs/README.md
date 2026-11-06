@@ -21,7 +21,7 @@ an ordinary link below; the map remains readable with animation disabled.
 | Find current work and remaining blockers | [Program #31](https://github.com/Valpatel/gyropup/issues/31), [turret print readiness #61](https://github.com/Valpatel/gyropup/issues/61), [the turret carrier #66](https://github.com/Valpatel/gyropup/issues/66) |
 | Prepare for the ordered motors | [RS-04 motor tool](rs04-motor-tool.md), [RS-04 mounting candidate](rs04-mounting-fit.md), [support-ring comparison](rs04-support-study.md), [3115-900KV survey and gauge](ordered-turret-motor.md), [purchase ledger](purchases.md) |
 | Read with an agent or HTTP client | [Public reading guide](agent-guide.md), [llms.txt](https://gyropup.com/llms.txt) |
-| Contribute or resume work | [Contributor orientation](../CONTRIBUTING.md), then the relevant GitHub issue and PR |
+| Contribute or resume work | [Contributor orientation](../.github/CONTRIBUTING.md), then the relevant GitHub issue and PR |
 
 The website is a published snapshot. GitHub issues hold active work; individual reports hold evidence for their
 stated revision and inputs. A current-looking model, a passing software check, or a downloadable print file does

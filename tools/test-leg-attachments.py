@@ -12,7 +12,7 @@ import unittest
 ROOT = Path(__file__).resolve().parents[1]
 OUT = ROOT / 'exports/sim/v2/leg-attachments'
 MAN = json.loads((OUT / 'manifest.json').read_text())
-REF = json.loads((ROOT / 'tests/fixtures/leg-attachment-motion.json').read_text())
+REF = json.loads((ROOT / 'tools/fixtures/leg-attachment-motion.json').read_text())
 
 
 def points(file):

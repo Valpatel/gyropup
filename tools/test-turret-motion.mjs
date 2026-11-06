@@ -4,7 +4,7 @@ import assert from 'node:assert/strict';
 import { readFile, writeFile, mkdir } from 'node:fs/promises';
 import { chromium, webkit } from '@playwright/test';
 import { createHash } from 'node:crypto';
-const fixture = JSON.parse(await readFile(new URL('../tests/fixtures/turret-motion-reference.json', import.meta.url)));
+const fixture = JSON.parse(await readFile(new URL('./fixtures/turret-motion-reference.json', import.meta.url)));
 const base = (process.env.SITE_URL || 'http://127.0.0.1:8879').replace(/\/$/, '');
 const out = process.env.TEST_OUTPUT || '/tmp/gyropup-turret-motion';
 const engine = process.env.PLAYWRIGHT_BROWSER === 'webkit' ? webkit : chromium;

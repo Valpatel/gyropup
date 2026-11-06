@@ -6,7 +6,7 @@ The 2026-10-28 live defect was invisible in a zero-angle assembly: wheel and dia
 
 ## Independent reference and coverage
 
-`tools/reference-turret-motion.py` regenerates the reference using the pinned Git snapshot and cad-agent's pose generator. `tests/fixtures/turret-motion-reference.json` records independently audited mechanical datums in box millimetres, rather than copying the corrected display manifest. Datum sources at revision `4769888bf0334608ff997faeff5e663d96a1a70d` (PR 196: the D76 turret straight on the box deck, a full build; until then the October snapshot `3eb32ba649a2b0b66dd80c4a2dfb3179b0697f20`):
+`tools/reference-turret-motion.py` regenerates the reference using the pinned Git snapshot and cad-agent's pose generator. `tools/fixtures/turret-motion-reference.json` records independently audited mechanical datums in box millimetres, rather than copying the corrected display manifest. Datum sources at revision `4769888bf0334608ff997faeff5e663d96a1a70d` (PR 196: the D76 turret straight on the box deck, a full build; until then the October snapshot `3eb32ba649a2b0b66dd80c4a2dfb3179b0697f20`):
 
 | Joint | Assembly-home pivot (mm) | Source / ownership |
 | --- | --- | --- |

@@ -19,7 +19,7 @@
 <rect class="card" x="62" y="357" width="334" height="105" rx="15"/><circle class="dot" cx="42" cy="392" r="5" style="animation-delay:2s"/>
 <g transform="translate(86 377)" fill="none" stroke="#ffc461" stroke-width="2"><path d="M0 1H34V30H0ZM7 8H27M7 15H22M7 22H27"/></g>
 <text class="label" x="83" y="428">Understand the design ↗</text><text class="sub" x="83" y="448">Decisions · CAD · simulation · tests</text></a>
-<a class="link" href="https://github.com/Valpatel/gyropup/blob/main/CONTRIBUTING.md" aria-label="Contribute or resume work using the contributor guide">
+<a class="link" href="https://github.com/Valpatel/gyropup/blob/main/.github/CONTRIBUTING.md" aria-label="Contribute or resume work using the contributor guide">
 <rect class="card" x="62" y="480" width="334" height="105" rx="15"/><circle class="dot" cx="42" cy="515" r="5" style="animation-delay:3s"/>
 <g transform="translate(86 500)" fill="none" stroke="#ffc461" stroke-width="2"><circle cx="4" cy="4" r="4"/><circle cx="4" cy="29" r="4"/><circle cx="29" cy="4" r="4"/><path d="M4 8V25M4 20C4 11 29 22 29 8"/></g>
 <text class="label" x="83" y="551">Contribute or resume ↗</text><text class="sub" x="83" y="571">Workflow · live issues · recovery audit</text></a>
