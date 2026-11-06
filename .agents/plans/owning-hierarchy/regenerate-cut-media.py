@@ -19,8 +19,8 @@ def archive(label,directory):
  with tarfile.open(OUT/(label+'.tgz'),'w:gz') as tar:
   for n in rows:tar.add(directory/n,arcname=n,recursive=False)
  save(label+'-archive.json',{'sha256':sha(OUT/(label+'.tgz')),'files':len(rows)})
-def phase(name,command):
- start=time.monotonic();record={'command':command}
+def phase(name,command,expected=0):
+ start=time.monotonic();record={'command':command,'expected_exit':expected}
  print('START '+name,flush=True)
  with (OUT/(name+'.log')).open('w') as stream:
   child=subprocess.Popen(command,cwd=ROOT,stdout=stream,stderr=subprocess.STDOUT,start_new_session=True)
@@ -43,7 +43,7 @@ def phase(name,command):
    except ProcessLookupError:pass
  record['seconds']=time.monotonic()-start;result['phases'][name]=record;save('result.json',result)
  print('END '+name+' '+json.dumps(record),flush=True)
- assert record.get('exit')==0,name+' failed/incomplete; actual logs retained'
+ assert record.get('exit')==expected,name+' failed/incomplete; actual logs retained'
 p=argparse.ArgumentParser(description=__doc__);p.add_argument('--head',required=True);args=p.parse_args()
 result={'status':'FAILED','source':args.head,'phases':{},'scope':'genuine cut geometry and thumbnails only; no adoption or physical qualification'}
 before=None;original=OUT/'original-targets';candidate=OUT/'candidate-targets';allowed=set();replacement={}
@@ -80,6 +80,25 @@ try:
   target=candidate/name;target.parent.mkdir(parents=True,exist_ok=True);shutil.copyfile(ROOT/name,target)
  archive('candidate-targets',candidate)
  phase('actual-media-consumers',['node','--test','tests/site/media/test-part-media.mjs'])
+ # Exercise actual relocated-path and actual image integrity guards, then restore
+ # the fresh genuine bytes independently of assertion/phase failures.
+ receipt_path=ROOT/'hardware/catalog/designed-media-validation.json'
+ fresh_receipt=receipt_path.read_bytes()
+ try:
+  mutant=json.loads(fresh_receipt);key=sorted(mutant['location_inputs_sha256'])[0]
+  mutant['location_inputs_sha256'][key]='0'*64
+  receipt_path.write_text(json.dumps(mutant,indent=2)+'\n')
+  phase('wrong-location-contract-control',[sys.executable,'-B','tools/evidence/media/part-media-generation.py','--check'],expected=1)
+  assert 'Source location contract changed' in (OUT/'wrong-location-contract-control.log').read_text()
+ finally:receipt_path.write_bytes(fresh_receipt)
+ fresh=json.loads(fresh_receipt);image=ROOT/'hardware'/fresh['parts'][sorted(keys)[0]]['image']
+ fresh_png=image.read_bytes()
+ try:
+  image.write_bytes(fresh_png+b'planted output hash change')
+  phase('changed-thumbnail-control',[sys.executable,'-B','tools/evidence/media/part-media-generation.py','--check'],expected=1)
+  assert 'output/receipt hash mismatch' in (OUT/'changed-thumbnail-control.log').read_text()
+ finally:image.write_bytes(fresh_png)
+ phase('media-check-after-controls',[sys.executable,'-B','tools/evidence/media/part-media-generation.py','--check'])
  receipt=json.loads((ROOT/'hardware/catalog/designed-media-validation.json').read_text())
  images=json.loads((ROOT/'hardware/catalog/images.json').read_text())
  scoped=keys|{k.split('/')[1] for k in ['leg/output_adapter','rig/carriage_plate','turret/pan_clamp']}
@@ -89,6 +108,19 @@ try:
  changed={n for n in inputs_before['files'] if inputs_before['files'][n]!=inputs_after['files'].get(n)}
  assert set(inputs_before['files'])==set(inputs_after['files'])
  assert changed=={'hardware/catalog/images.json','hardware/catalog/designed-media-validation.json'}
+ old_cut=json.loads((original/'hardware/exports/turret/component-preview/manifest.json').read_text())
+ new_cut=json.loads((ROOT/'hardware/exports/turret/component-preview/manifest.json').read_text())
+ assert new_cut['physical_fit_verified'] is False and new_cut['qualified_for_manufacture'] is False
+ old_parts={p['name']:p for p in old_cut['parts']};new_parts={p['name']:p for p in new_cut['parts']}
+ assert set(old_parts)==set(new_parts)==cut_names
+ comparisons={}
+ for name in sorted(cut_names):
+  old,new=old_parts[name],new_parts[name]
+  comparisons[name]={'historical':old,'fresh':new}
+  save('cut-old-new-geometry.json',comparisons)
+  assert old['stock']==new['stock']
+  assert max(abs(x-y) for x,y in zip(old['bounds_mm'],new['bounds_mm']))<=1e-6
+  assert abs(old['volume_mm3']-new['volume_mm3'])<=1e-5
  result['catalog_inputs_requiring_subsequent_cad_generation']=sorted(changed)
  result['status']='PASS_SCOPED'
 except BaseException as exc:
