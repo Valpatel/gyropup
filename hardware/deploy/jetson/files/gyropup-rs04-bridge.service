@@ -1,4 +1,4 @@
-# Gyropup: the RS-04 configuration bridge (rig/rs04_bridge.py) on the robot (deploy/jetson, installed by install.sh).
+# Gyropup: the RS-04 configuration bridge (rig/rs04_bridge.py) on the robot (hardware/deploy/jetson, installed by install.sh).
 # Listens on 127.0.0.1 only. LAN mode is a drop-in (install.sh --lan) and needs a token. The interface and the build
 # profile are in /etc/gyropup/rs04-bridge.env.
 [Unit]

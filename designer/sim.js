@@ -72,6 +72,8 @@ const balls = createBalls(stage.root);
 const gun = { pan: 0, tilt: -0.05, mag: BALL.hopper, capacity: BALL.hopper, queue: [], attached: true, showFov: false, lastShot: -1, laserMode: 'auto', laserOn: false,
               armedUntil: 0, headlights: true, armHeld: false };
 const sfx = createSfx();
+// Apply URL audio before talk can mount or an optional import can pause startup.
+if (q.has('sound')) sfx.setEnabled(q.get('sound') !== '0');
 let talk = null;            // speech bubbles and voice (character/talk.js), when loaded
 let gamepad = null;         // Xbox-layout gamepad control (sim_gamepad.js on kit/gamepad/), when loaded
 const reactionMood = mood => { if (!talk?.isBusy()) eyes.set(mood); };
@@ -1264,7 +1266,6 @@ updateInsets();
 const canvas = stage.renderer.domElement;
 canvas.style.opacity = '0';
 if (q.get('panel') === '0') panelFold.set(true);
-if (q.has('sound')) { sfx.setEnabled(q.get('sound') !== '0'); paintSound(); }
 setTimeout(() => { if (!state.replay && !state.bench) react(Math.random() < 0.5 ? 'hello' : 'banter'); }, 1200);   // replays greet with their own line
 // ?cam=side|front|iso and ?height=0..1 for screenshots and docs; ?run=<scenario> starts a replay
 const camAt = { side: [1, 0.35, 0], front: [0, 0.35, 1], iso: [0.6, 0.45, 1], back: [0, 0.35, -1] }[q.get('cam')];

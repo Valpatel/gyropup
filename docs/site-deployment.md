@@ -56,8 +56,9 @@ npm run deploy
 
 `npm run deploy` builds the current checkout and uploads it to production. Commit
 and push the source first. `/version.json` records the source revision so a
-published artifact can be matched to GitHub. `wrangler.toml` declares the output
-folder; keep it aligned with the dashboard configuration.
+published artifact can be matched to GitHub. [`.github/wrangler.toml`](../.github/wrangler.toml) declares the output
+folder relative to its own directory. The deploy script uses `wrangler --cwd .github pages deploy ../dist`
+because Pages rejects a custom `--config` path. Keep the dashboard output at `dist` relative to the repository root.
 
 ### Returning browsers and local edits
 

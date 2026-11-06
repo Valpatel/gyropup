@@ -14,7 +14,7 @@ import { describe as describeLive, SOURCE } from '../web/cad-agent-live.js';
 const root = path.resolve(import.meta.dirname, '..');
 const read = file => readFile(path.join(root, file), 'utf8');
 const json = async file => JSON.parse(await read(file));
-const source = await read('index.html');
+const source = await read('designer/home.html');
 const { document } = parseHTML(source);
 const loop = document.querySelector('#loop');
 const text = el => el.textContent.replace(/\s+/g, ' ').trim();
