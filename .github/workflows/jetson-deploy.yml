@@ -9,6 +9,8 @@ on:
       - 'hardware/**'
       - 'rig/rs04*.py'
       - 'rig/tests/test_rs04_inventory.py'
+      - 'rig/tests/test_rs04_vectors.py'
+      - 'rig/tests/test_rs04_bridge.py'
       - 'tools/check-hardware.py'
       - 'tools/test_check_hardware.py'
       - 'firmware/balance/include/**'   # the hardware configs' sourced values
