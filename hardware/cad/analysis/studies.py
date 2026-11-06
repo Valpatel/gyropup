@@ -41,6 +41,7 @@ import subprocess
 import sys
 import time
 from pathlib import Path
+from hardware.cad.locations import artifact_identity, design_identity
 
 R = (Path(__file__).resolve().parents[3])
 sys.path.insert(0, str((R / 'hardware/cad')))
@@ -186,11 +187,11 @@ def run(design: Path, mesh: float, anim: bool = True, only=None):
         if anim:
             mp4 = st.animate(OUT / f'{part}-{case}{tag}.mp4', view=VIEWS.get(part, (25, -60)),
                              title=f"{part} {case}{tag}: {MATERIALS[material].name}")
-            r['animation'] = str(Path(mp4).relative_to(R))
+            r['animation'] = artifact_identity(R, Path(mp4))
             # the interactive viewer's data (designer/kit/fea.html?case=...): written with the videos, so the
             # optimiser's --no-anim runs stay fast and do not fill its trial folders
-            r['viewer'] = str(st.export_viewer(OUT / f'{part}-{case}{tag}.json').relative_to(R))
-        r.update(part=part, case=case, material_id=material, load_from=C[case]['from'], png=str(png.relative_to(R)),
+            r['viewer'] = artifact_identity(R, st.export_viewer(OUT / f'{part}-{case}{tag}.json'))
+        r.update(part=part, case=case, material_id=material, load_from=C[case]['from'], png=artifact_identity(R, png),
                  seconds=round(time.time() - t0, 1), assumed_interfaces=assumed)
         results.append(r)
         print(f"  {part:6} {case} {material:7} SF {r['safety_factor']}  stress {r['von_mises_design_mpa']} MPa  "
@@ -303,7 +304,7 @@ def run(design: Path, mesh: float, anim: bool = True, only=None):
     if only:                                                   # a quick look at some parts: no summary, no verdict
         return {'results': results + fall_results}
     # leg deflection at the wheel: thigh tip (worst case) carried down the shin, plus the shin's own
-    summary = {'design': str(design.relative_to(R)), 'mesh_mm': mesh, 'cases': C, 'stack_mm': S.y, 'track_mm': S.track,
+    summary = {'design': design_identity(R, design), 'mesh_mm': mesh, 'cases': C, 'stack_mm': S.y, 'track_mm': S.track,
                'stack_notes': S.notes, 'assumed_interfaces': assumed, 'results': results,
                'targets': TARGETS}
     summary['results'] = results + fall_results

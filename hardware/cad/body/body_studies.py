@@ -41,6 +41,7 @@ import os
 import sys
 import time
 from pathlib import Path
+from hardware.cad.locations import artifact_identity
 
 import numpy as np
 
@@ -61,7 +62,7 @@ ROBOT_KG = 29.5                  # the plan's estimate until T3's ledger (export
 def _rel(p):
     """A path relative to the repository when it is in it."""
     p = Path(p)
-    return str(p.relative_to(R)) if p.is_relative_to(R) else str(p)
+    return artifact_identity(R, p) if p.is_relative_to(R) else str(p)
 
 
 def _wheel_r_mm():

@@ -23,6 +23,7 @@ import math
 import sys
 import time
 from pathlib import Path
+from hardware.cad.locations import artifact_identity
 
 import cadquery as cq
 import numpy as np
@@ -574,7 +575,7 @@ def plate_dxf(path: Path) -> dict:
     by_d = {}
     for c in circles:
         by_d[c[2]] = by_d.get(c[2], 0) + 1
-    return {'file': str(path.relative_to(R)), 'circles': len(circles), 'holes_by_diameter_mm': dict(sorted(by_d.items())),
+    return {'file': artifact_identity(R, path), 'circles': len(circles), 'holes_by_diameter_mm': dict(sorted(by_d.items())),
             'slots': slots, 'outline_mm': ext, 'units': 'mm', 'reimport_ok': not missing and ext == (W, H) and slots == 2,
             'missing': missing}
 

@@ -37,6 +37,7 @@ import math
 import re
 import sys
 from pathlib import Path
+from hardware.cad.locations import artifact_identity
 
 R = (Path(__file__).resolve().parents[3])
 sys.path.insert(0, str((R / 'hardware/cad')))
@@ -77,7 +78,7 @@ def _read(path: Path):
 
 
 def _rel(path: Path) -> str:
-    return str(path.relative_to(R))
+    return artifact_identity(R, path)
 
 
 def _r(v, n=2):

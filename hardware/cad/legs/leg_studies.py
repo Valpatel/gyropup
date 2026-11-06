@@ -41,6 +41,7 @@ import math
 import sys
 import time
 from pathlib import Path
+from hardware.cad.locations import artifact_identity
 
 import numpy as np
 
@@ -508,9 +509,9 @@ def run(mesh, anim=True, only=None, only_cases=None, viewer=False):
         disp = r['probe_displacement_mm'] and round(math.hypot(*r['probe_displacement_mm']), 2)
         st.render(png, view=VIEWS.get(part, (25, -60)), title=f"{part} {case} ({MATERIALS[mat].name}): SF {r['safety_factor']}, {disp} mm at the load")
         if anim:
-            r['animation'] = str(st.animate(OUT / f'{part}-{case}.mp4', view=VIEWS.get(part, (25, -60)), title=f'{part} {case}: {MATERIALS[mat].name}').relative_to(R))
+            r['animation'] = artifact_identity(R, st.animate(OUT / f'{part}-{case}.mp4', view=VIEWS.get(part, (25, -60)), title=f'{part} {case}: {MATERIALS[mat].name}'))
         if anim or viewer:
-            r['viewer'] = str(st.export_viewer(OUT / f'{part}-{case}.json').relative_to(R))
+            r['viewer'] = artifact_identity(R, st.export_viewer(OUT / f'{part}-{case}.json'))
         target = TARGETS['sf_fault' if rare == 'fault' else 'sf_rare' if rare else 'sf']
         if part == 'leg':                                        # the printed members; the joints are joint_checks()
             r['safety_factor_with_joint_plugs'] = r['safety_factor']
@@ -521,7 +522,7 @@ def run(mesh, anim=True, only=None, only_cases=None, viewer=False):
         if part == 'upper_link' and shape is not None:           # held on its bonded pad: leave out the pad rim's spike
             r['safety_factor_with_pad_rim'] = r['safety_factor']
             r['safety_factor'], r['von_mises_design_mpa'] = away_from_pad_rim(st, gmi.STD['AO-L']['journal_d'] / 2)
-        r.update(part=part, case=case, material_id=mat, load_from=why, png=str(png.relative_to(R)), target=target,
+        r.update(part=part, case=case, material_id=mat, load_from=why, png=artifact_identity(R, png), target=target,
                  ok=r['safety_factor'] >= target, seconds=round(time.time() - t0, 1))
         results.append(r)
         print(f"  {part:14} {case:3} {mat:9} SF {r['safety_factor']:5} (>= {target})  {r['von_mises_design_mpa']} MPa  "

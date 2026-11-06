@@ -37,6 +37,7 @@ import os
 import subprocess
 import sys
 from pathlib import Path
+from hardware.cad.locations import design_identity
 
 import cadquery as cq
 
@@ -330,10 +331,10 @@ def build(design_path: Path, fast: bool = False):
 
     (OUT / 'geometry-checks.json').write_text(json.dumps({k: v for k, v in report.items() if v.get('print')}, indent=1) + '\n')
     total = sum(m['mass_g'] * m['qty'] for m in mass.values())
-    (OUT / 'mass-properties.json').write_text(json.dumps({'design': str(Path(design_path).resolve().relative_to(R)), 'parts': mass,
+    (OUT / 'mass-properties.json').write_text(json.dumps({'design': design_identity(R, Path(design_path).resolve()), 'parts': mass,
                                                           'made_total_g': round(total, 1), 'estimate': True,
                                                           'note': 'printed parts at 2 mm walls and 40 % infill; metal parts solid; weigh the real parts'}, indent=1) + '\n')
-    (OUT / 'mech-layout.json').write_text(json.dumps({'design': str(Path(design_path).resolve().relative_to(R)), 'stack_mm': S.y, 'track_mm': S.track,
+    (OUT / 'mech-layout.json').write_text(json.dumps({'design': design_identity(R, Path(design_path).resolve()), 'stack_mm': S.y, 'track_mm': S.track,
                                                       'notes': S.notes, 'assumed_interfaces': assumed,
                                                       'hip_y_mm': sum(S.y['thigh']) / 2, 'wheel_y_mm': S.y['wheel_centre'],
                                                       'min_knee_deg': S.y.get('min_knee_deg')}, indent=1) + '\n')
@@ -645,7 +646,7 @@ def assemble(design_path, d, ev, L, S, parts, meta, lparts, lbought, hip_id, ele
             continue
         notes.append(f'{slot}: {g:.0f} g not placed in the CAD yet (a point on the body)')
         A.add('base', f'{slot} (unplaced)', 'bought', Body(g / 1000, (0, 0, (L['trayBottom'] + T['height'] / 2) / 1000)), None, estimate=True)
-    data = A.write(OUT / 'assembly.json', str(Path(design_path).resolve().relative_to(R)), OUT / 'mjcf' if meshes else None, notes)
+    data = A.write(OUT / 'assembly.json', design_identity(R, Path(design_path).resolve()), OUT / 'mjcf' if meshes else None, notes)
     if tinfo:
         data['turret'] = tinfo
         (OUT / 'assembly.json').write_text(json.dumps({k: v for k, v in data.items()}, indent=1) + '\n')
@@ -701,7 +702,7 @@ def export_link_meshes(design_path, L, S, parts, lparts, lbought, bought, placed
     for name, shape, color, local, link in extra:   # motors, battery, the J501 box, electronics, sensors, turret
         put(link, name, shape, None, color, local)
     (d / 'manifest.json').write_text(json.dumps({
-        'design': str(Path(design_path).resolve().relative_to(R)), 'units': 'mm',
+        'design': design_identity(R, Path(design_path).resolve()), 'units': 'mm',
         'frame': 'robot: x forward, y left, z up, origin on the hip axis; legs at the zero pose (hanging straight down)',
         'thigh_mm': L['thigh'], 'shin_mm': L['shin'], 'crank_r_mm': leg.PARAMS['crank_r'], 'lever_beta_deg': leg.PARAMS['lever_beta_deg'], 'mirror': 'side l parts are mirrored (y -> -y) for the right leg',
         'cad_has': sorted({n for n, *_ in extra} | {'chassis'}),

@@ -25,6 +25,7 @@ import sys
 import time
 import zipfile
 from pathlib import Path
+from hardware.cad.locations import artifact_identity
 
 import cadquery as cq
 
@@ -194,8 +195,8 @@ def cnc_part(name: str, m: dict, grams: float) -> dict:
     cq.exporters.export(solid, str(d / f'{name}.stl'), tolerance=0.05, angularTolerance=0.1)
     bb = solid.BoundingBox()
     row = {'key': name, 'qty': m['qty'], 'material': MATERIALS[m['material']]['name'], 'mass_g_each': round(grams, 1),
-           'size_mm': [round(v, 1) for v in (bb.xlen, bb.ylen, bb.zlen)], 'step': str((d / f'{name}.step').relative_to(R)),
-           'stl': str((d / f'{name}.stl').relative_to(R)), 'spec': spec, 'price_usd_each': None, 'note': m['note'], **CNC_ORDER}
+           'size_mm': [round(v, 1) for v in (bb.xlen, bb.ylen, bb.zlen)], 'step': artifact_identity(R, d / f'{name}.step'),
+           'stl': artifact_identity(R, d / f'{name}.stl'), 'spec': spec, 'price_usd_each': None, 'note': m['note'], **CNC_ORDER}
     index = json.loads((d / 'cnc.json').read_text()) if (d / 'cnc.json').exists() else {}
     index[name] = row
     (d / 'cnc.json').write_text(json.dumps(index, indent=1, ensure_ascii=False) + '\n')

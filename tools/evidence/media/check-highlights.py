@@ -358,6 +358,11 @@ def negative_controls(receipt, capture, frames, out, decoded):
     fault('self-consistent required renderer omission', omit_module)
     fault('capture location contract', lambda r,c,f: c['locationContracts'].__setitem__(CAPTURE_LOCATIONS[0], '0'*64))
     fault('captured artifact revision', lambda r,c,f: c['servedVersion'].__setitem__('revision', '0'*40))
+    fault('wrong encoding source revision', lambda r,c,f: r.__setitem__('source_revision', LEG_REVISION))
+    def wrong_capture_revision(r, c, f):
+        c['sourceRevision'] = LEG_REVISION
+        c['servedVersion']['revision'] = LEG_REVISION
+    fault('wrong capture source revision with matching served metadata', wrong_capture_revision)
     fault('capture recipe', lambda r,c,f: c.__setitem__('recipeSha256', '0'*64))
     fault('served simulator', lambda r,c,f: c['inputs']['/designer/sim.js'].__setitem__('servedSha256', '0'*64))
     fault('stage instrumentation', lambda r,c,f: c['inputs']['/designer/kit/stage.js'].__setitem__('servedSha256', '0'*64))

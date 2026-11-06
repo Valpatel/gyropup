@@ -1280,7 +1280,7 @@
         "observed_on": "2026-10-29",
         "readiness": false,
         "row_index": 0,
-        "source": "research/protection/carrier-practical-architecture.inputs.json"
+        "source": "docs/research/protection/carrier-practical-architecture.inputs.json"
       },
       "value": "ideal diode controller"
     },
@@ -1318,7 +1318,7 @@
         "observed_on": "2026-10-29",
         "readiness": false,
         "row_index": 1,
-        "source": "research/protection/carrier-practical-architecture.inputs.json"
+        "source": "docs/research/protection/carrier-practical-architecture.inputs.json"
       },
       "value": "250V N-MOS"
     },
@@ -1361,7 +1361,7 @@
         "observed_on": "2026-10-29",
         "readiness": false,
         "row_index": 2,
-        "source": "research/protection/carrier-practical-architecture.inputs.json"
+        "source": "docs/research/protection/carrier-practical-architecture.inputs.json"
       },
       "value": "70V TVS"
     },
@@ -1403,7 +1403,7 @@
         "observed_on": "2026-10-29",
         "readiness": false,
         "row_index": 3,
-        "source": "research/protection/carrier-practical-architecture.inputs.json"
+        "source": "docs/research/protection/carrier-practical-architecture.inputs.json"
       },
       "value": "5.1V zener"
     },
@@ -1441,7 +1441,7 @@
         "observed_on": "2026-10-29",
         "readiness": false,
         "row_index": 4,
-        "source": "research/protection/carrier-practical-architecture.inputs.json"
+        "source": "docs/research/protection/carrier-practical-architecture.inputs.json"
       },
       "value": "75V zener; modern grade equivalence open"
     },
@@ -1484,7 +1484,7 @@
         "observed_on": "2026-10-29",
         "readiness": false,
         "row_index": 5,
-        "source": "research/protection/carrier-practical-architecture.inputs.json"
+        "source": "docs/research/protection/carrier-practical-architecture.inputs.json"
       },
       "value": "12V gate zener; supply not confirmed"
     },
@@ -1537,7 +1537,7 @@
         "observed_on": "2026-10-29",
         "readiness": false,
         "row_index": 6,
-        "source": "research/protection/carrier-practical-architecture.inputs.json"
+        "source": "docs/research/protection/carrier-practical-architecture.inputs.json"
       },
       "value": "floating-reference return diode"
     },
@@ -1587,7 +1587,7 @@
         "observed_on": "2026-10-29",
         "readiness": false,
         "row_index": 7,
-        "source": "research/protection/carrier-practical-architecture.inputs.json"
+        "source": "docs/research/protection/carrier-practical-architecture.inputs.json"
       },
       "value": "150V TVS, Littelfuse candidate manufacturer"
     },
@@ -1629,7 +1629,7 @@
         "observed_on": "2026-10-29",
         "readiness": false,
         "row_index": 8,
-        "source": "research/protection/carrier-practical-architecture.inputs.json"
+        "source": "docs/research/protection/carrier-practical-architecture.inputs.json"
       },
       "value": "2kohm pulse resistor candidate; pulse acceptance open"
     },
@@ -1723,7 +1723,7 @@
       "prior_sources": [
         "https://www.ti.com/product/NE555/part-details/NE555P"
       ],
-      "source": "cad/turret_boards.py",
+      "source": "hardware/cad/turret/turret_boards.py",
       "supplier_observation": null,
       "value": "NE555P"
     },
@@ -1762,7 +1762,7 @@
         "https://www.mouser.com/ProductDetail/603-MFR-25FBF52-1K",
         "https://www.digikey.com/en/products/detail/yageo/MFR-25FBF52-1K/1.00KXBK-ND/13011"
       ],
-      "source": "cad/turret_boards.py",
+      "source": "hardware/cad/turret/turret_boards.py",
       "supplier_observation": null,
       "value": "1.00 k 1 %"
     },
@@ -1801,7 +1801,7 @@
         "https://www.mouser.com/ProductDetail/603-MFR-25FBF52-6K8",
         "https://www.digikey.com/en/products/detail/yageo/MFR-25FRF52-6K8/MFR-25FRF52-6K8-ND/9139107"
       ],
-      "source": "cad/turret_boards.py",
+      "source": "hardware/cad/turret/turret_boards.py",
       "supplier_observation": null,
       "value": "6.8 k 1 %"
     },
@@ -1839,7 +1839,7 @@
         "https://www.mouser.com/ProductDetail/WIMA/MKS2-1-63-5/?qs=ISKKXg98%252B1lWN2VQKHfGJg%3D%3D",
         "https://www.newark.com/search?st=46T6775"
       ],
-      "source": "cad/turret_boards.py",
+      "source": "hardware/cad/turret/turret_boards.py",
       "supplier_observation": null,
       "value": "100 nF film 5 %"
     },
@@ -1871,7 +1871,7 @@
         "https://www.mouser.com/ProductDetail/594-K104K15X7RF53L2",
         "https://www.digikey.com/en/products/detail/vishay-beyschlag-draloric-bc-components/K104K15X7RF53L2/2820506"
       ],
-      "source": "cad/turret_boards.py",
+      "source": "hardware/cad/turret/turret_boards.py",
       "supplier_observation": null,
       "value": "100 nF X7R"
     },
@@ -1915,7 +1915,7 @@
         "https://www.mouser.com/ProductDetail/810-FG24X7R1H105KRT6",
         "https://www.digikey.com/en/products/detail/tdk/FG24X7R1H105KRT06/5802988"
       ],
-      "source": "cad/turret_boards.py",
+      "source": "hardware/cad/turret/turret_boards.py",
       "supplier_observation": null,
       "value": "1 uF X7R"
     },
@@ -1946,7 +1946,7 @@
         "https://www.mouser.com/ProductDetail/512-1N4148",
         "https://www.digikey.com/en/products/detail/onsemi/1N4148/458603"
       ],
-      "source": "cad/turret_boards.py",
+      "source": "hardware/cad/turret/turret_boards.py",
       "supplier_observation": null,
       "value": "1N4148"
     },
@@ -1984,7 +1984,7 @@
         "https://www.mouser.com/ProductDetail/603-RSF100JB-73-2K2",
         "https://www.digikey.com/product-detail/en/yageo/RSF100JB-73-2K2/2.2KW-1-ND/18091"
       ],
-      "source": "cad/turret_boards.py",
+      "source": "hardware/cad/turret/turret_boards.py",
       "supplier_observation": null,
       "value": "2.2 k 1 W"
     },
@@ -2017,25 +2017,25 @@
       "prior_sources": [
         "https://www.mouser.com/c/?q=MF-R300"
       ],
-      "source": "cad/turret_boards.py",
+      "source": "hardware/cad/turret/turret_boards.py",
       "supplier_observation": null,
       "value": "MF-R300"
     }
   ],
   "source_sha256": {
-    "cad/turret_boards.py": "aa6ce27963e5c18058400afc57663af64b0a92a0cbd0c7095abed78f9f4721c7",
-    "catalog/turret.json": "4e0ab8a62f75e4da60e50e84dcddc85d2e462ffc0949bacdcdf60d7f4aade9f7",
-    "docs/base-board-interfaces.md": "32a4d63c33ee79dad2753a7be1d8dc6b60ea557a8a842370f5f1ca5680e6d7b8",
-    "docs/carrier-service-connectors.md": "f73db1114d1d807002ff454b5cb9ae1c7d94c1e29af89567b640e36f17966ec7",
+    "docs/electronics/base-board-interfaces.md": "daffd3eda5797ae53e543bd7cc3089a30b7865c1bba215b6c5504ce8acdf574e",
+    "docs/electronics/carrier-service-connectors.md": "028e7f670d28f57fbc1a2b9885572006b43ee2a614e64af45fe623b15d03fa65",
+    "docs/research/protection/carrier-practical-architecture.inputs.json": "0b6fddcf95ea8719ae215e24827ceb1c33624a0e113604e4db1afe2f95891a70",
+    "hardware/cad/turret/turret_boards.py": "8b8ba6b1f6195fa81f2d04bf862244d1da21d7fb85ca23667e80fcf03cac8ceb",
     "hardware/carrier-packaging/front-reference-contract.json": "06956af049dafbeaf44bb9b0a739cde0b4ce099f0a6795758bebc77ced918b48",
-    "hardware/carrier-packaging/inventory.py": "317786bb0bf507e3a572a48e45b77b08320baf9220bc0156d3c61293d0f767b7",
+    "hardware/carrier-packaging/inventory.py": "1fca930629074d2d095d20867f04a0fdf9185b11d6495c40c2ffe89ba193b94c",
     "hardware/carrier-packaging/package-envelopes.json": "8b263374bc27d7c5c99ef11a136f4f8df5c49db56fd91fb4316132f467bdbb4f",
     "hardware/carrier-packaging/primary-envelope-sources.json": "7d4e6f55c351073e6d1123a988b6b02bb7f94df2ed41540917ee59bec3723f57",
     "hardware/carrier-packaging/terminal-contract.json": "4f1eb2c31cafc363d8ea5381293db8f9ea43dcd111f506ccf698e0599a3253ca",
     "hardware/carrier-pan-protection/availability.json": "549a8ccdfd7d9ea95b5baedcb47ec7aa971cfbdeffe1092e4be13df40c480ec8",
     "hardware/carrier-pan-protection/circuit_design.py": "37b4d99eecaa1f567109df6762a00f69f46c02e6efbe7d53c35893d2955ace8a",
     "hardware/carrier-pan-protection/pins.md": "37ce5846b0335bea6263851fd83cf629d92b1a8a897f00f5cb5ec8205a7cadc4",
-    "research/protection/carrier-practical-architecture.inputs.json": "0b6fddcf95ea8719ae215e24827ceb1c33624a0e113604e4db1afe2f95891a70"
+    "hardware/catalog/turret.json": "4e0ab8a62f75e4da60e50e84dcddc85d2e462ffc0949bacdcdf60d7f4aade9f7"
   },
   "status": "WIP_INVENTORY_NOT_A_FROZEN_LAYOUT"
 }

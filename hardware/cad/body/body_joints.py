@@ -42,6 +42,7 @@ import sys
 from collections import defaultdict
 from dataclasses import dataclass, field
 from pathlib import Path
+from hardware.cad.locations import artifact_identity
 
 R = (Path(__file__).resolve().parents[3])
 sys.path.insert(0, str((R / 'hardware/cad')))
@@ -622,7 +623,7 @@ def run(parts, items=None, stages=('P1', 'P2', 'P3'), clashes=None):
                                       'fails': [c['id'] for c in v['checks'] if c['status'] == 'fail'],
                                       'undeclared_contacts': [c['id'].split(':', 1)[1] for c in v['checks']
                                                               if c['status'] == 'warn' and c['id'].startswith('contact:')],
-                                      'verdict': str((gdir / f'connectivity-{st}.json').relative_to(R))}
+                                      'verdict': artifact_identity(R, gdir / f'connectivity-{st}.json')}
     report['screw_count'] = screw_counts(J)
     report['summary'] = {'joints': len({r['joint'] for r in report['joints']}), 'screws': sum(j.__dict__['at'].__len__() for j in J),
                          'joints_with_problems': sorted({r['joint'] for r in report['joints'] if r['problems']}),

@@ -96,3 +96,5 @@
 | Exact helper hash fails on one newline, or linked-worktree ancestry loses parents after a depth fetch | [Materialize exact bytes and preserve shared Git history](inbox/2026-11-05-ci-classification-needs-phase-evidence.md#materialize-exact-helper-bytes-before-expensive-setup) |
 
 | A fleet comparison worktree unexpectedly falls inside its run directory | [Select the temporary parent before setup](inbox/2026-11-05-ci-classification-needs-phase-evidence.md#select-the-temporary-worktree-parent-before-dependency-setup) |
+
+| Isolated KiCad ERC raises footprint-link warnings; a verifier reports only the first stale binding; native replay leaves personal project state | [Prepare real library configuration and account for every output](inbox/2026-11-05-ci-classification-needs-phase-evidence.md#native-verification-needs-its-real-library-configuration-and-full-output-accounting) |

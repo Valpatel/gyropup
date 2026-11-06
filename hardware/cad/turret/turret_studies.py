@@ -59,6 +59,7 @@ import math
 import sys
 import time
 from pathlib import Path
+from hardware.cad.locations import artifact_identity
 
 import numpy as np
 
@@ -215,13 +216,13 @@ def run(mesh, anim=True, only=None):
         else:
             r.update(layer_aware=None, sf_layer_aware=None, sf_isotropic_weak=None, ok_isotropic=r['safety_factor'] >= target,
                      verdict_sf=r['safety_factor'], verdict_on='isotropic (metal: yield)')
-        r.update(part=part, case=case, material_id=mat, load_from=why, png=str(png.relative_to(R)), target=target,
+        r.update(part=part, case=case, material_id=mat, load_from=why, png=artifact_identity(R, png), target=target,
                  ok=r['verdict_sf'] >= target, seconds=round(time.time() - t0, 1))
         sf_txt = f"SF {r['safety_factor']}" + (f", layer-aware {r['sf_layer_aware']}" if pm else '')
         st.render(png, view=VIEWS.get(part, (25, -60)), title=f"{part} {case} ({MATERIALS[mat].name}): {sf_txt}, {disp} mm at the load")
         if anim:
-            r['animation'] = str(st.animate(OUT / f'{part}-{case}.mp4', view=VIEWS.get(part, (25, -60)), title=f'{part} {case}: {MATERIALS[mat].name}').relative_to(R))
-            r['viewer'] = str(st.export_viewer(OUT / f'{part}-{case}.json').relative_to(R))
+            r['animation'] = artifact_identity(R, st.animate(OUT / f'{part}-{case}.mp4', view=VIEWS.get(part, (25, -60)), title=f'{part} {case}: {MATERIALS[mat].name}'))
+            r['viewer'] = artifact_identity(R, st.export_viewer(OUT / f'{part}-{case}.json'))
         results.append(r)
         la_txt = ''
         if pm:

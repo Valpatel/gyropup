@@ -15,12 +15,19 @@ serial chain (DDT models the Diablo the same way). Numbers marked "estimate" in 
 """
 from __future__ import annotations
 
+# Support direct-file CLI execution from outside the checkout.
+if __package__ in (None, ''):
+    import sys as _checkout_sys
+    from pathlib import Path as _CheckoutPath
+    _checkout_sys.path.insert(0, str(_CheckoutPath(__file__).resolve().parents[2]))
+
 import json
 import os
 import math
 import subprocess
 import sys
 from pathlib import Path
+from hardware.cad.locations import design_identity
 
 from cadagent import robot as rb
 
@@ -84,7 +91,7 @@ def cad_masses(design_path: Path):
     if not f.exists():
         return None
     mp = json.loads(f.read_text())
-    if (R / mp.get('design', '')).resolve() != Path(design_path).resolve():
+    if mp.get('design') != design_identity(R, design_path):
         return None
     return {n: (v['mass_g'] / 1000, v['qty']) for n, v in mp['parts'].items()}
 
@@ -96,7 +103,7 @@ def cad_assembly(design_path: Path):
     if not f.exists():
         return None
     a = json.loads(f.read_text())
-    return a if (R / a.get('design', '')).resolve() == Path(design_path).resolve() else None
+    return a if a.get('design') == design_identity(R, design_path) else None
 
 
 def _rgba(hexc: str, alpha: float = 1.0):
@@ -111,7 +118,7 @@ def mech_layout(design_path: Path):
     if not f.exists():
         return None
     ml = json.loads(f.read_text())
-    return ml if (R / ml.get('design', '')).resolve() == Path(design_path).resolve() else None
+    return ml if ml.get('design') == design_identity(R, design_path) else None
 
 
 def build(design_path: Path, out_dir: Path | None = None) -> dict:
@@ -394,7 +401,7 @@ def build(design_path: Path, out_dir: Path | None = None) -> dict:
                       if p['id'] not in ('wheel_hub', 'tyre')) * M
     cad_delta = (sum(kg * q for kg, q in cad.values()) - est_printed) if cad else 0.0   # CAD replaces the estimate
     info = {
-        'design': str(design_path.relative_to(R)), 'name': name, 'total_mass_kg': total,
+        'design': design_identity(R, design_path), 'name': name, 'total_mass_kg': total,
         'designer_mass_kg': ev['mass']['total_kg'], 'printed_cad_delta_kg': round(cad_delta, 3),
         # with the CAD assembly the model IS the CAD (plus the turret's budget until its CAD joins); else the designer's
         # BOM with the printed estimates swapped for the CAD's

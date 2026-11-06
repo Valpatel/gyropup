@@ -78,11 +78,11 @@
     "status": "ARCHITECTURE_RECOMMENDATION_ONLY_UNSELECTED_UNQUALIFIED"
   },
   "inputs_sha256": {
+    "docs/research/protection/calculate_practical_architecture.py": "9336dd472637dba5335770b7ef4e54da73d9246ab2b1d97ae4228bb4bfdeebe8",
+    "docs/research/protection/carrier-practical-architecture.inputs.json": "0b6fddcf95ea8719ae215e24827ceb1c33624a0e113604e4db1afe2f95891a70",
+    "docs/research/protection/carrier-practical-architecture.md": "9045ca40e653f8da0bc956acefb598cdb73feea13e4ecf39858e24e714bb424b",
+    "docs/research/protection/test_practical_architecture.py": "93b45ba0f4cd1949ca0039790760d0f2ed3f1f94846a4161e188ea5609a33ee1",
     "hardware/carrier-pan-protection/calculate.py": "911d0f1402fa4ce7b087bd56fc1c54ab070d08564b44af3d42853b8223290ee9",
-    "hardware/carrier-pan-protection/circuit_design.py": "37b4d99eecaa1f567109df6762a00f69f46c02e6efbe7d53c35893d2955ace8a",
-    "research/protection/calculate_practical_architecture.py": "82926d111d5607a75f628e5ff8505fbc3e4839cbcc9d69cd480d6517311e4c5c",
-    "research/protection/carrier-practical-architecture.inputs.json": "0b6fddcf95ea8719ae215e24827ceb1c33624a0e113604e4db1afe2f95891a70",
-    "research/protection/carrier-practical-architecture.md": "44539462317f9c5874755aed66e8478b59405d7f53a6cf71c853e7b9978d6437",
-    "research/protection/test_practical_architecture.py": "93b45ba0f4cd1949ca0039790760d0f2ed3f1f94846a4161e188ea5609a33ee1"
+    "hardware/carrier-pan-protection/circuit_design.py": "37b4d99eecaa1f567109df6762a00f69f46c02e6efbe7d53c35893d2955ace8a"
   }
 }
