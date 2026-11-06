@@ -1,0 +1,13 @@
+{
+  "producer_source": "1bfdee9cd95ec54230873058087e7d8ab0217de3",
+  "fresh_original_closure_files": 28,
+  "closure_exact_before_adoption": true,
+  "adopted_sha256": {
+    "hardware/carrier-packaging/component-inventory.json": "5efff007d97eb606516ab915b03da48449aaac530d6d4cdb42eebe9bdff643d4",
+    "hardware/carrier-packaging/allocation-proposal.json": "15adf56f471ce219fafab9a889ed299d90fca85aa83990cb6fc1fcdc6fb7b8f6",
+    "docs/research/protection/carrier-practical-architecture.results.json": "5615fe52e14a962626d5b4eb6b9ac3328533f94138cd6e01923cd0cbce774a17"
+  },
+  "archive_sha256": "a4373abf3cd2843123d42af6c07f18dcd9b67e6d3249fd2d5f8b28799e633656",
+  "review": "https://github.com/Valpatel/gyropup/pull/238#issuecomment-6684895033",
+  "scope": "genuine paper inventory/allocation/arithmetic source binding; no CAD/physical/circuit qualification"
+}

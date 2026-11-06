@@ -1,0 +1,184 @@
+{
+  "source": "bbf33b27223dd4648763fd1ddf300278abbfe1bc",
+  "collection": {
+    "job": 223,
+    "alias": "cpu-a",
+    "status": "PASS_SCOPED"
+  },
+  "independent_review": "https://github.com/Valpatel/gyropup/pull/238#issuecomment-6687739473",
+  "fresh_original_targets": {
+    "hardware/exports/turret/base-board-service/interfaces/carrier-wiring-candidate.step": {
+      "bytes": 126924,
+      "sha256": "45dfb572e52fa574d85db226904bb8794270a9c30fa74fc1d4483058d8a2cdce"
+    },
+    "hardware/exports/turret/base-board-service/interfaces/carrier-wiring-layout.step": {
+      "bytes": 2419442,
+      "sha256": "52b8f2fa569efbdc4001b89ee30d5a7c87bcdc441e4899fac1ad8a3a4213d823"
+    },
+    "hardware/exports/turret/base-board-service/interfaces/interfaces.json": {
+      "bytes": 201201,
+      "sha256": "a0774334ede19a71fa01523226f631448e8a17d202ad739875673b8503af99b3"
+    },
+    "hardware/exports/turret/base-board-service/interfaces/pan-base-wiring-candidate.step": {
+      "bytes": 1677079,
+      "sha256": "13ebff546bb1badeb7912f00357f0547a2547402c6159779ec390f492c81209a"
+    },
+    "hardware/exports/turret/carrier-insert-fit/base-anchor.3mf": {
+      "bytes": 4984,
+      "sha256": "3803b3a32499170250c1809129b3b0052f658c1c886fde41ba8fb4b55ec9d91e"
+    },
+    "hardware/exports/turret/carrier-insert-fit/base-anchor.step": {
+      "bytes": 28437,
+      "sha256": "7ccfea952b6b723ba3995ca3999e9603bb7fd44fa100b63f88e5bbeea2902163"
+    },
+    "hardware/exports/turret/carrier-insert-fit/base-anchor.stl": {
+      "bytes": 22084,
+      "sha256": "02d9ceeca7f107f91fbd6d551683c594345cd1d6aff005924ccf06f4101ef86b"
+    },
+    "hardware/exports/turret/carrier-insert-fit/carrier-boss.3mf": {
+      "bytes": 9643,
+      "sha256": "01279bd05697f36a1df4ed6143efbc27ec334edf477f5df72662c9d8e03e8d17"
+    },
+    "hardware/exports/turret/carrier-insert-fit/carrier-boss.step": {
+      "bytes": 35634,
+      "sha256": "edc84aa19d6e58085a44664821009fccde89092115f00b2be6718f98216eeb66"
+    },
+    "hardware/exports/turret/carrier-insert-fit/carrier-boss.stl": {
+      "bytes": 46784,
+      "sha256": "f6cdda4c76c14918d0f7790ae3f5260cb31e12938b3693daaec7848e30f064fb"
+    },
+    "hardware/exports/turret/carrier-insert-fit/measurements.csv": {
+      "bytes": 560,
+      "sha256": "763fce59e411c8a81f168694643a536181d41c1891dffa0eec1f62ad4f8f8820"
+    },
+    "hardware/exports/turret/carrier-insert-fit/receipt.json": {
+      "bytes": 28274,
+      "sha256": "ef9d604fd7277a73cc89feecdde5453f57a68dc4a60f3dac1845be5540c87056"
+    },
+    "hardware/exports/turret/ordered-motor-fit/checks.json": {
+      "bytes": 19550,
+      "sha256": "ad3e52f221104638cf95bd51fcdd2e3defbc972a3a19cd32a8986604308e043c"
+    },
+    "hardware/exports/turret/ordered-motor-fit/shaft-clearance-survey.step": {
+      "bytes": 2297976,
+      "sha256": "1b5b33ef2603001abff19d35696d3fe13cc43cafbbe6e78243de5cd2620ef3cf"
+    },
+    "hardware/exports/turret/ordered-motor-fit/shaft-clearance-survey.stl": {
+      "bytes": 1879384,
+      "sha256": "f71124b175344d07a49e31be3e7f81944af43973ab6c4e3f51827ef0636dde10"
+    }
+  },
+  "fresh_geometry_members": 92,
+  "context_and_gauge_source_hashes_checked": true,
+  "adopted": {
+    "hardware/exports/turret/base-board-service/interfaces/carrier-wiring-candidate.step": {
+      "bytes": 126924,
+      "sha256": "9b7f294279e7dcd1ae3a84448c199d1919ce85114d50158ab4474e0087fcf647"
+    },
+    "hardware/exports/turret/base-board-service/interfaces/carrier-wiring-layout.step": {
+      "bytes": 2420786,
+      "sha256": "f4593c5bacc4f978ebecc685f4e1a3625fcbe9b2c04a5de1257ca00da9c787b2"
+    },
+    "hardware/exports/turret/base-board-service/interfaces/interfaces.json": {
+      "bytes": 204325,
+      "sha256": "82158ca6a9b4432af6512e0c09555ee351d3321d29a083f6e849229600e54fab"
+    },
+    "hardware/exports/turret/base-board-service/interfaces/pan-base-wiring-candidate.step": {
+      "bytes": 1678423,
+      "sha256": "82362ee7178ff07ecc481991e6814c72286a4f4276fb2bf1afe02242ac4c72df"
+    },
+    "hardware/exports/turret/carrier-insert-fit/base-anchor.3mf": {
+      "bytes": 4960,
+      "sha256": "6c2a09c805a503e327404999aba049bd897911074f535795d627955cb870a615"
+    },
+    "hardware/exports/turret/carrier-insert-fit/base-anchor.step": {
+      "bytes": 28437,
+      "sha256": "65e2905252e5cd3e6e29e35755f71d7a9d116038467d642937e5d8ed335cbf5f"
+    },
+    "hardware/exports/turret/carrier-insert-fit/base-anchor.stl": {
+      "bytes": 22084,
+      "sha256": "ce29f74ad434979e27b0025e5bb06cfcc07bd5ded646b1a483fc5f211352d8d7"
+    },
+    "hardware/exports/turret/carrier-insert-fit/carrier-boss.3mf": {
+      "bytes": 9629,
+      "sha256": "b46b7c50eb099ea07d1e05f0551bef47ffe4c697ffbdcf0cd5af2d954d619bd2"
+    },
+    "hardware/exports/turret/carrier-insert-fit/carrier-boss.step": {
+      "bytes": 35634,
+      "sha256": "3552a10c518f59b1cbeabdfdbbd04eddf6223ed5aa0f90aa7a0d59dbf8c28f33"
+    },
+    "hardware/exports/turret/carrier-insert-fit/carrier-boss.stl": {
+      "bytes": 46784,
+      "sha256": "374fcbef1209f1ea25dfa195dcf7106e197ecbbaf919842c50a924967da563d3"
+    },
+    "hardware/exports/turret/carrier-insert-fit/measurements.csv": {
+      "bytes": 560,
+      "sha256": "763fce59e411c8a81f168694643a536181d41c1891dffa0eec1f62ad4f8f8820"
+    },
+    "hardware/exports/turret/carrier-insert-fit/receipt.json": {
+      "bytes": 29862,
+      "sha256": "345c8975ac33788b49245aae51ff1decda3fbfdc6a295de2329a318b263de646"
+    },
+    "hardware/exports/turret/ordered-motor-fit/checks.json": {
+      "bytes": 19560,
+      "sha256": "00334bdcf80dd59c026ae2916448eac95cb764e8f3b0f0f53c73261c0df0434d"
+    },
+    "hardware/exports/turret/ordered-motor-fit/shaft-clearance-survey.step": {
+      "bytes": 2297976,
+      "sha256": "08e152eeb4b87cdcf69e7740b9474b0a099196ad76fab0ebc0dc0413e15a9926"
+    },
+    "hardware/exports/turret/ordered-motor-fit/shaft-clearance-survey.stl": {
+      "bytes": 1879384,
+      "sha256": "f71124b175344d07a49e31be3e7f81944af43973ab6c4e3f51827ef0636dde10"
+    }
+  },
+  "archives": {
+    "interfaces": {
+      "sha256": "e625897a99bbed5cc5c75f69b5f6269419e6e13396679fcbb5e928b651da45b8",
+      "files": 4
+    },
+    "insert-fit": {
+      "sha256": "f0cc64b6c79864847d08d098894a08a1182bbd99a797cfda54dcb9fddbc4d765",
+      "files": 8
+    },
+    "ordered-gauge": {
+      "sha256": "8ec193e81b5ec002fba7c87443c1aee07a442001fce1439386078be6dfa3a865",
+      "files": 3
+    }
+  },
+  "actual_post_adoption_commands": [
+    [
+      "python3",
+      "tests/hardware/interfaces/test-base-board-interfaces.py"
+    ],
+    [
+      "python3",
+      "docs/research/carrier-insert-fit/verify.py"
+    ],
+    [
+      "python3",
+      "docs/research/carrier-insert-fit/test_guards.py"
+    ],
+    [
+      "python3",
+      "tests/hardware/manufacturing/test-ordered-turret-motor.py"
+    ]
+  ],
+  "post_adoption_toolkit": {
+    "revision": "2ad426943ce2c7232875e105e50810849f9a3e5e",
+    "origin": "immutable Git archive; no distribution install or native CAD"
+  },
+  "prior_local_reader_failure": "Missing cadagent before full survey tests; all15 targets rolled back and verified, then runtime preflighted before retry",
+  "limits": [
+    "No physical fit, slicer, release or powered qualification",
+    "Meshes retain geometry but triangle order differs",
+    "Native pan Boolean comparison timed out and remains incomplete; no symmetric-difference-zero claim",
+    "Lug222 remains FAILED and separate; no whole-PR acceptance"
+  ],
+  "reviewed_gauge_packager_pin": {
+    "file": "tools/evidence/manufacturing/package-survey-fit-job.py",
+    "old": "ad3e52f221104638cf95bd51fcdd2e3defbc972a3a19cd32a8986604308e043c",
+    "new": "00334bdcf80dd59c026ae2916448eac95cb764e8f3b0f0f53c73261c0df0434d",
+    "does_not_claim_slicing_or_new_package": true
+  }
+}

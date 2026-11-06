@@ -3,7 +3,7 @@
 On 2026-10-30, the first retained RS04 coupon slice on Bambu Studio
 02.08.04.57 (snap revision 8) returned exit 0 and `Success.`, estimating 172.43 g,
 65.17 m and 386.611 minutes. The PA6-CF profile declared 275°C and the bed 100°C.
-No printer operation occurred. The [rejected archive](../../research/retained-fit-jobs/rejected-7b67f03.zip)
+No printer operation occurred. The [rejected archive](../../docs/research/retained-fit-jobs/rejected-7b67f03.zip)
 retains the original job, profiles, source mesh, logs and executable G-code.
 
 Command: `timeout --kill-after=10s 300s python tools/package-fit-job.py --out build/rs04-fit-job-7b67f03`

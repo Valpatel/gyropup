@@ -2,7 +2,7 @@
 
 **The editable 29-part candidate now includes a reverse-input barrier and explicit converter startup inhibit. It remains unselected and unqualified: do not fabricate or energize it.** D1/D2 separate negative raw BUS from the LTC4368 input; a TPS3760 UV supervisor drives converter EN. The revised sense network and gate ramp have reproducible conditional startup bounds. The output remains 12 V and the shared head BUS still bypasses this circuit.
 
-Tracking [issue87](https://github.com/Valpatel/gyropup/issues/87) / [PR88](https://github.com/Valpatel/gyropup/pull/88), following [candidate A](https://github.com/Valpatel/gyropup/pull/84) and [input requirements](../../research/protection/carrier-input-protection.md). No catalog selection, carrier geometry or external connector changes here.
+Tracking [issue87](https://github.com/Valpatel/gyropup/issues/87) / [PR88](https://github.com/Valpatel/gyropup/pull/88), following [candidate A](https://github.com/Valpatel/gyropup/pull/84) and [input requirements](../../docs/research/protection/carrier-input-protection.md). No catalog selection, carrier geometry or external connector changes here.
 
 ![PAN candidate B with reverse barrier, active cutoff, current sense and converter enable supervisor](pictures/pan-cutoff.svg)
 

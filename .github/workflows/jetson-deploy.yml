@@ -1,25 +1,25 @@
-# The robot Jetson's deployment (hardware/deploy/jetson): install.sh's dry run, a staged install, idempotence, stable names, LAN
+# The robot Jetson's deployment (software/deploy/jetson): install.sh's dry run, a staged install, idempotence, stable names, LAN
 # mode, shellcheck; the hardware folders' records (hardware/README.md) and the RS-04 inventory. No Jetson is needed.
 name: jetson-deploy
 
 on:
   pull_request:
     paths:
-      - 'hardware/deploy/**'
+      - 'software/deploy/**'
       - 'hardware/**'
-      - 'rig/rs04*.py'
-      - 'rig/tests/test_rs04_inventory.py'
-      - 'rig/tests/test_rs04_vectors.py'
-      - 'rig/tests/test_rs04_bridge.py'
-      - 'tools/check-hardware.py'
-      - 'tools/test_check_hardware.py'
-      - 'firmware/balance/include/**'   # the hardware configs' sourced values
-      - 'firmware/balance/src/**'
+      - 'software/control/rig/rs04*.py'
+      - 'tests/control/rig/test_rs04_inventory.py'
+      - 'tests/control/rig/test_rs04_vectors.py'
+      - 'tests/control/rig/test_rs04_bridge.py'
+      - 'tools/evidence/interfaces/check-hardware.py'
+      - 'tests/hardware/inventory/test_check_hardware.py'
+      - 'software/firmware/balance/include/**'   # the hardware configs' sourced values
+      - 'software/firmware/balance/src/**'
       - 'docs/**'                       # the folders' links point into these
       - 'references/**'
       - 'catalog/**'
-      - 'designer/kit/rs04/**'
-      - 'exports/**'
+      - 'software/site/designer/kit/rs04/**'
+      - 'hardware/exports/**'
       - '.github/workflows/jetson-deploy.yml'
   push:
     branches: [main]
@@ -37,11 +37,11 @@ jobs:
         with:
           python-version: '3.10'   # JetPack 6's Python: the bridge and the checks must run on it
       - name: install.sh (dry run, staged install, idempotence, names, LAN mode, shellcheck)
-        run: python3 hardware/deploy/jetson/test_install.py -v
+        run: python3 software/deploy/jetson/test_install.py -v
       - name: The hardware folders and the RS-04 inventory
         run: |
-          python3 tools/check-hardware.py
-          python3 -m unittest tools/test_check_hardware.py -v
-          python3 -m unittest rig.tests.test_rs04_inventory -v
+          python3 tools/evidence/interfaces/check-hardware.py
+          python3 -m unittest tests/hardware/inventory/test_check_hardware.py -v
+          python3 -m unittest tests.control.rig.test_rs04_inventory -v
       - name: The RS-04 bridge and profiles on JetPack's Python
-        run: python3 -m unittest rig.tests.test_rs04_vectors rig.tests.test_rs04_bridge -v
+        run: python3 -m unittest tests.control.rig.test_rs04_vectors tests.control.rig.test_rs04_bridge -v

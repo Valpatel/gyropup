@@ -1,0 +1,244 @@
+/** Build first. SITE_URL optionally checks the deployed routes instead of a local server. */
+import assert from 'node:assert/strict';
+import { test, before, after } from 'node:test';
+import { readFile, mkdir, mkdtemp, cp, writeFile, rm, stat } from 'node:fs/promises';
+import { spawn, execFileSync } from 'node:child_process';
+import { once } from 'node:events';
+import { createHash } from 'node:crypto';
+import os from 'node:os';
+import path from 'node:path';
+import { parseHTML } from 'linkedom';
+import { marked } from 'marked';
+import { htmlToMarkdown, renderPortal } from '../../../tools/site/site-markdown.mjs';
+import {publicDirectoryForSource,publicForSource,publicationFiles} from '../../../tools/site/source-layout.mjs';
+
+const root = path.resolve(import.meta.dirname, '../../..');
+const out = path.join(root, 'dist');
+const read = file => readFile(path.join(out, file), 'utf8');
+const sha = value => createHash('sha256').update(value).digest('hex');
+const { pages } = JSON.parse(await read('markdown-pages.json'));
+let server;
+let base = process.env.SITE_URL?.replace(/\/$/, '');
+before(async () => {
+  if (base) return;
+  server = spawn(process.execPath, ['tools/site/serve-site.mjs'], { cwd: root, env: { ...process.env, PORT: '0', GYROPUP_PREVIEW_PARENT_PID: String(process.pid) }, stdio: ['ignore', 'pipe', 'inherit'] });
+  const timeout = setTimeout(() => server.kill(), 10_000);
+  try {
+    const [output] = await once(server.stdout, 'data');
+    base = output.toString().match(/http:\/\/127\.0\.0\.1:\d+/)?.[0];
+    assert.ok(base, 'local server must announce its listening address');
+  } finally { clearTimeout(timeout); }
+});
+after(async () => {
+  if (server && server.exitCode === null) { const exited = once(server, 'exit'); server.kill(); await exited; }
+});
+
+test('every public page and agent counterpart includes the research warning', async () => {
+  assert.ok(!pages.some(entry => entry.html === '/web/prototype-notice.html'), 'the injection template is not a standalone page');
+  for (const entry of pages) {
+    const { document } = parseHTML(await read(entry.html));
+    assert.equal(document.querySelectorAll('#prototype-notice-dialog').length, 1, entry.html);
+    assert.equal(document.querySelectorAll('#prototype-notice-footer').length, 1, entry.html);
+    assert.ok(document.querySelector('script[src^="/web/prototype-notice.js"]'), entry.html);
+    const text = await read(entry.markdown);
+    assert.match(text, /will not be offered for sale/, entry.markdown);
+    assert.match(text, /research purposes only/, entry.markdown);
+  }
+});
+
+test('every generated HTML page advertises a current Markdown counterpart', async () => {
+  assert.ok(pages.length > 100);
+  const discovery = await read('llms.txt');
+  for (const entry of pages) {
+    const html = await read(entry.html);
+    const md = await read(entry.markdown);
+    assert.equal(sha(html), entry.htmlSha256, `${entry.html} changed after Markdown generation`);
+    assert.equal(sha(md), entry.markdownSha256, `${entry.markdown} changed after generation`);
+    const { document } = parseHTML(html);
+    assert.equal(document.querySelector('link[rel="alternate"][type="text/markdown"]')?.getAttribute('href'), entry.markdown);
+    assert.ok(discovery.includes('https://gyropup.com' + entry.markdown), entry.markdown);
+    assert.equal(md, htmlToMarkdown(await renderPortal(html, entry.html.slice(1), out), entry.html.slice(1)), entry.markdown);
+    assert.ok(md.length > 100 && !md.includes('<script'), entry.markdown);
+  }
+  assert.ok(!discovery.includes('handoff.md'));
+  assert.ok(!pages.some(p => /(?:AGENTS|CLAUDE|\.agents)/.test(p.markdown)));
+  assert.match(await read('_headers'), /\/\*\.md\n  Content-Type: text\/markdown; charset=utf-8/);
+});
+
+test('public entry guides and directory links resolve while unpublished sources stay excluded', async () => {
+  const discovery = await read('llms.txt');
+  // Simulated tracked candidates exercise the exact map used by copy, docs,
+  // directories and models; this is not a claim that private files were built.
+  const layout=JSON.parse(await readFile(path.join(root,'tools/site/source-layout.json'),'utf8'));
+  const tracked=execFileSync('git',['ls-files','-z'],{cwd:root}).toString().split('\0').filter(Boolean);
+  const baseline=publicationFiles(tracked);
+  assert.ok(baseline.size>1000,'The publication boundary needs real positive inputs');
+  const planted=layout.unpublished.filter(p=>!p.endsWith('.md')).flatMap(home=>
+    ['private-boundary.md','private-boundary.json','private-boundary.stl','nested/private-boundary.md','nested/private-boundary.json','nested/private-boundary.step'].map(file=>home+'/'+file));
+  planted.push(...layout.unpublished.filter(p=>p.endsWith('.md')),'AGENTS.md','CLAUDE.md','docs/AGENTS.md','hardware/CLAUDE.md');
+  const assertBoundary=publish=>{
+    const actual=publish([...tracked,...planted]);
+    assert.deepEqual([...actual],[...baseline],'Unpublished inputs changed the published file set');
+    for(const source of planted)assert.equal(publicForSource(source),null,source);
+    assert.equal(layout.legacyPublicTestFiles.length,5);
+    for(const source of layout.legacyPublicTestFiles){
+      const target=layout.files.find(row=>row.source===source)?.public;
+      assert.ok(target&&actual.get(target)===source,'Keep the intentional public legacy test: '+source);
+    }
+    const sibling='docs/dossier-public-control/probe.md';
+    assert.equal(publish([sibling]).get(sibling),sibling,'A legitimate docs sibling stays eligible');
+  };
+  assertBoundary(publicationFiles);
+  assert.throws(()=>assertBoundary(files=>new Map([...publicationFiles(files),...planted.map(file=>[file,file])])),
+    /Unpublished inputs changed the published file set/,'Bypassing the filter must fail the same boundary assertion');
+  assert.throws(()=>assertBoundary(()=>new Map()),/Unpublished inputs changed the published file set/,'Empty publication cannot satisfy the exclusion proof');
+  for(const [page,destinations] of [
+    ['docs-mechanical-interfaces-md',['/cad/','/exports/fea/']],
+    ['docs-body-firmware-md',['/firmware/balance/','/firmware/balance/hil/']],
+    ['docs-leg-print-package-md',['/research/leg-preprint/sheets/']],
+    ['hardware-actuators-rs04-readme-md',['/hardware/actuators/rs04/profiles/']],
+    ['hardware-readme-md',['/hardware/fuse-board/']],
+    ['research-leg-preprint-readme-md',['/research/leg-preprint/evidence/']],
+  ]){
+    const {document}=parseHTML(await read('site/pages/'+page+'.html'));
+    const links=[...document.querySelectorAll('article a[href]')].map(a=>a.getAttribute('href'));
+    for(const destination of destinations){
+      assert.ok(links.includes(destination),'Preserve the authored public directory link: '+page+' '+destination);
+      assert.ok((await stat(path.join(out,destination,'index.html'))).isFile(),destination);
+    }
+  }
+  assert.equal(publicDirectoryForSource('hardware/cad',new Set(['cad'])),'cad');
+  assert.equal(publicDirectoryForSource('hardware/cad',new Set()),null,'An absent public index cannot qualify the source directory');
+  for(const source of ['hardware/cad-notes','hardware/cad/turret','hardware/vendor','docs/dossier','software/control'])
+    assert.equal(publicDirectoryForSource(source,new Set(['cad','cad/turret',source])),null,source);
+  for (const route of ['/site/pages/docs-readme-md.md', '/site/pages/docs-agent-guide-md.md']) {
+    assert.ok(discovery.indexOf(route) < discovery.indexOf('## All public pages'), route);
+    assert.ok(pages.some(page => page.markdown === route), route);
+    const { document } = parseHTML(await read(route.replace(/\.md$/, '.html')));
+    for (const link of document.querySelectorAll('article a[href]')) {
+      const url = new URL(link.getAttribute('href'), 'https://gyropup.com' + route);
+      if (url.origin !== 'https://gyropup.com') continue;
+      let target = path.join(out, decodeURIComponent(url.pathname));
+      if ((await stat(target)).isDirectory()) target = path.join(target, 'index.html');
+      assert.ok((await stat(target)).isFile(), url.href);
+    }
+  }
+  assert.match(discovery, /will not be offered for sale/);
+  assert.match(discovery, /historical reports and recordings, and physical qualification are separate/);
+  assert.match(discovery, /version\.json/);
+  assert.match(discovery, /markdown-pages\.json/);
+  for (const file of ['AGENTS.md', '.agents', 'CONTRIBUTING.md', '.github/CONTRIBUTING.md', 'docs/handoff.md',
+    'web/index.html', 'web/index.md', 'web/highlights/index.html', 'web/highlights/index.md',
+    'docs/dossier', 'site/pages/docs-dossier-readme-md.html', 'site/pages/docs-dossier-readme-md.md']) {
+    await assert.rejects(stat(path.join(out, file)), { code: 'ENOENT' }, 'Unpublished source or generated index must stay absent: '+file);
+  }
+  const models = JSON.parse(await read('site/models.json')).files;
+  assert.ok(!models.some(model => model.path === '/docs/dossier' || model.path.startsWith('/docs/dossier/')),
+    'Unpublished dossier inputs never become model downloads');
+  const { document } = parseHTML(await read('site/pages/docs-turret-sections-md.html'));
+  const sourceLinks = [...document.querySelectorAll('article a[href]')].map(link => link.getAttribute('href'));
+  for (const target of ['docs/dossier', 'docs/dossier/project.yaml']) {
+    assert.ok(sourceLinks.includes('https://github.com/Valpatel/gyropup/blob/main/' + target), target);
+    assert.ok(!sourceLinks.some(href => {
+      const url = new URL(href, 'https://gyropup.com/site/pages/docs-turret-sections-md.html');
+      return url.origin === 'https://gyropup.com' && (url.pathname === '/' + target || url.pathname.startsWith('/' + target + '/'));
+    }), 'The source guide must not offer an unpublished site route: ' + target);
+  }
+});
+
+test('progress and build expose their data, tables, prices, and original downloads', async () => {
+  const progress = JSON.parse(await read('docs/progress.json'));
+  const md = await read('designer/progress.md');
+  for (const status of progress.status) {
+    assert.ok(md.includes(status.title), status.title);
+    assert.ok(md.includes(status.value), status.value);
+  }
+  assert.ok(md.includes(progress.updated));
+  for(const entry of progress.log)assert.ok(md.includes(entry.title),'Collapsed history remains agent-readable: '+entry.title);
+  assert.ok(md.includes(progress.focus));
+  assert.match(md, /\|.*scenario/i);
+  assert.match(md, /Watch the deformation animation/);
+  assert.match(md, /WebM alternative/);
+  assert.match(md, /static load scaling, not elapsed physical time/i);
+  assert.match(md, /does not validate the 100 lb design target/);
+  assert.match(md, /Recorded leg simulation · 18\.75 kg · 36 V/);
+  assert.match(md, /e7b512870a39259a04a4930e2908af84001bc84e/);
+  assert.ok(!md.includes('blob:'), 'Markdown retains original movie downloads');
+  const build = await read('designer/build.md');
+  assert.ok(!build.includes('Reading the parts lists'));
+  const { document } = parseHTML(await renderPortal(await read('designer/build.html'), 'designer/build.html', out));
+  const total = document.querySelector('#grand-usd').textContent.trim();
+  assert.ok(build.includes(total), 'order total must match the browser renderer');
+  assert.match(build, /\|.*Supplier part number/i);
+  const tables = marked.lexer(build).filter(token => token.type === 'table');
+  const orders = tables.find(table => table.header.some(cell => cell.text === 'Supplier part number'));
+  assert.ok(orders?.rows.length > 1, 'order records remain parseable Markdown table rows');
+  assert.equal(orders.header.length, 7, 'all order columns remain associated with their values');
+  assert.ok(!tables.some(table => table.rows.some(row => row.length !== table.header.length)));
+  assert.match(build, /https:\/\/gyropup.com\/exports\/leg\/bom.json/);
+  assert.match(build, /https:\/\/gyropup.com\/exports\/[^)]+\.stl/);
+  assert.match(build, /Preview 3D/);
+  assert.match(build, /file-viewer\.html\?file=/);
+});
+
+test('a changed published status changes Markdown; local unpublished data is never read', async () => {
+  const fixture = await mkdtemp(path.join(os.tmpdir(), 'gyropup-markdown-'));
+  try {
+    await mkdir(path.join(fixture, 'designer'), { recursive: true });
+    await mkdir(path.join(fixture, 'docs'), { recursive: true });
+    await mkdir(path.join(fixture,'site'));await writeFile(path.join(fixture,'site/models.json'),JSON.stringify({files:[]}));
+    await cp(path.join(out, 'designer/progress.js'), path.join(fixture, 'designer/progress.js'));
+    await cp(path.join(out, 'designer/rig-media.js'), path.join(fixture, 'designer/rig-media.js'));
+    await mkdir(path.join(fixture,'designer/kit'),{recursive:true});
+    await cp(path.join(out,'designer/kit/portal-data.js'),path.join(fixture,'designer/kit/portal-data.js'));
+    await cp(path.join(out,'designer/kit/study-media.js'),path.join(fixture,'designer/kit/study-media.js'));
+    const source = await read('designer/progress.html');
+    const data = { updated: 'fixture-revision', status: [{ title: 'Published sentinel', value: 'Changed current data', note: 'Only this bundle is visible.' }], log: [] };
+    await writeFile(path.join(fixture, 'docs/progress.json'), JSON.stringify(data));
+    const markdown = htmlToMarkdown(await renderPortal(source, 'designer/progress.html', fixture), 'designer/progress.html');
+    assert.ok(markdown.includes('Published sentinel'));
+    assert.ok(markdown.includes('Changed current data'));
+    assert.ok(!markdown.includes('bench tests next'), 'must not fall back to the checkout data');
+    await mkdir(path.join(fixture,'exports/leg'),{recursive:true});
+    const rig = JSON.parse(await read('exports/leg/rig-results.json'));
+    rig.half_mass_kg = 20;
+    await writeFile(path.join(fixture,'exports/leg/rig-results.json'),JSON.stringify(rig));
+    await cp(path.join(out,'exports/leg/rig-media.json'),path.join(fixture,'exports/leg/rig-media.json'));
+    const stale = htmlToMarkdown(await renderPortal(source,'designer/progress.html',fixture),'designer/progress.html');
+    assert.match(stale,/Recorded movies belong to a different report/);
+    assert.ok(!stale.includes('Original movie'), 'mismatched recording must not become a Markdown download gallery');
+    assert.match(stale,/20 kg/, 'numerical results survive an unavailable movie gallery');
+    await rm(path.join(fixture,'exports/leg/rig-results.json'));
+    await rm(path.join(fixture,'exports/leg/rig-media.json'));
+    await writeFile(path.join(fixture,'exports/leg/leg.json'),'<html>Not a report</html>');
+    await assert.rejects(renderPortal(source,'designer/progress.html',fixture),/Incomplete Markdown data snapshot/);
+    await rm(path.join(fixture,'exports/leg/leg.json'));
+    // Missing required status must fail the build instead of publishing a blank portal.
+    await rm(path.join(fixture, 'docs/progress.json'));
+    await assert.rejects(renderPortal(source, 'designer/progress.html', fixture), /Empty Markdown data snapshot/);
+  } finally { await rm(fixture, { recursive: true, force: true }); }
+});
+
+test('Markdown routes have the right MIME types and preserve HTML, downloads, HEAD, and real 404s', async () => {
+  for (const route of ['/index.md', '/designer/progress.md', '/designer/build.md', '/designer/sim.md', '/site/index.md', '/site/pages/docs-leg-prototype-plan-md.md']) {
+    const response = await fetch(base + route);
+    assert.equal(response.status, 200, route);
+    assert.match(response.headers.get('content-type'), /^text\/markdown\b/, route);
+    assert.ok((await response.text()).includes('[HTML view]'), route);
+    const head = await fetch(base + route, { method: 'HEAD' });
+    assert.equal(head.status, 200, route);
+    assert.equal(await head.text(), '');
+  }
+  const llms = await fetch(base + '/llms.txt');
+  assert.match(llms.headers.get('content-type'), /^text\/plain\b/);
+  assert.ok((await llms.text()).includes('/designer/progress.md'));
+  const html = await fetch(base + '/');
+  assert.match(html.headers.get('content-type'), /^text\/html\b/);
+  const download = await fetch(base + '/exports/leg/leg_stand.step');
+  assert.equal(download.status, 200);
+  assert.ok((await download.text()).startsWith('ISO-10303-21;'));
+  for (const route of ['/not-a-gyropup-page.md', '/not-a-gyropup-file.json']) {
+    const response = await fetch(base + route, { headers: { Accept: 'text/markdown' } });
+    assert.equal(response.status, 404, route);
+  }
+});

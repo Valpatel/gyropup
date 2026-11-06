@@ -1,0 +1,19 @@
+{
+  "baseline": "a70764475dbe0312c8c2fdf18cd8cea877e1ff24",
+  "candidate": "4aba2832a66b91797f73ba80555328c15d0fb6f3",
+  "groups": {
+    "generated_exports": {
+      "mapped_files": 1459,
+      "exact_git_blob_identity": true
+    },
+    "catalog_and_design_inputs": {
+      "mapped_files": 19,
+      "exact_git_blob_identity": true
+    },
+    "supplier_source_records": {
+      "mapped_files": 112,
+      "exact_git_blob_identity": true
+    }
+  },
+  "scope": "Exact tracked blob identity at this source-only checkpoint; source-bound freshness and engineering qualification are separate. No generated receipt updated."
+}

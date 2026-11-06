@@ -2,48 +2,49 @@
 __pycache__/
 *.pyc
 node_modules
-exports/*.log
+hardware/exports/*.log
 runs/
-!exports/rig/runs/
-site/
+!hardware/exports/rig/runs/
+/site/
 preview/site-url.txt
 build/
-exports/sim/
-exports/mjcf/
-exports/links/local/
+hardware/exports/sim/
+hardware/exports/mjcf/
+hardware/exports/links/local/
 
 # vendor CAD has no licence to redistribute: keep it local, track only where it came from
-references/vendor/**
-!references/vendor/**/
-!references/vendor/**/SOURCE.txt
+hardware/vendor/**
+!hardware/vendor/**/
+!hardware/vendor/**/SOURCE.txt
 
 # optimiser trials (tools/iterate.py)
 work/
-exports/iterate/
-exports/turret/*.step
-exports/turret/*.stl
+hardware/exports/iterate/
+hardware/exports/turret/*.step
+hardware/exports/turret/*.stl
 
 # meshes the rig simulation writes for its videos
-exports/leg/rig_meshes/
+hardware/exports/leg/rig_meshes/
 
 # the spring study's every-step results (48 MB): rebuilt by sim/leg_spring_study.py
-exports/leg/springs/results*.json
+hardware/exports/leg/springs/results*.json
 
 # the body's assembly STEP (12 MB, rebuilt by cad/build_body.py) and the FEA viewer files (3 MB each)
-exports/body/body_stand.step
-exports/body/fea/*.json
-!exports/body/fea/summary.json
+hardware/exports/body/body_stand.step
+hardware/exports/body/fea/*.json
+!hardware/exports/body/fea/summary.json
 
 # B10: the J501 project's parameters, vendored on purpose (our own project; cad/body_params.py --snapshot-j501)
-!references/vendor/j501/*.json
+!hardware/vendor/j501/SOURCE.json
+!hardware/vendor/j501/parameters-0.9-g48r.json
 # the whole rig as one STEP (5.8 MB): rebuilt by cad/build_rig.py
-exports/rig/rig_300.step
+hardware/exports/rig/rig_300.step
 
 # The local preview and Cloudflare Pages use the same generated bundle.
 dist/
 .wrangler/
 test-results/
 # Public browser simulation snapshot; no RL policies or private run directories.
-!exports/sim/
-!exports/sim/**
+!hardware/exports/sim/
+!hardware/exports/sim/**
 /.cadagent-cache/

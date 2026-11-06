@@ -31,7 +31,7 @@ class InventoryTests(unittest.TestCase):
         for kind in ('source','dimension'):
             with self.subTest(kind=kind):
                 d=copy.deepcopy(self.inventory)
-                if kind=='source':d['source_sha256']['cad/turret_boards.py']='0'*64
+                if kind=='source':d['source_sha256']['hardware/cad/turret/turret_boards.py']='0'*64
                 else:d['rows'][0]['maximum_envelope']['maximum_body_mm'][2]=0
                 with self.assertRaises(ValueError):C.validate_inventory(d)
 

@@ -1,0 +1,13 @@
+{
+  "producer_source": "b6b6b3f376285b083892d38daff90214304fb54b",
+  "fresh_original_closure_files": 22,
+  "closure_exact_before_adoption": true,
+  "adopted": "hardware/carrier-pan-protection/reports/receipt.json",
+  "sha256": "9337005e32f613cde0d010dd34105dcee0ea7df6d64aad1ee21109a8074c62e5",
+  "changed_binding_keys": [
+    "README.md",
+    "fault-review.md"
+  ],
+  "review": "https://github.com/Valpatel/gyropup/pull/238#issuecomment-6684706031",
+  "scope": "genuine native source/artifact binding only; no electrical/physical qualification"
+}

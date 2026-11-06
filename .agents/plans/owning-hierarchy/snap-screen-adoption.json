@@ -1,0 +1,32 @@
+{
+  "producer_source": "11514f3d17f71ee2ec0b619d79fdb9d07347bb5c",
+  "fresh_original_closure_files": 40,
+  "archive_sha256": "55198f4e333a57a9ce8a69ef248a38add7a21cb76e69eedc2c7d0a78b3ac345d",
+  "review": "https://github.com/Valpatel/gyropup/pull/238#issuecomment-6686582412",
+  "adopted_only": {
+    "docs/research/snap-fits/snaps.yaml": {
+      "bytes": 1808,
+      "sha256": "37913323711bcc8fd1393aa30203a7b128ee5827fa4e9d6b345f4e47f4c610f1"
+    },
+    "docs/research/snap-fits/summary.json": {
+      "bytes": 20503,
+      "sha256": "e41422fda6daf9ea5ba652e0577ae9e17ef9ddc8954c721120f4097b1f0e1f84"
+    },
+    "docs/research/leg-preprint/screen.json": {
+      "bytes": 49455,
+      "sha256": "8f488f4c9ecc7846e64eb9329d04961b0c80d2027ed24da2a0b98fe02285e6fe"
+    },
+    "docs/research/leg-preprint/screen.md": {
+      "bytes": 26204,
+      "sha256": "23b2f1c639c952a021ec89d9ee9f9c9e27bb530689a360a7acddc4a7d651846a"
+    },
+    "docs/legs/leg-print-package.md": {
+      "bytes": 21923,
+      "sha256": "00880d161294f80e31e1f5bb622af1a381956fcb72e1b10569fb9c33d958f308"
+    }
+  },
+  "unchanged_original_members": 35,
+  "unchanged_pinned_snapfit_and_measurement_CSVs": true,
+  "collection_receipt_adoption_pass_remains_false": true,
+  "scope": "genuine source/formula/path binding; all numerical values/status/assumptions and physical unknowns retained; no CAD/FEA/physical qualification"
+}

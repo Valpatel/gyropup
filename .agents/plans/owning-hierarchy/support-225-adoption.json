@@ -1,0 +1,109 @@
+{
+  "job": 225,
+  "alias": "cpu-c",
+  "source": "f07565ecc7369c5734e2dd8a1b1319601ec9ffbd",
+  "status": "PASS_SCOPED",
+  "independent_artifact_adoption_review": "https://github.com/Valpatel/gyropup/pull/238#issuecomment-6689033913",
+  "archive": {
+    "sha256": "bc65b043fb002352b86477c41e688cf395dca84faeba664b3b904235b93d7a3a",
+    "files": 9
+  },
+  "fresh_geometry_members": 92,
+  "fresh_context": {
+    "docs/research/rs04-support/probe.py": "08e5d3574d58afcc835b4b57d8fc97d322223d1c0b02ce7f8d0e0a217d974b58",
+    "docs/research/rs04-support/README.md": "803fd31a9f53307dd97ef434fb59a987a47501f2de18ed8a8d41ced5f560f0f3",
+    "hardware/exports/leg/rs04-mounting-fit/checks.json": "9f01cea13904f9b892b9e13629ea0f1cbd70b018ae3fd3434af3ecd5b1522fe7"
+  },
+  "fresh_original_nine": {
+    "od118-id80-t2.032.step": {
+      "bytes": 69686,
+      "sha256": "c3fe5f8d799baaa9f281eaaf0799a0717ad7fcd933cdb67d6f72f8e9d41e64db"
+    },
+    "od118-id80-t3.175.step": {
+      "bytes": 69686,
+      "sha256": "1c33b5cfc998c1196d6c90ac2ee4eb678430f8f772a81b314665106030bd90a9"
+    },
+    "od118-id94-t2.032.step": {
+      "bytes": 69686,
+      "sha256": "2f1140daf5aa80b44164d46fa2a77f8abb6318cff9985db8f650f2987cbe3629"
+    },
+    "od118-id94-t3.175.step": {
+      "bytes": 69686,
+      "sha256": "7d9be47584db8735f4dc3ce391721af56eea6a7a1736234558f342fb6bf34309"
+    },
+    "od120-id80-t2.032.step": {
+      "bytes": 69690,
+      "sha256": "147014395fb5f79c1a4f045c552bf882f6c1f3f94694e3e446524a55ec13f231"
+    },
+    "od120-id80-t3.175.step": {
+      "bytes": 69690,
+      "sha256": "bbc7d93ee6bed7e34ae7f928986f590d23f4be17525b4e1527c51963bcb087bf"
+    },
+    "od120-id94-t2.032.step": {
+      "bytes": 69690,
+      "sha256": "351636c6541f1e5f97d273de23934702e8551a2c7af9b91f947096cde572e2b8"
+    },
+    "od120-id94-t3.175.step": {
+      "bytes": 69690,
+      "sha256": "f100fac74aa6f63b7c4f2bd69954a9f50e57776f528a92dbd62ca2cd652d7cde"
+    },
+    "probe.json": {
+      "bytes": 336665,
+      "sha256": "437341b8d7d0b935821497510fbcf51e1a8e10677cafc334afe6ee14fb05341d"
+    }
+  },
+  "adopted": {
+    "docs/research/rs04-support/results/od118-id80-t2.032.step": {
+      "bytes": 69686,
+      "sha256": "8de83455edb00dce94e53fd4e5b69b3cc532ef7e83c95953ccde49ceb3170792"
+    },
+    "docs/research/rs04-support/results/od118-id80-t3.175.step": {
+      "bytes": 69686,
+      "sha256": "239e3b9133aff90e6dd023abb14e9c4b586bdc11bcb9524b9591958f4f9d0a93"
+    },
+    "docs/research/rs04-support/results/od118-id94-t2.032.step": {
+      "bytes": 69686,
+      "sha256": "30e13be3be830ea0deb21ab28708180cb7c7b73fd41901d3f2529f347c96bd38"
+    },
+    "docs/research/rs04-support/results/od118-id94-t3.175.step": {
+      "bytes": 69686,
+      "sha256": "314a5e87b4f8ac3308bdc75810cc5937c466a72d451ffba93ac21f3ed60f30b0"
+    },
+    "docs/research/rs04-support/results/od120-id80-t2.032.step": {
+      "bytes": 69690,
+      "sha256": "762aa05aa2dc5374aaac63ee58b0d8a6254f2e5b02b781bc83c8443193f6a262"
+    },
+    "docs/research/rs04-support/results/od120-id80-t3.175.step": {
+      "bytes": 69690,
+      "sha256": "70736e854a7ff6b5c8ba1ba221798fd54b2a7eb01c79c6aabb5f40995b011aa6"
+    },
+    "docs/research/rs04-support/results/od120-id94-t2.032.step": {
+      "bytes": 69690,
+      "sha256": "a6ca7858753ce7a3c572d31dd153bbb3399c7f640eebadfdf4a28f4dcd16f72a"
+    },
+    "docs/research/rs04-support/results/od120-id94-t3.175.step": {
+      "bytes": 69690,
+      "sha256": "4aa16c742eab18a523b7205d5c6d9823d8edc7d65d96ad2d1cd578d101cb264a"
+    },
+    "docs/research/rs04-support/results/probe.json": {
+      "bytes": 339889,
+      "sha256": "dea769e63b1ba5b59a64157f15b3ebf5b0d415fb58c186b74594ae9435b46f82"
+    }
+  },
+  "post_adoption_actual_command": [
+    "python3",
+    "tests/hardware/interfaces/test-rs04-support-probe.py"
+  ],
+  "flags": {
+    "engineering_pass": false,
+    "physical_fit_verified": false,
+    "structural_qualification": false,
+    "fabrication_release": false
+  },
+  "limits": [
+    "Existing vendor/authored/plate inventory pins remain unchanged",
+    "All eight ring geometry/shape/contact/relation/stack fields strict equal historical results; only genuineSTEP digest and timing differ",
+    "No mounting/strength/physical/manufacturing qualification; eight lug failures remain visible",
+    "Whole hierarchy currentCI and publication remain separate"
+  ]
+}

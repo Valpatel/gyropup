@@ -1,0 +1,15 @@
+{
+  "producer_source": "032c01ed0c166b60663322abbc440e5c98bb1903",
+  "fresh_original_closure_files": 39,
+  "closure_exact_before_adoption": true,
+  "outputs": {
+    "joints.json": "7705635df81ff0932fd4932e576f6004ded467c62ba0955fbe9ebfe93d0d8983",
+    "joints.md": "3c0aee14265fe0d587b76e7906d4a039d0b04b2733742f00d354814b9a0c85d5",
+    "phase2.json": "6b93379f8ea667e190981ec025353eb9e1481f3f14868295f314c7ba246eb864",
+    "phase2.md": "05e7cd65b585e64aa0467fd4787192af9e9320f539acbc427fbc5d459e4b56a5"
+  },
+  "archive_sha256": "7cf1e163247a4c8df2c78145b74c7c6016aa61a26523bdadda0fabf87376927b",
+  "review": "https://github.com/Valpatel/gyropup/pull/238#issuecomment-6685465413",
+  "collection_receipt_unchanged_adoption_pass": false,
+  "scope": "genuine formula/source-binding replay only; retained disagreements/skipped engineering cases and physical hypotheses unchanged"
+}

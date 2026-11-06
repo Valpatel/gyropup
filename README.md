@@ -14,9 +14,20 @@
 [<img class="repo-badge" src="https://img.shields.io/github/stars/Valpatel/gyropup?style=flat&amp;logo=github" alt="Stars" width="71" height="20" style="width:71px;height:20px;object-fit:contain;padding:0;border-radius:0">](https://github.com/Valpatel/gyropup/stargazers)
 [<img class="repo-badge" src="https://img.shields.io/badge/PRs-welcome-ec4899" alt="PRs welcome" width="90" height="20" style="width:90px;height:20px;object-fit:contain;padding:0;border-radius:0">](.github/CONTRIBUTING.md)
 
-[Website & playground](https://gyropup.com) · [Documentation map](docs/README.md) · [Prototype warning](docs/prototype-safety.md) · [Contributing](.github/CONTRIBUTING.md)
+[Website & playground](https://gyropup.com) · [Documentation map](docs/README.md) · [Prototype warning](docs/guide/prototype-safety.md) · [Contributing](.github/CONTRIBUTING.md)
 
-<sub>The banner is drawn from the project's own CadQuery code (<code>cad/build_leg.py</code>, <code>cad/turret.py</code>, <code>cad/turret_stand.py</code>) with hidden lines removed, set as the project's own <code>tools/readme_hero.py</code> sets it, by the <a href="https://github.com/mvalancy/mvalancy/tree/9a878ce602d8a5256027c9f4367d2ae5ea4784da/tools/hero">README banner generator</a>.</sub>
+<sub>Project artwork generated from Gyropup CAD · <a href="https://github.com/mvalancy/mvalancy/tree/9a878ce602d8a5256027c9f4367d2ae5ea4784da/tools/hero">generator credit</a></sub>
+
+<details>
+<summary>How the banner was made</summary>
+
+The original banner used the project's CadQuery code at `cad/build_leg.py`, `cad/turret.py` and
+`cad/turret_stand.py`, with hidden lines removed and placement from `tools/readme_hero.py`.
+Their current homes are [leg building](hardware/cad/builders/build_leg.py),
+[turret CAD](hardware/cad/turret/turret.py), [stand CAD](hardware/cad/turret/turret_stand.py) and
+[artwork generation](tools/engineering/robot/readme_hero.py). The artwork retains its original design context.
+
+</details>
 
 </div>
 
@@ -32,31 +43,35 @@ hub-motor wheels, two five-bar legs driven by RobStride RS-04 actuators, and a p
 balls. CAD, simulation, component libraries and evidence are developed in the open. The playground runs in your browser.
 
 **Physical progress, owner report 2026-11-05:** first motors in hand; main motor holder and motor adapter printed.
-[The dated record](docs/physical-progress.md) keeps received/printed status separate from measured fit, installation
+[The dated record](docs/program/physical-progress.md) keeps received/printed status separate from measured fit, installation
 and testing. No assembled robot or full print release is recorded.
 
 **Gyropup prototypes are unsafe, are for research purposes only, and will not be offered for sale.**
-Read the [prototype warning](docs/prototype-safety.md).
+Read the [prototype warning](docs/guide/prototype-safety.md).
 
 ## Follow the build
 
-1. [One leg on its test rig](docs/motor-day.md): motor-day preparation, fit observations and bench evidence.
-2. [The turret on a bench base](docs/turret-prototype-plan.md): mechanisms, parts and qualification work.
-3. [The body around two legs](docs/body-plan.md): compute, power, structure and integration.
+1. [One leg on its test rig](docs/legs/motor-day.md): motor-day preparation, fit observations and bench evidence.
+2. [The turret on a bench base](docs/turret/turret-prototype-plan.md): mechanisms, parts and qualification work.
+3. [The body around two legs](docs/body/body-plan.md): compute, power, structure and integration.
 
 [Progress and reports](https://gyropup.com/designer/progress.html) show published evidence;
 [program #31](https://github.com/Valpatel/gyropup/issues/31) holds current priorities and remaining work.
 Historical reports retain their own geometry, loads and limitations. The
-[weight record](docs/design-weight-budget.md) distinguishes design estimates from tested loads and the 100 lb ceiling.
+[weight record](docs/architecture/design-weight-budget.md) distinguishes design estimates from tested loads and the 100 lb ceiling.
 
 ## Work with the repository
 
+[Hardware](hardware/README.md) holds physical design and evidence; [software](software/README.md) holds firmware,
+control, simulation and the website. [Tools](tools/README.md), [tests](tests/README.md) and [docs](docs/README.md)
+have their own short maps.
+
 Start with [CONTRIBUTING.md](.github/CONTRIBUTING.md) and the [documentation map](docs/README.md).
 Run the same website locally with `nvm use && npm ci && npm run dev`.
-[Website development and deployment](docs/site-deployment.md) explains checks, previews and publishing.
-Agents can use the [public reading guide](docs/agent-guide.md) and [llms.txt](https://gyropup.com/llms.txt).
+[Website development and deployment](docs/software/site-deployment.md) explains checks, previews and publishing.
+Agents can use the [public reading guide](docs/guide/agent-guide.md) and [llms.txt](https://gyropup.com/llms.txt).
 
 ## Licence
 
 [MIT](LICENSE) covers repository code, CAD sources, generated models, docs and data. Vendor CAD is excluded;
-`references/vendor/**/SOURCE.txt` records sources. Product names and trademarks belong to their owners.
+`hardware/vendor/**/SOURCE.txt` records sources. Product names and trademarks belong to their owners.

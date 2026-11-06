@@ -1,6 +1,6 @@
 # Mechanical release coherence
 
-Review entry point: [mechanical readiness](../../docs/mechanical-readiness.md). Keep CAD source, selected hardware, installed instances, public meshes, print files and instructions bound to one explicit configuration. Imported reports remain historical until the affected geometry and gates are rebuilt on that configuration.
+Review entry point: [mechanical readiness](../../docs/architecture/mechanical-readiness.md). Keep CAD source, selected hardware, installed instances, public meshes, print files and instructions bound to one explicit configuration. Imported reports remain historical until the affected geometry and gates are rebuilt on that configuration.
 
 `cad-agent check` reads existing reports; it is not a CAD rebuild. Run the appropriate geometry build and affected gates on the committed candidate, record source/toolkit/input/output hashes, and inspect the evidence. Keep visual completeness, assembly/clearance, fabrication readiness and physical acceptance separate. A valid solid, a successful render or an unchanged bearing boundary does not establish the other outcomes.
 

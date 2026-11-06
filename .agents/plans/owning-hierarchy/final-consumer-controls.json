@@ -1,0 +1,70 @@
+{
+  "old_date_test": {
+    "exit": 1,
+    "actual_expected_source_date_mismatch": true
+  },
+  "mapped_date_test": {
+    "exit": 0,
+    "source_sha256": "c63b32ab3603c7b6c6f0cd232c1832ee39bca91b428e1eb739cf499d02af207f"
+  },
+  "publication_map_boundary_and_real_routes": {
+    "exit": 0,
+    "source_sha256": "7bd1b6e5d2001e3a529b6b33f0a7a20ce700a5c336805f835674a2af2a2eee5c",
+    "includes_bypass_and_empty_mutants": true
+  },
+  "product_source": "f07565ecc7369c5734e2dd8a1b1319601ec9ffbd",
+  "actual_site_archive_sha256": "4044b4e292d7f5c2dbb908cd8f449c8cd60fee21da9455a291b5d1c17470f615",
+  "no_rebuild": true,
+  "owned_worktree_listener_links_removed": true,
+  "date_lookup_correction": "Independent Git expectation now resolves each public record to its actual source path; date/commit/time and source coverage assertions remain unchanged.",
+  "publication_boundary_scope": "Actual publicationFiles on direct/nested simulated tracked MD/JSON/model paths in every excluded home, plus real normal-build inventory and routes; no planted-file build claimed.",
+  "dowel_physical_source_paths": {
+    "old_exit": 1,
+    "corrected_exit": 0,
+    "actual_tests": 3,
+    "expected_failures_retained": 1,
+    "scope": "Only four actual source-file paths changed to hardware/exports; all geometric measurements/assertions and expected failure remain unchanged.",
+    "outside_geometry92_and_media191": true
+  },
+  "thermal_generator_links": {
+    "actual_old_render_mismatch": true,
+    "corrected_actual_render_byte_equal_to_canonical_page": true,
+    "existing_tests": 23,
+    "skips_retained": 1,
+    "exit": 0,
+    "scope": "Only two emitted href strings changed to ../body/; regeneration equality and all numerical assertions remain unchanged.",
+    "outside_geometry92_and_media191": true
+  },
+  "relocated_backlog_readers": {
+    "old_wall_reader_fails_missing_path": true,
+    "current_wall_baseline_pages": 5,
+    "exact_legacy_git_baseline_fallback": true,
+    "new_wall_and_growth_mutants_rejected": true,
+    "privacy_current_and_legacy_baselines_nonnull": true,
+    "existing_privacy_growth_and_override_tests_pass": 2,
+    "thresholds_backlog_bytes_and_findings_unchanged": true
+  },
+  "attachment_source_relocation": {
+    "existing_tests_pass": 4,
+    "immutable_baseline": "949b73c2fe589a52527ff43d65f953d3e40110e1",
+    "scope": "Both original CAD source pins remain exact immutable-baseline hashes; entire current source bytes must equal only enumerated relocation edits. Other 18 current source/mesh pins and geometric assertions remain unchanged.",
+    "manifest_source_revision_limit": "The retained source_revision predates subsequent source-pin updates; no assertion that its fivebar blob matches the pin.",
+    "geometry_constant_mutant_rejected": true,
+    "missing_current_valid_old_rejected": true,
+    "changed_manifest_digest_rejected": true,
+    "manifest_fixture_meshes_not_modified": true
+  },
+  "recorded_activity_model_readiness": {
+    "old_control_status": "PASS_REPRODUCED_READINESS_RACE",
+    "old_control_script_sha256": "243d62286f35423aa06f557750c7d54a74a1f240d00a9be0bfed7cef15387ae5",
+    "corrected_control_status": "PASS_ACTUAL_NEW_MODEL_HELPER",
+    "actual_model_helper_sha256": "f9e0fc640626f7c610b8a1aebcb1f7defe0b036ae4d9d27bec5d6742aa080605",
+    "source_equals_served": true,
+    "sim_source_sha256": "5042c0347f73092ce308beaf8fb7b1cb6c5e6b5183c066e05ca7c1de629ed591",
+    "scope": "Actual model helper stays pending while the exact summary request is held; resolves only after matching model drive and targets options; actual targets replay then starts. Replay assertions, application source and timeouts unchanged.",
+    "page_errors": 0,
+    "request_failures": 0,
+    "owned_resources_closed": true,
+    "unknown_original_ci_case_retained": true
+  }
+}

@@ -12,7 +12,7 @@ flowchart LR
 ## References
 
 - The D400 series datasheet (337029-017, March 2026) and RealSense's SolidWorks part, kept locally only:
-  [references/vendor/realsense-d435/SOURCE.txt](../../../references/vendor/realsense-d435/SOURCE.txt).
+  [references/vendor/realsense-d435/SOURCE.txt](../../vendor/realsense-d435/SOURCE.txt).
 - librealsense (Apache 2.0), RealSense's SDK: [github.com/IntelRealSense/librealsense](https://github.com/IntelRealSense/librealsense), not vendored.
 - Specs and mounting: `catalog/sensors_compute.json` (`realsense-d435`).
 

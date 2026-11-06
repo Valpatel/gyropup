@@ -1,0 +1,72 @@
+# The turret lids' snap fits (#131 wave 1). Generated from hardware/cad/turret/turret_snaps.py, the constants hardware/cad/turret/turret.py
+# builds the latches from: do not edit; run python3 docs/research/snap-fits/snaps.py --cad-agent PATH.
+#   cad-agent snapfit docs/research/snap-fits/snaps.yaml --output docs/research/snap-fits/snapfit.json
+snaps:
+  - name: hopper_lid-latch-mu-low
+    material: petg-bambu-basic
+    process: fdm
+    orientation: along
+    repeated: true
+    design: 1
+    length_mm: 26.0
+    undercut_mm: 1.0
+    section:
+      rect:
+        width_mm: 24.0
+        thickness_mm: 2.0
+    root_radius_mm: 1.2
+    lead_deg: 30.0
+    return_deg: 30.0
+    friction: 0.35
+    min_retention_n: 4.3233
+  - name: hopper_lid-latch-mu-high
+    material: petg-bambu-basic
+    process: fdm
+    orientation: along
+    repeated: true
+    design: 1
+    length_mm: 26.0
+    undercut_mm: 1.0
+    section:
+      rect:
+        width_mm: 24.0
+        thickness_mm: 2.0
+    root_radius_mm: 1.2
+    lead_deg: 30.0
+    return_deg: 30.0
+    friction: 0.6
+    max_mating_n: 16.6667
+  - name: board_bay_lid-latch-mu-low
+    material: petg-bambu-basic
+    process: fdm
+    orientation: along
+    repeated: true
+    design: 1
+    length_mm: 32.5
+    undercut_mm: 1.0
+    section:
+      rect:
+        width_mm: 12.5
+        thickness_mm: 3.0
+    root_radius_mm: 1.8
+    lead_deg: 30.0
+    return_deg: 30.0
+    friction: 0.35
+    min_retention_n: 2.5604
+  - name: board_bay_lid-latch-mu-high
+    material: petg-bambu-basic
+    process: fdm
+    orientation: along
+    repeated: true
+    design: 1
+    length_mm: 32.5
+    undercut_mm: 1.0
+    section:
+      rect:
+        width_mm: 12.5
+        thickness_mm: 3.0
+    root_radius_mm: 1.8
+    lead_deg: 30.0
+    return_deg: 30.0
+    friction: 0.6
+    max_mating_n: 25.0

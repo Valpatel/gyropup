@@ -1,7 +1,7 @@
 # VectorNav VN-100 Rugged IMU
 
 The balance loop's pitch and pitch rate: the IMU on the balance MCU's USART1, read at 800 Hz in VectorNav's binary
-format ([D6](../../../docs/decisions.yaml)). **The owner's own unit** (`docs/body-plan.md`, `docs/cad-plan.md`): not
+format ([D6](../../../docs/program/decisions.yaml)). **The owner's own unit** (`docs/body-plan.md`, `docs/cad-plan.md`): not
 bought for the project and not yet on the bench.
 
 ```mermaid
@@ -15,7 +15,7 @@ flowchart LR
 
 - The VN-100 Rugged STEP and its mechanical drawing VN-100-CR-ASM rev 7.0.0, kept locally only (proprietary notice,
   no redistribution): where from and when in
-  [references/vendor/vectornav-vn-100-rugged/SOURCE.txt](../../../references/vendor/vectornav-vn-100-rugged/SOURCE.txt).
+  [references/vendor/vectornav-vn-100-rugged/SOURCE.txt](../../vendor/vectornav-vn-100-rugged/SOURCE.txt).
 - The user manual and the register reference: VectorNav's site ([vectornav.com](https://www.vectornav.com/)), not kept.
 - Dimensions, mounting and connector: `catalog/power_electronics.json` (`vectornav-vn-100-rugged`).
 
@@ -31,7 +31,7 @@ output off, binary output on register 75, 921600 baud), each checked against `fi
 
 ## Driver
 
-[`firmware/balance/src/core/gp_vn100.c`](../../../firmware/balance/src/core/gp_vn100.c) parses the 30-byte binary
+[`firmware/balance/src/core/gp_vn100.c`](../../../software/firmware/balance/src/core/gp_vn100.c) parses the 30-byte binary
 packet and checks its CRC (`include/gp/gp_vn100.h`); `src/mcu/board.c` sends the register writes and runs the UART
 on DMA.
 
@@ -41,7 +41,7 @@ on DMA.
 
 ## Bring-up and tests
 
-Not yet. On the bench (open in [docs/body-firmware.md](../../../docs/body-firmware.md)): which of the sensor's two
+Not yet. On the bench (open in [docs/body-firmware.md](../../../docs/software/body-firmware.md)): which of the sensor's two
 serial ports the harness uses, the 921600 baud change at every boot, and the mounting axes; then the firmware's IMU
 freshness bit in the MCU's FAULTS frame (0x123) and the pitch against a level.
 

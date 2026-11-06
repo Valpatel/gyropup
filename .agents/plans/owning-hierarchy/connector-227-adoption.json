@@ -1,0 +1,97 @@
+{
+  "job": 227,
+  "alias": "cpu-a",
+  "source": "99c92d4a511c16d7743e9583b129e2a178651cb8",
+  "independent_artifact_adoption_review": "https://github.com/Valpatel/gyropup/pull/238#issuecomment-6689243313",
+  "archive_sha256": "d0afbda1dc59240299f3b3a650605b4b92285afb3ef7ceebf4fa5edab0796cfc",
+  "fresh_geometry_members": 92,
+  "fresh_contexts": {
+    "private-input-diagnosis.json": {
+      "tools/evidence/interfaces/check-carrier-connector-inputs.py": "6e2cc8af0bf757303092136af15116ac2ece46fc8949ce2d5dedf0be52494ccf",
+      "docs/research/carrier-service-connectors/private-inputs.json": "db7318f705e1966a93b07bacbab153eaa5fa9bc03a3d6a8114fff3a573382348"
+    },
+    "external-pose.json": {
+      "tools/evidence/interfaces/check-carrier-connector-pose.py": "464066db1cdaf9e84f5914c867784e2b97c43bb40d1b1e2fd225a9a8618063eb",
+      "tools/evidence/interfaces/check-carrier-connector-inputs.py": "6e2cc8af0bf757303092136af15116ac2ece46fc8949ce2d5dedf0be52494ccf",
+      "docs/research/carrier-service-connectors/private-inputs.json": "db7318f705e1966a93b07bacbab153eaa5fa9bc03a3d6a8114fff3a573382348"
+    },
+    "support-candidate.json": {
+      "tools/evidence/interfaces/check-carrier-connector-support.py": "2ea1f292653e1be41f96be44ac233536600edda63f9552d1d9148a7946d59c43",
+      "tools/evidence/interfaces/check-carrier-connector-inputs.py": "6e2cc8af0bf757303092136af15116ac2ece46fc8949ce2d5dedf0be52494ccf",
+      "tools/evidence/interfaces/check-carrier-connector-pose.py": "464066db1cdaf9e84f5914c867784e2b97c43bb40d1b1e2fd225a9a8618063eb",
+      "docs/research/carrier-service-connectors/private-inputs.json": "db7318f705e1966a93b07bacbab153eaa5fa9bc03a3d6a8114fff3a573382348",
+      "docs/research/carrier-service-connectors/support-hardware-catalog.json": "61e5e3d8d6152d0e35ffdb77406a63fa8338879ffabb20bc4a155f0861cb717e"
+    }
+  },
+  "fresh_original_six": {
+    "docs/research/carrier-service-connectors/external-pose.json": {
+      "bytes": 178480,
+      "sha256": "f8c54940cef542ea20a11e6ce7b28e89bd4e1619034c3338b21439a821cdf5bc"
+    },
+    "docs/research/carrier-service-connectors/private-input-diagnosis.json": {
+      "bytes": 15619,
+      "sha256": "5c8988c96a3b88949454a7537019b33d1faaf448228c9a5817959d57f7b2dc83"
+    },
+    "docs/research/carrier-service-connectors/support-candidate.json": {
+      "bytes": 176180,
+      "sha256": "cbc922fcd4e9c596ca2354f2779c57a3bee058f0e7bf28028d770f3cf8250272"
+    },
+    "hardware/exports/turret/base-board-service/connectors/C3-support-candidate.step": {
+      "bytes": 155698,
+      "sha256": "af7c88916687a319d1b59719dcc1d8a48dab83a7b3cfaf2973547660061837a2"
+    },
+    "hardware/exports/turret/base-board-service/connectors/C3-support-layout.step": {
+      "bytes": 2771871,
+      "sha256": "0ef87ad1efc4f144b945a0b62426611d0317f8829dc7de273d56639bca0273f1"
+    },
+    "hardware/exports/turret/base-board-service/connectors/carrier-support-candidate.step": {
+      "bytes": 194461,
+      "sha256": "9debd7a6b9bfae2fee6731b966adb2adbee1c3e40f24fafafbf5558955485681"
+    }
+  },
+  "adopted": {
+    "docs/research/carrier-service-connectors/external-pose.json": {
+      "bytes": 179870,
+      "sha256": "fcf5f365fd4b4846432adf8f6560207a4b8e1a200140ea402c5abde8bd99cda3"
+    },
+    "docs/research/carrier-service-connectors/private-input-diagnosis.json": {
+      "bytes": 17220,
+      "sha256": "d84b7019924a0f7aa271b07bb7b56a92aebc73a21ac8846d75c28425de6307ec"
+    },
+    "hardware/exports/turret/base-board-service/connectors/C3-support-candidate.step": {
+      "bytes": 155698,
+      "sha256": "a9ef48428fc16d381016c1bf32e77b0ac8b97402685732a45d6f0b97107933b8"
+    },
+    "hardware/exports/turret/base-board-service/connectors/C3-support-layout.step": {
+      "bytes": 2773244,
+      "sha256": "6d02106e108a633cf7106eb72ad8ae785a4b722d76db26597ce0f178d5f8ebc8"
+    },
+    "hardware/exports/turret/base-board-service/connectors/carrier-support-candidate.step": {
+      "bytes": 194490,
+      "sha256": "ee82b520730629bdb986096b907f7605398a3e5ede811b531c4178c8730de5ad"
+    },
+    "docs/research/carrier-service-connectors/support-candidate.json": {
+      "bytes": 177803,
+      "sha256": "2ab556ffaa7503be1f20a8d50aa895a63021f195dd0d0a28daff2b494bbd821e"
+    }
+  },
+  "actual_post_adoption_commands": [
+    [
+      "python3",
+      "tests/hardware/interfaces/test-carrier-connector-inputs.py"
+    ],
+    [
+      "python3",
+      "tests/hardware/interfaces/test-carrier-connector-pose.py"
+    ],
+    [
+      "python3",
+      "tests/hardware/interfaces/test-carrier-connector-support.py"
+    ]
+  ],
+  "limits": [
+    "No supplier payload adopted; three STEP files are the existing authored public candidates",
+    "All qualification flags,58checks/load screen and limits retain their original unqualified scope",
+    "Whole hierarchy currentCI and main publication remain separate"
+  ]
+}
