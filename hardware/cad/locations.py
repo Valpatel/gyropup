@@ -4,8 +4,14 @@ from pathlib import Path, PurePosixPath
 
 def artifact_identity(root: Path, path: Path) -> str:
     """Public records keep exports/ IDs while files belong to hardware/exports/."""
-    relative = Path(path).resolve().relative_to((Path(root) / 'hardware/exports').resolve())
-    return (PurePosixPath('exports') / relative.as_posix()).as_posix()
+    root = Path(root).resolve()
+    path = Path(path).resolve()
+    owning = root / 'hardware/exports'
+    if path.is_relative_to(owning):
+        return (PurePosixPath('exports') / path.relative_to(owning).as_posix()).as_posix()
+    # Existing sweep/optimiser outputs can live elsewhere inside the checkout.
+    # Their actual relative identity is retained; this grants no site publication.
+    return path.relative_to(root).as_posix()
 
 
 def artifact_path(root: Path, identity: str) -> Path:
@@ -22,5 +28,9 @@ def artifact_path(root: Path, identity: str) -> Path:
 
 def design_identity(root: Path, path: Path) -> str:
     """A browser-facing design identity is separate from its owning source path."""
-    relative = Path(path).resolve().relative_to((Path(root) / 'hardware/designs').resolve())
-    return (PurePosixPath('designs') / relative.as_posix()).as_posix()
+    root = Path(root).resolve()
+    path = Path(path).resolve()
+    owning = root / 'hardware/designs'
+    if path.is_relative_to(owning):
+        return (PurePosixPath('designs') / path.relative_to(owning).as_posix()).as_posix()
+    return path.relative_to(root).as_posix()
