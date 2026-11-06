@@ -98,3 +98,12 @@ or excessive gate cannot qualify, and the outer cap alone is never acceptance.
 The mandatory ordinary core bound remains 30 seconds, and the real held optional
 import bound remains 15 seconds. Both failed runs remain failed; this adjustment
 accounts for verified injected time rather than granting genuine startup more time.
+
+Fleet 179 at `11d1941` passed the ordinary suite and stress with an actual timing
+receipt: talk phase 42780.941 ms, held interval 17499.619 ms, excluded overlap
+17499.619 ms, genuine core 25281.322 ms. The real optional request was held, and
+all early/post mute assertions passed. Privacy passed 10 tests with one expected
+skip; overall exit 0. The final actual-helper old-order mutation still rejected
+at 15118 ms, and its unchanged first-mute assertions rejected the old fleet 155
+product at 2410 ms. This establishes the focused procedure's positive and negative
+controls; it does not identify the original CI request or qualify hardware.
