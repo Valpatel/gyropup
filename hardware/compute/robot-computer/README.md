@@ -4,7 +4,7 @@ The robot's own computer: it plans, sees (the [lidar](../../sensors/vlp16-lidar/
 [depth cameras](../../sensors/d435-depth-camera/README.md)) and sends the balance MCU its setpoints on bus C. The
 design names a **Seeed reComputer J501 carrier with a Jetson AGX Orin 32GB** (`catalog/sensors_compute.json`; the
 user's: `docs/cad-plan.md`; listed, not ordered: `docs/body-orders.md`). Its software is installed from
-[deploy/jetson](../../../deploy/jetson/README.md).
+[hardware/deploy/jetson](../../deploy/jetson/README.md).
 
 **Open question for the owner: which Jetson is the robot's computer, a Jetson AGX Thor or the J501's AGX Orin?** The
 repository's design is the J501 and this folder does not change it; the deployment is written for JetPack in general
@@ -34,7 +34,7 @@ Power, CAN, Ethernet and USB: [interfaces.md](interfaces.md).
 
 ## Config and profiles
 
-What the robot installs on it: [deploy/jetson](../../../deploy/jetson/README.md) (CAN bring-up at 1 Mbit/s for USB
+What the robot installs on it: [hardware/deploy/jetson](../../deploy/jetson/README.md) (CAN bring-up at 1 Mbit/s for USB
 adapters, stable names, the RS-04 bridge service). Its own CAN ports and network are not configured by the repository
 yet.
 
@@ -50,7 +50,7 @@ The Jetson side of the MCU link (setpoints 0x110 out, state 0x120-0x123 in) is s
 
 ## Bring-up and tests
 
-Not yet. First: `deploy/jetson/install.sh --dry-run`, then the install; `ip link` shows whether both J25 CAN ports
+Not yet. First: `hardware/deploy/jetson/install.sh --dry-run`, then the install; `ip link` shows whether both J25 CAN ports
 come up (if only one does, bus C moves to an isolated USB-CAN adapter: `docs/body-electrical.md` 4).
 
 ## Open questions

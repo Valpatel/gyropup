@@ -2,8 +2,7 @@
 
 Issue [104](https://github.com/Valpatel/gyropup/issues/104) replaces the old
 target-practice snapshot with a 22-second edit of current browser footage and
-explicitly labelled engineering studies. The public turret is the 48-part model
-shared by the landing character and simulator; the Orin bench adds 18 enclosure
+explicitly labelled engineering studies. The public turret model is shared by the landing character and simulator; the Orin bench adds its enclosure
 and adapter parts. The full-robot body remains an interim export. Current demo
 movement is scripted browser motion with projectile integration, not a newly
 solved whole-robot physics run.
@@ -30,7 +29,8 @@ they sit beside ([issue 106](https://github.com/Valpatel/gyropup/issues/106), se
 
 ## Capture and encode
 
-Use Node 22, the pinned Playwright package, installed Chrome, and FFmpeg with
+Use Node 22, the pinned Playwright package, installed Chrome (or bundled Chromium with
+`PLAYWRIGHT_CHANNEL=chromium`), and FFmpeg with
 libx264, libvpx-vp9, libwebp and FreeType. Build and serve the repository first,
 then capture its actual browser simulation:
 
@@ -306,3 +306,31 @@ reported in [issue 118](https://github.com/Valpatel/gyropup/issues/118).
 Final browser and independent review results are recorded on
 [PR 105](https://github.com/Valpatel/gyropup/pull/105). Production playback is checked
 again after the reviewed dev/main publication.
+
+## Startup-audio correction, 2026-11-05
+
+The early `?sound=0` correction changes the source-bound simulator. Fleet capture **160 on cpu-b** built
+`cd7d4a29b8e2cc47b5b852590730c23c869f363c`, passed the complete audio suite on that actual build, and
+recorded all 480 current-scene frames with Chromium 141.0.7390.37. The strengthened audio control holds the
+optional gamepad import and requires muted master/voice plus SOUND OFF at the first talk mount. Its pre-fix
+negative control fails at that exact early-state assertion; no source overlay substitutes for the built page.
+
+Encoding **163 on cpu-b**, at the same source, reused those original frames and capture receipt byte-for-byte.
+All 480 raw frame hashes were checked. The mechanism emitted nine shots; target practice recorded three shots,
+three hits and three knockdowns. The actual scene inventories contain 80 bench entries and 62 robot-turret entries.
+The unchanged encoder produced both 660-frame, 22-second companions and the poster; the existing guard passed
+all 19 negative controls, including source omissions, historical report drift and frozen segments. Raw turret and
+target-practice frames were visually inspected. Historical leg/E1 identities and qualification limits remain intact.
+
+The initial encoding attempts correctly stopped when the shallow worker lacked pinned historical evidence.
+Another shallow worker must fetch the complete required commit set before encoding/checking:
+
+```sh
+git fetch --no-tags --depth=1 origin \
+  e7b512870a39259a04a4930e2908af84001bc84e \
+  a12cf8e73f337274174c56e14c22832250acf284 \
+  1f46309c4bf4deecf1c8b825bbe35c7e2e0dbd0f
+```
+
+These supply the leg recording, E1 solved-field producer and E1 video producer evidence respectively.
+No receipt was relabelled to bypass missing history, and no new physical experiment is claimed.

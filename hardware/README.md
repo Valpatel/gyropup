@@ -31,7 +31,7 @@ flowchart TB
 | [power/ina228-monitor/](power/ina228-monitor/README.md) | INA228 bus monitor and its shunt | none | shunt builds recorded |
 | [power/dcb609-packs/](power/dcb609-packs/README.md) | DeWalt DCB609 packs and dock adapters | 2 (the owner's) | firmware limits recorded |
 | [compute/balance-mcu/](compute/balance-mcu/README.md) | STM32G474 balance MCU board and CAN transceivers | none | pins and buses |
-| [compute/robot-computer/](compute/robot-computer/README.md) | the robot's Jetson (J501 + AGX Orin in the design) | 1 (the owner's J501) | [deploy/jetson](../deploy/jetson/README.md); which Jetson is open |
+| [compute/robot-computer/](compute/robot-computer/README.md) | the robot's Jetson (J501 + AGX Orin in the design) | 1 (the owner's J501) | [hardware/deploy/jetson](deploy/jetson/README.md); which Jetson is open |
 | [comms/pcan-usb/](comms/pcan-usb/README.md) | PEAK PCAN-USB configuration adapter | 1 (the owner's) | used by the motor tool |
 | [turret/turret-controller/](turret/turret-controller/README.md) | the turret's Feather M4 CAN electronics | none | a pointer to the turret docs |
 
@@ -73,4 +73,4 @@ that has not run.
 ## Deployment
 
 What runs on the robot's computer (CAN bring-up, stable adapter names, the RS-04 bridge service) is in
-[deploy/jetson](../deploy/jetson/README.md), installed by one idempotent command.
+[hardware/deploy/jetson](deploy/jetson/README.md), installed by one idempotent command.

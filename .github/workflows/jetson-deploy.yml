@@ -1,11 +1,11 @@
-# The robot Jetson's deployment (deploy/jetson): install.sh's dry run, a staged install, idempotence, stable names, LAN
+# The robot Jetson's deployment (hardware/deploy/jetson): install.sh's dry run, a staged install, idempotence, stable names, LAN
 # mode, shellcheck; the hardware folders' records (hardware/README.md) and the RS-04 inventory. No Jetson is needed.
 name: jetson-deploy
 
 on:
   pull_request:
     paths:
-      - 'deploy/**'
+      - 'hardware/deploy/**'
       - 'hardware/**'
       - 'rig/rs04*.py'
       - 'rig/tests/test_rs04_inventory.py'
@@ -37,7 +37,7 @@ jobs:
         with:
           python-version: '3.10'   # JetPack 6's Python: the bridge and the checks must run on it
       - name: install.sh (dry run, staged install, idempotence, names, LAN mode, shellcheck)
-        run: python3 deploy/jetson/test_install.py -v
+        run: python3 hardware/deploy/jetson/test_install.py -v
       - name: The hardware folders and the RS-04 inventory
         run: |
           python3 tools/check-hardware.py
