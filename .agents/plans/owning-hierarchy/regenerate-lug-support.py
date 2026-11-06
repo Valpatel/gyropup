@@ -69,7 +69,14 @@ def phase(name,command,expected=0,timeout=3600):
  try:
   with (OUT/(name+'.log')).open('w') as stream:
    processes_quiescent=False
-   child=subprocess.Popen(command,cwd=ROOT,stdout=stream,stderr=subprocess.STDOUT,start_new_session=True)
+   blocked_before_spawn=signal.pthread_sigmask(signal.SIG_BLOCK,{signal.SIGINT,signal.SIGTERM})
+   def child_unmask():signal.pthread_sigmask(signal.SIG_SETMASK,blocked_before_spawn)
+   try:
+    child=subprocess.Popen(command,cwd=ROOT,stdout=stream,stderr=subprocess.STDOUT,
+                           start_new_session=True,preexec_fn=child_unmask)
+   finally:
+    # Deliver a pending interrupt only after the child handle is captured.
+    signal.pthread_sigmask(signal.SIG_SETMASK,blocked_before_spawn)
    try:record['exit']=child.wait(timeout=timeout)
    except subprocess.TimeoutExpired:record['timed_out']=True
  except BaseException as exc:
