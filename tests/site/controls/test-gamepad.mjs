@@ -143,7 +143,17 @@ try {
   await until(() => !!window.__sim.state.jump);
   await pad('button', 0, 'A', 0);
   await until(() => window.__sim.state.robot.group.position.y > 0.12);   // wheels clear: the hip's rise plus the tuck
-  await until(() => !window.__sim.state.jump && window.__sim.state.robot.group.position.y === 0);
+  try {
+    await until(() => !window.__sim.state.jump && window.__sim.state.robot.group.position.y === 0);
+  } catch (error) {
+    try {
+      console.error('Hop landing failure state:', JSON.stringify(await sim(() => ({
+        modelKey: window.__sim.state.modelKey, jump: window.__sim.state.jump,
+        y: window.__sim.state.robot.group.position.y, visibility: document.visibilityState,
+      }))));
+    } catch (diagnosticError) { console.error('Hop landing diagnostic unavailable:', diagnosticError.message); }
+    throw error;
+  }
 
   // ---- Menu: the settings dialog, live diagram, actions suspended, rebind persisted, reset
   await tap('Menu');

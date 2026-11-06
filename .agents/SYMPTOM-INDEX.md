@@ -109,3 +109,5 @@
 - A post-adoption consumer fails because its toolkit is absent: [preflight every reader runtime before copying targets](inbox/2026-11-05-ci-classification-needs-phase-evidence.md#provision-every-post-adoption-reader-before-mutating-its-targets).
 
 - A moved source directory sends an existing local listing link to GitHub despite a published index: [preserve directory navigation using actual index membership](inbox/2026-11-05-root-moves-need-consumer-and-publication-maps.md#preserve-existing-directory-navigation-through-actual-published-indexes).
+
+- A model key looks ready but selecting a recorded activity does nothing: [wait for the selected model recording list](inbox/2026-11-06-recorded-activities-need-the-selected-model-list.md).
