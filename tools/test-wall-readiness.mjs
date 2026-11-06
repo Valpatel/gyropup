@@ -2,7 +2,7 @@ import { waitForRenderedText } from './test-rendered-readiness.mjs';
 
 /** Whole-article geometry needs every unfolded primary image, including native lazy images below the viewport. */
 export async function waitForWallImages(page) {
-  await page.waitForFunction(async () => {
+  await page.waitForFunction(() => {
     const content=document.querySelector('main.document article')||document.querySelector('article.prose')||document.querySelector('main');
     if(!content)throw new Error('Wall content is missing');
     const folded=el=>{for(let d=el.closest('details:not([open])');d;d=d.parentElement?.closest('details:not([open])'))if(!d.querySelector(':scope > summary')?.contains(el))return true;return false;};
@@ -19,8 +19,18 @@ export async function waitForWallImages(page) {
     });
     for(const img of images)if(img.complete&&!img.naturalWidth)throw new Error(`Primary image failed to load: ${img.getAttribute('src')}`);
     if(images.some(img=>!img.complete))return false;
-    await Promise.all(images.map(img=>img.decode()));
+    window.__wallPrimaryImages=images;
     return true;
+  },null,{timeout:30000});
+  await page.evaluate(()=>{
+    const state=window.__wallImageDecode={done:false,error:null};
+    Promise.all(window.__wallPrimaryImages.map(img=>img.decode()))
+      .then(()=>{state.done=true;},error=>{state.error=String(error.message||error);});
+  });
+  await page.waitForFunction(()=>{
+    const state=window.__wallImageDecode;
+    if(state?.error)throw new Error(`Primary image decode failed: ${state.error}`);
+    return state?.done;
   },null,{timeout:30000});
 }
 

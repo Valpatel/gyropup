@@ -28,18 +28,19 @@ export async function wallReadinessControls(browser,base,root) {
       assert.deepEqual(await geometry(page),before,'Actual README article and wall geometry remain identical after badge decode');
     } finally {closing=true;release();await context.close();await loading.catch(()=>{});}
   }
-  for(const kind of ['font','lazy-primary','missing-primary','stylesheet-error']) {
+  for(const kind of ['font','lazy-primary','missing-primary','decode-never','stylesheet-error']) {
     const context=await contextFor(),page=await context.newPage();let release,requested,measured=false,closing=false;
     const gate=new Promise(resolve=>{release=resolve;}),seen=new Promise(resolve=>{requested=resolve;});
-    const route='/__wall-readiness-control',font=kind==='font',primary=kind==='lazy-primary'||kind==='missing-primary';
+    const route='/__wall-readiness-control',font=kind==='font',primary=['lazy-primary','missing-primary','decode-never'].includes(kind);
+    if(kind==='decode-never')await context.addInitScript(()=>{const native=HTMLImageElement.prototype.decode;HTMLImageElement.prototype.decode=function(){return new URL(this.src).pathname==='/__wall-primary.svg'?new Promise(()=>{}):native.call(this);};});
     const html='<!doctype html><meta name="viewport" content="width=device-width">'
       +(kind==='stylesheet-error'?'<link rel="stylesheet" href="/__wall-failed.css">':'')
-      +`<style>body{margin:0;font:16px/1.5 system-ui}${font?'@font-face{font-family:WallControl;src:url(/__wall-font.woff2)}body{font-family:WallControl}':''}</style>`
+      +`<style>body{margin:0;font:16px/1.5 system-ui}${font?'@font-face{font-family:WallControl;src:url(/__wall-font.woff2)}article::before{content:"Actual rendered font glyphs";display:block;font-family:WallControl}':''}</style>`
       +`<main class="document"><article><h1>Wall readiness</h1><p style="height:${primary?12000:300}px">${'Actual rendered text. '.repeat(20)}</p>`
       +(primary?'<img loading="lazy" src="/__wall-primary.svg" alt="Primary evidence with unknown intrinsic dimensions">':'')+'</article></main>';
     await page.route(base+route,r=>r.fulfill({contentType:'text/html',body:html}));
     await page.route(base+'/__wall-failed.css',r=>r.fulfill({status:404,contentType:'text/css',body:''}));
-    await page.route(base+'/__wall-primary.svg',async r=>{requested();if(kind==='missing-primary')return r.fulfill({status:404,body:''});await gate;try{await r.abort();}catch(error){if(!closing)throw error;}});
+    await page.route(base+'/__wall-primary.svg',async r=>{requested();if(kind==='missing-primary')return r.fulfill({status:404,body:''});if(kind==='decode-never')return r.fulfill({contentType:'image/svg+xml',body:'<svg xmlns="http://www.w3.org/2000/svg" width="340" height="220"><rect width="340" height="220" fill="orange"/></svg>'});await gate;try{await r.abort();}catch(error){if(!closing)throw error;}});
     await page.route(base+'/__wall-font.woff2',async r=>{requested();await gate;try{await r.fulfill({contentType:'font/woff2',body:await readFile(path.join(root,'designer/kit/vendor/fonts/inter.woff2'))});}catch(error){if(!closing)throw error;}});
     const loading=(async()=>{await loadWallPage(page,base,route);const wall=await page.evaluate(longestStretch,VISUAL);measured=true;return wall;})();loading.catch(()=>{});
     try {
@@ -47,8 +48,11 @@ export async function wallReadinessControls(browser,base,root) {
       if(font) {
         assert.equal(measured,false,'Actual rendered font blocks wall measurement');
         assert.equal(await page.evaluate(()=>[...document.fonts].some(face=>face.family==='WallControl'&&face.status==='loading')),true);
-        release();await bound(loading);
-        assert.equal(await page.evaluate(()=>document.fonts.check('16px WallControl')),true,'Actual font decoded before measurement');
+        let error;try{await bound(loading);}catch(e){error=e;}
+        assert.match(error?.message||'',/Timeout 30000ms/,'A pending rendered pseudo-element font must not falsely complete');
+        assert.equal(measured,false,'Held global font state fails before measurement');
+        release();await loadWallPage(page,base,route);await page.evaluate(longestStretch,VISUAL);
+        assert.equal(await page.evaluate(()=>document.fonts.check('16px WallControl')),true,'Released actual font decodes before the fresh measurement');
       } else {
         if(kind==='lazy-primary')assert.equal(await page.locator('img').evaluate(img=>img.getBoundingClientRect().top>innerHeight&&!img.hasAttribute('width')&&!img.hasAttribute('height')),true,'Held unknown-size lazy primary is offscreen');
         let error;try{await bound(loading);}catch(e){error=e;}
@@ -57,5 +61,5 @@ export async function wallReadinessControls(browser,base,root) {
       }
     } finally {closing=true;release();await context.close();await loading.catch(()=>{});}
   }
-  console.log('walls readiness controls: real pending README badge preserves geometry; actual font awaited; offscreen lazy held/missing primary and failed stylesheet reject before measurement');
+  console.log('walls readiness controls: real pending README badge preserves geometry; actual font awaited; offscreen lazy held/missing primary, never-ending decode and failed stylesheet reject before measurement');
 }

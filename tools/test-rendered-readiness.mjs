@@ -26,7 +26,8 @@ export async function waitForRenderedText(page) {
   }, null, { timeout: 30000 });
   // FontFaceSet.ready can wait for document load even when only an unrelated image is pending.
   // Load the actual rendered text fonts explicitly, including the characters selecting Unicode subsets.
-  await page.waitForFunction(async () => {
+  await page.evaluate(() => {
+    const state = window.__renderedTextFonts = { done: false, error: null };
     const used = new Map(), walker = document.createTreeWalker(document.body, NodeFilter.SHOW_TEXT);
     for (let node = walker.nextNode(); node; node = walker.nextNode()) {
       const element = node.parentElement;
@@ -37,7 +38,12 @@ export async function waitForRenderedText(page) {
       if (!used.has(font)) used.set(font, new Set());
       for (const character of node.textContent) used.get(font).add(character);
     }
-    await Promise.all([...used].map(([font, characters]) => document.fonts.load(font, [...characters].join(''))));
-    return document.fonts.status === 'loaded';
+    Promise.all([...used].map(([font, characters]) => document.fonts.load(font, [...characters].join(''))))
+      .then(() => { state.done = true; }, error => { state.error = String(error.message || error); });
+  });
+  await page.waitForFunction(() => {
+    const state = window.__renderedTextFonts;
+    if (state?.error) throw new Error(`Rendered font failed: ${state.error}`);
+    return state?.done && document.fonts.status === 'loaded';
   }, null, { timeout: 30000 });
 }

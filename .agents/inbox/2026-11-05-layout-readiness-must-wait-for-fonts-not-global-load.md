@@ -87,3 +87,28 @@ real font, hold an offscreen unknown-size lazy primary, fail a missing primary,
 and fail a stylesheet. Each uses bounded barriers/finally cleanup. Source and
 fresh-build positive controls remain pending in this initial implementation;
 no successful validation is claimed yet.
+
+Fleet 186 at `ed8000ab` failed before any sweep: the planted lazy-primary case
+found that readiness had completed while its request was still held. The real
+README geometry and awaited-body-font cases had passed before it. This was an
+actual source defect caught by the control, not provisioning or cancellation.
+Pinned Playwright 1.56.1 truth-tests a predicate's returned Promise before its
+false value resolves; an actual `waitForFunction(async () => false)` probe
+returned false in 19 ms despite a 2-second deadline.
+
+Image readiness now polls synchronously for completion and valid natural size,
+then launches native decoding into a captured per-call completion/error state
+and polls that state synchronously under a 30-second bound. Actual text-font
+loads use the same bounded-state pattern; final fonts.status=loaded is enforced
+instead of returning an unchecked asynchronous false. No native font or image
+state is forged.
+
+The font control now holds a real rendered pseudo-element font: ordinary text
+loads can finish while that face remains loading. It must time out before any
+measurement, then pass a fresh actual-loader run after release. A loaded primary
+whose decode never resolves must also time out before measurement. Together
+with the real README, offscreen lazy/missing primary and CSS-error cases, all six
+controls passed locally with the corrected harness against fleet 186's product
+artifact; this is scoped local evidence, not a fresh corrected-source fleet pass.
+All ordinary bounds and geometry/backlog thresholds remain unchanged. The failed
+186 attempt stays failed, and the particular original CI request remains unknown.
