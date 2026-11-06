@@ -34,5 +34,24 @@
     "exit": 0,
     "scope": "Only two emitted href strings changed to ../body/; regeneration equality and all numerical assertions remain unchanged.",
     "outside_geometry92_and_media191": true
+  },
+  "relocated_backlog_readers": {
+    "old_wall_reader_fails_missing_path": true,
+    "current_wall_baseline_pages": 5,
+    "exact_legacy_git_baseline_fallback": true,
+    "new_wall_and_growth_mutants_rejected": true,
+    "privacy_current_and_legacy_baselines_nonnull": true,
+    "existing_privacy_growth_and_override_tests_pass": 2,
+    "thresholds_backlog_bytes_and_findings_unchanged": true
+  },
+  "attachment_source_relocation": {
+    "existing_tests_pass": 4,
+    "immutable_baseline": "949b73c2fe589a52527ff43d65f953d3e40110e1",
+    "scope": "Both original CAD source pins remain exact immutable-baseline hashes; entire current source bytes must equal only enumerated relocation edits. Other 18 current source/mesh pins and geometric assertions remain unchanged.",
+    "manifest_source_revision_limit": "The retained source_revision predates subsequent source-pin updates; no assertion that its fivebar blob matches the pin.",
+    "geometry_constant_mutant_rejected": true,
+    "missing_current_valid_old_rejected": true,
+    "changed_manifest_digest_rejected": true,
+    "manifest_fixture_meshes_not_modified": true
   }
 }

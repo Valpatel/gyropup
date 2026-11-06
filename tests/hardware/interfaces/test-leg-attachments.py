@@ -6,13 +6,59 @@ import json
 import math
 from pathlib import Path
 import struct
+import subprocess
+import sys
 import types
 import unittest
 
 ROOT = (Path(__file__).resolve().parents[3])
+sys.path.insert(0, str(ROOT))
+from tools.site.source_layout import CONTRACT_FILE, source_file
 OUT = (ROOT / 'hardware/exports/sim/v2/leg-attachments')
 MAN = json.loads((OUT / 'manifest.json').read_text())
 REF = json.loads(((ROOT / 'tests/fixtures/leg-attachment-motion.json')).read_text())
+
+
+
+def pinned_source_bytes(name, digest):
+    """Keep historical pins while permitting only the exact owning-path edits.
+
+    The manifest's source_revision predates its later source-pin updates. The
+    published migration baseline contains those exact pinned bytes; neither
+    the manifest nor the meshes are regenerated or relabelled here.
+    """
+    current = source_file(ROOT, name).read_bytes()
+    if name not in ('cad/fivebar.py', 'cad/gmi.py'):
+        return current
+    baseline = json.loads(CONTRACT_FILE.read_text())['baseline']
+    original = subprocess.check_output(['git', 'show', f'{baseline}:{name}'], cwd=ROOT)
+    if hashlib.sha256(original).hexdigest() != digest:
+        raise AssertionError(f'{name}: the immutable baseline does not match the retained source pin')
+    expected = original.decode()
+    def relocate(old, new, count=1):
+        nonlocal expected
+        if expected.count(old) != count:
+            raise AssertionError(f'{name}: unexpected relocation replacement count')
+        expected = expected.replace(old, new)
+    if name == 'cad/fivebar.py':
+        relocate('from __future__ import annotations\n', 'from __future__ import annotations\n\n'
+            "# Support direct-file CLI execution as well as checkout package imports.\n"
+            "if __package__ in (None, ''):\n"
+            "    import sys as _checkout_sys\n"
+            "    from pathlib import Path as _CheckoutPath\n"
+            "    _checkout_sys.path.insert(0, str(_CheckoutPath(__file__).resolve().parents[3]))\n\n")
+        relocate('\nimport gmi\n', '\nimport hardware.cad.robot.gmi as gmi\n')
+    else:
+        for old, new, count in [
+            ('R = Path(__file__).resolve().parents[1]', 'R = (Path(__file__).resolve().parents[3])', 1),
+            ("(R / 'cad/interfaces.json')", "((R / 'hardware/cad/robot/interfaces.json'))", 1),
+            ("(R / 'catalog/interfaces.json')", "((R / 'hardware/catalog/interfaces.json'))", 2),
+            ("R / 'references/vendor'", "(R / 'hardware/vendor')", 2),
+        ]:
+            relocate(old, new, count)
+    if current != expected.encode():
+        raise AssertionError(f'{name}: changes beyond the exact source relocation; regenerate/review the attachment evidence')
+    return original
 
 
 def points(file):
@@ -24,7 +70,7 @@ def points(file):
 class Attachments(unittest.TestCase):
     def test_source_and_published_geometry_are_pinned(self):
         for name, digest in {**MAN['source_hashes'], **REF['source_hashes']}.items():
-            self.assertEqual(hashlib.sha256((ROOT/name).read_bytes()).hexdigest(), digest, name)
+            self.assertEqual(hashlib.sha256(pinned_source_bytes(name, digest)).hexdigest(), digest, name)
         for p in MAN['parts']:
             self.assertEqual(hashlib.sha256((OUT/p['file']).read_bytes()).hexdigest(), p['sha256'])
         self.assertEqual(len(MAN['parts']), 10)

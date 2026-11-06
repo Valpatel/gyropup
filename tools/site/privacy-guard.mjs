@@ -239,7 +239,11 @@ export function baseRatchet(root = ROOT, env = process.env) {
     if (!ref && env.GITHUB_EVENT_NAME === 'push') ref = git('rev-parse', 'HEAD^1');
     if (!ref) ref = git('merge-base', 'HEAD', `origin/${env.GITHUB_BASE_REF || 'dev'}`);
   } catch { return { ref: null, ratchet: null }; }
-  try { return { ref, ratchet: parseRatchet(git('show', `${ref}:${RATCHET}`)) }; } catch { return { ref, ratchet: null }; }
+  for (const file of [RATCHET, 'tools/privacy-ratchet.txt']) {
+    try { return { ref, ratchet: parseRatchet(git('show', `${ref}:${file}`)) }; }
+    catch { /* Read the exact pre-move baseline without searching current source copies. */ }
+  }
+  return { ref, ratchet: null };
 }
 
 function report(title, findings, problems) {

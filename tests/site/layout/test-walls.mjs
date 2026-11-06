@@ -21,7 +21,8 @@ import { wallReadinessControls } from './test-wall-readiness-controls.mjs';
 import { VIEWPORT, VISUAL, WALL_CLEARED, WALL_LIMIT, longestStretch, plantedScript, sitePages } from '../../../tools/site/site-walls.mjs';
 
 const root = path.resolve(import.meta.dirname, '../../..');
-const BACKLOG = 'tools/wall-backlog.json';
+const BACKLOG = 'tools/site/wall-backlog.json';
+const LEGACY_BACKLOG = 'tools/wall-backlog.json';
 const report = process.argv.includes('--report');
 const backlog = JSON.parse(await readFile(path.join(root, BACKLOG), 'utf8'));
 const problems = [];
@@ -35,8 +36,10 @@ let baseList = null, ref = null;
 try { ref = process.env.WALLS_BASE_REF || git('merge-base', 'HEAD', `origin/${process.env.GITHUB_BASE_REF || 'dev'}`); }
 catch { if (process.env.CI && !report) problems.push(`${BACKLOG}: no merge base with origin/${process.env.GITHUB_BASE_REF || 'dev'}, so the shrink-only check cannot run (fetch the full history)`); }
 if (ref) {
-  try { baseList = JSON.parse(git('show', `${ref}:${BACKLOG}`)).pages; }
-  catch { /* the base has no backlog yet: this change adds it */ }
+  for (const file of [BACKLOG, LEGACY_BACKLOG]) {
+    try { baseList = JSON.parse(git('show', `${ref}:${file}`)).pages; break; }
+    catch { /* Before the owning-folder move, the same baseline used the legacy path. */ }
+  }
 }
 // A page may only come off the list, and its recorded stretch may only go down: never above the base's number.
 if (baseList) for (const route of listed) {
