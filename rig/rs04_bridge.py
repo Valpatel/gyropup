@@ -48,6 +48,7 @@ WS_GUID = b'258EAFA5-E914-47DA-95CA-C5AB0DC85B11'
 MAX_MESSAGE = 1 << 16
 LOOPBACK = ('127.0.0.1', 'localhost', '::1')
 QUIET_S = 1.0             # armed and no message from the tab for this long: stop everything
+READER_JOIN_S = 5.0        # a stuck receive must fail shutdown, never report a clean exit
 VERSION = 1
 
 
@@ -256,8 +257,14 @@ class Bridge:
             self.client = None
             sender.cancel()
             watchdog.cancel()
-            self.stop_all(why)
-            log('tab disconnected')
+            try:
+                self.stop_all(why)
+                log('tab disconnected')
+            finally:
+                results = await asyncio.gather(sender, watchdog, return_exceptions=True)
+                for result in results:
+                    if isinstance(result, BaseException) and not isinstance(result, asyncio.CancelledError):
+                        raise result
 
     async def _sender(self, writer, queue):
         try:
@@ -330,15 +337,83 @@ def make_transport(iface: str, emu_ids):
 
 
 async def serve(bridge: Bridge, bind: str, port: int, ready=None):
+    """Own this server's connections, reader and transport, but not the caller's loop."""
     bridge.loop = asyncio.get_running_loop()
-    th = threading.Thread(target=bridge.reader_thread, daemon=True)
-    th.start()
-    server = await asyncio.start_server(bridge.handle, bind, port, limit=1 << 16)
-    addr = server.sockets[0].getsockname()
-    if ready:
-        ready(addr)
-    async with server:
-        await server.serve_forever()
+    server, th = None, None
+    handlers, writers = set(), set()
+    closing = False
+
+    async def handle(reader, writer):
+        try:
+            await bridge.handle(reader, writer)
+        finally:
+            writer.close()
+            try:
+                await writer.wait_closed()
+            except (ConnectionError, OSError):
+                pass
+            finally:
+                writers.discard(writer)
+
+    def finished(task):
+        handlers.discard(task)
+        if not task.cancelled() and task.exception() is not None:
+            bridge.loop.call_exception_handler({'message': 'RS-04 connection handler failed',
+                                                'exception': task.exception(), 'task': task})
+
+    def connected(reader, writer):
+        if closing:
+            writer.transport.abort()
+            return
+        # Register synchronously: cancellation can precede the coroutine's first step.
+        writers.add(writer)
+        task = bridge.loop.create_task(handle(reader, writer))
+        handlers.add(task)
+        task.add_done_callback(finished)
+
+    try:
+        th = threading.Thread(target=bridge.reader_thread, daemon=True)
+        th.start()
+        server = await asyncio.start_server(connected, bind, port, limit=1 << 16)
+        if ready:
+            ready(server.sockets[0].getsockname())
+        # start_server already accepts connections. In Python 3.12 serve_forever's
+        # cancellation waits for clients before our finally can close those clients.
+        await asyncio.Future()
+    finally:
+        closing = True
+        if server is not None:
+            server.close()
+        bridge.running = False
+        errors = []
+        try:
+            bridge.stop_all('the bridge is shutting down')
+        except BaseException as error:
+            errors.append(error)
+        # No final telemetry flush may delay a motor STOP or keep a client alive.
+        for writer in tuple(writers):
+            writer.transport.abort()
+        owned = tuple(handlers)
+        for task in owned:
+            task.cancel()
+        results = await asyncio.gather(*owned, return_exceptions=True)
+        errors.extend(error for error in results if isinstance(error, BaseException)
+                      and not isinstance(error, asyncio.CancelledError))
+        if th is not None and th.ident is not None:
+            await asyncio.to_thread(th.join, READER_JOIN_S)
+            if th.is_alive():
+                errors.append(TimeoutError('RS-04 reader did not stop before transport closure'))
+        try:
+            bridge.t.close()
+        except BaseException as error:
+            errors.append(error)
+        if th is not None and th.is_alive():
+            # Closing may wake a stuck transport. Even if it does, retain the timeout failure.
+            await asyncio.to_thread(th.join, READER_JOIN_S)
+        if server is not None:
+            await server.wait_closed()  # Python 3.12 includes accepted connections in this wait.
+        if errors:
+            raise errors[0]
 
 
 def main(argv=None) -> int:
@@ -366,20 +441,32 @@ def main(argv=None) -> int:
     elif a.bind not in ('127.0.0.1', '::1', 'localhost') and token is None:
         ap.error('listening beyond this computer needs --lan with a token')
     transport, kind = make_transport(a.iface, a.emu_ids)
-    bridge = Bridge(transport, profile, a.iface, kind, token=token, allow_origins=a.allow_origin)
-    log(f'RS-04 bridge on {a.iface} ({kind}), profile {profile["id"]} v{profile["version"]}: cap '
-        f'{profile["limits"]["limit_torque_nm"]:g} N m, jog {profile["limits"]["jog_torque_nm"]:g} N m')
-    shown = '127.0.0.1' if a.bind in ('0.0.0.0', '127.0.0.1') else a.bind
+    bridge = None
+    runtime_started = False
     try:
-        asyncio.run(serve(bridge, a.bind, a.port, lambda addr: log(
-            f'open http://{shown}:{addr[1]}/{"?token=" + token if token and not a.lan else ""}'
-            + ('  (LAN: use the robot\'s address and ?token=)' if a.lan else ''))))
+        bridge = Bridge(transport, profile, a.iface, kind, token=token, allow_origins=a.allow_origin)
+        shown = '127.0.0.1' if a.bind in ('0.0.0.0', '127.0.0.1') else a.bind
+
+        async def run():
+            nonlocal runtime_started
+            runtime_started = True
+            await serve(bridge, a.bind, a.port, lambda addr: log(
+                f'open http://{shown}:{addr[1]}/{"?token=" + token if token and not a.lan else ""}'
+                + ('  (LAN: use the robot\'s address and ?token=)' if a.lan else '')))
+
+        log(f'RS-04 bridge on {a.iface} ({kind}), profile {profile["id"]} v{profile["version"]}: cap '
+            f'{profile["limits"]["limit_torque_nm"]:g} N m, jog {profile["limits"]["jog_torque_nm"]:g} N m')
+        asyncio.run(run())
     except KeyboardInterrupt:
         pass
     finally:
-        bridge.running = False
-        bridge.stop_all('the bridge is shutting down')
-        transport.close()
+        if not runtime_started:
+            try:
+                if bridge is not None:
+                    bridge.running = False
+                    bridge.stop_all('the bridge could not start')
+            finally:
+                transport.close()
     return 0
 
 

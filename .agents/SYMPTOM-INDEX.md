@@ -2,6 +2,7 @@
 
 | Symptom | Canonical guidance |
 | --- | --- |
+| Production RS-04 shutdown returns while its reader is alive, or Python 3.12 cancellation waits on connected clients | [Runtime ownership](domains/rs04-runtime-lifecycle.md), [production shutdown incident](inbox/2026-11-06-runtime-shutdown-must-finish-before-loop-closure.md) |
 | Tests report OK, then Python aborts with `_enter_buffered_busy`, or teardown leaves daemon threads/accepted sockets alive | [Test-owned asynchronous resources](domains/test-lifecycle.md), [RS-04 shutdown incident](inbox/2026-11-06-test-close-must-finish-owned-threads.md) |
 | A motor-day picture refresh changes STL bytes while keeping old slice estimates | [Preserve the independent mesh/slice snapshot](inbox/2026-11-05-picture-refresh-can-change-retained-slice-inputs.md) |
 | `motor_day --no-render` keeps stale pictures after an explode-offset or camera edit | [Bind all step visual inputs before reuse](inbox/2026-11-05-render-reuse-needs-explode-and-camera-inputs.md) |

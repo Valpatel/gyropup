@@ -8,9 +8,13 @@ from __future__ import annotations
 import asyncio
 import base64
 from concurrent.futures import ThreadPoolExecutor, TimeoutError as FutureTimeout
+import errno
 import json
 import os
 import socket
+import subprocess
+import sys
+import textwrap
 import threading
 import time
 import unittest
@@ -390,6 +394,282 @@ class BridgeTests(unittest.TestCase):
             w.close()
         finally:
             srv.close()
+
+
+class MainTests(unittest.TestCase):
+    def test_initialization_error_closes_the_created_transport(self):
+        transport, kind = B.make_transport('emu', [127])
+        error = ValueError('injected bridge initialization failure')
+        with patch.object(B, 'make_transport', return_value=(transport, kind)), \
+                patch.object(B, 'Bridge', side_effect=error), \
+                patch.object(transport, 'close', wraps=transport.close) as close:
+            with self.assertRaises(ValueError) as caught:
+                B.main(['--iface', 'emu', '--emu-ids', '127', '--port', '0'])
+            self.assertIs(caught.exception, error)
+            close.assert_called_once_with()
+
+    def test_sigint_main_waits_for_its_real_reader(self):
+        # Signal only this software-only child, after its real listener/reader start.
+        script = textwrap.dedent('''\
+            import json, os, signal, threading
+            from unittest.mock import patch
+            from rig import rs04_bridge as B
+            entered, release, ready, returned = (threading.Event() for _ in range(4))
+            transport, kind = B.make_transport('emu', [127])
+            recv, close, log, bridge_type = transport.recv, transport.close, B.log, B.Bridge
+            readers, bridges, closure, observation, errors = [], [], [], [], []
+            def held_recv(timeout):
+                if not readers:
+                    readers.append(threading.current_thread())
+                entered.set()
+                if not release.wait(3):
+                    errors.append('reader gate was not released')
+                return recv(timeout)
+            def closed():
+                closure.append((readers[0].is_alive(), bridges[0].loop.is_closed()))
+                close()
+            def created(*args, **kwargs):
+                bridge = bridge_type(*args, **kwargs)
+                bridges.append(bridge)
+                return bridge
+            def logged(*args):
+                log(*args)
+                if args and str(args[0]).startswith('open http'):
+                    ready.set()
+            def interrupt():
+                try:
+                    assert entered.wait(2) and ready.wait(2), 'runtime did not become ready'
+                    os.kill(os.getpid(), signal.SIGINT)
+                    observation.append(returned.wait(0.05))
+                except BaseException as exc:
+                    errors.append(repr(exc))
+                finally:
+                    release.set()
+            def software_only(iface, ids):
+                assert iface == 'emu' and ids == [127]
+                return transport, kind
+            transport.recv, transport.close = held_recv, closed
+            coordinator = threading.Thread(target=interrupt)
+            try:
+                with patch.object(B, 'make_transport', software_only), patch.object(B, 'Bridge', created), patch.object(B, 'log', logged):
+                    coordinator.start()
+                    result = B.main(['--iface', 'emu', '--emu-ids', '127', '--port', '0'])
+                    reader_alive_at_return = readers[0].is_alive()
+                    returned.set()
+            finally:
+                release.set()
+                coordinator.join(3)
+                for reader in readers:
+                    reader.join(3)
+                close()
+            assert not errors, errors
+            assert observation == [False], 'main returned while recv was held'
+            assert result == 0 and not reader_alive_at_return
+            assert closure == [(False, False)], closure
+            assert bridges[0].loop.is_closed() and not bridges[0].running
+            assert not coordinator.is_alive() and not any(t.is_alive() for t in readers)
+            print('PASS real SIGINT: reader finished before transport/loop closure')
+        ''')
+        result = subprocess.run([sys.executable, '-W', 'error::ResourceWarning', '-c', script],
+                                cwd=B.ROOT, capture_output=True, text=True, timeout=10)
+        self.assertEqual(result.returncode, 0, result.stdout + result.stderr)
+        self.assertIn('PASS real SIGINT', result.stdout)
+        self.assertNotIn('ResourceWarning', result.stderr)
+
+
+class RuntimeTests(unittest.IsolatedAsyncioTestCase):
+    """Exercise production serve(), including resources the older test server did not own."""
+
+    async def asyncSetUp(self):
+        self.transport, kind = B.make_transport('emu', [1])
+        self.bridge = B.Bridge(self.transport, rs04_profiles.load('pla-bench'), 'emu', kind)
+        self.runtime = None
+        self.reader = None
+        self.releases = []
+        self.closed = []
+        self.before_tasks = asyncio.all_tasks()
+        self.sentinel = asyncio.create_task(asyncio.Event().wait())
+        original_reader, original_close = self.bridge.reader_thread, self.transport.close
+
+        def reader():
+            self.reader = threading.current_thread()
+            original_reader()
+
+        def close():
+            self.closed.append((self.bridge.stops_sent, self.bridge.loop.is_closed()))
+            original_close()
+
+        self.bridge.reader_thread = reader
+        self.transport.close = close
+        # Let the real emulated reply identify a motor to the production reader.
+        self.transport.send(*P.pack_get_id(1), True)
+
+    async def asyncTearDown(self):
+        for release in self.releases:
+            release.set()
+        self.bridge.running = False
+        if self.runtime is not None:
+            if not self.runtime.done():
+                self.runtime.cancel()
+            await asyncio.gather(self.runtime, return_exceptions=True)
+        self.transport.close()
+        if self.reader is not None:
+            await asyncio.to_thread(self.reader.join, 2)
+            self.assertFalse(self.reader.is_alive(), 'test cleanup left its own reader alive')
+        self.sentinel.cancel()
+        await asyncio.gather(self.sentinel, return_exceptions=True)
+
+    async def start(self, port=0, ready=None):
+        address = asyncio.get_running_loop().create_future()
+
+        def listening(addr):
+            if ready is not None:
+                ready(addr)
+            address.set_result(addr)
+
+        self.runtime = asyncio.create_task(B.serve(self.bridge, '127.0.0.1', port, listening))
+        done, _ = await asyncio.wait((address, self.runtime), timeout=2, return_when=asyncio.FIRST_COMPLETED)
+        if self.runtime in done:
+            await self.runtime
+        self.assertIn(address, done, 'production listener did not become ready')
+        return address.result()
+
+    def assert_finished(self):
+        self.assertFalse(self.bridge.running)
+        self.assertIsNone(self.bridge.client)
+        self.assertFalse(self.reader.is_alive())
+        self.assertEqual(len(self.closed), 1)
+        self.assertFalse(self.closed[0][1], 'the transport closed after its loop')
+        self.assertFalse(self.sentinel.done(), 'serve cancelled an unrelated caller task')
+        self.assertFalse(asyncio.get_running_loop().is_closed())
+        remaining = asyncio.all_tasks() - self.before_tasks - {asyncio.current_task(), self.sentinel}
+        self.assertFalse(remaining, f'production cleanup left tasks: {remaining}')
+
+    async def test_cancel_waits_for_reader_before_closing_transport(self):
+        await self.start()
+        entered, release = threading.Event(), threading.Event()
+        self.releases.append(release)
+        original = self.transport.recv
+
+        def held_recv(timeout):
+            entered.set()
+            if not release.wait(3):
+                raise TimeoutError('test reader gate was not released')
+            return original(timeout)
+
+        with patch.object(self.transport, 'recv', held_recv):
+            self.assertTrue(await asyncio.to_thread(entered.wait, 2))
+            self.runtime.cancel()
+            try:
+                done, _ = await asyncio.wait((self.runtime,), timeout=0.05)
+                self.assertFalse(done, 'serve returned while its transport reader was held')
+                self.assertFalse(self.closed, 'transport closed before the reader finished')
+                self.assertGreater(self.bridge.stops_sent, 0, 'STOP must precede the reader wait')
+            finally:
+                release.set()
+            with self.assertRaises(asyncio.CancelledError):
+                await self.runtime
+        self.assert_finished()
+
+    async def test_cancel_finishes_live_websocket_children_and_partial_http(self):
+        entered, release = asyncio.Event(), asyncio.Event()
+        self.releases.append(release)
+        original = self.bridge._quiet_watch
+
+        async def held_child():
+            try:
+                await original()
+            finally:
+                entered.set()
+                await release.wait()
+
+        with patch.object(self.bridge, '_quiet_watch', held_child):
+            addr = await self.start()
+            websocket = await asyncio.to_thread(WS, addr)
+            reader, writer = await asyncio.open_connection(*addr[:2])
+            try:
+                await asyncio.to_thread(websocket.recv)
+                writer.write(b'GET / HTTP/1.1\r\n')
+                await writer.drain()
+                self.runtime.cancel()
+                await asyncio.wait_for(entered.wait(), 2)
+                try:
+                    done, _ = await asyncio.wait((self.runtime,), timeout=0.05)
+                    self.assertFalse(done, 'serve returned before the real watchdog finalizer')
+                    self.assertFalse(self.closed)
+                    self.assertGreater(self.bridge.stops_sent, 0)
+                finally:
+                    release.set()
+                with self.assertRaises(asyncio.CancelledError):
+                    await self.runtime
+                try:
+                    self.assertEqual(await asyncio.wait_for(reader.read(), 2), b'')
+                except ConnectionResetError:
+                    pass  # An accepted socket with unread HTTP bytes may close with RST.
+                self.assert_finished()
+            finally:
+                release.set()
+                websocket.close()
+                writer.close()
+                try:
+                    await writer.wait_closed()
+                except ConnectionResetError:
+                    pass
+
+    async def test_bind_failure_preserves_error_and_finishes_reader(self):
+        with socket.socket() as occupied:
+            occupied.bind(('127.0.0.1', 0))
+            occupied.listen()
+            with self.assertRaises(OSError) as error:
+                await self.start(port=occupied.getsockname()[1])
+        self.assertEqual(error.exception.errno, errno.EADDRINUSE)
+        self.assert_finished()
+
+    async def test_ready_callback_failure_preserves_original_error(self):
+        error = ValueError('injected ready failure')
+
+        def fail(_):
+            raise error
+
+        with self.assertRaises(ValueError) as caught:
+            await self.start(ready=fail)
+        self.assertIs(caught.exception, error)
+        self.assert_finished()
+
+    async def test_reader_timeout_is_not_reported_as_success(self):
+        entered, release = threading.Event(), threading.Event()
+        self.releases.append(release)
+        original_recv, original_close = self.transport.recv, self.transport.close
+
+        def held_recv(timeout):
+            entered.set()
+            if not release.wait(3):
+                raise TimeoutError('test timeout gate was not released')
+            return original_recv(timeout)
+
+        def close_wakes_reader():
+            release.set()
+            original_close()
+
+        with patch.object(self.transport, 'recv', held_recv), \
+                patch.object(self.transport, 'close', close_wakes_reader), \
+                patch.object(B, 'READER_JOIN_S', 0.03):
+            await self.start()
+            self.assertTrue(await asyncio.to_thread(entered.wait, 2))
+            self.runtime.cancel()
+            with self.assertRaisesRegex(TimeoutError, 'reader did not stop'):
+                await self.runtime
+        self.assert_finished()
+
+    async def test_stop_error_still_finishes_owned_resources_and_propagates(self):
+        await self.start()
+        error = ValueError('injected STOP failure')
+        with patch.object(self.bridge, 'stop_all', side_effect=error):
+            self.runtime.cancel()
+            with self.assertRaises(ValueError) as caught:
+                await self.runtime
+        self.assertIs(caught.exception, error)
+        self.assert_finished()
 
 
 if __name__ == '__main__':
