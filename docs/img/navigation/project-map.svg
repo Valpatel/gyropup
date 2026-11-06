@@ -2,7 +2,7 @@
   <title id="title">Four paths into Gyropup</title>
   <desc id="desc">A compact circuit of four destinations: Play, Build, Understand and Contribute. Fine animated traces connect the paths. Open this SVG to follow its links, or use the ordinary links beside it. This is a navigation illustration, not a mechanical drawing.</desc>
   <style>
-    svg{--paper:#f7f5ef;--ink:#233b40;--muted:#667c7d;--line:#ccd6d0;--accent:#c6502d;--teal:#187d7a;background:var(--paper);border-radius:12px}
+    svg{width:100%;max-width:640px;height:auto;--paper:#f7f5ef;--ink:#233b40;--muted:#667c7d;--line:#ccd6d0;--accent:#c6502d;--teal:#187d7a;background:var(--paper);border-radius:12px}
     text{font-family:system-ui,-apple-system,sans-serif;fill:var(--ink)}
     .label{font-size:24px;font-weight:600;letter-spacing:-.7px}.index{font:11px ui-monospace,monospace;letter-spacing:1.5px;fill:var(--muted)}
     .wire{fill:none;stroke:var(--line);stroke-width:1.2}.trace{fill:none;stroke:var(--teal);stroke-width:1.5;stroke-dasharray:8 196;animation:travel 12s linear infinite}

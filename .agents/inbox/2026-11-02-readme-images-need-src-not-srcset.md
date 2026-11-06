@@ -37,3 +37,9 @@ Check the actual built HTML (`npm run build`), not only the SVG source: inspect 
 inherited padding, phone and desktop views, light/dark palettes, reduced motion and visible ordinary links.
 `npm run test:markdown` checks generated routes, but cannot judge visual proportion. A compact navigation map
 has a different purpose from a detailed engineering drawing; do not impose this image's dimensions on every figure.
+
+Independent review then caught a different consumer: opening the compact SVG directly on a phone still gave
+its root a fixed 640 px viewport, leaving two destinations off screen in both engines. The embedded image
+checks and four-link count had passed. Make the SVG root itself responsive as well as its embedding, and check
+the direct document's scroll width and all four link rectangles. Keep the actual fixed-width source as a failing
+control; link presence and animation state alone cannot establish usable navigation.
