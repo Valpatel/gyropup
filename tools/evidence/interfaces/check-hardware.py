@@ -33,6 +33,22 @@ def _number(tok: str):
     return float(t.rstrip('fF'))
 
 
+def input_file(identity: str) -> Path:
+    """Resolve existing config evidence identities to their current owning source.
+
+    The config's published identities remain stable; an old source copy is never
+    consulted when the current software or export input is absent.
+    """
+    relative = Path(identity)
+    if relative.is_absolute() or '..' in relative.parts:
+        raise ValueError('Config input escapes project')
+    if identity.startswith('firmware/'):
+        return ROOT / 'software' / relative
+    if identity.startswith('exports/'):
+        return ROOT / 'hardware' / relative
+    return ROOT / relative
+
+
 def source_problems(rel, d: dict) -> list:
     """A gyropup.config/1 file's 'sources': each dotted path's value must equal what its source says.
 
@@ -50,7 +66,7 @@ def source_problems(rel, d: dict) -> list:
         except (KeyError, TypeError):
             out.append(f'{rel}: sources names {path}, which the file does not have')
             continue
-        f = ROOT / (src.get('c_define') or src.get('json') or src.get('contains') or '')
+        f = input_file(src.get('c_define') or src.get('json') or src.get('contains') or '')
         if not f.is_file():
             out.append(f'{rel}: {path}: source {f.relative_to(ROOT)} does not exist')
             continue
@@ -118,7 +134,7 @@ def check() -> list:
         inv = c / 'inventory.json'
         if not inv.is_file():
             out.append(f'{rel}: no inventory.json')
-    for f in sorted(HW.rglob('*.json')):
+    for f in sorted(p for category in CATEGORIES for p in (HW / category).rglob('*.json')):
         rel = f.relative_to(ROOT)
         if any(rel.parts[1] == p for p in PCB_PROJECTS):
             continue

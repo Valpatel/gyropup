@@ -7,8 +7,8 @@ import {createLegLimits, windowAt, yawLimitRadS, RATES, legRateMMPerS, vmaxMPerS
 
 const root = new URL('../../../', import.meta.url);
 const limits = JSON.parse(await readFile(new URL('exports/leg/limits.json', root), 'utf8'));
-const model = await readFile(new URL('firmware/balance/include/gp/gp_model.h', root), 'utf8');
-const control = await readFile(new URL('firmware/balance/src/core/gp_control.c', root), 'utf8');
+const model = await readFile(new URL('software/firmware/balance/include/gp/gp_model.h', root), 'utf8');
+const control = await readFile(new URL('software/firmware/balance/src/core/gp_control.c', root), 'utf8');
 const manifest = JSON.parse(await readFile(new URL('exports/sim/v2/rig/manifest.json', root), 'utf8'));
 const [hMin, hMax] = manifest.fivebar.h_range_mm;
 const info = {hMin, hMax, v2: true};

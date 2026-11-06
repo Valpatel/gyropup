@@ -145,6 +145,76 @@ class InstallTests(unittest.TestCase):
         module = re.search(r'-m (software\.control\.rig\.\w+)', unit).group(1)
         self.assertTrue((REPO / (module.replace('.', '/') + '.py')).is_file())
 
+    def test_staged_checkout_service_uses_its_own_module_and_serves_emulator(self):
+        import json
+        import sys
+        import textwrap
+        checkout = self.root / 'checkout'
+        for relative in ('software/__init__.py', 'software/control/__init__.py'):
+            dest = checkout / relative
+            dest.parent.mkdir(parents=True, exist_ok=True)
+            shutil.copyfile(REPO / relative, dest)
+        for relative in ('software/control/rig', 'hardware/actuators/rs04/profiles',
+                         'software/site/designer/kit/rs04'):
+            shutil.copytree(REPO / relative, checkout / relative, ignore=shutil.ignore_patterns('__pycache__'))
+        for relative in ('software/site/designer/motor-tool.html', 'software/site/designer/motor-tool.js',
+                         'software/site/assets/icon.svg', 'software/site/assets/theme.js', 'software/site/assets/theme.css',
+                         'hardware/exports/motor-day/derating.json', 'hardware/exports/leg/thermal/motor_thermal.json'):
+            dest = checkout / relative
+            dest.parent.mkdir(parents=True, exist_ok=True)
+            shutil.copyfile(REPO / relative, dest)
+        run('--root', str(self.root / 'image'), '--checkout', str(checkout))
+        unit = (self.root / 'image/etc/systemd/system/gyropup-rs04-bridge.service').read_text()
+        working = re.search(r'^WorkingDirectory=(.+)$', unit, re.M).group(1)
+        module = re.search(r'ExecStart=/usr/bin/python3 -m ([\w.]+)', unit).group(1)
+        # A generic installed software package must not shadow the selected checkout.
+        foreign = self.root / 'foreign'
+        (foreign / 'software').mkdir(parents=True)
+        (foreign / 'software/__init__.py').write_text('raise AssertionError("foreign package selected")\n')
+        script = textwrap.dedent("""
+            import importlib, os, signal, threading
+            from pathlib import Path
+            from urllib.request import urlopen
+            B = importlib.import_module(MODULE)
+            assert Path(B.__file__).resolve() == Path.cwd() / 'software/control/rig/rs04_bridge.py'
+            assert B.ROOT == Path.cwd()
+            original = B.log
+            errors = []
+            workers = []
+            def client(address):
+                try:
+                    with urlopen(address + 'designer/motor-tool.html', timeout=2) as response:
+                        assert response.status == 200
+                        assert response.read() == (Path.cwd() / 'software/site/designer/motor-tool.html').read_bytes()
+                    assert B.served_file('/software/control/rig/rs04_bridge.py') is None
+                    assert B.served_file('/designer/kit/rs04-lookalike/file.js') is None
+                except BaseException as exc:
+                    errors.append(repr(exc))
+                finally:
+                    os.kill(os.getpid(), signal.SIGINT)
+            def logged(*args):
+                original(*args)
+                if args and str(args[0]).startswith('open http'):
+                    thread = threading.Thread(target=client, args=(str(args[0]).split()[1],))
+                    workers.append(thread)
+                    thread.start()
+            B.log = logged
+            try:
+                assert B.main(['--iface', 'emu', '--emu-ids', '127', '--port', '0']) == 0
+            finally:
+                for thread in workers:
+                    thread.join(3)
+            assert workers and not errors, errors
+            assert not any(t.is_alive() for t in workers)
+            print('PASS staged service: selected checkout module, real emulator, tool bytes, SIGINT cleanup')
+        """).replace('MODULE', json.dumps(module))
+        result = subprocess.run([sys.executable, '-c', script], cwd=working,
+                                env={**os.environ, 'PYTHONPATH': str(foreign)},
+                                text=True, capture_output=True, timeout=10)
+        self.assertEqual(result.returncode, 0, result.stdout + result.stderr)
+        self.assertIn('PASS staged service', result.stdout)
+        self.assertIn('STOP all (the bridge is shutting down)', result.stdout)
+
     def test_shellcheck(self):
         if not shutil.which('shellcheck'):
             self.skipTest('shellcheck is not installed')

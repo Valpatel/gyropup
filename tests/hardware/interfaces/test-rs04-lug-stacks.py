@@ -38,12 +38,12 @@ class LugStackControls(unittest.TestCase):
         writer = next(n for n in tree.body if isinstance(n, ast.FunctionDef) and n.name == 'write_doc')
         with tempfile.TemporaryDirectory() as temp:
             root = Path(temp)
-            (root / 'docs').mkdir()
+            (root / 'docs/legs').mkdir(parents=True)
             namespace = {'R': root}
             exec(compile(ast.Module(body=[writer], type_ignores=[]), 'rig_assembly.py', 'exec'), namespace)
             namespace['write_doc']([{'step': 7, 'title': motor.elts[0].value,
                                     'picture': 'exports/rig/assembly/step-07.png', 'how': prose}])
-            text = (root / 'docs/leg-rig-assembly.md').read_text()
+            text = (root / 'docs/legs/leg-rig-assembly.md').read_text()
         self.assertLess(text.index('Unqualified assembly walkthrough'), text.index('## 7.'))
         self.assertIn('no physical coupon results are recorded', text)
         self.assertIn('rs04-mounting-fit.md', text)
@@ -220,7 +220,7 @@ class ReceiptControls(unittest.TestCase):
                 self.validate(changed)
 
     def test_source_context_toolkit_private_identity_required(self):
-        for mutate in (lambda d: d['source_inputs']['project']['files'].pop('cad/fivebar.py'),
+        for mutate in (lambda d: d['source_inputs']['project']['files'].pop('hardware/cad/legs/fivebar.py'),
                        lambda d: d['source_inputs']['context_files'].clear(),
                        lambda d: d['source_inputs'].update(toolkit_commit='0' * 40),
                        lambda d: d['source_inputs']['project'].update(toolkit_sources_sha256='0' * 64),

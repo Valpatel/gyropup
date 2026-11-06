@@ -32,8 +32,8 @@ from inventory import Repo, Stale  # noqa: E402  (the bound-source reader the in
 OUT_JSON = HERE / 'screen.json'
 OUT_MD = HERE / 'screen.md'
 SHEETS = HERE / 'sheets'
-LAYER_EVIDENCE = 'research/fea-v060-29/evidence/leg-layer-check.json'
-ORIENT_EVIDENCE = 'research/leg-preprint/evidence/orientation-screen.json'
+LAYER_EVIDENCE = 'docs/research/fea-v060-29/evidence/leg-layer-check.json'
+ORIENT_EVIDENCE = 'docs/research/leg-preprint/evidence/orientation-screen.json'
 
 SOURCES = {
     'bambu_tds': 'Bambu Lab PA6-CF technical data sheet V3.0 (catalog/materials.json pa6-cf source)',
@@ -93,15 +93,15 @@ def materials(repo):
     ev = repo.json(LAYER_EVIDENCE)
     md = next(row['material_data'] for row in ev['rows'] if row['material_data']['key'] == 'pa6_cf_xy')
     mz = next(row['material_data'] for row in ev['rows'] if row['material_data']['key'] == 'pa6_cf_z')
-    tds = repo.json('catalog/materials.json')['pa6-cf']
+    tds = repo.json('hardware/catalog/materials.json')['pa6-cf']
     s_z = md['strength_z_mpa']
     return {
         'E_xy_humid': md['E_mpa'], 'E_z_humid': mz['E_mpa'],
         'E_xy_dry': tds['modulus_gpa'] * 1000.0, 'E_z_dry': 2170.0, 'S_xy_dry': float(tds['tensile_mpa']),
         'S_xy': md['strength_xy_mpa'], 'S_z': s_z, 'S_s': s_z / math.sqrt(3), 'S_s_half': s_z / 2,
         'density': tds['density_g_cm3'],
-        'washer_mpa': repo.num('cad/studies.py', r"'washer_mpa': ([\d.]+),"),
-        'bearing_humid_mpa': repo.num('cad/studies.py', r"'bearing_mpa': ([\d.]+),"),
+        'washer_mpa': repo.num('hardware/cad/analysis/studies.py', r"'washer_mpa': ([\d.]+),"),
+        'bearing_humid_mpa': repo.num('hardware/cad/analysis/studies.py', r"'bearing_mpa': ([\d.]+),"),
         'source': f"{SOURCES['cadagent_rows']}; dry moduli {SOURCES['bambu_tds']} (X-Y {tds['modulus_gpa']:g} GPa, Z 2.17 GPa)",
     }
 
@@ -147,17 +147,17 @@ def stl_faces(path):
 
 
 def print_parts(repo, mat):
-    plan = repo.json('exports/leg/print-plan.json')
+    plan = repo.json('hardware/exports/leg/print-plan.json')
     rot = {}
-    text = repo.text('cad/build_leg.py')
+    text = repo.text('hardware/cad/builders/build_leg.py')
     for name in plan['parts']:
         found = [d for d in ('DOWN_OUTER', 'DOWN_INNER') if f"'{name}': {d}" in text]
         if len(found) != 1:
             raise Stale(f"cad/build_leg.py: no single ROT entry for {name}; update research/leg-preprint/screen.py")
-        repo.has('cad/build_leg.py', f"'{name}': {found[0]}")
+        repo.has('hardware/cad/builders/build_leg.py', f"'{name}': {found[0]}")
         rot[name] = found[0]
-    repo.has('cad/build_leg.py', "DOWN_OUTER = ((1, 0, 0), -90)        # the part's +y face on the bed")
-    repo.has('cad/build_leg.py', "DOWN_INNER = ((1, 0, 0), 90)         # its -y face on the bed")
+    repo.has('hardware/cad/builders/build_leg.py', "DOWN_OUTER = ((1, 0, 0), -90)        # the part's +y face on the bed")
+    repo.has('hardware/cad/builders/build_leg.py', "DOWN_INNER = ((1, 0, 0), 90)         # its -y face on the bed")
     rows = []
     for name, p in plan['parts'].items():
         stl = (ROOT / 'hardware/exports/leg') / f'{name}.stl'
@@ -217,8 +217,8 @@ def layer_rows(repo, mat):
 def where(part, c, repo):
     """A plain name for a worst corner, from the part's own frame (each part's origin and axes as cad/fivebar.py)."""
     if getattr(repo, '_links', None) is None:      # bound once per repository object, not once per row
-        repo._links = (repo.num('cad/fivebar.py', r"'D': [\d.]+, 'l1': ([\d.]+), 'l2'"),
-                       repo.num('cad/fivebar.py', r"'D': [\d.]+, 'l1': [\d.]+, 'l2': ([\d.]+),"))
+        repo._links = (repo.num('hardware/cad/legs/fivebar.py', r"'D': [\d.]+, 'l1': ([\d.]+), 'l2'"),
+                       repo.num('hardware/cad/legs/fivebar.py', r"'D': [\d.]+, 'l1': [\d.]+, 'l2': ([\d.]+),"))
     l1, l2 = repo._links
     x, y, z = c
     if part == 'upper_link':
@@ -293,32 +293,32 @@ def fit_verdict(band, dry, press, s_dry):
 def fits(repo, mat):
     """Press and slide fits into printed holes: the CAD's hole, the part's tolerance, the interference band once the
     printed hole closes up by PRINT_HOLE_ERR, and what that does dry (at assembly) and humid (in service)."""
-    eye_r = repo.num('cad/fivebar.py', r"'eye_r': ([\d.]+), 'eye_stub_fillet'")
-    comp = repo.num('cad/fivebar.py', r'^PRINT_HOLE_COMP = ([\d.]+)')
-    repo.has('cad/fivebar.py', 'u = u.cut(ycyl(EYE_SLEEVE[0] / 2 + PRINT_HOLE_COMP / 2, eye_sleeve_end(), t + 1, l1, 0))')
-    sleeve_hole = repo.num('cad/fivebar.py', r'^EYE_SLEEVE = \(([\d.]+), ') + comp
-    repo.has('cad/fivebar.py', "re, fe = P['eye_r'], P['eye_stub_fillet']")
-    stub_in = repo.num('cad/fivebar.py', r"ycyl\(re - ([\d.]+), -EYE_BOSS, 0\.01, l1, 0\)")   # the eye stub's radius
-    sl_len = repo.num('cad/fivebar.py', r'^EYE_SLEEVE = \([\d.]+, [\d.]+, ([\d.]+)\)')
-    sl_n = repo.num('cad/fivebar.py', r'^EYE_SLEEVES = (\d+)')
-    kc_od = repo.num('cad/fivebar.py', r"'bearing': '6301-2RS', 'bearing_od': ([\d.]+),")
-    kc_hub = repo.num('cad/fivebar.py', r"'bearing_od': [\d.]+, 'bearing_w': [\d.]+, 'hub_od': ([\d.]+),")
-    kc_w = repo.num('cad/fivebar.py', r"'bearing': '6301-2RS', 'bearing_od': [\d.]+, 'bearing_w': ([\d.]+),")
-    kc_play = repo.num('cad/fivebar.py', r"c = ycyl\(bo / 2 \+ ([\d.]+), y0 - 0\.01, y0 \+ bw\)")
-    ac = repo.json('cad/interfaces.json')['AC-L']
-    ac_play = repo.num('cad/fivebar.py', r"f = f\.cut\(ycyl\(AC\['bearing_od'\] / 2 \+ ([\d.]+), ao\[0\], e1 \+ 1, l2\)\)")
-    repo.has('cad/fivebar.py', "r_eye = AC['bearing_od'] / 2 + P['apex_wall']")
-    ring_wall = repo.num('cad/fivebar.py', r"'apex_wall': ([\d.]+), 'front_eye_fillet'")
+    eye_r = repo.num('hardware/cad/legs/fivebar.py', r"'eye_r': ([\d.]+), 'eye_stub_fillet'")
+    comp = repo.num('hardware/cad/legs/fivebar.py', r'^PRINT_HOLE_COMP = ([\d.]+)')
+    repo.has('hardware/cad/legs/fivebar.py', 'u = u.cut(ycyl(EYE_SLEEVE[0] / 2 + PRINT_HOLE_COMP / 2, eye_sleeve_end(), t + 1, l1, 0))')
+    sleeve_hole = repo.num('hardware/cad/legs/fivebar.py', r'^EYE_SLEEVE = \(([\d.]+), ') + comp
+    repo.has('hardware/cad/legs/fivebar.py', "re, fe = P['eye_r'], P['eye_stub_fillet']")
+    stub_in = repo.num('hardware/cad/legs/fivebar.py', r"ycyl\(re - ([\d.]+), -EYE_BOSS, 0\.01, l1, 0\)")   # the eye stub's radius
+    sl_len = repo.num('hardware/cad/legs/fivebar.py', r'^EYE_SLEEVE = \([\d.]+, [\d.]+, ([\d.]+)\)')
+    sl_n = repo.num('hardware/cad/legs/fivebar.py', r'^EYE_SLEEVES = (\d+)')
+    kc_od = repo.num('hardware/cad/legs/fivebar.py', r"'bearing': '6301-2RS', 'bearing_od': ([\d.]+),")
+    kc_hub = repo.num('hardware/cad/legs/fivebar.py', r"'bearing_od': [\d.]+, 'bearing_w': [\d.]+, 'hub_od': ([\d.]+),")
+    kc_w = repo.num('hardware/cad/legs/fivebar.py', r"'bearing': '6301-2RS', 'bearing_od': [\d.]+, 'bearing_w': ([\d.]+),")
+    kc_play = repo.num('hardware/cad/legs/fivebar.py', r"c = ycyl\(bo / 2 \+ ([\d.]+), y0 - 0\.01, y0 \+ bw\)")
+    ac = repo.json('hardware/cad/robot/interfaces.json')['AC-L']
+    ac_play = repo.num('hardware/cad/legs/fivebar.py', r"f = f\.cut\(ycyl\(AC\['bearing_od'\] / 2 \+ ([\d.]+), ao\[0\], e1 \+ 1, l2\)\)")
+    repo.has('hardware/cad/legs/fivebar.py', "r_eye = AC['bearing_od'] / 2 + P['apex_wall']")
+    ring_wall = repo.num('hardware/cad/legs/fivebar.py', r"'apex_wall': ([\d.]+), 'front_eye_fillet'")
     dw = r'web = web\.cut\(ycyl\({} \+ PRINT_HOLE_COMP / 2 \+ {}, yf0 - 1, yf0 \+ {}, x, z\)\)'
     num, any_ = r'([\d.]+)', r'[\d.]+'
-    dowel_r = repo.num('cad/fivebar.py', dw.format(num, any_, any_)) + comp / 2
-    dowel_cut = -repo.num('cad/fivebar.py', dw.format(any_, num, any_))
-    dowel_in = repo.num('cad/fivebar.py', dw.format(any_, any_, num))
-    stop_d = repo.num('cad/fivebar.py', r'^STOP_PIN = \(([\d.]+), ')
-    stop_play = repo.num('cad/fivebar.py', r'^STOP_HOLE_PLAY = ([\d.]+)')
-    stop_in = repo.num('cad/fivebar.py', r'^STOP_PIN = \([\d.]+, [\d.]+, ([\d.]+)\)')
-    journal = 2 * repo.num('cad/fivebar.py', r"\.union\(ycyl\(([\d.]+), h0, ab1 \+ 0\.01, l2\)\)")
-    hw = {i['key']: i for i in repo.json('catalog/hardware.json')}
+    dowel_r = repo.num('hardware/cad/legs/fivebar.py', dw.format(num, any_, any_)) + comp / 2
+    dowel_cut = -repo.num('hardware/cad/legs/fivebar.py', dw.format(any_, num, any_))
+    dowel_in = repo.num('hardware/cad/legs/fivebar.py', dw.format(any_, any_, num))
+    stop_d = repo.num('hardware/cad/legs/fivebar.py', r'^STOP_PIN = \(([\d.]+), ')
+    stop_play = repo.num('hardware/cad/legs/fivebar.py', r'^STOP_HOLE_PLAY = ([\d.]+)')
+    stop_in = repo.num('hardware/cad/legs/fivebar.py', r'^STOP_PIN = \([\d.]+, [\d.]+, ([\d.]+)\)')
+    journal = 2 * repo.num('hardware/cad/legs/fivebar.py', r"\.union\(ycyl\(([\d.]+), h0, ab1 \+ 0\.01, l2\)\)")
+    hw = {i['key']: i for i in repo.json('hardware/catalog/hardware.json')}
     sl_tol = hw['eye_sleeve']['specs']['od_tol_mm']
     rows = [
         # name, part, hole as drawn, the mating part's diameter band, ring OD (None: plate), engaged length, mouth on the bed?
@@ -379,7 +379,7 @@ def clamp_row(name, d, grip_mm, area_mm2, preload_n, mat, bolt_len_mm, sleeve=Fa
 
 def preload_table(repo, mat, J):
     hub, lugs, wheel = J['leg.upper_link_hub'], J['leg.hip_frame_lugs'], J['leg.wheel_botwheel']
-    hub_pre = repo.num('cad/leg_studies.py', r'^HUB_PRELOAD_N = ([\d.]+)')
+    hub_pre = repo.num('hardware/cad/legs/leg_studies.py', r'^HUB_PRELOAD_N = ([\d.]+)')
     rows = [
         clamp_row('upper link hub, today (M5 head on the link)', 5, hub['clamp']['printed_mm'], hub['clamp']['bearing_area_mm2'],
                   hub_pre, mat, 40.0),
@@ -415,9 +415,9 @@ FRAME_GRIP = 81.3 - 4.5                                         # flange end (y 
 # ---------------------------------------------------------------------------------------------------- joints
 
 def joints(repo, mat, layers):
-    inv = repo.json('research/insert-joints/joints.json')
+    inv = repo.json('docs/research/insert-joints/joints.json')
     J = {j['id']: j for j in inv['joints'] if j['id'].startswith('leg.')}
-    S = repo.json('exports/leg/fea/summary.json')['joints']
+    S = repo.json('hardware/exports/leg/fea/summary.json')['joints']
     worst = {}
     for row in layers['rows']:
         k = (row['part'], row['where'].split(' (')[0])
@@ -429,8 +429,8 @@ def joints(repo, mat, layers):
     hf = J['leg.hip_frame_mount']
     pull = hf['pullout_repo_n']
     fault = max(l['per_insert_n'] for l in hf['loads'])
-    flange_t = repo.num('cad/fivebar.py', r'^FLANGE_T, FLANGE_X = ([\d.]+), ')
-    knurl = repo.json('research/insert-joints/joints.json')['inserts']['insert_m5']['od_mm']
+    flange_t = repo.num('hardware/cad/legs/fivebar.py', r'^FLANGE_T, FLANGE_X = ([\d.]+), ')
+    knurl = repo.json('docs/research/insert-joints/joints.json')['inserts']['insert_m5']['od_mm']
     wall = (flange_t - knurl) / 2             # the M5 insert's knurl (research/insert-joints) centred in the flange
     sleeved = proof_preload(5, '8.8')
     flange = [row for row in layers['rows'] if row['part'] == 'hip_frame' and row['where'].startswith('flange')]
@@ -475,7 +475,7 @@ def joints(repo, mat, layers):
     # 2. upper link hub on the machined adapter
     hub = J['leg.upper_link_hub']
     h1, h3 = S['R1']['hub_rear'], S['R3']['hub_rear']
-    hub_pre = repo.num('cad/leg_studies.py', r'^HUB_PRELOAD_N = ([\d.]+)')
+    hub_pre = repo.num('hardware/cad/legs/leg_studies.py', r'^HUB_PRELOAD_N = ([\d.]+)')
     ring_pre = 4000.0
     lift_ring = h1['edge_lifts_at_nm'] * 8 * ring_pre / (8 * hub_pre)
     out.append(joint_entry(
@@ -547,7 +547,7 @@ def joints(repo, mat, layers):
 
     # 5. knee bearings and spacer (lower links)
     ks = J['leg.knee_spacer']
-    hw = {i['key']: i for i in repo.json('catalog/hardware.json')}
+    hw = {i['key']: i for i in repo.json('hardware/catalog/hardware.json')}
     da = hw['bearing_6301']['specs']['abutments_mm']
     out.append(joint_entry(
         'leg.knee_spacer', ks['qty_robot'], 'the inner races\' clamp at each knee',
@@ -565,9 +565,9 @@ def joints(repo, mat, layers):
     ring = min((row for row in layers['rows'] if row['part'] == 'front_link'), key=lambda x: x['layer_sf'] / x['target'])
     # a 6061 hub in place of the printed one: the Ø60 journal from the hub's end (y -6) to the outer 61812's face (y 45)
     # and the Ø64 shoulder from there to the link's inner face (y 54), both round the Ø48 bore (cad/fivebar.py Stack)
-    jr = repo.num('cad/fivebar.py', r"\.union\(ycyl\(([\d.]+), h0, ab1 \+ 0\.01, l2\)\)")
-    sr = repo.num('cad/fivebar.py', r"k = k\.union\(ycyl\(([\d.]+), ab1, h1 \+ 0\.01, l2\)\)")
-    br = repo.num('cad/fivebar.py', r"k = k\.cut\(ycyl\(([\d.]+), h0 - 1, h1 - 0\.01, l2\)\)")
+    jr = repo.num('hardware/cad/legs/fivebar.py', r"\.union\(ycyl\(([\d.]+), h0, ab1 \+ 0\.01, l2\)\)")
+    sr = repo.num('hardware/cad/legs/fivebar.py', r"k = k\.union\(ycyl\(([\d.]+), ab1, h1 \+ 0\.01, l2\)\)")
+    br = repo.num('hardware/cad/legs/fivebar.py', r"k = k\.cut\(ycyl\(([\d.]+), h0 - 1, h1 - 0\.01, l2\)\)")
     hub_mm3 = annulus(2 * jr, 2 * br) * (45.0 + 6.0) + annulus(2 * sr, 2 * br) * (54.0 - 45.0)
     apex_hub_g = hub_mm3 / 1000 * (2.70 - mat['density'])
     out.append(joint_entry(
@@ -629,10 +629,10 @@ def joint_entry(jid, qty, role, today, high, options, pick, why, pr2, mass_g_per
 # ---------------------------------------------------------------------------------------------------- five-bar play
 
 def fivebar(repo):
-    D = repo.num('cad/fivebar.py', r"'D': ([\d.]+), 'l1'")
-    l1 = repo.num('cad/fivebar.py', r"'D': [\d.]+, 'l1': ([\d.]+), 'l2'")
-    l2 = repo.num('cad/fivebar.py', r"'D': [\d.]+, 'l1': [\d.]+, 'l2': ([\d.]+),")
-    repo.has('cad/fivebar.py', 'E = E1 if E1[1] < E2[1] else E2')
+    D = repo.num('hardware/cad/legs/fivebar.py', r"'D': ([\d.]+), 'l1'")
+    l1 = repo.num('hardware/cad/legs/fivebar.py', r"'D': [\d.]+, 'l1': ([\d.]+), 'l2'")
+    l2 = repo.num('hardware/cad/legs/fivebar.py', r"'D': [\d.]+, 'l1': [\d.]+, 'l2': ([\d.]+),")
+    repo.has('hardware/cad/legs/fivebar.py', 'E = E1 if E1[1] < E2[1] else E2')
     return D, l1, l2
 
 
@@ -702,8 +702,8 @@ def play_sensitivity(repo):
 # ---------------------------------------------------------------------------------------------------- impact
 
 def impact(repo):
-    rig = repo.json('exports/leg/rig-results.json')['scenarios']
-    S = repo.json('exports/leg/fea/summary.json')['joints']
+    rig = repo.json('hardware/exports/leg/rig-results.json')['scenarios']
+    S = repo.json('hardware/exports/leg/fea/summary.json')['joints']
     rows = []
     for n in ('drop_150', 'jump_peak', 'power_off', 'power_off_damped'):
         s = rig[n]
@@ -796,7 +796,7 @@ def document(repo):
     jrows, J = joints(repo, mat, layers)
     doc = {
         'schema': 1,
-        'generator': 'research/leg-preprint/screen.py',
+        'generator': 'docs/research/leg-preprint/screen.py',
         'status': 'screen: nothing here has been printed or tested; the coupons and the proof loads decide',
         'materials': {k: (r(v, 2) if isinstance(v, float) else v) for k, v in mat.items()},
         'parts': print_parts(repo, mat),
@@ -892,14 +892,14 @@ def markdown(doc):
     return '\n'.join(L)
 
 
-PACKAGE_DOC = 'docs/leg-print-package.md'
-FINAL_LAYER = 'research/leg-preprint/evidence/leg-layer-check-print-ready.json'
-FINAL_GATE = 'exports/leg/fea/summary.json'
+PACKAGE_DOC = 'docs/legs/leg-print-package.md'
+FINAL_LAYER = 'docs/research/leg-preprint/evidence/leg-layer-check-print-ready.json'
+FINAL_GATE = 'hardware/exports/leg/fea/summary.json'
 BLOCK = ('<!-- gen:final-record -->', '<!-- /gen:final-record -->')
 
 
-C4_EVIDENCE = 'research/leg-preprint/evidence/c4-fea.json'
-HIP_MESH = 'research/leg-preprint/evidence/hip-frame-print-ready.json'
+C4_EVIDENCE = 'docs/research/leg-preprint/evidence/c4-fea.json'
+HIP_MESH = 'docs/research/leg-preprint/evidence/hip-frame-print-ready.json'
 ROBOT_KG = 38.69      # the robot with this branch (docs/leg-print-package.md section 9: the ledger's 38.56 + 2 x 64 g)
 
 
@@ -943,7 +943,7 @@ def final_record(repo, mat):
                      'gate_before': b['gate_sf'] if b else None, 'gate_now': g,
                      'layer_before': b['layer_check']['safety_factor'] if b else None, 'layer_now': sf,
                      'S_s_needed_mpa': need, 'where': where(x['part'], w['corner_mm'], repo)})
-    design_kg = repo.num('cad/leg_studies.py', r'^ROBOT_KG = ([\d.]+)')
+    design_kg = repo.num('hardware/cad/legs/leg_studies.py', r'^ROBOT_KG = ([\d.]+)')
     for x in rows:
         x['gate_at_robot_mass'] = r(x['gate_now'] * design_kg / ROBOT_KG, 2)
     hf = repo.json(HIP_MESH)['meshes']

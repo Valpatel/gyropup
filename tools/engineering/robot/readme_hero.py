@@ -116,4 +116,4 @@ for i, t in enumerate(['Built leg first: a five-bar leg on two RS-04s,', 'and th
     d.text((x, y + 210 + i * 62), t, font=text, fill='#aab4c2')
 d.text((x, y + 430), 'DESIGNED · SIMULATED · CHECKED WITH CAD-AGENT', font=mono, fill='#5fd3e0')
 im.save((R / 'docs/img/hero/hero.jpg'), quality=88, optimize=True, progressive=True)
-print('docs/hero.jpg', im.size)
+print('docs/img/hero/hero.jpg', im.size)

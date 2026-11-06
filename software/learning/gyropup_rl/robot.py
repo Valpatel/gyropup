@@ -61,7 +61,7 @@ def design_path() -> Path:
     GYROPUP_MODEL_DIR, if set, points at an already generated robot.xml + model.json and skips the build: use it to
     replay or export a policy on exactly the model it was trained on after the design has moved on.
     """
-    p = Path(os.environ.get('GYROPUP_DESIGN', 'designs/default.json'))
+    p = Path(os.environ.get('GYROPUP_DESIGN', 'hardware/designs/default.json'))
     return p if p.is_absolute() else (REPO / p)
 
 
@@ -76,7 +76,7 @@ def build_model(design: Path | None = None, force: bool = False) -> Path:
     if force or stale:
         if not MAIN_PY.exists():
             raise FileNotFoundError(f'{MAIN_PY} not found: the main venv builds the model (sim/model.py)')
-        code = 'import sys; from pathlib import Path; from sim.model import build; build(Path(sys.argv[1]), Path(sys.argv[2]))'
+        code = 'import sys; from pathlib import Path; from software.simulation.model import build; build(Path(sys.argv[1]), Path(sys.argv[2]))'
         subprocess.run([str(MAIN_PY), '-c', code, str(design), str(out)], cwd=REPO, check=True)
     return out
 

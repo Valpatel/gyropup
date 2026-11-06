@@ -35,8 +35,8 @@ def digest(path):
 def source_hashes():
     from hardware.cad.manufacturing.print_provenance import source_files
     paths = set(source_files(ROOT))
-    paths.update(ROOT / p for p in ('sim/leg_rig.py', 'sim/leg_control.py',
-        'exports/leg/rig-results.json', 'exports/leg/fea/summary.json', 'tools/export-hip-frame-e1.py'))
+    paths.update(ROOT / p for p in ('software/simulation/leg_rig.py', 'software/simulation/leg_control.py',
+        'exports/leg/rig-results.json', 'exports/leg/fea/summary.json', 'tools/engineering/legs/export-hip-frame-e1.py'))
     return {p.relative_to(ROOT).as_posix(): digest(p) for p in sorted(paths)}
 
 

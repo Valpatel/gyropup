@@ -129,8 +129,8 @@ AMMO_D = (22.2, 22.8)          # D67: any Rival-compatible round 22.2-22.8 mm (1
 # Every file the turret's geometry is built from: cad/turret.py, every cad/ module it imports (and they import), and the
 # data files they read when imported. cad/test_turret_gate_sources.py walks the imports and fails on one missing
 # here (cad/turret_snaps.py was, from #131 until the review of PR #181).
-GEOMETRY_SOURCES = ('cad/turret.py', 'cad/turret_base_board.py', 'cad/turret_boards.py', 'cad/turret_snaps.py', 'cad/gmi.py',
-                    'cad/interfaces.json', 'catalog/interfaces.json', 'catalog/materials.json')
+GEOMETRY_SOURCES = ('hardware/__init__.py', 'hardware/cad/__init__.py', 'hardware/cad/turret/turret.py', 'hardware/cad/turret/turret_base_board.py', 'hardware/cad/turret/turret_boards.py', 'hardware/cad/turret/turret_snaps.py', 'hardware/cad/robot/gmi.py',
+                    'hardware/cad/robot/interfaces.json', 'hardware/catalog/interfaces.json', 'hardware/catalog/materials.json')
 
 
 def geometry_fingerprint():

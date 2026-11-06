@@ -188,8 +188,8 @@ class GaugeReceiptTests(unittest.TestCase):
         self.assertEqual(data['gate'], 'ordered-motor-shaft-survey-gauge')
         self.assertIs(data['pass'], True)
         self.assertEqual(data['counts'], {'pass': 12, 'warn': 0, 'fail': 0})
-        self.assertEqual(set(data['source_sha256']), {'research/ordered-turret-motor/gauge.py',
-                         'research/ordered-turret-motor/seller-claims.json'})
+        self.assertEqual(set(data['source_sha256']), {'docs/research/ordered-turret-motor/gauge.py',
+                         'docs/research/ordered-turret-motor/seller-claims.json'})
         self.assertEqual(set(data['artifact_sha256']), {'shaft-clearance-survey.step', 'shaft-clearance-survey.stl'})
         for path, digest in data['source_sha256'].items():
             self.assertEqual(m.sha(ROOT / path), digest, path)

@@ -32,7 +32,7 @@ ROOT = (HERE.parents[2])
 JOINTS = HERE / 'joints.json'
 OUT_JSON = HERE / 'phase2.json'
 OUT_MD = HERE / 'phase2.md'
-GENERATOR = 'research/insert-joints/phase2.py'
+GENERATOR = 'docs/research/insert-joints/phase2.py'
 
 PIN = 'v0.18.2'          # the cad-agent release this was run on
 MODULES = ('cadagent.formulas.inserts', 'cadagent.formulas.limiters', 'cadagent.mechanical.inserts')
@@ -636,7 +636,7 @@ def document(joints_path: Path, tk: Toolkit, tag: str, commit: str):
         'generator_sha256': sha256(Path(__file__)),
         'issue': 'Valpatel/gyropup#137, phase 2',
         'status': 'screen, not qualification: the toolkit set beside inventory.py; nothing printed or tested',
-        'joints_json': {'path': 'research/insert-joints/joints.json', 'sha256': sha256(joints_path),
+        'joints_json': {'path': 'docs/research/insert-joints/joints.json', 'sha256': sha256(joints_path),
                         'summary': doc['summary']},
         'toolkit': {'repo': 'Valpatel/cad-agent', 'tag': tag, 'commit': commit, 'modules': list(MODULES),
                     'material_status': tk.mi.STATUS, 'margin': tk.mi.MARGIN},

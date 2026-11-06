@@ -21,8 +21,8 @@ import sys
 
 ROOT = (Path(__file__).resolve().parents[3])
 OUT = (ROOT / 'hardware/exports/turret/component-preview')
-SOURCES = ('cad/turret.py', 'cad/gmi.py', 'cad/interfaces.json', 'catalog/interfaces.json',
-           'catalog/materials.json', 'tools/export-turret-cut-previews.py')
+SOURCES = ('hardware/cad/turret/turret.py', 'hardware/cad/robot/gmi.py', 'hardware/cad/robot/interfaces.json', 'hardware/catalog/interfaces.json',
+           'hardware/catalog/materials.json', 'tools/engineering/turret/export-turret-cut-previews.py')
 sys.path.insert(0, str((ROOT / 'hardware/cad')))
 
 

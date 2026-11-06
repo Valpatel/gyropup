@@ -1,3 +1,4 @@
+import {publicForSource} from '../../../tools/site/source-layout.mjs';
 /** Product integration: real tables, original downloads, and browser-local part state. */
 import assert from 'node:assert/strict';
 import {mkdir,readFile,writeFile} from 'node:fs/promises';
@@ -99,9 +100,9 @@ try{
  // Check every original against the served revision's Git tree, not a frozen
  // file count or the inventory endpoint's own claim of completeness.
  assert.match(version.revision,/^[a-f0-9]{40}$/);
- const publishedRoots=['designer','exports','catalog','designs','docs','research','cad','sim','hardware','firmware'];
+ const publishedRoots=['hardware','software','docs'];
  const committed=execFileSync('git',['ls-tree','-rz','--name-only',version.revision,'--',...publishedRoots],{cwd:new URL('../../../', import.meta.url)}).toString().split('\0').filter(Boolean);
- const expectedModels=committed.filter(file=>/\.(stl|step|stp|3mf)$/i.test(file)).map(file=>'/'+file).sort();
+ const expectedModels=committed.filter(file=>/\.(stl|step|stp|3mf)$/i.test(file)).map(publicForSource).filter(Boolean).map(file=>'/'+file).sort();
  assert.ok(expectedModels.length>0,'Served revision contains original CAD files');
  assert.deepEqual(inventory.files.map(file=>file.path).sort(),expectedModels,'Every committed public original appears exactly once');
  for(const file of inventory.files)assert.equal(file.format,file.path.split('.').pop().toLowerCase());

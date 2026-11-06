@@ -50,8 +50,8 @@ def leg_lines() -> list:
     """The leg's bought parts per leg from exports/leg/bom.json; while that file predates D46 (machined adapters),
     its adapter screws and the counts D46 changes are corrected here."""
     bom = load('exports/leg/bom.json', {'per_leg': []})['per_leg']
-    alts = load('catalog/alternates.json', {})
-    hw = {i['key']: i for i in load('catalog/hardware.json', [])}
+    alts = load('hardware/catalog/alternates.json', {})
+    hw = {i['key']: i for i in load('hardware/catalog/hardware.json', [])}
     for f in ('leg_actuators.json', 'wheel_motors.json'):
         for i in load(f'catalog/{f}', []):
             hw.setdefault(i['id'], i)
@@ -106,7 +106,7 @@ def leg_lines() -> list:
 
 def rig_lines() -> list:
     rows = []
-    for it in load('catalog/rig.json', []):
+    for it in load('hardware/catalog/rig.json', []):
         b = (it.get('buy') or [{}])[0]
         m = SHARED.search(it.get('notes') or '')
         rows.append({'key': it['key'], 'group': it['group'], 'qty': it['qty'], 'name': it['name'], 'used_for': it.get('used_for', ''),
@@ -135,7 +135,7 @@ def add_bench_extra(rows: list) -> list:
 
 
 def filament_lines() -> list:
-    mats = load('catalog/materials.json', {})
+    mats = load('hardware/catalog/materials.json', {})
     grams = {}
     skip = {'output_adapter'}                                     # D46: machined now
     for p in ('exports/leg/print-plan.json', 'exports/rig/print-plan.json', 'exports/rig/bench/print-plan.json'):

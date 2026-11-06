@@ -595,7 +595,7 @@ def study(quick=False, seed=1):
         import software.simulation.turret_ball as tb
         pop = tb.population(120 if quick else 400, seed=seed)
         balls = ceiling_balls([b.launch() for b in pop])           # accepted rounds only (D67): clipped to 22.2-22.8 mm, 1.6-2.0 g
-        ball_src = 'sim/turret_ball.py'
+        ball_src = 'software/simulation/turret_ball.py'
     except Exception as exc:                                   # the ball module is mine too, but keep this runnable alone
         pop = None
         balls = tl.population(120 if quick else 400, seed=seed)    # already the accepted range

@@ -11,7 +11,7 @@ import subprocess
 import sys
 
 path = Path(sys.argv[1] if len(sys.argv) > 1 else
-            'research/supply/turret-carrier-2026-10-29.json')
+            'docs/research/supply/turret-carrier-2026-10-29.json')
 audit = json.loads(path.read_text())
 source = audit['source_commit']
 assert len(source) == 40 and all(c in '0123456789abcdef' for c in source)
@@ -45,7 +45,7 @@ for row in rows:
     assert row['required_quantity'] is None or row['required_quantity'] > 0
 
 # Read just literal component tuples, never execute CAD imports or module code.
-tree = ast.parse(files['cad/turret_boards.py'])
+tree = ast.parse(files['hardware/cad/turret/turret_boards.py'])
 constants = {n.targets[0].id: n.value.value for n in tree.body
              if isinstance(n, ast.Assign) and isinstance(n.targets[0], ast.Name)
              and isinstance(n.value, ast.Constant) and isinstance(n.value.value, str)}

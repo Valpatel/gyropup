@@ -64,7 +64,7 @@ def generate(output):
                       'geometry': 'project-authored cylindrical envelope; head/socket/thread detail omitted'})
     for part in parts:
         part['sha256'] = sha((output / part['file']).read_bytes())
-    source_files = ['cad/fivebar.py', 'cad/gmi.py', 'cad/interfaces.json', 'catalog/interfaces.json', 'catalog/hardware.json']
+    source_files = ['hardware/cad/legs/fivebar.py', 'hardware/cad/robot/gmi.py', 'hardware/cad/robot/interfaces.json', 'hardware/catalog/interfaces.json', 'hardware/catalog/hardware.json']
     manifest = {'schema_version': 1, 'units': 'mm', 'frame': 'upper-link local; x along link, y outboard, z up',
                 'source_revision': subprocess.check_output(['git', 'rev-parse', 'HEAD'], cwd=ROOT, text=True).strip(),
                 'source_hashes': {f: sha((ROOT / f).read_bytes()) for f in source_files},

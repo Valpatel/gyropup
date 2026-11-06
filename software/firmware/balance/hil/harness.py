@@ -58,25 +58,10 @@ def import_rig():
     from software.simulation import robot_v2
     robot_v2.use_d69_wheel()                            # D69's 10 in hub wheel, as the firmware header was generated
     from software.simulation import leg_control  # noqa: F401
-    try:
-        import software.control.rig.hil
-        import software.control.rig as rig  # noqa: F401
-    except ImportError:
-        if not (RIG_DIR / 'rig' / 'hil.py').exists():
-            raise
-        sys.path.append(str(RIG_DIR))
-        import software.control.rig.hil
-        import software.control.rig as rig  # noqa: F401
-    import software.control.rig.bus
-    import software.control.rig as rig
-    import software.control.rig.can_bus
-    import software.control.rig as rig
-    import software.control.rig.canio
-    import software.control.rig as rig
-    import software.control.rig.leg_control
-    import software.control.rig as rig
-    import software.control.rig.sim_bus
-    import software.control.rig as rig
+    # Use this checkout's explicit software package; another rig checkout cannot
+    # silently substitute control or safety code for this firmware validation.
+    from software.control import rig
+    from software.control.rig import hil, bus, can_bus, canio, leg_control, sim_bus
     return lr, rig.hil, rig.sim_bus, rig.can_bus, rig.canio, rig.bus, rig.leg_control
 
 

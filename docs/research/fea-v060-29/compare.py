@@ -22,12 +22,12 @@ from pathlib import Path
 
 ROOT = (Path(__file__).resolve().parents[3])
 HERE = Path(__file__).resolve().parent
-RECORDS = {'leg': 'exports/leg/fea/summary.json', 'turret': 'exports/turret/fea/summary.json'}
+RECORDS = {'leg': 'hardware/exports/leg/fea/summary.json', 'turret': 'hardware/exports/turret/fea/summary.json'}
 # Not regenerated: cad/studies.py's inputs (cad/gmi.py, designs/default.json, exports/sim/default) changed after this
 # record was made, and part of them was never committed, so a re-run is a different design (evidence/
 # historical-leg-rerun.json). Its v0.6.0 values are the exact scaling, which evidence/historical-scaling-control.json
 # checks: the same studies under v0.4.2 and v0.6.0 on one revision give the same stress field.
-HISTORICAL = {'historical leg (D33)': 'exports/fea/summary.json'}
+HISTORICAL = {'historical leg (D33)': 'hardware/exports/fea/summary.json'}
 # cad-agent v0.4.2 (2ad4269) MATERIALS, which made the records at --before: (E MPa, strength MPa)
 OLD = {'pa6_cf_xy': (3000.0, 49.0), 'pa6_cf_z': (2400.0, 23.0), 'al6061': (68900.0, 276.0), 'petg': (1800.0, 20.0)}
 # cad-agent #197 read gyropup at this revision (a checkout of main whose turret record is the 2026-10-27 v0 turret)

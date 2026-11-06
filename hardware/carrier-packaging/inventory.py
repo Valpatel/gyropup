@@ -104,7 +104,7 @@ def inventory():
     for row in rows:
         row['supplier_observation'] = None
         source = ('hardware/carrier-pan-protection/availability.json' if row['id'].startswith('P.')
-                  else 'research/protection/carrier-practical-architecture.inputs.json')
+                  else 'docs/research/protection/carrier-practical-architecture.inputs.json')
         if row['id'].startswith('P.') or row['id'] == 'I.COUT':
             source = 'hardware/carrier-pan-protection/availability.json'
             matches = [(n, offer) for n, offer in enumerate(retained_offers['rows']) if offer['mpn'] == row['mpn']]

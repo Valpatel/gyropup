@@ -28,8 +28,8 @@ import hardware.cad.turret.turret as tu
 import hardware.cad.turret.turret_base_board as bb
 
 ROOT = (Path(__file__).resolve().parents[3])
-SOURCES = ['cad/turret.py','cad/turret_base_board.py','cad/turret_boards.py','cad/check_base_board_service.py',
-           'catalog/hardware.json','catalog/turret.json']
+SOURCES = ['hardware/cad/turret/turret.py','hardware/cad/turret/turret_base_board.py','hardware/cad/turret/turret_boards.py','hardware/cad/turret/check_base_board_service.py',
+           'hardware/catalog/hardware.json','hardware/catalog/turret.json']
 PAIR_CACHE = PairCache(ROOT / '.cadagent-cache/base-board-service')
 TOOL = {'segments': [{'d':6.,'length':60.},{'d':25.,'length':80.}]}
 
@@ -56,7 +56,7 @@ def manufacturer_inputs():
     """Inventory the same private root the geometry loader uses; do not import CAD."""
     models = {}
     for pn in bb.MANUFACTURER_PARTS:
-        relative = f'references/vendor/mcmaster/{pn}/{pn}.norm.step'
+        relative = f'hardware/vendor/mcmaster/{pn}/{pn}.norm.step'
         path = bb.ROOT / relative
         models[pn] = {'available': path.is_file(), 'file': relative}
         if path.is_file():

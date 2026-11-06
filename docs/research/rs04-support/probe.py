@@ -40,8 +40,8 @@ DOWEL_CLEARANCE_D_MM = 5.3
 # Query exact geometry only where enclosing boxes cannot prove no contact.
 # This is a broad-phase policy, not a physical clearance/fit requirement.
 BROAD_PHASE_MM = .01
-CONTEXT = ('research/rs04-support/probe.py', 'research/rs04-support/README.md',
-           'exports/leg/rs04-mounting-fit/checks.json')
+CONTEXT = ('docs/research/rs04-support/probe.py', 'docs/research/rs04-support/README.md',
+           'hardware/exports/leg/rs04-mounting-fit/checks.json')
 LIMITS = [
     'This is contact geometry and finite-pose clearance evidence, not a qualified mounting design.',
     'No elastic contact, bolt preload, thread pull-out, creep or strength calculation is performed.',

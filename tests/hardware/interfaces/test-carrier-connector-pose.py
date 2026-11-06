@@ -9,7 +9,7 @@ import unittest
 
 SPEC=importlib.util.spec_from_file_location('connector_pose',Path(__file__).with_name('check-carrier-connector-pose.py'))
 MOD=importlib.util.module_from_spec(SPEC);SPEC.loader.exec_module(MOD)
-RECEIPT=MOD.ROOT/'research/carrier-service-connectors/external-pose.json'
+RECEIPT=MOD.ROOT/'docs/research/carrier-service-connectors/external-pose.json'
 
 
 class CandidateEvidence(unittest.TestCase):
@@ -38,7 +38,7 @@ class CandidateEvidence(unittest.TestCase):
             for name in set(self.receipt['inputs']['files'])|set(self.receipt['context_files']):
                 p=root/name;p.parent.mkdir(parents=True,exist_ok=True);shutil.copyfile(MOD.ROOT/name,p)
             self.assertTrue(MOD.validate_receipt(self.receipt,root))
-            p=root/'cad/gmi.py';p.write_bytes(p.read_bytes()+b'\n# changed neighbour geometry dependency\n')
+            p=root/'hardware/cad/robot/gmi.py';p.write_bytes(p.read_bytes()+b'\n# changed neighbour geometry dependency\n')
             with self.assertRaisesRegex(ValueError,'closure changed'):MOD.validate_receipt(self.receipt,root)
 
     def test_false_readiness_and_private_substitution_reject(self):

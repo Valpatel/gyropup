@@ -40,7 +40,7 @@ def main():
                'plastic_retainer_hole_diameter_mm':board.M3_CLEAR,
                'factory_pattern_reused':False,'physical_fit_verified':False,
                'sources':{p:hashlib.sha256((ROOT/p).read_bytes()).hexdigest() for p in
-                          ('cad/turret_base_board.py','cad/turret_boards.py','tools/export-base-board-drill.py')},
+                          ('hardware/cad/turret/turret_base_board.py','hardware/cad/turret/turret_boards.py','tools/engineering/turret/export-base-board-drill.py')},
                'limits':['Not a drill template at printed page scale; use the stated dimensions.',
                          'Cut Wombat stock and drill the custom pattern; original factory mounting holes are elsewhere.',
                          'Remove burrs and inspect copper/insulation around mounting screws; electrical clearance remains to validate.',

@@ -129,7 +129,7 @@ def public_insert():
 
 def normalized(part_number, private=False):
     if private:
-        p = ROOT / f'references/vendor/mcmaster/{part_number}/{part_number}.norm.step'
+        p = ROOT / f'hardware/vendor/mcmaster/{part_number}/{part_number}.norm.step'
         if not p.is_file():
             raise FileNotFoundError(f'private manufacturer CAD missing: {part_number}; no silent fallback')
         return cq.importers.importStep(str(p))

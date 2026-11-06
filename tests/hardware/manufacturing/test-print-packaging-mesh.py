@@ -39,7 +39,7 @@ class RealMeshPackaging(unittest.TestCase):
                 turret_print.main()
                 vertices, _ = read_3mf(out/'cube.3mf')
                 self.assertEqual((vertices.max(axis=0)-vertices.min(axis=0)).tolist(), [1., 1., 1.])
-                before = {p: p.read_bytes() for p in [out/'cube.3mf', out/'print.json', root/'docs/turret-print.md']}
+                before = {p: p.read_bytes() for p in [out/'cube.3mf', out/'print.json', root/'docs/turret/turret-print.md']}
                 report = json.loads(before[out/'print.json'])
                 self.assertEqual(report['parts']['cube']['source']['sha256'], provenance.digest(mesh))
                 self.assertEqual(report['parts']['cube']['sha256'], provenance.digest(out/'cube.3mf'))

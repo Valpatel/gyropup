@@ -295,7 +295,7 @@ class PublishedArchiveTests(unittest.TestCase):
 
 
 # The docs that quote the retained slice: each states the job receipt's own estimate (time, grams, filament).
-SLICE_DOCS = ('docs/rs04-fit-job.md', 'docs/mechanical-readiness.md')
+SLICE_DOCS = ('docs/legs/rs04-fit-job.md', 'docs/architecture/mechanical-readiness.md')
 GRAMS = re.compile(r'(\d+\.\d+) g\b')
 SLICE_QUOTE = re.compile(r'(\d+) h (\d+) min (\d+) s, ([\d.]+) g and ([\d.]+) m')
 

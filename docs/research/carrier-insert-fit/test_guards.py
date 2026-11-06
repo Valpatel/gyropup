@@ -7,7 +7,7 @@ import shutil
 import tempfile
 import unittest
 from unittest.mock import patch
-from verify import ROOT, check
+from verify import ROOT, check, source_files
 
 
 class Guards(unittest.TestCase):
@@ -15,14 +15,12 @@ class Guards(unittest.TestCase):
         self.temp = tempfile.TemporaryDirectory()
         self.addCleanup(self.temp.cleanup)
         self.root = Path(self.temp.name)
-        for folder in ('cad','catalog','designs'):
-            for p in (ROOT/folder).rglob('*'):
-                if p.is_file() and p.suffix in ('.py','.json'):
-                    dest=self.root/p.relative_to(ROOT);dest.parent.mkdir(parents=True,exist_ok=True);shutil.copyfile(p,dest)
-        target=self.root/'research/carrier-insert-fit';target.mkdir(parents=True)
-        for p in (ROOT/'research/carrier-insert-fit').glob('*.py'):shutil.copyfile(p,target/p.name)
-        self.package=self.root/'exports/turret/carrier-insert-fit'
-        shutil.copytree(ROOT/'exports/turret/carrier-insert-fit',self.package)
+        for p in source_files(ROOT):
+            dest=self.root/p.relative_to(ROOT);dest.parent.mkdir(parents=True,exist_ok=True);shutil.copyfile(p,dest)
+        target=self.root/'docs/research/carrier-insert-fit';target.mkdir(parents=True)
+        for p in (ROOT/'docs/research/carrier-insert-fit').glob('*.py'):shutil.copyfile(p,target/p.name)
+        self.package=self.root/'hardware/exports/turret/carrier-insert-fit'
+        shutil.copytree(ROOT/'hardware/exports/turret/carrier-insert-fit',self.package)
         check(self.root)
 
     def test_baseline(self):
@@ -37,11 +35,11 @@ class Guards(unittest.TestCase):
         with self.assertRaisesRegex(ValueError,'membership'):check(self.root)
 
     def test_changed_geometry_source(self):
-        with (self.root/'cad/turret_base_board.py').open('a') as f:f.write('\nINSERT_PILOT=4.1\n')
+        with (self.root/'hardware/cad/turret/turret_base_board.py').open('a') as f:f.write('\nINSERT_PILOT=4.1\n')
         with self.assertRaisesRegex(ValueError,'inputs changed'):check(self.root)
 
     def test_added_generation_dependency(self):
-        (self.root/'research/carrier-insert-fit/helper.py').write_text('# new dependency\n')
+        (self.root/'docs/research/carrier-insert-fit/helper.py').write_text('# new dependency\n')
         with self.assertRaisesRegex(ValueError,'sources changed'):check(self.root)
 
     def test_optional_parameter_override(self):

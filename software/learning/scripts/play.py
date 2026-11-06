@@ -53,7 +53,7 @@ def latest_checkpoint() -> Path:
 def main():
     ap = argparse.ArgumentParser()
     ap.add_argument('--checkpoint', type=Path)
-    ap.add_argument('--design', default=os.environ.get('GYROPUP_DESIGN', 'designs/default.json'))
+    ap.add_argument('--design', default=os.environ.get('GYROPUP_DESIGN', 'hardware/designs/default.json'))
     ap.add_argument('--out', type=Path, default=HERE / 'results')
     ap.add_argument('--width', type=int, default=960)
     ap.add_argument('--height', type=int, default=540)

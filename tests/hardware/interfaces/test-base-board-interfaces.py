@@ -82,13 +82,13 @@ class CarrierInterfaces(unittest.TestCase):
                 (root/path).parent.mkdir(parents=True,exist_ok=True)
                 shutil.copyfile(ROOT/path,root/path)
             ci.validate_source_receipt(root,receipt)
-            interface=root/'cad/interfaces.json';original=interface.read_bytes()
+            interface=root/'hardware/cad/robot/interfaces.json';original=interface.read_bytes()
             changed=json.loads(original);changed['fasteners']['M5']['clear']+=2
             interface.write_text(json.dumps(changed))
             with self.assertRaisesRegex(ValueError,'closure changed'):
                 ci.validate_source_receipt(root,receipt)
             interface.write_bytes(original)
-            gmi=root/'cad/gmi.py';original=gmi.read_bytes();gmi.unlink()
+            gmi=root/'hardware/cad/robot/gmi.py';original=gmi.read_bytes();gmi.unlink()
             with self.assertRaisesRegex(ValueError,'closure changed'):
                 ci.validate_source_receipt(root,receipt)
             gmi.write_bytes(original)

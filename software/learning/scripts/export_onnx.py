@@ -23,7 +23,7 @@ sys.path.insert(0, str(HERE / 'scripts'))
 def main():
     ap = argparse.ArgumentParser()
     ap.add_argument('--checkpoint', type=Path)
-    ap.add_argument('--design', default=os.environ.get('GYROPUP_DESIGN', 'designs/default.json'))
+    ap.add_argument('--design', default=os.environ.get('GYROPUP_DESIGN', 'hardware/designs/default.json'))
     ap.add_argument('--out', type=Path, default=HERE / 'results')
     a = ap.parse_args()
     os.environ['GYROPUP_DESIGN'] = a.design

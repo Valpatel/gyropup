@@ -420,7 +420,7 @@ def snapshot_j501():
     J501_SNAPSHOT.parent.mkdir(parents=True, exist_ok=True)
     J501_SNAPSHOT.write_bytes(live.read_bytes())
     src = {'from': '~/Code/j501-agx/cad/parameters.json (the j501-agx project, read only)', 'commit': git('rev-parse', 'HEAD'),
-           'branch': git('rev-parse', '--abbrev-ref', 'HEAD'), 'dirty': bool(git('status', '--short', 'cad/parameters.json')),
+           'branch': git('rev-parse', '--abbrev-ref', 'HEAD'), 'dirty': bool(git('status', '--short', 'hardware/cad/robot/parameters.json')),
            'sha1': hashlib.sha1(live.read_bytes()).hexdigest(), 'revision': json.loads(live.read_text()).get('revision'),
            'copied_on': datetime.date.today().isoformat(),
            'photo_note': 'the G48R cooler\'s centre on the PCB is from the user\'s photos (IMG_1852-1854), about +-3 mm: measure the fan '

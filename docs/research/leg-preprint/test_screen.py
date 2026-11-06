@@ -143,12 +143,12 @@ class Screen(unittest.TestCase):
                 self.assertAlmostEqual(x['predicted_peel_n'], 1000 * x['layer_check_at_1kn']['safety_factor'], delta=0.5)
 
     def test_control_sleeve_count_moves_the_press_force(self):
-        one = fit(generate({'cad/fivebar.py': [('EYE_SLEEVES = 2 ', 'EYE_SLEEVES = 1 ')]}), 'knee eye sleeves')
+        one = fit(generate({'hardware/cad/legs/fivebar.py': [('EYE_SLEEVES = 2 ', 'EYE_SLEEVES = 1 ')]}), 'knee eye sleeves')
         two = fit(self.doc, 'knee eye sleeves')
         self.assertAlmostEqual(one['at_max_dry']['press_n'] * 2, two['at_max_dry']['press_n'], delta=20)
 
     def test_control_hole_compensation_relieves_the_fit(self):
-        rel = 'cad/fivebar.py'
+        rel = 'hardware/cad/legs/fivebar.py'
         drawn = fit(self.doc, 'knee eye sleeves')
         self.assertNotIn('too tight', drawn['verdict'])
         self.assertIn('C1 sets the hole', drawn['verdict'])            # the band straddles zero: the coupon decides
@@ -157,7 +157,7 @@ class Screen(unittest.TestCase):
         self.assertGreater(bare['at_max_dry']['press_n'], 2 * drawn['at_max_dry']['press_n'])
 
     def test_control_flange_thickness_moves_the_insert_wall(self):
-        rel = 'cad/fivebar.py'
+        rel = 'hardware/cad/legs/fivebar.py'
         base = joint(self.doc, 'leg.hip_frame_mount')['today']
         doc = generate({rel: [('FLANGE_T, FLANGE_X = 13.0, ', 'FLANGE_T, FLANGE_X = 17.0, ')]})
         self.assertIn('2.94 mm of wall', base)
@@ -166,10 +166,10 @@ class Screen(unittest.TestCase):
 
     def test_control_unbound_line_is_stale(self):
         with self.assertRaises(sc.Stale):
-            generate({'cad/fivebar.py': [('STOP_HOLE_PLAY = 0.05', 'STOP_HOLE_CLEARANCE = 0.05')]})
+            generate({'hardware/cad/legs/fivebar.py': [('STOP_HOLE_PLAY = 0.05', 'STOP_HOLE_CLEARANCE = 0.05')]})
 
     def test_every_leg_joint_has_a_pick(self):
-        inv = json.loads((sc.ROOT / 'research/insert-joints/joints.json').read_text())
+        inv = json.loads((sc.ROOT / 'docs/research/insert-joints/joints.json').read_text())
         leg = {j['id'] for j in inv['joints'] if j['id'].startswith('leg.')}
         screened = {j['id'] for j in self.doc['joints']}
         self.assertLessEqual(leg, screened)

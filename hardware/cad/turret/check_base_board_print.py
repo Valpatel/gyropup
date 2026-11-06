@@ -32,7 +32,7 @@ def main():
             'physical_fit_verified':False,'release_ready':False,'carrier':positive,'thin_control':negative,
             'rotation':{'axis':[0,1,0],'degrees':90},'print_bounds_mm':[bounds.xlen,bounds.ylen,bounds.zlen],
             'sources':{n:hashlib.sha256((ROOT/n).read_bytes()).hexdigest() for n in
-                       ('cad/check_base_board_print.py','cad/turret_base_board.py','cad/turret_boards.py')},
+                       ('hardware/cad/turret/check_base_board_print.py','hardware/cad/turret/turret_base_board.py','hardware/cad/turret/turret_boards.py')},
             'limits':['Sampled wall thickness, not a print or load test.','Clearance and insert fit require measured coupons.',
                       'Pan-base wall/structure qualification is outside this isolated carrier check.']}
     OUT.mkdir(parents=True,exist_ok=True)

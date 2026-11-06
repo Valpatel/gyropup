@@ -391,7 +391,7 @@ def clashes_for_design(design_file: str, heights=(0.0, 0.5, 1.0), min_mm3: float
     from software.simulation.controller import hip_for, knee_for
     R = (Path(__file__).resolve().parents[3])
     d = json.loads((R / design_file if not Path(design_file).is_absolute() else Path(design_file)).read_text())
-    L = json.loads(sp.run(['node', str(R / 'tools/derive.mjs'), str(R / design_file)], capture_output=True, text=True, check=True).stdout)['layout']
+    L = json.loads(sp.run(['node', str(R / 'tools/engineering/robot/derive.mjs'), str(R / design_file)], capture_output=True, text=True, check=True).stdout)['layout']
     parts, meta, bought, S, _ = leg_parts(L, d['parts']['leg_actuator'], d['parts']['leg_actuator'], d['parts']['wheel_motor'])
     a, b = L['thigh'] / 1000, L['shin'] / 1000
     lo, hi = math.radians(L['kneeMinDeg']), math.radians(L['kneeMaxDeg'])

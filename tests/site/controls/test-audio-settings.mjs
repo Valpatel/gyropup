@@ -1,3 +1,4 @@
+import {sourceForPublic} from '../../../tools/site/source-layout.mjs';
 import { acknowledgePrototypeNotice } from '../content/test-prototype-session.mjs';
 /** Master audio gates both synthesis backends without erasing voice-only preferences. */
 import assert from 'node:assert/strict';
@@ -36,7 +37,7 @@ await acknowledgePrototypeNotice(context);
  await page.route('**/*',async route=>{
   const url=new URL(route.request().url());
   if(url.pathname==='/')return route.fulfill({contentType:'text/html',body:html});
-  if(url.pathname.startsWith('/designer/'))return route.fulfill({contentType:url.pathname.endsWith('.css')?'text/css':'text/javascript',body:await readFile(new URL(url.pathname.slice(1),root))});
+  if(url.pathname.startsWith('/designer/'))return route.fulfill({contentType:url.pathname.endsWith('.css')?'text/css':'text/javascript',body:await readFile(new URL(sourceForPublic(url.pathname.slice(1)),root))});
   if(url.pathname==='/tts'){
    if(url.searchParams.get('text')==='Delayed reply') {waiting=true;await new Promise(resolve=>{release=resolve;});}
    return route.fulfill({contentType:'audio/wav',body:Buffer.from([0])}); // Decoder is a deterministic adapter; no voice service is contacted.
@@ -86,11 +87,11 @@ async function pronunciation() {
  await page.route('**/*',async route=>{
   const url=new URL(route.request().url());requests.push(url.pathname+url.search);
   if(url.pathname==='/')return route.fulfill({contentType:'text/html',body:html});
-  if(url.pathname.startsWith('/designer/'))return route.fulfill({contentType:url.pathname.endsWith('.css')?'text/css':url.pathname.endsWith('.mp3')?'audio/mpeg':'text/javascript',body:await readFile(new URL(url.pathname.slice(1),root))});
+  if(url.pathname.startsWith('/designer/'))return route.fulfill({contentType:url.pathname.endsWith('.css')?'text/css':url.pathname.endsWith('.mp3')?'audio/mpeg':'text/javascript',body:await readFile(new URL(sourceForPublic(url.pathname.slice(1)),root))});
   if(url.pathname==='/tts')return route.fulfill({contentType:'audio/wav',body:Buffer.from([0])});
   throw new Error('Unexpected speech request: '+url.href);
  });
- const manifest=JSON.parse(await readFile(new URL('designer/character/voice/manifest.json',root),'utf8'));
+ const manifest=JSON.parse(await readFile(new URL(sourceForPublic('designer/character/voice/manifest.json'),root),'utf8'));
  const bubble=()=>page.evaluate(()=>document.querySelector('.gp-bubble .gp-text').textContent);
  try {
   await page.goto('https://speech.example.test');await page.waitForFunction(()=>window.audioReady);
@@ -172,7 +173,7 @@ await acknowledgePrototypeNotice(context);
  const page=await context.newPage();page.on('pageerror',e=>errors.push(e.message));
  if(process.env.AUDIO_SOURCE==='1')await page.route('**/designer/**',async route=>{
   const p=new URL(route.request().url()).pathname;
-  if(['/designer/sim.js','/designer/sfx.js','/designer/character/talk.js','/designer/character/talk-demo.html'].includes(p))return route.fulfill({contentType:p.endsWith('.html')?'text/html':'text/javascript',body:await readFile(new URL(p.slice(1),root))});
+  if(['/designer/sim.js','/designer/sfx.js','/designer/character/talk.js','/designer/character/talk-demo.html'].includes(p))return route.fulfill({contentType:p.endsWith('.html')?'text/html':'text/javascript',body:await readFile(new URL(sourceForPublic(p.slice(1)),root))});
   return route.continue();
  });
  try {

@@ -9,6 +9,8 @@ import sys
 
 ROOT = (Path(__file__).resolve().parents[3])
 HERE = Path(__file__).resolve().parent
+sys.path.insert(0, str(ROOT))
+from hardware.cad.manufacturing.print_provenance import source_files
 NAMES = ('carrier-boss', 'base-anchor')
 
 
@@ -18,7 +20,7 @@ def digest(path):
 
 def check(root=ROOT, package=None):
     root = Path(root)
-    package = Path(package) if package else root/'exports/turret/carrier-insert-fit'
+    package = Path(package) if package else root/'hardware/exports/turret/carrier-insert-fit'
     report = json.loads((package/'receipt.json').read_text())
     if report.get('schema') != 'gyropup.carrier-insert-fit/1' or report.get('relation_engine') != '4':
         raise ValueError('Unsupported specimen evidence')
@@ -29,11 +31,10 @@ def check(root=ROOT, package=None):
     parameter_hash = digest(Path(override)) if override else None
     if report.get('inputs', {}).get('GYROPUP_CAD_PARAMS_sha256') != parameter_hash:
         raise ValueError('Optional CAD parameter input changed; regenerate specimens')
-    actual_inputs = {p.relative_to(root).as_posix(): digest(p) for folder in ('cad','catalog','designs')
-                     for p in (root/folder).rglob('*') if p.is_file() and p.suffix in ('.py','.json')}
+    actual_inputs = {p.relative_to(root).as_posix(): digest(p) for p in source_files(root)}
     if report.get('inputs', {}).get('files') != actual_inputs:
         raise ValueError('CAD/config/catalog inputs changed; regenerate specimens')
-    context = {p.relative_to(root).as_posix(): digest(p) for p in (root/'research/carrier-insert-fit').glob('*.py')}
+    context = {p.relative_to(root).as_posix(): digest(p) for p in (root/'docs/research/carrier-insert-fit').glob('*.py')}
     if report.get('context_files') != context:
         raise ValueError('Specimen generation/validation sources changed')
     expected = {f'{name}.{ext}' for name in NAMES for ext in ('step','stl','3mf')} | {'measurements.csv'}

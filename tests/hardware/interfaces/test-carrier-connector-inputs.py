@@ -37,16 +37,16 @@ class PrivateInputs(unittest.TestCase):
         with self.assertRaises(ValueError):MOD.private_path(self.entry,self.root)
 
     def test_committed_diagnosis_matches_source_and_manifest(self):
-        receipt=json.loads((MOD.ROOT/'research/carrier-service-connectors/private-input-diagnosis.json').read_text())
+        receipt=json.loads((MOD.ROOT/'docs/research/carrier-service-connectors/private-input-diagnosis.json').read_text())
         self.assertTrue(MOD.validate_receipt(receipt))
 
     def test_changed_deleted_and_new_geometry_inputs_reject(self):
-        receipt=json.loads((MOD.ROOT/'research/carrier-service-connectors/private-input-diagnosis.json').read_text())
+        receipt=json.loads((MOD.ROOT/'docs/research/carrier-service-connectors/private-input-diagnosis.json').read_text())
         for name in set(receipt['inputs']['files'])|set(receipt['context_files']):
             target=self.root/name;target.parent.mkdir(parents=True,exist_ok=True)
             shutil.copyfile(MOD.ROOT/name,target)
         self.assertTrue(MOD.validate_receipt(receipt,self.root))
-        helper=self.root/'cad/print_provenance.py';original=helper.read_bytes()
+        helper=self.root/'hardware/cad/manufacturing/print_provenance.py';original=helper.read_bytes()
         helper.write_bytes(original+b'\n# changed imported helper\n')
         with self.assertRaisesRegex(ValueError,'closure changed'):MOD.validate_receipt(receipt,self.root)
         helper.unlink()

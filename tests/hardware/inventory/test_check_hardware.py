@@ -14,7 +14,7 @@ HERE = (Path(__file__).resolve().parents[3] / 'tools')
 spec = importlib.util.spec_from_file_location('check_hardware', (HERE / 'evidence/interfaces/check-hardware.py'))
 ch = importlib.util.module_from_spec(spec)
 spec.loader.exec_module(ch)
-CFG = 'firmware/balance/include/gp/gp_config.h'
+CFG = 'software/firmware/balance/include/gp/gp_config.h'
 
 
 class Sources(unittest.TestCase):
@@ -29,15 +29,15 @@ class Sources(unittest.TestCase):
 
     def test_hex_and_float_defines(self):
         d = {'i2c': {'address': 64, 'r': 0.001}, 'sources': {
-            'i2c.address': {'c_define': 'firmware/balance/include/gp/gp_ina228.h', 'name': 'GP_INA228_ADDR'},
-            'i2c.r': {'c_define': 'firmware/balance/include/gp/gp_ina228.h', 'name': 'GP_SHUNT_FUSE_BOARD_OHM'}}}
+            'i2c.address': {'c_define': 'software/firmware/balance/include/gp/gp_ina228.h', 'name': 'GP_INA228_ADDR'},
+            'i2c.r': {'c_define': 'software/firmware/balance/include/gp/gp_ina228.h', 'name': 'GP_SHUNT_FUSE_BOARD_OHM'}}}
         self.assertEqual(ch.source_problems('x', d), [])
 
     def test_contains_and_missing(self):
         d = {'boot': {'baud': 'VNWRG,05,921600', 'gone': 'VNWRG,05,9600'}, 'sources': {
-            'boot.baud': {'contains': 'firmware/balance/src/mcu/board.c'},
-            'boot.gone': {'contains': 'firmware/balance/src/mcu/board.c'},
-            'boot.nothing': {'contains': 'firmware/balance/src/mcu/board.c'},
+            'boot.baud': {'contains': 'software/firmware/balance/src/mcu/board.c'},
+            'boot.gone': {'contains': 'software/firmware/balance/src/mcu/board.c'},
+            'boot.nothing': {'contains': 'software/firmware/balance/src/mcu/board.c'},
             'boot.nofile': {'c_define': 'no/such.h', 'name': 'X'}}}
         boot = d['boot']
         boot['nofile'] = 1
@@ -47,9 +47,23 @@ class Sources(unittest.TestCase):
         self.assertIn('boot.nothing', out)
         self.assertIn('does not exist', out)
 
+    def test_missing_current_input_is_not_rescued_by_an_obsolete_copy(self):
+        with tempfile.TemporaryDirectory() as temp:
+            root = Path(temp)
+            old = root / 'firmware/balance/include/gp/gp_config.h'
+            old.parent.mkdir(parents=True)
+            old.write_text('#define GP_VESC_ID_LEFT 10\n')
+            previous = ch.ROOT
+            ch.ROOT = root
+            try:
+                source = {'a': 10, 'sources': {'a': {'c_define': 'firmware/balance/include/gp/gp_config.h', 'name': 'GP_VESC_ID_LEFT'}}}
+                self.assertIn('does not exist', ' '.join(ch.source_problems('x', source)))
+            finally:
+                ch.ROOT = previous
+
     def test_counts_and_a_dangling_pointer(self):
         d = {'b': {'s': 'VNWRG,75,3,1,01,0028', 'p': 1}, 'sources': {
-            'b.s': {'contains': 'firmware/balance/src/mcu/board.c', 'count': 3},
+            'b.s': {'contains': 'software/firmware/balance/src/mcu/board.c', 'count': 3},
             'b.p': {'json': 'exports/motor-day/derating.json', 'pointer': '/no/such/key'}}}
         out = ' '.join(ch.source_problems('x', d))
         self.assertIn('2 time(s), not 3', out)
@@ -60,10 +74,13 @@ class Skeleton(unittest.TestCase):
     def test_a_bare_folder_and_a_bad_inventory_are_reported(self):
         with tempfile.TemporaryDirectory() as tmp:
             root = Path(tmp)
-            shutil.copytree(ch.HW, root / 'hardware')
-            (root / 'firmware').symlink_to(ch.ROOT / 'firmware')
+            (root / 'hardware').mkdir()
+            shutil.copyfile(ch.HW / 'README.md', root / 'hardware/README.md')
+            for category in (*ch.CATEGORIES, *ch.PCB_PROJECTS):
+                if (ch.HW / category).is_dir():
+                    shutil.copytree(ch.HW / category, root / 'hardware' / category)
             (root / 'docs').symlink_to(ch.ROOT / 'docs')
-            for top in ('deploy', 'rig', 'designer', 'references', 'catalog', 'exports', 'research', 'cad', 'tools', 'sim'):
+            for top in ('software', 'tools'):
                 if (ch.ROOT / top).exists():
                     (root / top).symlink_to(ch.ROOT / top)
             (root / 'hardware/sensors/new-thing').mkdir()

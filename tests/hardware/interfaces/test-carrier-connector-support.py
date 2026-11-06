@@ -9,7 +9,7 @@ import unittest
 
 SPEC=importlib.util.spec_from_file_location('support_check',Path(__file__).with_name('check-carrier-connector-support.py'))
 MOD=importlib.util.module_from_spec(SPEC);SPEC.loader.exec_module(MOD)
-RECEIPT=MOD.ROOT/'research/carrier-service-connectors/support-candidate.json'
+RECEIPT=MOD.ROOT/'docs/research/carrier-service-connectors/support-candidate.json'
 
 
 class SupportEvidence(unittest.TestCase):
@@ -42,7 +42,7 @@ class SupportEvidence(unittest.TestCase):
             for name in set(self.receipt['inputs']['files'])|set(self.receipt['context_files'])|artifacts:
                 p=root/name;p.parent.mkdir(parents=True,exist_ok=True);shutil.copyfile(MOD.ROOT/name,p)
             self.assertTrue(MOD.validate_receipt(self.receipt,root))
-            p=root/'cad/turret_base_board.py';p.write_bytes(p.read_bytes()+b'\n# altered underlying mount\n')
+            p=root/'hardware/cad/turret/turret_base_board.py';p.write_bytes(p.read_bytes()+b'\n# altered underlying mount\n')
             with self.assertRaisesRegex(ValueError,'closure changed'):MOD.validate_receipt(self.receipt,root)
 
     def test_missing_partial_or_changed_artifact_binding_rejects(self):

@@ -178,7 +178,7 @@ try {
   await context.close();
 
   // ------------------------------------------------------------------ served by the bridge (software motors)
-  const bridge = spawn('python3', ['-m', 'rig.rs04_bridge', '--iface', 'emu', '--emu-ids', '127', '--port', '0'], { cwd: root, stdio: ['ignore', 'pipe', 'pipe'] });
+  const bridge = spawn('python3', ['-m', 'software.control.rig.rs04_bridge', '--iface', 'emu', '--emu-ids', '127', '--port', '0'], { cwd: root, stdio: ['ignore', 'pipe', 'pipe'] });
   let blog = '';
   bridge.stdout.on('data', d => { blog += d; });
   bridge.stderr.on('data', d => { blog += d; });

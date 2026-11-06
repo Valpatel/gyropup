@@ -23,7 +23,7 @@ HERE = Path(__file__).resolve().parent
 
 def main():
     args = sys.argv[1:]
-    design = 'designs/default.json'
+    design = 'hardware/designs/default.json'
     if '--design' in args:
         i = args.index('--design')
         design = args[i + 1]

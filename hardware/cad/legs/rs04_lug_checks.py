@@ -35,7 +35,7 @@ DEPTH_RESERVE_MM = 0.5
 EXPECTED_INSTANCES = {'leg_front': 10, 'leg_rear': 10, 'dyno': 10, 'coupon_nom': 10}
 TOOLKIT_COMMIT = '2ad426943ce2c7232875e105e50810849f9a3e5e'
 TOOLKIT_SOURCES = 'c2941322d5f3d000d3777b0047567211d06855861fa5e14229d7d7519fef3ed3'
-CONTEXT_FILES = ('tools/test-rs04-lug-stacks.py', 'research/actuator-interfaces.md')
+CONTEXT_FILES = ('tests/hardware/interfaces/test-rs04-lug-stacks.py', 'docs/research/actuator-interfaces.md')
 OUTPUT_PARTS = ('hip_frame', 'dyno_lug_plate', 'coupon_frame_ring_nom')
 READY_FLAGS = ('physical_fit_verified', 'full_assembly_qualified', 'thread_mating_verified',
                'tool_access_verified', 'manufacturing_tolerance_stack_verified', 'strength_verified')

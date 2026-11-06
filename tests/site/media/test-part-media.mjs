@@ -4,13 +4,14 @@ import { readFileSync } from 'node:fs';
 import { spawnSync } from 'node:child_process';
 import { fileURLToPath } from 'node:url';
 import { test } from 'node:test';
+import {sourceForPublic} from '../../../tools/site/source-layout.mjs';
 const root = fileURLToPath(new URL('../../../', import.meta.url));
-const read = name => JSON.parse(readFileSync(new URL('../' + name, import.meta.url), 'utf8'));
+const read = name => JSON.parse(readFileSync(new URL(sourceForPublic(name),new URL('../../../',import.meta.url)), 'utf8'));
 const images = read('catalog/images.json');
 const report = read('catalog/vendor-media-verification.json');
 
 test('all current made-to-order and first-frame thumbnails retain exact geometry/output receipts', () => {
-  const run = spawnSync('python3', ['tools/part-media-generation.py', '--check'], { cwd: root, encoding: 'utf8' });
+  const run = spawnSync('python3', ['tools/evidence/media/part-media-generation.py', '--check'], { cwd: root, encoding: 'utf8' });
   assert.equal(run.status, 0, run.stdout + run.stderr);
 });
 

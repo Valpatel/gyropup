@@ -78,7 +78,7 @@ class Inventory(unittest.TestCase):
 
     def test_body_inserts_all_inventoried(self):
         """Every P3 insert joint of the body's own check lands in a family (the generator raises otherwise)."""
-        integ = json.loads((inv.ROOT / 'exports/body/integrity.json').read_text())
+        integ = json.loads((inv.ROOT / 'hardware/exports/body/integrity.json').read_text())
         names = {j['joint'] for j in integ['joints'] if j['stage'] == 'P3' and j['receiver'][0] == 'insert'}
         listed = set()
         for j in self.doc['joints']:
@@ -110,7 +110,7 @@ class Inventory(unittest.TestCase):
     def test_tm_load_from_the_tm_face(self):
         """The TM bolts' 30 g load is taken about the TM face (the pan base's foot since D76)."""
         j = joint(self.doc, 'body.riser_top_tm')
-        m = json.loads((inv.ROOT / 'exports/turret/mount.json').read_text())
+        m = json.loads((inv.ROOT / 'hardware/exports/turret/mount.json').read_text())
         arm = (m['com_mm'][2] - m['envelope']['lowest_z_mm']) / 1000.0
         self.assertAlmostEqual(j['loads'][0]['per_insert_n'], m['mass_kg'] * inv.G0 * 30.0 * arm / 0.160, delta=1.0)
         # D76: without the plinth the feet's pull-out SF is 3.7 (it was 1.9, an owner decision, at 135 mm and 2.57 kg)
@@ -119,52 +119,52 @@ class Inventory(unittest.TestCase):
 
     def test_control_riser_unfixed(self):
         """The riser's pilots back at 9.5 and 8 mm: the screws bottom and both contract depths fail again."""
-        d = generate({'cad/body_frame.py': [('RISER_TM_PILOT = 13.0', 'RISER_TM_PILOT = 9.5'),
+        d = generate({'hardware/cad/body/body_frame.py': [('RISER_TM_PILOT = 13.0', 'RISER_TM_PILOT = 9.5'),
                                             ('RISER_DOWEL_DEPTH = 12.5', 'RISER_DOWEL_DEPTH = 8.0')]})
         fixes = {f['code'] for f in joint(d, 'body.riser_top_tm')['findings'] if f['level'] == 'fix'}
         self.assertEqual(fixes, {'screw-bottoms', 'contract-depth', 'contract-dowel'})
 
     def test_control_mount_without_its_frame_stops_generation(self):
         """A mount.json without frame_t_above_face_mm (before #137) or with D66's 86 mm stops generation."""
-        m = json.loads((inv.ROOT / 'exports/turret/mount.json').read_text())
+        m = json.loads((inv.ROOT / 'hardware/exports/turret/mount.json').read_text())
         dz = m['frame_t_above_face_mm']
         self.assertEqual(dz, 0.0)
         with self.assertRaises(inv.Stale):
-            generate({'exports/turret/mount.json': [(f'"frame_t_above_face_mm": {json.dumps(dz)},\n', '')]})
+            generate({'hardware/exports/turret/mount.json': [(f'"frame_t_above_face_mm": {json.dumps(dz)},\n', '')]})
         with self.assertRaises(inv.Stale):
-            generate({'exports/turret/mount.json': [(f'"frame_t_above_face_mm": {json.dumps(dz)}', '"frame_t_above_face_mm": 86.0')]})
+            generate({'hardware/exports/turret/mount.json': [(f'"frame_t_above_face_mm": {json.dumps(dz)}', '"frame_t_above_face_mm": 86.0')]})
 
     def test_control_a_turret_below_its_face_stops_generation(self):
         """Nothing of the turret may reach below the TM face (the pan base's foot, D76)."""
-        m = json.loads((inv.ROOT / 'exports/turret/mount.json').read_text())
+        m = json.loads((inv.ROOT / 'hardware/exports/turret/mount.json').read_text())
         low = m['envelope']['lowest_z_mm']
         with self.assertRaises(inv.Stale):
-            generate({'exports/turret/mount.json': [(f'"lowest_z_mm": {json.dumps(low)}', '"lowest_z_mm": -8.0')]})
+            generate({'hardware/exports/turret/mount.json': [(f'"lowest_z_mm": {json.dumps(low)}', '"lowest_z_mm": -8.0')]})
 
     def test_control_hand_check_in_frame_t(self):
         """A hand check that still takes the lever from frame T is caught: the source line and its number."""
-        d = generate({'cad/turret_studies.py': [("h_face = M['com_mm'][2] + tu.FRAME_T_ABOVE_TM", "h_face = M['com_mm'][2]")]})
+        d = generate({'hardware/cad/turret/turret_studies.py': [("h_face = M['com_mm'][2] + tu.FRAME_T_ABOVE_TM", "h_face = M['com_mm'][2]")]})
         self.assertIn('tm-hand-check', codes(d, 'body.riser_top_tm'))
-        s = json.loads((inv.ROOT / 'exports/turret/fea/summary.json').read_text())
+        s = json.loads((inv.ROOT / 'hardware/exports/turret/fea/summary.json').read_text())
         n = s['hand_checks']['tm_bolts']['tension_per_bolt_n']
-        d = generate({'exports/turret/fea/summary.json': [(f'"tension_per_bolt_n": {n},', f'"tension_per_bolt_n": {round(n * 0.4)},')]})
+        d = generate({'hardware/exports/turret/fea/summary.json': [(f'"tension_per_bolt_n": {n},', f'"tension_per_bolt_n": {round(n * 0.4)},')]})
         self.assertIn('tm-hand-check', codes(d, 'body.riser_top_tm'))
 
     def test_control_shallow_yoke_pilots(self):
-        d = generate({'cad/turret.py': [("s = s.cut(insert_hole(x, y, z1, 'M4'))", "s = s.cut(insert_hole(x, y, z1, 'M4', 5.0))")]})
+        d = generate({'hardware/cad/turret/turret.py': [("s = s.cut(insert_hole(x, y, z1, 'M4'))", "s = s.cut(insert_hole(x, y, z1, 'M4', 5.0))")]})
         self.assertIn('pilot-shorter-than-insert', codes(d, 'turret.pan_ring_yoke'))
 
     def test_control_yoke_screw_and_bom_must_agree(self):
         with self.assertRaises(inv.Stale):
-            generate({'cad/turret.py': [("so an M4 x 12 keeps 6 mm (1.5 d)", "so an M4 x 10 keeps 6 mm (1.5 d)")]})
+            generate({'hardware/cad/turret/turret.py': [("so an M4 x 12 keeps 6 mm (1.5 d)", "so an M4 x 10 keeps 6 mm (1.5 d)")]})
 
     def test_control_stand_dock_unfixed(self):
-        d = generate({'cad/turret_stand.py': [("-TOP - 0.01, -TOP + 5.3, dx0", "-TOP - 0.01, -TOP + 4.0, dx0")]})
+        d = generate({'hardware/cad/turret/turret_stand.py': [("-TOP - 0.01, -TOP + 5.3, dx0", "-TOP - 0.01, -TOP + 4.0, dx0")]})
         self.assertEqual({f['code'] for f in joint(d, 'stand.dock')['findings'] if f['level'] == 'fix'},
                          {'pilot-shorter-than-insert', 'pilot-fix'})
 
     def test_control_pod_lid_pilot_too_shallow(self):
-        d = generate({'cad/rig_parts.py': [("POD_LID_BOSS = {'r': 5.0, 'len': 11.0, 'pilot_depth': 8.5}",
+        d = generate({'hardware/cad/rig/rig_parts.py': [("POD_LID_BOSS = {'r': 5.0, 'len': 11.0, 'pilot_depth': 8.5}",
                                             "POD_LID_BOSS = {'r': 5.0, 'len': 11.0, 'pilot_depth': 6.5}")]})
         self.assertIn('screw-bottoms', codes(d, 'rig.pod_lid'))
 
@@ -174,21 +174,21 @@ class Inventory(unittest.TestCase):
         self.assertEqual(joint(self.doc, 'rig.tof_arm')['verdict'], 'owner')
         self.assertEqual(joint(self.doc, 'rig.pendant_clip')['verdict'], 'owner')
         tof = "'min_engage': 3.5,\n                  'holds': ('carriage_plate', 'tof_arm')"
-        d = generate({'cad/rig_hardware.py': [(tof, tof.replace('3.5', '4.0'))]})
+        d = generate({'hardware/cad/rig/rig_hardware.py': [(tof, tof.replace('3.5', '4.0'))]})
         self.assertEqual(joint(d, 'rig.tof_arm')['verdict'], 'fix')
         self.assertEqual(joint(d, 'rig.pendant_clip')['verdict'], 'owner')
         pend = "'min_engage': 3.5, 'holds': ('pendant_clip', 'pod')"
-        d = generate({'cad/rig_hardware.py': [(pend, pend.replace('3.5', '4.5'))]})
+        d = generate({'hardware/cad/rig/rig_hardware.py': [(pend, pend.replace('3.5', '4.5'))]})
         self.assertEqual(joint(d, 'rig.pendant_clip')['verdict'], 'fix')
         self.assertEqual(joint(d, 'rig.tof_arm')['verdict'], 'owner')
         self.assertIn('sets 3.5 mm', ' '.join(f['text'] for f in joint(self.doc, 'rig.tof_arm')['findings']))
 
     def test_control_oversize_pilot_is_caught(self):
-        d = generate({'cad/interfaces.json': [('"insert_pilot": 6.4', '"insert_pilot": 6.6')]})
+        d = generate({'hardware/cad/robot/interfaces.json': [('"insert_pilot": 6.4', '"insert_pilot": 6.6')]})
         self.assertIn('hole-oversize', codes(d, 'body.post_m5'))
 
     def test_control_shallow_post_pilot(self):
-        d = generate({'cad/body_frame.py': [('s = s.cut(cyl_z(3.2, -1.0, 11.0)).cut(cyl_z(3.2, h - 11.0, h + 1.0))',
+        d = generate({'hardware/cad/body/body_frame.py': [('s = s.cut(cyl_z(3.2, -1.0, 11.0)).cut(cyl_z(3.2, h - 11.0, h + 1.0))',
                                              's = s.cut(cyl_z(3.2, -1.0, 7.0)).cut(cyl_z(3.2, h - 11.0, h + 1.0))')]})
         c = codes(d, 'body.post_m5')
         self.assertIn('pilot-shorter-than-insert', c)
@@ -196,24 +196,24 @@ class Inventory(unittest.TestCase):
 
     def test_control_a_changed_bound_line_stops_generation(self):
         with self.assertRaises(inv.Stale):
-            generate({'cad/fivebar.py': [('LUG_CB = 8.5', 'LUG_CB_MM = 8.5')]})
+            generate({'hardware/cad/legs/fivebar.py': [('LUG_CB = 8.5', 'LUG_CB_MM = 8.5')]})
 
     def test_control_a_second_site_that_disagrees_stops_generation(self):
         """A pattern that matches two lines binds both: the pod's relay boss drifting from the contactor's is noticed."""
         with self.assertRaises(inv.Stale):
-            generate({'cad/rig_parts.py': [("'z', t - 3.0, t + 6.1, m['x'], m['y']", "'z', t - 2.0, t + 6.1, m['x'], m['y']")]})
+            generate({'hardware/cad/rig/rig_parts.py': [("'z', t - 3.0, t + 6.1, m['x'], m['y']", "'z', t - 2.0, t + 6.1, m['x'], m['y']")]})
 
     def test_control_a_stale_note_comes_back(self):
         """A note quoted by a finding: the finding goes when the note is fixed and returns with the stale text."""
         self.assertNotIn('note-vs-joint', codes(self.doc, 'leg.wheel_botwheel'))       # fixed on leg/print-ready (#148)
-        d = generate({'cad/fivebar.py': [('its 4 x M6 x 30', 'its 4 x M6 x 40')]})
+        d = generate({'hardware/cad/legs/fivebar.py': [('its 4 x M6 x 30', 'its 4 x M6 x 40')]})
         self.assertIn('note-vs-joint', codes(d, 'leg.wheel_botwheel'))
-        d = generate({'cad/body_shell.py': [("'PETG; four M3 x 8 into the wall\\'s nuts'", "'PETG; four M3 x 16 into the wall\\'s nuts'")]})
+        d = generate({'hardware/cad/body/body_shell.py': [("'PETG; four M3 x 8 into the wall\\'s nuts'", "'PETG; four M3 x 16 into the wall\\'s nuts'")]})
         self.assertIn('note-vs-joint', codes(d, 'body.printed_clamps'))
 
     def test_control_a_quoted_literal_that_goes_stops_generation(self):
         with self.assertRaises(inv.Stale):
-            generate({'cad/turret.py': [("'foot_holes_x': (-3.0, 33.0, 58.0, 77.0)", "'foot_holes_x': (-3.0, 33.0, 58.0, 78.0)")]})
+            generate({'hardware/cad/turret/turret.py': [("'foot_holes_x': (-3.0, 33.0, 58.0, 77.0)", "'foot_holes_x': (-3.0, 33.0, 58.0, 78.0)")]})
 
 
 if __name__ == '__main__':

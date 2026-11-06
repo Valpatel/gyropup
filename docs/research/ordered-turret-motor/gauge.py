@@ -24,7 +24,7 @@ FONT_PATH = Path('/usr/share/fonts/truetype/dejavu/DejaVuSans-Bold.ttf')
 FONT_SHA256 = '5c1247acef7f2b8522a31742c76d6adcb5569bacc0be7ceaa4dc39dd252ce895'
 LABEL_SIZE = 5.0
 NAME = 'shaft-clearance-survey'
-SOURCES = ('research/ordered-turret-motor/gauge.py', 'research/ordered-turret-motor/seller-claims.json')
+SOURCES = ('docs/research/ordered-turret-motor/gauge.py', 'docs/research/ordered-turret-motor/seller-claims.json')
 TOOLKIT = ('geometry.py', 'evidence.py', 'gates/verdict.py')
 
 

@@ -97,7 +97,10 @@ def private_model(pn):
     entries = json.loads(HARDWARE_RECORD.read_text())
     entry = next(e for e in entries if e['model']==pn)
     relative = entry['cad']['file']
-    path = (ROOT / relative).resolve()
+    prefix = next((value for value in ('references/vendor/', 'hardware/vendor/') if relative.startswith(value)), None)
+    if prefix is None or '..' in Path(relative).parts:
+        raise ValueError('Manufacturer record is outside the supplier input namespace')
+    path = (ROOT / 'hardware/vendor' / relative[len(prefix):]).resolve()
     if not path.is_relative_to((ROOT / 'hardware/vendor')):
         raise ValueError('Private hardware input escapes vendor directory')
     if not path.is_file():

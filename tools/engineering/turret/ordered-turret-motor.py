@@ -58,7 +58,7 @@ POINT_FIELDS = {'mount_hole_centres_xy_mm', 'lead_exit_xyz_mm'}
 FIELDS = set(NUMERIC) | set(ENUMS) | POINT_FIELDS
 BLOCKED_FLAGS = ('physical_fit_verified', 'mount_design_released', 'hub_design_released',
                  'slicer_run', 'powered_operation_qualified')
-SOURCES = ('tools/ordered-turret-motor.py', 'research/ordered-turret-motor/seller-claims.json')
+SOURCES = ('tools/engineering/turret/ordered-turret-motor.py', 'docs/research/ordered-turret-motor/seller-claims.json')
 
 
 def sha(path):

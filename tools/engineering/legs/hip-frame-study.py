@@ -234,14 +234,14 @@ def run_variant(out: Path, params: dict | None, cases, mesh: float, vmax: float 
         rows.append(row)
     fit = interfaces(fb, frame, out)
     rev = subprocess.run(['git', 'rev-parse', 'HEAD'], cwd=ROOT, text=True, capture_output=True).stdout.strip()
-    dirty = subprocess.run(['git', 'status', '--porcelain', 'cad', 'catalog', 'designs', 'sim', 'tools/hip-frame-study.py'], cwd=ROOT, text=True,
+    dirty = subprocess.run(['git', 'status', '--porcelain', 'hardware/cad', 'hardware/catalog', 'hardware/designs', 'software/simulation', 'tools/engineering/legs/hip-frame-study.py'], cwd=ROOT, text=True,
                            capture_output=True).stdout.strip()
     import cadagent
     res = {'schema': 1, 'source_revision': rev, 'source_dirty': bool(dirty), 'params': params or {}, 'hip': dict(getattr(fb, 'HIP', {})),
            'mesh_mm': mesh, 'render': {'vmax_mpa': vmax, 'deformation_scale': dscale}, 'cases': rows, 'mass_g': round(frame.Volume() / 1000 * PA6_CF_DENSITY, 1),
            'volume_mm3': round(frame.Volume(), 1), 'allowables_mpa': {'across_layers': s_z, 'in_layers': s_xy},
            'print_normal': PRINT_NORMAL, **fit, 'toolkit': toolkit_identity(cadagent), 'seconds': round(time.time() - t0, 1),
-           'inputs_sha256': {p: sha(ROOT / p) for p in ('cad/fivebar.py', 'cad/leg_studies.py', 'sim/leg_rig.py',
+           'inputs_sha256': {p: sha(ROOT / p) for p in ('hardware/cad/legs/fivebar.py', 'hardware/cad/legs/leg_studies.py', 'software/simulation/leg_rig.py',
                                                         'exports/leg/rig-results.json', 'exports/leg/fea/summary.json')}}
     (out / 'result.json').write_text(json.dumps(res, indent=1) + '\n')
     return res
