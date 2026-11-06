@@ -414,7 +414,7 @@ class MainTests(unittest.TestCase):
             import json, os, signal, threading
             from unittest.mock import patch
             from rig import rs04_bridge as B
-            entered, release, ready, returned = (threading.Event() for _ in range(4))
+            entered, release, ready, stopping, returned = (threading.Event() for _ in range(5))
             transport, kind = B.make_transport('emu', [127])
             recv, close, log, bridge_type = transport.recv, transport.close, B.log, B.Bridge
             readers, bridges, closure, observation, errors = [], [], [], [], []
@@ -436,10 +436,13 @@ class MainTests(unittest.TestCase):
                 log(*args)
                 if args and str(args[0]).startswith('open http'):
                     ready.set()
+                if args and str(args[0]).startswith('STOP all ('):
+                    stopping.set()
             def interrupt():
                 try:
                     assert entered.wait(2) and ready.wait(2), 'runtime did not become ready'
                     os.kill(os.getpid(), signal.SIGINT)
+                    assert stopping.wait(2), 'SIGINT did not reach production STOP'
                     observation.append(returned.wait(0.05))
                 except BaseException as exc:
                     errors.append(repr(exc))

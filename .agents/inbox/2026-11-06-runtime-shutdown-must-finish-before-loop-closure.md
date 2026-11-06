@@ -43,6 +43,13 @@ reader-timeout failure and an unrelated caller task. The original production
 `serve` restored from the immutable revision above fails all three selected
 reader/bind/ready ownership checks. Diagnostic teardown joins each test reader.
 
+A subsequent test review made the SIGINT observer wait for the actual production
+STOP call before checking that return remains pending. Starting that observation
+immediately after sending the signal could otherwise confuse delayed signal
+handling with completed cleanup. Restoring both original `main` and `serve` in
+the software child fails this strengthened check on Python 3.10 and 3.12 with
+`main returned while recv was held`; the corrective entry point passes both.
+
 ## Corrective rule and limits
 
 Retain only resources owned by this server. Stop accepting, send STOP while the
