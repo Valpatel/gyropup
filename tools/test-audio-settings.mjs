@@ -114,27 +114,34 @@ async function pronunciation() {
   assert.equal(await page.evaluate(()=>window.audioTest.active.text),'Two gyro pups, one Trittium team','Browser speech is sent the pronounced text');
  } finally {await context.close();}
 }
-async function firstMountSoundOverride() {
+async function firstMountSoundOverride({startupDelayMs=0}={}) {
  const context=await browser.newContext({viewport:{width:1200,height:900}});
  await context.addInitScript(browserVoice);await acknowledgePrototypeNotice(context);
  await context.addInitScript(()=>{localStorage.setItem('gyropup-sfx','1');localStorage.setItem('gyropup-sfx-volume','.3');localStorage.setItem('gyropup.muted','0');});
  const page=await context.newPage();page.on('pageerror',e=>errors.push(e.message));
- let release,signalHeld,timer;
+ let release,signalHeld,timer,releaseStartup,startupTimer,startupHeldAt;
  const gate=new Promise(resolve=>{release=resolve;});
  const held=new Promise(resolve=>{signalHeld=resolve;});
+ const startupGate=new Promise(resolve=>{releaseStartup=resolve;});
+ if(startupDelayMs)await page.route(url=>url.pathname==='/designer/sim.js',async route=>{
+  startupHeldAt=performance.now();startupTimer=setTimeout(releaseStartup,startupDelayMs);
+  await startupGate;await route.continue();
+ });
  const gamepadPath=url=>url.pathname==='/designer/sim_gamepad.js';
  await page.route(gamepadPath,async route=>{signalHeld();await gate;await route.continue();});
  try {
   await page.goto(base+'/designer/sim.html?run=none&sound=0',{waitUntil:'commit'});
+  // Core startup precedes this optional import; its existing readiness bound is a separate phase.
+  await page.waitForFunction(()=>window.__sim?.talk,null,{timeout:30000});
   await Promise.race([held,new Promise((_,reject)=>{timer=setTimeout(()=>reject(new Error('The gamepad import was not held')),15000);})]);
   clearTimeout(timer);
-  await page.waitForFunction(()=>window.__sim?.talk);
+  if(startupDelayMs)assert.ok(startupHeldAt && performance.now()-startupHeldAt>=startupDelayMs,'The actual startup module was held beyond the optional-import deadline');
   assert.equal(await page.evaluate(()=>!window.__sim.sfx.enabled && window.__sim.talk.audio.voiceVolume===0),true,'Query mute applies at first talk mount while optional gamepad import is held');
   assert.match(await page.locator('#topbar button').filter({hasText:/SOUND/}).textContent(),/SOUND OFF/);
   release();
   await page.waitForFunction(()=>document.body.dataset.ready==='1');
   assert.equal(await page.evaluate(()=>!window.__sim.sfx.enabled && window.__sim.talk.audio.voiceVolume===0),true,'Query mute remains after optional initialization');
- } finally {clearTimeout(timer);release();await context.close();}
+ } finally {clearTimeout(timer);clearTimeout(startupTimer);releaseStartup();release();await context.close();}
 }
 async function siteControls() {
  const context=await browser.newContext({viewport:{width:1200,height:900}});await context.addInitScript(browserVoice);
@@ -182,6 +189,10 @@ await acknowledgePrototypeNotice(context);
    }
   }
   await firstMountSoundOverride();
+  if(process.argv.includes('--startup-control')) {
+   await firstMountSoundOverride({startupDelayMs:17000});
+   console.log('PASS startup control: actual startup module held beyond 15 seconds; first-mounted mute remains enforced');
+  }
  } finally {await context.close();}
 }
 try {
