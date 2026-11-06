@@ -2,7 +2,7 @@
 half the design mass (D71: 37.5 kg, 18.75 kg a leg, with D69's 10 in hub wheel) at the bus voltage given, through its public run() (nothing of
 the leg's is written: the bus voltage is set on the imported module, as sim/leg_rig.py's own --bus-v would).
 
-    .venv/bin/python cad/body_legloads.py [--half-mass 16.25] [--bus-v 48.1] [--ledger]   # -> exports/body/leg-loads.json
+    .venv/bin/python hardware/cad/body/body_legloads.py [--half-mass 16.25] [--bus-v 48.1] [--ledger]   # -> exports/body/leg-loads.json
 
 D62: the body's and the legs' strength loads come from the rig at the design mass, not the ledger (--ledger runs it at
 half the ledger's P3 robot instead, for a comparison). The body's strength cases (cad/body_studies.py) read this file.

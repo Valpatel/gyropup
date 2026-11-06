@@ -1,6 +1,6 @@
 """The ball: Rival-size foam rounds, what is published, what is swept, and how the bench measures the rest.
 
-    .venv/bin/python sim/turret_ball.py        # writes exports/turret/launch/ball.json (sources, ranges, bench plan)
+    .venv/bin/python software/simulation/turret_ball.py        # writes exports/turret/launch/ball.json (sources, ranges, bench plan)
 
 Every number below carries its source and the date it was checked, or is marked `est` with its basis. The launch
 (sim/turret_launch.py, sim/turret_launch3d.py), the barrel and flight (sim/turret_flight.py) and the feed

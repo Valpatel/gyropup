@@ -1,6 +1,6 @@
 """How fast a Rival ball leaves the turret's twin flywheels, and what holds it at or under 105 fps (D68).
 
-    .venv/bin/python sim/turret_launch.py            # the study: writes exports/turret/launch/launch.json and plots
+    .venv/bin/python software/simulation/turret_launch.py            # the study: writes exports/turret/launch/launch.json and plots
 
 The model (one shot, 1 us steps). Two equal wheels of radius R spin in opposite directions about vertical axes c apart
 (cad/turret.py: the ball path on the line between them). The ball, radius r and mass m, arrives from the chute at

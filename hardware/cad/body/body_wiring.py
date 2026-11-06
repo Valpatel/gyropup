@@ -1,6 +1,6 @@
 """The body's power and CAN wiring (milestone M5, P0 power skid): one wire list and the diagram drawn from it.
 
-    .venv/bin/python cad/body_wiring.py      # -> exports/body/wiring.json, exports/body/wiring.svg
+    .venv/bin/python hardware/cad/body/body_wiring.py      # -> exports/body/wiring.json, exports/body/wiring.svg
 
 The wire list is the build sheet: every run with its two ends, gauge, colour, connector, the fuse that protects it and
 why that size. docs/body-electrical.md explains the system; this file is what the drawing and the table are made from,

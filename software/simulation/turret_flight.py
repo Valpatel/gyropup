@@ -1,6 +1,6 @@
 """The barrel and the flight: wall contacts in the bore, then drag, Magnus lift and gravity out to 8 m.
 
-    .venv/bin/python sim/turret_flight.py [--quick]    # writes exports/turret/flight/flight.json and plots
+    .venv/bin/python software/simulation/turret_flight.py [--quick]    # writes exports/turret/flight/flight.json and plots
 
 Barrel (a reduced model, vectorised over a population, 2 us steps): the ball leaves the nip with the launch stage's
 velocity and spin (sim/turret_launch3d.py) in the cartridge frame, 111 mm before the muzzle, inside a bore of

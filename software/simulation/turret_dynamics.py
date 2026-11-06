@@ -1,6 +1,6 @@
 """The turret's own dynamics while it shoots: recoil, the flywheels' gyroscopic loads, the servos, and the aim.
 
-    .venv/bin/python sim/turret_dynamics.py      # writes exports/turret/e2e/dynamics.json
+    .venv/bin/python software/simulation/turret_dynamics.py      # writes exports/turret/e2e/dynamics.json
 
 Inputs: the CAD's masses and inertias (cad/turret_motion.py -> exports/turret/motion.json), the launch stage's force
 pulse and impulse (sim/turret_launch3d.py), the STS3215 datasheet (references/vendor/feetech-sts3215: 30 kg cm stall,

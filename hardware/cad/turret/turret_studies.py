@@ -1,7 +1,7 @@
 """Strength of the turret's printed parts (cadagent.fea) under slewing, a push on the barrel, and a fall.
 
-    .venv/bin/python cad/turret_studies.py [--mesh 2.5] [--no-anim] [--only tilt_yoke pan_ring]
-    .venv/bin/python cad/turret_studies.py --hand-checks      # only the formula checks, into the existing summary.json
+    .venv/bin/python hardware/cad/turret/turret_studies.py [--mesh 2.5] [--no-anim] [--only tilt_yoke pan_ring]
+    .venv/bin/python hardware/cad/turret/turret_studies.py --hand-checks      # only the formula checks, into the existing summary.json
 
 Every printed part that carries load is meshed from cad/turret.py's solid (in its build frame), held where its bolts
 and seats hold it, loaded where its neighbours push, and solved with cadagent.fea (P2 tetrahedra, linear elastic).

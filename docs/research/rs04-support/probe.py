@@ -1,7 +1,7 @@
 """Read-only RS04 contact/clearance investigation, not a mounting acceptance gate.
 
 Run in the isolated CAD environment after committing this source:
-  python -B research/rs04-support/probe.py --vendor-root references/vendor --out /new/probe
+  python -B docs/research/rs04-support/probe.py --vendor-root hardware/vendor --out /new/probe
 
 Imports all manufacturer solids, uses released cad-agent relations, and exports
 only authored comparison rings. Geometric classification tolerances stay at their

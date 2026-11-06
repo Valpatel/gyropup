@@ -1,7 +1,7 @@
 """The body's parts list (milestone M5, task T8): exports/body/bom.json in the leg's and turret's format, read by the
 build page (designer/build.js) and by docs/body-orders.md.
 
-    .venv/bin/python cad/body_bom.py          # after cad/build_body.py (it reads exports/body/body.json)
+    .venv/bin/python hardware/cad/body/body_bom.py          # after cad/build_body.py (it reads exports/body/body.json)
 
 Every bought line names a catalogue key (catalog/body.json, or the shared files for parts other workstreams already
 list), its quantity for one robot, what it is for, and its sellers: the first is the one to order from, the rest are

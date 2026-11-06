@@ -1,6 +1,6 @@
 """Stiffness and strength studies of the leg parts under the simulator's worst loads (cadagent.fea).
 
-    .venv/bin/python cad/studies.py [designs/default.json] [--mesh 4]
+    .venv/bin/python hardware/cad/analysis/studies.py [hardware/designs/default.json] [--mesh 4]
 
 Load cases come from exports/sim/<design>/*.json (link_loads: the wrench each link takes at its joint, in its own
 frame, at the moment of peak force and of peak moment) and are turned into loads on the CAD parts:

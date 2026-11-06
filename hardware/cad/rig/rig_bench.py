@@ -1,7 +1,7 @@
 """Bench fixtures and fit coupons for the first leg (docs/leg-prototype-plan.md task T4, section 5), printed while the
 parts ship:
 
-    .venv/bin/python cad/rig_bench.py          # exports/rig/bench/: <part>.step + print-ready .stl, print-plan.json
+    .venv/bin/python hardware/cad/rig/rig_bench.py          # exports/rig/bench/: <part>.step + print-ready .stl, print-plan.json
 
   dyno_lug_plate x 2   PETG    an RS-04 on its 10 x M4 output-side lugs (M4 x 20, the leg's screw), standing on a board
   dyno_hub x 2         PETG    on each motor's output (3 pin sockets, 9 x M5 x 25, the leg's D46 screw), three jaws

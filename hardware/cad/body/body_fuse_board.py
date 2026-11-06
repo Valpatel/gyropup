@@ -2,7 +2,7 @@
 holders, its studs and pads with the wires that land on them, the P3 rows of the wire list, and the parts to order.
 Plain data; the board itself (KiCad, gerbers, checks) is hardware/fuse-board/, and docs/body-fuse-board.md explains it.
 
-    .venv/bin/python cad/body_fuse_board.py          # prints the summary
+    .venv/bin/python hardware/cad/body/body_fuse_board.py          # prints the summary
 
 The board replaces two P0 items of cad/body_layout.py's power plate: plate_fuses (the inline MINI holders) and
 plate_shunt (the Blue Sea 150 A / 50 mV block). It sits in the free area x 34..122, y -14..62 (88 x 76 mm) on the

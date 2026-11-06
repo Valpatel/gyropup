@@ -1,6 +1,6 @@
 """Strength and stiffness of the body's frame (milestone M5, task T6), cadagent.fea on the frame's real solids.
 
-    .venv/bin/python cad/body_studies.py [--mesh 4] [--no-anim] [--only S1 D1]
+    .venv/bin/python hardware/cad/body/body_studies.py [--mesh 4] [--no-anim] [--only S1 D1]
 
 Loads come from the leg rig at the body's real half mass (cad/body_legloads.py -> exports/body/leg-loads.json, D56):
 each leg's vertical force and roll moment where it enters the body, at the hip frame's mount plane, taken every step

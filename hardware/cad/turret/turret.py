@@ -1,6 +1,6 @@
 """Gyropup's foam-ball turret (head payload), in CadQuery: every made part printed (D33), the bought parts as envelopes.
 
-    .venv/bin/python cad/turret.py [designs/default.json] [--no-render]
+    .venv/bin/python hardware/cad/turret/turret.py [hardware/designs/default.json] [--no-render]
 
 The concept is research/turret-launcher-study.md section 8 and docs/cad-plan.md section 4: Rival-size foam balls, a
 gravity hopper over an 8-pocket dial on an STS3215 servo, twin SunnySky X2216 flywheels in the horizontal plane, a 100 mm

@@ -1,7 +1,7 @@
 """Bounded RS-04 front-lug checks using released cad-agent measurements.
 
 Run on the isolated CAD host, with a private vendor cache; nothing is downloaded:
-  python cad/rs04_lug_checks.py --vendor-root /path/references/vendor --out /new/run --export
+  python hardware/cad/legs/rs04_lug_checks.py --vendor-root /path/references/vendor --out /new/run --export
 
 This checks the actual printed seats and private manufacturer screw against the
 selected manufacturer lug plate. The drawing's guaranteed thread depth is a

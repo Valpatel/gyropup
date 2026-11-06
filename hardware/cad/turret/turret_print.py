@@ -2,7 +2,7 @@
 orientation, sliced by Bambu Studio for a P1S with a 0.4 mm hardened-steel nozzle, with the material's profile and the
 settings the strength checks assume, and the print schedule.
 
-    .venv/bin/python cad/turret_print.py [--only pan_base dial ...] [--no-slice]
+    .venv/bin/python hardware/cad/turret/turret_print.py [--only pan_base dial ...] [--no-slice]
 
 Reads the print-oriented meshes the builds write (cad/turret.py: exports/turret/<part>.stl; cad/build_turret.py:
 exports/turret/bench/stand_*.stl). Writes exports/turret/print/<part>.3mf (one part centred on the 256 mm bed, in the

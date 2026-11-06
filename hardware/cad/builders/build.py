@@ -1,6 +1,6 @@
 """Gyropup's parts in CadQuery, from a design file: the chassis, the two leg modules, the head, face and sensor mounts.
 
-    python cad/build.py [designs/default.json]
+    python hardware/cad/builders/build.py [hardware/designs/default.json]
 
 The leg modules are built on the mechanical interface standard (docs/mechanical-interfaces.md, cad/gmi.py, cad/leg.py)
 from the motors' real drawings (catalog/interfaces.json). Link lengths, wheel size and the body size come from the

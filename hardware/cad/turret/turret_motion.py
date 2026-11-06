@@ -1,6 +1,6 @@
 """Pan and tilt servo margins for the turret, from the CAD's masses and inertias.
 
-    .venv/bin/python cad/turret_motion.py
+    .venv/bin/python hardware/cad/turret/turret_motion.py
 
 Every part of cad/turret.py becomes a rigid body (cadagent.robot: printed parts by their print fill, bought parts with
 their catalogue mass spread over their envelope, the 30 balls in the hopper, the not-modelled grams at the turntable).

@@ -2,7 +2,7 @@
 "breaking the design down by sections, reviewing each piece to justify all design decisions, and building proper
 models"). Writes docs/body-sections.md from the CAD and its checks, so the tables cannot drift from the model.
 
-    .venv/bin/python cad/body_sections.py      # after cad/build_body.py (reads exports/body/*.json)
+    .venv/bin/python hardware/cad/body/body_sections.py      # after cad/build_body.py (reads exports/body/*.json)
 
 Each section: what it does and the numbers it must meet; its interfaces to the other sections; every part with its
 material, how it is made and how it is held (the joints of cad/body_joints.py and the listed holds: the same records the

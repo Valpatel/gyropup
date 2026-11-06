@@ -1,7 +1,7 @@
 """The turret's power from its one input (the DT12's pins 1-4 since D76), with the D68 flywheels: every supply, the ring,
 the stand's rocker.
 
-    .venv/bin/python sim/turret_power.py      # writes exports/turret/e2e/power.json and power.png (~2 min: run it on a GB10)
+    .venv/bin/python software/simulation/turret_power.py      # writes exports/turret/e2e/power.json and power.png (~2 min: run it on a GB10)
 
 The chain (docs/turret-wiring.md 4, docs/turret-sections.md 7): a supply (one DCB609 in 20 V mode on the stand, 15 V
 empty under load to 20.5 V full; or Gyropup's 10S bus, 30 V near empty to 42 V full) behind its source resistance (the

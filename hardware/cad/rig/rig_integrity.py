@@ -1,7 +1,7 @@
 """The rig's integrity checks (cad/assembly_checks.py on the rig's parts), run by cad/build_rig.py; exits 1 on a
 violation so a build cannot pass with one:
 
-    .venv/bin/python cad/rig_integrity.py            # -> exports/rig/integrity.json
+    .venv/bin/python hardware/cad/rig/rig_integrity.py            # -> exports/rig/integrity.json
 
 1. Nothing floats: each body (the fixed rig, the carriage with the leg's frame and motors, the leg's moving links) is
    one connected group of parts that touch, or that a screw of the joint table holds together; the carriage meets the

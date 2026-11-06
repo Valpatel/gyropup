@@ -1,7 +1,7 @@
 """Build the foam-ball turret on the Orin AGX compute box (cad/turret_box.py): the adapter's parts and print plan, the
 clearance and airflow checks, and the 3D game page's scene (designer/sim.html, design "Turret on the Orin AGX box").
 
-    .venv/bin/python cad/build_turret_box.py [--no-j501] [--out DIR --scene DIR]
+    .venv/bin/python hardware/cad/builders/build_turret_box.py [--no-j501] [--out DIR --scene DIR]
 
 Writes exports/turret/box/ (the adapter's STEP and print-ready STL, print-plan.json, bom.json, box.json with the checks,
 the mechanism's numbers and the J501 revision it was built on) and exports/sim/turret_box/ (gitignored: every turret,

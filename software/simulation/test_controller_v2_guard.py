@@ -1,7 +1,7 @@
 """sim/controller_v2.py's guard: the robot sim runs the firmware's reach window and soft stops (docs/leg-protection.md).
 
     python -m pytest sim/test_controller_v2_guard.py -q     # seconds; no robot model is built
-The whole robot with the guard on: python tools/simulate.py --v2 (every scenario must still pass).
+The whole robot with the guard on: python tools/engineering/robot/simulate.py --v2 (every scenario must still pass).
 """
 from __future__ import annotations
 

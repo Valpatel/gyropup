@@ -1,6 +1,6 @@
 """The body's thermal hand model (milestone M5, B7; D61): the J501's G48R cooler and its 9215 fan in the closed P3 body.
 
-    .venv/bin/python cad/body_thermal.py        # -> exports/body/thermal/hand_model.json (read by docs/body-thermal.md)
+    .venv/bin/python hardware/cad/body/body_thermal.py        # -> exports/body/thermal/hand_model.json (read by docs/body-thermal.md)
 
 The fan blows UP (the j501-agx project, 94da39d, from the user's look at the fitted cooler): it draws air in through
 the fin block's open +-y sides and blows it out of its top. In the body that air comes in through the side walls'

@@ -1,8 +1,8 @@
 """The turret firing over the VLP-16 lidar in front of it: clearance of the barrel, the cartridge and the ball's path at
 every pan and tilt, the pan-dependent depression limit that keeps them clear, and where the lidar may sit.
 
-    .venv/bin/python cad/turret_lidar.py [--x 143] [--top 41.7] [--margin 10] [--map]   # the robot: over its lidar
-    .venv/bin/python cad/turret_lidar.py --scene box                                       # the Orin box: its deck, antennas
+    .venv/bin/python hardware/cad/turret/turret_lidar.py [--x 143] [--top 41.7] [--margin 10] [--map]   # the robot: over its lidar
+    .venv/bin/python hardware/cad/turret/turret_lidar.py --scene box                                       # the Orin box: its deck, antennas
 
 The same check serves any mount: a scene is a list of obstacles (vertical cylinders and boxes), each with or without
 the ball path (scene_robot, scene_box). Points that can never come within the margin at any pan and tilt are dropped

@@ -23,10 +23,10 @@ pile and the toolkit's gate code), which cad/build_turret_box.py reads.
 Frames: the assembly is the T frame (mm, mount face z = 0, robot=False) with every part placed by its build frame's
 rigid motion (Turret.pose_shape as a gp_Trsf), so a pose only changes placements and the pair cache stays warm.
 
-    .venv/bin/python cad/turret_gates.py          (exit 1 when a gate fails)
-    .venv/bin/python cad/turret_gates.py --dossier   (path + ammo range for cad-agent check: exports/gates/turret-*.json)
+    .venv/bin/python hardware/cad/turret/turret_gates.py          (exit 1 when a gate fails)
+    .venv/bin/python hardware/cad/turret/turret_gates.py --dossier   (path + ammo range for cad-agent check: exports/gates/turret-*.json)
     gp-remote --pull exports/turret/gates.json --pull exports/turret/gates/ -- \\
-        env CADAGENT_GATE_CACHE=$HOME/gyropup-compute/cache/turret-gates python -u cad/turret_gates.py
+        env CADAGENT_GATE_CACHE=$HOME/gyropup-compute/cache/turret-gates python -u hardware/cad/turret/turret_gates.py
 """
 from __future__ import annotations
 

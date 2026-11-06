@@ -1,7 +1,7 @@
 """The body's joints and its integrity checks (milestone M5; the user's "building proper models"): every screw as a
 modelled joint, checked against the CAD itself, and the body checked for floating parts.
 
-    .venv/bin/python cad/body_joints.py            # -> exports/body/integrity.json (cad/build_body.py runs it too)
+    .venv/bin/python hardware/cad/body/body_joints.py            # -> exports/body/integrity.json (cad/build_body.py runs it too)
 
 A Joint is a group of identical screws: the thread and length, the head's bearing point(s) and the axis into the
 work, the parts the screw clamps (head side first) and what takes its thread (a PEM nut pressed in a sheet, a heat-set

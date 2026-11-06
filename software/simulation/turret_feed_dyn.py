@@ -1,7 +1,7 @@
 """The feed under motion: the dial driven like the real feed servo (an STS3215 since D42), the cartridge slewing, jolted and shaken, and the
 ball's state when it first touches the tyres (what the launch stage starts from).
 
-    .venv/bin/python sim/turret_feed_dyn.py [--quick] [--video]     # writes exports/turret/feed/feed_dyn.json, plots, mp4
+    .venv/bin/python software/simulation/turret_feed_dyn.py [--quick] [--video]     # writes exports/turret/feed/feed_dyn.json, plots, mp4
 
 Built on sim/turret_feed.py (the program agent's MuJoCo feed: hopper, dial, baffle, chute from cad/turret.py's Geo;
 imported unchanged). This file adds:

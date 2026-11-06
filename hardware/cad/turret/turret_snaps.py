@@ -2,7 +2,7 @@
 hold and their declaration for cad-agent's snap-fit calculator. Plain Python (no CAD kernel), so the declaration and
 its checks run anywhere.
 
-    python3 research/snap-fits/snaps.py --cad-agent PATH      # snaps.yaml, cad-agent's snapfit.json, summary.json
+    python3 docs/research/snap-fits/snaps.py --cad-agent PATH      # snaps.yaml, cad-agent's snapfit.json, summary.json
 
 Two lids, both PETG, both opened again and again:
   board_bay_lid  two latches, one on its top edge and one on its bottom edge (the same latch turned 180 deg about the

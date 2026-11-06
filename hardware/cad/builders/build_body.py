@@ -2,7 +2,7 @@
 thickness in the file names), the printed parts (STEP + print-ready STL), the assembly with both legs, a clash sweep of
 the body against both legs over their whole range, the parts' masses, the print plan, the SendCutSend cart and pictures.
 
-    .venv/bin/python cad/build_body.py [--no-render] [--no-clash] [--quick]
+    .venv/bin/python hardware/cad/builders/build_body.py [--no-render] [--no-clash] [--quick]
 
 Writes exports/body/: body.json (numbers, interface, sheet orders and rule checks, clash sweep, masses),
 sendcutsend/<part>_<material>_<thickness>_x<qty>.{step,dxf}, <printed part>.{step,stl}, body_stand.step (the frame

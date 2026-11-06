@@ -1,6 +1,6 @@
 """Strength of leg v2's printed parts (cadagent.fea) under the single-leg rig's loads (sim/leg_rig.py).
 
-    .venv/bin/python cad/leg_studies.py [--mesh 4] [--no-anim] [--only upper_link wheel_link]
+    .venv/bin/python hardware/cad/legs/leg_studies.py [--mesh 4] [--no-anim] [--only upper_link wheel_link]
 
 The rig gives the wheel's ground force at its worst moments; the five-bar's statics (sim.leg_rig.pin_forces) turn a
 ground force into the force in every joint, so each part is loaded at its own pins at the same instant. Out of the

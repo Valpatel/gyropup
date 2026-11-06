@@ -1,6 +1,6 @@
 """Build the foam-ball turret on its own bench stand (M4): pictures, the print plan, the parts list.
 
-    .venv/bin/python cad/build_turret.py [--no-render]
+    .venv/bin/python hardware/cad/builders/build_turret.py [--no-render]
 
 The turret is cad/turret.py's, mounted with its TM face on the stand's top (cad/turret_stand.py) instead of on the
 robot's head. Writes exports/turret/bench/: the stand's parts (STEP, print-ready STL), turret-bench-*.png,

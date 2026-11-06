@@ -1,7 +1,7 @@
 """The leg rig's assembly, step by step, with a picture of each step from the CAD (docs/leg-prototype-plan.md section
 6.4 and task T13; the turret's cad/turret_assembly.py pattern).
 
-    .venv/bin/python cad/rig_assembly.py
+    .venv/bin/python hardware/cad/rig/rig_assembly.py
 
 Each step adds parts to what is already built: the new parts in colour, lifted along the way they go in, what is already
 fitted in grey. Writes exports/rig/assembly/step-NN.png, steps.json and docs/leg-rig-assembly.md (the written order;

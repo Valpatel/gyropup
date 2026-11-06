@@ -1,7 +1,7 @@
 """End to end: the turret on the robot aims at targets at 2, 4 and 6 m and fires 5-ball bursts, every stage on the
 current CAD, one stage's exit the next stage's input.
 
-    .venv/bin/python sim/turret_e2e.py [--quick] [--no-video] [--set-fps 55 65]
+    .venv/bin/python software/simulation/turret_e2e.py [--quick] [--no-video] [--set-fps 55 65]
 
 The chain, per shot (R = reduced model solved outside MuJoCo; M = MuJoCo):
   1. the ball            sim/turret_ball.py            the sourced size/mass spread, the swept foam unknowns

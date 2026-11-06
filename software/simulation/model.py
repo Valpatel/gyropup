@@ -1,6 +1,6 @@
 """Design → robot model: MuJoCo (MJCF) and URDF, with masses, inertias and actuator limits from the design's parts.
 
-    python -m sim.model designs/default.json      # writes build/sim/<design>/robot.xml, robot.urdf, model.json
+    python -m software.simulation.model hardware/designs/default.json      # writes build/sim/<design>/robot.xml, robot.urdf, model.json
 
 The design is evaluated with the designer's own model (tools/derive.mjs), so masses, the layout and the parts list are
 exactly what the designer shows. Every BOM line becomes mass on a link:

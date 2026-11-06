@@ -2,7 +2,7 @@
 board, checked against the board's edges, its standoff holes, each other and the height its level allows, and drawn on
 the 0.1 in grid so a person can build them.
 
-    .venv/bin/python cad/turret_boards.py
+    .venv/bin/python hardware/cad/turret/turret_boards.py
 
 Writes exports/turret/wiring/board-<name>.png and boards.json. Sizes are the makers' (Pololu, Adafruit, the parts' data
 sheets); a placement is the part's footprint on the board (its body and its leads), in mm from the board's lower left

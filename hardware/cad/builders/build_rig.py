@@ -2,7 +2,7 @@
 print-ready STL), the carriage plate's DXF and order sheet for SendCutSend, the assembled rig with the leg at four
 poses (renders), the rig's parts list and print plan, and the checks of docs/leg-prototype-plan.md section 2.2.
 
-    .venv/bin/python cad/build_rig.py [--no-render] [--no-sweep] [--no-sim]
+    .venv/bin/python hardware/cad/builders/build_rig.py [--no-render] [--no-sweep] [--no-sim]
 
 Writes exports/rig/: <part>.step/.stl, rig_300.step (the assembly, bought parts as envelopes), rig-*.png,
 print-plan.json, rig.json (masses, ballast, travel, clearances, block loads, post and brace, bumpers, the

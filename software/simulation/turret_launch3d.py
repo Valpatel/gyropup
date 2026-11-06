@@ -1,6 +1,6 @@
 """The launch in 3D: a foam ball between two tyres, each on its own motor, with slip, spin and lateral forces.
 
-    .venv/bin/python sim/turret_launch3d.py [--quick]      # writes exports/turret/launch/launch3d.json and plots
+    .venv/bin/python software/simulation/turret_launch3d.py [--quick]      # writes exports/turret/launch/launch3d.json and plots
 
 This extends sim/turret_launch.py (the program agent's 1D model, which it imports for the motor, the Hertz foam law and
 the ball/launcher definitions) to six degrees of freedom. It is a REDUCED MODEL solved outside MuJoCo (1 us explicit

@@ -1,7 +1,7 @@
 """The legs' pinch points as the body's hazard table sees them (B6; docs/body-safety.md rows 3-4): what a guard must do
 at the knee scissor and the lower-link V, measured from cad/fivebar.py over the leg's whole range (read only).
 
-    .venv/bin/python cad/body_guards.py      # -> exports/body/shell/guards.json
+    .venv/bin/python hardware/cad/body/body_guards.py      # -> exports/body/shell/guards.json
 
 ISO 13854: a gap that closes is safe for fingers at >= 25 mm; ISO 13857: an opening <= 4 mm admits none. For a V of
 angle theta closing at its vertex, the opening at a distance r from the vertex is 2 r sin(theta / 2): a guard that

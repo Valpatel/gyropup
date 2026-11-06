@@ -1,7 +1,7 @@
 """Build leg v2 (cad/fivebar.py): every printed part as STEP and print-ready STL, the assembled leg, pictures, the
 print plan, the parts list with McMaster part numbers, the mass, and a clash sweep over the whole range.
 
-    .venv/bin/python cad/build_leg.py [--no-render] [--no-clash]
+    .venv/bin/python hardware/cad/builders/build_leg.py [--no-render] [--no-clash]
 
 Writes exports/leg/: <part>.step, <part>.stl and <part>.3mf (print orientation, on z = 0), leg_stand.step (the assembled leg with the
 bought parts as envelopes: the vendor models are not redistributed), *.png, print-plan.json, bom.json, leg.json; and

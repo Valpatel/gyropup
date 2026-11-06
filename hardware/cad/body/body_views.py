@@ -1,6 +1,6 @@
 """Section and exploded views of the body (milestone M5; the user's review of the design by sections), headless.
 
-    .venv/bin/python cad/body_views.py        # -> exports/body/views/*.png (heavy: run it on a GB10 with gp-remote)
+    .venv/bin/python hardware/cad/body/body_views.py        # -> exports/body/views/*.png (heavy: run it on a GB10 with gp-remote)
 
 Solid views are cad/build_body.py's (body-p1-*, body-p3-*). These add:
   section-side-y0      the P3 robot cut at y = 0, seen from the left: the spine's gap, the tray's stack, the bay's packs

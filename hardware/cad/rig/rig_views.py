@@ -1,7 +1,7 @@
 """Headless review renders of the rig with every bought part in place (cad/rig_hardware.py): the whole rig solid, a
 section through its middle, the same exploded, and close-ups of the carriage from the front and the back.
 
-    .venv/bin/python cad/rig_views.py          # -> exports/rig/views/*.png
+    .venv/bin/python hardware/cad/rig/rig_views.py          # -> exports/rig/views/*.png
 """
 from __future__ import annotations
 

@@ -1,6 +1,6 @@
 """The ball feed in physics: 30 Rival balls in the hopper, the dial stepping them to the exit, at every pose.
 
-    .venv/bin/python sim/turret_feed.py [--quick] [--video]
+    .venv/bin/python software/simulation/turret_feed.py [--quick] [--video]
 
 MuJoCo, in the cartridge frame of cad/turret.py (x along the barrel, z up through the dial axis; metres), with the
 CAD's own numbers (cad/turret.py Geo): the dial-housing floor with its exit opening under the front pocket, the

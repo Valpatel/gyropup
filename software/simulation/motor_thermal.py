@@ -1,8 +1,8 @@
 """The RS-04 leg motors' thermal model (issue #194): their losses, how the heat reaches the hip frame, the body and the
 air, and which hip frame keeps them cool enough.
 
-    .venv/bin/python sim/motor_thermal.py           # -> exports/leg/thermal/motor_thermal.json and docs/motor-thermal.md
-    python3 sim/motor_thermal.py --check            # recompute from the JSON's recorded loads (no CAD): exit 1 if stale
+    .venv/bin/python software/simulation/motor_thermal.py           # -> exports/leg/thermal/motor_thermal.json and docs/motor-thermal.md
+    python3 software/simulation/motor_thermal.py --check            # recompute from the JSON's recorded loads (no CAD): exit 1 if stale
 
 Pattern as cad/body_thermal.py: one script writes generated JSON (and here the page that reads it); regenerate, never
 edit. The thermal core is the standard library only, so the check and the tests run anywhere; only `loads()` reads the

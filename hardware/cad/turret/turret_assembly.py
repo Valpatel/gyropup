@@ -1,6 +1,6 @@
 """The turret's assembly order, step by step, with a picture of each step from the CAD.
 
-    .venv/bin/python cad/turret_assembly.py
+    .venv/bin/python hardware/cad/turret/turret_assembly.py
 
 Each step adds parts to what is already built: the new parts in colour, lifted along the way they go in (an exploded
 view of that step), the parts already fitted in grey. Writes exports/turret/assembly/step-NN.png, steps.json and the

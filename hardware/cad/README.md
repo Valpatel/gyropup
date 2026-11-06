@@ -15,10 +15,10 @@ and the VLP-16 drawn, not as the layout's envelopes; run it after `build_body.py
 receipts pin this folder's sources.
 
 ```
-.venv/bin/python tools/robot_view.py   # exports/robot/*.step + robot.json, cad/assembly.png, cad/exploded.png
+.venv/bin/python tools/engineering/robot/robot_view.py   # exports/robot/*.step + robot.json, cad/assembly.png, cad/exploded.png
 .venv/bin/cad-agent view                # the 3D assembly, at /_cadagent/kit/viewer.html
-.venv/bin/python tools/leg_cables.py    # add --clash to sweep the cable against the leg's parts
-.venv/bin/python tools/body_pictures.py # exports/body/*.png and views/*.png with the turret and the VLP-16 drawn
+.venv/bin/python tools/engineering/legs/leg_cables.py    # add --clash to sweep the cable against the leg's parts
+.venv/bin/python tools/engineering/body/body_pictures.py # exports/body/*.png and views/*.png with the turret and the VLP-16 drawn
 ```
 
 | Assembled, standing | Exploded |
@@ -31,7 +31,7 @@ five-bar leg.
 [`build.py`](builders/build.py) makes every part of a design in CadQuery: the aluminium chassis, the two leg modules ([`leg.py`](legs/leg.py), built on the mechanical interface standard in [`gmi.py`](robot/gmi.py) and [`../docs/mechanical-interfaces.md`](../../docs/architecture/mechanical-interfaces.md)), and the printed head, face and sensor mounts. The motor interfaces come from the vendors' drawings ([`../catalog/interfaces.json`](../catalog/interfaces.json)). [`studies.py`](analysis/studies.py) runs the stiffness and strength studies, and [`cables.py`](robot/cables.py) checked the serial leg's cable routes.
 
 ```
-.venv/bin/python cad/build.py designs/default.json   # STEP + print-ready STL in exports/ (the serial leg, rev 0.1)
+.venv/bin/python hardware/cad/builders/build.py hardware/designs/default.json   # STEP + print-ready STL in exports/ (the serial leg, rev 0.1)
 ```
 
 | Part | Qty | Made | Notes |
@@ -65,8 +65,8 @@ out, so the deck stands 44 mm up (the TM face at 141 mm) and an intake shroud ke
 the grille, sealed on the roof's solid band by a foam ring under its floor's lip, fed by a 160 mm duct from the front.
 
 ```
-.venv/bin/python cad/build_turret_box.py     # exports/turret/box/ (parts, print plan, parts list, checks) and exports/sim/turret_box/
-.venv/bin/python cad/turret_lidar.py --scene box   # the 3D clearance study the box checks read (exports/turret/lidar/box.json)
+.venv/bin/python hardware/cad/builders/build_turret_box.py     # exports/turret/box/ (parts, print plan, parts list, checks) and exports/sim/turret_box/
+.venv/bin/python hardware/cad/turret/turret_lidar.py --scene box   # the 3D clearance study the box checks read (exports/turret/lidar/box.json)
 ```
 
 The second folder is the scene for the 3D game page: pick **Turret on the Orin AGX box** in the simulator's design

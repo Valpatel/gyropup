@@ -48,21 +48,21 @@ def phase(name,command,expected=0):
  print('START '+name,flush=True)
  try:
   with (OUT/(name+'.log')).open('w') as stream:
-   child=subprocess.Popen(command,cwd=ROOT,stdout=stream,stderr=subprocess.STDOUT,start_new_session=True)
    processes_quiescent=False
-   try:
-    try:record['exit']=child.wait(timeout=900)
-    except subprocess.TimeoutExpired:record['timed_out']=True
-   except BaseException as exc:
-    record['error']=type(exc).__name__+': '+str(exc)
-    raise
-   finally:
-    cleanup=settle_owned_group(child)
-    record['process_cleanup']=cleanup;processes_quiescent=cleanup['group_gone']
-    assert processes_quiescent,'Owned group not quiescent; do not race archive/restore'
+   child=subprocess.Popen(command,cwd=ROOT,stdout=stream,stderr=subprocess.STDOUT,start_new_session=True)
+   try:record['exit']=child.wait(timeout=900)
+   except subprocess.TimeoutExpired:record['timed_out']=True
+ except BaseException as exc:
+  record['error']=type(exc).__name__+': '+str(exc)
+  raise
  finally:
+  # Cover every path after launch, including interruption before wait begins.
+  if child is not None:
+   cleanup=settle_owned_group(child)
+   record['process_cleanup']=cleanup;processes_quiescent=cleanup['group_gone']
   record['seconds']=time.monotonic()-start;result['phases'][name]=record;save('result.json',result)
   print('END '+name+' '+json.dumps(record),flush=True)
+  assert processes_quiescent,'Owned group not quiescent; do not race archive/restore'
  assert record.get('exit')==expected,name+' failed/incomplete; actual logs retained'
 p=argparse.ArgumentParser(description=__doc__);p.add_argument('--head',required=True);args=p.parse_args()
 result={'status':'FAILED','source':args.head,'phases':{},'scope':'genuine cut geometry and thumbnails only; no adoption or physical qualification'}
@@ -110,14 +110,16 @@ try:
   receipt_path.write_text(json.dumps(mutant,indent=2)+'\n')
   phase('wrong-location-contract-control',[sys.executable,'-B','tools/evidence/media/part-media-generation.py','--check'],expected=1)
   assert 'Source location contract changed' in (OUT/'wrong-location-contract-control.log').read_text()
- finally:receipt_path.write_bytes(fresh_receipt)
+ finally:
+  if processes_quiescent:receipt_path.write_bytes(fresh_receipt)
  fresh=json.loads(fresh_receipt);image=ROOT/'hardware'/fresh['parts'][sorted(keys)[0]]['image']
  fresh_png=image.read_bytes()
  try:
   image.write_bytes(fresh_png+b'planted output hash change')
   phase('changed-thumbnail-control',[sys.executable,'-B','tools/evidence/media/part-media-generation.py','--check'],expected=1)
   assert 'output/receipt hash mismatch' in (OUT/'changed-thumbnail-control.log').read_text()
- finally:image.write_bytes(fresh_png)
+ finally:
+  if processes_quiescent:image.write_bytes(fresh_png)
  phase('media-check-after-controls',[sys.executable,'-B','tools/evidence/media/part-media-generation.py','--check'])
  receipt=json.loads((ROOT/'hardware/catalog/designed-media-validation.json').read_text())
  images=json.loads((ROOT/'hardware/catalog/images.json').read_text())

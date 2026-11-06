@@ -1,7 +1,7 @@
 """The bench turret's order sheets (docs/turret-prototype-plan.md T1): one page per seller from the parts list and the
 catalogue, with what to buy, how many (whole packs), the listed price, the link and a backup seller for every line.
 
-    .venv/bin/python cad/turret_orders.py        (cad/build_turret.py runs it after writing bom.json)
+    .venv/bin/python hardware/cad/turret/turret_orders.py        (cad/build_turret.py runs it after writing bom.json)
 
 Writes exports/turret/bench/orders/<seller>.md and orders/README.md: the order to place them in (the parts with the
 longest lead first), each seller's total, the SendCutSend upload, and the robot-only (v1) lines that are not ordered

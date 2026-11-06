@@ -1,7 +1,7 @@
 """The turret's interface file for the body: exports/turret/mount.json (docs/turret-next-plan.md section 3.1, task N5).
 
-    .venv/bin/python cad/turret_mount.py            # build the turret and write exports/turret/mount.json
-    .venv/bin/python cad/turret_mount.py --check    # read the file back against cad/turret.py's constants (no build)
+    .venv/bin/python hardware/cad/turret/turret_mount.py            # build the turret and write exports/turret/mount.json
+    .venv/bin/python hardware/cad/turret/turret_mount.py --check    # read the file back against cad/turret.py's constants (no build)
 
 cad/build_turret.py calls `write(T)` at the end of every bench build, so the file follows the CAD: the TM pattern, the
 foot, the DT12 receptacle and its plug's boxes come from cad/turret.py, the mass and the centre from its

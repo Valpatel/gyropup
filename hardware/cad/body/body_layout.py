@@ -2,7 +2,7 @@
 zones (plugs, the fan's intake, the battery drawer's path), an overlap check, the holes each part needs in the frame,
 and the mass and centre-of-mass ledger. Robot frame (mm): x forward, y left, z up from the hip axis.
 
-    .venv/bin/python cad/body_layout.py          # check, then write exports/body/mass.json and layout.json
+    .venv/bin/python hardware/cad/body/body_layout.py          # check, then write exports/body/mass.json and layout.json
 
 The body's three zones (docs/body-frame.md):
   the compute bay   the J501 carrier on its pallet at the rear of the floor tray, its fan under the turret's riser

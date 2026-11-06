@@ -1,7 +1,7 @@
 """Wheel fit (issue #18): the leg's clash sweep with an air-tyre hub wheel in place of the BotWheel, on a scratch copy
 of the wheel's solid. cad/fivebar.py is not edited: fivebar.botwheel is replaced in memory before leg_parts() builds.
 
-    python cad/wheel_fit.py [--wheels hb10 hb85] [--quick]
+    python hardware/cad/legs/wheel_fit.py [--wheels hb10 hb85] [--quick]
 
 Writes exports/wheels/fit_clashes.json: for each wheel, fivebar.clashes() at the standard stances (130-380 mm,
 leans -20/0/20) and the stop poses, with the bought parts; plus the track, the standing hip height and the foot's

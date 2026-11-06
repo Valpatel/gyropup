@@ -3,7 +3,7 @@
 check of a calibration case, the network solver against closed forms, the bench re-fit on a synthetic log, and the
 committed JSON and page against a fresh run. Standard library only (CadQuery only for the geometry cross-check).
 
-    python3 sim/test_motor_thermal.py            # or: .venv/bin/python -m pytest sim/test_motor_thermal.py -q
+    python3 software/simulation/test_motor_thermal.py            # or: .venv/bin/python -m pytest sim/test_motor_thermal.py -q
 """
 
 # Support direct-file CLI execution as well as checkout package imports.

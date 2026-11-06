@@ -24,7 +24,7 @@ parts, not from the bearings that carry them, so those interfaces declare a clea
 project.yaml says which; reported on Valpatel/cad-agent#39). The real bearing pairs are the joints' intended contacts.
 
     .venv/bin/cad-agent gates --build          # builds this (cad: gates: build:) and runs every gate and the lint
-    .venv/bin/python cad/turret_dossier.py     # just the geometry record: exports/dossier-geometry.json
+    .venv/bin/python hardware/cad/turret/turret_dossier.py     # just the geometry record: exports/dossier-geometry.json
 """
 from __future__ import annotations
 

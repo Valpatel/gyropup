@@ -1,6 +1,6 @@
 """The target: what a ball does when it arrives, whether it knocks a game target over, and what it would do to a kid.
 
-    .venv/bin/python sim/turret_target.py      # writes exports/turret/target/target.json and a plot
+    .venv/bin/python software/simulation/turret_target.py      # writes exports/turret/target/target.json and a plot
 
 Impact: momentum m v and energy 1/2 m v^2 at the target (the flight stage's speed there), the energy density over the
 ball's cross-section (the toy standards' measure), compared with EN 71-1's 0.5 J for resilient projectiles and ASTM
