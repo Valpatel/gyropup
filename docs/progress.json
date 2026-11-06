@@ -1,15 +1,15 @@
 {
-  "updated": "2026-11-01",
+  "updated": "2026-11-05",
   "status": [
     {
       "title": "Project stage",
       "value": "CAD + simulation",
-      "note": "No assembled robot yet. The goal is a 100 lb maximum robot with a $10,000 target budget; these are design targets, not achieved specifications."
+      "note": "No assembled or tested robot result recorded. The goal is a 100 lb maximum robot with a $10,000 target budget; these are design targets, not achieved specifications."
     },
     {
       "title": "Motor day",
-      "value": "Plan + build package · draft",
-      "note": "RS-04 leg motors arrived 2026-11-02. A generated PLA print list, McMaster order, assembly drawings and a low-current test ladder to a first hop on a lumber boom stand. PLA caps the motors at 12 N m. Not yet reviewed, no motor has run."
+      "value": "Motors + printed holder/adapter",
+      "note": "Owner reported first motors in hand and the main motor holder and motor adapter printed on 2026-11-05. This report does not restate motor type, print revision/material or installation details. No run/fit result recorded."
     },
     {
       "title": "Leg mounting fit",
@@ -24,7 +24,7 @@
     {
       "title": "Software",
       "value": "Live browser playground",
-      "note": "Recent releases repair diagrams, model previews and target knockdown. The demo does not control a physical robot."
+      "note": "The browser playground and documentation show the design and its evidence. Simulation remains separate from physical robot control."
     }
   ],
   "log": [
@@ -382,6 +382,44 @@
           "href": "../exports/motor-day/motor-day-package.zip"
         }
       ]
+    },
+    {
+      "time": "2026-11-05",
+      "title": "Motors in hand; holder and adapter printed",
+      "text": "The owner reports first motors in hand and the main motor holder and motor adapter printed. This latest report does not restate motor type or print revision/material; the separate dated inventory remains recorded. No installation, run or fit result is recorded.",
+      "links": [
+        {
+          "title": "Dated owner report and evidence boundaries",
+          "href": "../site/pages/docs-physical-progress-md.html"
+        },
+        {
+          "title": "Current acceptance tasks",
+          "href": "https://github.com/Valpatel/gyropup/issues/31"
+        }
+      ]
+    },
+    {
+      "time": "2026-11-05",
+      "title": "A visual entrance and stronger evidence reuse",
+      "text": "A shorter README and animated documentation map guide project exploration. Deployment and presentation sources have owning homes while familiar page and download links remain. Query mute applies from the first talk mount, assembly picture reuse checks ordered pose/camera inputs, and media consumers preserve original evidence identities. Root cleanup continues; physical qualification remains separate.",
+      "links": [
+        {
+          "title": "Documentation map",
+          "href": "../site/pages/docs-readme-md.html"
+        },
+        {
+          "title": "Repository cleanup",
+          "href": "https://github.com/Valpatel/gyropup/pull/222"
+        },
+        {
+          "title": "Assembly picture provenance",
+          "href": "https://github.com/Valpatel/gyropup/pull/223"
+        },
+        {
+          "title": "Media evidence and runtime/readiness fixes",
+          "href": "https://github.com/Valpatel/gyropup/pull/224"
+        }
+      ]
     }
   ],
   "shopping": {
@@ -411,5 +449,5 @@
       }
     ]
   },
-  "focus": "Current focus: prepare both ordered motor families for real fit checks. The 3115-900KV shaft survey and RS-04 parent coupon now have retained unpowered print jobs and blank measurement records. Actual motor dimensions, printed fits and RS-04 mounting support still block complete turret and leg print releases."
+  "focus": "Next: reconcile the latest owner report with unit inventory, record print identities, then measure unpowered fit against documented datums. Received and printed items remain unqualified; mounting support and actual measurements still block complete print releases."
 }
