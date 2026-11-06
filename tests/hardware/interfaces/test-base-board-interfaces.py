@@ -99,7 +99,7 @@ class CarrierInterfaces(unittest.TestCase):
             with self.assertRaisesRegex(ValueError,'closure changed'):
                 ci.validate_source_receipt(root,receipt)
             gmi.write_bytes(original)
-            (root/'cad/new-effective-input.json').write_text('{}')
+            (root/'hardware/cad/new-effective-input.json').write_text('{}')
             with self.assertRaisesRegex(ValueError,'closure changed'):
                 ci.validate_source_receipt(root,receipt)
 
