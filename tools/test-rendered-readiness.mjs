@@ -27,7 +27,7 @@ export async function waitForRenderedText(page) {
   // FontFaceSet.ready can wait for document load even when only an unrelated image is pending.
   // Load the actual rendered text fonts explicitly, including the characters selecting Unicode subsets.
   await page.evaluate(() => {
-    const state = window.__renderedTextFonts = { done: false, error: null };
+    const state = window.__renderedTextFonts = { done: false, error: null, faces: [] };
     const used = new Map(), walker = document.createTreeWalker(document.body, NodeFilter.SHOW_TEXT);
     for (let node = walker.nextNode(); node; node = walker.nextNode()) {
       const element = node.parentElement;
@@ -39,11 +39,15 @@ export async function waitForRenderedText(page) {
       for (const character of node.textContent) used.get(font).add(character);
     }
     Promise.all([...used].map(([font, characters]) => document.fonts.load(font, [...characters].join(''))))
-      .then(() => { state.done = true; }, error => { state.error = String(error.message || error); });
+      .then(results => { state.faces = [...new Set(results.flat())]; state.done = true; }, error => { state.error = String(error.message || error); });
   });
   await page.waitForFunction(() => {
     const state = window.__renderedTextFonts;
     if (state?.error) throw new Error(`Rendered font failed: ${state.error}`);
-    return state?.done && document.fonts.status === 'loaded';
+    const faces = [...document.fonts, ...(state?.faces || [])];
+    const failed = faces.find(face => face.status === 'error');
+    if (failed) throw new Error(`Rendered font face failed: ${failed.family}`);
+    // FontFaceSet.status can remain loading solely because the document has an unrelated pending image.
+    return state?.done && state.faces.every(face => face.status === 'loaded') && !faces.some(face => face.status === 'loading');
   }, null, { timeout: 30000 });
 }

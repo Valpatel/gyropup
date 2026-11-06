@@ -36,11 +36,15 @@ export async function waitForWallImages(page) {
 
 /** The actual navigation/readiness boundary used before both ordinary and planted wall measurements. */
 export async function loadWallPage(page,base,route) {
-  await page.goto(base+route,{waitUntil:'domcontentloaded'});
-  await page.waitForFunction(()=>!document.querySelector('pre.mermaid, pre > code.language-mermaid')
-    &&[...document.querySelectorAll('.cad-diagram')].every(f=>f.dataset.state==='ready'||f.dataset.state==='error')
-    &&(!/^\/designer\/(progress|build|sim)\.html$/.test(location.pathname)||document.body.dataset.ready==='1'),null,{timeout:30000});
-  await waitForRenderedText(page);
-  await waitForWallImages(page);
-  await page.evaluate(()=>{scrollTo(0,0);return new Promise(resolve=>requestAnimationFrame(()=>requestAnimationFrame(resolve)));});
+  try {
+    await page.goto(base+route,{waitUntil:'domcontentloaded'});
+    await page.waitForFunction(()=>!document.querySelector('pre.mermaid, pre > code.language-mermaid')
+      &&[...document.querySelectorAll('.cad-diagram')].every(f=>f.dataset.state==='ready'||f.dataset.state==='error')
+      &&(!/^\/designer\/(progress|build|sim)\.html$/.test(location.pathname)||document.body.dataset.ready==='1'),null,{timeout:30000});
+    await waitForRenderedText(page);
+    await waitForWallImages(page);
+    await page.evaluate(()=>{scrollTo(0,0);return new Promise(resolve=>requestAnimationFrame(()=>requestAnimationFrame(resolve)));});
+  } catch (error) {
+    throw new Error(`Wall readiness ${route}: ${error.message}`, { cause: error });
+  }
 }

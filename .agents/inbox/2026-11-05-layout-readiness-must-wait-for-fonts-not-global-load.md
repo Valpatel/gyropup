@@ -112,3 +112,40 @@ controls passed locally with the corrected harness against fleet 186's product
 artifact; this is scoped local evidence, not a fresh corrected-source fleet pass.
 All ordinary bounds and geometry/backlog thresholds remain unchanged. The failed
 186 attempt stays failed, and the particular original CI request remains unknown.
+
+Fleet 187 at `998fd92c` then failed the actual README held-badge positive at
+the font boundary, before any sweep. An observer-only same-source/bounds run,
+fleet 188, preserved these native states at 2022 ms:
+
+```text
+used font-load promises: done=true, error=null
+auto-loaded Inter and JetBrains Mono: status=loaded, loaded promise fulfilled
+FontFaceSet.status=loading; document=interactive
+only pending request: actual held Stars badge
+result: 30-second timeout; owned browser/listener closed
+```
+
+This establishes the global-set/document-environment coupling for this observed
+case, rather than inferring it from a timeout. The [CSS Font Loading draft's
+environment rule](https://drafts.csswg.org/css-font-loading/#fontfaceset-pending-on-the-environment)
+also explains why set-level metadata can await document completion after the
+individual faces are available. Local installed Chrome and bundled Chromium
+both passed the earlier control, so this is not labelled a universal engine or
+architecture failure.
+
+The font contract now keeps the actual text-load promises and their returned
+native faces, requires returned faces loaded, rejects native face errors, and
+waits while any native face is loading (including the rendered pseudo-element
+face). Unused unloaded faces are not forced to load. Set-level status is recorded
+only as diagnostic metadata; no native state is overwritten. The held pseudo-font
+and real text-font controls remain, with an additional actual pseudo-font 404
+negative. These guards prevent removing global metadata from becoming a blanket
+font bypass. Fresh corrected-source controls and sweeps remain required.
+
+GitHub run 42148700612 attempt 1, presentation job 127666350122, also
+failed at the old `998fd92c` font boundary. Its six readiness controls passed
+before the ordinary full-page loop timed out; that failure did not identify the
+route. This is additional evidence against an ARM-only diagnosis, not proof
+that the unobserved page had the same pending request as fleet 188. The actual
+wall loader now adds route context while retaining the original error as its
+cause, with the same readiness rules and bounds.
