@@ -48,3 +48,42 @@ Limits: the control demonstrates the failure class, not the identity of the old
 CI request. Core model/report readiness remains required. No readiness timeout is a
 successful validation. This is a product-specific layout harness, not a new
 network availability or universal font-rendering guarantee.
+
+
+## Text-wall readiness has the same global-load failure class
+
+On 2026-11-05, PR #224 at `bd95fb6d` failed in tools/test-walls.mjs:71,
+waiting for global load on /site/pages/readme-md.html. Job 127645161957
+(run 42142254463) had 21-second dependency setup and took 7m57s overall;
+its exit1 was a 30-second readiness timeout, not global cancellation or a wall
+threshold result. The particular pending CI request was not identified.
+
+A controlled run extracted the actual walls navigation statement and held the
+real README Stars request. It timed out at the control's 2-second bound while
+the document was interactive, fonts.status loaded and the title present; the
+pending badge had a 0×0 box and no declared height. This proves the failure class,
+not that Stars caused the observed CI failure. All owned resources were closed.
+
+Shared native stylesheet/actual-text font readiness is extracted without changing
+its behavior. Walls must additionally decode all unfolded relevant/unknown-size
+images across the entire article, activating actual native lazy loading even
+offscreen. A currently zero-size image is not assumed decorative. Return to the
+top and settle two frames before the unchanged wall measure; fail missing/held
+primary media before measurement. Existing wall geometry, thresholds, backlog
+ratchet and planted cases are unchanged.
+
+The seven README status badges now reserve both dimensions, using measured SVG
+widths 158/236/78/112/116/71/90 and height20. Fixed inline sizing overrides the
+portal's height:auto rule; contain sizing preserves artwork as status contents
+change. All seven links/alt semantics and GitHub width/height attributes remain.
+The badge source URL is not a readiness exemption: the explicit fixed small box
+must actually match its laid-out dimensions. README and doc-page styling were
+checked against the actual capture-input list; neither is bound to highlights.
+
+The actual README control holds its real Stars request, calls the real walls
+loader/measure while it remains pending, then decodes a deliberately wider SVG
+response and requires identical article/wall geometry. Other controls hold a
+real font, hold an offscreen unknown-size lazy primary, fail a missing primary,
+and fail a stylesheet. Each uses bounded barriers/finally cleanup. Source and
+fresh-build positive controls remain pending in this initial implementation;
+no successful validation is claimed yet.
