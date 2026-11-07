@@ -103,15 +103,15 @@ try:
  assert not subprocess.check_output(['git','status','--porcelain'],text=True).strip()
  initial=tracked();hw=inventory(ROOT/'hardware');save('tracked-before.json',initial);save('hardware-before.json',hw)
  cfg=json.loads((ROOT/'.agents/plans/turret-recovery/highlights-frame-inputs.json').read_text());assert cfg['schema']=='gyropup.highlights-frame-inputs/1'
- assert inventory(stage)==cfg['staged_files'] and set(cfg['staged_files'])=={'frames.tgz','frames-inventory.json','capture-stage-source-bindings.json'}
+ assert inventory(stage)==cfg['staged_files']
  frame_rows=json.loads((stage/'frames-inventory.json').read_text());assert len(frame_rows)==481
+ assert set(cfg['staged_files'])=={'frames/'+n for n in frame_rows}|{'frames-inventory.json','capture-stage-source-bindings.json'}
  frames.mkdir()
- with tarfile.open(stage/'frames.tgz') as tar:
-  members=tar.getmembers();assert len(members)==len({m.name for m in members})==481
-  for m in members:
-   path=PurePosixPath(m.name);assert m.isfile() and not path.is_absolute() and '..' not in path.parts and str(path)==m.name and m.uid==m.gid==0 and not m.uname and not m.gname
-   b=tar.extractfile(m).read();assert frame_rows[m.name]=={'bytes':len(b),'sha256':hashlib.sha256(b).hexdigest()}
-   target=frames/m.name;target.parent.mkdir(parents=True,exist_ok=True);target.write_bytes(b);target.chmod(0o400)
+ for name,row in frame_rows.items():
+  path=PurePosixPath(name);assert not path.is_absolute() and '..' not in path.parts and str(path)==name
+  source=stage/'frames'/name;assert stat.S_ISREG(source.lstat().st_mode)
+  assert {'bytes':source.stat().st_size,'sha256':sha(source)}==row
+  target=frames/name;target.parent.mkdir(parents=True,exist_ok=True);shutil.copyfile(source,target);target.chmod(0o400)
  assert inventory(frames)==frame_rows
  for tool in ('ffmpeg','ffprobe'):assert shutil.which(tool)
  encoders=subprocess.check_output(['ffmpeg','-hide_banner','-encoders'],text=True,stderr=subprocess.STDOUT);assert all(n in encoders for n in ('libx264','libvpx-vp9','libwebp'))
@@ -125,7 +125,7 @@ try:
  manifest=encoder.frame_manifest(frames);assert sum(map(len,manifest['shots'].values()))==480
  source_hashes={n:sha(ROOT/n) for n in sorted(encoder.check.expected_sources(capture))};encoder.check.validate_source_bindings(args.head,source_hashes,capture)
  declared=json.loads((stage/'capture-stage-source-bindings.json').read_text());assert declared['source']==cfg['capture_revision'] and declared['source_hashes']==source_hashes
- save('actual-source-frame-proof.json',{'capture_job':cfg['capture_job'],'capture_source':cfg['capture_revision'],'encoding_source':args.head,'raw_archive_sha256':sha(stage/'frames.tgz'),'frame_records':481,'all_current_capture_inputs_exact':True,'source_hashes':source_hashes})
+ save('actual-source-frame-proof.json',{'capture_job':cfg['capture_job'],'capture_source':cfg['capture_revision'],'encoding_source':args.head,'accepted_capture_archive_sha256':cfg['source_frame_archive']['sha256'],'transport':'unpacked481 regular files; actual bytes checked against staged inventory and frozen config','frame_records':481,'all_current_capture_inputs_exact':True,'source_hashes':source_hashes})
  original=OUT/'original-highlights';original.mkdir()
  for name in inventory(ROOT/'software/site/assets/highlights'):shutil.copyfile(ROOT/'software/site/assets/highlights'/name,original/name)
  assert len(inventory(original))==6;archive('original-highlights',original)
