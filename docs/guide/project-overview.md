@@ -132,3 +132,7 @@ No CAD kernel, font download or new dependency is involved. The README's `pictur
 selects the generated still for reduced motion. Existing browser checks compare
 actual image pixels and reject an intentionally animated still; page media
 emulation alone does not establish that an external SVG image has stopped.
+
+### Made with cad-agent badge
+
+The two self-contained badge SVGs are copied unchanged from [cad-agent2c340775](https://github.com/Valpatel/cad-agent/tree/2c340775b1429a67e207e9668b2a3003009d4999/docs/img/hero), copyright2026Valpatel Software LLC, under the [MIT licence](https://github.com/Valpatel/cad-agent/blob/2c340775b1429a67e207e9668b2a3003009d4999/LICENSE). Their producer is `tools/anim/made_with_badge.py` from8ec8511fd468b843e8410c7305df01946534b0a5. Animated SHA256: `bcbe24827a5b8f9ca6aef2528eaec8f7f66448aa713ba83f95ab37fc04a9ac85`; still: `3dae18a9ccba77199d61b18645865c523209082c7fdb5ea95304f9b7ecadd8b9`. The README and homepage serve local copies and select the explicit still for reduced motion; no third-party image request or engineering claim is involved.

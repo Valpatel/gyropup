@@ -293,3 +293,32 @@ test('both README pictures select a real static image and keep ordinary navigati
     } finally { await context.close(); }
   }
 });
+
+test('the local Made with badge animates normally and selects its genuine still', async () => {
+  for(const route of ['/','/site/pages/readme-md.html'])for(const reducedMotion of ['no-preference','reduce']) {
+    const context=await browser.newContext({viewport:{width:390,height:844},reducedMotion});
+    try {
+      await acknowledgePrototypeNotice(context);const page=await context.newPage();
+      await page.goto(base+route,{waitUntil:'load'});
+      const image=page.getByRole('img',{name:'Made with cad-agent',exact:true});
+      assert.equal(await image.count(),1);await image.evaluate(img=>img.decode());
+      const expected=reducedMotion==='reduce'?'made-with-cad-agent-still.svg':'made-with-cad-agent.svg';
+      assert.equal(new URL(await image.evaluate(img=>img.currentSrc)).pathname,'/docs/img/hero/'+expected);
+      assert.equal(await image.locator('xpath=ancestor::a[1]').getAttribute('href'),'https://cad-agent.valpatel.com/');
+      const box=await image.boundingBox(),wrapper=await image.locator('..').boundingBox();
+      assert.ok(box.x>=0&&box.x+box.width<=390.5&&Math.abs(box.width/box.height-248/56)<.02);
+      for(const key of ['x','y','width','height'])assert.ok(Math.abs(box[key]-wrapper[key])<1);
+      const first=await image.screenshot();await page.waitForTimeout(1250);
+      assert.equal(!first.equals(await image.screenshot()),reducedMotion==='no-preference');
+      if(reducedMotion==='reduce') {
+        const body=readFileSync(path.join(root,'docs/img/hero/made-with-cad-agent-still.svg'),'utf8');
+        await page.route('**/made-with-wrong-still.svg',r=>r.fulfill({contentType:'image/svg+xml',body:body.replace('</svg>','<style>:root{animation:broken 8s linear infinite!important}@keyframes broken{from{opacity:.1}to{opacity:1}}</style></svg>')}));
+        const wrong=base+'/docs/img/hero/made-with-wrong-still.svg';
+        await image.evaluate((i,u)=>i.parentElement.querySelector('source').srcset=u,wrong);
+        await page.waitForFunction(u=>[...document.images].find(i=>i.alt==='Made with cad-agent')?.currentSrc===u,wrong);await image.evaluate(i=>i.decode());
+        const before=await image.screenshot();await page.waitForTimeout(1250);
+        assert.ok(!before.equals(await image.screenshot()),'a still with actual animated pixels must fail');
+      }
+    }finally{await context.close();}
+  }
+});
