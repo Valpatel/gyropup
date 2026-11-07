@@ -158,6 +158,45 @@ try {
     assert.ok(maxError(sensitivities[name]).error>1,`Independent landmarks reject ${name}`);
   for(const name of ['lostParentHome','motorOwnershipHome'])
     assert.ok(maxError(sensitivities[name]).error<.02,`${name} deliberately preserves correct home geometry`);
+  // Exercise the actual input/servo path, not just poseMechanism's direct mesh setter.
+  const limits=await page.evaluate(()=>window.__sim.bench().manifest.limits);
+  assert.deepEqual(limits.tilt_deg,[-25,12]); assert.equal(limits.fire_tilt_max_deg,10);
+  await page.evaluate(()=>{const a=window.__sim.bench().api;a.explode(0);a.pad({});a.arm(false);a.aim(0,0);});
+  const tiltInput=page.getByLabel(/^Tilt \(between the hard stops; 0 = level\)/);
+  assert.equal(await tiltInput.getAttribute('max'),'12');
+  await tiltInput.focus(); await tiltInput.press('End');
+  await page.waitForFunction(()=>Math.abs(window.__sim.bench().api.state.tilt*180/Math.PI-12)<.01,{},{timeout:10000});
+  const appliedUpper=await page.evaluate(()=>{
+    const s=window.__sim.bench().api.state,d=180/Math.PI;
+    return window.captureTurret('actual-servo-upper-stop',{pan:s.pan*d,tilt:s.tilt*d,pinion:-3*s.pan*d,
+      dial:s.phi*d,wheel_l:s.wheelAng*d,wheel_r:s.wheelAng*d,flap:s.flapAngle*d});
+  });
+  assert.ok(maxError(appliedUpper).error<.02,'The applied +12-degree servo pose matches independent CAD landmarks');
+  await page.getByLabel('Show straight laser reference',{exact:true}).check();
+  const heldBaseline=await page.evaluate(()=>{
+    const b=window.__sim.bench(),a=b.api;window.upperHoldSamples=[];
+    window.__sim.stage.onFrame(()=>{
+      const s=a.state;
+      if(s.rpm>=.95*b.manifest.mechanics.flywheel.rpm && window.upperHoldSamples.length<15)
+        window.upperHoldSamples.push({shots:s.shots,queue:s.queue,phi:s.phi,phiCmd:s.phiCmd,tiltDeg:s.tilt*180/Math.PI,
+          laserOn:s.laserOn,beamVisible:a.prediction.laser.visible});
+    });
+    a.arm(true);a.fire(2);return {shots:a.state.shots,queue:a.state.queue,phi:a.state.phi,phiCmd:a.state.phiCmd};
+  });
+  await page.waitForFunction(()=>window.upperHoldSamples.length>=15,{},{timeout:15000});
+  const upperHold=await page.evaluate(()=>window.upperHoldSamples);
+  assert.ok(upperHold.every(s=>s.shots===heldBaseline.shots && s.queue===heldBaseline.queue &&
+    Math.abs(s.phi-heldBaseline.phi)<1e-12 && Math.abs(s.phiCmd-heldBaseline.phiCmd)<1e-12 && Math.abs(s.tiltDeg-12)<.01),
+    'The real armed/spun-up frame loop holds queued fire above the separate +10-degree ceiling');
+  assert.ok(upperHold.every(s=>s.laserOn && s.beamVisible),'Explicit model laser reference follows actual armed state');
+  await page.waitForFunction(()=>[...document.querySelectorAll('.hud-readouts .r')].some(r=>
+    r.querySelector('span')?.textContent==='laser' && /model reference.*class unverified/.test(r.querySelector('b')?.textContent)),{},{timeout:10000});
+  await page.screenshot({path:`${out}/${engine.name()}-upper-stop-armed.png`});
+  await page.evaluate(()=>window.__sim.bench().api.arm(false));
+  await page.waitForFunction(()=>{const a=window.__sim.bench().api;return !a.state.laserOn && !a.prediction.laser.visible && a.state.queue===0;},{},{timeout:10000});
+  await page.getByLabel('Show straight laser reference',{exact:true}).uncheck();
+  const limitControls={appliedUpper,upperHold,heldBaseline,disarmedLaserOff:true,fireCeilingDeg:limits.fire_tilt_max_deg};
+  await writeFile(`${out}/${engine.name()}-limit-controls.json`,JSON.stringify(limitControls));
   // Check connected effects, bearings, balls, and actual live firing through the normal frame loop.
   const attachments=await page.evaluate(()=>{
     const api=window.__sim.bench().api,m=api.mechanism;
@@ -195,6 +234,7 @@ try {
   for(const [width,height] of [[320,568],[360,800],[390,844],[430,932],[844,390]]) {
     await page.setViewportSize({width,height});
     assert.ok(await page.evaluate(()=>document.documentElement.scrollWidth<=innerWidth+1),`No overflow at ${width}x${height}`);
+    if(width===390)await page.screenshot({path:`${out}/${engine.name()}-phone390.png`});
   }
   await page.screenshot({path:`${out}/${engine.name()}-phone.png`});
   assert.deepEqual(errors,[]);

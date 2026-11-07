@@ -1395,7 +1395,7 @@ export async function createTurretBench({ stage, sfx, panel, root = '../', onLay
       say('Reassembling before firing…', 1200);
     }
     const tooHigh = S.tilt > fireMax * D2R + 1e-6;
-    if (tooHigh && (S.trigger || S.queue > 0) && !S.saidHigh) { S.saidHigh = true; say(`Aimed above ${fireMax}°: the feed is only proven up to there, so it holds fire`, 2200); }
+    if (tooHigh && (S.trigger || S.queue > 0) && !S.saidHigh) { S.saidHigh = true; say(`Aimed above ${fireMax}°: the feed simulation is limited to there, so it holds fire`, 2200); }
     if (!tooHigh) S.saidHigh = false;
     const ready = armed && S.rpm >= 0.95 * fl.rpm && hopperCount() > 0 && S.explode < 1e-4 && !tooHigh;
     fireBtn.classList.toggle('ready', ready);
@@ -1496,7 +1496,7 @@ export async function createTurretBench({ stage, sfx, panel, root = '../', onLay
     live.set([['pan', `${(S.pan / D2R).toFixed(1)}° (servo ${(3 * S.pan / D2R).toFixed(0)}°)`],
       ['tilt', `${(S.tilt / D2R).toFixed(1)}°  (limit -${tiltMax(S.pan).toFixed(1)}°)`],
       ['dial', `${(((S.phi / D2R) % 360) + 360) % 360 | 0}° · ${Math.abs(S.phiCmd - S.phi) > 1e-6 ? 'feeding' : 'parked: spoke over the exit'}`],
-      ['laser', S.laserOn ? 'on (Class 2, 650 nm red)' : 'off'],
+      ['laser', S.laserOn ? 'on (model reference; class unverified)' : 'off'],
       ['shots', `${S.shots}`], ['hits', `${S.hits}`], ['plates down', `${down} / ${plates.length}`], ['cans knocked', `${knocked} / ${cans.length}`],
       ['paper group', group]]);
   }
