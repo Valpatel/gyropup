@@ -120,3 +120,28 @@ def test_control_a_new_import_is_caught(tg, tmp_path):
     src = (cad / 'turret/turret.py').read_text()
     (cad / 'turret/turret.py').write_text(src.replace('import hardware.cad.turret.turret_snaps as snaps', 'import hardware.cad.turret.turret_snaps as snaps\nimport hardware.cad.turret.turret_studies', 1))
     assert 'hardware/cad/turret/turret_studies.py' in uncovered(tg.GEOMETRY_SOURCES, cad)
+
+
+def test_dossier_child_probe_requires_the_current_module_path(tmp_path):
+    """Read the actual child program, keeping the no-write build contract and canonical input mandatory."""
+    tree = ast.parse((HERE / 'turret/turret_gates.py').read_text())
+    function = next(n for n in tree.body if isinstance(n, ast.FunctionDef) and n.name == 'dossier_gates')
+    assignment = next(n for n in function.body if isinstance(n, ast.Assign)
+                      and any(isinstance(t, ast.Name) and t.id == 'probe' for t in n.targets))
+    program = ast.literal_eval(assignment.value)
+    child = ast.parse(program)
+    calls = [n for n in ast.walk(child) if isinstance(n, ast.Call) and isinstance(n.func, ast.Name)
+             and n.func.id == 'build_module']
+    assert len(calls) == 1
+    call = calls[0]
+    path = ast.literal_eval(call.args[0])
+    assert path == 'hardware/cad/turret/turret_dossier.py'
+    assert {k.arg: ast.literal_eval(k.value) for k in call.keywords} == {'root': '.', 'write': False}
+    legacy = tmp_path / 'cad/turret_dossier.py'
+    legacy.parent.mkdir(parents=True)
+    legacy.write_text('historical copy')
+    assert not (tmp_path / path).exists()
+    (tmp_path / path).parent.mkdir(parents=True)
+    (tmp_path / path).write_text('current copy')
+    assert (tmp_path / path).is_file()
+    assert (ROOT / path).is_file()

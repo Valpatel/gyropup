@@ -650,7 +650,7 @@ def dossier_gates(cache=None):
     # the record must be what this source registers: rebuilt (not written) in a fresh process, as cad-agent gates builds
     # it, because building in this process would reuse shapes whose tolerances the hopper cavity's cuts have changed
     probe = ('import json, sys; from cadagent.dossier import build_module; from cadagent.gates.verdict import geometry_digest; '
-             'print(geometry_digest(build_module("cad/turret_dossier.py", root=".", write=False).geometry))')
+             'print(geometry_digest(build_module("hardware/cad/turret/turret_dossier.py", root=".", write=False).geometry))')
     mine = subprocess.run([sys.executable, '-c', probe], cwd=R, capture_output=True, text=True, check=True).stdout.split()[-1]
     if mine != geometry_digest(record):
         raise GateFailure(f'{DOSSIER_RECORD.relative_to(R)} is not the turret this source builds: rerun cad-agent gates --build')

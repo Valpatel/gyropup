@@ -1,6 +1,5 @@
 {
-  "source": "4ca4d4e6b691df43d0ba13e20007f457402c7162",
-  "purpose": "Pre-cut current CAD closure; catalogs must genuinely regenerate before final downstream freeze. Not an artifact receipt.",
+  "purpose": "Pre-cut current CAD closure, verified against exact command HEAD; source_baseline is historical context only. Catalogs genuinely regenerate before downstream freeze. Not an artifact receipt.",
   "files": {
     "hardware/__init__.py": "d6ddd9ce4ef273b82f43f315f09d11db1224f2b8298c9b0b3ea7dafb97280ba0",
     "hardware/cad/__init__.py": "d6ddd9ce4ef273b82f43f315f09d11db1224f2b8298c9b0b3ea7dafb97280ba0",
@@ -61,7 +60,7 @@
     "hardware/cad/turret/turret_carrier_interfaces.py": "d43e7f968fc16e51447bcbdc515cb4e6043ca8b169b406da4820785cf97eb04f",
     "hardware/cad/turret/turret_carrier_support.py": "6ce4f816778c10a4d2e91c64b58ca8583c70f6ad443cd34fff9f36cf37b6438a",
     "hardware/cad/turret/turret_dossier.py": "3cb60f119539a1adfb5f56439ce5b4d8011b86baf09ebc44c684ae6a1677e707",
-    "hardware/cad/turret/turret_gates.py": "3ee44b83cd5b6ee9d3c23ce2ef248cde0e75cc134eddc40ed6a9155554c200a9",
+    "hardware/cad/turret/turret_gates.py": "d994b3a737cffc1dfbbb5b3b6a2a6d06dfaf906fe139c42d96e613d29257545f",
     "hardware/cad/turret/turret_lidar.py": "1f892cc50a2508d7a79e2d8411dbd6d42a1e4b60951355400eee979879af235c",
     "hardware/cad/turret/turret_limits.py": "a725c29197ef2908f00bac4e6d8b14815c3449196c4d0d15483719f0276b6b6e",
     "hardware/cad/turret/turret_motion.py": "f3d40ab565a1121dcd46e32e8d4b907f44732f203aa67faa44bf359b8132ac9c",
@@ -93,9 +92,10 @@
     "hardware/designs/default.json": "3dc7d04d0d6eeec81decefa360f3904b093f19515d6944910c2cb20c976db211",
     "tests/hardware/body/test_body.py": "1f99193493bd0512cbbcef0f771f1e0585dd1a820ea159719bd828a54f564d64",
     "tests/hardware/legs/test_leg_loads.py": "f05c09f4719541fa8880dbee28ce01e4314ae5dba7a599e7eecb6240d94341a4",
-    "tests/hardware/turret/test_turret_gate_sources.py": "d4ee3b4082e70a4d859516b064aa45388cf67f704cc11be2d448346716548ca5",
+    "tests/hardware/turret/test_turret_gate_sources.py": "fb85a82ab0a322debc60b6b93a3b8018227949e80fb7d5bcc453171b0f397732",
     "tests/hardware/turret/test_turret_snaps.py": "96afedabae5991a7d99eab3af5f324ae901589d7e92e45b2a36f32bc7a709fd6",
     "tests/hardware/turret/test_turret_solids.py": "d03677019224ad4e95f8775f374010c450299daf67fd729f546a1ea458e87a31"
   },
-  "fingerprint": "dff1eb33d094970d8fca4b4ccdde9e78805c8492b22b6a9e01200f628163c56d"
+  "fingerprint": "0fd7c877a357ef6fa82e3ae3f9115768b2ec2788b2524284f2ec801b91e59559",
+  "source_baseline": "4ca4d4e6b691df43d0ba13e20007f457402c7162"
 }
