@@ -415,3 +415,14 @@ On 2026-11-07, genuine E1 video job 257 rendered successfully and passed the def
 The corrective collector derives both immutable rig revisions from the unchanged receipt, fetches exact objects before dependencies/rendering, and calls the real `verifyRigFiles(..., {historical:true, decode:false})` preflight. Eight actual test-context files are bound and checked independently afterward. Normal-import metadata controls reject missing or mutable pins; no frame, numerical threshold, field, rig clip or receipt is rewritten.
 
 The sealed candidate was separately checked in an owned checkout of the exact original source with the actual historical objects available: the unchanged full media guard and all 16 unchanged tests pass. That supports independent candidate-reuse review, not relabelling the original run or automatically adopting outputs. Do not render again merely to obtain a green job. Keep every joined consumer's real prerequisite closure and preserve the failed run, complete source/hardware restoration and all original tests.
+
+
+## Structured guard output must stay separate from seeded-negative stderr
+
+On 2026-11-07, independent review stopped an unexecuted highlight-adoption operator (`3f09a138`) before its intent or copy. The actual highlight guard emits expected historical `git show` failures to stderr while rejecting seeded invalid source identities. The draft used a phase logger that joined stderr into stdout, then tried to parse the entire log as JSON. The guard could exit zero while the transaction would roll back on JSON parsing. This was an adoption-operator defect, not rejected encoded media; genuine fleet job 258 had already passed its full guard.
+
+The corrected operator (`1511d1b8`) invokes the unchanged guard in its owned process group, captures stdout JSON and stderr separately, and propagates the exact child return code. Two inert controls run that exact capture string with a stdlib-only child: both successful exit 0 and failed exit 7 retain clean parseable stdout, exact diagnostic stderr and their original status. No operational collector function is extracted or executed for these controls. [Independent pre-execution correction review](https://github.com/Valpatel/gyropup/issues/8#issuecomment-6712847874).
+
+The one corrected transaction passed the actual full guard with both 660-frame / 22-second companions and all 25 negative controls, followed by seven ordinary prerequisite tests. Complete tracked and hardware inventories outside its six software targets stayed exact; the original blocked operator was never run. Final artifact adoption, Git publication and physical limits remain separate claims.
+
+Rule: a structured-output consumer must parse the producer's stdout, retain stderr independently and preserve its exit status. Do not suppress expected negative-control diagnostics, loosen the guard or parse an arbitrary JSON-looking substring from a mixed log.
