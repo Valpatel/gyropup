@@ -26,12 +26,12 @@
         "hardware/cad/__init__.py": "d6ddd9ce4ef273b82f43f315f09d11db1224f2b8298c9b0b3ea7dafb97280ba0",
         "hardware/cad/analysis/studies.py": "41d2807c06b54abfa69c966fb274eaa0933e080ee642f977bae8e1aa1900d349",
         "hardware/cad/body/body_battery.py": "3f491f0e4ccafa2e985fd1f0b20ef886c7b53f059593b354817e17a47b65fa71",
-        "hardware/cad/body/body_bom.py": "b82524527473fafcf943876181f8be2dd199337deadac0f8a0a1b77968a329df",
+        "hardware/cad/body/body_bom.py": "aab4d9612ef7176fe74b511be838ad2bb3695a61a81d233ab788cca5650098c0",
         "hardware/cad/body/body_frame.py": "0dbff64156008827de6e7841e0e310d1741739de93623d23390fa8fe773f7c32",
         "hardware/cad/body/body_fuse_board.py": "5dcb993962fdcfc0a18cea93c43dec7bb04f0ce3f2174228465f2a73e76d20de",
         "hardware/cad/body/body_guards.py": "488427babff18f5503df518831dcf68f8ce71573c2fd3d517cedf70af116ff57",
         "hardware/cad/body/body_joints.py": "696ada09b51da53b01c930ab274f171bf86f8e9f19e1eeb942a8d48345358ee6",
-        "hardware/cad/body/body_layout.py": "00a74468c47acde5588d706f7717f46fd74ca2366b96a6bbe19136c2d8463d53",
+        "hardware/cad/body/body_layout.py": "2d4514ca185c983caa290ab2c2cc6b167894c9fc473e9b15bf284cb3878e324a",
         "hardware/cad/body/body_legloads.py": "3a5726ef7c7adf58d2183dd2c55156e1a9f6a55e1c181b3344c777b10d2ce136",
         "hardware/cad/body/body_params.py": "a68737201e93af4ce8f00f675fbe3c235453b8bb0e19440fe3062635737a2247",
         "hardware/cad/body/body_sections.py": "1592a87f99a3428761432a4231a9931c2bbddeddbbf20449005aaf3b46710515",
@@ -135,12 +135,12 @@
     "context": {
       "docs/research/rs04-support/probe.py": "08e5d3574d58afcc835b4b57d8fc97d322223d1c0b02ce7f8d0e0a217d974b58",
       "docs/research/rs04-support/README.md": "803fd31a9f53307dd97ef434fb59a987a47501f2de18ed8a8d41ced5f560f0f3",
-      "hardware/exports/leg/rs04-mounting-fit/checks.json": "9f01cea13904f9b892b9e13629ea0f1cbd70b018ae3fd3434af3ecd5b1522fe7"
+      "hardware/exports/leg/rs04-mounting-fit/checks.json": "e54f86dc6c2224d7b3937008022d37287683f5f613624a9b4eb0142212613042"
     },
     "toolkit_commit": "2ad426943ce2c7232875e105e50810849f9a3e5e"
   },
   "baseline": {
-    "receipt_sha256": "9f01cea13904f9b892b9e13629ea0f1cbd70b018ae3fd3434af3ecd5b1522fe7",
+    "receipt_sha256": "e54f86dc6c2224d7b3937008022d37287683f5f613624a9b4eb0142212613042",
     "engineering_pass": false,
     "counts": {
       "pass": 322,
@@ -396,7 +396,7 @@
   "candidate_rings": {
     "od118-id80-t2.032": {
       "shape_sha256": "07a5b402c29eec62ae73edd579b7405724a39aede9a878ae3984d012098d49ba",
-      "step_sha256": "8de83455edb00dce94e53fd4e5b69b3cc532ef7e83c95953ccde49ceb3170792",
+      "step_sha256": "ce8cedfaf2f01295490e364212a60b7b76606de76a3e05a5d0185b2edd61fc1a",
       "bbox_mm": [
         -59.0,
         -59.0,
@@ -411,8 +411,8 @@
         "candidates": 21,
         "kernel_queries": 21,
         "cache_hits": 0,
-        "broad_phase_s": 39.3465,
-        "narrow_phase_s": 77.5853,
+        "broad_phase_s": 39.1706,
+        "narrow_phase_s": 77.8398,
         "states": {
           "apart": 20,
           "touching": 1,
@@ -422,7 +422,7 @@
           "unchecked": 0
         }
       },
-      "elapsed_s": 162.29538533929735,
+      "elapsed_s": 162.2042268048972,
       "outside_d_mm": 118.0,
       "inside_d_mm": 80.0,
       "thickness_mm": 2.032,
@@ -1326,7 +1326,7 @@
     },
     "od118-id80-t3.175": {
       "shape_sha256": "7d78b323c68f58bfb1380fd902cabcede29a37b003010d9c5bcac060d17b2fe0",
-      "step_sha256": "239e3b9133aff90e6dd023abb14e9c4b586bdc11bcb9524b9591958f4f9d0a93",
+      "step_sha256": "b6de9b004bfb325e5d68055ca86b30bee7a8609382fde9a574c2a4bd43ff8578",
       "bbox_mm": [
         -59.0,
         -59.0,
@@ -1341,8 +1341,8 @@
         "candidates": 21,
         "kernel_queries": 21,
         "cache_hits": 0,
-        "broad_phase_s": 39.3245,
-        "narrow_phase_s": 77.8901,
+        "broad_phase_s": 39.0968,
+        "narrow_phase_s": 77.7664,
         "states": {
           "apart": 20,
           "touching": 1,
@@ -1352,7 +1352,7 @@
           "unchecked": 0
         }
       },
-      "elapsed_s": 162.5866126595065,
+      "elapsed_s": 162.0174553571269,
       "outside_d_mm": 118.0,
       "inside_d_mm": 80.0,
       "thickness_mm": 3.175,
@@ -2256,7 +2256,7 @@
     },
     "od118-id94-t2.032": {
       "shape_sha256": "3f1781bb1b8616e13942ac5a781dcc6379382da38d95fce24b4cafaaa58aa032",
-      "step_sha256": "30e13be3be830ea0deb21ab28708180cb7c7b73fd41901d3f2529f347c96bd38",
+      "step_sha256": "485fae0e8739f8f0ab569fc9d0e0eb0387ea1b2e93a166c15f8f531301cd9824",
       "bbox_mm": [
         -59.0,
         -59.0,
@@ -2271,8 +2271,8 @@
         "candidates": 21,
         "kernel_queries": 21,
         "cache_hits": 0,
-        "broad_phase_s": 39.8552,
-        "narrow_phase_s": 98.8328,
+        "broad_phase_s": 39.1515,
+        "narrow_phase_s": 99.072,
         "states": {
           "apart": 20,
           "touching": 1,
@@ -2282,7 +2282,7 @@
           "unchecked": 0
         }
       },
-      "elapsed_s": 184.60865302290767,
+      "elapsed_s": 183.39080640021712,
       "outside_d_mm": 118.0,
       "inside_d_mm": 94.0,
       "thickness_mm": 2.032,
@@ -3186,7 +3186,7 @@
     },
     "od118-id94-t3.175": {
       "shape_sha256": "0f97e9477d87e23ef1c8907f2fb81f0ff059b9b53f181aeb13641ecd81e6ca63",
-      "step_sha256": "314a5e87b4f8ac3308bdc75810cc5937c466a72d451ffba93ac21f3ed60f30b0",
+      "step_sha256": "e1aae127fa49bafe5b233bc81699fcc5752a94dc09919c654852fb9cf2b327d3",
       "bbox_mm": [
         -59.0,
         -59.0,
@@ -3201,8 +3201,8 @@
         "candidates": 21,
         "kernel_queries": 21,
         "cache_hits": 0,
-        "broad_phase_s": 39.3599,
-        "narrow_phase_s": 98.1258,
+        "broad_phase_s": 39.1306,
+        "narrow_phase_s": 98.3799,
         "states": {
           "apart": 20,
           "touching": 1,
@@ -3212,7 +3212,7 @@
           "unchecked": 0
         }
       },
-      "elapsed_s": 182.94039900507778,
+      "elapsed_s": 182.65187569428235,
       "outside_d_mm": 118.0,
       "inside_d_mm": 94.0,
       "thickness_mm": 3.175,
@@ -4116,7 +4116,7 @@
     },
     "od120-id80-t2.032": {
       "shape_sha256": "f46646285f774639c871427aff74ee83bf78efdfc75de2ebdfedf296c30df495",
-      "step_sha256": "762aa05aa2dc5374aaac63ee58b0d8a6254f2e5b02b781bc83c8443193f6a262",
+      "step_sha256": "f0412ff92fc675d7e6eb336c6dd78afa3eef0264b153a90be62749056526f5b4",
       "bbox_mm": [
         -60.0,
         -60.0,
@@ -4131,8 +4131,8 @@
         "candidates": 21,
         "kernel_queries": 21,
         "cache_hits": 0,
-        "broad_phase_s": 39.3511,
-        "narrow_phase_s": 77.6677,
+        "broad_phase_s": 39.1285,
+        "narrow_phase_s": 77.7808,
         "states": {
           "apart": 20,
           "touching": 1,
@@ -4142,7 +4142,7 @@
           "unchecked": 0
         }
       },
-      "elapsed_s": 162.4529784899205,
+      "elapsed_s": 162.16328667104244,
       "outside_d_mm": 120.0,
       "inside_d_mm": 80.0,
       "thickness_mm": 2.032,
@@ -5046,7 +5046,7 @@
     },
     "od120-id80-t3.175": {
       "shape_sha256": "6a14e3068349ef1640519544877c9a874698a2e6629c8e8061561cd9d8eb12c7",
-      "step_sha256": "70736e854a7ff6b5c8ba1ba221798fd54b2a7eb01c79c6aabb5f40995b011aa6",
+      "step_sha256": "97ea6ca6e93ea36ef0f5c1a61c1763a4b31d50fe8c4eaafca4a7b09aeec878a1",
       "bbox_mm": [
         -60.0,
         -60.0,
@@ -5061,8 +5061,8 @@
         "candidates": 21,
         "kernel_queries": 21,
         "cache_hits": 0,
-        "broad_phase_s": 39.2982,
-        "narrow_phase_s": 77.6203,
+        "broad_phase_s": 39.1318,
+        "narrow_phase_s": 77.7993,
         "states": {
           "apart": 20,
           "touching": 1,
@@ -5072,7 +5072,7 @@
           "unchecked": 0
         }
       },
-      "elapsed_s": 162.2957152882591,
+      "elapsed_s": 162.11543004307896,
       "outside_d_mm": 120.0,
       "inside_d_mm": 80.0,
       "thickness_mm": 3.175,
@@ -5976,7 +5976,7 @@
     },
     "od120-id94-t2.032": {
       "shape_sha256": "92bd76002422dfb24486b9f3619559f061657f118e49cb685d01b6ba7f56baeb",
-      "step_sha256": "a6ca7858753ce7a3c572d31dd153bbb3399c7f640eebadfdf4a28f4dcd16f72a",
+      "step_sha256": "23e4ed4c33443b9121f22ccfe254433f410bd28138dd60c590bde7bc0bf5777e",
       "bbox_mm": [
         -60.0,
         -60.0,
@@ -5991,8 +5991,8 @@
         "candidates": 21,
         "kernel_queries": 21,
         "cache_hits": 0,
-        "broad_phase_s": 39.3385,
-        "narrow_phase_s": 99.0965,
+        "broad_phase_s": 39.1851,
+        "narrow_phase_s": 99.1725,
         "states": {
           "apart": 20,
           "touching": 1,
@@ -6002,7 +6002,7 @@
           "unchecked": 0
         }
       },
-      "elapsed_s": 183.76464419532567,
+      "elapsed_s": 183.58746037166566,
       "outside_d_mm": 120.0,
       "inside_d_mm": 94.0,
       "thickness_mm": 2.032,
@@ -6906,7 +6906,7 @@
     },
     "od120-id94-t3.175": {
       "shape_sha256": "bfc67451ef0bb8ac029e8286d5b6f43945d66067e69fe4172818b525dacc14a5",
-      "step_sha256": "4aa16c742eab18a523b7205d5c6d9823d8edc7d65d96ad2d1cd578d101cb264a",
+      "step_sha256": "a57575f8b27907374effe33ec70c46a5c082681dce8b86bd1ddca7ee6078ab78",
       "bbox_mm": [
         -60.0,
         -60.0,
@@ -6921,8 +6921,8 @@
         "candidates": 21,
         "kernel_queries": 21,
         "cache_hits": 0,
-        "broad_phase_s": 39.3264,
-        "narrow_phase_s": 98.4478,
+        "broad_phase_s": 39.164,
+        "narrow_phase_s": 98.6262,
         "states": {
           "apart": 20,
           "touching": 1,
@@ -6932,7 +6932,7 @@
           "unchecked": 0
         }
       },
-      "elapsed_s": 183.24676486477256,
+      "elapsed_s": 183.00087042618543,
       "outside_d_mm": 120.0,
       "inside_d_mm": 94.0,
       "thickness_mm": 3.175,
@@ -9269,12 +9269,12 @@
         "hardware/cad/__init__.py": "d6ddd9ce4ef273b82f43f315f09d11db1224f2b8298c9b0b3ea7dafb97280ba0",
         "hardware/cad/analysis/studies.py": "41d2807c06b54abfa69c966fb274eaa0933e080ee642f977bae8e1aa1900d349",
         "hardware/cad/body/body_battery.py": "3f491f0e4ccafa2e985fd1f0b20ef886c7b53f059593b354817e17a47b65fa71",
-        "hardware/cad/body/body_bom.py": "b82524527473fafcf943876181f8be2dd199337deadac0f8a0a1b77968a329df",
+        "hardware/cad/body/body_bom.py": "aab4d9612ef7176fe74b511be838ad2bb3695a61a81d233ab788cca5650098c0",
         "hardware/cad/body/body_frame.py": "0dbff64156008827de6e7841e0e310d1741739de93623d23390fa8fe773f7c32",
         "hardware/cad/body/body_fuse_board.py": "5dcb993962fdcfc0a18cea93c43dec7bb04f0ce3f2174228465f2a73e76d20de",
         "hardware/cad/body/body_guards.py": "488427babff18f5503df518831dcf68f8ce71573c2fd3d517cedf70af116ff57",
         "hardware/cad/body/body_joints.py": "696ada09b51da53b01c930ab274f171bf86f8e9f19e1eeb942a8d48345358ee6",
-        "hardware/cad/body/body_layout.py": "00a74468c47acde5588d706f7717f46fd74ca2366b96a6bbe19136c2d8463d53",
+        "hardware/cad/body/body_layout.py": "2d4514ca185c983caa290ab2c2cc6b167894c9fc473e9b15bf284cb3878e324a",
         "hardware/cad/body/body_legloads.py": "3a5726ef7c7adf58d2183dd2c55156e1a9f6a55e1c181b3344c777b10d2ce136",
         "hardware/cad/body/body_params.py": "a68737201e93af4ce8f00f675fbe3c235453b8bb0e19440fe3062635737a2247",
         "hardware/cad/body/body_sections.py": "1592a87f99a3428761432a4231a9931c2bbddeddbbf20449005aaf3b46710515",
@@ -9378,7 +9378,7 @@
     "context": {
       "docs/research/rs04-support/probe.py": "08e5d3574d58afcc835b4b57d8fc97d322223d1c0b02ce7f8d0e0a217d974b58",
       "docs/research/rs04-support/README.md": "803fd31a9f53307dd97ef434fb59a987a47501f2de18ed8a8d41ced5f560f0f3",
-      "hardware/exports/leg/rs04-mounting-fit/checks.json": "9f01cea13904f9b892b9e13629ea0f1cbd70b018ae3fd3434af3ecd5b1522fe7"
+      "hardware/exports/leg/rs04-mounting-fit/checks.json": "e54f86dc6c2224d7b3937008022d37287683f5f613624a9b4eb0142212613042"
     },
     "toolkit_commit": "2ad426943ce2c7232875e105e50810849f9a3e5e"
   }

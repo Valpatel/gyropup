@@ -2758,12 +2758,12 @@
         "contact_area_mm2": 18.307631,
         "witness": {
           "point_a": [
-            100.698768,
+            94.098768,
             -9.5,
             -48.034313
           ],
           "point_b": [
-            100.698768,
+            94.098768,
             -9.5,
             -48.034313
           ],
@@ -5238,12 +5238,12 @@
         "contact_area_mm2": 18.307631,
         "witness": {
           "point_a": [
-            -39.538254,
+            -32.938254,
             -9.5,
             -36.145913
           ],
           "point_b": [
-            -39.538254,
+            -32.938254,
             -9.5,
             -36.145913
           ],
@@ -5858,12 +5858,12 @@
         "contact_area_mm2": 18.307631,
         "witness": {
           "point_a": [
-            -94.098768,
+            -100.698768,
             -9.5,
             -48.034313
           ],
           "point_b": [
-            -94.098768,
+            -100.698768,
             -9.5,
             -48.034313
           ],
@@ -6478,12 +6478,12 @@
         "contact_area_mm2": 18.307631,
         "witness": {
           "point_a": [
-            130.904946,
+            124.304946,
             -9.5,
             6.459075
           ],
           "point_b": [
-            130.904946,
+            124.304946,
             -9.5,
             6.459075
           ],
@@ -6788,12 +6788,12 @@
         "contact_area_mm2": 18.307631,
         "witness": {
           "point_a": [
-            110.461746,
+            117.061746,
             -9.5,
             36.145913
           ],
           "point_b": [
-            110.461746,
+            117.061746,
             -9.5,
             36.145913
           ],
@@ -7098,12 +7098,12 @@
         "contact_area_mm2": 18.307631,
         "witness": {
           "point_a": [
-            88.412877,
+            81.812877,
             -9.5,
             52.026241
           ],
           "point_b": [
-            88.412877,
+            81.812877,
             -9.5,
             52.026241
           ],
@@ -7408,12 +7408,12 @@
         "contact_area_mm2": 18.307631,
         "witness": {
           "point_a": [
-            55.901232,
+            49.301232,
             -9.5,
             48.034313
           ],
           "point_b": [
-            55.901232,
+            49.301232,
             -9.5,
             48.034313
           ],
@@ -7718,12 +7718,12 @@
         "contact_area_mm2": 18.307631,
         "witness": {
           "point_a": [
-            31.945156,
+            25.345156,
             -9.5,
             25.69491
           ],
           "point_b": [
-            31.945156,
+            25.345156,
             -9.5,
             25.69491
           ],
@@ -8028,12 +8028,12 @@
         "contact_area_mm2": 18.307631,
         "witness": {
           "point_a": [
-            25.695054,
+            19.095054,
             -9.5,
             -6.459075
           ],
           "point_b": [
-            25.695054,
+            19.095054,
             -9.5,
             -6.459075
           ],
@@ -8648,12 +8648,12 @@
         "contact_area_mm2": 18.307631,
         "witness": {
           "point_a": [
-            68.187123,
+            61.587123,
             -9.5,
             -52.026241
           ],
           "point_b": [
-            68.187123,
+            61.587123,
             -9.5,
             -52.026241
           ],
@@ -8958,12 +8958,12 @@
         "contact_area_mm2": 18.307631,
         "witness": {
           "point_a": [
-            100.698768,
+            94.098768,
             -9.5,
             -48.034313
           ],
           "point_b": [
-            100.698768,
+            94.098768,
             -9.5,
             -48.034313
           ],
@@ -9268,12 +9268,12 @@
         "contact_area_mm2": 18.307631,
         "witness": {
           "point_a": [
-            124.654844,
+            118.054844,
             -9.5,
             -25.69491
           ],
           "point_b": [
-            124.654844,
+            118.054844,
             -9.5,
             -25.69491
           ],
@@ -10198,12 +10198,12 @@
         "contact_area_mm2": 18.307631,
         "witness": {
           "point_a": [
-            25.565869,
+            32.165869,
             15.6,
             134.44954
           ],
           "point_b": [
-            25.565869,
+            32.165869,
             15.6,
             134.44954
           ],
@@ -10818,12 +10818,12 @@
         "contact_area_mm2": 18.307631,
         "witness": {
           "point_a": [
-            -36.653981,
+            -30.053981,
             15.6,
             131.188736
           ],
           "point_b": [
-            -36.653981,
+            -30.053981,
             15.6,
             131.188736
           ],
@@ -11748,12 +11748,12 @@
         "contact_area_mm2": 18.307631,
         "witness": {
           "point_a": [
-            -32.165869,
+            -25.565869,
             15.6,
             45.55046
           ],
           "point_b": [
-            -32.165869,
+            -25.565869,
             15.6,
             45.55046
           ],
@@ -12368,12 +12368,12 @@
         "contact_area_mm2": 18.307631,
         "witness": {
           "point_a": [
-            30.053981,
+            36.653981,
             15.6,
             48.811264
           ],
           "point_b": [
-            30.053981,
+            36.653981,
             15.6,
             48.811264
           ],
@@ -14419,12 +14419,12 @@
         "hardware/cad/__init__.py": "d6ddd9ce4ef273b82f43f315f09d11db1224f2b8298c9b0b3ea7dafb97280ba0",
         "hardware/cad/analysis/studies.py": "41d2807c06b54abfa69c966fb274eaa0933e080ee642f977bae8e1aa1900d349",
         "hardware/cad/body/body_battery.py": "3f491f0e4ccafa2e985fd1f0b20ef886c7b53f059593b354817e17a47b65fa71",
-        "hardware/cad/body/body_bom.py": "b82524527473fafcf943876181f8be2dd199337deadac0f8a0a1b77968a329df",
+        "hardware/cad/body/body_bom.py": "aab4d9612ef7176fe74b511be838ad2bb3695a61a81d233ab788cca5650098c0",
         "hardware/cad/body/body_frame.py": "0dbff64156008827de6e7841e0e310d1741739de93623d23390fa8fe773f7c32",
         "hardware/cad/body/body_fuse_board.py": "5dcb993962fdcfc0a18cea93c43dec7bb04f0ce3f2174228465f2a73e76d20de",
         "hardware/cad/body/body_guards.py": "488427babff18f5503df518831dcf68f8ce71573c2fd3d517cedf70af116ff57",
         "hardware/cad/body/body_joints.py": "696ada09b51da53b01c930ab274f171bf86f8e9f19e1eeb942a8d48345358ee6",
-        "hardware/cad/body/body_layout.py": "00a74468c47acde5588d706f7717f46fd74ca2366b96a6bbe19136c2d8463d53",
+        "hardware/cad/body/body_layout.py": "2d4514ca185c983caa290ab2c2cc6b167894c9fc473e9b15bf284cb3878e324a",
         "hardware/cad/body/body_legloads.py": "3a5726ef7c7adf58d2183dd2c55156e1a9f6a55e1c181b3344c777b10d2ce136",
         "hardware/cad/body/body_params.py": "a68737201e93af4ce8f00f675fbe3c235453b8bb0e19440fe3062635737a2247",
         "hardware/cad/body/body_sections.py": "1592a87f99a3428761432a4231a9931c2bbddeddbbf20449005aaf3b46710515",
@@ -34915,7 +34915,7 @@
         "volume_cm3": 1014.7
       },
       "files": {
-        "step": "c63562aa659cc96a163717620dfd4f6193d44c9d40d72eae0e74abbfd127efd2",
+        "step": "e26483bdea88c9c0e64bb5e8f0e8c3b252f4e72b4c3468ea9e7224ae0d943d5c",
         "stl": "f15c00497974e3f78d3fdc9ca60ef958ebff4d3537556d98c7c6828e6ec103de"
       }
     },
@@ -34933,7 +34933,7 @@
         "volume_cm3": 278.096
       },
       "files": {
-        "step": "7cd1d97654640d0d6c92b1875ede4dfd0bb8113e5a8af62c6a5825e71b6b2024",
+        "step": "7d25fca5492d48dd2d115b2c9e14da50ce7311a2039fd338418ff7b9bd4f82a1",
         "stl": "ce7b8cf46b6ff804f388fae00d2a67fcc5a36d6a53fdc49d32b90cce71630a4f"
       }
     },
@@ -34951,7 +34951,7 @@
         "volume_cm3": 162.045
       },
       "files": {
-        "step": "902b078c19360c9dacf762cd290efbc956efcbd5d8caa2d40c07e40df9fd8dca",
+        "step": "9abfd7bec8cdb49e373dff84ec2f686e255609dab30d1ad7c9b38650ee16f820",
         "stl": "4b2b5efee4d0504ddf80f7efd25a679fca5be77d994928b1e2ff554e39d80a23"
       }
     }
@@ -36559,12 +36559,12 @@
             "contact_area_mm2": 18.307631,
             "witness": {
               "point_a": [
-                130.904946,
+                124.304946,
                 -8.5,
                 6.459075
               ],
               "point_b": [
-                130.904946,
+                124.304946,
                 -8.5,
                 6.459075
               ],

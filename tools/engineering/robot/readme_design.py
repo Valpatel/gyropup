@@ -113,7 +113,7 @@ def render_svg(scene, cfg, profile):
                    f"published baseline {cfg['source']['published_baseline']}. "
                    'Bought parts include envelopes. Tessellated vector illustration, not physical qualification.')
     svg = (f'<svg xmlns="http://www.w3.org/2000/svg" width="{width}" height="{height}" '
-           f'viewBox="0 0 {width} {height}" role="img" aria-label="{title}">'
+           f'viewBox="0 0 {width} {height}" style="max-width:100%;height:auto" role="img" aria-label="{title}">'
            f'<title>{title}</title><desc>{escape(description)}</desc><style>{css}</style>'
            f'<rect width="{width}" height="{height}" rx="8" fill="var(--bg2)"/>{drawing}</svg>\n')
     svg = renderer._colour(svg, cfg['presentation']['palette'], 'auto')

@@ -2,7 +2,10 @@
 
 | Symptom | Canonical guidance |
 | --- | --- |
+| A fleet request with `--node cpu-a` is refused before a job exists | [Use the actual scheduler selector privately and the alias publicly](inbox/2026-11-05-ci-classification-needs-phase-evidence.md#fleet-aliases-are-reporting-labels-not-scheduler-selectors) |
+| A current CAD package reader still dynamically imports an old flat module name | [Fix canonical consumers and refresh their actual source-bound evidence](inbox/2026-11-05-root-moves-need-consumer-and-publication-maps.md#dynamic-imports-need-canonical-package-paths-too) |
 | A check summary says failed but the executed phase may be provisioning, a global cancellation, or a true assertion | [Classify phases and actual attempts before changing a check](inbox/2026-11-05-ci-classification-needs-phase-evidence.md) |
+| A final retrieval still contains `probe-incomplete.json` from an earlier live fetch | [Preserve partials and extract the sealed final product freshly](inbox/2026-11-05-ci-classification-needs-phase-evidence.md#incremental-retrieval-can-retain-an-earlier-partial-product) |
 | A retrieved product omits nested `src` files, or generated engineering indexes differ only in version queries | [Verify complete retrieval and bound generated-query comparisons](inbox/2026-11-05-ci-classification-needs-phase-evidence.md#compare-generated-cache-queries-without-exempting-engineering-outputs) |
 | Production reports a new version but a changed document still has preceding-source bytes | [Verify actual version, bytes and routes together](inbox/2026-11-05-ci-classification-needs-phase-evidence.md#a-new-version-response-is-not-complete-publication-evidence) |
 | An asynchronous Playwright wait predicate returns false but polling finishes immediately | [Use synchronous acceptance polling and bounded native completion states](inbox/2026-11-05-layout-readiness-must-wait-for-fonts-not-global-load.md) |
