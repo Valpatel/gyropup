@@ -35,6 +35,17 @@ try {
    await page.evaluate(()=>new Promise(r=>requestAnimationFrame(()=>requestAnimationFrame(r))));
    const metrics=await page.evaluate(()=>({width:innerWidth,scroll:document.documentElement.scrollWidth,height:innerHeight,nav:document.querySelector('.site-header,.appnav')?.getBoundingClientRect().height}));
    assert.ok(metrics.scroll<=width+1,`${route} overflows ${width}×${height}: ${metrics.scroll}`);
+   if(route==='/') {
+    const badge=page.locator('.site-header>.made-with');
+    assert.equal(await badge.getAttribute('href'),'https://cad-agent.valpatel.com/');
+    const box=await badge.boundingBox(),header=await page.locator('.site-header').boundingBox();
+    assert.ok(box.width>=120&&box.width<=155&&Math.abs(box.width/box.height-248/56)<.02);
+    assert.ok(box.x>=header.x&&box.x+box.width<=header.x+header.width+.5&&box.y>=header.y&&box.y+box.height<=header.y+header.height+.5);
+    for(const selector of ['.site-header>.wordmark','.landing-nav']) {
+      const other=await page.locator(selector).boundingBox();
+      assert.ok(box.x+box.width<=other.x||other.x+other.width<=box.x||box.y+box.height<=other.y||other.y+other.height<=box.y,'Badge must not overlap the brand or navigation');
+    }
+   }
    if(route.includes('sim.html')) {
     const canvas=await page.locator('#app canvas').boundingBox();
     assert.ok(canvas.width>=width-1 && canvas.height>100,'Simulator canvas missing');
@@ -72,12 +83,17 @@ try {
  try {
   const noScript=await plain.newPage();
   await noScript.goto(base+'/',{waitUntil:'domcontentloaded'});
-  for(const width of [320,390,1440]) {
+  for(const width of [320,390,759,760,761,899,900,901,1440]) {
    await noScript.setViewportSize({width,height:844});
    assert.ok(await noScript.getByRole('link',{name:'Design notes'}).isVisible(),`No-script landing at ${width}: nav links hidden`);
    assert.ok(!(await noScript.getByRole('button',{name:'Menu'}).isVisible()),`No-script landing at ${width}: a Menu button that cannot work`);
    const scroll=await noScript.evaluate(()=>document.documentElement.scrollWidth);
    assert.ok(scroll<=width+1,`No-script landing overflows at ${width}: ${scroll}`);
+   const badge=await noScript.locator('.site-header>.made-with').boundingBox();
+   for(const selector of ['.site-header>.wordmark','.landing-nav']) {
+     const other=await noScript.locator(selector).boundingBox();
+     assert.ok(badge.x+badge.width<=other.x||other.x+other.width<=badge.x||badge.y+badge.height<=other.y||other.y+other.height<=badge.y,`No-script badge overlaps ${selector} at ${width}`);
+   }
   }
  } finally { await plain.close(); }
  // The phone header is laid out by CSS alone, so it must not change height when the menu script arrives late.

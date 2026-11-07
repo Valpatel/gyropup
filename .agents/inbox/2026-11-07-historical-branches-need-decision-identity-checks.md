@@ -7,3 +7,9 @@ A normal ancestry merge retains the study tip, but conflict resolution must pres
 Corrective rule: compare exact old and current decision identities before recovering an unmerged branch. Require a whole-tree allowlist, immutable original payload hashes, and an explicit historical scope. A proposal's old identifier is not authority to replace an unrelated decided record. Preserve runtime/CAD/catalog/program files exactly and run the actual publication/privacy/link/wall consumers before integration.
 
 Limits: archival recovery does not make the old scripts runnable, refresh quotes or FEA, choose an option, or close engineering acceptance. Issue #155 retains its unresolved owner choices and acceptance work. Incorporated ancestry and later retirement of a completed remote name are separate from issue closure. No FEA, native CAD, purchasing or physical test was performed for this recovery.
+
+## Keep closing keywords out of prose that must leave an issue open
+
+On 2026-11-07, independent review caught the literal closing phrase `close #155` inside a negated sentence in the initial PR252 description. The body was changed to “Issue #155 remains open; no body design is selected.” Actual readback with `gh api graphql` for `pullRequest(number:252) { closingIssuesReferences(first:20) { nodes { number } } }` returned `nodes: []`; issue155 remained OPEN.
+
+Corrective rule: when an issue must remain open, state that directly without a closing keyword followed by its issue reference. Read back the live body and GitHub's parsed closing references before merging; do not rely on natural-language negation. The old body is retained in review history. No automatic closure was observed in this case: the finding was caught before merge, and only the corrected body's empty reference set was measured. This is a workflow guard, not new engineering acceptance or a reason to alter the archived study.

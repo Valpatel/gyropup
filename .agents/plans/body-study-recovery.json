@@ -407,8 +407,9 @@
     "fig-pem-rules.png",
     "fig-joints.png"
   ],
-  "integration_base": "48024e5644d178340d7787218e836568a3f35d2d",
+  "integration_base": "aaee9f873f18cc948e7cec35bfbf66136680aaf7",
   "readme_prefix_utf8": "> **Historical study, recovered 2026-11-07.** This is the unmerged 2026-11-01\u201302 study from [commit `4585596`](https://github.com/Valpatel/gyropup/tree/4585596492a75a08489ef99b6b9e3b8334c5e5ee/research/body-sheet-metal) and closed, unmerged [PR #158](https://github.com/Valpatel/gyropup/pull/158). Its prices, design assumptions, cad-agent v0.13.0 calculations and incomplete FEA describe that historical configuration; they are not current design, price, manufacturing or physical qualification evidence.\n>\n> The **proposed body D75** below is preserved in the [historical decision archive](decisions-historical.yaml). It is a different record from the current [decided D75 for recorded pronunciation](../../program/decisions.yaml). This recovery adopts neither the old proposal nor any CAD change. The original scripts, DXFs and FEA files are archived evidence, not migrated current tools or approved manufacturing files. Owner choices 1\u20133 and the applicable acceptance work remain open in [issue #155](https://github.com/Valpatel/gyropup/issues/155).\n\n",
   "readme_original_sha256": "2cf177e6a7c75824286ac99a1f72ff2a1638ecd24fc8e2868a7c8fc50a7f0233",
-  "scope": "Historical recovery only; issue155 acceptance and owner choices remain open."
+  "scope": "Historical recovery only; issue155 acceptance and owner choices remain open.",
+  "original_integration_base": "48024e5644d178340d7787218e836568a3f35d2d"
 }
