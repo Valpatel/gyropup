@@ -83,12 +83,17 @@ try {
  try {
   const noScript=await plain.newPage();
   await noScript.goto(base+'/',{waitUntil:'domcontentloaded'});
-  for(const width of [320,390,1440]) {
+  for(const width of [320,390,759,760,761,899,900,901,1440]) {
    await noScript.setViewportSize({width,height:844});
    assert.ok(await noScript.getByRole('link',{name:'Design notes'}).isVisible(),`No-script landing at ${width}: nav links hidden`);
    assert.ok(!(await noScript.getByRole('button',{name:'Menu'}).isVisible()),`No-script landing at ${width}: a Menu button that cannot work`);
    const scroll=await noScript.evaluate(()=>document.documentElement.scrollWidth);
    assert.ok(scroll<=width+1,`No-script landing overflows at ${width}: ${scroll}`);
+   const badge=await noScript.locator('.site-header>.made-with').boundingBox();
+   for(const selector of ['.site-header>.wordmark','.landing-nav']) {
+     const other=await noScript.locator(selector).boundingBox();
+     assert.ok(badge.x+badge.width<=other.x||other.x+other.width<=badge.x||badge.y+badge.height<=other.y||other.y+other.height<=badge.y,`No-script badge overlaps ${selector} at ${width}`);
+   }
   }
  } finally { await plain.close(); }
  // The phone header is laid out by CSS alone, so it must not change height when the menu script arrives late.

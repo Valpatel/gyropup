@@ -82,3 +82,19 @@ backlog or measurement exclusions. The existing two-README browser test now
 requires wrapper/image x/y/width/height to agree. This source correction still
 needs its own normal current CI and compiled two-engine readback after the
 account-switch pause; the temporary live-DOM probe is not final publication.
+
+## Test badge flow with scripting disabled as well as a delayed script
+
+On2026-11-07 PR251's first mobile attribution-badge CSS used absolute top64px
+placement. Forty Chrome151/WebKit26 cases with the real menu script passed, but
+independent review reproduced an actual320px no-JavaScript overlap: the expanded
+navigation centered the brand at y74.5 while the badge occupied y64–92. A delayed
+script and the browser's actual `scripting:none` layout are different states.
+
+Keep the normal compact scripted header, but put the badge into real flex flow
+under `scripting:none` at the relevant width; retain all navigation links. The
+existing no-script header test now includes the760/900px boundaries and rejects
+brand/navigation overlap. The exact source-header/CSS fixture passed144cases
+across both engines, scripting states, boundary widths, themes and motion
+preferences; this remains a prototype until actual compiled-site checks and
+normal CI pass. Badge asset bytes and the191movie input closure are unchanged.
