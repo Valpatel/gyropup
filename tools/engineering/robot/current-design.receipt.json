@@ -1,0 +1,53 @@
+{
+  "extract_key": "dd524a52fce74f792088127af4498563fa2ae26b98b2fe69bc92a64b1c4e1c45",
+  "hardware_tree": "32cb511e33ed1d6e66e6493d7020f1b15b4eec1f",
+  "presentation": {
+    "mini": false,
+    "palette": "gyropup",
+    "size": [
+      480,
+      180
+    ]
+  },
+  "profile": {
+    "files": {
+      "extract_mesh.py": "789ab36b1dfb19a777f8a312708bab1c2ba83e7a3815425e63cdb36995a5fd57",
+      "heroes.py": "2e153d9a0c67f3bd104bde15b7b94d216cbe2ad26b539abe23a276695b806990"
+    },
+    "repository": "mvalancy/mvalancy",
+    "revision": "70c325d0111427647e2e782d6c04b4123d23cebf"
+  },
+  "projection": {
+    "crease_deg": 35,
+    "edge_tol_mm": 0.4,
+    "mesh": {
+      "ang": 0.3,
+      "tol": 0.25
+    },
+    "min_area_px": 8,
+    "min_edge_mm": 4.0,
+    "outline_tol_mm": 0.6,
+    "px_per_mm": 1.0,
+    "roles_order": [
+      "plate",
+      "accent",
+      "glass",
+      "dark"
+    ],
+    "view": [
+      1.0,
+      -1.05,
+      0.55
+    ]
+  },
+  "render_key": "f5527a5e745473cb9dec9c29986865c4dbd5fc8832b2cc13e65987016649e667",
+  "scene_sha256": "60fefcb7641c6c10643298a12bb9974574eaf6efc773c4e978acfcbae9ac6e5e",
+  "schema": "gyropup.readme-design-receipt/1",
+  "source_inputs": "1b8e8cc32b74dcd8878767446746d9ddc1d45f9e7b061df4448a7639b5fbd9b6",
+  "source_revision": "3d0b8269b8a188e759d2a9665aee93d0caf76792",
+  "svg_sha256": "1a4b1d3d6854c60e29f618e93b30db54e21a271eb01d8ec0293c99126d292c24",
+  "toolkit": {
+    "repository": "Valpatel/cad-agent",
+    "revision": "e662a1ce79b4f63f7352b9d065c5027f77d53a81"
+  }
+}

@@ -5,7 +5,7 @@ import os from 'node:os';
 import path from 'node:path';
 import { chromium, webkit } from '@playwright/test';
 import { createSiteServer } from '../../../tools/site/serve-site.mjs';
-import { versionSiteAssets } from '../../../tools/site/site-cache.mjs';
+import { versionSiteAssets, singleSourceURL } from '../../../tools/site/site-cache.mjs';
 
 const root = await mkdtemp(path.join(os.tmpdir(), 'gyropup-cache-'));
 const requests = [];
@@ -24,6 +24,14 @@ const base = `http://127.0.0.1:${server.address().port}`;
 const browser = process.env.PLAYWRIGHT_BROWSER === 'webkit'
   ? await webkit.launch() : await chromium.launch({channel:process.env.PLAYWRIGHT_CHANNEL==='chromium'?undefined:'chrome', headless:true});
 try {
+  for (const unsupported of ['a.svg 1x','a.svg,b.svg','a.svg\nb.svg','']) {
+    assert.throws(()=>singleSourceURL(unsupported),/single URL/);
+  }
+  await writeFile(path.join(root,'still.svg'),'<svg xmlns="http://www.w3.org/2000/svg"/>');
+  await writeFile(path.join(root,'picture.html'),'<html><head></head><body><picture><source media="(prefers-reduced-motion: reduce)" srcset="./still.svg"><img src="./still.svg"></picture></body></html>');
+  const pictureKey=await versionSiteAssets(root);
+  assert.match(await readFile(path.join(root,'picture.html'),'utf8'),new RegExp(`srcset="/still.svg\\?v=${pictureKey}"`));
+  await rm(path.join(root,'picture.html'));await rm(path.join(root,'still.svg'));
   // Build validation catches the exact failure that blanks a page when a new
   // relative dependency exists locally but was omitted from git ls-files.
   for (const source of [

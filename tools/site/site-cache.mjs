@@ -5,6 +5,12 @@ import path from 'node:path';
 import { parseHTML } from 'linkedom';
 
 export const SITE_CACHE_CONTROL = 'public, no-cache, max-age=0, must-revalidate';
+// README picture alternatives are one asset each. Do not mistake responsive
+// candidate lists/descriptors for a single repository path.
+export function singleSourceURL(value) {
+  if (!value || /[\s,"'<>\\]/.test(value)) throw new Error('Only a single URL is supported in srcset');
+  return value;
+}
 const origin = 'https://gyropup.invalid';
 async function filesIn(root, dir = '') {
   const files = [];
@@ -80,6 +86,9 @@ export async function versionSiteAssets(root) {
     }
     for (const element of document.querySelectorAll('script[src], img[src], source[src], video[src]')) {
       element.setAttribute('src', version(element.getAttribute('src'), file));
+    }
+    for (const element of document.querySelectorAll('picture source[srcset]')) {
+      element.setAttribute('srcset', version(singleSourceURL(element.getAttribute('srcset')), file));
     }
     for (const element of document.querySelectorAll('[poster]')) element.setAttribute('poster', version(element.getAttribute('poster'), file));
     await writeFile(path.join(root, file), document.toString());

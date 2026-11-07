@@ -2,7 +2,10 @@
 
 | Symptom | Canonical guidance |
 | --- | --- |
+| A fleet request with `--node cpu-a` is refused before a job exists | [Use the actual scheduler selector privately and the alias publicly](inbox/2026-11-05-ci-classification-needs-phase-evidence.md#fleet-aliases-are-reporting-labels-not-scheduler-selectors) |
+| A current CAD package reader still dynamically imports an old flat module name | [Fix canonical consumers and refresh their actual source-bound evidence](inbox/2026-11-05-root-moves-need-consumer-and-publication-maps.md#dynamic-imports-need-canonical-package-paths-too) |
 | A check summary says failed but the executed phase may be provisioning, a global cancellation, or a true assertion | [Classify phases and actual attempts before changing a check](inbox/2026-11-05-ci-classification-needs-phase-evidence.md) |
+| A final retrieval still contains `probe-incomplete.json` from an earlier live fetch | [Preserve partials and extract the sealed final product freshly](inbox/2026-11-05-ci-classification-needs-phase-evidence.md#incremental-retrieval-can-retain-an-earlier-partial-product) |
 | A retrieved product omits nested `src` files, or generated engineering indexes differ only in version queries | [Verify complete retrieval and bound generated-query comparisons](inbox/2026-11-05-ci-classification-needs-phase-evidence.md#compare-generated-cache-queries-without-exempting-engineering-outputs) |
 | Production reports a new version but a changed document still has preceding-source bytes | [Verify actual version, bytes and routes together](inbox/2026-11-05-ci-classification-needs-phase-evidence.md#a-new-version-response-is-not-complete-publication-evidence) |
 | An asynchronous Playwright wait predicate returns false but polling finishes immediately | [Use synchronous acceptance polling and bounded native completion states](inbox/2026-11-05-layout-readiness-must-wait-for-fonts-not-global-load.md) |
@@ -17,7 +20,7 @@
 | Layout checks time out on a small pending resource despite visible content and loaded fonts | [Measure after real font readiness, not global load](inbox/2026-11-05-layout-readiness-must-wait-for-fonts-not-global-load.md) |
 | `?sound=0` is briefly ignored while talk mounts and an optional import is delayed | [Apply the audio query before mounting consumers](inbox/2026-11-05-audio-query-must-precede-optional-imports.md) |
 | Pages rejects a relocated Wrangler file with “custom paths” unsupported | [Find the config through the command working directory](inbox/2026-11-05-pages-deploy-needs-config-working-directory.md) |
-| A README image is broken, oversized, or hides its ordinary navigation links on the site | [README images must use `src`, not `srcset`](inbox/2026-11-02-readme-images-need-src-not-srcset.md) |
+| A README image is broken, oversized, or hides its ordinary navigation links on the site | [README images and single-URL picture alternatives](inbox/2026-11-02-readme-images-need-src-not-srcset.md) |
 | A browser reports an untrusted certificate while a DNS firewall names a blocked domain or name server | [Failing-path evidence and domain-age limits](inbox/2026-10-30-dns-filter-warnings-need-the-failing-path.md), [public HTTPS receipt](../docs/validation/public-https.md) |
 | Local services fill with old branch previews, or dependency symlinks look like unfinished work | [One shared preview and bounded test listeners](domains/site-preview.md), [incident](inbox/2026-10-29-preview-servers-need-one-owner.md) |
 | Valid supplier connector solids overlap when mated or omit wire-entry holes, contacts or latch details | [Vendor solids can omit functional cavities](inbox/2026-10-29-valid-vendor-solids-can-omit-connector-cavities.md) |
@@ -113,3 +116,11 @@
 - A model key looks ready but selecting a recorded activity does nothing: [wait for the selected model recording list](inbox/2026-11-06-recorded-activities-need-the-selected-model-list.md).
 
 - A cold landing reel stays paused without a source while near-viewport history pictures download: [keep history previews out of the hero startup budget](inbox/2026-11-06-recorded-activities-need-the-selected-model-list.md#history-cards-must-not-consume-the-hero-startup-budget).
+
+- README scene JSON is unchanged but renderer parity/SVG digest differs: [persisted scene paint order](inbox/2026-11-05-ci-classification-needs-phase-evidence.md#render-the-persisted-scene-representation-before-claiming-parity).
+
+- A local fleet runner or skill link disappears while a remote job is active: [check remote state before dispatching again](inbox/2026-11-05-ci-classification-needs-phase-evidence.md#a-missing-local-runner-does-not-establish-remote-job-state).
+
+- Browser model placement is correct but a nested parser node-order assertion fails: [verify parser and browser order](inbox/2026-11-05-ci-classification-needs-phase-evidence.md#verify-parser-and-browser-ordering-with-the-same-actual-document).
+
+- An image is visible but wall measurement counts no visual inside its inline picture wrapper: [match the real picture/image boxes](inbox/2026-11-02-readme-images-need-src-not-srcset.md#a-picture-wrapper-must-have-the-visible-images-real-box).
