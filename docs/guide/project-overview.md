@@ -69,7 +69,7 @@ Agents can use the [public reading guide](../guide/agent-guide.md) and [llms.txt
 ## Keeping the design illustration current
 
 The pixel header explains a stable learning method. The realistic figure depicts
-a stated published CAD revision; it is an illustration, not a fit, strength,
+a stated CAD revision and its published baseline; it is an illustration, not a fit, strength,
 collision, fabrication or physical-operation verdict. Bought components include
 engineering envelopes. The original artwork above retains its historical context.
 
@@ -94,6 +94,10 @@ that drift result and a genuine refresh when inputs changed.
    that revision, run `python tools/engineering/robot/readme_design.py bind-source --revision <immutable-main-sha>`.
    This updates requested source configuration only: it deliberately leaves any
    old scene, SVG and receipt stale. It verifies every input byte against that Git revision.
+   A genuine source repair may instead use clean committed current HEAD with
+   `--candidate-source`; the configuration records published `main` separately
+   as its baseline. Call that source a candidate until normal promotion and
+   actual main publication have been verified.
 2. Prepare and independently review the exact bounded fleet recipe, with the
    pinned profile and CAD-agent checkouts. Run
    `python tools/engineering/robot/readme_design.py extract --profile <profile-checkout> --toolkit <cad-agent-checkout> --out <new-owned-output>`

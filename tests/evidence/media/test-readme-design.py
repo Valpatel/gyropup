@@ -58,12 +58,12 @@ class DesignIdentity(unittest.TestCase):
 
     def test_geometry_constant_change_rejects(self):
         self.change_geometry()
-        with self.assertRaisesRegex(ValueError, 'Published CAD inputs changed'):
+        with self.assertRaisesRegex(ValueError, 'Recorded CAD inputs changed'):
             M['verify_inputs'](self.root, CONFIG)
 
     def test_new_effective_input_rejects(self):
         (self.root / 'hardware/cad/new-effective-input.py').write_text('WIDTH_MM = 101\n')
-        with self.assertRaisesRegex(ValueError, 'Published CAD inputs changed'):
+        with self.assertRaisesRegex(ValueError, 'Recorded CAD inputs changed'):
             M['verify_inputs'](self.root, CONFIG)
 
     def test_missing_current_with_valid_legacy_copy_rejects(self):
@@ -91,7 +91,7 @@ class DesignIdentity(unittest.TestCase):
             M['verify_public_tree'](self.root, cfg)
         git('add', 'hardware')
         git('-c', 'user.name=Fixture', '-c', 'user.email=fixture@example.invalid', 'commit', '-qm', 'changed source fixture')
-        with self.assertRaisesRegex(ValueError, 'Published hardware tree changed'):
+        with self.assertRaisesRegex(ValueError, 'Recorded hardware tree changed'):
             M['verify_public_tree'](self.root, cfg)
 
     def test_rebinding_requested_inputs_cannot_reseal_old_scene(self):

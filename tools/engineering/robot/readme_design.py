@@ -60,7 +60,7 @@ def verify_inputs(root, cfg):
         raise ValueError('A published-design illustration cannot use GYROPUP_* overrides')
     actual = inputs(root)
     if actual != cfg['source']['files']:
-        raise ValueError('Published CAD inputs changed; refresh from a reviewed published revision')
+        raise ValueError('Recorded CAD inputs changed; refresh from a reviewed source revision')
     return actual
 
 
@@ -68,7 +68,7 @@ def verify_public_tree(root, cfg):
     # Whole-hardware identity covers the full-body constructor's supplemental
     # board, mount and exported JSON inputs as well as the conservative CAD list.
     if git(root, 'rev-parse', 'HEAD:hardware') != cfg['source']['hardware_tree']:
-        raise ValueError('Published hardware tree changed; refresh the illustration')
+        raise ValueError('Recorded hardware tree changed; refresh the illustration')
     if git(root, 'status', '--porcelain', '--untracked-files=all', '--', 'hardware'):
         raise ValueError('Unpublished hardware edits cannot describe the published design')
 
@@ -109,7 +109,8 @@ def render_svg(scene, cfg, profile):
            '.cad .sil{stroke:var(--edge);stroke-width:1.3;stroke-linejoin:round}'
            '.cad .glass{fill-opacity:.35}.scan{display:none}' + renderer.REDUCED_MOTION)
     title = 'Gyropup CAD illustration'
-    description = (f"CAD inputs from published revision {cfg['source']['revision']}. "
+    description = (f"CAD inputs from source revision {cfg['source']['revision']}; "
+                   f"published baseline {cfg['source']['published_baseline']}. "
                    'Bought parts include envelopes. Tessellated vector illustration, not physical qualification.')
     svg = (f'<svg xmlns="http://www.w3.org/2000/svg" width="{width}" height="{height}" '
            f'viewBox="0 0 {width} {height}" role="img" aria-label="{title}">'
@@ -163,7 +164,7 @@ def extract(root, cfg, profile, toolkit, out):
             raise ValueError('Start extraction in a fresh process without cached project CAD')
         params = importlib.import_module('hardware.cad.body.body_params')
         params.CACHE = out / 'body-measurement-cache'  # Derived cache only, never an engineering export.
-        print('Building the published CAD in memory; using tracked J501 snapshot and fresh output cache', flush=True)
+        print('Building recorded CAD in memory; using tracked J501 snapshot and fresh output cache', flush=True)
         robot = load_module('readme_robot_source', root / SOURCE_CONTEXT)
         rows = robot.collect()  # Deliberately never call export() or render().
         if params.j501_params().get('_source') != 'hardware/vendor/j501/parameters-0.9-g48r.json':
@@ -246,6 +247,8 @@ def main():
     parser.add_argument('command', choices=('bind-source', 'check', 'extract', 'render'))
     parser.add_argument('--profile', type=Path)
     parser.add_argument('--revision')
+    parser.add_argument('--candidate-source', action='store_true',
+                        help='record clean current HEAD for review before its normal main publication')
     parser.add_argument('--toolkit', type=Path)
     parser.add_argument('--out', type=Path)
     parser.add_argument('--scene', type=Path)
@@ -254,20 +257,25 @@ def main():
     cfg = json.loads((ROOT / CONFIG).read_text())
     if args.command == 'bind-source':
         if not args.revision:
-            raise ValueError('Choose an immutable published main revision')
+            raise ValueError('Choose an immutable source revision')
         revision = git(ROOT, 'rev-parse', args.revision + '^{commit}')
-        if revision != git(ROOT, 'rev-parse', 'origin/main'):
+        published = git(ROOT, 'rev-parse', 'origin/main')
+        if args.candidate_source:
+            if revision != git(ROOT, 'rev-parse', 'HEAD') or git(ROOT, 'status', '--porcelain', '--', 'hardware'):
+                raise ValueError('Candidate source must be committed current HEAD with unchanged hardware')
+        elif revision != published:
             raise ValueError('Requested source is not the fetched published main revision')
         files = inputs(ROOT)
         for name, expected in files.items():
             raw = subprocess.check_output(['git', '-C', str(ROOT), 'show', revision + ':' + name])
             if hashlib.sha256(raw).hexdigest() != expected:
-                raise ValueError(f'Current input is not the published byte sequence: {name}')
+                raise ValueError(f'Current input is not the recorded source byte sequence: {name}')
         cfg['source'] = {'repository': 'Valpatel/gyropup', 'revision': revision,
+                         'published_baseline': published,
                          'hardware_tree': git(ROOT, 'rev-parse', revision + ':hardware'), 'files': files}
         verify_public_tree(ROOT, cfg)
         (ROOT / CONFIG).write_text(json.dumps(cfg, indent=2) + '\n')
-        print('Recorded requested published inputs only; no scene, SVG or receipt was refreshed')
+        print('Recorded requested source inputs only; no scene, SVG or receipt was refreshed; publication is checked separately')
         return
     if not args.profile:
         raise ValueError('Provide the pinned shared profile-tool checkout')
