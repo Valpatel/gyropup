@@ -1,0 +1,21 @@
+{
+  "schema": "gyropup.highlights-frame-inputs/1",
+  "capture_job": 253,
+  "capture_revision": "9fc04c3f0af6c92fa4c82cd1f59ed647944f9ba2",
+  "staged_files": {
+    "frames-inventory.json": {
+      "bytes": 63558,
+      "sha256": "2e8cd72a446ca65db61e92e80f935f46b409e1b827149cee732054e064adec28"
+    },
+    "frames.tgz": {
+      "bytes": 172422025,
+      "sha256": "67ccfe25028bda119bf79e4d071f71a9603fded7cfa35f2562076c350f92cdbd"
+    },
+    "capture-stage-source-bindings.json": {
+      "bytes": 23575,
+      "sha256": "44f03c1842e56a3772e9ef42a2b3deb6c28fefb64158f52d3338a466a8408870"
+    }
+  },
+  "limits": "Independently accepted actual253 all480-frame capture. This input configuration is not encoder execution or output acceptance; exact collector/command/operator review is mandatory.",
+  "capture_review": "https://github.com/Valpatel/gyropup/pull/255#pullrequestreview-5813302236"
+}
