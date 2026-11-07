@@ -256,17 +256,34 @@ finally:
                 try:
                     if (original/n).is_file():shutil.copyfile(original/n,ROOT/n)
                 except BaseException as exc:errors.append('Restore '+n+': '+str(exc))
-        try:
-            if initial is not None:
+        if initial is not None:
+            try:
                 final=tracked();save('tracked-final-restored.json',final)
                 if final!=initial:errors.append('Full tracked source/products not restored')
+            except BaseException as exc:errors.append('Final tracked identity: '+str(exc))
+            try:
                 restored=inventory(ROOT/'hardware');save('hardware-final-restored.json',restored)
                 if restored!=protected:errors.append('Complete hardware membership/bytes changed')
-                if subprocess.check_output(['git','status','--porcelain'],text=True).strip():errors.append('Checkout not clean after restoration')
-            if cfg is not None and 'jinputs' in globals():
-                if any(sha(jroot/n)!=h for n,h in jinputs.items()):errors.append('J501 retained/tracked input changed')
-                if subprocess.check_output(['git','status','--porcelain'],cwd=jroot,text=True).strip():errors.append('J501 tracked source changed')
-        except BaseException as exc:errors.append('Final identity: '+str(exc))
+            except BaseException as exc:errors.append('Final hardware identity: '+str(exc))
+            try:
+                status=subprocess.check_output(['git','status','--porcelain'],text=True).strip()
+                save('source-status-final.json',{'porcelain':status})
+                if status:errors.append('Checkout not clean after restoration')
+            except BaseException as exc:errors.append('Final project status: '+str(exc))
+        if cfg is not None and 'jinputs' in globals():
+            actual_jinputs={}
+            for n in jinputs:
+                try:actual_jinputs[n]=sha(jroot/n)
+                except BaseException as exc:errors.append('Final J501 input '+n+': '+str(exc))
+            try:
+                save('j501-inputs-final.json',actual_jinputs)
+                if actual_jinputs!=jinputs:errors.append('J501 retained/tracked input changed')
+            except BaseException as exc:errors.append('Final J501 identities: '+str(exc))
+            try:
+                status=subprocess.check_output(['git','status','--porcelain'],cwd=jroot,text=True).strip()
+                save('j501-status-final.json',{'porcelain':status})
+                if status:errors.append('J501 tracked source changed')
+            except BaseException as exc:errors.append('Final J501 status: '+str(exc))
     if errors:results['status']='FAILED';results['final_guard_errors']=errors
     results['adoption_performed']=False;results['immutable_reference_and_browser_acceptance']='pending separate mandatory stage'
     try:save('result.json',results)

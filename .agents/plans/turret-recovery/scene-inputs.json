@@ -99,7 +99,7 @@
   },
   "cad94_fingerprint": "a510bd881217d91015769fbecbbfcabffa8db5f96d1909d3f8d8de0aac91609d",
   "project_context": {
-    ".agents/plans/turret-recovery/regenerate-scene.py": "b885df43011b0e7982a1ca2083bfed26d7fe56ecdeabe195fbf8be081f4aa98b",
+    ".agents/plans/turret-recovery/regenerate-scene.py": "c262245975ea7f2d1beaca54f11d4066f1c9952f0ad2df4c42aa5d7a874e1dac",
     "tools/engineering/turret/reference-turret-motion.py": "bfbd1d030e9f673fa66e76a066cbec818c85550d7abb4c63a51a5869cc8f6ccd",
     "tests/evidence/test-turret-frames.py": "46fa7b428f94948da4b0ae95d825ad3da42f5d0f484c11102f50efb55c121e1e",
     "tests/fixtures/turret-box-ball-path-before-elevation.json": "e6b4b3807f381ce9d1c073e7db1dea7a593c67c05aacceeb8fb63a1c4e45faab",
