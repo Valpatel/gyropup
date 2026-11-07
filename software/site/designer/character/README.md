@@ -85,7 +85,7 @@ the live sidecar (`tools/tts_server.py` applies it to every line it is sent, `--
 ```
 
 - `match`: the written word or phrase (or a list of them). Case-insensitive, whole words only: `Gyropup's`,
-  `Gyropup’s`, `Gyropups` and `Gyropups'` keep their ending (`gyro pup's`), while `Gyropupper`, `gyropup.com`, URLs
+  `Gyropup’s`, `Gyropups` and `Gyropups'` keep their ending (`gyro, pup's`), while `Gyropupper`, `gyropup.com`, URLs
   and e-mail addresses and domain names with a common top-level domain, path and query included (the key's `protect`
   pattern), are left alone. A word is bounded by anything but an ASCII or Latin letter, digit or underscore, so
   `éGyropup` is left alone too, while `Gyropup.Want` (a missing space) is still changed. The longest match wins.
@@ -168,7 +168,7 @@ under a python that can. Voices live in `~/.local/share/piper-voices`; fetch ano
 The pup character is made in the sidecar, so every client hears the same voice and `talk.js` plays it as it is: Piper
 first speaks slower by the pitch factor, then a band-limited resample lifts the pitch and the formants (a smaller,
 younger voice, not just a higher one) and brings the pace back. Names espeak says wrongly are respelled by the
-[pronunciation key](#pronunciation-key) before Piper sees them (Gyropup is "gyro pup", Tritium "Trittium"); the disk
+[pronunciation key](#pronunciation-key) before Piper sees them (Gyropup is "gyro, pup", Tritium "Trittium"); the disk
 and memory caches are keyed by that respelled text, so a key change re-renders exactly the lines it changes.
 
 | Flag | Environment | Default | |

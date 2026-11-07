@@ -100,19 +100,19 @@ async function pronunciation() {
   assert.equal(await page.evaluate(()=>window.talk.say('Hi! I am Gyropup!')),true);
   assert.equal(await bubble(),'Hi! I am Gyropup!');
   assert.ok(requests.includes('/designer/character/voice/'+manifest.lines['Hi! I am Gyropup!'].clip),'Fixed line plays its recorded clip');
-  assert.equal(manifest.lines['Hi! I am Gyropup!'].spoken,'Hi! I am gyro pup!');
+  assert.equal(manifest.lines['Hi! I am Gyropup!'].spoken,'Hi! I am gyro, pup!');
   assert.equal(requests.filter(r=>r.startsWith('/tts')).length+await page.evaluate(()=>window.audioTest.spoken.length),0,'No live speech for a recorded line');
   // A live line through the sidecar: the request carries the key's text, the bubble the written one.
   await page.evaluate(()=>Object.assign(window.talk.services.tts,{ok:true,base:location.origin}));
   assert.equal(await page.evaluate(()=>window.talk.say("Gyropup's turret is ready, see gyropup.com")),true);
   assert.equal(await bubble(),"Gyropup's turret is ready, see gyropup.com");
   const tts=requests.filter(r=>r.startsWith('/tts')).map(r=>new URL(r,'https://x.test').searchParams.get('text'));
-  assert.deepEqual(tts,["gyro pup's turret is ready, see gyropup.com"],'Sidecar is sent the pronounced text');
+  assert.deepEqual(tts,["gyro, pup's turret is ready, see gyropup.com"],'Sidecar is sent the pronounced text');
   // The same live line through browser speech.
   await page.evaluate(()=>{window.talk.services.tts.ok=false;});
   assert.equal(await page.evaluate(()=>window.talk.say('Two Gyropups, one Tritium team')),true);
   assert.equal(await bubble(),'Two Gyropups, one Tritium team');
-  assert.equal(await page.evaluate(()=>window.audioTest.active.text),'Two gyro pups, one Trittium team','Browser speech is sent the pronounced text');
+  assert.equal(await page.evaluate(()=>window.audioTest.active.text),'Two gyro, pups, one Trittium team','Browser speech is sent the pronounced text');
  } finally {await context.close();}
 }
 async function firstMountSoundOverride({startupDelayMs=0}={}) {

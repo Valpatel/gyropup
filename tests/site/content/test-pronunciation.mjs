@@ -67,5 +67,5 @@ test('every fixed line has a clip spoken as the key says', () => {
     assert.equal(manifest.lines[line].spoken, say(line.replace(/\s+/g, ' ').trim()), `${line}: run tools/render-voice.py`);
     assert.match(manifest.lines[line].clip, /^[0-9a-f]{16}\.mp3$/);
   }
-  assert.ok(lines.some(l => /Gyropup/.test(l) && /gyro pup/.test(manifest.lines[l].spoken)));
+  assert.ok(lines.some(l => /Gyropup/.test(l) && /gyro, pup/.test(manifest.lines[l].spoken)));
 });

@@ -298,3 +298,32 @@ blanket stylesheet-cancellation allowance is justified. Keep strict rejection
 and add request identities, frame/load/navigation timestamps for recurrence.
 A legitimate parser-test correction requires normal new-head CI, not a retry of
 superseded98a or a claim that the unknown cancellation was a product fix.
+
+## A correct spoken-text field does not establish the sound a visitor hears
+
+On2026-11-07 the owner reported that the landing greeting still ran Gyropup
+together. An actual production browser trace after a Sound gesture selected
+recorded `c58eb622a507091c.mp3`, SHA256
+`606502601e5221acf2700da76ad396aa30d9135daad9b298af7494697f9ff8cf`.
+Its manifest already said “Hi! I’m gyro pup. Ready for a backyard adventure?”;
+no live browser utterance or sidecar request occurred. The shared live dictionary
+was therefore not evidence that the recorded acoustic complaint was resolved.
+The initial no-gesture probe correctly remained master-muted and was not counted
+as a reproduction. Preserve visual branding while adding the explicit short
+“gyro, pup” boundary through the existing shared key and genuine clip producer.
+
+Reviewed job239 on cpu-b rendered the seven genuinely changed clips;118other
+rows/clips stayed exact. It then FAILED an existing JS assertion that still
+expected the old space-only respelling. That later assertion was masked by stale
+clips in preflight, and both author and reviewer missed it. Keep239FAILED and
+its decode phases unreached; do not repeat synthesis to chase one green recipe.
+All126original/candidate/observed archive members and final original-source stat
+identities were retained. The minimum expectation correction preserves actual
+key→row/hash checks and a wrong-space-only negative. An owned replay of the
+sealed candidate passes actual producer check,11Python and7JS tests plus decoding
+allseven changed MP3s; independent review permits coherent adoption without
+resealing or regenerating. Existing recorded, sidecar-request and browser-utterance
+consumer expectations use the same new boundary. The decoded greeting is3.81s
+instead of3.25s, but duration or silence detection is not word alignment or a
+human listening verdict. Link playable before/after evidence and retain that
+acoustic limitation. No191movie source input changed.
