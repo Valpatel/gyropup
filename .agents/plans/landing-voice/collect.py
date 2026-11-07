@@ -47,7 +47,7 @@ def interrupted(signum,frame):raise KeyboardInterrupt('signal '+str(signum))
 for sig in(signal.SIGINT,signal.SIGTERM):signal.signal(sig,interrupted)
 def limits():
  if blocked is not None:signal.pthread_sigmask(signal.SIG_SETMASK,blocked)
- resource.setrlimit(resource.RLIMIT_AS,(3*1024**3,3*1024**3));resource.setrlimit(resource.RLIMIT_CPU,(180,180))
+ resource.setrlimit(resource.RLIMIT_CPU,(180,180))  # Slurm bounds actual RAM; V8 reserves a larger virtual cage.
 def settle_owned_group(proc):
  signalled=False;reaped=[]
  try:os.killpg(proc.pid,signal.SIGKILL);signalled=True
