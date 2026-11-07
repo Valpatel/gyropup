@@ -1,0 +1,21 @@
+{
+  "scope": "Exact native gate geometry sources, pile and launch; toolkit code bound separately. This is not the conservative94-source manufacturing receipt.",
+  "files": {
+    "hardware/__init__.py": "d6ddd9ce4ef273b82f43f315f09d11db1224f2b8298c9b0b3ea7dafb97280ba0",
+    "hardware/cad/__init__.py": "d6ddd9ce4ef273b82f43f315f09d11db1224f2b8298c9b0b3ea7dafb97280ba0",
+    "hardware/cad/turret/turret.py": "bba2ddcadb453fc99ad548aa3d3f912d0bf66b2d43eb4af59077b34873c04808",
+    "hardware/cad/turret/turret_base_board.py": "68fa770daf4d6568f253c103d8f89225c90eadb2a5a523e7afbf3e689fbd395e",
+    "hardware/cad/turret/turret_boards.py": "a10736535be770721bbd3ca59579d5854655026bbd3f4670a96d360b8f8deb71",
+    "hardware/cad/turret/turret_snaps.py": "9dd5ed2fffeed0c8798e11836866725003fe3265e2bc2f915b56a543d98ad0c1",
+    "hardware/cad/robot/gmi.py": "13ee0da5ad9cc1399d6be16d661775633ae16b4ef872907d7c52ff3dc9b45269",
+    "hardware/cad/robot/interfaces.json": "a4842a317dd2e64e9b4e11d34376bc36c26e1ddf8435a4b16a85dae3cd730b73",
+    "hardware/catalog/interfaces.json": "3889bc34503444f389e7951d74944f37b7e57b0b2b3be68ed596b959e83a46af",
+    "hardware/catalog/materials.json": "f699e8ea644aeb4f66227f5e021a2a7996b477ef1a41d6048b7f638364ba5d1f",
+    "hardware/cad/turret/turret_gates.py": "d994b3a737cffc1dfbbb5b3b6a2a6d06dfaf906fe139c42d96e613d29257545f",
+    "hardware/exports/turret/feed/pile.json": "5d474530a16c7cb431f61e86f71f72430916b60d62eed0af7e5dbc3c1a26c663",
+    "hardware/exports/turret/launch/launch3d.json": "cfc79c8992aef36803bc58fde0368edb217dcb024c60e78156e29d4916a48250"
+  },
+  "toolkit_revision": "2ad426943ce2c7232875e105e50810849f9a3e5e",
+  "toolkit_python_fingerprint": "c2941322d5f3d000d3777b0047567211d06855861fa5e14229d7d7519fef3ed3",
+  "expected_outputs": 13
+}
