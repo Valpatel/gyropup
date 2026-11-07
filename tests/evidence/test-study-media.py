@@ -289,6 +289,87 @@ class TopologyInspection(unittest.TestCase):
                 collector.main()
             self.assertEqual(list(out.iterdir()), [])
 
+    def test_submitter_import_and_exact_remote_program_are_inert(self):
+        submit = self.load('submit-topology-once.py')
+        compile(submit.REMOTE, 'actual-remote-topology-bootstrap', 'exec')
+        with self.assertRaisesRegex(AssertionError, 'Explicit execution required'):
+            submit.main(['--review-url', 'https://github.com/Valpatel/gyropup/issues/8#fixture',
+                         '--operator-sha256', '0' * 64, '--config-sha256', '0' * 64,
+                         '--private-config', '/tmp/nonexistent-topology-unit-fixture',
+                         '--receipt', '/tmp/nonexistent-topology-unit-intent'])
+
+    def test_submit_hash_guards_precede_network_and_intent(self):
+        submit = self.load('submit-topology-once.py')
+        with tempfile.TemporaryDirectory(prefix='topology-submit-hash-') as tmp:
+            root = Path(tmp); cfg = root / 'config.json'; cfg.write_text('{}')
+            for bad in ('operator', 'config'):
+                out = root / (bad + '-intent.json')
+                args = ['--execute', '--review-url', 'https://github.com/Valpatel/gyropup/issues/8#fixture',
+                        '--operator-sha256', '0' * 64 if bad == 'operator' else submit.sha(submit.__file__),
+                        '--config-sha256', '0' * 64 if bad == 'config' else submit.sha(cfg),
+                        '--private-config', str(cfg), '--receipt', str(out)]
+                with patch.object(submit, 'command', side_effect=AssertionError('Network reached')) as command:
+                    with self.assertRaises(AssertionError): submit.main(args)
+                    command.assert_not_called()
+                self.assertFalse(out.exists())
+
+    def test_controller_result_is_unambiguous_and_never_repeatable(self):
+        submit = self.load('submit-topology-once.py')
+        started = {'head': 'a' * 40, 'cpus': [0, 1, 2, 3], 'launcher_pid': 42, 'run': '/tmp/fixture-run',
+                   'command': ['bash', '/tmp/fixture-run/src/.agents/plans/hip-study/launch-step-topology.sh'],
+                   'started_utc': '2026-11-07T00:00:00Z'}
+        cases = ((1, '', AssertionError), (0, 'not a launcher receipt', json.JSONDecodeError),
+                 (0, json.dumps({**started, 'launcher_pid': 0}), AssertionError),
+                 (0, json.dumps(started), None))
+        for rc, stdout, error in cases:
+            with self.subTest(rc=rc), tempfile.TemporaryDirectory(prefix='topology-submit-fault-') as tmp:
+                root = Path(tmp); repo = root / 'repo'; repo.mkdir()
+                cli = root / 'fixture-cli'; cli.write_text('synthetic client fixture')
+                files = {}
+                for name in submit.SOURCE_FILES:
+                    target = repo / name; target.parent.mkdir(parents=True, exist_ok=True)
+                    shutil.copyfile(check.ROOT / name, target); files[name] = submit.sha(target)
+                cfg = {'repo': str(repo), 'head': 'a' * 40, 'base': 'b' * 40, 'pr': 263,
+                       'branch': 'study/hip-frame-foot-topology', 'files': files, 'fleet_cli': str(cli),
+                       'fleet_cli_sha256': submit.sha(cli), 'role': 'cpu-a', 'node': 'fixture-node',
+                       'fleet_environment_file': str(root / 'fixture-env'), 'runtime_sha256': 'c' * 64,
+                       'run_name': 'fixture-run'}
+                config = root / 'config.json'; config.write_text(json.dumps(cfg))
+                intent = root / 'intent.json'
+                def command(argv, **kwargs):
+                    if argv[:3] == ['git', 'rev-parse', 'HEAD']: return cfg['head']
+                    if argv[:3] == ['git', 'status', '--porcelain']: return ''
+                    if argv[0] == 'gh':
+                        if '/pulls/' in argv[-1]:
+                            return json.dumps({'state': 'open', 'merged': False, 'draft': True,
+                                               'head': {'sha': cfg['head'], 'ref': cfg['branch']},
+                                               'base': {'ref': 'dev', 'sha': cfg['base']}})
+                        return json.dumps({'state': 'open'})
+                    if argv == [str(cli), 'nodes']:
+                        return 'NODE STATE CPU MEMORY LOAD ROLE\nfixture-node IDLE 0/12 0/32768 0 cpu-a\n'
+                    if argv == [str(cli), 'queue']: return 'JOB HEADER\n'
+                    if argv[0] == 'bash': return 'fixture-node:fixture-target'
+                    raise AssertionError('Unexpected mocked command')
+                args = ['--execute', '--review-url', 'https://github.com/Valpatel/gyropup/issues/8#fixture',
+                        '--operator-sha256', submit.sha(submit.__file__), '--config-sha256', submit.sha(config),
+                        '--private-config', str(config), '--receipt', str(intent)]
+                with patch.object(submit, 'command', command), patch.object(submit.subprocess, 'run', return_value=
+                        types.SimpleNamespace(returncode=rc, stdout=stdout, stderr='controlled client output')) as invoke:
+                    if error:
+                        with self.assertRaises(error): submit.main(args)
+                    else:
+                        output = io.StringIO()
+                        with patch.object(sys, 'stdout', output): submit.main(args)
+                        self.assertEqual(json.loads(output.getvalue())['status'], 'STARTED_NOT_ACCEPTED')
+                    record = json.loads(intent.read_text())
+                    self.assertEqual(record['returncode'], rc)
+                    self.assertEqual(record['stdout'], stdout)
+                    self.assertEqual('local_error' in record, error is not None)
+                    first = intent.read_bytes()
+                    with self.assertRaises(AssertionError): submit.main(args)
+                    self.assertEqual(intent.read_bytes(), first)
+                    self.assertEqual(invoke.call_count, 1)
+
 
 class FieldStage(unittest.TestCase):
     def test_real_historical_field_can_be_checked_without_a_video_claim(self):

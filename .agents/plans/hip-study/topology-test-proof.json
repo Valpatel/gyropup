@@ -1,11 +1,12 @@
 {
   "scope": "Kernel-free source/input/lifecycle controls only; no native STEP import or geometry acceptance",
-  "python_tests": 30,
+  "python_tests": 33,
   "node_companion_tests": 3,
   "exit": 0,
-  "complete_log_sha256": "5d8dd7b1875cb62eec577eb72a36daa077f7ef7e5297db3adb9f03ca1d9cff2c",
-  "focused_controls": 9,
+  "complete_log_sha256": "e79c6d5fd11c10483bf213dc5a3fb3460bae4dc12af366e7f1705261265ad654",
+  "focused_controls": 12,
   "focused_exit": 0,
-  "focused_log_sha256": "7645aaa9a9d1e207fc58a91d962f1f881d960a048fae480d28d265ef87577ae2",
-  "native_executed": false
+  "focused_log_sha256": "12f2433f85e4c9488d200d089fdb13796bfc9076ab2be629dab72aaa75cddaa2",
+  "native_executed": false,
+  "submission_controls": "Actual import-safe submitter with mocked SSH: client nonzero, ambiguous output, invalid PID and one valid launch-only receipt; no native run"
 }
