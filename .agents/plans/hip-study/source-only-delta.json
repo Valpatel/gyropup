@@ -1,0 +1,14 @@
+{
+  "old_source_sha256": "96f350831f94471c346273d80504b7beadef3346806a6493d7b9f06b09439226",
+  "new_source_sha256": "cbd5b7ff0cb17d8969b6893e8af8404efa561df1143da8faf65ec2b8a715426b",
+  "static_AST_only": true,
+  "native_execution": false,
+  "all_module_code_equal_after_removing_only": [
+    "canonical resolver import",
+    "kernel-free source_hashes definition",
+    "initial input snapshot",
+    "final unchanged-input comparison",
+    "result input-hash value"
+  ],
+  "geometry_load_material_mask_mesh_target_and_solver_statements_unchanged": true
+}

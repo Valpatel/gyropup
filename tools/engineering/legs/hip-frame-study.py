@@ -48,6 +48,8 @@ from pathlib import Path
 import numpy as np
 
 ROOT = (Path(__file__).resolve().parents[3])
+from tools.site.source_layout import source_file
+
 LAYER_NORMALS = {'y': (0.0, 1.0, 0.0), 'z': (0.0, 0.0, 1.0), 'x': (1.0, 0.0, 0.0)}
 PRINT_NORMAL = 'y'                 # the frame prints web-down: its layers are x-z planes, stacked along y
 HF_CASES = ('E1', 'R1', 'E3o', 'E3i', 'R3o')
@@ -56,6 +58,18 @@ STUDIES = []                       # every Study solved in this process, in orde
 
 def sha(path: Path) -> str:
     return hashlib.sha256(path.read_bytes()).hexdigest()
+
+
+def source_hashes() -> dict:
+    """Bind current owned inputs before a native study; never use legacy copies."""
+    from hardware.cad.manufacturing.print_provenance import source_files
+    paths = set(source_files(ROOT))
+    paths.update(source_file(ROOT, name) for name in (
+        'software/simulation/leg_rig.py', 'software/simulation/leg_control.py',
+        'exports/leg/rig-results.json', 'exports/leg/fea/summary.json',
+        'tools/engineering/legs/hip-frame-study.py',
+        'tools/site/source_layout.py', 'tools/site/source-layout.json'))
+    return {path.relative_to(ROOT).as_posix(): sha(path) for path in sorted(paths)}
 
 
 def stress_corners(st):
@@ -198,6 +212,7 @@ def precheck(out: Path, params: dict | None) -> dict:
 
 def run_variant(out: Path, params: dict | None, cases, mesh: float, vmax: float | None, viewer: bool, dump: bool = False,
                 dscale: float | None = None):
+    before = source_hashes()
     out = out.resolve()
     use_params(out, params)
     shutil.copyfile((ROOT / 'hardware/exports/leg/fea/summary.json'), out / 'summary.json')
@@ -241,8 +256,9 @@ def run_variant(out: Path, params: dict | None, cases, mesh: float, vmax: float 
            'mesh_mm': mesh, 'render': {'vmax_mpa': vmax, 'deformation_scale': dscale}, 'cases': rows, 'mass_g': round(frame.Volume() / 1000 * PA6_CF_DENSITY, 1),
            'volume_mm3': round(frame.Volume(), 1), 'allowables_mpa': {'across_layers': s_z, 'in_layers': s_xy},
            'print_normal': PRINT_NORMAL, **fit, 'toolkit': toolkit_identity(cadagent), 'seconds': round(time.time() - t0, 1),
-           'inputs_sha256': {p: sha(ROOT / p) for p in ('hardware/cad/legs/fivebar.py', 'hardware/cad/legs/leg_studies.py', 'software/simulation/leg_rig.py',
-                                                        'exports/leg/rig-results.json', 'exports/leg/fea/summary.json')}}
+           'inputs_sha256': before}
+    if source_hashes() != before:
+        raise ValueError('Study inputs changed during native work')
     (out / 'result.json').write_text(json.dumps(res, indent=1) + '\n')
     return res
 
