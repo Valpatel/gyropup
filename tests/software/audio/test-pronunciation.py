@@ -52,6 +52,15 @@ class Key(unittest.TestCase):
         for written, spoken in KEY['examples']:
             self.assertEqual(P.pronounce(written), spoken, written)
 
+    def test_actual_name_has_an_explicit_spoken_boundary(self):
+        line = 'Hi! I’m Gyropup. Ready for a backyard adventure?'
+        want = 'Hi! I’m gyro, pup. Ready for a backyard adventure?'
+        self.assertEqual(P.pronounce(line), want)
+        old = json.loads(json.dumps(KEY))
+        next(e for e in old['entries'] if e['match'] == 'Gyropup')['say'] = 'gyro pup'
+        self.assertNotEqual(P.Pronouncer(old)(line), want)
+        self.assertEqual(P.pronounce('Visit gyropup.com, Gyropup!'), 'Visit gyropup.com, gyro, pup!')
+
     def test_gyropup_forms(self):
         f = P.Pronouncer(FIXTURE)
         cases = {
@@ -104,7 +113,7 @@ class Key(unittest.TestCase):
         self.assertEqual(node_pronounce(key, ['Gyropup.com']), ['gyro pup.com'])
 
     def test_sidecar_applies_key_once(self):
-        self.assertEqual(tts_server.clean('Hi! I am \n Gyropup!'), 'Hi! I am gyro pup!')
+        self.assertEqual(tts_server.clean('Hi! I am \n Gyropup!'), 'Hi! I am gyro, pup!')
         self.assertEqual(tts_server.clean(tts_server.clean("Gyropup's day")), "gyro pup's day")
         self.assertNotIn('RESPELL', vars(tts_server), 'one key: no second respelling table in the sidecar')
 

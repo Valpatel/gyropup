@@ -38,6 +38,15 @@ test('an emphasis entry moves the stress by respelling', () => {
   assert.equal(say('My eyes glow cyan.'), 'My eyes glow sigh-an.');
 });
 
+test('the actual name has an explicit spoken boundary, not just joined metadata', () => {
+  const line='Hi! I’m Gyropup. Ready for a backyard adventure?';
+  const want='Hi! I’m gyro, pup. Ready for a backyard adventure?';
+  assert.equal(say(line),want);
+  const old=structuredClone(KEY);old.entries.find(e=>e.match==='Gyropup').say='gyro pup';
+  assert.notEqual(compileKey(old)(line),want,'the old space-only respelling must fail');
+  assert.equal(say('Visit gyropup.com, Gyropup!'),'Visit gyropup.com, gyro, pup!');
+});
+
 test('applying the key twice is the same as once', () => {
   const texts = KEY.examples.map(e => e[0]);
   for (const e of [...KEY.entries, ...FIXTURE.entries]) for (const m of [].concat(e.match)) texts.push(m, m + "'s", m + 's', e.say);

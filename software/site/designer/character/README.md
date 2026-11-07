@@ -81,7 +81,7 @@ again (Piper varies a little between takes). Commit the clips and the manifest w
 the live sidecar (`tools/tts_server.py` applies it to every line it is sent, `--say` included) and browser speech.
 
 ```json
-{ "match": "Gyropup", "say": "gyro pup", "why": "..." }
+{ "match": "Gyropup", "say": "gyro, pup", "why": "An explicit short boundary keeps the two words distinct." }
 ```
 
 - `match`: the written word or phrase (or a list of them). Case-insensitive, whole words only: `Gyropup's`,
@@ -251,3 +251,5 @@ OpenAI-compatible brain call). The Whisper server is Moxie's `sim/stt/server.py`
 protocol of Moxie's `sim/tts/server.py`. `eyes.js` adapts `sim/web/moxie/face.js` from the same project.
 
 Public pages (including gyropup.com) never automatically discover a visitor’s local AI or voice servers. Browser voice and the scripted brain are the default. Explicit `gyropup.llmBase`, `gyropup.ttsBase`, `gyropup.sttBase`, or `GYROPUP_BRAIN` configuration remains opt-in; the endpoint must meet the browser’s HTTPS, CORS and local-network permission requirements.
+
+The landing greeting uses a recorded clip before any live TTS. Its old manifest already said `gyro pup`, yet the owner heard the name run together. The actual key now sends `gyro, pup` to the existing producer and live fallback: a short comma boundary, with visible branding unchanged. Clip IDs bind the resulting spoken text, so only the seven affected fixed lines require genuine regeneration; unchanged clips keep their original bytes. Text/key checks alone are not an acoustic listening verdict.
