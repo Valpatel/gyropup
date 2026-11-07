@@ -1,0 +1,12 @@
+{
+  "date": "2026-11-07",
+  "requested_candidate_source": "a86c230c97b29b3f61eaa38d3cae9719072c2b9e",
+  "published_baseline": "1134c9e645a0f3154c98255ed7dc71167f3e1348",
+  "hardware_tree": "89ae8db4a748d5b19893293fbef3c1d49eeccc2f",
+  "all95_source_hashes_unchanged": true,
+  "helper_sha256": "8c653277d2aee9fbfd08acb07c23c6542cdd04930804180a111352666110499e",
+  "actual_old_scene_guard": "Stale extracted scene; rendering cannot rebind CAD inputs",
+  "old_scene_and_receipt_untouched": true,
+  "new_extraction_or_adoption": false,
+  "limits": "Source binding only; strict guard requires genuine fresh extraction/render/check before publication."
+}

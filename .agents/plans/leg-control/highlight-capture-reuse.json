@@ -1,0 +1,19 @@
+{
+  "source": "a86c230c97b29b3f61eaa38d3cae9719072c2b9e",
+  "capture_source": "9fc04c3f0af6c92fa4c82cd1f59ed647944f9ba2",
+  "staged_regular_files": 483,
+  "source_closure_keys": 192,
+  "actual_captured_input_entries": 178,
+  "full_current_source_guard_pass": true,
+  "all_historical_stage_digests_match_immutable_git": true,
+  "changed_current_sources": [
+    "hardware/exports/leg/fea/hip-frame-e1-media/field-receipt.json",
+    "hardware/exports/leg/fea/hip-frame-e1-media/hip_frame-E1.json",
+    "hardware/exports/leg/fea/hip-frame-e1-media/video-receipt.json"
+  ],
+  "metadata_and_481_framefiles_unchanged": true,
+  "staged_inventory_sha256": "df0dc0799679b2d4ced1af7cc85a3560de8f6511987f9b03088dc25048153cad",
+  "stage_metadata_sha256": "44f03c1842e56a3772e9ef42a2b3deb6c28fefb64158f52d3338a466a8408870",
+  "frame_receipt_sha256": "a565b2bdae357f8d394aa0c9d22ced967596e61b75ec41af43d10a4706978ef3",
+  "limits": "Read-only actual capture reuse proof only; no encode/adoption/qualification or new capture."
+}
