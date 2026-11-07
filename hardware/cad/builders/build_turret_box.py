@@ -124,7 +124,7 @@ ROLE = {
     'esc_r': 'AM32 35 A ESC for the right flywheel motor, on the cartridge board.',
     'cartridge_board': 'The cartridge board: six FETs that short the motors\' phases about 8 ms after the safety line drops (the brake), their driver and the gates\' comparator; the two ESCs lie under it on the cage plate.',
     'feed_motor': 'Feetech STS3215 servo (bus ID 3) under the dial floor: steps the dial 45 deg per ball and feels a jam in its load reading.',
-    'laser': 'Quarton 650 nm Class 2 red laser (under 1 mW): the aiming dot, parallel to the barrel.',
+    'laser': 'Modelled reference envelope: Quarton 650 nm red laser, assumed Class 2 and under 1 mW. The requested green module and its actual label/class still need verification; the aiming dot is parallel to the barrel.',
     'laser_screws': 'Three M3 nylon-tip set screws (McMaster 93285A115): they hold the laser in its ring and aim it (the boresight).',
     'box_deck': f'The adapter: carries the TM face {tb.Z_TM - tb.ROOF:.0f} mm above the J501\'s roof on four legs at the lid\'s screw '
                 f'corners; the control pod hangs at the back.',
@@ -500,7 +500,8 @@ def exhaust_check(T):
     out['ok'] = out['intakes_below_mouth_mm'] > 0 and out['plume']['ok']
     out['note'] = (f'the J501 exhaust leaves the deck\'s front mouth ({out["mouth_w_mm"]} mm wide, z {out["mouth_z_mm"][0]}-{out["mouth_z_mm"][1]}), '
                    f'{out["intakes_below_mouth_mm"]} mm above the J501\'s highest intake vent, with the front corners walled; no part of the turret comes within '
-                   f'{out["plume"]["least_mm"]} mm of the plume\'s keep-out ahead of the mouth at any pan or tilt. To prove on the bench: the '
+                   f'{out["plume"]["least_mm"]} mm of the plume\'s keep-out ahead of the mouth at the sampled pan grid, level and full depression; '
+                   'positive tilt and intermediate poses were not checked by this plume sample. To prove on the bench: the '
                    'J501\'s intake within 3 K of the room at full load with the turret on (bench_proof)')
     return out
 
@@ -848,6 +849,7 @@ def main():
     fl, fd, tm = mech['flywheel'], mech['feed'], mech['timing']
     fl_rows = mech['flight_level']['rows']
     at3 = next((r for r in fl_rows if r[0] == 3.0), fl_rows[-1])
+    stop_limits = json.loads((R / 'hardware/exports/turret/limits.json').read_text())
     journey = [
         {'id': 'hopper', 'title': '1  Hopper', 'parts': ['hopper', 'hopper_lid', 'hopper_flap'], 'focus': tf(0.0, 0.0, (G.dial_z0 + G.hopper_top) / 2),
          'text': f'Thirty balls (Ø{G.ball}, 1.83 g) wait in the clear hopper. Gravity drops them into the dial\'s pockets; the cone on top of the dial stirs the pile so they cannot bridge.'},
@@ -871,8 +873,9 @@ def main():
          'text': f'{G.barrel_len:.0f} mm long, bore Ø{G.bore_out:.1f}: 2 mm over the ball, so it only guides. Two IR gates 60 mm apart time every ball '
                  f'(a built-in chronograph); {tm["nip_to_muzzle_ms"]} ms from the nip to the muzzle.'},
         {'id': 'muzzle', 'title': '7  Muzzle', 'parts': ['barrel', 'laser', 'laser_mount'], 'focus': tf(G.barrel_x1, 0.0, 0.0),
-         'text': f'{mech["ball"]["speed_mps"]} m/s ({mech["ball"]["fps"]} fps set; the physical ceiling is {mech["ball"]["cap_fps"]}), {mech["ball"]["energy_j"]} J. The barrel can never point above '
-                 f'level: hard stops at 0 and {G.tilt_min:.0f} deg in the yoke. About {tm["trigger_to_muzzle_ms"]} ms from the command to here.'},
+         'text': f'{mech["ball"]["speed_mps"]} m/s ({mech["ball"]["fps"]} fps set; the physical ceiling is {mech["ball"]["cap_fps"]}), {mech["ball"]["energy_j"]} J. The mechanical stops are '
+                 f'{G.tilt_min:g} to {G.tilt_max:+g} deg. Firing is capped at {stop_limits["fire_tilt_max_deg"]:g} deg by the simulated feed study, pending bench confirmation. '
+                 f'About {tm["trigger_to_muzzle_ms"]} ms from the command to here.'},
         {'id': 'flight', 'title': '8  Flight', 'parts': [], 'focus': None,
          'text': f'Air drag and gravity: a level shot from the bench has dropped {at3[2]} mm at {at3[0]:.0f} m and slowed to {at3[3]} m/s. The laser is parallel to '
                  f'the barrel, so at range the ball lands under the dot.'},
@@ -905,7 +908,7 @@ def main():
                       'wheel_r': list(wheel['wheel_r']), 'flap': list(flap_hinge)},
            'limits': {'pan_deg': [-170.0, 170.0], 'tilt_deg': [G.tilt_min, G.tilt_max], 'pan_rate_deg_s': mech['pan']['max_deg_s'],
                       'tilt_rate_deg_s': mech['tilt']['max_deg_s'],
-                      'fire_tilt_max_deg': json.loads((R / 'hardware' / 'exports' / 'turret' / 'limits.json').read_text())['fire_tilt_max_deg']},
+                      'fire_tilt_max_deg': stop_limits['fire_tilt_max_deg']},
            'muzzle': tf(G.barrel_x1, 0.0, 0.0), 'laser': tf(tu.LASER_X[0] - 2 + tu.LASER['L'], tu.LASER_Y, tu.LASER_Z),
            'ball_path': path, 'pockets': pockets, 'pile': pile, 'ball_r': rb, 'dial_park_deg': fd['park_deg'],
            'antennas': [{'name': n, 'base': list(b), 'top': list(t), 'd': d} for n, b, t, d in tb.antennas()],

@@ -174,3 +174,41 @@ def test_tilt_range_cli_derives_the_current_design_path(tmp_path):
     current.write_text('{}')
     assert selected.is_file()
     assert eval(argument, {'R': R}).is_file()
+
+
+def test_scene_generated_claims_follow_actual_limits_and_sample_scope():
+    """Evaluate actual authored output expressions without importing the CAD kernel."""
+    import ast
+    from types import SimpleNamespace
+    source = ast.parse((R / 'hardware/cad/builders/build_turret_box.py').read_text())
+    main = next(n for n in source.body if isinstance(n, ast.FunctionDef) and n.name == 'main')
+    journey = next(n.value for n in ast.walk(main) if isinstance(n, ast.Assign)
+                   and any(isinstance(t, ast.Name) and t.id == 'journey' for t in n.targets))
+    def field(row, name):
+        return next(v for k, v in zip(row.keys, row.values) if isinstance(k, ast.Constant) and k.value == name)
+    muzzle = next(row for row in journey.elts if ast.literal_eval(field(row, 'id')) == 'muzzle')
+    for lo, hi, fire in [(-25.0, 12.0, 10.0), (-30.0, 8.0, 7.0)]:
+        ns = {'G': SimpleNamespace(tilt_min=lo, tilt_max=hi),
+              'stop_limits': {'fire_tilt_max_deg': fire},
+              'mech': {'ball': {'speed_mps': 16, 'fps': 53, 'cap_fps': 105, 'energy_j': 0.24}},
+              'tm': {'trigger_to_muzzle_ms': 300}}
+        text = eval(compile(ast.Expression(field(muzzle, 'text')), '<actual-muzzle-caption>', 'eval'), {'__builtins__': {}}, ns)
+        assert f'{lo:g} to {hi:+g} deg' in text
+        assert f'Firing is capped at {fire:g} deg' in text
+        assert 'simulated' in text and 'bench' in text and 'never point above' not in text
+    role = next(n.value for n in source.body if isinstance(n, ast.Assign)
+                and any(isinstance(t, ast.Name) and t.id == 'ROLE' for t in n.targets))
+    laser = ast.literal_eval(field(role, 'laser'))
+    assert 'assumed' in laser and 'actual label/class' in laser and 'verification' in laser
+    plume = next(n for n in source.body if isinstance(n, ast.FunctionDef) and n.name == 'plume_clearance')
+    tilt_loop = next(n for n in ast.walk(plume) if isinstance(n, ast.For)
+                     and isinstance(n.target, ast.Name) and n.target.id == 'tilt')
+    assert eval(compile(ast.Expression(tilt_loop.iter), '<actual-plume-tilts>', 'eval'), {'__builtins__': {}},
+                {'G': SimpleNamespace(tilt_min=-30.0)}) == (0.0, -30.0)
+    exhaust = next(n for n in source.body if isinstance(n, ast.FunctionDef) and n.name == 'exhaust_check')
+    note = next(n.value for n in ast.walk(exhaust) if isinstance(n, ast.Assign)
+                and any(isinstance(t, ast.Subscript) and isinstance(t.slice, ast.Constant) and t.slice.value == 'note' for t in n.targets))
+    text = eval(compile(ast.Expression(note), '<actual-exhaust-caption>', 'eval'), {'__builtins__': {}},
+                {'out': {'mouth_w_mm': 80, 'mouth_z_mm': [10, 20], 'intakes_below_mouth_mm': 5, 'plume': {'least_mm': 12.3}}})
+    assert '12.3 mm' in text and 'sampled pan grid' in text and 'level and full depression' in text
+    assert 'positive tilt and intermediate poses were not checked' in text and 'at any pan or tilt' not in text
