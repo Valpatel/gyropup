@@ -1,0 +1,111 @@
+{
+  "source": "1d566eeae9029146025f84230aad3aa0d2f40df1",
+  "status": "FAILED",
+  "adoption_approved": false,
+  "phases": {
+    "source-object-9fc04c3f": {
+      "command": [
+        "git",
+        "fetch",
+        "--depth",
+        "1",
+        "--no-tags",
+        "origin",
+        "9fc04c3f0af6c92fa4c82cd1f59ed647944f9ba2"
+      ],
+      "expected_exit": 0,
+      "exit": 0,
+      "pid": 2514322,
+      "process_cleanup": {
+        "group_gone": true,
+        "signalled": false,
+        "reaped": []
+      },
+      "seconds": 129.8239682642743
+    },
+    "source-object-a12cf8e7": {
+      "command": [
+        "git",
+        "fetch",
+        "--depth",
+        "1",
+        "--no-tags",
+        "origin",
+        "a12cf8e73f337274174c56e14c22832250acf284"
+      ],
+      "expected_exit": 0,
+      "exit": 0,
+      "pid": 2534999,
+      "process_cleanup": {
+        "group_gone": true,
+        "signalled": false,
+        "reaped": []
+      },
+      "seconds": 98.64126071101055
+    },
+    "source-object-e7b51287": {
+      "command": [
+        "git",
+        "fetch",
+        "--depth",
+        "1",
+        "--no-tags",
+        "origin",
+        "e7b512870a39259a04a4930e2908af84001bc84e"
+      ],
+      "expected_exit": 0,
+      "exit": 0,
+      "pid": 2547117,
+      "process_cleanup": {
+        "group_gone": true,
+        "signalled": false,
+        "reaped": []
+      },
+      "seconds": 139.50818658107892
+    },
+    "source-object-e93b3bbc": {
+      "command": [
+        "git",
+        "fetch",
+        "--depth",
+        "1",
+        "--no-tags",
+        "origin",
+        "e93b3bbce57ee36fc966e8ba4513f05273a75967"
+      ],
+      "expected_exit": 0,
+      "exit": 0,
+      "pid": 2573305,
+      "process_cleanup": {
+        "group_gone": true,
+        "signalled": false,
+        "reaped": []
+      },
+      "seconds": 57.99808024475351
+    },
+    "actual-encode-and-full-guard": {
+      "command": [
+        "/var/tmp/fleet-jobs/fleetjob-gyropup-0/254/src/.venv/bin/python",
+        "-B",
+        "tools/evidence/media/encode-highlights.py",
+        "--frames",
+        "/var/tmp/fleet-jobs/fleetjob-gyropup-0/254/out/frames",
+        "--output",
+        "/var/tmp/fleet-jobs/fleetjob-gyropup-0/254/out/candidate",
+        "--threads",
+        "4"
+      ],
+      "expected_exit": 0,
+      "exit": 1,
+      "pid": 2578923,
+      "process_cleanup": {
+        "group_gone": true,
+        "signalled": false,
+        "reaped": []
+      },
+      "seconds": 43.55267019197345
+    }
+  },
+  "scope": "existing full660-frame/22s encoder, actual full decode/fault/E1/historical-companion guards; no capture/solver/physical qualification",
+  "original_error": "AssertionError: actual-encode-and-full-guard failed/incomplete; actual logs retained"
+}

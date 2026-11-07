@@ -117,11 +117,14 @@ try:
  encoders=subprocess.check_output(['ffmpeg','-hide_banner','-encoders'],text=True,stderr=subprocess.STDOUT);assert all(n in encoders for n in ('libx264','libvpx-vp9','libwebp'))
  filters=subprocess.check_output(['ffmpeg','-hide_banner','-filters'],text=True,stderr=subprocess.STDOUT);assert 'drawtext' in filters
  spec=importlib.util.spec_from_file_location('actual_encoder',ROOT/'tools/evidence/media/encode-highlights.py');encoder=importlib.util.module_from_spec(spec);spec.loader.exec_module(encoder)
+ spec=importlib.util.spec_from_file_location('highlight_prerequisites',ROOT/'tools/evidence/media/highlight_prerequisites.py');prerequisites=importlib.util.module_from_spec(spec);spec.loader.exec_module(prerequisites)
  capture=json.loads((frames/'capture-receipt.json').read_text());assert capture['sourceRevision']==cfg['capture_revision'] and capture['servedVersion']['revision']==cfg['capture_revision']
- for revision in (cfg['capture_revision'],'a12cf8e73f337274174c56e14c22832250acf284','e7b512870a39259a04a4930e2908af84001bc84e','e93b3bbce57ee36fc966e8ba4513f05273a75967'):
+ for revision in prerequisites.historical_revisions(encoder.check,cfg['capture_revision']):
   if subprocess.run(['git','cat-file','-e',revision+'^{commit}'],stdout=subprocess.DEVNULL,stderr=subprocess.DEVNULL).returncode:phase('source-object-'+revision[:8],['git','fetch','--depth','1','--no-tags','origin',revision],timeout=180)
   assert subprocess.check_output(['git','rev-parse',revision+'^{commit}'],text=True).strip()==revision
  assert subprocess.check_output(['git','rev-parse','HEAD'],text=True).strip()==args.head
+ spec=importlib.util.spec_from_file_location('actual_study_check',ROOT/'tools/evidence/media/check-study-media.py');study=importlib.util.module_from_spec(spec);spec.loader.exec_module(study)
+ study.validate(decode=False)
  manifest=encoder.frame_manifest(frames);assert sum(map(len,manifest['shots'].values()))==480
  source_hashes={n:sha(ROOT/n) for n in sorted(encoder.check.expected_sources(capture))};encoder.check.validate_source_bindings(args.head,source_hashes,capture)
  declared=json.loads((stage/'capture-stage-source-bindings.json').read_text());assert declared['source']==cfg['capture_revision'] and declared['source_hashes']==source_hashes
@@ -130,7 +133,7 @@ try:
  for name in inventory(ROOT/'software/site/assets/highlights'):shutil.copyfile(ROOT/'software/site/assets/highlights'/name,original/name)
  assert len(inventory(original))==6;archive('original-highlights',original)
  phase('actual-encode-and-full-guard',[sys.executable,'-B','tools/evidence/media/encode-highlights.py','--frames',str(frames),'--output',str(candidate),'--threads','4'],timeout=900)
- assert set(inventory(candidate))=={'gyropup-highlights.mp4','gyropup-highlights.webm','poster.webp','capture-receipt.json','capture-frames.json','receipt.json'}
+ assert set(inventory(candidate))==prerequisites.candidate_names(encoder.check)
  assert inventory(frames)==frame_rows and tracked()==initial and inventory(ROOT/'hardware')==hw
  results['status']='PASS_SCOPED'
 except BaseException as exc:results['original_error']=type(exc).__name__+': '+str(exc);raise
