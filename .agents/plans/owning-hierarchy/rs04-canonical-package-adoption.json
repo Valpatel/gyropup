@@ -1,0 +1,174 @@
+{
+  "source": "325cbc3e301361d59248743cedf5a585988fd6ad",
+  "review": "https://github.com/Valpatel/gyropup/pull/246#issuecomment-6703092667",
+  "status": "ADOPTED_PENDING_MAIN",
+  "targets": {
+    "hardware/exports/leg/rs04-fit-job/critical-layers.png": {
+      "original_sha256": "476bb8b5d7bec8ec4e32d66d5717d6ab5ec7cab8247872f97c2b7e66bd1ff37d",
+      "candidate_sha256": "476bb8b5d7bec8ec4e32d66d5717d6ab5ec7cab8247872f97c2b7e66bd1ff37d"
+    },
+    "hardware/exports/leg/rs04-fit-job/geometry.3mf": {
+      "original_sha256": "9eed4bd6f32d8db34ca299ee43c42d993055c89c35d1130cc85593446b9ddbc2",
+      "candidate_sha256": "9eed4bd6f32d8db34ca299ee43c42d993055c89c35d1130cc85593446b9ddbc2"
+    },
+    "hardware/exports/leg/rs04-fit-job/job.json": {
+      "original_sha256": "da373b448b42951db7cde584533385f76f2b9106e2bb47df6c2bc682539bad30",
+      "candidate_sha256": "d11e71fc384ae4de715009fc6ffd33fdbb5c6faa769c6ce2945f178e381d7a98"
+    },
+    "hardware/exports/leg/rs04-fit-job/measurements.csv": {
+      "original_sha256": "a425d41717706738b1a67cd3181f4b579a701e22d770688b8bd15b442ed35e2d",
+      "candidate_sha256": "a425d41717706738b1a67cd3181f4b579a701e22d770688b8bd15b442ed35e2d"
+    },
+    "hardware/exports/leg/rs04-fit-job/process-record.csv": {
+      "original_sha256": "443cac5a21b7adc86ff34b71b386ffbf918ac8aaa4a32a16128292e4cd21b56c",
+      "candidate_sha256": "443cac5a21b7adc86ff34b71b386ffbf918ac8aaa4a32a16128292e4cd21b56c"
+    },
+    "hardware/exports/leg/rs04-fit-job/profiles/filament/Bambu PA6-CF @BBL X1C.json": {
+      "original_sha256": "80783d20169f5dc21b8e43e90d61af54d5f5fae816339e6b17aa8ecf7b87ed15",
+      "candidate_sha256": "80783d20169f5dc21b8e43e90d61af54d5f5fae816339e6b17aa8ecf7b87ed15"
+    },
+    "hardware/exports/leg/rs04-fit-job/profiles/filament/Bambu PA6-CF @base.json": {
+      "original_sha256": "66d5d1a96e005afbc1cefbeaf8182de1b83b54ba3facfd219051303af64135c6",
+      "candidate_sha256": "66d5d1a96e005afbc1cefbeaf8182de1b83b54ba3facfd219051303af64135c6"
+    },
+    "hardware/exports/leg/rs04-fit-job/profiles/filament/fdm_filament_common.json": {
+      "original_sha256": "8c7105b7d59a28f600c43a946f067b8b4d707b9711c0bf6b88e9166e48878548",
+      "candidate_sha256": "8c7105b7d59a28f600c43a946f067b8b4d707b9711c0bf6b88e9166e48878548"
+    },
+    "hardware/exports/leg/rs04-fit-job/profiles/filament/fdm_filament_pa.json": {
+      "original_sha256": "8b9745795aecf73476837299eff1fbcaee51ba16878ff258978b67b2d4fbe545",
+      "candidate_sha256": "8b9745795aecf73476837299eff1fbcaee51ba16878ff258978b67b2d4fbe545"
+    },
+    "hardware/exports/leg/rs04-fit-job/profiles/filament/fdm_filament_template_direct_dual.json": {
+      "original_sha256": "e0f564b83f3ef70cce4de1401dd7cd855d6fbd834343cb8f4292f2a1ac3efc51",
+      "candidate_sha256": "e0f564b83f3ef70cce4de1401dd7cd855d6fbd834343cb8f4292f2a1ac3efc51"
+    },
+    "hardware/exports/leg/rs04-fit-job/profiles/machine/Bambu Lab P1S 0.4 nozzle template change_filament_gcode.json": {
+      "original_sha256": "3194e4322c3b8953a187e11a0ccc198949244065fb5caf62a67443f8acc54dde",
+      "candidate_sha256": "3194e4322c3b8953a187e11a0ccc198949244065fb5caf62a67443f8acc54dde"
+    },
+    "hardware/exports/leg/rs04-fit-job/profiles/machine/Bambu Lab P1S 0.4 nozzle template layer_change_gcode.json": {
+      "original_sha256": "f0ca694af70aec99a72501da294b8c73b8d655e8adab004325b27d2df83b98f1",
+      "candidate_sha256": "f0ca694af70aec99a72501da294b8c73b8d655e8adab004325b27d2df83b98f1"
+    },
+    "hardware/exports/leg/rs04-fit-job/profiles/machine/Bambu Lab P1S 0.4 nozzle template machine_end_gcode.json": {
+      "original_sha256": "766999ac6456c7ddd82aa47a3dbd9ef71d1e9333483305999b3530befe22ab7d",
+      "candidate_sha256": "766999ac6456c7ddd82aa47a3dbd9ef71d1e9333483305999b3530befe22ab7d"
+    },
+    "hardware/exports/leg/rs04-fit-job/profiles/machine/Bambu Lab P1S 0.4 nozzle template machine_start_gcode.json": {
+      "original_sha256": "ecfedd58ee4775dec2dafe0a14c1adbcd1fe3c83d2f85e9a252cceec05d2730e",
+      "candidate_sha256": "ecfedd58ee4775dec2dafe0a14c1adbcd1fe3c83d2f85e9a252cceec05d2730e"
+    },
+    "hardware/exports/leg/rs04-fit-job/profiles/machine/Bambu Lab P1S 0.4 nozzle template time_lapse_gcode.json": {
+      "original_sha256": "af84ee5b92597644c2a27ee45a0c811b748bcc8230b7c378a16d1fd405b46f44",
+      "candidate_sha256": "af84ee5b92597644c2a27ee45a0c811b748bcc8230b7c378a16d1fd405b46f44"
+    },
+    "hardware/exports/leg/rs04-fit-job/profiles/machine/Bambu Lab P1S 0.4 nozzle.json": {
+      "original_sha256": "ca7de71dd2b48899ccadeeab9f9f68f866e6b2afae55caa812d0e6dec2ad83c8",
+      "candidate_sha256": "ca7de71dd2b48899ccadeeab9f9f68f866e6b2afae55caa812d0e6dec2ad83c8"
+    },
+    "hardware/exports/leg/rs04-fit-job/profiles/machine/fdm_bbl_3dp_001_common.json": {
+      "original_sha256": "f911d4012d803184927b48d149eb18e30e98317109424ecc988caeb9c204504a",
+      "candidate_sha256": "f911d4012d803184927b48d149eb18e30e98317109424ecc988caeb9c204504a"
+    },
+    "hardware/exports/leg/rs04-fit-job/profiles/machine/fdm_machine_common.json": {
+      "original_sha256": "26ef8ee697849323e67d8e1a9026c175cebe3397e38c5091dddb5cd3fc52e94c",
+      "candidate_sha256": "26ef8ee697849323e67d8e1a9026c175cebe3397e38c5091dddb5cd3fc52e94c"
+    },
+    "hardware/exports/leg/rs04-fit-job/profiles/process/0.20mm Standard @BBL X1C.json": {
+      "original_sha256": "e4d3f211b6ef87e9612c96f3ac2d18413e0610fff7eeb815a76420344a3b0a19",
+      "candidate_sha256": "e4d3f211b6ef87e9612c96f3ac2d18413e0610fff7eeb815a76420344a3b0a19"
+    },
+    "hardware/exports/leg/rs04-fit-job/profiles/process/fdm_process_common.json": {
+      "original_sha256": "5c16ba3f17a36cc8f01743245e221426b3cdceac7cc367758d6f48d86b63d8ef",
+      "candidate_sha256": "5c16ba3f17a36cc8f01743245e221426b3cdceac7cc367758d6f48d86b63d8ef"
+    },
+    "hardware/exports/leg/rs04-fit-job/profiles/process/fdm_process_single_0.20.json": {
+      "original_sha256": "cdda8d56d67f62a0faa892cb6efc605ebb5c745bf742f6ead4daaeb6627c182a",
+      "candidate_sha256": "cdda8d56d67f62a0faa892cb6efc605ebb5c745bf742f6ead4daaeb6627c182a"
+    },
+    "hardware/exports/leg/rs04-fit-job/profiles/process/fdm_process_single_common.json": {
+      "original_sha256": "05b38ac1318e465e817978b36da51754f928da0172738a20bb3a8d4a69eb4769",
+      "candidate_sha256": "05b38ac1318e465e817978b36da51754f928da0172738a20bb3a8d4a69eb4769"
+    },
+    "hardware/exports/leg/rs04-fit-job/slice/exit-code.json": {
+      "original_sha256": "124fd50cb6d223cdd18fedc166d00af7254199b6e6dedf9be82f71db87af6d01",
+      "candidate_sha256": "124fd50cb6d223cdd18fedc166d00af7254199b6e6dedf9be82f71db87af6d01"
+    },
+    "hardware/exports/leg/rs04-fit-job/slice/filament.json": {
+      "original_sha256": "0d2b91e9d7f31661688294b60c19e3fb922f1fde5d2f219ee16d85f190cb3374",
+      "candidate_sha256": "0d2b91e9d7f31661688294b60c19e3fb922f1fde5d2f219ee16d85f190cb3374"
+    },
+    "hardware/exports/leg/rs04-fit-job/slice/machine.json": {
+      "original_sha256": "44b41d9e562c8b9a7223ec87dd1c7e37271549983ea572f09a81f62a9b76d9af",
+      "candidate_sha256": "44b41d9e562c8b9a7223ec87dd1c7e37271549983ea572f09a81f62a9b76d9af"
+    },
+    "hardware/exports/leg/rs04-fit-job/slice/out/plate_1.gcode": {
+      "original_sha256": "dbc4ea31afc8b4493899d94ee0264166b6d66ce7c04880774487b91178ec869e",
+      "candidate_sha256": "0953e69211245f2d62c8eab5e986f7708c420c3399a9c49f06144b2febebe17b"
+    },
+    "hardware/exports/leg/rs04-fit-job/slice/out/result.json": {
+      "original_sha256": "8df4ba95631227b97d7af258ce39aa357c2bfae5e0ed50a4150cdfd1383febc4",
+      "candidate_sha256": "94db77f016a5618a5c8114e5187a5bbf698303c3239a4092cfa1883e894f04e3"
+    },
+    "hardware/exports/leg/rs04-fit-job/slice/out/sliced.3mf": {
+      "original_sha256": "5d64be1a2d0b28223f749f8a8ee761d0b518e07b2810518e5f72855ae8831ba3",
+      "candidate_sha256": "77e310bfaf04b0eb5ddb688138f42375407d231a6b354c1035db68a44d2b5332"
+    },
+    "hardware/exports/leg/rs04-fit-job/slice/process.json": {
+      "original_sha256": "9591ffa2ff4d223ebc859b1901766aabf71caf7cfdcf93719dcc77484b12a345",
+      "candidate_sha256": "9591ffa2ff4d223ebc859b1901766aabf71caf7cfdcf93719dcc77484b12a345"
+    },
+    "hardware/exports/leg/rs04-fit-job/slice/slicer.log": {
+      "original_sha256": "3bc99a01870d3f6bf1a4d6525a0563773b57cc8788c528be71e6f0860b00a933",
+      "candidate_sha256": "5a0f0c25eb983a910417b0ed76ab13e0ab9662905cdca4eafca3c87e281cd625"
+    },
+    "hardware/exports/leg/rs04-fit-job/source.stl": {
+      "original_sha256": "4b2b5efee4d0504ddf80f7efd25a679fca5be77d994928b1e2ff554e39d80a23",
+      "candidate_sha256": "4b2b5efee4d0504ddf80f7efd25a679fca5be77d994928b1e2ff554e39d80a23"
+    },
+    "hardware/exports/leg/rs04-fit-job.zip": {
+      "original_sha256": "a209e69a24439ecc9c11e6bc689b2ec66c0334c012728f8712655bf55bd83793",
+      "candidate_sha256": "bca2ea6b880654d67025dc4fc27c8050f9ef27d0024467fe75d527cb2e58223b"
+    },
+    "docs/legs/rs04-fit-job.md": {
+      "original_sha256": "4c36835184e5ba7a1f7d2f4679d0952c3ce469c23b36cf2cd10f230e1fb936c9",
+      "candidate_sha256": "9d0455886676542e3868a3e81b632682359ac8bfa2a6fddfa645e1ed7d562ddc"
+    },
+    "docs/architecture/mechanical-readiness.md": {
+      "original_sha256": "e2058b4147cb907512cbeec8dda6fdeb01be7bf29d85bcf95e4cdff6fad8196b",
+      "candidate_sha256": "16f037aeb5ae985d4d6de286c3b44ba63fa0c2619154798e305d6a6dc77c8fd7"
+    }
+  },
+  "readers": [
+    {
+      "command": [
+        "python",
+        "-B",
+        "tools/evidence/manufacturing/package-fit-job.py",
+        "--verify",
+        "hardware/exports/leg/rs04-fit-job"
+      ],
+      "exit": 0
+    },
+    {
+      "command": [
+        "python",
+        "-B",
+        "tests/hardware/manufacturing/test-fit-job.py"
+      ],
+      "exit": 0
+    }
+  ],
+  "cad93_unchanged": true,
+  "other_source_hardware_unchanged": true,
+  "minutes": 392.69554036458334,
+  "rounded_quote": "6 h 32 min 42 s",
+  "schema": "gyropup.rs04-canonical-package-adoption/1",
+  "sealed_directory_sha256": "729ddee30ffecff80df3cf66c1dcb2c995e16735781bfa3a8c34a6025dd6ad49",
+  "wrapped_zip_sha256": "bca2ea6b880654d67025dc4fc27c8050f9ef27d0024467fe75d527cb2e58223b",
+  "rejected_unwrapped_zip_sha256": "3bb764a3e9811d259afaf64ede3d938fff3c6b3539a2739f079b4c015f73d64e",
+  "wrapper_control": "Existing PublishedArchiveTests rejects unwrapped ZIP and passes corrected wrapper; native directory bytes unchanged.",
+  "limits": "Unpowered fit observation only; all original engineering failures, warnings and qualification limits retained. Survey unchanged. Main publication pending.",
+  "reader_runtime": "Existing Python runtime with the immutable 2ad toolkit helpers; verification/tests invoke no slicer."
+}
