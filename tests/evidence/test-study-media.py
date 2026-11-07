@@ -34,6 +34,7 @@ class RendererPaths(unittest.TestCase):
                 for key in ('exports/leg/fea/summary.json', 'hardware/exports/leg/fea/summary.json'):
                     receipt = {'source_hashes': {key: hashlib.sha256(report.read_bytes()).hexdigest()}}
                     self.assertEqual(renderer.report_input(receipt), report)
+                    check.report_binding(root, receipt)
 
     def test_missing_duplicate_and_wrong_report_bindings_reject(self):
         with tempfile.TemporaryDirectory(prefix='e1-render-binding-') as tmp:
@@ -46,6 +47,8 @@ class RendererPaths(unittest.TestCase):
                            {'hardware/exports/leg/fea/summary.json': '0' * 64}):
                 with patch.object(renderer, 'ROOT', root), self.assertRaises(ValueError):
                     renderer.report_input({'source_hashes': hashes})
+                with self.assertRaises(ValueError):
+                    check.report_binding(root, {'source_hashes': hashes})
 
     def test_legacy_physical_report_cannot_replace_the_current_report(self):
         with tempfile.TemporaryDirectory(prefix='e1-render-missing-') as tmp:
@@ -55,6 +58,35 @@ class RendererPaths(unittest.TestCase):
             legacy.write_bytes(b'legacy decoy')
             with patch.object(renderer, 'ROOT', root), self.assertRaises(FileNotFoundError):
                 renderer.report_input({'source_hashes': {'exports/leg/fea/summary.json': hashlib.sha256(legacy.read_bytes()).hexdigest()}})
+            with self.assertRaises(FileNotFoundError):
+                check.report_binding(root, {'source_hashes': {'exports/leg/fea/summary.json': hashlib.sha256(legacy.read_bytes()).hexdigest()}})
+
+
+class FieldStage(unittest.TestCase):
+    def test_real_historical_field_can_be_checked_without_a_video_claim(self):
+        result = check.validate(decode=False, scope='field')
+        self.assertEqual(result['scope'], 'field-only')
+        self.assertFalse(result['video_validated'])
+        self.assertEqual((result['vertices'], result['triangles']), (25232, 50552))
+
+    def test_field_stage_does_not_read_video_and_full_still_rejects_a_stale_video(self):
+        original = Path.read_text
+        # A rejecting sentinel proves field-only never reads either video input.
+        def no_video(path, *args, **kwargs):
+            if path.name in ('video-receipt.json', 'media.json'):
+                raise AssertionError('Field-only read a video input')
+            return original(path, *args, **kwargs)
+        with patch.object(Path, 'read_text', no_video):
+            self.assertFalse(check.validate(decode=False, scope='field')['video_validated'])
+        # The ordinary default path still rejects the planted stale video.
+        def stale(path, *args, **kwargs):
+            if path.name == 'video-receipt.json':
+                data = json.loads(original(path, *args, **kwargs))
+                data['source_hashes'][check.VIDEO_RENDERER] = '0' * 64
+                return json.dumps(data)
+            return original(path, *args, **kwargs)
+        with patch.object(Path, 'read_text', stale), self.assertRaisesRegex(ValueError, 'Stale animation source'):
+            check.validate(decode=False)
 
 
 class ProducerPaths(unittest.TestCase):
