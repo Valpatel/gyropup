@@ -16,6 +16,46 @@ check = importlib.util.module_from_spec(spec); spec.loader.exec_module(check)
 producer_spec = importlib.util.spec_from_file_location('e1_export', check.ROOT / 'tools/engineering/legs/export-hip-frame-e1.py')
 producer = importlib.util.module_from_spec(producer_spec); producer_spec.loader.exec_module(producer)
 
+renderer_spec = importlib.util.spec_from_file_location('e1_render', check.ROOT / check.VIDEO_RENDERER)
+renderer = importlib.util.module_from_spec(renderer_spec); renderer_spec.loader.exec_module(renderer)
+
+
+class RendererPaths(unittest.TestCase):
+    def test_either_declared_identity_reads_the_same_current_report(self):
+        with tempfile.TemporaryDirectory(prefix='e1-render-source-') as tmp:
+            root = Path(tmp)
+            report = root / 'hardware/exports/leg/fea/summary.json'
+            report.parent.mkdir(parents=True)
+            report.write_bytes(b'current report')
+            legacy = root / 'exports/leg/fea/summary.json'
+            legacy.parent.mkdir(parents=True)
+            legacy.write_bytes(b'legacy decoy')
+            with patch.object(renderer, 'ROOT', root):
+                for key in ('exports/leg/fea/summary.json', 'hardware/exports/leg/fea/summary.json'):
+                    receipt = {'source_hashes': {key: hashlib.sha256(report.read_bytes()).hexdigest()}}
+                    self.assertEqual(renderer.report_input(receipt), report)
+
+    def test_missing_duplicate_and_wrong_report_bindings_reject(self):
+        with tempfile.TemporaryDirectory(prefix='e1-render-binding-') as tmp:
+            root = Path(tmp)
+            report = root / 'hardware/exports/leg/fea/summary.json'
+            report.parent.mkdir(parents=True)
+            report.write_bytes(b'current report')
+            value = hashlib.sha256(report.read_bytes()).hexdigest()
+            for hashes in ({}, {'exports/leg/fea/summary.json': value, 'hardware/exports/leg/fea/summary.json': value},
+                           {'hardware/exports/leg/fea/summary.json': '0' * 64}):
+                with patch.object(renderer, 'ROOT', root), self.assertRaises(ValueError):
+                    renderer.report_input({'source_hashes': hashes})
+
+    def test_legacy_physical_report_cannot_replace_the_current_report(self):
+        with tempfile.TemporaryDirectory(prefix='e1-render-missing-') as tmp:
+            root = Path(tmp)
+            legacy = root / 'exports/leg/fea/summary.json'
+            legacy.parent.mkdir(parents=True)
+            legacy.write_bytes(b'legacy decoy')
+            with patch.object(renderer, 'ROOT', root), self.assertRaises(FileNotFoundError):
+                renderer.report_input({'source_hashes': {'exports/leg/fea/summary.json': hashlib.sha256(legacy.read_bytes()).hexdigest()}})
+
 
 class ProducerPaths(unittest.TestCase):
     def fixture(self, root):

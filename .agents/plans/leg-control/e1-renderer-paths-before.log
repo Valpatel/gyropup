@@ -1,0 +1,32 @@
+EEE
+======================================================================
+ERROR: test_either_declared_identity_reads_the_same_current_report (__main__.RendererPaths.test_either_declared_identity_reads_the_same_current_report)
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "<checkout>/tests/evidence/test-study-media.py", line 36, in test_either_declared_identity_reads_the_same_current_report
+    self.assertEqual(renderer.report_input(receipt), report)
+                     ^^^^^^^^^^^^^^^^^^^^^
+AttributeError: module 'e1_render' has no attribute 'report_input'
+
+======================================================================
+ERROR: test_legacy_physical_report_cannot_replace_the_current_report (__main__.RendererPaths.test_legacy_physical_report_cannot_replace_the_current_report)
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "<checkout>/tests/evidence/test-study-media.py", line 57, in test_legacy_physical_report_cannot_replace_the_current_report
+    renderer.report_input({'source_hashes': {'exports/leg/fea/summary.json': hashlib.sha256(legacy.read_bytes()).hexdigest()}})
+    ^^^^^^^^^^^^^^^^^^^^^
+AttributeError: module 'e1_render' has no attribute 'report_input'
+
+======================================================================
+ERROR: test_missing_duplicate_and_wrong_report_bindings_reject (__main__.RendererPaths.test_missing_duplicate_and_wrong_report_bindings_reject)
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "<checkout>/tests/evidence/test-study-media.py", line 48, in test_missing_duplicate_and_wrong_report_bindings_reject
+    renderer.report_input({'source_hashes': hashes})
+    ^^^^^^^^^^^^^^^^^^^^^
+AttributeError: module 'e1_render' has no attribute 'report_input'
+
+----------------------------------------------------------------------
+Ran 3 tests in 0.004s
+
+FAILED (errors=3)
