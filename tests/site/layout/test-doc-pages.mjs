@@ -261,6 +261,8 @@ test('both README pictures select a real static image and keep ordinary navigati
       assert.equal(selected.closed,false);
       const box = await image.boundingBox();
       assert.ok(box.x >= 0 && box.x+box.width <= 390.5 && Math.abs(box.width / box.height - 640 / 240) < .02);
+      const wrapper=await image.locator('..').boundingBox();
+      for(const key of ['x','y','width','height'])assert.ok(Math.abs(wrapper[key]-box[key])<1,`picture ${key} matches its visible image`);
       for (const [name,target] of Object.entries({
         Play:'https://gyropup.com/designer/sim.html',Build:'https://gyropup.com/designer/build.html',
         Understand:route==='docs-readme-md' ? new URL('#design-and-qualification',page.url()).href

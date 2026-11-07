@@ -122,3 +122,5 @@
 - A local fleet runner or skill link disappears while a remote job is active: [check remote state before dispatching again](inbox/2026-11-05-ci-classification-needs-phase-evidence.md#a-missing-local-runner-does-not-establish-remote-job-state).
 
 - Browser model placement is correct but a nested parser node-order assertion fails: [verify parser and browser order](inbox/2026-11-05-ci-classification-needs-phase-evidence.md#verify-parser-and-browser-ordering-with-the-same-actual-document).
+
+- An image is visible but wall measurement counts no visual inside its inline picture wrapper: [match the real picture/image boxes](inbox/2026-11-02-readme-images-need-src-not-srcset.md#a-picture-wrapper-must-have-the-visible-images-real-box).

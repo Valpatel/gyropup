@@ -1,7 +1,7 @@
 <div align="center">
 
 <p>
-<picture><source media="(prefers-reduced-motion: reduce)" srcset="docs/img/navigation/project-map-still.svg"><img src="docs/img/navigation/project-map.svg" width="640" height="240" style="max-width:100%;height:auto;padding:0" alt="Fictional wheeled Gyropup robots chase and duel in a pixel workshop. Sources, test, review and reuse form a learning loop."></picture><br>
+<picture style="display:block;max-width:640px;margin:0 auto"><source media="(prefers-reduced-motion: reduce)" srcset="docs/img/navigation/project-map-still.svg"><img src="docs/img/navigation/project-map.svg" width="640" height="240" style="display:block;max-width:100%;height:auto;padding:0" alt="Fictional wheeled Gyropup robots chase and duel in a pixel workshop. Sources, test, review and reuse form a learning loop."></picture>
 A fictional playground. <a href="docs/program/physical-progress.md">Follow the real build evidence.</a><br>
 <a href="https://gyropup.com/designer/sim.html">Play</a> · <a href="https://gyropup.com/designer/build.html">Build</a> · <a href="docs/README.md#design-and-qualification">Understand</a> · <a href=".github/CONTRIBUTING.md">Contribute</a>
 </p>

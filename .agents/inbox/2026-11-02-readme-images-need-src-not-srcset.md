@@ -64,3 +64,21 @@ still changed pixels and was rejected in both engines. That prototype is not a
 compiled-site result: the existing document-page tests apply the same acceptance
 and negative control to the actual build. Standalone SVG media checks and font or
 intrinsic-width observations do not substitute for this image-mode behavior.
+
+## A picture wrapper must have the visible image's real box
+
+On2026-11-07 UTC, PR246 at16271b3b passed its twelve document tests but failed
+its full153-page wall sweep: Docs README measured1282px without a qualifying
+visual, exceeding the unchanged1200px limit (five existing backlog entries).
+The actual image was visible640×240, but its default inline `picture` box was
+only640×19. The established nested-visual de-duplication measured the outer
+picture and correctly rejected that tiny box; the child image was then excluded.
+
+An actual `loadWallPage`/unchanged `longestStretch` probe on the exact compiled
+product reproduced it. A bounded block picture plus block image, with the now
+redundant following BR removed, made both boxes640×240: Docs749px and root487px
+instead of1282px and723px. Fix the real wrapper geometry, not the1200px threshold,
+backlog or measurement exclusions. The existing two-README browser test now
+requires wrapper/image x/y/width/height to agree. This source correction still
+needs its own normal current CI and compiled two-engine readback after the
+account-switch pause; the temporary live-DOM probe is not final publication.
