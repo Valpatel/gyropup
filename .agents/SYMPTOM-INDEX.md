@@ -148,3 +148,5 @@
 - Cleanup or record-writing masks the original producer error: [persist phase evidence independently and retain the primary exception](inbox/2026-11-05-ci-classification-needs-phase-evidence.md#cleanup-failures-must-not-replace-the-producers-original-error).
 
 - A clearance report matches height but omits the current upper stop or firmware bounds: [require both tilt boundaries and complete sampled grids](inbox/2026-10-28-rendered-joints-need-independent-datums.md#clearance-freshness-needs-both-current-tilt-boundaries-and-complete-sampled-grids).
+
+- A private Xvfb run fails Snap cgroup tracking after private-bus systemd activation fails: [separate display isolation from session-bus setup](inbox/2026-11-05-ci-classification-needs-phase-evidence.md#a-private-display-and-a-private-session-bus-are-different-isolation-boundaries).
