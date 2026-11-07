@@ -141,6 +141,155 @@ class E1CollectorLifecycle(unittest.TestCase):
             signal.signal(signal.SIGTERM, previous)
 
 
+class TopologyInspection(unittest.TestCase):
+    def load(self, name):
+        path = check.ROOT / '.agents/plans/hip-study' / name
+        spec = importlib.util.spec_from_file_location('topology_' + name.replace('-', '_'), path)
+        module = importlib.util.module_from_spec(spec)
+        with patch.object(subprocess, 'Popen', side_effect=AssertionError('Operational import')), patch.dict(
+                sys.modules, {n: None for n in ('cadquery', 'cadagent', 'gmsh', 'OCP')}):
+            spec.loader.exec_module(module)
+        return module
+
+    def test_synthetic_receipt_and_all_source_bindings_without_native_imports(self):
+        worker = self.load('inspect-step-worker.py')
+        with tempfile.TemporaryDirectory(prefix='topology-synthetic-') as tmp:
+            root = Path(tmp); cfg = self.fixture(root)
+            step, receipt = worker.bound_inputs(root, cfg)
+            self.assertEqual(step.name, 'hip_frame.step')
+            self.assertEqual(receipt['source_inputs']['project']['files'], cfg['cad_sources'])
+
+    def fixture(self, root):
+        # Explicit unit fixture, not a CAD artifact or claim that a historical
+        # inspection recipe must remain current after future geometry changes.
+        cfg = json.loads((check.ROOT / '.agents/plans/hip-study/topology-inputs.json').read_text())
+        for name in cfg['cad_sources']:
+            target = root / name; target.parent.mkdir(parents=True, exist_ok=True)
+            target.write_bytes(('synthetic source input: ' + name).encode())
+            cfg['cad_sources'][name] = hashlib.sha256(target.read_bytes()).hexdigest()
+        step = root / cfg['step']['path']; step.parent.mkdir(parents=True, exist_ok=True)
+        step.write_bytes(b'synthetic input-guard fixture; SI_UNIT(.MILLI.,.METRE.)')
+        cfg['step']['sha256'] = hashlib.sha256(step.read_bytes()).hexdigest()
+        receipt = root / cfg['receipt']['path']
+        receipt.write_text(json.dumps({'source_inputs': {'project': {'files': cfg['cad_sources']}},
+                                       'artifacts': {'hip_frame': {'files': {'step': cfg['step']['sha256']}}}}))
+        cfg['receipt']['sha256'] = hashlib.sha256(receipt.read_bytes()).hexdigest()
+        return cfg
+
+    def test_missing_current_step_and_changed_source_or_payload_reject(self):
+        worker = self.load('inspect-step-worker.py')
+        with tempfile.TemporaryDirectory(prefix='topology-input-') as tmp:
+            root = Path(tmp); cfg = self.fixture(root)
+            worker.bound_inputs(root, cfg)
+            step = root / cfg['step']['path']; original = step.read_bytes()
+            old = root / 'exports/leg/rs04-mounting-fit/hip_frame.step'
+            old.parent.mkdir(parents=True); old.write_bytes(original)
+            step.unlink()
+            with self.assertRaises(ValueError): worker.bound_inputs(root, cfg)
+            step.write_bytes(original + b'changed')
+            with self.assertRaises(AssertionError): worker.bound_inputs(root, cfg)
+            step.write_bytes(original)
+            source = root / next(iter(cfg['cad_sources']))
+            source.write_bytes(source.read_bytes() + b'changed')
+            with self.assertRaises(AssertionError): worker.bound_inputs(root, cfg)
+
+    def test_inherited_parameter_rejects_actual_worker_before_output(self):
+        worker = self.load('inspect-step-worker.py')
+        study = HipStudyInputs().load_study()
+        with tempfile.TemporaryDirectory(prefix='topology-env-') as tmp:
+            root = Path(tmp); out = root / 'out'
+            args = [part for name, value in {'root': root, 'config': root / 'missing', 'runtime': root / 'missing',
+                                             'contract': root / 'missing', 'out': out}.items()
+                    for part in ('--' + name, str(value))]
+            with patch.dict(os.environ, {'GYROPUP_HIP_PARAMS': 'inherited-candidate.json'}), self.assertRaisesRegex(
+                    ValueError, 'Inherited product parameters'):
+                worker.main(args)
+            self.assertFalse(out.exists())
+            with patch.dict(os.environ, {'GYROPUP_HIP_PARAMS': 'inherited-candidate.json'}):
+                study.use_params(root / 'old-behavior', None)
+                self.assertEqual(os.environ['GYROPUP_HIP_PARAMS'], 'inherited-candidate.json')
+
+    def test_actual_collector_phase_unmasks_and_reaps_pending_signal(self):
+        collector = self.load('collect-step-topology.py')
+        case = E1CollectorLifecycle()
+        with patch.object(case, 'load_collector', return_value=collector):
+            case.test_import_is_inert_and_children_start_unmasked()
+            case.test_pending_signal_before_popen_returns_retains_error_and_reaps_child()
+
+    def test_independent_capture_and_save_failures_reach_later_guards(self):
+        collector = self.load('collect-step-topology.py')
+        for failed in ('project', 'hardware'):
+            for mode in ('capture', 'save'):
+                with self.subTest(failed=failed, mode=mode):
+                    seen = []; saved = {}
+                    def observe(name):
+                        seen.append(name)
+                        if name == failed and mode == 'capture': raise OSError('capture failed')
+                        return name
+                    def save(name, value):
+                        if name == failed + '-after.json' and mode == 'save': raise OSError('save failed')
+                        saved[name] = value
+                    observations = [(n + '-after.json', lambda n=n: observe(n), n)
+                                    for n in ('project', 'hardware', 'runtime', 'status')]
+                    result = {'status': 'PASS_IMPORT_TOPOLOGY_ONLY'}
+                    with patch.object(collector, 'save', save), self.assertRaises(RuntimeError):
+                        collector.final_observations(result, observations, lambda: None, True)
+                    self.assertEqual(seen, ['project', 'hardware', 'runtime', 'status'])
+                    self.assertEqual(saved['result.json']['status'], 'FAILED')
+
+    def test_archive_nonquiescence_and_final_write_never_hide_primary_failure(self):
+        collector = self.load('collect-step-topology.py')
+        for fault in ('archive', 'nonquiescent', 'final-write'):
+            seen = []
+            def archive():
+                seen.append('archive')
+                if fault == 'archive': raise OSError('archive failure')
+            def save(name, value):
+                if name == 'result.json' and fault == 'final-write': raise OSError('final write failure')
+            def actual():
+                result = {'status': 'FAILED'}
+                try: raise ValueError('primary diagnostic failure')
+                except BaseException as exc:
+                    result['original_error'] = str(exc); raise
+                finally:
+                    with patch.object(collector, 'save', save):
+                        collector.final_observations(result, [('later', lambda: seen.append('later'), None)],
+                                                     archive, fault != 'nonquiescent')
+            with self.subTest(fault=fault), self.assertRaisesRegex(ValueError, 'primary diagnostic failure'):
+                actual()
+            self.assertIn('later', seen)
+            self.assertEqual('archive' in seen, fault != 'nonquiescent')
+        with patch.object(collector, 'save', side_effect=OSError('final write failure')), self.assertRaises(RuntimeError):
+            collector.final_observations({'status': 'PASS'}, [], lambda: None, True)
+
+    def test_worker_final_record_failure_is_nonzero_or_preserves_primary(self):
+        worker = self.load('inspect-step-worker.py')
+        def write(*args): raise OSError('final worker write failed')
+        result = {'status': 'PASS'}
+        with self.assertRaises(OSError): worker.final_record(result, write)
+        self.assertEqual(result['status'], 'FAILED')
+        result = {'status': 'FAILED', 'original_error': 'native primary'}
+        worker.final_record(result, write)
+        self.assertEqual(result['original_error'], 'native primary')
+
+    def test_hardware_inventory_rejects_a_symlink_directory(self):
+        collector = self.load('collect-step-topology.py')
+        with tempfile.TemporaryDirectory(prefix='topology-links-') as tmp:
+            root = Path(tmp); (root / 'real').mkdir(); (root / 'link').symlink_to(root / 'real')
+            with self.assertRaises(ValueError): collector.inventory(root)
+
+    def test_invalid_output_refuses_before_handlers_or_final_writes(self):
+        collector = self.load('collect-step-topology.py')
+        with tempfile.TemporaryDirectory(prefix='topology-output-') as tmp:
+            root = Path(tmp); out = root / 'hardware'; out.mkdir()
+            with patch.object(Path, 'cwd', return_value=root), patch.dict(os.environ, {'FLEET_RUN_OUT': str(out)}), patch.object(
+                    sys, 'argv', ['collector', '--head', 'a' * 40, '--runtime', str(root / 'absent')]), patch.object(
+                    collector.ctypes, 'CDLL', side_effect=AssertionError('Unexpected handler setup')), self.assertRaisesRegex(
+                    AssertionError, 'Invalid owned output directory'):
+                collector.main()
+            self.assertEqual(list(out.iterdir()), [])
+
+
 class FieldStage(unittest.TestCase):
     def test_real_historical_field_can_be_checked_without_a_video_claim(self):
         result = check.validate(decode=False, scope='field')

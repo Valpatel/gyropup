@@ -1,0 +1,19 @@
+{
+  "scope": "Actual current source/STEP binding preflight only; no native import or geometry result",
+  "published_baseline": "cacdc2e3e8ce2ed40d0b8a2369aa5455b149f65a",
+  "preparation_head": "64b2437d5013b2952d83bdb48d51dcadce9a480e",
+  "hardware_tree": "89ae8db4a748d5b19893293fbef3c1d49eeccc2f",
+  "cad_source_count": 94,
+  "cad_mismatches": [],
+  "step_sha256": "7c181d5a524cb2fd432d49ed4a990aae9e163b08402bf06be516bb37d749c8dc",
+  "step_git_blob": "a1e1a70bacb0b138945f27c019284e383ff8e56e",
+  "receipt_sha256": "613e9ff07406145c3e7821a75f964dd8b569764385e840ff448d06c2b62dcfc4",
+  "receipt_git_blob": "88c85bff0445b25003eccdde7e883198e2d13d18",
+  "retained_engineering_pass": false,
+  "retained_counts": {
+    "pass": 322,
+    "warn": 40,
+    "fail": 8
+  },
+  "native_executed": false
+}
