@@ -1,6 +1,6 @@
 {
   "schema": "gyropup.carrier-insert-fit/1",
-  "source_revision": "dba8954adb10cf4d796b35eaa457152e41cb89b3",
+  "source_revision": "ec44a63730caafbdeb7a927cc77b5c9a968086f6",
   "inputs": {
     "files": {
       "hardware/__init__.py": "d6ddd9ce4ef273b82f43f315f09d11db1224f2b8298c9b0b3ea7dafb97280ba0",
@@ -27,7 +27,7 @@
       "hardware/cad/builders/build_leg.py": "b2ed60b0da4f38390f8798124e01b0f64c1005fd860204beb944cb17ae80c1ed",
       "hardware/cad/builders/build_rig.py": "619c6cfd0ad666dbe52fe75e732515bfeefa14a2ab6694c29f91aec4c9ea8779",
       "hardware/cad/builders/build_turret.py": "1ff62e01fb86b8de8159c7e75dbec2c502aebde457d528f53dedcda4b7a15915",
-      "hardware/cad/builders/build_turret_box.py": "ad8c9ace642563ae51592bb00e950ad3e30e7c505180338ed54ec1c3364137da",
+      "hardware/cad/builders/build_turret_box.py": "1c9c3bc4297b572c6619df53e565568818469abd23796e0370671a1923837100",
       "hardware/cad/legs/fivebar.py": "79aa5ae2f902c9a87323a7c9d40edbe71a5f04da8ed228907bddf2dc100a4d17",
       "hardware/cad/legs/leg.py": "f8cf486e8056b55b024b83d87223429c1d2d163443d3734115e36e2e0f16f1eb",
       "hardware/cad/legs/leg_studies.py": "a89b96dae120a0d56430eabc8fba5eb7a69f75fc4685087eff106cd496dc9c4a",
@@ -705,10 +705,10 @@
   ],
   "files": {
     "base-anchor.3mf": "6c2a09c805a503e327404999aba049bd897911074f535795d627955cb870a615",
-    "base-anchor.step": "5832bbbd312c46d77a4f05cd63e295a7bd7533d31ab17970082662479b2be85f",
+    "base-anchor.step": "52f7139fb15c9dbc0c34e1340d36de9d6f23aab1e1034d45910c77d897e824af",
     "base-anchor.stl": "ce29f74ad434979e27b0025e5bb06cfcc07bd5ded646b1a483fc5f211352d8d7",
     "carrier-boss.3mf": "b46b7c50eb099ea07d1e05f0551bef47ffe4c697ffbdcf0cd5af2d954d619bd2",
-    "carrier-boss.step": "0f53ec424aca22fba1fc0ea8158cd35ce2a16585148811583c018af456d26d3e",
+    "carrier-boss.step": "5ee01152fbbc3ef0c2ed15552be07f53d64bc2b65219edb40a66cc056758436d",
     "carrier-boss.stl": "374fcbef1209f1ea25dfa195dcf7106e197ecbbaf919842c50a924967da563d3",
     "measurements.csv": "763fce59e411c8a81f168694643a536181d41c1891dffa0eec1f62ad4f8f8820"
   }

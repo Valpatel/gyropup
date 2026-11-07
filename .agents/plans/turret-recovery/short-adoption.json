@@ -1,15 +1,15 @@
 {
-  "job": 246,
-  "producer_revision": "dba8954adb10cf4d796b35eaa457152e41cb89b3",
-  "review": "https://github.com/Valpatel/gyropup/pull/255#issuecomment-6706542332",
+  "job": 248,
+  "producer_revision": "ec44a63730caafbdeb7a927cc77b5c9a968086f6",
+  "review": "https://github.com/Valpatel/gyropup/pull/255#issuecomment-6706764145",
   "candidate_archives": {
-    "connector3-produced": "91717a97ff5f54465ac0ad86301eed1c71db66f738e21b139e7355d8eec4b157",
-    "interfaces": "700ae3d74bd68a656188539e0f7906d360f3c799be2c4c2916d33dfe55b595ed",
-    "insert-fit": "8455e88e4390490dd250ed2b7963b883f084d27c26088131bb9e029ec507bb79"
+    "connector3-produced": "6aaa75dd570bf1e5d86fc87890a64a454d6a9d607831831ddd71b9d47fae9d14",
+    "interfaces": "9c2f4c3b4748bfd92ba68dc2624e7018d6677869ea4115de3128a233ac9558fd",
+    "insert-fit": "73b3ddd5fc1e55680fdf05cc4f6075cb2ed1cb92e76be16ecd23d8953e6416cc"
   },
   "fresh_guards": {
     "source_files": 94,
-    "source_fingerprint": "f1a061f346ce7981612b3e2bd40519ac358c28b3e68c5456bd91172aea11dccc",
+    "source_fingerprint": "a510bd881217d91015769fbecbbfcabffa8db5f96d1909d3f8d8de0aac91609d",
     "all_reported_contexts": true,
     "original_destinations": 18,
     "sealed_candidate_payloads": 18
@@ -17,43 +17,43 @@
   "outputs": {
     "docs/research/carrier-service-connectors/external-pose.json": {
       "bytes": 180102,
-      "sha256": "59d11dd937763a25146113990f08bbfd8693493833c71d5782e30fb031d77bdc"
+      "sha256": "9ae926fc0ba745984b777e72c2245ec41968e9ff79c9d1f24dca0bf79f121468"
     },
     "docs/research/carrier-service-connectors/private-input-diagnosis.json": {
       "bytes": 17452,
-      "sha256": "2c85f77c7a849e7d7c37532dd3ea4a5a7ad173ea48ea92a1dc75640c6cf2944d"
+      "sha256": "d9b6fcec5849e686706efb54d8340444ab5dd53acbcb80d68db0629e99e1209a"
     },
     "docs/research/carrier-service-connectors/support-candidate.json": {
-      "bytes": 178034,
-      "sha256": "3b747cf030a205050559832a2135f3c472a25681e95484ed7b8be597ccc6bb9e"
+      "bytes": 178035,
+      "sha256": "f255b6cee12716012b505f72a0a3b0c0b455827e473a553c63845c144789e7aa"
     },
     "hardware/exports/turret/base-board-service/connectors/C3-support-candidate.step": {
       "bytes": 155698,
-      "sha256": "c921ccaa7c7064d183c42da4159fb9a08360fd94d1f6cfe90874c27f70a55cd8"
+      "sha256": "4bdcbd9b8380e81309afdfef377b89129dc545dbb26e8230c054a00eba017ecd"
     },
     "hardware/exports/turret/base-board-service/connectors/C3-support-layout.step": {
       "bytes": 2773244,
-      "sha256": "aba3a692203ad1672aabb64020d9a8c8aa403effc12d114bdcf4d5f70fd21ad4"
+      "sha256": "10676774c36f98a12f8d3376dfff0a9e6ee742399d5e7c47508fbe228f5fd15b"
     },
     "hardware/exports/turret/base-board-service/connectors/carrier-support-candidate.step": {
       "bytes": 194490,
-      "sha256": "5866291653066bc45e60727a9f7aae5e77359e071f29afc0810fc59baba36935"
+      "sha256": "011c8739cf247b0961b81613d755adf51919b4aa296da23d11fb1ac5705e9651"
     },
     "hardware/exports/turret/base-board-service/interfaces/carrier-wiring-candidate.step": {
       "bytes": 126924,
-      "sha256": "8e04c7568aa4834d75227c57a7c4bfefa28e1a62df8914e2711cfd56bc7ce304"
+      "sha256": "d8270704048f9963eff96ba495b74a4b57754e69f7e8c4ff15f1715fad5c7800"
     },
     "hardware/exports/turret/base-board-service/interfaces/carrier-wiring-layout.step": {
       "bytes": 2420786,
-      "sha256": "892fc79a776c9ce47540c2241a73132421710345927d3cf7c3c33cf004b3a074"
+      "sha256": "1ca030c8112cccbd24027068e03c1aa1c3f8f90a66a1547f356b8253c9767d31"
     },
     "hardware/exports/turret/base-board-service/interfaces/interfaces.json": {
       "bytes": 204785,
-      "sha256": "8272dc9477b8d7200c749534b4c7cdc62280e42de02419aad611ac5769b59663"
+      "sha256": "ccca71a19e94f877a34b3691803abade7eac2fff50b659c0b2f62a917fa75d7f"
     },
     "hardware/exports/turret/base-board-service/interfaces/pan-base-wiring-candidate.step": {
       "bytes": 1678423,
-      "sha256": "07b75ebbe0eeb60b59f7bd61b63f985781f724f423628ab31dfd6c0d8b30cf15"
+      "sha256": "e686ca60db221eff39b0db094c5041d78d5dd01d8efc2192e67abae413025d18"
     },
     "hardware/exports/turret/carrier-insert-fit/base-anchor.3mf": {
       "bytes": 4960,
@@ -61,7 +61,7 @@
     },
     "hardware/exports/turret/carrier-insert-fit/base-anchor.step": {
       "bytes": 28437,
-      "sha256": "5832bbbd312c46d77a4f05cd63e295a7bd7533d31ab17970082662479b2be85f"
+      "sha256": "52f7139fb15c9dbc0c34e1340d36de9d6f23aab1e1034d45910c77d897e824af"
     },
     "hardware/exports/turret/carrier-insert-fit/base-anchor.stl": {
       "bytes": 22084,
@@ -73,7 +73,7 @@
     },
     "hardware/exports/turret/carrier-insert-fit/carrier-boss.step": {
       "bytes": 35634,
-      "sha256": "0f53ec424aca22fba1fc0ea8158cd35ce2a16585148811583c018af456d26d3e"
+      "sha256": "5ee01152fbbc3ef0c2ed15552be07f53d64bc2b65219edb40a66cc056758436d"
     },
     "hardware/exports/turret/carrier-insert-fit/carrier-boss.stl": {
       "bytes": 46784,
@@ -85,7 +85,7 @@
     },
     "hardware/exports/turret/carrier-insert-fit/receipt.json": {
       "bytes": 30094,
-      "sha256": "f06dba520e43541b972da4c87d0838d75341035edb8017cd59be4120c4f60429"
+      "sha256": "17a1fbe2120199afb106738cd27caeb0ce14a6a8efe6d3f95bccbbd3677bff3c"
     }
   },
   "post_adoption_existing_consumers": [
@@ -97,7 +97,7 @@
     "docs/research/carrier-insert-fit/test_guards.py"
   ],
   "adoption_pass": true,
-  "engineering_values": "Unchanged. The 113 JSON differences are actual source membership/hash/fingerprint/revision, artifact digests and elapsed time only.",
+  "engineering_values": "Unchanged. The 23 JSON differences are the actual builder source hash, input fingerprint, producer revision, artifact digests and elapsed time only.",
   "geometry": "Six individual STEP DATA blocks exact; both layout geometry/placements exact and resolved presentation graphs equal. Both STL, both 3MF, measurements CSV byte-exact.",
   "qualification": "No physical fit, load, service or manufacturing qualification; native gates, lug/support, scene, media and art remain separate."
 }

@@ -3498,7 +3498,7 @@
     "splice_application": "https://www.te.com/commerce/DocumentDelivery/DDEController?Action=srchrtrv&DocFormat=pdf&DocLang=English&DocNm=114-2157&DocType=Specification+Or+Standard&PartCntxt=320559",
     "wire": "https://www.remingtonindustries.com/content/PTFE%20Hook%20Up%20Wire%20Data%20Sheet.pdf"
   },
-  "seconds": 47.35,
+  "seconds": 45.78,
   "runtime": {
     "cadquery": "2.8.0",
     "OCP": "7.9.3.1"
@@ -3530,7 +3530,7 @@
       "hardware/cad/builders/build_leg.py": "b2ed60b0da4f38390f8798124e01b0f64c1005fd860204beb944cb17ae80c1ed",
       "hardware/cad/builders/build_rig.py": "619c6cfd0ad666dbe52fe75e732515bfeefa14a2ab6694c29f91aec4c9ea8779",
       "hardware/cad/builders/build_turret.py": "1ff62e01fb86b8de8159c7e75dbec2c502aebde457d528f53dedcda4b7a15915",
-      "hardware/cad/builders/build_turret_box.py": "ad8c9ace642563ae51592bb00e950ad3e30e7c505180338ed54ec1c3364137da",
+      "hardware/cad/builders/build_turret_box.py": "1c9c3bc4297b572c6619df53e565568818469abd23796e0370671a1923837100",
       "hardware/cad/legs/fivebar.py": "79aa5ae2f902c9a87323a7c9d40edbe71a5f04da8ed228907bddf2dc100a4d17",
       "hardware/cad/legs/leg.py": "f8cf486e8056b55b024b83d87223429c1d2d163443d3734115e36e2e0f16f1eb",
       "hardware/cad/legs/leg_studies.py": "a89b96dae120a0d56430eabc8fba5eb7a69f75fc4685087eff106cd496dc9c4a",
@@ -3635,7 +3635,7 @@
     "hardware/cad/builders/build_leg.py": "b2ed60b0da4f38390f8798124e01b0f64c1005fd860204beb944cb17ae80c1ed",
     "hardware/cad/builders/build_rig.py": "619c6cfd0ad666dbe52fe75e732515bfeefa14a2ab6694c29f91aec4c9ea8779",
     "hardware/cad/builders/build_turret.py": "1ff62e01fb86b8de8159c7e75dbec2c502aebde457d528f53dedcda4b7a15915",
-    "hardware/cad/builders/build_turret_box.py": "ad8c9ace642563ae51592bb00e950ad3e30e7c505180338ed54ec1c3364137da",
+    "hardware/cad/builders/build_turret_box.py": "1c9c3bc4297b572c6619df53e565568818469abd23796e0370671a1923837100",
     "hardware/cad/legs/fivebar.py": "79aa5ae2f902c9a87323a7c9d40edbe71a5f04da8ed228907bddf2dc100a4d17",
     "hardware/cad/legs/leg.py": "f8cf486e8056b55b024b83d87223429c1d2d163443d3734115e36e2e0f16f1eb",
     "hardware/cad/legs/leg_studies.py": "a89b96dae120a0d56430eabc8fba5eb7a69f75fc4685087eff106cd496dc9c4a",
@@ -3706,7 +3706,7 @@
     "tests/hardware/turret/test_turret_snaps.py": "96afedabae5991a7d99eab3af5f324ae901589d7e92e45b2a36f32bc7a709fd6",
     "tests/hardware/turret/test_turret_solids.py": "d03677019224ad4e95f8775f374010c450299daf67fd729f546a1ea458e87a31"
   },
-  "input_fingerprint": "7a37b050eeb457380b025ce9a77e048313e23f87a7d6390e0aa6bdd9ed4db7c7",
+  "input_fingerprint": "8f1c54a424398a4622f6c00d0dc199283f5a7f1b60eaa87c80d544f780810580",
   "relation_tolerances": {
     "touch_mm": 0.01,
     "overlap_mm3": 1e-06,
@@ -7459,8 +7459,8 @@
     "Base and carrier changes require renewed structural, print and physical-fit qualification."
   ],
   "artifact_sha256": {
-    "carrier-wiring-candidate.step": "8e04c7568aa4834d75227c57a7c4bfefa28e1a62df8914e2711cfd56bc7ce304",
-    "pan-base-wiring-candidate.step": "07b75ebbe0eeb60b59f7bd61b63f985781f724f423628ab31dfd6c0d8b30cf15",
-    "carrier-wiring-layout.step": "892fc79a776c9ce47540c2241a73132421710345927d3cf7c3c33cf004b3a074"
+    "carrier-wiring-candidate.step": "d8270704048f9963eff96ba495b74a4b57754e69f7e8c4ff15f1715fad5c7800",
+    "pan-base-wiring-candidate.step": "e686ca60db221eff39b0db094c5041d78d5dd01d8efc2192e67abae413025d18",
+    "carrier-wiring-layout.step": "1ca030c8112cccbd24027068e03c1aa1c3f8f90a66a1547f356b8253c9767d31"
   }
 }

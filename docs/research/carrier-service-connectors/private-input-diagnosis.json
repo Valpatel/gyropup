@@ -28,7 +28,7 @@
       "hardware/cad/builders/build_leg.py": "b2ed60b0da4f38390f8798124e01b0f64c1005fd860204beb944cb17ae80c1ed",
       "hardware/cad/builders/build_rig.py": "619c6cfd0ad666dbe52fe75e732515bfeefa14a2ab6694c29f91aec4c9ea8779",
       "hardware/cad/builders/build_turret.py": "1ff62e01fb86b8de8159c7e75dbec2c502aebde457d528f53dedcda4b7a15915",
-      "hardware/cad/builders/build_turret_box.py": "ad8c9ace642563ae51592bb00e950ad3e30e7c505180338ed54ec1c3364137da",
+      "hardware/cad/builders/build_turret_box.py": "1c9c3bc4297b572c6619df53e565568818469abd23796e0370671a1923837100",
       "hardware/cad/legs/fivebar.py": "79aa5ae2f902c9a87323a7c9d40edbe71a5f04da8ed228907bddf2dc100a4d17",
       "hardware/cad/legs/leg.py": "f8cf486e8056b55b024b83d87223429c1d2d163443d3734115e36e2e0f16f1eb",
       "hardware/cad/legs/leg_studies.py": "a89b96dae120a0d56430eabc8fba5eb7a69f75fc4685087eff106cd496dc9c4a",
@@ -108,7 +108,7 @@
     },
     "toolkit_sources_sha256": "c2941322d5f3d000d3777b0047567211d06855861fa5e14229d7d7519fef3ed3"
   },
-  "input_fingerprint": "7a37b050eeb457380b025ce9a77e048313e23f87a7d6390e0aa6bdd9ed4db7c7",
+  "input_fingerprint": "8f1c54a424398a4622f6c00d0dc199283f5a7f1b60eaa87c80d544f780810580",
   "context_files": {
     "tools/evidence/interfaces/check-carrier-connector-inputs.py": "6e2cc8af0bf757303092136af15116ac2ece46fc8949ce2d5dedf0be52494ccf",
     "docs/research/carrier-service-connectors/private-inputs.json": "db7318f705e1966a93b07bacbab153eaa5fa9bc03a3d6a8114fff3a573382348"
@@ -371,5 +371,5 @@
     "No latch flexure, crimped terminal, lead diameter/bend or physical-fit qualification.",
     "Exact male terminal and servo mating connector CAD remain missing."
   ],
-  "elapsed_seconds": 9.701
+  "elapsed_seconds": 9.075
 }
