@@ -1,6 +1,8 @@
 #!/usr/bin/env python3
 """Check the shipped meshes, not just manifest declarations; no CAD kernel needed."""
 import hashlib
+import copy
+import importlib.util
 import json
 import math
 from pathlib import Path
@@ -11,6 +13,9 @@ ROOT = (Path(__file__).resolve().parents[2])
 SCENE = (ROOT / 'hardware/exports/sim/turret_box')
 MAN = json.loads((SCENE / 'manifest.json').read_text())
 PARTS = {p['name']: p for p in MAN['parts']}
+SPEC = importlib.util.spec_from_file_location('turret_reference', ROOT/'tools/engineering/turret/reference-turret-motion.py')
+REFERENCE = importlib.util.module_from_spec(SPEC)
+SPEC.loader.exec_module(REFERENCE)
 
 
 def vertices(path):
@@ -21,6 +26,20 @@ def vertices(path):
 
 
 class SceneFrames(unittest.TestCase):
+    def test_reference_is_bound_to_the_actual_current_scene(self):
+        fixture = json.loads((ROOT/'tests/fixtures/turret-motion-reference.json').read_text())
+        self.assertIn('source', fixture, 'Regenerate the reference from the reviewed immutable full scene')
+        self.assertEqual(fixture['source']['manifest_sha256'], hashlib.sha256((SCENE/'manifest.json').read_bytes()).hexdigest())
+        self.assertEqual(set(fixture['source']['parts']), set(REFERENCE.OWNERS))
+        for name, binding in fixture['source']['parts'].items():
+            self.assertEqual(binding['group'], REFERENCE.OWNERS[name])
+            self.assertEqual(binding['file'], name+'.stl')
+            self.assertEqual(PARTS[name]['group'], binding['group'])
+            self.assertEqual(PARTS[name]['file'], binding['file'])
+            self.assertEqual(binding['sha256'], hashlib.sha256((SCENE/binding['file']).read_bytes()).hexdigest())
+            self.assertEqual(fixture['contract']['components'][name]['joint'],
+                             binding['group'] if binding['group'] in REFERENCE.JOINTS else None)
+
     def test_all_meshes_valid_and_match_bounds(self):
         self.assertEqual(len(PARTS), 80)
         for part in PARTS.values():
@@ -67,6 +86,37 @@ class SceneFrames(unittest.TestCase):
         self.assertTrue(MAN['built'])
         for name in PARTS:
             self.assertNotRegex(name, r'(?i)plinth|compute|j4012|xt30|ethernet')
+
+
+class ReferenceInputGuards(unittest.TestCase):
+    def test_actual_parser_rejects_display_ownership_and_identity_corruption(self):
+        # Explicit input-validator fixture, not a fresh scene or geometry claim.
+        candidate = copy.deepcopy(MAN)
+        candidate['limits']['tilt_deg'] = [-25, 12]
+        candidate['limits']['fire_tilt_max_deg'] = 10
+        self.assertEqual(set(REFERENCE.manifest_parts(candidate)), set(REFERENCE.OWNERS))
+        for kind in ('units', 'frame', 'missing', 'duplicate', 'foreign', 'file', 'motor-owner', 'boolean-pivot'):
+            bad = copy.deepcopy(candidate)
+            if kind == 'units': bad['units'] = 'm'
+            elif kind == 'frame': bad['scene_frame_version'] = 1
+            elif kind == 'missing': bad['parts'].pop()
+            elif kind == 'duplicate': bad['parts'][0] = copy.deepcopy(bad['parts'][1])
+            elif kind == 'foreign': bad['parts'][0]['name'] = 'foreign-part'
+            elif kind == 'file': bad['parts'][0]['file'] = '../other.stl'
+            elif kind == 'motor-owner':
+                next(p for p in bad['parts'] if p['name'] == 'flywheel_motor_l')['group'] = 'wheel_l'
+            else: bad['pivots']['pan'][0] = False
+            with self.subTest(kind=kind), self.assertRaises(ValueError): REFERENCE.manifest_parts(bad)
+
+    def test_actual_stl_parser_rejects_truncation_nonfinite_and_planar_landmarks(self):
+        data = (SCENE/'barrel.stl').read_bytes()
+        points = REFERENCE.vertices(data)
+        self.assertEqual(len(REFERENCE.landmarks(points)), 4)
+        bad = bytearray(data)
+        struct.pack_into('<f', bad, 84+12, float('nan'))
+        for payload in (data[:83], data[:-1], bytes(bad)):
+            with self.assertRaises(ValueError): REFERENCE.vertices(payload)
+        with self.assertRaises(ValueError): REFERENCE.landmarks([[x,y,0] for x,y,z in points])
 
 
 if __name__ == '__main__':

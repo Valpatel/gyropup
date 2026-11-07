@@ -142,3 +142,5 @@
 - Fleet submission says a public repository is not anonymously readable before any job is assigned: [classify the no-job boundary without bypassing authentication checks](inbox/2026-11-05-ci-classification-needs-phase-evidence.md#a-no-job-readability-refusal-is-not-a-producer-failure-or-an-authentication-diagnosis).
 
 - A fresh scene would describe old stops, an unverified module class, or broader clearance than sampled: [freeze generated explanations with actual mechanical constraints](inbox/2026-11-05-root-moves-need-consumer-and-publication-maps.md#freeze-generated-explanations-alongside-mechanical-constraints).
+
+- Independent pivots still permit a copied manifest owner or stale landmark indices: [bind source-audited ownership to actual loaded asset bytes](inbox/2026-10-28-rendered-joints-need-independent-datums.md#reference-ownership-and-asset-identity-must-also-be-independent).
