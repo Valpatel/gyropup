@@ -1,0 +1,56 @@
+{
+  "current_source": "e32b6c526067adf6a452b708fb78e02162441cec",
+  "render_source": "c9a836d9bea5718032ea51c0215ee25991601fc0",
+  "field_source": "2064364217b9780014bec0648267809c3333550a",
+  "review": "https://github.com/Valpatel/gyropup/issues/8#issuecomment-6712526512",
+  "original_job": 257,
+  "original_job_status": "FAILED",
+  "reused_sealed_candidate_sha256": "9b8be5ae94c37eae79b6c3c00c95e9e01ae35a9b02829333bcaab4e350d4e721",
+  "rerendered": false,
+  "adopted": {
+    "hardware/exports/leg/fea/hip-frame-e1-media/hip-frame-e1-poster.png": {
+      "bytes": 298006,
+      "sha256": "7ed8ca26851531d2e8e6f33ec24a2ad9b0ec31a7b778d2638b0257aa6f92bce1"
+    },
+    "hardware/exports/leg/fea/hip-frame-e1-media/hip-frame-e1.mp4": {
+      "bytes": 733347,
+      "sha256": "76518421335431320a7a60c58f66cb817c0f4b5b1b0e9993a62f68d87d065581"
+    },
+    "hardware/exports/leg/fea/hip-frame-e1-media/hip-frame-e1.webm": {
+      "bytes": 565510,
+      "sha256": "fc3b65a0fb61e1884b8bffa7ba5cf200bca0b43ce14f339de38a267dbc17125f"
+    },
+    "hardware/exports/leg/fea/hip-frame-e1-media/video-receipt.json": {
+      "bytes": 49824,
+      "sha256": "c0e3a6c73a8d31107dd6e71a420ca40b20734064f2283340b0346edd07bbc684"
+    },
+    "hardware/exports/leg/fea/media.json": {
+      "bytes": 852,
+      "sha256": "dbe019e1df2edc47bc8dbb8aa8066ec859cc203fedbbf0aab79a89e75a22a17b"
+    }
+  },
+  "current_default_full_guard": {
+    "historical_source": "2064364217b9780014bec0648267809c3333550a",
+    "safety_factor": 1.6,
+    "required": 2,
+    "vertices": 25232,
+    "triangles": 50552,
+    "mean_channel_difference": 31.806344946641556,
+    "channels_changed_over_20": 0.30712021343377277,
+    "decoded_frames": 288,
+    "seconds": 12,
+    "vp9_motion": {
+      "mean_channel_difference": 31.787135907093536,
+      "channels_changed_over_20": 0.3071217827997489
+    },
+    "mean_codec_difference": 0.8107893910860012
+  },
+  "current_entire_study_tests": 17,
+  "all_validation_groups_gone": true,
+  "outside_target_complete_tracked_and_hardware_preserved": true,
+  "qualifications": {
+    "transient_simulation": false,
+    "qualified_for_manufacture": false
+  },
+  "limits": "Genuine solved-field video with recorded failed SF1.6/2.0. Original job257 remains FAILED; independent sealed reuse/current controls support this adoption. Highlight encoding, hardware-bound artwork, CI and publication remain pending; issue8 stays open."
+}
