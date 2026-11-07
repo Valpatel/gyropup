@@ -7,6 +7,7 @@ import os
 import runpy
 import shutil
 import subprocess
+import sys
 import tempfile
 import types
 import unittest
@@ -48,8 +49,10 @@ class DesignIdentity(unittest.TestCase):
         frame = types.ModuleType('hardware.cad.body.body_frame')
         frame.PLATE_STANDOFFS = [(3, 4)]
         frame.PLATE_POST_W = 2
-        with patch.dict('sys.modules', {'hardware.cad.body.body_frame': frame}):
+        with patch.object(sys, 'path', [str(ROOT), *sys.path]), \
+                patch.dict('sys.modules', {'hardware.cad.body.body_frame': frame}):
             self.assertEqual(scope['frame_boxes']()[-1], ('plate_post_1', (2, 4, 3, 5, 5, 17)))
+            self.assertNotIn('cadquery', sys.modules)
 
     def test_local_parameter_override_rejects_before_reading_it(self):
         with patch.dict(os.environ, {'GYROPUP_LEG_PARAMS': 'not-a-published-input'}):
