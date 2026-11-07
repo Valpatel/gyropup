@@ -8,7 +8,7 @@
   "stops": "hard: the cradle's aluminium stop lug on the -y arm's printed sectors (D48)"
  },
  "fire_tilt_max_deg": 10.0,
- "fire_source": "exports/turret/feed/feed-elevated.json fire_tilt_max_deg (sim/turret_feed.py --elevated), capped at the upper stop",
+ "fire_source": "hardware/exports/turret/feed/feed-elevated.json fire_tilt_max_deg (sim/turret_feed.py --elevated), capped at the upper stop",
  "fire_note": "no shot is fired above this tilt (the barrel may still aim up to the stop); a simulated figure until the bench feed test",
  "pan": {
   "continuous": true,

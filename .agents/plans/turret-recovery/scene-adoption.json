@@ -1,0 +1,521 @@
+{
+  "job": 249,
+  "producer_revision": "227afbcca70ab616f412ee7a00b119cfff3a0d20",
+  "review": "https://github.com/Valpatel/gyropup/pull/255#issuecomment-6708072975",
+  "archives": {
+    "original-targets": {
+      "sha256": "ecfadb642207bcbfc97bcaa6d3ad777c57cf5e3ff7a6508415fd9c66ed9f695c",
+      "files": 93,
+      "bytes": 11239589
+    },
+    "candidate-targets": {
+      "sha256": "b53bfd97b25ad45b7cc5ec5b31186164e850a897fe9999a272d65877cdb66c24",
+      "files": 93,
+      "bytes": 11274829
+    },
+    "final-observed-targets": {
+      "sha256": "6db6e07b59b1e1a9905c4427915afd0947f96277a19ddbf6934f4be2bec96991",
+      "files": 93,
+      "bytes": 11274829
+    },
+    "adapter-produced": {
+      "sha256": "731d638ad5d70deb4d2109c530935d5cd2396127d4f722b0c6042eeaeb90b5e7",
+      "files": 9,
+      "bytes": 2544961
+    },
+    "scene-produced": {
+      "sha256": "83efb2f1088cc6bd9f84536af68e2ea55895a3b36272bbde5f3c70a9aad949a8",
+      "files": 81,
+      "bytes": 8628016
+    }
+  },
+  "outputs": {
+    "hardware/exports/sim/turret_box/barrel.stl": {
+      "bytes": 96784,
+      "sha256": "b2c1685547859c328fe3e15d5253e9c52580940c6b230405d91aabc6e693cf8c"
+    },
+    "hardware/exports/sim/turret_box/base_board.stl": {
+      "bytes": 40684,
+      "sha256": "332e660ebbb9c2d64c3347007435c16987449480d2b4d0889b92ea2ba659c51f"
+    },
+    "hardware/exports/sim/turret_box/base_board_carrier.stl": {
+      "bytes": 114284,
+      "sha256": "b5e65ffc2e5912d1e5fb8a6af8d3cbaa00cb7675f65a4a066badd91d2074cb5b"
+    },
+    "hardware/exports/sim/turret_box/base_board_inserts.stl": {
+      "bytes": 67284,
+      "sha256": "7e62cb42e5c439002ff827c5de5e6b3b34c3ca5c4f075b4f183f0d7672fc8bca"
+    },
+    "hardware/exports/sim/turret_box/base_board_screws.stl": {
+      "bytes": 71284,
+      "sha256": "5714b5671b299587ae5d8566252e39e6553038a489a73d0a6fdf013915fbde05"
+    },
+    "hardware/exports/sim/turret_box/base_carrier_inserts.stl": {
+      "bytes": 67284,
+      "sha256": "3c2a2eb1a32527dbfba21a7419ae223fc9eab72e013f77cc12a6e48c9a5262f1"
+    },
+    "hardware/exports/sim/turret_box/base_carrier_screws.stl": {
+      "bytes": 71284,
+      "sha256": "01dd7e0d390695df505117291ab9021030b04c2a9ab03c44ff60ebecab6df3e7"
+    },
+    "hardware/exports/sim/turret_box/board_bay.stl": {
+      "bytes": 137684,
+      "sha256": "667e34b614bad21f56378680f3ab7e60350056394fc1002fb330d4be2e901282"
+    },
+    "hardware/exports/sim/turret_box/board_bay_lid.stl": {
+      "bytes": 12484,
+      "sha256": "bfe64593cd0061e37e6074e4d83aabe23dcf36a270b31aa7123fa6f24edc7482"
+    },
+    "hardware/exports/sim/turret_box/box_deck.stl": {
+      "bytes": 399884,
+      "sha256": "b2a2fbf1f8c367d8eb245667a75465eadd16ec193c21f878cf650fe781134a69"
+    },
+    "hardware/exports/sim/turret_box/bumper_ring.stl": {
+      "bytes": 92084,
+      "sha256": "5c4b34592d0a649b70c839fa44ff1d412b77eaec6f1051e761dd69ddcd18e483"
+    },
+    "hardware/exports/sim/turret_box/cartridge_board.stl": {
+      "bytes": 1484,
+      "sha256": "5f0fe5167ea885205b13161eb357ac174c7629ef025b5fb61cfb7797c2c5608f"
+    },
+    "hardware/exports/sim/turret_box/cartridge_body.stl": {
+      "bytes": 633684,
+      "sha256": "777ec8152d87f95daca3fe4a38b63f3406b9a2d9071ec568132658e64f708af6"
+    },
+    "hardware/exports/sim/turret_box/circlip_50.stl": {
+      "bytes": 22484,
+      "sha256": "9b86035e26d244e1cce1a3ed2d8dee00ef9a19f38f207ea13f24f40bd94da27e"
+    },
+    "hardware/exports/sim/turret_box/cradle.stl": {
+      "bytes": 116684,
+      "sha256": "fc785651c0c2b138aa3450bd982ebbae8ae814c2fb07d846d16951142e3290dd"
+    },
+    "hardware/exports/sim/turret_box/cradle_plate_l.stl": {
+      "bytes": 121284,
+      "sha256": "bec2c93cbc0d6360bc3da9ef65ece94b892ef675a7b924472d89abc1de2c5a25"
+    },
+    "hardware/exports/sim/turret_box/cradle_plate_r.stl": {
+      "bytes": 87084,
+      "sha256": "b1383a08f471051ebd798887be08623100795f54d127c942845e8fddd0bb0086"
+    },
+    "hardware/exports/sim/turret_box/ct_thumbscrew.stl": {
+      "bytes": 16684,
+      "sha256": "a37acd10de534137dd999285af8f271a66df067d04518870d5e88fe926fc72d2"
+    },
+    "hardware/exports/sim/turret_box/dial.stl": {
+      "bytes": 124884,
+      "sha256": "747c9beb8ce984e100f5cead5c4f1e87da82cce856b00facb737fdf4e53363b5"
+    },
+    "hardware/exports/sim/turret_box/dt_plug.stl": {
+      "bytes": 1084,
+      "sha256": "ebfbd7c35f242e6d8a123b8b6c9e0be10f66a9a45400d13a746c44c8172ec64f"
+    },
+    "hardware/exports/sim/turret_box/dt_receptacle.stl": {
+      "bytes": 2284,
+      "sha256": "0e436b19a1c1dabd5605a3744760b4f7a16f8bff160cd067c66643dcd94773af"
+    },
+    "hardware/exports/sim/turret_box/esc_l.stl": {
+      "bytes": 684,
+      "sha256": "8cc013dd96e24cf12f67cd0db26cd21af1f8120954896c39c4fb4beaf3705036"
+    },
+    "hardware/exports/sim/turret_box/esc_r.stl": {
+      "bytes": 684,
+      "sha256": "b60dbd3221adb253c7dc6f8ca51da6bbb939e93ce1a75c4aeb649cef2cd6f1c1"
+    },
+    "hardware/exports/sim/turret_box/feed_motor.stl": {
+      "bytes": 20684,
+      "sha256": "36c7235730be59cace50c6206327f7a2ee7734f34b7569dd6ad8db2e107c5e0d"
+    },
+    "hardware/exports/sim/turret_box/flywheel.stl": {
+      "bytes": 29484,
+      "sha256": "3f7a9f58bcb420e150f6bb5bc737b633f07f55686d29c3b47b5adfe30217b081"
+    },
+    "hardware/exports/sim/turret_box/flywheel_m.stl": {
+      "bytes": 29484,
+      "sha256": "28cb2d4c9b3ee706e76154e6093e0270050c182139eee9e720fc5b75da13d87a"
+    },
+    "hardware/exports/sim/turret_box/flywheel_motor_l.stl": {
+      "bytes": 67084,
+      "sha256": "c6afc95fee05395294b25d3aaa04258121acbe005c6c9d550609476a16853584"
+    },
+    "hardware/exports/sim/turret_box/flywheel_motor_r.stl": {
+      "bytes": 67084,
+      "sha256": "908968189f6c608fa5e7331bb69b50690520482bb268b8927ac590ca0b3ddc3f"
+    },
+    "hardware/exports/sim/turret_box/flywheel_tyre.stl": {
+      "bytes": 16884,
+      "sha256": "bef7b5943b4c71b6247b40726dde280ab5b27d082f952d2481cd2b913498bdf1"
+    },
+    "hardware/exports/sim/turret_box/flywheel_tyre_m.stl": {
+      "bytes": 16884,
+      "sha256": "bdefd70d688d63c08c1b2cddf9a164fb3dfaef17c880c2061c286be0a2ac789a"
+    },
+    "hardware/exports/sim/turret_box/hall_switch.stl": {
+      "bytes": 684,
+      "sha256": "7080d0d027e32403a036b13a2aceafb31fd228a7bf2240c1e736a771d931d95a"
+    },
+    "hardware/exports/sim/turret_box/hopper.stl": {
+      "bytes": 91784,
+      "sha256": "51eedcf5187fac296619bdec473b082b535099fb7ced0813581d65a9e6938c43"
+    },
+    "hardware/exports/sim/turret_box/hopper_flap.stl": {
+      "bytes": 22484,
+      "sha256": "e7081ed1e282ae41d6a28c93c7697e631490408823e378013067ffcff1c86a32"
+    },
+    "hardware/exports/sim/turret_box/hopper_inserts.stl": {
+      "bytes": 50484,
+      "sha256": "dc4851af1a041a5967819d8f77f49cb98e83e2cfa577a40fe26ad906c43493d7"
+    },
+    "hardware/exports/sim/turret_box/hopper_lid.stl": {
+      "bytes": 99284,
+      "sha256": "81820009e0bda11d95a5932178d9b46296510bfe82f3fb87263348b2bd14a60d"
+    },
+    "hardware/exports/sim/turret_box/horn_boss.stl": {
+      "bytes": 51284,
+      "sha256": "2f15d2bc58b23d87844daa6fe2a5df860250dc544fa585ca9b45702c6b3efc60"
+    },
+    "hardware/exports/sim/turret_box/index_magnet.stl": {
+      "bytes": 8284,
+      "sha256": "b7fdf5248c405ca731dce2e55072904833e5164a50ccb2af0c261107a1582228"
+    },
+    "hardware/exports/sim/turret_box/intake_shroud.stl": {
+      "bytes": 139484,
+      "sha256": "753db627e5f9517c579a164a28ca849f87f46cea2a615ed5d001c6f27b523291"
+    },
+    "hardware/exports/sim/turret_box/j501_base.stl": {
+      "bytes": 1175484,
+      "sha256": "b4f5803d0e7ed0e154afd0d4fcab3dc8d0281eb5a0fa0379a0f5a994a685d5a4"
+    },
+    "hardware/exports/sim/turret_box/j501_cover.stl": {
+      "bytes": 1200084,
+      "sha256": "2886914f7c99ce01301d06d3cd22acdbf2876c49dcae07412aabbc404d3cd5b8"
+    },
+    "hardware/exports/sim/turret_box/j501_front_no_gmsl.stl": {
+      "bytes": 400084,
+      "sha256": "0c924692974360c348a629fd0a1f41e0cef87ce43eac11979ba1001161edd2a3"
+    },
+    "hardware/exports/sim/turret_box/j501_rear_io.stl": {
+      "bytes": 399984,
+      "sha256": "7941a3c7329ff8398ee1c44f063f697338a5df7f52b5a58fac916003ed8677f6"
+    },
+    "hardware/exports/sim/turret_box/j501_side_hatch.stl": {
+      "bytes": 42684,
+      "sha256": "abcf1d6d13cded51e6598565851ffc87fd03b0cc07377033ab5a8a82469c9fe1"
+    },
+    "hardware/exports/sim/turret_box/laser.stl": {
+      "bytes": 8284,
+      "sha256": "1089a49df5814bb8b564f92d912394abfac1146737e0370b7e9ab85b64f39387"
+    },
+    "hardware/exports/sim/turret_box/laser_inserts.stl": {
+      "bytes": 33684,
+      "sha256": "b6ee5a71c3e91f15e123a2ff51fdb4f7c6bed0e82b75aa94ae323a94b1b6057a"
+    },
+    "hardware/exports/sim/turret_box/laser_mount.stl": {
+      "bytes": 104784,
+      "sha256": "999f8a6297d822ea7de537d0da460596eee44cc568d8137b02c2b5b23a5cd6bb"
+    },
+    "hardware/exports/sim/turret_box/laser_screws.stl": {
+      "bytes": 24684,
+      "sha256": "2286a1a86fa2524f1edee276e1fc5506425a6e49d3516ce8196262c759b69262"
+    },
+    "hardware/exports/sim/turret_box/lid_screw_1.stl": {
+      "bytes": 16684,
+      "sha256": "0e8a09778dc6580a06875db42ceab167c5742af5ed1a5291eba394518a8414a9"
+    },
+    "hardware/exports/sim/turret_box/lid_screw_2.stl": {
+      "bytes": 16684,
+      "sha256": "40825d248bc68fe3982a9b68b3a4d8b1eeb3778a866291c9777d3c1331431c59"
+    },
+    "hardware/exports/sim/turret_box/lid_screw_3.stl": {
+      "bytes": 16684,
+      "sha256": "c507a688924e373c4c04f3ddc6258061324a7c20c3e9913ec2c9d76cda072a68"
+    },
+    "hardware/exports/sim/turret_box/lid_screw_4.stl": {
+      "bytes": 16684,
+      "sha256": "50a697cef2d8f69da6e2b4b1526e67fd7f077bf762a9376a998c931df4814359"
+    },
+    "hardware/exports/sim/turret_box/manifest.json": {
+      "bytes": 81346,
+      "sha256": "02a7384b877f4af3adef5090be0feffe2e4ac9c10acfc51e8f202469f1f74b71"
+    },
+    "hardware/exports/sim/turret_box/pan_base.stl": {
+      "bytes": 501384,
+      "sha256": "e6c7b413103054d1fec7450d2d6511bb6665fd42b3167f80d099e8d0c5ecd8c6"
+    },
+    "hardware/exports/sim/turret_box/pan_bearing.stl": {
+      "bytes": 33684,
+      "sha256": "2d21384bedc5d34882c3047b69ac6192b19c7fd011450336fd4e5fa3b3945322"
+    },
+    "hardware/exports/sim/turret_box/pan_bearing_inner.stl": {
+      "bytes": 16884,
+      "sha256": "5781f47a620e882dbca51662ef8be79923b37b425e2ede04054e0b11b76e08db"
+    },
+    "hardware/exports/sim/turret_box/pan_clamp.stl": {
+      "bytes": 83484,
+      "sha256": "41edf7d1c9ba45bab274695bd55303e2bf6eb39d8eae922b5573ba72ac8e51fa"
+    },
+    "hardware/exports/sim/turret_box/pan_pinion.stl": {
+      "bytes": 164684,
+      "sha256": "813b0ae7875a591b9aa6fd5c40adb270c17ec47576d3a5f8493108e1030ebdf7"
+    },
+    "hardware/exports/sim/turret_box/pan_ring.stl": {
+      "bytes": 374084,
+      "sha256": "b8f3a1da167be501326ad764f364411fa1f1af345b05f163ac8aeb5d84185ec1"
+    },
+    "hardware/exports/sim/turret_box/pan_servo.stl": {
+      "bytes": 20684,
+      "sha256": "31eee127b22aee6e8ea7c0e60f98be21fac42e26953df44fd439fd1291b5dce7"
+    },
+    "hardware/exports/sim/turret_box/pan_spacer.stl": {
+      "bytes": 25284,
+      "sha256": "767862d0b1c5457447451b487f87893f70fd6d92b5c08a690c28ca95db81c3f0"
+    },
+    "hardware/exports/sim/turret_box/pivot_spacer.stl": {
+      "bytes": 25284,
+      "sha256": "f8808fa2538a123d433bdb1f11cc2bd7f6815e315b8d7a734ea74cba916c1630"
+    },
+    "hardware/exports/sim/turret_box/pod_cover.stl": {
+      "bytes": 77484,
+      "sha256": "281585a98a490188ac611d7b61242682dd8d0389fa736f298997b905f29db33c"
+    },
+    "hardware/exports/sim/turret_box/pod_fuse.stl": {
+      "bytes": 684,
+      "sha256": "223b9e45f8e233211fb12822909c76109400330de7af7da281d2cdc20e5273d1"
+    },
+    "hardware/exports/sim/turret_box/pod_pendant.stl": {
+      "bytes": 684,
+      "sha256": "0dfa4586b0dc382bc3e8d5687aa4ca6206701a60475e2e256844063db9bc8d7c"
+    },
+    "hardware/exports/sim/turret_box/pod_switch.stl": {
+      "bytes": 684,
+      "sha256": "d1e8061523c99314dd28a1c465f0c6acfbc257769c90008f854b2c15bb6e9e0e"
+    },
+    "hardware/exports/sim/turret_box/pod_usb.stl": {
+      "bytes": 684,
+      "sha256": "6765c265ec01158b60b036c5d6ab4b128d31f9b8b9dc2160902dd63deab8acbe"
+    },
+    "hardware/exports/sim/turret_box/pod_wago.stl": {
+      "bytes": 684,
+      "sha256": "d774d431dc1b30bcf1410fd9d2739d635e3d409eef939dd8d2350d307ea66f2a"
+    },
+    "hardware/exports/sim/turret_box/pod_xt60.stl": {
+      "bytes": 684,
+      "sha256": "672aac85c5c1c6df2920decae5f4c62ba0f5a2f420e4f88455c2b772ebb8cd66"
+    },
+    "hardware/exports/sim/turret_box/ring_carrier.stl": {
+      "bytes": 123284,
+      "sha256": "d59b82fe55f3651d4a876b65159f858df32931d8337c4dc140056d948a538976"
+    },
+    "hardware/exports/sim/turret_box/ring_coupling.stl": {
+      "bytes": 33684,
+      "sha256": "1c56b19b40c8264e3251d1130c6d832b1100623dc5fbf31b3948972075eb52f5"
+    },
+    "hardware/exports/sim/turret_box/ring_driver.stl": {
+      "bytes": 45284,
+      "sha256": "7fecea689680baaef9812fb0dbc98438600f5f4096dc5e3d455c7c82b4c52e3e"
+    },
+    "hardware/exports/sim/turret_box/ring_leads_rotor.stl": {
+      "bytes": 25234,
+      "sha256": "69cb66d827479d8ed4992f5af4c2362901415c6ceeda31789dc7e717fe4a9147"
+    },
+    "hardware/exports/sim/turret_box/shoulder_screw.stl": {
+      "bytes": 25084,
+      "sha256": "b072039d30f95ff9f852e7467855b22d0794b5928d7edabb737edb280128aa67"
+    },
+    "hardware/exports/sim/turret_box/slip_ring.stl": {
+      "bytes": 16684,
+      "sha256": "1d8e208f276dfa4503541d079d4e8b81614eb9de0b747c75a45855cf8aa33d62"
+    },
+    "hardware/exports/sim/turret_box/slip_ring_rotor.stl": {
+      "bytes": 8284,
+      "sha256": "9278231204a19898ee2b61958537ea1a32613560a7666a81cd836fc424d04037"
+    },
+    "hardware/exports/sim/turret_box/stop_lug.stl": {
+      "bytes": 25684,
+      "sha256": "fa46179bc32f6f2ebd8b443a87aa0c8b999033105f9a7dab27ae40805726172d"
+    },
+    "hardware/exports/sim/turret_box/tilt_bearing.stl": {
+      "bytes": 33684,
+      "sha256": "9bb667ae3e0ddff782cfb196e31dc97614ac69709d1d3120882d58c4f14330a0"
+    },
+    "hardware/exports/sim/turret_box/tilt_bearing_inner.stl": {
+      "bytes": 16884,
+      "sha256": "0055271dd6db32546c315d669cac48ed536d45d330aaa8fc8be121e250728b65"
+    },
+    "hardware/exports/sim/turret_box/tilt_servo.stl": {
+      "bytes": 20684,
+      "sha256": "12a10874ac27721475d08ba9bc6463fd07f74d7bc506a84a2c0d35a0e45adca8"
+    },
+    "hardware/exports/sim/turret_box/tilt_yoke.stl": {
+      "bytes": 308184,
+      "sha256": "b2604c2bd46b0dfd7dbe09adc4648082b82802d8d9fd5c7cee3f2722440bea9b"
+    },
+    "hardware/exports/sim/turret_box/turret_board.stl": {
+      "bytes": 69084,
+      "sha256": "7f940e6d05216891baed76704919b23da7bdbbd5c323dcbd732e80932eece323"
+    },
+    "hardware/exports/turret/box/bom.json": {
+      "bytes": 16404,
+      "sha256": "b3e31489fc419a44beef0f58c63a012624b95c5bd0a6039c5ed2ba2ba5afab43"
+    },
+    "hardware/exports/turret/box/box.json": {
+      "bytes": 18034,
+      "sha256": "b0ea2894703c401f0ca7520067adc4c5d7e421f199a2b73e1c4ec1a2711929ae"
+    },
+    "hardware/exports/turret/box/box_deck.step": {
+      "bytes": 505752,
+      "sha256": "4e77b7eecd2815edb3849f350275bc02247ce77a9dfd7293fa84a0375f7fa19f"
+    },
+    "hardware/exports/turret/box/box_deck.stl": {
+      "bytes": 1025484,
+      "sha256": "96c30a869c90c9e120cdbe0e499bf25217b8cd1341cf6ded66a0e151fea0cf7d"
+    },
+    "hardware/exports/turret/box/intake_shroud.step": {
+      "bytes": 380815,
+      "sha256": "8f630e88e9843ec5100d846a14fdc02051d2bbaaa1260b2c865910a1ed85bd58"
+    },
+    "hardware/exports/turret/box/intake_shroud.stl": {
+      "bytes": 325084,
+      "sha256": "76e784251c91cd5f3ef2c950ec3a18852ffa08442442d428003cd9e5f3bde28a"
+    },
+    "hardware/exports/turret/box/pod_cover.step": {
+      "bytes": 59257,
+      "sha256": "8b7e23a3bef89b214695913261976fdd2278d1a55e204ff89d157737b19db119"
+    },
+    "hardware/exports/turret/box/pod_cover.stl": {
+      "bytes": 212684,
+      "sha256": "62b48621050bdaba387f181a85b57cb12751b0a71c38690a33ec40822c9866cd"
+    },
+    "hardware/exports/turret/box/print-plan.json": {
+      "bytes": 1447,
+      "sha256": "546e7445dec2592f82ba570f668ddd6d94d93a0cf413929ea1e51eee555d4f50"
+    },
+    "hardware/exports/turret/lidar/box-limit.png": {
+      "bytes": 46434,
+      "sha256": "fa220553b72d6ab26e1715b37f27a4658d1f5a1b07984a9c9edb2477a6a805d3"
+    },
+    "hardware/exports/turret/lidar/box.json": {
+      "bytes": 54666,
+      "sha256": "e07470cadd48abcd99d543ba4905f83143449f9ef91f49a85b82eb9a2d7e2bb2"
+    },
+    "hardware/exports/turret/limits.json": {
+      "bytes": 752,
+      "sha256": "09dea88cbb8731c0c462d61dc7db5be5b143ca3ec799d96e9c2a175b34de62f1"
+    }
+  },
+  "adoption_pass": true,
+  "all_other_tracked_and_complete_local_hardware_bytes_preserved": true,
+  "actual_existing_raw_parser_and_box_coverage_tests": 8,
+  "immutable_reference_and_two_engine_motion": "mandatory next stage; not accepted by this adoption",
+  "simulation_tests": 11,
+  "simulation_skips": 0,
+  "current_box_grids": {
+    "pan": 181,
+    "firmware": 73,
+    "mechanical_range_deg": [
+      -25,
+      12
+    ],
+    "lower_and_upper_complete": true
+  },
+  "retained_failures": {
+    "airflow": {
+      "mouth_mm": [
+        158,
+        37
+      ],
+      "throat_mm": [
+        158,
+        37
+      ],
+      "grille": {
+        "bars": 11,
+        "bar_mm": 2.0,
+        "pitch_mm": 14.0,
+        "gap_mm": 12.0,
+        "open_fraction": 0.861
+      },
+      "air_speed_mps": {
+        "mouth": 1.93,
+        "grille": 2.25,
+        "throat": 1.93
+      },
+      "losses_pa": {
+        "grille": 3.03,
+        "turn": 2.24
+      },
+      "loss_pa": 5.27,
+      "flow_before_m3h": 40.7,
+      "flow_after_m3h": 36.61,
+      "flow_drop_pct": 10.1,
+      "fan_fraction_of_free_air_after": 0.39,
+      "limit_pct": 10.0,
+      "ok": false,
+      "fan": {
+        "model": "9215-Y: 12 V, 0-4000 rpm PWM, 14.1-55.26 CFM, 0.84-2.87 mmH2O, 0.24-2.28 W, 4-pin 2510 (S06 p.2, drawing p.11)",
+        "dp0_pa": 28.1,
+        "q_free_m3h": 93.9,
+        "note": "9215-Y at full speed (12 V, 4000 rpm): 55.26 CFM free air, 2.87 mmH2O at zero flow (S06 p.2); straight-line curve between the two. Blows up: it pulls air in through the fin block's open sides and out through the lid grille (user, 2026-10-27, on the fitted cooler)."
+      },
+      "operating_point": {
+        "q_m3h": 40.7,
+        "dp_pa": 15.92,
+        "fraction_of_free_air": 0.433,
+        "air_into_fan_c": 28.12,
+        "converged": true,
+        "case_revision": "0.9-g48r",
+        "source": "J501_DIR/exports/thermal/cooled-0.9.json",
+        "note": "the J501's CFD of the bare box at 40 W in 25 C air"
+      },
+      "method": "losses K x 0.5 rho v^2 (rho 1.2): K = 1 through the grille's gaps (the entry and the bars), K = 1 for the turn down into the fan on the whole flow across the duct over the fan's centre; the box's own resistance as k q^2 through the J501 CFD's operating point; the fan's straight-line curve from its J501 parameters (dp0, q_free); the new flow where the two meet",
+      "sensitivity_flow_drop_pct": {
+        "the plan's duct: a 124 mm mouth flaring from the \u00d8111 collar, 2 mm bars on 8": 18.0,
+        "a 124 mm mouth with this grille, as wide back to the fan": 14.9,
+        "K = 1.5 for the turn": 11.8,
+        "Idelchik: a sharp inlet (0.5) and the bars by Kirschmer (0.22) on the mouth speed, the turn K = 1": 7.7,
+        "with the roof cells the floor covers, as if all the air left through the roof (upper bound)": 20.6,
+        "at the J501's first Rev 0.9 point (27.5 m3/h at 19.9 Pa, the plan's)": 4.7,
+        "the plan's duct at that point": 9.1
+      },
+      "not_modelled": "the open roof cells the shroud's floor covers (they vent through the 1 mm under it: intake_seal; bounded in the sensitivity), the deck over the exhaust, the fan's swirl",
+      "bench_proof": "the thermometer, as the J501's own criterion: the box at 40 W (a 40 W nvpmodel under load) with the adapter on and the turret parked, a thermocouple in the collar 10 mm over the grille and one in the room 0.5 m away at the same height, logged for 30 min: the intake within 3 K of the room, and the module's temperatures from tegrastats no worse than for the same 30 min without the adapter (task N17)",
+      "note": "hand estimate on the J501 0.9-g48r fan and its CFD's operating point (not converged: rerun this build when it settles); the mouth is as wide as the deck's front legs allow"
+    },
+    "exhaust": {
+      "mouth_x_mm": 90.5,
+      "mouth_z_mm": [
+        100.0,
+        137.0
+      ],
+      "mouth_w_mm": 158.0,
+      "j501_intakes_top_z_mm": 88,
+      "intakes_below_mouth_mm": 12.0,
+      "fan_blows": "up (exhaust through the lid grille; J501 thermal.fan.note)",
+      "plume": {
+        "keep_out": {
+          "x_mm": [
+            90.5,
+            190.5
+          ],
+          "half_width_mm": 94.0,
+          "z_mm": [
+            100.0,
+            217.0
+          ]
+        },
+        "least_mm": 0.0,
+        "nearest": {
+          "part": "barrel",
+          "pan_deg": 0.0,
+          "tilt_deg": -25.0
+        },
+        "required_mm": 10.0,
+        "ok": false,
+        "how": "the J501 fan blows up into the shroud, whose duct throws the plume forward out of the deck's mouth, where it rises: the box ahead of the mouth is kept clear of the turret at every pan of the grid, level and fully depressed"
+      },
+      "ok": false,
+      "note": "the J501 exhaust leaves the deck's front mouth (158.0 mm wide, z 100.0-137.0), 12.0 mm above the J501's highest intake vent, with the front corners walled; no part of the turret comes within 0.0 mm of the plume's keep-out ahead of the mouth at the sampled pan grid, level and full depression; positive tilt and intermediate poses were not checked by this plume sample. To prove on the bench: the J501's intake within 3 K of the room at full load with the turret on (bench_proof)"
+    }
+  },
+  "limits": "Scoped sampled CAD/model evidence. Airflow 10.1% loss exceeds 10% and exhaust least clearance 0 mm is below 10 mm; both remain failed. No physical fit, laser class, feed, HIL, continuous collision or whole-program qualification."
+}

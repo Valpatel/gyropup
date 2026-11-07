@@ -290,6 +290,285 @@
      25.0
     ]
    ],
+   "antenna_tilt_up_deg": [
+    [
+     -170.0,
+     12.0
+    ],
+    [
+     -165.0,
+     12.0
+    ],
+    [
+     -160.0,
+     12.0
+    ],
+    [
+     -155.0,
+     12.0
+    ],
+    [
+     -150.0,
+     12.0
+    ],
+    [
+     -145.0,
+     12.0
+    ],
+    [
+     -140.0,
+     12.0
+    ],
+    [
+     -135.0,
+     12.0
+    ],
+    [
+     -130.0,
+     12.0
+    ],
+    [
+     -125.0,
+     12.0
+    ],
+    [
+     -120.0,
+     12.0
+    ],
+    [
+     -115.0,
+     12.0
+    ],
+    [
+     -110.0,
+     12.0
+    ],
+    [
+     -105.0,
+     12.0
+    ],
+    [
+     -100.0,
+     12.0
+    ],
+    [
+     -95.0,
+     12.0
+    ],
+    [
+     -90.0,
+     12.0
+    ],
+    [
+     -85.0,
+     12.0
+    ],
+    [
+     -80.0,
+     12.0
+    ],
+    [
+     -75.0,
+     12.0
+    ],
+    [
+     -70.0,
+     12.0
+    ],
+    [
+     -65.0,
+     12.0
+    ],
+    [
+     -60.0,
+     12.0
+    ],
+    [
+     -55.0,
+     12.0
+    ],
+    [
+     -50.0,
+     12.0
+    ],
+    [
+     -45.0,
+     12.0
+    ],
+    [
+     -40.0,
+     12.0
+    ],
+    [
+     -35.0,
+     12.0
+    ],
+    [
+     -30.0,
+     12.0
+    ],
+    [
+     -25.0,
+     12.0
+    ],
+    [
+     -20.0,
+     12.0
+    ],
+    [
+     -15.0,
+     12.0
+    ],
+    [
+     -10.0,
+     12.0
+    ],
+    [
+     -5.0,
+     12.0
+    ],
+    [
+     0.0,
+     12.0
+    ],
+    [
+     5.0,
+     12.0
+    ],
+    [
+     10.0,
+     12.0
+    ],
+    [
+     15.0,
+     12.0
+    ],
+    [
+     20.0,
+     12.0
+    ],
+    [
+     25.0,
+     12.0
+    ],
+    [
+     30.0,
+     12.0
+    ],
+    [
+     35.0,
+     12.0
+    ],
+    [
+     40.0,
+     12.0
+    ],
+    [
+     45.0,
+     12.0
+    ],
+    [
+     50.0,
+     12.0
+    ],
+    [
+     55.0,
+     12.0
+    ],
+    [
+     60.0,
+     12.0
+    ],
+    [
+     65.0,
+     12.0
+    ],
+    [
+     70.0,
+     12.0
+    ],
+    [
+     75.0,
+     12.0
+    ],
+    [
+     80.0,
+     12.0
+    ],
+    [
+     85.0,
+     12.0
+    ],
+    [
+     90.0,
+     12.0
+    ],
+    [
+     95.0,
+     12.0
+    ],
+    [
+     100.0,
+     12.0
+    ],
+    [
+     105.0,
+     12.0
+    ],
+    [
+     110.0,
+     12.0
+    ],
+    [
+     115.0,
+     12.0
+    ],
+    [
+     120.0,
+     12.0
+    ],
+    [
+     125.0,
+     12.0
+    ],
+    [
+     130.0,
+     12.0
+    ],
+    [
+     135.0,
+     12.0
+    ],
+    [
+     140.0,
+     12.0
+    ],
+    [
+     145.0,
+     12.0
+    ],
+    [
+     150.0,
+     12.0
+    ],
+    [
+     155.0,
+     12.0
+    ],
+    [
+     160.0,
+     12.0
+    ],
+    [
+     165.0,
+     12.0
+    ],
+    [
+     170.0,
+     12.0
+    ]
+   ],
+   "antenna_limited_up_pans_deg": [],
    "antenna_limited_pans_deg": [],
    "note": "antennas: upright swivel dipoles on all four RP-SMA bulkheads (none chosen yet: typical 2.4 GHz swivel dipole, \u00d810 x 108 (est; none chosen))"
   },
@@ -386,9 +665,9 @@
   },
   "design_gates": {
    "file": "exports/turret/gates.json",
-   "verdicts": "exports/turret/gates",
+   "verdicts": "hardware/exports/turret/gates",
    "toolkit": "cadagent.gates (connectivity, containment, relation table, fasteners, motion)",
-   "fingerprint": "9b4a2f2753096b4a",
+   "fingerprint": "9cfeb944cfa391c3",
    "ok": true,
    "gates": {
     "connectivity": {
@@ -396,7 +675,7 @@
      "status": "warn",
      "counts": {
       "pass": 29,
-      "warn": 63,
+      "warn": 62,
       "fail": 0
      }
     },
@@ -422,7 +701,7 @@
      "ok": true,
      "status": "pass",
      "counts": {
-      "pass": 40,
+      "pass": 48,
       "warn": 0,
       "fail": 0
      }
@@ -498,7 +777,7 @@
     "how": "the J501 fan blows up into the shroud, whose duct throws the plume forward out of the deck's mouth, where it rises: the box ahead of the mouth is kept clear of the turret at every pan of the grid, level and fully depressed"
    },
    "ok": false,
-   "note": "the J501 exhaust leaves the deck's front mouth (158.0 mm wide, z 100.0-137.0), 12.0 mm above the J501's highest intake vent, with the front corners walled; no part of the turret comes within 0.0 mm of the plume's keep-out ahead of the mouth at any pan or tilt. To prove on the bench: the J501's intake within 3 K of the room at full load with the turret on (bench_proof)"
+   "note": "the J501 exhaust leaves the deck's front mouth (158.0 mm wide, z 100.0-137.0), 12.0 mm above the J501's highest intake vent, with the front corners walled; no part of the turret comes within 0.0 mm of the plume's keep-out ahead of the mouth at the sampled pan grid, level and full depression; positive tilt and intermediate poses were not checked by this plume sample. To prove on the bench: the J501's intake within 3 K of the room at full load with the turret on (bench_proof)"
   },
   "shroud_fit": {
    "legs_mm": {
@@ -621,8 +900,8 @@
    ],
    "hard_stop_deg": 173.5,
    "encoder_counts_per_turret_deg": 34.1,
-   "inertia_kg_m2": 0.00491,
-   "accel_at_cap_deg_s2": 51513,
+   "inertia_kg_m2": 0.0049,
+   "accel_at_cap_deg_s2": 51521,
    "time_to_full_slew_ms": 1.7
   },
   "tilt": {
@@ -630,7 +909,7 @@
    "max_deg_s": 270,
    "range_deg": [
     -25.0,
-    0.0
+    12.0
    ],
    "group_mass_g": 771,
    "com_ahead_mm": -7.7,
@@ -695,7 +974,7 @@
   "parameters_git": {
    "state": "committed",
    "head": "240be82ec5420e989dbfad07d76ab62ea3e83a50",
-   "branch": "rev0.9-g48r",
+   "branch": "HEAD",
    "tags_at_head": [],
    "file": "cad/parameters.json"
   },
