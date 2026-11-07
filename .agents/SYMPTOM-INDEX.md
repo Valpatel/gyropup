@@ -144,3 +144,5 @@
 - A fresh scene would describe old stops, an unverified module class, or broader clearance than sampled: [freeze generated explanations with actual mechanical constraints](inbox/2026-11-05-root-moves-need-consumer-and-publication-maps.md#freeze-generated-explanations-alongside-mechanical-constraints).
 
 - Independent pivots still permit a copied manifest owner or stale landmark indices: [bind source-audited ownership to actual loaded asset bytes](inbox/2026-10-28-rendered-joints-need-independent-datums.md#reference-ownership-and-asset-identity-must-also-be-independent).
+
+- Cleanup or record-writing masks the original producer error: [persist phase evidence independently and retain the primary exception](inbox/2026-11-05-ci-classification-needs-phase-evidence.md#cleanup-failures-must-not-replace-the-producers-original-error).
