@@ -1,0 +1,103 @@
+{
+  "job": 246,
+  "producer_revision": "dba8954adb10cf4d796b35eaa457152e41cb89b3",
+  "review": "https://github.com/Valpatel/gyropup/pull/255#issuecomment-6706542332",
+  "candidate_archives": {
+    "connector3-produced": "91717a97ff5f54465ac0ad86301eed1c71db66f738e21b139e7355d8eec4b157",
+    "interfaces": "700ae3d74bd68a656188539e0f7906d360f3c799be2c4c2916d33dfe55b595ed",
+    "insert-fit": "8455e88e4390490dd250ed2b7963b883f084d27c26088131bb9e029ec507bb79"
+  },
+  "fresh_guards": {
+    "source_files": 94,
+    "source_fingerprint": "f1a061f346ce7981612b3e2bd40519ac358c28b3e68c5456bd91172aea11dccc",
+    "all_reported_contexts": true,
+    "original_destinations": 18,
+    "sealed_candidate_payloads": 18
+  },
+  "outputs": {
+    "docs/research/carrier-service-connectors/external-pose.json": {
+      "bytes": 180102,
+      "sha256": "59d11dd937763a25146113990f08bbfd8693493833c71d5782e30fb031d77bdc"
+    },
+    "docs/research/carrier-service-connectors/private-input-diagnosis.json": {
+      "bytes": 17452,
+      "sha256": "2c85f77c7a849e7d7c37532dd3ea4a5a7ad173ea48ea92a1dc75640c6cf2944d"
+    },
+    "docs/research/carrier-service-connectors/support-candidate.json": {
+      "bytes": 178034,
+      "sha256": "3b747cf030a205050559832a2135f3c472a25681e95484ed7b8be597ccc6bb9e"
+    },
+    "hardware/exports/turret/base-board-service/connectors/C3-support-candidate.step": {
+      "bytes": 155698,
+      "sha256": "c921ccaa7c7064d183c42da4159fb9a08360fd94d1f6cfe90874c27f70a55cd8"
+    },
+    "hardware/exports/turret/base-board-service/connectors/C3-support-layout.step": {
+      "bytes": 2773244,
+      "sha256": "aba3a692203ad1672aabb64020d9a8c8aa403effc12d114bdcf4d5f70fd21ad4"
+    },
+    "hardware/exports/turret/base-board-service/connectors/carrier-support-candidate.step": {
+      "bytes": 194490,
+      "sha256": "5866291653066bc45e60727a9f7aae5e77359e071f29afc0810fc59baba36935"
+    },
+    "hardware/exports/turret/base-board-service/interfaces/carrier-wiring-candidate.step": {
+      "bytes": 126924,
+      "sha256": "8e04c7568aa4834d75227c57a7c4bfefa28e1a62df8914e2711cfd56bc7ce304"
+    },
+    "hardware/exports/turret/base-board-service/interfaces/carrier-wiring-layout.step": {
+      "bytes": 2420786,
+      "sha256": "892fc79a776c9ce47540c2241a73132421710345927d3cf7c3c33cf004b3a074"
+    },
+    "hardware/exports/turret/base-board-service/interfaces/interfaces.json": {
+      "bytes": 204785,
+      "sha256": "8272dc9477b8d7200c749534b4c7cdc62280e42de02419aad611ac5769b59663"
+    },
+    "hardware/exports/turret/base-board-service/interfaces/pan-base-wiring-candidate.step": {
+      "bytes": 1678423,
+      "sha256": "07b75ebbe0eeb60b59f7bd61b63f985781f724f423628ab31dfd6c0d8b30cf15"
+    },
+    "hardware/exports/turret/carrier-insert-fit/base-anchor.3mf": {
+      "bytes": 4960,
+      "sha256": "6c2a09c805a503e327404999aba049bd897911074f535795d627955cb870a615"
+    },
+    "hardware/exports/turret/carrier-insert-fit/base-anchor.step": {
+      "bytes": 28437,
+      "sha256": "5832bbbd312c46d77a4f05cd63e295a7bd7533d31ab17970082662479b2be85f"
+    },
+    "hardware/exports/turret/carrier-insert-fit/base-anchor.stl": {
+      "bytes": 22084,
+      "sha256": "ce29f74ad434979e27b0025e5bb06cfcc07bd5ded646b1a483fc5f211352d8d7"
+    },
+    "hardware/exports/turret/carrier-insert-fit/carrier-boss.3mf": {
+      "bytes": 9629,
+      "sha256": "b46b7c50eb099ea07d1e05f0551bef47ffe4c697ffbdcf0cd5af2d954d619bd2"
+    },
+    "hardware/exports/turret/carrier-insert-fit/carrier-boss.step": {
+      "bytes": 35634,
+      "sha256": "0f53ec424aca22fba1fc0ea8158cd35ce2a16585148811583c018af456d26d3e"
+    },
+    "hardware/exports/turret/carrier-insert-fit/carrier-boss.stl": {
+      "bytes": 46784,
+      "sha256": "374fcbef1209f1ea25dfa195dcf7106e197ecbbaf919842c50a924967da563d3"
+    },
+    "hardware/exports/turret/carrier-insert-fit/measurements.csv": {
+      "bytes": 560,
+      "sha256": "763fce59e411c8a81f168694643a536181d41c1891dffa0eec1f62ad4f8f8820"
+    },
+    "hardware/exports/turret/carrier-insert-fit/receipt.json": {
+      "bytes": 30094,
+      "sha256": "f06dba520e43541b972da4c87d0838d75341035edb8017cd59be4120c4f60429"
+    }
+  },
+  "post_adoption_existing_consumers": [
+    "tests/hardware/interfaces/test-carrier-connector-inputs.py",
+    "tests/hardware/interfaces/test-carrier-connector-pose.py",
+    "tests/hardware/interfaces/test-carrier-connector-support.py",
+    "tests/hardware/interfaces/test-base-board-interfaces.py",
+    "docs/research/carrier-insert-fit/verify.py",
+    "docs/research/carrier-insert-fit/test_guards.py"
+  ],
+  "adoption_pass": true,
+  "engineering_values": "Unchanged. The 113 JSON differences are actual source membership/hash/fingerprint/revision, artifact digests and elapsed time only.",
+  "geometry": "Six individual STEP DATA blocks exact; both layout geometry/placements exact and resolved presentation graphs equal. Both STL, both 3MF, measurements CSV byte-exact.",
+  "qualification": "No physical fit, load, service or manufacturing qualification; native gates, lug/support, scene, media and art remain separate."
+}
