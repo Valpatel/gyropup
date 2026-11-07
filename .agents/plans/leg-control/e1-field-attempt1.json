@@ -1,0 +1,32 @@
+{
+  "date": "2026-11-07",
+  "source": "ec2343b337fda3942833bedee7c5fbaa7dfea4ff",
+  "original_status": "FAILED",
+  "exit": 1,
+  "command": "prlimit --as=12884901888 --cpu=3600:3610 -- <retained-cad-python> -B tools/engineering/legs/export-hip-frame-e1.py",
+  "actual_error": "numpy._core._exceptions._ArrayMemoryError: Unable to allocate 1.29 GiB for an array with shape (173155659,) and data type float64",
+  "phase_seconds": 144.61405579466373,
+  "preflight_mem_available_gib": 52.75460433959961,
+  "actual_worker_runtime_exit": 0,
+  "path_controls_exit": 0,
+  "all_phase_groups_gone": true,
+  "outer_group_gone": true,
+  "full_source_equal": true,
+  "full_hardware_equal": true,
+  "full_retained_runtime_equal": true,
+  "final_guard_errors": [],
+  "archives": {
+    "observed-media.tgz": "ef8bab47408ec18c06cc59b75827f5c0a1170e378a0e8132ffb87955d60e3551",
+    "original-media.tgz": "5ce27de8cce1fb063491b82cced388707e5f6207d6b00adea2fcafeaba0585eb"
+  },
+  "changed_original_media_files": [],
+  "observed_extra_files": [
+    "summary.json"
+  ],
+  "new_solved_field": false,
+  "adoption_approved": false,
+  "raw_failure_log_sha256": "a637c79643b6983e756ef56efe5e04f7c892ac46877c0cabe92b804641a176a6",
+  "published_failure_log_sha256": "36f2fb42fe909c28de5a95a2fbd25168d69489eaa203056851fff7e55369771a",
+  "redaction": "Only the exact OS-user home prefix was replaced; traceback, array shape, allocation size and native failure unchanged.",
+  "limits": "This run failed. The preflight available-memory observation does not prove contemporaneous resident peak or establish the exact needed virtual-address bound. No algorithm, mesh, material, threshold or old receipt changed."
+}

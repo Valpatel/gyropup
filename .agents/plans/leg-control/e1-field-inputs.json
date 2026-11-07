@@ -114,5 +114,5 @@
     "hardware/exports/leg/fea/hip-frame-e1-media/hip_frame-E1.json": "57d35cec20107572c0fa222db16cbd66e2c74e8469b09927f9ca376ab4291e58",
     "hardware/exports/leg/fea/hip-frame-e1-media/hip_frame-E1.png": "e669557dd7be8d402ee3f2a814f140a062b679e6d13161a9665bc006fe23e5a8"
   },
-  "runtime_contract_sha256": "f977bcfdac66bcabad9c8fab26f67365f43560b1c54747f34dfb745e7197fefb"
+  "runtime_contract_sha256": "44dff551c60439fa0dc4b26f0ecf12728d1dab5e426022644903ff2c7afe6414"
 }

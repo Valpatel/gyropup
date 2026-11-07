@@ -160,7 +160,7 @@ def main():
         code=worker_preflight_code()
         phase('actual-worker-runtime',[python,'-B','-c',code,str(contract_path),args.runtime],timeout=90)
         phase('six-path-controls',[python,'-B','tests/evidence/test-study-media.py','ProducerPaths','RendererPaths'],timeout=60)
-        phase('genuine-field',['prlimit','--as=12884901888','--cpu=3600:3610','--',python,'-B','tools/engineering/legs/export-hip-frame-e1.py'],timeout=900)
+        phase('genuine-field',['prlimit','--as=25769803776','--cpu=3600:3610','--',python,'-B','tools/engineering/legs/export-hip-frame-e1.py'],timeout=900)
         # No historical object fetch is needed: the fresh receipt must bind the
         # actual clean executed HEAD already present in this immutable checkout.
         receipt=json.loads((MEDIA/'field-receipt.json').read_text())

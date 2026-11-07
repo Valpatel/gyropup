@@ -115,7 +115,7 @@
   "platform": "aarch64",
   "limits": {
     "cpus": 4,
-    "address_space_gib": 12,
+    "address_space_gib": 24,
     "native_wall_seconds": 900,
     "outer_wall_seconds": 1800,
     "disk_gib": 8

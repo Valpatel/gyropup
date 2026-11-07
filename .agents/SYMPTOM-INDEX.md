@@ -158,3 +158,4 @@
 - Runtime uses current stops but an active introduction still asserts a zero-degree rule: [keep current descriptions tied to shared bounds](inbox/2026-11-05-root-moves-need-consumer-and-publication-maps.md#current-descriptions-must-follow-shared-limits-too).
 
 - NaN or infinite requested motor torque becomes a limit command or a non-finite output: [reject it before saturation, and distinguish historical media validity from unfinished regeneration](inbox/2026-11-07-nonfinite-torque-is-not-a-saturation-command.md).
+- Sparse finite-element assembly raises an allocation error under `RLIMIT_AS` despite host memory headroom: [distinguish virtual-address bounds from resident-memory evidence](inbox/2026-11-07-fem-address-space-cap-is-not-resident-memory.md).
