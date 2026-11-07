@@ -95,14 +95,24 @@ try:
   line='Hi! I’m Gyropup. Ready for a backyard adventure?';shutil.copyfile(directory/manifest['lines'][line]['clip'],OUT/(label+'-landing.mp3'))
   phase(label+'-decode',['ffmpeg','-v','error','-i',str(OUT/(label+'-landing.mp3')),'-f','null','-'])
  result.update(collection_pass=True,affected=len(affected),unchanged_lines=len(old)-len(affected),source_bindings_unchanged_outside_voice=True)
+except BaseException as error:
+ result['original_error']={'type':type(error).__name__,'message':str(error)}
+ raise
 finally:
- result['processes_quiescent']=processes_quiescent
+ result['processes_quiescent']=processes_quiescent;cleanup_errors=[]
  try:
   if processes_quiescent:
-   after=tracked();write('source-after.json',after);result['source_restored']=after==before
-   result['voice_restored']=inventory(ORIGINAL_VOICE)==inventory(backup)
-   assert result['source_restored']and result['voice_restored']
-   assert not subprocess.check_output(['git','status','--porcelain'],text=True).strip()
-  else:result['source_restored']=False
- finally:write('result.json',result)
-assert result['collection_pass']and result['source_restored']and result['processes_quiescent'];print(json.dumps(result))
+   try:result['observed_archive']=archive(VOICE,'observed-voice')
+   except BaseException as error:cleanup_errors.append({'stage':'partial-archive','type':type(error).__name__,'message':str(error)})
+ finally:
+  try:
+   if processes_quiescent:
+    after=tracked();write('source-after.json',after);result['source_restored']=after==before
+    result['voice_restored']=inventory(ORIGINAL_VOICE)==inventory(backup)
+    assert result['source_restored']and result['voice_restored']
+    assert not subprocess.check_output(['git','status','--porcelain'],text=True).strip()
+   else:result['source_restored']=False
+  except BaseException as error:cleanup_errors.append({'stage':'source-final-guard','type':type(error).__name__,'message':str(error)})
+  finally:
+   result['cleanup_errors']=cleanup_errors;write('result.json',result)
+assert not result.get('cleanup_errors')and result['collection_pass']and result['source_restored']and result['processes_quiescent'];print(json.dumps(result))
