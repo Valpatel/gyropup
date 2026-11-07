@@ -1,0 +1,414 @@
+{
+  "source_revision": "4585596492a75a08489ef99b6b9e3b8334c5e5ee",
+  "files": [
+    {
+      "source": "research/body-sheet-metal/README.md",
+      "destination": "docs/research/body-sheet-metal/README.md",
+      "size": 19326,
+      "sha256": "2cf177e6a7c75824286ac99a1f72ff2a1638ecd24fc8e2868a7c8fc50a7f0233"
+    },
+    {
+      "source": "research/body-sheet-metal/dxf/bay_floor_5052-0.063_x1.dxf",
+      "destination": "docs/research/body-sheet-metal/dxf/bay_floor_5052-0.063_x1.dxf",
+      "size": 58004,
+      "sha256": "2ca6433af0529980644039ba784a80e52144e2af06d2abca0a7b1e65f3adc86a"
+    },
+    {
+      "source": "research/body-sheet-metal/dxf/bay_side_5052-0.063_x2.dxf",
+      "destination": "docs/research/body-sheet-metal/dxf/bay_side_5052-0.063_x2.dxf",
+      "size": 61283,
+      "sha256": "25f01d8908868ed0c27b6d34bc8b88923df44481451feccc8efc50043612b164"
+    },
+    {
+      "source": "research/body-sheet-metal/dxf/belly_plate_6061-0.100_x1.dxf",
+      "destination": "docs/research/body-sheet-metal/dxf/belly_plate_6061-0.100_x1.dxf",
+      "size": 58671,
+      "sha256": "7602e2ae4e02b72caa66b433b302aa75d8dbd4571acc814268f7e2458088c4dd"
+    },
+    {
+      "source": "research/body-sheet-metal/dxf/bus_bar_C110-0.125_x2.dxf",
+      "destination": "docs/research/body-sheet-metal/dxf/bus_bar_C110-0.125_x2.dxf",
+      "size": 55679,
+      "sha256": "9f1c8627fe15d55ae00b37d3a981b6248186c6ff3ec2f2614abe0f3e7f4d9a88"
+    },
+    {
+      "source": "research/body-sheet-metal/dxf/cheek_5052-0.187_x2.dxf",
+      "destination": "docs/research/body-sheet-metal/dxf/cheek_5052-0.187_x2.dxf",
+      "size": 58664,
+      "sha256": "403b5cfb30e65192644c61d154d8857351886a6b4ed71e939f5c46d8977ec4a0"
+    },
+    {
+      "source": "research/body-sheet-metal/dxf/cheek_pem_5052-0.187_x2.dxf",
+      "destination": "docs/research/body-sheet-metal/dxf/cheek_pem_5052-0.187_x2.dxf",
+      "size": 58678,
+      "sha256": "f6ee6801ea95071c1322a1456f213311e4eea5687a79fcb2041808c835da4ed9"
+    },
+    {
+      "source": "research/body-sheet-metal/dxf/compute_pallet_6061-0.125_x1.dxf",
+      "destination": "docs/research/body-sheet-metal/dxf/compute_pallet_6061-0.125_x1.dxf",
+      "size": 56631,
+      "sha256": "2a5811dca3089c98e8b6012eda589bffabcf6a9b22d7bc5042dfdc1db76e816b"
+    },
+    {
+      "source": "research/body-sheet-metal/dxf/deck_2b_5052-0.125_x1.dxf",
+      "destination": "docs/research/body-sheet-metal/dxf/deck_2b_5052-0.125_x1.dxf",
+      "size": 83533,
+      "sha256": "c9def8a34f1722191042700f5d8841335709ed4ca7db0612080c7f02c07149c7"
+    },
+    {
+      "source": "research/body-sheet-metal/dxf/deck_5052-0.100_x1.dxf",
+      "destination": "docs/research/body-sheet-metal/dxf/deck_5052-0.100_x1.dxf",
+      "size": 85380,
+      "sha256": "4d9bb0c09fca6accfd8ec8ec58799432ff1ea16e5dbdee60eede8fd92ce6ff8a"
+    },
+    {
+      "source": "research/body-sheet-metal/dxf/floor_tray_2b_5052-0.125_x1.dxf",
+      "destination": "docs/research/body-sheet-metal/dxf/floor_tray_2b_5052-0.125_x1.dxf",
+      "size": 58675,
+      "sha256": "214c2d2bfb613a970690807e0b9735d6925354175a62d16db9ad29389225eb3c"
+    },
+    {
+      "source": "research/body-sheet-metal/dxf/floor_tray_5052-0.125_x1.dxf",
+      "destination": "docs/research/body-sheet-metal/dxf/floor_tray_5052-0.125_x1.dxf",
+      "size": 60604,
+      "sha256": "3ea77c997b5e9bce535247aecfa2c10c902cf7dbd24e4b5f50bd443504867c11"
+    },
+    {
+      "source": "research/body-sheet-metal/dxf/keel_half_5052-0.090_x2.dxf",
+      "destination": "docs/research/body-sheet-metal/dxf/keel_half_5052-0.090_x2.dxf",
+      "size": 63053,
+      "sha256": "51f8b244b5340fc9d15e14d198237932983dbd68e8ea24ca4cd83ed04f202371"
+    },
+    {
+      "source": "research/body-sheet-metal/dxf/power_plate_5052-0.100_x1.dxf",
+      "destination": "docs/research/body-sheet-metal/dxf/power_plate_5052-0.100_x1.dxf",
+      "size": 61996,
+      "sha256": "26ea360714085af36f6e17483b4ddf19f22a6b6c02a1d85c1d2c44b9dfb2d318"
+    },
+    {
+      "source": "research/body-sheet-metal/dxf/probe_12pem_5052-0.125_x1.dxf",
+      "destination": "docs/research/body-sheet-metal/dxf/probe_12pem_5052-0.125_x1.dxf",
+      "size": 56199,
+      "sha256": "8fcb92cd03230fac6919a37d2411413ca250dbc528abd250bdb5756f24c45813"
+    },
+    {
+      "source": "research/body-sheet-metal/dxf/probe_2b_5052-0.125_x1.dxf",
+      "destination": "docs/research/body-sheet-metal/dxf/probe_2b_5052-0.125_x1.dxf",
+      "size": 55811,
+      "sha256": "7bcb4aff6c64557dfcc318b19cdfb508c414330c994c1da7e96caf3864dff957"
+    },
+    {
+      "source": "research/body-sheet-metal/dxf/probe_4pem_5052-0.125_x1.dxf",
+      "destination": "docs/research/body-sheet-metal/dxf/probe_4pem_5052-0.125_x1.dxf",
+      "size": 55403,
+      "sha256": "1c4e97131a32f37aa2e263a1bcdb784e09facdf957eb6d64eeacf882756ed6e0"
+    },
+    {
+      "source": "research/body-sheet-metal/dxf/probe_flat_5052-0.125_x1.dxf",
+      "destination": "docs/research/body-sheet-metal/dxf/probe_flat_5052-0.125_x1.dxf",
+      "size": 55397,
+      "sha256": "ebf718e16712a58d75d67f884d730ca5cdf7e990c77dc851fcf8e2e7ba48fc55"
+    },
+    {
+      "source": "research/body-sheet-metal/dxf/strap_5052-0.090_x2.dxf",
+      "destination": "docs/research/body-sheet-metal/dxf/strap_5052-0.090_x2.dxf",
+      "size": 57711,
+      "sha256": "821374c2164d9c362e086ba33b1aa872c5d3cc09ecc23590a41331f4824e88a8"
+    },
+    {
+      "source": "research/body-sheet-metal/dxf/turret_plate_6061-0.125_x1.dxf",
+      "destination": "docs/research/body-sheet-metal/dxf/turret_plate_6061-0.125_x1.dxf",
+      "size": 60242,
+      "sha256": "5f633f97cbec2c462d13d9dc31eae755cb2e8851cef9cdcf4a40381069452d7f"
+    },
+    {
+      "source": "research/body-sheet-metal/fea.py",
+      "destination": "docs/research/body-sheet-metal/fea.py",
+      "size": 9557,
+      "sha256": "43aab0382c8b674e989c9806930595bc50e25ea456c920d45a16cdc79a712b34"
+    },
+    {
+      "source": "research/body-sheet-metal/fea/A-mesh3/D1-hand-front.png",
+      "destination": "docs/research/body-sheet-metal/fea/A-mesh3/D1-hand-front.png",
+      "size": 105397,
+      "sha256": "aa68547dedae325ec9de8d2ffc95feab5115fba1cfcaacfa34672ff04ccfeb2d"
+    },
+    {
+      "source": "research/body-sheet-metal/fea/A-mesh3/D1-hand-riser.png",
+      "destination": "docs/research/body-sheet-metal/fea/A-mesh3/D1-hand-riser.png",
+      "size": 104358,
+      "sha256": "0a7a08be3434e1f7ac26afdecb917a2c95dc14ed84ba11cdf309e8359750b2e1"
+    },
+    {
+      "source": "research/body-sheet-metal/fea/A-mesh3/summary.json",
+      "destination": "docs/research/body-sheet-metal/fea/A-mesh3/summary.json",
+      "size": 7814,
+      "sha256": "aa7e6763e7c081215d22538506435f48b87b012974362c017f0eac081d2edb05"
+    },
+    {
+      "source": "research/body-sheet-metal/fea/A-tray2b/D1-hand-front.png",
+      "destination": "docs/research/body-sheet-metal/fea/A-tray2b/D1-hand-front.png",
+      "size": 107283,
+      "sha256": "8ee8067b660d6a6b36b93413884a4c2855dc4ee320ec6b0c2b42bf579458bec6"
+    },
+    {
+      "source": "research/body-sheet-metal/fea/A-tray2b/D1-hand-riser.png",
+      "destination": "docs/research/body-sheet-metal/fea/A-tray2b/D1-hand-riser.png",
+      "size": 107565,
+      "sha256": "c116ad0e3a710a6e06066d4c75fc4d4edd913f180896eee39f271d23c9d8f946"
+    },
+    {
+      "source": "research/body-sheet-metal/fea/A-tray2b/D2-turret-fall.png",
+      "destination": "docs/research/body-sheet-metal/fea/A-tray2b/D2-turret-fall.png",
+      "size": 98341,
+      "sha256": "d24d6203941b25e99b14a6fce739431d93dc4b3b22fc163aa8f9fa52899b7af5"
+    },
+    {
+      "source": "research/body-sheet-metal/fea/A-tray2b/T1-tray.png",
+      "destination": "docs/research/body-sheet-metal/fea/A-tray2b/T1-tray.png",
+      "size": 105804,
+      "sha256": "13b53425c0bd5e0d3c0f3d5227bf106419352b96ec7bd5491ef7f35a109e715a"
+    },
+    {
+      "source": "research/body-sheet-metal/fea/A-tray2b/summary.json",
+      "destination": "docs/research/body-sheet-metal/fea/A-tray2b/summary.json",
+      "size": 14981,
+      "sha256": "b6c34ee1d4df0e829608fb454ff2148e8f5fec3589afac280175c310baa05466"
+    },
+    {
+      "source": "research/body-sheet-metal/fea/A/D1-hand-front.png",
+      "destination": "docs/research/body-sheet-metal/fea/A/D1-hand-front.png",
+      "size": 107283,
+      "sha256": "8ee8067b660d6a6b36b93413884a4c2855dc4ee320ec6b0c2b42bf579458bec6"
+    },
+    {
+      "source": "research/body-sheet-metal/fea/A/D1-hand-riser.png",
+      "destination": "docs/research/body-sheet-metal/fea/A/D1-hand-riser.png",
+      "size": 107565,
+      "sha256": "c116ad0e3a710a6e06066d4c75fc4d4edd913f180896eee39f271d23c9d8f946"
+    },
+    {
+      "source": "research/body-sheet-metal/fea/A/D2-turret-fall.png",
+      "destination": "docs/research/body-sheet-metal/fea/A/D2-turret-fall.png",
+      "size": 98341,
+      "sha256": "d24d6203941b25e99b14a6fce739431d93dc4b3b22fc163aa8f9fa52899b7af5"
+    },
+    {
+      "source": "research/body-sheet-metal/fea/A/summary.json",
+      "destination": "docs/research/body-sheet-metal/fea/A/summary.json",
+      "size": 12035,
+      "sha256": "1d84a0a27c09e63564909126ec5f042099163b346360822a18ad01d8bc05ae7b"
+    },
+    {
+      "source": "research/body-sheet-metal/fea/B/S1-landing.png",
+      "destination": "docs/research/body-sheet-metal/fea/B/S1-landing.png",
+      "size": 151396,
+      "sha256": "b60a849c374cca2d767069db5e0a1be17b20ffe2de6c1bf6cb6ed9f6574c6238"
+    },
+    {
+      "source": "research/body-sheet-metal/fea/B/S1F-collapse.png",
+      "destination": "docs/research/body-sheet-metal/fea/B/S1F-collapse.png",
+      "size": 152454,
+      "sha256": "1268efa6386a06b05f2203719e82a6e4ea3d23be26c74ac4b8af67d9adf621b0"
+    },
+    {
+      "source": "research/body-sheet-metal/fea/B/S1b-one-leg-bound.png",
+      "destination": "docs/research/body-sheet-metal/fea/B/S1b-one-leg-bound.png",
+      "size": 131355,
+      "sha256": "88e077c2365bdb0a9cd45d9d8c4c726b3cafac8020622fe6eb4107def9952de4"
+    },
+    {
+      "source": "research/body-sheet-metal/fea/B/S2-twist.png",
+      "destination": "docs/research/body-sheet-metal/fea/B/S2-twist.png",
+      "size": 128650,
+      "sha256": "168e665640d4d94a161d5709c1d259ccbf23f45fad581e485b9208802365ec43"
+    },
+    {
+      "source": "research/body-sheet-metal/fea/B/S3-pitch.png",
+      "destination": "docs/research/body-sheet-metal/fea/B/S3-pitch.png",
+      "size": 123863,
+      "sha256": "31d1df0dfd911ea6c9a5d4d4fd4f3a6f422a716c6e692fbb527bc4d55384efa4"
+    },
+    {
+      "source": "research/body-sheet-metal/fea/B/summary.json",
+      "destination": "docs/research/body-sheet-metal/fea/B/summary.json",
+      "size": 24080,
+      "sha256": "30ab445c0bd9d614e30ceadabd6c71a1e276cd6a644879c12bbe60912816f7a2"
+    },
+    {
+      "source": "research/body-sheet-metal/fea/C/D1-hand-front.png",
+      "destination": "docs/research/body-sheet-metal/fea/C/D1-hand-front.png",
+      "size": 109544,
+      "sha256": "745310f3655234b2d2d0f00f61a2f74600350bd2adecef775c0f11057ecb5a24"
+    },
+    {
+      "source": "research/body-sheet-metal/fea/C/D1-hand-riser.png",
+      "destination": "docs/research/body-sheet-metal/fea/C/D1-hand-riser.png",
+      "size": 112089,
+      "sha256": "a1b45f8a494bcfbe42781c9a32830f69aac2f381978b41fad18c406349bdd565"
+    },
+    {
+      "source": "research/body-sheet-metal/fea/C/summary.json",
+      "destination": "docs/research/body-sheet-metal/fea/C/summary.json",
+      "size": 12178,
+      "sha256": "afd44f595d5c56d4a8f2c477e6f245e38e8be3491e2b5e2d099a1e7574ea1daa"
+    },
+    {
+      "source": "research/body-sheet-metal/fea/today/D1-hand-front.png",
+      "destination": "docs/research/body-sheet-metal/fea/today/D1-hand-front.png",
+      "size": 105203,
+      "sha256": "43eda6a469b130bb1945426f64df85bd66a729f814f9c852598c3a80f2246304"
+    },
+    {
+      "source": "research/body-sheet-metal/fea/today/D1-hand-riser.png",
+      "destination": "docs/research/body-sheet-metal/fea/today/D1-hand-riser.png",
+      "size": 107950,
+      "sha256": "f849831d5dec5f789f33f96d97fbd748cd3c8e8924e960402ebc9ff08522db7b"
+    },
+    {
+      "source": "research/body-sheet-metal/fea/today/D2-turret-fall.png",
+      "destination": "docs/research/body-sheet-metal/fea/today/D2-turret-fall.png",
+      "size": 96989,
+      "sha256": "493d242531c9599c9f88d1efc6d9285db1c9e8a3d39959d8dd1e279ee959bce5"
+    },
+    {
+      "source": "research/body-sheet-metal/fea/today/S1-landing.png",
+      "destination": "docs/research/body-sheet-metal/fea/today/S1-landing.png",
+      "size": 154921,
+      "sha256": "dcf884aa410708fe874ebb8b00915eb56335ed763cdd1252c0ab7d4eec9035e4"
+    },
+    {
+      "source": "research/body-sheet-metal/fea/today/S1F-collapse.png",
+      "destination": "docs/research/body-sheet-metal/fea/today/S1F-collapse.png",
+      "size": 156003,
+      "sha256": "af2c7ae7ddeddc36efc4d6b4f33d187b3e222f5ebad10b942ceb2f68830afc9d"
+    },
+    {
+      "source": "research/body-sheet-metal/fea/today/S1b-one-leg-bound.png",
+      "destination": "docs/research/body-sheet-metal/fea/today/S1b-one-leg-bound.png",
+      "size": 134184,
+      "sha256": "f0798d0c392213916785792e1af73ce080eadb2c678743f0f34ac5ef163a938d"
+    },
+    {
+      "source": "research/body-sheet-metal/fea/today/S2-twist.png",
+      "destination": "docs/research/body-sheet-metal/fea/today/S2-twist.png",
+      "size": 132337,
+      "sha256": "3a5049fa043236ce436447206a19d15db64dbcccf7e063e898ab269561109bf7"
+    },
+    {
+      "source": "research/body-sheet-metal/fea/today/S3-pitch.png",
+      "destination": "docs/research/body-sheet-metal/fea/today/S3-pitch.png",
+      "size": 126593,
+      "sha256": "33dc73ff02fe45c4289fb28d1df66450cd53561be16e14a5582a4b2d64fc3938"
+    },
+    {
+      "source": "research/body-sheet-metal/fea/today/T1-tray.png",
+      "destination": "docs/research/body-sheet-metal/fea/today/T1-tray.png",
+      "size": 112018,
+      "sha256": "8ebe38264638e9c039075e209274ce27defdd2182caefc2b6ac4c86b00f8efd7"
+    },
+    {
+      "source": "research/body-sheet-metal/fea/today/summary.json",
+      "destination": "docs/research/body-sheet-metal/fea/today/summary.json",
+      "size": 43652,
+      "sha256": "27ba3f1d6b68016f7585cf4824b2d7138ac8325e0c80a7835ca1f6a800cdf02b"
+    },
+    {
+      "source": "research/body-sheet-metal/fig-cost.png",
+      "destination": "docs/research/body-sheet-metal/fig-cost.png",
+      "size": 59664,
+      "sha256": "8efaba610b340e111241ac5db7fd78facfecdf405aed612757933a91582d6bf0"
+    },
+    {
+      "source": "research/body-sheet-metal/fig-counts.png",
+      "destination": "docs/research/body-sheet-metal/fig-counts.png",
+      "size": 62203,
+      "sha256": "d0051c61e10e5ac6610bfdfd402cc00da0a04d338ebc89862006b7bdb8ba1ac7"
+    },
+    {
+      "source": "research/body-sheet-metal/fig-fea.png",
+      "destination": "docs/research/body-sheet-metal/fig-fea.png",
+      "size": 81447,
+      "sha256": "58d73caf6cc4eae48dbd2f1f1fdeee78695c767a32181020f240d1c0a6c8b4f0"
+    },
+    {
+      "source": "research/body-sheet-metal/fig-joints.png",
+      "destination": "docs/research/body-sheet-metal/fig-joints.png",
+      "size": 90055,
+      "sha256": "dd06311b822e7e23a11920e4584b860b476ad24d42f36f67c66c6599fb5f3655"
+    },
+    {
+      "source": "research/body-sheet-metal/fig-pem-rules.png",
+      "destination": "docs/research/body-sheet-metal/fig-pem-rules.png",
+      "size": 90081,
+      "sha256": "d58ad5489b1c509e4fb80749ad6ad116c6e44e3d2e3a6f06d83de3fcbd151eb4"
+    },
+    {
+      "source": "research/body-sheet-metal/fig-probe.png",
+      "destination": "docs/research/body-sheet-metal/fig-probe.png",
+      "size": 33532,
+      "sha256": "b153cd2b42c1cc0607f0dc455cfb5f6edcbfa351a9feb48013d5cb88fd30318d"
+    },
+    {
+      "source": "research/body-sheet-metal/fig-sections.png",
+      "destination": "docs/research/body-sheet-metal/fig-sections.png",
+      "size": 90820,
+      "sha256": "078d58d698a9041f5b623e5eba22a5ff484db073467fb42f6479383c2f75db6e"
+    },
+    {
+      "source": "research/body-sheet-metal/figures.py",
+      "destination": "docs/research/body-sheet-metal/figures.py",
+      "size": 22526,
+      "sha256": "f44f717b229133f0ec61ef828f0c4fb67b677ffe6172117238ecf14f602e3d9e"
+    },
+    {
+      "source": "research/body-sheet-metal/parts.py",
+      "destination": "docs/research/body-sheet-metal/parts.py",
+      "size": 11635,
+      "sha256": "b10bdfd82c2354da1de82faee06014e90c9d3f4d781230146388feb0d6391876"
+    },
+    {
+      "source": "research/body-sheet-metal/prices.json",
+      "destination": "docs/research/body-sheet-metal/prices.json",
+      "size": 21569,
+      "sha256": "dcbb65e11c4a189eb466f615175f0fcf475c022bd9848e66762131573c285a1f"
+    },
+    {
+      "source": "research/body-sheet-metal/quote.py",
+      "destination": "docs/research/body-sheet-metal/quote.py",
+      "size": 4287,
+      "sha256": "ed8169a8df493940fc974e041a5b88b3f386aa7845dde61852a7387a843b86b2"
+    },
+    {
+      "source": "research/body-sheet-metal/study.json",
+      "destination": "docs/research/body-sheet-metal/study.json",
+      "size": 95309,
+      "sha256": "b65379ed8ebe967ba3cf2cb2f6c7f533cc8b7eac2a2b91ee2a8b30c474894440"
+    },
+    {
+      "source": "research/body-sheet-metal/study.py",
+      "destination": "docs/research/body-sheet-metal/study.py",
+      "size": 25380,
+      "sha256": "646b796e2890bd2c2693a66481b85626b1caad546e0b3845bae32e343c49413f"
+    }
+  ],
+  "historical_decisions": {
+    "source": "docs/decisions.yaml",
+    "sha256": "604d9e582fdfc91f5a07369af88e998f964caace4fdb2af4098c00a6a05113f7",
+    "do_not_merge_into_current_program_decisions": true,
+    "destination": "docs/research/body-sheet-metal/decisions-historical.yaml"
+  },
+  "readme_links": [
+    "fig-sections.png",
+    "fig-cost.png",
+    "fig-probe.png",
+    "fig-counts.png",
+    "fig-fea.png",
+    "fig-pem-rules.png",
+    "fig-joints.png"
+  ],
+  "integration_base": "48024e5644d178340d7787218e836568a3f35d2d",
+  "readme_prefix_utf8": "> **Historical study, recovered 2026-11-07.** This is the unmerged 2026-11-01\u201302 study from [commit `4585596`](https://github.com/Valpatel/gyropup/tree/4585596492a75a08489ef99b6b9e3b8334c5e5ee/research/body-sheet-metal) and closed, unmerged [PR #158](https://github.com/Valpatel/gyropup/pull/158). Its prices, design assumptions, cad-agent v0.13.0 calculations and incomplete FEA describe that historical configuration; they are not current design, price, manufacturing or physical qualification evidence.\n>\n> The **proposed body D75** below is preserved in the [historical decision archive](decisions-historical.yaml). It is a different record from the current [decided D75 for recorded pronunciation](../../program/decisions.yaml). This recovery adopts neither the old proposal nor any CAD change. The original scripts, DXFs and FEA files are archived evidence, not migrated current tools or approved manufacturing files. Owner choices 1\u20133 and the applicable acceptance work remain open in [issue #155](https://github.com/Valpatel/gyropup/issues/155).\n\n",
+  "readme_original_sha256": "2cf177e6a7c75824286ac99a1f72ff2a1638ecd24fc8e2868a7c8fc50a7f0233",
+  "scope": "Historical recovery only; issue155 acceptance and owner choices remain open."
+}

@@ -126,3 +126,5 @@
 - An image is visible but wall measurement counts no visual inside its inline picture wrapper: [match the real picture/image boxes](inbox/2026-11-02-readme-images-need-src-not-srcset.md#a-picture-wrapper-must-have-the-visible-images-real-box).
 
 - A landing name sounds joined despite a correct pronunciation JSON field: [trace the selected recorded audio](inbox/2026-11-05-ci-classification-needs-phase-evidence.md#a-correct-spoken-text-field-does-not-establish-the-sound-a-visitor-hears).
+
+- An unmerged historical branch reuses an already-decided ID: [preserve old evidence without overwriting current decisions](inbox/2026-11-07-historical-branches-need-decision-identity-checks.md).
