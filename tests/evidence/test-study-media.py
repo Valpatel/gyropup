@@ -1,7 +1,9 @@
 #!/usr/bin/env python3
 """Artifact faults must fail before the static study video is published."""
 import importlib.util
+import importlib.abc
 import hashlib
+import io
 import json
 from pathlib import Path
 import shutil
@@ -11,6 +13,7 @@ import sys
 import subprocess
 import tempfile
 import unittest
+import types
 from unittest.mock import patch
 
 spec = importlib.util.spec_from_file_location('study_check', Path(__file__).resolve().parents[2] / 'tools/evidence/media/check-study-media.py')
@@ -210,6 +213,97 @@ class ProducerPaths(unittest.TestCase):
                 self.assertTrue(identity.startswith(check.MEDIA))
                 with self.assertRaises(ValueError):
                     producer.field_identity(root / 'unrelated/hip_frame-E1.json')
+
+
+class HipStudyInputs(unittest.TestCase):
+    def load_study(self):
+        class NoNative(importlib.abc.MetaPathFinder):
+            def find_spec(self, fullname, path=None, target=None):
+                if fullname.split('.')[0] in {'cadquery', 'cadagent', 'gmsh', 'OCP'}:
+                    raise AssertionError('Native import during input preflight: ' + fullname)
+        spec = importlib.util.spec_from_file_location(
+            'hip_study_inputs_test', check.ROOT / 'tools/engineering/legs/hip-frame-study.py')
+        module = importlib.util.module_from_spec(spec)
+        # The source-input path uses no NumPy operations or CAD kernel.
+        blocked = {name: None for name in ('cadquery', 'cadagent', 'gmsh', 'OCP')}
+        with patch.dict(sys.modules, {'numpy': types.ModuleType('numpy'), **blocked}), patch.object(
+                sys, 'meta_path', [NoNative(), *sys.meta_path]), patch.object(
+                subprocess, 'Popen', side_effect=AssertionError('Process at import')):
+            spec.loader.exec_module(module)
+        return module
+
+    def fixture(self, root):
+        expected = ProducerPaths().fixture(root)
+        expected.pop('tools/engineering/legs/export-hip-frame-e1.py')
+        name = 'tools/engineering/legs/hip-frame-study.py'
+        path = root / name
+        path.write_text('owned study input fixture')
+        expected[name] = hashlib.sha256(path.read_bytes()).hexdigest()
+        return expected
+
+    def test_current_inputs_are_bound_and_added_cad_members_are_not_dropped(self):
+        study = self.load_study()
+        with tempfile.TemporaryDirectory(prefix='hip-study-inputs-') as tmp:
+            root = Path(tmp); expected = self.fixture(root)
+            with patch.object(study, 'ROOT', root):
+                self.assertEqual(study.source_hashes(), expected)
+                path = root / 'hardware/exports/leg/fea/summary.json'
+                path.write_text('changed current report')
+                expected[path.relative_to(root).as_posix()] = hashlib.sha256(path.read_bytes()).hexdigest()
+                extra = root / 'hardware/cad/legs/additional.py'
+                extra.write_text('new CAD input')
+                expected[extra.relative_to(root).as_posix()] = hashlib.sha256(extra.read_bytes()).hexdigest()
+                self.assertEqual(study.source_hashes(), expected)
+
+    def test_missing_current_inputs_fail_before_output_or_native_work(self):
+        study = self.load_study()
+        for missing in ('hardware/exports/leg/rig-results.json', 'hardware/exports/leg/fea/summary.json'):
+            with self.subTest(missing=missing), tempfile.TemporaryDirectory(prefix='hip-study-missing-') as tmp:
+                root = Path(tmp); self.fixture(root)
+                (root / missing).unlink()
+                self.assertTrue((root / missing.removeprefix('hardware/')).is_file())
+                out = root / 'candidate-output'
+                with patch.object(study, 'ROOT', root), patch.object(
+                        study, 'install_recorder', side_effect=AssertionError('Native study reached')), patch.dict(
+                        sys.modules, {name: None for name in ('gmsh', 'cadquery', 'cadagent', 'OCP')}):
+                    with self.assertRaises(FileNotFoundError):
+                        study.run_variant(out, None, ['E1'], 3.0, None, False)
+                self.assertFalse(out.exists())
+
+    def test_actual_checkout_has_complete_canonical_source_closure(self):
+        study = self.load_study()
+        from hardware.cad.manufacturing.print_provenance import source_files
+        paths = {path.relative_to(check.ROOT).as_posix() for path in source_files(check.ROOT)}
+        paths.update(('software/simulation/leg_rig.py', 'software/simulation/leg_control.py',
+                      'hardware/exports/leg/rig-results.json', 'hardware/exports/leg/fea/summary.json',
+                      'tools/engineering/legs/hip-frame-study.py',
+                      'tools/site/source_layout.py', 'tools/site/source-layout.json'))
+        expected = {name: hashlib.sha256((check.ROOT / name).read_bytes()).hexdigest() for name in paths}
+        self.assertEqual(study.source_hashes(), expected)
+
+    def test_evaluator_rejects_missing_current_inputs_before_cad_precheck(self):
+        study = self.load_study()
+        for missing in ('hardware/exports/leg/rig-results.json', 'hardware/exports/leg/fea/summary.json'):
+            with self.subTest(missing=missing), tempfile.TemporaryDirectory(prefix='hip-evaluator-missing-') as tmp:
+                root = Path(tmp); self.fixture(root)
+                (root / missing).unlink()
+                self.assertTrue((root / missing.removeprefix('hardware/')).is_file())
+                out = root / 'candidate-output'
+                reply = io.StringIO()
+                # Exercise the actual evaluator without redirecting the test process's file descriptors.
+                with patch.object(study, 'ROOT', root), patch.object(sys, 'stdin', io.StringIO(
+                        json.dumps({'id': 'trial', 'params': {'hip': {'root_r': 7.5}}}))), patch.object(
+                        os, 'dup', return_value=1), patch.object(os, 'dup2'), patch.object(
+                        os, 'fdopen', return_value=reply), patch.dict(sys.modules, {
+                        name: None for name in ('gmsh', 'cadquery', 'cadagent', 'OCP')}), patch.object(
+                        subprocess, 'Popen', side_effect=AssertionError('Native process during evaluator preflight')):
+                    study.evaluator(out, 3.0)
+                result = json.loads(reply.getvalue())
+                self.assertEqual(result['metrics'], {})
+                self.assertEqual(result['checks'][0]['level'], 'fail')
+                self.assertIn('FileNotFoundError:', result['checks'][0]['text'])
+                self.assertIn(missing, result['checks'][0]['text'])
+                self.assertFalse(out.exists())
 
 
 class StudyMedia(unittest.TestCase):

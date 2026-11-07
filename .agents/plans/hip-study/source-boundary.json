@@ -1,0 +1,40 @@
+{
+  "base": "1a1f8b441d6769c7feefe4c3d27b18a259c2f268",
+  "source_changes": [
+    "tools/engineering/legs/hip-frame-study.py",
+    "tests/evidence/test-study-media.py"
+  ],
+  "geometry_or_generated_outputs_changed": false,
+  "maps": {
+    "art95": {
+      "members": 95,
+      "all_actual_bytes_match": true,
+      "changed_members": []
+    },
+    "field101": {
+      "members": 101,
+      "all_actual_bytes_match": true,
+      "changed_members": []
+    },
+    "video6": {
+      "members": 6,
+      "all_actual_bytes_match": true,
+      "changed_members": []
+    },
+    "highlights192": {
+      "members": 192,
+      "all_actual_bytes_match": true,
+      "changed_members": []
+    }
+  },
+  "cad94_unchanged": true,
+  "actual_default_full_study_guard_no_decode": {
+    "historical_source": "2064364217b9780014bec0648267809c3333550a",
+    "safety_factor": 1.6,
+    "required": 2,
+    "vertices": 25232,
+    "triangles": 50552
+  },
+  "actual_highlight_source_binding_guard": true,
+  "hardware_tree": "89ae8db4a748d5b19893293fbef3c1d49eeccc2f"
+}

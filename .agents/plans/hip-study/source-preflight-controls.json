@@ -1,0 +1,11 @@
+{
+  "base": "1a1f8b441d6769c7feefe4c3d27b18a259c2f268",
+  "old_helper_sha256": "96f350831f94471c346273d80504b7beadef3346806a6493d7b9f06b09439226",
+  "new_helper_sha256": "cbd5b7ff0cb17d8969b6893e8af8404efa561df1143da8faf65ec2b8a715426b",
+  "actual_test_sha256": "6651aae96a80f1ddc93acaefec379bf7ff7a55352dbe17225dd444d727ec36ce",
+  "scope": "Three actual input-preflight tests against exact original helper; native imports and execution disabled.",
+  "old_exit": 1,
+  "working_helper_restored": true,
+  "historical_at_head": "4c5bbe52dca2145c55183c6a66e7125a35b54a31",
+  "later_evaluator_control": "evaluator-preflight-controls.json"
+}

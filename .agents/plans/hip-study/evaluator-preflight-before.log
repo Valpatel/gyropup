@@ -1,0 +1,21 @@
+FF
+======================================================================
+FAIL: test_evaluator_rejects_missing_current_inputs_before_cad_precheck (__main__.HipStudyInputs.test_evaluator_rejects_missing_current_inputs_before_cad_precheck) (missing='hardware/exports/leg/rig-results.json')
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "<checkout>/tests/evidence/test-study-media.py", line 304, in test_evaluator_rejects_missing_current_inputs_before_cad_precheck
+    self.assertIn('FileNotFoundError:', result['checks'][0]['text'])
+AssertionError: 'FileNotFoundError:' not found in 'ModuleNotFoundError: import of gmsh halted; None in sys.modules'
+
+======================================================================
+FAIL: test_evaluator_rejects_missing_current_inputs_before_cad_precheck (__main__.HipStudyInputs.test_evaluator_rejects_missing_current_inputs_before_cad_precheck) (missing='hardware/exports/leg/fea/summary.json')
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "<checkout>/tests/evidence/test-study-media.py", line 304, in test_evaluator_rejects_missing_current_inputs_before_cad_precheck
+    self.assertIn('FileNotFoundError:', result['checks'][0]['text'])
+AssertionError: 'FileNotFoundError:' not found in 'ModuleNotFoundError: import of gmsh halted; None in sys.modules'
+
+----------------------------------------------------------------------
+Ran 1 test in 0.017s
+
+FAILED (failures=2)
