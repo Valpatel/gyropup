@@ -2,9 +2,9 @@
   "schema": "gyropup.readme-design-config/1",
   "source": {
     "repository": "Valpatel/gyropup",
-    "revision": "ab493a369fa6ffa2eda29ae153a5db44b88a2b39",
-    "published_baseline": "b61f0cd4b4e27b8006c06e6a473a9984d63e2033",
-    "hardware_tree": "d9e2577430dd831bc70cb7a43f24b56f63df7bee",
+    "revision": "a86c230c97b29b3f61eaa38d3cae9719072c2b9e",
+    "published_baseline": "1134c9e645a0f3154c98255ed7dc71167f3e1348",
+    "hardware_tree": "89ae8db4a748d5b19893293fbef3c1d49eeccc2f",
     "files": {
       "hardware/__init__.py": "d6ddd9ce4ef273b82f43f315f09d11db1224f2b8298c9b0b3ea7dafb97280ba0",
       "hardware/cad/__init__.py": "d6ddd9ce4ef273b82f43f315f09d11db1224f2b8298c9b0b3ea7dafb97280ba0",

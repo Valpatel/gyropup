@@ -86,9 +86,11 @@ class EncoderPrerequisites(unittest.TestCase):
 
     def test_actual_field_and_renderer_receipt_pins_are_both_required(self):
         revisions = self.helpers.historical_revisions(self.check, '9fc04c3f0af6c92fa4c82cd1f59ed647944f9ba2')
-        self.assertIn('a12cf8e73f337274174c56e14c22832250acf284', revisions)
-        # Actual job254 omitted this renderer revision and failed after encoding.
-        self.assertIn('99c92d4a511c16d7743e9583b129e2a178651cb8', revisions)
+        expected = [json.loads((ROOT / 'hardware/exports/leg/fea/hip-frame-e1-media' / name).read_text())['source_revision']
+                    for name in ('field-receipt.json', 'video-receipt.json')]
+        # Job254 omitted its then-current renderer revision and failed after encoding.
+        for revision in expected:
+            self.assertIn(revision, revisions)
         self.assertEqual(len(revisions), len(set(revisions)))
 
     def test_renderer_revision_is_derived_and_not_a_fixed_list(self):
@@ -97,6 +99,46 @@ class EncoderPrerequisites(unittest.TestCase):
         self.check.read = lambda path: {'source_revision': 'main'}
         with self.assertRaises(ValueError):
             self.helpers.historical_revisions(self.check, 'c' * 40)
+
+    def stage_fixture(self):
+        source = 'c' * 40
+        old, new = '1' * 64, '2' * 64
+        raw = 'software/site/designer/sim.js'
+        insert = 'hardware/exports/leg/fea/hip-frame-e1-media/field-receipt.json'
+        check = SimpleNamespace(E1='exports/leg/fea/hip-frame-e1-media/',
+            source_for_public=lambda name: 'hardware/' + name if name.startswith('exports/') else name,
+            full_revision=self.check.full_revision,
+            git_sha=lambda revision, name: old)
+        declared = {'source': source, 'source_hashes': {raw: old, insert: old}}
+        return check, source, declared, {raw: old, insert: new}, raw, insert
+
+    def test_old_stage_and_new_e1_insert_are_distinct_valid_sources(self):
+        check, source, declared, current, raw, insert = self.stage_fixture()
+        before = json.dumps(declared, sort_keys=True)
+        self.assertEqual(self.helpers.validate_recorded_stage(check, declared, current, source), [insert])
+        self.assertEqual(json.dumps(declared, sort_keys=True), before)
+
+    def test_resealed_stage_cannot_claim_new_e1_bytes_were_captured(self):
+        check, source, declared, current, raw, insert = self.stage_fixture()
+        declared['source_hashes'][insert] = current[insert]
+        with self.assertRaisesRegex(ValueError, 'Historical stage'):
+            self.helpers.validate_recorded_stage(check, declared, current, source)
+
+    def test_non_e1_drift_or_missing_stage_source_cannot_be_waived(self):
+        check, source, declared, current, raw, insert = self.stage_fixture()
+        current[raw] = '3' * 64
+        with self.assertRaisesRegex(ValueError, 'Non-E1'):
+            self.helpers.validate_recorded_stage(check, declared, current, source)
+        current[raw] = declared['source_hashes'][raw]
+        declared['source_hashes'].pop(raw)
+        with self.assertRaisesRegex(ValueError, 'Incomplete historical'):
+            self.helpers.validate_recorded_stage(check, declared, current, source)
+
+    def test_wrong_stage_revision_cannot_replace_capture_provenance(self):
+        check, source, declared, current, raw, insert = self.stage_fixture()
+        declared['source'] = 'd' * 40
+        with self.assertRaisesRegex(ValueError, 'immutable capture'):
+            self.helpers.validate_recorded_stage(check, declared, current, source)
 
     def test_expected_poster_matches_the_existing_encoder_constant(self):
         tree = ast.parse(SOURCE.read_text())

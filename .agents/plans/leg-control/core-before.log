@@ -1,0 +1,50 @@
+Internal ctest changing into directory: <owned-before-build>
+Test project <owned-before-build>
+    Start 1: core
+1/1 Test #1: core .............................***Failed    0.21 sec
+FAIL <checkout>/software/firmware/balance/tests/test_core.c:212: isfinite(out)
+FAIL <checkout>/software/firmware/balance/tests/test_core.c:213: out = nan, want 0 (+-0)
+FAIL <checkout>/software/firmware/balance/tests/test_core.c:212: isfinite(out)
+FAIL <checkout>/software/firmware/balance/tests/test_core.c:213: out = nan, want 0 (+-0)
+FAIL <checkout>/software/firmware/balance/tests/test_core.c:212: isfinite(out)
+FAIL <checkout>/software/firmware/balance/tests/test_core.c:213: out = nan, want 0 (+-0)
+FAIL <checkout>/software/firmware/balance/tests/test_core.c:212: isfinite(out)
+FAIL <checkout>/software/firmware/balance/tests/test_core.c:213: out = nan, want 0 (+-0)
+FAIL <checkout>/software/firmware/balance/tests/test_core.c:212: isfinite(out)
+FAIL <checkout>/software/firmware/balance/tests/test_core.c:213: out = nan, want 0 (+-0)
+FAIL <checkout>/software/firmware/balance/tests/test_core.c:212: isfinite(out)
+FAIL <checkout>/software/firmware/balance/tests/test_core.c:213: out = nan, want 0 (+-0)
+FAIL <checkout>/software/firmware/balance/tests/test_core.c:212: isfinite(out)
+FAIL <checkout>/software/firmware/balance/tests/test_core.c:213: out = nan, want 0 (+-0)
+FAIL <checkout>/software/firmware/balance/tests/test_core.c:212: isfinite(out)
+FAIL <checkout>/software/firmware/balance/tests/test_core.c:213: out = nan, want 0 (+-0)
+FAIL <checkout>/software/firmware/balance/tests/test_core.c:212: isfinite(out)
+FAIL <checkout>/software/firmware/balance/tests/test_core.c:213: out = nan, want 0 (+-0)
+FAIL <checkout>/software/firmware/balance/tests/test_core.c:212: isfinite(out)
+FAIL <checkout>/software/firmware/balance/tests/test_core.c:213: out = nan, want 0 (+-0)
+FAIL <checkout>/software/firmware/balance/tests/test_core.c:213: out = 120, want 0 (+-0)
+FAIL <checkout>/software/firmware/balance/tests/test_core.c:213: out = 60, want 0 (+-0)
+FAIL <checkout>/software/firmware/balance/tests/test_core.c:213: out = 120, want 0 (+-0)
+FAIL <checkout>/software/firmware/balance/tests/test_core.c:213: out = 60, want 0 (+-0)
+FAIL <checkout>/software/firmware/balance/tests/test_core.c:213: out = 120, want 0 (+-0)
+FAIL <checkout>/software/firmware/balance/tests/test_core.c:213: out = 60, want 0 (+-0)
+FAIL <checkout>/software/firmware/balance/tests/test_core.c:213: out = 60, want 0 (+-0)
+FAIL <checkout>/software/firmware/balance/tests/test_core.c:213: out = 60, want 0 (+-0)
+FAIL <checkout>/software/firmware/balance/tests/test_core.c:213: out = -60, want 0 (+-0)
+FAIL <checkout>/software/firmware/balance/tests/test_core.c:213: out = -60, want 0 (+-0)
+FAIL <checkout>/software/firmware/balance/tests/test_core.c:213: out = -120, want 0 (+-0)
+FAIL <checkout>/software/firmware/balance/tests/test_core.c:213: out = -60, want 0 (+-0)
+FAIL <checkout>/software/firmware/balance/tests/test_core.c:213: out = -120, want 0 (+-0)
+FAIL <checkout>/software/firmware/balance/tests/test_core.c:213: out = -60, want 0 (+-0)
+FAIL <checkout>/software/firmware/balance/tests/test_core.c:213: out = -120, want 0 (+-0)
+FAIL <checkout>/software/firmware/balance/tests/test_core.c:213: out = -60, want 0 (+-0)
+611 checks, 36 failed
+
+
+0% tests passed, 1 tests failed out of 1
+
+Total Test time (real) =   0.21 sec
+
+The following tests FAILED:
+	  1 - core (Failed)
+Errors while running CTest

@@ -1,0 +1,150 @@
+{
+  "job": 258,
+  "job_status": "COMPLETED_EXIT0",
+  "executed_revision": "ac3b035a421e00d4c49f4cf5f4d72d0e0dd3c8b3",
+  "review": "https://github.com/Valpatel/gyropup/issues/8#issuecomment-6712847874",
+  "candidate_archive_sha256": "5c68c63ddcf617624a63262710e99f0c4fd8edb685ea99e6e1d246e881db2ff7",
+  "outputs": {
+    "capture-frames.json": {
+      "bytes": 100989,
+      "sha256": "b5bd61bbd56e24572a4a3cd28f25b76312d2b7885631e2e0788bf0973a16e04d"
+    },
+    "capture-receipt.json": {
+      "bytes": 122659,
+      "sha256": "a565b2bdae357f8d394aa0c9d22ced967596e61b75ec41af43d10a4706978ef3"
+    },
+    "gyropup-highlights.mp4": {
+      "bytes": 1873038,
+      "sha256": "7d820ab71c85f35d54b9e15b2b526c5c1ac7799d7fea3b6e7a51ce32748c5b5c"
+    },
+    "gyropup-highlights.webm": {
+      "bytes": 1488632,
+      "sha256": "1429bed0cd5aea7d42dd95a54561965cf11e30af84f785cdcfad36a357f36a33"
+    },
+    "gyropup-highlights.webp": {
+      "bytes": 33050,
+      "sha256": "45908a66165e86505a639f8c5f17413c626795d4efb7edcdbc3cc705b0cd4ebd"
+    },
+    "receipt.json": {
+      "bytes": 29933,
+      "sha256": "2d63b4a1154815336c255087944d16d325752b9e3933ac07738b4635e71a015c"
+    }
+  },
+  "capture_source": "9fc04c3f0af6c92fa4c82cd1f59ed647944f9ba2",
+  "current_binding_count": 192,
+  "raw_frame_records": 481,
+  "current_guard": {
+    "gyropup-highlights.mp4": {
+      "bytes": 1873038,
+      "frames": 660,
+      "seconds": 22,
+      "motion": {
+        "turret": {
+          "mean_channel_difference": 10.608375,
+          "fraction_changed_over_12": 0.18435416666666668
+        },
+        "mechanism": {
+          "mean_channel_difference": 4.956166666666666,
+          "fraction_changed_over_12": 0.09945833333333333
+        },
+        "battle": {
+          "mean_channel_difference": 6.1614375,
+          "fraction_changed_over_12": 0.092375
+        },
+        "leg": {
+          "mean_channel_difference": 20.420729166666668,
+          "fraction_changed_over_12": 0.24775
+        },
+        "e1": {
+          "mean_channel_difference": 32.04954166666667,
+          "fraction_changed_over_12": 0.4089583333333333
+        },
+        "character": {
+          "mean_channel_difference": 16.956083333333332,
+          "fraction_changed_over_12": 0.22847916666666668
+        }
+      }
+    },
+    "gyropup-highlights.webm": {
+      "bytes": 1488632,
+      "frames": 660,
+      "seconds": 22,
+      "motion": {
+        "turret": {
+          "mean_channel_difference": 10.60125,
+          "fraction_changed_over_12": 0.1844375
+        },
+        "mechanism": {
+          "mean_channel_difference": 4.9683125,
+          "fraction_changed_over_12": 0.10066666666666667
+        },
+        "battle": {
+          "mean_channel_difference": 6.1205625,
+          "fraction_changed_over_12": 0.09127083333333333
+        },
+        "leg": {
+          "mean_channel_difference": 20.412208333333332,
+          "fraction_changed_over_12": 0.24716666666666667
+        },
+        "e1": {
+          "mean_channel_difference": 32.060854166666665,
+          "fraction_changed_over_12": 0.41022916666666664
+        },
+        "character": {
+          "mean_channel_difference": 16.997979166666667,
+          "fraction_changed_over_12": 0.22883333333333333
+        }
+      }
+    },
+    "codec_mean_difference": {
+      "turret": 0.5301458333333333,
+      "mechanism": 0.46746875,
+      "battle": 0.44835416666666666,
+      "leg": 0.48184375,
+      "e1": 0.6615729166666666,
+      "character": 0.5695104166666667
+    },
+    "e1_original_frame_mean_difference": {
+      "gyropup-highlights.mp4": 0.16498456790123456,
+      "gyropup-highlights.webm": 0.1621604938271605
+    },
+    "e1_original_labels_mean_difference": {
+      "gyropup-highlights.mp4": 0.23537414965986395,
+      "gyropup-highlights.webm": 0.22491496598639457
+    },
+    "erased_e1_labels_rejected": true,
+    "poster_mean_difference": 0.16641203703703702,
+    "rejected_negative_controls": [
+      "source hash",
+      "source omission",
+      "self-consistent required mesh omission",
+      "self-consistent required renderer omission",
+      "self-consistent firing limits omission",
+      "served firing limits",
+      "capture location contract",
+      "captured artifact revision",
+      "wrong encoding source revision",
+      "wrong capture source revision with matching served metadata",
+      "capture recipe",
+      "served simulator",
+      "stage instrumentation",
+      "frame count",
+      "wrong turret name with unchanged part count",
+      "historical load baseline",
+      "leg report drift on disk",
+      "static animation label",
+      "media bytes",
+      "frozen turret",
+      "frozen mechanism",
+      "frozen battle",
+      "frozen leg",
+      "frozen e1",
+      "frozen character"
+    ]
+  },
+  "pure_prerequisite_tests": 7,
+  "all_validation_groups_gone": true,
+  "complete_outside_target_tracked_and_hardware_preserved": true,
+  "adoption": true,
+  "limits": "Genuine new encode using independently accepted unchanged sampled virtual frames. No new motion capture or physical qualification. E1 remains SF1.6 below required2; original native/video failures and rolled-back transaction remain retained. README artwork, CI and publication remain separate."
+}

@@ -1,0 +1,46 @@
+{
+  "committed_field_adoption": "93a9591ab2d8f52a5b8bec2b9f20a9f997a62292",
+  "hardware_tree": "69b1c1e8a809d685912891ae9a2145eff861a9f9",
+  "field_source": "2064364217b9780014bec0648267809c3333550a",
+  "lifecycle_sha256": "60a7f7c36d7c73f5a25bef5b8725d67e76dd571ba34895ed89e5cb2001acdb45",
+  "inputs": {
+    "tools/engineering/legs/render-hip-frame-e1.py": "f6e6b6f3ea131d9cdf2f2c37b02f85ba792a5101d24ae8ab1d840e34f1632d97",
+    "hardware/cad/locations.py": "ce87f089e519134d47a041a933b9bf862b91917ddf03e073152d132e845c130e",
+    "hardware/exports/leg/fea/hip-frame-e1-media/field-receipt.json": "2eeeb29e4c635607c1f107e433cac0cb82fe4e7b8d88ced127d9ded116b21f1e",
+    "hardware/exports/leg/fea/hip-frame-e1-media/hip_frame-E1.json": "70f1d67fe40a03eeb181e741e9674d9e2f5bbbee7a431494db382ef9e2ff3d1f",
+    "hardware/exports/leg/fea/summary.json": "1488c5f62b90fd44162140ba1cb7adf8f52135a727cd37b6f08f4d2794000a39",
+    "docs/research/leg-preprint/evidence/hip-frame-print-ready.json": "f936de2746794bd0603585df4649653bcb97af49f72f88047fb99633dd0d9796"
+  },
+  "targets": [
+    "hardware/exports/leg/fea/hip-frame-e1-media/hip-frame-e1.mp4",
+    "hardware/exports/leg/fea/hip-frame-e1-media/hip-frame-e1.webm",
+    "hardware/exports/leg/fea/hip-frame-e1-media/hip-frame-e1-poster.png",
+    "hardware/exports/leg/fea/hip-frame-e1-media/video-receipt.json",
+    "hardware/exports/leg/fea/media.json"
+  ],
+  "original_targets": {
+    "hardware/exports/leg/fea/hip-frame-e1-media/hip-frame-e1.mp4": "76518421335431320a7a60c58f66cb817c0f4b5b1b0e9993a62f68d87d065581",
+    "hardware/exports/leg/fea/hip-frame-e1-media/hip-frame-e1.webm": "7b70a9fac4e3d5b961a05d3257b97329bbca16fb2b0be79bd75b3b58528d3f15",
+    "hardware/exports/leg/fea/hip-frame-e1-media/hip-frame-e1-poster.png": "7ed8ca26851531d2e8e6f33ec24a2ad9b0ec31a7b778d2638b0257aa6f92bce1",
+    "hardware/exports/leg/fea/hip-frame-e1-media/video-receipt.json": "26cbe471527d8fad8d706e65740e9b7ee29b7e7e5b28a35599b2b73422bf2568",
+    "hardware/exports/leg/fea/media.json": "dbe019e1df2edc47bc8dbb8aa8066ec859cc203fedbbf0aab79a89e75a22a17b"
+  },
+  "packages": {
+    "numpy": "2.5.4",
+    "pyvista": "0.49.1",
+    "vtk": "9.6.2",
+    "matplotlib": "3.11.2",
+    "pillow": "13.0.0"
+  },
+  "font_sha256": "5c1247acef7f2b8522a31742c76d6adcb5569bacc0be7ceaa4dc39dd252ce895",
+  "test_context": {
+    "hardware/exports/leg/rig-media.json": "18446ba2704e07e5bd93e3a0a68a3155df2bc26704b93dac19f9341de29acf13",
+    "hardware/exports/leg/rig-results.json": "171a1d4f2195468a235313fce29e5dde1272499b0d0934e22ad2bab5564ba902",
+    "tools/evidence/media/rig-media.mjs": "3b1824276f7f4c8f5a54f0fc80df12996d58e00527cfb1939390344428d2e27b",
+    "software/site/designer/rig-media.js": "e6f0b7dee36de0da02a3e711476132bf457b88ee77685ee6960f007a88f639e1",
+    "tools/site/source-layout.mjs": "9f9ba1dfd638e5fa83ecd1b49100b638f3b22db827122de742e34558dd3d7b4c",
+    "tools/site/source-layout.json": "da14426ba66d03195bb8566ae61371b38ba3ad7a19e39e7030509542d9d9902c",
+    "tests/site/media/test-rig-media.mjs": "dd1b42b0df378f2818b7f2fc39b517db101590b51aca2012ebf66946daf3a2b4",
+    "tests/evidence/test-study-media.py": "6fbd0111b528e0a5b9aca4bf93bff282e897192d9991528317ed0317537119e2"
+  }
+}

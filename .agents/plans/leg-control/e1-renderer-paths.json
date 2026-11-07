@@ -1,0 +1,33 @@
+{
+  "date": "2026-11-07",
+  "scope": "Renderer report identity lookup only; no native solve or media regeneration",
+  "command": "python3 -B tests/evidence/test-study-media.py ProducerPaths RendererPaths",
+  "old_renderer_controls": {
+    "tests": 3,
+    "errors": 3,
+    "reason": "Old renderer has no import-safe identity lookup helper"
+  },
+  "corrected_combined_controls": {
+    "tests": 6,
+    "failures": 0,
+    "errors": 0
+  },
+  "current_media_guard": {
+    "full_current_media_guard_pass": false,
+    "actual_error": "Stale animation source: tools/engineering/legs/render-hip-frame-e1.py",
+    "reason": "Renderer source repaired; original video/receipts preserved until genuine regeneration.",
+    "no_receipt_rewrite": true
+  },
+  "logs": {
+    "e1-renderer-paths-before.log": {
+      "raw_sha256": "089f8b48f194cf3185792303f5b9c43bff187568a914519bfb600a65d61408fe",
+      "published_sha256": "d76f6e59e5dfc7a0ca3c6cce166990b716e9484dc3523631bf24b0c338ac8fb1",
+      "redaction": "Only the exact owned checkout path was replaced."
+    },
+    "e1-path-controls-after.log": {
+      "raw_sha256": "d26bdd8902cfd9615fdc56631c8cf5c6f50365669f489e98ad81e93f48fdb11a",
+      "published_sha256": "d26bdd8902cfd9615fdc56631c8cf5c6f50365669f489e98ad81e93f48fdb11a",
+      "redaction": "Only the exact owned checkout path was replaced."
+    }
+  }
+}

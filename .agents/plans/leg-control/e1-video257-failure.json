@@ -1,0 +1,87 @@
+{
+  "source": "c9a836d9bea5718032ea51c0215ee25991601fc0",
+  "status": "FAILED",
+  "phases": {
+    "actual-field-source-object": {
+      "exit": 0,
+      "seconds": 139.1638242006302,
+      "group_gone": true
+    },
+    "committed-field-check": {
+      "exit": 0,
+      "seconds": 0.4224454569630325,
+      "group_gone": true
+    },
+    "owned-render-dependencies": {
+      "exit": 0,
+      "seconds": 175.38235748000443,
+      "group_gone": true
+    },
+    "genuine-standard-render": {
+      "exit": 0,
+      "seconds": 46.16974642826244,
+      "group_gone": true
+    },
+    "actual-full-media-guard": {
+      "exit": 0,
+      "seconds": 2.123174407053739,
+      "group_gone": true
+    },
+    "actual-full-corruption-controls": {
+      "exit": 1,
+      "seconds": 25.69557976676151,
+      "group_gone": true
+    }
+  },
+  "project_restored": true,
+  "hardware_restored": true,
+  "render_inputs_restored": true,
+  "final_guard_errors": [],
+  "archives": {
+    "observed-targets.tgz": {
+      "sha256": "be1c31f9b7e27b8ec2286e4733ff543ac005a55cfa8a8a3fb895a69ed9a9fe51",
+      "files": 5
+    },
+    "candidate-targets.tgz": {
+      "sha256": "9b8be5ae94c37eae79b6c3c00c95e9e01ae35a9b02829333bcaab4e350d4e721",
+      "files": 5
+    },
+    "original-targets.tgz": {
+      "sha256": "73c3a047aedb22b244ee801a6e511803f68f50aeb5203587c7b2b4ae54d8fee6",
+      "files": 5
+    }
+  },
+  "date": "2026-11-07",
+  "failure": "Only test_leg_rig_companions failed: missing historical rig producer object/path in shallow worker. Actual genuine render/default full media guard passed; original job remains FAILED.",
+  "original_suite": {
+    "tests": 16,
+    "errors": 1,
+    "node_tests": 3,
+    "node_failed": 1
+  },
+  "owned_scratch_unchanged_suite": {
+    "unchanged-full-media-guard": {
+      "exit": 0,
+      "log_sha256": "fad4f386b085369b672e66f2fa3ca89d1252225548c57d1f0a6a9371f2634ee8"
+    },
+    "unchanged-entire16tests": {
+      "exit": 0,
+      "log_sha256": "5500d41433cf55df3dd87963fe4cb82b2ed53bbc85b97efd6ba2f2889e4aa9f6"
+    }
+  },
+  "historical_rig_objects": [
+    "e7b512870a39259a04a4930e2908af84001bc84e",
+    "e93b3bbce57ee36fc966e8ba4513f05273a75967"
+  ],
+  "candidate_approved_for_adoption": false,
+  "raw_failure_sha256": "6db5e9462161fd6dba0e7604ddd3017049f28cc1956372e02d325f1578e0c6f0",
+  "published_failure_sha256": "0bbe417595a2c1dd38fa5d76683bc4d0d52a905518f1b9d069d6213eb6be2e0e",
+  "source_correction_controls": {
+    "selected_tests": 13,
+    "failures": 0,
+    "native_or_render_run": false,
+    "raw_log_sha256": "02069e6ed6d0405274c19801213090eddab158378d191f3394d3bfc8d8f1c858",
+    "published_log_sha256": "02069e6ed6d0405274c19801213090eddab158378d191f3394d3bfc8d8f1c858"
+  },
+  "published_log_redaction": "Only exact owned worker prefix replaced; trailing whitespace removed. Original raw log/hash retained; no error or assertion text changed."
+}
