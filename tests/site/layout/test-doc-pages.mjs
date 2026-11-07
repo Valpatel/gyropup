@@ -227,12 +227,22 @@ test('the current CAD image follows the What explanation and precedes Why', () =
   const model=article.querySelector('img[src^="/docs/img/hero/current-design.svg"]');
   const what=article.querySelector('#what-is-it'),why=article.querySelector('#why-is-it-cool');
   assert.ok(model&&what&&why);
-  assert.ok(what.compareDocumentPosition(model)&4,'model follows What in document order');
-  assert.ok(model.compareDocumentPosition(why)&4,'model precedes Why in document order');
+  const explanation=what.nextElementSibling;
+  assert.equal(explanation.tagName,'P');
+  assert.ok(explanation.textContent.trim()&&!explanation.contains(model));
+  // Linkedom's nested-node compareDocumentPosition disagrees with browsers;
+  // selector traversal gives the actual parsed document order.
+  const expected=[what,explanation,model,why];
+  const order=()=>[...article.querySelectorAll('h2,p,img')].filter(node=>expected.includes(node));
+  assert.deepEqual(order(),expected,'model follows the What explanation and precedes Why');
   assert.equal(model.closest('details:not([open])'),null);
   assert.ok(article.querySelector('a[href$="#keeping-the-design-illustration-current"]'));
   assert.deepEqual(readFileSync(path.join(dist,'docs/img/hero/current-design.svg')),
     readFileSync(path.join(root,'docs/img/hero/current-design.svg')));
+  why.after(model.closest('p'));
+  assert.notDeepEqual(order(),expected,'a model in the wrong section cannot pass');
+  explanation.before(model.closest('p'));
+  assert.notDeepEqual(order(),expected,'a model before the explanation cannot pass');
 });
 
 test('both README pictures select a real static image and keep ordinary navigation', async () => {

@@ -272,3 +272,29 @@ No shared checkout, skill link, credentials or configuration was changed. Its
 normal status/read/fetch commands established that238 had already completed
 successfully and retrieved its sealed outputs. Tool recovery and actual remote
 execution/artifact acceptance remain separate facts.
+
+## Verify parser and browser ordering with the same actual document
+
+At98a68d71, presentation job128334471366 in run42349524636 failed the new
+README model-placement assertion. Actual Chrome151/WebKit26 compiled-page
+checks showed What → explanation → model → Why correctly. The installed
+Linkedom returned `2` for a nested image's `compareDocumentPosition` against the
+following heading, even in a minimal `h2,p(a(img)),h2` document; selector traversal
+returned the correct order. The new test had assumed browser-equivalent behavior
+from that parser API. Replace the faulty comparison with exact ordered-node
+membership, and require actual wrong-section and before-explanation mutations to
+fail. This corrects the test; it does not excuse misplaced product content.
+
+The same head's build-portal job128334471271 separately failed its unchanged
+strict C3 request check after allthree viewport/assembly cases and nine negative
+controls completed: one versioned `model-links.css` GET had `net::ERR_ABORTED`.
+There were no HTTP/page errors. Preserve the complete29-member artifact
+`8a357257a038cf373e3e4b4904fa1ddb542d7760aeb8bcd0d474f0094de83f11` and original
+failure. A bounded actual-consumer trace on Chromium141 against the exact
+Cloudflare98a product passed; that different hosting environment does not explain
+or erase the CI cancellation. Pinned Playwright `waitForURL` already waits for
+load, and that stylesheet is static: neither a redundant readiness wait nor a
+blanket stylesheet-cancellation allowance is justified. Keep strict rejection
+and add request identities, frame/load/navigation timestamps for recurrence.
+A legitimate parser-test correction requires normal new-head CI, not a retry of
+superseded98a or a claim that the unknown cancellation was a product fix.

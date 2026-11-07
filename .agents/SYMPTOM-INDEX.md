@@ -120,3 +120,5 @@
 - README scene JSON is unchanged but renderer parity/SVG digest differs: [persisted scene paint order](inbox/2026-11-05-ci-classification-needs-phase-evidence.md#render-the-persisted-scene-representation-before-claiming-parity).
 
 - A local fleet runner or skill link disappears while a remote job is active: [check remote state before dispatching again](inbox/2026-11-05-ci-classification-needs-phase-evidence.md#a-missing-local-runner-does-not-establish-remote-job-state).
+
+- Browser model placement is correct but a nested parser node-order assertion fails: [verify parser and browser order](inbox/2026-11-05-ci-classification-needs-phase-evidence.md#verify-parser-and-browser-ordering-with-the-same-actual-document).
