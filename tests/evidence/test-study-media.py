@@ -5,6 +5,9 @@ import hashlib
 import json
 from pathlib import Path
 import shutil
+import os
+import signal
+import sys
 import subprocess
 import tempfile
 import unittest
@@ -60,6 +63,58 @@ class RendererPaths(unittest.TestCase):
                 renderer.report_input({'source_hashes': {'exports/leg/fea/summary.json': hashlib.sha256(legacy.read_bytes()).hexdigest()}})
             with self.assertRaises(FileNotFoundError):
                 check.report_binding(root, {'source_hashes': {'exports/leg/fea/summary.json': hashlib.sha256(legacy.read_bytes()).hexdigest()}})
+
+
+class E1CollectorLifecycle(unittest.TestCase):
+    def load_collector(self):
+        path = check.ROOT / '.agents/plans/leg-control/regenerate-e1-field.py'
+        spec = importlib.util.spec_from_file_location('e1_collector_test', path)
+        module = importlib.util.module_from_spec(spec)
+        # A normal import may define helpers, but cannot launch a process.
+        with patch.object(subprocess, 'Popen', side_effect=AssertionError('Operational import')):
+            spec.loader.exec_module(module)
+        return module
+
+    def test_exact_worker_preflight_is_syntactically_valid(self):
+        collector = self.load_collector()
+        compile(collector.worker_preflight_code(), 'actual-worker-preflight', 'exec')
+
+    def test_import_is_inert_and_children_start_unmasked(self):
+        collector = self.load_collector()
+        with tempfile.TemporaryDirectory(prefix='e1-phase-') as tmp:
+            collector.ROOT = collector.OUT = Path(tmp)
+            collector.results = {'phases': {}}
+            collector.processes_quiescent = True
+            code = 'import signal; assert signal.SIGTERM not in signal.pthread_sigmask(signal.SIG_BLOCK, set())'
+            collector.phase('unmasked', [sys.executable, '-I', '-S', '-B', '-c', code], timeout=3)
+            self.assertTrue(collector.results['phases']['unmasked']['process_cleanup']['group_gone'])
+
+    def test_pending_signal_before_popen_returns_retains_error_and_reaps_child(self):
+        collector = self.load_collector()
+        previous = signal.getsignal(signal.SIGTERM)
+        actual_popen = subprocess.Popen
+        created = []
+        def spawn(*args, **kwargs):
+            child = actual_popen(*args, **kwargs)
+            created.append(child)
+            os.kill(os.getpid(), signal.SIGTERM)
+            return child
+        def interrupt(signum, frame):
+            raise KeyboardInterrupt('controlled pending TERM')
+        try:
+            signal.signal(signal.SIGTERM, interrupt)
+            with tempfile.TemporaryDirectory(prefix='e1-pending-') as tmp:
+                collector.ROOT = collector.OUT = Path(tmp)
+                collector.results = {'phases': {}}
+                collector.processes_quiescent = True
+                with patch.object(collector.subprocess, 'Popen', spawn), self.assertRaisesRegex(KeyboardInterrupt, 'controlled pending TERM'):
+                    collector.phase('pending', [sys.executable, '-I', '-S', '-B', '-c', 'import time; time.sleep(10)'], timeout=3)
+                record = json.loads((Path(tmp) / 'result.json').read_text())['phases']['pending']
+                self.assertIn('KeyboardInterrupt', record['original_error'])
+                self.assertTrue(record['process_cleanup']['group_gone'])
+                self.assertIsNotNone(created[0].poll())
+        finally:
+            signal.signal(signal.SIGTERM, previous)
 
 
 class FieldStage(unittest.TestCase):

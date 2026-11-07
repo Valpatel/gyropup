@@ -1,0 +1,15 @@
+{
+  "date": "2026-11-07",
+  "command": "python3 -B tests/evidence/test-study-media.py ProducerPaths RendererPaths FieldStage E1CollectorLifecycle",
+  "tests": 11,
+  "failures": 0,
+  "native_run": false,
+  "source_import": "Normal import-safe collector module; no AST extraction or operational execution during import",
+  "real_child_controls": [
+    "next child starts with SIGTERM unmasked",
+    "SIGTERM pending before Popen returns retains original KeyboardInterrupt and reaps the created child/group"
+  ],
+  "raw_log_sha256": "1701dc1d880d178a51e729d8ea1e511cc0180d1772e4d875f122d39aa814f783",
+  "published_log_sha256": "1701dc1d880d178a51e729d8ea1e511cc0180d1772e4d875f122d39aa814f783",
+  "syntax_control": "Compiles the exact worker_preflight_code() string without executing it; no CAD import or native call"
+}
