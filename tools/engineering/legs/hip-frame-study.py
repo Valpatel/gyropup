@@ -314,6 +314,7 @@ def evaluator(out_root: Path, mesh: float):
         reply.write(text + '\n')
         reply.flush()
     try:
+        source_hashes()                                      # precheck also creates output and loads CAD
         fit = precheck(out, params)                          # a frame that no longer fits is failed before any FEA
         if not (fit['bed']['ok'] and fit['body']['ok']):
             print(json.dumps({'metrics': {}, 'checks': [

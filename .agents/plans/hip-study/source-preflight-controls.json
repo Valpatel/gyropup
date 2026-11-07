@@ -5,5 +5,7 @@
   "actual_test_sha256": "6651aae96a80f1ddc93acaefec379bf7ff7a55352dbe17225dd444d727ec36ce",
   "scope": "Three actual input-preflight tests against exact original helper; native imports and execution disabled.",
   "old_exit": 1,
-  "working_helper_restored": true
+  "working_helper_restored": true,
+  "historical_at_head": "4c5bbe52dca2145c55183c6a66e7125a35b54a31",
+  "later_evaluator_control": "evaluator-preflight-controls.json"
 }

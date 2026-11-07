@@ -3,6 +3,7 @@
 import importlib.util
 import importlib.abc
 import hashlib
+import io
 import json
 from pathlib import Path
 import shutil
@@ -279,6 +280,30 @@ class HipStudyInputs(unittest.TestCase):
                       'tools/site/source_layout.py', 'tools/site/source-layout.json'))
         expected = {name: hashlib.sha256((check.ROOT / name).read_bytes()).hexdigest() for name in paths}
         self.assertEqual(study.source_hashes(), expected)
+
+    def test_evaluator_rejects_missing_current_inputs_before_cad_precheck(self):
+        study = self.load_study()
+        for missing in ('hardware/exports/leg/rig-results.json', 'hardware/exports/leg/fea/summary.json'):
+            with self.subTest(missing=missing), tempfile.TemporaryDirectory(prefix='hip-evaluator-missing-') as tmp:
+                root = Path(tmp); self.fixture(root)
+                (root / missing).unlink()
+                self.assertTrue((root / missing.removeprefix('hardware/')).is_file())
+                out = root / 'candidate-output'
+                reply = io.StringIO()
+                # Exercise the actual evaluator without redirecting the test process's file descriptors.
+                with patch.object(study, 'ROOT', root), patch.object(sys, 'stdin', io.StringIO(
+                        json.dumps({'id': 'trial', 'params': {'hip': {'root_r': 7.5}}}))), patch.object(
+                        os, 'dup', return_value=1), patch.object(os, 'dup2'), patch.object(
+                        os, 'fdopen', return_value=reply), patch.dict(sys.modules, {
+                        name: None for name in ('gmsh', 'cadquery', 'cadagent', 'OCP')}), patch.object(
+                        subprocess, 'Popen', side_effect=AssertionError('Native process during evaluator preflight')):
+                    study.evaluator(out, 3.0)
+                result = json.loads(reply.getvalue())
+                self.assertEqual(result['metrics'], {})
+                self.assertEqual(result['checks'][0]['level'], 'fail')
+                self.assertIn('FileNotFoundError:', result['checks'][0]['text'])
+                self.assertIn(missing, result['checks'][0]['text'])
+                self.assertFalse(out.exists())
 
 
 class StudyMedia(unittest.TestCase):
