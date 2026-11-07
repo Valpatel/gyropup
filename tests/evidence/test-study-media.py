@@ -75,6 +75,14 @@ class E1CollectorLifecycle(unittest.TestCase):
             spec.loader.exec_module(module)
         return module
 
+    def test_video_collector_import_is_inert(self):
+        path = check.ROOT / '.agents/plans/leg-control/regenerate-e1-video.py'
+        spec = importlib.util.spec_from_file_location('e1_video_collector_test', path)
+        module = importlib.util.module_from_spec(spec)
+        with patch.object(subprocess, 'Popen', side_effect=AssertionError('Operational import')):
+            spec.loader.exec_module(module)
+        self.assertTrue(callable(module.main))
+
     def test_exact_worker_preflight_is_syntactically_valid(self):
         collector = self.load_collector()
         compile(collector.worker_preflight_code(), 'actual-worker-preflight', 'exec')
