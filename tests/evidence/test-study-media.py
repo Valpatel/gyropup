@@ -1,15 +1,67 @@
 #!/usr/bin/env python3
 """Artifact faults must fail before the static study video is published."""
 import importlib.util
+import hashlib
 import json
 from pathlib import Path
 import shutil
 import subprocess
 import tempfile
 import unittest
+from unittest.mock import patch
 
 spec = importlib.util.spec_from_file_location('study_check', Path(__file__).resolve().parents[2] / 'tools/evidence/media/check-study-media.py')
 check = importlib.util.module_from_spec(spec); spec.loader.exec_module(check)
+
+producer_spec = importlib.util.spec_from_file_location('e1_export', check.ROOT / 'tools/engineering/legs/export-hip-frame-e1.py')
+producer = importlib.util.module_from_spec(producer_spec); producer_spec.loader.exec_module(producer)
+
+
+class ProducerPaths(unittest.TestCase):
+    def fixture(self, root):
+        from hardware.cad.manufacturing.print_provenance import FORMER_CAD_TESTS, SOURCE_PARENTS, SOURCE_ROOTS
+        for directory in SOURCE_ROOTS:
+            (root / directory).mkdir(parents=True)
+        current = [*FORMER_CAD_TESTS, *SOURCE_PARENTS, 'hardware/cad/legs/input.py',
+                   'software/simulation/leg_rig.py', 'software/simulation/leg_control.py',
+                   'hardware/exports/leg/rig-results.json', 'hardware/exports/leg/fea/summary.json',
+                   'tools/engineering/legs/export-hip-frame-e1.py',
+                   'tools/site/source_layout.py', 'tools/site/source-layout.json']
+        for name in [*current, 'exports/leg/rig-results.json', 'exports/leg/fea/summary.json']:
+            path = root / name
+            path.parent.mkdir(parents=True, exist_ok=True)
+            path.write_text('owned input fixture: ' + name)
+        return {name: hashlib.sha256((root / name).read_bytes()).hexdigest() for name in current}
+
+    def test_source_preflight_binds_current_paths_not_legacy_decoys(self):
+        with tempfile.TemporaryDirectory(prefix='e1-source-paths-') as tmp:
+            root = Path(tmp)
+            expected = self.fixture(root)
+            with patch.object(producer, 'ROOT', root):
+                self.assertEqual(producer.source_hashes(), expected)
+                path = root / 'hardware/exports/leg/fea/summary.json'
+                path.write_text('a changed current report')
+                expected[path.relative_to(root).as_posix()] = hashlib.sha256(path.read_bytes()).hexdigest()
+                self.assertEqual(producer.source_hashes(), expected)
+
+    def test_missing_current_report_rejects_a_present_legacy_copy(self):
+        with tempfile.TemporaryDirectory(prefix='e1-missing-source-') as tmp:
+            root = Path(tmp)
+            self.fixture(root)
+            (root / 'hardware/exports/leg/fea/summary.json').unlink()
+            with patch.object(producer, 'ROOT', root), self.assertRaises(FileNotFoundError):
+                producer.source_hashes()
+
+    def test_field_download_identity_resolves_to_the_current_output(self):
+        with tempfile.TemporaryDirectory(prefix='e1-output-path-') as tmp:
+            root = Path(tmp)
+            fields = root / 'hardware/exports/leg/fea/hip-frame-e1-media/hip_frame-E1.json'
+            with patch.object(producer, 'ROOT', root):
+                identity = producer.field_identity(fields)
+                self.assertEqual(check.source_file(root, identity), fields)
+                self.assertTrue(identity.startswith(check.MEDIA))
+                with self.assertRaises(ValueError):
+                    producer.field_identity(root / 'unrelated/hip_frame-E1.json')
 
 
 class StudyMedia(unittest.TestCase):
