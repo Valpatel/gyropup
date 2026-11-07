@@ -98,3 +98,17 @@ brand/navigation overlap. The exact source-header/CSS fixture passed144cases
 across both engines, scripting states, boundary widths, themes and motion
 preferences; this remains a prototype until actual compiled-site checks and
 normal CI pass. Badge asset bytes and the191movie input closure are unchanged.
+
+## A badge link needs the verified project origin, not merely HTTP success
+
+During PR251's2026-11-07 source audit, the first attribution badge linked to
+`https://cad-agent.com/`. It returned200, but served an unrelated Japanese site.
+The authoritative cad-agent README linked to `https://cad-agent.valpatel.com/`;
+that origin returned the actual project site. The wrong target was caught before
+main publication and corrected in both real README/homepage consumers. Existing
+browser assertions pin that exact official origin rather than accepting any
+successful HTTP response, label match or domain containing the project name.
+The locally vendored SVG hashes/MIT provenance and source-bound CAD/movie inputs
+are unchanged. Recheck a future origin migration against the owning project's
+published links; this observed correction is not permission to follow arbitrary
+third-party redirects or to treat availability as identity.

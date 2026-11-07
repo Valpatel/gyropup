@@ -126,3 +126,5 @@
 - An image is visible but wall measurement counts no visual inside its inline picture wrapper: [match the real picture/image boxes](inbox/2026-11-02-readme-images-need-src-not-srcset.md#a-picture-wrapper-must-have-the-visible-images-real-box).
 
 - A compact attribution badge overlaps the brand only without JavaScript: [use real no-script flow and boundary checks](inbox/2026-11-02-readme-images-need-src-not-srcset.md#test-badge-flow-with-scripting-disabled-as-well-as-a-delayed-script).
+
+- A Made with badge link returns200 but belongs to an unrelated site: [verify the actual project origin](inbox/2026-11-02-readme-images-need-src-not-srcset.md#a-badge-link-needs-the-verified-project-origin-not-merely-http-success).
