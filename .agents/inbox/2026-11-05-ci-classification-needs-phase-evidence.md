@@ -327,3 +327,12 @@ consumer expectations use the same new boundary. The decoded greeting is3.81s
 instead of3.25s, but duration or silence detection is not word alignment or a
 human listening verdict. Link playable before/after evidence and retain that
 acoustic limitation. No191movie source input changed.
+
+
+## A no-job readability refusal is not a producer failure or an authentication diagnosis
+
+On 2026-11-07 at11:09UTC, the reviewed short18 collection command `96a082b30d8f4b66b5926520cc7e176266dac4953f9dc62ade0e2f0485b5782e` at Gyropup `dba8954adb10cf4d796b35eaa457152e41cb89b3` was refused by the existing fleet CLI: exit1, empty stdout, `repo is not anonymously readable (public repos only): https://github.com/Valpatel/gyropup`. No job was assigned or private payload staged. The actual CLI's anonymous lookup precedes its controller request; this was not a CAD, dependency or test failure. [Original refusal](https://github.com/Valpatel/gyropup/pull/255#issuecomment-6706053012).
+
+At11:11UTC, one bounded read-only replay of the same lookup, with the CLI's empty environment/temporary home/disabled credential helper and system config, returned public main `b61f0cd4` with exit0 and no stderr. That proves later readability, not the cause of the first failure. No account, credential or repository visibility change was established. After independent exact-operator [review](https://github.com/Valpatel/gyropup/pull/255#issuecomment-6706182087), one fresh normal submission at11:23UTC used a new exclusive0600 write-ahead receipt, unchanged command/source/resources and actual node/capacity/private-slot/no-duplicate guards. An explicit operator assertion kept `FLEET_RUN_SKIP_REMOTE_CHECK` disabled. It created [fleet job246](https://github.com/Valpatel/gyropup/pull/255#issuecomment-6706191864); the original receipt stayed unchanged.
+
+Classify the actual boundary before retrying: a no-job precheck refusal needs retained stdout/stderr and authoritative queue/control-flow evidence. Do not infer a private repository, request broader authentication or bypass the anonymous check from this message alone. A later successful read is a diagnostic slice, not a native result or proof of the earlier cause. Any further submission needs fresh reviewed scope and its own durable receipt; this incident grants no automatic repeats. Job246 was still in progress when this incident was recorded, with actual producer/artifact acceptance separate.

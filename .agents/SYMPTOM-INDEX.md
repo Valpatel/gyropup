@@ -138,3 +138,5 @@
 - A recovered feature resurrects legacy root imports or new files miss the publication map: [reconcile feature additions with current ownership contracts](inbox/2026-11-05-root-moves-need-consumer-and-publication-maps.md#recover-feature-additions-into-the-current-package-and-publication-contracts).
 
 - Recovered positive aim commands stay at level, or absent feed metadata widens firing permission: [check the applied servo and separate firing bounds](inbox/2026-11-05-root-moves-need-consumer-and-publication-maps.md#recovered-commands-must-reach-the-actual-servo-and-retain-separate-firing-bounds).
+
+- Fleet submission says a public repository is not anonymously readable before any job is assigned: [classify the no-job boundary without bypassing authentication checks](inbox/2026-11-05-ci-classification-needs-phase-evidence.md#a-no-job-readability-refusal-is-not-a-producer-failure-or-an-authentication-diagnosis).
