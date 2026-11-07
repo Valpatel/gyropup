@@ -12,8 +12,8 @@ same axes, origin on the pan axis at the top face of the head's turret ring = th
 mount_z = bodyTop + 20 + SADDLE_T. The parts that tilt are built in the cartridge frame C (x along the barrel, the ball
 path on z = 0, the dial axis on x = 0); at tilt 0 C sits PATH_T above the mount face and TILT_X behind the pan axis.
 Pan turns about the T z axis, tilt about a y axis through C (TILT_X, TILT_C), which lies on the pan axis. Negative
-tilt = muzzle down; the hard stops allow 0 .. -25 deg. The tilting group's centre of mass sits a few mm behind the
-tilt axis, so unpowered the barrel rises to the 0 deg stop (it cannot drop onto the lidar in front of the turret).
+tilt = muzzle down; the hard stops allow +12 .. -25 deg (D77). The tilting group's centre of mass sits a few mm behind
+the tilt axis, so unpowered the barrel rises to the upper stop (it cannot drop onto the lidar in front of the turret).
 
 How the ball moves (turret-section.png): hopper (30 balls) -> dial pocket -> a hole in the dial-housing floor -> a
 curved chute that turns it forward -> the nip of the two flywheels -> the barrel. Each shot steps the dial 45 deg and
@@ -239,7 +239,7 @@ class Geo:
         # tilt and pan
         self.tilt_c = 15.0                                       # tilt axis above the ball path ...
         # ... and this far ahead of the dial axis, so the tilting group's centre of mass sits a few mm behind the axis
-        # with an empty or a full hopper: unpowered, the barrel rises to the 0 deg stop and never drops onto the lidar
+        # with an empty or a full hopper: unpowered, the barrel rises to the upper stop and never drops onto the lidar
         # in front of it (it was 32-35 mm ahead with the axis on the dial axis). The axis stays on the pan axis, so the
         # dial and hopper sit tilt_x behind it. 48 with the X2216s (72 g each, ahead of the axis) and the servo feed:
         # 8.5 mm behind with 30 balls, 5.2 empty (at 40 it was 0.9 behind full and 2.3 ahead empty)
@@ -253,7 +253,14 @@ class Geo:
         self.plate_y = (self.cheek_y[1] - PLATE['rebate'], self.cheek_y[1] - PLATE['rebate'] + SHEET['al6061']['thickness_mm'])
         self.foot_z = (self.rail_z[1] - PLATE['foot_h'], self.rail_z[1])
         self.stop_r = (24.0, 32.0)
+        # the tilt hard stops (deg, + = muzzle up): the stop lug on the yoke's sectors. D77: the limits are the mechanism's.
+        # Upper +12: cad/turret_tilt_range.py finds the feed servo under the dial 3 mm over the fixed pan pinion at
+        # +14.75 (pan 0 +-20; contact past +17.25) and 3 mm from the pan ring at +18.5 elsewhere; +12 keeps 2.75 deg to
+        # that margin for the lug's give and the print, and keeps 17 deg of the upper sector on the -y arm (the sector
+        # runs off the arm's edge past +13.7 with 15 deg left). exports/turret/limits.json (cad/turret_limits.py)
+        # carries both stops, and the feed's firing limit, to the sims and the firmware
         self.tilt_min = -25.0
+        self.tilt_max = 12.0
         # pan stack (T frame, mount face z = 0)
         self.foot_t = 5.0
         self.brg_z = 40.0                                        # bottom of the 61810
@@ -638,7 +645,7 @@ PLATE = {'foot_x': (-10.0, 84.0), 'foot_h': 10.0, 'half_w': 22.0, 'rebate': 3.2,
 # (+-STOP_HALF_DEG about straight down at tilt 0, r 22.5..32) meets the yoke's two sectors (r 24..32, YOKE_STOP_PROUD off
 # the arm's inner face: 1.5 mm onto the lug); its pad (r 11..22.5, +-32 deg) sits inside the sectors' annulus with two
 # M3 x 6 flat heads from the plate's inner face into holes tapped in it (and a drop of CA gel). Wider than v0's printed
-# lug (+-7.5 deg): the band's root is the lug's weak section, and the sectors moved with it, so the range is still 0..-25.
+# lug (+-7.5 deg): the band's root is the lug's weak section, and the sectors moved with it, so the range was still 0..-25 (+12..-25 since D77).
 STOP_HALF_DEG = 10.0
 YOKE_STOP_PROUD = 3.0
 YOKE_ROOT_FILLET = (6.0, 3.0)     # where the arms meet the bridge (D48's FEA): 6 mm, but 3 under the rotor leads ...
@@ -1001,7 +1008,7 @@ def tilt_yoke(G):
     # hard stops on the -y arm's inner face; the cradle's aluminium lug (D48) sits at -90 deg at tilt 0 and sweeps to
     # -115 at -25. The sectors stand YOKE_STOP_PROUD (3.0) off the arm: 1.5 mm onto the lug, 1.0 mm from the -y plate
     w = STOP_HALF_DEG
-    up_face, low_face = -90 + w, -90 + G.tilt_min - w
+    up_face, low_face = -90 + G.tilt_max + w, -90 + G.tilt_min - w
     # each sector clipped to the arm's width: their far ends overhung the arm's edges (never loaded) and left slivers
     # where the faceted arcs crossed them (zero-volume elements in the FEA mesh)
     clip = box(-20.0, 20.0, -a0 - 1.0, -a0 + YOKE_STOP_PROUD + 1.0, b0, zt + 40.0)
@@ -1203,7 +1210,7 @@ def lug_screws(G):
 def stop_lug(G):
     """The hard stop (D48), laser-cut by SendCutSend from 0.100 in (2.54 mm) 6061-T6 with two holes tapped M3: on the
     -y plate's outer face, 1.5 mm from the yoke's arm. Its stop band (r 22.5..32, +-STOP_HALF_DEG about straight down at
-    tilt 0) meets the yoke's sectors (r 24..32) at tilt 0 and -25 deg, 1.5 mm deep, loaded in its own plane: a push on
+    tilt 0) meets the yoke's sectors (r 24..32) at the two stops (G.tilt_max, G.tilt_min), 1.5 mm deep, loaded in its own plane: a push on
     the muzzle puts 262 N on it (50 N x 147 / 28 mm). Its pad (r 11..22.5, +-32 deg) lies inside the sectors' annulus,
     held by 2 x M3 x 6 flat heads from the plate's inner face (and a drop of CA gel). The barrel cannot be pushed above
     level while it is there: it is the kid-safety stop."""
@@ -1978,13 +1985,15 @@ PAIR_MIN_GAP = {frozenset(('pan_spacer', 'pan_bearing')): 0.3, frozenset(('pan_r
 STOP_PAIR = frozenset(('tilt_yoke', 'stop_lug'))
 
 
-def clashes(T: Turret, tilts=(0.0, -20.0, -25.0), pans=(0.0, 90.0, -90.0, 170.0, -170.0), min_mm3=10.0, verbose=False,
+def clashes(T: Turret, tilts=None, pans=(0.0, 90.0, -90.0, 170.0, -170.0), min_mm3=10.0, verbose=False,
             gaps=None, min_gap=1.0):
     """Pairs of turret parts (made and bought) that overlap by more than min_mm3, like leg.clashes_for_design. Parts in
-    the same rigid group are checked once; base-pan pairs at every pan angle; pan-tilt pairs at every tilt; base-tilt
-    pairs at every pan x tilt; the pinion turns with the ring (-3 x pan). Includes the proposed head ring and the DT
-    plug's 30 mm withdrawal path (against fixed parts only: plug it in with the turret parked). Returns [[part, part, mm3, pan, tilt], ...]."""
+    the same rigid group are checked once; base-pan pairs at every pan angle; pan-tilt pairs at every tilt (by default
+    both hard stops, level and -20); base-tilt pairs at every pan x tilt; the pinion turns with the ring (-3 x pan).
+    Includes the proposed head ring and the DT plug's 30 mm withdrawal path (against fixed parts only: plug it in with
+    the turret parked). Returns [[part, part, mm3, pan, tilt], ...]."""
     G = T.G
+    tilts = tilts if tilts is not None else tuple(dict.fromkeys((G.tilt_max, 0.0, -20.0, G.tilt_min)))
     names = list(T.local)
     extra = {'head_ring': (head_ring_tm(T.L).translate((0, 0, -T.mount_z)), 'base')}
     pl, f = DT['plug'], DT['flange']
@@ -2055,18 +2064,20 @@ def clashes(T: Turret, tilts=(0.0, -20.0, -25.0), pans=(0.0, 90.0, -90.0, 170.0,
     return out
 
 
-SWEEP_TILTS = (0.0, -5.0, -12.5, -20.0, -25.0)      # D48: the lug swings between the yoke's two stop sectors
+SWEEP_TILTS = (0.0, -5.0, -12.5, -20.0, -25.0)      # D48: the lug swings between the yoke's two stop sectors; sweep() adds the upper stop
 
 
-def sweep(T: Turret, out_dir: Path, step=10.0, tilts=SWEEP_TILTS):
+def sweep(T: Turret, out_dir: Path, step=10.0, tilts=None):
     """The clash sweep the pan joint's acceptance asks for (docs/turret-plan.md 7.1 T1): every pan from 0 to 350 deg in
-    `step` steps at each tilt (0, -5, -12.5, -20, -25 since D48), all parts with their designed contacts, moving pairs
-    flagged under 1 mm; the tilt hard stop (STOP_PAIR) may touch only at 0 and -25 deg. Writes clash-sweep.json."""
+    `step` steps at each tilt (the upper stop and half of it, then 0, -5, -12.5, -20, -25 as since D48), all parts with their designed contacts, moving pairs
+    flagged under 1 mm; the tilt hard stop (STOP_PAIR) may touch only at its two stops (D77: G.tilt_max, G.tilt_min).
+    Writes clash-sweep.json."""
+    tilts = tilts if tilts is not None else (T.G.tilt_max, T.G.tilt_max / 2, *SWEEP_TILTS)
     pans = [float(p) for p in np.arange(0.0, 360.0, step)]
     t0 = time.time()
     gaps = []
     cl = clashes(T, tilts=tilts, pans=pans, gaps=gaps)
-    stop = lambda a, b, t: frozenset((a, b)) == STOP_PAIR and t in (0.0, T.G.tilt_min)
+    stop = lambda a, b, t: frozenset((a, b)) == STOP_PAIR and t in (T.G.tilt_max, T.G.tilt_min)
     res = {'pans_deg': pans, 'tilts_deg': list(tilts), 'continuous_pan': CONTINUOUS_PAN, 'ring_model': RING_MODEL,
            'clashes': cl, 'gaps_under_1mm': [g + (['the tilt hard stop, touching by design'] if stop(g[0], g[1], g[4]) else []) for g in gaps],
            'unexpected_gaps': [g for g in gaps if not stop(g[0], g[1], g[4])], 'seconds': round(time.time() - t0)}
@@ -2171,7 +2182,7 @@ def turret_parts(L, ball_d=22.7, pan=0.0, tilt=0.0):
         'muzzle': list(T.point((G.barrel_x1, 0, 0), 'tilt', pan, tilt)),
         'muzzle_dir': [round(c, 4) for c in d],
         'laser_origin': list(T.point((LASER_X[1], LASER_Y, LASER_Z), 'tilt', pan, tilt)),
-        'tilt_range_deg': [G.tilt_min, 0.0], 'pan_range_deg': [-170.0, 170.0], 'pan_hard_stop_deg': 173.5,
+        'tilt_range_deg': [G.tilt_min, G.tilt_max], 'pan_range_deg': [-170.0, 170.0], 'pan_hard_stop_deg': 173.5,
         'mass_estimate_g': round(tot, 1),
         'com': [round(c, 1) for c in (com[0], com[1], com[2] + T.mount_z)],
         'com_above_mount_mm': round(com[2], 1),
@@ -2306,14 +2317,14 @@ def main():
     tx = (sum(rows[n]['mass_g'] * (rows[n]['com_mm'][0] + (rows[n].get('com_mm_2') or rows[n]['com_mm'])[0] * (rows[n]['qty'] - 1))
               for n in tilt_names if n in rows) + rows['balls_30']['mass_g'] * rows['balls_30']['com_mm'][0]) / tm
     print(f'  tilting group {tm:.0f} g, centre {tx:+.1f} mm ahead of the tilt axis: holding torque {tm / 1000 * 9.81 * tx / 1000:.2f} N·m '
-          f'(STS3215 stall 2.94); unpowered it ' + ('drops to the -25 deg stop' if tx > 0 else 'rises to the 0 deg stop'))
+          f'(STS3215 stall 2.94); unpowered it ' + (f'drops to the {G.tilt_min:g} deg stop' if tx > 0 else f'rises to the {G.tilt_max:+g} deg stop'))
 
     # clash check
-    print('\nCLASH CHECK (tilt 0, -20, -25 deg x pan 0, +-90, +-170 deg; incl. the proposed head ring and the DT plug path)')
+    print(f'\nCLASH CHECK (tilt {G.tilt_max:+g}, 0, -20, {G.tilt_min:g} deg x pan 0, +-90, +-170 deg; incl. the proposed head ring and the DT plug path)')
     gaps = []
     cl = clashes(T, verbose=True, gaps=gaps)
     print('  no clashes' if not cl else '\n'.join(f'  CLASH {a} x {b}: {v} mm3 at pan {p}, tilt {t}' for a, b, v, p, t in cl))
-    stop = lambda a, b, t: frozenset((a, b)) == STOP_PAIR and t in (0.0, G.tilt_min)
+    stop = lambda a, b, t: frozenset((a, b)) == STOP_PAIR and t in (G.tilt_max, G.tilt_min)
     print('  moving parts closer than 1 mm (designed contacts excluded): ' +
           ('none' if not gaps else '; '.join(f'{a} x {b} {d} mm at pan {p}, tilt {t}' + (' (the tilt hard stop, touching by design)' if stop(a, b, t) else '')
                                             for a, b, d, p, t in gaps)))

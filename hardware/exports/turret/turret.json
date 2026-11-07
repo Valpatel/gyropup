@@ -92,7 +92,7 @@
    "solid": true,
    "frame": "pan",
    "doc": "Printed PA6-CF on its back (layers run along the arms): a 12 mm bridge on the turntable (4 x M4) and two 8 mm",
-   "mass_g_each": 126.2,
+   "mass_g_each": 126.0,
    "print_h": 8.3,
    "bed_mm": [
     172.5,
@@ -701,14 +701,14 @@
   ],
   "tilt_range_deg": [
    -25.0,
-   0.0
+   12.0
   ],
   "pan_range_deg": [
    -170.0,
    170.0
   ],
   "pan_hard_stop_deg": 173.5,
-  "mass_estimate_g": 1756.8,
+  "mass_estimate_g": 1756.6,
   "com": [
    -5.1,
    -4.6,
@@ -758,7 +758,7 @@
    "stop_lug",
    0.0,
    0.0,
-   0.0
+   12.0
   ],
   [
    "tilt_yoke",
@@ -775,8 +775,8 @@
    -25.0
   ]
  ],
- "mass_g_with_balls": 1756.8,
- "mass_g_empty": 1701.9,
+ "mass_g_with_balls": 1756.6,
+ "mass_g_empty": 1701.7,
  "com_frame_t_mm": [
   -5.1,
   -4.6,
@@ -796,5 +796,5 @@
   "CT connector pair (Micro-Fit 3.0 class)": 12
  },
  "print_hours": 55.4,
- "made_g": 896.8
+ "made_g": 896.6
 }

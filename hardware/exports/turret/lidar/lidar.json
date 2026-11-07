@@ -24,7 +24,7 @@
   "muzzle_ahead_of_pan_axis_mm": 150.0,
   "tilt_range_deg": [
    -25.0,
-   0.0
+   12.0
   ]
  },
  "fixed_parts_to_obstacles_mm": {
@@ -55,300 +55,379 @@
   "closest_at_limit": [
    "ball path / VLP-16",
    11.7
+  ],
+  "max_elevation_deg": 12.0,
+  "closest_at_up_limit": [
+   "barrel / VLP-16",
+   96.0
   ]
  },
+ "elevation_limited_pans_deg": null,
  "firmware_table": [
   {
    "pan_deg": -180,
-   "min_tilt_deg": -25.0
+   "min_tilt_deg": -25.0,
+   "max_tilt_deg": 12.0
   },
   {
    "pan_deg": -175,
-   "min_tilt_deg": -25.0
+   "min_tilt_deg": -25.0,
+   "max_tilt_deg": 12.0
   },
   {
    "pan_deg": -170,
-   "min_tilt_deg": -25.0
+   "min_tilt_deg": -25.0,
+   "max_tilt_deg": 12.0
   },
   {
    "pan_deg": -165,
-   "min_tilt_deg": -25.0
+   "min_tilt_deg": -25.0,
+   "max_tilt_deg": 12.0
   },
   {
    "pan_deg": -160,
-   "min_tilt_deg": -25.0
+   "min_tilt_deg": -25.0,
+   "max_tilt_deg": 12.0
   },
   {
    "pan_deg": -155,
-   "min_tilt_deg": -25.0
+   "min_tilt_deg": -25.0,
+   "max_tilt_deg": 12.0
   },
   {
    "pan_deg": -150,
-   "min_tilt_deg": -25.0
+   "min_tilt_deg": -25.0,
+   "max_tilt_deg": 12.0
   },
   {
    "pan_deg": -145,
-   "min_tilt_deg": -25.0
+   "min_tilt_deg": -25.0,
+   "max_tilt_deg": 12.0
   },
   {
    "pan_deg": -140,
-   "min_tilt_deg": -25.0
+   "min_tilt_deg": -25.0,
+   "max_tilt_deg": 12.0
   },
   {
    "pan_deg": -135,
-   "min_tilt_deg": -25.0
+   "min_tilt_deg": -25.0,
+   "max_tilt_deg": 12.0
   },
   {
    "pan_deg": -130,
-   "min_tilt_deg": -25.0
+   "min_tilt_deg": -25.0,
+   "max_tilt_deg": 12.0
   },
   {
    "pan_deg": -125,
-   "min_tilt_deg": -25.0
+   "min_tilt_deg": -25.0,
+   "max_tilt_deg": 12.0
   },
   {
    "pan_deg": -120,
-   "min_tilt_deg": -25.0
+   "min_tilt_deg": -25.0,
+   "max_tilt_deg": 12.0
   },
   {
    "pan_deg": -115,
-   "min_tilt_deg": -25.0
+   "min_tilt_deg": -25.0,
+   "max_tilt_deg": 12.0
   },
   {
    "pan_deg": -110,
-   "min_tilt_deg": -25.0
+   "min_tilt_deg": -25.0,
+   "max_tilt_deg": 12.0
   },
   {
    "pan_deg": -105,
-   "min_tilt_deg": -25.0
+   "min_tilt_deg": -25.0,
+   "max_tilt_deg": 12.0
   },
   {
    "pan_deg": -100,
-   "min_tilt_deg": -25.0
+   "min_tilt_deg": -25.0,
+   "max_tilt_deg": 12.0
   },
   {
    "pan_deg": -95,
-   "min_tilt_deg": -25.0
+   "min_tilt_deg": -25.0,
+   "max_tilt_deg": 12.0
   },
   {
    "pan_deg": -90,
-   "min_tilt_deg": -25.0
+   "min_tilt_deg": -25.0,
+   "max_tilt_deg": 12.0
   },
   {
    "pan_deg": -85,
-   "min_tilt_deg": -25.0
+   "min_tilt_deg": -25.0,
+   "max_tilt_deg": 12.0
   },
   {
    "pan_deg": -80,
-   "min_tilt_deg": -25.0
+   "min_tilt_deg": -25.0,
+   "max_tilt_deg": 12.0
   },
   {
    "pan_deg": -75,
-   "min_tilt_deg": -25.0
+   "min_tilt_deg": -25.0,
+   "max_tilt_deg": 12.0
   },
   {
    "pan_deg": -70,
-   "min_tilt_deg": -25.0
+   "min_tilt_deg": -25.0,
+   "max_tilt_deg": 12.0
   },
   {
    "pan_deg": -65,
-   "min_tilt_deg": -25.0
+   "min_tilt_deg": -25.0,
+   "max_tilt_deg": 12.0
   },
   {
    "pan_deg": -60,
-   "min_tilt_deg": -25.0
+   "min_tilt_deg": -25.0,
+   "max_tilt_deg": 12.0
   },
   {
    "pan_deg": -55,
-   "min_tilt_deg": -25.0
+   "min_tilt_deg": -25.0,
+   "max_tilt_deg": 12.0
   },
   {
    "pan_deg": -50,
-   "min_tilt_deg": -25.0
+   "min_tilt_deg": -25.0,
+   "max_tilt_deg": 12.0
   },
   {
    "pan_deg": -45,
-   "min_tilt_deg": -25.0
+   "min_tilt_deg": -25.0,
+   "max_tilt_deg": 12.0
   },
   {
    "pan_deg": -40,
-   "min_tilt_deg": -25.0
+   "min_tilt_deg": -25.0,
+   "max_tilt_deg": 12.0
   },
   {
    "pan_deg": -35,
-   "min_tilt_deg": -25.0
+   "min_tilt_deg": -25.0,
+   "max_tilt_deg": 12.0
   },
   {
    "pan_deg": -30,
-   "min_tilt_deg": -23.5
+   "min_tilt_deg": -23.5,
+   "max_tilt_deg": 12.0
   },
   {
    "pan_deg": -25,
-   "min_tilt_deg": -19.5
+   "min_tilt_deg": -19.5,
+   "max_tilt_deg": 12.0
   },
   {
    "pan_deg": -20,
-   "min_tilt_deg": -18.0
+   "min_tilt_deg": -18.0,
+   "max_tilt_deg": 12.0
   },
   {
    "pan_deg": -15,
-   "min_tilt_deg": -17.0
+   "min_tilt_deg": -17.0,
+   "max_tilt_deg": 12.0
   },
   {
    "pan_deg": -10,
-   "min_tilt_deg": -16.5
+   "min_tilt_deg": -16.5,
+   "max_tilt_deg": 12.0
   },
   {
    "pan_deg": -5,
-   "min_tilt_deg": -16.5
+   "min_tilt_deg": -16.5,
+   "max_tilt_deg": 12.0
   },
   {
    "pan_deg": 0,
-   "min_tilt_deg": -16.5
+   "min_tilt_deg": -16.5,
+   "max_tilt_deg": 12.0
   },
   {
    "pan_deg": 5,
-   "min_tilt_deg": -16.5
+   "min_tilt_deg": -16.5,
+   "max_tilt_deg": 12.0
   },
   {
    "pan_deg": 10,
-   "min_tilt_deg": -16.5
+   "min_tilt_deg": -16.5,
+   "max_tilt_deg": 12.0
   },
   {
    "pan_deg": 15,
-   "min_tilt_deg": -17.0
+   "min_tilt_deg": -17.0,
+   "max_tilt_deg": 12.0
   },
   {
    "pan_deg": 20,
-   "min_tilt_deg": -18.0
+   "min_tilt_deg": -18.0,
+   "max_tilt_deg": 12.0
   },
   {
    "pan_deg": 25,
-   "min_tilt_deg": -19.5
+   "min_tilt_deg": -19.5,
+   "max_tilt_deg": 12.0
   },
   {
    "pan_deg": 30,
-   "min_tilt_deg": -23.5
+   "min_tilt_deg": -23.5,
+   "max_tilt_deg": 12.0
   },
   {
    "pan_deg": 35,
-   "min_tilt_deg": -25.0
+   "min_tilt_deg": -25.0,
+   "max_tilt_deg": 12.0
   },
   {
    "pan_deg": 40,
-   "min_tilt_deg": -25.0
+   "min_tilt_deg": -25.0,
+   "max_tilt_deg": 12.0
   },
   {
    "pan_deg": 45,
-   "min_tilt_deg": -25.0
+   "min_tilt_deg": -25.0,
+   "max_tilt_deg": 12.0
   },
   {
    "pan_deg": 50,
-   "min_tilt_deg": -25.0
+   "min_tilt_deg": -25.0,
+   "max_tilt_deg": 12.0
   },
   {
    "pan_deg": 55,
-   "min_tilt_deg": -25.0
+   "min_tilt_deg": -25.0,
+   "max_tilt_deg": 12.0
   },
   {
    "pan_deg": 60,
-   "min_tilt_deg": -25.0
+   "min_tilt_deg": -25.0,
+   "max_tilt_deg": 12.0
   },
   {
    "pan_deg": 65,
-   "min_tilt_deg": -25.0
+   "min_tilt_deg": -25.0,
+   "max_tilt_deg": 12.0
   },
   {
    "pan_deg": 70,
-   "min_tilt_deg": -25.0
+   "min_tilt_deg": -25.0,
+   "max_tilt_deg": 12.0
   },
   {
    "pan_deg": 75,
-   "min_tilt_deg": -25.0
+   "min_tilt_deg": -25.0,
+   "max_tilt_deg": 12.0
   },
   {
    "pan_deg": 80,
-   "min_tilt_deg": -25.0
+   "min_tilt_deg": -25.0,
+   "max_tilt_deg": 12.0
   },
   {
    "pan_deg": 85,
-   "min_tilt_deg": -25.0
+   "min_tilt_deg": -25.0,
+   "max_tilt_deg": 12.0
   },
   {
    "pan_deg": 90,
-   "min_tilt_deg": -25.0
+   "min_tilt_deg": -25.0,
+   "max_tilt_deg": 12.0
   },
   {
    "pan_deg": 95,
-   "min_tilt_deg": -25.0
+   "min_tilt_deg": -25.0,
+   "max_tilt_deg": 12.0
   },
   {
    "pan_deg": 100,
-   "min_tilt_deg": -25.0
+   "min_tilt_deg": -25.0,
+   "max_tilt_deg": 12.0
   },
   {
    "pan_deg": 105,
-   "min_tilt_deg": -25.0
+   "min_tilt_deg": -25.0,
+   "max_tilt_deg": 12.0
   },
   {
    "pan_deg": 110,
-   "min_tilt_deg": -25.0
+   "min_tilt_deg": -25.0,
+   "max_tilt_deg": 12.0
   },
   {
    "pan_deg": 115,
-   "min_tilt_deg": -25.0
+   "min_tilt_deg": -25.0,
+   "max_tilt_deg": 12.0
   },
   {
    "pan_deg": 120,
-   "min_tilt_deg": -25.0
+   "min_tilt_deg": -25.0,
+   "max_tilt_deg": 12.0
   },
   {
    "pan_deg": 125,
-   "min_tilt_deg": -25.0
+   "min_tilt_deg": -25.0,
+   "max_tilt_deg": 12.0
   },
   {
    "pan_deg": 130,
-   "min_tilt_deg": -25.0
+   "min_tilt_deg": -25.0,
+   "max_tilt_deg": 12.0
   },
   {
    "pan_deg": 135,
-   "min_tilt_deg": -25.0
+   "min_tilt_deg": -25.0,
+   "max_tilt_deg": 12.0
   },
   {
    "pan_deg": 140,
-   "min_tilt_deg": -25.0
+   "min_tilt_deg": -25.0,
+   "max_tilt_deg": 12.0
   },
   {
    "pan_deg": 145,
-   "min_tilt_deg": -25.0
+   "min_tilt_deg": -25.0,
+   "max_tilt_deg": 12.0
   },
   {
    "pan_deg": 150,
-   "min_tilt_deg": -25.0
+   "min_tilt_deg": -25.0,
+   "max_tilt_deg": 12.0
   },
   {
    "pan_deg": 155,
-   "min_tilt_deg": -25.0
+   "min_tilt_deg": -25.0,
+   "max_tilt_deg": 12.0
   },
   {
    "pan_deg": 160,
-   "min_tilt_deg": -25.0
+   "min_tilt_deg": -25.0,
+   "max_tilt_deg": 12.0
   },
   {
    "pan_deg": 165,
-   "min_tilt_deg": -25.0
+   "min_tilt_deg": -25.0,
+   "max_tilt_deg": 12.0
   },
   {
    "pan_deg": 170,
-   "min_tilt_deg": -25.0
+   "min_tilt_deg": -25.0,
+   "max_tilt_deg": 12.0
   },
   {
    "pan_deg": 175,
-   "min_tilt_deg": -25.0
+   "min_tilt_deg": -25.0,
+   "max_tilt_deg": 12.0
   },
   {
    "pan_deg": 180,
-   "min_tilt_deg": -25.0
+   "min_tilt_deg": -25.0,
+   "max_tilt_deg": 12.0
   }
  ],
  "keep_out_fire_pan_deg": [],
@@ -359,6 +438,11 @@
    "closest_at_limit": [
     "barrel / VLP-16",
     197.0
+   ],
+   "max_elevation_deg": 12.0,
+   "closest_at_up_limit": [
+    "barrel / VLP-16",
+    244.2
    ]
   },
   {
@@ -367,6 +451,11 @@
    "closest_at_limit": [
     "barrel / VLP-16",
     196.9
+   ],
+   "max_elevation_deg": 12.0,
+   "closest_at_up_limit": [
+    "barrel / VLP-16",
+    244.1
    ]
   },
   {
@@ -375,6 +464,11 @@
    "closest_at_limit": [
     "barrel / VLP-16",
     196.8
+   ],
+   "max_elevation_deg": 12.0,
+   "closest_at_up_limit": [
+    "barrel / VLP-16",
+    244.0
    ]
   },
   {
@@ -383,6 +477,11 @@
    "closest_at_limit": [
     "barrel / VLP-16",
     196.6
+   ],
+   "max_elevation_deg": 12.0,
+   "closest_at_up_limit": [
+    "barrel / VLP-16",
+    243.7
    ]
   },
   {
@@ -391,6 +490,11 @@
    "closest_at_limit": [
     "barrel / VLP-16",
     196.3
+   ],
+   "max_elevation_deg": 12.0,
+   "closest_at_up_limit": [
+    "barrel / VLP-16",
+    243.4
    ]
   },
   {
@@ -399,6 +503,11 @@
    "closest_at_limit": [
     "barrel / VLP-16",
     195.9
+   ],
+   "max_elevation_deg": 12.0,
+   "closest_at_up_limit": [
+    "barrel / VLP-16",
+    243.0
    ]
   },
   {
@@ -407,6 +516,11 @@
    "closest_at_limit": [
     "barrel / VLP-16",
     195.4
+   ],
+   "max_elevation_deg": 12.0,
+   "closest_at_up_limit": [
+    "barrel / VLP-16",
+    242.5
    ]
   },
   {
@@ -415,6 +529,11 @@
    "closest_at_limit": [
     "barrel / VLP-16",
     194.9
+   ],
+   "max_elevation_deg": 12.0,
+   "closest_at_up_limit": [
+    "barrel / VLP-16",
+    241.9
    ]
   },
   {
@@ -423,6 +542,11 @@
    "closest_at_limit": [
     "barrel / VLP-16",
     194.3
+   ],
+   "max_elevation_deg": 12.0,
+   "closest_at_up_limit": [
+    "barrel / VLP-16",
+    241.3
    ]
   },
   {
@@ -431,6 +555,11 @@
    "closest_at_limit": [
     "barrel / VLP-16",
     193.6
+   ],
+   "max_elevation_deg": 12.0,
+   "closest_at_up_limit": [
+    "barrel / VLP-16",
+    240.6
    ]
   },
   {
@@ -439,6 +568,11 @@
    "closest_at_limit": [
     "barrel / VLP-16",
     192.8
+   ],
+   "max_elevation_deg": 12.0,
+   "closest_at_up_limit": [
+    "barrel / VLP-16",
+    239.8
    ]
   },
   {
@@ -446,7 +580,12 @@
    "max_depression_deg": -25.0,
    "closest_at_limit": [
     "barrel / VLP-16",
-    191.9
+    192.0
+   ],
+   "max_elevation_deg": 12.0,
+   "closest_at_up_limit": [
+    "barrel / VLP-16",
+    238.9
    ]
   },
   {
@@ -455,6 +594,11 @@
    "closest_at_limit": [
     "barrel / VLP-16",
     191.0
+   ],
+   "max_elevation_deg": 12.0,
+   "closest_at_up_limit": [
+    "barrel / VLP-16",
+    238.0
    ]
   },
   {
@@ -462,7 +606,12 @@
    "max_depression_deg": -25.0,
    "closest_at_limit": [
     "barrel / VLP-16",
-    190.0
+    190.1
+   ],
+   "max_elevation_deg": 12.0,
+   "closest_at_up_limit": [
+    "barrel / VLP-16",
+    237.0
    ]
   },
   {
@@ -471,6 +620,11 @@
    "closest_at_limit": [
     "barrel / VLP-16",
     189.0
+   ],
+   "max_elevation_deg": 12.0,
+   "closest_at_up_limit": [
+    "barrel / VLP-16",
+    235.9
    ]
   },
   {
@@ -478,7 +632,12 @@
    "max_depression_deg": -25.0,
    "closest_at_limit": [
     "barrel / VLP-16",
-    187.8
+    187.9
+   ],
+   "max_elevation_deg": 12.0,
+   "closest_at_up_limit": [
+    "barrel / VLP-16",
+    234.7
    ]
   },
   {
@@ -486,7 +645,12 @@
    "max_depression_deg": -25.0,
    "closest_at_limit": [
     "barrel / VLP-16",
-    186.6
+    186.7
+   ],
+   "max_elevation_deg": 12.0,
+   "closest_at_up_limit": [
+    "barrel / VLP-16",
+    233.5
    ]
   },
   {
@@ -495,6 +659,11 @@
    "closest_at_limit": [
     "barrel / VLP-16",
     185.4
+   ],
+   "max_elevation_deg": 12.0,
+   "closest_at_up_limit": [
+    "barrel / VLP-16",
+    232.2
    ]
   },
   {
@@ -502,7 +671,12 @@
    "max_depression_deg": -25.0,
    "closest_at_limit": [
     "barrel / VLP-16",
-    184.0
+    184.1
+   ],
+   "max_elevation_deg": 12.0,
+   "closest_at_up_limit": [
+    "barrel / VLP-16",
+    230.8
    ]
   },
   {
@@ -511,6 +685,11 @@
    "closest_at_limit": [
     "barrel / VLP-16",
     182.6
+   ],
+   "max_elevation_deg": 12.0,
+   "closest_at_up_limit": [
+    "barrel / VLP-16",
+    229.4
    ]
   },
   {
@@ -518,7 +697,12 @@
    "max_depression_deg": -25.0,
    "closest_at_limit": [
     "barrel / VLP-16",
-    181.1
+    181.2
+   ],
+   "max_elevation_deg": 12.0,
+   "closest_at_up_limit": [
+    "barrel / VLP-16",
+    227.8
    ]
   },
   {
@@ -527,6 +711,11 @@
    "closest_at_limit": [
     "barrel / VLP-16",
     179.6
+   ],
+   "max_elevation_deg": 12.0,
+   "closest_at_up_limit": [
+    "barrel / VLP-16",
+    226.3
    ]
   },
   {
@@ -534,7 +723,12 @@
    "max_depression_deg": -25.0,
    "closest_at_limit": [
     "barrel / VLP-16",
-    177.9
+    178.0
+   ],
+   "max_elevation_deg": 12.0,
+   "closest_at_up_limit": [
+    "barrel / VLP-16",
+    224.6
    ]
   },
   {
@@ -543,6 +737,11 @@
    "closest_at_limit": [
     "barrel / VLP-16",
     176.3
+   ],
+   "max_elevation_deg": 12.0,
+   "closest_at_up_limit": [
+    "barrel / VLP-16",
+    222.9
    ]
   },
   {
@@ -550,7 +749,12 @@
    "max_depression_deg": -25.0,
    "closest_at_limit": [
     "barrel / VLP-16",
-    174.5
+    174.6
+   ],
+   "max_elevation_deg": 12.0,
+   "closest_at_up_limit": [
+    "barrel / VLP-16",
+    221.1
    ]
   },
   {
@@ -558,7 +762,12 @@
    "max_depression_deg": -25.0,
    "closest_at_limit": [
     "barrel / VLP-16",
-    172.7
+    172.8
+   ],
+   "max_elevation_deg": 12.0,
+   "closest_at_up_limit": [
+    "barrel / VLP-16",
+    219.3
    ]
   },
   {
@@ -566,7 +775,12 @@
    "max_depression_deg": -25.0,
    "closest_at_limit": [
     "barrel / VLP-16",
-    170.8
+    170.9
+   ],
+   "max_elevation_deg": 12.0,
+   "closest_at_up_limit": [
+    "barrel / VLP-16",
+    217.3
    ]
   },
   {
@@ -574,7 +788,12 @@
    "max_depression_deg": -25.0,
    "closest_at_limit": [
     "barrel / VLP-16",
-    168.9
+    169.0
+   ],
+   "max_elevation_deg": 12.0,
+   "closest_at_up_limit": [
+    "barrel / VLP-16",
+    215.4
    ]
   },
   {
@@ -583,6 +802,11 @@
    "closest_at_limit": [
     "barrel / VLP-16",
     166.9
+   ],
+   "max_elevation_deg": 12.0,
+   "closest_at_up_limit": [
+    "barrel / VLP-16",
+    213.3
    ]
   },
   {
@@ -590,7 +814,12 @@
    "max_depression_deg": -25.0,
    "closest_at_limit": [
     "barrel / VLP-16",
-    164.8
+    164.9
+   ],
+   "max_elevation_deg": 12.0,
+   "closest_at_up_limit": [
+    "barrel / VLP-16",
+    211.2
    ]
   },
   {
@@ -598,7 +827,12 @@
    "max_depression_deg": -25.0,
    "closest_at_limit": [
     "barrel / VLP-16",
-    162.6
+    162.7
+   ],
+   "max_elevation_deg": 12.0,
+   "closest_at_up_limit": [
+    "barrel / VLP-16",
+    209.1
    ]
   },
   {
@@ -606,7 +840,12 @@
    "max_depression_deg": -25.0,
    "closest_at_limit": [
     "barrel / VLP-16",
-    160.4
+    160.5
+   ],
+   "max_elevation_deg": 12.0,
+   "closest_at_up_limit": [
+    "barrel / VLP-16",
+    206.8
    ]
   },
   {
@@ -614,7 +853,12 @@
    "max_depression_deg": -25.0,
    "closest_at_limit": [
     "barrel / VLP-16",
-    158.2
+    158.3
+   ],
+   "max_elevation_deg": 12.0,
+   "closest_at_up_limit": [
+    "barrel / VLP-16",
+    204.6
    ]
   },
   {
@@ -623,6 +867,11 @@
    "closest_at_limit": [
     "barrel / VLP-16",
     155.9
+   ],
+   "max_elevation_deg": 12.0,
+   "closest_at_up_limit": [
+    "barrel / VLP-16",
+    202.2
    ]
   },
   {
@@ -631,6 +880,11 @@
    "closest_at_limit": [
     "barrel / VLP-16",
     153.5
+   ],
+   "max_elevation_deg": 12.0,
+   "closest_at_up_limit": [
+    "barrel / VLP-16",
+    199.9
    ]
   },
   {
@@ -639,6 +893,11 @@
    "closest_at_limit": [
     "barrel / VLP-16",
     151.0
+   ],
+   "max_elevation_deg": 12.0,
+   "closest_at_up_limit": [
+    "barrel / VLP-16",
+    197.4
    ]
   },
   {
@@ -646,7 +905,12 @@
    "max_depression_deg": -25.0,
    "closest_at_limit": [
     "barrel / VLP-16",
-    148.4
+    148.5
+   ],
+   "max_elevation_deg": 12.0,
+   "closest_at_up_limit": [
+    "barrel / VLP-16",
+    194.9
    ]
   },
   {
@@ -654,7 +918,12 @@
    "max_depression_deg": -25.0,
    "closest_at_limit": [
     "barrel / VLP-16",
-    145.8
+    145.9
+   ],
+   "max_elevation_deg": 12.0,
+   "closest_at_up_limit": [
+    "barrel / VLP-16",
+    192.4
    ]
   },
   {
@@ -662,7 +931,12 @@
    "max_depression_deg": -25.0,
    "closest_at_limit": [
     "barrel / VLP-16",
-    143.2
+    143.3
+   ],
+   "max_elevation_deg": 12.0,
+   "closest_at_up_limit": [
+    "barrel / VLP-16",
+    189.8
    ]
   },
   {
@@ -670,7 +944,12 @@
    "max_depression_deg": -25.0,
    "closest_at_limit": [
     "barrel / VLP-16",
-    140.5
+    140.6
+   ],
+   "max_elevation_deg": 12.0,
+   "closest_at_up_limit": [
+    "barrel / VLP-16",
+    187.2
    ]
   },
   {
@@ -678,7 +957,12 @@
    "max_depression_deg": -25.0,
    "closest_at_limit": [
     "barrel / VLP-16",
-    137.7
+    137.8
+   ],
+   "max_elevation_deg": 12.0,
+   "closest_at_up_limit": [
+    "barrel / VLP-16",
+    184.6
    ]
   },
   {
@@ -686,7 +970,12 @@
    "max_depression_deg": -25.0,
    "closest_at_limit": [
     "barrel / VLP-16",
-    134.9
+    135.0
+   ],
+   "max_elevation_deg": 12.0,
+   "closest_at_up_limit": [
+    "barrel / VLP-16",
+    181.9
    ]
   },
   {
@@ -694,7 +983,12 @@
    "max_depression_deg": -25.0,
    "closest_at_limit": [
     "barrel / VLP-16",
-    132.0
+    132.1
+   ],
+   "max_elevation_deg": 12.0,
+   "closest_at_up_limit": [
+    "barrel / VLP-16",
+    179.1
    ]
   },
   {
@@ -703,6 +997,11 @@
    "closest_at_limit": [
     "barrel / VLP-16",
     129.1
+   ],
+   "max_elevation_deg": 12.0,
+   "closest_at_up_limit": [
+    "barrel / VLP-16",
+    176.3
    ]
   },
   {
@@ -711,6 +1010,11 @@
    "closest_at_limit": [
     "barrel / VLP-16",
     126.1
+   ],
+   "max_elevation_deg": 12.0,
+   "closest_at_up_limit": [
+    "barrel / VLP-16",
+    173.5
    ]
   },
   {
@@ -718,7 +1022,12 @@
    "max_depression_deg": -25.0,
    "closest_at_limit": [
     "barrel / VLP-16",
-    123.0
+    123.1
+   ],
+   "max_elevation_deg": 12.0,
+   "closest_at_up_limit": [
+    "barrel / VLP-16",
+    170.7
    ]
   },
   {
@@ -726,7 +1035,12 @@
    "max_depression_deg": -25.0,
    "closest_at_limit": [
     "barrel / VLP-16",
-    119.9
+    120.0
+   ],
+   "max_elevation_deg": 12.0,
+   "closest_at_up_limit": [
+    "barrel / VLP-16",
+    167.8
    ]
   },
   {
@@ -735,6 +1049,11 @@
    "closest_at_limit": [
     "barrel / VLP-16",
     116.8
+   ],
+   "max_elevation_deg": 12.0,
+   "closest_at_up_limit": [
+    "barrel / VLP-16",
+    164.9
    ]
   },
   {
@@ -743,6 +1062,11 @@
    "closest_at_limit": [
     "barrel / VLP-16",
     113.6
+   ],
+   "max_elevation_deg": 12.0,
+   "closest_at_up_limit": [
+    "barrel / VLP-16",
+    162.0
    ]
   },
   {
@@ -751,6 +1075,11 @@
    "closest_at_limit": [
     "barrel / VLP-16",
     110.3
+   ],
+   "max_elevation_deg": 12.0,
+   "closest_at_up_limit": [
+    "barrel / VLP-16",
+    159.1
    ]
   },
   {
@@ -759,6 +1088,11 @@
    "closest_at_limit": [
     "barrel / VLP-16",
     107.0
+   ],
+   "max_elevation_deg": 12.0,
+   "closest_at_up_limit": [
+    "barrel / VLP-16",
+    156.1
    ]
   },
   {
@@ -767,6 +1101,11 @@
    "closest_at_limit": [
     "barrel / VLP-16",
     103.6
+   ],
+   "max_elevation_deg": 12.0,
+   "closest_at_up_limit": [
+    "barrel / VLP-16",
+    153.2
    ]
   },
   {
@@ -775,6 +1114,11 @@
    "closest_at_limit": [
     "barrel / VLP-16",
     100.2
+   ],
+   "max_elevation_deg": 12.0,
+   "closest_at_up_limit": [
+    "barrel / VLP-16",
+    150.2
    ]
   },
   {
@@ -782,7 +1126,12 @@
    "max_depression_deg": -25.0,
    "closest_at_limit": [
     "barrel / VLP-16",
-    96.7
+    96.8
+   ],
+   "max_elevation_deg": 12.0,
+   "closest_at_up_limit": [
+    "barrel / VLP-16",
+    147.3
    ]
   },
   {
@@ -791,6 +1140,11 @@
    "closest_at_limit": [
     "barrel / VLP-16",
     93.2
+   ],
+   "max_elevation_deg": 12.0,
+   "closest_at_up_limit": [
+    "barrel / VLP-16",
+    144.4
    ]
   },
   {
@@ -798,7 +1152,12 @@
    "max_depression_deg": -25.0,
    "closest_at_limit": [
     "barrel / VLP-16",
-    89.6
+    89.7
+   ],
+   "max_elevation_deg": 12.0,
+   "closest_at_up_limit": [
+    "barrel / VLP-16",
+    141.4
    ]
   },
   {
@@ -807,6 +1166,11 @@
    "closest_at_limit": [
     "barrel / VLP-16",
     86.1
+   ],
+   "max_elevation_deg": 12.0,
+   "closest_at_up_limit": [
+    "barrel / VLP-16",
+    138.5
    ]
   },
   {
@@ -815,6 +1179,11 @@
    "closest_at_limit": [
     "barrel / VLP-16",
     82.4
+   ],
+   "max_elevation_deg": 12.0,
+   "closest_at_up_limit": [
+    "barrel / VLP-16",
+    135.7
    ]
   },
   {
@@ -823,6 +1192,11 @@
    "closest_at_limit": [
     "barrel / VLP-16",
     78.7
+   ],
+   "max_elevation_deg": 12.0,
+   "closest_at_up_limit": [
+    "barrel / VLP-16",
+    132.8
    ]
   },
   {
@@ -830,7 +1204,12 @@
    "max_depression_deg": -25.0,
    "closest_at_limit": [
     "barrel / VLP-16",
-    74.9
+    75.0
+   ],
+   "max_elevation_deg": 12.0,
+   "closest_at_up_limit": [
+    "barrel / VLP-16",
+    130.0
    ]
   },
   {
@@ -839,6 +1218,11 @@
    "closest_at_limit": [
     "barrel / VLP-16",
     71.2
+   ],
+   "max_elevation_deg": 12.0,
+   "closest_at_up_limit": [
+    "barrel / VLP-16",
+    127.3
    ]
   },
   {
@@ -846,7 +1230,12 @@
    "max_depression_deg": -25.0,
    "closest_at_limit": [
     "barrel / VLP-16",
-    67.4
+    67.5
+   ],
+   "max_elevation_deg": 12.0,
+   "closest_at_up_limit": [
+    "barrel / VLP-16",
+    124.6
    ]
   },
   {
@@ -855,6 +1244,11 @@
    "closest_at_limit": [
     "barrel / VLP-16",
     63.6
+   ],
+   "max_elevation_deg": 12.0,
+   "closest_at_up_limit": [
+    "barrel / VLP-16",
+    121.9
    ]
   },
   {
@@ -862,7 +1256,12 @@
    "max_depression_deg": -25.0,
    "closest_at_limit": [
     "barrel / VLP-16",
-    59.7
+    59.8
+   ],
+   "max_elevation_deg": 12.0,
+   "closest_at_up_limit": [
+    "barrel / VLP-16",
+    119.4
    ]
   },
   {
@@ -871,6 +1270,11 @@
    "closest_at_limit": [
     "barrel / VLP-16",
     55.9
+   ],
+   "max_elevation_deg": 12.0,
+   "closest_at_up_limit": [
+    "barrel / VLP-16",
+    116.9
    ]
   },
   {
@@ -879,6 +1283,11 @@
    "closest_at_limit": [
     "barrel / VLP-16",
     52.0
+   ],
+   "max_elevation_deg": 12.0,
+   "closest_at_up_limit": [
+    "barrel / VLP-16",
+    114.5
    ]
   },
   {
@@ -887,6 +1296,11 @@
    "closest_at_limit": [
     "barrel / VLP-16",
     48.1
+   ],
+   "max_elevation_deg": 12.0,
+   "closest_at_up_limit": [
+    "barrel / VLP-16",
+    112.2
    ]
   },
   {
@@ -895,6 +1309,11 @@
    "closest_at_limit": [
     "barrel / VLP-16",
     44.2
+   ],
+   "max_elevation_deg": 12.0,
+   "closest_at_up_limit": [
+    "barrel / VLP-16",
+    110.0
    ]
   },
   {
@@ -903,6 +1322,11 @@
    "closest_at_limit": [
     "barrel / VLP-16",
     40.4
+   ],
+   "max_elevation_deg": 12.0,
+   "closest_at_up_limit": [
+    "barrel / VLP-16",
+    108.0
    ]
   },
   {
@@ -911,6 +1335,11 @@
    "closest_at_limit": [
     "barrel / VLP-16",
     36.5
+   ],
+   "max_elevation_deg": 12.0,
+   "closest_at_up_limit": [
+    "barrel / VLP-16",
+    106.0
    ]
   },
   {
@@ -919,6 +1348,11 @@
    "closest_at_limit": [
     "barrel / VLP-16",
     32.5
+   ],
+   "max_elevation_deg": 12.0,
+   "closest_at_up_limit": [
+    "barrel / VLP-16",
+    104.2
    ]
   },
   {
@@ -927,6 +1361,11 @@
    "closest_at_limit": [
     "barrel / VLP-16",
     28.6
+   ],
+   "max_elevation_deg": 12.0,
+   "closest_at_up_limit": [
+    "barrel / VLP-16",
+    102.6
    ]
   },
   {
@@ -935,6 +1374,11 @@
    "closest_at_limit": [
     "barrel / VLP-16",
     24.8
+   ],
+   "max_elevation_deg": 12.0,
+   "closest_at_up_limit": [
+    "barrel / VLP-16",
+    101.1
    ]
   },
   {
@@ -943,6 +1387,11 @@
    "closest_at_limit": [
     "barrel / VLP-16",
     21.3
+   ],
+   "max_elevation_deg": 12.0,
+   "closest_at_up_limit": [
+    "barrel / VLP-16",
+    99.8
    ]
   },
   {
@@ -951,6 +1400,11 @@
    "closest_at_limit": [
     "barrel / VLP-16",
     17.9
+   ],
+   "max_elevation_deg": 12.0,
+   "closest_at_up_limit": [
+    "barrel / VLP-16",
+    98.7
    ]
   },
   {
@@ -959,6 +1413,11 @@
    "closest_at_limit": [
     "barrel / VLP-16",
     14.9
+   ],
+   "max_elevation_deg": 12.0,
+   "closest_at_up_limit": [
+    "barrel / VLP-16",
+    97.8
    ]
   },
   {
@@ -967,6 +1426,11 @@
    "closest_at_limit": [
     "ball path / VLP-16",
     11.0
+   ],
+   "max_elevation_deg": 12.0,
+   "closest_at_up_limit": [
+    "barrel / VLP-16",
+    97.1
    ]
   },
   {
@@ -975,6 +1439,11 @@
    "closest_at_limit": [
     "ball path / VLP-16",
     10.0
+   ],
+   "max_elevation_deg": 12.0,
+   "closest_at_up_limit": [
+    "barrel / VLP-16",
+    96.5
    ]
   },
   {
@@ -983,6 +1452,11 @@
    "closest_at_limit": [
     "ball path / VLP-16",
     11.1
+   ],
+   "max_elevation_deg": 12.0,
+   "closest_at_up_limit": [
+    "barrel / VLP-16",
+    96.1
    ]
   },
   {
@@ -991,6 +1465,11 @@
    "closest_at_limit": [
     "ball path / VLP-16",
     10.6
+   ],
+   "max_elevation_deg": 12.0,
+   "closest_at_up_limit": [
+    "barrel / VLP-16",
+    96.0
    ]
   },
   {
@@ -999,6 +1478,11 @@
    "closest_at_limit": [
     "ball path / VLP-16",
     11.0
+   ],
+   "max_elevation_deg": 12.0,
+   "closest_at_up_limit": [
+    "barrel / VLP-16",
+    96.0
    ]
   },
   {
@@ -1007,6 +1491,11 @@
    "closest_at_limit": [
     "ball path / VLP-16",
     10.1
+   ],
+   "max_elevation_deg": 12.0,
+   "closest_at_up_limit": [
+    "barrel / VLP-16",
+    96.0
    ]
   },
   {
@@ -1015,6 +1504,11 @@
    "closest_at_limit": [
     "ball path / VLP-16",
     11.5
+   ],
+   "max_elevation_deg": 12.0,
+   "closest_at_up_limit": [
+    "barrel / VLP-16",
+    96.0
    ]
   },
   {
@@ -1023,6 +1517,11 @@
    "closest_at_limit": [
     "ball path / VLP-16",
     11.5
+   ],
+   "max_elevation_deg": 12.0,
+   "closest_at_up_limit": [
+    "barrel / VLP-16",
+    96.0
    ]
   },
   {
@@ -1031,6 +1530,11 @@
    "closest_at_limit": [
     "ball path / VLP-16",
     10.3
+   ],
+   "max_elevation_deg": 12.0,
+   "closest_at_up_limit": [
+    "barrel / VLP-16",
+    96.0
    ]
   },
   {
@@ -1039,6 +1543,11 @@
    "closest_at_limit": [
     "ball path / VLP-16",
     10.8
+   ],
+   "max_elevation_deg": 12.0,
+   "closest_at_up_limit": [
+    "barrel / VLP-16",
+    96.0
    ]
   },
   {
@@ -1047,6 +1556,11 @@
    "closest_at_limit": [
     "ball path / VLP-16",
     11.7
+   ],
+   "max_elevation_deg": 12.0,
+   "closest_at_up_limit": [
+    "barrel / VLP-16",
+    96.0
    ]
   },
   {
@@ -1055,6 +1569,11 @@
    "closest_at_limit": [
     "ball path / VLP-16",
     11.3
+   ],
+   "max_elevation_deg": 12.0,
+   "closest_at_up_limit": [
+    "barrel / VLP-16",
+    96.0
    ]
   },
   {
@@ -1063,6 +1582,11 @@
    "closest_at_limit": [
     "ball path / VLP-16",
     10.7
+   ],
+   "max_elevation_deg": 12.0,
+   "closest_at_up_limit": [
+    "barrel / VLP-16",
+    96.0
    ]
   },
   {
@@ -1071,6 +1595,11 @@
    "closest_at_limit": [
     "ball path / VLP-16",
     10.3
+   ],
+   "max_elevation_deg": 12.0,
+   "closest_at_up_limit": [
+    "barrel / VLP-16",
+    96.0
    ]
   },
   {
@@ -1079,6 +1608,11 @@
    "closest_at_limit": [
     "ball path / VLP-16",
     10.2
+   ],
+   "max_elevation_deg": 12.0,
+   "closest_at_up_limit": [
+    "barrel / VLP-16",
+    96.0
    ]
   },
   {
@@ -1087,6 +1621,11 @@
    "closest_at_limit": [
     "ball path / VLP-16",
     10.3
+   ],
+   "max_elevation_deg": 12.0,
+   "closest_at_up_limit": [
+    "barrel / VLP-16",
+    96.0
    ]
   },
   {
@@ -1095,6 +1634,11 @@
    "closest_at_limit": [
     "ball path / VLP-16",
     10.7
+   ],
+   "max_elevation_deg": 12.0,
+   "closest_at_up_limit": [
+    "barrel / VLP-16",
+    96.0
    ]
   },
   {
@@ -1103,6 +1647,11 @@
    "closest_at_limit": [
     "ball path / VLP-16",
     11.3
+   ],
+   "max_elevation_deg": 12.0,
+   "closest_at_up_limit": [
+    "barrel / VLP-16",
+    96.0
    ]
   },
   {
@@ -1111,6 +1660,11 @@
    "closest_at_limit": [
     "ball path / VLP-16",
     11.7
+   ],
+   "max_elevation_deg": 12.0,
+   "closest_at_up_limit": [
+    "barrel / VLP-16",
+    96.0
    ]
   },
   {
@@ -1119,6 +1673,11 @@
    "closest_at_limit": [
     "ball path / VLP-16",
     10.8
+   ],
+   "max_elevation_deg": 12.0,
+   "closest_at_up_limit": [
+    "barrel / VLP-16",
+    96.0
    ]
   },
   {
@@ -1127,6 +1686,11 @@
    "closest_at_limit": [
     "ball path / VLP-16",
     10.3
+   ],
+   "max_elevation_deg": 12.0,
+   "closest_at_up_limit": [
+    "barrel / VLP-16",
+    96.0
    ]
   },
   {
@@ -1135,6 +1699,11 @@
    "closest_at_limit": [
     "ball path / VLP-16",
     11.5
+   ],
+   "max_elevation_deg": 12.0,
+   "closest_at_up_limit": [
+    "barrel / VLP-16",
+    96.0
    ]
   },
   {
@@ -1143,6 +1712,11 @@
    "closest_at_limit": [
     "ball path / VLP-16",
     11.5
+   ],
+   "max_elevation_deg": 12.0,
+   "closest_at_up_limit": [
+    "barrel / VLP-16",
+    96.0
    ]
   },
   {
@@ -1151,6 +1725,11 @@
    "closest_at_limit": [
     "ball path / VLP-16",
     10.1
+   ],
+   "max_elevation_deg": 12.0,
+   "closest_at_up_limit": [
+    "barrel / VLP-16",
+    96.0
    ]
   },
   {
@@ -1159,6 +1738,11 @@
    "closest_at_limit": [
     "ball path / VLP-16",
     11.0
+   ],
+   "max_elevation_deg": 12.0,
+   "closest_at_up_limit": [
+    "barrel / VLP-16",
+    96.0
    ]
   },
   {
@@ -1167,6 +1751,11 @@
    "closest_at_limit": [
     "ball path / VLP-16",
     10.6
+   ],
+   "max_elevation_deg": 12.0,
+   "closest_at_up_limit": [
+    "barrel / VLP-16",
+    96.0
    ]
   },
   {
@@ -1175,6 +1764,11 @@
    "closest_at_limit": [
     "ball path / VLP-16",
     11.1
+   ],
+   "max_elevation_deg": 12.0,
+   "closest_at_up_limit": [
+    "barrel / VLP-16",
+    96.1
    ]
   },
   {
@@ -1183,6 +1777,11 @@
    "closest_at_limit": [
     "ball path / VLP-16",
     10.0
+   ],
+   "max_elevation_deg": 12.0,
+   "closest_at_up_limit": [
+    "barrel / VLP-16",
+    96.5
    ]
   },
   {
@@ -1191,6 +1790,11 @@
    "closest_at_limit": [
     "ball path / VLP-16",
     11.0
+   ],
+   "max_elevation_deg": 12.0,
+   "closest_at_up_limit": [
+    "barrel / VLP-16",
+    97.1
    ]
   },
   {
@@ -1199,6 +1803,11 @@
    "closest_at_limit": [
     "barrel / VLP-16",
     14.9
+   ],
+   "max_elevation_deg": 12.0,
+   "closest_at_up_limit": [
+    "barrel / VLP-16",
+    97.8
    ]
   },
   {
@@ -1207,6 +1816,11 @@
    "closest_at_limit": [
     "barrel / VLP-16",
     17.9
+   ],
+   "max_elevation_deg": 12.0,
+   "closest_at_up_limit": [
+    "barrel / VLP-16",
+    98.7
    ]
   },
   {
@@ -1215,6 +1829,11 @@
    "closest_at_limit": [
     "barrel / VLP-16",
     21.3
+   ],
+   "max_elevation_deg": 12.0,
+   "closest_at_up_limit": [
+    "barrel / VLP-16",
+    99.8
    ]
   },
   {
@@ -1223,6 +1842,11 @@
    "closest_at_limit": [
     "barrel / VLP-16",
     24.8
+   ],
+   "max_elevation_deg": 12.0,
+   "closest_at_up_limit": [
+    "barrel / VLP-16",
+    101.1
    ]
   },
   {
@@ -1231,6 +1855,11 @@
    "closest_at_limit": [
     "barrel / VLP-16",
     28.6
+   ],
+   "max_elevation_deg": 12.0,
+   "closest_at_up_limit": [
+    "barrel / VLP-16",
+    102.6
    ]
   },
   {
@@ -1239,6 +1868,11 @@
    "closest_at_limit": [
     "barrel / VLP-16",
     32.5
+   ],
+   "max_elevation_deg": 12.0,
+   "closest_at_up_limit": [
+    "barrel / VLP-16",
+    104.2
    ]
   },
   {
@@ -1247,6 +1881,11 @@
    "closest_at_limit": [
     "barrel / VLP-16",
     36.5
+   ],
+   "max_elevation_deg": 12.0,
+   "closest_at_up_limit": [
+    "barrel / VLP-16",
+    106.0
    ]
   },
   {
@@ -1255,6 +1894,11 @@
    "closest_at_limit": [
     "barrel / VLP-16",
     40.4
+   ],
+   "max_elevation_deg": 12.0,
+   "closest_at_up_limit": [
+    "barrel / VLP-16",
+    108.0
    ]
   },
   {
@@ -1263,6 +1907,11 @@
    "closest_at_limit": [
     "barrel / VLP-16",
     44.2
+   ],
+   "max_elevation_deg": 12.0,
+   "closest_at_up_limit": [
+    "barrel / VLP-16",
+    110.0
    ]
   },
   {
@@ -1271,6 +1920,11 @@
    "closest_at_limit": [
     "barrel / VLP-16",
     48.1
+   ],
+   "max_elevation_deg": 12.0,
+   "closest_at_up_limit": [
+    "barrel / VLP-16",
+    112.2
    ]
   },
   {
@@ -1279,6 +1933,11 @@
    "closest_at_limit": [
     "barrel / VLP-16",
     52.0
+   ],
+   "max_elevation_deg": 12.0,
+   "closest_at_up_limit": [
+    "barrel / VLP-16",
+    114.5
    ]
   },
   {
@@ -1287,6 +1946,11 @@
    "closest_at_limit": [
     "barrel / VLP-16",
     55.9
+   ],
+   "max_elevation_deg": 12.0,
+   "closest_at_up_limit": [
+    "barrel / VLP-16",
+    116.9
    ]
   },
   {
@@ -1294,7 +1958,12 @@
    "max_depression_deg": -25.0,
    "closest_at_limit": [
     "barrel / VLP-16",
-    59.7
+    59.8
+   ],
+   "max_elevation_deg": 12.0,
+   "closest_at_up_limit": [
+    "barrel / VLP-16",
+    119.4
    ]
   },
   {
@@ -1303,6 +1972,11 @@
    "closest_at_limit": [
     "barrel / VLP-16",
     63.6
+   ],
+   "max_elevation_deg": 12.0,
+   "closest_at_up_limit": [
+    "barrel / VLP-16",
+    121.9
    ]
   },
   {
@@ -1310,7 +1984,12 @@
    "max_depression_deg": -25.0,
    "closest_at_limit": [
     "barrel / VLP-16",
-    67.4
+    67.5
+   ],
+   "max_elevation_deg": 12.0,
+   "closest_at_up_limit": [
+    "barrel / VLP-16",
+    124.6
    ]
   },
   {
@@ -1319,6 +1998,11 @@
    "closest_at_limit": [
     "barrel / VLP-16",
     71.2
+   ],
+   "max_elevation_deg": 12.0,
+   "closest_at_up_limit": [
+    "barrel / VLP-16",
+    127.3
    ]
   },
   {
@@ -1326,7 +2010,12 @@
    "max_depression_deg": -25.0,
    "closest_at_limit": [
     "barrel / VLP-16",
-    74.9
+    75.0
+   ],
+   "max_elevation_deg": 12.0,
+   "closest_at_up_limit": [
+    "barrel / VLP-16",
+    130.0
    ]
   },
   {
@@ -1335,6 +2024,11 @@
    "closest_at_limit": [
     "barrel / VLP-16",
     78.7
+   ],
+   "max_elevation_deg": 12.0,
+   "closest_at_up_limit": [
+    "barrel / VLP-16",
+    132.8
    ]
   },
   {
@@ -1343,6 +2037,11 @@
    "closest_at_limit": [
     "barrel / VLP-16",
     82.4
+   ],
+   "max_elevation_deg": 12.0,
+   "closest_at_up_limit": [
+    "barrel / VLP-16",
+    135.7
    ]
   },
   {
@@ -1351,6 +2050,11 @@
    "closest_at_limit": [
     "barrel / VLP-16",
     86.1
+   ],
+   "max_elevation_deg": 12.0,
+   "closest_at_up_limit": [
+    "barrel / VLP-16",
+    138.5
    ]
   },
   {
@@ -1358,7 +2062,12 @@
    "max_depression_deg": -25.0,
    "closest_at_limit": [
     "barrel / VLP-16",
-    89.6
+    89.7
+   ],
+   "max_elevation_deg": 12.0,
+   "closest_at_up_limit": [
+    "barrel / VLP-16",
+    141.4
    ]
   },
   {
@@ -1367,6 +2076,11 @@
    "closest_at_limit": [
     "barrel / VLP-16",
     93.2
+   ],
+   "max_elevation_deg": 12.0,
+   "closest_at_up_limit": [
+    "barrel / VLP-16",
+    144.4
    ]
   },
   {
@@ -1374,7 +2088,12 @@
    "max_depression_deg": -25.0,
    "closest_at_limit": [
     "barrel / VLP-16",
-    96.7
+    96.8
+   ],
+   "max_elevation_deg": 12.0,
+   "closest_at_up_limit": [
+    "barrel / VLP-16",
+    147.3
    ]
   },
   {
@@ -1383,6 +2102,11 @@
    "closest_at_limit": [
     "barrel / VLP-16",
     100.2
+   ],
+   "max_elevation_deg": 12.0,
+   "closest_at_up_limit": [
+    "barrel / VLP-16",
+    150.2
    ]
   },
   {
@@ -1391,6 +2115,11 @@
    "closest_at_limit": [
     "barrel / VLP-16",
     103.6
+   ],
+   "max_elevation_deg": 12.0,
+   "closest_at_up_limit": [
+    "barrel / VLP-16",
+    153.2
    ]
   },
   {
@@ -1399,6 +2128,11 @@
    "closest_at_limit": [
     "barrel / VLP-16",
     107.0
+   ],
+   "max_elevation_deg": 12.0,
+   "closest_at_up_limit": [
+    "barrel / VLP-16",
+    156.1
    ]
   },
   {
@@ -1407,6 +2141,11 @@
    "closest_at_limit": [
     "barrel / VLP-16",
     110.3
+   ],
+   "max_elevation_deg": 12.0,
+   "closest_at_up_limit": [
+    "barrel / VLP-16",
+    159.1
    ]
   },
   {
@@ -1415,6 +2154,11 @@
    "closest_at_limit": [
     "barrel / VLP-16",
     113.6
+   ],
+   "max_elevation_deg": 12.0,
+   "closest_at_up_limit": [
+    "barrel / VLP-16",
+    162.0
    ]
   },
   {
@@ -1423,6 +2167,11 @@
    "closest_at_limit": [
     "barrel / VLP-16",
     116.8
+   ],
+   "max_elevation_deg": 12.0,
+   "closest_at_up_limit": [
+    "barrel / VLP-16",
+    164.9
    ]
   },
   {
@@ -1430,7 +2179,12 @@
    "max_depression_deg": -25.0,
    "closest_at_limit": [
     "barrel / VLP-16",
-    119.9
+    120.0
+   ],
+   "max_elevation_deg": 12.0,
+   "closest_at_up_limit": [
+    "barrel / VLP-16",
+    167.8
    ]
   },
   {
@@ -1438,7 +2192,12 @@
    "max_depression_deg": -25.0,
    "closest_at_limit": [
     "barrel / VLP-16",
-    123.0
+    123.1
+   ],
+   "max_elevation_deg": 12.0,
+   "closest_at_up_limit": [
+    "barrel / VLP-16",
+    170.7
    ]
   },
   {
@@ -1447,6 +2206,11 @@
    "closest_at_limit": [
     "barrel / VLP-16",
     126.1
+   ],
+   "max_elevation_deg": 12.0,
+   "closest_at_up_limit": [
+    "barrel / VLP-16",
+    173.5
    ]
   },
   {
@@ -1455,6 +2219,11 @@
    "closest_at_limit": [
     "barrel / VLP-16",
     129.1
+   ],
+   "max_elevation_deg": 12.0,
+   "closest_at_up_limit": [
+    "barrel / VLP-16",
+    176.3
    ]
   },
   {
@@ -1462,7 +2231,12 @@
    "max_depression_deg": -25.0,
    "closest_at_limit": [
     "barrel / VLP-16",
-    132.0
+    132.1
+   ],
+   "max_elevation_deg": 12.0,
+   "closest_at_up_limit": [
+    "barrel / VLP-16",
+    179.1
    ]
   },
   {
@@ -1470,7 +2244,12 @@
    "max_depression_deg": -25.0,
    "closest_at_limit": [
     "barrel / VLP-16",
-    134.9
+    135.0
+   ],
+   "max_elevation_deg": 12.0,
+   "closest_at_up_limit": [
+    "barrel / VLP-16",
+    181.9
    ]
   },
   {
@@ -1478,7 +2257,12 @@
    "max_depression_deg": -25.0,
    "closest_at_limit": [
     "barrel / VLP-16",
-    137.7
+    137.8
+   ],
+   "max_elevation_deg": 12.0,
+   "closest_at_up_limit": [
+    "barrel / VLP-16",
+    184.6
    ]
   },
   {
@@ -1486,7 +2270,12 @@
    "max_depression_deg": -25.0,
    "closest_at_limit": [
     "barrel / VLP-16",
-    140.5
+    140.6
+   ],
+   "max_elevation_deg": 12.0,
+   "closest_at_up_limit": [
+    "barrel / VLP-16",
+    187.2
    ]
   },
   {
@@ -1494,7 +2283,12 @@
    "max_depression_deg": -25.0,
    "closest_at_limit": [
     "barrel / VLP-16",
-    143.2
+    143.3
+   ],
+   "max_elevation_deg": 12.0,
+   "closest_at_up_limit": [
+    "barrel / VLP-16",
+    189.8
    ]
   },
   {
@@ -1502,7 +2296,12 @@
    "max_depression_deg": -25.0,
    "closest_at_limit": [
     "barrel / VLP-16",
-    145.8
+    145.9
+   ],
+   "max_elevation_deg": 12.0,
+   "closest_at_up_limit": [
+    "barrel / VLP-16",
+    192.4
    ]
   },
   {
@@ -1510,7 +2309,12 @@
    "max_depression_deg": -25.0,
    "closest_at_limit": [
     "barrel / VLP-16",
-    148.4
+    148.5
+   ],
+   "max_elevation_deg": 12.0,
+   "closest_at_up_limit": [
+    "barrel / VLP-16",
+    194.9
    ]
   },
   {
@@ -1519,6 +2323,11 @@
    "closest_at_limit": [
     "barrel / VLP-16",
     151.0
+   ],
+   "max_elevation_deg": 12.0,
+   "closest_at_up_limit": [
+    "barrel / VLP-16",
+    197.4
    ]
   },
   {
@@ -1527,6 +2336,11 @@
    "closest_at_limit": [
     "barrel / VLP-16",
     153.5
+   ],
+   "max_elevation_deg": 12.0,
+   "closest_at_up_limit": [
+    "barrel / VLP-16",
+    199.9
    ]
   },
   {
@@ -1535,6 +2349,11 @@
    "closest_at_limit": [
     "barrel / VLP-16",
     155.9
+   ],
+   "max_elevation_deg": 12.0,
+   "closest_at_up_limit": [
+    "barrel / VLP-16",
+    202.2
    ]
   },
   {
@@ -1542,7 +2361,12 @@
    "max_depression_deg": -25.0,
    "closest_at_limit": [
     "barrel / VLP-16",
-    158.2
+    158.3
+   ],
+   "max_elevation_deg": 12.0,
+   "closest_at_up_limit": [
+    "barrel / VLP-16",
+    204.6
    ]
   },
   {
@@ -1550,7 +2374,12 @@
    "max_depression_deg": -25.0,
    "closest_at_limit": [
     "barrel / VLP-16",
-    160.4
+    160.5
+   ],
+   "max_elevation_deg": 12.0,
+   "closest_at_up_limit": [
+    "barrel / VLP-16",
+    206.8
    ]
   },
   {
@@ -1558,7 +2387,12 @@
    "max_depression_deg": -25.0,
    "closest_at_limit": [
     "barrel / VLP-16",
-    162.6
+    162.7
+   ],
+   "max_elevation_deg": 12.0,
+   "closest_at_up_limit": [
+    "barrel / VLP-16",
+    209.1
    ]
   },
   {
@@ -1566,7 +2400,12 @@
    "max_depression_deg": -25.0,
    "closest_at_limit": [
     "barrel / VLP-16",
-    164.8
+    164.9
+   ],
+   "max_elevation_deg": 12.0,
+   "closest_at_up_limit": [
+    "barrel / VLP-16",
+    211.2
    ]
   },
   {
@@ -1575,6 +2414,11 @@
    "closest_at_limit": [
     "barrel / VLP-16",
     166.9
+   ],
+   "max_elevation_deg": 12.0,
+   "closest_at_up_limit": [
+    "barrel / VLP-16",
+    213.3
    ]
   },
   {
@@ -1582,7 +2426,12 @@
    "max_depression_deg": -25.0,
    "closest_at_limit": [
     "barrel / VLP-16",
-    168.9
+    169.0
+   ],
+   "max_elevation_deg": 12.0,
+   "closest_at_up_limit": [
+    "barrel / VLP-16",
+    215.4
    ]
   },
   {
@@ -1590,7 +2439,12 @@
    "max_depression_deg": -25.0,
    "closest_at_limit": [
     "barrel / VLP-16",
-    170.8
+    170.9
+   ],
+   "max_elevation_deg": 12.0,
+   "closest_at_up_limit": [
+    "barrel / VLP-16",
+    217.3
    ]
   },
   {
@@ -1598,7 +2452,12 @@
    "max_depression_deg": -25.0,
    "closest_at_limit": [
     "barrel / VLP-16",
-    172.7
+    172.8
+   ],
+   "max_elevation_deg": 12.0,
+   "closest_at_up_limit": [
+    "barrel / VLP-16",
+    219.3
    ]
   },
   {
@@ -1606,7 +2465,12 @@
    "max_depression_deg": -25.0,
    "closest_at_limit": [
     "barrel / VLP-16",
-    174.5
+    174.6
+   ],
+   "max_elevation_deg": 12.0,
+   "closest_at_up_limit": [
+    "barrel / VLP-16",
+    221.1
    ]
   },
   {
@@ -1615,6 +2479,11 @@
    "closest_at_limit": [
     "barrel / VLP-16",
     176.3
+   ],
+   "max_elevation_deg": 12.0,
+   "closest_at_up_limit": [
+    "barrel / VLP-16",
+    222.9
    ]
   },
   {
@@ -1622,7 +2491,12 @@
    "max_depression_deg": -25.0,
    "closest_at_limit": [
     "barrel / VLP-16",
-    177.9
+    178.0
+   ],
+   "max_elevation_deg": 12.0,
+   "closest_at_up_limit": [
+    "barrel / VLP-16",
+    224.6
    ]
   },
   {
@@ -1631,6 +2505,11 @@
    "closest_at_limit": [
     "barrel / VLP-16",
     179.6
+   ],
+   "max_elevation_deg": 12.0,
+   "closest_at_up_limit": [
+    "barrel / VLP-16",
+    226.3
    ]
   },
   {
@@ -1638,7 +2517,12 @@
    "max_depression_deg": -25.0,
    "closest_at_limit": [
     "barrel / VLP-16",
-    181.1
+    181.2
+   ],
+   "max_elevation_deg": 12.0,
+   "closest_at_up_limit": [
+    "barrel / VLP-16",
+    227.8
    ]
   },
   {
@@ -1647,6 +2531,11 @@
    "closest_at_limit": [
     "barrel / VLP-16",
     182.6
+   ],
+   "max_elevation_deg": 12.0,
+   "closest_at_up_limit": [
+    "barrel / VLP-16",
+    229.4
    ]
   },
   {
@@ -1654,7 +2543,12 @@
    "max_depression_deg": -25.0,
    "closest_at_limit": [
     "barrel / VLP-16",
-    184.0
+    184.1
+   ],
+   "max_elevation_deg": 12.0,
+   "closest_at_up_limit": [
+    "barrel / VLP-16",
+    230.8
    ]
   },
   {
@@ -1663,6 +2557,11 @@
    "closest_at_limit": [
     "barrel / VLP-16",
     185.4
+   ],
+   "max_elevation_deg": 12.0,
+   "closest_at_up_limit": [
+    "barrel / VLP-16",
+    232.2
    ]
   },
   {
@@ -1670,7 +2569,12 @@
    "max_depression_deg": -25.0,
    "closest_at_limit": [
     "barrel / VLP-16",
-    186.6
+    186.7
+   ],
+   "max_elevation_deg": 12.0,
+   "closest_at_up_limit": [
+    "barrel / VLP-16",
+    233.5
    ]
   },
   {
@@ -1678,7 +2582,12 @@
    "max_depression_deg": -25.0,
    "closest_at_limit": [
     "barrel / VLP-16",
-    187.8
+    187.9
+   ],
+   "max_elevation_deg": 12.0,
+   "closest_at_up_limit": [
+    "barrel / VLP-16",
+    234.7
    ]
   },
   {
@@ -1687,6 +2596,11 @@
    "closest_at_limit": [
     "barrel / VLP-16",
     189.0
+   ],
+   "max_elevation_deg": 12.0,
+   "closest_at_up_limit": [
+    "barrel / VLP-16",
+    235.9
    ]
   },
   {
@@ -1694,7 +2608,12 @@
    "max_depression_deg": -25.0,
    "closest_at_limit": [
     "barrel / VLP-16",
-    190.0
+    190.1
+   ],
+   "max_elevation_deg": 12.0,
+   "closest_at_up_limit": [
+    "barrel / VLP-16",
+    237.0
    ]
   },
   {
@@ -1703,6 +2622,11 @@
    "closest_at_limit": [
     "barrel / VLP-16",
     191.0
+   ],
+   "max_elevation_deg": 12.0,
+   "closest_at_up_limit": [
+    "barrel / VLP-16",
+    238.0
    ]
   },
   {
@@ -1710,7 +2634,12 @@
    "max_depression_deg": -25.0,
    "closest_at_limit": [
     "barrel / VLP-16",
-    191.9
+    192.0
+   ],
+   "max_elevation_deg": 12.0,
+   "closest_at_up_limit": [
+    "barrel / VLP-16",
+    238.9
    ]
   },
   {
@@ -1719,6 +2648,11 @@
    "closest_at_limit": [
     "barrel / VLP-16",
     192.8
+   ],
+   "max_elevation_deg": 12.0,
+   "closest_at_up_limit": [
+    "barrel / VLP-16",
+    239.8
    ]
   },
   {
@@ -1727,6 +2661,11 @@
    "closest_at_limit": [
     "barrel / VLP-16",
     193.6
+   ],
+   "max_elevation_deg": 12.0,
+   "closest_at_up_limit": [
+    "barrel / VLP-16",
+    240.6
    ]
   },
   {
@@ -1735,6 +2674,11 @@
    "closest_at_limit": [
     "barrel / VLP-16",
     194.3
+   ],
+   "max_elevation_deg": 12.0,
+   "closest_at_up_limit": [
+    "barrel / VLP-16",
+    241.3
    ]
   },
   {
@@ -1743,6 +2687,11 @@
    "closest_at_limit": [
     "barrel / VLP-16",
     194.9
+   ],
+   "max_elevation_deg": 12.0,
+   "closest_at_up_limit": [
+    "barrel / VLP-16",
+    241.9
    ]
   },
   {
@@ -1751,6 +2700,11 @@
    "closest_at_limit": [
     "barrel / VLP-16",
     195.4
+   ],
+   "max_elevation_deg": 12.0,
+   "closest_at_up_limit": [
+    "barrel / VLP-16",
+    242.5
    ]
   },
   {
@@ -1759,6 +2713,11 @@
    "closest_at_limit": [
     "barrel / VLP-16",
     195.9
+   ],
+   "max_elevation_deg": 12.0,
+   "closest_at_up_limit": [
+    "barrel / VLP-16",
+    243.0
    ]
   },
   {
@@ -1767,6 +2726,11 @@
    "closest_at_limit": [
     "barrel / VLP-16",
     196.3
+   ],
+   "max_elevation_deg": 12.0,
+   "closest_at_up_limit": [
+    "barrel / VLP-16",
+    243.4
    ]
   },
   {
@@ -1775,6 +2739,11 @@
    "closest_at_limit": [
     "barrel / VLP-16",
     196.6
+   ],
+   "max_elevation_deg": 12.0,
+   "closest_at_up_limit": [
+    "barrel / VLP-16",
+    243.7
    ]
   },
   {
@@ -1783,6 +2752,11 @@
    "closest_at_limit": [
     "barrel / VLP-16",
     196.8
+   ],
+   "max_elevation_deg": 12.0,
+   "closest_at_up_limit": [
+    "barrel / VLP-16",
+    244.0
    ]
   },
   {
@@ -1791,6 +2765,11 @@
    "closest_at_limit": [
     "barrel / VLP-16",
     196.9
+   ],
+   "max_elevation_deg": 12.0,
+   "closest_at_up_limit": [
+    "barrel / VLP-16",
+    244.1
    ]
   },
   {
@@ -1799,17 +2778,22 @@
    "closest_at_limit": [
     "barrel / VLP-16",
     197.0
+   ],
+   "max_elevation_deg": 12.0,
+   "closest_at_up_limit": [
+    "barrel / VLP-16",
+    244.2
    ]
   }
  ],
  "points": {
-  "sampled": 5741736,
+  "sampled": 5745106,
   "near_enough_to_check": {
-   "barrel": 30101
+   "barrel": 29798
   }
  },
- "how": "surface samples of every panning and tilting part (~1.2 mm apart), the ones that can come within the margin at some pose kept (a lower bound over pan and tilt), and the ball path; the limit is the deepest tilt in 0.5 deg steps that keeps the margin",
- "seconds": 77,
+ "how": "surface samples of every panning and tilting part (~1.2 mm apart), the ones that can come within the margin at some pose kept (a lower bound over pan and tilt), and the ball path; the limit is the deepest tilt in 0.5 deg steps that keeps the margin, and above level the highest up to the upper stop",
+ "seconds": 57,
  "lidar": {
   "d": 103.3,
   "h": 71.7,

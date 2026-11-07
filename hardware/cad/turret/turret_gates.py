@@ -372,11 +372,12 @@ def path_gate(T, cache, ball_d, out):
 SWEEP_PANS = (0.0, 45.0, 90.0, 135.0, 180.0, -135.0, -90.0, -45.0)
 
 
-def sweep_gate(T, asm, cache, pans=SWEEP_PANS, tilts=tu.SWEEP_TILTS):
+def sweep_gate(T, asm, cache, pans=SWEEP_PANS, tilts=None):
     """The hopper's balls against every part that moves relative to them (the base, the pinion, the pan frame) at
     every pan and tilt: the relation table with only the balls queried, ball/ball and ball/tilt-family pairs skipped
     (the containment gate checks those)."""
     G = T.G
+    tilts = tilts if tilts is not None else (G.tilt_max, *tu.SWEEP_TILTS)    # D77: the upper stop too
     balls = [n for n in asm if n.startswith('ball#')]
     tiltish = [n for n in asm if asm[n].body in TILT_FAMILY and not n.startswith('ball#')]
     skip = [(a, b) for i, a in enumerate(balls) for b in balls[i + 1:]] + [(a, b) for a in balls for b in tiltish]
@@ -485,8 +486,8 @@ MOTION_CONTACTS = [sorted(p) for p in tu.DESIGNED_CONTACTS] + [sorted(tu.STOP_PA
 
 
 def motion_pan_tilt(T, cache, pans=35, tilts=6):
-    """cadagent.gates.motion over the aim: the pan joint (+-170 deg) carrying the tilt joint (0 to -25 deg: a turn of
-    0..25 deg about +y at the tilt axis) on one grid; the dial, the flywheels and the flap ride with the tilt frame at
+    """cadagent.gates.motion over the aim: the pan joint (+-170 deg) carrying the tilt joint (its hard stops, +12 to -25 deg:
+    a turn of -12..25 deg about +y at the tilt axis) on one grid; the dial, the flywheels and the flap ride with the tilt frame at
     home. The pinion is held still and its mesh with the ring is left to turret.pinion_check (the gate has no gear
     coupling). No balls (the containment gates hold them)."""
     G = T.G
@@ -495,7 +496,7 @@ def motion_pan_tilt(T, cache, pans=35, tilts=6):
     joints = {'pan': {'kind': 'revolute', 'moving': 'pan_bearing_inner', 'fixed': 'pan_bearing',
                       'axis': ((0.0, 0.0, 0.0), (0.0, 0.0, 1.0)), 'range': [-170.0, 170.0], 'unit': 'deg', 'samples': pans},
               'tilt': {'kind': 'revolute', 'moving': 'tilt_bearing_inner', 'fixed': 'tilt_bearing',
-                       'axis': ((0.0, 0.0, G.tilt_t), (0.0, 1.0, 0.0)), 'range': [0.0, -G.tilt_min], 'unit': 'deg',
+                       'axis': ((0.0, 0.0, G.tilt_t), (0.0, 1.0, 0.0)), 'range': [-G.tilt_max, -G.tilt_min], 'unit': 'deg',
                        'samples': tilts}}
     rotor = 'the slip ring\'s rotor stub drawn 0.01 mm into its own stator (one bought part, the ring\'s envelope)'
     return motion_gate(asm, joints, tol=CONNECT_TOL, cache=cache, max_step_deg=12.0, intended_contacts=MOTION_CONTACTS,

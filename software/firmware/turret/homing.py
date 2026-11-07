@@ -6,7 +6,7 @@ The pan servo (STS3215) reports a 12-bit absolute angle per turn of its own outp
 63:21, so one servo turn is 120 deg of pan: at power-up the pan is known only modulo 120 deg. The index (a magnet in
 the base at pan 0, a hall switch on the turntable) settles which of the three it is:
 
-  1. the tilt goes to its 0 deg stop first (nothing can then meet the lidar or the deck);
+  1. the tilt goes to level (0 deg) first (clear at every pan: nothing can then meet the lidar or the deck);
   2. the pan sweeps in +pan at <= 60 deg/s (always the same direction, the one the index was calibrated in) until the
      hall's window has been crossed: its rising and falling edges are timestamped by an interrupt, the servo's
      position by its reads, and the window's centre comes from interpolating the reads at the two edge times;

@@ -651,6 +651,14 @@
     {
       "source": "software/simulation/__init__.py",
       "public": "sim/__init__.py"
+    },
+    {
+      "source": "hardware/cad/turret/turret_limits.py",
+      "public": "cad/turret_limits.py"
+    },
+    {
+      "source": "hardware/cad/turret/turret_tilt_range.py",
+      "public": "cad/turret_tilt_range.py"
     }
   ],
   "unpublished": [

@@ -7,9 +7,9 @@
   21 cm over a level 4 m, at 16 m/s when it gets there.
 - **Servos:** pan and tilt are joint PDs on the turret's motors, clipped to their torque.
 - **Aiming:** from the muzzle site to the target, with a drop allowance for the ball's flight (with the same drag as
-  the physics). Kid-safety rule from research/turret-and-safety.md: the barrel never points above horizontal *in the
-  world frame*, so the body's lean is taken out of the tilt command; a target that would need an upward shot is not
-  engaged.
+  the physics), up or down: the body's lean is taken out of the tilt command, and the command stays inside the tilt
+  joint's hard stops (exports/turret/limits.json, from cad/turret.py; D77 replaced the old rule that
+  kept the barrel at or below level with them). A target that would need the barrel past a stop is tracked at the stop but not fired at.
 - **Firing:** only when settled on target (aim error and turret speed small), at up to 5 shots per second. Each shot
   takes a parked ball body (air drag from MuJoCo's fluid model), places it just ahead of the muzzle, and applies the
   reaction impulse to the launcher.
@@ -23,8 +23,10 @@
 """
 from __future__ import annotations
 
+import json
 import math
 from dataclasses import dataclass, field
+from pathlib import Path
 from typing import List, Optional
 
 import mujoco
@@ -36,6 +38,29 @@ BALL_R = 0.0227 / 2          # m: the design ball of cad/turret.py (Geo.ball_d =
 BALL_SPEED = 21.3            # m/s, 70 fps: the kid-safety cap for balls
 BALL_CD = 0.5                # drag coefficient of a foam ball (a sphere at Re ~ 3e4)
 HOPPER = 30                  # balls in a full hopper (cad/turret.py)
+LIMITS_JSON = Path(__file__).resolve().parents[2] / 'hardware' / 'exports' / 'turret' / 'limits.json'
+
+
+def stop_limits_deg(path: Path = LIMITS_JSON) -> tuple:
+    """(lowest, highest) barrel tilt in deg, + = muzzle up: the turret's hard stops (cad/turret_limits.py)."""
+    t = json.loads(Path(path).read_text())['tilt_deg']
+    return float(t['min']), float(t['max'])
+
+
+TILT_MIN_DEG, TILT_MAX_DEG = stop_limits_deg()
+# no shot above this tilt (the barrel may still aim up to the stop): the feed's qualified elevation, as the firmware
+FIRE_TILT_MAX_DEG = float(json.loads(LIMITS_JSON.read_text()).get('fire_tilt_max_deg', TILT_MAX_DEG))
+
+
+def joint_tilt(elev: float, pitch: float, stops_deg: tuple = None) -> tuple:
+    """The tilt joint command (rad, + = barrel down relative to the body, the MuJoCo joint's sign) for a world elevation
+    `elev` (rad, + = up) on a body pitched `pitch` (rad, nose down +), held inside the hard stops `stops_deg` ((lowest,
+    highest) deg, + = muzzle up; default the CAD's). Returns (tilt, inside): inside is False when a stop clipped it."""
+    lo_deg, hi_deg = (TILT_MIN_DEG, TILT_MAX_DEG) if stops_deg is None else stops_deg
+    want = -elev - pitch
+    lo, hi = -math.radians(hi_deg), -math.radians(lo_deg)
+    tilt = min(hi, max(lo, want))
+    return tilt, abs(tilt - want) < 1e-9
 
 
 @dataclass
@@ -198,16 +223,16 @@ class TurretController:
         horiz = math.hypot(to[0], to[1])
         elev = elevation_for(horiz, to[2])                          # needed barrel elevation, world frame (+ = up), with drag
         pan = (math.atan2(to[1], to[0]) - yaw + math.pi) % (2 * math.pi) - math.pi
+        reachable = elev is not None                                # None: short even at the steepest elevation tried
         if elev is None:
-            elev = 0.0
+            elev = math.radians(TILT_MAX_DEG) - pitch
         elev += self.correction[target.name][0]
         pan += self.correction[target.name][1]
-        self.in_range = elev <= 0.0
+        tilt, inside = joint_tilt(elev, pitch)
+        # -tilt + ... : the joint's + is barrel down, so -tilt is the tilt relative to the body, + up (the firmware's sign)
+        self.in_range = reachable and inside and math.degrees(-tilt) <= FIRE_TILT_MAX_DEG + 1e-9
         if not self.in_range:
-            self.unreachable.add(target.name)                       # would need an upward shot: track it, but hold fire
-            elev = 0.0
-        # tilt joint: + = barrel down relative to the body; world elevation = -(tilt + body pitch)
-        tilt = -elev - pitch
+            self.unreachable.add(target.name)                       # past a stop: track it at the stop, hold fire
         self.blocked = self.tilt_max is not None and tilt > self.tilt_limit(pan) - self.lim_margin
         if self.blocked:
             self.blocked_targets.add(target.name)

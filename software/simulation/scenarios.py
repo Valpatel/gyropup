@@ -95,7 +95,7 @@ def ramp_profile(t, start, ramp_s, v):
     return 0.0 if t < start else min(v, v * (t - start) / ramp_s)
 
 
-# Knock-down targets at knee height, within range: the barrel never points upwards (kid-safety rule), and a 21.3 m/s
+# Knock-down targets at knee height, within range (the barrel fires up to +10 deg since D77; these stay low for the knee-height plates), and a 21.3 m/s
 # foam ball fired level from a ~0.6-0.7 m muzzle is down to 0.3 m at about 4.7-5.3 m. Gyropup stands tall to shoot.
 # Each target takes up to 5 balls; once its plate flips, the turret moves on.
 TARGETS = [Target('target_a', (3.0, 1.3, 0.30), 5, (2.0, 16.0)), Target('target_b', (3.4, 0.2, 0.30), 5, (2.0, 16.0)),

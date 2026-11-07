@@ -7,7 +7,8 @@ research/turret-slip-ring.md (sources and dates). Charter and checklist: docs/tu
 build, well researched" and "Make sure you do real physics simulations of the turrets with the foam balls end to end,
 make something I can actually build, get good parts from mcmaster."
 
-Hard rules stand: the barrel never points above horizontal; muzzle speed ≤ 105 fps (32.0 m/s) for every accepted round,
+Hard rules stand: the barrel tilts only between its mechanical hard stops (D77, which replaced "never above
+horizontal"; exports/turret/limits.json); muzzle speed ≤ 105 fps (32.0 m/s) for every accepted round,
 held by the hardware (D68, which replaced the 70 fps cap: a Hasbro Rival round leaves at ~97 fps, like a stock Rival
 blaster); nothing spins or feeds unless the safety line is held (the pendant on the bench, the radio stop on the robot).
 Eye protection is recommended for everyone in range, as Hasbro does for Rival.
@@ -234,7 +235,7 @@ flywheel blasters do (Nemesis 94-101 fps, Prometheus 100; sold for 14+), and **n
    tyre or wrong wheels. A pre-shot trip on wheel speed (an LM2917 frequency-to-voltage converter on one motor phase,
    7 pole pairs: 1,834 Hz at the trimmed no-load speed, 1,912 Hz at 16,390 rpm) stays an option, not in the first build.
 
-Safety beyond the ceiling is unchanged: nothing spins unless ARM is held, the barrel never points above level, the
+Safety beyond the ceiling is unchanged: nothing spins unless ARM is held, the barrel stays between its hard stops (D77), the
 laser warns before firing, the phase-short brake on release. **The docs recommend eye protection for everyone in
 range, as Hasbro does for Rival.**
 

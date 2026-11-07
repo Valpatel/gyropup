@@ -7,7 +7,7 @@ must meet. It follows docs/turret-prototype-plan.md section 5 with the v0 number
 firmware or CAN and writes those files (its `--sim` mode rehearses every test against a simulated turret and writes to
 `exports/turret/bench/sim/`, which is never evidence).
 
-**The safety rules hold in every test:** the barrel never above horizontal (the hard stop at 0°); every ball at or
+**The safety rules hold in every test:** the barrel only between its hard stops (exports/turret/limits.json, D77); every ball at or
 under 66 fps on the bench (the hard cap is 70); nothing spins or feeds unless the pendant is held; never 24 V on the ESC
 side, not even for a test. Wear eye protection; the muzzle points into a catch box or at the targets.
 
@@ -42,8 +42,8 @@ flowchart TB
 |---|---|---|---|
 | 1.1 | Printed sizes: the bearing seat Ø65.0, the journal Ø50.0, the carrier's Ø65 opening, the tyre bore 26.9, the CT dowel holes, the hub's bore after reaming (5.00 on the X2216's pilot); the stand's panel cutouts with the parts in hand (the rocker, the fuse holder, the TB3M pendant socket's D hole: its 11.3 mm is from Switchcraft's drawing, not measured) | a light press for the seat, a slip fit for the journal, the hub a close slip fit on the pilot and flat on the adapter's flange; each panel part seats and does not turn | fits.json |
 | 1.2 | Inserts: pull an M3 and an M4 insert from a PA6-CF coupon | > 300 N (M3), > 500 N (M4) | fits.json |
-| 1.3 | Gear mesh: dial-indicator backlash at the turntable's rim; two full turns by hand at tilt 0 and -25° | 0.2-0.4 mm; no binding; nothing touches; the ring's leads do not wind | fits.json |
-| 1.4 | Tilt stops by hand | hard stop at 0° (level) and -25°; nothing else touches at any pan | fits.json |
+| 1.3 | Gear mesh: dial-indicator backlash at the turntable's rim; two full turns by hand at tilt +12°, 0 and -25° | 0.2-0.4 mm; no binding; nothing touches; the ring's leads do not wind | fits.json |
+| 1.4 | Tilt stops by hand | hard stops at +12° and -25°; nothing else touches at any pan | fits.json |
 | 1.5 | Hub runout on each X2216 (dial indicator at the rim, motor turned by hand) | <= 0.15 mm; the tyre stays put after 50 turns by hand | fits.json |
 | 1.6 | Ball sizes: 50 balls on the calipers and the scale | Ø22.2-22.8, 1.6-1.9 g; outliers rejected from the hopper | balls.json |
 | 1.7 | The ring turns freely by hand with the carrier's screws loose and tight; the tube coupling does not load it sideways | no change in stiffness when tightened | fits.json |
@@ -98,7 +98,7 @@ turret's only CAN terminator), and the CT power plug is out (the signal plug goe
 | 5.1 | 100 balls per pose at 3/s: level; -25°; level while panning at 60 deg/s | 0 doubles; <= 1 jam per 100 (a step that needed a reverse); <= 5 % empty steps after the dither; jams and empties logged per 100 | feed.json |
 | 5.2 | The firmware's maximum rate (3/s: the model shows the servo's 235 ms step leaves too little time for the ball to fall clear at 4/s) | 0 doubles | feed.json |
 | 5.3 | 50 worn and 50 damp balls, level, 3/s | 0 doubles; jams logged (information) | feed.json |
-| 5.4 | Parked safe: the dial parked, the rail off; the stand shaken by hand (~5 m/s²) and knocked (~13 m/s²) at tilt 0 and -25° | no ball reaches the wheels | feed.json |
+| 5.4 | Parked safe: the dial parked, the rail off; the stand shaken by hand (~5 m/s²) and knocked (~13 m/s²) at tilt +12°, 0 and -25° | no ball reaches the wheels | feed.json |
 | 5.5 | The last 5 balls of a hopper at -25° | the lift-to-0 rule empties it; no ball left behind | feed.json |
 
 ## 6. Accuracy and the game

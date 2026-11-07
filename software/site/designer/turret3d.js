@@ -3,13 +3,25 @@
 //
 // Concept from research/turret-launcher-study.md section 8, as cad/turret.py builds it: a pan ring on a quick-release
 // plate, a cradle with twin brushless flywheels fed by a dial under a ball hopper, a 30 mm barrel. Rival-size foam balls
-// leave at 21.3 m/s (70 fps, the safety cap for balls) and the launcher never tilts above horizontal in the world frame.
+// leave at 21.3 m/s (70 fps, the safety cap for balls); the barrel tilts between the turret's hard stops (TILT_STOPS).
 import * as THREE from 'three';
 
 const M = 0.001;
 const mat = (c, o = {}) => new THREE.MeshPhysicalMaterial({ color: c, roughness: 0.45, clearcoat: 0.3, ...o });
-const MAX_TILT_UP = 0;           // rad: never above horizontal
-const MAX_TILT_DOWN = -0.35;
+const D2R = Math.PI / 180;
+/** The tilt joint's hard stops (rad, + = muzzle up, relative to the body): the CAD's stop lug on the yoke's sectors, as
+ *  exports/turret/limits.json (cad/turret_limits.py) gives them. D77 replaced the old rule that kept the barrel at or below
+ *  level with these. The values here are the CAD's as this file was written; setTiltStops() puts the exported numbers in. */
+export const TILT_STOPS = { min: -25 * D2R, max: 12 * D2R, fire: 10 * D2R };   // fire: no shot above it (the feed's limit)
+/** Take the stops from exports/turret/limits.json's contents; an invalid file leaves them as they were. */
+export function setTiltStops(limits) {
+  const lo = limits?.tilt_deg?.min, hi = limits?.tilt_deg?.max;
+  if (!Number.isFinite(lo) || !Number.isFinite(hi) || !(lo < hi)) return false;
+  TILT_STOPS.min = lo * D2R; TILT_STOPS.max = hi * D2R;
+  const fire = limits.fire_tilt_max_deg;
+  TILT_STOPS.fire = Number.isFinite(fire) ? Math.min(hi, fire) * D2R : TILT_STOPS.max;
+  return true;
+}
 
 /** The ammo, as cad/turret.py and sim/turret.py have it: Rival-size foam balls from a hopper of 30. */
 export const BALL = {
@@ -91,7 +103,7 @@ export function buildTurret(color = 0xe8892b) {
   }
   const muzzle = new THREE.Object3D();
   muzzle.position.z = 160 * M;
-  // the green aiming laser, beside the barrel (real one: Class 1 or low-power Class 2, never aimed above horizontal)
+  // the aiming laser, beside the barrel (a green pointer module, Class 2 at most by its label: docs/head-payload.md)
   const laserBody = new THREE.Mesh(new THREE.CylinderGeometry(7 * M, 7 * M, 40 * M, 16), mat(0x1d2025));
   laserBody.rotation.x = Math.PI / 2;
   laserBody.position.set(-26 * M, -8 * M, 118 * M);
@@ -159,11 +171,10 @@ export function buildTurret(color = 0xe8892b) {
       beam.quaternion.setFromUnitVectors(new THREE.Vector3(0, 1, 0), dir);
       dot.position.copy(end);
     },
-    setAim(panRad, tiltRad, bodyPitch = 0) {
+    setAim(panRad, tiltRad) {
       pan.rotation.y = panRad;
-      // the limit applies in the world frame: the body pitches, so subtract it
-      const worldMax = MAX_TILT_UP - bodyPitch, worldMin = MAX_TILT_DOWN - bodyPitch;
-      tilt.rotation.x = -Math.max(worldMin, Math.min(worldMax, tiltRad));
+      // the stops are in the joint, so they turn with the body: no world-frame limit (D77)
+      tilt.rotation.x = -Math.max(TILT_STOPS.min, Math.min(TILT_STOPS.max, tiltRad));
     },
     flash() { flashT = 0.06; },
     step(dt) { flashT = Math.max(0, flashT - dt); flash.material.opacity = flashT > 0 ? 0.9 : 0; flash.scale.setScalar(1 + 6 * flashT); },

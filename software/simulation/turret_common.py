@@ -3,9 +3,19 @@ which share a file name, and loading the program agent's feed/launch modules by 
 from __future__ import annotations
 
 import importlib
+import json
 from pathlib import Path
 
 R = (Path(__file__).resolve().parents[2])
+
+
+LIMITS_JSON = R / 'hardware' / 'exports' / 'turret' / 'limits.json'
+
+
+def tilt_stops_deg(path: Path = LIMITS_JSON) -> tuple:
+    """Return the CAD hard stops in degrees, with positive tilt pointing the muzzle up."""
+    limits = json.loads(Path(path).read_text())['tilt_deg']
+    return float(limits['min']), float(limits['max'])
 
 
 def cad_turret():

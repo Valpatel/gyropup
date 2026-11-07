@@ -75,7 +75,7 @@ parts:
   - gate:motion
   - gate:fasteners
 - id: laser
-  function: Shows the aim, parallel to the bore (Quarton VLM-650-03, < 1 mW, Class 2)
+  function: Shows the aim, parallel to the bore (a green pointer module, its class from its label, Class 2 at most; lit only while armed)
   interfaces:
   - I-laser
   material:
