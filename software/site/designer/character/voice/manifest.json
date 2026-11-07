@@ -13,8 +13,8 @@
  },
  "engine": "piper-tts 1.4.2",
  "encoding": "MP3 VBR V5 (libmp3lame -q:a 5), mono, 22.05 kHz",
- "total_bytes": 1739959,
- "seconds": 270.4,
+ "total_bytes": 1748959,
+ "seconds": 272.4,
  "lines": {
   "I promise to aim for the legs!": {
    "clip": "ea153f8728b8bf76.mp3",
@@ -332,11 +332,11 @@
    "sha256": "06458dcf8988635ad1a3d2a3bad84452b4ac21bec15f59302fed25a0f2dd2928"
   },
   "Hi! I am Gyropup!": {
-   "clip": "e8c7ce71beaaac6c.mp3",
-   "spoken": "Hi! I am gyro pup!",
-   "seconds": 1.61,
-   "bytes": 9622,
-   "sha256": "b43fb54b402abf2d9d92cd1dfd500892fd0661efa20667e3cbacd9272b48ca74"
+   "clip": "fc643fb92a3f9a7a.mp3",
+   "spoken": "Hi! I am gyro, pup!",
+   "seconds": 1.99,
+   "bytes": 11130,
+   "sha256": "e45b4f5faefa4dc3c52d47683dea48e35c2010bd679df0fbc34a9e45b70399e2"
   },
   "Hello, friend! Want to play?": {
    "clip": "96b86c4b5ffb5d6c.mp3",
@@ -367,11 +367,11 @@
    "sha256": "b030ea6deef197285658eb5146f1e2aa84d4bbc59eead51d556fe0f8e0b7c69d"
   },
   "No way! Heads are off-limits. Legs and targets only, that is the Gyropup promise!": {
-   "clip": "6121389355cdd23c.mp3",
-   "spoken": "No way! Heads are off-limits. Legs and targets only, that is the gyro pup promise!",
-   "seconds": 5.58,
-   "bytes": 35860,
-   "sha256": "0881076b3046eed3c17426e4b3eb2e6374bcd5b1d1a836db387c1de064dd6dbe"
+   "clip": "f1b24dda46dd839c.mp3",
+   "spoken": "No way! Heads are off-limits. Legs and targets only, that is the gyro, pup promise!",
+   "seconds": 5.5,
+   "bytes": 35471,
+   "sha256": "1d8602d83e80c92bec1b033ca5c7f5062ac32bb31a92e1c3a9a1d92b52bf5f25"
   },
   "Not pets, not faces, not anyone without safety glasses. Want me to knock down a target instead?": {
    "clip": "35e5cda0511b3cad.mp3",
@@ -395,25 +395,25 @@
    "sha256": "5a039c3cefc9545c50caae282f9907ef33fa93a35fc59f3d7d03aee9cd5be976"
   },
   "Hey! I am Gyropup. Nice to meet you!": {
-   "clip": "808db3be364d049c.mp3",
-   "spoken": "Hey! I am gyro pup. Nice to meet you!",
-   "seconds": 2.7,
-   "bytes": 16627,
-   "sha256": "48dc258a2846fc4a323761e5b360685d05ba0e3efae5573d06a47c979b5d1b20"
+   "clip": "10346921046329d5.mp3",
+   "spoken": "Hey! I am gyro, pup. Nice to meet you!",
+   "seconds": 3.06,
+   "bytes": 17767,
+   "sha256": "e642b13bff29cce0d2e07bed086e26529c20d9380d2d3a2fc29dabfb2220e6c3"
   },
   "I am Gyropup, a robot pup on the Tritium team!": {
-   "clip": "eb0366670ffe041f.mp3",
-   "spoken": "I am gyro pup, a robot pup on the Trittium team!",
-   "seconds": 2.84,
-   "bytes": 17429,
-   "sha256": "1507e0e8a2c82dbf0f9e5176be31117f959a6b122b9f5826f8db3225e0425757"
+   "clip": "90ed1a431fc285ff.mp3",
+   "spoken": "I am gyro, pup, a robot pup on the Trittium team!",
+   "seconds": 3.22,
+   "bytes": 19117,
+   "sha256": "70da85abb92d5f230dcfa1cf4652f7a612ac326ead597034420635b3e9496253"
   },
   "My name is Gyropup. I balance on two wheels!": {
-   "clip": "992434771a6f7c17.mp3",
-   "spoken": "My name is gyro pup. I balance on two wheels!",
-   "seconds": 2.82,
-   "bytes": 18390,
-   "sha256": "91d9d0fc584c8f91ba5cecc78a2e50428a1b0a3b5ec95acc58e81577b6299a7e"
+   "clip": "4a38f24690c2342c.mp3",
+   "spoken": "My name is gyro, pup. I balance on two wheels!",
+   "seconds": 3.15,
+   "bytes": 20006,
+   "sha256": "3e3477051e332e2a23ef0e8f59883fe392ff286fe9902a418daa9726b795c7db"
   },
   "Super bouncy today, thanks! How about you?": {
    "clip": "98ec4ed0fab08740.mp3",
@@ -815,11 +815,11 @@
    "sha256": "882922c192b68023bf138aca587d2feaf79475e890d06bbb184c68ae2dd91522"
   },
   "Hi! I’m Gyropup. Ready for a backyard adventure?": {
-   "clip": "c58eb622a507091c.mp3",
-   "spoken": "Hi! I’m gyro pup. Ready for a backyard adventure?",
-   "seconds": 3.25,
-   "bytes": 20111,
-   "sha256": "606502601e5221acf2700da76ad396aa30d9135daad9b298af7494697f9ff8cf"
+   "clip": "0bb2ecc67744ce21.mp3",
+   "spoken": "Hi! I’m gyro, pup. Ready for a backyard adventure?",
+   "seconds": 3.81,
+   "bytes": 22712,
+   "sha256": "6ed7f9ef2089afb1ccf1cef4edd3a090d02118b31d175e15a45c9d94ab16f4de"
   },
   "Want to see how I work? Take a peek inside!": {
    "clip": "fe85c54f1232ec3c.mp3",
@@ -843,11 +843,11 @@
    "sha256": "ce7b12feb5473fd760b0529e0e1632cb79a4ba8fed674c8877f11931f57a1963"
   },
   "Hi! I am Gyropup. Want to play a target game?": {
-   "clip": "7637c3ee8994adce.mp3",
-   "spoken": "Hi! I am gyro pup. Want to play a target game?",
-   "seconds": 3.31,
-   "bytes": 19249,
-   "sha256": "5be188ce3d0f162d4726a04a90b3bd806f1c75560ee68429dcf493222fa24ed7"
+   "clip": "f7ef44efc6b694f1.mp3",
+   "spoken": "Hi! I am gyro, pup. Want to play a target game?",
+   "seconds": 3.44,
+   "bytes": 20085,
+   "sha256": "8d899a67afd08b32ed4c060cf152825086cdf15ccae7c15e1409e34c81af5c51"
   },
   "Wheee! That was fun!": {
    "clip": "643add8af578bca3.mp3",

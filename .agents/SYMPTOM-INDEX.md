@@ -128,3 +128,5 @@
 - A compact attribution badge overlaps the brand only without JavaScript: [use real no-script flow and boundary checks](inbox/2026-11-02-readme-images-need-src-not-srcset.md#test-badge-flow-with-scripting-disabled-as-well-as-a-delayed-script).
 
 - A Made with badge link returns200 but belongs to an unrelated site: [verify the actual project origin](inbox/2026-11-02-readme-images-need-src-not-srcset.md#a-badge-link-needs-the-verified-project-origin-not-merely-http-success).
+
+- A landing name sounds joined despite a correct pronunciation JSON field: [trace the selected recorded audio](inbox/2026-11-05-ci-classification-needs-phase-evidence.md#a-correct-spoken-text-field-does-not-establish-the-sound-a-visitor-hears).
