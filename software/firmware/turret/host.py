@@ -21,7 +21,7 @@ What it does:
   - refuses to arm until those rows have gone out since the turret's last boot and its next heartbeat has come back
     without CONFIG_MISMATCH. The firmware reference echoes no CONFIG row, so that heartbeat, with the restart watch
     (the heartbeat's sequence and gaps, a BOOT state), is the acknowledgement it allows;
-  - AIM, FIRE and LASER: the tilt never asked above level (nor below the mount's table), pan and tilt at most
+  - AIM, FIRE and LASER: the tilt clamped to its mechanical stops and the mount's table, pan and tilt at most
     90 deg/s and at most 50 deg/s while "people near" is set; while it is set no FIRE goes out (a burst under way is
     stopped and its wheels spun down) and an aim under way is slowed;
   - logs every SHOT, FEED, POWER, HEALTH and EVENT frame, the turret's state changes, the CONFIG rows and the commands
@@ -508,8 +508,8 @@ class TurretHost:
     # ---------------------------------------------------------------- aim, fire, laser, people near
     def aim(self, pan: float, tilt: float = 0.0, rate: Optional[float] = None, wait: bool = False,
             timeout: Optional[float] = None, absolute: bool = False) -> dict:
-        """Aim at `pan` (deg; the nearest turn of it unless `absolute`) and `tilt` (deg, never above level: clamped to
-        [the mount's table at that pan, 0]), at `rate` deg/s capped at 90, or 50 while people are near."""
+        """Aim at `pan` (deg; the nearest turn of it unless `absolute`) and `tilt` (deg, + = up: clamped to [the mount's
+        table at that pan, the upper hard stop]), at `rate` deg/s capped at 90, or 50 while people are near."""
         with self.lock:
             tt = self.tt
             cur = tt.pan()

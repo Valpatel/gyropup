@@ -111,6 +111,7 @@ def required_capture_inputs():
             'kit/vendor/three/addons/controls/OrbitControls.js',
             'kit/vendor/three/addons/geometries/RoundedBoxGeometry.js')
     }
+    paths.add('/exports/turret/limits.json')
     for directory in ('exports/sim/turret_box', 'exports/sim/v2/rig', 'exports/sim/v2/leg-attachments'):
         paths.add('/' + directory + '/manifest.json')
         manifest = read(project_path(directory) / 'manifest.json')
@@ -173,7 +174,7 @@ def validate_source_bindings(source_revision, source_hashes, capture):
             require(git_sha(capture['sourceRevision'], source_for_public(name.lstrip('/'))) == item['repoSha256'], f'Captured source differs from recorded revision: {name}')
         # Model data and simulator modules have no static-build rewriting. Only the
         # instrumented stage gets the narrowly specified callback exposure below.
-        if item.get('repoSha256') and (name.endswith(('.js', '.stl')) or name.startswith('/exports/sim/')):
+        if item.get('repoSha256') and (name.endswith(('.js', '.stl')) or name.startswith('/exports/sim/') or name == '/exports/turret/limits.json'):
             if name == '/designer/kit/stage.js':
                 data = project_path(name.lstrip('/')).read_bytes()
                 needle = b'const callbacks = [];'
@@ -356,6 +357,11 @@ def negative_controls(receipt, capture, frames, out, decoded):
         c['inputs'].pop('/designer/current_turret.js')
         r['source_hashes'].pop(source_for_public('designer/current_turret.js'))
     fault('self-consistent required renderer omission', omit_module)
+    def omit_limits(r, c, f):
+        c['inputs'].pop('/exports/turret/limits.json')
+        r['source_hashes'].pop(source_for_public('exports/turret/limits.json'))
+    fault('self-consistent firing limits omission', omit_limits)
+    fault('served firing limits', lambda r,c,f: c['inputs']['/exports/turret/limits.json'].__setitem__('servedSha256', '0'*64))
     fault('capture location contract', lambda r,c,f: c['locationContracts'].__setitem__(CAPTURE_LOCATIONS[0], '0'*64))
     fault('captured artifact revision', lambda r,c,f: c['servedVersion'].__setitem__('revision', '0'*40))
     fault('wrong encoding source revision', lambda r,c,f: r.__setitem__('source_revision', LEG_REVISION))

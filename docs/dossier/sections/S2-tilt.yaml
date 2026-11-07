@@ -2,8 +2,8 @@
 # cad/turret_dossier.py registers (exports/dossier-geometry.json). The design story is docs/turret-sections.md.
 id: S2-tilt
 title: Tilt yoke and cradle
-purpose: Hold the cartridge on a horizontal axis over the pan axis and tilt it 0 to -25 deg off an STS3215, with hard stops
-  at both ends so the barrel never points above level
+purpose: Hold the cartridge on a horizontal axis over the pan axis and tilt it +12 to -25 deg off an STS3215, with hard stops
+  at both ends that are its range (D77: the real mechanical stops, not a never-above-level rule)
 requirements:
 - R3
 - R9
@@ -115,7 +115,7 @@ interfaces:
   - stop_lug
   - tilt_yoke
   kind: contact
-  datum: the yoke's stop sectors at 0 and -25 deg
+  datum: the yoke's stop sectors at +12 and -25 deg
   description: 'The hard stop: the lug rests on the upper sector at 0 deg (the tilt joint''s intended contact).'
   owner: S2-tilt
 - id: I-shoulder-arm
@@ -138,7 +138,7 @@ interfaces:
 parts:
 - id: tilt_yoke
   function: 'Holds the cradle on the tilt axis over the pan axis: the tilt servo on the +y arm, the MR126 in the -y arm, the
-    hard-stop sectors at 0 and -25 deg'
+    hard-stop sectors at +12 and -25 deg'
   interfaces:
   - I-yoke
   - I-bay
@@ -202,7 +202,7 @@ parts:
   - gate:motion
   - turret-fea
 - id: stop_lug
-  function: 'The tilt hard stop: rests on the yoke''s sectors at 0 and -25 deg, so the barrel never points above level'
+  function: 'The tilt hard stop: rests on the yoke''s sectors at +12 and -25 deg, the ends of the tilt range (D77)'
   interfaces:
   - I-stop-lug
   - I-tilt-stop

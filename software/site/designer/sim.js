@@ -10,7 +10,7 @@ import { buildRobotV2 } from './robot_v2.js';
 import { loadCadRig } from './cadrig.js';
 import { createEyes, eyesGlyph } from './character/eyes.js';
 import { INTRO, DEFAULT_INTRO } from './character/lines.js';   // spoken lines: one source with their voice clips
-import { BALL, BALL_SPIN, ballMesh, createBalls } from './turret3d.js';
+import { BALL, BALL_SPIN, ballMesh, createBalls, TILT_STOPS, setTiltStops } from './turret3d.js';
 import { evaluate, indexCatalog, legPose, effectiveDesign, resolvePart } from './model.js';
 import { createSfx } from './sfx.js';
 import { createRobotActions } from './robot_actions.js';
@@ -31,6 +31,7 @@ startupMessage('Loading the parts catalogue…');
 const index = await getJson('../catalog/index.json');
 const catalog = indexCatalog(await Promise.all(index.files.map((f) => getJson(`../catalog/${f}`))));
 const materials = await getJson('../catalog/materials.json');
+try { setTiltStops(await getJson('../exports/turret/limits.json')); } catch { /* the CAD's stops as built into turret3d.js */ }
 // one robot (D36): v2 with the five-bar legs (sim/robot_v2.py, an interim body until M5); the first, serial-leg robot
 // stays as a legacy view
 // the turret has its own group: on the Orin AGX compute box (the J501 enclosure), aimed and fired by hand, with its
@@ -714,7 +715,7 @@ const tele = readouts(section(panel, 'Telemetry', { note: 'static, from the desi
 const gunSec = section(panel, 'Turret', { note: 'removable head payload' });
 const gunInfo = readouts(gunSec);
 const panSlider = slider(gunSec, { label: 'Pan', min: -180, max: 180, step: 1, value: 0, unit: '°', onInput: (v) => { takeControl(); command.panDeg(v); } });
-const tiltSlider = slider(gunSec, { label: 'Tilt (never above horizontal)', min: -20, max: 0, step: 0.5, value: -3, unit: '°', onInput: (v) => { takeControl(); command.tiltDeg(v); } });
+const tiltSlider = slider(gunSec, { label: 'Tilt (between the hard stops)', min: TILT_STOPS.min * 180 / Math.PI, max: TILT_STOPS.max * 180 / Math.PI, step: 0.5, value: -3, unit: '°', onInput: (v) => { takeControl(); command.tiltDeg(v); } });
 const gunRow = document.createElement('div');
 gunRow.className = 'hud-chips';
 for (const [label, fn] of [['FIRE', () => queueShots(1)], ['BURST 8', () => queueShots(8)],
@@ -986,7 +987,7 @@ function stepDemo(dt) {
       const dx = target.pos[1] - origin.x, dz = target.pos[0] - origin.z, distance = Math.hypot(dx,dz);
       const speed = state.robot.turret.launchSpeed ?? BALL.speed;
       gun.pan = Math.atan2(dx,dz);
-      gun.tilt = Math.min(0, Math.atan2(target.pos[2] - origin.y + 9.81 * distance * distance / (2 * speed * speed), distance));
+      gun.tilt = Math.min(TILT_STOPS.fire, Math.atan2(target.pos[2] - origin.y + 9.81 * distance * distance / (2 * speed * speed), distance));
     }
     if (target && demo.t >= demo.nextShot && time > 10.8 && gun.mag > 0 && !gun.queue.length) {
       scheduleShots(1); demo.nextShot = demo.t + 1.25;

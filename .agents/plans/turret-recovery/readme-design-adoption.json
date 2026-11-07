@@ -1,0 +1,47 @@
+{
+  "job": 251,
+  "executed_revision": "8ca43a928cb361695903960062d34e5f77b0d1ff",
+  "recorded_component_source": "ab493a369fa6ffa2eda29ae153a5db44b88a2b39",
+  "published_baseline": "b61f0cd4b4e27b8006c06e6a473a9984d63e2033",
+  "actual_input_files": 95,
+  "hardware_tree": "d9e2577430dd831bc70cb7a43f24b56f63df7bee",
+  "review": "https://github.com/Valpatel/gyropup/pull/255#issuecomment-6708690648",
+  "figure_archive": {
+    "sha256": "52c51a99ccd58be882aa2c1422f6519114fe69853eb4dee204cc63d3bec26c8c",
+    "files": 8
+  },
+  "original_archive": {
+    "sha256": "ac2ecc8117f54d0e024ec185aac184f4e93ef72422f4e9bc2b8af33a1477293b",
+    "files": 3
+  },
+  "outputs": {
+    "tools/engineering/robot/current-design.receipt.json": {
+      "bytes": 1516,
+      "sha256": "07a20d1e2009f5d18678304f67d14f3173a2570576463231ac3638e2f48bd2af"
+    },
+    "tools/engineering/robot/current-design.scene.json": {
+      "bytes": 211476,
+      "sha256": "7c7fd1690b38a7444b641cd62bc4dd07b2d4076f2afe48f10652ee92f93b42c5"
+    },
+    "docs/img/hero/current-design.svg": {
+      "bytes": 62470,
+      "sha256": "a28ed9b8ae25d01ad522374a73833b34fa13afc2f74f184db552c5a00eabec9c"
+    }
+  },
+  "source_and_hardware_preservation": true,
+  "all_other_tracked_bytes_preserved": true,
+  "actual_current_pure_parity": true,
+  "actual_current_ten_tests": true,
+  "controlled_SVG_image_and_standalone_cases": 8,
+  "controlled_engines": [
+    "Chrome151",
+    "WebKit26.0"
+  ],
+  "compiled_README_consumer": "Mandatory final exact-source compiled/production checks; controlled SVG cases are not substituted.",
+  "failed_prior_collection": {
+    "job": 250,
+    "classification": "FAILED before native start: absent optional GNU time wrapper; original receipt and conservative flag retained."
+  },
+  "adoption_pass": true,
+  "limits": "Tessellated source-bound CAD illustration, not physical qualification or universal geometry equivalence. Body and both leg projections exact prior; actual turret projection changes. Airflow/exhaust findings remain failed in scene evidence. No 3D homepage mesh is produced or relabelled."
+}

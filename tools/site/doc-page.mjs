@@ -19,6 +19,12 @@ const esc = s => String(s ?? '').replace(/[&<>"']/g, c => ({ '&': '&amp;', '<': 
 const words = text => (text.match(/\S+/g) || []).length;
 const plural = (n, noun) => `${n} ${noun}${n === 1 ? '' : 's'}`;
 
+// The notebook is navigation, not an ever-growing open article. Keep every
+// ordinary document link available through the same native fold as hardware.
+export function notebookDocuments(items) {
+  return `<details class="decision" id="design-documents"><summary>Design notes and research (${items.length} pages)</summary><ul class="document-list">${items.join('')}</ul></details>`;
+}
+
 // The page's measure (web/portal.css: 1100 px column, 15 px Inter, 1.8 line height) as a rough layout model: enough
 // to decide what to fold. tools/test-walls.mjs measures the real result in a browser.
 const LINE = 27, CHARS = 125;

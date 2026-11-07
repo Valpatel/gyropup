@@ -100,12 +100,12 @@ class SimTurret(HAL):
         self.pan_true_log: List[Tuple[float, float]] = []
         # -------------------------------------------------- the tilt
         z = C.TILT_ZERO_COUNT
-        span = int(round(25.0 / C.DEG_PER_COUNT))
-        lo, hi = (z - 5, z + span + 5) if C.TILT_SIGN < 0 else (z - span - 5, z + 5)
+        up, down = int(round(C.TILT_MAX_DEG / C.DEG_PER_COUNT)), int(round(-C.TILT_MIN_DEG / C.DEG_PER_COUNT))
+        lo, hi = (z - up - 5, z + down + 5) if C.TILT_SIGN < 0 else (z - down - 5, z + up + 5)
         self.tilt_servo = SimServo(C.ID_TILT, mode=C.MODE_POSITION, pos=z, min_angle=lo, max_angle=hi,
                                    rng=random.Random(seed * 7 + 3))
-        stop0, stop25 = z, z + C.TILT_SIGN * (-25.0) / C.DEG_PER_COUNT
-        self.tilt_servo.blocked_lo, self.tilt_servo.blocked_hi = min(stop0, stop25), max(stop0, stop25)
+        stop_up, stop_down = z + C.TILT_SIGN * C.TILT_MAX_DEG / C.DEG_PER_COUNT, z + C.TILT_SIGN * C.TILT_MIN_DEG / C.DEG_PER_COUNT
+        self.tilt_servo.blocked_lo, self.tilt_servo.blocked_hi = min(stop_up, stop_down), max(stop_up, stop_down)
         self.tilt_max_seen = -99.0
         # -------------------------------------------------- the feed and the dial
         self.feed_servo = SimServo(C.ID_FEED, mode=C.MODE_STEP, rng=random.Random(seed * 7 + 4),

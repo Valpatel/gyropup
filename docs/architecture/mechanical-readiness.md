@@ -28,7 +28,7 @@ flowchart TB
 | Interface | Available evidence and job | Still required |
 | --- | --- | --- |
 | Ordered 3115-900KV flywheel motor | [Exact listing, sample survey and sliced shaft gauge](../turret/ordered-turret-motor.md); all eight size labels survive the 0.4 mm slice, about 28 minutes / 8.5 g | Delivered-part dimensions, calibrated printed widths, mounting and shaft/retention design; the older SunnySky cartridge is a different motor |
-| RS-04 leg mounting | [Corrected parent geometry](../legs/rs04-mounting-fit.md) and [retained unpowered coupon job](../legs/rs04-fit-job.md), 6 h 32 min 42 s, 172.41 g and 65.16 m | Inspect the unsupported roofs and all screw seats, measure the actual stack, resolve motor-side support/load spreading ([support-ring comparison](../legs/rs04-support-study.md)) and establish tightening/preload limits |
+| RS-04 leg mounting | [Corrected parent geometry](../legs/rs04-mounting-fit.md) and [retained unpowered coupon job](../legs/rs04-fit-job.md), 6 h 32 min 45 s, 172.41 g and 65.16 m | Inspect the unsupported roofs and all screw seats, measure the actual stack, resolve motor-side support/load spreading ([support-ring comparison](../legs/rs04-support-study.md)) and establish tightening/preload limits |
 
 Both packages retain resolved profiles, executable toolpaths, source identities,
 inspection images and blank measurement records. Slicer estimates and valid solids

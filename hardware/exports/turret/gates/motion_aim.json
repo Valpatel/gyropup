@@ -12,7 +12,7 @@
     {
       "id": "motion:pan+tilt",
       "status": "pass",
-      "message": "pan+tilt: no collision in 210 poses (pan -170..170 deg in 35 samples (10 deg apart, up to 26.358 mm of travel); tilt 0..25 deg in 6 samples (5 deg apart, up to 13.349 mm of travel))",
+      "message": "pan+tilt: no collision in 210 poses (pan -170..170 deg in 35 samples (10 deg apart, up to 26.871 mm of travel); tilt -12..25 deg in 6 samples (7.4 deg apart, up to 19.757 mm of travel))",
       "parts": [
         "pan_bearing_inner",
         "tilt_bearing_inner"
@@ -35,22 +35,22 @@
             "samples": 35,
             "declared_samples": 35,
             "step": 10.0,
-            "max_radius_mm": 151.017,
-            "max_travel_per_step_mm": 26.358
+            "max_radius_mm": 153.957,
+            "max_travel_per_step_mm": 26.871
           },
           {
             "joint": "tilt",
             "axis": "rotate",
             "unit": "deg",
             "range": [
-              0.0,
+              -12.0,
               25.0
             ],
             "samples": 6,
             "declared_samples": 6,
-            "step": 5.0,
+            "step": 7.4,
             "max_radius_mm": 152.971,
-            "max_travel_per_step_mm": 13.349
+            "max_travel_per_step_mm": 19.757
           }
         ],
         "coarsened": false,
@@ -121,12 +121,12 @@
         "intended_contacts_touching": {
           "horn_boss|tilt_servo": {
             "poses": 210,
-            "first": "pan=-170deg,tilt=0deg",
+            "first": "pan=-170deg,tilt=-12deg",
             "last": "pan=170deg,tilt=25deg"
           },
           "stop_lug|tilt_yoke": {
             "poses": 70,
-            "first": "pan=-170deg,tilt=0deg",
+            "first": "pan=-170deg,tilt=-12deg",
             "last": "pan=170deg,tilt=25deg"
           }
         },
@@ -138,16 +138,16 @@
             "pivot_spacer",
             "tilt_bearing"
           ],
-          "pose": "pan=-170deg,tilt=0deg",
+          "pose": "pan=-170deg,tilt=-12deg",
           "point_a": [
-            -13.907892,
-            59.295756,
-            140.0
+            -13.834723,
+            59.308657,
+            140.7069
           ],
           "point_b": [
-            -14.220699,
-            59.342142,
-            140.0
+            -14.141074,
+            59.356182,
+            140.769273
           ]
         }
       }
@@ -205,22 +205,22 @@
           "samples": 35,
           "declared_samples": 35,
           "step": 10.0,
-          "max_radius_mm": 151.017,
-          "max_travel_per_step_mm": 26.358
+          "max_radius_mm": 153.957,
+          "max_travel_per_step_mm": 26.871
         },
         {
           "joint": "tilt",
           "axis": "rotate",
           "unit": "deg",
           "range": [
-            0.0,
+            -12.0,
             25.0
           ],
           "samples": 6,
           "declared_samples": 6,
-          "step": 5.0,
+          "step": 7.4,
           "max_radius_mm": 152.971,
-          "max_travel_per_step_mm": 13.349
+          "max_travel_per_step_mm": 19.757
         }
       ],
       "coarsened": false,
@@ -245,12 +245,12 @@
       "intended_contacts_touching": {
         "horn_boss|tilt_servo": {
           "poses": 210,
-          "first": "pan=-170deg,tilt=0deg",
+          "first": "pan=-170deg,tilt=-12deg",
           "last": "pan=170deg,tilt=25deg"
         },
         "stop_lug|tilt_yoke": {
           "poses": 70,
-          "first": "pan=-170deg,tilt=0deg",
+          "first": "pan=-170deg,tilt=-12deg",
           "last": "pan=170deg,tilt=25deg"
         }
       },
@@ -262,16 +262,16 @@
           "pivot_spacer",
           "tilt_bearing"
         ],
-        "pose": "pan=-170deg,tilt=0deg",
+        "pose": "pan=-170deg,tilt=-12deg",
         "point_a": [
-          -13.907892,
-          59.295756,
-          140.0
+          -13.834723,
+          59.308657,
+          140.7069
         ],
         "point_b": [
-          -14.220699,
-          59.342142,
-          140.0
+          -14.141074,
+          59.356182,
+          140.769273
         ]
       },
       "status": "pass"
@@ -282,10 +282,10 @@
     "joints": 2,
     "groups": 1,
     "poses": 210,
-    "pair_queries": 17151,
-    "kernel_queries": 10941,
+    "pair_queries": 17046,
+    "kernel_queries": 10841,
     "memo_hits": 6205,
-    "cache_hits": 5,
-    "seconds": 5468.545
+    "cache_hits": 0,
+    "seconds": 5408.31
   }
 }

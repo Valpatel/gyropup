@@ -1,0 +1,112 @@
+{
+  "job": 247,
+  "producer_revision": "ec44a63730caafbdeb7a927cc77b5c9a968086f6",
+  "review": "https://github.com/Valpatel/gyropup/pull/255#issuecomment-6707301652",
+  "archives": {
+    "original-lug-inputs": "caf6cca69f7ecb441fa4e0a286adb49014691585e385113bd22103c91dca506e",
+    "lug-candidate": "b631621c6958b428bb8d2d42e2e51c48351ac4c4647657a03a429e593e8f8df1",
+    "original-support-targets": "60590182636ea15a9d20b647358e023969c89a56a4a57663a20c789da6c6c8df",
+    "support-candidate": "b0283ad60c8fee5a10344e4bae7c7f4613bed2ff160e1cd3e2ad21241a64639d"
+  },
+  "source94_fingerprint": "a510bd881217d91015769fbecbbfcabffa8db5f96d1909d3f8d8de0aac91609d",
+  "fresh_guards": {
+    "all94_source_bytes": true,
+    "all_contexts": true,
+    "private_files": 6,
+    "original_destinations": 16,
+    "sealed_candidates": 16,
+    "full_other_tracked_and_hardware_preserved": true
+  },
+  "outputs": {
+    "docs/research/rs04-support/results/od118-id80-t2.032.step": {
+      "bytes": 69686,
+      "sha256": "d6480f4663e37534db9769f8d0838dc7daf113571b40f8b6c11d68309e69ade8"
+    },
+    "docs/research/rs04-support/results/od118-id80-t3.175.step": {
+      "bytes": 69686,
+      "sha256": "c8b5d25c4bc9f32577cf4510d7769959e631a0b7087692123dc0860ac5a8e43e"
+    },
+    "docs/research/rs04-support/results/od118-id94-t2.032.step": {
+      "bytes": 69686,
+      "sha256": "bead177eed314bae52fcf96c301b617b968202e8c68c89c07de6e705e2b35880"
+    },
+    "docs/research/rs04-support/results/od118-id94-t3.175.step": {
+      "bytes": 69686,
+      "sha256": "f319059369e75f14ef290859fb36bcaccf70d80f8609acb7125303c1894972e0"
+    },
+    "docs/research/rs04-support/results/od120-id80-t2.032.step": {
+      "bytes": 69690,
+      "sha256": "c3c94b81c3974645e9c8ca251f72eaa39de5f5bb3a3e1dbfc73161306387e166"
+    },
+    "docs/research/rs04-support/results/od120-id80-t3.175.step": {
+      "bytes": 69690,
+      "sha256": "6237902eeb0d0cffe8c5e66e06dd036131e6d7d9a58c0e56f19964b84f11c1ad"
+    },
+    "docs/research/rs04-support/results/od120-id94-t2.032.step": {
+      "bytes": 69690,
+      "sha256": "a216c9a777c115082771028fd241772c283f44c3c3e37c0eb1767679b1528280"
+    },
+    "docs/research/rs04-support/results/od120-id94-t3.175.step": {
+      "bytes": 69690,
+      "sha256": "d56f13b216ea8cc2ac14c3e834f0f3cbb04a0b5d827f1a238c25a750105a667f"
+    },
+    "docs/research/rs04-support/results/probe.json": {
+      "bytes": 340364,
+      "sha256": "756b3607d3cdb4a32276be011a028c960b2148f4b561d1a6c46d1f293ed64f2c"
+    },
+    "hardware/exports/leg/rs04-mounting-fit/checks.json": {
+      "bytes": 860355,
+      "sha256": "613e9ff07406145c3e7821a75f964dd8b569764385e840ff448d06c2b62dcfc4"
+    },
+    "hardware/exports/leg/rs04-mounting-fit/coupon_frame_ring_nom.step": {
+      "bytes": 163102,
+      "sha256": "1308abe774ed246e54c42d72b50103ad71891e6293a4bea9c5bb7e5c0b2e0a3b"
+    },
+    "hardware/exports/leg/rs04-mounting-fit/coupon_frame_ring_nom.stl": {
+      "bytes": 583684,
+      "sha256": "4b2b5efee4d0504ddf80f7efd25a679fca5be77d994928b1e2ff554e39d80a23"
+    },
+    "hardware/exports/leg/rs04-mounting-fit/dyno_lug_plate.step": {
+      "bytes": 258982,
+      "sha256": "b9542b00cc42e12364a95f1711632ee8338002020a63207bc03e9199cc332409"
+    },
+    "hardware/exports/leg/rs04-mounting-fit/dyno_lug_plate.stl": {
+      "bytes": 614884,
+      "sha256": "ce7b8cf46b6ff804f388fae00d2a67fcc5a36d6a53fdc49d32b90cce71630a4f"
+    },
+    "hardware/exports/leg/rs04-mounting-fit/hip_frame.step": {
+      "bytes": 3139533,
+      "sha256": "7c181d5a524cb2fd432d49ed4a990aae9e163b08402bf06be516bb37d749c8dc"
+    },
+    "hardware/exports/leg/rs04-mounting-fit/hip_frame.stl": {
+      "bytes": 1483884,
+      "sha256": "f15c00497974e3f78d3fdc9ca60ef958ebff4d3537556d98c7c6828e6ec103de"
+    }
+  },
+  "actual_existing_consumers": [
+    "tests/hardware/interfaces/test-rs04-lug-stacks.py",
+    "tests/hardware/interfaces/test-rs04-support-probe.py"
+  ],
+  "adoption_pass": true,
+  "engineering_pass": false,
+  "counts": {
+    "pass": 322,
+    "warn": 40,
+    "fail": 8
+  },
+  "classification": {
+    "lug": {
+      "source_membership_or_hash": 16,
+      "actual_STEP_digests": 3,
+      "coincident_contact_witness_coordinates": 34
+    },
+    "support": {
+      "source_bindings": 32,
+      "lug_receipt_bindings": 3,
+      "STEP_digests": 8,
+      "elapsed_times": 24
+    }
+  },
+  "geometry": "All 11 STEP DATA blocks and all 3 STL files exact against retained originals; 17 coincident witness pairs move together by 6.6 mm with all other evidence fields unchanged.",
+  "qualification": "Original engineering failures and all physical/structural/fabrication flags remain false; native gates, current scene/motion/media/art and publication remain separate."
+}

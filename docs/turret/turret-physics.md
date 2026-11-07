@@ -20,7 +20,7 @@ and the densest (2.0 g on 22.2 mm) carries **2,480 J/m², under ASTM F963's 2,50
 Untrimmed (KV +5 %, the converter's +4 % set point) the same hardware reaches 110 fps, or holds 104 only with the
 Hasbro ball at 92: **both at once need the trim**. The chronograph trip moves to 105 fps (a 1.875 ms window over the
 60 mm gates); the eRPM guard refuses to feed above 16,390 rpm. Unchanged: nothing spins unless ARM is held, the barrel
-never points above level, the laser warns, the phase-short brake on release. **Eye protection is recommended for
+stays between its hard stops (D77 dropped the old level-only rule), the laser warns, the phase-short brake on release. **Eye protection is recommended for
 everyone in range, as Hasbro does for Rival.** Recoil is 0.052 N s a shot (a 2.1 mrad kick); one ball knocks over a
 0.82 kg hinged plate at 4 m.
 
@@ -59,7 +59,7 @@ the hopper agitator is the feed's open item. The research default of 65 fps is n
 out at 59.5 fps at 100 % throttle on the 12 V rail with Ø36 tyres, so the usable set speeds are 50-57 fps, and more range means a
 different ceiling (section 4) or a taller stance. A shot takes ~245 ms from the dial command to the muzzle (dial step ~100 ms, the drop and the chute ~130 ms, the nip
 5 ms, the bore 7 ms). Level from the 0.55 m muzzle the 55 fps ball lands at 5.0 m and can reach a 0.30 m-high target out to 3.5 m (4.1 m
-at 65 fps, 4.4 m at 70 fps; 5.0-6.2 m if the robot stands 0.3 m taller), because the barrel never points up. It knocks over any hinged
+at 65 fps, 4.4 m at 70 fps; 5.0-6.2 m if the robot stands 0.3 m taller), with the barrel level; it may aim up to its +12 deg stop and fires up to +10 (D77), which reaches further. It knocks over any hinged
 plate up to ~0.5 kg at 4 m and carries 0.26 J (0.42 J at the cap: 84 % of EN 71-1's resilient limit, 41 % of ASTM's energy density; a
 stock Rival blaster at 97 fps is 0.81 J). Recoil is 0.030 N s per shot and moves the aim 1.2 mrad; the biggest aim movers are the printed
 pan gear's backlash (7.6 mrad), the tilt servo's backlash (8.7 mrad) and firing while panning at 90 deg/s (14.5 mrad, 8.7 cm at 6 m).
@@ -386,7 +386,7 @@ Level shots of the population from the 0.55 m muzzle (no aim error; the 55 fps s
 small for the drop: 35 rad/s adds 4 cm at 4 m and 100 rad/s ~12 cm, so the firmware's drop table must be measured with the real
 spin (the bench's 2/4/6/8 m groups), not computed from speed alone.
 
-A level shot lands at **5.0 m (55 fps), 5.8 (65), 6.2 (70)** from 0.55 m; the farthest 0.30 m-high target a never-above-horizontal barrel can
+A level shot lands at **5.0 m (55 fps), 5.8 (65), 6.2 (70)** from 0.55 m; the farthest 0.30 m-high target a level barrel (the upper stop until #201 moves it) can
 reach: **3.5 / 4.1 / 4.4 m**; from 0.70 m: 4.3 / 5.1 / 5.4; from 0.85 m: 5.0 / 5.8 / 6.2. The tilt for a 0.30 m target: −13.0° at 1 m, −4.95° at
 2 m, −1.35° at 3 m (55 fps). Magnus: 300 rpm of yaw spin drifts 3.8 cm at 4 m, 1,000 rpm 12.8 cm (so a 2 % wheel mismatch is 1.5 cm). Panning
 while firing: the muzzle is 155 mm from the pan axis, so 30 / 90 / 150 deg/s add 0.08 / 0.24 / 0.41 m/s sideways: **0.28° / 0.83° / 1.39°, i.e.

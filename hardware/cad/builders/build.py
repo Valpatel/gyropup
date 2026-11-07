@@ -493,7 +493,7 @@ def assemble(design_path, d, ev, L, S, parts, meta, lparts, lbought, hip_id, ele
         origins.update({'turret_pan': (0, 0, tur.mount_z), 'turret_tilt': (0, 0, tilt_z)})
         tinfo = {'pan_mm': [0, 0, tur.mount_z], 'tilt_mm': [0, 0, tilt_z],
                  'muzzle_mm': list(tur.point((tur.G.barrel_x1, 0, 0), 'tilt', 0.0, 0.0)),
-                 'tilt_range_deg': [tur.G.tilt_min, 0.0], 'pan_range_deg': [-170.0, 170.0], 'tilt_positive': 'muzzle up (CAD)'}
+                 'tilt_range_deg': [tur.G.tilt_min, tur.G.tilt_max], 'pan_range_deg': [-170.0, 170.0], 'tilt_positive': 'muzzle up (CAD)'}
     for side, tag in ((1, 'l'), (-1, 'r')):
         origins.update({f'thigh_{tag}': (0, side * hy, 0), f'shin_{tag}': (0, side * hy, -a), f'wheel_{tag}': (0, side * wy, -a - b)})
     A = assembly.Assembly(origins)

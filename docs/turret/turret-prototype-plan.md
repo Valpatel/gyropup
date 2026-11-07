@@ -15,7 +15,8 @@ check and an estimate, and flags the ones that change the Turret API (`cad/turre
 `cad/turret_assembly.py`, `cad/turret_motion.py`, `cad/turret_lidar.py`, `cad/turret_studies.py` and
 `tools/part_images.py` all build on it.
 
-Hard rules stand and are not relaxed anywhere below: the barrel never points above horizontal; muzzle speed at most
+Hard rules stand and are not relaxed anywhere below: the barrel only between its mechanical hard stops (D77 replaced
+"never above horizontal"); muzzle speed at most
 70 fps (21.3 m/s), held physically by a fixed 12 V flywheel rail (motor KV x rail x tyre diameter inside the cap);
 nothing spins or feeds unless the safety line is held. Parts rule D40: off the shelf with a listed price and a buy
 link, printed (PA6-CF, PETG, TPU on the P1S's 256 mm bed), or ordered online at an instant price. No quotes.
@@ -55,7 +56,7 @@ stop.
 | The pan joint | The ROB-13065 ring on a printed carrier, driven through a silicone tube; swept clean at pans 0-350 x tilts 0/-25 with the Ø7.5 lead bundle; the safety line as a 1 kHz pulse train so a bouncing contact fails safe; homing on the index proven on 1,000 random starts | cad/turret.py `ring_carrier`, `ring_driver`; exports/turret/clash-sweep.json; wiring 3.1; firmware/turret/test_homing.py |
 | The cartridge concept | The whole feed-and-launch group lifts off the cradle on two dowels and a thumbscrew with two keyed Micro-Fit plugs; everything that wears is on it | cad/turret.py `cartridge_body`, `ct_points`; docs/turret-assembly.md step 12 |
 | The hopper, dial and baffle | 30 balls fit (lid at 100 mm); the parked dial never lets a ball out, powered or not, through a 13.5 m/s^2 jolt; no double at <= 4 steps/s; nothing ever stuck in the chute | physics section 3 |
-| Hard tilt stops, CoM behind the tilt axis | Unpowered the barrel rises to the 0 deg stop; the tilting group's centre sits 8-11 mm behind the axis empty to full; tilt hold margin 43 | exports/turret/motion.json |
+| Hard tilt stops, CoM behind the tilt axis | Unpowered the barrel rises to the upper (+12 deg) stop; the tilting group's centre sits 8-11 mm behind the axis empty to full; tilt hold margin 43 | exports/turret/motion.json |
 | The load paths after the FEA | Yoke SF 2.53 / 2.35 / 1.99 in the 30 g falls and 1.72 in the everyday push at the muzzle; turntable 3.59; pan base 7.2 / 1.61 (falls), 2.52 / 1.26 (servo cap / stall); the aluminium clamp 3.1 (the printed one was 0.18 in the lift case); pinion 2.7 / 1.35; teeth 3.2 / 1.6 | the program log 2026-10-27 (later); exports/turret/fea/*.png |
 | The clearance check is general | `cad/turret_lidar.py` takes obstacles as cylinders and boxes and the ball path at the slowest stray-ball speed: over the lidar on the 30 mm riser the depression is limited only within pan +-26 deg (to -16 deg); on the Orin box nothing limits it and firing is kept out within 60 deg of straight back | exports/turret/lidar/lidar.json, box.json |
 | The bench stand and the TM interface | The stand carries the real TM pattern and the DT12 harness, so the bench turret is the robot turret; the pendant is wired through the pins the radio stop will use; the switch, fuse holder and jack cutouts were redrawn to the makers' panel drawings | cad/turret_stand.py, wiring 1.1 |
@@ -117,7 +118,7 @@ stop.
 | Feed | 100 balls per pose at 3/s, poses level / -25 deg / panning 60 deg/s: 0 doubles, <= 1 jam per 100 (a step that needs a reverse), <= 5 % empty steps after the dither; parked and shaken: 0 balls out |
 | Wheels, ceiling | at 100 % throttle on the 12 V rail: no-load eRPM <= 1.10 x KV x 12 V; 20 balls all <= 66 fps on both chronographs |
 | Wheels, set speed | 50 balls at the set speed: mean within +-2 fps of the set value, SD <= 1.5 fps |
-| Aim | pan and tilt reach the commanded angles within 0.5 deg (one-sided approach); a 90 deg pan in <= 1.2 s; tilt never above 0 deg at any command; homing within 7 s at 50 random power-ups |
+| Aim | pan and tilt reach the commanded angles within 0.5 deg (one-sided approach); a 90 deg pan in <= 1.2 s; tilt never past its hard stops at any command (exports/turret/limits.json); homing within 7 s at 50 random power-ups |
 | Hit | 20 shots each at paper targets at 2 and 4 m: 68 % radius <= 1.5 cm and <= 5 cm; 20 g hinged plates at 2 and 4 m: every plate down |
 | Safety line and ring | only the genuine 1 kHz train arms; every fault (open, short to GND, short to +24 V, DC, 300 Hz, 3 kHz, 50 Hz hum) disarms within 25 ms; release: ESC rail off <= 25 ms, brake closed at +10 +-3 ms, wheels <= 5 % by +50 ms; 20 releases during feeding: no ball above 20 fps; the trip latches on a simulated 1.3 ms gate pair and only the button clears it; the ring: <= 60 mOhm per paralleled pair, no dropout > 100 us at 15 rpm with 5 A, 0 bus-off in 1 h of 1,000 frames/s |
 | Temperature | after 100 balls in 2 min then 10 min at speed: ESCs <= 80 C, motors <= 70 C, flywheel regulator <= 60 C, servos <= 60 C, ring body <= 20 K over ambient |
@@ -413,7 +414,7 @@ CAD; the hand tools are listed at the top of that page):
    measured and the carrier reprinted to them (T6). Check: the ring turns freely before the carrier's screws are
    tightened (Moflon's rule), and after.
 7. **Tilt yoke and the board bay**: as written; levels 0-2 per section 4.4; the rotor plug and the hall into level 2.
-8. **Tilt servo (ID 2) and the cradle**: as written. Check the 0 and -25 deg stops by hand. The CT receptacles onto the
+8. **Tilt servo (ID 2) and the cradle**: as written. Check the +12 and -25 deg stops by hand. The CT receptacles onto the
    cradle's -y rail (C5, C6).
 9. **Laser**: as written, with the VLM-650-03 LPT (boresight at 4 m, test 6.1).
 10. **The cartridge, on the bench** (changed): the feed servo (ID 3) up against the dial floor's underside, horn
@@ -446,8 +447,8 @@ damp ones for test 5.3).
 |---|---|---|
 | 1.1 | Printed sizes: bearing seat Ø65.0, journal Ø50.0, the carrier's Ø65 opening, tyre bore 26.9, the CT dowel holes, the hub's stud bore | a light press for the seat, a slip fit for the journal, the hub a clearance fit on the stud and flat on the adapter's flange |
 | 1.2 | Inserts: pull an M3 and an M4 insert from a PA6-CF coupon | > 300 N (M3), > 500 N (M4) |
-| 1.3 | Gear mesh: dial-indicator backlash at the turntable rim; two full turns by hand at tilt 0 and -25 | 0.2-0.4 mm; no binding; nothing touches; the ring's leads do not wind |
-| 1.4 | Tilt stops by hand | hard stop at 0 deg (level) and -25 deg; nothing else touches at any pan |
+| 1.3 | Gear mesh: dial-indicator backlash at the turntable rim; two full turns by hand at tilt +12, 0 and -25 | 0.2-0.4 mm; no binding; nothing touches; the ring's leads do not wind |
+| 1.4 | Tilt stops by hand | hard stops at +12 deg and -25 deg; nothing else touches at any pan |
 | 1.5 | Hub runout on the motor (dial indicator at the rim, motor turned by hand) | <= 0.15 mm; the tyre stays put after 50 turns by hand |
 | 1.6 | Ball sizes: 50 balls on calipers and scale | Ø22.2-22.8, 1.6-1.9 g; outliers rejected from the hopper |
 | 1.7 | The ring turns freely by hand with the carrier screws loose and tight; the coupling tube does not load it radially | no stiffness change when tightened |
@@ -456,7 +457,7 @@ damp ones for test 5.3).
 
 | # | Test | Accept |
 |---|---|---|
-| 2.1 | 50 N up on the muzzle with the cradle on its 0 deg stop, 200 times | no crack, stop creep < 0.2 mm |
+| 2.1 | 50 N up on the muzzle with the cradle on its +12 deg stop, 200 times | no crack, stop creep < 0.2 mm |
 | 2.2 | Lift the turret by its yoke to 100 N (spring scale) | the bearing's outer race does not move under the clamp |
 | 2.3 | Pan servo at 50 % torque against a held turntable (once), then held 10 s | no tooth marks |
 
@@ -495,7 +496,7 @@ damp ones for test 5.3).
 | 5.1 | 100 balls per pose at 3/s: level; -25 deg; level while panning at 60 deg/s | 0 doubles; <= 1 jam per 100 (a step that needed a reverse); <= 5 % empty steps after the dither; jams and empties logged per 100 |
 | 5.2 | The same at the firmware's maximum rate (4/s target; 3.5/s if the servo step is 250 ms) | 0 doubles |
 | 5.3 | 50 worn and 50 damp balls, level, 3/s | 0 doubles; jams logged (an information test) |
-| 5.4 | Parked safe: dial parked, rail off; the stand shaken by hand (~5 m/s^2) and knocked (~13 m/s^2) at tilt 0 and -25 | no ball reaches the wheels |
+| 5.4 | Parked safe: dial parked, rail off; the stand shaken by hand (~5 m/s^2) and knocked (~13 m/s^2) at tilt +12, 0 and -25 | no ball reaches the wheels |
 | 5.5 | The 5-ball hopper (the last balls of a magazine) at -25 deg | the lift-to-0 rule empties it; no ball left behind |
 
 ### 5.6 Accuracy and the game

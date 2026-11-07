@@ -126,7 +126,7 @@ throttle within 200 ms of the host's last heartbeat.
 **The power (D76)** is the body's turret branch from the 10S bus (30-42 V) with its own 58 V fuse (D55, F8 7.5 A),
 on the DT12's pins 1-4 (D66 brought it to an XT30 on the plinth instead). The turret does not need that branch cut on a stop:
 its own arm chain removes FLY and brakes the wheels within ~30 ms of the contact opening (above), with no help from the
-body. A body that cuts it anyway (as the STOP relay's pole B does) stops the whole turret, and the barrel rises to its 0 deg stop by itself (the tilting group's centre is 8 mm behind the tilt axis);
+body. A body that cuts it anyway (as the STOP relay's pole B does) stops the whole turret, and the barrel rises to its upper stop by itself (the tilting group's centre is 8 mm behind the tilt axis);
 the switch then closes onto the bay's 940 uF and must take that inrush (or the branch
 gets an NTC in series). That is the body's call (docs/body-plan.md, not changed here).
 

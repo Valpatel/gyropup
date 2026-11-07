@@ -69,7 +69,7 @@
   "muzzle_ahead_of_pan_axis_mm": 150.0,
   "tilt_range_deg": [
    -25.0,
-   0.0
+   12.0
   ]
  },
  "fixed_parts_to_obstacles_mm": {
@@ -140,298 +140,372 @@
  },
  "limited_pan_window_deg": null,
  "worst": null,
+ "elevation_limited_pans_deg": null,
  "firmware_table": [
   {
    "pan_deg": -180,
-   "min_tilt_deg": -25.0
+   "min_tilt_deg": -25.0,
+   "max_tilt_deg": 12.0
   },
   {
    "pan_deg": -175,
-   "min_tilt_deg": -25.0
+   "min_tilt_deg": -25.0,
+   "max_tilt_deg": 12.0
   },
   {
    "pan_deg": -170,
-   "min_tilt_deg": -25.0
+   "min_tilt_deg": -25.0,
+   "max_tilt_deg": 12.0
   },
   {
    "pan_deg": -165,
-   "min_tilt_deg": -25.0
+   "min_tilt_deg": -25.0,
+   "max_tilt_deg": 12.0
   },
   {
    "pan_deg": -160,
-   "min_tilt_deg": -25.0
+   "min_tilt_deg": -25.0,
+   "max_tilt_deg": 12.0
   },
   {
    "pan_deg": -155,
-   "min_tilt_deg": -25.0
+   "min_tilt_deg": -25.0,
+   "max_tilt_deg": 12.0
   },
   {
    "pan_deg": -150,
-   "min_tilt_deg": -25.0
+   "min_tilt_deg": -25.0,
+   "max_tilt_deg": 12.0
   },
   {
    "pan_deg": -145,
-   "min_tilt_deg": -25.0
+   "min_tilt_deg": -25.0,
+   "max_tilt_deg": 12.0
   },
   {
    "pan_deg": -140,
-   "min_tilt_deg": -25.0
+   "min_tilt_deg": -25.0,
+   "max_tilt_deg": 12.0
   },
   {
    "pan_deg": -135,
-   "min_tilt_deg": -25.0
+   "min_tilt_deg": -25.0,
+   "max_tilt_deg": 12.0
   },
   {
    "pan_deg": -130,
-   "min_tilt_deg": -25.0
+   "min_tilt_deg": -25.0,
+   "max_tilt_deg": 12.0
   },
   {
    "pan_deg": -125,
-   "min_tilt_deg": -25.0
+   "min_tilt_deg": -25.0,
+   "max_tilt_deg": 12.0
   },
   {
    "pan_deg": -120,
-   "min_tilt_deg": -25.0
+   "min_tilt_deg": -25.0,
+   "max_tilt_deg": 12.0
   },
   {
    "pan_deg": -115,
-   "min_tilt_deg": -25.0
+   "min_tilt_deg": -25.0,
+   "max_tilt_deg": 12.0
   },
   {
    "pan_deg": -110,
-   "min_tilt_deg": -25.0
+   "min_tilt_deg": -25.0,
+   "max_tilt_deg": 12.0
   },
   {
    "pan_deg": -105,
-   "min_tilt_deg": -25.0
+   "min_tilt_deg": -25.0,
+   "max_tilt_deg": 12.0
   },
   {
    "pan_deg": -100,
-   "min_tilt_deg": -25.0
+   "min_tilt_deg": -25.0,
+   "max_tilt_deg": 12.0
   },
   {
    "pan_deg": -95,
-   "min_tilt_deg": -25.0
+   "min_tilt_deg": -25.0,
+   "max_tilt_deg": 12.0
   },
   {
    "pan_deg": -90,
-   "min_tilt_deg": -25.0
+   "min_tilt_deg": -25.0,
+   "max_tilt_deg": 12.0
   },
   {
    "pan_deg": -85,
-   "min_tilt_deg": -25.0
+   "min_tilt_deg": -25.0,
+   "max_tilt_deg": 12.0
   },
   {
    "pan_deg": -80,
-   "min_tilt_deg": -25.0
+   "min_tilt_deg": -25.0,
+   "max_tilt_deg": 12.0
   },
   {
    "pan_deg": -75,
-   "min_tilt_deg": -25.0
+   "min_tilt_deg": -25.0,
+   "max_tilt_deg": 12.0
   },
   {
    "pan_deg": -70,
-   "min_tilt_deg": -25.0
+   "min_tilt_deg": -25.0,
+   "max_tilt_deg": 12.0
   },
   {
    "pan_deg": -65,
-   "min_tilt_deg": -25.0
+   "min_tilt_deg": -25.0,
+   "max_tilt_deg": 12.0
   },
   {
    "pan_deg": -60,
-   "min_tilt_deg": -25.0
+   "min_tilt_deg": -25.0,
+   "max_tilt_deg": 12.0
   },
   {
    "pan_deg": -55,
-   "min_tilt_deg": -25.0
+   "min_tilt_deg": -25.0,
+   "max_tilt_deg": 12.0
   },
   {
    "pan_deg": -50,
-   "min_tilt_deg": -25.0
+   "min_tilt_deg": -25.0,
+   "max_tilt_deg": 12.0
   },
   {
    "pan_deg": -45,
-   "min_tilt_deg": -25.0
+   "min_tilt_deg": -25.0,
+   "max_tilt_deg": 12.0
   },
   {
    "pan_deg": -40,
-   "min_tilt_deg": -25.0
+   "min_tilt_deg": -25.0,
+   "max_tilt_deg": 12.0
   },
   {
    "pan_deg": -35,
-   "min_tilt_deg": -25.0
+   "min_tilt_deg": -25.0,
+   "max_tilt_deg": 12.0
   },
   {
    "pan_deg": -30,
-   "min_tilt_deg": -25.0
+   "min_tilt_deg": -25.0,
+   "max_tilt_deg": 12.0
   },
   {
    "pan_deg": -25,
-   "min_tilt_deg": -25.0
+   "min_tilt_deg": -25.0,
+   "max_tilt_deg": 12.0
   },
   {
    "pan_deg": -20,
-   "min_tilt_deg": -25.0
+   "min_tilt_deg": -25.0,
+   "max_tilt_deg": 12.0
   },
   {
    "pan_deg": -15,
-   "min_tilt_deg": -25.0
+   "min_tilt_deg": -25.0,
+   "max_tilt_deg": 12.0
   },
   {
    "pan_deg": -10,
-   "min_tilt_deg": -25.0
+   "min_tilt_deg": -25.0,
+   "max_tilt_deg": 12.0
   },
   {
    "pan_deg": -5,
-   "min_tilt_deg": -25.0
+   "min_tilt_deg": -25.0,
+   "max_tilt_deg": 12.0
   },
   {
    "pan_deg": 0,
-   "min_tilt_deg": -25.0
+   "min_tilt_deg": -25.0,
+   "max_tilt_deg": 12.0
   },
   {
    "pan_deg": 5,
-   "min_tilt_deg": -25.0
+   "min_tilt_deg": -25.0,
+   "max_tilt_deg": 12.0
   },
   {
    "pan_deg": 10,
-   "min_tilt_deg": -25.0
+   "min_tilt_deg": -25.0,
+   "max_tilt_deg": 12.0
   },
   {
    "pan_deg": 15,
-   "min_tilt_deg": -25.0
+   "min_tilt_deg": -25.0,
+   "max_tilt_deg": 12.0
   },
   {
    "pan_deg": 20,
-   "min_tilt_deg": -25.0
+   "min_tilt_deg": -25.0,
+   "max_tilt_deg": 12.0
   },
   {
    "pan_deg": 25,
-   "min_tilt_deg": -25.0
+   "min_tilt_deg": -25.0,
+   "max_tilt_deg": 12.0
   },
   {
    "pan_deg": 30,
-   "min_tilt_deg": -25.0
+   "min_tilt_deg": -25.0,
+   "max_tilt_deg": 12.0
   },
   {
    "pan_deg": 35,
-   "min_tilt_deg": -25.0
+   "min_tilt_deg": -25.0,
+   "max_tilt_deg": 12.0
   },
   {
    "pan_deg": 40,
-   "min_tilt_deg": -25.0
+   "min_tilt_deg": -25.0,
+   "max_tilt_deg": 12.0
   },
   {
    "pan_deg": 45,
-   "min_tilt_deg": -25.0
+   "min_tilt_deg": -25.0,
+   "max_tilt_deg": 12.0
   },
   {
    "pan_deg": 50,
-   "min_tilt_deg": -25.0
+   "min_tilt_deg": -25.0,
+   "max_tilt_deg": 12.0
   },
   {
    "pan_deg": 55,
-   "min_tilt_deg": -25.0
+   "min_tilt_deg": -25.0,
+   "max_tilt_deg": 12.0
   },
   {
    "pan_deg": 60,
-   "min_tilt_deg": -25.0
+   "min_tilt_deg": -25.0,
+   "max_tilt_deg": 12.0
   },
   {
    "pan_deg": 65,
-   "min_tilt_deg": -25.0
+   "min_tilt_deg": -25.0,
+   "max_tilt_deg": 12.0
   },
   {
    "pan_deg": 70,
-   "min_tilt_deg": -25.0
+   "min_tilt_deg": -25.0,
+   "max_tilt_deg": 12.0
   },
   {
    "pan_deg": 75,
-   "min_tilt_deg": -25.0
+   "min_tilt_deg": -25.0,
+   "max_tilt_deg": 12.0
   },
   {
    "pan_deg": 80,
-   "min_tilt_deg": -25.0
+   "min_tilt_deg": -25.0,
+   "max_tilt_deg": 12.0
   },
   {
    "pan_deg": 85,
-   "min_tilt_deg": -25.0
+   "min_tilt_deg": -25.0,
+   "max_tilt_deg": 12.0
   },
   {
    "pan_deg": 90,
-   "min_tilt_deg": -25.0
+   "min_tilt_deg": -25.0,
+   "max_tilt_deg": 12.0
   },
   {
    "pan_deg": 95,
-   "min_tilt_deg": -25.0
+   "min_tilt_deg": -25.0,
+   "max_tilt_deg": 12.0
   },
   {
    "pan_deg": 100,
-   "min_tilt_deg": -25.0
+   "min_tilt_deg": -25.0,
+   "max_tilt_deg": 12.0
   },
   {
    "pan_deg": 105,
-   "min_tilt_deg": -25.0
+   "min_tilt_deg": -25.0,
+   "max_tilt_deg": 12.0
   },
   {
    "pan_deg": 110,
-   "min_tilt_deg": -25.0
+   "min_tilt_deg": -25.0,
+   "max_tilt_deg": 12.0
   },
   {
    "pan_deg": 115,
-   "min_tilt_deg": -25.0
+   "min_tilt_deg": -25.0,
+   "max_tilt_deg": 12.0
   },
   {
    "pan_deg": 120,
-   "min_tilt_deg": -25.0
+   "min_tilt_deg": -25.0,
+   "max_tilt_deg": 12.0
   },
   {
    "pan_deg": 125,
-   "min_tilt_deg": -25.0
+   "min_tilt_deg": -25.0,
+   "max_tilt_deg": 12.0
   },
   {
    "pan_deg": 130,
-   "min_tilt_deg": -25.0
+   "min_tilt_deg": -25.0,
+   "max_tilt_deg": 12.0
   },
   {
    "pan_deg": 135,
-   "min_tilt_deg": -25.0
+   "min_tilt_deg": -25.0,
+   "max_tilt_deg": 12.0
   },
   {
    "pan_deg": 140,
-   "min_tilt_deg": -25.0
+   "min_tilt_deg": -25.0,
+   "max_tilt_deg": 12.0
   },
   {
    "pan_deg": 145,
-   "min_tilt_deg": -25.0
+   "min_tilt_deg": -25.0,
+   "max_tilt_deg": 12.0
   },
   {
    "pan_deg": 150,
-   "min_tilt_deg": -25.0
+   "min_tilt_deg": -25.0,
+   "max_tilt_deg": 12.0
   },
   {
    "pan_deg": 155,
-   "min_tilt_deg": -25.0
+   "min_tilt_deg": -25.0,
+   "max_tilt_deg": 12.0
   },
   {
    "pan_deg": 160,
-   "min_tilt_deg": -25.0
+   "min_tilt_deg": -25.0,
+   "max_tilt_deg": 12.0
   },
   {
    "pan_deg": 165,
-   "min_tilt_deg": -25.0
+   "min_tilt_deg": -25.0,
+   "max_tilt_deg": 12.0
   },
   {
    "pan_deg": 170,
-   "min_tilt_deg": -25.0
+   "min_tilt_deg": -25.0,
+   "max_tilt_deg": 12.0
   },
   {
    "pan_deg": 175,
-   "min_tilt_deg": -25.0
+   "min_tilt_deg": -25.0,
+   "max_tilt_deg": 12.0
   },
   {
    "pan_deg": 180,
-   "min_tilt_deg": -25.0
+   "min_tilt_deg": -25.0,
+   "max_tilt_deg": 12.0
   }
  ],
  "keep_out_fire_pan_deg": [
@@ -505,6 +579,11 @@
    "closest_at_limit": [
     "ball path / deck and box",
     50.9
+   ],
+   "max_elevation_deg": 12.0,
+   "closest_at_up_limit": [
+    "ball path / deck and box",
+    148.7
    ]
   },
   {
@@ -513,6 +592,11 @@
    "closest_at_limit": [
     "ball path / deck and box",
     50.9
+   ],
+   "max_elevation_deg": 12.0,
+   "closest_at_up_limit": [
+    "ball path / deck and box",
+    148.7
    ]
   },
   {
@@ -521,6 +605,11 @@
    "closest_at_limit": [
     "ball path / deck and box",
     50.8
+   ],
+   "max_elevation_deg": 12.0,
+   "closest_at_up_limit": [
+    "ball path / deck and box",
+    148.7
    ]
   },
   {
@@ -529,6 +618,11 @@
    "closest_at_limit": [
     "ball path / deck and box",
     50.6
+   ],
+   "max_elevation_deg": 12.0,
+   "closest_at_up_limit": [
+    "ball path / deck and box",
+    148.6
    ]
   },
   {
@@ -537,6 +631,11 @@
    "closest_at_limit": [
     "ball path / deck and box",
     50.3
+   ],
+   "max_elevation_deg": 12.0,
+   "closest_at_up_limit": [
+    "ball path / deck and box",
+    148.4
    ]
   },
   {
@@ -545,6 +644,11 @@
    "closest_at_limit": [
     "ball path / deck and box",
     50.0
+   ],
+   "max_elevation_deg": 12.0,
+   "closest_at_up_limit": [
+    "ball path / deck and box",
+    148.3
    ]
   },
   {
@@ -553,6 +657,11 @@
    "closest_at_limit": [
     "ball path / deck and box",
     49.5
+   ],
+   "max_elevation_deg": 12.0,
+   "closest_at_up_limit": [
+    "ball path / deck and box",
+    148.1
    ]
   },
   {
@@ -561,6 +670,11 @@
    "closest_at_limit": [
     "ball path / deck and box",
     48.9
+   ],
+   "max_elevation_deg": 12.0,
+   "closest_at_up_limit": [
+    "ball path / deck and box",
+    147.8
    ]
   },
   {
@@ -569,6 +683,11 @@
    "closest_at_limit": [
     "ball path / deck and box",
     48.3
+   ],
+   "max_elevation_deg": 12.0,
+   "closest_at_up_limit": [
+    "ball path / deck and box",
+    147.6
    ]
   },
   {
@@ -577,6 +696,11 @@
    "closest_at_limit": [
     "ball path / deck and box",
     47.6
+   ],
+   "max_elevation_deg": 12.0,
+   "closest_at_up_limit": [
+    "ball path / deck and box",
+    147.3
    ]
   },
   {
@@ -585,6 +709,11 @@
    "closest_at_limit": [
     "ball path / deck and box",
     46.8
+   ],
+   "max_elevation_deg": 12.0,
+   "closest_at_up_limit": [
+    "ball path / deck and box",
+    147.1
    ]
   },
   {
@@ -593,6 +722,11 @@
    "closest_at_limit": [
     "ball path / deck and box",
     45.8
+   ],
+   "max_elevation_deg": 12.0,
+   "closest_at_up_limit": [
+    "ball path / deck and box",
+    146.8
    ]
   },
   {
@@ -601,6 +735,11 @@
    "closest_at_limit": [
     "ball path / deck and box",
     44.8
+   ],
+   "max_elevation_deg": 12.0,
+   "closest_at_up_limit": [
+    "ball path / deck and box",
+    146.5
    ]
   },
   {
@@ -609,6 +748,11 @@
    "closest_at_limit": [
     "ball path / deck and box",
     43.7
+   ],
+   "max_elevation_deg": 12.0,
+   "closest_at_up_limit": [
+    "ball path / deck and box",
+    146.2
    ]
   },
   {
@@ -617,6 +761,11 @@
    "closest_at_limit": [
     "ball path / deck and box",
     42.4
+   ],
+   "max_elevation_deg": 12.0,
+   "closest_at_up_limit": [
+    "ball path / deck and box",
+    146.0
    ]
   },
   {
@@ -625,6 +774,11 @@
    "closest_at_limit": [
     "ball path / deck and box",
     41.0
+   ],
+   "max_elevation_deg": 12.0,
+   "closest_at_up_limit": [
+    "ball path / antenna_left_145.5",
+    145.5
    ]
   },
   {
@@ -633,6 +787,11 @@
    "closest_at_limit": [
     "ball path / deck and box",
     39.4
+   ],
+   "max_elevation_deg": 12.0,
+   "closest_at_up_limit": [
+    "ball path / antenna_left_145.5",
+    143.2
    ]
   },
   {
@@ -641,6 +800,11 @@
    "closest_at_limit": [
     "ball path / deck and box",
     37.8
+   ],
+   "max_elevation_deg": 12.0,
+   "closest_at_up_limit": [
+    "ball path / antenna_left_145.5",
+    140.9
    ]
   },
   {
@@ -649,6 +813,11 @@
    "closest_at_limit": [
     "ball path / deck and box",
     35.9
+   ],
+   "max_elevation_deg": 12.0,
+   "closest_at_up_limit": [
+    "ball path / antenna_left_145.5",
+    138.7
    ]
   },
   {
@@ -657,6 +826,11 @@
    "closest_at_limit": [
     "ball path / deck and box",
     34.3
+   ],
+   "max_elevation_deg": 12.0,
+   "closest_at_up_limit": [
+    "ball path / antenna_left_145.5",
+    136.6
    ]
   },
   {
@@ -665,6 +839,11 @@
    "closest_at_limit": [
     "ball path / deck and box",
     33.3
+   ],
+   "max_elevation_deg": 12.0,
+   "closest_at_up_limit": [
+    "ball path / antenna_left_145.5",
+    134.6
    ]
   },
   {
@@ -673,6 +852,11 @@
    "closest_at_limit": [
     "ball path / deck and box",
     33.1
+   ],
+   "max_elevation_deg": 12.0,
+   "closest_at_up_limit": [
+    "ball path / antenna_left_145.5",
+    132.8
    ]
   },
   {
@@ -681,6 +865,11 @@
    "closest_at_limit": [
     "ball path / deck and box",
     33.6
+   ],
+   "max_elevation_deg": 12.0,
+   "closest_at_up_limit": [
+    "ball path / antenna_left_145.5",
+    131.0
    ]
   },
   {
@@ -689,6 +878,11 @@
    "closest_at_limit": [
     "ball path / deck and box",
     34.8
+   ],
+   "max_elevation_deg": 12.0,
+   "closest_at_up_limit": [
+    "ball path / antenna_left_145.5",
+    129.4
    ]
   },
   {
@@ -697,6 +891,11 @@
    "closest_at_limit": [
     "ball path / deck and box",
     36.7
+   ],
+   "max_elevation_deg": 12.0,
+   "closest_at_up_limit": [
+    "ball path / antenna_left_145.5",
+    127.9
    ]
   },
   {
@@ -705,6 +904,11 @@
    "closest_at_limit": [
     "ball path / antenna_left_145.5",
     37.8
+   ],
+   "max_elevation_deg": 12.0,
+   "closest_at_up_limit": [
+    "ball path / antenna_left_145.5",
+    126.6
    ]
   },
   {
@@ -713,6 +917,11 @@
    "closest_at_limit": [
     "ball path / antenna_left_145.5",
     34.6
+   ],
+   "max_elevation_deg": 12.0,
+   "closest_at_up_limit": [
+    "ball path / antenna_left_145.5",
+    125.4
    ]
   },
   {
@@ -721,6 +930,11 @@
    "closest_at_limit": [
     "ball path / antenna_left_145.5",
     31.6
+   ],
+   "max_elevation_deg": 12.0,
+   "closest_at_up_limit": [
+    "ball path / antenna_left_145.5",
+    124.4
    ]
   },
   {
@@ -729,6 +943,11 @@
    "closest_at_limit": [
     "ball path / antenna_left_145.5",
     28.9
+   ],
+   "max_elevation_deg": 12.0,
+   "closest_at_up_limit": [
+    "ball path / antenna_left_145.5",
+    123.5
    ]
   },
   {
@@ -737,6 +956,11 @@
    "closest_at_limit": [
     "ball path / antenna_left_145.5",
     26.5
+   ],
+   "max_elevation_deg": 12.0,
+   "closest_at_up_limit": [
+    "ball path / antenna_left_145.5",
+    122.8
    ]
   },
   {
@@ -745,6 +969,11 @@
    "closest_at_limit": [
     "ball path / antenna_left_145.5",
     24.6
+   ],
+   "max_elevation_deg": 12.0,
+   "closest_at_up_limit": [
+    "ball path / antenna_left_145.5",
+    122.2
    ]
   },
   {
@@ -753,6 +982,11 @@
    "closest_at_limit": [
     "ball path / antenna_left_145.5",
     23.2
+   ],
+   "max_elevation_deg": 12.0,
+   "closest_at_up_limit": [
+    "ball path / antenna_left_145.5",
+    121.8
    ]
   },
   {
@@ -761,6 +995,11 @@
    "closest_at_limit": [
     "ball path / antenna_left_145.5",
     22.1
+   ],
+   "max_elevation_deg": 12.0,
+   "closest_at_up_limit": [
+    "ball path / antenna_left_145.5",
+    121.5
    ]
   },
   {
@@ -769,6 +1008,11 @@
    "closest_at_limit": [
     "ball path / antenna_left_145.5",
     21.6
+   ],
+   "max_elevation_deg": 12.0,
+   "closest_at_up_limit": [
+    "ball path / antenna_left_145.5",
+    121.3
    ]
   },
   {
@@ -777,6 +1021,11 @@
    "closest_at_limit": [
     "ball path / antenna_left_145.5",
     21.5
+   ],
+   "max_elevation_deg": 12.0,
+   "closest_at_up_limit": [
+    "ball path / antenna_left_145.5",
+    121.3
    ]
   },
   {
@@ -785,6 +1034,11 @@
    "closest_at_limit": [
     "ball path / antenna_left_145.5",
     22.1
+   ],
+   "max_elevation_deg": 12.0,
+   "closest_at_up_limit": [
+    "ball path / antenna_left_145.5",
+    121.5
    ]
   },
   {
@@ -793,6 +1047,11 @@
    "closest_at_limit": [
     "ball path / antenna_left_145.5",
     23.1
+   ],
+   "max_elevation_deg": 12.0,
+   "closest_at_up_limit": [
+    "ball path / antenna_left_145.5",
+    121.7
    ]
   },
   {
@@ -801,6 +1060,11 @@
    "closest_at_limit": [
     "ball path / antenna_left_145.5",
     24.5
+   ],
+   "max_elevation_deg": 12.0,
+   "closest_at_up_limit": [
+    "ball path / antenna_left_145.5",
+    122.2
    ]
   },
   {
@@ -809,6 +1073,11 @@
    "closest_at_limit": [
     "ball path / antenna_left_145.5",
     26.4
+   ],
+   "max_elevation_deg": 12.0,
+   "closest_at_up_limit": [
+    "ball path / antenna_left_145.5",
+    122.7
    ]
   },
   {
@@ -817,6 +1086,11 @@
    "closest_at_limit": [
     "ball path / antenna_left_145.5",
     28.7
+   ],
+   "max_elevation_deg": 12.0,
+   "closest_at_up_limit": [
+    "ball path / antenna_left_145.5",
+    123.4
    ]
   },
   {
@@ -825,6 +1099,11 @@
    "closest_at_limit": [
     "ball path / antenna_left_145.5",
     31.4
+   ],
+   "max_elevation_deg": 12.0,
+   "closest_at_up_limit": [
+    "ball path / antenna_left_145.5",
+    124.3
    ]
   },
   {
@@ -833,6 +1112,11 @@
    "closest_at_limit": [
     "ball path / antenna_left_145.5",
     34.4
+   ],
+   "max_elevation_deg": 12.0,
+   "closest_at_up_limit": [
+    "ball path / antenna_left_145.5",
+    125.3
    ]
   },
   {
@@ -841,6 +1125,11 @@
    "closest_at_limit": [
     "ball path / antenna_left_145.5",
     37.6
+   ],
+   "max_elevation_deg": 12.0,
+   "closest_at_up_limit": [
+    "ball path / antenna_left_145.5",
+    126.5
    ]
   },
   {
@@ -849,6 +1138,11 @@
    "closest_at_limit": [
     "ball path / antenna_left_145.5",
     40.9
+   ],
+   "max_elevation_deg": 12.0,
+   "closest_at_up_limit": [
+    "ball path / antenna_left_145.5",
+    127.9
    ]
   },
   {
@@ -857,6 +1151,11 @@
    "closest_at_limit": [
     "ball path / antenna_left_145.5",
     44.3
+   ],
+   "max_elevation_deg": 12.0,
+   "closest_at_up_limit": [
+    "ball path / antenna_left_145.5",
+    129.3
    ]
   },
   {
@@ -865,6 +1164,11 @@
    "closest_at_limit": [
     "ball path / antenna_left_46.5",
     47.9
+   ],
+   "max_elevation_deg": 12.0,
+   "closest_at_up_limit": [
+    "ball path / antenna_left_46.5",
+    130.9
    ]
   },
   {
@@ -873,6 +1177,11 @@
    "closest_at_limit": [
     "ball path / antenna_left_46.5",
     44.3
+   ],
+   "max_elevation_deg": 12.0,
+   "closest_at_up_limit": [
+    "ball path / antenna_left_46.5",
+    129.3
    ]
   },
   {
@@ -881,6 +1190,11 @@
    "closest_at_limit": [
     "ball path / antenna_left_46.5",
     40.9
+   ],
+   "max_elevation_deg": 12.0,
+   "closest_at_up_limit": [
+    "ball path / antenna_left_46.5",
+    127.9
    ]
   },
   {
@@ -889,6 +1203,11 @@
    "closest_at_limit": [
     "ball path / antenna_left_46.5",
     37.6
+   ],
+   "max_elevation_deg": 12.0,
+   "closest_at_up_limit": [
+    "ball path / antenna_left_46.5",
+    126.5
    ]
   },
   {
@@ -897,6 +1216,11 @@
    "closest_at_limit": [
     "ball path / antenna_left_46.5",
     34.4
+   ],
+   "max_elevation_deg": 12.0,
+   "closest_at_up_limit": [
+    "ball path / antenna_left_46.5",
+    125.3
    ]
   },
   {
@@ -905,6 +1229,11 @@
    "closest_at_limit": [
     "ball path / antenna_left_46.5",
     31.4
+   ],
+   "max_elevation_deg": 12.0,
+   "closest_at_up_limit": [
+    "ball path / antenna_left_46.5",
+    124.3
    ]
   },
   {
@@ -913,6 +1242,11 @@
    "closest_at_limit": [
     "ball path / antenna_left_46.5",
     28.7
+   ],
+   "max_elevation_deg": 12.0,
+   "closest_at_up_limit": [
+    "ball path / antenna_left_46.5",
+    123.4
    ]
   },
   {
@@ -921,6 +1255,11 @@
    "closest_at_limit": [
     "ball path / antenna_left_46.5",
     26.4
+   ],
+   "max_elevation_deg": 12.0,
+   "closest_at_up_limit": [
+    "ball path / antenna_left_46.5",
+    122.7
    ]
   },
   {
@@ -929,6 +1268,11 @@
    "closest_at_limit": [
     "ball path / antenna_left_46.5",
     24.5
+   ],
+   "max_elevation_deg": 12.0,
+   "closest_at_up_limit": [
+    "ball path / antenna_left_46.5",
+    122.2
    ]
   },
   {
@@ -937,6 +1281,11 @@
    "closest_at_limit": [
     "ball path / antenna_left_46.5",
     23.1
+   ],
+   "max_elevation_deg": 12.0,
+   "closest_at_up_limit": [
+    "ball path / antenna_left_46.5",
+    121.7
    ]
   },
   {
@@ -945,6 +1294,11 @@
    "closest_at_limit": [
     "ball path / antenna_left_46.5",
     22.1
+   ],
+   "max_elevation_deg": 12.0,
+   "closest_at_up_limit": [
+    "ball path / antenna_left_46.5",
+    121.5
    ]
   },
   {
@@ -953,6 +1307,11 @@
    "closest_at_limit": [
     "ball path / antenna_left_46.5",
     21.5
+   ],
+   "max_elevation_deg": 12.0,
+   "closest_at_up_limit": [
+    "ball path / antenna_left_46.5",
+    121.3
    ]
   },
   {
@@ -961,6 +1320,11 @@
    "closest_at_limit": [
     "ball path / antenna_left_46.5",
     21.6
+   ],
+   "max_elevation_deg": 12.0,
+   "closest_at_up_limit": [
+    "ball path / antenna_left_46.5",
+    121.3
    ]
   },
   {
@@ -969,6 +1333,11 @@
    "closest_at_limit": [
     "ball path / antenna_left_46.5",
     22.1
+   ],
+   "max_elevation_deg": 12.0,
+   "closest_at_up_limit": [
+    "ball path / antenna_left_46.5",
+    121.5
    ]
   },
   {
@@ -977,6 +1346,11 @@
    "closest_at_limit": [
     "ball path / antenna_left_46.5",
     23.2
+   ],
+   "max_elevation_deg": 12.0,
+   "closest_at_up_limit": [
+    "ball path / antenna_left_46.5",
+    121.8
    ]
   },
   {
@@ -985,6 +1359,11 @@
    "closest_at_limit": [
     "ball path / antenna_left_46.5",
     24.6
+   ],
+   "max_elevation_deg": 12.0,
+   "closest_at_up_limit": [
+    "ball path / antenna_left_46.5",
+    122.2
    ]
   },
   {
@@ -993,6 +1372,11 @@
    "closest_at_limit": [
     "ball path / antenna_left_46.5",
     26.5
+   ],
+   "max_elevation_deg": 12.0,
+   "closest_at_up_limit": [
+    "ball path / antenna_left_46.5",
+    122.8
    ]
   },
   {
@@ -1001,6 +1385,11 @@
    "closest_at_limit": [
     "ball path / antenna_left_46.5",
     28.9
+   ],
+   "max_elevation_deg": 12.0,
+   "closest_at_up_limit": [
+    "ball path / antenna_left_46.5",
+    123.5
    ]
   },
   {
@@ -1009,6 +1398,11 @@
    "closest_at_limit": [
     "ball path / antenna_left_46.5",
     31.6
+   ],
+   "max_elevation_deg": 12.0,
+   "closest_at_up_limit": [
+    "ball path / antenna_left_46.5",
+    124.4
    ]
   },
   {
@@ -1017,6 +1411,11 @@
    "closest_at_limit": [
     "ball path / antenna_left_46.5",
     34.6
+   ],
+   "max_elevation_deg": 12.0,
+   "closest_at_up_limit": [
+    "ball path / antenna_left_46.5",
+    125.4
    ]
   },
   {
@@ -1025,6 +1424,11 @@
    "closest_at_limit": [
     "ball path / antenna_left_46.5",
     37.8
+   ],
+   "max_elevation_deg": 12.0,
+   "closest_at_up_limit": [
+    "ball path / antenna_left_46.5",
+    126.6
    ]
   },
   {
@@ -1033,6 +1437,11 @@
    "closest_at_limit": [
     "ball path / antenna_left_46.5",
     41.2
+   ],
+   "max_elevation_deg": 12.0,
+   "closest_at_up_limit": [
+    "ball path / antenna_left_46.5",
+    127.9
    ]
   },
   {
@@ -1041,6 +1450,11 @@
    "closest_at_limit": [
     "ball path / deck and box",
     41.8
+   ],
+   "max_elevation_deg": 12.0,
+   "closest_at_up_limit": [
+    "ball path / antenna_left_46.5",
+    129.4
    ]
   },
   {
@@ -1049,6 +1463,11 @@
    "closest_at_limit": [
     "ball path / deck and box",
     42.7
+   ],
+   "max_elevation_deg": 12.0,
+   "closest_at_up_limit": [
+    "ball path / antenna_left_46.5",
+    131.0
    ]
   },
   {
@@ -1057,6 +1476,11 @@
    "closest_at_limit": [
     "ball path / deck and box",
     44.1
+   ],
+   "max_elevation_deg": 12.0,
+   "closest_at_up_limit": [
+    "ball path / antenna_left_46.5",
+    132.8
    ]
   },
   {
@@ -1065,6 +1489,11 @@
    "closest_at_limit": [
     "ball path / deck and box",
     46.0
+   ],
+   "max_elevation_deg": 12.0,
+   "closest_at_up_limit": [
+    "ball path / antenna_left_46.5",
+    134.6
    ]
   },
   {
@@ -1073,6 +1502,11 @@
    "closest_at_limit": [
     "ball path / deck and box",
     47.8
+   ],
+   "max_elevation_deg": 12.0,
+   "closest_at_up_limit": [
+    "ball path / antenna_left_46.5",
+    136.6
    ]
   },
   {
@@ -1081,6 +1515,11 @@
    "closest_at_limit": [
     "ball path / deck and box",
     49.6
+   ],
+   "max_elevation_deg": 12.0,
+   "closest_at_up_limit": [
+    "ball path / antenna_left_46.5",
+    138.7
    ]
   },
   {
@@ -1089,6 +1528,11 @@
    "closest_at_limit": [
     "ball path / deck and box",
     51.1
+   ],
+   "max_elevation_deg": 12.0,
+   "closest_at_up_limit": [
+    "ball path / antenna_left_46.5",
+    140.9
    ]
   },
   {
@@ -1097,6 +1541,11 @@
    "closest_at_limit": [
     "ball path / deck and box",
     52.7
+   ],
+   "max_elevation_deg": 12.0,
+   "closest_at_up_limit": [
+    "ball path / antenna_left_46.5",
+    143.2
    ]
   },
   {
@@ -1105,6 +1554,11 @@
    "closest_at_limit": [
     "ball path / deck and box",
     53.9
+   ],
+   "max_elevation_deg": 12.0,
+   "closest_at_up_limit": [
+    "ball path / antenna_left_46.5",
+    145.5
    ]
   },
   {
@@ -1113,6 +1567,11 @@
    "closest_at_limit": [
     "ball path / deck and box",
     55.2
+   ],
+   "max_elevation_deg": 12.0,
+   "closest_at_up_limit": [
+    "ball path / antenna_left_46.5",
+    148.0
    ]
   },
   {
@@ -1121,6 +1580,11 @@
    "closest_at_limit": [
     "ball path / deck and box",
     56.2
+   ],
+   "max_elevation_deg": 12.0,
+   "closest_at_up_limit": [
+    "ball path / antenna_left_46.5",
+    150.5
    ]
   },
   {
@@ -1129,6 +1593,11 @@
    "closest_at_limit": [
     "ball path / deck and box",
     57.2
+   ],
+   "max_elevation_deg": 12.0,
+   "closest_at_up_limit": [
+    "ball path / deck and box",
+    151.8
    ]
   },
   {
@@ -1137,6 +1606,11 @@
    "closest_at_limit": [
     "ball path / deck and box",
     58.2
+   ],
+   "max_elevation_deg": 12.0,
+   "closest_at_up_limit": [
+    "ball path / deck and box",
+    152.4
    ]
   },
   {
@@ -1145,6 +1619,11 @@
    "closest_at_limit": [
     "ball path / deck and box",
     59.0
+   ],
+   "max_elevation_deg": 12.0,
+   "closest_at_up_limit": [
+    "ball path / deck and box",
+    153.0
    ]
   },
   {
@@ -1153,6 +1632,11 @@
    "closest_at_limit": [
     "ball path / deck and box",
     59.6
+   ],
+   "max_elevation_deg": 12.0,
+   "closest_at_up_limit": [
+    "ball path / deck and box",
+    153.5
    ]
   },
   {
@@ -1161,6 +1645,11 @@
    "closest_at_limit": [
     "ball path / deck and box",
     60.2
+   ],
+   "max_elevation_deg": 12.0,
+   "closest_at_up_limit": [
+    "ball path / deck and box",
+    154.0
    ]
   },
   {
@@ -1169,6 +1658,11 @@
    "closest_at_limit": [
     "ball path / deck and box",
     60.8
+   ],
+   "max_elevation_deg": 12.0,
+   "closest_at_up_limit": [
+    "ball path / deck and box",
+    154.5
    ]
   },
   {
@@ -1177,6 +1671,11 @@
    "closest_at_limit": [
     "ball path / deck and box",
     61.3
+   ],
+   "max_elevation_deg": 12.0,
+   "closest_at_up_limit": [
+    "ball path / deck and box",
+    154.9
    ]
   },
   {
@@ -1185,6 +1684,11 @@
    "closest_at_limit": [
     "ball path / deck and box",
     61.7
+   ],
+   "max_elevation_deg": 12.0,
+   "closest_at_up_limit": [
+    "ball path / deck and box",
+    155.2
    ]
   },
   {
@@ -1193,6 +1697,11 @@
    "closest_at_limit": [
     "ball path / deck and box",
     62.1
+   ],
+   "max_elevation_deg": 12.0,
+   "closest_at_up_limit": [
+    "ball path / deck and box",
+    155.5
    ]
   },
   {
@@ -1201,6 +1710,11 @@
    "closest_at_limit": [
     "ball path / deck and box",
     62.4
+   ],
+   "max_elevation_deg": 12.0,
+   "closest_at_up_limit": [
+    "ball path / deck and box",
+    155.7
    ]
   },
   {
@@ -1209,6 +1723,11 @@
    "closest_at_limit": [
     "ball path / deck and box",
     62.6
+   ],
+   "max_elevation_deg": 12.0,
+   "closest_at_up_limit": [
+    "ball path / deck and box",
+    155.9
    ]
   },
   {
@@ -1217,6 +1736,11 @@
    "closest_at_limit": [
     "ball path / deck and box",
     62.7
+   ],
+   "max_elevation_deg": 12.0,
+   "closest_at_up_limit": [
+    "ball path / deck and box",
+    155.9
    ]
   },
   {
@@ -1225,6 +1749,11 @@
    "closest_at_limit": [
     "ball path / deck and box",
     62.8
+   ],
+   "max_elevation_deg": 12.0,
+   "closest_at_up_limit": [
+    "ball path / deck and box",
+    156.0
    ]
   },
   {
@@ -1233,6 +1762,11 @@
    "closest_at_limit": [
     "ball path / deck and box",
     62.7
+   ],
+   "max_elevation_deg": 12.0,
+   "closest_at_up_limit": [
+    "ball path / deck and box",
+    155.9
    ]
   },
   {
@@ -1241,6 +1775,11 @@
    "closest_at_limit": [
     "ball path / deck and box",
     62.6
+   ],
+   "max_elevation_deg": 12.0,
+   "closest_at_up_limit": [
+    "ball path / deck and box",
+    155.9
    ]
   },
   {
@@ -1249,6 +1788,11 @@
    "closest_at_limit": [
     "ball path / deck and box",
     62.4
+   ],
+   "max_elevation_deg": 12.0,
+   "closest_at_up_limit": [
+    "ball path / deck and box",
+    155.7
    ]
   },
   {
@@ -1257,6 +1801,11 @@
    "closest_at_limit": [
     "ball path / deck and box",
     62.1
+   ],
+   "max_elevation_deg": 12.0,
+   "closest_at_up_limit": [
+    "ball path / deck and box",
+    155.5
    ]
   },
   {
@@ -1265,6 +1814,11 @@
    "closest_at_limit": [
     "ball path / deck and box",
     61.7
+   ],
+   "max_elevation_deg": 12.0,
+   "closest_at_up_limit": [
+    "ball path / deck and box",
+    155.2
    ]
   },
   {
@@ -1273,6 +1827,11 @@
    "closest_at_limit": [
     "ball path / deck and box",
     61.3
+   ],
+   "max_elevation_deg": 12.0,
+   "closest_at_up_limit": [
+    "ball path / deck and box",
+    154.9
    ]
   },
   {
@@ -1281,6 +1840,11 @@
    "closest_at_limit": [
     "ball path / deck and box",
     60.8
+   ],
+   "max_elevation_deg": 12.0,
+   "closest_at_up_limit": [
+    "ball path / deck and box",
+    154.5
    ]
   },
   {
@@ -1289,6 +1853,11 @@
    "closest_at_limit": [
     "ball path / deck and box",
     60.2
+   ],
+   "max_elevation_deg": 12.0,
+   "closest_at_up_limit": [
+    "ball path / deck and box",
+    154.0
    ]
   },
   {
@@ -1297,6 +1866,11 @@
    "closest_at_limit": [
     "ball path / deck and box",
     59.6
+   ],
+   "max_elevation_deg": 12.0,
+   "closest_at_up_limit": [
+    "ball path / deck and box",
+    153.5
    ]
   },
   {
@@ -1305,6 +1879,11 @@
    "closest_at_limit": [
     "ball path / deck and box",
     59.0
+   ],
+   "max_elevation_deg": 12.0,
+   "closest_at_up_limit": [
+    "ball path / deck and box",
+    153.0
    ]
   },
   {
@@ -1313,6 +1892,11 @@
    "closest_at_limit": [
     "ball path / deck and box",
     58.2
+   ],
+   "max_elevation_deg": 12.0,
+   "closest_at_up_limit": [
+    "ball path / deck and box",
+    152.4
    ]
   },
   {
@@ -1321,6 +1905,11 @@
    "closest_at_limit": [
     "ball path / deck and box",
     57.2
+   ],
+   "max_elevation_deg": 12.0,
+   "closest_at_up_limit": [
+    "ball path / deck and box",
+    151.8
    ]
   },
   {
@@ -1329,6 +1918,11 @@
    "closest_at_limit": [
     "ball path / deck and box",
     56.2
+   ],
+   "max_elevation_deg": 12.0,
+   "closest_at_up_limit": [
+    "ball path / antenna_right_46.5",
+    150.5
    ]
   },
   {
@@ -1337,6 +1931,11 @@
    "closest_at_limit": [
     "ball path / deck and box",
     55.2
+   ],
+   "max_elevation_deg": 12.0,
+   "closest_at_up_limit": [
+    "ball path / antenna_right_46.5",
+    148.0
    ]
   },
   {
@@ -1345,6 +1944,11 @@
    "closest_at_limit": [
     "ball path / deck and box",
     53.9
+   ],
+   "max_elevation_deg": 12.0,
+   "closest_at_up_limit": [
+    "ball path / antenna_right_46.5",
+    145.5
    ]
   },
   {
@@ -1353,6 +1957,11 @@
    "closest_at_limit": [
     "ball path / deck and box",
     52.7
+   ],
+   "max_elevation_deg": 12.0,
+   "closest_at_up_limit": [
+    "ball path / antenna_right_46.5",
+    143.2
    ]
   },
   {
@@ -1361,6 +1970,11 @@
    "closest_at_limit": [
     "ball path / deck and box",
     51.1
+   ],
+   "max_elevation_deg": 12.0,
+   "closest_at_up_limit": [
+    "ball path / antenna_right_46.5",
+    140.9
    ]
   },
   {
@@ -1369,6 +1983,11 @@
    "closest_at_limit": [
     "ball path / deck and box",
     49.6
+   ],
+   "max_elevation_deg": 12.0,
+   "closest_at_up_limit": [
+    "ball path / antenna_right_46.5",
+    138.7
    ]
   },
   {
@@ -1377,6 +1996,11 @@
    "closest_at_limit": [
     "ball path / deck and box",
     47.8
+   ],
+   "max_elevation_deg": 12.0,
+   "closest_at_up_limit": [
+    "ball path / antenna_right_46.5",
+    136.6
    ]
   },
   {
@@ -1385,6 +2009,11 @@
    "closest_at_limit": [
     "ball path / deck and box",
     46.0
+   ],
+   "max_elevation_deg": 12.0,
+   "closest_at_up_limit": [
+    "ball path / antenna_right_46.5",
+    134.6
    ]
   },
   {
@@ -1393,6 +2022,11 @@
    "closest_at_limit": [
     "ball path / deck and box",
     44.1
+   ],
+   "max_elevation_deg": 12.0,
+   "closest_at_up_limit": [
+    "ball path / antenna_right_46.5",
+    132.8
    ]
   },
   {
@@ -1401,6 +2035,11 @@
    "closest_at_limit": [
     "ball path / deck and box",
     42.7
+   ],
+   "max_elevation_deg": 12.0,
+   "closest_at_up_limit": [
+    "ball path / antenna_right_46.5",
+    131.0
    ]
   },
   {
@@ -1409,6 +2048,11 @@
    "closest_at_limit": [
     "ball path / deck and box",
     41.8
+   ],
+   "max_elevation_deg": 12.0,
+   "closest_at_up_limit": [
+    "ball path / antenna_right_46.5",
+    129.4
    ]
   },
   {
@@ -1417,6 +2061,11 @@
    "closest_at_limit": [
     "ball path / antenna_right_46.5",
     41.2
+   ],
+   "max_elevation_deg": 12.0,
+   "closest_at_up_limit": [
+    "ball path / antenna_right_46.5",
+    127.9
    ]
   },
   {
@@ -1425,6 +2074,11 @@
    "closest_at_limit": [
     "ball path / antenna_right_46.5",
     37.8
+   ],
+   "max_elevation_deg": 12.0,
+   "closest_at_up_limit": [
+    "ball path / antenna_right_46.5",
+    126.6
    ]
   },
   {
@@ -1433,6 +2087,11 @@
    "closest_at_limit": [
     "ball path / antenna_right_46.5",
     34.6
+   ],
+   "max_elevation_deg": 12.0,
+   "closest_at_up_limit": [
+    "ball path / antenna_right_46.5",
+    125.4
    ]
   },
   {
@@ -1441,6 +2100,11 @@
    "closest_at_limit": [
     "ball path / antenna_right_46.5",
     31.6
+   ],
+   "max_elevation_deg": 12.0,
+   "closest_at_up_limit": [
+    "ball path / antenna_right_46.5",
+    124.4
    ]
   },
   {
@@ -1449,6 +2113,11 @@
    "closest_at_limit": [
     "ball path / antenna_right_46.5",
     28.9
+   ],
+   "max_elevation_deg": 12.0,
+   "closest_at_up_limit": [
+    "ball path / antenna_right_46.5",
+    123.5
    ]
   },
   {
@@ -1457,6 +2126,11 @@
    "closest_at_limit": [
     "ball path / antenna_right_46.5",
     26.5
+   ],
+   "max_elevation_deg": 12.0,
+   "closest_at_up_limit": [
+    "ball path / antenna_right_46.5",
+    122.8
    ]
   },
   {
@@ -1465,6 +2139,11 @@
    "closest_at_limit": [
     "ball path / antenna_right_46.5",
     24.6
+   ],
+   "max_elevation_deg": 12.0,
+   "closest_at_up_limit": [
+    "ball path / antenna_right_46.5",
+    122.2
    ]
   },
   {
@@ -1473,6 +2152,11 @@
    "closest_at_limit": [
     "ball path / antenna_right_46.5",
     23.2
+   ],
+   "max_elevation_deg": 12.0,
+   "closest_at_up_limit": [
+    "ball path / antenna_right_46.5",
+    121.8
    ]
   },
   {
@@ -1481,6 +2165,11 @@
    "closest_at_limit": [
     "ball path / antenna_right_46.5",
     22.1
+   ],
+   "max_elevation_deg": 12.0,
+   "closest_at_up_limit": [
+    "ball path / antenna_right_46.5",
+    121.5
    ]
   },
   {
@@ -1489,6 +2178,11 @@
    "closest_at_limit": [
     "ball path / antenna_right_46.5",
     21.6
+   ],
+   "max_elevation_deg": 12.0,
+   "closest_at_up_limit": [
+    "ball path / antenna_right_46.5",
+    121.3
    ]
   },
   {
@@ -1497,6 +2191,11 @@
    "closest_at_limit": [
     "ball path / antenna_right_46.5",
     21.5
+   ],
+   "max_elevation_deg": 12.0,
+   "closest_at_up_limit": [
+    "ball path / antenna_right_46.5",
+    121.3
    ]
   },
   {
@@ -1505,6 +2204,11 @@
    "closest_at_limit": [
     "ball path / antenna_right_46.5",
     22.1
+   ],
+   "max_elevation_deg": 12.0,
+   "closest_at_up_limit": [
+    "ball path / antenna_right_46.5",
+    121.5
    ]
   },
   {
@@ -1513,6 +2217,11 @@
    "closest_at_limit": [
     "ball path / antenna_right_46.5",
     23.1
+   ],
+   "max_elevation_deg": 12.0,
+   "closest_at_up_limit": [
+    "ball path / antenna_right_46.5",
+    121.7
    ]
   },
   {
@@ -1521,6 +2230,11 @@
    "closest_at_limit": [
     "ball path / antenna_right_46.5",
     24.5
+   ],
+   "max_elevation_deg": 12.0,
+   "closest_at_up_limit": [
+    "ball path / antenna_right_46.5",
+    122.2
    ]
   },
   {
@@ -1529,6 +2243,11 @@
    "closest_at_limit": [
     "ball path / antenna_right_46.5",
     26.4
+   ],
+   "max_elevation_deg": 12.0,
+   "closest_at_up_limit": [
+    "ball path / antenna_right_46.5",
+    122.7
    ]
   },
   {
@@ -1537,6 +2256,11 @@
    "closest_at_limit": [
     "ball path / antenna_right_46.5",
     28.7
+   ],
+   "max_elevation_deg": 12.0,
+   "closest_at_up_limit": [
+    "ball path / antenna_right_46.5",
+    123.4
    ]
   },
   {
@@ -1545,6 +2269,11 @@
    "closest_at_limit": [
     "ball path / antenna_right_46.5",
     31.4
+   ],
+   "max_elevation_deg": 12.0,
+   "closest_at_up_limit": [
+    "ball path / antenna_right_46.5",
+    124.3
    ]
   },
   {
@@ -1553,6 +2282,11 @@
    "closest_at_limit": [
     "ball path / antenna_right_46.5",
     34.4
+   ],
+   "max_elevation_deg": 12.0,
+   "closest_at_up_limit": [
+    "ball path / antenna_right_46.5",
+    125.3
    ]
   },
   {
@@ -1561,6 +2295,11 @@
    "closest_at_limit": [
     "ball path / antenna_right_46.5",
     37.6
+   ],
+   "max_elevation_deg": 12.0,
+   "closest_at_up_limit": [
+    "ball path / antenna_right_46.5",
+    126.5
    ]
   },
   {
@@ -1569,6 +2308,11 @@
    "closest_at_limit": [
     "ball path / antenna_right_46.5",
     40.9
+   ],
+   "max_elevation_deg": 12.0,
+   "closest_at_up_limit": [
+    "ball path / antenna_right_46.5",
+    127.9
    ]
   },
   {
@@ -1577,6 +2321,11 @@
    "closest_at_limit": [
     "ball path / antenna_right_46.5",
     44.3
+   ],
+   "max_elevation_deg": 12.0,
+   "closest_at_up_limit": [
+    "ball path / antenna_right_46.5",
+    129.3
    ]
   },
   {
@@ -1585,6 +2334,11 @@
    "closest_at_limit": [
     "ball path / antenna_right_46.5",
     47.9
+   ],
+   "max_elevation_deg": 12.0,
+   "closest_at_up_limit": [
+    "ball path / antenna_right_46.5",
+    130.9
    ]
   },
   {
@@ -1593,6 +2347,11 @@
    "closest_at_limit": [
     "ball path / antenna_right_145.5",
     44.3
+   ],
+   "max_elevation_deg": 12.0,
+   "closest_at_up_limit": [
+    "ball path / antenna_right_145.5",
+    129.3
    ]
   },
   {
@@ -1601,6 +2360,11 @@
    "closest_at_limit": [
     "ball path / antenna_right_145.5",
     40.9
+   ],
+   "max_elevation_deg": 12.0,
+   "closest_at_up_limit": [
+    "ball path / antenna_right_145.5",
+    127.9
    ]
   },
   {
@@ -1609,6 +2373,11 @@
    "closest_at_limit": [
     "ball path / antenna_right_145.5",
     37.6
+   ],
+   "max_elevation_deg": 12.0,
+   "closest_at_up_limit": [
+    "ball path / antenna_right_145.5",
+    126.5
    ]
   },
   {
@@ -1617,6 +2386,11 @@
    "closest_at_limit": [
     "ball path / antenna_right_145.5",
     34.4
+   ],
+   "max_elevation_deg": 12.0,
+   "closest_at_up_limit": [
+    "ball path / antenna_right_145.5",
+    125.3
    ]
   },
   {
@@ -1625,6 +2399,11 @@
    "closest_at_limit": [
     "ball path / antenna_right_145.5",
     31.4
+   ],
+   "max_elevation_deg": 12.0,
+   "closest_at_up_limit": [
+    "ball path / antenna_right_145.5",
+    124.3
    ]
   },
   {
@@ -1633,6 +2412,11 @@
    "closest_at_limit": [
     "ball path / antenna_right_145.5",
     28.7
+   ],
+   "max_elevation_deg": 12.0,
+   "closest_at_up_limit": [
+    "ball path / antenna_right_145.5",
+    123.4
    ]
   },
   {
@@ -1641,6 +2425,11 @@
    "closest_at_limit": [
     "ball path / antenna_right_145.5",
     26.4
+   ],
+   "max_elevation_deg": 12.0,
+   "closest_at_up_limit": [
+    "ball path / antenna_right_145.5",
+    122.7
    ]
   },
   {
@@ -1649,6 +2438,11 @@
    "closest_at_limit": [
     "ball path / antenna_right_145.5",
     24.5
+   ],
+   "max_elevation_deg": 12.0,
+   "closest_at_up_limit": [
+    "ball path / antenna_right_145.5",
+    122.2
    ]
   },
   {
@@ -1657,6 +2451,11 @@
    "closest_at_limit": [
     "ball path / antenna_right_145.5",
     23.1
+   ],
+   "max_elevation_deg": 12.0,
+   "closest_at_up_limit": [
+    "ball path / antenna_right_145.5",
+    121.7
    ]
   },
   {
@@ -1665,6 +2464,11 @@
    "closest_at_limit": [
     "ball path / antenna_right_145.5",
     22.1
+   ],
+   "max_elevation_deg": 12.0,
+   "closest_at_up_limit": [
+    "ball path / antenna_right_145.5",
+    121.5
    ]
   },
   {
@@ -1673,6 +2477,11 @@
    "closest_at_limit": [
     "ball path / antenna_right_145.5",
     21.5
+   ],
+   "max_elevation_deg": 12.0,
+   "closest_at_up_limit": [
+    "ball path / antenna_right_145.5",
+    121.3
    ]
   },
   {
@@ -1681,6 +2490,11 @@
    "closest_at_limit": [
     "ball path / antenna_right_145.5",
     21.6
+   ],
+   "max_elevation_deg": 12.0,
+   "closest_at_up_limit": [
+    "ball path / antenna_right_145.5",
+    121.3
    ]
   },
   {
@@ -1689,6 +2503,11 @@
    "closest_at_limit": [
     "ball path / antenna_right_145.5",
     22.1
+   ],
+   "max_elevation_deg": 12.0,
+   "closest_at_up_limit": [
+    "ball path / antenna_right_145.5",
+    121.5
    ]
   },
   {
@@ -1697,6 +2516,11 @@
    "closest_at_limit": [
     "ball path / antenna_right_145.5",
     23.2
+   ],
+   "max_elevation_deg": 12.0,
+   "closest_at_up_limit": [
+    "ball path / antenna_right_145.5",
+    121.8
    ]
   },
   {
@@ -1705,6 +2529,11 @@
    "closest_at_limit": [
     "ball path / antenna_right_145.5",
     24.6
+   ],
+   "max_elevation_deg": 12.0,
+   "closest_at_up_limit": [
+    "ball path / antenna_right_145.5",
+    122.2
    ]
   },
   {
@@ -1713,6 +2542,11 @@
    "closest_at_limit": [
     "ball path / antenna_right_145.5",
     26.5
+   ],
+   "max_elevation_deg": 12.0,
+   "closest_at_up_limit": [
+    "ball path / antenna_right_145.5",
+    122.8
    ]
   },
   {
@@ -1721,6 +2555,11 @@
    "closest_at_limit": [
     "ball path / antenna_right_145.5",
     28.9
+   ],
+   "max_elevation_deg": 12.0,
+   "closest_at_up_limit": [
+    "ball path / antenna_right_145.5",
+    123.5
    ]
   },
   {
@@ -1729,6 +2568,11 @@
    "closest_at_limit": [
     "ball path / antenna_right_145.5",
     31.6
+   ],
+   "max_elevation_deg": 12.0,
+   "closest_at_up_limit": [
+    "ball path / antenna_right_145.5",
+    124.4
    ]
   },
   {
@@ -1737,6 +2581,11 @@
    "closest_at_limit": [
     "ball path / antenna_right_145.5",
     34.6
+   ],
+   "max_elevation_deg": 12.0,
+   "closest_at_up_limit": [
+    "ball path / antenna_right_145.5",
+    125.4
    ]
   },
   {
@@ -1745,6 +2594,11 @@
    "closest_at_limit": [
     "ball path / antenna_right_145.5",
     37.8
+   ],
+   "max_elevation_deg": 12.0,
+   "closest_at_up_limit": [
+    "ball path / antenna_right_145.5",
+    126.6
    ]
   },
   {
@@ -1753,6 +2607,11 @@
    "closest_at_limit": [
     "ball path / deck and box",
     36.7
+   ],
+   "max_elevation_deg": 12.0,
+   "closest_at_up_limit": [
+    "ball path / antenna_right_145.5",
+    127.9
    ]
   },
   {
@@ -1761,6 +2620,11 @@
    "closest_at_limit": [
     "ball path / deck and box",
     34.8
+   ],
+   "max_elevation_deg": 12.0,
+   "closest_at_up_limit": [
+    "ball path / antenna_right_145.5",
+    129.4
    ]
   },
   {
@@ -1769,6 +2633,11 @@
    "closest_at_limit": [
     "ball path / deck and box",
     33.6
+   ],
+   "max_elevation_deg": 12.0,
+   "closest_at_up_limit": [
+    "ball path / antenna_right_145.5",
+    131.0
    ]
   },
   {
@@ -1777,6 +2646,11 @@
    "closest_at_limit": [
     "ball path / deck and box",
     33.1
+   ],
+   "max_elevation_deg": 12.0,
+   "closest_at_up_limit": [
+    "ball path / antenna_right_145.5",
+    132.8
    ]
   },
   {
@@ -1785,6 +2659,11 @@
    "closest_at_limit": [
     "ball path / deck and box",
     33.3
+   ],
+   "max_elevation_deg": 12.0,
+   "closest_at_up_limit": [
+    "ball path / antenna_right_145.5",
+    134.6
    ]
   },
   {
@@ -1793,6 +2672,11 @@
    "closest_at_limit": [
     "ball path / deck and box",
     34.3
+   ],
+   "max_elevation_deg": 12.0,
+   "closest_at_up_limit": [
+    "ball path / antenna_right_145.5",
+    136.6
    ]
   },
   {
@@ -1801,6 +2685,11 @@
    "closest_at_limit": [
     "ball path / deck and box",
     35.9
+   ],
+   "max_elevation_deg": 12.0,
+   "closest_at_up_limit": [
+    "ball path / antenna_right_145.5",
+    138.7
    ]
   },
   {
@@ -1809,6 +2698,11 @@
    "closest_at_limit": [
     "ball path / deck and box",
     37.8
+   ],
+   "max_elevation_deg": 12.0,
+   "closest_at_up_limit": [
+    "ball path / antenna_right_145.5",
+    140.9
    ]
   },
   {
@@ -1817,6 +2711,11 @@
    "closest_at_limit": [
     "ball path / deck and box",
     39.4
+   ],
+   "max_elevation_deg": 12.0,
+   "closest_at_up_limit": [
+    "ball path / antenna_right_145.5",
+    143.2
    ]
   },
   {
@@ -1825,6 +2724,11 @@
    "closest_at_limit": [
     "ball path / deck and box",
     41.0
+   ],
+   "max_elevation_deg": 12.0,
+   "closest_at_up_limit": [
+    "ball path / antenna_right_145.5",
+    145.5
    ]
   },
   {
@@ -1833,6 +2737,11 @@
    "closest_at_limit": [
     "ball path / deck and box",
     42.4
+   ],
+   "max_elevation_deg": 12.0,
+   "closest_at_up_limit": [
+    "ball path / deck and box",
+    146.0
    ]
   },
   {
@@ -1841,6 +2750,11 @@
    "closest_at_limit": [
     "ball path / deck and box",
     43.7
+   ],
+   "max_elevation_deg": 12.0,
+   "closest_at_up_limit": [
+    "ball path / deck and box",
+    146.2
    ]
   },
   {
@@ -1849,6 +2763,11 @@
    "closest_at_limit": [
     "ball path / deck and box",
     44.8
+   ],
+   "max_elevation_deg": 12.0,
+   "closest_at_up_limit": [
+    "ball path / deck and box",
+    146.5
    ]
   },
   {
@@ -1857,6 +2776,11 @@
    "closest_at_limit": [
     "ball path / deck and box",
     45.8
+   ],
+   "max_elevation_deg": 12.0,
+   "closest_at_up_limit": [
+    "ball path / deck and box",
+    146.8
    ]
   },
   {
@@ -1865,6 +2789,11 @@
    "closest_at_limit": [
     "ball path / deck and box",
     46.8
+   ],
+   "max_elevation_deg": 12.0,
+   "closest_at_up_limit": [
+    "ball path / deck and box",
+    147.1
    ]
   },
   {
@@ -1873,6 +2802,11 @@
    "closest_at_limit": [
     "ball path / deck and box",
     47.6
+   ],
+   "max_elevation_deg": 12.0,
+   "closest_at_up_limit": [
+    "ball path / deck and box",
+    147.3
    ]
   },
   {
@@ -1881,6 +2815,11 @@
    "closest_at_limit": [
     "ball path / deck and box",
     48.3
+   ],
+   "max_elevation_deg": 12.0,
+   "closest_at_up_limit": [
+    "ball path / deck and box",
+    147.6
    ]
   },
   {
@@ -1889,6 +2828,11 @@
    "closest_at_limit": [
     "ball path / deck and box",
     48.9
+   ],
+   "max_elevation_deg": 12.0,
+   "closest_at_up_limit": [
+    "ball path / deck and box",
+    147.8
    ]
   },
   {
@@ -1897,6 +2841,11 @@
    "closest_at_limit": [
     "ball path / deck and box",
     49.5
+   ],
+   "max_elevation_deg": 12.0,
+   "closest_at_up_limit": [
+    "ball path / deck and box",
+    148.1
    ]
   },
   {
@@ -1905,6 +2854,11 @@
    "closest_at_limit": [
     "ball path / deck and box",
     50.0
+   ],
+   "max_elevation_deg": 12.0,
+   "closest_at_up_limit": [
+    "ball path / deck and box",
+    148.3
    ]
   },
   {
@@ -1913,6 +2867,11 @@
    "closest_at_limit": [
     "ball path / deck and box",
     50.3
+   ],
+   "max_elevation_deg": 12.0,
+   "closest_at_up_limit": [
+    "ball path / deck and box",
+    148.4
    ]
   },
   {
@@ -1921,6 +2880,11 @@
    "closest_at_limit": [
     "ball path / deck and box",
     50.6
+   ],
+   "max_elevation_deg": 12.0,
+   "closest_at_up_limit": [
+    "ball path / deck and box",
+    148.6
    ]
   },
   {
@@ -1929,6 +2893,11 @@
    "closest_at_limit": [
     "ball path / deck and box",
     50.8
+   ],
+   "max_elevation_deg": 12.0,
+   "closest_at_up_limit": [
+    "ball path / deck and box",
+    148.7
    ]
   },
   {
@@ -1937,6 +2906,11 @@
    "closest_at_limit": [
     "ball path / deck and box",
     50.9
+   ],
+   "max_elevation_deg": 12.0,
+   "closest_at_up_limit": [
+    "ball path / deck and box",
+    148.7
    ]
   },
   {
@@ -1945,13 +2919,18 @@
    "closest_at_limit": [
     "ball path / deck and box",
     50.9
+   ],
+   "max_elevation_deg": 12.0,
+   "closest_at_up_limit": [
+    "ball path / deck and box",
+    148.7
    ]
   }
  ],
  "points": {
-  "sampled": 5741736,
+  "sampled": 5745106,
   "near_enough_to_check": {}
  },
- "how": "surface samples of every panning and tilting part (~1.2 mm apart), the ones that can come within the margin at some pose kept (a lower bound over pan and tilt), and the ball path; the limit is the deepest tilt in 0.5 deg steps that keeps the margin",
- "seconds": 65
+ "how": "surface samples of every panning and tilting part (~1.2 mm apart), the ones that can come within the margin at some pose kept (a lower bound over pan and tilt), and the ball path; the limit is the deepest tilt in 0.5 deg steps that keeps the margin, and above level the highest up to the upper stop",
+ "seconds": 90
 }

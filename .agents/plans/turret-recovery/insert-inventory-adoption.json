@@ -1,0 +1,68 @@
+{
+  "review": "https://github.com/Valpatel/gyropup/pull/255#issuecomment-6709606196",
+  "toolkit": "8e244f0ce48d8028d7c086b53eed3f0df9f68073",
+  "actual_phases": {
+    "inventory": {
+      "seconds": 0.20918809802969918,
+      "exit": 0
+    },
+    "phase2": {
+      "seconds": 0.3550865849829279,
+      "exit": 0
+    },
+    "inventory-check": {
+      "seconds": 0.2082855729968287,
+      "exit": 0
+    },
+    "phase2-check": {
+      "seconds": 0.36163626896450296,
+      "exit": 0
+    },
+    "inventory-tests": {
+      "seconds": 0.6009070539730601,
+      "exit": 0
+    },
+    "phase2-tests": {
+      "seconds": 0.12151518603786826,
+      "exit": 0
+    }
+  },
+  "changes": [
+    [
+      "joints.json/joints/10/loads/0/case",
+      "R: 30 g sideways, the whole turret (1.7568 kg) with its centre 96.9 mm above the TM face (exports/turret/mount.json com_mm, from the TM face), 30 mm further down at the feet (the riser's 80 x 80 legs)",
+      "R: 30 g sideways, the whole turret (1.7566 kg) with its centre 96.9 mm above the TM face (exports/turret/mount.json com_mm, from the TM face), 30 mm further down at the feet (the riser's 80 x 80 legs)"
+    ],
+    [
+      "joints.json/joints/11/loads/0/case",
+      "R: 30 g sideways, the whole turret (1.7568 kg) with its centre 96.9 mm above the TM face (exports/turret/mount.json com_mm, from the TM face)",
+      "R: 30 g sideways, the whole turret (1.7566 kg) with its centre 96.9 mm above the TM face (exports/turret/mount.json com_mm, from the TM face)"
+    ],
+    [
+      "phase2.json/joints_json/sha256",
+      "7705635df81ff0932fd4932e576f6004ded467c62ba0955fbe9ebfe93d0d8983",
+      "407f0fc4f7b295042ab28bdab8fa6b29f1d1fcdfd0173405a1b4a635c28262cc"
+    ]
+  ],
+  "outputs": {
+    "docs/research/insert-joints/joints.json": {
+      "sha256": "407f0fc4f7b295042ab28bdab8fa6b29f1d1fcdfd0173405a1b4a635c28262cc",
+      "bytes": 92999
+    },
+    "docs/research/insert-joints/joints.md": {
+      "sha256": "09cf67443dba0165e26536726850e68a401e9745f62dd17d6f17df173909770f",
+      "bytes": 42076
+    },
+    "docs/research/insert-joints/phase2.json": {
+      "sha256": "8a3f317b6d2fd1048ed5778e724ae32fc416395998eb839fedd3b4a2b0dedde4",
+      "bytes": 307419
+    },
+    "docs/research/insert-joints/phase2.md": {
+      "sha256": "bb757b780ebba4e030dc2c21ab4880aa5f010e5c61e3f402688ea61510b2d35c",
+      "bytes": 10922
+    }
+  },
+  "all_other_39_inputs_exact": true,
+  "actual_post_copy_43_tests_pass": true,
+  "limits": "Existing kernel-free inventory/phase2 regenerated; only two mass prose values and dependent digests change. All engineering values/flags/counts unchanged; no native/physical qualification."
+}

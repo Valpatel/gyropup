@@ -10,7 +10,7 @@ Run `npm run test:turret` against a built local site or set `SITE_URL` to the de
 
 Check the actual barrel STL mouth center on all three axes and its transformed bore axis, not only the muzzle's longitudinal coordinate. Validate journey and live emission after explosion sliders, paused stage skipping and compound pan/tilt. A correct assembled datum does not prove the mesh remains assembled during a demonstration. Reassemble before firing or entering the ball path; keep teaching-flight speed nominal when manual navigation skips wheel spin-up.
 
-`tools/test-turret-frames.py` checks the three-axis mouth; `tools/test-turret-interactions.mjs` checks visible barrel/journey alignment after reassembly, paused-stage nominal speed and live firing after inspection.
+`tests/evidence/test-turret-frames.py` checks the three-axis mouth; `tests/site/controls/test-turret-interactions.mjs` checks visible barrel/journey alignment after reassembly, paused-stage nominal speed and live firing after inspection.
 
 ## Current models and physics archives
 
@@ -20,3 +20,7 @@ Visible-model tests must include fixed-position speech/chat rectangles (`offsetP
 ## Output adapters must follow the upper links
 
 The full-robot rig's historical body classification is not mechanical ownership. `fivebar.assembly` and its screw placements put output adapters and their output screws on each rotating upper link; stationary motor housings remain on the frame. Preserve historical rig provenance when correcting current presentation. Run `npm run test:legs` for actual world-vertex captures, mirrored sides, independent CAD datums, correct-home wrong-parent/pivot controls, archive races and missing-part fallback. See [the ownership incident](../inbox/2026-10-29-output-adapters-belong-to-upper-links.md).
+
+## Bind independent ownership to actual loaded assets
+
+The turret reference producer uses an explicit source-audited component→owner map, not display-manifest grouping. Its immutable scene revision binds the manifest and every mesh hash. Reject unknown/missing/duplicate components, wrong ownership/units/frame, nonfinite/truncated STL data and coplanar landmarks. Browser acceptance must compare that reference with actual loaded response bytes and part metadata, not only content-versioned URLs. Exercise units, axis/sign, lost-parent and whole-motor ownership faults alongside the correct-home/wrong-pivot intermediate-pose control. Preserve the existing tolerance and distinguish bounded viewer pan coverage from continuous mechanical pan. See the [ownership/binding incident](../inbox/2026-10-28-rendered-joints-need-independent-datums.md#reference-ownership-and-asset-identity-must-also-be-independent).

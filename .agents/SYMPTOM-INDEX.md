@@ -134,3 +134,24 @@
 - An unmerged historical branch reuses an already-decided ID: [preserve old evidence without overwriting current decisions](inbox/2026-11-07-historical-branches-need-decision-identity-checks.md).
 
 - An issue must stay open but the PR description contains a closing keyword: [state the open scope directly and verify parsed references](inbox/2026-11-07-historical-branches-need-decision-identity-checks.md#keep-closing-keywords-out-of-prose-that-must-leave-an-issue-open).
+
+- A recovered feature resurrects legacy root imports or new files miss the publication map: [reconcile feature additions with current ownership contracts](inbox/2026-11-05-root-moves-need-consumer-and-publication-maps.md#recover-feature-additions-into-the-current-package-and-publication-contracts).
+
+- Recovered positive aim commands stay at level, or absent feed metadata widens firing permission: [check the applied servo and separate firing bounds](inbox/2026-11-05-root-moves-need-consumer-and-publication-maps.md#recovered-commands-must-reach-the-actual-servo-and-retain-separate-firing-bounds).
+
+- Fleet submission says a public repository is not anonymously readable before any job is assigned: [classify the no-job boundary without bypassing authentication checks](inbox/2026-11-05-ci-classification-needs-phase-evidence.md#a-no-job-readability-refusal-is-not-a-producer-failure-or-an-authentication-diagnosis).
+
+- A fresh scene would describe old stops, an unverified module class, or broader clearance than sampled: [freeze generated explanations with actual mechanical constraints](inbox/2026-11-05-root-moves-need-consumer-and-publication-maps.md#freeze-generated-explanations-alongside-mechanical-constraints).
+
+- Independent pivots still permit a copied manifest owner or stale landmark indices: [bind source-audited ownership to actual loaded asset bytes](inbox/2026-10-28-rendered-joints-need-independent-datums.md#reference-ownership-and-asset-identity-must-also-be-independent).
+
+- Cleanup or record-writing masks the original producer error: [persist phase evidence independently and retain the primary exception](inbox/2026-11-05-ci-classification-needs-phase-evidence.md#cleanup-failures-must-not-replace-the-producers-original-error).
+
+- A clearance report matches height but omits the current upper stop or firmware bounds: [require both tilt boundaries and complete sampled grids](inbox/2026-10-28-rendered-joints-need-independent-datums.md#clearance-freshness-needs-both-current-tilt-boundaries-and-complete-sampled-grids).
+
+- A private Xvfb run fails Snap cgroup tracking after private-bus systemd activation fails: [separate display isolation from session-bus setup](inbox/2026-11-05-ci-classification-needs-phase-evidence.md#a-private-display-and-a-private-session-bus-are-different-isolation-boundaries).
+- A depth-one worker has the correct current files but `git show` cannot read its separately recorded component source: [fetch the exact recorded source object in the disposable clone](inbox/2026-11-05-ci-classification-needs-phase-evidence.md#an-isolated-depth-one-worker-needs-the-recorded-source-object-too).
+- Native work never starts because an optional `/usr/bin/time` wrapper is absent: [separate measurement tooling from the actual bounded producer](inbox/2026-11-05-ci-classification-needs-phase-evidence.md#optional-measurement-tools-must-not-block-the-actual-producer).
+- A valid sealed input archive is refused by fleet staging: [stage its verified unpacked files through the actual transport policy](inbox/2026-11-05-ci-classification-needs-phase-evidence.md#pass-the-actual-staging-policy-before-dispatching-an-archive-derived-input).
+- Encoding completes but the E1 guard cannot read the renderer's historical commit: [derive both field and video receipt revisions before encoding](inbox/2026-11-05-ci-classification-needs-phase-evidence.md#fetch-both-the-solved-field-and-rendered-video-history-before-encoding).
+- A notebook catalogue grows beyond the existing text-wall backlog: [fold optional navigation while preserving every link and strict measurements](inbox/2026-11-05-ci-classification-needs-phase-evidence.md#a-growing-navigation-catalogue-is-still-subject-to-the-text-wall-gate).

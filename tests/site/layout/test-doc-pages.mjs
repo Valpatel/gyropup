@@ -11,7 +11,7 @@ import { parseHTML } from 'linkedom';
 import { chromium, webkit } from '@playwright/test';
 import { createSiteServer } from '../../../tools/site/serve-site.mjs';
 import { acknowledgePrototypeNotice } from '../content/test-prototype-session.mjs';
-import { SHOWN_WHOLE, enhanceDocument, isCaveat, statusKind, tableStates } from '../../../tools/site/doc-page.mjs';
+import { SHOWN_WHOLE, enhanceDocument, isCaveat, statusKind, tableStates, notebookDocuments } from '../../../tools/site/doc-page.mjs';
 import { subsystemOf } from '../../../tools/site/timeline.mjs';
 
 const root = path.resolve(import.meta.dirname, '../../..');
@@ -23,6 +23,33 @@ const pages = readdirSync(path.join(dist, 'site/pages')).filter(f => f.endsWith(
 const slug = p => p.toLowerCase().replace(/[^a-z0-9]+/g, '-');
 const sources = new Map(execFileSync('git',['ls-files','-z'],{cwd:root}).toString().split('\0').filter(f=>f.endsWith('.md')&&publicForSource(f)).map(f=>[`${slug(publicForSource(f))}.html`,f]));
 const WORST = ['docs-carrier-service-connectors-md', 'docs-leg-bench-tests-md', 'docs-requirements-md', 'docs-mechanical-readiness-md', 'docs-body-fuse-board-md', 'docs-body-frame-md', 'docs-turret-bench-tests-md'];
+
+test('notebook catalogue uses a native optional fold without losing ordinary links', () => {
+  const items = ['<li><a href="/site/pages/example.html">Example &amp; evidence</a></li>', '<li><a href="/site/pages/safety.html">Safety note</a></li>'];
+  const article = fragment('<p>Engineering notes, not finished specifications.</p>' + notebookDocuments(items));
+  const fold = article.querySelector('details#design-documents');
+  assert.ok(fold);
+  assert.equal(fold.hasAttribute('open'), false);
+  assert.equal(fold.querySelector('summary').textContent, 'Design notes and research (2 pages)');
+  const links = node => [...node.querySelectorAll('a')].map(a => [a.getAttribute('href'), a.textContent]);
+  assert.deepEqual(links(fold), links(fragment(items.join(''))));
+  fold.setAttribute('open', '');
+  assert.deepEqual(links(fold), links(fragment(items.join(''))));
+  assert.ok(!article.querySelector('p').closest('details'));
+});
+
+test('built notebook keeps every published document link exactly once', () => {
+  const document = parseHTML(readFileSync(path.join(dist, 'site/index.html'), 'utf8')).document;
+  const fold = document.querySelector('details#design-documents');
+  assert.ok(fold, 'Design catalogue must not grow the default open text wall');
+  assert.equal(fold.hasAttribute('open'), false);
+  const links = [...fold.querySelectorAll('a')];
+  assert.equal(fold.querySelector('summary').textContent, `Design notes and research (${links.length} pages)`);
+  assert.ok(links.length > 40);
+  assert.equal(new Set(links.map(a => a.getAttribute('href'))).size, links.length);
+  for (const page of pages) assert.equal(document.querySelectorAll(`a[href="/site/pages/${page}"]`).length, 1, page);
+  assert.ok(document.querySelector('.doc-lede') && !document.querySelector('.doc-lede').closest('details'));
+});
 
 test('retired catalogue handling is limited to the two historical notes and links', () => {
   const anchor=(file,root='https://github.com/Valpatel/gyropup/blob/main/')=>`<a href="${root}${file}"><code>${file.split('/').at(-1)}</code></a>`;

@@ -1,0 +1,30 @@
+Prepare turret: 120 frames
+Prepare mechanism: 90 frames
+Prepare battle: 180 frames
+Prepare leg: 90 frames
+Prepare e1: 90 frames
+Prepare character: 90 frames
+Encode H.264 and VP9 companions
+fatal: path 'tools/engineering/legs/render-hip-frame-e1.py' exists on disk, but not in '99c92d4a511c16d7743e9583b129e2a178651cb8'
+Traceback (most recent call last):
+  File "/var/tmp/fleet-jobs/fleetjob-gyropup-0/254/src/tools/evidence/media/encode-highlights.py", line 129, in <module>
+    main()
+  File "/var/tmp/fleet-jobs/fleetjob-gyropup-0/254/src/tools/evidence/media/encode-highlights.py", line 125, in main
+    print(json.dumps(check.validate(out, frames), indent=2))
+                     ^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/var/tmp/fleet-jobs/fleetjob-gyropup-0/254/src/tools/evidence/media/check-highlights.py", line 397, in validate
+    validate_bindings(receipt, capture, frames, out, raw_frames)
+  File "/var/tmp/fleet-jobs/fleetjob-gyropup-0/254/src/tools/evidence/media/check-highlights.py", line 228, in validate_bindings
+    module.validate(decode=False)
+  File "/var/tmp/fleet-jobs/fleetjob-gyropup-0/254/src/tools/evidence/media/check-study-media.py", line 93, in validate
+    require(historical_hash(video_receipt['source_revision'], path) == sha, f'Uncommitted animation source: {path}')
+            ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/var/tmp/fleet-jobs/fleetjob-gyropup-0/254/src/tools/evidence/media/check-study-media.py", line 38, in historical_hash
+    return digest(subprocess.check_output(['git', 'show', f'{revision}:{path}'], cwd=ROOT))
+                  ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/usr/lib/python3.12/subprocess.py", line 466, in check_output
+    return run(*popenargs, stdout=PIPE, timeout=timeout, check=True,
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/usr/lib/python3.12/subprocess.py", line 571, in run
+    raise CalledProcessError(retcode, process.args,
+subprocess.CalledProcessError: Command '['git', 'show', '99c92d4a511c16d7743e9583b129e2a178651cb8:tools/engineering/legs/render-hip-frame-e1.py']' returned non-zero exit status 128.

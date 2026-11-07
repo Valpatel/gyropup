@@ -196,7 +196,7 @@ Orientation: printed on its top face: insert axes along the build direction.
 Screw side: open end (from below).
 Clamp: turret plate + deck (aluminium); limiter: n/a.
 Pull-out estimate 1676 N (repository estimate 1500 N; the lower is used).
-Load: R: 30 g sideways, the whole turret (1.7568 kg) with its centre 96.9 mm above the TM face (exports/turret/mount.json com_mm, from the TM face), 30 mm further down at the feet (the riser's 80 x 80 legs): 410 N (exports/turret/mount.json mass_kg, com_mm; cad/turret.py FRAME_T_ABOVE_TM; cad/body_params.py RISER_H).
+Load: R: 30 g sideways, the whole turret (1.7566 kg) with its centre 96.9 mm above the TM face (exports/turret/mount.json com_mm, from the TM face), 30 mm further down at the feet (the riser's 80 x 80 legs): 410 N (exports/turret/mount.json mass_kg, com_mm; cad/turret.py FRAME_T_ABOVE_TM; cad/body_params.py RISER_H).
 The turret's hand check (hand_checks.tm_bolts) gives 313 N a bolt at the TM face; 30 mm lower, each foot sees 410 N. Body joints: riser.
 - **check** `pullout-margin`: pull-out estimate 1500 N / 410 N = 3.66: qualify with the B4 pull-out coupon in this material and orientation
 
@@ -207,7 +207,7 @@ Orientation: riser printed on its top face.
 Screw side: open end (from above).
 Clamp: 5 mm printed PA6-CF foot under each head (40 % gyroid inside 4 walls); limiter: none.
 Pull-out estimate 1676 N (repository estimate 1500 N; the lower is used).
-Load: R: 30 g sideways, the whole turret (1.7568 kg) with its centre 96.9 mm above the TM face (exports/turret/mount.json com_mm, from the TM face): 313 N (exports/turret/mount.json mass_kg, com_mm; cad/turret.py FRAME_T_ABOVE_TM (hand_checks.tm_bolts gives 313 N)).
+Load: R: 30 g sideways, the whole turret (1.7566 kg) with its centre 96.9 mm above the TM face (exports/turret/mount.json com_mm, from the TM face): 313 N (exports/turret/mount.json mass_kg, com_mm; cad/turret.py FRAME_T_ABOVE_TM (hand_checks.tm_bolts gives 313 N)).
 exports/turret/mount.json (the turret's contract with the robot) asks the head for 12 mm bolt holes; the riser cuts 13. Its dowel holes are 12.5 deep against the contract's 12.5 mm. The pilots stand on the legs (solid Ø18 under each bolt), the dowel holes on Ø12 bosses under the ring.
 
 ### `body.dcdc_bracket`

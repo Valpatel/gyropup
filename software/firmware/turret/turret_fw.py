@@ -252,7 +252,8 @@ class TurretFirmware:
         elif name == 'FIRE':
             self._fire(t, f['balls'], f['rate_d'] / 10.0 or C.RATE_DEFAULT, f['fps_d'] / 10.0, f['req'])
         elif name == 'LASER':
-            self.hal.laser(bool(f['on']))
+            self.laser_req = bool(f['on'])                     # lit only while armed (_apply_laser)
+            self._apply_laser()
         elif name == 'CONFIG':
             self._config(f)
         elif name == 'COMMAND':
@@ -466,11 +467,11 @@ class TurretFirmware:
             if sid == C.ID_PAN:                                          # the printed pinion's ceiling (EEPROM 16)
                 good = good and 0 < e['max_torque'] <= C.PAN_MAX_TORQUE
             if sid == C.ID_TILT:
-                over = int(math.ceil(1.0 / C.DEG_PER_COUNT))          # at most 1 deg above level, into the stop
+                over = int(math.ceil(1.0 / C.DEG_PER_COUNT))          # at most 1 deg past the upper stop, into it
                 if C.TILT_SIGN < 0:
-                    good = good and e['min_angle'] >= C.TILT_ZERO_COUNT - over and e['max_angle'] != 0
+                    good = good and e['min_angle'] >= C.TILT_STOP_COUNT - over and e['max_angle'] != 0
                 else:
-                    good = good and 0 < e['max_angle'] <= C.TILT_ZERO_COUNT + over
+                    good = good and 0 < e['max_angle'] <= C.TILT_STOP_COUNT + over
             if not good:
                 self.latched |= M.F_SERVO_CONFIG
                 continue
@@ -614,7 +615,7 @@ class TurretFirmware:
         else:
             want = self.tilt_goal
         pan = self.pan_deg() or 0.0
-        want = min(C.TILT_MAX_DEG, max(C.TILT_MIN_DEG, self.cfg.min_tilt(pan), want))   # never above level
+        want = min(C.TILT_MAX_DEG, max(C.TILT_MIN_DEG, self.cfg.min_tilt(pan), want))   # inside the hard stops and the mount's table
         if self.tilt_cmd is None or abs(want - self.tilt_cmd) > 0.05 or t - self.tilt_written_t > 1.0:
             spd = int(min(C.AIM_RATE_CAP, self.rate if self.state != 'HOMING' else C.AIM_RATE_CAP) / C.DEG_PER_COUNT)
             if spd != self.tilt_speed_reg and self.master.write(C.ID_TILT, sts.R_GOAL_SPEED, sts.u16(spd)):
@@ -712,6 +713,15 @@ class TurretFirmware:
         if s != self.state:
             self.log.append((t, 'state', s))
         self.state, self.state_t = s, t
+        self._apply_laser()
+
+    def _apply_laser(self):
+        """The laser interlock: the host asks for it (LASER), the firmware lights it only in an armed state, and puts it out
+        on leaving one. Since D77 the barrel can point above level, so the beam is never lit for aiming while disarmed."""
+        on = bool(getattr(self, 'laser_req', False)) and self.state in ARMED_STATES
+        if on != getattr(self, 'laser_lit', None):
+            self.laser_lit = on
+            self.hal.laser(on)
 
     def _end_burst(self, t: float, why: str):
         if self.burst is not None:
@@ -800,9 +810,13 @@ class TurretFirmware:
             b = self.burst
             pan = self.pan_deg() or 0.0
             any_aim = self.bench is not None and self.bench['kind'] == 'fire_any_aim'
-            can = (self.fly.prefeed_ok(t)[0] and (any_aim or self.aim_settled(t)) and not self.cfg.in_keepout(pan)
+            # D77: the barrel may aim up to its stop, but no shot leaves above the feed's qualified elevation
+            too_high = (self.tilt_cmd is not None and self.tilt_cmd > C.FIRE_TILT_MAX_DEG) or \
+                (self.tilt_deg is not None and self.tilt_deg > C.FIRE_TILT_MAX_DEG + C.AIM_TOL_DEG)
+            held = self.cfg.in_keepout(pan) or too_high
+            can = (self.fly.prefeed_ok(t)[0] and (any_aim or self.aim_settled(t)) and not held
                    and not self.lift)
-            if not can and self.cfg.in_keepout(pan):              # held in a keep-out sector for 3 s: end the burst
+            if not can and held:                                  # held in a keep-out sector or too high for 3 s: end the burst
                 self.keepout_t = t if self.keepout_t is None else self.keepout_t
                 if t - self.keepout_t > 3.0:
                     b.done = 'aborted'

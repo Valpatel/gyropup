@@ -1,0 +1,18 @@
+{
+ "what": "the turret's joint limits from its hard stops (cad/turret_limits.py; D77)",
+ "source": "cad/turret.py Geo.tilt_min, Geo.tilt_max (the stop lug on the yoke's stop sectors), CONTINUOUS_PAN",
+ "tilt_deg": {
+  "min": -25.0,
+  "max": 12.0,
+  "positive": "muzzle up",
+  "stops": "hard: the cradle's aluminium stop lug on the -y arm's printed sectors (D48)"
+ },
+ "fire_tilt_max_deg": 10.0,
+ "fire_source": "hardware/exports/turret/feed/feed-elevated.json fire_tilt_max_deg (sim/turret_feed.py --elevated), capped at the upper stop",
+ "fire_note": "no shot is fired above this tilt (the barrel may still aim up to the stop); a simulated figure until the bench feed test",
+ "pan": {
+  "continuous": true,
+  "stop_deg": null
+ },
+ "decision": "D77"
+}

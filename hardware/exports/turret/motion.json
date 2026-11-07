@@ -29,113 +29,118 @@
    {
     "balls": 0,
     "tilt_deg": 0.0,
-    "mass_g": 690.3,
+    "mass_g": 716.3,
     "com_from_axis_mm": [
-     -4.3,
-     -1.8,
-     2.9
+     -4.6,
+     -1.0,
+     4.6
     ],
-    "I_yy_kg_m2": 0.0023,
-    "gravity_torque_nm": -0.0293
+    "I_yy_kg_m2": 0.002431,
+    "gravity_torque_nm": -0.0324
    },
    {
     "balls": 0,
     "tilt_deg": -12.5,
-    "mass_g": 690.3,
+    "mass_g": 716.3,
     "com_from_axis_mm": [
-     -3.6,
-     -1.8,
-     3.7
+     -3.5,
+     -1.0,
+     5.5
     ],
-    "I_yy_kg_m2": 0.0023,
-    "gravity_torque_nm": -0.0244
+    "I_yy_kg_m2": 0.002431,
+    "gravity_torque_nm": -0.0247
    },
    {
     "balls": 0,
     "tilt_deg": -25.0,
-    "mass_g": 690.3,
+    "mass_g": 716.3,
     "com_from_axis_mm": [
-     -2.7,
-     -1.8,
-     4.4
+     -2.2,
+     -1.0,
+     6.1
     ],
-    "I_yy_kg_m2": 0.0023,
-    "gravity_torque_nm": -0.0183
+    "I_yy_kg_m2": 0.002431,
+    "gravity_torque_nm": -0.0158
    },
    {
     "balls": 30,
     "tilt_deg": 0.0,
-    "mass_g": 745.2,
+    "mass_g": 771.2,
     "com_from_axis_mm": [
-     -7.7,
-     -1.6,
-     5.4
+     -7.9,
+     -1.0,
+     6.9
     ],
-    "I_yy_kg_m2": 0.002567,
-    "gravity_torque_nm": -0.0563
+    "I_yy_kg_m2": 0.002697,
+    "gravity_torque_nm": -0.0594
    },
    {
     "balls": 30,
     "tilt_deg": -12.5,
-    "mass_g": 745.2,
+    "mass_g": 771.2,
     "com_from_axis_mm": [
-     -6.3,
-     -1.6,
-     7.0
+     -6.2,
+     -1.0,
+     8.5
     ],
-    "I_yy_kg_m2": 0.002567,
-    "gravity_torque_nm": -0.0464
+    "I_yy_kg_m2": 0.002697,
+    "gravity_torque_nm": -0.0466
    },
    {
     "balls": 30,
     "tilt_deg": -25.0,
-    "mass_g": 745.2,
+    "mass_g": 771.2,
     "com_from_axis_mm": [
-     -4.7,
-     -1.6,
-     8.2
+     -4.2,
+     -1.0,
+     9.6
     ],
-    "I_yy_kg_m2": 0.002567,
-    "gravity_torque_nm": -0.0342
+    "I_yy_kg_m2": 0.002697,
+    "gravity_torque_nm": -0.0317
    }
   ],
   "margins": {
-   "inertia_kg_m2": 0.002567,
-   "gravity_torque_max_nm": 0.0563,
+   "inertia_kg_m2": 0.002697,
+   "gravity_torque_max_nm": 0.0594,
    "move": "25 deg in 0.25 s: peak 200 deg/s, 28 rad/s^2",
-   "move_torque_nm": 0.128,
+   "move_torque_nm": 0.135,
    "available_at_peak_speed_nm": 0.762,
-   "move_margin": 6.0,
-   "hold_margin": 52.2,
-   "world_frame_against_body_pitch_nm": 0.133,
-   "world_frame_margin": 22.1,
+   "move_margin": 5.7,
+   "hold_margin": 49.5,
+   "world_frame_against_body_pitch_nm": 0.14,
+   "world_frame_margin": 21.0,
    "max_speed_deg_s": 270
   }
  },
  "pan": {
   "rows": [
    {
+    "tilt_deg": 12.0,
+    "mass_g": 1320.8,
+    "I_zz_kg_m2": 0.004953
+   },
+   {
     "tilt_deg": 0.0,
-    "mass_g": 1270.3,
-    "I_zz_kg_m2": 0.004583
+    "mass_g": 1320.8,
+    "I_zz_kg_m2": 0.004963
    },
    {
     "tilt_deg": -25.0,
-    "mass_g": 1270.3,
-    "I_zz_kg_m2": 0.004331
+    "mass_g": 1320.8,
+    "I_zz_kg_m2": 0.004701
    }
   ],
   "pinion_I_kg_m2": 7.564159325045145e-07,
   "margins": {
-   "inertia_at_turret_kg_m2": 0.004583,
-   "inertia_at_servo_kg_m2": 0.00051,
+   "inertia_at_turret_kg_m2": 0.004963,
+   "inertia_at_servo_kg_m2": 0.0005522,
    "move": "90 deg in 1.2 s: a trapezoid to 81 deg/s at the turret (243 at the servo), 15.9 rad/s^2 for 89 ms",
    "torque_cap": "50% of stall in firmware (the printed pinion's strength)",
-   "move_torque_at_servo_nm": 0.0344,
+   "move_torque_at_servo_nm": 0.0367,
    "available_at_peak_speed_nm": 0.294,
-   "move_margin": 8.5,
-   "against_body_yaw_nm": 0.0329,
-   "yaw_margin": 89.4,
+   "move_margin": 8.0,
+   "against_body_yaw_nm": 0.035,
+   "yaw_margin": 84.0,
    "max_speed_deg_s_at_turret": 90.0,
    "fastest_90_deg_s": 1.0
   }
@@ -156,19 +161,19 @@
     "tooth_force_n": 224.0,
     "pinion_mpa": 34.1,
     "ring_mpa": 26.4,
-    "pinion_sf_xy": 1.44,
-    "ring_sf_xy": 1.86
+    "pinion_sf_xy": 1.2,
+    "ring_sf_xy": 1.55
    },
    {
     "case": "cap 50 %",
     "tooth_force_n": 112.0,
     "pinion_mpa": 17.1,
     "ring_mpa": 13.2,
-    "pinion_sf_xy": 2.87,
-    "ring_sf_xy": 3.72
+    "pinion_sf_xy": 2.39,
+    "ring_sf_xy": 3.1
    }
   ],
-  "allowable": "PA6-CF along the layers, humid: 49 MPa (teeth printed flat: the root bending runs in the layers)",
+  "allowable": "PA6-CF along the layers, humid: 40.83732845379689 MPa (teeth printed flat: the root bending runs in the layers)",
   "method": "Lewis, load at the tooth tip on one tooth (conservative), Y for 20 deg full depth; it does not see the pinion's full-round roots, which the FEA of one tooth does (cad/turret_studies.py: SF 1.26 at stall, 2.52 at the cap)"
  }
 }

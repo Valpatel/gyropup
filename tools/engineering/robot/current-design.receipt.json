@@ -1,6 +1,6 @@
 {
-  "extract_key": "dd524a52fce74f792088127af4498563fa2ae26b98b2fe69bc92a64b1c4e1c45",
-  "hardware_tree": "32cb511e33ed1d6e66e6493d7020f1b15b4eec1f",
+  "extract_key": "4312891388ba07eb24cf153750cadf4ab7a4d15c2bf75f0a323520c603e3bcbd",
+  "hardware_tree": "d9e2577430dd831bc70cb7a43f24b56f63df7bee",
   "presentation": {
     "mini": false,
     "palette": "gyropup",
@@ -41,11 +41,11 @@
     ]
   },
   "render_key": "f5527a5e745473cb9dec9c29986865c4dbd5fc8832b2cc13e65987016649e667",
-  "scene_sha256": "60fefcb7641c6c10643298a12bb9974574eaf6efc773c4e978acfcbae9ac6e5e",
+  "scene_sha256": "7c7fd1690b38a7444b641cd62bc4dd07b2d4076f2afe48f10652ee92f93b42c5",
   "schema": "gyropup.readme-design-receipt/1",
-  "source_inputs": "1b8e8cc32b74dcd8878767446746d9ddc1d45f9e7b061df4448a7639b5fbd9b6",
-  "source_revision": "3d0b8269b8a188e759d2a9665aee93d0caf76792",
-  "svg_sha256": "1a4b1d3d6854c60e29f618e93b30db54e21a271eb01d8ec0293c99126d292c24",
+  "source_inputs": "d4bf8a22390d7b71eceaf4dc5ee554c4dde126fa2f2ce3f39685fd6f15014497",
+  "source_revision": "ab493a369fa6ffa2eda29ae153a5db44b88a2b39",
+  "svg_sha256": "a28ed9b8ae25d01ad522374a73833b34fa13afc2f74f184db552c5a00eabec9c",
   "toolkit": {
     "repository": "Valpatel/cad-agent",
     "revision": "e662a1ce79b4f63f7352b9d065c5027f77d53a81"
