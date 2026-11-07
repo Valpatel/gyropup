@@ -1,0 +1,16 @@
+{
+  "review": "https://github.com/Valpatel/gyropup/pull/255#issuecomment-6708220738",
+  "scene_revision": "ab493a369fa6ffa2eda29ae153a5db44b88a2b39",
+  "fixture": "tests/fixtures/turret-motion-reference.json",
+  "fixture_sha256": "f8e8caffd02b824759e77b5c584a23c49e0ee9efaf35f2615da7e35d777dd2b2",
+  "fixture_bytes": 70049,
+  "components": 80,
+  "required_poses": 47,
+  "generation_seconds": 2.622569201979786,
+  "toolkit_revision": "2ad426943ce2c7232875e105e50810849f9a3e5e",
+  "toolkit_origin": "Three imported source archive files hash-verified against immutable Git blobs; actual module origin checked. Not represented as a detached checkout.",
+  "all_nine_existing_root_consumers_pass": true,
+  "all_other_tracked_and_complete_hardware_bytes_preserved": true,
+  "adoption_pass": true,
+  "limits": "Independent sampled mechanical reference only. Actual two-engine rendered traces, runtime fault/interlock controls and phone evidence remain mandatory. Pan +/-170 is bounded viewer sampling, not a mechanical hard stop. No physical qualification."
+}
