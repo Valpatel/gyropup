@@ -81,11 +81,11 @@ again (Piper varies a little between takes). Commit the clips and the manifest w
 the live sidecar (`tools/tts_server.py` applies it to every line it is sent, `--say` included) and browser speech.
 
 ```json
-{ "match": "Gyropup", "say": "gyro pup", "why": "..." }
+{ "match": "Gyropup", "say": "gyro, pup", "why": "An explicit short boundary keeps the two words distinct." }
 ```
 
 - `match`: the written word or phrase (or a list of them). Case-insensitive, whole words only: `Gyropup's`,
-  `Gyropup’s`, `Gyropups` and `Gyropups'` keep their ending (`gyro pup's`), while `Gyropupper`, `gyropup.com`, URLs
+  `Gyropup’s`, `Gyropups` and `Gyropups'` keep their ending (`gyro, pup's`), while `Gyropupper`, `gyropup.com`, URLs
   and e-mail addresses and domain names with a common top-level domain, path and query included (the key's `protect`
   pattern), are left alone. A word is bounded by anything but an ASCII or Latin letter, digit or underscore, so
   `éGyropup` is left alone too, while `Gyropup.Want` (a missing space) is still changed. The longest match wins.
@@ -168,7 +168,7 @@ under a python that can. Voices live in `~/.local/share/piper-voices`; fetch ano
 The pup character is made in the sidecar, so every client hears the same voice and `talk.js` plays it as it is: Piper
 first speaks slower by the pitch factor, then a band-limited resample lifts the pitch and the formants (a smaller,
 younger voice, not just a higher one) and brings the pace back. Names espeak says wrongly are respelled by the
-[pronunciation key](#pronunciation-key) before Piper sees them (Gyropup is "gyro pup", Tritium "Trittium"); the disk
+[pronunciation key](#pronunciation-key) before Piper sees them (Gyropup is "gyro, pup", Tritium "Trittium"); the disk
 and memory caches are keyed by that respelled text, so a key change re-renders exactly the lines it changes.
 
 | Flag | Environment | Default | |
@@ -251,3 +251,5 @@ OpenAI-compatible brain call). The Whisper server is Moxie's `sim/stt/server.py`
 protocol of Moxie's `sim/tts/server.py`. `eyes.js` adapts `sim/web/moxie/face.js` from the same project.
 
 Public pages (including gyropup.com) never automatically discover a visitor’s local AI or voice servers. Browser voice and the scripted brain are the default. Explicit `gyropup.llmBase`, `gyropup.ttsBase`, `gyropup.sttBase`, or `GYROPUP_BRAIN` configuration remains opt-in; the endpoint must meet the browser’s HTTPS, CORS and local-network permission requirements.
+
+The landing greeting uses a recorded clip before any live TTS. Its old manifest already said `gyro pup`, yet the owner heard the name run together. The actual key now sends `gyro, pup` to the existing producer and live fallback: a short comma boundary, with visible branding unchanged. Clip IDs bind the resulting spoken text, so only the seven affected fixed lines require genuine regeneration; unchanged clips keep their original bytes. Text/key checks alone are not an acoustic listening verdict.
