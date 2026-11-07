@@ -5,7 +5,7 @@
   "status": "warn",
   "counts": {
     "pass": 29,
-    "warn": 63,
+    "warn": 62,
     "fail": 0
   },
   "checks": [
@@ -1065,8 +1065,8 @@
           "volume_integration": {
             "method": "adaptive BRepGProp GK, requested relative errors 1e-6 and 1e-8",
             "error_basis": "max(OCCT summed absolute face-error estimates, refinement delta); not a rigorous bound",
-            "max_estimated_error_mm3": 0.00013013006537221372,
-            "max_refinement_delta_mm3": 0.00013013006537221372
+            "max_estimated_error_mm3": 0.00012829029583372176,
+            "max_refinement_delta_mm3": 0.00012829029583372176
           },
           "point_a": [
             -8.0,
@@ -2358,7 +2358,7 @@
             "method": "adaptive BRepGProp GK, requested relative errors 1e-6 and 1e-8",
             "error_basis": "max(OCCT summed absolute face-error estimates, refinement delta); not a rigorous bound",
             "max_estimated_error_mm3": 0.0002546896594745055,
-            "max_refinement_delta_mm3": 0.00013013006537221372
+            "max_refinement_delta_mm3": 0.00012829029583372176
           }
         }
       }
@@ -2540,8 +2540,8 @@
           "volume_integration": {
             "method": "adaptive BRepGProp GK, requested relative errors 1e-6 and 1e-8",
             "error_basis": "max(OCCT summed absolute face-error estimates, refinement delta); not a rigorous bound",
-            "max_estimated_error_mm3": 0.00013388667139224708,
-            "max_refinement_delta_mm3": 0.00013388667139224708
+            "max_estimated_error_mm3": 0.00013209987082518637,
+            "max_refinement_delta_mm3": 0.00013209987082518637
           },
           "point_a": [
             6.75,
@@ -2588,37 +2588,6 @@
       }
     },
     {
-      "id": "contact:stop_lug|tilt_yoke",
-      "status": "warn",
-      "message": "stop_lug and tilt_yoke are in contact (touching, 12.1 mm2) but no interface, joint, fastener, contains or intended overlap declares it",
-      "parts": [
-        "stop_lug",
-        "tilt_yoke"
-      ],
-      "evidence": {
-        "state": "touching",
-        "contact_area_mm2": 12.12,
-        "witness": {
-          "volume_integration": {
-            "method": "adaptive BRepGProp GK, requested relative errors 1e-6 and 1e-8",
-            "error_basis": "max(OCCT summed absolute face-error estimates, refinement delta); not a rigorous bound",
-            "max_estimated_error_mm3": 0.00013013006537221372,
-            "max_refinement_delta_mm3": 0.00013013006537221372
-          },
-          "point_a": [
-            5.556742,
-            -57.81,
-            108.486152
-          ],
-          "point_b": [
-            5.556742,
-            -57.81,
-            108.486152
-          ]
-        }
-      }
-    },
-    {
       "id": "contact:tilt_bearing|tilt_yoke",
       "status": "warn",
       "message": "tilt_bearing and tilt_yoke are in contact (touching, 176 mm2) but no interface, joint, fastener, contains or intended overlap declares it",
@@ -2633,8 +2602,8 @@
           "volume_integration": {
             "method": "adaptive BRepGProp GK, requested relative errors 1e-6 and 1e-8",
             "error_basis": "max(OCCT summed absolute face-error estimates, refinement delta); not a rigorous bound",
-            "max_estimated_error_mm3": 0.00013249984478801502,
-            "max_refinement_delta_mm3": 0.00013013006537221372
+            "max_estimated_error_mm3": 0.00013250999771128525,
+            "max_refinement_delta_mm3": 0.00012829029583372176
           },
           "point_a": [
             6.0,
@@ -2664,8 +2633,8 @@
           "volume_integration": {
             "method": "adaptive BRepGProp GK, requested relative errors 1e-6 and 1e-8",
             "error_basis": "max(OCCT summed absolute face-error estimates, refinement delta); not a rigorous bound",
-            "max_estimated_error_mm3": 0.00013408251106739044,
-            "max_refinement_delta_mm3": 0.00013408251106739044
+            "max_estimated_error_mm3": 0.00013223866699263453,
+            "max_refinement_delta_mm3": 0.00013223866699263453
           },
           "point_a": [
             -9.322055,
@@ -3097,8 +3066,8 @@
           "volume_integration": {
             "method": "adaptive BRepGProp GK, requested relative errors 1e-6 and 1e-8",
             "error_basis": "max(OCCT summed absolute face-error estimates, refinement delta); not a rigorous bound",
-            "max_estimated_error_mm3": 0.00013013006537221372,
-            "max_refinement_delta_mm3": 0.00013013006537221372
+            "max_estimated_error_mm3": 0.00012829029583372176,
+            "max_refinement_delta_mm3": 0.00012829029583372176
           },
           "point_a": [
             -8.0,
@@ -4390,7 +4359,7 @@
             "method": "adaptive BRepGProp GK, requested relative errors 1e-6 and 1e-8",
             "error_basis": "max(OCCT summed absolute face-error estimates, refinement delta); not a rigorous bound",
             "max_estimated_error_mm3": 0.0002546896594745055,
-            "max_refinement_delta_mm3": 0.00013013006537221372
+            "max_refinement_delta_mm3": 0.00012829029583372176
           }
         }
       }
@@ -4572,8 +4541,8 @@
           "volume_integration": {
             "method": "adaptive BRepGProp GK, requested relative errors 1e-6 and 1e-8",
             "error_basis": "max(OCCT summed absolute face-error estimates, refinement delta); not a rigorous bound",
-            "max_estimated_error_mm3": 0.00013388667139224708,
-            "max_refinement_delta_mm3": 0.00013388667139224708
+            "max_estimated_error_mm3": 0.00013209987082518637,
+            "max_refinement_delta_mm3": 0.00013209987082518637
           },
           "point_a": [
             6.75,
@@ -4620,37 +4589,6 @@
       }
     },
     {
-      "id": "contact:stop_lug|tilt_yoke",
-      "status": "warn",
-      "message": "stop_lug and tilt_yoke are in contact (touching, 12.1 mm2) but no interface, joint, fastener, contains or intended overlap declares it",
-      "parts": [
-        "stop_lug",
-        "tilt_yoke"
-      ],
-      "evidence": {
-        "state": "touching",
-        "contact_area_mm2": 12.12,
-        "witness": {
-          "volume_integration": {
-            "method": "adaptive BRepGProp GK, requested relative errors 1e-6 and 1e-8",
-            "error_basis": "max(OCCT summed absolute face-error estimates, refinement delta); not a rigorous bound",
-            "max_estimated_error_mm3": 0.00013013006537221372,
-            "max_refinement_delta_mm3": 0.00013013006537221372
-          },
-          "point_a": [
-            5.556742,
-            -57.81,
-            108.486152
-          ],
-          "point_b": [
-            5.556742,
-            -57.81,
-            108.486152
-          ]
-        }
-      }
-    },
-    {
       "id": "contact:tilt_bearing|tilt_yoke",
       "status": "warn",
       "message": "tilt_bearing and tilt_yoke are in contact (touching, 176 mm2) but no interface, joint, fastener, contains or intended overlap declares it",
@@ -4665,8 +4603,8 @@
           "volume_integration": {
             "method": "adaptive BRepGProp GK, requested relative errors 1e-6 and 1e-8",
             "error_basis": "max(OCCT summed absolute face-error estimates, refinement delta); not a rigorous bound",
-            "max_estimated_error_mm3": 0.00013249984478801502,
-            "max_refinement_delta_mm3": 0.00013013006537221372
+            "max_estimated_error_mm3": 0.00013250999771128525,
+            "max_refinement_delta_mm3": 0.00012829029583372176
           },
           "point_a": [
             6.0,
@@ -4696,8 +4634,8 @@
           "volume_integration": {
             "method": "adaptive BRepGProp GK, requested relative errors 1e-6 and 1e-8",
             "error_basis": "max(OCCT summed absolute face-error estimates, refinement delta); not a rigorous bound",
-            "max_estimated_error_mm3": 0.00013408251106739044,
-            "max_refinement_delta_mm3": 0.00013408251106739044
+            "max_estimated_error_mm3": 0.00013223866699263453,
+            "max_refinement_delta_mm3": 0.00013223866699263453
           },
           "point_a": [
             -9.322055,
@@ -8744,8 +8682,8 @@
           "volume_integration": {
             "method": "adaptive BRepGProp GK, requested relative errors 1e-6 and 1e-8",
             "error_basis": "max(OCCT summed absolute face-error estimates, refinement delta); not a rigorous bound",
-            "max_estimated_error_mm3": 0.00013013006537221372,
-            "max_refinement_delta_mm3": 0.00013013006537221372
+            "max_estimated_error_mm3": 0.00012829029583372176,
+            "max_refinement_delta_mm3": 0.00012829029583372176
           },
           "point_a": [
             -8.0,
@@ -10231,7 +10169,7 @@
             "method": "adaptive BRepGProp GK, requested relative errors 1e-6 and 1e-8",
             "error_basis": "max(OCCT summed absolute face-error estimates, refinement delta); not a rigorous bound",
             "max_estimated_error_mm3": 0.0002546896594745055,
-            "max_refinement_delta_mm3": 0.00013013006537221372
+            "max_refinement_delta_mm3": 0.00012829029583372176
           }
         },
         "rigid": true,
@@ -10401,8 +10339,8 @@
           "volume_integration": {
             "method": "adaptive BRepGProp GK, requested relative errors 1e-6 and 1e-8",
             "error_basis": "max(OCCT summed absolute face-error estimates, refinement delta); not a rigorous bound",
-            "max_estimated_error_mm3": 0.00013388667139224708,
-            "max_refinement_delta_mm3": 0.00013388667139224708
+            "max_estimated_error_mm3": 0.00013209987082518637,
+            "max_refinement_delta_mm3": 0.00013209987082518637
           },
           "point_a": [
             6.75,
@@ -10487,35 +10425,6 @@
         ]
       },
       {
-        "a": "stop_lug",
-        "b": "tilt_yoke",
-        "kind": "contact",
-        "state": "touching",
-        "gap_mm": 0.0,
-        "contact_area_mm2": 12.12,
-        "witness": {
-          "volume_integration": {
-            "method": "adaptive BRepGProp GK, requested relative errors 1e-6 and 1e-8",
-            "error_basis": "max(OCCT summed absolute face-error estimates, refinement delta); not a rigorous bound",
-            "max_estimated_error_mm3": 0.00013013006537221372,
-            "max_refinement_delta_mm3": 0.00013013006537221372
-          },
-          "point_a": [
-            5.556742,
-            -57.81,
-            108.486152
-          ],
-          "point_b": [
-            5.556742,
-            -57.81,
-            108.486152
-          ]
-        },
-        "rigid": false,
-        "declared_by": [],
-        "undeclared": true
-      },
-      {
         "a": "tilt_bearing",
         "b": "tilt_yoke",
         "kind": "contact",
@@ -10526,8 +10435,8 @@
           "volume_integration": {
             "method": "adaptive BRepGProp GK, requested relative errors 1e-6 and 1e-8",
             "error_basis": "max(OCCT summed absolute face-error estimates, refinement delta); not a rigorous bound",
-            "max_estimated_error_mm3": 0.00013249984478801502,
-            "max_refinement_delta_mm3": 0.00013013006537221372
+            "max_estimated_error_mm3": 0.00013250999771128525,
+            "max_refinement_delta_mm3": 0.00012829029583372176
           },
           "point_a": [
             6.0,
@@ -10555,8 +10464,8 @@
           "volume_integration": {
             "method": "adaptive BRepGProp GK, requested relative errors 1e-6 and 1e-8",
             "error_basis": "max(OCCT summed absolute face-error estimates, refinement delta); not a rigorous bound",
-            "max_estimated_error_mm3": 0.00013408251106739044,
-            "max_refinement_delta_mm3": 0.00013408251106739044
+            "max_estimated_error_mm3": 0.00013223866699263453,
+            "max_refinement_delta_mm3": 0.00013223866699263453
           },
           "point_a": [
             -9.322055,
@@ -11601,8 +11510,8 @@
         "volume_integration": {
           "method": "adaptive BRepGProp GK, requested relative errors 1e-6 and 1e-8",
           "error_basis": "max(OCCT summed absolute face-error estimates, refinement delta); not a rigorous bound",
-          "max_estimated_error_mm3": 0.00013013006537221372,
-          "max_refinement_delta_mm3": 0.00013013006537221372
+          "max_estimated_error_mm3": 0.00012829029583372176,
+          "max_refinement_delta_mm3": 0.00012829029583372176
         },
         "point_a": [
           -8.0,
@@ -12734,7 +12643,7 @@
           "method": "adaptive BRepGProp GK, requested relative errors 1e-6 and 1e-8",
           "error_basis": "max(OCCT summed absolute face-error estimates, refinement delta); not a rigorous bound",
           "max_estimated_error_mm3": 0.0002546896594745055,
-          "max_refinement_delta_mm3": 0.00013013006537221372
+          "max_refinement_delta_mm3": 0.00012829029583372176
         }
       }
     },
@@ -12892,8 +12801,8 @@
         "volume_integration": {
           "method": "adaptive BRepGProp GK, requested relative errors 1e-6 and 1e-8",
           "error_basis": "max(OCCT summed absolute face-error estimates, refinement delta); not a rigorous bound",
-          "max_estimated_error_mm3": 0.00013388667139224708,
-          "max_refinement_delta_mm3": 0.00013388667139224708
+          "max_estimated_error_mm3": 0.00013209987082518637,
+          "max_refinement_delta_mm3": 0.00013209987082518637
         },
         "point_a": [
           6.75,
@@ -12936,33 +12845,6 @@
     },
     {
       "parts": [
-        "stop_lug",
-        "tilt_yoke"
-      ],
-      "state": "touching",
-      "contact_area_mm2": 12.12,
-      "overlap_mm3": null,
-      "witness": {
-        "volume_integration": {
-          "method": "adaptive BRepGProp GK, requested relative errors 1e-6 and 1e-8",
-          "error_basis": "max(OCCT summed absolute face-error estimates, refinement delta); not a rigorous bound",
-          "max_estimated_error_mm3": 0.00013013006537221372,
-          "max_refinement_delta_mm3": 0.00013013006537221372
-        },
-        "point_a": [
-          5.556742,
-          -57.81,
-          108.486152
-        ],
-        "point_b": [
-          5.556742,
-          -57.81,
-          108.486152
-        ]
-      }
-    },
-    {
-      "parts": [
         "tilt_bearing",
         "tilt_yoke"
       ],
@@ -12973,8 +12855,8 @@
         "volume_integration": {
           "method": "adaptive BRepGProp GK, requested relative errors 1e-6 and 1e-8",
           "error_basis": "max(OCCT summed absolute face-error estimates, refinement delta); not a rigorous bound",
-          "max_estimated_error_mm3": 0.00013249984478801502,
-          "max_refinement_delta_mm3": 0.00013013006537221372
+          "max_estimated_error_mm3": 0.00013250999771128525,
+          "max_refinement_delta_mm3": 0.00012829029583372176
         },
         "point_a": [
           6.0,
@@ -13000,8 +12882,8 @@
         "volume_integration": {
           "method": "adaptive BRepGProp GK, requested relative errors 1e-6 and 1e-8",
           "error_basis": "max(OCCT summed absolute face-error estimates, refinement delta); not a rigorous bound",
-          "max_estimated_error_mm3": 0.00013408251106739044,
-          "max_refinement_delta_mm3": 0.00013408251106739044
+          "max_estimated_error_mm3": 0.00013223866699263453,
+          "max_refinement_delta_mm3": 0.00013223866699263453
         },
         "point_a": [
           -9.322055,
@@ -13023,8 +12905,8 @@
     "pairs": 4095,
     "candidates": 318,
     "states": {
-      "apart": 187,
-      "touching": 59,
+      "apart": 188,
+      "touching": 58,
       "overlapping": 72,
       "contains": 0,
       "unknown": 0

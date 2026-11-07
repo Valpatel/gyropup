@@ -1,0 +1,183 @@
+{
+  "job": 244,
+  "producer_revision": "ae5f163ba954a4fd731cef041e12a52de81e34d5",
+  "review": "https://github.com/Valpatel/gyropup/pull/255#issuecomment-6707540152",
+  "archives": {
+    "original-targets": {
+      "sha256": "e599e2063b589f98281b1f665d029c27bb2ea1ddad95dfd49a690731a987760b",
+      "files": 13
+    },
+    "candidate-targets": {
+      "sha256": "ba81b7ddc3bbff82c49b6abf781940298d5ffa276bcd64a68724c33817ddaf56",
+      "files": 13
+    },
+    "final-observed-targets": {
+      "sha256": "32941e158f92fb63ffcf3d2c14acfec8b2757976e23eed2fe7b1c57ebc1c7178",
+      "files": 13
+    }
+  },
+  "outputs": {
+    "hardware/exports/turret/gates/ammo_path_22.8.json": {
+      "bytes": 406615,
+      "sha256": "7b4ea2e3c62b1b5ed3d7d0b98a74f0489f1800aa0e99d70376f4ca6bf834e035"
+    },
+    "hardware/exports/turret/gates/ammo_pockets_22.8.json": {
+      "bytes": 27327,
+      "sha256": "6ff41d66d3e222898bb2e0eb4c51cad2c1f19abfc6d0ce1996893501bab0102f"
+    },
+    "hardware/exports/turret/gates/ammo_range.json": {
+      "bytes": 2010,
+      "sha256": "922e557b465a1bd927f84e4780941510ee5915cc32fec1bebe0c5c13181a2d22"
+    },
+    "hardware/exports/turret/gates/connectivity.dot": {
+      "bytes": 11645,
+      "sha256": "a716a18f72702b289809f6cf7fa796d74a19f4d644b2e6e3cd6dc625f4c10097"
+    },
+    "hardware/exports/turret/gates/connectivity.json": {
+      "bytes": 385337,
+      "sha256": "dbb02c182011255d3a1442e886b319958c695ef6a734ded055545fef7e71d5e0"
+    },
+    "hardware/exports/turret/gates/fasteners.json": {
+      "bytes": 34105,
+      "sha256": "c6d8ff81e2d648011b217828cdf76bb7ebcbd86c8b3f81260637b199a1bd7c5f"
+    },
+    "hardware/exports/turret/gates/fasteners.md": {
+      "bytes": 1040,
+      "sha256": "e7d3ff28bf930efdbbc0542728305909b33baac542cc31e8f36f8b5899db6af5"
+    },
+    "hardware/exports/turret/gates/hopper.json": {
+      "bytes": 93062,
+      "sha256": "e4f1b2a93682a75680009b842da24f4b2b5e7d50df3aa5804bbe2aa89ca1914b"
+    },
+    "hardware/exports/turret/gates/motion_aim.json": {
+      "bytes": 8083,
+      "sha256": "2e504b4a0ffe82e79b6998287d2611ccd301f8e15d0c65eef9d48fb4a8985c74"
+    },
+    "hardware/exports/turret/gates/motion_mechanisms.json": {
+      "bytes": 21394,
+      "sha256": "b51c3b2e96b83c62224cf296b6d7bda538a6ab31d9478018e5ad646a5694d59f"
+    },
+    "hardware/exports/turret/gates/path.json": {
+      "bytes": 406666,
+      "sha256": "c3e828f9175d20eba022df5f9b78e49e2f824d560d4bdb849bc5f33ebce8070d"
+    },
+    "hardware/exports/turret/gates/sweep.json": {
+      "bytes": 52456,
+      "sha256": "5c6aeaa45c27789555fe4af97838d5104c9bb44a0b68a0b1f0fc6e27347b0648"
+    },
+    "hardware/exports/turret/gates.json": {
+      "bytes": 7162,
+      "sha256": "17965cc2ac7f3e22356a55313418e51bac3635cf3c892bcf4ce2fd39dc43dffd"
+    }
+  },
+  "actual_project_inputs": {
+    "hardware/__init__.py": "d6ddd9ce4ef273b82f43f315f09d11db1224f2b8298c9b0b3ea7dafb97280ba0",
+    "hardware/cad/__init__.py": "d6ddd9ce4ef273b82f43f315f09d11db1224f2b8298c9b0b3ea7dafb97280ba0",
+    "hardware/cad/turret/turret.py": "bba2ddcadb453fc99ad548aa3d3f912d0bf66b2d43eb4af59077b34873c04808",
+    "hardware/cad/turret/turret_base_board.py": "68fa770daf4d6568f253c103d8f89225c90eadb2a5a523e7afbf3e689fbd395e",
+    "hardware/cad/turret/turret_boards.py": "a10736535be770721bbd3ca59579d5854655026bbd3f4670a96d360b8f8deb71",
+    "hardware/cad/turret/turret_snaps.py": "9dd5ed2fffeed0c8798e11836866725003fe3265e2bc2f915b56a543d98ad0c1",
+    "hardware/cad/robot/gmi.py": "13ee0da5ad9cc1399d6be16d661775633ae16b4ef872907d7c52ff3dc9b45269",
+    "hardware/cad/robot/interfaces.json": "a4842a317dd2e64e9b4e11d34376bc36c26e1ddf8435a4b16a85dae3cd730b73",
+    "hardware/catalog/interfaces.json": "3889bc34503444f389e7951d74944f37b7e57b0b2b3be68ed596b959e83a46af",
+    "hardware/catalog/materials.json": "f699e8ea644aeb4f66227f5e021a2a7996b477ef1a41d6048b7f638364ba5d1f",
+    "hardware/cad/turret/turret_gates.py": "d994b3a737cffc1dfbbb5b3b6a2a6d06dfaf906fe139c42d96e613d29257545f",
+    "hardware/exports/turret/feed/pile.json": "5d474530a16c7cb431f61e86f71f72430916b60d62eed0af7e5dbc3c1a26c663",
+    "hardware/exports/turret/launch/launch3d.json": "cfc79c8992aef36803bc58fde0368edb217dcb024c60e78156e29d4916a48250"
+  },
+  "fingerprint": "9cfeb944cfa391c3",
+  "all_other_tracked_and_hardware_bytes_preserved": true,
+  "actual_stored_reader_pass": true,
+  "existing_source_tests": "Existing project runtime: python -B -m pytest tests/hardware/turret/test_turret_gate_sources.py -q -p no:cacheprovider",
+  "adoption_pass": true,
+  "outcomes": {
+    "path": {
+      "status": "pass",
+      "counts": {
+        "pass": 410,
+        "warn": 0,
+        "fail": 0
+      },
+      "seconds": 58.7
+    },
+    "connectivity": {
+      "status": "warn",
+      "counts": {
+        "pass": 29,
+        "warn": 62,
+        "fail": 0
+      },
+      "seconds": 157.2
+    },
+    "hopper": {
+      "status": "warn",
+      "counts": {
+        "pass": 64,
+        "warn": 1,
+        "fail": 0
+      },
+      "seconds": 2400.2
+    },
+    "motion_mechanisms": {
+      "status": "warn",
+      "counts": {
+        "pass": 5,
+        "warn": 1,
+        "fail": 0
+      },
+      "seconds": 157.7
+    },
+    "motion_aim": {
+      "status": "pass",
+      "counts": {
+        "pass": 1,
+        "warn": 0,
+        "fail": 0
+      },
+      "seconds": 5411.0
+    },
+    "sweep": {
+      "status": "pass",
+      "counts": {
+        "pass": 48,
+        "warn": 0,
+        "fail": 0
+      },
+      "seconds": 67.2
+    },
+    "fasteners": {
+      "status": "pass",
+      "counts": {
+        "pass": 35,
+        "warn": 0,
+        "fail": 0
+      },
+      "seconds": 19.8
+    },
+    "ammo_range": {
+      "status": "pass",
+      "counts": {
+        "pass": 6,
+        "warn": 0,
+        "fail": 0
+      },
+      "seconds": 67.0
+    }
+  },
+  "coverage": {
+    "aim_combined_poses": 210,
+    "pan_samples": 35,
+    "tilt_samples": 6,
+    "tilt_step_deg": 7.4,
+    "positive_y_tilt_range_deg": [
+      -12,
+      25
+    ],
+    "mechanical_tilt_range_deg": [
+      -25,
+      12
+    ],
+    "pile_sweep_poses": 48
+  },
+  "limits": "Sampled model checks only; warnings 62 connectivity +1 hopper support +1 separately sampled wheel combination retained. No continuous-collision, physical fit, dossier, overall CLI, feed or FEA qualification."
+}
