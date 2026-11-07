@@ -37,6 +37,19 @@ wait "$cpid"; rc=$?
 if kill -0 "$cpid" 2>/dev/null; then wait "$cpid"; rc=$?; fi
 kill "$wpid" 2>/dev/null || true
 wait "$wpid" 2>/dev/null || true
+# Leader exit is insufficient: probe the exact outer process group too.
+if kill -0 -- "-$cpid" 2>/dev/null; then
+  kill -TERM -- "-$cpid" 2>/dev/null || true
+  for _ in 1 2 3 4 5; do kill -0 -- "-$cpid" 2>/dev/null || break; sleep 1; done
+  if kill -0 -- "-$cpid" 2>/dev/null; then kill -KILL -- "-$cpid" 2>/dev/null || true; fi
+  for _ in 1 2 3; do kill -0 -- "-$cpid" 2>/dev/null || break; sleep 1; done
+fi
+if kill -0 -- "-$cpid" 2>/dev/null; then
+  printf '{"group_gone":false}\n' > "$E1_RUN/outer-group-state.json"
+  rc=96
+else
+  printf '{"group_gone":true}\n' > "$E1_RUN/outer-group-state.json"
+fi
 [ ! -e "$E1_RUN/disk-stop" ] || rc=95
 printf '%s\n' "$rc" > "$E1_RUN/exit.done.tmp"
 mv "$E1_RUN/exit.done.tmp" "$E1_RUN/exit.done"
