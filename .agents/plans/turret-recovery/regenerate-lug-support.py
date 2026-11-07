@@ -113,7 +113,7 @@ try:
     from hardware.cad.legs import rs04_lug_checks as lugs
     before = provenance.snapshot(ROOT)
     save('cad-inputs-before.json', before)
-    config=json.loads((ROOT/'.agents/plans/turret-recovery/cad-inputs-final.json').read_text())
+    config=json.loads((ROOT/'.agents/plans/turret-recovery/cad-inputs-scene-final.json').read_text())
     frozen=config['files']
     assert len(before['files']) == len(frozen) == 94
     assert before['files'] == frozen

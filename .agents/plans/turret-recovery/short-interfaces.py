@@ -114,10 +114,10 @@ try:
     assert not subprocess.check_output(['git','status','--porcelain','--untracked-files=no'],cwd=kit,text=True).strip()
     from hardware.cad.manufacturing import print_provenance as provenance
     before=provenance.snapshot(ROOT)
-    config=json.loads((ROOT/'.agents/plans/turret-recovery/cad-inputs-final.json').read_text())
+    config=json.loads((ROOT/'.agents/plans/turret-recovery/cad-inputs-scene-final.json').read_text())
     frozen=config['files']
     assert before['files']==frozen and len(frozen)==94
-    assert provenance.fingerprint(frozen)=='f1a061f346ce7981612b3e2bd40519ac358c28b3e68c5456bd91172aea11dccc'
+    assert provenance.fingerprint(frozen)=='a510bd881217d91015769fbecbbfcabffa8db5f96d1909d3f8d8de0aac91609d'
     assert subprocess.check_output(['git','rev-parse','HEAD:hardware'],text=True).strip()==config['hardware_tree']
     save('frozen-current-source.json',{'files':frozen,'fingerprint':provenance.fingerprint(frozen),'catalogue_collection':config['catalogue_collection'],'hardware_tree':config['hardware_tree']})
     assert before['versions']=={'cad-agent':'0.4.2','cadquery':'2.8.0','cadquery-ocp':'7.9.3.1.1','numpy':'2.5.4'}

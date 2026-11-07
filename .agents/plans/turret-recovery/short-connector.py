@@ -120,11 +120,11 @@ try:
  assert subprocess.check_output(['git','rev-parse','HEAD'],cwd=kit,text=True).strip()==PIN
  assert not subprocess.check_output(['git','status','--porcelain','--untracked-files=no'],cwd=kit,text=True).strip()
  before=provenance.snapshot(ROOT)
- config=json.loads((ROOT/'.agents/plans/turret-recovery/cad-inputs-final.json').read_text())
- frozen={'files':config['files'],'source_closure_sha256': 'f1a061f346ce7981612b3e2bd40519ac358c28b3e68c5456bd91172aea11dccc'}
- assert subprocess.check_output(['git','rev-parse','HEAD:hardware'],text=True).strip()==config['hardware_tree']=='2aedbeccd42010f8c5a645dcadc2336e3997d720'
+ config=json.loads((ROOT/'.agents/plans/turret-recovery/cad-inputs-scene-final.json').read_text())
+ frozen={'files':config['files'],'source_closure_sha256': 'a510bd881217d91015769fbecbbfcabffa8db5f96d1909d3f8d8de0aac91609d'}
+ assert subprocess.check_output(['git','rev-parse','HEAD:hardware'],text=True).strip()==config['hardware_tree']=='e1ee146e4261ab4f2cc33d57ffc7b6659e89d0e9'
  assert before['files']==frozen['files'] and len(before['files'])==94
- assert provenance.fingerprint(before['files'])==frozen['source_closure_sha256']=='f1a061f346ce7981612b3e2bd40519ac358c28b3e68c5456bd91172aea11dccc'
+ assert provenance.fingerprint(before['files'])==frozen['source_closure_sha256']=='a510bd881217d91015769fbecbbfcabffa8db5f96d1909d3f8d8de0aac91609d'
  assert before['versions']=={'cad-agent':'0.4.2','cadquery':'2.8.0','cadquery-ocp':'7.9.3.1.1','numpy':'2.5.4'}
  assert before['toolkit_sources_sha256']=='c2941322d5f3d000d3777b0047567211d06855861fa5e14229d7d7519fef3ed3'
  assert before['GYROPUP_CAD_PARAMS_sha256'] is None
