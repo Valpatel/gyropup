@@ -156,3 +156,5 @@
 - Encoding completes but the E1 guard cannot read the renderer's historical commit: [derive both field and video receipt revisions before encoding](inbox/2026-11-05-ci-classification-needs-phase-evidence.md#fetch-both-the-solved-field-and-rendered-video-history-before-encoding).
 - A notebook catalogue grows beyond the existing text-wall backlog: [fold optional navigation while preserving every link and strict measurements](inbox/2026-11-05-ci-classification-needs-phase-evidence.md#a-growing-navigation-catalogue-is-still-subject-to-the-text-wall-gate).
 - Runtime uses current stops but an active introduction still asserts a zero-degree rule: [keep current descriptions tied to shared bounds](inbox/2026-11-05-root-moves-need-consumer-and-publication-maps.md#current-descriptions-must-follow-shared-limits-too).
+
+- NaN or infinite requested motor torque becomes a limit command or a non-finite output: [reject it before saturation, and distinguish historical media validity from unfinished regeneration](inbox/2026-11-07-nonfinite-torque-is-not-a-saturation-command.md).

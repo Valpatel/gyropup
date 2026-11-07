@@ -1,0 +1,78 @@
+{
+  "date": "2026-11-07",
+  "issue": 8,
+  "published_baseline": "1134c9e645a0f3154c98255ed7dc71167f3e1348",
+  "integration_base": "86f1ed1908559b97dace9997755d7da189b96319",
+  "scope": "Reject non-finite requested torque in the actual shared Python function and C firmware port; no CAD/device/simulator or evidence regeneration.",
+  "python_before": {
+    "methods": 2,
+    "failed_subtests": 33,
+    "nan_torque_at_zero_speed_output_nm": 60.0
+  },
+  "core_before": {
+    "checks": 611,
+    "failed": 36,
+    "nan_output": "nan",
+    "positive_infinity_output_nm": 60.0,
+    "negative_infinity_output_nm": -60.0
+  },
+  "python_after": {
+    "methods": 2,
+    "failed": 0,
+    "nonfinite_subtest_cases": 45,
+    "finite_examples": 10
+  },
+  "core_after": {
+    "checks": 611,
+    "failed": 0
+  },
+  "commands": [
+    "python3 -I -B tests/control/rig/test_clip_motor.py",
+    "cmake -S software/firmware/balance -B <owned-build>",
+    "cmake --build <owned-build> -j2",
+    "ctest --test-dir <owned-build> --output-on-failure"
+  ],
+  "logs": {
+    "python-before.log": {
+      "raw_sha256": "4d8fccd6e003927a8f48a31f09fe534428506558993a7f87eb07d72222df9ac4",
+      "published_sha256": "614f63323372905de192bac47fbf4ff5474986f3529f8ab3b282b2c59af07c55",
+      "redaction": "Only exact checkout and owned build path prefixes replaced; no assertion/output changes."
+    },
+    "core-before.log": {
+      "raw_sha256": "8c4a8430e8faa9c505ba98ca16f20edd49acb375e51cae793d74eb5df0ce10ef",
+      "published_sha256": "4ec06c48895cef5f22d0ac55b29d78cff55945aa0ec0a238243079529ea8c9be",
+      "redaction": "Only exact checkout and owned build path prefixes replaced; no assertion/output changes."
+    },
+    "python-after.log": {
+      "raw_sha256": "24adda79e21044fef19cdc7f0606a9cd7770fc9a99c705a8622ee923c13bce5d",
+      "published_sha256": "24adda79e21044fef19cdc7f0606a9cd7770fc9a99c705a8622ee923c13bce5d",
+      "redaction": "Only exact checkout and owned build path prefixes replaced; no assertion/output changes."
+    },
+    "core-after.log": {
+      "raw_sha256": "2819243d12de23f8fea5af1ad756e670cdbe12e202ceb1c1cb0570eddf0e6b68",
+      "published_sha256": "422006fc841b9cb62c4929c87f5771b9242560b27051165b46aa81bce6bf7c3e",
+      "redaction": "Only exact checkout and owned build path prefixes replaced; no assertion/output changes."
+    }
+  },
+  "reader_boundary": {
+    "historical_study_guard": {
+      "historical_source": "a12cf8e73f337274174c56e14c22832250acf284",
+      "safety_factor": 1.6,
+      "required": 2,
+      "vertices": 25232,
+      "triangles": 50552
+    },
+    "current_highlight_binding_guard_pass": true,
+    "capture_source_count": 192,
+    "art_source_count": 95,
+    "art_sources_all_exact": true,
+    "cad_source_count": 94,
+    "changed_control_in_cad": false,
+    "changed_control_in_art": false,
+    "changed_control_in_capture": false,
+    "original_same_change_e1_criterion_complete": false,
+    "actual_field_producer_preflight_failure": "[Errno 2] No such file or directory: '<checkout>/exports/leg/fea/summary.json'"
+  },
+  "historical_e1_reproduction_criterion_satisfied": false,
+  "physical_qualification": false
+}

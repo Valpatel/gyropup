@@ -1,0 +1,269 @@
+.FFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFF
+======================================================================
+FAIL: test_nonfinite_requested_torque_cannot_become_a_motor_command (__main__.MotorClipping.test_nonfinite_requested_torque_cannot_become_a_motor_command) (tau=nan, omega=-10.5, cap=None)
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "<checkout>/tests/control/rig/test_clip_motor.py", line 71, in test_nonfinite_requested_torque_cannot_become_a_motor_command
+    self.assertEqual(value, 0.)
+AssertionError: 60.0 != 0.0
+
+======================================================================
+FAIL: test_nonfinite_requested_torque_cannot_become_a_motor_command (__main__.MotorClipping.test_nonfinite_requested_torque_cannot_become_a_motor_command) (tau=nan, omega=-10.5, cap=0.0)
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "<checkout>/tests/control/rig/test_clip_motor.py", line 71, in test_nonfinite_requested_torque_cannot_become_a_motor_command
+    self.assertEqual(value, 0.)
+AssertionError: 60.0 != 0.0
+
+======================================================================
+FAIL: test_nonfinite_requested_torque_cannot_become_a_motor_command (__main__.MotorClipping.test_nonfinite_requested_torque_cannot_become_a_motor_command) (tau=nan, omega=-10.5, cap=60.0)
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "<checkout>/tests/control/rig/test_clip_motor.py", line 71, in test_nonfinite_requested_torque_cannot_become_a_motor_command
+    self.assertEqual(value, 0.)
+AssertionError: 60.0 != 0.0
+
+======================================================================
+FAIL: test_nonfinite_requested_torque_cannot_become_a_motor_command (__main__.MotorClipping.test_nonfinite_requested_torque_cannot_become_a_motor_command) (tau=nan, omega=0.0, cap=None)
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "<checkout>/tests/control/rig/test_clip_motor.py", line 71, in test_nonfinite_requested_torque_cannot_become_a_motor_command
+    self.assertEqual(value, 0.)
+AssertionError: 120.0 != 0.0
+
+======================================================================
+FAIL: test_nonfinite_requested_torque_cannot_become_a_motor_command (__main__.MotorClipping.test_nonfinite_requested_torque_cannot_become_a_motor_command) (tau=nan, omega=0.0, cap=0.0)
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "<checkout>/tests/control/rig/test_clip_motor.py", line 71, in test_nonfinite_requested_torque_cannot_become_a_motor_command
+    self.assertEqual(value, 0.)
+AssertionError: 120.0 != 0.0
+
+======================================================================
+FAIL: test_nonfinite_requested_torque_cannot_become_a_motor_command (__main__.MotorClipping.test_nonfinite_requested_torque_cannot_become_a_motor_command) (tau=nan, omega=0.0, cap=60.0)
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "<checkout>/tests/control/rig/test_clip_motor.py", line 71, in test_nonfinite_requested_torque_cannot_become_a_motor_command
+    self.assertEqual(value, 0.)
+AssertionError: 60.0 != 0.0
+
+======================================================================
+FAIL: test_nonfinite_requested_torque_cannot_become_a_motor_command (__main__.MotorClipping.test_nonfinite_requested_torque_cannot_become_a_motor_command) (tau=nan, omega=10.5, cap=None)
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "<checkout>/tests/control/rig/test_clip_motor.py", line 71, in test_nonfinite_requested_torque_cannot_become_a_motor_command
+    self.assertEqual(value, 0.)
+AssertionError: 60.0 != 0.0
+
+======================================================================
+FAIL: test_nonfinite_requested_torque_cannot_become_a_motor_command (__main__.MotorClipping.test_nonfinite_requested_torque_cannot_become_a_motor_command) (tau=nan, omega=10.5, cap=0.0)
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "<checkout>/tests/control/rig/test_clip_motor.py", line 71, in test_nonfinite_requested_torque_cannot_become_a_motor_command
+    self.assertEqual(value, 0.)
+AssertionError: 60.0 != 0.0
+
+======================================================================
+FAIL: test_nonfinite_requested_torque_cannot_become_a_motor_command (__main__.MotorClipping.test_nonfinite_requested_torque_cannot_become_a_motor_command) (tau=nan, omega=10.5, cap=60.0)
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "<checkout>/tests/control/rig/test_clip_motor.py", line 71, in test_nonfinite_requested_torque_cannot_become_a_motor_command
+    self.assertEqual(value, 0.)
+AssertionError: 60.0 != 0.0
+
+======================================================================
+FAIL: test_nonfinite_requested_torque_cannot_become_a_motor_command (__main__.MotorClipping.test_nonfinite_requested_torque_cannot_become_a_motor_command) (tau=inf, omega=-21.0, cap=None)
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "<checkout>/tests/control/rig/test_clip_motor.py", line 71, in test_nonfinite_requested_torque_cannot_become_a_motor_command
+    self.assertEqual(value, 0.)
+AssertionError: 120.0 != 0.0
+
+======================================================================
+FAIL: test_nonfinite_requested_torque_cannot_become_a_motor_command (__main__.MotorClipping.test_nonfinite_requested_torque_cannot_become_a_motor_command) (tau=inf, omega=-21.0, cap=0.0)
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "<checkout>/tests/control/rig/test_clip_motor.py", line 71, in test_nonfinite_requested_torque_cannot_become_a_motor_command
+    self.assertEqual(value, 0.)
+AssertionError: 120.0 != 0.0
+
+======================================================================
+FAIL: test_nonfinite_requested_torque_cannot_become_a_motor_command (__main__.MotorClipping.test_nonfinite_requested_torque_cannot_become_a_motor_command) (tau=inf, omega=-21.0, cap=60.0)
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "<checkout>/tests/control/rig/test_clip_motor.py", line 71, in test_nonfinite_requested_torque_cannot_become_a_motor_command
+    self.assertEqual(value, 0.)
+AssertionError: 60.0 != 0.0
+
+======================================================================
+FAIL: test_nonfinite_requested_torque_cannot_become_a_motor_command (__main__.MotorClipping.test_nonfinite_requested_torque_cannot_become_a_motor_command) (tau=inf, omega=-10.5, cap=None)
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "<checkout>/tests/control/rig/test_clip_motor.py", line 71, in test_nonfinite_requested_torque_cannot_become_a_motor_command
+    self.assertEqual(value, 0.)
+AssertionError: 120.0 != 0.0
+
+======================================================================
+FAIL: test_nonfinite_requested_torque_cannot_become_a_motor_command (__main__.MotorClipping.test_nonfinite_requested_torque_cannot_become_a_motor_command) (tau=inf, omega=-10.5, cap=0.0)
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "<checkout>/tests/control/rig/test_clip_motor.py", line 71, in test_nonfinite_requested_torque_cannot_become_a_motor_command
+    self.assertEqual(value, 0.)
+AssertionError: 120.0 != 0.0
+
+======================================================================
+FAIL: test_nonfinite_requested_torque_cannot_become_a_motor_command (__main__.MotorClipping.test_nonfinite_requested_torque_cannot_become_a_motor_command) (tau=inf, omega=-10.5, cap=60.0)
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "<checkout>/tests/control/rig/test_clip_motor.py", line 71, in test_nonfinite_requested_torque_cannot_become_a_motor_command
+    self.assertEqual(value, 0.)
+AssertionError: 60.0 != 0.0
+
+======================================================================
+FAIL: test_nonfinite_requested_torque_cannot_become_a_motor_command (__main__.MotorClipping.test_nonfinite_requested_torque_cannot_become_a_motor_command) (tau=inf, omega=0.0, cap=None)
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "<checkout>/tests/control/rig/test_clip_motor.py", line 71, in test_nonfinite_requested_torque_cannot_become_a_motor_command
+    self.assertEqual(value, 0.)
+AssertionError: 120.0 != 0.0
+
+======================================================================
+FAIL: test_nonfinite_requested_torque_cannot_become_a_motor_command (__main__.MotorClipping.test_nonfinite_requested_torque_cannot_become_a_motor_command) (tau=inf, omega=0.0, cap=0.0)
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "<checkout>/tests/control/rig/test_clip_motor.py", line 71, in test_nonfinite_requested_torque_cannot_become_a_motor_command
+    self.assertEqual(value, 0.)
+AssertionError: 120.0 != 0.0
+
+======================================================================
+FAIL: test_nonfinite_requested_torque_cannot_become_a_motor_command (__main__.MotorClipping.test_nonfinite_requested_torque_cannot_become_a_motor_command) (tau=inf, omega=0.0, cap=60.0)
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "<checkout>/tests/control/rig/test_clip_motor.py", line 71, in test_nonfinite_requested_torque_cannot_become_a_motor_command
+    self.assertEqual(value, 0.)
+AssertionError: 60.0 != 0.0
+
+======================================================================
+FAIL: test_nonfinite_requested_torque_cannot_become_a_motor_command (__main__.MotorClipping.test_nonfinite_requested_torque_cannot_become_a_motor_command) (tau=inf, omega=10.5, cap=None)
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "<checkout>/tests/control/rig/test_clip_motor.py", line 71, in test_nonfinite_requested_torque_cannot_become_a_motor_command
+    self.assertEqual(value, 0.)
+AssertionError: 60.0 != 0.0
+
+======================================================================
+FAIL: test_nonfinite_requested_torque_cannot_become_a_motor_command (__main__.MotorClipping.test_nonfinite_requested_torque_cannot_become_a_motor_command) (tau=inf, omega=10.5, cap=0.0)
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "<checkout>/tests/control/rig/test_clip_motor.py", line 71, in test_nonfinite_requested_torque_cannot_become_a_motor_command
+    self.assertEqual(value, 0.)
+AssertionError: 60.0 != 0.0
+
+======================================================================
+FAIL: test_nonfinite_requested_torque_cannot_become_a_motor_command (__main__.MotorClipping.test_nonfinite_requested_torque_cannot_become_a_motor_command) (tau=inf, omega=10.5, cap=60.0)
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "<checkout>/tests/control/rig/test_clip_motor.py", line 71, in test_nonfinite_requested_torque_cannot_become_a_motor_command
+    self.assertEqual(value, 0.)
+AssertionError: 60.0 != 0.0
+
+======================================================================
+FAIL: test_nonfinite_requested_torque_cannot_become_a_motor_command (__main__.MotorClipping.test_nonfinite_requested_torque_cannot_become_a_motor_command) (tau=-inf, omega=-10.5, cap=None)
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "<checkout>/tests/control/rig/test_clip_motor.py", line 71, in test_nonfinite_requested_torque_cannot_become_a_motor_command
+    self.assertEqual(value, 0.)
+AssertionError: -60.0 != 0.0
+
+======================================================================
+FAIL: test_nonfinite_requested_torque_cannot_become_a_motor_command (__main__.MotorClipping.test_nonfinite_requested_torque_cannot_become_a_motor_command) (tau=-inf, omega=-10.5, cap=0.0)
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "<checkout>/tests/control/rig/test_clip_motor.py", line 71, in test_nonfinite_requested_torque_cannot_become_a_motor_command
+    self.assertEqual(value, 0.)
+AssertionError: -60.0 != 0.0
+
+======================================================================
+FAIL: test_nonfinite_requested_torque_cannot_become_a_motor_command (__main__.MotorClipping.test_nonfinite_requested_torque_cannot_become_a_motor_command) (tau=-inf, omega=-10.5, cap=60.0)
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "<checkout>/tests/control/rig/test_clip_motor.py", line 71, in test_nonfinite_requested_torque_cannot_become_a_motor_command
+    self.assertEqual(value, 0.)
+AssertionError: -60.0 != 0.0
+
+======================================================================
+FAIL: test_nonfinite_requested_torque_cannot_become_a_motor_command (__main__.MotorClipping.test_nonfinite_requested_torque_cannot_become_a_motor_command) (tau=-inf, omega=0.0, cap=None)
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "<checkout>/tests/control/rig/test_clip_motor.py", line 71, in test_nonfinite_requested_torque_cannot_become_a_motor_command
+    self.assertEqual(value, 0.)
+AssertionError: -120.0 != 0.0
+
+======================================================================
+FAIL: test_nonfinite_requested_torque_cannot_become_a_motor_command (__main__.MotorClipping.test_nonfinite_requested_torque_cannot_become_a_motor_command) (tau=-inf, omega=0.0, cap=0.0)
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "<checkout>/tests/control/rig/test_clip_motor.py", line 71, in test_nonfinite_requested_torque_cannot_become_a_motor_command
+    self.assertEqual(value, 0.)
+AssertionError: -120.0 != 0.0
+
+======================================================================
+FAIL: test_nonfinite_requested_torque_cannot_become_a_motor_command (__main__.MotorClipping.test_nonfinite_requested_torque_cannot_become_a_motor_command) (tau=-inf, omega=0.0, cap=60.0)
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "<checkout>/tests/control/rig/test_clip_motor.py", line 71, in test_nonfinite_requested_torque_cannot_become_a_motor_command
+    self.assertEqual(value, 0.)
+AssertionError: -60.0 != 0.0
+
+======================================================================
+FAIL: test_nonfinite_requested_torque_cannot_become_a_motor_command (__main__.MotorClipping.test_nonfinite_requested_torque_cannot_become_a_motor_command) (tau=-inf, omega=10.5, cap=None)
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "<checkout>/tests/control/rig/test_clip_motor.py", line 71, in test_nonfinite_requested_torque_cannot_become_a_motor_command
+    self.assertEqual(value, 0.)
+AssertionError: -120.0 != 0.0
+
+======================================================================
+FAIL: test_nonfinite_requested_torque_cannot_become_a_motor_command (__main__.MotorClipping.test_nonfinite_requested_torque_cannot_become_a_motor_command) (tau=-inf, omega=10.5, cap=0.0)
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "<checkout>/tests/control/rig/test_clip_motor.py", line 71, in test_nonfinite_requested_torque_cannot_become_a_motor_command
+    self.assertEqual(value, 0.)
+AssertionError: -120.0 != 0.0
+
+======================================================================
+FAIL: test_nonfinite_requested_torque_cannot_become_a_motor_command (__main__.MotorClipping.test_nonfinite_requested_torque_cannot_become_a_motor_command) (tau=-inf, omega=10.5, cap=60.0)
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "<checkout>/tests/control/rig/test_clip_motor.py", line 71, in test_nonfinite_requested_torque_cannot_become_a_motor_command
+    self.assertEqual(value, 0.)
+AssertionError: -60.0 != 0.0
+
+======================================================================
+FAIL: test_nonfinite_requested_torque_cannot_become_a_motor_command (__main__.MotorClipping.test_nonfinite_requested_torque_cannot_become_a_motor_command) (tau=-inf, omega=21.0, cap=None)
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "<checkout>/tests/control/rig/test_clip_motor.py", line 71, in test_nonfinite_requested_torque_cannot_become_a_motor_command
+    self.assertEqual(value, 0.)
+AssertionError: -120.0 != 0.0
+
+======================================================================
+FAIL: test_nonfinite_requested_torque_cannot_become_a_motor_command (__main__.MotorClipping.test_nonfinite_requested_torque_cannot_become_a_motor_command) (tau=-inf, omega=21.0, cap=0.0)
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "<checkout>/tests/control/rig/test_clip_motor.py", line 71, in test_nonfinite_requested_torque_cannot_become_a_motor_command
+    self.assertEqual(value, 0.)
+AssertionError: -120.0 != 0.0
+
+======================================================================
+FAIL: test_nonfinite_requested_torque_cannot_become_a_motor_command (__main__.MotorClipping.test_nonfinite_requested_torque_cannot_become_a_motor_command) (tau=-inf, omega=21.0, cap=60.0)
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "<checkout>/tests/control/rig/test_clip_motor.py", line 71, in test_nonfinite_requested_torque_cannot_become_a_motor_command
+    self.assertEqual(value, 0.)
+AssertionError: -60.0 != 0.0
+
+----------------------------------------------------------------------
+Ran 2 tests in 0.005s
+
+FAILED (failures=33)

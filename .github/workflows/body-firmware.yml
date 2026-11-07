@@ -31,6 +31,7 @@ jobs:
 
       - name: Host library and unit tests
         run: |
+          python3 -I -B tests/control/rig/test_clip_motor.py
           cmake -S software/firmware/balance -B build/fw-host
           cmake --build build/fw-host -j
           ctest --test-dir build/fw-host --output-on-failure

@@ -1,0 +1,15 @@
+# A non-finite torque request must not become a saturated motor command
+
+On 2026-11-07, read-only reproduction against published `1134c9e6` confirmed issue #8: the actual Python `clip_motor(nan, 0, 120, 21, 60)` returned +60 N·m. The actual C port returned NaN for NaN and saturated positive/negative infinity to ±60 N·m. These are host/library observations, not motor measurements. Python's nested `min`/`max` comparisons do not reject NaN; the C clamp's comparisons let it through.
+
+The narrow repair checks the requested torque for finiteness before either limiter. NaN and both infinities produce zero torque. Finite driving, braking, torque-speed and cap behavior remain unchanged. It does not establish validity of unrelated parameters or physical safety.
+
+The new kernel-free Python unit test imports the complete actual controller with its unused NumPy/five-bar dependencies replaced by rejecting sentinels; CAD and simulator imports are blocked. It does not execute extracted operational code or a copied clipping implementation. It checks 45 invalid-request combinations and ten finite examples. The existing actual C core test now checks invalid requests at both speed signs and zero, with and without a cap. Before repair, the two Python methods had 33 failing subtests and the core had 36 failures in 611 checks; afterward both Python methods and all 611 core checks pass. The existing firmware workflow runs the Python test and retains both existing C build profiles and MCU build. [Commands, redacted original failures and results](../plans/leg-control/nonfinite-torque.json).
+
+## Historical evidence validity is separate from an unfinished regeneration criterion
+
+The unchanged E1 reader intentionally verifies its static field against historical producer `a12cf8e7`, not current controller source. The actual current controller already had a different hash before this repair. Its video binds six current renderer/field/report inputs; the 95-art and 192-highlight closures exclude this controller. Actual unchanged study and highlight source guards pass after the code-only repair; all CAD94/art95/hardware bytes remain unchanged. No receipt was rewritten and no old result is relabelled current.
+
+Issue #8 nevertheless explicitly requests genuine E1 reproduction with the torque fix. That original criterion is not satisfied by passing historical readers or a source-only patch. Independent boundary review is [recorded on the issue](https://github.com/Valpatel/gyropup/issues/8#issuecomment-6711185633). The actual field producer also has an unfixed physical `exports/leg/fea/summary.json` path in its source preflight; calling that preflight without CAD reproduces FileNotFoundError after the ownership move. Any genuine solve must first repair and review that path, then collect its real downstream field/video/highlight and applicable artwork bindings. This record does not approve such a run or narrow any guard.
+
+Larger #8 tasks remain separate: 6201 mass/rating assumptions, rig loads recorded at 14.75 kg, leg strength/fit and physical bench proof. Issue #8 stays open.

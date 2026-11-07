@@ -202,6 +202,18 @@ static void stance_sense(gp_sense *s, float L)
 
 static void test_control(void)
 {
+    const float invalid_torque[] = {NAN, INFINITY, -INFINITY};
+    const float speeds[] = {-21.0f, -10.5f, 0.0f, 10.5f, 21.0f};
+    const float caps[] = {0.0f, 60.0f};
+    for (unsigned i = 0; i < sizeof invalid_torque / sizeof invalid_torque[0]; i++) {
+        for (unsigned j = 0; j < sizeof speeds / sizeof speeds[0]; j++) {
+            for (unsigned k = 0; k < sizeof caps / sizeof caps[0]; k++) {
+                const float out = gp_clip_motor(invalid_torque[i], speeds[j], 120.0f, 21.0f, caps[k]);
+                CHECK(isfinite(out));
+                NEAR(out, 0.0, 0);
+            }
+        }
+    }
     NEAR(gp_clip_motor(100.0f, 0.0f, 120.0f, 21.0f, 60.0f), 60.0, 0);
     NEAR(gp_clip_motor(50.0f, 10.5f, 120.0f, 21.0f, 0.0f), 50.0, 0);       /* 60 N m left at half speed */
     NEAR(gp_clip_motor(100.0f, 10.5f, 120.0f, 21.0f, 0.0f), 60.0, 1e-5);
