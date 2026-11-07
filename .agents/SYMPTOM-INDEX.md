@@ -151,3 +151,4 @@
 
 - A private Xvfb run fails Snap cgroup tracking after private-bus systemd activation fails: [separate display isolation from session-bus setup](inbox/2026-11-05-ci-classification-needs-phase-evidence.md#a-private-display-and-a-private-session-bus-are-different-isolation-boundaries).
 - A depth-one worker has the correct current files but `git show` cannot read its separately recorded component source: [fetch the exact recorded source object in the disposable clone](inbox/2026-11-05-ci-classification-needs-phase-evidence.md#an-isolated-depth-one-worker-needs-the-recorded-source-object-too).
+- Native work never starts because an optional `/usr/bin/time` wrapper is absent: [separate measurement tooling from the actual bounded producer](inbox/2026-11-05-ci-classification-needs-phase-evidence.md#optional-measurement-tools-must-not-block-the-actual-producer).

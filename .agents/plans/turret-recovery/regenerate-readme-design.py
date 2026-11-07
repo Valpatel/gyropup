@@ -133,7 +133,7 @@ try:
  assert (TOOLKIT/'software/cadagent/__init__.py').is_file()
  phase('dependencies',[sys.executable,'-m','pip','install','-q','cadquery==2.8.0','cadquery-ocp==7.9.3.1.1','numpy==2.5.4','vtk==9.6.2','trimesh==5.2.0','PyYAML==6.0.3','scipy==1.18.1','matplotlib==3.11.2','pillow==13.0.0'],timeout=720)
  phase('runtime-freeze',[sys.executable,'-m','pip','freeze'],timeout=30)
- phase('extract',['/usr/bin/time','-v',sys.executable,'-B','tools/engineering/robot/readme_design.py','extract','--profile',str(PROFILE),'--toolkit',str(TOOLKIT),'--out',str(OUT/'figure')],timeout=1500)
+ phase('extract',[sys.executable,'-B','tools/engineering/robot/readme_design.py','extract','--profile',str(PROFILE),'--toolkit',str(TOOLKIT),'--out',str(OUT/'figure')],timeout=1500)
  phase('pure-parity',[sys.executable,'-B','tools/engineering/robot/readme_design.py','check','--profile',str(PROFILE),'--candidate',str(OUT/'figure/candidate')],timeout=120)
  os.environ['README_DESIGN_CANDIDATE']=str(OUT/'figure/candidate')
  phase('ten-existing-controls',[sys.executable,'-B','tests/evidence/media/test-readme-design.py'],timeout=120)
