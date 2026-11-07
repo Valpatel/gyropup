@@ -1,6 +1,6 @@
 # Gyropup project guide
 
-The project entrance is the [short README](../../README.md). This guide keeps the detailed orientation, historical artwork context and build paths one click away. Reports retain their own revisions and limits.
+The project entrance is the [short README](../../README.md). This guide keeps the detailed orientation, historical artwork context and build paths one click away. Reports retain their own revisions and limits. Root READMEs answer What/Why/Join briefly; the owner explicitly wants plentiful badges, so badge collections are exempt from that prose budget.
 
 ## Project links
 
@@ -65,3 +65,46 @@ Agents can use the [public reading guide](../guide/agent-guide.md) and [llms.txt
 
 [MIT](../../LICENSE) covers repository code, CAD sources, generated models, docs and data. Vendor CAD is excluded;
 `hardware/vendor/**/SOURCE.txt` records sources. Product names and trademarks belong to their owners.
+
+## Keeping the design illustration current
+
+The pixel header explains a stable learning method. The realistic figure depicts
+a stated published CAD revision; it is an illustration, not a fit, strength,
+collision, fabrication or physical-operation verdict. Bought components include
+engineering envelopes. The original artwork above retains its historical context.
+
+The figure uses the existing shared [CAD motif extractor and renderer](https://github.com/mvalancy/mvalancy/tree/70c325d0111427647e2e782d6c04b4123d23cebf/tools/hero).
+[The project configuration](../../tools/engineering/robot/readme-design.json)
+pins that toolkit, camera, CAD runtime and published input files. The complete
+conservative CAD/config/catalogue closure includes the five tests formerly under
+`cad/`; the actual `robot_view.collect()` source is also bound. Extraction reads
+the CAD into memory and never calls its engineering export or raster-render functions.
+The complete published hardware Git tree also binds supplemental board, mount
+and exported-data inputs. Local parameter overrides are rejected; the constructor
+uses the tracked J501 parameter snapshot and a fresh measurement cache in the
+owned run output, never a neighbouring checkout or an old local cache.
+
+Refresh after relevant published CAD changes. A weekly cheap job checks input
+drift and pure SVG parity; it does not run CAD, update hashes to hide drift, or
+automatically publish a picture. Normal PR and main browser suites retain their
+full commands, thresholds and limits. The intended cadence is weekly review of
+that drift result and a genuine refresh when inputs changed.
+
+1. Fetch published `main` normally. In a scoped branch whose CAD inputs equal
+   that revision, run `python tools/engineering/robot/readme_design.py bind-source --revision <immutable-main-sha>`.
+   This updates requested source configuration only: it deliberately leaves any
+   old scene, SVG and receipt stale. It verifies every input byte against that Git revision.
+2. Prepare and independently review the exact bounded fleet recipe, with the
+   pinned profile and CAD-agent checkouts. Run
+   `python tools/engineering/robot/readme_design.py extract --profile <profile-checkout> --toolkit <cad-agent-checkout> --out <new-owned-output>`
+   on the fleet. Keep its complete source guards, candidate scene/SVG/receipt,
+   runtime evidence and any failed attempts. Never run this native CAD stage on
+   the shared workstation or regenerate unrelated engineering exports for artwork.
+3. Inspect the genuine candidate and obtain independent adoption review. Copy
+   only the coherent scene, SVG and receipt into their configured homes, verify
+   bytes and run `python tools/engineering/robot/readme_design.py check --profile <profile-checkout>`.
+   Presentation-only changes may use `render` with a still-current committed scene;
+   that command cannot rebind stale CAD inputs.
+4. Review the actual compiled README at desktop and phone sizes in both themes,
+   including static/reduced motion, old anchors, ordinary links and the detailed guide.
+   Publish through normal reviewed dev → main merges and check the actual public result.

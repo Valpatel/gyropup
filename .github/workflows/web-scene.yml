@@ -3,8 +3,13 @@ on:
   pull_request:
   push:
     branches: [main]
+  # Scheduled work is only the cheap drift/parity check below. Ordinary PR/main
+  # browser commands, thresholds and job limits remain unchanged.
+  schedule:
+    - cron: '17 6 * * 1'
 jobs:
   retained-fit-job:
+    if: github.event_name != 'schedule'
     runs-on: ubuntu-24.04
     timeout-minutes: 10
     steps:
@@ -30,6 +35,7 @@ jobs:
           python tests/hardware/manufacturing/test-survey-fit-job.py
           python tools/evidence/manufacturing/package-survey-fit-job.py --verify hardware/exports/turret/shaft-survey-fit-job
   privacy:
+    if: github.event_name != 'schedule'
     # No home paths, fleet host names, private addresses or private repository names in the tracked files or the
     # built site, beyond the shrink-only tools/site/privacy-ratchet.txt (issue 141). Reports never print the strings.
     runs-on: ubuntu-24.04
@@ -50,6 +56,7 @@ jobs:
           GYROPUP_PRIVATE_NAMES: ${{ secrets.GYROPUP_PRIVATE_NAMES }}
         run: npm run test:privacy
   browser-validation:
+    if: github.event_name != 'schedule'
     # A stable check name per suite (the default name embeds the whole command list), so main's protection can require it.
     name: browser-validation (${{ matrix.suite }})
     runs-on: ubuntu-24.04
@@ -163,3 +170,34 @@ jobs:
           path: |
             /tmp/gyropup-*
             test-results
+  docs-art-freshness:
+    # No CAD kernel, native render, browser, credentials or write permissions.
+    # Drift requests a documented fleet refresh and reviewed PR; it never reseals
+    # an existing scene or silently commits a replacement illustration.
+    runs-on: ubuntu-24.04
+    timeout-minutes: 5
+    permissions:
+      contents: read
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          persist-credentials: false
+      - uses: actions/checkout@v4
+        with:
+          repository: mvalancy/mvalancy
+          ref: 70c325d0111427647e2e782d6c04b4123d23cebf
+          path: .readme-profile
+          persist-credentials: false
+          sparse-checkout-cone-mode: false
+          sparse-checkout: |
+            tools/hero/heroes.py
+            tools/hero/extract_mesh.py
+      - uses: actions/setup-python@v5
+        with:
+          python-version: '3.12'
+      - name: Check published inputs and deterministic SVG parity
+        env:
+          PYTHONDONTWRITEBYTECODE: '1'
+        run: |
+          python tools/engineering/robot/readme_design.py check --profile .readme-profile
+          python tests/evidence/media/test-readme-design.py

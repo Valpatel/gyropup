@@ -16,7 +16,8 @@ repository rather than only in a chat or local memory. Follow the applicable rep
 CAD, simulation or hardware work.
 
 The root README is a mini hyperpage: answer **What is it? Why is it cool? How do I join in?** in a compact entrance,
-with detailed content one click away. Keep the pixel learning header and a small source-bound CAD illustration distinct: one
+with detailed content one click away. **Badge collections are an explicit owner-requested exception:** keep plentiful
+root badges outside that prose budget. Keep the pixel learning header and a small source-bound CAD illustration distinct: one
 explains the method, the other depicts a stated design revision. Preserve old anchors and original artwork; a refreshed-looking
 image is not evidence of current geometry or physical qualification. See the [project guide](../docs/guide/project-overview.md).
 

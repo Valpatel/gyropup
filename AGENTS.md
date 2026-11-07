@@ -6,7 +6,8 @@ before rediscovering a known incident, and record new durable findings in `.agen
 Changes require relevant checks and independent review before merge.
 
 Documentation entrances follow the mini-hyperpage principle in [.github/CONTRIBUTING.md](.github/CONTRIBUTING.md):
-What is it, why is it cool, and how to join. Keep detailed content one click away, preserve old anchors, and bind realistic
+What is it, why is it cool, and how to join. Badge collections are explicitly exempt from the prose budget.
+Keep detailed content one click away, preserve old anchors, and bind realistic
 CAD illustrations to their actual source revision; keep conceptual pixel art separate from engineering evidence.
 
 ## One shared website preview

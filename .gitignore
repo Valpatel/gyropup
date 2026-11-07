@@ -48,3 +48,5 @@ test-results/
 !hardware/exports/sim/
 !hardware/exports/sim/**
 /.cadagent-cache/
+# Read-only pinned shared README tooling, checked out by the cheap CI job.
+/.readme-profile/
