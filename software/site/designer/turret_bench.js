@@ -15,7 +15,7 @@
 // (y, z, x) in metres. The box stands on a 0.3 m crate, so the barrel is at about the robot's turret height.
 import * as THREE from 'three';
 import { STLLoader } from 'three/addons/loaders/STLLoader.js';
-import { BALL, ballMesh } from './turret3d.js';
+import { BALL, ballMesh, readTiltStops } from './turret3d.js';
 import { section, slider, chips, readouts, toggle } from './kit/panel.js';
 import { createReloadEffect, RELOAD_OPEN_ANGLE } from './turret_reload.js';
 import { createDataReader, isRecord, validateSTLBytes, validateGeometry } from './kit/portal-data.js';
@@ -47,6 +47,9 @@ export async function createTurretBench({ stage, sfx, panel, root = '../', onLay
       !['pan','tilt','pinion','dial','wheel_l','wheel_r','flap'].every(k=>vector(man.pivots[k])) ||
       !(man.mechanics?.ball?.speed_mps>0) ||
       !man.parts.every(p=>p&&typeof p.file==='string'&&typeof p.group==='string')) throw new Error('Invalid turret manifest');
+  const stops = readTiltStops({ tilt_deg: { min: man.limits?.tilt_deg?.[0], max: man.limits?.tilt_deg?.[1] },
+    fire_tilt_max_deg: man.limits?.fire_tilt_max_deg });
+  if (!stops) throw new Error('Invalid turret firing limits');
   const mech = man.mechanics;
   const launchSpeed = mech.ball.speed_mps;
   const coarse = matchMedia('(pointer: coarse)').matches;
@@ -377,7 +380,7 @@ export async function createTurretBench({ stage, sfx, panel, root = '../', onLay
   // ------------------------------------------------------------------------------------------------ state
   const lim = man.limits;
   // D77: the barrel aims between its hard stops; no shot leaves above the feed's firing limit (exports/turret/limits.json)
-  const upMax = lim.tilt_deg[1] ?? 0, fireMax = lim.fire_tilt_max_deg ?? upMax;
+  const upMax = stops.max, fireMax = stops.fire;
   const S = {
     active: false, pan: 0, tilt: -3 * D2R, panCmd: 0, tiltCmd: -3 * D2R, keys: new Set(),
     arm: new Set(), trigger: false, queue: 0, nextAt: 0, rate: 3, rpm: 0, laserOn: false, wasArmed: false,
@@ -1373,7 +1376,7 @@ export async function createTurretBench({ stage, sfx, panel, root = '../', onLay
     S.tiltCmd = clamp(S.tiltCmd, lim.tilt_deg[0] * D2R, upMax * D2R);
     const mv = (cur, cmd, rate) => cur + clamp(cmd - cur, -rate * dt, rate * dt);
     S.pan = mv(S.pan, S.panCmd, lim.pan_rate_deg_s * D2R);
-    S.tilt = clamp(mv(S.tilt, S.tiltCmd, lim.tilt_rate_deg_s * D2R), tmin, 0);
+    S.tilt = clamp(mv(S.tilt, S.tiltCmd, lim.tilt_rate_deg_s * D2R), tmin, upMax * D2R);
     // the safety line: ARM held = flywheels up, laser on; released = no feed, and the phase-short brake stops the
     // flywheels (5 % speed ~48 ms after release; unbraked they would coast for 1.1 s)
     const armed = !S.reloading && (S.arm.size > 0 || !!S.journey);

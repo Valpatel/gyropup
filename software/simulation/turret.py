@@ -41,15 +41,23 @@ HOPPER = 30                  # balls in a full hopper (cad/turret.py)
 LIMITS_JSON = Path(__file__).resolve().parents[2] / 'hardware' / 'exports' / 'turret' / 'limits.json'
 
 
+def read_stop_limits(limits: dict) -> tuple:
+    """Require separate finite mechanical and firing bounds; never infer firing permission from a stop."""
+    lo, hi = limits['tilt_deg']['min'], limits['tilt_deg']['max']
+    fire = limits['fire_tilt_max_deg']
+    if (not all(isinstance(v, (int, float)) and not isinstance(v, bool) and math.isfinite(v)
+                for v in (lo, hi, fire)) or not lo < hi or not lo <= fire <= hi):
+        raise ValueError('Invalid turret firing limits')
+    return float(lo), float(hi), float(fire)
+
+
 def stop_limits_deg(path: Path = LIMITS_JSON) -> tuple:
     """(lowest, highest) barrel tilt in deg, + = muzzle up: the turret's hard stops (cad/turret_limits.py)."""
-    t = json.loads(Path(path).read_text())['tilt_deg']
-    return float(t['min']), float(t['max'])
+    return read_stop_limits(json.loads(Path(path).read_text()))[:2]
 
 
-TILT_MIN_DEG, TILT_MAX_DEG = stop_limits_deg()
-# no shot above this tilt (the barrel may still aim up to the stop): the feed's qualified elevation, as the firmware
-FIRE_TILT_MAX_DEG = float(json.loads(LIMITS_JSON.read_text()).get('fire_tilt_max_deg', TILT_MAX_DEG))
+# Separate firing permission is mandatory even though the joint can aim higher.
+TILT_MIN_DEG, TILT_MAX_DEG, FIRE_TILT_MAX_DEG = read_stop_limits(json.loads(LIMITS_JSON.read_text()))
 
 
 def joint_tilt(elev: float, pitch: float, stops_deg: tuple = None) -> tuple:

@@ -31,3 +31,8 @@ The JSON manifest beside this plan hashes all38 changed export payloads against 
 7. Obtain independent exact-head review and normal current CI, then dev→main publication. PR207 and both remote names remain until accepted replacement ancestry/publication and a separately reviewed no-loss retirement. Issue #201 and physical acceptance are not closed by this source checkpoint.
 
 No native CAD/FEA, manufacturing, purchase or device connection was performed for this checkpoint. No changed schema, threshold, failed row or private-input boundary is authorised by this plan.
+
+
+## Constraint repair checkpoint
+
+Independent review reproduced a zero-degree upper clamp in the actual bench servo and fail-open missing firing metadata. The repaired actual functions pass three Node controls and two selected Python controls, including the old zero-ceiling mutant, missing/nonfinite/out-of-range firing fields and mandatory current paths. Four isolated kernel-free movie controls require the new exact limits JSON input and served-byte equality. These checks do not generate geometry, validate a current bench manifest, or refresh any evidence. The existing compiled bench test is strengthened to reach the positive stop while disarmed; it will run against genuinely rebuilt outputs. The inherited bench manifest remains `[-25,0]` with no firing field and is deliberately rejected before geometry setup. No historical output was rehashed or resealed.

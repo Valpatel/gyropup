@@ -13,13 +13,17 @@ const D2R = Math.PI / 180;
  *  exports/turret/limits.json (cad/turret_limits.py) gives them. D77 replaced the old rule that kept the barrel at or below
  *  level with these. The values here are the CAD's as this file was written; setTiltStops() puts the exported numbers in. */
 export const TILT_STOPS = { min: -25 * D2R, max: 12 * D2R, fire: 10 * D2R };   // fire: no shot above it (the feed's limit)
-/** Take the stops from exports/turret/limits.json's contents; an invalid file leaves them as they were. */
+/** Parse separate mechanical and firing bounds without granting permission for an absent field. */
+export function readTiltStops(limits) {
+  const lo = limits?.tilt_deg?.min, hi = limits?.tilt_deg?.max, fire = limits?.fire_tilt_max_deg;
+  if (![lo, hi, fire].every(Number.isFinite) || !(lo < hi) || fire < lo || fire > hi) return null;
+  return { min: lo, max: hi, fire };
+}
+/** An invalid exports/turret/limits.json leaves every previously validated bound unchanged. */
 export function setTiltStops(limits) {
-  const lo = limits?.tilt_deg?.min, hi = limits?.tilt_deg?.max;
-  if (!Number.isFinite(lo) || !Number.isFinite(hi) || !(lo < hi)) return false;
-  TILT_STOPS.min = lo * D2R; TILT_STOPS.max = hi * D2R;
-  const fire = limits.fire_tilt_max_deg;
-  TILT_STOPS.fire = Number.isFinite(fire) ? Math.min(hi, fire) * D2R : TILT_STOPS.max;
+  const stops = readTiltStops(limits);
+  if (!stops) return false;
+  TILT_STOPS.min = stops.min * D2R; TILT_STOPS.max = stops.max * D2R; TILT_STOPS.fire = stops.fire * D2R;
   return true;
 }
 

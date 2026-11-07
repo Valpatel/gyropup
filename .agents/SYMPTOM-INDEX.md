@@ -136,3 +136,5 @@
 - An issue must stay open but the PR description contains a closing keyword: [state the open scope directly and verify parsed references](inbox/2026-11-07-historical-branches-need-decision-identity-checks.md#keep-closing-keywords-out-of-prose-that-must-leave-an-issue-open).
 
 - A recovered feature resurrects legacy root imports or new files miss the publication map: [reconcile feature additions with current ownership contracts](inbox/2026-11-05-root-moves-need-consumer-and-publication-maps.md#recover-feature-additions-into-the-current-package-and-publication-contracts).
+
+- Recovered positive aim commands stay at level, or absent feed metadata widens firing permission: [check the applied servo and separate firing bounds](inbox/2026-11-05-root-moves-need-consumer-and-publication-maps.md#recovered-commands-must-reach-the-actual-servo-and-retain-separate-firing-bounds).

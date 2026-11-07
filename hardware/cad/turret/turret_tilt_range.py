@@ -239,7 +239,7 @@ def main():
     a = ap.parse_args()
     IGNORED.update(frozenset(x.split(':')) for x in a.ignore)
     t0 = time.time()
-    L = tu.derive(R / 'designs/default.json')
+    L = tu.derive(R / 'hardware/designs/default.json')
     T = tu.Turret(L)
     G = T.G
     C = clouds(T)

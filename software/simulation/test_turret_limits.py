@@ -129,3 +129,48 @@ def test_limits_reader_requires_the_current_path_even_with_a_valid_legacy_copy(t
     current.parent.mkdir(parents=True)
     current.write_text(json.dumps(LIMITS))
     assert tc.tilt_stops_deg(current) == (LIMITS['tilt_deg']['min'], LIMITS['tilt_deg']['max'])
+
+
+def test_actual_simulation_parser_requires_separate_firing_permission():
+    """Execute the current parser body without importing MuJoCo or CAD."""
+    import ast
+    import copy
+    tree = ast.parse((R / 'software/simulation/turret.py').read_text())
+    node = next(n for n in tree.body if isinstance(n, ast.FunctionDef) and n.name == 'read_stop_limits')
+    scope = {'math': math}
+    exec(compile(ast.Module(body=[node], type_ignores=[]), 'actual-turret-limit-reader', 'exec'), scope)
+    parse = scope['read_stop_limits']
+    valid = {'tilt_deg': {'min': -25, 'max': 12}, 'fire_tilt_max_deg': 10}
+    assert parse(valid) == (-25, 12, 10)
+    missing = copy.deepcopy(valid)
+    del missing['fire_tilt_max_deg']
+    with pytest.raises(KeyError):
+        parse(missing)
+    for value in (float('nan'), float('inf'), -26, 13, '10', True):
+        with pytest.raises(ValueError, match='Invalid turret firing limits'):
+            parse({**valid, 'fire_tilt_max_deg': value})
+    for stops in ({'min': 12, 'max': -25}, {'min': -25, 'max': float('inf')}):
+        with pytest.raises(ValueError, match='Invalid turret firing limits'):
+            parse({**valid, 'tilt_deg': stops})
+
+
+def test_tilt_range_cli_derives_the_current_design_path(tmp_path):
+    """Exercise the actual CLI argument expression before any CAD work; a legacy copy cannot select it."""
+    import ast
+    tree = ast.parse((R / 'hardware/cad/turret/turret_tilt_range.py').read_text())
+    main = next(n for n in tree.body if isinstance(n, ast.FunctionDef) and n.name == 'main')
+    calls = [n for n in ast.walk(main) if isinstance(n, ast.Call) and isinstance(n.func, ast.Attribute)
+             and isinstance(n.func.value, ast.Name) and n.func.value.id == 'tu' and n.func.attr == 'derive']
+    assert len(calls) == 1
+    argument = compile(ast.Expression(calls[0].args[0]), 'actual-tilt-range-design-input', 'eval')
+    legacy = tmp_path / 'designs/default.json'
+    current = tmp_path / 'hardware/designs/default.json'
+    legacy.parent.mkdir(parents=True)
+    legacy.write_text('{}')
+    selected = eval(argument, {'R': tmp_path})
+    assert selected == current
+    assert not selected.exists()
+    current.parent.mkdir(parents=True)
+    current.write_text('{}')
+    assert selected.is_file()
+    assert eval(argument, {'R': R}).is_file()
