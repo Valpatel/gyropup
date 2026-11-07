@@ -1,0 +1,489 @@
+- id: D1
+  date: "2026-10-25"
+  title: A Diablo-like wheel-legged biped
+  decision: Two legs (hip + knee) ending in direct-drive wheels; it balances on the wheels and crouches, stands and hops on the legs
+  why: What the user asked for; the reference robots (Diablo, Ascento, Upkie) show the layout works.
+  status: decided
+  source: {kind: user, quote: "Can you take this up a notch and design a robot for me like the diablo robot?", ref: "[reference robots](research/reference-robots.md)"}
+- id: D2
+  date: "2026-10-25"
+  title: The real goal is a closed loop
+  decision: Design → CAD and robot model → simulation → loads and stress → manufacturing and cost → iterate without a human, with any components and any specs
+  why: The user's stated goal. Prior art has the pieces but nobody has published the whole loop, and stress checking is the missing step.
+  status: decided
+  source: {kind: user, quote: "Honestly the real goal should be closed loop - design a robot, evaluate it in sim, look at the stress points and how well it can drive around etc, iterate independently.", ref: "[architecture](docs/architecture.md)"}
+- id: D3
+  date: "2026-10-25"
+  title: Mostly 3D printed, PLA on a P1S first
+  decision: Every structural part starts as PLA on a Bambu P1S; a material ladder (PLA → PETG → CF-filled) and SendCutSend metal or CF tube are upgrades with the same interfaces
+  why: Low cost and fast iteration. PLA softens at 54 °C, so parts touching motors start in PETG and the checks flag heat.
+  status: decided
+  source: {kind: user, quote: "Ideally this is mostly 3d printed for low cost and we use a fancier bambu printer to make it a carbon fiber filled material later on. But start with PLA", ref: "[fabrication](research/fabrication.md)"}
+- id: D4
+  date: "2026-10-25"
+  title: Compute is the J501 AGX Orin box
+  decision: Jetson AGX Orin 32GB on the Seeed J501 in our printed enclosure, powered straight from the pack (12–36 V input)
+  why: It is what we have; a 7S pack stays under 36 V so no converter is needed.
+  status: decided
+  source: {kind: user, quote: "assume jetson orin agx 32GB with our new compute box"}
+- id: D5
+  date: "2026-10-25"
+  title: Perception is a VLP-16 plus RealSense, no ZED or GMSL
+  decision: VLP-16 on top with a clear horizon; RealSense D435 facing forward and another facing back in a cradle that also fits the D415
+  why: GMSL is overkill for a robot this size, and the ZED X has no driver for the J501's MAX96724 GMSL board.
+  status: decided
+  source: {kind: user, quote: "So honestly the intel realsense is probably the best for our size with vlp-16 lidar.", ref: "[sensors and compute](research/sensors-compute.md)"}
+  alternatives: ["ZED X over GMSL (needs a J501 driver port)", ZED 2i over USB]
+- id: D6
+  date: "2026-10-25"
+  title: The balance IMU is the VN-100 Rugged
+  decision: VectorNav VN-100 in its housing, mounted rigidly on the body near the centre of mass, read over serial at up to 800 Hz
+  why: A calibrated, temperature-compensated IMU the user has; the lidar mast flexes and carries a spinning rotor, so the IMU stays off it.
+  status: decided
+  source: {kind: user, quote: "VN-100 is a good IMU I have"}
+- id: D7
+  date: "2026-10-25"
+  title: Which controller runs the 1 kHz balance loop
+  decision: "Assumed for now: a WeAct STM32G474 core board (3× FDCAN, 170 MHz with FPU) with two CAN transceivers runs the 1 kHz loop and owns the motor CAN bus. Swap in one of the user's own boards when named"
+  why: Needs a steady 1 kHz loop independent of Linux, CAN for the motors plus CAN to the J501 (2× CAN, or 1× CAN-FD shared), a UART for the VN-100, and an FPU. Waiting for the user's list of boards.
+  status: open
+  source: {kind: user, quote: "Why a teensy 4.1? I don't have one of those but I have other microcontrollers with CAN I think."}
+  alternatives: [Teensy 4.1 (research pick), STM32 G4/H7 with FDCAN, Matek H7A3 flight controller, Jetson with PREEMPT_RT (Upkie style)]
+- id: D8
+  date: "2026-10-25"
+  title: A 24 V-class battery, 7S Li-ion (superseded by D17)
+  decision: WREKD 7S2P Molicel P50B pack (29.4 V full, 252 Wh, 1.05 kg) runs the J501 directly; a 12 V regulator feeds the VLP-16
+  why: Keeps the J501 within 12–36 V without a converter; Diablo's motors are in the same class. The trade-off is that 48 V-rated leg motors run at about half speed.
+  status: superseded
+  source: {kind: research, ref: "[power and electronics](research/power-electronics.md)"}
+  alternatives: [12S 48 V pack with a DC-DC for the J501, power-tool packs]
+  superseded_by: D17
+- id: D9
+  date: "2026-10-25"
+  title: The microcontroller owns the motor CAN bus; the J501's CAN-FD links it to the Jetson
+  decision: The balance microcontroller drives the motors on its own CAN bus. The J501's built-in CAN-FD carries setpoints and state between the Jetson and the microcontroller, so no USB sits in the control path; the second J501 port is free for logging. The e-stop, a wireless relay and the controller's enable switch drive a contactor that cuts motor power while the computer stays up
+  why: Seeed's schematic shows two isolated CAN-FD ports on J25; the user wants the microcontroller to be the main CAN for the motors.
+  status: decided
+  source: {kind: user, quote: "Also our board likely has CAN built in? For the AGX board but the microcontroler board is the main one for CAN", ref: "[power and electronics](research/power-electronics.md)"}
+- id: D10
+  date: "2026-10-25"
+  title: Leg layout like the Diablo, no hip abduction
+  decision: Hip and knee motors stacked on the body with a four-bar link to the knee; legs move only fore and aft in v1
+  why: Diablo is built this way (DDT's sim model); motors on the body keep legs light; Diablo, Upkie and Ascento all balance without hip abduction.
+  status: decided
+  source: {kind: research, ref: "[reference robots](research/reference-robots.md)"}
+  alternatives: [five-bar leg, motor at the knee]
+- id: D11
+  date: "2026-10-25"
+  title: Default parts for the first design
+  decision: RobStride RS-03 leg actuators; ODrive BotWheel wheels with moteus n1 drivers
+  why: RS-03 is $225 for 60 N·m peak and 20 N·m rated with STEP files and torque–speed data; BotWheel has a fine encoder for slow balancing and is in stock in the US. The loop may change both.
+  status: decided
+  source: {kind: research, ref: "[leg actuators](research/leg-actuators.md), [wheel motors](research/wheel-motors.md)"}
+- id: D12
+  date: "2026-10-25"
+  title: Build on prior work for the loop
+  decision: MuJoCo for evaluation with a per-design LQR ported from Upkie; mjlab (from mjlab_upkie) for RL, Isaac Lab later; gmsh + scikit-fem FEA, CalculiX to verify; Optuna 5 with staged fidelity
+  why: The toolchain survey found these are the best maintained, permissively licensed options; no framework ships a wheel-legged scenario suite, so we write that part.
+  status: decided
+  source: {kind: research, ref: "[toolchain prior art](research/prior-art-toolchain.md), [co-design prior art](research/prior-art-codesign.md)"}
+- id: D13
+  date: "2026-10-25"
+  title: The name is Gyropup
+  decision: Gyropup (gyro, because it balances itself; pup, because it is a small, friendly robot). It is its own robot, not a duck; Open Duck Mini was only a reference for charm and buildability
+  why: wobbit.com was taken. The user picked Gyropup from names with unregistered .com domains and kept it after finding a furry who uses the name.
+  status: decided
+  source: {kind: user, quote: "We aren't making a duck, the duck was just a design reference for a new friendly robot. gyropup is a cool name"}
+- id: D14
+  date: "2026-10-25"
+  title: Gyropup is closed for now; cad-agent stays public and generic
+  decision: Gyropup lives in a private repository; everything generic (robot export, the project site, FEA glue, optimiser staging) goes into the public cad-agent, which stays modular for any CAD project
+  why: The user wants to build on a public toolkit while keeping this design closed, maybe opening it later.
+  status: decided
+  source: {kind: user, quote: "Ideally we can build on a public cad-agent but have gyropup be our design eventually free maybe but closed for now"}
+- id: D15
+  date: "2026-10-25"
+  title: The lidar sits on top as the head, in a crown (superseded by D20)
+  decision: VLP-16 directly on top of the body (no mast), centred over the wheel axle, on rubber isolators, inside a printed crown that takes the hit in a fall. The mount stays a design variable (top, mast, under) for the loop to test
+  why: Moving 0.83 kg changes the centre of mass by at most about 16 mm, so view and falls decide. Under the body, the wheels and legs hide roughly a third of its view; on top it is the first part to hit the ground, so it needs a guard.
+  status: superseded
+  source: {kind: user, quote: "Also the lidar is heavy, it can be mounted directly to the head? or under the body?"}
+  alternatives: [on a mast, under the body between the legs]
+- id: D16
+  date: "2026-10-25"
+  title: Gyropup's eyes are two round screens
+  decision: Waveshare 0.71 in DualEye LCD (two 160×160 round IPS screens, GC9D01, SPI, 11 g, $15.99) on the front of the head, driven by a small separate controller; no mouth
+  why: Expressive eyes carry most of a friendly robot's character; a separate controller keeps the character layer off the balance loop.
+  status: decided
+  source: {kind: user, quote: "waveshare 0.71inch Double Eye Round LCD Display Module 160×160 Resolution 65K Colors IPS Display ... <-- cool robot eyes", ref: "[Waveshare product page](https://www.waveshare.com/0.71inch-dualeye-lcd-module.htm)"}
+- id: D17
+  date: "2026-10-25"
+  title: The battery is 8S LiFePO4 (superseded by D23)
+  decision: An 8S LiFePO4 pack (25.6 V nominal, 29.2 V full, about 20 V at cut-off) runs the J501, motors and drivers directly. It must deliver 60 A or more continuous; the pack (ready-made or custom high-rate cells with a 60–150 A BMS) is being sourced
+  why: LiFePO4 is safer to charge, which matters most because Gyropup will dock and charge itself unattended (D18). It is a preference, not a requirement ("If LiFeP04 doesn't work that's OK too"). 8S keeps the J501 inside 12–36 V; 10S would exceed 36 V. The cost is weight, about twice the mass per watt-hour of the Li-ion pack. The only LFP pack in the catalog so far (Bioenno, 10 A continuous) is a placeholder that fails the current check.
+  status: superseded
+  source: {kind: user, quote: "I would like to use LiFeP04 cells/battery pack if possible because they are safer to charge etc."}
+  alternatives: [7S Li-ion Molicel pack (lighter, D8)]
+- id: D18
+  date: "2026-10-25"
+  title: Gyropup docks and charges itself by sitting down
+  decision: A low dock with spring contacts and a fiducial marker. Gyropup reverses over it using the rear depth camera and lidar, then crouches so a contact plate under the battery tray lands on the contacts; its weight holds them closed. The dock holds the charger (29.2 V for 8S LiFePO4); the robot enables its charge input only after it detects the dock
+  why: "Legs make docking easy: lowering the body is precise and needs no connector alignment. Unattended charging is why LiFePO4 is preferred."
+  status: open
+  source: {kind: user, quote: "I would like the robot to be able to auto dock and charge that's where LiFeP04 is nice because of the sketchyness of LiPo"}
+  alternatives: [rear charge contacts like a robot vacuum, a magnetic charge connector on the side]
+- id: D19
+  date: "2026-10-25"
+  title: Gyropup is a Tritium robot, outdoors, with a foam-dart turret
+  decision: Gyropup drives outdoors and carries a foam-dart turret on its head for Tritium's neighborhood robot battles with kids. Kid safety is a hard requirement in hardware and software (dart energy limits, aiming limits, wireless e-stop, speed limits, pinch points)
+  why: The user's goal for the robot. Turret recoil and head mass, terrain and weather now drive the design and the simulation scenarios.
+  status: decided
+  source: {kind: user, quote: "Honestly the goal is for this to drive around outdoors and be able to shoot nerf darts with a turret on it's head, that's the whole dream with tritium : kids battling robots."}
+- id: D20
+  date: "2026-10-25"
+  title: The lidar goes under the waist
+  decision: The VLP-16 hangs under the body between the legs; the legs and wheels block part of its view and that is accepted. The head is free for the turret
+  why: The user's call. Under the waist it is protected in falls and lowers the centre of mass; the depth cameras cover what the legs hide.
+  status: decided
+  source: {kind: user, quote: "lidar could go under it's waist and just accept leg obstructions."}
+  alternatives: [on top in a crown (D15), on a mast]
+- id: D21
+  date: "2026-10-25"
+  title: A mini Gyropup for controller development
+  decision: A second design, about 5.8 kg, on the user's Waveshare DDSM115 hub motors (12–24 V, RS485) with Steadywin GIM6010-8 legs, a Raspberry Pi 5 and a Makita 18 V pack, for tuning the balance controller cheaply before the full robot
+  why: The DDSM115 is too weak and too low-voltage for the 15 kg robot (it catches only a 32° lean and exceeds its 24 V limit on 8S LiFePO4), but suits a small, safe-to-crash dev robot (55° catch, 42° slope in the model).
+  status: open
+  source: {kind: user, quote: "As a side note I have some of these around already: https://www.waveshare.com/ddsm115.htm in case they are relevant, maybe not enough torque for a bigger robot?"}
+- id: D22
+  date: "2026-10-25"
+  title: The turret is its own project; Gyropup offers a head payload interface
+  decision: The foam-dart turret (automated reload and firing) is developed in a separate lane. Gyropup defines and simulates a head payload interface (bolt pattern, power, data, mass and centre-of-mass height, recoil impulse) so any turret that meets it can mount
+  why: The turret is a large project with plenty of open-source work to build on; keeping an interface between the two lets both move independently. The user expects about 24 shots per magazine (drum or belt) and a trip to get a new magazine, so the dock doubles as the reload station.
+  status: decided
+  source: {kind: user, quote: "The robot mounted nerf gun with automated reload and firing is a clear separate session/lane with massive amounts of open source online resources to discover."}
+- id: D23
+  date: "2026-10-25"
+  title: Two DeWalt FLEXVOLT packs in series (40 V) power Gyropup
+  decision: Two FLEXVOLT packs in 20 V mode (5S3P each) wired in series give a 30–40 V bus. A Pololu D42V55F24 (24–60 V in) feeds the J501. Off-the-shelf adapters provide the latch and contacts; 10 AWG leads, a 60–80 A time-delay fuse at the battery for burst current, the adapters' blade fuses as backup. The robot enforces a 3.0 V/cell cut-off per pack and a current limit, because tool packs leave that to the tool
+  why: "The user has 60 V FLEXVOLT packs and likes tool batteries (easy to swap and charge). Of the three ways to use them, the series pair is the only one with no problems: it passes all 7 simulated scenarios at 17.6 kg, with 153 min estimated runtime, 146 rpm leg speed and 8 km/h top speed. One pack in 20 V mode is too slow (73 rpm legs, 4 km/h); 60 V mode exceeds the moteus drivers' 54 V and the lidar converter's 50 V, and leaves no regeneration margin on the RS-03s."
+  status: superseded by D25
+  source: {kind: user, quote: "Oh dewalt batteries are actually a really good idea, I have the 60V kind..."}
+  alternatives: [8S LiFePO4 custom A123 pack (designs/lfp-8s4p.json), one FLEXVOLT in 20 V mode (designs/flexvolt-20v.json), two FLEXVOLTs in series (now designs/flexvolt-2x20v.json)]
+- id: D24
+  date: "2026-10-25"
+  title: Assumptions to keep moving
+  decision: "Where a fact was missing, a reasonable assumption is used and labelled as assumed: FLEXVOLT pack size about 157 × 92 × 110 mm; a WeAct STM32G474 balance controller; a pair of 20 W 12–30 V LED pods as headlights; turret pan/tilt torques (5 and 3 N·m) and a 40/60 pan/tilt mass split; darts of 1 g at 24 m/s with drag only"
+  why: The user asked to make things up where needed and keep going until the design is realistic, fires darts in simulation and has forward lights.
+  status: decided
+  source: {kind: user, quote: "Can you just make things up and keep going independently until we have a realistic design that fires darts in sim, has forward facing lights, and is awesome?"}
+- id: D25
+  date: "2026-10-25"
+  title: One FLEXVOLT in 60 V mode is the default, with a regen clamp
+  decision: "designs/default.json runs from one DeWalt FLEXVOLT in 60 V mode (15S, 45–60 V) in a FLEXVOLT 60 V dock adapter. The parts that could not take 60 V are swapped: two Flipsky 75100 VESCs (14–84 V) drive the BotWheels instead of moteus (54 V max), a Mean Well DDR-30L-12 (18–75 V) makes the 12 V rail instead of the Pololu D36V50F12 (50 V max), and a Mean Well DDR-120C-24 (33.6–67.2 V) feeds the J501. A full pack sits at the RS-03's 60 V limit, so a regen clamp (brake chopper and 2 Ω resistor, ASSUMED part) trips at 58 V and the robot treats 58 V as full. The two-pack 40 V build is kept as designs/flexvolt-2x20v.json"
+  why: The user has 60 V packs and asked for this build in the simulator. One pack is simpler to swap and dock than two in series. The designer now checks the clamp against every motor's limit; the build passes 9/9 scenarios at 17.0 kg (17.5 kg with the CAD part masses).
+  status: decided
+  source: {kind: user, quote: "Gyropup on one flexvolt 60v and replay target practice should be the sim default"}
+  alternatives: [two FLEXVOLTs in series, 40 V (designs/flexvolt-2x20v.json), one FLEXVOLT in 20 V mode (designs/flexvolt-20v.json)]
+- id: D26
+  date: "2026-10-25"
+  title: Knock-down targets, nose-first darts, and a laser that warns before firing
+  decision: "Targets are 20 g foam plates hinged at the bottom on posts; a hit knocks them over and the turret moves on (5 targets, pass = 60 % knocked down and 40 % of darts on target). Darts have a heavier rubber tip (0.55 g of 1 g) so they fly nose-first. The laser is off at the start and while slewing between targets, comes on when the turret is within 0.08 rad of its aim, and stays on for 0.35 s before the first shot. A 0.6 s pause follows each knock-down. The simulator's laser has AUTO / ON / OFF modes"
+  why: The user said the darts looked cheesy (they tumbled and nothing reacted to a hit) and asked for the laser to come on only when getting ready to fire. A laser before every burst is also a sensible visible warning for kids.
+  status: decided
+  source: {kind: user, quote: "laser should be toggleable, toggle on when getting ready to fire, toggle off in-between targets and at stat."}
+- id: D27
+  date: "2026-10-25"
+  title: Gyropup's voice comes from Moxie's stack, with browser fallbacks
+  decision: "designer/character/talk.js gives speech bubbles over the head, spoken lines, listening and a small brain. It uses Moxie's local Piper TTS (:8081) and Whisper STT (:8082) when they run, else the browser's speech synthesis and Web Speech recognition; an OpenAI-compatible endpoint or local Ollama when reachable, else a scripted kid-safe brain. Sound effects (flywheels, shots, hits, knock-downs, laser, servos, reload) are synthesised in designer/sfx.js"
+  why: The user asked for Gyropup to talk like Moxie, with word bubbles and STT, and for cool sound effects. Adapting our own MIT Moxie code keeps one voice stack; the fallbacks keep the page working with nothing else running.
+  status: decided
+  source: {kind: user, quote: "gyropup should talk like Moxie does as well and have word bubbles, Moxie has STT"}
+- id: D28
+  date: "2026-10-25"
+  title: Two wheel-legs plus a tail, not a three-legged tricycle
+  decision: "Gyropup keeps its two balancing wheel-legs and gains a tail: a RobStride RS-06 lifts it (36 N·m peak, 621 g), a RobStride RS-00 wags it (14 N·m, 310 g), a 20 mm carbon tube carries a TPU skid shoe 390 mm from the pivot, and a spring-applied ratchet (ASSUMED part) locks it against being pushed up whenever the solenoid is unpowered. The tail is not driven. It rides up while balancing; the robot sits on it (2.4 N·m on the motor, parked on the ratchet), it catches a backward fall, and an e-stop is a controlled stop: sit, lock, cut the power."
+  why: "A third wheel-leg would add about 4.3 kg and six-hundred-odd dollars, make turning scrub, and still balance when lifting a leg; the tail gives the robot most of the tripod's benefits for 1.2 kg. In simulation the tail lets the robot survive a backward shove of 2.0 m/s per kg (vs 1.2 without), sits and stands up again in about 5 s, and stops safely with the lidar 80 mm off the ground. RS-02 and RS-00 pitch motors also sit and catch moderate shoves but drop the hardest catch, so the RS-06 stays. The ratchet sees at most 43 N·m."
+  status: reversed by D30
+  source: {kind: user, quote: "Don't worry about cost can you just think about light weight, high quality with good tail motors but not driving wheels?"}
+  alternatives: [three wheel-legs (a tricycle), a passive kickstand, an RS-02 or RS-00 for the tail lift]
+- id: D29
+  date: "2026-10-25"
+  title: Beni as a consumer reference; Gyropup heavier, tougher and more capable
+  decision: Beni (Mondo Robotics, 1.75 kg) joins the reference robots for character and tricks (self-righting, hops, follow-me filming, swappable battery). Gyropup stays a ~19 kg outdoor robot and aims higher on durability and capability (see research/reference-robots.md)
+  why: The user pointed to Beni as consumer inspiration but wants Gyropup way heavier, more durable and more capable.
+  status: decided
+  source: {kind: user, quote: "The beni robot is another good consumer exmaple product for inspiration, but we want this way heavier, more durable, more capable."}
+- id: D30
+  date: "2026-10-25"
+  title: No tail
+  decision: "The tail is removed from Gyropup: from the design, the catalog, the physics model and controller, the scenarios, the 3D views and the CAD. Gyropup is back to two balancing wheel-legs. An emergency stop is a controlled crouch (category 1) before the motors are cut, with the knees landing on their mechanical stops; a skid or bumper under the chassis protects the lidar if the robot does tip."
+  why: The user found the tail ridiculous. Its benefits in simulation (catching hard backward shoves, a tripod to sit on) did not outweigh how it looks and the extra 1.2 kg.
+  status: decided
+  source: {kind: user, quote: "the tail is ridiculous please remove it"}
+- id: D31
+  date: "2026-10-25"
+  title: Real mechanical design on a modular interface standard; aluminium where the loads are
+  decision: "Legs are built from motor-specific adapters onto standard faces (GMI, docs/mechanical-interfaces.md): an output adapter (AO-L) with a 61812 support bearing in a motor plate (AC-L), standard faces for links, a yoke box closed by three posts, a 3 mm 6061 chassis as the spine. The thigh and shin are 6061 boxes (40 x 30, 3 mm walls) with the wheel's cables inside. Any of the RS-03, RS-04, CubeMars AK70-10 or Damiao J10010 fits the same leg with its own two adapters."
+  why: "The user asked for real motor attachment points, real cable routing and stiffness studies, with modular interfaces so motors and leg designs can change. The studies showed printed PA6-CF links and a flat 16 mm thigh far too flexible for the hard-turn case (out-of-plane 50 N m at the hip, 120 N sideways at the knee: safety factor 0.11, 38 mm deflection), and RobStride outputs ride on thin 45 x 58 mm ball bearings, so a separate support bearing takes the leg's bending."
+  status: decided
+  source: {kind: user, quote: "we need to start the real mechanical design. Ideally separate it into components such as: the interface between motor and leg, knee motor interface, hip motor interface, keeping it flexible so we can swap motors and change our leg designs but have modular mating interfaces and such. But we need real cable routing, real motor attachment points. Real stiffness studies and so on."}
+- id: D32
+  date: "2026-10-25"
+  title: Stage S0 of the CAD plan, and an overnight design loop on the RTX 4090
+  decision: "Applied the review's blockers before optimising: the knee crank and shin lever point 75° from the perpendicular towards the foot (the rod's transmission stays >= 0.5 over the knee range; it was at its dead point), the knee motor is modelled as it drives (a tendon over hip + knee), the body has collision shapes, and falls, a kerb drop and a landing are scenarios. The yoke is a bent hat channel (496 g, was 961 g) and the motor plates are pocketed (344 g, was 418 g); the robot is 21.4 kg. tools/iterate.py (NSGA-II: mass, cost, motor load, width) runs every candidate end to end on the 4090 overnight; the open questions in docs/cad-plan.md section 9 take its defaults until the user answers."
+  why: "The user asked to iterate on the CAD all night with the best, most available parts (in stock and rated for 60 V: RobStride RS-03/RS-04, catalog/availability.json), on the RTX 4090 (its LLM services stopped with the user's approval). The review (research/mech-review-2026-10-25.md) showed that optimising the old model would have optimised the wrong machine."
+  status: decided
+  source: {kind: user, quote: "But what I really need is for you to iterate on the CAD all night with the best parts that are most available. Use the RTX4090 and the Thor they are likely doing useless work."}
+- id: D33
+  date: "2026-10-26"
+  title: Every made part is 3D printed; RS-04 leg motors capped at 60 N·m
+  decision: "All custom parts are printed: structure in PA6-CF on a hardened nozzle (100 % solid where the CAD has walls, so the FEA sees what is printed), the rest in PETG, the lidar guard in TPU. Bought hardware only: bearings, steel pins and shoulder bolts, rod ends on M8 threaded rod, screws, heat-set inserts. Strength uses humid, print-knocked-down PA6-CF allowables (x0.6 x0.8 on Bambu's dry TDS; along or across the layers by print orientation), targets SF 2 everyday and 1.2 in falls, leg flex at the wheel <= 4 mm. Four RobStride RS-04 (hip and knee on each leg; RS-03 fits the same faces), capped at 60 N·m in firmware so the printed joints never see more; the output joint carries it by screw clamp plus the motor's pins (SF 3.2). Hip ab/adduction is not added: two wheels 600 mm apart need no sideways balance and differential leg height levels the body (as DDT Diablo and Ascento do)."
+  why: "The user wants to print it and has PA6-CF on a hardened-nozzle printer; RS-04s ship sooner than RS-03s (Seeed: 11 on hand and 80 due Nov 14, against none until Nov 20). The aluminium parts of D31/D32 were sized for CNC and SendCutSend, which the user does not want."
+  status: decided
+  source: {kind: user, quote: "To be clear I want to 3d print it, We can go with the RS-03 I can wait for them or what about the RS-04? Those ship sooner."}
+- id: D34
+  date: "2026-10-26"
+  title: The simulator fires foam balls, as the CAD turret does
+  decision: "The physics fires Rival-size foam balls (22.7 mm, 1.83 g, Cd 0.5) at 70 fps (21.3 m/s, the kid-safety cap for balls) from a 30-ball hopper: the ammo of research/turret-launcher-study.md section 8 and cad/turret.py. The matched flywheels give them no spin, so they fly on drag alone. On the 3D page they turn, bounce and roll, the turret panel counts the hopper, a shot sounds like a dial step and a flywheel pomp, and Gyropup talks about balls. This replaces the dart parts of D19 and D26; the knock-down targets and the laser rules stand."
+  why: "The user saw darts in the simulator while the CAD turret shoots balls. A ball leaves slower than the 80 fps dart, so it drops about a quarter more over 4 m, but with 1.6 times the momentum it knocks plates over sooner: the targets scenario downed all five plates with 9 hits from 11 shots (darts: 18 hits from 18 shots, four plates)."
+  status: decided
+  source: {kind: user, quote: "The robot ammo still looks like darts not balls."}
+- id: D35
+  date: "2026-10-26"
+  title: Gyropup's own Piper voice
+  decision: "tools/tts_server.py is Gyropup's Piper sidecar, speaking the protocol talk.js already used (GET /health, GET /tts): en_US-hfc_female-medium, lifted 2 semitones by resampling after Piper speaks that much slower, at 0.95 pace, each line cached on disk. /health tells the page to play the audio as it is and names the voice, which the talk dock shows. Voice and settings are flags or GYROPUP_TTS_* variables. Runners-up: en_US-libritts_r-medium speaker 8329, en_US-lessac-medium, en_GB-cori-medium, en_US-ljspeech-medium. The browser fallback is gentler (pitch 1.3, natural voices first). Moxie's Whisper and the brain chain of D27 are unchanged."
+  why: "The user found the voice odd: with no Piper running, the page fell back to the browser's speech at pitch 1.7. Eighteen single-speaker English Piper voices said the same eight Gyropup lines, 1,047 speakers of the multi-speaker voices were screened on two of them, and each was measured for pitch, intonation, pace and cleanliness; hfc_female, from a studio corpus, is the liveliest with the cleanest pauses. Its data is CC BY-NC-SA 4.0: fine for this private, non-commercial robot, but a commercial product would switch (LibriTTS-R is CC BY 4.0; cori and ljspeech are public domain)."
+  status: decided
+  source: {kind: user, quote: "The voice is odd, we need a new Piper voice."}
+- id: D36
+  date: "2026-10-26"
+  title: One robot, one design; the parts explorer goes to cad-agent
+  decision: "Gyropup is now a single design. Removed from this repo: the choose-your-own-adventure designer pages, the results/comparison page, the design variants, the overnight optimiser loop (iterate, trial evaluation, the 4090 mirror), the catalogue's 305 alternative parts and their product images, and the vendor files of motors we do not use. Everything is kept at the git tag explorer-snapshot-2026-10-26. The generic part of it (catalogue schema, design choices, pluggable evaluation, comparisons) is being turned into a modular comparison framework in cad-agent, by a PR into dev. The old serial-leg robot (cad/build.py, cad/leg.py, sim/model.py and the 3D game page that draws it) stays only until leg v2 is on the full robot, then goes too."
+  why: "The user: the any-parts concept is cool but not realistic; it belongs in cad-agent as a framework for comparisons, and this repo should build one great robot."
+  status: decided
+  source: {kind: user, quote: "the whole massive custom gyropup concept is cool but not realistic (pick any parts in an exporer). That's something worth leaving in our cad-agent repo as a modular framework for comparisons...but let's just build a great robot and clear out the clutter here."}
+- id: D37
+  date: "2026-10-26"
+  title: No e-stop button or contactor on the robot
+  decision: "The robot carries no e-stop button and no contactor. A radio stop is designed separately. A power cut while standing is the knees' governing case (D39): the radio stop should sit the robot down before power goes."
+  why: "The user will use a radio and work the stop out separately."
+  status: decided
+  source: {kind: user, quote: "Honestly don't add an e-stop we will use some radio and figure that out separately."}
+- id: D38
+  date: "2026-10-26"
+  title: "Leg v2: a five-bar with both motors in the body, built and tested as one leg first"
+  decision: "Each leg is a symmetric five-bar (cad/fivebar.py): two RS-04s 150 mm apart in one printed hip frame (each on a 61812 support bearing), two 150 mm upper links, two 250 mm lower links meeting at the wheel axle; the wheel link carries the BotWheel on a hollow hub, the front lower link rides on that hub on a 61812, the knees are the standard cartridge (two 6001s on a 12 mm shoulder screw). TPU-sleeved stop posts limit the upper links (+3 deg / -97 deg). Leg 130-380 mm, at least 467 N of push anywhere in that range at the 60 N·m cap, 16.7 N·m per motor to hold 130 N, every joint at least 33 deg from a dead point, every link printable on a 256 mm bed. The track drops from 692 mm to about 360 mm. The first build is one leg on a vertical-rail test rig (sim/leg_rig.py), then the turret, then the body around two legs."
+  why: "The user asked to focus on one great leg (and the turret) before the rest. The coaxial hip-and-knee stack of D31-D33 put two 56 mm RS-04s side by side on each hip and made the robot 740 mm wide. A sweep of 330 printable five-bar geometries (tools/leg_synthesis.py: 36 feasible) found one with the motors inside the body, the load shared by both motors and links that mostly carry tension and compression, which suits printed parts. The survey (research/wheel-legged-survey-2026-10-26.md) recommended Diablo's coaxial layout instead; with RS-04s that layout is about 630 mm wide, and the five-bar is the usual leg on RoboMaster balance robots, the closest match to Gyropup's job. The price is no 360-degree hip, so the legs cannot swing over to self-right."
+  status: decided
+  source: {kind: user, quote: "Honestly you should really focus on a single leg making it awesome? Then we could make one leg first. 1 leg and a nerf turret"}
+- id: D39
+  date: "2026-10-27"
+  title: "Leg v2 loads from the rig's real joint forces; a two-sleeve knee eye; no spring until the RS-04's power-off damping is measured"
+  decision: "The rig (sim/leg_rig.py) carries the real 13.1 kg (half the 26.2 kg v2 robot; it carried 8.5 kg before: a lost ballast mass) and records the gearbox torque and every joint's force at every step; the strength cases (cad/leg_studies.py) take their loads from those, not from statics on the axle's peak force, which overstates a landing's knee load about twice. Changes from them: each upper link's knee eye has two 12 x 18 x 20 steel sleeves (40 mm) in a boss 20 mm proud of its inner face, with a 90 mm knee shoulder screw; the 61812 hip bearings are pressed in from the motor side onto a lip (no retainer screws); fillets where the knee bosses and the eye boss meet their links; each chain is checked at its measured share of the out-of-plane load plus 0.15. The leg has no spring for now. The one case it does not pass is an undamped power cut while standing: the leg folds onto its stops with 3.0 kN on each knee; with the RS-04's power-off damping it is 0.3 kN. A bench test of that damping (back-drive an unpowered RS-04, measure torque against speed) comes before anything else is built for it. If it is too weak: the knee-to-knee spring add-on (research/leg-suspension.md section 8), softer longer-travel stop bumpers, and a firmware sit-down before any planned power-off. Re-checked 2026-10-28 at D71's 37.5 kg (18.75 kg a leg), the 10S 36 V bus (D65) and D69's wheel. The rig takes the 10 in wheel's mass (4.0 kg; 3.53 kg listed), radius (127 mm) and air tyre (10 x 2.125 at 30-35 psi, about 60 N/mm: solref 0.0141 / 0.5, research/air-tyre-hub-wheels.md 3.2). The CAD keeps the BotWheel's interface for geometry, because W2's 45 mm split D-clamp foot is not designed yet: its boss in the wheel link's foot, the wheel's mid-plane 37 mm from the link's middle. W3 re-runs the studies with the clamp, the shaft and the measured offset (issue #25). The rig: drop_150 axle 1,605 N; the capped jump's landing knees 574 N dynamic (773 N at 16.25 kg on the solid tyre); the jump 153 mm; the gearbox at most 110 N m; the undamped power cut 2,048 N on a knee and 122 N m on a stop post. The air tyre makes the landings about a quarter kinder. The bigger wheel makes the everyday turn (E1) the sizing case: its sideways grip acts 127 mm below the axle, not 85.6. Changes: the hip frame's gussets run out tangent to the web (their sharp tip was real, not mesh noise: E1 1.43 to 1.77 at 17.75 kg); the front link's knee boss fillet on its outer face goes from 6 to 16 mm, plus a 6 mm fillet where the apex eye leaves its inner face (E1 1.62 to 2.16 at 17.75 kg); the hub dowels are Ø5 x 20 (McMaster 91595A356), 12 mm in the link. Strength at 18.75 kg (exports/leg/fea/summary.json, 4 mm mesh). Whole leg: R1 2.40, E1 2.85, R3 1.88. Upper link: R1 1.83, E1 2.13, R3K 1.08, R2 1.64, E2 3.28, E3 7.36. Front link: R1 1.69, E1 2.00. Wheel link: R1 2.74, R1w 1.61, E1 3.15. Hip frame: R1 1.55, E3o 2.38, E3i 2.70, R3o 1.17. Output adapter: 11.2 or more. Joints: hub dowels 2.95, knee pins 1.31 or more, eye pressure 1.06 or more, stop pin 2.11 everyday and 1.03 in the power cut. Two cases miss their targets. (1) The hip frame's E1 is 1.65 against 2.0, at the bottom flange's square end, on its root on the motor side, across the print's layers. It was 1.98 at 32.5 kg on the BotWheel and 1.75 at 17.75 kg. Five changes there each made it worse or moved the failure, so none was kept (cad/fivebar.py GUSSET_RUNOUT): a trimmed root fillet, a variable-radius root fillet, a web lobe, a backing block and a thicker flange. A snipe gave 1.81 but took R1 to 1.35. The fix, before the robot runs: proof-load the first printed frame on the rig to twice the E1 load at the hip (issue #29). If it shows damage, the frame's flanges move to a bent 5052 part. (2) In the undamped power cut, the rear knee's 6201 is at s0 0.94 against 1.0. The rig folds the leg onto its stops with all 18.75 kg on it. On the robot, the body's skids and D71's crush pads land first, at a leg of 119 mm or more against the stops' 88-101 mm. Over C0 by 6 % is raceway brinelling, not breakage. The fix: the rig's power_off test runs with its bottom bumper set or with the RS-04's measured damping (power_off_damped: 364 N), and the knees are inspected after any undamped cut, as above."
+  why: "The gearboxes peak at 64-106 N·m in every rig event (under the RS-04's 120). A spring between the upper links, the survey's first answer, cannot be built: in 3D its line passes through the hips below a 250 mm leg. The knee-to-knee spring clears the CAD and holds the unpowered robot up, but costs brackets, a guide and a boot (0.45-0.6 kg per leg), a steady 8 N·m on each knee bolt and 7 mm to the tyre at full crouch; for landings the tyre and firmware matter more than any spring."
+  status: decided
+  source: {kind: user, quote: "do our legs need springs or anything like that as basically a suspension system and to set them at a good resting middle positon?"}
+- id: D40
+  date: "2026-10-27"
+  title: "Every part is bought off the shelf, printed, or ordered online as a custom part: no quotes"
+  decision: "Each part of Gyropup is one of three kinds. (1) Off the shelf, with a listed price and a buy link: McMaster-Carr first for hardware and bearings; Digi-Key, Mouser, SparkFun, Adafruit and Pololu for electronics; the makers' own stores for motors, servos and the wheel. (2) 3D printed: PA6-CF for structure, PETG, TPU. (3) Custom parts ordered online from our drawings at an instant price: SendCutSend (laser-cut, bent or machined sheet and plate), Xometry or JLCCNC (CNC), JLCPCB or PCBWay (boards). Nothing needs a request for quote: a part sold only on quote is replaced by one of these. So the turret's slip ring is the SparkFun ROB-13065 (Senring, 12 circuits x 2 A, $27.95, in stock) on the bench and on the robot; the 200 ms flywheel soft start keeps every circuit under 2 A (docs/turret-physics.md V3: 2.2 A peak with the ramp), with power circuits paralleled."
+  why: "The user wants a robot anyone can order and build: off-the-shelf parts, printed parts and SendCutSend-style parts; vendor quotes (the plan's robot-grade slip rings from Moog, Servotecnica, Senring and Moflon) are not needed."
+  status: decided
+  source: {kind: user, quote: "why do we need to send a vendor quote requests? We should use mostly off the shelf parts, 3d printed parts, and sendcutsend or similar parts?"}
+- id: D41
+  date: "2026-10-27"
+  title: "The turret plan's open choices, decided"
+  decision: "docs/turret-plan.md section 1, as its planner recommended, except where D40 overrides it. D1: continuous pan through the slip ring (the plus or minus 170 deg cable loop stays a CAD option). D2: the SparkFun ROB-13065, no quotes (D40). D3: an Adafruit Feather M4 CAN Express on the turret. D4: the pan servo's bus crosses the ring. D5: one fixed 12 V regulator for the flywheels (Pololu D24V150F12 class), which is the speed ceiling. D6: two ring circuits reserved for a camera. D7: the safety line cuts the flywheels and the dial in hardware; pan and tilt stay live, capped at 100 deg/s while disarmed. D8: dropped (no quotes). D9: a phase-short brake on release plus the ESCs' brake-on-stop. D10: a hardware chronograph trip at 66 fps. Also: the turret stands on a 30 mm printed riser on the top deck (14 deg of depression facing forward over the lidar, the full 25 deg outside plus or minus 56 deg of pan), and the pan bearing is a chrome-steel 6810-2RS from an off-the-shelf seller, not McMaster's $195 stainless one."
+  why: "The user asked not to wait on them for decisions."
+  status: decided
+  source: {kind: user, quote: "You don't need to wait on anything for me"}
+- id: D42
+  date: "2026-10-27"
+  title: "The first bench turret (v0): the turret as drawn, with three part swaps forced by stock"
+  decision: "v0 is the turret as drawn on main (the slip ring and continuous pan, the SendCutSend aluminium clamp, the pulse-train safety line, the two chronograph gates and the hardware trip, the phase-short brake, the hard tilt stops, the ball + 2.0 bore) on its printed bench stand, with three swaps. (1) Two SunnySky X2216 880KV V3 short-shaft outrunners replace the delisted DJI Snail 2305s, on the same fixed 12 V flywheel rail: Ø34 tyres first (worst-corner ball 64.1 fps), Ø36 only if every ball of the bench ceiling test on Ø34 stays under 60 fps; each hub clamps on the motor's own bolt-on prop adapter (M5 stud, Ø5 pilot, Ø17 flange) under the bell. (2) A third Feetech STS3215 on the servo bus steps the dial, replacing the DJI M2006 + C610 (out of stock; the C610 is $250-320 elsewhere); it takes the switched 12 V rail through a 3 A polyfuse, so the safety line still cuts it, and neither 24 V nor a CAN node reaches the cartridge. (3) The red Quarton VLM-650-03 LPT (Class 2, under 1 mW, Ø7 x 21) replaces the green VLM-520-73 LPT (0 stock, 4 weeks). Not fitted on the bench: the TPU bumper, the fill flap and its spring, the lights and buzzer, the hopper-full beam. The stand's rocker is the DC-rated Switch Components RA1-1A-DC-2-B-1 (Ø20.2 round snap-in). The +-170 deg cable loop stays the documented fallback if the ring fails its bench tests (docs/turret-prototype-plan.md 2.4). D41 stands for the robot."
+  why: "The DJI parts and the green laser cannot be bought today. The substitutes are in stock at US sellers, sit inside the cage's KV band on the fixed 12 V rail (790-910 rpm/V), and reuse what the turret already has (one servo type on one bus). Everything else is built, swept and documented, so the bench turret is the robot's turret."
+  status: decided
+  source: {kind: user, quote: "full steam ahead, finish our plans and get this ready for first prototype manufacturing"}
+- id: D43
+  date: "2026-10-27"
+  title: "The bus is 13S Li-ion: 48.1 V nominal, charged to 4.10 V a cell (53.3 V)"
+  decision: "The robot runs from a 13S Li-ion pack on a 48.1 V bus, charged only to 4.10 V a cell (53.3 V) by a charger set to that voltage, with the BMS's cell over-voltage at 4.15 V as the backstop; empty at 3.0 V a cell (39 V). The FLEXVOLT 60 V default and the maxon regen clamp are dropped from the robot (the user's FLEXVOLT packs stay on the bench and the turret stand). Every load is rated across 39-53.3 V: the RS-04 (15-60 V), the Flipsky 75100 (14-84 V), the anti-spark switch (12-84 V), the Mean Well DDR converters (33.6-67.2 V and 18-75 V), the MINI 58V and MRBF fuses (58 V); regeneration has room to 57 V. This is docs/body-plan.md's proposed D42, renumbered."
+  why: "The RS-04 faults on over-voltage at 60 V, which a FLEXVOLT pack's 60 V initial voltage reaches; the 13S bus keeps 7 V of regen headroom under that, gives the rig's jump speed, and puts a BMS's protections on the pack. 4.10 V a cell trades about 9 % of the capacity for cycle life and margin."
+  status: superseded by D65
+  source: {kind: user, quote: "Usage limits reset, full steam ahead, finish our plans and get this ready for first prototype manufacturing."}
+- id: D44
+  date: "2026-10-27"
+  title: "The body frame: two bent 3/16 in 5052 cheeks on eight standoffs in the hip frames' bolt rows, a floor tray, a belly plate and a deck, all SendCutSend sheet"
+  decision: "The spine is two identical C-channel cheeks (5052-H32 3/16 in, 184 x 181 mm webs, 30 mm flanges outwards, eight PEM SS-M5-0 each), 31 mm apart on eight M4 x 31 aluminium hex standoffs (McMaster 95947A065) that stand in the hip frames' bolt rows (z +-67.5, x +-10 and +-72) beside the frames' six M5 inserts (fivebar.frame_mounts(): x 0, +-83, z +-70). Each hip frame bolts to its cheek with six M5 x 12 ISO 7380 button heads from inside the gap. The floor tray (5052 1/8 in, 15 mm lips) lies on the upper flanges at z 90.5, the belly plate (6061-T6 0.100 in, 116 wide: the knee eyes keep 25 mm) under the lower ones; the deck (5052 0.100 in) on four printed PA6-CF posts at z 216 (TOP, as the sim). The spine is 40.5 mm wide between the frames' faces: the track is 414.3 mm (the plan's 415.8). The battery lives in a drawer under the belly plate, the power skid on its own plate on printed posts over the tray's front half, the compute on its pallet over the rear half, the lidar 5 mm behind the plan's spot (x 103: its front pin 8 mm from the deck's bend). This replaces the plan's proposed D43 (a 36 mm bent U spine of 1/8 in sheet: SendCutSend cannot bend a channel whose base is under twice its flanges, and 1/8 in cheeks fail the landing case: SF 0.6)."
+  why: "cad/body_studies.py at the rig's loads on the body for the 32 kg robot (cad/body_legloads.py: 205 N m roll and 559 N at a 150 mm drop, 275 N m and 964 N in the undamped power cut, taken at the hip frame's mount plane): S1 landing SF 4.4 away from the standoffs' bonded ends (1.5 at those ends, a modelling singularity still under yield), S1F fault 2.9 (1.7), S1b one leg against a clamped cheek 2.8 (1.7), the 80 N m twist 0.013 deg, the pitch couple SF 27; the tray with what stands on it at the landing's 8.8 g SF 2.5 (1/8 in: 0.100 in was 1.55); the deck under a 300 N hand SF 2.5, 0.33-0.38 mm; a 30 g tip-over of the 1.70 kg head SF 1.3 against the abuse target 1.2 (exports/body/fea/summary.json). With 1/8 in cheeks no standoff layout passed; the standoffs carry each leg's roll moment straight across to the other frame. One cheek part serves both sides, as one hip frame serves both legs."
+  status: decided
+  source: {kind: user, quote: "Usage limits reset, full steam ahead, finish our plans and get this ready for first prototype manufacturing."}
+- id: D45
+  date: "2026-10-27"
+  title: "The J501 and the turret share the body's 24 V converter; the turret is on the J501's second CAN port; branch fuses are MINI 58V"
+  decision: "One Mean Well DDR-120C-24 (isolated, 24 V 5 A) feeds the J501 and the turret, each through its own 5 A fuse; the turret's CAN is the J501's can1 and its SAFETY loop is a radio-stop relay's contact; the turret's stepped flywheel start is forbidden on the robot (the ramped start is the design point). A DDR-60L-12 makes 12 V (lidar box, radio stop, the P3 lights and eyes) and a Pololu D36V28F5 5 V from it. Every branch on the 48 V bus has a Littelfuse MINI 58V blade fuse (0997 series, 1 kA at 58 V) instead of the plan's 10 x 38 mm midget fuses, which stand 83 mm off their rail and need 193 mm of it. This is the plan's proposed D44, with the fuses changed."
+  why: "120 W covers the J501 (60 W) and the turret (60 W peak, 40 W playing) with the flywheels ramped; one converter and one fuse type keep the skid on one plate. The MINI 58V is the only compact blade fuse found rated 58 V DC in every size needed (2-30 A)."
+  status: decided
+  source: {kind: user, quote: "Usage limits reset, full steam ahead, finish our plans and get this ready for first prototype manufacturing."}
+- id: D46
+  date: "2026-10-27"
+  title: "The leg's output adapters are machined 6061-T6, ordered online at an instant price; the standard face's holes fixed"
+  decision: "The two output adapters per leg (between each RS-04's output flange and its upper link) are CNC 6061-T6 from JLCCNC (backup Xometry), uploaded as exports/leg/cnc/output_adapter.step with the callouts in exports/leg/cnc/README.md (Ø60 j6 journal for the 61812, H7 dowel holes, M5 threads, ISO 2768-m). The standard face (cad/interfaces.json AO-L) changes with them: 8 x M5 tapped at 0, 30, 90, 120, 180, 210, 270, 300 deg and 2 x Ø5 H7 dowels at 60 and 150 deg on PCD 50, each 15 deg from every RS-04 output screw; the motor's 9 screws are M5 x 25 socket heads (McMaster 91290A252) in Ø10 pockets with their heads 0.6 mm below the face, 6 mm into the motor's 6.5 mm threads. The upper links' hubs take the new pattern. made: 'print' in the standard still gives a PA6-CF adapter (inserts in the face) for a fit check, not for loads. 154 g each against about 70 g printed: +0.33 kg on the robot."
+  why: "Held where it really sits on the motor (its contact face and the motor's pins, with the screws in clearance holes), the printed adapter came out at SF 0.86 in the landing case across its layers (1.04 if its 61812 is counted as a stiff radial support), against 1.2, with the 13.1 kg loads (about a tenth worse at the 14.75 kg design mass); the earlier 1.15 came from clamping the screw holes along their whole length. Checking the CAD for the fix found three faults in the printed design: both face dowels sat inside bolt holes (so there were none, though the hub joint check counted on them), six face inserts broke into the motor screws' counterbores, and the motor screws' heads stood 0.2 mm (1.2 mm with washers) into the upper link. Machined, the adapter is at SF 7.6 (landing), 15.8 (a motor at 120 N m against a stalled leg) and 22 (everyday); the joint screws can take full preload; and the bearing journal and dowel holes are held to a fit a print cannot hold. D40 allows instant-price CNC; one part type, four per robot."
+  status: decided
+  source: {kind: user, quote: "Usage limits reset, full steam ahead, finish our plans and get this ready for first prototype manufacturing."}
+- id: D47
+  date: "2026-10-27"
+  title: "The bench turret's arm chain as built: 3.3 V logic, the 555 on the pendant's 12 V, the brake FETs to ground"
+  decision: "The hardware arm chain keeps D7, D9 and D10 and is built as docs/turret-wiring.md section 3 draws it, part by part (exports/turret/wiring/parts.md). (1) The logic that makes ARM (the two one-shots, the trip latch, the AND gate) runs on the Feather M4 CAN's 3.3 V, so nothing over 3.3 V reaches the Feather; the servo bus returns to RX through a divider, and the laser's FET gate is driven at 5 V by the bus buffer's spare channel. (2) The base's NE555 runs on the pendant loop's 12 V (no 78L05) and drives the 4N35 at 2 mA through 2 x 2.2 k 1 W, with a diode that keeps a +24 V fault out of it. (3) The six brake FETs short each motor phase to ground (not to a floating star), driven on the cartridge board by a 74HCT14 from ARM through a 6.8 k / 1 uF delay (5-14 ms) with a diode for an immediate release. (4) The Feather's own 120 R is the turret's only CAN terminator. After an independent review against the datasheets: (5) the trip latch is set-only (its D tied high, clocked by gate 2 while the window is open), so no later edge can clear a trip; (6) the Feather reads ARM and the pulse train through 100 k and cannot drive them; (7) the one-shots are the CD74HC423E, which a rising reset never triggers, and an MCP120 makes the power-up reset; (8) each brake FET has 100 nF from gate to source so the ESC's phase edges cannot turn it on; (9) AM32's complementary PWM is off and the firmware ramps between set speeds, so no wheel energy goes back into the buck-fed 12 V rail, with TVS diodes on both 12 V rails and Pololu's Schottky across the 2815; (10) the pendant plugs into a keyed mini-XLR socket that no headphone plug fits, through a 0.1 A polyfuse."
+  why: "The plan's version would have failed on the bench: its 5 V logic put 5 V on the Feather's pins (not 5 V tolerant) and its gates' 3.3 V pull-ups were under a 5 V 74HC input's threshold; a 5 V 555 drives the opto's LED at about 0.5 mA, too little for the 4N35 to pull its input low reliably; a floating star takes the FETs' gate drive from wherever the ESC's phase-sense dividers hold it, so the brake could stay off; and the Feather already terminates CAN. Shorting the phases to ground is what AM32's own brake does, so the two never fight. The review found that the plan's latch (D = the window) could be cleared by the next slower ball, that the Feather could raise ARM through its own pins, that a '123 one-shot fires on a rising reset, that the ESC's dV/dt would lift the brake FETs' gates through 1 k, that complementary PWM regenerates into a rail a buck cannot absorb, and that any audio plug would have closed the pendant loop."
+  status: decided
+  source: {kind: research, ref: "[the turret wiring, section 3](docs/turret-wiring.md)"}
+- id: D48
+  date: "2026-10-27"
+  title: "The cradle is a printed PA6-CF rail frame with two laser-cut 6061-T6 cheek plates and an aluminium hard-stop lug, from its first print"
+  decision: "cad/turret.py `cradle` is a rail frame printed flat with no supports (the rails, the rear cross bar, the CT dowels and captive thumbscrew, the laser tab, as v0), 10 mm deep along the cheek plates' feet (x -10..80) with a 3.2 mm rebate on each rail's outer face and 4 x M3 inserts a side. Two SendCutSend 6061-T6 0.125 in plates (cradle_plate_l, cradle_plate_r: a 90 x 10 foot on 4 x M3 x 8 button heads and a 44 mm cheek to the Ø44 round at the tilt axis; outer faces at y +-56.5, 4.0 mm from the yoke's arms) carry the tilt servo's horn through a printed boss (horn_boss; 4 x M3 x 14 18-8 flat heads, McMaster 92125A133, the only length that reaches the horn's flange and stops short of the servo) and the ISO 7379 shoulder screw in a tapped M5 hole, with a printed pivot_spacer whose Ø6.8 x 1 land bears on the MR126's inner race and takes the screw's step, as v0's insert did (no separate shim). The hard stop is a SendCutSend 6061-T6 0.100 in lug on the -y plate's outer face (2 x M3 x 6 flat heads into its tapped holes, a drop of CA), 1.5 mm from the arm, its stop band +-10 deg at r 22.5..32 and its screw pad inside the stop annulus. The yoke's two stop sectors stand 3.0 mm proud (1.5 mm onto the lug, 1.0 mm from the plate), on true arcs clipped to the arm's width and each backed by a buttress; its bridge is 12 mm, its arms meet it in 6 mm fillets (3 mm under the rotor leads), the +y arm has no window and the -y arm's lead window is 12 x 10.5. The range is still 0 to -25 deg. Four aluminium parts in one SendCutSend cart, in two thicknesses. The turret is 1.684 kg with 30 balls."
+  why: "Re-solved by stress direction the v0 cradle failed across its layers in every print orientation (the sideways fall 0.73 flat, 0.57 on its side, 0.67 on its tail; the 50 N push 0.86-1.13 against 2.0), and the push's weak spot was the root of the hard-stop lug that keeps the barrel from being pushed above level. With the layer-aware check (N2) on the final geometry: the rail frame 2.51 / 4.29 in the falls and 2.22 in the push; the yoke 3.79 / 2.03 / 5.10 and 2.36; the +y plate 2.14 out of its plane and 8.6 in it, the -y plate 20.8 in its plane, 15.5 in the push and about 3.8 out of its plane pinned at its pivot (1.24 if the pivot is clamped, a bound: a bearing carries no moment); the lug 2.61 on yield. What the checks changed from the plan's sketch: the feet are 10 mm, not 12 (at full depression a 12 mm rail passed 0.37 mm over the slip ring's rotor leads where they cross the bridge; 10 keeps 2.4); they reach x -10 (behind x 26 the printed rail cantilevered 46 mm to the rear CT dowel, 0.97 in the fall); the lug's band is +-10 deg (+-7.5 left its root at 2.2 by hand) and its pad sits inside the annulus (the foot is taken by the plate's screws, the latch and the front dowel); the pivot spacer's land carries the step (the plan's Ø6.5 bore leaves a 0.15 mm land and no standard shim fits inside the inner race's Ø7.2); and the yoke, which the push loads across its layers (printed on its back), needed the thicker bridge (its torsion), the fillets, the smaller window and the buttresses before it passed (1.07 at first). The flared printed cradle stays the schedule hedge only, proof-tested at the fall load (test 2.4, N12) and never on the robot. Supersedes plan T16's 'fixed in v1 if under 1.2'."
+  status: decided
+  source: {kind: agent, ref: "[the turret next plan, sections 1.3 and 5.2](docs/turret-next-plan.md)"}
+- id: D49
+  date: "2026-10-27"
+  title: "The head payload's mass budget is 1.70 kg with a full hopper, its centre at most 100 mm above the TM face"
+  decision: "The turret with 30 balls may weigh 1.70 kg, its centre at most 100 mm above the TM face (130 mm above the deck on the 30 mm riser). As built after D48: 1.684 kg with 30 balls (1.629 empty), the centre 95.7 mm above the TM face (exports/turret/turret.json; exports/turret/mount.json gives the body both). The levers stay listed, not scheduled: a 24-ball hopper (-11 g), a one-board bay (-40 g). docs/head-payload.md and the designs' head_payload (the simulation suite's numbers) take 1.70 kg at the main session's next tick; the body's mass ledger took it on body/program."
+  why: "The turret as drawn was 1.639 kg in v0: the slip ring, its carrier and driver, the board bays, the X2216s and the cartridge board are what the 1.5 kg of docs/head-payload.md did not have. D48 adds the aluminium cheeks and the FEA's own changes (the rail frame's longer feet, the yoke's thicker bridge and fillets). The leg is run at the robot's real mass anyway (body T4), where 0.2 kg is 0.7 % of the robot; cutting it would cost the margins the FEA just bought."
+  status: decided
+  source: {kind: agent, ref: "[the turret next plan, section 5.2](docs/turret-next-plan.md)"}
+- id: D50
+  date: "2026-10-27"
+  title: "The turret-on-J501 adapter is rebuilt on the J501's Rev 0.9 and printed only once the J501's own Rev 0.9 cover fits its cooler"
+  decision: "cad/turret_box.py reads the J501's Rev 0.9 parameters (the flush fan grille, the 9215 fan's frame and chamfer, the cooler's centre; committed in the J501 repo at 8e33874 with the cooler centred on the module) and falls back to Rev 0.8's when they are not there. The intake shroud's collar stands on the roof's solid band round the grille on a 3 mm foam ring (tape on the hex cells would leak exhaust under it), fed by a duct with a 158 mm mouth under a deck 40 mm above the roof (the TM face 145 mm above the desk; the lid screws M3 x 40); the TM face's M5 inserts sit wholly in the 8 mm deck and the turret goes on the box with 4 x M5 x 12 button heads, so nothing hangs below the deck in the collar's way; the pod's panel is the stand's (the Ø20.2 keyed rocker, the TB3M mini-XLR's D-hole, the XT60E-M). box.json records the J501's revision and the parameters file's git state, and the build warns when the revision changes. The three prints wait for the J501's own Rev 0.9 cover; the proof is a thermocouple in the collar and one in the room: the intake within 3 K of the room for 30 min at 40 W, and tegrastats no worse than without the adapter."
+  why: "Rev 0.9 replaced the ring the Rev 0.8 shroud was drawn round by a flush grille and a 9215 fan, and its last commit re-centred the cooler 9.5 mm behind the pan axis, where the Ø105 collar its seal band asks for meets the TM pattern: bosses for the stand's M5 x 16 under the deck stood in its way, so the box uses its own shorter screws. At the J501's CFD point (38.8 m3/h) the plan's 124 mm duct over a 36 mm gap costs 16 % of the fan's flow; the 158 mm mouth (the front legs allow no more) over the 40 mm gap costs 9.2 % by hand. The shroud keeps 3.7 mm from the nearest leg, the box scene limits no pan, and firing stays out within 60 deg of straight back."
+  status: decided
+  source: {kind: agent, ref: "[the turret next plan, section 2](docs/turret-next-plan.md)"}
+- id: D51
+  date: "2026-10-27"
+  title: "Both AM32 ESC pairs in the first order; the pair that returns eRPM on the bench is the one built in"
+  decision: "The first order buys the Repeat Robotics AM32 35 A pair as catalogued and the Lumenier Razor Pro F4 45A AM32 pair (RaceDayQuads, $31.49 each; GetFPV, Lumenier's own store, as the backup seller), and the gate comparator's 39 k pull-up alternates (R41a, R42a, bench test 3.10). The first bench hour with any ESC (docs/turret-next-plan.md N10: the Feather, one ESC, one motor without a hub, 12 V at 1 A) asks each for bidirectional-DShot eRPM at idle and at 50 % throttle; the Repeat pair is flashed with AM32's stock release and retried if it returns none. The pair that returns eRPM within 2 % of a strobe or a phase-frequency reading is built in (firmware/turret/am32_settings.md names it), the other is the spare. The Lumenier board is 28 x 12 x 5 mm and fits the Repeat board's place on the cage plate."
+  why: "The pre-feed speed check and the whole flywheel loop (firmware/turret/flywheel.py ErpmGuard) depend on eRPM telemetry. The Repeat page calls its ESC bi-directional in the sense of a reversible drive and says nothing of DShot telemetry, and the catalogue says RPM telemetry on that board is not confirmed; the Lumenier runs stock AM32 with a telemetry pad. $63 of insurance against a week lost to shipping after the bench finds out."
+  status: decided
+  source: {kind: agent, ref: "[the turret next plan, sections 1.5 and 5.2](docs/turret-next-plan.md)"}
+- id: D52
+  date: "2026-10-27"
+  title: "On the robot the turret's safety line is a dry contact of the body's stop relay, whose second pole cuts the turret's 24 V; the harness drops at the right rear"
+  decision: "Across DT12 pins 7-8 the body puts a dry contact of its STOP relay (closed = run), in place of the bench pendant: it opens on the radio stop, on the receiver's failsafe (the link lost) and when the robot sits (D37). It carries the base's 555 and its opto loop, about 10 mA at 12 V, so it is a gold-clad signal contact. The same relay's second pole is in the turret's +24 V branch (after the body's 5 A branch fuse): an independent cut that relies on nothing inside the turret, opening with the first; it closes onto the turret's 2 x 1000 uF bank, so it is rated for that inrush or the branch gets an NTC limiter. The harness is a 300 mm pigtail with the DT06-12SA plug in a TE 1011-248-1205 90 deg backshell; the receptacle is on the turret's -y side (the robot's right) and the TM dowels fix that side, so the deck grommet goes to the robot's right rear, (-130, -60) (a 450 mm pigtail if the body keeps the left rear). CAN to the J501's can1 with one 120 R at the body's end; the DT12 is plugged and unplugged only with the branch off. Written as docs/turret-wiring.md section 1.1b; the turret's hardware and firmware need nothing new."
+  why: "The turret's hardware arm chain already does everything once the loop opens (ARM falls within 16-21 ms, the 12 V FLY rail is cut, the phase-short brake closes 5-14 ms later), so the robot needs only to open a contact where the bench's hand opens the pendant. The second pole makes the power cut independent of the turret's own electronics (the Pololu 2815 is a load switch, not a safety device). A stop leaves the turret dark: the barrel rises to its 0 deg stop by itself (the tilting group's centre is 8 mm behind the axis) and the turret homes again before it can arm. The body's branch already planned one two-pole relay for this (its own power-protection decision)."
+  status: decided
+  source: {kind: agent, ref: "[the turret wiring, section 1.1b](docs/turret-wiring.md)"}
+- id: D53
+  date: "2026-10-27"
+  title: "The leg's stop posts are Ø16 steel pins in blind holes, and each upper link meets its TPU sleeve with a radial stop face"
+  decision: "Each of the four stop posts (cad/fivebar.py) is a Ø16 x 40 vented pull-out 52100 dowel (McMaster 98432A386, $5.88; DIN 7979 D, m6, its end tapped M8 for a puller), 23 mm into a blind hole in the hip frame's 24.1 mm web (a light fit dialled on a post coupon, Loctite 638 filling the gap, never a hard press), in a Ø36 boss; the two knee-out posts sit at the motor's ring's edge, so their bosses are blended into the ring and the flange's corner (the most the frame takes and still fits the bed turned: 249.2 of 250 mm) and backed by a block 40 mm deep on the motor side (the hull of the boss and the flange's end face, its face towards the motor at r 66 and rounded into the web, 2.5 mm off the motor's Ø120). Over it, a printed TPU 95A sleeve, Ø32 with an 8 mm wall and a 3 mm cap, from the frame's face to 19 mm above the upper link's inner face, a stretch fit without glue. Each upper link gets a radial stop face either side of its hub (stop_dogs: flat out to 70 mm, its back tapered into the link's edge, its root filleted), so the sleeve is pushed square on, 57.8 mm from the motor's axis (fivebar.stop_arm), and the face does not slide on it. The posts sit 60 mm from the motor's axis and 58 deg past each stop angle (+3 / -97 deg unchanged): both of a motor's posts exactly midway between two lug screws, so the lug pattern, the motors' turns and the dowel holes do not move. The M8 shoulder-screw posts (92981A303) and their M8 heat-set inserts leave the leg. The rig's stop is the new sleeve: k = E A / t at the 57.8 mm arm, 856 N m/rad, 7.4 deg of travel to the pin."
+  why: "The pre-order review found the old posts' heads inside the link's thickness (the link met steel after 5 mm of TPU, review M6) and the stop's moment tearing the M8 insert out of the printed web (S3). Checking the fix on the real solids found the force about twice what the review took: the link's straight edge met the round post 31 mm from the motor's axis, not 58, so a 60 N m stop pushed 1.9 kN, not 1.0. A steel pin turns in a printed hole as a rigid body, so the web bears p = F/(dL)(4 + 6e/L) at the hole's mouth (6M/(dL^2) + F/(dL) with M about the hole's middle, as the knee eyes' check takes it; with M at the face, as the review took it, it reads 3F/(dL) low): the proposed Ø12 pin 22 mm deep came out at SF 0.6 everyday against the link's edge, 1.2 with a radial face (target 2). With the face (F = T / 57.8 mm) and the contact low on the pin (19 mm of sleeve, e = 10.5 mm), a Ø16 pin 23 mm deep bears 19 MPa at the 60 N m cap (SF 2.11 on the humid 40 MPa) and 38.7 MPa in the rig's undamped power cut at D71's 18.75 kg a leg (122 N m, SF 1.03 against the fault case's 1.0; 109 N m and 1.15 at 14.75 kg). A Ø20 pin with an 8 mm sleeve does not fit between the lug screws, and the knee-in posts cannot move down (the front link's apex eye passes 3.8 mm under their sleeves at the squeezed crouch). The sleeve keeps the rig's stop stiffness where it was (856 against 816 N m/rad): a stiffer stop raised the power cut's knee force (1,360 N m/rad: 2.1 kN), which the knees' 6201s cannot take. The frame round a knee-out post, with the pin bearing as a contact: SF 0.76 at the 60 N m cap with a round Ø28 boss (its notches); the ear's lobe alone 1.64 (judged 4 mm beyond the hole, where the pin's own bearing is checked: the stress in that band is in the print's layers, 13 MPa in them against 3 across them). The backing also buries the top flange's end, whose root the lobe loaded in the frame's own landing case (SF 1.33 before the stops were redone, 1.13 with the lobe alone, 1.22 with the rounded backing; a backing cut close round the motor thinned to a knife edge there, 0.43). The stop faces' backs taper into the link's edge with a filleted root: ended square, they cost the link's landing case 15 %; tapered, it is the same with and without them (1.37 and 1.36 at a 3 mm mesh). At 18.75 kg a leg (D71, 2026-10-28): the frame round a knee-out post 2.38 at the cap (E3o) and 1.17 in the power cut (R3o); round a knee-in post 2.70 (E3i); the upper link's stop face 7.36 (E3) and 3.61 (R3). Adds 229 g per leg (the pins 91, the stop faces 79, the frame's ears 38, the sleeves 21; the leg 9.71 kg with the 2026-10-28 fillets) and $6.90."
+  status: decided
+  source: {kind: research, ref: "[cad/leg_studies.py stop_checks, cad/fivebar.py stop_arm](cad/leg_studies.py); the pre-order review's M6 and S3"}
+- id: D54
+  date: "2026-10-27"
+  title: "The battery: 13S2P Molicel P30B with a Daly K 13S BMS in a drawer under the belly, read over Bluetooth"
+  decision: "The pack is 26 Molicel INR-18650-P30B (3.0 Ah, 36 A) in 13S2P, two layers of 13 columns lying across the robot (266 x 76 x 60 mm with the BMS, 1.54 kg, 256 Wh to 4.10 V), welded with 2P nickel strip, in a printed drawer under the belly plate (P3: a bent 5052 box). The BMS is a Daly K-series 13S 100 A Bluetooth + UART (98 x 65 x 14 mm, common port on the negative side), set over Bluetooth (cell over-voltage 4.15 V, under-voltage 3.00 V, charge 6 A, 0-45 C). Nothing is wired to the BMS's data ports, whose ground is B-: a QT Py ESP32-S3 on the MCU board reads it over Bluetooth and puts it on CAN bus C. An XT90-S plugs the pack in; the charge port is a female XT60 to the pack through a 10 A fuse (it charges with the main switch off); the charger is a Luna 48V Advanced set to 90 % and metered at 53.3 V before use (backup: a Grin Satiator set to 53.3 V)."
+  why: "The JK-B2A24S15P the plan named is 162 x 102 x 20 mm and cannot fit any cassette that fits the body; the Daly K is the smart 100 A BMS that does. No ready-made 13S pack with a high-current BMS sells in the US at a listed price (Danenergy ships only in Europe). P30B over P50B: 1.54 kg against 2.17 kg on a robot over its mass budget, enough for about 1.5 h of play, 72 A continuous for the 80 A jump pulses. A wired UART from a negative-side BMS is a path round its switches."
+  status: decided
+  source: {kind: user, quote: "Usage limits reset, full steam ahead, finish our plans and get this ready for first prototype manufacturing."}
+- id: D55
+  date: "2026-10-27"
+  title: "Power protection: an 80 A MRBF main fuse, an anti-spark low-side switch, labelled inline fuse holders, the frame bonded to the negative"
+  decision: "The pack's + lead goes to a Blue Sea 5191 MRBF block with an 80 A 5181 fuse (58 V DC, 2 kA) within 150 mm of the plug; its - lead through a 150 A / 50 mV shunt (an INA228 reads it) to a Flipsky Anti Spark Switch Smart Enhanced 300A V2.0 (12-84 V, momentary mode) on the low side, then the bus bars (SendCutSend C110 on printed insulators; Victron VBB115040020 as the backup). The MINI 58V branch fuses sit in Bussmann HHM inline holders, rated 32 V by Eaton: each is labelled '58 V fuses only' and a fuse is pulled only with the pack unplugged; a JLCPCB fuse board with Keystone PCB holders replaces them in P3. The aluminium frame is bonded to the - bus. The radio stop (D37) is an ExpressLRS PWM receiver (failsafe: no pulses) driving a Pololu RC relay switch whose contact feeds the coil of a DPDT stop relay (Omron G2RL-2, 12 V) grounded through the MCU's MOSFET: it holds only while the radio and the MCU both say run; pole A is the turret's dry safety loop (TM pins 7-8), pole B its 24 V branch, as the turret's plan asks (docs/turret-next-plan.md 3.2); the MCU senses the coil and sits the robot down when the radio drops."
+  why: "No compact MINI holder rated 58 V DC is sold; the fuse does the interrupting, so the holder's rating matters only when a fuse is pulled live, which the procedure forbids. Bonding the frame turns a chafed + lead into a blown fuse instead of a live frame. One relay with two poles gives the turret its dry loop and an independent power cut that open together, from the radio or from the MCU."
+  status: decided
+  source: {kind: user, quote: "Usage limits reset, full steam ahead, finish our plans and get this ready for first prototype manufacturing."}
+- id: D56
+  date: "2026-10-27"
+  title: "The body's strength loads are the leg's reactions at the hip frame's mount plane, from the rig"
+  decision: "The body's strength cases (cad/body_studies.py) take each leg's load where it enters the body: the vertical force and the roll moment at the hip frame's mount plane, worked out every step of the rig (sim/leg_rig.py, at half the ledger's robot mass) by d'Alembert on the leg module (each body's mass, centre and acceleration from MuJoCo; the rig's ballast force checks the vertical), plus 10 % of the ground force sideways at the contact patch; not the axle's peak force times the wheel's 187 mm offset. Rare events (the jumps, the 150 mm drop) at SF >= 2 on yield; the undamped power cut (D39) at SF >= 1.2."
+  why: "The axle's peak is mostly the wheel and the lower links decelerating against the ground: at 16 kg a leg the body sees 205 N m of roll and 559 N at the worst landing, about 0.4-0.5 of the axle force times its offset (2.4 kN x 187 mm). Designing the body for the axle force would have tripled its spine for loads it never sees; the leg's own parts are checked by the leg workstream against their own joint forces (D39)."
+  status: decided
+  source: {kind: user, quote: "Usage limits reset, full steam ahead, finish our plans and get this ready for first prototype manufacturing."}
+- id: D65
+  date: "2026-10-27"
+  title: "Gyropup runs on two DeWalt DCB609 FLEXVOLT 9.0 Ah packs in 20 V mode, in series: a 10S 36 V bus (30-41 V)"
+  decision: "Two DCB609 packs, each in 20 V mode (5S3P, 9.0 Ah, 180 Wh rated), sit in series in two off-the-shelf 20 V dock adapters: 10S3P, 36 V nominal, about 41 V full, 30 V empty (3.0 V a cell), 360 Wh rated. This replaces D43's 13S2P custom pack. The robot enforces the cut-off and the current limit itself (tool packs leave that to the tool, as D23 found), with the MRBF fuse and the anti-spark switch of D55 kept. Every load is rated across 30-41 V: the RS-04 (24-60 V, regen headroom to its 60 V fault is now 19 V), the Flipsky 75100s (14-84 V), the anti-spark switch (12-84 V), the 12 V rail's DDR-30L-12 (18-75 V); the J501's 24 V converter must change, because the DDR-120C-24 starts at 33.6 V (the body workstream picks a converter rated to 28 V or below). The firmware's and the rig's voltage windows move to the 10S range."
+  why: "The user chose the pack. 60 V mode is ruled out: DeWalt rates a fresh pack at 60 V, the RS-04's over-voltage fault (D43). 20 V mode in series keeps everything in rating with wide regen headroom, uses the user's tool packs and chargers with no custom pack, and both packs swap in seconds. The cost, from the leg rig at 16.25 kg (rig/run.py, the jump, the rig's 44 V gate relaxed, R_int 0.1 ohm): jump 207 mm full / 180 mm nominal / 162 mm at 33 V, against 245 / 231 mm on the 13S pack; 60 N m is still reached; top speed falls with voltage; 360 Wh rated against 433-480 Wh; about 2.8 kg against 2.0 kg, so the mass ledger must absorb about 0.8 kg."
+  status: decided
+  source: {kind: user, quote: "https://www.dewalt.com/en-us/product/dcb609/20v60v-max-flexvolt-90ah-battery here is the ideal battery I would want to use for our robot. Maybe 2 of these."}
+  alternatives: [13S2P Molicel pack (D43, 433-480 Wh, 2.0 kg, best jump), two DCB609 in 60 V mode in parallel (15S, 54 V; a fresh pack sits at the RS-04's 60 V fault), one DCB609 in 20 V mode (18 V, below the RS-04's 24 V minimum)]
+- id: D66
+  date: "2026-10-27"
+  title: "The turret is a robot of its own: its own Jetson on a reComputer Mini carrier, its own power input, mounted on Gyropup or standing alone"
+  decision: "The turret gets its own compute: a Jetson Orin NX 16 GB module (the user's choice; up to 157 TOPS in Super mode, 10-40 W) on a Seeed reComputer Mini carrier board (88 x 56 x 17 mm, 12-54 V in on an XT30), inside the turret's base. It takes one power input on an XT30, 12-54 V: standing alone it runs from one DCB609 in 20 V mode (15-20.5 V) in a dock in its stand; on Gyropup it plugs into the 10S bus (30-41 V) through its own fused branch (D55). Its servos and flywheels run from a wide-input converter inside the turret. Its interfaces to Gyropup are mechanical (the pan base's bolt circle), power (the XT30 branch), Ethernet to the J501, and the dry safety loop; the turret's ARM line and its physical speed ceiling (D68) stay inside the turret, so it is safe on its own. Kid safety stays a hard rule in both forms."
+  why: "The user asked for it: two robots, the turret and Gyropup, that combine but are independent assemblies, which also gives redundancy. A turret that carries its own computer, power input and safety can be built, tested and played with on its stand before Gyropup walks, and a fault in one does not take the other down. The reComputer Mini's 12-54 V input covers both one pack in 20 V mode and Gyropup's 10S bus with no converter in front of it."
+  status: decided
+  source: {kind: user, quote: "I would use a jetson orin nx 16gb. / To keep things simple the turret could have it's own ... jetson mini carrier board? That would let us basically make this design into two robots - nerf turret and gyropup. They can combined of course, but would basically be two independent assemblies, which would also give us redundancy."}
+- id: D67
+  date: "2026-10-27"
+  title: "The ammo is standard Hasbro Nerf Rival rounds"
+  decision: "The turret is designed and bought for Hasbro's own Nerf Rival rounds (22.2-22.8 mm, 1.83 g average measured; the design ball is 22.7 mm and 1.83 g, as the launch, feed and safety numbers already assume). Off-brand Rival-compatible rounds are fine when they are close enough: 22.2-22.8 mm and 1.6-2.0 g (the feed, bore and speed ceiling are checked across that range). The BOM lists an official Nerf Rival refill and a third-party pack (e.g. Worker Cheetah) side by side, cheapest in-stock first. The speed ceiling is D68's; the barrel-never-above-level rule is unchanged."
+  why: "The user asked for standard Rival rounds: they are sold everywhere, kids already have them, and they are the round the turret's physics (research/turret-launcher-study.md 2.1, BlasterHub's weighing of Hasbro rounds) was sized on. Third-party rounds vary in size and mass, which moves the speed under the cap."
+  status: decided
+  source: {kind: user, quote: "standard \"nerf rival\" foam balls should be our ammo. / It's ok to use off brand balls, just as long as they're close enough."}
+- id: D68
+  date: "2026-10-27"
+  title: "The turret fires like a stock Nerf Rival blaster: about 100 fps, with a physical ceiling of 105 fps"
+  decision: "The launch speed target is 95-100 fps (29-30.5 m/s) for a Hasbro Rival round, the speed of Hasbro's own Rival flywheel blasters (Nemesis 94-101 fps measured, Prometheus 100 fps; sold for 14+). The flywheels run from a fixed regulated rail whose no-load speed is the hardware ceiling: no ball may leave above 105 fps (0.94 J, 2300 J/m^2), under ASTM F963's 2500 J/m^2 for a Rival round (109 fps). The chronograph's hardware trip moves to 105 fps. Unchanged: nothing spins unless ARM is held, the barrel never points above level, the laser warns before firing, and the phase-short brake on release. The docs recommend eye protection, as Hasbro does for Rival. This replaces the 70 fps cap of D29 and the turret plans (the EN 71 0.5 J toy limit, 77 fps, which applies to toys for under-14s)."
+  why: "The user: the turret is for older kids and should fire 'pretty good'. 70 fps was our own margin under the EU toy limit for young children; Rival blasters are a 14+ product at about 100 fps, and the ASTM energy-per-area limit still holds at 105 fps with a 4 fps margin. A fixed rail keeps the ceiling physical (no software setting can exceed it), so the safety argument is the same as before, at Rival's own speed."
+  status: decided
+  source: {kind: user, quote: "safety cap? Please don't take the fun out of this, it's for older kids we need to fire these things pretty good."}
+  alternatives: [keep 70 fps (EN 71 young-children margin), uncapped modded speeds 120-150 fps (over ASTM's 2500 J/m^2 for Rival at 109 fps)]
+- id: D69
+  date: "2026-10-28"
+  title: "The wheels are 10 in single-shaft hoverboard-class hub motors with 10 x 2.125 pneumatic tyres at 30-35 psi, on the Flipsky 75100s; the mass gate moves to 35.0 kg"
+  decision: "Each wheel is a 36 V 350 W outer-rotor hub motor of the hoverboard family (15 pole pairs, halls, a hollow D-shaft Ø16 mm with a 13.5 mm flat, 76 mm long, clamped on one side in the wheel link's foot) with a 10 x 2.125 pneumatic tube tyre run at 30-35 psi; the backup is the same motor's 8.5 in version. Bought at a listed price (Robokits RKI-9013 Rs 3,256 plus a pneumatic tyre; e-gizmo 230300029; Alibaba/eBay/Amazon 10 in 36 V 350 W listings confirmed live before ordering); two are bought and measured (mass, Kv, R, L, shaft hardness, run-out) before the foot is cut. The wheel link's foot becomes a 45 mm split D-clamp (4 x M5, inserts; a SendCutSend steel clamp block if the print slips). The Flipsky 75100s drive them in FOC on halls with interpolation, 30 A motor max, 10 A continuous; the balance loop takes pitch from the VN-100 and blends the hall edges with the torque model for wheel speed; an AS5047P on the rotor's outer cover is the encoder upgrade if the bench shows a limit cycle. No mechanical or electromagnetic brake: the balance controller holds while powered (3.8 N m a wheel on 10 deg), the skids hold the sat-down robot, a passive phase-short relay is the add-on if P1 shows a roll-away during the fold. Ingress: the hub sealed (greased shaft bearing, silicone cover seam, sealed lead exit, a vent plug), Deutsch DT/DTP wheel connectors, the belly box at IP54; puddles to 40 mm. The ledger's as-built ceiling becomes 35.0 kg (design mass 35.5 kg, 17.75 kg a leg); the strength cases and the rig re-run at it. Stairs are not a v1 capability; the rolling step is 35-40 mm; a 100 mm kerb by jump is a later firmware milestone."
+  why: "The user wants air tyres for suspension, puddles and steps. The rig at 18.05 kg a leg keeps every case under the RS-04's 120 N m (109 N m uncapped jump, the same as today) and the knee and axle loads inside the leg's FEA cases (the 150 mm drop's axle spike falls 15 %); the clash sweep is clean; the full-robot sim climbs 35-40 mm kerbs against 25 mm today. The cost is the jump (206 to 167 mm), +2.7-3.6 kg on a 32.27 kg ledger, and a 41 mm taller stance (or a 259 mm standing leg). No robot-grade 8-10 in air-tyre hub motor sells at a listed price (D40); the hoverboard family is single-sided by construction, 36 V like the bus, and proven on VESCs. Study: research/air-tyre-hub-wheels.md, docs/wheel-change-plan.md (issue #18, PR #23)."
+  status: decided
+  source: {kind: user, quote: "for the wheels can we do something more like a 10\" hub motor with air filled tires? ... In general I want air tires."}
+  alternatives: [the ODrive BotWheel 171 mm solid (today), the 8.5 in hoverboard motor (backup), a two-sided scooter 10 in wheel in a fork, the DDT M1502D (24 V, quote-only)]
+- id: D70
+  date: "2026-10-28"
+  title: "The slip ring's camera pair (circuits 11-12) carries power; standing alone on one FLEXVOLT, the turret fires on a supply-voltage profile"
+  decision: "D41 reserved circuits 11-12 of the turret's slip ring for a camera. They now carry power, as a third power pair, because two pairs cannot carry the standalone case (D66: one DCB609 in 20 V mode, 15-20.5 V). A camera on the turret uses the Orin NX on the turret itself (D66), so nothing needs to cross the ring for it. On a single pack, the turret keeps every ring circuit at or under 2 A with a profile driven by the supply voltage: at 15 V the spin-up stretches to 2.4 s and the rate drops to 1 shot/s. On Gyropup's 30-41 V bus, the full rate and speed of D68 apply. The stand's rocker switch becomes a DC switch rated 15 A or more (it carries up to 13.7 A at 15 V)."
+  why: "The turret's power rework (turret/program 3e238a6, issue #2) found 3.0-3.3 A per circuit at 15 V on two pairs. A third pair and a low-voltage profile keep the bought slip ring within its rating without a bigger ring or a boost converter. The camera reservation is moot now that the turret has its own computer."
+  status: decided
+  source: {kind: user, quote: "To keep things simple the turret could have it's own ... jetson mini carrier board? That would let us basically make this design into two robots"}
+  alternatives: [a boost converter to about 30 V on the stand, a larger slip ring, two packs on the stand]
+- id: D71
+  date: "2026-10-28"
+  title: "The design mass is 37.5 kg (18.75 kg a leg), with a 37.0 kg as-built gate; the body's own savings are taken as margin"
+  decision: "The robot is designed and strength-checked at 37.5 kg, 18.75 kg a leg. The as-built mass ledger must stay at or under 37.0 kg. This replaces D69's 35.5 kg / 35.0 kg. The body takes its listed savings levers (lighter cheeks, aluminium deck standoffs, the smaller cooler, a 1 m lidar cable, the packs weighed: about 0.8-1.0 kg) as margin, not as a reason to lower the design mass. The packs stay the user's DCB609 9 Ah (D65) and the wheels stay 10 in (D69). The leg's strength cases, the rig predictions and the robot sim re-run at 18.75 kg a leg. The lowest controlled leg length is 185 mm, so the body's 50 mm TPU crush pads (600 N plateau, 30 mm stroke) keep every motors-off fall under 3,000 N (worst 2,724 N)."
+  why: "The ledger with D65's packs and D69's 3.53 kg wheels is 36.25 kg after the scheduled savings (body/program 205b807, issue #10), and the turret as its own robot (D66: Orin NX, its own converter) weighs 2.55 kg against the 1.70 kg head budget: about 37.1 kg in all. D69's 35.0 kg ceiling came from a ledger taken before the packs. The alternatives cost what the user asked for: 6 Ah packs lose a third of the energy, and the 8.5 in wheel saves only 0.46 kg. The RS-04 has the torque (it stands at about 18 N m against 40 rated), so the honest answer is to design for the real mass and keep the levers as margin."
+  status: decided
+  source: {kind: user, quote: "Usage limits reset, full steam ahead, finish our plans and get this ready for first prototype manufacturing."}
+  alternatives: [keep 35.0 kg and swap to 6 Ah packs (-1.0 kg, 2/3 the energy), the 8.5 in wheel (-0.46 kg), a 36.1 kg ceiling at 18.3 kg a leg (does not cover the turret)]
+- id: D72
+  date: "2026-10-28"
+  title: "The complete-robot product weight ceiling is 100 lb (45.36 kg)"
+  decision: "The complete robot, including its operating battery, compute, sensors, turret and loaded consumables, has a product weight ceiling of 100 lb (45.359237 kg). This replaces the former public 50 lb ambition. The current CAD/design baseline remains 37.5 kg; D71's 37.0 kg as-built gate and 18.75 kg-per-leg results describe the configuration those reports evaluated, not the new product ceiling. Any design using the additional budget needs its mass ledger, dynamics and affected load cases checked at its actual operating mass before manufacturing. See docs/design-weight-budget.md."
+  why: "The user explicitly raised the maximum weight. A revised requirement must not relabel older lower-mass evidence as a successful 100 lb test."
+  status: decided
+  source: {kind: user, quote: "Also throughout our project there's notes about 50lb max weight, that should be raised to 100."}
+- id: D73
+  date: "2026-10-28"
+  title: "Public prototype warning and a $10,000 design target"
+  decision: "Current Gyropup prototypes are unsafe research machines, not for sale or general public use. The site requires an explicit warning acknowledgement per browser-tab session and keeps a persistent warning on the landing and document pages. Future play with children is a goal requiring proven final designs and adult supervision; supervision does not establish current prototype safety. The landing states design targets of up to 100 lb and $10,000. The cost figure is a target, not an offer or a validated production estimate. See docs/prototype-safety.md."
+  why: "The user requested clear risks before entry and at the bottom of the page, clarified the distinction between current high-power prototypes and future supervised family use, and supplied the cost target."
+  status: decided
+  source: {kind: user, quote: 'Warning should be a modal before entering page? "I accept" or something'}
+
+- id: D74
+  date: "2026-11-01"
+  title: "Joints in printed parts: metal through the plastic where the stress is high, heat-set inserts where the loads allow"
+  decision: "A joint in a printed part is high-stress when its load reaches half of a heat-set insert's pull-out, when the clamp it needs would put more than the 25 MPa sustained screen on the plastic under a head, or when the boss or flange it sits in fails the layer check. A high-stress joint gets a metal sleeve or bushing through the plastic, clamped by a through-bolt or threaded rod and a nut. The sleeve is cut to the measured printed length (flush to 0.05 mm short), so the bolt's preload stays in metal and the layers under the washer are held in light compression. Where the plastic itself must stay in compression (a root that peels across its layers, a hub face that must not open), the clamp is spread by a metal ring or plate, kept under the sustained screen, and re-torqued after 24 h and after the first humid week. Heat-set inserts stay wherever the loads allow, with a crush-limiting sleeve wherever the screw would clamp printed plastic. Every leg joint is screened by research/leg-preprint/screen.py and every robot insert by research/insert-joints/inventory.py. The fits and preloads are settled on the print-first coupons (C1-C4) before parts are printed for the robot."
+  why: "Heat-set inserts in printed PA6-CF are pulled out across the layers, and the leg's hip-frame mount carries an 851 N fault tension on M5 inserts whose estimated humid pull-out is 1,500 N (0.57 x), with no measured spin-out or creep. Plastic clamped under a screw head creeps, worst when humid, and sheds preload (research/leg-preprint/screen.md screens it; coupon C3 measures it). A metal sleeve keeps the preload whatever the plastic does. Earlier the same day the owner said heat-set inserts combined with crush-limiting bushings make nice assemblies, but they need to be fully understood and simulated."
+  status: decided
+  source: {kind: user, quote: "make sure you keep pushing the real gyropup design so we can begin 3d printing legs soon and testing them. Think of the things we will figure out are obvious issues -after- we print, and address them now instead. For example in high stress locations a bushing through plastic and threaded rods, nuts, etc can be better than thermal inserts. But thermal inserts are also great where possible.", ref: "[leg pre-print review](research/leg-preprint/README.md)"}
+  alternatives: ["heat-set inserts everywhere, torque limited to half their pull-out", "screw heads on bare printed plastic, re-torqued", "machined metal parts for every joint (D46's adapter pattern)"]
+- id: D75
+  date: "2026-11-01"
+  title: "The body's sheet metal: PEM nuts for the hip-frame bolts, a two-bend deck that replaces the turret plate (proposed; the owner chooses)"
+  decision: "Proposed, option A of research/body-sheet-metal. The deck becomes 1/8 in 5052 with lips on its two long sides only (two bends). It takes over the turret plate's job: the riser screws up through it into its inserts as today, and the fan duct's tabs go into three PEM S-M3-0. A PEM version of the riser's feet (PR #145's 782 N) needs off-axis holes in the riser, because its feet sit on solid legs under the turret's bolts; that is the rebuild's. Each cheek gains six PEM SS-M5-0 at its hip-frame holes, as the nuts for D74's sleeved through-bolts, so nothing is held in the spine's 31 mm gap. Every PEM is loaded toward the sheet, as PennEngineering requires. The floor tray keeps its four bends, and the cheeks, belly plate, battery bay, pallet and power plate stay as they are. Heat-set inserts stay in the lightly loaded printed parts. The CAD rebuild follows as a second PR, after the owner picks."
+  why: "SendCutSend's instant quote (2026-11-01) prices today's ten parts at $622 a set. A part costs its setup before its metal: a 200 x 150 mm 1/8 in plate is $25.31 flat, two bends add $17.05, and a PEM nut costs about $0.24 after a $6.40 setup per part. Option A comes to $583 (-$39), 38 g lighter, with three fewer build steps. On the same host, mesh and mask with the turret's real 2.56 kg, its deck reaches D2 SF 1.95 against today's 1.38: a comparison rather than a margin, since both peaks sit at the edge of the riser feet's excluded zone. That still misses 2.0, so the rebuild must close it at the real 135 mm centre (PR #145), with a finer-mesh check. A two-bend floor tray misses T1 (SF 1.74), so the tray keeps its four bends. Option B, a riveted keel of two identical C-channels, matches today on the spine cases with the rivets modelled as a bond (a hand check puts each rivet at about 3x its IFI-114 minimum shear), but saves only $4 more in all and adds 0.25 kg and 32 rivets, while PR #145 puts the robot over D71's gate. Option C, with printed plates, saves metal but costs $158 of PA6-CF and 130 print hours, and its deck deflects 1.94 mm against 0.5 mm (an upper bound: its model's turret plate is PA6-CF too). Loaded toward the sheet, a PEM M5 nut is limited by the M5 8.8 screw's 8.25 kN proof load (the nut's own minimum is 9.96 kN, PennEngineering SS-024-0), 9.7x the hip frame's 851 N fault tension. An M5 heat-set insert in humid PA6-CF is allowed 570 N (cad-agent check_joint)."
+  status: open
+  source: {kind: user, quote: "The aluminum box main body is cool but could be a bit expensive, can you generally try to use sendcutsend bent sheet metal parts that are affordable? I want this to be easy to build with minimal parts, utilizing 3d printing where possible and something like simple bent plates as needed.", ref: "[body sheet-metal study](research/body-sheet-metal/README.md)"}
+  alternatives: ["today's body (10 parts, 14 bends, $622)", "option B: A plus a riveted keel of two identical C-channels and two straps ($571 of metal, $4 less than A in all, +0.25 kg, 32 rivets)", "option C: B plus a printed deck, tray, pallet and power plate ($356 of metal + $158 of PA6-CF, 224 print hours, a deck four times too soft)", "the hip-frame bolts' nut loose on a DIN 9021 washer in the leg's face (D74 as written)"]
