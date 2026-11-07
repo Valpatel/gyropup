@@ -83,6 +83,35 @@ def manifest_parts(manifest):
     return {p['name']: p for p in parts}
 
 
+def box_path_coverage(report, manifest, shared_limits):
+    """Reject a height-only match that lacks actual full mechanical-range samples."""
+    def fail(message): raise ValueError('Stale/incomplete box ball-path coverage: '+message)
+    def number(value): return type(value) in (int, float) and math.isfinite(value)
+    limits = shared_limits['tilt_deg']
+    lo, hi = limits['min'], limits['max']
+    if not all(number(x) for x in (lo, hi)) or not lo < hi: fail('mechanical limits')
+    if manifest['limits']['tilt_deg'] != [lo, hi]: fail('scene/shared limits disagree')
+    if report.get('scene') != 'box' or report.get('turret', {}).get('tilt_range_deg') != [lo, hi]:
+        fail('report does not cover the current mechanical range')
+    deck=[o for o in report.get('obstacles', []) if o.get('name')=='deck and box']
+    if len(deck)!=1 or deck[0].get('kind')!='box' or deck[0].get('lo', [None]*3)[2] != -manifest['z_tm']:
+        fail('report/scene TM height disagrees')
+    if report.get('margin_mm') != 10 or report.get('ball') != {'d_mm': 22.8, 'wild_deg': 2.0, 'slowest_m_s': 11.0}:
+        fail('changed margin/ball assumptions')
+    for key in ('limited_pan_window_deg', 'elevation_limited_pans_deg'):
+        if key not in report or report[key] is not None: fail('narrowed/unknown '+key)
+    for rows, pan_key, lower_key, upper_key, grid in (
+        (report.get('per_pan', []), 'pan', 'max_depression_deg', 'max_elevation_deg', list(range(-180, 181, 2))),
+        (report.get('firmware_table', []), 'pan_deg', 'min_tilt_deg', 'max_tilt_deg', list(range(-180, 181, 5))),
+    ):
+        if [r.get(pan_key) for r in rows] != grid: fail('missing/duplicate/out-of-order pan samples')
+        for row in rows:
+            if not all(number(row.get(k)) for k in (pan_key, lower_key, upper_key)):
+                fail('missing/nonfinite depression or elevation')
+            if row[lower_key] != lo or row[upper_key] != hi: fail('narrowed/blocked mechanical range')
+    return True
+
+
 def vertices(data):
     if len(data) < 84:
         raise ValueError('Incomplete binary STL')
@@ -124,6 +153,9 @@ def generate(revision):
     raw = blob(PREFIX + 'manifest.json')
     manifest = json.loads(raw)
     parts = manifest_parts(manifest)
+    box_bytes = blob('hardware/exports/turret/lidar/box.json')
+    limit_bytes = blob('hardware/exports/turret/limits.json')
+    box_path_coverage(json.loads(box_bytes), manifest, json.loads(limit_bytes))
     contract = dict(schema_version=1, length_unit='mm', frame='assembly-home',
                     reference='Independently audited hardware/cad/turret/turret.py and turret_box.py datums/ownership; '
                               'actual immutable rest STL at ' + revision + '; bounded sampled viewer coverage, not physical qualification.',
@@ -148,6 +180,8 @@ def generate(revision):
     from cadagent.motion_trace import required_poses
     return dict(contract=contract, vertex_indices=indices, poses=required_poses(contract),
                 source=dict(revision=revision, manifest_sha256=hashlib.sha256(raw).hexdigest(), parts=bindings,
+                            ball_path_sha256=hashlib.sha256(box_bytes).hexdigest(),
+                            limits_sha256=hashlib.sha256(limit_bytes).hexdigest(),
                             cad_source_sha256={name: hashlib.sha256(blob(name)).hexdigest() for name in (
                                 'hardware/cad/turret/turret.py', 'hardware/cad/turret/turret_box.py',
                                 'hardware/cad/builders/build_turret_box.py')}))

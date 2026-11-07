@@ -90,10 +90,12 @@ def phase(name,command,expected=0,timeout=3600):
  assert processes_quiescent,'Owned group not quiescent; do not race archive/restore'
  assert record.get('exit')==expected,name+' failed/incomplete; actual logs retained'
 p=argparse.ArgumentParser(description=__doc__);p.add_argument('--head',required=True);args=p.parse_args()
-results={'source':args.head,'status':'FAILED','phases':{},'scope':'existing limits and full 80-mesh bench scene only; immutable reference/browser/physical acceptance remains separate'}
+results={'source':args.head,'status':'FAILED','phases':{},'scope':'existing limits, complete box ball-path coverage and full 80-mesh bench scene only; immutable reference/browser/physical acceptance remains separate'}
 initial=None;protected=None;replacement={};original=OUT/'original-targets';candidate=OUT/'candidate-targets'
 ADAPTER=OUT/'adapter-produced';SCENE=OUT/'scene-produced'
 LIMIT='hardware/exports/turret/limits.json'
+BOX_REPORT='hardware/exports/turret/lidar/box.json'
+BOX_PLOT='hardware/exports/turret/lidar/box-limit.png'
 allowed=set();cfg=None;before_inputs=None
 
 def archive_once(label,directory):
@@ -111,8 +113,9 @@ def collect_candidate():
             for name in inventory(directory):
                 target=candidate/relative/name;target.parent.mkdir(parents=True,exist_ok=True)
                 shutil.copyfile(directory/name,target)
-    if (original/LIMIT).is_file() and (ROOT/LIMIT).is_file() and 'limits-generate' in results['phases']:
-        target=candidate/LIMIT;target.parent.mkdir(parents=True,exist_ok=True);shutil.copyfile(ROOT/LIMIT,target)
+    for n,phase_name in ((LIMIT,'limits-generate'),(BOX_REPORT,'box-ball-path-generate'),(BOX_PLOT,'box-ball-path-generate')):
+        if (original/n).is_file() and (ROOT/n).is_file() and phase_name in results['phases']:
+            target=candidate/n;target.parent.mkdir(parents=True,exist_ok=True);shutil.copyfile(ROOT/n,target)
     if candidate.exists():archive_once('candidate-targets',candidate)
 
 try:
@@ -149,10 +152,10 @@ try:
     save('actual-current-gates.json',report)
     spec=importlib.util.spec_from_file_location('motion_reference',ROOT/'tools/engineering/turret/reference-turret-motion.py')
     reference=importlib.util.module_from_spec(spec);spec.loader.exec_module(reference)
-    allowed={LIMIT,*('hardware/exports/turret/box/'+n for n in (
+    allowed={LIMIT,BOX_REPORT,BOX_PLOT,*('hardware/exports/turret/box/'+n for n in (
         'bom.json','box.json','box_deck.step','box_deck.stl','intake_shroud.step','intake_shroud.stl','pod_cover.step','pod_cover.stl','print-plan.json')),
         'hardware/exports/sim/turret_box/manifest.json',*('hardware/exports/sim/turret_box/'+n+'.stl' for n in reference.OWNERS)}
-    assert len(allowed)==91 and allowed<=set(initial)
+    assert len(allowed)==93 and allowed<=set(initial)
     for n in sorted(allowed):
         target=original/n;target.parent.mkdir(parents=True,exist_ok=True);shutil.copyfile(ROOT/n,target)
     archive('original-targets',original)
@@ -165,6 +168,16 @@ try:
     import xml.etree.ElementTree as ET
     suites=ET.parse(junit).getroot();cases=list(suites.iter('testcase'));assert len(cases)==11
     assert not any(list(s.iter(tag)) for s in cases for tag in ('skipped','failure','error'))
+    # This existing CLI writes only the box report and its plot; no robot/map outputs.
+    phase('box-ball-path-generate',[sys.executable,'-B','hardware/cad/turret/turret_lidar.py','--scene','box'],timeout=600)
+    replacement.update({n:sha(ROOT/n) for n in (BOX_REPORT,BOX_PLOT)})
+    # Reject incomplete or narrowed evidence before the builder can publish its
+    # height-only freshness claim. The identical durable consumer runs again on
+    # the genuine manifest below. No synthetic report is supplied to the builder.
+    shared_limits=json.loads((ROOT/LIMIT).read_text())
+    box_report=json.loads((ROOT/BOX_REPORT).read_text())
+    expected_range=[shared_limits['tilt_deg'][k] for k in ('min','max')]
+    reference.box_path_coverage(box_report,{'limits':{'tilt_deg':expected_range},'z_tm':reference.PIVOTS['pan'][2]},shared_limits)
     try:
         phase('scene-generate',[sys.executable,'-B','hardware/cad/builders/build_turret_box.py','--out',str(ADAPTER),'--scene',str(SCENE)],timeout=1800)
     finally:
@@ -173,6 +186,7 @@ try:
     assert len(inventory(ADAPTER))==9 and len(inventory(SCENE))==81
     manifest=json.loads((SCENE/'manifest.json').read_text())
     reference.manifest_parts(manifest)
+    reference.box_path_coverage(box_report,manifest,shared_limits)
     assert manifest['box']['parts']==['base','cover','front_no_gmsl','rear_io','side_hatch']
     assert manifest['j501']['revision']=='0.9-g48r' and manifest['roof_z']==97
     assert manifest['j501']['meshes']=='exports/view (its view meshes)'
@@ -202,7 +216,8 @@ try:
         replacement[n]=sha(candidate/n);shutil.copyfile(candidate/n,ROOT/n)
     save('temporary-consumer-inputs.json',replacement)
     tests=['SceneFrames.test_all_meshes_valid_and_match_bounds','SceneFrames.test_rotors_are_centered_on_shafts_and_housings_do_not_spin',
-           'SceneFrames.test_effects_follow_the_actual_geometry','SceneFrames.test_the_scene_is_one_full_build','ReferenceInputGuards']
+           'SceneFrames.test_effects_follow_the_actual_geometry','SceneFrames.test_the_scene_is_one_full_build',
+           'SceneFrames.test_ball_path_claim_has_complete_current_range_evidence','ReferenceInputGuards']
     phase('actual-geometry-and-parser-consumers',[sys.executable,'-B','tests/evidence/test-turret-frames.py',*tests],timeout=120)
     assert provenance.snapshot(ROOT)==before_inputs
     assert gates.stored()==report

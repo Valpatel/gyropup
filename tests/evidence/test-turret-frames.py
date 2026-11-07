@@ -30,6 +30,10 @@ class SceneFrames(unittest.TestCase):
         fixture = json.loads((ROOT/'tests/fixtures/turret-motion-reference.json').read_text())
         self.assertIn('source', fixture, 'Regenerate the reference from the reviewed immutable full scene')
         self.assertEqual(fixture['source']['manifest_sha256'], hashlib.sha256((SCENE/'manifest.json').read_bytes()).hexdigest())
+        self.assertEqual(fixture['source']['ball_path_sha256'], hashlib.sha256((ROOT/'hardware/exports/turret/lidar/box.json').read_bytes()).hexdigest())
+        self.assertEqual(fixture['source']['limits_sha256'], hashlib.sha256((ROOT/'hardware/exports/turret/limits.json').read_bytes()).hexdigest())
+        for name, digest in fixture['source']['cad_source_sha256'].items():
+            self.assertEqual(hashlib.sha256((ROOT/name).read_bytes()).hexdigest(), digest, name)
         self.assertEqual(set(fixture['source']['parts']), set(REFERENCE.OWNERS))
         for name, binding in fixture['source']['parts'].items():
             self.assertEqual(binding['group'], REFERENCE.OWNERS[name])
@@ -39,6 +43,13 @@ class SceneFrames(unittest.TestCase):
             self.assertEqual(binding['sha256'], hashlib.sha256((SCENE/binding['file']).read_bytes()).hexdigest())
             self.assertEqual(fixture['contract']['components'][name]['joint'],
                              binding['group'] if binding['group'] in REFERENCE.JOINTS else None)
+
+    def test_ball_path_claim_has_complete_current_range_evidence(self):
+        report=json.loads((ROOT/'hardware/exports/turret/lidar/box.json').read_text())
+        limits=json.loads((ROOT/'hardware/exports/turret/limits.json').read_text())
+        self.assertTrue(REFERENCE.box_path_coverage(report, MAN, limits))
+        self.assertTrue(MAN['checks']['ball_path']['current'])
+        self.assertTrue(MAN['checks']['ball_path']['clear'])
 
     def test_all_meshes_valid_and_match_bounds(self):
         self.assertEqual(len(PARTS), 80)
@@ -89,6 +100,38 @@ class SceneFrames(unittest.TestCase):
 
 
 class ReferenceInputGuards(unittest.TestCase):
+    def test_box_path_guard_rejects_real_old_and_incomplete_coverage(self):
+        # Byte-exact published b61f0cd4 report, not a fabricated stale example.
+        raw=(ROOT/'tests/fixtures/turret-box-ball-path-before-elevation.json').read_bytes()
+        self.assertEqual(hashlib.sha256(raw).hexdigest(), 'e6b4b3807f381ce9d1c073e7db1dea7a593c67c05aacceeb8fb63a1c4e45faab')
+        old=json.loads(raw)
+        scene=copy.deepcopy(MAN);scene['limits']['tilt_deg']=[-25,12]
+        limits={'tilt_deg':{'min':-25,'max':12}}
+        with self.assertRaisesRegex(ValueError,'current mechanical range'):
+            REFERENCE.box_path_coverage(old,scene,limits)
+        # Explicit guard fixture only; no positive-angle geometry is inferred.
+        candidate=copy.deepcopy(old);candidate['turret']['tilt_range_deg']=[-25,12]
+        candidate['elevation_limited_pans_deg']=None
+        for row in candidate['per_pan']: row['max_elevation_deg']=12
+        for row in candidate['firmware_table']: row['max_tilt_deg']=12
+        self.assertTrue(REFERENCE.box_path_coverage(candidate,scene,limits))
+        for kind in ('missing-upper','lower-narrowed','upper-narrowed','missing-pan','duplicate-pan','firmware-upper','margin','ball','height','scene-range'):
+            bad=copy.deepcopy(candidate)
+            if kind=='missing-upper': bad['per_pan'][0].pop('max_elevation_deg')
+            elif kind=='lower-narrowed': bad['per_pan'][0]['max_depression_deg']=-20
+            elif kind=='upper-narrowed': bad['per_pan'][0]['max_elevation_deg']=10
+            elif kind=='missing-pan': bad['per_pan'].pop()
+            elif kind=='duplicate-pan': bad['per_pan'][1]['pan']=bad['per_pan'][0]['pan']
+            elif kind=='firmware-upper': bad['firmware_table'][0].pop('max_tilt_deg')
+            elif kind=='margin': bad['margin_mm']=5
+            elif kind=='ball': bad['ball']['d_mm']=22.7
+            elif kind=='height': bad['obstacles'][0]['lo'][2]-=1
+            else: scene_bad=copy.deepcopy(scene);scene_bad['limits']['tilt_deg']=[-25,0];
+            if kind=='scene-range':
+                with self.assertRaises(ValueError): REFERENCE.box_path_coverage(bad,scene_bad,limits)
+                continue
+            with self.subTest(kind=kind), self.assertRaises(ValueError): REFERENCE.box_path_coverage(bad,scene,limits)
+
     def test_actual_parser_rejects_display_ownership_and_identity_corruption(self):
         # Explicit input-validator fixture, not a fresh scene or geometry claim.
         candidate = copy.deepcopy(MAN)
