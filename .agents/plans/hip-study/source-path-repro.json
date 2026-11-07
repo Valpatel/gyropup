@@ -1,0 +1,19 @@
+{
+  "scope": "Actual import-safe study sha helper on two literal identity paths; no run_variant, geometry or FEA execution.",
+  "source": "706d8d25c4ecf2a52ae5844873a9515403cf8a42",
+  "findings": [
+    {
+      "recorded_literal": "exports/leg/rig-results.json",
+      "actual_helper_sha_error": "FileNotFoundError",
+      "canonical_current_path": "hardware/exports/leg/rig-results.json",
+      "canonical_sha256": "171a1d4f2195468a235313fce29e5dde1272499b0d0934e22ad2bab5564ba902"
+    },
+    {
+      "recorded_literal": "exports/leg/fea/summary.json",
+      "actual_helper_sha_error": "FileNotFoundError",
+      "canonical_current_path": "hardware/exports/leg/fea/summary.json",
+      "canonical_sha256": "1488c5f62b90fd44162140ba1cb7adf8f52135a727cd37b6f08f4d2794000a39"
+    }
+  ],
+  "native_imports": 0
+}

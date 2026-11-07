@@ -1,0 +1,13 @@
+{
+  "reviewed_previous_head": "4c5bbe52dca2145c55183c6a66e7125a35b54a31",
+  "new_helper_sha256": "624c3f2e8cd766f64075eec87f4cfddf6caa409f114da5412520f2680ec330c4",
+  "test_sha256": "80a782e74cdeab7ab7e11589016bfa3e8389cc80cd0d2e10fc3a8029f5ea9a50",
+  "before_exit": 1,
+  "before_failures": 2,
+  "after_exit": 0,
+  "after_tests": 4,
+  "native_imports_blocked": true,
+  "actual_evaluator_called": true,
+  "real_fd_redirection_mocked": true,
+  "both_missing_canonical_reports_have_legacy_decoys": true
+}
