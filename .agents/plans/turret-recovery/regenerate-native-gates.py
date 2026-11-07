@@ -97,6 +97,7 @@ try:
  frozen=json.loads((ROOT/'.agents/plans/turret-recovery/native-gate-inputs.json').read_text())
  assert bound==frozen['files']
  fingerprint=gates.geometry_fingerprint();save('actual-gate-fingerprint.json',{'fingerprint':fingerprint})
+ phase('actual-gate-source-contracts',[sys.executable,'-B','-m','pytest','tests/hardware/turret/test_turret_gate_sources.py','-q','-p','no:cacheprovider'],timeout=120)
  # This is the unchanged real CLI. Exit1 is retained as an engineering failure
  # only if the complete fresh report below proves every gate actually finished.
  phase('native-turret-gates',[sys.executable,'-B','hardware/cad/turret/turret_gates.py'],expected=(0,1))
