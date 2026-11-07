@@ -1,18 +1,18 @@
 {
   "schema": "gyropup.carrier-insert-fit/1",
-  "source_revision": "bbf33b27223dd4648763fd1ddf300278abbfe1bc",
+  "source_revision": "3f44cadeadf5a505f2127b6f87765c603956efb8",
   "inputs": {
     "files": {
       "hardware/__init__.py": "d6ddd9ce4ef273b82f43f315f09d11db1224f2b8298c9b0b3ea7dafb97280ba0",
       "hardware/cad/__init__.py": "d6ddd9ce4ef273b82f43f315f09d11db1224f2b8298c9b0b3ea7dafb97280ba0",
       "hardware/cad/analysis/studies.py": "41d2807c06b54abfa69c966fb274eaa0933e080ee642f977bae8e1aa1900d349",
       "hardware/cad/body/body_battery.py": "3f491f0e4ccafa2e985fd1f0b20ef886c7b53f059593b354817e17a47b65fa71",
-      "hardware/cad/body/body_bom.py": "b82524527473fafcf943876181f8be2dd199337deadac0f8a0a1b77968a329df",
+      "hardware/cad/body/body_bom.py": "aab4d9612ef7176fe74b511be838ad2bb3695a61a81d233ab788cca5650098c0",
       "hardware/cad/body/body_frame.py": "0dbff64156008827de6e7841e0e310d1741739de93623d23390fa8fe773f7c32",
       "hardware/cad/body/body_fuse_board.py": "5dcb993962fdcfc0a18cea93c43dec7bb04f0ce3f2174228465f2a73e76d20de",
       "hardware/cad/body/body_guards.py": "488427babff18f5503df518831dcf68f8ce71573c2fd3d517cedf70af116ff57",
       "hardware/cad/body/body_joints.py": "696ada09b51da53b01c930ab274f171bf86f8e9f19e1eeb942a8d48345358ee6",
-      "hardware/cad/body/body_layout.py": "00a74468c47acde5588d706f7717f46fd74ca2366b96a6bbe19136c2d8463d53",
+      "hardware/cad/body/body_layout.py": "2d4514ca185c983caa290ab2c2cc6b167894c9fc473e9b15bf284cb3878e324a",
       "hardware/cad/body/body_legloads.py": "3a5726ef7c7adf58d2183dd2c55156e1a9f6a55e1c181b3344c777b10d2ce136",
       "hardware/cad/body/body_params.py": "a68737201e93af4ce8f00f675fbe3c235453b8bb0e19440fe3062635737a2247",
       "hardware/cad/body/body_sections.py": "1592a87f99a3428761432a4231a9931c2bbddeddbbf20449005aaf3b46710515",
@@ -703,10 +703,10 @@
   ],
   "files": {
     "base-anchor.3mf": "6c2a09c805a503e327404999aba049bd897911074f535795d627955cb870a615",
-    "base-anchor.step": "65e2905252e5cd3e6e29e35755f71d7a9d116038467d642937e5d8ed335cbf5f",
+    "base-anchor.step": "c0b20746d9ca48992643b94bd93f6a1aaa1f0b3a9c441aa4efd9fb459321d1d1",
     "base-anchor.stl": "ce29f74ad434979e27b0025e5bb06cfcc07bd5ded646b1a483fc5f211352d8d7",
     "carrier-boss.3mf": "b46b7c50eb099ea07d1e05f0551bef47ffe4c697ffbdcf0cd5af2d954d619bd2",
-    "carrier-boss.step": "3552a10c518f59b1cbeabdfdbbd04eddf6223ed5aa0f90aa7a0d59dbf8c28f33",
+    "carrier-boss.step": "92d24b39a2dfbd8e5b13ac90a6cadb55e09c61e6c5f3f8467844184af3b5d5bc",
     "carrier-boss.stl": "374fcbef1209f1ea25dfa195dcf7106e197ecbbaf919842c50a924967da563d3",
     "measurements.csv": "763fce59e411c8a81f168694643a536181d41c1891dffa0eec1f62ad4f8f8820"
   }

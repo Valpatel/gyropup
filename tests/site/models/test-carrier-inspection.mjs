@@ -37,9 +37,26 @@ const contract=c3?{
   status:/readiness: false/,
 };
 const report={engine:engine.name(),candidate,localLiveReloadDisabled,passed:false,cases:[],errors:[],missing:[],requestFailures:[]};
+// Keep strict asset failures actionable without changing cancellation policy.
+const started=Date.now(),requestIds=new WeakMap();let nextRequest=0;
+report.lifecycle=[];
+const note=(event,extra={})=>report.lifecycle.push({ms:Date.now()-started,event,page:page.url(),...extra});
+for(const event of ['request','requestfinished','requestfailed'])page.on(event,request=>{
+  if(request.resourceType()!=='stylesheet'&&!request.isNavigationRequest())return;
+  if(!requestIds.has(request))requestIds.set(request,++nextRequest);
+  let frame;try{frame=request.frame().url();}catch{frame='unavailable';}
+  note(event,{id:requestIds.get(request),url:request.url(),type:request.resourceType(),frame,
+    error:request.failure()?.errorText});
+});
+page.on('framenavigated',frame=>{if(frame===page.mainFrame())note('navigated',{url:frame.url()});});
+page.on('load',()=>note('load'));
 page.on('pageerror',error=>report.errors.push(error.message));
 page.on('response',response=>{if(response.status()>=400)report.missing.push({url:response.url(),status:response.status()});});
-const navigate=trackNavigationRequests(page,base,report);
+const trackedNavigate=trackNavigationRequests(page,base,report);
+const navigate=async action=>{
+  note('navigation-start');
+  try{return await trackedNavigate(action);}finally{note('navigation-return');}
+};
 const {original,docPath}=contract;
 const doc=base+docPath+'?live=0'; // Static previews do not run cad-agent's local live-reload endpoint.
 const state=()=>page.evaluate(()=>({url:location.href,visibility:document.visibilityState,
@@ -189,7 +206,7 @@ try{
     await page.waitForURL(url=>isDocumentReturn(url,{base,docPath,search:backURL.search}));
     if(contract.diagrams)await page.locator('.cad-diagram[data-state=ready] svg').waitFor();
     report.cases.push({width,height,staticLink,advertisedBack:backURL.href,returnedURL:page.url(),documentState,model,viewDirections,wheelRatio,fitRadius});
-    if(staticLink)await page.unroute(enhancer);
+    if(staticLink){note('remove-static-route-start');await page.unroute(enhancer);note('remove-static-route-end');}
   }
   assert.deepEqual(report.errors,[]);assert.deepEqual(report.missing,[]);assert.deepEqual(report.requestFailures,[]);
   report.passed=true;console.log(JSON.stringify({passed:true,engine:engine.name(),candidate,cases:report.cases.length,out}));

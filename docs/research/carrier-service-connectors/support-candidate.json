@@ -8,12 +8,12 @@
       "hardware/cad/__init__.py": "d6ddd9ce4ef273b82f43f315f09d11db1224f2b8298c9b0b3ea7dafb97280ba0",
       "hardware/cad/analysis/studies.py": "41d2807c06b54abfa69c966fb274eaa0933e080ee642f977bae8e1aa1900d349",
       "hardware/cad/body/body_battery.py": "3f491f0e4ccafa2e985fd1f0b20ef886c7b53f059593b354817e17a47b65fa71",
-      "hardware/cad/body/body_bom.py": "b82524527473fafcf943876181f8be2dd199337deadac0f8a0a1b77968a329df",
+      "hardware/cad/body/body_bom.py": "aab4d9612ef7176fe74b511be838ad2bb3695a61a81d233ab788cca5650098c0",
       "hardware/cad/body/body_frame.py": "0dbff64156008827de6e7841e0e310d1741739de93623d23390fa8fe773f7c32",
       "hardware/cad/body/body_fuse_board.py": "5dcb993962fdcfc0a18cea93c43dec7bb04f0ce3f2174228465f2a73e76d20de",
       "hardware/cad/body/body_guards.py": "488427babff18f5503df518831dcf68f8ce71573c2fd3d517cedf70af116ff57",
       "hardware/cad/body/body_joints.py": "696ada09b51da53b01c930ab274f171bf86f8e9f19e1eeb942a8d48345358ee6",
-      "hardware/cad/body/body_layout.py": "00a74468c47acde5588d706f7717f46fd74ca2366b96a6bbe19136c2d8463d53",
+      "hardware/cad/body/body_layout.py": "2d4514ca185c983caa290ab2c2cc6b167894c9fc473e9b15bf284cb3878e324a",
       "hardware/cad/body/body_legloads.py": "3a5726ef7c7adf58d2183dd2c55156e1a9f6a55e1c181b3344c777b10d2ce136",
       "hardware/cad/body/body_params.py": "a68737201e93af4ce8f00f675fbe3c235453b8bb0e19440fe3062635737a2247",
       "hardware/cad/body/body_sections.py": "1592a87f99a3428761432a4231a9931c2bbddeddbbf20449005aaf3b46710515",
@@ -106,7 +106,7 @@
     },
     "toolkit_sources_sha256": "c2941322d5f3d000d3777b0047567211d06855861fa5e14229d7d7519fef3ed3"
   },
-  "input_fingerprint": "e5e6095d633ea4d57abbea042ddb2938914a51cbdcc6955c02c45a696a05de45",
+  "input_fingerprint": "91e805de07bf26c6d3ff86daca7a40a77d67c8d7f520a9f44fc432c402bfe978",
   "context_files": {
     "tools/evidence/interfaces/check-carrier-connector-support.py": "2ea1f292653e1be41f96be44ac233536600edda63f9552d1d9148a7946d59c43",
     "tools/evidence/interfaces/check-carrier-connector-inputs.py": "6e2cc8af0bf757303092136af15116ac2ece46fc8949ce2d5dedf0be52494ccf",
@@ -6368,11 +6368,11 @@
     "C2/C3/servo parking, actual retained tails/junctions and added protection board remain incomplete.",
     "Wire-exit and tool corridors are explicit design reservations, not detailed cable/tool models."
   ],
-  "elapsed_seconds": 148.234,
+  "elapsed_seconds": 147.796,
   "public_artifact_sha256": {
-    "carrier-support-candidate.step": "ee82b520730629bdb986096b907f7605398a3e5ede811b531c4178c8730de5ad",
-    "C3-support-candidate.step": "a9ef48428fc16d381016c1bf32e77b0ac8b97402685732a45d6f0b97107933b8",
-    "C3-support-layout.step": "6d02106e108a633cf7106eb72ad8ae785a4b722d76db26597ce0f178d5f8ebc8"
+    "carrier-support-candidate.step": "6ad07ad286d1b6a7bb451b89b8e28d57e09f83ab7fe4fe22ca30df28462c58ac",
+    "C3-support-candidate.step": "27c6046aa560fee11dec0be9bdb7c4065bec5a86261905967e7ff85617bcebd0",
+    "C3-support-layout.step": "c2640d3c9fd3ac1909d4e3301a93a22f2d46723d690f8e3696ef88567d0724ae"
   },
   "public_geometry_note": "Independently authored dimension representation; not manufacturer CAD; no threads or flexible clip geometry."
 }

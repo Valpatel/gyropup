@@ -15,6 +15,12 @@ through an issue, focused checks and independent PR review. Record reproducible 
 repository rather than only in a chat or local memory. Follow the applicable repository rules before starting
 CAD, simulation or hardware work.
 
+The root README is a mini hyperpage: answer **What is it? Why is it cool? How do I join in?** in a compact entrance,
+with detailed content one click away. **Badge collections are an explicit owner-requested exception:** keep plentiful
+root badges outside that prose budget. Keep the pixel learning header and a small source-bound CAD illustration distinct: one
+explains the method, the other depicts a stated design revision. Preserve old anchors and original artwork; a refreshed-looking
+image is not evidence of current geometry or physical qualification. See the [project guide](../docs/guide/project-overview.md).
+
 For website changes, use Node 22 and the commands in [site deployment](../docs/software/site-deployment.md).
 New public files must be tracked before the allowlisted build can include them. Use `npm run build` and the
 checks relevant to the change; Markdown/discovery changes use `npm run test:markdown`. The repository and site are public:

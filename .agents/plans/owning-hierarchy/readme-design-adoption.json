@@ -1,0 +1,27 @@
+{
+  "schema": "gyropup.readme-design-adoption/1",
+  "job": 238,
+  "alias": "cpu-a",
+  "executed_checkout": "06db820c5e000801ca0f2bbe833ba5da8729f12d",
+  "source_revision": "3d0b8269b8a188e759d2a9665aee93d0caf76792",
+  "published_baseline": "70f9c32c21fea52c254ee35df9b5ff57dd50d91f",
+  "hardware_tree": "32cb511e33ed1d6e66e6493d7020f1b15b4eec1f",
+  "source_inputs": 93,
+  "producer_sha256": "8c653277d2aee9fbfd08acb07c23c6542cdd04930804180a111352666110499e",
+  "archive_sha256": "34bafe17ffd350cd3680a161572a27758c4b0ed46cac99b9150fd069e6313b2a",
+  "outputs": {
+    "tools/engineering/robot/current-design.scene.json": "60fefcb7641c6c10643298a12bb9974574eaf6efc773c4e978acfcbae9ac6e5e",
+    "docs/img/hero/current-design.svg": "1a4b1d3d6854c60e29f618e93b30db54e21a271eb01d8ec0293c99126d292c24",
+    "tools/engineering/robot/current-design.receipt.json": "ca54d10e0ab660b288436d9d069d0a7b35d24f97f63232adb6de31ea10eb7dcf"
+  },
+  "original_destinations": "all three absent",
+  "fresh_current_inputs_and_hardware_tree_exact": true,
+  "coherent_three_output_copy_and_hashes": true,
+  "worker_parity": "PASS",
+  "worker_tests": 10,
+  "collection_adoption_approved": false,
+  "independent_adoption_review": "https://github.com/Valpatel/gyropup/pull/246#issuecomment-6703631753",
+  "prior_failed_job": 237,
+  "prior_failed_archive": "3cf7df1edfb348368da755b5642e476f51456684f2fa29304fd629d6d6c8584a",
+  "limits": "Illustration only; tessellation/group painter-order approximations and bought-part envelopes; no physical or engineering qualification. Immutable original collection receipts and failed runs are retained."
+}

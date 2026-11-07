@@ -236,3 +236,65 @@ The existing test now requires the actual sidecar function to be the same Python
 On2026-11-06, the first guarded adoption of fleet223's reviewed15 public geometry targets reached three successful kernel-free readers, then the full acquisition/survey suite failed because the local system Python had no cad-agent module. The runner restored and rehashed all15 originals. This was a local reader-runtime setup failure; the genuine remote collection and independent artifact review remained their own evidence. It was not a reason to reduce the reader's test coverage.
 
 Before the second adoption, the exact public toolkit2ad4269 source was extracted from the already-held immutable Git object into an owned temporary runtime, all136 source-file hashes were recorded, and its actual module origin/verdict import was checked. Only then were the full current inputs and original15 targets checked again and the same reviewed candidates copied. All five interface tests, specimen verifier/seven corruption tests and15 acquisition/survey/gauge tests passed. Keep the first failed reader log and rollback proof; do not report it as a passing attempt or install into shared user environments. The local archived-source reader runtime does not replace the collection's independently pinned CAD runtime.
+
+## Fleet aliases are reporting labels, not scheduler selectors
+
+On 2026-11-07 UTC, the reviewed README illustration command at Gyropup `933a222` was first submitted with `--node cpu-a`. The CLI exited 1 with empty stdout and `sbatch: error: Batch job submission failed: Invalid node name specified`. No job was assigned, and no dependency, CAD or test phase ran.
+
+At fleet tool commit `602d954e2f5d5d76dd8ac85570c6609ae1a83fe8` (`slurm/scripts/fleet-run` SHA256 `cb520154788c008a05f86d7e76d7a868a0a2a989a32282b9dc43dc920502a6f8`), `--node` is forwarded as the literal scheduler node selector; `cpu-a` is the separate public reporting alias. After independent [selector-correction review](https://github.com/Valpatel/gyropup/pull/246#issuecomment-6702231633), one fresh guarded submission used the actual NODE from the authoritative `fleet-run nodes` table privately and created [job 231 on cpu-a](https://github.com/Valpatel/gyropup/pull/246#issuecomment-6702243083). Source, exact command and resource bounds were unchanged.
+
+Use the real NODE column only in private operator arguments; publish the ALIAS and job ID. Preserve no-job scheduler refusals separately from native or test failures. This observed CLI version does not promise alias resolution, and successful scheduling does not prove a CAD or application result.
+
+## Incremental retrieval can retain an earlier partial product
+
+On 2026-11-07 UTC, job 232 on cpu-c completed after an earlier live output fetch. A second incremental `fleet-run fetch ... --outputs-only` retained the local earlier `support-candidate/probe-incomplete.json` (SHA256 `c19dd5c0ed5ae697711ceab89325bdd898256429fa3ee38004a45e82835b0712`). That file was absent from the final nine-member sealed support archive `0adbd18788044c32d9e1e43bd81879afd057d5ebd1b67e593e16b689d1cf7987`. The source/hardware restoration checks passed; this local retrieval union was not the final product membership. The observed fleet CLI was the same `602d954e`/`cb520154...` version identified above.
+
+Preserve partial evidence separately. Rehash the sealed final archive and inventory, then extract its regular members into a fresh owned directory before adoption. Do not weaken the existing reader to ignore an extra partial file, delete evidence to manufacture a clean result, or credit a merged retrieval directory as an exact final product. The current adoption uses the exact seven lug plus nine support archive members; the earlier fetched union and partial result remain retained.
+
+## Render the persisted scene representation before claiming parity
+
+On 2026-11-07 UTC, README-art job237 on cpu-a at506a3a53 completed genuine read-only CAD collection/rendering in142.84s (618080KiB peak RSS), then failed the pure renderer parity command. The complete eight-member archive `3cf7df1edfb348368da755b5642e476f51456684f2fa29304fd629d6d6c8584a` preserves the scene and three unapproved candidates. Source, shared-profile and toolkit restoration guards passed; overall collection remained FAILED and the subsequent fault controls did not run.
+
+The producer rendered its in-memory role dictionaries before writing sorted-key JSON. The shared motif paints those roles in iteration order. Re-reading the same JSON reordered the roles alphabetically: scene bytes and SVG leaf payloads remained equal, but SVG paint order and its receipt digest changed. This was a real producer/parity defect, not CAD geometry drift or a reason to replace the renderer check with unordered SVG comparison.
+
+Render the exact persisted JSON representation during initial generation. The existing regression reconstructs the actual extraction role order and requires the real shared renderer to produce identical bundles before and after serialization. The helper's own digest is part of the extraction key, so a helper correction requires a new genuine extraction; never rewrite a captured scene's key to make an old run current. Preserve job237 and review the corrected painter order visually before adoption. Native construction success alone does not authorize artifact adoption or imply physical qualification.
+
+## A missing local runner does not establish remote job state
+
+During job238 monitoring on2026-11-07 UTC, the previously used local fleet-tools
+checkout disappeared and its installed skill link was dangling. The cause was
+not established; the coordinator had not retired it. Do not infer that a
+scheduler job vanished, cancel it, or submit a duplicate from this workstation
+symptom. The existing tool repository still retained main602d954e; a fresh owned
+checkout was pinned after verifying the actual remote main, with the same
+`fleet-run` SHA256 `cb520154788c008a05f86d7e76d7a868a0a2a989a32282b9dc43dc920502a6f8`.
+No shared checkout, skill link, credentials or configuration was changed. Its
+normal status/read/fetch commands established that238 had already completed
+successfully and retrieved its sealed outputs. Tool recovery and actual remote
+execution/artifact acceptance remain separate facts.
+
+## Verify parser and browser ordering with the same actual document
+
+At98a68d71, presentation job128334471366 in run42349524636 failed the new
+README model-placement assertion. Actual Chrome151/WebKit26 compiled-page
+checks showed What → explanation → model → Why correctly. The installed
+Linkedom returned `2` for a nested image's `compareDocumentPosition` against the
+following heading, even in a minimal `h2,p(a(img)),h2` document; selector traversal
+returned the correct order. The new test had assumed browser-equivalent behavior
+from that parser API. Replace the faulty comparison with exact ordered-node
+membership, and require actual wrong-section and before-explanation mutations to
+fail. This corrects the test; it does not excuse misplaced product content.
+
+The same head's build-portal job128334471271 separately failed its unchanged
+strict C3 request check after allthree viewport/assembly cases and nine negative
+controls completed: one versioned `model-links.css` GET had `net::ERR_ABORTED`.
+There were no HTTP/page errors. Preserve the complete29-member artifact
+`8a357257a038cf373e3e4b4904fa1ddb542d7760aeb8bcd0d474f0094de83f11` and original
+failure. A bounded actual-consumer trace on Chromium141 against the exact
+Cloudflare98a product passed; that different hosting environment does not explain
+or erase the CI cancellation. Pinned Playwright `waitForURL` already waits for
+load, and that stylesheet is static: neither a redundant readiness wait nor a
+blanket stylesheet-cancellation allowance is justified. Keep strict rejection
+and add request identities, frame/load/navigation timestamps for recurrence.
+A legitimate parser-test correction requires normal new-head CI, not a retry of
+superseded98a or a claim that the unknown cancellation was a product fix.

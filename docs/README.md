@@ -5,8 +5,8 @@ Gyropup is at the CAD and simulation stage. There is no assembled robot or print
 for research purposes only, and will not be offered for sale.
 
 <p>
-<a href="https://gyropup.com/docs/img/navigation/project-map.svg"><img src="img/navigation/project-map.svg" width="640" height="240" style="max-width:100%;height:auto;padding:0" alt="An illustrated learning loop: sources, virtual and physical tests, review and reuse connect cad-agent with Gyropup."></a><br>
-An illustrated learning loop. <a href="program/physical-progress.md">Follow the real build evidence.</a><br>
+<picture style="display:block;max-width:640px;margin:0 auto"><source media="(prefers-reduced-motion: reduce)" srcset="img/navigation/project-map-still.svg"><img src="img/navigation/project-map.svg" width="640" height="240" style="display:block;max-width:100%;height:auto;padding:0" alt="Fictional wheeled Gyropup robots chase and duel in a pixel workshop. Sources, test, review and reuse form a learning loop."></picture>
+A fictional playground. <a href="program/physical-progress.md">Follow the real build evidence.</a><br>
 <a href="https://gyropup.com/designer/sim.html">Play</a> · <a href="https://gyropup.com/designer/build.html">Build</a> · <a href="#design-and-qualification">Understand</a> · <a href="../.github/CONTRIBUTING.md">Contribute</a>
 </p>
 

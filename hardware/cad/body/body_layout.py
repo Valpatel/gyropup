@@ -392,14 +392,15 @@ DCDC = {'x': (30.0, 128.0), 'y': (-118.0, -82.0), 'h': 65.0, 'mass_g': 300.0,   
 
 def frame_boxes():
     """Boxes of the frame parts the items must not overlap (posts, cheeks' flanges, the shelf's standoffs)."""
+    from hardware.cad.body import body_frame as bf
     out = []
     zt = bp.z_tray_top()
     zd = bp.TOP - bp.STOCK[bp.DECK]['t']
     for k, (x, y) in enumerate(bp.POSTS):
         out.append((f'post_{k + 1}', (x - bp.POST_W / 2, x + bp.POST_W / 2, y - bp.POST_W / 2, y + bp.POST_W / 2, zt, zd)))
     out.append(('deck', (bp.BODY_X[0], bp.BODY_X[1], -bp.BODY_HALF_Y, bp.BODY_HALF_Y, zd - 1.0, bp.TOP)))   # 1 mm under it kept clear
-    for k, (x, y) in enumerate(__import__('body_frame').PLATE_STANDOFFS):
-        w = __import__('body_frame').PLATE_POST_W
+    for k, (x, y) in enumerate(bf.PLATE_STANDOFFS):
+        w = bf.PLATE_POST_W
         out.append((f'plate_post_{k + 1}', (x - w / 2, x + w / 2, y - w / 2, y + w / 2, zt, zt + PLATE_H)))
     return out
 

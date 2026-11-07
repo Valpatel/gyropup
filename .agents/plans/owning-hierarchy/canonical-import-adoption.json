@@ -1,0 +1,391 @@
+{
+  "source": "3f44cadeadf5a505f2127b6f87765c603956efb8",
+  "status": "ADOPTED_PENDING_MAIN",
+  "review_lug_support": "https://github.com/Valpatel/gyropup/pull/246#issuecomment-6702973122",
+  "review_short": "https://github.com/Valpatel/gyropup/pull/246#issuecomment-6702870939",
+  "targets": {
+    "hardware/exports/leg/rs04-mounting-fit/checks.json": {
+      "original_sha256": "9f01cea13904f9b892b9e13629ea0f1cbd70b018ae3fd3434af3ecd5b1522fe7",
+      "candidate_sha256": "e54f86dc6c2224d7b3937008022d37287683f5f613624a9b4eb0142212613042"
+    },
+    "hardware/exports/leg/rs04-mounting-fit/coupon_frame_ring_nom.step": {
+      "original_sha256": "902b078c19360c9dacf762cd290efbc956efcbd5d8caa2d40c07e40df9fd8dca",
+      "candidate_sha256": "9abfd7bec8cdb49e373dff84ec2f686e255609dab30d1ad7c9b38650ee16f820"
+    },
+    "hardware/exports/leg/rs04-mounting-fit/coupon_frame_ring_nom.stl": {
+      "original_sha256": "4b2b5efee4d0504ddf80f7efd25a679fca5be77d994928b1e2ff554e39d80a23",
+      "candidate_sha256": "4b2b5efee4d0504ddf80f7efd25a679fca5be77d994928b1e2ff554e39d80a23"
+    },
+    "hardware/exports/leg/rs04-mounting-fit/dyno_lug_plate.step": {
+      "original_sha256": "7cd1d97654640d0d6c92b1875ede4dfd0bb8113e5a8af62c6a5825e71b6b2024",
+      "candidate_sha256": "7d25fca5492d48dd2d115b2c9e14da50ce7311a2039fd338418ff7b9bd4f82a1"
+    },
+    "hardware/exports/leg/rs04-mounting-fit/dyno_lug_plate.stl": {
+      "original_sha256": "ce7b8cf46b6ff804f388fae00d2a67fcc5a36d6a53fdc49d32b90cce71630a4f",
+      "candidate_sha256": "ce7b8cf46b6ff804f388fae00d2a67fcc5a36d6a53fdc49d32b90cce71630a4f"
+    },
+    "hardware/exports/leg/rs04-mounting-fit/hip_frame.step": {
+      "original_sha256": "c63562aa659cc96a163717620dfd4f6193d44c9d40d72eae0e74abbfd127efd2",
+      "candidate_sha256": "e26483bdea88c9c0e64bb5e8f0e8c3b252f4e72b4c3468ea9e7224ae0d943d5c"
+    },
+    "hardware/exports/leg/rs04-mounting-fit/hip_frame.stl": {
+      "original_sha256": "f15c00497974e3f78d3fdc9ca60ef958ebff4d3537556d98c7c6828e6ec103de",
+      "candidate_sha256": "f15c00497974e3f78d3fdc9ca60ef958ebff4d3537556d98c7c6828e6ec103de"
+    },
+    "docs/research/rs04-support/results/od118-id80-t2.032.step": {
+      "original_sha256": "8de83455edb00dce94e53fd4e5b69b3cc532ef7e83c95953ccde49ceb3170792",
+      "candidate_sha256": "ce8cedfaf2f01295490e364212a60b7b76606de76a3e05a5d0185b2edd61fc1a"
+    },
+    "docs/research/rs04-support/results/od118-id80-t3.175.step": {
+      "original_sha256": "239e3b9133aff90e6dd023abb14e9c4b586bdc11bcb9524b9591958f4f9d0a93",
+      "candidate_sha256": "b6de9b004bfb325e5d68055ca86b30bee7a8609382fde9a574c2a4bd43ff8578"
+    },
+    "docs/research/rs04-support/results/od118-id94-t2.032.step": {
+      "original_sha256": "30e13be3be830ea0deb21ab28708180cb7c7b73fd41901d3f2529f347c96bd38",
+      "candidate_sha256": "485fae0e8739f8f0ab569fc9d0e0eb0387ea1b2e93a166c15f8f531301cd9824"
+    },
+    "docs/research/rs04-support/results/od118-id94-t3.175.step": {
+      "original_sha256": "314a5e87b4f8ac3308bdc75810cc5937c466a72d451ffba93ac21f3ed60f30b0",
+      "candidate_sha256": "e1aae127fa49bafe5b233bc81699fcc5752a94dc09919c654852fb9cf2b327d3"
+    },
+    "docs/research/rs04-support/results/od120-id80-t2.032.step": {
+      "original_sha256": "762aa05aa2dc5374aaac63ee58b0d8a6254f2e5b02b781bc83c8443193f6a262",
+      "candidate_sha256": "f0412ff92fc675d7e6eb336c6dd78afa3eef0264b153a90be62749056526f5b4"
+    },
+    "docs/research/rs04-support/results/od120-id80-t3.175.step": {
+      "original_sha256": "70736e854a7ff6b5c8ba1ba221798fd54b2a7eb01c79c6aabb5f40995b011aa6",
+      "candidate_sha256": "97ea6ca6e93ea36ef0f5c1a61c1763a4b31d50fe8c4eaafca4a7b09aeec878a1"
+    },
+    "docs/research/rs04-support/results/od120-id94-t2.032.step": {
+      "original_sha256": "a6ca7858753ce7a3c572d31dd153bbb3399c7f640eebadfdf4a28f4dcd16f72a",
+      "candidate_sha256": "23e4ed4c33443b9121f22ccfe254433f410bd28138dd60c590bde7bc0bf5777e"
+    },
+    "docs/research/rs04-support/results/od120-id94-t3.175.step": {
+      "original_sha256": "4aa16c742eab18a523b7205d5c6d9823d8edc7d65d96ad2d1cd578d101cb264a",
+      "candidate_sha256": "a57575f8b27907374effe33ec70c46a5c082681dce8b86bd1ddca7ee6078ab78"
+    },
+    "docs/research/rs04-support/results/probe.json": {
+      "original_sha256": "dea769e63b1ba5b59a64157f15b3ebf5b0d415fb58c186b74594ae9435b46f82",
+      "candidate_sha256": "1c270acc7c1cc21d0270e4392040e0e75853bb963310f9d6aca5528dbb45e343"
+    },
+    "hardware/exports/turret/base-board-service/interfaces/carrier-wiring-candidate.step": {
+      "original_sha256": "9b7f294279e7dcd1ae3a84448c199d1919ce85114d50158ab4474e0087fcf647",
+      "candidate_sha256": "faf8b3dced4aa0601bc1aa6c0e1508026bb5672fff75d2895054760f995c2477"
+    },
+    "hardware/exports/turret/base-board-service/interfaces/carrier-wiring-layout.step": {
+      "original_sha256": "f4593c5bacc4f978ebecc685f4e1a3625fcbe9b2c04a5de1257ca00da9c787b2",
+      "candidate_sha256": "b8d5fc15c7be5f11e7b4cf00174f5eea98364321c8ebdc715238c8fe69b70b79"
+    },
+    "hardware/exports/turret/base-board-service/interfaces/interfaces.json": {
+      "original_sha256": "82158ca6a9b4432af6512e0c09555ee351d3321d29a083f6e849229600e54fab",
+      "candidate_sha256": "e62f58f55295806d8a0ca39182084b0ae601a44b5bfdabd9c80c1672c7b5a465"
+    },
+    "hardware/exports/turret/base-board-service/interfaces/pan-base-wiring-candidate.step": {
+      "original_sha256": "82362ee7178ff07ecc481991e6814c72286a4f4276fb2bf1afe02242ac4c72df",
+      "candidate_sha256": "b566995b9755ca66e67ce1c2fcc808d5c91514de9057067ea65478478a8fdb94"
+    },
+    "hardware/exports/turret/carrier-insert-fit/base-anchor.3mf": {
+      "original_sha256": "6c2a09c805a503e327404999aba049bd897911074f535795d627955cb870a615",
+      "candidate_sha256": "6c2a09c805a503e327404999aba049bd897911074f535795d627955cb870a615"
+    },
+    "hardware/exports/turret/carrier-insert-fit/base-anchor.step": {
+      "original_sha256": "65e2905252e5cd3e6e29e35755f71d7a9d116038467d642937e5d8ed335cbf5f",
+      "candidate_sha256": "c0b20746d9ca48992643b94bd93f6a1aaa1f0b3a9c441aa4efd9fb459321d1d1"
+    },
+    "hardware/exports/turret/carrier-insert-fit/base-anchor.stl": {
+      "original_sha256": "ce29f74ad434979e27b0025e5bb06cfcc07bd5ded646b1a483fc5f211352d8d7",
+      "candidate_sha256": "ce29f74ad434979e27b0025e5bb06cfcc07bd5ded646b1a483fc5f211352d8d7"
+    },
+    "hardware/exports/turret/carrier-insert-fit/carrier-boss.3mf": {
+      "original_sha256": "b46b7c50eb099ea07d1e05f0551bef47ffe4c697ffbdcf0cd5af2d954d619bd2",
+      "candidate_sha256": "b46b7c50eb099ea07d1e05f0551bef47ffe4c697ffbdcf0cd5af2d954d619bd2"
+    },
+    "hardware/exports/turret/carrier-insert-fit/carrier-boss.step": {
+      "original_sha256": "3552a10c518f59b1cbeabdfdbbd04eddf6223ed5aa0f90aa7a0d59dbf8c28f33",
+      "candidate_sha256": "92d24b39a2dfbd8e5b13ac90a6cadb55e09c61e6c5f3f8467844184af3b5d5bc"
+    },
+    "hardware/exports/turret/carrier-insert-fit/carrier-boss.stl": {
+      "original_sha256": "374fcbef1209f1ea25dfa195dcf7106e197ecbbaf919842c50a924967da563d3",
+      "candidate_sha256": "374fcbef1209f1ea25dfa195dcf7106e197ecbbaf919842c50a924967da563d3"
+    },
+    "hardware/exports/turret/carrier-insert-fit/measurements.csv": {
+      "original_sha256": "763fce59e411c8a81f168694643a536181d41c1891dffa0eec1f62ad4f8f8820",
+      "candidate_sha256": "763fce59e411c8a81f168694643a536181d41c1891dffa0eec1f62ad4f8f8820"
+    },
+    "hardware/exports/turret/carrier-insert-fit/receipt.json": {
+      "original_sha256": "345c8975ac33788b49245aae51ff1decda3fbfdc6a295de2329a318b263de646",
+      "candidate_sha256": "ffa88adccdce8b0e69f022298e0a4e0d24086baf666ed68f380db3332f4afb28"
+    },
+    "docs/research/carrier-service-connectors/external-pose.json": {
+      "original_sha256": "fcf5f365fd4b4846432adf8f6560207a4b8e1a200140ea402c5abde8bd99cda3",
+      "candidate_sha256": "f92e7bf9d6da4eb36282deb3d59257d779c42cea1679e9377a0a54c2abfe0a3e"
+    },
+    "docs/research/carrier-service-connectors/private-input-diagnosis.json": {
+      "original_sha256": "d84b7019924a0f7aa271b07bb7b56a92aebc73a21ac8846d75c28425de6307ec",
+      "candidate_sha256": "e9403a3075ed88e59b37c1640a972e0308013c7c0fc35e02dcd3d924f56c1cf8"
+    },
+    "docs/research/carrier-service-connectors/support-candidate.json": {
+      "original_sha256": "2ab556ffaa7503be1f20a8d50aa895a63021f195dd0d0a28daff2b494bbd821e",
+      "candidate_sha256": "4f760345e92df7bffde790d77836b465ed54278d64398d5780712bc63a369ee8"
+    },
+    "hardware/exports/turret/base-board-service/connectors/carrier-support-candidate.step": {
+      "original_sha256": "ee82b520730629bdb986096b907f7605398a3e5ede811b531c4178c8730de5ad",
+      "candidate_sha256": "6ad07ad286d1b6a7bb451b89b8e28d57e09f83ab7fe4fe22ca30df28462c58ac"
+    },
+    "hardware/exports/turret/base-board-service/connectors/C3-support-candidate.step": {
+      "original_sha256": "a9ef48428fc16d381016c1bf32e77b0ac8b97402685732a45d6f0b97107933b8",
+      "candidate_sha256": "27c6046aa560fee11dec0be9bdb7c4065bec5a86261905967e7ff85617bcebd0"
+    },
+    "hardware/exports/turret/base-board-service/connectors/C3-support-layout.step": {
+      "original_sha256": "6d02106e108a633cf7106eb72ad8ae785a4b722d76db26597ce0f178d5f8ebc8",
+      "candidate_sha256": "c2640d3c9fd3ac1909d4e3301a93a22f2d46723d690f8e3696ef88567d0724ae"
+    }
+  },
+  "readers": [
+    {
+      "script": "tests/hardware/interfaces/test-rs04-lug-stacks.py",
+      "exit": 0
+    },
+    {
+      "script": "tests/hardware/interfaces/test-rs04-support-probe.py",
+      "exit": 0
+    },
+    {
+      "script": "tests/hardware/interfaces/test-carrier-connector-inputs.py",
+      "exit": 0
+    },
+    {
+      "script": "tests/hardware/interfaces/test-carrier-connector-pose.py",
+      "exit": 0
+    },
+    {
+      "script": "tests/hardware/interfaces/test-carrier-connector-support.py",
+      "exit": 0
+    },
+    {
+      "script": "tests/hardware/interfaces/test-base-board-interfaces.py",
+      "exit": 0
+    },
+    {
+      "script": "docs/research/carrier-insert-fit/verify.py",
+      "exit": 0
+    },
+    {
+      "script": "docs/research/carrier-insert-fit/test_guards.py",
+      "exit": 0
+    }
+  ],
+  "cad93_unchanged": true,
+  "other_source_and_hardware_unchanged": true,
+  "robot_subtree_unchanged": true,
+  "robot_files": 42,
+  "schema": "gyropup.canonical-import-adoption/1",
+  "jobs": {
+    "232": "cpu-c",
+    "233": "cpu-a"
+  },
+  "cad92_fingerprint": "9ca5cdb52ece00630f8cb0e3dd37cec18015eb5fbef6c5af4ccacb3c8eb16c34",
+  "cad_source": "118e816f66b11d10dace0b482e6f7e213655e2fa",
+  "published_baseline": "70f9c32c21fea52c254ee35df9b5ff57dd50d91f",
+  "private_input_guard": {
+    "supplier_six_unchanged": true,
+    "connector_five_unchanged": true,
+    "no_private_payload_adopted": true
+  },
+  "geometry": {
+    "lug_stl_bytes_exact": 3,
+    "lug_step_data_exact": 3,
+    "support_step_data_exact": 8,
+    "short_geometry_review": "https://github.com/Valpatel/gyropup/pull/246#issuecomment-6702870939",
+    "witness_pairs": [
+      {
+        "table": "checks",
+        "id": "leg_front_09:printed-relation",
+        "status": "pass",
+        "point_pair_delta_mm": [
+          -6.6,
+          0.0,
+          0.0
+        ],
+        "all_other_fields_exact": true
+      },
+      {
+        "table": "checks",
+        "id": "leg_rear_07:printed-relation",
+        "status": "pass",
+        "point_pair_delta_mm": [
+          6.6,
+          0.0,
+          0.0
+        ],
+        "all_other_fields_exact": true
+      },
+      {
+        "table": "checks",
+        "id": "leg_rear_09:printed-relation",
+        "status": "pass",
+        "point_pair_delta_mm": [
+          -6.6,
+          0.0,
+          0.0
+        ],
+        "all_other_fields_exact": true
+      },
+      {
+        "table": "checks",
+        "id": "coupon_nom_01:printed-relation",
+        "status": "pass",
+        "point_pair_delta_mm": [
+          -6.6,
+          0.0,
+          0.0
+        ],
+        "all_other_fields_exact": true
+      },
+      {
+        "table": "checks",
+        "id": "coupon_nom_02:printed-relation",
+        "status": "pass",
+        "point_pair_delta_mm": [
+          6.6,
+          0.0,
+          0.0
+        ],
+        "all_other_fields_exact": true
+      },
+      {
+        "table": "checks",
+        "id": "coupon_nom_03:printed-relation",
+        "status": "pass",
+        "point_pair_delta_mm": [
+          -6.6,
+          0.0,
+          0.0
+        ],
+        "all_other_fields_exact": true
+      },
+      {
+        "table": "checks",
+        "id": "coupon_nom_04:printed-relation",
+        "status": "pass",
+        "point_pair_delta_mm": [
+          -6.6,
+          0.0,
+          0.0
+        ],
+        "all_other_fields_exact": true
+      },
+      {
+        "table": "checks",
+        "id": "coupon_nom_05:printed-relation",
+        "status": "pass",
+        "point_pair_delta_mm": [
+          -6.6,
+          0.0,
+          0.0
+        ],
+        "all_other_fields_exact": true
+      },
+      {
+        "table": "checks",
+        "id": "coupon_nom_06:printed-relation",
+        "status": "pass",
+        "point_pair_delta_mm": [
+          -6.6,
+          0.0,
+          0.0
+        ],
+        "all_other_fields_exact": true
+      },
+      {
+        "table": "checks",
+        "id": "coupon_nom_08:printed-relation",
+        "status": "pass",
+        "point_pair_delta_mm": [
+          -6.6,
+          0.0,
+          0.0
+        ],
+        "all_other_fields_exact": true
+      },
+      {
+        "table": "checks",
+        "id": "coupon_nom_09:printed-relation",
+        "status": "pass",
+        "point_pair_delta_mm": [
+          -6.6,
+          0.0,
+          0.0
+        ],
+        "all_other_fields_exact": true
+      },
+      {
+        "table": "checks",
+        "id": "coupon_nom_10:printed-relation",
+        "status": "pass",
+        "point_pair_delta_mm": [
+          -6.6,
+          0.0,
+          0.0
+        ],
+        "all_other_fields_exact": true
+      },
+      {
+        "table": "checks",
+        "id": "dyno_03:printed-relation",
+        "status": "pass",
+        "point_pair_delta_mm": [
+          6.6,
+          0.0,
+          0.0
+        ],
+        "all_other_fields_exact": true
+      },
+      {
+        "table": "checks",
+        "id": "dyno_05:printed-relation",
+        "status": "pass",
+        "point_pair_delta_mm": [
+          6.6,
+          0.0,
+          0.0
+        ],
+        "all_other_fields_exact": true
+      },
+      {
+        "table": "checks",
+        "id": "dyno_08:printed-relation",
+        "status": "pass",
+        "point_pair_delta_mm": [
+          6.6,
+          0.0,
+          0.0
+        ],
+        "all_other_fields_exact": true
+      },
+      {
+        "table": "checks",
+        "id": "dyno_10:printed-relation",
+        "status": "pass",
+        "point_pair_delta_mm": [
+          6.6,
+          0.0,
+          0.0
+        ],
+        "all_other_fields_exact": true
+      },
+      {
+        "table": "negative_controls/insufficient_engagement/checks",
+        "id": "insufficient_engagement:printed-relation",
+        "status": "pass",
+        "point_pair_delta_mm": [
+          -6.6,
+          0.0,
+          0.0
+        ],
+        "all_other_fields_exact": true
+      }
+    ]
+  },
+  "limits": "Existing engineering findings, readiness and physical limitations remain unchanged; source-bound evidence is not qualification. RS04 package and final artwork/publication remain pending."
+}
