@@ -127,8 +127,8 @@ try:
  study.validate(decode=False)
  manifest=encoder.frame_manifest(frames);assert sum(map(len,manifest['shots'].values()))==480
  source_hashes={n:sha(ROOT/n) for n in sorted(encoder.check.expected_sources(capture))};encoder.check.validate_source_bindings(args.head,source_hashes,capture)
- declared=json.loads((stage/'capture-stage-source-bindings.json').read_text());assert declared['source']==cfg['capture_revision'] and declared['source_hashes']==source_hashes
- save('actual-source-frame-proof.json',{'capture_job':cfg['capture_job'],'capture_source':cfg['capture_revision'],'encoding_source':args.head,'accepted_capture_archive_sha256':cfg['source_frame_archive']['sha256'],'transport':'unpacked481 regular files; actual bytes checked against staged inventory and frozen config','frame_records':481,'all_current_capture_inputs_exact':True,'source_hashes':source_hashes})
+ declared=json.loads((stage/'capture-stage-source-bindings.json').read_text());changed_e1=prerequisites.validate_recorded_stage(encoder.check,declared,source_hashes,cfg['capture_revision'])
+ save('actual-source-frame-proof.json',{'capture_job':cfg['capture_job'],'capture_source':cfg['capture_revision'],'encoding_source':args.head,'accepted_capture_archive_sha256':cfg['source_frame_archive']['sha256'],'transport':'unpacked481 regular files; actual bytes checked against staged inventory and frozen config','frame_records':481,'all_current_capture_inputs_exact':True,'historical_stage_source_hashes_verified':True,'updated_E1_insert_paths':changed_e1,'source_hashes':source_hashes})
  original=OUT/'original-highlights';original.mkdir()
  for name in inventory(ROOT/'software/site/assets/highlights'):shutil.copyfile(ROOT/'software/site/assets/highlights'/name,original/name)
  assert len(inventory(original))==6;archive('original-highlights',original)

@@ -1,0 +1,26 @@
+{
+  "date": "2026-11-07",
+  "scope": "Source preparation only; real 192-source stage/current proof still awaits committed genuine video",
+  "original_pin_test": {
+    "command": "python3 -B <owned-copy-of-original-test> EncoderPrerequisites.test_actual_field_and_renderer_receipt_pins_are_both_required",
+    "exit": 1,
+    "cause": "Literal a12 revision is absent after genuine field206 adoption; helper correctly derives new actual pins"
+  },
+  "corrected_controls": {
+    "command": "python3 -B tests/evidence/media/test-highlight-bindings.py EncoderPrerequisites",
+    "tests": 7,
+    "failures": 0,
+    "old_AST_function_tests_executed": false
+  },
+  "logs": {
+    "encoder-pin-test-before.log": {
+      "raw_sha256": "0b0ebeb76baa39b81ba0cc47e651209bbb80c5c0f5da568da70b8522306fea4b",
+      "published_sha256": "48593d8d293ea478c6828dbea0d844b8de18b9a22a500cb24ae1f4c923e9b3a6"
+    },
+    "encoder-reuse-controls.log": {
+      "raw_sha256": "0797a603f79e55a5612211749887a547eca16fda33260dc9b3baf57657cc4f17",
+      "published_sha256": "0797a603f79e55a5612211749887a547eca16fda33260dc9b3baf57657cc4f17"
+    }
+  },
+  "policy": "Keep sealed capture-era metadata; validate all historical digests and exact closure; permit only five enumerated E1 insert paths after the full unchanged current guard. No recapture/encode/adoption acceptance."
+}
