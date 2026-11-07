@@ -304,7 +304,7 @@ test('the local Made with badge animates normally and selects its genuine still'
       assert.equal(await image.count(),1);await image.evaluate(img=>img.decode());
       const expected=reducedMotion==='reduce'?'made-with-cad-agent-still.svg':'made-with-cad-agent.svg';
       assert.equal(new URL(await image.evaluate(img=>img.currentSrc)).pathname,'/docs/img/hero/'+expected);
-      assert.equal(await image.locator('xpath=ancestor::a[1]').getAttribute('href'),'https://cad-agent.com/');
+      assert.equal(await image.locator('xpath=ancestor::a[1]').getAttribute('href'),'https://cad-agent.valpatel.com/');
       const box=await image.boundingBox(),wrapper=await image.locator('..').boundingBox();
       assert.ok(box.x>=0&&box.x+box.width<=390.5&&Math.abs(box.width/box.height-248/56)<.02);
       for(const key of ['x','y','width','height'])assert.ok(Math.abs(box[key]-wrapper[key])<1);

@@ -37,7 +37,7 @@ try {
    assert.ok(metrics.scroll<=width+1,`${route} overflows ${width}×${height}: ${metrics.scroll}`);
    if(route==='/') {
     const badge=page.locator('.site-header>.made-with');
-    assert.equal(await badge.getAttribute('href'),'https://cad-agent.com/');
+    assert.equal(await badge.getAttribute('href'),'https://cad-agent.valpatel.com/');
     const box=await badge.boundingBox(),header=await page.locator('.site-header').boundingBox();
     assert.ok(box.width>=120&&box.width<=155&&Math.abs(box.width/box.height-248/56)<.02);
     assert.ok(box.x>=header.x&&box.x+box.width<=header.x+header.width+.5&&box.y>=header.y&&box.y+box.height<=header.y+header.height+.5);
