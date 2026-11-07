@@ -66,6 +66,29 @@
     kind: user
     quote: Turret runs off the orin AGX on the robot or an Orin NX on a desktop (optional 2nd variation). Turret has something
       like an ESP32 for it's control system? Some standard turret controler common drone thing or similar.
+- id: D77
+  decision: 'The tilt is limited by the turret''s hard stops only, +12 and -25 deg (cad/turret.py Geo.tilt_max, Geo.tilt_min,
+    exported to exports/turret/limits.json), and on the robot by the per-pan clearance table; no shot above the feed''s
+    qualified elevation, +10 deg (limits.json fire_tilt_max_deg). The never-above-horizontal rule is dropped. The aiming
+    laser is a green pointer module, lit only while armed'
+  why: 'The owner judged the rule odd and no safer: the 105 fps ceiling (D68) holds a ball''s energy at any elevation, and
+    the ARM chain and the chronograph gate firing. The +12 stop is the mechanism''s: the feed servo under the dial comes 3 mm
+    from the fixed pan pinion at +14.75 deg near pan 0 (cad/turret_tilt_range.py), and +12 leaves room for the lug''s give and
+    keeps the upper sector on the yoke''s arm. The simulated feed works as at level up to +10 deg'
+  alternatives:
+  - option: Keep the 0 deg upper stop
+    rejected: the owner removed the rule
+  - option: The stop at +14.75 deg, on the clearance margin itself
+    rejected: no allowance for the lug's give or the print
+  - option: Move or turn the feed servo for about +18 deg
+    rejected: a cartridge redesign for range the feed does not use (it is qualified to +10)
+  title: The tilt range is the real mechanical stops (+12 to -25 deg); firing up to the feed's +10
+  status: decided
+  date: '2026-11-04'
+  source:
+    kind: user
+    quote: remove the restrictions on turret tilt "never above horizontal" that's an odd restriction that doesn't make sense
+      and doesn't make this safer. The limits should be real mechanical stops.
 - id: D67
   decision: The ammo is standard Hasbro Nerf Rival rounds; off-brand rounds of 22.2-22.8 mm and 1.6-2.0 g are fine
   why: Sold everywhere, kids already have them, and the turret's physics was sized on them

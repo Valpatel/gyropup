@@ -4,17 +4,25 @@
    6.02,
    180
   ],
+  "ct_thumbscrew": [
+   7.21,
+   225
+  ],
   "cartridge_body": [
    13.95,
    167
   ],
   "cradle": [
-   18.9,
-   130
+   14.37,
+   224
   ],
   "cradle_plate_l": [
-   21.13,
+   21.1,
    130
+  ],
+  "cradle_plate_r": [
+   21.1,
+   230
   ],
   "flywheel_motor_l": [
    34.45,
@@ -46,10 +54,6 @@
   ],
   "horn_boss": [
    61.0,
-   130
-  ],
-  "cradle_plate_r": [
-   65.22,
    130
   ],
   "dial": [
@@ -92,12 +96,8 @@
    91.29,
    130
   ],
-  "ct_thumbscrew": [
-   91.79,
-   130
-  ],
   "hopper_lid": [
-   143.99,
+   128.73,
    130
   ],
   "hopper_flap": [

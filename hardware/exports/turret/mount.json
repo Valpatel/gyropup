@@ -3,7 +3,7 @@
  "frame": "the TM frame: x forward, y left, z up (mm), the origin on the pan axis in the TM face (the pan base's foot, D76); cad/turret.py's frame T (the pan base's foot) is frame_t_above_face_mm above it",
  "frame_t_above_face_mm": 0.0,
  "written_by": "cad/build_turret.py through cad/turret_mount.py, from the CAD as built",
- "mass_kg": 1.7568,
+ "mass_kg": 1.7566,
  "com_mm": [
   -5.1,
   -4.6,
@@ -201,7 +201,7 @@
  "mass": {
   "pose": "pan 0, tilt 0 (the centre turns with pan about the pan axis)",
   "with_30_balls": {
-   "mass_g": 1756.8,
+   "mass_g": 1756.6,
    "com_mm": [
     -5.1,
     -4.6,
@@ -209,7 +209,7 @@
    ]
   },
   "empty": {
-   "mass_g": 1701.9,
+   "mass_g": 1701.7,
    "com_mm": [
     -3.7,
     -4.7,
@@ -218,7 +218,7 @@
   },
   "with_30_balls_at_tilt_min": {
    "tilt_deg": -25.0,
-   "mass_g": 1756.8,
+   "mass_g": 1756.6,
    "com_mm": [
     -3.5,
     -4.6,
@@ -340,9 +340,9 @@
   "pan_rate_max_deg_s": 90.0,
   "tilt_deg": [
    -25.0,
-   0.0
+   12.0
   ],
-  "tilt_rule": "never above level: the hard stop at 0 and every goal clamped to <= 0",
+  "tilt_rule": "D77: the mechanical hard stops only; every goal clamps into them, and firing stops above the feed's qualified elevation (exports/turret/limits.json fire_tilt_max_deg)",
   "tilt_axis_above_tm_mm": 140.0,
   "ball_path_above_tm_mm": 125.0,
   "muzzle_ahead_of_pan_axis_mm": 150.0,
@@ -357,7 +357,7 @@
   "top_by": "hopper_lid",
   "fixed_r_mm": 100.1,
   "fixed_r_by": "dt_receptacle",
-  "swept_r_mm": 150.8,
+  "swept_r_mm": 153.1,
   "swept_r_by": "barrel",
   "how": "every part (tilting parts at 0 and -25 deg), the robot's DT06 plug apart: z from bounding boxes in the TM frame, radii from the pan axis over the tessellated surfaces (0.1 mm, added)"
  },

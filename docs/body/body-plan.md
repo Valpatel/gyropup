@@ -254,7 +254,7 @@ SODOLA SL720S-4T1GT, $28.99 on Amazon 2026-10-27, only if a second Ethernet devi
 
 Rules used: ISO 13854 (crushing: ≥ 25 mm for fingers, ≥ 100 mm for hands), ISO 13857 (an opening ≤ 4 mm admits no
 finger), touch temperatures of 48 °C on metal and 60 °C on plastic (IEC 62115-class limits with our margin), the
-turret's hard rules (barrel never above horizontal, ≤ 70 fps, the safety line held) and the stops of R37/D39 (sit
+turret's hard rules (the barrel between its hard stops (D77), ≤ 70 fps, the safety line held) and the stops of R37/D39 (sit
 before any planned power-off; an unplanned cut is the legs' case).
 
 | Hazard | Where | Mechanism | Measure |

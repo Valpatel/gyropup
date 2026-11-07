@@ -110,7 +110,7 @@ Made-part total target: **≈ 3.6 kg** (from 6.9).
 | pan_base | 1 | PET-CF print | 90 g | bolts to TM on the head plate; holds the 61810-2RS outer race; STS3215 pan servo pocket; hard stops ±170°; drip skirt |
 | pan_ring | 1 | PET-CF print | 70 g | 60 T internal ring gear (module 1) on the bearing inner race; Ø45 open centre for the clock-spring loop; mounts the tilt yoke |
 | pan_pinion | 1 | PET-CF print | 5 g | 20 T on the STS3215 horn (3:1) |
-| tilt_yoke | 1 | PET-CF print (2 arms + bridge) | 80 g | STS3215 tilt servo on one arm, 6 × 12 bearing on the other; **hard stop at 0° body frame** |
+| tilt_yoke | 1 | PET-CF print (2 arms + bridge) | 80 g | STS3215 tilt servo on one arm, 6 × 12 bearing on the other; **hard stops at +12° and -25° (D77: the mechanism's own limits)** |
 | cradle | 1 | PET-CF print | 50 g | cartridge seat: 2 dowels + cam latch; blind-mate connector |
 | cartridge_body | 1 | PET-CF print | 110 g | flywheel cage (2 × Snail 2305, 40 mm wheels at 60 mm centres), barrel socket, ammo ID pins |
 | flywheel | 2 | PET-CF hub + TPU 95A tyre print | 10 g | Ø40, 5 mm bore with flat; bench-tuned diameter (study §8.3) |
@@ -132,7 +132,7 @@ Made-part total target: **≈ 3.6 kg** (from 6.9).
 | Feed motor | 1 | DJI RoboMaster M2006 P36 + C610 ESC (CAN) | $95 + |
 | Head MCU | 1 | WeAct STM32G431 core + SN65HVD230 (or the user's CAN board) | runs RPM loop, dial, chronograph, interlocks |
 | Chronograph | 2 | IR break-beam pairs (ITR9608) | |
-| Laser | 1 | Picotronic DD520-1-24(12×40), 520 nm Class 1 | |
+| Laser | 1 | A green laser pointer module, Ø7, its class from its label (Class 2 at most: docs/head-payload.md); the early plan's Picotronic DD520 was never bought | |
 | Payload converter | 1 | Mean Well DDR-60L-24 + 2 × 2200 µF 35 V | behind the arming relay |
 | Arming relay | 1 | 24 V 10 A automotive relay (or Pololu high-side MOSFET switch) in series with the e-stop loop | |
 | Connector | 1 pair | Deutsch DT04-12PA / DT06-12SA (12-way, IP68) | head plate ↔ turret |

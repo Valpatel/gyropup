@@ -1,0 +1,253 @@
+{
+  "integration_base": "74930ae271c20b18ffdfd36ee705ea4f619dda90",
+  "retained_source": "eeccc07bacfca95464c703f6d730f975781f1fe0",
+  "original_worktree_head_preserved": "eeccc07bacfca95464c703f6d730f975781f1fe0",
+  "original_worktree_porcelain_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+  "retained_export_origin": "Exact old feature payloads, not new candidate production or current source-freshness acceptance",
+  "retained_exports": [
+    {
+      "path": "hardware/exports/turret/clash-sweep.json",
+      "source_path": "exports/turret/clash-sweep.json",
+      "bytes": 1241,
+      "sha256": "d1b11539adbc68a580bbc10d9c1b925d464b6bc25e08eb2cd1be13776669d827"
+    },
+    {
+      "path": "hardware/exports/turret/fea/cradle-E-push-up.json",
+      "source_path": "exports/turret/fea/cradle-E-push-up.json",
+      "bytes": 495922,
+      "sha256": "87951579f63b1b893f6093436c76f07b74a30f2c8af41fca770eed55f13e8ad3"
+    },
+    {
+      "path": "hardware/exports/turret/fea/cradle-E-push-up.mp4",
+      "source_path": "exports/turret/fea/cradle-E-push-up.mp4",
+      "bytes": 78866,
+      "sha256": "d1006bc525163cf4af6c21aa4dd57b145c53c494faaac319bb415dc4ca085f77"
+    },
+    {
+      "path": "hardware/exports/turret/fea/cradle-E-push-up.png",
+      "source_path": "exports/turret/fea/cradle-E-push-up.png",
+      "bytes": 73228,
+      "sha256": "248e073903b6bd327259d01b3b43bef8d465573adc8fe70cf5631b7f6a775711"
+    },
+    {
+      "path": "hardware/exports/turret/fea/cradle-R-fall-down.json",
+      "source_path": "exports/turret/fea/cradle-R-fall-down.json",
+      "bytes": 490761,
+      "sha256": "f5ec3ea940e1465240caa642ed37631b7ec353039b2f4e9ab1e04f8825013ae3"
+    },
+    {
+      "path": "hardware/exports/turret/fea/cradle-R-fall-down.mp4",
+      "source_path": "exports/turret/fea/cradle-R-fall-down.mp4",
+      "bytes": 74001,
+      "sha256": "d4b104dc0cdc74578d58bd6f6ce14c20a826b7cdcbbef5a5985fdd3f1f28dcd9"
+    },
+    {
+      "path": "hardware/exports/turret/fea/cradle-R-fall-down.png",
+      "source_path": "exports/turret/fea/cradle-R-fall-down.png",
+      "bytes": 71803,
+      "sha256": "7725eb135894f88122a70e6c5acc45337c68e294da0a773d7faa991654fe6542"
+    },
+    {
+      "path": "hardware/exports/turret/fea/cradle-R-fall-side.json",
+      "source_path": "exports/turret/fea/cradle-R-fall-side.json",
+      "bytes": 490516,
+      "sha256": "1ae7f6871967082cd7bf1d16aabd59bebd0afec8f694d87b60c82ab056498254"
+    },
+    {
+      "path": "hardware/exports/turret/fea/cradle-R-fall-side.mp4",
+      "source_path": "exports/turret/fea/cradle-R-fall-side.mp4",
+      "bytes": 71483,
+      "sha256": "12723ff77162c417ef0da1d90bc9f5358ae2d8b36a3a1463f452422266a7fdd9"
+    },
+    {
+      "path": "hardware/exports/turret/fea/cradle-R-fall-side.png",
+      "source_path": "exports/turret/fea/cradle-R-fall-side.png",
+      "bytes": 72905,
+      "sha256": "92f5ff5f02d85c427322147478295149b85fe705e9f71c15d7ec2286a0e2554c"
+    },
+    {
+      "path": "hardware/exports/turret/fea/stop_lug-E-push-up.json",
+      "source_path": "exports/turret/fea/stop_lug-E-push-up.json",
+      "bytes": 172880,
+      "sha256": "3b19e11c93c5404b7a9d0c696c29bb086aef83e1180dfec3b1098f1e4fbcf033"
+    },
+    {
+      "path": "hardware/exports/turret/fea/stop_lug-E-push-up.mp4",
+      "source_path": "exports/turret/fea/stop_lug-E-push-up.mp4",
+      "bytes": 101270,
+      "sha256": "b20d0ed4ee4b768cfcbe4b1662a768ca5cc58c68ec0e78e28c8ad48e36ed5f90"
+    },
+    {
+      "path": "hardware/exports/turret/fea/stop_lug-E-push-up.png",
+      "source_path": "exports/turret/fea/stop_lug-E-push-up.png",
+      "bytes": 91902,
+      "sha256": "b5255885dbf1e57f914ebc337aa1904e2aada9864629536a295abdcdadb242ea"
+    },
+    {
+      "path": "hardware/exports/turret/fea/summary.json",
+      "source_path": "exports/turret/fea/summary.json",
+      "bytes": 127829,
+      "sha256": "49ac98a970aa06d0160021415cd78a41fdcf3a74cff09f432257271bdb271b48"
+    },
+    {
+      "path": "hardware/exports/turret/fea/tilt_yoke-E-push-up.json",
+      "source_path": "exports/turret/fea/tilt_yoke-E-push-up.json",
+      "bytes": 1092924,
+      "sha256": "004a848c4efef2aa337d1a04af532e44360c744bfa422899d45125f54a2bc132"
+    },
+    {
+      "path": "hardware/exports/turret/fea/tilt_yoke-E-push-up.mp4",
+      "source_path": "exports/turret/fea/tilt_yoke-E-push-up.mp4",
+      "bytes": 63937,
+      "sha256": "d68755148d2b1abf2b263e3065a2a495dfa1157c6f79ccad3c77b912f4faa3ef"
+    },
+    {
+      "path": "hardware/exports/turret/fea/tilt_yoke-E-push-up.png",
+      "source_path": "exports/turret/fea/tilt_yoke-E-push-up.png",
+      "bytes": 75813,
+      "sha256": "05b0a37551c39f7ee8fb5759f5a33facb68a5812690c31bfd498ee969fd8cc9e"
+    },
+    {
+      "path": "hardware/exports/turret/fea/tilt_yoke-R-fall-down.json",
+      "source_path": "exports/turret/fea/tilt_yoke-R-fall-down.json",
+      "bytes": 1093231,
+      "sha256": "7e1c4a87ef6420f7ad0c7f61e1597b2358667379df6a40644ac8aeaa2e765618"
+    },
+    {
+      "path": "hardware/exports/turret/fea/tilt_yoke-R-fall-down.mp4",
+      "source_path": "exports/turret/fea/tilt_yoke-R-fall-down.mp4",
+      "bytes": 89992,
+      "sha256": "0f87adbfd64c0f452c89f0ba3fcdaeba2d89f92720f0297b97d0f5c434c13ebd"
+    },
+    {
+      "path": "hardware/exports/turret/fea/tilt_yoke-R-fall-down.png",
+      "source_path": "exports/turret/fea/tilt_yoke-R-fall-down.png",
+      "bytes": 85782,
+      "sha256": "fd819152a2c368c503562b872383ca5f1e09503c7b0e5d3f8df041f904c76759"
+    },
+    {
+      "path": "hardware/exports/turret/fea/tilt_yoke-R-fall-side+.json",
+      "source_path": "exports/turret/fea/tilt_yoke-R-fall-side+.json",
+      "bytes": 1093650,
+      "sha256": "eb9f5432b97a493b6307bec76b36d0912c018ea137a043bfd290b8fa3c5c305b"
+    },
+    {
+      "path": "hardware/exports/turret/fea/tilt_yoke-R-fall-side+.mp4",
+      "source_path": "exports/turret/fea/tilt_yoke-R-fall-side+.mp4",
+      "bytes": 77878,
+      "sha256": "f6dad001d3587cb63a05247f61204fe4e24af246531663cf534b2f4d69a8c88d"
+    },
+    {
+      "path": "hardware/exports/turret/fea/tilt_yoke-R-fall-side+.png",
+      "source_path": "exports/turret/fea/tilt_yoke-R-fall-side+.png",
+      "bytes": 82270,
+      "sha256": "87354f9a6160673649f67ccdb857a873dabf7b9302273e3d4706be4247c75d25"
+    },
+    {
+      "path": "hardware/exports/turret/fea/tilt_yoke-R-fall-side.json",
+      "source_path": "exports/turret/fea/tilt_yoke-R-fall-side.json",
+      "bytes": 1095949,
+      "sha256": "bc9126d6b207ccc669509222491c73b43b186c35f4acd64d166ddac6148e6549"
+    },
+    {
+      "path": "hardware/exports/turret/fea/tilt_yoke-R-fall-side.mp4",
+      "source_path": "exports/turret/fea/tilt_yoke-R-fall-side.mp4",
+      "bytes": 74849,
+      "sha256": "a23e26623677085d98f887282e702f0864fce21c49d035707ecdb869ea6663a8"
+    },
+    {
+      "path": "hardware/exports/turret/fea/tilt_yoke-R-fall-side.png",
+      "source_path": "exports/turret/fea/tilt_yoke-R-fall-side.png",
+      "bytes": 76260,
+      "sha256": "c650f9373d641fef5aea27a31e19a8054887171ea8642279eb98155b8da50d69"
+    },
+    {
+      "path": "hardware/exports/turret/feed/feed-elevated.json",
+      "source_path": "exports/turret/feed/feed-elevated.json",
+      "bytes": 45952,
+      "sha256": "ecad27c823eb045059e38059f06f77416115d26a86b4326049788e3a725f50c9"
+    },
+    {
+      "path": "hardware/exports/turret/feed/feed.json",
+      "source_path": "exports/turret/feed/feed.json",
+      "bytes": 4393,
+      "sha256": "57c8cac916081fe4b7d52f05413db29228203fd197f849411885f993207eb896"
+    },
+    {
+      "path": "hardware/exports/turret/firmware/firmware.json",
+      "source_path": "exports/turret/firmware/firmware.json",
+      "bytes": 5516,
+      "sha256": "28c9930ed50d0ce5eaf8b7a747b12704ee65e253a4464b7c9dffbb18f2693e5d"
+    },
+    {
+      "path": "hardware/exports/turret/lidar/lidar-limit.png",
+      "source_path": "exports/turret/lidar/lidar-limit.png",
+      "bytes": 48511,
+      "sha256": "3b04e07af56bd321e1f732745de6921dcf612888b3802634fa0e497c33d1f0c3"
+    },
+    {
+      "path": "hardware/exports/turret/lidar/lidar.json",
+      "source_path": "exports/turret/lidar/lidar.json",
+      "bytes": 47239,
+      "sha256": "0bfe21100e693353eedb56546cef44c7898c3a3841bea28b6619f6eb3f29b228"
+    },
+    {
+      "path": "hardware/exports/turret/limits.json",
+      "source_path": "exports/turret/limits.json",
+      "bytes": 743,
+      "sha256": "616e664a5fc0805dae3ff719bc4040f77a7126b9e9a242a0290cc071053f5786"
+    },
+    {
+      "path": "hardware/exports/turret/motion.json",
+      "source_path": "exports/turret/motion.json",
+      "bytes": 3796,
+      "sha256": "00b6386ec0b5e8116c60dc977d4d48f914f437df1e0316c9c102577252e0b409"
+    },
+    {
+      "path": "hardware/exports/turret/mount.json",
+      "source_path": "exports/turret/mount.json",
+      "bytes": 11368,
+      "sha256": "d0c3bda29655cde5e108e60d64d4e1e43172aa1e57fdfdbef7543811c0066ab0"
+    },
+    {
+      "path": "hardware/exports/turret/t1-fine-checks.json",
+      "source_path": "exports/turret/t1-fine-checks.json",
+      "bytes": 2055,
+      "sha256": "b10cc765675fa4c6caaa784355211c3598bf2941c6800ecea86e1caf66ca18b5"
+    },
+    {
+      "path": "hardware/exports/turret/tilt-range-next.json",
+      "source_path": "exports/turret/tilt-range-next.json",
+      "bytes": 3685,
+      "sha256": "fcc219c38d7ed62b648de094541ba5a4ea664eadd400da327910a720d5b34fbd"
+    },
+    {
+      "path": "hardware/exports/turret/tilt-range.json",
+      "source_path": "exports/turret/tilt-range.json",
+      "bytes": 4140,
+      "sha256": "0af768d61594b7ee716a26f1d5147a3309bfb7a92e7b0ef8808e71b0209f8151"
+    },
+    {
+      "path": "hardware/exports/turret/turret.json",
+      "source_path": "exports/turret/turret.json",
+      "bytes": 22162,
+      "sha256": "33de532d39e379daffff5258574b635e17de2926946395e78bbdc61bb602e0ae"
+    }
+  ],
+  "known_limits": {
+    "feed_cases": 72,
+    "double_feeds": 15,
+    "parked_leaks": 0,
+    "fea_rows": 28,
+    "below_target_rows": 9,
+    "fea_all_ok": false,
+    "refreshed_fea_parts": [
+      "tilt_yoke",
+      "stop_lug",
+      "cradle"
+    ],
+    "everyday_minimum": 1.5,
+    "rare_minimum": 0.98
+  },
+  "phase": "Source recovery only; exact current producer DAG and immutable source guards need independent review before native runs"
+}

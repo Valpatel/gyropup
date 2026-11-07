@@ -40,10 +40,254 @@
     "constants_hash": "b0989f2b1b1c8bdc"
    },
    "mesh": {
-    "nodes": 16621,
-    "tets": 64197,
+    "nodes": 16685,
+    "tets": 64526,
     "size_mm": 2.5,
-    "element": "P2 tetrahedra"
+    "element": "P2 tetrahedra",
+    "mesher": {
+     "gmsh": "4.15.2",
+     "occ": "7.8.1",
+     "build": {
+      "os": "Linux64-sdk",
+      "date": "20260324"
+     },
+     "library": {
+      "file": "libgmsh.so.4.15",
+      "sha256_16": "9db3090d3b720c57"
+     },
+     "platform": {
+      "system": "Linux",
+      "machine": "x86_64",
+      "python": "3.12.13"
+     }
+    },
+    "refine": [],
+    "slivers": {
+     "faces": [
+      {
+       "tag": 84,
+       "kind": "Cylinder",
+       "area_mm2": 0.002113,
+       "width_mm": 0.01719,
+       "under_mm2": 0.0625,
+       "under_mm": 0.25,
+       "why": "small",
+       "center_mm": [
+        19.987,
+        -52.302,
+        80.127
+       ]
+      },
+      {
+       "tag": 85,
+       "kind": "Torus",
+       "area_mm2": 0.005492,
+       "width_mm": 0.029208,
+       "under_mm2": 0.0625,
+       "under_mm": 0.25,
+       "why": "small",
+       "center_mm": [
+        19.979,
+        -52.301,
+        80.033
+       ]
+      },
+      {
+       "tag": 90,
+       "kind": "Torus",
+       "area_mm2": 0.005492,
+       "width_mm": 0.029208,
+       "under_mm2": 0.0625,
+       "under_mm": 0.25,
+       "why": "small",
+       "center_mm": [
+        19.979,
+        -34.319,
+        80.033
+       ]
+      },
+      {
+       "tag": 91,
+       "kind": "Cylinder",
+       "area_mm2": 0.002113,
+       "width_mm": 0.01719,
+       "under_mm2": 0.0625,
+       "under_mm": 0.25,
+       "why": "small",
+       "center_mm": [
+        19.987,
+        -34.318,
+        80.127
+       ]
+      },
+      {
+       "tag": 113,
+       "kind": "Plane",
+       "area_mm2": 1.402057,
+       "width_mm": 0.232912,
+       "under_mm2": 0.0625,
+       "under_mm": 0.25,
+       "why": "narrow",
+       "center_mm": [
+        12.79,
+        69.81,
+        140.0
+       ]
+      },
+      {
+       "tag": 120,
+       "kind": "Plane",
+       "area_mm2": 1.402057,
+       "width_mm": 0.232912,
+       "under_mm2": 0.0625,
+       "under_mm": 0.25,
+       "why": "narrow",
+       "center_mm": [
+        -12.79,
+        69.81,
+        140.0
+       ]
+      }
+     ],
+     "edges": [
+      {
+       "tag": 143,
+       "length_mm": 0.105583,
+       "under_mm": 0.25,
+       "center_mm": [
+        20.0,
+        -34.318,
+        80.138
+       ]
+      },
+      {
+       "tag": 144,
+       "length_mm": 0.151402,
+       "under_mm": 0.25,
+       "center_mm": [
+        20.0,
+        -34.321,
+        80.01
+       ]
+      },
+      {
+       "tag": 149,
+       "length_mm": 0.155378,
+       "under_mm": 0.25,
+       "center_mm": [
+        20.0,
+        -34.881,
+        77.586
+       ]
+      },
+      {
+       "tag": 153,
+       "length_mm": 0.155378,
+       "under_mm": 0.25,
+       "center_mm": [
+        20.0,
+        -51.739,
+        77.586
+       ]
+      },
+      {
+       "tag": 158,
+       "length_mm": 0.151402,
+       "under_mm": 0.25,
+       "center_mm": [
+        20.0,
+        -52.299,
+        80.01
+       ]
+      },
+      {
+       "tag": 159,
+       "length_mm": 0.105583,
+       "under_mm": 0.25,
+       "center_mm": [
+        20.0,
+        -52.302,
+        80.138
+       ]
+      },
+      {
+       "tag": 216,
+       "length_mm": 0.096444,
+       "under_mm": 0.25,
+       "center_mm": [
+        19.98,
+        -34.319,
+        80.147
+       ]
+      },
+      {
+       "tag": 217,
+       "length_mm": 0.180853,
+       "under_mm": 0.25,
+       "center_mm": [
+        19.976,
+        -34.322,
+        80.019
+       ]
+      },
+      {
+       "tag": 233,
+       "length_mm": 0.180853,
+       "under_mm": 0.25,
+       "center_mm": [
+        19.976,
+        -52.298,
+        80.019
+       ]
+      },
+      {
+       "tag": 234,
+       "length_mm": 0.096444,
+       "under_mm": 0.25,
+       "center_mm": [
+        19.98,
+        -52.301,
+        80.147
+       ]
+      },
+      {
+       "tag": 295,
+       "length_mm": 0.043819,
+       "under_mm": 0.25,
+       "center_mm": [
+        19.98,
+        -52.302,
+        80.094
+       ]
+      },
+      {
+       "tag": 296,
+       "length_mm": 0.043819,
+       "under_mm": 0.25,
+       "center_mm": [
+        19.98,
+        -34.318,
+        80.094
+       ]
+      }
+     ]
+    },
+    "peak": {
+     "stress_mpa": 14.59,
+     "at_mm": [
+      1.239,
+      37.98,
+      70.5
+     ],
+     "where": "curved face",
+     "element_mm": 3.017,
+     "wall_mm": 10.5,
+     "elements_across": 3.5,
+     "wall_resolved": true,
+     "radius_mm": null,
+     "radius_resolved": null,
+     "note": ""
+    }
    },
    "loads": [
     {
@@ -51,7 +295,7 @@
      "n": [
       0.0,
       0.0,
-      -111.99991162500001
+      -113.50084162500004
      ],
      "area_mm2": 412.9
     },
@@ -60,28 +304,28 @@
      "n": [
       0.0,
       0.0,
-      -111.99991162500001
+      -113.50084162500004
      ],
      "area_mm2": 2741.7
     }
    ],
-   "max_displacement_mm": 6.7586,
+   "max_displacement_mm": 6.8459,
    "probe_displacement_mm": [
-    0.0062,
-    -0.3765,
-    -0.3033
+    0.0063,
+    -0.3809,
+    -0.3074
    ],
-   "max_von_mises_mpa": 21.68,
-   "von_mises_design_mpa": 13.95,
-   "safety_factor": 2.93,
+   "max_von_mises_mpa": 23.24,
+   "von_mises_design_mpa": 14.59,
+   "safety_factor": 2.8,
    "assumptions": "linear elastic, small deflection, isotropic: E 1029.2 MPa, a modulus in the layer plane (X-Y), and strength 40.8373 MPa everywhere (Bambu PA6-CF TDS V3.0: dry X-Y tensile modulus 4430 MPa x0.290 humid and strength 102 MPa x0.500 humid (Polymaker PA6-CF20 V1.1 wet / dry), each x0.8 print. For parts printed so their main stress runs in the layers), though a printed part is not isotropic; faces clamped where fixed; no contact, preload or buckling",
    "stiffness_n_per_mm": 369.2,
    "peak_at_mm": [
-    1.7,
-    37.1,
-    70.8
+    0.4,
+    36.7,
+    70.5
    ],
-   "p99_mpa": 6.95,
+   "p99_mpa": 7.04,
    "layer_aware": {
     "layer_normal": [
      -1.0,
@@ -95,55 +339,55 @@
     },
     "in_plane": {
      "what": "von Mises in the layers' plane",
-     "peak_mpa": 16.66,
+     "peak_mpa": 16.49,
      "at_mm": [
-      1.7,
-      37.1,
+      2.1,
+      37.0,
       70.8
      ],
      "allowable_mpa": 40.83732845379689,
-     "sf": 2.45,
-     "p99_mpa": 7.44
+     "sf": 2.48,
+     "p99_mpa": 7.51
     },
     "across": {
      "what": "tension across the layers",
-     "peak_mpa": 4.82,
+     "peak_mpa": 5.2,
      "at_mm": [
-      -9.4,
-      32.3,
-      80.5
+      -7.5,
+      30.7,
+      74.5
      ],
      "allowable_mpa": 18.133333333333333,
-     "sf": 3.76,
-     "p99_mpa": 1.9
+     "sf": 3.48,
+     "p99_mpa": 1.93
     },
     "shear": {
      "what": "interlaminar shear",
-     "peak_mpa": 3.61,
+     "peak_mpa": 3.9,
      "at_mm": [
-      6.5,
-      30.2,
-      80.5
+      -7.3,
+      31.2,
+      80.6
      ],
      "allowable_mpa": 9.066666666666666,
-     "sf": 2.51,
-     "p99_mpa": 1.26
+     "sf": 2.32,
+     "p99_mpa": 1.29
     },
-    "governs": "in_plane",
-    "sf": 2.45
+    "governs": "shear",
+    "sf": 2.32
    },
-   "sf_layer_aware": 2.45,
-   "sf_isotropic_weak": 1.3,
+   "sf_layer_aware": 2.32,
+   "sf_isotropic_weak": 1.24,
    "ok_isotropic": true,
-   "verdict_sf": 2.45,
+   "verdict_sf": 2.32,
    "verdict_on": "layer-aware",
    "case": "R-fall-down",
    "material_id": "pa6_cf_xy",
-   "load_from": "30 g down on the tilting group (0.76 kg): 224 N, half at each arm (the MR126 bore, the servo pocket)",
+   "load_from": "30 g down on the tilting group (0.77 kg): 227 N, half at each arm (the MR126 bore, the servo pocket)",
    "png": "exports/turret/fea/tilt_yoke-R-fall-down.png",
    "target": 1.2,
    "ok": true,
-   "seconds": 44.7,
+   "seconds": 46.8,
    "animation": "exports/turret/fea/tilt_yoke-R-fall-down.mp4",
    "viewer": "exports/turret/fea/tilt_yoke-R-fall-down.json"
   },
@@ -168,39 +412,283 @@
     "constants_hash": "b0989f2b1b1c8bdc"
    },
    "mesh": {
-    "nodes": 16621,
-    "tets": 64197,
+    "nodes": 16685,
+    "tets": 64526,
     "size_mm": 2.5,
-    "element": "P2 tetrahedra"
+    "element": "P2 tetrahedra",
+    "mesher": {
+     "gmsh": "4.15.2",
+     "occ": "7.8.1",
+     "build": {
+      "os": "Linux64-sdk",
+      "date": "20260324"
+     },
+     "library": {
+      "file": "libgmsh.so.4.15",
+      "sha256_16": "9db3090d3b720c57"
+     },
+     "platform": {
+      "system": "Linux",
+      "machine": "x86_64",
+      "python": "3.12.13"
+     }
+    },
+    "refine": [],
+    "slivers": {
+     "faces": [
+      {
+       "tag": 84,
+       "kind": "Cylinder",
+       "area_mm2": 0.002113,
+       "width_mm": 0.01719,
+       "under_mm2": 0.0625,
+       "under_mm": 0.25,
+       "why": "small",
+       "center_mm": [
+        19.987,
+        -52.302,
+        80.127
+       ]
+      },
+      {
+       "tag": 85,
+       "kind": "Torus",
+       "area_mm2": 0.005492,
+       "width_mm": 0.029208,
+       "under_mm2": 0.0625,
+       "under_mm": 0.25,
+       "why": "small",
+       "center_mm": [
+        19.979,
+        -52.301,
+        80.033
+       ]
+      },
+      {
+       "tag": 90,
+       "kind": "Torus",
+       "area_mm2": 0.005492,
+       "width_mm": 0.029208,
+       "under_mm2": 0.0625,
+       "under_mm": 0.25,
+       "why": "small",
+       "center_mm": [
+        19.979,
+        -34.319,
+        80.033
+       ]
+      },
+      {
+       "tag": 91,
+       "kind": "Cylinder",
+       "area_mm2": 0.002113,
+       "width_mm": 0.01719,
+       "under_mm2": 0.0625,
+       "under_mm": 0.25,
+       "why": "small",
+       "center_mm": [
+        19.987,
+        -34.318,
+        80.127
+       ]
+      },
+      {
+       "tag": 113,
+       "kind": "Plane",
+       "area_mm2": 1.402057,
+       "width_mm": 0.232912,
+       "under_mm2": 0.0625,
+       "under_mm": 0.25,
+       "why": "narrow",
+       "center_mm": [
+        12.79,
+        69.81,
+        140.0
+       ]
+      },
+      {
+       "tag": 120,
+       "kind": "Plane",
+       "area_mm2": 1.402057,
+       "width_mm": 0.232912,
+       "under_mm2": 0.0625,
+       "under_mm": 0.25,
+       "why": "narrow",
+       "center_mm": [
+        -12.79,
+        69.81,
+        140.0
+       ]
+      }
+     ],
+     "edges": [
+      {
+       "tag": 143,
+       "length_mm": 0.105583,
+       "under_mm": 0.25,
+       "center_mm": [
+        20.0,
+        -34.318,
+        80.138
+       ]
+      },
+      {
+       "tag": 144,
+       "length_mm": 0.151402,
+       "under_mm": 0.25,
+       "center_mm": [
+        20.0,
+        -34.321,
+        80.01
+       ]
+      },
+      {
+       "tag": 149,
+       "length_mm": 0.155378,
+       "under_mm": 0.25,
+       "center_mm": [
+        20.0,
+        -34.881,
+        77.586
+       ]
+      },
+      {
+       "tag": 153,
+       "length_mm": 0.155378,
+       "under_mm": 0.25,
+       "center_mm": [
+        20.0,
+        -51.739,
+        77.586
+       ]
+      },
+      {
+       "tag": 158,
+       "length_mm": 0.151402,
+       "under_mm": 0.25,
+       "center_mm": [
+        20.0,
+        -52.299,
+        80.01
+       ]
+      },
+      {
+       "tag": 159,
+       "length_mm": 0.105583,
+       "under_mm": 0.25,
+       "center_mm": [
+        20.0,
+        -52.302,
+        80.138
+       ]
+      },
+      {
+       "tag": 216,
+       "length_mm": 0.096444,
+       "under_mm": 0.25,
+       "center_mm": [
+        19.98,
+        -34.319,
+        80.147
+       ]
+      },
+      {
+       "tag": 217,
+       "length_mm": 0.180853,
+       "under_mm": 0.25,
+       "center_mm": [
+        19.976,
+        -34.322,
+        80.019
+       ]
+      },
+      {
+       "tag": 233,
+       "length_mm": 0.180853,
+       "under_mm": 0.25,
+       "center_mm": [
+        19.976,
+        -52.298,
+        80.019
+       ]
+      },
+      {
+       "tag": 234,
+       "length_mm": 0.096444,
+       "under_mm": 0.25,
+       "center_mm": [
+        19.98,
+        -52.301,
+        80.147
+       ]
+      },
+      {
+       "tag": 295,
+       "length_mm": 0.043819,
+       "under_mm": 0.25,
+       "center_mm": [
+        19.98,
+        -52.302,
+        80.094
+       ]
+      },
+      {
+       "tag": 296,
+       "length_mm": 0.043819,
+       "under_mm": 0.25,
+       "center_mm": [
+        19.98,
+        -34.318,
+        80.094
+       ]
+      }
+     ]
+    },
+    "peak": {
+     "stress_mpa": 16.37,
+     "at_mm": [
+      -7.752,
+      -60.54,
+      85.22
+     ],
+     "where": "R6 inside fillet",
+     "element_mm": 2.288,
+     "wall_mm": 8.0,
+     "elements_across": 3.5,
+     "wall_resolved": true,
+     "radius_mm": 3.0,
+     "radius_resolved": true,
+     "note": ""
+    }
    },
    "loads": [
     {
      "kind": "force",
      "n": [
       0.0,
-      -223.99982325000002,
+      -227.00168325000007,
       0.0
      ],
      "area_mm2": 211.9
     }
    ],
-   "max_displacement_mm": 7.952,
+   "max_displacement_mm": 8.0928,
    "probe_displacement_mm": [
-    -0.0075,
-    -1.7767,
-    -0.9455
+    -0.0082,
+    -1.8051,
+    -0.9582
    ],
-   "max_von_mises_mpa": 29.47,
-   "von_mises_design_mpa": 16.18,
-   "safety_factor": 2.52,
+   "max_von_mises_mpa": 29.54,
+   "von_mises_design_mpa": 16.37,
+   "safety_factor": 2.5,
    "assumptions": "linear elastic, small deflection, isotropic: E 1029.2 MPa, a modulus in the layer plane (X-Y), and strength 40.8373 MPa everywhere (Bambu PA6-CF TDS V3.0: dry X-Y tensile modulus 4430 MPa x0.290 humid and strength 102 MPa x0.500 humid (Polymaker PA6-CF20 V1.1 wet / dry), each x0.8 print. For parts printed so their main stress runs in the layers), though a printed part is not isotropic; faces clamped where fixed; no contact, preload or buckling",
-   "stiffness_n_per_mm": 126.1,
+   "stiffness_n_per_mm": 125.8,
    "peak_at_mm": [
-    13.9,
-    -50.9,
-    79.3
+    -6.4,
+    -60.6,
+    85.6
    ],
-   "p99_mpa": 10.34,
+   "p99_mpa": 10.48,
    "layer_aware": {
     "layer_normal": [
      -1.0,
@@ -214,55 +702,55 @@
     },
     "in_plane": {
      "what": "von Mises in the layers' plane",
-     "peak_mpa": 17.07,
+     "peak_mpa": 17.27,
      "at_mm": [
       13.9,
       -50.9,
       79.3
      ],
      "allowable_mpa": 40.83732845379689,
-     "sf": 2.39,
-     "p99_mpa": 10.83
+     "sf": 2.36,
+     "p99_mpa": 10.97
     },
     "across": {
      "what": "tension across the layers",
-     "peak_mpa": 7.19,
+     "peak_mpa": 7.29,
      "at_mm": [
       13.5,
       -35.0,
       80.6
      ],
      "allowable_mpa": 18.133333333333333,
-     "sf": 2.52,
-     "p99_mpa": 2.55
+     "sf": 2.49,
+     "p99_mpa": 2.58
     },
     "shear": {
      "what": "interlaminar shear",
-     "peak_mpa": 6.29,
+     "peak_mpa": 6.16,
      "at_mm": [
       5.3,
       -68.5,
       85.2
      ],
      "allowable_mpa": 9.066666666666666,
-     "sf": 1.44,
-     "p99_mpa": 2.59
+     "sf": 1.47,
+     "p99_mpa": 2.67
     },
     "governs": "shear",
-    "sf": 1.44
+    "sf": 1.47
    },
-   "sf_layer_aware": 1.44,
-   "sf_isotropic_weak": 1.12,
+   "sf_layer_aware": 1.47,
+   "sf_isotropic_weak": 1.11,
    "ok_isotropic": true,
-   "verdict_sf": 1.44,
+   "verdict_sf": 1.47,
    "verdict_on": "layer-aware",
    "case": "R-fall-side",
    "material_id": "pa6_cf_xy",
-   "load_from": "30 g sideways (-y): the tilting group 224 N through the cradle spacer and the MR126 into its seat floor",
+   "load_from": "30 g sideways (-y): the tilting group 227 N through the cradle spacer and the MR126 into its seat floor",
    "png": "exports/turret/fea/tilt_yoke-R-fall-side.png",
    "target": 1.2,
    "ok": true,
-   "seconds": 37.7,
+   "seconds": 27.5,
    "animation": "exports/turret/fea/tilt_yoke-R-fall-side.mp4",
    "viewer": "exports/turret/fea/tilt_yoke-R-fall-side.json"
   },
@@ -287,39 +775,283 @@
     "constants_hash": "b0989f2b1b1c8bdc"
    },
    "mesh": {
-    "nodes": 16621,
-    "tets": 64197,
+    "nodes": 16685,
+    "tets": 64526,
     "size_mm": 2.5,
-    "element": "P2 tetrahedra"
+    "element": "P2 tetrahedra",
+    "mesher": {
+     "gmsh": "4.15.2",
+     "occ": "7.8.1",
+     "build": {
+      "os": "Linux64-sdk",
+      "date": "20260324"
+     },
+     "library": {
+      "file": "libgmsh.so.4.15",
+      "sha256_16": "9db3090d3b720c57"
+     },
+     "platform": {
+      "system": "Linux",
+      "machine": "x86_64",
+      "python": "3.12.13"
+     }
+    },
+    "refine": [],
+    "slivers": {
+     "faces": [
+      {
+       "tag": 84,
+       "kind": "Cylinder",
+       "area_mm2": 0.002113,
+       "width_mm": 0.01719,
+       "under_mm2": 0.0625,
+       "under_mm": 0.25,
+       "why": "small",
+       "center_mm": [
+        19.987,
+        -52.302,
+        80.127
+       ]
+      },
+      {
+       "tag": 85,
+       "kind": "Torus",
+       "area_mm2": 0.005492,
+       "width_mm": 0.029208,
+       "under_mm2": 0.0625,
+       "under_mm": 0.25,
+       "why": "small",
+       "center_mm": [
+        19.979,
+        -52.301,
+        80.033
+       ]
+      },
+      {
+       "tag": 90,
+       "kind": "Torus",
+       "area_mm2": 0.005492,
+       "width_mm": 0.029208,
+       "under_mm2": 0.0625,
+       "under_mm": 0.25,
+       "why": "small",
+       "center_mm": [
+        19.979,
+        -34.319,
+        80.033
+       ]
+      },
+      {
+       "tag": 91,
+       "kind": "Cylinder",
+       "area_mm2": 0.002113,
+       "width_mm": 0.01719,
+       "under_mm2": 0.0625,
+       "under_mm": 0.25,
+       "why": "small",
+       "center_mm": [
+        19.987,
+        -34.318,
+        80.127
+       ]
+      },
+      {
+       "tag": 113,
+       "kind": "Plane",
+       "area_mm2": 1.402057,
+       "width_mm": 0.232912,
+       "under_mm2": 0.0625,
+       "under_mm": 0.25,
+       "why": "narrow",
+       "center_mm": [
+        12.79,
+        69.81,
+        140.0
+       ]
+      },
+      {
+       "tag": 120,
+       "kind": "Plane",
+       "area_mm2": 1.402057,
+       "width_mm": 0.232912,
+       "under_mm2": 0.0625,
+       "under_mm": 0.25,
+       "why": "narrow",
+       "center_mm": [
+        -12.79,
+        69.81,
+        140.0
+       ]
+      }
+     ],
+     "edges": [
+      {
+       "tag": 143,
+       "length_mm": 0.105583,
+       "under_mm": 0.25,
+       "center_mm": [
+        20.0,
+        -34.318,
+        80.138
+       ]
+      },
+      {
+       "tag": 144,
+       "length_mm": 0.151402,
+       "under_mm": 0.25,
+       "center_mm": [
+        20.0,
+        -34.321,
+        80.01
+       ]
+      },
+      {
+       "tag": 149,
+       "length_mm": 0.155378,
+       "under_mm": 0.25,
+       "center_mm": [
+        20.0,
+        -34.881,
+        77.586
+       ]
+      },
+      {
+       "tag": 153,
+       "length_mm": 0.155378,
+       "under_mm": 0.25,
+       "center_mm": [
+        20.0,
+        -51.739,
+        77.586
+       ]
+      },
+      {
+       "tag": 158,
+       "length_mm": 0.151402,
+       "under_mm": 0.25,
+       "center_mm": [
+        20.0,
+        -52.299,
+        80.01
+       ]
+      },
+      {
+       "tag": 159,
+       "length_mm": 0.105583,
+       "under_mm": 0.25,
+       "center_mm": [
+        20.0,
+        -52.302,
+        80.138
+       ]
+      },
+      {
+       "tag": 216,
+       "length_mm": 0.096444,
+       "under_mm": 0.25,
+       "center_mm": [
+        19.98,
+        -34.319,
+        80.147
+       ]
+      },
+      {
+       "tag": 217,
+       "length_mm": 0.180853,
+       "under_mm": 0.25,
+       "center_mm": [
+        19.976,
+        -34.322,
+        80.019
+       ]
+      },
+      {
+       "tag": 233,
+       "length_mm": 0.180853,
+       "under_mm": 0.25,
+       "center_mm": [
+        19.976,
+        -52.298,
+        80.019
+       ]
+      },
+      {
+       "tag": 234,
+       "length_mm": 0.096444,
+       "under_mm": 0.25,
+       "center_mm": [
+        19.98,
+        -52.301,
+        80.147
+       ]
+      },
+      {
+       "tag": 295,
+       "length_mm": 0.043819,
+       "under_mm": 0.25,
+       "center_mm": [
+        19.98,
+        -52.302,
+        80.094
+       ]
+      },
+      {
+       "tag": 296,
+       "length_mm": 0.043819,
+       "under_mm": 0.25,
+       "center_mm": [
+        19.98,
+        -34.318,
+        80.094
+       ]
+      }
+     ]
+    },
+    "peak": {
+     "stress_mpa": 8.87,
+     "at_mm": [
+      6.0,
+      60.353,
+      84.704
+     ],
+     "where": "R6 inside fillet",
+     "element_mm": 1.856,
+     "wall_mm": 8.0,
+     "elements_across": 4.3,
+     "wall_resolved": true,
+     "radius_mm": 3.0,
+     "radius_resolved": true,
+     "note": ""
+    }
    },
    "loads": [
     {
      "kind": "force",
      "n": [
       0.0,
-      223.99982325000002,
+      227.00168325000007,
       0.0
      ],
      "area_mm2": 248.9
     }
    ],
-   "max_displacement_mm": 4.3139,
+   "max_displacement_mm": 4.3698,
    "probe_displacement_mm": [
-    0.0,
-    0.7958,
-    -0.141
+    -0.0,
+    0.8061,
+    -0.1426
    ],
-   "max_von_mises_mpa": 10.73,
-   "von_mises_design_mpa": 8.75,
-   "safety_factor": 4.67,
+   "max_von_mises_mpa": 11.53,
+   "von_mises_design_mpa": 8.87,
+   "safety_factor": 4.6,
    "assumptions": "linear elastic, small deflection, isotropic: E 1029.2 MPa, a modulus in the layer plane (X-Y), and strength 40.8373 MPa everywhere (Bambu PA6-CF TDS V3.0: dry X-Y tensile modulus 4430 MPa x0.290 humid and strength 102 MPa x0.500 humid (Polymaker PA6-CF20 V1.1 wet / dry), each x0.8 print. For parts printed so their main stress runs in the layers), though a printed part is not isotropic; faces clamped where fixed; no contact, preload or buckling",
-   "stiffness_n_per_mm": 281.5,
+   "stiffness_n_per_mm": 281.6,
    "peak_at_mm": [
-    -6.4,
+    6.4,
     60.6,
     85.6
    ],
-   "p99_mpa": 4.98,
+   "p99_mpa": 5.04,
    "layer_aware": {
     "layer_normal": [
      -1.0,
@@ -333,55 +1065,55 @@
     },
     "in_plane": {
      "what": "von Mises in the layers' plane",
-     "peak_mpa": 9.19,
+     "peak_mpa": 9.27,
      "at_mm": [
       -6.4,
       60.6,
       85.6
      ],
      "allowable_mpa": 40.83732845379689,
-     "sf": 4.44,
-     "p99_mpa": 5.34
+     "sf": 4.41,
+     "p99_mpa": 5.42
     },
     "across": {
      "what": "tension across the layers",
-     "peak_mpa": 3.61,
+     "peak_mpa": 3.62,
      "at_mm": [
-      5.2,
-      60.7,
-      82.1
+      0.5,
+      61.2,
+      82.9
      ],
      "allowable_mpa": 18.133333333333333,
-     "sf": 5.03,
-     "p99_mpa": 1.23
+     "sf": 5.0,
+     "p99_mpa": 1.25
     },
     "shear": {
      "what": "interlaminar shear",
-     "peak_mpa": 1.98,
+     "peak_mpa": 2.04,
      "at_mm": [
-      6.4,
-      60.6,
-      84.8
+      -7.3,
+      31.2,
+      80.6
      ],
      "allowable_mpa": 9.066666666666666,
-     "sf": 4.58,
-     "p99_mpa": 0.55
+     "sf": 4.45,
+     "p99_mpa": 0.56
     },
     "governs": "in_plane",
-    "sf": 4.44
+    "sf": 4.41
    },
-   "sf_layer_aware": 4.44,
-   "sf_isotropic_weak": 2.07,
+   "sf_layer_aware": 4.41,
+   "sf_isotropic_weak": 2.04,
    "ok_isotropic": true,
-   "verdict_sf": 4.44,
+   "verdict_sf": 4.41,
    "verdict_on": "layer-aware",
    "case": "R-fall-side+",
    "material_id": "pa6_cf_xy",
-   "load_from": "30 g sideways (+y): 224 N pulls the tilt servo off the arm, on its 4 M2 screw heads",
+   "load_from": "30 g sideways (+y): 227 N pulls the tilt servo off the arm, on its 4 M2 screw heads",
    "png": "exports/turret/fea/tilt_yoke-R-fall-side+.png",
    "target": 1.2,
    "ok": true,
-   "seconds": 39.6,
+   "seconds": 26.4,
    "animation": "exports/turret/fea/tilt_yoke-R-fall-side+.mp4",
    "viewer": "exports/turret/fea/tilt_yoke-R-fall-side+.json"
   },
@@ -406,48 +1138,292 @@
     "constants_hash": "b0989f2b1b1c8bdc"
    },
    "mesh": {
-    "nodes": 16621,
-    "tets": 64197,
+    "nodes": 16685,
+    "tets": 64526,
     "size_mm": 2.5,
-    "element": "P2 tetrahedra"
+    "element": "P2 tetrahedra",
+    "mesher": {
+     "gmsh": "4.15.2",
+     "occ": "7.8.1",
+     "build": {
+      "os": "Linux64-sdk",
+      "date": "20260324"
+     },
+     "library": {
+      "file": "libgmsh.so.4.15",
+      "sha256_16": "9db3090d3b720c57"
+     },
+     "platform": {
+      "system": "Linux",
+      "machine": "x86_64",
+      "python": "3.12.13"
+     }
+    },
+    "refine": [],
+    "slivers": {
+     "faces": [
+      {
+       "tag": 84,
+       "kind": "Cylinder",
+       "area_mm2": 0.002113,
+       "width_mm": 0.01719,
+       "under_mm2": 0.0625,
+       "under_mm": 0.25,
+       "why": "small",
+       "center_mm": [
+        19.987,
+        -52.302,
+        80.127
+       ]
+      },
+      {
+       "tag": 85,
+       "kind": "Torus",
+       "area_mm2": 0.005492,
+       "width_mm": 0.029208,
+       "under_mm2": 0.0625,
+       "under_mm": 0.25,
+       "why": "small",
+       "center_mm": [
+        19.979,
+        -52.301,
+        80.033
+       ]
+      },
+      {
+       "tag": 90,
+       "kind": "Torus",
+       "area_mm2": 0.005492,
+       "width_mm": 0.029208,
+       "under_mm2": 0.0625,
+       "under_mm": 0.25,
+       "why": "small",
+       "center_mm": [
+        19.979,
+        -34.319,
+        80.033
+       ]
+      },
+      {
+       "tag": 91,
+       "kind": "Cylinder",
+       "area_mm2": 0.002113,
+       "width_mm": 0.01719,
+       "under_mm2": 0.0625,
+       "under_mm": 0.25,
+       "why": "small",
+       "center_mm": [
+        19.987,
+        -34.318,
+        80.127
+       ]
+      },
+      {
+       "tag": 113,
+       "kind": "Plane",
+       "area_mm2": 1.402057,
+       "width_mm": 0.232912,
+       "under_mm2": 0.0625,
+       "under_mm": 0.25,
+       "why": "narrow",
+       "center_mm": [
+        12.79,
+        69.81,
+        140.0
+       ]
+      },
+      {
+       "tag": 120,
+       "kind": "Plane",
+       "area_mm2": 1.402057,
+       "width_mm": 0.232912,
+       "under_mm2": 0.0625,
+       "under_mm": 0.25,
+       "why": "narrow",
+       "center_mm": [
+        -12.79,
+        69.81,
+        140.0
+       ]
+      }
+     ],
+     "edges": [
+      {
+       "tag": 143,
+       "length_mm": 0.105583,
+       "under_mm": 0.25,
+       "center_mm": [
+        20.0,
+        -34.318,
+        80.138
+       ]
+      },
+      {
+       "tag": 144,
+       "length_mm": 0.151402,
+       "under_mm": 0.25,
+       "center_mm": [
+        20.0,
+        -34.321,
+        80.01
+       ]
+      },
+      {
+       "tag": 149,
+       "length_mm": 0.155378,
+       "under_mm": 0.25,
+       "center_mm": [
+        20.0,
+        -34.881,
+        77.586
+       ]
+      },
+      {
+       "tag": 153,
+       "length_mm": 0.155378,
+       "under_mm": 0.25,
+       "center_mm": [
+        20.0,
+        -51.739,
+        77.586
+       ]
+      },
+      {
+       "tag": 158,
+       "length_mm": 0.151402,
+       "under_mm": 0.25,
+       "center_mm": [
+        20.0,
+        -52.299,
+        80.01
+       ]
+      },
+      {
+       "tag": 159,
+       "length_mm": 0.105583,
+       "under_mm": 0.25,
+       "center_mm": [
+        20.0,
+        -52.302,
+        80.138
+       ]
+      },
+      {
+       "tag": 216,
+       "length_mm": 0.096444,
+       "under_mm": 0.25,
+       "center_mm": [
+        19.98,
+        -34.319,
+        80.147
+       ]
+      },
+      {
+       "tag": 217,
+       "length_mm": 0.180853,
+       "under_mm": 0.25,
+       "center_mm": [
+        19.976,
+        -34.322,
+        80.019
+       ]
+      },
+      {
+       "tag": 233,
+       "length_mm": 0.180853,
+       "under_mm": 0.25,
+       "center_mm": [
+        19.976,
+        -52.298,
+        80.019
+       ]
+      },
+      {
+       "tag": 234,
+       "length_mm": 0.096444,
+       "under_mm": 0.25,
+       "center_mm": [
+        19.98,
+        -52.301,
+        80.147
+       ]
+      },
+      {
+       "tag": 295,
+       "length_mm": 0.043819,
+       "under_mm": 0.25,
+       "center_mm": [
+        19.98,
+        -52.302,
+        80.094
+       ]
+      },
+      {
+       "tag": 296,
+       "length_mm": 0.043819,
+       "under_mm": 0.25,
+       "center_mm": [
+        19.98,
+        -34.318,
+        80.094
+       ]
+      }
+     ]
+    },
+    "peak": {
+     "stress_mpa": 20.32,
+     "at_mm": [
+      13.016,
+      -57.81,
+      110.767
+     ],
+     "where": "R32 rounded edge",
+     "element_mm": 1.709,
+     "wall_mm": 6.903,
+     "elements_across": 4.0,
+     "wall_resolved": true,
+     "radius_mm": null,
+     "radius_resolved": null,
+     "note": ""
+    }
    },
    "loads": [
     {
      "kind": "force",
      "n": [
-      263.7877909854128,
+      248.35281818753234,
       0.0,
-      46.5129047322135
+      100.34105180783355
      ],
      "area_mm2": 24.0
     },
     {
      "kind": "force",
      "n": [
-      -263.7877909854128,
+      -258.7484027284203,
       0.0,
-      3.4870952677865006
+      -51.43367177114327
      ],
      "area_mm2": 412.9
     }
    ],
-   "max_displacement_mm": 1.1294,
+   "max_displacement_mm": 0.778,
    "probe_displacement_mm": [
-    0.6402,
-    0.0872,
-    0.1129
+    0.5108,
+    -0.1192,
+    0.1416
    ],
-   "max_von_mises_mpa": 25.08,
-   "von_mises_design_mpa": 19.76,
-   "safety_factor": 2.07,
+   "max_von_mises_mpa": 27.76,
+   "von_mises_design_mpa": 20.32,
+   "safety_factor": 2.01,
    "assumptions": "linear elastic, small deflection, isotropic: E 1029.2 MPa, a modulus in the layer plane (X-Y), and strength 40.8373 MPa everywhere (Bambu PA6-CF TDS V3.0: dry X-Y tensile modulus 4430 MPa x0.290 humid and strength 102 MPa x0.500 humid (Polymaker PA6-CF20 V1.1 wet / dry), each x0.8 print. For parts printed so their main stress runs in the layers), though a printed part is not isotropic; faces clamped where fixed; no contact, preload or buckling",
    "stiffness_n_per_mm": null,
    "peak_at_mm": [
-    6.5,
+    12.8,
     -58.4,
-    109.0
+    111.0
    ],
-   "p99_mpa": 4.53,
+   "p99_mpa": 4.66,
    "layer_aware": {
     "layer_normal": [
      -1.0,
@@ -461,55 +1437,55 @@
     },
     "in_plane": {
      "what": "von Mises in the layers' plane",
-     "peak_mpa": 10.48,
+     "peak_mpa": 10.25,
      "at_mm": [
-      6.5,
+      12.8,
       -58.4,
-      109.0
+      111.0
      ],
      "allowable_mpa": 40.83732845379689,
-     "sf": 3.9,
-     "p99_mpa": 2.94
+     "sf": 3.99,
+     "p99_mpa": 3.06
     },
     "across": {
      "what": "tension across the layers",
-     "peak_mpa": 9.43,
+     "peak_mpa": 10.06,
      "at_mm": [
-      7.1,
-      -58.2,
-      108.0
+      7.3,
+      -61.3,
+      116.2
      ],
      "allowable_mpa": 18.133333333333333,
-     "sf": 1.92,
-     "p99_mpa": 1.96
+     "sf": 1.8,
+     "p99_mpa": 2.4
     },
     "shear": {
      "what": "interlaminar shear",
-     "peak_mpa": 5.48,
+     "peak_mpa": 5.6,
      "at_mm": [
-      6.5,
-      -58.4,
-      109.0
+      13.8,
+      -58.2,
+      110.0
      ],
      "allowable_mpa": 9.066666666666666,
-     "sf": 1.66,
-     "p99_mpa": 2.34
+     "sf": 1.62,
+     "p99_mpa": 2.33
     },
     "governs": "shear",
-    "sf": 1.66
+    "sf": 1.62
    },
-   "sf_layer_aware": 1.66,
-   "sf_isotropic_weak": 0.92,
+   "sf_layer_aware": 1.62,
+   "sf_isotropic_weak": 0.89,
    "ok_isotropic": true,
-   "verdict_sf": 1.66,
+   "verdict_sf": 1.62,
    "verdict_on": "layer-aware",
    "case": "E-push-up",
    "material_id": "pa6_cf_xy",
-   "load_from": "50 N up at the muzzle (150 mm from the tilt axis) holds the cradle on the 0 deg stop: 268 N on the stop sector at r 28",
+   "load_from": "50 N square to the barrel at the muzzle (150 mm from the tilt axis) holds the cradle on the +12 deg upper stop: 268 N on the stop sector at r 28",
    "png": "exports/turret/fea/tilt_yoke-E-push-up.png",
    "target": 2.0,
    "ok": false,
-   "seconds": 30.6,
+   "seconds": 24.4,
    "animation": "exports/turret/fea/tilt_yoke-E-push-up.mp4",
    "viewer": "exports/turret/fea/tilt_yoke-E-push-up.json"
   },
@@ -1854,10 +2830,48 @@
     "constants_hash": "b0989f2b1b1c8bdc"
    },
    "mesh": {
-    "nodes": 6962,
-    "tets": 25114,
+    "nodes": 6955,
+    "tets": 25139,
     "size_mm": 2.5,
-    "element": "P2 tetrahedra"
+    "element": "P2 tetrahedra",
+    "mesher": {
+     "gmsh": "4.15.2",
+     "occ": "7.8.1",
+     "build": {
+      "os": "Linux64-sdk",
+      "date": "20260324"
+     },
+     "library": {
+      "file": "libgmsh.so.4.15",
+      "sha256_16": "9db3090d3b720c57"
+     },
+     "platform": {
+      "system": "Linux",
+      "machine": "x86_64",
+      "python": "3.12.13"
+     }
+    },
+    "refine": [],
+    "slivers": {
+     "faces": [],
+     "edges": []
+    },
+    "peak": {
+     "stress_mpa": 13.24,
+     "at_mm": [
+      -10.0,
+      53.61,
+      -22.1
+     ],
+     "where": "sharp inside corner (no fillet: the peak there rises as the mesh is refined)",
+     "element_mm": 1.737,
+     "wall_mm": 7.0,
+     "elements_across": 4.0,
+     "wall_resolved": true,
+     "radius_mm": 2.0,
+     "radius_resolved": true,
+     "note": "the peak is at a sharp re-entrant corner, which is singular: its stress rises with every refinement and never converges. Model the fillet the part will have"
+    }
    },
    "loads": [
     {
@@ -1865,28 +2879,28 @@
      "n": [
       0.0,
       0.0,
-      -188.31962700000003
+      -191.32148699999996
      ],
      "area_mm2": 281.1
     }
    ],
-   "max_displacement_mm": 0.556,
+   "max_displacement_mm": 0.5629,
    "probe_displacement_mm": [
     -0.0027,
     -0.0001,
-    -0.0939
+    -0.0952
    ],
-   "max_von_mises_mpa": 16.9,
-   "von_mises_design_mpa": 13.02,
-   "safety_factor": 3.14,
+   "max_von_mises_mpa": 17.12,
+   "von_mises_design_mpa": 13.24,
+   "safety_factor": 3.08,
    "assumptions": "linear elastic, small deflection, isotropic: E 1029.2 MPa, a modulus in the layer plane (X-Y), and strength 40.8373 MPa everywhere (Bambu PA6-CF TDS V3.0: dry X-Y tensile modulus 4430 MPa x0.290 humid and strength 102 MPa x0.500 humid (Polymaker PA6-CF20 V1.1 wet / dry), each x0.8 print. For parts printed so their main stress runs in the layers), though a printed part is not isotropic; faces clamped where fixed; no contact, preload or buckling",
-   "stiffness_n_per_mm": 2004.5,
+   "stiffness_n_per_mm": 2009.5,
    "peak_at_mm": [
     -10.4,
     53.4,
     -21.9
    ],
-   "p99_mpa": 3.86,
+   "p99_mpa": 3.9,
    "layer_aware": {
     "layer_normal": [
      0.0,
@@ -1900,55 +2914,55 @@
     },
     "in_plane": {
      "what": "von Mises in the layers' plane",
-     "peak_mpa": 12.48,
+     "peak_mpa": 12.7,
      "at_mm": [
       -10.4,
       53.4,
       -21.9
      ],
      "allowable_mpa": 40.83732845379689,
-     "sf": 3.27,
-     "p99_mpa": 3.73
+     "sf": 3.22,
+     "p99_mpa": 3.78
     },
     "across": {
      "what": "tension across the layers",
-     "peak_mpa": 3.65,
+     "peak_mpa": 3.84,
      "at_mm": [
-      -10.5,
-      53.0,
-      -21.9
+      -9.2,
+      45.1,
+      -22.3
      ],
      "allowable_mpa": 18.133333333333333,
-     "sf": 4.96,
-     "p99_mpa": 0.71
+     "sf": 4.72,
+     "p99_mpa": 0.74
     },
     "shear": {
      "what": "interlaminar shear",
-     "peak_mpa": 4.69,
+     "peak_mpa": 4.84,
      "at_mm": [
       -10.2,
       52.5,
       -21.9
      ],
      "allowable_mpa": 9.066666666666666,
-     "sf": 1.93,
-     "p99_mpa": 1.26
+     "sf": 1.87,
+     "p99_mpa": 1.3
     },
     "governs": "shear",
-    "sf": 1.93
+    "sf": 1.87
    },
-   "sf_layer_aware": 1.93,
-   "sf_isotropic_weak": 1.39,
+   "sf_layer_aware": 1.87,
+   "sf_isotropic_weak": 1.37,
    "ok_isotropic": true,
-   "verdict_sf": 1.93,
+   "verdict_sf": 1.87,
    "verdict_on": "layer-aware",
    "case": "R-fall-down",
    "material_id": "pa6_cf_xy",
-   "load_from": "30 g down: the cartridge (0.64 kg with 30 balls) 188 N through its CT dowels and latch; the rail frame held by the two aluminium plates' 6 x M3 x 8 (clamped under each screw)",
+   "load_from": "30 g down: the cartridge (0.65 kg with 30 balls) 191 N through its CT dowels and latch; the rail frame held by the two aluminium plates' 6 x M3 x 8 (clamped under each screw)",
    "png": "exports/turret/fea/cradle-R-fall-down.png",
    "target": 1.2,
    "ok": true,
-   "seconds": 13.8,
+   "seconds": 9.1,
    "animation": "exports/turret/fea/cradle-R-fall-down.mp4",
    "viewer": "exports/turret/fea/cradle-R-fall-down.json"
   },
@@ -1973,39 +2987,77 @@
     "constants_hash": "b0989f2b1b1c8bdc"
    },
    "mesh": {
-    "nodes": 6962,
-    "tets": 25114,
+    "nodes": 6955,
+    "tets": 25139,
     "size_mm": 2.5,
-    "element": "P2 tetrahedra"
+    "element": "P2 tetrahedra",
+    "mesher": {
+     "gmsh": "4.15.2",
+     "occ": "7.8.1",
+     "build": {
+      "os": "Linux64-sdk",
+      "date": "20260324"
+     },
+     "library": {
+      "file": "libgmsh.so.4.15",
+      "sha256_16": "9db3090d3b720c57"
+     },
+     "platform": {
+      "system": "Linux",
+      "machine": "x86_64",
+      "python": "3.12.13"
+     }
+    },
+    "refine": [],
+    "slivers": {
+     "faces": [],
+     "edges": []
+    },
+    "peak": {
+     "stress_mpa": 7.94,
+     "at_mm": [
+      -7.5,
+      53.61,
+      -20.1
+     ],
+     "where": "edge of a \u00d89 boss or pin",
+     "element_mm": 2.107,
+     "wall_mm": 2.43,
+     "elements_across": 1.2,
+     "wall_resolved": false,
+     "radius_mm": null,
+     "radius_resolved": null,
+     "note": "the design peak sits in a 2.4 mm wall only 1.2 elements thick: a peak in a wall one or two elements thick is not a result. Mesh finer there (refine=[(point, radius, size)], a size under 0.81 mm) and check it with converge()"
+    }
    },
    "loads": [
     {
      "kind": "force",
      "n": [
       0.0,
-      -188.31962700000003,
+      -191.32148699999996,
       0.0
      ],
      "area_mm2": 211.2
     }
    ],
-   "max_displacement_mm": 0.1307,
+   "max_displacement_mm": 0.1326,
    "probe_displacement_mm": [
-    0.0067,
-    -0.0404,
-    -0.0009
+    0.0068,
+    -0.041,
+    -0.0008
    ],
-   "max_von_mises_mpa": 14.81,
-   "von_mises_design_mpa": 7.91,
-   "safety_factor": 5.17,
+   "max_von_mises_mpa": 15.02,
+   "von_mises_design_mpa": 7.94,
+   "safety_factor": 5.14,
    "assumptions": "linear elastic, small deflection, isotropic: E 1029.2 MPa, a modulus in the layer plane (X-Y), and strength 40.8373 MPa everywhere (Bambu PA6-CF TDS V3.0: dry X-Y tensile modulus 4430 MPa x0.290 humid and strength 102 MPa x0.500 humid (Polymaker PA6-CF20 V1.1 wet / dry), each x0.8 print. For parts printed so their main stress runs in the layers), though a printed part is not isotropic; faces clamped where fixed; no contact, preload or buckling",
-   "stiffness_n_per_mm": 4659.8,
+   "stiffness_n_per_mm": 4663.8,
    "peak_at_mm": [
     -8.7,
     53.1,
     -20.0
    ],
-   "p99_mpa": 2.14,
+   "p99_mpa": 2.16,
    "layer_aware": {
     "layer_normal": [
      0.0,
@@ -2019,55 +3071,55 @@
     },
     "in_plane": {
      "what": "von Mises in the layers' plane",
-     "peak_mpa": 11.23,
+     "peak_mpa": 11.35,
      "at_mm": [
       -7.4,
       53.2,
       -21.3
      ],
      "allowable_mpa": 40.83732845379689,
-     "sf": 3.64,
-     "p99_mpa": 2.14
+     "sf": 3.6,
+     "p99_mpa": 2.18
     },
     "across": {
      "what": "tension across the layers",
-     "peak_mpa": 5.37,
+     "peak_mpa": 5.47,
      "at_mm": [
-      -7.4,
-      53.2,
-      -21.3
+      -7.3,
+      53.0,
+      -18.9
      ],
      "allowable_mpa": 18.133333333333333,
-     "sf": 3.38,
-     "p99_mpa": 0.27
+     "sf": 3.31,
+     "p99_mpa": 0.29
     },
     "shear": {
      "what": "interlaminar shear",
-     "peak_mpa": 1.79,
+     "peak_mpa": 1.82,
      "at_mm": [
       -7.7,
       53.1,
       -17.1
      ],
      "allowable_mpa": 9.066666666666666,
-     "sf": 5.06,
-     "p99_mpa": 0.43
+     "sf": 4.99,
+     "p99_mpa": 0.46
     },
     "governs": "across",
-    "sf": 3.38
+    "sf": 3.31
    },
-   "sf_layer_aware": 3.38,
-   "sf_isotropic_weak": 2.29,
+   "sf_layer_aware": 3.31,
+   "sf_isotropic_weak": 2.28,
    "ok_isotropic": true,
-   "verdict_sf": 3.38,
+   "verdict_sf": 3.31,
    "verdict_on": "layer-aware",
    "case": "R-fall-side",
    "material_id": "pa6_cf_xy",
-   "load_from": "30 g sideways (-y): the cartridge's 188 N through the two CT dowels; the frame held by the plates",
+   "load_from": "30 g sideways (-y): the cartridge's 191 N through the two CT dowels; the frame held by the plates",
    "png": "exports/turret/fea/cradle-R-fall-side.png",
    "target": 1.2,
    "ok": true,
-   "seconds": 12.6,
+   "seconds": 7.1,
    "animation": "exports/turret/fea/cradle-R-fall-side.mp4",
    "viewer": "exports/turret/fea/cradle-R-fall-side.json"
   },
@@ -2092,10 +3144,89 @@
     "constants_hash": "b0989f2b1b1c8bdc"
    },
    "mesh": {
-    "nodes": 7054,
-    "tets": 25554,
+    "nodes": 7053,
+    "tets": 25616,
     "size_mm": 2.5,
-    "element": "P2 tetrahedra"
+    "element": "P2 tetrahedra",
+    "mesher": {
+     "gmsh": "4.15.2",
+     "occ": "7.8.1",
+     "build": {
+      "os": "Linux64-sdk",
+      "date": "20260324"
+     },
+     "library": {
+      "file": "libgmsh.so.4.15",
+      "sha256_16": "9db3090d3b720c57"
+     },
+     "platform": {
+      "system": "Linux",
+      "machine": "x86_64",
+      "python": "3.12.13"
+     }
+    },
+    "refine": [],
+    "slivers": {
+     "faces": [],
+     "edges": [
+      {
+       "tag": 58,
+       "length_mm": 0.01,
+       "under_mm": 0.25,
+       "center_mm": [
+        -45.6,
+        50.81,
+        -15.105
+       ]
+      },
+      {
+       "tag": 64,
+       "length_mm": 0.01,
+       "under_mm": 0.25,
+       "center_mm": [
+        -45.6,
+        44.81,
+        -15.105
+       ]
+      },
+      {
+       "tag": 72,
+       "length_mm": 0.01,
+       "under_mm": 0.25,
+       "center_mm": [
+        -45.6,
+        -44.81,
+        -15.105
+       ]
+      },
+      {
+       "tag": 115,
+       "length_mm": 0.01,
+       "under_mm": 0.25,
+       "center_mm": [
+        -45.6,
+        -50.81,
+        -15.105
+       ]
+      }
+     ]
+    },
+    "peak": {
+     "stress_mpa": 17.83,
+     "at_mm": [
+      -10.0,
+      53.61,
+      -22.1
+     ],
+     "where": "sharp inside corner (no fillet: the peak there rises as the mesh is refined)",
+     "element_mm": 1.737,
+     "wall_mm": 7.0,
+     "elements_across": 4.0,
+     "wall_resolved": true,
+     "radius_mm": 2.0,
+     "radius_resolved": true,
+     "note": "the peak is at a sharp re-entrant corner, which is singular: its stress rises with every refinement and never converges. Model the fillet the part will have"
+    }
    },
    "loads": [
     {
@@ -2117,14 +3248,14 @@
      "area_mm2": 909.0
     }
    ],
-   "max_displacement_mm": 2.1099,
+   "max_displacement_mm": 2.1103,
    "probe_displacement_mm": [
-    -0.0021,
-    -0.0027,
-    0.1692
+    -0.0024,
+    -0.0028,
+    0.1689
    ],
-   "max_von_mises_mpa": 20.65,
-   "von_mises_design_mpa": 17.87,
+   "max_von_mises_mpa": 20.63,
+   "von_mises_design_mpa": 17.83,
    "safety_factor": 2.29,
    "assumptions": "linear elastic, small deflection, isotropic: E 1029.2 MPa, a modulus in the layer plane (X-Y), and strength 40.8373 MPa everywhere (Bambu PA6-CF TDS V3.0: dry X-Y tensile modulus 4430 MPa x0.290 humid and strength 102 MPa x0.500 humid (Polymaker PA6-CF20 V1.1 wet / dry), each x0.8 print. For parts printed so their main stress runs in the layers), though a printed part is not isotropic; faces clamped where fixed; no contact, preload or buckling",
    "stiffness_n_per_mm": null,
@@ -2133,7 +3264,7 @@
     53.4,
     -21.9
    ],
-   "p99_mpa": 7.14,
+   "p99_mpa": 7.16,
    "layer_aware": {
     "layer_normal": [
      0.0,
@@ -2147,7 +3278,7 @@
     },
     "in_plane": {
      "what": "von Mises in the layers' plane",
-     "peak_mpa": 17.4,
+     "peak_mpa": 17.37,
      "at_mm": [
       -10.4,
       53.4,
@@ -2155,47 +3286,47 @@
      ],
      "allowable_mpa": 40.83732845379689,
      "sf": 2.35,
-     "p99_mpa": 7.05
+     "p99_mpa": 7.0
     },
     "across": {
      "what": "tension across the layers",
-     "peak_mpa": 7.71,
+     "peak_mpa": 8.26,
      "at_mm": [
       85.7,
       -39.7,
       -22.2
      ],
      "allowable_mpa": 18.133333333333333,
-     "sf": 2.35,
-     "p99_mpa": 1.37
+     "sf": 2.19,
+     "p99_mpa": 1.4
     },
     "shear": {
      "what": "interlaminar shear",
-     "peak_mpa": 5.93,
+     "peak_mpa": 6.06,
      "at_mm": [
       -10.2,
       52.5,
       -21.9
      ],
      "allowable_mpa": 9.066666666666666,
-     "sf": 1.53,
-     "p99_mpa": 2.04
+     "sf": 1.5,
+     "p99_mpa": 2.03
     },
     "governs": "shear",
-    "sf": 1.53
+    "sf": 1.5
    },
-   "sf_layer_aware": 1.53,
-   "sf_isotropic_weak": 1.01,
+   "sf_layer_aware": 1.5,
+   "sf_isotropic_weak": 1.02,
    "ok_isotropic": true,
-   "verdict_sf": 1.53,
+   "verdict_sf": 1.5,
    "verdict_on": "layer-aware",
    "case": "E-push-up",
    "material_id": "pa6_cf_xy",
-   "load_from": "50 N up at the muzzle (150 mm from the tilt axis) reaches the frame through the cartridge as 88 N up at the CT thumbscrew and 38 N down on the rails' rear cross bar (the dowels only locate); the plates hold the frame (the lug on the -y plate holds the 0 deg stop)",
+   "load_from": "50 N up at the muzzle (150 mm from the tilt axis) reaches the frame through the cartridge as 88 N up at the CT thumbscrew and 38 N down on the rails' rear cross bar (the dowels only locate); the plates hold the frame (the lug on the -y plate holds the upper stop)",
    "png": "exports/turret/fea/cradle-E-push-up.png",
    "target": 2.0,
    "ok": false,
-   "seconds": 15.7,
+   "seconds": 8.5,
    "animation": "exports/turret/fea/cradle-E-push-up.mp4",
    "viewer": "exports/turret/fea/cradle-E-push-up.json"
   },
@@ -2591,10 +3722,48 @@
     "constants_hash": "aeee977f95934faf"
    },
    "mesh": {
-    "nodes": 2520,
-    "tets": 9496,
+    "nodes": 2490,
+    "tets": 9309,
     "size_mm": 0.8,
-    "element": "P2 tetrahedra"
+    "element": "P2 tetrahedra",
+    "mesher": {
+     "gmsh": "4.15.2",
+     "occ": "7.8.1",
+     "build": {
+      "os": "Linux64-sdk",
+      "date": "20260324"
+     },
+     "library": {
+      "file": "libgmsh.so.4.15",
+      "sha256_16": "9db3090d3b720c57"
+     },
+     "platform": {
+      "system": "Linux",
+      "machine": "x86_64",
+      "python": "3.12.13"
+     }
+    },
+    "refine": [],
+    "slivers": {
+     "faces": [],
+     "edges": []
+    },
+    "peak": {
+     "stress_mpa": 107.9,
+     "at_mm": [
+      52.384,
+      -58.742,
+      -7.504
+     ],
+     "where": "R1.5 inside fillet",
+     "element_mm": 0.819,
+     "wall_mm": 2.54,
+     "elements_across": 3.1,
+     "wall_resolved": true,
+     "radius_mm": 1.5,
+     "radius_resolved": true,
+     "note": ""
+    }
    },
    "loads": [
     {
@@ -2607,28 +3776,28 @@
      "area_mm2": 20.4
     }
    ],
-   "max_displacement_mm": 0.0112,
+   "max_displacement_mm": 0.0166,
    "probe_displacement_mm": [
-    -0.006,
+    -0.0098,
     -0.0,
-    -0.0046
+    -0.0058
    ],
-   "max_von_mises_mpa": 238.92,
-   "von_mises_design_mpa": 98.41,
-   "safety_factor": 2.45,
+   "max_von_mises_mpa": 107.9,
+   "von_mises_design_mpa": 107.9,
+   "safety_factor": 2.24,
    "assumptions": "linear elastic, small deflection, isotropic; faces clamped where fixed; no contact, preload or buckling",
-   "stiffness_n_per_mm": 40027.6,
+   "stiffness_n_per_mm": 25204.9,
    "peak_at_mm": [
-    43.9,
-    -58.2,
-    -9.2
+    52.2,
+    -59.1,
+    -7.7
    ],
-   "p99_mpa": 53.67,
+   "p99_mpa": 67.37,
    "layer_aware": null,
    "sf_layer_aware": null,
    "sf_isotropic_weak": null,
    "ok_isotropic": true,
-   "verdict_sf": 2.45,
+   "verdict_sf": 2.24,
    "verdict_on": "isotropic (metal: yield)",
    "case": "E-push-up",
    "material_id": "al6061",
@@ -2636,7 +3805,7 @@
    "png": "exports/turret/fea/stop_lug-E-push-up.png",
    "target": 2.0,
    "ok": true,
-   "seconds": 11.9,
+   "seconds": 2.2,
    "animation": "exports/turret/fea/stop_lug-E-push-up.mp4",
    "viewer": "exports/turret/fea/stop_lug-E-push-up.json"
   },
@@ -3265,18 +4434,18 @@
  },
  "verdict": {
   "on": "the layer-aware SF for printed parts (N2), the yield SF for the aluminium parts; the isotropic columns are reported with each result",
-  "min_sf_everyday": 1.53,
+  "min_sf_everyday": 1.5,
   "min_sf_rare": 0.98,
   "all_ok": false,
   "weakest": "cradle E-push-up",
   "below_target": [
-   "tilt_yoke E-push-up: 1.66 < 2.0",
+   "tilt_yoke E-push-up: 1.62 < 2.0",
    "pan_ring E-cap-teeth: 1.89 < 2.0",
    "pan_ring R-stall-teeth: 1.18 < 1.2",
    "pan_pinion E-cap: 1.75 < 2.0",
    "pan_pinion R-stall: 1.09 < 1.2",
    "pan_base R-fall-side: 0.98 < 1.2",
-   "cradle E-push-up: 1.53 < 2.0",
+   "cradle E-push-up: 1.5 < 2.0",
    "cradle_plate_r R-fall-out: 1.15 < 1.2",
    "cartridge_body E-recoil: 1.65 < 2.0"
   ]
@@ -3286,44 +4455,44 @@
    "part": "tilt_yoke",
    "case": "R-fall-down",
    "target": 1.2,
-   "sf_as_v0": 2.93,
-   "sf_isotropic_weak": 1.3,
-   "sf_layer_aware": 2.45,
-   "governs": "in_plane",
-   "verdict_sf": 2.45,
+   "sf_as_v0": 2.8,
+   "sf_isotropic_weak": 1.24,
+   "sf_layer_aware": 2.32,
+   "governs": "shear",
+   "verdict_sf": 2.32,
    "ok": true
   },
   {
    "part": "tilt_yoke",
    "case": "R-fall-side",
    "target": 1.2,
-   "sf_as_v0": 2.52,
-   "sf_isotropic_weak": 1.12,
-   "sf_layer_aware": 1.44,
+   "sf_as_v0": 2.5,
+   "sf_isotropic_weak": 1.11,
+   "sf_layer_aware": 1.47,
    "governs": "shear",
-   "verdict_sf": 1.44,
+   "verdict_sf": 1.47,
    "ok": true
   },
   {
    "part": "tilt_yoke",
    "case": "R-fall-side+",
    "target": 1.2,
-   "sf_as_v0": 4.67,
-   "sf_isotropic_weak": 2.07,
-   "sf_layer_aware": 4.44,
+   "sf_as_v0": 4.6,
+   "sf_isotropic_weak": 2.04,
+   "sf_layer_aware": 4.41,
    "governs": "in_plane",
-   "verdict_sf": 4.44,
+   "verdict_sf": 4.41,
    "ok": true
   },
   {
    "part": "tilt_yoke",
    "case": "E-push-up",
    "target": 2.0,
-   "sf_as_v0": 2.07,
-   "sf_isotropic_weak": 0.92,
-   "sf_layer_aware": 1.66,
+   "sf_as_v0": 2.01,
+   "sf_isotropic_weak": 0.89,
+   "sf_layer_aware": 1.62,
    "governs": "shear",
-   "verdict_sf": 1.66,
+   "verdict_sf": 1.62,
    "ok": false
   },
   {
@@ -3451,22 +4620,22 @@
    "part": "cradle",
    "case": "R-fall-down",
    "target": 1.2,
-   "sf_as_v0": 3.14,
-   "sf_isotropic_weak": 1.39,
-   "sf_layer_aware": 1.93,
+   "sf_as_v0": 3.08,
+   "sf_isotropic_weak": 1.37,
+   "sf_layer_aware": 1.87,
    "governs": "shear",
-   "verdict_sf": 1.93,
+   "verdict_sf": 1.87,
    "ok": true
   },
   {
    "part": "cradle",
    "case": "R-fall-side",
    "target": 1.2,
-   "sf_as_v0": 5.17,
-   "sf_isotropic_weak": 2.29,
-   "sf_layer_aware": 3.38,
+   "sf_as_v0": 5.14,
+   "sf_isotropic_weak": 2.28,
+   "sf_layer_aware": 3.31,
    "governs": "across",
-   "verdict_sf": 3.38,
+   "verdict_sf": 3.31,
    "ok": true
   },
   {
@@ -3474,10 +4643,10 @@
    "case": "E-push-up",
    "target": 2.0,
    "sf_as_v0": 2.29,
-   "sf_isotropic_weak": 1.01,
-   "sf_layer_aware": 1.53,
+   "sf_isotropic_weak": 1.02,
+   "sf_layer_aware": 1.5,
    "governs": "shear",
-   "verdict_sf": 1.53,
+   "verdict_sf": 1.5,
    "ok": false
   },
   {
@@ -3539,11 +4708,11 @@
    "part": "stop_lug",
    "case": "E-push-up",
    "target": 2.0,
-   "sf_as_v0": 2.45,
+   "sf_as_v0": 2.24,
    "sf_isotropic_weak": null,
    "sf_layer_aware": null,
    "governs": null,
-   "verdict_sf": 2.45,
+   "verdict_sf": 2.24,
    "ok": true
   },
   {
@@ -3629,6 +4798,32 @@
    "turret_py_sha256": "71a663ea426e583d1fcbef1f36c2e0d8ff63a7a68462914724565015914ff5b4",
    "cad_agent": "0.6.0",
    "cad_agent_tree": "50d4921a5ab26c7750a869ed41c9a4346ef1379c"
+  },
+  {
+   "parts": [
+    "tilt_yoke",
+    "stop_lug",
+    "cradle"
+   ],
+   "why": "D77: the upper tilt stop moved to +12 deg (the yoke's upper sector and the push square to the raised barrel), #201",
+   "masses": {
+    "tilt_kg": 0.7713275000000002,
+    "pan_kg": 1.3209400000000002,
+    "total_kg": 1.7566000000000004,
+    "cartridge_kg": 0.6500899999999998,
+    "com_mm": [
+     -5.053655177220498,
+     -4.570942338057024,
+     96.93558010844251
+    ],
+    "pan_group_com_z_mm": 123.57367571723346,
+    "mass_g_with_balls": 1756.8,
+    "pan_ring_kg": 0.07790000000000001
+   },
+   "commit": "668c2c3008901dd7dedf690b7b0b935b2d2d2544",
+   "turret_py_sha256": "2f2e9c3c7b23962720ac6e27e637fdbfadb7609e2f6639cc8171a71743e1567d",
+   "cad_agent": null,
+   "cad_agent_tree": "sha256:47b5374f1bd3eee5dc31340a16730a5927e2a50bc6fb4f0cb96c19b00c2c65be"
   }
  ]
 }

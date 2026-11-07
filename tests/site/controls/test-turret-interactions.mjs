@@ -22,6 +22,11 @@ try{
  await page.goto(base+'/designer/sim.html?design=turret-box&run=none&sound=0',{waitUntil:'networkidle'});
  await page.waitForFunction(()=>window.__sim?.bench()?.active);
  await page.waitForFunction(()=>window.__sim.talk);
+ // The actual servo step must reach the positive mechanical stop while disarmed.
+ await page.evaluate(()=>{const b=window.__sim.bench();b.api.arm(false);b.api.aim(0,b.manifest.limits.tilt_deg[1]);});
+ await page.waitForFunction(()=>{const b=window.__sim.bench();return Math.abs(b.api.state.tilt*180/Math.PI-b.manifest.limits.tilt_deg[1])<.01;});
+ assert.ok(await page.evaluate(()=>window.__sim.bench().api.state.tilt>0),'Applied bench tilt rises above level');
+ await page.evaluate(()=>window.__sim.bench().api.aim(0,-3));
  // Native controls own their keys; releasing a shortcut after focus moves still clears it.
  const guide=page.getByRole('checkbox',{name:'Show curved shot guide',exact:true});
  await guide.focus();await page.keyboard.press('Space');assert.equal(await guide.isChecked(),false);

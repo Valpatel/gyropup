@@ -245,7 +245,6 @@ graph connectivity {
   "ring_driver" -- "tilt_yoke" [color=orange, label="undeclared"];
   "shoulder_screw" -- "tilt_bearing_inner" [color=orange, label="undeclared"];
   "slip_ring" -- "slip_ring_rotor" [color=gray60];
-  "stop_lug" -- "tilt_yoke" [color=orange, label="undeclared"];
   "tilt_bearing" -- "tilt_yoke" [color=orange, label="undeclared"];
   "tilt_servo" -- "tilt_yoke" [color=orange, label="undeclared"];
   "ball#14" -- "hopper" [style=dotted, label="in hopper_cavity"];

@@ -142,7 +142,7 @@ def main():
     }
     # ---- pan
     pan_rows = []
-    for tilt in (0.0, -25.0):
+    for tilt in (T.G.tilt_max, 0.0, T.G.tilt_min):
         B = bodies(T, tilt, 30)
         pg = group(T, B, {'pan', 'tilt'})
         Iz = pg.inertia_about((0.0, 0.0, 0.0))[2][2]

@@ -1,0 +1,156 @@
+{
+  "job": 254,
+  "original_job_status": "FAILED",
+  "adoption_performed": true,
+  "immutable_tracked_files": 3002,
+  "hardware_files_preserved": 1790,
+  "frames_preserved": 481,
+  "current_source_bindings": 192,
+  "all_owned_groups_gone": true,
+  "historical_missing_revision": "99c92d4a511c16d7743e9583b129e2a178651cb8",
+  "original_job_error": "AssertionError: actual-encode-and-full-guard failed/incomplete; actual logs retained",
+  "guard_context": "Actual unchanged check.validate on fresh sealed candidate extraction; local immutable historical objects available. Original FAILED job receipt unchanged.",
+  "guard_at_current_head": "1d566eeae9029146025f84230aad3aa0d2f40df1",
+  "review": "https://github.com/Valpatel/gyropup/pull/255#issuecomment-6709535643",
+  "candidate_archive": "f8a0cb088b3c5b0f5149db168707e3edd52df4c248df4b53638d946abb645bac",
+  "original_archive": "e8d91f039d64a916b281d3db143b16563e35335b873aa7056f8082f05b6f43a8",
+  "outputs": {
+    "capture-frames.json": {
+      "bytes": 100989,
+      "sha256": "b5bd61bbd56e24572a4a3cd28f25b76312d2b7885631e2e0788bf0973a16e04d"
+    },
+    "capture-receipt.json": {
+      "bytes": 122659,
+      "sha256": "a565b2bdae357f8d394aa0c9d22ced967596e61b75ec41af43d10a4706978ef3"
+    },
+    "gyropup-highlights.mp4": {
+      "bytes": 1873038,
+      "sha256": "7d820ab71c85f35d54b9e15b2b526c5c1ac7799d7fea3b6e7a51ce32748c5b5c"
+    },
+    "gyropup-highlights.webm": {
+      "bytes": 1488632,
+      "sha256": "ccd48c76c93da584e8766595963c83b7549147ad939b2f27c1700259851ee68a"
+    },
+    "gyropup-highlights.webp": {
+      "bytes": 33050,
+      "sha256": "45908a66165e86505a639f8c5f17413c626795d4efb7edcdbc3cc705b0cd4ebd"
+    },
+    "receipt.json": {
+      "bytes": 29933,
+      "sha256": "a115450e272b720f52a13fbd8aa04953f5dbf1da2a1509e57eb7de97d5ee6891"
+    }
+  },
+  "adoption_pass": true,
+  "actual_post_copy_full_guard": {
+    "gyropup-highlights.mp4": {
+      "bytes": 1873038,
+      "frames": 660,
+      "seconds": 22,
+      "motion": {
+        "turret": {
+          "mean_channel_difference": 10.608375,
+          "fraction_changed_over_12": 0.18435416666666668
+        },
+        "mechanism": {
+          "mean_channel_difference": 4.956166666666666,
+          "fraction_changed_over_12": 0.09945833333333333
+        },
+        "battle": {
+          "mean_channel_difference": 6.1614375,
+          "fraction_changed_over_12": 0.092375
+        },
+        "leg": {
+          "mean_channel_difference": 20.420729166666668,
+          "fraction_changed_over_12": 0.24775
+        },
+        "e1": {
+          "mean_channel_difference": 32.04954166666667,
+          "fraction_changed_over_12": 0.4089583333333333
+        },
+        "character": {
+          "mean_channel_difference": 16.956083333333332,
+          "fraction_changed_over_12": 0.22847916666666668
+        }
+      }
+    },
+    "gyropup-highlights.webm": {
+      "bytes": 1488632,
+      "frames": 660,
+      "seconds": 22,
+      "motion": {
+        "turret": {
+          "mean_channel_difference": 10.60125,
+          "fraction_changed_over_12": 0.1844375
+        },
+        "mechanism": {
+          "mean_channel_difference": 4.9683125,
+          "fraction_changed_over_12": 0.10066666666666667
+        },
+        "battle": {
+          "mean_channel_difference": 6.1205625,
+          "fraction_changed_over_12": 0.09127083333333333
+        },
+        "leg": {
+          "mean_channel_difference": 20.412208333333332,
+          "fraction_changed_over_12": 0.24716666666666667
+        },
+        "e1": {
+          "mean_channel_difference": 32.060854166666665,
+          "fraction_changed_over_12": 0.41022916666666664
+        },
+        "character": {
+          "mean_channel_difference": 16.997979166666667,
+          "fraction_changed_over_12": 0.22883333333333333
+        }
+      }
+    },
+    "codec_mean_difference": {
+      "turret": 0.5301458333333333,
+      "mechanism": 0.46746875,
+      "battle": 0.44835416666666666,
+      "leg": 0.48184375,
+      "e1": 0.6615729166666666,
+      "character": 0.5695104166666667
+    },
+    "e1_original_frame_mean_difference": {
+      "gyropup-highlights.mp4": 0.16498456790123456,
+      "gyropup-highlights.webm": 0.1621604938271605
+    },
+    "e1_original_labels_mean_difference": {
+      "gyropup-highlights.mp4": 0.23537414965986395,
+      "gyropup-highlights.webm": 0.22491496598639457
+    },
+    "erased_e1_labels_rejected": true,
+    "poster_mean_difference": 0.16641203703703702,
+    "rejected_negative_controls": [
+      "source hash",
+      "source omission",
+      "self-consistent required mesh omission",
+      "self-consistent required renderer omission",
+      "self-consistent firing limits omission",
+      "served firing limits",
+      "capture location contract",
+      "captured artifact revision",
+      "wrong encoding source revision",
+      "wrong capture source revision with matching served metadata",
+      "capture recipe",
+      "served simulator",
+      "stage instrumentation",
+      "frame count",
+      "wrong turret name with unchanged part count",
+      "historical load baseline",
+      "leg report drift on disk",
+      "static animation label",
+      "media bytes",
+      "frozen turret",
+      "frozen mechanism",
+      "frozen battle",
+      "frozen leg",
+      "frozen e1",
+      "frozen character"
+    ]
+  },
+  "all_other_tracked_bytes_preserved": true,
+  "complete_hardware_preserved": true,
+  "limits": "Fleet254 remains FAILED; candidate bytes separately accepted by unchanged full guard and independent sealed review. No re-encode or receipt reseal. Sampled virtual footage; historical E1/feed/FEA and current airflow/exhaust/physical/HIL findings retain their scope."
+}

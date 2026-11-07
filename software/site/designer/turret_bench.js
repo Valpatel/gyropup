@@ -15,7 +15,7 @@
 // (y, z, x) in metres. The box stands on a 0.3 m crate, so the barrel is at about the robot's turret height.
 import * as THREE from 'three';
 import { STLLoader } from 'three/addons/loaders/STLLoader.js';
-import { BALL, ballMesh } from './turret3d.js';
+import { BALL, ballMesh, readTiltStops } from './turret3d.js';
 import { section, slider, chips, readouts, toggle } from './kit/panel.js';
 import { createReloadEffect, RELOAD_OPEN_ANGLE } from './turret_reload.js';
 import { createDataReader, isRecord, validateSTLBytes, validateGeometry } from './kit/portal-data.js';
@@ -47,6 +47,9 @@ export async function createTurretBench({ stage, sfx, panel, root = '../', onLay
       !['pan','tilt','pinion','dial','wheel_l','wheel_r','flap'].every(k=>vector(man.pivots[k])) ||
       !(man.mechanics?.ball?.speed_mps>0) ||
       !man.parts.every(p=>p&&typeof p.file==='string'&&typeof p.group==='string')) throw new Error('Invalid turret manifest');
+  const stops = readTiltStops({ tilt_deg: { min: man.limits?.tilt_deg?.[0], max: man.limits?.tilt_deg?.[1] },
+    fire_tilt_max_deg: man.limits?.fire_tilt_max_deg });
+  if (!stops) throw new Error('Invalid turret firing limits');
   const mech = man.mechanics;
   const launchSpeed = mech.ball.speed_mps;
   const coarse = matchMedia('(pointer: coarse)').matches;
@@ -376,6 +379,8 @@ export async function createTurretBench({ stage, sfx, panel, root = '../', onLay
 
   // ------------------------------------------------------------------------------------------------ state
   const lim = man.limits;
+  // D77: the barrel aims between its hard stops; no shot leaves above the feed's firing limit (exports/turret/limits.json)
+  const upMax = stops.max, fireMax = stops.fire;
   const S = {
     active: false, pan: 0, tilt: -3 * D2R, panCmd: 0, tiltCmd: -3 * D2R, keys: new Set(),
     arm: new Set(), trigger: false, queue: 0, nextAt: 0, rate: 3, rpm: 0, laserOn: false, wasArmed: false,
@@ -482,7 +487,7 @@ export async function createTurretBench({ stage, sfx, panel, root = '../', onLay
   fireSec.appendChild(fr);
   const aimSec = sec('Aim', { note: coarse ? 'or tap the range' : 'or click the range, or the arrow keys' });
   const panSl = slider(aimSec, { label: 'Pan', min: lim.pan_deg[0], max: lim.pan_deg[1], step: 1, value: 0, unit: '°', onInput: (v) => { S.panCmd = v * D2R; } });
-  const tiltSl = slider(aimSec, { label: 'Tilt (0 = level; it never points up)', min: lim.tilt_deg[0], max: 0, step: 0.5, value: -3, unit: '°', onInput: (v) => { S.tiltCmd = v * D2R; } });
+  const tiltSl = slider(aimSec, { label: 'Tilt (between the hard stops; 0 = level)', min: lim.tilt_deg[0], max: upMax, step: 0.5, value: -3, unit: '°', onInput: (v) => { S.tiltCmd = v * D2R; } });
   toggle(aimSec, 'Show curved shot guide', S.marker, (on) => { S.marker = on; });
   toggle(aimSec, 'Show straight laser reference', S.laserReference, (on) => { S.laserReference = on; });
   toggle(aimSec, 'Antennas fitted on the J501 (upright)', S.antennas, (on) => { S.antennas = on; antennas.visible = on; if (on) say(`Upright antennas limit the depression to ${Math.min(...man.checks.clearance.antenna_tilt_max_deg.map((r) => r[1]))}° over the box corners`, 3500); });
@@ -729,9 +734,9 @@ export async function createTurretBench({ stage, sfx, panel, root = '../', onLay
     const dist = Math.hypot(pt.x - axis.x, pt.z - axis.z);
     const p0 = new THREE.Vector3(), d0 = new THREE.Vector3();
     const miss = (tilt) => { muzzleAt(pan, tilt, p0, d0); return heightAt(p0, d0.multiplyScalar(launchSpeed), dist, axis) - pt.y; };
-    let lo = -tiltMax(pan) * D2R, hi = 0;
+    let lo = -tiltMax(pan) * D2R, hi = Math.min(upMax, fireMax) * D2R;
     let tilt;
-    if (miss(hi) < 0) { tilt = 0; say('Too far for a level shot: the barrel never points above level, so the ball falls short', 2600); }
+    if (miss(hi) < 0) { tilt = hi; say(`Too far: even at ${(hi / D2R).toFixed(0)}° up (the highest it fires) the ball falls short`, 2600); }
     else if (miss(lo) > 0) { tilt = lo; say(`Too close and low: the tilt stops at ${(-lo / D2R).toFixed(1)}°`, 2200); }
     else { for (let k = 0; k < 22; k++) { const mid = (lo + hi) / 2; if (miss(mid) > 0) hi = mid; else lo = mid; } tilt = (lo + hi) / 2; }
     S.panCmd = pan; S.tiltCmd = tilt;
@@ -1364,14 +1369,14 @@ export async function createTurretBench({ stage, sfx, panel, root = '../', onLay
     const kt = Math.max(-1, Math.min(1, (S.keys.has('arrowup') || S.keys.has('w') ? 1 : 0) - (S.keys.has('arrowdown') || S.keys.has('s') ? 1 : 0) + (S.padAim?.tilt ?? 0)));
     if (kp || kt) {
       S.panCmd = clamp(S.panCmd + kp * 60 * D2R * dtReal, lim.pan_deg[0] * D2R, lim.pan_deg[1] * D2R);
-      S.tiltCmd = clamp(S.tiltCmd + kt * 15 * D2R * dtReal, -tiltMax(S.panCmd) * D2R, 0);
+      S.tiltCmd = clamp(S.tiltCmd + kt * 15 * D2R * dtReal, -tiltMax(S.panCmd) * D2R, upMax * D2R);
       panSl.set(Math.round(S.panCmd / D2R)); tiltSl.set(+(S.tiltCmd / D2R).toFixed(1));
     }
     const tmin = -tiltMax(S.pan) * D2R;
-    S.tiltCmd = clamp(S.tiltCmd, -25 * D2R, 0);
+    S.tiltCmd = clamp(S.tiltCmd, lim.tilt_deg[0] * D2R, upMax * D2R);
     const mv = (cur, cmd, rate) => cur + clamp(cmd - cur, -rate * dt, rate * dt);
     S.pan = mv(S.pan, S.panCmd, lim.pan_rate_deg_s * D2R);
-    S.tilt = clamp(mv(S.tilt, S.tiltCmd, lim.tilt_rate_deg_s * D2R), tmin, 0);
+    S.tilt = clamp(mv(S.tilt, S.tiltCmd, lim.tilt_rate_deg_s * D2R), tmin, upMax * D2R);
     // the safety line: ARM held = flywheels up, laser on; released = no feed, and the phase-short brake stops the
     // flywheels (5 % speed ~48 ms after release; unbraked they would coast for 1.1 s)
     const armed = !S.reloading && (S.arm.size > 0 || !!S.journey);
@@ -1389,7 +1394,10 @@ export async function createTurretBench({ stage, sfx, panel, root = '../', onLay
       if (S.view === 'explode') setView('solid');
       say('Reassembling before firing…', 1200);
     }
-    const ready = armed && S.rpm >= 0.95 * fl.rpm && hopperCount() > 0 && S.explode < 1e-4;
+    const tooHigh = S.tilt > fireMax * D2R + 1e-6;
+    if (tooHigh && (S.trigger || S.queue > 0) && !S.saidHigh) { S.saidHigh = true; say(`Aimed above ${fireMax}°: the feed simulation is limited to there, so it holds fire`, 2200); }
+    if (!tooHigh) S.saidHigh = false;
+    const ready = armed && S.rpm >= 0.95 * fl.rpm && hopperCount() > 0 && S.explode < 1e-4 && !tooHigh;
     fireBtn.classList.toggle('ready', ready);
     const now = performance.now() / 1000;
     if (!S.journey && (S.trigger || S.queue > 0) && ready && Math.abs(S.phiCmd - S.phi) < 1e-6 && now >= S.nextAt) {
@@ -1488,7 +1496,7 @@ export async function createTurretBench({ stage, sfx, panel, root = '../', onLay
     live.set([['pan', `${(S.pan / D2R).toFixed(1)}° (servo ${(3 * S.pan / D2R).toFixed(0)}°)`],
       ['tilt', `${(S.tilt / D2R).toFixed(1)}°  (limit -${tiltMax(S.pan).toFixed(1)}°)`],
       ['dial', `${(((S.phi / D2R) % 360) + 360) % 360 | 0}° · ${Math.abs(S.phiCmd - S.phi) > 1e-6 ? 'feeding' : 'parked: spoke over the exit'}`],
-      ['laser', S.laserOn ? 'on (Class 2, 650 nm red)' : 'off'],
+      ['laser', S.laserOn ? 'on (model reference; class unverified)' : 'off'],
       ['shots', `${S.shots}`], ['hits', `${S.hits}`], ['plates down', `${down} / ${plates.length}`], ['cans knocked', `${knocked} / ${cans.length}`],
       ['paper group', group]]);
   }

@@ -38,6 +38,8 @@
   350.0
  ],
  "tilts_deg": [
+  12.0,
+  6.0,
   0.0,
   -5.0,
   -12.5,
@@ -46,14 +48,43 @@
  ],
  "continuous_pan": true,
  "ring_model": "sparkfun_rob13065",
- "clashes": [],
+ "clashes": [
+  [
+   "pan_base",
+   "base_carrier_inserts",
+   113.2,
+   0.0,
+   0.0
+  ],
+  [
+   "base_board_carrier",
+   "base_board_inserts",
+   113.2,
+   0.0,
+   0.0
+  ],
+  [
+   "base_board_screws",
+   "base_board_inserts",
+   38.0,
+   0.0,
+   0.0
+  ],
+  [
+   "base_carrier_screws",
+   "base_carrier_inserts",
+   43.2,
+   0.0,
+   0.0
+  ]
+ ],
  "gaps_under_1mm": [
   [
    "tilt_yoke",
    "stop_lug",
    0.0,
    0.0,
-   0.0,
+   12.0,
    "the tilt hard stop, touching by design"
   ],
   [
@@ -63,8 +94,23 @@
    0.0,
    -25.0,
    "the tilt hard stop, touching by design"
+  ],
+  [
+   "tilt_yoke",
+   "ct_thumbscrew",
+   1.0,
+   0.0,
+   -25.0
   ]
  ],
- "unexpected_gaps": [],
- "seconds": 256
+ "unexpected_gaps": [
+  [
+   "tilt_yoke",
+   "ct_thumbscrew",
+   1.0,
+   0.0,
+   -25.0
+  ]
+ ],
+ "seconds": 249
 }

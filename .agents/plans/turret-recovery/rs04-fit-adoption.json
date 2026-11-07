@@ -1,0 +1,80 @@
+{
+  "producer_revision": "017e1e03eacdfaec7eda891a14143a2f9254581a",
+  "review": "https://github.com/Valpatel/gyropup/pull/255#issuecomment-6707611088",
+  "directory_archive": "2752597279c2716e1a670de6c6c8f0b9fa409b2e52199c0684888b7ccdaaaadd",
+  "zip_sha256": "24973af2d092ad788a2fa66d85621ab6a6c6c1851c5260bbbd5e3676fad4c663",
+  "members": 31,
+  "wrapper": "rs04-fit-job/",
+  "outputs": {
+    "hardware/exports/leg/rs04-fit-job/measurements.csv": "a425d41717706738b1a67cd3181f4b579a701e22d770688b8bd15b442ed35e2d",
+    "hardware/exports/leg/rs04-fit-job/critical-layers.png": "476bb8b5d7bec8ec4e32d66d5717d6ab5ec7cab8247872f97c2b7e66bd1ff37d",
+    "hardware/exports/leg/rs04-fit-job/source.stl": "4b2b5efee4d0504ddf80f7efd25a679fca5be77d994928b1e2ff554e39d80a23",
+    "hardware/exports/leg/rs04-fit-job/geometry.3mf": "9eed4bd6f32d8db34ca299ee43c42d993055c89c35d1130cc85593446b9ddbc2",
+    "hardware/exports/leg/rs04-fit-job/job.json": "b94cfb11d2da264069c4d0e7c9fb784ee44f6620032fa3030bf4461865a18605",
+    "hardware/exports/leg/rs04-fit-job/process-record.csv": "443cac5a21b7adc86ff34b71b386ffbf918ac8aaa4a32a16128292e4cd21b56c",
+    "hardware/exports/leg/rs04-fit-job/slice/filament.json": "0d2b91e9d7f31661688294b60c19e3fb922f1fde5d2f219ee16d85f190cb3374",
+    "hardware/exports/leg/rs04-fit-job/slice/process.json": "9591ffa2ff4d223ebc859b1901766aabf71caf7cfdcf93719dcc77484b12a345",
+    "hardware/exports/leg/rs04-fit-job/slice/machine.json": "44b41d9e562c8b9a7223ec87dd1c7e37271549983ea572f09a81f62a9b76d9af",
+    "hardware/exports/leg/rs04-fit-job/slice/slicer.log": "e8641fd3eb85799f1d95c2efc8579dc08249fc44243ed091793e5684b6f3e9c0",
+    "hardware/exports/leg/rs04-fit-job/slice/exit-code.json": "124fd50cb6d223cdd18fedc166d00af7254199b6e6dedf9be82f71db87af6d01",
+    "hardware/exports/leg/rs04-fit-job/slice/out/result.json": "1d2f7a63de94d5301107b0e69645f05423663152ad2a59c79939a95e6c5ea869",
+    "hardware/exports/leg/rs04-fit-job/slice/out/plate_1.gcode": "322818aa89d4ea010dcad68d68d3b8b3781f7adb97bec3b5dd0a4d8bae3d4315",
+    "hardware/exports/leg/rs04-fit-job/slice/out/sliced.3mf": "0756490fdbb3becc3862837d76e57957d2bc022562ed24cefd116291ebcc85e3",
+    "hardware/exports/leg/rs04-fit-job/profiles/filament/Bambu PA6-CF @base.json": "66d5d1a96e005afbc1cefbeaf8182de1b83b54ba3facfd219051303af64135c6",
+    "hardware/exports/leg/rs04-fit-job/profiles/filament/fdm_filament_common.json": "8c7105b7d59a28f600c43a946f067b8b4d707b9711c0bf6b88e9166e48878548",
+    "hardware/exports/leg/rs04-fit-job/profiles/filament/fdm_filament_pa.json": "8b9745795aecf73476837299eff1fbcaee51ba16878ff258978b67b2d4fbe545",
+    "hardware/exports/leg/rs04-fit-job/profiles/filament/Bambu PA6-CF @BBL X1C.json": "80783d20169f5dc21b8e43e90d61af54d5f5fae816339e6b17aa8ecf7b87ed15",
+    "hardware/exports/leg/rs04-fit-job/profiles/filament/fdm_filament_template_direct_dual.json": "e0f564b83f3ef70cce4de1401dd7cd855d6fbd834343cb8f4292f2a1ac3efc51",
+    "hardware/exports/leg/rs04-fit-job/profiles/process/0.20mm Standard @BBL X1C.json": "e4d3f211b6ef87e9612c96f3ac2d18413e0610fff7eeb815a76420344a3b0a19",
+    "hardware/exports/leg/rs04-fit-job/profiles/process/fdm_process_single_common.json": "05b38ac1318e465e817978b36da51754f928da0172738a20bb3a8d4a69eb4769",
+    "hardware/exports/leg/rs04-fit-job/profiles/process/fdm_process_common.json": "5c16ba3f17a36cc8f01743245e221426b3cdceac7cc367758d6f48d86b63d8ef",
+    "hardware/exports/leg/rs04-fit-job/profiles/process/fdm_process_single_0.20.json": "cdda8d56d67f62a0faa892cb6efc605ebb5c745bf742f6ead4daaeb6627c182a",
+    "hardware/exports/leg/rs04-fit-job/profiles/machine/Bambu Lab P1S 0.4 nozzle template change_filament_gcode.json": "3194e4322c3b8953a187e11a0ccc198949244065fb5caf62a67443f8acc54dde",
+    "hardware/exports/leg/rs04-fit-job/profiles/machine/fdm_machine_common.json": "26ef8ee697849323e67d8e1a9026c175cebe3397e38c5091dddb5cd3fc52e94c",
+    "hardware/exports/leg/rs04-fit-job/profiles/machine/Bambu Lab P1S 0.4 nozzle template time_lapse_gcode.json": "af84ee5b92597644c2a27ee45a0c811b748bcc8230b7c378a16d1fd405b46f44",
+    "hardware/exports/leg/rs04-fit-job/profiles/machine/Bambu Lab P1S 0.4 nozzle.json": "ca7de71dd2b48899ccadeeab9f9f68f866e6b2afae55caa812d0e6dec2ad83c8",
+    "hardware/exports/leg/rs04-fit-job/profiles/machine/Bambu Lab P1S 0.4 nozzle template layer_change_gcode.json": "f0ca694af70aec99a72501da294b8c73b8d655e8adab004325b27d2df83b98f1",
+    "hardware/exports/leg/rs04-fit-job/profiles/machine/Bambu Lab P1S 0.4 nozzle template machine_start_gcode.json": "ecfedd58ee4775dec2dafe0a14c1adbcd1fe3c83d2f85e9a252cceec05d2730e",
+    "hardware/exports/leg/rs04-fit-job/profiles/machine/Bambu Lab P1S 0.4 nozzle template machine_end_gcode.json": "766999ac6456c7ddd82aa47a3dbd9ef71d1e9333483305999b3530befe22ab7d",
+    "hardware/exports/leg/rs04-fit-job/profiles/machine/fdm_bbl_3dp_001_common.json": "f911d4012d803184927b48d149eb18e30e98317109424ecc988caeb9c204504a",
+    "hardware/exports/leg/rs04-fit-job.zip": "24973af2d092ad788a2fa66d85621ab6a6c6c1851c5260bbbd5e3676fad4c663"
+  },
+  "quotes": {
+    "docs/legs/rs04-fit-job.md": "b19aad9cb3348babd6dcb5abf9b22229115c01fcf282886214a90588be21d5a7",
+    "docs/architecture/mechanical-readiness.md": "6fef851319400cbdfefa62f45d4cb1e24f897cf7fb74bae6bdbf99398818a294"
+  },
+  "metrics": {
+    "grams": 172.41,
+    "minutes": 392.7420247395833,
+    "filament_m": 65.16,
+    "exit_code": 0,
+    "return_code": 0,
+    "error": null
+  },
+  "qualification": {
+    "physical_fit_verified": false,
+    "mounting_approved": false,
+    "strength_verified": false,
+    "support_removal_verified": false,
+    "printer_calibration_verified": false,
+    "full_leg_print_released": false,
+    "powered_operation_approved": false
+  },
+  "fresh_original_input_and_candidate_guards": true,
+  "full_other_tracked_and_hardware_preserved": true,
+  "actual_verify_and_full_existing_fit_tests_pass": true,
+  "original_private_bus_attempt": {
+    "status": "FAILED",
+    "partial_files": 24,
+    "archive_sha256": "c590716f591df5d11ab799ceb6bce4e009b2ccfb4b1151cd676a7ac1b13f225e",
+    "seconds": 12.334544021985494
+  },
+  "corrected_normal_bus_attempt": {
+    "status": "PASS_SCOPED",
+    "seconds": 38.344283818034455,
+    "private_display": true,
+    "engine_profile_source_hardware_unchanged": true
+  },
+  "adoption_pass": true,
+  "physical_qualification": false
+}

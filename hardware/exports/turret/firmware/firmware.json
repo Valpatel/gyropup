@@ -31,10 +31,40 @@
    "arms_on_38": true,
    "pass_": true
   },
-  "tilt_never_above_level": {
-   "max_true_tilt_deg": -0.0,
-   "clamped_commands": 4,
+  "tilt_within_stops": {
+   "max_true_tilt_deg": 12.0,
+   "upper_stop_deg": 12.0,
+   "clamped_commands": 1,
    "lifts": 2,
+   "pass_": true
+  },
+  "tilt_range_is_the_cad_stops": {
+   "firmware_deg": [
+    -25.0,
+    12.0
+   ],
+   "cad_stops_deg": [
+    -25.0,
+    12.0
+   ],
+   "fire_tilt_max_deg": 10.0,
+   "limits_fire_tilt_max_deg": 10.0,
+   "pass_": true
+  },
+  "no_shot_above_fire_limit": {
+   "aimed_high_deg": 11.0,
+   "shots_high": 0,
+   "burst_ended": true,
+   "aimed_low_deg": 8.0,
+   "shots_low": 2,
+   "fire_tilt_max_deg": 10.0,
+   "pass_": true
+  },
+  "laser_only_when_armed": {
+   "dark_when_disarmed": true,
+   "lit_when_armed": true,
+   "out_after_disarm": true,
+   "state_after": "IDLE",
    "pass_": true
   },
   "no_spin_without_arm": {

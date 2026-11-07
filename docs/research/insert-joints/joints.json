@@ -604,7 +604,7 @@
    },
    "loads": [
     {
-     "case": "R: 30 g sideways, the whole turret (1.7568 kg) with its centre 96.9 mm above the TM face (exports/turret/mount.json com_mm, from the TM face), 30 mm further down at the feet (the riser's 80 x 80 legs)",
+     "case": "R: 30 g sideways, the whole turret (1.7566 kg) with its centre 96.9 mm above the TM face (exports/turret/mount.json com_mm, from the TM face), 30 mm further down at the feet (the riser's 80 x 80 legs)",
      "per_insert_n": 410,
      "tension": true,
      "source": "exports/turret/mount.json mass_kg, com_mm; cad/turret.py FRAME_T_ABOVE_TM; cad/body_params.py RISER_H"
@@ -664,7 +664,7 @@
    },
    "loads": [
     {
-     "case": "R: 30 g sideways, the whole turret (1.7568 kg) with its centre 96.9 mm above the TM face (exports/turret/mount.json com_mm, from the TM face)",
+     "case": "R: 30 g sideways, the whole turret (1.7566 kg) with its centre 96.9 mm above the TM face (exports/turret/mount.json com_mm, from the TM face)",
      "per_insert_n": 313,
      "tension": true,
      "source": "exports/turret/mount.json mass_kg, com_mm; cad/turret.py FRAME_T_ABOVE_TM (hand_checks.tm_bolts gives 313 N)"

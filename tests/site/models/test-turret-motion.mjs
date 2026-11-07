@@ -5,13 +5,52 @@ import { readFile, writeFile, mkdir } from 'node:fs/promises';
 import { chromium, webkit } from '@playwright/test';
 import { createHash } from 'node:crypto';
 const fixture = JSON.parse(await readFile(new URL('../../fixtures/turret-motion-reference.json', import.meta.url)));
+assert.ok(fixture.source?.parts, 'Regenerate the independent reference from the reviewed current full scene');
 const base = (process.env.SITE_URL || 'http://127.0.0.1:8879').replace(/\/$/, '');
 const out = process.env.TEST_OUTPUT || '/tmp/gyropup-turret-motion';
 const engine = process.env.PLAYWRIGHT_BROWSER === 'webkit' ? webkit : chromium;
+function assertReferenceAssets(reference, manifestBytes, responses) {
+  assert.ok(reference.source?.parts, 'Regenerate the independent reference from the reviewed current full scene');
+  assert.equal(createHash('sha256').update(manifestBytes).digest('hex'), reference.source.manifest_sha256);
+  const manifest = JSON.parse(manifestBytes);
+  assert.deepEqual(manifest.parts.map(p=>p.name).sort(), Object.keys(reference.source.parts).sort());
+  assert.equal(new Set(manifest.parts.map(p=>p.name)).size, manifest.parts.length);
+  const expectedFiles = new Map();
+  for (const part of manifest.parts) {
+    const bound = reference.source.parts[part.name];
+    assert.equal(part.file, bound.file); assert.equal(part.group, bound.group); assert.equal(part.sha256, bound.sha256);
+    assert.equal(reference.contract.components[part.name].joint,
+      Object.hasOwn(reference.contract.joints, bound.group) ? bound.group : null);
+    assert.ok(!expectedFiles.has(bound.file)); expectedFiles.set(bound.file, bound.sha256);
+  }
+  const loaded = new Set(); let loadedManifests = 0;
+  for (const response of responses) {
+    assert.ok(!response.error, JSON.stringify(response)); assert.equal(response.status, 200);
+    if (response.file === 'manifest.json') {
+      loadedManifests++; assert.equal(response.sha256, reference.source.manifest_sha256);
+    } else {
+      assert.ok(expectedFiles.has(response.file), `Unknown loaded mesh: ${response.file}`);
+      assert.equal(response.version, expectedFiles.get(response.file));
+      assert.equal(response.sha256, expectedFiles.get(response.file)); loaded.add(response.file);
+    }
+  }
+  assert.ok(loadedManifests > 0, 'Hash the actual manifest response used by the renderer');
+  assert.deepEqual([...loaded].sort(), [...expectedFiles.keys()].sort(), 'Hash every actual loaded mesh response');
+  return manifest;
+}
 const browser = await engine.launch(engine === chromium ? { channel:process.env.PLAYWRIGHT_CHANNEL === 'chromium' ? undefined : 'chrome', headless:true,
   args:['--no-sandbox','--use-gl=angle','--use-angle=swiftshader','--enable-unsafe-swiftshader'] } : {headless:true});
 await mkdir(out, {recursive:true});
 const page = await browser.newPage({viewport:{width:1280,height:900}}), errors=[];
+const assetResponses=[];
+page.on('response', response=>{
+  const url=new URL(response.url()), prefix='/exports/sim/turret_box/';
+  if (url.origin!==new URL(base).origin || !url.pathname.startsWith(prefix)) return;
+  const file=url.pathname.slice(prefix.length);
+  if (file!=='manifest.json' && !file.endsWith('.stl')) return;
+  assetResponses.push(response.body().then(bytes=>({file,status:response.status(),version:url.searchParams.get('v'),
+    sha256:createHash('sha256').update(bytes).digest('hex')})).catch(error=>({file,error:String(error)})));
+});
 await acknowledgePrototypeNotice(page);
 page.on('pageerror', e => errors.push(e.message));
 // 80 box meshes and the site's own assets overflow the default 250-entry Resource Timing buffer that the mesh check reads.
@@ -52,6 +91,9 @@ try {
   assert.ok(await checkLaser(),'V2 CAD laser origin is on its actual lens');
   await page.selectOption('#design-select','turret-box');
   await page.waitForFunction(()=>window.__sim.bench()?.active);
+  const loadedParts=await page.evaluate(()=>window.__sim.bench().api.mechanism.parts.map(p=>({name:p.e.name,file:p.e.file,group:p.e.group,sha256:p.e.sha256})));
+  assert.equal(loadedParts.length,Object.keys(fixture.contract.components).length);
+  for(const part of loadedParts) assert.deepEqual({file:part.file,group:part.group,sha256:part.sha256},fixture.source.parts[part.name]);
   const samples = await page.evaluate(({fixture})=>{
     const bench=window.__sim.bench(), api=bench.api,m=api.mechanism;
     window.captureTurret=(id,angles)=>{
@@ -90,6 +132,71 @@ try {
   });
   assert.ok(maxError(broken.home).error<.02,'Seeded wrong pivot still passes at home');
   assert.ok(maxError(broken.quarter).error>60,'Independent intermediate-pose oracle rejects the original orbit failure');
+  const sensitivities=await page.evaluate(()=>{
+    const api=window.__sim.bench().api,m=api.mechanism;
+    const zero={pan:0,tilt:0,pinion:0,dial:0,wheel_l:0,wheel_r:0,flap:0};
+    const pose=(angles)=>{const a={...zero,...angles};api.poseMechanism(Object.fromEntries(Object.entries(a).map(([k,v])=>[k,v*Math.PI/180])));return a;};
+    const result={};
+    pose({});
+    const leaf=m.parts.find(p=>p.e.name==='barrel').mesh,scale=leaf.scale.clone();
+    try {leaf.scale.multiplyScalar(.001);const a=pose({pan:35,tilt:12});result.units=window.captureTurret('wrong-units',a);}
+    finally {leaf.scale.copy(scale);pose({});}
+    try {const a=pose({pan:35,tilt:12});m.groups.tilt.rotation.x*=-1;result.axis=window.captureTurret('wrong-tilt-sign',a);}
+    finally {pose({});}
+    const detach=(object,newParent,angles,name)=>{
+      pose({});const parent=object.parent,position=object.position.clone(),rotation=object.quaternion.clone(),size=object.scale.clone();
+      try {
+        newParent.attach(object);result[name+'Home']=window.captureTurret(name+'-home',zero);
+        const a=pose(angles);result[name]=window.captureTurret(name,a);
+      } finally {parent.attach(object);object.position.copy(position);object.quaternion.copy(rotation);object.scale.copy(size);pose({});}
+    };
+    detach(m.groups.tilt,m.world,{pan:60,tilt:12},'lostParent');
+    detach(m.parts.find(p=>p.e.name==='flywheel_motor_l').mesh,m.groups.wheel_l,{wheel_l:90},'motorOwnership');
+    return result;
+  });
+  for(const name of ['units','axis','lostParent','motorOwnership'])
+    assert.ok(maxError(sensitivities[name]).error>1,`Independent landmarks reject ${name}`);
+  for(const name of ['lostParentHome','motorOwnershipHome'])
+    assert.ok(maxError(sensitivities[name]).error<.02,`${name} deliberately preserves correct home geometry`);
+  // Exercise the actual input/servo path, not just poseMechanism's direct mesh setter.
+  const limits=await page.evaluate(()=>window.__sim.bench().manifest.limits);
+  assert.deepEqual(limits.tilt_deg,[-25,12]); assert.equal(limits.fire_tilt_max_deg,10);
+  await page.evaluate(()=>{const a=window.__sim.bench().api;a.explode(0);a.pad({});a.arm(false);a.aim(0,0);});
+  const tiltInput=page.getByLabel(/^Tilt \(between the hard stops; 0 = level\)/);
+  assert.equal(await tiltInput.getAttribute('max'),'12');
+  await tiltInput.focus(); await tiltInput.press('End');
+  await page.waitForFunction(()=>Math.abs(window.__sim.bench().api.state.tilt*180/Math.PI-12)<.01,{},{timeout:10000});
+  const appliedUpper=await page.evaluate(()=>{
+    const s=window.__sim.bench().api.state,d=180/Math.PI;
+    return window.captureTurret('actual-servo-upper-stop',{pan:s.pan*d,tilt:s.tilt*d,pinion:-3*s.pan*d,
+      dial:s.phi*d,wheel_l:s.wheelAng*d,wheel_r:s.wheelAng*d,flap:s.flapAngle*d});
+  });
+  assert.ok(maxError(appliedUpper).error<.02,'The applied +12-degree servo pose matches independent CAD landmarks');
+  await page.getByLabel('Show straight laser reference',{exact:true}).check();
+  const heldBaseline=await page.evaluate(()=>{
+    const b=window.__sim.bench(),a=b.api;window.upperHoldSamples=[];
+    window.__sim.stage.onFrame(()=>{
+      const s=a.state;
+      if(s.rpm>=.95*b.manifest.mechanics.flywheel.rpm && window.upperHoldSamples.length<15)
+        window.upperHoldSamples.push({shots:s.shots,queue:s.queue,phi:s.phi,phiCmd:s.phiCmd,tiltDeg:s.tilt*180/Math.PI,
+          laserOn:s.laserOn,beamVisible:a.prediction.laser.visible});
+    });
+    a.arm(true);a.fire(2);return {shots:a.state.shots,queue:a.state.queue,phi:a.state.phi,phiCmd:a.state.phiCmd};
+  });
+  await page.waitForFunction(()=>window.upperHoldSamples.length>=15,{},{timeout:15000});
+  const upperHold=await page.evaluate(()=>window.upperHoldSamples);
+  assert.ok(upperHold.every(s=>s.shots===heldBaseline.shots && s.queue===heldBaseline.queue &&
+    Math.abs(s.phi-heldBaseline.phi)<1e-12 && Math.abs(s.phiCmd-heldBaseline.phiCmd)<1e-12 && Math.abs(s.tiltDeg-12)<.01),
+    'The real armed/spun-up frame loop holds queued fire above the separate +10-degree ceiling');
+  assert.ok(upperHold.every(s=>s.laserOn && s.beamVisible),'Explicit model laser reference follows actual armed state');
+  await page.waitForFunction(()=>[...document.querySelectorAll('.hud-readouts .r')].some(r=>
+    r.querySelector('span')?.textContent==='laser' && /model reference.*class unverified/.test(r.querySelector('b')?.textContent)),{},{timeout:10000});
+  await page.screenshot({path:`${out}/${engine.name()}-upper-stop-armed.png`});
+  await page.evaluate(()=>window.__sim.bench().api.arm(false));
+  await page.waitForFunction(()=>{const a=window.__sim.bench().api;return !a.state.laserOn && !a.prediction.laser.visible && a.state.queue===0;},{},{timeout:10000});
+  await page.getByLabel('Show straight laser reference',{exact:true}).uncheck();
+  const limitControls={appliedUpper,upperHold,heldBaseline,disarmedLaserOff:true,fireCeilingDeg:limits.fire_tilt_max_deg};
+  await writeFile(`${out}/${engine.name()}-limit-controls.json`,JSON.stringify(limitControls));
   // Check connected effects, bearings, balls, and actual live firing through the normal frame loop.
   const attachments=await page.evaluate(()=>{
     const api=window.__sim.bench().api,m=api.mechanism;
@@ -127,12 +234,23 @@ try {
   for(const [width,height] of [[320,568],[360,800],[390,844],[430,932],[844,390]]) {
     await page.setViewportSize({width,height});
     assert.ok(await page.evaluate(()=>document.documentElement.scrollWidth<=innerWidth+1),`No overflow at ${width}x${height}`);
+    if(width===390)await page.screenshot({path:`${out}/${engine.name()}-phone390.png`});
   }
   await page.screenshot({path:`${out}/${engine.name()}-phone.png`});
   assert.deepEqual(errors,[]);
   const version=await (await page.request.get(base+'/version.json')).json();
   const manifestBytes=await (await page.request.get(base+'/exports/sim/turret_box/manifest.json')).body();
-  const manifest=JSON.parse(manifestBytes);
+  const responses=await Promise.all(assetResponses);
+  const manifest=assertReferenceAssets(fixture,manifestBytes,responses);
+  // Actual binding guard sensitivity; no stale/missing-asset normalization.
+  const changed=JSON.parse(manifestBytes);changed.parts[0].group='foreign-owner';
+  const changedBytes=Buffer.from(JSON.stringify(changed)),claimed=structuredClone(fixture);
+  claimed.source.manifest_sha256=createHash('sha256').update(changedBytes).digest('hex');
+  const claimedResponses=responses.map(r=>r.file==='manifest.json'?{...r,sha256:claimed.source.manifest_sha256}:r);
+  assert.throws(()=>assertReferenceAssets(claimed,changedBytes,claimedResponses),'A self-consistent manifest hash cannot bless different ownership');
+  const changedMesh=responses.map(r=>({...r}));changedMesh.find(r=>r.file.endsWith('.stl')).sha256='0'.repeat(64);
+  assert.throws(()=>assertReferenceAssets(fixture,manifestBytes,changedMesh));
+  assert.throws(()=>assertReferenceAssets(fixture,manifestBytes,responses.filter(r=>r.file!==manifest.parts[0].file)));
   const requested=await page.evaluate(()=>performance.getEntriesByType('resource').map(e=>e.name));
   for(const p of manifest.parts) assert.ok(requested.some(u=>u.endsWith(`/turret_box/${p.file}?v=${p.sha256}`)),`Content-versioned mesh loaded: ${p.name}`);
   const manifestHash=createHash('sha256').update(manifestBytes).digest('hex');
@@ -141,6 +259,8 @@ try {
   await writeFile(`${out}/capture-version.json`,JSON.stringify(version));
   await writeFile(`${out}/${engine.name()}-trace.json`,JSON.stringify(trace));
   await writeFile(`${out}/contract.json`,JSON.stringify(fixture.contract));
+  await writeFile(`${out}/${engine.name()}-asset-bindings.json`,JSON.stringify(responses,null,2));
+  await writeFile(`${out}/${engine.name()}-sensitivity.json`,JSON.stringify(sensitivities));
   await writeFile(`${out}/${engine.name()}-summary.json`,JSON.stringify({components:Object.keys(fixture.contract.components).length,poses:samples.length,liveFrames:live.length,maxErrorMm:worst.error,worst:worst.worst,speed,attachments},null,2));
   console.log(`PASS ${engine.name()}: ${Object.keys(fixture.contract.components).length} components × ${samples.length} poses; ${live.length} real firing frames; max ${worst.error.toFixed(6)}mm; negative pivot control rejected; CAD attachments, configured launch speed, 5 phone layouts`);
 } finally {await browser.close();}

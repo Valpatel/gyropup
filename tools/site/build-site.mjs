@@ -10,7 +10,7 @@ import { writeMarkdownSite } from './site-markdown.mjs';
 import { SITE_CACHE_CONTROL, versionSiteAssets, singleSourceURL } from './site-cache.mjs';
 import { collectStatus, createReader, renderBoard, shallowHistory } from './status-board.mjs';
 import { collectTimeline, gitIn, imagePaths, previewPaths, timelinePreview, renderTimeline, subsystemOf } from './timeline.mjs';
-import { OPEN_FOLDS, enhanceDocument } from './doc-page.mjs';
+import { OPEN_FOLDS, enhanceDocument, notebookDocuments } from './doc-page.mjs';
 import { verifyRigFiles } from '../evidence/media/rig-media.mjs';
 import {publicForSource,publicDirectoryForSource,sourceForPublic,publicationFiles,markRetiredCatalogLinks} from './source-layout.mjs';
 const root = path.resolve(import.meta.dirname, '../..');
@@ -160,7 +160,7 @@ const folded = (f) => /^(hardware|deploy)\//.test(f) && !f.startsWith('hardware/
 const docItem = (d) => `<li><a href="${pagePath(d.file)}">${esc(d.title)}</a><small>${esc(d.file)}</small></li>`;
 const hw = docs.filter(d => folded(d.file));
 const hardwareFold = hw.length ? `<details class="decision" id="hardware-folders"><summary>Hardware folders and deployment (${hw.length} pages)</summary><ul class="document-list">${hw.map(docItem).join('')}</ul></details>` : '';
-const notebook = `<h1>The design notebook.</h1><p class="doc-lede">Follow the decisions, research, and work behind Gyropup. These are evolving engineering notes, not finished product specifications.</p><div class="notebook-links"><a href="/designer/progress.html">Progress & test reports ↗</a><a href="/designer/build.html">Parts & build files ↗</a><a href="#decisions">Decisions ↓</a></div><h2 id="documents">Documents</h2><ul class="document-list">${docs.filter(d=>!folded(d.file)).map(docItem).join('')}</ul>${hardwareFold}<h2 id="decisions">Design decisions</h2>${decisions.slice().reverse().map(d=>`<details class="decision"><summary><span>${esc(d.id)}</span> ${esc(d.title)}</summary><p>${esc(d.decision)}</p><p>${esc(d.why)}</p><small>${esc(d.date)} · ${esc(d.status)}</small></details>`).join('')}`;
+const notebook = `<h1>The design notebook.</h1><p class="doc-lede">Follow the decisions, research, and work behind Gyropup. These are evolving engineering notes, not finished product specifications.</p><div class="notebook-links"><a href="/designer/progress.html">Progress & test reports ↗</a><a href="/designer/build.html">Parts & build files ↗</a><a href="#decisions">Decisions ↓</a></div><h2 id="documents">Documents</h2>${notebookDocuments(docs.filter(d=>!folded(d.file)).map(docItem))}${hardwareFold}<h2 id="decisions">Design decisions</h2>${decisions.slice().reverse().map(d=>`<details class="decision"><summary><span>${esc(d.id)}</span> ${esc(d.title)}</summary><p>${esc(d.decision)}</p><p>${esc(d.why)}</p><small>${esc(d.date)} · ${esc(d.status)}</small></details>`).join('')}`;
 await writeFile(path.join(out,'site/index.html'), frame('Design notebook', notebook).replace("root:'../../'", "root:'../'"));
 // Static equivalents of local file listings keep the existing Build page's file links working.
 for (const [dir, files] of directories) {
