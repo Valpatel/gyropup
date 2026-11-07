@@ -83,6 +83,19 @@ class E1CollectorLifecycle(unittest.TestCase):
             spec.loader.exec_module(module)
         self.assertTrue(callable(module.main))
 
+    def test_video_bootstrap_requires_both_actual_rig_history_objects(self):
+        path = check.ROOT / '.agents/plans/leg-control/regenerate-e1-video.py'
+        spec = importlib.util.spec_from_file_location('e1_video_history_test', path)
+        module = importlib.util.module_from_spec(spec); spec.loader.exec_module(module)
+        record = json.loads((check.ROOT / 'hardware/exports/leg/rig-media.json').read_text())
+        expected = (record['producer_revision'], record['derivation']['converter_revision'])
+        self.assertEqual(module.rig_history_revisions(record), tuple(dict.fromkeys(expected)))
+        changed = {**record, 'derivation': {**record['derivation'], 'converter_revision': 'b' * 40}}
+        self.assertIn('b' * 40, module.rig_history_revisions(changed))
+        for bad in ({}, {'producer_revision': 'main', 'derivation': {'converter_revision': 'a' * 40}},
+                    {'producer_revision': 'a' * 40, 'derivation': {'converter_revision': None}}):
+            with self.assertRaises(ValueError): module.rig_history_revisions(bad)
+
     def test_exact_worker_preflight_is_syntactically_valid(self):
         collector = self.load_collector()
         compile(collector.worker_preflight_code(), 'actual-worker-preflight', 'exec')

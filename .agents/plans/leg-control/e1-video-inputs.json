@@ -32,5 +32,15 @@
     "matplotlib": "3.11.2",
     "pillow": "13.0.0"
   },
-  "font_sha256": "5c1247acef7f2b8522a31742c76d6adcb5569bacc0be7ceaa4dc39dd252ce895"
+  "font_sha256": "5c1247acef7f2b8522a31742c76d6adcb5569bacc0be7ceaa4dc39dd252ce895",
+  "test_context": {
+    "hardware/exports/leg/rig-media.json": "18446ba2704e07e5bd93e3a0a68a3155df2bc26704b93dac19f9341de29acf13",
+    "hardware/exports/leg/rig-results.json": "171a1d4f2195468a235313fce29e5dde1272499b0d0934e22ad2bab5564ba902",
+    "tools/evidence/media/rig-media.mjs": "3b1824276f7f4c8f5a54f0fc80df12996d58e00527cfb1939390344428d2e27b",
+    "software/site/designer/rig-media.js": "e6f0b7dee36de0da02a3e711476132bf457b88ee77685ee6960f007a88f639e1",
+    "tools/site/source-layout.mjs": "9f9ba1dfd638e5fa83ecd1b49100b638f3b22db827122de742e34558dd3d7b4c",
+    "tools/site/source-layout.json": "da14426ba66d03195bb8566ae61371b38ba3ad7a19e39e7030509542d9d9902c",
+    "tests/site/media/test-rig-media.mjs": "dd1b42b0df378f2818b7f2fc39b517db101590b51aca2012ebf66946daf3a2b4",
+    "tests/evidence/test-study-media.py": "6fbd0111b528e0a5b9aca4bf93bff282e897192d9991528317ed0317537119e2"
+  }
 }
