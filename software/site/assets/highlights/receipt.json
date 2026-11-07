@@ -8,12 +8,12 @@
     "seconds": 22,
     "audio": false
   },
-  "source_revision": "1d566eeae9029146025f84230aad3aa0d2f40df1",
+  "source_revision": "ac3b035a421e00d4c49f4cf5f4d72d0e0dd3c8b3",
   "source_hashes": {
-    "hardware/exports/leg/fea/hip-frame-e1-media/field-receipt.json": "eb4eac465394f49a24215d1d39b21a72665cde3e319db0c2d380478c05030f2a",
+    "hardware/exports/leg/fea/hip-frame-e1-media/field-receipt.json": "2eeeb29e4c635607c1f107e433cac0cb82fe4e7b8d88ced127d9ded116b21f1e",
     "hardware/exports/leg/fea/hip-frame-e1-media/hip-frame-e1.mp4": "76518421335431320a7a60c58f66cb817c0f4b5b1b0e9993a62f68d87d065581",
-    "hardware/exports/leg/fea/hip-frame-e1-media/hip_frame-E1.json": "57d35cec20107572c0fa222db16cbd66e2c74e8469b09927f9ca376ab4291e58",
-    "hardware/exports/leg/fea/hip-frame-e1-media/video-receipt.json": "26cbe471527d8fad8d706e65740e9b7ee29b7e7e5b28a35599b2b73422bf2568",
+    "hardware/exports/leg/fea/hip-frame-e1-media/hip_frame-E1.json": "70f1d67fe40a03eeb181e741e9674d9e2f5bbbee7a431494db382ef9e2ff3d1f",
+    "hardware/exports/leg/fea/hip-frame-e1-media/video-receipt.json": "c0e3a6c73a8d31107dd6e71a420ca40b20734064f2283340b0346edd07bbc684",
     "hardware/exports/leg/fea/media.json": "dbe019e1df2edc47bc8dbb8aa8066ec859cc203fedbbf0aab79a89e75a22a17b",
     "hardware/exports/leg/fea/summary.json": "1488c5f62b90fd44162140ba1cb7adf8f52135a727cd37b6f08f4d2794000a39",
     "hardware/exports/leg/limits.json": "4376ffbd691b91d35ac49f02b7bc32d50ddbae29dc28ebef1b08e0da55a92bf4",
@@ -450,7 +450,7 @@
       "bytes": 1873038
     },
     "gyropup-highlights.webm": {
-      "sha256": "ccd48c76c93da584e8766595963c83b7549147ad939b2f27c1700259851ee68a",
+      "sha256": "1429bed0cd5aea7d42dd95a54561965cf11e30af84f785cdcfad36a357f36a33",
       "bytes": 1488632
     },
     "gyropup-highlights.webp": {

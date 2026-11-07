@@ -1,0 +1,9 @@
+.........START unmasked
+END unmasked {"command": ["/usr/bin/python3", "-I", "-S", "-B", "-c", "import signal; assert signal.SIGTERM not in signal.pthread_sigmask(signal.SIG_BLOCK, set())"], "expected_exit": 0, "exit": 0, "pid": 3078017, "process_cleanup": {"group_gone": true, "signalled": false, "reaped": []}, "seconds": 0.034917986020445824}
+.START pending
+END pending {"command": ["/usr/bin/python3", "-I", "-S", "-B", "-c", "import time; time.sleep(10)"], "expected_exit": 0, "original_error": "KeyboardInterrupt: controlled pending TERM", "pid": 3078025, "process_cleanup": {"group_gone": true, "signalled": true, "reaped": []}, "seconds": 0.0032791789853945374}
+..
+----------------------------------------------------------------------
+Ran 12 tests in 0.607s
+
+OK

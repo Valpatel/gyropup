@@ -27,7 +27,9 @@ import hardware.cad.legs.fivebar as fb  # noqa: E402
 
 def clip_motor(tau, omega, peak, omega_max, cap=None):
     """A motor's torque limit at a speed: the full peak when braking, falling to zero at omega_max when driving;
-    then the firmware's cap."""
+    then the firmware's cap. A non-finite torque request produces zero torque."""
+    if not math.isfinite(tau):
+        return 0.0
     lim = peak if tau * omega <= 0 else peak * max(0.0, 1.0 - abs(omega) / omega_max)
     if cap:
         lim = min(lim, cap)

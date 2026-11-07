@@ -1,0 +1,32 @@
+{
+  "job": 259,
+  "job_status": "COMPLETED_EXIT0",
+  "executed_revision": "ac3b035a421e00d4c49f4cf5f4d72d0e0dd3c8b3",
+  "current_adoption_revision": "b15aaad6af908bd65ba2e13f24e21ec9d2bb59a3",
+  "recorded_component_source": "a86c230c97b29b3f61eaa38d3cae9719072c2b9e",
+  "published_baseline": "1134c9e645a0f3154c98255ed7dc71167f3e1348",
+  "hardware_tree": "89ae8db4a748d5b19893293fbef3c1d49eeccc2f",
+  "actual_input_count": 95,
+  "review": "https://github.com/Valpatel/gyropup/issues/8#issuecomment-6712951730",
+  "candidate_archive_sha256": "16d83e93e86d2ab706bc6095d2b7a80f12f82f4131fe26e5d2339befae065688",
+  "outputs": {
+    "current-design.receipt.json": {
+      "bytes": 1516,
+      "sha256": "7b68f7a8999ca09350b44a9b7715002f27dbfd9bd045ed19eae25b5ed740d1ea"
+    },
+    "current-design.svg": {
+      "bytes": 62470,
+      "sha256": "f582f3aed6b3983bab2b85115ab08afdfc15fc23d5b3e3339b880511fd07160c"
+    },
+    "current-design.scene.json": {
+      "bytes": 211476,
+      "sha256": "5998710c865c02f3bb071a6fbb2dce227f58461e8f29d90b65cd8dc1a019b747"
+    }
+  },
+  "actual_current_pure_parity": true,
+  "actual_current_tests": 10,
+  "all_validation_groups_gone": true,
+  "complete_outside_target_tracked_and_hardware_preserved": true,
+  "adoption": true,
+  "limits": "Genuine freshly extracted source-bound CAD illustration, not physical qualification. All 95 design inputs unchanged; drawing element attributes/order match prior art and only SVG description provenance changes. Current compiled/public delivery and CI remain separate; known strength/airflow/exhaust/hardware gates remain unresolved."
+}

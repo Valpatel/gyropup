@@ -1,0 +1,36 @@
+Traceback (most recent call last):
+  File "<user-home>/gyropup-mechanical-runs/20261107-e1-nonfinite-ec2343b3/src/tools/engineering/legs/export-hip-frame-e1.py", line 116, in <module>
+    main()
+  File "<user-home>/gyropup-mechanical-runs/20261107-e1-nonfinite-ec2343b3/src/tools/engineering/legs/export-hip-frame-e1.py", line 86, in main
+    result = leg_studies.run(4.0, anim=False, only=['hip_frame'], only_cases=['E1'], viewer=True)
+             ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "<user-home>/gyropup-mechanical-runs/20261107-e1-nonfinite-ec2343b3/src/hardware/cad/legs/leg_studies.py", line 700, in run
+    study('hip_frame', key, setup, c['rare'], f"{c['from']}; both upper links' pin forces, the out-of-plane moment {sr:.0%} rear / {sf:.0%} front")
+  File "<user-home>/gyropup-mechanical-runs/20261107-e1-nonfinite-ec2343b3/src/hardware/cad/legs/leg_studies.py", line 502, in study
+    r = st.solve()
+        ^^^^^^^^^^
+  File "<user-home>/gyropup-mechanical-runs/20261101-leg-preprint/cad-agent/src/cadagent/simulation/fea.py", line 650, in solve
+    K = asm(linear_elasticity(lam, mu), ib)
+        ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "<user-home>/gyropup-mechanical-runs/20261101-leg-preprint/.venv/lib/python3.12/site-packages/skfem/assembly/__init__.py", line 93, in asm
+    retval = to(map(lambda a: form.coo_data(*a[1], idx=a[0], **kwargs),
+             ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "<user-home>/gyropup-mechanical-runs/20261101-leg-preprint/.venv/lib/python3.12/site-packages/skfem/assembly/__init__.py", line 66, in _sum
+    return out.todefault()
+           ^^^^^^^^^^^^^^^
+  File "<user-home>/gyropup-mechanical-runs/20261101-leg-preprint/.venv/lib/python3.12/site-packages/skfem/assembly/form/coo_data.py", line 189, in todefault
+    return self.tocsr()
+           ^^^^^^^^^^^^
+  File "<user-home>/gyropup-mechanical-runs/20261101-leg-preprint/.venv/lib/python3.12/site-packages/skfem/assembly/form/coo_data.py", line 95, in tocsr
+    return self._assemble_scipy_csr(
+           ^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "<user-home>/gyropup-mechanical-runs/20261101-leg-preprint/.venv/lib/python3.12/site-packages/skfem/assembly/form/coo_data.py", line 36, in _assemble_scipy_csr
+    return K.tocsr()
+           ^^^^^^^^^
+  File "<user-home>/gyropup-mechanical-runs/20261101-leg-preprint/.venv/lib/python3.12/site-packages/scipy/sparse/_coo.py", line 406, in tocsr
+    arrays = self._coo_to_compressed(csr_array._swap, copy=copy)
+             ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "<user-home>/gyropup-mechanical-runs/20261101-leg-preprint/.venv/lib/python3.12/site-packages/scipy/sparse/_coo.py", line 436, in _coo_to_compressed
+    data = np.empty_like(self.data, dtype=self.dtype)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+numpy._core._exceptions._ArrayMemoryError: Unable to allocate 1.29 GiB for an array with shape (173155659,) and data type float64

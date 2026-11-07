@@ -1,0 +1,41 @@
+{
+  "date": "2026-11-07",
+  "scope": "Adoption preservation-guard namespace; media remained valid",
+  "first_operator_sha256": "ce6a94f66bbdd322f17b05d449e84ff39ca85c2ed04a095c832703a9ab594812",
+  "first_state": "FAILED_ROLLED_BACK",
+  "first_error": "AssertionError: ",
+  "first_current_tests": 17,
+  "first_rollback_errors": [],
+  "first_rollback_five_bytes_modes": {
+    "hardware/exports/leg/fea/media.json": {
+      "bytes_equal": true,
+      "mode_equal": true
+    },
+    "hardware/exports/leg/fea/hip-frame-e1-media/hip-frame-e1.webm": {
+      "bytes_equal": true,
+      "mode_equal": true
+    },
+    "hardware/exports/leg/fea/hip-frame-e1-media/hip-frame-e1.mp4": {
+      "bytes_equal": true,
+      "mode_equal": true
+    },
+    "hardware/exports/leg/fea/hip-frame-e1-media/hip-frame-e1-poster.png": {
+      "bytes_equal": true,
+      "mode_equal": true
+    },
+    "hardware/exports/leg/fea/hip-frame-e1-media/video-receipt.json": {
+      "bytes_equal": true,
+      "mode_equal": true
+    }
+  },
+  "cause": "Inventory(hardware) keys are hardware-relative, while target list was repository-relative; intended target exclusions matched none.",
+  "correction": "Map only the five explicit target names through PurePosixPath(name).relative_to(hardware) for the hardware guard; retain repo-relative tracked guard and all complete keysets/outside hashes.",
+  "corrected_operator_sha256": "a310052a5b2a9dd1a9ac0c2a19268d0de32c6ebba758587c80789d33de19dd74",
+  "corrected_state": "ADOPTED_VIDEO_ONLY",
+  "current_tests": 17,
+  "outside_target_preserved": true,
+  "all_validation_groups_gone": true,
+  "review": "https://github.com/Valpatel/gyropup/issues/8#issuecomment-6712526512",
+  "raw_snapshot_scope": "The corrected transaction durably records full before/after tracked, hardware and untracked inventories plus original backups. First transaction selfchecked rollback in memory; five-byte/mode and clean-Git readbacks were independently repeated.",
+  "original_fleet_job_status": "FAILED; unchanged"
+}

@@ -40,6 +40,9 @@ void gp_ctl_lqr_gains(float height, float K[4])
 
 float gp_clip_motor(float tau, float omega, float peak, float omega_max, float cap)
 {
+    if (!isfinite(tau)) {
+        return 0.0f;
+    }
     float lim = (tau * omega <= 0.0f) ? peak : peak * fmaxf(0.0f, 1.0f - fabsf(omega) / omega_max);
     if (cap > 0.0f) {
         lim = fminf(lim, cap);

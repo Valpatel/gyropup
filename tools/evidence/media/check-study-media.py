@@ -47,12 +47,20 @@ def moving_model(first, loaded):
     return {'mean_channel_difference': average, 'channels_changed_over_20': changed}
 
 
-def validate(root=ROOT, decode=True):
+def report_binding(root, receipt):
+    """Bind exactly one declared identity to the current owned report bytes."""
+    hashes = receipt.get('source_hashes', {})
+    require(isinstance(hashes, dict), 'Missing structural report input binding')
+    keys = [key for key in (SUMMARY, source_for_public(SUMMARY)) if key in hashes]
+    require(len(keys) == 1, 'Expected exactly one structural report input binding')
+    require(digest(source_file(root, SUMMARY).read_bytes()) == hashes[keys[0]], 'Stale report binding')
+
+
+def validate(root=ROOT, decode=True, scope='full'):
+    require(scope in ('field', 'full'), 'Unknown validation scope')
     root = Path(root)
     read = lambda path: json.loads((source_file(root, path)).read_text())
     field_receipt = read(MEDIA + 'field-receipt.json')
-    video_receipt = read(MEDIA + 'video-receipt.json')
-    index = read('exports/leg/fea/media.json')['cases']['hip_frame/E1']
     baseline = next(row for row in read(SUMMARY)['results'] if (row['part'], row['case']) == ('hip_frame', 'E1'))
     require(baseline == field_receipt['baseline'], 'Published report differs from reproduced baseline')
     require(baseline['safety_factor'] == GATE_SF and baseline['target'] == 2 and baseline['ok'] is False,
@@ -63,7 +71,7 @@ def validate(root=ROOT, decode=True):
     # reclassified as the current mechanical design after later CAD changes.
     for path, sha in field_receipt['source_hashes'].items():
         require(historical_hash(field_receipt['source_revision'], path) == sha, f'Producer input mismatch: {path}')
-    require(digest((source_file(root, SUMMARY)).read_bytes()) == field_receipt['source_hashes'][SUMMARY], 'Stale report binding')
+    report_binding(root, field_receipt)
     require(field_receipt['fields'] == MEDIA + 'hip_frame-E1.json', 'Unexpected field path')
     fields = read(field_receipt['fields'])
     require(digest((source_file(root, field_receipt['fields'])).read_bytes()) == field_receipt['fields_sha256'], 'Field bytes changed')
@@ -86,6 +94,12 @@ def validate(root=ROOT, decode=True):
     require(abs(maximum - baseline['max_displacement_mm']) < .0001, 'Displacement field differs from report')
     for key in ('max_displacement_mm', 'von_mises_design_mpa', 'safety_factor', 'target', 'ok'):
         require(field_receipt['reproduced'][key] == baseline[key], f'Reproduction differs: {key}')
+    result = {'historical_source': field_receipt['source_revision'], 'safety_factor': GATE_SF, 'required': 2,
+              'vertices': surface['vertices'], 'triangles': surface['triangles']}
+    if scope == 'field':
+        return {**result, 'scope': 'field-only', 'video_validated': False}
+    video_receipt = read(MEDIA + 'video-receipt.json')
+    index = read('exports/leg/fea/media.json')['cases']['hip_frame/E1']
     expected_inputs = {VIDEO_RENDERER, LOCATION_SOURCE, *(source_for_public(name) for name in (MEDIA + 'field-receipt.json', field_receipt['fields'], SUMMARY, FINER))}
     require(set(video_receipt['source_hashes']) == expected_inputs, 'Incomplete renderer inputs')
     for path, sha in video_receipt['source_hashes'].items():
@@ -110,8 +124,6 @@ def validate(root=ROOT, decode=True):
         require(0 <= factor <= 1 and abs(frame['max_physical_displacement_mm'] - maximum * factor) < .000001,
                 'Presentation extrapolates the solved load or changes physical displacement')
     require(timeline[0]['load_factor'] == 0 and timeline[144]['load_factor'] == 1 and timeline[-1]['load_factor'] == 0, 'Missing load/unload loop')
-    result = {'historical_source': field_receipt['source_revision'], 'safety_factor': GATE_SF, 'required': 2,
-              'vertices': surface['vertices'], 'triangles': surface['triangles']}
     if decode:
         movie = source_file(root, index['video'])
         probe = json.loads(subprocess.check_output(['ffprobe','-v','error','-count_frames','-select_streams','v:0',
@@ -150,4 +162,8 @@ def validate(root=ROOT, decode=True):
 
 
 if __name__ == '__main__':
-    print(json.dumps(validate(), indent=2))
+    import argparse
+    parser = argparse.ArgumentParser(description=__doc__)
+    parser.add_argument('--field-only', action='store_true', help='Validate only the solved field; does not accept video or index')
+    args = parser.parse_args()
+    print(json.dumps(validate(scope='field' if args.field_only else 'full'), indent=2))

@@ -1,0 +1,14 @@
+{
+  "operator_sha256": "78648309e54eaa88e1c05fb6c7501a86ffbc36ce1302de1573e4d3c6acddd787",
+  "status": "PRE_INTENT_REFUSAL",
+  "error": "AttributeError: str has no read_bytes while hashing __file__",
+  "intent_created": false,
+  "copy_started": false,
+  "stdout_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+  "stderr_sha256": "b71c5d578d3ba2f4f923ccbae7cc77296ce41795f0a6677efbbdf61b2143334f",
+  "date": "2026-11-07",
+  "corrected_operator_sha256": "5d8acda4fc3fbfce0210aa3e2fd28152f45501967a6e5c6d61a187551567f696",
+  "correction": "Normalize the checksum argument with Path(p); new exclusive receipt; no native or artifact changes",
+  "corrected_actual_status": "ADOPTED_FIELD_ONLY",
+  "review": "https://github.com/Valpatel/gyropup/issues/8#issuecomment-6712091596"
+}
