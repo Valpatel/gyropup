@@ -117,6 +117,20 @@ class DesignIdentity(unittest.TestCase):
             with self.assertRaisesRegex(ValueError, 'Stale extracted scene'):
                 M['render_svg'](scene, cfg, Path('must-not-load-a-renderer'))
 
+    def test_real_renderer_survives_scene_dictionary_roundtrip(self):
+        scene = json.loads((ART / M['NAMES'][0]).read_text())
+        # Recreate the actual extraction's nonalphabetical paint-role insertion
+        # order from job237. Geometry and source binding remain untouched.
+        for part in scene['parts']:
+            part['regions'] = {role: part['regions'][role]
+                               for role in CONFIG['projection']['roles_order']
+                               if role in part['regions']}
+        loaded = json.loads(json.dumps(scene, sort_keys=True))
+        self.assertNotEqual(list(scene['parts'][0]['regions']), list(loaded['parts'][0]['regions']))
+        profile = Path(os.environ.get('README_ART_PROFILE', ROOT / '.readme-profile'))
+        self.assertEqual(M['bundle'](scene, CONFIG, profile, None),
+                         M['bundle'](loaded, CONFIG, profile, None))
+
 
 if __name__ == '__main__':
     unittest.main()

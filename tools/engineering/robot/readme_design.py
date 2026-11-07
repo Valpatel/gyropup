@@ -230,8 +230,10 @@ def extract(root, cfg, profile, toolkit, out):
 
 
 def bundle(scene, cfg, profile, out):
-    svg = render_svg(scene, cfg, profile)
     scene_bytes = (json.dumps(scene, sort_keys=True, separators=(',', ':')) + '\n').encode()
+    # The shared motif paints role dictionaries in iteration order. Render the
+    # exact persisted representation so extraction and later parity agree.
+    svg = render_svg(json.loads(scene_bytes), cfg, profile)
     receipt = {'schema': 'gyropup.readme-design-receipt/1', 'extract_key': extract_key(cfg),
                'source_revision': cfg['source']['revision'], 'source_inputs': fingerprint(cfg['source']['files']),
                'hardware_tree': cfg['source']['hardware_tree'],
