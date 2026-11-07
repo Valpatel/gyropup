@@ -112,3 +112,16 @@ that drift result and a genuine refresh when inputs changed.
 4. Review the actual compiled README at desktop and phone sizes in both themes,
    including static/reduced motion, old anchors, ordinary links and the detailed guide.
    Publish through normal reviewed dev → main merges and check the actual public result.
+
+### The fictional pixel playground
+
+The header's wheel-legged robot duel is original conceptual art, separate from
+the source-bound CAD illustration and dated physical evidence. Regenerate its
+animated SVG and explicit still with
+`python tools/site/readme_workshop.py --svg-library <cad-agent>/software/cadagent/publish/anim/svg.py`.
+Use cad-agent revision `e662a1ce79b4f63f7352b9d065c5027f77d53a81`; the producer verifies the
+shared component's exact hash and safety rules. Add `--check` for cheap deterministic parity.
+No CAD kernel, font download or new dependency is involved. The README's `picture`
+selects the generated still for reduced motion. Existing browser checks compare
+actual image pixels and reject an intentionally animated still; page media
+emulation alone does not establish that an external SVG image has stopped.

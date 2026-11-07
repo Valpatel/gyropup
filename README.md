@@ -1,8 +1,8 @@
 <div align="center">
 
 <p>
-<a href="https://gyropup.com/docs/img/navigation/project-map.svg"><img src="docs/img/navigation/project-map.svg" width="640" height="240" style="max-width:100%;height:auto;padding:0" alt="An illustrated learning loop: sources, virtual and physical tests, review and reuse connect cad-agent with Gyropup."></a><br>
-An illustrated learning loop. <a href="docs/program/physical-progress.md">Follow the real build evidence.</a><br>
+<picture><source media="(prefers-reduced-motion: reduce)" srcset="docs/img/navigation/project-map-still.svg"><img src="docs/img/navigation/project-map.svg" width="640" height="240" style="max-width:100%;height:auto;padding:0" alt="Fictional wheeled Gyropup robots chase and duel in a pixel workshop. Sources, test, review and reuse form a learning loop."></picture><br>
+A fictional playground. <a href="docs/program/physical-progress.md">Follow the real build evidence.</a><br>
 <a href="https://gyropup.com/designer/sim.html">Play</a> · <a href="https://gyropup.com/designer/build.html">Build</a> · <a href="docs/README.md#design-and-qualification">Understand</a> · <a href=".github/CONTRIBUTING.md">Contribute</a>
 </p>
 

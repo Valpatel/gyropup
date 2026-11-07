@@ -220,3 +220,43 @@ test('the Markdown route keeps folded words', async () => {
   assert.match(md, /No unresolved critical load path, missing retention, impossible insertion/);
   assert.match(md, /```mermaid/);
 });
+
+test('both README pictures select a real static image and keep ordinary navigation', async () => {
+  for (const route of ['readme-md','docs-readme-md']) for (const reducedMotion of ['no-preference', 'reduce']) {
+    const context = await browser.newContext({viewport:{width:390,height:844},reducedMotion});
+    try {
+      await acknowledgePrototypeNotice(context);
+      const page = await context.newPage();
+      await page.goto(`${base}/site/pages/${route}.html`, {waitUntil:'load'});
+      const image = page.locator('article picture img').first();
+      await image.evaluate(img => img.decode());
+      const selected = await image.evaluate(img => ({src:img.currentSrc,closed:!!img.closest('details:not([open])')}));
+      const expected = reducedMotion === 'reduce' ? 'project-map-still.svg' : 'project-map.svg';
+      assert.equal(new URL(selected.src).pathname, `/docs/img/navigation/${expected}`);
+      assert.ok(new URL(selected.src).searchParams.has('v'), 'the selected alternative has the build cache key');
+      assert.equal(selected.closed,false);
+      const box = await image.boundingBox();
+      assert.ok(box.x >= 0 && box.x+box.width <= 390.5 && Math.abs(box.width / box.height - 640 / 240) < .02);
+      for (const name of ['Play','Build','Understand','Contribute']) {
+        assert.ok(await page.locator('article').getByRole('link',{name,exact:true}).first().isVisible(),name);
+      }
+      const first = await image.screenshot();
+      await page.waitForTimeout(1250);
+      const changes = !first.equals(await image.screenshot());
+      assert.equal(changes,reducedMotion === 'no-preference','real image pixels follow the picture selection');
+      if (reducedMotion === 'reduce') {
+        // A wrong still must fail the same pixel check. Parent emulation alone
+        // does not reliably stop animations inside an external SVG image.
+        const broken = `${base}/docs/img/navigation/project-map-broken-still.svg`;
+        const still = await (await fetch(`${base}/docs/img/navigation/project-map-still.svg`)).text();
+        await page.route('**/project-map-broken-still.svg', route => route.fulfill({contentType:'image/svg+xml',body:still.replace('</svg>', '<style>:root{animation:broken-still 8s linear infinite!important}@keyframes broken-still{from{opacity:.1}to{opacity:1}}</style></svg>')}));
+        await image.evaluate((img,url) => img.parentElement.querySelector('source').srcset=url,broken);
+        await page.waitForFunction(url => document.querySelector('article picture img').currentSrc===url,broken);
+        await image.evaluate(img=>img.decode());
+        const wrong = await image.screenshot();
+        await page.waitForTimeout(1250);
+        assert.ok(!wrong.equals(await image.screenshot()),'an actually animated still is rejected');
+      }
+    } finally { await context.close(); }
+  }
+});

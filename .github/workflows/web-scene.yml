@@ -192,6 +192,14 @@ jobs:
           sparse-checkout: |
             tools/hero/heroes.py
             tools/hero/extract_mesh.py
+      - uses: actions/checkout@v4
+        with:
+          repository: Valpatel/cad-agent
+          ref: e662a1ce79b4f63f7352b9d065c5027f77d53a81
+          path: .readme-svg
+          persist-credentials: false
+          sparse-checkout-cone-mode: false
+          sparse-checkout: software/cadagent/publish/anim/svg.py
       - uses: actions/setup-python@v5
         with:
           python-version: '3.12'
@@ -199,5 +207,6 @@ jobs:
         env:
           PYTHONDONTWRITEBYTECODE: '1'
         run: |
+          python tools/site/readme_workshop.py --svg-library .readme-svg/software/cadagent/publish/anim/svg.py --check
           python tools/engineering/robot/readme_design.py check --profile .readme-profile
           python tests/evidence/media/test-readme-design.py

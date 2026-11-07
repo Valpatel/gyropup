@@ -7,7 +7,7 @@ import YAML from 'yaml';
 import { parseHTML } from 'linkedom';
 import { addModelPreviews } from '../../software/site/assets/model-links.js';
 import { writeMarkdownSite } from './site-markdown.mjs';
-import { SITE_CACHE_CONTROL, versionSiteAssets } from './site-cache.mjs';
+import { SITE_CACHE_CONTROL, versionSiteAssets, singleSourceURL } from './site-cache.mjs';
 import { collectStatus, createReader, renderBoard, shallowHistory } from './status-board.mjs';
 import { collectTimeline, gitIn, imagePaths, previewPaths, timelinePreview, renderTimeline, subsystemOf } from './timeline.mjs';
 import { OPEN_FOLDS, enhanceDocument } from './doc-page.mjs';
@@ -134,7 +134,8 @@ for (const file of documents) {
     return `<h${depth} id="${base}${n ? '-'+n : ''}">${text}</h${depth}>`;
   };
   let html = await marked.parse(source, {renderer});
-  html = html.replace(/(href|src)="([^"#][^"]*)"/g, (all, attr, url) => {
+  html = html.replace(/(href|src|srcset)="([^"#][^"]*)"/g, (all, attr, url) => {
+    if (attr === 'srcset') singleSourceURL(url);
     if (/^(?:[a-z][a-z\d+.-]*:|\/\/)/i.test(url)) return all;
     const [pathname, ...hash] = url.split('#');
     const resolvedSource=pathname.startsWith('/')?sourceForPublic(pathname.slice(1)):path.posix.normalize(path.posix.join(path.posix.dirname(authoredSource),pathname));

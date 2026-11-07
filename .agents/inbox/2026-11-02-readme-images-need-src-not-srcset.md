@@ -43,3 +43,24 @@ its root a fixed 640 px viewport, leaving two destinations off screen in both en
 checks and four-link count had passed. Make the SVG root itself responsive as well as its embedding, and check
 the direct document's scroll width and all four link rectangles. Keep the actual fixed-width source as a failing
 control; link presence and animation state alone cannot establish usable navigation.
+
+## External SVG motion needs an explicit still and tested single-URL rewriting
+
+The 2026-11-07 README refinement adds a bounded exception to the original `src`-only rule:
+`picture/source` may select one generated still SVG through a single-URL `srcset`.
+The compiler must resolve that source-relative URL and the cache pass must version
+it just as they do the fallback `img/src`. Multi-candidate lists, descriptors,
+whitespace and comma-separated paths are deliberately unsupported and rejected;
+this is not a general responsive-image parser. The ordinary `img/src` fallback,
+explicit compact dimensions and visible ordinary navigation remain mandatory.
+
+A parent page's reduced-motion emulation alone did not reliably stop external SVG
+image animations in the two observed browser engines. Generate the explicit still
+with final `animation:none!important`, select it using parent-picture media, and
+check the actual image's `currentSrc`, successful decode, aspect and pixels over
+elapsed time. The source-SVG prototype in Chrome151 and WebKit26 passed phone and
+desktop/light/dark normal-versus-reduced cases; an intentionally animated wrong
+still changed pixels and was rejected in both engines. That prototype is not a
+compiled-site result: the existing document-page tests apply the same acceptance
+and negative control to the actual build. Standalone SVG media checks and font or
+intrinsic-width observations do not substitute for this image-mode behavior.
