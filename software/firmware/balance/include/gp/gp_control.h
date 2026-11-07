@@ -96,7 +96,8 @@ float gp_ctl_height_m(float frac);
 float gp_ctl_height_frac(float L);
 void gp_ctl_lqr_gains(float height, float K[4]);
 
-/* The motors' torque limits (sim/leg_control.py clip_motor, sim/controller.py clip_torque) */
+/* The motors' torque limits (sim/leg_control.py clip_motor, sim/controller.py clip_torque).
+ * A non-finite requested torque produces zero torque. */
 float gp_clip_motor(float tau, float omega, float peak, float omega_max, float cap);
 
 /* The pendulum angle (rad, + = the centre of mass ahead of the axle) and its rate from the stance and the pitch. */

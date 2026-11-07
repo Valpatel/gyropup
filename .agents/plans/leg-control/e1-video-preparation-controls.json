@@ -1,0 +1,12 @@
+{
+  "date": "2026-11-07",
+  "command": "python3 -B tests/evidence/test-study-media.py ProducerPaths RendererPaths FieldStage E1CollectorLifecycle",
+  "tests": 12,
+  "failures": 0,
+  "native_or_render_execution": false,
+  "new_control": "Normal import of actual video collector under Popen-rejecting sentinel; main remains guarded",
+  "field_source": "2064364217b9780014bec0648267809c3333550a",
+  "committed_field_adoption": "93a9591ab2d8f52a5b8bec2b9f20a9f997a62292",
+  "raw_log_sha256": "306b682614e76af90e0896a30603451f1065c5742e449cc02d3972489e66376a",
+  "published_log_sha256": "306b682614e76af90e0896a30603451f1065c5742e449cc02d3972489e66376a"
+}

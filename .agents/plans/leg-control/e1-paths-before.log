@@ -1,0 +1,31 @@
+EFF
+======================================================================
+ERROR: test_field_download_identity_resolves_to_the_current_output (__main__.ProducerPaths.test_field_download_identity_resolves_to_the_current_output)
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "<checkout>/tests/evidence/test-study-media.py", line 59, in test_field_download_identity_resolves_to_the_current_output
+    identity = producer.field_identity(fields)
+               ^^^^^^^^^^^^^^^^^^^^^^^
+AttributeError: module 'e1_export' has no attribute 'field_identity'
+
+======================================================================
+FAIL: test_missing_current_report_rejects_a_present_legacy_copy (__main__.ProducerPaths.test_missing_current_report_rejects_a_present_legacy_copy)
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "<checkout>/tests/evidence/test-study-media.py", line 51, in test_missing_current_report_rejects_a_present_legacy_copy
+    with patch.object(producer, 'ROOT', root), self.assertRaises(FileNotFoundError):
+AssertionError: FileNotFoundError not raised
+
+======================================================================
+FAIL: test_source_preflight_binds_current_paths_not_legacy_decoys (__main__.ProducerPaths.test_source_preflight_binds_current_paths_not_legacy_decoys)
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "<checkout>/tests/evidence/test-study-media.py", line 40, in test_source_preflight_binds_current_paths_not_legacy_decoys
+    self.assertEqual(producer.source_hashes(), expected)
+AssertionError: {'exports/leg/fea/summary.json': '86fc290bc[1230 chars]ff6'} != {'tests/hardware/body/test_body.py': 'd0043[1248 chars]ff6'}
+Diff is 1643 characters long. Set self.maxDiff to None to see it.
+
+----------------------------------------------------------------------
+Ran 3 tests in 0.012s
+
+FAILED (failures=2, errors=1)

@@ -20,10 +20,25 @@ FPS, SECONDS, WIDTH, HEIGHT = 24, 12, 960, 720
 # not converged, so the caption gives both. Review the captions whenever either value changes.
 GATE_SF, GATE_MESH_MM, FINE_MESH_MM = 1.60, 4.0, 3.0
 FINER = 'docs/research/leg-preprint/evidence/hip-frame-print-ready.json'
+REPORT = 'exports/leg/fea/summary.json'
 
 
 def digest(path):
     return hashlib.sha256(path.read_bytes()).hexdigest()
+
+
+def report_input(receipt):
+    """Read the owned report using exactly one declared old/public or current key."""
+    report = artifact_path(ROOT, REPORT)
+    hashes = receipt.get('source_hashes', {})
+    if not isinstance(hashes, dict):
+        raise ValueError('Missing structural report input binding')
+    declared = [key for key in (REPORT, report.relative_to(ROOT).as_posix()) if key in hashes]
+    if len(declared) != 1:
+        raise ValueError('Expected exactly one structural report input binding')
+    if digest(report) != hashes[declared[0]]:
+        raise ValueError('Published structural report changed; review the animation baseline')
+    return report
 
 
 def load_factor(t):
@@ -42,10 +57,9 @@ def main():
     fields = artifact_path(ROOT, receipt['fields'])
     if digest(fields) != receipt['fields_sha256']:
         raise ValueError('Solved surface differs from its source receipt')
-    if digest((ROOT / 'hardware/exports/leg/fea/summary.json')) != receipt['source_hashes']['exports/leg/fea/summary.json']:
-        raise ValueError('Published structural report changed; review the animation baseline')
+    report = report_input(receipt)
     source_hashes = {str(p.relative_to(ROOT)): digest(p) for p in
-                     (Path(__file__), Path(locations.__file__), OUT / 'field-receipt.json', fields, (ROOT / 'hardware/exports/leg/fea/summary.json'), ROOT / FINER)}
+                     (Path(__file__), Path(locations.__file__), OUT / 'field-receipt.json', fields, report, ROOT / FINER)}
     finer = json.loads((ROOT / FINER).read_text())
     gate_row = next(c for c in finer['meshes'][str(GATE_MESH_MM)]['cases'] if c['case'] == 'E1')
     fine_row = next(c for c in finer['meshes'][str(FINE_MESH_MM)]['cases'] if c['case'] == 'E1')

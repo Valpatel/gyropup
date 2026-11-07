@@ -1,0 +1,13 @@
+F
+======================================================================
+FAIL: test_actual_field_and_renderer_receipt_pins_are_both_required (__main__.EncoderPrerequisites.test_actual_field_and_renderer_receipt_pins_are_both_required)
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "<checkout>/tests/evidence/media/.old-encoder-pins-0z93y4yd.py", line 89, in test_actual_field_and_renderer_receipt_pins_are_both_required
+    self.assertIn('a12cf8e73f337274174c56e14c22832250acf284', revisions)
+AssertionError: 'a12cf8e73f337274174c56e14c22832250acf284' not found in ('9fc04c3f0af6c92fa4c82cd1f59ed647944f9ba2', '2064364217b9780014bec0648267809c3333550a', '99c92d4a511c16d7743e9583b129e2a178651cb8', 'e7b512870a39259a04a4930e2908af84001bc84e', 'e93b3bbce57ee36fc966e8ba4513f05273a75967')
+
+----------------------------------------------------------------------
+Ran 1 test in 0.002s
+
+FAILED (failures=1)

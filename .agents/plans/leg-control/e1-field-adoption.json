@@ -1,0 +1,37 @@
+{
+  "source": "2064364217b9780014bec0648267809c3333550a",
+  "review": "https://github.com/Valpatel/gyropup/issues/8#issuecomment-6712091596",
+  "candidate_archive_sha256": "128c6838c454b8d6502976add643c662cc35ceb91db9c7a3ee0c275fe9d80a20",
+  "adopted": {
+    "hardware/exports/leg/fea/hip-frame-e1-media/field-receipt.json": {
+      "bytes": 31361,
+      "sha256": "2eeeb29e4c635607c1f107e433cac0cb82fe4e7b8d88ced127d9ded116b21f1e"
+    },
+    "hardware/exports/leg/fea/hip-frame-e1-media/hip_frame-E1.json": {
+      "bytes": 2271173,
+      "sha256": "70f1d67fe40a03eeb181e741e9674d9e2f5bbbee7a431494db382ef9e2ff3d1f"
+    },
+    "hardware/exports/leg/fea/hip-frame-e1-media/hip_frame-E1.png": {
+      "bytes": 124150,
+      "sha256": "e669557dd7be8d402ee3f2a814f140a062b679e6d13161a9665bc006fe23e5a8"
+    }
+  },
+  "fresh_originals_and_101_inputs_exact": true,
+  "outside_target_tracked_and_complete_hardware_preserved": true,
+  "actual_field_validator": {
+    "historical_source": "2064364217b9780014bec0648267809c3333550a",
+    "safety_factor": 1.6,
+    "required": 2,
+    "vertices": 25232,
+    "triangles": 50552,
+    "scope": "field-only",
+    "video_validated": false
+  },
+  "old_video_rejected": "Stale animation source: tools/engineering/legs/render-hip-frame-e1.py",
+  "original_attempt": "FAILED at ec2343b3; preserved separately",
+  "qualifications": {
+    "transient_simulation": false,
+    "qualified_for_manufacture": false
+  },
+  "limits": "Field-only adoption. Standard video rendering, full media/highlight guards, whole-hardware illustration refresh, CI and publication remain pending; issue8 stays open."
+}

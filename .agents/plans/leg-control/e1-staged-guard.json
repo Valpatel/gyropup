@@ -1,0 +1,11 @@
+{
+  "date": "2026-11-07",
+  "command": "python3 -B tests/evidence/test-study-media.py ProducerPaths RendererPaths FieldStage",
+  "tests": 8,
+  "failures": 0,
+  "scope": "Kernel-free source controls; original historical field only, no newly solved artifact accepted",
+  "field_only_result": "Explicit field-only scope; video_validated false. All original source/field/strength checks execute.",
+  "full_default": "Planted stale video still rejects; no default validation waiver",
+  "log_raw_sha256": "d27c306d46f0dd39f6a5916ffa59e9f48b8305d6cef6bb58f78aae12c21bd1f4",
+  "log_published_sha256": "d27c306d46f0dd39f6a5916ffa59e9f48b8305d6cef6bb58f78aae12c21bd1f4"
+}

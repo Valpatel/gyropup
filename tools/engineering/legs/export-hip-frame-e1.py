@@ -22,7 +22,11 @@ import subprocess
 import sys
 
 ROOT = (Path(__file__).resolve().parents[3])
-OUT = (ROOT / 'hardware/exports/leg/fea/hip-frame-e1-media')
+from tools.site.source_layout import source_file
+from hardware.cad.locations import artifact_identity
+
+MEDIA = 'exports/leg/fea/hip-frame-e1-media'
+OUT = source_file(ROOT, MEDIA)
 # The recorded E1 gate (exports/leg/fea/summary.json, regenerated on cad-agent v0.6.0 for the print-ready leg, #148,
 # issue #29). Review the visualization explicitly whenever the record changes; never relabel another case as this one.
 RECORDED_SF = 1.60
@@ -35,9 +39,18 @@ def digest(path):
 def source_hashes():
     from hardware.cad.manufacturing.print_provenance import source_files
     paths = set(source_files(ROOT))
-    paths.update(ROOT / p for p in ('software/simulation/leg_rig.py', 'software/simulation/leg_control.py',
-        'exports/leg/rig-results.json', 'exports/leg/fea/summary.json', 'tools/engineering/legs/export-hip-frame-e1.py'))
+    paths.update(source_file(ROOT, p) for p in ('software/simulation/leg_rig.py', 'software/simulation/leg_control.py',
+        'exports/leg/rig-results.json', 'exports/leg/fea/summary.json', 'tools/engineering/legs/export-hip-frame-e1.py',
+        'tools/site/source_layout.py', 'tools/site/source-layout.json'))
     return {p.relative_to(ROOT).as_posix(): digest(p) for p in sorted(paths)}
+
+
+def field_identity(fields):
+    """Keep the existing public download identity bound to its canonical output."""
+    identity = artifact_identity(ROOT, fields)
+    if not identity.startswith(MEDIA + '/') or source_file(ROOT, identity).resolve() != fields.resolve():
+        raise ValueError('Field is outside the owned E1 output directory')
+    return identity
 
 
 def main():
@@ -89,7 +102,7 @@ def main():
         'versions': {**{name: version(name) for name in ('cad-agent', 'cadquery', 'cadquery-ocp', 'numpy', 'scikit-fem')},
                      'gmsh': gmsh.__version__},
         'mapped_runtime_libraries': runtime_hashes,
-        'baseline': original, 'reproduced': solved, 'fields': fields.relative_to(ROOT).as_posix(),
+        'baseline': original, 'reproduced': solved, 'fields': field_identity(fields),
         'fields_sha256': digest(fields), 'transient_simulation': False, 'qualified_for_manufacture': False,
         'limitations': 'Linear elastic, small deflection, isotropic weak-direction material; recorded 37.5 kg robot load case. '
                        'No contact, preload, buckling, crack propagation or validation of the future 100 lb target.'}
