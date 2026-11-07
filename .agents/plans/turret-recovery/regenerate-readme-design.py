@@ -104,6 +104,13 @@ try:
  helper=runpy.run_path(str(ROOT/'tools/engineering/robot/readme_design.py'));cfg=json.loads((ROOT/helper['CONFIG']).read_text())
  helper['verify_inputs'](ROOT,cfg);helper['verify_public_tree'](ROOT,cfg)
  assert len(cfg['source']['files'])==95
+ # The isolated worker is depth1 at executed HEAD; retain the distinct recorded
+ # source as an exact object before inspecting its immutable blobs.
+ if subprocess.run(['git','cat-file','-e',cfg['source']['revision']+'^{commit}'],stdout=subprocess.DEVNULL,stderr=subprocess.DEVNULL).returncode:
+  phase('recorded-source-fetch',['git','fetch','--depth','1','--no-tags','origin',cfg['source']['revision']],timeout=180)
+ assert subprocess.check_output(['git','rev-parse',cfg['source']['revision']+'^{commit}'],text=True).strip()==cfg['source']['revision']
+ assert subprocess.check_output(['git','rev-parse','HEAD'],text=True).strip()==args.head
+ assert not subprocess.check_output(['git','status','--porcelain'],text=True).strip()
  for n,h in cfg['source']['files'].items():assert hashlib.sha256(subprocess.check_output(['git','show',cfg['source']['revision']+':'+n])).hexdigest()==h
  assert subprocess.check_output(['git','rev-parse',cfg['source']['revision']+':hardware'],text=True).strip()==cfg['source']['hardware_tree']
  original=OUT/'original-artifacts';original.mkdir()

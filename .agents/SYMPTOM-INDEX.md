@@ -150,3 +150,4 @@
 - A clearance report matches height but omits the current upper stop or firmware bounds: [require both tilt boundaries and complete sampled grids](inbox/2026-10-28-rendered-joints-need-independent-datums.md#clearance-freshness-needs-both-current-tilt-boundaries-and-complete-sampled-grids).
 
 - A private Xvfb run fails Snap cgroup tracking after private-bus systemd activation fails: [separate display isolation from session-bus setup](inbox/2026-11-05-ci-classification-needs-phase-evidence.md#a-private-display-and-a-private-session-bus-are-different-isolation-boundaries).
+- A depth-one worker has the correct current files but `git show` cannot read its separately recorded component source: [fetch the exact recorded source object in the disposable clone](inbox/2026-11-05-ci-classification-needs-phase-evidence.md#an-isolated-depth-one-worker-needs-the-recorded-source-object-too).
