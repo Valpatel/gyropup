@@ -350,7 +350,7 @@ sectionLoad('turret','turretlede','Turret design',async isCurrent=>{
 const tb=await getJson(`${TB}bench.json`,{optional:true,validate:value=>isRecord(value)&&Array.isArray(value.stand_mm),label:'Turret design'});
 if(!isCurrent())return false;
 if (tb) {
-  $('turretlede').innerHTML = `The turret (cad/turret.py: a 30-ball hopper over an 8-pocket dial, twin flywheels, a 100 mm barrel that never points above level)`
+  $('turretlede').innerHTML = `The turret (cad/turret.py: a 30-ball hopper over an 8-pocket dial, twin flywheels, a 100 mm barrel aimed within the model's mechanical stops, with a separate tilt limit for firing)`
     + ` on a printed stand (${tb.stand_mm.join(' × ')} mm) with a 24 V inlet, fuse and switch, a USB-CAN adapter for a laptop and a hold-to-run pendant:`
     + ` the turret will not spin up or feed a ball unless the pendant's button is held. <b>${(tb.printed_g / 1000).toFixed(2)} kg</b> printed, ~<b>${Math.round(tb.print_hours)} h</b>`
     + `${tb.too_big?.length ? ` <span class="tag fail">TOO BIG: ${esc(tb.too_big.join(', '))}</span>` : ', every part fits the bed'}.`;

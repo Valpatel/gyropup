@@ -5,8 +5,8 @@ replaces it with pins, timers and the two buses). The arm chain is hardware: thi
 PULSE_MON and can only ever command zero throttle and stop the dial; it cannot raise ARM.
 
 The rules it holds, whatever the host sends:
-  - the barrel never points above level: every tilt goal clamps to [max(-25, the depression table), 0] deg, and the
-    tilt servo's own angle limits are checked at boot;
+  - tilt goals stay within the shared mechanical stops and the mount's depression table; the tilt servo's own
+    angle limits are checked at boot, and feeding obeys its separate shared tilt ceiling;
   - nothing spins or feeds without ARM_IN high, the 1 kHz train good on PULSE_MON, a host heartbeat no older than
     200 ms, the host's arm request (seen low after the line is held: the pendant alone never arms, and nothing re-arms
     by itself after a SAFE), no trip and no latched fault; losing any of them is zero throttle and a stopped dial in
@@ -137,7 +137,7 @@ class TurretFirmware:
         self.tilt_cmd: Optional[float] = None
         self.tilt_written_t = -1.0
         self.tilt_speed_reg = None
-        self.tilt_clamped = 0                             # host tilt goals above level that were clamped
+        self.tilt_clamped = 0                             # host goals above the shared upper stop that were clamped
         # D70: the supply profile from BUS_V (the lowest over BUS_V_WINDOW_S)
         self.bus_v = 0.0
         self.bus_win: deque = deque()                    # (t, v), v increasing: the window's minimum is bus_win[0]

@@ -12,7 +12,7 @@ Each model, and where its numbers come from:
   pan          test_homing.Hardware (the 63:21 drive, 0.44 deg backlash, the hall window with hysteresis and
                interrupt jitter) moved at the speed of the pan servo's own acceleration-limited loop (sim_servo.py),
                step mode; reads go through the ring: 2e-4 of the pan's replies are corrupted
-  tilt         a position-mode servo with its angle limits, between hard stops at 0 and -25 deg
+  tilt         a position-mode servo with its angle limits and the shared mechanical stops from config
   feed         a step-mode servo on the switched 12 V FEED rail (it leaves the bus on every release); the dial: a
                pocket reaching the exit hole drops a ball with p_fill (0.85 level: the rerun's ~1 empty in 8), a
                dither's return refills it with p_dither (0.8, a stand-in), below -12 deg with <= 5 balls the balls pool

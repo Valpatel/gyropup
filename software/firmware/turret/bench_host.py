@@ -17,9 +17,9 @@ for the instruments' readings; --answers FILE answers them from a JSON {"<test>/
 runs in a background thread, so the turret stays armed while the operator reads a scope. Tests 1.x and 2.x (fits,
 strength) need neither firmware nor CAN and are not here.
 
-Hard rules the script never relaxes: it never asks for a tilt above level (the firmware clamps it anyway), never fires
-with the converter bypassed (test 4.6 runs with the feed servo unplugged and no balls), and never arms without
-the operator's pendant.
+This bench procedure deliberately requests no above-level tilt; that procedural limit is not the firmware's
+mechanical stop. It never fires with the converter bypassed (test 4.6 runs with the feed servo unplugged and no
+balls), and never arms without the operator's pendant.
 """
 from __future__ import annotations
 
