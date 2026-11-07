@@ -159,3 +159,4 @@
 
 - NaN or infinite requested motor torque becomes a limit command or a non-finite output: [reject it before saturation, and distinguish historical media validity from unfinished regeneration](inbox/2026-11-07-nonfinite-torque-is-not-a-saturation-command.md).
 - Sparse finite-element assembly raises an allocation error under `RLIMIT_AS` despite host memory headroom: [distinguish virtual-address bounds from resident-memory evidence](inbox/2026-11-07-fem-address-space-cap-is-not-resident-memory.md).
+- An adoption checksum raises `str has no attribute read_bytes` before intent/copy: [normalize the actual path argument at the checksum boundary](inbox/2026-11-07-nonfinite-torque-is-not-a-saturation-command.md#a-checksum-preflight-must-accept-the-path-type-actually-supplied).
