@@ -221,6 +221,20 @@ test('the Markdown route keeps folded words', async () => {
   assert.match(md, /```mermaid/);
 });
 
+test('the current CAD image follows the What explanation and precedes Why', () => {
+  const {document}=parseHTML(readFileSync(path.join(dist,'site/pages/readme-md.html'),'utf8'));
+  const article=document.querySelector('article');
+  const model=article.querySelector('img[src^="/docs/img/hero/current-design.svg"]');
+  const what=article.querySelector('#what-is-it'),why=article.querySelector('#why-is-it-cool');
+  assert.ok(model&&what&&why);
+  assert.ok(what.compareDocumentPosition(model)&4,'model follows What in document order');
+  assert.ok(model.compareDocumentPosition(why)&4,'model precedes Why in document order');
+  assert.equal(model.closest('details:not([open])'),null);
+  assert.ok(article.querySelector('a[href$="#keeping-the-design-illustration-current"]'));
+  assert.deepEqual(readFileSync(path.join(dist,'docs/img/hero/current-design.svg')),
+    readFileSync(path.join(root,'docs/img/hero/current-design.svg')));
+});
+
 test('both README pictures select a real static image and keep ordinary navigation', async () => {
   for (const route of ['readme-md','docs-readme-md']) for (const reducedMotion of ['no-preference', 'reduce']) {
     const context = await browser.newContext({viewport:{width:390,height:844},reducedMotion});
@@ -237,8 +251,15 @@ test('both README pictures select a real static image and keep ordinary navigati
       assert.equal(selected.closed,false);
       const box = await image.boundingBox();
       assert.ok(box.x >= 0 && box.x+box.width <= 390.5 && Math.abs(box.width / box.height - 640 / 240) < .02);
-      for (const name of ['Play','Build','Understand','Contribute']) {
-        assert.ok(await page.locator('article').getByRole('link',{name,exact:true}).first().isVisible(),name);
+      for (const [name,target] of Object.entries({
+        Play:'https://gyropup.com/designer/sim.html',Build:'https://gyropup.com/designer/build.html',
+        Understand:route==='docs-readme-md' ? new URL('#design-and-qualification',page.url()).href
+          : `${base}/site/pages/docs-readme-md.html#design-and-qualification`,
+        Contribute:'https://github.com/Valpatel/gyropup/blob/main/.github/CONTRIBUTING.md',
+      })) {
+        const link=page.locator('article').getByRole('link',{name,exact:true}).first();
+        assert.ok(await link.isVisible(),name);
+        assert.equal(await link.evaluate(a=>a.href),target,`${route}: ${name} destination`);
       }
       const first = await image.screenshot();
       await page.waitForTimeout(1250);

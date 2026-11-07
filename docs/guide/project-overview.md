@@ -73,6 +73,13 @@ a stated CAD revision and its published baseline; it is an illustration, not a f
 collision, fabrication or physical-operation verdict. Bought components include
 engineering envelopes. The original artwork above retains its historical context.
 
+The current [source receipt](../../tools/engineering/robot/current-design.receipt.json)
+records the actual CAD revision, published baseline, complete hardware identity,
+camera and tool versions; the [projected scene](../../tools/engineering/robot/current-design.scene.json)
+retains the geometry used by the vector renderer. A candidate remains a candidate
+until its normal main promotion and actual publication are verified. The figure
+is current only while its complete input bindings still match.
+
 The figure uses the existing shared [CAD motif extractor and renderer](https://github.com/mvalancy/mvalancy/tree/70c325d0111427647e2e782d6c04b4123d23cebf/tools/hero).
 [The project configuration](../../tools/engineering/robot/readme-design.json)
 pins that toolkit, camera, CAD runtime and published input files. The complete

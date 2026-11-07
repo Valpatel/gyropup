@@ -258,3 +258,17 @@ On 2026-11-07 UTC, README-art job237 on cpu-a at506a3a53 completed genuine read-
 The producer rendered its in-memory role dictionaries before writing sorted-key JSON. The shared motif paints those roles in iteration order. Re-reading the same JSON reordered the roles alphabetically: scene bytes and SVG leaf payloads remained equal, but SVG paint order and its receipt digest changed. This was a real producer/parity defect, not CAD geometry drift or a reason to replace the renderer check with unordered SVG comparison.
 
 Render the exact persisted JSON representation during initial generation. The existing regression reconstructs the actual extraction role order and requires the real shared renderer to produce identical bundles before and after serialization. The helper's own digest is part of the extraction key, so a helper correction requires a new genuine extraction; never rewrite a captured scene's key to make an old run current. Preserve job237 and review the corrected painter order visually before adoption. Native construction success alone does not authorize artifact adoption or imply physical qualification.
+
+## A missing local runner does not establish remote job state
+
+During job238 monitoring on2026-11-07 UTC, the previously used local fleet-tools
+checkout disappeared and its installed skill link was dangling. The cause was
+not established; the coordinator had not retired it. Do not infer that a
+scheduler job vanished, cancel it, or submit a duplicate from this workstation
+symptom. The existing tool repository still retained main602d954e; a fresh owned
+checkout was pinned after verifying the actual remote main, with the same
+`fleet-run` SHA256 `cb520154788c008a05f86d7e76d7a868a0a2a989a32282b9dc43dc920502a6f8`.
+No shared checkout, skill link, credentials or configuration was changed. Its
+normal status/read/fetch commands established that238 had already completed
+successfully and retrieved its sealed outputs. Tool recovery and actual remote
+execution/artifact acceptance remain separate facts.
