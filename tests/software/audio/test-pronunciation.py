@@ -114,7 +114,7 @@ class Key(unittest.TestCase):
 
     def test_sidecar_applies_key_once(self):
         self.assertEqual(tts_server.clean('Hi! I am \n Gyropup!'), 'Hi! I am gyro, pup!')
-        self.assertEqual(tts_server.clean(tts_server.clean("Gyropup's day")), "gyro pup's day")
+        self.assertEqual(tts_server.clean(tts_server.clean("Gyropup's day")), "gyro, pup's day")
         self.assertNotIn('RESPELL', vars(tts_server), 'one key: no second respelling table in the sidecar')
 
 
