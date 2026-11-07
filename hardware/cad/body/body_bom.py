@@ -479,10 +479,11 @@ How to order:
     # ---- the P2 cart: the head, ordered once P1 balances on its tether (D59)
     p2 = 0.0
     if made2 or bom.get('p2_head'):
+        from hardware.cad.body import body_frame as bf
         out += ["## 6. The P2 cart (the head: order it once P1 balances on its tether)\n",
                 "The turret's mount plate (D59) goes under the deck at the riser: the riser's four screws grow to M5 x 16 through it, "
                 "and its two ends are screwed down through the deck into its PEM nuts. **In the P1 deck, drill the two Ø5.5 holes "
-                "by hand** at (x, y) = " + ' and '.join(f'({x:.0f}, {y:.0f})' for x, y in __import__('body_frame').turret_plate_end_holes())
+                "by hand** at (x, y) = " + ' and '.join(f'({x:.0f}, {y:.0f})' for x, y in bf.turret_plate_end_holes())
                 + " mm (robot frame): hold the plate on the riser's four screws and spot through its PEM nuts with an M5 transfer punch. "
                 "A Rev B deck (lever 3) gets them cut.\n",
                 "| Part | Qty | Made | Price each | Line | For |", "|---|---|---|---|---|---|"]

@@ -1,5 +1,6 @@
 """Real source-identity fault controls; no CAD kernel or browser is imported."""
 from pathlib import Path
+import ast
 import copy
 import json
 import os
@@ -7,6 +8,7 @@ import runpy
 import shutil
 import subprocess
 import tempfile
+import types
 import unittest
 from unittest.mock import patch
 
@@ -34,6 +36,20 @@ class DesignIdentity(unittest.TestCase):
 
     def test_actual_current_inputs(self):
         self.assertEqual(M['verify_inputs'](self.root, CONFIG), CONFIG['source']['files'])
+
+    def test_published_frame_reader_uses_the_canonical_package(self):
+        # Exercise the actual function body without importing a CAD kernel.
+        tree = ast.parse((ROOT / 'hardware/cad/body/body_layout.py').read_text())
+        reader = next(n for n in tree.body if isinstance(n, ast.FunctionDef) and n.name == 'frame_boxes')
+        params = types.SimpleNamespace(z_tray_top=lambda: 5, TOP=30, STOCK={'deck': {'t': 2}},
+                                       DECK='deck', POSTS=[], BODY_X=(0, 10), BODY_HALF_Y=8)
+        scope = {'bp': params, 'PLATE_H': 12}
+        exec(compile(ast.Module(body=[reader], type_ignores=[]), 'current-frame-reader', 'exec'), scope)
+        frame = types.ModuleType('hardware.cad.body.body_frame')
+        frame.PLATE_STANDOFFS = [(3, 4)]
+        frame.PLATE_POST_W = 2
+        with patch.dict('sys.modules', {'hardware.cad.body.body_frame': frame}):
+            self.assertEqual(scope['frame_boxes']()[-1], ('plate_post_1', (2, 4, 3, 5, 5, 17)))
 
     def test_local_parameter_override_rejects_before_reading_it(self):
         with patch.dict(os.environ, {'GYROPUP_LEG_PARAMS': 'not-a-published-input'}):
