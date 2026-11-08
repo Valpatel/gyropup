@@ -93,6 +93,7 @@ def case(study, out, params):
         raise ValueError('Geometry inputs changed during the build')
     bb = shape.BoundingBox()
     result = {'scope': 'geometry-only; no FEA or physical qualification',
+              'units': 'mm', 'frame': 'Source left-leg frame: x forward, y outward, z up; unrotated',
               'status': 'BUILT_WITH_FAILED_INTERFACES' if not (fit['bed']['ok'] and fit['body']['ok']) else 'BUILT_ONLY',
               'inputs_sha256': before, 'params': params or {}, 'effective_hip': dict(fb.HIP),
               'interfaces': fit, 'measured_mounts': mounts, 'declared_mounts': declared,
@@ -236,6 +237,8 @@ def compare(study, out, baseline_dir, candidate_dir, motor_step):
     import hardware.cad.robot.gmi as gmi
     old, new = [row for row, _ in raw]
     for row in (old, new):
+        if row['units'] != 'mm':
+            raise ValueError('Geometry case is not in the source millimetre frame')
         if row['inputs_sha256'] != before:
             raise ValueError('Case inputs are not this exact geometry source')
         if not (row['interfaces']['body']['ok'] and row['interfaces']['bed']['ok']):
@@ -270,11 +273,13 @@ def compare(study, out, baseline_dir, candidate_dir, motor_step):
     if inputs(study) != before:
         raise ValueError('Geometry inputs changed during final comparison')
     result = {'status': 'PASS_GEOMETRY_INTERFACE_SCREEN_ONLY', 'inputs_sha256': before,
+              'units': 'mm',
               'baseline_brep_sha256': old['brep']['sha256'], 'candidate_brep_sha256': new['brep']['sha256'],
               'checks': checks, 'actual_motor_step_sha256': digest(motor_step), 'manufacturer_solids': 43,
               'actual_finished_shape_negative_controls': controls,
               'actual_motor_comparisons': actual_motors, 'fea_run': False, 'physical_qualification': False,
               'limits': ['Nominal model screen only; no manufacturing tolerance or physical fit qualification.',
+                         'Baseline manufacturer-model intersections are reported, not silently qualified.',
                          'Existing source-bound engineering failures remain; no new FEA or strength result.']}
     write(out, 'geometry-comparison.json', result)
     return result
