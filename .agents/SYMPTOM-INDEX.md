@@ -2,6 +2,8 @@
 
 | Symptom | Canonical guidance |
 | --- | --- |
+| A native identity guard rejects a known package file after resolving it outside the venv | [Bind the predeclared file link and exact target identity](inbox/2026-11-07-native-origins-must-bind-declared-symlinks.md) |
+| A baseline caller passes no parameters but inherits an earlier HIP variant | [Reject inherited scenario variables before CAD import](inbox/2026-11-07-baseline-builds-must-reject-inherited-parameters.md) |
 | A fleet request with `--node cpu-a` is refused before a job exists | [Use the actual scheduler selector privately and the alias publicly](inbox/2026-11-05-ci-classification-needs-phase-evidence.md#fleet-aliases-are-reporting-labels-not-scheduler-selectors) |
 | A current CAD package reader still dynamically imports an old flat module name | [Fix canonical consumers and refresh their actual source-bound evidence](inbox/2026-11-05-root-moves-need-consumer-and-publication-maps.md#dynamic-imports-need-canonical-package-paths-too) |
 | A check summary says failed but the executed phase may be provisioning, a global cancellation, or a true assertion | [Classify phases and actual attempts before changing a check](inbox/2026-11-05-ci-classification-needs-phase-evidence.md) |

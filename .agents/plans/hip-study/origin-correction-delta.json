@@ -1,0 +1,26 @@
+{
+  "scope": "Exact predeclared module-file binding correction only; no native continuation yet",
+  "original_source": "844dac411332d54aa1237683c6024dbf0e51d422",
+  "all_original_config_fields_except_worker_pin_exact": true,
+  "added_fields": [
+    "module_inputs"
+  ],
+  "runtime_snapshot_pin_unchanged": true,
+  "cad94_step_receipt_hardware_and_resource_bounds_unchanged": true,
+  "declared_modules": {
+    "cadquery": {
+      "venv_path": "lib/python3.12/site-packages/cadquery/__init__.py",
+      "sha256": "aee64095e45cbb3af8ff4f3de654aecfa75a2647b2a80160a118e87228128cd7",
+      "kind": "regular",
+      "resolved_path_sha256": "ab64e7d9d2b68a08a378f168fc9a8d583ef84f1b9fcb917022b8e95810db5553"
+    },
+    "gmsh": {
+      "venv_path": "lib/python3.12/site-packages/gmsh.py",
+      "sha256": "f4b0935cebde899750293d87a643090e5ea33c9b18d249267f507db68a0e01c3",
+      "kind": "file-symlink",
+      "link_target_sha256": "7508d8b6866520737bc41052a27e3ed9e78a4c9224f4af56792bf90acb0277c2",
+      "resolved_path_sha256": "7508d8b6866520737bc41052a27e3ed9e78a4c9224f4af56792bf90acb0277c2"
+    }
+  },
+  "first_attempt_remains_FAILED": true
+}

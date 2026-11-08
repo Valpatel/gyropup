@@ -1,0 +1,18 @@
+{
+  "scope": "Opaque STEP DATA bytes only, no CAD import/geometry inference",
+  "steps": [
+    {
+      "path": "hardware/exports/leg/hip_frame.step",
+      "bytes": 3139533,
+      "sha256": "a98db9982538cd7d96b0581b815aebe0fbf1fcb7f2ad193c2cee6b39ed4b2874",
+      "data_sha256": "1a93ab6d714391380383858e0d81dea8e1123f243d509bceda63ef3c2f200e70"
+    },
+    {
+      "path": "hardware/exports/leg/rs04-mounting-fit/hip_frame.step",
+      "bytes": 3139533,
+      "sha256": "7c181d5a524cb2fd432d49ed4a990aae9e163b08402bf06be516bb37d749c8dc",
+      "data_sha256": "1a93ab6d714391380383858e0d81dea8e1123f243d509bceda63ef3c2f200e70"
+    }
+  ],
+  "data_bytes_equal": true
+}
