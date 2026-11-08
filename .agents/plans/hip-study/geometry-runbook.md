@@ -79,3 +79,10 @@ target fetch/checkout, connectivity and no-alternates checks. It records donor
 Git state before/after and keeps its original directories. New output/HOME
 and checkout are isolated; the retained runtime remains read-only. Source
 object reuse never substitutes an old geometry or engineering result.
+
+The saved-rejoin-only capacity accommodation is fixed to a measured 20-CPU
+allowed set, no tighter quota, ≥6 equivalent idle CPUs over 2 seconds, load≤12
+and both host/cgroup memory headroom≥32 GiB. Its four selected least-busy CPUs
+remain fixed through preparation/launch; fresh checks repeat immediately before
+launch, with nice10 and unchanged AS/scratch/native limits. Baseline/candidate
+modes retain load≤8. Refused attempts remain separate from CAD outcomes.

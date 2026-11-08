@@ -208,7 +208,7 @@
     ".agents/plans/hip-study/collect-foot-geometry.py": "9fb57e698a99f991568f34573400d0cf00f2e14cb6b031e79a61f339c616c2a0",
     ".agents/plans/hip-study/run-foot-case.py": "d745e9d4587a51878e69aba698f3a60082e8a4e2551c955c96d149f2044c32d8",
     ".agents/plans/hip-study/launch-foot-geometry.sh": "39492bebb509826fcdb2d8e0bb8e51446384f7a5de5e846131f704142ddaa693",
-    ".agents/plans/hip-study/submit-foot-geometry-once.py": "82f369f86dbf2ab4a386d0dfdcfd817324005f702266c214b6d86d8b684eeab9",
+    ".agents/plans/hip-study/submit-foot-geometry-once.py": "9af5636227c9608835c08a235e3f71966898fd159939603060793a7713be82bd",
     ".agents/plans/hip-study/inspect-step-worker.py": "36ca7c8148774a12505f7a6f65f6dc6f7b442a4d03b5b4726ffd4cbb0c7ab4a3",
     ".agents/plans/hip-study/collect-step-topology.py": "1caac47cc47b9d424a955903d505990b35b07682ef27a0d4fce3232174ab3e07",
     ".agents/plans/leg-control/e1-runtime-contract.json": "44dff551c60439fa0dc4b26f0ecf12728d1dab5e426022644903ff2c7afe6414",

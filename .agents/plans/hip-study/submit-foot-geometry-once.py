@@ -26,11 +26,49 @@ oldpid=int((prior/'launcher.pid').read_text())
 oldcmd=Path('/proc')/str(oldpid)/'cmdline'
 if oldcmd.exists():
  assert c['prior_complete_run_name'].encode() not in oldcmd.read_bytes(),'Prior owned launcher remains active'
-assert len(os.sched_getaffinity(0))>=4
-cpus=sorted(os.sched_getaffinity(0))[:4];assert len(cpus)==4 and len(set(cpus))==4
-assert os.getloadavg()[0]<=8
-mem={k:int(v.split()[0])for k,v in (x.split(':',1)for x in Path('/proc/meminfo').read_text().splitlines())}
-assert mem['MemAvailable']>=32*1024*1024
+short=c['saved_rejoin_only']
+def capacity(fixed=None, expected_affinity=None):
+ affinity=sorted(os.sched_getaffinity(0));assert len(affinity)>=4
+ if expected_affinity is not None:assert affinity==expected_affinity,'Allowed CPUs changed'
+ if short:
+  assert len(affinity)==20,'Short diagnostic capacity decision requires exactly 20 allowed CPUs'
+  def ticks():
+   return {int(v[0][3:]):list(map(int,v[1:9]))for x in Path('/proc/stat').read_text().splitlines()if(v:=x.split())and v[0].startswith('cpu')and v[0][3:].isdigit()}
+  first=ticks();time.sleep(2);last=ticks();assert sorted(os.sched_getaffinity(0))==affinity,'Allowed CPUs changed during sample'
+  idle={}
+  for cpu in affinity:
+   delta=[y-x for x,y in zip(first[cpu],last[cpu])];total=sum(delta)
+   assert total>0 and all(x>=0 for x in delta),'Unusable CPU counters'
+   idle[cpu]=(delta[3]+delta[4])/total
+ mem={k:int(v.split()[0])for k,v in (x.split(':',1)for x in Path('/proc/meminfo').read_text().splitlines())}
+ available=mem['MemAvailable']*1024;load=os.getloadavg();fact={'affinity':affinity,'load':load,'host_available_bytes':available}
+ if short:
+  line=[x for x in Path('/proc/self/cgroup').read_text().splitlines()if x.startswith('0::')];assert len(line)==1,'Unknown CPU/memory hierarchy'
+  place=Path('/sys/fs/cgroup')/line[0].split('::',1)[1].lstrip('/');quotas=[];levels=0
+  assert place.is_dir()
+  while place.is_relative_to('/sys/fs/cgroup'):
+   levels+=1;entries={q.name for q in place.iterdir()}
+   if 'cpu.max'in entries:
+    q,period=(place/'cpu.max').read_text().split();assert int(period)>0
+    if q!='max':quotas.append(int(q)/int(period))
+   if 'memory.max'in entries:
+    maximum=(place/'memory.max').read_text().strip()
+    if maximum!='max':available=min(available,int(maximum)-int((place/'memory.current').read_text()))
+   if place==Path('/sys/fs/cgroup'):break
+   place=place.parent
+  assert levels>0 and place==Path('/sys/fs/cgroup'),'Incomplete hierarchy read'
+  assert not quotas or min(quotas)>=20,'Tighter CPU quota'
+  fact.update(cgroup_levels_checked=levels,cpu_quota_min=min(quotas)if quotas else None,idle_cpu_equivalents=sum(idle.values()),idle_fraction_by_cpu=idle)
+  assert sum(idle.values())>=6,'Fewer than 6 equivalent idle CPUs: '+str(sum(idle.values()))
+  assert load[0]<=12,'Short diagnostic host load exceeds 12: '+str(load[0])
+  cpus=sorted(affinity,key=lambda n:(-idle[n],n))[:4]if fixed is None else fixed
+ else:
+  assert load[0]<=8,'Host load exceeds 8: '+str(load[0]);cpus=affinity[:4]if fixed is None else fixed
+ assert len(cpus)==4 and len(set(cpus))==4 and set(cpus)<=set(affinity),'Selected CPUs changed'
+ assert available>=32*1024**3,'Available host/cgroup memory below 32 GiB: '+str(available)
+ fact.update(available_kib=available//1024,cpus=cpus,saved_rejoin_only=short)
+ return fact,cpus
+headroom,cpus=capacity()
 assert shutil.disk_usage(home).free>=20*1024**3
 assert c['run_name'].startswith('20261107-hip-foot-geometry-') and '/'not in c['run_name']
 assert hashlib.sha256(json.dumps(c['runtime'],sort_keys=True).encode()).hexdigest()==c['runtime_sha256']
@@ -46,7 +84,7 @@ assert len(payload)==c['motor_input_bytes'] and hashlib.sha256(payload).hexdiges
 fd=os.open(run/'inputs/RS04.stp',os.O_WRONLY|os.O_CREAT|os.O_EXCL,0o600)
 with os.fdopen(fd,'wb')as model:model.write(payload);model.flush();os.fsync(model.fileno())
 del payload
-preflight={'load':os.getloadavg(),'available_kib':mem['MemAvailable'],'cpus':cpus,'runtime_sha256':c['runtime_sha256'],'head':c['head']}
+preflight={**headroom,'runtime_sha256':c['runtime_sha256'],'head':c['head']}
 (run/'host-preflight.json').write_text(json.dumps(preflight,indent=2)+'\n')
 (run/'runtime.json').write_text(json.dumps(rt,indent=2)+'\n')
 env={**os.environ,'GIT_TERMINAL_PROMPT':'0','GIT_CONFIG_NOSYSTEM':'1','GIT_CONFIG_GLOBAL':'/dev/null','GIT_CONFIG_COUNT':'0','GIT_ASKPASS':'/bin/false','GIT_OPTIONAL_LOCKS':'0'}
@@ -76,7 +114,7 @@ with (run/'bootstrap.log').open('x')as log:
  cache_primary=None
  try:
   for argv,limit in [(['git','clone','-q','--shared','--dissociate','--no-checkout',str(cache),str(run/'src')],60),(['git','-C',str(run/'src'),'remote','set-url','origin','https://github.com/Valpatel/gyropup.git'],30),(['git','-C',str(run/'src'),'-c','credential.helper=','fetch','-q','--depth','1','origin',c['head']],600),(['git','-C',str(run/'src'),'checkout','-q','--detach','FETCH_HEAD'],30),(['git','-C',str(run/'src'),'fsck','--connectivity-only','--no-dangling'],30)]:
-   subprocess.run(['taskset','-c',','.join(map(str,cpus)),'timeout','--signal=TERM','--kill-after=10s',str(limit)+'s',*argv],env=env,stdout=log,stderr=subprocess.STDOUT,check=True,timeout=limit+15)
+   subprocess.run(['nice','-n','10','taskset','-c',','.join(map(str,cpus)),'timeout','--signal=TERM','--kill-after=10s',str(limit)+'s',*argv],env=env,stdout=log,stderr=subprocess.STDOUT,check=True,timeout=limit+15)
   assert not(run/'src/.git/objects/info/alternates').exists(),'New object store still depends on donor'
  except BaseException as error:
   cache_primary=error;raise
@@ -92,12 +130,11 @@ with (run/'bootstrap.log').open('x')as log:
  for n,h in c['files'].items():assert hashlib.sha256((root/n).read_bytes()).hexdigest()==h
  launcher=root/'.agents/plans/hip-study/launch-foot-geometry.sh'
  clean={'PATH':'/usr/local/bin:/usr/bin:/bin','LANG':'C.UTF-8','HOME':str(run/'home'),'TMPDIR':str(run/'tmp'),'FOOT_RUN':str(run),'FOOT_HEAD':c['head'],'FOOT_CPUS':','.join(map(str,cpus)),'FOOT_RUNTIME':str(run/'runtime.json'),'FOOT_MOTOR_STEP':str(run/'inputs/RS04.stp'),'GIT_OPTIONAL_LOCKS':'0','GIT_TERMINAL_PROMPT':'0','GIT_CONFIG_NOSYSTEM':'1','GIT_CONFIG_GLOBAL':'/dev/null','GIT_CONFIG_COUNT':'0','GIT_ASKPASS':'/bin/false'}
- # Recheck host headroom after source bootstrap, immediately before launch.
- assert os.getloadavg()[0]<=8
- fresh_mem={k:int(v.split()[0])for k,v in (x.split(':',1)for x in Path('/proc/meminfo').read_text().splitlines())}
- assert fresh_mem['MemAvailable']>=32*1024*1024
+ # Repeat the same selected CPU mask and fresh capacity immediately before launch.
+ assert ('rejoin_diagnostic'in json.loads((root/'.agents/plans/hip-study/foot-geometry-inputs.json').read_text()))==short
+ fresh,selected=capacity(cpus,headroom['affinity']);assert selected==cpus
  assert shutil.disk_usage(home).free>=20*1024**3
- (run/'host-before-launch.json').write_text(json.dumps({'load':os.getloadavg(),'available_kib':fresh_mem['MemAvailable'],'cpus':cpus},indent=2)+'\n')
+ (run/'host-before-launch.json').write_text(json.dumps(fresh,indent=2)+'\n')
  with (run/'launcher.log').open('x')as output:
   proc=subprocess.Popen(['/usr/bin/nohup','/usr/bin/nice','-n','10','/bin/bash',str(launcher)],env=clean,cwd=root,stdin=subprocess.DEVNULL,stdout=output,stderr=subprocess.STDOUT,start_new_session=True)
  (run/'launcher.pid').write_text(str(proc.pid)+'\n')
@@ -123,6 +160,7 @@ def main(argv=None):
  assert not command(['git','status','--porcelain'],cwd=root).strip()
  for name,value in cfg['files'].items():assert sha(root/name)==value
  source_config=json.loads((root/'.agents/plans/hip-study/foot-geometry-inputs.json').read_text())
+ cfg['saved_rejoin_only']='rejoin_diagnostic'in source_config
  for name,value in {**source_config['cad_sources'],**source_config['study_inputs'],**source_config['execution_sources']}.items():assert sha(root/name)==value
  assert command(['git','rev-parse','HEAD:hardware'],cwd=root).strip()==source_config['hardware_tree']
  motor_input=Path(cfg['motor_input_path']);assert stat.S_ISREG(motor_input.lstat().st_mode)
@@ -137,14 +175,14 @@ def main(argv=None):
  nodes=command([cfg['fleet_cli'],'nodes']);queue=command([cfg['fleet_cli'],'queue'])
  rows=[n.split()for n in nodes.splitlines()[1:]if n.strip()];selected=[r for r in rows if r[-1]==cfg['role']]
  assert len(selected)==1 and selected[0][0]==cfg['node']
- row=selected[0];assert row[1]=='IDLE' and row[2]=='0/12' and row[3]=='0/32768' and float(row[4])<=8
+ row=selected[0];assert row[1]=='IDLE' and row[2]=='0/12' and row[3]=='0/32768' and float(row[4])<=(12 if cfg['saved_rejoin_only'] else 8)
  assert len([n for n in queue.splitlines()if n.strip()])==1,'Unexpected scheduler work; coordinate first'
  raw=command(['bash','-c','source "$1"; printf "%s" "$NODES"','fleet-config',cfg['fleet_environment_file']])
  target={p[0]:p[1]for p in (n.split(':')for n in raw.split())}[cfg['node']]
  record={'status':'INTENT_WRITTEN','review':args.review_url,'head':cfg['head'],'operator_sha256':sha(__file__),
          'config_sha256':sha(CONFIG),'source_files':cfg['files'],'runtime_path_identity_sha256':cfg['runtime_sha256'],
          'nodes':nodes,'queue':queue,'one_remote_invocation':True,'no_auto_retry':True,'manufacturer_input_before':motor_before,
-         'requested_utc':datetime.datetime.now(datetime.timezone.utc).isoformat()}
+         'saved_rejoin_only':cfg['saved_rejoin_only'],'requested_utc':datetime.datetime.now(datetime.timezone.utc).isoformat()}
  fd=os.open(RECEIPT,os.O_WRONLY|os.O_CREAT|os.O_EXCL,0o600)
  def write():
   with os.fdopen(os.dup(fd),'w')as f:f.seek(0);json.dump(record,f,indent=2);f.truncate();f.flush();os.fsync(f.fileno())
