@@ -1,0 +1,7 @@
+{
+  "status": "PASS_IMPORT_TOPOLOGY_ONLY",
+  "step_sha256": "7c181d5a524cb2fd432d49ed4a990aae9e163b08402bf06be516bb37d749c8dc",
+  "adoption_approved": false,
+  "edges": 2017,
+  "faces": 905
+}

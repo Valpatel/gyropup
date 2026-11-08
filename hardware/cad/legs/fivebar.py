@@ -499,7 +499,8 @@ FLANGE_T, FLANGE_X = 13.0, 95.0                  # the hip frame's top and botto
 # tip of each knee-out ear's backing block, where it ends on the web's motor face (x +-120, z 45, r 64 from the motor):
 # a sharp corner, so it is not converged. Two fixes there failed: the block run on to the ear's edge (E1 1.33: a knife
 # edge at r 66) and a revolved fillet round the boss side (the mesher refused its slivers). Next: a fillet along the
-# whole foot of the block (on a local solid), checked at 3 and 2.5 mm.
+# whole foot of the block (on a local solid), checked at 3 and 2.5 mm. The stop_foot_r candidate below is
+# unqualified until fresh geometry/interfaces and strength evidence have been accepted.
 HIP = {                                          # the hip frame's shape beyond the body interface (issue #29's sweep;
     'top_t': FLANGE_T,                           # GYROPUP_HIP_PARAMS, a JSON file, overrides it). Each flange's thickness:
     'bottom_t': 18.0,                            # it grows outwards (the inner face stays at ring + flange_dz) and the web
@@ -512,6 +513,8 @@ HIP = {                                          # the hip frame's shape beyond 
                                                  # +-(ring + dz)), which leaves room for a root fillet over the motors
     'root_r': 7.5,                               # mm: the flanges' roots on the motor side rounded, up to this radius and
     'root_gap': 0.75,                            # ... less where a motor's can (OD) comes within root_gap of the fillet
+    'stop_foot_r': STOP_EAR_FILLET,               # issue #8 candidate: whole outer-foot blend; native interfaces,
+                                                 # clearance and strength are unverified (0 = retained baseline).
     'bed_clip': True,                            # the bottom flange's outer corners cut back to the 45 deg lines through
                                                  # today's corners (|x| + |z| <= FLANGE_X + ring + FLANGE_T), so the frame
                                                  # still fits the bed turned (printplan.fits: 248.9 of 250 mm)
@@ -535,13 +538,80 @@ def frame_mounts() -> dict:
             'inserts_xz': [(x, s * (zf + FLANGE_T / 2 + 1.5)) for s in (1, -1) for x in (-FLANGE_X + 12, 0.0, FLANGE_X - 12)]}
 
 
-def hip_frame():
+def _backing_foot_blend(web, back, plane_y, radius, motor_void):
+    """Blend the sharp outer back/web contact, owned by the actual source-built back.
+
+    The existing cylindrical motor-side round stays separate. TOLERANCE is the
+    CadQuery representation tolerance, not an engineering clearance allowance.
+    """
+    from cadquery.occ_impl.shapes import TOLERANCE
+    local = web.union(back).val()
+    solids = local.Solids()
+    if len(solids) != 1 or not local.isValid():
+        raise ValueError('Backing-foot input must be one valid solid')
+    local = solids[0]
+    owners = [face for face in back.val().Faces()
+              if face.geomType() == 'PLANE' and abs(face.normalAt().y) <= TOLERANCE]
+    selected, records = [], []
+    for edge in local.Edges():
+        bb = edge.BoundingBox()
+        if abs(bb.ymin - plane_y) > TOLERANCE or abs(bb.ymax - plane_y) > TOLERANCE:
+            continue
+        faces = edge.ancestors(local, 'Face').Faces()
+        web_faces = [face for face in faces if face.geomType() == 'PLANE'
+                     and face.normalAt().y < -1 + TOLERANCE]
+        sides = [face for face in faces if face.geomType() == 'PLANE'
+                 and abs(face.normalAt().y) <= TOLERANCE]
+        if not web_faces or not sides:
+            continue
+        samples = [edge.positionAt(t) for t in (0.0, 0.5, 1.0)]
+        matches = [face for face in owners if all(
+            cq.Vertex.makeVertex(*point.toTuple()).distance(face) <= TOLERANCE for point in samples)]
+        if not matches:
+            continue
+        if len(faces) != 2 or len(web_faces) != 1 or len(sides) != 1 or len(matches) != 1:
+            raise ValueError('Backing-foot contact ownership is ambiguous')
+        if edge.geomType() != 'LINE':
+            raise ValueError('Outer backing-foot contact is not a source polygon edge')
+        # A reentrant foot has material in both cross-quadrants; a convex edge does not.
+        delta = (sides[0].normalAt() - web_faces[0].normalAt()).normalized()
+        probe = min(radius / 10, edge.Length() / 100)
+        if probe <= 10 * TOLERANCE or not all(local.isInside(
+                samples[1] + delta * (sign * probe), TOLERANCE) for sign in (-1, 1)):
+            raise ValueError('Backing-foot edge is not an unambiguous concave contact')
+        selected.append(edge)
+        records.append({'type': edge.geomType(), 'length_mm': edge.Length(),
+                        'start_mm': list(samples[0].toTuple()), 'end_mm': list(samples[-1].toTuple()),
+                        'centre_mm': list(samples[1].toTuple()), 'source_owner': 'backing-block outer side'})
+    if not selected:
+        raise ValueError('No complete outer backing-foot contact was found')
+    rounded = local.fillet(radius, selected)
+    if not rounded.isValid() or len(rounded.Solids()) != 1:
+        raise ValueError('Backing-foot blend did not produce one valid solid')
+    removed, added = local.cut(rounded), rounded.cut(local)
+    if removed.Solids() or removed.Volume() != 0:
+        raise ValueError('Backing-foot blend removed retained supported material')
+    if added.Volume() <= 0:
+        raise ValueError('Backing-foot blend added no material')
+    intrusion = added.intersect(motor_void)
+    if intrusion.Solids() or intrusion.Volume() != 0:
+        raise ValueError('Backing-foot blend enters the retained motor-clearance region')
+    return cq.Workplane(obj=rounded), {'radius_mm': radius, 'edges': records,
+                                      'removed_mm3': removed.Volume(), 'added_mm3': added.Volume(),
+                                      'motor_void_intrusion_mm3': intrusion.Volume()}
+
+
+def hip_frame(foot_diagnostics=None):
     """The hip frame (printed PA6-CF): one web holding both motors on their output-side lugs (10 x M4) and a 61812
     support bearing each around the output adapters' journals, so leg bending goes into the frame, not into the
     motors' 61810. Flanges top and bottom run inwards to the body's centre plane and carry it (6 x M5 inserts in
     their ends: the body, or the test rig's carriage; frame_mounts()). Four stop posts limit the upper links: Ø16 steel
     pins 23 mm into blind holes in the web, TPU sleeves over them (D53). A cable pass between the motors for the wheel
     and motor leads. Printed web-down: it fits the bed turned 45 deg."""
+    foot_radius = float(HIP['stop_foot_r'])
+    if not math.isfinite(foot_radius) or foot_radius < 0:
+        raise ValueError('Backing-foot radius must be finite and nonnegative')
+    foot_reports = []
     yf0, yf1 = Y['frame']
     b = gmi.motor_interface(MOTOR)['case']['bolts']
     ring_r = frame_ring_r()
@@ -599,7 +669,40 @@ def hip_frame():
                 prof = [(mx + rc, yf0 + 0.01), (mx + rc - f, yf0 + 0.01)]
                 prof += [(mx + rc - f + f * math.cos(math.radians(90 - 90 * k / 8)), yf0 - f + f * math.sin(math.radians(90 - 90 * k / 8))) for k in range(9)]
                 ring = cq.Workplane('XY').polyline(prof).close().revolve(360, (mx, 0, 0), (mx, 1, 0))
-                web = web.union(back).union(ring.intersect(yslab(blk, yf0 - f - 1.0, yf0 + 0.02)))
+                if foot_radius:
+                    # Preserve the smallest radius reached by the existing motor-side round.
+                    motor_void = ycyl(rc - f, yf0 - STOP_EAR_BACK - 1, yf0 + 1, mx)
+                    web, report = _backing_foot_blend(web, back, yf0, foot_radius, motor_void)
+                    foot_reports.append(dict(report, side=sx, motor_x_mm=mx))
+                else:
+                    web = web.union(back)
+                web = web.union(ring.intersect(yslab(blk, yf0 - f - 1.0, yf0 + 0.02)))
+    if foot_radius:
+        from cadquery.occ_impl.shapes import TOLERANCE
+        if len(foot_reports) != 2 or {row['side'] for row in foot_reports} != {-1, 1}:
+            raise ValueError('Both mirrored backing feet must be blended')
+        def signature(edge, side):
+            return [edge['length_mm'], *(side * edge['centre_mm'][0], *edge['centre_mm'][1:]),
+                    *(side * edge['start_mm'][0], *edge['start_mm'][1:]),
+                    *(side * edge['end_mm'][0], *edge['end_mm'][1:])]
+        left, right = foot_reports
+        unmatched = [signature(edge, right['side']) for edge in right['edges']]
+        for edge in left['edges']:
+            row = signature(edge, left['side'])
+            matches = []
+            for i, other in enumerate(unmatched):
+                reversed_ends = other[:4] + other[7:] + other[4:7]
+                if any(all(abs(a-b) <= TOLERANCE for a,b in zip(row, candidate))
+                       for candidate in (other, reversed_ends)):
+                    matches.append(i)
+            if len(matches) != 1:
+                raise ValueError('Backing-foot selections are not unambiguously mirrored')
+            unmatched.pop(matches[0])
+        if unmatched:
+            raise ValueError('Backing-foot selection omitted a mirrored contact')
+    if foot_diagnostics is not None:
+        foot_diagnostics.update({'radius_mm': foot_radius, 'blocks': foot_reports,
+                                 'qualification': 'geometry candidate; interfaces/clearance/strength unverified'})
     if HIP['root_r'] > 0:                                    # the flanges' roots rounded on the motor side (HIP)
         for s_ in (1, -1):
             web = web.union(root_fillet(s_, zf, yf0, fl_x, (ax, bx)))
