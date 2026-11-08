@@ -591,6 +591,70 @@ class HipStudyInputs(unittest.TestCase):
                 self.assertFalse(out.exists())
 
 
+class HipGeometryInputs(unittest.TestCase):
+    def load_geometry(self):
+        spec = importlib.util.spec_from_file_location(
+            'hip_geometry_inputs_test', check.ROOT / 'tools/engineering/legs/hip_frame_geometry.py')
+        module = importlib.util.module_from_spec(spec)
+        with patch.dict(sys.modules, {name: None for name in ('cadquery', 'cadagent', 'gmsh', 'OCP')}), patch.object(
+                subprocess, 'Popen', side_effect=AssertionError('Process at geometry helper import')):
+            spec.loader.exec_module(module)
+        return module
+
+    def test_actual_measured_mounts_cannot_be_hidden_by_unchanged_declared_holes(self):
+        geometry = self.load_geometry()
+        row = json.loads((check.ROOT / 'hardware/exports/body/body.json').read_text())['interface']['frame_mounts']
+        self.assertEqual(len(row['measured_holes']), 6)
+        geometry.require_same_mounts(row, row)
+        for field in ('measured_holes', 'depth', 'face', 'centre_plane_y'):
+            changed = json.loads(json.dumps(row))
+            if field == 'measured_holes': changed[field].pop()
+            elif field == 'face': changed[field][0][-1] += 1
+            else: changed[field] += 1
+            self.assertEqual(changed['holes'], row['holes'])  # copied metadata does not qualify the actual solid
+            with self.subTest(field=field), self.assertRaisesRegex(ValueError, 'Actual mounting faces'):
+                geometry.require_same_mounts(row, changed)
+
+    def test_geometry_rejects_inherited_parameters_before_source_or_output(self):
+        geometry = self.load_geometry(); study = HipStudyInputs().load_study()
+        with tempfile.TemporaryDirectory(prefix='hip-geometry-inherited-') as tmp:
+            out = Path(tmp) / 'out'
+            with patch.dict(os.environ, {'GYROPUP_HIP_PARAMS': 'unowned.json'}), patch.object(
+                    study, 'source_hashes', side_effect=AssertionError('Read after inherited override')):
+                with self.assertRaisesRegex(ValueError, 'inherited product parameters'):
+                    geometry.prepare(study, out)
+            self.assertFalse(out.exists())
+
+    def test_actual_geometry_cli_rejects_missing_canonical_input_with_legacy_decoy(self):
+        study = HipStudyInputs().load_study()
+        for missing in ('hardware/exports/leg/rig-results.json', 'hardware/exports/leg/fea/summary.json'):
+            with self.subTest(missing=missing), tempfile.TemporaryDirectory(prefix='hip-geometry-missing-') as tmp:
+                root = Path(tmp); HipStudyInputs().fixture(root)
+                (root / missing).unlink()
+                self.assertTrue((root / missing.removeprefix('hardware/')).is_file())
+                baseline = root / '.agents/plans/hip-study/retained-foot-baseline.params.json'
+                baseline.parent.mkdir(parents=True)
+                baseline.write_bytes((check.ROOT / baseline.relative_to(root)).read_bytes())
+                out = root.parent / (root.name + '-geometry-output')
+                with patch.object(study, 'ROOT', root), patch.object(sys, 'argv', [
+                        'hip-frame-study.py', '--geometry-only', '--out', str(out)]), patch.dict(
+                        sys.modules, {study.__name__: study, **{name: None for name in ('cadquery', 'cadagent', 'gmsh', 'OCP')}}):
+                    with self.assertRaisesRegex(FileNotFoundError, missing):
+                        study.main()
+                self.assertFalse(out.exists())
+
+    def test_geometry_case_rejects_extra_or_nonfinite_parameter_choices_before_native(self):
+        geometry = self.load_geometry(); study = HipStudyInputs().load_study()
+        with tempfile.TemporaryDirectory(prefix='hip-geometry-params-') as tmp:
+            for value in (2.5, float('nan'), float('inf'), -float('inf')):
+                out = Path(tmp) / str(value)
+                with self.subTest(value=value), patch.dict(sys.modules, {
+                        name: None for name in ('cadquery', 'cadagent', 'gmsh', 'OCP')}), self.assertRaisesRegex(
+                        ValueError, 'only the retained zero-radius override'):
+                    geometry.case(study, out, {'stop_foot_r': value})
+                self.assertFalse(out.exists())
+
+
 class StudyMedia(unittest.TestCase):
     def test_leg_rig_companions(self):
         subprocess.run(['node', '--test', 'tests/site/media/test-rig-media.mjs'], cwd=check.ROOT, check=True)

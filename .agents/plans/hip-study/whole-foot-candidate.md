@@ -1,6 +1,6 @@
 # Whole-foot blend: next geometry-only question
 
-Read-only proposal based on the accepted STEP inspection at source2251f009; independently accepted at issue #8 comment6714990049. No source edit, candidate geometry or FEA is claimed.
+Unreleased candidate source based on the accepted STEP inspection at source 2251f009 (independent review: issue #8 comment 6714990049). No native candidate geometry, interface or FEA result is accepted yet.
 
 The imported web motor-side face is one large planar face at y=-25.1mm, with an outer wire spanning several regions and many hole wires. Near the positive-x knee-out hotspot, the foot boundary includes short planar segments at x119.97..122.23mm,z43.40..50.09mm and an existing circular/conical motor-side blend. The face is not an isolated closed foot loop. Imported numerical IDs are evidence only and must not be used as selectors in the parametric producer.
 
@@ -20,3 +20,6 @@ Preparation detail from the existing interfaces() call chain: body_params.frame_
 No loads, material allowables, FEA masks, body/bed margins or physical assumptions change. No generated engineering output has been updated. Changing fivebar.py legitimately makes its full94 source-bound receipts and current-design illustration stale for this draft. Their original baseline results remain valid only at their recorded sources; they are not rehashed or relabeled. Geometry/interfaces must pass before proposing any native FEA. The intended final PR batches the real design/evidence chain rather than merging a tool-only release.
 
 The baseline/candidate native comparison must use fresh separate processes and caches, source_hashes, an explicit effective HIP identity, exact source and retained runtime binding, and no inherited GYROPUP_ parameters. Candidate face/pilot measurements must actually read the candidate solid; `interfaces(fb, frame, out)` alone otherwise rebuilds baseline through body_params.frame_mounts(). Preserve all baseline failures. Use the accepted topology records only as diagnostics, never as current parametric selectors or physical evidence.
+
+
+The existing hip-frame study now has geometry-only case/comparison paths. Baseline and candidate run in separate fresh processes; the frozen baseline file states every old HIP value and a zero foot radius. A final BREP comparison checks retained material, source-datum/contact neighborhoods, actual measured mounting faces/pilots, body/bed results and retained motor voids. The exact existing private RS04 manufacturer STEP is available for nominal whole-model collision/clearance comparison, with all 43 solids retained and no envelope fallback. It is not redistributed. Actual connected out-of-region, removed-material and filled-pilot faults exercise the same finished-shape guards. All native checks remain pending.

@@ -550,7 +550,7 @@ def _backing_foot_blend(web, back, plane_y, radius, motor_void):
     if len(solids) != 1 or not local.isValid():
         raise ValueError('Backing-foot input must be one valid solid')
     local = solids[0]
-    owners = [face for face in back.val().Faces()
+    owners = [(face, face.BoundingBox()) for face in back.val().Faces()
               if face.geomType() == 'PLANE' and abs(face.normalAt().y) <= TOLERANCE]
     selected, records = [], []
     for edge in local.Edges():
@@ -565,8 +565,11 @@ def _backing_foot_blend(web, back, plane_y, radius, motor_void):
         if not web_faces or not sides:
             continue
         samples = [edge.positionAt(t) for t in (0.0, 0.5, 1.0)]
-        matches = [face for face in owners if all(
-            cq.Vertex.makeVertex(*point.toTuple()).distance(face) <= TOLERANCE for point in samples)]
+        matches = [face for face, bounds in owners if all(
+            bounds.xmin-TOLERANCE <= point.x <= bounds.xmax+TOLERANCE
+            and bounds.ymin-TOLERANCE <= point.y <= bounds.ymax+TOLERANCE
+            and bounds.zmin-TOLERANCE <= point.z <= bounds.zmax+TOLERANCE
+            and cq.Vertex.makeVertex(*point.toTuple()).distance(face) <= TOLERANCE for point in samples)]
         if not matches:
             continue
         if len(faces) != 2 or len(web_faces) != 1 or len(sides) != 1 or len(matches) != 1:
