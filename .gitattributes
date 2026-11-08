@@ -1,0 +1,2 @@
+# Preserve native OCCT snapshots byte-for-byte; validate their geometry and hashes.
+*.brep binary
