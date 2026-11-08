@@ -351,9 +351,35 @@ def main():
     ap.add_argument('--dscale', type=float, help="with --vmax: the renders' deformation exaggeration (default: automatic)")
     ap.add_argument('--viewer', action='store_true')
     ap.add_argument('--dump', action='store_true', help='save each case\'s stress field (field-<case>.npz)')
+    ap.add_argument('--geometry-only', action='store_true', help='build and measure one geometry, without FEA')
+    ap.add_argument('--compare-geometry', nargs=2, type=Path, metavar=('BASELINE', 'CANDIDATE'))
+    ap.add_argument('--motor-step', type=Path, help='pinned private manufacturer RS04 STEP, comparison only')
+    ap.add_argument('--diagnose-foot', type=Path, help='sealed failed local BREP directory; no product build')
+    ap.add_argument('--diagnose-rejoin', type=Path, help='sealed failed rejoin operands; no product build')
     ap.add_argument('--evaluator', action='store_true')
     ap.add_argument('--out-root', type=Path, default=ROOT / 'build/hip-frame/sweep')
     a = ap.parse_args()
+    if a.geometry_only or a.compare_geometry or a.diagnose_foot or a.diagnose_rejoin:
+        if a.evaluator or sum(bool(v) for v in (a.geometry_only, a.compare_geometry, a.diagnose_foot, a.diagnose_rejoin)) != 1 or not a.out:
+            ap.error('choose one geometry mode with a fresh external --out')
+        from tools.engineering.legs import hip_frame_geometry as geometry
+        if a.diagnose_rejoin:
+            if a.params or a.motor_step:
+                ap.error('saved-rejoin diagnosis accepts no parameter or manufacturer override')
+            res = geometry.diagnose_rejoin(sys.modules[__name__], a.out, a.diagnose_rejoin)
+        elif a.diagnose_foot:
+            if a.params or a.motor_step:
+                ap.error('saved-shape diagnosis accepts no parameter or manufacturer override')
+            res = geometry.diagnose(sys.modules[__name__], a.out, a.diagnose_foot)
+        elif a.compare_geometry:
+            if not a.motor_step or a.params:
+                ap.error('geometry comparison requires --motor-step and no parameter override')
+            res = geometry.compare(sys.modules[__name__], a.out, *a.compare_geometry, a.motor_step)
+        else:
+            params = json.loads(a.params.read_text()) if a.params else None
+            res = geometry.case(sys.modules[__name__], a.out, params)
+        print(json.dumps(res, allow_nan=False))
+        return
     if a.evaluator:
         return evaluator(a.out_root, a.mesh)
     params = json.loads(a.params.read_text()) if a.params else None

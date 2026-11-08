@@ -591,6 +591,151 @@ class HipStudyInputs(unittest.TestCase):
                 self.assertFalse(out.exists())
 
 
+class HipGeometryInputs(unittest.TestCase):
+    def load_geometry(self):
+        spec = importlib.util.spec_from_file_location(
+            'hip_geometry_inputs_test', check.ROOT / 'tools/engineering/legs/hip_frame_geometry.py')
+        module = importlib.util.module_from_spec(spec)
+        with patch.dict(sys.modules, {name: None for name in ('cadquery', 'cadagent', 'gmsh', 'OCP')}), patch.object(
+                subprocess, 'Popen', side_effect=AssertionError('Process at geometry helper import')):
+            spec.loader.exec_module(module)
+        return module
+
+    def test_rejoin_diagnostic_rejects_changed_operands_before_output_or_kernel(self):
+        geometry = self.load_geometry()
+        fixture = check.ROOT / '.agents/plans/hip-study/failed-rejoin'
+        declared = {p.name: geometry.digest(p) for p in fixture.iterdir()}
+        original = geometry.rejoin_inputs(fixture, declared)
+        self.assertEqual(len(original['shapes']), 7)
+        with tempfile.TemporaryDirectory(prefix='hip-rejoin-input-') as tmp:
+            root = Path(tmp); source = root / 'source';source.mkdir()
+            for p in fixture.iterdir():
+                (source / p.name).write_bytes(p.read_bytes())
+            cfg = root / '.agents/plans/hip-study/foot-geometry-inputs.json'
+            cfg.parent.mkdir(parents=True)
+            cfg.write_text(json.dumps({'rejoin_diagnostic': {'inputs': declared}}))
+            study = type('ReadOnlyStudy', (), {'ROOT': root})()
+            out = root / 'output'
+            target = source / 'rounded-addition.brep';target.write_bytes(b'changed')
+            with patch.object(geometry, 'prepare', side_effect=AssertionError('Passed input boundary')), patch.dict(
+                    sys.modules, {name: None for name in ('cadquery', 'gmsh', 'OCP')}):
+                with self.assertRaisesRegex(ValueError, 'input identity differs'):
+                    geometry.diagnose_rejoin(study, out, source)
+                target.unlink();target.symlink_to(fixture / target.name)
+                with self.assertRaisesRegex(ValueError, 'input identity differs'):
+                    geometry.diagnose_rejoin(study, out, source)
+            self.assertFalse(out.exists())
+            with self.assertRaisesRegex(ValueError, 'Incomplete'):
+                geometry.rejoin_inputs(fixture, {k:v for k,v in declared.items() if k != target.name})
+
+    def test_saved_failure_diagnostic_rejects_changed_or_linked_inputs_before_native(self):
+        geometry = self.load_geometry()
+        fixture = check.ROOT / '.agents/plans/hip-study/failed-local-foot'
+        declared = {p.name: geometry.digest(p) for p in fixture.iterdir()}
+        self.assertEqual(geometry.diagnostic_inputs(fixture, declared)['context']['radius_mm'], 3.5)
+        with tempfile.TemporaryDirectory(prefix='hip-fault-input-') as tmp:
+            source = Path(tmp)
+            for p in fixture.iterdir():
+                (source / p.name).write_bytes(p.read_bytes())
+            brep = source / 'unfilleted-local.brep'
+            data = brep.read_bytes()
+            brep.write_bytes(data + b'changed')
+            with patch.dict(sys.modules, {name: None for name in ('cadquery', 'gmsh', 'OCP')}):
+                with self.assertRaisesRegex(ValueError, 'identity differs'):
+                    geometry.diagnostic_inputs(source, declared)
+                brep.unlink(); brep.symlink_to(fixture / brep.name)
+                with self.assertRaisesRegex(ValueError, 'identity differs'):
+                    geometry.diagnostic_inputs(source, declared)
+            with self.assertRaisesRegex(ValueError, 'Incomplete'):
+                geometry.diagnostic_inputs(fixture, {k:v for k,v in declared.items() if k != brep.name})
+
+    def test_failed_construction_keeps_owned_shapes_and_primary_error(self):
+        geometry = self.load_geometry()
+        class OwnedShape:
+            def exportBrep(self, target):
+                Path(target).write_bytes(b'owned failed-shape diagnostic')
+                return True
+        primary = RuntimeError('Actual native fillet failed')
+        primary.__cause__ = ValueError('kernel command not done')
+        primary.foot_context = {'radius_mm': 3.5, 'edges': [{'source_owner': 'backing-block outer side'}]}
+        primary.foot_shapes = {name: OwnedShape() for name in (
+            'unfilleted-local', 'source-back', 'raw-finished', 'finished-local')}
+        with tempfile.TemporaryDirectory(prefix='hip-failed-construction-') as tmp:
+            out = Path(tmp)
+            study = HipStudyInputs().load_study()
+            failed_out = out / 'actual-case'
+            with patch.object(study, 'precheck', side_effect=primary):
+                with self.assertRaises(RuntimeError) as caught:
+                    geometry.case(study, failed_out, None)
+            self.assertIs(caught.exception, primary)
+            out = failed_out
+            row = json.loads((out / 'construction-failure.json').read_text())
+            self.assertEqual(row['context'], primary.foot_context)
+            self.assertEqual(set(row['shapes']), set(primary.foot_shapes))
+            self.assertEqual(row['error'], 'ValueError: kernel command not done')
+            for shape in row['shapes'].values():
+                self.assertEqual(geometry.digest(out / shape['file']), shape['sha256'])
+            self.assertEqual(str(primary), 'Actual native fillet failed')
+            with patch.object(geometry, 'write', side_effect=OSError('diagnostic disk error')):
+                geometry.preserve_construction_failure(out, primary)
+            self.assertIn('Secondary diagnostic capture failure: OSError', primary.__notes__[-1])
+            self.assertEqual(str(primary.__cause__), 'kernel command not done')
+            self.assertFalse((out / 'geometry.json').exists())
+
+    def test_actual_measured_mounts_cannot_be_hidden_by_unchanged_declared_holes(self):
+        geometry = self.load_geometry()
+        row = json.loads((check.ROOT / 'hardware/exports/body/body.json').read_text())['interface']['frame_mounts']
+        self.assertEqual(len(row['measured_holes']), 6)
+        geometry.require_same_mounts(row, row)
+        for field in ('measured_holes', 'depth', 'face', 'centre_plane_y'):
+            changed = json.loads(json.dumps(row))
+            if field == 'measured_holes': changed[field].pop()
+            elif field == 'face': changed[field][0][-1] += 1
+            else: changed[field] += 1
+            self.assertEqual(changed['holes'], row['holes'])  # copied metadata does not qualify the actual solid
+            with self.subTest(field=field), self.assertRaisesRegex(ValueError, 'Actual mounting faces'):
+                geometry.require_same_mounts(row, changed)
+
+    def test_geometry_rejects_inherited_parameters_before_source_or_output(self):
+        geometry = self.load_geometry(); study = HipStudyInputs().load_study()
+        with tempfile.TemporaryDirectory(prefix='hip-geometry-inherited-') as tmp:
+            out = Path(tmp) / 'out'
+            with patch.dict(os.environ, {'GYROPUP_HIP_PARAMS': 'unowned.json'}), patch.object(
+                    study, 'source_hashes', side_effect=AssertionError('Read after inherited override')):
+                with self.assertRaisesRegex(ValueError, 'inherited product parameters'):
+                    geometry.prepare(study, out)
+            self.assertFalse(out.exists())
+
+    def test_actual_geometry_cli_rejects_missing_canonical_input_with_legacy_decoy(self):
+        study = HipStudyInputs().load_study()
+        for missing in ('hardware/exports/leg/rig-results.json', 'hardware/exports/leg/fea/summary.json'):
+            with self.subTest(missing=missing), tempfile.TemporaryDirectory(prefix='hip-geometry-missing-') as tmp:
+                root = Path(tmp); HipStudyInputs().fixture(root)
+                (root / missing).unlink()
+                self.assertTrue((root / missing.removeprefix('hardware/')).is_file())
+                baseline = root / '.agents/plans/hip-study/retained-foot-baseline.params.json'
+                baseline.parent.mkdir(parents=True)
+                baseline.write_bytes((check.ROOT / baseline.relative_to(root)).read_bytes())
+                out = root.parent / (root.name + '-geometry-output')
+                with patch.object(study, 'ROOT', root), patch.object(sys, 'argv', [
+                        'hip-frame-study.py', '--geometry-only', '--out', str(out)]), patch.dict(
+                        sys.modules, {study.__name__: study, **{name: None for name in ('cadquery', 'cadagent', 'gmsh', 'OCP')}}):
+                    with self.assertRaisesRegex(FileNotFoundError, missing):
+                        study.main()
+                self.assertFalse(out.exists())
+
+    def test_geometry_case_rejects_extra_or_nonfinite_parameter_choices_before_native(self):
+        geometry = self.load_geometry(); study = HipStudyInputs().load_study()
+        with tempfile.TemporaryDirectory(prefix='hip-geometry-params-') as tmp:
+            for value in (2.5, float('nan'), float('inf'), -float('inf')):
+                out = Path(tmp) / str(value)
+                with self.subTest(value=value), patch.dict(sys.modules, {
+                        name: None for name in ('cadquery', 'cadagent', 'gmsh', 'OCP')}), self.assertRaisesRegex(
+                        ValueError, 'only the retained zero-radius override'):
+                    geometry.case(study, out, {'stop_foot_r': value})
+                self.assertFalse(out.exists())
+
+
 class StudyMedia(unittest.TestCase):
     def test_leg_rig_companions(self):
         subprocess.run(['node', '--test', 'tests/site/media/test-rig-media.mjs'], cwd=check.ROOT, check=True)

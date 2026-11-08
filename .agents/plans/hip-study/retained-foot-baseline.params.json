@@ -1,0 +1,10 @@
+{
+  "top_t": 13.0,
+  "bottom_t": 18.0,
+  "haunch": 0.0,
+  "flange_dz": 1.5,
+  "root_r": 7.5,
+  "root_gap": 0.75,
+  "bed_clip": true,
+  "stop_foot_r": 0.0
+}

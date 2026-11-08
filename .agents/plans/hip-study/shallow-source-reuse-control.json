@@ -1,0 +1,171 @@
+{
+  "scope": "Disposable Git-only shallow-donor control; no product checkout/env/native operation",
+  "git_version": "git version 2.43.0",
+  "compute_git_version": "git version 2.43.0",
+  "shallow_donor": true,
+  "exact_target": "f80f49eb44ee46aa50ede7c7ebc0fd074a8f3acb",
+  "no_alternates": true,
+  "connectivity_without_donor": true,
+  "donor_before": {
+    "data": "0de6bd647f68d1cb9e9191fe897eb23d7cf8cdc859589717b3daaf38abee3ee2",
+    ".git/config": "48d9b88ba3375f9d34162982554763693321b783fea534656ab69af7ed0539af",
+    ".git/HEAD": "28d25bf82af4c0e2b72f50959b2beb859e3e60b9630a5e8c603dad4ddb2b6e80",
+    ".git/index": "29d402f7a5eaf6ad047bc80185d35e9deecd512c1b58ec6948af32aa1712c74c",
+    ".git/description": "85ab6c163d43a17ea9cf7788308bca1466f1b0a8d1cc92e26e9bf63da4062aee",
+    ".git/packed-refs": "ae7450a190518ab773f2beecf984d7fd8f08fe767ac4a3eab69d85fc4e31dbed",
+    ".git/shallow": "fc93f45f243ad265595e012b2dd74874f26651883c77db6650f4d9ff20c859f5",
+    ".git/logs/HEAD": "47b2d9ea0778796d9775528c236424d32e173803726d61ea452694bdbccd75ce",
+    ".git/info/exclude": "6671fe83b7a07c8932ee89164d1f2793b2318058eb8b98dc5c06ee0a5a3b0ec1",
+    ".git/hooks/post-update.sample": "81765af2daef323061dcbc5e61fc16481cb74b3bac9ad8a174b186523586f6c5",
+    ".git/hooks/update.sample": "8d5f2fa83e103cf08b57eaa67521df9194f45cbdbcb37da52ad586097a14d106",
+    ".git/hooks/pre-rebase.sample": "4febce867790052338076f4e66cc47efb14879d18097d1d61c8261859eaaa7b3",
+    ".git/hooks/push-to-checkout.sample": "a53d0741798b287c6dd7afa64aee473f305e65d3f49463bb9d7408ec3b12bf5f",
+    ".git/hooks/pre-receive.sample": "a4c3d2b9c7bb3fd8d1441c31bd4ee71a595d66b44fcf49ddb310252320169989",
+    ".git/hooks/pre-merge-commit.sample": "d3825a70337940ebbd0a5c072984e13245920cdf8898bd225c8d27a6dfc9cb53",
+    ".git/hooks/commit-msg.sample": "1f74d5e9292979b573ebd59741d46cb93ff391acdd083d340b94370753d92437",
+    ".git/hooks/pre-push.sample": "ecce9c7e04d3f5dd9d8ada81753dd1d549a9634b26770042b58dda00217d086a",
+    ".git/hooks/applypatch-msg.sample": "0223497a0b8b033aa58a3a521b8629869386cf7ab0e2f101963d328aa62193f7",
+    ".git/hooks/pre-commit.sample": "f9af7d95eb1231ecf2eba9770fedfa8d4797a12b02d7240e98d568201251244a",
+    ".git/hooks/pre-applypatch.sample": "e15c5b469ea3e0a695bea6f2c82bcf8e62821074939ddd85b77e0007ff165475",
+    ".git/hooks/fsmonitor-watchman.sample": "e0549964e93897b519bd8e333c037e51fff0f88ba13e086a331592bf801fa1d0",
+    ".git/hooks/prepare-commit-msg.sample": "e9ddcaa4189fddd25ed97fc8c789eca7b6ca16390b2392ae3276f0c8e1aa4619",
+    ".git/hooks/sendemail-validate.sample": "44ebfc923dc5466bc009602f0ecf067b9c65459abfe8868ddc49b78e6ced7a92",
+    ".git/logs/refs/heads/main": "47b2d9ea0778796d9775528c236424d32e173803726d61ea452694bdbccd75ce",
+    ".git/logs/refs/remotes/origin/HEAD": "47b2d9ea0778796d9775528c236424d32e173803726d61ea452694bdbccd75ce",
+    ".git/objects/pack/pack-7910517617d8f3e5225d983fcc92ae0742e866bf.pack": "dba5bce15949f62ec02e6f637be435c4c9c9481405fbd10b314dd0d113ffb83b",
+    ".git/objects/pack/pack-7910517617d8f3e5225d983fcc92ae0742e866bf.idx": "fe3ef646cb1baca625187e4cb6150b010069bb1b628039f982e604d4965c6cf4",
+    ".git/objects/pack/pack-7910517617d8f3e5225d983fcc92ae0742e866bf.rev": "6b516c75c523dc1a5bac004d19fbaf70c6805abcaeb8e9829403341f41c252e7",
+    ".git/refs/heads/main": "fc93f45f243ad265595e012b2dd74874f26651883c77db6650f4d9ff20c859f5",
+    ".git/refs/remotes/origin/HEAD": "2bb6a24aa0fc6c484100f5d51a29bbad841cd2c755f5d93faa204e5dbb4eb2b4"
+  },
+  "donor_after": {
+    "data": "0de6bd647f68d1cb9e9191fe897eb23d7cf8cdc859589717b3daaf38abee3ee2",
+    ".git/config": "48d9b88ba3375f9d34162982554763693321b783fea534656ab69af7ed0539af",
+    ".git/HEAD": "28d25bf82af4c0e2b72f50959b2beb859e3e60b9630a5e8c603dad4ddb2b6e80",
+    ".git/index": "29d402f7a5eaf6ad047bc80185d35e9deecd512c1b58ec6948af32aa1712c74c",
+    ".git/description": "85ab6c163d43a17ea9cf7788308bca1466f1b0a8d1cc92e26e9bf63da4062aee",
+    ".git/packed-refs": "ae7450a190518ab773f2beecf984d7fd8f08fe767ac4a3eab69d85fc4e31dbed",
+    ".git/shallow": "fc93f45f243ad265595e012b2dd74874f26651883c77db6650f4d9ff20c859f5",
+    ".git/logs/HEAD": "47b2d9ea0778796d9775528c236424d32e173803726d61ea452694bdbccd75ce",
+    ".git/info/exclude": "6671fe83b7a07c8932ee89164d1f2793b2318058eb8b98dc5c06ee0a5a3b0ec1",
+    ".git/hooks/post-update.sample": "81765af2daef323061dcbc5e61fc16481cb74b3bac9ad8a174b186523586f6c5",
+    ".git/hooks/update.sample": "8d5f2fa83e103cf08b57eaa67521df9194f45cbdbcb37da52ad586097a14d106",
+    ".git/hooks/pre-rebase.sample": "4febce867790052338076f4e66cc47efb14879d18097d1d61c8261859eaaa7b3",
+    ".git/hooks/push-to-checkout.sample": "a53d0741798b287c6dd7afa64aee473f305e65d3f49463bb9d7408ec3b12bf5f",
+    ".git/hooks/pre-receive.sample": "a4c3d2b9c7bb3fd8d1441c31bd4ee71a595d66b44fcf49ddb310252320169989",
+    ".git/hooks/pre-merge-commit.sample": "d3825a70337940ebbd0a5c072984e13245920cdf8898bd225c8d27a6dfc9cb53",
+    ".git/hooks/commit-msg.sample": "1f74d5e9292979b573ebd59741d46cb93ff391acdd083d340b94370753d92437",
+    ".git/hooks/pre-push.sample": "ecce9c7e04d3f5dd9d8ada81753dd1d549a9634b26770042b58dda00217d086a",
+    ".git/hooks/applypatch-msg.sample": "0223497a0b8b033aa58a3a521b8629869386cf7ab0e2f101963d328aa62193f7",
+    ".git/hooks/pre-commit.sample": "f9af7d95eb1231ecf2eba9770fedfa8d4797a12b02d7240e98d568201251244a",
+    ".git/hooks/pre-applypatch.sample": "e15c5b469ea3e0a695bea6f2c82bcf8e62821074939ddd85b77e0007ff165475",
+    ".git/hooks/fsmonitor-watchman.sample": "e0549964e93897b519bd8e333c037e51fff0f88ba13e086a331592bf801fa1d0",
+    ".git/hooks/prepare-commit-msg.sample": "e9ddcaa4189fddd25ed97fc8c789eca7b6ca16390b2392ae3276f0c8e1aa4619",
+    ".git/hooks/sendemail-validate.sample": "44ebfc923dc5466bc009602f0ecf067b9c65459abfe8868ddc49b78e6ced7a92",
+    ".git/logs/refs/heads/main": "47b2d9ea0778796d9775528c236424d32e173803726d61ea452694bdbccd75ce",
+    ".git/logs/refs/remotes/origin/HEAD": "47b2d9ea0778796d9775528c236424d32e173803726d61ea452694bdbccd75ce",
+    ".git/objects/pack/pack-7910517617d8f3e5225d983fcc92ae0742e866bf.pack": "dba5bce15949f62ec02e6f637be435c4c9c9481405fbd10b314dd0d113ffb83b",
+    ".git/objects/pack/pack-7910517617d8f3e5225d983fcc92ae0742e866bf.idx": "fe3ef646cb1baca625187e4cb6150b010069bb1b628039f982e604d4965c6cf4",
+    ".git/objects/pack/pack-7910517617d8f3e5225d983fcc92ae0742e866bf.rev": "6b516c75c523dc1a5bac004d19fbaf70c6805abcaeb8e9829403341f41c252e7",
+    ".git/refs/heads/main": "fc93f45f243ad265595e012b2dd74874f26651883c77db6650f4d9ff20c859f5",
+    ".git/refs/remotes/origin/HEAD": "2bb6a24aa0fc6c484100f5d51a29bbad841cd2c755f5d93faa204e5dbb4eb2b4"
+  },
+  "donor_unchanged": true,
+  "steps": [
+    {
+      "argv": [
+        "git",
+        "-C",
+        "<fixture>/origin",
+        "rev-parse",
+        "HEAD"
+      ],
+      "exit": 0,
+      "stdout": "f80f49eb44ee46aa50ede7c7ebc0fd074a8f3acb\n",
+      "stderr": ""
+    },
+    {
+      "argv": [
+        "git",
+        "clone",
+        "--shared",
+        "--dissociate",
+        "--no-checkout",
+        "<fixture>/cache",
+        "<fixture>/verified-dissociated"
+      ],
+      "exit": 0,
+      "stdout": "",
+      "stderr": "Cloning into '<fixture>/verified-dissociated'...\n"
+    },
+    {
+      "argv": [
+        "git",
+        "-C",
+        "<fixture>/verified-dissociated",
+        "remote",
+        "set-url",
+        "origin",
+        "<fixture>/origin"
+      ],
+      "exit": 0,
+      "stdout": "",
+      "stderr": ""
+    },
+    {
+      "argv": [
+        "git",
+        "-C",
+        "<fixture>/verified-dissociated",
+        "fetch",
+        "-q",
+        "--depth",
+        "1",
+        "origin",
+        "f80f49eb44ee46aa50ede7c7ebc0fd074a8f3acb"
+      ],
+      "exit": 0,
+      "stdout": "",
+      "stderr": ""
+    },
+    {
+      "argv": [
+        "git",
+        "-C",
+        "<fixture>/verified-dissociated",
+        "checkout",
+        "-q",
+        "--detach",
+        "f80f49eb44ee46aa50ede7c7ebc0fd074a8f3acb"
+      ],
+      "exit": 0,
+      "stdout": "",
+      "stderr": ""
+    },
+    {
+      "argv": [
+        "git",
+        "-C",
+        "<fixture>/verified-dissociated",
+        "rev-parse",
+        "HEAD"
+      ],
+      "exit": 0,
+      "stdout": "f80f49eb44ee46aa50ede7c7ebc0fd074a8f3acb\n",
+      "stderr": ""
+    },
+    {
+      "argv": [
+        "git",
+        "-C",
+        "<fixture>/verified-dissociated",
+        "fsck",
+        "--connectivity-only",
+        "--no-dangling"
+      ],
+      "exit": 0,
+      "stdout": "",
+      "stderr": ""
+    }
+  ]
+}

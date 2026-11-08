@@ -1,0 +1,149 @@
+{
+  "scope": "Initial pre-native readiness refusal and bounded saved-shape capacity decision only",
+  "refused_source": "2d44ac8898c1f02238339c16b6df053b2d2ea5dd",
+  "refused_operator_sha256": "82f369f86dbf2ab4a386d0dfdcfd817324005f702266c214b6d86d8b684eeab9",
+  "refused_action_sha256": "8fd5f8a3653967303d8cc5ae433bd51cec9cbb654c2dc28c0bcabb58e40b5f15",
+  "refused_remote_exit": 1,
+  "native_started": false,
+  "run_directory_created": false,
+  "guard": "Initial os.getloadavg()[0] <= 8, before run directory/source preparation",
+  "later_observation_utc": "2026-11-08T03:35:00Z",
+  "later_capacity": {
+    "role": "cpu-a",
+    "machine": "aarch64",
+    "load": [
+      10.63525390625,
+      7.52197265625,
+      5.3447265625
+    ],
+    "affinity_cpus": [
+      0,
+      1,
+      2,
+      3,
+      4,
+      5,
+      6,
+      7,
+      8,
+      9,
+      10,
+      11,
+      12,
+      13,
+      14,
+      15,
+      16,
+      17,
+      18,
+      19
+    ],
+    "online_cpus": 20,
+    "cpu_quota_min": null,
+    "cgroup_free_bytes_min": null,
+    "memory_kib": {
+      "MemTotal": 127535912,
+      "MemAvailable": 44975636
+    },
+    "cpu_two_second_usage": {
+      "cpu": {
+        "busy_percent": 66.05,
+        "iowait_percent": 0.0
+      },
+      "cpu0": {
+        "busy_percent": 59.39,
+        "iowait_percent": 0.0
+      },
+      "cpu1": {
+        "busy_percent": 58.79,
+        "iowait_percent": 0.0
+      },
+      "cpu2": {
+        "busy_percent": 60.61,
+        "iowait_percent": 0.0
+      },
+      "cpu3": {
+        "busy_percent": 40.61,
+        "iowait_percent": 0.0
+      },
+      "cpu4": {
+        "busy_percent": 42.21,
+        "iowait_percent": 0.0
+      },
+      "cpu5": {
+        "busy_percent": 81.5,
+        "iowait_percent": 0.0
+      },
+      "cpu6": {
+        "busy_percent": 85.93,
+        "iowait_percent": 0.0
+      },
+      "cpu7": {
+        "busy_percent": 82.41,
+        "iowait_percent": 0.0
+      },
+      "cpu8": {
+        "busy_percent": 81.09,
+        "iowait_percent": 0.0
+      },
+      "cpu9": {
+        "busy_percent": 78.61,
+        "iowait_percent": 0.0
+      },
+      "cpu10": {
+        "busy_percent": 56.06,
+        "iowait_percent": 0.0
+      },
+      "cpu11": {
+        "busy_percent": 46.19,
+        "iowait_percent": 0.0
+      },
+      "cpu12": {
+        "busy_percent": 54.04,
+        "iowait_percent": 0.0
+      },
+      "cpu13": {
+        "busy_percent": 41.12,
+        "iowait_percent": 0.0
+      },
+      "cpu14": {
+        "busy_percent": 38.07,
+        "iowait_percent": 0.0
+      },
+      "cpu15": {
+        "busy_percent": 78.89,
+        "iowait_percent": 0.0
+      },
+      "cpu16": {
+        "busy_percent": 86.93,
+        "iowait_percent": 0.0
+      },
+      "cpu17": {
+        "busy_percent": 82.09,
+        "iowait_percent": 0.0
+      },
+      "cpu18": {
+        "busy_percent": 81.5,
+        "iowait_percent": 0.0
+      },
+      "cpu19": {
+        "busy_percent": 83.42,
+        "iowait_percent": 0.0
+      }
+    },
+    "pressure_cpu": "some avg10=3.22 avg60=1.82 avg300=0.81 total=13315830255\nfull avg10=0.00 avg60=0.00 avg300=0.00 total=0\n",
+    "scope": "Read-only capacity/runtime inventory, no CAD import or environment mutation"
+  },
+  "new_short_scope_only": {
+    "allowed_cpus": 20,
+    "minimum_equivalent_idle_cpus": 6,
+    "sample_seconds": 2,
+    "maximum_load": 12,
+    "minimum_host_and_cgroup_memory_GiB": 32,
+    "enforced_selected_cpus": 4,
+    "address_space_GiB": 24,
+    "native_phase_seconds": 120,
+    "nice": 10,
+    "ordinary_mode_load_cap": 8
+  }
+}

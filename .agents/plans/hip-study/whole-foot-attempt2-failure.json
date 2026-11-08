@@ -1,0 +1,403 @@
+{
+  "failed_construction": {
+    "scope": "Failed native construction only; no candidate/interfaces/FEA acceptance",
+    "error": "StdFail_NotDone: BRep_API: command not done",
+    "context": {
+      "radius_mm": 3.5,
+      "edges": [
+        {
+          "type": "LINE",
+          "length_mm": 2.3937948617206075,
+          "start_mm": [
+            122.23200000000001,
+            -25.1,
+            54.865800000000014
+          ],
+          "end_mm": [
+            121.76500000000001,
+            -25.1,
+            57.21360000000001
+          ],
+          "centre_mm": [
+            121.99850000000002,
+            -25.1,
+            56.03970000000001
+          ],
+          "source_owner": "backing-block outer side"
+        },
+        {
+          "type": "LINE",
+          "length_mm": 2.3937279544676713,
+          "start_mm": [
+            122.38860000000003,
+            -25.1,
+            52.47720000000001
+          ],
+          "end_mm": [
+            122.23200000000003,
+            -25.1,
+            54.86580000000001
+          ],
+          "centre_mm": [
+            122.31030000000003,
+            -25.1,
+            53.671500000000016
+          ],
+          "source_owner": "backing-block outer side"
+        },
+        {
+          "type": "LINE",
+          "length_mm": 2.3937279544676784,
+          "start_mm": [
+            122.232,
+            -25.1,
+            50.088600000000014
+          ],
+          "end_mm": [
+            122.3886,
+            -25.1,
+            52.47720000000002
+          ],
+          "centre_mm": [
+            122.31030000000001,
+            -25.1,
+            51.28290000000002
+          ],
+          "source_owner": "backing-block outer side"
+        },
+        {
+          "type": "LINE",
+          "length_mm": 2.3937948617206075,
+          "start_mm": [
+            121.76500000000001,
+            -25.1,
+            47.74080000000002
+          ],
+          "end_mm": [
+            122.23200000000001,
+            -25.1,
+            50.08860000000002
+          ],
+          "centre_mm": [
+            121.99850000000002,
+            -25.1,
+            48.914700000000025
+          ],
+          "source_owner": "backing-block outer side"
+        },
+        {
+          "type": "LINE",
+          "length_mm": 0.9213160085930525,
+          "start_mm": [
+            121.46886681395371,
+            -25.1,
+            46.86837331321658
+          ],
+          "end_mm": [
+            121.76500000000001,
+            -25.1,
+            47.7408
+          ],
+          "centre_mm": [
+            121.61693340697687,
+            -25.1,
+            47.30458665660829
+          ],
+          "source_owner": "backing-block outer side"
+        }
+      ],
+      "crop_bounds_mm": [
+        82.29018888009483,
+        -72.1,
+        39.86837331321658,
+        129.3886,
+        -18.09,
+        82.5
+      ],
+      "status": "FAILED_CONSTRUCTION; no candidate qualification"
+    },
+    "shapes": {
+      "unfilleted-local": {
+        "file": "unfilleted-local.brep",
+        "sha256": "f32a1f83c6131b5ca384800007f5dd5c8911f6a137e2f0b7e3b030af49116981"
+      },
+      "source-back": {
+        "file": "source-back.brep",
+        "sha256": "3650a4a694f5da73aae16c8a509bec4752c71a97ad8697dd12a0370095541da3"
+      }
+    }
+  },
+  "scope": "Actual local-material geometry construction failure; no candidate/FEM/clearance acceptance",
+  "source": "c90caf864f6c9c1bb8a2f4c604b91c3425421c56",
+  "status": "FAILED_CANDIDATE_FILLET",
+  "archive_sha256": "f577c483afb67f132f56a2394cbebad335414451d0b9398280c2161e11f4eb75",
+  "members": {
+    "baseline/geometry.json": {
+      "bytes": 15583,
+      "sha256": "84f435fc7adb5f89f653ac8badaede320552e4f7bd8db72c3107a163e8ca615d"
+    },
+    "baseline/hip-frame.brep": {
+      "bytes": 1053599,
+      "sha256": "eade0bb22007b829473ca64bdf9dd3fc5574ae09267495542141d997d15d48b3"
+    },
+    "baseline/precheck/body-cache/frame_mounts.json": {
+      "bytes": 812,
+      "sha256": "41f2b24eb34a64211101c2da25bb0a8363ea265ea4287363e9908cc2c19bccaa"
+    },
+    "baseline/precheck/params.json": {
+      "bytes": 148,
+      "sha256": "180833cbc6aa0adbc315ae0a9d2c69ad6febc0c0daec759416292722a8f11107"
+    },
+    "baseline-runtime.json": {
+      "bytes": 139219,
+      "sha256": "157559217907a93c7b7af0b0bcf0d702c76286828de5c6d8dd1f5893dd546260"
+    },
+    "candidate/construction-failure.json": {
+      "bytes": 2980,
+      "sha256": "3cfbca0285b00552323884cfbbb730ba0b6d795b9abb7a1512df47ceb6e4c08a"
+    },
+    "candidate/source-back.brep": {
+      "bytes": 18949,
+      "sha256": "3650a4a694f5da73aae16c8a509bec4752c71a97ad8697dd12a0370095541da3"
+    },
+    "candidate/unfilleted-local.brep": {
+      "bytes": 39838,
+      "sha256": "f32a1f83c6131b5ca384800007f5dd5c8911f6a137e2f0b7e3b030af49116981"
+    },
+    "candidate-runtime.json": {
+      "bytes": 138953,
+      "sha256": "e35ebac6aa54f9854eb51d85df1a0bff5e3838ba242c542a5cb61dd342f1973b"
+    }
+  },
+  "preservation": {
+    "project": {
+      "before_sha256": "b3d1ebe15dab3877cf629121b4f60e6d68937b2aced2af5e424a1d639a7cc8f9",
+      "after_sha256": "b3d1ebe15dab3877cf629121b4f60e6d68937b2aced2af5e424a1d639a7cc8f9",
+      "equal": true,
+      "members": 3100
+    },
+    "hardware": {
+      "before_sha256": "0e59aae44062740569119c47523706f72465348eefad7516cf6fa5cdb951e7c3",
+      "after_sha256": "0e59aae44062740569119c47523706f72465348eefad7516cf6fa5cdb951e7c3",
+      "equal": true,
+      "members": 1790
+    },
+    "runtime": {
+      "before_sha256": "d228d65f57b8e325d31143d0da144dd2a28e81a89c71f6f0495eaf1551149c23",
+      "after_sha256": "d228d65f57b8e325d31143d0da144dd2a28e81a89c71f6f0495eaf1551149c23",
+      "equal": true,
+      "members": 24222
+    }
+  },
+  "all_project_Git_blobs_exact": true,
+  "private_input_exact": true,
+  "phase_results": {
+    "baseline": {
+      "exit": 0,
+      "seconds": 98.34331499692053,
+      "process_cleanup": {
+        "group_gone": true,
+        "signalled": false,
+        "reaped": []
+      }
+    },
+    "candidate": {
+      "exit": 1,
+      "seconds": 24.21915667783469,
+      "process_cleanup": {
+        "group_gone": true,
+        "signalled": false,
+        "reaped": []
+      }
+    }
+  },
+  "baseline_volume_mm3": 1014700.4905201178,
+  "baseline_interfaces": {
+    "bed": {
+      "size_mm": [
+        274,
+        158,
+        81
+      ],
+      "placement": "turned",
+      "ok": true
+    },
+    "body": {
+      "z_spine_top_mm": 90.5,
+      "reference_mm": 90.5,
+      "cheek_flange_z_mm": -85.75,
+      "frame_z_min_mm": -81.5,
+      "ok": true,
+      "inserts": [
+        [
+          -83.0,
+          70.0
+        ],
+        [
+          0.0,
+          70.0
+        ],
+        [
+          83.0,
+          70.0
+        ],
+        [
+          -83.0,
+          -70.0
+        ],
+        [
+          0.0,
+          -70.0
+        ],
+        [
+          83.0,
+          -70.0
+        ]
+      ]
+    },
+    "bbox_mm": [
+      -137.0,
+      137.0,
+      -82.3,
+      -1.0,
+      -81.5,
+      77.0
+    ]
+  },
+  "candidate_geometry_absent": true,
+  "comparison_not_run": true,
+  "raw_files": {
+    "bootstrap.log": {
+      "bytes": 0,
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+    },
+    "host-before-launch.json": {
+      "bytes": 147,
+      "sha256": "35b34b7e56f7b88b333699fb059057bbfdd20f4a9299f4e93c701e64981d700b"
+    },
+    "exit.done": {
+      "bytes": 2,
+      "sha256": "4355a46b19d348dc2f57c046f8ef63d4538ebb936000f3c9ee954a27460dd865"
+    },
+    "outer-group-state.json": {
+      "bytes": 20,
+      "sha256": "01494769646704bf89e80824e006f460ae4f48f4ac631ad3d8d87c7e6e8b8d39"
+    },
+    "started.json": {
+      "bytes": 466,
+      "sha256": "e0bc5b04ae18d4ed6c71bb4c11b9a412aeac2f3603d9cc7c2d289f0202cb68ca"
+    },
+    "run.log": {
+      "bytes": 3524,
+      "sha256": "d8e817693f5f5aa3990ff40cd94faeb3ae0ad6e599ddc15645f015aa71c65bbe"
+    },
+    "launcher.log": {
+      "bytes": 0,
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+    },
+    "collection.json": {
+      "bytes": 853,
+      "sha256": "975bb8d69acdfd7e0a54b252c0615f9fb7daeaec54c1d48bc96faca534b598ae"
+    },
+    "host-preflight.json": {
+      "bytes": 289,
+      "sha256": "aa1c752f29d4d74baf4cc542ef305dcd8291c345a8de6b1ffef7500839c0fcdc"
+    },
+    "out/private-input-after.json": {
+      "bytes": 118,
+      "sha256": "f092a9daccd49dd6c736d3001d6e52d4eaa5366c3f3e902f472b85ed26f84b69"
+    },
+    "out/result.json": {
+      "bytes": 3506,
+      "sha256": "3409eea100bf9afc53554b70aa6edc248217b6d064cb6a66328a4a3f382cf46a"
+    },
+    "out/geometry-inventory.json": {
+      "bytes": 1283,
+      "sha256": "7f1f6c1ee732d034c568284e7b7d4ea168ff0d2a089c134d9a12faa03db52931"
+    },
+    "out/geometry.tgz": {
+      "bytes": 267354,
+      "sha256": "f577c483afb67f132f56a2394cbebad335414451d0b9398280c2161e11f4eb75"
+    },
+    "out/project-status-after.json": {
+      "bytes": 3,
+      "sha256": "bd85bcdb8d4e613a79cb62d0903946ad10c83e63dc75f67614c159c0dbf4d184"
+    },
+    "out/private-input-before.json": {
+      "bytes": 118,
+      "sha256": "f092a9daccd49dd6c736d3001d6e52d4eaa5366c3f3e902f472b85ed26f84b69"
+    },
+    "out/runtime-before.json": {
+      "bytes": 4697920,
+      "sha256": "d228d65f57b8e325d31143d0da144dd2a28e81a89c71f6f0495eaf1551149c23"
+    },
+    "out/runtime-after.json": {
+      "bytes": 4697920,
+      "sha256": "d228d65f57b8e325d31143d0da144dd2a28e81a89c71f6f0495eaf1551149c23"
+    },
+    "out/baseline.log": {
+      "bytes": 13749,
+      "sha256": "f1234b61834b35d6273802de0ae89b5f37ce5f13a264f88fa4667ddef21e2b54"
+    },
+    "out/hardware-after.json": {
+      "bytes": 268409,
+      "sha256": "0e59aae44062740569119c47523706f72465348eefad7516cf6fa5cdb951e7c3"
+    },
+    "out/geometry-archive.json": {
+      "bytes": 97,
+      "sha256": "d709effdd9723f39e423601c08b1ad02c0cb3790687c3e4eca3b16c90a853d3c"
+    },
+    "out/candidate.log": {
+      "bytes": 3108,
+      "sha256": "64f3f854d8d45362673276e2a57bc6445313e2ae2e32e4bf8bb9f47303789694"
+    },
+    "out/hardware-before.json": {
+      "bytes": 268409,
+      "sha256": "0e59aae44062740569119c47523706f72465348eefad7516cf6fa5cdb951e7c3"
+    },
+    "out/project-after.json": {
+      "bytes": 551308,
+      "sha256": "b3d1ebe15dab3877cf629121b4f60e6d68937b2aced2af5e424a1d639a7cc8f9"
+    },
+    "out/project-before.json": {
+      "bytes": 551308,
+      "sha256": "b3d1ebe15dab3877cf629121b4f60e6d68937b2aced2af5e424a1d639a7cc8f9"
+    },
+    "out/geometry/baseline-runtime.json": {
+      "bytes": 139219,
+      "sha256": "157559217907a93c7b7af0b0bcf0d702c76286828de5c6d8dd1f5893dd546260"
+    },
+    "out/geometry/candidate-runtime.json": {
+      "bytes": 138953,
+      "sha256": "e35ebac6aa54f9854eb51d85df1a0bff5e3838ba242c542a5cb61dd342f1973b"
+    },
+    "out/geometry/baseline/hip-frame.brep": {
+      "bytes": 1053599,
+      "sha256": "eade0bb22007b829473ca64bdf9dd3fc5574ae09267495542141d997d15d48b3"
+    },
+    "out/geometry/baseline/geometry.json": {
+      "bytes": 15583,
+      "sha256": "84f435fc7adb5f89f653ac8badaede320552e4f7bd8db72c3107a163e8ca615d"
+    },
+    "out/geometry/candidate/construction-failure.json": {
+      "bytes": 2980,
+      "sha256": "3cfbca0285b00552323884cfbbb730ba0b6d795b9abb7a1512df47ceb6e4c08a"
+    },
+    "out/geometry/candidate/unfilleted-local.brep": {
+      "bytes": 39838,
+      "sha256": "f32a1f83c6131b5ca384800007f5dd5c8911f6a137e2f0b7e3b030af49116981"
+    },
+    "out/geometry/candidate/source-back.brep": {
+      "bytes": 18949,
+      "sha256": "3650a4a694f5da73aae16c8a509bec4752c71a97ad8697dd12a0370095541da3"
+    },
+    "out/geometry/baseline/precheck/params.json": {
+      "bytes": 148,
+      "sha256": "180833cbc6aa0adbc315ae0a9d2c69ad6febc0c0daec759416292722a8f11107"
+    },
+    "out/geometry/baseline/precheck/body-cache/frame_mounts.json": {
+      "bytes": 812,
+      "sha256": "41f2b24eb34a64211101c2da25bb0a8363ea265ea4287363e9908cc2c19bccaa"
+    }
+  }
+}

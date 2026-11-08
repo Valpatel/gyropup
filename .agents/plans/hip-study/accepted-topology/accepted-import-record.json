@@ -1,0 +1,102 @@
+{
+  "checked_utc": "2026-11-08T00:20:58.281629+00:00",
+  "source": "2251f009fa7c51068ac57d047a92a1f640bb604d",
+  "status": "PASS_IMPORT_TOPOLOGY_ONLY",
+  "native_phase_exit": 0,
+  "native_phase_seconds": 22.79204289196059,
+  "phase_group_gone": true,
+  "outer_group_gone": true,
+  "all_preservation": {
+    "project": {
+      "before_sha256": "c50b12178680bc26a89cc2af9716c7438f4bc5470e1279aa9f676288f5127763",
+      "after_sha256": "c50b12178680bc26a89cc2af9716c7438f4bc5470e1279aa9f676288f5127763",
+      "equal": true,
+      "members": 3083
+    },
+    "hardware": {
+      "before_sha256": "9db41f5cce0369d708c8a1e382918d46eb47992936b9772919e3139f9b1e0510",
+      "after_sha256": "9db41f5cce0369d708c8a1e382918d46eb47992936b9772919e3139f9b1e0510",
+      "equal": true,
+      "members": 1790
+    },
+    "runtime": {
+      "before_sha256": "d228d65f57b8e325d31143d0da144dd2a28e81a89c71f6f0495eaf1551149c23",
+      "after_sha256": "d228d65f57b8e325d31143d0da144dd2a28e81a89c71f6f0495eaf1551149c23",
+      "equal": true,
+      "members": 24222
+    }
+  },
+  "all_project_blobs_equal_immutable_git": true,
+  "archive_sha256": "2f3afc1012c5e903eda742eb15a43f711fb1bdb3b60113cdc49bdc7c5880285e",
+  "sealed_members": {
+    "topology.json": {
+      "bytes": 2248748,
+      "sha256": "faf077d86f27294060e27d415f2000873ff92c0ceb1dd4df51b262d86b2fbb0f"
+    },
+    "worker-result.json": {
+      "bytes": 192,
+      "sha256": "65a66716b228ac737ffec890036b3d1b7cb58b843927849b0962df4e092b7bf9"
+    },
+    "worker-runtime.json": {
+      "bytes": 139120,
+      "sha256": "02c8a6c90449459b4ceafc693b33fc68f85c7787d6e4df0f4c8eebf5c20ce9a4"
+    }
+  },
+  "topology_summary": {
+    "units": "mm",
+    "frame": "Retained unrotated STEP export; no world transform applied",
+    "valid": true,
+    "solid_count": 1,
+    "volume_mm3": 1014700.490519481,
+    "bounds_mm": [
+      -137.0000001,
+      -82.30000009999999,
+      -81.5,
+      137.0000001,
+      -1.0,
+      77.0
+    ],
+    "index_scope": "IDs are local to this import, not stable parametric edge selectors",
+    "source_builder_invoked": false,
+    "interfaces_validated": false,
+    "fea_run": false,
+    "physical_qualification": false,
+    "retained_engineering_receipt": {
+      "sha256": "613e9ff07406145c3e7821a75f964dd8b569764385e840ff448d06c2b62dcfc4",
+      "status": "fail",
+      "pass": false,
+      "counts": {
+        "pass": 322,
+        "warn": 40,
+        "fail": 8
+      },
+      "meaning": "Retained source-bound result, not a new fit or strength evaluation"
+    }
+  },
+  "edge_count": 2017,
+  "face_count": 905,
+  "actual_module_origins": {
+    "cadquery": {
+      "path": "lib/python3.12/site-packages/cadquery/__init__.py",
+      "sha256": "aee64095e45cbb3af8ff4f3de654aecfa75a2647b2a80160a118e87228128cd7",
+      "kind": "regular",
+      "actual_declared_target_match": true,
+      "resolved_inside_venv": true,
+      "resolved_path_sha256": "ab64e7d9d2b68a08a378f168fc9a8d583ef84f1b9fcb917022b8e95810db5553"
+    },
+    "gmsh": {
+      "path": "lib/python3.12/site-packages/gmsh.py",
+      "sha256": "f4b0935cebde899750293d87a643090e5ea33c9b18d249267f507db68a0e01c3",
+      "kind": "file-symlink",
+      "actual_declared_target_match": true,
+      "resolved_inside_venv": false,
+      "resolved_path_sha256": "7508d8b6866520737bc41052a27e3ed9e78a4c9224f4af56792bf90acb0277c2"
+    }
+  },
+  "all_edge_face_wire_adjacencies_consistent": true,
+  "first_attempt_remains_FAILED": true,
+  "independent_review": "https://github.com/Valpatel/gyropup/issues/8#issuecomment-6714990049",
+  "retained_original_failure": "https://github.com/Valpatel/gyropup/issues/8#issuecomment-6714771814",
+  "result_scope": "Import-only diagnostics. No source-builder/interface/FEA/physical approval.",
+  "publication": "Immutable diagnostics from source2251f009, committed with the subsequent geometry study; no current candidate interface/strength claim."
+}

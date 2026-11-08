@@ -1,0 +1,11 @@
+{
+  "scope": "Kernel-free producer/interface/preflight tests; CAD candidate not executed",
+  "python_tests": 40,
+  "node_companion_tests": 3,
+  "exit": 0,
+  "log_sha256": "480af2db05c1b1912564dbcca836d5070e38c5201a7f7dbe704e88fdb79328d1",
+  "actual_cli_preflight_controls": true,
+  "published_measured_mount_fault_controls": true,
+  "native_candidate_executed": false,
+  "cad_syntax_only": true
+}

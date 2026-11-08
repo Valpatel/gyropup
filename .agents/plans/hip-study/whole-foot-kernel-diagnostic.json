@@ -1,0 +1,521 @@
+{
+  "scope": "Actual saved-failed-shape OCP diagnostic only; not candidate/clearance/strength acceptance",
+  "source": "5765afc6c29e7a1bdef0af3e53b0f994556e200e",
+  "status": "COLLECTED_KERNEL_DIAGNOSTIC_ONLY",
+  "archive_sha256": "f6bb0ac36ab29be7c5f4050731322cb5bc4f59d17234a62acec0df7098d5fae4",
+  "members": {
+    "fault-diagnostic/fillet-diagnostic.json": {
+      "bytes": 17404,
+      "sha256": "9d5dce95c972501ca2d28643ee4546aac38fa60d407327e9483a50c00243e1a2"
+    },
+    "fault-diagnostic-runtime.json": {
+      "bytes": 139219,
+      "sha256": "d24fe27b511cd1c07001f81460d6f7cb17a35f7ea60abac1443216d4a9037da5"
+    }
+  },
+  "preservation": {
+    "project": {
+      "before_sha256": "b7715526a6f3c385a38498b78851adecc8ca97f4e9bcb0ba2cac989a303411f8",
+      "after_sha256": "b7715526a6f3c385a38498b78851adecc8ca97f4e9bcb0ba2cac989a303411f8",
+      "equal": true,
+      "members": 3104
+    },
+    "hardware": {
+      "before_sha256": "0e59aae44062740569119c47523706f72465348eefad7516cf6fa5cdb951e7c3",
+      "after_sha256": "0e59aae44062740569119c47523706f72465348eefad7516cf6fa5cdb951e7c3",
+      "equal": true,
+      "members": 1790
+    },
+    "runtime": {
+      "before_sha256": "d228d65f57b8e325d31143d0da144dd2a28e81a89c71f6f0495eaf1551149c23",
+      "after_sha256": "d228d65f57b8e325d31143d0da144dd2a28e81a89c71f6f0495eaf1551149c23",
+      "equal": true,
+      "members": 24222
+    }
+  },
+  "all_project_Git_blobs_exact": true,
+  "private_input_exact": true,
+  "failed_input_exact": true,
+  "phase_results": {
+    "fault-diagnostic": {
+      "exit": 0,
+      "seconds": 17.176409476902336,
+      "process_cleanup": {
+        "group_gone": true,
+        "signalled": false,
+        "reaped": []
+      }
+    }
+  },
+  "diagnostic": {
+    "scope": "Saved failed-shape kernel diagnosis only; no candidate or engineering acceptance",
+    "input_sha256": {
+      "construction-failure.json": "3cfbca0285b00552323884cfbbb730ba0b6d795b9abb7a1512df47ceb6e4c08a",
+      "unfilleted-local.brep": "f32a1f83c6131b5ca384800007f5dd5c8911f6a137e2f0b7e3b030af49116981",
+      "source-back.brep": "3650a4a694f5da73aae16c8a509bec4752c71a97ad8697dd12a0370095541da3"
+    },
+    "source_sha256": {
+      "hardware/__init__.py": "d6ddd9ce4ef273b82f43f315f09d11db1224f2b8298c9b0b3ea7dafb97280ba0",
+      "hardware/cad/__init__.py": "d6ddd9ce4ef273b82f43f315f09d11db1224f2b8298c9b0b3ea7dafb97280ba0",
+      "hardware/cad/analysis/studies.py": "41d2807c06b54abfa69c966fb274eaa0933e080ee642f977bae8e1aa1900d349",
+      "hardware/cad/body/body_battery.py": "3f491f0e4ccafa2e985fd1f0b20ef886c7b53f059593b354817e17a47b65fa71",
+      "hardware/cad/body/body_bom.py": "aab4d9612ef7176fe74b511be838ad2bb3695a61a81d233ab788cca5650098c0",
+      "hardware/cad/body/body_frame.py": "0dbff64156008827de6e7841e0e310d1741739de93623d23390fa8fe773f7c32",
+      "hardware/cad/body/body_fuse_board.py": "5dcb993962fdcfc0a18cea93c43dec7bb04f0ce3f2174228465f2a73e76d20de",
+      "hardware/cad/body/body_guards.py": "488427babff18f5503df518831dcf68f8ce71573c2fd3d517cedf70af116ff57",
+      "hardware/cad/body/body_joints.py": "696ada09b51da53b01c930ab274f171bf86f8e9f19e1eeb942a8d48345358ee6",
+      "hardware/cad/body/body_layout.py": "2d4514ca185c983caa290ab2c2cc6b167894c9fc473e9b15bf284cb3878e324a",
+      "hardware/cad/body/body_legloads.py": "3a5726ef7c7adf58d2183dd2c55156e1a9f6a55e1c181b3344c777b10d2ce136",
+      "hardware/cad/body/body_params.py": "a68737201e93af4ce8f00f675fbe3c235453b8bb0e19440fe3062635737a2247",
+      "hardware/cad/body/body_sections.py": "1592a87f99a3428761432a4231a9931c2bbddeddbbf20449005aaf3b46710515",
+      "hardware/cad/body/body_sheet.py": "d695fa0d8f3cf1d8c0f9b71fe08a52cb6e701f4d0ed895bf3053cd2325f56459",
+      "hardware/cad/body/body_shell.py": "a5e8f050988b12b1cd7f69e247314eb01ec4b08eed9e4911d7fde5578e780296",
+      "hardware/cad/body/body_studies.py": "e496e35481580e4d1c1c635da5434a300ee63d5140662c5b25a95130375cab0c",
+      "hardware/cad/body/body_thermal.py": "d0aa1a5e8fc31cd9e4fa8ac1bf1600b374611546233cab1db9fe8f884f32b104",
+      "hardware/cad/body/body_views.py": "d6a59be073b020537d55448be63dc89a7867f1118c6e0bf36290482f5518fc0e",
+      "hardware/cad/body/body_wiring.py": "7ae4a6e9684fe852cc22f5efe6cef377be53da3cd1a9dd28b6b1a6a8c69fb1d9",
+      "hardware/cad/builders/build.py": "83b7342f3e1b6fba2555649668d51814ec814258b2e018372b127ef046d0fcec",
+      "hardware/cad/builders/build_body.py": "218b22c53eac82d94a0f4e6014f4c6f7d833be9c10cffbc062f6ffa4b64fa087",
+      "hardware/cad/builders/build_leg.py": "b2ed60b0da4f38390f8798124e01b0f64c1005fd860204beb944cb17ae80c1ed",
+      "hardware/cad/builders/build_rig.py": "619c6cfd0ad666dbe52fe75e732515bfeefa14a2ab6694c29f91aec4c9ea8779",
+      "hardware/cad/builders/build_turret.py": "1ff62e01fb86b8de8159c7e75dbec2c502aebde457d528f53dedcda4b7a15915",
+      "hardware/cad/builders/build_turret_box.py": "1c9c3bc4297b572c6619df53e565568818469abd23796e0370671a1923837100",
+      "hardware/cad/legs/fivebar.py": "ba3d97111e57e68cd27faee602f285ce941be5dbe028108b50c28cb3483b5fa5",
+      "hardware/cad/legs/leg.py": "f8cf486e8056b55b024b83d87223429c1d2d163443d3734115e36e2e0f16f1eb",
+      "hardware/cad/legs/leg_studies.py": "a89b96dae120a0d56430eabc8fba5eb7a69f75fc4685087eff106cd496dc9c4a",
+      "hardware/cad/legs/rs04_lug_checks.py": "c5751f8ef30f1b7ea804494e818667419dcfd05f5ac200a03f5936ae3a78d823",
+      "hardware/cad/legs/wheel_fit.py": "ab2141bab7743d89ee330401906ec182e59448188f67e1bce7afb32970badcfc",
+      "hardware/cad/locations.py": "ce87f089e519134d47a041a933b9bf862b91917ddf03e073152d132e845c130e",
+      "hardware/cad/manufacturing/bom_media.py": "785b9c60608980cff01b03fa054159e50230df6a7f223c0edb9172292e9314cb",
+      "hardware/cad/manufacturing/print_provenance.py": "10ab9d0688273573e7d4647b1f2abea23efcfe43a1d89a0ff11330fb04cf558a",
+      "hardware/cad/manufacturing/print_slicing.py": "61c6d39b363efec49e8d111c234c53dfbd9f2c60752bfb0cbe3d253906be1704",
+      "hardware/cad/manufacturing/printplan.py": "3bff04439c3a60ec89a1263b44f6a16c0eb42afe18b514d1207b59d8bfc294d0",
+      "hardware/cad/rig/rig_assembly.py": "13382c222d6bf56363f494279507f761381aa882d95a27409114b1bcb959f9be",
+      "hardware/cad/rig/rig_bench.py": "70c545bbc7fe5fee3d022fa219acb8e25dc074c6534fb19e7ee5c75ca64a9fca",
+      "hardware/cad/rig/rig_hardware.py": "5fa85d0973dc3fff49a4b6ddf7765c01fba193e70fcf102ae11dd58036d983fe",
+      "hardware/cad/rig/rig_integrity.py": "c361c7323b3c2fe461fd5d9c0af9edbee8a4dedfee3fd8ed0fe622e9013365ad",
+      "hardware/cad/rig/rig_parts.py": "4fb51ecb263971c06712696617e59c3bef59280db8bb3bff12ee906e8bd70143",
+      "hardware/cad/rig/rig_views.py": "de912fbdad7616f61c965786add7b296e830e60ae04b134a448cbc9182500709",
+      "hardware/cad/robot/assembly.py": "8da70c67e060884544d1b44c69153480a8a5e541f0f7caa3ea8aec87b0991e1a",
+      "hardware/cad/robot/assembly_checks.py": "33ee6454e3477586e2a2dc7af2901e60678ca61a567152d5d7e987bfde104122",
+      "hardware/cad/robot/cables.py": "26ff1e464439bfe776fa0a30fb511b36d8bbee56fdb92980fde49f82105da75a",
+      "hardware/cad/robot/electronics.py": "e3d322ee903366af22caa191dbc1aab80546a1c90aac886d1d87b7905af93daa",
+      "hardware/cad/robot/gmi.py": "13ee0da5ad9cc1399d6be16d661775633ae16b4ef872907d7c52ff3dc9b45269",
+      "hardware/cad/robot/interfaces.json": "a4842a317dd2e64e9b4e11d34376bc36c26e1ddf8435a4b16a85dae3cd730b73",
+      "hardware/cad/robot/parameters.json": "92cfeaa792a2466594852afeef08af70fe74335ce60f458bd976f62ec0a39e13",
+      "hardware/cad/turret/check_base_board_interfaces.py": "e66019c5d03b14239535af20eaf7aa6ca9db7884a72f01a39fe4182fdd7dc02e",
+      "hardware/cad/turret/check_base_board_print.py": "cdabcfec32a17ab901880ce6fa94f74398923fd0237758a2b6ee5b8d6deb8aeb",
+      "hardware/cad/turret/check_base_board_service.py": "56f07bb65cb5c103948b41e2d5e971a809401b3e7cf793da48317c8000050dc2",
+      "hardware/cad/turret/turret.py": "bba2ddcadb453fc99ad548aa3d3f912d0bf66b2d43eb4af59077b34873c04808",
+      "hardware/cad/turret/turret_assembly.py": "bd581546115d97277ccb320e122afc126a40ec494c8766eb8b0a64bb0a043a43",
+      "hardware/cad/turret/turret_base_board.py": "68fa770daf4d6568f253c103d8f89225c90eadb2a5a523e7afbf3e689fbd395e",
+      "hardware/cad/turret/turret_boards.py": "a10736535be770721bbd3ca59579d5854655026bbd3f4670a96d360b8f8deb71",
+      "hardware/cad/turret/turret_box.py": "9d3f6a82712f1449e03edafe78383fa0916ac0efa1740d0ea9dc6ed03a7ddafe",
+      "hardware/cad/turret/turret_carrier_interfaces.py": "d43e7f968fc16e51447bcbdc515cb4e6043ca8b169b406da4820785cf97eb04f",
+      "hardware/cad/turret/turret_carrier_support.py": "6ce4f816778c10a4d2e91c64b58ca8583c70f6ad443cd34fff9f36cf37b6438a",
+      "hardware/cad/turret/turret_dossier.py": "3cb60f119539a1adfb5f56439ce5b4d8011b86baf09ebc44c684ae6a1677e707",
+      "hardware/cad/turret/turret_gates.py": "d994b3a737cffc1dfbbb5b3b6a2a6d06dfaf906fe139c42d96e613d29257545f",
+      "hardware/cad/turret/turret_lidar.py": "1f892cc50a2508d7a79e2d8411dbd6d42a1e4b60951355400eee979879af235c",
+      "hardware/cad/turret/turret_limits.py": "a725c29197ef2908f00bac4e6d8b14815c3449196c4d0d15483719f0276b6b6e",
+      "hardware/cad/turret/turret_motion.py": "f3d40ab565a1121dcd46e32e8d4b907f44732f203aa67faa44bf359b8132ac9c",
+      "hardware/cad/turret/turret_mount.py": "19e6b657b4b29baf5937bc0e5814726a67cfa0c499311b65233c33824a20acef",
+      "hardware/cad/turret/turret_orders.py": "d8654ac8d7bc1ccc92a897741f336115e2065b39a45e2a94e5ce05cb36568ae7",
+      "hardware/cad/turret/turret_print.py": "7482db25ad8334a60ec4ee15e8606c20ef5a15e025c0310e1e64a831334cd54f",
+      "hardware/cad/turret/turret_snaps.py": "9dd5ed2fffeed0c8798e11836866725003fe3265e2bc2f915b56a543d98ad0c1",
+      "hardware/cad/turret/turret_stand.py": "5fb158d98b56c7273056a95c10238b05af2766e17ddcde8a7c684847983d3562",
+      "hardware/cad/turret/turret_studies.py": "faf8a0900752a39fdd38fdb8cccc20dc3cdd1ff82679d93d47886680ba9701ac",
+      "hardware/cad/turret/turret_tilt_range.py": "1852dedd5edb5a67b8198dc2bac888d10f505e96c399769f7a9e0aac84a94885",
+      "hardware/catalog/alternates.json": "9d5da650878fefa12654cdedae841d2daf22c1101c7f038018a75b8921d5ee3b",
+      "hardware/catalog/body.json": "91a27038348a4e8e4beb3ede92c5c84a073d4728cd73e14f66d3e3226ab9b52b",
+      "hardware/catalog/designed-media-validation.json": "b31f669c36e93dc2d5e701f161fbd74374688688b21a8bacf6f93227e808a435",
+      "hardware/catalog/hardware.json": "af0f7f3bdce4ee93649e278106d00a93fe2ebea3569c057f1d2a04fe4b360015",
+      "hardware/catalog/images.json": "918f8c682e95ae0210f732197c0d9bd58d27c066a9cffc0037bee4284b795e73",
+      "hardware/catalog/index.json": "5e77d00c8ab4961f5da0bb2d5692a23170b9f4143e05d850d7b33fe36d70f334",
+      "hardware/catalog/interfaces.json": "3889bc34503444f389e7951d74944f37b7e57b0b2b3be68ed596b959e83a46af",
+      "hardware/catalog/leg_actuators.json": "b8ed3125cca22e9936b929fa1529395b1dead7a9585c21c63995bb294fa31bc5",
+      "hardware/catalog/lights.json": "7f8a4a2ebf819141ba8929257bce17a3868d5420fd34a4ee137e7d8b2ee51f78",
+      "hardware/catalog/materials.json": "f699e8ea644aeb4f66227f5e021a2a7996b477ef1a41d6048b7f638364ba5d1f",
+      "hardware/catalog/motor_drivers.json": "4b4d83c2ba6ded0127992de1fb01982e96d831a79864af73ff49ecad102704e3",
+      "hardware/catalog/power_electronics.json": "896ad5da63cb4cf56ebb38607e012343395e220d3c4a8d0a2275e9a614012c97",
+      "hardware/catalog/rig.json": "87b982f76287ec4141cdb043de880e985373ca8305a8cf30ed15d378f25879b5",
+      "hardware/catalog/sensors_compute.json": "7ba205b22b43195db0dcff85976a18f0a8405f782c3437e675122dbbc549f47a",
+      "hardware/catalog/sourcing.json": "a002bac6b795357a717ed0528ea6e2a561d774a7e608c35fee64fd8231370a12",
+      "hardware/catalog/turret.json": "4e0ab8a62f75e4da60e50e84dcddc85d2e462ffc0949bacdcdf60d7f4aade9f7",
+      "hardware/catalog/vendor-media-verification.json": "3025ca6b68918b33986078c8a8087f036a653f17c230accf665127fa3d72d733",
+      "hardware/catalog/wheel_motors.json": "e92baa60e433e177d87450145943c32bd6b60bebb97e1c1746354aa00f2dbc99",
+      "hardware/designs/default.json": "3dc7d04d0d6eeec81decefa360f3904b093f19515d6944910c2cb20c976db211",
+      "hardware/exports/leg/fea/summary.json": "1488c5f62b90fd44162140ba1cb7adf8f52135a727cd37b6f08f4d2794000a39",
+      "hardware/exports/leg/rig-results.json": "171a1d4f2195468a235313fce29e5dde1272499b0d0934e22ad2bab5564ba902",
+      "software/simulation/leg_control.py": "cadd718dc75c610c7f83eb467e3358336187c706fab02654eeea5316a591df01",
+      "software/simulation/leg_rig.py": "caa507399957278afd6ff414c2ae69ab05000456ceb15810f6ccbf7b7f273e05",
+      "tests/hardware/body/test_body.py": "1f99193493bd0512cbbcef0f771f1e0585dd1a820ea159719bd828a54f564d64",
+      "tests/hardware/legs/test_leg_loads.py": "f05c09f4719541fa8880dbee28ce01e4314ae5dba7a599e7eecb6240d94341a4",
+      "tests/hardware/turret/test_turret_gate_sources.py": "fb85a82ab0a322debc60b6b93a3b8018227949e80fb7d5bcc453171b0f397732",
+      "tests/hardware/turret/test_turret_snaps.py": "96afedabae5991a7d99eab3af5f324ae901589d7e92e45b2a36f32bc7a709fd6",
+      "tests/hardware/turret/test_turret_solids.py": "d03677019224ad4e95f8775f374010c450299daf67fd729f546a1ea458e87a31",
+      "tools/engineering/legs/hip-frame-study.py": "8012476057e63d01af6e5a4e208fe81bffade35f316418e50b69ee2ffff02b40",
+      "tools/site/source-layout.json": "da14426ba66d03195bb8566ae61371b38ba3ad7a19e39e7030509542d9d9902c",
+      "tools/site/source_layout.py": "6763319c818b15386f9c6157b35455ab0b11acbd6110dc24eefc5eba3103eb4f",
+      "tools/engineering/legs/hip_frame_geometry.py": "0f1e5fa925288a38f8835f9b0851e073764361c1a55500f06ea32a366a73d25e",
+      ".agents/plans/hip-study/accepted-topology/topology.json": "faf077d86f27294060e27d415f2000873ff92c0ceb1dd4df51b262d86b2fbb0f",
+      ".agents/plans/hip-study/accepted-topology/accepted-import-record.json": "2224e1f86cb6f92c3a3a3065a69d6ba688f547f9a53ccfe5c1b6f743a41fedc0",
+      ".agents/plans/hip-study/retained-foot-baseline.params.json": "d8ac357fbb37b9512a37347ed80fba18b1184943fcdb6e5be6ab93f644e57175"
+    },
+    "radius_mm": 3.5,
+    "selected_edges": [
+      {
+        "type": "LINE",
+        "length_mm": 2.3937948617206004,
+        "start_mm": [
+          122.23200000000001,
+          -25.1,
+          54.86580000000001
+        ],
+        "centre_mm": [
+          121.99850000000002,
+          -25.1,
+          56.0397
+        ],
+        "end_mm": [
+          121.76500000000003,
+          -25.1,
+          57.21359999999999
+        ]
+      },
+      {
+        "type": "LINE",
+        "length_mm": 2.3937279544676997,
+        "start_mm": [
+          122.38860000000003,
+          -25.1,
+          52.47719999999998
+        ],
+        "centre_mm": [
+          122.31030000000003,
+          -25.1,
+          53.6715
+        ],
+        "end_mm": [
+          122.23200000000003,
+          -25.1,
+          54.86580000000001
+        ]
+      },
+      {
+        "type": "LINE",
+        "length_mm": 2.3937279544676926,
+        "start_mm": [
+          122.23200000000001,
+          -25.1,
+          50.08860000000004
+        ],
+        "centre_mm": [
+          122.31030000000001,
+          -25.1,
+          51.28290000000005
+        ],
+        "end_mm": [
+          122.38860000000001,
+          -25.1,
+          52.47720000000006
+        ]
+      },
+      {
+        "type": "LINE",
+        "length_mm": 2.3937948617205933,
+        "start_mm": [
+          121.76500000000001,
+          -25.1,
+          47.74080000000002
+        ],
+        "centre_mm": [
+          121.99850000000002,
+          -25.1,
+          48.914700000000025
+        ],
+        "end_mm": [
+          122.23200000000001,
+          -25.1,
+          50.08860000000001
+        ]
+      },
+      {
+        "type": "LINE",
+        "length_mm": 0.9213160085930099,
+        "start_mm": [
+          121.46886681395371,
+          -25.1,
+          46.868373313216594
+        ],
+        "centre_mm": [
+          121.61693340697686,
+          -25.1,
+          47.30458665660828
+        ],
+        "end_mm": [
+          121.765,
+          -25.1,
+          47.74079999999997
+        ]
+      }
+    ],
+    "fea_run": false,
+    "physical_qualification": false,
+    "queries": {
+      "contour_count": 5,
+      "contour_1": {
+        "closed": false,
+        "edge_count": 1,
+        "edges": [
+          {
+            "type": "LINE",
+            "length_mm": 2.3937948617206004,
+            "start_mm": [
+              122.23200000000001,
+              -25.1,
+              54.86580000000001
+            ],
+            "centre_mm": [
+              121.99850000000002,
+              -25.1,
+              56.0397
+            ],
+            "end_mm": [
+              121.76500000000003,
+              -25.1,
+              57.21359999999999
+            ]
+          }
+        ]
+      },
+      "contour_2": {
+        "closed": false,
+        "edge_count": 1,
+        "edges": [
+          {
+            "type": "LINE",
+            "length_mm": 2.3937279544676997,
+            "start_mm": [
+              122.38860000000003,
+              -25.1,
+              52.47719999999998
+            ],
+            "centre_mm": [
+              122.31030000000003,
+              -25.1,
+              53.6715
+            ],
+            "end_mm": [
+              122.23200000000003,
+              -25.1,
+              54.86580000000001
+            ]
+          }
+        ]
+      },
+      "contour_3": {
+        "closed": false,
+        "edge_count": 1,
+        "edges": [
+          {
+            "type": "LINE",
+            "length_mm": 2.3937279544676926,
+            "start_mm": [
+              122.23200000000001,
+              -25.1,
+              50.08860000000004
+            ],
+            "centre_mm": [
+              122.31030000000001,
+              -25.1,
+              51.28290000000005
+            ],
+            "end_mm": [
+              122.38860000000001,
+              -25.1,
+              52.47720000000006
+            ]
+          }
+        ]
+      },
+      "contour_4": {
+        "closed": false,
+        "edge_count": 1,
+        "edges": [
+          {
+            "type": "LINE",
+            "length_mm": 2.3937948617205933,
+            "start_mm": [
+              121.76500000000001,
+              -25.1,
+              47.74080000000002
+            ],
+            "centre_mm": [
+              121.99850000000002,
+              -25.1,
+              48.914700000000025
+            ],
+            "end_mm": [
+              122.23200000000001,
+              -25.1,
+              50.08860000000001
+            ]
+          }
+        ]
+      },
+      "contour_5": {
+        "closed": false,
+        "edge_count": 1,
+        "edges": [
+          {
+            "type": "LINE",
+            "length_mm": 0.9213160085930099,
+            "start_mm": [
+              121.46886681395371,
+              -25.1,
+              46.868373313216594
+            ],
+            "centre_mm": [
+              121.61693340697686,
+              -25.1,
+              47.30458665660828
+            ],
+            "end_mm": [
+              121.765,
+              -25.1,
+              47.74079999999997
+            ]
+          }
+        ]
+      },
+      "faulty_contour_count": 4,
+      "faulty_1_index": 1,
+      "faulty_1_status": "ChFiDS_ErrorStatus.ChFiDS_StartsolFailure",
+      "faulty_1_computed_surfaces": 0,
+      "faulty_2_index": 2,
+      "faulty_2_status": "ChFiDS_ErrorStatus.ChFiDS_StartsolFailure",
+      "faulty_2_computed_surfaces": 0,
+      "faulty_3_index": 3,
+      "faulty_3_status": "ChFiDS_ErrorStatus.ChFiDS_StartsolFailure",
+      "faulty_3_computed_surfaces": 0,
+      "faulty_4_index": 4,
+      "faulty_4_status": "ChFiDS_ErrorStatus.ChFiDS_StartsolFailure",
+      "faulty_4_computed_surfaces": 0,
+      "faulty_vertex_count": 0,
+      "has_partial_result": false
+    },
+    "query_errors": {},
+    "is_done": false,
+    "status": "COLLECTED_KERNEL_DIAGNOSTIC_ONLY"
+  },
+  "raw_files": {
+    "bootstrap.log": {
+      "bytes": 0,
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+    },
+    "host-before-launch.json": {
+      "bytes": 141,
+      "sha256": "4c04cf5ea7c3278729a9bcf893a80ef030f9bc18f8e4ce91fa3dcf0f7e891f11"
+    },
+    "exit.done": {
+      "bytes": 2,
+      "sha256": "9a271f2a916b0b6ee6cecb2426f0b3206ef074578be55d9bc94f6f3fe3ab86aa"
+    },
+    "outer-group-state.json": {
+      "bytes": 20,
+      "sha256": "01494769646704bf89e80824e006f460ae4f48f4ac631ad3d8d87c7e6e8b8d39"
+    },
+    "started.json": {
+      "bytes": 466,
+      "sha256": "04f1a06c40aa41f41f325715f41b710927060037229ed661db96ab8dbaefb43f"
+    },
+    "run.log": {
+      "bytes": 21509,
+      "sha256": "29abc91a9f551efb5330fadd33d26be841543ca0704db88c236bbae8d3dcffe6"
+    },
+    "launcher.log": {
+      "bytes": 0,
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+    },
+    "collection.json": {
+      "bytes": 853,
+      "sha256": "975bb8d69acdfd7e0a54b252c0615f9fb7daeaec54c1d48bc96faca534b598ae"
+    },
+    "host-preflight.json": {
+      "bytes": 291,
+      "sha256": "8c92663288aacf4503cf5ed866c6260767f4ee03648832de61791eb8c1ad1c33"
+    },
+    "out/private-input-after.json": {
+      "bytes": 118,
+      "sha256": "f092a9daccd49dd6c736d3001d6e52d4eaa5366c3f3e902f472b85ed26f84b69"
+    },
+    "out/fault-diagnostic.log": {
+      "bytes": 14948,
+      "sha256": "785a4c58e47622f3e17558ea3f1c44fb8326d07178adcd2b3112887225422339"
+    },
+    "out/result.json": {
+      "bytes": 20067,
+      "sha256": "3280184bd5326c49a88cedce824d4ce9b0738ecfe220c32f26cd43ecf6cfd7bb"
+    },
+    "out/geometry-inventory.json": {
+      "bytes": 300,
+      "sha256": "70cda8c86d789629b4bcc4c837d213c5a258eb7cb14b56931e7e63d8a2fb239e"
+    },
+    "out/geometry.tgz": {
+      "bytes": 52145,
+      "sha256": "f6bb0ac36ab29be7c5f4050731322cb5bc4f59d17234a62acec0df7098d5fae4"
+    },
+    "out/project-status-after.json": {
+      "bytes": 3,
+      "sha256": "bd85bcdb8d4e613a79cb62d0903946ad10c83e63dc75f67614c159c0dbf4d184"
+    },
+    "out/private-input-before.json": {
+      "bytes": 118,
+      "sha256": "f092a9daccd49dd6c736d3001d6e52d4eaa5366c3f3e902f472b85ed26f84b69"
+    },
+    "out/runtime-before.json": {
+      "bytes": 4697920,
+      "sha256": "d228d65f57b8e325d31143d0da144dd2a28e81a89c71f6f0495eaf1551149c23"
+    },
+    "out/runtime-after.json": {
+      "bytes": 4697920,
+      "sha256": "d228d65f57b8e325d31143d0da144dd2a28e81a89c71f6f0495eaf1551149c23"
+    },
+    "out/hardware-after.json": {
+      "bytes": 268409,
+      "sha256": "0e59aae44062740569119c47523706f72465348eefad7516cf6fa5cdb951e7c3"
+    },
+    "out/geometry-archive.json": {
+      "bytes": 97,
+      "sha256": "4a5e258c858e802869782989877f34fc2954ef29065ca5d491528d704e1e5a58"
+    },
+    "out/hardware-before.json": {
+      "bytes": 268409,
+      "sha256": "0e59aae44062740569119c47523706f72465348eefad7516cf6fa5cdb951e7c3"
+    },
+    "out/project-after.json": {
+      "bytes": 552076,
+      "sha256": "b7715526a6f3c385a38498b78851adecc8ca97f4e9bcb0ba2cac989a303411f8"
+    },
+    "out/failed-inputs-after.json": {
+      "bytes": 457,
+      "sha256": "dcd4046be15635d86dba34926d8bacb9d861d399f811d0511aa2df215b1c126a"
+    },
+    "out/project-before.json": {
+      "bytes": 552076,
+      "sha256": "b7715526a6f3c385a38498b78851adecc8ca97f4e9bcb0ba2cac989a303411f8"
+    },
+    "out/failed-inputs-before.json": {
+      "bytes": 457,
+      "sha256": "dcd4046be15635d86dba34926d8bacb9d861d399f811d0511aa2df215b1c126a"
+    },
+    "out/geometry/fault-diagnostic-runtime.json": {
+      "bytes": 139219,
+      "sha256": "d24fe27b511cd1c07001f81460d6f7cb17a35f7ea60abac1443216d4a9037da5"
+    },
+    "out/geometry/fault-diagnostic/fillet-diagnostic.json": {
+      "bytes": 17404,
+      "sha256": "9d5dce95c972501ca2d28643ee4546aac38fa60d407327e9483a50c00243e1a2"
+    }
+  }
+}
