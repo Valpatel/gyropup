@@ -708,8 +708,8 @@ def hip_frame(foot_diagnostics=None):
                 ring = cq.Workplane('XY').polyline(prof).close().revolve(360, (mx, 0, 0), (mx, 1, 0))
                 if foot_radius:
                     # Preserve the smallest radius reached by the existing motor-side round.
-                    motor_void = ycyl(rc - f, yf0 - STOP_EAR_BACK - 1, yf0 + 1, mx)
-                    motor_cut = ycyl(rc, yf0 - foot_radius - 1, yf0 + foot_radius + 1, mx)
+                    motor_void = ycyl(rc - f, yf0 - STOP_EAR_BACK - 1, yf0 + 1, mx).val()
+                    motor_cut = ycyl(rc, yf0 - foot_radius - 1, yf0 + foot_radius + 1, mx).val()
                     web, report = _backing_foot_blend(
                         web, back, uncut_back, blk, yf0, foot_radius, motor_void, motor_cut)
                     foot_reports.append(dict(report, side=sx, motor_x_mm=mx))
