@@ -109,7 +109,7 @@
   },
   "worker": {
     "path": ".agents/plans/hip-study/inspect-step-worker.py",
-    "sha256": "d6c3ff9f5815be9b188a94020095d7de5c8246a2d46755f4ee25e24b00c313cd"
+    "sha256": "36ca7c8148774a12505f7a6f65f6dc6f7b442a4d03b5b4726ffd4cbb0c7ab4a3"
   },
   "runtime_contract_sha256": "44dff551c60439fa0dc4b26f0ecf12728d1dab5e426022644903ff2c7afe6414",
   "scope": "Existing STEP import only; original failed lug checks/physical gaps remain. No builder/interfaces/FEA/adoption.",
@@ -124,5 +124,20 @@
   },
   "retained_runtime_snapshot_sha256": "90ac47c25a841b109102e2cc6c528d0b5b8a3e155919b107f8028c1ff9f465e6",
   "retained_runtime_snapshot_source": "Genuine E1 continuation20643642, independently accepted issue8#6712047515",
-  "retained_runtime_snapshot_raw_sha256": "d228d65f57b8e325d31143d0da144dd2a28e81a89c71f6f0495eaf1551149c23"
+  "retained_runtime_snapshot_raw_sha256": "d228d65f57b8e325d31143d0da144dd2a28e81a89c71f6f0495eaf1551149c23",
+  "module_inputs": {
+    "cadquery": {
+      "venv_path": "lib/python3.12/site-packages/cadquery/__init__.py",
+      "sha256": "aee64095e45cbb3af8ff4f3de654aecfa75a2647b2a80160a118e87228128cd7",
+      "kind": "regular",
+      "resolved_path_sha256": "ab64e7d9d2b68a08a378f168fc9a8d583ef84f1b9fcb917022b8e95810db5553"
+    },
+    "gmsh": {
+      "venv_path": "lib/python3.12/site-packages/gmsh.py",
+      "sha256": "f4b0935cebde899750293d87a643090e5ea33c9b18d249267f507db68a0e01c3",
+      "kind": "file-symlink",
+      "link_target_sha256": "7508d8b6866520737bc41052a27e3ed9e78a4c9224f4af56792bf90acb0277c2",
+      "resolved_path_sha256": "7508d8b6866520737bc41052a27e3ed9e78a4c9224f4af56792bf90acb0277c2"
+    }
+  }
 }

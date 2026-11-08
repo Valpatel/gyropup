@@ -20,9 +20,13 @@ import hashlib,json,os,shutil,stat,subprocess,sys,time
 c=json.load(sys.stdin);home=Path.home();run=home/'gyropup-mechanical-runs'/c['run_name']
 assert not run.exists(),'Exclusive run already exists; no repeat'
 prior=home/'gyropup-mechanical-runs'/c['prior_complete_run_name']
-assert (prior/'exit.done').read_text().strip()=='0'
+assert (prior/'exit.done').read_text().strip()=='1'
 assert json.loads((prior/'outer-group-state.json').read_text())['group_gone']is True
-old=json.loads((prior/'out/result.json').read_text());assert old['status']=='PASS_FIELD_CANDIDATE_ONLY' and old['source']==c['prior_source']
+old=json.loads((prior/'out/result.json').read_text());assert old['status']=='FAILED' and old['source']==c['prior_source']
+assert not old.get('final_guard_errors')
+assert set(old['phases'])=={'retained-step-import'} and old['phases']['retained-step-import']['exit']==1
+assert not (prior/'out/diagnostic/topology.json').exists()
+assert hashlib.sha256((prior/'out/diagnostic.tgz').read_bytes()).hexdigest()==c['prior_archive_sha256']
 assert all(v.get('process_cleanup',{}).get('group_gone')is True for v in old['phases'].values())
 oldpid=int((prior/'launcher.pid').read_text())
 oldcmd=Path('/proc')/str(oldpid)/'cmdline'

@@ -298,6 +298,61 @@ class TopologyInspection(unittest.TestCase):
                          '--private-config', '/tmp/nonexistent-topology-unit-fixture',
                          '--receipt', '/tmp/nonexistent-topology-unit-intent'])
 
+    def module_fixture(self, root):
+        venv = root / 'venv'; venv.mkdir()
+        regular = venv / 'cadquery.py'; regular.write_text('synthetic regular module')
+        target = root / 'retained-gmsh.py'; target.write_text('synthetic linked module')
+        link = venv / 'gmsh.py'; link.symlink_to(target)
+        data = {'cadquery': {'venv_path': regular.name, 'kind': 'regular',
+                             'resolved_path_sha256': hashlib.sha256(str(regular.resolve()).encode()).hexdigest(),
+                             'sha256': hashlib.sha256(regular.read_bytes()).hexdigest()},
+                'gmsh': {'venv_path': link.name, 'kind': 'file-symlink',
+                         'resolved_path_sha256': hashlib.sha256(str(target.resolve()).encode()).hexdigest(),
+                         'sha256': hashlib.sha256(target.read_bytes()).hexdigest(),
+                         'link_target_sha256': hashlib.sha256(os.readlink(link).encode()).hexdigest()}}
+        return venv, regular, link, target, data
+
+    def test_regular_and_exact_predeclared_symlink_module_origins(self):
+        worker = self.load('inspect-step-worker.py')
+        with tempfile.TemporaryDirectory(prefix='topology-module-file-') as tmp:
+            venv, regular, link, target, data = self.module_fixture(Path(tmp))
+            self.assertEqual(worker.module_identity('cadquery', regular, venv, data['cadquery'])['kind'], 'regular')
+            self.assertFalse(target.resolve().is_relative_to(venv))
+            result = worker.module_identity('gmsh', link, venv, data['gmsh'])
+            self.assertTrue(result['actual_declared_target_match'])
+            self.assertEqual(result['kind'], 'file-symlink')
+            self.assertEqual(worker.module_identity('gmsh', target, venv, data['gmsh']), result)
+
+    def test_module_origin_rejects_other_target_even_with_identical_bytes(self):
+        worker = self.load('inspect-step-worker.py')
+        with tempfile.TemporaryDirectory(prefix='topology-module-fault-') as tmp:
+            root = Path(tmp); venv, regular, link, target, data = self.module_fixture(root)
+            other = root / 'other.py'; other.write_bytes(target.read_bytes())
+            with self.assertRaisesRegex(ValueError, 'exact declared file target'):
+                worker.module_identity('gmsh', other, venv, data['gmsh'])
+            link.unlink(); link.symlink_to(other)
+            with self.assertRaisesRegex(ValueError, 'link target changed'):
+                worker.module_identity('gmsh', other, venv, data['gmsh'])
+            link.unlink(); link.symlink_to(target); target.write_text('changed target bytes')
+            with self.assertRaisesRegex(ValueError, 'target bytes changed'):
+                worker.module_identity('gmsh', target, venv, data['gmsh'])
+            with self.assertRaisesRegex(ValueError, 'kind changed'):
+                worker.module_identity('gmsh', link, venv, {**data['gmsh'], 'kind': 'regular'})
+            with self.assertRaisesRegex(ValueError, 'venv-relative'):
+                worker.declared_module_file(venv, {**data['gmsh'], 'venv_path': '../retained-gmsh.py'})
+            target.unlink(); target.symlink_to(other)
+            with self.assertRaisesRegex(ValueError, 'Resolved module target path changed'):
+                worker.module_identity('gmsh', other, venv, data['gmsh'])
+
+    def test_declared_module_checks_precede_native_imports(self):
+        worker = self.load('inspect-step-worker.py')
+        with tempfile.TemporaryDirectory(prefix='topology-module-preflight-') as tmp:
+            venv, regular, link, target, data = self.module_fixture(Path(tmp))
+            data['cadquery']['sha256'] = '0' * 64
+            with patch.dict(sys.modules, {n: None for n in ('cadquery', 'cadagent', 'gmsh', 'OCP')}), self.assertRaisesRegex(
+                    ValueError, 'target bytes changed'):
+                worker.runtime_identity({}, {'venv': str(venv)}, data)
+
     def test_submit_hash_guards_precede_network_and_intent(self):
         submit = self.load('submit-topology-once.py')
         with tempfile.TemporaryDirectory(prefix='topology-submit-hash-') as tmp:

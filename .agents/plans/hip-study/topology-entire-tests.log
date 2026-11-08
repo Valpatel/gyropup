@@ -1,22 +1,22 @@
 .START unmasked
-END unmasked {"command": ["/usr/bin/python3", "-I", "-S", "-B", "-c", "import signal; assert signal.SIGTERM not in signal.pthread_sigmask(signal.SIG_BLOCK, set())"], "expected_exit": 0, "exit": 0, "pid": 2616015, "process_cleanup": {"group_gone": true, "signalled": false, "reaped": []}, "seconds": 0.01781246898462996}
+END unmasked {"command": ["/usr/bin/python3", "-I", "-S", "-B", "-c", "import signal; assert signal.SIGTERM not in signal.pthread_sigmask(signal.SIG_BLOCK, set())"], "expected_exit": 0, "exit": 0, "pid": 3189335, "process_cleanup": {"group_gone": true, "signalled": false, "reaped": []}, "seconds": 0.035113724996335804}
 .START pending
-END pending {"command": ["/usr/bin/python3", "-I", "-S", "-B", "-c", "import time; time.sleep(10)"], "expected_exit": 0, "original_error": "KeyboardInterrupt: controlled pending TERM", "pid": 2616020, "process_cleanup": {"group_gone": true, "signalled": true, "reaped": []}, "seconds": 0.004203668038826436}
+END pending {"command": ["/usr/bin/python3", "-I", "-S", "-B", "-c", "import time; time.sleep(10)"], "expected_exit": 0, "original_error": "KeyboardInterrupt: controlled pending TERM", "pid": 3189337, "process_cleanup": {"group_gone": true, "signalled": true, "reaped": []}, "seconds": 0.00474408600712195}
 .................TAP version 13
 # Subtest: publication checks both actual formats even if a browser selects only one
 ok 1 - publication checks both actual formats even if a browser selects only one
   ---
-  duration_ms: 26.351332
+  duration_ms: 17.082806
   ...
 # Subtest: every retained companion preserves all original decoded pixels and timing
 ok 2 - every retained companion preserves all original decoded pixels and timing
   ---
-  duration_ms: 16359.387652
+  duration_ms: 16073.641228
   ...
 # Subtest: rehashed substituted, frozen and false-duration companions cannot pass decoded correspondence
 ok 3 - rehashed substituted, frozen and false-duration companions cannot pass decoded correspondence
   ---
-  duration_ms: 24726.566331
+  duration_ms: 24554.662941
   ...
 1..3
 # tests 3
@@ -26,17 +26,17 @@ ok 3 - rehashed substituted, frozen and false-duration companions cannot pass de
 # cancelled 0
 # skipped 0
 # todo 0
-# duration_ms 41176.726309
+# duration_ms 40704.753912
 ..START unmasked
-END unmasked {"command": ["/usr/bin/python3", "-I", "-S", "-B", "-c", "import signal; assert signal.SIGTERM not in signal.pthread_sigmask(signal.SIG_BLOCK, set())"], "expected_exit": 0, "exit": 0, "pid": 2629922, "process_cleanup": {"group_gone": true, "signalled": false, "reaped": []}, "seconds": 0.01863217697246}
+END unmasked {"command": ["/usr/bin/python3", "-I", "-S", "-B", "-c", "import signal; assert signal.SIGTERM not in signal.pthread_sigmask(signal.SIG_BLOCK, set())"], "expected_exit": 0, "exit": 0, "pid": 3197774, "process_cleanup": {"group_gone": true, "signalled": false, "reaped": []}, "seconds": 0.03526384400902316}
 START pending
-END pending {"command": ["/usr/bin/python3", "-I", "-S", "-B", "-c", "import time; time.sleep(10)"], "expected_exit": 0, "original_error": "KeyboardInterrupt: controlled pending TERM", "pid": 2629924, "process_cleanup": {"group_gone": true, "signalled": true, "reaped": []}, "seconds": 0.005131212004926056}
+END pending {"command": ["/usr/bin/python3", "-I", "-S", "-B", "-c", "import time; time.sleep(10)"], "expected_exit": 0, "original_error": "KeyboardInterrupt: controlled pending TERM", "pid": 3197782, "process_cleanup": {"group_gone": true, "signalled": true, "reaped": []}, "seconds": 0.004000729008112103}
 .Final result write: OSError: final write failure
 Final result write: OSError: final write failure
-..........{"status": "FAILED", "final_write_error": "OSError: final worker write failed"}
+.............{"status": "FAILED", "final_write_error": "OSError: final worker write failed"}
 {"status": "FAILED", "original_error": "native primary", "final_write_error": "OSError: final worker write failed"}
 .
 ----------------------------------------------------------------------
-Ran 33 tests in 44.290s
+Ran 36 tests in 43.915s
 
 OK

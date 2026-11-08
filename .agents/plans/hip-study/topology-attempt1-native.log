@@ -1,0 +1,10 @@
+Traceback (most recent call last):
+  File "<user-home>/gyropup-mechanical-runs/20261107-hip-step-topology-844dac41/src/.agents/plans/hip-study/inspect-step-worker.py", line 176, in <module>
+    main()
+  File "<user-home>/gyropup-mechanical-runs/20261107-hip-step-topology-844dac41/src/.agents/plans/hip-study/inspect-step-worker.py", line 153, in main
+    cq, identity = runtime_identity(json.loads(args.contract.read_text()), json.loads(args.runtime.read_text()))
+                   ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "<user-home>/gyropup-mechanical-runs/20261107-hip-step-topology-844dac41/src/.agents/plans/hip-study/inspect-step-worker.py", line 61, in runtime_identity
+    assert path.is_relative_to(venv)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^
+AssertionError

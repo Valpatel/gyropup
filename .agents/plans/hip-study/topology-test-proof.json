@@ -1,12 +1,13 @@
 {
   "scope": "Kernel-free source/input/lifecycle controls only; no native STEP import or geometry acceptance",
-  "python_tests": 33,
+  "python_tests": 36,
   "node_companion_tests": 3,
   "exit": 0,
-  "complete_log_sha256": "e79c6d5fd11c10483bf213dc5a3fb3460bae4dc12af366e7f1705261265ad654",
-  "focused_controls": 12,
+  "complete_log_sha256": "e6909c0bcef16ac1508085b4e4e082f4fbb1d79e8360a4355c13a6233eb725be",
+  "focused_controls": 15,
   "focused_exit": 0,
-  "focused_log_sha256": "12f2433f85e4c9488d200d089fdb13796bfc9076ab2be629dab72aaa75cddaa2",
+  "focused_log_sha256": "c38f609a03a4bba8f55431a646e1eb978ad72241f80e45c81e21dcc430cf0bb4",
   "native_executed": false,
-  "submission_controls": "Actual import-safe submitter with mocked SSH: client nonzero, ambiguous output, invalid PID and one valid launch-only receipt; no native run"
+  "submission_controls": "Actual import-safe submitter with mocked SSH: client nonzero, ambiguous output, invalid PID and one valid launch-only receipt; no native run",
+  "origin_controls": "Exact regular/file-link target binding, same-byte wrong origin, retargeted chain, altered kind/bytes and pre-import rejection; no CAD import"
 }

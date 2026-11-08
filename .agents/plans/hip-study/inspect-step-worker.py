@@ -43,8 +43,41 @@ def bound_inputs(root, cfg):
     return step, record
 
 
-def runtime_identity(contract, runtime):
+def declared_module_file(venv, declared):
+    """A pre-recorded regular file or file symlink; never a broad external prefix."""
+    rel = declared['venv_path']
+    path = Path(rel)
+    if path.is_absolute() or '..' in path.parts or path.as_posix() != rel:
+        raise ValueError('Module input must be an exact venv-relative file')
+    logical = venv / path
+    if not logical.is_file(): raise ValueError('Declared module file is missing')
+    kind = 'file-symlink' if logical.is_symlink() else 'regular'
+    if kind != declared['kind']: raise ValueError('Declared module file kind changed')
+    if kind == 'file-symlink':
+        target = hashlib.sha256(os.readlink(logical).encode()).hexdigest()
+        if target != declared['link_target_sha256']: raise ValueError('Declared module link target changed')
+    resolved = hashlib.sha256(str(logical.resolve(strict=True)).encode()).hexdigest()
+    if resolved != declared['resolved_path_sha256']: raise ValueError('Resolved module target path changed')
+    if sha(logical) != declared['sha256']: raise ValueError('Declared module target bytes changed')
+    return logical
+
+
+def module_identity(name, actual_file, venv, declared):
+    logical = declared_module_file(venv, declared)
+    actual = Path(actual_file).resolve(strict=True)
+    if actual != logical.resolve(strict=True):
+        raise ValueError(name + ': imported source differs from the exact declared file target')
+    if sha(actual) != declared['sha256']: raise ValueError(name + ': imported bytes changed')
+    return {'path': declared['venv_path'], 'sha256': sha(actual), 'kind': declared['kind'],
+            'actual_declared_target_match': True, 'resolved_inside_venv': actual.is_relative_to(venv.resolve()),
+            'resolved_path_sha256': declared['resolved_path_sha256']}
+
+
+def runtime_identity(contract, runtime, module_inputs):
     # The identity and import execute in the SAME process as the STEP inspection.
+    venv = Path(runtime['venv']).resolve()
+    assert set(module_inputs) == {'cadquery', 'gmsh'}
+    for declared in module_inputs.values(): declared_module_file(venv, declared)
     from importlib.metadata import version
     import cadagent
     import cadquery
@@ -54,12 +87,9 @@ def runtime_identity(contract, runtime):
     assert Path(cadagent.__file__).resolve().is_relative_to(Path(runtime['toolkit']).resolve() / 'src/cadagent')
     versions = {name: (gmsh.__version__ if name == 'gmsh' else version(name)) for name in contract['versions']}
     assert versions == contract['versions']
-    venv = Path(runtime['venv']).resolve()
     origins = {}
     for name, module in (('cadquery', cadquery), ('gmsh', gmsh)):
-        path = Path(module.__file__).resolve()
-        assert path.is_relative_to(venv)
-        origins[name] = {'path': path.relative_to(venv).as_posix(), 'sha256': sha(path)}
+        origins[name] = module_identity(name, module.__file__, venv, module_inputs[name])
     mapped = {}; managed = {}
     for line in Path('/proc/self/maps').read_text().splitlines():
         fields = line.split(maxsplit=5)
@@ -150,7 +180,7 @@ def main(argv=None):
     def save(name, value):
         (out / name).write_text(json.dumps(value, indent=2, allow_nan=False) + '\n')
     try:
-        cq, identity = runtime_identity(json.loads(args.contract.read_text()), json.loads(args.runtime.read_text()))
+        cq, identity = runtime_identity(json.loads(args.contract.read_text()), json.loads(args.runtime.read_text()), cfg['module_inputs'])
         save('worker-runtime.json', identity)
         report = inspect(cq, step)
         report['retained_engineering_receipt'] = {
@@ -162,7 +192,7 @@ def main(argv=None):
         assert round(report['volume_mm3'] / 1000, 1) == receipt['artifacts']['hip_frame']['stl_check']['volume_cm3']
         assert sha(step) == cfg['step']['sha256']
         assert not any(name == 'hardware.cad' or name.startswith('hardware.cad.') for name in sys.modules)
-        _, after = runtime_identity(json.loads(args.contract.read_text()), json.loads(args.runtime.read_text()))
+        _, after = runtime_identity(json.loads(args.contract.read_text()), json.loads(args.runtime.read_text()), cfg['module_inputs'])
         save('worker-runtime.json', {'before': identity, 'after': after})
         result.update(status='PASS_IMPORT_TOPOLOGY_ONLY', edges=len(report['edges']), faces=len(report['faces']))
     except BaseException as exc:

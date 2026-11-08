@@ -173,6 +173,12 @@ def main():
         assert runtime_before['toolkit_python']==contract['toolkit_python']
         assert runtime_before['toolkit_head']==contract['toolkit_revision'] and not runtime_before['toolkit_status'].strip()
         assert runtime_before['libraries']==contract['mapped_libraries']
+        assert set(cfg['module_inputs'])=={'cadquery','gmsh'}
+        for declared in cfg['module_inputs'].values():
+            row=runtime_before['venv'][declared['venv_path']]
+            assert row['sha256']==declared['sha256']
+            assert ('file-symlink' if 'link'in row else 'regular')==declared['kind']
+            if 'link'in row:assert hashlib.sha256(row['link'].encode()).hexdigest()==declared['link_target_sha256']
         native_env=dict(os.environ)
         for name in ('DISPLAY','WAYLAND_DISPLAY','DBUS_SESSION_BUS_ADDRESS'):native_env.pop(name,None)
         native_env.update(LD_PRELOAD=':'.join(runtime['libraries'][n]for n in ('libcrypto.so.3','libssl.so.3')),
@@ -190,7 +196,11 @@ def main():
         identities=json.loads((diagnostic/'worker-runtime.json').read_text())
         assert set(identities)=={'before','after'}
         for identity in identities.values():
-            for origin in identity['module_origins'].values():
+            assert set(identity['module_origins'])==set(cfg['module_inputs'])
+            for name,origin in identity['module_origins'].items():
+                assert origin['path']==cfg['module_inputs'][name]['venv_path']
+                assert origin['kind']==cfg['module_inputs'][name]['kind']
+                assert origin['resolved_path_sha256']==cfg['module_inputs'][name]['resolved_path_sha256']
                 assert runtime_before['venv'][origin['path']]['sha256']==origin['sha256']
             for name,value in identity['mapped_venv_libraries'].items():
                 assert runtime_before['venv'][name]['sha256']==value
