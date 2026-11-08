@@ -1,0 +1,13 @@
+# Native origins must bind declared file links, not just a directory prefix
+
+On 2026-11-07, the first issue #8 import-only inspection at `844dac41` exited 1 after 2.58 s in `runtime_identity`, before STEP inspection. The worker resolved each package file and required it to remain physically inside the retained venv. Gmsh's logical `lib/python3.12/site-packages/gmsh.py` is a pre-existing file symlink to a retained external Gmsh environment. That link and its target bytes were already recorded by the accepted genuine E1 snapshot. The blanket prefix rule contradicted this supported runtime layout.
+
+The [failed packet proof](../plans/hip-study/topology-attempt1-failure.json) preserves the original FAILED outcome, sealed partial worker result, all raw file hashes and the module metadata limit: the failed worker did not report its actual module.__file__ values. Passive filesystem/PathFinder lookup imported neither package and resolves the logical alias to the recorded target. Its target SHA256 is `f4b0935cebde899750293d87a643090e5ea33c9b18d249267f507db68a0e01c3`. The source, hardware and full retained environment inventories are identical before/after, and all owned groups/processes are gone. The [native traceback](../plans/hip-study/topology-attempt1-native.log) has only its private home prefix redacted; raw originals remain retained privately.
+
+The correction requires exact declared regular-file or file-link kind, the pre-recorded link-target path digest, imported resolved-target equality, and target bytes. Its regular/symlink positives and wrong-origin, same-content different-target, changed bytes/kind and pre-import negatives run without CAD. No arbitrary external path is allowed.
+
+Corrective rule: require each actual module source to equal the exact resolved target of its declared venv alias, with both alias/link metadata and target bytes bound by the existing full snapshot. Reject other external modules, even a same-content file at another path. Do not copy files into a shared environment, reinstall packages, remove the guard, or treat a version string as source identity.
+
+No topology, interface, CAD change, FEA or physical acceptance follows from this failed attempt. Any corrected continuation needs its own immutable source/operator review, fresh exclusive receipt/output and capacity checks; the first run remains FAILED.
+
+Independent classification: [issue #8 comment 6714771814](https://github.com/Valpatel/gyropup/issues/8#issuecomment-6714771814). The corrected source passes 15 kernel-free controls and all 36 existing Python tests plus three Node companion checks. These are source controls, not a successful native inspection.

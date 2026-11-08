@@ -141,6 +141,291 @@ class E1CollectorLifecycle(unittest.TestCase):
             signal.signal(signal.SIGTERM, previous)
 
 
+class TopologyInspection(unittest.TestCase):
+    def load(self, name):
+        path = check.ROOT / '.agents/plans/hip-study' / name
+        spec = importlib.util.spec_from_file_location('topology_' + name.replace('-', '_'), path)
+        module = importlib.util.module_from_spec(spec)
+        with patch.object(subprocess, 'Popen', side_effect=AssertionError('Operational import')), patch.dict(
+                sys.modules, {n: None for n in ('cadquery', 'cadagent', 'gmsh', 'OCP')}):
+            spec.loader.exec_module(module)
+        return module
+
+    def test_synthetic_receipt_and_all_source_bindings_without_native_imports(self):
+        worker = self.load('inspect-step-worker.py')
+        with tempfile.TemporaryDirectory(prefix='topology-synthetic-') as tmp:
+            root = Path(tmp); cfg = self.fixture(root)
+            step, receipt = worker.bound_inputs(root, cfg)
+            self.assertEqual(step.name, 'hip_frame.step')
+            self.assertEqual(receipt['source_inputs']['project']['files'], cfg['cad_sources'])
+
+    def fixture(self, root):
+        # Explicit unit fixture, not a CAD artifact or claim that a historical
+        # inspection recipe must remain current after future geometry changes.
+        cfg = json.loads((check.ROOT / '.agents/plans/hip-study/topology-inputs.json').read_text())
+        for name in cfg['cad_sources']:
+            target = root / name; target.parent.mkdir(parents=True, exist_ok=True)
+            target.write_bytes(('synthetic source input: ' + name).encode())
+            cfg['cad_sources'][name] = hashlib.sha256(target.read_bytes()).hexdigest()
+        step = root / cfg['step']['path']; step.parent.mkdir(parents=True, exist_ok=True)
+        step.write_bytes(b'synthetic input-guard fixture; SI_UNIT(.MILLI.,.METRE.)')
+        cfg['step']['sha256'] = hashlib.sha256(step.read_bytes()).hexdigest()
+        receipt = root / cfg['receipt']['path']
+        receipt.write_text(json.dumps({'source_inputs': {'project': {'files': cfg['cad_sources']}},
+                                       'artifacts': {'hip_frame': {'files': {'step': cfg['step']['sha256']}}}}))
+        cfg['receipt']['sha256'] = hashlib.sha256(receipt.read_bytes()).hexdigest()
+        return cfg
+
+    def test_missing_current_step_and_changed_source_or_payload_reject(self):
+        worker = self.load('inspect-step-worker.py')
+        with tempfile.TemporaryDirectory(prefix='topology-input-') as tmp:
+            root = Path(tmp); cfg = self.fixture(root)
+            worker.bound_inputs(root, cfg)
+            step = root / cfg['step']['path']; original = step.read_bytes()
+            old = root / 'exports/leg/rs04-mounting-fit/hip_frame.step'
+            old.parent.mkdir(parents=True); old.write_bytes(original)
+            step.unlink()
+            with self.assertRaises(ValueError): worker.bound_inputs(root, cfg)
+            step.write_bytes(original + b'changed')
+            with self.assertRaises(AssertionError): worker.bound_inputs(root, cfg)
+            step.write_bytes(original)
+            source = root / next(iter(cfg['cad_sources']))
+            source.write_bytes(source.read_bytes() + b'changed')
+            with self.assertRaises(AssertionError): worker.bound_inputs(root, cfg)
+
+    def test_inherited_parameter_rejects_actual_worker_before_output(self):
+        worker = self.load('inspect-step-worker.py')
+        study = HipStudyInputs().load_study()
+        with tempfile.TemporaryDirectory(prefix='topology-env-') as tmp:
+            root = Path(tmp); out = root / 'out'
+            args = [part for name, value in {'root': root, 'config': root / 'missing', 'runtime': root / 'missing',
+                                             'contract': root / 'missing', 'out': out}.items()
+                    for part in ('--' + name, str(value))]
+            with patch.dict(os.environ, {'GYROPUP_HIP_PARAMS': 'inherited-candidate.json'}), self.assertRaisesRegex(
+                    ValueError, 'Inherited product parameters'):
+                worker.main(args)
+            self.assertFalse(out.exists())
+            with patch.dict(os.environ, {'GYROPUP_HIP_PARAMS': 'inherited-candidate.json'}):
+                study.use_params(root / 'old-behavior', None)
+                self.assertEqual(os.environ['GYROPUP_HIP_PARAMS'], 'inherited-candidate.json')
+
+    def test_actual_collector_phase_unmasks_and_reaps_pending_signal(self):
+        collector = self.load('collect-step-topology.py')
+        case = E1CollectorLifecycle()
+        with patch.object(case, 'load_collector', return_value=collector):
+            case.test_import_is_inert_and_children_start_unmasked()
+            case.test_pending_signal_before_popen_returns_retains_error_and_reaps_child()
+
+    def test_independent_capture_and_save_failures_reach_later_guards(self):
+        collector = self.load('collect-step-topology.py')
+        for failed in ('project', 'hardware'):
+            for mode in ('capture', 'save'):
+                with self.subTest(failed=failed, mode=mode):
+                    seen = []; saved = {}
+                    def observe(name):
+                        seen.append(name)
+                        if name == failed and mode == 'capture': raise OSError('capture failed')
+                        return name
+                    def save(name, value):
+                        if name == failed + '-after.json' and mode == 'save': raise OSError('save failed')
+                        saved[name] = value
+                    observations = [(n + '-after.json', lambda n=n: observe(n), n)
+                                    for n in ('project', 'hardware', 'runtime', 'status')]
+                    result = {'status': 'PASS_IMPORT_TOPOLOGY_ONLY'}
+                    with patch.object(collector, 'save', save), self.assertRaises(RuntimeError):
+                        collector.final_observations(result, observations, lambda: None, True)
+                    self.assertEqual(seen, ['project', 'hardware', 'runtime', 'status'])
+                    self.assertEqual(saved['result.json']['status'], 'FAILED')
+
+    def test_archive_nonquiescence_and_final_write_never_hide_primary_failure(self):
+        collector = self.load('collect-step-topology.py')
+        for fault in ('archive', 'nonquiescent', 'final-write'):
+            seen = []
+            def archive():
+                seen.append('archive')
+                if fault == 'archive': raise OSError('archive failure')
+            def save(name, value):
+                if name == 'result.json' and fault == 'final-write': raise OSError('final write failure')
+            def actual():
+                result = {'status': 'FAILED'}
+                try: raise ValueError('primary diagnostic failure')
+                except BaseException as exc:
+                    result['original_error'] = str(exc); raise
+                finally:
+                    with patch.object(collector, 'save', save):
+                        collector.final_observations(result, [('later', lambda: seen.append('later'), None)],
+                                                     archive, fault != 'nonquiescent')
+            with self.subTest(fault=fault), self.assertRaisesRegex(ValueError, 'primary diagnostic failure'):
+                actual()
+            self.assertIn('later', seen)
+            self.assertEqual('archive' in seen, fault != 'nonquiescent')
+        with patch.object(collector, 'save', side_effect=OSError('final write failure')), self.assertRaises(RuntimeError):
+            collector.final_observations({'status': 'PASS'}, [], lambda: None, True)
+
+    def test_worker_final_record_failure_is_nonzero_or_preserves_primary(self):
+        worker = self.load('inspect-step-worker.py')
+        def write(*args): raise OSError('final worker write failed')
+        result = {'status': 'PASS'}
+        with self.assertRaises(OSError): worker.final_record(result, write)
+        self.assertEqual(result['status'], 'FAILED')
+        result = {'status': 'FAILED', 'original_error': 'native primary'}
+        worker.final_record(result, write)
+        self.assertEqual(result['original_error'], 'native primary')
+
+    def test_hardware_inventory_rejects_a_symlink_directory(self):
+        collector = self.load('collect-step-topology.py')
+        with tempfile.TemporaryDirectory(prefix='topology-links-') as tmp:
+            root = Path(tmp); (root / 'real').mkdir(); (root / 'link').symlink_to(root / 'real')
+            with self.assertRaises(ValueError): collector.inventory(root)
+
+    def test_invalid_output_refuses_before_handlers_or_final_writes(self):
+        collector = self.load('collect-step-topology.py')
+        with tempfile.TemporaryDirectory(prefix='topology-output-') as tmp:
+            root = Path(tmp); out = root / 'hardware'; out.mkdir()
+            with patch.object(Path, 'cwd', return_value=root), patch.dict(os.environ, {'FLEET_RUN_OUT': str(out)}), patch.object(
+                    sys, 'argv', ['collector', '--head', 'a' * 40, '--runtime', str(root / 'absent')]), patch.object(
+                    collector.ctypes, 'CDLL', side_effect=AssertionError('Unexpected handler setup')), self.assertRaisesRegex(
+                    AssertionError, 'Invalid owned output directory'):
+                collector.main()
+            self.assertEqual(list(out.iterdir()), [])
+
+    def test_submitter_import_and_exact_remote_program_are_inert(self):
+        submit = self.load('submit-topology-once.py')
+        compile(submit.REMOTE, 'actual-remote-topology-bootstrap', 'exec')
+        with self.assertRaisesRegex(AssertionError, 'Explicit execution required'):
+            submit.main(['--review-url', 'https://github.com/Valpatel/gyropup/issues/8#fixture',
+                         '--operator-sha256', '0' * 64, '--config-sha256', '0' * 64,
+                         '--private-config', '/tmp/nonexistent-topology-unit-fixture',
+                         '--receipt', '/tmp/nonexistent-topology-unit-intent'])
+
+    def module_fixture(self, root):
+        venv = root / 'venv'; venv.mkdir()
+        regular = venv / 'cadquery.py'; regular.write_text('synthetic regular module')
+        target = root / 'retained-gmsh.py'; target.write_text('synthetic linked module')
+        link = venv / 'gmsh.py'; link.symlink_to(target)
+        data = {'cadquery': {'venv_path': regular.name, 'kind': 'regular',
+                             'resolved_path_sha256': hashlib.sha256(str(regular.resolve()).encode()).hexdigest(),
+                             'sha256': hashlib.sha256(regular.read_bytes()).hexdigest()},
+                'gmsh': {'venv_path': link.name, 'kind': 'file-symlink',
+                         'resolved_path_sha256': hashlib.sha256(str(target.resolve()).encode()).hexdigest(),
+                         'sha256': hashlib.sha256(target.read_bytes()).hexdigest(),
+                         'link_target_sha256': hashlib.sha256(os.readlink(link).encode()).hexdigest()}}
+        return venv, regular, link, target, data
+
+    def test_regular_and_exact_predeclared_symlink_module_origins(self):
+        worker = self.load('inspect-step-worker.py')
+        with tempfile.TemporaryDirectory(prefix='topology-module-file-') as tmp:
+            venv, regular, link, target, data = self.module_fixture(Path(tmp))
+            self.assertEqual(worker.module_identity('cadquery', regular, venv, data['cadquery'])['kind'], 'regular')
+            self.assertFalse(target.resolve().is_relative_to(venv))
+            result = worker.module_identity('gmsh', link, venv, data['gmsh'])
+            self.assertTrue(result['actual_declared_target_match'])
+            self.assertEqual(result['kind'], 'file-symlink')
+            self.assertEqual(worker.module_identity('gmsh', target, venv, data['gmsh']), result)
+
+    def test_module_origin_rejects_other_target_even_with_identical_bytes(self):
+        worker = self.load('inspect-step-worker.py')
+        with tempfile.TemporaryDirectory(prefix='topology-module-fault-') as tmp:
+            root = Path(tmp); venv, regular, link, target, data = self.module_fixture(root)
+            other = root / 'other.py'; other.write_bytes(target.read_bytes())
+            with self.assertRaisesRegex(ValueError, 'exact declared file target'):
+                worker.module_identity('gmsh', other, venv, data['gmsh'])
+            link.unlink(); link.symlink_to(other)
+            with self.assertRaisesRegex(ValueError, 'link target changed'):
+                worker.module_identity('gmsh', other, venv, data['gmsh'])
+            link.unlink(); link.symlink_to(target); target.write_text('changed target bytes')
+            with self.assertRaisesRegex(ValueError, 'target bytes changed'):
+                worker.module_identity('gmsh', target, venv, data['gmsh'])
+            with self.assertRaisesRegex(ValueError, 'kind changed'):
+                worker.module_identity('gmsh', link, venv, {**data['gmsh'], 'kind': 'regular'})
+            with self.assertRaisesRegex(ValueError, 'venv-relative'):
+                worker.declared_module_file(venv, {**data['gmsh'], 'venv_path': '../retained-gmsh.py'})
+            target.unlink(); target.symlink_to(other)
+            with self.assertRaisesRegex(ValueError, 'Resolved module target path changed'):
+                worker.module_identity('gmsh', other, venv, data['gmsh'])
+
+    def test_declared_module_checks_precede_native_imports(self):
+        worker = self.load('inspect-step-worker.py')
+        with tempfile.TemporaryDirectory(prefix='topology-module-preflight-') as tmp:
+            venv, regular, link, target, data = self.module_fixture(Path(tmp))
+            data['cadquery']['sha256'] = '0' * 64
+            with patch.dict(sys.modules, {n: None for n in ('cadquery', 'cadagent', 'gmsh', 'OCP')}), self.assertRaisesRegex(
+                    ValueError, 'target bytes changed'):
+                worker.runtime_identity({}, {'venv': str(venv)}, data)
+
+    def test_submit_hash_guards_precede_network_and_intent(self):
+        submit = self.load('submit-topology-once.py')
+        with tempfile.TemporaryDirectory(prefix='topology-submit-hash-') as tmp:
+            root = Path(tmp); cfg = root / 'config.json'; cfg.write_text('{}')
+            for bad in ('operator', 'config'):
+                out = root / (bad + '-intent.json')
+                args = ['--execute', '--review-url', 'https://github.com/Valpatel/gyropup/issues/8#fixture',
+                        '--operator-sha256', '0' * 64 if bad == 'operator' else submit.sha(submit.__file__),
+                        '--config-sha256', '0' * 64 if bad == 'config' else submit.sha(cfg),
+                        '--private-config', str(cfg), '--receipt', str(out)]
+                with patch.object(submit, 'command', side_effect=AssertionError('Network reached')) as command:
+                    with self.assertRaises(AssertionError): submit.main(args)
+                    command.assert_not_called()
+                self.assertFalse(out.exists())
+
+    def test_controller_result_is_unambiguous_and_never_repeatable(self):
+        submit = self.load('submit-topology-once.py')
+        started = {'head': 'a' * 40, 'cpus': [0, 1, 2, 3], 'launcher_pid': 42, 'run': '/tmp/fixture-run',
+                   'command': ['bash', '/tmp/fixture-run/src/.agents/plans/hip-study/launch-step-topology.sh'],
+                   'started_utc': '2026-11-07T00:00:00Z'}
+        cases = ((1, '', AssertionError), (0, 'not a launcher receipt', json.JSONDecodeError),
+                 (0, json.dumps({**started, 'launcher_pid': 0}), AssertionError),
+                 (0, json.dumps(started), None))
+        for rc, stdout, error in cases:
+            with self.subTest(rc=rc), tempfile.TemporaryDirectory(prefix='topology-submit-fault-') as tmp:
+                root = Path(tmp); repo = root / 'repo'; repo.mkdir()
+                cli = root / 'fixture-cli'; cli.write_text('synthetic client fixture')
+                files = {}
+                for name in submit.SOURCE_FILES:
+                    target = repo / name; target.parent.mkdir(parents=True, exist_ok=True)
+                    shutil.copyfile(check.ROOT / name, target); files[name] = submit.sha(target)
+                cfg = {'repo': str(repo), 'head': 'a' * 40, 'base': 'b' * 40, 'pr': 263,
+                       'branch': 'study/hip-frame-foot-topology', 'files': files, 'fleet_cli': str(cli),
+                       'fleet_cli_sha256': submit.sha(cli), 'role': 'cpu-a', 'node': 'fixture-node',
+                       'fleet_environment_file': str(root / 'fixture-env'), 'runtime_sha256': 'c' * 64,
+                       'run_name': 'fixture-run'}
+                config = root / 'config.json'; config.write_text(json.dumps(cfg))
+                intent = root / 'intent.json'
+                def command(argv, **kwargs):
+                    if argv[:3] == ['git', 'rev-parse', 'HEAD']: return cfg['head']
+                    if argv[:3] == ['git', 'status', '--porcelain']: return ''
+                    if argv[0] == 'gh':
+                        if '/pulls/' in argv[-1]:
+                            return json.dumps({'state': 'open', 'merged': False, 'draft': True,
+                                               'head': {'sha': cfg['head'], 'ref': cfg['branch']},
+                                               'base': {'ref': 'dev', 'sha': cfg['base']}})
+                        return json.dumps({'state': 'open'})
+                    if argv == [str(cli), 'nodes']:
+                        return 'NODE STATE CPU MEMORY LOAD ROLE\nfixture-node IDLE 0/12 0/32768 0 cpu-a\n'
+                    if argv == [str(cli), 'queue']: return 'JOB HEADER\n'
+                    if argv[0] == 'bash': return 'fixture-node:fixture-target'
+                    raise AssertionError('Unexpected mocked command')
+                args = ['--execute', '--review-url', 'https://github.com/Valpatel/gyropup/issues/8#fixture',
+                        '--operator-sha256', submit.sha(submit.__file__), '--config-sha256', submit.sha(config),
+                        '--private-config', str(config), '--receipt', str(intent)]
+                with patch.object(submit, 'command', command), patch.object(submit.subprocess, 'run', return_value=
+                        types.SimpleNamespace(returncode=rc, stdout=stdout, stderr='controlled client output')) as invoke:
+                    if error:
+                        with self.assertRaises(error): submit.main(args)
+                    else:
+                        output = io.StringIO()
+                        with patch.object(sys, 'stdout', output): submit.main(args)
+                        self.assertEqual(json.loads(output.getvalue())['status'], 'STARTED_NOT_ACCEPTED')
+                    record = json.loads(intent.read_text())
+                    self.assertEqual(record['returncode'], rc)
+                    self.assertEqual(record['stdout'], stdout)
+                    self.assertEqual('local_error' in record, error is not None)
+                    first = intent.read_bytes()
+                    with self.assertRaises(AssertionError): submit.main(args)
+                    self.assertEqual(intent.read_bytes(), first)
+                    self.assertEqual(invoke.call_count, 1)
+
+
 class FieldStage(unittest.TestCase):
     def test_real_historical_field_can_be_checked_without_a_video_claim(self):
         result = check.validate(decode=False, scope='field')
