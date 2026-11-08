@@ -2,6 +2,7 @@
 
 | Symptom | Canonical guidance |
 | --- | --- |
+| A local blend builds but its rejoined frame is invalid or multi-solid | [Retain pre/post rejoin operands and refine without waiving validity](inbox/2026-11-07-backing-foot-fillets-need-local-construction.md#refine-rejoin-booleans-without-weakening-validity) |
 | A native shape boolean raises `Workplane` has no attribute `wrapped` | [Resolve shape operands at the CAD boundary](inbox/2026-11-07-backing-foot-fillets-need-local-construction.md#native-boolean-operands-must-be-actual-shapes) |
 | A whole-foot fillet fails in OCP before a candidate exists | [Use local actual material, preserve failed intent and check the finished solid](inbox/2026-11-07-backing-foot-fillets-need-local-construction.md) |
 | A native identity guard rejects a known package file after resolving it outside the venv | [Bind the predeclared file link and exact target identity](inbox/2026-11-07-native-origins-must-bind-declared-symlinks.md) |

@@ -61,7 +61,10 @@ def preserve_construction_failure(out, error):
         return
     try:
         exports = {}
-        for name in ('unfilleted-local', 'source-back'):
+        for name in ('unfilleted-local', 'source-back', 'rounded-local', 'retained-base',
+                     'rounded-addition', 'raw-finished', 'finished-local'):
+            if name not in error.foot_shapes:
+                continue
             target = out / (name + '.brep')
             if not error.foot_shapes[name].exportBrep(str(target)):
                 raise ValueError('Failed construction BREP export failed')

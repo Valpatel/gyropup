@@ -631,7 +631,8 @@ class HipGeometryInputs(unittest.TestCase):
         primary = RuntimeError('Actual native fillet failed')
         primary.__cause__ = ValueError('kernel command not done')
         primary.foot_context = {'radius_mm': 3.5, 'edges': [{'source_owner': 'backing-block outer side'}]}
-        primary.foot_shapes = {name: OwnedShape() for name in ('unfilleted-local', 'source-back')}
+        primary.foot_shapes = {name: OwnedShape() for name in (
+            'unfilleted-local', 'source-back', 'raw-finished', 'finished-local')}
         with tempfile.TemporaryDirectory(prefix='hip-failed-construction-') as tmp:
             out = Path(tmp)
             study = HipStudyInputs().load_study()
@@ -643,6 +644,7 @@ class HipGeometryInputs(unittest.TestCase):
             out = failed_out
             row = json.loads((out / 'construction-failure.json').read_text())
             self.assertEqual(row['context'], primary.foot_context)
+            self.assertEqual(set(row['shapes']), set(primary.foot_shapes))
             self.assertEqual(row['error'], 'ValueError: kernel command not done')
             for shape in row['shapes'].values():
                 self.assertEqual(geometry.digest(out / shape['file']), shape['sha256'])

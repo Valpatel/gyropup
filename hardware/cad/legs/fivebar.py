@@ -627,12 +627,35 @@ def _backing_foot_blend(web, back, uncut_back, footprint, plane_y, radius, motor
     intrusion = added.intersect(motor_void)
     if intrusion.Solids() or intrusion.Volume() != 0:
         raise ValueError('Backing-foot blend enters the retained motor-clearance region')
-    finished = joined.fuse(added)
-    if len(finished.Solids()) != 1 or not finished.isValid():
-        raise ValueError('Local backing-foot addition did not rejoin as one valid solid')
+    raw = finished = None
+    join_state = {}
+    try:
+        raw = joined.fuse(added)
+        join_state['before_refinement'] = {'valid': raw.isValid(), 'solids': len(raw.Solids())}
+        # Match Workplane.union's normal same-domain refinement; validity and
+        # complete finished-material/interface checks are still mandatory.
+        finished = raw.clean()
+        join_state['after_refinement'] = {'valid': finished.isValid(), 'solids': len(finished.Solids())}
+        state = join_state['after_refinement']
+        if not state['valid']:
+            raise ValueError(f"Backing-foot rejoin is invalid after refinement (solids={state['solids']})")
+        if state['solids'] != 1:
+            raise ValueError(f"Backing-foot rejoin has {state['solids']} solids after refinement; expected one")
+    except Exception as error:
+        shapes = {'unfilleted-local': local, 'source-back': uncut_back.val(),
+                  'rounded-local': rounded, 'retained-base': joined, 'rounded-addition': added}
+        if raw is not None:
+            shapes['raw-finished'] = raw
+        if finished is not None:
+            shapes['finished-local'] = finished
+        raise HipFootBlendError(
+            {'radius_mm': radius, 'edges': records, 'stage': 'post-blend rejoin',
+             'shoulder_width_mm': width, 'shoulder_depth_mm': radius, 'join_state': join_state,
+             'status': 'FAILED_CONSTRUCTION; no candidate qualification'}, shapes) from error
     return cq.Workplane(obj=finished), {'radius_mm': radius, 'edges': records,
                                       'shoulder_land_mm': STOP_FOOT_LAND, 'shoulder_width_mm': width,
                                       'shoulder_depth_mm': radius, 'fillet_added_mm3': fillet_added.Volume(),
+                                      'join_state': join_state,
                                       'removed_mm3': removed.Volume(), 'added_mm3': added.Volume(),
                                       'motor_void_intrusion_mm3': intrusion.Volume()}
 
