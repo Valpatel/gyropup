@@ -1,0 +1,77 @@
+{
+  "schema": 1,
+  "status": "FAILED_TIMEOUT_PARTIAL_DIAGNOSTIC",
+  "executed_source": "a4fce43ac6852a84a5bceb50d661d50d331a1a11",
+  "review": "https://github.com/Valpatel/gyropup/issues/8#issuecomment-6716848510",
+  "run_role": "cpu-a",
+  "run_relative": "gyropup-mechanical-runs/20261107-hip-foot-geometry-rejoin-capacity-a4fce43a",
+  "phase_seconds": 120.2262759571895,
+  "timed_out": true,
+  "done_exit": 1,
+  "owned_groups_gone": true,
+  "archive": {
+    "sha256": "da5b93e346826405d24374a0890474f1dd09982d7a99318151e0b941359e4b68",
+    "regular_members": 6
+  },
+  "partial_report_sha256": "c9d161be69be84548f7ddd91bfedc4af961c7a51438e0dcf911c0133c06852ef",
+  "saved": {
+    "unfilleted-local": {
+      "valid": true,
+      "solids": 1
+    },
+    "source-back": {
+      "valid": true,
+      "solids": 1
+    },
+    "rounded-local": {
+      "valid": true,
+      "solids": 1
+    },
+    "retained-base": {
+      "valid": true,
+      "solids": 1
+    },
+    "rounded-addition": {
+      "valid": false,
+      "solids": 3
+    },
+    "raw-finished": {
+      "valid": false,
+      "solids": 1
+    },
+    "finished-local": {
+      "valid": false,
+      "solids": 1
+    }
+  },
+  "reconstructed_stages": {
+    "fillet_minus_unfilleted": {
+      "valid": false,
+      "solids": 4
+    },
+    "rounded_minus_original": {
+      "valid": false,
+      "solids": 3
+    },
+    "rounded_minus_original_after_motor_cut": {
+      "valid": false,
+      "solids": 3
+    }
+  },
+  "variants_completed": 0,
+  "preservation": {
+    "project": true,
+    "hardware": true,
+    "runtime": true,
+    "failed-inputs": true,
+    "private-input": true
+  },
+  "cached_donor_preserved": true,
+  "limitations": [
+    "Partial output only; not independently accepted yet.",
+    "Invalid subtraction precedes final fuse, but no corrected construction has been validated.",
+    "No completed candidate, interface comparison, manufacturer clearance, FEA or physical qualification.",
+    "Issue #8 remains open; published E1 SF 1.60 is below required 2.00."
+  ],
+  "stop_reason": "User requested credit-saving wrap-up; no follow-on run authorized today."
+}
