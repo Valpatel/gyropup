@@ -62,10 +62,15 @@ def main():
         for name, value in {**config['cad_sources'], **config['study_inputs'], **config['execution_sources']}.items():
             assert life.sha(root / name) == value, name
             assert hashlib.sha256(subprocess.check_output(['git', 'show', args.head + ':' + name])).hexdigest() == value
-        if 'fault_diagnostic' in config:
-            failed = config['fault_diagnostic']
-            assert failed['run_name'] == '20261107-hip-foot-geometry-local-c90caf86'
-            assert failed['input_directory'] == '.agents/plans/hip-study/failed-local-foot'
+        assert not ('fault_diagnostic' in config and 'rejoin_diagnostic' in config)
+        failed = config.get('rejoin_diagnostic', config.get('fault_diagnostic'))
+        if failed is not None:
+            if 'rejoin_diagnostic' in config:
+                assert failed['run_name'] == '20261107-hip-foot-geometry-refine-80e49685-ready'
+                assert failed['input_directory'] == '.agents/plans/hip-study/failed-rejoin'
+            else:
+                assert failed['run_name'] == '20261107-hip-foot-geometry-local-c90caf86'
+                assert failed['input_directory'] == '.agents/plans/hip-study/failed-local-foot'
             failed_source = root / failed['input_directory']
             def failed_snapshot():
                 return {name: private_input(failed_source / name) for name in failed['inputs']}
@@ -110,12 +115,15 @@ def main():
             ('candidate', ['--geometry-only', '--out', str(diagnostic / 'candidate')]),
             ('comparison', ['--compare-geometry', str(diagnostic / 'baseline'), str(diagnostic / 'candidate'),
                             '--out', str(diagnostic / 'comparison'), '--motor-step', str(args.motor_step)])]
-        if failed_source is not None:
+        if 'rejoin_diagnostic' in config:
+            phases = [('rejoin-diagnostic', ['--diagnose-rejoin', str(failed_source),
+                                            '--out', str(diagnostic / 'rejoin-diagnostic')])]
+        elif failed_source is not None:
             phases = [('fault-diagnostic', ['--diagnose-foot', str(failed_source),
                                            '--out', str(diagnostic / 'fault-diagnostic')])]
         for name, tail in phases:
             report = diagnostic / (name + '-runtime.json')
-            life.phase(name, [*prefix, '--report', str(report), '--', *tail], timeout=60 if failed_source is not None else 600)
+            life.phase(name, [*prefix, '--report', str(report), '--', *tail], timeout=120 if 'rejoin_diagnostic' in config else 60 if failed_source is not None else 600)
             observed = json.loads(report.read_text())
             assert observed['status'] == 'RETURNED_GEOMETRY_ONLY' and not observed.get('final_errors')
             for identity in (observed['before'], observed['after']):
@@ -128,12 +136,17 @@ def main():
                 for path, value in identity['mapped_venv_libraries'].items():
                     assert runtime_before['venv'][path]['sha256'] == value
         if failed_source is not None:
-            report = json.loads((diagnostic / 'fault-diagnostic/fillet-diagnostic.json').read_text())
-            assert report['status'] == 'COLLECTED_KERNEL_DIAGNOSTIC_ONLY'
-            assert report['input_sha256'] == config['fault_diagnostic']['inputs']
-            assert report['source_sha256'] == config['study_inputs']
-            assert report['radius_mm'] == 3.5 and report['fea_run'] is False
-            result.update(status='COLLECTED_KERNEL_DIAGNOSTIC_ONLY', diagnostic=report)
+            rejoin = 'rejoin_diagnostic' in config
+            label = 'rejoin-diagnostic' if rejoin else 'fault-diagnostic'
+            filename = 'rejoin-diagnostic.json' if rejoin else 'fillet-diagnostic.json'
+            expected_status = 'COLLECTED_REJOIN_DIAGNOSTIC_ONLY' if rejoin else 'COLLECTED_KERNEL_DIAGNOSTIC_ONLY'
+            report = json.loads((diagnostic / label / filename).read_text())
+            assert report['status'] == expected_status
+            assert report['input_sha256'] == failed['inputs'] and report['source_sha256'] == config['study_inputs']
+            if not rejoin:
+                assert report['radius_mm'] == 3.5
+            assert report['fea_run'] is False and report['physical_qualification'] is False
+            result.update(status=expected_status, diagnostic=report)
         else:
             for name in ('baseline', 'candidate'):
                 row = json.loads((diagnostic / name / 'geometry.json').read_text())
@@ -144,6 +157,8 @@ def main():
             assert report['actual_motor_step_sha256'] == config['motor_step_sha256']
             assert set(report['actual_finished_shape_negative_controls']) == {
                 'connected_outside_foot', 'removed_retained_material', 'filled_actual_pilot'}
+            if not rejoin:
+                assert report['radius_mm'] == 3.5
             assert report['fea_run'] is False and report['physical_qualification'] is False
             assert sum(row['bytes'] for row in life.inventory(diagnostic).values()) <= 512 * 1024**2
             result.update(status='PASS_GEOMETRY_INTERFACE_SCREEN_ONLY', comparison=report)

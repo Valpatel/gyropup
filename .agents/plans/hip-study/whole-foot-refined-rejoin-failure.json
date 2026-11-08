@@ -1,0 +1,1128 @@
+{
+  "failed_rejoin": {
+    "scope": "Failed native construction only; no candidate/interfaces/FEA acceptance",
+    "error": "ValueError: Backing-foot rejoin is invalid after refinement (solids=1)",
+    "context": {
+      "radius_mm": 3.5,
+      "edges": [
+        {
+          "type": "LINE",
+          "length_mm": 2.3937948617206106,
+          "start_mm": [
+            86.4121,
+            -25.100000000000012,
+            47.7408
+          ],
+          "end_mm": [
+            85.9451,
+            -25.100000000000012,
+            50.0886
+          ],
+          "centre_mm": [
+            86.17859999999999,
+            -25.100000000000012,
+            48.914699999999996
+          ],
+          "source_owner": "backing-block outer side"
+        },
+        {
+          "type": "LINE",
+          "length_mm": 2.3937541937300106,
+          "start_mm": [
+            87.1816,
+            -25.100000000000012,
+            45.4741
+          ],
+          "end_mm": [
+            86.4121,
+            -25.100000000000012,
+            47.7408
+          ],
+          "centre_mm": [
+            86.79685,
+            -25.100000000000012,
+            46.60745
+          ],
+          "source_owner": "backing-block outer side"
+        },
+        {
+          "type": "LINE",
+          "length_mm": 2.3937471253246474,
+          "start_mm": [
+            88.2403,
+            -25.100000000000012,
+            43.3272
+          ],
+          "end_mm": [
+            87.1816,
+            -25.100000000000012,
+            45.4741
+          ],
+          "centre_mm": [
+            87.71095000000001,
+            -25.100000000000012,
+            44.40065
+          ],
+          "source_owner": "backing-block outer side"
+        },
+        {
+          "type": "LINE",
+          "length_mm": 2.3938099694837915,
+          "start_mm": [
+            89.5702,
+            -25.100000000000012,
+            41.3368
+          ],
+          "end_mm": [
+            88.2403,
+            -25.100000000000012,
+            43.3272
+          ],
+          "centre_mm": [
+            88.90525000000001,
+            -25.100000000000012,
+            42.332
+          ],
+          "source_owner": "backing-block outer side"
+        },
+        {
+          "type": "LINE",
+          "length_mm": 2.3937316014958685,
+          "start_mm": [
+            91.1485,
+            -25.100000000000012,
+            39.5371
+          ],
+          "end_mm": [
+            89.5702,
+            -25.100000000000012,
+            41.3368
+          ],
+          "centre_mm": [
+            90.35935,
+            -25.100000000000012,
+            40.43695
+          ],
+          "source_owner": "backing-block outer side"
+        },
+        {
+          "type": "LINE",
+          "length_mm": 2.3937316014958787,
+          "start_mm": [
+            92.9482,
+            -25.100000000000012,
+            37.958800000000004
+          ],
+          "end_mm": [
+            91.1485,
+            -25.100000000000012,
+            39.53710000000001
+          ],
+          "centre_mm": [
+            92.04835,
+            -25.100000000000012,
+            38.74795
+          ],
+          "source_owner": "backing-block outer side"
+        },
+        {
+          "type": "LINE",
+          "length_mm": 2.3938099694837858,
+          "start_mm": [
+            94.9386,
+            -25.100000000000012,
+            36.6289
+          ],
+          "end_mm": [
+            92.9482,
+            -25.100000000000012,
+            37.9588
+          ],
+          "centre_mm": [
+            93.9434,
+            -25.100000000000012,
+            37.29385
+          ],
+          "source_owner": "backing-block outer side"
+        },
+        {
+          "type": "LINE",
+          "length_mm": 2.3937471253246474,
+          "start_mm": [
+            97.0855,
+            -25.100000000000012,
+            35.57019999999999
+          ],
+          "end_mm": [
+            94.9386,
+            -25.100000000000012,
+            36.628899999999994
+          ],
+          "centre_mm": [
+            96.01204999999999,
+            -25.100000000000012,
+            36.099549999999994
+          ],
+          "source_owner": "backing-block outer side"
+        },
+        {
+          "type": "LINE",
+          "length_mm": 2.3937541937300084,
+          "start_mm": [
+            99.3522,
+            -25.100000000000012,
+            34.800700000000006
+          ],
+          "end_mm": [
+            97.0855,
+            -25.100000000000012,
+            35.57020000000001
+          ],
+          "centre_mm": [
+            98.21885,
+            -25.100000000000012,
+            35.18545
+          ],
+          "source_owner": "backing-block outer side"
+        },
+        {
+          "type": "LINE",
+          "length_mm": 2.393696783220468,
+          "start_mm": [
+            101.6999,
+            -25.100000000000012,
+            34.3337
+          ],
+          "end_mm": [
+            99.3522,
+            -25.100000000000012,
+            34.8007
+          ],
+          "centre_mm": [
+            100.52605,
+            -25.100000000000012,
+            34.5672
+          ],
+          "source_owner": "backing-block outer side"
+        },
+        {
+          "type": "LINE",
+          "length_mm": 2.393821200507674,
+          "start_mm": [
+            104.0886,
+            -25.100000000000012,
+            34.177200000000006
+          ],
+          "end_mm": [
+            101.6999,
+            -25.100000000000012,
+            34.33370000000001
+          ],
+          "centre_mm": [
+            102.89425,
+            -25.100000000000012,
+            34.25545
+          ],
+          "source_owner": "backing-block outer side"
+        },
+        {
+          "type": "LINE",
+          "length_mm": 2.3937214144507264,
+          "start_mm": [
+            106.4772,
+            -25.100000000000012,
+            34.33369999999999
+          ],
+          "end_mm": [
+            104.0886,
+            -25.100000000000012,
+            34.17719999999999
+          ],
+          "centre_mm": [
+            105.2829,
+            -25.100000000000012,
+            34.255449999999996
+          ],
+          "source_owner": "backing-block outer side"
+        },
+        {
+          "type": "LINE",
+          "length_mm": 2.3937948617206173,
+          "start_mm": [
+            108.825,
+            -25.100000000000012,
+            34.8007
+          ],
+          "end_mm": [
+            106.4772,
+            -25.100000000000012,
+            34.3337
+          ],
+          "centre_mm": [
+            107.6511,
+            -25.100000000000012,
+            34.5672
+          ],
+          "source_owner": "backing-block outer side"
+        },
+        {
+          "type": "LINE",
+          "length_mm": 2.3937541937300084,
+          "start_mm": [
+            111.0917,
+            -25.100000000000012,
+            35.5702
+          ],
+          "end_mm": [
+            108.825,
+            -25.100000000000012,
+            34.8007
+          ],
+          "centre_mm": [
+            109.95835,
+            -25.100000000000012,
+            35.18545
+          ],
+          "source_owner": "backing-block outer side"
+        },
+        {
+          "type": "LINE",
+          "length_mm": 2.3937471253246474,
+          "start_mm": [
+            113.2386,
+            -25.100000000000012,
+            36.6289
+          ],
+          "end_mm": [
+            111.0917,
+            -25.100000000000012,
+            35.5702
+          ],
+          "centre_mm": [
+            112.16515,
+            -25.100000000000012,
+            36.09955
+          ],
+          "source_owner": "backing-block outer side"
+        },
+        {
+          "type": "LINE",
+          "length_mm": 2.393726822342088,
+          "start_mm": [
+            115.2289,
+            -25.100000000000012,
+            37.9588
+          ],
+          "end_mm": [
+            113.2386,
+            -25.100000000000012,
+            36.6289
+          ],
+          "centre_mm": [
+            114.23375,
+            -25.100000000000012,
+            37.29385
+          ],
+          "source_owner": "backing-block outer side"
+        },
+        {
+          "type": "LINE",
+          "length_mm": 2.3937316014958787,
+          "start_mm": [
+            117.0286,
+            -25.100000000000012,
+            39.5371
+          ],
+          "end_mm": [
+            115.2289,
+            -25.100000000000012,
+            37.9588
+          ],
+          "centre_mm": [
+            116.12875,
+            -25.100000000000012,
+            38.747949999999996
+          ],
+          "source_owner": "backing-block outer side"
+        },
+        {
+          "type": "LINE",
+          "length_mm": 2.3937316014958685,
+          "start_mm": [
+            118.6069,
+            -25.100000000000012,
+            41.3368
+          ],
+          "end_mm": [
+            117.0286,
+            -25.100000000000012,
+            39.5371
+          ],
+          "centre_mm": [
+            117.81774999999999,
+            -25.100000000000012,
+            40.43695
+          ],
+          "source_owner": "backing-block outer side"
+        },
+        {
+          "type": "LINE",
+          "length_mm": 2.3938099694837995,
+          "start_mm": [
+            119.9368,
+            -25.100000000000012,
+            43.32719999999999
+          ],
+          "end_mm": [
+            118.6069,
+            -25.100000000000012,
+            41.33679999999999
+          ],
+          "centre_mm": [
+            119.27185,
+            -25.100000000000012,
+            42.331999999999994
+          ],
+          "source_owner": "backing-block outer side"
+        },
+        {
+          "type": "LINE",
+          "length_mm": 2.393791354734157,
+          "start_mm": [
+            120.99560000000001,
+            -25.100000000000012,
+            45.47409999999999
+          ],
+          "end_mm": [
+            119.93680000000002,
+            -25.100000000000012,
+            43.32719999999999
+          ],
+          "centre_mm": [
+            120.46620000000001,
+            -25.100000000000012,
+            44.40064999999999
+          ],
+          "source_owner": "backing-block outer side"
+        },
+        {
+          "type": "LINE",
+          "length_mm": 2.393722049445175,
+          "start_mm": [
+            121.76499999999999,
+            -25.100000000000012,
+            47.7408
+          ],
+          "end_mm": [
+            120.99559999999998,
+            -25.100000000000012,
+            45.4741
+          ],
+          "centre_mm": [
+            121.38029999999999,
+            -25.100000000000012,
+            46.60745
+          ],
+          "source_owner": "backing-block outer side"
+        },
+        {
+          "type": "LINE",
+          "length_mm": 2.3937948617206106,
+          "start_mm": [
+            122.23199999999999,
+            -25.100000000000012,
+            50.0886
+          ],
+          "end_mm": [
+            121.76499999999999,
+            -25.100000000000012,
+            47.7408
+          ],
+          "centre_mm": [
+            121.99849999999999,
+            -25.100000000000012,
+            48.9147
+          ],
+          "source_owner": "backing-block outer side"
+        },
+        {
+          "type": "LINE",
+          "length_mm": 2.393727954467679,
+          "start_mm": [
+            122.3886,
+            -25.100000000000012,
+            52.4772
+          ],
+          "end_mm": [
+            122.232,
+            -25.100000000000012,
+            50.0886
+          ],
+          "centre_mm": [
+            122.3103,
+            -25.100000000000012,
+            51.2829
+          ],
+          "source_owner": "backing-block outer side"
+        },
+        {
+          "type": "LINE",
+          "length_mm": 2.3937279544676717,
+          "start_mm": [
+            122.23200000000001,
+            -25.100000000000012,
+            54.8658
+          ],
+          "end_mm": [
+            122.38860000000001,
+            -25.100000000000012,
+            52.4772
+          ],
+          "centre_mm": [
+            122.31030000000001,
+            -25.100000000000012,
+            53.6715
+          ],
+          "source_owner": "backing-block outer side"
+        },
+        {
+          "type": "LINE",
+          "length_mm": 2.3937948617206106,
+          "start_mm": [
+            121.76499999999999,
+            -25.100000000000012,
+            57.2136
+          ],
+          "end_mm": [
+            122.23199999999999,
+            -25.100000000000012,
+            54.8658
+          ],
+          "centre_mm": [
+            121.99849999999999,
+            -25.100000000000012,
+            56.039699999999996
+          ],
+          "source_owner": "backing-block outer side"
+        },
+        {
+          "type": "LINE",
+          "length_mm": 2.393722049445175,
+          "start_mm": [
+            120.99560000000001,
+            -25.100000000000012,
+            59.48030000000001
+          ],
+          "end_mm": [
+            121.76500000000001,
+            -25.100000000000012,
+            57.2136
+          ],
+          "centre_mm": [
+            121.3803,
+            -25.100000000000012,
+            58.34695000000001
+          ],
+          "source_owner": "backing-block outer side"
+        },
+        {
+          "type": "LINE",
+          "length_mm": 2.393791354734157,
+          "start_mm": [
+            119.9368,
+            -25.100000000000012,
+            61.6272
+          ],
+          "end_mm": [
+            120.9956,
+            -25.100000000000012,
+            59.4803
+          ],
+          "centre_mm": [
+            120.4662,
+            -25.100000000000012,
+            60.55375
+          ],
+          "source_owner": "backing-block outer side"
+        },
+        {
+          "type": "LINE",
+          "length_mm": 2.3937268223421015,
+          "start_mm": [
+            118.6069,
+            -25.100000000000012,
+            63.61750000000001
+          ],
+          "end_mm": [
+            119.9368,
+            -25.100000000000012,
+            61.62720000000001
+          ],
+          "centre_mm": [
+            119.27185,
+            -25.100000000000012,
+            62.622350000000004
+          ],
+          "source_owner": "backing-block outer side"
+        },
+        {
+          "type": "LINE",
+          "length_mm": 2.3937316014958685,
+          "start_mm": [
+            117.0286,
+            -25.100000000000012,
+            65.4172
+          ],
+          "end_mm": [
+            118.6069,
+            -25.100000000000012,
+            63.6175
+          ],
+          "centre_mm": [
+            117.81774999999999,
+            -25.100000000000012,
+            64.51735
+          ],
+          "source_owner": "backing-block outer side"
+        },
+        {
+          "type": "LINE",
+          "length_mm": 2.393731601495883,
+          "start_mm": [
+            115.22890000000001,
+            -25.100000000000012,
+            66.99550000000002
+          ],
+          "end_mm": [
+            117.02860000000001,
+            -25.100000000000012,
+            65.41720000000001
+          ],
+          "centre_mm": [
+            116.12875000000001,
+            -25.100000000000012,
+            66.20635000000001
+          ],
+          "source_owner": "backing-block outer side"
+        },
+        {
+          "type": "LINE",
+          "length_mm": 2.393726822342088,
+          "start_mm": [
+            113.2386,
+            -25.100000000000012,
+            68.3254
+          ],
+          "end_mm": [
+            115.2289,
+            -25.100000000000012,
+            66.9955
+          ],
+          "centre_mm": [
+            114.23375,
+            -25.100000000000012,
+            67.66045
+          ],
+          "source_owner": "backing-block outer side"
+        },
+        {
+          "type": "LINE",
+          "length_mm": 2.393791354734163,
+          "start_mm": [
+            111.0917,
+            -25.100000000000012,
+            69.3842
+          ],
+          "end_mm": [
+            113.2386,
+            -25.100000000000012,
+            68.3254
+          ],
+          "centre_mm": [
+            112.16515000000001,
+            -25.100000000000012,
+            68.85480000000001
+          ],
+          "source_owner": "backing-block outer side"
+        },
+        {
+          "type": "LINE",
+          "length_mm": 18.152939666346057,
+          "start_mm": [
+            94.0,
+            -25.100000000000012,
+            75.50000000000001
+          ],
+          "end_mm": [
+            111.0917,
+            -25.100000000000012,
+            69.38420000000002
+          ],
+          "centre_mm": [
+            102.54585,
+            -25.100000000000012,
+            72.44210000000001
+          ],
+          "source_owner": "backing-block outer side"
+        },
+        {
+          "type": "LINE",
+          "length_mm": 17.41038100243645,
+          "start_mm": [
+            87.18160000000002,
+            -25.100000000000012,
+            59.48029999999999
+          ],
+          "end_mm": [
+            94.00000000000001,
+            -25.100000000000012,
+            75.5
+          ],
+          "centre_mm": [
+            90.59080000000002,
+            -25.100000000000012,
+            67.49015
+          ],
+          "source_owner": "backing-block outer side"
+        },
+        {
+          "type": "LINE",
+          "length_mm": 2.3937541937300106,
+          "start_mm": [
+            86.4121,
+            -25.100000000000012,
+            57.2136
+          ],
+          "end_mm": [
+            87.1816,
+            -25.100000000000012,
+            59.4803
+          ],
+          "centre_mm": [
+            86.79685,
+            -25.100000000000012,
+            58.34695
+          ],
+          "source_owner": "backing-block outer side"
+        },
+        {
+          "type": "LINE",
+          "length_mm": 2.3937948617206106,
+          "start_mm": [
+            85.94509999999998,
+            -25.100000000000012,
+            54.8658
+          ],
+          "end_mm": [
+            86.41209999999998,
+            -25.100000000000012,
+            57.2136
+          ],
+          "centre_mm": [
+            86.17859999999997,
+            -25.100000000000012,
+            56.0397
+          ],
+          "source_owner": "backing-block outer side"
+        },
+        {
+          "type": "LINE",
+          "length_mm": 2.3937214144507255,
+          "start_mm": [
+            85.78859999999999,
+            -25.100000000000012,
+            52.4772
+          ],
+          "end_mm": [
+            85.94509999999998,
+            -25.100000000000012,
+            54.8658
+          ],
+          "centre_mm": [
+            85.86684999999999,
+            -25.100000000000012,
+            53.6715
+          ],
+          "source_owner": "backing-block outer side"
+        },
+        {
+          "type": "LINE",
+          "length_mm": 2.393721414450733,
+          "start_mm": [
+            85.9451,
+            -25.100000000000012,
+            50.0886
+          ],
+          "end_mm": [
+            85.7886,
+            -25.100000000000012,
+            52.4772
+          ],
+          "centre_mm": [
+            85.86685,
+            -25.100000000000012,
+            51.282900000000005
+          ],
+          "source_owner": "backing-block outer side"
+        }
+      ],
+      "stage": "post-blend rejoin",
+      "shoulder_width_mm": 4.0,
+      "shoulder_depth_mm": 3.5,
+      "join_state": {
+        "before_refinement": {
+          "valid": false,
+          "solids": 1
+        },
+        "after_refinement": {
+          "valid": false,
+          "solids": 1
+        }
+      },
+      "status": "FAILED_CONSTRUCTION; no candidate qualification"
+    },
+    "shapes": {
+      "unfilleted-local": {
+        "file": "unfilleted-local.brep",
+        "sha256": "484f55b41533b41a8f50f72f36f2562249f27280599cfdee45c7bb13c619de8b"
+      },
+      "source-back": {
+        "file": "source-back.brep",
+        "sha256": "fa05dfcb2baaa4ad5fdebe298883f4a2dbd10a822723f2ff566516f5bdffe4d6"
+      },
+      "rounded-local": {
+        "file": "rounded-local.brep",
+        "sha256": "8a53e7ec2cea756555962ee60855724456c740f0fdc8b28eda4de22c8d8bb96a"
+      },
+      "retained-base": {
+        "file": "retained-base.brep",
+        "sha256": "e852a16a49fb76ec85c925846d739848bc00ef427d0f3c2c5b6d24bbec8cdac0"
+      },
+      "rounded-addition": {
+        "file": "rounded-addition.brep",
+        "sha256": "1a5f34dd739b825a4d030a552cba41c8d68e0c311add71bb2673593c0ca7dd94"
+      },
+      "raw-finished": {
+        "file": "raw-finished.brep",
+        "sha256": "59cf04a9da6bc6fb1846c6d95ccf5c1e7e30687131e1dc63030b920927eb9ace"
+      },
+      "finished-local": {
+        "file": "finished-local.brep",
+        "sha256": "38c74bb1d00865f9272d6d77bebdccad9abddeec857c780a7b426a8d63f5f5c3"
+      }
+    }
+  },
+  "scope": "Actual post-fillet rejoin validity/count failure; no full candidate/clearance/FEA acceptance",
+  "source": "80e49685cf36a84bc1d05a04cfcf2991e0dfe49f",
+  "status": "FAILED_INVALID_SINGLE_SOLID_REJOIN",
+  "archive_sha256": "70f3c7198487b00efbc83452c8801590f511709b3b1f77e70a502be471598ac0",
+  "members": {
+    "baseline/geometry.json": {
+      "bytes": 15583,
+      "sha256": "bb4d987ddbc58cb73c9de0fe1ffa57a8e0198daecb2c0461f7a902b187c8f84a"
+    },
+    "baseline/hip-frame.brep": {
+      "bytes": 1053599,
+      "sha256": "eade0bb22007b829473ca64bdf9dd3fc5574ae09267495542141d997d15d48b3"
+    },
+    "baseline/precheck/body-cache/frame_mounts.json": {
+      "bytes": 812,
+      "sha256": "39bc4be9c7a22b4a564056d03bc266784826c1275d6dd1d97902c6ab71691ba3"
+    },
+    "baseline/precheck/params.json": {
+      "bytes": 148,
+      "sha256": "180833cbc6aa0adbc315ae0a9d2c69ad6febc0c0daec759416292722a8f11107"
+    },
+    "baseline-runtime.json": {
+      "bytes": 139220,
+      "sha256": "c3115f2dddbff0ca550159b0789d07f4b399fa5fee59a337864d98bffd2ab8b6"
+    },
+    "candidate/construction-failure.json": {
+      "bytes": 18985,
+      "sha256": "245433699ba16838295e6bfc2923ed47d9a056779010c910fe92e7c4ec8b7eaf"
+    },
+    "candidate/finished-local.brep": {
+      "bytes": 235315,
+      "sha256": "38c74bb1d00865f9272d6d77bebdccad9abddeec857c780a7b426a8d63f5f5c3"
+    },
+    "candidate/raw-finished.brep": {
+      "bytes": 268138,
+      "sha256": "59cf04a9da6bc6fb1846c6d95ccf5c1e7e30687131e1dc63030b920927eb9ace"
+    },
+    "candidate/retained-base.brep": {
+      "bytes": 97549,
+      "sha256": "e852a16a49fb76ec85c925846d739848bc00ef427d0f3c2c5b6d24bbec8cdac0"
+    },
+    "candidate/rounded-addition.brep": {
+      "bytes": 281555,
+      "sha256": "1a5f34dd739b825a4d030a552cba41c8d68e0c311add71bb2673593c0ca7dd94"
+    },
+    "candidate/rounded-local.brep": {
+      "bytes": 234424,
+      "sha256": "8a53e7ec2cea756555962ee60855724456c740f0fdc8b28eda4de22c8d8bb96a"
+    },
+    "candidate/source-back.brep": {
+      "bytes": 45901,
+      "sha256": "fa05dfcb2baaa4ad5fdebe298883f4a2dbd10a822723f2ff566516f5bdffe4d6"
+    },
+    "candidate/unfilleted-local.brep": {
+      "bytes": 163814,
+      "sha256": "484f55b41533b41a8f50f72f36f2562249f27280599cfdee45c7bb13c619de8b"
+    },
+    "candidate-runtime.json": {
+      "bytes": 138954,
+      "sha256": "7f8f81091317c6dfb1b05a2bb576ddeec62cfb1e912e3827f670e4ada7e11304"
+    }
+  },
+  "preservation": {
+    "project": {
+      "before_sha256": "77d132e6f47679495a5b29c35ed38e1e6a459c14c13b6d3e15db318c15434cfc",
+      "after_sha256": "77d132e6f47679495a5b29c35ed38e1e6a459c14c13b6d3e15db318c15434cfc",
+      "equal": true,
+      "members": 3108
+    },
+    "hardware": {
+      "before_sha256": "3f34f6f09aa789c0372ca675c311bf8175f15e7feedc86c07dd09183a5dc79f6",
+      "after_sha256": "3f34f6f09aa789c0372ca675c311bf8175f15e7feedc86c07dd09183a5dc79f6",
+      "equal": true,
+      "members": 1790
+    },
+    "runtime": {
+      "before_sha256": "d228d65f57b8e325d31143d0da144dd2a28e81a89c71f6f0495eaf1551149c23",
+      "after_sha256": "d228d65f57b8e325d31143d0da144dd2a28e81a89c71f6f0495eaf1551149c23",
+      "equal": true,
+      "members": 24222
+    }
+  },
+  "all_project_Git_blobs_exact": true,
+  "private_input_exact": true,
+  "phase_results": {
+    "baseline": {
+      "exit": 0,
+      "seconds": 105.74960940796882,
+      "process_cleanup": {
+        "group_gone": true,
+        "signalled": false,
+        "reaped": []
+      }
+    },
+    "candidate": {
+      "exit": 1,
+      "seconds": 26.84124638698995,
+      "process_cleanup": {
+        "group_gone": true,
+        "signalled": false,
+        "reaped": []
+      }
+    }
+  },
+  "baseline_volume_mm3": 1014700.4905201178,
+  "baseline_interfaces": {
+    "bed": {
+      "size_mm": [
+        274,
+        158,
+        81
+      ],
+      "placement": "turned",
+      "ok": true
+    },
+    "body": {
+      "z_spine_top_mm": 90.5,
+      "reference_mm": 90.5,
+      "cheek_flange_z_mm": -85.75,
+      "frame_z_min_mm": -81.5,
+      "ok": true,
+      "inserts": [
+        [
+          -83.0,
+          70.0
+        ],
+        [
+          0.0,
+          70.0
+        ],
+        [
+          83.0,
+          70.0
+        ],
+        [
+          -83.0,
+          -70.0
+        ],
+        [
+          0.0,
+          -70.0
+        ],
+        [
+          83.0,
+          -70.0
+        ]
+      ]
+    },
+    "bbox_mm": [
+      -137.0,
+      137.0,
+      -82.3,
+      -1.0,
+      -81.5,
+      77.0
+    ]
+  },
+  "candidate_geometry_absent": true,
+  "comparison_not_run": true,
+  "raw_files": {
+    "bootstrap.log": {
+      "bytes": 0,
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+    },
+    "host-before-launch.json": {
+      "bytes": 146,
+      "sha256": "49c5cff0d1a21e90ce8e25d605457eaccfebd33aa1f576fa374fdbfe5603895f"
+    },
+    "exit.done": {
+      "bytes": 2,
+      "sha256": "4355a46b19d348dc2f57c046f8ef63d4538ebb936000f3c9ee954a27460dd865"
+    },
+    "outer-group-state.json": {
+      "bytes": 20,
+      "sha256": "01494769646704bf89e80824e006f460ae4f48f4ac631ad3d8d87c7e6e8b8d39"
+    },
+    "started.json": {
+      "bytes": 481,
+      "sha256": "90bf8102434bc0ca7afc4c3582fb201a7ab5ed3d2321d3758af73e150103947d"
+    },
+    "run.log": {
+      "bytes": 3690,
+      "sha256": "5bbf1e9153e69ae9f4f96115f759b526253ec3889e24f2a62ae2ef4b18a5a53b"
+    },
+    "launcher.log": {
+      "bytes": 0,
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+    },
+    "collection.json": {
+      "bytes": 853,
+      "sha256": "975bb8d69acdfd7e0a54b252c0615f9fb7daeaec54c1d48bc96faca534b598ae"
+    },
+    "host-preflight.json": {
+      "bytes": 290,
+      "sha256": "7f2bbaac2424a74fd9bad7cfab4a27741261217979dfc5e8ed42580bbafefcdc"
+    },
+    "out/private-input-after.json": {
+      "bytes": 118,
+      "sha256": "f092a9daccd49dd6c736d3001d6e52d4eaa5366c3f3e902f472b85ed26f84b69"
+    },
+    "out/result.json": {
+      "bytes": 3614,
+      "sha256": "dc4890c869e2cb23218386ff2e093ba4ffda7c4c7ddb52d6f91afa93aefd9114"
+    },
+    "out/geometry-inventory.json": {
+      "bytes": 2002,
+      "sha256": "a945f446d72efc860811f94623d236f78d2d1efc2d1483eba3a1a24d79a8bf1c"
+    },
+    "out/geometry.tgz": {
+      "bytes": 492202,
+      "sha256": "70f3c7198487b00efbc83452c8801590f511709b3b1f77e70a502be471598ac0"
+    },
+    "out/project-status-after.json": {
+      "bytes": 3,
+      "sha256": "bd85bcdb8d4e613a79cb62d0903946ad10c83e63dc75f67614c159c0dbf4d184"
+    },
+    "out/private-input-before.json": {
+      "bytes": 118,
+      "sha256": "f092a9daccd49dd6c736d3001d6e52d4eaa5366c3f3e902f472b85ed26f84b69"
+    },
+    "out/runtime-before.json": {
+      "bytes": 4697920,
+      "sha256": "d228d65f57b8e325d31143d0da144dd2a28e81a89c71f6f0495eaf1551149c23"
+    },
+    "out/runtime-after.json": {
+      "bytes": 4697920,
+      "sha256": "d228d65f57b8e325d31143d0da144dd2a28e81a89c71f6f0495eaf1551149c23"
+    },
+    "out/baseline.log": {
+      "bytes": 13749,
+      "sha256": "5aa1c571556b355ea65aa09cc293671e9e812c5f1a22ac135a3a2665112ee64b"
+    },
+    "out/hardware-after.json": {
+      "bytes": 268409,
+      "sha256": "3f34f6f09aa789c0372ca675c311bf8175f15e7feedc86c07dd09183a5dc79f6"
+    },
+    "out/geometry-archive.json": {
+      "bytes": 98,
+      "sha256": "7ce7e95667435affe182b1e60724b4407e1f6aec71332826bf765783b9088349"
+    },
+    "out/candidate.log": {
+      "bytes": 2863,
+      "sha256": "abee1dde39d7d45ed692472c863669d3e89e5cc6ae2e37ee1f7a51dc21b9a27a"
+    },
+    "out/hardware-before.json": {
+      "bytes": 268409,
+      "sha256": "3f34f6f09aa789c0372ca675c311bf8175f15e7feedc86c07dd09183a5dc79f6"
+    },
+    "out/project-after.json": {
+      "bytes": 552821,
+      "sha256": "77d132e6f47679495a5b29c35ed38e1e6a459c14c13b6d3e15db318c15434cfc"
+    },
+    "out/project-before.json": {
+      "bytes": 552821,
+      "sha256": "77d132e6f47679495a5b29c35ed38e1e6a459c14c13b6d3e15db318c15434cfc"
+    },
+    "out/geometry/baseline-runtime.json": {
+      "bytes": 139220,
+      "sha256": "c3115f2dddbff0ca550159b0789d07f4b399fa5fee59a337864d98bffd2ab8b6"
+    },
+    "out/geometry/candidate-runtime.json": {
+      "bytes": 138954,
+      "sha256": "7f8f81091317c6dfb1b05a2bb576ddeec62cfb1e912e3827f670e4ada7e11304"
+    },
+    "out/geometry/baseline/hip-frame.brep": {
+      "bytes": 1053599,
+      "sha256": "eade0bb22007b829473ca64bdf9dd3fc5574ae09267495542141d997d15d48b3"
+    },
+    "out/geometry/baseline/geometry.json": {
+      "bytes": 15583,
+      "sha256": "bb4d987ddbc58cb73c9de0fe1ffa57a8e0198daecb2c0461f7a902b187c8f84a"
+    },
+    "out/geometry/candidate/construction-failure.json": {
+      "bytes": 18985,
+      "sha256": "245433699ba16838295e6bfc2923ed47d9a056779010c910fe92e7c4ec8b7eaf"
+    },
+    "out/geometry/candidate/rounded-local.brep": {
+      "bytes": 234424,
+      "sha256": "8a53e7ec2cea756555962ee60855724456c740f0fdc8b28eda4de22c8d8bb96a"
+    },
+    "out/geometry/candidate/rounded-addition.brep": {
+      "bytes": 281555,
+      "sha256": "1a5f34dd739b825a4d030a552cba41c8d68e0c311add71bb2673593c0ca7dd94"
+    },
+    "out/geometry/candidate/retained-base.brep": {
+      "bytes": 97549,
+      "sha256": "e852a16a49fb76ec85c925846d739848bc00ef427d0f3c2c5b6d24bbec8cdac0"
+    },
+    "out/geometry/candidate/raw-finished.brep": {
+      "bytes": 268138,
+      "sha256": "59cf04a9da6bc6fb1846c6d95ccf5c1e7e30687131e1dc63030b920927eb9ace"
+    },
+    "out/geometry/candidate/unfilleted-local.brep": {
+      "bytes": 163814,
+      "sha256": "484f55b41533b41a8f50f72f36f2562249f27280599cfdee45c7bb13c619de8b"
+    },
+    "out/geometry/candidate/finished-local.brep": {
+      "bytes": 235315,
+      "sha256": "38c74bb1d00865f9272d6d77bebdccad9abddeec857c780a7b426a8d63f5f5c3"
+    },
+    "out/geometry/candidate/source-back.brep": {
+      "bytes": 45901,
+      "sha256": "fa05dfcb2baaa4ad5fdebe298883f4a2dbd10a822723f2ff566516f5bdffe4d6"
+    },
+    "out/geometry/baseline/precheck/params.json": {
+      "bytes": 148,
+      "sha256": "180833cbc6aa0adbc315ae0a9d2c69ad6febc0c0daec759416292722a8f11107"
+    },
+    "out/geometry/baseline/precheck/body-cache/frame_mounts.json": {
+      "bytes": 812,
+      "sha256": "39bc4be9c7a22b4a564056d03bc266784826c1275d6dd1d97902c6ab71691ba3"
+    }
+  }
+}

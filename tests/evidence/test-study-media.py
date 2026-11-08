@@ -601,6 +601,33 @@ class HipGeometryInputs(unittest.TestCase):
             spec.loader.exec_module(module)
         return module
 
+    def test_rejoin_diagnostic_rejects_changed_operands_before_output_or_kernel(self):
+        geometry = self.load_geometry()
+        fixture = check.ROOT / '.agents/plans/hip-study/failed-rejoin'
+        declared = {p.name: geometry.digest(p) for p in fixture.iterdir()}
+        original = geometry.rejoin_inputs(fixture, declared)
+        self.assertEqual(len(original['shapes']), 7)
+        with tempfile.TemporaryDirectory(prefix='hip-rejoin-input-') as tmp:
+            root = Path(tmp); source = root / 'source';source.mkdir()
+            for p in fixture.iterdir():
+                (source / p.name).write_bytes(p.read_bytes())
+            cfg = root / '.agents/plans/hip-study/foot-geometry-inputs.json'
+            cfg.parent.mkdir(parents=True)
+            cfg.write_text(json.dumps({'rejoin_diagnostic': {'inputs': declared}}))
+            study = type('ReadOnlyStudy', (), {'ROOT': root})()
+            out = root / 'output'
+            target = source / 'rounded-addition.brep';target.write_bytes(b'changed')
+            with patch.object(geometry, 'prepare', side_effect=AssertionError('Passed input boundary')), patch.dict(
+                    sys.modules, {name: None for name in ('cadquery', 'gmsh', 'OCP')}):
+                with self.assertRaisesRegex(ValueError, 'input identity differs'):
+                    geometry.diagnose_rejoin(study, out, source)
+                target.unlink();target.symlink_to(fixture / target.name)
+                with self.assertRaisesRegex(ValueError, 'input identity differs'):
+                    geometry.diagnose_rejoin(study, out, source)
+            self.assertFalse(out.exists())
+            with self.assertRaisesRegex(ValueError, 'Incomplete'):
+                geometry.rejoin_inputs(fixture, {k:v for k,v in declared.items() if k != target.name})
+
     def test_saved_failure_diagnostic_rejects_changed_or_linked_inputs_before_native(self):
         geometry = self.load_geometry()
         fixture = check.ROOT / '.agents/plans/hip-study/failed-local-foot'

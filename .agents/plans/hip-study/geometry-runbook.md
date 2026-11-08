@@ -62,3 +62,20 @@ old motor round and protected 62.5 mm void. The independent finished-addition
 region explicitly includes this shoulder. The normal three genuine phases
 and all existing finished-solid/interface/manufacturer/fault checks apply.
 No geometry success, strength improvement or physical qualification is implied.
+
+## Saved rejoin diagnosis and source-object reuse
+
+The current `rejoin_diagnostic` selector runs only a 120-second saved-shape
+study through the same bounded collector/runtime. It checks seven sealed
+operands, recomputes subtraction stages, and reports two finite join orders.
+There is no baseline rebuild, product build, FEA or finished-candidate adoption.
+Only after those facts justify a construction correction should the normal
+finished geometry/interface/manufacturer comparison run again. Baseline reuse
+with its original provenance is not implemented or silently substituted.
+
+Bootstrap uses an explicitly pinned completed owned source donor with
+`git clone --shared --dissociate --no-checkout`, then public origin/exact
+target fetch/checkout, connectivity and no-alternates checks. It records donor
+Git state before/after and keeps its original directories. New output/HOME
+and checkout are isolated; the retained runtime remains read-only. Source
+object reuse never substitutes an old geometry or engineering result.

@@ -229,6 +229,139 @@ def diagnose(study, out, source):
     return result
 
 
+def rejoin_inputs(source, declared):
+    names = {'unfilleted-local', 'source-back', 'rounded-local', 'retained-base',
+             'rounded-addition', 'raw-finished', 'finished-local'}
+    expected = {'construction-failure.json', *(name + '.brep' for name in names)}
+    if set(declared) != expected:
+        raise ValueError('Incomplete failed-rejoin input contract')
+    source = Path(source)
+    for name, value in declared.items():
+        path = source / name
+        if not stat.S_ISREG(path.lstat().st_mode) or digest(path) != value:
+            raise ValueError('Failed-rejoin input identity differs: ' + name)
+    failure = json.loads((source / 'construction-failure.json').read_text())
+    context = failure['context']
+    if (set(failure['shapes']) != names or context['radius_mm'] != 3.5
+            or context['shoulder_width_mm'] != 4 or context['shoulder_depth_mm'] != 3.5
+            or context['join_state'] != {'before_refinement': {'valid': False, 'solids': 1},
+                                         'after_refinement': {'valid': False, 'solids': 1}}):
+        raise ValueError('Saved rejoin is not the declared failed single-solid case')
+    for name, row in failure['shapes'].items():
+        if row['file'] != name + '.brep' or declared[row['file']] != row['sha256']:
+            raise ValueError('Failed-rejoin shape seal differs')
+    return failure
+
+
+def diagnose_rejoin(study, out, source):
+    """Read failed operands and two finite same-geometry joins, never a candidate."""
+    config = json.loads((study.ROOT / '.agents/plans/hip-study/foot-geometry-inputs.json').read_text())
+    cfg = config['rejoin_diagnostic']; declared = cfg['inputs']
+    failure = rejoin_inputs(source, declared)
+    out, before = prepare(study, out)
+    import cadquery as cq
+    from OCP.BRepCheck import BRepCheck_Analyzer
+    shapes = {name: cq.Shape.importBrep(str(Path(source) / row['file']))
+              for name, row in failure['shapes'].items()}
+    result = {'scope': 'Saved own-shape BRepCheck and finite Boolean diagnosis only; not finished CAD/FEA acceptance',
+              'status': 'INCOMPLETE_DIAGNOSTIC', 'source_sha256': before,
+              'failed_source': cfg['source'], 'failed_archive_sha256': cfg['archive_sha256'],
+              'frame': 'Original left-leg source frame, unrotated, millimetres', 'datums': cfg['datums'],
+              'input_sha256': declared, 'saved': {}, 'reconstructed_stages': {}, 'variants': {},
+              'fea_run': False, 'physical_qualification': False}
+    def inspect(shape):
+        check = BRepCheck_Analyzer(shape.wrapped)
+        bb = shape.BoundingBox()
+        row = {'valid': check.IsValid(), 'solids': len(shape.Solids()), 'kernel_volume_mm3': shape.Volume(),
+               'bounds_mm': [bb.xmin, bb.ymin, bb.zmin, bb.xmax, bb.ymax, bb.zmax],
+               'invalid_components': [], 'query_errors': []}
+        for kind in ('Solids', 'Shells', 'Faces', 'Wires', 'Edges'):
+            for i, part in enumerate(getattr(shape, kind)()):
+                try:
+                    item = check.Result(part.wrapped)
+                    direct = [str(v) for v in item.Status()]
+                    contexts = []
+                    item.InitContextIterator()
+                    while item.MoreShapeInContext():
+                        flags = [str(v) for v in item.StatusOnShape()]
+                        if any(not flag.endswith('BRepCheck_NoError') for flag in flags):
+                            contexts.append({'type': str(item.ContextualShape().ShapeType()), 'statuses': flags})
+                        item.NextShapeInContext()
+                    if (not check.IsValid(part.wrapped) or contexts
+                            or any(not flag.endswith('BRepCheck_NoError') for flag in direct)):
+                        b = part.BoundingBox()
+                        row['invalid_components'].append({'kind': kind, 'index': i, 'statuses': direct,
+                            'contexts': contexts, 'bounds_mm': [b.xmin,b.ymin,b.zmin,b.xmax,b.ymax,b.zmax]})
+                except Exception as error:
+                    row['query_errors'].append({'kind': kind, 'index': i,
+                                                'error': type(error).__name__ + ': ' + str(error)})
+        return row
+    for name, shape in shapes.items():
+        result['saved'][name] = inspect(shape)
+        write(out, 'rejoin-diagnostic.json', result)
+    d = cfg['datums']
+    if d != {'motor_x_mm': 75.0, 'motor_cut_r_mm': 66.0, 'protected_r_mm': 62.5,
+             'plane_y_mm': -25.1, 'width_mm': 4.0, 'depth_mm': 3.5}:
+        raise ValueError('Diagnostic datums differ from the pinned first-foot source')
+    base, rounded, added = (shapes[n] for n in ('retained-base', 'rounded-local', 'rounded-addition'))
+    bb = rounded.BoundingBox();lo, hi = bb.ymin-1, bb.ymax+1
+    cut = (cq.Workplane('XZ', origin=(d['motor_x_mm'], hi, 0)).circle(d['motor_cut_r_mm'])
+           .extrude(hi-lo).val())
+    protected = (cq.Workplane('XZ', origin=(d['motor_x_mm'], hi, 0)).circle(d['protected_r_mm'])
+                 .extrude(hi-lo).val())
+    b = shapes['source-back'].BoundingBox();w,depth,y = d['width_mm'],d['depth_mm'],d['plane_y_mm']
+    envelope = cq.Solid.makeBox(b.xlen+2*w, 2*depth, b.zlen+2*w,
+                               cq.Vector(b.xmin-w, y-depth, b.zmin-w))
+    patch_cut = (cq.Workplane('XZ', origin=(d['motor_x_mm'], y+depth+1, 0))
+                 .circle(d['motor_cut_r_mm']).extrude(2*depth+2).val())
+    difference = None
+    def stage(name, build):
+        try:
+            shape = build();row = inspect(shape)
+            result['reconstructed_stages'][name] = row
+            path = out / (name + '.brep')
+            if not shape.exportBrep(str(path)):
+                raise ValueError('Diagnostic stage BREP export failed')
+            row['brep'] = {'file': path.name, 'sha256': digest(path)}
+            return shape
+        except Exception as error:
+            result['reconstructed_stages'].setdefault(name, {})['operation_error'] = type(error).__name__ + ': ' + str(error)
+        finally:
+            write(out, 'rejoin-diagnostic.json', result)
+        return None
+    stage('fillet_minus_unfilleted', lambda: rounded.cut(shapes['unfilleted-local']))
+    difference = stage('rounded_minus_original', lambda: rounded.cut(shapes['source-back']))
+    if difference is not None:
+        stage('rounded_minus_original_after_motor_cut', lambda: difference.cut(patch_cut))
+    variants = [('clean_operands', lambda: base.clean().fuse(added.clean()).clean()),
+                ('restore_complete_rounded_back', lambda: base.fuse(rounded.cut(cut).clean()).clean())]
+    for name, build in variants:
+        try:
+            candidate = build();row = inspect(candidate)
+            result['variants'][name] = row
+            path = out / (name + '.brep')
+            if not candidate.exportBrep(str(path)):
+                raise ValueError('Diagnostic Boolean BREP export failed')
+            row['brep'] = {'file': path.name, 'sha256': digest(path)}
+            # Raw Boolean facts are diagnostic, not a substitute for the full
+            # finished-shape/interface/manufacturer acceptance pipeline.
+            loss = base.cut(candidate);new = candidate.cut(base)
+            violation = new.intersect(protected);outside = new.cut(envelope)
+            row['boolean_facts'] = {'retained_loss_solids': len(loss.Solids()), 'retained_loss_mm3': loss.Volume(),
+                'new_volume_mm3': new.Volume(), 'protected_intrusion_solids': len(violation.Solids()),
+                'protected_intrusion_mm3': violation.Volume(), 'outside_envelope_solids': len(outside.Solids()),
+                'outside_envelope_mm3': outside.Volume(), 'valid_intermediate_only': row['valid'] and row['solids']==1}
+            result['variants'][name] = row
+        except Exception as error:
+            result['variants'].setdefault(name, {})['operation_error'] = type(error).__name__ + ': ' + str(error)
+        write(out, 'rejoin-diagnostic.json', result)
+    if before != inputs(study) or failure != rejoin_inputs(source, declared):
+        raise ValueError('Rejoin diagnostic source/failed inputs changed')
+    result['status'] = 'COLLECTED_REJOIN_DIAGNOSTIC_ONLY'
+    write(out, 'rejoin-diagnostic.json', result)
+    return result
+
+
 def require_empty(shape, message):
     count, volume = len(shape.Solids()), shape.Volume()
     if count or volume != 0:

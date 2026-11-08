@@ -51,9 +51,41 @@ preflight={'load':os.getloadavg(),'available_kib':mem['MemAvailable'],'cpus':cpu
 (run/'runtime.json').write_text(json.dumps(rt,indent=2)+'\n')
 env={**os.environ,'GIT_TERMINAL_PROMPT':'0','GIT_CONFIG_NOSYSTEM':'1','GIT_CONFIG_GLOBAL':'/dev/null','GIT_CONFIG_COUNT':'0','GIT_ASKPASS':'/bin/false','GIT_OPTIONAL_LOCKS':'0'}
 for name in ('GIT_DIR','GIT_WORK_TREE','GIT_COMMON_DIR','GIT_INDEX_FILE','GIT_NAMESPACE'):env.pop(name,None)
+# Reuse only a frozen completed owned checkout; dissociate the new object store.
+cc=c['source_cache'];assert cc['run_name'].startswith('20261107-hip-foot-geometry-')and'/'not in cc['run_name']
+cache=home/'gyropup-mechanical-runs'/cc['run_name']/'src'
+assert cache.is_dir()and not cache.is_symlink()and cache.stat().st_uid==os.getuid()
+assert (cache/'.git').is_dir()and not(cache/'.git').is_symlink()
+assert (cache.parent/'exit.done').read_text().strip()in('0','1')
+assert json.loads((cache.parent/'outer-group-state.json').read_text())['group_gone']is True
+cache_result=json.loads((cache.parent/'out/result.json').read_text())
+assert cache_result['source']==cc['head']and not cache_result.get('final_guard_errors')
+assert all(v.get('process_cleanup',{}).get('group_gone')is True for v in cache_result['phases'].values())
+def cache_state():
+ def read(*tail):return subprocess.check_output(['git','--no-optional-locks','-C',str(cache),*tail],env=env,text=True)
+ return {'head':read('rev-parse','HEAD').strip(),'tree':read('rev-parse','HEAD^{tree}').strip(),
+         'status':read('status','--porcelain'),'origin':read('remote','get-url','origin').strip(),
+         'refs':read('for-each-ref','--format=%(refname) %(objectname)'),
+         'metadata':{n:hashlib.sha256((cache/'.git'/n).read_bytes()).hexdigest()for n in
+                     ('HEAD','config','index','shallow','packed-refs','FETCH_HEAD')if(cache/'.git'/n).is_file()}}
+cache_before=cache_state()
+assert cache_before['head']==cc['head']and cache_before['tree']==cc['tree']and cache_before['status']==''
+assert cache_before['origin']=='https://github.com/Valpatel/gyropup.git'
+(run/'source-cache-before.json').write_text(json.dumps(cache_before,indent=2)+'\n')
 with (run/'bootstrap.log').open('x')as log:
- for argv,limit in [(['git','init','-q',str(run/'src')],30),(['git','-C',str(run/'src'),'remote','add','origin','https://github.com/Valpatel/gyropup.git'],30),(['git','-C',str(run/'src'),'-c','credential.helper=','fetch','-q','--depth','1','origin',c['head']],600),(['git','-C',str(run/'src'),'checkout','-q','--detach','FETCH_HEAD'],30)]:
-  subprocess.run(['timeout','--signal=TERM','--kill-after=10s',str(limit)+'s',*argv],env=env,stdout=log,stderr=subprocess.STDOUT,check=True,timeout=limit+15)
+ cache_primary=None
+ try:
+  for argv,limit in [(['git','clone','-q','--shared','--dissociate','--no-checkout',str(cache),str(run/'src')],60),(['git','-C',str(run/'src'),'remote','set-url','origin','https://github.com/Valpatel/gyropup.git'],30),(['git','-C',str(run/'src'),'-c','credential.helper=','fetch','-q','--depth','1','origin',c['head']],600),(['git','-C',str(run/'src'),'checkout','-q','--detach','FETCH_HEAD'],30),(['git','-C',str(run/'src'),'fsck','--connectivity-only','--no-dangling'],30)]:
+   subprocess.run(['taskset','-c',','.join(map(str,cpus)),'timeout','--signal=TERM','--kill-after=10s',str(limit)+'s',*argv],env=env,stdout=log,stderr=subprocess.STDOUT,check=True,timeout=limit+15)
+  assert not(run/'src/.git/objects/info/alternates').exists(),'New object store still depends on donor'
+ except BaseException as error:
+  cache_primary=error;raise
+ finally:
+  try:
+   cache_after=cache_state();(run/'source-cache-after.json').write_text(json.dumps(cache_after,indent=2)+'\n');assert cache_after==cache_before
+  except BaseException as error:
+   if cache_primary is None:raise
+   print('Secondary donor preservation readback: '+type(error).__name__+': '+str(error),file=sys.stderr)
  root=run/'src'
  assert subprocess.check_output(['git','-C',str(root),'rev-parse','HEAD'],text=True).strip()==c['head']
  assert not subprocess.check_output(['git','-C',str(root),'status','--porcelain'],text=True).strip()

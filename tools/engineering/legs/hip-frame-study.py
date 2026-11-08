@@ -355,14 +355,19 @@ def main():
     ap.add_argument('--compare-geometry', nargs=2, type=Path, metavar=('BASELINE', 'CANDIDATE'))
     ap.add_argument('--motor-step', type=Path, help='pinned private manufacturer RS04 STEP, comparison only')
     ap.add_argument('--diagnose-foot', type=Path, help='sealed failed local BREP directory; no product build')
+    ap.add_argument('--diagnose-rejoin', type=Path, help='sealed failed rejoin operands; no product build')
     ap.add_argument('--evaluator', action='store_true')
     ap.add_argument('--out-root', type=Path, default=ROOT / 'build/hip-frame/sweep')
     a = ap.parse_args()
-    if a.geometry_only or a.compare_geometry or a.diagnose_foot:
-        if a.evaluator or sum(bool(v) for v in (a.geometry_only, a.compare_geometry, a.diagnose_foot)) != 1 or not a.out:
+    if a.geometry_only or a.compare_geometry or a.diagnose_foot or a.diagnose_rejoin:
+        if a.evaluator or sum(bool(v) for v in (a.geometry_only, a.compare_geometry, a.diagnose_foot, a.diagnose_rejoin)) != 1 or not a.out:
             ap.error('choose one geometry mode with a fresh external --out')
         from tools.engineering.legs import hip_frame_geometry as geometry
-        if a.diagnose_foot:
+        if a.diagnose_rejoin:
+            if a.params or a.motor_step:
+                ap.error('saved-rejoin diagnosis accepts no parameter or manufacturer override')
+            res = geometry.diagnose_rejoin(sys.modules[__name__], a.out, a.diagnose_rejoin)
+        elif a.diagnose_foot:
             if a.params or a.motor_step:
                 ap.error('saved-shape diagnosis accepts no parameter or manufacturer override')
             res = geometry.diagnose(sys.modules[__name__], a.out, a.diagnose_foot)
