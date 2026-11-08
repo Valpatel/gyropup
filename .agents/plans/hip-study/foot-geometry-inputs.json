@@ -1,5 +1,5 @@
 {
-  "scope": "ONE source geometry/interface/manufacturer-model screen; no FEA or adoption",
+  "scope": "ONE saved failed-shape OCP diagnostic at3.5mm; no product build, FEA or adoption",
   "cad_sources": {
     "hardware/__init__.py": "d6ddd9ce4ef273b82f43f315f09d11db1224f2b8298c9b0b3ea7dafb97280ba0",
     "hardware/cad/__init__.py": "d6ddd9ce4ef273b82f43f315f09d11db1224f2b8298c9b0b3ea7dafb97280ba0",
@@ -196,22 +196,25 @@
     "tests/hardware/turret/test_turret_gate_sources.py": "fb85a82ab0a322debc60b6b93a3b8018227949e80fb7d5bcc453171b0f397732",
     "tests/hardware/turret/test_turret_snaps.py": "96afedabae5991a7d99eab3af5f324ae901589d7e92e45b2a36f32bc7a709fd6",
     "tests/hardware/turret/test_turret_solids.py": "d03677019224ad4e95f8775f374010c450299daf67fd729f546a1ea458e87a31",
-    "tools/engineering/legs/hip-frame-study.py": "9d1ece455e82d057cedb98e6566b17ea95e6d5de9e84f217b7cacee9e65956b4",
+    "tools/engineering/legs/hip-frame-study.py": "8012476057e63d01af6e5a4e208fe81bffade35f316418e50b69ee2ffff02b40",
     "tools/site/source-layout.json": "da14426ba66d03195bb8566ae61371b38ba3ad7a19e39e7030509542d9d9902c",
     "tools/site/source_layout.py": "6763319c818b15386f9c6157b35455ab0b11acbd6110dc24eefc5eba3103eb4f",
-    "tools/engineering/legs/hip_frame_geometry.py": "907f526efe0c75e7f3bf4d868b51865c867ca41c5da9a52e2bf62fc69c3e301f",
+    "tools/engineering/legs/hip_frame_geometry.py": "0f1e5fa925288a38f8835f9b0851e073764361c1a55500f06ea32a366a73d25e",
     ".agents/plans/hip-study/accepted-topology/topology.json": "faf077d86f27294060e27d415f2000873ff92c0ceb1dd4df51b262d86b2fbb0f",
     ".agents/plans/hip-study/accepted-topology/accepted-import-record.json": "2224e1f86cb6f92c3a3a3065a69d6ba688f547f9a53ccfe5c1b6f743a41fedc0",
     ".agents/plans/hip-study/retained-foot-baseline.params.json": "d8ac357fbb37b9512a37347ed80fba18b1184943fcdb6e5be6ab93f644e57175"
   },
   "execution_sources": {
-    ".agents/plans/hip-study/collect-foot-geometry.py": "61aa2451ed7038b9997e26d1c8b4c5a01b12fb92fb75df059cea3f90d6dde4c5",
+    ".agents/plans/hip-study/collect-foot-geometry.py": "398d167ac8484d1294a91ced1bd0f9f298d407dd45cb0609197d734e6e3bb050",
     ".agents/plans/hip-study/run-foot-case.py": "d745e9d4587a51878e69aba698f3a60082e8a4e2551c955c96d149f2044c32d8",
     ".agents/plans/hip-study/launch-foot-geometry.sh": "39492bebb509826fcdb2d8e0bb8e51446384f7a5de5e846131f704142ddaa693",
     ".agents/plans/hip-study/submit-foot-geometry-once.py": "25c61eb0d88f730430a7a60eb9c92f2e356e160b514fad993ee7293a64eeed62",
     ".agents/plans/hip-study/inspect-step-worker.py": "36ca7c8148774a12505f7a6f65f6dc6f7b442a4d03b5b4726ffd4cbb0c7ab4a3",
     ".agents/plans/hip-study/collect-step-topology.py": "1caac47cc47b9d424a955903d505990b35b07682ef27a0d4fce3232174ab3e07",
-    ".agents/plans/leg-control/e1-runtime-contract.json": "44dff551c60439fa0dc4b26f0ecf12728d1dab5e426022644903ff2c7afe6414"
+    ".agents/plans/leg-control/e1-runtime-contract.json": "44dff551c60439fa0dc4b26f0ecf12728d1dab5e426022644903ff2c7afe6414",
+    ".agents/plans/hip-study/failed-local-foot/construction-failure.json": "3cfbca0285b00552323884cfbbb730ba0b6d795b9abb7a1512df47ceb6e4c08a",
+    ".agents/plans/hip-study/failed-local-foot/unfilleted-local.brep": "f32a1f83c6131b5ca384800007f5dd5c8911f6a137e2f0b7e3b030af49116981",
+    ".agents/plans/hip-study/failed-local-foot/source-back.brep": "3650a4a694f5da73aae16c8a509bec4752c71a97ad8697dd12a0370095541da3"
   },
   "runtime_contract_sha256": "44dff551c60439fa0dc4b26f0ecf12728d1dab5e426022644903ff2c7afe6414",
   "retained_runtime_snapshot_sha256": "90ac47c25a841b109102e2cc6c528d0b5b8a3e155919b107f8028c1ff9f465e6",
@@ -241,5 +244,16 @@
     "min_available_gib": 32,
     "max_load": 8
   },
-  "baseline_import_review": "https://github.com/Valpatel/gyropup/issues/8#issuecomment-6714990049"
+  "baseline_import_review": "https://github.com/Valpatel/gyropup/issues/8#issuecomment-6714990049",
+  "fault_diagnostic": {
+    "run_name": "20261107-hip-foot-geometry-local-c90caf86",
+    "source": "c90caf864f6c9c1bb8a2f4c604b91c3425421c56",
+    "archive_sha256": "f577c483afb67f132f56a2394cbebad335414451d0b9398280c2161e11f4eb75",
+    "inputs": {
+      "construction-failure.json": "3cfbca0285b00552323884cfbbb730ba0b6d795b9abb7a1512df47ceb6e4c08a",
+      "unfilleted-local.brep": "f32a1f83c6131b5ca384800007f5dd5c8911f6a137e2f0b7e3b030af49116981",
+      "source-back.brep": "3650a4a694f5da73aae16c8a509bec4752c71a97ad8697dd12a0370095541da3"
+    },
+    "input_directory": ".agents/plans/hip-study/failed-local-foot"
+  }
 }

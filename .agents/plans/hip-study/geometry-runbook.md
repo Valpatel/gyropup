@@ -40,3 +40,14 @@ candidate failed at the 3.5 mm OCP fillet before a candidate/comparison existed.
 See [sealed failure proof](whole-foot-attempt1-failure.json). A corrected local
 construction keeps 3.5 mm and every finished interface/clearance check; any new
 run needs a distinct exclusive output/receipt and the same bounded procedure.
+
+The local-material continuation at `c90caf86` also failed at 3.5 mm. Its own proof
+and failed local/back BREP fixture remain separate from a valid candidate.
+The current `fault_diagnostic` configuration selects ONLY the existing
+`--diagnose-foot` saved-shape inspection (60s native phase), under the unchanged
+outer runtime/source/process/scratch guards. It imports the sealed owned local
+BREP, uniquely rebinds all five saved edges at CadQuery representation tolerance,
+and calls OCP at the same 3.5 mm to collect contours/faults. No baseline/candidate
+rebuild, private manufacturer CAD import, FEA, result adoption or physical
+acceptance occurs in this mode. Remove this diagnostic selector only for a
+separately reviewed actual construction experiment.

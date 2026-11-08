@@ -44,7 +44,7 @@ def main():
     assert ctypes.CDLL(None, use_errno=True).prctl(36, 1, 0, 0, 0) == 0
     for sig in (signal.SIGINT, signal.SIGTERM):
         signal.signal(sig, lambda signum, frame: (_ for _ in ()).throw(KeyboardInterrupt('received signal ' + str(signum))))
-    before = hw = runtime_before = runtime = private_before = None
+    before = hw = runtime_before = runtime = private_before = failed_before = failed_source = None
     diagnostic = out / 'geometry'
     observations = []
     try:
@@ -62,6 +62,16 @@ def main():
         for name, value in {**config['cad_sources'], **config['study_inputs'], **config['execution_sources']}.items():
             assert life.sha(root / name) == value, name
             assert hashlib.sha256(subprocess.check_output(['git', 'show', args.head + ':' + name])).hexdigest() == value
+        if 'fault_diagnostic' in config:
+            failed = config['fault_diagnostic']
+            assert failed['run_name'] == '20261107-hip-foot-geometry-local-c90caf86'
+            assert failed['input_directory'] == '.agents/plans/hip-study/failed-local-foot'
+            failed_source = root / failed['input_directory']
+            def failed_snapshot():
+                return {name: private_input(failed_source / name) for name in failed['inputs']}
+            failed_before = failed_snapshot()
+            assert {name: row['sha256'] for name, row in failed_before.items()} == failed['inputs']
+            life.save('failed-inputs-before.json', failed_before)
         private_before = private_input(args.motor_step)
         assert private_before['sha256'] == config['motor_step_sha256']
         life.save('private-input-before.json', private_before)
@@ -100,9 +110,12 @@ def main():
             ('candidate', ['--geometry-only', '--out', str(diagnostic / 'candidate')]),
             ('comparison', ['--compare-geometry', str(diagnostic / 'baseline'), str(diagnostic / 'candidate'),
                             '--out', str(diagnostic / 'comparison'), '--motor-step', str(args.motor_step)])]
+        if failed_source is not None:
+            phases = [('fault-diagnostic', ['--diagnose-foot', str(failed_source),
+                                           '--out', str(diagnostic / 'fault-diagnostic')])]
         for name, tail in phases:
             report = diagnostic / (name + '-runtime.json')
-            life.phase(name, [*prefix, '--report', str(report), '--', *tail], timeout=600)
+            life.phase(name, [*prefix, '--report', str(report), '--', *tail], timeout=60 if failed_source is not None else 600)
             observed = json.loads(report.read_text())
             assert observed['status'] == 'RETURNED_GEOMETRY_ONLY' and not observed.get('final_errors')
             for identity in (observed['before'], observed['after']):
@@ -114,18 +127,26 @@ def main():
                     assert runtime_before['venv'][row['path']]['sha256'] == row['sha256']
                 for path, value in identity['mapped_venv_libraries'].items():
                     assert runtime_before['venv'][path]['sha256'] == value
-        for name in ('baseline', 'candidate'):
-            row = json.loads((diagnostic / name / 'geometry.json').read_text())
-            assert row['status'] == 'BUILT_ONLY' and row['inputs_sha256'] == config['study_inputs']
-        report = json.loads((diagnostic / 'comparison/geometry-comparison.json').read_text())
-        assert report['status'] == 'PASS_GEOMETRY_INTERFACE_SCREEN_ONLY'
-        assert report['inputs_sha256'] == config['study_inputs'] and report['manufacturer_solids'] == 43
-        assert report['actual_motor_step_sha256'] == config['motor_step_sha256']
-        assert set(report['actual_finished_shape_negative_controls']) == {
-            'connected_outside_foot', 'removed_retained_material', 'filled_actual_pilot'}
-        assert report['fea_run'] is False and report['physical_qualification'] is False
-        assert sum(row['bytes'] for row in life.inventory(diagnostic).values()) <= 512 * 1024**2
-        result.update(status='PASS_GEOMETRY_INTERFACE_SCREEN_ONLY', comparison=report)
+        if failed_source is not None:
+            report = json.loads((diagnostic / 'fault-diagnostic/fillet-diagnostic.json').read_text())
+            assert report['status'] == 'COLLECTED_KERNEL_DIAGNOSTIC_ONLY'
+            assert report['input_sha256'] == config['fault_diagnostic']['inputs']
+            assert report['source_sha256'] == config['study_inputs']
+            assert report['radius_mm'] == 3.5 and report['fea_run'] is False
+            result.update(status='COLLECTED_KERNEL_DIAGNOSTIC_ONLY', diagnostic=report)
+        else:
+            for name in ('baseline', 'candidate'):
+                row = json.loads((diagnostic / name / 'geometry.json').read_text())
+                assert row['status'] == 'BUILT_ONLY' and row['inputs_sha256'] == config['study_inputs']
+            report = json.loads((diagnostic / 'comparison/geometry-comparison.json').read_text())
+            assert report['status'] == 'PASS_GEOMETRY_INTERFACE_SCREEN_ONLY'
+            assert report['inputs_sha256'] == config['study_inputs'] and report['manufacturer_solids'] == 43
+            assert report['actual_motor_step_sha256'] == config['motor_step_sha256']
+            assert set(report['actual_finished_shape_negative_controls']) == {
+                'connected_outside_foot', 'removed_retained_material', 'filled_actual_pilot'}
+            assert report['fea_run'] is False and report['physical_qualification'] is False
+            assert sum(row['bytes'] for row in life.inventory(diagnostic).values()) <= 512 * 1024**2
+            result.update(status='PASS_GEOMETRY_INTERFACE_SCREEN_ONLY', comparison=report)
     except BaseException as error:
         result['original_error'] = type(error).__name__ + ': ' + str(error)
         raise
@@ -136,6 +157,8 @@ def main():
             observations.append(('hardware-after.json', lambda: life.inventory(root / 'hardware'), hw))
         if runtime_before is not None:
             observations.append(('runtime-after.json', lambda: life.runtime_snapshot(runtime), runtime_before))
+        if failed_before is not None:
+            observations.append(('failed-inputs-after.json', failed_snapshot, failed_before))
         if private_before is not None:
             observations.append(('private-input-after.json', lambda: private_input(args.motor_step), private_before))
         observations.append(('project-status-after.json', lambda: subprocess.check_output(

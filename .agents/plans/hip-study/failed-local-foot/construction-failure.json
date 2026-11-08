@@ -1,0 +1,128 @@
+{
+  "scope": "Failed native construction only; no candidate/interfaces/FEA acceptance",
+  "error": "StdFail_NotDone: BRep_API: command not done",
+  "context": {
+    "radius_mm": 3.5,
+    "edges": [
+      {
+        "type": "LINE",
+        "length_mm": 2.3937948617206075,
+        "start_mm": [
+          122.23200000000001,
+          -25.1,
+          54.865800000000014
+        ],
+        "end_mm": [
+          121.76500000000001,
+          -25.1,
+          57.21360000000001
+        ],
+        "centre_mm": [
+          121.99850000000002,
+          -25.1,
+          56.03970000000001
+        ],
+        "source_owner": "backing-block outer side"
+      },
+      {
+        "type": "LINE",
+        "length_mm": 2.3937279544676713,
+        "start_mm": [
+          122.38860000000003,
+          -25.1,
+          52.47720000000001
+        ],
+        "end_mm": [
+          122.23200000000003,
+          -25.1,
+          54.86580000000001
+        ],
+        "centre_mm": [
+          122.31030000000003,
+          -25.1,
+          53.671500000000016
+        ],
+        "source_owner": "backing-block outer side"
+      },
+      {
+        "type": "LINE",
+        "length_mm": 2.3937279544676784,
+        "start_mm": [
+          122.232,
+          -25.1,
+          50.088600000000014
+        ],
+        "end_mm": [
+          122.3886,
+          -25.1,
+          52.47720000000002
+        ],
+        "centre_mm": [
+          122.31030000000001,
+          -25.1,
+          51.28290000000002
+        ],
+        "source_owner": "backing-block outer side"
+      },
+      {
+        "type": "LINE",
+        "length_mm": 2.3937948617206075,
+        "start_mm": [
+          121.76500000000001,
+          -25.1,
+          47.74080000000002
+        ],
+        "end_mm": [
+          122.23200000000001,
+          -25.1,
+          50.08860000000002
+        ],
+        "centre_mm": [
+          121.99850000000002,
+          -25.1,
+          48.914700000000025
+        ],
+        "source_owner": "backing-block outer side"
+      },
+      {
+        "type": "LINE",
+        "length_mm": 0.9213160085930525,
+        "start_mm": [
+          121.46886681395371,
+          -25.1,
+          46.86837331321658
+        ],
+        "end_mm": [
+          121.76500000000001,
+          -25.1,
+          47.7408
+        ],
+        "centre_mm": [
+          121.61693340697687,
+          -25.1,
+          47.30458665660829
+        ],
+        "source_owner": "backing-block outer side"
+      }
+    ],
+    "crop_bounds_mm": [
+      82.29018888009483,
+      -72.1,
+      39.86837331321658,
+      129.3886,
+      -18.09,
+      82.5
+    ],
+    "status": "FAILED_CONSTRUCTION; no candidate qualification"
+  },
+  "shapes": {
+    "unfilleted-local": {
+      "file": "unfilleted-local.brep",
+      "sha256": "f32a1f83c6131b5ca384800007f5dd5c8911f6a137e2f0b7e3b030af49116981"
+    },
+    "source-back": {
+      "file": "source-back.brep",
+      "sha256": "3650a4a694f5da73aae16c8a509bec4752c71a97ad8697dd12a0370095541da3"
+    }
+  }
+}

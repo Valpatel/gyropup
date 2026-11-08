@@ -601,6 +601,27 @@ class HipGeometryInputs(unittest.TestCase):
             spec.loader.exec_module(module)
         return module
 
+    def test_saved_failure_diagnostic_rejects_changed_or_linked_inputs_before_native(self):
+        geometry = self.load_geometry()
+        fixture = check.ROOT / '.agents/plans/hip-study/failed-local-foot'
+        declared = {p.name: geometry.digest(p) for p in fixture.iterdir()}
+        self.assertEqual(geometry.diagnostic_inputs(fixture, declared)['context']['radius_mm'], 3.5)
+        with tempfile.TemporaryDirectory(prefix='hip-fault-input-') as tmp:
+            source = Path(tmp)
+            for p in fixture.iterdir():
+                (source / p.name).write_bytes(p.read_bytes())
+            brep = source / 'unfilleted-local.brep'
+            data = brep.read_bytes()
+            brep.write_bytes(data + b'changed')
+            with patch.dict(sys.modules, {name: None for name in ('cadquery', 'gmsh', 'OCP')}):
+                with self.assertRaisesRegex(ValueError, 'identity differs'):
+                    geometry.diagnostic_inputs(source, declared)
+                brep.unlink(); brep.symlink_to(fixture / brep.name)
+                with self.assertRaisesRegex(ValueError, 'identity differs'):
+                    geometry.diagnostic_inputs(source, declared)
+            with self.assertRaisesRegex(ValueError, 'Incomplete'):
+                geometry.diagnostic_inputs(fixture, {k:v for k,v in declared.items() if k != brep.name})
+
     def test_failed_construction_keeps_owned_shapes_and_primary_error(self):
         geometry = self.load_geometry()
         class OwnedShape:

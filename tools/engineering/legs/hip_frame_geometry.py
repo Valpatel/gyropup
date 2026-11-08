@@ -3,6 +3,7 @@ from pathlib import Path
 import hashlib
 import json
 import os
+import stat
 import types
 
 
@@ -127,6 +128,101 @@ def case(study, out, params):
               'brep': {'file': brep.name, 'sha256': digest(brep)},
               'source_builder_invoked': True, 'fea_run': False, 'physical_qualification': False}
     write(out, 'geometry.json', result)
+    return result
+
+
+def diagnostic_inputs(source, declared):
+    source = Path(source).resolve()
+    expected = {'construction-failure.json', 'unfilleted-local.brep', 'source-back.brep'}
+    if set(declared) != expected:
+        raise ValueError('Incomplete failed-construction input contract')
+    for name, value in declared.items():
+        path = source / name
+        if not stat.S_ISREG(path.lstat().st_mode) or digest(path) != value:
+            raise ValueError('Failed-construction input identity differs: ' + name)
+    failure = json.loads((source / 'construction-failure.json').read_text())
+    if failure['context']['radius_mm'] != 3.5 or not failure['context']['edges']:
+        raise ValueError('Diagnostic must retain the failed 3.5 mm edge intent')
+    for row in failure['shapes'].values():
+        if declared[row['file']] != row['sha256']:
+            raise ValueError('Failed-shape seal differs')
+    return failure
+
+
+def diagnose(study, out, source):
+    """Inspect one sealed failed fillet at unchanged radius, never a design screen."""
+    config = json.loads((study.ROOT / '.agents/plans/hip-study/foot-geometry-inputs.json').read_text())
+    declared = config['fault_diagnostic']['inputs']
+    failure = diagnostic_inputs(source, declared)
+    out, before = prepare(study, out)
+    import cadquery as cq
+    from cadquery.occ_impl.shapes import TOLERANCE
+    from OCP.BRepFilletAPI import BRepFilletAPI_MakeFillet
+    local = cq.Shape.importBrep(str(Path(source) / 'unfilleted-local.brep'))
+    if not local.isValid() or len(local.Solids()) != 1:
+        raise ValueError('Sealed failed local shape is not one valid solid')
+    local = local.Solids()[0]
+    def edge_row(edge):
+        return {'type': edge.geomType(), 'length_mm': edge.Length(),
+                **{name: list(edge.positionAt(t).toTuple()) for name, t in (
+                    ('start_mm', 0), ('centre_mm', .5), ('end_mm', 1))}}
+    def same_point(a, b):
+        return sum((x-y)**2 for x, y in zip(a, b)) <= TOLERANCE**2
+    selected = []
+    all_edges = local.Edges()
+    for record in failure['context']['edges']:
+        matches = [edge for edge in all_edges if edge.geomType() == record['type']
+                   and abs(edge.Length()-record['length_mm']) <= TOLERANCE
+                   and same_point(edge_row(edge)['centre_mm'], record['centre_mm'])
+                   and (all(same_point(edge_row(edge)[a], record[b]) for a, b in (
+                       ('start_mm', 'start_mm'), ('end_mm', 'end_mm')))
+                        or all(same_point(edge_row(edge)[a], record[b]) for a, b in (
+                            ('start_mm', 'end_mm'), ('end_mm', 'start_mm'))))]
+        if len(matches) != 1 or any(matches[0].isSame(e) for e in selected):
+            raise ValueError('Failed edge cannot be uniquely rebound to actual sealed shape')
+        selected.append(matches[0])
+    builder = BRepFilletAPI_MakeFillet(local.wrapped)
+    for edge in selected:
+        builder.Add(failure['context']['radius_mm'], edge.wrapped)
+    result = {'scope': 'Saved failed-shape kernel diagnosis only; no candidate or engineering acceptance',
+              'input_sha256': declared, 'source_sha256': before, 'radius_mm': 3.5,
+              'selected_edges': [edge_row(e) for e in selected], 'fea_run': False,
+              'physical_qualification': False, 'queries': {}, 'query_errors': {}}
+    # Keep native API differences/errors as evidence without guessing or changing parameters.
+    def query(name, call):
+        try:
+            result['queries'][name] = call()
+            return result['queries'][name]
+        except Exception as error:
+            result['query_errors'][name] = type(error).__name__ + ': ' + str(error)
+            return None
+    contours = query('contour_count', builder.NbContours)
+    if contours is not None:
+        for i in range(1, contours+1):
+            query(f'contour_{i}', lambda i=i: {
+                'closed': builder.Closed(i), 'edge_count': builder.NbEdges(i),
+                'edges': [edge_row(cq.Edge(builder.Edge(i, j))) for j in range(1, builder.NbEdges(i)+1)]})
+    try:
+        builder.Build()
+    except Exception as error:
+        result['build_error'] = type(error).__name__ + ': ' + str(error)
+    result['is_done'] = builder.IsDone()
+    faulty = query('faulty_contour_count', builder.NbFaultyContours)
+    if faulty is not None:
+        for j in range(1, faulty+1):
+            i = query(f'faulty_{j}_index', lambda j=j: builder.FaultyContour(j))
+            if i is not None:
+                query(f'faulty_{j}_status', lambda i=i: str(builder.StripeStatus(i)))
+                query(f'faulty_{j}_computed_surfaces', lambda i=i: builder.NbComputedSurfaces(i))
+    vertices = query('faulty_vertex_count', builder.NbFaultyVertices)
+    if vertices is not None:
+        for i in range(1, vertices+1):
+            query(f'faulty_vertex_{i}', lambda i=i: list(cq.Vertex(builder.FaultyVertex(i)).toTuple()))
+    query('has_partial_result', builder.HasResult)
+    if before != inputs(study) or failure != diagnostic_inputs(source, declared):
+        raise ValueError('Diagnostic source/failed inputs changed')
+    result['status'] = 'COLLECTED_KERNEL_DIAGNOSTIC_ONLY'
+    write(out, 'fillet-diagnostic.json', result)
     return result
 
 
