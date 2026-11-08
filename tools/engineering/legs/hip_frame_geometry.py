@@ -54,15 +54,39 @@ def require_same_mounts(baseline, candidate):
         raise ValueError('Actual mounting faces or pilot geometry changed')
 
 
+def preserve_construction_failure(out, error):
+    """Keep only owned shape evidence; diagnostics must not replace the CAD error."""
+    if not hasattr(error, 'foot_context') or not hasattr(error, 'foot_shapes'):
+        return
+    try:
+        exports = {}
+        for name in ('unfilleted-local', 'source-back'):
+            target = out / (name + '.brep')
+            if not error.foot_shapes[name].exportBrep(str(target)):
+                raise ValueError('Failed construction BREP export failed')
+            exports[name] = {'file': target.name, 'sha256': digest(target)}
+        write(out, 'construction-failure.json', {
+            'scope': 'Failed native construction only; no candidate/interfaces/FEA acceptance',
+            'error': type(error.__cause__).__name__ + ': ' + str(error.__cause__),
+            'context': error.foot_context, 'shapes': exports})
+    except Exception as capture_error:
+        error.add_note('Secondary diagnostic capture failure: ' + type(capture_error).__name__
+                       + ': ' + str(capture_error))
+
+
 def case(study, out, params):
     baseline_params = json.loads((study.ROOT / '.agents/plans/hip-study/retained-foot-baseline.params.json').read_text())
     if params is not None and params != baseline_params:
         raise ValueError('Geometry case accepts only the retained zero-radius override or the source default')
     out, before = prepare(study, out)
-    fit = study.precheck(out / 'precheck', params)
-    import hardware.cad.legs.fivebar as fb
-    diagnostics = {}
-    shape = fb.hip_frame(foot_diagnostics=diagnostics).val()
+    try:
+        fit = study.precheck(out / 'precheck', params)
+        import hardware.cad.legs.fivebar as fb
+        diagnostics = {}
+        shape = fb.hip_frame(foot_diagnostics=diagnostics).val()
+    except Exception as error:
+        preserve_construction_failure(out, error)
+        raise
     if not shape.isValid() or len(shape.Solids()) != 1:
         raise ValueError('Geometry case is not one valid solid')
     mounts = measured_mounts(fb, shape)

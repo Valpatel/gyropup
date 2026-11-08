@@ -2,6 +2,7 @@
 
 | Symptom | Canonical guidance |
 | --- | --- |
+| A whole-foot fillet fails in OCP before a candidate exists | [Use local actual material, preserve failed intent and check the finished solid](inbox/2026-11-07-backing-foot-fillets-need-local-construction.md) |
 | A native identity guard rejects a known package file after resolving it outside the venv | [Bind the predeclared file link and exact target identity](inbox/2026-11-07-native-origins-must-bind-declared-symlinks.md) |
 | A baseline caller passes no parameters but inherits an earlier HIP variant | [Reject inherited scenario variables before CAD import](inbox/2026-11-07-baseline-builds-must-reject-inherited-parameters.md) |
 | A fleet request with `--node cpu-a` is refused before a job exists | [Use the actual scheduler selector privately and the alias publicly](inbox/2026-11-05-ci-classification-needs-phase-evidence.md#fleet-aliases-are-reporting-labels-not-scheduler-selectors) |

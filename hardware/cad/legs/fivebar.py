@@ -538,6 +538,15 @@ def frame_mounts() -> dict:
             'inserts_xz': [(x, s * (zf + FLANGE_T / 2 + 1.5)) for s in (1, -1) for x in (-FLANGE_X + 12, 0.0, FLANGE_X - 12)]}
 
 
+class HipFootBlendError(RuntimeError):
+    """Failed native construction with owned diagnostic shapes, never a valid candidate."""
+
+    def __init__(self, context, shapes):
+        super().__init__('Backing-foot fillet construction failed')
+        self.foot_context = context
+        self.foot_shapes = shapes
+
+
 def _backing_foot_blend(web, back, plane_y, radius, motor_void):
     """Blend the sharp outer back/web contact, owned by the actual source-built back.
 
@@ -545,11 +554,20 @@ def _backing_foot_blend(web, back, plane_y, radius, motor_void):
     CadQuery representation tolerance, not an engineering clearance allowance.
     """
     from cadquery.occ_impl.shapes import TOLERANCE
-    local = web.union(back).val()
-    solids = local.Solids()
-    if len(solids) != 1 or not local.isValid():
+    joined = web.union(back).val()
+    if len(joined.Solids()) != 1 or not joined.isValid():
         raise ValueError('Backing-foot input must be one valid solid')
-    local = solids[0]
+    joined = joined.Solids()[0]
+    # Work on actual local material, keeping crop boundaries two radii beyond
+    # the back. Do not introduce an artificial support or fillet the whole web.
+    bounds = back.val().BoundingBox()
+    lo = (bounds.xmin-2*radius, bounds.ymin-2*radius, bounds.zmin-2*radius)
+    hi = (bounds.xmax+2*radius, max(bounds.ymax, plane_y)+2*radius, bounds.zmax+2*radius)
+    crop = cq.Solid.makeBox(*(b-a for a, b in zip(lo, hi)), cq.Vector(*lo))
+    local = joined.intersect(crop)
+    if len(local.Solids()) != 1 or not local.isValid():
+        raise ValueError('Local backing-foot material must be one valid solid')
+    local = local.Solids()[0]
     owners = [(face, face.BoundingBox()) for face in back.val().Faces()
               if face.geomType() == 'PLANE' and abs(face.normalAt().y) <= TOLERANCE]
     selected, records = [], []
@@ -588,7 +606,13 @@ def _backing_foot_blend(web, back, plane_y, radius, motor_void):
                         'centre_mm': list(samples[1].toTuple()), 'source_owner': 'backing-block outer side'})
     if not selected:
         raise ValueError('No complete outer backing-foot contact was found')
-    rounded = local.fillet(radius, selected)
+    try:
+        rounded = local.fillet(radius, selected)
+    except Exception as error:
+        raise HipFootBlendError(
+            {'radius_mm': radius, 'edges': records, 'crop_bounds_mm': [*lo, *hi],
+             'status': 'FAILED_CONSTRUCTION; no candidate qualification'},
+            {'unfilleted-local': local, 'source-back': back.val()}) from error
     if not rounded.isValid() or len(rounded.Solids()) != 1:
         raise ValueError('Backing-foot blend did not produce one valid solid')
     removed, added = local.cut(rounded), rounded.cut(local)
@@ -599,7 +623,10 @@ def _backing_foot_blend(web, back, plane_y, radius, motor_void):
     intrusion = added.intersect(motor_void)
     if intrusion.Solids() or intrusion.Volume() != 0:
         raise ValueError('Backing-foot blend enters the retained motor-clearance region')
-    return cq.Workplane(obj=rounded), {'radius_mm': radius, 'edges': records,
+    finished = joined.fuse(added)
+    if len(finished.Solids()) != 1 or not finished.isValid():
+        raise ValueError('Local backing-foot addition did not rejoin as one valid solid')
+    return cq.Workplane(obj=finished), {'radius_mm': radius, 'edges': records,
                                       'removed_mm3': removed.Volume(), 'added_mm3': added.Volume(),
                                       'motor_void_intrusion_mm3': intrusion.Volume()}
 

@@ -32,3 +32,11 @@ Before any use, independently verify the actual source/private-input/runtime
 before-after identities, output hashes and geometry findings. Keep baseline
 failures and SF1.60<2.00 explicit. FEA requires a separate exact reviewed plan
 after the real geometry/interfaces justify it.
+
+## Retained first construction failure
+
+The first source `6c373e51` run is FAILED: baseline built and passed body/bed;
+candidate failed at the 3.5 mm OCP fillet before a candidate/comparison existed.
+See [sealed failure proof](whole-foot-attempt1-failure.json). A corrected local
+construction keeps 3.5 mm and every finished interface/clearance check; any new
+run needs a distinct exclusive output/receipt and the same bounded procedure.

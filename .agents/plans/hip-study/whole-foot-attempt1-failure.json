@@ -1,0 +1,251 @@
+{
+  "scope": "Actual first geometry construction failure; no candidate/FEM/clearance acceptance",
+  "source": "6c373e51a78850639d9b7f851e1598e805427b16",
+  "status": "FAILED_CANDIDATE_FILLET",
+  "archive_sha256": "8af14d75383118c948ea49b0c08c11066e6ce6ea452012a21df4dd4b4f1b56e6",
+  "members": {
+    "baseline/geometry.json": {
+      "bytes": 15583,
+      "sha256": "bc97e836776b88b29343a98dbfb24da7e492a57c8e4fa7d5d765404855c60109"
+    },
+    "baseline/hip-frame.brep": {
+      "bytes": 1053599,
+      "sha256": "eade0bb22007b829473ca64bdf9dd3fc5574ae09267495542141d997d15d48b3"
+    },
+    "baseline/precheck/body-cache/frame_mounts.json": {
+      "bytes": 812,
+      "sha256": "9ed03e6ae68719b39d454c390716c88ecffd1f3768c45d67d2361899d37c483c"
+    },
+    "baseline/precheck/params.json": {
+      "bytes": 148,
+      "sha256": "180833cbc6aa0adbc315ae0a9d2c69ad6febc0c0daec759416292722a8f11107"
+    },
+    "baseline-runtime.json": {
+      "bytes": 139218,
+      "sha256": "200f89e04d1156d0149cc0d5c425f904d634660a6e7bfd16dcd190783856363b"
+    },
+    "candidate-runtime.json": {
+      "bytes": 138937,
+      "sha256": "d6297e8533a5c785c619bc155dc63aa612ae9d8f38987933563c8eac8d297932"
+    }
+  },
+  "preservation": {
+    "project": {
+      "before_sha256": "3217b6a36228250b74ded80154040184a0aa9d56e5caa900de8048f9ddd4feb6",
+      "after_sha256": "3217b6a36228250b74ded80154040184a0aa9d56e5caa900de8048f9ddd4feb6",
+      "equal": true,
+      "members": 3098
+    },
+    "hardware": {
+      "before_sha256": "461428a458b88dc4ede35da158a33f2d5bdb18dbe7274e7961cb9c801fe5f322",
+      "after_sha256": "461428a458b88dc4ede35da158a33f2d5bdb18dbe7274e7961cb9c801fe5f322",
+      "equal": true,
+      "members": 1790
+    },
+    "runtime": {
+      "before_sha256": "d228d65f57b8e325d31143d0da144dd2a28e81a89c71f6f0495eaf1551149c23",
+      "after_sha256": "d228d65f57b8e325d31143d0da144dd2a28e81a89c71f6f0495eaf1551149c23",
+      "equal": true,
+      "members": 24222
+    }
+  },
+  "all_project_Git_blobs_exact": true,
+  "private_input_exact": true,
+  "phase_results": {
+    "baseline": {
+      "exit": 0,
+      "seconds": 105.7084153429605,
+      "process_cleanup": {
+        "group_gone": true,
+        "signalled": false,
+        "reaped": []
+      }
+    },
+    "candidate": {
+      "exit": 1,
+      "seconds": 22.976729597896338,
+      "process_cleanup": {
+        "group_gone": true,
+        "signalled": false,
+        "reaped": []
+      }
+    }
+  },
+  "baseline_volume_mm3": 1014700.4905201178,
+  "baseline_interfaces": {
+    "bed": {
+      "size_mm": [
+        274,
+        158,
+        81
+      ],
+      "placement": "turned",
+      "ok": true
+    },
+    "body": {
+      "z_spine_top_mm": 90.5,
+      "reference_mm": 90.5,
+      "cheek_flange_z_mm": -85.75,
+      "frame_z_min_mm": -81.5,
+      "ok": true,
+      "inserts": [
+        [
+          -83.0,
+          70.0
+        ],
+        [
+          0.0,
+          70.0
+        ],
+        [
+          83.0,
+          70.0
+        ],
+        [
+          -83.0,
+          -70.0
+        ],
+        [
+          0.0,
+          -70.0
+        ],
+        [
+          83.0,
+          -70.0
+        ]
+      ]
+    },
+    "bbox_mm": [
+      -137.0,
+      137.0,
+      -82.3,
+      -1.0,
+      -81.5,
+      77.0
+    ]
+  },
+  "candidate_geometry_absent": true,
+  "comparison_not_run": true,
+  "raw_files": {
+    "bootstrap.log": {
+      "bytes": 0,
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+    },
+    "host-before-launch.json": {
+      "bytes": 148,
+      "sha256": "859082d348573f24391e35104061296b7f15ce3f69462450bc03f628567a2a4a"
+    },
+    "exit.done": {
+      "bytes": 2,
+      "sha256": "4355a46b19d348dc2f57c046f8ef63d4538ebb936000f3c9ee954a27460dd865"
+    },
+    "outer-group-state.json": {
+      "bytes": 20,
+      "sha256": "01494769646704bf89e80824e006f460ae4f48f4ac631ad3d8d87c7e6e8b8d39"
+    },
+    "started.json": {
+      "bytes": 453,
+      "sha256": "0bc69069ce61a7b65341f7ed95f6455310703ee15fe366b893eec4d7ff363e95"
+    },
+    "run.log": {
+      "bytes": 3415,
+      "sha256": "ee1d105440ecedddf7a078041654f0a01f0b7752e55cf1f65551d884d4534c0d"
+    },
+    "launcher.log": {
+      "bytes": 0,
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+    },
+    "collection.json": {
+      "bytes": 853,
+      "sha256": "975bb8d69acdfd7e0a54b252c0615f9fb7daeaec54c1d48bc96faca534b598ae"
+    },
+    "host-preflight.json": {
+      "bytes": 287,
+      "sha256": "4945dbda2ee8e09262be68e8de02816ee637626020c26d61f794974da7df13de"
+    },
+    "out/private-input-after.json": {
+      "bytes": 118,
+      "sha256": "f092a9daccd49dd6c736d3001d6e52d4eaa5366c3f3e902f472b85ed26f84b69"
+    },
+    "out/result.json": {
+      "bytes": 3415,
+      "sha256": "6c595d273a62542d811ae12a51384e2223eb1e2fa605aa30a43a3057922ca130"
+    },
+    "out/geometry-inventory.json": {
+      "bytes": 850,
+      "sha256": "96cb7a1644267441016e2c2a4de464bfec3a72245de1e4f0952e253427e00bdc"
+    },
+    "out/geometry.tgz": {
+      "bytes": 255446,
+      "sha256": "8af14d75383118c948ea49b0c08c11066e6ce6ea452012a21df4dd4b4f1b56e6"
+    },
+    "out/project-status-after.json": {
+      "bytes": 3,
+      "sha256": "bd85bcdb8d4e613a79cb62d0903946ad10c83e63dc75f67614c159c0dbf4d184"
+    },
+    "out/private-input-before.json": {
+      "bytes": 118,
+      "sha256": "f092a9daccd49dd6c736d3001d6e52d4eaa5366c3f3e902f472b85ed26f84b69"
+    },
+    "out/runtime-before.json": {
+      "bytes": 4697920,
+      "sha256": "d228d65f57b8e325d31143d0da144dd2a28e81a89c71f6f0495eaf1551149c23"
+    },
+    "out/runtime-after.json": {
+      "bytes": 4697920,
+      "sha256": "d228d65f57b8e325d31143d0da144dd2a28e81a89c71f6f0495eaf1551149c23"
+    },
+    "out/baseline.log": {
+      "bytes": 13749,
+      "sha256": "0cf031ccd007164c9fc561304ff54a10caeba3f6828b87251b02808fdeaccfa5"
+    },
+    "out/hardware-after.json": {
+      "bytes": 268409,
+      "sha256": "461428a458b88dc4ede35da158a33f2d5bdb18dbe7274e7961cb9c801fe5f322"
+    },
+    "out/geometry-archive.json": {
+      "bytes": 97,
+      "sha256": "a2d83e7ce12767320128097bde4e78ee1ebeebd4e325f6db2ca0622fdc85f261"
+    },
+    "out/candidate.log": {
+      "bytes": 2675,
+      "sha256": "7d5d0dc8e807805b348e0d5b4759d31093d3561f378c567060c749741c6efd04"
+    },
+    "out/hardware-before.json": {
+      "bytes": 268409,
+      "sha256": "461428a458b88dc4ede35da158a33f2d5bdb18dbe7274e7961cb9c801fe5f322"
+    },
+    "out/project-after.json": {
+      "bytes": 550920,
+      "sha256": "3217b6a36228250b74ded80154040184a0aa9d56e5caa900de8048f9ddd4feb6"
+    },
+    "out/project-before.json": {
+      "bytes": 550920,
+      "sha256": "3217b6a36228250b74ded80154040184a0aa9d56e5caa900de8048f9ddd4feb6"
+    },
+    "out/geometry/baseline-runtime.json": {
+      "bytes": 139218,
+      "sha256": "200f89e04d1156d0149cc0d5c425f904d634660a6e7bfd16dcd190783856363b"
+    },
+    "out/geometry/candidate-runtime.json": {
+      "bytes": 138937,
+      "sha256": "d6297e8533a5c785c619bc155dc63aa612ae9d8f38987933563c8eac8d297932"
+    },
+    "out/geometry/baseline/hip-frame.brep": {
+      "bytes": 1053599,
+      "sha256": "eade0bb22007b829473ca64bdf9dd3fc5574ae09267495542141d997d15d48b3"
+    },
+    "out/geometry/baseline/geometry.json": {
+      "bytes": 15583,
+      "sha256": "bc97e836776b88b29343a98dbfb24da7e492a57c8e4fa7d5d765404855c60109"
+    },
+    "out/geometry/baseline/precheck/params.json": {
+      "bytes": 148,
+      "sha256": "180833cbc6aa0adbc315ae0a9d2c69ad6febc0c0daec759416292722a8f11107"
+    },
+    "out/geometry/baseline/precheck/body-cache/frame_mounts.json": {
+      "bytes": 812,
+      "sha256": "9ed03e6ae68719b39d454c390716c88ecffd1f3768c45d67d2361899d37c483c"
+    }
+  }
+}

@@ -601,6 +601,37 @@ class HipGeometryInputs(unittest.TestCase):
             spec.loader.exec_module(module)
         return module
 
+    def test_failed_construction_keeps_owned_shapes_and_primary_error(self):
+        geometry = self.load_geometry()
+        class OwnedShape:
+            def exportBrep(self, target):
+                Path(target).write_bytes(b'owned failed-shape diagnostic')
+                return True
+        primary = RuntimeError('Actual native fillet failed')
+        primary.__cause__ = ValueError('kernel command not done')
+        primary.foot_context = {'radius_mm': 3.5, 'edges': [{'source_owner': 'backing-block outer side'}]}
+        primary.foot_shapes = {name: OwnedShape() for name in ('unfilleted-local', 'source-back')}
+        with tempfile.TemporaryDirectory(prefix='hip-failed-construction-') as tmp:
+            out = Path(tmp)
+            study = HipStudyInputs().load_study()
+            failed_out = out / 'actual-case'
+            with patch.object(study, 'precheck', side_effect=primary):
+                with self.assertRaises(RuntimeError) as caught:
+                    geometry.case(study, failed_out, None)
+            self.assertIs(caught.exception, primary)
+            out = failed_out
+            row = json.loads((out / 'construction-failure.json').read_text())
+            self.assertEqual(row['context'], primary.foot_context)
+            self.assertEqual(row['error'], 'ValueError: kernel command not done')
+            for shape in row['shapes'].values():
+                self.assertEqual(geometry.digest(out / shape['file']), shape['sha256'])
+            self.assertEqual(str(primary), 'Actual native fillet failed')
+            with patch.object(geometry, 'write', side_effect=OSError('diagnostic disk error')):
+                geometry.preserve_construction_failure(out, primary)
+            self.assertIn('Secondary diagnostic capture failure: OSError', primary.__notes__[-1])
+            self.assertEqual(str(primary.__cause__), 'kernel command not done')
+            self.assertFalse((out / 'geometry.json').exists())
+
     def test_actual_measured_mounts_cannot_be_hidden_by_unchanged_declared_holes(self):
         geometry = self.load_geometry()
         row = json.loads((check.ROOT / 'hardware/exports/body/body.json').read_text())['interface']['frame_mounts']
