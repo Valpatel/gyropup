@@ -1,5 +1,5 @@
 {
-  "scope": "ONE saved failed-shape OCP diagnostic at3.5mm; no product build, FEA or adoption",
+  "scope": "ONE real shoulder baseline/candidate geometry/interface/manufacturer screen; no FEA or adoption",
   "cad_sources": {
     "hardware/__init__.py": "d6ddd9ce4ef273b82f43f315f09d11db1224f2b8298c9b0b3ea7dafb97280ba0",
     "hardware/cad/__init__.py": "d6ddd9ce4ef273b82f43f315f09d11db1224f2b8298c9b0b3ea7dafb97280ba0",
@@ -26,7 +26,7 @@
     "hardware/cad/builders/build_rig.py": "619c6cfd0ad666dbe52fe75e732515bfeefa14a2ab6694c29f91aec4c9ea8779",
     "hardware/cad/builders/build_turret.py": "1ff62e01fb86b8de8159c7e75dbec2c502aebde457d528f53dedcda4b7a15915",
     "hardware/cad/builders/build_turret_box.py": "1c9c3bc4297b572c6619df53e565568818469abd23796e0370671a1923837100",
-    "hardware/cad/legs/fivebar.py": "ba3d97111e57e68cd27faee602f285ce941be5dbe028108b50c28cb3483b5fa5",
+    "hardware/cad/legs/fivebar.py": "1a6889ca5ed33a9ac396c24f7590651e30ee64e8225d9ee8b07949ad4612f6da",
     "hardware/cad/legs/leg.py": "f8cf486e8056b55b024b83d87223429c1d2d163443d3734115e36e2e0f16f1eb",
     "hardware/cad/legs/leg_studies.py": "a89b96dae120a0d56430eabc8fba5eb7a69f75fc4685087eff106cd496dc9c4a",
     "hardware/cad/legs/rs04_lug_checks.py": "c5751f8ef30f1b7ea804494e818667419dcfd05f5ac200a03f5936ae3a78d823",
@@ -96,7 +96,7 @@
     "tests/hardware/turret/test_turret_snaps.py": "96afedabae5991a7d99eab3af5f324ae901589d7e92e45b2a36f32bc7a709fd6",
     "tests/hardware/turret/test_turret_solids.py": "d03677019224ad4e95f8775f374010c450299daf67fd729f546a1ea458e87a31"
   },
-  "hardware_tree": "2fc803fbb57bfde21f7b1a563bb4adde7e23f40c",
+  "hardware_tree": "fc8eb1bfdf65c45436057077c531a971a6af769c",
   "study_inputs": {
     "hardware/__init__.py": "d6ddd9ce4ef273b82f43f315f09d11db1224f2b8298c9b0b3ea7dafb97280ba0",
     "hardware/cad/__init__.py": "d6ddd9ce4ef273b82f43f315f09d11db1224f2b8298c9b0b3ea7dafb97280ba0",
@@ -123,7 +123,7 @@
     "hardware/cad/builders/build_rig.py": "619c6cfd0ad666dbe52fe75e732515bfeefa14a2ab6694c29f91aec4c9ea8779",
     "hardware/cad/builders/build_turret.py": "1ff62e01fb86b8de8159c7e75dbec2c502aebde457d528f53dedcda4b7a15915",
     "hardware/cad/builders/build_turret_box.py": "1c9c3bc4297b572c6619df53e565568818469abd23796e0370671a1923837100",
-    "hardware/cad/legs/fivebar.py": "ba3d97111e57e68cd27faee602f285ce941be5dbe028108b50c28cb3483b5fa5",
+    "hardware/cad/legs/fivebar.py": "1a6889ca5ed33a9ac396c24f7590651e30ee64e8225d9ee8b07949ad4612f6da",
     "hardware/cad/legs/leg.py": "f8cf486e8056b55b024b83d87223429c1d2d163443d3734115e36e2e0f16f1eb",
     "hardware/cad/legs/leg_studies.py": "a89b96dae120a0d56430eabc8fba5eb7a69f75fc4685087eff106cd496dc9c4a",
     "hardware/cad/legs/rs04_lug_checks.py": "c5751f8ef30f1b7ea804494e818667419dcfd05f5ac200a03f5936ae3a78d823",
@@ -199,7 +199,7 @@
     "tools/engineering/legs/hip-frame-study.py": "8012476057e63d01af6e5a4e208fe81bffade35f316418e50b69ee2ffff02b40",
     "tools/site/source-layout.json": "da14426ba66d03195bb8566ae61371b38ba3ad7a19e39e7030509542d9d9902c",
     "tools/site/source_layout.py": "6763319c818b15386f9c6157b35455ab0b11acbd6110dc24eefc5eba3103eb4f",
-    "tools/engineering/legs/hip_frame_geometry.py": "0f1e5fa925288a38f8835f9b0851e073764361c1a55500f06ea32a366a73d25e",
+    "tools/engineering/legs/hip_frame_geometry.py": "c0717ac1378527dbac4e8ef1b74cd1cc2f1a812b9fa21f89ab96974266394bf7",
     ".agents/plans/hip-study/accepted-topology/topology.json": "faf077d86f27294060e27d415f2000873ff92c0ceb1dd4df51b262d86b2fbb0f",
     ".agents/plans/hip-study/accepted-topology/accepted-import-record.json": "2224e1f86cb6f92c3a3a3065a69d6ba688f547f9a53ccfe5c1b6f743a41fedc0",
     ".agents/plans/hip-study/retained-foot-baseline.params.json": "d8ac357fbb37b9512a37347ed80fba18b1184943fcdb6e5be6ab93f644e57175"
@@ -244,16 +244,5 @@
     "min_available_gib": 32,
     "max_load": 8
   },
-  "baseline_import_review": "https://github.com/Valpatel/gyropup/issues/8#issuecomment-6714990049",
-  "fault_diagnostic": {
-    "run_name": "20261107-hip-foot-geometry-local-c90caf86",
-    "source": "c90caf864f6c9c1bb8a2f4c604b91c3425421c56",
-    "archive_sha256": "f577c483afb67f132f56a2394cbebad335414451d0b9398280c2161e11f4eb75",
-    "inputs": {
-      "construction-failure.json": "3cfbca0285b00552323884cfbbb730ba0b6d795b9abb7a1512df47ceb6e4c08a",
-      "unfilleted-local.brep": "f32a1f83c6131b5ca384800007f5dd5c8911f6a137e2f0b7e3b030af49116981",
-      "source-back.brep": "3650a4a694f5da73aae16c8a509bec4752c71a97ad8697dd12a0370095541da3"
-    },
-    "input_directory": ".agents/plans/hip-study/failed-local-foot"
-  }
+  "baseline_import_review": "https://github.com/Valpatel/gyropup/issues/8#issuecomment-6714990049"
 }

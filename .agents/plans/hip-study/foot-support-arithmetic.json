@@ -1,0 +1,84 @@
+{
+  "scope": "Source polygon arithmetic only; no imported geometry/interfaces/FEA",
+  "source": "c90caf864f6c9c1bb8a2f4c604b91c3425421c56",
+  "constants": {
+    "motor_x": 75.0,
+    "stop_x": 104.08857721478023,
+    "stop_z": 52.47718242836375,
+    "boss_polygon_r": 18.3,
+    "lobe_motor_polygon_r": 61.0
+  },
+  "selected_edge_centres": [
+    {
+      "point_xz_mm": [
+        121.99850000000002,
+        56.03970000000001
+      ],
+      "outward_xz": [
+        0.9807857964539405,
+        0.1950877276360808
+      ],
+      "lobe_min_signed_margin_mm": 0.1064947036988749,
+      "outward_until_lobe_boundary_mm": 0.10691876455865448,
+      "proposed_radius_mm": 3.5
+    },
+    {
+      "point_xz_mm": [
+        122.31030000000003,
+        53.671500000000016
+      ],
+      "outward_xz": [
+        0.9978577538612505,
+        0.06542096803762433
+      ],
+      "lobe_min_signed_margin_mm": 0.4741486025468966,
+      "outward_until_lobe_boundary_mm": 0.48585607030790817,
+      "proposed_radius_mm": 3.5
+    },
+    {
+      "point_xz_mm": [
+        122.31030000000001,
+        51.28290000000002
+      ],
+      "outward_xz": [
+        0.9978577538612505,
+        -0.06542096803762414
+      ],
+      "lobe_min_signed_margin_mm": 1.1467306050264816,
+      "outward_until_lobe_boundary_mm": 1.221146086510563,
+      "proposed_radius_mm": 3.5
+    },
+    {
+      "point_xz_mm": [
+        121.99850000000002,
+        48.914700000000025
+      ],
+      "outward_xz": [
+        0.9807857964539407,
+        -0.19508772763608023
+      ],
+      "lobe_min_signed_margin_mm": 2.1127522468902624,
+      "outward_until_lobe_boundary_mm": 2.3841436152286257,
+      "proposed_radius_mm": 3.5
+    },
+    {
+      "point_xz_mm": [
+        121.61693340697687,
+        47.30458665660829
+      ],
+      "outward_xz": [
+        0.9469353388482955,
+        -0.32142411863496434
+      ],
+      "lobe_min_signed_margin_mm": 2.9322555233221226,
+      "outward_until_lobe_boundary_mm": 3.5841666912964345,
+      "proposed_radius_mm": 3.5
+    }
+  ],
+  "source_inputs_sha256": {
+    "hardware/cad/legs/fivebar.py": "ba3d97111e57e68cd27faee602f285ce941be5dbe028108b50c28cb3483b5fa5",
+    "hardware/cad/robot/interfaces.json": "a4842a317dd2e64e9b4e11d34376bc36c26e1ddf8435a4b16a85dae3cd730b73",
+    "hardware/catalog/interfaces.json": "3889bc34503444f389e7951d74944f37b7e57b0b2b3be68ed596b959e83a46af"
+  },
+  "failed_context_sha256": "3cfbca0285b00552323884cfbbb730ba0b6d795b9abb7a1512df47ceb6e4c08a"
+}

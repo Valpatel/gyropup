@@ -43,11 +43,22 @@ run needs a distinct exclusive output/receipt and the same bounded procedure.
 
 The local-material continuation at `c90caf86` also failed at 3.5 mm. Its own proof
 and failed local/back BREP fixture remain separate from a valid candidate.
-The current `fault_diagnostic` configuration selects ONLY the existing
+The retained `fault_diagnostic` configuration selected ONLY the existing
 `--diagnose-foot` saved-shape inspection (60s native phase), under the unchanged
 outer runtime/source/process/scratch guards. It imports the sealed owned local
 BREP, uniquely rebinds all five saved edges at CadQuery representation tolerance,
 and calls OCP at the same 3.5 mm to collect contours/faults. No baseline/candidate
 rebuild, private manufacturer CAD import, FEA, result adoption or physical
-acceptance occurs in this mode. Remove this diagnostic selector only for a
-separately reviewed actual construction experiment.
+acceptance occurs in this mode. The fresh shoulder experiment removes that selector for a separately reviewed
+actual construction experiment.
+
+## Real shoulder candidate
+
+The candidate retains the 3.5 mm blend and adds a 4 mm offset / 3.5 mm deep
+local supporting shoulder, including an explicit unqualified 0.5 mm land.
+Fillet the complete source polygon foot before its motor cut; retain only the
+rounded shoulder addition after restoring the original 66 mm cut. Keep the
+old motor round and protected 62.5 mm void. The independent finished-addition
+region explicitly includes this shoulder. The normal three genuine phases
+and all existing finished-solid/interface/manufacturer/fault checks apply.
+No geometry success, strength improvement or physical qualification is implied.

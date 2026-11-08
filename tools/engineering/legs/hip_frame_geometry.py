@@ -237,6 +237,7 @@ def foot_regions(fb, diagnostics):
     import cadquery as cq
     from cadquery.occ_impl.shapes import TOLERANCE
     radius = float(fb.HIP['stop_foot_r'])
+    width = radius + float(fb.STOP_FOOT_LAND)
     if radius <= 0 or diagnostics['radius_mm'] != radius:
         raise ValueError('Candidate radius is not the source design radius')
     blocks = diagnostics['blocks']
@@ -255,8 +256,13 @@ def foot_regions(fb, diagnostics):
         # Independent source-parameter envelope of this backing block's footprint.
         xs = (px-r, px+r, anchor)
         zs = (pz-r, pz+r, zf+0.5, zf+fb.HIP['top_t']-1.0)
-        lo = (min(xs)-radius, yf0-radius, min(zs)-radius)
-        hi = (max(xs)+radius, yf0+radius, max(zs)+radius)
+        if (row['shoulder_width_mm'] != width or row['shoulder_depth_mm'] != radius
+                or row['shoulder_land_mm'] != fb.STOP_FOOT_LAND):
+            raise ValueError('Candidate shoulder dimensions differ from the source design')
+        # Explicitly allow the real 4 mm footprint and 3.5 mm depth shoulder;
+        # this is a changed design region, never a tolerance/threshold waiver.
+        lo = (min(xs)-width, yf0-radius, min(zs)-width)
+        hi = (max(xs)+width, yf0+radius, max(zs)+width)
         envelope = cq.Solid.makeBox(*(b-a for a,b in zip(lo,hi)), cq.Vector(*lo))
         halos = []
         for edge in row['edges']:
@@ -265,8 +271,8 @@ def foot_regions(fb, diagnostics):
                 raise ValueError('Foreign backing-foot contact record')
             if any(abs(point[1]-yf0) > TOLERANCE for point in points):
                 raise ValueError('Backing-foot contact left the source web datum')
-            a = [min(point[j] for point in points)-radius-TOLERANCE for j in range(3)]
-            b = [max(point[j] for point in points)+radius+TOLERANCE for j in range(3)]
+            a = [min(point[j] for point in points)-width-TOLERANCE for j in range(3)]
+            b = [max(point[j] for point in points)+width+TOLERANCE for j in range(3)]
             halos.append(cq.Solid.makeBox(*(y-x for x,y in zip(a,b)), cq.Vector(*a)))
         if not halos:
             raise ValueError('Empty backing-foot contact region')

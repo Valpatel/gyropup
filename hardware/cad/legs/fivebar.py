@@ -466,6 +466,7 @@ STOP_EAR_BACK = 40.0                             # mm: the knee-out posts' ears 
                                                  # SF 1.13 with the lobe alone, 1.22 so; 1.33 before the stops were redone)
 STOP_EAR_CLEAR = 66.0                            # ... outside this radius from the motor's axis (its case is Ø120)
 STOP_EAR_FILLET = 3.5                            # ... that face rounded into the web's back face (to 2.5 mm off the motor)
+STOP_FOOT_LAND = 0.5                             # mm: unqualified local shoulder land beyond the 3.5 mm blend, not a fit tolerance
 STOP_EAR_CORNER = True                           # the knee-out lobe also blended into the flange's corner
 GUSSET_RUNOUT = 12.0                             # mm: the frame's gussets between the motors run out tangent to the web
                                                  # this far below the old triangle's tip (z 28 -> 16; the cable pass is Ø18).
@@ -547,7 +548,7 @@ class HipFootBlendError(RuntimeError):
         self.foot_shapes = shapes
 
 
-def _backing_foot_blend(web, back, plane_y, radius, motor_void):
+def _backing_foot_blend(web, back, uncut_back, footprint, plane_y, radius, motor_void, motor_cut):
     """Blend the sharp outer back/web contact, owned by the actual source-built back.
 
     The existing cylindrical motor-side round stays separate. TOLERANCE is the
@@ -558,17 +559,17 @@ def _backing_foot_blend(web, back, plane_y, radius, motor_void):
     if len(joined.Solids()) != 1 or not joined.isValid():
         raise ValueError('Backing-foot input must be one valid solid')
     joined = joined.Solids()[0]
-    # Work on actual local material, keeping crop boundaries two radii beyond
-    # the back. Do not introduce an artificial support or fillet the whole web.
-    bounds = back.val().BoundingBox()
-    lo = (bounds.xmin-2*radius, bounds.ymin-2*radius, bounds.zmin-2*radius)
-    hi = (bounds.xmax+2*radius, max(bounds.ymax, plane_y)+2*radius, bounds.zmax+2*radius)
-    crop = cq.Solid.makeBox(*(b-a for a, b in zip(lo, hi)), cq.Vector(*lo))
-    local = joined.intersect(crop)
+    # The old web has less than one radius of support at four failed edges.
+    # Add a real, bounded shoulder; construct the full foot before the motor cut.
+    # Neither the temporary uncut block nor any construction material is kept.
+    width = radius + STOP_FOOT_LAND
+    shoulder = (cq.Workplane('XZ', origin=(0, plane_y + radius, 0))
+                .polyline(footprint).close().offset2D(width, kind='arc').extrude(radius))
+    local = shoulder.union(uncut_back).val()
     if len(local.Solids()) != 1 or not local.isValid():
-        raise ValueError('Local backing-foot material must be one valid solid')
+        raise ValueError('Local backing-foot support must be one valid solid')
     local = local.Solids()[0]
-    owners = [(face, face.BoundingBox()) for face in back.val().Faces()
+    owners = [(face, face.BoundingBox()) for face in uncut_back.val().Faces()
               if face.geomType() == 'PLANE' and abs(face.normalAt().y) <= TOLERANCE]
     selected, records = [], []
     for edge in local.Edges():
@@ -604,22 +605,25 @@ def _backing_foot_blend(web, back, plane_y, radius, motor_void):
         records.append({'type': edge.geomType(), 'length_mm': edge.Length(),
                         'start_mm': list(samples[0].toTuple()), 'end_mm': list(samples[-1].toTuple()),
                         'centre_mm': list(samples[1].toTuple()), 'source_owner': 'backing-block outer side'})
-    if not selected:
-        raise ValueError('No complete outer backing-foot contact was found')
+    if len(selected) != len(footprint):
+        raise ValueError('Full source polygon backing-foot contact was not selected')
     try:
         rounded = local.fillet(radius, selected)
     except Exception as error:
         raise HipFootBlendError(
-            {'radius_mm': radius, 'edges': records, 'crop_bounds_mm': [*lo, *hi],
+            {'radius_mm': radius, 'edges': records, 'shoulder_width_mm': width, 'shoulder_depth_mm': radius,
              'status': 'FAILED_CONSTRUCTION; no candidate qualification'},
-            {'unfilleted-local': local, 'source-back': back.val()}) from error
+            {'unfilleted-local': local, 'source-back': uncut_back.val()}) from error
     if not rounded.isValid() or len(rounded.Solids()) != 1:
         raise ValueError('Backing-foot blend did not produce one valid solid')
-    removed, added = local.cut(rounded), rounded.cut(local)
+    removed, fillet_added = local.cut(rounded), rounded.cut(local)
     if removed.Solids() or removed.Volume() != 0:
         raise ValueError('Backing-foot blend removed retained supported material')
-    if added.Volume() <= 0:
+    if fillet_added.Volume() <= 0:
         raise ValueError('Backing-foot blend added no material')
+    # Retain only the rounded shoulder addition; restore the original 66 mm
+    # backing cut before union, independently of the smaller protected void.
+    added = rounded.cut(uncut_back.val()).cut(motor_cut)
     intrusion = added.intersect(motor_void)
     if intrusion.Solids() or intrusion.Volume() != 0:
         raise ValueError('Backing-foot blend enters the retained motor-clearance region')
@@ -627,6 +631,8 @@ def _backing_foot_blend(web, back, plane_y, radius, motor_void):
     if len(finished.Solids()) != 1 or not finished.isValid():
         raise ValueError('Local backing-foot addition did not rejoin as one valid solid')
     return cq.Workplane(obj=finished), {'radius_mm': radius, 'edges': records,
+                                      'shoulder_land_mm': STOP_FOOT_LAND, 'shoulder_width_mm': width,
+                                      'shoulder_depth_mm': radius, 'fillet_added_mm3': fillet_added.Volume(),
                                       'removed_mm3': removed.Volume(), 'added_mm3': added.Volume(),
                                       'motor_void_intrusion_mm3': intrusion.Volume()}
 
@@ -694,7 +700,8 @@ def hip_frame(foot_diagnostics=None):
                 # edge, which the frame's landing case tore at), so it also fills the corner of the flange's end; its
                 # face towards the motor rounded into the web (a square step there tore in the landing case too)
                 blk = _hull(circle(px, pz, STOP_BOSS_R + 0.3) + [(sx * (fl_x - 1.0), zf + 0.5), (sx * (fl_x - 1.0), zf + fl_t - 1.0)])
-                back = yslab(blk, yf0 - STOP_EAR_BACK, yf0 + 0.01).cut(ycyl(STOP_EAR_CLEAR, yf0 - STOP_EAR_BACK - 1, yf0 + 1, mx))
+                uncut_back = yslab(blk, yf0 - STOP_EAR_BACK, yf0 + 0.01)
+                back = uncut_back.cut(ycyl(STOP_EAR_CLEAR, yf0 - STOP_EAR_BACK - 1, yf0 + 1, mx))
                 f, rc = STOP_EAR_FILLET, STOP_EAR_CLEAR
                 prof = [(mx + rc, yf0 + 0.01), (mx + rc - f, yf0 + 0.01)]
                 prof += [(mx + rc - f + f * math.cos(math.radians(90 - 90 * k / 8)), yf0 - f + f * math.sin(math.radians(90 - 90 * k / 8))) for k in range(9)]
@@ -702,7 +709,9 @@ def hip_frame(foot_diagnostics=None):
                 if foot_radius:
                     # Preserve the smallest radius reached by the existing motor-side round.
                     motor_void = ycyl(rc - f, yf0 - STOP_EAR_BACK - 1, yf0 + 1, mx)
-                    web, report = _backing_foot_blend(web, back, yf0, foot_radius, motor_void)
+                    motor_cut = ycyl(rc, yf0 - foot_radius - 1, yf0 + foot_radius + 1, mx)
+                    web, report = _backing_foot_blend(
+                        web, back, uncut_back, blk, yf0, foot_radius, motor_void, motor_cut)
                     foot_reports.append(dict(report, side=sx, motor_x_mm=mx))
                 else:
                     web = web.union(back)
