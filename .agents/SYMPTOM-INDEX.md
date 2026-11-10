@@ -204,3 +204,5 @@
 - Browser speech is null after a volume adjustment while a scheduled greeting fires: [preserve conversation ownership across the real greeting deadline](inbox/2026-11-10-scheduled-greetings-must-respect-conversations.md).
 
 - A gamepad hop times out with wheels down but jump still recovering, or wall time diverges from clamped stage time: [observe the actual stage clock and keep separate completion/wall/stall caps](inbox/2026-11-10-hop-completion-needs-the-actual-stage-clock.md).
+
+- Context-wide page-error capture finds sessionStorage denied only on about:blank initial documents: [guard the fixture's intended HTTP security origin before reading storage](inbox/2026-11-10-browser-init-fixtures-need-an-http-origin.md).

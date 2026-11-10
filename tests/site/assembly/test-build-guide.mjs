@@ -3,6 +3,7 @@ import assert from 'node:assert/strict';
 import {readFile,writeFile,mkdir} from 'node:fs/promises';
 import {createHash} from 'node:crypto';
 import {chromium,webkit} from '@playwright/test';
+import {acknowledgePrototypeNotice} from '../content/test-prototype-session.mjs';
 const base=(process.env.SITE_URL||'http://127.0.0.1:8879').replace(/\/$/,'');
 const engine=process.env.PLAYWRIGHT_BROWSER==='webkit'?webkit:chromium;
 const out=process.env.TEST_OUTPUT||'/tmp/gyropup-build-guide';await mkdir(out,{recursive:true});
@@ -18,7 +19,7 @@ async function context(options={}){
  if(localLiveReloadDisabled)await c.addInitScript(()=>window.__cadagentLive=true);
  c.on('request',request=>{if(new URL(request.url()).pathname==='/_cadagent/changes')liveRequests.push({at:new Date().toISOString(),phase:phases.at(-1)?.name,url:request.url()});});
  c.on('page',page=>page.on('pageerror',error=>{errors.push(error.message);runtimeErrors.push({at:new Date().toISOString(),phase:phases.at(-1)?.name,url:page.url(),message:error.message});}));
- await c.addInitScript(()=>sessionStorage.setItem('gyropup.prototype-notice','2026-10-29-v1'));return c;
+ await acknowledgePrototypeNotice(c,base);return c;
 }
 async function pageFor(c,url='?assembly=turret'){const p=await c.newPage();p.setDefaultTimeout(45000);await p.goto(base+'/designer/build.html'+url);await p.waitForFunction(()=>window.__buildGuide?.active?.viewer);return p;}
 async function source(p){const details=p.locator('.assembly-evidence');if(!await details.evaluate(e=>e.open))await details.locator('summary').first().click();}

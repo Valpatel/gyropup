@@ -52,7 +52,7 @@
     "test:walls": "node tests/site/layout/test-walls.mjs",
     "test:empty-space": "node tests/site/layout/test-empty-space.mjs",
     "test:theme": "node --test tests/site/platform/test-theme.mjs",
-    "test:build-guide": "python3 -B tools/site/assembly/export_turret_guide.py --check && python3 -B tests/site/assembly/test_turret_guide.py && python3 -B -m unittest discover -s tests/site/assembly -p 'test_robot*.py' && node --test tests/site/assembly/test-guide-state.mjs tests/site/assembly/test-guide-fallback.mjs tests/site/assembly/test-poster-contract.mjs tests/site/assembly/test-print-selection.mjs tests/site/assembly/test-print-mount.mjs && node tools/site/assembly/poster-contract.mjs --check && node tests/site/assembly/test-build-guide.mjs && npm run test:build-loading",
+    "test:build-guide": "python3 -B tools/site/assembly/export_turret_guide.py --check && python3 -B tests/site/assembly/test_turret_guide.py && python3 -B -m unittest discover -s tests/site/assembly -p 'test_robot*.py' && node --test tests/site/content/test-prototype-session-unit.mjs tests/site/assembly/test-guide-state.mjs tests/site/assembly/test-guide-fallback.mjs tests/site/assembly/test-poster-contract.mjs tests/site/assembly/test-print-selection.mjs tests/site/assembly/test-print-mount.mjs && node tools/site/assembly/poster-contract.mjs --check && node tests/site/assembly/test-build-guide.mjs && npm run test:build-loading",
     "test:instruction-docking": "node tests/site/assembly/test-instruction-docking.mjs",
     "test:build-workspace": "node tests/site/assembly/test-build-workspace.mjs",
     "test:build-route": "node tests/site/assembly/test-build-route.mjs",
