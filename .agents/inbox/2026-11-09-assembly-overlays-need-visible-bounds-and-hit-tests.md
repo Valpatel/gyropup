@@ -161,3 +161,13 @@ expanded fullscreen. Await actual document.fullscreenElement, matching mode and
 pressed-control state (or the intentional expanded-denial state) before testing
 Print escape. The same30s bound remains; no fixed sleep or timeout increase is a
 substitute for the native completion predicate.
+
+The next bf41 Build-portal job129784699522 failed its pure mount test after81ms:
+200setImmediate turns elapsed while a valid restored project's asynchronous
+fetch/hash work remained loading. Iteration counts are not completion deadlines.
+The regression now observes the actual host data-state with a bounded
+MutationObserver and rejects wrong terminal states. A deterministic valid response
+is held beyond300 event-loop turns, proving it remains loading until released;
+then the original verified recovery/count/download assertions must pass. No
+product runtime or source-bound image input changed, and no poll-count increase
+substitutes for actual completion.
