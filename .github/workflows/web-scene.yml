@@ -137,6 +137,24 @@ jobs:
           - suite: layout
             commands: |
               npm run test:empty-space
+          - suite: build-workspace-layout
+            commands: |
+              WORKSPACE_CASE=layout npm run test:build-workspace
+              PLAYWRIGHT_BROWSER=webkit WORKSPACE_CASE=layout npm run test:build-workspace
+          - suite: build-workspace-interactions
+            commands: |
+              WORKSPACE_CASE=interactions npm run test:build-workspace
+              PLAYWRIGHT_BROWSER=webkit WORKSPACE_CASE=interactions npm run test:build-workspace
+              npm run test:build-route
+              PLAYWRIGHT_BROWSER=webkit npm run test:build-route
+          - suite: build-workspace-playback
+            commands: |
+              WORKSPACE_CASE=playback npm run test:build-workspace
+              PLAYWRIGHT_BROWSER=webkit WORKSPACE_CASE=playback npm run test:build-workspace
+          - suite: build-workspace-print
+            commands: |
+              WORKSPACE_CASE=print npm run test:build-workspace
+              PLAYWRIGHT_BROWSER=webkit WORKSPACE_CASE=print npm run test:build-workspace
           - suite: build-portal
             commands: |
               npm run test:build-guide
@@ -155,7 +173,7 @@ jobs:
           cache: npm
       - run: npm ci
       - run: npx playwright install --with-deps chromium
-      - if: matrix.suite == 'build-portal'
+      - if: matrix.suite == 'build-portal' || startsWith(matrix.suite, 'build-workspace-')
         run: npx playwright install --with-deps webkit
       - if: matrix.suite == 'build-portal'
         run: sudo apt-get update && sudo apt-get install -y ffmpeg

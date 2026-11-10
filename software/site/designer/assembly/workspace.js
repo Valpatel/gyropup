@@ -53,7 +53,7 @@ export function createWorkspace(host,getActive,paint,report){
  }
  function scheduleFrame(){if(framePending||disposed)return;framePending=true;requestAnimationFrame(()=>{framePending=false;if(!disposed)frame();});}
  function present(){
-  const active=getActive();if(!active)return;layout.dataset.overview=String(!!active.overview);renderPanels();
+  const active=getActive();if(!active)return;layout.dataset.overview=String(!!active.overview);required('[data-context-provenance]').hidden=!active.overview;renderPanels();
   for(const button of host.querySelectorAll('button[data-assembly]'))button.setAttribute('aria-pressed',String(button.dataset.assembly===(active.overview?active.assembly:active.guideAssembly||'turret')));
   required('[data-context-tools]').hidden=!!active.viewer&&!active.overview;required('[data-step-tools]').hidden=!!active.overview||!active.viewer;required('button[data-guide-fit]').disabled=!active.viewer;
   if(!active.viewer)required('[data-context-tools]').textContent='Interactive 3D tools are unavailable. The bound instructions and available diagrams remain accessible.';
