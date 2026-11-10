@@ -6,7 +6,7 @@ import sys
 import subprocess
 ROOT=Path(__file__).resolve().parents[3]
 sys.path.insert(0,str(ROOT/'tools/site/assembly'))
-from recipe_path_screen import screen, triangles
+from recipe_path_screen import screen, triangles, topology
 from robot_data import sha
 from robot_recipe import robot_operations
 ASSETS=ROOT/'software/site/assets/build-guides'
@@ -28,12 +28,14 @@ CASES=[
 ]
 
 def produce():
- cache={}
+ cache={};topologies={}
  def mesh(n):
   if n not in cache:
    p=PARTS[n];f=FOLDER/p['file']
    if sha(f)!=p['sha256']:raise ValueError('Changed actual mesh '+n)
    cache[n]=triangles(f)
+   topologies[n]={'mesh_sha256':p['sha256'],**topology(cache[n])}
+   if not topologies[n]['closed_oriented_edges']:raise ValueError('Ray-parity input is not a closed oriented mesh: '+n)
   return cache[n]
  baseline=subprocess.check_output(['git','show','33c4464b710341dc45b0ba43fb1006ddbab13f95:software/site/assets/build-guides/robot-wip-540056ba4e59/guide.json'],cwd=ROOT)
  cases=[]
@@ -70,7 +72,7 @@ def produce():
   'limits':'Interior witnesses demonstrate sampled surface penetration. Zero witnesses do not prove collision-free paths. No full-mesh continuous collision, BREP, contact, support, tool access, compliance, press fit, wiring, strength or dynamic simulation. The circlip/grouped source envelopes are not faithful individual installation bodies.',
   'recipe_sha256':sha(ROOT/'tools/site/assembly/robot_recipe.py'),
   'candidate_scope':'All installed-obstacle broad-phase candidates for changed motor/hip, output-screw/upper-link and wheel-fastener arrivals; all other arrivals remain unqualified.',
-  'candidate_pairs':candidate,'cases':cases}
+  'mesh_topology':topologies,'candidate_pairs':candidate,'cases':cases}
 
 if __name__=='__main__':
  result=produce()
