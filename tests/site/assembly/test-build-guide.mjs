@@ -19,6 +19,13 @@ try{
  phase('core-start');
  const c=await context({viewport:{width:1280,height:900},reducedMotion:'reduce'}),p=await pageFor(c);const initial=await state(p);
  assert.equal(initial.snapshot,'turret-wip-4866459e2abd');assert.equal(initial.parts.length,55);
+ const defaultLayout=[];
+ for(const viewport of [{width:1440,height:1000},{width:390,height:844}]){
+  await p.setViewportSize(viewport);await p.evaluate(()=>window.scrollTo(0,0));await p.evaluate(()=>new Promise(r=>requestAnimationFrame(()=>requestAnimationFrame(r))));
+  const measured=await p.evaluate(()=>({width:innerWidth,height:innerHeight,scrollHeight:document.documentElement.scrollHeight,procurementClosed:!document.getElementById('build-details').open,assemblyHeight:document.getElementById('assembly').getBoundingClientRect().height}));assert.equal(measured.procurementClosed,true);
+  await p.screenshot({path:`${out}/${engine.name()}-default-${viewport.width}.png`,fullPage:true});defaultLayout.push(measured);
+ }
+ provenance.default_layout=defaultLayout;await p.setViewportSize({width:1280,height:900});cases.push('default desktop and phone reading extent recorded before procurement expansion');
  const guide=await p.evaluate(()=>window.__buildGuide.active.guide);provenance={...provenance,base,version:await(await c.request.get(base+'/version.json')).json(),browser:browser.version(),snapshot:guide.snapshot,guide_sha256:await p.evaluate(()=>window.__buildGuide.active.guideHash),model_sha256:guide.model.sha256};
  // Every stage via native navigation, then back: verify actual rendered instance visibility/materials/offsets.
  const captures=new Map();

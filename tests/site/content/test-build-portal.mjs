@@ -1,8 +1,10 @@
-import {publicForSource} from '../../../tools/site/source-layout.mjs';
+import {publicForSource,sourceForPublic} from '../../../tools/site/source-layout.mjs';
 /** Product integration: real tables, original downloads, and browser-local part state. */
 import assert from 'node:assert/strict';
 import {mkdir,readFile,writeFile} from 'node:fs/promises';
 import {execFileSync} from 'node:child_process';
+import {createHash} from 'node:crypto';
+import {validateGuide} from '../../../software/site/designer/kit/assembly/guide.js';
 import {parseHTML} from 'linkedom';
 import {chromium,webkit} from '@playwright/test';
 const base=(process.env.SITE_URL||'http://127.0.0.1:8893').replace(/\/$/,'');
@@ -102,9 +104,27 @@ try{
  assert.match(version.revision,/^[a-f0-9]{40}$/);
  const publishedRoots=['hardware','software','docs'];
  const committed=execFileSync('git',['ls-tree','-rz','--name-only',version.revision,'--',...publishedRoots],{cwd:new URL('../../../', import.meta.url)}).toString().split('\0').filter(Boolean);
- const expectedModels=committed.filter(file=>/\.(stl|step|stp|3mf)$/i.test(file)).map(publicForSource).filter(Boolean).map(file=>'/'+file).sort();
+ // Neutral guide meshes are presentation derivatives, not extra engineering originals.
+ // Exclude only the exact immutable guide-declared set; an orphan or an omitted
+ // engineering original still fails the complete inventory equality below.
+ const gitBytes=published=>execFileSync('git',['show',version.revision+':'+sourceForPublic(published)],{cwd:new URL('../../../',import.meta.url),maxBuffer:16<<20});
+ const digest=bytes=>createHash('sha256').update(bytes).digest('hex'),presentationModels=new Set();
+ const guideIndex=JSON.parse(gitBytes('/web/build-guides/index.json'));
+ for(const row of guideIndex.snapshots){
+  const guideURL=new URL(row.file,base+'/web/build-guides/index.json'),guideRaw=gitBytes(guideURL.pathname);assert.equal(digest(guideRaw),row.sha256);
+  const guide=JSON.parse(guideRaw),modelURL=new URL(guide.model.file,guideURL),modelRaw=gitBytes(modelURL.pathname);assert.equal(digest(modelRaw),guide.model.sha256);
+  const model=JSON.parse(modelRaw);validateGuide(guide,model);
+  const folder=new URL('.',guideURL).pathname+'meshes/';assert.ok(folder.startsWith('/web/build-guides/'));
+  for(const part of model.parts){
+   const file=new URL(part.file,modelURL).pathname;assert.ok(file.startsWith(folder)&&file.endsWith('.stl'),'Only the guide-owned neutral mesh folder is presentation data');
+   assert.equal(digest(gitBytes(file)),part.sha256,'Guide derivative matches the immutable served revision');
+   const response=await context.request.get(base+file);assert.equal(response.status(),200);assert.equal(digest(await response.body()),part.sha256,'Guide derivatives remain available at their exact public URL');presentationModels.add(file);
+  }
+ }
+ assert.ok(presentationModels.size>0);
+ const expectedModels=committed.filter(file=>/\.(stl|step|stp|3mf)$/i.test(file)).map(publicForSource).filter(Boolean).map(file=>'/'+file).filter(file=>!presentationModels.has(file)).sort();
  assert.ok(expectedModels.length>0,'Served revision contains original CAD files');
- assert.deepEqual(inventory.files.map(file=>file.path).sort(),expectedModels,'Every committed public original appears exactly once');
+ assert.deepEqual(inventory.files.map(file=>file.path).sort(),expectedModels,'Every committed engineering original appears exactly once; only hash-bound guide derivatives are separate');
  for(const file of inventory.files)assert.equal(file.format,file.path.split('.').pop().toLowerCase());
  // Every published original has its own adjacent directory preview and unchanged download.
  const directories=new Map();for(const file of inventory.files){const dir=file.path.slice(0,file.path.lastIndexOf('/')+1);if(!directories.has(dir))directories.set(dir,[]);directories.get(dir).push(file);}
@@ -219,5 +239,5 @@ try{
   await deep.waitForFunction(n=>document.querySelectorAll('#print-now a[data-model-preview]').length>=n,card.downloads);
   await deepContext.close();
  }
- assert.deepEqual(errors,[]);await writeFile(`${out}/${engine.name()}-report.json`,JSON.stringify({base,version,shared,printedKey,summaries,sticky,publishedModels:inventory.files.length,errors},null,2));console.log(`PASS ${engine.name()}: sortable semantic tables, fixed totals, shared persistent checklists, print status, atomic import/export, denied storage, ${inventory.files.length} original/preview mappings, real STL/STEP/3MF controls and stage disposal, and four phone layouts`);
+ assert.deepEqual(errors,[]);await writeFile(`${out}/${engine.name()}-report.json`,JSON.stringify({base,version,shared,printedKey,summaries,sticky,publishedModels:inventory.files.length,guidePresentationModels:presentationModels.size,errors},null,2));console.log(`PASS ${engine.name()}: sortable semantic tables, fixed totals, shared persistent checklists, print status, atomic import/export, denied storage, ${inventory.files.length} original/preview mappings, real STL/STEP/3MF controls and stage disposal, and four phone layouts`);
 }finally{await browser.close();}
