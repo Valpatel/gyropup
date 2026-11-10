@@ -2,6 +2,7 @@
 
 | Symptom | Canonical guidance |
 | --- | --- |
+| A robot is tiny despite a large canvas, stable guide rectangles hide controls, or narrow screenshots use desktop height | [Fit visible geometry and test actual overlay hit targets](inbox/2026-11-09-assembly-overlays-need-visible-bounds-and-hit-tests.md) |
 | A native identity guard rejects a known package file after resolving it outside the venv | [Bind the predeclared file link and exact target identity](inbox/2026-11-07-native-origins-must-bind-declared-symlinks.md) |
 | A baseline caller passes no parameters but inherits an earlier HIP variant | [Reject inherited scenario variables before CAD import](inbox/2026-11-07-baseline-builds-must-reject-inherited-parameters.md) |
 | A fleet request with `--node cpu-a` is refused before a job exists | [Use the actual scheduler selector privately and the alias publicly](inbox/2026-11-05-ci-classification-needs-phase-evidence.md#fleet-aliases-are-reporting-labels-not-scheduler-selectors) |

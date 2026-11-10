@@ -20,3 +20,5 @@
 .assembly-cut-actions{display:flex;gap:4px}.assembly-cut-actions button{flex:1;font-size:11px;padding:7px 4px}.assembly-layout[data-instructions=expanded] .assembly-step{height:max(230px,min(65%,480px,calc(100% - var(--assembly-nav-bottom,142px) - 100px)))}
 
 html{scroll-padding-top:calc(var(--appnav-h,64px) + 12px);scroll-padding-bottom:12px}.assembly-topbar button,.assembly-nav button{scroll-margin-top:calc(var(--appnav-h,64px) + 20px)}
+
+.assembly-selected{position:sticky;top:0;z-index:2;background:var(--gp-card)}

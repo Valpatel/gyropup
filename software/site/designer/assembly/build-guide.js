@@ -17,7 +17,7 @@ function selection(name){
  host.querySelector('[data-guide-selection]').textContent=!active.viewer?'3D selection is unavailable; the parts below remain a reading list.':part?`Selected: ${part.title||part.name.replaceAll('_',' ')}`:'Choose a part in the model or the step list.';
  host.querySelector('[data-guide-isolate]').disabled=!name;
  const appearance=host.querySelector('[data-guide-part-mode]');appearance.disabled=!name;appearance.value=active.partModes[name]||'automatic';
- const info=host.querySelector('[data-selected-info]');info.hidden=!part;info.innerHTML=part?partInfo(name):'';
+ const info=host.querySelector('[data-selected-info]');info.hidden=!part;info.innerHTML=part?partInfo(name):'';if(part){const body=host.querySelector('.assembly-step-body');body.scrollTop=Math.max(0,info.offsetTop-body.offsetTop-8);}
  host.querySelectorAll('[data-part]').forEach(button=>button.setAttribute('aria-pressed',String(JSON.parse(button.dataset.instances).includes(name))));
  if(wasIsolated&&!name)paint(active.step);
 }
@@ -91,7 +91,7 @@ function applyPresentation(s,frame){
  finally{applying=false;}
 }
 function paint(id){
- const a=active,g=a.guide,s=stepFor(g,{step:id});a.wantsOverview=false;a.overview=false;a.assembly=a.guideAssembly||'turret';if(a.step!==s.id){if(s.id===g.source?.overview_step_id){a.mode='solid';a.explode=0;}else if(a.step===g.source?.overview_step_id){a.mode='ghost';a.explode=1;}a.selected=null;a.isolate=false;a.partModes={};}a.step=s.id;assemblyChoices.set(a.guideAssembly||'turret',{snapshot:g.snapshot.id,step:s.id});
+ const a=active,g=a.guide,s=stepFor(g,{step:id});partHover(null);a.wantsOverview=false;a.overview=false;a.assembly=a.guideAssembly||'turret';if(a.step!==s.id){if(s.id===g.source?.overview_step_id){a.mode='solid';a.explode=0;}else if(a.step===g.source?.overview_step_id){a.mode='ghost';a.explode=1;}a.selected=null;a.isolate=false;a.partModes={};}a.step=s.id;assemblyChoices.set(a.guideAssembly||'turret',{snapshot:g.snapshot.id,step:s.id});
  applyPresentation(s,true);
  const index=g.steps.indexOf(s),chapter=g.subassemblies.find(c=>c.id===s.subassembly);
  host.querySelector('[data-guide-source]').innerHTML=`${esc(g.snapshot.revision)} · ${esc(g.snapshot.status)} · <a href="https://github.com/Valpatel/gyropup/tree/${esc(g.snapshot.source_commit)}">Source snapshot</a>`;
