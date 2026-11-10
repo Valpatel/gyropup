@@ -221,6 +221,7 @@
 
 - A ready simulator produces a blank recovery screenshot during its opening fade: [observe canvas visibility and real draw counters before visual capture](inbox/2026-11-10-canvas-readiness-needs-observed-presentation.md).
 - A gamepad hop times out with wheels down but jump still recovering, or wall time diverges from clamped stage time: [observe the actual stage clock and keep separate completion/wall/stall caps](inbox/2026-11-10-hop-completion-needs-the-actual-stage-clock.md).
+- The adopted Robot hop advances steadily and exceeds the CI wall cap: [compare the existing touch rendering profile at the same viewport](inbox/2026-11-10-hop-completion-needs-the-actual-stage-clock.md#exercise-gamepad-controls-with-the-existing-touch-renderer).
 
 - Context-wide page-error capture finds sessionStorage denied only on about:blank initial documents: [guard the fixture's intended HTTP security origin before reading storage](inbox/2026-11-10-browser-init-fixtures-need-an-http-origin.md).
 - A current Build browser test expects171/233 parts or waits for the recorded rig manifest: [bind current defaults separately from explicit archives](inbox/2026-11-10-browser-harnesses-need-current-and-archive-bindings.md).

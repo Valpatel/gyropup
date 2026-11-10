@@ -27,7 +27,8 @@ const mockPads = () => {
   Object.defineProperty(Navigator.prototype, 'getGamepads', { configurable: true, value() { return slots.slice(); } });
 };
 
-const context = await browser.newContext({ viewport: { width: 1440, height: 1000 } });
+// Keep desktop layout and select the product's lighter renderer through its real touch capability.
+const context = await browser.newContext({ viewport: { width: 1440, height: 1000 }, deviceScaleFactor: 1, hasTouch: true });
 await acknowledgePrototypeNotice(context);
 await context.addInitScript(() => { localStorage.setItem('gyropup.probe', 'off'); localStorage.setItem('gyropup-sfx', '0'); });
 await context.addInitScript(mockPads);
@@ -177,6 +178,23 @@ try {
 
   // ---- jump: input/start and real airborne geometry retain their15s response bounds.
   // Landing follows actual clamped stage dt, with separate wall/stalled-render limits.
+  const hopEnvironment = await sim(() => {
+    const s = window.__sim, r = s.stage.renderer, model = s.state.robot;
+    return { presentation: model.presentation, parts: model.parts.length, coarse: matchMedia('(pointer: coarse)').matches,
+      viewport: [innerWidth, innerHeight], devicePixelRatio, shadows: r.shadowMap.enabled,
+      drawingBuffer: [r.domElement.width, r.domElement.height], connected: r.domElement.isConnected,
+      contextLost: r.getContext().isContextLost(), drawCalls: r.info.render.calls, triangles: r.info.render.triangles };
+  });
+  assert.equal(hopEnvironment.presentation.mode, 'current');
+  assert.equal(hopEnvironment.presentation.nativeSource, '3a40891962b0b0a04625e070700f1d130bea3c7b');
+  assert.equal(hopEnvironment.presentation.collectionSha256, '7c2f1905474a8c89bdc477ea472f5c826e57c674aa222f2134f6a0a4138d5a67');
+  assert.equal(hopEnvironment.parts, 228);
+  assert.deepEqual(hopEnvironment.viewport, [1440, 1000]);
+  assert.equal(hopEnvironment.devicePixelRatio, 1);
+  assert.ok(hopEnvironment.connected && !hopEnvironment.contextLost && hopEnvironment.drawCalls > 0 && hopEnvironment.triangles > 0);
+  assert.ok(hopEnvironment.drawingBuffer[0] === 1440 && hopEnvironment.drawingBuffer[1] >= 900);
+  if (engine === chromium) assert.equal(hopEnvironment.coarse, true, 'Chromium selects the product touch renderer');
+  assert.equal(hopEnvironment.shadows, !hopEnvironment.coarse);
   const hopGuard=await page.evaluateHandle('('+checkHopProgress.toString()+')'),hopSample=await page.evaluateHandle('('+readHopSample.toString()+')');
   await sim(()=>{
     window.__hopTrace={frames:0,rows:[],started:false,simulatedS:0,maxY:0};
@@ -200,8 +218,8 @@ try {
     await Promise.all([hopGuard.dispose(),hopSample.dispose()]);
     try{
       const trace=await sim(()=>{window.__hopTraceOff();return{modelKey:window.__sim.state.modelKey,frameTrace:window.__hopTrace,jump:window.__sim.state.jump,y:window.__sim.state.robot.group.position.y};});
-      const out=process.env.TEST_OUTPUT||'/tmp/gyropup-gamepad';await mkdir(out,{recursive:true});await writeFile(`${out}/${engine.name()}-hop.json`,JSON.stringify({engine:engine.name(),browser:browser.version(),limits:HOP_LIMITS,error:hopError?String(hopError):null,...trace},null,2));
-      if(hopError)console.error('Hop landing failure state:',JSON.stringify(trace));
+      const out=process.env.TEST_OUTPUT||'/tmp/gyropup-gamepad';await mkdir(out,{recursive:true});await writeFile(`${out}/${engine.name()}-hop.json`,JSON.stringify({engine:engine.name(),browser:browser.version(),limits:HOP_LIMITS,error:hopError?String(hopError):null,environment:hopEnvironment,...trace},null,2));
+      if(hopError)console.error('Hop landing failure state:',JSON.stringify({environment:hopEnvironment,...trace}));
     }catch(error){if(!hopError)throw error;console.error('Hop diagnostic unavailable:',error.message);}
   }
 

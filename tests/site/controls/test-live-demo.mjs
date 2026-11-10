@@ -13,12 +13,18 @@ const page=await context.newPage(),errors=[],requests=[];page.setDefaultTimeout(
 page.on('pageerror',e=>errors.push(e.message));page.on('request',r=>requests.push(r.url()));
 const out=process.env.TEST_OUTPUT||'/tmp/gyropup-live-demo';await mkdir(out,{recursive:true});
 const action=name=>page.locator(`#robot-actions [data-action=${name}]`);
+function assertCurrentDemo({presentation,speed}){
+ assert.equal(presentation.mode,'current');
+ assert.equal(presentation.nativeSource,'3a40891962b0b0a04625e070700f1d130bea3c7b');
+ assert.equal(presentation.collectionSha256,'7c2f1905474a8c89bdc477ea472f5c826e57c674aa222f2134f6a0a4138d5a67');
+ assert.equal(speed,21.3,'The adopted current holder uses the live simulation ball-speed setting');
+}
 const snap=()=>page.evaluate(()=>{const s=window.__sim;return {t:s.demo.t,base:s.state.robot.base.position.toArray(),rotation:s.state.robot.base.quaternion.toArray(),position:s.state.robot.group.position.toArray(),wheel:s.state.wheel,shots:s.demo.shots,balls:s.balls.active.map(b=>b.g.position.toArray()),targets:[...s.liveTargets.values()].map(t=>({angle:t.angle,meshes:t.meshes.map(m=>[...m.position.toArray(),...m.quaternion.toArray()])}))};});
 try{
  await page.goto(base+'/designer/sim.html?sound=0',{waitUntil:'networkidle'});
  await page.waitForFunction(()=>document.body.dataset.ready==='1'&&window.__sim.talk);
  const initial=await page.evaluate(()=>{const s=window.__sim;window.liveIdentity={scene:s.stage.scene,robot:s.state.robot,talk:s.talk};return {demo:s.demo.on,replay:!!s.state.replay,presentation:s.state.robot.presentation,speed:s.state.robot.turret.launchSpeed};});
- assert.equal(initial.demo,true);assert.equal(initial.replay,false);assert.equal(initial.presentation.mode,'current');assert.equal(initial.speed,28.96);
+ assert.equal(initial.demo,true);assert.equal(initial.replay,false);assertCurrentDemo(initial);
  assert.equal(requests.some(u=>/\/exports\/sim\/v2\/(targets|stand|drive)\.json/.test(u)),false,'Default demo does not silently fetch recorded activities');
  await page.evaluate(()=>{
   const s=window.__sim;
@@ -85,7 +91,7 @@ try{
   await action('play').click();assert.equal(await page.evaluate(()=>window.__sim.state.replay.playing),false);
   await page.selectOption('#robot-actions select','demo');
   await page.waitForFunction(()=>window.__sim.demo.on&&!window.__sim.state.replay&&window.__sim.state.robot.presentation.mode==='current');
-  assert.equal(await page.evaluate(()=>window.__sim.state.robot.turret.launchSpeed),28.96);
+  assertCurrentDemo(await page.evaluate(()=>{const r=window.__sim.state.robot;return{presentation:r.presentation,speed:r.turret.launchSpeed};}));
   assert.equal(await page.evaluate(()=>{const s=window.__sim,k=window.liveIdentity;return s.stage.scene===k.scene&&s.state.robot===k.robot&&s.talk===k.talk;}),true);
  }
  // Loading an older recording must not reclaim control after a newer live choice.
