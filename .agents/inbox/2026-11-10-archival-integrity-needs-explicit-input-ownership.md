@@ -88,3 +88,12 @@ their actual bound archived triangles using the unchanged pure screen. Current
 leg-order controls remain separate. Historical guide checks preserve all old
 artifact hashes; the current233-output reproduction uses the adopted266 cache.
 Neither test relabels an old source closure as current or executes historical code.
+
+The accepted five-row candidate used escaped JSON Unicode for the middot in
+titles, while the existing Turret producer checks its literal UTF-8 encoding.
+The original `7e8a51f3` receipt remains immutable; only the public index was
+canonicalized through the unchanged producer's existing `snapshot_index` encoder.
+The [formatting correction](../plans/end-packs/guide-adoption/index-formatting-correction.json)
+records both digests and exact parsed equality, including row order, old three
+rows and unavailable entries. `export_turret_guide.py --check` now passes all60
+original outputs without a new checker or any regenerated guide/model bytes.

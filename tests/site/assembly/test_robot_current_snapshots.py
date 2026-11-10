@@ -18,7 +18,8 @@ RECORDS=ROOT/'.agents/plans/end-packs/guide-adoption'
 SOURCE='3a40891962b0b0a04625e070700f1d130bea3c7b'
 MANIFEST='3183870617a7ca3182c4a79a2afd8890a546ac2a3353cacc98e5295a63e64fe3'
 COLLECTION='7c2f1905474a8c89bdc477ea472f5c826e57c674aa222f2134f6a0a4138d5a67'
-INDEX='7e8a51f3743e154230e0882e8ac20641b79e74e657773acd22b13d0548231016'
+INDEX='16af1475fb58fdcc1eb6db939a6539044fea632916ce8fad6e6741df952e3244'
+ACCEPTED_INDEX='7e8a51f3743e154230e0882e8ac20641b79e74e657773acd22b13d0548231016'
 
 class AdoptedCurrentSnapshots(unittest.TestCase):
     def test_bound_current_cache_has_exact224_originals_and95_current_sources(self):
@@ -39,7 +40,8 @@ class AdoptedCurrentSnapshots(unittest.TestCase):
 
     def test_five_row_index_preserves_old_three_and_has_explicit_current_defaults(self):
         self.assertEqual(sha(ASSETS/'index.json'),INDEX)
-        self.assertEqual((ASSETS/'index.json').read_bytes(),(RECORDS/'final-index.json').read_bytes())
+        self.assertEqual(sha(RECORDS/'final-index.json'),ACCEPTED_INDEX)
+        self.assertEqual(json.loads((ASSETS/'index.json').read_bytes()),json.loads((RECORDS/'final-index.json').read_bytes()))
         index=json.loads((ASSETS/'index.json').read_bytes());old=json.loads((ROOT/'.agents/plans/robot-assembly/index-entries-260.json').read_bytes())
         self.assertEqual(len(index['snapshots']),5);self.assertEqual(index['snapshots'][0]['id'],'turret-wip-4866459e2abd')
         for assembly in ['robot','combined']:

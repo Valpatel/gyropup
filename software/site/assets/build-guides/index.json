@@ -3,7 +3,7 @@
   "snapshots": [
     {
       "id": "turret-wip-4866459e2abd",
-      "title": "Turret bench \u00b7 4866459e2abd",
+      "title": "Turret bench · 4866459e2abd",
       "status": "wip",
       "assembly": "turret",
       "file": "turret-wip-4866459e2abd/guide.json",
@@ -11,7 +11,7 @@
     },
     {
       "id": "robot-wip-3a40891962b0",
-      "title": "Robot \u00b7 3a40891962b0 \u00b7 WIP",
+      "title": "Robot · 3a40891962b0 · WIP",
       "assembly": "robot",
       "status": "wip",
       "file": "robot-wip-3a40891962b0/guide.json",
@@ -19,7 +19,7 @@
     },
     {
       "id": "combined-wip-3a40891962b0",
-      "title": "Combined \u00b7 3a40891962b0 \u00b7 WIP",
+      "title": "Combined · 3a40891962b0 · WIP",
       "assembly": "combined",
       "status": "wip",
       "file": "combined-wip-3a40891962b0/guide.json",
@@ -27,7 +27,7 @@
     },
     {
       "id": "robot-wip-540056ba4e59",
-      "title": "Robot \u00b7 540056ba4e59 \u00b7 WIP",
+      "title": "Robot · 540056ba4e59 · WIP",
       "assembly": "robot",
       "status": "wip",
       "file": "robot-wip-540056ba4e59/guide.json",
@@ -35,7 +35,7 @@
     },
     {
       "id": "combined-wip-540056ba4e59",
-      "title": "Combined \u00b7 540056ba4e59 \u00b7 WIP",
+      "title": "Combined · 540056ba4e59 · WIP",
       "assembly": "combined",
       "status": "wip",
       "file": "combined-wip-540056ba4e59/guide.json",

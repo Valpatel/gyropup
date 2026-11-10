@@ -117,6 +117,20 @@ observer now required before both screenshots. Actual state is retained; no fixe
 sleep, transition removal or error filtering is used. A new reviewed WebKit-only
 action must still pass complete controls and independent visual readback.
 
+The completed426f WebKit campaign is independently accepted alongside Chrome6dd.
+The [canonical outcomes](motion/outcomes.json) preserve all five attempts and
+scope limitations. Ordinary `npm run test:models` now runs the same full current
+observer and shared validator against the adopted default in both engines. The
+shell runner requires a clean pinned c671 shared toolkit checkout; normal CI
+provisions that exact source and NumPy2.5.4, no native CAD stack. The delivered
+authority, manifest and collection bytes are verified, and adopted mode does not
+replace the source module with a route fixture. Candidate mode remains separate.
+
+The old interim-body bench turret and40-attachment tests retain every original
+fixture/negative assertion under explicit legacy null-authority test contexts.
+They do not claim the adopted body, mount or grouped hardware are current.
+Legacy fixture output and current accepted224-part trace evidence remain separate.
+
 Campaign-local storage initialization runs only on HTTP(S) origins. The initial
 `about:blank` document is skipped before accessing either storage object; an
 HTTP-origin storage exception remains an observed page error. The historical

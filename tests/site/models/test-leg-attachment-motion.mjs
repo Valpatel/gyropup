@@ -1,3 +1,4 @@
+/** Explicit legacy interim-body/bench compatibility; actual266 current motion runs separately. */
 import {acknowledgePrototypeNotice} from '../content/test-prototype-session.mjs';
 import assert from 'node:assert/strict';
 import {readFile,writeFile,mkdir} from 'node:fs/promises';
@@ -9,6 +10,8 @@ const engine=process.env.PLAYWRIGHT_BROWSER==='webkit'?webkit:chromium;
 const browser=await engine.launch(engine===chromium?{channel:process.env.PLAYWRIGHT_CHANNEL==='chromium'?undefined:'chrome',headless:true,
  args:['--no-sandbox','--use-gl=angle','--use-angle=swiftshader','--enable-unsafe-swiftshader']}:{headless:true});
 const context=await browser.newContext({viewport:{width:1280,height:900},reducedMotion:'reduce'});
+// Deliberate test-only legacy authority. Never interpreted as the public current model.
+await context.route('**/designer/robot_current_source.js*',route=>route.fulfill({status:200,contentType:'text/javascript',body:'export const CURRENT_ROBOT_SOURCE = null;\n'}));
 await acknowledgePrototypeNotice(context);await context.addInitScript(()=>{localStorage.setItem('gyropup.probe','off');localStorage.setItem('gyropup-sfx','0');});
 const page=await context.newPage(),errors=[];page.setDefaultTimeout(60000);page.on('pageerror',e=>errors.push(e.message));await mkdir(out,{recursive:true});
 const sub=(a,b)=>a.map((x,i)=>x-b[i]);
@@ -132,9 +135,9 @@ try{
  await page.waitForFunction(()=>document.getElementById('robot-preview').dataset.state==='fallback');assert.equal(await page.locator('#robot-preview canvas').count(),0);
  assert.deepEqual(errors,[]);
  await writeFile(`${out}/contract.json`,JSON.stringify(fixture.contract));
- const trace={schema_version:1,length_unit:'mm',frame:'assembly-home',capture_source:`${base};${engine.name()}; actual STL vertices through world matrices; only known free-body placement removed; revision ${version.revision}; source hashes in adjacent receipt`,samples:[...samples,...live,transitions.restored]};
+ const trace={schema_version:1,length_unit:'mm',frame:'assembly-home',capture_source:`legacy standalone attachment compatibility; ${base};${engine.name()}; actual STL vertices through world matrices; only known free-body placement removed; revision ${version.revision}; source hashes in adjacent receipt`,samples:[...samples,...live,transitions.restored]};
  await writeFile(`${out}/${engine.name()}-trace.json`,JSON.stringify(trace));
  await writeFile(`${out}/${engine.name()}-source-hashes.json`,JSON.stringify(delivered,null,2));
- await writeFile(`${out}/${engine.name()}-summary.json`,JSON.stringify({version,worst,components:44,poses:samples.length,liveFrames:live.length,negative:Object.fromEntries(Object.entries(negative).map(([k,v])=>[k,error(v)])),transitions,rejectedManifests:rejected,modernReady,errors},null,2));
- console.log(`PASS ${engine.name()}: 44 components × ${samples.length} required/combined poses + ${live.length} live frames; worst ${worst.max.toFixed(6)}mm; 5 negative controls; archive transforms/race; hero/sim/talk; 7 malformed manifests; modern format; failed-load fallback`);
+ await writeFile(`${out}/${engine.name()}-summary.json`,JSON.stringify({scope:'legacy-interim-body-attachment-compatibility',version,worst,components:44,poses:samples.length,liveFrames:live.length,negative:Object.fromEntries(Object.entries(negative).map(([k,v])=>[k,error(v)])),transitions,rejectedManifests:rejected,modernReady,errors},null,2));
+ console.log(`PASS legacy compatibility ${engine.name()}: 44 components × ${samples.length} required/combined poses + ${live.length} live frames; worst ${worst.max.toFixed(6)}mm; 5 negative controls; archive transforms/race; hero/sim/talk; 7 malformed manifests; modern format; failed-load fallback`);
 }finally{await browser.close();}

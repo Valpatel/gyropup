@@ -267,6 +267,15 @@ jobs:
       - uses: actions/setup-python@v5
         with:
           python-version: '3.12'
+      - if: matrix.suite == 'mechanism'
+        uses: actions/checkout@v4
+        with:
+          repository: Valpatel/cad-agent
+          ref: c67149b0a35127f93a237d3083ac0b70fcf0d17d # Existing shared motion_trace; no CAD engine installation.
+          path: .cad-agent-motion
+          persist-credentials: false
+      - if: matrix.suite == 'mechanism'
+        run: python -m pip install numpy==2.5.4
       - run: npm ci
       - name: Verify the locked browser runtime
         run: |
@@ -285,6 +294,7 @@ jobs:
       - run: npm run build
       - name: Validate ${{ matrix.suite }}
         env:
+          CURRENT_MOTION_TOOLKIT: ${{ github.workspace }}/.cad-agent-motion
           PORT: 8879
           PLAYWRIGHT_CHANNEL: chromium
           SITE_URL: http://127.0.0.1:8879

@@ -25,13 +25,21 @@ const currentPart=requiredPart.pattern;
 assert.equal(sha(await readFile(path.join(siteRoot,'web/robot-current/collection.json'))),reference.collection_sha256);
 const bindingBody='// Reviewed candidate binding only; no renderer algorithm replacement.\nexport const CURRENT_ROBOT_SOURCE = '+JSON.stringify(source)+';\n';
 const originalBinding=await readFile(new URL('software/site/designer/robot_current_source.js',root));
+const {CURRENT_ROBOT_SOURCE:adoptedSource}=await import(new URL('software/site/designer/robot_current_source.js',root));
+const authorityMode=process.env.CURRENT_MOTION_MODE??(adoptedSource===null?'candidate':'adopted');
+assert.ok(['candidate','adopted'].includes(authorityMode),'Explicit candidate or adopted authority mode required');
+const candidateOverlay=authorityMode==='candidate';
+if(!candidateOverlay)assert.notEqual(adoptedSource,null,'Ordinary current CI requires the actual adopted authority');
+if(!candidateOverlay)assert.deepEqual(adoptedSource,source,'Adopted authority must match the actual accepted data');
 await mkdir(out,{recursive:false});
 const selected=process.env.PLAYWRIGHT_BROWSER;assert.ok(['chromium','webkit'].includes(selected),'Explicit browser required');
 const engine=selected==='webkit'?webkit:chromium,server=createSiteServer(path.resolve(siteRoot));
 let browser,aborted=false,deadline;const contexts=[],errors=[];
 const report={schema:'gyropup.current-renderer-capture/1',status:'FAILED_OR_INCOMPLETE',sourceRevision,
   referenceSha256:referenceHash,manifestSha256:source.sha256,collectionSha256:reference.collection_sha256,
-  bindingOverlay:{file:'/designer/robot_current_source.js',originalSha256:sha(originalBinding),servedSha256:sha(bindingBody),source,notPublicAdoption:true},
+  bindingOverlay:candidateOverlay?{file:'/designer/robot_current_source.js',originalSha256:sha(originalBinding),servedSha256:sha(bindingBody),source,notPublicAdoption:true}:null,
+  adoptedBinding:candidateOverlay?null:{sha256:sha(originalBinding),source},
+  authorityMode,
   browser:selected,outputs:{},phases:[],engineering:reference.engineering};
 report.requiredPartRequest={name:requiredPart.name,file:requiredPart.file,sha256:requiredPart.sha256,pathname:requiredPart.pathname};
 const progress=async phase=>{report.phases.push(phase);await writeFile(path.join(out,'progress.json'),JSON.stringify(report,null,2)+'\n');console.log(phase);};
@@ -45,7 +53,7 @@ async function context(viewport={width:1280,height:900}){
     sessionStorage.setItem('gyropup.prototype-notice','2026-10-29-v1');
     localStorage.setItem('gyropup.probe','off');localStorage.setItem('gyropup-sfx','0');
   });
-  await c.route('**/designer/robot_current_source.js*',async route=>{
+  if(candidateOverlay)await c.route('**/designer/robot_current_source.js*',async route=>{
     const response=await route.fetch();assert.equal(sha(await response.body()),sha(originalBinding));
     await route.fulfill({response,body:bindingBody,contentType:'text/javascript'});
   });
@@ -56,11 +64,16 @@ try{
   await new Promise((resolve,reject)=>{server.once('error',reject);server.listen(0,'127.0.0.1',resolve);});
   const base='http://127.0.0.1:'+server.address().port;report.port=server.address().port;
   deadline=setTimeout(stop,180000);await progress('launch');
-  browser=await engine.launch(selected==='chromium'?{channel:'chrome',headless:true,args:['--no-sandbox','--use-gl=angle','--use-angle=swiftshader','--enable-unsafe-swiftshader']}:{headless:true});
+  browser=await engine.launch(selected==='chromium'?{channel:process.env.PLAYWRIGHT_CHANNEL==='chromium'?undefined:'chrome',headless:true,args:['--no-sandbox','--use-gl=angle','--use-angle=swiftshader','--enable-unsafe-swiftshader']}:{headless:true});
   if(aborted)throw new Error('Capture cancelled during browser launch');report.browserVersion=browser.version();
   const c=await context(),page=await c.newPage();page.setDefaultTimeout(45000);
   const version=await(await c.request.get(base+'/version.json')).json();assert.equal(version.revision,sourceRevision);report.servedVersion=version;
   report.deliveredSource={};
+  if(!candidateOverlay){const response=await c.request.get(base+'/designer/robot_current_source.js');assert.ok(response.ok());assert.equal(sha(await response.body()),sha(originalBinding));report.deliveredSource['designer/robot_current_source.js']={sha256:sha(originalBinding),bytes:originalBinding.length};}
+  report.deliveredData={};
+  for(const [file,digest]of [[publicManifest,source.sha256],['web/robot-current/collection.json',reference.collection_sha256]]){
+    const response=await c.request.get(base+'/'+file);assert.ok(response.ok(),file);const bytes=await response.body();assert.equal(sha(bytes),digest,file+' actual delivered data');report.deliveredData[file]={sha256:digest,bytes:bytes.length};
+  }
   for(const file of ['designer/robot_v2.js','designer/current_robot.js','designer/robot_kinematics.js','designer/robot_sensors.js','designer/robot_presentations.js','designer/robot_identity.js',
     'designer/sim.js','designer/turret3d.js','designer/kit/assembly/guide.js','designer/kit/assembly/playback.js','designer/kit/portal-data.js','designer/kit/stage.js',
     'designer/kit/vendor/three/three.module.min.js','designer/kit/vendor/three/addons/loaders/STLLoader.js','web/landing.js']){
