@@ -51,3 +51,22 @@ logic passed a read-only Git and build-file replay on e5c6. It identified 512
 guide derivatives, 224 current presentation meshes and all 643 originals. The
 browser job still owns HTTP delivery and adjacent original/preview link checks.
 [Original portal failure](https://github.com/Valpatel/gyropup/actions/runs/42913926552/job/130171477132)
+
+## Keep the laser lens check in its original mesh frame
+
+The 0d51 mechanism job completed the Python checks and stopped at the interim
+body's laser lens assertion. That fixture picks local `max.z`. The adopted
+collection's forward lens is at `x = 44.5 mm` and the mesh spans
+`397.0098–403.9902 mm` in Z. Its source lens center and rendered origin datum
+both bind `[44.5, 0, 400.5] mm`. The bench harness selects its explicit legacy
+authority before navigation and verifies the legacy body manifest request and
+body identity. Its original lens, bench and fault assertions still run.
+[Original mechanism failure](https://github.com/Valpatel/gyropup/actions/runs/42916833600/job/130181338427)
+
+All 15 current live contracts observe the actual `turret.laser` mesh and
+`helper.laser_origin` under `turret.tilt` through the shared motion validator.
+The source lens and origin differ by `0 mm`. The next camera suite explicitly
+enters the bench and recorded drive replay for its orbit and camera ownership
+assertions. It has no interim-body mesh frame dependency. The nine Turret
+frame tests passed on 2026-11-10, along with JavaScript syntax and whitespace
+checks.
