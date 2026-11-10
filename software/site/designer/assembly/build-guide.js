@@ -30,6 +30,7 @@ async function start(){
    try{nextViewer=await createViewer({app:canvas,panel,manifest:loaded.manifest,manifestUrl:loaded.manifestUrl,signal:abort.signal,
      onSelect:name=>{if(applying||active?.viewer!==nextViewer)return;active.selected=name;if(!name)active.isolate=false;host.querySelector('[data-guide-isolate]').disabled=!name;}});}
    catch(error){if(abort.signal.aborted)throw error;renderError=error;}
+   if(renderError&&active)throw renderError;
    if(own!==request){nextViewer?.dispose();return;}
    const previous=active;
    active={guide,guideHash:row.sha256,viewer:nextViewer,controller:nextViewer?createGuideController(nextViewer,guide):null,done:readProgress(storage(),guide,row.sha256),url,step:step.id,mode:'ghost',explode:1,selected:null,isolate:false,renderError};
