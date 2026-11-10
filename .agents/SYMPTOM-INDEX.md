@@ -4,6 +4,7 @@
 
 | Symptom | Canonical guidance |
 | --- | --- |
+| A collection differs from an isolated module default, or sampled bounds suggest a changed nominal radius | [Trace effective overrides and actual bound geometry first](inbox/2026-11-10-collection-geometry-needs-effective-runtime-parameters.md) |
 | Removing a model factory breaks unrelated quotes, a fresh-output guard breaks simulation callers, or pack bounds move sensor effects | [Trace actual caller contracts and canonical sensor datums](inbox/2026-11-10-current-labels-need-the-current-body-model.md#model-api-changes-need-real-consumer-call-paths) |
 | A latest/current robot view retains a belly battery despite a front/rear-pack plan | [Trace actual current body geometry and preserve historical recordings](inbox/2026-11-10-current-labels-need-the-current-body-model.md) |
 | A playing→paused contextual click moves even though status height and scroll range stay constant | [Preserve existing playback text nodes during genuine pause](inbox/2026-11-10-playing-pause-must-preserve-text-nodes.md) |
