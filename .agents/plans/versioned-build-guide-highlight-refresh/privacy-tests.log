@@ -1,0 +1,65 @@
+TAP version 13
+# Subtest: each kind of private string is caught, without reporting the string
+ok 1 - each kind of private string is caught, without reporting the string
+  ---
+  duration_ms: 3.962092
+  ...
+# Subtest: public look-alikes pass
+ok 2 - public look-alikes pass
+  ---
+  duration_ms: 0.535144
+  ...
+# Subtest: extra private names come from the environment only
+ok 3 - extra private names come from the environment only
+  ---
+  duration_ms: 0.606017
+  ...
+# Subtest: exemptions and allowances are narrow and still needed
+ok 4 - exemptions and allowances are narrow and still needed
+  ---
+  duration_ms: 3398.275759
+  ...
+# Subtest: the ratchet parses one line per file
+ok 5 - the ratchet parses one line per file
+  ---
+  duration_ms: 0.665448
+  ...
+# Subtest: the ratchet is exact: fixing a file without updating it fails, and so does a new finding
+ok 6 - the ratchet is exact: fixing a file without updating it fails, and so does a new finding
+  ---
+  duration_ms: 0.533591
+  ...
+# Subtest: the ratchet only shrinks
+ok 7 - the ratchet only shrinks
+  ---
+  duration_ms: 0.40547
+  ...
+# Subtest: the base override must name a commit
+ok 8 - the base override must name a commit
+  ---
+  duration_ms: 19.434354
+  ...
+# Subtest: tools/site/privacy-ratchet.txt is well formed and no larger than on the base branch
+ok 9 - tools/site/privacy-ratchet.txt is well formed and no larger than on the base branch
+  ---
+  duration_ms: 10.97144
+  ...
+# Subtest: tracked files hold no private details beyond the ratchet
+ok 10 - tracked files hold no private details beyond the ratchet
+  ---
+  duration_ms: 3272.520845
+  ...
+# Subtest: the built site holds none either
+ok 11 - the built site holds none either
+  ---
+  duration_ms: 3414.373368
+  ...
+1..11
+# tests 11
+# suites 0
+# pass 11
+# fail 0
+# cancelled 0
+# skipped 0
+# todo 0
+# duration_ms 10188.827808
