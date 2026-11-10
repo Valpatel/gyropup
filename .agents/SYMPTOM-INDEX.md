@@ -187,3 +187,5 @@
 - A playback observation loses its execution context while a later screenshot still looks coherent: [record document identity and navigation before changing runtime](inbox/2026-11-09-assembly-overlays-need-visible-bounds-and-hit-tests.md#2026-11-10-context-destruction-needs-document-identity-evidence).
 
 - A retained input fails full inventory comparison with unchanged bytes after a fleet job ends: [check the documented post-job permission freeze](inbox/2026-11-10-retained-artifact-modes-follow-the-fleet-freeze.md).
+
+- A native study is killed at its cap with no final unchecked IDs or CLI exit receipt: [derive coverage from the full plan and retained completed prefix](inbox/2026-11-10-capped-native-studies-need-observed-prefixes.md).

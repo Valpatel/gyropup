@@ -1,0 +1,124 @@
+{
+  "status": "FAILED_OR_INCOMPLETE_NATIVE_PAIR_STUDY",
+  "source": "542b9a40396845708139e95e6b77f4a4e975fb36",
+  "core": "5c29c9e2abf2562baa72a05248f23de054b8241e",
+  "input_job": 261,
+  "frame_job": 263,
+  "recipe_sha256": "f243cff65a834e0368ffad6f1d38b954849c41309cdb9cdf83f5a1531a9651c4",
+  "paths_requested": true,
+  "selected_pairs_only": true,
+  "adoption_approved": false,
+  "guards": {
+    "runtime": true,
+    "toolkit": true,
+    "candidate": true,
+    "guides": true,
+    "frame-input": true,
+    "input-seals": true,
+    "hardware": true,
+    "tracked": true,
+    "playback-core": true,
+    "clean_source": true
+  },
+  "errors": [],
+  "original_error": "AssertionError: native-pairs failed/incomplete; retain actual logs",
+  "pair_archive_sha256": "b5da76d4908f60f78f9d3ddfbb81ebd4e482c6e2ae17cd889d9f2153a4f3f31b",
+  "processes_quiescent": true,
+  "schema": "gyropup.native-pair-execution/1",
+  "raw_final_sha256": "c515e33482f455b8d53acec3a0612b28dd65a53058b70bb6309e925bd510de98",
+  "phases": {
+    "core-init": {
+      "expected_exit": 0,
+      "timeout_seconds": 10,
+      "exit": 0,
+      "pid": 4141972,
+      "process_cleanup": {
+        "group_gone": true,
+        "signalled": false,
+        "reaped": []
+      },
+      "seconds": 0.011239559389650822,
+      "actual_command_sha256": "698a1148a8e4e002d176a81e1a94a89636cebd711e7e4f194c6da5907b377e84",
+      "command_record": "Exact private argv retained in original job264 terminal result; public normalization keeps its hash."
+    },
+    "core-origin": {
+      "expected_exit": 0,
+      "timeout_seconds": 10,
+      "exit": 0,
+      "pid": 4141973,
+      "process_cleanup": {
+        "group_gone": true,
+        "signalled": false,
+        "reaped": []
+      },
+      "seconds": 0.005735587794333696,
+      "actual_command_sha256": "258b16b919f26f5f93e67e23584f8df99302bff2a1230f88b34ddc89990b4a17",
+      "command_record": "Exact private argv retained in original job264 terminal result; public normalization keeps its hash."
+    },
+    "core-fetch": {
+      "expected_exit": 0,
+      "timeout_seconds": 180,
+      "exit": 0,
+      "pid": 4141974,
+      "process_cleanup": {
+        "group_gone": true,
+        "signalled": false,
+        "reaped": []
+      },
+      "seconds": 16.511791918892413,
+      "actual_command_sha256": "0e67e9d413845c3a39714b2b32f3871ed16a03ebe92ea675910448444ad4eaec",
+      "command_record": "Exact private argv retained in original job264 terminal result; public normalization keeps its hash."
+    },
+    "core-sparse": {
+      "expected_exit": 0,
+      "timeout_seconds": 20,
+      "exit": 0,
+      "pid": 4142132,
+      "process_cleanup": {
+        "group_gone": true,
+        "signalled": false,
+        "reaped": []
+      },
+      "seconds": 0.006942744832485914,
+      "actual_command_sha256": "137a3ccd63898474ad848a72eed8c08d1e2a85e174de0cdbcde0a9c120b7c30a",
+      "command_record": "Exact private argv retained in original job264 terminal result; public normalization keeps its hash."
+    },
+    "core-checkout": {
+      "expected_exit": 0,
+      "timeout_seconds": 60,
+      "exit": 0,
+      "pid": 4142133,
+      "process_cleanup": {
+        "group_gone": true,
+        "signalled": false,
+        "reaped": []
+      },
+      "seconds": 0.11604871274903417,
+      "actual_command_sha256": "8614c8388e8b8bdcd822786f2a044612cfbde94bd631c8fdd7978782cb02fe2d",
+      "command_record": "Exact private argv retained in original job264 terminal result; public normalization keeps its hash."
+    },
+    "native-pairs": {
+      "expected_exit": 0,
+      "timeout_seconds": 300,
+      "timed_out": true,
+      "pid": 4142147,
+      "process_cleanup": {
+        "group_gone": true,
+        "signalled": true,
+        "reaped": [
+          {
+            "pid": 4142148,
+            "status": 9
+          }
+        ]
+      },
+      "seconds": 300.04766771616414,
+      "actual_command_sha256": "7bf9c49a451fdd299a8578340e849447526a19e348159393dceded4b95bc8180",
+      "command_record": "Exact private argv retained in original job264 terminal result; public normalization keeps its hash."
+    }
+  },
+  "retrieval": "fleet-run fetch 264 <fresh-owned-directory> --outputs-only --max-mb 256",
+  "worker_exit": 1,
+  "worker_seconds": 332,
+  "total_seconds": 423
+}

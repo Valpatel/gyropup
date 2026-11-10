@@ -131,7 +131,7 @@ passed against independently reviewed core
 attempt262 stopped at an input permission comparison before any core checkout
 or native query; retain its [failure checkpoint](native-262/README.md). The
 separately reviewed successor263 completed all233 actual frames, with475 output
-files and941 progress records independently accepted. Its source6acc8fda/core5c29
+files and941 progress records independently accepted. Its source6acc8fda/core 5c29
 identities, original261 bytes and actual bounds remain in the
 [frame checkpoint](native-263/README.md); zero insertion pairs were queried.
 The documented post-job freeze changes producer0600 modes to retained0640.
@@ -167,3 +167,18 @@ path routing, incomplete serialization/storage behavior and fsync uncertainty.
 The small real three-box control must be repeated with the final reviewed core
 before a genuine 233-part native preflight. No new planner, repair, overlap
 exemption, tolerance waiver or dependency installation is introduced.
+
+
+## Preserve the first capped native pair study
+
+The reviewed source 542b9a40/core 5c29 selected study 264 reached its 300s native-phase
+cap. The [independently accepted partial artifact](native-264/README.md) retains
+42 completed pairs (36 clear, six terminal seats), 48 uncompleted queries and all
+ten passing preservation guards. Its 553-record prefix and 552/512 flush/fsync
+counts remain distinct; no finally-only field or absent result is treated as
+clear. Both hip/cheek terminal overlaps match retained pre-candidate rigid-contact
+records; this baseline classification grants no insertion exemption. All
+old-order/wrong-side controls remain unchecked. Source and printing leg
+geometry stay unchanged. The next separately reviewed question is two explicit
+unperformed controls from the same full plan, without an automatic 90-query retry
+or broad timeout increase. No product insertion/physical release is granted.
