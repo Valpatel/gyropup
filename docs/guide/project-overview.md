@@ -133,6 +133,32 @@ selects the generated still for reduced motion. Existing browser checks compare
 actual image pixels and reject an intentionally animated still; page media
 emulation alone does not establish that an external SVG image has stopped.
 
+### The playful graph-built title
+
+The title uses the website's sunny toy-store palette. Colorful graph nodes connect into
+the letters, become a solid Gyropup wordmark, and start again. Its smiling toy robot and
+letterforms are original vector paths; the existing pixel playground remains unchanged.
+
+<details>
+<summary>Regeneration and animation test plan</summary>
+
+The same `readme_workshop.py` command above regenerates the title and its completed
+still. `--check` validates deterministic bytes and the shared SVG safety rules.
+
+| Requirement | Persistent check |
+| --- | --- |
+| Graph → solid title → returning graph | Actual SVG animation seeks and image pixels at construction, completion and the next cycle; a real one-shot animation is rejected. |
+| Genuine reduced-motion still | The README selects its completed still and actual image pixels stay unchanged. |
+| Friendly phone and desktop proportions | Real 320/1280px views in both themes; title and scene remain visible, the badge stays small, and a planted full-width badge fails. |
+| Existing animation and navigation survive | Original scene/still bytes, ordinary links, source-bound CAD position and plentiful status badges are preserved. |
+
+After `npm run build`, run the relevant cases in `tests/site/layout/test-doc-pages.mjs`
+through Node's test-name filter, then repeat with `PLAYWRIGHT_BROWSER=webkit`.
+Required presentation CI retains the existing complete document suite. These are
+visual/interaction checks, separate from the robot's engineering evidence.
+
+</details>
+
 ### Made with cad-agent badge
 
 The two self-contained badge SVGs are copied unchanged from [cad-agent2c340775](https://github.com/Valpatel/cad-agent/tree/2c340775b1429a67e207e9668b2a3003009d4999/docs/img/hero), copyright2026Valpatel Software LLC, under the [MIT licence](https://github.com/Valpatel/cad-agent/blob/2c340775b1429a67e207e9668b2a3003009d4999/LICENSE). Their producer is `tools/anim/made_with_badge.py` from8ec8511fd468b843e8410c7305df01946534b0a5. Animated SHA256: `bcbe24827a5b8f9ca6aef2528eaec8f7f66448aa713ba83f95ab37fc04a9ac85`; still: `3dae18a9ccba77199d61b18645865c523209082c7fdb5ea95304f9b7ecadd8b9`. The README and homepage serve local copies and select the explicit still for reduced motion; no third-party image request or engineering claim is involved.
