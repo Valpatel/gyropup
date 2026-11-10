@@ -24,13 +24,15 @@ const base='http://127.0.0.1:'+server.address().port;
 console.log('Owned poster listener',base,'source',head);
 const errors=[],foreign=[],frames={},proof={};let browser;
 try{
- browser=await chromium.launch({channel:'chrome',headless:true});
+ browser=await chromium.launch({channel:'chrome',headless:true,args:['--no-sandbox','--use-gl=angle','--use-angle=swiftshader','--enable-unsafe-swiftshader']});
  const context=await browser.newContext({viewport:{width:1280,height:900},deviceScaleFactor:1,colorScheme:'light',reducedMotion:'reduce'});
  const page=await context.newPage();
  const version=await(await context.request.get(base+'/version.json')).json();assert.equal(version.revision,head,'Build the exact current checkout before capture');
  page.on('pageerror',e=>errors.push(e.message));
  page.on('request',r=>{if(!r.url().startsWith(base+'/')&&!r.url().startsWith('data:')&&!r.url().startsWith('blob:'))foreign.push(r.url());});
  await page.goto(base+'/designer/build.html?snapshot=turret-wip-4866459e2abd&step=step-01#assembly');
+ await page.locator('#prototype-notice-dialog[open]').waitFor();await page.locator('#prototype-notice-ack').click();
+ await page.waitForFunction(()=>document.querySelector('.appnav'));await page.evaluate(()=>document.fonts.ready);
  await page.waitForFunction(()=>window.__buildGuide?.active?.viewer&&document.querySelector('#assembly').dataset.ready==='1',null,{timeout:30000});
  const guide=await page.evaluate(()=>window.__buildGuide.active.guide);
  assert.equal(guide.steps.length,12);
@@ -57,7 +59,7 @@ try{
  assert.deepEqual(errors,[]);assert.deepEqual(foreign,[]);
  assert.equal((await captureContract(root)).visual_sha256,contract.visual_sha256,'Source remained frozen');
  assert.equal(execFileSync('git',['rev-parse','HEAD'],{cwd:root,encoding:'utf8'}).trim(),head,'Checkout remained frozen');
- const receipt={visual_sha256:contract.visual_sha256,source_commit:head,version,render:contract.inputs.render,frames,proof,errors,foreign};
+ const receipt={visual_sha256:contract.visual_sha256,source_commit:head,version,browser:browser.version(),session_notice_acknowledged:true,render:contract.inputs.render,frames,proof,errors,foreign};
  await writeFile(path.join(out,'posters.json'),JSON.stringify(receipt,null,2)+'\n');
  await writeFile(path.join(out,'visual-contract.json'),JSON.stringify(contract,null,2)+'\n');
  console.log('PASS',Object.keys(frames).length,'actual canvas posters',sha(await readFile(path.join(out,'posters.json'))));

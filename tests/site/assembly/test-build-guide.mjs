@@ -12,7 +12,7 @@ const contexts=[],cases=[],errors=[],phases=[];let provenance;
 const phase=name=>{phases.push({name,at:new Date().toISOString()});console.log('PHASE '+name);};
 async function context(options={}){const c=await browser.newContext(options);contexts.push(c);await c.addInitScript(()=>sessionStorage.setItem('gyropup.prototype-notice','2026-10-29-v1'));return c;}
 async function pageFor(c,url=''){const p=await c.newPage();p.setDefaultTimeout(45000);p.on('pageerror',e=>errors.push(e.message));await p.goto(base+'/designer/build.html'+url);await p.waitForFunction(()=>window.__buildGuide?.active?.viewer);return p;}
-const state=p=>p.evaluate(()=>{const a=window.__buildGuide.active;return {step:a.step,snapshot:a.guide.snapshot.id,text:document.querySelector('[data-guide-text]').textContent,parts:a.viewer.parts.map(p=>({name:p.name,visible:p.mesh.visible,position:p.mesh.position.toArray(),opacity:p.mesh.material.opacity,wireframe:p.mesh.material.wireframe,emissive:p.mesh.material.emissive?.getHex()}))};});
+const state=p=>p.evaluate(()=>{const a=window.__buildGuide.active;return {step:a.step,snapshot:a.guide.snapshot.id,text:document.querySelector('[data-guide-text]').textContent,camera:{position:a.viewer.stage.camera.position.toArray(),target:a.viewer.stage.controls.target.toArray()},parts:a.viewer.parts.map(p=>({name:p.name,visible:p.mesh.visible,position:p.mesh.position.toArray(),opacity:p.mesh.material.opacity,wireframe:p.mesh.material.wireframe,emissive:p.mesh.material.emissive?.getHex()}))};});
 try{
  provenance={...provenance,base,version:await(await fetch(base+'/version.json')).json(),browser:browser.version(),scope};
  if(scope==='all'||scope==='core'){
@@ -25,6 +25,7 @@ try{
  for(let i=0;i<12;i++){
   phase('forward-'+(i+1));if(i)await p.getByRole('button',{name:'Next →',exact:true}).click();
   const actual=await state(p),s=guide.steps[i];assert.equal(actual.step,s.id);
+  if(s.camera){const expected=[s.camera.direction[0],s.camera.direction[2],-s.camera.direction[1]],direction=actual.camera.position.map((v,n)=>v-actual.camera.target[n]);const dot=expected.reduce((sum,v,n)=>sum+v*direction[n],0)/(Math.hypot(...expected)*Math.hypot(...direction));assert.ok(dot>1-1e-9,JSON.stringify({step:s.id,expected,direction,reason:'Authored camera direction must not be clamped, including the underside step'}));}
   assert.deepEqual(actual.parts.filter(v=>v.visible).map(v=>v.name).sort(),[...s.parts].sort());
   for(const part of actual.parts){if(!part.visible)continue;assert.deepEqual(part.position,s.offsets_mm[part.name]||[0,0,0]);if(s.highlight.includes(part.name))assert.equal(part.opacity,1);else assert.ok(part.opacity>0&&part.opacity<.5);}
   captures.set(s.id,actual.parts);

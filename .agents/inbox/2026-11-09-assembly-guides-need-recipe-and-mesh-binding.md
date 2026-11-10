@@ -24,3 +24,10 @@ Source inspection then found an independent lifecycle defect: the product retain
 
 
 A WebKit probe at `872fcfab` then rejected a real projected pick target at y=24.57, under the sticky site header after a preceding part-list click had scrolled the tall step. Preserve that failure; before testing a canvas action, return the canvas vertically into view and still require the actual target to be unoccluded. A valid projected 3D coordinate is not proof of an accessible pointer target. This correction changes the test's ordinary navigation setup, not the renderer or its acceptance assertion.
+
+
+## Honor an authored underside camera instead of accepting a clamped view
+
+On 2026-11-10, final capture-source inspection found current recipe step 6 requests CAD direction `[0.6, -1, -0.35]`. The product's preserved stage sets `controls.maxPolarAngle = 1.5`; the mm/z-up to display basis maps that direction below the horizontal, so `controls.update()` clamps it. Earlier membership/material checks did not compare the actual camera direction and therefore did not establish the authored view. This is a presentation contract gap, not a geometry or clearance result.
+
+Corrective rule: permit underside inspection only for guide-bound viewer instances, retaining ordinary viewer behavior; compare actual camera-minus-target against the authored CAD direction transformed once into the display basis. The existing product twelve-step loop and repeatable poster capture both enforce that comparison, including the underside step. Shared source correction and actual browser acceptance are recorded separately; do not capture or label a clamped view as the authored diagram.

@@ -2,7 +2,7 @@
 
 Issue #266 extends the existing Build page and existing viewer. Shared schema,
 asset loader, absolute rendering state and lifecycle are owned by
-[cad-agent #302](https://github.com/Valpatel/cad-agent/issues/302). Shared testing contract: [assembly-guide-testing.md](https://github.com/Valpatel/cad-agent/blob/cdbee23b10d421ea62975ab141253bec958c36b3/docs/practice/assembly-guide-testing.md). Product uses the targeted viewer/guide import recorded in `.agents/plans/versioned-build-guide-shared-sync.json`; its existing stage, loading helpers and route entry remain.
+[cad-agent #302](https://github.com/Valpatel/cad-agent/issues/302). Shared testing contract: [assembly-guide-testing.md](https://github.com/Valpatel/cad-agent/blob/d0d13ee3b700b20ebec76ddc3e51561e8d7fbdcc/docs/practice/assembly-guide-testing.md). Product uses the targeted viewer/guide import recorded in `.agents/plans/versioned-build-guide-shared-sync.json`; its existing stage, loading helpers and route entry remain.
 
 The pilot follows twelve authored turret steps across three subassemblies.
 Source identity, rendering and physical qualification are separate: this guide
@@ -52,6 +52,7 @@ retained command/result evidence; **pending** is not claimed tested.
 | --- | --- | --- | --- |
 | Neutral frame and exact source inputs | Binary vertices translated once; normals/order/attributes retained; current original Git and SHA bindings | Wrong group, malformed STL and NaN reject; fixed independent expected offsets catch wrong units/double transform | `tests/site/assembly/test_turret_guide.py`: 4 tests passed before browser integration |
 | Complete twelve steps and three subassemblies | Every instance added exactly once; final membership exact; mirrored wheels both present | Unknown/duplicate/missing membership rejected | Same Python test + shared schema tests; browser pending |
+| Authored camera views | Every actual camera-minus-target direction equals the once-transformed recipe direction, including step 6 underneath | A floor-orbit clamp cannot silently replace the authored underside view | Existing product twelve-step loop and poster capture; shared guide-bound correction and actual results pending |
 | Current authored instructions | Recipe current positive stop used | Retained real old zero-stop export differs and is never consumed | Same Python test passed |
 | Forward/back/direct/reload | Sequential and direct step states equal; real rendered instances and positions checked | Reordered/late steps cannot accumulate offsets | Product browser test pending |
 | Picking, highlight and isolation | Real canvas pick and list pick agree with part card/mesh | Hidden/future part cannot be picked; clear selection restores context | Product/shared browser tests pending |
