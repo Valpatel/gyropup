@@ -17,6 +17,7 @@ const {fiveBar}=await import('../../../software/site/designer/robot_kinematics.j
 const {composeRobotPresentations}=await import('../../../software/site/designer/robot_presentations.js');
 const {buildRobotV2}=await import('../../../software/site/designer/robot_v2.js');
 const {robotIdentity}=await import('../../../software/site/designer/robot_identity.js');
+const {buildTurret}=await import('../../../software/site/designer/turret3d.js');
 const sha=bytes=>createHash('sha256').update(bytes).digest('hex');
 const encode=value=>Buffer.from(JSON.stringify(value));
 const motionPlan=JSON.parse(await readFile(new URL('tests/fixtures/current-robot-motion-plan.json',root)));
@@ -128,6 +129,33 @@ function holder(mode){
   return{group,base,head,fov,turret,lights:[],info:{massKg:mode==='current'?null:35,hMin:mode==='current'?185:150},presentation:{mode,bodySource:mode+'-source'},log,
     setPose(p){log.poses.push(p);return p;},setFromQpos(q){log.qpos.push(q);},setExplode(x){log.explodes.push(x);},dispose(){log.disposed++;group.removeFromParent();}};
 }
+
+test('real laser API restores the page-owned hide on cached return and through both complete modes',async()=>{
+  const direct=buildTurret(0xffffff,{geometry:false});
+  direct.laser.visible=false;direct.updateLaser([],true);assert.equal(direct.laser.visible,true);direct.dispose();
+  const make=mode=>{
+    const result=holder(mode);result.turret.group.removeFromParent();
+    result.turret=buildTurret(0xffffff,{geometry:false});result.base.add(result.turret.group);
+    const dispose=result.dispose;result.dispose=()=>{result.turret.dispose();dispose();};return result;
+  };
+  const current=make('current'),recorded=make('recorded'),robot=composeRobotPresentations(current,async()=>recorded);
+  const effective=o=>{for(let p=o;p;p=p.parent)if(!p.visible)return false;return true;};
+  try{
+    for(const mode of ['current','recorded','current','recorded','current']){
+      await robot.setPresentation(mode);
+      const active=mode==='current'?current:recorded,inactive=mode==='current'?recorded:current;
+      // Same public hide/return calls as sim enterBench/model replacement and
+      // cached loadDesign. The effect remains one stable stage attachment.
+      robot.group.visible=false;robot.turret.laser.visible=false;
+      robot.group.visible=true;robot.turret.updateLaser([],true);
+      assert.equal(effective(active.turret.laser),true,mode+' cached return');
+      if(inactive.turret.laser.parent===robot.turret.laser)assert.equal(inactive.turret.laser.visible,false,mode+' inactive cached holder stays hidden');
+      robot.turret.updateLaser([],false);assert.equal(effective(active.turret.laser),false);
+      active.turret.group.visible=false;robot.turret.updateLaser([],true);assert.equal(effective(active.turret.laser),false,'Detached turret stays disabled');
+      active.turret.group.visible=true;robot.turret.updateLaser([],true);assert.equal(effective(active.turret.laser),true);
+    }
+  }finally{robot.dispose();}
+});
 
 test('whole mode metadata/anchors commit atomically and repeated switches reuse only two holders',async()=>{
   const current=holder('current'),recorded=holder('recorded');let release,calls=0;

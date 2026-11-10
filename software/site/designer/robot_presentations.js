@@ -4,7 +4,7 @@ import * as THREE from 'three';
 
 export function composeRobotPresentations(current,loadRecorded,{signal}={}){
   const group=new THREE.Group(),laser=new THREE.Group(),lifetime=new AbortController();
-  group.add(current.group);laser.add(current.turret.laser);
+  group.add(current.group);laser.add(current.turret.laser);laser.visible=false;
   let active=current,recorded=null,loading=null,request=0,disposed=false,currentPlacement=null;
   const ensureLive=()=>{if(disposed)throw new Error('Robot presentation is disposed');};
   const placement=()=>({position:group.position.clone(),quaternion:group.quaternion.clone(),scale:group.scale.clone()});
@@ -21,7 +21,7 @@ export function composeRobotPresentations(current,loadRecorded,{signal}={}){
     if(!next.turret.laser.parent)laser.add(next.turret.laser);
     next.fov.visible=showFov;next.turret.group.visible=attached;
     next.lights.forEach((p,i)=>{const state=lights[i];if(state){p.spot.visible=state.visible;p.spot.intensity=state.intensity;p.lens.material.emissiveIntensity=state.emissive;}});
-    next.group.visible=true;next.turret.laser.visible=false;active=next;
+    next.group.visible=true;next.turret.laser.visible=false;laser.visible=false;active=next;
   }
   async function recordedHolder(){
     if(recorded)return recorded;
@@ -50,6 +50,13 @@ export function composeRobotPresentations(current,loadRecorded,{signal}={}){
   // switches. All other values/methods resolve on the fully committed holder.
   const turret=new Proxy({}, {get(_target,key){
     if(key==='laser')return laser;
+    if(key==='updateLaser')return(...args)=>{
+      ensureLive();for(const holder of [current,recorded])if(holder&&holder!==active)holder.turret.laser.visible=false;
+      active.turret.updateLaser(...args);
+      // Pages hide this stable stage attachment during bench/model changes.
+      // Restore the same public visibility semantics as the single laser API.
+      laser.visible=active.turret.laser.visible;
+    };
     ensureLive();const value=active.turret[key];return typeof value==='function'?value.bind(active.turret):value;
   }});
   const result={group,turret,setPresentation,dispose,
