@@ -253,3 +253,20 @@ not treat the prior successful HTTP404 prefix as fullscreen acceptance. Runtime
 and all53c15b92 poster inputs are unchanged by this test-only correction.
 
 Expanded fullscreen acceptance: denied/unsupported native requests must keep real toolbar and step hit targets above global app navigation and prototype footer at desktop,390,and320px. Escape, Print navigation, and disposal restore normal ancestor stacking; a child z-index alone is insufficient. Verify actual elementFromPoint and the existing selected-part Print flow.
+
+
+### Complete layout and diagram coverage
+
+The existing empty-space scan is partitioned by `phone-360`, `iphone-13`,
+`tablet-768`, `laptop-1024` and `desktop-1440`. Every partition visits all
+published pages in both themes and runs the same planted-defect controls; the
+measurement limits and twenty-minute CI bound remain unchanged. Invalid or
+empty selections fail before launch. `test-results/empty-space/coverage.json`
+records expected, observed, unique and missing page/size/theme tuples, and the
+retained layout check requires all browser partitions to succeed.
+
+`node --test tests/site/layout/test-empty-space-selection.mjs` checks the CI
+union and rejected selections. `npm run test:diagrams` enrolls all ten diagram
+source documents, including both Build validation pages, and checks all thirteen
+diagrams at desktop/phone sizes, with source/retry and dynamic-insertion controls.
+The same diagram command can run with `PLAYWRIGHT_BROWSER=webkit`.

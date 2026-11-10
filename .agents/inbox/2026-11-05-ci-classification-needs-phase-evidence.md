@@ -426,3 +426,47 @@ The corrected operator (`1511d1b8`) invokes the unchanged guard in its owned pro
 The one corrected transaction passed the actual full guard with both 660-frame / 22-second companions and all 25 negative controls, followed by seven ordinary prerequisite tests. Complete tracked and hardware inventories outside its six software targets stayed exact; the original blocked operator was never run. Final artifact adoption, Git publication and physical limits remain separate claims.
 
 Rule: a structured-output consumer must parse the producer's stdout, retain stderr independently and preserve its exit status. Do not suppress expected negative-control diagnostics, loosen the guard or parse an arbitrary JSON-looking substring from a mixed log.
+
+
+## Diagram inventories must name the sources they cover
+
+2026-11-10: Gyropup run `42802870101`, presentation job `129784699310`,
+reached `npm run test:diagrams` and failed `13 !== 11` at the inventory guard.
+The existing eight documents still contain eleven diagrams; the new Build and
+robot-data validation documents each add one. This was an obsolete inventory,
+not a renderer or timeout failure. Bind the exact ten document paths and their
+counts, then run every entry through the existing desktop/phone SVG, reachable
+node, source-route, bootstrap/runtime recovery and dynamic-insertion checks.
+Keep the guard fail-closed for additions and removals, and derive the success
+message from the verified inventory rather than a stale literal seven.
+
+Actual commands `node tests/site/layout/test-diagrams.mjs` and
+`PLAYWRIGHT_BROWSER=webkit node tests/site/layout/test-diagrams.mjs` passed all thirteen diagrams
+and twenty document/viewport cases per engine against the unchanged diagram
+sources in the owned preview. The source/harness-qualified reports are indexed
+in `.agents/plans/versioned-build-guide-ci-validation.json`. This proves the
+scoped SVG checks, not complete current-head CI or physical qualification.
+
+## Layout partitions must prove complete tuple coverage
+
+2026-11-10: the same run's layout job `129784699269` started at 10:54:02 UTC,
+passed readiness and planted-defect controls, then was cancelled at 11:14:16
+by its existing twenty-minute job bound. Its actual partial result contained
+1,266 of 1,560 views (156 pages, five sizes, two themes), with zero findings
+before cancellation. Connection-refused messages appeared when CI stopped the
+owned server; they do not establish a broken production route. The run remains
+incomplete and is never relabelled a pass.
+
+Partition the existing scan by its five canonical sizes. Each partition still
+scans every published page in both themes, runs the original controls, keeps the
+same workers and measurement limits, and retains the twenty-minute job bound.
+Reject empty, unknown, mixed-unknown and duplicate size/theme selectors before
+starting a browser. Record expected and observed `(page,size,theme)` tuples;
+missing or duplicate views must fail the normal gate. Preserve the historical
+`browser-validation (layout)` check as an aggregate that cannot pass when a
+browser partition fails, is cancelled or is skipped. The new selector tests also
+bind the workflow union to every canonical size and both themes.
+
+A local selected-page smoke only checks reporting and representative execution;
+acceptance still requires all current CI partitions. Do not enlarge a timeout,
+remove a page/theme/size, or treat a zero-case selection as success.

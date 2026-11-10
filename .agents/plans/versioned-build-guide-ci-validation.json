@@ -1,0 +1,45 @@
+{
+  "scope": "Scoped real diagram and selected-page layout verification against the owned preview; complete current-head CI is separate",
+  "site_revision": "90788070aecb5012a3fdf34f3ad50c8301d8f4cf",
+  "harness_file": "tests/site/layout/test-diagrams.mjs",
+  "harness_sha256": "6053899b02bdb89560f46ea080a1634b357c8e316b41ad8ef4cd45df2a0eb7b7",
+  "reports": [
+    {
+      "engine": "chromium",
+      "file": ".agents/plans/build-workspace-evidence/diagrams-chromium-root.json",
+      "sha256": "bbcb86a303cc4dcb8e85654b01b6dacb07c5cbfce60fe03389d136b631ab7ec8",
+      "pages": 10,
+      "diagrams": 13,
+      "desktop_phone_cases": 20
+    },
+    {
+      "engine": "webkit",
+      "file": ".agents/plans/build-workspace-evidence/diagrams-webkit-root.json",
+      "sha256": "35f67bf66cbc16daac8d1f06d17428631432f1f51f85805c4f9b33f6795ca470",
+      "pages": 10,
+      "diagrams": 13,
+      "desktop_phone_cases": 20
+    }
+  ],
+  "limits": "These are scoped diagram checks, not complete current-head CI or engineering qualification.",
+  "site_assets": "eeb0281b36218e8bd335",
+  "layout_smoke": {
+    "scope": "Two explicitly selected pages at phone-360 in both themes; not the complete CI scan",
+    "expected": 4,
+    "observed": 4,
+    "unique": 4,
+    "findings": 0,
+    "coverage_sha256": "a221105789bb09fa4ce127ef0e94ae3c3b917c5e22a31f880010dccee6ac3031",
+    "elapsed_seconds": 130,
+    "coverage": {
+      "file": ".agents/plans/build-workspace-evidence/layout-phone360-coverage-root.json",
+      "sha256": "a221105789bb09fa4ce127ef0e94ae3c3b917c5e22a31f880010dccee6ac3031"
+    },
+    "results": {
+      "file": ".agents/plans/build-workspace-evidence/layout-phone360-root.json",
+      "sha256": "56faa5d93e4085a6bc4345ebb6ffa9f9b0cc16b964f67023d42a44267d187000"
+    },
+    "harness_file": "tests/site/layout/test-empty-space.mjs",
+    "harness_sha256": "4dd76fac8e854e3fa90c084eb0fb4f8f547dff614b36686f309911888e9a774f"
+  }
+}

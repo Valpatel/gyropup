@@ -134,9 +134,29 @@ jobs:
               npm run test:loading-hero
           # Every page at a phone, an iPhone, a tablet, a small laptop and a desktop, light and dark: no large blank
           # band while scrolling, no blank picture box, no text squeezed to a word a line (tools/site/site-empty-space.mjs).
-          - suite: layout
+          # Each size still scans every published page in both themes and runs
+          # the existing planted controls. The former combined scan exceeded its
+          # unchanged 20-minute bound; no measurement limit or case is removed.
+          - suite: layout-phone-360
             commands: |
-              npm run test:empty-space
+              node --test tests/site/layout/test-empty-space-selection.mjs
+              npm run test:empty-space -- --sizes=phone-360
+          - suite: layout-iphone-13
+            commands: |
+              node --test tests/site/layout/test-empty-space-selection.mjs
+              npm run test:empty-space -- --sizes=iphone-13
+          - suite: layout-tablet-768
+            commands: |
+              node --test tests/site/layout/test-empty-space-selection.mjs
+              npm run test:empty-space -- --sizes=tablet-768
+          - suite: layout-laptop-1024
+            commands: |
+              node --test tests/site/layout/test-empty-space-selection.mjs
+              npm run test:empty-space -- --sizes=laptop-1024
+          - suite: layout-desktop-1440
+            commands: |
+              node --test tests/site/layout/test-empty-space-selection.mjs
+              npm run test:empty-space -- --sizes=desktop-1440
           - suite: build-workspace-layout-robot-1440
             commands: |
               WORKSPACE_CASE=layout WORKSPACE_ASSEMBLY=robot WORKSPACE_WIDTH=1440 npm run test:build-workspace
@@ -239,6 +259,19 @@ jobs:
           path: |
             /tmp/gyropup-*
             test-results
+  # Keep the existing aggregate check name meaningful after splitting layout.
+  # A failed, cancelled or skipped browser partition cannot make this gate pass.
+  layout:
+    name: browser-validation (layout)
+    if: always() && github.event_name != 'schedule'
+    needs: browser-validation
+    runs-on: ubuntu-24.04
+    timeout-minutes: 2
+    steps:
+      - name: Require all browser partitions to pass
+        env:
+          BROWSER_RESULT: ${{ needs.browser-validation.result }}
+        run: test "$BROWSER_RESULT" = success
   docs-art-freshness:
     # No CAD kernel, native render, browser, credentials or write permissions.
     # Drift requests a documented fleet refresh and reviewed PR; it never reseals

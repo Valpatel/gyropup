@@ -36,10 +36,18 @@ const root = path.resolve(import.meta.dirname, '../../..');
 const out = path.join(root,'test-results/empty-space');
 const arg = name => process.argv.find(a => a.startsWith(`--${name}=`))?.split('=')[1];
 const report = process.argv.includes('--report');
-const pick = (all, name) => { const want = arg(name)?.split(','); return want ? all.filter(x => want.includes(x.name ?? x)) : all; };
+const pick = (all, name) => {
+  const value=arg(name);if(value===undefined)return all;
+  const want=value.split(','),known=new Set(all.map(x=>x.name??x));
+  if(want.some(value=>!value||!known.has(value))||new Set(want).size!==want.length)throw new Error(`Invalid empty-space ${name} selection: ${value}`);
+  const selected=all.filter(x=>want.includes(x.name??x));
+  if(!selected.length)throw new Error(`Empty empty-space ${name} selection`);
+  return selected;
+};
 const sizes = pick(SIZES, 'sizes'), schemes = pick(SCHEMES, 'schemes');
 const workers = Number(arg('workers') || process.env.EMPTY_SPACE_WORKERS || 3);
 const problems = [], rows = [];
+let expectedViews=[];
 const started = Date.now();
 
 let server, base = process.env.SITE_URL?.replace(/\/$/, '');
@@ -335,6 +343,7 @@ try {
   const all = sitePages(files);
   if (all.length < 60) throw new Error(`only ${all.length} pages found in dist/: run npm run build first`);
   const pages = arg('pages') ? arg('pages').split(',') : process.argv.includes('--controls') ? [] : all;
+  expectedViews=sizes.flatMap(size=>pages.flatMap(route=>schemes.map(scheme=>({route,size:size.name,scheme}))));
   if (!report && !arg('pages') || process.argv.includes('--controls')) {
     const failed = await controls();
     for (const f of failed) problems.push(`empty-space control ${f}`);
@@ -372,6 +381,11 @@ try {
 }
 
 rows.sort((a, b) => b.worstShare - a.worstShare);
+const tuple=row=>JSON.stringify([row.route,row.size,row.scheme]);
+const observed=new Set(rows.map(tuple)),missing=expectedViews.filter(row=>!observed.has(tuple(row)));
+const complete=rows.length===expectedViews.length&&observed.size===rows.length&&!missing.length;
+await writeFile(path.join(out,'coverage.json'),JSON.stringify({schema:'gyropup.empty-space-coverage/1',sizes:sizes.map(size=>size.name),schemes,expected:expectedViews.length,observed:rows.length,unique:observed.size,missing,complete},null,2));
+if(!complete)problems.push(`empty-space coverage incomplete: ${rows.length}/${expectedViews.length} views, ${missing.length} missing, ${rows.length-observed.size} duplicates`);
 await writeFile(path.join(out, 'results.json'), JSON.stringify(rows, null, 1));
 const seconds = Math.round((Date.now() - started) / 1000);
 if (report) {

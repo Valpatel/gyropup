@@ -1,0 +1,610 @@
+{
+  "pages": [
+    {
+      "file": "docs/architecture/architecture.md",
+      "count": 1,
+      "path": "/site/pages/docs-architecture-md.html"
+    },
+    {
+      "file": "docs/architecture/mechanical-readiness.md",
+      "count": 1,
+      "path": "/site/pages/docs-mechanical-readiness-md.html"
+    },
+    {
+      "file": "docs/electronics/base-board-interfaces.md",
+      "count": 1,
+      "path": "/site/pages/docs-base-board-interfaces-md.html"
+    },
+    {
+      "file": "docs/legs/motor-day.md",
+      "count": 2,
+      "path": "/site/pages/docs-motor-day-md.html"
+    },
+    {
+      "file": "docs/legs/motor-thermal.md",
+      "count": 1,
+      "path": "/site/pages/docs-motor-thermal-md.html"
+    },
+    {
+      "file": "docs/research/power-electronics.md",
+      "count": 3,
+      "path": "/site/pages/research-power-electronics-md.html"
+    },
+    {
+      "file": "docs/software/rs04-motor-tool.md",
+      "count": 1,
+      "path": "/site/pages/docs-rs04-motor-tool-md.html"
+    },
+    {
+      "file": "docs/turret/turret-bench-tests.md",
+      "count": 1,
+      "path": "/site/pages/docs-turret-bench-tests-md.html"
+    },
+    {
+      "file": "docs/validation/build-guide.md",
+      "count": 1,
+      "path": "/site/pages/docs-validation-build-guide-md.html"
+    },
+    {
+      "file": "docs/validation/robot-assembly-data.md",
+      "count": 1,
+      "path": "/site/pages/docs-validation-robot-assembly-data-md.html"
+    }
+  ],
+  "cases": [
+    {
+      "width": 1280,
+      "file": "docs/architecture/architecture.md",
+      "count": 1,
+      "path": "/site/pages/docs-architecture-md.html",
+      "diagrams": [
+        {
+          "theme": "dark",
+          "state": "ready",
+          "labelCount": 25,
+          "rect": {
+            "x": 135,
+            "y": 510,
+            "width": 1961.453125,
+            "height": 294,
+            "top": 510,
+            "right": 2096.453125,
+            "bottom": 804,
+            "left": 135
+          }
+        }
+      ]
+    },
+    {
+      "width": 1280,
+      "file": "docs/architecture/mechanical-readiness.md",
+      "count": 1,
+      "path": "/site/pages/docs-mechanical-readiness-md.html",
+      "diagrams": [
+        {
+          "theme": "dark",
+          "state": "ready",
+          "labelCount": 35,
+          "rect": {
+            "x": 155.515625,
+            "y": 705.390625,
+            "width": 968.96875,
+            "height": 632,
+            "top": 705.390625,
+            "right": 1124.484375,
+            "bottom": 1337.390625,
+            "left": 155.515625
+          }
+        }
+      ]
+    },
+    {
+      "width": 1280,
+      "file": "docs/electronics/base-board-interfaces.md",
+      "count": 1,
+      "path": "/site/pages/docs-base-board-interfaces-md.html",
+      "diagrams": [
+        {
+          "theme": "dark",
+          "state": "ready",
+          "labelCount": 45,
+          "rect": {
+            "x": 135,
+            "y": 1358.5,
+            "width": 1086,
+            "height": 1638,
+            "top": 1358.5,
+            "right": 1221,
+            "bottom": 2996.5,
+            "left": 135
+          }
+        }
+      ]
+    },
+    {
+      "width": 1280,
+      "file": "docs/legs/motor-day.md",
+      "count": 2,
+      "path": "/site/pages/docs-motor-day-md.html",
+      "diagrams": [
+        {
+          "theme": "dark",
+          "state": "ready",
+          "labelCount": 22,
+          "rect": {
+            "x": 135,
+            "y": 877.390625,
+            "width": 1091.578125,
+            "height": 389,
+            "top": 877.390625,
+            "right": 1226.578125,
+            "bottom": 1266.390625,
+            "left": 135
+          }
+        },
+        {
+          "theme": "dark",
+          "state": "ready",
+          "labelCount": 23,
+          "rect": {
+            "x": 135,
+            "y": 13626.28125,
+            "width": 1739.71875,
+            "height": 142,
+            "top": 13626.28125,
+            "right": 1874.71875,
+            "bottom": 13768.28125,
+            "left": 135
+          }
+        }
+      ]
+    },
+    {
+      "width": 1280,
+      "file": "docs/legs/motor-thermal.md",
+      "count": 1,
+      "path": "/site/pages/docs-motor-thermal-md.html",
+      "diagrams": [
+        {
+          "theme": "dark",
+          "state": "ready",
+          "labelCount": 20,
+          "rect": {
+            "x": 135,
+            "y": 872.390625,
+            "width": 1378.28125,
+            "height": 282.046875,
+            "top": 872.390625,
+            "right": 1513.28125,
+            "bottom": 1154.4375,
+            "left": 135
+          }
+        }
+      ]
+    },
+    {
+      "width": 1280,
+      "file": "docs/research/power-electronics.md",
+      "count": 3,
+      "path": "/site/pages/research-power-electronics-md.html",
+      "diagrams": [
+        {
+          "theme": "dark",
+          "state": "ready",
+          "labelCount": 52,
+          "rect": {
+            "x": 135,
+            "y": 1336.078125,
+            "width": 2253.171875,
+            "height": 965,
+            "top": 1336.078125,
+            "right": 2388.171875,
+            "bottom": 2301.078125,
+            "left": 135
+          }
+        },
+        {
+          "theme": "dark",
+          "state": "ready",
+          "labelCount": 53,
+          "rect": {
+            "x": 135,
+            "y": 3115.171875,
+            "width": 1044.609375,
+            "height": 1071.03125,
+            "top": 3115.171875,
+            "right": 1179.609375,
+            "bottom": 4186.203125,
+            "left": 135
+          }
+        },
+        {
+          "theme": "dark",
+          "state": "ready",
+          "labelCount": 42,
+          "rect": {
+            "x": 135,
+            "y": 5036.53125,
+            "width": 1217.8125,
+            "height": 1023.015625,
+            "top": 5036.53125,
+            "right": 1352.8125,
+            "bottom": 6059.546875,
+            "left": 135
+          }
+        }
+      ]
+    },
+    {
+      "width": 1280,
+      "file": "docs/software/rs04-motor-tool.md",
+      "count": 1,
+      "path": "/site/pages/docs-rs04-motor-tool-md.html",
+      "diagrams": [
+        {
+          "theme": "dark",
+          "state": "ready",
+          "labelCount": 27,
+          "rect": {
+            "x": 135,
+            "y": 776.375,
+            "width": 1515.96875,
+            "height": 573,
+            "top": 776.375,
+            "right": 1650.96875,
+            "bottom": 1349.375,
+            "left": 135
+          }
+        }
+      ]
+    },
+    {
+      "width": 1280,
+      "file": "docs/turret/turret-bench-tests.md",
+      "count": 1,
+      "path": "/site/pages/docs-turret-bench-tests-md.html",
+      "diagrams": [
+        {
+          "theme": "dark",
+          "state": "ready",
+          "labelCount": 32,
+          "rect": {
+            "x": 208.578125,
+            "y": 987.765625,
+            "width": 862.84375,
+            "height": 608,
+            "top": 987.765625,
+            "right": 1071.421875,
+            "bottom": 1595.765625,
+            "left": 208.578125
+          }
+        }
+      ]
+    },
+    {
+      "width": 1280,
+      "file": "docs/validation/build-guide.md",
+      "count": 1,
+      "path": "/site/pages/docs-validation-build-guide-md.html",
+      "diagrams": [
+        {
+          "theme": "dark",
+          "state": "ready",
+          "labelCount": 11,
+          "rect": {
+            "x": 370.015625,
+            "y": 544.390625,
+            "width": 539.96875,
+            "height": 277.984375,
+            "top": 544.390625,
+            "right": 909.984375,
+            "bottom": 822.375,
+            "left": 370.015625
+          }
+        }
+      ]
+    },
+    {
+      "width": 1280,
+      "file": "docs/validation/robot-assembly-data.md",
+      "count": 1,
+      "path": "/site/pages/docs-validation-robot-assembly-data-md.html",
+      "diagrams": [
+        {
+          "theme": "dark",
+          "state": "ready",
+          "labelCount": 11,
+          "rect": {
+            "x": 135,
+            "y": 579,
+            "width": 1094.390625,
+            "height": 70,
+            "top": 579,
+            "right": 1229.390625,
+            "bottom": 649,
+            "left": 135
+          }
+        }
+      ]
+    },
+    {
+      "width": 320,
+      "file": "docs/architecture/architecture.md",
+      "count": 1,
+      "path": "/site/pages/docs-architecture-md.html",
+      "diagrams": [
+        {
+          "theme": "dark",
+          "state": "ready",
+          "labelCount": 25,
+          "rect": {
+            "x": 35,
+            "y": 764,
+            "width": 1961.453125,
+            "height": 294,
+            "top": 764,
+            "right": 1996.453125,
+            "bottom": 1058,
+            "left": 35
+          }
+        }
+      ]
+    },
+    {
+      "width": 320,
+      "file": "docs/architecture/mechanical-readiness.md",
+      "count": 1,
+      "path": "/site/pages/docs-mechanical-readiness-md.html",
+      "diagrams": [
+        {
+          "theme": "dark",
+          "state": "ready",
+          "labelCount": 35,
+          "rect": {
+            "x": 35,
+            "y": 1545.390625,
+            "width": 968.96875,
+            "height": 632,
+            "top": 1545.390625,
+            "right": 1003.96875,
+            "bottom": 2177.390625,
+            "left": 35
+          }
+        }
+      ]
+    },
+    {
+      "width": 320,
+      "file": "docs/electronics/base-board-interfaces.md",
+      "count": 1,
+      "path": "/site/pages/docs-base-board-interfaces-md.html",
+      "diagrams": [
+        {
+          "theme": "dark",
+          "state": "ready",
+          "labelCount": 45,
+          "rect": {
+            "x": 35,
+            "y": 2649.375,
+            "width": 1086,
+            "height": 1638,
+            "top": 2649.375,
+            "right": 1121,
+            "bottom": 4287.375,
+            "left": 35
+          }
+        }
+      ]
+    },
+    {
+      "width": 320,
+      "file": "docs/legs/motor-day.md",
+      "count": 2,
+      "path": "/site/pages/docs-motor-day-md.html",
+      "diagrams": [
+        {
+          "theme": "dark",
+          "state": "ready",
+          "labelCount": 22,
+          "rect": {
+            "x": 35,
+            "y": 1951.390625,
+            "width": 1091.578125,
+            "height": 389,
+            "top": 1951.390625,
+            "right": 1126.578125,
+            "bottom": 2340.390625,
+            "left": 35
+          }
+        },
+        {
+          "theme": "dark",
+          "state": "ready",
+          "labelCount": 23,
+          "rect": {
+            "x": 35,
+            "y": 10535.28125,
+            "width": 1739.71875,
+            "height": 142,
+            "top": 10535.28125,
+            "right": 1774.71875,
+            "bottom": 10677.28125,
+            "left": 35
+          }
+        }
+      ]
+    },
+    {
+      "width": 320,
+      "file": "docs/legs/motor-thermal.md",
+      "count": 1,
+      "path": "/site/pages/docs-motor-thermal-md.html",
+      "diagrams": [
+        {
+          "theme": "dark",
+          "state": "ready",
+          "labelCount": 20,
+          "rect": {
+            "x": 35,
+            "y": 1609.390625,
+            "width": 1378.28125,
+            "height": 282.046875,
+            "top": 1609.390625,
+            "right": 1413.28125,
+            "bottom": 1891.4375,
+            "left": 35
+          }
+        }
+      ]
+    },
+    {
+      "width": 320,
+      "file": "docs/research/power-electronics.md",
+      "count": 3,
+      "path": "/site/pages/research-power-electronics-md.html",
+      "diagrams": [
+        {
+          "theme": "dark",
+          "state": "ready",
+          "labelCount": 52,
+          "rect": {
+            "x": 35,
+            "y": 2306.953125,
+            "width": 2253.171875,
+            "height": 965,
+            "top": 2306.953125,
+            "right": 2288.171875,
+            "bottom": 3271.953125,
+            "left": 35
+          }
+        },
+        {
+          "theme": "dark",
+          "state": "ready",
+          "labelCount": 53,
+          "rect": {
+            "x": 35,
+            "y": 4355.046875,
+            "width": 1044.609375,
+            "height": 1071.03125,
+            "top": 4355.046875,
+            "right": 1079.609375,
+            "bottom": 5426.078125,
+            "left": 35
+          }
+        },
+        {
+          "theme": "dark",
+          "state": "ready",
+          "labelCount": 42,
+          "rect": {
+            "x": 35,
+            "y": 6670.40625,
+            "width": 1217.8125,
+            "height": 1023.015625,
+            "top": 6670.40625,
+            "right": 1252.8125,
+            "bottom": 7693.421875,
+            "left": 35
+          }
+        }
+      ]
+    },
+    {
+      "width": 320,
+      "file": "docs/software/rs04-motor-tool.md",
+      "count": 1,
+      "path": "/site/pages/docs-rs04-motor-tool-md.html",
+      "diagrams": [
+        {
+          "theme": "dark",
+          "state": "ready",
+          "labelCount": 27,
+          "rect": {
+            "x": 35,
+            "y": 1454.25,
+            "width": 1515.96875,
+            "height": 573,
+            "top": 1454.25,
+            "right": 1550.96875,
+            "bottom": 2027.25,
+            "left": 35
+          }
+        }
+      ]
+    },
+    {
+      "width": 320,
+      "file": "docs/turret/turret-bench-tests.md",
+      "count": 1,
+      "path": "/site/pages/docs-turret-bench-tests-md.html",
+      "diagrams": [
+        {
+          "theme": "dark",
+          "state": "ready",
+          "labelCount": 32,
+          "rect": {
+            "x": 35,
+            "y": 2191.640625,
+            "width": 862.84375,
+            "height": 608,
+            "top": 2191.640625,
+            "right": 897.84375,
+            "bottom": 2799.640625,
+            "left": 35
+          }
+        }
+      ]
+    },
+    {
+      "width": 320,
+      "file": "docs/validation/build-guide.md",
+      "count": 1,
+      "path": "/site/pages/docs-validation-build-guide-md.html",
+      "diagrams": [
+        {
+          "theme": "dark",
+          "state": "ready",
+          "labelCount": 11,
+          "rect": {
+            "x": 35,
+            "y": 1097.390625,
+            "width": 539.96875,
+            "height": 277.984375,
+            "top": 1097.390625,
+            "right": 574.96875,
+            "bottom": 1375.375,
+            "left": 35
+          }
+        }
+      ]
+    },
+    {
+      "width": 320,
+      "file": "docs/validation/robot-assembly-data.md",
+      "count": 1,
+      "path": "/site/pages/docs-validation-robot-assembly-data-md.html",
+      "diagrams": [
+        {
+          "theme": "dark",
+          "state": "ready",
+          "labelCount": 11,
+          "rect": {
+            "x": 35,
+            "y": 937,
+            "width": 1094.390625,
+            "height": 70,
+            "top": 937,
+            "right": 1129.390625,
+            "bottom": 1007,
+            "left": 35
+          }
+        }
+      ]
+    }
+  ],
+  "bootstrapRecovery": true,
+  "runtimeRecovery": true,
+  "dynamic": true,
+  "errors": []
+}
