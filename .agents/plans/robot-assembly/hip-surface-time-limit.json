@@ -1,0 +1,18 @@
+{
+  "exit": 124,
+  "status": "TIME_LIMIT",
+  "bound_seconds": 90,
+  "native_run": false,
+  "source_sha256": "183fe62a1045c7b0c63753e0081ae76bcc8d81394371648556d074174d84a194",
+  "completed_left": {
+    "a_to_b": {
+      "samples": 44470,
+      "max_distance_mm": 0.15697023886636854
+    },
+    "b_to_a": {
+      "samples": 19828,
+      "max_distance_mm": 0.1366546756111658
+    }
+  },
+  "right_complete": false
+}

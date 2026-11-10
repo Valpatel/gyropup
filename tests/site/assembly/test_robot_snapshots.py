@@ -34,12 +34,14 @@ class CurrentRobotSnapshots(unittest.TestCase):
             g=json.loads(raw);model_raw=(directory/'view.json').read_bytes();model=json.loads(model_raw)
             self.assertEqual(g['snapshot']['source_commit'],c['source_commit'])
             self.assertEqual(g['model']['sha256'],hashlib.sha256(model_raw).hexdigest())
+            expected_mapping=mapping(ROOT,[p['name'] for p in model['parts']],c)
             for p in model['parts']:
                 file=(directory/p['file']).resolve()
                 self.assertTrue(file.is_relative_to(ASSETS.resolve()))
                 self.assertEqual(sha(file),p['sha256'],p['name'])
                 manufacturing=g['source']['manufacturing_by_part'][p['name']]
-                self.assertEqual(manufacturing['geometry_match']['status'],'pending')
+                expected=expected_mapping[p['name']]
+                self.assertEqual(manufacturing,expected)
                 for original in manufacturing['originals']:
                     self.assertEqual(sha(ROOT/original['source_file']),original['sha256'])
                     self.assertNotIn('build-guides',original['source_file'])
@@ -56,7 +58,7 @@ class CurrentRobotSnapshots(unittest.TestCase):
             boms={f:sha(ROOT/f) for f in ('hardware/exports/body/bom.json','hardware/exports/leg/bom.json',
                                          'hardware/exports/turret/bench/bom.json')}
             outputs=generate(c,folder,sha(ROOT/'tools/site/assembly/robot_recipe.py'),boms,
-                             sha(RECORDS/'collection-260.json'),mapping(ROOT,[p['name'] for p in c['parts']]))
+                             sha(RECORDS/'collection-260.json'),mapping(ROOT,[p['name'] for p in c['parts']],c))
             self.assertEqual(len(outputs),242)
             for name,data in outputs.items():
                 actual=RECORDS/'index-entries-260.json' if name=='index-entries.json' else ASSETS/name

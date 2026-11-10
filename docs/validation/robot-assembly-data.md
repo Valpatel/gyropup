@@ -121,16 +121,26 @@ same stage text and requirements. Manufacturing metadata identifies existing
 print STL, machining STEP or sheet STEP/DXF originals by actual digest; baked
 posed guide meshes are never offered for printing. Unknown catalogue relations
 stay unresolved. File identity and print-plan membership are not proof that an
-original matches the new collected shape. Every manufacturing row therefore
-has an explicit `geometry_match.status: pending`; Print must remain unavailable
-until a separately accepted correspondence exists. Identified originals may be
+original matches the new collected shape. Manufacturing rows have an explicit
+`geometry_match` status; Print must remain unavailable until a separately
+accepted correspondence exists. Identified originals may be
 offered as clearly labelled retained downloads. The default hip-frame STL is
 byte-identical to the source-bound RS04 fit-study artifact, but that finding
-does not qualify the whole leg or its known failing support checks.
+does not qualify the whole leg or its known failing support checks. The narrow
+hip proof additionally compares every vertex and triangle centre of that
+original against the actual left and right collected hips in both directions,
+after the source-authored print transform. The observed maxima are 0.156971 mm
+and 0.136655 mm, below the declared 0.3011 mm combined tessellation/weld/float
+allowance. This is sampled corroboration plus full source provenance, not a
+continuous surface-distance proof. Only a reviewed record with current
+source/receipt/original/mesh/sampler identities may mark these two instances
+matched for WIP file preparation. All other mappings remain pending. The
+original 90-second arithmetic timeout is preserved; the optimized equivalent
+comparison completed in 55.09 seconds, including an actual 3 mm shift negative.
 Body/leg planning quantities retain their original scope;
 wheel hub and tyre share one bought-wheel identity.
 
-Nineteen kernel-free tests currently pass. They cover retained named
+The kernel-free suite contains 21 tests. They cover retained named
 membership, stationary/moving ownership, grouped hardware, frame/unit/mirror
 negatives, strict binary STL, symlink inventory rejection, import safety,
 original-file mapping, snapshot/text integrity and changed-source rejection.
