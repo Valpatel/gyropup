@@ -132,5 +132,11 @@ class DesignIdentity(unittest.TestCase):
                          M['bundle'](loaded, CONFIG, profile, None))
 
 
+# Keep cached-input fault controls in the existing ordinary-CI entry point.
+# The actual runtime and two shared-projection fixture tests require NumPy;
+# artifact parity above remains mandatory with only the standard library.
+CachedInputs = runpy.run_path(str(Path(__file__).with_name('test-readme-collection.py')))['CachedInputs']
+
+
 if __name__ == '__main__':
     unittest.main()

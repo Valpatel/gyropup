@@ -4,6 +4,7 @@
 
 | Symptom | Canonical guidance |
 | --- | --- |
+| A cached CAD illustration has new source headers but old body membership, or native and projection runtimes are conflated | [Bind original collection and new projection consumer separately](inbox/2026-11-10-cached-projections-need-separate-consumer-provenance.md) |
 | Small mode-switch doubles pass but recorded-only model construction fails or metadata remains on the previous body | [Exercise the real archived constructor and atomic holder](inbox/2026-11-10-atomic-model-switches-need-real-archive-construction.md) |
 | A collection differs from an isolated module default, or sampled bounds suggest a changed nominal radius | [Trace effective overrides and actual bound geometry first](inbox/2026-11-10-collection-geometry-needs-effective-runtime-parameters.md) |
 | Removing a model factory breaks unrelated quotes, a fresh-output guard breaks simulation callers, or pack bounds move sensor effects | [Trace actual caller contracts and canonical sensor datums](inbox/2026-11-10-current-labels-need-the-current-body-model.md#model-api-changes-need-real-consumer-call-paths) |

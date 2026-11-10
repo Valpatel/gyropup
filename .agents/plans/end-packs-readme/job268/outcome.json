@@ -1,0 +1,213 @@
+{
+  "schema": "gyropup.readme-cached-projection-adoption/1",
+  "date": "2026-11-10",
+  "job": 268,
+  "producer": "1abbe0d2aea9ac904c224f4db02faa29ca8d9bf8",
+  "original_native_source": "3a40891962b0b0a04625e070700f1d130bea3c7b",
+  "status": "PASS_CACHED_PROJECTION_CANDIDATE",
+  "projection_archive_sha256": "cff191fb7580f173830d7f494ffc4cd094bb7368ec67d308ee8ec6c8c41828ef",
+  "projection_members": 9,
+  "worker_final_receipt_sha256": "3faecc9b004fec63b39499dc7f693b7eab9c964562b8b7edc2a45525c1d39b8f",
+  "preservation": {
+    "source": {
+      "before_sha256": "941859c39e1c6e2936fa09e765ebc409b6e6399aa496e064aeb4a088b275fa44",
+      "after_sha256": "941859c39e1c6e2936fa09e765ebc409b6e6399aa496e064aeb4a088b275fa44",
+      "equal": true
+    },
+    "hardware": {
+      "before_sha256": "1a9dce826f808108f365fd9ef7ddada6b08db6580ea6b06697ce852bd6a73399",
+      "after_sha256": "1a9dce826f808108f365fd9ef7ddada6b08db6580ea6b06697ce852bd6a73399",
+      "equal": true
+    },
+    "runtime": {
+      "before_sha256": "7748b9fb81bd780bf6d2f6bf673dddcfab7b4879eea705e94fd994a65bcfdb17",
+      "after_sha256": "7748b9fb81bd780bf6d2f6bf673dddcfab7b4879eea705e94fd994a65bcfdb17",
+      "equal": true
+    },
+    "toolkit": {
+      "before_sha256": "886c27981c8ac58369fd2364d35d21b828d44a82646808b09ded0fee4bb5933f",
+      "after_sha256": "886c27981c8ac58369fd2364d35d21b828d44a82646808b09ded0fee4bb5933f",
+      "equal": true
+    },
+    "original_collection": {
+      "before_sha256": "156f6d0bbdd2d607afb3722bc7cfbaab71ce77969fb7211ef2c7a92290600dcb",
+      "after_sha256": "156f6d0bbdd2d607afb3722bc7cfbaab71ce77969fb7211ef2c7a92290600dcb",
+      "equal": true
+    },
+    "profile": {
+      "before_sha256": "1e075b6a30488f8ce1eb17eedd602fb583c2d0178efa8c60c9c2d278c8dee6fe",
+      "after_sha256": "1e075b6a30488f8ce1eb17eedd602fb583c2d0178efa8c60c9c2d278c8dee6fe",
+      "equal": true
+    }
+  },
+  "phases": {
+    "runtime-preflight": {
+      "expected_exit": 0,
+      "timeout_seconds": 20,
+      "exit": 0,
+      "process_cleanup": {
+        "group_gone": true,
+        "signalled": false,
+        "reaped": []
+      },
+      "seconds": 0.12208615010604262
+    },
+    "profile-init": {
+      "expected_exit": 0,
+      "timeout_seconds": 10,
+      "exit": 0,
+      "process_cleanup": {
+        "group_gone": true,
+        "signalled": false,
+        "reaped": []
+      },
+      "seconds": 0.010656600818037987
+    },
+    "profile-remote": {
+      "expected_exit": 0,
+      "timeout_seconds": 10,
+      "exit": 0,
+      "process_cleanup": {
+        "group_gone": true,
+        "signalled": false,
+        "reaped": []
+      },
+      "seconds": 0.0055338130332529545
+    },
+    "profile-sparse-init": {
+      "expected_exit": 0,
+      "timeout_seconds": 10,
+      "exit": 0,
+      "process_cleanup": {
+        "group_gone": true,
+        "signalled": false,
+        "reaped": []
+      },
+      "seconds": 0.005349820014089346
+    },
+    "profile-sparse-set": {
+      "expected_exit": 0,
+      "timeout_seconds": 10,
+      "exit": 0,
+      "process_cleanup": {
+        "group_gone": true,
+        "signalled": false,
+        "reaped": []
+      },
+      "seconds": 0.003298614639788866
+    },
+    "profile-fetch": {
+      "expected_exit": 0,
+      "timeout_seconds": 90,
+      "exit": 0,
+      "process_cleanup": {
+        "group_gone": true,
+        "signalled": false,
+        "reaped": []
+      },
+      "seconds": 0.8186914431862533
+    },
+    "profile-checkout": {
+      "expected_exit": 0,
+      "timeout_seconds": 10,
+      "exit": 0,
+      "process_cleanup": {
+        "group_gone": true,
+        "signalled": false,
+        "reaped": []
+      },
+      "seconds": 0.01853381609544158
+    },
+    "projection": {
+      "expected_exit": 0,
+      "timeout_seconds": 300,
+      "exit": 0,
+      "process_cleanup": {
+        "group_gone": true,
+        "signalled": false,
+        "reaped": []
+      },
+      "seconds": 24.13246772577986
+    },
+    "renderer-parity": {
+      "expected_exit": 0,
+      "timeout_seconds": 30,
+      "exit": 0,
+      "process_cleanup": {
+        "group_gone": true,
+        "signalled": false,
+        "reaped": []
+      },
+      "seconds": 0.21718198992311954
+    }
+  },
+  "before_assets_sha256": {
+    "tools/engineering/robot/current-design.scene.json": "5998710c865c02f3bb071a6fbb2dce227f58461e8f29d90b65cd8dc1a019b747",
+    "tools/engineering/robot/current-design.receipt.json": "7b68f7a8999ca09350b44a9b7715002f27dbfd9bd045ed19eae25b5ed740d1ea",
+    "docs/img/hero/current-design.svg": "f582f3aed6b3983bab2b85115ab08afdfc15fc23d5b3e3339b880511fd07160c"
+  },
+  "adopted_assets": {
+    "tools/engineering/robot/current-design.scene.json": {
+      "sha256": "8974cd187e1fb456b2a3a05ebcd8b4ab9a51ba616ec4db3c10ac69590061f9a8",
+      "bytes": 210069
+    },
+    "docs/img/hero/current-design.svg": {
+      "sha256": "a72fc3ad4d4ad74f90933ad30f023a6ad6ae48d0816040498a544a76917038e9",
+      "bytes": 60173
+    },
+    "tools/engineering/robot/current-design.receipt.json": {
+      "sha256": "8aa88ad4259c66cd443b02337fd422251e1fd0e7ec6855d0fe4f4952d4993af3",
+      "bytes": 10210
+    }
+  },
+  "independent_artifact_review": "https://github.com/Valpatel/gyropup/pull/291#issuecomment-6778805080",
+  "visual_review": "Root inspected actual SVG in light/dark: end packs/supports visible, old suspended central bay absent, legs/full robot framed. No new browser run by adopting agent.",
+  "native_construction": false,
+  "physical_qualified": false,
+  "publication": false,
+  "action": {
+    "review": "https://github.com/Valpatel/gyropup/pull/291#issuecomment-6778689025",
+    "proposal_sha256": "d9f28cb9e51a09e8de760b12f49dfe2815ca1e6767a827e4d6cd6074ab76bdcb",
+    "plan_sha256": "a850d8285c22bcb0de955b3f1ab530ded3a380cfc562ddd692bb902a8ea63bad",
+    "worker_sha256": "7e898150d6442fd8ec0cf43c63783628c87a4cb3b1c05662bba82a3550bac38c",
+    "operator_sha256": "9524438bc28a356dbcacc0983c8d8d7d551020799cd240dfd79ab8a9cc916386",
+    "cli_sha256": "cb520154788c008a05f86d7e76d7a868a0a2a989a32282b9dc43dc920502a6f8",
+    "one_submit": true,
+    "no_retry": true,
+    "resources": {
+      "cpus": 2,
+      "memory_gib": 4,
+      "disk_gib": 4,
+      "scheduler_minutes": 20,
+      "projection_seconds": 300,
+      "outer_seconds": 480
+    },
+    "commands_by_role": [
+      [
+        "<existing-preserved-python>",
+        "-I",
+        "-B",
+        "tools/engineering/robot/readme_design.py",
+        "extract-collection",
+        "--collection",
+        "<original266-candidate>",
+        "--profile",
+        "<fresh-pinned-profile70c>",
+        "--out",
+        "<owned-output>/projection"
+      ],
+      [
+        "<existing-preserved-python>",
+        "-I",
+        "-B",
+        "tools/engineering/robot/readme_design.py",
+        "check",
+        "--profile",
+        "<fresh-pinned-profile70c>",
+        "--candidate",
+        "<owned-output>/projection/candidate"
+      ]
+    ],
+    "recovery": "Use existing fleet CLI status/log/fetch268 with outputs-only; verify the bound archive/member hashes before extraction. Private runtime roles are resolved by the existing approved operator packet, not public infrastructure details."
+  }
+}

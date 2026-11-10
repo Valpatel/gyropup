@@ -1,0 +1,23 @@
+.........far_leg: 1 parts, 4 triangles
+body: 1 parts, 4 triangles
+turret: 1 parts, 4 triangles
+near_leg: 1 parts, 4 triangles
+..........E..
+======================================================================
+ERROR: test_real_renderer_survives_scene_dictionary_roundtrip (__main__.DesignIdentity.test_real_renderer_survives_scene_dictionary_roundtrip)
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "<checkout>/tests/evidence/media/test-readme-design.py", line 131, in test_real_renderer_survives_scene_dictionary_roundtrip
+    self.assertEqual(M['bundle'](scene, CONFIG, profile, None),
+                     ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "<checkout>/tools/engineering/robot/readme_design.py", line 394, in bundle
+    svg = render_svg(json.loads(scene_bytes), cfg, profile)
+          ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "<checkout>/tools/engineering/robot/readme_design.py", line 261, in render_svg
+    raise ValueError('Stale extracted scene; rendering cannot rebind CAD inputs')
+ValueError: Stale extracted scene; rendering cannot rebind CAD inputs
+
+----------------------------------------------------------------------
+Ran 22 tests in 1.164s
+
+FAILED (errors=1)

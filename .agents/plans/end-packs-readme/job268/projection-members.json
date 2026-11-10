@@ -1,0 +1,47 @@
+{
+  "candidate/current-design.receipt.json": {
+    "mode": 384,
+    "bytes": 10210,
+    "sha256": "8aa88ad4259c66cd443b02337fd422251e1fd0e7ec6855d0fe4f4952d4993af3"
+  },
+  "candidate/current-design.scene.json": {
+    "mode": 384,
+    "bytes": 210069,
+    "sha256": "8974cd187e1fb456b2a3a05ebcd8b4ab9a51ba616ec4db3c10ac69590061f9a8"
+  },
+  "candidate/current-design.svg": {
+    "mode": 384,
+    "bytes": 60173,
+    "sha256": "a72fc3ad4d4ad74f90933ad30f023a6ad6ae48d0816040498a544a76917038e9"
+  },
+  "collection-after.json": {
+    "mode": 384,
+    "bytes": 70434,
+    "sha256": "380168d2d2b5da23985f8d5ad1ebd9cea02090da5f22cfc2b3cbba086bd582cc"
+  },
+  "collection-before.json": {
+    "mode": 384,
+    "bytes": 70434,
+    "sha256": "380168d2d2b5da23985f8d5ad1ebd9cea02090da5f22cfc2b3cbba086bd582cc"
+  },
+  "extracted.scene.json": {
+    "mode": 384,
+    "bytes": 210069,
+    "sha256": "8974cd187e1fb456b2a3a05ebcd8b4ab9a51ba616ec4db3c10ac69590061f9a8"
+  },
+  "source-after-render.json": {
+    "mode": 384,
+    "bytes": 465854,
+    "sha256": "600b1e1af63663eda7ee2c5ffd8656055e08e032c80231d5cdbf8860bc95a174"
+  },
+  "source-after.json": {
+    "mode": 384,
+    "bytes": 465854,
+    "sha256": "600b1e1af63663eda7ee2c5ffd8656055e08e032c80231d5cdbf8860bc95a174"
+  },
+  "source-before.json": {
+    "mode": 384,
+    "bytes": 465854,
+    "sha256": "600b1e1af63663eda7ee2c5ffd8656055e08e032c80231d5cdbf8860bc95a174"
+  }
+}
