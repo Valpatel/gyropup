@@ -2,9 +2,9 @@
  * Cold, real landing-page integration: the hero and reel share one connection.
  * No routes, mocked models, forced media sources or altered hero state are used.
  *
- * Chrome defaults to both cases at 150 ms / 1.6 Mbps down / 750 kbps up.
- * HIGHLIGHT_INTEGRATION_CASE=auto|manual selects one case. WebKit has no CDP
- * network shaping and defaults to one unthrottled automatic case.
+ * The unthrottled auto and manual cases verify full playback and replay.
+ * Chromium also checks the real expiry and Play now choice at 150 ms / 1.6 Mbps
+ * down / 750 kbps up. WebKit defaults to unthrottled auto and has no CDP shaping.
  */
 import assert from 'node:assert/strict';
 import { mkdir, writeFile } from 'node:fs/promises';
@@ -16,14 +16,15 @@ const out = process.env.TEST_OUTPUT || '/tmp/gyropup-highlight-integration';
 const engine = process.env.PLAYWRIGHT_BROWSER === 'webkit' ? webkit : chromium;
 const browserLabel = engine === webkit ? 'webkit' : process.env.PLAYWRIGHT_CHANNEL === 'chromium' ? 'chromium' : 'chrome';
 const selection = process.env.HIGHLIGHT_INTEGRATION_CASE || (engine === webkit ? 'auto' : 'all');
-assert.ok(['all', 'auto', 'manual'].includes(selection), 'HIGHLIGHT_INTEGRATION_CASE must be all, auto or manual');
-const cases = selection === 'all' ? ['auto', 'manual'] : [selection];
+assert.ok(['all', 'auto', 'manual', 'cold-manual'].includes(selection), 'HIGHLIGHT_INTEGRATION_CASE must be all, auto, manual or cold-manual');
+assert.ok(engine === chromium || selection !== 'cold-manual', 'Cold manual case requires Chromium network shaping');
+const cases = selection === 'all' ? ['auto', 'manual', ...(engine === chromium ? ['cold-manual'] : [])] : [selection];
 const viewport = { width: 390, height: 844 };
-const network = engine === chromium ? { latencyMs: 150, downloadBytesPerSecond: 200000, uploadBytesPerSecond: 93750 } : null;
+const coldNetwork = { latencyMs: 150, downloadBytesPerSecond: 200000, uploadBytesPerSecond: 93750 };
 const movieURL = value => /\/web\/highlights\/gyropup-highlights\.(mp4|webm)$/.test(new URL(value).pathname);
 const relevantAsset = value => {
   const url = new URL(value);
-  return url.origin === new URL(base).origin && (movieURL(value) || /^\/(designer|exports\/sim)\//.test(url.pathname));
+  return url.origin === new URL(base).origin && (movieURL(value) || /^\/(designer|exports\/sim|web\/robot-current)\//.test(url.pathname));
 };
 const browser = await engine.launch({ headless: true, ...(engine === chromium ? {
   channel: process.env.PLAYWRIGHT_CHANNEL === 'chromium' ? undefined : 'chrome',
@@ -36,6 +37,8 @@ function installProbe() {
   localStorage.setItem('gyropup.probe', 'off');
   localStorage.setItem('gyropup-sfx', '0');
   sessionStorage.setItem('gyropup.prototype-notice', '2026-10-29-v1');
+  // The adopted model has 224 requests before counting the rest of the page.
+  performance.setResourceTimingBufferSize(512);
   const probe = window.__highlightIntegrationProbe = {
     timeOrigin: performance.timeOrigin, heroReadyAt: null, heroStates: [],
     sources: [], events: [], frames: [], firstDecodedFrame: null,
@@ -100,6 +103,8 @@ async function state(page) {
         canvas: !!document.querySelector('#robot-preview canvas'),
         renderCalls: hero?.renderer.info.render.calls, triangles: hero?.renderer.info.render.triangles,
         soundEnabled: hero?.sfx.enabled, loadingHidden: document.querySelector('#hero-loading').hidden,
+        meshResponses: performance.getEntriesByType('resource').filter(resource =>
+          new URL(resource.name).pathname.startsWith('/web/robot-current/meshes/')).length,
       },
       video: {
         state: document.querySelector('.highlight-card').dataset.state, source: video.currentSrc,
@@ -202,6 +207,7 @@ function summarize(report) {
 }
 
 async function run(mode) {
+  const cold = mode === 'cold-manual', network = cold ? coldNetwork : null;
   const context = await browser.newContext({ viewport, reducedMotion: 'no-preference' });
   await context.addInitScript(installProbe);
   const page = await context.newPage(); page.setDefaultTimeout(90000);
@@ -275,36 +281,65 @@ async function run(mode) {
         await page.locator('.highlight-controls').waitFor({ state: 'visible' });
         await page.addStyleTag({ content: 'html{scroll-behavior:auto!important}' });
         await page.locator('.highlight-card').evaluate(el => el.scrollIntoView({ block: 'center', behavior: 'instant' }));
-        if (mode === 'manual') {
+        if (mode === 'manual' || cold) {
           // Let the viewport observer run. Cancel its automatic intent first,
           // then deliberately Play using the real, visible control. This keeps
           // the normal motion preference and does not synthesize an offscreen
           // click merely to beat the automatic queue.
-          await page.waitForTimeout(150);
+          if (cold) await page.waitForFunction(() => document.querySelector('.highlight-card').dataset.state === 'queued');
+          else await page.waitForTimeout(150);
           if (/pause|cancel/i.test(await page.locator('.highlight-toggle').getAttribute('aria-label'))) {
             await page.locator('.highlight-toggle').click();
             report.cancelledAutoplayBeforeManual = true;
           }
           report.manualBeforeClick = await state(page);
-          if (network) assert.equal(report.manualBeforeClick.hero.ready, false, 'Cold manual case reaches the control while the hero is loading');
+          if (cold) assert.equal(report.manualBeforeClick.hero.ready, false, 'Cold manual case reaches the control while the hero is loading');
           await page.locator('.highlight-toggle').click();
           report.manualAfterClick = await state(page);
-          if (network) {
+          if (cold) {
+            assert.equal(report.manualAfterClick.video.state, 'queued');
             assert.equal(await page.locator('#highlight-video').getAttribute('src'), null, 'An early manual Play does not compete with hero downloads');
             assert.match(await page.locator('.highlight-toggle').getAttribute('aria-label'), /pause|cancel/i, 'Queued manual playback remains cancellable');
           }
         }
         report.snapshots.push({ label: 'near-reel', ...await state(page) });
-        await page.waitForFunction(() => {
+        if (cold) {
+          const playNow = page.getByRole('button', { name: 'Play highlights while the robot is still loading', exact: true });
+          await playNow.waitFor({ state: 'visible' });
+          const delayed = await state(page);
+          report.snapshots.push({ label: 'hero-wait-expired', ...delayed });
+          assert.equal(delayed.hero.state, 'loading');
+          assert.equal(delayed.video.state, 'delayed');
+          assert.equal(delayed.video.paused, true);
+          assert.equal(await page.locator('#highlight-video').getAttribute('src'), null);
+          assert.equal(report.movieRequests.length, 0, 'The real hero wait expires without a competing movie request');
+          report.delayedPlayRequestedAt = await page.evaluate(() => performance.now());
+          await playNow.click();
+        }
+        await page.waitForFunction(cold => {
           const hero = document.querySelector('#robot-preview'), video = document.querySelector('#highlight-video');
           if (hero.dataset.state === 'fallback') throw new Error(document.querySelector('#hero-loading-message').textContent);
           if (video.error || document.querySelector('.highlight-card').dataset.state === 'error') throw new Error(video.error?.message || document.querySelector('.highlight-status').textContent);
-          return hero.dataset.ready === 'true' && !video.paused && video.currentTime > .2;
-        });
-        report.snapshots.push({ label: 'hero-ready-and-playing', ...await state(page) });
+          return (cold || hero.dataset.ready === 'true') && !video.paused && video.currentTime > .2;
+        }, cold);
+        report.snapshots.push({ label: cold ? 'playing-after-explicit-bypass' : 'hero-ready-and-playing', ...await state(page) });
         report.motion = await movingPixels(page);
         assert.ok(report.motion.afterFrames > report.motion.beforeFrames, 'Real decoded frame count advances');
         assert.ok(report.motion.meanPixelDifference > .15, 'The model region moves, independently of baked captions');
+        if (cold) {
+          const before = report.snapshots.find(snapshot => snapshot.label === 'hero-wait-expired');
+          await page.waitForFunction(observedAt => {
+            const hero = document.querySelector('#robot-preview');
+            if (hero.dataset.state === 'fallback') throw new Error(document.querySelector('#hero-loading-message').textContent);
+            return hero.dataset.ready === 'true' || performance.getEntriesByType('resource').some(resource =>
+              resource.responseEnd > observedAt && new URL(resource.name).pathname.startsWith('/web/robot-current/meshes/'));
+          }, before.at);
+          report.snapshots.push({ label: 'hero-progress-after-explicit-bypass', ...await state(page) });
+          await page.screenshot({ path: `${out}/${browserLabel}-${mode}-390x844.png` });
+          report.endVersion = await version(context);
+          assert.deepEqual(report.endVersion, report.version, 'One published build throughout the cold integration case');
+          return;
+        }
         await page.waitForFunction(() => {
           const video = document.querySelector('#highlight-video');
           if (video.error || document.querySelector('.highlight-card').dataset.state === 'error') {
@@ -390,22 +425,30 @@ async function run(mode) {
     assert.deepEqual(report.badResponses.filter(response => relevantAsset(response.url)), [], 'No bad hero or media responses');
     assert.ok(!report.probe.heroStates.some(state => state.state === 'fallback'), 'Hero never falls back while the reel is loading');
     assert.ok(report.probe.sources.length > 0, 'Normal player selects its own source');
-    assert.ok(report.probe.sources.every(source => source.heroReady), 'Every movie source assignment follows hero readiness');
-    // MutationObserver timestamps are collected after the readiness mutation.
-    // The Boolean at source assignment is the causal assertion; 50 ms permits
-    // observer delivery without treating a scheduling difference as contention.
-    assert.ok(report.summary.movieRequestAfterHeroReadyMs >= -50, 'Movie request starts after hero readiness');
-    assert.ok(report.probe.firstDecodedFrame?.heroReady, 'Hero is ready before the first decoded movie frame');
+    if (cold) {
+      assert.ok(report.probe.sources.every(source => source.at >= report.delayedPlayRequestedAt), 'Movie source follows deliberate Play now');
+      assert.ok(report.probe.firstDecodedFrame?.at >= report.delayedPlayRequestedAt, 'Actual first movie frame follows deliberate Play now');
+    } else {
+      assert.ok(report.probe.sources.every(source => source.heroReady), 'Every movie source assignment follows hero readiness');
+      // The source-time readiness Boolean establishes order. Resource Timing
+      // allows 50 ms for delivery of the readiness mutation observer.
+      const delay = report.summary.movieRequestAfterHeroReadyMs;
+      assert.ok(Number.isFinite(delay) && delay >= -50, 'Movie request starts after hero readiness');
+      assert.ok(report.probe.firstDecodedFrame?.heroReady, 'Hero is ready before the first decoded movie frame');
+    }
     assert.equal(new Set(report.movieRequests.map(request => new URL(request.url).pathname)).size, 1, 'The normal player fetches one encoding');
     const firstPlaying = report.summary.firstPlaying;
     assert.ok(firstPlaying, 'Playback starts normally');
     const playable = firstPlaying.buffered.find(([start, end]) => start <= firstPlaying.mediaTime + .05 && end >= firstPlaying.mediaTime);
     assert.ok(playable && playable[1] - firstPlaying.mediaTime >= 2.8, 'Initial playback has approximately three seconds buffered');
-    assert.ok(report.summary.stalls.every(stall => stall.durationMs !== null), 'Every playback wait recovers');
-    assert.ok(report.summary.totalStallMs <= 1000, `No meaningful repeated stalls under the recorded conditions: ${report.summary.totalStallMs.toFixed(1)} ms`);
-    assert.ok(report.summary.replay.waits.every(wait => wait.recovery && wait.recovery.kind !== 'error'), 'Replay waits recover through native events or actual decoded-frame progress');
+    if (!cold) {
+      assert.ok(report.summary.stalls.every(stall => stall.durationMs !== null), 'Every playback wait recovers');
+      assert.ok(report.summary.totalStallMs <= 1000, `No meaningful repeated stalls under the recorded conditions: ${report.summary.totalStallMs.toFixed(1)} ms`);
+      assert.ok(report.summary.replay.waits.every(wait => wait.recovery && wait.recovery.kind !== 'error'), 'Replay waits recover through native events or actual decoded-frame progress');
+    }
     report.passed = true;
-    console.log(`PASS ${browserLabel} ${mode}: hero ${Math.round(report.summary.heroReadyMs)} ms; request→frame ${Math.round(report.summary.requestToFirstDecodedFrameMs)} ms; ${report.summary.stalls.length} waits / ${Math.round(report.summary.totalStallMs)} ms; real motion and full playback/replay`);
+    console.log(cold ? `PASS ${browserLabel} ${mode}: bounded wait, deliberate Play now, decoded motion and continuing hero` :
+      `PASS ${browserLabel} ${mode}: hero ${Math.round(report.summary.heroReadyMs)} ms; request→frame ${Math.round(report.summary.requestToFirstDecodedFrameMs)} ms; ${report.summary.stalls.length} waits / ${Math.round(report.summary.totalStallMs)} ms; real motion and full playback/replay`);
   } catch (error) {
     report.failure = error.stack;
     report.probe ??= await page.evaluate(() => window.__highlightIntegrationProbe).catch(() => null);
@@ -427,7 +470,7 @@ async function run(mode) {
 
 try {
   for (const mode of cases) await run(mode);
-  await writeFile(`${out}/${browserLabel}-summary.json`, JSON.stringify({ base, browser: browserLabel, network, cases: reports.map(report => ({ mode: report.mode, passed: report.passed, version: report.version, summary: report.summary, failure: report.failure })) }, null, 2));
+  await writeFile(`${out}/${browserLabel}-summary.json`, JSON.stringify({ base, browser: browserLabel, cases: reports.map(report => ({ mode: report.mode, network: report.network, passed: report.passed, version: report.version, summary: report.summary, failure: report.failure })) }, null, 2));
   assert.ok(reports.every(report => report.passed), `Integration failed; inspect ${out}/${browserLabel}-*-report.json`);
 } finally {
   await browser.close();
