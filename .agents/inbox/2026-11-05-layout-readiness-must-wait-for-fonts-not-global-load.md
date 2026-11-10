@@ -149,3 +149,22 @@ route. This is additional evidence against an ARM-only diagnosis, not proof
 that the unobserved page had the same pending request as fleet 188. The actual
 wall loader now adds route context while retaining the original error as its
 cause, with the same readiness rules and bounds.
+
+### 2026-11-10: A real stopped-stage negative must reject a Promise-false observer
+
+The first hop-budget draft repeated this failure class by using an async
+waitForFunction predicate that called an exposed Node guard. Actualstage.stop
+left jump.t0.5/y0.143 and11frames while the observer falsely accepted; the next
+unchanged gamepad settings assertion independently rejected jump.t0.65 instead
+of null. All apparent newPass values from that draft remain
+[rejected evidence](../plans/assembly-staging/ci-frame-budget/rejected-observers/README.md).
+
+The corrected polling adapter is passed directly to Playwright as a synchronous
+function, invokes the exact pure guard/read-sample functions through same-document
+handles and explicitly rejects non-boolean guard results. Unit tests call that
+actual adapter for both false and true results and reject a Promise-valued guard.
+The real stopped-stage control now rejects after10.022s with no frame; the actual
+1000ms-gated hop genuinely completes within the separately documented stage-dt
+and wall budgets. A private control first created handles before navigation and
+was correctly refused after navigation; preserve that unqualified setup failure.
+No product trajectory, browser error or failed evidence is bypassed.

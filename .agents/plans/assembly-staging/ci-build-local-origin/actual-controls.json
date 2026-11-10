@@ -1,0 +1,80 @@
+{
+  "cases": [
+    {
+      "engine": "chromium",
+      "case": "old opaque negative",
+      "errors": [
+        {
+          "url": "about:blank",
+          "message": "Failed to read the 'sessionStorage' property from 'Window': Access is denied for this document."
+        },
+        {
+          "url": "about:blank",
+          "message": "Failed to read the 'sessionStorage' property from 'Window': Access is denied for this document."
+        }
+      ]
+    },
+    {
+      "engine": "chromium",
+      "case": "guarded opaque and wrong-origin no-write; real site acknowledged",
+      "errors": []
+    },
+    {
+      "engine": "chromium",
+      "case": "matching HTTP denial observed",
+      "errors": [
+        {
+          "url": "http://loopback.fixture/fixture",
+          "message": "matching HTTP storage denial"
+        }
+      ]
+    },
+    {
+      "engine": "chromium",
+      "case": "ordinary HTTP error observed",
+      "errors": [
+        {
+          "url": "http://loopback.fixture/fixture",
+          "message": "ordinary fixture error"
+        }
+      ]
+    },
+    {
+      "engine": "webkit",
+      "case": "old opaque negative",
+      "errors": [
+        {
+          "url": "about:blank",
+          "message": "The operation is insecure."
+        }
+      ]
+    },
+    {
+      "engine": "webkit",
+      "case": "guarded opaque and wrong-origin no-write; real site acknowledged",
+      "errors": []
+    },
+    {
+      "engine": "webkit",
+      "case": "matching HTTP denial observed",
+      "errors": [
+        {
+          "url": "http://loopback.fixture/fixture",
+          "message": "matching HTTP storage denial"
+        }
+      ]
+    },
+    {
+      "engine": "webkit",
+      "case": "ordinary HTTP error observed",
+      "errors": [
+        {
+          "url": "http://loopback.fixture/fixture",
+          "message": "ordinary fixture error"
+        }
+      ]
+    }
+  ],
+  "errors": [],
+  "pass": true
+}

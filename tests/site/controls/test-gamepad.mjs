@@ -1,7 +1,8 @@
 /** Gamepad control in the playground and the kit's demo page, with navigator.getGamepads mocked. */
 import assert from 'node:assert/strict';
-import { readFile } from 'node:fs/promises';
+import { readFile,mkdir,writeFile } from 'node:fs/promises';
 import { chromium, webkit } from '@playwright/test';
+import {checkHopProgress,HOP_LIMITS,pollHop,readHopSample} from './hop-budget.mjs';
 import { acknowledgePrototypeNotice } from '../content/test-prototype-session.mjs';
 
 const base = (process.env.SITE_URL || 'http://127.0.0.1:8882').replace(/\/$/, '');
@@ -138,21 +139,34 @@ try {
   await pad('connect', 0);
   await until(() => !document.getElementById('gamepad-pill').hidden);
 
-  // ---- jump: a hop that leaves the ground and lands
-  await pad('button', 0, 'A', 1);
-  await until(() => !!window.__sim.state.jump);
-  await pad('button', 0, 'A', 0);
-  await until(() => window.__sim.state.robot.group.position.y > 0.12);   // wheels clear: the hip's rise plus the tuck
+  // ---- jump: input/start and real airborne geometry retain their15s response bounds.
+  // Landing follows actual clamped stage dt, with separate wall/stalled-render limits.
+  const hopGuard=await page.evaluateHandle('('+checkHopProgress.toString()+')'),hopSample=await page.evaluateHandle('('+readHopSample.toString()+')');
+  await sim(()=>{
+    window.__hopTrace={frames:0,rows:[],started:false,simulatedS:0,maxY:0};
+    window.__hopTraceOff=window.__sim.stage.onFrame((t,dt)=>{
+      const s=window.__sim,r=window.__hopTrace,now=performance.now();
+      if(!r.started&&s.state.jump){r.started=true;r.startedAt=now;}
+      if(!r.started)return;
+      r.frames++;r.simulatedS+=dt;r.lastFrameAt=now;r.maxY=Math.max(r.maxY,s.state.robot.group.position.y);
+      r.rows.push({t,dt,wall:now,jump:s.state.jump?{...s.state.jump}:null,y:s.state.robot.group.position.y,paused:s.demo.on&&!s.demo.playing,demoOn:s.demo.on,playing:s.demo.playing,replay:!!s.state.replay,visibility:document.visibilityState,stageError:document.body.dataset.stageError||null});
+      if(r.rows.length>512)r.rows.shift();
+    });
+  });
+  let hopError;
   try {
-    await until(() => !window.__sim.state.jump && window.__sim.state.robot.group.position.y === 0);
-  } catch (error) {
-    try {
-      console.error('Hop landing failure state:', JSON.stringify(await sim(() => ({
-        modelKey: window.__sim.state.modelKey, jump: window.__sim.state.jump,
-        y: window.__sim.state.robot.group.position.y, visibility: document.visibilityState,
-      }))));
-    } catch (diagnosticError) { console.error('Hop landing diagnostic unavailable:', diagnosticError.message); }
-    throw error;
+    await pad('button',0,'A',1);
+    await until(()=>!!window.__sim.state.jump);
+    await pad('button',0,'A',0);
+    await until(()=>window.__sim.state.robot.group.position.y>.12);
+    await page.waitForFunction(pollHop,{guard:hopGuard,readSample:hopSample,limits:HOP_LIMITS},{timeout:HOP_LIMITS.wallMs,polling:100});
+  }catch(error){hopError=error;throw error;}finally{
+    await Promise.all([hopGuard.dispose(),hopSample.dispose()]);
+    try{
+      const trace=await sim(()=>{window.__hopTraceOff();return{modelKey:window.__sim.state.modelKey,frameTrace:window.__hopTrace,jump:window.__sim.state.jump,y:window.__sim.state.robot.group.position.y};});
+      const out=process.env.TEST_OUTPUT||'/tmp/gyropup-gamepad';await mkdir(out,{recursive:true});await writeFile(`${out}/${engine.name()}-hop.json`,JSON.stringify({engine:engine.name(),browser:browser.version(),limits:HOP_LIMITS,error:hopError?String(hopError):null,...trace},null,2));
+      if(hopError)console.error('Hop landing failure state:',JSON.stringify(trace));
+    }catch(error){if(!hopError)throw error;console.error('Hop diagnostic unavailable:',error.message);}
   }
 
   // ---- Menu: the settings dialog, live diagram, actions suspended, rebind persisted, reset

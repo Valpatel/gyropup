@@ -9,6 +9,7 @@
 | A collection differs from an isolated module default, or sampled bounds suggest a changed nominal radius | [Trace effective overrides and actual bound geometry first](inbox/2026-11-10-collection-geometry-needs-effective-runtime-parameters.md) |
 | Removing a model factory breaks unrelated quotes, a fresh-output guard breaks simulation callers, or pack bounds move sensor effects | [Trace actual caller contracts and canonical sensor datums](inbox/2026-11-10-current-labels-need-the-current-body-model.md#model-api-changes-need-real-consumer-call-paths) |
 | A latest/current robot view retains a belly battery despite a front/rear-pack plan | [Trace actual current body geometry and preserve historical recordings](inbox/2026-11-10-current-labels-need-the-current-body-model.md) |
+| A screenshot times out after “fonts loaded” while interaction observations pass | [Time the original capture phases without clearing its failure](inbox/2026-11-10-screenshot-deadlines-need-timed-capture-phases.md) |
 | A playing→paused contextual click moves even though status height and scroll range stay constant | [Preserve existing playback text nodes during genuine pause](inbox/2026-11-10-playing-pause-must-preserve-text-nodes.md) |
 | Flip/Rotate miss after a capture-time pause refresh despite a valid initial hit | [Leave unchanged native controls untouched during playback refresh](inbox/2026-11-10-no-op-playback-renders-must-preserve-native-controls.md) |
 | A Reset button gets pointerdown/focus but leaves old model or section state | [Keep pointer-focused actions fixed until native click completes](inbox/2026-11-10-pointer-focus-must-not-move-panel-actions.md) |
@@ -216,3 +217,7 @@
 - A retry readiness wait throws on `document.body.dataset` during navigation: [wait through bodyless documents without suppressing page errors](inbox/2026-11-10-readiness-observers-must-wait-through-bodyless-documents.md).
 
 - A ready simulator produces a blank recovery screenshot during its opening fade: [observe canvas visibility and real draw counters before visual capture](inbox/2026-11-10-canvas-readiness-needs-observed-presentation.md).
+- A gamepad hop times out with wheels down but jump still recovering, or wall time diverges from clamped stage time: [observe the actual stage clock and keep separate completion/wall/stall caps](inbox/2026-11-10-hop-completion-needs-the-actual-stage-clock.md).
+
+- Context-wide page-error capture finds sessionStorage denied only on about:blank initial documents: [guard the fixture's intended HTTP security origin before reading storage](inbox/2026-11-10-browser-init-fixtures-need-an-http-origin.md).
+- Highlight-media source validation rejects a newly edited shared test helper: [preserve recorded fixture bytes and narrow the caller fix](inbox/2026-11-10-browser-init-fixtures-need-an-http-origin.md#historical-capture-fixtures-can-require-a-narrower-caller-fix).

@@ -1,0 +1,148 @@
+TAP version 13
+# Subtest: actual init fixture never reads opaque or wrong-origin storage
+ok 1 - actual init fixture never reads opaque or wrong-origin storage
+  ---
+  duration_ms: 2.602869
+  type: 'test'
+  ...
+# Subtest: actual matching-origin write has the exact notice key/version
+ok 2 - actual matching-origin write has the exact notice key/version
+  ---
+  duration_ms: 1.764928
+  type: 'test'
+  ...
+# Subtest: matching HTTP storage failure is not swallowed
+ok 3 - matching HTTP storage failure is not swallowed
+  ---
+  duration_ms: 0.853631
+  type: 'test'
+  ...
+# Subtest: existing callers default to SITE_URL and keep standalone HTTP compatibility
+ok 4 - existing callers default to SITE_URL and keep standalone HTTP compatibility
+  ---
+  duration_ms: 1.071259
+  type: 'test'
+  ...
+# Subtest: plain fallback binds actual selected recipe and rejects stale HTML
+ok 5 - plain fallback binds actual selected recipe and rejects stale HTML
+  ---
+  duration_ms: 260.916411
+  type: 'test'
+  ...
+# Subtest: two frozen versions differ in membership, instructions, source and storage identity
+ok 6 - two frozen versions differ in membership, instructions, source and storage identity
+  ---
+  duration_ms: 2.181279
+  type: 'test'
+  ...
+# Subtest: exact WIP, direct step and chapter routes round trip; unavailable choices reject
+ok 7 - exact WIP, direct step and chapter routes round trip; unavailable choices reject
+  ---
+  duration_ms: 1.222832
+  type: 'test'
+  ...
+# Subtest: broken storage and stale step IDs do not erase other meanings
+ok 8 - broken storage and stale step IDs do not erase other meanings
+  ---
+  duration_ms: 0.256701
+  type: 'test'
+  ...
+# Subtest: index rejects duplicate identities and external/escaping files
+ok 9 - index rejects duplicate identities and external/escaping files
+  ---
+  duration_ms: 0.297117
+  type: 'test'
+  ...
+# Subtest: actual generated guide passes shared reader with cumulative prior chapters; bad ownership rejects
+ok 10 - actual generated guide passes shared reader with cumulative prior chapters; bad ownership rejects
+  ---
+  duration_ms: 5.707169
+  type: 'test'
+  ...
+# Subtest: index cannot redirect one snapshot identity to another correctly hashed guide
+ok 11 - index cannot redirect one snapshot identity to another correctly hashed guide
+  ---
+  duration_ms: 0.182933
+  type: 'test'
+  ...
+# Subtest: assembly identity filters independently from snapshot revision labels
+ok 12 - assembly identity filters independently from snapshot revision labels
+  ---
+  duration_ms: 0.305392
+  type: 'test'
+  ...
+# Subtest: reference overview completion migrates away without erasing construction flags
+ok 13 - reference overview completion migrates away without erasing construction flags
+  ---
+  duration_ms: 0.434655
+  type: 'test'
+  ...
+# Subtest: explicit snapshot-only routes retain indexed assembly while bare routes and explicit overrides stay distinct
+ok 14 - explicit snapshot-only routes retain indexed assembly while bare routes and explicit overrides stay distinct
+  ---
+  duration_ms: 2.72056
+  type: 'test'
+  ...
+# Subtest: visual fingerprint is sensitive to actual recipe/geometry/runtime, independent of poster sealing
+ok 15 - visual fingerprint is sensitive to actual recipe/geometry/runtime, independent of poster sealing
+  ---
+  duration_ms: 7.967496
+  type: 'test'
+  ...
+# Subtest: prepared-project404 is partial and same-part/action retries recover after restore
+ok 16 - prepared-project404 is partial and same-part/action retries recover after restore
+  ---
+  duration_ms: 69.5428
+  type: 'test'
+  ...
+# Subtest: print handoff verifies exact manufacturing bytes and preserves original identity
+ok 17 - print handoff verifies exact manufacturing bytes and preserves original identity
+  ---
+  duration_ms: 21.4919
+  type: 'test'
+  ...
+# Subtest: moving latest original cannot masquerade as a bound historical file
+ok 18 - moving latest original cannot masquerade as a bound historical file
+  ---
+  duration_ms: 1.521953
+  type: 'test'
+  ...
+# Subtest: neutral posed scenes and bought or fabricated parts cannot enter the Print action
+ok 19 - neutral posed scenes and bought or fabricated parts cannot enter the Print action
+  ---
+  duration_ms: 0.333034
+  type: 'test'
+  ...
+# Subtest: file category and identity cannot substitute for a geometry match
+ok 20 - file category and identity cannot substitute for a geometry match
+  ---
+  duration_ms: 0.166332
+  type: 'test'
+  ...
+# Subtest: actual reviewed hip project verifies independently from the original
+ok 21 - actual reviewed hip project verifies independently from the original
+  ---
+  duration_ms: 3.017556
+  type: 'test'
+  ...
+# Subtest: project identity cannot turn a scene mesh or unrelated original into print preparation
+ok 22 - project identity cannot turn a scene mesh or unrelated original into print preparation
+  ---
+  duration_ms: 0.326953
+  type: 'test'
+  ...
+# Subtest: desktop links follow distinct official Studio handlers without opening an application
+ok 23 - desktop links follow distinct official Studio handlers without opening an application
+  ---
+  duration_ms: 0.196308
+  type: 'test'
+  ...
+1..23
+# tests 23
+# suites 0
+# pass 23
+# fail 0
+# cancelled 0
+# skipped 0
+# todo 0
+# duration_ms 412.447431

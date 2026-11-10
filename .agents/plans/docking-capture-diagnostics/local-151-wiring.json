@@ -1,0 +1,189 @@
+{
+  "qualification": "One local Chrome151 observational wiring probe, not CI141 reproduction. Preserved build1a291c66 site/test bytes equal immutable main67d5ea2f. Observer wraps original protocol methods, forwarding original arguments/return values unchanged; in-memory metadata collection, one frame counter callback and before/after evaluations add observer overhead. No stage stopping, font bypass, capture retry or product edit.",
+  "startedUTC": "2026-11-10T20:19:17.823Z",
+  "originalFailedRun": 42889052519,
+  "originalFailedJob": 130084998921,
+  "captureTimeoutMs": 15000,
+  "status": "passed",
+  "protocol": [
+    {
+      "id": 248,
+      "method": "Runtime.callFunctionOn",
+      "phase": "prepare-screenshot",
+      "sentMs": 10738.562,
+      "receivedMs": 10747.705,
+      "durationMs": 9.143,
+      "errorCode": null
+    },
+    {
+      "id": 249,
+      "method": "Runtime.callFunctionOn",
+      "phase": "font-ready",
+      "sentMs": 10747.845,
+      "receivedMs": 10748.68,
+      "durationMs": 0.835,
+      "errorCode": null
+    },
+    {
+      "id": 250,
+      "method": "Page.getLayoutMetrics",
+      "phase": "Page.getLayoutMetrics",
+      "sentMs": 10748.946,
+      "receivedMs": 10749.25,
+      "durationMs": 0.304,
+      "errorCode": null
+    },
+    {
+      "id": 251,
+      "method": "Page.captureScreenshot",
+      "phase": "Page.captureScreenshot",
+      "sentMs": 10749.315,
+      "receivedMs": 12686.77,
+      "durationMs": 1937.455,
+      "errorCode": null,
+      "base64Length": 295376
+    },
+    {
+      "id": 252,
+      "method": "Runtime.callFunctionOn",
+      "phase": "restore-screenshot",
+      "sentMs": 12687.028,
+      "receivedMs": 12689.905,
+      "durationMs": 2.877,
+      "errorCode": null
+    }
+  ],
+  "events": [
+    {
+      "type": "navigation",
+      "atMs": 250.363,
+      "path": "/designer/build.html"
+    },
+    {
+      "type": "navigation",
+      "atMs": 2660.051,
+      "path": "/designer/build.html"
+    },
+    {
+      "type": "navigation",
+      "atMs": 2662.794,
+      "path": "/designer/build.html"
+    }
+  ],
+  "version": {
+    "revision": "1a291c666f22f17f22b955707dd327f88299130f",
+    "assets": "a14dcd48ce545629b714",
+    "history": true,
+    "built": "2026-11-10T19:00:35.926Z"
+  },
+  "browser": "151.0.7922.71",
+  "initialFontReady": {
+    "startedMs": 2697.26,
+    "completedMs": 2704.329
+  },
+  "before": {
+    "label": "before original capture",
+    "startedMs": 10735.56,
+    "completedMs": 10737.54,
+    "pendingRequests": [],
+    "documentToken": "one-probe-1794341958076",
+    "visibility": "visible",
+    "readyState": "complete",
+    "fonts": {
+      "status": "loaded",
+      "faces": [
+        {
+          "family": "Inter",
+          "status": "loaded"
+        },
+        {
+          "family": "JetBrains Mono",
+          "status": "loaded"
+        }
+      ]
+    },
+    "frames": 21,
+    "rendererFrames": 24,
+    "contextLost": false,
+    "canvas": {
+      "width": 1300,
+      "height": 688
+    },
+    "section": {
+      "axis": "x",
+      "flipped": true,
+      "depth": 0.4
+    },
+    "player": {
+      "status": "idle",
+      "stepId": "body-spine",
+      "partId": "cheek_left",
+      "operationIndex": 0,
+      "elapsedMs": 0,
+      "progress": 0,
+      "speed": 1,
+      "loop": true
+    },
+    "scrollY": 109,
+    "stageError": null,
+    "contextEvents": []
+  },
+  "capture": {
+    "startedMs": 10737.565,
+    "completedMs": 12690.874,
+    "bytes": 221532,
+    "sha256": "d383aff0efa16e141b81f289caa092474a70d11d2df2dd9f6601e8082e744458",
+    "status": "passed",
+    "durationMs": 1953.3089999999993
+  },
+  "after": {
+    "label": "after original capture",
+    "startedMs": 12691.025,
+    "completedMs": 12692.704,
+    "pendingRequests": [],
+    "documentToken": "one-probe-1794341958076",
+    "visibility": "visible",
+    "readyState": "complete",
+    "fonts": {
+      "status": "loaded",
+      "faces": [
+        {
+          "family": "Inter",
+          "status": "loaded"
+        },
+        {
+          "family": "JetBrains Mono",
+          "status": "loaded"
+        }
+      ]
+    },
+    "frames": 26,
+    "rendererFrames": 29,
+    "contextLost": false,
+    "canvas": {
+      "width": 1300,
+      "height": 688
+    },
+    "section": {
+      "axis": "x",
+      "flipped": true,
+      "depth": 0.4
+    },
+    "player": {
+      "status": "idle",
+      "stepId": "body-spine",
+      "partId": "cheek_left",
+      "operationIndex": 0,
+      "elapsedMs": 0,
+      "progress": 0,
+      "speed": 1,
+      "loop": true
+    },
+    "scrollY": 109,
+    "stageError": null,
+    "contextEvents": []
+  },
+  "browserClosed": true,
+  "listenerClosed": true,
+  "totalDurationMs": 13095.619
+}

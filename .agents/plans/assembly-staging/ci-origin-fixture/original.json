@@ -1,0 +1,20 @@
+{
+  "source": "073693f9f738ccc7cfb2b4dec8c4432ba7f885fa",
+  "artifact_zip_sha256": "2d30334358976b8e251582f15730518ccb819e723e30d3a1a034e86ee3ca921e",
+  "artifact_members": 10,
+  "artifact_crc_pass": true,
+  "raw_failed_report_sha256": "fe5d70f0e02dcf7dddcad26e00b13964c3c2ea09f5b94b0d2bd1a9c37d052c77",
+  "normalization": "Only local preview origin replaced with <preview-origin>; opaque about:blank URLs/error ownership unchanged.",
+  "actual_errors": 9,
+  "all_error_documents": "about:blank",
+  "unsupported_development_requests": [],
+  "cause": "Context-wide error observer exposes the init fixture writing sessionStorage on opaque documents.",
+  "limits": "Observed original failure retained; no browser errors are filtered.",
+  "id": 130078277725,
+  "run_id": 42887111943,
+  "html_url": "https://github.com/Valpatel/gyropup/actions/runs/42887111943/job/130078277725",
+  "head_sha": "073693f9f738ccc7cfb2b4dec8c4432ba7f885fa",
+  "conclusion": "failure",
+  "started_at": "2026-11-10T19:41:13Z",
+  "completed_at": "2026-11-10T19:45:49Z"
+}

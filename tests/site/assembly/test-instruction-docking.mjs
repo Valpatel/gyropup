@@ -4,17 +4,21 @@ import {once} from 'node:events';
 import {mkdir,writeFile,readFile} from 'node:fs/promises';
 import {createHash} from 'node:crypto';
 import path from 'node:path';
+import {createRequire} from 'node:module';
 import {chromium,webkit} from '@playwright/test';
 import {createSiteServer} from '../../../tools/site/serve-site.mjs';
+import {captureScope,requireFreshCaptureRuntime,observeCaptureProtocol,observeScreenshot,readCaptureDiagnostic,watchCapturePage} from './capture-diagnostics.mjs';
 const engine=process.env.PLAYWRIGHT_BROWSER==='webkit'?webkit:chromium;
-const out=process.env.TEST_OUTPUT||'/tmp/gyropup-instruction-docking-'+engine.name();
+const scope=captureScope(process.env.DOCKING_CASE);
+const out=process.env.TEST_OUTPUT||'/tmp/gyropup-instruction-docking-'+engine.name()+(scope==='all'?'':'-fresh-capture');
 await mkdir(out,{recursive:true});
 const server=createSiteServer(path.resolve(import.meta.dirname,'../../../dist'));
 server.listen(0,'127.0.0.1');await once(server,'listening');
 const base='http://127.0.0.1:'+server.address().port,observations=[],errors=[];
-const sources=Object.fromEntries(await Promise.all(['tests/site/assembly/test-instruction-docking.mjs','software/site/designer/assembly/workspace.js','software/site/designer/assembly/guide.css','software/site/designer/build.html','software/site/designer/assembly/playback.js'].map(async file=>[file,createHash('sha256').update(await readFile(path.resolve(import.meta.dirname,'../../..',file))).digest('hex')])));
+const sources=Object.fromEntries(await Promise.all(['tests/site/assembly/test-instruction-docking.mjs','tests/site/assembly/capture-diagnostics.mjs','tests/site/assembly/test-capture-diagnostics.mjs','software/site/designer/assembly/workspace.js','software/site/designer/assembly/guide.css','software/site/designer/build.html','software/site/designer/assembly/playback.js'].map(async file=>[file,createHash('sha256').update(await readFile(path.resolve(import.meta.dirname,'../../..',file))).digest('hex')])));
 console.log('Owned docking listener',base);
-let browser,page;
+let browser,page,builtVersion,captureProtocol;
+const captureLifecycle=[];
 const settle=()=>page.evaluate(()=>new Promise(resolve=>requestAnimationFrame(()=>requestAnimationFrame(resolve))));
 async function clickState(selector,attribute,value){if(await page.locator(selector).getAttribute(attribute)!==String(value))await page.locator(selector).click();}
 async function inspect(label){
@@ -86,7 +90,10 @@ async function phoneFooterCases(){
   if(viewport.width===844){await mobilePane('tools');await page.getByLabel('Section plane',{exact:true}).selectOption('z');await page.locator('[data-guide-section]').fill('0.4');await trustedTap('[data-guide-cut-flip]','844 actual touch Flip after closing hip details');assert.deepEqual(await page.evaluate(()=>window.__buildGuide.active.viewer.getSectionState()),{axis:'z',flipped:true,depth:.4});await trustedTap('[data-guide-cut-rotate]','844 actual touch Rotate');assert.deepEqual(await page.evaluate(()=>window.__buildGuide.active.viewer.getSectionState()),{axis:'x',flipped:true,depth:.4});const loop=await page.evaluate(()=>window.__buildGuide.active.player.getState().loop);await trustedTap('[data-guide-loop]','844 actual touch Loop');assert.equal(await page.evaluate(()=>window.__buildGuide.active.player.getState().loop),!loop);}
   observations.push({label:viewport.width+' long-label multi-action footer and keyboard navigation',syntheticLabelOnly:true,realPart:'L.hip_frame',body,footer});
  }
- await phone.close();
+ // Observe native-fullscreen ownership before the existing phone-context teardown;
+ // do not exit fullscreen, focus a page or change the compositor sequence.
+ captureLifecycle.push({phase:'before phone context close',atMs:performance.now(),state:await readCaptureDiagnostic(()=>page.evaluate(()=>({documentId:performance.timeOrigin,visibility:document.visibilityState,hasFocus:document.hasFocus(),fullscreen:Boolean(document.fullscreenElement),viewport:{width:innerWidth,height:innerHeight}})))});
+ await phone.close();captureLifecycle.push({phase:'phone context close completed',atMs:performance.now(),contexts:browser.contexts().length});
 }
 async function mouseControl(selector,label){
  const button=page.locator(selector);await button.scrollIntoViewIfNeeded();const before=await button.boundingBox();
@@ -96,11 +103,14 @@ async function mouseControl(selector,label){
 }
 async function playbackActivationCases(){
  const desktop=await browser.newContext({viewport:{width:1366,height:900},colorScheme:'dark',reducedMotion:'reduce'});await desktop.addInitScript(()=>sessionStorage.setItem('gyropup.prototype-notice','2026-10-29-v1'));page=await desktop.newPage();page.on('pageerror',e=>errors.push(e.message));
+ const capturePage=await watchCapturePage(page);captureLifecycle.push({phase:'playback context created',atMs:performance.now(),contexts:browser.contexts().length});
  await page.goto(base+'/designer/build.html?assembly=robot#assembly',{waitUntil:'domcontentloaded'});await page.waitForFunction(()=>window.__buildGuide?.active?.guideAssembly==='robot'&&window.__buildGuide.active.viewer?.parts.length===171&&document.querySelector('#assembly').dataset.ready==='1',null,{timeout:60000});await page.evaluate(()=>document.fonts.ready);
  await clickState('[data-explorer-toggle]','aria-expanded',true);await clickState('[data-tools-toggle]','aria-expanded',true);await clickState('[data-instructions-toggle]','aria-expanded',true);await selectDesktopPart('L.hip_frame');await page.locator('[data-part-close]').click();
  assert.equal(await page.evaluate(()=>window.__buildGuide.active.player.getState().status),'idle');await page.getByLabel('Section plane',{exact:true}).selectOption('z');let result=await mouseControl('[data-guide-cut-flip]','stopped Robot Flip after closing hip details');assert.deepEqual(result.section,{axis:'z',flipped:true,depth:1});assert.equal(result.player.status,'idle');await page.locator('[data-guide-section]').fill('0.4');assert.deepEqual(await page.evaluate(()=>window.__buildGuide.active.viewer.getSectionState()),{axis:'z',flipped:true,depth:.4});
  result=await mouseControl('[data-guide-cut-rotate]','stopped Robot Rotate');assert.deepEqual(result.section,{axis:'x',flipped:true,depth:.4});let loop=result.player.loop;result=await mouseControl('[data-guide-loop]','stopped Robot Loop');assert.equal(result.player.loop,!loop);assert.equal(result.player.status,'idle');
- await page.screenshot({path:out+'/robot-stopped-control-activation.png',timeout:15000});await page.emulateMedia({reducedMotion:'no-preference'});await page.waitForFunction(()=>!matchMedia('(prefers-reduced-motion: reduce)').matches&&!document.querySelector('[data-guide-play]').disabled);
+ try{await observeScreenshot({capture:options=>page.screenshot(options),options:{path:out+'/robot-stopped-control-activation.png',timeout:15000},collect:()=>capturePage.snapshot(),protocol:captureProtocol,metadata:{label:'robot-stopped-control-activation',scope,engine:engine.name(),browser:browser.version(),version:builtVersion,sources,lifecycle:captureLifecycle,qualification:'Passive observation adds timing overhead; no render/focus/fullscreen/timeout changes or retry.'},writeReport:report=>writeFile(out+'/robot-stopped-capture-diagnostic.json',JSON.stringify(report,null,2)+'\n')});}finally{capturePage.dispose();}
+ if(scope==='fresh-capture'){await desktop.close();return;}
+ await page.emulateMedia({reducedMotion:'no-preference'});await page.waitForFunction(()=>!matchMedia('(prefers-reduced-motion: reduce)').matches&&!document.querySelector('[data-guide-play]').disabled);
  await page.locator('[data-guide-reset]').click();await page.locator('[data-guide-play]').click();await page.waitForFunction(()=>window.__buildGuide.active.player.getState().status==='playing'&&window.__buildGuide.active.player.getState().elapsedMs>100);await page.locator('[data-guide-play]').click();assert.equal(await page.evaluate(()=>window.__buildGuide.active.player.getState().status),'paused');
  await page.getByLabel('Section plane',{exact:true}).selectOption('z');await page.locator('[data-guide-section]').fill('0.4');result=await mouseControl('[data-guide-cut-flip]','already-paused Robot Flip');assert.deepEqual(result.section,{axis:'z',flipped:true,depth:.4});assert.equal(result.player.status,'paused');result=await mouseControl('[data-guide-cut-rotate]','already-paused Robot Rotate');assert.deepEqual(result.section,{axis:'x',flipped:true,depth:.4});loop=result.player.loop;result=await mouseControl('[data-guide-loop]','already-paused Robot Loop');assert.equal(result.player.loop,!loop);assert.equal(result.player.status,'paused');
  await page.getByLabel('Section plane',{exact:true}).selectOption('z');await mouseControl('[data-guide-cut-flip]','paused section preparation');await page.getByLabel('Assembly playback speed',{exact:true}).selectOption('2');let elapsed=await page.evaluate(()=>window.__buildGuide.active.player.getState().elapsedMs);await page.locator('[data-guide-play]').click();await page.waitForFunction(start=>window.__buildGuide.active.player.getState().status==='playing'&&window.__buildGuide.active.player.getState().elapsedMs>start+50,elapsed);assert.deepEqual(await page.evaluate(()=>window.__buildGuide.active.viewer.getSectionState()),{axis:'z',flipped:false,depth:.4});
@@ -114,11 +124,22 @@ async function fullscreen(mode){
  await page.waitForFunction(({mode,nativeRequired})=>{const l=document.querySelector('.assembly-layout');return mode==='denied'?l.dataset.fullscreen==='expanded':nativeRequired?document.fullscreenElement===l&&l.dataset.fullscreen==='native':['native','expanded'].includes(l.dataset.fullscreen);},{mode,nativeRequired:engine===chromium});
 }
 try{
+ const require=createRequire(import.meta.url);assert.equal(require('playwright-core/package.json').version,'1.56.1','Review pinned screenshot internals before upgrading the diagnostic observer');
+ const Connection=engine===chromium?require(path.join(path.dirname(require.resolve('playwright-core/package.json')),'lib/server/chromium/crConnection.js')).CRConnection:null;
+ captureProtocol=observeCaptureProtocol(Connection);
+ if(scope==='fresh-capture'){assert.equal(engine,chromium,'Fresh control uses Chromium only');assert.equal(process.env.PLAYWRIGHT_CHANNEL,'chromium','Fresh control cannot substitute native Chrome');}
  browser=await engine.launch(engine===chromium?{channel:process.env.PLAYWRIGHT_CHANNEL==='chromium'?undefined:'chrome',headless:true,args:['--no-sandbox','--use-gl=angle','--use-angle=swiftshader','--enable-unsafe-swiftshader']}:{headless:true});
+ if(scope==='fresh-capture'){
+  requireFreshCaptureRuntime({engine:engine.name(),channel:process.env.PLAYWRIGHT_CHANNEL,version:browser.version()});assert.equal(browser.contexts().length,0,'Fresh control starts before any browser context or WebGL scene');
+  builtVersion=await(await fetch(base+'/version.json')).json();captureLifecycle.push({phase:'fresh browser before Robot context',atMs:performance.now(),contexts:0});
+  await playbackActivationCases();assert.deepEqual(errors,[]);assert.equal(observations.length,3,'Exactly the original stopped Flip/Rotate/Loop observations');
+  await writeFile(out+'/report.json',JSON.stringify({status:'passed',scope,completeCampaign:false,qualification:'Fresh pinned-browser control only; not the full132-state campaign or a root-cause result.',engine:engine.name(),browser:browser.version(),version:builtVersion,sources,observations,errors},null,2)+'\n');console.log('PASS fresh-capture diagnostic only; full campaign not run by this separate control');
+ }else{
  const context=await browser.newContext({viewport:{width:1440,height:1000},hasTouch:true,isMobile:true,reducedMotion:'reduce'});
  await context.addInitScript(()=>sessionStorage.setItem('gyropup.prototype-notice','2026-10-29-v1'));
  page=await context.newPage();page.on('pageerror',e=>errors.push(e.message));
  const version=await(await context.request.get(base+'/version.json')).json();
+ builtVersion=version;
  await page.goto(base+'/designer/build.html?assembly=turret&step=step-02#assembly',{waitUntil:'domcontentloaded'});
  await page.waitForFunction(()=>window.__buildGuide?.active?.viewer?.parts.some(p=>p.mesh.visible)&&document.querySelector('#assembly').dataset.ready==='1');await page.evaluate(()=>document.fonts.ready);
  for(const mode of ['windowed','native','denied']){
@@ -153,5 +174,6 @@ try{
  const fine=await browser.newContext({viewport:{width:844,height:390},hasTouch:false,isMobile:false,reducedMotion:'reduce'});await fine.addInitScript(()=>sessionStorage.setItem('gyropup.prototype-notice','2026-10-29-v1'));page=await fine.newPage();page.on('pageerror',e=>errors.push(e.message));await page.goto(base+'/designer/build.html?assembly=turret&step=step-02#assembly',{waitUntil:'domcontentloaded'});await page.waitForFunction(()=>window.__buildGuide?.active?.viewer?.parts.some(p=>p.mesh.visible)&&document.querySelector('#assembly').dataset.ready==='1');await page.evaluate(()=>document.fonts.ready);await fullscreen('native');
  await clickState('[data-instructions-toggle]','aria-expanded',true);await clickState('[data-explorer-toggle]','aria-expanded',true);await clickState('[data-tools-toggle]','aria-expanded',true);const desktop=await inspect('fine-pointer 844x390 native desktop control');assert.equal(desktop.pointerCoarse,false);assert.equal(desktop.mobile,'false');assert.equal(Object.keys(desktop.panels).length,3);await page.screenshot({path:out+'/fine-pointer-844-desktop.png',timeout:15000});await fine.close();
  await phoneFooterCases();await playbackActivationCases();assert.deepEqual(errors,[]);await writeFile(out+'/report.json',JSON.stringify({status:'passed',engine:engine.name(),browser:browser.version(),version,sources,observations,errors},null,2)+'\n');console.log('PASS',engine.name(),observations.length,'actual docking/control states');
-}catch(error){await writeFile(out+'/failed.json',JSON.stringify({status:'failed',sources,observations,errors,error:error.stack},null,2));try{await page?.screenshot({path:out+'/failure.png',timeout:15000});}catch{}throw error;}
-finally{await browser?.close();server.closeAllConnections();await new Promise(resolve=>server.close(resolve));console.log('Owned docking listener closed');}
+ }
+}catch(error){await writeFile(out+'/failed.json',JSON.stringify({status:'failed',scope,completeCampaign:false,sources,observations,errors,error:error.stack},null,2));try{await page?.screenshot({path:out+'/failure.png',timeout:15000});}catch{}throw error;}
+finally{captureProtocol?.dispose();await browser?.close();server.closeAllConnections();await new Promise(resolve=>server.close(resolve));console.log('Owned docking listener closed');}

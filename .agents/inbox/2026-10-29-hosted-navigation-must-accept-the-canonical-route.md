@@ -23,3 +23,21 @@ Reproduce: `SITE_URL=https://gyropup.com npm run test:carrier-inspection`; repea
 The first corrected production run exposed the actual browser-specific telemetry types: Chrome reported `ping` and `xhr`; WebKit reported `beacon` and `xhr`. The classification uses those three observed types, not a generic request exemption. In that run C2 Chrome passed and all other executed navigation/model checks passed before the final telemetry assertion. The suites were rerun after recording this evidence.
 
 CI at `35bfea9` caught a local-fixture mismatch after the queryless static Back case: `GET http://127.0.0.1:8879/_cadagent/changes` returned 404. The cad-agent navigation component starts its localhost development poller without `?live=0`, while this harness serves a static build without that endpoint. For loopback test origins only, the context now sets the component's existing `window.__cadagentLive` idempotence marker before scripts start. This disables that unsupported development poller without changing the static Back href, intercepting model/HTTP requests, or exempting the 404. Production contexts remain untouched, and the report records whether this fixture setting was used.
+
+## 2026-11-10: Static guide contexts also opt out of the development poller
+
+PR280 e3401b0a CI run42877492001 job130045776406 completed all15 WebKit guide
+interaction groups, then failed its strict page-error array with
+`/_cadagent/changes due to access control checks`. The actual source uses fetch,
+not EventSource. Original error timing/page ownership was not retained and is not
+inferred from later screenshots. Preserve [the failed report and identities](../plans/assembly-staging/ci-frame-budget/investigation.json).
+
+A controlled actual-WebKit probe invoked the unchanged sharedliveReload against
+the actual static server. Without the existing marker, the4s controlled interval
+made three real GETs, each unsupported endpoint returned404. With the marker set
+before scripts, it made zero requests and no errors. This proves the fixture
+contract, not the original browser error's exact lifecycle timing. Apply the same
+loopback-only marker already used by carrier inspection to every guide context.
+Record the flag, request/error phase telemetry, assert zero unsupported requests,
+and retain the strict errors[] assertion for all pages. No imported kit/server
+change, production-origin opt-out or browser-error filter is introduced.

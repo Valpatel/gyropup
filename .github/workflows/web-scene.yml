@@ -219,6 +219,9 @@ jobs:
             commands: |
               npm run test:instruction-docking
               PLAYWRIGHT_BROWSER=webkit npm run test:instruction-docking
+          - suite: build-docking-fresh-capture
+            commands: |
+              DOCKING_CASE=fresh-capture npm run test:instruction-docking
           - suite: build-workspace-interactions
             commands: |
               WORKSPACE_CASE=interactions npm run test:build-workspace

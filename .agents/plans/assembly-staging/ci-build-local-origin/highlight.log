@@ -1,0 +1,120 @@
+
+> test:highlight-media
+> python3 tests/evidence/media/test-highlight-bindings.py && python3 tools/evidence/media/check-highlights.py
+
+...........
+----------------------------------------------------------------------
+Ran 11 tests in 0.031s
+
+OK
+fatal: path 'hardware/exports/leg/fea/hip-frame-e1-media/field-receipt.json' exists on disk, but not in 'e7b512870a39259a04a4930e2908af84001bc84e'
+fatal: path 'tools/evidence/media/capture-highlights.mjs' exists on disk, but not in 'e7b512870a39259a04a4930e2908af84001bc84e'
+{
+  "gyropup-highlights.mp4": {
+    "bytes": 1872096,
+    "frames": 660,
+    "seconds": 22,
+    "motion": {
+      "turret": {
+        "mean_channel_difference": 10.570333333333334,
+        "fraction_changed_over_12": 0.18397916666666667
+      },
+      "mechanism": {
+        "mean_channel_difference": 4.8432916666666666,
+        "fraction_changed_over_12": 0.09716666666666667
+      },
+      "battle": {
+        "mean_channel_difference": 6.137583333333334,
+        "fraction_changed_over_12": 0.09191666666666666
+      },
+      "leg": {
+        "mean_channel_difference": 20.42289583333333,
+        "fraction_changed_over_12": 0.24783333333333332
+      },
+      "e1": {
+        "mean_channel_difference": 32.0501875,
+        "fraction_changed_over_12": 0.4089583333333333
+      },
+      "character": {
+        "mean_channel_difference": 16.946145833333333,
+        "fraction_changed_over_12": 0.22827083333333334
+      }
+    }
+  },
+  "gyropup-highlights.webm": {
+    "bytes": 1488420,
+    "frames": 660,
+    "seconds": 22,
+    "motion": {
+      "turret": {
+        "mean_channel_difference": 10.575,
+        "fraction_changed_over_12": 0.18395833333333333
+      },
+      "mechanism": {
+        "mean_channel_difference": 4.838,
+        "fraction_changed_over_12": 0.0986875
+      },
+      "battle": {
+        "mean_channel_difference": 6.094416666666667,
+        "fraction_changed_over_12": 0.09097916666666667
+      },
+      "leg": {
+        "mean_channel_difference": 20.4008125,
+        "fraction_changed_over_12": 0.24704166666666666
+      },
+      "e1": {
+        "mean_channel_difference": 32.066541666666666,
+        "fraction_changed_over_12": 0.40970833333333334
+      },
+      "character": {
+        "mean_channel_difference": 16.991958333333333,
+        "fraction_changed_over_12": 0.2291875
+      }
+    }
+  },
+  "codec_mean_difference": {
+    "turret": 0.52475,
+    "mechanism": 0.45858333333333334,
+    "battle": 0.41458333333333336,
+    "leg": 0.4861666666666667,
+    "e1": 0.6589895833333334,
+    "character": 0.5621770833333334
+  },
+  "e1_original_frame_mean_difference": {
+    "gyropup-highlights.mp4": 0.1641358024691358,
+    "gyropup-highlights.webm": 0.1621604938271605
+  },
+  "e1_original_labels_mean_difference": {
+    "gyropup-highlights.mp4": 0.23514739229024945,
+    "gyropup-highlights.webm": 0.22491496598639457
+  },
+  "erased_e1_labels_rejected": true,
+  "poster_mean_difference": 0.15981481481481483,
+  "rejected_negative_controls": [
+    "source hash",
+    "source omission",
+    "self-consistent required mesh omission",
+    "self-consistent required renderer omission",
+    "self-consistent firing limits omission",
+    "served firing limits",
+    "capture location contract",
+    "captured artifact revision",
+    "wrong encoding source revision",
+    "wrong capture source revision with matching served metadata",
+    "capture recipe",
+    "served simulator",
+    "stage instrumentation",
+    "frame count",
+    "wrong turret name with unchanged part count",
+    "historical load baseline",
+    "leg report drift on disk",
+    "static animation label",
+    "media bytes",
+    "frozen turret",
+    "frozen mechanism",
+    "frozen battle",
+    "frozen leg",
+    "frozen e1",
+    "frozen character"
+  ]
+}

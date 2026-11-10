@@ -1,0 +1,26 @@
+{
+  "schema": "gyropup.browser-composition-seal/1",
+  "date": "2026-11-10",
+  "tested_code_commit": "22df19170c966c62184355aab4f9d90dc6e2776c",
+  "files": {
+    "COMPOSITION.md": "d5666340c785b7d9b1b60066351320ebe43e40d09ddcc178cf744e07926b639e",
+    "README.md": "72c0f2c08e479dd41a66f1b9f3bd7737c75c6c4020d92e93f3a6c1db596b78a7",
+    "accepted-results.json": "d91a743a2529a311f5c760b5689f2c7721759995e8eaf85d3b03989e6290c39a",
+    "checkpoint.json": "11407bab6c8d29e30a4ee152dedb18902364a8d50bc94817082abe78096ff6d5",
+    "composition.json": "68f82beff128ae46a5b5bb6eb8c9c971a924bd728483be6f10d370152bd52e97",
+    "gamepad-hop.json": "0c6314326ccbdf859df55a817f414fd311f2f4936153100f40d8d41f2a0580f4",
+    "guide-webkit-composed.json": "55dfbf0dc918e60468942d8d61a56c327714b3f7bd3c3cc7e77fb6dc851102b7",
+    "guide-webkit-failed.json": "923515f14d07a4c03661fcfb4c8830f5680fa7dd0c4dd02b8b2c1a9efb388c32",
+    "guide-webkit-passed.json": "9669bdc3cd213287b625272dc3c8bb8da69345bf0f815eb824ed41d13fa1f9ff",
+    "hop-frame-starvation.json": "0993f3a56312dd5ed9044865fc669b15b895b21808dcf41a0c2c1b44dcccf97d",
+    "hop-gated-accepted.json": "dc1f6ff493405a3d26821f719051c13957efc46070f6c3845fc60da14757b8b9",
+    "hop-stopped-rejected.json": "9a45a04c7dfd02efe592521c292b7cb80646816a030c9e5a835883f89410f69a",
+    "investigation.json": "b158ab897134aed80b12fcbf11084d50c9625952df24c418e83d3006ffa45ec3",
+    "rejected-observers/README.md": "a5bdacb999f975cd2aa17bd541d68d6bf6fe26f1fbccc649c24d4fac0eb2268e",
+    "rejected-observers/async-guard-combined.json": "3e7bfe5f2ebd2404a55967fd536cfd92b805cdf7a173b78c54ae5988e3c35b59",
+    "rejected-observers/async-guard-frozen.json": "7b783b248e76d91f9f90b93ebf0f787a6404cb6e923094b6bd3e4389de0f1b51",
+    "rejected-observers/async-guard-full-gamepad.json": "8bc166cfdc8ceb71768cb1b0f2c9c2e4f61efc502f42912b0b59e3c7092f644d",
+    "rejected-observers/wrong-context-handles.json": "bb0702d6ec98415ece0d9cda79f1b0edb23d3226476e8bd7690dbf0e9ff99603",
+    "static-poller-control.json": "250dd4150f377d1da0c6b34ada1f425ead87eaf1642ba931fb8e9ab46410e286"
+  }
+}

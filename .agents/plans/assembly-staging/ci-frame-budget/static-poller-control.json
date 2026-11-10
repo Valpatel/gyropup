@@ -1,0 +1,35 @@
+{
+  "engine": "ExistingWebKit2215",
+  "scope": "Actual sharedliveReload on actualstaticserver; explicitmarker controls unsupporteddevelopmentpoller, no errors filtered.",
+  "rows": [
+    {
+      "marked": false,
+      "requests": [
+        {
+          "method": "GET",
+          "path": "/_cadagent/changes"
+        },
+        {
+          "method": "GET",
+          "path": "/_cadagent/changes"
+        },
+        {
+          "method": "GET",
+          "path": "/_cadagent/changes"
+        }
+      ],
+      "statuses": [
+        404,
+        404,
+        404
+      ],
+      "errors": []
+    },
+    {
+      "marked": true,
+      "requests": [],
+      "statuses": [],
+      "errors": []
+    }
+  ]
+}
