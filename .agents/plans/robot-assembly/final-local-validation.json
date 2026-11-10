@@ -11,15 +11,15 @@
   "all_other_geometry_matches": "pending",
   "tests": {
     "command": "python3 -B -m unittest discover -s tests/site/assembly -p 'test_robot*.py'",
-    "passed": 21,
-    "seconds": 2.432
+    "passed": 24,
+    "seconds": 7.128
   },
   "site_build": {
     "command": "npm run build",
     "exit": 0,
     "pages": 150,
     "markdown_pages": 357,
-    "tested_working_tree_base": "a8390d92c960",
+    "tested_working_tree_base": "2af7cdfc12cc",
     "complete_document_and_shared_theme_contracts": true
   },
   "privacy": {
@@ -38,5 +38,18 @@
     "No physical, fit, strength, slice or manufacturing release",
     "The original dense arithmetic timeout remains TIME_LIMIT; final equivalent pure check completed55.09s",
     "No second native collection or CAD geometry change"
-  ]
+  ],
+  "prepared_project": {
+    "record": ".agents/plans/robot-assembly/hip-prepared-project.json",
+    "project_sha256": "82398d2679176eedd9420da8938336210a9ed6e9d4feb284390590d9a60310cd",
+    "single_pure_generation": true,
+    "generation_exit": 0,
+    "timeout_seconds": 30,
+    "writer_and_packer": "existing cadagent.manufacturing.mesh3mf and plates",
+    "generic_layout_only": true,
+    "actual_printer_fit_verified": false,
+    "slice_verified": false,
+    "source_original_and_retained_3mf_unchanged": true,
+    "mutation_tests": "changed original/project; units, coordinates, triangle indices, build transform, NaN reject"
+  }
 }
