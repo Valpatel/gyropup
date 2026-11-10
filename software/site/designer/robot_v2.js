@@ -7,7 +7,12 @@
 import * as THREE from 'three';
 import { STLLoader } from 'three/addons/loaders/STLLoader.js';
 import { buildCurrentTurret } from './current_turret.js';
-import { BALL } from './turret3d.js';
+import { BALL, buildTurret } from './turret3d.js';
+import { fiveBar } from './robot_kinematics.js';
+import { buildRobotSensors } from './robot_sensors.js';
+import { buildCurrentRobot } from './current_robot.js';
+import { composeRobotPresentations } from './robot_presentations.js';
+import { CURRENT_ROBOT_SOURCE } from './robot_current_source.js';
 import { createDataReader, isRecord, validateSTLBytes, validateGeometry } from './kit/portal-data.js';
 
 const M = 0.001;
@@ -27,30 +32,17 @@ function mirrored(geo) {
   return g;
 }
 
-// the five-bar in the leg's plane (mm, x forward, z up): motors at (+-D/2, 0), upper links l1, lower links l2
-function fiveBar(D, l1, l2) {
-  const A = [D / 2, 0], B = [-D / 2, 0];
-  const ik = (x, z) => {
-    const out = [];
-    for (const [P, side] of [[A, 1], [B, -1]]) {
-      const vx = x - P[0], vz = z - P[1], r = Math.hypot(vx, vz);
-      if (r > l1 + l2 || r < Math.abs(l1 - l2)) return null;
-      const a = (l1 * l1 - l2 * l2 + r * r) / (2 * r), h = Math.sqrt(Math.max(0, l1 * l1 - a * a));
-      const mx = P[0] + (a * vx) / r, mz = P[1] + (a * vz) / r;
-      const c1 = [mx - (h * vz) / r, mz + (h * vx) / r], c2 = [mx + (h * vz) / r, mz - (h * vx) / r];
-      const C = (c1[0] - c2[0]) * side > 0 ? c1 : c2;
-      let ang = Math.atan2(C[1] - P[1], C[0] - P[0]);
-      if (side < 0 && ang > 0) ang -= 2 * Math.PI;                    // the rear link's angles run continuously
-      out.push({ ang, C });
-    }
-    return out;
-  };
-  return { A, B, ik };
-}
-
-export async function buildRobotV2(root, { eyes, color = 0xf5b82e } = {}) {
+async function buildRigRobotV2(root, { eyes, color = 0xf5b82e, recordedOnly=false, signal } = {}) {
+  const geometryResources=new Set(),materialResources=new Set(),lifetime=new AbortController();
+  let disposed=false,turret;
+  const cancel=()=>lifetime.abort(signal?.reason);signal?.addEventListener('abort',cancel,{once:true});if(signal?.aborted)cancel();
+  function dispose(){
+    if(disposed)return;disposed=true;lifetime.abort();signal?.removeEventListener('abort',cancel);turret?.dispose?.();
+    for(const geometry of geometryResources)geometry.dispose();for(const material of materialResources)material.dispose();geometryResources.clear();materialResources.clear();
+  }
+  try{
   const base0 = `${root}exports/sim/v2/rig/`;
-  const reader=createDataReader(fetch),part=p=>isRecord(p)&&typeof p.file==='string'&&p.file.length>0&&typeof p.name==='string'&&p.name.length>0;
+  const reader=createDataReader((url,options)=>fetch(url,{...options,signal:AbortSignal.any([lifetime.signal,options.signal])})),part=p=>isRecord(p)&&typeof p.file==='string'&&p.file.length>0&&typeof p.name==='string'&&p.name.length>0;
   const positive=n=>Number.isFinite(n)&&n>0,vector=(v,n=3)=>Array.isArray(v)&&v.length===n&&v.every(Number.isFinite);
   const validFivebar=f=>isRecord(f)&&['D_mm','l1_mm','l2_mm'].every(k=>positive(f[k]))&&Number.isFinite(f.y_off_mm)
     &&isRecord(f.ref)&&['phi1','phi2','af','aw'].every(k=>Number.isFinite(f.ref[k]))
@@ -78,7 +70,8 @@ export async function buildRobotV2(root, { eyes, color = 0xf5b82e } = {}) {
   function loadGeometry(file){
     if(geo[file])return Promise.resolve(geo[file]);
     if(!loading.has(file))loading.set(file,reader.bytes(base0+file,{label:'Robot part '+file}).then(bytes=>{
-      validateSTLBytes(bytes);const g=validateGeometry(loader.parse(bytes));
+      if(disposed)throw new Error('Recorded robot disposed during loading');
+      validateSTLBytes(bytes);const g=loader.parse(bytes);geometryResources.add(g);validateGeometry(g);
       g.applyMatrix4(TO_PAGE);g.computeVertexNormals();geo[file]=g;return g;
     }).catch(error=>{loading.delete(file);throw new Error(`Robot mesh ${file}: ${error.message}`);}));
     return loading.get(file);
@@ -93,11 +86,12 @@ export async function buildRobotV2(root, { eyes, color = 0xf5b82e } = {}) {
       matCache.set(k, new THREE.MeshPhysicalMaterial({ color: c, roughness: 0.45, metalness: /#(c9|9a|8f)/i.test(c) ? 0.5 : 0.05, clearcoat: 0.15,
         transparent: opacity < 1, opacity, depthWrite: opacity >= 1, side: THREE.FrontSide }));
     }
-    return matCache.get(k);
+    const material=matCache.get(k);materialResources.add(material);return material;
   };
   const mesh = (p, mirror = false) => {
     if (!geo[p.file]) return null;
-    const m = new THREE.Mesh(mirror ? mirrored(geo[p.file]) : geo[p.file], mat(p.color, p.opacity ?? 1));
+    const geometry=mirror?mirrored(geo[p.file]):geo[p.file];geometryResources.add(geometry);
+    const m = new THREE.Mesh(geometry, mat(p.color, p.opacity ?? 1));
     m.castShadow = (p.opacity ?? 1) >= 1;
     m.receiveShadow = true;
     m.name = p.name;
@@ -132,7 +126,7 @@ export async function buildRobotV2(root, { eyes, color = 0xf5b82e } = {}) {
   // versioned, joint-local attachments. New CAD exports already own them in upper.
   const legacyAdapters=base.children.filter(m=>/^adapter_[fr]_[lr]$/.test(m.name));
   const legHardware={current:[],recorded:legacyAdapters,source:base0+'manifest.json',manifest:null};
-  if(legacyAdapters.length){
+  if(legacyAdapters.length&&!recordedOnly){
     const source=base0+'../leg-attachments/manifest.json';
     const attachments=await reader.json(source,{label:'Upper-link attachments',validate:a=>isRecord(a)&&a.schema_version===1&&a.units==='mm'
       &&Array.isArray(a.parts)&&a.parts.every(part)&&complete(a.parts,attachmentNames)});
@@ -143,7 +137,7 @@ export async function buildRobotV2(root, { eyes, color = 0xf5b82e } = {}) {
       leg[owner].add(object);legHardware.current.push({name:object.name,entry,mesh:object});
     }
     legHardware.source=source;legHardware.manifest=attachments;
-  }else{
+  }else if(!recordedOnly){
     for(const [side,leg] of Object.entries(legs))for(const [end,owner] of [['f','upperF'],['r','upperR']])for(const object of leg[owner].children){
       if(!/^(output_adapter|output_screw_\d+)$/.test(object.name))continue;
       const entry=man.links.upper.find(p=>p.name===object.name);object.name+='_'+end+'_'+side;
@@ -155,7 +149,7 @@ export async function buildRobotV2(root, { eyes, color = 0xf5b82e } = {}) {
     legacyAdapters.forEach(m=>m.visible=mode==='recorded');
     legHardware.current.forEach(p=>p.mesh.visible=mode==='current');
   }
-  setLegPresentation('current');
+  setLegPresentation(recordedOnly?'recorded':'current');
   // joint angles -> link rotations: the leg joints turn about the robot's -y (page -x), the wheel about +y (page +x)
   function setLeg(side, mf, kf, mr, kr, w) {
     const L = legs[side];
@@ -179,7 +173,16 @@ export async function buildRobotV2(root, { eyes, color = 0xf5b82e } = {}) {
   // Current live presentation and recorded physics share the body, but retain
   // their own turret geometry. A recorded ball trajectory belongs to its original
   // muzzle; never move it onto a newer assembly and call that new physics.
-  const turret = await buildCurrentTurret(root, { color });
+  turret = recordedOnly ? buildTurret(color,{geometry:false}) : await buildCurrentTurret(root, { color });
+  if(recordedOnly){
+    turret.setExplode=()=>{}; // no current submechanism offsets enter an archive
+    turret.setSnapshot=mode=>{if(mode!=='recorded')throw new Error('Archived rig cannot select a current turret');};
+    turret.registerRecorded=snapshot=>{
+      turret.tilt.position.copy(snapshot.tilt);turret.muzzle.position.copy(snapshot.muzzle);turret.laserOrigin.position.copy(snapshot.laser);
+      turret.flashMesh.position.copy(snapshot.muzzle).add(new THREE.Vector3(0,0,.006));turret.muzzle.userData.launchSpeed=snapshot.launchSpeed;
+    };
+    Object.defineProperties(turret,{presentation:{get:()=> 'recorded'},launchSpeed:{get:()=>turret.muzzle.userData.launchSpeed}});
+  }else for(const part of turret.model.parts){geometryResources.add(part.mesh.geometry);materialResources.add(part.mesh.material);}
   const T=man.turret,panP=at(T.pan_mm),tiltP=at(T.tilt_mm);
   turret.group.position.copy(panP);base.add(turret.group);
   let recordedReady=false,recordedLoading=null,presentationRequest=0;
@@ -188,6 +191,7 @@ export async function buildRobotV2(root, { eyes, color = 0xf5b82e } = {}) {
     if(!recordedLoading)recordedLoading=(async()=>{
       const definitions=[...man.body.filter(p=>p.name.startsWith('turret_')),...(T.pan??[]),...(T.tilt??[])];
       await Promise.all(definitions.map(p=>loadGeometry(p.file)));
+      if(disposed)throw new Error('Recorded robot disposed during loading');
       const fixed=new THREE.Group(),pan=new THREE.Group(),tilt=new THREE.Group();
       fixed.position.copy(panP).negate();
       for(const p of man.body)if(p.name.startsWith('turret_')){const m=mesh(p);if(m)fixed.add(m);}
@@ -202,57 +206,7 @@ export async function buildRobotV2(root, { eyes, color = 0xf5b82e } = {}) {
     await recordedLoading;
   }
 
-  // the eyes on the front face (the DualEye board) and the headlights on the side walls, like ears. No two faces in
-  // one plane: the bezel straddles the shell's face (1.5 mm in, 1.5 mm out), the screens stand 1 mm proud of the bezel,
-  // and each lens is a 3 mm plate half sunk in its pod, so its glowing face is 1.5 mm in front of the pod's
-  const em = at(man.mounts.eyes);
-  const head = new THREE.Object3D();head.position.copy(em);base.add(head);
-  const bezel = new THREE.Mesh(new THREE.BoxGeometry(0.062, 0.03, 0.003), new THREE.MeshPhysicalMaterial({ color: 0x0b0e12, roughness: 0.3, clearcoat: 1 }));
-  bezel.position.copy(em);
-  base.add(bezel);
-  for (const [s, tex] of [[-1, eyes?.left?.texture], [1, eyes?.right?.texture]]) {
-    const screen = new THREE.Mesh(new THREE.CircleGeometry(0.0095, 40), new THREE.MeshBasicMaterial({ map: tex ?? null, color: tex ? 0xffffff : 0x55e9ff }));
-    screen.position.copy(em).add(new THREE.Vector3(s * 0.0155, 0, 0.0025));
-    base.add(screen);
-  }
-  const lights = [];
-  const lensGeo = (() => {
-    const w = 0.044, r = 0.006, sh = new THREE.Shape();             // the SSC1's rounded-square lens, 44 mm
-    sh.moveTo(-w / 2 + r, -w / 2);
-    sh.lineTo(w / 2 - r, -w / 2); sh.quadraticCurveTo(w / 2, -w / 2, w / 2, -w / 2 + r);
-    sh.lineTo(w / 2, w / 2 - r); sh.quadraticCurveTo(w / 2, w / 2, w / 2 - r, w / 2);
-    sh.lineTo(-w / 2 + r, w / 2); sh.quadraticCurveTo(-w / 2, w / 2, -w / 2, w / 2 - r);
-    sh.lineTo(-w / 2, -w / 2 + r); sh.quadraticCurveTo(-w / 2, -w / 2, -w / 2 + r, -w / 2);
-    const g = new THREE.ExtrudeGeometry(sh, { depth: 0.003, bevelEnabled: false, curveSegments: 4 });
-    g.translate(0, 0, -0.0015);
-    return g;
-  })();
-  for (const p of man.mounts.headlights) {
-    const pod = new THREE.Group();
-    const lens = new THREE.Mesh(lensGeo, new THREE.MeshStandardMaterial({ color: 0xffffff, emissive: 0xfff4d6, emissiveIntensity: 1.6 }));
-    const spot = new THREE.SpotLight(0xfff1d8, 70, 12, 0.42, 0.45, 1.6);
-    spot.userData.full = 70;
-    spot.position.z = 0.002;
-    const aimAt = new THREE.Object3D();
-    aimAt.position.set(0, -0.6, 3);
-    spot.target = aimAt;
-    pod.add(lens, spot, aimAt);
-    pod.position.copy(at(p));
-    base.add(pod);
-    lights.push({ spot, lens });
-  }
-  // the front depth camera's field of view (toggle with robot.fov.visible): a RealSense D435, 87 x 58 deg to 2 m
-  const fov = new THREE.Group();
-  fov.visible = false;
-  {
-    const r = 2, h = Math.tan((87 / 2) * Math.PI / 180) * r, v = Math.tan((58 / 2) * Math.PI / 180) * r;
-    const pts = [[0, 0, 0], [-h, -v, r], [h, -v, r], [h, v, r], [-h, v, r]].map((q) => new THREE.Vector3(...q));
-    const g = new THREE.BufferGeometry().setFromPoints([0, 1, 0, 2, 0, 3, 0, 4, 1, 2, 2, 3, 3, 4, 4, 1].map((i) => pts[i]));
-    const lines = new THREE.LineSegments(g, new THREE.LineBasicMaterial({ color: 0x00f0ff, transparent: true, opacity: 0.5 }));
-    lines.position.copy(at(man.mounts.camera_front));
-    fov.add(lines);
-  }
-  base.add(fov);
+  const {head,lights,fov}=buildRobotSensors(base,man.mounts,eyes);
 
   const wheelR = man.wheel_r_mm;
   const [hMin, hMax] = fv.h_range_mm;
@@ -304,6 +258,8 @@ export async function buildRobotV2(root, { eyes, color = 0xf5b82e } = {}) {
   }
   async function setPresentation(mode='current'){
     if(mode!=='current'&&mode!=='recorded')throw new Error(`Unknown robot presentation: ${mode}`);
+    if(disposed)throw new Error('Recorded robot is disposed');
+    if(recordedOnly&&mode!=='recorded')throw new Error('Archived rig requires complete recorded presentation');
     const request=++presentationRequest;setExplode(0);
     // Current takes effect synchronously for firing; archived downloads never
     // replace a newer user choice or discard the existing usable model.
@@ -312,11 +268,25 @@ export async function buildRobotV2(root, { eyes, color = 0xf5b82e } = {}) {
   }
   group.traverse((o) => { if (o.isMesh && o.material?.transparent) o.castShadow = false; });
   setPose();
-  const currentHeightMM = T.pan_mm[2] + turret.model.manifest.pivots.tilt[2] + Math.max(...turret.model.parts.filter(p=>p.entry.group==='tilt').map(p=>p.entry.bbox[5]));
+  if(recordedOnly)await setPresentation('recorded');
+  const currentHeightMM = recordedOnly?man.height_mm:T.pan_mm[2] + turret.model.manifest.pivots.tilt[2] + Math.max(...turret.model.parts.filter(p=>p.entry.group==='tilt').map(p=>p.entry.bbox[5]));
+  // Sensor effects own their geometry/materials, but eyes textures are external.
+  for(const object of [head,...lights.map(p=>p.lens),fov])object.traverse(o=>{if(o.geometry)geometryResources.add(o.geometry);if(o.material)materialResources.add(o.material);});
+  for(const o of base.children)if(o.isMesh&&!man.body.some(p=>p.name===o.name)){geometryResources.add(o.geometry);materialResources.add(o.material);}
   const heightM = (wheelR + hMax + Math.max(man.height_mm,currentHeightMM)) * M;
-  return { group, base, head, setPose, setFromQpos, turret, lights, fov, legs, legHardware, setExplode, setPresentation,
+  return { group, base, head, setPose, setFromQpos, turret, lights, fov, legs, legHardware, setExplode, setPresentation, dispose,
            get presentation(){return {mode:turret.presentation,robotId:'gyropup-v2-rig',turretId:turret.presentation==='current'?'turret-box-v2':'v2-recorded-turret',
              bodySource:base0+'manifest.json',legSource:turret.presentation==='current'?legHardware.source:base0+'manifest.json',
              turretSource:turret.presentation==='current'?turret.model.source:base0+'manifest.json'};},
-           info: { heightM, hMin, hMax, wheelR, trackMM: man.track_mm, massKg: man.mass_kg, massBasis:'recorded v2 physics snapshot; current turret presentation has not rerun full-robot physics', currentTurretMassKg:turret.model.manifest.masses_g.turret_with_balls/1000, massSplit: man.mass_split_kg, deck: man.deck, legRef, v2: true } };
+           info: { heightM, hMin, hMax, wheelR, trackMM: man.track_mm, massKg: man.mass_kg, massBasis:recordedOnly?'Recorded v2 physics snapshot; geometry/qpos/mass remain archival.':'recorded v2 physics snapshot; current turret presentation has not rerun full-robot physics', currentTurretMassKg:recordedOnly?null:turret.model.manifest.masses_g.turret_with_balls/1000, massSplit: man.mass_split_kg, deck: man.deck, legRef, v2: true } };
+  }catch(error){dispose();throw error;}
+}
+
+// The null staging authority deliberately keeps the existing route unchanged
+// until reviewed artifact adoption. An explicit current binding never falls
+// back to the archive when loading or validation fails.
+export async function buildRobotV2(root,{presentationSource=CURRENT_ROBOT_SOURCE,...options}={}){
+  if(presentationSource===null)return buildRigRobotV2(root,options);
+  const current=await buildCurrentRobot(root,{...options,source:presentationSource});
+  return composeRobotPresentations(current,({signal})=>buildRigRobotV2(root,{...options,signal,recordedOnly:true}),{signal:options.signal});
 }
