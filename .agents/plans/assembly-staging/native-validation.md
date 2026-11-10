@@ -123,8 +123,15 @@ modes. Native modes require the reviewed core `preflight_only` / `on_progress`
 interface; the original011 core remains usable for pure binding. The distinct
 `assembly-playback-preflight` report must declare `paths_checked=false`.
 A successful frame preflight is not a clearance verdict. The new protocol's
-native fixture/product runs remain pending the final independently reviewed
-core pin and bounded command review.
+nine dedicated controls, including the small real three-box native fixture,
+passed against independently reviewed core
+`5c29c9e2abf2562baa72a05248f23de054b8241e`. The genuine233-instance frame-only
+attempt262 stopped at an input permission comparison before any core checkout
+or native query; retain its [failure checkpoint](native-262/README.md).
+The documented post-job freeze changes producer0600 modes to retained0640.
+A successor must separately bind a fresh reviewed source/packet, require that
+exact transition with unchanged member/byte seals, and preserve complete actual
+before/after inventories. No product frame or path pass is assumed.
 
 Every requested native guide gets an exclusive `progress/<snapshot>.jsonl` and
 `reports/<snapshot>.phase.json` before native work. JSONL envelopes retain the

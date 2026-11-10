@@ -1,5 +1,6 @@
 """Pure expected mechanical frames; no kernel, renderer or collector execution."""
 import importlib.util
+import copy
 from pathlib import Path
 import struct
 import subprocess
@@ -48,6 +49,23 @@ class PhysicalFrames(unittest.TestCase):
             self.assertEqual(set(data.inventory(root)),{'part'})
             (root/'alias').symlink_to(root/'dir',target_is_directory=True)
             with self.assertRaises(ValueError):data.inventory(root)
+
+    def test_retained_inventory_allows_only_exact_documented_freeze(self):
+        producer = {'part': {'sha256': '0'*64, 'bytes': 3, 'mode': 0o600}}
+        actual = {'part': {**producer['part'], 'mode': 0o640}}
+        self.assertEqual(data.verify_frozen_inventory(actual, producer, 'fixture')['members'], 1)
+        for field, value in [('sha256', '1'*64), ('bytes', 4),
+                             *[('mode', m) for m in (0o600, 0o660, 0o644, 0o740, 0o1640)]]:
+            with self.subTest(field=field, value=value):
+                wrong = copy.deepcopy(actual);wrong['part'][field] = value
+                with self.assertRaisesRegex(ValueError, 'content or frozen mode'):
+                    data.verify_frozen_inventory(wrong, producer, 'fixture')
+        for wrong in ({}, {**actual, 'extra': actual['part']}):
+            with self.assertRaisesRegex(ValueError, 'membership'):
+                data.verify_frozen_inventory(wrong, producer, 'fixture')
+        wrong = copy.deepcopy(producer);wrong['part']['mode'] = 0o644
+        with self.assertRaisesRegex(ValueError, 'unexpected producer mode'):
+            data.verify_frozen_inventory(actual, wrong, 'fixture')
 
     def test_source_names_must_not_collide_after_filename_normalization(self):
         self.assertEqual(data.mesh_files(['L.hip_frame'])['L.hip_frame'],'meshes/L__hip_frame.stl')

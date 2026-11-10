@@ -185,3 +185,5 @@
 - Browser installation consumes most of a CI job, or the presentation command list reaches its time bound: [keep provisioning outside executable test budgets and preserve command unions](inbox/2026-11-05-ci-classification-needs-phase-evidence.md#browser-provisioning-must-leave-time-for-executable-checks).
 
 - A playback observation loses its execution context while a later screenshot still looks coherent: [record document identity and navigation before changing runtime](inbox/2026-11-09-assembly-overlays-need-visible-bounds-and-hit-tests.md#2026-11-10-context-destruction-needs-document-identity-evidence).
+
+- A retained input fails full inventory comparison with unchanged bytes after a fleet job ends: [check the documented post-job permission freeze](inbox/2026-11-10-retained-artifact-modes-follow-the-fleet-freeze.md).

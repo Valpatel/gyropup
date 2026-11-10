@@ -1,0 +1,28 @@
+{
+  "schema": "gyropup.native-preflight-checkpoint/1",
+  "status": "preparation-failure-before-native-work",
+  "date": "2026-11-10",
+  "job": 262,
+  "input_job": 261,
+  "source": "9c7abd1388353ee2be68911d4fa49932ee1668b1",
+  "core_requested": "5c29c9e2abf2562baa72a05248f23de054b8241e",
+  "core_checkout_started": false,
+  "paths_requested": false,
+  "native_queries_started": false,
+  "adoption_approved": false,
+  "recipe_sha256": "712dc0ecf4f8344bde95c0110a4cb6726369701a88e9ddb98b32b713176d788c",
+  "plan_sha256": "d755cbc796b8112b67303b242b4cfad8e95d0206c4424aea1c4ea62cdfe8c4ac",
+  "command_sha256": "30f484a473933081b1c524e76660475d491fac9af9fb44f00ba5ca30273c69d9",
+  "operator_sha256": "335d57e97497264d392f1e613411272f8952bea0aa8351c882281ab8aa9f26f7",
+  "review": "https://github.com/Valpatel/gyropup/issues/276#issuecomment-6772767345",
+  "started": "https://github.com/Valpatel/gyropup/issues/276#issuecomment-6772810915",
+  "diagnosis": "https://github.com/Valpatel/gyropup/issues/276#issuecomment-6772985965",
+  "exit": 1,
+  "command_seconds": 14,
+  "total_seconds": 78,
+  "cause": "Producer-time0600 inventory compared directly to retained0640 inventory after documented epilog freeze. All728 input names, sizes and hashes unchanged.",
+  "seals": {
+    "final-result.json": "dd5e9a020d1ceb21e812d94aa43340f69300fc3c7df7c501ac709bf9e330ceb0",
+    "input-lifecycle-audit.json": "cc14cce8e976dbc0fc35f68c76d4b1ff22347c7947bdc2f8ea197c83a5e09e59"
+  }
+}
