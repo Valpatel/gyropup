@@ -1,0 +1,35 @@
+{
+  "schema": "gyropup.robot-native-binding-audit/1",
+  "status": "AUTHOR_AUDIT_PENDING_POSTACTION_REVIEW",
+  "source_commit": "e5b3089277448e5ae3d546fc36c549a62949856b",
+  "core_revision": "011a29b6fe1ddf4a6726fa01f59d710cbf1d6757",
+  "collection_sha256": "94ea324e5ee710a174dd67b5545c62ba5365e8ea29ebac2f317391c4c88f980b",
+  "inputs_sha256": "7b89317214fc43766e5967ee7d7465c02b9b1071617864a303c37d3b08de4026",
+  "binding_count": 2,
+  "unique_brep_files": 233,
+  "stored_files": 474,
+  "stored_bytes": 29558138,
+  "bindings": [
+    {
+      "snapshot": "robot-wip-e5b308927744",
+      "binding_sha256": "2e9419291f0fbba6c05a56a75989bf520bd3b792bafdf9cf8b4b72ec125487f1",
+      "guide_sha256": "ae015c98ee200ed281dff983ae2ec0ffcedc7d96d492ca85a1ddea86bea43bbd",
+      "instances": 171,
+      "original_brep_bytes_preserved": true,
+      "original_producer_platform_preserved": true,
+      "captured_mesh_bytes_checked": true
+    },
+    {
+      "snapshot": "combined-wip-e5b308927744",
+      "binding_sha256": "ccce5798a6cd220a8ba9935468f34cd619a2db26b4d386ccc1b34c28fcf3590c",
+      "guide_sha256": "044a5a4ca3c2f3e238cbfdf6dba3412a095223ae76e98505ef8d698ba9d4516a",
+      "instances": 233,
+      "original_brep_bytes_preserved": true,
+      "original_producer_platform_preserved": true,
+      "captured_mesh_bytes_checked": true
+    }
+  ],
+  "native_validation_requested": false,
+  "reports_absent": true,
+  "limits": "Pure original-byte capture and identity only; no CAD readback/frame query, trajectory/collision query, continuous clearance, support, physical fit or manufacturing qualification."
+}

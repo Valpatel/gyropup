@@ -1,0 +1,14 @@
+{
+  "date": "2026-11-10",
+  "scope": "Historical bounded checks of fixed footer/reserved inspector before playback-node corrections. Original version and source hashes remain in each report; these are not relabeled as final composition validation.",
+  "original_sha256": {
+    "chromium-119-docking.json": "f112388210a3231b77b7373189f6c7a01dca76099714993f1efb2d5909a995bc",
+    "chromium-559-guide-all.json": "193466425986eb4922e85732ad7fe93b45a367375e38d723d7eac2cf158aa207",
+    "chromium-559-loading.json": "1409d81a0dd2c60e754fd37f44911733243a27997cabc9f862c617d2933093b3",
+    "chromium-559-interactions.json": "24eda84e77be3131faf98ecc595bed894df2b4fcf21c61a63d2c019c7b1ee698",
+    "webkit-119-docking.json": "c68b9a320a00b262ad53589ee4d3bf4beb27e614cc3ca6283f6cd11b2dd9c1cf",
+    "webkit-559-guide-all.json": "6ff04f20d2373fcb36de77acc696a98471b928f6ea54518fdae11cafb8d25a79",
+    "webkit-559-loading.json": "1a4824df50e1fb14c5b30860df67f1b54edc3f23d578544b3b9150941e42363d",
+    "webkit-559-interactions.json": "b775100bf3d40fcc13a8c87156e418f28f6c5bfb5b3d97a6181f3d2fb9da2692"
+  }
+}

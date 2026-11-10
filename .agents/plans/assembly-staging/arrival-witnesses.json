@@ -1,0 +1,4606 @@
+{
+  "date": "2026-11-10",
+  "schema": "gyropup.arrival-witness-screen/1",
+  "source_commit": "540056ba4e59b197859236cb693463e10c9c8901",
+  "baseline_guide_commit": "33c4464b710341dc45b0ba43fb1006ddbab13f95",
+  "baseline_guide_sha256": "845f8b442b5e16ca52ad59fd6794b9211a92847f41feac5401b56e240f9f4dd6",
+  "model_sha256": "985d903d774eba4caa94b96a45425c6ab5c86d477c3ffa7fd7ec83c1650654c0",
+  "screen_sha256": "70987b6d88249651838e6afc76a16d347b218090b6f74d37eb03751339efd3d7",
+  "procedure": "128 deterministic moving-triangle centroids; 21 equally spaced translation poses; axial ray parity against fixed triangles; 0.05 mm interior margin; odd/edge rays unknown.",
+  "scope": "Robot and Combined share these exact body/leg meshes and operations. Turret bench retains its separately authored sequence; mounted turret remains a placement illustration, not a rigid-insertion qualification.",
+  "limits": "Interior witnesses demonstrate sampled surface penetration. Zero witnesses do not prove collision-free paths. No full-mesh continuous collision, BREP, contact, support, tool access, compliance, press fit, wiring, strength or dynamic simulation. The circlip/grouped source envelopes are not faithful individual installation bodies.",
+  "recipe_sha256": "29e588aeca21c663a085b2abe130d89238413b2b8c80a299468e8873bfc73231",
+  "candidate_scope": "All installed-obstacle broad-phase candidates for changed motor/hip, output-screw/upper-link and wheel-fastener arrivals; all other arrivals remain unqualified.",
+  "mesh_topology": {
+    "L.motor_front": {
+      "mesh_sha256": "f9cb266260840ccd91909e8d11aa515b36e009794666b5fb6d41fb71cdc094cb",
+      "triangles": 332,
+      "nonmanifold_edges": 0,
+      "orientation_errors": 0,
+      "degenerate_triangles": 0,
+      "closed_oriented_edges": true
+    },
+    "L.hip_frame": {
+      "mesh_sha256": "adb8677e0019433add3d72da790868dad86d4ef62aa998c3aebf967f8ecc2e9f",
+      "triangles": 13248,
+      "nonmanifold_edges": 0,
+      "orientation_errors": 0,
+      "degenerate_triangles": 0,
+      "closed_oriented_edges": true
+    },
+    "R.motor_front": {
+      "mesh_sha256": "2da11562329d41b3859410435f2dfab8d08f6d4d8848fb029cc6c5e4bfd16fd7",
+      "triangles": 332,
+      "nonmanifold_edges": 0,
+      "orientation_errors": 0,
+      "degenerate_triangles": 0,
+      "closed_oriented_edges": true
+    },
+    "R.hip_frame": {
+      "mesh_sha256": "67dcab28c26d65fcbc6deaa854658147e6ceff18ba9db34a93a4f40b723aae52",
+      "triangles": 13248,
+      "nonmanifold_edges": 0,
+      "orientation_errors": 0,
+      "degenerate_triangles": 0,
+      "closed_oriented_edges": true
+    },
+    "cheek_left": {
+      "mesh_sha256": "44ae1db5cdfe3cdad535d45c0d9bf04c9563caa92c45777bdb2a07ba26106ecd",
+      "triangles": 5528,
+      "nonmanifold_edges": 0,
+      "orientation_errors": 0,
+      "degenerate_triangles": 0,
+      "closed_oriented_edges": true
+    },
+    "cheek_right": {
+      "mesh_sha256": "bcbf60762830b42d8097e683d74f90e60a5ba3a6f478382d6800320298f1ce8b",
+      "triangles": 5528,
+      "nonmanifold_edges": 0,
+      "orientation_errors": 0,
+      "degenerate_triangles": 0,
+      "closed_oriented_edges": true
+    },
+    "L.knee_bearing_front_in": {
+      "mesh_sha256": "3c6bb3eb8d78e635c3f3a80be1dcf0f0c5f356bee1d906360016989db5b9dd20",
+      "triangles": 336,
+      "nonmanifold_edges": 0,
+      "orientation_errors": 0,
+      "degenerate_triangles": 0,
+      "closed_oriented_edges": true
+    },
+    "L.front_link": {
+      "mesh_sha256": "ba45c6c10108a8d4adcc22b2bb719719c6976b5d6e86ad6d3be14a7b3296d8af",
+      "triangles": 2146,
+      "nonmanifold_edges": 0,
+      "orientation_errors": 0,
+      "degenerate_triangles": 0,
+      "closed_oriented_edges": true
+    },
+    "R.knee_bearing_front_in": {
+      "mesh_sha256": "b4d206ba08b86250233d459eeb50f9fed9206415721ed4aca0cbf6481f63a64a",
+      "triangles": 336,
+      "nonmanifold_edges": 0,
+      "orientation_errors": 0,
+      "degenerate_triangles": 0,
+      "closed_oriented_edges": true
+    },
+    "R.front_link": {
+      "mesh_sha256": "6dd7977037abbc1394b4982cb9c94dffac780a3d6a1d3633892b95546dacfeca",
+      "triangles": 2146,
+      "nonmanifold_edges": 0,
+      "orientation_errors": 0,
+      "degenerate_triangles": 0,
+      "closed_oriented_edges": true
+    },
+    "L.upper_link_front": {
+      "mesh_sha256": "916b12208f2fc935e234345761c08d9ca243c0ebb13ccbbd95c0c4d0505d4208",
+      "triangles": 5028,
+      "nonmanifold_edges": 0,
+      "orientation_errors": 0,
+      "degenerate_triangles": 0,
+      "closed_oriented_edges": true
+    },
+    "R.upper_link_front": {
+      "mesh_sha256": "577e0e783a7766119f8aca1eada793ca4915d52b9498750c46529237a506d4d1",
+      "triangles": 5028,
+      "nonmanifold_edges": 0,
+      "orientation_errors": 0,
+      "degenerate_triangles": 0,
+      "closed_oriented_edges": true
+    },
+    "L.screws_outputs": {
+      "mesh_sha256": "cceceb30827ef8c1db511540368cfd03f80a56c842cbcb9808f01e8811f6a588",
+      "triangles": 5976,
+      "nonmanifold_edges": 0,
+      "orientation_errors": 0,
+      "degenerate_triangles": 0,
+      "closed_oriented_edges": true
+    },
+    "R.screws_outputs": {
+      "mesh_sha256": "bd4f56df96ed866800aa830a9d4d978fe8940a4cbe910a6b8201d390f7007caf",
+      "triangles": 5976,
+      "nonmanifold_edges": 0,
+      "orientation_errors": 0,
+      "degenerate_triangles": 0,
+      "closed_oriented_edges": true
+    },
+    "L.washers_wheel": {
+      "mesh_sha256": "1d16fd728c56a85986f9b1274a67e1ffba79f31ecd2e6dc31cdc2c9b37eb018b",
+      "triangles": 1344,
+      "nonmanifold_edges": 0,
+      "orientation_errors": 0,
+      "degenerate_triangles": 0,
+      "closed_oriented_edges": true
+    },
+    "L.wheel_hub": {
+      "mesh_sha256": "7ba20d8e561585a9f44b5a4f4adcdb5cdf209dd0b7cba98fca22ed5fad8e1c05",
+      "triangles": 332,
+      "nonmanifold_edges": 0,
+      "orientation_errors": 0,
+      "degenerate_triangles": 0,
+      "closed_oriented_edges": true
+    },
+    "R.washers_wheel": {
+      "mesh_sha256": "f7c0dc783819ba64469db2f62b8e38c78533f9c12cf2c6791788aa6cbd5c55b1",
+      "triangles": 1344,
+      "nonmanifold_edges": 0,
+      "orientation_errors": 0,
+      "degenerate_triangles": 0,
+      "closed_oriented_edges": true
+    },
+    "R.wheel_hub": {
+      "mesh_sha256": "96e4288e84ffe8a5d1599d258168107d835546410b1beb2bdcc98583e7bbf994",
+      "triangles": 332,
+      "nonmanifold_edges": 0,
+      "orientation_errors": 0,
+      "degenerate_triangles": 0,
+      "closed_oriented_edges": true
+    },
+    "L.apex_circlip": {
+      "mesh_sha256": "067552dfbff3ec5e384a4faec7517ddd31214414b9b666f19f7f881dfa3ece0d",
+      "triangles": 336,
+      "nonmanifold_edges": 0,
+      "orientation_errors": 0,
+      "degenerate_triangles": 0,
+      "closed_oriented_edges": true
+    },
+    "L.wheel_link": {
+      "mesh_sha256": "4848998ab00fa52cc5a55bb7a0614ac4023a4109aa40e6f8feb15d0a646aedf2",
+      "triangles": 3302,
+      "nonmanifold_edges": 0,
+      "orientation_errors": 0,
+      "degenerate_triangles": 0,
+      "closed_oriented_edges": true
+    },
+    "R.apex_circlip": {
+      "mesh_sha256": "490fdb60e949cdf6d004ea2f4d4e88485bf89ec4d87f405c88b3c12e128e097a",
+      "triangles": 336,
+      "nonmanifold_edges": 0,
+      "orientation_errors": 0,
+      "degenerate_triangles": 0,
+      "closed_oriented_edges": true
+    },
+    "R.wheel_link": {
+      "mesh_sha256": "f809311155e1dc4d860fec81bb388fecad9ad9eac5b61dcc77d6d6b8f71f2e47",
+      "triangles": 3302,
+      "nonmanifold_edges": 0,
+      "orientation_errors": 0,
+      "degenerate_triangles": 0,
+      "closed_oriented_edges": true
+    },
+    "L.motor_rear": {
+      "mesh_sha256": "70552dab96f023e222bfc911db2dd392150ae3d7b350ecd1b1a5ae3a931a0846",
+      "triangles": 332,
+      "nonmanifold_edges": 0,
+      "orientation_errors": 0,
+      "degenerate_triangles": 0,
+      "closed_oriented_edges": true
+    },
+    "L.bearing_61812_front": {
+      "mesh_sha256": "a2537430cd319c9c0669243d84c792c0f73fcf5ab0ef01f10f5af448fdc88b9a",
+      "triangles": 336,
+      "nonmanifold_edges": 0,
+      "orientation_errors": 0,
+      "degenerate_triangles": 0,
+      "closed_oriented_edges": true
+    },
+    "L.bearing_61812_rear": {
+      "mesh_sha256": "50946e32bc052c053d776d11c87ae5a6a1229b6b334b9e7d684c6a1223fa9842",
+      "triangles": 336,
+      "nonmanifold_edges": 0,
+      "orientation_errors": 0,
+      "degenerate_triangles": 0,
+      "closed_oriented_edges": true
+    },
+    "L.screws_lugs": {
+      "mesh_sha256": "36578f419554725f9f9d811ef04cf1c5b2f74bdb944699d7e9e780681f89ba3b",
+      "triangles": 6640,
+      "nonmanifold_edges": 0,
+      "orientation_errors": 0,
+      "degenerate_triangles": 0,
+      "closed_oriented_edges": true
+    },
+    "L.output_adapter_front": {
+      "mesh_sha256": "9a9c50a9fd3baa59b0d584723f5f9be35e07f049a82bdcc0a3eb28650094f0ca",
+      "triangles": 5930,
+      "nonmanifold_edges": 0,
+      "orientation_errors": 0,
+      "degenerate_triangles": 0,
+      "closed_oriented_edges": true
+    },
+    "L.output_adapter_rear": {
+      "mesh_sha256": "4b6d4dbb158703de53358f489389dbfebbe798b088b464d67b421f88ee0f8062",
+      "triangles": 5930,
+      "nonmanifold_edges": 0,
+      "orientation_errors": 0,
+      "degenerate_triangles": 0,
+      "closed_oriented_edges": true
+    },
+    "L.upper_link_rear": {
+      "mesh_sha256": "4be8e6aad9d44eca988456887be130a9d09d5204685f2ec8962895e3744a423d",
+      "triangles": 5028,
+      "nonmanifold_edges": 0,
+      "orientation_errors": 0,
+      "degenerate_triangles": 0,
+      "closed_oriented_edges": true
+    },
+    "L.apex_spacer": {
+      "mesh_sha256": "77ab9e8fa7f3a6cc83b76bc7581f71f0751b765595bdde569d0ae36f643a8b88",
+      "triangles": 336,
+      "nonmanifold_edges": 0,
+      "orientation_errors": 0,
+      "degenerate_triangles": 0,
+      "closed_oriented_edges": true
+    },
+    "L.apex_61812": {
+      "mesh_sha256": "0b4e6de90116640a50ee896a63e0ccea1d9e191ed9e1017f423dfa95876884cc",
+      "triangles": 672,
+      "nonmanifold_edges": 0,
+      "orientation_errors": 0,
+      "degenerate_triangles": 0,
+      "closed_oriented_edges": true
+    },
+    "L.screws_wheel": {
+      "mesh_sha256": "9014811634a8f023c068edee941cf44cb5ae97c45f8e1c6fd0fdba25ff786488",
+      "triangles": 1328,
+      "nonmanifold_edges": 0,
+      "orientation_errors": 0,
+      "degenerate_triangles": 0,
+      "closed_oriented_edges": true
+    },
+    "R.motor_rear": {
+      "mesh_sha256": "e40c7c0c7c4befc52eb520928757886bbc26da74966c3c91477470c656916363",
+      "triangles": 332,
+      "nonmanifold_edges": 0,
+      "orientation_errors": 0,
+      "degenerate_triangles": 0,
+      "closed_oriented_edges": true
+    },
+    "R.bearing_61812_front": {
+      "mesh_sha256": "7536d5a9ba997d64dbf51bc6d84977e4e35b504d80b4a2686203a6dfd1936b24",
+      "triangles": 336,
+      "nonmanifold_edges": 0,
+      "orientation_errors": 0,
+      "degenerate_triangles": 0,
+      "closed_oriented_edges": true
+    },
+    "R.bearing_61812_rear": {
+      "mesh_sha256": "d157738bf722e33abd590815a48fa3df9024969366603e8dff3df9af1fee53b4",
+      "triangles": 336,
+      "nonmanifold_edges": 0,
+      "orientation_errors": 0,
+      "degenerate_triangles": 0,
+      "closed_oriented_edges": true
+    },
+    "R.screws_lugs": {
+      "mesh_sha256": "09fa23212205a051142471e7f0d3f7927e84f3b4e423aabda97b3232720faad8",
+      "triangles": 6640,
+      "nonmanifold_edges": 0,
+      "orientation_errors": 0,
+      "degenerate_triangles": 0,
+      "closed_oriented_edges": true
+    },
+    "R.output_adapter_front": {
+      "mesh_sha256": "895e7da4a2db32008207f4673dd53a068862011e6f435c0f0b69f9f828578e42",
+      "triangles": 5930,
+      "nonmanifold_edges": 0,
+      "orientation_errors": 0,
+      "degenerate_triangles": 0,
+      "closed_oriented_edges": true
+    },
+    "R.output_adapter_rear": {
+      "mesh_sha256": "e74d3ad81339531245bf6fed840782a029ed31e6f51b2624a42829fa1fac75d3",
+      "triangles": 5930,
+      "nonmanifold_edges": 0,
+      "orientation_errors": 0,
+      "degenerate_triangles": 0,
+      "closed_oriented_edges": true
+    },
+    "R.upper_link_rear": {
+      "mesh_sha256": "2959aedd302245d030d232eb42832cd422e61655841dc28c1f4208a06b83615a",
+      "triangles": 5028,
+      "nonmanifold_edges": 0,
+      "orientation_errors": 0,
+      "degenerate_triangles": 0,
+      "closed_oriented_edges": true
+    },
+    "R.apex_spacer": {
+      "mesh_sha256": "b5ccb2686662e2c9d36d4cecc0287aad3299576fa4e2c4959ed7a1d2c4c37c64",
+      "triangles": 336,
+      "nonmanifold_edges": 0,
+      "orientation_errors": 0,
+      "degenerate_triangles": 0,
+      "closed_oriented_edges": true
+    },
+    "R.apex_61812": {
+      "mesh_sha256": "e0a2cc817803022bbd39a6f29be6c59c64389ef6f6023ea788cb55adcac495be",
+      "triangles": 672,
+      "nonmanifold_edges": 0,
+      "orientation_errors": 0,
+      "degenerate_triangles": 0,
+      "closed_oriented_edges": true
+    },
+    "R.screws_wheel": {
+      "mesh_sha256": "cbd3d315e44b0302bfd8a35deb3efd0bc58002adbdd2e4ead109913f62e7a9ee",
+      "triangles": 1328,
+      "nonmanifold_edges": 0,
+      "orientation_errors": 0,
+      "degenerate_triangles": 0,
+      "closed_oriented_edges": true
+    }
+  },
+  "candidate_pairs": [
+    {
+      "moving": "L.motor_front",
+      "fixed": "cheek_left",
+      "offset_mm": [
+        0,
+        60,
+        0
+      ],
+      "mesh_sha256": {
+        "L.motor_front": "f9cb266260840ccd91909e8d11aa515b36e009794666b5fb6d41fb71cdc094cb",
+        "cheek_left": "44ae1db5cdfe3cdad535d45c0d9bf04c9563caa92c45777bdb2a07ba26106ecd"
+      },
+      "surface_samples": 128,
+      "unknown_rays": 0,
+      "sampled_positions": 21,
+      "interior_margin_mm": 0.05,
+      "max_preterminal_witnesses": 0,
+      "terminal_witnesses": 0,
+      "first_witness": null
+    },
+    {
+      "moving": "L.motor_rear",
+      "fixed": "cheek_left",
+      "offset_mm": [
+        0,
+        60,
+        0
+      ],
+      "mesh_sha256": {
+        "L.motor_rear": "70552dab96f023e222bfc911db2dd392150ae3d7b350ecd1b1a5ae3a931a0846",
+        "cheek_left": "44ae1db5cdfe3cdad535d45c0d9bf04c9563caa92c45777bdb2a07ba26106ecd"
+      },
+      "surface_samples": 128,
+      "unknown_rays": 0,
+      "sampled_positions": 21,
+      "interior_margin_mm": 0.05,
+      "max_preterminal_witnesses": 0,
+      "terminal_witnesses": 0,
+      "first_witness": null
+    },
+    {
+      "moving": "L.hip_frame",
+      "fixed": "cheek_left",
+      "offset_mm": [
+        0,
+        60,
+        0
+      ],
+      "mesh_sha256": {
+        "L.hip_frame": "adb8677e0019433add3d72da790868dad86d4ef62aa998c3aebf967f8ecc2e9f",
+        "cheek_left": "44ae1db5cdfe3cdad535d45c0d9bf04c9563caa92c45777bdb2a07ba26106ecd"
+      },
+      "surface_samples": 128,
+      "unknown_rays": 0,
+      "sampled_positions": 21,
+      "interior_margin_mm": 0.05,
+      "max_preterminal_witnesses": 0,
+      "terminal_witnesses": 0,
+      "first_witness": null
+    },
+    {
+      "moving": "L.hip_frame",
+      "fixed": "L.motor_front",
+      "offset_mm": [
+        0,
+        60,
+        0
+      ],
+      "mesh_sha256": {
+        "L.hip_frame": "adb8677e0019433add3d72da790868dad86d4ef62aa998c3aebf967f8ecc2e9f",
+        "L.motor_front": "f9cb266260840ccd91909e8d11aa515b36e009794666b5fb6d41fb71cdc094cb"
+      },
+      "surface_samples": 128,
+      "unknown_rays": 0,
+      "sampled_positions": 21,
+      "interior_margin_mm": 0.05,
+      "max_preterminal_witnesses": 0,
+      "terminal_witnesses": 0,
+      "first_witness": null
+    },
+    {
+      "moving": "L.hip_frame",
+      "fixed": "L.motor_rear",
+      "offset_mm": [
+        0,
+        60,
+        0
+      ],
+      "mesh_sha256": {
+        "L.hip_frame": "adb8677e0019433add3d72da790868dad86d4ef62aa998c3aebf967f8ecc2e9f",
+        "L.motor_rear": "70552dab96f023e222bfc911db2dd392150ae3d7b350ecd1b1a5ae3a931a0846"
+      },
+      "surface_samples": 128,
+      "unknown_rays": 0,
+      "sampled_positions": 21,
+      "interior_margin_mm": 0.05,
+      "max_preterminal_witnesses": 0,
+      "terminal_witnesses": 0,
+      "first_witness": null
+    },
+    {
+      "moving": "L.screws_outputs",
+      "fixed": "L.motor_front",
+      "offset_mm": [
+        0,
+        60,
+        0
+      ],
+      "mesh_sha256": {
+        "L.screws_outputs": "cceceb30827ef8c1db511540368cfd03f80a56c842cbcb9808f01e8811f6a588",
+        "L.motor_front": "f9cb266260840ccd91909e8d11aa515b36e009794666b5fb6d41fb71cdc094cb"
+      },
+      "surface_samples": 128,
+      "unknown_rays": 0,
+      "sampled_positions": 21,
+      "interior_margin_mm": 0.05,
+      "max_preterminal_witnesses": 7,
+      "terminal_witnesses": 7,
+      "first_witness": {
+        "progress": 0.95,
+        "moving_triangle_index": 326,
+        "home_centroid_mm": [
+          72.0115483601888,
+          71.94979858398438,
+          -19.768829345703125
+        ],
+        "translated_centroid_mm": [
+          72.0115483601888,
+          74.94979858398438,
+          -19.768829345703125
+        ],
+        "fixed_interior_intervals_mm": [
+          [
+            22.2498,
+            77.949799
+          ]
+        ]
+      }
+    },
+    {
+      "moving": "L.screws_outputs",
+      "fixed": "L.motor_rear",
+      "offset_mm": [
+        0,
+        60,
+        0
+      ],
+      "mesh_sha256": {
+        "L.screws_outputs": "cceceb30827ef8c1db511540368cfd03f80a56c842cbcb9808f01e8811f6a588",
+        "L.motor_rear": "70552dab96f023e222bfc911db2dd392150ae3d7b350ecd1b1a5ae3a931a0846"
+      },
+      "surface_samples": 128,
+      "unknown_rays": 0,
+      "sampled_positions": 21,
+      "interior_margin_mm": 0.05,
+      "max_preterminal_witnesses": 7,
+      "terminal_witnesses": 7,
+      "first_witness": {
+        "progress": 0.95,
+        "moving_triangle_index": 3314,
+        "home_centroid_mm": [
+          -93.73055521647136,
+          71.94979858398438,
+          -1.9595505992571514
+        ],
+        "translated_centroid_mm": [
+          -93.73055521647136,
+          74.94979858398438,
+          -1.9595505992571514
+        ],
+        "fixed_interior_intervals_mm": [
+          [
+            22.2498,
+            77.949799
+          ]
+        ]
+      }
+    },
+    {
+      "moving": "L.screws_outputs",
+      "fixed": "L.hip_frame",
+      "offset_mm": [
+        0,
+        60,
+        0
+      ],
+      "mesh_sha256": {
+        "L.screws_outputs": "cceceb30827ef8c1db511540368cfd03f80a56c842cbcb9808f01e8811f6a588",
+        "L.hip_frame": "adb8677e0019433add3d72da790868dad86d4ef62aa998c3aebf967f8ecc2e9f"
+      },
+      "surface_samples": 128,
+      "unknown_rays": 0,
+      "sampled_positions": 21,
+      "interior_margin_mm": 0.05,
+      "max_preterminal_witnesses": 0,
+      "terminal_witnesses": 0,
+      "first_witness": null
+    },
+    {
+      "moving": "L.screws_outputs",
+      "fixed": "L.bearing_61812_front",
+      "offset_mm": [
+        0,
+        60,
+        0
+      ],
+      "mesh_sha256": {
+        "L.screws_outputs": "cceceb30827ef8c1db511540368cfd03f80a56c842cbcb9808f01e8811f6a588",
+        "L.bearing_61812_front": "a2537430cd319c9c0669243d84c792c0f73fcf5ab0ef01f10f5af448fdc88b9a"
+      },
+      "surface_samples": 128,
+      "unknown_rays": 0,
+      "sampled_positions": 21,
+      "interior_margin_mm": 0.05,
+      "max_preterminal_witnesses": 0,
+      "terminal_witnesses": 0,
+      "first_witness": null
+    },
+    {
+      "moving": "L.screws_outputs",
+      "fixed": "L.bearing_61812_rear",
+      "offset_mm": [
+        0,
+        60,
+        0
+      ],
+      "mesh_sha256": {
+        "L.screws_outputs": "cceceb30827ef8c1db511540368cfd03f80a56c842cbcb9808f01e8811f6a588",
+        "L.bearing_61812_rear": "50946e32bc052c053d776d11c87ae5a6a1229b6b334b9e7d684c6a1223fa9842"
+      },
+      "surface_samples": 128,
+      "unknown_rays": 0,
+      "sampled_positions": 21,
+      "interior_margin_mm": 0.05,
+      "max_preterminal_witnesses": 0,
+      "terminal_witnesses": 0,
+      "first_witness": null
+    },
+    {
+      "moving": "L.screws_outputs",
+      "fixed": "L.screws_lugs",
+      "offset_mm": [
+        0,
+        60,
+        0
+      ],
+      "mesh_sha256": {
+        "L.screws_outputs": "cceceb30827ef8c1db511540368cfd03f80a56c842cbcb9808f01e8811f6a588",
+        "L.screws_lugs": "36578f419554725f9f9d811ef04cf1c5b2f74bdb944699d7e9e780681f89ba3b"
+      },
+      "surface_samples": 128,
+      "unknown_rays": 0,
+      "sampled_positions": 21,
+      "interior_margin_mm": 0.05,
+      "max_preterminal_witnesses": 0,
+      "terminal_witnesses": 0,
+      "first_witness": null
+    },
+    {
+      "moving": "L.screws_outputs",
+      "fixed": "L.output_adapter_front",
+      "offset_mm": [
+        0,
+        60,
+        0
+      ],
+      "mesh_sha256": {
+        "L.screws_outputs": "cceceb30827ef8c1db511540368cfd03f80a56c842cbcb9808f01e8811f6a588",
+        "L.output_adapter_front": "9a9c50a9fd3baa59b0d584723f5f9be35e07f049a82bdcc0a3eb28650094f0ca"
+      },
+      "surface_samples": 128,
+      "unknown_rays": 0,
+      "sampled_positions": 21,
+      "interior_margin_mm": 0.05,
+      "max_preterminal_witnesses": 0,
+      "terminal_witnesses": 0,
+      "first_witness": null
+    },
+    {
+      "moving": "L.screws_outputs",
+      "fixed": "L.output_adapter_rear",
+      "offset_mm": [
+        0,
+        60,
+        0
+      ],
+      "mesh_sha256": {
+        "L.screws_outputs": "cceceb30827ef8c1db511540368cfd03f80a56c842cbcb9808f01e8811f6a588",
+        "L.output_adapter_rear": "4b6d4dbb158703de53358f489389dbfebbe798b088b464d67b421f88ee0f8062"
+      },
+      "surface_samples": 128,
+      "unknown_rays": 0,
+      "sampled_positions": 21,
+      "interior_margin_mm": 0.05,
+      "max_preterminal_witnesses": 0,
+      "terminal_witnesses": 0,
+      "first_witness": null
+    },
+    {
+      "moving": "L.upper_link_front",
+      "fixed": "L.hip_frame",
+      "offset_mm": [
+        0,
+        60,
+        0
+      ],
+      "mesh_sha256": {
+        "L.upper_link_front": "916b12208f2fc935e234345761c08d9ca243c0ebb13ccbbd95c0c4d0505d4208",
+        "L.hip_frame": "adb8677e0019433add3d72da790868dad86d4ef62aa998c3aebf967f8ecc2e9f"
+      },
+      "surface_samples": 128,
+      "unknown_rays": 0,
+      "sampled_positions": 21,
+      "interior_margin_mm": 0.05,
+      "max_preterminal_witnesses": 0,
+      "terminal_witnesses": 0,
+      "first_witness": null
+    },
+    {
+      "moving": "L.upper_link_front",
+      "fixed": "L.bearing_61812_front",
+      "offset_mm": [
+        0,
+        60,
+        0
+      ],
+      "mesh_sha256": {
+        "L.upper_link_front": "916b12208f2fc935e234345761c08d9ca243c0ebb13ccbbd95c0c4d0505d4208",
+        "L.bearing_61812_front": "a2537430cd319c9c0669243d84c792c0f73fcf5ab0ef01f10f5af448fdc88b9a"
+      },
+      "surface_samples": 128,
+      "unknown_rays": 0,
+      "sampled_positions": 21,
+      "interior_margin_mm": 0.05,
+      "max_preterminal_witnesses": 0,
+      "terminal_witnesses": 0,
+      "first_witness": null
+    },
+    {
+      "moving": "L.upper_link_front",
+      "fixed": "L.screws_lugs",
+      "offset_mm": [
+        0,
+        60,
+        0
+      ],
+      "mesh_sha256": {
+        "L.upper_link_front": "916b12208f2fc935e234345761c08d9ca243c0ebb13ccbbd95c0c4d0505d4208",
+        "L.screws_lugs": "36578f419554725f9f9d811ef04cf1c5b2f74bdb944699d7e9e780681f89ba3b"
+      },
+      "surface_samples": 128,
+      "unknown_rays": 0,
+      "sampled_positions": 21,
+      "interior_margin_mm": 0.05,
+      "max_preterminal_witnesses": 0,
+      "terminal_witnesses": 0,
+      "first_witness": null
+    },
+    {
+      "moving": "L.upper_link_front",
+      "fixed": "L.output_adapter_front",
+      "offset_mm": [
+        0,
+        60,
+        0
+      ],
+      "mesh_sha256": {
+        "L.upper_link_front": "916b12208f2fc935e234345761c08d9ca243c0ebb13ccbbd95c0c4d0505d4208",
+        "L.output_adapter_front": "9a9c50a9fd3baa59b0d584723f5f9be35e07f049a82bdcc0a3eb28650094f0ca"
+      },
+      "surface_samples": 128,
+      "unknown_rays": 0,
+      "sampled_positions": 21,
+      "interior_margin_mm": 0.05,
+      "max_preterminal_witnesses": 0,
+      "terminal_witnesses": 0,
+      "first_witness": null
+    },
+    {
+      "moving": "L.upper_link_front",
+      "fixed": "L.screws_outputs",
+      "offset_mm": [
+        0,
+        60,
+        0
+      ],
+      "mesh_sha256": {
+        "L.upper_link_front": "916b12208f2fc935e234345761c08d9ca243c0ebb13ccbbd95c0c4d0505d4208",
+        "L.screws_outputs": "cceceb30827ef8c1db511540368cfd03f80a56c842cbcb9808f01e8811f6a588"
+      },
+      "surface_samples": 128,
+      "unknown_rays": 0,
+      "sampled_positions": 21,
+      "interior_margin_mm": 0.05,
+      "max_preterminal_witnesses": 0,
+      "terminal_witnesses": 0,
+      "first_witness": null
+    },
+    {
+      "moving": "L.upper_link_rear",
+      "fixed": "L.hip_frame",
+      "offset_mm": [
+        0,
+        60,
+        0
+      ],
+      "mesh_sha256": {
+        "L.upper_link_rear": "4be8e6aad9d44eca988456887be130a9d09d5204685f2ec8962895e3744a423d",
+        "L.hip_frame": "adb8677e0019433add3d72da790868dad86d4ef62aa998c3aebf967f8ecc2e9f"
+      },
+      "surface_samples": 128,
+      "unknown_rays": 0,
+      "sampled_positions": 21,
+      "interior_margin_mm": 0.05,
+      "max_preterminal_witnesses": 0,
+      "terminal_witnesses": 0,
+      "first_witness": null
+    },
+    {
+      "moving": "L.upper_link_rear",
+      "fixed": "L.bearing_61812_rear",
+      "offset_mm": [
+        0,
+        60,
+        0
+      ],
+      "mesh_sha256": {
+        "L.upper_link_rear": "4be8e6aad9d44eca988456887be130a9d09d5204685f2ec8962895e3744a423d",
+        "L.bearing_61812_rear": "50946e32bc052c053d776d11c87ae5a6a1229b6b334b9e7d684c6a1223fa9842"
+      },
+      "surface_samples": 128,
+      "unknown_rays": 0,
+      "sampled_positions": 21,
+      "interior_margin_mm": 0.05,
+      "max_preterminal_witnesses": 0,
+      "terminal_witnesses": 0,
+      "first_witness": null
+    },
+    {
+      "moving": "L.upper_link_rear",
+      "fixed": "L.screws_lugs",
+      "offset_mm": [
+        0,
+        60,
+        0
+      ],
+      "mesh_sha256": {
+        "L.upper_link_rear": "4be8e6aad9d44eca988456887be130a9d09d5204685f2ec8962895e3744a423d",
+        "L.screws_lugs": "36578f419554725f9f9d811ef04cf1c5b2f74bdb944699d7e9e780681f89ba3b"
+      },
+      "surface_samples": 128,
+      "unknown_rays": 0,
+      "sampled_positions": 21,
+      "interior_margin_mm": 0.05,
+      "max_preterminal_witnesses": 0,
+      "terminal_witnesses": 0,
+      "first_witness": null
+    },
+    {
+      "moving": "L.upper_link_rear",
+      "fixed": "L.output_adapter_rear",
+      "offset_mm": [
+        0,
+        60,
+        0
+      ],
+      "mesh_sha256": {
+        "L.upper_link_rear": "4be8e6aad9d44eca988456887be130a9d09d5204685f2ec8962895e3744a423d",
+        "L.output_adapter_rear": "4b6d4dbb158703de53358f489389dbfebbe798b088b464d67b421f88ee0f8062"
+      },
+      "surface_samples": 128,
+      "unknown_rays": 0,
+      "sampled_positions": 21,
+      "interior_margin_mm": 0.05,
+      "max_preterminal_witnesses": 0,
+      "terminal_witnesses": 0,
+      "first_witness": null
+    },
+    {
+      "moving": "L.upper_link_rear",
+      "fixed": "L.screws_outputs",
+      "offset_mm": [
+        0,
+        60,
+        0
+      ],
+      "mesh_sha256": {
+        "L.upper_link_rear": "4be8e6aad9d44eca988456887be130a9d09d5204685f2ec8962895e3744a423d",
+        "L.screws_outputs": "cceceb30827ef8c1db511540368cfd03f80a56c842cbcb9808f01e8811f6a588"
+      },
+      "surface_samples": 128,
+      "unknown_rays": 0,
+      "sampled_positions": 21,
+      "interior_margin_mm": 0.05,
+      "max_preterminal_witnesses": 0,
+      "terminal_witnesses": 0,
+      "first_witness": null
+    },
+    {
+      "moving": "L.washers_wheel",
+      "fixed": "L.front_link",
+      "offset_mm": [
+        0,
+        -60,
+        0
+      ],
+      "mesh_sha256": {
+        "L.washers_wheel": "1d16fd728c56a85986f9b1274a67e1ffba79f31ecd2e6dc31cdc2c9b37eb018b",
+        "L.front_link": "ba45c6c10108a8d4adcc22b2bb719719c6976b5d6e86ad6d3be14a7b3296d8af"
+      },
+      "surface_samples": 128,
+      "unknown_rays": 0,
+      "sampled_positions": 21,
+      "interior_margin_mm": 0.05,
+      "max_preterminal_witnesses": 0,
+      "terminal_witnesses": 0,
+      "first_witness": null
+    },
+    {
+      "moving": "L.washers_wheel",
+      "fixed": "L.wheel_link",
+      "offset_mm": [
+        0,
+        -60,
+        0
+      ],
+      "mesh_sha256": {
+        "L.washers_wheel": "1d16fd728c56a85986f9b1274a67e1ffba79f31ecd2e6dc31cdc2c9b37eb018b",
+        "L.wheel_link": "4848998ab00fa52cc5a55bb7a0614ac4023a4109aa40e6f8feb15d0a646aedf2"
+      },
+      "surface_samples": 128,
+      "unknown_rays": 0,
+      "sampled_positions": 21,
+      "interior_margin_mm": 0.05,
+      "max_preterminal_witnesses": 0,
+      "terminal_witnesses": 0,
+      "first_witness": null
+    },
+    {
+      "moving": "L.washers_wheel",
+      "fixed": "L.apex_spacer",
+      "offset_mm": [
+        0,
+        -60,
+        0
+      ],
+      "mesh_sha256": {
+        "L.washers_wheel": "1d16fd728c56a85986f9b1274a67e1ffba79f31ecd2e6dc31cdc2c9b37eb018b",
+        "L.apex_spacer": "77ab9e8fa7f3a6cc83b76bc7581f71f0751b765595bdde569d0ae36f643a8b88"
+      },
+      "surface_samples": 128,
+      "unknown_rays": 0,
+      "sampled_positions": 21,
+      "interior_margin_mm": 0.05,
+      "max_preterminal_witnesses": 0,
+      "terminal_witnesses": 0,
+      "first_witness": null
+    },
+    {
+      "moving": "L.washers_wheel",
+      "fixed": "L.apex_61812",
+      "offset_mm": [
+        0,
+        -60,
+        0
+      ],
+      "mesh_sha256": {
+        "L.washers_wheel": "1d16fd728c56a85986f9b1274a67e1ffba79f31ecd2e6dc31cdc2c9b37eb018b",
+        "L.apex_61812": "0b4e6de90116640a50ee896a63e0ccea1d9e191ed9e1017f423dfa95876884cc"
+      },
+      "surface_samples": 128,
+      "unknown_rays": 0,
+      "sampled_positions": 21,
+      "interior_margin_mm": 0.05,
+      "max_preterminal_witnesses": 0,
+      "terminal_witnesses": 0,
+      "first_witness": null
+    },
+    {
+      "moving": "L.washers_wheel",
+      "fixed": "L.apex_circlip",
+      "offset_mm": [
+        0,
+        -60,
+        0
+      ],
+      "mesh_sha256": {
+        "L.washers_wheel": "1d16fd728c56a85986f9b1274a67e1ffba79f31ecd2e6dc31cdc2c9b37eb018b",
+        "L.apex_circlip": "067552dfbff3ec5e384a4faec7517ddd31214414b9b666f19f7f881dfa3ece0d"
+      },
+      "surface_samples": 128,
+      "unknown_rays": 0,
+      "sampled_positions": 21,
+      "interior_margin_mm": 0.05,
+      "max_preterminal_witnesses": 0,
+      "terminal_witnesses": 0,
+      "first_witness": null
+    },
+    {
+      "moving": "L.washers_wheel",
+      "fixed": "L.wheel_hub",
+      "offset_mm": [
+        0,
+        -60,
+        0
+      ],
+      "mesh_sha256": {
+        "L.washers_wheel": "1d16fd728c56a85986f9b1274a67e1ffba79f31ecd2e6dc31cdc2c9b37eb018b",
+        "L.wheel_hub": "7ba20d8e561585a9f44b5a4f4adcdb5cdf209dd0b7cba98fca22ed5fad8e1c05"
+      },
+      "surface_samples": 128,
+      "unknown_rays": 0,
+      "sampled_positions": 21,
+      "interior_margin_mm": 0.05,
+      "max_preterminal_witnesses": 0,
+      "terminal_witnesses": 0,
+      "first_witness": null
+    },
+    {
+      "moving": "L.screws_wheel",
+      "fixed": "L.front_link",
+      "offset_mm": [
+        0,
+        -60,
+        0
+      ],
+      "mesh_sha256": {
+        "L.screws_wheel": "9014811634a8f023c068edee941cf44cb5ae97c45f8e1c6fd0fdba25ff786488",
+        "L.front_link": "ba45c6c10108a8d4adcc22b2bb719719c6976b5d6e86ad6d3be14a7b3296d8af"
+      },
+      "surface_samples": 128,
+      "unknown_rays": 0,
+      "sampled_positions": 21,
+      "interior_margin_mm": 0.05,
+      "max_preterminal_witnesses": 0,
+      "terminal_witnesses": 0,
+      "first_witness": null
+    },
+    {
+      "moving": "L.screws_wheel",
+      "fixed": "L.wheel_link",
+      "offset_mm": [
+        0,
+        -60,
+        0
+      ],
+      "mesh_sha256": {
+        "L.screws_wheel": "9014811634a8f023c068edee941cf44cb5ae97c45f8e1c6fd0fdba25ff786488",
+        "L.wheel_link": "4848998ab00fa52cc5a55bb7a0614ac4023a4109aa40e6f8feb15d0a646aedf2"
+      },
+      "surface_samples": 128,
+      "unknown_rays": 0,
+      "sampled_positions": 21,
+      "interior_margin_mm": 0.05,
+      "max_preterminal_witnesses": 36,
+      "terminal_witnesses": 32,
+      "first_witness": {
+        "progress": 0.55,
+        "moving_triangle_index": 300,
+        "home_centroid_mm": [
+          10.26766268412272,
+          184.93980407714844,
+          -288.94945271809894
+        ],
+        "translated_centroid_mm": [
+          10.26766268412272,
+          157.93980407714844,
+          -288.94945271809894
+        ],
+        "fixed_interior_intervals_mm": [
+          [
+            156.539795,
+            177.349792
+          ]
+        ]
+      }
+    },
+    {
+      "moving": "L.screws_wheel",
+      "fixed": "L.apex_spacer",
+      "offset_mm": [
+        0,
+        -60,
+        0
+      ],
+      "mesh_sha256": {
+        "L.screws_wheel": "9014811634a8f023c068edee941cf44cb5ae97c45f8e1c6fd0fdba25ff786488",
+        "L.apex_spacer": "77ab9e8fa7f3a6cc83b76bc7581f71f0751b765595bdde569d0ae36f643a8b88"
+      },
+      "surface_samples": 128,
+      "unknown_rays": 0,
+      "sampled_positions": 21,
+      "interior_margin_mm": 0.05,
+      "max_preterminal_witnesses": 0,
+      "terminal_witnesses": 0,
+      "first_witness": null
+    },
+    {
+      "moving": "L.screws_wheel",
+      "fixed": "L.apex_61812",
+      "offset_mm": [
+        0,
+        -60,
+        0
+      ],
+      "mesh_sha256": {
+        "L.screws_wheel": "9014811634a8f023c068edee941cf44cb5ae97c45f8e1c6fd0fdba25ff786488",
+        "L.apex_61812": "0b4e6de90116640a50ee896a63e0ccea1d9e191ed9e1017f423dfa95876884cc"
+      },
+      "surface_samples": 128,
+      "unknown_rays": 0,
+      "sampled_positions": 21,
+      "interior_margin_mm": 0.05,
+      "max_preterminal_witnesses": 0,
+      "terminal_witnesses": 0,
+      "first_witness": null
+    },
+    {
+      "moving": "L.screws_wheel",
+      "fixed": "L.apex_circlip",
+      "offset_mm": [
+        0,
+        -60,
+        0
+      ],
+      "mesh_sha256": {
+        "L.screws_wheel": "9014811634a8f023c068edee941cf44cb5ae97c45f8e1c6fd0fdba25ff786488",
+        "L.apex_circlip": "067552dfbff3ec5e384a4faec7517ddd31214414b9b666f19f7f881dfa3ece0d"
+      },
+      "surface_samples": 128,
+      "unknown_rays": 0,
+      "sampled_positions": 21,
+      "interior_margin_mm": 0.05,
+      "max_preterminal_witnesses": 0,
+      "terminal_witnesses": 0,
+      "first_witness": null
+    },
+    {
+      "moving": "L.screws_wheel",
+      "fixed": "L.wheel_hub",
+      "offset_mm": [
+        0,
+        -60,
+        0
+      ],
+      "mesh_sha256": {
+        "L.screws_wheel": "9014811634a8f023c068edee941cf44cb5ae97c45f8e1c6fd0fdba25ff786488",
+        "L.wheel_hub": "7ba20d8e561585a9f44b5a4f4adcdb5cdf209dd0b7cba98fca22ed5fad8e1c05"
+      },
+      "surface_samples": 128,
+      "unknown_rays": 0,
+      "sampled_positions": 21,
+      "interior_margin_mm": 0.05,
+      "max_preterminal_witnesses": 0,
+      "terminal_witnesses": 12,
+      "first_witness": {
+        "progress": 1.0,
+        "moving_triangle_index": 300,
+        "home_centroid_mm": [
+          10.26766268412272,
+          184.93980407714844,
+          -288.94945271809894
+        ],
+        "translated_centroid_mm": [
+          10.26766268412272,
+          184.93980407714844,
+          -288.94945271809894
+        ],
+        "fixed_interior_intervals_mm": [
+          [
+            184.549805,
+            249.549805
+          ]
+        ]
+      }
+    },
+    {
+      "moving": "L.screws_wheel",
+      "fixed": "L.washers_wheel",
+      "offset_mm": [
+        0,
+        -60,
+        0
+      ],
+      "mesh_sha256": {
+        "L.screws_wheel": "9014811634a8f023c068edee941cf44cb5ae97c45f8e1c6fd0fdba25ff786488",
+        "L.washers_wheel": "1d16fd728c56a85986f9b1274a67e1ffba79f31ecd2e6dc31cdc2c9b37eb018b"
+      },
+      "surface_samples": 128,
+      "unknown_rays": 0,
+      "sampled_positions": 21,
+      "interior_margin_mm": 0.05,
+      "max_preterminal_witnesses": 0,
+      "terminal_witnesses": 0,
+      "first_witness": null
+    },
+    {
+      "moving": "R.motor_front",
+      "fixed": "cheek_right",
+      "offset_mm": [
+        0,
+        -60,
+        0
+      ],
+      "mesh_sha256": {
+        "R.motor_front": "2da11562329d41b3859410435f2dfab8d08f6d4d8848fb029cc6c5e4bfd16fd7",
+        "cheek_right": "bcbf60762830b42d8097e683d74f90e60a5ba3a6f478382d6800320298f1ce8b"
+      },
+      "surface_samples": 128,
+      "unknown_rays": 0,
+      "sampled_positions": 21,
+      "interior_margin_mm": 0.05,
+      "max_preterminal_witnesses": 0,
+      "terminal_witnesses": 0,
+      "first_witness": null
+    },
+    {
+      "moving": "R.motor_rear",
+      "fixed": "cheek_right",
+      "offset_mm": [
+        0,
+        -60,
+        0
+      ],
+      "mesh_sha256": {
+        "R.motor_rear": "e40c7c0c7c4befc52eb520928757886bbc26da74966c3c91477470c656916363",
+        "cheek_right": "bcbf60762830b42d8097e683d74f90e60a5ba3a6f478382d6800320298f1ce8b"
+      },
+      "surface_samples": 128,
+      "unknown_rays": 0,
+      "sampled_positions": 21,
+      "interior_margin_mm": 0.05,
+      "max_preterminal_witnesses": 0,
+      "terminal_witnesses": 0,
+      "first_witness": null
+    },
+    {
+      "moving": "R.hip_frame",
+      "fixed": "cheek_right",
+      "offset_mm": [
+        0,
+        -60,
+        0
+      ],
+      "mesh_sha256": {
+        "R.hip_frame": "67dcab28c26d65fcbc6deaa854658147e6ceff18ba9db34a93a4f40b723aae52",
+        "cheek_right": "bcbf60762830b42d8097e683d74f90e60a5ba3a6f478382d6800320298f1ce8b"
+      },
+      "surface_samples": 128,
+      "unknown_rays": 0,
+      "sampled_positions": 21,
+      "interior_margin_mm": 0.05,
+      "max_preterminal_witnesses": 0,
+      "terminal_witnesses": 0,
+      "first_witness": null
+    },
+    {
+      "moving": "R.hip_frame",
+      "fixed": "R.motor_front",
+      "offset_mm": [
+        0,
+        -60,
+        0
+      ],
+      "mesh_sha256": {
+        "R.hip_frame": "67dcab28c26d65fcbc6deaa854658147e6ceff18ba9db34a93a4f40b723aae52",
+        "R.motor_front": "2da11562329d41b3859410435f2dfab8d08f6d4d8848fb029cc6c5e4bfd16fd7"
+      },
+      "surface_samples": 128,
+      "unknown_rays": 0,
+      "sampled_positions": 21,
+      "interior_margin_mm": 0.05,
+      "max_preterminal_witnesses": 0,
+      "terminal_witnesses": 0,
+      "first_witness": null
+    },
+    {
+      "moving": "R.hip_frame",
+      "fixed": "R.motor_rear",
+      "offset_mm": [
+        0,
+        -60,
+        0
+      ],
+      "mesh_sha256": {
+        "R.hip_frame": "67dcab28c26d65fcbc6deaa854658147e6ceff18ba9db34a93a4f40b723aae52",
+        "R.motor_rear": "e40c7c0c7c4befc52eb520928757886bbc26da74966c3c91477470c656916363"
+      },
+      "surface_samples": 128,
+      "unknown_rays": 0,
+      "sampled_positions": 21,
+      "interior_margin_mm": 0.05,
+      "max_preterminal_witnesses": 0,
+      "terminal_witnesses": 0,
+      "first_witness": null
+    },
+    {
+      "moving": "R.screws_outputs",
+      "fixed": "R.motor_front",
+      "offset_mm": [
+        0,
+        -60,
+        0
+      ],
+      "mesh_sha256": {
+        "R.screws_outputs": "bd4f56df96ed866800aa830a9d4d978fe8940a4cbe910a6b8201d390f7007caf",
+        "R.motor_front": "2da11562329d41b3859410435f2dfab8d08f6d4d8848fb029cc6c5e4bfd16fd7"
+      },
+      "surface_samples": 128,
+      "unknown_rays": 0,
+      "sampled_positions": 21,
+      "interior_margin_mm": 0.05,
+      "max_preterminal_witnesses": 7,
+      "terminal_witnesses": 7,
+      "first_witness": {
+        "progress": 0.95,
+        "moving_triangle_index": 326,
+        "home_centroid_mm": [
+          -72.0115483601888,
+          -71.94979858398438,
+          -19.768829345703125
+        ],
+        "translated_centroid_mm": [
+          -72.0115483601888,
+          -74.94979858398438,
+          -19.768829345703125
+        ],
+        "fixed_interior_intervals_mm": [
+          [
+            -77.949799,
+            -22.2498
+          ]
+        ]
+      }
+    },
+    {
+      "moving": "R.screws_outputs",
+      "fixed": "R.motor_rear",
+      "offset_mm": [
+        0,
+        -60,
+        0
+      ],
+      "mesh_sha256": {
+        "R.screws_outputs": "bd4f56df96ed866800aa830a9d4d978fe8940a4cbe910a6b8201d390f7007caf",
+        "R.motor_rear": "e40c7c0c7c4befc52eb520928757886bbc26da74966c3c91477470c656916363"
+      },
+      "surface_samples": 128,
+      "unknown_rays": 0,
+      "sampled_positions": 21,
+      "interior_margin_mm": 0.05,
+      "max_preterminal_witnesses": 7,
+      "terminal_witnesses": 7,
+      "first_witness": {
+        "progress": 0.95,
+        "moving_triangle_index": 3314,
+        "home_centroid_mm": [
+          93.73055521647136,
+          -71.94979858398438,
+          -1.9595505992571514
+        ],
+        "translated_centroid_mm": [
+          93.73055521647136,
+          -74.94979858398438,
+          -1.9595505992571514
+        ],
+        "fixed_interior_intervals_mm": [
+          [
+            -77.949799,
+            -22.2498
+          ]
+        ]
+      }
+    },
+    {
+      "moving": "R.screws_outputs",
+      "fixed": "R.hip_frame",
+      "offset_mm": [
+        0,
+        -60,
+        0
+      ],
+      "mesh_sha256": {
+        "R.screws_outputs": "bd4f56df96ed866800aa830a9d4d978fe8940a4cbe910a6b8201d390f7007caf",
+        "R.hip_frame": "67dcab28c26d65fcbc6deaa854658147e6ceff18ba9db34a93a4f40b723aae52"
+      },
+      "surface_samples": 128,
+      "unknown_rays": 0,
+      "sampled_positions": 21,
+      "interior_margin_mm": 0.05,
+      "max_preterminal_witnesses": 0,
+      "terminal_witnesses": 0,
+      "first_witness": null
+    },
+    {
+      "moving": "R.screws_outputs",
+      "fixed": "R.bearing_61812_front",
+      "offset_mm": [
+        0,
+        -60,
+        0
+      ],
+      "mesh_sha256": {
+        "R.screws_outputs": "bd4f56df96ed866800aa830a9d4d978fe8940a4cbe910a6b8201d390f7007caf",
+        "R.bearing_61812_front": "7536d5a9ba997d64dbf51bc6d84977e4e35b504d80b4a2686203a6dfd1936b24"
+      },
+      "surface_samples": 128,
+      "unknown_rays": 0,
+      "sampled_positions": 21,
+      "interior_margin_mm": 0.05,
+      "max_preterminal_witnesses": 0,
+      "terminal_witnesses": 0,
+      "first_witness": null
+    },
+    {
+      "moving": "R.screws_outputs",
+      "fixed": "R.bearing_61812_rear",
+      "offset_mm": [
+        0,
+        -60,
+        0
+      ],
+      "mesh_sha256": {
+        "R.screws_outputs": "bd4f56df96ed866800aa830a9d4d978fe8940a4cbe910a6b8201d390f7007caf",
+        "R.bearing_61812_rear": "d157738bf722e33abd590815a48fa3df9024969366603e8dff3df9af1fee53b4"
+      },
+      "surface_samples": 128,
+      "unknown_rays": 0,
+      "sampled_positions": 21,
+      "interior_margin_mm": 0.05,
+      "max_preterminal_witnesses": 0,
+      "terminal_witnesses": 0,
+      "first_witness": null
+    },
+    {
+      "moving": "R.screws_outputs",
+      "fixed": "R.screws_lugs",
+      "offset_mm": [
+        0,
+        -60,
+        0
+      ],
+      "mesh_sha256": {
+        "R.screws_outputs": "bd4f56df96ed866800aa830a9d4d978fe8940a4cbe910a6b8201d390f7007caf",
+        "R.screws_lugs": "09fa23212205a051142471e7f0d3f7927e84f3b4e423aabda97b3232720faad8"
+      },
+      "surface_samples": 128,
+      "unknown_rays": 0,
+      "sampled_positions": 21,
+      "interior_margin_mm": 0.05,
+      "max_preterminal_witnesses": 0,
+      "terminal_witnesses": 0,
+      "first_witness": null
+    },
+    {
+      "moving": "R.screws_outputs",
+      "fixed": "R.output_adapter_front",
+      "offset_mm": [
+        0,
+        -60,
+        0
+      ],
+      "mesh_sha256": {
+        "R.screws_outputs": "bd4f56df96ed866800aa830a9d4d978fe8940a4cbe910a6b8201d390f7007caf",
+        "R.output_adapter_front": "895e7da4a2db32008207f4673dd53a068862011e6f435c0f0b69f9f828578e42"
+      },
+      "surface_samples": 128,
+      "unknown_rays": 0,
+      "sampled_positions": 21,
+      "interior_margin_mm": 0.05,
+      "max_preterminal_witnesses": 0,
+      "terminal_witnesses": 0,
+      "first_witness": null
+    },
+    {
+      "moving": "R.screws_outputs",
+      "fixed": "R.output_adapter_rear",
+      "offset_mm": [
+        0,
+        -60,
+        0
+      ],
+      "mesh_sha256": {
+        "R.screws_outputs": "bd4f56df96ed866800aa830a9d4d978fe8940a4cbe910a6b8201d390f7007caf",
+        "R.output_adapter_rear": "e74d3ad81339531245bf6fed840782a029ed31e6f51b2624a42829fa1fac75d3"
+      },
+      "surface_samples": 128,
+      "unknown_rays": 0,
+      "sampled_positions": 21,
+      "interior_margin_mm": 0.05,
+      "max_preterminal_witnesses": 0,
+      "terminal_witnesses": 0,
+      "first_witness": null
+    },
+    {
+      "moving": "R.upper_link_front",
+      "fixed": "R.hip_frame",
+      "offset_mm": [
+        0,
+        -60,
+        0
+      ],
+      "mesh_sha256": {
+        "R.upper_link_front": "577e0e783a7766119f8aca1eada793ca4915d52b9498750c46529237a506d4d1",
+        "R.hip_frame": "67dcab28c26d65fcbc6deaa854658147e6ceff18ba9db34a93a4f40b723aae52"
+      },
+      "surface_samples": 128,
+      "unknown_rays": 0,
+      "sampled_positions": 21,
+      "interior_margin_mm": 0.05,
+      "max_preterminal_witnesses": 0,
+      "terminal_witnesses": 0,
+      "first_witness": null
+    },
+    {
+      "moving": "R.upper_link_front",
+      "fixed": "R.bearing_61812_front",
+      "offset_mm": [
+        0,
+        -60,
+        0
+      ],
+      "mesh_sha256": {
+        "R.upper_link_front": "577e0e783a7766119f8aca1eada793ca4915d52b9498750c46529237a506d4d1",
+        "R.bearing_61812_front": "7536d5a9ba997d64dbf51bc6d84977e4e35b504d80b4a2686203a6dfd1936b24"
+      },
+      "surface_samples": 128,
+      "unknown_rays": 0,
+      "sampled_positions": 21,
+      "interior_margin_mm": 0.05,
+      "max_preterminal_witnesses": 0,
+      "terminal_witnesses": 0,
+      "first_witness": null
+    },
+    {
+      "moving": "R.upper_link_front",
+      "fixed": "R.screws_lugs",
+      "offset_mm": [
+        0,
+        -60,
+        0
+      ],
+      "mesh_sha256": {
+        "R.upper_link_front": "577e0e783a7766119f8aca1eada793ca4915d52b9498750c46529237a506d4d1",
+        "R.screws_lugs": "09fa23212205a051142471e7f0d3f7927e84f3b4e423aabda97b3232720faad8"
+      },
+      "surface_samples": 128,
+      "unknown_rays": 0,
+      "sampled_positions": 21,
+      "interior_margin_mm": 0.05,
+      "max_preterminal_witnesses": 0,
+      "terminal_witnesses": 0,
+      "first_witness": null
+    },
+    {
+      "moving": "R.upper_link_front",
+      "fixed": "R.output_adapter_front",
+      "offset_mm": [
+        0,
+        -60,
+        0
+      ],
+      "mesh_sha256": {
+        "R.upper_link_front": "577e0e783a7766119f8aca1eada793ca4915d52b9498750c46529237a506d4d1",
+        "R.output_adapter_front": "895e7da4a2db32008207f4673dd53a068862011e6f435c0f0b69f9f828578e42"
+      },
+      "surface_samples": 128,
+      "unknown_rays": 0,
+      "sampled_positions": 21,
+      "interior_margin_mm": 0.05,
+      "max_preterminal_witnesses": 0,
+      "terminal_witnesses": 0,
+      "first_witness": null
+    },
+    {
+      "moving": "R.upper_link_front",
+      "fixed": "R.screws_outputs",
+      "offset_mm": [
+        0,
+        -60,
+        0
+      ],
+      "mesh_sha256": {
+        "R.upper_link_front": "577e0e783a7766119f8aca1eada793ca4915d52b9498750c46529237a506d4d1",
+        "R.screws_outputs": "bd4f56df96ed866800aa830a9d4d978fe8940a4cbe910a6b8201d390f7007caf"
+      },
+      "surface_samples": 128,
+      "unknown_rays": 0,
+      "sampled_positions": 21,
+      "interior_margin_mm": 0.05,
+      "max_preterminal_witnesses": 0,
+      "terminal_witnesses": 0,
+      "first_witness": null
+    },
+    {
+      "moving": "R.upper_link_rear",
+      "fixed": "R.hip_frame",
+      "offset_mm": [
+        0,
+        -60,
+        0
+      ],
+      "mesh_sha256": {
+        "R.upper_link_rear": "2959aedd302245d030d232eb42832cd422e61655841dc28c1f4208a06b83615a",
+        "R.hip_frame": "67dcab28c26d65fcbc6deaa854658147e6ceff18ba9db34a93a4f40b723aae52"
+      },
+      "surface_samples": 128,
+      "unknown_rays": 0,
+      "sampled_positions": 21,
+      "interior_margin_mm": 0.05,
+      "max_preterminal_witnesses": 0,
+      "terminal_witnesses": 0,
+      "first_witness": null
+    },
+    {
+      "moving": "R.upper_link_rear",
+      "fixed": "R.bearing_61812_rear",
+      "offset_mm": [
+        0,
+        -60,
+        0
+      ],
+      "mesh_sha256": {
+        "R.upper_link_rear": "2959aedd302245d030d232eb42832cd422e61655841dc28c1f4208a06b83615a",
+        "R.bearing_61812_rear": "d157738bf722e33abd590815a48fa3df9024969366603e8dff3df9af1fee53b4"
+      },
+      "surface_samples": 128,
+      "unknown_rays": 0,
+      "sampled_positions": 21,
+      "interior_margin_mm": 0.05,
+      "max_preterminal_witnesses": 0,
+      "terminal_witnesses": 0,
+      "first_witness": null
+    },
+    {
+      "moving": "R.upper_link_rear",
+      "fixed": "R.screws_lugs",
+      "offset_mm": [
+        0,
+        -60,
+        0
+      ],
+      "mesh_sha256": {
+        "R.upper_link_rear": "2959aedd302245d030d232eb42832cd422e61655841dc28c1f4208a06b83615a",
+        "R.screws_lugs": "09fa23212205a051142471e7f0d3f7927e84f3b4e423aabda97b3232720faad8"
+      },
+      "surface_samples": 128,
+      "unknown_rays": 0,
+      "sampled_positions": 21,
+      "interior_margin_mm": 0.05,
+      "max_preterminal_witnesses": 0,
+      "terminal_witnesses": 0,
+      "first_witness": null
+    },
+    {
+      "moving": "R.upper_link_rear",
+      "fixed": "R.output_adapter_rear",
+      "offset_mm": [
+        0,
+        -60,
+        0
+      ],
+      "mesh_sha256": {
+        "R.upper_link_rear": "2959aedd302245d030d232eb42832cd422e61655841dc28c1f4208a06b83615a",
+        "R.output_adapter_rear": "e74d3ad81339531245bf6fed840782a029ed31e6f51b2624a42829fa1fac75d3"
+      },
+      "surface_samples": 128,
+      "unknown_rays": 0,
+      "sampled_positions": 21,
+      "interior_margin_mm": 0.05,
+      "max_preterminal_witnesses": 0,
+      "terminal_witnesses": 0,
+      "first_witness": null
+    },
+    {
+      "moving": "R.upper_link_rear",
+      "fixed": "R.screws_outputs",
+      "offset_mm": [
+        0,
+        -60,
+        0
+      ],
+      "mesh_sha256": {
+        "R.upper_link_rear": "2959aedd302245d030d232eb42832cd422e61655841dc28c1f4208a06b83615a",
+        "R.screws_outputs": "bd4f56df96ed866800aa830a9d4d978fe8940a4cbe910a6b8201d390f7007caf"
+      },
+      "surface_samples": 128,
+      "unknown_rays": 0,
+      "sampled_positions": 21,
+      "interior_margin_mm": 0.05,
+      "max_preterminal_witnesses": 0,
+      "terminal_witnesses": 0,
+      "first_witness": null
+    },
+    {
+      "moving": "R.washers_wheel",
+      "fixed": "R.front_link",
+      "offset_mm": [
+        0,
+        60,
+        0
+      ],
+      "mesh_sha256": {
+        "R.washers_wheel": "f7c0dc783819ba64469db2f62b8e38c78533f9c12cf2c6791788aa6cbd5c55b1",
+        "R.front_link": "6dd7977037abbc1394b4982cb9c94dffac780a3d6a1d3633892b95546dacfeca"
+      },
+      "surface_samples": 128,
+      "unknown_rays": 0,
+      "sampled_positions": 21,
+      "interior_margin_mm": 0.05,
+      "max_preterminal_witnesses": 0,
+      "terminal_witnesses": 0,
+      "first_witness": null
+    },
+    {
+      "moving": "R.washers_wheel",
+      "fixed": "R.wheel_link",
+      "offset_mm": [
+        0,
+        60,
+        0
+      ],
+      "mesh_sha256": {
+        "R.washers_wheel": "f7c0dc783819ba64469db2f62b8e38c78533f9c12cf2c6791788aa6cbd5c55b1",
+        "R.wheel_link": "f809311155e1dc4d860fec81bb388fecad9ad9eac5b61dcc77d6d6b8f71f2e47"
+      },
+      "surface_samples": 128,
+      "unknown_rays": 0,
+      "sampled_positions": 21,
+      "interior_margin_mm": 0.05,
+      "max_preterminal_witnesses": 0,
+      "terminal_witnesses": 0,
+      "first_witness": null
+    },
+    {
+      "moving": "R.washers_wheel",
+      "fixed": "R.apex_spacer",
+      "offset_mm": [
+        0,
+        60,
+        0
+      ],
+      "mesh_sha256": {
+        "R.washers_wheel": "f7c0dc783819ba64469db2f62b8e38c78533f9c12cf2c6791788aa6cbd5c55b1",
+        "R.apex_spacer": "b5ccb2686662e2c9d36d4cecc0287aad3299576fa4e2c4959ed7a1d2c4c37c64"
+      },
+      "surface_samples": 128,
+      "unknown_rays": 0,
+      "sampled_positions": 21,
+      "interior_margin_mm": 0.05,
+      "max_preterminal_witnesses": 0,
+      "terminal_witnesses": 0,
+      "first_witness": null
+    },
+    {
+      "moving": "R.washers_wheel",
+      "fixed": "R.apex_61812",
+      "offset_mm": [
+        0,
+        60,
+        0
+      ],
+      "mesh_sha256": {
+        "R.washers_wheel": "f7c0dc783819ba64469db2f62b8e38c78533f9c12cf2c6791788aa6cbd5c55b1",
+        "R.apex_61812": "e0a2cc817803022bbd39a6f29be6c59c64389ef6f6023ea788cb55adcac495be"
+      },
+      "surface_samples": 128,
+      "unknown_rays": 0,
+      "sampled_positions": 21,
+      "interior_margin_mm": 0.05,
+      "max_preterminal_witnesses": 0,
+      "terminal_witnesses": 0,
+      "first_witness": null
+    },
+    {
+      "moving": "R.washers_wheel",
+      "fixed": "R.apex_circlip",
+      "offset_mm": [
+        0,
+        60,
+        0
+      ],
+      "mesh_sha256": {
+        "R.washers_wheel": "f7c0dc783819ba64469db2f62b8e38c78533f9c12cf2c6791788aa6cbd5c55b1",
+        "R.apex_circlip": "490fdb60e949cdf6d004ea2f4d4e88485bf89ec4d87f405c88b3c12e128e097a"
+      },
+      "surface_samples": 128,
+      "unknown_rays": 0,
+      "sampled_positions": 21,
+      "interior_margin_mm": 0.05,
+      "max_preterminal_witnesses": 0,
+      "terminal_witnesses": 0,
+      "first_witness": null
+    },
+    {
+      "moving": "R.washers_wheel",
+      "fixed": "R.wheel_hub",
+      "offset_mm": [
+        0,
+        60,
+        0
+      ],
+      "mesh_sha256": {
+        "R.washers_wheel": "f7c0dc783819ba64469db2f62b8e38c78533f9c12cf2c6791788aa6cbd5c55b1",
+        "R.wheel_hub": "96e4288e84ffe8a5d1599d258168107d835546410b1beb2bdcc98583e7bbf994"
+      },
+      "surface_samples": 128,
+      "unknown_rays": 0,
+      "sampled_positions": 21,
+      "interior_margin_mm": 0.05,
+      "max_preterminal_witnesses": 0,
+      "terminal_witnesses": 0,
+      "first_witness": null
+    },
+    {
+      "moving": "R.screws_wheel",
+      "fixed": "R.front_link",
+      "offset_mm": [
+        0,
+        60,
+        0
+      ],
+      "mesh_sha256": {
+        "R.screws_wheel": "cbd3d315e44b0302bfd8a35deb3efd0bc58002adbdd2e4ead109913f62e7a9ee",
+        "R.front_link": "6dd7977037abbc1394b4982cb9c94dffac780a3d6a1d3633892b95546dacfeca"
+      },
+      "surface_samples": 128,
+      "unknown_rays": 0,
+      "sampled_positions": 21,
+      "interior_margin_mm": 0.05,
+      "max_preterminal_witnesses": 0,
+      "terminal_witnesses": 0,
+      "first_witness": null
+    },
+    {
+      "moving": "R.screws_wheel",
+      "fixed": "R.wheel_link",
+      "offset_mm": [
+        0,
+        60,
+        0
+      ],
+      "mesh_sha256": {
+        "R.screws_wheel": "cbd3d315e44b0302bfd8a35deb3efd0bc58002adbdd2e4ead109913f62e7a9ee",
+        "R.wheel_link": "f809311155e1dc4d860fec81bb388fecad9ad9eac5b61dcc77d6d6b8f71f2e47"
+      },
+      "surface_samples": 128,
+      "unknown_rays": 0,
+      "sampled_positions": 21,
+      "interior_margin_mm": 0.05,
+      "max_preterminal_witnesses": 36,
+      "terminal_witnesses": 32,
+      "first_witness": {
+        "progress": 0.55,
+        "moving_triangle_index": 300,
+        "home_centroid_mm": [
+          -10.545141537984213,
+          -184.93980407714844,
+          -286.8104248046875
+        ],
+        "translated_centroid_mm": [
+          -10.545141537984213,
+          -157.93980407714844,
+          -286.8104248046875
+        ],
+        "fixed_interior_intervals_mm": [
+          [
+            -177.349792,
+            -156.539795
+          ]
+        ]
+      }
+    },
+    {
+      "moving": "R.screws_wheel",
+      "fixed": "R.apex_spacer",
+      "offset_mm": [
+        0,
+        60,
+        0
+      ],
+      "mesh_sha256": {
+        "R.screws_wheel": "cbd3d315e44b0302bfd8a35deb3efd0bc58002adbdd2e4ead109913f62e7a9ee",
+        "R.apex_spacer": "b5ccb2686662e2c9d36d4cecc0287aad3299576fa4e2c4959ed7a1d2c4c37c64"
+      },
+      "surface_samples": 128,
+      "unknown_rays": 0,
+      "sampled_positions": 21,
+      "interior_margin_mm": 0.05,
+      "max_preterminal_witnesses": 0,
+      "terminal_witnesses": 0,
+      "first_witness": null
+    },
+    {
+      "moving": "R.screws_wheel",
+      "fixed": "R.apex_61812",
+      "offset_mm": [
+        0,
+        60,
+        0
+      ],
+      "mesh_sha256": {
+        "R.screws_wheel": "cbd3d315e44b0302bfd8a35deb3efd0bc58002adbdd2e4ead109913f62e7a9ee",
+        "R.apex_61812": "e0a2cc817803022bbd39a6f29be6c59c64389ef6f6023ea788cb55adcac495be"
+      },
+      "surface_samples": 128,
+      "unknown_rays": 0,
+      "sampled_positions": 21,
+      "interior_margin_mm": 0.05,
+      "max_preterminal_witnesses": 0,
+      "terminal_witnesses": 0,
+      "first_witness": null
+    },
+    {
+      "moving": "R.screws_wheel",
+      "fixed": "R.apex_circlip",
+      "offset_mm": [
+        0,
+        60,
+        0
+      ],
+      "mesh_sha256": {
+        "R.screws_wheel": "cbd3d315e44b0302bfd8a35deb3efd0bc58002adbdd2e4ead109913f62e7a9ee",
+        "R.apex_circlip": "490fdb60e949cdf6d004ea2f4d4e88485bf89ec4d87f405c88b3c12e128e097a"
+      },
+      "surface_samples": 128,
+      "unknown_rays": 0,
+      "sampled_positions": 21,
+      "interior_margin_mm": 0.05,
+      "max_preterminal_witnesses": 0,
+      "terminal_witnesses": 0,
+      "first_witness": null
+    },
+    {
+      "moving": "R.screws_wheel",
+      "fixed": "R.wheel_hub",
+      "offset_mm": [
+        0,
+        60,
+        0
+      ],
+      "mesh_sha256": {
+        "R.screws_wheel": "cbd3d315e44b0302bfd8a35deb3efd0bc58002adbdd2e4ead109913f62e7a9ee",
+        "R.wheel_hub": "96e4288e84ffe8a5d1599d258168107d835546410b1beb2bdcc98583e7bbf994"
+      },
+      "surface_samples": 128,
+      "unknown_rays": 0,
+      "sampled_positions": 21,
+      "interior_margin_mm": 0.05,
+      "max_preterminal_witnesses": 0,
+      "terminal_witnesses": 12,
+      "first_witness": {
+        "progress": 1.0,
+        "moving_triangle_index": 300,
+        "home_centroid_mm": [
+          -10.545141537984213,
+          -184.93980407714844,
+          -286.8104248046875
+        ],
+        "translated_centroid_mm": [
+          -10.545141537984213,
+          -184.93980407714844,
+          -286.8104248046875
+        ],
+        "fixed_interior_intervals_mm": [
+          [
+            -249.549805,
+            -184.549805
+          ]
+        ]
+      }
+    },
+    {
+      "moving": "R.screws_wheel",
+      "fixed": "R.washers_wheel",
+      "offset_mm": [
+        0,
+        60,
+        0
+      ],
+      "mesh_sha256": {
+        "R.screws_wheel": "cbd3d315e44b0302bfd8a35deb3efd0bc58002adbdd2e4ead109913f62e7a9ee",
+        "R.washers_wheel": "f7c0dc783819ba64469db2f62b8e38c78533f9c12cf2c6791788aa6cbd5c55b1"
+      },
+      "surface_samples": 128,
+      "unknown_rays": 0,
+      "sampled_positions": 21,
+      "interior_margin_mm": 0.05,
+      "max_preterminal_witnesses": 0,
+      "terminal_witnesses": 0,
+      "first_witness": null
+    }
+  ],
+  "cases": [
+    {
+      "id": "motor-through-installed-hip-L",
+      "moving": "L.motor_front",
+      "fixed": "L.hip_frame",
+      "offset_mm": [
+        0,
+        60,
+        0
+      ],
+      "mesh_sha256": {
+        "L.motor_front": "f9cb266260840ccd91909e8d11aa515b36e009794666b5fb6d41fb71cdc094cb",
+        "L.hip_frame": "adb8677e0019433add3d72da790868dad86d4ef62aa998c3aebf967f8ecc2e9f"
+      },
+      "surface_samples": 128,
+      "unknown_rays": 0,
+      "sampled_positions": 21,
+      "interior_margin_mm": 0.05,
+      "max_preterminal_witnesses": 45,
+      "terminal_witnesses": 0,
+      "first_witness": {
+        "progress": 0.0,
+        "moving_triangle_index": 0,
+        "home_centroid_mm": [
+          134.77661641438803,
+          40.64979934692383,
+          -2.9808454513549827
+        ],
+        "translated_centroid_mm": [
+          134.77661641438803,
+          100.64979934692383,
+          -2.9808454513549827
+        ],
+        "fixed_interior_intervals_mm": [
+          [
+            77.449799,
+            101.549797
+          ]
+        ]
+      },
+      "samples": [
+        {
+          "progress": 0.0,
+          "interior_witnesses": 28
+        },
+        {
+          "progress": 0.05,
+          "interior_witnesses": 28
+        },
+        {
+          "progress": 0.1,
+          "interior_witnesses": 15
+        },
+        {
+          "progress": 0.15,
+          "interior_witnesses": 15
+        },
+        {
+          "progress": 0.2,
+          "interior_witnesses": 15
+        },
+        {
+          "progress": 0.25,
+          "interior_witnesses": 15
+        },
+        {
+          "progress": 0.3,
+          "interior_witnesses": 31
+        },
+        {
+          "progress": 0.35,
+          "interior_witnesses": 31
+        },
+        {
+          "progress": 0.4,
+          "interior_witnesses": 16
+        },
+        {
+          "progress": 0.45,
+          "interior_witnesses": 16
+        },
+        {
+          "progress": 0.5,
+          "interior_witnesses": 16
+        },
+        {
+          "progress": 0.55,
+          "interior_witnesses": 16
+        },
+        {
+          "progress": 0.6,
+          "interior_witnesses": 45
+        },
+        {
+          "progress": 0.65,
+          "interior_witnesses": 45
+        },
+        {
+          "progress": 0.7,
+          "interior_witnesses": 29
+        },
+        {
+          "progress": 0.75,
+          "interior_witnesses": 33
+        },
+        {
+          "progress": 0.8,
+          "interior_witnesses": 33
+        },
+        {
+          "progress": 0.85,
+          "interior_witnesses": 33
+        },
+        {
+          "progress": 0.9,
+          "interior_witnesses": 33
+        },
+        {
+          "progress": 0.95,
+          "interior_witnesses": 33
+        },
+        {
+          "progress": 1.0,
+          "interior_witnesses": 0
+        }
+      ]
+    },
+    {
+      "id": "motor-through-installed-hip-R",
+      "moving": "R.motor_front",
+      "fixed": "R.hip_frame",
+      "offset_mm": [
+        0,
+        -60,
+        0
+      ],
+      "mesh_sha256": {
+        "R.motor_front": "2da11562329d41b3859410435f2dfab8d08f6d4d8848fb029cc6c5e4bfd16fd7",
+        "R.hip_frame": "67dcab28c26d65fcbc6deaa854658147e6ceff18ba9db34a93a4f40b723aae52"
+      },
+      "surface_samples": 128,
+      "unknown_rays": 0,
+      "sampled_positions": 21,
+      "interior_margin_mm": 0.05,
+      "max_preterminal_witnesses": 48,
+      "terminal_witnesses": 0,
+      "first_witness": {
+        "progress": 0.0,
+        "moving_triangle_index": 0,
+        "home_centroid_mm": [
+          -134.77661641438803,
+          -40.64979934692383,
+          -2.9808454513549827
+        ],
+        "translated_centroid_mm": [
+          -134.77661641438803,
+          -100.64979934692383,
+          -2.9808454513549827
+        ],
+        "fixed_interior_intervals_mm": [
+          [
+            -101.549797,
+            -77.449799
+          ]
+        ]
+      },
+      "samples": [
+        {
+          "progress": 0.0,
+          "interior_witnesses": 28
+        },
+        {
+          "progress": 0.05,
+          "interior_witnesses": 28
+        },
+        {
+          "progress": 0.1,
+          "interior_witnesses": 15
+        },
+        {
+          "progress": 0.15,
+          "interior_witnesses": 15
+        },
+        {
+          "progress": 0.2,
+          "interior_witnesses": 15
+        },
+        {
+          "progress": 0.25,
+          "interior_witnesses": 15
+        },
+        {
+          "progress": 0.3,
+          "interior_witnesses": 31
+        },
+        {
+          "progress": 0.35,
+          "interior_witnesses": 31
+        },
+        {
+          "progress": 0.4,
+          "interior_witnesses": 16
+        },
+        {
+          "progress": 0.45,
+          "interior_witnesses": 16
+        },
+        {
+          "progress": 0.5,
+          "interior_witnesses": 16
+        },
+        {
+          "progress": 0.55,
+          "interior_witnesses": 16
+        },
+        {
+          "progress": 0.6,
+          "interior_witnesses": 48
+        },
+        {
+          "progress": 0.65,
+          "interior_witnesses": 48
+        },
+        {
+          "progress": 0.7,
+          "interior_witnesses": 32
+        },
+        {
+          "progress": 0.75,
+          "interior_witnesses": 33
+        },
+        {
+          "progress": 0.8,
+          "interior_witnesses": 33
+        },
+        {
+          "progress": 0.85,
+          "interior_witnesses": 33
+        },
+        {
+          "progress": 0.9,
+          "interior_witnesses": 33
+        },
+        {
+          "progress": 0.95,
+          "interior_witnesses": 33
+        },
+        {
+          "progress": 1.0,
+          "interior_witnesses": 0
+        }
+      ]
+    },
+    {
+      "id": "motor-wrong-inward-through-cheek-L",
+      "moving": "L.motor_front",
+      "fixed": "cheek_left",
+      "offset_mm": [
+        0,
+        -60,
+        0
+      ],
+      "mesh_sha256": {
+        "L.motor_front": "f9cb266260840ccd91909e8d11aa515b36e009794666b5fb6d41fb71cdc094cb",
+        "cheek_left": "44ae1db5cdfe3cdad535d45c0d9bf04c9563caa92c45777bdb2a07ba26106ecd"
+      },
+      "surface_samples": 128,
+      "unknown_rays": 0,
+      "sampled_positions": 21,
+      "interior_margin_mm": 0.05,
+      "max_preterminal_witnesses": 57,
+      "terminal_witnesses": 0,
+      "first_witness": {
+        "progress": 0.0,
+        "moving_triangle_index": 124,
+        "home_centroid_mm": [
+          46.818763732910156,
+          77.44979858398438,
+          28.174762725830078
+        ],
+        "translated_centroid_mm": [
+          46.818763732910156,
+          17.449798583984375,
+          28.174762725830078
+        ],
+        "fixed_interior_intervals_mm": [
+          [
+            15.5,
+            20.2498
+          ]
+        ]
+      },
+      "samples": [
+        {
+          "progress": 0.0,
+          "interior_witnesses": 57
+        },
+        {
+          "progress": 0.05,
+          "interior_witnesses": 0
+        },
+        {
+          "progress": 0.1,
+          "interior_witnesses": 0
+        },
+        {
+          "progress": 0.15,
+          "interior_witnesses": 0
+        },
+        {
+          "progress": 0.2,
+          "interior_witnesses": 0
+        },
+        {
+          "progress": 0.25,
+          "interior_witnesses": 0
+        },
+        {
+          "progress": 0.3,
+          "interior_witnesses": 7
+        },
+        {
+          "progress": 0.35,
+          "interior_witnesses": 7
+        },
+        {
+          "progress": 0.4,
+          "interior_witnesses": 0
+        },
+        {
+          "progress": 0.45,
+          "interior_witnesses": 0
+        },
+        {
+          "progress": 0.5,
+          "interior_witnesses": 0
+        },
+        {
+          "progress": 0.55,
+          "interior_witnesses": 0
+        },
+        {
+          "progress": 0.6,
+          "interior_witnesses": 8
+        },
+        {
+          "progress": 0.65,
+          "interior_witnesses": 8
+        },
+        {
+          "progress": 0.7,
+          "interior_witnesses": 0
+        },
+        {
+          "progress": 0.75,
+          "interior_witnesses": 0
+        },
+        {
+          "progress": 0.8,
+          "interior_witnesses": 0
+        },
+        {
+          "progress": 0.85,
+          "interior_witnesses": 0
+        },
+        {
+          "progress": 0.9,
+          "interior_witnesses": 9
+        },
+        {
+          "progress": 0.95,
+          "interior_witnesses": 9
+        },
+        {
+          "progress": 1.0,
+          "interior_witnesses": 0
+        }
+      ]
+    },
+    {
+      "id": "motor-wrong-inward-through-cheek-R",
+      "moving": "R.motor_front",
+      "fixed": "cheek_right",
+      "offset_mm": [
+        0,
+        60,
+        0
+      ],
+      "mesh_sha256": {
+        "R.motor_front": "2da11562329d41b3859410435f2dfab8d08f6d4d8848fb029cc6c5e4bfd16fd7",
+        "cheek_right": "bcbf60762830b42d8097e683d74f90e60a5ba3a6f478382d6800320298f1ce8b"
+      },
+      "surface_samples": 128,
+      "unknown_rays": 0,
+      "sampled_positions": 21,
+      "interior_margin_mm": 0.05,
+      "max_preterminal_witnesses": 58,
+      "terminal_witnesses": 0,
+      "first_witness": {
+        "progress": 0.0,
+        "moving_triangle_index": 124,
+        "home_centroid_mm": [
+          -46.818763732910156,
+          -77.44979858398438,
+          28.174762725830078
+        ],
+        "translated_centroid_mm": [
+          -46.818763732910156,
+          -17.449798583984375,
+          28.174762725830078
+        ],
+        "fixed_interior_intervals_mm": [
+          [
+            -20.2498,
+            -15.5
+          ]
+        ]
+      },
+      "samples": [
+        {
+          "progress": 0.0,
+          "interior_witnesses": 58
+        },
+        {
+          "progress": 0.05,
+          "interior_witnesses": 0
+        },
+        {
+          "progress": 0.1,
+          "interior_witnesses": 0
+        },
+        {
+          "progress": 0.15,
+          "interior_witnesses": 0
+        },
+        {
+          "progress": 0.2,
+          "interior_witnesses": 0
+        },
+        {
+          "progress": 0.25,
+          "interior_witnesses": 0
+        },
+        {
+          "progress": 0.3,
+          "interior_witnesses": 7
+        },
+        {
+          "progress": 0.35,
+          "interior_witnesses": 7
+        },
+        {
+          "progress": 0.4,
+          "interior_witnesses": 0
+        },
+        {
+          "progress": 0.45,
+          "interior_witnesses": 0
+        },
+        {
+          "progress": 0.5,
+          "interior_witnesses": 0
+        },
+        {
+          "progress": 0.55,
+          "interior_witnesses": 0
+        },
+        {
+          "progress": 0.6,
+          "interior_witnesses": 8
+        },
+        {
+          "progress": 0.65,
+          "interior_witnesses": 8
+        },
+        {
+          "progress": 0.7,
+          "interior_witnesses": 0
+        },
+        {
+          "progress": 0.75,
+          "interior_witnesses": 0
+        },
+        {
+          "progress": 0.8,
+          "interior_witnesses": 0
+        },
+        {
+          "progress": 0.85,
+          "interior_witnesses": 0
+        },
+        {
+          "progress": 0.9,
+          "interior_witnesses": 9
+        },
+        {
+          "progress": 0.95,
+          "interior_witnesses": 9
+        },
+        {
+          "progress": 1.0,
+          "interior_witnesses": 0
+        }
+      ]
+    },
+    {
+      "id": "hip-after-motor-outward-L",
+      "moving": "L.hip_frame",
+      "fixed": "L.motor_front",
+      "offset_mm": [
+        0,
+        60,
+        0
+      ],
+      "mesh_sha256": {
+        "L.hip_frame": "adb8677e0019433add3d72da790868dad86d4ef62aa998c3aebf967f8ecc2e9f",
+        "L.motor_front": "f9cb266260840ccd91909e8d11aa515b36e009794666b5fb6d41fb71cdc094cb"
+      },
+      "surface_samples": 128,
+      "unknown_rays": 0,
+      "sampled_positions": 21,
+      "interior_margin_mm": 0.05,
+      "max_preterminal_witnesses": 0,
+      "terminal_witnesses": 0,
+      "first_witness": null,
+      "samples": [
+        {
+          "progress": 0.0,
+          "interior_witnesses": 0
+        },
+        {
+          "progress": 0.05,
+          "interior_witnesses": 0
+        },
+        {
+          "progress": 0.1,
+          "interior_witnesses": 0
+        },
+        {
+          "progress": 0.15,
+          "interior_witnesses": 0
+        },
+        {
+          "progress": 0.2,
+          "interior_witnesses": 0
+        },
+        {
+          "progress": 0.25,
+          "interior_witnesses": 0
+        },
+        {
+          "progress": 0.3,
+          "interior_witnesses": 0
+        },
+        {
+          "progress": 0.35,
+          "interior_witnesses": 0
+        },
+        {
+          "progress": 0.4,
+          "interior_witnesses": 0
+        },
+        {
+          "progress": 0.45,
+          "interior_witnesses": 0
+        },
+        {
+          "progress": 0.5,
+          "interior_witnesses": 0
+        },
+        {
+          "progress": 0.55,
+          "interior_witnesses": 0
+        },
+        {
+          "progress": 0.6,
+          "interior_witnesses": 0
+        },
+        {
+          "progress": 0.65,
+          "interior_witnesses": 0
+        },
+        {
+          "progress": 0.7,
+          "interior_witnesses": 0
+        },
+        {
+          "progress": 0.75,
+          "interior_witnesses": 0
+        },
+        {
+          "progress": 0.8,
+          "interior_witnesses": 0
+        },
+        {
+          "progress": 0.85,
+          "interior_witnesses": 0
+        },
+        {
+          "progress": 0.9,
+          "interior_witnesses": 0
+        },
+        {
+          "progress": 0.95,
+          "interior_witnesses": 0
+        },
+        {
+          "progress": 1.0,
+          "interior_witnesses": 0
+        }
+      ]
+    },
+    {
+      "id": "hip-after-motor-outward-R",
+      "moving": "R.hip_frame",
+      "fixed": "R.motor_front",
+      "offset_mm": [
+        0,
+        -60,
+        0
+      ],
+      "mesh_sha256": {
+        "R.hip_frame": "67dcab28c26d65fcbc6deaa854658147e6ceff18ba9db34a93a4f40b723aae52",
+        "R.motor_front": "2da11562329d41b3859410435f2dfab8d08f6d4d8848fb029cc6c5e4bfd16fd7"
+      },
+      "surface_samples": 128,
+      "unknown_rays": 0,
+      "sampled_positions": 21,
+      "interior_margin_mm": 0.05,
+      "max_preterminal_witnesses": 0,
+      "terminal_witnesses": 0,
+      "first_witness": null,
+      "samples": [
+        {
+          "progress": 0.0,
+          "interior_witnesses": 0
+        },
+        {
+          "progress": 0.05,
+          "interior_witnesses": 0
+        },
+        {
+          "progress": 0.1,
+          "interior_witnesses": 0
+        },
+        {
+          "progress": 0.15,
+          "interior_witnesses": 0
+        },
+        {
+          "progress": 0.2,
+          "interior_witnesses": 0
+        },
+        {
+          "progress": 0.25,
+          "interior_witnesses": 0
+        },
+        {
+          "progress": 0.3,
+          "interior_witnesses": 0
+        },
+        {
+          "progress": 0.35,
+          "interior_witnesses": 0
+        },
+        {
+          "progress": 0.4,
+          "interior_witnesses": 0
+        },
+        {
+          "progress": 0.45,
+          "interior_witnesses": 0
+        },
+        {
+          "progress": 0.5,
+          "interior_witnesses": 0
+        },
+        {
+          "progress": 0.55,
+          "interior_witnesses": 0
+        },
+        {
+          "progress": 0.6,
+          "interior_witnesses": 0
+        },
+        {
+          "progress": 0.65,
+          "interior_witnesses": 0
+        },
+        {
+          "progress": 0.7,
+          "interior_witnesses": 0
+        },
+        {
+          "progress": 0.75,
+          "interior_witnesses": 0
+        },
+        {
+          "progress": 0.8,
+          "interior_witnesses": 0
+        },
+        {
+          "progress": 0.85,
+          "interior_witnesses": 0
+        },
+        {
+          "progress": 0.9,
+          "interior_witnesses": 0
+        },
+        {
+          "progress": 0.95,
+          "interior_witnesses": 0
+        },
+        {
+          "progress": 1.0,
+          "interior_witnesses": 0
+        }
+      ]
+    },
+    {
+      "id": "hip-wrong-inward-through-motor-L",
+      "moving": "L.hip_frame",
+      "fixed": "L.motor_front",
+      "offset_mm": [
+        0,
+        -60,
+        0
+      ],
+      "mesh_sha256": {
+        "L.hip_frame": "adb8677e0019433add3d72da790868dad86d4ef62aa998c3aebf967f8ecc2e9f",
+        "L.motor_front": "f9cb266260840ccd91909e8d11aa515b36e009794666b5fb6d41fb71cdc094cb"
+      },
+      "surface_samples": 128,
+      "unknown_rays": 0,
+      "sampled_positions": 21,
+      "interior_margin_mm": 0.05,
+      "max_preterminal_witnesses": 44,
+      "terminal_witnesses": 0,
+      "first_witness": {
+        "progress": 0.0,
+        "moving_triangle_index": 724,
+        "home_centroid_mm": [
+          72.7887674967448,
+          101.54979705810547,
+          51.946292877197266
+        ],
+        "translated_centroid_mm": [
+          72.7887674967448,
+          41.54979705810547,
+          51.946292877197266
+        ],
+        "fixed_interior_intervals_mm": [
+          [
+            22.2498,
+            77.449799
+          ]
+        ]
+      },
+      "samples": [
+        {
+          "progress": 0.0,
+          "interior_witnesses": 37
+        },
+        {
+          "progress": 0.05,
+          "interior_witnesses": 38
+        },
+        {
+          "progress": 0.1,
+          "interior_witnesses": 44
+        },
+        {
+          "progress": 0.15,
+          "interior_witnesses": 44
+        },
+        {
+          "progress": 0.2,
+          "interior_witnesses": 44
+        },
+        {
+          "progress": 0.25,
+          "interior_witnesses": 44
+        },
+        {
+          "progress": 0.3,
+          "interior_witnesses": 44
+        },
+        {
+          "progress": 0.35,
+          "interior_witnesses": 44
+        },
+        {
+          "progress": 0.4,
+          "interior_witnesses": 44
+        },
+        {
+          "progress": 0.45,
+          "interior_witnesses": 44
+        },
+        {
+          "progress": 0.5,
+          "interior_witnesses": 44
+        },
+        {
+          "progress": 0.55,
+          "interior_witnesses": 44
+        },
+        {
+          "progress": 0.6,
+          "interior_witnesses": 39
+        },
+        {
+          "progress": 0.65,
+          "interior_witnesses": 35
+        },
+        {
+          "progress": 0.7,
+          "interior_witnesses": 28
+        },
+        {
+          "progress": 0.75,
+          "interior_witnesses": 19
+        },
+        {
+          "progress": 0.8,
+          "interior_witnesses": 18
+        },
+        {
+          "progress": 0.85,
+          "interior_witnesses": 12
+        },
+        {
+          "progress": 0.9,
+          "interior_witnesses": 10
+        },
+        {
+          "progress": 0.95,
+          "interior_witnesses": 6
+        },
+        {
+          "progress": 1.0,
+          "interior_witnesses": 0
+        }
+      ]
+    },
+    {
+      "id": "hip-wrong-inward-through-motor-R",
+      "moving": "R.hip_frame",
+      "fixed": "R.motor_front",
+      "offset_mm": [
+        0,
+        60,
+        0
+      ],
+      "mesh_sha256": {
+        "R.hip_frame": "67dcab28c26d65fcbc6deaa854658147e6ceff18ba9db34a93a4f40b723aae52",
+        "R.motor_front": "2da11562329d41b3859410435f2dfab8d08f6d4d8848fb029cc6c5e4bfd16fd7"
+      },
+      "surface_samples": 128,
+      "unknown_rays": 0,
+      "sampled_positions": 21,
+      "interior_margin_mm": 0.05,
+      "max_preterminal_witnesses": 44,
+      "terminal_witnesses": 0,
+      "first_witness": {
+        "progress": 0.0,
+        "moving_triangle_index": 724,
+        "home_centroid_mm": [
+          -72.7887674967448,
+          -101.54979705810547,
+          51.946292877197266
+        ],
+        "translated_centroid_mm": [
+          -72.7887674967448,
+          -41.54979705810547,
+          51.946292877197266
+        ],
+        "fixed_interior_intervals_mm": [
+          [
+            -77.449799,
+            -22.2498
+          ]
+        ]
+      },
+      "samples": [
+        {
+          "progress": 0.0,
+          "interior_witnesses": 38
+        },
+        {
+          "progress": 0.05,
+          "interior_witnesses": 38
+        },
+        {
+          "progress": 0.1,
+          "interior_witnesses": 44
+        },
+        {
+          "progress": 0.15,
+          "interior_witnesses": 44
+        },
+        {
+          "progress": 0.2,
+          "interior_witnesses": 44
+        },
+        {
+          "progress": 0.25,
+          "interior_witnesses": 44
+        },
+        {
+          "progress": 0.3,
+          "interior_witnesses": 44
+        },
+        {
+          "progress": 0.35,
+          "interior_witnesses": 44
+        },
+        {
+          "progress": 0.4,
+          "interior_witnesses": 44
+        },
+        {
+          "progress": 0.45,
+          "interior_witnesses": 44
+        },
+        {
+          "progress": 0.5,
+          "interior_witnesses": 44
+        },
+        {
+          "progress": 0.55,
+          "interior_witnesses": 44
+        },
+        {
+          "progress": 0.6,
+          "interior_witnesses": 39
+        },
+        {
+          "progress": 0.65,
+          "interior_witnesses": 35
+        },
+        {
+          "progress": 0.7,
+          "interior_witnesses": 28
+        },
+        {
+          "progress": 0.75,
+          "interior_witnesses": 19
+        },
+        {
+          "progress": 0.8,
+          "interior_witnesses": 18
+        },
+        {
+          "progress": 0.85,
+          "interior_witnesses": 13
+        },
+        {
+          "progress": 0.9,
+          "interior_witnesses": 10
+        },
+        {
+          "progress": 0.95,
+          "interior_witnesses": 6
+        },
+        {
+          "progress": 1.0,
+          "interior_witnesses": 0
+        }
+      ]
+    },
+    {
+      "id": "inboard-bearing-outward-through-shoulder-L",
+      "moving": "L.knee_bearing_front_in",
+      "fixed": "L.front_link",
+      "offset_mm": [
+        0,
+        60,
+        0
+      ],
+      "mesh_sha256": {
+        "L.knee_bearing_front_in": "3c6bb3eb8d78e635c3f3a80be1dcf0f0c5f356bee1d906360016989db5b9dd20",
+        "L.front_link": "ba45c6c10108a8d4adcc22b2bb719719c6976b5d6e86ad6d3be14a7b3296d8af"
+      },
+      "surface_samples": 128,
+      "unknown_rays": 0,
+      "sampled_positions": 21,
+      "interior_margin_mm": 0.05,
+      "max_preterminal_witnesses": 32,
+      "terminal_witnesses": 0,
+      "first_witness": {
+        "progress": 0.5,
+        "moving_triangle_index": 2,
+        "home_centroid_mm": [
+          187.5299835205078,
+          138.5498046875,
+          -111.8156229654948
+        ],
+        "translated_centroid_mm": [
+          187.5299835205078,
+          168.5498046875,
+          -111.8156229654948
+        ],
+        "fixed_interior_intervals_mm": [
+          [
+            146.549805,
+            170.549805
+          ]
+        ]
+      },
+      "samples": [
+        {
+          "progress": 0.0,
+          "interior_witnesses": 0
+        },
+        {
+          "progress": 0.05,
+          "interior_witnesses": 0
+        },
+        {
+          "progress": 0.1,
+          "interior_witnesses": 0
+        },
+        {
+          "progress": 0.15,
+          "interior_witnesses": 0
+        },
+        {
+          "progress": 0.2,
+          "interior_witnesses": 0
+        },
+        {
+          "progress": 0.25,
+          "interior_witnesses": 0
+        },
+        {
+          "progress": 0.3,
+          "interior_witnesses": 0
+        },
+        {
+          "progress": 0.35,
+          "interior_witnesses": 0
+        },
+        {
+          "progress": 0.4,
+          "interior_witnesses": 0
+        },
+        {
+          "progress": 0.45,
+          "interior_witnesses": 0
+        },
+        {
+          "progress": 0.5,
+          "interior_witnesses": 16
+        },
+        {
+          "progress": 0.55,
+          "interior_witnesses": 32
+        },
+        {
+          "progress": 0.6,
+          "interior_witnesses": 32
+        },
+        {
+          "progress": 0.65,
+          "interior_witnesses": 32
+        },
+        {
+          "progress": 0.7,
+          "interior_witnesses": 32
+        },
+        {
+          "progress": 0.75,
+          "interior_witnesses": 32
+        },
+        {
+          "progress": 0.8,
+          "interior_witnesses": 32
+        },
+        {
+          "progress": 0.85,
+          "interior_witnesses": 32
+        },
+        {
+          "progress": 0.9,
+          "interior_witnesses": 16
+        },
+        {
+          "progress": 0.95,
+          "interior_witnesses": 0
+        },
+        {
+          "progress": 1.0,
+          "interior_witnesses": 0
+        }
+      ]
+    },
+    {
+      "id": "inboard-bearing-outward-through-shoulder-R",
+      "moving": "R.knee_bearing_front_in",
+      "fixed": "R.front_link",
+      "offset_mm": [
+        0,
+        -60,
+        0
+      ],
+      "mesh_sha256": {
+        "R.knee_bearing_front_in": "b4d206ba08b86250233d459eeb50f9fed9206415721ed4aca0cbf6481f63a64a",
+        "R.front_link": "6dd7977037abbc1394b4982cb9c94dffac780a3d6a1d3633892b95546dacfeca"
+      },
+      "surface_samples": 128,
+      "unknown_rays": 0,
+      "sampled_positions": 21,
+      "interior_margin_mm": 0.05,
+      "max_preterminal_witnesses": 32,
+      "terminal_witnesses": 0,
+      "first_witness": {
+        "progress": 0.5,
+        "moving_triangle_index": 2,
+        "home_centroid_mm": [
+          -187.5299835205078,
+          -138.5498046875,
+          -111.8156229654948
+        ],
+        "translated_centroid_mm": [
+          -187.5299835205078,
+          -168.5498046875,
+          -111.8156229654948
+        ],
+        "fixed_interior_intervals_mm": [
+          [
+            -170.549805,
+            -146.549805
+          ]
+        ]
+      },
+      "samples": [
+        {
+          "progress": 0.0,
+          "interior_witnesses": 0
+        },
+        {
+          "progress": 0.05,
+          "interior_witnesses": 0
+        },
+        {
+          "progress": 0.1,
+          "interior_witnesses": 0
+        },
+        {
+          "progress": 0.15,
+          "interior_witnesses": 0
+        },
+        {
+          "progress": 0.2,
+          "interior_witnesses": 0
+        },
+        {
+          "progress": 0.25,
+          "interior_witnesses": 0
+        },
+        {
+          "progress": 0.3,
+          "interior_witnesses": 0
+        },
+        {
+          "progress": 0.35,
+          "interior_witnesses": 0
+        },
+        {
+          "progress": 0.4,
+          "interior_witnesses": 0
+        },
+        {
+          "progress": 0.45,
+          "interior_witnesses": 0
+        },
+        {
+          "progress": 0.5,
+          "interior_witnesses": 16
+        },
+        {
+          "progress": 0.55,
+          "interior_witnesses": 32
+        },
+        {
+          "progress": 0.6,
+          "interior_witnesses": 32
+        },
+        {
+          "progress": 0.65,
+          "interior_witnesses": 32
+        },
+        {
+          "progress": 0.7,
+          "interior_witnesses": 32
+        },
+        {
+          "progress": 0.75,
+          "interior_witnesses": 32
+        },
+        {
+          "progress": 0.8,
+          "interior_witnesses": 32
+        },
+        {
+          "progress": 0.85,
+          "interior_witnesses": 32
+        },
+        {
+          "progress": 0.9,
+          "interior_witnesses": 16
+        },
+        {
+          "progress": 0.95,
+          "interior_witnesses": 0
+        },
+        {
+          "progress": 1.0,
+          "interior_witnesses": 0
+        }
+      ]
+    },
+    {
+      "id": "inboard-bearing-inward-through-upper-eye-L",
+      "moving": "L.knee_bearing_front_in",
+      "fixed": "L.upper_link_front",
+      "offset_mm": [
+        0,
+        -60,
+        0
+      ],
+      "mesh_sha256": {
+        "L.knee_bearing_front_in": "3c6bb3eb8d78e635c3f3a80be1dcf0f0c5f356bee1d906360016989db5b9dd20",
+        "L.upper_link_front": "916b12208f2fc935e234345761c08d9ca243c0ebb13ccbbd95c0c4d0505d4208"
+      },
+      "surface_samples": 128,
+      "unknown_rays": 0,
+      "sampled_positions": 21,
+      "interior_margin_mm": 0.05,
+      "max_preterminal_witnesses": 96,
+      "terminal_witnesses": 0,
+      "first_witness": {
+        "progress": 0.0,
+        "moving_triangle_index": 84,
+        "home_centroid_mm": [
+          159.81534830729166,
+          146.5498046875,
+          -105.99399312337239
+        ],
+        "translated_centroid_mm": [
+          159.81534830729166,
+          86.5498046875,
+          -105.99399312337239
+        ],
+        "fixed_interior_intervals_mm": [
+          [
+            82.549797,
+            132.549805
+          ]
+        ]
+      },
+      "samples": [
+        {
+          "progress": 0.0,
+          "interior_witnesses": 32
+        },
+        {
+          "progress": 0.05,
+          "interior_witnesses": 48
+        },
+        {
+          "progress": 0.1,
+          "interior_witnesses": 64
+        },
+        {
+          "progress": 0.15,
+          "interior_witnesses": 96
+        },
+        {
+          "progress": 0.2,
+          "interior_witnesses": 96
+        },
+        {
+          "progress": 0.25,
+          "interior_witnesses": 96
+        },
+        {
+          "progress": 0.3,
+          "interior_witnesses": 96
+        },
+        {
+          "progress": 0.35,
+          "interior_witnesses": 96
+        },
+        {
+          "progress": 0.4,
+          "interior_witnesses": 96
+        },
+        {
+          "progress": 0.45,
+          "interior_witnesses": 96
+        },
+        {
+          "progress": 0.5,
+          "interior_witnesses": 96
+        },
+        {
+          "progress": 0.55,
+          "interior_witnesses": 96
+        },
+        {
+          "progress": 0.6,
+          "interior_witnesses": 96
+        },
+        {
+          "progress": 0.65,
+          "interior_witnesses": 96
+        },
+        {
+          "progress": 0.7,
+          "interior_witnesses": 96
+        },
+        {
+          "progress": 0.75,
+          "interior_witnesses": 96
+        },
+        {
+          "progress": 0.8,
+          "interior_witnesses": 64
+        },
+        {
+          "progress": 0.85,
+          "interior_witnesses": 48
+        },
+        {
+          "progress": 0.9,
+          "interior_witnesses": 32
+        },
+        {
+          "progress": 0.95,
+          "interior_witnesses": 32
+        },
+        {
+          "progress": 1.0,
+          "interior_witnesses": 0
+        }
+      ]
+    },
+    {
+      "id": "inboard-bearing-inward-through-upper-eye-R",
+      "moving": "R.knee_bearing_front_in",
+      "fixed": "R.upper_link_front",
+      "offset_mm": [
+        0,
+        60,
+        0
+      ],
+      "mesh_sha256": {
+        "R.knee_bearing_front_in": "b4d206ba08b86250233d459eeb50f9fed9206415721ed4aca0cbf6481f63a64a",
+        "R.upper_link_front": "577e0e783a7766119f8aca1eada793ca4915d52b9498750c46529237a506d4d1"
+      },
+      "surface_samples": 128,
+      "unknown_rays": 0,
+      "sampled_positions": 21,
+      "interior_margin_mm": 0.05,
+      "max_preterminal_witnesses": 96,
+      "terminal_witnesses": 0,
+      "first_witness": {
+        "progress": 0.0,
+        "moving_triangle_index": 84,
+        "home_centroid_mm": [
+          -159.81534830729166,
+          -146.5498046875,
+          -105.99399312337239
+        ],
+        "translated_centroid_mm": [
+          -159.81534830729166,
+          -86.5498046875,
+          -105.99399312337239
+        ],
+        "fixed_interior_intervals_mm": [
+          [
+            -132.549805,
+            -82.549797
+          ]
+        ]
+      },
+      "samples": [
+        {
+          "progress": 0.0,
+          "interior_witnesses": 32
+        },
+        {
+          "progress": 0.05,
+          "interior_witnesses": 48
+        },
+        {
+          "progress": 0.1,
+          "interior_witnesses": 64
+        },
+        {
+          "progress": 0.15,
+          "interior_witnesses": 96
+        },
+        {
+          "progress": 0.2,
+          "interior_witnesses": 96
+        },
+        {
+          "progress": 0.25,
+          "interior_witnesses": 96
+        },
+        {
+          "progress": 0.3,
+          "interior_witnesses": 96
+        },
+        {
+          "progress": 0.35,
+          "interior_witnesses": 96
+        },
+        {
+          "progress": 0.4,
+          "interior_witnesses": 96
+        },
+        {
+          "progress": 0.45,
+          "interior_witnesses": 96
+        },
+        {
+          "progress": 0.5,
+          "interior_witnesses": 96
+        },
+        {
+          "progress": 0.55,
+          "interior_witnesses": 96
+        },
+        {
+          "progress": 0.6,
+          "interior_witnesses": 96
+        },
+        {
+          "progress": 0.65,
+          "interior_witnesses": 96
+        },
+        {
+          "progress": 0.7,
+          "interior_witnesses": 96
+        },
+        {
+          "progress": 0.75,
+          "interior_witnesses": 96
+        },
+        {
+          "progress": 0.8,
+          "interior_witnesses": 64
+        },
+        {
+          "progress": 0.85,
+          "interior_witnesses": 48
+        },
+        {
+          "progress": 0.9,
+          "interior_witnesses": 32
+        },
+        {
+          "progress": 0.95,
+          "interior_witnesses": 32
+        },
+        {
+          "progress": 1.0,
+          "interior_witnesses": 0
+        }
+      ]
+    },
+    {
+      "id": "output-screws-after-upper-L",
+      "moving": "L.screws_outputs",
+      "fixed": "L.upper_link_front",
+      "offset_mm": [
+        0,
+        60,
+        0
+      ],
+      "mesh_sha256": {
+        "L.screws_outputs": "cceceb30827ef8c1db511540368cfd03f80a56c842cbcb9808f01e8811f6a588",
+        "L.upper_link_front": "916b12208f2fc935e234345761c08d9ca243c0ebb13ccbbd95c0c4d0505d4208"
+      },
+      "surface_samples": 128,
+      "unknown_rays": 0,
+      "sampled_positions": 21,
+      "interior_margin_mm": 0.05,
+      "max_preterminal_witnesses": 55,
+      "terminal_witnesses": 0,
+      "first_witness": {
+        "progress": 0.0,
+        "moving_triangle_index": 326,
+        "home_centroid_mm": [
+          72.0115483601888,
+          71.94979858398438,
+          -19.768829345703125
+        ],
+        "translated_centroid_mm": [
+          72.0115483601888,
+          131.94979858398438,
+          -19.768829345703125
+        ],
+        "fixed_interior_intervals_mm": [
+          [
+            105.8498,
+            132.549805
+          ]
+        ]
+      },
+      "samples": [
+        {
+          "progress": 0.0,
+          "interior_witnesses": 7
+        },
+        {
+          "progress": 0.05,
+          "interior_witnesses": 7
+        },
+        {
+          "progress": 0.1,
+          "interior_witnesses": 7
+        },
+        {
+          "progress": 0.15,
+          "interior_witnesses": 9
+        },
+        {
+          "progress": 0.2,
+          "interior_witnesses": 9
+        },
+        {
+          "progress": 0.25,
+          "interior_witnesses": 9
+        },
+        {
+          "progress": 0.3,
+          "interior_witnesses": 23
+        },
+        {
+          "progress": 0.35,
+          "interior_witnesses": 23
+        },
+        {
+          "progress": 0.4,
+          "interior_witnesses": 23
+        },
+        {
+          "progress": 0.45,
+          "interior_witnesses": 41
+        },
+        {
+          "progress": 0.5,
+          "interior_witnesses": 54
+        },
+        {
+          "progress": 0.55,
+          "interior_witnesses": 55
+        },
+        {
+          "progress": 0.6,
+          "interior_witnesses": 55
+        },
+        {
+          "progress": 0.65,
+          "interior_witnesses": 55
+        },
+        {
+          "progress": 0.7,
+          "interior_witnesses": 55
+        },
+        {
+          "progress": 0.75,
+          "interior_witnesses": 44
+        },
+        {
+          "progress": 0.8,
+          "interior_witnesses": 41
+        },
+        {
+          "progress": 0.85,
+          "interior_witnesses": 41
+        },
+        {
+          "progress": 0.9,
+          "interior_witnesses": 22
+        },
+        {
+          "progress": 0.95,
+          "interior_witnesses": 4
+        },
+        {
+          "progress": 1.0,
+          "interior_witnesses": 0
+        }
+      ]
+    },
+    {
+      "id": "output-screws-after-upper-R",
+      "moving": "R.screws_outputs",
+      "fixed": "R.upper_link_front",
+      "offset_mm": [
+        0,
+        -60,
+        0
+      ],
+      "mesh_sha256": {
+        "R.screws_outputs": "bd4f56df96ed866800aa830a9d4d978fe8940a4cbe910a6b8201d390f7007caf",
+        "R.upper_link_front": "577e0e783a7766119f8aca1eada793ca4915d52b9498750c46529237a506d4d1"
+      },
+      "surface_samples": 128,
+      "unknown_rays": 0,
+      "sampled_positions": 21,
+      "interior_margin_mm": 0.05,
+      "max_preterminal_witnesses": 55,
+      "terminal_witnesses": 0,
+      "first_witness": {
+        "progress": 0.0,
+        "moving_triangle_index": 326,
+        "home_centroid_mm": [
+          -72.0115483601888,
+          -71.94979858398438,
+          -19.768829345703125
+        ],
+        "translated_centroid_mm": [
+          -72.0115483601888,
+          -131.94979858398438,
+          -19.768829345703125
+        ],
+        "fixed_interior_intervals_mm": [
+          [
+            -132.549805,
+            -105.8498
+          ]
+        ]
+      },
+      "samples": [
+        {
+          "progress": 0.0,
+          "interior_witnesses": 7
+        },
+        {
+          "progress": 0.05,
+          "interior_witnesses": 7
+        },
+        {
+          "progress": 0.1,
+          "interior_witnesses": 7
+        },
+        {
+          "progress": 0.15,
+          "interior_witnesses": 9
+        },
+        {
+          "progress": 0.2,
+          "interior_witnesses": 9
+        },
+        {
+          "progress": 0.25,
+          "interior_witnesses": 9
+        },
+        {
+          "progress": 0.3,
+          "interior_witnesses": 23
+        },
+        {
+          "progress": 0.35,
+          "interior_witnesses": 23
+        },
+        {
+          "progress": 0.4,
+          "interior_witnesses": 23
+        },
+        {
+          "progress": 0.45,
+          "interior_witnesses": 41
+        },
+        {
+          "progress": 0.5,
+          "interior_witnesses": 54
+        },
+        {
+          "progress": 0.55,
+          "interior_witnesses": 55
+        },
+        {
+          "progress": 0.6,
+          "interior_witnesses": 55
+        },
+        {
+          "progress": 0.65,
+          "interior_witnesses": 55
+        },
+        {
+          "progress": 0.7,
+          "interior_witnesses": 55
+        },
+        {
+          "progress": 0.75,
+          "interior_witnesses": 44
+        },
+        {
+          "progress": 0.8,
+          "interior_witnesses": 41
+        },
+        {
+          "progress": 0.85,
+          "interior_witnesses": 41
+        },
+        {
+          "progress": 0.9,
+          "interior_witnesses": 21
+        },
+        {
+          "progress": 0.95,
+          "interior_witnesses": 5
+        },
+        {
+          "progress": 1.0,
+          "interior_witnesses": 0
+        }
+      ]
+    },
+    {
+      "id": "upper-after-output-screws-L",
+      "moving": "L.upper_link_front",
+      "fixed": "L.screws_outputs",
+      "offset_mm": [
+        0,
+        60,
+        0
+      ],
+      "mesh_sha256": {
+        "L.upper_link_front": "916b12208f2fc935e234345761c08d9ca243c0ebb13ccbbd95c0c4d0505d4208",
+        "L.screws_outputs": "cceceb30827ef8c1db511540368cfd03f80a56c842cbcb9808f01e8811f6a588"
+      },
+      "surface_samples": 128,
+      "unknown_rays": 0,
+      "sampled_positions": 21,
+      "interior_margin_mm": 0.05,
+      "max_preterminal_witnesses": 0,
+      "terminal_witnesses": 0,
+      "first_witness": null,
+      "samples": [
+        {
+          "progress": 0.0,
+          "interior_witnesses": 0
+        },
+        {
+          "progress": 0.05,
+          "interior_witnesses": 0
+        },
+        {
+          "progress": 0.1,
+          "interior_witnesses": 0
+        },
+        {
+          "progress": 0.15,
+          "interior_witnesses": 0
+        },
+        {
+          "progress": 0.2,
+          "interior_witnesses": 0
+        },
+        {
+          "progress": 0.25,
+          "interior_witnesses": 0
+        },
+        {
+          "progress": 0.3,
+          "interior_witnesses": 0
+        },
+        {
+          "progress": 0.35,
+          "interior_witnesses": 0
+        },
+        {
+          "progress": 0.4,
+          "interior_witnesses": 0
+        },
+        {
+          "progress": 0.45,
+          "interior_witnesses": 0
+        },
+        {
+          "progress": 0.5,
+          "interior_witnesses": 0
+        },
+        {
+          "progress": 0.55,
+          "interior_witnesses": 0
+        },
+        {
+          "progress": 0.6,
+          "interior_witnesses": 0
+        },
+        {
+          "progress": 0.65,
+          "interior_witnesses": 0
+        },
+        {
+          "progress": 0.7,
+          "interior_witnesses": 0
+        },
+        {
+          "progress": 0.75,
+          "interior_witnesses": 0
+        },
+        {
+          "progress": 0.8,
+          "interior_witnesses": 0
+        },
+        {
+          "progress": 0.85,
+          "interior_witnesses": 0
+        },
+        {
+          "progress": 0.9,
+          "interior_witnesses": 0
+        },
+        {
+          "progress": 0.95,
+          "interior_witnesses": 0
+        },
+        {
+          "progress": 1.0,
+          "interior_witnesses": 0
+        }
+      ]
+    },
+    {
+      "id": "upper-after-output-screws-R",
+      "moving": "R.upper_link_front",
+      "fixed": "R.screws_outputs",
+      "offset_mm": [
+        0,
+        -60,
+        0
+      ],
+      "mesh_sha256": {
+        "R.upper_link_front": "577e0e783a7766119f8aca1eada793ca4915d52b9498750c46529237a506d4d1",
+        "R.screws_outputs": "bd4f56df96ed866800aa830a9d4d978fe8940a4cbe910a6b8201d390f7007caf"
+      },
+      "surface_samples": 128,
+      "unknown_rays": 0,
+      "sampled_positions": 21,
+      "interior_margin_mm": 0.05,
+      "max_preterminal_witnesses": 0,
+      "terminal_witnesses": 0,
+      "first_witness": null,
+      "samples": [
+        {
+          "progress": 0.0,
+          "interior_witnesses": 0
+        },
+        {
+          "progress": 0.05,
+          "interior_witnesses": 0
+        },
+        {
+          "progress": 0.1,
+          "interior_witnesses": 0
+        },
+        {
+          "progress": 0.15,
+          "interior_witnesses": 0
+        },
+        {
+          "progress": 0.2,
+          "interior_witnesses": 0
+        },
+        {
+          "progress": 0.25,
+          "interior_witnesses": 0
+        },
+        {
+          "progress": 0.3,
+          "interior_witnesses": 0
+        },
+        {
+          "progress": 0.35,
+          "interior_witnesses": 0
+        },
+        {
+          "progress": 0.4,
+          "interior_witnesses": 0
+        },
+        {
+          "progress": 0.45,
+          "interior_witnesses": 0
+        },
+        {
+          "progress": 0.5,
+          "interior_witnesses": 0
+        },
+        {
+          "progress": 0.55,
+          "interior_witnesses": 0
+        },
+        {
+          "progress": 0.6,
+          "interior_witnesses": 0
+        },
+        {
+          "progress": 0.65,
+          "interior_witnesses": 0
+        },
+        {
+          "progress": 0.7,
+          "interior_witnesses": 0
+        },
+        {
+          "progress": 0.75,
+          "interior_witnesses": 0
+        },
+        {
+          "progress": 0.8,
+          "interior_witnesses": 0
+        },
+        {
+          "progress": 0.85,
+          "interior_witnesses": 0
+        },
+        {
+          "progress": 0.9,
+          "interior_witnesses": 0
+        },
+        {
+          "progress": 0.95,
+          "interior_witnesses": 0
+        },
+        {
+          "progress": 1.0,
+          "interior_witnesses": 0
+        }
+      ]
+    },
+    {
+      "id": "wheel-washers-outward-through-hub-L",
+      "moving": "L.washers_wheel",
+      "fixed": "L.wheel_hub",
+      "offset_mm": [
+        0,
+        60,
+        0
+      ],
+      "mesh_sha256": {
+        "L.washers_wheel": "1d16fd728c56a85986f9b1274a67e1ffba79f31ecd2e6dc31cdc2c9b37eb018b",
+        "L.wheel_hub": "7ba20d8e561585a9f44b5a4f4adcdb5cdf209dd0b7cba98fca22ed5fad8e1c05"
+      },
+      "surface_samples": 128,
+      "unknown_rays": 0,
+      "sampled_positions": 21,
+      "interior_margin_mm": 0.05,
+      "max_preterminal_witnesses": 128,
+      "terminal_witnesses": 0,
+      "first_witness": {
+        "progress": 0.0,
+        "moving_triangle_index": 0,
+        "home_centroid_mm": [
+          18.2074457804362,
+          156.00646464029947,
+          -286.9988199869792
+        ],
+        "translated_centroid_mm": [
+          18.2074457804362,
+          216.00646464029947,
+          -286.9988199869792
+        ],
+        "fixed_interior_intervals_mm": [
+          [
+            184.549805,
+            249.549805
+          ]
+        ]
+      },
+      "samples": [
+        {
+          "progress": 0.0,
+          "interior_witnesses": 128
+        },
+        {
+          "progress": 0.05,
+          "interior_witnesses": 128
+        },
+        {
+          "progress": 0.1,
+          "interior_witnesses": 128
+        },
+        {
+          "progress": 0.15,
+          "interior_witnesses": 128
+        },
+        {
+          "progress": 0.2,
+          "interior_witnesses": 128
+        },
+        {
+          "progress": 0.25,
+          "interior_witnesses": 128
+        },
+        {
+          "progress": 0.3,
+          "interior_witnesses": 128
+        },
+        {
+          "progress": 0.35,
+          "interior_witnesses": 128
+        },
+        {
+          "progress": 0.4,
+          "interior_witnesses": 128
+        },
+        {
+          "progress": 0.45,
+          "interior_witnesses": 128
+        },
+        {
+          "progress": 0.5,
+          "interior_witnesses": 128
+        },
+        {
+          "progress": 0.55,
+          "interior_witnesses": 0
+        },
+        {
+          "progress": 0.6,
+          "interior_witnesses": 0
+        },
+        {
+          "progress": 0.65,
+          "interior_witnesses": 0
+        },
+        {
+          "progress": 0.7,
+          "interior_witnesses": 0
+        },
+        {
+          "progress": 0.75,
+          "interior_witnesses": 0
+        },
+        {
+          "progress": 0.8,
+          "interior_witnesses": 0
+        },
+        {
+          "progress": 0.85,
+          "interior_witnesses": 0
+        },
+        {
+          "progress": 0.9,
+          "interior_witnesses": 0
+        },
+        {
+          "progress": 0.95,
+          "interior_witnesses": 0
+        },
+        {
+          "progress": 1.0,
+          "interior_witnesses": 0
+        }
+      ]
+    },
+    {
+      "id": "wheel-washers-outward-through-hub-R",
+      "moving": "R.washers_wheel",
+      "fixed": "R.wheel_hub",
+      "offset_mm": [
+        0,
+        -60,
+        0
+      ],
+      "mesh_sha256": {
+        "R.washers_wheel": "f7c0dc783819ba64469db2f62b8e38c78533f9c12cf2c6791788aa6cbd5c55b1",
+        "R.wheel_hub": "96e4288e84ffe8a5d1599d258168107d835546410b1beb2bdcc98583e7bbf994"
+      },
+      "surface_samples": 128,
+      "unknown_rays": 0,
+      "sampled_positions": 21,
+      "interior_margin_mm": 0.05,
+      "max_preterminal_witnesses": 128,
+      "terminal_witnesses": 0,
+      "first_witness": {
+        "progress": 0.0,
+        "moving_triangle_index": 0,
+        "home_centroid_mm": [
+          -18.2074457804362,
+          -156.00646464029947,
+          -286.9988199869792
+        ],
+        "translated_centroid_mm": [
+          -18.2074457804362,
+          -216.00646464029947,
+          -286.9988199869792
+        ],
+        "fixed_interior_intervals_mm": [
+          [
+            -249.549805,
+            -184.549805
+          ]
+        ]
+      },
+      "samples": [
+        {
+          "progress": 0.0,
+          "interior_witnesses": 128
+        },
+        {
+          "progress": 0.05,
+          "interior_witnesses": 128
+        },
+        {
+          "progress": 0.1,
+          "interior_witnesses": 128
+        },
+        {
+          "progress": 0.15,
+          "interior_witnesses": 128
+        },
+        {
+          "progress": 0.2,
+          "interior_witnesses": 128
+        },
+        {
+          "progress": 0.25,
+          "interior_witnesses": 128
+        },
+        {
+          "progress": 0.3,
+          "interior_witnesses": 128
+        },
+        {
+          "progress": 0.35,
+          "interior_witnesses": 128
+        },
+        {
+          "progress": 0.4,
+          "interior_witnesses": 128
+        },
+        {
+          "progress": 0.45,
+          "interior_witnesses": 128
+        },
+        {
+          "progress": 0.5,
+          "interior_witnesses": 128
+        },
+        {
+          "progress": 0.55,
+          "interior_witnesses": 0
+        },
+        {
+          "progress": 0.6,
+          "interior_witnesses": 0
+        },
+        {
+          "progress": 0.65,
+          "interior_witnesses": 0
+        },
+        {
+          "progress": 0.7,
+          "interior_witnesses": 0
+        },
+        {
+          "progress": 0.75,
+          "interior_witnesses": 0
+        },
+        {
+          "progress": 0.8,
+          "interior_witnesses": 0
+        },
+        {
+          "progress": 0.85,
+          "interior_witnesses": 0
+        },
+        {
+          "progress": 0.9,
+          "interior_witnesses": 0
+        },
+        {
+          "progress": 0.95,
+          "interior_witnesses": 0
+        },
+        {
+          "progress": 1.0,
+          "interior_witnesses": 0
+        }
+      ]
+    },
+    {
+      "id": "wheel-washers-inward-L",
+      "moving": "L.washers_wheel",
+      "fixed": "L.wheel_hub",
+      "offset_mm": [
+        0,
+        -60,
+        0
+      ],
+      "mesh_sha256": {
+        "L.washers_wheel": "1d16fd728c56a85986f9b1274a67e1ffba79f31ecd2e6dc31cdc2c9b37eb018b",
+        "L.wheel_hub": "7ba20d8e561585a9f44b5a4f4adcdb5cdf209dd0b7cba98fca22ed5fad8e1c05"
+      },
+      "surface_samples": 128,
+      "unknown_rays": 0,
+      "sampled_positions": 21,
+      "interior_margin_mm": 0.05,
+      "max_preterminal_witnesses": 0,
+      "terminal_witnesses": 0,
+      "first_witness": null,
+      "samples": [
+        {
+          "progress": 0.0,
+          "interior_witnesses": 0
+        },
+        {
+          "progress": 0.05,
+          "interior_witnesses": 0
+        },
+        {
+          "progress": 0.1,
+          "interior_witnesses": 0
+        },
+        {
+          "progress": 0.15,
+          "interior_witnesses": 0
+        },
+        {
+          "progress": 0.2,
+          "interior_witnesses": 0
+        },
+        {
+          "progress": 0.25,
+          "interior_witnesses": 0
+        },
+        {
+          "progress": 0.3,
+          "interior_witnesses": 0
+        },
+        {
+          "progress": 0.35,
+          "interior_witnesses": 0
+        },
+        {
+          "progress": 0.4,
+          "interior_witnesses": 0
+        },
+        {
+          "progress": 0.45,
+          "interior_witnesses": 0
+        },
+        {
+          "progress": 0.5,
+          "interior_witnesses": 0
+        },
+        {
+          "progress": 0.55,
+          "interior_witnesses": 0
+        },
+        {
+          "progress": 0.6,
+          "interior_witnesses": 0
+        },
+        {
+          "progress": 0.65,
+          "interior_witnesses": 0
+        },
+        {
+          "progress": 0.7,
+          "interior_witnesses": 0
+        },
+        {
+          "progress": 0.75,
+          "interior_witnesses": 0
+        },
+        {
+          "progress": 0.8,
+          "interior_witnesses": 0
+        },
+        {
+          "progress": 0.85,
+          "interior_witnesses": 0
+        },
+        {
+          "progress": 0.9,
+          "interior_witnesses": 0
+        },
+        {
+          "progress": 0.95,
+          "interior_witnesses": 0
+        },
+        {
+          "progress": 1.0,
+          "interior_witnesses": 0
+        }
+      ]
+    },
+    {
+      "id": "wheel-washers-inward-R",
+      "moving": "R.washers_wheel",
+      "fixed": "R.wheel_hub",
+      "offset_mm": [
+        0,
+        60,
+        0
+      ],
+      "mesh_sha256": {
+        "R.washers_wheel": "f7c0dc783819ba64469db2f62b8e38c78533f9c12cf2c6791788aa6cbd5c55b1",
+        "R.wheel_hub": "96e4288e84ffe8a5d1599d258168107d835546410b1beb2bdcc98583e7bbf994"
+      },
+      "surface_samples": 128,
+      "unknown_rays": 0,
+      "sampled_positions": 21,
+      "interior_margin_mm": 0.05,
+      "max_preterminal_witnesses": 0,
+      "terminal_witnesses": 0,
+      "first_witness": null,
+      "samples": [
+        {
+          "progress": 0.0,
+          "interior_witnesses": 0
+        },
+        {
+          "progress": 0.05,
+          "interior_witnesses": 0
+        },
+        {
+          "progress": 0.1,
+          "interior_witnesses": 0
+        },
+        {
+          "progress": 0.15,
+          "interior_witnesses": 0
+        },
+        {
+          "progress": 0.2,
+          "interior_witnesses": 0
+        },
+        {
+          "progress": 0.25,
+          "interior_witnesses": 0
+        },
+        {
+          "progress": 0.3,
+          "interior_witnesses": 0
+        },
+        {
+          "progress": 0.35,
+          "interior_witnesses": 0
+        },
+        {
+          "progress": 0.4,
+          "interior_witnesses": 0
+        },
+        {
+          "progress": 0.45,
+          "interior_witnesses": 0
+        },
+        {
+          "progress": 0.5,
+          "interior_witnesses": 0
+        },
+        {
+          "progress": 0.55,
+          "interior_witnesses": 0
+        },
+        {
+          "progress": 0.6,
+          "interior_witnesses": 0
+        },
+        {
+          "progress": 0.65,
+          "interior_witnesses": 0
+        },
+        {
+          "progress": 0.7,
+          "interior_witnesses": 0
+        },
+        {
+          "progress": 0.75,
+          "interior_witnesses": 0
+        },
+        {
+          "progress": 0.8,
+          "interior_witnesses": 0
+        },
+        {
+          "progress": 0.85,
+          "interior_witnesses": 0
+        },
+        {
+          "progress": 0.9,
+          "interior_witnesses": 0
+        },
+        {
+          "progress": 0.95,
+          "interior_witnesses": 0
+        },
+        {
+          "progress": 1.0,
+          "interior_witnesses": 0
+        }
+      ]
+    },
+    {
+      "id": "circlip-outward-and-final-overlap-L",
+      "moving": "L.apex_circlip",
+      "fixed": "L.wheel_link",
+      "offset_mm": [
+        0,
+        60,
+        0
+      ],
+      "mesh_sha256": {
+        "L.apex_circlip": "067552dfbff3ec5e384a4faec7517ddd31214414b9b666f19f7f881dfa3ece0d",
+        "L.wheel_link": "4848998ab00fa52cc5a55bb7a0614ac4023a4109aa40e6f8feb15d0a646aedf2"
+      },
+      "surface_samples": 128,
+      "unknown_rays": 0,
+      "sampled_positions": 21,
+      "interior_margin_mm": 0.05,
+      "max_preterminal_witnesses": 128,
+      "terminal_witnesses": 32,
+      "first_witness": {
+        "progress": 0.0,
+        "moving_triangle_index": 0,
+        "home_centroid_mm": [
+          32.87713877360026,
+          104.73313649495442,
+          -298.36053466796875
+        ],
+        "translated_centroid_mm": [
+          32.87713877360026,
+          164.7331364949544,
+          -298.36053466796875
+        ],
+        "fixed_interior_intervals_mm": [
+          [
+            149.549805,
+            182.549805
+          ]
+        ]
+      },
+      "samples": [
+        {
+          "progress": 0.0,
+          "interior_witnesses": 128
+        },
+        {
+          "progress": 0.05,
+          "interior_witnesses": 128
+        },
+        {
+          "progress": 0.1,
+          "interior_witnesses": 128
+        },
+        {
+          "progress": 0.15,
+          "interior_witnesses": 128
+        },
+        {
+          "progress": 0.2,
+          "interior_witnesses": 128
+        },
+        {
+          "progress": 0.25,
+          "interior_witnesses": 112
+        },
+        {
+          "progress": 0.3,
+          "interior_witnesses": 60
+        },
+        {
+          "progress": 0.35,
+          "interior_witnesses": 60
+        },
+        {
+          "progress": 0.4,
+          "interior_witnesses": 60
+        },
+        {
+          "progress": 0.45,
+          "interior_witnesses": 60
+        },
+        {
+          "progress": 0.5,
+          "interior_witnesses": 60
+        },
+        {
+          "progress": 0.55,
+          "interior_witnesses": 60
+        },
+        {
+          "progress": 0.6,
+          "interior_witnesses": 60
+        },
+        {
+          "progress": 0.65,
+          "interior_witnesses": 60
+        },
+        {
+          "progress": 0.7,
+          "interior_witnesses": 60
+        },
+        {
+          "progress": 0.75,
+          "interior_witnesses": 60
+        },
+        {
+          "progress": 0.8,
+          "interior_witnesses": 60
+        },
+        {
+          "progress": 0.85,
+          "interior_witnesses": 60
+        },
+        {
+          "progress": 0.9,
+          "interior_witnesses": 60
+        },
+        {
+          "progress": 0.95,
+          "interior_witnesses": 60
+        },
+        {
+          "progress": 1.0,
+          "interior_witnesses": 32
+        }
+      ]
+    },
+    {
+      "id": "circlip-outward-and-final-overlap-R",
+      "moving": "R.apex_circlip",
+      "fixed": "R.wheel_link",
+      "offset_mm": [
+        0,
+        -60,
+        0
+      ],
+      "mesh_sha256": {
+        "R.apex_circlip": "490fdb60e949cdf6d004ea2f4d4e88485bf89ec4d87f405c88b3c12e128e097a",
+        "R.wheel_link": "f809311155e1dc4d860fec81bb388fecad9ad9eac5b61dcc77d6d6b8f71f2e47"
+      },
+      "surface_samples": 128,
+      "unknown_rays": 0,
+      "sampled_positions": 21,
+      "interior_margin_mm": 0.05,
+      "max_preterminal_witnesses": 128,
+      "terminal_witnesses": 32,
+      "first_witness": {
+        "progress": 0.0,
+        "moving_triangle_index": 0,
+        "home_centroid_mm": [
+          -32.87713877360026,
+          -104.73313649495442,
+          -298.36053466796875
+        ],
+        "translated_centroid_mm": [
+          -32.87713877360026,
+          -164.7331364949544,
+          -298.36053466796875
+        ],
+        "fixed_interior_intervals_mm": [
+          [
+            -182.549805,
+            -149.549805
+          ]
+        ]
+      },
+      "samples": [
+        {
+          "progress": 0.0,
+          "interior_witnesses": 128
+        },
+        {
+          "progress": 0.05,
+          "interior_witnesses": 128
+        },
+        {
+          "progress": 0.1,
+          "interior_witnesses": 128
+        },
+        {
+          "progress": 0.15,
+          "interior_witnesses": 128
+        },
+        {
+          "progress": 0.2,
+          "interior_witnesses": 128
+        },
+        {
+          "progress": 0.25,
+          "interior_witnesses": 112
+        },
+        {
+          "progress": 0.3,
+          "interior_witnesses": 62
+        },
+        {
+          "progress": 0.35,
+          "interior_witnesses": 62
+        },
+        {
+          "progress": 0.4,
+          "interior_witnesses": 62
+        },
+        {
+          "progress": 0.45,
+          "interior_witnesses": 62
+        },
+        {
+          "progress": 0.5,
+          "interior_witnesses": 62
+        },
+        {
+          "progress": 0.55,
+          "interior_witnesses": 62
+        },
+        {
+          "progress": 0.6,
+          "interior_witnesses": 62
+        },
+        {
+          "progress": 0.65,
+          "interior_witnesses": 62
+        },
+        {
+          "progress": 0.7,
+          "interior_witnesses": 62
+        },
+        {
+          "progress": 0.75,
+          "interior_witnesses": 62
+        },
+        {
+          "progress": 0.8,
+          "interior_witnesses": 62
+        },
+        {
+          "progress": 0.85,
+          "interior_witnesses": 62
+        },
+        {
+          "progress": 0.9,
+          "interior_witnesses": 62
+        },
+        {
+          "progress": 0.95,
+          "interior_witnesses": 62
+        },
+        {
+          "progress": 1.0,
+          "interior_witnesses": 32
+        }
+      ]
+    }
+  ]
+}

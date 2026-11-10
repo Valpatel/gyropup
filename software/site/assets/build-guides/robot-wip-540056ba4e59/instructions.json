@@ -179,9 +179,24 @@
       ]
     },
     {
+      "id": "l-motors",
+      "title": "Left stationary motor cases",
+      "text": "Present the two motor cases before the hip support closes around them. Their outward arrival avoids passing the cases through the already-installed hip web; the cases still need temporary support. This is a WIP presentation dependency, not a fixture procedure.",
+      "requirements": [
+        {
+          "title": "L.motor_front",
+          "quantity": 1
+        },
+        {
+          "title": "L.motor_rear",
+          "quantity": 1
+        }
+      ]
+    },
+    {
       "id": "l-hip",
-      "title": "Left hip frame and support bearings",
-      "text": "Locate the hip frame at the body mounting face and the two support-bearing envelopes in its seats. The source flange screw group remains a group; bearing fits and insert retention are unverified.",
+      "title": "Left hip frame, support bearings and lug screw group",
+      "text": "Locate the hip frame around the motor cases, then show its support bearings and retained screw groups. Lug screws follow the support and precede the upper links. The source flange screw group remains a group; bearing fits, driver access, temporary support and insert retention are unverified. No torque is specified.",
       "requirements": [
         {
           "title": "L.hip_frame",
@@ -202,21 +217,6 @@
         {
           "title": "cheek_nuts_left",
           "quantity": 1
-        }
-      ]
-    },
-    {
-      "id": "l-motors",
-      "title": "Left stationary motor cases and lug screw group",
-      "text": "The two motor housings belong to the fixed hip support, not the moving upper links. Show the lug screw envelopes before the upper links and stop posts obscure their access. No torque is specified.",
-      "requirements": [
-        {
-          "title": "L.motor_front",
-          "quantity": 1
-        },
-        {
-          "title": "L.motor_rear",
-          "quantity": 1
         },
         {
           "title": "L.screws_lugs",
@@ -227,7 +227,7 @@
     {
       "id": "l-upper",
       "title": "Left output adapters and upper links",
-      "text": "Each output adapter and its upper link share the authored rotating-link frame. The front and rear instances are distinct; their source screw groups are not individual manufactured screw models.",
+      "text": "Each output adapter and its upper link share the authored rotating-link frame. The output screw group precedes the upper links so it does not arrive through their hubs. The front and rear instances are distinct; source screw groups are not individual manufactured screw models.",
       "requirements": [
         {
           "title": "L.output_adapter_front",
@@ -235,6 +235,10 @@
         },
         {
           "title": "L.output_adapter_rear",
+          "quantity": 1
+        },
+        {
+          "title": "L.screws_outputs",
           "quantity": 1
         },
         {
@@ -246,10 +250,6 @@
           "quantity": 1
         },
         {
-          "title": "L.screws_outputs",
-          "quantity": 1
-        },
-        {
           "title": "L.screws_links",
           "quantity": 1
         }
@@ -258,7 +258,7 @@
     {
       "id": "l-front-knee",
       "title": "Left front knee and lower link",
-      "text": "The current source uses the 6301 knee cartridge in the front lower link, with separate spacer, eye sleeve, washer, shoulder-pin and nut identities. The pin connects the upper eye and lower knee; the archived 6201-era display is not substituted for this geometry.",
+      "text": "The current source uses the 6301 knee cartridge in the front lower link, with separate spacer, eye sleeve, washer, shoulder-pin and nut identities. The pin connects the upper eye and lower knee; the archived 6201-era display is not substituted for this geometry. The inboard bearing is blocked by the lower-link shoulder from outside and the upper eye from inside; this arrival remains illustrative pending subassembly validation.",
       "requirements": [
         {
           "title": "L.front_link",
@@ -336,7 +336,7 @@
     {
       "id": "l-apex",
       "title": "Left apex connection and loop closure",
-      "text": "The two lower links meet at the source five-bar apex. The spacer, paired-bearing envelope and circlip remain separate CAD identities. This geometric closure does not prove physical fit or free motion.",
+      "text": "The two lower links meet at the source five-bar apex. The spacer, paired-bearing envelope and circlip remain separate CAD identities. The rigid circlip envelope overlaps its final groove; its illustrated arrival does not model circlip expansion. This closure does not prove physical fit or free motion.",
       "requirements": [
         {
           "title": "L.apex_spacer",
@@ -355,7 +355,7 @@
     {
       "id": "l-wheel",
       "title": "Left wheel hub, tyre and retained screw groups",
-      "text": "The BotWheel hub and tyre share the authored apex/wheel datum. Keep the wheel-fastener and washer source groups visible as groups. Thread engagement, wiring and tightening remain unqualified.",
+      "text": "The BotWheel hub and tyre share the authored apex/wheel datum. Keep the wheel-fastener and washer source groups visible as groups. Washers precede screws, arriving from the inboard side of the hub as in the source screw stack. Thread engagement, wiring and tightening remain unqualified.",
       "requirements": [
         {
           "title": "L.wheel_hub",
@@ -366,11 +366,11 @@
           "quantity": 1
         },
         {
-          "title": "L.screws_wheel",
+          "title": "L.washers_wheel",
           "quantity": 1
         },
         {
-          "title": "L.washers_wheel",
+          "title": "L.screws_wheel",
           "quantity": 1
         }
       ]
@@ -403,9 +403,24 @@
       ]
     },
     {
+      "id": "r-motors",
+      "title": "Right stationary motor cases",
+      "text": "Present the two motor cases before the hip support closes around them. Their outward arrival avoids passing the cases through the already-installed hip web; the cases still need temporary support. This is a WIP presentation dependency, not a fixture procedure.",
+      "requirements": [
+        {
+          "title": "R.motor_front",
+          "quantity": 1
+        },
+        {
+          "title": "R.motor_rear",
+          "quantity": 1
+        }
+      ]
+    },
+    {
       "id": "r-hip",
-      "title": "Right hip frame and support bearings",
-      "text": "Locate the hip frame at the body mounting face and the two support-bearing envelopes in its seats. The source flange screw group remains a group; bearing fits and insert retention are unverified.",
+      "title": "Right hip frame, support bearings and lug screw group",
+      "text": "Locate the hip frame around the motor cases, then show its support bearings and retained screw groups. Lug screws follow the support and precede the upper links. The source flange screw group remains a group; bearing fits, driver access, temporary support and insert retention are unverified. No torque is specified.",
       "requirements": [
         {
           "title": "R.hip_frame",
@@ -426,21 +441,6 @@
         {
           "title": "cheek_nuts_right",
           "quantity": 1
-        }
-      ]
-    },
-    {
-      "id": "r-motors",
-      "title": "Right stationary motor cases and lug screw group",
-      "text": "The two motor housings belong to the fixed hip support, not the moving upper links. Show the lug screw envelopes before the upper links and stop posts obscure their access. No torque is specified.",
-      "requirements": [
-        {
-          "title": "R.motor_front",
-          "quantity": 1
-        },
-        {
-          "title": "R.motor_rear",
-          "quantity": 1
         },
         {
           "title": "R.screws_lugs",
@@ -451,7 +451,7 @@
     {
       "id": "r-upper",
       "title": "Right output adapters and upper links",
-      "text": "Each output adapter and its upper link share the authored rotating-link frame. The front and rear instances are distinct; their source screw groups are not individual manufactured screw models.",
+      "text": "Each output adapter and its upper link share the authored rotating-link frame. The output screw group precedes the upper links so it does not arrive through their hubs. The front and rear instances are distinct; source screw groups are not individual manufactured screw models.",
       "requirements": [
         {
           "title": "R.output_adapter_front",
@@ -459,6 +459,10 @@
         },
         {
           "title": "R.output_adapter_rear",
+          "quantity": 1
+        },
+        {
+          "title": "R.screws_outputs",
           "quantity": 1
         },
         {
@@ -470,10 +474,6 @@
           "quantity": 1
         },
         {
-          "title": "R.screws_outputs",
-          "quantity": 1
-        },
-        {
           "title": "R.screws_links",
           "quantity": 1
         }
@@ -482,7 +482,7 @@
     {
       "id": "r-front-knee",
       "title": "Right front knee and lower link",
-      "text": "The current source uses the 6301 knee cartridge in the front lower link, with separate spacer, eye sleeve, washer, shoulder-pin and nut identities. The pin connects the upper eye and lower knee; the archived 6201-era display is not substituted for this geometry.",
+      "text": "The current source uses the 6301 knee cartridge in the front lower link, with separate spacer, eye sleeve, washer, shoulder-pin and nut identities. The pin connects the upper eye and lower knee; the archived 6201-era display is not substituted for this geometry. The inboard bearing is blocked by the lower-link shoulder from outside and the upper eye from inside; this arrival remains illustrative pending subassembly validation.",
       "requirements": [
         {
           "title": "R.front_link",
@@ -560,7 +560,7 @@
     {
       "id": "r-apex",
       "title": "Right apex connection and loop closure",
-      "text": "The two lower links meet at the source five-bar apex. The spacer, paired-bearing envelope and circlip remain separate CAD identities. This geometric closure does not prove physical fit or free motion.",
+      "text": "The two lower links meet at the source five-bar apex. The spacer, paired-bearing envelope and circlip remain separate CAD identities. The rigid circlip envelope overlaps its final groove; its illustrated arrival does not model circlip expansion. This closure does not prove physical fit or free motion.",
       "requirements": [
         {
           "title": "R.apex_spacer",
@@ -579,7 +579,7 @@
     {
       "id": "r-wheel",
       "title": "Right wheel hub, tyre and retained screw groups",
-      "text": "The BotWheel hub and tyre share the authored apex/wheel datum. Keep the wheel-fastener and washer source groups visible as groups. Thread engagement, wiring and tightening remain unqualified.",
+      "text": "The BotWheel hub and tyre share the authored apex/wheel datum. Keep the wheel-fastener and washer source groups visible as groups. Washers precede screws, arriving from the inboard side of the hub as in the source screw stack. Thread engagement, wiring and tightening remain unqualified.",
       "requirements": [
         {
           "title": "R.wheel_hub",
@@ -590,11 +590,11 @@
           "quantity": 1
         },
         {
-          "title": "R.screws_wheel",
+          "title": "R.washers_wheel",
           "quantity": 1
         },
         {
-          "title": "R.washers_wheel",
+          "title": "R.screws_wheel",
           "quantity": 1
         }
       ]

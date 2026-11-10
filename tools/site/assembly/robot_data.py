@@ -91,6 +91,27 @@ def inventory(root):
     return files
 
 
+def verify_frozen_inventory(actual, producer, role):
+    """Verify this collector's 0600 files after the fleet epilog freezes them 0640.
+
+    This explicit lifecycle contract preserves membership, bytes and all other
+    mode bits. It is not a permission-insensitive comparison or an input repair.
+    Keep actual inventories for an exact before/after preservation check too.
+    """
+    if set(actual) != set(producer):
+        raise ValueError(role+': retained membership mismatch')
+    expected = {}
+    for name, row in producer.items():
+        if row['mode'] != 0o600:
+            raise ValueError(role+': unexpected producer mode: '+name)
+        expected[name] = {**row, 'mode': 0o640}
+    differences = [name for name in sorted(expected) if actual[name] != expected[name]]
+    if differences:
+        raise ValueError(role+': retained content or frozen mode mismatch: '+repr(differences[:8]))
+    return {'members': len(expected), 'producer_mode': 0o600,
+            'retained_mode': 0o640, 'content_and_membership_equal': True}
+
+
 def mesh_files(names):
     files = {}
     for name in names:

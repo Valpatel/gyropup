@@ -1,0 +1,105 @@
+{
+  "schema": "gyropup.native-seat-classification/1",
+  "date": "2026-11-10",
+  "native_job": 264,
+  "new_native_queries": false,
+  "leg_geometry_changed": false,
+  "classification": "Pre-existing final seated hip/cheek overlap, already recorded as a rigid contact declared by the body fastener joint; not introduced by the candidate installation order.",
+  "baseline_record": {
+    "file": "hardware/exports/body/gates/connectivity-P3.json",
+    "sha256": "6e1a9785a640e1b5a55dcc847620cf60184c9f6730e7da4efe987aadc28eb3ab",
+    "bytes_equal_pre_candidate_33c4464b": true,
+    "records": [
+      {
+        "json_pointer": "/graph/edges/39",
+        "record": {
+          "a": "cheek_left",
+          "b": "leg.left_hip_frame",
+          "kind": "contact",
+          "state": "overlapping",
+          "gap_mm": 0.0,
+          "overlap_mm3": 44.003843,
+          "witness": {
+            "overlap_centroid_estimate": {
+              "method": "Gauss centroid refinements 1e-6 and 1e-8; approximate witness only",
+              "refinement_delta_mm": 3.388789460459287e-13
+            },
+            "overlap_centroid": [
+              -0.0,
+              20.35622,
+              -80.9762
+            ],
+            "overlap_box": [
+              -90.5998,
+              20.2498,
+              -81.5,
+              90.5998,
+              20.607026,
+              -79.4002
+            ],
+            "volume_integration": {
+              "method": "adaptive BRepGProp GK, requested relative errors 1e-6 and 1e-8",
+              "error_basis": "max(OCCT summed absolute face-error estimates, refinement delta); not a rigorous bound",
+              "max_estimated_error_mm3": 0.0013025927963999102,
+              "max_refinement_delta_mm3": 0.0
+            }
+          },
+          "rigid": true,
+          "declared_by": [
+            "fastener:hip_frame_left:cheek_left"
+          ]
+        }
+      },
+      {
+        "json_pointer": "/graph/edges/46",
+        "record": {
+          "a": "cheek_right",
+          "b": "leg.right_hip_frame",
+          "kind": "contact",
+          "state": "overlapping",
+          "gap_mm": 0.0,
+          "overlap_mm3": 44.003843,
+          "witness": {
+            "overlap_centroid_estimate": {
+              "method": "Gauss centroid refinements 1e-6 and 1e-8; approximate witness only",
+              "refinement_delta_mm": 3.372991594186245e-13
+            },
+            "overlap_centroid": [
+              -0.0,
+              -20.35622,
+              -80.9762
+            ],
+            "overlap_box": [
+              -90.5998,
+              -20.607026,
+              -81.5,
+              90.5998,
+              -20.2498,
+              -79.4002
+            ],
+            "volume_integration": {
+              "method": "adaptive BRepGProp GK, requested relative errors 1e-6 and 1e-8",
+              "error_basis": "max(OCCT summed absolute face-error estimates, refinement delta); not a rigorous bound",
+              "max_estimated_error_mm3": 0.001302592813429949,
+              "max_refinement_delta_mm3": 0.0
+            }
+          },
+          "rigid": true,
+          "declared_by": [
+            "fastener:hip_frame_right:cheek_right"
+          ]
+        }
+      }
+    ]
+  },
+  "source_inference": {
+    "status": "Inference only, not independently recomputed overlap feature",
+    "description": "Overlap box lies at the mount-plane/lower-formed-bend region. The current hip has18mm lower and13mm upper flanges; the cheek bend may meet the thicker lower flange.",
+    "sources": [
+      "hardware/cad/legs/fivebar.py::hip_frame",
+      "hardware/cad/body/body_frame.py::cheek_part",
+      "hardware/cad/body/body_params.py::z_spine_top"
+    ]
+  },
+  "limits": "The numerical baseline match does not qualify the contact, prove physical fit or old whole-report freshness, or authorize an insertion overlap exemption. Keep the printing leg unchanged; classify any body-interface remedy separately."
+}

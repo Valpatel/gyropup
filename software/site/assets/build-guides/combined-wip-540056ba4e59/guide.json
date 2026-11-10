@@ -127,10 +127,10 @@
       "tools/engineering/robot/readme_design.py": "8c653277d2aee9fbfd08acb07c23c6542cdd04930804180a111352666110499e",
       "tools/engineering/robot/readme-design.json": "283a05fe4f5717929c5f3dfb316bbf35f9d1f38fbd00fcc59bd0441f35cbf4ff"
     },
-    "exporter_sha256": "4b86765a5fa5be9495007aecbe2d08135a49d8de9c29b0c83af778387cf44b24",
+    "exporter_sha256": "52e64375fcecd6f97bd94dca5cbd57ebedfe6343392e14ac04b43c2f828f5544",
     "hardware_tree": "89ae8db4a748d5b19893293fbef3c1d49eeccc2f",
     "collector_sha256": "e655d2c00c6d8d752ac941d2327d4b6faa673d8941567894f7792c92839ada37",
-    "recipe_sha256": "9562d12e1e5cc87b5d6d3af646b65bb190668b71fcf8ce531f8796ef71a5c83c",
+    "recipe_sha256": "29e588aeca21c663a085b2abe130d89238413b2b8c80a299468e8873bfc73231",
     "bom_hashes": {
       "hardware/exports/body/bom.json": "e7a72fd31eb0be55c1f1306170f3cc20b86793002a2f1f6fa037326627246d74",
       "hardware/exports/leg/bom.json": "77c19e0a4acb896b3fd372f581281954c6aa36efd71bb427390adbf188a06f79",
@@ -143,16 +143,16 @@
       "body-spine": "construction",
       "body-trays": "construction",
       "body-platforms": "construction",
-      "l-hip": "construction",
       "l-motors": "construction",
+      "l-hip": "construction",
       "l-upper": "construction",
       "l-front-knee": "construction",
       "l-rear-knee": "construction",
       "l-apex": "construction",
       "l-wheel": "construction",
       "l-stops": "construction",
-      "r-hip": "construction",
       "r-motors": "construction",
+      "r-hip": "construction",
       "r-upper": "construction",
       "r-front-knee": "construction",
       "r-rear-knee": "construction",
@@ -209,24 +209,24 @@
         "bus_bar_1",
         "bus_bar_2"
       ],
+      "l-motors": [
+        "L.motor_front",
+        "L.motor_rear"
+      ],
       "l-hip": [
         "L.hip_frame",
         "L.bearing_61812_front",
         "L.bearing_61812_rear",
         "frame_screws_left",
-        "cheek_nuts_left"
-      ],
-      "l-motors": [
-        "L.motor_front",
-        "L.motor_rear",
+        "cheek_nuts_left",
         "L.screws_lugs"
       ],
       "l-upper": [
         "L.output_adapter_front",
         "L.output_adapter_rear",
+        "L.screws_outputs",
         "L.upper_link_front",
         "L.upper_link_rear",
-        "L.screws_outputs",
         "L.screws_links"
       ],
       "l-front-knee": [
@@ -257,8 +257,8 @@
       "l-wheel": [
         "L.wheel_hub",
         "L.wheel_tyre",
-        "L.screws_wheel",
-        "L.washers_wheel"
+        "L.washers_wheel",
+        "L.screws_wheel"
       ],
       "l-stops": [
         "L.stop_posts",
@@ -267,24 +267,24 @@
         "L.stop_sleeve_3",
         "L.stop_sleeve_4"
       ],
+      "r-motors": [
+        "R.motor_front",
+        "R.motor_rear"
+      ],
       "r-hip": [
         "R.hip_frame",
         "R.bearing_61812_front",
         "R.bearing_61812_rear",
         "frame_screws_right",
-        "cheek_nuts_right"
-      ],
-      "r-motors": [
-        "R.motor_front",
-        "R.motor_rear",
+        "cheek_nuts_right",
         "R.screws_lugs"
       ],
       "r-upper": [
         "R.output_adapter_front",
         "R.output_adapter_rear",
+        "R.screws_outputs",
         "R.upper_link_front",
         "R.upper_link_rear",
-        "R.screws_outputs",
         "R.screws_links"
       ],
       "r-front-knee": [
@@ -315,8 +315,8 @@
       "r-wheel": [
         "R.wheel_hub",
         "R.wheel_tyre",
-        "R.screws_wheel",
-        "R.washers_wheel"
+        "R.washers_wheel",
+        "R.screws_wheel"
       ],
       "r-stops": [
         "R.stop_posts",
@@ -449,7 +449,7 @@
         "turret.hopper_inserts"
       ]
     },
-    "install_order_basis": "Explicit educational presentation order from the authored source operations; not verified insertion, fastening or physical assembly order.",
+    "install_order_basis": "Source-owned educational stages with bounded motor/hip and output-screw dependency screens, and inboard wheel-fastener arrivals. Knee and circlip arrival conflicts remain explicit; no verified physical assembly order.",
     "manufacturing_by_part": {
       "cheek_left": {
         "kind": "sheet",
@@ -4966,16 +4966,16 @@
       "body-spine": "hardware/cad/body/body_frame.py::frame_parts / place_cheek",
       "body-trays": "hardware/cad/body/body_frame.py::frame_parts; hardware/cad/body/body_battery.py::bay_parts",
       "body-platforms": "hardware/cad/body/body_frame.py::frame_parts / place_plate",
-      "l-hip": "hardware/cad/legs/fivebar.py::assembly / bought_parts; hardware/cad/body/body_frame.py::frame_parts / legs",
-      "l-motors": "hardware/cad/legs/fivebar.py::bought_parts / screw_groups",
+      "l-motors": "hardware/cad/legs/fivebar.py::bought_parts",
+      "l-hip": "hardware/cad/legs/fivebar.py::assembly / bought_parts / screw_groups; hardware/cad/body/body_frame.py::frame_parts / legs",
       "l-upper": "hardware/cad/legs/fivebar.py::assembly / link_frames / screw_groups",
       "l-front-knee": "hardware/cad/legs/fivebar.py::assembly / bought_parts / link_frames",
       "l-rear-knee": "hardware/cad/legs/fivebar.py::assembly / bought_parts / link_frames",
       "l-apex": "hardware/cad/legs/fivebar.py::assembly / bought_parts / link_frames",
       "l-wheel": "hardware/cad/legs/fivebar.py::bought_parts / botwheel / screw_groups",
       "l-stops": "hardware/cad/legs/fivebar.py::assembly / bought_parts / stop_posts",
-      "r-hip": "hardware/cad/legs/fivebar.py::assembly / bought_parts; hardware/cad/body/body_frame.py::frame_parts / legs",
-      "r-motors": "hardware/cad/legs/fivebar.py::bought_parts / screw_groups",
+      "r-motors": "hardware/cad/legs/fivebar.py::bought_parts",
+      "r-hip": "hardware/cad/legs/fivebar.py::assembly / bought_parts / screw_groups; hardware/cad/body/body_frame.py::frame_parts / legs",
       "r-upper": "hardware/cad/legs/fivebar.py::assembly / link_frames / screw_groups",
       "r-front-knee": "hardware/cad/legs/fivebar.py::assembly / bought_parts / link_frames",
       "r-rear-knee": "hardware/cad/legs/fivebar.py::assembly / bought_parts / link_frames",
@@ -5140,6 +5140,16 @@
           "quantity": 1
         }
       ],
+      "l-motors": [
+        {
+          "title": "L.motor_front",
+          "quantity": 1
+        },
+        {
+          "title": "L.motor_rear",
+          "quantity": 1
+        }
+      ],
       "l-hip": [
         {
           "title": "L.hip_frame",
@@ -5160,16 +5170,6 @@
         {
           "title": "cheek_nuts_left",
           "quantity": 1
-        }
-      ],
-      "l-motors": [
-        {
-          "title": "L.motor_front",
-          "quantity": 1
-        },
-        {
-          "title": "L.motor_rear",
-          "quantity": 1
         },
         {
           "title": "L.screws_lugs",
@@ -5186,15 +5186,15 @@
           "quantity": 1
         },
         {
+          "title": "L.screws_outputs",
+          "quantity": 1
+        },
+        {
           "title": "L.upper_link_front",
           "quantity": 1
         },
         {
           "title": "L.upper_link_rear",
-          "quantity": 1
-        },
-        {
-          "title": "L.screws_outputs",
           "quantity": 1
         },
         {
@@ -5294,11 +5294,11 @@
           "quantity": 1
         },
         {
-          "title": "L.screws_wheel",
+          "title": "L.washers_wheel",
           "quantity": 1
         },
         {
-          "title": "L.washers_wheel",
+          "title": "L.screws_wheel",
           "quantity": 1
         }
       ],
@@ -5324,6 +5324,16 @@
           "quantity": 1
         }
       ],
+      "r-motors": [
+        {
+          "title": "R.motor_front",
+          "quantity": 1
+        },
+        {
+          "title": "R.motor_rear",
+          "quantity": 1
+        }
+      ],
       "r-hip": [
         {
           "title": "R.hip_frame",
@@ -5344,16 +5354,6 @@
         {
           "title": "cheek_nuts_right",
           "quantity": 1
-        }
-      ],
-      "r-motors": [
-        {
-          "title": "R.motor_front",
-          "quantity": 1
-        },
-        {
-          "title": "R.motor_rear",
-          "quantity": 1
         },
         {
           "title": "R.screws_lugs",
@@ -5370,15 +5370,15 @@
           "quantity": 1
         },
         {
+          "title": "R.screws_outputs",
+          "quantity": 1
+        },
+        {
           "title": "R.upper_link_front",
           "quantity": 1
         },
         {
           "title": "R.upper_link_rear",
-          "quantity": 1
-        },
-        {
-          "title": "R.screws_outputs",
           "quantity": 1
         },
         {
@@ -5478,11 +5478,11 @@
           "quantity": 1
         },
         {
-          "title": "R.screws_wheel",
+          "title": "R.washers_wheel",
           "quantity": 1
         },
         {
-          "title": "R.washers_wheel",
+          "title": "R.screws_wheel",
           "quantity": 1
         }
       ],
@@ -6581,7 +6581,7 @@
     "limits": "Source-owned WIP sequence; no physical fit, insertion path, fastening/preload, power, motion or strength qualification.",
     "instructions": {
       "file": "instructions.json",
-      "sha256": "ddd296cb3909494960e982bf4c8fc48aee8699e39163c069fc2891782af27c92"
+      "sha256": "506668fda28074bc6a2a7c0cf974f9df9468377924a7745833c8a8c0d585527d"
     }
   },
   "subassemblies": [
@@ -6921,19 +6921,19 @@
       "id": "l-leg",
       "title": "Left leg",
       "parts": [
+        "L.motor_front",
+        "L.motor_rear",
         "L.hip_frame",
         "L.bearing_61812_front",
         "L.bearing_61812_rear",
         "frame_screws_left",
         "cheek_nuts_left",
-        "L.motor_front",
-        "L.motor_rear",
         "L.screws_lugs",
         "L.output_adapter_front",
         "L.output_adapter_rear",
+        "L.screws_outputs",
         "L.upper_link_front",
         "L.upper_link_rear",
-        "L.screws_outputs",
         "L.screws_links",
         "L.front_link",
         "L.knee_bearing_front_in",
@@ -6956,8 +6956,8 @@
         "L.apex_circlip",
         "L.wheel_hub",
         "L.wheel_tyre",
-        "L.screws_wheel",
         "L.washers_wheel",
+        "L.screws_wheel",
         "L.stop_posts",
         "L.stop_sleeve_1",
         "L.stop_sleeve_2",
@@ -6969,19 +6969,19 @@
       "id": "r-leg",
       "title": "Right leg",
       "parts": [
+        "R.motor_front",
+        "R.motor_rear",
         "R.hip_frame",
         "R.bearing_61812_front",
         "R.bearing_61812_rear",
         "frame_screws_right",
         "cheek_nuts_right",
-        "R.motor_front",
-        "R.motor_rear",
         "R.screws_lugs",
         "R.output_adapter_front",
         "R.output_adapter_rear",
+        "R.screws_outputs",
         "R.upper_link_front",
         "R.upper_link_rear",
-        "R.screws_outputs",
         "R.screws_links",
         "R.front_link",
         "R.knee_bearing_front_in",
@@ -7004,8 +7004,8 @@
         "R.apex_circlip",
         "R.wheel_hub",
         "R.wheel_tyre",
-        "R.screws_wheel",
         "R.washers_wheel",
+        "R.screws_wheel",
         "R.stop_posts",
         "R.stop_sleeve_1",
         "R.stop_sleeve_2",
@@ -7670,8 +7670,8 @@
       ]
     },
     {
-      "id": "l-hip",
-      "title": "Left hip frame and support bearings",
+      "id": "l-motors",
+      "title": "Left stationary motor cases",
       "subassembly": "l-leg",
       "parts": [
         "cheek_left",
@@ -7710,18 +7710,94 @@
         "bus_insulator_2",
         "bus_bar_1",
         "bus_bar_2",
+        "L.motor_front",
+        "L.motor_rear"
+      ],
+      "highlight": [
+        "L.motor_front",
+        "L.motor_rear"
+      ],
+      "offsets_mm": {
+        "L.motor_front": [
+          0,
+          60,
+          0
+        ],
+        "L.motor_rear": [
+          0,
+          60,
+          0
+        ]
+      },
+      "text": "Present the two motor cases before the hip support closes around them. Their outward arrival avoids passing the cases through the already-installed hip web; the cases still need temporary support. This is a WIP presentation dependency, not a fixture procedure.",
+      "camera": {
+        "direction": [
+          1,
+          1,
+          0.45
+        ]
+      },
+      "requires": [
+        "body-platforms"
+      ]
+    },
+    {
+      "id": "l-hip",
+      "title": "Left hip frame, support bearings and lug screw group",
+      "subassembly": "l-leg",
+      "parts": [
+        "cheek_left",
+        "cheek_right",
+        "spacers",
+        "spacer_screws",
+        "floor_tray",
+        "belly_plate",
+        "bay_floor",
+        "bay_side_l",
+        "bay_side_r",
+        "bay_rail_l",
+        "bay_rail_r",
+        "adapter_plate_front",
+        "adapter_plate_rear",
+        "bay_skid_1",
+        "bay_skid_2",
+        "bay_skid_3",
+        "bay_skid_4",
+        "post_1",
+        "post_2",
+        "post_3",
+        "post_4",
+        "isolator_1",
+        "isolator_2",
+        "isolator_3",
+        "isolator_4",
+        "compute_pallet",
+        "plate_post_1",
+        "plate_post_2",
+        "plate_post_3",
+        "plate_post_4",
+        "power_plate",
+        "dcdc_bracket",
+        "bus_insulator_1",
+        "bus_insulator_2",
+        "bus_bar_1",
+        "bus_bar_2",
+        "L.motor_front",
+        "L.motor_rear",
         "L.hip_frame",
         "L.bearing_61812_front",
         "L.bearing_61812_rear",
         "frame_screws_left",
-        "cheek_nuts_left"
+        "cheek_nuts_left",
+        "L.screws_lugs"
       ],
       "highlight": [
         "L.hip_frame",
         "L.bearing_61812_front",
         "L.bearing_61812_rear",
         "frame_screws_left",
-        "cheek_nuts_left"
+        "cheek_nuts_left",
+        "L.screws_lugs"
       ],
       "offsets_mm": {
         "L.hip_frame": [
@@ -7748,85 +7824,6 @@
           0,
           60,
           0
-        ]
-      },
-      "text": "Locate the hip frame at the body mounting face and the two support-bearing envelopes in its seats. The source flange screw group remains a group; bearing fits and insert retention are unverified.",
-      "camera": {
-        "direction": [
-          1,
-          1,
-          0.45
-        ]
-      },
-      "requires": [
-        "body-platforms"
-      ]
-    },
-    {
-      "id": "l-motors",
-      "title": "Left stationary motor cases and lug screw group",
-      "subassembly": "l-leg",
-      "parts": [
-        "cheek_left",
-        "cheek_right",
-        "spacers",
-        "spacer_screws",
-        "floor_tray",
-        "belly_plate",
-        "bay_floor",
-        "bay_side_l",
-        "bay_side_r",
-        "bay_rail_l",
-        "bay_rail_r",
-        "adapter_plate_front",
-        "adapter_plate_rear",
-        "bay_skid_1",
-        "bay_skid_2",
-        "bay_skid_3",
-        "bay_skid_4",
-        "post_1",
-        "post_2",
-        "post_3",
-        "post_4",
-        "isolator_1",
-        "isolator_2",
-        "isolator_3",
-        "isolator_4",
-        "compute_pallet",
-        "plate_post_1",
-        "plate_post_2",
-        "plate_post_3",
-        "plate_post_4",
-        "power_plate",
-        "dcdc_bracket",
-        "bus_insulator_1",
-        "bus_insulator_2",
-        "bus_bar_1",
-        "bus_bar_2",
-        "L.hip_frame",
-        "L.bearing_61812_front",
-        "L.bearing_61812_rear",
-        "frame_screws_left",
-        "cheek_nuts_left",
-        "L.motor_front",
-        "L.motor_rear",
-        "L.screws_lugs"
-      ],
-      "highlight": [
-        "L.motor_front",
-        "L.motor_rear",
-        "L.screws_lugs"
-      ],
-      "offsets_mm": {
-        "L.motor_front": [
-          0,
-          60,
-          0
-        ],
-        "L.motor_rear": [
-          0,
-          60,
-          0
         ],
         "L.screws_lugs": [
           0,
@@ -7834,7 +7831,7 @@
           0
         ]
       },
-      "text": "The two motor housings belong to the fixed hip support, not the moving upper links. Show the lug screw envelopes before the upper links and stop posts obscure their access. No torque is specified.",
+      "text": "Locate the hip frame around the motor cases, then show its support bearings and retained screw groups. Lug screws follow the support and precede the upper links. The source flange screw group remains a group; bearing fits, driver access, temporary support and insert retention are unverified. No torque is specified.",
       "camera": {
         "direction": [
           1,
@@ -7843,7 +7840,7 @@
         ]
       },
       "requires": [
-        "l-hip"
+        "l-motors"
       ]
     },
     {
@@ -7887,27 +7884,27 @@
         "bus_insulator_2",
         "bus_bar_1",
         "bus_bar_2",
+        "L.motor_front",
+        "L.motor_rear",
         "L.hip_frame",
         "L.bearing_61812_front",
         "L.bearing_61812_rear",
         "frame_screws_left",
         "cheek_nuts_left",
-        "L.motor_front",
-        "L.motor_rear",
         "L.screws_lugs",
         "L.output_adapter_front",
         "L.output_adapter_rear",
+        "L.screws_outputs",
         "L.upper_link_front",
         "L.upper_link_rear",
-        "L.screws_outputs",
         "L.screws_links"
       ],
       "highlight": [
         "L.output_adapter_front",
         "L.output_adapter_rear",
+        "L.screws_outputs",
         "L.upper_link_front",
         "L.upper_link_rear",
-        "L.screws_outputs",
         "L.screws_links"
       ],
       "offsets_mm": {
@@ -7917,6 +7914,11 @@
           0
         ],
         "L.output_adapter_rear": [
+          0,
+          60,
+          0
+        ],
+        "L.screws_outputs": [
           0,
           60,
           0
@@ -7931,18 +7933,13 @@
           60,
           0
         ],
-        "L.screws_outputs": [
-          0,
-          60,
-          0
-        ],
         "L.screws_links": [
           0,
           60,
           0
         ]
       },
-      "text": "Each output adapter and its upper link share the authored rotating-link frame. The front and rear instances are distinct; their source screw groups are not individual manufactured screw models.",
+      "text": "Each output adapter and its upper link share the authored rotating-link frame. The output screw group precedes the upper links so it does not arrive through their hubs. The front and rear instances are distinct; source screw groups are not individual manufactured screw models.",
       "camera": {
         "direction": [
           1,
@@ -7951,7 +7948,7 @@
         ]
       },
       "requires": [
-        "l-motors"
+        "l-hip"
       ]
     },
     {
@@ -7995,19 +7992,19 @@
         "bus_insulator_2",
         "bus_bar_1",
         "bus_bar_2",
+        "L.motor_front",
+        "L.motor_rear",
         "L.hip_frame",
         "L.bearing_61812_front",
         "L.bearing_61812_rear",
         "frame_screws_left",
         "cheek_nuts_left",
-        "L.motor_front",
-        "L.motor_rear",
         "L.screws_lugs",
         "L.output_adapter_front",
         "L.output_adapter_rear",
+        "L.screws_outputs",
         "L.upper_link_front",
         "L.upper_link_rear",
-        "L.screws_outputs",
         "L.screws_links",
         "L.front_link",
         "L.knee_bearing_front_in",
@@ -8070,7 +8067,7 @@
           0
         ]
       },
-      "text": "The current source uses the 6301 knee cartridge in the front lower link, with separate spacer, eye sleeve, washer, shoulder-pin and nut identities. The pin connects the upper eye and lower knee; the archived 6201-era display is not substituted for this geometry.",
+      "text": "The current source uses the 6301 knee cartridge in the front lower link, with separate spacer, eye sleeve, washer, shoulder-pin and nut identities. The pin connects the upper eye and lower knee; the archived 6201-era display is not substituted for this geometry. The inboard bearing is blocked by the lower-link shoulder from outside and the upper eye from inside; this arrival remains illustrative pending subassembly validation.",
       "camera": {
         "direction": [
           1,
@@ -8123,19 +8120,19 @@
         "bus_insulator_2",
         "bus_bar_1",
         "bus_bar_2",
+        "L.motor_front",
+        "L.motor_rear",
         "L.hip_frame",
         "L.bearing_61812_front",
         "L.bearing_61812_rear",
         "frame_screws_left",
         "cheek_nuts_left",
-        "L.motor_front",
-        "L.motor_rear",
         "L.screws_lugs",
         "L.output_adapter_front",
         "L.output_adapter_rear",
+        "L.screws_outputs",
         "L.upper_link_front",
         "L.upper_link_rear",
-        "L.screws_outputs",
         "L.screws_links",
         "L.front_link",
         "L.knee_bearing_front_in",
@@ -8259,19 +8256,19 @@
         "bus_insulator_2",
         "bus_bar_1",
         "bus_bar_2",
+        "L.motor_front",
+        "L.motor_rear",
         "L.hip_frame",
         "L.bearing_61812_front",
         "L.bearing_61812_rear",
         "frame_screws_left",
         "cheek_nuts_left",
-        "L.motor_front",
-        "L.motor_rear",
         "L.screws_lugs",
         "L.output_adapter_front",
         "L.output_adapter_rear",
+        "L.screws_outputs",
         "L.upper_link_front",
         "L.upper_link_rear",
-        "L.screws_outputs",
         "L.screws_links",
         "L.front_link",
         "L.knee_bearing_front_in",
@@ -8315,7 +8312,7 @@
           0
         ]
       },
-      "text": "The two lower links meet at the source five-bar apex. The spacer, paired-bearing envelope and circlip remain separate CAD identities. This geometric closure does not prove physical fit or free motion.",
+      "text": "The two lower links meet at the source five-bar apex. The spacer, paired-bearing envelope and circlip remain separate CAD identities. The rigid circlip envelope overlaps its final groove; its illustrated arrival does not model circlip expansion. This closure does not prove physical fit or free motion.",
       "camera": {
         "direction": [
           1,
@@ -8368,19 +8365,19 @@
         "bus_insulator_2",
         "bus_bar_1",
         "bus_bar_2",
+        "L.motor_front",
+        "L.motor_rear",
         "L.hip_frame",
         "L.bearing_61812_front",
         "L.bearing_61812_rear",
         "frame_screws_left",
         "cheek_nuts_left",
-        "L.motor_front",
-        "L.motor_rear",
         "L.screws_lugs",
         "L.output_adapter_front",
         "L.output_adapter_rear",
+        "L.screws_outputs",
         "L.upper_link_front",
         "L.upper_link_rear",
-        "L.screws_outputs",
         "L.screws_links",
         "L.front_link",
         "L.knee_bearing_front_in",
@@ -8403,14 +8400,14 @@
         "L.apex_circlip",
         "L.wheel_hub",
         "L.wheel_tyre",
-        "L.screws_wheel",
-        "L.washers_wheel"
+        "L.washers_wheel",
+        "L.screws_wheel"
       ],
       "highlight": [
         "L.wheel_hub",
         "L.wheel_tyre",
-        "L.screws_wheel",
-        "L.washers_wheel"
+        "L.washers_wheel",
+        "L.screws_wheel"
       ],
       "offsets_mm": {
         "L.wheel_hub": [
@@ -8423,18 +8420,18 @@
           60,
           0
         ],
-        "L.screws_wheel": [
-          0,
-          60,
-          0
-        ],
         "L.washers_wheel": [
           0,
-          60,
+          -60,
+          0
+        ],
+        "L.screws_wheel": [
+          0,
+          -60,
           0
         ]
       },
-      "text": "The BotWheel hub and tyre share the authored apex/wheel datum. Keep the wheel-fastener and washer source groups visible as groups. Thread engagement, wiring and tightening remain unqualified.",
+      "text": "The BotWheel hub and tyre share the authored apex/wheel datum. Keep the wheel-fastener and washer source groups visible as groups. Washers precede screws, arriving from the inboard side of the hub as in the source screw stack. Thread engagement, wiring and tightening remain unqualified.",
       "camera": {
         "direction": [
           1,
@@ -8487,19 +8484,19 @@
         "bus_insulator_2",
         "bus_bar_1",
         "bus_bar_2",
+        "L.motor_front",
+        "L.motor_rear",
         "L.hip_frame",
         "L.bearing_61812_front",
         "L.bearing_61812_rear",
         "frame_screws_left",
         "cheek_nuts_left",
-        "L.motor_front",
-        "L.motor_rear",
         "L.screws_lugs",
         "L.output_adapter_front",
         "L.output_adapter_rear",
+        "L.screws_outputs",
         "L.upper_link_front",
         "L.upper_link_rear",
-        "L.screws_outputs",
         "L.screws_links",
         "L.front_link",
         "L.knee_bearing_front_in",
@@ -8522,8 +8519,8 @@
         "L.apex_circlip",
         "L.wheel_hub",
         "L.wheel_tyre",
-        "L.screws_wheel",
         "L.washers_wheel",
+        "L.screws_wheel",
         "L.stop_posts",
         "L.stop_sleeve_1",
         "L.stop_sleeve_2",
@@ -8577,8 +8574,8 @@
       ]
     },
     {
-      "id": "r-hip",
-      "title": "Right hip frame and support bearings",
+      "id": "r-motors",
+      "title": "Right stationary motor cases",
       "subassembly": "r-leg",
       "parts": [
         "cheek_left",
@@ -8617,19 +8614,19 @@
         "bus_insulator_2",
         "bus_bar_1",
         "bus_bar_2",
+        "L.motor_front",
+        "L.motor_rear",
         "L.hip_frame",
         "L.bearing_61812_front",
         "L.bearing_61812_rear",
         "frame_screws_left",
         "cheek_nuts_left",
-        "L.motor_front",
-        "L.motor_rear",
         "L.screws_lugs",
         "L.output_adapter_front",
         "L.output_adapter_rear",
+        "L.screws_outputs",
         "L.upper_link_front",
         "L.upper_link_rear",
-        "L.screws_outputs",
         "L.screws_links",
         "L.front_link",
         "L.knee_bearing_front_in",
@@ -8652,25 +8649,143 @@
         "L.apex_circlip",
         "L.wheel_hub",
         "L.wheel_tyre",
-        "L.screws_wheel",
         "L.washers_wheel",
+        "L.screws_wheel",
         "L.stop_posts",
         "L.stop_sleeve_1",
         "L.stop_sleeve_2",
         "L.stop_sleeve_3",
         "L.stop_sleeve_4",
+        "R.motor_front",
+        "R.motor_rear"
+      ],
+      "highlight": [
+        "R.motor_front",
+        "R.motor_rear"
+      ],
+      "offsets_mm": {
+        "R.motor_front": [
+          0,
+          -60,
+          0
+        ],
+        "R.motor_rear": [
+          0,
+          -60,
+          0
+        ]
+      },
+      "text": "Present the two motor cases before the hip support closes around them. Their outward arrival avoids passing the cases through the already-installed hip web; the cases still need temporary support. This is a WIP presentation dependency, not a fixture procedure.",
+      "camera": {
+        "direction": [
+          1,
+          -1,
+          0.45
+        ]
+      },
+      "requires": [
+        "l-stops"
+      ]
+    },
+    {
+      "id": "r-hip",
+      "title": "Right hip frame, support bearings and lug screw group",
+      "subassembly": "r-leg",
+      "parts": [
+        "cheek_left",
+        "cheek_right",
+        "spacers",
+        "spacer_screws",
+        "floor_tray",
+        "belly_plate",
+        "bay_floor",
+        "bay_side_l",
+        "bay_side_r",
+        "bay_rail_l",
+        "bay_rail_r",
+        "adapter_plate_front",
+        "adapter_plate_rear",
+        "bay_skid_1",
+        "bay_skid_2",
+        "bay_skid_3",
+        "bay_skid_4",
+        "post_1",
+        "post_2",
+        "post_3",
+        "post_4",
+        "isolator_1",
+        "isolator_2",
+        "isolator_3",
+        "isolator_4",
+        "compute_pallet",
+        "plate_post_1",
+        "plate_post_2",
+        "plate_post_3",
+        "plate_post_4",
+        "power_plate",
+        "dcdc_bracket",
+        "bus_insulator_1",
+        "bus_insulator_2",
+        "bus_bar_1",
+        "bus_bar_2",
+        "L.motor_front",
+        "L.motor_rear",
+        "L.hip_frame",
+        "L.bearing_61812_front",
+        "L.bearing_61812_rear",
+        "frame_screws_left",
+        "cheek_nuts_left",
+        "L.screws_lugs",
+        "L.output_adapter_front",
+        "L.output_adapter_rear",
+        "L.screws_outputs",
+        "L.upper_link_front",
+        "L.upper_link_rear",
+        "L.screws_links",
+        "L.front_link",
+        "L.knee_bearing_front_in",
+        "L.knee_bearing_front_out",
+        "L.knee_spacer_front",
+        "L.eye_sleeve_front",
+        "L.knee_washer_front",
+        "L.knee_pin_front",
+        "L.knee_nut_upper_front",
+        "L.wheel_link",
+        "L.knee_bearing_rear_in",
+        "L.knee_bearing_rear_out",
+        "L.knee_spacer_rear",
+        "L.eye_sleeve_rear",
+        "L.knee_washer_rear",
+        "L.knee_pin_rear",
+        "L.knee_nut_upper_rear",
+        "L.apex_spacer",
+        "L.apex_61812",
+        "L.apex_circlip",
+        "L.wheel_hub",
+        "L.wheel_tyre",
+        "L.washers_wheel",
+        "L.screws_wheel",
+        "L.stop_posts",
+        "L.stop_sleeve_1",
+        "L.stop_sleeve_2",
+        "L.stop_sleeve_3",
+        "L.stop_sleeve_4",
+        "R.motor_front",
+        "R.motor_rear",
         "R.hip_frame",
         "R.bearing_61812_front",
         "R.bearing_61812_rear",
         "frame_screws_right",
-        "cheek_nuts_right"
+        "cheek_nuts_right",
+        "R.screws_lugs"
       ],
       "highlight": [
         "R.hip_frame",
         "R.bearing_61812_front",
         "R.bearing_61812_rear",
         "frame_screws_right",
-        "cheek_nuts_right"
+        "cheek_nuts_right",
+        "R.screws_lugs"
       ],
       "offsets_mm": {
         "R.hip_frame": [
@@ -8697,127 +8812,6 @@
           0,
           -60,
           0
-        ]
-      },
-      "text": "Locate the hip frame at the body mounting face and the two support-bearing envelopes in its seats. The source flange screw group remains a group; bearing fits and insert retention are unverified.",
-      "camera": {
-        "direction": [
-          1,
-          -1,
-          0.45
-        ]
-      },
-      "requires": [
-        "l-stops"
-      ]
-    },
-    {
-      "id": "r-motors",
-      "title": "Right stationary motor cases and lug screw group",
-      "subassembly": "r-leg",
-      "parts": [
-        "cheek_left",
-        "cheek_right",
-        "spacers",
-        "spacer_screws",
-        "floor_tray",
-        "belly_plate",
-        "bay_floor",
-        "bay_side_l",
-        "bay_side_r",
-        "bay_rail_l",
-        "bay_rail_r",
-        "adapter_plate_front",
-        "adapter_plate_rear",
-        "bay_skid_1",
-        "bay_skid_2",
-        "bay_skid_3",
-        "bay_skid_4",
-        "post_1",
-        "post_2",
-        "post_3",
-        "post_4",
-        "isolator_1",
-        "isolator_2",
-        "isolator_3",
-        "isolator_4",
-        "compute_pallet",
-        "plate_post_1",
-        "plate_post_2",
-        "plate_post_3",
-        "plate_post_4",
-        "power_plate",
-        "dcdc_bracket",
-        "bus_insulator_1",
-        "bus_insulator_2",
-        "bus_bar_1",
-        "bus_bar_2",
-        "L.hip_frame",
-        "L.bearing_61812_front",
-        "L.bearing_61812_rear",
-        "frame_screws_left",
-        "cheek_nuts_left",
-        "L.motor_front",
-        "L.motor_rear",
-        "L.screws_lugs",
-        "L.output_adapter_front",
-        "L.output_adapter_rear",
-        "L.upper_link_front",
-        "L.upper_link_rear",
-        "L.screws_outputs",
-        "L.screws_links",
-        "L.front_link",
-        "L.knee_bearing_front_in",
-        "L.knee_bearing_front_out",
-        "L.knee_spacer_front",
-        "L.eye_sleeve_front",
-        "L.knee_washer_front",
-        "L.knee_pin_front",
-        "L.knee_nut_upper_front",
-        "L.wheel_link",
-        "L.knee_bearing_rear_in",
-        "L.knee_bearing_rear_out",
-        "L.knee_spacer_rear",
-        "L.eye_sleeve_rear",
-        "L.knee_washer_rear",
-        "L.knee_pin_rear",
-        "L.knee_nut_upper_rear",
-        "L.apex_spacer",
-        "L.apex_61812",
-        "L.apex_circlip",
-        "L.wheel_hub",
-        "L.wheel_tyre",
-        "L.screws_wheel",
-        "L.washers_wheel",
-        "L.stop_posts",
-        "L.stop_sleeve_1",
-        "L.stop_sleeve_2",
-        "L.stop_sleeve_3",
-        "L.stop_sleeve_4",
-        "R.hip_frame",
-        "R.bearing_61812_front",
-        "R.bearing_61812_rear",
-        "frame_screws_right",
-        "cheek_nuts_right",
-        "R.motor_front",
-        "R.motor_rear",
-        "R.screws_lugs"
-      ],
-      "highlight": [
-        "R.motor_front",
-        "R.motor_rear",
-        "R.screws_lugs"
-      ],
-      "offsets_mm": {
-        "R.motor_front": [
-          0,
-          -60,
-          0
-        ],
-        "R.motor_rear": [
-          0,
-          -60,
-          0
         ],
         "R.screws_lugs": [
           0,
@@ -8825,7 +8819,7 @@
           0
         ]
       },
-      "text": "The two motor housings belong to the fixed hip support, not the moving upper links. Show the lug screw envelopes before the upper links and stop posts obscure their access. No torque is specified.",
+      "text": "Locate the hip frame around the motor cases, then show its support bearings and retained screw groups. Lug screws follow the support and precede the upper links. The source flange screw group remains a group; bearing fits, driver access, temporary support and insert retention are unverified. No torque is specified.",
       "camera": {
         "direction": [
           1,
@@ -8834,7 +8828,7 @@
         ]
       },
       "requires": [
-        "r-hip"
+        "r-motors"
       ]
     },
     {
@@ -8878,19 +8872,19 @@
         "bus_insulator_2",
         "bus_bar_1",
         "bus_bar_2",
+        "L.motor_front",
+        "L.motor_rear",
         "L.hip_frame",
         "L.bearing_61812_front",
         "L.bearing_61812_rear",
         "frame_screws_left",
         "cheek_nuts_left",
-        "L.motor_front",
-        "L.motor_rear",
         "L.screws_lugs",
         "L.output_adapter_front",
         "L.output_adapter_rear",
+        "L.screws_outputs",
         "L.upper_link_front",
         "L.upper_link_rear",
-        "L.screws_outputs",
         "L.screws_links",
         "L.front_link",
         "L.knee_bearing_front_in",
@@ -8913,34 +8907,34 @@
         "L.apex_circlip",
         "L.wheel_hub",
         "L.wheel_tyre",
-        "L.screws_wheel",
         "L.washers_wheel",
+        "L.screws_wheel",
         "L.stop_posts",
         "L.stop_sleeve_1",
         "L.stop_sleeve_2",
         "L.stop_sleeve_3",
         "L.stop_sleeve_4",
+        "R.motor_front",
+        "R.motor_rear",
         "R.hip_frame",
         "R.bearing_61812_front",
         "R.bearing_61812_rear",
         "frame_screws_right",
         "cheek_nuts_right",
-        "R.motor_front",
-        "R.motor_rear",
         "R.screws_lugs",
         "R.output_adapter_front",
         "R.output_adapter_rear",
+        "R.screws_outputs",
         "R.upper_link_front",
         "R.upper_link_rear",
-        "R.screws_outputs",
         "R.screws_links"
       ],
       "highlight": [
         "R.output_adapter_front",
         "R.output_adapter_rear",
+        "R.screws_outputs",
         "R.upper_link_front",
         "R.upper_link_rear",
-        "R.screws_outputs",
         "R.screws_links"
       ],
       "offsets_mm": {
@@ -8950,6 +8944,11 @@
           0
         ],
         "R.output_adapter_rear": [
+          0,
+          -60,
+          0
+        ],
+        "R.screws_outputs": [
           0,
           -60,
           0
@@ -8964,18 +8963,13 @@
           -60,
           0
         ],
-        "R.screws_outputs": [
-          0,
-          -60,
-          0
-        ],
         "R.screws_links": [
           0,
           -60,
           0
         ]
       },
-      "text": "Each output adapter and its upper link share the authored rotating-link frame. The front and rear instances are distinct; their source screw groups are not individual manufactured screw models.",
+      "text": "Each output adapter and its upper link share the authored rotating-link frame. The output screw group precedes the upper links so it does not arrive through their hubs. The front and rear instances are distinct; source screw groups are not individual manufactured screw models.",
       "camera": {
         "direction": [
           1,
@@ -8984,7 +8978,7 @@
         ]
       },
       "requires": [
-        "r-motors"
+        "r-hip"
       ]
     },
     {
@@ -9028,19 +9022,19 @@
         "bus_insulator_2",
         "bus_bar_1",
         "bus_bar_2",
+        "L.motor_front",
+        "L.motor_rear",
         "L.hip_frame",
         "L.bearing_61812_front",
         "L.bearing_61812_rear",
         "frame_screws_left",
         "cheek_nuts_left",
-        "L.motor_front",
-        "L.motor_rear",
         "L.screws_lugs",
         "L.output_adapter_front",
         "L.output_adapter_rear",
+        "L.screws_outputs",
         "L.upper_link_front",
         "L.upper_link_rear",
-        "L.screws_outputs",
         "L.screws_links",
         "L.front_link",
         "L.knee_bearing_front_in",
@@ -9063,26 +9057,26 @@
         "L.apex_circlip",
         "L.wheel_hub",
         "L.wheel_tyre",
-        "L.screws_wheel",
         "L.washers_wheel",
+        "L.screws_wheel",
         "L.stop_posts",
         "L.stop_sleeve_1",
         "L.stop_sleeve_2",
         "L.stop_sleeve_3",
         "L.stop_sleeve_4",
+        "R.motor_front",
+        "R.motor_rear",
         "R.hip_frame",
         "R.bearing_61812_front",
         "R.bearing_61812_rear",
         "frame_screws_right",
         "cheek_nuts_right",
-        "R.motor_front",
-        "R.motor_rear",
         "R.screws_lugs",
         "R.output_adapter_front",
         "R.output_adapter_rear",
+        "R.screws_outputs",
         "R.upper_link_front",
         "R.upper_link_rear",
-        "R.screws_outputs",
         "R.screws_links",
         "R.front_link",
         "R.knee_bearing_front_in",
@@ -9145,7 +9139,7 @@
           0
         ]
       },
-      "text": "The current source uses the 6301 knee cartridge in the front lower link, with separate spacer, eye sleeve, washer, shoulder-pin and nut identities. The pin connects the upper eye and lower knee; the archived 6201-era display is not substituted for this geometry.",
+      "text": "The current source uses the 6301 knee cartridge in the front lower link, with separate spacer, eye sleeve, washer, shoulder-pin and nut identities. The pin connects the upper eye and lower knee; the archived 6201-era display is not substituted for this geometry. The inboard bearing is blocked by the lower-link shoulder from outside and the upper eye from inside; this arrival remains illustrative pending subassembly validation.",
       "camera": {
         "direction": [
           1,
@@ -9198,19 +9192,19 @@
         "bus_insulator_2",
         "bus_bar_1",
         "bus_bar_2",
+        "L.motor_front",
+        "L.motor_rear",
         "L.hip_frame",
         "L.bearing_61812_front",
         "L.bearing_61812_rear",
         "frame_screws_left",
         "cheek_nuts_left",
-        "L.motor_front",
-        "L.motor_rear",
         "L.screws_lugs",
         "L.output_adapter_front",
         "L.output_adapter_rear",
+        "L.screws_outputs",
         "L.upper_link_front",
         "L.upper_link_rear",
-        "L.screws_outputs",
         "L.screws_links",
         "L.front_link",
         "L.knee_bearing_front_in",
@@ -9233,26 +9227,26 @@
         "L.apex_circlip",
         "L.wheel_hub",
         "L.wheel_tyre",
-        "L.screws_wheel",
         "L.washers_wheel",
+        "L.screws_wheel",
         "L.stop_posts",
         "L.stop_sleeve_1",
         "L.stop_sleeve_2",
         "L.stop_sleeve_3",
         "L.stop_sleeve_4",
+        "R.motor_front",
+        "R.motor_rear",
         "R.hip_frame",
         "R.bearing_61812_front",
         "R.bearing_61812_rear",
         "frame_screws_right",
         "cheek_nuts_right",
-        "R.motor_front",
-        "R.motor_rear",
         "R.screws_lugs",
         "R.output_adapter_front",
         "R.output_adapter_rear",
+        "R.screws_outputs",
         "R.upper_link_front",
         "R.upper_link_rear",
-        "R.screws_outputs",
         "R.screws_links",
         "R.front_link",
         "R.knee_bearing_front_in",
@@ -9376,19 +9370,19 @@
         "bus_insulator_2",
         "bus_bar_1",
         "bus_bar_2",
+        "L.motor_front",
+        "L.motor_rear",
         "L.hip_frame",
         "L.bearing_61812_front",
         "L.bearing_61812_rear",
         "frame_screws_left",
         "cheek_nuts_left",
-        "L.motor_front",
-        "L.motor_rear",
         "L.screws_lugs",
         "L.output_adapter_front",
         "L.output_adapter_rear",
+        "L.screws_outputs",
         "L.upper_link_front",
         "L.upper_link_rear",
-        "L.screws_outputs",
         "L.screws_links",
         "L.front_link",
         "L.knee_bearing_front_in",
@@ -9411,26 +9405,26 @@
         "L.apex_circlip",
         "L.wheel_hub",
         "L.wheel_tyre",
-        "L.screws_wheel",
         "L.washers_wheel",
+        "L.screws_wheel",
         "L.stop_posts",
         "L.stop_sleeve_1",
         "L.stop_sleeve_2",
         "L.stop_sleeve_3",
         "L.stop_sleeve_4",
+        "R.motor_front",
+        "R.motor_rear",
         "R.hip_frame",
         "R.bearing_61812_front",
         "R.bearing_61812_rear",
         "frame_screws_right",
         "cheek_nuts_right",
-        "R.motor_front",
-        "R.motor_rear",
         "R.screws_lugs",
         "R.output_adapter_front",
         "R.output_adapter_rear",
+        "R.screws_outputs",
         "R.upper_link_front",
         "R.upper_link_rear",
-        "R.screws_outputs",
         "R.screws_links",
         "R.front_link",
         "R.knee_bearing_front_in",
@@ -9474,7 +9468,7 @@
           0
         ]
       },
-      "text": "The two lower links meet at the source five-bar apex. The spacer, paired-bearing envelope and circlip remain separate CAD identities. This geometric closure does not prove physical fit or free motion.",
+      "text": "The two lower links meet at the source five-bar apex. The spacer, paired-bearing envelope and circlip remain separate CAD identities. The rigid circlip envelope overlaps its final groove; its illustrated arrival does not model circlip expansion. This closure does not prove physical fit or free motion.",
       "camera": {
         "direction": [
           1,
@@ -9527,19 +9521,19 @@
         "bus_insulator_2",
         "bus_bar_1",
         "bus_bar_2",
+        "L.motor_front",
+        "L.motor_rear",
         "L.hip_frame",
         "L.bearing_61812_front",
         "L.bearing_61812_rear",
         "frame_screws_left",
         "cheek_nuts_left",
-        "L.motor_front",
-        "L.motor_rear",
         "L.screws_lugs",
         "L.output_adapter_front",
         "L.output_adapter_rear",
+        "L.screws_outputs",
         "L.upper_link_front",
         "L.upper_link_rear",
-        "L.screws_outputs",
         "L.screws_links",
         "L.front_link",
         "L.knee_bearing_front_in",
@@ -9562,26 +9556,26 @@
         "L.apex_circlip",
         "L.wheel_hub",
         "L.wheel_tyre",
-        "L.screws_wheel",
         "L.washers_wheel",
+        "L.screws_wheel",
         "L.stop_posts",
         "L.stop_sleeve_1",
         "L.stop_sleeve_2",
         "L.stop_sleeve_3",
         "L.stop_sleeve_4",
+        "R.motor_front",
+        "R.motor_rear",
         "R.hip_frame",
         "R.bearing_61812_front",
         "R.bearing_61812_rear",
         "frame_screws_right",
         "cheek_nuts_right",
-        "R.motor_front",
-        "R.motor_rear",
         "R.screws_lugs",
         "R.output_adapter_front",
         "R.output_adapter_rear",
+        "R.screws_outputs",
         "R.upper_link_front",
         "R.upper_link_rear",
-        "R.screws_outputs",
         "R.screws_links",
         "R.front_link",
         "R.knee_bearing_front_in",
@@ -9604,14 +9598,14 @@
         "R.apex_circlip",
         "R.wheel_hub",
         "R.wheel_tyre",
-        "R.screws_wheel",
-        "R.washers_wheel"
+        "R.washers_wheel",
+        "R.screws_wheel"
       ],
       "highlight": [
         "R.wheel_hub",
         "R.wheel_tyre",
-        "R.screws_wheel",
-        "R.washers_wheel"
+        "R.washers_wheel",
+        "R.screws_wheel"
       ],
       "offsets_mm": {
         "R.wheel_hub": [
@@ -9624,18 +9618,18 @@
           -60,
           0
         ],
-        "R.screws_wheel": [
-          0,
-          -60,
-          0
-        ],
         "R.washers_wheel": [
           0,
-          -60,
+          60,
+          0
+        ],
+        "R.screws_wheel": [
+          0,
+          60,
           0
         ]
       },
-      "text": "The BotWheel hub and tyre share the authored apex/wheel datum. Keep the wheel-fastener and washer source groups visible as groups. Thread engagement, wiring and tightening remain unqualified.",
+      "text": "The BotWheel hub and tyre share the authored apex/wheel datum. Keep the wheel-fastener and washer source groups visible as groups. Washers precede screws, arriving from the inboard side of the hub as in the source screw stack. Thread engagement, wiring and tightening remain unqualified.",
       "camera": {
         "direction": [
           1,
@@ -9688,19 +9682,19 @@
         "bus_insulator_2",
         "bus_bar_1",
         "bus_bar_2",
+        "L.motor_front",
+        "L.motor_rear",
         "L.hip_frame",
         "L.bearing_61812_front",
         "L.bearing_61812_rear",
         "frame_screws_left",
         "cheek_nuts_left",
-        "L.motor_front",
-        "L.motor_rear",
         "L.screws_lugs",
         "L.output_adapter_front",
         "L.output_adapter_rear",
+        "L.screws_outputs",
         "L.upper_link_front",
         "L.upper_link_rear",
-        "L.screws_outputs",
         "L.screws_links",
         "L.front_link",
         "L.knee_bearing_front_in",
@@ -9723,26 +9717,26 @@
         "L.apex_circlip",
         "L.wheel_hub",
         "L.wheel_tyre",
-        "L.screws_wheel",
         "L.washers_wheel",
+        "L.screws_wheel",
         "L.stop_posts",
         "L.stop_sleeve_1",
         "L.stop_sleeve_2",
         "L.stop_sleeve_3",
         "L.stop_sleeve_4",
+        "R.motor_front",
+        "R.motor_rear",
         "R.hip_frame",
         "R.bearing_61812_front",
         "R.bearing_61812_rear",
         "frame_screws_right",
         "cheek_nuts_right",
-        "R.motor_front",
-        "R.motor_rear",
         "R.screws_lugs",
         "R.output_adapter_front",
         "R.output_adapter_rear",
+        "R.screws_outputs",
         "R.upper_link_front",
         "R.upper_link_rear",
-        "R.screws_outputs",
         "R.screws_links",
         "R.front_link",
         "R.knee_bearing_front_in",
@@ -9765,8 +9759,8 @@
         "R.apex_circlip",
         "R.wheel_hub",
         "R.wheel_tyre",
-        "R.screws_wheel",
         "R.washers_wheel",
+        "R.screws_wheel",
         "R.stop_posts",
         "R.stop_sleeve_1",
         "R.stop_sleeve_2",
@@ -9860,19 +9854,19 @@
         "bus_insulator_2",
         "bus_bar_1",
         "bus_bar_2",
+        "L.motor_front",
+        "L.motor_rear",
         "L.hip_frame",
         "L.bearing_61812_front",
         "L.bearing_61812_rear",
         "frame_screws_left",
         "cheek_nuts_left",
-        "L.motor_front",
-        "L.motor_rear",
         "L.screws_lugs",
         "L.output_adapter_front",
         "L.output_adapter_rear",
+        "L.screws_outputs",
         "L.upper_link_front",
         "L.upper_link_rear",
-        "L.screws_outputs",
         "L.screws_links",
         "L.front_link",
         "L.knee_bearing_front_in",
@@ -9895,26 +9889,26 @@
         "L.apex_circlip",
         "L.wheel_hub",
         "L.wheel_tyre",
-        "L.screws_wheel",
         "L.washers_wheel",
+        "L.screws_wheel",
         "L.stop_posts",
         "L.stop_sleeve_1",
         "L.stop_sleeve_2",
         "L.stop_sleeve_3",
         "L.stop_sleeve_4",
+        "R.motor_front",
+        "R.motor_rear",
         "R.hip_frame",
         "R.bearing_61812_front",
         "R.bearing_61812_rear",
         "frame_screws_right",
         "cheek_nuts_right",
-        "R.motor_front",
-        "R.motor_rear",
         "R.screws_lugs",
         "R.output_adapter_front",
         "R.output_adapter_rear",
+        "R.screws_outputs",
         "R.upper_link_front",
         "R.upper_link_rear",
-        "R.screws_outputs",
         "R.screws_links",
         "R.front_link",
         "R.knee_bearing_front_in",
@@ -9937,8 +9931,8 @@
         "R.apex_circlip",
         "R.wheel_hub",
         "R.wheel_tyre",
-        "R.screws_wheel",
         "R.washers_wheel",
+        "R.screws_wheel",
         "R.stop_posts",
         "R.stop_sleeve_1",
         "R.stop_sleeve_2",
@@ -10149,19 +10143,19 @@
         "bus_insulator_2",
         "bus_bar_1",
         "bus_bar_2",
+        "L.motor_front",
+        "L.motor_rear",
         "L.hip_frame",
         "L.bearing_61812_front",
         "L.bearing_61812_rear",
         "frame_screws_left",
         "cheek_nuts_left",
-        "L.motor_front",
-        "L.motor_rear",
         "L.screws_lugs",
         "L.output_adapter_front",
         "L.output_adapter_rear",
+        "L.screws_outputs",
         "L.upper_link_front",
         "L.upper_link_rear",
-        "L.screws_outputs",
         "L.screws_links",
         "L.front_link",
         "L.knee_bearing_front_in",
@@ -10184,26 +10178,26 @@
         "L.apex_circlip",
         "L.wheel_hub",
         "L.wheel_tyre",
-        "L.screws_wheel",
         "L.washers_wheel",
+        "L.screws_wheel",
         "L.stop_posts",
         "L.stop_sleeve_1",
         "L.stop_sleeve_2",
         "L.stop_sleeve_3",
         "L.stop_sleeve_4",
+        "R.motor_front",
+        "R.motor_rear",
         "R.hip_frame",
         "R.bearing_61812_front",
         "R.bearing_61812_rear",
         "frame_screws_right",
         "cheek_nuts_right",
-        "R.motor_front",
-        "R.motor_rear",
         "R.screws_lugs",
         "R.output_adapter_front",
         "R.output_adapter_rear",
+        "R.screws_outputs",
         "R.upper_link_front",
         "R.upper_link_rear",
-        "R.screws_outputs",
         "R.screws_links",
         "R.front_link",
         "R.knee_bearing_front_in",
@@ -10226,8 +10220,8 @@
         "R.apex_circlip",
         "R.wheel_hub",
         "R.wheel_tyre",
-        "R.screws_wheel",
         "R.washers_wheel",
+        "R.screws_wheel",
         "R.stop_posts",
         "R.stop_sleeve_1",
         "R.stop_sleeve_2",
@@ -10403,19 +10397,19 @@
         "bus_insulator_2",
         "bus_bar_1",
         "bus_bar_2",
+        "L.motor_front",
+        "L.motor_rear",
         "L.hip_frame",
         "L.bearing_61812_front",
         "L.bearing_61812_rear",
         "frame_screws_left",
         "cheek_nuts_left",
-        "L.motor_front",
-        "L.motor_rear",
         "L.screws_lugs",
         "L.output_adapter_front",
         "L.output_adapter_rear",
+        "L.screws_outputs",
         "L.upper_link_front",
         "L.upper_link_rear",
-        "L.screws_outputs",
         "L.screws_links",
         "L.front_link",
         "L.knee_bearing_front_in",
@@ -10438,26 +10432,26 @@
         "L.apex_circlip",
         "L.wheel_hub",
         "L.wheel_tyre",
-        "L.screws_wheel",
         "L.washers_wheel",
+        "L.screws_wheel",
         "L.stop_posts",
         "L.stop_sleeve_1",
         "L.stop_sleeve_2",
         "L.stop_sleeve_3",
         "L.stop_sleeve_4",
+        "R.motor_front",
+        "R.motor_rear",
         "R.hip_frame",
         "R.bearing_61812_front",
         "R.bearing_61812_rear",
         "frame_screws_right",
         "cheek_nuts_right",
-        "R.motor_front",
-        "R.motor_rear",
         "R.screws_lugs",
         "R.output_adapter_front",
         "R.output_adapter_rear",
+        "R.screws_outputs",
         "R.upper_link_front",
         "R.upper_link_rear",
-        "R.screws_outputs",
         "R.screws_links",
         "R.front_link",
         "R.knee_bearing_front_in",
@@ -10480,8 +10474,8 @@
         "R.apex_circlip",
         "R.wheel_hub",
         "R.wheel_tyre",
-        "R.screws_wheel",
         "R.washers_wheel",
+        "R.screws_wheel",
         "R.stop_posts",
         "R.stop_sleeve_1",
         "R.stop_sleeve_2",
@@ -10621,19 +10615,19 @@
         "bus_insulator_2",
         "bus_bar_1",
         "bus_bar_2",
+        "L.motor_front",
+        "L.motor_rear",
         "L.hip_frame",
         "L.bearing_61812_front",
         "L.bearing_61812_rear",
         "frame_screws_left",
         "cheek_nuts_left",
-        "L.motor_front",
-        "L.motor_rear",
         "L.screws_lugs",
         "L.output_adapter_front",
         "L.output_adapter_rear",
+        "L.screws_outputs",
         "L.upper_link_front",
         "L.upper_link_rear",
-        "L.screws_outputs",
         "L.screws_links",
         "L.front_link",
         "L.knee_bearing_front_in",
@@ -10656,26 +10650,26 @@
         "L.apex_circlip",
         "L.wheel_hub",
         "L.wheel_tyre",
-        "L.screws_wheel",
         "L.washers_wheel",
+        "L.screws_wheel",
         "L.stop_posts",
         "L.stop_sleeve_1",
         "L.stop_sleeve_2",
         "L.stop_sleeve_3",
         "L.stop_sleeve_4",
+        "R.motor_front",
+        "R.motor_rear",
         "R.hip_frame",
         "R.bearing_61812_front",
         "R.bearing_61812_rear",
         "frame_screws_right",
         "cheek_nuts_right",
-        "R.motor_front",
-        "R.motor_rear",
         "R.screws_lugs",
         "R.output_adapter_front",
         "R.output_adapter_rear",
+        "R.screws_outputs",
         "R.upper_link_front",
         "R.upper_link_rear",
-        "R.screws_outputs",
         "R.screws_links",
         "R.front_link",
         "R.knee_bearing_front_in",
@@ -10698,8 +10692,8 @@
         "R.apex_circlip",
         "R.wheel_hub",
         "R.wheel_tyre",
-        "R.screws_wheel",
         "R.washers_wheel",
+        "R.screws_wheel",
         "R.stop_posts",
         "R.stop_sleeve_1",
         "R.stop_sleeve_2",
@@ -10880,19 +10874,19 @@
         "bus_insulator_2",
         "bus_bar_1",
         "bus_bar_2",
+        "L.motor_front",
+        "L.motor_rear",
         "L.hip_frame",
         "L.bearing_61812_front",
         "L.bearing_61812_rear",
         "frame_screws_left",
         "cheek_nuts_left",
-        "L.motor_front",
-        "L.motor_rear",
         "L.screws_lugs",
         "L.output_adapter_front",
         "L.output_adapter_rear",
+        "L.screws_outputs",
         "L.upper_link_front",
         "L.upper_link_rear",
-        "L.screws_outputs",
         "L.screws_links",
         "L.front_link",
         "L.knee_bearing_front_in",
@@ -10915,26 +10909,26 @@
         "L.apex_circlip",
         "L.wheel_hub",
         "L.wheel_tyre",
-        "L.screws_wheel",
         "L.washers_wheel",
+        "L.screws_wheel",
         "L.stop_posts",
         "L.stop_sleeve_1",
         "L.stop_sleeve_2",
         "L.stop_sleeve_3",
         "L.stop_sleeve_4",
+        "R.motor_front",
+        "R.motor_rear",
         "R.hip_frame",
         "R.bearing_61812_front",
         "R.bearing_61812_rear",
         "frame_screws_right",
         "cheek_nuts_right",
-        "R.motor_front",
-        "R.motor_rear",
         "R.screws_lugs",
         "R.output_adapter_front",
         "R.output_adapter_rear",
+        "R.screws_outputs",
         "R.upper_link_front",
         "R.upper_link_rear",
-        "R.screws_outputs",
         "R.screws_links",
         "R.front_link",
         "R.knee_bearing_front_in",
@@ -10957,8 +10951,8 @@
         "R.apex_circlip",
         "R.wheel_hub",
         "R.wheel_tyre",
-        "R.screws_wheel",
         "R.washers_wheel",
+        "R.screws_wheel",
         "R.stop_posts",
         "R.stop_sleeve_1",
         "R.stop_sleeve_2",

@@ -1,0 +1,15 @@
+{
+  "emitter": "Gyropup selected pair study; results from existing core sweep_pair",
+  "frame_manifest_sha256": "d0dc620a44bd8cf806abf80c6483b8620cc0161b18052adde756f42970954755",
+  "frame_report_sha256": "3b89e80a5cb72c227e302612a30cb8fd1334cbab9ea0c47495f8afa2e6a66911",
+  "guide_sha256": "044a5a4ca3c2f3e238cbfdf6dba3412a095223ae76e98505ef8d698ba9d4516a",
+  "binding_sha256": "ccce5798a6cd220a8ba9935468f34cd619a2db26b4d386ccc1b34c28fcf3590c",
+  "witnesses_sha256": "d7126ece3eaf1baea6360666c237360b929778b7db9f62ad5874c07bed1ed315",
+  "baseline_guide_sha256": "845f8b442b5e16ca52ad59fd6794b9211a92847f41feac5401b56e240f9f4dd6",
+  "adapter_sha256": "63f7093468ba1ba2ab1063dcbac5e5fddb7331346a1eb6c8c4c287e87794b016",
+  "core_revision": "5c29c9e2abf2562baa72a05248f23de054b8241e",
+  "max_samples": 256,
+  "max_step_mm": 1.0,
+  "outer_time_cap": "Required separately reviewed detached phase; this process does not impose a native per-pair timer.",
+  "plan_sha256": "1316f2e4e315ee2cd45ed805d92ee219699a311bf09bb8d106148145fb8a96cc"
+}
