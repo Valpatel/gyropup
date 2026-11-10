@@ -237,9 +237,9 @@ jobs:
           - suite: build-workspace-print
             commands: |
               WORKSPACE_CASE=print npm run test:build-workspace
-              WORKSPACE_CASE=print PRINT_CASE=current npm run test:build-workspace
+              TEST_OUTPUT=/tmp/gyropup-build-workspace-current-print WORKSPACE_CASE=print PRINT_CASE=current npm run test:build-workspace
               PLAYWRIGHT_BROWSER=webkit WORKSPACE_CASE=print npm run test:build-workspace
-              PLAYWRIGHT_BROWSER=webkit WORKSPACE_CASE=print PRINT_CASE=current npm run test:build-workspace
+              TEST_OUTPUT=/tmp/gyropup-build-workspace-current-print PLAYWRIGHT_BROWSER=webkit WORKSPACE_CASE=print PRINT_CASE=current npm run test:build-workspace
           - suite: build-portal
             commands: |
               npm run test:build-guide

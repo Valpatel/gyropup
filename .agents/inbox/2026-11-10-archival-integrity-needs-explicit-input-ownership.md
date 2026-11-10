@@ -74,10 +74,13 @@ context test, archive helper, receipt, producer and sampler bytes stay unchanged
 Author verification on2026-11-10: full historical tests10PASS in7.485s, including
 the genuine archive positive and default-current stale negatives; actual adopted
 `test_robot_current_print_match.py --collection-folder software/site/assets/robot-current`
-6PASS in1.753s with0skips. Ordinary robot discovery64PASS in21.795s has7 optional
-tests skipped; it does not replace that explicit mandatory actual-current command.
+6PASS in1.753s with0skips. Ordinary robot discovery ran64 tests in21.795s:
+57 passed and7 optional tests skipped. It does not replace that explicit mandatory
+actual-current command.
 Both browser Print engines now have explicit `PRINT_CASE=current` invocations,
 because the existing `PRINT_CASE=all` branch does not execute that current case.
+Current Print uses a separate uploaded output directory so it cannot overwrite
+the generic Print report from the same engine and scope.
 Those final composed browser runs and source/CI acceptance remain pending.
 
 The same ownership error affected historical arrival tests: regenerating a540
@@ -88,6 +91,9 @@ their actual bound archived triangles using the unchanged pure screen. Current
 leg-order controls remain separate. Historical guide checks preserve all old
 artifact hashes; the current233-output reproduction uses the adopted266 cache.
 Neither test relabels an old source closure as current or executes historical code.
+Independent readback at84cc reran the actual adopted consumer (6PASS,1.741s,
+0skips) and historical triangle replay (6PASS,15.489s), with all recorded22
+cases and72 candidate pairs preserved.
 
 The accepted five-row candidate used escaped JSON Unicode for the middot in
 titles, while the existing Turret producer checks its literal UTF-8 encoding.
