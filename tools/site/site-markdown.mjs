@@ -91,6 +91,11 @@ export function htmlToMarkdown(html, file) {
   const { document } = parseHTML(html);
   const title = document.querySelector('title')?.textContent || file;
   const interactive = !!document.querySelector('canvas, script[type="module"]');
+  // Browser task tabs are alternate reading paths. Static readers need all three;
+  // keep genuinely unavailable/hidden descendants subject to the normal cleanup.
+  if (file === 'designer/build.html') {
+    document.querySelectorAll('#build-details > [data-build-panel]').forEach(panel => panel.removeAttribute('hidden'));
+  }
   document.querySelectorAll('script, style, head, svg, canvas, template, nav, dialog, button, select, input, textarea, label.inc, [aria-hidden="true"], [hidden]').forEach(el => el.remove());
   // CSS provides spacing and columns in the browser. Preserve that structure in text.
   for (const node of document.querySelectorAll('span, strong, b')) { node.before(' '); node.after(' '); }
