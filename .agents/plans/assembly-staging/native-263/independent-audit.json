@@ -1,0 +1,29 @@
+{
+  "reviewer": "independent GPT-6",
+  "job": 263,
+  "source": "6acc8fda343b1f27679a4c3ae84e859b1714ca36",
+  "core": "5c29c9e2abf2562baa72a05248f23de054b8241e",
+  "pass_scoped_frame_audit": true,
+  "actual_native_breps_reimported": 233,
+  "native_vs_report_max_error_mm": 2.842170943040401e-14,
+  "archive_and_actual_members": 475,
+  "triangles_independently_parsed": 360367,
+  "largest_cad_mesh_errors_mm": [
+    [
+      0.3551177978515625,
+      "R.wheel_tyre"
+    ],
+    [
+      0.3551177978515625,
+      "L.wheel_tyre"
+    ],
+    [
+      0.230682373046875,
+      "R.wheel_hub"
+    ]
+  ],
+  "progress_records": 941,
+  "paths_checked": false,
+  "physics_or_manufacturing_qualified": false,
+  "scope": "Original bytes, identity and actual native/mesh/model frame consistency; not insertion validation"
+}

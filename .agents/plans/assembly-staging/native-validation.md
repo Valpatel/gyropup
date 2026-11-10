@@ -5,7 +5,9 @@ binding are complete and independently accepted for their stated input/identity
 scope. The canonical [collection and binding checkpoint](native-261/README.md)
 retains both execution identities, archive/member seals, original byte bindings,
 author observations, independent receipts and a portable pure audit. No
-validation BREP read-back/frame/path query or physical acceptance is claimed.
+insertion/path query or physical acceptance is claimed. The later original-byte
+[frame-only checkpoint263](native-263/README.md) independently accepted233
+actual native/STL/model bounds; it preserves its separate source/core identity.
 
 The original-byte binder at `011a29b6fe1ddf4a6726fa01f59d710cbf1d6757`
 received independent source review; its exact tree merged into core dev at
@@ -127,11 +129,16 @@ nine dedicated controls, including the small real three-box native fixture,
 passed against independently reviewed core
 `5c29c9e2abf2562baa72a05248f23de054b8241e`. The genuine233-instance frame-only
 attempt262 stopped at an input permission comparison before any core checkout
-or native query; retain its [failure checkpoint](native-262/README.md).
+or native query; retain its [failure checkpoint](native-262/README.md). The
+separately reviewed successor263 completed all233 actual frames, with475 output
+files and941 progress records independently accepted. Its source6acc8fda/core5c29
+identities, original261 bytes and actual bounds remain in the
+[frame checkpoint](native-263/README.md); zero insertion pairs were queried.
 The documented post-job freeze changes producer0600 modes to retained0640.
-A successor must separately bind a fresh reviewed source/packet, require that
-exact transition with unchanged member/byte seals, and preserve complete actual
-before/after inventories. No product frame or path pass is assumed.
+The successor required that exact transition with unchanged member/byte seals
+and complete actual before/after inventories. Native changed-arrival and
+old-order/wrong-side checks still require a separately reviewed bounded packet;
+no product path or physical pass is assumed.
 
 Every requested native guide gets an exclusive `progress/<snapshot>.jsonl` and
 `reports/<snapshot>.phase.json` before native work. JSONL envelopes retain the
