@@ -270,3 +270,5 @@ union and rejected selections. `npm run test:diagrams` enrolls all ten diagram
 source documents, including both Build validation pages, and checks all thirteen
 diagrams at desktop/phone sizes, with source/retry and dynamic-insertion controls.
 The same diagram command can run with `PLAYWRIGHT_BROWSER=webkit`.
+
+Phone BOM acceptance: reconcile the source colgroup after tracker status columns are added; preserve the230px desktop identity basis and120px phone identity basis. At horizontal end, the sticky Part column must leave both44px status targets visible and hit-test reachable. Bring the actual row through all nested scroll ancestors before measuring pointer reachability; window scroll alone is insufficient for bounded Buy panels.
