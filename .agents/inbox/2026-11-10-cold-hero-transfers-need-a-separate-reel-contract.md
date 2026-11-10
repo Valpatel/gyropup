@@ -23,3 +23,7 @@ with progressing decoded pixels while the hero continues loading or becomes
 ready. Retain the 90-second action waits, 120-second case budget and current
 mesh request diagnostics. [Issue #299](https://github.com/Valpatel/gyropup/issues/299)
 tracks the measured startup cost separately from this harness correction.
+
+The separate WebKit media partition runs actual hero poster parity, the
+highlights player and both unthrottled integration cases. The existing
+presentation aggregate requires that partition along with the Chromium suites.

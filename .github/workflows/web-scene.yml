@@ -138,6 +138,11 @@ jobs:
               npm run test:diagrams
               npm run test:services
               npm run test:preview
+          - suite: presentation-webkit-media
+            commands: |
+              PLAYWRIGHT_BROWSER=webkit npm run test:hero
+              PLAYWRIGHT_BROWSER=webkit npm run test:highlights
+              PLAYWRIGHT_BROWSER=webkit HIGHLIGHT_INTEGRATION_CASE=all npm run test:highlight-integration
           - suite: loading
             commands: |
               npm run test:part-media
@@ -319,7 +324,7 @@ jobs:
         env:
           BROWSER_RESULT: ${{ needs.browser-validation.result }}
         run: test "$BROWSER_RESULT" = success
-  # Preserve main's required presentation context across the two command partitions.
+  # Preserve main's required presentation context across the browser partitions.
   presentation:
     name: browser-validation (presentation)
     if: always() && github.event_name != 'schedule'
