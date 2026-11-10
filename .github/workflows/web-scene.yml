@@ -63,6 +63,14 @@ jobs:
     # A stable check name per suite (the default name embeds the whole command list), so main's protection can require it.
     name: browser-validation (${{ matrix.suite }})
     runs-on: ubuntu-24.04
+    # Match the locked Playwright release and the already verified cad-agent CI image.
+    # Browser/system dependencies are baked in; retain the same test and job bounds.
+    container:
+      image: mcr.microsoft.com/playwright:v1.56.1-noble@sha256:f1e7e01021efd65dd1a2c56064be399f3e4de00fd021ac561325f2bfbb2b837a
+      options: --init --ipc=host
+    defaults:
+      run:
+        shell: bash
     timeout-minutes: 20
     strategy:
       fail-fast: false
@@ -101,7 +109,7 @@ jobs:
               npm run test:gamepad
               npm run test:sim
               npm run test:demo
-          - suite: presentation
+          - suite: presentation-controls
             commands: |
               npm run test:notice
               npm run test:hero
@@ -110,6 +118,8 @@ jobs:
               npm run test:audio
               npm run test:voice
               npm run test:web
+          - suite: presentation-content
+            commands: |
               npm run test:progress
               npm run test:landing-loop
               npm run test:status-board
@@ -231,16 +241,33 @@ jobs:
       - uses: actions/checkout@v4
         with:
           fetch-depth: 0 # Reproduce the pinned legacy mesh coordinate migration.
+      # The checkout is mounted into a root-owned test container; trust only this workspace.
+      - name: Trust the checked-out workspace in the browser container
+        run: git config --global --add safe.directory "$GITHUB_WORKSPACE"
       - uses: actions/setup-node@v4
         with:
           node-version: 22
           cache: npm
+      # Existing evidence/voice/rig checks and the loading suite's media guard use
+      # Python's standard library. Declare the interpreter instead of inheriting a runner install.
+      - uses: actions/setup-python@v5
+        with:
+          python-version: '3.12'
       - run: npm ci
-      - run: npx playwright install --with-deps chromium
-      - if: matrix.suite == 'build-portal' || startsWith(matrix.suite, 'build-workspace-')
-        run: npx playwright install --with-deps webkit
+      - name: Verify the locked browser runtime
+        run: |
+          node - <<'JS'
+          const fs=require('node:fs'),pw=require('@playwright/test');
+          if(require('@playwright/test/package.json').version!=='1.56.1')throw Error('Update the pinned browser image with the Playwright lock');
+          for(const engine of [pw.chromium,pw.webkit])if(!fs.existsSync(engine.executablePath()))throw Error('Pinned browser executable is missing');
+          JS
       - if: matrix.suite == 'build-portal'
-        run: sudo apt-get update && sudo apt-get install -y ffmpeg
+        name: Ensure existing media evidence tools are available
+        run: |
+          if ! command -v ffmpeg >/dev/null || ! command -v ffprobe >/dev/null; then
+            apt-get update
+            apt-get install --no-install-recommends -y ffmpeg
+          fi
       - run: npm run build
       - name: Validate ${{ matrix.suite }}
         env:
@@ -263,6 +290,18 @@ jobs:
   # A failed, cancelled or skipped browser partition cannot make this gate pass.
   layout:
     name: browser-validation (layout)
+    if: always() && github.event_name != 'schedule'
+    needs: browser-validation
+    runs-on: ubuntu-24.04
+    timeout-minutes: 2
+    steps:
+      - name: Require all browser partitions to pass
+        env:
+          BROWSER_RESULT: ${{ needs.browser-validation.result }}
+        run: test "$BROWSER_RESULT" = success
+  # Preserve main's required presentation context across the two command partitions.
+  presentation:
+    name: browser-validation (presentation)
     if: always() && github.event_name != 'schedule'
     needs: browser-validation
     runs-on: ubuntu-24.04

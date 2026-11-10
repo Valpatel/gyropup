@@ -28,3 +28,23 @@ for(const [name,values]of [['sizes',['','unknown','phone-360,unknown','phone-360
     }
   });
 }
+
+const readWorkflow=()=>readFileSync(new URL('.github/workflows/web-scene.yml',root),'utf8');
+function commandsFor(workflow,suite){
+  const marker='          - suite: '+suite+'\n            commands: |\n';
+  const offset=workflow.indexOf(marker);assert.ok(offset>=0,'Missing '+suite+' commands');
+  return workflow.slice(offset+marker.length).split(/\n {10}- suite:|\n {4}steps:/,1)[0].split('\n').map(line=>line.trim()).filter(Boolean);
+}
+test('presentation partitions retain the original command order and strict required aggregate',()=>{
+  const workflow=readWorkflow();
+  const expected=['notice','hero','viewers','file-viewer-theme','audio','voice','web','progress','landing-loop','status-board','timeline','doc-pages','walls','theme','highlights','highlight-integration','markdown','cache','diagrams','services','preview'].map(name=>'npm run test:'+name);
+  assert.deepEqual([...commandsFor(workflow,'presentation-controls'),...commandsFor(workflow,'presentation-content')],expected);
+  assert.match(workflow,/name: browser-validation \(presentation\)[\s\S]*?needs: browser-validation/);
+});
+test('the browser image is immutable and matches the locked Playwright release',()=>{
+  const workflow=readWorkflow(),lock=JSON.parse(readFileSync(new URL('package-lock.json',root),'utf8'));
+  const version=lock.packages['node_modules/@playwright/test'].version;
+  const prefix='image: mcr.microsoft.com/playwright:v'+version+'-noble@sha256:';
+  assert.ok(workflow.includes(prefix));assert.match(workflow.slice(workflow.indexOf(prefix)+prefix.length),/^[a-f0-9]{64}\n/);
+  assert.doesNotMatch(workflow,/^\s+- run: npx playwright install/m);
+});

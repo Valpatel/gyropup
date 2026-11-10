@@ -83,5 +83,23 @@
     },
     "seed": "On the first real Space keydown only, cancel its native default while setting checkbox and marker state false. Existing state assertions succeed; the new event/default-action assertion must reject.",
     "limits": "The old CI keyboard failure did not reproduce locally and its original focus was not captured. No simulator defect is claimed fixed; current full CI remains required."
+  },
+  "ci_runtime": {
+    "image": "mcr.microsoft.com/playwright:v1.56.1-noble@sha256:f1e7e01021efd65dd1a2c56064be399f3e4de00fd021ac561325f2bfbb2b837a",
+    "source_lock_version": "1.56.1",
+    "browser_suites": 26,
+    "unchanged_other_command_blocks": 24,
+    "presentation_partition_commands": [
+      7,
+      14
+    ],
+    "per_suite_minutes": 20,
+    "aggregate_contexts": [
+      "browser-validation (layout)",
+      "browser-validation (presentation)"
+    ],
+    "local_ci_tests_passed": 5,
+    "local_node": "22.23.4",
+    "limits": "Current GitHub CI in the pinned environment remains required. No local image pull or browser install was performed."
   }
 }

@@ -497,3 +497,32 @@ passed the prior state observations but was rejected by the new event assertion
 in15.3s. Those source/harness-qualified reports are indexed in the CI validation
 packet. This negative is explicitly seeded; it is not an observed production
 behavior. Complete current simulator CI is still required.
+
+
+## Browser provisioning must leave time for executable checks
+
+2026-11-10: run `42807633179`, Combined390 job `129800779786`, spent about
+seventeen minutes provisioning browsers. Tests began at11:45:29 UTC; Chromium
+completed all25 entries at11:47:02, then WebKit began and CI cancelled it at
+11:47:52 under the existing twenty-minute job bound. This is an incomplete
+campaign dominated by provisioning, not a demonstrated model-layout failure.
+Presentation job `129800779849` spent3m06 in setup and17m07 in assertions before
+the same bound stopped highlight integration; later Markdown, cache, diagrams,
+services and preview commands had not run. Neither prefix is a complete pass.
+
+Use the immutable Playwright1.56.1 Noble image already verified by cad-agent
+v0.31.0, matching this repository's lock. Preserve the library and browser
+versions, exact-workspace Git trust, declared Python3.12 standard-library checks
+and existing ffmpeg/ffprobe evidence tools. Root container package installation
+is only needed when those media CLI tools are absent. Do not repeat browser apt
+installation on each runner. Respect the existing bundled-Chromium environment
+in the route test; local branded Chrome remains its default outside that mode.
+
+Split the original21 presentation commands into7 controls and14 content commands
+without reordering or removing them. Preserve main's required presentation check
+name as a strict aggregate that accepts only successful browser partitions;
+failed, cancelled or skipped work cannot pass it. All other24 command blocks and
+the twenty-minute per-suite bound remain unchanged. Five pure selector/CI tests
+and an independent YAML comparison verify the union and immutable runtime pin.
+The first full Gyropup run in this image still must pass; upstream image success
+and local static checks are not a substitute for current integration evidence.

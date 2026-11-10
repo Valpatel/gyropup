@@ -178,3 +178,5 @@
 - A diagram inventory reports `13 !== 11`, or a full layout job reaches its time bound with only some page/size/theme views: [bind diagram sources and prove partition coverage](inbox/2026-11-05-ci-classification-needs-phase-evidence.md#diagram-inventories-must-name-the-sources-they-cover).
 
 - A native checkbox Space assertion fails without focused-element or key-target evidence: [record focus and native event ownership](inbox/2026-11-05-ci-classification-needs-phase-evidence.md#native-keyboard-assertions-need-focus-and-event-ownership-evidence).
+
+- Browser installation consumes most of a CI job, or the presentation command list reaches its time bound: [keep provisioning outside executable test budgets and preserve command unions](inbox/2026-11-05-ci-classification-needs-phase-evidence.md#browser-provisioning-must-leave-time-for-executable-checks).
