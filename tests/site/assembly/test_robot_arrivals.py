@@ -6,7 +6,7 @@ import sys
 import unittest
 ROOT=Path(__file__).resolve().parents[3]
 sys.path.insert(0,str(ROOT/'tools/site/assembly'))
-from recipe_path_screen import axial_intervals, screen
+from recipe_path_screen import axial_intervals, screen, topology
 from robot_recipe import robot_operations
 spec=importlib.util.spec_from_file_location('arrival_evidence',ROOT/'.agents/plans/assembly-staging/screen-arrivals.py')
 evidence=importlib.util.module_from_spec(spec);spec.loader.exec_module(evidence)
@@ -21,6 +21,8 @@ class ArrivalWitnesses(unittest.TestCase):
     def test_real_bound_report_is_reproducible_and_retains_limitations(self):
         self.assertEqual(self.report,json.loads((ROOT/'.agents/plans/assembly-staging/arrival-witnesses.json').read_text()))
         self.assertIn('Zero witnesses do not prove',self.report['limits'])
+        self.assertEqual(len(self.report['mesh_topology']),42)
+        self.assertTrue(all(t['closed_oriented_edges'] for t in self.report['mesh_topology'].values()))
         for case in self.cases.values():
             self.assertEqual(case['unknown_rays'],0,case['id'])
             self.assertEqual(case['surface_samples'],128)
@@ -74,6 +76,7 @@ class ArrivalWitnesses(unittest.TestCase):
     def test_degenerate_ray_and_bad_screen_are_unknown_or_rejected(self):
         # A single open face cannot establish an interior; do not call it empty.
         triangle=(((0,0,0),(1,0,0),(0,0,1)),)
+        self.assertFalse(topology(triangle)['closed_oriented_edges'])
         self.assertIsNone(axial_intervals((.2,0,.2),triangle,1))
         self.assertIsNone(axial_intervals((0,0,0),triangle,1))
         with self.assertRaises(ValueError):screen(triangle,triangle,0)

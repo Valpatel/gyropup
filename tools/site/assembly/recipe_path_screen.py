@@ -7,6 +7,7 @@ to the existing CAD assembly gates.
 """
 from __future__ import annotations
 import math
+from collections import Counter
 from pathlib import Path
 import struct
 
@@ -22,6 +23,21 @@ def triangles(path):
         result.append(tuple(tuple(values[k:k+3]) for k in (3, 6, 9)))
     if not result:
         raise ValueError('Empty STL')
+    return result
+
+
+def topology(mesh):
+    """Check exact STL edge closure before treating ray parity as an interior."""
+    edges=Counter();directed=Counter();degenerate=0
+    for a,b,c in mesh:
+        degenerate += len({a,b,c}) != 3
+        for p,q in ((a,b),(b,c),(c,a)):
+            edges[tuple(sorted((p,q)))]+=1;directed[p,q]+=1
+    result={'triangles':len(mesh),'nonmanifold_edges':sum(n!=2 for n in edges.values()),
+            'orientation_errors':sum(directed[q,p]!=n for (p,q),n in directed.items()),
+            'degenerate_triangles':degenerate}
+    result['closed_oriented_edges']=bool(mesh) and not any(result[k] for k in
+        ('nonmanifold_edges','orientation_errors','degenerate_triangles'))
     return result
 
 

@@ -55,3 +55,10 @@ native or source-model review. They are not silently exempted as acceptable
 physical contact, and this result is not a passing assembly gate. The selected
 motor/hip, upper-link/output-screw and washer/hub path obstructions have no
 witnesses in the candidate's sampled paths.
+
+Before interpreting parity as a mesh interior, the regression now checks exact
+STL edge incidence for every actual moving/fixed mesh in this screen: all 42
+have closed oriented edges (two oppositely directed uses of each edge, with no
+repeated-vertex triangles). An open-face negative fails that prerequisite. This
+is a tessellation topology check, not proof of geometric equivalence to BREP,
+absence of mesh self-intersection, continuous clearance or physical fit.
