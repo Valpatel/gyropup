@@ -15,7 +15,7 @@ export function createWorkspace(host,getActive,paint,report){
   required('[data-explorer-toggle]').setAttribute('aria-expanded',String(useSheet()?pane==='parts'&&!sheetCollapsed:partsOpen));required('[data-tools-toggle]').setAttribute('aria-expanded',String(useSheet()?pane==='tools'&&!sheetCollapsed:toolsOpen));
   instructionToggle.setAttribute('aria-expanded',String(expandedInstructions));instructionToggle.textContent=expandedInstructions?'Collapse ↙':'Expand ↗';
   for(const button of host.querySelectorAll('[data-sheet-tab]'))button.setAttribute('aria-pressed',String(button.dataset.sheetTab===pane));
-  const size=required('[data-sheet-size]');size.setAttribute('aria-label',sheetExpanded&&!sheetCollapsed?'Reduce panel':'Expand panel');size.title=size.getAttribute('aria-label');size.textContent=sheetExpanded&&!sheetCollapsed?'↙':'↗';
+  const size=required('[data-sheet-resize]');size.setAttribute('aria-label',sheetExpanded&&!sheetCollapsed?'Reduce panel':'Expand panel');size.title=size.getAttribute('aria-label');size.textContent=sheetExpanded&&!sheetCollapsed?'↙':'↗';
  }
  function panels(which,open){if(useSheet()){pane=which===tree?'parts':'tools';sheetCollapsed=!open;}else if(which===tree)partsOpen=open;else toolsOpen=open;renderPanels();frame();}
  function selectPane(id){pane=id;sheetCollapsed=false;renderPanels();frame();}
@@ -23,7 +23,7 @@ export function createWorkspace(host,getActive,paint,report){
  required('[data-tools-toggle]').onclick=()=>panels(tools,useSheet()?pane!=='tools'||sheetCollapsed:!toolsOpen);
  required('[data-explorer-close]').onclick=()=>panels(tree,false);required('[data-tools-close]').onclick=()=>panels(tools,false);
  for(const button of host.querySelectorAll('[data-sheet-tab]'))button.onclick=()=>selectPane(button.dataset.sheetTab);
- required('[data-sheet-size]').onclick=()=>{sheetCollapsed=false;sheetExpanded=!sheetExpanded;renderPanels();frame();};
+ required('[data-sheet-resize]').onclick=()=>{sheetCollapsed=false;sheetExpanded=!sheetExpanded;renderPanels();frame();};
  required('[data-sheet-close]').onclick=()=>{sheetCollapsed=true;renderPanels();frame();};
  instructionToggle.onclick=()=>{expandedInstructions=!expandedInstructions;renderPanels();frame();};
  required('[data-guide-fit]').onclick=()=>frame();
