@@ -1,0 +1,54 @@
+{
+  "schema": "gyropup.assembly-posters/1",
+  "visual_sha256": "17bee263854a22dd1cee3b308c7cf4dfc4acefde09a9312f66168e58d0b74839",
+  "frames": {
+    "step-01": {
+      "file": "posters/step-01.png",
+      "sha256": "4dc9885901a50562020d8979595712ce864aa37de23b5d4628d819979a234216"
+    },
+    "step-02": {
+      "file": "posters/step-02.png",
+      "sha256": "be50edbb7b44b4e7fe0b34715fb6b39a3b651038951a57604e4281a20892579c"
+    },
+    "step-03": {
+      "file": "posters/step-03.png",
+      "sha256": "f461b6948885bf7395f63923ded0d95ca2b19eb291375eef5a3177d1106d68aa"
+    },
+    "step-04": {
+      "file": "posters/step-04.png",
+      "sha256": "b0fd20f8bea9a46645fe36b98abad652faf6c2f55343e7280af0e127105a3f8e"
+    },
+    "step-05": {
+      "file": "posters/step-05.png",
+      "sha256": "3dce0ef4ac4b41914d8cc9e3449be018e912eb81a20fd63facb415c2c29b2cac"
+    },
+    "step-06": {
+      "file": "posters/step-06.png",
+      "sha256": "e59a90a5338dc9e94c2baf2c8fc1e81d943e1e943c33fdb3f5e06e7fe861b167"
+    },
+    "step-07": {
+      "file": "posters/step-07.png",
+      "sha256": "567cee773ca61079626a1805fdff2edca6c3beb9cf1b2b8859bc84dfd5efbbe0"
+    },
+    "step-08": {
+      "file": "posters/step-08.png",
+      "sha256": "78ea2bc4de2c9f1a031df56bbb8d17dcee285868adb9f158fbb63c24dfe84cb0"
+    },
+    "step-09": {
+      "file": "posters/step-09.png",
+      "sha256": "7ee17f8dafa2260a98f3f219dd39db27449252e9d93c637ada2287e66639e81f"
+    },
+    "step-10": {
+      "file": "posters/step-10.png",
+      "sha256": "0f65834f459add18a51dbebbb946418711e498deeadd503ab90fc64b296e5352"
+    },
+    "step-11": {
+      "file": "posters/step-11.png",
+      "sha256": "921ea712fe0f93699542d22326eb8327b9e9231ef8cd92751bb1412397b28408"
+    },
+    "step-12": {
+      "file": "posters/step-12.png",
+      "sha256": "508b236f4175983c19ee28c119b9bbfaeb11c44273b640fdd07a8d1f1c29def2"
+    }
+  }
+}
