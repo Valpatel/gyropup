@@ -141,6 +141,7 @@
 - A model key looks ready but selecting a recorded activity does nothing: [wait for the selected model recording list](inbox/2026-11-06-recorded-activities-need-the-selected-model-list.md).
 
 - A cold landing reel stays paused without a source while near-viewport history pictures download: [keep history previews out of the hero startup budget](inbox/2026-11-06-recorded-activities-need-the-selected-model-list.md#history-cards-must-not-consume-the-hero-startup-budget).
+- A cold landing reel reaches Play now with the hero still downloading and no movie source: [verify the bounded override and measure the hero transfer budget](inbox/2026-11-10-cold-hero-transfers-need-a-separate-reel-contract.md).
 
 - README scene JSON is unchanged but renderer parity/SVG digest differs: [persisted scene paint order](inbox/2026-11-05-ci-classification-needs-phase-evidence.md#render-the-persisted-scene-representation-before-claiming-parity).
 
