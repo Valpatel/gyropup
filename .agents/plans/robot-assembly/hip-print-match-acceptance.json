@@ -1,0 +1,17 @@
+{
+  "schema": "gyropup.geometry-source-match-acceptance/1",
+  "measurement_sha256": "da6d1df54e489c9a32acc1c15501f23bbbe95eba378e91bc816b58c17ef72814",
+  "review_url": "https://github.com/Valpatel/gyropup/pull/270#issuecomment-6762537417",
+  "instances": [
+    "L.hip_frame",
+    "R.hip_frame"
+  ],
+  "scope": "WIP geometry-file preparation only; no insertion, fit, fastening, printer, material process, strength or powered-operation approval",
+  "physical_qualification": false,
+  "known_engineering_counts": {
+    "pass": 322,
+    "warn": 40,
+    "fail": 8
+  },
+  "raw_measurement_unchanged": true
+}
