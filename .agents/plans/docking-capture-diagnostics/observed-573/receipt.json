@@ -1,0 +1,29 @@
+{
+  "date": "2026-11-10",
+  "source_head": "57341468e3f812698f534845ae0c803aedd85754",
+  "built_merge": "b3a396c4d5c3472a9c0b5e2f37e2df2ac382df5b",
+  "run": 42899887112,
+  "job": 130122907263,
+  "artifact": 13804330157,
+  "zip_sha256": "cb9809f261b4d6882f1a4a77aeedd9a9042921f5184ebd46c77f63e16f496301",
+  "members": 31,
+  "pngs": 28,
+  "crc": "passed",
+  "required_capture_exists": false,
+  "outcome": "failed;125 observations/errors0; later playing cases unrun",
+  "phase": "Page.captureScreenshot pending for remaining14985ms until original15s deadline, after preparation12.574ms/fonts1.313ms/layout0.393ms returned; cleanup5.431ms returned; API rejection15006.676ms",
+  "cause_limit": "Phase observed, browser internal reason unknown. Frames advanced37to48 between snapshots, no per-frame cadence; stableprogramcount5 does not exclude all native shader/driver cost. Prior fullscreen/context sequence witnessed, not causal proof.",
+  "original_full_job_log_sha256": "fa1ca640c2a3c0ca724d0ab6445f4307dc5401db74ad5929b9ff03f03441ddf2",
+  "files": {
+    "failed.json": {
+      "original_sha256": "47303e6d6a82733cb4838c718744eae0a4bbf4fc1004bf7241207555809598c3"
+    },
+    "robot-stopped-capture-diagnostic.json": {
+      "original_sha256": "593db7a2a3f9a3661e942e7012753120e1e8184df80ebe975fb1bb3e420cd965"
+    },
+    "failure.png": {
+      "original_sha256": "041b75598ddcfb7f1de868fcbbd063e322177fdd605f07fc73d63e05ccb3ecbb"
+    }
+  },
+  "public_receipt": "https://github.com/Valpatel/gyropup/issues/292#issuecomment-6779406950"
+}

@@ -1,0 +1,45 @@
+{
+  "date": "2026-11-10",
+  "attempts": [
+    {
+      "source": "67d5ea2fc93fb02e798f00dff6bfe58560e5b3e3",
+      "run": 42889052519,
+      "job": 130084998921,
+      "artifact": 13797624029,
+      "outcome": "failed; later playing cases unrun",
+      "artifact_sha256": "c6b8108d651b46ccac715ad173bb2824e74e64342b4f8380c2a0617a9101f63d",
+      "members": 30,
+      "crc": "passed",
+      "original_report_sha256": "317f7bdc995a0488f7f9fd80929ebd943ef147cc70ccb4272a64ec54b9e3c94a",
+      "report": "common-failed.json",
+      "report_error_redaction": "public runner checkout prefix removed; original hash retained",
+      "image_sha256": "041b75598ddcfb7f1de868fcbbd063e322177fdd605f07fc73d63e05ccb3ecbb",
+      "observations": 125,
+      "page_errors": []
+    },
+    {
+      "source": "cdcf7a4c12356e9e7e7ef5d89cc5c772432608bc",
+      "run": 42896715114,
+      "job": 130111635244,
+      "artifact": 13801865935,
+      "outcome": "failed; later playing cases unrun",
+      "artifact_sha256": "d76d78abcbe3b06a165827ac9f3f230c919c2202cbf269e68b6534d472ee9159",
+      "members": 30,
+      "crc": "passed",
+      "original_report_sha256": "317f7bdc995a0488f7f9fd80929ebd943ef147cc70ccb4272a64ec54b9e3c94a",
+      "report": "common-failed.json",
+      "report_error_redaction": "public runner checkout prefix removed; original hash retained",
+      "image_sha256": "041b75598ddcfb7f1de868fcbbd063e322177fdd605f07fc73d63e05ccb3ecbb",
+      "observations": 125,
+      "page_errors": []
+    }
+  ],
+  "source_hashes": {
+    "tests/site/assembly/test-instruction-docking.mjs": "6dee980c11df35d478f2a0d77f1b95c109f9b05c8c8e3643e9f6bc866d65e885",
+    "software/site/designer/assembly/workspace.js": "ebfbe51e22164688add70084f92728b6e47de1f341a1976c513b24c09e0195f7",
+    "software/site/designer/assembly/guide.css": "e5c5c311f6e6efcbdfc100eab2c028716840f5faebdcfe0639b8a206015c085f",
+    "software/site/designer/build.html": "6d1056f618aaa9a3ebe15a3061d4cb9e38b7845fe385b6b0d6754fbca32e881e",
+    "software/site/designer/assembly/playback.js": "8a5c6e5930be6e05b38bb306731698c69f5eefaf39f9bfa96587bef5ac4990de"
+  },
+  "limits": "These separate actual attempts have byte-identical failure reports. Untimed progress entries do not allocate the shared15-second budget or establish a cause. Diagnostic images do not satisfy the missing required capture."
+}

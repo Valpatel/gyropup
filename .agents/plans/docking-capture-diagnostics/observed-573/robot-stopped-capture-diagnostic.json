@@ -1,0 +1,266 @@
+{
+  "schema": "gyropup.capture-diagnostic/1",
+  "metadata": {
+    "label": "robot-stopped-control-activation",
+    "engine": "chromium",
+    "browser": "141.0.7390.37",
+    "version": {
+      "revision": "b3a396c4d5c3472a9c0b5e2f37e2df2ac382df5b",
+      "assets": "a14dcd48ce545629b714",
+      "history": true,
+      "built": "2026-11-10T21:04:20.178Z"
+    },
+    "sources": {
+      "tests/site/assembly/test-instruction-docking.mjs": "7385f99461f9b1ccf2b2862b58c8a317b7711f89597feb655c38f4a25757012d",
+      "tests/site/assembly/capture-diagnostics.mjs": "d68cafc17956890876f3b9896a1e640f5cfbfef918f003128849c847b1f98fde",
+      "tests/site/assembly/test-capture-diagnostics.mjs": "b3fe4d4478955666d149cc4b31aba61029ebe64a0d2aaf0f38e3da891bb4cbe7",
+      "software/site/designer/assembly/workspace.js": "ebfbe51e22164688add70084f92728b6e47de1f341a1976c513b24c09e0195f7",
+      "software/site/designer/assembly/guide.css": "e5c5c311f6e6efcbdfc100eab2c028716840f5faebdcfe0639b8a206015c085f",
+      "software/site/designer/build.html": "6d1056f618aaa9a3ebe15a3061d4cb9e38b7845fe385b6b0d6754fbca32e881e",
+      "software/site/designer/assembly/playback.js": "8a5c6e5930be6e05b38bb306731698c69f5eefaf39f9bfa96587bef5ac4990de"
+    },
+    "lifecycle": [
+      {
+        "phase": "before phone context close",
+        "atMs": 351509.024083,
+        "state": {
+          "status": "available",
+          "value": {
+            "documentId": 1794344918218.5,
+            "visibility": "visible",
+            "hasFocus": true,
+            "fullscreen": true,
+            "viewport": {
+              "width": 844,
+              "height": 390
+            }
+          }
+        }
+      },
+      {
+        "phase": "phone context close completed",
+        "atMs": 351519.950533,
+        "contexts": 0
+      },
+      {
+        "phase": "playback context created",
+        "atMs": 357416.196959,
+        "contexts": 1
+      }
+    ],
+    "qualification": "Passive observation adds timing overhead; no render/focus/fullscreen/timeout changes or retry."
+  },
+  "options": {
+    "file": "robot-stopped-control-activation.png",
+    "timeout": 15000
+  },
+  "before": {
+    "status": "available",
+    "value": {
+      "documentId": 1794345017986.1,
+      "visibility": "visible",
+      "hasFocus": true,
+      "readyState": "complete",
+      "fullscreen": false,
+      "workspaceFullscreen": null,
+      "fonts": {
+        "status": "loaded",
+        "faces": [
+          {
+            "family": "Inter",
+            "status": "loaded"
+          },
+          {
+            "family": "JetBrains Mono",
+            "status": "loaded"
+          }
+        ]
+      },
+      "renderer": {
+        "frame": 37,
+        "calls": 174,
+        "triangles": 267670,
+        "programs": 5,
+        "memory": {
+          "geometries": 174,
+          "textures": 2
+        },
+        "contextLost": false
+      },
+      "canvas": {
+        "width": 1300,
+        "height": 688
+      },
+      "contextEvents": [],
+      "stageError": null,
+      "section": {
+        "axis": "x",
+        "flipped": true,
+        "depth": 0.4
+      },
+      "player": {
+        "status": "idle",
+        "stepId": "body-spine",
+        "partId": "cheek_left",
+        "operationIndex": 0,
+        "elapsedMs": 0,
+        "progress": 0,
+        "speed": 1,
+        "loop": true
+      },
+      "scrollY": 109,
+      "pendingRequests": [],
+      "pageEvents": [
+        {
+          "type": "navigation",
+          "path": "/designer/build.html",
+          "atMs": 357425.018643
+        },
+        {
+          "type": "navigation",
+          "path": "/designer/build.html",
+          "atMs": 360842.527295
+        },
+        {
+          "type": "navigation",
+          "path": "/designer/build.html",
+          "atMs": 360844.446191
+        }
+      ]
+    }
+  },
+  "capture": {
+    "startedMs": 389395.833046,
+    "status": "failed",
+    "error": {
+      "name": "TimeoutError",
+      "message": "page.screenshot: Timeout 15000ms exceeded.\nCall log:\n  - taking page screenshot\n  - waiting for fonts to load...\n  - fonts loaded\n"
+    },
+    "completedMs": 404402.509145,
+    "durationMs": 15006.676099000033
+  },
+  "protocol": {
+    "supported": true,
+    "calls": [
+      {
+        "id": 7553,
+        "method": "Runtime.callFunctionOn",
+        "phase": "prepare-screenshot",
+        "sentMs": 389396.295804,
+        "receivedMs": 389408.869972,
+        "durationMs": 12.574168000021018,
+        "errorCode": null
+      },
+      {
+        "id": 7554,
+        "method": "Runtime.callFunctionOn",
+        "phase": "font-ready",
+        "sentMs": 389409.033589,
+        "receivedMs": 389410.346651,
+        "durationMs": 1.313062000030186,
+        "errorCode": null
+      },
+      {
+        "id": 7555,
+        "method": "Page.getLayoutMetrics",
+        "phase": "Page.getLayoutMetrics",
+        "sentMs": 389410.407495,
+        "receivedMs": 389410.800231,
+        "durationMs": 0.3927360000088811,
+        "errorCode": null
+      },
+      {
+        "id": 7556,
+        "method": "Page.captureScreenshot",
+        "phase": "Page.captureScreenshot",
+        "sentMs": 389410.828143
+      },
+      {
+        "id": 7557,
+        "method": "Runtime.callFunctionOn",
+        "phase": "restore-screenshot",
+        "sentMs": 404395.912666,
+        "receivedMs": 404401.343389,
+        "durationMs": 5.430722999968566,
+        "errorCode": null
+      }
+    ],
+    "observerErrors": [],
+    "droppedCalls": 0
+  },
+  "after": {
+    "status": "available",
+    "value": {
+      "documentId": 1794345017986.1,
+      "visibility": "visible",
+      "hasFocus": true,
+      "readyState": "complete",
+      "fullscreen": false,
+      "workspaceFullscreen": null,
+      "fonts": {
+        "status": "loaded",
+        "faces": [
+          {
+            "family": "Inter",
+            "status": "loaded"
+          },
+          {
+            "family": "JetBrains Mono",
+            "status": "loaded"
+          }
+        ]
+      },
+      "renderer": {
+        "frame": 48,
+        "calls": 174,
+        "triangles": 267670,
+        "programs": 5,
+        "memory": {
+          "geometries": 174,
+          "textures": 2
+        },
+        "contextLost": false
+      },
+      "canvas": {
+        "width": 1300,
+        "height": 688
+      },
+      "contextEvents": [],
+      "stageError": null,
+      "section": {
+        "axis": "x",
+        "flipped": true,
+        "depth": 0.4
+      },
+      "player": {
+        "status": "idle",
+        "stepId": "body-spine",
+        "partId": "cheek_left",
+        "operationIndex": 0,
+        "elapsedMs": 0,
+        "progress": 0,
+        "speed": 1,
+        "loop": true
+      },
+      "scrollY": 109,
+      "pendingRequests": [],
+      "pageEvents": [
+        {
+          "type": "navigation",
+          "path": "/designer/build.html",
+          "atMs": 357425.018643
+        },
+        {
+          "type": "navigation",
+          "path": "/designer/build.html",
+          "atMs": 360842.527295
+        },
+        {
+          "type": "navigation",
+          "path": "/designer/build.html",
+          "atMs": 360844.446191
+        }
+      ]
+    }
+  }
+}
