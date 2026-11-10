@@ -27,7 +27,7 @@ Explore the [browser playground](https://gyropup.com/designer/sim.html), the
 
 <p align="center">
 <a href="docs/img/hero/current-design.svg"><img src="docs/img/hero/current-design.svg" width="480" height="180" style="max-width:100%;height:auto;padding:0" alt="Source-bound Gyropup CAD model: two wheeled legs, body and foam-ball turret."></a><br>
-CAD snapshot · <a href="docs/guide/project-overview.md#keeping-the-design-illustration-current">Source and context</a>.
+Committed CAD baseline · <a href="docs/guide/project-overview.md#keeping-the-design-illustration-current">Source and context</a> · <a href="https://github.com/Valpatel/gyropup/issues/193">Battery placement work</a>.
 </p>
 
 ## Why is it cool?
