@@ -171,3 +171,8 @@ is held beyond300 event-loop turns, proving it remains loading until released;
 then the original verified recovery/count/download assertions must pass. No
 product runtime or source-bound image input changed, and no poll-count increase
 substitutes for actual completion.
+
+
+### 2026-11-10: Expanded fullscreen must promote the ancestor stacking context
+
+The bf41 Print CI job129784699382 passed original/project404 recovery and native fullscreen Print, then timed out selecting Explorer in intentionally denied fullscreen. Its call log identified appnav pointer interception; retained failure PNG also showed the prototype footer across the model. `main.prog` establishes z-index3, below appnav50/footer51, so its fixed workspace child cannot escape that ancestor even at z-index10000. The scoped `main.prog:has(.assembly-layout[data-expanded=true])` promotion to100 places only the expanded workspace above site chrome, and removal of that state restores normal3 automatically. Persistent tests assert real center-point reachability at desktop/390/320 during denial, ordinary stacking after Escape/Print, and the existing selected-hip preparation flow. Native fullscreen remains governed by the browser top layer. This is a visual/runtime correction and requires a fresh actual twelve-image poster contract; the old bf41 campaign stays failed.

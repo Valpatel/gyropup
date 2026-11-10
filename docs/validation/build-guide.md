@@ -251,3 +251,5 @@ bound, including selectedhip inside fullscreen, actual exit and verified origina
 and3MF downloads. This corrects the immediate-read race in CI129780849681; it does
 not treat the prior successful HTTP404 prefix as fullscreen acceptance. Runtime
 and all53c15b92 poster inputs are unchanged by this test-only correction.
+
+Expanded fullscreen acceptance: denied/unsupported native requests must keep real toolbar and step hit targets above global app navigation and prototype footer at desktop,390,and320px. Escape, Print navigation, and disposal restore normal ancestor stacking; a child z-index alone is insufficient. Verify actual elementFromPoint and the existing selected-part Print flow.
