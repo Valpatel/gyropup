@@ -3,6 +3,8 @@ import {readLocation,stepFor,validateIndex,matchSnapshot,progressKey,readProgres
 const esc=s=>String(s??'').replace(/[&<>"']/g,c=>({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[c]));
 const host=document.getElementById('assembly');
 let active=null,request=0,pending=null,applying=false;
+const initialAnchor=location.hash,interactionEvents=new AbortController();let userMoved=false;
+for(const type of ['wheel','touchmove','pointerdown','keydown'])window.addEventListener(type,()=>{userMoved=true;},{once:true,passive:true,signal:interactionEvents.signal});
 const tabProgress=new Map(),assemblyChoices=new Map(),viewStates=new Map();
 const workspace=createWorkspace(host,()=>active,paint,report);
 let retryAction=()=>start().catch(error=>report(error.message,true));
@@ -59,7 +61,7 @@ async function start(){
    select.value=id;paint(step.id);
    if(renderError)report('Interactive 3D is unavailable. '+(guide.steps.some(step=>step.poster)?'The same snapshot’s text and diagrams remain below.':'The same snapshot’s text remains below.'),true);
    else report(guide.snapshot.status==='wip'?'Source-bound WIP guide loaded. No physical build release.':'Versioned guide loaded. Its publication status is separate from physical qualification.');
-   window.__buildGuide={get active(){return active;},load,apply:id=>paint(id),dispose(){workspace.dispose();pending?.abort();disposeRobot(active?.robot);active?.viewer?.dispose();for(const value of active?.posterURLs?.values()||[])URL.revokeObjectURL(value);active=null;}};
+   window.__buildGuide={get active(){return active;},load,apply:id=>paint(id),dispose(){interactionEvents.abort();workspace.dispose();pending?.abort();disposeRobot(active?.robot);active?.viewer?.dispose();for(const value of active?.posterURLs?.values()||[])URL.revokeObjectURL(value);active=null;}};
    if(!renderError&&route.assembly&&route.assembly!==assembly)workspace.choose(route.assembly,false);
    if(pending===abort)pending=null;
   }catch(error){const cancelled=abort.signal.aborted||own!==request;abort.abort();if(pending===abort)pending=null;nextViewer?.dispose();for(const value of posterURLs.values())URL.revokeObjectURL(value);if(cancelled)return;report(error.message+(active?' Your previous build remains selected.':''),true);if(active){const choice=assemblyChoices.get(assembly);select.value=choice?.snapshot||'';}else select.selectedIndex=-1;}
@@ -71,6 +73,7 @@ async function start(){
  if(requested)assemblyChoices.set(requested.assembly||'turret',{snapshot:requested.id,step:route.step});
  const initial=rows.length&&(!requested||(requested.assembly||'turret')!==desired)?rows[0].id:route.snapshot;
  await load(initial,{...route,assembly:desired,step:initial===route.snapshot?route.step:null,chapter:initial===route.snapshot?route.chapter:null});
+ if(!initialAnchor||initialAnchor==='#assembly'){await document.fonts.ready;await new Promise(resolve=>requestAnimationFrame(()=>requestAnimationFrame(resolve)));if(!userMoved){const top=document.querySelector('.appnav')?.getBoundingClientRect().bottom||64;window.scrollTo({top:host.getBoundingClientRect().top+scrollY-top-8,behavior:'instant'});}}
  window.addEventListener('popstate',()=>{const next=readLocation(location,index),assembly=next.assembly||'turret',row=index.snapshots.find(s=>s.id===next.snapshot);if(row&&(row.assembly||'turret')===assembly){if(next.snapshot!==active?.guide.snapshot.id)load(next.snapshot,next);else workspace.step(stepFor(active.guide,next).id);}else workspace.choose(assembly,false);});
  window.addEventListener('pagehide',()=>window.__buildGuide?.dispose(),{once:true});
 }
