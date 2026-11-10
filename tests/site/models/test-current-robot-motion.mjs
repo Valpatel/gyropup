@@ -6,7 +6,6 @@ import path from 'node:path';
 import {chromium,webkit} from '@playwright/test';
 import {createSiteServer} from '../../../tools/site/serve-site.mjs';
 import {publicForSource,sourceForPublic} from '../../../tools/site/source-layout.mjs';
-import {acknowledgePrototypeNotice} from '../content/test-prototype-session.mjs';
 import {installCurrentMotion,captureMotionFaults,captureMotionOperation} from './current-motion-capture.mjs';
 
 const root=new URL('../../../',import.meta.url),sha=b=>createHash('sha256').update(b).digest('hex');
@@ -35,8 +34,12 @@ const stop=()=>{aborted=true;void browser?.close().catch(()=>{});server.closeAll
 process.once('SIGTERM',stop);process.once('SIGINT',stop);
 async function save(name,value){const data=JSON.stringify(value)+'\n';await writeFile(path.join(out,name),data,{flag:'wx'});report.outputs[name]={sha256:sha(data),bytes:Buffer.byteLength(data)};}
 async function context(viewport={width:1280,height:900}){
-  const c=await browser.newContext({viewport,reducedMotion:'reduce'});contexts.push(c);await acknowledgePrototypeNotice(c);
-  await c.addInitScript(()=>{localStorage.setItem('gyropup.probe','off');localStorage.setItem('gyropup-sfx','0');});
+  const c=await browser.newContext({viewport,reducedMotion:'reduce'});contexts.push(c);
+  await c.addInitScript(()=>{
+    if(!/^https?:$/.test(location.protocol))return;
+    sessionStorage.setItem('gyropup.prototype-notice','2026-10-29-v1');
+    localStorage.setItem('gyropup.probe','off');localStorage.setItem('gyropup-sfx','0');
+  });
   await c.route('**/designer/robot_current_source.js*',async route=>{
     const response=await route.fetch();assert.equal(sha(await response.body()),sha(originalBinding));
     await route.fulfill({response,body:bindingBody,contentType:'text/javascript'});

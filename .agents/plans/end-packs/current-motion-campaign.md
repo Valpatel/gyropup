@@ -90,6 +90,12 @@ qpos/mass/source/muzzle roundtrips, real bench-selector cached return and stable
 laser recovery, landing/talk same-source identities, and320×568 native error/
 retry recovery. Actual current browser/visual/frame acceptance remains pending.
 
+Campaign-local storage initialization runs only on HTTP(S) origins. The initial
+`about:blank` document is skipped before accessing either storage object; an
+HTTP-origin storage exception remains an observed page error. The historical
+prototype helper bytes are unchanged. This carries the independently reproduced
+opaque-origin storage lesson into this new campaign without resealing old media.
+
 ## Disjoint current media and remaining aggregate ownership
 
 The media owner prepares existing highlight capture/encode/check and the
