@@ -78,6 +78,7 @@
 | A study shows a zero-second player, or a valid encoded movie is frozen or mislabels static analysis as transient physics | [Structural media and recorded evidence](domains/structural-media.md) |
 | Video works in local Chrome but CI Chromium reports no supported streams or never reaches ready | [Chrome and Chromium codec coverage](inbox/2026-10-29-chrome-and-chromium-do-not-share-video-codecs.md) |
 | Highlights reject `Source changed: software/site/designer/kit/stage.js` after a lifecycle correction | [Capture changed renderer inputs freshly](inbox/2026-11-10-stage-lifecycle-changes-need-fresh-media.md) |
+| Copied rendering dependencies match by hash but Node cannot resolve a sibling import | [Smoke-test the real staged package layout](inbox/2026-11-10-stage-lifecycle-changes-need-fresh-media.md#smoke-test-the-real-staged-package-layout) |
 | A movie's neighboring report or current model has changed, or a capture has the wrong aspect ratio | [Recorded evidence and capture dimensions](domains/structural-media.md) |
 | Video plays initially but WebKit replay fails with an unexpected HTTP 200 range response | [Local and production media ranges](domains/structural-media.md) |
 | Isolated video tests pass but real-page autoplay stalls or times out CAD parts on a slow connection | [Integrated media loading and buffering](domains/structural-media.md) |
