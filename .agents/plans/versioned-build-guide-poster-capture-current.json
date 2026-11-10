@@ -1,11 +1,11 @@
 {
-  "visual_sha256": "8db75adae66247f142d4395adc6e67cb04849ba55a31a323d0dedc9411b40f9a",
-  "source_commit": "82aa0e611c53bb449e526f2115bb0ce6544aef16",
+  "visual_sha256": "f0b69f8f3e75d383157af2a546dd2584b56db823de9925b702af101b0e80ca6f",
+  "source_commit": "ca7f2226daf9b845132c4be182acbb21c97abf11",
   "version": {
-    "revision": "82aa0e611c53bb449e526f2115bb0ce6544aef16",
-    "assets": "364d5f4de00d9cec52e9",
+    "revision": "ca7f2226daf9b845132c4be182acbb21c97abf11",
+    "assets": "9c45ccd501d9e53679ce",
     "history": true,
-    "built": "2026-11-10T16:58:28.643Z"
+    "built": "2026-11-10T17:04:39.720Z"
   },
   "browser": "151.0.7922.71",
   "session_notice_acknowledged": true,
@@ -190,7 +190,7 @@
       ],
       "camera": [
         0.19624228600365423,
-        0.3266826678943592,
+        0.32668266789435924,
         0.3900038097517772
       ],
       "target": [

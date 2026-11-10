@@ -1,30 +1,34 @@
 {
   "date": "2026-11-10",
-  "runtime_source_commit": "82aa0e61",
+  "runtime_source_commit": "ca7f2226daf9b845132c4be182acbb21c97abf11",
   "commands": [
     "npm run test:instruction-docking",
     "PLAYWRIGHT_BROWSER=webkit npm run test:instruction-docking"
   ],
   "local_browsers": "Native Chrome and installed WebKit; normal pinned CI remains required.",
-  "actual_states_per_engine": 93,
+  "actual_states_per_engine": 103,
   "sources": {
-    "tests/site/assembly/test-instruction-docking.mjs": "d536b22b5f542cf1d829d610aec864637c693ca69f8dc7e64e842b13e81305c3",
-    "software/site/designer/assembly/workspace.js": "e818c71ed4bc87d73107e8f42f4e2969ce3d0bc07f402fb54fa6f86d376d64a8",
-    "software/site/designer/assembly/guide.css": "b4d745dcefd49b05535622170e097918afde33596587f4dde1a0da25fc46f666"
+    "tests/site/assembly/test-instruction-docking.mjs": "6c0868ff9b240929ef5fb1dac17ba938d75f27cc927d601320fa4df920d47157",
+    "software/site/designer/assembly/workspace.js": "1bd81e7eb24abd4697aa033af09853ecdf36ccc62cd99a1d52ddb18010594370",
+    "software/site/designer/assembly/guide.css": "5bbf514891377cd7f5847bddde07e5e2397b20e4c85d9ea114c32380cf5e3586"
   },
   "files": {
     "after-1024-native.png": "f7569b5d33e9529c55a1f3ffa86556143b09b185fa185d6972c0eafd5b8847a9",
     "after-1440-native.png": "b08915ecd4208164942db7c773530bae0905a1aaa2c88dab79b3a9a2fef2dfea",
     "after-1440-windowed.png": "f1c7c89d48666b82fc29c4cea014c5a0b41516cbb521537757e3b8d5bf219fc6",
     "after-390-native.png": "37a2a778b31f4a130475cd61dcdc09742d2b216fc5b8884287b399e698314939",
+    "after-844-fine-native.png": "3b245106a2db6a17dcc108bacb9a29ef2150ef9289ffe937908a1b5d9fb9d377",
+    "after-844-phone-native.png": "dff47e39e77950c17ea2227da862025aa9710dfff43467172a5663a3d82896d3",
     "before-1280-native.png": "4e593658b82ba64621e0d2ada51d2392903cfc20a3712ab19566ec5c9c7a74be",
     "before.json": "3396708905e46c5def453ad4f5126004e62599e2c5497bc658fc5abe5daab1d1",
-    "chromium.json": "f82646efd2bf08a564613d45c13b156bc89acbc71a66b67b0f9b3a77e79e6ece",
-    "webkit.json": "5a45d6048fdc3b23ca0a5cb68d374ec8398a9ec5466e026f7f7d88136f30397f"
+    "chromium.json": "7e761d7c283d13f0b505e200680ee4f00933e81a49ad6a3c1f77c4d4c814ff66",
+    "phone-landscape-before.json": "c87c1f0b0667986d09cde40ac9d757c77bb27447e1c5787bc52e1503bcf4e15d",
+    "webkit.json": "b4fb6ef826d62b3cdb776c59ad59851bf342d5f2083f9e0fa3373b877e57d7f1"
   },
   "limits": [
     "The pre-fix probe reproduced desktop bottom-sheet placement, not disappearance of Parts/Tools tabs.",
     "Ordinary short windows scroll; each narrow tab was brought into view before its actual hit test. Fullscreen controls must fit the viewport.",
-    "The screenshots and browser bounds establish presentation, not physical qualification."
+    "The screenshots and browser bounds establish presentation, not physical qualification.",
+    "Open bottom-sheet instructions in short coarse landscape leave a small model area; the actual screenshot is retained for independent visual review."
   ]
 }

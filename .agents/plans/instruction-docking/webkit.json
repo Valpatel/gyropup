@@ -3,20 +3,21 @@
   "engine": "webkit",
   "browser": "26.0",
   "version": {
-    "revision": "82aa0e611c53bb449e526f2115bb0ce6544aef16",
-    "assets": "364d5f4de00d9cec52e9",
+    "revision": "ca7f2226daf9b845132c4be182acbb21c97abf11",
+    "assets": "9c45ccd501d9e53679ce",
     "history": true,
-    "built": "2026-11-10T16:58:28.643Z"
+    "built": "2026-11-10T17:04:39.720Z"
   },
   "sources": {
-    "tests/site/assembly/test-instruction-docking.mjs": "d536b22b5f542cf1d829d610aec864637c693ca69f8dc7e64e842b13e81305c3",
-    "software/site/designer/assembly/workspace.js": "e818c71ed4bc87d73107e8f42f4e2969ce3d0bc07f402fb54fa6f86d376d64a8",
-    "software/site/designer/assembly/guide.css": "b4d745dcefd49b05535622170e097918afde33596587f4dde1a0da25fc46f666"
+    "tests/site/assembly/test-instruction-docking.mjs": "6c0868ff9b240929ef5fb1dac17ba938d75f27cc927d601320fa4df920d47157",
+    "software/site/designer/assembly/workspace.js": "1bd81e7eb24abd4697aa033af09853ecdf36ccc62cd99a1d52ddb18010594370",
+    "software/site/designer/assembly/guide.css": "5bbf514891377cd7f5847bddde07e5e2397b20e4c85d9ea114c32380cf5e3586"
   },
   "observations": [
     {
       "label": "windowed 1440 expanded=false Parts=false Tools=false",
       "mobile": "false",
+      "pointerCoarse": true,
       "mode": "none",
       "expanded": "normal",
       "workspace": {
@@ -187,6 +188,7 @@
     {
       "label": "windowed 1440 expanded=false Parts=false Tools=true",
       "mobile": "false",
+      "pointerCoarse": true,
       "mode": "none",
       "expanded": "normal",
       "workspace": {
@@ -365,6 +367,7 @@
     {
       "label": "windowed 1440 expanded=false Parts=true Tools=false",
       "mobile": "false",
+      "pointerCoarse": true,
       "mode": "none",
       "expanded": "normal",
       "workspace": {
@@ -543,6 +546,7 @@
     {
       "label": "windowed 1440 expanded=false Parts=true Tools=true",
       "mobile": "false",
+      "pointerCoarse": true,
       "mode": "none",
       "expanded": "normal",
       "workspace": {
@@ -729,6 +733,7 @@
     {
       "label": "windowed 1440 expanded=true Parts=false Tools=false",
       "mobile": "false",
+      "pointerCoarse": true,
       "mode": "none",
       "expanded": "expanded",
       "workspace": {
@@ -899,6 +904,7 @@
     {
       "label": "windowed 1440 expanded=true Parts=false Tools=true",
       "mobile": "false",
+      "pointerCoarse": true,
       "mode": "none",
       "expanded": "expanded",
       "workspace": {
@@ -1077,6 +1083,7 @@
     {
       "label": "windowed 1440 expanded=true Parts=true Tools=false",
       "mobile": "false",
+      "pointerCoarse": true,
       "mode": "none",
       "expanded": "expanded",
       "workspace": {
@@ -1255,6 +1262,7 @@
     {
       "label": "windowed 1440 expanded=true Parts=true Tools=true",
       "mobile": "false",
+      "pointerCoarse": true,
       "mode": "none",
       "expanded": "expanded",
       "workspace": {
@@ -1441,6 +1449,7 @@
     {
       "label": "windowed 1024 expanded=false Parts=false Tools=false",
       "mobile": "false",
+      "pointerCoarse": true,
       "mode": "none",
       "expanded": "normal",
       "workspace": {
@@ -1611,6 +1620,7 @@
     {
       "label": "windowed 1024 expanded=false Parts=false Tools=true",
       "mobile": "false",
+      "pointerCoarse": true,
       "mode": "none",
       "expanded": "normal",
       "workspace": {
@@ -1789,6 +1799,7 @@
     {
       "label": "windowed 1024 expanded=false Parts=true Tools=false",
       "mobile": "false",
+      "pointerCoarse": true,
       "mode": "none",
       "expanded": "normal",
       "workspace": {
@@ -1967,6 +1978,7 @@
     {
       "label": "windowed 1024 expanded=false Parts=true Tools=true",
       "mobile": "false",
+      "pointerCoarse": true,
       "mode": "none",
       "expanded": "normal",
       "workspace": {
@@ -2153,6 +2165,7 @@
     {
       "label": "windowed 1024 expanded=true Parts=false Tools=false",
       "mobile": "false",
+      "pointerCoarse": true,
       "mode": "none",
       "expanded": "expanded",
       "workspace": {
@@ -2323,6 +2336,7 @@
     {
       "label": "windowed 1024 expanded=true Parts=false Tools=true",
       "mobile": "false",
+      "pointerCoarse": true,
       "mode": "none",
       "expanded": "expanded",
       "workspace": {
@@ -2501,6 +2515,7 @@
     {
       "label": "windowed 1024 expanded=true Parts=true Tools=false",
       "mobile": "false",
+      "pointerCoarse": true,
       "mode": "none",
       "expanded": "expanded",
       "workspace": {
@@ -2679,6 +2694,7 @@
     {
       "label": "windowed 1024 expanded=true Parts=true Tools=true",
       "mobile": "false",
+      "pointerCoarse": true,
       "mode": "none",
       "expanded": "expanded",
       "workspace": {
@@ -2865,6 +2881,7 @@
     {
       "label": "windowed resize 1280x900",
       "mobile": "false",
+      "pointerCoarse": true,
       "mode": "none",
       "expanded": "expanded",
       "workspace": {
@@ -3049,182 +3066,856 @@
       "horizontalOverflow": false
     },
     {
-      "label": "windowed resize 844x390",
-      "mobile": "false",
+      "label": "windowed 844 instructions",
+      "mobile": "true",
+      "pointerCoarse": true,
       "mode": "none",
       "expanded": "expanded",
       "workspace": {
         "x": 17,
         "y": 72,
         "w": 810,
-        "h": 460,
+        "h": 440,
         "right": 827,
-        "bottom": 532
+        "bottom": 512
       },
       "navigation": {
-        "x": 82,
-        "y": 162,
-        "w": 680,
+        "x": 25,
+        "y": 150,
+        "w": 794,
         "h": 56,
-        "right": 762,
-        "bottom": 218
+        "right": 819,
+        "bottom": 206
       },
       "panels": {
-        "assembly-explorer": {
-          "x": 33,
-          "y": 231,
-          "w": 150,
-          "h": 284,
-          "right": 183,
-          "bottom": 515
-        },
-        "assembly-tools": {
-          "x": 661,
-          "y": 231,
-          "w": 150,
-          "h": 284,
-          "right": 811,
-          "bottom": 515
-        },
         "instructions": {
-          "x": 409,
-          "y": 231,
-          "w": 240,
-          "h": 284,
-          "right": 649,
-          "bottom": 515
+          "x": 26,
+          "y": 344,
+          "w": 792,
+          "h": 158,
+          "right": 818,
+          "bottom": 502
         }
       },
       "controls": [
         {
           "label": "Explore",
-          "x": 40,
-          "y": 99,
-          "w": 103.625,
+          "x": 30,
+          "y": 89,
+          "w": 44,
           "h": 44,
-          "right": 143.625,
-          "bottom": 143,
+          "right": 74,
+          "bottom": 133,
           "hit": true,
           "inViewport": true
         },
         {
           "label": "Robot",
-          "x": 154.625,
-          "y": 99,
-          "w": 59.21875,
+          "x": 81,
+          "y": 89,
+          "w": 51.21875,
           "h": 44,
-          "right": 213.84375,
-          "bottom": 143,
+          "right": 132.21875,
+          "bottom": 133,
           "hit": true,
           "inViewport": true
         },
         {
           "label": "Turret",
-          "x": 216.84375,
-          "y": 99,
-          "w": 59.90625,
+          "x": 135.21875,
+          "y": 89,
+          "w": 51.90625,
           "h": 44,
-          "right": 276.75,
-          "bottom": 143,
+          "right": 187.125,
+          "bottom": 133,
           "hit": true,
           "inViewport": true
         },
         {
           "label": "Combined",
-          "x": 279.75,
-          "y": 99,
-          "w": 84.171875,
+          "x": 190.125,
+          "y": 89,
+          "w": 76.171875,
           "h": 44,
-          "right": 363.921875,
-          "bottom": 143,
+          "right": 266.296875,
+          "bottom": 133,
           "hit": true,
           "inViewport": true
         },
         {
           "label": "Fit model to view",
-          "x": 609.578125,
-          "y": 99,
-          "w": 46,
+          "x": 674,
+          "y": 89,
+          "w": 44,
           "h": 44,
-          "right": 655.578125,
-          "bottom": 143,
+          "right": 718,
+          "bottom": 133,
           "hit": true,
           "inViewport": true
         },
         {
           "label": "Enter full screen",
-          "x": 663.578125,
-          "y": 99,
-          "w": 46,
+          "x": 722,
+          "y": 89,
+          "w": 44,
           "h": 44,
-          "right": 709.578125,
-          "bottom": 143,
+          "right": 766,
+          "bottom": 133,
           "hit": true,
           "inViewport": true
         },
         {
           "label": "View",
-          "x": 717.578125,
-          "y": 99,
-          "w": 86.421875,
+          "x": 770,
+          "y": 89,
+          "w": 44,
           "h": 44,
-          "right": 804,
-          "bottom": 143,
+          "right": 814,
+          "bottom": 133,
           "hit": true,
           "inViewport": true
         },
         {
           "label": "Previous step",
-          "x": 95,
-          "y": 168,
-          "w": 110,
+          "x": 30,
+          "y": 156,
+          "w": 44,
           "h": 44,
-          "right": 205,
-          "bottom": 212,
+          "right": 74,
+          "bottom": 200,
           "hit": true,
           "inViewport": true
         },
         {
           "label": "Instruction step",
-          "x": 213,
-          "y": 168,
-          "w": 300,
+          "x": 78,
+          "y": 156,
+          "w": 610,
           "h": 44,
-          "right": 513,
-          "bottom": 212,
+          "right": 688,
+          "bottom": 200,
           "hit": true,
           "inViewport": true
         },
         {
           "label": "Complete",
-          "x": 521,
-          "y": 168,
-          "w": 110,
+          "x": 692,
+          "y": 156,
+          "w": 74,
           "h": 44,
-          "right": 631,
-          "bottom": 212,
+          "right": 766,
+          "bottom": 200,
           "hit": true,
           "inViewport": true
         },
         {
           "label": "Next step",
-          "x": 639,
-          "y": 168,
-          "w": 110,
+          "x": 770,
+          "y": 156,
+          "w": 44,
           "h": 44,
-          "right": 749,
-          "bottom": 212,
+          "right": 814,
+          "bottom": 200,
           "hit": true,
           "inViewport": true
         },
         {
-          "label": "Collapse ↙",
-          "x": 545.96875,
-          "y": 231.5,
-          "w": 92.03125,
+          "label": "Instructions",
+          "x": 30,
+          "y": 300,
+          "w": 228,
           "h": 44,
-          "right": 638,
-          "bottom": 275.5,
+          "right": 258,
+          "bottom": 344,
+          "hit": true,
+          "inViewport": true
+        },
+        {
+          "label": "Parts",
+          "x": 261,
+          "y": 300,
+          "w": 228,
+          "h": 44,
+          "right": 489,
+          "bottom": 344,
+          "hit": true,
+          "inViewport": true
+        },
+        {
+          "label": "Tools",
+          "x": 492,
+          "y": 300,
+          "w": 228,
+          "h": 44,
+          "right": 720,
+          "bottom": 344,
+          "hit": true,
+          "inViewport": true
+        },
+        {
+          "label": "Expand panel",
+          "x": 723,
+          "y": 300,
+          "w": 44,
+          "h": 44,
+          "right": 767,
+          "bottom": 344,
+          "hit": true,
+          "inViewport": true
+        },
+        {
+          "label": "Collapse panel",
+          "x": 770,
+          "y": 300,
+          "w": 44,
+          "h": 44,
+          "right": 814,
+          "bottom": 344,
+          "hit": true,
+          "inViewport": true
+        }
+      ],
+      "vertices": 250,
+      "unoccluded": true,
+      "shortWindow": true,
+      "horizontalOverflow": false
+    },
+    {
+      "label": "windowed 844 parts",
+      "mobile": "true",
+      "pointerCoarse": true,
+      "mode": "none",
+      "expanded": "expanded",
+      "workspace": {
+        "x": 17,
+        "y": 72,
+        "w": 810,
+        "h": 440,
+        "right": 827,
+        "bottom": 512
+      },
+      "navigation": {
+        "x": 25,
+        "y": 150,
+        "w": 794,
+        "h": 56,
+        "right": 819,
+        "bottom": 206
+      },
+      "panels": {
+        "assembly-explorer": {
+          "x": 26,
+          "y": 344,
+          "w": 792,
+          "h": 158,
+          "right": 818,
+          "bottom": 502
+        }
+      },
+      "controls": [
+        {
+          "label": "Explore",
+          "x": 30,
+          "y": 89,
+          "w": 44,
+          "h": 44,
+          "right": 74,
+          "bottom": 133,
+          "hit": true,
+          "inViewport": true
+        },
+        {
+          "label": "Robot",
+          "x": 81,
+          "y": 89,
+          "w": 51.21875,
+          "h": 44,
+          "right": 132.21875,
+          "bottom": 133,
+          "hit": true,
+          "inViewport": true
+        },
+        {
+          "label": "Turret",
+          "x": 135.21875,
+          "y": 89,
+          "w": 51.90625,
+          "h": 44,
+          "right": 187.125,
+          "bottom": 133,
+          "hit": true,
+          "inViewport": true
+        },
+        {
+          "label": "Combined",
+          "x": 190.125,
+          "y": 89,
+          "w": 76.171875,
+          "h": 44,
+          "right": 266.296875,
+          "bottom": 133,
+          "hit": true,
+          "inViewport": true
+        },
+        {
+          "label": "Fit model to view",
+          "x": 674,
+          "y": 89,
+          "w": 44,
+          "h": 44,
+          "right": 718,
+          "bottom": 133,
+          "hit": true,
+          "inViewport": true
+        },
+        {
+          "label": "Enter full screen",
+          "x": 722,
+          "y": 89,
+          "w": 44,
+          "h": 44,
+          "right": 766,
+          "bottom": 133,
+          "hit": true,
+          "inViewport": true
+        },
+        {
+          "label": "View",
+          "x": 770,
+          "y": 89,
+          "w": 44,
+          "h": 44,
+          "right": 814,
+          "bottom": 133,
+          "hit": true,
+          "inViewport": true
+        },
+        {
+          "label": "Previous step",
+          "x": 30,
+          "y": 156,
+          "w": 44,
+          "h": 44,
+          "right": 74,
+          "bottom": 200,
+          "hit": true,
+          "inViewport": true
+        },
+        {
+          "label": "Instruction step",
+          "x": 78,
+          "y": 156,
+          "w": 610,
+          "h": 44,
+          "right": 688,
+          "bottom": 200,
+          "hit": true,
+          "inViewport": true
+        },
+        {
+          "label": "Complete",
+          "x": 692,
+          "y": 156,
+          "w": 74,
+          "h": 44,
+          "right": 766,
+          "bottom": 200,
+          "hit": true,
+          "inViewport": true
+        },
+        {
+          "label": "Next step",
+          "x": 770,
+          "y": 156,
+          "w": 44,
+          "h": 44,
+          "right": 814,
+          "bottom": 200,
+          "hit": true,
+          "inViewport": true
+        },
+        {
+          "label": "Instructions",
+          "x": 30,
+          "y": 300,
+          "w": 228,
+          "h": 44,
+          "right": 258,
+          "bottom": 344,
+          "hit": true,
+          "inViewport": true
+        },
+        {
+          "label": "Parts",
+          "x": 261,
+          "y": 300,
+          "w": 228,
+          "h": 44,
+          "right": 489,
+          "bottom": 344,
+          "hit": true,
+          "inViewport": true
+        },
+        {
+          "label": "Tools",
+          "x": 492,
+          "y": 300,
+          "w": 228,
+          "h": 44,
+          "right": 720,
+          "bottom": 344,
+          "hit": true,
+          "inViewport": true
+        },
+        {
+          "label": "Expand panel",
+          "x": 723,
+          "y": 300,
+          "w": 44,
+          "h": 44,
+          "right": 767,
+          "bottom": 344,
+          "hit": true,
+          "inViewport": true
+        },
+        {
+          "label": "Collapse panel",
+          "x": 770,
+          "y": 300,
+          "w": 44,
+          "h": 44,
+          "right": 814,
+          "bottom": 344,
+          "hit": true,
+          "inViewport": true
+        }
+      ],
+      "vertices": 250,
+      "unoccluded": true,
+      "shortWindow": true,
+      "horizontalOverflow": false
+    },
+    {
+      "label": "windowed 844 tools",
+      "mobile": "true",
+      "pointerCoarse": true,
+      "mode": "none",
+      "expanded": "expanded",
+      "workspace": {
+        "x": 17,
+        "y": 72,
+        "w": 810,
+        "h": 440,
+        "right": 827,
+        "bottom": 512
+      },
+      "navigation": {
+        "x": 25,
+        "y": 150,
+        "w": 794,
+        "h": 56,
+        "right": 819,
+        "bottom": 206
+      },
+      "panels": {
+        "assembly-tools": {
+          "x": 26,
+          "y": 344,
+          "w": 792,
+          "h": 158,
+          "right": 818,
+          "bottom": 502
+        }
+      },
+      "controls": [
+        {
+          "label": "Explore",
+          "x": 30,
+          "y": 89,
+          "w": 44,
+          "h": 44,
+          "right": 74,
+          "bottom": 133,
+          "hit": true,
+          "inViewport": true
+        },
+        {
+          "label": "Robot",
+          "x": 81,
+          "y": 89,
+          "w": 51.21875,
+          "h": 44,
+          "right": 132.21875,
+          "bottom": 133,
+          "hit": true,
+          "inViewport": true
+        },
+        {
+          "label": "Turret",
+          "x": 135.21875,
+          "y": 89,
+          "w": 51.90625,
+          "h": 44,
+          "right": 187.125,
+          "bottom": 133,
+          "hit": true,
+          "inViewport": true
+        },
+        {
+          "label": "Combined",
+          "x": 190.125,
+          "y": 89,
+          "w": 76.171875,
+          "h": 44,
+          "right": 266.296875,
+          "bottom": 133,
+          "hit": true,
+          "inViewport": true
+        },
+        {
+          "label": "Fit model to view",
+          "x": 674,
+          "y": 89,
+          "w": 44,
+          "h": 44,
+          "right": 718,
+          "bottom": 133,
+          "hit": true,
+          "inViewport": true
+        },
+        {
+          "label": "Enter full screen",
+          "x": 722,
+          "y": 89,
+          "w": 44,
+          "h": 44,
+          "right": 766,
+          "bottom": 133,
+          "hit": true,
+          "inViewport": true
+        },
+        {
+          "label": "View",
+          "x": 770,
+          "y": 89,
+          "w": 44,
+          "h": 44,
+          "right": 814,
+          "bottom": 133,
+          "hit": true,
+          "inViewport": true
+        },
+        {
+          "label": "Previous step",
+          "x": 30,
+          "y": 156,
+          "w": 44,
+          "h": 44,
+          "right": 74,
+          "bottom": 200,
+          "hit": true,
+          "inViewport": true
+        },
+        {
+          "label": "Instruction step",
+          "x": 78,
+          "y": 156,
+          "w": 610,
+          "h": 44,
+          "right": 688,
+          "bottom": 200,
+          "hit": true,
+          "inViewport": true
+        },
+        {
+          "label": "Complete",
+          "x": 692,
+          "y": 156,
+          "w": 74,
+          "h": 44,
+          "right": 766,
+          "bottom": 200,
+          "hit": true,
+          "inViewport": true
+        },
+        {
+          "label": "Next step",
+          "x": 770,
+          "y": 156,
+          "w": 44,
+          "h": 44,
+          "right": 814,
+          "bottom": 200,
+          "hit": true,
+          "inViewport": true
+        },
+        {
+          "label": "Instructions",
+          "x": 30,
+          "y": 300,
+          "w": 228,
+          "h": 44,
+          "right": 258,
+          "bottom": 344,
+          "hit": true,
+          "inViewport": true
+        },
+        {
+          "label": "Parts",
+          "x": 261,
+          "y": 300,
+          "w": 228,
+          "h": 44,
+          "right": 489,
+          "bottom": 344,
+          "hit": true,
+          "inViewport": true
+        },
+        {
+          "label": "Tools",
+          "x": 492,
+          "y": 300,
+          "w": 228,
+          "h": 44,
+          "right": 720,
+          "bottom": 344,
+          "hit": true,
+          "inViewport": true
+        },
+        {
+          "label": "Expand panel",
+          "x": 723,
+          "y": 300,
+          "w": 44,
+          "h": 44,
+          "right": 767,
+          "bottom": 344,
+          "hit": true,
+          "inViewport": true
+        },
+        {
+          "label": "Collapse panel",
+          "x": 770,
+          "y": 300,
+          "w": 44,
+          "h": 44,
+          "right": 814,
+          "bottom": 344,
+          "hit": true,
+          "inViewport": true
+        }
+      ],
+      "vertices": 250,
+      "unoccluded": true,
+      "shortWindow": true,
+      "horizontalOverflow": false
+    },
+    {
+      "label": "windowed 844 expanded mobile instructions",
+      "mobile": "true",
+      "pointerCoarse": true,
+      "mode": "none",
+      "expanded": "expanded",
+      "workspace": {
+        "x": 17,
+        "y": 72,
+        "w": 810,
+        "h": 440,
+        "right": 827,
+        "bottom": 512
+      },
+      "navigation": {
+        "x": 25,
+        "y": 150,
+        "w": 794,
+        "h": 56,
+        "right": 819,
+        "bottom": 206
+      },
+      "panels": {
+        "instructions": {
+          "x": 26,
+          "y": 344,
+          "w": 792,
+          "h": 158,
+          "right": 818,
+          "bottom": 502
+        }
+      },
+      "controls": [
+        {
+          "label": "Explore",
+          "x": 30,
+          "y": 89,
+          "w": 44,
+          "h": 44,
+          "right": 74,
+          "bottom": 133,
+          "hit": true,
+          "inViewport": true
+        },
+        {
+          "label": "Robot",
+          "x": 81,
+          "y": 89,
+          "w": 51.21875,
+          "h": 44,
+          "right": 132.21875,
+          "bottom": 133,
+          "hit": true,
+          "inViewport": true
+        },
+        {
+          "label": "Turret",
+          "x": 135.21875,
+          "y": 89,
+          "w": 51.90625,
+          "h": 44,
+          "right": 187.125,
+          "bottom": 133,
+          "hit": true,
+          "inViewport": true
+        },
+        {
+          "label": "Combined",
+          "x": 190.125,
+          "y": 89,
+          "w": 76.171875,
+          "h": 44,
+          "right": 266.296875,
+          "bottom": 133,
+          "hit": true,
+          "inViewport": true
+        },
+        {
+          "label": "Fit model to view",
+          "x": 674,
+          "y": 89,
+          "w": 44,
+          "h": 44,
+          "right": 718,
+          "bottom": 133,
+          "hit": true,
+          "inViewport": true
+        },
+        {
+          "label": "Enter full screen",
+          "x": 722,
+          "y": 89,
+          "w": 44,
+          "h": 44,
+          "right": 766,
+          "bottom": 133,
+          "hit": true,
+          "inViewport": true
+        },
+        {
+          "label": "View",
+          "x": 770,
+          "y": 89,
+          "w": 44,
+          "h": 44,
+          "right": 814,
+          "bottom": 133,
+          "hit": true,
+          "inViewport": true
+        },
+        {
+          "label": "Previous step",
+          "x": 30,
+          "y": 156,
+          "w": 44,
+          "h": 44,
+          "right": 74,
+          "bottom": 200,
+          "hit": true,
+          "inViewport": true
+        },
+        {
+          "label": "Instruction step",
+          "x": 78,
+          "y": 156,
+          "w": 610,
+          "h": 44,
+          "right": 688,
+          "bottom": 200,
+          "hit": true,
+          "inViewport": true
+        },
+        {
+          "label": "Complete",
+          "x": 692,
+          "y": 156,
+          "w": 74,
+          "h": 44,
+          "right": 766,
+          "bottom": 200,
+          "hit": true,
+          "inViewport": true
+        },
+        {
+          "label": "Next step",
+          "x": 770,
+          "y": 156,
+          "w": 44,
+          "h": 44,
+          "right": 814,
+          "bottom": 200,
+          "hit": true,
+          "inViewport": true
+        },
+        {
+          "label": "Instructions",
+          "x": 30,
+          "y": 300,
+          "w": 228,
+          "h": 44,
+          "right": 258,
+          "bottom": 344,
+          "hit": true,
+          "inViewport": true
+        },
+        {
+          "label": "Parts",
+          "x": 261,
+          "y": 300,
+          "w": 228,
+          "h": 44,
+          "right": 489,
+          "bottom": 344,
+          "hit": true,
+          "inViewport": true
+        },
+        {
+          "label": "Tools",
+          "x": 492,
+          "y": 300,
+          "w": 228,
+          "h": 44,
+          "right": 720,
+          "bottom": 344,
+          "hit": true,
+          "inViewport": true
+        },
+        {
+          "label": "Reduce panel",
+          "x": 723,
+          "y": 300,
+          "w": 44,
+          "h": 44,
+          "right": 767,
+          "bottom": 344,
+          "hit": true,
+          "inViewport": true
+        },
+        {
+          "label": "Collapse panel",
+          "x": 770,
+          "y": 300,
+          "w": 44,
+          "h": 44,
+          "right": 814,
+          "bottom": 344,
           "hit": true,
           "inViewport": true
         }
@@ -3237,6 +3928,7 @@
     {
       "label": "windowed 720 instructions",
       "mobile": "true",
+      "pointerCoarse": true,
       "mode": "none",
       "expanded": "expanded",
       "workspace": {
@@ -3249,18 +3941,18 @@
       },
       "navigation": {
         "x": 25,
-        "y": 190,
+        "y": 142,
         "w": 670,
         "h": 56,
         "right": 695,
-        "bottom": 246
+        "bottom": 198
       },
       "panels": {
         "instructions": {
           "x": 26,
-          "y": 384,
+          "y": 336,
           "w": 668,
-          "h": 110,
+          "h": 158,
           "right": 694,
           "bottom": 494
         }
@@ -3269,176 +3961,176 @@
         {
           "label": "Explore",
           "x": 30,
-          "y": 78,
+          "y": 81,
           "w": 44,
           "h": 44,
           "right": 74,
-          "bottom": 122,
+          "bottom": 125,
           "hit": true,
           "inViewport": true
         },
         {
           "label": "Robot",
-          "x": 33,
-          "y": 129,
-          "w": 216,
+          "x": 81,
+          "y": 81,
+          "w": 51.21875,
           "h": 44,
-          "right": 249,
-          "bottom": 173,
+          "right": 132.21875,
+          "bottom": 125,
           "hit": true,
           "inViewport": true
         },
         {
           "label": "Turret",
-          "x": 252,
-          "y": 129,
-          "w": 216,
+          "x": 135.21875,
+          "y": 81,
+          "w": 51.90625,
           "h": 44,
-          "right": 468,
-          "bottom": 173,
+          "right": 187.125,
+          "bottom": 125,
           "hit": true,
           "inViewport": true
         },
         {
           "label": "Combined",
-          "x": 471,
-          "y": 129,
-          "w": 216,
+          "x": 190.125,
+          "y": 81,
+          "w": 76.171875,
           "h": 44,
-          "right": 687,
-          "bottom": 173,
+          "right": 266.296875,
+          "bottom": 125,
           "hit": true,
           "inViewport": true
         },
         {
           "label": "Fit model to view",
           "x": 550,
-          "y": 78,
+          "y": 81,
           "w": 44,
           "h": 44,
           "right": 594,
-          "bottom": 122,
+          "bottom": 125,
           "hit": true,
           "inViewport": true
         },
         {
           "label": "Enter full screen",
           "x": 598,
-          "y": 78,
+          "y": 81,
           "w": 44,
           "h": 44,
           "right": 642,
-          "bottom": 122,
+          "bottom": 125,
           "hit": true,
           "inViewport": true
         },
         {
           "label": "View",
           "x": 646,
-          "y": 78,
+          "y": 81,
           "w": 44,
           "h": 44,
           "right": 690,
-          "bottom": 122,
+          "bottom": 125,
           "hit": true,
           "inViewport": true
         },
         {
           "label": "Previous step",
           "x": 30,
-          "y": 196,
+          "y": 148,
           "w": 44,
           "h": 44,
           "right": 74,
-          "bottom": 240,
+          "bottom": 192,
           "hit": true,
           "inViewport": true
         },
         {
           "label": "Instruction step",
           "x": 78,
-          "y": 196,
+          "y": 148,
           "w": 486,
           "h": 44,
           "right": 564,
-          "bottom": 240,
+          "bottom": 192,
           "hit": true,
           "inViewport": true
         },
         {
           "label": "Complete",
           "x": 568,
-          "y": 196,
+          "y": 148,
           "w": 74,
           "h": 44,
           "right": 642,
-          "bottom": 240,
+          "bottom": 192,
           "hit": true,
           "inViewport": true
         },
         {
           "label": "Next step",
           "x": 646,
-          "y": 196,
+          "y": 148,
           "w": 44,
           "h": 44,
           "right": 690,
-          "bottom": 240,
+          "bottom": 192,
           "hit": true,
           "inViewport": true
         },
         {
           "label": "Instructions",
           "x": 30,
-          "y": 340,
+          "y": 292,
           "w": 186.65625,
           "h": 44,
           "right": 216.65625,
-          "bottom": 384,
+          "bottom": 336,
           "hit": true,
           "inViewport": true
         },
         {
           "label": "Parts",
           "x": 219.65625,
-          "y": 340,
+          "y": 292,
           "w": 186.671875,
           "h": 44,
           "right": 406.328125,
-          "bottom": 384,
+          "bottom": 336,
           "hit": true,
           "inViewport": true
         },
         {
           "label": "Tools",
           "x": 409.328125,
-          "y": 340,
+          "y": 292,
           "w": 186.65625,
           "h": 44,
           "right": 595.984375,
-          "bottom": 384,
+          "bottom": 336,
           "hit": true,
           "inViewport": true
         },
         {
           "label": "Expand panel",
           "x": 598.984375,
-          "y": 340,
+          "y": 292,
           "w": 44,
           "h": 44,
           "right": 642.984375,
-          "bottom": 384,
+          "bottom": 336,
           "hit": true,
           "inViewport": true
         },
         {
           "label": "Collapse panel",
           "x": 645.984375,
-          "y": 340,
+          "y": 292,
           "w": 44,
           "h": 44,
           "right": 689.984375,
-          "bottom": 384,
+          "bottom": 336,
           "hit": true,
           "inViewport": true
         }
@@ -3451,6 +4143,7 @@
     {
       "label": "windowed 720 parts",
       "mobile": "true",
+      "pointerCoarse": true,
       "mode": "none",
       "expanded": "expanded",
       "workspace": {
@@ -3463,18 +4156,18 @@
       },
       "navigation": {
         "x": 25,
-        "y": 190,
+        "y": 142,
         "w": 670,
         "h": 56,
         "right": 695,
-        "bottom": 246
+        "bottom": 198
       },
       "panels": {
         "assembly-explorer": {
           "x": 26,
-          "y": 384,
+          "y": 336,
           "w": 668,
-          "h": 110,
+          "h": 158,
           "right": 694,
           "bottom": 494
         }
@@ -3483,176 +4176,176 @@
         {
           "label": "Explore",
           "x": 30,
-          "y": 78,
+          "y": 81,
           "w": 44,
           "h": 44,
           "right": 74,
-          "bottom": 122,
+          "bottom": 125,
           "hit": true,
           "inViewport": true
         },
         {
           "label": "Robot",
-          "x": 33,
-          "y": 129,
-          "w": 216,
+          "x": 81,
+          "y": 81,
+          "w": 51.21875,
           "h": 44,
-          "right": 249,
-          "bottom": 173,
+          "right": 132.21875,
+          "bottom": 125,
           "hit": true,
           "inViewport": true
         },
         {
           "label": "Turret",
-          "x": 252,
-          "y": 129,
-          "w": 216,
+          "x": 135.21875,
+          "y": 81,
+          "w": 51.90625,
           "h": 44,
-          "right": 468,
-          "bottom": 173,
+          "right": 187.125,
+          "bottom": 125,
           "hit": true,
           "inViewport": true
         },
         {
           "label": "Combined",
-          "x": 471,
-          "y": 129,
-          "w": 216,
+          "x": 190.125,
+          "y": 81,
+          "w": 76.171875,
           "h": 44,
-          "right": 687,
-          "bottom": 173,
+          "right": 266.296875,
+          "bottom": 125,
           "hit": true,
           "inViewport": true
         },
         {
           "label": "Fit model to view",
           "x": 550,
-          "y": 78,
+          "y": 81,
           "w": 44,
           "h": 44,
           "right": 594,
-          "bottom": 122,
+          "bottom": 125,
           "hit": true,
           "inViewport": true
         },
         {
           "label": "Enter full screen",
           "x": 598,
-          "y": 78,
+          "y": 81,
           "w": 44,
           "h": 44,
           "right": 642,
-          "bottom": 122,
+          "bottom": 125,
           "hit": true,
           "inViewport": true
         },
         {
           "label": "View",
           "x": 646,
-          "y": 78,
+          "y": 81,
           "w": 44,
           "h": 44,
           "right": 690,
-          "bottom": 122,
+          "bottom": 125,
           "hit": true,
           "inViewport": true
         },
         {
           "label": "Previous step",
           "x": 30,
-          "y": 196,
+          "y": 148,
           "w": 44,
           "h": 44,
           "right": 74,
-          "bottom": 240,
+          "bottom": 192,
           "hit": true,
           "inViewport": true
         },
         {
           "label": "Instruction step",
           "x": 78,
-          "y": 196,
+          "y": 148,
           "w": 486,
           "h": 44,
           "right": 564,
-          "bottom": 240,
+          "bottom": 192,
           "hit": true,
           "inViewport": true
         },
         {
           "label": "Complete",
           "x": 568,
-          "y": 196,
+          "y": 148,
           "w": 74,
           "h": 44,
           "right": 642,
-          "bottom": 240,
+          "bottom": 192,
           "hit": true,
           "inViewport": true
         },
         {
           "label": "Next step",
           "x": 646,
-          "y": 196,
+          "y": 148,
           "w": 44,
           "h": 44,
           "right": 690,
-          "bottom": 240,
+          "bottom": 192,
           "hit": true,
           "inViewport": true
         },
         {
           "label": "Instructions",
           "x": 30,
-          "y": 340,
+          "y": 292,
           "w": 186.65625,
           "h": 44,
           "right": 216.65625,
-          "bottom": 384,
+          "bottom": 336,
           "hit": true,
           "inViewport": true
         },
         {
           "label": "Parts",
           "x": 219.65625,
-          "y": 340,
+          "y": 292,
           "w": 186.671875,
           "h": 44,
           "right": 406.328125,
-          "bottom": 384,
+          "bottom": 336,
           "hit": true,
           "inViewport": true
         },
         {
           "label": "Tools",
           "x": 409.328125,
-          "y": 340,
+          "y": 292,
           "w": 186.65625,
           "h": 44,
           "right": 595.984375,
-          "bottom": 384,
+          "bottom": 336,
           "hit": true,
           "inViewport": true
         },
         {
           "label": "Expand panel",
           "x": 598.984375,
-          "y": 340,
+          "y": 292,
           "w": 44,
           "h": 44,
           "right": 642.984375,
-          "bottom": 384,
+          "bottom": 336,
           "hit": true,
           "inViewport": true
         },
         {
           "label": "Collapse panel",
           "x": 645.984375,
-          "y": 340,
+          "y": 292,
           "w": 44,
           "h": 44,
           "right": 689.984375,
-          "bottom": 384,
+          "bottom": 336,
           "hit": true,
           "inViewport": true
         }
@@ -3665,6 +4358,7 @@
     {
       "label": "windowed 720 tools",
       "mobile": "true",
+      "pointerCoarse": true,
       "mode": "none",
       "expanded": "expanded",
       "workspace": {
@@ -3677,18 +4371,18 @@
       },
       "navigation": {
         "x": 25,
-        "y": 190,
+        "y": 142,
         "w": 670,
         "h": 56,
         "right": 695,
-        "bottom": 246
+        "bottom": 198
       },
       "panels": {
         "assembly-tools": {
           "x": 26,
-          "y": 384,
+          "y": 336,
           "w": 668,
-          "h": 110,
+          "h": 158,
           "right": 694,
           "bottom": 494
         }
@@ -3697,176 +4391,176 @@
         {
           "label": "Explore",
           "x": 30,
-          "y": 78,
+          "y": 81,
           "w": 44,
           "h": 44,
           "right": 74,
-          "bottom": 122,
+          "bottom": 125,
           "hit": true,
           "inViewport": true
         },
         {
           "label": "Robot",
-          "x": 33,
-          "y": 129,
-          "w": 216,
+          "x": 81,
+          "y": 81,
+          "w": 51.21875,
           "h": 44,
-          "right": 249,
-          "bottom": 173,
+          "right": 132.21875,
+          "bottom": 125,
           "hit": true,
           "inViewport": true
         },
         {
           "label": "Turret",
-          "x": 252,
-          "y": 129,
-          "w": 216,
+          "x": 135.21875,
+          "y": 81,
+          "w": 51.90625,
           "h": 44,
-          "right": 468,
-          "bottom": 173,
+          "right": 187.125,
+          "bottom": 125,
           "hit": true,
           "inViewport": true
         },
         {
           "label": "Combined",
-          "x": 471,
-          "y": 129,
-          "w": 216,
+          "x": 190.125,
+          "y": 81,
+          "w": 76.171875,
           "h": 44,
-          "right": 687,
-          "bottom": 173,
+          "right": 266.296875,
+          "bottom": 125,
           "hit": true,
           "inViewport": true
         },
         {
           "label": "Fit model to view",
           "x": 550,
-          "y": 78,
+          "y": 81,
           "w": 44,
           "h": 44,
           "right": 594,
-          "bottom": 122,
+          "bottom": 125,
           "hit": true,
           "inViewport": true
         },
         {
           "label": "Enter full screen",
           "x": 598,
-          "y": 78,
+          "y": 81,
           "w": 44,
           "h": 44,
           "right": 642,
-          "bottom": 122,
+          "bottom": 125,
           "hit": true,
           "inViewport": true
         },
         {
           "label": "View",
           "x": 646,
-          "y": 78,
+          "y": 81,
           "w": 44,
           "h": 44,
           "right": 690,
-          "bottom": 122,
+          "bottom": 125,
           "hit": true,
           "inViewport": true
         },
         {
           "label": "Previous step",
           "x": 30,
-          "y": 196,
+          "y": 148,
           "w": 44,
           "h": 44,
           "right": 74,
-          "bottom": 240,
+          "bottom": 192,
           "hit": true,
           "inViewport": true
         },
         {
           "label": "Instruction step",
           "x": 78,
-          "y": 196,
+          "y": 148,
           "w": 486,
           "h": 44,
           "right": 564,
-          "bottom": 240,
+          "bottom": 192,
           "hit": true,
           "inViewport": true
         },
         {
           "label": "Complete",
           "x": 568,
-          "y": 196,
+          "y": 148,
           "w": 74,
           "h": 44,
           "right": 642,
-          "bottom": 240,
+          "bottom": 192,
           "hit": true,
           "inViewport": true
         },
         {
           "label": "Next step",
           "x": 646,
-          "y": 196,
+          "y": 148,
           "w": 44,
           "h": 44,
           "right": 690,
-          "bottom": 240,
+          "bottom": 192,
           "hit": true,
           "inViewport": true
         },
         {
           "label": "Instructions",
           "x": 30,
-          "y": 340,
+          "y": 292,
           "w": 186.65625,
           "h": 44,
           "right": 216.65625,
-          "bottom": 384,
+          "bottom": 336,
           "hit": true,
           "inViewport": true
         },
         {
           "label": "Parts",
           "x": 219.65625,
-          "y": 340,
+          "y": 292,
           "w": 186.671875,
           "h": 44,
           "right": 406.328125,
-          "bottom": 384,
+          "bottom": 336,
           "hit": true,
           "inViewport": true
         },
         {
           "label": "Tools",
           "x": 409.328125,
-          "y": 340,
+          "y": 292,
           "w": 186.65625,
           "h": 44,
           "right": 595.984375,
-          "bottom": 384,
+          "bottom": 336,
           "hit": true,
           "inViewport": true
         },
         {
           "label": "Expand panel",
           "x": 598.984375,
-          "y": 340,
+          "y": 292,
           "w": 44,
           "h": 44,
           "right": 642.984375,
-          "bottom": 384,
+          "bottom": 336,
           "hit": true,
           "inViewport": true
         },
         {
           "label": "Collapse panel",
           "x": 645.984375,
-          "y": 340,
+          "y": 292,
           "w": 44,
           "h": 44,
           "right": 689.984375,
-          "bottom": 384,
+          "bottom": 336,
           "hit": true,
           "inViewport": true
         }
@@ -3879,6 +4573,7 @@
     {
       "label": "windowed 720 expanded mobile instructions",
       "mobile": "true",
+      "pointerCoarse": true,
       "mode": "none",
       "expanded": "expanded",
       "workspace": {
@@ -3891,18 +4586,18 @@
       },
       "navigation": {
         "x": 25,
-        "y": 190,
+        "y": 142,
         "w": 670,
         "h": 56,
         "right": 695,
-        "bottom": 246
+        "bottom": 198
       },
       "panels": {
         "instructions": {
           "x": 26,
-          "y": 384,
+          "y": 336,
           "w": 668,
-          "h": 110,
+          "h": 158,
           "right": 694,
           "bottom": 494
         }
@@ -3911,176 +4606,176 @@
         {
           "label": "Explore",
           "x": 30,
-          "y": 78,
+          "y": 81,
           "w": 44,
           "h": 44,
           "right": 74,
-          "bottom": 122,
+          "bottom": 125,
           "hit": true,
           "inViewport": true
         },
         {
           "label": "Robot",
-          "x": 33,
-          "y": 129,
-          "w": 216,
+          "x": 81,
+          "y": 81,
+          "w": 51.21875,
           "h": 44,
-          "right": 249,
-          "bottom": 173,
+          "right": 132.21875,
+          "bottom": 125,
           "hit": true,
           "inViewport": true
         },
         {
           "label": "Turret",
-          "x": 252,
-          "y": 129,
-          "w": 216,
+          "x": 135.21875,
+          "y": 81,
+          "w": 51.90625,
           "h": 44,
-          "right": 468,
-          "bottom": 173,
+          "right": 187.125,
+          "bottom": 125,
           "hit": true,
           "inViewport": true
         },
         {
           "label": "Combined",
-          "x": 471,
-          "y": 129,
-          "w": 216,
+          "x": 190.125,
+          "y": 81,
+          "w": 76.171875,
           "h": 44,
-          "right": 687,
-          "bottom": 173,
+          "right": 266.296875,
+          "bottom": 125,
           "hit": true,
           "inViewport": true
         },
         {
           "label": "Fit model to view",
           "x": 550,
-          "y": 78,
+          "y": 81,
           "w": 44,
           "h": 44,
           "right": 594,
-          "bottom": 122,
+          "bottom": 125,
           "hit": true,
           "inViewport": true
         },
         {
           "label": "Enter full screen",
           "x": 598,
-          "y": 78,
+          "y": 81,
           "w": 44,
           "h": 44,
           "right": 642,
-          "bottom": 122,
+          "bottom": 125,
           "hit": true,
           "inViewport": true
         },
         {
           "label": "View",
           "x": 646,
-          "y": 78,
+          "y": 81,
           "w": 44,
           "h": 44,
           "right": 690,
-          "bottom": 122,
+          "bottom": 125,
           "hit": true,
           "inViewport": true
         },
         {
           "label": "Previous step",
           "x": 30,
-          "y": 196,
+          "y": 148,
           "w": 44,
           "h": 44,
           "right": 74,
-          "bottom": 240,
+          "bottom": 192,
           "hit": true,
           "inViewport": true
         },
         {
           "label": "Instruction step",
           "x": 78,
-          "y": 196,
+          "y": 148,
           "w": 486,
           "h": 44,
           "right": 564,
-          "bottom": 240,
+          "bottom": 192,
           "hit": true,
           "inViewport": true
         },
         {
           "label": "Complete",
           "x": 568,
-          "y": 196,
+          "y": 148,
           "w": 74,
           "h": 44,
           "right": 642,
-          "bottom": 240,
+          "bottom": 192,
           "hit": true,
           "inViewport": true
         },
         {
           "label": "Next step",
           "x": 646,
-          "y": 196,
+          "y": 148,
           "w": 44,
           "h": 44,
           "right": 690,
-          "bottom": 240,
+          "bottom": 192,
           "hit": true,
           "inViewport": true
         },
         {
           "label": "Instructions",
           "x": 30,
-          "y": 340,
+          "y": 292,
           "w": 186.65625,
           "h": 44,
           "right": 216.65625,
-          "bottom": 384,
+          "bottom": 336,
           "hit": true,
           "inViewport": true
         },
         {
           "label": "Parts",
           "x": 219.65625,
-          "y": 340,
+          "y": 292,
           "w": 186.671875,
           "h": 44,
           "right": 406.328125,
-          "bottom": 384,
+          "bottom": 336,
           "hit": true,
           "inViewport": true
         },
         {
           "label": "Tools",
           "x": 409.328125,
-          "y": 340,
+          "y": 292,
           "w": 186.65625,
           "h": 44,
           "right": 595.984375,
-          "bottom": 384,
+          "bottom": 336,
           "hit": true,
           "inViewport": true
         },
         {
           "label": "Reduce panel",
           "x": 598.984375,
-          "y": 340,
+          "y": 292,
           "w": 44,
           "h": 44,
           "right": 642.984375,
-          "bottom": 384,
+          "bottom": 336,
           "hit": true,
           "inViewport": true
         },
         {
           "label": "Collapse panel",
           "x": 645.984375,
-          "y": 340,
+          "y": 292,
           "w": 44,
           "h": 44,
           "right": 689.984375,
-          "bottom": 384,
+          "bottom": 336,
           "hit": true,
           "inViewport": true
         }
@@ -4093,6 +4788,7 @@
     {
       "label": "windowed 390 instructions",
       "mobile": "true",
+      "pointerCoarse": true,
       "mode": "none",
       "expanded": "expanded",
       "workspace": {
@@ -4307,6 +5003,7 @@
     {
       "label": "windowed 390 parts",
       "mobile": "true",
+      "pointerCoarse": true,
       "mode": "none",
       "expanded": "expanded",
       "workspace": {
@@ -4521,6 +5218,7 @@
     {
       "label": "windowed 390 tools",
       "mobile": "true",
+      "pointerCoarse": true,
       "mode": "none",
       "expanded": "expanded",
       "workspace": {
@@ -4735,6 +5433,7 @@
     {
       "label": "windowed 390 expanded mobile instructions",
       "mobile": "true",
+      "pointerCoarse": true,
       "mode": "none",
       "expanded": "expanded",
       "workspace": {
@@ -4949,6 +5648,7 @@
     {
       "label": "windowed 320 instructions",
       "mobile": "true",
+      "pointerCoarse": true,
       "mode": "none",
       "expanded": "expanded",
       "workspace": {
@@ -5163,6 +5863,7 @@
     {
       "label": "windowed 320 parts",
       "mobile": "true",
+      "pointerCoarse": true,
       "mode": "none",
       "expanded": "expanded",
       "workspace": {
@@ -5377,6 +6078,7 @@
     {
       "label": "windowed 320 tools",
       "mobile": "true",
+      "pointerCoarse": true,
       "mode": "none",
       "expanded": "expanded",
       "workspace": {
@@ -5591,6 +6293,7 @@
     {
       "label": "windowed 320 expanded mobile instructions",
       "mobile": "true",
+      "pointerCoarse": true,
       "mode": "none",
       "expanded": "expanded",
       "workspace": {
@@ -5805,6 +6508,7 @@
     {
       "label": "windowed desktop restored after resize",
       "mobile": "false",
+      "pointerCoarse": true,
       "mode": "none",
       "expanded": "expanded",
       "workspace": {
@@ -5991,7 +6695,8 @@
     {
       "label": "native 1440 expanded=false Parts=false Tools=false",
       "mobile": "false",
-      "mode": "native",
+      "pointerCoarse": true,
+      "mode": "expanded",
       "expanded": "normal",
       "workspace": {
         "x": 0,
@@ -6161,7 +6866,8 @@
     {
       "label": "native 1440 expanded=false Parts=false Tools=true",
       "mobile": "false",
-      "mode": "native",
+      "pointerCoarse": true,
+      "mode": "expanded",
       "expanded": "normal",
       "workspace": {
         "x": 0,
@@ -6339,7 +7045,8 @@
     {
       "label": "native 1440 expanded=false Parts=true Tools=false",
       "mobile": "false",
-      "mode": "native",
+      "pointerCoarse": true,
+      "mode": "expanded",
       "expanded": "normal",
       "workspace": {
         "x": 0,
@@ -6517,7 +7224,8 @@
     {
       "label": "native 1440 expanded=false Parts=true Tools=true",
       "mobile": "false",
-      "mode": "native",
+      "pointerCoarse": true,
+      "mode": "expanded",
       "expanded": "normal",
       "workspace": {
         "x": 0,
@@ -6703,7 +7411,8 @@
     {
       "label": "native 1440 expanded=true Parts=false Tools=false",
       "mobile": "false",
-      "mode": "native",
+      "pointerCoarse": true,
+      "mode": "expanded",
       "expanded": "expanded",
       "workspace": {
         "x": 0,
@@ -6873,7 +7582,8 @@
     {
       "label": "native 1440 expanded=true Parts=false Tools=true",
       "mobile": "false",
-      "mode": "native",
+      "pointerCoarse": true,
+      "mode": "expanded",
       "expanded": "expanded",
       "workspace": {
         "x": 0,
@@ -7051,7 +7761,8 @@
     {
       "label": "native 1440 expanded=true Parts=true Tools=false",
       "mobile": "false",
-      "mode": "native",
+      "pointerCoarse": true,
+      "mode": "expanded",
       "expanded": "expanded",
       "workspace": {
         "x": 0,
@@ -7229,7 +7940,8 @@
     {
       "label": "native 1440 expanded=true Parts=true Tools=true",
       "mobile": "false",
-      "mode": "native",
+      "pointerCoarse": true,
+      "mode": "expanded",
       "expanded": "expanded",
       "workspace": {
         "x": 0,
@@ -7415,7 +8127,8 @@
     {
       "label": "native 1024 expanded=false Parts=false Tools=false",
       "mobile": "false",
-      "mode": "native",
+      "pointerCoarse": true,
+      "mode": "expanded",
       "expanded": "normal",
       "workspace": {
         "x": 0,
@@ -7585,7 +8298,8 @@
     {
       "label": "native 1024 expanded=false Parts=false Tools=true",
       "mobile": "false",
-      "mode": "native",
+      "pointerCoarse": true,
+      "mode": "expanded",
       "expanded": "normal",
       "workspace": {
         "x": 0,
@@ -7763,7 +8477,8 @@
     {
       "label": "native 1024 expanded=false Parts=true Tools=false",
       "mobile": "false",
-      "mode": "native",
+      "pointerCoarse": true,
+      "mode": "expanded",
       "expanded": "normal",
       "workspace": {
         "x": 0,
@@ -7941,7 +8656,8 @@
     {
       "label": "native 1024 expanded=false Parts=true Tools=true",
       "mobile": "false",
-      "mode": "native",
+      "pointerCoarse": true,
+      "mode": "expanded",
       "expanded": "normal",
       "workspace": {
         "x": 0,
@@ -8127,7 +8843,8 @@
     {
       "label": "native 1024 expanded=true Parts=false Tools=false",
       "mobile": "false",
-      "mode": "native",
+      "pointerCoarse": true,
+      "mode": "expanded",
       "expanded": "expanded",
       "workspace": {
         "x": 0,
@@ -8297,7 +9014,8 @@
     {
       "label": "native 1024 expanded=true Parts=false Tools=true",
       "mobile": "false",
-      "mode": "native",
+      "pointerCoarse": true,
+      "mode": "expanded",
       "expanded": "expanded",
       "workspace": {
         "x": 0,
@@ -8475,7 +9193,8 @@
     {
       "label": "native 1024 expanded=true Parts=true Tools=false",
       "mobile": "false",
-      "mode": "native",
+      "pointerCoarse": true,
+      "mode": "expanded",
       "expanded": "expanded",
       "workspace": {
         "x": 0,
@@ -8653,7 +9372,8 @@
     {
       "label": "native 1024 expanded=true Parts=true Tools=true",
       "mobile": "false",
-      "mode": "native",
+      "pointerCoarse": true,
+      "mode": "expanded",
       "expanded": "expanded",
       "workspace": {
         "x": 0,
@@ -8839,7 +9559,8 @@
     {
       "label": "native resize 1280x900",
       "mobile": "false",
-      "mode": "native",
+      "pointerCoarse": true,
+      "mode": "expanded",
       "expanded": "expanded",
       "workspace": {
         "x": 0,
@@ -9023,182 +9744,856 @@
       "horizontalOverflow": false
     },
     {
-      "label": "native resize 844x390",
-      "mobile": "false",
-      "mode": "native",
+      "label": "native 844 instructions",
+      "mobile": "true",
+      "pointerCoarse": true,
+      "mode": "expanded",
       "expanded": "expanded",
       "workspace": {
         "x": 0,
         "y": 0,
-        "w": 844,
+        "w": 843.984375,
         "h": 390,
-        "right": 844,
+        "right": 843.984375,
         "bottom": 390
       },
       "navigation": {
-        "x": 82,
-        "y": 88,
-        "w": 680,
+        "x": 8,
+        "y": 76,
+        "w": 827.984375,
         "h": 56,
-        "right": 762,
-        "bottom": 144
+        "right": 835.984375,
+        "bottom": 132
       },
       "panels": {
-        "assembly-explorer": {
-          "x": 16,
-          "y": 156,
-          "w": 150,
-          "h": 218,
-          "right": 166,
-          "bottom": 374
-        },
-        "assembly-tools": {
-          "x": 678,
-          "y": 156,
-          "w": 150,
-          "h": 218,
-          "right": 828,
-          "bottom": 374
-        },
         "instructions": {
-          "x": 426,
-          "y": 156,
-          "w": 240,
-          "h": 218,
-          "right": 666,
-          "bottom": 374
+          "x": 9,
+          "y": 269,
+          "w": 825.984375,
+          "h": 112,
+          "right": 834.984375,
+          "bottom": 381
         }
       },
       "controls": [
         {
           "label": "Explore",
-          "x": 23,
-          "y": 26,
-          "w": 103.625,
+          "x": 13,
+          "y": 16,
+          "w": 44,
           "h": 44,
-          "right": 126.625,
-          "bottom": 70,
+          "right": 57,
+          "bottom": 60,
           "hit": true,
           "inViewport": true
         },
         {
           "label": "Robot",
-          "x": 137.625,
-          "y": 26,
-          "w": 59.21875,
+          "x": 64,
+          "y": 16,
+          "w": 51.21875,
           "h": 44,
-          "right": 196.84375,
-          "bottom": 70,
+          "right": 115.21875,
+          "bottom": 60,
           "hit": true,
           "inViewport": true
         },
         {
           "label": "Turret",
-          "x": 199.84375,
-          "y": 26,
-          "w": 59.90625,
+          "x": 118.21875,
+          "y": 16,
+          "w": 51.90625,
           "h": 44,
-          "right": 259.75,
-          "bottom": 70,
+          "right": 170.125,
+          "bottom": 60,
           "hit": true,
           "inViewport": true
         },
         {
           "label": "Combined",
-          "x": 262.75,
-          "y": 26,
-          "w": 84.171875,
+          "x": 173.125,
+          "y": 16,
+          "w": 76.171875,
           "h": 44,
-          "right": 346.921875,
-          "bottom": 70,
+          "right": 249.296875,
+          "bottom": 60,
           "hit": true,
           "inViewport": true
         },
         {
           "label": "Fit model to view",
-          "x": 626.578125,
-          "y": 26,
-          "w": 46,
+          "x": 690.984375,
+          "y": 16,
+          "w": 44,
           "h": 44,
-          "right": 672.578125,
-          "bottom": 70,
+          "right": 734.984375,
+          "bottom": 60,
           "hit": true,
           "inViewport": true
         },
         {
           "label": "Exit full screen",
-          "x": 680.578125,
-          "y": 26,
-          "w": 46,
+          "x": 738.984375,
+          "y": 16,
+          "w": 44,
           "h": 44,
-          "right": 726.578125,
-          "bottom": 70,
+          "right": 782.984375,
+          "bottom": 60,
           "hit": true,
           "inViewport": true
         },
         {
           "label": "View",
-          "x": 734.578125,
-          "y": 26,
-          "w": 86.421875,
+          "x": 786.984375,
+          "y": 16,
+          "w": 44,
           "h": 44,
-          "right": 821,
-          "bottom": 70,
+          "right": 830.984375,
+          "bottom": 60,
           "hit": true,
           "inViewport": true
         },
         {
           "label": "Previous step",
-          "x": 95,
-          "y": 94,
-          "w": 110,
+          "x": 13,
+          "y": 82,
+          "w": 44,
           "h": 44,
-          "right": 205,
-          "bottom": 138,
+          "right": 57,
+          "bottom": 126,
           "hit": true,
           "inViewport": true
         },
         {
           "label": "Instruction step",
-          "x": 213,
-          "y": 94,
-          "w": 300,
+          "x": 61,
+          "y": 82,
+          "w": 643.984375,
           "h": 44,
-          "right": 513,
-          "bottom": 138,
+          "right": 704.984375,
+          "bottom": 126,
           "hit": true,
           "inViewport": true
         },
         {
           "label": "Complete",
-          "x": 521,
-          "y": 94,
-          "w": 110,
+          "x": 708.984375,
+          "y": 82,
+          "w": 74,
           "h": 44,
-          "right": 631,
-          "bottom": 138,
+          "right": 782.984375,
+          "bottom": 126,
           "hit": true,
           "inViewport": true
         },
         {
           "label": "Next step",
-          "x": 639,
-          "y": 94,
-          "w": 110,
+          "x": 786.984375,
+          "y": 82,
+          "w": 44,
           "h": 44,
-          "right": 749,
-          "bottom": 138,
+          "right": 830.984375,
+          "bottom": 126,
           "hit": true,
           "inViewport": true
         },
         {
-          "label": "Collapse ↙",
-          "x": 562.96875,
-          "y": 156.5,
-          "w": 92.03125,
+          "label": "Instructions",
+          "x": 13,
+          "y": 225,
+          "w": 239.328125,
           "h": 44,
-          "right": 655,
-          "bottom": 200.5,
+          "right": 252.328125,
+          "bottom": 269,
+          "hit": true,
+          "inViewport": true
+        },
+        {
+          "label": "Parts",
+          "x": 255.328125,
+          "y": 225,
+          "w": 239.328125,
+          "h": 44,
+          "right": 494.65625,
+          "bottom": 269,
+          "hit": true,
+          "inViewport": true
+        },
+        {
+          "label": "Tools",
+          "x": 497.65625,
+          "y": 225,
+          "w": 239.328125,
+          "h": 44,
+          "right": 736.984375,
+          "bottom": 269,
+          "hit": true,
+          "inViewport": true
+        },
+        {
+          "label": "Expand panel",
+          "x": 739.984375,
+          "y": 225,
+          "w": 44,
+          "h": 44,
+          "right": 783.984375,
+          "bottom": 269,
+          "hit": true,
+          "inViewport": true
+        },
+        {
+          "label": "Collapse panel",
+          "x": 786.984375,
+          "y": 225,
+          "w": 44,
+          "h": 44,
+          "right": 830.984375,
+          "bottom": 269,
+          "hit": true,
+          "inViewport": true
+        }
+      ],
+      "vertices": 250,
+      "unoccluded": true,
+      "shortWindow": false,
+      "horizontalOverflow": false
+    },
+    {
+      "label": "native 844 parts",
+      "mobile": "true",
+      "pointerCoarse": true,
+      "mode": "expanded",
+      "expanded": "expanded",
+      "workspace": {
+        "x": 0,
+        "y": 0,
+        "w": 843.984375,
+        "h": 390,
+        "right": 843.984375,
+        "bottom": 390
+      },
+      "navigation": {
+        "x": 8,
+        "y": 76,
+        "w": 827.984375,
+        "h": 56,
+        "right": 835.984375,
+        "bottom": 132
+      },
+      "panels": {
+        "assembly-explorer": {
+          "x": 9,
+          "y": 269,
+          "w": 825.984375,
+          "h": 112,
+          "right": 834.984375,
+          "bottom": 381
+        }
+      },
+      "controls": [
+        {
+          "label": "Explore",
+          "x": 13,
+          "y": 16,
+          "w": 44,
+          "h": 44,
+          "right": 57,
+          "bottom": 60,
+          "hit": true,
+          "inViewport": true
+        },
+        {
+          "label": "Robot",
+          "x": 64,
+          "y": 16,
+          "w": 51.21875,
+          "h": 44,
+          "right": 115.21875,
+          "bottom": 60,
+          "hit": true,
+          "inViewport": true
+        },
+        {
+          "label": "Turret",
+          "x": 118.21875,
+          "y": 16,
+          "w": 51.90625,
+          "h": 44,
+          "right": 170.125,
+          "bottom": 60,
+          "hit": true,
+          "inViewport": true
+        },
+        {
+          "label": "Combined",
+          "x": 173.125,
+          "y": 16,
+          "w": 76.171875,
+          "h": 44,
+          "right": 249.296875,
+          "bottom": 60,
+          "hit": true,
+          "inViewport": true
+        },
+        {
+          "label": "Fit model to view",
+          "x": 690.984375,
+          "y": 16,
+          "w": 44,
+          "h": 44,
+          "right": 734.984375,
+          "bottom": 60,
+          "hit": true,
+          "inViewport": true
+        },
+        {
+          "label": "Exit full screen",
+          "x": 738.984375,
+          "y": 16,
+          "w": 44,
+          "h": 44,
+          "right": 782.984375,
+          "bottom": 60,
+          "hit": true,
+          "inViewport": true
+        },
+        {
+          "label": "View",
+          "x": 786.984375,
+          "y": 16,
+          "w": 44,
+          "h": 44,
+          "right": 830.984375,
+          "bottom": 60,
+          "hit": true,
+          "inViewport": true
+        },
+        {
+          "label": "Previous step",
+          "x": 13,
+          "y": 82,
+          "w": 44,
+          "h": 44,
+          "right": 57,
+          "bottom": 126,
+          "hit": true,
+          "inViewport": true
+        },
+        {
+          "label": "Instruction step",
+          "x": 61,
+          "y": 82,
+          "w": 643.984375,
+          "h": 44,
+          "right": 704.984375,
+          "bottom": 126,
+          "hit": true,
+          "inViewport": true
+        },
+        {
+          "label": "Complete",
+          "x": 708.984375,
+          "y": 82,
+          "w": 74,
+          "h": 44,
+          "right": 782.984375,
+          "bottom": 126,
+          "hit": true,
+          "inViewport": true
+        },
+        {
+          "label": "Next step",
+          "x": 786.984375,
+          "y": 82,
+          "w": 44,
+          "h": 44,
+          "right": 830.984375,
+          "bottom": 126,
+          "hit": true,
+          "inViewport": true
+        },
+        {
+          "label": "Instructions",
+          "x": 13,
+          "y": 225,
+          "w": 239.328125,
+          "h": 44,
+          "right": 252.328125,
+          "bottom": 269,
+          "hit": true,
+          "inViewport": true
+        },
+        {
+          "label": "Parts",
+          "x": 255.328125,
+          "y": 225,
+          "w": 239.328125,
+          "h": 44,
+          "right": 494.65625,
+          "bottom": 269,
+          "hit": true,
+          "inViewport": true
+        },
+        {
+          "label": "Tools",
+          "x": 497.65625,
+          "y": 225,
+          "w": 239.328125,
+          "h": 44,
+          "right": 736.984375,
+          "bottom": 269,
+          "hit": true,
+          "inViewport": true
+        },
+        {
+          "label": "Expand panel",
+          "x": 739.984375,
+          "y": 225,
+          "w": 44,
+          "h": 44,
+          "right": 783.984375,
+          "bottom": 269,
+          "hit": true,
+          "inViewport": true
+        },
+        {
+          "label": "Collapse panel",
+          "x": 786.984375,
+          "y": 225,
+          "w": 44,
+          "h": 44,
+          "right": 830.984375,
+          "bottom": 269,
+          "hit": true,
+          "inViewport": true
+        }
+      ],
+      "vertices": 250,
+      "unoccluded": true,
+      "shortWindow": false,
+      "horizontalOverflow": false
+    },
+    {
+      "label": "native 844 tools",
+      "mobile": "true",
+      "pointerCoarse": true,
+      "mode": "expanded",
+      "expanded": "expanded",
+      "workspace": {
+        "x": 0,
+        "y": 0,
+        "w": 843.984375,
+        "h": 390,
+        "right": 843.984375,
+        "bottom": 390
+      },
+      "navigation": {
+        "x": 8,
+        "y": 76,
+        "w": 827.984375,
+        "h": 56,
+        "right": 835.984375,
+        "bottom": 132
+      },
+      "panels": {
+        "assembly-tools": {
+          "x": 9,
+          "y": 269,
+          "w": 825.984375,
+          "h": 112,
+          "right": 834.984375,
+          "bottom": 381
+        }
+      },
+      "controls": [
+        {
+          "label": "Explore",
+          "x": 13,
+          "y": 16,
+          "w": 44,
+          "h": 44,
+          "right": 57,
+          "bottom": 60,
+          "hit": true,
+          "inViewport": true
+        },
+        {
+          "label": "Robot",
+          "x": 64,
+          "y": 16,
+          "w": 51.21875,
+          "h": 44,
+          "right": 115.21875,
+          "bottom": 60,
+          "hit": true,
+          "inViewport": true
+        },
+        {
+          "label": "Turret",
+          "x": 118.21875,
+          "y": 16,
+          "w": 51.90625,
+          "h": 44,
+          "right": 170.125,
+          "bottom": 60,
+          "hit": true,
+          "inViewport": true
+        },
+        {
+          "label": "Combined",
+          "x": 173.125,
+          "y": 16,
+          "w": 76.171875,
+          "h": 44,
+          "right": 249.296875,
+          "bottom": 60,
+          "hit": true,
+          "inViewport": true
+        },
+        {
+          "label": "Fit model to view",
+          "x": 690.984375,
+          "y": 16,
+          "w": 44,
+          "h": 44,
+          "right": 734.984375,
+          "bottom": 60,
+          "hit": true,
+          "inViewport": true
+        },
+        {
+          "label": "Exit full screen",
+          "x": 738.984375,
+          "y": 16,
+          "w": 44,
+          "h": 44,
+          "right": 782.984375,
+          "bottom": 60,
+          "hit": true,
+          "inViewport": true
+        },
+        {
+          "label": "View",
+          "x": 786.984375,
+          "y": 16,
+          "w": 44,
+          "h": 44,
+          "right": 830.984375,
+          "bottom": 60,
+          "hit": true,
+          "inViewport": true
+        },
+        {
+          "label": "Previous step",
+          "x": 13,
+          "y": 82,
+          "w": 44,
+          "h": 44,
+          "right": 57,
+          "bottom": 126,
+          "hit": true,
+          "inViewport": true
+        },
+        {
+          "label": "Instruction step",
+          "x": 61,
+          "y": 82,
+          "w": 643.984375,
+          "h": 44,
+          "right": 704.984375,
+          "bottom": 126,
+          "hit": true,
+          "inViewport": true
+        },
+        {
+          "label": "Complete",
+          "x": 708.984375,
+          "y": 82,
+          "w": 74,
+          "h": 44,
+          "right": 782.984375,
+          "bottom": 126,
+          "hit": true,
+          "inViewport": true
+        },
+        {
+          "label": "Next step",
+          "x": 786.984375,
+          "y": 82,
+          "w": 44,
+          "h": 44,
+          "right": 830.984375,
+          "bottom": 126,
+          "hit": true,
+          "inViewport": true
+        },
+        {
+          "label": "Instructions",
+          "x": 13,
+          "y": 225,
+          "w": 239.328125,
+          "h": 44,
+          "right": 252.328125,
+          "bottom": 269,
+          "hit": true,
+          "inViewport": true
+        },
+        {
+          "label": "Parts",
+          "x": 255.328125,
+          "y": 225,
+          "w": 239.328125,
+          "h": 44,
+          "right": 494.65625,
+          "bottom": 269,
+          "hit": true,
+          "inViewport": true
+        },
+        {
+          "label": "Tools",
+          "x": 497.65625,
+          "y": 225,
+          "w": 239.328125,
+          "h": 44,
+          "right": 736.984375,
+          "bottom": 269,
+          "hit": true,
+          "inViewport": true
+        },
+        {
+          "label": "Expand panel",
+          "x": 739.984375,
+          "y": 225,
+          "w": 44,
+          "h": 44,
+          "right": 783.984375,
+          "bottom": 269,
+          "hit": true,
+          "inViewport": true
+        },
+        {
+          "label": "Collapse panel",
+          "x": 786.984375,
+          "y": 225,
+          "w": 44,
+          "h": 44,
+          "right": 830.984375,
+          "bottom": 269,
+          "hit": true,
+          "inViewport": true
+        }
+      ],
+      "vertices": 250,
+      "unoccluded": true,
+      "shortWindow": false,
+      "horizontalOverflow": false
+    },
+    {
+      "label": "native 844 expanded mobile instructions",
+      "mobile": "true",
+      "pointerCoarse": true,
+      "mode": "expanded",
+      "expanded": "expanded",
+      "workspace": {
+        "x": 0,
+        "y": 0,
+        "w": 843.984375,
+        "h": 390,
+        "right": 843.984375,
+        "bottom": 390
+      },
+      "navigation": {
+        "x": 8,
+        "y": 76,
+        "w": 827.984375,
+        "h": 56,
+        "right": 835.984375,
+        "bottom": 132
+      },
+      "panels": {
+        "instructions": {
+          "x": 9,
+          "y": 269,
+          "w": 825.984375,
+          "h": 112,
+          "right": 834.984375,
+          "bottom": 381
+        }
+      },
+      "controls": [
+        {
+          "label": "Explore",
+          "x": 13,
+          "y": 16,
+          "w": 44,
+          "h": 44,
+          "right": 57,
+          "bottom": 60,
+          "hit": true,
+          "inViewport": true
+        },
+        {
+          "label": "Robot",
+          "x": 64,
+          "y": 16,
+          "w": 51.21875,
+          "h": 44,
+          "right": 115.21875,
+          "bottom": 60,
+          "hit": true,
+          "inViewport": true
+        },
+        {
+          "label": "Turret",
+          "x": 118.21875,
+          "y": 16,
+          "w": 51.90625,
+          "h": 44,
+          "right": 170.125,
+          "bottom": 60,
+          "hit": true,
+          "inViewport": true
+        },
+        {
+          "label": "Combined",
+          "x": 173.125,
+          "y": 16,
+          "w": 76.171875,
+          "h": 44,
+          "right": 249.296875,
+          "bottom": 60,
+          "hit": true,
+          "inViewport": true
+        },
+        {
+          "label": "Fit model to view",
+          "x": 690.984375,
+          "y": 16,
+          "w": 44,
+          "h": 44,
+          "right": 734.984375,
+          "bottom": 60,
+          "hit": true,
+          "inViewport": true
+        },
+        {
+          "label": "Exit full screen",
+          "x": 738.984375,
+          "y": 16,
+          "w": 44,
+          "h": 44,
+          "right": 782.984375,
+          "bottom": 60,
+          "hit": true,
+          "inViewport": true
+        },
+        {
+          "label": "View",
+          "x": 786.984375,
+          "y": 16,
+          "w": 44,
+          "h": 44,
+          "right": 830.984375,
+          "bottom": 60,
+          "hit": true,
+          "inViewport": true
+        },
+        {
+          "label": "Previous step",
+          "x": 13,
+          "y": 82,
+          "w": 44,
+          "h": 44,
+          "right": 57,
+          "bottom": 126,
+          "hit": true,
+          "inViewport": true
+        },
+        {
+          "label": "Instruction step",
+          "x": 61,
+          "y": 82,
+          "w": 643.984375,
+          "h": 44,
+          "right": 704.984375,
+          "bottom": 126,
+          "hit": true,
+          "inViewport": true
+        },
+        {
+          "label": "Complete",
+          "x": 708.984375,
+          "y": 82,
+          "w": 74,
+          "h": 44,
+          "right": 782.984375,
+          "bottom": 126,
+          "hit": true,
+          "inViewport": true
+        },
+        {
+          "label": "Next step",
+          "x": 786.984375,
+          "y": 82,
+          "w": 44,
+          "h": 44,
+          "right": 830.984375,
+          "bottom": 126,
+          "hit": true,
+          "inViewport": true
+        },
+        {
+          "label": "Instructions",
+          "x": 13,
+          "y": 225,
+          "w": 239.328125,
+          "h": 44,
+          "right": 252.328125,
+          "bottom": 269,
+          "hit": true,
+          "inViewport": true
+        },
+        {
+          "label": "Parts",
+          "x": 255.328125,
+          "y": 225,
+          "w": 239.328125,
+          "h": 44,
+          "right": 494.65625,
+          "bottom": 269,
+          "hit": true,
+          "inViewport": true
+        },
+        {
+          "label": "Tools",
+          "x": 497.65625,
+          "y": 225,
+          "w": 239.328125,
+          "h": 44,
+          "right": 736.984375,
+          "bottom": 269,
+          "hit": true,
+          "inViewport": true
+        },
+        {
+          "label": "Reduce panel",
+          "x": 739.984375,
+          "y": 225,
+          "w": 44,
+          "h": 44,
+          "right": 783.984375,
+          "bottom": 269,
+          "hit": true,
+          "inViewport": true
+        },
+        {
+          "label": "Collapse panel",
+          "x": 786.984375,
+          "y": 225,
+          "w": 44,
+          "h": 44,
+          "right": 830.984375,
+          "bottom": 269,
           "hit": true,
           "inViewport": true
         }
@@ -9211,7 +10606,8 @@
     {
       "label": "native 720 instructions",
       "mobile": "true",
-      "mode": "native",
+      "pointerCoarse": true,
+      "mode": "expanded",
       "expanded": "expanded",
       "workspace": {
         "x": 0,
@@ -9223,18 +10619,18 @@
       },
       "navigation": {
         "x": 8,
-        "y": 124,
+        "y": 76,
         "w": 704,
         "h": 56,
         "right": 712,
-        "bottom": 180
+        "bottom": 132
       },
       "panels": {
         "instructions": {
           "x": 9,
-          "y": 317,
+          "y": 269,
           "w": 702,
-          "h": 64,
+          "h": 112,
           "right": 711,
           "bottom": 381
         }
@@ -9243,176 +10639,176 @@
         {
           "label": "Explore",
           "x": 13,
-          "y": 13,
+          "y": 16,
           "w": 44,
           "h": 44,
           "right": 57,
-          "bottom": 57,
+          "bottom": 60,
           "hit": true,
           "inViewport": true
         },
         {
           "label": "Robot",
-          "x": 16,
-          "y": 64,
-          "w": 227.328125,
+          "x": 64,
+          "y": 16,
+          "w": 51.21875,
           "h": 44,
-          "right": 243.328125,
-          "bottom": 108,
+          "right": 115.21875,
+          "bottom": 60,
           "hit": true,
           "inViewport": true
         },
         {
           "label": "Turret",
-          "x": 246.328125,
-          "y": 64,
-          "w": 227.328125,
+          "x": 118.21875,
+          "y": 16,
+          "w": 51.90625,
           "h": 44,
-          "right": 473.65625,
-          "bottom": 108,
+          "right": 170.125,
+          "bottom": 60,
           "hit": true,
           "inViewport": true
         },
         {
           "label": "Combined",
-          "x": 476.65625,
-          "y": 64,
-          "w": 227.328125,
+          "x": 173.125,
+          "y": 16,
+          "w": 76.171875,
           "h": 44,
-          "right": 703.984375,
-          "bottom": 108,
+          "right": 249.296875,
+          "bottom": 60,
           "hit": true,
           "inViewport": true
         },
         {
           "label": "Fit model to view",
           "x": 567,
-          "y": 13,
+          "y": 16,
           "w": 44,
           "h": 44,
           "right": 611,
-          "bottom": 57,
+          "bottom": 60,
           "hit": true,
           "inViewport": true
         },
         {
           "label": "Exit full screen",
           "x": 615,
-          "y": 13,
+          "y": 16,
           "w": 44,
           "h": 44,
           "right": 659,
-          "bottom": 57,
+          "bottom": 60,
           "hit": true,
           "inViewport": true
         },
         {
           "label": "View",
           "x": 663,
-          "y": 13,
+          "y": 16,
           "w": 44,
           "h": 44,
           "right": 707,
-          "bottom": 57,
+          "bottom": 60,
           "hit": true,
           "inViewport": true
         },
         {
           "label": "Previous step",
           "x": 13,
-          "y": 130,
+          "y": 82,
           "w": 44,
           "h": 44,
           "right": 57,
-          "bottom": 174,
+          "bottom": 126,
           "hit": true,
           "inViewport": true
         },
         {
           "label": "Instruction step",
           "x": 61,
-          "y": 130,
+          "y": 82,
           "w": 520,
           "h": 44,
           "right": 581,
-          "bottom": 174,
+          "bottom": 126,
           "hit": true,
           "inViewport": true
         },
         {
           "label": "Complete",
           "x": 585,
-          "y": 130,
+          "y": 82,
           "w": 74,
           "h": 44,
           "right": 659,
-          "bottom": 174,
+          "bottom": 126,
           "hit": true,
           "inViewport": true
         },
         {
           "label": "Next step",
           "x": 663,
-          "y": 130,
+          "y": 82,
           "w": 44,
           "h": 44,
           "right": 707,
-          "bottom": 174,
+          "bottom": 126,
           "hit": true,
           "inViewport": true
         },
         {
           "label": "Instructions",
           "x": 13,
-          "y": 273,
+          "y": 225,
           "w": 198,
           "h": 44,
           "right": 211,
-          "bottom": 317,
+          "bottom": 269,
           "hit": true,
           "inViewport": true
         },
         {
           "label": "Parts",
           "x": 214,
-          "y": 273,
+          "y": 225,
           "w": 198,
           "h": 44,
           "right": 412,
-          "bottom": 317,
+          "bottom": 269,
           "hit": true,
           "inViewport": true
         },
         {
           "label": "Tools",
           "x": 415,
-          "y": 273,
+          "y": 225,
           "w": 198,
           "h": 44,
           "right": 613,
-          "bottom": 317,
+          "bottom": 269,
           "hit": true,
           "inViewport": true
         },
         {
           "label": "Expand panel",
           "x": 616,
-          "y": 273,
+          "y": 225,
           "w": 44,
           "h": 44,
           "right": 660,
-          "bottom": 317,
+          "bottom": 269,
           "hit": true,
           "inViewport": true
         },
         {
           "label": "Collapse panel",
           "x": 663,
-          "y": 273,
+          "y": 225,
           "w": 44,
           "h": 44,
           "right": 707,
-          "bottom": 317,
+          "bottom": 269,
           "hit": true,
           "inViewport": true
         }
@@ -9425,7 +10821,8 @@
     {
       "label": "native 720 parts",
       "mobile": "true",
-      "mode": "native",
+      "pointerCoarse": true,
+      "mode": "expanded",
       "expanded": "expanded",
       "workspace": {
         "x": 0,
@@ -9437,18 +10834,18 @@
       },
       "navigation": {
         "x": 8,
-        "y": 124,
+        "y": 76,
         "w": 704,
         "h": 56,
         "right": 712,
-        "bottom": 180
+        "bottom": 132
       },
       "panels": {
         "assembly-explorer": {
           "x": 9,
-          "y": 317,
+          "y": 269,
           "w": 702,
-          "h": 64,
+          "h": 112,
           "right": 711,
           "bottom": 381
         }
@@ -9457,176 +10854,176 @@
         {
           "label": "Explore",
           "x": 13,
-          "y": 13,
+          "y": 16,
           "w": 44,
           "h": 44,
           "right": 57,
-          "bottom": 57,
+          "bottom": 60,
           "hit": true,
           "inViewport": true
         },
         {
           "label": "Robot",
-          "x": 16,
-          "y": 64,
-          "w": 227.328125,
+          "x": 64,
+          "y": 16,
+          "w": 51.21875,
           "h": 44,
-          "right": 243.328125,
-          "bottom": 108,
+          "right": 115.21875,
+          "bottom": 60,
           "hit": true,
           "inViewport": true
         },
         {
           "label": "Turret",
-          "x": 246.328125,
-          "y": 64,
-          "w": 227.328125,
+          "x": 118.21875,
+          "y": 16,
+          "w": 51.90625,
           "h": 44,
-          "right": 473.65625,
-          "bottom": 108,
+          "right": 170.125,
+          "bottom": 60,
           "hit": true,
           "inViewport": true
         },
         {
           "label": "Combined",
-          "x": 476.65625,
-          "y": 64,
-          "w": 227.328125,
+          "x": 173.125,
+          "y": 16,
+          "w": 76.171875,
           "h": 44,
-          "right": 703.984375,
-          "bottom": 108,
+          "right": 249.296875,
+          "bottom": 60,
           "hit": true,
           "inViewport": true
         },
         {
           "label": "Fit model to view",
           "x": 567,
-          "y": 13,
+          "y": 16,
           "w": 44,
           "h": 44,
           "right": 611,
-          "bottom": 57,
+          "bottom": 60,
           "hit": true,
           "inViewport": true
         },
         {
           "label": "Exit full screen",
           "x": 615,
-          "y": 13,
+          "y": 16,
           "w": 44,
           "h": 44,
           "right": 659,
-          "bottom": 57,
+          "bottom": 60,
           "hit": true,
           "inViewport": true
         },
         {
           "label": "View",
           "x": 663,
-          "y": 13,
+          "y": 16,
           "w": 44,
           "h": 44,
           "right": 707,
-          "bottom": 57,
+          "bottom": 60,
           "hit": true,
           "inViewport": true
         },
         {
           "label": "Previous step",
           "x": 13,
-          "y": 130,
+          "y": 82,
           "w": 44,
           "h": 44,
           "right": 57,
-          "bottom": 174,
+          "bottom": 126,
           "hit": true,
           "inViewport": true
         },
         {
           "label": "Instruction step",
           "x": 61,
-          "y": 130,
+          "y": 82,
           "w": 520,
           "h": 44,
           "right": 581,
-          "bottom": 174,
+          "bottom": 126,
           "hit": true,
           "inViewport": true
         },
         {
           "label": "Complete",
           "x": 585,
-          "y": 130,
+          "y": 82,
           "w": 74,
           "h": 44,
           "right": 659,
-          "bottom": 174,
+          "bottom": 126,
           "hit": true,
           "inViewport": true
         },
         {
           "label": "Next step",
           "x": 663,
-          "y": 130,
+          "y": 82,
           "w": 44,
           "h": 44,
           "right": 707,
-          "bottom": 174,
+          "bottom": 126,
           "hit": true,
           "inViewport": true
         },
         {
           "label": "Instructions",
           "x": 13,
-          "y": 273,
+          "y": 225,
           "w": 198,
           "h": 44,
           "right": 211,
-          "bottom": 317,
+          "bottom": 269,
           "hit": true,
           "inViewport": true
         },
         {
           "label": "Parts",
           "x": 214,
-          "y": 273,
+          "y": 225,
           "w": 198,
           "h": 44,
           "right": 412,
-          "bottom": 317,
+          "bottom": 269,
           "hit": true,
           "inViewport": true
         },
         {
           "label": "Tools",
           "x": 415,
-          "y": 273,
+          "y": 225,
           "w": 198,
           "h": 44,
           "right": 613,
-          "bottom": 317,
+          "bottom": 269,
           "hit": true,
           "inViewport": true
         },
         {
           "label": "Expand panel",
           "x": 616,
-          "y": 273,
+          "y": 225,
           "w": 44,
           "h": 44,
           "right": 660,
-          "bottom": 317,
+          "bottom": 269,
           "hit": true,
           "inViewport": true
         },
         {
           "label": "Collapse panel",
           "x": 663,
-          "y": 273,
+          "y": 225,
           "w": 44,
           "h": 44,
           "right": 707,
-          "bottom": 317,
+          "bottom": 269,
           "hit": true,
           "inViewport": true
         }
@@ -9639,7 +11036,8 @@
     {
       "label": "native 720 tools",
       "mobile": "true",
-      "mode": "native",
+      "pointerCoarse": true,
+      "mode": "expanded",
       "expanded": "expanded",
       "workspace": {
         "x": 0,
@@ -9651,18 +11049,18 @@
       },
       "navigation": {
         "x": 8,
-        "y": 124,
+        "y": 76,
         "w": 704,
         "h": 56,
         "right": 712,
-        "bottom": 180
+        "bottom": 132
       },
       "panels": {
         "assembly-tools": {
           "x": 9,
-          "y": 317,
+          "y": 269,
           "w": 702,
-          "h": 64,
+          "h": 112,
           "right": 711,
           "bottom": 381
         }
@@ -9671,176 +11069,176 @@
         {
           "label": "Explore",
           "x": 13,
-          "y": 13,
+          "y": 16,
           "w": 44,
           "h": 44,
           "right": 57,
-          "bottom": 57,
+          "bottom": 60,
           "hit": true,
           "inViewport": true
         },
         {
           "label": "Robot",
-          "x": 16,
-          "y": 64,
-          "w": 227.328125,
+          "x": 64,
+          "y": 16,
+          "w": 51.21875,
           "h": 44,
-          "right": 243.328125,
-          "bottom": 108,
+          "right": 115.21875,
+          "bottom": 60,
           "hit": true,
           "inViewport": true
         },
         {
           "label": "Turret",
-          "x": 246.328125,
-          "y": 64,
-          "w": 227.328125,
+          "x": 118.21875,
+          "y": 16,
+          "w": 51.90625,
           "h": 44,
-          "right": 473.65625,
-          "bottom": 108,
+          "right": 170.125,
+          "bottom": 60,
           "hit": true,
           "inViewport": true
         },
         {
           "label": "Combined",
-          "x": 476.65625,
-          "y": 64,
-          "w": 227.328125,
+          "x": 173.125,
+          "y": 16,
+          "w": 76.171875,
           "h": 44,
-          "right": 703.984375,
-          "bottom": 108,
+          "right": 249.296875,
+          "bottom": 60,
           "hit": true,
           "inViewport": true
         },
         {
           "label": "Fit model to view",
           "x": 567,
-          "y": 13,
+          "y": 16,
           "w": 44,
           "h": 44,
           "right": 611,
-          "bottom": 57,
+          "bottom": 60,
           "hit": true,
           "inViewport": true
         },
         {
           "label": "Exit full screen",
           "x": 615,
-          "y": 13,
+          "y": 16,
           "w": 44,
           "h": 44,
           "right": 659,
-          "bottom": 57,
+          "bottom": 60,
           "hit": true,
           "inViewport": true
         },
         {
           "label": "View",
           "x": 663,
-          "y": 13,
+          "y": 16,
           "w": 44,
           "h": 44,
           "right": 707,
-          "bottom": 57,
+          "bottom": 60,
           "hit": true,
           "inViewport": true
         },
         {
           "label": "Previous step",
           "x": 13,
-          "y": 130,
+          "y": 82,
           "w": 44,
           "h": 44,
           "right": 57,
-          "bottom": 174,
+          "bottom": 126,
           "hit": true,
           "inViewport": true
         },
         {
           "label": "Instruction step",
           "x": 61,
-          "y": 130,
+          "y": 82,
           "w": 520,
           "h": 44,
           "right": 581,
-          "bottom": 174,
+          "bottom": 126,
           "hit": true,
           "inViewport": true
         },
         {
           "label": "Complete",
           "x": 585,
-          "y": 130,
+          "y": 82,
           "w": 74,
           "h": 44,
           "right": 659,
-          "bottom": 174,
+          "bottom": 126,
           "hit": true,
           "inViewport": true
         },
         {
           "label": "Next step",
           "x": 663,
-          "y": 130,
+          "y": 82,
           "w": 44,
           "h": 44,
           "right": 707,
-          "bottom": 174,
+          "bottom": 126,
           "hit": true,
           "inViewport": true
         },
         {
           "label": "Instructions",
           "x": 13,
-          "y": 273,
+          "y": 225,
           "w": 198,
           "h": 44,
           "right": 211,
-          "bottom": 317,
+          "bottom": 269,
           "hit": true,
           "inViewport": true
         },
         {
           "label": "Parts",
           "x": 214,
-          "y": 273,
+          "y": 225,
           "w": 198,
           "h": 44,
           "right": 412,
-          "bottom": 317,
+          "bottom": 269,
           "hit": true,
           "inViewport": true
         },
         {
           "label": "Tools",
           "x": 415,
-          "y": 273,
+          "y": 225,
           "w": 198,
           "h": 44,
           "right": 613,
-          "bottom": 317,
+          "bottom": 269,
           "hit": true,
           "inViewport": true
         },
         {
           "label": "Expand panel",
           "x": 616,
-          "y": 273,
+          "y": 225,
           "w": 44,
           "h": 44,
           "right": 660,
-          "bottom": 317,
+          "bottom": 269,
           "hit": true,
           "inViewport": true
         },
         {
           "label": "Collapse panel",
           "x": 663,
-          "y": 273,
+          "y": 225,
           "w": 44,
           "h": 44,
           "right": 707,
-          "bottom": 317,
+          "bottom": 269,
           "hit": true,
           "inViewport": true
         }
@@ -9853,7 +11251,8 @@
     {
       "label": "native 720 expanded mobile instructions",
       "mobile": "true",
-      "mode": "native",
+      "pointerCoarse": true,
+      "mode": "expanded",
       "expanded": "expanded",
       "workspace": {
         "x": 0,
@@ -9865,18 +11264,18 @@
       },
       "navigation": {
         "x": 8,
-        "y": 124,
+        "y": 76,
         "w": 704,
         "h": 56,
         "right": 712,
-        "bottom": 180
+        "bottom": 132
       },
       "panels": {
         "instructions": {
           "x": 9,
-          "y": 317,
+          "y": 269,
           "w": 702,
-          "h": 64,
+          "h": 112,
           "right": 711,
           "bottom": 381
         }
@@ -9885,176 +11284,176 @@
         {
           "label": "Explore",
           "x": 13,
-          "y": 13,
+          "y": 16,
           "w": 44,
           "h": 44,
           "right": 57,
-          "bottom": 57,
+          "bottom": 60,
           "hit": true,
           "inViewport": true
         },
         {
           "label": "Robot",
-          "x": 16,
-          "y": 64,
-          "w": 227.328125,
+          "x": 64,
+          "y": 16,
+          "w": 51.21875,
           "h": 44,
-          "right": 243.328125,
-          "bottom": 108,
+          "right": 115.21875,
+          "bottom": 60,
           "hit": true,
           "inViewport": true
         },
         {
           "label": "Turret",
-          "x": 246.328125,
-          "y": 64,
-          "w": 227.328125,
+          "x": 118.21875,
+          "y": 16,
+          "w": 51.90625,
           "h": 44,
-          "right": 473.65625,
-          "bottom": 108,
+          "right": 170.125,
+          "bottom": 60,
           "hit": true,
           "inViewport": true
         },
         {
           "label": "Combined",
-          "x": 476.65625,
-          "y": 64,
-          "w": 227.328125,
+          "x": 173.125,
+          "y": 16,
+          "w": 76.171875,
           "h": 44,
-          "right": 703.984375,
-          "bottom": 108,
+          "right": 249.296875,
+          "bottom": 60,
           "hit": true,
           "inViewport": true
         },
         {
           "label": "Fit model to view",
           "x": 567,
-          "y": 13,
+          "y": 16,
           "w": 44,
           "h": 44,
           "right": 611,
-          "bottom": 57,
+          "bottom": 60,
           "hit": true,
           "inViewport": true
         },
         {
           "label": "Exit full screen",
           "x": 615,
-          "y": 13,
+          "y": 16,
           "w": 44,
           "h": 44,
           "right": 659,
-          "bottom": 57,
+          "bottom": 60,
           "hit": true,
           "inViewport": true
         },
         {
           "label": "View",
           "x": 663,
-          "y": 13,
+          "y": 16,
           "w": 44,
           "h": 44,
           "right": 707,
-          "bottom": 57,
+          "bottom": 60,
           "hit": true,
           "inViewport": true
         },
         {
           "label": "Previous step",
           "x": 13,
-          "y": 130,
+          "y": 82,
           "w": 44,
           "h": 44,
           "right": 57,
-          "bottom": 174,
+          "bottom": 126,
           "hit": true,
           "inViewport": true
         },
         {
           "label": "Instruction step",
           "x": 61,
-          "y": 130,
+          "y": 82,
           "w": 520,
           "h": 44,
           "right": 581,
-          "bottom": 174,
+          "bottom": 126,
           "hit": true,
           "inViewport": true
         },
         {
           "label": "Complete",
           "x": 585,
-          "y": 130,
+          "y": 82,
           "w": 74,
           "h": 44,
           "right": 659,
-          "bottom": 174,
+          "bottom": 126,
           "hit": true,
           "inViewport": true
         },
         {
           "label": "Next step",
           "x": 663,
-          "y": 130,
+          "y": 82,
           "w": 44,
           "h": 44,
           "right": 707,
-          "bottom": 174,
+          "bottom": 126,
           "hit": true,
           "inViewport": true
         },
         {
           "label": "Instructions",
           "x": 13,
-          "y": 273,
+          "y": 225,
           "w": 198,
           "h": 44,
           "right": 211,
-          "bottom": 317,
+          "bottom": 269,
           "hit": true,
           "inViewport": true
         },
         {
           "label": "Parts",
           "x": 214,
-          "y": 273,
+          "y": 225,
           "w": 198,
           "h": 44,
           "right": 412,
-          "bottom": 317,
+          "bottom": 269,
           "hit": true,
           "inViewport": true
         },
         {
           "label": "Tools",
           "x": 415,
-          "y": 273,
+          "y": 225,
           "w": 198,
           "h": 44,
           "right": 613,
-          "bottom": 317,
+          "bottom": 269,
           "hit": true,
           "inViewport": true
         },
         {
           "label": "Reduce panel",
           "x": 616,
-          "y": 273,
+          "y": 225,
           "w": 44,
           "h": 44,
           "right": 660,
-          "bottom": 317,
+          "bottom": 269,
           "hit": true,
           "inViewport": true
         },
         {
           "label": "Collapse panel",
           "x": 663,
-          "y": 273,
+          "y": 225,
           "w": 44,
           "h": 44,
           "right": 707,
-          "bottom": 317,
+          "bottom": 269,
           "hit": true,
           "inViewport": true
         }
@@ -10067,15 +11466,16 @@
     {
       "label": "native 390 instructions",
       "mobile": "true",
-      "mode": "native",
+      "pointerCoarse": true,
+      "mode": "expanded",
       "expanded": "expanded",
       "workspace": {
         "x": 0,
         "y": 0,
         "w": 390,
-        "h": 844,
+        "h": 843.984375,
         "right": 390,
-        "bottom": 844
+        "bottom": 843.984375
       },
       "navigation": {
         "x": 8,
@@ -10088,11 +11488,11 @@
       "panels": {
         "instructions": {
           "x": 9,
-          "y": 671,
+          "y": 670.984375,
           "w": 372,
           "h": 164,
           "right": 381,
-          "bottom": 835
+          "bottom": 834.984375
         }
       },
       "controls": [
@@ -10220,55 +11620,55 @@
         {
           "label": "Instructions",
           "x": 13,
-          "y": 627,
+          "y": 626.984375,
           "w": 88,
           "h": 44,
           "right": 101,
-          "bottom": 671,
+          "bottom": 670.984375,
           "hit": true,
           "inViewport": true
         },
         {
           "label": "Parts",
           "x": 104,
-          "y": 627,
+          "y": 626.984375,
           "w": 88,
           "h": 44,
           "right": 192,
-          "bottom": 671,
+          "bottom": 670.984375,
           "hit": true,
           "inViewport": true
         },
         {
           "label": "Tools",
           "x": 195,
-          "y": 627,
+          "y": 626.984375,
           "w": 88,
           "h": 44,
           "right": 283,
-          "bottom": 671,
+          "bottom": 670.984375,
           "hit": true,
           "inViewport": true
         },
         {
           "label": "Expand panel",
           "x": 286,
-          "y": 627,
+          "y": 626.984375,
           "w": 44,
           "h": 44,
           "right": 330,
-          "bottom": 671,
+          "bottom": 670.984375,
           "hit": true,
           "inViewport": true
         },
         {
           "label": "Collapse panel",
           "x": 333,
-          "y": 627,
+          "y": 626.984375,
           "w": 44,
           "h": 44,
           "right": 377,
-          "bottom": 671,
+          "bottom": 670.984375,
           "hit": true,
           "inViewport": true
         }
@@ -10281,15 +11681,16 @@
     {
       "label": "native 390 parts",
       "mobile": "true",
-      "mode": "native",
+      "pointerCoarse": true,
+      "mode": "expanded",
       "expanded": "expanded",
       "workspace": {
         "x": 0,
         "y": 0,
         "w": 390,
-        "h": 844,
+        "h": 843.984375,
         "right": 390,
-        "bottom": 844
+        "bottom": 843.984375
       },
       "navigation": {
         "x": 8,
@@ -10302,11 +11703,11 @@
       "panels": {
         "assembly-explorer": {
           "x": 9,
-          "y": 671,
+          "y": 670.984375,
           "w": 372,
           "h": 164,
           "right": 381,
-          "bottom": 835
+          "bottom": 834.984375
         }
       },
       "controls": [
@@ -10434,55 +11835,55 @@
         {
           "label": "Instructions",
           "x": 13,
-          "y": 627,
+          "y": 626.984375,
           "w": 88,
           "h": 44,
           "right": 101,
-          "bottom": 671,
+          "bottom": 670.984375,
           "hit": true,
           "inViewport": true
         },
         {
           "label": "Parts",
           "x": 104,
-          "y": 627,
+          "y": 626.984375,
           "w": 88,
           "h": 44,
           "right": 192,
-          "bottom": 671,
+          "bottom": 670.984375,
           "hit": true,
           "inViewport": true
         },
         {
           "label": "Tools",
           "x": 195,
-          "y": 627,
+          "y": 626.984375,
           "w": 88,
           "h": 44,
           "right": 283,
-          "bottom": 671,
+          "bottom": 670.984375,
           "hit": true,
           "inViewport": true
         },
         {
           "label": "Expand panel",
           "x": 286,
-          "y": 627,
+          "y": 626.984375,
           "w": 44,
           "h": 44,
           "right": 330,
-          "bottom": 671,
+          "bottom": 670.984375,
           "hit": true,
           "inViewport": true
         },
         {
           "label": "Collapse panel",
           "x": 333,
-          "y": 627,
+          "y": 626.984375,
           "w": 44,
           "h": 44,
           "right": 377,
-          "bottom": 671,
+          "bottom": 670.984375,
           "hit": true,
           "inViewport": true
         }
@@ -10495,15 +11896,16 @@
     {
       "label": "native 390 tools",
       "mobile": "true",
-      "mode": "native",
+      "pointerCoarse": true,
+      "mode": "expanded",
       "expanded": "expanded",
       "workspace": {
         "x": 0,
         "y": 0,
         "w": 390,
-        "h": 844,
+        "h": 843.984375,
         "right": 390,
-        "bottom": 844
+        "bottom": 843.984375
       },
       "navigation": {
         "x": 8,
@@ -10516,11 +11918,11 @@
       "panels": {
         "assembly-tools": {
           "x": 9,
-          "y": 671,
+          "y": 670.984375,
           "w": 372,
           "h": 164,
           "right": 381,
-          "bottom": 835
+          "bottom": 834.984375
         }
       },
       "controls": [
@@ -10648,55 +12050,55 @@
         {
           "label": "Instructions",
           "x": 13,
-          "y": 627,
+          "y": 626.984375,
           "w": 88,
           "h": 44,
           "right": 101,
-          "bottom": 671,
+          "bottom": 670.984375,
           "hit": true,
           "inViewport": true
         },
         {
           "label": "Parts",
           "x": 104,
-          "y": 627,
+          "y": 626.984375,
           "w": 88,
           "h": 44,
           "right": 192,
-          "bottom": 671,
+          "bottom": 670.984375,
           "hit": true,
           "inViewport": true
         },
         {
           "label": "Tools",
           "x": 195,
-          "y": 627,
+          "y": 626.984375,
           "w": 88,
           "h": 44,
           "right": 283,
-          "bottom": 671,
+          "bottom": 670.984375,
           "hit": true,
           "inViewport": true
         },
         {
           "label": "Expand panel",
           "x": 286,
-          "y": 627,
+          "y": 626.984375,
           "w": 44,
           "h": 44,
           "right": 330,
-          "bottom": 671,
+          "bottom": 670.984375,
           "hit": true,
           "inViewport": true
         },
         {
           "label": "Collapse panel",
           "x": 333,
-          "y": 627,
+          "y": 626.984375,
           "w": 44,
           "h": 44,
           "right": 377,
-          "bottom": 671,
+          "bottom": 670.984375,
           "hit": true,
           "inViewport": true
         }
@@ -10709,15 +12111,16 @@
     {
       "label": "native 390 expanded mobile instructions",
       "mobile": "true",
-      "mode": "native",
+      "pointerCoarse": true,
+      "mode": "expanded",
       "expanded": "expanded",
       "workspace": {
         "x": 0,
         "y": 0,
         "w": 390,
-        "h": 844,
+        "h": 843.984375,
         "right": 390,
-        "bottom": 844
+        "bottom": 843.984375
       },
       "navigation": {
         "x": 8,
@@ -10730,11 +12133,11 @@
       "panels": {
         "instructions": {
           "x": 9,
-          "y": 451,
+          "y": 450.984375,
           "w": 372,
           "h": 384,
           "right": 381,
-          "bottom": 835
+          "bottom": 834.984375
         }
       },
       "controls": [
@@ -10862,55 +12265,55 @@
         {
           "label": "Instructions",
           "x": 13,
-          "y": 407,
+          "y": 406.984375,
           "w": 88,
           "h": 44,
           "right": 101,
-          "bottom": 451,
+          "bottom": 450.984375,
           "hit": true,
           "inViewport": true
         },
         {
           "label": "Parts",
           "x": 104,
-          "y": 407,
+          "y": 406.984375,
           "w": 88,
           "h": 44,
           "right": 192,
-          "bottom": 451,
+          "bottom": 450.984375,
           "hit": true,
           "inViewport": true
         },
         {
           "label": "Tools",
           "x": 195,
-          "y": 407,
+          "y": 406.984375,
           "w": 88,
           "h": 44,
           "right": 283,
-          "bottom": 451,
+          "bottom": 450.984375,
           "hit": true,
           "inViewport": true
         },
         {
           "label": "Reduce panel",
           "x": 286,
-          "y": 407,
+          "y": 406.984375,
           "w": 44,
           "h": 44,
           "right": 330,
-          "bottom": 451,
+          "bottom": 450.984375,
           "hit": true,
           "inViewport": true
         },
         {
           "label": "Collapse panel",
           "x": 333,
-          "y": 407,
+          "y": 406.984375,
           "w": 44,
           "h": 44,
           "right": 377,
-          "bottom": 451,
+          "bottom": 450.984375,
           "hit": true,
           "inViewport": true
         }
@@ -10923,7 +12326,8 @@
     {
       "label": "native 320 instructions",
       "mobile": "true",
-      "mode": "native",
+      "pointerCoarse": true,
+      "mode": "expanded",
       "expanded": "expanded",
       "workspace": {
         "x": 0,
@@ -11137,7 +12541,8 @@
     {
       "label": "native 320 parts",
       "mobile": "true",
-      "mode": "native",
+      "pointerCoarse": true,
+      "mode": "expanded",
       "expanded": "expanded",
       "workspace": {
         "x": 0,
@@ -11351,7 +12756,8 @@
     {
       "label": "native 320 tools",
       "mobile": "true",
-      "mode": "native",
+      "pointerCoarse": true,
+      "mode": "expanded",
       "expanded": "expanded",
       "workspace": {
         "x": 0,
@@ -11565,7 +12971,8 @@
     {
       "label": "native 320 expanded mobile instructions",
       "mobile": "true",
-      "mode": "native",
+      "pointerCoarse": true,
+      "mode": "expanded",
       "expanded": "expanded",
       "workspace": {
         "x": 0,
@@ -11779,7 +13186,8 @@
     {
       "label": "native desktop restored after resize",
       "mobile": "false",
-      "mode": "native",
+      "pointerCoarse": true,
+      "mode": "expanded",
       "expanded": "expanded",
       "workspace": {
         "x": 0,
@@ -11965,6 +13373,7 @@
     {
       "label": "denied 1440 expanded=false Parts=false Tools=false",
       "mobile": "false",
+      "pointerCoarse": true,
       "mode": "expanded",
       "expanded": "normal",
       "workspace": {
@@ -12135,6 +13544,7 @@
     {
       "label": "denied 1440 expanded=false Parts=false Tools=true",
       "mobile": "false",
+      "pointerCoarse": true,
       "mode": "expanded",
       "expanded": "normal",
       "workspace": {
@@ -12313,6 +13723,7 @@
     {
       "label": "denied 1440 expanded=false Parts=true Tools=false",
       "mobile": "false",
+      "pointerCoarse": true,
       "mode": "expanded",
       "expanded": "normal",
       "workspace": {
@@ -12491,6 +13902,7 @@
     {
       "label": "denied 1440 expanded=false Parts=true Tools=true",
       "mobile": "false",
+      "pointerCoarse": true,
       "mode": "expanded",
       "expanded": "normal",
       "workspace": {
@@ -12677,6 +14089,7 @@
     {
       "label": "denied 1440 expanded=true Parts=false Tools=false",
       "mobile": "false",
+      "pointerCoarse": true,
       "mode": "expanded",
       "expanded": "expanded",
       "workspace": {
@@ -12847,6 +14260,7 @@
     {
       "label": "denied 1440 expanded=true Parts=false Tools=true",
       "mobile": "false",
+      "pointerCoarse": true,
       "mode": "expanded",
       "expanded": "expanded",
       "workspace": {
@@ -13025,6 +14439,7 @@
     {
       "label": "denied 1440 expanded=true Parts=true Tools=false",
       "mobile": "false",
+      "pointerCoarse": true,
       "mode": "expanded",
       "expanded": "expanded",
       "workspace": {
@@ -13203,6 +14618,7 @@
     {
       "label": "denied 1440 expanded=true Parts=true Tools=true",
       "mobile": "false",
+      "pointerCoarse": true,
       "mode": "expanded",
       "expanded": "expanded",
       "workspace": {
@@ -13389,6 +14805,7 @@
     {
       "label": "denied 1024 expanded=false Parts=false Tools=false",
       "mobile": "false",
+      "pointerCoarse": true,
       "mode": "expanded",
       "expanded": "normal",
       "workspace": {
@@ -13559,6 +14976,7 @@
     {
       "label": "denied 1024 expanded=false Parts=false Tools=true",
       "mobile": "false",
+      "pointerCoarse": true,
       "mode": "expanded",
       "expanded": "normal",
       "workspace": {
@@ -13737,6 +15155,7 @@
     {
       "label": "denied 1024 expanded=false Parts=true Tools=false",
       "mobile": "false",
+      "pointerCoarse": true,
       "mode": "expanded",
       "expanded": "normal",
       "workspace": {
@@ -13915,6 +15334,7 @@
     {
       "label": "denied 1024 expanded=false Parts=true Tools=true",
       "mobile": "false",
+      "pointerCoarse": true,
       "mode": "expanded",
       "expanded": "normal",
       "workspace": {
@@ -14101,6 +15521,7 @@
     {
       "label": "denied 1024 expanded=true Parts=false Tools=false",
       "mobile": "false",
+      "pointerCoarse": true,
       "mode": "expanded",
       "expanded": "expanded",
       "workspace": {
@@ -14271,6 +15692,7 @@
     {
       "label": "denied 1024 expanded=true Parts=false Tools=true",
       "mobile": "false",
+      "pointerCoarse": true,
       "mode": "expanded",
       "expanded": "expanded",
       "workspace": {
@@ -14449,6 +15871,7 @@
     {
       "label": "denied 1024 expanded=true Parts=true Tools=false",
       "mobile": "false",
+      "pointerCoarse": true,
       "mode": "expanded",
       "expanded": "expanded",
       "workspace": {
@@ -14627,6 +16050,7 @@
     {
       "label": "denied 1024 expanded=true Parts=true Tools=true",
       "mobile": "false",
+      "pointerCoarse": true,
       "mode": "expanded",
       "expanded": "expanded",
       "workspace": {
@@ -14813,6 +16237,7 @@
     {
       "label": "denied resize 1280x900",
       "mobile": "false",
+      "pointerCoarse": true,
       "mode": "expanded",
       "expanded": "expanded",
       "workspace": {
@@ -14997,8 +16422,9 @@
       "horizontalOverflow": false
     },
     {
-      "label": "denied resize 844x390",
-      "mobile": "false",
+      "label": "denied 844 instructions",
+      "mobile": "true",
+      "pointerCoarse": true,
       "mode": "expanded",
       "expanded": "expanded",
       "workspace": {
@@ -15010,169 +16436,842 @@
         "bottom": 390
       },
       "navigation": {
-        "x": 81.984375,
-        "y": 88,
-        "w": 680,
+        "x": 8,
+        "y": 76,
+        "w": 827.984375,
         "h": 56,
-        "right": 761.984375,
-        "bottom": 144
+        "right": 835.984375,
+        "bottom": 132
       },
       "panels": {
-        "assembly-explorer": {
-          "x": 16,
-          "y": 156,
-          "w": 150,
-          "h": 218,
-          "right": 166,
-          "bottom": 374
-        },
-        "assembly-tools": {
-          "x": 677.984375,
-          "y": 156,
-          "w": 150,
-          "h": 218,
-          "right": 827.984375,
-          "bottom": 374
-        },
         "instructions": {
-          "x": 425.984375,
-          "y": 156,
-          "w": 240,
-          "h": 218,
-          "right": 665.984375,
-          "bottom": 374
+          "x": 9,
+          "y": 269,
+          "w": 825.984375,
+          "h": 112,
+          "right": 834.984375,
+          "bottom": 381
         }
       },
       "controls": [
         {
           "label": "Explore",
-          "x": 23,
-          "y": 26,
-          "w": 103.625,
+          "x": 13,
+          "y": 16,
+          "w": 44,
           "h": 44,
-          "right": 126.625,
-          "bottom": 70,
+          "right": 57,
+          "bottom": 60,
           "hit": true,
           "inViewport": true
         },
         {
           "label": "Robot",
-          "x": 137.625,
-          "y": 26,
-          "w": 59.21875,
+          "x": 64,
+          "y": 16,
+          "w": 51.21875,
           "h": 44,
-          "right": 196.84375,
-          "bottom": 70,
+          "right": 115.21875,
+          "bottom": 60,
           "hit": true,
           "inViewport": true
         },
         {
           "label": "Turret",
-          "x": 199.84375,
-          "y": 26,
-          "w": 59.90625,
+          "x": 118.21875,
+          "y": 16,
+          "w": 51.90625,
           "h": 44,
-          "right": 259.75,
-          "bottom": 70,
+          "right": 170.125,
+          "bottom": 60,
           "hit": true,
           "inViewport": true
         },
         {
           "label": "Combined",
-          "x": 262.75,
-          "y": 26,
-          "w": 84.171875,
+          "x": 173.125,
+          "y": 16,
+          "w": 76.171875,
           "h": 44,
-          "right": 346.921875,
-          "bottom": 70,
+          "right": 249.296875,
+          "bottom": 60,
           "hit": true,
           "inViewport": true
         },
         {
           "label": "Fit model to view",
-          "x": 626.5625,
-          "y": 26,
-          "w": 46,
+          "x": 690.984375,
+          "y": 16,
+          "w": 44,
           "h": 44,
-          "right": 672.5625,
-          "bottom": 70,
+          "right": 734.984375,
+          "bottom": 60,
           "hit": true,
           "inViewport": true
         },
         {
           "label": "Exit full screen",
-          "x": 680.5625,
-          "y": 26,
-          "w": 46,
+          "x": 738.984375,
+          "y": 16,
+          "w": 44,
           "h": 44,
-          "right": 726.5625,
-          "bottom": 70,
+          "right": 782.984375,
+          "bottom": 60,
           "hit": true,
           "inViewport": true
         },
         {
           "label": "View",
-          "x": 734.5625,
-          "y": 26,
-          "w": 86.421875,
+          "x": 786.984375,
+          "y": 16,
+          "w": 44,
           "h": 44,
-          "right": 820.984375,
-          "bottom": 70,
+          "right": 830.984375,
+          "bottom": 60,
           "hit": true,
           "inViewport": true
         },
         {
           "label": "Previous step",
-          "x": 94.984375,
-          "y": 94,
-          "w": 110,
+          "x": 13,
+          "y": 82,
+          "w": 44,
           "h": 44,
-          "right": 204.984375,
-          "bottom": 138,
+          "right": 57,
+          "bottom": 126,
           "hit": true,
           "inViewport": true
         },
         {
           "label": "Instruction step",
-          "x": 212.984375,
-          "y": 94,
-          "w": 300,
+          "x": 61,
+          "y": 82,
+          "w": 643.984375,
           "h": 44,
-          "right": 512.984375,
-          "bottom": 138,
+          "right": 704.984375,
+          "bottom": 126,
           "hit": true,
           "inViewport": true
         },
         {
           "label": "Complete",
-          "x": 520.984375,
-          "y": 94,
-          "w": 110,
+          "x": 708.984375,
+          "y": 82,
+          "w": 74,
           "h": 44,
-          "right": 630.984375,
-          "bottom": 138,
+          "right": 782.984375,
+          "bottom": 126,
           "hit": true,
           "inViewport": true
         },
         {
           "label": "Next step",
-          "x": 638.984375,
-          "y": 94,
-          "w": 110,
+          "x": 786.984375,
+          "y": 82,
+          "w": 44,
           "h": 44,
-          "right": 748.984375,
-          "bottom": 138,
+          "right": 830.984375,
+          "bottom": 126,
           "hit": true,
           "inViewport": true
         },
         {
-          "label": "Collapse ↙",
-          "x": 562.953125,
-          "y": 156.5,
-          "w": 92.03125,
+          "label": "Instructions",
+          "x": 13,
+          "y": 225,
+          "w": 239.328125,
           "h": 44,
-          "right": 654.984375,
-          "bottom": 200.5,
+          "right": 252.328125,
+          "bottom": 269,
+          "hit": true,
+          "inViewport": true
+        },
+        {
+          "label": "Parts",
+          "x": 255.328125,
+          "y": 225,
+          "w": 239.328125,
+          "h": 44,
+          "right": 494.65625,
+          "bottom": 269,
+          "hit": true,
+          "inViewport": true
+        },
+        {
+          "label": "Tools",
+          "x": 497.65625,
+          "y": 225,
+          "w": 239.328125,
+          "h": 44,
+          "right": 736.984375,
+          "bottom": 269,
+          "hit": true,
+          "inViewport": true
+        },
+        {
+          "label": "Expand panel",
+          "x": 739.984375,
+          "y": 225,
+          "w": 44,
+          "h": 44,
+          "right": 783.984375,
+          "bottom": 269,
+          "hit": true,
+          "inViewport": true
+        },
+        {
+          "label": "Collapse panel",
+          "x": 786.984375,
+          "y": 225,
+          "w": 44,
+          "h": 44,
+          "right": 830.984375,
+          "bottom": 269,
+          "hit": true,
+          "inViewport": true
+        }
+      ],
+      "vertices": 250,
+      "unoccluded": true,
+      "shortWindow": false,
+      "horizontalOverflow": false
+    },
+    {
+      "label": "denied 844 parts",
+      "mobile": "true",
+      "pointerCoarse": true,
+      "mode": "expanded",
+      "expanded": "expanded",
+      "workspace": {
+        "x": 0,
+        "y": 0,
+        "w": 843.984375,
+        "h": 390,
+        "right": 843.984375,
+        "bottom": 390
+      },
+      "navigation": {
+        "x": 8,
+        "y": 76,
+        "w": 827.984375,
+        "h": 56,
+        "right": 835.984375,
+        "bottom": 132
+      },
+      "panels": {
+        "assembly-explorer": {
+          "x": 9,
+          "y": 269,
+          "w": 825.984375,
+          "h": 112,
+          "right": 834.984375,
+          "bottom": 381
+        }
+      },
+      "controls": [
+        {
+          "label": "Explore",
+          "x": 13,
+          "y": 16,
+          "w": 44,
+          "h": 44,
+          "right": 57,
+          "bottom": 60,
+          "hit": true,
+          "inViewport": true
+        },
+        {
+          "label": "Robot",
+          "x": 64,
+          "y": 16,
+          "w": 51.21875,
+          "h": 44,
+          "right": 115.21875,
+          "bottom": 60,
+          "hit": true,
+          "inViewport": true
+        },
+        {
+          "label": "Turret",
+          "x": 118.21875,
+          "y": 16,
+          "w": 51.90625,
+          "h": 44,
+          "right": 170.125,
+          "bottom": 60,
+          "hit": true,
+          "inViewport": true
+        },
+        {
+          "label": "Combined",
+          "x": 173.125,
+          "y": 16,
+          "w": 76.171875,
+          "h": 44,
+          "right": 249.296875,
+          "bottom": 60,
+          "hit": true,
+          "inViewport": true
+        },
+        {
+          "label": "Fit model to view",
+          "x": 690.984375,
+          "y": 16,
+          "w": 44,
+          "h": 44,
+          "right": 734.984375,
+          "bottom": 60,
+          "hit": true,
+          "inViewport": true
+        },
+        {
+          "label": "Exit full screen",
+          "x": 738.984375,
+          "y": 16,
+          "w": 44,
+          "h": 44,
+          "right": 782.984375,
+          "bottom": 60,
+          "hit": true,
+          "inViewport": true
+        },
+        {
+          "label": "View",
+          "x": 786.984375,
+          "y": 16,
+          "w": 44,
+          "h": 44,
+          "right": 830.984375,
+          "bottom": 60,
+          "hit": true,
+          "inViewport": true
+        },
+        {
+          "label": "Previous step",
+          "x": 13,
+          "y": 82,
+          "w": 44,
+          "h": 44,
+          "right": 57,
+          "bottom": 126,
+          "hit": true,
+          "inViewport": true
+        },
+        {
+          "label": "Instruction step",
+          "x": 61,
+          "y": 82,
+          "w": 643.984375,
+          "h": 44,
+          "right": 704.984375,
+          "bottom": 126,
+          "hit": true,
+          "inViewport": true
+        },
+        {
+          "label": "Complete",
+          "x": 708.984375,
+          "y": 82,
+          "w": 74,
+          "h": 44,
+          "right": 782.984375,
+          "bottom": 126,
+          "hit": true,
+          "inViewport": true
+        },
+        {
+          "label": "Next step",
+          "x": 786.984375,
+          "y": 82,
+          "w": 44,
+          "h": 44,
+          "right": 830.984375,
+          "bottom": 126,
+          "hit": true,
+          "inViewport": true
+        },
+        {
+          "label": "Instructions",
+          "x": 13,
+          "y": 225,
+          "w": 239.328125,
+          "h": 44,
+          "right": 252.328125,
+          "bottom": 269,
+          "hit": true,
+          "inViewport": true
+        },
+        {
+          "label": "Parts",
+          "x": 255.328125,
+          "y": 225,
+          "w": 239.328125,
+          "h": 44,
+          "right": 494.65625,
+          "bottom": 269,
+          "hit": true,
+          "inViewport": true
+        },
+        {
+          "label": "Tools",
+          "x": 497.65625,
+          "y": 225,
+          "w": 239.328125,
+          "h": 44,
+          "right": 736.984375,
+          "bottom": 269,
+          "hit": true,
+          "inViewport": true
+        },
+        {
+          "label": "Expand panel",
+          "x": 739.984375,
+          "y": 225,
+          "w": 44,
+          "h": 44,
+          "right": 783.984375,
+          "bottom": 269,
+          "hit": true,
+          "inViewport": true
+        },
+        {
+          "label": "Collapse panel",
+          "x": 786.984375,
+          "y": 225,
+          "w": 44,
+          "h": 44,
+          "right": 830.984375,
+          "bottom": 269,
+          "hit": true,
+          "inViewport": true
+        }
+      ],
+      "vertices": 250,
+      "unoccluded": true,
+      "shortWindow": false,
+      "horizontalOverflow": false
+    },
+    {
+      "label": "denied 844 tools",
+      "mobile": "true",
+      "pointerCoarse": true,
+      "mode": "expanded",
+      "expanded": "expanded",
+      "workspace": {
+        "x": 0,
+        "y": 0,
+        "w": 843.984375,
+        "h": 390,
+        "right": 843.984375,
+        "bottom": 390
+      },
+      "navigation": {
+        "x": 8,
+        "y": 76,
+        "w": 827.984375,
+        "h": 56,
+        "right": 835.984375,
+        "bottom": 132
+      },
+      "panels": {
+        "assembly-tools": {
+          "x": 9,
+          "y": 269,
+          "w": 825.984375,
+          "h": 112,
+          "right": 834.984375,
+          "bottom": 381
+        }
+      },
+      "controls": [
+        {
+          "label": "Explore",
+          "x": 13,
+          "y": 16,
+          "w": 44,
+          "h": 44,
+          "right": 57,
+          "bottom": 60,
+          "hit": true,
+          "inViewport": true
+        },
+        {
+          "label": "Robot",
+          "x": 64,
+          "y": 16,
+          "w": 51.21875,
+          "h": 44,
+          "right": 115.21875,
+          "bottom": 60,
+          "hit": true,
+          "inViewport": true
+        },
+        {
+          "label": "Turret",
+          "x": 118.21875,
+          "y": 16,
+          "w": 51.90625,
+          "h": 44,
+          "right": 170.125,
+          "bottom": 60,
+          "hit": true,
+          "inViewport": true
+        },
+        {
+          "label": "Combined",
+          "x": 173.125,
+          "y": 16,
+          "w": 76.171875,
+          "h": 44,
+          "right": 249.296875,
+          "bottom": 60,
+          "hit": true,
+          "inViewport": true
+        },
+        {
+          "label": "Fit model to view",
+          "x": 690.984375,
+          "y": 16,
+          "w": 44,
+          "h": 44,
+          "right": 734.984375,
+          "bottom": 60,
+          "hit": true,
+          "inViewport": true
+        },
+        {
+          "label": "Exit full screen",
+          "x": 738.984375,
+          "y": 16,
+          "w": 44,
+          "h": 44,
+          "right": 782.984375,
+          "bottom": 60,
+          "hit": true,
+          "inViewport": true
+        },
+        {
+          "label": "View",
+          "x": 786.984375,
+          "y": 16,
+          "w": 44,
+          "h": 44,
+          "right": 830.984375,
+          "bottom": 60,
+          "hit": true,
+          "inViewport": true
+        },
+        {
+          "label": "Previous step",
+          "x": 13,
+          "y": 82,
+          "w": 44,
+          "h": 44,
+          "right": 57,
+          "bottom": 126,
+          "hit": true,
+          "inViewport": true
+        },
+        {
+          "label": "Instruction step",
+          "x": 61,
+          "y": 82,
+          "w": 643.984375,
+          "h": 44,
+          "right": 704.984375,
+          "bottom": 126,
+          "hit": true,
+          "inViewport": true
+        },
+        {
+          "label": "Complete",
+          "x": 708.984375,
+          "y": 82,
+          "w": 74,
+          "h": 44,
+          "right": 782.984375,
+          "bottom": 126,
+          "hit": true,
+          "inViewport": true
+        },
+        {
+          "label": "Next step",
+          "x": 786.984375,
+          "y": 82,
+          "w": 44,
+          "h": 44,
+          "right": 830.984375,
+          "bottom": 126,
+          "hit": true,
+          "inViewport": true
+        },
+        {
+          "label": "Instructions",
+          "x": 13,
+          "y": 225,
+          "w": 239.328125,
+          "h": 44,
+          "right": 252.328125,
+          "bottom": 269,
+          "hit": true,
+          "inViewport": true
+        },
+        {
+          "label": "Parts",
+          "x": 255.328125,
+          "y": 225,
+          "w": 239.328125,
+          "h": 44,
+          "right": 494.65625,
+          "bottom": 269,
+          "hit": true,
+          "inViewport": true
+        },
+        {
+          "label": "Tools",
+          "x": 497.65625,
+          "y": 225,
+          "w": 239.328125,
+          "h": 44,
+          "right": 736.984375,
+          "bottom": 269,
+          "hit": true,
+          "inViewport": true
+        },
+        {
+          "label": "Expand panel",
+          "x": 739.984375,
+          "y": 225,
+          "w": 44,
+          "h": 44,
+          "right": 783.984375,
+          "bottom": 269,
+          "hit": true,
+          "inViewport": true
+        },
+        {
+          "label": "Collapse panel",
+          "x": 786.984375,
+          "y": 225,
+          "w": 44,
+          "h": 44,
+          "right": 830.984375,
+          "bottom": 269,
+          "hit": true,
+          "inViewport": true
+        }
+      ],
+      "vertices": 250,
+      "unoccluded": true,
+      "shortWindow": false,
+      "horizontalOverflow": false
+    },
+    {
+      "label": "denied 844 expanded mobile instructions",
+      "mobile": "true",
+      "pointerCoarse": true,
+      "mode": "expanded",
+      "expanded": "expanded",
+      "workspace": {
+        "x": 0,
+        "y": 0,
+        "w": 843.984375,
+        "h": 390,
+        "right": 843.984375,
+        "bottom": 390
+      },
+      "navigation": {
+        "x": 8,
+        "y": 76,
+        "w": 827.984375,
+        "h": 56,
+        "right": 835.984375,
+        "bottom": 132
+      },
+      "panels": {
+        "instructions": {
+          "x": 9,
+          "y": 269,
+          "w": 825.984375,
+          "h": 112,
+          "right": 834.984375,
+          "bottom": 381
+        }
+      },
+      "controls": [
+        {
+          "label": "Explore",
+          "x": 13,
+          "y": 16,
+          "w": 44,
+          "h": 44,
+          "right": 57,
+          "bottom": 60,
+          "hit": true,
+          "inViewport": true
+        },
+        {
+          "label": "Robot",
+          "x": 64,
+          "y": 16,
+          "w": 51.21875,
+          "h": 44,
+          "right": 115.21875,
+          "bottom": 60,
+          "hit": true,
+          "inViewport": true
+        },
+        {
+          "label": "Turret",
+          "x": 118.21875,
+          "y": 16,
+          "w": 51.90625,
+          "h": 44,
+          "right": 170.125,
+          "bottom": 60,
+          "hit": true,
+          "inViewport": true
+        },
+        {
+          "label": "Combined",
+          "x": 173.125,
+          "y": 16,
+          "w": 76.171875,
+          "h": 44,
+          "right": 249.296875,
+          "bottom": 60,
+          "hit": true,
+          "inViewport": true
+        },
+        {
+          "label": "Fit model to view",
+          "x": 690.984375,
+          "y": 16,
+          "w": 44,
+          "h": 44,
+          "right": 734.984375,
+          "bottom": 60,
+          "hit": true,
+          "inViewport": true
+        },
+        {
+          "label": "Exit full screen",
+          "x": 738.984375,
+          "y": 16,
+          "w": 44,
+          "h": 44,
+          "right": 782.984375,
+          "bottom": 60,
+          "hit": true,
+          "inViewport": true
+        },
+        {
+          "label": "View",
+          "x": 786.984375,
+          "y": 16,
+          "w": 44,
+          "h": 44,
+          "right": 830.984375,
+          "bottom": 60,
+          "hit": true,
+          "inViewport": true
+        },
+        {
+          "label": "Previous step",
+          "x": 13,
+          "y": 82,
+          "w": 44,
+          "h": 44,
+          "right": 57,
+          "bottom": 126,
+          "hit": true,
+          "inViewport": true
+        },
+        {
+          "label": "Instruction step",
+          "x": 61,
+          "y": 82,
+          "w": 643.984375,
+          "h": 44,
+          "right": 704.984375,
+          "bottom": 126,
+          "hit": true,
+          "inViewport": true
+        },
+        {
+          "label": "Complete",
+          "x": 708.984375,
+          "y": 82,
+          "w": 74,
+          "h": 44,
+          "right": 782.984375,
+          "bottom": 126,
+          "hit": true,
+          "inViewport": true
+        },
+        {
+          "label": "Next step",
+          "x": 786.984375,
+          "y": 82,
+          "w": 44,
+          "h": 44,
+          "right": 830.984375,
+          "bottom": 126,
+          "hit": true,
+          "inViewport": true
+        },
+        {
+          "label": "Instructions",
+          "x": 13,
+          "y": 225,
+          "w": 239.328125,
+          "h": 44,
+          "right": 252.328125,
+          "bottom": 269,
+          "hit": true,
+          "inViewport": true
+        },
+        {
+          "label": "Parts",
+          "x": 255.328125,
+          "y": 225,
+          "w": 239.328125,
+          "h": 44,
+          "right": 494.65625,
+          "bottom": 269,
+          "hit": true,
+          "inViewport": true
+        },
+        {
+          "label": "Tools",
+          "x": 497.65625,
+          "y": 225,
+          "w": 239.328125,
+          "h": 44,
+          "right": 736.984375,
+          "bottom": 269,
+          "hit": true,
+          "inViewport": true
+        },
+        {
+          "label": "Reduce panel",
+          "x": 739.984375,
+          "y": 225,
+          "w": 44,
+          "h": 44,
+          "right": 783.984375,
+          "bottom": 269,
+          "hit": true,
+          "inViewport": true
+        },
+        {
+          "label": "Collapse panel",
+          "x": 786.984375,
+          "y": 225,
+          "w": 44,
+          "h": 44,
+          "right": 830.984375,
+          "bottom": 269,
           "hit": true,
           "inViewport": true
         }
@@ -15185,6 +17284,7 @@
     {
       "label": "denied 720 instructions",
       "mobile": "true",
+      "pointerCoarse": true,
       "mode": "expanded",
       "expanded": "expanded",
       "workspace": {
@@ -15197,18 +17297,18 @@
       },
       "navigation": {
         "x": 8,
-        "y": 124,
+        "y": 76,
         "w": 704,
         "h": 56,
         "right": 712,
-        "bottom": 180
+        "bottom": 132
       },
       "panels": {
         "instructions": {
           "x": 9,
-          "y": 317,
+          "y": 269,
           "w": 702,
-          "h": 64,
+          "h": 112,
           "right": 711,
           "bottom": 381
         }
@@ -15217,176 +17317,176 @@
         {
           "label": "Explore",
           "x": 13,
-          "y": 13,
+          "y": 16,
           "w": 44,
           "h": 44,
           "right": 57,
-          "bottom": 57,
+          "bottom": 60,
           "hit": true,
           "inViewport": true
         },
         {
           "label": "Robot",
-          "x": 16,
-          "y": 64,
-          "w": 227.328125,
+          "x": 64,
+          "y": 16,
+          "w": 51.21875,
           "h": 44,
-          "right": 243.328125,
-          "bottom": 108,
+          "right": 115.21875,
+          "bottom": 60,
           "hit": true,
           "inViewport": true
         },
         {
           "label": "Turret",
-          "x": 246.328125,
-          "y": 64,
-          "w": 227.328125,
+          "x": 118.21875,
+          "y": 16,
+          "w": 51.90625,
           "h": 44,
-          "right": 473.65625,
-          "bottom": 108,
+          "right": 170.125,
+          "bottom": 60,
           "hit": true,
           "inViewport": true
         },
         {
           "label": "Combined",
-          "x": 476.65625,
-          "y": 64,
-          "w": 227.328125,
+          "x": 173.125,
+          "y": 16,
+          "w": 76.171875,
           "h": 44,
-          "right": 703.984375,
-          "bottom": 108,
+          "right": 249.296875,
+          "bottom": 60,
           "hit": true,
           "inViewport": true
         },
         {
           "label": "Fit model to view",
           "x": 567,
-          "y": 13,
+          "y": 16,
           "w": 44,
           "h": 44,
           "right": 611,
-          "bottom": 57,
+          "bottom": 60,
           "hit": true,
           "inViewport": true
         },
         {
           "label": "Exit full screen",
           "x": 615,
-          "y": 13,
+          "y": 16,
           "w": 44,
           "h": 44,
           "right": 659,
-          "bottom": 57,
+          "bottom": 60,
           "hit": true,
           "inViewport": true
         },
         {
           "label": "View",
           "x": 663,
-          "y": 13,
+          "y": 16,
           "w": 44,
           "h": 44,
           "right": 707,
-          "bottom": 57,
+          "bottom": 60,
           "hit": true,
           "inViewport": true
         },
         {
           "label": "Previous step",
           "x": 13,
-          "y": 130,
+          "y": 82,
           "w": 44,
           "h": 44,
           "right": 57,
-          "bottom": 174,
+          "bottom": 126,
           "hit": true,
           "inViewport": true
         },
         {
           "label": "Instruction step",
           "x": 61,
-          "y": 130,
+          "y": 82,
           "w": 520,
           "h": 44,
           "right": 581,
-          "bottom": 174,
+          "bottom": 126,
           "hit": true,
           "inViewport": true
         },
         {
           "label": "Complete",
           "x": 585,
-          "y": 130,
+          "y": 82,
           "w": 74,
           "h": 44,
           "right": 659,
-          "bottom": 174,
+          "bottom": 126,
           "hit": true,
           "inViewport": true
         },
         {
           "label": "Next step",
           "x": 663,
-          "y": 130,
+          "y": 82,
           "w": 44,
           "h": 44,
           "right": 707,
-          "bottom": 174,
+          "bottom": 126,
           "hit": true,
           "inViewport": true
         },
         {
           "label": "Instructions",
           "x": 13,
-          "y": 273,
+          "y": 225,
           "w": 198,
           "h": 44,
           "right": 211,
-          "bottom": 317,
+          "bottom": 269,
           "hit": true,
           "inViewport": true
         },
         {
           "label": "Parts",
           "x": 214,
-          "y": 273,
+          "y": 225,
           "w": 198,
           "h": 44,
           "right": 412,
-          "bottom": 317,
+          "bottom": 269,
           "hit": true,
           "inViewport": true
         },
         {
           "label": "Tools",
           "x": 415,
-          "y": 273,
+          "y": 225,
           "w": 198,
           "h": 44,
           "right": 613,
-          "bottom": 317,
+          "bottom": 269,
           "hit": true,
           "inViewport": true
         },
         {
           "label": "Expand panel",
           "x": 616,
-          "y": 273,
+          "y": 225,
           "w": 44,
           "h": 44,
           "right": 660,
-          "bottom": 317,
+          "bottom": 269,
           "hit": true,
           "inViewport": true
         },
         {
           "label": "Collapse panel",
           "x": 663,
-          "y": 273,
+          "y": 225,
           "w": 44,
           "h": 44,
           "right": 707,
-          "bottom": 317,
+          "bottom": 269,
           "hit": true,
           "inViewport": true
         }
@@ -15399,6 +17499,7 @@
     {
       "label": "denied 720 parts",
       "mobile": "true",
+      "pointerCoarse": true,
       "mode": "expanded",
       "expanded": "expanded",
       "workspace": {
@@ -15411,18 +17512,18 @@
       },
       "navigation": {
         "x": 8,
-        "y": 124,
+        "y": 76,
         "w": 704,
         "h": 56,
         "right": 712,
-        "bottom": 180
+        "bottom": 132
       },
       "panels": {
         "assembly-explorer": {
           "x": 9,
-          "y": 317,
+          "y": 269,
           "w": 702,
-          "h": 64,
+          "h": 112,
           "right": 711,
           "bottom": 381
         }
@@ -15431,176 +17532,176 @@
         {
           "label": "Explore",
           "x": 13,
-          "y": 13,
+          "y": 16,
           "w": 44,
           "h": 44,
           "right": 57,
-          "bottom": 57,
+          "bottom": 60,
           "hit": true,
           "inViewport": true
         },
         {
           "label": "Robot",
-          "x": 16,
-          "y": 64,
-          "w": 227.328125,
+          "x": 64,
+          "y": 16,
+          "w": 51.21875,
           "h": 44,
-          "right": 243.328125,
-          "bottom": 108,
+          "right": 115.21875,
+          "bottom": 60,
           "hit": true,
           "inViewport": true
         },
         {
           "label": "Turret",
-          "x": 246.328125,
-          "y": 64,
-          "w": 227.328125,
+          "x": 118.21875,
+          "y": 16,
+          "w": 51.90625,
           "h": 44,
-          "right": 473.65625,
-          "bottom": 108,
+          "right": 170.125,
+          "bottom": 60,
           "hit": true,
           "inViewport": true
         },
         {
           "label": "Combined",
-          "x": 476.65625,
-          "y": 64,
-          "w": 227.328125,
+          "x": 173.125,
+          "y": 16,
+          "w": 76.171875,
           "h": 44,
-          "right": 703.984375,
-          "bottom": 108,
+          "right": 249.296875,
+          "bottom": 60,
           "hit": true,
           "inViewport": true
         },
         {
           "label": "Fit model to view",
           "x": 567,
-          "y": 13,
+          "y": 16,
           "w": 44,
           "h": 44,
           "right": 611,
-          "bottom": 57,
+          "bottom": 60,
           "hit": true,
           "inViewport": true
         },
         {
           "label": "Exit full screen",
           "x": 615,
-          "y": 13,
+          "y": 16,
           "w": 44,
           "h": 44,
           "right": 659,
-          "bottom": 57,
+          "bottom": 60,
           "hit": true,
           "inViewport": true
         },
         {
           "label": "View",
           "x": 663,
-          "y": 13,
+          "y": 16,
           "w": 44,
           "h": 44,
           "right": 707,
-          "bottom": 57,
+          "bottom": 60,
           "hit": true,
           "inViewport": true
         },
         {
           "label": "Previous step",
           "x": 13,
-          "y": 130,
+          "y": 82,
           "w": 44,
           "h": 44,
           "right": 57,
-          "bottom": 174,
+          "bottom": 126,
           "hit": true,
           "inViewport": true
         },
         {
           "label": "Instruction step",
           "x": 61,
-          "y": 130,
+          "y": 82,
           "w": 520,
           "h": 44,
           "right": 581,
-          "bottom": 174,
+          "bottom": 126,
           "hit": true,
           "inViewport": true
         },
         {
           "label": "Complete",
           "x": 585,
-          "y": 130,
+          "y": 82,
           "w": 74,
           "h": 44,
           "right": 659,
-          "bottom": 174,
+          "bottom": 126,
           "hit": true,
           "inViewport": true
         },
         {
           "label": "Next step",
           "x": 663,
-          "y": 130,
+          "y": 82,
           "w": 44,
           "h": 44,
           "right": 707,
-          "bottom": 174,
+          "bottom": 126,
           "hit": true,
           "inViewport": true
         },
         {
           "label": "Instructions",
           "x": 13,
-          "y": 273,
+          "y": 225,
           "w": 198,
           "h": 44,
           "right": 211,
-          "bottom": 317,
+          "bottom": 269,
           "hit": true,
           "inViewport": true
         },
         {
           "label": "Parts",
           "x": 214,
-          "y": 273,
+          "y": 225,
           "w": 198,
           "h": 44,
           "right": 412,
-          "bottom": 317,
+          "bottom": 269,
           "hit": true,
           "inViewport": true
         },
         {
           "label": "Tools",
           "x": 415,
-          "y": 273,
+          "y": 225,
           "w": 198,
           "h": 44,
           "right": 613,
-          "bottom": 317,
+          "bottom": 269,
           "hit": true,
           "inViewport": true
         },
         {
           "label": "Expand panel",
           "x": 616,
-          "y": 273,
+          "y": 225,
           "w": 44,
           "h": 44,
           "right": 660,
-          "bottom": 317,
+          "bottom": 269,
           "hit": true,
           "inViewport": true
         },
         {
           "label": "Collapse panel",
           "x": 663,
-          "y": 273,
+          "y": 225,
           "w": 44,
           "h": 44,
           "right": 707,
-          "bottom": 317,
+          "bottom": 269,
           "hit": true,
           "inViewport": true
         }
@@ -15613,6 +17714,7 @@
     {
       "label": "denied 720 tools",
       "mobile": "true",
+      "pointerCoarse": true,
       "mode": "expanded",
       "expanded": "expanded",
       "workspace": {
@@ -15625,18 +17727,18 @@
       },
       "navigation": {
         "x": 8,
-        "y": 124,
+        "y": 76,
         "w": 704,
         "h": 56,
         "right": 712,
-        "bottom": 180
+        "bottom": 132
       },
       "panels": {
         "assembly-tools": {
           "x": 9,
-          "y": 317,
+          "y": 269,
           "w": 702,
-          "h": 64,
+          "h": 112,
           "right": 711,
           "bottom": 381
         }
@@ -15645,176 +17747,176 @@
         {
           "label": "Explore",
           "x": 13,
-          "y": 13,
+          "y": 16,
           "w": 44,
           "h": 44,
           "right": 57,
-          "bottom": 57,
+          "bottom": 60,
           "hit": true,
           "inViewport": true
         },
         {
           "label": "Robot",
-          "x": 16,
-          "y": 64,
-          "w": 227.328125,
+          "x": 64,
+          "y": 16,
+          "w": 51.21875,
           "h": 44,
-          "right": 243.328125,
-          "bottom": 108,
+          "right": 115.21875,
+          "bottom": 60,
           "hit": true,
           "inViewport": true
         },
         {
           "label": "Turret",
-          "x": 246.328125,
-          "y": 64,
-          "w": 227.328125,
+          "x": 118.21875,
+          "y": 16,
+          "w": 51.90625,
           "h": 44,
-          "right": 473.65625,
-          "bottom": 108,
+          "right": 170.125,
+          "bottom": 60,
           "hit": true,
           "inViewport": true
         },
         {
           "label": "Combined",
-          "x": 476.65625,
-          "y": 64,
-          "w": 227.328125,
+          "x": 173.125,
+          "y": 16,
+          "w": 76.171875,
           "h": 44,
-          "right": 703.984375,
-          "bottom": 108,
+          "right": 249.296875,
+          "bottom": 60,
           "hit": true,
           "inViewport": true
         },
         {
           "label": "Fit model to view",
           "x": 567,
-          "y": 13,
+          "y": 16,
           "w": 44,
           "h": 44,
           "right": 611,
-          "bottom": 57,
+          "bottom": 60,
           "hit": true,
           "inViewport": true
         },
         {
           "label": "Exit full screen",
           "x": 615,
-          "y": 13,
+          "y": 16,
           "w": 44,
           "h": 44,
           "right": 659,
-          "bottom": 57,
+          "bottom": 60,
           "hit": true,
           "inViewport": true
         },
         {
           "label": "View",
           "x": 663,
-          "y": 13,
+          "y": 16,
           "w": 44,
           "h": 44,
           "right": 707,
-          "bottom": 57,
+          "bottom": 60,
           "hit": true,
           "inViewport": true
         },
         {
           "label": "Previous step",
           "x": 13,
-          "y": 130,
+          "y": 82,
           "w": 44,
           "h": 44,
           "right": 57,
-          "bottom": 174,
+          "bottom": 126,
           "hit": true,
           "inViewport": true
         },
         {
           "label": "Instruction step",
           "x": 61,
-          "y": 130,
+          "y": 82,
           "w": 520,
           "h": 44,
           "right": 581,
-          "bottom": 174,
+          "bottom": 126,
           "hit": true,
           "inViewport": true
         },
         {
           "label": "Complete",
           "x": 585,
-          "y": 130,
+          "y": 82,
           "w": 74,
           "h": 44,
           "right": 659,
-          "bottom": 174,
+          "bottom": 126,
           "hit": true,
           "inViewport": true
         },
         {
           "label": "Next step",
           "x": 663,
-          "y": 130,
+          "y": 82,
           "w": 44,
           "h": 44,
           "right": 707,
-          "bottom": 174,
+          "bottom": 126,
           "hit": true,
           "inViewport": true
         },
         {
           "label": "Instructions",
           "x": 13,
-          "y": 273,
+          "y": 225,
           "w": 198,
           "h": 44,
           "right": 211,
-          "bottom": 317,
+          "bottom": 269,
           "hit": true,
           "inViewport": true
         },
         {
           "label": "Parts",
           "x": 214,
-          "y": 273,
+          "y": 225,
           "w": 198,
           "h": 44,
           "right": 412,
-          "bottom": 317,
+          "bottom": 269,
           "hit": true,
           "inViewport": true
         },
         {
           "label": "Tools",
           "x": 415,
-          "y": 273,
+          "y": 225,
           "w": 198,
           "h": 44,
           "right": 613,
-          "bottom": 317,
+          "bottom": 269,
           "hit": true,
           "inViewport": true
         },
         {
           "label": "Expand panel",
           "x": 616,
-          "y": 273,
+          "y": 225,
           "w": 44,
           "h": 44,
           "right": 660,
-          "bottom": 317,
+          "bottom": 269,
           "hit": true,
           "inViewport": true
         },
         {
           "label": "Collapse panel",
           "x": 663,
-          "y": 273,
+          "y": 225,
           "w": 44,
           "h": 44,
           "right": 707,
-          "bottom": 317,
+          "bottom": 269,
           "hit": true,
           "inViewport": true
         }
@@ -15827,6 +17929,7 @@
     {
       "label": "denied 720 expanded mobile instructions",
       "mobile": "true",
+      "pointerCoarse": true,
       "mode": "expanded",
       "expanded": "expanded",
       "workspace": {
@@ -15839,18 +17942,18 @@
       },
       "navigation": {
         "x": 8,
-        "y": 124,
+        "y": 76,
         "w": 704,
         "h": 56,
         "right": 712,
-        "bottom": 180
+        "bottom": 132
       },
       "panels": {
         "instructions": {
           "x": 9,
-          "y": 317,
+          "y": 269,
           "w": 702,
-          "h": 64,
+          "h": 112,
           "right": 711,
           "bottom": 381
         }
@@ -15859,176 +17962,176 @@
         {
           "label": "Explore",
           "x": 13,
-          "y": 13,
+          "y": 16,
           "w": 44,
           "h": 44,
           "right": 57,
-          "bottom": 57,
+          "bottom": 60,
           "hit": true,
           "inViewport": true
         },
         {
           "label": "Robot",
-          "x": 16,
-          "y": 64,
-          "w": 227.328125,
+          "x": 64,
+          "y": 16,
+          "w": 51.21875,
           "h": 44,
-          "right": 243.328125,
-          "bottom": 108,
+          "right": 115.21875,
+          "bottom": 60,
           "hit": true,
           "inViewport": true
         },
         {
           "label": "Turret",
-          "x": 246.328125,
-          "y": 64,
-          "w": 227.328125,
+          "x": 118.21875,
+          "y": 16,
+          "w": 51.90625,
           "h": 44,
-          "right": 473.65625,
-          "bottom": 108,
+          "right": 170.125,
+          "bottom": 60,
           "hit": true,
           "inViewport": true
         },
         {
           "label": "Combined",
-          "x": 476.65625,
-          "y": 64,
-          "w": 227.328125,
+          "x": 173.125,
+          "y": 16,
+          "w": 76.171875,
           "h": 44,
-          "right": 703.984375,
-          "bottom": 108,
+          "right": 249.296875,
+          "bottom": 60,
           "hit": true,
           "inViewport": true
         },
         {
           "label": "Fit model to view",
           "x": 567,
-          "y": 13,
+          "y": 16,
           "w": 44,
           "h": 44,
           "right": 611,
-          "bottom": 57,
+          "bottom": 60,
           "hit": true,
           "inViewport": true
         },
         {
           "label": "Exit full screen",
           "x": 615,
-          "y": 13,
+          "y": 16,
           "w": 44,
           "h": 44,
           "right": 659,
-          "bottom": 57,
+          "bottom": 60,
           "hit": true,
           "inViewport": true
         },
         {
           "label": "View",
           "x": 663,
-          "y": 13,
+          "y": 16,
           "w": 44,
           "h": 44,
           "right": 707,
-          "bottom": 57,
+          "bottom": 60,
           "hit": true,
           "inViewport": true
         },
         {
           "label": "Previous step",
           "x": 13,
-          "y": 130,
+          "y": 82,
           "w": 44,
           "h": 44,
           "right": 57,
-          "bottom": 174,
+          "bottom": 126,
           "hit": true,
           "inViewport": true
         },
         {
           "label": "Instruction step",
           "x": 61,
-          "y": 130,
+          "y": 82,
           "w": 520,
           "h": 44,
           "right": 581,
-          "bottom": 174,
+          "bottom": 126,
           "hit": true,
           "inViewport": true
         },
         {
           "label": "Complete",
           "x": 585,
-          "y": 130,
+          "y": 82,
           "w": 74,
           "h": 44,
           "right": 659,
-          "bottom": 174,
+          "bottom": 126,
           "hit": true,
           "inViewport": true
         },
         {
           "label": "Next step",
           "x": 663,
-          "y": 130,
+          "y": 82,
           "w": 44,
           "h": 44,
           "right": 707,
-          "bottom": 174,
+          "bottom": 126,
           "hit": true,
           "inViewport": true
         },
         {
           "label": "Instructions",
           "x": 13,
-          "y": 273,
+          "y": 225,
           "w": 198,
           "h": 44,
           "right": 211,
-          "bottom": 317,
+          "bottom": 269,
           "hit": true,
           "inViewport": true
         },
         {
           "label": "Parts",
           "x": 214,
-          "y": 273,
+          "y": 225,
           "w": 198,
           "h": 44,
           "right": 412,
-          "bottom": 317,
+          "bottom": 269,
           "hit": true,
           "inViewport": true
         },
         {
           "label": "Tools",
           "x": 415,
-          "y": 273,
+          "y": 225,
           "w": 198,
           "h": 44,
           "right": 613,
-          "bottom": 317,
+          "bottom": 269,
           "hit": true,
           "inViewport": true
         },
         {
           "label": "Reduce panel",
           "x": 616,
-          "y": 273,
+          "y": 225,
           "w": 44,
           "h": 44,
           "right": 660,
-          "bottom": 317,
+          "bottom": 269,
           "hit": true,
           "inViewport": true
         },
         {
           "label": "Collapse panel",
           "x": 663,
-          "y": 273,
+          "y": 225,
           "w": 44,
           "h": 44,
           "right": 707,
-          "bottom": 317,
+          "bottom": 269,
           "hit": true,
           "inViewport": true
         }
@@ -16041,6 +18144,7 @@
     {
       "label": "denied 390 instructions",
       "mobile": "true",
+      "pointerCoarse": true,
       "mode": "expanded",
       "expanded": "expanded",
       "workspace": {
@@ -16255,6 +18359,7 @@
     {
       "label": "denied 390 parts",
       "mobile": "true",
+      "pointerCoarse": true,
       "mode": "expanded",
       "expanded": "expanded",
       "workspace": {
@@ -16469,6 +18574,7 @@
     {
       "label": "denied 390 tools",
       "mobile": "true",
+      "pointerCoarse": true,
       "mode": "expanded",
       "expanded": "expanded",
       "workspace": {
@@ -16683,6 +18789,7 @@
     {
       "label": "denied 390 expanded mobile instructions",
       "mobile": "true",
+      "pointerCoarse": true,
       "mode": "expanded",
       "expanded": "expanded",
       "workspace": {
@@ -16897,6 +19004,7 @@
     {
       "label": "denied 320 instructions",
       "mobile": "true",
+      "pointerCoarse": true,
       "mode": "expanded",
       "expanded": "expanded",
       "workspace": {
@@ -17111,6 +19219,7 @@
     {
       "label": "denied 320 parts",
       "mobile": "true",
+      "pointerCoarse": true,
       "mode": "expanded",
       "expanded": "expanded",
       "workspace": {
@@ -17325,6 +19434,7 @@
     {
       "label": "denied 320 tools",
       "mobile": "true",
+      "pointerCoarse": true,
       "mode": "expanded",
       "expanded": "expanded",
       "workspace": {
@@ -17539,6 +19649,7 @@
     {
       "label": "denied 320 expanded mobile instructions",
       "mobile": "true",
+      "pointerCoarse": true,
       "mode": "expanded",
       "expanded": "expanded",
       "workspace": {
@@ -17753,6 +19864,7 @@
     {
       "label": "denied desktop restored after resize",
       "mobile": "false",
+      "pointerCoarse": true,
       "mode": "expanded",
       "expanded": "expanded",
       "workspace": {
@@ -17926,6 +20038,193 @@
           "w": 92.03125,
           "h": 44,
           "right": 1123,
+          "bottom": 200.5,
+          "hit": true,
+          "inViewport": true
+        }
+      ],
+      "vertices": 250,
+      "unoccluded": true,
+      "shortWindow": false,
+      "horizontalOverflow": false
+    },
+    {
+      "label": "fine-pointer 844x390 native desktop control",
+      "mobile": "false",
+      "pointerCoarse": false,
+      "mode": "native",
+      "expanded": "expanded",
+      "workspace": {
+        "x": 0,
+        "y": 0,
+        "w": 844,
+        "h": 390,
+        "right": 844,
+        "bottom": 390
+      },
+      "navigation": {
+        "x": 82,
+        "y": 88,
+        "w": 680,
+        "h": 56,
+        "right": 762,
+        "bottom": 144
+      },
+      "panels": {
+        "assembly-explorer": {
+          "x": 16,
+          "y": 156,
+          "w": 150,
+          "h": 218,
+          "right": 166,
+          "bottom": 374
+        },
+        "assembly-tools": {
+          "x": 678,
+          "y": 156,
+          "w": 150,
+          "h": 218,
+          "right": 828,
+          "bottom": 374
+        },
+        "instructions": {
+          "x": 426,
+          "y": 156,
+          "w": 240,
+          "h": 218,
+          "right": 666,
+          "bottom": 374
+        }
+      },
+      "controls": [
+        {
+          "label": "Explore",
+          "x": 23,
+          "y": 26,
+          "w": 103.625,
+          "h": 44,
+          "right": 126.625,
+          "bottom": 70,
+          "hit": true,
+          "inViewport": true
+        },
+        {
+          "label": "Robot",
+          "x": 137.625,
+          "y": 26,
+          "w": 59.21875,
+          "h": 44,
+          "right": 196.84375,
+          "bottom": 70,
+          "hit": true,
+          "inViewport": true
+        },
+        {
+          "label": "Turret",
+          "x": 199.84375,
+          "y": 26,
+          "w": 59.90625,
+          "h": 44,
+          "right": 259.75,
+          "bottom": 70,
+          "hit": true,
+          "inViewport": true
+        },
+        {
+          "label": "Combined",
+          "x": 262.75,
+          "y": 26,
+          "w": 84.171875,
+          "h": 44,
+          "right": 346.921875,
+          "bottom": 70,
+          "hit": true,
+          "inViewport": true
+        },
+        {
+          "label": "Fit model to view",
+          "x": 626.578125,
+          "y": 26,
+          "w": 46,
+          "h": 44,
+          "right": 672.578125,
+          "bottom": 70,
+          "hit": true,
+          "inViewport": true
+        },
+        {
+          "label": "Exit full screen",
+          "x": 680.578125,
+          "y": 26,
+          "w": 46,
+          "h": 44,
+          "right": 726.578125,
+          "bottom": 70,
+          "hit": true,
+          "inViewport": true
+        },
+        {
+          "label": "View",
+          "x": 734.578125,
+          "y": 26,
+          "w": 86.421875,
+          "h": 44,
+          "right": 821,
+          "bottom": 70,
+          "hit": true,
+          "inViewport": true
+        },
+        {
+          "label": "Previous step",
+          "x": 95,
+          "y": 94,
+          "w": 110,
+          "h": 44,
+          "right": 205,
+          "bottom": 138,
+          "hit": true,
+          "inViewport": true
+        },
+        {
+          "label": "Instruction step",
+          "x": 213,
+          "y": 94,
+          "w": 300,
+          "h": 44,
+          "right": 513,
+          "bottom": 138,
+          "hit": true,
+          "inViewport": true
+        },
+        {
+          "label": "Complete",
+          "x": 521,
+          "y": 94,
+          "w": 110,
+          "h": 44,
+          "right": 631,
+          "bottom": 138,
+          "hit": true,
+          "inViewport": true
+        },
+        {
+          "label": "Next step",
+          "x": 639,
+          "y": 94,
+          "w": 110,
+          "h": 44,
+          "right": 749,
+          "bottom": 138,
+          "hit": true,
+          "inViewport": true
+        },
+        {
+          "label": "Collapse ↙",
+          "x": 562.96875,
+          "y": 156.5,
+          "w": 92.03125,
+          "h": 44,
+          "right": 655,
           "bottom": 200.5,
           "hit": true,
           "inViewport": true

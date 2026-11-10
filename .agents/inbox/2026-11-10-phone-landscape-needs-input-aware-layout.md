@@ -8,7 +8,7 @@ The review used actual Chromium with an 844×390 context, `isMobile:true` and
 `hasTouch:true`, native fullscreen and Robot selected. Its recorded output was:
 
 ```text
-2026-11-10: actual phone-landscape browser probe
+2026-11-10: node /tmp/root-gy286-touch.mjs
 mobile:false, coarse:true, fullscreen:native
 Parts: x16 y156 width150 height218
 Tools: x678 y156 width150 height218
