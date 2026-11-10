@@ -58,9 +58,11 @@ async function start(){
    const previous=active;if(previous)viewStates.set(previous.guideHash,{mode:previous.mode,explode:previous.explode,section:previous.section,sectionPlane:previous.sectionPlane});workspace.invalidate();
    const key=progressKey(guide,row.sha256),done=tabProgress.has(key)?new Set(tabProgress.get(key)):readProgress(storage(),guide,row.sha256);
    active={guide,modelParts:loaded.manifest.parts,guideAssembly:assembly,assembly,guideHash:row.sha256,viewer:nextViewer,controller:nextViewer?createGuideController(nextViewer,guide):null,done,url,posterURLs,step:step.id,mode:step.id===guide.source?.overview_step_id?'solid':'ghost',explode:step.id===guide.source?.overview_step_id?0:1,section:1,selected:null,isolate:false,partModes:{},sectionPlane:{axis:'x',flipped:false},...viewStates.get(row.sha256),renderError};
-   const model=host.querySelector('[data-guide-model]');model.replaceChildren(canvas);disposeRobot(previous?.robot);previous?.viewer?.dispose();for(const value of previous?.posterURLs?.values()||[])URL.revokeObjectURL(value);
+   const model=host.querySelector('[data-guide-model]'),previousNodes=[...model.childNodes];model.replaceChildren(canvas);
    host.querySelector('[data-guide-visual]').hidden=!!renderError;host.querySelector('.assembly-layout').dataset.static=String(!!renderError);
-   select.value=id;paint(step.id,{preserveAnchor:true});
+   try{select.value=id;paint(step.id,{preserveAnchor:true});}
+   catch(error){active=previous;model.replaceChildren(...previousNodes);if(previous){try{paint(previous.step,{preserveAnchor:true});}catch{}}else{host.dataset.ready='0';}throw error;}
+   disposeRobot(previous?.robot);previous?.viewer?.dispose();for(const value of previous?.posterURLs?.values()||[])URL.revokeObjectURL(value);
    if(renderError)report('Interactive 3D is unavailable. '+(guide.steps.some(step=>step.poster)?'The same snapshot’s text and diagrams remain below.':'The same snapshot’s text remains below.'),true);
    else report(guide.snapshot.status==='wip'?'Source-bound WIP guide loaded. No physical build release.':'Versioned guide loaded. Its publication status is separate from physical qualification.');
    window.__buildGuide={get active(){return active;},load,apply:id=>paint(id),dispose(){interactionEvents.abort();inspector.dispose();workspace.dispose();pending?.abort();disposeRobot(active?.robot);active?.viewer?.dispose();for(const value of active?.posterURLs?.values()||[])URL.revokeObjectURL(value);active=null;}};
