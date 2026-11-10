@@ -1,6 +1,6 @@
 {
   "source_repository": "Valpatel/cad-agent",
-  "source_revision": "0148ee2e273b9929363251feffce157ff0a129bb",
+  "source_revision": "4d37c839ab4f12afc642c46f9e509075b8f1d91f",
   "files": [
     {
       "source": "software/cadagent/webkit/viewer.js",
@@ -24,5 +24,6 @@
     }
   ],
   "preserved_product_stage_loader_and_entry_html": true,
-  "limits": "In-flight PR509 candidate; component browser cases passed, publication and final product qualification remain pending. Final release must bind a reviewed published toolkit pin."
+  "limits": "Reviewed source and release candidate; all imported bytes match. Actual main/tag and public module readback remain pending; product merge is blocked until publication is verified.",
+  "release_candidate": "v0.31.0"
 }

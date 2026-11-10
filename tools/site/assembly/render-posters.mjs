@@ -34,6 +34,10 @@ try{
  await page.locator('#prototype-notice-dialog[open]').waitFor();await page.locator('#prototype-notice-ack').click();
  await page.waitForFunction(()=>document.querySelector('.appnav'));await page.evaluate(()=>document.fonts.ready);
  await page.waitForFunction(()=>window.__buildGuide?.active?.viewer&&document.querySelector('#assembly').dataset.ready==='1',null,{timeout:30000});
+ await page.locator('[data-guide-fullscreen]').click();
+ await page.waitForFunction(()=>document.fullscreenElement===document.querySelector('.assembly-layout'));
+ await page.locator('button[data-sheet-close]').click();
+ await page.waitForFunction(()=>document.querySelector('.assembly-layout').dataset.sheetSize==='collapsed');
  const guide=await page.evaluate(()=>window.__buildGuide.active.guide);
  assert.equal(guide.steps.length,12);
  for(const step of guide.steps){
@@ -47,11 +51,11 @@ try{
    for(const part of v.parts.filter(part=>part.mesh.visible)){const pos=part.mesh.geometry.attributes.position;for(let i=0;i<pos.count;i++){const point=new T.Vector3().fromBufferAttribute(pos,i).applyMatrix4(part.mesh.matrixWorld).project(v.stage.camera),x=r.x+(point.x+1)*r.width/2,y=r.y+(1-point.y)*r.height/2;vertices++;if(![x,y,point.z].every(Number.isFinite)||x<r.left||x>r.right||y<r.top||y>r.bottom||Math.abs(point.z)>1||overlays.some(box=>x>box.left&&x<box.right&&y>box.top&&y<box.bottom))geometryUnoccluded=false;}}
    // Draw the current pose with the existing renderer, then read its actual preserved pixels.
    v.stage.renderer.render(v.stage.scene,v.stage.camera);
-   return {step:a.step,state:v.getState(),calls:v.stage.renderer.info.render.calls,
+   return {step:a.step,workspace:{nativeFullscreen:document.fullscreenElement===document.querySelector('.assembly-layout'),sheet:document.querySelector('.assembly-layout').dataset.sheetSize},state:v.getState(),calls:v.stage.renderer.info.render.calls,
     canvas:{width:c.width,height:c.height,cssWidth:c.getBoundingClientRect().width,cssHeight:c.getBoundingClientRect().height,geometryUnoccluded,vertices},
     visible:v.parts.filter(p=>p.mesh.visible).map(p=>p.name),camera:v.stage.camera.position.toArray(),target:v.stage.controls.target.toArray()};
   });
-  assert.equal(state.step,step.id);assert.ok(state.calls>0);assert.equal(state.canvas.geometryUnoccluded,true,'Every real model vertex fits outside the overlays');assert.ok(state.canvas.vertices>0);
+  assert.equal(state.step,step.id);assert.equal(state.workspace.nativeFullscreen,true);assert.equal(state.workspace.sheet,'collapsed');assert.ok(state.calls>0);assert.equal(state.canvas.geometryUnoccluded,true,'Every real model vertex fits outside the overlays');assert.ok(state.canvas.vertices>0);
   if(step.camera){const expected=[step.camera.direction[0],step.camera.direction[2],-step.camera.direction[1]],actual=state.camera.map((v,i)=>v-state.target[i]),dot=expected.reduce((sum,v,i)=>sum+v*actual[i],0)/(Math.hypot(...expected)*Math.hypot(...actual));assert.ok(dot>1-1e-9,'Authored CAD camera direction must be applied exactly once');}
   assert.equal(state.state.mode,'ghost');assert.equal(state.state.selected,null);assert.equal(state.state.isolate,null);
   assert.deepEqual(state.state.partModes,{});assert.deepEqual(state.state.offsets_mm,step.offsets_mm);

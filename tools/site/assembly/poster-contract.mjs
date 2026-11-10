@@ -11,7 +11,7 @@ export function visualContract(guide,model,dependencies){
   model_sha256:guide.model.sha256,
   meshes:Object.fromEntries(model.parts.map(p=>[p.name,{file:p.file,sha256:p.sha256}])),
   steps:guide.steps.map(({id,parts,highlight,offsets_mm,camera})=>({id,parts,highlight,offsets_mm,camera})),
-  render:{mode:'ghost',explode:1,viewport:{width:1280,height:900},deviceScaleFactor:1,reducedMotion:'reduce',colorScheme:'light',capture:'actual preserved WebGL canvas PNG readback after applyStep(id,{mode:ghost,explode:1,frame:true})'},
+  render:{mode:'ghost',explode:1,viewport:{width:1280,height:900},deviceScaleFactor:1,workspace:{fullscreen:'native',sheet:'collapsed'},reducedMotion:'reduce',colorScheme:'light',capture:'actual preserved WebGL canvas PNG readback after applyStep(id,{mode:ghost,explode:1,frame:true})'},
   dependencies};
  return {inputs:canonical(inputs),visual_sha256:sha(JSON.stringify(canonical(inputs)))};
 }
