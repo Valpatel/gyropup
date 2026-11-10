@@ -8,4 +8,11 @@ Corrective rule: when a required captured renderer input changes, capture new fr
 
 The first compute attempt failed before capture because an existing dependency snapshot was copied to a folder named `deps`; Node resolved symlinked packages there and could not discover sibling dependencies through its `node_modules` ancestor lookup. An owned-scratch `node_modules` link restored resolution without installation. Preserve package layout or verify lookup before the capture; source and dependency content identity alone do not establish module resolution. Both ends matched 4,616 file entries and a sorted manifest digest recorded in the adoption receipt.
 
+
+## Smoke-test the real staged package layout
+
+The first current CAD media invocation at `76cc5b3d` repeated that layout failure on 2026-11-10. The frozen source fetch exited 0. The build exited 1 with `ERR_MODULE_NOT_FOUND` for `htmlparser2` under the symlinked `linkedom` package, before any capture. The [original terminal checkpoint](https://github.com/Valpatel/gyropup/issues/193#issuecomment-6781497743) records the failure separately.
+
+The fresh invocation staged the same 4,616 dependency files in an actual `node_modules` directory. Its bounded pre-build Node ESM probe resolved both packages to the owned staged tree and parsed an HTML fragment through each. A copied-tree control reproduced the original failure before renaming the directory and passed afterward. Check module resolution from the exact source working directory before running the full build. The [adoption receipt](../plans/end-packs-highlights/adoption.json) preserves both attempts, the exact-byte identity and the separate browser diagnostics.
+
 Limits: native Chrome capture does not establish pinned CI browser parity or physical behavior. Historical leg and E1 source/video/failed strength limits remain retained. No hardware or runtime source changed during media adoption. Independent review and full current CI are separate integration requirements. This repository has no `.agents/WRITING-IT-DOWN.md` at this revision; this incident follows the supplied lesson/evidence/cause/rule/limits format and is indexed here.

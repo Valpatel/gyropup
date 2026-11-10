@@ -1,10 +1,31 @@
 # Front/rear packs from the existing robot CAD
 
 Issue [#193](https://github.com/Valpatel/gyropup/issues/193), resumed 2026-11-10.
+
+## Current status — 2026-11-10
+
+The current presentations use the [accepted collection 266](https://github.com/Valpatel/gyropup/issues/193#issuecomment-6775564625)
+from native source `3a408919`. Its 224 meshes include all 80 protected L/R leg
+meshes at their original hashes. See the [model contract](current-model-source.md),
+[both-engine motion outcomes](motion/outcomes.json), and
+[accepted Robot/Combined guides](guide-adoption/acceptance.json).
+The [README illustration readback](../end-packs-readme/job268/independent-readback.json)
+and [landing poster and reel receipt](../end-packs-highlights/adoption.json)
+bind those assets to the same collection.
+
+The [L/R hip Prepare checks](current-print-consumer-checks.json) cover
+correspondence with the existing print assets. Pack and adapter mating
+dimensions, insertion and removal clearance, retention and fall loads, current
+mass properties, and physical qualification remain open. The retained rig and
+failed E1 strength records keep their original scope. Publication and public
+readback belong to the promotion record.
+
+## Original design brief
+
 The owner selects the chunky DCB609 20V/60V FLEXVOLT model, one pack dropping
 into each end, with smaller-pack support. Keep the leg parts already being
-printed unchanged. This plan accompanies implementation and testing; it is not
-an accepted CAD result or a manufacturing release.
+printed unchanged. The original plan below records implementation and testing
+requirements alongside dated checkpoints.
 
 ## Source and preservation boundary
 
