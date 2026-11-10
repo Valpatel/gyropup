@@ -1,0 +1,20 @@
+{
+  "schema": "gyropup.native-pair-study-checkpoint/1",
+  "date": "2026-11-10",
+  "native_product_paths_executed": false,
+  "core": "5c29c9e2abf2562baa72a05248f23de054b8241e",
+  "frame_job": 263,
+  "helper_sha256": "63f7093468ba1ba2ab1063dcbac5e5fddb7331346a1eb6c8c4c287e87794b016",
+  "test_sha256": "93ea6b965d572865e5efbe28a0fe412e6069641c62d83c3f15e10a7d8e51e15d",
+  "files": {
+    "plan-source.json": "a7f6219e068d29f2232fec6c95d0fcb0392fdb85ef39332f66961b912ac939c8",
+    "tests.json": "f782decdc74aca03ad50ee02d761c3d91aa34c0267b88fc0eebbfb5601493bc6",
+    "plan.json": "1316f2e4e315ee2cd45ed805d92ee219699a311bf09bb8d106148145fb8a96cc",
+    "README.md": "4545b0861ff443c6a82d09a0f1173253e8e8a41de3457f32bda9162cefca23b4",
+    "baseline-guide.json": "845f8b442b5e16ca52ad59fd6794b9211a92847f41feac5401b56e240f9f4dd6",
+    "prepare.py": "da4bc453d2e50df7160bc9040c3ba42d25678270e52b53ce233729c67060ea1d",
+    "pure-preflight.json": "4facba3e26d02ca0a01283222401bf98cd6de7fbbbb4c60c23f735df92eeb8e5"
+  },
+  "next": "Independent source/protocol and exact bounded action review before any genuine product native pair query.",
+  "limits": "Pure plan and small synthetic/native fixture contracts only; no product pair verdict, CAD change or qualification."
+}

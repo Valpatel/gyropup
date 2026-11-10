@@ -1,0 +1,59 @@
+{
+  "schema": "gyropup.native-input-lifecycle-audit/1",
+  "date": "2026-11-10",
+  "input_job": 261,
+  "failed_job": 262,
+  "native_queries_started": false,
+  "core_checkout_started": false,
+  "actual_inventories": {
+    "candidate": {
+      "role": "terminal262 candidate inventory",
+      "sha256": "0a37fc8545e8589185ba6f80da76f0508c353bd6c545dfd666d99e762e5da303"
+    },
+    "guides": {
+      "role": "terminal262 guides inventory",
+      "sha256": "a080a18875043d9efa638dd9f5c42c17c06fa786b6ac5c40ff2a0dbde148e9f1"
+    }
+  },
+  "comparisons": {
+    "candidate": {
+      "count": 486,
+      "differing_entries": 486,
+      "same_membership": true,
+      "same_hashes_and_sizes": true,
+      "mode_pairs": [
+        [
+          384,
+          416
+        ]
+      ]
+    },
+    "guides": {
+      "count": 242,
+      "differing_entries": 242,
+      "same_membership": true,
+      "same_hashes_and_sizes": true,
+      "mode_pairs": [
+        [
+          384,
+          416
+        ]
+      ]
+    }
+  },
+  "epilog": {
+    "source_sha256": "7181d06f53a4a2ce84cb39bb376e67520c156471c689ed368222f483db67dce8",
+    "installed_equals_retained_source": true,
+    "lines": [
+      125,
+      127
+    ],
+    "rules": [
+      "strip set-id and other permissions",
+      "add owner read/write and group read; remove group write"
+    ]
+  },
+  "candidate_before_equals_after": true,
+  "guides_before_captured": false,
+  "limits": "Read-only lifecycle diagnosis; no CAD geometry or trajectory verdict."
+}

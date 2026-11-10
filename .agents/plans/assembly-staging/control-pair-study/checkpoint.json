@@ -1,0 +1,23 @@
+{
+  "schema": "gyropup.native-control-selection-checkpoint/1",
+  "date": "2026-11-10",
+  "status": "source-prepared-not-executed",
+  "core": "5c29c9e2abf2562baa72a05248f23de054b8241e",
+  "full_plan_sha256": "1316f2e4e315ee2cd45ed805d92ee219699a311bf09bb8d106148145fb8a96cc",
+  "selection_sha256": "ecb26e9ddd47a023664447e4078dbc34bd960e5b19c0194dfcf631503ec2a945",
+  "effective_query_plan_sha256": "c8c2f01464bd49f5cd464637b277032efe761fb3e76cd216e8c146ded25d3cc6",
+  "helper_sha256": "68712d70f24061fa65e433576619318eec201d1cb6c3d4632d911a3f4295c712",
+  "prior_capped_job": 264,
+  "source_geometry_changes": false,
+  "new_product_native_queries": 0,
+  "files": {
+    "plan-source.json": "947503be415e49c72ce35a5eadeaea3429b85c77cc8d35054ca3bda89b853f3c",
+    "selected-queries.json": "3eeb6574e3f877de7ed187b80f6ad479f06305aa854a5e1d76be1e9e055b8ec6",
+    "tests.json": "56bcca2314129aa607fd0b0f27fe80a88f5434f2b5466176bb7a9d0c2177f1f3",
+    "README.md": "797217ff21820bcfacba6d9c11e23ea87ae1d54a042c0de341547e3cd2278ea7",
+    "selection.json": "ecb26e9ddd47a023664447e4078dbc34bd960e5b19c0194dfcf631503ec2a945",
+    "prepare.py": "5c0342d2e142b7e37a61adb4e950bd0e347dc7b5702cb1a4fd6a69f8a2d54f80",
+    "pure-preflight.json": "bd310b27785c935454ab07179d6c55fcc46ba0b59a699b0b2beaab85470bb801"
+  },
+  "next": "Independent source/tests and fresh bounded one-use action review before any product native query."
+}

@@ -71,6 +71,7 @@ def main(argv=None):
  global ROOT,OUT,WORK_DEADLINE,processes_quiescent,results
  p=argparse.ArgumentParser(description=__doc__)
  p.add_argument('--contract-json',required=True);p.add_argument('--source',required=True)
+ p.add_argument('--emit-brep',action='store_true',help='Retain optional original worldshape BREP payloads; does not run native playback validation')
  a=p.parse_args(argv);cfg=json.loads(a.contract_json)
  ROOT=Path.cwd().resolve();OUT=Path(os.environ['FLEET_RUN_OUT']).resolve()
  os.umask(0o077);sys.dont_write_bytecode=True
@@ -97,7 +98,7 @@ def main(argv=None):
   before['tracked']=inventory(ROOT/'hardware');save('hardware-before.json',before['tracked'])
   before['source']={x:sha(ROOT/x) for x in subprocess.check_output(['git','ls-files','-z'],text=True).split('\0') if x}
   save('tracked-before.json',before['source'])
-  phase('collect',[str(venv/'bin/python'),'-I','-B',str(ROOT/'tools/site/assembly/collect_robot_parts.py'),'--out',str(candidate),'--toolkit',str(toolkit)],timeout=600)
+  phase('collect',[str(venv/'bin/python'),'-I','-B',str(ROOT/'tools/site/assembly/collect_robot_parts.py'),'--out',str(candidate),'--toolkit',str(toolkit)]+(['--emit-brep'] if a.emit_brep else []),timeout=600)
   phase('generate',[str(venv/'bin/python'),'-I','-B',str(ROOT/'tools/site/assembly/export_robot_guide.py'),'--collection',str(candidate/'collection.json'),'--out',str(OUT/'guides')],timeout=90)
   passed=True
  except BaseException as exc:
