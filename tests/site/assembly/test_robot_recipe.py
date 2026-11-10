@@ -13,14 +13,28 @@ spec.loader.exec_module(recipe)
 class SourceOperations(unittest.TestCase):
     def setUp(self):
         record = json.loads((ROOT/'hardware/exports/robot/robot.json').read_text())
-        self.names = {n for g in record['groups'].values() for n in g['members'] if not n.startswith('turret.')}
+        self.archived_names = {n for g in record['groups'].values() for n in g['members'] if not n.startswith('turret.')}
+        retired = {'bay_floor', 'bay_side_l', 'bay_side_r', 'bay_rail_l', 'bay_rail_r',
+                   'adapter_plate_front', 'adapter_plate_rear', 'bay_door_front', 'bay_door_rear',
+                   *{f'bay_skid_{i}' for i in range(1, 5)}}
+        self.names = (self.archived_names-retired) | {'end_pack_holder_front', 'end_pack_holder_rear', 'end_foot_front', 'end_foot_rear'}
         self.ops = recipe.robot_operations()
 
     def test_complete_declared_construction_membership(self):
         self.assertEqual(recipe.validate_operations(self.ops, self.names), self.names)
-        self.assertEqual(len(self.names), 171)
-        self.assertEqual(len(self.ops), 23)
-        # This checks the retained collector inventory, not fresh native output.
+        self.assertEqual(len(self.archived_names), 171)
+        self.assertEqual(len(self.names), 162)
+        self.assertEqual(len(self.ops), 28)
+        # Declared transition from the retained inventory, NOT fresh native output.
+        with self.assertRaises(ValueError): recipe.validate_operations(self.ops, self.archived_names)
+
+    def test_end_supports_and_pack_arrivals_have_distinct_physical_sides(self):
+        by = {op['id']: op for op in self.ops}
+        self.assertEqual(by['body-belly']['offset'], [0, 0, -188])
+        self.assertEqual(by['body-end-supports']['offset'], [0, 0, -188])
+        self.assertEqual(by['body-packs']['offset'], [0, 0, 188])
+        self.assertEqual(by['body-adapter-front']['offset'], [80, 0, 0])
+        self.assertEqual(by['body-adapter-rear']['offset'], [-80, 0, 0])
 
     def test_stationary_and_rotating_owners_are_separate(self):
         by = {p: op['id'] for op in self.ops for p in op['additions']}

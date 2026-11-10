@@ -53,9 +53,9 @@ def _keep(shape, x=None, y=None, z=None):
 
 
 GROUP_OFFSET = [                                  # (name prefixes, (dx, dy, dz)) for the exploded view, first match wins
-    (('item.battery_front',), (260.0, 0.0, -260.0)), (('item.battery_rear',), (-260.0, 0.0, -260.0)),
-    (('bay_door_front',), (120.0, 0.0, -200.0)), (('bay_door_rear',), (-120.0, 0.0, -200.0)),
-    (('bay_', 'item.battery_adapter', 'adapter_plate'), (0.0, 0.0, -180.0)),
+    (('item.battery_front', 'item.battery_rear'), (0.0, 0.0, 188.0)),
+    (('end_pack_holder_front', 'end_foot_front', 'item.battery_adapter_front'), (180.0, 0.0, 0.0)),
+    (('end_pack_holder_rear', 'end_foot_rear', 'item.battery_adapter_rear'), (-180.0, 0.0, 0.0)),
     (('belly_plate',), (0.0, 0.0, -90.0)),
     (('shell_side_l', 'ear_bracket_l', 'ear_pod_l'), (0.0, 170.0, 0.0)), (('shell_side_r', 'ear_bracket_r', 'ear_pod_r'), (0.0, -170.0, 0.0)),
     (('shell_door',), (0.0, 230.0, 0.0)), (('shell_hatch',), (0.0, 230.0, 0.0)),
@@ -103,11 +103,11 @@ def main():
     for n, (s, c) in shapes.items():
         dx, dy, dz = offset(n)
         ex.append((s.translate((dx, dy, dz)) if (dx, dy, dz) != (0, 0, 0) else s, c))
-    r.render('exploded.png', shapes=ex, view=(1.0, -1.1, 0.75), caption='exploded by section: shell out, head up, power up, bay down, packs out')
+    r.render('exploded.png', shapes=ex, view=(1.0, -1.1, 0.75), caption='exploded by section: shell/end supports out, head/power/pack envelopes up; WIP paths')
     made.append('exploded.png')
-    bay = [(s.translate((offset(n)[0] * 0.8, 0.0, 0.0)) if n.startswith(('item.battery_front', 'item.battery_rear', 'bay_door')) else s, c)
-           for n, (s, c) in shapes.items() if n.startswith(('bay_', 'adapter_plate', 'item.battery', 'belly_plate'))]
-    r.render('exploded-bay.png', shapes=bay, view=(1.0, -1.2, 0.5), caption='the battery bay: the packs slide out of their doors on their adapters\' rails')
+    bay = [(s.translate((0.0, 0.0, 188.0)) if n.startswith(('item.battery_front', 'item.battery_rear')) else s, c)
+           for n, (s, c) in shapes.items() if n.startswith(('end_pack_holder', 'end_foot', 'item.battery', 'belly_plate'))]
+    r.render('exploded-bay.png', shapes=bay, view=(1.0, -1.2, 0.5), caption='conditional end packs: upward removal reservation; rail/latch/retention unmeasured')
     made.append('exploded-bay.png')
     print('\n'.join(str(OUT / m) for m in made))
 

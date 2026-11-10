@@ -1,0 +1,10 @@
+{
+  "schema": "gyropup.end-pack-history-protection/1",
+  "baseline_commit": "65ea282f2bc540d2588dcc4ada0c40fd523d4f3a",
+  "recorded_sim_tree": "6a937b35a8738b390411374d8d381f0cbeafe023",
+  "historical_pad_reports_sha256": {
+    "hardware/exports/body/bay-pad-study.json": "10bd00efc34c6256434cf570d83a05c93ae389a55851cf8d4b8bc83cdfae570c",
+    "hardware/exports/body/bay-pad-depth.json": "5ceff35bbd9b1fd47d1af645fcc940e763042342659d6bddb614e271e59886e5"
+  },
+  "limits": "Preserves dated historical artifacts; does not qualify new end-pack supports, retention, model or physics"
+}

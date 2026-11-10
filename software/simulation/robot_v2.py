@@ -66,9 +66,7 @@ TILT_UP_STOP_DEG = float(_LIMITS['max'])             # the upper hard stop, + = 
 PAN_STOP_DEG = 170.0
 REF_H = 300.0                                       # the model's joints are zero standing at this leg length
 import hardware.cad.body.body_battery as _bb  # noqa: E402
-H_RANGE = (_bb.PAD['lowest_leg_mm'], 375.0)        # leg length (mm) for the controller's height 0..1. Issue #19: the bay's 50 mm
-                                                    # crush pads (cad/body_battery.py PAD) need the lowest height at 185 mm (it was
-                                                    # 160) to keep D69's 40 mm under them; they touch the floor under a 145 mm leg
+H_RANGE = (_bb.PAD['lowest_leg_mm'], 375.0)        # Preserve existing controller/firmware height limits through #193.
 WHEEL_KEY = 'hb10'                                  # D69: sim/wheel_candidates.json's 10 in hub motor, at the ledger's wheel mass
 _WHEEL = {}
 
@@ -100,9 +98,10 @@ def use_d69_wheel() -> dict:
 
 
 def pads():
-    """The battery bay's crush pads (issue #19; cad/body_battery.py PAD): [(name, box mm)], and the pad's numbers."""
-    import hardware.cad.body.body_battery as bb
-    return [(f'pad_{i + 1}', b) for i, b in enumerate(bb.pad_boxes())], dict(bb.PAD)
+    """No old pad force law transfers to the current rigid WIP end feet."""
+    return [], dict(k_n_per_mm=0.0, c_ns_per_m=0.0, plateau_n=0.0,
+                    unload_ratio=0.0, stroke=0.0, h=0.0, qualified=False,
+                    basis='Rigid WIP end feet; old belly-pad/drop qualification does not transfer')
 COLORS = {'body': '#9fb4c7', 'frame': '#5f6670', 'motor': '#2a2d33', 'link': '#f5b82e', 'wheel_link': '#e9a21f',
           'adapter': '#c9ced6', 'tyre': '#1b1d21', 'hub': '#4a5058', 'battery': '#fdb913', 'compute': '#5a6b7c',
           'driver': '#2b6cb0', 'power': '#8f9aa7', 'lidar': '#2a2d33', 'camera': '#2a2d33', 'light': '#3a3f47',
@@ -200,12 +199,15 @@ def real_body():
         ('floor_tray', (X[0], X[1], -HY, HY, zt - bp.TRAY_LIP, zt)),
         ('deck', (X[0], X[1], -HY, HY, bp.TOP - bp.DECK_LIP, bp.TOP)),
         ('belly_plate', (X[0], X[1], -bp.BELLY_HALF_Y, bp.BELLY_HALF_Y, -zs - be, -zs)),
-        ('battery_bay', (tg['x_out'][0], tg['x_out'][1], -tg['side_out'], tg['side_out'], tg['z_floor'], tg['z_belly'])),   # the pads hang under
         ('shell_l', (-bs3.XO, bs3.XO, bs3.YI, bs3.YO, bs3.ZB, bs3.ZT)), ('shell_r', (-bs3.XO, bs3.XO, -bs3.YO, -bs3.YI, bs3.ZB, bs3.ZT)),
         ('shell_front', (bs3.XI, bs3.XO, -bs3.YI, bs3.YI, bs3.APRON['z0'], bs3.ZT)),
         ('shell_rear', (-bs3.XO, -bs3.XI, -bs3.YI, bs3.YI, bs3.APRON['z0'], bs3.ZT)),
     ] + ear_boxes()
-    B = {'x': tuple(X), 'y': (-HY, HY), 'z': (round(tg['z_bottom'], 2), bp.TOP)}
+    collide += [(f'battery_{end}', box) for end, box in tg['clearance_packs'].items()]
+    for end in ('front', 'rear'):
+        collide += [(f'end_foot_{end}_{i}', b) for i, b in enumerate(bb.foot_collision_boxes(end, tg))]
+    B = {'x': (min(X[0], tg['clearance_packs']['rear'][0]), max(X[1], tg['clearance_packs']['front'][1])),
+         'y': (-HY, HY), 'z': (round(tg['foot_bottom_z'], 2), bp.TOP)}
     return {'L': L, 'parts': parts, 'ledger': led, 'collide': collide, 'B': B}
 
 
@@ -218,8 +220,7 @@ def body_bodies(rb, x_p, turret_extra):
     items = {it.name: it for it in rb['L']['items'] if not it.keepout}
     out = []
     for r in rb['ledger']['rows']:
-        if r['group'] == 'legs' or r['name'] == 'turret' or r['name'].startswith('frame.bay_skid_') or r['name'] == 'frame.bay_floor':
-            # the pads are bodies of their own, and the bay's floor rides on them in the model (see build())
+        if r['group'] == 'legs' or r['name'] == 'turret':
             continue
         g, c = r['mass_g'] / 1000.0, tuple(v * M for v in r['com_mm'])
         name = r['name']
@@ -567,8 +568,21 @@ def export_rig(rb, lid, lid_at, turret_base, turret_groups_):
     return man
 
 
-def build():
-    """Write the MJCF and model.json (build/sim/v2/) and the 3D page's rig (exports/sim/v2/rig/). Returns the info."""
+def _configure_output(out):
+    """Never overwrite the archived rig/trajectories with a new body model."""
+    global OUT_BUILD, OUT_RIG
+    if out is None:
+        raise ValueError('The current end-pack model requires an explicit fresh --out outside the source checkout; archived v2 rig is preserved')
+    out = Path(out).resolve()
+    if out.exists() or out.is_relative_to(R.resolve()):
+        raise ValueError('Use a fresh output outside the source checkout')
+    out.mkdir(mode=0o700, parents=True, exist_ok=False)
+    OUT_BUILD, OUT_RIG = out / 'build', out / 'rig'
+
+
+def build(out=None):
+    """Build a conditional current-model candidate into an explicit fresh directory."""
+    _configure_output(out)
     import software.simulation.turret as tu
     OUT_BUILD.mkdir(parents=True, exist_ok=True)
     design = json.loads(DESIGN.read_text())
@@ -577,9 +591,7 @@ def build():
     rb = real_body()
     wd69 = use_d69_wheel()                                           # after the ledger (it places the tyre's band itself)
     pad_boxes, PAD = pads()
-    pad_g = {r['name'].split('.', 1)[1].replace('bay_skid_', 'pad_'): r['mass_g'] / 1000.0
-             for r in rb['ledger']['rows'] if r['name'].startswith('frame.bay_skid_')}
-    floor_g = next(r['mass_g'] for r in rb['ledger']['rows'] if r['name'] == 'frame.bay_floor') / 1000.0   # rides on the pads (numerics)
+    pad_g, floor_g = {}, 0.0  # no old bay floor/pad masses or constitutive law
     B = rb['B']
     TOP = bp.TOP                                                     # the deck's top face (the lidar stands on it)
     T = tu.Turret({'bodyTop': tmd['face_z'] - 20.0 - tu.SADDLE_T})  # its TM face on the 30 mm riser (D41)
@@ -733,7 +745,7 @@ def build():
                          f'pos="{(b[0] + b[1]) / 2000:.4f} {(b[2] + b[3]) / 2000:.4f} {(b[4] + b[5]) / 2000:.4f}" contype="2" conaffinity="1" '
                          f'rgba="0 0 0 0" mass="0"/>' for n, b in rb['collide'])
     xml = f"""<mujoco model="gyropup_v2">
-  <compiler angle="radian" autolimits="true" meshdir="{OUT_RIG}"/>
+  <compiler angle="radian" autolimits="true" meshdir="../rig"/>
   <option timestep="0.001" gravity="0 0 -9.81" integrator="implicitfast"/>
   <visual><headlight diffuse="0.6 0.6 0.6" ambient="0.35 0.35 0.35"/><global offwidth="1280" offheight="720"/></visual>
   <asset>{asset_xml}
@@ -843,12 +855,12 @@ def build():
         'track_mm': round(2 * (wd69['y_mm'] + Y_OFF), 1),
         'wheel': {'decision': 'D69', 'key': WHEEL_KEY, 'od_mm': wd69['od_mm'], 'mass_g': wd69['mass_g'], 'tyre_width_mm': wd69['tyre_width_mm'],
                   'tyre_solref': lr.TYRE_SOLREF, 'peak_nm': wheel_peak, 'basis': 'sim/wheel_candidates.json hb10 at the ledger\'s mass'},
-        'pads': {'names': [n for n, _ in pad_boxes], 'k_n_per_mm_each': PAD['k_n_per_mm'], 'c_ns_per_m_each': PAD['c_ns_per_m'],
+        'pads': {'qualified': False, 'names': [n for n, _ in pad_boxes], 'k_n_per_mm_each': PAD['k_n_per_mm'], 'c_ns_per_m_each': PAD['c_ns_per_m'],
                  'plateau_n_each': PAD['plateau_n'], 'unload_ratio': PAD['unload_ratio'], 'body_kg_each_in_model': round(pad_each, 4),
                  'stroke_mm': PAD['stroke'], 'h_mm': PAD['h'], 'mass_kg': {n: round(g, 4) for n, g in pad_g.items()},
-                 'touch_leg_mm': round(-B['z'][0] - wr * 1000, 1), 'basis': 'cad/body_battery.py PAD (issue #19)'},
+                 'touch_leg_mm': round(-B['z'][0] - wr * 1000, 1), 'basis': PAD['basis']},
         'notes': [f'the body as built (M5): the P3 ledger, {led_kg:.2f} kg (cad/body_layout.py; the model {total:.2f} kg), the spine 40.5 mm wide '
-                  f'(track {2 * (wd69["y_mm"] + Y_OFF):.1f} mm), the deck at z {TOP:.0f}, the battery bay\'s crush pads at z {lowest} (the lowest part)',
+                  f'(track {2 * (wd69["y_mm"] + Y_OFF):.1f} mm), the deck at z {TOP:.0f}, rigid WIP end feet at z {lowest}; no inherited bay-pad/drop qualification',
                   f'D69\'s wheels: 10 in hub motors, {wd69["mass_g"] / 1000:.2f} kg each, a pneumatic tyre (solref {lr.TYRE_SOLREF})',
                   f'the deck: the VLP-16 at x = {x_l:.1f} mm, the turret\'s pan axis {d_lp:.1f} mm behind it (x = {x_p:.1f} mm) on the 30 mm riser '
                   f'(TM face z {tmd["face_z"]:.0f}); the turret\'s clearance needs {max(need.values()):.1f} mm; its base overhangs the rear by {rear_overhang:.1f} mm',
@@ -878,7 +890,10 @@ def build():
 
 
 if __name__ == '__main__':
-    info = build()
+    import argparse
+    parser = argparse.ArgumentParser(description=__doc__)
+    parser.add_argument('--out', type=Path, required=True, help='Fresh candidate output outside the source checkout; preserves historical rig')
+    info = build(parser.parse_args().out)
     print(f"{info['name']}: {info['total_mass_kg']:.2f} kg  {info['mass_split_kg']}  track {info['track_mm']} mm  com {info['com_mm']} mm")
     for n in info['notes']:
         print(' -', n)

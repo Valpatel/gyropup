@@ -210,7 +210,8 @@ def layout(cell=None):
     {'items': [Item], 'mounts': {part: [...]}, 'checks': [text], 'mass': {...}}."""
     import hardware.cad.body.body_battery as bb
     import hardware.cad.body.body_frame as bf
-    cell = 'DCB609'
+    cell = cell or 'DCB609'
+    pack = bb.pack_profile(cell)
     zt = bp.z_tray_top()
     zd = bp.TOP - bp.STOCK[bp.DECK]['t']
     items = j501_items()
@@ -292,20 +293,22 @@ def layout(cell=None):
                       f"(turret.json: {tj['mass_g_with_balls'] / 1000:.3f} kg with 30 balls)", 'deck', 'P2', '',
                       f"the foam-ball turret on the riser (P1: a dummy of its {t['mass_kg']:.2f} kg)",
                       (0.55, 0.57, 0.6), cyl=(t['pan_x'], 0.0, t['bumper_r'])))
-    # ---------------- the battery in the belly (D65): two DCB609 packs on their rail adapters
-    g = bb.geometry()
-    for k, box_ in bb.pack_boxes().items():
-        items.append(Item(f'battery_{k}', box_, bb.PACK['mass_g'], bb.PACK['source'], 'battery', 'P0', 'dewalt-dcb609',
-                          f'{bb.PACK["name"]}: slides out of the {k} door', (0.99, 0.73, 0.07)))
-    for k, box_ in bb.adapter_boxes().items():
-        items.append(Item(f'battery_adapter_{k}', box_, bb.ADAPTER['mass_g'], bb.ADAPTER['basis'], 'battery', 'P0', 'terrafirma-dewalt-20v-adapter-10awg',
-                          f'the {k} pack\'s rail adapter (10 AWG leads, 30 A), screwed to its printed plate', (0.15, 0.15, 0.17)))
-    B = {'outer': (g['x_out'][0], g['x_out'][1], -g['side_out'], g['side_out'], g['z_bottom'], g['z_belly']), 'half_y': g['side_out'],
-         'bottom_z': g['z_bottom']}
-    items.append(Item('battery_bay', B['outer'], 0, '', 'frame', 'P1', keepout=True, owner='battery', note='the bay (floor, sides, rails, doors, skids)'))
+    # ---------------- conditional front/rear drop-in packs, sharing one fixed adapter datum
+    g = bb.geometry(cell)
+    for k, box_ in g['packs'].items():
+        items.append(Item(f'battery_{k}', box_, pack['mass_g'], 'ENVELOPE: '+pack['source']+'; '+pack['mass_basis'],
+                          'battery', 'P0', 'dewalt-dcb609' if cell == 'DCB609' else '',
+                          f'{pack["name"]}: conditional +Z removal/-Z insertion; actual rail/latch/retention unmeasured',
+                          (0.99, 0.73, 0.07)))
+    for k, box_ in g['adapters'].items():
+        items.append(Item(f'battery_adapter_{k}', box_, bb.ADAPTER['mass_g'], bb.ADAPTER['basis'], 'battery', 'P0',
+                          'azocek-dewalt-adapter-b0cdgr4y8k',
+                          f'{k} Azocek adapter reservation; mounting holes, latch and ratings unverified', (0.15, 0.15, 0.17)))
+    B = {'layout': 'front-rear-vertical-drop-in', 'bottom_z': g['foot_bottom_z'], 'packs': g['packs'],
+         'reference_union_mm': g['reference_union_mm'], 'physical_fit_verified': False}
     # ---------------- what the frame parts must give these items (holes, slots, nuts)
     mounts = mounts_for(items, B)
-    return {'items': items, 'mounts': mounts, 'cell': cell, 'brick': None, 'bay': B}
+    return {'items': items, 'mounts': mounts, 'cell': pack['profile'], 'brick': None, 'battery': B}
 
 
 def _get(items, name):
@@ -337,14 +340,11 @@ def mounts_for(items, B):
     for sx in (-1, 1):                                  # VN-100: 2 x M3 (tapped) 30.84 apart, 17.8 from the connector end; its
         T.append((vcx + sx * 15.42, vy0 + 17.8, 2.5, 'tap M3 x 0.5: VN-100'))      # dowel holes are 3.81 from the screws: a 1.8 mm web,
                                                         # under SendCutSend's minimum, so no dowels (the firmware calibrates the mounting)
-    # ---- belly: the bay's rails and adapter plates (S-M4-0 beyond the cheeks' ends), the leads' slot
+    # ---- belly: end-holder/foot stacks at the existing end lands, plus retained leads slot
     import hardware.cad.body.body_battery as bb
-    for x, yc in bb.rail_holes():
-        for sy in (1, -1):
-            BE.append(('pem', x, sy * yc, 'S-M4-0', 'battery bay rail'))
     for k in ('front', 'rear'):
         for x, y in bb.plate_holes(k):
-            BE.append(('pem', x, y, 'S-M4-0', f'{k} pack adapter plate'))
+            BE.append(('pem', x, y, 'S-M4-0', f'{k} end holder and rigid sit-foot stack'))
     BE.append(('slot', bb.LEADS_SLOT[0], 0.0, bb.LEADS_SLOT[1], 22.0, 6.0, 'the packs\' two leads up into the spine\'s gap'))
     # ---- deck
     for name, inset, what in (('lidar_box', 12.0, 'lidar interface box bracket'), ('lidar_coil', 20.0, 'lidar cable coil clip')):
@@ -643,11 +643,6 @@ def ledger(L=None, parts=None, stage='P3'):
         add(it.group, it.name, it.mass_g, it.centre, it.basis)
     zt = bp.z_tray_top()
     add('frame', 'hardware', HARDWARE_G, (0.0, 0.0, 40.0), 'estimate')
-    import hardware.cad.body.body_battery as bb
-    mats = json.loads(((R / 'hardware/catalog/materials.json')).read_text())
-    dv = sum(bb.pad_solid_volume_mm3(p) for p in bb.pad_boxes()) / 1000.0
-    add('frame', 'bay_pads_solid_lips', dv * (mats['tpu95']['density_g_cm3'] - mats[bb.PAD['material']]['density_g_cm3']),
-        (0.0, 0.0, bb.geometry()['z_floor']), 'CAD: the pads\' webs, their chamfers and lips are solid TPU, not lattice (#26)')
     add('power', 'harness', HARNESS_G, (60.0, 0.0, zt + 20.0), 'estimate (docs/body-wiring.md)')
     for side, sy in (('l', 1.0), ('r', -1.0)):          # D69: each wheel's DTP04-4P/DTP06-4S (phases) and DT04-6P/DT06-6S (halls,
         add('power', f'wheel_connectors_{side}', WHEEL_CONNECTORS_G, (-30.0, sy * 70.0, zt),   # NTC) at the cheek where the wheel lead enters

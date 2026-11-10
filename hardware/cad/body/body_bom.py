@@ -290,10 +290,8 @@ def build():
         'p0_battery': [
             L('dewalt-dcb609', 2, 'the battery (D65): two FLEXVOLT 9.0 Ah packs in 20 V mode, in series (10S, 30-41 V); '
                                   'the user\'s own packs and chargers serve'),
-            L('terrafirma-dewalt-20v-adapter-10awg', 1, 'the packs\' rail adapters (4-pack: two used, two spare): 10 AWG leads, 30 A stated'),
-            L('xt90s_pair', 2, 'the bay\'s lead (anti-spark: female on the bay, male on the robot) and the series link between the packs'),
-            L('thumbscrew_m3x10', 4, 'the bay\'s two doors (two each, into the rails\' end inserts): tool-free'),
-            L('vhb_tape_25mm', 1, 'the bay\'s TPU skids (3M VHB 5952, 25 mm)'),
+            L('azocek-dewalt-adapter-b0cdgr4y8k', 2, 'Owner-selected reference only: actual adapter mount, latch, mass and ratings unverified; not interchangeable with the old Terrafirma drawing'),
+            L('xt90s_pair', 2, 'Existing electrical model reference for pack leads and series link; end-pack placement does not qualify wiring or hot-swap'),
         ],
         'p0_control': [
             L('nucleo_g474re', 1, 'the balance and power MCU (three FDCAN: buses A, B, C)'),

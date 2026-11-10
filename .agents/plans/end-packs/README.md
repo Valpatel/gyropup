@@ -124,3 +124,48 @@ failed). The corrected assertion requires that actual difference to equal
 50 mm; geometry and travel were unchanged. These tests construct no native
 solids. Native body/collection/sweep acceptance and current-consumer adoption
 remain pending a frozen source and separately reviewed bounded run packet.
+
+## Body integration candidate — 2026-11-10
+
+The next source slice switches the existing `body_frame`/`body_layout` owners
+to the end-pack geometry. It retires the old bay floor, side rails, doors and
+crush-pad parts; it does not change a leg source, manufacturing original,
+mounting datum or controlled height/torque limit. The one-bend 5052 holder uses
+the existing belly end lands. Rigid printed sit frames share its body-side
+M4×12 stack through 1.5 mm counterbored seats; the existing catalogue family
+is retained, not replaced with invented fastener dimensions or an extra SKU.
+Bought-adapter mounting and pack latch/secondary retention remain explicit
+unresolved interfaces, rather than inferred connectivity holds.
+
+The localized rigid feet plan for Z−228.5 mm at the existing 127 mm wheel /
+101.5 mm leg-stop reference. Their nominal ground room is 83.5 mm at 185 mm
+and 198.5 mm at 300 mm; the central belly clearance is a different quantity.
+No old pad stroke, plateau, rebound law or drop pass is transferred. The
+camera envelope moves upward/outward on an existing cradle owner, with screws
+from inside into outside feet; actual native interference, cable/optical and
+strength checks remain pending. These are source proposals, not accepted solids.
+
+Current simulation generation requires a fresh explicit output outside the
+checkout and preserves the recorded v2 rig. Its proposed rigid-foot stock
+collision boxes omit screw/tool holes and are labelled conditional; they are
+not exact contact geometry. [History protection](history-protection.json)
+pins the old rig tree and pad reports. Old pad-lip/web tests are retired with
+their removed component, while source/hash guards prevent their results being
+reused as current qualification. Native tests must validate the new component.
+
+Assembly source operations distinguish downward floor-tray placement, upward
+belly/support placement, outward adapter reservations and common +188 mm pack
+arrival. Leg operations and all historical guide files stay unchanged. The
+recipe test's 162-name transition is explicitly a declaration derived from the
+171-name archived inventory; it is not fresh native collection evidence. A
+stale old inventory is rejected. No new collision exemption was added.
+
+Numeric/output/history/preservation tests passed 56 cases (29 unrelated native
+body cases deselected), and six kernel-free recipe controls passed. They
+constructed no solids. A first native collection must use a clean immutable
+source, the existing pinned producer/runtime, fresh isolated output and existing
+detached fleet wrapper; compare all 80 old leg mesh hashes before adoption.
+Capture failed/partial results without overwriting historical or manufacturing
+files. Current source-bound figures/snapshots/consumer changes remain pending;
+never relabel the old geometry as these new supports. No such native job has
+been run or approved by this checkpoint.

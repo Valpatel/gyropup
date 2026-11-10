@@ -201,8 +201,8 @@ def body_internal_clashes(parts, items=None, min_mm3=1.0):
 # (zone, frame part prefix) that meet by design: the plate and the bay in their own zones; the tray's slot has round corners in
 # a square zone; the frame screws' heads stand 1 mm into the cable slot's lowest band; the front-right deck post passes the
 # power plate's box where the plate is notched round it; the fan's column is the deck's cells' business (turret_plate_intake)
-FRAME_ZONE_OK = {('power_plate', 'power_plate'), ('battery_bay', 'bay_'), ('fan_column', 'turret_plate'), ('tray_slot', 'floor_tray'),
-                 ('tray_slot', 'frame_screws'), ('power_plate', 'post_'), ('battery_bay', 'adapter_plate')}
+FRAME_ZONE_OK = {('power_plate', 'power_plate'), ('fan_column', 'turret_plate'), ('tray_slot', 'floor_tray'),
+                 ('tray_slot', 'frame_screws'), ('power_plate', 'post_')}
 
 
 def frame_vs_keepouts(parts, L, min_mm3=1.0):
@@ -438,6 +438,10 @@ def main():
         'in_keepouts': frame_vs_keepouts(parts, lay['raw']),
         'turret_plate': turret_plate_intake(),
     }
+    from hardware.cad.body import body_battery as battery
+    from tools.engineering.robot.readme_design import inputs as cad_inputs
+    summary['battery'] = battery.summary()
+    summary['cad_source_inputs'] = cad_inputs(R)
     import hardware.cad.body.body_joints as bj                                     # the integrity checks: every screw's stack, no floating part
     integ = bj.run(parts, items, clashes=len(summary['internal_clashes']))
     bj.OUT.write_text(json.dumps(integ, indent=1) + '\n')

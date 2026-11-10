@@ -6,6 +6,7 @@ adoption retain separately reviewed native/browser evidence requirements.
 from __future__ import annotations
 
 import hashlib
+import ast
 import json
 import math
 from pathlib import Path
@@ -72,7 +73,7 @@ def test_smaller_envelope_keeps_adapter_and_full_rigid_datum():
 
 
 @pytest.mark.parametrize('field', ['L', 'W', 'H', 'mass_g'])
-@pytest.mark.parametrize('bad', [0, -1, math.nan, math.inf, -math.inf, True, '97'])
+@pytest.mark.parametrize('bad', [0, -1, math.nan, math.inf, -math.inf, True, '97', 10**400])
 def test_nonphysical_or_nonfinite_variant_is_rejected(field, bad):
     custom = {'L': 124, 'W': 84, 'H': 91, 'mass_g': 1000}
     custom[field] = bad
@@ -88,7 +89,7 @@ def test_oversize_needs_new_clearance_work(field, oversize):
 
 
 @pytest.mark.parametrize('change', [{'belly_z': math.nan}, {'body_x': (160, -160)},
-                                  {'body_x': (0, math.inf)}, {'support_t': 0}, {'support_t': True}])
+                                  {'body_x': (0, math.inf)}, {'support_t': 0}, {'support_t': True}, {'belly_z': 10**400}])
 def test_invalid_frame_cannot_produce_placement(change):
     with pytest.raises(ValueError, match='frame needs finite'):
         battery.end_pack_geometry(**(FRAME | change))
@@ -113,3 +114,44 @@ def test_printed_leg_source_and_manufacturing_originals_remain_exact():
         assert not subprocess.check_output(['git', 'status', '--porcelain', '--untracked-files=all', '--', path], cwd=ROOT, text=True)
     # This source-only guard does not substitute for the fresh collection's 80 mesh comparisons.
     assert len(baseline['collection261_leg_mesh_sha256']) == 80
+
+
+def test_rigid_end_feet_do_not_inherit_the_old_pad_law():
+    assert battery.PAD['lowest_leg_mm'] == 185.0 and battery.PAD['wheel_r'] == 127.0
+    assert battery.END_FOOT['sit_leg_mm'] == 101.5
+    assert not battery.END_FOOT['compliance_qualified'] and battery.END_FOOT['force_curve'] is None
+    g = battery.end_pack_geometry(**FRAME)
+    g.update(foot_bottom_z=-228.5, holder_half_y=54.5, base_bottom_z=-96.215)
+    for end in ('front', 'rear'):
+        boxes = battery.foot_collision_boxes(end, g)
+        assert len(boxes) == 4 and min(b[4] for b in boxes) == -228.5
+        assert all(b[2] >= -54.5 and b[3] <= 54.5 for b in boxes)
+    assert 185.0 + 127.0 - 228.5 == 83.5
+    assert 300.0 + 127.0 - 228.5 == 198.5
+    assert 185.0 + 127.0 + FRAME['belly_z'] > 218.0  # centre clearance differs from localized feet
+
+
+def test_archived_rig_and_pad_reports_are_not_replaced_by_current_geometry():
+    protected = json.loads((ROOT / '.agents/plans/end-packs/history-protection.json').read_text())
+    assert subprocess.check_output(['git', 'rev-parse', 'HEAD:hardware/exports/sim/v2'], cwd=ROOT, text=True).strip() == protected['recorded_sim_tree']
+    assert not subprocess.check_output(['git', 'status', '--porcelain', '--untracked-files=all', '--', 'hardware/exports/sim/v2'], cwd=ROOT, text=True)
+    for file, expected in protected['historical_pad_reports_sha256'].items():
+        assert hashlib.sha256((ROOT / file).read_bytes()).hexdigest() == expected, file
+
+
+def test_new_physics_output_cannot_overwrite_the_recorded_rig(tmp_path):
+    # Execute the actual filesystem guard without importing native physics/CAD.
+    path = ROOT / 'software/simulation/robot_v2.py'
+    tree = ast.parse(path.read_text())
+    guard = next(n for n in tree.body if isinstance(n, ast.FunctionDef) and n.name == '_configure_output')
+    scope = {'Path': Path, 'R': ROOT}
+    exec(compile(ast.Module(body=[guard], type_ignores=[]), str(path), 'exec'), scope)
+    for bad in (None, ROOT/'new-physics', tmp_path):
+        with pytest.raises(ValueError):
+            scope['_configure_output'](bad)
+    fresh = tmp_path/'fresh-candidate'
+    scope['_configure_output'](fresh)
+    assert fresh.is_dir()
+    assert scope['OUT_BUILD'] == fresh/'build' and scope['OUT_RIG'] == fresh/'rig'
+    with pytest.raises(ValueError):
+        scope['_configure_output'](fresh)
