@@ -1,0 +1,243 @@
+{
+  "errors": [],
+  "version": {
+    "revision": "a76c6eeb7ad16f4a1a414b34b20923cbef6abdb5",
+    "assets": "32ae0b2a353e92bfa5e1",
+    "history": true,
+    "built": "2026-11-10T11:44:51.011Z"
+  },
+  "desktop": {
+    "cell": {
+      "x": 112.90625,
+      "y": 2197.46875,
+      "width": 258.46875,
+      "height": 144,
+      "right": 371.375,
+      "bottom": 2341.46875
+    },
+    "text": "output_adapter\nOne leg (milestone M3)\nMaterial and callouts\nPreview 3D",
+    "checks": [
+      {
+        "x": 1055.65625,
+        "y": 2204.96875,
+        "width": 78.890625,
+        "height": 44,
+        "right": 1134.546875,
+        "bottom": 2248.96875,
+        "reachable": false
+      },
+      {
+        "x": 1154.546875,
+        "y": 2204.96875,
+        "width": 78.453125,
+        "height": 44,
+        "right": 1233,
+        "bottom": 2248.96875,
+        "reachable": false
+      }
+    ],
+    "cols": [
+      {
+        "width": "76.4062px",
+        "style": "width: 68px;"
+      },
+      {
+        "width": "258.469px",
+        "style": "width: var(--build-part-column, 230px);"
+      },
+      {
+        "width": "224.766px",
+        "style": "width: 200px;"
+      },
+      {
+        "width": "112.375px",
+        "style": "width: 100px;"
+      },
+      {
+        "width": "224.766px",
+        "style": "width: 200px;"
+      },
+      {
+        "width": "112.375px",
+        "style": "width: 100px;"
+      },
+      {
+        "width": "98.8906px",
+        "style": "width: var(--build-status-column, 88px);"
+      },
+      {
+        "width": "98.9531px",
+        "style": "width: var(--build-status-column, 88px);"
+      }
+    ],
+    "headers": 8,
+    "scrollY": 1007,
+    "panel": {
+      "x": 32,
+      "y": 577.8125,
+      "width": 1216,
+      "height": 760,
+      "right": 1248,
+      "bottom": 1337.8125
+    },
+    "panelScrollTop": 0,
+    "dialog": false
+  },
+  "windowOnly": {
+    "cell": {
+      "x": 16,
+      "y": 1329.125,
+      "width": 120,
+      "height": 155,
+      "right": 136,
+      "bottom": 1484.125
+    },
+    "text": "output_adapter\nOne leg (milestone M3)\nMaterial and callouts\nPreview 3D",
+    "checks": [
+      {
+        "x": 141.5,
+        "y": 1335.625,
+        "width": 72,
+        "height": 44,
+        "right": 213.5,
+        "bottom": 1379.625,
+        "reachable": false
+      },
+      {
+        "x": 225.5,
+        "y": 1335.625,
+        "width": 71.5,
+        "height": 44,
+        "right": 297,
+        "bottom": 1379.625,
+        "reachable": false
+      }
+    ],
+    "cols": [
+      {
+        "width": "68px",
+        "style": "width: 68px;"
+      },
+      {
+        "width": "120px",
+        "style": "width: var(--build-part-column, 230px);"
+      },
+      {
+        "width": "200px",
+        "style": "width: 200px;"
+      },
+      {
+        "width": "100px",
+        "style": "width: 100px;"
+      },
+      {
+        "width": "200px",
+        "style": "width: 200px;"
+      },
+      {
+        "width": "100px",
+        "style": "width: 100px;"
+      },
+      {
+        "width": "84px",
+        "style": "width: var(--build-status-column, 88px);"
+      },
+      {
+        "width": "84px",
+        "style": "width: var(--build-status-column, 88px);"
+      }
+    ],
+    "headers": 8,
+    "scrollY": 2720,
+    "panel": {
+      "x": 12,
+      "y": -910.859375,
+      "width": 296,
+      "height": 700,
+      "right": 308,
+      "bottom": -210.859375
+    },
+    "panelScrollTop": 0,
+    "dialog": false
+  },
+  "rowVisible": {
+    "cell": {
+      "x": 16,
+      "y": 238.125,
+      "width": 120,
+      "height": 155,
+      "right": 136,
+      "bottom": 393.125
+    },
+    "text": "output_adapter\nOne leg (milestone M3)\nMaterial and callouts\nPreview 3D",
+    "checks": [
+      {
+        "x": 141.5,
+        "y": 244.625,
+        "width": 72,
+        "height": 44,
+        "right": 213.5,
+        "bottom": 288.625,
+        "reachable": true,
+        "hit": "<span>Ordered</span>"
+      },
+      {
+        "x": 225.5,
+        "y": 244.625,
+        "width": 71.5,
+        "height": 44,
+        "right": 297,
+        "bottom": 288.625,
+        "reachable": true,
+        "hit": "<span>In hand</span>"
+      }
+    ],
+    "cols": [
+      {
+        "width": "68px",
+        "style": "width: 68px;"
+      },
+      {
+        "width": "120px",
+        "style": "width: var(--build-part-column, 230px);"
+      },
+      {
+        "width": "200px",
+        "style": "width: 200px;"
+      },
+      {
+        "width": "100px",
+        "style": "width: 100px;"
+      },
+      {
+        "width": "200px",
+        "style": "width: 200px;"
+      },
+      {
+        "width": "100px",
+        "style": "width: 100px;"
+      },
+      {
+        "width": "84px",
+        "style": "width: var(--build-status-column, 88px);"
+      },
+      {
+        "width": "84px",
+        "style": "width: var(--build-status-column, 88px);"
+      }
+    ],
+    "headers": 8,
+    "scrollY": 1844,
+    "panel": {
+      "x": 12,
+      "y": -34.859375,
+      "width": 296,
+      "height": 700,
+      "right": 308,
+      "bottom": 665.140625
+    },
+    "panelScrollTop": 1967,
+    "dialog": false
+  },
+  "correct": true
+}

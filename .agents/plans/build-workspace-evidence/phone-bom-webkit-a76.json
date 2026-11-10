@@ -1,0 +1,320 @@
+{
+  "errors": [],
+  "version": {
+    "revision": "a76c6eeb7ad16f4a1a414b34b20923cbef6abdb5",
+    "assets": "32ae0b2a353e92bfa5e1",
+    "history": true,
+    "built": "2026-11-10T11:44:51.011Z"
+  },
+  "desktop": {
+    "cell": {
+      "x": 112.40625,
+      "y": 2206,
+      "width": 258.484375,
+      "height": 144,
+      "right": 370.890625,
+      "bottom": 2350
+    },
+    "text": "output_adapter\nOne leg (milestone M3)\nMaterial and callouts\nPreview 3D",
+    "checks": [
+      {
+        "x": 1055.203125,
+        "y": 2214,
+        "width": 78.890625,
+        "height": 44,
+        "right": 1134.09375,
+        "bottom": 2258,
+        "reachable": false
+      },
+      {
+        "x": 1154.09375,
+        "y": 2214,
+        "width": 78.90625,
+        "height": 44,
+        "right": 1233,
+        "bottom": 2258,
+        "reachable": false
+      }
+    ],
+    "cols": [
+      {
+        "width": "0px",
+        "style": "width: 68px;"
+      },
+      {
+        "width": "0px",
+        "style": "width: var(--build-part-column, 230px);"
+      },
+      {
+        "width": "0px",
+        "style": "width: 200px;"
+      },
+      {
+        "width": "0px",
+        "style": "width: 100px;"
+      },
+      {
+        "width": "0px",
+        "style": "width: 200px;"
+      },
+      {
+        "width": "0px",
+        "style": "width: 100px;"
+      },
+      {
+        "width": "0px",
+        "style": "width: var(--build-status-column, 88px);"
+      },
+      {
+        "width": "0px",
+        "style": "width: var(--build-status-column, 88px);"
+      }
+    ],
+    "headers": 8,
+    "scrollY": 1001,
+    "panel": {
+      "x": 32,
+      "y": 578,
+      "width": 1216,
+      "height": 760,
+      "right": 1248,
+      "bottom": 1338
+    },
+    "panelScrollTop": 0,
+    "dialog": false
+  },
+  "windowOnly": {
+    "cell": {
+      "x": 16,
+      "y": 1420,
+      "width": 120,
+      "height": 155,
+      "right": 136,
+      "bottom": 1575
+    },
+    "text": "output_adapter\nOne leg (milestone M3)\nMaterial and callouts\nPreview 3D",
+    "checks": [
+      {
+        "x": 141,
+        "y": 1427,
+        "width": 72,
+        "height": 44,
+        "right": 213,
+        "bottom": 1471,
+        "reachable": false
+      },
+      {
+        "x": 225,
+        "y": 1427,
+        "width": 72,
+        "height": 44,
+        "right": 297,
+        "bottom": 1471,
+        "reachable": false
+      }
+    ],
+    "cols": [
+      {
+        "width": "0px",
+        "style": "width: 68px;"
+      },
+      {
+        "width": "0px",
+        "style": "width: var(--build-part-column, 230px);"
+      },
+      {
+        "width": "0px",
+        "style": "width: 200px;"
+      },
+      {
+        "width": "0px",
+        "style": "width: 100px;"
+      },
+      {
+        "width": "0px",
+        "style": "width: 200px;"
+      },
+      {
+        "width": "0px",
+        "style": "width: 100px;"
+      },
+      {
+        "width": "0px",
+        "style": "width: var(--build-status-column, 88px);"
+      },
+      {
+        "width": "0px",
+        "style": "width: var(--build-status-column, 88px);"
+      }
+    ],
+    "headers": 8,
+    "scrollY": 2694,
+    "panel": {
+      "x": 12,
+      "y": -899,
+      "width": 296,
+      "height": 700,
+      "right": 308,
+      "bottom": -199
+    },
+    "panelScrollTop": 0,
+    "dialog": false
+  },
+  "afterRowScrollBeforeHorizontal": {
+    "cell": {
+      "x": 84,
+      "y": 239,
+      "width": 120,
+      "height": 155,
+      "right": 204,
+      "bottom": 394
+    },
+    "text": "output_adapter\nOne leg (milestone M3)\nMaterial and callouts\nPreview 3D",
+    "checks": [
+      {
+        "x": 810,
+        "y": 246,
+        "width": 72,
+        "height": 44,
+        "right": 882,
+        "bottom": 290,
+        "reachable": false
+      },
+      {
+        "x": 894,
+        "y": 246,
+        "width": 72,
+        "height": 44,
+        "right": 966,
+        "bottom": 290,
+        "reachable": false
+      }
+    ],
+    "cols": [
+      {
+        "width": "0px",
+        "style": "width: 68px;"
+      },
+      {
+        "width": "0px",
+        "style": "width: var(--build-part-column, 230px);"
+      },
+      {
+        "width": "0px",
+        "style": "width: 200px;"
+      },
+      {
+        "width": "0px",
+        "style": "width: 100px;"
+      },
+      {
+        "width": "0px",
+        "style": "width: 200px;"
+      },
+      {
+        "width": "0px",
+        "style": "width: 100px;"
+      },
+      {
+        "width": "0px",
+        "style": "width: var(--build-status-column, 88px);"
+      },
+      {
+        "width": "0px",
+        "style": "width: var(--build-status-column, 88px);"
+      }
+    ],
+    "headers": 8,
+    "scrollY": 1829,
+    "panel": {
+      "x": 12,
+      "y": -34,
+      "width": 296,
+      "height": 700,
+      "right": 308,
+      "bottom": 666
+    },
+    "panelScrollTop": 2046,
+    "dialog": false
+  },
+  "rowVisible": {
+    "cell": {
+      "x": 16,
+      "y": 239,
+      "width": 120,
+      "height": 155,
+      "right": 136,
+      "bottom": 394
+    },
+    "text": "output_adapter\nOne leg (milestone M3)\nMaterial and callouts\nPreview 3D",
+    "checks": [
+      {
+        "x": 141,
+        "y": 246,
+        "width": 72,
+        "height": 44,
+        "right": 213,
+        "bottom": 290,
+        "reachable": true,
+        "hit": "<span>Ordered</span>"
+      },
+      {
+        "x": 225,
+        "y": 246,
+        "width": 72,
+        "height": 44,
+        "right": 297,
+        "bottom": 290,
+        "reachable": true,
+        "hit": "<span>In hand</span>"
+      }
+    ],
+    "cols": [
+      {
+        "width": "0px",
+        "style": "width: 68px;"
+      },
+      {
+        "width": "0px",
+        "style": "width: var(--build-part-column, 230px);"
+      },
+      {
+        "width": "0px",
+        "style": "width: 200px;"
+      },
+      {
+        "width": "0px",
+        "style": "width: 100px;"
+      },
+      {
+        "width": "0px",
+        "style": "width: 200px;"
+      },
+      {
+        "width": "0px",
+        "style": "width: 100px;"
+      },
+      {
+        "width": "0px",
+        "style": "width: var(--build-status-column, 88px);"
+      },
+      {
+        "width": "0px",
+        "style": "width: var(--build-status-column, 88px);"
+      }
+    ],
+    "headers": 8,
+    "scrollY": 1829,
+    "panel": {
+      "x": 12,
+      "y": -34,
+      "width": 296,
+      "height": 700,
+      "right": 308,
+      "bottom": 666
+    },
+    "panelScrollTop": 2046,
+    "dialog": false
+  },
+  "correct": true
+}

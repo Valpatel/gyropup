@@ -14,6 +14,10 @@ const out=process.env.TEST_OUTPUT||'/tmp/gyropup-build-portal';await mkdir(out,{
 const browser=await engine.launch(engine===chromium?{channel:process.env.PLAYWRIGHT_CHANNEL==='chromium'?undefined:'chrome',headless:true,args:['--no-sandbox','--use-gl=angle','--use-angle=swiftshader','--enable-unsafe-swiftshader']}:{headless:true});
 const context=await browser.newContext({viewport:{width:1280,height:900}});await context.addInitScript(()=>sessionStorage.setItem('gyropup.prototype-notice','2026-10-29-v1'));
 const page=await context.newPage(),errors=[];page.setDefaultTimeout(60000);page.on('pageerror',error=>errors.push(error.message));
+const navigation={};page.on('request',request=>{if(request.isNavigationRequest()&&request.frame()===page.mainFrame())Object.assign(navigation,{requested:new URL(request.url()).pathname,requestedAt:new Date().toISOString(),committed:null,domContentLoadedAt:null,loadedAt:null});});page.on('framenavigated',frame=>{if(frame===page.mainFrame())navigation.committed=new URL(frame.url()).pathname;});page.on('domcontentloaded',()=>navigation.domContentLoadedAt=new Date().toISOString());page.on('load',()=>navigation.loadedAt=new Date().toISOString());
+const phases=[],pagination=[];const phase=name=>{phases.push({name,at:new Date().toISOString()});console.log('PHASE',name);};
+// page.evaluate does not inherit Playwright's default action timeout: bound observers in Node too.
+const evaluate=page.evaluate.bind(page);page.evaluate=async(...args)=>{let timer;try{return await Promise.race([evaluate(...args),new Promise((_,reject)=>timer=setTimeout(()=>reject(new Error('Page observer exceeded existing60s budget during '+phases.at(-1)?.name)),60000))]);}finally{clearTimeout(timer);}};
 const ready=async()=>{await page.waitForFunction(()=>document.body.dataset.ready==='1');const details=page.locator('#build-details');if(await details.count())await details.evaluate(el=>el.open=true);};
 const checkModelActions=async()=>{
  await page.locator('[data-model-preview]').first().waitFor({state:'attached'});
@@ -45,13 +49,13 @@ const checkNativeSort=async(table,column,direction)=>{
 try{
  const version=await(await context.request.get(base+'/version.json')).json();
  const wasm=await context.request.get(base+'/designer/kit/vendor/occt-import-js/occt-import-js.wasm',{method:'HEAD'});assert.equal(wasm.status(),200);assert.match(wasm.headers()['content-type'],/^application\/wasm/);
- await page.goto(base+'/designer/progress.html');await ready();await checkModelActions();
+ phase('initial Progress model actions');await page.goto(base+'/designer/progress.html');await ready();await checkModelActions();
  const progressKeys=await page.locator('tr[data-part-key^="buy/"]').evaluateAll(rows=>rows.map(row=>row.dataset.partKey));
  assert.ok(progressKeys.length>20);assert.equal(await page.locator('table:not(.cad-part-table)').count(),0);
- await page.goto(base+'/designer/build.html');await ready();await checkModelActions();
+ phase('initial Build model actions');await page.goto(base+'/designer/build.html');await ready();await checkModelActions();
  assert.equal(await page.locator('table:not(.cad-part-table)').count(),0);
  assert.equal(await page.getByRole('button',{name:/^Picture: sort/}).count(),0,'Picture-only columns have no meaningless sort control');
- const summaries=await page.evaluate(()=>({total:+document.querySelector('#sum-total').dataset.usd,sellers:[...document.querySelectorAll('#sellertable tbody tr[data-seller]')].reduce((sum,row)=>sum+ +row.dataset.usd,0),made:+document.querySelector('#sum-made').dataset.usd,hours:+document.querySelector('#sum-hours').dataset.h}));
+ phase('workstream totals and source qualifications');const summaries=await page.evaluate(()=>({total:+document.querySelector('#sum-total').dataset.usd,sellers:[...document.querySelectorAll('#sellertable tbody tr[data-seller]')].reduce((sum,row)=>sum+ +row.dataset.usd,0),made:+document.querySelector('#sum-made').dataset.usd,hours:+document.querySelector('#sum-hours').dataset.h}));
  assert.ok(Math.abs(summaries.total-summaries.sellers)<.01);assert.ok(summaries.made>0&&summaries.hours>0);
  // Archived print metadata stays visible beside its queue and mixed totals,
  // then leaves those totals when that workstream is excluded. Other streams
@@ -76,15 +80,19 @@ try{
  assert.equal(Number(await page.locator('#sum-hours').getAttribute('data-h')),summaries.hours);
  const shared=await page.locator('#orders tr[data-part-key]').evaluateAll((rows,keys)=>rows.find(row=>keys.includes(row.dataset.partKey)&&row.closest('table').tBodies[0].rows.length>2)?.dataset.partKey,progressKeys);assert.ok(shared,'Build and Progress share catalog part identities');
 
- const target=page.locator('#orders tr[data-part-key='+JSON.stringify(shared)+']');
+ phase('orders native sorting');const target=page.locator('#orders tr[data-part-key='+JSON.stringify(shared)+']');
  await view('buy');const table=page.locator('#orders table');await checkNativeSort(table,4,'ascending');
- const label=await target.getAttribute('data-part-label');
+ phase('orders search and checkbox selection');const label=await target.getAttribute('data-part-label');
  const search=page.locator('#orders').getByRole('searchbox');await search.fill(label);await target.locator('input[type=checkbox]').first().check();assert.equal(await target.isVisible(),true);assert.equal(await target.locator('input').first().isChecked(),true);await search.fill('');
  // Every source order row is reachable through actual pagination, with no infinite visible list.
- const reached=new Set();let pages=0;const next=page.getByRole('button',{name:'Next page of All orders',exact:true});
- for(;;){for(const key of await table.locator('tbody tr:visible').evaluateAll(rows=>rows.map(row=>row.dataset.partKey)))reached.add(key);pages++;if(await next.isDisabled())break;await next.click();}
- assert.equal(reached.size,await table.locator('tbody tr[data-part-key]').count());assert.ok(pages>1);
- await view('setup');const body=page.locator('[data-stream=body]');await body.uncheck();await body.check();await checkModelActions();await view('buy');await search.fill(label);assert.equal(await target.locator('input').first().isChecked(),true);
+ phase('every native orders pagination page');const reached=new Set(),pageSize=Number(await table.getAttribute('data-page-size')),rowCount=await table.locator('tbody tr[data-part-key]').count();assert.ok(Number.isInteger(pageSize)&&pageSize>0);const expectedPages=Math.max(1,Math.ceil(rowCount/pageSize));let pages=0;const next=page.getByRole('button',{name:'Next page of All orders',exact:true});
+ for(;pages<expectedPages;pages++){
+  const expected=`Page ${pages+1} of ${expectedPages}`;await page.waitForFunction(expected=>document.querySelector('nav[aria-label="All orders pages"] span')?.textContent===expected,expected);
+  const keys=await table.locator('tbody tr:visible').evaluateAll(rows=>rows.map(row=>row.dataset.partKey));for(const key of keys)reached.add(key);pagination.push({page:pages+1,expectedPages,visible:keys.length,at:new Date().toISOString()});console.log('PAGE',expected,keys.length,'visible rows');
+  assert.equal(await next.isDisabled(),pages===expectedPages-1,'Only the exact final native page disables Next');if(pages<expectedPages-1)await next.click();
+ }
+ assert.equal(reached.size,rowCount);assert.equal(pages,expectedPages);assert.ok(pages>1);
+ phase('workstream rerender and persistent import/export');await view('setup');const body=page.locator('[data-stream=body]');await body.uncheck();await body.check();await checkModelActions();await view('buy');await search.fill(label);assert.equal(await target.locator('input').first().isChecked(),true);
  assert.equal(await page.locator('#orders .cad-table-tools').count(),await page.locator('#orders table').count(),'Rerender disposes old toolbars');
  await page.reload();await ready();await view('buy');await search.fill(label);assert.equal(await target.locator('input').first().isChecked(),true);
  const saved=await exported();assert.equal(saved.project,'gyropup');assert.equal(saved.parts[shared].ordered,true);
@@ -93,7 +101,7 @@ try{
  await page.waitForFunction(()=>document.querySelector('.cad-progress-receipt').textContent.includes('unsupported status'));assert.deepEqual(await exported(),saved,'Invalid imports are atomic');
  await input.setInputFiles({name:'valid.json',mimeType:'application/json',buffer:Buffer.from(JSON.stringify({version:1,project:'gyropup',parts:{[shared]:{inHand:true}}}))});
  await page.waitForFunction(()=>document.querySelector('.cad-progress-receipt').textContent.includes('Imported'));assert.equal(await target.locator('input').nth(1).isChecked(),true);
- await page.goto(base+'/designer/progress.html');await ready();const other=page.locator('tr[data-part-key='+JSON.stringify(shared)+']').first();assert.equal(await other.locator('input').first().isChecked(),true);assert.equal(await other.locator('input').nth(1).isChecked(),true);
+ phase('shared Progress checklists');await page.goto(base+'/designer/progress.html');await ready();const other=page.locator('tr[data-part-key='+JSON.stringify(shared)+']').first();assert.equal(await other.locator('input').first().isChecked(),true);assert.equal(await other.locator('input').nth(1).isChecked(),true);
  await page.getByRole('link',{name:'Parts & prints',exact:true}).click();
  assert.equal(await page.locator('#parts').evaluate(el=>el.open),true,'The ordinary section jump reveals the native disclosure');
  await page.getByText('Leg · what to buy',{exact:true}).click();
@@ -102,7 +110,7 @@ try{
  await page.getByText('Leg · what to print',{exact:true}).click();
  const prints=page.locator('#print table');await checkNativeSort(prints,7,'ascending');await prints.locator('tbody input[type=checkbox]').first().check();
  const printedKey=await prints.locator('tbody tr').first().getAttribute('data-part-key');await page.reload();await ready();assert.equal(await page.locator('tr[data-part-key='+JSON.stringify(printedKey)+'] input').first().isChecked(),true);
- const inventory=await(await context.request.get(base+'/site/models.json')).json();
+ phase('exact guide dependencies and prepared project inventory');const inventory=await(await context.request.get(base+'/site/models.json')).json();
  // Check every original against the served revision's Git tree, not a frozen
  // file count or the inventory endpoint's own claim of completeness.
  assert.match(version.revision,/^[a-f0-9]{40}$/);
@@ -137,14 +145,14 @@ try{
   const response=await context.request.get(base+project.public_file);assert.equal(response.status(),200);assert.equal(digest(await response.body()),project.sha256);preparedModels.add(project.public_file);
  }
  assert.equal(preparedModels.size,1,'Only the reviewed content-addressed hip project is separate from engineering originals');
- const expectedModels=committed.filter(file=>/\.(stl|step|stp|3mf)$/i.test(file)).map(publicForSource).filter(Boolean).map(file=>'/'+file).filter(file=>!presentationModels.has(file)&&!preparedModels.has(file)).sort();
+ phase('all original inventory and adjacent download links');const expectedModels=committed.filter(file=>/\.(stl|step|stp|3mf)$/i.test(file)).map(publicForSource).filter(Boolean).map(file=>'/'+file).filter(file=>!presentationModels.has(file)&&!preparedModels.has(file)).sort();
  assert.ok(expectedModels.length>0,'Served revision contains original CAD files');
  assert.deepEqual(inventory.files.map(file=>file.path).sort(),expectedModels,'Every committed engineering original appears exactly once; only hash-bound guide derivatives are separate');
  for(const file of inventory.files)assert.equal(file.format,file.path.split('.').pop().toLowerCase());
  // Every published original has its own adjacent directory preview and unchanged download.
  const directories=new Map();for(const file of inventory.files){const dir=file.path.slice(0,file.path.lastIndexOf('/')+1);if(!directories.has(dir))directories.set(dir,[]);directories.get(dir).push(file);}
  for(const [dir,files] of directories){const response=await context.request.get(base+dir);assert.equal(response.status(),200);const {document}=parseHTML(await response.text());for(const file of files){const name=file.path.split('/').pop(),original=[...document.querySelectorAll('a[data-model-original]')].find(a=>decodeURIComponent(new URL(a.getAttribute('href'),base+dir).pathname)===file.path);assert.ok(original,file.path+' original');const preview=original.nextElementSibling;assert.ok(preview.hasAttribute('data-model-preview'),file.path+' preview');assert.equal(new URL(preview.getAttribute('href'),base).searchParams.get('file'),file.path);assert.ok(original.hasAttribute('download'));}}
- await page.goto(base+'/designer/build.html');await ready();
+ phase('procurement media and phone layouts');await page.goto(base+'/designer/build.html');await ready();
  const media=await(await context.request.get(base+'/catalog/images.json')).json();
  const shown=await page.locator('#made tr[data-part-key],#queue tr[data-part-key^="print/body/"]').evaluateAll(rows=>rows.map(row=>({key:row.dataset.partKey.replace(/^(made|print)\//,''),src:row.querySelector('img')?.getAttribute('src')})));
  const framePlan=await(await context.request.get(base+'/exports/body/print-plan.json')).json();
@@ -163,11 +171,11 @@ try{
  await filament.locator('.thumb').scrollIntoViewIfNeeded();await filament.locator('.thumb.source').waitFor();assert.equal(await filament.locator('.thumb.source').getAttribute('href'),media.petg.source_url,'Unavailable remote photos retain their source link');
  const modelLink=page.locator('#made a[data-model-preview]').first();await modelLink.waitFor();assert.ok((await modelLink.getAttribute('href')).includes('file-viewer.html?'));
  for(const [width,height] of [[320,568],[568,320],[390,844],[844,390]]){await page.setViewportSize({width,height});await page.locator('#made .cad-table-tools').scrollIntoViewIfNeeded();const layout=await page.evaluate(()=>({width:innerWidth,scroll:document.documentElement.scrollWidth,controls:[...document.querySelectorAll('#made .cad-table-tools input,#made .cad-table-tools select')].map(el=>({width:el.getBoundingClientRect().width,height:el.getBoundingClientRect().height}))}));assert.ok(layout.scroll<=width+1,JSON.stringify(layout));assert.ok(layout.controls.every(r=>r.height>=44&&r.width<=width),JSON.stringify(layout));await page.screenshot({path:`${out}/${engine.name()}-${width}x${height}.png`});}
- await page.setViewportSize({width:320,height:568});await page.locator('#made tbody tr').first().scrollIntoViewIfNeeded();await page.evaluate(()=>{const scroll=document.querySelector('#made .cad-table-scroll');scroll.scrollLeft=scroll.scrollWidth;});const columns=await page.locator('#made table').evaluate(table=>({columns:table.querySelectorAll(':scope > colgroup > col').length,headers:table.tHead.rows[0].cells.length}));assert.equal(columns.columns,columns.headers,'Fixed table columns include every enhanced status header');
+ phase('strict phone sticky identity and status targets');await page.setViewportSize({width:320,height:568});await page.locator('#made tbody tr').first().scrollIntoViewIfNeeded();await page.evaluate(()=>{const scroll=document.querySelector('#made .cad-table-scroll');scroll.scrollLeft=scroll.scrollWidth;});const columns=await page.locator('#made table').evaluate(table=>({columns:table.querySelectorAll(':scope > colgroup > col').length,headers:table.tHead.rows[0].cells.length}));assert.equal(columns.columns,columns.headers,'Fixed table columns include every enhanced status header');
  const sticky=await page.locator('#made tbody tr').first().evaluate(row=>{const cell=row.querySelector('.cad-part-identity'),r=cell.getBoundingClientRect(),checks=[...row.querySelectorAll('.cad-status-check')].map(label=>{const r=label.getBoundingClientRect(),hit=document.elementFromPoint(r.x+r.width/2,r.y+r.height/2);return {x:r.x,right:r.right,height:r.height,width:r.width,reachable:label===hit||label.contains(hit)};});return {text:(cell.querySelector('b')||cell).innerText.trim(),x:r.x,right:r.right,checks};});assert.ok(sticky.text&&sticky.x>=0&&sticky.right<=160,JSON.stringify(sticky));assert.ok(sticky.checks.every(r=>r.height>=44&&r.width>=44&&r.x>=sticky.right-1&&r.right<=320&&r.reachable),JSON.stringify(sticky));await page.screenshot({path:`${out}/${engine.name()}-status-320.png`});
  // Small preparation pages must expose their primary inspection actions without
  // sideways scrolling. Page scrollWidth alone misses nested table clipping.
- const fitReceipt=JSON.parse(await readFile(new URL('../../../hardware/exports/turret/carrier-insert-fit/receipt.json', import.meta.url),'utf8'));
+ phase('carrier preparation inspection actions');const fitReceipt=JSON.parse(await readFile(new URL('../../../hardware/exports/turret/carrier-insert-fit/receipt.json', import.meta.url),'utf8'));
  for(const width of [320,390,1440]){
   await page.setViewportSize({width,height:900});
   await page.goto(base+'/site/pages/research-carrier-insert-fit-readme-md.html?live=0');
@@ -231,8 +239,8 @@ try{
  }
  const stopped=await page.evaluate(async()=>{const v=window.__fileViewer;window.viewerTicks=0;v.stage.onFrame(()=>window.viewerTicks++);const frames=()=>new Promise(resolve=>requestAnimationFrame(()=>requestAnimationFrame(resolve)));await frames();v.stage.stop();const count=window.viewerTicks;await frames();const stopped=count===window.viewerTicks;v.stage.start();await frames();const resumed=window.viewerTicks>count;v.dispose();v.dispose();const final=window.viewerTicks;await frames();return {stopped,resumed,disposed:final===window.viewerTicks,canvases:document.querySelectorAll('canvas').length,lost:v.stage.renderer.getContext().isContextLost()};});assert.deepEqual(stopped,{stopped:true,resumed:true,disposed:true,canvases:0,lost:true});
  await context.close();
- const denied=await browser.newContext({viewport:{width:320,height:568}});await denied.addInitScript(()=>{sessionStorage.setItem('gyropup.prototype-notice','2026-10-29-v1');Object.defineProperty(window,'localStorage',{get(){throw new Error('Storage denied');}});});const blocked=await denied.newPage();blocked.on('pageerror',error=>errors.push(error.message));await blocked.goto(base+'/designer/build.html');await blocked.waitForFunction(()=>document.body.dataset.ready==='1');assert.match(await blocked.locator('.cad-progress-tools').textContent(),/Changes stay in this tab/);await denied.close();
- const firstEntry=await browser.newContext({viewport:{width:320,height:568}}),notice=await firstEntry.newPage();notice.on('pageerror',error=>errors.push(error.message));
+ phase('denied storage');const denied=await browser.newContext({viewport:{width:320,height:568}});await denied.addInitScript(()=>{sessionStorage.setItem('gyropup.prototype-notice','2026-10-29-v1');Object.defineProperty(window,'localStorage',{get(){throw new Error('Storage denied');}});});const blocked=await denied.newPage();blocked.on('pageerror',error=>errors.push(error.message));await blocked.goto(base+'/designer/build.html');await blocked.waitForFunction(()=>document.body.dataset.ready==='1');assert.match(await blocked.locator('.cad-progress-tools').textContent(),/Changes stay in this tab/);await denied.close();
+ phase('first entry notice lifecycle');const firstEntry=await browser.newContext({viewport:{width:320,height:568}}),notice=await firstEntry.newPage();notice.on('pageerror',error=>errors.push(error.message));
  await notice.goto(base+'/designer/kit/file-viewer.html?file=%2Fexports%2Fbody%2Fpost.stl&back=%2Fdesigner%2Fbuild.html');
  await notice.locator('#prototype-notice-dialog[open]').waitFor();await notice.locator('#prototype-notice-ack').click();await notice.waitForFunction(()=>window.__fileViewer?.root.dataset.state==='ready');
  const reopen=notice.locator('.file-nav .prototype-notice-reopen');await reopen.waitFor();
@@ -254,9 +262,11 @@ try{
   await deep.waitForFunction(n=>document.querySelectorAll('#print-now a[data-model-preview]').length>=n,card.downloads);
   await deepContext.close();
  }
- assert.deepEqual(errors,[]);await writeFile(`${out}/${engine.name()}-report.json`,JSON.stringify({base,version,shared,printedKey,summaries,sticky,publishedModels:inventory.files.length,guidePresentationModels:presentationModels.size,errors},null,2));console.log(`PASS ${engine.name()}: sortable semantic tables, fixed totals, shared persistent checklists, print status, atomic import/export, denied storage, ${inventory.files.length} original/preview mappings, real STL/STEP/3MF controls and stage disposal, and four phone layouts`);
+ phase('complete');assert.deepEqual(errors,[]);await writeFile(`${out}/${engine.name()}-report.json`,JSON.stringify({base,version,shared,printedKey,summaries,sticky,phases,pagination,publishedModels:inventory.files.length,guidePresentationModels:presentationModels.size,errors},null,2));console.log(`PASS ${engine.name()}: sortable semantic tables, fixed totals, shared persistent checklists, print status, atomic import/export, denied storage, ${inventory.files.length} original/preview mappings, real STL/STEP/3MF controls and stage disposal, and four phone layouts`);
 }catch(error){
- await page.screenshot({path:`${out}/${engine.name()}-failure.png`}).catch(()=>{});
- const state=await page.evaluate(()=>({url:location.pathname+location.hash,ready:document.body.dataset.ready,scrollY,parts:document.querySelector('#parts')?.open})).catch(()=>null);
- await writeFile(`${out}/${engine.name()}-failed.json`,JSON.stringify({status:'failed',error:String(error),state,errors},null,2));throw error;
+ const failure={status:'failed',error:String(error),phases,pagination,navigation,state:null,errors};
+ await writeFile(`${out}/${engine.name()}-failed.json`,JSON.stringify(failure,null,2));
+ failure.state=await page.evaluate(()=>({url:location.pathname+location.hash,ready:document.body.dataset.ready,documentState:document.readyState,visibility:document.visibilityState,focus:document.hasFocus(),active:document.activeElement?.tagName,scrollY,parts:document.querySelector('#parts')?.open})).catch(()=>null);
+ await writeFile(`${out}/${engine.name()}-failed.json`,JSON.stringify(failure,null,2));
+ await page.screenshot({path:`${out}/${engine.name()}-failure.png`,timeout:15000}).catch(()=>{});throw error;
 }finally{await browser.close();}

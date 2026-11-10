@@ -107,6 +107,22 @@
       "scope": "Actual Turret hover/selection/section/native fullscreen plus denied-fullscreen hit targets at1440/390/320 and Escape restores normal stacking.",
       "test_harness_file": "tests/site/assembly/test-build-workspace.mjs",
       "test_harness_sha256": "0fdeac92fe515126f297babd7bc80845f2c33f76a4056be6f01e3838592440bc"
+    },
+    {
+      "file": ".agents/plans/build-workspace-evidence/phone-bom-chromium-a76.json",
+      "sha256": "5551a1d14b0e330de8e08f3f25afdd0d778b566a7bbe8a4fb9f7dbcf6a9077d0",
+      "tested_site_revision": "a76c6eeb7ad16f4a1a414b34b20923cbef6abdb5",
+      "scope": "Targeted chromium diagnostic of actual320px Made table:120px sticky identity, full72x44 status labels beside it, both actual center hits and8columns/8headers. Ephemeral targeted probe, not a full procurement-suite pass.",
+      "image": ".agents/plans/build-workspace-evidence/phone-bom-chromium-a76.png",
+      "image_sha256": "9da92114a18a85477fe289906a4b7afc8fb3b615d33e42a896a25a891eac3df5"
+    },
+    {
+      "file": ".agents/plans/build-workspace-evidence/phone-bom-webkit-a76.json",
+      "sha256": "2069d9f615d3916c1a50419ee99b848c90438b79417d0494a2ea8a81c8c13689",
+      "tested_site_revision": "a76c6eeb7ad16f4a1a414b34b20923cbef6abdb5",
+      "scope": "Targeted webkit diagnostic of actual320px Made table:120px sticky identity, full72x44 status labels beside it, both actual center hits and8columns/8headers. Ephemeral targeted probe, not a full procurement-suite pass.",
+      "image": ".agents/plans/build-workspace-evidence/phone-bom-webkit-a76.png",
+      "image_sha256": "f302df936788f6451b9c2430ccdc8f82410fb741c626748c54cda08df088e4cc"
     }
   ],
   "retained_failures": [
@@ -114,7 +130,9 @@
     "Composite180-second320 layout cap after Robot24-step prefix",
     "Actual1200px three-pane190px free-width failure, corrected by1280single-sheet breakpoint",
     "bf41 pure mount200-event-loop-turn observer ended while valid project verification was still loading; replaced with actual state completion and held-response counterexample",
-    "bf41 denied fullscreen Print Explorer pointer intercepted by site navigation/footer because workspace ancestor stacking context stayed at3; corrected scoped expanded ancestor promotion"
+    "bf41 denied fullscreen Print Explorer pointer intercepted by site navigation/footer because workspace ancestor stacking context stayed at3; corrected scoped expanded ancestor promotion",
+    "a76 local nativeChromium full procurement240s cap; diagnostic rerun proved all24pages/279IDs reached but pagination consumed229s, then cap during next Setup action. No complete-suite pass or infinite-pager claim.",
+    "a76 localWebKit full procurement240s cap after all24pages/279IDs and import/export; actual60s Parts & prints link stability timeout on Progress, failureobserver also incomplete. Cause unclassified; no readiness or pager runtime change inferred."
   ],
   "checkpoint_harness_sha256": "90c36c5a70fa4bd71694651de77c317ca10ea84abd46b7ea353461c09df17b8a",
   "checkpoint_harness_commit": "1ec82f67222b7b0d8d9522f21b6ea2c649018e91"
