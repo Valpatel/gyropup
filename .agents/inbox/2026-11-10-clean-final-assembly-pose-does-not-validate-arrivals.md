@@ -62,3 +62,18 @@ have closed oriented edges (two oppositely directed uses of each edge, with no
 repeated-vertex triangles). An open-face negative fails that prerequisite. This
 is a tessellation topology check, not proof of geometric equivalence to BREP,
 absence of mesh self-intersection, continuous clearance or physical fit.
+
+The existing real Chrome playback scope additionally captured eight targeted
+arrivals across both physical sides, with 16 actual world-mesh vertices each.
+[The normalized canonical receipt](../plans/assembly-staging/browser-playback.json)
+preserves all 128 vertex deltas, original report/harness hashes and exact
+candidate guide/model/instruction/171-mesh correspondence. Its worst translation
+delta error is `2.08e-17 m` under the unchanged `1e-7 m` check. The build preceded
+the candidate commit and records base `33c4464b`; the receipt preserves that
+version alongside the measured staged-payload correspondence to `86514707`.
+It is not immutable candidate-version or full both-engine acceptance. The
+separate targeted poses have numeric vertex observations, not dedicated PNGs.
+The original owned ephemeral listener closed after browser teardown. Use
+`node .agents/plans/assembly-staging/run-playback-check.mjs` to repeat the same
+existing harness against a fresh isolated build, preserving source/version
+identity and closing its test listener in `finally`.
