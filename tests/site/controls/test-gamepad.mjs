@@ -82,9 +82,45 @@ try {
   await pad('axes', 0, [0, 0, 0, -1]);
   const tiltMax = await sim(() => +[...document.querySelectorAll('#panel .hud-slider')].find((l) => /^Tilt/.test(l.textContent)).querySelector('input').max);
   await until((m) => Math.abs(window.__sim.gun.tilt * 180 / Math.PI - m) < 1e-6, tiltMax);
-  await pad('axes', 0, [0, 0, 0, 1]);
-  await until(() => { const s = window.__sim, slider = [...document.querySelectorAll('#panel .hud-slider')].find((l) => /^Tilt/.test(l.textContent)).querySelector('input');
-    return Math.abs(s.gun.tilt * 180 / Math.PI - Math.max(+slider.min, -s.tiltLimitDeg())) < 1e-6; });
+  // Set up the lower-stop check separately. The stick uses clamped stage dt,
+  // so traversing the entire range also measures the software renderer's frame rate.
+  await pad('axes', 0, [0, 0, 0, 0]);
+  await until(() => window.__sim.gamepad.control.value('tilt') === 0);
+  const downStart = await sim(() => {
+    const s = window.__sim;
+    const slider = [...document.querySelectorAll('#panel .hud-slider')].find((l) => /^Tilt/.test(l.textContent)).querySelector('input');
+    const limit = Math.max(+slider.min, -s.tiltLimitDeg());
+    s.command.tiltDeg(limit + 4);
+    return { tilt: s.gun.tilt * 180 / Math.PI, limit };
+  });
+  assert.ok(Math.abs(downStart.tilt - downStart.limit - 4) < 1e-6, 'Lower-stop setup leaves four degrees for the stick to move');
+  const tiltTrace = await page.evaluateHandle(() => {
+    const s = window.__sim, axis = () => window.__fakePads.slots[0]?.axes[3];
+    let frames = 0, downFrames = 0, simulatedS = 0;
+    const off = s.stage.onFrame((_, dt) => {
+      frames++;
+      if (axis() === 1) { downFrames++; simulatedS += dt; }
+    });
+    return () => {
+      off();
+      return { tilt: s.gun.tilt * 180 / Math.PI, pan: s.gun.pan * 180 / Math.PI, axis: axis(), input: s.gamepad.control.value('tilt'),
+        frames, downFrames, simulatedS, visibility: document.visibilityState, stageError: document.body.dataset.stageError || null };
+    };
+  });
+  let tiltError;
+  try {
+    await pad('axes', 0, [0, 0, 0, 1]);
+    await until(() => { const s = window.__sim, slider = [...document.querySelectorAll('#panel .hud-slider')].find((l) => /^Tilt/.test(l.textContent)).querySelector('input');
+      return s.gamepad.control.value('tilt') === -1 && Math.abs(s.gun.tilt * 180 / Math.PI - Math.max(+slider.min, -s.tiltLimitDeg())) < 1e-6; });
+  } catch (error) {
+    tiltError = error;
+    throw error;
+  } finally {
+    let observed;
+    try { observed = await tiltTrace.evaluate(finish => finish()); await tiltTrace.dispose(); }
+    catch (error) { if (!tiltError) throw error; observed = { observationError: error.message }; }
+    if (tiltError) console.error('Lower tilt stop failure state:', JSON.stringify({ start: downStart, observed }));
+  }
   const { tilt, limit } = await sim(() => {
     const s = window.__sim;
     const slider = [...document.querySelectorAll('#panel .hud-slider')].find((l) => /^Tilt/.test(l.textContent)).querySelector('input');
