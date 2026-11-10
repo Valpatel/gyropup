@@ -15,7 +15,7 @@ const browser=await engine.launch(engine===chromium?{channel:process.env.PLAYWRI
 const context=await browser.newContext({viewport:{width:1280,height:900}});await context.addInitScript(()=>sessionStorage.setItem('gyropup.prototype-notice','2026-10-29-v1'));
 const page=await context.newPage(),errors=[];page.setDefaultTimeout(60000);page.on('pageerror',error=>errors.push(error.message));
 const navigation={};page.on('request',request=>{if(request.isNavigationRequest()&&request.frame()===page.mainFrame())Object.assign(navigation,{requested:new URL(request.url()).pathname,requestedAt:new Date().toISOString(),committed:null,domContentLoadedAt:null,loadedAt:null});});page.on('framenavigated',frame=>{if(frame===page.mainFrame())navigation.committed=new URL(frame.url()).pathname;});page.on('domcontentloaded',()=>navigation.domContentLoadedAt=new Date().toISOString());page.on('load',()=>navigation.loadedAt=new Date().toISOString());
-const phases=[],pagination=[];const phase=name=>{phases.push({name,at:new Date().toISOString()});console.log('PHASE',name);};
+const phases=[],pagination=[],photoFailure={intercepted:0,failures:[]};const phase=name=>{phases.push({name,at:new Date().toISOString()});console.log('PHASE',name);};
 // page.evaluate does not inherit Playwright's default action timeout: bound observers in Node too.
 const evaluate=page.evaluate.bind(page);page.evaluate=async(...args)=>{let timer;try{return await Promise.race([evaluate(...args),new Promise((_,reject)=>timer=setTimeout(()=>reject(new Error('Page observer exceeded existing60s budget during '+phases.at(-1)?.name)),60000))]);}finally{clearTimeout(timer);}};
 const ready=async()=>{await page.waitForFunction(()=>document.body.dataset.ready==='1');const details=page.locator('#build-details');if(await details.count())await details.evaluate(el=>el.open=true);};
@@ -152,8 +152,13 @@ try{
  // Every published original has its own adjacent directory preview and unchanged download.
  const directories=new Map();for(const file of inventory.files){const dir=file.path.slice(0,file.path.lastIndexOf('/')+1);if(!directories.has(dir))directories.set(dir,[]);directories.get(dir).push(file);}
  for(const [dir,files] of directories){const response=await context.request.get(base+dir);assert.equal(response.status(),200);const {document}=parseHTML(await response.text());for(const file of files){const name=file.path.split('/').pop(),original=[...document.querySelectorAll('a[data-model-original]')].find(a=>decodeURIComponent(new URL(a.getAttribute('href'),base+dir).pathname)===file.path);assert.ok(original,file.path+' original');const preview=original.nextElementSibling;assert.ok(preview.hasAttribute('data-model-preview'),file.path+' preview');assert.equal(new URL(preview.getAttribute('href'),base).searchParams.get('file'),file.path);assert.ok(original.hasAttribute('download'));}}
- phase('procurement media and phone layouts');await page.goto(base+'/designer/build.html');await ready();
+ phase('procurement media and phone layouts');
  const media=await(await context.request.get(base+'/catalog/images.json')).json();
+ // Arm the failure before navigation: lazy images may already be loaded by
+ // the time the table is ready, and a later route cannot undo a completed fetch.
+ page.on('requestfailed',request=>{if(request.url()===media.petg.image_url)photoFailure.failures.push(request.failure()?.errorText||'unknown');});
+ await page.route(url=>url.href===media.petg.image_url,async route=>{photoFailure.intercepted++;await route.abort('failed');});
+ await page.goto(base+'/designer/build.html');await ready();
  const shown=await page.locator('#made tr[data-part-key],#queue tr[data-part-key^="print/body/"]').evaluateAll(rows=>rows.map(row=>({key:row.dataset.partKey.replace(/^(made|print)\//,''),src:row.querySelector('img')?.getAttribute('src')})));
  const framePlan=await(await context.request.get(base+'/exports/body/print-plan.json')).json();
  const expectedShown=Object.keys(framePlan.parts).map(key=>'body/'+key);
@@ -166,9 +171,9 @@ try{
  assert.deepEqual(shown.map(row=>row.key).sort(),expectedShown.sort(),'Every made-to-order and first-frame BOM row is shown');
  for(const row of shown){assert.ok(media[row.key]?.path,row.key+' has a scoped geometry image');assert.equal(new URL(row.src,base+'/designer/build.html').pathname,'/'+media[row.key].path,row.key);}
  for(const key of ['pa6-cf','petg','tpu95','tpu95-gyroid']){const img=page.locator('#orders tr[data-part-key="material/'+key+'"] img');if(await img.count())assert.equal(await img.getAttribute('src'),media[key].image_url,key);}
- await page.route(url=>url.href===media.petg.image_url,route=>route.abort('failed'));
  const filament=page.locator('#orders tr[data-part-key="material/petg"]');await view('buy');await page.locator('#orders').getByRole('searchbox').fill(await filament.getAttribute('data-part-label'));
  await filament.locator('.thumb').scrollIntoViewIfNeeded();await filament.locator('.thumb.source').waitFor();assert.equal(await filament.locator('.thumb.source').getAttribute('href'),media.petg.source_url,'Unavailable remote photos retain their source link');
+ assert.ok(photoFailure.intercepted>0&&photoFailure.failures.length>0,'Fallback follows an actual intercepted, failed image request');
  const modelLink=page.locator('#made a[data-model-preview]').first();await modelLink.waitFor();assert.ok((await modelLink.getAttribute('href')).includes('file-viewer.html?'));
  for(const [width,height] of [[320,568],[568,320],[390,844],[844,390]]){await page.setViewportSize({width,height});await page.locator('#made .cad-table-tools').scrollIntoViewIfNeeded();const layout=await page.evaluate(()=>({width:innerWidth,scroll:document.documentElement.scrollWidth,controls:[...document.querySelectorAll('#made .cad-table-tools input,#made .cad-table-tools select')].map(el=>({width:el.getBoundingClientRect().width,height:el.getBoundingClientRect().height}))}));assert.ok(layout.scroll<=width+1,JSON.stringify(layout));assert.ok(layout.controls.every(r=>r.height>=44&&r.width<=width),JSON.stringify(layout));await page.screenshot({path:`${out}/${engine.name()}-${width}x${height}.png`});}
  phase('strict phone sticky identity and status targets');await page.setViewportSize({width:320,height:568});await page.locator('#made tbody tr').first().scrollIntoViewIfNeeded();await page.evaluate(()=>{const scroll=document.querySelector('#made .cad-table-scroll');scroll.scrollLeft=scroll.scrollWidth;});const columns=await page.locator('#made table').evaluate(table=>({columns:table.querySelectorAll(':scope > colgroup > col').length,headers:table.tHead.rows[0].cells.length}));assert.equal(columns.columns,columns.headers,'Fixed table columns include every enhanced status header');
@@ -262,9 +267,9 @@ try{
   await deep.waitForFunction(n=>document.querySelectorAll('#print-now a[data-model-preview]').length>=n,card.downloads);
   await deepContext.close();
  }
- phase('complete');assert.deepEqual(errors,[]);await writeFile(`${out}/${engine.name()}-report.json`,JSON.stringify({base,version,shared,printedKey,summaries,sticky,phases,pagination,publishedModels:inventory.files.length,guidePresentationModels:presentationModels.size,errors},null,2));console.log(`PASS ${engine.name()}: sortable semantic tables, fixed totals, shared persistent checklists, print status, atomic import/export, denied storage, ${inventory.files.length} original/preview mappings, real STL/STEP/3MF controls and stage disposal, and four phone layouts`);
+ phase('complete');assert.deepEqual(errors,[]);await writeFile(`${out}/${engine.name()}-report.json`,JSON.stringify({base,version,shared,printedKey,summaries,sticky,phases,pagination,photoFailure,publishedModels:inventory.files.length,guidePresentationModels:presentationModels.size,errors},null,2));console.log(`PASS ${engine.name()}: sortable semantic tables, fixed totals, shared persistent checklists, print status, atomic import/export, denied storage, ${inventory.files.length} original/preview mappings, real STL/STEP/3MF controls and stage disposal, and four phone layouts`);
 }catch(error){
- const failure={status:'failed',error:String(error),phases,pagination,navigation,state:null,errors};
+ const failure={status:'failed',error:String(error),phases,pagination,photoFailure,navigation,state:null,errors};
  await writeFile(`${out}/${engine.name()}-failed.json`,JSON.stringify(failure,null,2));
  failure.state=await page.evaluate(()=>({url:location.pathname+location.hash,ready:document.body.dataset.ready,documentState:document.readyState,visibility:document.visibilityState,focus:document.hasFocus(),active:document.activeElement?.tagName,scrollY,parts:document.querySelector('#parts')?.open})).catch(()=>null);
  await writeFile(`${out}/${engine.name()}-failed.json`,JSON.stringify(failure,null,2));

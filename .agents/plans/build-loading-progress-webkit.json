@@ -1,0 +1,18 @@
+{
+  "status": "passed",
+  "engine": "webkit",
+  "version": {
+    "revision": "8c2019598d3eba2013cdc66e6c56882fc5b1dfea",
+    "assets": "462b7d3be8b9d640380a",
+    "history": true,
+    "built": "2026-11-10T15:03:25.542Z"
+  },
+  "cases": [
+    "Real first/second mesh holds stay at 0/1 completed parts; desktop/mobile progress is visible",
+    "Failed replacement ends loading and preserves the old model; retry loads the selected model",
+    "A superseded real request cannot change or dismiss the current progress",
+    "Initial corrupt mesh ends progress; retry feedback remains visible from text fallback and returns real 3D",
+    "A failed older index retry cannot dismiss progress for a newer retry still waiting on a real mesh"
+  ],
+  "errors": []
+}
