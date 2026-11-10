@@ -1,0 +1,33 @@
+{
+  "schema": "gyropup.current-highlights-starting-evidence/1",
+  "date": "2026-11-10",
+  "base": "1f813ab7ced8816955a40c4983548b3c239be03e",
+  "old_reel_source": "76f1e243d1e87295ce085e3db28390eed12ec224",
+  "old_source_inputs": 193,
+  "actual_old_source_guard_error": "Source changed: software/site/designer/robot_v2.js",
+  "changed_existing_inputs": [
+    "software/site/designer/robot_v2.js",
+    "software/site/designer/sim.js",
+    "software/site/designer/turret3d.js"
+  ],
+  "preserved_sha256": {
+    "software/site/assets/highlights/receipt.json": "c7511868b14e7ae96e4a14453bb125b478263df96b630e7e4494087e0e682090",
+    "software/site/assets/highlights/capture-receipt.json": "348901ff0c388a089ac57791ac28f9e451a239b6e77d8ce46f3e0d97a839186c",
+    "software/site/assets/highlights/capture-frames.json": "defa53a1dcd19af84af1b98db07c66fceb46d996156f274ae390385872a18a9c",
+    "software/site/assets/highlights/gyropup-highlights.mp4": "a335c86a4e059b23c12af56847ffbf704ca64dc2bddb4a613d7aed269dd5ebb8",
+    "software/site/assets/highlights/gyropup-highlights.webm": "cca6cff82f6bf9a821e938a96b54b53f9f1882640986d2d51bfd13811e2beaa1",
+    "software/site/assets/highlights/gyropup-highlights.webp": "7607565957afe5f8d39e65b17b12e85459890e819c11e93155cdce3e9cad241f",
+    "tests/site/content/test-prototype-session.mjs": "997a39297102005095ee42adc9c6397552e3dc550f0f42494ad554eccf4ecefb",
+    "hardware/exports/leg/rig_jump.mp4": "3e5188b87059d75c23e5eb48f32510aa5b4e4c5726e66ef3c43e86b15d28bc9c",
+    "hardware/exports/leg/rig-results.json": "171a1d4f2195468a235313fce29e5dde1272499b0d0934e22ad2bab5564ba902",
+    "hardware/exports/leg/fea/hip-frame-e1-media/hip-frame-e1.mp4": "76518421335431320a7a60c58f66cb817c0f4b5b1b0e9993a62f68d87d065581",
+    "hardware/exports/leg/fea/hip-frame-e1-media/field-receipt.json": "2eeeb29e4c635607c1f107e433cac0cb82fe4e7b8d88ced127d9ded116b21f1e",
+    "hardware/exports/leg/fea/hip-frame-e1-media/video-receipt.json": "c0e3a6c73a8d31107dd6e71a420ca40b20734064f2283340b0346edd07bbc684",
+    "hardware/exports/leg/fea/hip-frame-e1-media/hip_frame-E1.json": "70f1d67fe40a03eeb181e741e9674d9e2f5bbbee7a431494db382ef9e2ff3d1f"
+  },
+  "source_authority": "null, separate adoption pending",
+  "capture": false,
+  "encoding": false,
+  "native": false,
+  "adoption": false
+}

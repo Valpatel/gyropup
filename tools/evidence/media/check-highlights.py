@@ -5,11 +5,13 @@ import copy
 import hashlib
 import importlib.util
 import json
+import re
 from functools import lru_cache
 import sys
 from pathlib import Path
 import struct
 import subprocess
+from urllib.parse import urlsplit
 
 ROOT = (Path(__file__).resolve().parents[3])
 sys.path.insert(0, str(ROOT))
@@ -29,6 +31,10 @@ MOVIES = ['gyropup-highlights.mp4', 'gyropup-highlights.webm']
 POSTER = 'gyropup-highlights.webp'
 CAPTURE_COUNTS = {'turret': 120, 'mechanism': 90, 'battle': 180, 'character': 90}
 TURRET_GROUPS = {'base', 'pan', 'tilt', 'pinion', 'dial', 'wheel_l', 'wheel_r', 'flap'}
+CURRENT_SOURCE = {'file': 'web/robot-current/manifest.json', 'sha256': '3183870617a7ca3182c4a79a2afd8890a546ac2a3353cacc98e5295a63e64fe3'}
+CURRENT_NATIVE = '3a40891962b0b0a04625e070700f1d130bea3c7b'
+CURRENT_COLLECTION = '7c2f1905474a8c89bdc477ea472f5c826e57c674aa222f2134f6a0a4138d5a67'
+CURRENT_LABEL = 'Collection266 current unqualified WIP; current mass/COM and physics pending; combined hub/motor internals unresolved.'
 # Pixel regions exclude all added lower thirds and the original E1 captions.
 SEGMENTS = [
     dict(id='turret', start=0, frames=120, samples=[5, 110], crop=[280, 120, 720, 430],
@@ -99,12 +105,82 @@ def safe_path(root, name):
     return path
 
 
-def required_capture_inputs():
+def current_robot_contract():
+    """Bind the separately adopted presentation to original bytes, without CAD or a browser."""
+    authority = project_path('designer/robot_current_source.js').read_text()
+    literal = re.search(r'^export const CURRENT_ROBOT_SOURCE\s*=\s*(null|\{.*?\})\s*;\s*$', authority, re.M | re.S)
+    require(literal is not None and json.loads(literal[1]) == CURRENT_SOURCE,
+            'Reviewed current robot authority must be adopted before capture')
+
+    def member(public):
+        require(isinstance(public, str) and public and not public.startswith('/')
+                and '..' not in Path(public).parts and Path(public).as_posix() == public,
+                'Unsafe current robot member')
+        path = ROOT / source_for_public(public)
+        safe_path(ROOT, source_for_public(public))
+        require(path.is_file() and not any(p.is_symlink() for p in (path, *path.parents)),
+                'Nonregular current robot member: ' + public)
+        return path
+
+    manifest = member(CURRENT_SOURCE['file'])
+    require(file_sha(manifest) == CURRENT_SOURCE['sha256'], 'Current presentation manifest bytes differ')
+    model = read(manifest)
+    directory = CURRENT_SOURCE['file'].rsplit('/', 1)[0] + '/'
+    collection_file = directory + 'collection.json'
+    require(file_sha(member(collection_file)) == CURRENT_COLLECTION, 'Original current collection bytes differ')
+    collection = read(member(collection_file))
+    require(model['schema'] == 'gyropup.current-robot-presentation/1' and collection['schema'] == 'gyropup.robot-assembly-parts/1'
+            and collection['frame'] == 'robot: x forward,y left,z up; hip-axis origin' and model['units'] == collection['units'] == 'mm'
+            and model['up'] == collection['up'] == 'z' and model['native_source'] == collection['source_commit'] == CURRENT_NATIVE
+            and model['collection_sha256'] == CURRENT_COLLECTION, 'Current native/frame identity differs')
+    require(model['current_inputs'] == collection['inputs'] and len(model['current_inputs']) == 95
+            and model['native_runtime'] == collection['runtime']
+            and model['native_producer_inputs'] == collection['producer_inputs']
+            and len(model['conversion']['inputs']) == 7, 'Current/native/conversion provenance differs')
+    parts = model['parts']
+    require(len(parts) == 224 and len({p['name'] for p in parts}) == len({p['file'] for p in parts}) == 224,
+            'Complete unique current224 inventory required')
+    original = {p['name']: (p['file'], p['sha256']) for p in collection['parts']}
+    require(len(collection['parts']) == len(original) == 224
+            and {p['name']: (p['file'], p['sha256']) for p in parts} == original, 'Current parts differ from original collection')
+    names = sorted(original)
+    counts = {'body': sum(not n.startswith(('L.', 'R.', 'turret.')) for n in names),
+              'leg': sum(n.startswith(('L.', 'R.')) for n in names), 'turret': sum(n.startswith('turret.') for n in names)}
+    require(counts == model['ownership_counts'] == {'body': 82, 'leg': 80, 'turret': 62}, 'Current anatomical inventory differs')
+    assets = {CURRENT_SOURCE['file']: CURRENT_SOURCE['sha256']}
+    for part in parts:
+        require(Path(part['file']).parent.as_posix() == 'meshes', 'Current mesh must be in its original directory')
+        public = directory + part['file']
+        require(file_sha(member(public)) == part['sha256'], 'Current mesh bytes differ: ' + part['name'])
+        assets[public] = part['sha256']
+    meshes = member(directory + parts[0]['file']).parent
+    require({p.name for p in meshes.iterdir()} == {Path(p['file']).name for p in parts}, 'Current mesh membership differs')
+    # The renderer loads the presentation and STLs. The original collection is
+    # local provenance, not a falsely claimed browser response.
+    sources = {source_for_public(collection_file): CURRENT_COLLECTION}
+    for inputs in (model['current_inputs'], model['conversion']['inputs']):
+        for name, digest in inputs.items():
+            require(isinstance(name, str) and name and not name.startswith('/')
+                    and '..' not in Path(name).parts and Path(name).as_posix() == name, 'Unsafe current source member')
+            path = safe_path(ROOT, name)
+            raw = ROOT / name
+            require(raw.is_file() and not any(p.is_symlink() for p in (raw, *raw.parents))
+                    and file_sha(path) == digest, 'Current source/conversion bytes differ: ' + name)
+            require(name not in sources or sources[name] == digest, 'Conflicting current source identity')
+            sources[name] = digest
+    return dict(source=CURRENT_SOURCE, native_source=CURRENT_NATIVE, collection_sha256=CURRENT_COLLECTION,
+                parts=names, turret_parts=[n for n in names if n.startswith('turret.')],
+                asset_hashes=assets, source_hashes=sources)
+
+
+def required_capture_inputs(current=None):
     """Derive geometry closure independently of the capture's optional inputs map."""
     paths = {
         '/designer/' + name for name in (
             'sim.js', 'robot_v2.js', 'current_turret.js', 'turret_bench.js', 'turret_reload.js',
             'robot3d.js', 'cadrig.js', 'turret3d.js', 'model.js', 'sfx.js', 'robot_actions.js',
+            'current_robot.js', 'robot_current_source.js', 'robot_identity.js', 'robot_kinematics.js',
+            'robot_presentations.js', 'robot_sensors.js', 'kit/assembly/guide.js', 'kit/assembly/playback.js',
             'character/eyes.js', 'character/talk.js', 'kit/stage.js', 'kit/portal-data.js',
             'kit/smooth_zoom.js', 'kit/panel.js', 'kit/loading.js',
             'kit/vendor/three/three.module.min.js', 'kit/vendor/three/addons/loaders/STLLoader.js',
@@ -112,26 +188,21 @@ def required_capture_inputs():
             'kit/vendor/three/addons/geometries/RoundedBoxGeometry.js')
     }
     paths.add('/exports/turret/limits.json')
-    for directory in ('exports/sim/turret_box', 'exports/sim/v2/rig', 'exports/sim/v2/leg-attachments'):
+    for directory in ('exports/sim/turret_box',):
         paths.add('/' + directory + '/manifest.json')
         manifest = read(project_path(directory) / 'manifest.json')
-        if directory.endswith('/rig'):
-            # Current presentation deliberately excludes the archived turret's
-            # fixed meshes; recorded modes own those meshes and their old frames.
-            parts = [p for p in manifest['body'] if not p['name'].startswith('turret_')]
-            parts += [p for group in manifest['links'].values() for p in group]
-        else:
-            parts = manifest['parts']
+        parts = manifest['parts']
         paths.update('/' + directory + '/' + part['file'] for part in parts)
-    return paths
+    return paths | {'/' + path for path in (current or current_robot_contract())['asset_hashes']}
 
 
-def expected_sources(capture):
+def expected_sources(capture, current=None):
     paths = {name.lstrip('/') for name, item in capture['inputs'].items() if item.get('repoSha256')}
     paths.update({'designer/kit/vendor/fonts/inter.woff2', LEG, E1 + 'hip-frame-e1.mp4',
                   E1 + 'field-receipt.json', E1 + 'video-receipt.json', E1 + 'hip_frame-E1.json',
                   'exports/leg/fea/summary.json', 'exports/leg/fea/media.json'})
-    return {source_for_public(name) for name in paths} | {CAPTURE_SCRIPT, *CAPTURE_LOCATIONS, *ENCODING_SOURCES}
+    return ({source_for_public(name) for name in paths} | {CAPTURE_SCRIPT, *CAPTURE_LOCATIONS, *ENCODING_SOURCES}
+            | set((current or current_robot_contract())['source_hashes']))
 
 
 def historical_leg():
@@ -151,15 +222,21 @@ def check_leg_report(receipt, report_bytes):
             "The leg report on disk is not the pinned clip's report; re-record the clip with it and move LEG_REVISION")
 
 
-def validate_source_bindings(source_revision, source_hashes, capture):
+def validate_source_bindings(source_revision, source_hashes, capture, current=None):
     """Validate actual captured/committed inputs before encoding and on replay."""
+    require(capture.get('format') == 2, 'A fresh complete-current capture is required')
     require(full_revision(source_revision) and full_revision(capture.get('sourceRevision')), 'Use immutable capture and encoding source revisions')
     require(capture.get('servedVersion', {}).get('revision') == capture['sourceRevision'], 'Captured artifact revision differs from capture source')
     require(set(capture.get('locationContracts', {})) == set(CAPTURE_LOCATIONS), 'Incomplete capture location inputs')
-    required = required_capture_inputs()
+    current = current or current_robot_contract()
+    require(capture.get('currentRobotSource') == current['source'], 'Capture current presentation authority differs')
+    required = required_capture_inputs(current)
     require(required <= set(capture['inputs']), 'Required renderer or manifest-derived mesh missing from capture')
     require(all(capture['inputs'][name].get('repoSha256') for name in required), 'Required capture input has no repository identity')
-    require(set(source_hashes) == expected_sources(capture), 'Incomplete source closure')
+    require(set(source_hashes) == expected_sources(capture, current), 'Incomplete source closure')
+    for name, digest in current['asset_hashes'].items():
+        item = capture['inputs']['/' + name]
+        require(item['repoSha256'] == item['servedSha256'] == digest, 'Served current asset differs: ' + name)
     for name, digest in source_hashes.items():
         require(file_sha(safe_path(ROOT, name)) == digest, f'Source changed: {name}')
         require(git_sha(source_revision, name) == digest, f'Encoding source differs from recorded revision: {name}')
@@ -185,12 +262,26 @@ def validate_source_bindings(source_revision, source_hashes, capture):
                 require(item['servedSha256'] == item['repoSha256'], f'Served simulation differs: {name}')
 
 
+def validate_current_shot(shot, current):
+    require(sorted(shot['info']['parts']) == current['parts'], 'Wrong complete current robot snapshot')
+    require(sorted(shot['info']['turretParts']) == current['turret_parts'], 'Wrong prefixed current turret snapshot')
+    identity = shot['info']['presentation']
+    require(identity['mode'] == 'current' and identity['robotId'] == 'collection266'
+            and identity['nativeSource'] == CURRENT_NATIVE and identity['collectionSha256'] == CURRENT_COLLECTION
+            and all(urlsplit(identity[key]).path == '/' + current['source']['file']
+                    for key in ('bodySource', 'legSource', 'turretSource')), 'Wrong active current presentation')
+    expected = dict(mode='current', nativeSource=CURRENT_NATIVE, collectionSha256=CURRENT_COLLECTION, parts=224)
+    require(shot['observations'] and all(row.get('current') == expected for row in shot['observations']), 'Current presentation changed during capture')
+
+
 def validate_bindings(receipt, capture, frame_manifest, out=OUT, raw_frames=None):
     require(receipt['schema'] == 1, 'Unknown highlights receipt schema')
     require(receipt['format'] == dict(width=WIDTH, height=HEIGHT, fps=FPS, frames=FRAMES, seconds=22, audio=False),
             'Wrong highlights format')
     require(receipt['segments'] == SEGMENTS, 'Edit timeline or factual captions changed')
-    validate_source_bindings(receipt.get('source_revision'), receipt['source_hashes'], capture)
+    current = current_robot_contract()
+    validate_source_bindings(receipt.get('source_revision'), receipt['source_hashes'], capture, current)
+    require(receipt['capture']['current_model'] == CURRENT_LABEL, 'Current model qualification label differs')
     shots = {shot['id']: shot for shot in capture['shots']}
     require(set(shots) == set(CAPTURE_COUNTS), 'Incomplete current-model capture')
     require(set(frame_manifest['shots']) == set(CAPTURE_COUNTS), 'Incomplete captured frame manifest')
@@ -201,7 +292,10 @@ def validate_bindings(receipt, capture, frame_manifest, out=OUT, raw_frames=None
     for name, count in CAPTURE_COUNTS.items():
         shot = shots[name]
         require(shot['frames'] == count and len(shot['observations']) == count, f'Wrong capture count: {name}')
-        require(sorted(shot['info']['parts']) == (bench_names if name in ('turret', 'mechanism') else current_names), f'Wrong model snapshot: {name}')
+        if name in ('turret', 'mechanism'):
+            require(sorted(shot['info']['parts']) == bench_names, f'Wrong bench snapshot: {name}')
+        else:
+            validate_current_shot(shot, current)
         require(all(not row['error'] for row in shot['observations']), f'Capture stage error: {name}')
         rows = frame_manifest['shots'][name]
         require(len(rows) == count, f'Wrong frame manifest count: {name}')
@@ -340,6 +434,7 @@ def validate_media(out=OUT):
 
 def negative_controls(receipt, capture, frames, out, decoded):
     rejected = []
+    current = current_robot_contract()
     def fault(label, mutate):
         r, c, f = copy.deepcopy(receipt), copy.deepcopy(capture), copy.deepcopy(frames)
         mutate(r, c, f)
@@ -357,6 +452,14 @@ def negative_controls(receipt, capture, frames, out, decoded):
         c['inputs'].pop('/designer/current_turret.js')
         r['source_hashes'].pop(source_for_public('designer/current_turret.js'))
     fault('self-consistent required renderer omission', omit_module)
+    def omit_current(r, c, f, path):
+        c['inputs'].pop('/' + path)
+        r['source_hashes'].pop(source_for_public(path))
+    for path in (CURRENT_SOURCE['file'], next(p for p in current['asset_hashes'] if p.endswith('.stl')),
+                 'designer/current_robot.js', 'designer/kit/assembly/playback.js'):
+        fault('self-consistent current input omission: ' + path, lambda r,c,f,path=path: omit_current(r,c,f,path))
+    fault('served current manifest', lambda r,c,f: c['inputs']['/' + CURRENT_SOURCE['file']].__setitem__('servedSha256', '0'*64))
+    fault('current authority', lambda r,c,f: c['currentRobotSource'].__setitem__('sha256', '0'*64))
     def omit_limits(r, c, f):
         c['inputs'].pop('/exports/turret/limits.json')
         r['source_hashes'].pop(source_for_public('exports/turret/limits.json'))
@@ -373,7 +476,9 @@ def negative_controls(receipt, capture, frames, out, decoded):
     fault('served simulator', lambda r,c,f: c['inputs']['/designer/sim.js'].__setitem__('servedSha256', '0'*64))
     fault('stage instrumentation', lambda r,c,f: c['inputs']['/designer/kit/stage.js'].__setitem__('servedSha256', '0'*64))
     fault('frame count', lambda r,c,f: f['shots']['battle'].pop())
-    fault('wrong turret name with unchanged part count', lambda r,c,f: next(s for s in c['shots'] if s['id']=='battle')['info']['parts'].__setitem__(0, 'older_turret'))
+    fault('wrong original name with unchanged part count', lambda r,c,f: next(s for s in c['shots'] if s['id']=='battle')['info']['parts'].__setitem__(0, 'older_body'))
+    fault('wrong current holder despite current mode', lambda r,c,f: next(s for s in c['shots'] if s['id']=='battle')['info']['presentation'].__setitem__('robotId', 'gyropup-v2-rig'))
+    fault('presentation changes during capture', lambda r,c,f: next(s for s in c['shots'] if s['id']=='character')['observations'][0]['current'].__setitem__('mode', 'recorded'))
     fault('historical load baseline', lambda r,c,f: r['historical_leg'].__setitem__('half_mass_kg', 16.25))
     def leg_report_drift(r, c, f):
         report = json.loads(project_path(r['historical_leg']['report']).read_bytes())
@@ -404,5 +509,6 @@ if __name__ == '__main__':
     parser = argparse.ArgumentParser(description=__doc__)
     parser.add_argument('--output', type=Path, default=OUT)
     parser.add_argument('--frames', type=Path, help='Also verify the original PNGs when locally available')
+    parser.add_argument('--capture-contract', action='store_true', help='Pure current authority/data preflight; no capture or codecs')
     args = parser.parse_args()
-    print(json.dumps(validate(args.output.resolve(), args.frames), indent=2))
+    print(json.dumps(current_robot_contract() if args.capture_contract else validate(args.output.resolve(), args.frames), indent=2))

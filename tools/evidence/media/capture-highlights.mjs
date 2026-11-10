@@ -6,6 +6,7 @@ import {createHash} from 'node:crypto';
 import {execFileSync} from 'node:child_process';
 import {chromium} from '@playwright/test';
 import {acknowledgePrototypeNotice} from '../../../tests/site/content/test-prototype-session.mjs';
+import {CURRENT_ROBOT_SOURCE} from '../../../software/site/designer/robot_current_source.js';
 const base=(process.env.SITE_URL||'http://127.0.0.1:8983').replace(/\/$/,''),out=process.env.CAPTURE_OUTPUT||'/tmp/gyropup-highlights-frames';
 const width=1280,height=720,fps=30,seed=1042026;
 const repository=new URL('../../../',import.meta.url);
@@ -13,10 +14,14 @@ const locationFiles=['tools/site/source-layout.mjs','tools/site/source-layout.js
 const locationContracts=Object.fromEntries(await Promise.all(locationFiles.map(async file=>[file,createHash('sha256').update(await readFile(new URL(file,repository))).digest('hex')])));
 const shots=[{id:'turret',seconds:4,bench:true},{id:'mechanism',seconds:3,bench:true},{id:'battle',seconds:6},{id:'character',seconds:3}];
 const only=process.env.CAPTURE_SHOT,limit=Number(process.env.CAPTURE_FRAMES||0);
+// Source/data preflight runs before any browser: null authority or missing adopted
+// bytes may never silently record the earlier interim body as the current model.
+const current=JSON.parse(execFileSync('python3',['-B',new URL('./check-highlights.py',import.meta.url).pathname,'--capture-contract'],{cwd:repository,encoding:'utf8'}));
+assert.deepEqual(CURRENT_ROBOT_SOURCE,current.source);
 await mkdir(out,{recursive:true});
 const browser=await chromium.launch({channel:process.env.PLAYWRIGHT_CHANNEL === 'chromium' ? undefined : 'chrome',headless:true,args:['--no-sandbox','--use-gl=angle','--use-angle=swiftshader','--enable-unsafe-swiftshader']});
 const hash=b=>createHash('sha256').update(b).digest('hex');
-const report={format:1,sourceRevision:execFileSync('git',['rev-parse','HEAD'],{encoding:'utf8'}).trim(),recipeSha256:hash(await readFile(new URL(import.meta.url))),width,height,fps,seed,
+const report={format:2,currentRobotSource:current.source,sourceRevision:execFileSync('git',['rev-parse','HEAD'],{encoding:'utf8'}).trim(),recipeSha256:hash(await readFile(new URL(import.meta.url))),width,height,fps,seed,
   browser:browser.version(),locationContracts,instrumentation:'Expose the existing stage callback array to the recorder; stop its RAF loop, advance its callbacks at 60Hz with a fixed performance clock and seeded random source, then explicitly render each captured frame. No model or projectile code is replaced.',shots:[],inputs:{}};
 report.servedVersion=await (await fetch(base+'/version.json')).json();
 try{
@@ -38,7 +43,7 @@ for(const shot of shots.filter(s=>!only||s.id===only)){
   await route.fulfill({response,body:text.replace(needle,needle+' window.__captureCallbacks = callbacks;')});
  });
  await page.goto(base+'/designer/sim.html?run=none&sound=0&panel=0&light=.55'+(shot.bench?'&design=turret-box':'&demo=1'));
- await page.waitForFunction(bench=>document.body.dataset.ready==='1'&&window.__sim?.talk&&(bench?window.__sim.bench()?.active:window.__sim.state.robot?.presentation.mode==='current'),shot.bench,{timeout:90000});
+ await page.waitForFunction(({bench,native,collection})=>document.body.dataset.ready==='1'&&window.__sim?.talk&&(bench?window.__sim.bench()?.active:window.__sim.state.robot?.presentation?.nativeSource===native&&window.__sim.state.robot?.presentation?.collectionSha256===collection),{bench:shot.bench,native:current.native_source,collection:current.collection_sha256},{timeout:90000});
  await page.evaluate(async({shot,width,height})=>{
   const s=window.__sim,stage=s.stage,THREE=await import('/designer/kit/vendor/three/three.module.min.js');
   stage.stop();s.sfx.setEnabled(false);s.talk.stop();stage.controls.enabled=false;stage.controls.enableDamping=false;
@@ -68,7 +73,8 @@ for(const shot of shots.filter(s=>!only||s.id===only)){
   const frames=[];
   window.__highlightCapture={
    info:{bounds:box.toArray?.()||[...box.min.toArray(),...box.max.toArray()],center:center.toArray(),size:size.toArray(),distance,
-    parts:shot.bench?s.bench().api.mechanism.parts.map(p=>p.e.name):s.state.robot.turret.model.parts.map(p=>p.entry.name)},
+    parts:shot.bench?s.bench().api.mechanism.parts.map(p=>p.e.name):[...new Set(s.state.robot.parts.map(p=>p.entry.name))],
+    ...(!shot.bench?{turretParts:[...new Set(s.state.robot.turret.model.parts.map(p=>p.entry.name))],presentation:s.state.robot.presentation}:{})},
    frame(index){
     step();step();
     const progress=index/(shot.seconds*30-1),angle=baseAngle+(shot.id==='battle'?.10:shot.id==='mechanism'?.12:.42)*(progress-.5);
@@ -79,11 +85,13 @@ for(const shot of shots.filter(s=>!only||s.id===only)){
     const observation={frame:index,shots:shot.bench?s.bench().api.state.shots:s.demo.shots,hits:shot.bench?s.bench().api.state.hits:s.demo.hits,
       targetsDown:shot.bench?s.bench().api.targets.plates.filter(p=>p.down).length:[...s.liveTargets.values()].filter(p=>p.down).length,
       error:document.body.dataset.stageError||null};
+    if(!shot.bench){const p=s.state.robot.presentation;observation.current={mode:p.mode,nativeSource:p.nativeSource,collectionSha256:p.collectionSha256,parts:new Set(s.state.robot.parts.map(p=>p.entry.name)).size};}
     frames.push(observation);return stage.renderer.domElement.toDataURL('image/png');
    },get observations(){return frames;}
   };
  },{shot,width,height});
  const info=await page.evaluate(()=>window.__highlightCapture.info),count=limit||shot.seconds*fps;
+ if(!shot.bench){assert.deepEqual([...info.parts].sort(),current.parts);assert.deepEqual([...info.turretParts].sort(),current.turret_parts);}
  for(let i=0;i<count;i++){
   const data=await page.evaluate(i=>window.__highlightCapture.frame(i),i);
   const bytes=Buffer.from(data.split(',')[1],'base64');
