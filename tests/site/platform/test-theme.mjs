@@ -79,6 +79,9 @@ test('every page loads web/theme.js and then web/theme.css before its other styl
   assert.ok(pages.length > 100, 'the built pages');
   for (const file of pages) {
     const head = readFileSync(file, 'utf8').split('</head>')[0];
+    const icons=[...head.matchAll(/<link\b[^>]*\brel="icon"[^>]*>/g)];
+    assert.equal(icons.length,1,`${path.relative(dist,file)}: one canonical favicon`);
+    assert.match(icons[0][0],/href="\/web\/favicon\.svg\?v=[0-9a-f]{20}"/,`${path.relative(dist,file)}: versioned crystal favicon`);
     const script = head.search(/<script src="\/web\/theme\.js(?:\?v=[^"]*)?"><\/script>/), sheet = head.search(/<link rel="stylesheet" href="\/web\/theme\.css(?:\?v=[^"]*)?">/);
     const firstSheet = head.search(/<link rel="stylesheet"/);
     assert.ok(script >= 0 && sheet > script && sheet === firstSheet, path.relative(dist, file));
