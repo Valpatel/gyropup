@@ -1,5 +1,6 @@
 """Original-byte provenance negatives; no synthetic fixture is native evidence."""
 import copy
+import os
 from pathlib import Path
 import subprocess
 import sys
@@ -18,7 +19,7 @@ class OriginalNativeBytes(unittest.TestCase):
            'native_geometry':{'file':'breps/part.brep','sha256':digest(raw),'shape_sha256':'c'*64,'matrix':IDENTITY[:]} }],
            'native_geometry':{'schema':'gyropup.robot-native-parts/1','units':'mm','up':'z','frame':'assembled robot CAD mm/Z-up',
                               'format':'OCCT BREP v1 without triangulation or normals',
-                              'hash_platform':{'fixture':True},'source_correspondence':'Synthetic fixture, never native evidence'}}
+                              'hash_platform':{'machine':'synthetic-fixture','system':'synthetic-fixture'},'source_correspondence':'Synthetic fixture, never native evidence'}}
         return c,raw
 
     def bundle(self,c):
@@ -64,6 +65,34 @@ class OriginalNativeBytes(unittest.TestCase):
         import json
         collection=json.loads((ROOT/'.agents/plans/robot-assembly/collection-260.json').read_text())
         with self.assertRaises(ValueError):native_parts(collection,ROOT/'.agents/plans/robot-assembly')
+
+    @unittest.skipUnless(os.environ.get('ROBOT_PLAYBACK_TOOLKIT'),'Explicit reviewed core checkout needed for optional cross-API preflight')
+    def test_real_core_original_byte_helper_contract_without_native_evidence(self):
+        toolkit=Path(os.environ['ROBOT_PLAYBACK_TOOLKIT']).resolve()
+        revision=os.environ.get('ROBOT_PLAYBACK_TOOLKIT_REVISION','')
+        self.assertRegex(revision,r'^[0-9a-f]{40}$')
+        self.assertEqual(subprocess.check_output(['git','-C',str(toolkit),'rev-parse','HEAD'],text=True).strip(),revision)
+        self.assertEqual(subprocess.check_output(['git','-C',str(toolkit),'status','--porcelain'],text=True).strip(),'')
+        sys.path.insert(0,str(toolkit/'software'))
+        from cadagent.review.gates.playback import bind_playback_breps
+        import cadagent
+        self.assertTrue(Path(cadagent.__file__).resolve().is_relative_to(toolkit/'software/cadagent'))
+        with tempfile.TemporaryDirectory() as tmp:
+            folder=Path(tmp);c,raw=self.fixture(folder)
+            # Explicit non-CAD/non-STL bytes test only the pure interface and
+            # capture/provenance contract; they cannot enter a native query.
+            mesh=b'SYNTHETIC non-STL interface fixture, never native evidence'
+            mesh_sha=digest(mesh);c['parts'][0]['sha256']=mesh_sha
+            c['parts'][0]['native_geometry']['shape_sha256']=digest(raw)
+            model=encode({'units':'mm','up':'z','parts':[{'name':'part','file':'part.stl','sha256':mesh_sha}]})
+            guide=encode({'snapshot':{'id':'fixture','source_commit':c['source_commit']},
+                          'source':{'collection_sha256':'d'*64},'model':{'file':'view.json','sha256':digest(model)}})
+            bundle=SimpleNamespace(path='fixture/guide.json',files={'fixture/guide.json':guide,'fixture/view.json':model,'fixture/part.stl':mesh})
+            rows,outputs=bind_inputs(c,'d'*64,[bundle],native_parts(c,folder),bind_playback_breps)
+            binding=__import__('json').loads(outputs[rows[0]['binding']])
+            self.assertEqual(binding['hash_platform'],c['native_geometry']['hash_platform'])
+            self.assertEqual(binding['instances']['part']['brep_sha256'],digest(raw))
+            self.assertEqual(outputs[rows[0]['breps']['part']],raw)
 
     def test_native_cli_help_does_not_import_kernel(self):
         value=subprocess.check_output([sys.executable,'-I','-S','-B',str(ROOT/'tools/site/assembly/robot_native_playback.py'),'--help'],text=True,timeout=5)

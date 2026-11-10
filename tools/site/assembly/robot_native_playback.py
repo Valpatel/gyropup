@@ -34,7 +34,9 @@ def native_parts(collection,folder):
         or meta.get('schema')!='gyropup.robot-native-parts/1' or meta.get('units')!='mm'
         or meta.get('up')!='z' or meta.get('frame')!='assembled robot CAD mm/Z-up'
         or meta.get('format')!='OCCT BREP v1 without triangulation or normals'
-        or not meta.get('hash_platform') or not meta.get('source_correspondence')):
+        or not isinstance(meta.get('hash_platform'),dict) or not meta['hash_platform']
+        or any(not isinstance(k,str) or not isinstance(v,str) or not v for k,v in meta['hash_platform'].items())
+        or not isinstance(meta.get('source_correspondence'),str) or not meta['source_correspondence']):
         raise ValueError('Original worldshape native collection is required')
     result={};files=set()
     for part in collection['parts']:

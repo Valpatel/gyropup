@@ -3,8 +3,10 @@
 Status on 2026-11-10: optional producer/consumer source prepared; no new native
 robot collection, exact playback run or physical acceptance is claimed. This
 follow-up depends on Gyropup PR279 and the independently reviewed core API in
-[cad-agent PR513](https://github.com/Valpatel/cad-agent/pull/513). The original-byte
-binder addition must be reviewed and pinned before the consumer is executed.
+[cad-agent PR513](https://github.com/Valpatel/cad-agent/pull/513). The original-byte binder at `011a29b6fe1ddf4a6726fa01f59d710cbf1d6757`
+received independent source review; ordinary core CI/merge remain separate.
+Native producer source review and retained-runtime preflight remain required
+before a long robot run.
 
 The existing CAD collector intentionally requires its recorded toolkit
 `e662a1ce79b4f63f7352b9d065c5027f77d53a81` and runtime. Keep that boundary.
@@ -62,3 +64,18 @@ checks declared finite rigid paths through its existing conservative advancement
 and near-contact native queries; it does not prove continuous clearance,
 gravity/support, fixtures, deformation, press fits, fastener engagement, tool or
 hand access, wiring, loads or a physical assembly procedure.
+
+
+The dedicated consumer controls also expose an optional real-core pure interface
+preflight. With the exact clean reviewed core checkout above, all five dedicated
+tests passed on 2026-11-10 in 0.170 seconds, including the real
+`bind_inputs -> bind_playback_breps` call. The inputs are explicitly synthetic
+non-CAD/non-STL bytes with string platform metadata; this verifies interface,
+captured input hashes and original-byte/platform preservation only. It performs
+no native query and is not robot geometry evidence.
+
+```text
+ROBOT_PLAYBACK_TOOLKIT=<reviewed-core-checkout> \
+ROBOT_PLAYBACK_TOOLKIT_REVISION=011a29b6fe1ddf4a6726fa01f59d710cbf1d6757 \
+python3 -B -m unittest discover -s tests/site/assembly -p test_robot_native_playback.py
+```
