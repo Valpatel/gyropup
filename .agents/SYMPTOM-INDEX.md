@@ -191,3 +191,5 @@
 
 - A native study is killed at its cap with no final unchecked IDs or CLI exit receipt: [derive coverage from the full plan and retained completed prefix](inbox/2026-11-10-capped-native-studies-need-observed-prefixes.md).
 - A supplier-photo fallback times out while the screenshot shows a loaded image: [arm and witness the actual request failure before navigation](inbox/2026-11-10-photo-failure-tests-must-intercept-the-request.md).
+
+- An audit accepts unrelated prior query IDs while reporting unchanged combined coverage: [bind the prior byte seal and ordered plan membership before counting](inbox/2026-11-10-combined-coverage-needs-sealed-prior-evidence.md).

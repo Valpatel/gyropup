@@ -22,24 +22,35 @@
   "distinct_completed264_265": 44,
   "uncompleted_full_plan": 46,
   "files": {
-    "README.md": "47f840ae498a39d128115d8c45165e970b5e50c5ceb5b386d3a1c22e513ba7ad",
+    "README.md": "020d8babebe865bbd96b6a54bdb4b7f20a6ccb8b52d3293e47fbd47fd4d67b1a",
     "artifact-audit.json": "f71cf5bedad8ff63a39f36277a68d2552a25ccc0a8aa74dea10d8868a83732be",
     "audit.py": "a45c1a1dbbfcdfe4610fb096cea0134e7745444404961692223e908b1e46e940",
     "execution.json": "9cf1c7c0c9347da4f25ff1b168270ae56bfbc8d5c92a0ffbdcc3c330a52f5801",
     "independent-audit.json": "68a12e2df7cc899a544986e48aeff21df9a049cf49d4b7e3519b7f2170e28136",
-    "independent-audit.py": "0facf3d6fe85858ab603ca67559200074c5889204493bf16422fd3c510b5460c",
+    "independent-audit.py": "9e5079679aac79c27731dd1f437787f5d8557d53f1c5aa6bc6a98b1b112ad149",
     "members.json": "49698094d13c798acb442b5859fd9de2d511899ea156e4f72553453ea116ca48",
     "native-cli-exit.json": "7ab6df969c3dfb2cde7d083d9d1daafe9b19b355a33ec55a798ab84a98aa9eda",
     "phase.json": "b1e2505e5ecfe704357472acc31a7bb9f354b68fcaec093cb7f2d21f05ecb15d",
     "progress.jsonl": "27de7d5dd2ad27f6ad176c29ebcd2de75a0cd19f0ae6d867aaa8afa4a3e3c7a9",
     "report.json": "5694ee1dfffaf2011a9deeaf8b336df26f42bcef8584e950ae71ad7882571308",
+    "review-counterexample/README.md": "62cb8146332174b019992fc06e30b459eaad409e386d2607e43323c34b6db20b",
+    "review-counterexample/old-accepted-receipt.json": "68a12e2df7cc899a544986e48aeff21df9a049cf49d4b7e3519b7f2170e28136",
+    "review-counterexample/old-result.json": "5d8d16b52efc72d5610b0f00d09825e7ea53e2123beb2d67b975f323adf73c1c",
+    "review-counterexample/wrong-prior-42.json": "ae4eac6b9cc1e4f9c63d10431a85cd066446ea60570d1d5fc42c5ca855a656c5",
     "selection.json": "ecb26e9ddd47a023664447e4078dbc34bd960e5b19c0194dfcf631503ec2a945",
-    "source.json": "947503be415e49c72ce35a5eadeaea3429b85c77cc8d35054ca3bda89b853f3c"
+    "source.json": "947503be415e49c72ce35a5eadeaea3429b85c77cc8d35054ca3bda89b853f3c",
+    "review-counterexample/corrected-result.json": "0edf98b9482921f921f00a737e708aa6ad6dea72550f74489a4efe7a92208c5b"
   },
   "independent_audit_portability": {
     "original_script_sha256": "3ef6808e13feeed4004ef4ed78136813c3e81c85eb78bbe90efc32640e93e8fb",
-    "portable_script_sha256": "0facf3d6fe85858ab603ca67559200074c5889204493bf16422fd3c510b5460c",
-    "changes": "Only private path literals replaced with explicit CLI arguments; optional output path replaced with exclusive CLI output. Assertions and original receipt preserved.",
-    "portable_replay_receipt_sha256": "68a12e2df7cc899a544986e48aeff21df9a049cf49d4b7e3519b7f2170e28136"
+    "portable_script_sha256": "9e5079679aac79c27731dd1f437787f5d8557d53f1c5aa6bc6a98b1b112ad149",
+    "changes": "Initial private paths replaced by explicit CLI arguments and exclusive optional receipt. Review correction preserves existing assertions and original receipt, adds import-safe sealed prior264 report validation and exact ordered first42 plan membership/state/flag checks before combined coverage.",
+    "portable_replay_receipt_sha256": "68a12e2df7cc899a544986e48aeff21df9a049cf49d4b7e3519b7f2170e28136",
+    "initial_portable_script_sha256": "0facf3d6fe85858ab603ca67559200074c5889204493bf16422fd3c510b5460c",
+    "review_correction": "https://github.com/Valpatel/gyropup/pull/280#discussion_r4528726930"
+  },
+  "regression_test": {
+    "file": "tests/site/assembly/test_robot_native_audit.py",
+    "sha256": "1553b3d749977059c7ed0b7387335302e2a1dec6dade2f2e66d1fbe328310940"
   }
 }

@@ -41,10 +41,13 @@ python3 -B audit.py <fetched-job-directory> <product-checkout>
 python3 -B independent-audit.py <fetched-job-directory> <263-member-manifest> <full-plan> <264-report> <optional-fresh-receipt>
 ```
 
-The portable independent audit replaces only private path literals with explicit
-arguments and makes its optional receipt exclusive. Its assertions and original
-receipt are preserved; replay reproduced that receipt byte for byte. The
-[checkpoint](checkpoint.json) seals all retained evidence and reviewed action
+The initial portable independent audit replaced private path literals with explicit
+arguments and made its optional receipt exclusive. Independent review then exposed
+a substituted-prior-report false acceptance; its [counterexample and correction](review-counterexample/README.md)
+remain visible. The corrected import-safe audit additionally binds the exact264
+report byte seal and ordered first42 plan IDs, states and flags before combining
+coverage. Its original assertions and accepted receipt remain preserved; genuine
+replay still reproduces that receipt byte for byte. The [checkpoint](checkpoint.json) seals all retained evidence and reviewed action
 identities. [Independent post-action acceptance](https://github.com/Valpatel/gyropup/issues/276#issuecomment-6775076990)
 covers scoped execution/artifact correspondence. It grants no further native run,
 geometry adoption or whole-robot pass.

@@ -1,0 +1,10 @@
+{
+  "date": "2026-11-10",
+  "scope": "Corrected pure audit against genuine fetched265 plus the retained42-fake-ID prior report; no CAD queried.",
+  "exit": 1,
+  "wrong_prior_sha256": "ae4eac6b9cc1e4f9c63d10431a85cd066446ea60570d1d5fc42c5ca855a656c5",
+  "error": "Prior report byte seal differs from retained264",
+  "stdout_empty": true,
+  "receipt_written": false,
+  "accepted": false
+}
