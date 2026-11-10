@@ -269,45 +269,75 @@ svg{max-width:100%;height:auto} g{transform-box:view-box}
 
 
 def wordmark(svg, *, still=False):
-    """A quiet, sharp title above the unchanged moving proving ground."""
+    """Toy-store lettering: a real node/edge graph becomes a soft solid logo."""
+    # Original centerline glyphs keep the graph and finished letter shapes in
+    # the same frame. No external font, bitmap, filter or animation script.
+    glyphs = [
+        ('G', 184, '#ffd14d', 'M112 46C98 23 49 20 31 49C9 83 22 130 57 139C83 146 108 135 115 116V87H77', [(112,46),(57,29),(22,85),(57,139),(115,116),(115,87),(77,87)]),
+        ('y', 324, '#ff947e', 'M22 62V108Q22 139 51 139Q81 139 81 108V62M81 114V151Q81 183 50 183Q34 183 24 175', [(22,62),(22,108),(51,139),(81,108),(81,62),(81,151),(50,183)]),
+        ('r', 454, '#a9d4fb', 'M28 138V63M28 92Q43 57 78 64', [(28,138),(28,92),(28,63),(78,64)]),
+        ('o', 568, '#c7b4f7', 'M58 62C11 62 11 140 58 140C105 140 105 62 58 62', [(58,62),(23,100),(58,140),(93,100)]),
+        ('p', 696, '#a4e0be', 'M24 184V64M24 100C24 50 103 50 103 100C103 150 24 150 24 100', [(24,184),(24,64),(24,100),(64,62),(103,100),(64,138)]),
+        ('u', 834, '#ffbc74', 'M20 64V109Q20 142 55 142Q91 142 91 109V64', [(20,64),(20,109),(55,142),(91,109),(91,64)]),
+        ('p', 962, '#f4a7c7', 'M24 184V64M24 100C24 50 103 50 103 100C103 150 24 150 24 100', [(24,184),(24,64),(24,100),(64,62),(103,100),(64,138)]),
+    ]
     body = [
-        '<defs><linearGradient id="pup-metal" x1="0" y1="0" x2="0" y2="1">'
-        '<stop stop-color="#fff8d7"/><stop offset=".40" stop-color="#f1d291"/>'
-        '<stop offset=".43" stop-color="#84f5dd"/><stop offset="1" stop-color="#3a9cab"/>'
-        '</linearGradient><linearGradient id="pup-trail"><stop stop-color="#418f99" stop-opacity="0"/>'
-        '<stop offset=".5" stop-color="#78d6c2"/><stop offset="1" stop-color="#418f99" stop-opacity="0"/>'
-        '</linearGradient></defs>',
-        '<g fill="none" stroke="#477e89" stroke-width="3">'
-        '<path d="M12 112h105l26-26h64m1066 26h-105l-26-26h-64"/>'
-        '<path d="M56 133h90l20-20h34m1024 20h-90l-20-20h-34"/>'
-        '<path d="M180 160h920" stroke="url(#pup-trail)"/>'
-        '</g>',
-        '<g fill="#e9cd8b" stroke="#163344" stroke-width="3">'
-        '<path d="M126 78l8 8-8 8-8-8zM1154 78l8 8-8 8-8-8z"/>'
+        '<rect x="128" y="19" width="1024" height="191" rx="94" fill="#1d2350" opacity=".08"/>',
+        '<rect x="124" y="12" width="1024" height="191" rx="94" fill="#fff4c9"/>',
+        '<path d="M158 73Q171 32 225 30M1052 181q39-5 55-30" fill="none" stroke="#fffdf4" stroke-width="9" stroke-linecap="round"/>',
+        '<g class="title-confetti" fill="#ffd14d" stroke="#1d2350" stroke-width="3">'
+        '<path d="M1161 27l5 16 17 5-17 5-5 16-5-16-17-5 17-5z"/>'
+        '<path d="M137 177l4 12 12 4-12 4-4 12-4-12-12-4 12-4z"/>'
+        '</g><g class="title-confetti" fill="none" stroke-linecap="round" stroke-width="7">'
+        '<path d="M1171 115l13 7" stroke="#ff947e"/><path d="M1114 20l5-11" stroke="#a4e0be"/>'
+        '<path d="M1122 186l11 9" stroke="#a9d4fb"/></g>',
+        '<g class="title-graph title-links" fill="none" stroke="#8b91af" stroke-width="3">'
+        '<path pathLength="1000" d="M296 46Q327 17 346 62M405 62Q442 25 482 63M532 64Q583 24 626 62M661 100Q686 21 720 64M799 100Q825 39 854 64M925 64Q955 23 986 64"/>'
         '</g>',
     ]
-    face = ('text-anchor="middle" font-family="Arial Black,Arial,Helvetica,sans-serif" '
-            'font-size="166" font-weight="900" letter-spacing="-5" '
-            'stroke-linejoin="round" paint-order="stroke fill"')
-    body += [
-        f'<text x="645" y="137" {face} fill="#173d50" stroke="#102437" stroke-width="14">Gyropup</text>',
-        f'<text x="640" y="128" {face} fill="url(#pup-metal)" stroke="#133143" stroke-width="6">Gyropup</text>',
-        '<path d="M265 149h59m693 0h-59" fill="none" stroke="#efcf8a" stroke-width="3"/>',
-        '<text x="640" y="192" text-anchor="middle" font-family="monospace" font-size="22" '
-        'font-weight="700" letter-spacing="8" fill="#558a8e">ROLL · LEARN · REPEAT</text>',
-        f'<defs><clipPath id="pup-face"><text x="640" y="128" {face}>Gyropup</text></clipPath></defs>',
-        '<g clip-path="url(#pup-face)"><path class="title-glint" d="M-120-30h50l-60 190h-50z" fill="#fffce8" opacity=".5"/></g>',
-        '<path class="title-spark" d="M180 157h8v6h-8z" fill="#f1cf87"/>',
-    ]
+    for i, (letter, x, color, d, nodes) in enumerate(glyphs):
+        body.append(f'<g transform="translate({x} 0)" data-letter="{letter}" style="--i:{i}">')
+        body.append('<g class="title-solid" fill="none" stroke-linecap="round" stroke-linejoin="round">')
+        for stroke, width, extra in [('#1d2350',54,'opacity=".12" transform="translate(3 7)"'),
+                                     ('#ffffff',52,''),('#1d2350',42,''),(color,32,''),
+                                     ('#ffffff',5,'opacity=".3"')]:
+            body.append(f'<path d="{d}" stroke="{stroke}" stroke-width="{width}" {extra}/>')
+        body.append('</g><g class="title-graph" fill="none" stroke-linecap="round" stroke-linejoin="round">')
+        body.append(f'<path class="title-wire" pathLength="1000" d="{d}" stroke="#1d2350" stroke-width="4"/>')
+        for j, (nx, ny) in enumerate(nodes):
+            body.append(f'<circle class="title-node" cx="{nx}" cy="{ny}" r="6" fill="{color}" stroke="#1d2350" stroke-width="2.5" style="--n:{j}"/>')
+        body.append('</g></g>')
+    # A tiny wheeled toy friend supervises construction; the existing full robot
+    # playground below stays byte-identical and remains the main moving scene.
+    body += ['<g transform="translate(77 110)"><g class="title-friend">'
+             '<ellipse cy="46" rx="38" ry="7" fill="#1d2350" opacity=".1"/>'
+             '<path d="M0-28v-15" stroke="#1d2350" stroke-width="5" stroke-linecap="round"/>'
+             '<circle cy="-45" r="7" fill="#ff947e" stroke="#1d2350" stroke-width="3"/>'
+             '<rect x="-30" y="-25" width="60" height="54" rx="16" fill="#ffd14d" stroke="#1d2350" stroke-width="5"/>'
+             '<rect x="-23" y="-16" width="46" height="23" rx="10" fill="#ffffff"/>'
+             '<circle cx="-10" cy="-5" r="4" fill="#1d2350"/><circle cx="10" cy="-5" r="4" fill="#1d2350"/>'
+             '<path d="M-7 15q7 7 14 0" fill="none" stroke="#1d2350" stroke-width="3" stroke-linecap="round"/>'
+             '<circle cx="-22" cy="31" r="12" fill="#1d2350"/><circle cx="22" cy="31" r="12" fill="#1d2350"/>'
+             '<circle cx="-22" cy="31" r="5" fill="#a9d4fb"/><circle cx="22" cy="31" r="5" fill="#a4e0be"/>'
+             '</g></g>']
     css = """svg{max-width:100%;height:auto}
-.title-glint{animation:title-glint 8s linear infinite}.title-spark{animation:title-spark 8s linear infinite}
-@keyframes title-glint{0%{transform:translateX(0)}45%,100%{transform:translateX(1600px)}}
-@keyframes title-spark{0%,100%{transform:translateX(0)}50%{transform:translateX(912px)}}
+.title-solid{opacity:1;transform-box:fill-box;transform-origin:center;animation:toy-solid 12s ease-in-out infinite;animation-delay:calc(var(--i)*.055s)}
+.title-graph{opacity:0;animation:toy-graph 12s linear infinite}
+.title-wire,.title-links path{stroke-dasharray:1000;stroke-dashoffset:0;animation:toy-wire 12s ease-in-out infinite;animation-delay:calc(var(--i,0)*.055s)}
+.title-node{transform-box:fill-box;transform-origin:center;animation:toy-node 12s ease-in-out infinite;animation-delay:calc(var(--n)*.025s)}
+.title-friend{transform-box:fill-box;transform-origin:50% 95%;animation:toy-friend 12s ease-in-out infinite}
+.title-confetti{animation:toy-confetti 12s ease-in-out infinite}
+@keyframes toy-graph{0%,3%{opacity:0}7%,29%{opacity:1}40%,88%{opacity:0}94%{opacity:.7}100%{opacity:0}}
+@keyframes toy-wire{0%,7%{stroke-dashoffset:1000}29%,88%{stroke-dashoffset:0}100%{stroke-dashoffset:1000}}
+@keyframes toy-node{0%,2%{transform:scale(0)}9%,29%{transform:scale(1)}35%,88%{transform:scale(.4)}94%{transform:scale(1)}100%{transform:scale(0)}}
+@keyframes toy-solid{0%,27%{opacity:0;transform:translateY(5px) scale(.92)}39%{opacity:1;transform:translateY(-3px) scale(1.035)}45%,82%{opacity:1;transform:translateY(0) scale(1)}91%,100%{opacity:0;transform:translateY(5px) scale(.97)}}
+@keyframes toy-friend{0%,100%{transform:translateY(0) rotate(-3deg)}20%{transform:translateY(-6px) rotate(5deg)}40%{transform:translateY(0) rotate(-3deg)}60%{transform:translateY(-3px) rotate(3deg)}80%{transform:translateY(0) rotate(0)}}
+@keyframes toy-confetti{0%,100%{transform:translateY(0)}40%{transform:translateY(-5px)}70%{transform:translateY(2px)}}
 """ + svg.REDUCED_MOTION
     if still:
         css += "\n*{animation:none!important}\n"
-    return svg.document(640, 104, "Gyropup" + (" (still)" if still else ""),
-                        "Gyropup. Roll, learn, repeat. A vector arcade title above the moving robot playground.",
+    return svg.document(640, 112, "Gyropup" + (" (still)" if still else ""),
+                        "Colorful nodes connect into Gyropup's letters, become a solid toy-store wordmark, and loop. A smiling wheeled robot helps. The still shows the completed title.",
                         css, body, background=False)
 
 

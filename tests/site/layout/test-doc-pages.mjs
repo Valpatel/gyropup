@@ -4,6 +4,8 @@ import {execFileSync} from 'node:child_process';
  * counted from the note's own tables, and folds. Browser tests use SITE_URL, or serve dist/ (run `npm run build`). */
 import assert from 'node:assert/strict';
 import { readFileSync, readdirSync } from 'node:fs';
+import { mkdir, mkdtemp, writeFile } from 'node:fs/promises';
+import { tmpdir } from 'node:os';
 import path from 'node:path';
 import { after, before, test } from 'node:test';
 import { marked } from 'marked';
@@ -329,6 +331,71 @@ test('README entrances keep the moving scene, title and genuine reduced-motion i
       }
     } finally { await context.close(); }
   }
+});
+
+test('README branding stays balanced on phone and desktop in both themes', async () => {
+  const output=process.env.TEST_OUTPUT||await mkdtemp(path.join(tmpdir(),'gyropup-brand-layout-'));
+  await mkdir(output,{recursive:true});const results=[];
+  for(const [width,height]of [[320,720],[1280,900]])for(const colorScheme of ['light','dark']){
+    const context=await browser.newContext({viewport:{width,height},colorScheme,reducedMotion:'reduce'});
+    try{
+      await acknowledgePrototypeNotice(context);const page=await context.newPage();
+      await page.goto(base+'/site/pages/readme-md.html',{waitUntil:'load'});
+      const title=page.getByRole('heading',{name:'Gyropup',exact:true}).getByRole('img',{name:'Gyropup',exact:true});
+      const banner=page.locator('article picture img[src*="navigation/project-map"]');
+      const badge=page.getByRole('img',{name:'Made with cad-agent',exact:true});
+      for(const image of [title,banner,badge])await image.evaluate(img=>img.decode());
+      const boxes=await Promise.all([title,banner,badge].map(image=>image.boundingBox()));
+      for(const b of boxes)assert.ok(b.width>0&&b.x>=0&&b.x+b.width<=width+.5,'real branding images fit the viewport');
+      assert.ok(boxes[0].width<=640.5&&boxes[0].y+boxes[0].height<=boxes[1].y);
+      assert.ok(boxes[2].width<=144&&boxes[2].width<boxes[1].width*.6&&boxes[2].height<boxes[1].height*.4,'the tool badge supports the robot scene');
+      assert.equal(await page.evaluate(()=>document.documentElement.scrollWidth<=innerWidth),true);
+      await page.screenshot({path:path.join(output,`readme-${width}-${colorScheme}.png`)});
+      results.push({width,colorScheme,title:boxes[0],banner:boxes[1],badge:boxes[2]});
+      if(width===320&&colorScheme==='light'){
+        await badge.evaluate(img=>{img.parentElement.style.width='100%';img.style.width='100%';});
+        assert.ok((await badge.boundingBox()).width>144,'the original full-width badge failure is rejected');
+      }
+    }finally{await context.close();}
+  }
+  await writeFile(path.join(output,'branding-layout-result.json'),JSON.stringify(results,null,2)+'\n');
+});
+
+test('the playful Gyropup title builds a graph, solidifies and really loops', async () => {
+  const output=process.env.TEST_OUTPUT||await mkdtemp(path.join(tmpdir(),'gyropup-title-'));
+  await mkdir(output,{recursive:true});
+  const context=await browser.newContext({viewport:{width:800,height:300},reducedMotion:'no-preference'});
+  try{
+    const page=await context.newPage();
+    await page.goto(base+'/docs/img/hero/gyropup-title.svg',{waitUntil:'load'});
+    await page.waitForFunction(()=>document.getAnimations().length>20);
+    assert.equal(await page.locator('[data-letter]').evaluateAll(nodes=>nodes.map(n=>n.dataset.letter).join('')),'Gyropup');
+    const seek=async ms=>{
+      await page.evaluate(time=>{
+        window.titleAnimations??=document.getAnimations();
+        for(const a of window.titleAnimations){a.pause();a.currentTime=time;}
+      },ms);
+      await page.evaluate(()=>new Promise(resolve=>requestAnimationFrame(()=>requestAnimationFrame(resolve))));
+      return page.evaluate(()=>({
+        solid:[...document.querySelectorAll('.title-solid')].map(n=>+getComputedStyle(n).opacity),
+        graph:[...document.querySelectorAll('.title-graph')].map(n=>+getComputedStyle(n).opacity),
+        iterations:window.titleAnimations.map(a=>a.effect.getTiming().iterations===Infinity),
+      }));
+    };
+    const graph=await seek(1800),graphPixels=await page.locator('svg').screenshot({path:path.join(output,'title-graph.png')});
+    assert.ok(graph.graph.every(n=>n>.99)&&graph.solid.every(n=>n<.01),'the build phase really shows the graph before the solid letters');
+    const solid=await seek(7200),solidPixels=await page.locator('svg').screenshot({path:path.join(output,'title-solid.png')});
+    assert.ok(solid.solid.every(n=>n>.99)&&solid.graph.every(n=>n<.01),'the letters solidify into the completed toy-store title');
+    assert.ok(!solidPixels.equals(graphPixels),'the actual image changes between construction and completion');
+    const loop=await seek(13800),loopPixels=await page.locator('svg').screenshot({path:path.join(output,'title-loop.png')});
+    assert.deepEqual(loop,graph,'the construction phase returns after the twelve-second cycle');
+    assert.ok(loopPixels.equals(graphPixels),'the actual graph image repeats, not just a CSS declaration');
+    assert.ok(loop.iterations.every(Boolean));
+    await page.evaluate(()=>{for(const a of window.titleAnimations)a.effect.updateTiming({iterations:1});});
+    const once=await seek(13800);
+    assert.ok(once.graph.every(n=>n<.01),'a real one-shot animation fails the returning-graph control');
+    await writeFile(path.join(output,'title-loop-result.json'),JSON.stringify({graph,solid,loop,oneShotRejected:true},null,2)+'\n');
+  }finally{await context.close();}
 });
 
 test('the local Made with badge animates normally and selects its genuine still', async () => {

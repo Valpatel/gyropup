@@ -1,6 +1,6 @@
 <div align="center">
 
-<h1 id="gyropup"><picture style="display:block;max-width:640px;margin:0 auto"><source media="(prefers-reduced-motion: reduce)" srcset="docs/img/hero/gyropup-title-still.svg"><img src="docs/img/hero/gyropup-title.svg" width="640" height="104" style="display:block;max-width:100%;height:auto;padding:0" alt="Gyropup"></picture></h1>
+<h1 id="gyropup"><picture style="display:block;max-width:640px;margin:0 auto"><source media="(prefers-reduced-motion: reduce)" srcset="docs/img/hero/gyropup-title-still.svg"><img src="docs/img/hero/gyropup-title.svg" width="640" height="112" style="display:block;max-width:100%;height:auto;padding:0" alt="Gyropup"></picture></h1>
 
 <p>
 <picture style="display:block;max-width:640px;margin:0 auto"><source media="(prefers-reduced-motion: reduce)" srcset="docs/img/navigation/project-map-still.svg"><img src="docs/img/navigation/project-map.svg" width="640" height="240" style="display:block;max-width:100%;height:auto;padding:0" alt="Fictional wheeled Gyropup robots chase and duel in a pixel workshop. Sources, test, review and reuse form a learning loop."></picture>
