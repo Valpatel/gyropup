@@ -57,7 +57,8 @@ try {
   await rm(path.join(root, 'present.js'));
   async function release(name, versioned) {
     const files = {
-      'index.html': '<!doctype html><html><head><link rel="stylesheet" href="./style.css"><script type="importmap">{"imports":{"three":"./vendor/core.js","three/addons/":"./vendor/addons/"}}</script></head><body><p>Cache fixture</p><script type="module" src="./entry.js"></script></body></html>',
+      'index.html': '<!doctype html><html><head><link rel="icon" href="./favicon.svg"><link rel="stylesheet" href="./style.css"><script type="importmap">{"imports":{"three":"./vendor/core.js","three/addons/":"./vendor/addons/"}}</script></head><body><p>Cache fixture</p><script type="module" src="./entry.js"></script></body></html>',
+      'favicon.svg': `<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 16 16"><rect width="16" height="16" fill="${{old:'#ff0000',new:'#0000ff',edited:'#00ff00'}[name]}"/></svg>`,
       'entry.js': `import {deep} from './nested.js'; import {core} from 'three';
         const {lazy} = await import('./lazy.js'); const {addon} = await import('three/addons/example.js');
         const link = document.createElement('link'); link.rel='stylesheet';
@@ -88,25 +89,41 @@ try {
     return page.evaluate(() => ({...window.result, entry:getComputedStyle(document.body).getPropertyValue('--entry').trim(), nested:getComputedStyle(document.body).getPropertyValue('--nested').trim(), runtime:getComputedStyle(document.body).getPropertyValue('--runtime').trim()}));
   }
   const expected = value => Object.fromEntries(['deep','core','lazy','addon','entry','nested','runtime'].map(k=>[k,value]));
+  const faviconPixel = () => page.evaluate(async () => {
+    const image=new Image();image.src=document.querySelector('link[rel="icon"]').href;await image.decode();
+    const canvas=document.createElement('canvas');canvas.width=canvas.height=16;
+    const context=canvas.getContext('2d');context.drawImage(image,0,0,16,16);
+    return [...context.getImageData(8,8,1,1).data];
+  });
   await release('old',false);
   await page.goto(base+'/index.html');
   assert.deepEqual(await state(),expected('old'));
+  assert.deepEqual(await faviconPixel(),[255,0,0,255]);
   // Seed JSON as an old public asset too, then prove the static-data fetch option.
   assert.equal(await page.evaluate(async()=> (await (await fetch('/data.json')).json()).release), 'old');
   legacyHeaders=false;
   await release('new',false);
   await page.reload();
   assert.deepEqual(await state(),expected('old'), 'headers alone cannot evict old fresh assets');
+  assert.deepEqual(await faviconPixel(),[255,0,0,255], 'unversioned favicon remains cached too');
   const firstKey = await release('new',true);
   await page.reload();
   assert.deepEqual(await state(),expected('new'), 'ordinary reload migrates the entire module/CSS graph');
+  assert.deepEqual(await faviconPixel(),[0,0,255,255], 'versioned favicon actually decodes the new pixels');
   assert.equal(await page.evaluate(async()=> (await (await fetch('/data.json',{cache:'no-cache'})).json()).release), 'new');
   const secondKey = await release('edited',true);
   assert.notEqual(firstKey,secondKey,'editing bytes without a git commit changes the key');
   await page.reload();
   assert.deepEqual(await state(),expected('edited'));
+  assert.deepEqual(await faviconPixel(),[0,255,0,255]);
   const repeatKey = await release('edited',true);
   assert.equal(secondKey,repeatKey,'identical build inputs have a stable key');
+  await writeFile(path.join(root,'favicon.svg'),'<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 16 16"><rect width="16" height="16" fill="#ff00ff"/></svg>');
+  const iconOnlyKey=await versionSiteAssets(root);
+  assert.notEqual(iconOnlyKey,repeatKey,'a favicon-only edit changes its URL identity');
+  await page.reload();
+  assert.deepEqual(await state(),expected('edited'),'favicon-only edits retain the module values');
+  assert.deepEqual(await faviconPixel(),[255,0,255,255],'a cached tab asset refreshes after an icon-only edit');
   requests.length=0;
   await page.reload();
   assert.deepEqual(await state(),expected('edited'));
