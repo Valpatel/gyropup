@@ -1,4 +1,5 @@
 """Actual mesh arrival witnesses and scoped recipe dependencies, not fit proof."""
+import hashlib
 import importlib.util
 import json
 from pathlib import Path
@@ -6,7 +7,7 @@ import sys
 import unittest
 ROOT=Path(__file__).resolve().parents[3]
 sys.path.insert(0,str(ROOT/'tools/site/assembly'))
-from recipe_path_screen import axial_intervals, screen, topology
+from recipe_path_screen import axial_intervals, screen, topology, triangles
 from robot_recipe import robot_operations
 spec=importlib.util.spec_from_file_location('arrival_evidence',ROOT/'.agents/plans/assembly-staging/screen-arrivals.py')
 evidence=importlib.util.module_from_spec(spec);spec.loader.exec_module(evidence)
@@ -15,11 +16,30 @@ evidence=importlib.util.module_from_spec(spec);spec.loader.exec_module(evidence)
 class ArrivalWitnesses(unittest.TestCase):
     @classmethod
     def setUpClass(cls):
-        cls.report=evidence.produce()
+        # The archived540 screen and its recorded pair inventory are immutable.
+        # Today's body recipe is a different source; never regenerate history with it.
+        file=ROOT/'.agents/plans/assembly-staging/arrival-witnesses.json'
+        assert hashlib.sha256(file.read_bytes()).hexdigest()=='d7126ece3eaf1baea6360666c237360b929778b7db9f62ad5874c07bed1ed315'
+        cls.report=json.loads(file.read_bytes())
         cls.cases={case['id']:case for case in cls.report['cases']}
 
     def test_real_bound_report_is_reproducible_and_retains_limitations(self):
-        self.assertEqual(self.report,json.loads((ROOT/'.agents/plans/assembly-staging/arrival-witnesses.json').read_text()))
+        self.assertEqual(hashlib.sha256(evidence.MODEL.read_bytes()).hexdigest(),self.report['model_sha256'])
+        self.assertEqual(hashlib.sha256((ROOT/'tools/site/assembly/recipe_path_screen.py').read_bytes()).hexdigest(),self.report['screen_sha256'])
+        cache={}
+        def mesh(name):
+            if name not in cache:
+                part=evidence.PARTS[name];file=evidence.FOLDER/part['file']
+                self.assertEqual(hashlib.sha256(file.read_bytes()).hexdigest(),part['sha256'])
+                cache[name]=triangles(file)
+                self.assertEqual({'mesh_sha256':part['sha256'],**topology(cache[name])},self.report['mesh_topology'][name])
+            return cache[name]
+        # Recompute every actual recorded witness using original mesh bytes and
+        # the unchanged current screen, without old recipe execution/Git/network.
+        for row in self.report['cases']+self.report['candidate_pairs']:
+            actual=screen(mesh(row['moving']),mesh(row['fixed']),row['offset_mm'][1])
+            if 'samples'not in row:actual.pop('samples')
+            for key,value in actual.items():self.assertEqual(value,row[key],(row['moving'],row['fixed'],key))
         self.assertIn('Zero witnesses do not prove',self.report['limits'])
         self.assertEqual(len(self.report['mesh_topology']),42)
         self.assertTrue(all(t['closed_oriented_edges'] for t in self.report['mesh_topology'].values()))

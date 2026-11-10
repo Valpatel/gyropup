@@ -58,3 +58,33 @@ Corrupt project bytes exposed no3MF download. All contexts/listeners closed.
 The [canonical consumer record](../plans/end-packs/current-print-consumer-checks.json)
 retains hashes, scope and actual readback values without private test URLs.
 Public guide adoption and joint CI ownership still require independent review.
+
+## Ordinary consumer tests must transfer the exact assertion ownership
+
+After separately accepted266 collection, proof and233-guide readback, the current
+cache and guides were adopted without regenerating geometry or historical assets.
+CI source now assigns the dated complete archive to
+`test_retained_fit_history.py --full` and `verify-retained-fit-history.py`, with
+the original v0.4.2 helper pin. The original default current-root checker and
+packager must still reject the stale source closure. The protected lug test's
+existing `--pure` invocation transfers only its one dated committed-receipt
+assertion to that mandatory full job;15 original controls still run. The checker,
+context test, archive helper, receipt, producer and sampler bytes stay unchanged.
+
+Author verification on2026-11-10: full historical tests10PASS in7.485s, including
+the genuine archive positive and default-current stale negatives; actual adopted
+`test_robot_current_print_match.py --collection-folder software/site/assets/robot-current`
+6PASS in1.753s with0skips. Ordinary robot discovery64PASS in21.795s has7 optional
+tests skipped; it does not replace that explicit mandatory actual-current command.
+Both browser Print engines now have explicit `PRINT_CASE=current` invocations,
+because the existing `PRINT_CASE=all` branch does not execute that current case.
+Those final composed browser runs and source/CI acceptance remain pending.
+
+The same ownership error affected historical arrival tests: regenerating a540
+screen with the new end-pack recipe raised `KeyError: end_pack_holder_front`.
+The original screen producer/report stay unchanged. Its test now fixes the old
+report hash and recomputes all recorded22 cases and72 candidate pairs against
+their actual bound archived triangles using the unchanged pure screen. Current
+leg-order controls remain separate. Historical guide checks preserve all old
+artifact hashes; the current233-output reproduction uses the adopted266 cache.
+Neither test relabels an old source closure as current or executes historical code.

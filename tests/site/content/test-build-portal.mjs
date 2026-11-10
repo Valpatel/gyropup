@@ -53,6 +53,10 @@ try{
  const progressKeys=await page.locator('tr[data-part-key^="buy/"]').evaluateAll(rows=>rows.map(row=>row.dataset.partKey));
  assert.ok(progressKeys.length>20);assert.equal(await page.locator('table:not(.cad-part-table)').count(),0);
  phase('initial Build model actions');await page.goto(base+'/designer/build.html');await ready();await checkModelActions();
+ assert.match(await page.locator('[data-current-source-note]').innerText(),/original BotWheel leg prototype/);
+ assert.match(await page.locator('[data-current-source-note]').innerText(),/current-body order\/print plan and D69 procurement remain pending/);
+ assert.match(await page.locator('#streams .stream').filter({has:page.locator('[data-stream="leg"]')}).innerText(),/Original printed-leg files remain available/);
+ assert.match(await page.locator('#streams .stream').filter({has:page.locator('[data-stream="body"]')}).innerText(),/do not establish the current front\/rear holder/);
  assert.equal(await page.locator('table:not(.cad-part-table)').count(),0);
  assert.equal(await page.getByRole('button',{name:/^Picture: sort/}).count(),0,'Picture-only columns have no meaningless sort control');
  phase('workstream totals and source qualifications');const summaries=await page.evaluate(()=>({total:+document.querySelector('#sum-total').dataset.usd,sellers:[...document.querySelectorAll('#sellertable tbody tr[data-seller]')].reduce((sum,row)=>sum+ +row.dataset.usd,0),made:+document.querySelector('#sum-made').dataset.usd,hours:+document.querySelector('#sum-hours').dataset.h}));

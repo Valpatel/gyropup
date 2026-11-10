@@ -34,7 +34,10 @@ jobs:
           PYTHONPATH: .cad-agent-toolkit/src
         run: |
           python tests/hardware/manufacturing/test-fit-job.py
-          python tools/evidence/manufacturing/package-fit-job.py --verify hardware/exports/leg/rs04-fit-job
+          # Historical archive integrity uses fixed captured inputs, never a current-fit fallback.
+          # --full includes the real historical positive AND unchanged current-root stale negatives.
+          python tests/hardware/manufacturing/test_retained_fit_history.py --full
+          python tools/evidence/manufacturing/verify-retained-fit-history.py
           python tests/hardware/manufacturing/test-survey-fit-job.py
           python tools/evidence/manufacturing/package-survey-fit-job.py --verify hardware/exports/turret/shaft-survey-fit-job
   privacy:
@@ -80,7 +83,9 @@ jobs:
             commands: |
               python3 tests/hardware/manufacturing/test-motor-day-render-inputs.py
               python3 tests/hardware/manufacturing/test-print-provenance.py
-              python3 tests/hardware/interfaces/test-rs04-lug-stacks.py
+              # Only the dated committed-receipt assertion moves to retained-fit-job's
+              # mandatory historical positive/current-stale negatives. Original checker stays strict.
+              python3 tests/hardware/interfaces/test-rs04-lug-stacks.py --pure
               python3 tests/hardware/interfaces/test-rs04-dowel-protrusion.py
               python3 tests/hardware/interfaces/test-rs04-support-probe.py
               python3 docs/research/thread-mating-2026-10-29/test_wrapper.py
@@ -235,7 +240,9 @@ jobs:
           - suite: build-workspace-print
             commands: |
               WORKSPACE_CASE=print npm run test:build-workspace
+              WORKSPACE_CASE=print PRINT_CASE=current npm run test:build-workspace
               PLAYWRIGHT_BROWSER=webkit WORKSPACE_CASE=print npm run test:build-workspace
+              PLAYWRIGHT_BROWSER=webkit WORKSPACE_CASE=print PRINT_CASE=current npm run test:build-workspace
           - suite: build-portal
             commands: |
               npm run test:build-guide
