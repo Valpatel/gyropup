@@ -1,0 +1,13 @@
+{
+  "schema": "gyropup.current-guide-adoption/1",
+  "review": "https://github.com/Valpatel/gyropup/issues/193#issuecomment-6780367921",
+  "source": "eb3cc327d9bf942f018c4daa608c189ccffa99e5",
+  "native_source": "3a40891962b0b0a04625e070700f1d130bea3c7b",
+  "candidate_seals_sha256": "059523933394ceb90bef293e94145458e6b09d17d720f1c2f09eb59e18caa2f9",
+  "index_sha256": "7e8a51f3743e154230e0882e8ac20641b79e74e657773acd22b13d0548231016",
+  "model_manifest_sha256": "3183870617a7ca3182c4a79a2afd8890a546ac2a3353cacc98e5295a63e64fe3",
+  "readback_sha256": "7ae216a1644d30cd5da3ebd9669aafb43af4e581f3531aceaa45a4fc3a094d72",
+  "historical_assets_modified": false,
+  "regenerated": false,
+  "engineering_qualified": false
+}

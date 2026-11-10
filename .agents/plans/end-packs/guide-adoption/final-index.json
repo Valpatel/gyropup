@@ -1,0 +1,55 @@
+{
+  "schema": "gyropup.build-guides/1",
+  "snapshots": [
+    {
+      "id": "turret-wip-4866459e2abd",
+      "title": "Turret bench \u00b7 4866459e2abd",
+      "status": "wip",
+      "assembly": "turret",
+      "file": "turret-wip-4866459e2abd/guide.json",
+      "sha256": "dd3485c4b1d1a5ab4efd1095b8259c572e1fd28e42d24c2ac7b7c739ffd21b17"
+    },
+    {
+      "id": "robot-wip-3a40891962b0",
+      "title": "Robot \u00b7 3a40891962b0 \u00b7 WIP",
+      "assembly": "robot",
+      "status": "wip",
+      "file": "robot-wip-3a40891962b0/guide.json",
+      "sha256": "a2a3959c2eaa0210f31748e207a1f737606ec9269cb991f73f89548b593e3c9c"
+    },
+    {
+      "id": "combined-wip-3a40891962b0",
+      "title": "Combined \u00b7 3a40891962b0 \u00b7 WIP",
+      "assembly": "combined",
+      "status": "wip",
+      "file": "combined-wip-3a40891962b0/guide.json",
+      "sha256": "9e69dc165eb2608aa0816d8cdb6de5622c0a8363e141c30ba27c994c6a340f67"
+    },
+    {
+      "id": "robot-wip-540056ba4e59",
+      "title": "Robot \u00b7 540056ba4e59 \u00b7 WIP",
+      "assembly": "robot",
+      "status": "wip",
+      "file": "robot-wip-540056ba4e59/guide.json",
+      "sha256": "284b63087c9f9256413f0e8dcfb3b18c494ca0e36c38e4e37df7a73963e1c3b4"
+    },
+    {
+      "id": "combined-wip-540056ba4e59",
+      "title": "Combined \u00b7 540056ba4e59 \u00b7 WIP",
+      "assembly": "combined",
+      "status": "wip",
+      "file": "combined-wip-540056ba4e59/guide.json",
+      "sha256": "f71d0343ebb9852978d98ddaefcc86051fea559cfdd5c20e970768844fa7969c"
+    }
+  ],
+  "unavailable": [
+    {
+      "id": "released",
+      "reason": "No named product build releases have been published."
+    },
+    {
+      "id": "rig",
+      "reason": "Historical assembly illustrations contain withdrawn instructions; current guide is unavailable."
+    }
+  ]
+}
