@@ -23,6 +23,18 @@
   states, then failed at the native Appearance label lookup. The actual screenshot
   showed the inspector and select; an explicit accessible name was added.
 
+- At `3e839ab6`, the exact legacy route `snapshot=turret-wip-4866459e2abd&assembly=robot`
+  became blank. Fresh-browser evidence showed `Cannot set properties of null
+  (setting 'hidden')`, followed by `Viewer is disposed`. The hierarchy rewrite
+  removed an instruction/BOM wrapper while `workspace.present` still required it.
+  The loader disposed the newly published viewer after the presentation error.
+  `80453a22` removed the obsolete reference and postponed prior-viewer disposal
+  until successful presentation, restoring the prior scene on failure.
+  Exact-route, native assembly switch, held-context/manual-step and completed
+  asynchronous-disposal controls passed Chromium and WebKit. Canonical hashes
+  and actual rendered observations are in
+  `../plans/versioned-build-guide-route-proof.json`.
+
 ## Cause and corrective rule
 
 Three-dimensional bounds can contain intentionally hidden context. Fit only the
@@ -34,6 +46,13 @@ at the actual viewport dimensions. Check `elementFromPoint`, touch target size,
 global fixed navigation, nested scrolling and initial anchor settlement. A
 full-page capture at a narrow width with a desktop height is diagnostic only;
 record the exact viewport and take viewport captures for phone acceptance.
+
+A renderer may be loaded successfully while product presentation still fails.
+Do not dispose the prior coherent scene until the replacement has painted its UI.
+When overlay DOM is restructured, run the exact default and legacy assembly links
+in fresh contexts; waiting only for an unrelated procurement-ready flag misses a
+blank guide. Async disposal evidence must wait for the old operation to finish,
+not an arbitrary sleep.
 
 Use separate bounded browser scopes and retain failed receipts. A timer cap,
 a later failing control, or a screenshot closure cannot turn earlier partial
