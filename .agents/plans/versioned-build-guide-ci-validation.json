@@ -126,5 +126,41 @@
     "visual_sha256": "c58fbc6820cde063acf6386bf5204db72cec401551a6e9f50be1b6a9a839d921",
     "ci_source_review": "https://github.com/Valpatel/gyropup/pull/267#pullrequestreview-5841477534",
     "limits": "Local and scoped checks are separate from mandatory complete current-head CI, dev/main promotion and public read-back. Incomplete legacy probes remain incomplete."
+  },
+  "integration_candidate": {
+    "product_and_media_checkpoint": "500016ba6ff8c8a0bc27618c6255c4a9a60af7d4",
+    "test_delta_review": "https://github.com/Valpatel/gyropup/pull/267#pullrequestreview-5841781850",
+    "visual_sha256": "c58fbc6820cde063acf6386bf5204db72cec401551a6e9f50be1b6a9a839d921",
+    "fresh_highlights": {
+      "source_revision": "76f1e243d1e87295ce085e3db28390eed12ec224",
+      "adoption": ".agents/plans/versioned-build-guide-highlight-refresh/adoption.json",
+      "source_bindings": 193,
+      "raw_frames": 480,
+      "decoded_frames_per_companion": 660,
+      "rejected_negative_controls": 25,
+      "binding_tests_passed": 11,
+      "limits": "Genuine virtual recapture and encoding; historical leg and E1 evidence remains explicitly qualified. No physical qualification."
+    },
+    "prior_normal_campaign": {
+      "head": "1d0ad8e57d399154f725b6a0d56da6674d1b0736",
+      "workflow_run": 42813659763,
+      "conclusion": "failure",
+      "successful_browser_jobs": 27,
+      "primary_failures": [
+        "playback observer execution context destroyed; original cause unclassified",
+        "highlight source binding correctly rejected changed stage.js"
+      ],
+      "strict_aggregate_failures": 2,
+      "procurement_scope": "Complete Chromium legacy procurement passed; this is not a complete WebKit legacy procurement claim.",
+      "playground_scope": "Complete interactions, RS-04, motor tool, robot, gamepad, simulator and demo commands passed."
+    },
+    "required_next": [
+      "independent exact-head source review",
+      "every current-head check and both strict aggregates pass",
+      "normal dev-to-main promotion",
+      "public version, assets and functional read-back",
+      "retire only incorporated remote tips, preserving all local work and paused branches"
+    ],
+    "status": "Current integration and publication pending; prior failure remains failed."
   }
 }
