@@ -14,7 +14,8 @@
   "local_raw_focus_trace_sha256": "3a736771b624a0be972879bd8f062601eb9ea3fbf3f0b98b6e46a298351e98b1",
   "redactions": [
     "Preview origins only in JSON; original raw digests retained.",
-    "failure-log.txt is the exact assertion excerpt; full original log hash and source URL retained."
+    "failure-log.txt is the exact assertion excerpt; full original log hash and source URL retained.",
+    "Trailing whitespace trimmed from the log excerpt; full raw log digest is unchanged."
   ],
   "local_trace_limit": "The local popup-dock draft was present, but no selection had occurred before this Reset boundary. The separate original CI interaction failure remains the primary failed receipt."
 }
