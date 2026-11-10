@@ -139,3 +139,16 @@ pagination; a hidden-child negative stays omitted. All six existing Markdown
 tests and eleven privacy tests passed. Reveal intentional presentation containers
 for static export, rather than stripping every hidden attribute or weakening the
 original table/download assertions.
+
+## An explicit version must resolve its indexed assembly
+
+2026-11-10 actual fresh WebKit at `bea6b2b6` requested the Robot540 and Turret486
+snapshot-only URLs. Both instead loaded Combined540 with233 model parts. The
+initial desired-assembly default ignored the explicit snapshot's indexed owner.
+Resolve a nonempty explicit snapshot to its index row's assembly when no assembly
+is supplied; retain explicit assembly overrides and keep the bare page's Combined
+default. Centralize this in location parsing so initial load, history and canonical
+version links agree. Tests cover all three real version-only routes, the bare
+default, explicit mixed override, unknown rejection and Combined canonical reload.
+Do not infer assembly from a label/revision string or silently substitute another
+version. The failing observation remains distinct from later fixed-head acceptance.

@@ -1,9 +1,9 @@
 /** Product navigation/progress only; the shared viewer owns 3D guide state. */
 const ID=/^[a-zA-Z0-9][a-zA-Z0-9._-]*$/;
 export function readLocation(location,index){
- const q=new URLSearchParams(location.search),snapshot=q.get('snapshot')||index.snapshots[0]?.id;
- if(!index.snapshots.some(s=>s.id===snapshot))throw new Error('This build snapshot is unavailable. Choose one of the published snapshots.');
- const assembly=q.get('assembly');if(assembly&&!['robot','turret','combined'].includes(assembly))throw new Error('Unknown assembly selection.');
+ const q=new URLSearchParams(location.search),explicitSnapshot=q.get('snapshot'),snapshot=explicitSnapshot||index.snapshots[0]?.id,row=index.snapshots.find(s=>s.id===snapshot);
+ if(!row)throw new Error('This build snapshot is unavailable. Choose one of the published snapshots.');
+ const assembly=q.get('assembly')||(explicitSnapshot?(row.assembly||'turret'):null);if(assembly&&!['robot','turret','combined'].includes(assembly))throw new Error('Unknown assembly selection.');
  return {snapshot,step:q.get('step'),chapter:q.get('chapter'),assembly};
 }
 export function stepFor(guide,{step,chapter}={}){
