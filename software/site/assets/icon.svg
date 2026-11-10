@@ -1,16 +1,1 @@
-<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 64 64" role="img" aria-labelledby="title desc">
-  <title id="title">Gyropup crystal scout</title>
-  <desc id="desc">A bright violet crystal rides a blue V on a midnight scout badge, with a little gold spark. Inspired by Valpatel Software's crystal identity.</desc>
-  <rect x="1" y="1" width="62" height="62" rx="16" fill="#202447" stroke="#fef7e9" stroke-width="2"/>
-  <path d="M11 25h10l11 20 11-20h10L32 57Z" fill="#458bff"/>
-  <path d="m11 25 10 2 11 18v12Z" fill="#71d8fa"/>
-  <path d="m43 25 10 0-21 32V45Z" fill="#3674e9"/>
-  <path d="m32 7 16 21-16 23-16-23Z" fill="#9e65f0" stroke="#202447" stroke-width="2.5" stroke-linejoin="round"/>
-  <path d="m32 7 16 21H32Z" fill="#d5a2ff"/>
-  <path d="M32 7v21H16Z" fill="#af79fa"/>
-  <path d="m16 28 16 23V28Z" fill="#8250d6"/>
-  <path d="M32 28h16L32 51Z" fill="#b789ff"/>
-  <path d="m32 8-6 20 6 22 6-22Z" fill="#f2d7ff" opacity=".68"/>
-  <path d="M17 28h30" stroke="#202447" stroke-width="1.5" opacity=".6"/>
-  <path d="m50 8 1.7 3.3L55 13l-3.3 1.7L50 18l-1.7-3.3L45 13l3.3-1.7Z" fill="#ffd05d"/>
-</svg>
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 64 64"><rect width="64" height="64" rx="20" fill="#ec652c"/><rect x="12" y="17" width="40" height="30" rx="12" fill="#fffaf2"/><rect x="19" y="25" width="8" height="12" rx="4" fill="#253d34"/><rect x="37" y="25" width="8" height="12" rx="4" fill="#253d34"/><path d="M27 42q5 4 10 0" fill="none" stroke="#253d34" stroke-width="2.5" stroke-linecap="round"/></svg>
