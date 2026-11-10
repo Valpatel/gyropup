@@ -1,0 +1,22 @@
+{
+  "schema": "gyropup.build-guides/1",
+  "snapshots": [
+    {
+      "id": "turret-wip-4866459e2abd",
+      "title": "Turret bench · 4866459e2abd",
+      "status": "wip",
+      "file": "turret-wip-4866459e2abd/guide.json",
+      "sha256": "f5cdb3c5e3b2e01ef2262533ad87ff2a64bffd171f86777515a0c079c47652fa"
+    }
+  ],
+  "unavailable": [
+    {
+      "id": "released",
+      "reason": "No named product build releases have been published."
+    },
+    {
+      "id": "rig",
+      "reason": "Historical assembly illustrations contain withdrawn instructions; current guide is unavailable."
+    }
+  ]
+}

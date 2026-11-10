@@ -9,6 +9,8 @@
 <link rel="stylesheet" href="kit/hud.css">
 <link rel="stylesheet" href="kit/part-table.css">
 <link rel="stylesheet" href="portal-parts.css">
+<link rel="stylesheet" href="assembly/guide.css">
+<script type="importmap">{"imports":{"three":"./kit/vendor/three/three.module.min.js","three/addons/":"./kit/vendor/three/addons/"}}</script>
 <link rel="stylesheet" href="kit/loading.css" data-gyropup-loading>
 <style>
   /* the progress page's look (designer/progress.html): the same variables, fonts, cards, tags and part rows */
@@ -147,7 +149,34 @@
 <body>
 <main class="prog">
   <div class="portal-intro"><strong>Built by autonomous systems · work in progress</strong>You're inside the Gyropup workshop. These are evolving design files and simulation reports; physical testing is still ahead. <a href="../#built">About the project ↗</a></div>
-  <h1>Gyropup: build the first prototype</h1>
+  <h1>Build Gyropup</h1>
+  <section id="assembly" class="assembly-guide" aria-labelledby="assembly-title">
+    <h2 id="assembly-title">One assembly, one step at a time</h2>
+    <p>Explore the turret’s current design, then use Buy and Print for its files and parts. This is an educational WIP walkthrough; physical build qualification is still ahead.</p>
+    <div class="assembly-toolbar"><label>Design snapshot <select data-snapshot aria-label="Design snapshot"><option>Loading current WIP…</option></select></label><span data-guide-source class="assembly-source"></span></div>
+    <p data-guide-status role="status" aria-live="polite">Loading the source-bound assembly guide…</p>
+    <p data-guide-warning class="assembly-warning">No print, fabrication or operating release.</p>
+    <nav data-guide-chapters class="assembly-chapters" aria-label="Subassemblies"></nav>
+    <div class="assembly-layout">
+      <div><div data-guide-model class="assembly-model" aria-label="Interactive assembly model"></div>
+        <div class="assembly-views"><label>Appearance <select data-guide-mode><option value="ghost">Ghost fitted parts</option><option value="solid">Solid</option><option value="wireframe">Wireframe</option></select></label><label>Explode <input data-guide-explode type="range" min="0" max="1" step="0.01" value="1"></label><button data-guide-isolate type="button" disabled aria-pressed="false">Isolate selected</button><button data-guide-reset type="button">Assembled reset</button></div>
+        <p class="small dim">Drag to orbit · scroll to zoom · choose a part to highlight it. Exploded positions explain assembly; they are not verified insertion paths.</p>
+      </div>
+      <article class="assembly-step">
+        <p data-guide-count class="assembly-count"></p>
+        <label>Instruction <select data-guide-step aria-label="Instruction step"></select></label>
+        <h3 data-guide-title>Turret assembly</h3>
+        <img data-guide-poster class="assembly-poster" alt="" hidden>
+        <p data-guide-text>Plain instructions remain available without interactive 3D.</p>
+        <details><summary>Parts in this step</summary><ul data-guide-parts></ul><p class="small">Fasteners, tools and checks are specified in the instruction text. Modeled quantities are not a purchase ledger.</p></details>
+        <label class="assembly-progress"><input type="checkbox" data-guide-complete>Mark this step complete on this browser</label>
+        <nav class="assembly-nav" aria-label="Instruction navigation"><button type="button" data-guide-prev>← Previous</button><button type="button" data-guide-next>Next →</button></nav>
+      </article>
+    </div>
+    <p><a href="../web/build-guides/turret-wip-4866459e2abd/instructions.html">All twelve instructions in plain HTML</a> · <a href="../exports/turret/bench/bom.json">Original BOM</a> · <a href="#build-details">Buy, print and full parts lists ↓</a></p>
+    <noscript><p>JavaScript is off. Use the plain HTML instructions above; no interactive scene is required to read them.</p></noscript>
+  </section>
+  <details id="build-details" class="build-details"><summary>Buy, print and full parts lists</summary>
   <div id="build-loading"><div class="gp-loading" role="status" aria-live="polite" aria-busy="true" data-state="loading"><span class="gp-loading-icon" aria-hidden="true"></span><span class="gp-loading-message">Loading parts lists and print plans…</span></div></div>
   <div class="summary" id="summary">Parts and print totals appear after the published data is ready.</div>
   <p class="lede">Plan the first prototype: choose workstreams, compare suppliers, and follow the print queues. Prices are recorded estimates before shipping and tax. Design files and quantities update as the project progresses.</p>
@@ -173,8 +202,15 @@
   <p class="lede" id="printlede"></p>
   <div id="materials"></div>
   <div class="queue" id="queue"></div>
+  </details>
 <footer class="portal-footer">Created by <a href="https://valpatel.com">Valpatel Software LLC</a>. © 2026. All rights reserved. Repository materials retain their stated licenses.</footer>
 </main>
+<script type="module">
+  const details=document.getElementById('build-details');
+  function openTarget(){const id=location.hash.slice(1);const target=document.getElementById(id);if(target&&details.contains(target)){details.open=true;requestAnimationFrame(()=>target.scrollIntoView());}}
+  addEventListener('hashchange',openTarget);openTarget();
+  import('./assembly/build-guide.js').catch(error=>{document.querySelector('[data-guide-status]').textContent='Interactive guide unavailable. Use the plain HTML instructions below.';console.warn('Build guide:',error.message);});
+</script>
 <script type="module">
   import('./print-now.js').then((m)=>m.mountPrintNow(document.getElementById('print-now'))).catch((e)=>console.warn('Print list failed:',e.message));
   try{await import('./build.js');}catch(error){
