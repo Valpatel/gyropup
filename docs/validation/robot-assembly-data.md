@@ -85,12 +85,41 @@ authorized by this document alone.
 | Genuine stages | Explicit source operation, prerequisites and exact included/highlighted instance sets, both sides | Arbitrary colour-group hiding called an assembly operation; invented fastener/qualification claims | 23 source operations exactly cover 171 robot instances |
 | Coherent immutable snapshots | Robot and Combined use exact model/mesh/recipe/BOM/source bindings; text/static fallback same stages | Cross-version asset substitution, stale prose, incomplete source coverage | Native-generated 242 outputs verified; final product/static pictures pending |
 | Manufacturing originals | Exact existing file/plan identity, kept separate from current geometry correspondence | A named, rehashed stale original must not enable Print | Current mapping explicitly pending; actual stale-file regression passed |
+| Hip geometry-only 3MF | Existing writer/read-back preserves source triangles, finite millimetres, winding and volume after an existing packer's rigid placement | Changed original/project, wrong units/coordinates/faces or out-of-rectangle layout reject | Narrow design below; implementation pending |
 | Regression/integration | Existing shared validator/controller and product browser coverage applied to imported new data | Existing turret guide or procurement state changed unintentionally | Planned; UI owner integrates |
 
 Geometry-valid CAD/poses and passing presentation tests do not establish
 physical assembly order, access, fits, preload, motor operation or strength.
 Existing #8, #193 and #201 limits remain open. Preserve failed runs and report
 any source/placement disagreement before adopting a candidate.
+
+</details>
+
+<details>
+<summary>Bounded hip geometry-only project handoff</summary>
+
+The identified hip STL remains the manufacturing original. Its retained
+`hip_frame.3mf` also remains unchanged. Prepare one distinctly named derivative
+with the existing `cadagent.manufacturing.plates` footprint/packing functions
+and `mesh3mf.write_3mf`/read-back; no new writer, CAD, slicing or transport.
+Metadata uses a separate `prepared_projects` list with project/original hashes,
+`kind: geometry-only`, immutable identity and explicit limitations.
+
+Actual footprint inspection rejected a 256 mm square with a 5 mm margin. The
+existing packer finds a 45-degree yaw in a generic 256 mm rectangle with a
+3 mm margin (249.216815 mm square footprint). This is only a finite geometric
+layout with no keepouts. It is **not** a P1S/X1E profile, keepout, adhesion,
+material, support or slicing proof. Users must select and check their actual
+printer/material/orientation/support/slicing settings. No job starts.
+
+Compare the saved project's exact triangle topology and every vertex against
+the original after that known rigid transform (allowing only the writer's
+0.0001 mm coordinate serialization), as well as finite coordinates, mm units,
+closed consistently wound edges, signed volume and actual rectangle bounds.
+Persist the layout and source/tool hashes. Reject altered originals, geometry,
+units and triangle indices; missing or changed proof/project must remove the
+prepared-project offer rather than falling back to a differently bound file.
+The UI owner verifies the same declared project/original hashes at handoff.
 
 </details>
 
