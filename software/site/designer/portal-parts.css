@@ -11,4 +11,4 @@ main.prog{margin:auto;min-width:0}.portal-jumps{display:flex;flex-wrap:wrap;gap:
 table.cmp.cad-part-table{overflow:visible}
 
 /* Fixed Build colgroups must yield the same compact identity width as their sticky phone cells. */
-@media(max-width:600px){.build-details{--build-part-column:120px}}
+@media(max-width:600px){.build-details{--build-part-column:120px;--build-status-column:84px}.build-details table[data-track],.build-details #made table{width:var(--build-columns-width);min-width:var(--build-columns-width)}}

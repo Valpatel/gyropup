@@ -24,8 +24,9 @@ export function createPortalParts(host) {
       // squeeze unassigned status columns underneath the sticky phone identity.
       const columns=table.querySelector(':scope > colgroup');
       if(columns)for(let index=columns.children.length;index<table.tHead.rows[0].cells.length;index++){
-        const column=document.createElement('col');column.style.width=table.tHead.rows[0].cells[index].classList.contains('cad-status-heading')?'88px':'100px';columns.append(column);
+        const column=document.createElement('col');column.style.width=table.tHead.rows[0].cells[index].classList.contains('cad-status-heading')?'var(--build-status-column, 88px)':'100px';columns.append(column);
       }
+      if(columns)table.style.setProperty('--build-columns-width','calc('+[...columns.children].map(column=>column.style.width).join(' + ')+')');
       api.toolbar.hidden=!many;
       if(many){const hint=document.createElement('span');hint.className='cad-table-hint';hint.textContent='Scroll the table sideways for more columns and status boxes.';api.toolbar.append(hint);}
       enhanced.set(table,api);
