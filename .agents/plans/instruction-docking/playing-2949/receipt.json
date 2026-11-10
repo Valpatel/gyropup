@@ -1,0 +1,31 @@
+{
+  "date": "2026-11-10",
+  "source": "2949ccc3e17d0178c66bb5f3e1748356147d3adb",
+  "result": "WebKit genuine playing\u2192Loop\u2192Rotate loses native click after text-node replacement; unchanged status height and scroll range exclude wrapping/clamping. CI docking independently reproduces same interaction. CI portal stops at deliberately stale poster contract before browser phase.",
+  "ci_run": 42875931873,
+  "docking_job": 130039207319,
+  "portal_job": 130039207323,
+  "files": {
+    "original-flip.json": {
+      "original_sha256": "d294966660a47169652134a44c87a00787cbd4440d1faee162f9c0e97beee98e"
+    },
+    "original-failure.png": {
+      "original_sha256": "54a3f060524ec83d3a6aca4f7475776243b26ae5774eb1d6ff869f29f2d5f770"
+    },
+    "original-failed.json": {
+      "original_sha256": "13c00c6ab7bbaee26f289afbb9792254a3841ecf6d106ed8bf55ea4455c36e0f"
+    },
+    "status-measure.json": {
+      "original_sha256": "aa88dc83d61a2a11389e0f404b2eb9989f4bd7daf85bac35937e3b71e41859ce"
+    },
+    "author-failed.json": {
+      "original_sha256": "fabda0acebe9ca8766b2e45e358dc9b5f067713db63941f5231e63e42eccab95"
+    },
+    "ci-docking-excerpt.txt": {
+      "original_full_log_sha256": "712a310f21e80e770b8f3d3113c5cc3b665087e735061a14103976e8fc2b7e88"
+    },
+    "ci-poster-excerpt.txt": {
+      "original_full_log_sha256": "8aee4a1955a55d83607cb9883a2f5a88464dc5a83ca39b1d952ef7caad739222"
+    }
+  }
+}

@@ -1,0 +1,42 @@
+{
+  "schema": "gyropup.native-frame-checkpoint/1",
+  "date": "2026-11-10",
+  "job": 263,
+  "input_job": 261,
+  "failed_predecessor_job": 262,
+  "status": "independently-accepted-frame-scope-only",
+  "source": "6acc8fda343b1f27679a4c3ae84e859b1714ca36",
+  "core": "5c29c9e2abf2562baa72a05248f23de054b8241e",
+  "original_cad_source": "e5b3089277448e5ae3d546fc36c549a62949856b",
+  "retained_mesh_source": "540056ba4e59b197859236cb693463e10c9c8901",
+  "source_and_action_review": "https://github.com/Valpatel/gyropup/pull/280#pullrequestreview-5845630652",
+  "started": "https://github.com/Valpatel/gyropup/issues/276#issuecomment-6773154896",
+  "author_audit": "https://github.com/Valpatel/gyropup/issues/276#issuecomment-6773267884",
+  "independent_postaction_review": "https://github.com/Valpatel/gyropup/issues/276#issuecomment-6773480372",
+  "native_frame_seconds": 6.838488876353949,
+  "worker_seconds": 45,
+  "total_seconds": 133,
+  "paths_checked": false,
+  "physical_assembly_verified": false,
+  "independent_script_portability": {
+    "original_sha256": "316d08ba0282354f0ee8c046dc86d7bdf432d2385a487e3de7b0cae0d0d7c62c",
+    "portable_sha256": "0a14a2ec7dc80c04a1f32051119d9c6e31f8a56d2c6aea943d48aed32ad26e24",
+    "changes": "Only import sys and replace private input/output path literals with CLI arguments; optional receipt uses exclusive creation. Audit assertions and native calculations unchanged. Original receipt bytes preserved; portable source not re-executed as new native evidence."
+  },
+  "files": {
+    "frame-report.json": "3b89e80a5cb72c227e302612a30cb8fd1334cbab9ea0c47495f8afa2e6a66911",
+    "audit.py": "58d78a6fc2c9e8329485cf0d3b37b8baa6e9643e2cf5a175303623793130204c",
+    "frame-phase.json": "97c9a1588b76396cae79023005febbc3037d2bc31d87f6c3cd9a6bcaa5312cc1",
+    "artifact-audit.json": "c7cce12c9fd957ad2a6d186f56a4878320a03f6c2eb9844a4888e43b3d90596e",
+    "independent-audit.py": "0a14a2ec7dc80c04a1f32051119d9c6e31f8a56d2c6aea943d48aed32ad26e24",
+    "frame-progress.jsonl": "62e9194d8eeafe9c8b21d6a9bc66b355226674135055d2c6c591b954f4d75a2a",
+    "frame-members.json": "d0dc620a44bd8cf806abf80c6483b8620cc0161b18052adde756f42970954755",
+    "frame-inputs.json": "faabe04c39031302f79c28dcf2b51ec174df6623c8fc28edec5b5d8e9c0f1fa6",
+    "execution.json": "d2cb90e59acb7b48473cc185ac00b37bb2e5bb8f308404c9d0847df7b8e634e9",
+    "README.md": "e34e7820c9c069c340d72ab1f864009a6cb8a2b582f3133a89ec3546cc388ad7",
+    "independent-audit.json": "f848d69bde37e4137da88a22c13086d6abbe834b2d932acad1618ca30b0781ab"
+  },
+  "retrieve": "fleet-run fetch 263 <fresh-owned-directory> --outputs-only --max-mb 256",
+  "limits": "Original byte provenance and CAD/STL/model world bounds only. Correspondence remains producer-declared. No insertion pair, gravity/support, physical or manufacturing acceptance.",
+  "frame_archive_sha256": "11ab77cded69bf6ba7f54b2ced0f9b43198d6fa0d8ca726daf378e7f51994e1b"
+}

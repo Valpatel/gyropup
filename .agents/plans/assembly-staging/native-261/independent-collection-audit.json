@@ -1,0 +1,37 @@
+{
+  "status": "PASS_COLLECTION_IDENTITY_ONLY",
+  "source": "e5b3089277448e5ae3d546fc36c549a62949856b",
+  "retained_source": "540056ba4e59b197859236cb693463e10c9c8901",
+  "archives": {
+    "candidate": {
+      "sha256": "e25403d3d0e0c0aeb8c7673003fc4f9f634f1db2f916e441f95c00493d10ec2f",
+      "members": 486
+    },
+    "guides": {
+      "sha256": "344a1c1ecf07ded1d3b4e36f4b5401f62d14f6084015011672042bdc5359f580",
+      "members": 242
+    }
+  },
+  "parts_and_original_breps": 233,
+  "exact_retained_mesh_matches": 233,
+  "stl_triangles_independently_parsed": 360367,
+  "cad_inputs": 95,
+  "before_after_inventories_equal": true,
+  "guides": [
+    {
+      "assembly": "robot",
+      "fresh_guide_sha256": "ae015c98ee200ed281dff983ae2ec0ffcedc7d96d492ca85a1ddea86bea43bbd",
+      "retained_guide_sha256": "284b63087c9f9256413f0e8dcfb3b18c494ca0e36c38e4e37df7a73963e1c3b4",
+      "parts": 171,
+      "steps": 24
+    },
+    {
+      "assembly": "combined",
+      "fresh_guide_sha256": "044a5a4ca3c2f3e238cbfdf6dba3412a095223ae76e98505ef8d698ba9d4516a",
+      "retained_guide_sha256": "f71d0343ebb9852978d98ddaefcc86051fea559cfdd5c20e970768844fa7969c",
+      "parts": 233,
+      "steps": 25
+    }
+  ],
+  "limits": "No native BREP readback, insertion sweep, support, physical or asset adoption acceptance."
+}

@@ -1,0 +1,11 @@
+{
+  "schema": "gyropup.native-pair-study-phase/1",
+  "state": "running",
+  "phase": "pairs",
+  "completed_pairs": 42,
+  "total_pairs": 90,
+  "progress_flushed_records": 552,
+  "progress_fsync_acknowledged_records": 512,
+  "progress_tail_uncertain": true,
+  "current_query": "b65f28c0c121cf3539f8746fa212aec74ca925e9ae5b35946aede80807280182"
+}

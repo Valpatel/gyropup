@@ -2,6 +2,15 @@
 
 | Symptom | Canonical guidance |
 | --- | --- |
+| A playing→paused contextual click moves even though status height and scroll range stay constant | [Preserve existing playback text nodes during genuine pause](inbox/2026-11-10-playing-pause-must-preserve-text-nodes.md) |
+| Flip/Rotate miss after a capture-time pause refresh despite a valid initial hit | [Leave unchanged native controls untouched during playback refresh](inbox/2026-11-10-no-op-playback-renders-must-preserve-native-controls.md) |
+| A Reset button gets pointerdown/focus but leaves old model or section state | [Keep pointer-focused actions fixed until native click completes](inbox/2026-11-10-pointer-focus-must-not-move-panel-actions.md) |
+| Isolate succeeds, but the selected-part popup intercepts the real model point | [Keep selected details inside reserved viewer space](inbox/2026-11-10-selection-details-need-reserved-viewer-space.md) |
+| Projected vertices are unoccluded and hit tests pass, but the model is still tiny | [Require useful model space as well as non-overlap](inbox/2026-11-10-camera-acceptance-needs-useful-model-space.md) |
+| A sideways phone keeps three desktop panels despite touch emulation | [Use actual input and height when choosing the compact layout](inbox/2026-11-10-phone-landscape-needs-input-aware-layout.md) |
+| Desktop instructions jump to a bottom sheet, an expanded card covers panel controls, or intermediate widths leave too little model space | [Budget all desktop docks together across window modes](inbox/2026-11-10-desktop-docks-need-a-shared-space-budget.md) |
+| A CLI writes a failed gate report but its shell exit is zero | [Propagate failure returns through the actual process entry point](inbox/2026-11-10-cli-failure-returns-must-reach-the-process.md) |
+| A build part passes through installed geometry despite a clean final pose, or flipping its direction hits a different obstruction | [Bind arrival paths to installed dependencies](inbox/2026-11-10-clean-final-assembly-pose-does-not-validate-arrivals.md) |
 | A build viewer looks blank during mesh downloads, or a progress bar counts the pending part as complete | [Count validated loader completions](inbox/2026-11-10-loader-progress-must-count-completed-parts.md) |
 | A robot is tiny despite a large canvas, stable guide rectangles hide controls, or narrow screenshots use desktop height | [Fit visible geometry and test actual overlay hit targets](inbox/2026-11-09-assembly-overlays-need-visible-bounds-and-hit-tests.md) |
 | A named, hashed manufacturing original is offered as matching a newly collected assembly part | [Keep file identity separate from accepted geometry correspondence](inbox/2026-11-10-manufacturing-links-need-geometry-correspondence.md) |
@@ -185,4 +194,11 @@
 
 - A playback observation loses its execution context while a later screenshot still looks coherent: [record document identity and navigation before changing runtime](inbox/2026-11-09-assembly-overlays-need-visible-bounds-and-hit-tests.md#2026-11-10-context-destruction-needs-document-identity-evidence).
 
+- A retained input fails full inventory comparison with unchanged bytes after a fleet job ends: [check the documented post-job permission freeze](inbox/2026-11-10-retained-artifact-modes-follow-the-fleet-freeze.md).
+
+- A native study is killed at its cap with no final unchecked IDs or CLI exit receipt: [derive coverage from the full plan and retained completed prefix](inbox/2026-11-10-capped-native-studies-need-observed-prefixes.md).
 - A supplier-photo fallback times out while the screenshot shows a loaded image: [arm and witness the actual request failure before navigation](inbox/2026-11-10-photo-failure-tests-must-intercept-the-request.md).
+
+- An audit accepts unrelated prior query IDs while reporting unchanged combined coverage: [bind the prior byte seal and ordered plan membership before counting](inbox/2026-11-10-combined-coverage-needs-sealed-prior-evidence.md).
+
+- Browser speech is null after a volume adjustment while a scheduled greeting fires: [preserve conversation ownership across the real greeting deadline](inbox/2026-11-10-scheduled-greetings-must-respect-conversations.md).

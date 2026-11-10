@@ -1,0 +1,632 @@
+{
+  "schema": "gyropup.native-pair-study/1",
+  "complete": false,
+  "pass": false,
+  "inputs": {
+    "emitter": "Gyropup selected pair study; results from existing core sweep_pair",
+    "frame_manifest_sha256": "d0dc620a44bd8cf806abf80c6483b8620cc0161b18052adde756f42970954755",
+    "frame_report_sha256": "3b89e80a5cb72c227e302612a30cb8fd1334cbab9ea0c47495f8afa2e6a66911",
+    "guide_sha256": "044a5a4ca3c2f3e238cbfdf6dba3412a095223ae76e98505ef8d698ba9d4516a",
+    "binding_sha256": "ccce5798a6cd220a8ba9935468f34cd619a2db26b4d386ccc1b34c28fcf3590c",
+    "witnesses_sha256": "d7126ece3eaf1baea6360666c237360b929778b7db9f62ad5874c07bed1ed315",
+    "baseline_guide_sha256": "845f8b442b5e16ca52ad59fd6794b9211a92847f41feac5401b56e240f9f4dd6",
+    "adapter_sha256": "63f7093468ba1ba2ab1063dcbac5e5fddb7331346a1eb6c8c4c287e87794b016",
+    "core_revision": "5c29c9e2abf2562baa72a05248f23de054b8241e",
+    "max_samples": 256,
+    "max_step_mm": 1.0,
+    "outer_time_cap": "Required separately reviewed detached phase; this process does not impose a native per-pair timer.",
+    "plan_sha256": "1316f2e4e315ee2cd45ed805d92ee219699a311bf09bb8d106148145fb8a96cc"
+  },
+  "queries": [
+    {
+      "id": "7d5e825add996ddf7db122a0e47b1a778f0a19f009e04b0774e8210ed47d3c51",
+      "result": {
+        "part": "cheek_left",
+        "travel_mm": 60.0,
+        "state": "clear",
+        "min_gap_mm": 2.0,
+        "gap_lower_bound_mm": 2.0,
+        "touching": false,
+        "samples": 3
+      },
+      "transient_path_complete": true,
+      "terminal_only": false
+    },
+    {
+      "id": "28bc5ed020518cb442791b64d024c7d4b21b2049519a925aa6357d15a7d88809",
+      "result": {
+        "part": "cheek_left",
+        "travel_mm": 60.0,
+        "state": "clear",
+        "min_gap_mm": 2.0,
+        "gap_lower_bound_mm": 2.0,
+        "touching": false,
+        "samples": 3
+      },
+      "transient_path_complete": true,
+      "terminal_only": false
+    },
+    {
+      "id": "16cc4c358939e194f17eeb29f049467c2d415be99dd5b5368e3d6f193a06335b",
+      "result": {
+        "part": "cheek_left",
+        "travel_mm": 60.0,
+        "state": "seat",
+        "overlap_mm3": 44.003843,
+        "samples": 1,
+        "overlap_centroid": [
+          0.0,
+          20.35622,
+          -80.9762
+        ]
+      },
+      "transient_path_complete": false,
+      "terminal_only": true
+    },
+    {
+      "id": "e1dfac2dbb518aebdfae499c7711b3133a8abd92c658755b6250caef80d0528c",
+      "result": {
+        "part": "spacer_screws",
+        "travel_mm": 60.0,
+        "state": "clear",
+        "min_gap_mm": 0.0,
+        "gap_lower_bound_mm": 0.0,
+        "touching": true,
+        "samples": 2
+      },
+      "transient_path_complete": true,
+      "terminal_only": false
+    },
+    {
+      "id": "58877214925ef256c72658736e6ea65ba86afa6f7afec9fdbf88a2392761d39e",
+      "result": {
+        "part": "L.motor_front",
+        "travel_mm": 60.0,
+        "state": "clear",
+        "min_gap_mm": 0.0,
+        "gap_lower_bound_mm": 0.0,
+        "touching": true,
+        "samples": 19
+      },
+      "transient_path_complete": true,
+      "terminal_only": false
+    },
+    {
+      "id": "0c0483e8e1dc62f888c75cc90a835d074b1579c66b7b57b6c89c5bbc536b1eed",
+      "result": {
+        "part": "L.motor_rear",
+        "travel_mm": 60.0,
+        "state": "clear",
+        "min_gap_mm": 0.0,
+        "gap_lower_bound_mm": 0.0,
+        "touching": true,
+        "samples": 19
+      },
+      "transient_path_complete": true,
+      "terminal_only": false
+    },
+    {
+      "id": "1cecb2c8868e593e7c1a05a529c5bfecc9833166496cdabed19c71593a829c02",
+      "result": {
+        "part": "L.motor_front",
+        "travel_mm": 60.0,
+        "state": "seat",
+        "overlap_mm3": 1060.287521,
+        "samples": 1,
+        "overlap_centroid": [
+          75.0,
+          74.9498,
+          0.0
+        ]
+      },
+      "transient_path_complete": false,
+      "terminal_only": true
+    },
+    {
+      "id": "713357de223a8d075030f0e9152cf6dc8cdd4ba737441eac2adedbc4e84c3b86",
+      "result": {
+        "part": "L.motor_rear",
+        "travel_mm": 60.0,
+        "state": "seat",
+        "overlap_mm3": 1060.287521,
+        "samples": 1,
+        "overlap_centroid": [
+          -75.0,
+          74.9498,
+          0.0
+        ]
+      },
+      "transient_path_complete": false,
+      "terminal_only": true
+    },
+    {
+      "id": "7cec4317b03780f01d9b20070b980d4966263becc06a9e940536d0261bcf8588",
+      "result": {
+        "part": "L.hip_frame",
+        "travel_mm": 60.0,
+        "state": "clear",
+        "min_gap_mm": 14.75,
+        "gap_lower_bound_mm": 7.6835,
+        "touching": false,
+        "samples": 4
+      },
+      "transient_path_complete": true,
+      "terminal_only": false
+    },
+    {
+      "id": "340fdb5cf97075377250327763fc9b4ce9f2543bbf5dc63f09889e0d20bee7eb",
+      "result": {
+        "part": "L.bearing_61812_front",
+        "travel_mm": 60.0,
+        "state": "clear",
+        "min_gap_mm": 7.75,
+        "gap_lower_bound_mm": 4.5154,
+        "touching": false,
+        "samples": 5
+      },
+      "transient_path_complete": true,
+      "terminal_only": false
+    },
+    {
+      "id": "53fee091af5ee38ce3407d9faf9cdab9ed4c98b1cecbbae3597d2d0f8093a548",
+      "result": {
+        "part": "L.bearing_61812_rear",
+        "travel_mm": 60.0,
+        "state": "clear",
+        "min_gap_mm": 7.75,
+        "gap_lower_bound_mm": 4.5154,
+        "touching": false,
+        "samples": 5
+      },
+      "transient_path_complete": true,
+      "terminal_only": false
+    },
+    {
+      "id": "255c65560f30fd2efb5a7c46127c5dca4095882915dfb861577921cce1295145",
+      "result": {
+        "part": "L.screws_lugs",
+        "travel_mm": 60.0,
+        "state": "clear",
+        "min_gap_mm": 27.2532,
+        "gap_lower_bound_mm": 14.5016,
+        "touching": false,
+        "samples": 3
+      },
+      "transient_path_complete": true,
+      "terminal_only": false
+    },
+    {
+      "id": "47ed893602a587cc613cd8dd755b2909598ee3ee1b47570b8cb57e5ed6e307f0",
+      "result": {
+        "part": "L.output_adapter_front",
+        "travel_mm": 60.0,
+        "state": "clear",
+        "min_gap_mm": 0.0,
+        "gap_lower_bound_mm": 0.0,
+        "touching": true,
+        "samples": 31
+      },
+      "transient_path_complete": true,
+      "terminal_only": false
+    },
+    {
+      "id": "a900a7eca983af5376e73f2105dc7ffb7e6fe537c1422b16c33952e7e15eb315",
+      "result": {
+        "part": "L.output_adapter_rear",
+        "travel_mm": 60.0,
+        "state": "clear",
+        "min_gap_mm": 0.0,
+        "gap_lower_bound_mm": 0.0,
+        "touching": true,
+        "samples": 31
+      },
+      "transient_path_complete": true,
+      "terminal_only": false
+    },
+    {
+      "id": "e7f1b94c3595dfa69a9b715a94c4291c83707dad94512612e10ab91942505d3b",
+      "result": {
+        "part": "L.hip_frame",
+        "travel_mm": 60.0,
+        "state": "clear",
+        "min_gap_mm": 1.0,
+        "gap_lower_bound_mm": 1.0,
+        "touching": false,
+        "samples": 2
+      },
+      "transient_path_complete": true,
+      "terminal_only": false
+    },
+    {
+      "id": "391d26dd6b5e6826b6ec4053b8252a102ad447eeff3a808b64f9326e33a41d5c",
+      "result": {
+        "part": "L.bearing_61812_front",
+        "travel_mm": 60.0,
+        "state": "clear",
+        "min_gap_mm": 3.0,
+        "gap_lower_bound_mm": 3.0,
+        "touching": false,
+        "samples": 2
+      },
+      "transient_path_complete": true,
+      "terminal_only": false
+    },
+    {
+      "id": "be48904d47e434f91e08329520f3106ca3261191a0662485c00b6256a8b9eb71",
+      "result": {
+        "part": "L.screws_lugs",
+        "travel_mm": 60.0,
+        "state": "clear",
+        "min_gap_mm": 5.5,
+        "gap_lower_bound_mm": 5.5,
+        "touching": false,
+        "samples": 2
+      },
+      "transient_path_complete": true,
+      "terminal_only": false
+    },
+    {
+      "id": "7e40ba67a0ae579b423f8c869a105d7b1bdfb4a0257f4323c41b85121ea96af6",
+      "result": {
+        "part": "L.output_adapter_front",
+        "travel_mm": 60.0,
+        "state": "clear",
+        "min_gap_mm": 0.0,
+        "gap_lower_bound_mm": 0.0,
+        "touching": true,
+        "samples": 5
+      },
+      "transient_path_complete": true,
+      "terminal_only": false
+    },
+    {
+      "id": "0d03a782a2617e055ce439940cb07be5b0c13bfd5101e95d983082fd06fa8513",
+      "result": {
+        "part": "L.screws_outputs",
+        "travel_mm": 60.0,
+        "state": "clear",
+        "min_gap_mm": 0.6,
+        "gap_lower_bound_mm": 0.6,
+        "touching": false,
+        "samples": 2
+      },
+      "transient_path_complete": true,
+      "terminal_only": false
+    },
+    {
+      "id": "0aa6b066bea99875f7a0f11891a0a4b2873a9b59cb797cb2fe387f1438da189c",
+      "result": {
+        "part": "L.hip_frame",
+        "travel_mm": 60.0,
+        "state": "clear",
+        "min_gap_mm": 1.0,
+        "gap_lower_bound_mm": 1.0,
+        "touching": false,
+        "samples": 2
+      },
+      "transient_path_complete": true,
+      "terminal_only": false
+    },
+    {
+      "id": "70dc0f0e05fab18201c1c6ccddf9e0815dee7bde4132263bddc8cb03884ccaf8",
+      "result": {
+        "part": "L.bearing_61812_rear",
+        "travel_mm": 60.0,
+        "state": "clear",
+        "min_gap_mm": 3.0,
+        "gap_lower_bound_mm": 3.0,
+        "touching": false,
+        "samples": 2
+      },
+      "transient_path_complete": true,
+      "terminal_only": false
+    },
+    {
+      "id": "3559a349288a9f9400a91d8e439cc133e55c72f12e8e53e659197a2152184070",
+      "result": {
+        "part": "L.screws_lugs",
+        "travel_mm": 60.0,
+        "state": "clear",
+        "min_gap_mm": 5.5,
+        "gap_lower_bound_mm": 5.5,
+        "touching": false,
+        "samples": 2
+      },
+      "transient_path_complete": true,
+      "terminal_only": false
+    },
+    {
+      "id": "fdacf7f1a7f15d298895d5155868db42618b422714d44323e94a4ab9a0d04fa4",
+      "result": {
+        "part": "L.output_adapter_rear",
+        "travel_mm": 60.0,
+        "state": "clear",
+        "min_gap_mm": 0.0,
+        "gap_lower_bound_mm": 0.0,
+        "touching": true,
+        "samples": 5
+      },
+      "transient_path_complete": true,
+      "terminal_only": false
+    },
+    {
+      "id": "d9f1238866425cc186e7013febf3da7552e642ec13cb152fcfb761c971a56b9c",
+      "result": {
+        "part": "L.screws_outputs",
+        "travel_mm": 60.0,
+        "state": "clear",
+        "min_gap_mm": 0.6,
+        "gap_lower_bound_mm": 0.6,
+        "touching": false,
+        "samples": 2
+      },
+      "transient_path_complete": true,
+      "terminal_only": false
+    },
+    {
+      "id": "ab55a38ababb6d7f156a686073e714210b5cacdd939311a3abe497986acc37f9",
+      "result": {
+        "part": "L.front_link",
+        "travel_mm": 60.0,
+        "state": "clear",
+        "min_gap_mm": 12.5,
+        "gap_lower_bound_mm": 6.25,
+        "touching": false,
+        "samples": 6
+      },
+      "transient_path_complete": true,
+      "terminal_only": false
+    },
+    {
+      "id": "23d8546577b4e7781dc21394265eeb4af93c042ec31cc0015cf34afe1a755a5a",
+      "result": {
+        "part": "L.wheel_link",
+        "travel_mm": 60.0,
+        "state": "clear",
+        "min_gap_mm": 0.0,
+        "gap_lower_bound_mm": 0.0,
+        "touching": true,
+        "samples": 61
+      },
+      "transient_path_complete": true,
+      "terminal_only": false
+    },
+    {
+      "id": "a1fe7807bf89a1ce4efaadb2c4c43fde3aa9816c68169b784fba8a1a78061ab9",
+      "result": {
+        "part": "L.apex_spacer",
+        "travel_mm": 60.0,
+        "state": "clear",
+        "min_gap_mm": 6.6,
+        "gap_lower_bound_mm": 2.0538,
+        "touching": false,
+        "samples": 6
+      },
+      "transient_path_complete": true,
+      "terminal_only": false
+    },
+    {
+      "id": "56f6e943b89080824747c6cbf1eb6969384c9a7625650f52173c91401b5b0f94",
+      "result": {
+        "part": "L.apex_61812",
+        "travel_mm": 60.0,
+        "state": "clear",
+        "min_gap_mm": 6.5,
+        "gap_lower_bound_mm": 1.7039,
+        "touching": false,
+        "samples": 8
+      },
+      "transient_path_complete": true,
+      "terminal_only": false
+    },
+    {
+      "id": "18eab7d4cc8dc0fa2b6f5360ffbf144bd4bad44053bcf557b5edc0a92f659686",
+      "result": {
+        "part": "L.apex_circlip",
+        "travel_mm": 60.0,
+        "state": "clear",
+        "min_gap_mm": 5.0,
+        "gap_lower_bound_mm": 1.5144,
+        "touching": false,
+        "samples": 3
+      },
+      "transient_path_complete": true,
+      "terminal_only": false
+    },
+    {
+      "id": "87b9e77e16be6a72221de88b83d55ae874b446a55399612b6c9970a8a7ac9297",
+      "result": {
+        "part": "L.wheel_hub",
+        "travel_mm": 60.0,
+        "state": "clear",
+        "min_gap_mm": 4.0,
+        "gap_lower_bound_mm": 2.0,
+        "touching": false,
+        "samples": 16
+      },
+      "transient_path_complete": true,
+      "terminal_only": false
+    },
+    {
+      "id": "c12afda42d21c129a796bf023ab5b8d7407b23f2910412ab6b7c9be7401ca280",
+      "result": {
+        "part": "L.front_link",
+        "travel_mm": 60.0,
+        "state": "clear",
+        "min_gap_mm": 13.0,
+        "gap_lower_bound_mm": 6.5,
+        "touching": false,
+        "samples": 6
+      },
+      "transient_path_complete": true,
+      "terminal_only": false
+    },
+    {
+      "id": "6d2861dd58b7a75a884a168f6ec39b8150b7aaf8b00bd24afad112c76f238c45",
+      "result": {
+        "part": "L.wheel_link",
+        "travel_mm": 60.0,
+        "state": "seat",
+        "overlap_mm3": 2353.555552,
+        "samples": 1,
+        "overlap_centroid": [
+          -0.0,
+          166.9448,
+          -300.0
+        ]
+      },
+      "transient_path_complete": false,
+      "terminal_only": true
+    },
+    {
+      "id": "5437b9fe57ae9937f3d880081913b630915915416e7ad423452042f2503a3795",
+      "result": {
+        "part": "L.apex_spacer",
+        "travel_mm": 60.0,
+        "state": "clear",
+        "min_gap_mm": 7.1,
+        "gap_lower_bound_mm": 2.8103,
+        "touching": false,
+        "samples": 8
+      },
+      "transient_path_complete": true,
+      "terminal_only": false
+    },
+    {
+      "id": "2652c85b3fc09fadad6b855a0b67e24411846891bb43e2fda4ecbfbfc1db937f",
+      "result": {
+        "part": "L.apex_61812",
+        "travel_mm": 60.0,
+        "state": "clear",
+        "min_gap_mm": 7.0,
+        "gap_lower_bound_mm": 3.5,
+        "touching": false,
+        "samples": 9
+      },
+      "transient_path_complete": true,
+      "terminal_only": false
+    },
+    {
+      "id": "0bc54058b4630728f57d10d89622eb2c18f2f329d701537dec8ef2ca6a6b3674",
+      "result": {
+        "part": "L.apex_circlip",
+        "travel_mm": 60.0,
+        "state": "clear",
+        "min_gap_mm": 5.5,
+        "gap_lower_bound_mm": 1.0616,
+        "touching": false,
+        "samples": 4
+      },
+      "transient_path_complete": true,
+      "terminal_only": false
+    },
+    {
+      "id": "06f38794b4cc2c897aca6b4e51c8ba5176e5938f6b2727db456bfd08138c2f95",
+      "result": {
+        "part": "L.wheel_hub",
+        "travel_mm": 60.0,
+        "state": "seat",
+        "overlap_mm3": 44.107961,
+        "samples": 1,
+        "overlap_centroid": [
+          -0.0,
+          184.7448,
+          -300.0
+        ]
+      },
+      "transient_path_complete": false,
+      "terminal_only": true
+    },
+    {
+      "id": "872ab93008b4c7202243bdbd36ecd01a383ab416192a9def69f317708fd76bdf",
+      "result": {
+        "part": "L.washers_wheel",
+        "travel_mm": 60.0,
+        "state": "clear",
+        "min_gap_mm": 0.0,
+        "gap_lower_bound_mm": 0.0,
+        "touching": true,
+        "samples": 32
+      },
+      "transient_path_complete": true,
+      "terminal_only": false
+    },
+    {
+      "id": "5a5ad17de40d35f5ecdb867449e345202f7cb9174898bbf51911923e8e399a50",
+      "result": {
+        "part": "cheek_right",
+        "travel_mm": 60.0,
+        "state": "clear",
+        "min_gap_mm": 2.0,
+        "gap_lower_bound_mm": 2.0,
+        "touching": false,
+        "samples": 3
+      },
+      "transient_path_complete": true,
+      "terminal_only": false
+    },
+    {
+      "id": "89b74e27a8ac50f0521ed981b3935474eee2330f2d5085b7e409046fa69cc33d",
+      "result": {
+        "part": "cheek_right",
+        "travel_mm": 60.0,
+        "state": "clear",
+        "min_gap_mm": 2.0,
+        "gap_lower_bound_mm": 2.0,
+        "touching": false,
+        "samples": 3
+      },
+      "transient_path_complete": true,
+      "terminal_only": false
+    },
+    {
+      "id": "d7b1b1ddecac024902dd5ca83a884f9b4158b2376269abaad0d76ea915cf74aa",
+      "result": {
+        "part": "cheek_right",
+        "travel_mm": 60.0,
+        "state": "seat",
+        "overlap_mm3": 44.003843,
+        "samples": 1,
+        "overlap_centroid": [
+          0.0,
+          -20.35622,
+          -80.9762
+        ]
+      },
+      "transient_path_complete": false,
+      "terminal_only": true
+    },
+    {
+      "id": "3c325c436d72215aca3e5113bb19f8a5e4c33bcc05a0cef0f312d978cc207706",
+      "result": {
+        "part": "spacer_screws",
+        "travel_mm": 60.0,
+        "state": "clear",
+        "min_gap_mm": 0.0,
+        "gap_lower_bound_mm": 0.0,
+        "touching": true,
+        "samples": 2
+      },
+      "transient_path_complete": true,
+      "terminal_only": false
+    },
+    {
+      "id": "909f09fbb897d6a7ba12eb576d84c8895b6f91139b3f5eebfaf97f9830ed4c40",
+      "result": {
+        "part": "R.motor_front",
+        "travel_mm": 60.0,
+        "state": "clear",
+        "min_gap_mm": 0.0,
+        "gap_lower_bound_mm": 0.0,
+        "touching": true,
+        "samples": 19
+      },
+      "transient_path_complete": true,
+      "terminal_only": false
+    }
+  ],
+  "all_assembly_paths_checked": false,
+  "support_stability_verified": false,
+  "physical_assembly_verified": false,
+  "limits": "Finite selected pair probes, using unchanged native engine/tolerances. A seat result checks no transient path. No geometry repair or overlap exemptions."
+}

@@ -37,6 +37,8 @@ def main(argv=None):
     parser=argparse.ArgumentParser(description=__doc__)
     parser.add_argument('--out',type=Path,required=True)
     parser.add_argument('--toolkit',type=Path,required=True)
+    parser.add_argument('--emit-brep',action='store_true',
+                        help='Retain original world-shape BREP bytes beside the display meshes for separate native playback validation')
     args=parser.parse_args(argv)
     root=Path(__file__).resolve().parents[3]
     out=args.out.resolve();toolkit=args.toolkit.resolve()
@@ -86,10 +88,21 @@ def main(argv=None):
         validate_operations(robot_operations(),[n for n in names if not n.startswith('turret.')])
         filenames=mesh_files(names)
         parts=[]
+        if args.emit_brep:
+            from cadagent.review.evidence import shape_brep_text, brep_content_hash, hash_platform
+            (out/'breps').mkdir()
         for group,color,name,shape,offset in rows:
             file=filenames[name]
             cq.exporters.export(shape,str(out/file),tolerance=.25,angularTolerance=.3,opt={'ascii':False})
             parts.append({'name':name,'file':file,'color':color,'visible':True,'bounds_mm':bounds(out/file),'sha256':sha(out/file),'source_group':group,'compound':len(shape.Solids())>1,'source_shape_valid':bool(shape.isValid())})
+            if args.emit_brep:
+                # The same original worldshape emitted the STL immediately above.
+                # Keep these exact bytes; a BREP read-back must never be rehashed
+                # as proof of the original source geometry or silently repaired.
+                brep_file='breps/'+Path(file).stem+'.brep'
+                raw=shape_brep_text(shape);(out/brep_file).write_bytes(raw)
+                parts[-1]['native_geometry']={'file':brep_file,'sha256':sha(out/brep_file),
+                    'shape_sha256':brep_content_hash(raw),'matrix':[1,0,0,0,0,1,0,0,0,0,1,0]}
             print('PART '+name,flush=True)
         # Independent module-to-body reference: source local parts, not the display manifest.
         from hardware.cad.legs import fivebar as fb
@@ -164,6 +177,11 @@ def main(argv=None):
                 'inputs':inputs,'producer_inputs':{p:sha(root/p) for p in ('tools/site/assembly/collect_robot_parts.py','tools/site/assembly/robot_data.py','tools/site/assembly/robot_recipe.py','tools/site/assembly/robot_runtime.py','tools/site/assembly/run_robot_collection.py','tools/site/assembly/export_robot_guide.py','tools/site/assembly/robot_manufacturing.py','tools/engineering/robot/readme_design.py','tools/engineering/robot/readme-design.json')},'collector_sha256':sha(root/helper.SOURCE_CONTEXT),'runtime':runtime,
                 'configuration':{'stage':'P3','stance_mm':robot.STANCE_MM,'tracked_j501':True,'bought_parts':'existing project envelopes'},
                 'datums':{'y_off_mm':bp.y_off(),'tm':tm},'mount_reference':mount_reference,'parts':parts,'module_reference':references,'module_origins':origins}
+        if args.emit_brep:
+            record['native_geometry']={'schema':'gyropup.robot-native-parts/1','format':'OCCT BREP v1 without triangulation or normals',
+                'units':'mm','up':'z','frame':'assembled robot CAD mm/Z-up','hash_platform':hash_platform(),
+                'source_correspondence':'Each STL and BREP payload was emitted from the same original collected worldshape. '
+                    'Identity and placement are retained; hashes are not a mathematical equivalence proof of BREP and tessellation.'}
         save(out/'collection.json',record)
         result.update(status='COLLECTED_CANDIDATE_ONLY',parts=len(parts),collection_sha256=sha(out/'collection.json'))
     except BaseException as exc:

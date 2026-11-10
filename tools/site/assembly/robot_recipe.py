@@ -4,6 +4,7 @@ No CAD imports. Archived rig tightening/fit instructions are deliberately not
 republished. Grouped source screw envelopes remain grouped source identities.
 """
 from __future__ import annotations
+import math
 
 BODY = 'hardware/cad/body/body_frame.py'
 LEG = 'hardware/cad/legs/fivebar.py'
@@ -12,9 +13,10 @@ WARNING = ('WIP CAD assembly study. The order explains named construction relati
            'it is not a qualified fastening, fit, wiring or powered-operation procedure.')
 
 
-def operation(key, title, parts, source, text, chapter, direction=(1, -1, .7), offset=(0, 0, 50)):
+def operation(key, title, parts, source, text, chapter, direction=(1, -1, .7), offset=(0, 0, 50), offsets=None):
     return dict(id=key, title=title, additions=parts, source_operation=source,
-                text=text, subassembly=chapter, camera=dict(direction=list(direction)), offset=list(offset))
+                text=text, subassembly=chapter, camera=dict(direction=list(direction)), offset=list(offset),
+                offsets=dict(offsets or {}))
 
 
 def body_operations():
@@ -47,33 +49,38 @@ def leg_operations(side):
     label = 'Left' if side == 'L' else 'Right'
     chapter = side.lower()+'-leg'
     def names(*items): return [side+'.'+n for n in items]
-    def add(key, title, parts, function, text):
+    def add(key, title, parts, function, text, offsets=None):
         return operation(side.lower()+'-'+key, label+' '+title, parts, LEG+'::'+function,
                          text, chapter, direction=(1, 1 if side == 'L' else -1, .45),
-                         offset=(0, 60 if side == 'L' else -60, 0))
+                         offset=(0, 60 if side == 'L' else -60, 0), offsets=offsets)
     return [
-        add('hip', 'hip frame and support bearings',
+        add('motors', 'stationary motor cases',
+            names('motor_front', 'motor_rear'), 'bought_parts',
+            'Present the two motor cases before the hip support closes around them. '
+            'Their outward arrival avoids passing the cases through the already-installed hip web; '
+            'the cases still need temporary support. This is a WIP presentation dependency, not a fixture procedure.'),
+        add('hip', 'hip frame, support bearings and lug screw group',
             names('hip_frame', 'bearing_61812_front', 'bearing_61812_rear')+
-            ['frame_screws_'+('left' if side == 'L' else 'right'), 'cheek_nuts_'+('left' if side == 'L' else 'right')],
-            'assembly / bought_parts; '+BODY+'::frame_parts / legs',
-            'Locate the hip frame at the body mounting face and the two support-bearing envelopes in its seats. '
-            'The source flange screw group remains a group; bearing fits and insert retention are unverified.'),
-        add('motors', 'stationary motor cases and lug screw group',
-            names('motor_front', 'motor_rear', 'screws_lugs'), 'bought_parts / screw_groups',
-            'The two motor housings belong to the fixed hip support, not the moving upper links. '
-            'Show the lug screw envelopes before the upper links and stop posts obscure their access. No torque is specified.'),
+            ['frame_screws_'+('left' if side == 'L' else 'right'), 'cheek_nuts_'+('left' if side == 'L' else 'right')]+
+            names('screws_lugs'),
+            'assembly / bought_parts / screw_groups; '+BODY+'::frame_parts / legs',
+            'Locate the hip frame around the motor cases, then show its support bearings and retained screw groups. '
+            'Lug screws follow the support and precede the upper links. The source flange screw group remains a group; '
+            'bearing fits, driver access, temporary support and insert retention are unverified. No torque is specified.'),
         add('upper', 'output adapters and upper links',
-            names('output_adapter_front', 'output_adapter_rear', 'upper_link_front', 'upper_link_rear', 'screws_outputs', 'screws_links'),
+            names('output_adapter_front', 'output_adapter_rear', 'screws_outputs', 'upper_link_front', 'upper_link_rear', 'screws_links'),
             'assembly / link_frames / screw_groups',
             'Each output adapter and its upper link share the authored rotating-link frame. '
-            'The front and rear instances are distinct; their source screw groups are not individual manufactured screw models.'),
+            'The output screw group precedes the upper links so it does not arrive through their hubs. '
+            'The front and rear instances are distinct; source screw groups are not individual manufactured screw models.'),
         add('front-knee', 'front knee and lower link',
             names('front_link', 'knee_bearing_front_in', 'knee_bearing_front_out', 'knee_spacer_front',
                   'eye_sleeve_front', 'knee_washer_front', 'knee_pin_front', 'knee_nut_upper_front'),
             'assembly / bought_parts / link_frames',
             'The current source uses the 6301 knee cartridge in the front lower link, with separate spacer, '
             'eye sleeve, washer, shoulder-pin and nut identities. The pin connects the upper eye and lower knee; '
-            'the archived 6201-era display is not substituted for this geometry.'),
+            'the archived 6201-era display is not substituted for this geometry. The inboard bearing is blocked by '
+            'the lower-link shoulder from outside and the upper eye from inside; this arrival remains illustrative pending subassembly validation.'),
         add('rear-knee', 'rear knee and wheel-carrying lower link',
             names('wheel_link', 'knee_bearing_rear_in', 'knee_bearing_rear_out', 'knee_spacer_rear',
                   'eye_sleeve_rear', 'knee_washer_rear', 'knee_pin_rear', 'knee_nut_upper_rear'),
@@ -83,11 +90,14 @@ def leg_operations(side):
         add('apex', 'apex connection and loop closure',
             names('apex_spacer', 'apex_61812', 'apex_circlip'), 'assembly / bought_parts / link_frames',
             'The two lower links meet at the source five-bar apex. The spacer, paired-bearing envelope '
-            'and circlip remain separate CAD identities. This geometric closure does not prove physical fit or free motion.'),
+            'and circlip remain separate CAD identities. The rigid circlip envelope overlaps its final groove; '
+            'its illustrated arrival does not model circlip expansion. This closure does not prove physical fit or free motion.'),
         add('wheel', 'wheel hub, tyre and retained screw groups',
-            names('wheel_hub', 'wheel_tyre', 'screws_wheel', 'washers_wheel'), 'bought_parts / botwheel / screw_groups',
+            names('wheel_hub', 'wheel_tyre', 'washers_wheel', 'screws_wheel'), 'bought_parts / botwheel / screw_groups',
             'The BotWheel hub and tyre share the authored apex/wheel datum. Keep the wheel-fastener and washer '
-            'source groups visible as groups. Thread engagement, wiring and tightening remain unqualified.'),
+            'source groups visible as groups. Washers precede screws, arriving from the inboard side of the hub as in '
+            'the source screw stack. Thread engagement, wiring and tightening remain unqualified.',
+            offsets={side+'.'+n: [0, -60 if side == 'L' else 60, 0] for n in ('washers_wheel', 'screws_wheel')}),
         add('stops', 'stop posts and four sleeves',
             names('stop_posts', *[f'stop_sleeve_{i}' for i in range(1, 5)]), 'assembly / bought_parts / stop_posts',
             'Show the fixed stop-post group and four separate sleeve instances after the motor-access stages. '
@@ -138,6 +148,11 @@ def validate_operations(operations, available):
         names = op['additions']
         if not names or len(names) != len(set(names)) or set(names)-available or seen.intersection(names):
             raise ValueError('Unknown, duplicate or multiply assigned operation parts: '+op['id'])
+        overrides = op.get('offsets', {})
+        if (set(overrides)-set(names) or any(not isinstance(v, (list, tuple)) or len(v) != 3
+                or any(not isinstance(n, (int, float)) or not math.isfinite(n) for n in v)
+                for v in [op['offset'], *overrides.values()])):
+            raise ValueError('Unknown or invalid operation offset: '+op['id'])
         seen.update(names)
     if seen != available:
         raise ValueError('Unassigned robot parts: '+', '.join(sorted(available-seen)))

@@ -1,0 +1,142 @@
+{
+  "status": "PASS_SCOPED_NATIVE_FRAME_PREFLIGHT",
+  "source": "6acc8fda343b1f27679a4c3ae84e859b1714ca36",
+  "core": "5c29c9e2abf2562baa72a05248f23de054b8241e",
+  "input_job": 261,
+  "recipe_sha256": "26bc1abeef345c6493726c85db20dc29a38a1a97f5a9ba4acdc0b579a8eb163e",
+  "paths_requested": false,
+  "adoption_approved": false,
+  "guards": {
+    "runtime": true,
+    "toolkit": true,
+    "candidate": true,
+    "guides": true,
+    "hardware": true,
+    "tracked": true,
+    "playback-core": true,
+    "clean_source": true
+  },
+  "errors": [],
+  "frame_archive_sha256": "11ab77cded69bf6ba7f54b2ced0f9b43198d6fa0d8ca726daf378e7f51994e1b",
+  "native_summary": {
+    "pass": true,
+    "gate": "assembly-playback-preflight",
+    "limits": {
+      "max_step_mm": 1.0,
+      "margin_mm": 1.0,
+      "refine_steps": 12,
+      "max_samples": 5000,
+      "tool_access": true,
+      "missing_direction": "warn",
+      "touch_mm": 0.01,
+      "overlap_mm3": 0.001,
+      "bounds_tolerance_mm": 0.5,
+      "model_bounds_rounding_allowance_mm": 0.01,
+      "finite_paths": true,
+      "support_stability_verified": false,
+      "physical_assembly_verified": false,
+      "cad_mesh_correspondence": "producer-declared",
+      "paths_checked": false,
+      "progress_complete": true
+    },
+    "frames": 233,
+    "operations": 0,
+    "world_stats": {
+      "kernel_queries": 0,
+      "memo_hits": 0,
+      "cache_hits": 0,
+      "tool_sweeps": 0
+    }
+  },
+  "processes_quiescent": true,
+  "schema": "gyropup.native-frame-execution/1",
+  "raw_final_sha256": "022346802f7272f0d09fcf307b539a3c3638c7e59bafb120fd82a54b99d978d6",
+  "phases": {
+    "core-init": {
+      "expected_exit": 0,
+      "timeout_seconds": 10,
+      "exit": 0,
+      "pid": 3975857,
+      "process_cleanup": {
+        "group_gone": true,
+        "signalled": false,
+        "reaped": []
+      },
+      "seconds": 0.0078081549145281315,
+      "actual_command_sha256": "0a3462c8761ab24143607b5549267f250f1bad46c8f17a0749bbdd296505ef49",
+      "command_record": "Exact argv retained in original job263 terminal result; normalized public receipt excludes private runtime paths."
+    },
+    "core-origin": {
+      "expected_exit": 0,
+      "timeout_seconds": 10,
+      "exit": 0,
+      "pid": 3975858,
+      "process_cleanup": {
+        "group_gone": true,
+        "signalled": false,
+        "reaped": []
+      },
+      "seconds": 0.0059323678724467754,
+      "actual_command_sha256": "4c72e2c2b5d728294a3d2127b17e8fc2837d9546fc31c1b9bcb750ee491e0d76",
+      "command_record": "Exact argv retained in original job263 terminal result; normalized public receipt excludes private runtime paths."
+    },
+    "core-fetch": {
+      "expected_exit": 0,
+      "timeout_seconds": 180,
+      "exit": 0,
+      "pid": 3975859,
+      "process_cleanup": {
+        "group_gone": true,
+        "signalled": false,
+        "reaped": []
+      },
+      "seconds": 18.742008089087903,
+      "actual_command_sha256": "9f51da2e9a1bee28d71b855294c413c4b16eb0bf30aaee8e801a84e1dc108877",
+      "command_record": "Exact argv retained in original job263 terminal result; normalized public receipt excludes private runtime paths."
+    },
+    "core-sparse": {
+      "expected_exit": 0,
+      "timeout_seconds": 20,
+      "exit": 0,
+      "pid": 3976530,
+      "process_cleanup": {
+        "group_gone": true,
+        "signalled": false,
+        "reaped": []
+      },
+      "seconds": 0.007516810204833746,
+      "actual_command_sha256": "d4818fdb49f8fb9f7e88be1578d2e701988ba04988b9fa006085876ee78c09e4",
+      "command_record": "Exact argv retained in original job263 terminal result; normalized public receipt excludes private runtime paths."
+    },
+    "core-checkout": {
+      "expected_exit": 0,
+      "timeout_seconds": 60,
+      "exit": 0,
+      "pid": 3976531,
+      "process_cleanup": {
+        "group_gone": true,
+        "signalled": false,
+        "reaped": []
+      },
+      "seconds": 0.11614158237352967,
+      "actual_command_sha256": "6f20b065a3a7a7ac19b5b29052719ffecbdc0dcec1de03221b4647386ea410c2",
+      "command_record": "Exact argv retained in original job263 terminal result; normalized public receipt excludes private runtime paths."
+    },
+    "native-frame": {
+      "expected_exit": 0,
+      "timeout_seconds": 180,
+      "exit": 0,
+      "pid": 3976545,
+      "process_cleanup": {
+        "group_gone": true,
+        "signalled": false,
+        "reaped": []
+      },
+      "seconds": 6.838488876353949,
+      "actual_command_sha256": "1280a17fe07adb5cf7d9be3fd95a2814881ded5d2ea4a7d817d5cd88eed4c371",
+      "command_record": "Exact argv retained in original job263 terminal result; normalized public receipt excludes private runtime paths."
+    }
+  },
+  "retrieval": "fleet-run fetch 263 <fresh-owned-directory> --outputs-only --max-mb 256",
+  "limits": "Frame-only preflight. No insertion pair, collision-clearance, support or physical assembly acceptance."
+}

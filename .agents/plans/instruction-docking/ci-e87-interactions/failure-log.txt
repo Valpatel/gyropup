@@ -1,0 +1,32 @@
+2026-11-10T17:28:02.0634817Z
+2026-11-10T17:28:02.0635645Z > test:build-workspace
+2026-11-10T17:28:02.0636038Z > node tests/site/assembly/test-build-workspace.mjs
+2026-11-10T17:28:02.0636289Z
+2026-11-10T17:28:12.5404896Z node:internal/modules/run_main:123
+2026-11-10T17:28:12.5405383Z     triggerUncaughtException(
+2026-11-10T17:28:12.5407553Z     ^
+2026-11-10T17:28:12.5419961Z
+2026-11-10T17:28:12.5420812Z AssertionError [ERR_ASSERTION]: Expected values to be strictly deep-equal:
+2026-11-10T17:28:12.5421249Z + actual - expected
+2026-11-10T17:28:12.5421381Z
+2026-11-10T17:28:12.5421460Z   {
+2026-11-10T17:28:12.5421635Z +   axis: 'z',
+2026-11-10T17:28:12.5421842Z +   depth: 0.4,
+2026-11-10T17:28:12.5422038Z +   flipped: true
+2026-11-10T17:28:12.5422226Z -   axis: 'x',
+2026-11-10T17:28:12.5422782Z -   depth: 1,
+2026-11-10T17:28:12.5422981Z -   flipped: false
+2026-11-10T17:28:12.5423163Z   }
+2026-11-10T17:28:12.5423257Z
+2026-11-10T17:28:12.5423543Z     at file:///__w/gyropup/gyropup/tests/site/assembly/test-build-workspace.mjs:55:616 {
+2026-11-10T17:28:12.5423951Z   generatedMessage: true,
+2026-11-10T17:28:12.5424176Z   code: 'ERR_ASSERTION',
+2026-11-10T17:28:12.5424855Z   actual: { axis: 'z', flipped: true, depth: 0.4 },
+2026-11-10T17:28:12.5425278Z   expected: { axis: 'x', flipped: false, depth: 1 },
+2026-11-10T17:28:12.5425582Z   operator: 'deepStrictEqual',
+2026-11-10T17:28:12.5425803Z   diff: 'simple'
+2026-11-10T17:28:12.5425991Z }
+2026-11-10T17:28:12.5426080Z
+2026-11-10T17:28:12.5426161Z Node.js v22.23.4
+2026-11-10T17:28:12.5625434Z ##[error]Process completed with exit code 1.
+2026-11-10T17:28:12.5691261Z ##[group]Run actions/upload-artifact@v4

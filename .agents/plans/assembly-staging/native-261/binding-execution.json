@@ -1,0 +1,13 @@
+{
+  "state": "RETURNED",
+  "at": "2026-11-10T15:40:33.282504+00:00",
+  "review": "https://github.com/Valpatel/gyropup/issues/276#issuecomment-6771733240",
+  "plan_sha256": "5501e77a9ce97892c0d036e37fa4daa57f8bad89f238623f561e888e93c13592",
+  "command_sha256": "f3a7f3059009179272746cb1b246ade64a4d721b13d3f2932a29d0abf44e08ad",
+  "one_invocation": true,
+  "native_validation": false,
+  "exit": 0,
+  "stdout": "Captured 2 native playback bindings; original BREP bytes preserved; no adoption\n",
+  "stderr": "",
+  "completed": "2026-11-10T15:40:33.780979+00:00"
+}

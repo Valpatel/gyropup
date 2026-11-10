@@ -215,6 +215,10 @@ jobs:
             commands: |
               WORKSPACE_CASE=layout WORKSPACE_ASSEMBLY=turret WORKSPACE_WIDTH=320 npm run test:build-workspace
               PLAYWRIGHT_BROWSER=webkit WORKSPACE_CASE=layout WORKSPACE_ASSEMBLY=turret WORKSPACE_WIDTH=320 npm run test:build-workspace
+          - suite: build-instruction-docking
+            commands: |
+              npm run test:instruction-docking
+              PLAYWRIGHT_BROWSER=webkit npm run test:instruction-docking
           - suite: build-workspace-interactions
             commands: |
               WORKSPACE_CASE=interactions npm run test:build-workspace

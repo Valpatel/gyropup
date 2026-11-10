@@ -55,6 +55,14 @@ class SourceOperations(unittest.TestCase):
             self.assertTrue(op['text'].strip())
         with self.assertRaises(ValueError): recipe.leg_operations('mirrored')
 
+    def test_per_instance_offsets_reject_unknown_and_nonfinite_vectors(self):
+        for value in ({'missing': [0, 1, 0]}, {'cheek_left': [0, float('nan'), 0]},
+                      {'cheek_left': [0, 1]}):
+            ops = recipe.robot_operations()
+            ops[0]['offsets'] = value
+            with self.subTest(value=value), self.assertRaises(ValueError):
+                recipe.validate_operations(ops, self.names)
+
 
 if __name__ == '__main__':
     unittest.main()

@@ -163,7 +163,8 @@
   }
   detectButton.onclick=detectServices;detectButton.disabled=false;
 
-  setTimeout(() => talk.say(LINES.DEMO_GREETING, { mood: 'happy', hold: 60000 }), 400);
+  // The visitor's answer owns the voice if they start talking before the greeting.
+  setTimeout(() => talk.announce(LINES.DEMO_GREETING, { mood: 'happy', hold: 60000 }), 400);
   await new Promise(requestAnimationFrame);stage.renderer.render(stage.scene,stage.camera);
   loading.ready(token);document.body.dataset.ready='1';
   }catch(error){if(own===request)loading.fail('Gyropup could not load. '+error.message,{token,onRetry:load});}

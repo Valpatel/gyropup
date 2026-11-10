@@ -1,0 +1,19 @@
+{
+  "schema": "gyropup.native-pair-pure-preflight/1",
+  "date": "2026-11-10",
+  "pass": true,
+  "native_import_guard": "cadquery/OCP/vtk/vtkmodules imports forbidden throughout actual CLI execution",
+  "native_queries": false,
+  "frame_job": 263,
+  "plan_sha256": "1316f2e4e315ee2cd45ed805d92ee219699a311bf09bb8d106148145fb8a96cc",
+  "source_receipt_sha256": "a7f6219e068d29f2232fec6c95d0fcb0392fdb85ef39332f66961b912ac939c8",
+  "helper_sha256": "63f7093468ba1ba2ab1063dcbac5e5fddb7331346a1eb6c8c4c287e87794b016",
+  "preparation_harness_sha256": "da4bc453d2e50df7160bc9040c3ba42d25678270e52b53ce233729c67060ea1d",
+  "core": "5c29c9e2abf2562baa72a05248f23de054b8241e",
+  "predecessor_rows": 1126,
+  "cad_candidates": 74,
+  "cad_exclusions": 1052,
+  "labelled_controls": 22,
+  "unique_query_contexts": 90,
+  "qualification": "Exact staged helper/input bytes; no immutable executed implementation commit claimed. No native path verdict."
+}

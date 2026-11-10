@@ -1,0 +1,38 @@
+{
+  "date": "2026-11-10",
+  "head": "a9f2f361d0cc6016caf964a7654cd2d0fd36001d",
+  "tested_merge": "521811c5c1cbfebd10bc41e9448998e0a821354b",
+  "base": "1855230003a6be8ac88a37396c6f911cacbd043f",
+  "run": 42872278158,
+  "engine": "Pinned Playwright1.56.1 image bundled Chromium; exact binary unavailable locally, not installed",
+  "playback": {
+    "job": 130026340857,
+    "artifact": 13790707742,
+    "zip_sha256": "1fa9ce5a687a85a4e593dd57a9d4a51bcdc4755ddf951c78e0511c287940947e",
+    "log_sha256": "797f047012ee4833362fe382b316d28b89f37355976fdba7b340629aae857d50",
+    "raw_report_sha256": "342714d1f35efa4c657f3df6334fc3d11b9171c495f6460b236d71646dbe0880",
+    "report_normalization": "Only local preview origin replaced with <preview-origin>; original token/events/failed assertions retained",
+    "error": "page.evaluate: Execution context was destroyed, most likely because of a navigation.",
+    "observer": "test-build-workspace.mjs:75, asynchronous second arrival sample after selecting l-upper",
+    "document_creations": 1,
+    "document_tokens": 1,
+    "page_errors": [],
+    "last_successful_arrival": "L.motor_front",
+    "cause_limit": "No full navigation/new document/crash is recorded. The exact browser/runtime context destruction cause remains unproved; removing the unnecessary async vector import makes the sampled player/mesh observation atomic."
+  },
+  "audio": {
+    "job": 130026340603,
+    "artifact": 13791650915,
+    "zip_sha256": "40ba459d8b8cf28cd7bdbbeee69049c21d26a948c777cf962fffdde2d6da9965",
+    "log_sha256": "3108e9241a2075f75d00ed2743eb3054510e223c32ce25da9a31f1c9ec1d1671",
+    "error": "page.evaluate: TypeError: Cannot read properties of null (reading 'volume')",
+    "observer": "test-audio-settings.mjs:190 after second volume input",
+    "baseline_source_unchanged": true,
+    "cause_limit": "The old CI test did not retain the active design/timer trace. Controlled-clock reproduction independently confirms a baseline400ms talk-demo greeting can produce the observed cancelled active utterance; it does not reconstruct the missing original timer trace."
+  },
+  "source_change": {
+    "audio": "Scheduled greeting uses existing announce guard; active conversations retain ownership.",
+    "playback": "Synchronous loaded-mesh vector math; all8x16 vertex/state checks retained, per-sample document identity added."
+  },
+  "no_cad_or_imported_player_changes": true
+}

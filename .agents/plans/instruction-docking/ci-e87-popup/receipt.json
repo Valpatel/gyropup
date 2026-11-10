@@ -1,0 +1,19 @@
+{
+  "date": "2026-11-10",
+  "run": 42863757535,
+  "job": 129997763341,
+  "artifact": 13786931504,
+  "head": "e87d12ba16b26b3623266ab61e2785bad3b8a96e",
+  "tested_merge_revision": "bbf356c8aad8f0b6e0d893104d3a8139e34e43e9",
+  "job_url": "https://github.com/Valpatel/gyropup/actions/runs/42863757535/job/129997763341",
+  "artifact_url": "https://github.com/Valpatel/gyropup/actions/runs/42863757535/artifacts/13786931504",
+  "uploaded_artifact_sha256": "296eb4eb70d04589f9cf56d2919934e006aafc5143eaacc942dfb5075846c9ad",
+  "retrieved_zip_sha256": "296eb4eb70d04589f9cf56d2919934e006aafc5143eaacc942dfb5075846c9ad",
+  "raw_failed_json_sha256": "8888f44356c993d8201eaca60063eee3893867e92b737a684d03c48f28bfa8f6",
+  "raw_log_sha256": "c4230d169f1b78d6c51696172e0b9a7c787c3633ed4e5750e677c0e752ea15d2",
+  "raw_failure_png_sha256": "3d5da10f7fa4507f71a91e082d0a639f30dd5f399f1ab5476cc41e39da639674",
+  "redactions": [
+    "Preview origin only in failed.json; original raw digest retained.",
+    "failure-log.txt is the exact phase/assertion excerpt; full original log hash and source URL retained."
+  ]
+}

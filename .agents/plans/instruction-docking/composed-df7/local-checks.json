@@ -1,0 +1,31 @@
+{
+  "date": "2026-11-10",
+  "source_commit": "df7fec062753be4b0170c4d22453a6d44bf18def",
+  "commands": [
+    {
+      "command": "python3 -B -m unittest discover -s tests/site/assembly -p 'test_robot*.py'",
+      "tests": 52,
+      "skipped": 3,
+      "status": "passed"
+    },
+    {
+      "command": "node --test tests/site/assembly/test-guide-state.mjs tests/site/assembly/test-guide-fallback.mjs tests/site/assembly/test-poster-contract.mjs tests/site/assembly/test-print-selection.mjs tests/site/assembly/test-print-mount.mjs",
+      "tests": 19,
+      "status": "passed"
+    },
+    {
+      "command": "npm run test:instruction-docking",
+      "actual_states": 132,
+      "status": "passed",
+      "engine": "chromium"
+    },
+    {
+      "command": "PLAYWRIGHT_BROWSER=webkit npm run test:instruction-docking",
+      "actual_states": 132,
+      "status": "passed",
+      "engine": "webkit"
+    }
+  ],
+  "native_evidence": "Byte-identical to accepted e3401b0a6789c9a05daff8867f2348e114e2460b in hardware, firmware, assembly-staging, native helpers and source collection helpers. No native CAD work ran.",
+  "environment": "Node22, native local Chrome151 and installed WebKit26.0. Pinned normal CI remains mandatory; local Chromium differs from pinned CI."
+}

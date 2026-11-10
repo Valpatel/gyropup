@@ -1,0 +1,67 @@
+{
+  "artifact_audit_pass": true,
+  "scoped_execution_complete": true,
+  "actual_native_exit": 1,
+  "source": "05bf810d245ca1b938f9283a10dde624ed2104ba",
+  "core": "5c29c9e2abf2562baa72a05248f23de054b8241e",
+  "archive_sha256": "17488f0972a382f3658bf6d51bf47444b9d9a984e471741634c315e433448dac",
+  "files": 485,
+  "original_input_files": 475,
+  "selected_counts": {
+    "blocked": 2
+  },
+  "hits": [
+    {
+      "id": "f2bd165061ce41d9e225a5d2ed0b42fcf4b882e7fbe393f474089ff75afd519e",
+      "result": {
+        "part": "L.hip_frame",
+        "travel_mm": 60.0,
+        "state": "blocked",
+        "first_contact_mm": [
+          null,
+          60.0
+        ],
+        "overlap_mm3": 115749.939463,
+        "overlap_centroid": [
+          75.393213,
+          91.849692,
+          -0.421669
+        ],
+        "samples": 2
+      },
+      "transient_path_complete": false,
+      "terminal_only": false
+    },
+    {
+      "id": "6b8e90982dd9f33b2bef4654d5d234c1d9d2a825198245b14d86df7a52bac254",
+      "result": {
+        "part": "cheek_left",
+        "travel_mm": 60.0,
+        "state": "blocked",
+        "first_contact_mm": [
+          null,
+          60.0
+        ],
+        "overlap_mm3": 15823.005812,
+        "overlap_centroid": [
+          60.146074,
+          16.566367,
+          0.0
+        ],
+        "samples": 2
+      },
+      "transient_path_complete": false,
+      "terminal_only": false
+    }
+  ],
+  "prior_completed": 42,
+  "distinct_completed_across_both": 44,
+  "uncompleted_full_plan": 46,
+  "unselected_this_job": 88,
+  "progress_records": 472,
+  "tail_uncertain": false,
+  "assembly_qualified": false,
+  "all_assembly_paths_checked": false,
+  "support_stability_verified": false,
+  "physical_assembly_verified": false
+}

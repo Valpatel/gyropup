@@ -1,0 +1,28 @@
+2026-11-10T18:42:34.0419743Z node:internal/modules/run_main:123
+2026-11-10T18:42:34.0420148Z     triggerUncaughtException(
+2026-11-10T18:42:34.0420491Z     ^
+2026-11-10T18:42:34.0420618Z
+2026-11-10T18:42:34.0430260Z AssertionError [ERR_ASSERTION]: {"label":"actively-playing Robot Rotate pauses before action","result":{"trace":[{"type":"pointerdown","target":true,"trusted":true,"pointerType":"mouse","box":[1052,665,124,44],"scroll":202,"player":{"status":"playing","stepId":"body-spine","partId":"spacer_screws","operationIndex":3,"elapsedMs":797.0000000000073,"progress":0.7245454545454612,"speed":2,"loop":true},"section":{"axis":"z","flipped":true,"depth":0.4}},{"type":"pointerup","target":false,"trusted":true,"pointerType":"mouse","box":[1052,692,124,44],"scroll":175,"player":{"status":"paused","stepId":"body-spine","partId":"spacer_screws","operationIndex":3,"elapsedMs":797.0000000000073,"progress":0.7245454545454612,"speed":2,"loop":true},"section":{"axis":"z","flipped":true,"depth":0.4}},{"type":"click","target":false,"trusted":true,"pointerType":"mouse","box":[1052,692,124,44],"scroll":175,"player":{"status":"paused","stepId":"body-spine","partId":"spacer_screws","operationIndex":3,"elapsedMs":797.0000000000073,"progress":0.7245454545454612,"speed":2,"loop":true},"section":{"axis":"z","flipped":true,"depth":0.4}}],"player":{"status":"paused","stepId":"body-spine","partId":"spacer_screws","operationIndex":3,"elapsedMs":797.0000000000073,"progress":0.7245454545454612,"speed":2,"loop":true},"section":{"axis":"z","flipped":true,"depth":0.4}}}
+2026-11-10T18:42:34.0436510Z     at mouseControl (file:///__w/gyropup/gyropup/tests/site/assembly/test-instruction-docking.mjs:95:9)
+2026-11-10T18:42:34.0437206Z     at async playbackActivationCases (file:///__w/gyropup/gyropup/tests/site/assembly/test-instruction-docking.mjs:108:559)
+2026-11-10T18:42:34.0437834Z     at async file:///__w/gyropup/gyropup/tests/site/assembly/test-instruction-docking.mjs:155:27 {
+2026-11-10T18:42:34.0438382Z   generatedMessage: false,
+2026-11-10T18:42:34.0438702Z   code: 'ERR_ASSERTION',
+2026-11-10T18:42:34.0439000Z   actual: false,
+2026-11-10T18:42:34.0439277Z   expected: true,
+2026-11-10T18:42:34.0439689Z   operator: '==',
+2026-11-10T18:42:34.0439970Z   diff: 'simple'
+2026-11-10T18:42:34.0440227Z }
+2026-11-10T18:42:34.0440364Z
+2026-11-10T18:42:34.0440476Z Node.js v22.23.4
+2026-11-10T18:42:34.0672870Z ##[error]Process completed with exit code 1.
+2026-11-10T18:42:34.0746372Z ##[group]Run actions/upload-artifact@v4
+2026-11-10T18:42:34.0746613Z with:
+2026-11-10T18:42:34.0746814Z   name: build-instruction-docking-evidence
+2026-11-10T18:42:34.0747069Z   path: /tmp/gyropup-*
+test-results
+
+2026-11-10T18:42:34.0747305Z   if-no-files-found: warn
+2026-11-10T18:42:34.0747510Z   compression-level: 6
+2026-11-10T18:42:34.0747704Z   overwrite: false
+2026-11-10T18:42:34.0747891Z   include-hidden-files: false
