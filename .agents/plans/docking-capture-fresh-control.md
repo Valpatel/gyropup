@@ -72,3 +72,13 @@ Source-only validation:13 pure guards pass (the original11 failure-retention
 controls plus scope/runtime controls), syntax/diff checks pass. Parsed workflow
 comparison proves removing the one new case restores every existing job, command,
 image, budget and gate exactly. No browser or CI control has been executed.
+
+## Completed experiment and matrix retirement
+
+The reviewed9c fresh141 control passed at13.714s; the c7 fresh141 control
+failed at15s while the c7 full campaign passed132 states in each engine.
+The additional duplicate matrix case is retired; explicit diagnostic mode and
+full required coverage/deadlines stay unchanged. Canonical outcomes and rationale:
+[docking-capture-diagnostics/retired-fresh-experiment/](docking-capture-diagnostics/retired-fresh-experiment/README.md).
+No cause fix is claimed. Any30s artifact experiment remains a separate future
+source/action review after protected integration/current-model publication.
