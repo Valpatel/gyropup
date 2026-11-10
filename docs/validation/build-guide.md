@@ -243,3 +243,11 @@ the unchanged actual raster bytes, rather than resealing old images without a ru
 The earlier `bea6b2b6` version-only misrouting observation remains superseded,
 not a passing routing claim. Complete final-head CI and independent review gate
 integration.
+
+The final Print harness awaits actual native fullscreenElement plus matching mode
+and pressed state, or the explicit expanded-denial state, before acting. A real
+Chromium native Print campaign against50cc passed at the unchanged30s readiness
+bound, including selectedhip inside fullscreen, actual exit and verified original
+and3MF downloads. This corrects the immediate-read race in CI129780849681; it does
+not treat the prior successful HTTP404 prefix as fullscreen acceptance. Runtime
+and all53c15b92 poster inputs are unchanged by this test-only correction.

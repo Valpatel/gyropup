@@ -67,6 +67,14 @@
       "scope": "Actual3realversion-onlyroutes, Combinedcanonicalreload, bareCombineddefault; mixedlegacycontext, nativechanges, heldlate/disposal preserved.",
       "test_harness_file": "tests/site/assembly/test-build-route.mjs",
       "test_harness_sha256": "8a7f629666e3cda3fe805ec4971e2078e0e9481ba31cba498aa950b22b8bdad0"
+    },
+    {
+      "file": ".agents/plans/build-workspace-evidence/native-print-ready-chromium-50cc.json",
+      "sha256": "6e75bed4096619c9340dbfb7ea30361949a1daff15b81304e5e05775835f155e",
+      "tested_site_revision": "50cc2bf28d85a10a12d5cd153804b020016c3a89",
+      "scope": "Actual native document/mode/aria completion at original30s bound, selectedhip inside fullscreen, verifiedPrint escape and downloads; no application/printer activation.",
+      "test_harness_file": "tests/site/assembly/test-build-workspace.mjs",
+      "test_harness_sha256": "638fa586e29540f46026e83cc84146736c47aded22196b9777a0885d75c4b9f9"
     }
   ],
   "retained_failures": [

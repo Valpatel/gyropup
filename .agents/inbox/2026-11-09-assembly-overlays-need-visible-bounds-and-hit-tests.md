@@ -152,3 +152,12 @@ version links agree. Tests cover all three real version-only routes, the bare
 default, explicit mixed override, unknown rejection and Combined canonical reload.
 Do not infer assembly from a label/revision string or silently substitute another
 version. The failing observation remains distinct from later fixed-head acceptance.
+
+Current-head50cc Print job129780849681 then reached the real fullscreen click,
+but immediately read `data-fullscreen:null` before the asynchronous transition
+completed. Both HTTP404 boundaries passed and errors were empty. The catch image
+already occupied the viewport, but that alone could not identify native versus
+expanded fullscreen. Await actual document.fullscreenElement, matching mode and
+pressed-control state (or the intentional expanded-denial state) before testing
+Print escape. The same30s bound remains; no fixed sleep or timeout increase is a
+substitute for the native completion predicate.
