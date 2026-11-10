@@ -5,7 +5,7 @@ export function createWorkspace(host,getActive,paint,report){
  const required=selector=>{const node=host.querySelector(selector);if(!node)throw new Error('Missing workspace element: '+selector);return node;};
  const layout=required('.assembly-layout'),tree=required('#assembly-explorer'),tools=required('#assembly-tools'),instructions=required('.assembly-step'),sheet=required('[data-workspace-sheet]');
  const toolbar=required('.assembly-topbar'),nav=required('.assembly-nav'),full=required('button[data-guide-fullscreen]'),instructionToggle=required('button[data-instructions-toggle]');
- const mobile=matchMedia('(max-width:1100px)'),events=new AbortController();
+ const mobile=matchMedia('(max-width:1280px)'),events=new AbortController();
  let disposed=false,generation=0,assemblyLoader=null,previousOverflow='',expandedInstructions=false,partsOpen=false,toolsOpen=false,pane='instructions',sheetCollapsed=false,sheetExpanded=false,framePending=false;
  const useSheet=()=>mobile.matches||!!getActive()&&!getActive().viewer;
  function renderPanels(){
