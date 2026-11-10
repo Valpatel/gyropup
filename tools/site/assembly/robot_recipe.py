@@ -98,7 +98,7 @@ def leg_operations(side):
         add('wheel', 'wheel hub, tyre and retained screw groups',
             names('wheel_hub', 'wheel_tyre', 'washers_wheel', 'screws_wheel'), 'bought_parts / screw_groups; hardware/cad/body/body_params.py::_fivebar (D69 override)',
             'The collected wheel hub and tyre share the authored apex/wheel datum. The D69 body collection uses '
-            'a 254 mm diameter, 64 mm wide envelope; its ordered SKU and physical dimensions remain unverified. '
+            'a 254 mm diameter, 64 mm wide tyre-band envelope; its ordered SKU and physical dimensions remain unverified. '
             'Keep the wheel-fastener and washer '
             'source groups visible as groups. Washers precede screws, arriving from the inboard side of the hub as in '
             'the source screw stack. Thread engagement, wiring and tightening remain unqualified.',

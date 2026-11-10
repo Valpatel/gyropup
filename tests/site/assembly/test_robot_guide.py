@@ -33,7 +33,7 @@ class DataGuide(unittest.TestCase):
                 self.assertNotIn('BW0124',json.dumps(row))
                 if collection['source_commit'].startswith('3a408919'):
                     ref=row['design_reference']
-                    self.assertEqual((ref['nominal_diameter_mm'],ref['envelope_width_mm']),(254,64))
+                    self.assertEqual((ref['nominal_diameter_mm'],ref['tyre_band_width_mm']),(254,64))
                     self.assertFalse(ref['ordered_sku_verified']);self.assertFalse(ref['physical_measurements_verified'])
                     self.assertEqual(ref['sha256'],sha(ROOT/ref['source_file']))
 
