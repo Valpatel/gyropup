@@ -1,0 +1,32 @@
+{
+  "schema": "gyropup.native-control-selection-tests/1",
+  "date": "2026-11-10",
+  "helper_sha256": "68712d70f24061fa65e433576619318eec201d1cb6c3d4632d911a3f4295c712",
+  "test_sha256": "1941798e03f34e8c7c8ab9be67a244c2afdb45b87ad370e36e9543acd23c7fdc",
+  "core": "5c29c9e2abf2562baa72a05248f23de054b8241e",
+  "ordinary_dedicated": {
+    "command": "python3 -B -m unittest discover -s tests/site/assembly -p test_robot_native_pairs.py",
+    "exit": 0,
+    "tests": 8,
+    "skipped_optional_native": 1,
+    "seconds": 0.653
+  },
+  "actual_simple_native_fixture": {
+    "command": "ROBOT_PLAYBACK_TOOLKIT=<exact-reviewed-core> ROBOT_PLAYBACK_TOOLKIT_REVISION=5c29c9e2abf2562baa72a05248f23de054b8241e ROBOT_PLAYBACK_NATIVE=1 <existing-native-python> -B -m unittest discover -s tests/site/assembly -p test_robot_native_pairs.py",
+    "exit": 0,
+    "tests": 8,
+    "skipped": 0,
+    "seconds": 3.793,
+    "selection_control": "Explicit two-of-three native box queries preserve blocked/clear results and the unselected seat ID."
+  },
+  "new_product_native_queries": 0,
+  "hardware_source_or_export_delta": false,
+  "limits": "Source/selection/progress contracts and synthetic/native fixtures, not product probe acceptance.",
+  "ordinary_robot_suite": {
+    "command": "python3 -B -m unittest discover -s tests/site/assembly -p 'test_robot*.py'",
+    "exit": 0,
+    "tests": 49,
+    "skipped_optional_native": 3,
+    "seconds": 24.119
+  }
+}

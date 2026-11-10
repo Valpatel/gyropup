@@ -1,0 +1,15 @@
+{
+  "status": "proposal-only-not-executed",
+  "full_plan_sha256": "1316f2e4e315ee2cd45ed805d92ee219699a311bf09bb8d106148145fb8a96cc",
+  "query_ids": [
+    "f2bd165061ce41d9e225a5d2ed0b42fcf4b882e7fbe393f474089ff75afd519e",
+    "6b8e90982dd9f33b2bef4654d5d234c1d9d2a825198245b14d86df7a52bac254"
+  ],
+  "case_ids": [
+    "motor-through-installed-hip-L",
+    "motor-wrong-inward-through-cheek-L"
+  ],
+  "reason": "These old-order/wrong-side controls were not reached by capped264; current motor/hip outward paths have observed clear records. Both44mm3 hip/cheek seats match retained pre-candidate declared rigid-contact records; no exemption or physical acceptance follows.",
+  "requires": "Independent artifact/findings review, explicit immutable2-ID sub-study and fresh bounded action review. No automatic retry, changed geometry or tolerance exemption.",
+  "leg_geometry_changes_authorized": false
+}

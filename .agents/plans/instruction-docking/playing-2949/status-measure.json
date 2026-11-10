@@ -1,0 +1,134 @@
+{
+  "label": "playing Rotate pauses time",
+  "trace": [
+    {
+      "status": {
+        "text": "Installing: cheek_right · 49%",
+        "box": [
+          1052,
+          377,
+          252,
+          16
+        ],
+        "font": "11px / 16.5px Inter, system-ui, sans-serif",
+        "lineHeight": "16.5px",
+        "marginTop": "11px",
+        "marginBottom": "11px"
+      },
+      "contentHeight": 383,
+      "scrollHeight": 585,
+      "maxScroll": 202,
+      "type": "pointerdown",
+      "hit": true,
+      "trusted": true,
+      "y": 665,
+      "scroll": 202,
+      "player": {
+        "status": "playing",
+        "stepId": "body-spine",
+        "partId": "cheek_right",
+        "operationIndex": 1,
+        "elapsedMs": 536,
+        "progress": 0.48727272727272725,
+        "speed": 1,
+        "loop": true
+      },
+      "section": {
+        "axis": "x",
+        "flipped": true,
+        "depth": 0.4
+      }
+    },
+    {
+      "status": {
+        "text": "Paused: cheek_right · 49%",
+        "box": [
+          1052,
+          404,
+          252,
+          16
+        ],
+        "font": "11px / 16.5px Inter, system-ui, sans-serif",
+        "lineHeight": "16.5px",
+        "marginTop": "11px",
+        "marginBottom": "11px"
+      },
+      "contentHeight": 383,
+      "scrollHeight": 585,
+      "maxScroll": 202,
+      "type": "pointerup",
+      "hit": false,
+      "trusted": true,
+      "y": 692,
+      "scroll": 175,
+      "player": {
+        "status": "paused",
+        "stepId": "body-spine",
+        "partId": "cheek_right",
+        "operationIndex": 1,
+        "elapsedMs": 536,
+        "progress": 0.48727272727272725,
+        "speed": 1,
+        "loop": true
+      },
+      "section": {
+        "axis": "x",
+        "flipped": true,
+        "depth": 0.4
+      }
+    },
+    {
+      "status": {
+        "text": "Paused: cheek_right · 49%",
+        "box": [
+          1052,
+          404,
+          252,
+          16
+        ],
+        "font": "11px / 16.5px Inter, system-ui, sans-serif",
+        "lineHeight": "16.5px",
+        "marginTop": "11px",
+        "marginBottom": "11px"
+      },
+      "contentHeight": 383,
+      "scrollHeight": 585,
+      "maxScroll": 202,
+      "type": "click",
+      "hit": false,
+      "trusted": true,
+      "y": 692,
+      "scroll": 175,
+      "player": {
+        "status": "paused",
+        "stepId": "body-spine",
+        "partId": "cheek_right",
+        "operationIndex": 1,
+        "elapsedMs": 536,
+        "progress": 0.48727272727272725,
+        "speed": 1,
+        "loop": true
+      },
+      "section": {
+        "axis": "x",
+        "flipped": true,
+        "depth": 0.4
+      }
+    }
+  ],
+  "player": {
+    "status": "paused",
+    "stepId": "body-spine",
+    "partId": "cheek_right",
+    "operationIndex": 1,
+    "elapsedMs": 536,
+    "progress": 0.48727272727272725,
+    "speed": 1,
+    "loop": true
+  },
+  "section": {
+    "axis": "x",
+    "flipped": true,
+    "depth": 0.4
+  }
+}

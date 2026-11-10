@@ -1,0 +1,26 @@
+{
+  "mobile": "false",
+  "coarse": true,
+  "fullscreen": "native",
+  "parts": {
+    "hidden": false,
+    "x": 16,
+    "y": 156,
+    "width": 150,
+    "height": 218
+  },
+  "tools": {
+    "hidden": false,
+    "x": 678,
+    "y": 156,
+    "width": 150,
+    "height": 218
+  },
+  "instructions": {
+    "hidden": false,
+    "x": 426,
+    "y": 156,
+    "width": 240,
+    "height": 218
+  }
+}

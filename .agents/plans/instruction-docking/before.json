@@ -1,0 +1,232 @@
+[
+  {
+    "width": 1440,
+    "mobile": "false",
+    "instructions": {
+      "x": 1031,
+      "y": 359.96875,
+      "width": 360,
+      "height": 514,
+      "display": "grid",
+      "hidden": false
+    },
+    "workspace": {
+      "x": 33,
+      "y": 200.96875,
+      "width": 1374,
+      "height": 690,
+      "display": "block",
+      "hidden": false
+    },
+    "tabs": [
+      {
+        "label": "Explore",
+        "width": 103.625,
+        "height": 44,
+        "hit": true,
+        "display": "flex"
+      },
+      {
+        "label": "View",
+        "width": 86.421875,
+        "height": 44,
+        "hit": true,
+        "display": "flex"
+      },
+      {
+        "label": "Instructions",
+        "width": 0,
+        "height": 0,
+        "hit": false,
+        "display": "inline-block"
+      },
+      {
+        "label": "Parts",
+        "width": 0,
+        "height": 0,
+        "hit": false,
+        "display": "inline-block"
+      },
+      {
+        "label": "Tools",
+        "width": 0,
+        "height": 0,
+        "hit": false,
+        "display": "inline-block"
+      }
+    ]
+  },
+  {
+    "width": 1440,
+    "mode": "native",
+    "mobile": "false",
+    "instructions": {
+      "x": 1064,
+      "y": 156,
+      "width": 360,
+      "height": 728,
+      "display": "grid",
+      "hidden": false
+    },
+    "workspace": {
+      "x": 0,
+      "y": 0,
+      "width": 1440,
+      "height": 900,
+      "display": "block",
+      "hidden": false
+    },
+    "tabs": [
+      {
+        "label": "Explore",
+        "width": 103.625,
+        "height": 44,
+        "hit": true,
+        "display": "flex"
+      },
+      {
+        "label": "View",
+        "width": 86.421875,
+        "height": 44,
+        "hit": true,
+        "display": "flex"
+      },
+      {
+        "label": "Instructions",
+        "width": 0,
+        "height": 0,
+        "hit": false,
+        "display": "inline-block"
+      },
+      {
+        "label": "Parts",
+        "width": 0,
+        "height": 0,
+        "hit": false,
+        "display": "inline-block"
+      },
+      {
+        "label": "Tools",
+        "width": 0,
+        "height": 0,
+        "hit": false,
+        "display": "inline-block"
+      }
+    ]
+  },
+  {
+    "width": 1280,
+    "mobile": "true",
+    "instructions": {
+      "x": 42,
+      "y": 496.96875,
+      "width": 1196,
+      "height": 384,
+      "display": "block",
+      "hidden": false
+    },
+    "workspace": {
+      "x": 33,
+      "y": 200.96875,
+      "width": 1214,
+      "height": 690,
+      "display": "block",
+      "hidden": false
+    },
+    "tabs": [
+      {
+        "label": "Explore",
+        "width": 103.625,
+        "height": 44,
+        "hit": true,
+        "display": "flex"
+      },
+      {
+        "label": "View",
+        "width": 86.421875,
+        "height": 44,
+        "hit": true,
+        "display": "flex"
+      },
+      {
+        "label": "Instructions",
+        "width": 362.65625,
+        "height": 44,
+        "hit": true,
+        "display": "block"
+      },
+      {
+        "label": "Parts",
+        "width": 362.671875,
+        "height": 44,
+        "hit": true,
+        "display": "block"
+      },
+      {
+        "label": "Tools",
+        "width": 362.65625,
+        "height": 44,
+        "hit": true,
+        "display": "block"
+      }
+    ]
+  },
+  {
+    "width": 1280,
+    "mode": "native",
+    "mobile": "true",
+    "instructions": {
+      "x": 9,
+      "y": 507,
+      "width": 1262,
+      "height": 384,
+      "display": "block",
+      "hidden": false
+    },
+    "workspace": {
+      "x": 0,
+      "y": 0,
+      "width": 1280,
+      "height": 900,
+      "display": "block",
+      "hidden": false
+    },
+    "tabs": [
+      {
+        "label": "Explore",
+        "width": 103.625,
+        "height": 44,
+        "hit": true,
+        "display": "flex"
+      },
+      {
+        "label": "View",
+        "width": 86.421875,
+        "height": 44,
+        "hit": true,
+        "display": "flex"
+      },
+      {
+        "label": "Instructions",
+        "width": 384.65625,
+        "height": 44,
+        "hit": true,
+        "display": "block"
+      },
+      {
+        "label": "Parts",
+        "width": 384.671875,
+        "height": 44,
+        "hit": true,
+        "display": "block"
+      },
+      {
+        "label": "Tools",
+        "width": 384.65625,
+        "height": 44,
+        "hit": true,
+        "display": "block"
+      }
+    ]
+  }
+]

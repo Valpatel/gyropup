@@ -1,0 +1,18 @@
+{
+  "status": "PASS_INPUT_SERIALIZATION_ONLY",
+  "inputs_sha256": "7b89317214fc43766e5967ee7d7465c02b9b1071617864a303c37d3b08de4026",
+  "bindings": [
+    {
+      "guide": "robot-wip-e5b308927744/guide.json",
+      "parts": 171,
+      "binding_sha256": "2e9419291f0fbba6c05a56a75989bf520bd3b792bafdf9cf8b4b72ec125487f1"
+    },
+    {
+      "guide": "combined-wip-e5b308927744/guide.json",
+      "parts": 233,
+      "binding_sha256": "ccce5798a6cd220a8ba9935468f34cd619a2db26b4d386ccc1b34c28fcf3590c"
+    }
+  ],
+  "original_brep_files": 233,
+  "native_queries": false
+}

@@ -1,0 +1,135 @@
+{
+  "status": "COMPLETE_SCOPED_NATIVE_CONTROL_STUDY",
+  "source": "05bf810d245ca1b938f9283a10dde624ed2104ba",
+  "core": "5c29c9e2abf2562baa72a05248f23de054b8241e",
+  "input_job": 261,
+  "frame_job": 263,
+  "recipe_sha256": "d73266cd45159c4b9433ccb37c18e00c65b6f09c7b14af751e4c31ec324777f9",
+  "paths_requested": true,
+  "selected_pairs_only": true,
+  "adoption_approved": false,
+  "phases": {
+    "core-init": {
+      "expected_exit": 0,
+      "timeout_seconds": 10,
+      "exit": 0,
+      "pid": 76406,
+      "process_cleanup": {
+        "group_gone": true,
+        "signalled": false,
+        "reaped": []
+      },
+      "seconds": 0.01059274422004819,
+      "actual_command_sha256": "936dabe4321c8c6605261ac4417a8ec2dc383505cb38af3a0eccb6a95a4be74a",
+      "command_record": "Exact private argv retained in original job265 terminal result; public normalization keeps its hash."
+    },
+    "core-origin": {
+      "expected_exit": 0,
+      "timeout_seconds": 10,
+      "exit": 0,
+      "pid": 76407,
+      "process_cleanup": {
+        "group_gone": true,
+        "signalled": false,
+        "reaped": []
+      },
+      "seconds": 0.005701745860278606,
+      "actual_command_sha256": "5e09b4bd924a04160ca60f9b8b237f4a5ad6705f23a82780a2faef05aafa1a2a",
+      "command_record": "Exact private argv retained in original job265 terminal result; public normalization keeps its hash."
+    },
+    "core-fetch": {
+      "expected_exit": 0,
+      "timeout_seconds": 180,
+      "exit": 0,
+      "pid": 76408,
+      "process_cleanup": {
+        "group_gone": true,
+        "signalled": false,
+        "reaped": []
+      },
+      "seconds": 11.672719481866807,
+      "actual_command_sha256": "f6a9bef11df9a284733cab84b8af7b39836fdf876697dc37e6006b3daba24c55",
+      "command_record": "Exact private argv retained in original job265 terminal result; public normalization keeps its hash."
+    },
+    "core-sparse": {
+      "expected_exit": 0,
+      "timeout_seconds": 20,
+      "exit": 0,
+      "pid": 76708,
+      "process_cleanup": {
+        "group_gone": true,
+        "signalled": false,
+        "reaped": []
+      },
+      "seconds": 0.006271312013268471,
+      "actual_command_sha256": "aba552c6274b1219920847af00f720d2e598e6b8da1bc09c56c528811433305e",
+      "command_record": "Exact private argv retained in original job265 terminal result; public normalization keeps its hash."
+    },
+    "core-checkout": {
+      "expected_exit": 0,
+      "timeout_seconds": 60,
+      "exit": 0,
+      "pid": 76709,
+      "process_cleanup": {
+        "group_gone": true,
+        "signalled": false,
+        "reaped": []
+      },
+      "seconds": 0.11582352872937918,
+      "actual_command_sha256": "8e4a41ee0912b22a17f6e32f6800b239805c20272d09597d26f2ff15094a9564",
+      "command_record": "Exact private argv retained in original job265 terminal result; public normalization keeps its hash."
+    },
+    "native-controls": {
+      "expected_exit": 0,
+      "timeout_seconds": 120,
+      "exit": 0,
+      "pid": 76723,
+      "process_cleanup": {
+        "group_gone": true,
+        "signalled": false,
+        "reaped": []
+      },
+      "seconds": 11.51553279766813,
+      "actual_command_sha256": "6f31e76a589f5f5cbfc6f9f516f45d0b1d3625cfa610f99bae75c783328e4460",
+      "command_record": "Exact private argv retained in original job265 terminal result; public normalization keeps its hash."
+    }
+  },
+  "guards": {
+    "runtime": true,
+    "toolkit": true,
+    "candidate": true,
+    "guides": true,
+    "frame-input": true,
+    "input-seals": true,
+    "hardware": true,
+    "tracked": true,
+    "playback-core": true,
+    "clean_source": true
+  },
+  "errors": [],
+  "selected_query_ids": [
+    "f2bd165061ce41d9e225a5d2ed0b42fcf4b882e7fbe393f474089ff75afd519e",
+    "6b8e90982dd9f33b2bef4654d5d234c1d9d2a825198245b14d86df7a52bac254"
+  ],
+  "native_summary": {
+    "execution_complete": true,
+    "all_selected_pairs_clear": false,
+    "pair_counts": {
+      "blocked": 2
+    },
+    "queries": 2,
+    "unselected_queries": 88,
+    "all_assembly_paths_checked": false,
+    "physical_assembly_verified": false,
+    "world_stats": {
+      "kernel_queries": 4,
+      "memo_hits": 0,
+      "cache_hits": 0,
+      "tool_sweeps": 0
+    }
+  },
+  "control_archive_sha256": "17488f0972a382f3658bf6d51bf47444b9d9a984e471741634c315e433448dac",
+  "processes_quiescent": true,
+  "schema": "gyropup.native-control-execution/1",
+  "raw_final_sha256": "120c2e7ad5e8565a5063ed1ad42484ca566a3daddb28a70717dfbdbb83c0f408"
+}

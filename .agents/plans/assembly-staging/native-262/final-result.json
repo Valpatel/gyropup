@@ -1,0 +1,22 @@
+{
+  "status": "FAILED_OR_INCOMPLETE_NATIVE_FRAME_PREFLIGHT",
+  "source": "9c7abd1388353ee2be68911d4fa49932ee1668b1",
+  "core": "5c29c9e2abf2562baa72a05248f23de054b8241e",
+  "input_job": 261,
+  "recipe_sha256": "712dc0ecf4f8344bde95c0110a4cb6726369701a88e9ddb98b32b713176d788c",
+  "paths_requested": false,
+  "adoption_approved": false,
+  "phases": {},
+  "guards": {
+    "runtime": true,
+    "toolkit": true,
+    "candidate": true,
+    "guides": false,
+    "hardware": false,
+    "tracked": false,
+    "clean_source": true
+  },
+  "errors": [],
+  "original_error": "AssertionError: ",
+  "processes_quiescent": true
+}

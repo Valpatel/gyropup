@@ -1,0 +1,23 @@
+{
+  "schema": "gyropup.native-playback-phase/1",
+  "state": "complete",
+  "inputs": {
+    "source_commit": "e5b3089277448e5ae3d546fc36c549a62949856b",
+    "guide_sha256": "044a5a4ca3c2f3e238cbfdf6dba3412a095223ae76e98505ef8d698ba9d4516a",
+    "binding_sha256": "ccce5798a6cd220a8ba9935468f34cd619a2db26b4d386ccc1b34c28fcf3590c",
+    "core_revision": "5c29c9e2abf2562baa72a05248f23de054b8241e",
+    "mode": "preflight"
+  },
+  "progress": "progress/combined-wip-e5b308927744.jsonl",
+  "report": "reports/combined-wip-e5b308927744.json",
+  "progress_flushed_records": 941,
+  "progress_fsync_acknowledged_records": 941,
+  "progress_tail_uncertain": false,
+  "writer_policy": {
+    "flush_each_record": true,
+    "fsync_every_records": 128,
+    "fsync_completed_operations_and_preflight": true
+  },
+  "wall_seconds": 6.140284480061382,
+  "gate_pass": true
+}

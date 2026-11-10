@@ -1,0 +1,73 @@
+{
+  "status": "failed",
+  "scope": "interactions",
+  "cases": [],
+  "observations": [
+    {
+      "case": "medium all panels",
+      "viewport": {
+        "width": 1200,
+        "height": 900
+      },
+      "sheet": "false",
+      "freeWidth": 328.015625,
+      "parts": [
+        49,
+        221.578125
+      ],
+      "instructions": [
+        622.59375,
+        294.828125
+      ],
+      "visibility": "visible",
+      "focus": true
+    }
+  ],
+  "documents": [
+    {
+      "page": 0,
+      "events": [
+        {
+          "kind": "navigation-request",
+          "at": "2026-11-10T17:28:02.993Z",
+          "url": "<preview-origin>/designer/build.html?assembly=turret&step=step-02",
+          "method": "GET"
+        },
+        {
+          "kind": "main-frame-navigation",
+          "at": "2026-11-10T17:28:02.999Z",
+          "url": "<preview-origin>/designer/build.html?assembly=turret&step=step-02#assembly"
+        },
+        {
+          "kind": "document-created",
+          "at": "2026-11-10T17:28:03.001Z",
+          "token": "26467857-f486-4835-b542-09f2a6012064",
+          "url": "<preview-origin>/designer/build.html?assembly=turret&step=step-02#assembly"
+        },
+        {
+          "kind": "document-load",
+          "at": "2026-11-10T17:28:03.173Z",
+          "url": "<preview-origin>/designer/build.html?assembly=turret&step=step-02#assembly"
+        },
+        {
+          "kind": "document-domcontentloaded",
+          "at": "2026-11-10T17:28:03.181Z",
+          "url": "<preview-origin>/designer/build.html?assembly=turret&step=step-02#assembly"
+        },
+        {
+          "kind": "main-frame-navigation",
+          "at": "2026-11-10T17:28:05.358Z",
+          "url": "<preview-origin>/designer/build.html?assembly=turret&step=step-02&snapshot=turret-wip-4866459e2abd&chapter=pan-base#assembly"
+        },
+        {
+          "kind": "main-frame-navigation",
+          "at": "2026-11-10T17:28:05.358Z",
+          "url": "<preview-origin>/designer/build.html?assembly=turret&step=step-02&snapshot=turret-wip-4866459e2abd&chapter=pan-base#assembly"
+        }
+      ],
+      "totalEvents": 7
+    }
+  ],
+  "errors": [],
+  "error": "AssertionError [ERR_ASSERTION]: Expected values to be strictly deep-equal:\n+ actual - expected\n\n  {\n+   axis: 'z',\n+   depth: 0.4,\n+   flipped: true\n-   axis: 'x',\n-   depth: 1,\n-   flipped: false\n  }\n"
+}
