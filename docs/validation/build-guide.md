@@ -4,6 +4,20 @@ Issue #266 extends the existing Build page and existing viewer. Shared schema,
 asset loader, absolute rendering state and lifecycle are owned by
 [cad-agent #302](https://github.com/Valpatel/cad-agent/issues/302). Shared testing contract: [assembly-guide-testing.md](https://github.com/Valpatel/cad-agent/blob/cdbee23b10d421ea62975ab141253bec958c36b3/docs/practice/assembly-guide-testing.md). Product uses the targeted viewer/guide import recorded in `.agents/plans/versioned-build-guide-shared-sync.json`; its existing stage, loading helpers and route entry remain.
 
+The pilot follows twelve authored turret steps across three subassemblies.
+Source identity, rendering and physical qualification are separate: this guide
+remains educational WIP, with fit/feed/laser/strength checks unresolved.
+
+```mermaid
+flowchart TD
+  A[Recipe, meshes and BOM] --> B[Bound snapshot]
+  B --> C[3D, text and diagrams]
+  B --> D[Source and browser checks]
+```
+
+<details>
+<summary>Data, frames and qualification boundary</summary>
+
 ## Data and presentation
 
 The current turret recipe, original manifest and BOM are pinned to immutable
@@ -23,6 +37,11 @@ used as current posters. WIP source identity and publication do not establish
 physical qualification. Original fitting/laser/feed/strength gaps remain visible.
 The selector advertises no invented released history. Two different frozen test
 versions exercise isolation separately from the exact-commit public WIP.
+
+</details>
+
+<details>
+<summary>Complete feature test matrix: positive and negative cases</summary>
 
 ## Feature matrix
 
@@ -46,4 +65,11 @@ retained command/result evidence; **pending** is not claimed tested.
 | Disposal and races | One live canvas after repeated switches; old callbacks/resources stop | Slow old request completing after new selection cannot mutate scene | Shared two-engine lifecycle passed; Chromium product switching scope passed at `c58e4ae2`, final two-engine source pending |
 | Publication/package closure | Exact snapshot dependency bytes and working relative paths | Escaping/missing dependencies reject | Existing shared release tests; root owner |
 
-The first pre-poster browser probe at `678d4ba3` reached its global 180-second bound; its partial execution observations are retained in `.agents/plans/versioned-build-guide-preposter-probe.json` and are not full acceptance. The corrected switching and real hasTouch phone scopes passed in Chromium at `c58e4ae2`; exact source/assets, case names and raw report digests are retained in `.agents/plans/versioned-build-guide-browser-proof.json`. Selected-part appearance, core/fallback, latest-source two-engine and legacy Build controls remain pending. The shared `cdbee23b` multipart component tests passed in both engines, separately from product acceptance. No full Build regression, current CI or production pass is claimed at this checkpoint. `npm run test:build-guide` is wired into the existing Build-portal browser CI suite. Its browser portion and actual receipts remain required before the pilot is ready to merge.
+</details>
+
+<details>
+<summary>Retained verification results and unfinished acceptance</summary>
+
+The first pre-poster browser probe at `678d4ba3` reached its global 180-second bound; its partial execution observations are retained in `.agents/plans/versioned-build-guide-preposter-probe.json` and are not full acceptance. The corrected switching and real hasTouch phone scopes passed in Chromium at `c58e4ae2`; exact source/assets, case names and raw report digests are retained in `.agents/plans/versioned-build-guide-browser-proof.json`. Chromium core and fallback scopes also passed at `872fcfab`, including selected-part appearance and all twelve steps. WebKit subsequently rejected an occluded projected pick point after a part-list scroll; that retained result led to an ordinary vertical canvas-framing test correction. Corrected latest-source two-engine and legacy Build controls remain pending. The shared `cdbee23b` multipart component tests passed in both engines, separately from product acceptance. No full Build regression, current CI or production pass is claimed at this checkpoint. `npm run test:build-guide` is wired into the existing Build-portal browser CI suite. Its browser portion and actual receipts remain required before the pilot is ready to merge.
+
+</details>
