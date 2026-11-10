@@ -102,7 +102,10 @@ def mapping(root,names,collection=None):
                       'qty_scope':'per_leg' if physical_leg else 'body','infill':value.get('infill')})
             row['geometry_match']['basis']='Identified retained manufacturing original only. File identity and plan membership do not prove a match to the collected CAD instance.'
             match=hip_geometry_match(root,collection,name)
-            if match:row['geometry_match']=match
+            if match:
+                row['geometry_match']=match
+                from robot_project import prepared
+                row['prepared_projects']=prepared(root,row['originals'][0]['sha256'])
             row.pop('reason');continue
         if physical_leg and family in leg.get('made_to_order',{}):
             file='hardware/'+leg['made_to_order'][family]
