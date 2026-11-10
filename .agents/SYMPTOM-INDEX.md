@@ -224,6 +224,6 @@
 - The adopted Robot hop advances steadily and exceeds the CI wall cap: [compare the existing touch rendering profile at the same viewport](inbox/2026-11-10-hop-completion-needs-the-actual-stage-clock.md#exercise-gamepad-controls-with-the-existing-touch-renderer).
 
 - Context-wide page-error capture finds sessionStorage denied only on about:blank initial documents: [guard the fixture's intended HTTP security origin before reading storage](inbox/2026-11-10-browser-init-fixtures-need-an-http-origin.md).
-- A current Build browser test expects171/233 parts or waits for the recorded rig manifest: [bind current defaults separately from explicit archives](inbox/2026-11-10-browser-harnesses-need-current-and-archive-bindings.md).
+- A current Build browser test expects171/233 parts, waits for the recorded rig manifest, or confuses index order with the bare-page default: [bind current defaults separately from explicit archives](inbox/2026-11-10-browser-harnesses-need-current-and-archive-bindings.md).
 - Highlight-media source validation rejects a newly edited shared test helper: [preserve recorded fixture bytes and narrow the caller fix](inbox/2026-11-10-browser-init-fixtures-need-an-http-origin.md#historical-capture-fixtures-can-require-a-narrower-caller-fix).
 - A poster utility overwrites its public PNG before artifact review, or pure import starts a browser: [reserve fresh candidate output and preserve the actual hero hook](inbox/2026-11-10-poster-captures-need-fresh-candidate-output.md).

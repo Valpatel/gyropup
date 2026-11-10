@@ -70,3 +70,21 @@ enters the bench and recorded drive replay for its orbit and camera ownership
 assertions. It has no interim-body mesh frame dependency. The nine Turret
 frame tests passed on 2026-11-10, along with JavaScript syntax and whitespace
 checks.
+
+## An index's first row is not the page's default assembly
+
+On 2026-11-10, final publication review found an incorrect interpretation in
+`plans/end-packs/guide-adoption/root-independent-readback.json`:
+`turret_no_query_default_unchanged: true` was inferred from preserving the first
+index row. The original receipt stays unchanged, but that default claim is
+superseded by this correction. Its file seals and explicit assembly identities
+are unaffected.
+
+At `33ddbcda`, `assembly/state.js` leaves assembly null for a bare route, and
+`assembly/build-guide.js:107` resolves that route to `combined`; an explicit
+step/chapter without an assembly or snapshot takes the Turret path. The existing real
+`test-build-route.mjs` bare-default case independently requires the current
+224-part Combined guide. Read route resolution and its browser evidence before
+claiming a default; preserving index order alone proves neither initial UI nor
+user-visible selection. The PR description was corrected. No runtime, guide,
+mesh or historical receipt was changed by this clarification.
