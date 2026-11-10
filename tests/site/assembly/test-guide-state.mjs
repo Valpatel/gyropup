@@ -11,7 +11,7 @@ test('two frozen versions differ in membership, instructions, source and storage
 test('exact WIP, direct step and chapter routes round trip; unavailable choices reject',()=>{
  const wip=JSON.parse(readFileSync(new URL('../../../software/site/assets/build-guides/turret-wip-4866459e2abd/guide.json',import.meta.url)));
  const index=validateIndex(JSON.parse(readFileSync(new URL('../../../software/site/assets/build-guides/index.json',import.meta.url))));
- assert.equal(wip.snapshot.source_commit,'4866459e2abdb6c7f5f25e9448156b6615593499');assert.equal(index.snapshots.length,1);assert.equal(index.snapshots[0].status,'wip');
+ assert.equal(wip.snapshot.source_commit,'4866459e2abdb6c7f5f25e9448156b6615593499');assert.equal(snapshotsFor(index,'turret').length,1);assert.equal(index.snapshots[0].status,'wip');
  const location={href:'https://gyropup.com/designer/build.html?other=kept',search:''};let url;writeLocation(location,{replaceState:(a,b,c)=>url=c},wip,wip.steps[7]);
  assert.equal(url.searchParams.get('other'),'kept');assert.equal(stepFor(wip,readLocation(url,index)).id,'step-08');
  assert.equal(stepFor(wip,{chapter:'cartridge'}).id,'step-10');

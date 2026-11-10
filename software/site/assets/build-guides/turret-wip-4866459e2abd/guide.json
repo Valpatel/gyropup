@@ -71,7 +71,7 @@
       "hardware/exports/sim/turret_box/ct_thumbscrew.stl": "a37acd10de534137dd999285af8f271a66df067d04518870d5e88fe926fc72d2",
       "hardware/exports/sim/turret_box/laser.stl": "1089a49df5814bb8b564f92d912394abfac1146737e0370b7e9ab85b64f39387"
     },
-    "converter_sha256": "7f0cac8b65fcaed5f8bccee4061c9eae07757b1d522f6917a076173a650f8c72",
+    "converter_sha256": "95f5f89154dad9e26e56220a0e70b54d7f3c7387d76550543d3906ea3de11734",
     "requirements_by_step": {
       "step-01": [
         {
@@ -752,6 +752,88 @@
         }
       ]
     },
+    "install_order_by_step": {
+      "step-01": [
+        "pan_base"
+      ],
+      "step-02": [
+        "pan_servo",
+        "pan_pinion",
+        "dt_receptacle"
+      ],
+      "step-03": [
+        "base_board_carrier",
+        "base_board",
+        "base_board_inserts",
+        "base_board_screws",
+        "base_carrier_inserts",
+        "base_carrier_screws",
+        "index_magnet"
+      ],
+      "step-04": [
+        "pan_bearing",
+        "pan_bearing_inner",
+        "pan_clamp"
+      ],
+      "step-05": [
+        "pan_ring",
+        "hall_switch",
+        "pan_spacer",
+        "circlip_50"
+      ],
+      "step-06": [
+        "ring_driver",
+        "slip_ring",
+        "slip_ring_rotor",
+        "ring_coupling",
+        "ring_carrier"
+      ],
+      "step-07": [
+        "tilt_yoke",
+        "ring_leads_rotor",
+        "board_bay",
+        "turret_board"
+      ],
+      "step-08": [
+        "tilt_servo",
+        "tilt_bearing",
+        "tilt_bearing_inner",
+        "cradle",
+        "cradle_plate_l",
+        "cradle_plate_r",
+        "stop_lug",
+        "horn_boss",
+        "pivot_spacer",
+        "shoulder_screw"
+      ],
+      "step-09": [
+        "laser_mount",
+        "laser"
+      ],
+      "step-10": [
+        "cartridge_body",
+        "feed_motor",
+        "dial",
+        "flywheel_motor_l",
+        "flywheel_motor_r",
+        "flywheel",
+        "flywheel_m",
+        "flywheel_tyre",
+        "flywheel_tyre_m",
+        "cartridge_board",
+        "esc_l",
+        "esc_r"
+      ],
+      "step-11": [
+        "barrel",
+        "hopper",
+        "hopper_lid"
+      ],
+      "step-12": [
+        "ct_thumbscrew"
+      ]
+    },
+    "install_order_basis": "Literal authored STEPS logical order; explicitly declared paired-instance presentation order. Educational arrivals only, not verified insertion or tightening paths.",
     "original_scene_producer": "227afbcca70ab616f412ee7a00b119cfff3a0d20",
     "qualification": "Educational WIP walkthrough. Fit, tightening, feed, laser class and safe operation remain unqualified. No print or fabrication release.",
     "assembly_pose": "Neutral zero joint angles. Original triangle topology/normals retained; translation only.",

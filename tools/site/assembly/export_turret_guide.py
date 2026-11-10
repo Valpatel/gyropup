@@ -27,6 +27,10 @@ EXCLUDED = {'hopper_flap': 'Dock refill flap is deferred by the authored recipe.
             'hopper_inserts': 'No explicit mesh installation action in the authored sequence; unplaced context.',
             'dt_plug': 'Connection is discussed in prose but has no authored mesh placement; unplaced context.'}
 JOINTS = {'base', 'pan', 'tilt', 'pinion', 'dial', 'wheel_l', 'wheel_r', 'flap'}
+# Authored presentation order for the paired instances in the literal recipe.
+# This is not a verified physical insertion path or tightening sequence.
+PAIRED_INSTALL_ORDER = {'flywheel': ['flywheel', 'flywheel_m'],
+                        'flywheel_tyre': ['flywheel_tyre', 'flywheel_tyre_m']}
 
 
 def digest(data):
@@ -55,6 +59,16 @@ def recipe_rows(data):
     if len(rows) != 12 or any(len(row) != 5 for row in rows):
         raise ValueError('Unexpected authored sequence')
     return rows
+
+
+def install_instances(requirement):
+    instances = requirement['instances']
+    if len(instances) == 1:
+        return list(instances)
+    authored = PAIRED_INSTALL_ORDER.get(requirement['part'])
+    if authored is None or len(authored) != len(instances) or set(authored) != set(instances):
+        raise ValueError('Repeated instances need an explicit presentation order')
+    return list(authored)
 
 
 def neutral_offset(entry, pivots):
@@ -123,11 +137,11 @@ def plain_instructions(guide):
             body + '</main></body></html>\n').encode()
 
 
-def snapshot_index(guide_bytes, directory):
+def snapshot_index(guide_bytes, directory, additional=()):
     guide = json.loads(guide_bytes)
     return encode({'schema': 'gyropup.build-guides/1', 'snapshots': [
         {'id': guide['snapshot']['id'], 'title': 'Turret bench · ' + guide['snapshot']['revision'],
-         'status': 'wip', 'file': directory + '/guide.json', 'sha256': digest(guide_bytes)}],
+         'status': 'wip', 'assembly': 'turret', 'file': directory + '/guide.json', 'sha256': digest(guide_bytes)}, *additional],
         'unavailable': [{'id': 'released', 'reason': 'No named product build releases have been published.'},
                         {'id': 'rig', 'reason': 'Historical assembly illustrations contain withdrawn instructions; current guide is unavailable.'}]})
 
@@ -198,6 +212,8 @@ def generate(root=ROOT, posters=None):
                               'parts': [p['name'] for p in parts if any(p['name'] in s['highlight'] for s in steps[start-1:end])]})
     source = {'inputs': inputs, 'converter_sha256': digest(Path(__file__).read_bytes()),
               'requirements_by_step': requirements_by_step,
+              'install_order_by_step': {step_id: [name for row in requirements for name in install_instances(row)] for step_id, requirements in requirements_by_step.items()},
+              'install_order_basis': 'Literal authored STEPS logical order; explicitly declared paired-instance presentation order. Educational arrivals only, not verified insertion or tightening paths.',
               'original_scene_producer': '227afbcca70ab616f412ee7a00b119cfff3a0d20',
               'qualification': 'Educational WIP walkthrough. Fit, tightening, feed, laser class and safe operation remain unqualified. No print or fabrication release.',
               'assembly_pose': 'Neutral zero joint angles. Original triangle topology/normals retained; translation only.',
@@ -242,7 +258,22 @@ def main():
         for frame in posters['frames'].values():
             if digest((args.out / frame['file']).read_bytes()) != frame['sha256']:
                 raise SystemExit('Stale actual poster bytes: ' + frame['file'])
-    index_bytes = snapshot_index(outputs['guide.json'], args.out.name)
+    additional = []
+    index_file = args.out.parent / 'index.json'
+    if index_file.exists():
+        current = json.loads(index_file.read_text())
+        for row in current['snapshots']:
+            if row['id'] == json.loads(outputs['guide.json'])['snapshot']['id']:
+                continue
+            target = (args.out.parent / row['file']).resolve()
+            if not target.is_relative_to(args.out.parent.resolve()):
+                raise ValueError('Snapshot index escapes its bundle')
+            raw = target.read_bytes()
+            snapshot = json.loads(raw)['snapshot']
+            if digest(raw) != row['sha256'] or snapshot['id'] != row['id'] or snapshot['status'] != row['status'] or row.get('assembly') not in ('robot', 'combined', 'turret'):
+                raise ValueError('Additional snapshot index binding is stale')
+            additional.append(row)
+    index_bytes = snapshot_index(outputs['guide.json'], args.out.name, additional)
     if args.check:
         for name, data in outputs.items():
             if (args.out / name).read_bytes() != data:

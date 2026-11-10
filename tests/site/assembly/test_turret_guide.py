@@ -43,6 +43,18 @@ class NeutralGuide(unittest.TestCase):
         with self.assertRaises(ValueError):
             module.reframe_stl(source, [float('nan'), 0, 0])
 
+    def test_playback_order_is_explicit_and_covers_actual_additions(self):
+        guide = json.loads(module.generate()['guide.json'])
+        prior = set()
+        for step in guide['steps']:
+            order = guide['source']['install_order_by_step'][step['id']]
+            self.assertEqual(len(order), len(set(order)))
+            self.assertEqual(set(order), set(step['parts']) - prior)
+            prior = set(step['parts'])
+        self.assertEqual(module.install_instances({'part': 'flywheel', 'instances': ['flywheel_m', 'flywheel']}), ['flywheel', 'flywheel_m'])
+        with self.assertRaisesRegex(ValueError, 'explicit presentation order'):
+            module.install_instances({'part': 'unknown_pair', 'instances': ['a', 'b']})
+
     def test_whole_real_snapshot_is_complete_and_reproducible(self):
         outputs = module.generate()
         guide = json.loads(outputs['guide.json'])

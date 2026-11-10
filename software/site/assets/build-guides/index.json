@@ -5,8 +5,25 @@
       "id": "turret-wip-4866459e2abd",
       "title": "Turret bench · 4866459e2abd",
       "status": "wip",
+      "assembly": "turret",
       "file": "turret-wip-4866459e2abd/guide.json",
-      "sha256": "692db577ba8be4db8ec8324a16af21be828e9780ae3ccf2fe557ac7c3e4b6840"
+      "sha256": "49474307330f4aee7af5952d82f62e725663445050ecf19170a79fbda1ec284c"
+    },
+    {
+      "id": "robot-wip-540056ba4e59",
+      "title": "Robot · 540056ba4e59 · WIP",
+      "assembly": "robot",
+      "status": "wip",
+      "file": "robot-wip-540056ba4e59/guide.json",
+      "sha256": "35fcc0edbc4a19f11e5232aacdfca34a22a6b22f4a37722ddddbc1b9d9df94d6"
+    },
+    {
+      "id": "combined-wip-540056ba4e59",
+      "title": "Combined · 540056ba4e59 · WIP",
+      "assembly": "combined",
+      "status": "wip",
+      "file": "combined-wip-540056ba4e59/guide.json",
+      "sha256": "846e3d32c12d0c07038ac4f55f29e5e4452fe02bf8519b82870553f112cb7fe7"
     }
   ],
   "unavailable": [
