@@ -1,0 +1,63 @@
+{
+  "source": "df7fec062753be4b0170c4d22453a6d44bf18def",
+  "pass": true,
+  "rows": [
+    {
+      "engine": "webkit",
+      "mobile": false,
+      "popup": {
+        "x": 49,
+        "y": 359,
+        "width": 278,
+        "height": 514
+      },
+      "footer": {
+        "x": 62,
+        "y": 791,
+        "width": 252,
+        "height": 69
+      },
+      "modelInsets": {
+        "--assembly-left-dock": "",
+        "--assembly-right-dock": "290px",
+        "--assembly-instruction-width": "clamp(240px,26cqw,360px)"
+      },
+      "resetEvents": [
+        {
+          "type": "pointerdown",
+          "target": true,
+          "trusted": true,
+          "rect": [
+            1052,
+            816,
+            252,
+            44
+          ]
+        },
+        {
+          "type": "pointerup",
+          "target": true,
+          "trusted": true,
+          "rect": [
+            1052,
+            816,
+            252,
+            44
+          ]
+        },
+        {
+          "type": "click",
+          "target": true,
+          "trusted": true,
+          "rect": [
+            1052,
+            816,
+            252,
+            44
+          ]
+        }
+      ]
+    }
+  ],
+  "errors": []
+}

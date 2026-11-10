@@ -1,11 +1,11 @@
 {
-  "visual_sha256": "5ae1d3a0870ff9beeb81496878547ed1138c498a8b38363158d773757fce2725",
-  "source_commit": "6eeea9e01d2ce7766a5f3829d5beef38b6cd8c6a",
+  "visual_sha256": "6e012c3390e004f36669a7e69ef6efaca15d2226e8570cee05124e5d0e286f38",
+  "source_commit": "df7fec062753be4b0170c4d22453a6d44bf18def",
   "version": {
-    "revision": "6eeea9e01d2ce7766a5f3829d5beef38b6cd8c6a",
-    "assets": "42df4964aa404172ead3",
+    "revision": "df7fec062753be4b0170c4d22453a6d44bf18def",
+    "assets": "65ec72e22a8ffbf45eca",
     "history": true,
-    "built": "2026-11-10T17:56:53.073Z"
+    "built": "2026-11-10T18:52:21.454Z"
   },
   "browser": "151.0.7922.71",
   "session_notice_acknowledged": true,
@@ -728,7 +728,7 @@
         "dt_receptacle"
       ],
       "camera": [
-        0.1784742583579071,
+        0.17847425835790715,
         0.30767425912084667,
         0.4439535177839298
       ],

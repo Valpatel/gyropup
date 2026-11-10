@@ -1,0 +1,246 @@
+{
+  "status": "passed",
+  "engine": "webkit",
+  "version": {
+    "revision": "559c897cbdb57b4087be9939f39f6dd654d4fd92",
+    "assets": "94d7afefc78f390f7ca9",
+    "history": true,
+    "built": "2026-11-10T18:05:24.088Z"
+  },
+  "scope": "interactions",
+  "filters": {
+    "width": null,
+    "assembly": null,
+    "printCase": null
+  },
+  "executions": [
+    {
+      "assembly": "turret",
+      "viewport": {
+        "width": 1200,
+        "height": 900
+      },
+      "phase": "medium docking"
+    },
+    {
+      "assembly": "turret",
+      "viewport": {
+        "width": 1440,
+        "height": 1000
+      },
+      "phase": "fullscreen"
+    },
+    {
+      "assembly": "turret",
+      "viewport": {
+        "width": 390,
+        "height": 844
+      },
+      "phase": "fullscreen"
+    },
+    {
+      "assembly": "turret",
+      "viewport": {
+        "width": 320,
+        "height": 700
+      },
+      "phase": "fullscreen"
+    },
+    {
+      "assembly": "turret",
+      "viewport": {
+        "width": 1440,
+        "height": 1000
+      },
+      "phase": "denied-fullscreen hit targets and restored stacking"
+    },
+    {
+      "assembly": "turret",
+      "viewport": {
+        "width": 390,
+        "height": 844
+      },
+      "phase": "denied-fullscreen hit targets and restored stacking"
+    },
+    {
+      "assembly": "turret",
+      "viewport": {
+        "width": 320,
+        "height": 700
+      },
+      "phase": "denied-fullscreen hit targets and restored stacking"
+    }
+  ],
+  "cases": [
+    "real hover, repeated pointer selection, keyboard tree, per-part appearance, orthogonal section state/reset and native/denied fullscreen"
+  ],
+  "observations": [
+    {
+      "case": "medium all panels",
+      "viewport": {
+        "width": 1200,
+        "height": 900
+      },
+      "sheet": "false",
+      "freeWidth": 328.015625,
+      "parts": [
+        49,
+        221.578125
+      ],
+      "instructions": [
+        622.59375,
+        294.828125
+      ],
+      "visibility": "visible",
+      "focus": true
+    },
+    {
+      "case": "native assembled-reset activation",
+      "trace": [
+        {
+          "type": "pointerdown",
+          "trusted": true,
+          "pointerType": "mouse",
+          "resetTarget": true,
+          "target": "BUTTON",
+          "x": 1252,
+          "y": 928,
+          "button": [
+            1126,
+            906,
+            252,
+            44
+          ],
+          "scroll": 0
+        },
+        {
+          "type": "pointerup",
+          "trusted": true,
+          "pointerType": "mouse",
+          "resetTarget": true,
+          "target": "BUTTON",
+          "x": 1252,
+          "y": 928,
+          "button": [
+            1126,
+            906,
+            252,
+            44
+          ],
+          "scroll": 0
+        },
+        {
+          "type": "click",
+          "trusted": true,
+          "pointerType": "mouse",
+          "resetTarget": true,
+          "target": "BUTTON",
+          "x": 1252,
+          "y": 928,
+          "button": [
+            1126,
+            906,
+            252,
+            44
+          ],
+          "scroll": 0
+        }
+      ]
+    },
+    {
+      "case": "fullscreen",
+      "viewport": [
+        1440,
+        1000
+      ],
+      "mode": "native",
+      "native": true,
+      "box": [
+        1440,
+        1000
+      ]
+    },
+    {
+      "case": "fullscreen",
+      "viewport": [
+        390,
+        844
+      ],
+      "mode": "native",
+      "native": true,
+      "box": [
+        390,
+        844
+      ]
+    },
+    {
+      "case": "fullscreen",
+      "viewport": [
+        320,
+        700
+      ],
+      "mode": "native",
+      "native": true,
+      "box": [
+        320,
+        700
+      ]
+    }
+  ],
+  "documents": [
+    {
+      "page": 0,
+      "events": [
+        {
+          "kind": "navigation-request",
+          "at": "2026-11-10T18:10:42.894Z",
+          "url": "http://temporary-preview/designer/build.html?assembly=turret&step=step-02",
+          "method": "GET"
+        },
+        {
+          "kind": "main-frame-navigation",
+          "at": "2026-11-10T18:10:42.911Z",
+          "url": "http://temporary-preview/designer/build.html?assembly=turret&step=step-02#assembly"
+        },
+        {
+          "kind": "document-created",
+          "at": "2026-11-10T18:10:42.912Z",
+          "token": "783c4bb7-6acc-452b-b546-3c570b1d2e57",
+          "url": "http://temporary-preview/designer/build.html?assembly=turret&step=step-02#assembly"
+        },
+        {
+          "kind": "document-domcontentloaded",
+          "at": "2026-11-10T18:10:43.726Z",
+          "url": "http://temporary-preview/designer/build.html?assembly=turret&step=step-02#assembly"
+        },
+        {
+          "kind": "document-load",
+          "at": "2026-11-10T18:10:43.740Z",
+          "url": "http://temporary-preview/designer/build.html?assembly=turret&step=step-02#assembly"
+        },
+        {
+          "kind": "main-frame-navigation",
+          "at": "2026-11-10T18:10:46.638Z",
+          "url": "http://temporary-preview/designer/build.html?assembly=turret&step=step-02&snapshot=turret-wip-4866459e2abd&chapter=pan-base#assembly"
+        },
+        {
+          "kind": "main-frame-navigation",
+          "at": "2026-11-10T18:10:46.638Z",
+          "url": "http://temporary-preview/designer/build.html?assembly=turret&step=step-02&snapshot=turret-wip-4866459e2abd&chapter=pan-base#assembly"
+        },
+        {
+          "kind": "main-frame-navigation",
+          "at": "2026-11-10T18:10:53.861Z",
+          "url": "http://temporary-preview/designer/build.html?assembly=turret&step=step-02&snapshot=turret-wip-4866459e2abd&chapter=pan-base#assembly"
+        },
+        {
+          "kind": "main-frame-navigation",
+          "at": "2026-11-10T18:10:53.861Z",
+          "url": "http://temporary-preview/designer/build.html?assembly=turret&step=step-02&snapshot=turret-wip-4866459e2abd&chapter=pan-base#assembly"
+        }
+      ],
+      "totalEvents": 9
+    }
+  ],
+  "errors": []
+}

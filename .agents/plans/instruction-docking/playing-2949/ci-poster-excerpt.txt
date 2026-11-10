@@ -1,1 +1,18 @@
+2026-11-10T18:33:21.8527391Z tools/site/assembly/poster-contract.mjs:28
+2026-11-10T18:33:21.8528220Z   if(guide.source.poster_visual_sha256!==value.visual_sha256||guide.steps.some(step=>!step.poster))throw new Error('Fresh source-bound posters are missing or stale; capture the actual viewer before publication.');
+2026-11-10T18:33:21.8528752Z                                                                                                          ^
+2026-11-10T18:33:21.8528906Z
+2026-11-10T18:33:21.8529292Z Error: Fresh source-bound posters are missing or stale; capture the actual viewer before publication.
+2026-11-10T18:33:21.8529659Z     at tools/site/assembly/poster-contract.mjs:28:106
+2026-11-10T18:33:21.8529837Z
+2026-11-10T18:33:21.8529894Z Node.js v22.23.4
+2026-11-10T18:33:21.8656294Z ##[error]Process completed with exit code 1.
+2026-11-10T18:33:21.8706181Z ##[group]Run actions/upload-artifact@v4
+2026-11-10T18:33:21.8706345Z with:
+2026-11-10T18:33:21.8706468Z   name: build-portal-evidence
+2026-11-10T18:33:21.8706621Z   path: /tmp/gyropup-*
+test-results
 
+2026-11-10T18:33:21.8706774Z   if-no-files-found: warn
+2026-11-10T18:33:21.8706906Z   compression-level: 6
+2026-11-10T18:33:21.8707031Z   overwrite: false
