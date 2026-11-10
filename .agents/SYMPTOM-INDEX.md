@@ -2,6 +2,7 @@
 
 | Symptom | Canonical guidance |
 | --- | --- |
+| A screenshot times out after “fonts loaded” while interaction observations pass | [Time the original capture phases without clearing its failure](inbox/2026-11-10-screenshot-deadlines-need-timed-capture-phases.md) |
 | A playing→paused contextual click moves even though status height and scroll range stay constant | [Preserve existing playback text nodes during genuine pause](inbox/2026-11-10-playing-pause-must-preserve-text-nodes.md) |
 | Flip/Rotate miss after a capture-time pause refresh despite a valid initial hit | [Leave unchanged native controls untouched during playback refresh](inbox/2026-11-10-no-op-playback-renders-must-preserve-native-controls.md) |
 | A Reset button gets pointerdown/focus but leaves old model or section state | [Keep pointer-focused actions fixed until native click completes](inbox/2026-11-10-pointer-focus-must-not-move-panel-actions.md) |

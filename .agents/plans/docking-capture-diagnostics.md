@@ -31,6 +31,22 @@ probe established observation wiring only; it did not reproduce CI141/history.
   first section render/scene costs and compositor behavior remain hypotheses
   until actual phase/frame observations identify a boundary.
 
-Next: implement the test-only observer, inspect the second artifact once
-available, run pure controls and source/privacy checks, then freeze a draft for
-independent review. The historical failures remain failed.
+Implemented: protocol metadata is active only for the original stopped Robot
+capture; native page state is read without forcing a render/frame/focus change.
+Before/after and evidence writing have separate500ms diagnostic bounds; these do
+not replace or enlarge the original15s capture. Missing snapshot data is explicit;
+a report-write error cannot replace a failed capture, and cannot turn a passed
+PNG into complete required diagnostic evidence. All132 interaction states remain.
+
+The immediately preceding phone context may still own native fullscreen when
+its existing close is requested. Passive before-close native state, awaited-close
+completion and new-context markers retain that hypothesis without changing the
+sequence. Material clipping is already enabled from scene creation; section
+updates mutate existing plane values, so no first-section shader-cause claim is
+made. The original phase remains unobserved until actual pinnedCI runs.
+
+Both actual reports/ZIPs were verified and preserved with immutable identities;
+the byte-identical report is stored once and linked from both failed attempts.
+The local151 wiring receipt is qualified separately. Eleven pure guards pass.
+Next: build/privacy and independent review of this test-only delta, followed by
+the next normal pinnedCI campaign. The historical failures remain failed.
