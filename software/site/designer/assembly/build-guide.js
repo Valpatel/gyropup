@@ -10,7 +10,7 @@ function selection(name){
  if(!active)return;
  const wasIsolated=active.isolate;active.selected=name;if(!name)active.isolate=false;
  const part=active.viewer?.parts.find(p=>p.name===name);
- host.querySelector('[data-guide-selection]').textContent=part?`Selected: ${part.title||part.name.replaceAll('_',' ')}`:'Choose a part in the model or the step list.';
+ host.querySelector('[data-guide-selection]').textContent=!active.viewer?'3D selection is unavailable; the parts below remain a reading list.':part?`Selected: ${part.title||part.name.replaceAll('_',' ')}`:'Choose a part in the model or the step list.';
  host.querySelector('[data-guide-isolate]').disabled=!name;
  const appearance=host.querySelector('[data-guide-part-mode]');appearance.disabled=!name;appearance.value=active.partModes[name]||'automatic';
  host.querySelectorAll('[data-part]').forEach(button=>button.setAttribute('aria-pressed',String(JSON.parse(button.dataset.instances).includes(name))));
@@ -83,13 +83,13 @@ function paint(id){
  host.querySelector('[data-guide-title]').textContent=s.title;
  host.querySelector('[data-guide-count]').textContent=`${chapter.title} · ${index+1} / ${g.steps.length}`;
  host.querySelector('[data-guide-text]').textContent=s.text;
- const poster=host.querySelector('[data-guide-poster]');poster.hidden=!s.poster;
+ const poster=host.querySelector('[data-guide-poster]');poster.hidden=!s.poster||!a.renderError;
  if(s.poster){poster.src=a.posterURLs.get(s.id);poster.alt=`Step ${index+1}: ${s.title}`;}
  host.querySelector('[data-guide-chapters]').innerHTML=g.subassemblies.map(c=>`<button type="button" data-chapter="${esc(c.id)}" aria-current="${c.id===s.subassembly?'step':'false'}">${esc(c.title)}</button>`).join('');
  host.querySelectorAll('[data-chapter]').forEach(b=>b.onclick=()=>paint(stepFor(g,{chapter:b.dataset.chapter}).id));
  const stepSelect=host.querySelector('[data-guide-step]');stepSelect.innerHTML=g.steps.map((x,i)=>`<option value="${esc(x.id)}">${i+1}. ${esc(x.title)}</option>`).join('');stepSelect.value=s.id;stepSelect.onchange=()=>paint(stepSelect.value);
  const prev=host.querySelector('[data-guide-prev]'),next=host.querySelector('[data-guide-next]');prev.disabled=index===0;next.disabled=index===g.steps.length-1;prev.onclick=()=>paint(g.steps[index-1].id);next.onclick=()=>paint(g.steps[index+1].id);
- host.querySelector('[data-guide-parts]').innerHTML=(g.source?.requirements_by_step?.[s.id]||[]).map(r=>`<li><button type="button" data-part="${esc(r.instances[0])}" data-instances="${esc(JSON.stringify(r.instances))}" aria-pressed="false">${esc(r.title)}</button> <span>×${r.quantity} modeled instance${r.quantity===1?'':'s'}</span>${r.catalogue?.length?`<small>${r.catalogue.map(c=>esc(c.part_number||c.item)).join(' · ')}</small>`:''}</li>`).join('');
+ host.querySelector('[data-guide-parts]').innerHTML=(g.source?.requirements_by_step?.[s.id]||[]).map(r=>`<li><button type="button" data-part="${esc(r.instances[0])}" ${a.viewer?'':'disabled'} data-instances="${esc(JSON.stringify(r.instances))}" aria-pressed="false">${esc(r.title)}</button> <span>×${r.quantity} modeled instance${r.quantity===1?'':'s'}</span>${r.catalogue?.length?`<small>${r.catalogue.map(c=>esc(c.part_number||c.item)).join(' · ')}</small>`:''}</li>`).join('');
  host.querySelectorAll('[data-part]').forEach(b=>b.onclick=()=>{if(a.viewer)a.viewer.setSelection(b.dataset.part);else selection(b.dataset.part);});
  selection(a.selected);
  const complete=host.querySelector('[data-guide-complete]');complete.checked=a.done.has(s.id);complete.onchange=()=>{complete.checked?a.done.add(s.id):a.done.delete(s.id);tabProgress.set(progressKey(g,a.guideHash),new Set(a.done));try{saveProgress(storage(),g,a.done,a.guideHash);}catch{report('Completion stays in this tab because browser storage is unavailable.',true);host.querySelector('[data-guide-retry]').hidden=true;}};
