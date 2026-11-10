@@ -3,6 +3,7 @@ import hashlib
 import json
 from pathlib import Path
 import struct
+import shutil
 import sys
 import tempfile
 import unittest
@@ -30,6 +31,29 @@ class DataGuide(unittest.TestCase):
                 self.assertNotIn('build-guides',original['public_file'])
                 self.assertEqual(sha(ROOT/original['source_file']),original['sha256'])
         self.assertTrue(m['L.hip_frame']['originals'][0]['public_file'].endswith('/exports/leg/hip_frame.stl'))
+        self.assertEqual(m['L.hip_frame']['geometry_match']['status'],'pending')
+
+    def test_named_and_rehashed_stale_original_does_not_enable_current_print(self):
+        # The original's filename, plan key and digest all look legitimate even
+        # after a stale/replacement file is rebound. That is identity, not shape
+        # correspondence; neither original may claim a current geometry match.
+        files=['hardware/exports/'+p for p in ('leg/print-plan.json','body/print-plan.json',
+               'body/shell/print-plan.json','body/body.json','leg/leg.json',
+               'leg/bom.json','body/bom.json','leg/hip_frame.stl')]
+        with tempfile.TemporaryDirectory() as tmp:
+            root=Path(tmp)
+            for file in files:
+                dest=root/file;dest.parent.mkdir(parents=True,exist_ok=True)
+                shutil.copyfile(ROOT/file,dest)
+            old=mapping(root,['L.hip_frame'])['L.hip_frame']
+            original=root/'hardware/exports/leg/hip_frame.stl'
+            original.write_bytes(b'not the current hip geometry')
+            stale=mapping(root,['L.hip_frame'])['L.hip_frame']
+            self.assertNotEqual(old['originals'][0]['sha256'],stale['originals'][0]['sha256'])
+            self.assertEqual(stale['originals'][0]['sha256'],sha(original))
+            self.assertEqual(stale['kind'],'print')
+            self.assertEqual(stale['geometry_match']['status'],'pending')
+            self.assertEqual(old['geometry_match']['status'],'pending')
 
     def fixture(self,folder):
         # Explicit synthetic triangles exercise serializer integrity, never CAD validity.

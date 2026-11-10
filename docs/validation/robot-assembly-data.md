@@ -3,8 +3,9 @@
 Issue #266 now includes real body, leg, knee and wheel stages. This extends the
 existing assembly-guide contract and current CAD collector; the product UI is
 owned separately in PR #267. No renderer, physical action or geometry redesign
-is proposed. The source study below is complete; source preparation is in progress; native collection and actual geometry acceptance
-are not yet performed.
+is proposed. The bounded native collection completed at immutable source
+`540056ba4e59b197859236cb693463e10c9c8901`; independent visual-asset review
+and product integration remain separate from physical qualification.
 
 ```mermaid
 flowchart LR
@@ -77,12 +78,13 @@ authorized by this document alone.
 
 | Requirement | Positive evidence | Required rejection/sensitivity | Status |
 | --- | --- | --- | --- |
-| Source and part identity | Exact Git/input/collector/runtime hashes and one-to-one named output membership | Stale source, missing/duplicate/unexpected part or altered mesh digest | Planned |
-| Actual CAD frames | Independent representative module landmarks through left translation and right180deg-Z rotation; actual exported vertices in common mm frame | Y-only mirror, wrong side/front-rear owner, axis sign, 1000x units or double transform | Planned |
-| Hip/knee/apex/wheel ownership | Motors fixed to hip support; upper adapters rotate with links; knee bearings/pins and wheel hub/tyre remain separately named | Stationary motor attached to rotating link, wrong knee parent, merged hardware masquerading as individual parts | Planned |
-| Mounted combined assembly | Actual TM face/pan datum agrees with body CAD and collected assembled turret | Bench-local mesh/assumed mounting height or missing mount relation | Planned |
-| Genuine stages | Explicit source operation, prerequisites and exact included/highlighted instance sets, both sides | Arbitrary colour-group hiding called an assembly operation; invented fastener/qualification claims | Planned |
-| Coherent immutable snapshots | Robot and Combined use exact model/mesh/recipe/BOM/source bindings; text/static fallback same stages | Cross-version asset substitution, stale prose, incomplete source coverage | Planned |
+| Source and part identity | Exact Git/input/collector/runtime hashes and one-to-one named output membership | Stale source, missing/duplicate/unexpected part or altered mesh digest | Native collection passed; sealed audit passed |
+| Actual CAD frames | Independent representative module landmarks through left translation and right180deg-Z rotation; actual exported vertices in common mm frame | Y-only mirror, wrong side/front-rear owner, axis sign, 1000x units or double transform | 88 actual landmarks passed; mirror/unit/double-transform controls rejected |
+| Hip/knee/apex/wheel ownership | Motors fixed to hip support; upper adapters rotate with links; knee bearings/pins and wheel hub/tyre remain separately named | Stationary motor attached to rotating link, wrong knee parent, merged hardware masquerading as individual parts | Source/recipe tests and native compound checks passed; animated product checks pending |
+| Mounted combined assembly | Actual TM face/pan datum agrees with body CAD and collected assembled turret | Bench-local mesh/assumed mounting height or missing mount relation | Native four-bolt XYZ match passed; actual wrong-XY shift rejected |
+| Genuine stages | Explicit source operation, prerequisites and exact included/highlighted instance sets, both sides | Arbitrary colour-group hiding called an assembly operation; invented fastener/qualification claims | 23 source operations exactly cover 171 robot instances |
+| Coherent immutable snapshots | Robot and Combined use exact model/mesh/recipe/BOM/source bindings; text/static fallback same stages | Cross-version asset substitution, stale prose, incomplete source coverage | Native-generated 242 outputs verified; final product/static pictures pending |
+| Manufacturing originals | Exact existing file/plan identity, kept separate from current geometry correspondence | A named, rehashed stale original must not enable Print | Current mapping explicitly pending; actual stale-file regression passed |
 | Regression/integration | Existing shared validator/controller and product browser coverage applied to imported new data | Existing turret guide or procurement state changed unintentionally | Planned; UI owner integrates |
 
 Geometry-valid CAD/poses and passing presentation tests do not establish
@@ -107,8 +109,10 @@ It prepares actual module-local mesh landmarks for 11 representative parts on
 both sides, checks the physical 180 degree-Z mapping within 0.02 mm, and checks
 the actual riser/pan-base TM plane plus bolt-circle X/Y/Z centers. A rigid
 wrong-X/Y native mount negative is required. Normalized output filename
-collisions reject before writing. These native controls are prepared, not yet
-executed.
+collisions reject before writing. These native controls executed successfully
+in collection 260; the maximum independent landmark error was
+0.000004688 mm, below 0.02 mm. All 233 authored source shapes were valid;
+38 meshes are explicitly declared source compounds.
 
 The pure exporter prepares Robot and Combined snapshots with an honest full
 CAD overview followed by construction stages. Installation presentation order
@@ -116,15 +120,31 @@ is explicit per stage, not manifest/BOM iteration. Plain HTML/JSON use the
 same stage text and requirements. Manufacturing metadata identifies existing
 print STL, machining STEP or sheet STEP/DXF originals by actual digest; baked
 posed guide meshes are never offered for printing. Unknown catalogue relations
-stay unresolved. Body/leg planning quantities retain their original scope;
+stay unresolved. File identity and print-plan membership are not proof that an
+original matches the new collected shape. Every manufacturing row therefore
+has an explicit `geometry_match.status: pending`; Print must remain unavailable
+until a separately accepted correspondence exists. Identified originals may be
+offered as clearly labelled retained downloads. The default hip-frame STL is
+byte-identical to the source-bound RS04 fit-study artifact, but that finding
+does not qualify the whole leg or its known failing support checks.
+Body/leg planning quantities retain their original scope;
 wheel hub and tyre share one bought-wheel identity.
 
-Fourteen kernel-free tests currently pass. They cover retained named
+Sixteen kernel-free tests currently pass. They cover retained named
 membership, stationary/moving ownership, grouped hardware, frame/unit/mirror
 negatives, strict binary STL, symlink inventory rejection, import safety,
 original-file mapping, snapshot/text integrity and changed-source rejection.
 Synthetic serializer fixtures are test-only and are not CAD/asset acceptance.
 Broad draft CI is deliberately deferred on preparation commits until genuine
 assets are ready; final source/assets must run all ordinary required checks.
+
+The actual collection used a retained read-only runtime on a CAD host: native
+collection 132.85 seconds and pure guide serialization 1.07 seconds, both
+exit zero with owned process groups gone. Complete project, hardware, runtime
+and toolkit inventories were equal before/after. The immutable native archives
+and their original guide metadata are preserved; the current pure exporter adds
+the conservative manufacturing-match fields without re-tessellating geometry
+or relabelling the native source. See the [run checkpoint](https://github.com/Valpatel/gyropup/issues/266#issuecomment-6761821545)
+and the committed collection record for archive and output bindings.
 
 </details>

@@ -115,6 +115,7 @@ def generate(collection,folder,recipe_sha256,bom_hashes,collection_sha256,manufa
         source={'qualification':WARNING,'configuration':collection['configuration'],'cad_inputs':collection['inputs'],
                 'collection_sha256':collection_sha256,'native_producer_inputs':collection.get('producer_inputs',{}),'exporter_sha256':sha(Path(__file__)),'hardware_tree':collection['hardware_tree'],
                 'collector_sha256':collection['collector_sha256'],'recipe_sha256':recipe_sha256,'bom_hashes':bom_hashes,
+                'manufacturing_mapper_sha256':sha(Path(__file__).with_name('robot_manufacturing.py')),
                 'overview_step_id':'overview','step_kinds':kinds,
                 'install_order_by_step':{'overview':[],**{op['id']:op['additions'] for op in ops}},
                 'install_order_basis':'Explicit educational presentation order from the authored source operations; not verified insertion, fastening or physical assembly order.',

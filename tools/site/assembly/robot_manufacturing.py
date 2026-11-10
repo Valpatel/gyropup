@@ -46,6 +46,7 @@ def mapping(root,names):
     result={}
     for name in names:
         row={'kind':'unresolved','originals':[],'qualification':QUALIFICATION,
+             'geometry_match':{'status':'pending','basis':'No current collected-part to manufacturing-original correspondence has been accepted.'},
              'reason':'No verified manufacturing/catalogue mapping for this modeled instance.'}
         result[name]=row
         if name.startswith('turret.'):
@@ -62,6 +63,7 @@ def mapping(root,names):
                 originals=[original('hardware/exports/'+folder+'/'+family+'.stl')],
                 plan={**binding(plan_file),'material':value['material'],'qty':value['qty'],
                       'qty_scope':'per_leg' if physical_leg else 'body','infill':value.get('infill')})
+            row['geometry_match']['basis']='Identified retained manufacturing original only. File identity and plan membership do not prove a match to the collected CAD instance.'
             row.pop('reason');continue
         if physical_leg and family in leg.get('made_to_order',{}):
             file='hardware/'+leg['made_to_order'][family]
