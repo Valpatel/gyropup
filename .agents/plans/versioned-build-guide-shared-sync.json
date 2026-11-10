@@ -1,23 +1,28 @@
 {
   "source_repository": "Valpatel/cad-agent",
-  "source_revision": "d0d13ee3b700b20ebec76ddc3e51561e8d7fbdcc",
+  "source_revision": "a259f46c71b1483a59fae5d3b5ea1bea74990922",
   "files": [
     {
       "source": "software/cadagent/webkit/viewer.js",
       "target": "software/site/designer/kit/viewer.js",
-      "sha256": "1c2b96a41fc42f1d28dd1802aaf025db67463de154b8ef95f9aa8f373455a1b0"
+      "sha256": "5b2661e46e638ec15ca45b8814c235c00eb99e49e8416ec712ee5ff6b93d221b"
     },
     {
       "source": "software/cadagent/webkit/assembly/guide.js",
       "target": "software/site/designer/kit/assembly/guide.js",
-      "sha256": "e97f09ff08bce066f93cec730a6faa87a10657837ef72be14d13e9eaafd033c6"
+      "sha256": "4d2d4bc138665a4dfd171f2f3b4419e34e24da846f0e9100701a06d884604367"
+    },
+    {
+      "source": "software/cadagent/webkit/assembly/playback.js",
+      "target": "software/site/designer/kit/assembly/playback.js",
+      "sha256": "4fc834abc1bafa021dc22b89e5baa66014350be6238af775ba98743f131a5fa8"
     },
     {
       "source": "software/cadagent/webkit/assembly/README.md",
       "target": "software/site/designer/kit/assembly/README.md",
-      "sha256": "4b8ea661eb6c42d23ffdef1adfed88df2a3a91f319e68609ba2813426a768e1d"
+      "sha256": "868fec7dc0845daa3070cb74f221e1af15db78d62a8fda8e0d37b7df2f8fa386"
     }
   ],
   "preserved_product_stage_loader_and_entry_html": true,
-  "limits": "Targeted import; product browser controls and final acceptance remain pending."
+  "limits": "In-flight PR509 candidate; component browser cases passed, publication and final product qualification remain pending. Final release must bind a reviewed published toolkit pin."
 }

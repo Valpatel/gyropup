@@ -5,7 +5,7 @@ export function createWorkspace(host,getActive,paint,report){
  const required=selector=>{const node=host.querySelector(selector);if(!node)throw new Error('Missing workspace element: '+selector);return node;};
  const layout=required('.assembly-layout'),tree=required('#assembly-explorer'),tools=required('#assembly-tools'),instructions=required('.assembly-step'),sheet=required('[data-workspace-sheet]');
  const toolbar=required('.assembly-topbar'),nav=required('.assembly-nav'),full=required('button[data-guide-fullscreen]'),instructionToggle=required('button[data-instructions-toggle]');
- const mobile=matchMedia('(max-width:1000px)'),events=new AbortController();
+ const mobile=matchMedia('(max-width:1100px)'),events=new AbortController();
  let disposed=false,generation=0,assemblyLoader=null,previousOverflow='',expandedInstructions=false,partsOpen=false,toolsOpen=false,pane='instructions',sheetCollapsed=false,sheetExpanded=false,framePending=false;
  const useSheet=()=>mobile.matches||!!getActive()&&!getActive().viewer;
  function renderPanels(){
@@ -34,7 +34,7 @@ export function createWorkspace(host,getActive,paint,report){
  document.addEventListener('fullscreenchange',fullState,{signal:events.signal});
  window.addEventListener('gyropup:exit-workspace-fullscreen',()=>{if(layout.dataset.expanded==='true')collapseFullscreen();},{signal:events.signal});
  host.addEventListener('keydown',event=>{if(event.key!=='Escape')return;if(layout.dataset.expanded==='true')collapseFullscreen();if(document.fullscreenElement===layout)document.exitFullscreen().catch(()=>{});if(useSheet()){if(getActive()?.viewer)sheetCollapsed=true;else{pane='instructions';sheetCollapsed=false;}}else{partsOpen=false;toolsOpen=false;}renderPanels();frame();},{signal:events.signal});
- host.addEventListener('gyropup:part-selected',()=>{if(mobile.matches){pane='parts';sheetCollapsed=false;sheetExpanded=true;renderPanels();frame();}},{signal:events.signal});
+ host.addEventListener('gyropup:part-selected',()=>{if(mobile.matches){pane='parts';sheetCollapsed=false;renderPanels();frame();}},{signal:events.signal});
  function frame(){
   const active=getActive(),viewer=active?.viewer;if(!viewer)return;
   const bounds=layout.getBoundingClientRect(),top=toolbar.getBoundingClientRect();layout.style.setProperty('--assembly-toolbar-bottom',`${top.bottom-bounds.top}px`);
@@ -49,7 +49,7 @@ export function createWorkspace(host,getActive,paint,report){
   }
   viewer.stage.setInsets(insets);
   if(active.overview&&active.robot){active.robot.group.updateMatrixWorld(true);const box=new THREE.Box3();active.robot.group.traverseVisible(object=>{if(object.isMesh)box.union(new THREE.Box3().setFromObject(object));});viewer.stage.fitView(box,{direction:new THREE.Vector3(1,.45,1.5),margin:1.12});}
-  else if(!active.overview)viewer.frameParts(active.isolate&&active.selected?[active.selected]:undefined,active.guide.steps.find(step=>step.id===active.step)?.camera?.direction);
+  else if(!active.overview){const current=active.guide.steps.find(step=>step.id===active.step),playing=active.player?.getState().status==='playing'||active.player?.getState().status==='paused'&&active.player?.getState().elapsedMs>0;viewer.frameParts(playing?current.parts:active.isolate&&active.selected?[active.selected]:undefined,current?.camera?.direction,playing?{includeHidden:true}:undefined);}
  }
  function scheduleFrame(){if(framePending||disposed)return;framePending=true;requestAnimationFrame(()=>{framePending=false;if(!disposed)frame();});}
  function present(){

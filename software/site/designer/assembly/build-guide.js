@@ -1,3 +1,4 @@
+import {mountPlayback} from './playback.js';
 import {createPartInspector,partMetadata} from './part-inspector.js';
 import {createWorkspace,disposeRobot} from './workspace.js';
 import {readLocation,stepFor,validateIndex,matchSnapshot,progressKey,readProgress,saveProgress,writeLocation,snapshotsFor} from './state.js';
@@ -21,7 +22,7 @@ function selection(name,interactive=false,interaction){
  const appearance=host.querySelector('[data-guide-part-mode]');appearance.disabled=!name;appearance.value=active.partModes[name]||'automatic';
  inspector.update(name,{interactive,interaction});
  host.querySelectorAll('[data-part]').forEach(button=>button.setAttribute('aria-pressed',String(JSON.parse(button.dataset.instances).includes(name))));
- if(wasIsolated&&!name)paint(active.step);
+ if(wasIsolated&&!name&&interactive&&interaction)paint(active.step);
 }
 function partInfo(name){const a=active,meta=a&&partMetadata(a.guide,a.modelParts||a.viewer?.parts||[],name);return meta?`<b>${esc(meta.title)}</b><small>${esc(meta.name)}${meta.compound?' · compound':''}</small>`:'';}
 function partHover(name,point){const tip=host.querySelector('[data-part-tooltip]');tip.hidden=!name;if(!name)return;tip.innerHTML=partInfo(name,true);const bounds=host.querySelector('.assembly-layout').getBoundingClientRect(),x=(point?.clientX??bounds.left)-bounds.left+14,y=(point?.clientY??bounds.top)-bounds.top+14;tip.style.left=Math.max(8,Math.min(x,bounds.width-tip.offsetWidth-8))+'px';tip.style.top=Math.max(8,Math.min(y,bounds.height-tip.offsetHeight-8))+'px';}
@@ -51,7 +52,7 @@ async function start(){
    const step=stepFor(guide,route),canvas=document.createElement('div'),panel=document.createElement('div');canvas.className='assembly-canvas';
    let renderError=null;
    try{nextViewer=await createViewer({app:canvas,panel,guideBound:true,manifest:loaded.manifest,manifestUrl:loaded.manifestUrl,signal:abort.signal,
-     onSelect:(name,point)=>{if(applying||active?.viewer!==nextViewer||active?.overview)return;selection(name,true,point);},onHover:(name,point)=>{if(active?.viewer===nextViewer&&!active?.overview)partHover(name,point);}});}
+     onSelect:(name,point)=>{if(applying||active?.viewer!==nextViewer||active?.overview)return;if(point)active.playback?.pause();selection(name,!!point,point);},onHover:(name,point)=>{if(active?.viewer===nextViewer&&!active?.overview)partHover(name,point);}});}
    catch(error){if(abort.signal.aborted)throw error;renderError=error;}
    if(renderError&&active?.viewer)throw renderError;
    if(own!==request){nextViewer?.dispose();for(const value of posterURLs.values())URL.revokeObjectURL(value);return;}
@@ -62,10 +63,11 @@ async function start(){
    host.querySelector('[data-guide-visual]').hidden=!!renderError;host.querySelector('.assembly-layout').dataset.static=String(!!renderError);
    try{select.value=id;paint(step.id,{preserveAnchor:true});}
    catch(error){active=previous;model.replaceChildren(...previousNodes);if(previous){try{paint(previous.step,{preserveAnchor:true});}catch{}}else{host.dataset.ready='0';}throw error;}
-   disposeRobot(previous?.robot);previous?.viewer?.dispose();for(const value of previous?.posterURLs?.values()||[])URL.revokeObjectURL(value);
+   previous?.playback?.dispose();disposeRobot(previous?.robot);previous?.viewer?.dispose();for(const value of previous?.posterURLs?.values()||[])URL.revokeObjectURL(value);
+   if(nextViewer)active.playback=mountPlayback(host,active,()=>active?.viewer===nextViewer,(id)=>{if(active.step!==id)paint(id,{playback:true});});active.player=active.playback?.player;
    if(renderError)report('Interactive 3D is unavailable. '+(guide.steps.some(step=>step.poster)?'The same snapshot’s text and diagrams remain below.':'The same snapshot’s text remains below.'),true);
    else report(guide.snapshot.status==='wip'?'Source-bound WIP guide loaded. No physical build release.':'Versioned guide loaded. Its publication status is separate from physical qualification.');
-   window.__buildGuide={get active(){return active;},load,apply:id=>paint(id),dispose(){interactionEvents.abort();inspector.dispose();workspace.dispose();pending?.abort();disposeRobot(active?.robot);active?.viewer?.dispose();for(const value of active?.posterURLs?.values()||[])URL.revokeObjectURL(value);active=null;}};
+   window.__buildGuide={get active(){return active;},load,apply:id=>paint(id),dispose(){interactionEvents.abort();inspector.dispose();workspace.dispose();pending?.abort();active?.playback?.dispose();disposeRobot(active?.robot);active?.viewer?.dispose();for(const value of active?.posterURLs?.values()||[])URL.revokeObjectURL(value);active=null;}};
    if(!renderError&&route.assembly&&route.assembly!==assembly)workspace.choose(route.assembly,false);
    if(pending===abort)pending=null;
   }catch(error){const cancelled=abort.signal.aborted||own!==request;abort.abort();if(pending===abort)pending=null;nextViewer?.dispose();for(const value of posterURLs.values())URL.revokeObjectURL(value);if(cancelled)return;report(error.message+(active?' Your previous build remains selected.':''),true);if(active){const choice=assemblyChoices.get(assembly);select.value=choice?.snapshot||'';}else select.selectedIndex=-1;}
@@ -108,9 +110,9 @@ function partTree(active,step){
   const context=chapter.parts.filter(name=>!claimed.has(name));return `<details ${chapter.id===step.subassembly?'open':''}><summary>${esc(chapter.title)} <small>${chapter.parts.length} instances</small></summary>${stages.join('')}${context.length?`<details><summary>Modeled context</summary>${instances(context)}</details>`:''}</details>`;
  }).join('');
 }
-function paint(id,{preserveAnchor=false}={}){
+function paint(id,{preserveAnchor=false,playback=false}={}){
  const a=active,g=a.guide,s=stepFor(g,{step:id});partHover(null);a.wantsOverview=false;a.overview=false;a.assembly=a.guideAssembly||'turret';if(a.step!==s.id){if(s.id===g.source?.overview_step_id){a.mode='solid';a.explode=0;}else if(a.step===g.source?.overview_step_id){a.mode='ghost';a.explode=1;}a.selected=null;a.isolate=false;a.partModes={};}a.step=s.id;assemblyChoices.set(a.guideAssembly||'turret',{snapshot:g.snapshot.id,step:s.id});
- applyPresentation(s,true);
+ if(!playback)applyPresentation(s,true);
  const index=g.steps.indexOf(s),chapter=g.subassemblies.find(c=>c.id===s.subassembly);
  host.querySelector('[data-guide-source]').innerHTML=`${esc(g.snapshot.revision)} · ${esc(g.snapshot.status)} · <a href="https://github.com/Valpatel/gyropup/tree/${esc(g.snapshot.source_commit)}">Source snapshot</a>`;
  host.querySelector('[data-guide-scope-description]').textContent=`${g.steps.length} authored entries for ${a.guideAssembly||'turret'}, bound to this snapshot. Overview entries are reference views; physical qualification remains separate.`;const plain=host.querySelector('[data-guide-plain]');plain.href=new URL('instructions.html',a.url);plain.textContent=(a.guideAssembly==='turret'&&g.steps.length===12)?'All twelve instructions in plain HTML':`All ${g.steps.length} ${a.guideAssembly} instructions (plain HTML)`;host.querySelector('[data-guide-manifest]').href=a.url.href;
@@ -123,7 +125,7 @@ function paint(id,{preserveAnchor=false}={}){
  if(s.poster){poster.src=a.posterURLs.get(s.id);poster.alt=`Step ${index+1}: ${s.title}`;}else{poster.removeAttribute('src');poster.alt='';}
  host.querySelector('[data-guide-chapters]').innerHTML=partTree(a,s);
  host.querySelectorAll('[data-tree-step]').forEach(button=>button.onclick=()=>workspace.step(button.dataset.treeStep));
- host.querySelectorAll('[data-part]').forEach(button=>{const show=()=>{if(a.viewer)a.viewer.setSelection(button.dataset.part);selection(button.dataset.part,true);};button.onclick=show;button.onfocus=show;});
+ host.querySelectorAll('[data-part]').forEach(button=>{const show=()=>{a.playback?.pause();if(a.viewer)a.viewer.setSelection(button.dataset.part);selection(button.dataset.part,true);};button.onclick=show;button.onfocus=show;});
  const stepSelect=host.querySelector('[data-guide-step]');stepSelect.innerHTML=g.steps.map((x,i)=>`<option value="${esc(x.id)}">${i+1}. ${esc(x.title)}</option>`).join('');stepSelect.value=s.id;stepSelect.disabled=false;stepSelect.onchange=()=>paint(stepSelect.value);
  const prev=host.querySelector('[data-guide-prev]'),next=host.querySelector('[data-guide-next]');prev.title='Previous step';next.title='Next step';prev.disabled=index===0;next.disabled=index===g.steps.length-1;prev.onclick=()=>paint(g.steps[index-1].id);next.onclick=()=>paint(g.steps[index+1].id);
  selection(a.selected);
