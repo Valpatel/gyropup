@@ -137,10 +137,54 @@ jobs:
           - suite: layout
             commands: |
               npm run test:empty-space
-          - suite: build-workspace-layout
+          - suite: build-workspace-layout-robot-1440
             commands: |
-              WORKSPACE_CASE=layout npm run test:build-workspace
-              PLAYWRIGHT_BROWSER=webkit WORKSPACE_CASE=layout npm run test:build-workspace
+              WORKSPACE_CASE=layout WORKSPACE_ASSEMBLY=robot WORKSPACE_WIDTH=1440 npm run test:build-workspace
+              PLAYWRIGHT_BROWSER=webkit WORKSPACE_CASE=layout WORKSPACE_ASSEMBLY=robot WORKSPACE_WIDTH=1440 npm run test:build-workspace
+          - suite: build-workspace-layout-robot-1024
+            commands: |
+              WORKSPACE_CASE=layout WORKSPACE_ASSEMBLY=robot WORKSPACE_WIDTH=1024 npm run test:build-workspace
+              PLAYWRIGHT_BROWSER=webkit WORKSPACE_CASE=layout WORKSPACE_ASSEMBLY=robot WORKSPACE_WIDTH=1024 npm run test:build-workspace
+          - suite: build-workspace-layout-robot-390
+            commands: |
+              WORKSPACE_CASE=layout WORKSPACE_ASSEMBLY=robot WORKSPACE_WIDTH=390 npm run test:build-workspace
+              PLAYWRIGHT_BROWSER=webkit WORKSPACE_CASE=layout WORKSPACE_ASSEMBLY=robot WORKSPACE_WIDTH=390 npm run test:build-workspace
+          - suite: build-workspace-layout-robot-320
+            commands: |
+              WORKSPACE_CASE=layout WORKSPACE_ASSEMBLY=robot WORKSPACE_WIDTH=320 npm run test:build-workspace
+              PLAYWRIGHT_BROWSER=webkit WORKSPACE_CASE=layout WORKSPACE_ASSEMBLY=robot WORKSPACE_WIDTH=320 npm run test:build-workspace
+          - suite: build-workspace-layout-combined-1440
+            commands: |
+              WORKSPACE_CASE=layout WORKSPACE_ASSEMBLY=combined WORKSPACE_WIDTH=1440 npm run test:build-workspace
+              PLAYWRIGHT_BROWSER=webkit WORKSPACE_CASE=layout WORKSPACE_ASSEMBLY=combined WORKSPACE_WIDTH=1440 npm run test:build-workspace
+          - suite: build-workspace-layout-combined-1024
+            commands: |
+              WORKSPACE_CASE=layout WORKSPACE_ASSEMBLY=combined WORKSPACE_WIDTH=1024 npm run test:build-workspace
+              PLAYWRIGHT_BROWSER=webkit WORKSPACE_CASE=layout WORKSPACE_ASSEMBLY=combined WORKSPACE_WIDTH=1024 npm run test:build-workspace
+          - suite: build-workspace-layout-combined-390
+            commands: |
+              WORKSPACE_CASE=layout WORKSPACE_ASSEMBLY=combined WORKSPACE_WIDTH=390 npm run test:build-workspace
+              PLAYWRIGHT_BROWSER=webkit WORKSPACE_CASE=layout WORKSPACE_ASSEMBLY=combined WORKSPACE_WIDTH=390 npm run test:build-workspace
+          - suite: build-workspace-layout-combined-320
+            commands: |
+              WORKSPACE_CASE=layout WORKSPACE_ASSEMBLY=combined WORKSPACE_WIDTH=320 npm run test:build-workspace
+              PLAYWRIGHT_BROWSER=webkit WORKSPACE_CASE=layout WORKSPACE_ASSEMBLY=combined WORKSPACE_WIDTH=320 npm run test:build-workspace
+          - suite: build-workspace-layout-turret-1440
+            commands: |
+              WORKSPACE_CASE=layout WORKSPACE_ASSEMBLY=turret WORKSPACE_WIDTH=1440 npm run test:build-workspace
+              PLAYWRIGHT_BROWSER=webkit WORKSPACE_CASE=layout WORKSPACE_ASSEMBLY=turret WORKSPACE_WIDTH=1440 npm run test:build-workspace
+          - suite: build-workspace-layout-turret-1024
+            commands: |
+              WORKSPACE_CASE=layout WORKSPACE_ASSEMBLY=turret WORKSPACE_WIDTH=1024 npm run test:build-workspace
+              PLAYWRIGHT_BROWSER=webkit WORKSPACE_CASE=layout WORKSPACE_ASSEMBLY=turret WORKSPACE_WIDTH=1024 npm run test:build-workspace
+          - suite: build-workspace-layout-turret-390
+            commands: |
+              WORKSPACE_CASE=layout WORKSPACE_ASSEMBLY=turret WORKSPACE_WIDTH=390 npm run test:build-workspace
+              PLAYWRIGHT_BROWSER=webkit WORKSPACE_CASE=layout WORKSPACE_ASSEMBLY=turret WORKSPACE_WIDTH=390 npm run test:build-workspace
+          - suite: build-workspace-layout-turret-320
+            commands: |
+              WORKSPACE_CASE=layout WORKSPACE_ASSEMBLY=turret WORKSPACE_WIDTH=320 npm run test:build-workspace
+              PLAYWRIGHT_BROWSER=webkit WORKSPACE_CASE=layout WORKSPACE_ASSEMBLY=turret WORKSPACE_WIDTH=320 npm run test:build-workspace
           - suite: build-workspace-interactions
             commands: |
               WORKSPACE_CASE=interactions npm run test:build-workspace

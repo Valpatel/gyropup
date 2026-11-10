@@ -1,0 +1,16 @@
+/** Actual product mount, real reviewed bytes, controlled HTTP failure; no browser or application launch. */
+import test from 'node:test';import assert from 'node:assert/strict';import {readFile} from 'node:fs/promises';import {parseHTML} from 'linkedom';
+import {mountPrintSelection} from '../../../software/site/designer/assembly/print-selection.js';
+test('prepared-project404 is partial and same-part/action retries recover after restore',async()=>{
+ const root=new URL('../../../',import.meta.url),guide=JSON.parse(await readFile(new URL('software/site/assets/build-guides/robot-wip-540056ba4e59/guide.json',root))),mapping=guide.source.manufacturing_by_part['L.hip_frame'],model=JSON.parse(await readFile(new URL('software/site/assets/build-guides/robot-wip-540056ba4e59/view.json',root))),original=await readFile(new URL(mapping.originals[0].source_file,root)),project=await readFile(new URL(mapping.prepared_projects[0].source_file,root));
+ const {window}=parseHTML('<html><body><details id="build-details"></details><section id="print-selection"></section></body></html>');
+ Object.assign(globalThis,{window,document:window.document,Event:window.Event,CustomEvent:window.CustomEvent,location:new URL('https://fixture.invalid/designer/build.html'),history:{pushState(_a,_b,url){globalThis.location=new URL(url);}},requestAnimationFrame:()=>0});globalThis.HashChangeEvent=class extends window.Event{constructor(type,options){super(type);Object.assign(this,options);}};
+ let fail=true,projectRequests=0;globalThis.fetch=async url=>{const path=new URL(url).pathname;if(path===mapping.originals[0].public_file)return new Response(original);if(path===mapping.prepared_projects[0].public_file){projectRequests++;return fail?new Response('Intentional temporary project404',{status:404}):new Response(project);}throw Error('Unexpected fixture request '+path);};
+ const host=document.querySelector('#print-selection'),mounted=mountPrintSelection(host),detail=name=>({guide,guideHash:'a'.repeat(64),assembly:'robot',part:{...model.parts.find(p=>p.name===name),manufacturing:mapping}}),send=name=>window.dispatchEvent(new CustomEvent('gyropup:prepare-print',{detail:detail(name)}));
+ const settled=async state=>{for(let i=0;i<200&&host.dataset.state!==state;i++)await new Promise(r=>setImmediate(r));assert.equal(host.dataset.state,state);};
+ try{
+  send('L.hip_frame');await settled('partial');assert.equal(projectRequests,1);assert.equal(host.querySelectorAll('a[download]').length,1);assert.equal(host.querySelectorAll('.print-prepared-project a').length,0);assert.match(host.textContent,/Prepared project unavailable: Asset HTTP 404/);
+  fail=false;send('L.hip_frame');await settled('ready');assert.equal(projectRequests,2,'Same part re-verifies the restored project');assert.equal(host.querySelectorAll('a[download]').length,2);assert.equal(host.querySelectorAll('.print-prepared-project a').length,3);
+  fail=true;send('R.hip_frame');await settled('partial');assert.equal(projectRequests,3);fail=false;const retry=[...host.querySelectorAll('button')].find(button=>button.textContent==='Retry prepared project');assert.ok(retry);retry.click();await settled('ready');assert.equal(projectRequests,4);assert.equal(host.querySelectorAll('a[download]').length,2);
+ }finally{mounted.dispose();}
+});

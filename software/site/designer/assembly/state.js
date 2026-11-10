@@ -28,10 +28,11 @@ export function progressKey(guide,guideHash){
  if(!/^[0-9a-f]{64}$/.test(guideHash||''))throw new Error('Completion needs the exact guide digest.');
  return `gyropup.assembly.${guide.snapshot.id}.${guideHash}`;
 }
+export function canCompleteStep(guide,id){return guide.steps.some(step=>step.id===id)&&id!==guide.source?.overview_step_id&&guide.source?.step_kinds?.[id]!=='reference';}
 export function readProgress(storage,guide,guideHash){
- try{const x=JSON.parse(storage.getItem(progressKey(guide,guideHash))||'[]');return new Set(Array.isArray(x)?x.filter(id=>guide.steps.some(s=>s.id===id)):[]);}catch{return new Set();}
+ try{const key=progressKey(guide,guideHash),x=JSON.parse(storage.getItem(key)||'[]'),clean=Array.isArray(x)?[...new Set(x.filter(id=>canCompleteStep(guide,id)))]:[];if(Array.isArray(x)&&JSON.stringify(x)!==JSON.stringify(clean)){try{storage.setItem(key,JSON.stringify(clean));}catch{}}return new Set(clean);}catch{return new Set();}
 }
-export function saveProgress(storage,guide,done,guideHash){storage.setItem(progressKey(guide,guideHash),JSON.stringify([...done].filter(id=>guide.steps.some(s=>s.id===id))));}
+export function saveProgress(storage,guide,done,guideHash){storage.setItem(progressKey(guide,guideHash),JSON.stringify([...done].filter(id=>canCompleteStep(guide,id))));}
 export function writeLocation(location,history,guide,step){
  const url=new URL(location.href);url.searchParams.set('snapshot',guide.snapshot.id);url.searchParams.set('chapter',step.subassembly);url.searchParams.set('step',step.id);url.hash='assembly';history.replaceState(null,'',url);
 }

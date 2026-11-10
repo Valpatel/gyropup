@@ -1,7 +1,7 @@
 import {mountPlayback} from './playback.js';
 import {createPartInspector,partMetadata} from './part-inspector.js';
 import {createWorkspace,disposeRobot} from './workspace.js';
-import {readLocation,stepFor,validateIndex,matchSnapshot,progressKey,readProgress,saveProgress,writeLocation,snapshotsFor} from './state.js';
+import {readLocation,stepFor,validateIndex,matchSnapshot,progressKey,readProgress,saveProgress,writeLocation,snapshotsFor,canCompleteStep} from './state.js';
 const esc=s=>String(s??'').replace(/[&<>"']/g,c=>({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[c]));
 const host=document.getElementById('assembly');
 let active=null,request=0,pending=null,applying=false;
@@ -57,7 +57,7 @@ async function start(){
    if(renderError&&active?.viewer)throw renderError;
    if(own!==request){nextViewer?.dispose();for(const value of posterURLs.values())URL.revokeObjectURL(value);return;}
    const previous=active;if(previous)viewStates.set(previous.guideHash,{mode:previous.mode,explode:previous.explode,section:previous.section,sectionPlane:previous.sectionPlane});workspace.invalidate();
-   const key=progressKey(guide,row.sha256),done=tabProgress.has(key)?new Set(tabProgress.get(key)):readProgress(storage(),guide,row.sha256);
+   const key=progressKey(guide,row.sha256),done=tabProgress.has(key)?new Set([...tabProgress.get(key)].filter(id=>canCompleteStep(guide,id))):readProgress(storage(),guide,row.sha256);
    active={guide,modelParts:loaded.manifest.parts,guideAssembly:assembly,assembly,guideHash:row.sha256,viewer:nextViewer,controller:nextViewer?createGuideController(nextViewer,guide):null,done,url,posterURLs,step:step.id,mode:step.id===guide.source?.overview_step_id?'solid':'ghost',explode:step.id===guide.source?.overview_step_id?0:1,section:1,selected:null,isolate:false,partModes:{},sectionPlane:{axis:'x',flipped:false},...viewStates.get(row.sha256),renderError};
    const model=host.querySelector('[data-guide-model]'),previousNodes=[...model.childNodes];model.replaceChildren(canvas);
    host.querySelector('[data-guide-visual]').hidden=!!renderError;host.querySelector('.assembly-layout').dataset.static=String(!!renderError);
@@ -101,9 +101,9 @@ function partTree(active,step){
  function instances(names){const groups=new Map();for(const name of names){const part=parts.get(name),key=part.logical_part||name;if(!groups.has(key))groups.set(key,[]);groups.get(key).push(part);}
   return `<ul>${[...groups].map(([logical,items])=>{const buttons=items.map(part=>{const visible=step.parts.includes(part.name);return `<button type="button" data-part="${esc(part.name)}" data-instances="${esc(JSON.stringify([part.name]))}" aria-pressed="false" ${active.viewer&&visible?'':'disabled'} title="${esc(visible?part.name:'Shown in a later step')}"><span class="assembly-tree-cube" aria-hidden="true">◇</span><span>${esc(part.title||part.name.replaceAll('_',' '))}<small>${esc(part.name)}${part.compound||part.grouped?' · compound':''}${visible?'':' · later step'}</small></span></button>`;}).join('');return `<li>${items.length>1?`<details ${items.some(part=>step.highlight.includes(part.name))?'open':''}><summary>${esc(logical.replaceAll('_',' '))} ×${items.length}</summary>${buttons}</details>`:buttons}</li>`;}).join('')}</ul>`;
  }
- return `<p class="assembly-tree-root">${esc((active.guideAssembly||'turret').replace(/^./,c=>c.toUpperCase()))} <span class="tag warn">${esc(guide.snapshot.status.toUpperCase())}</span></p>`+guide.subassemblies.filter(chapter=>guide.steps.some(operation=>operation.subassembly===chapter.id&&operation.id!==guide.source?.overview_step_id)).map(chapter=>{
+ return `<p class="assembly-tree-root">${esc((active.guideAssembly||'turret').replace(/^./,c=>c.toUpperCase()))} <span class="tag warn">${esc(guide.snapshot.status.toUpperCase())}</span></p>`+guide.subassemblies.filter(chapter=>guide.steps.some(operation=>operation.subassembly===chapter.id&&canCompleteStep(guide,operation.id))).map(chapter=>{
   const owned=new Set(chapter.parts),claimed=new Set(),stages=[];
-  for(const operation of guide.steps.filter(item=>item.subassembly===chapter.id&&item.id!==guide.source?.overview_step_id)){
+  for(const operation of guide.steps.filter(item=>item.subassembly===chapter.id&&canCompleteStep(guide,item.id))){
    const listed=guide.source?.requirements_by_step?.[operation.id]?.flatMap(row=>row.instances)||operation.highlight,names=listed.filter(name=>owned.has(name)&&!claimed.has(name));
    for(const name of names)claimed.add(name);if(names.length)stages.push(`<details class="assembly-tree-stage" ${operation.id===step.id?'open':''}><summary aria-current="${operation.id===step.id?'step':'false'}">${esc(operation.title)}</summary><button type="button" data-tree-step="${esc(operation.id)}" class="assembly-tree-jump">View step ${guide.steps.indexOf(operation)+1} →</button>${instances(names)}</details>`);
   }
@@ -112,7 +112,7 @@ function partTree(active,step){
 }
 function paint(id,{preserveAnchor=false,playback=false}={}){
  const a=active,g=a.guide,s=stepFor(g,{step:id});partHover(null);a.wantsOverview=false;a.overview=false;a.assembly=a.guideAssembly||'turret';if(a.step!==s.id){if(s.id===g.source?.overview_step_id){a.mode='solid';a.explode=0;}else if(a.step===g.source?.overview_step_id){a.mode='ghost';a.explode=1;}a.selected=null;a.isolate=false;a.partModes={};}a.step=s.id;assemblyChoices.set(a.guideAssembly||'turret',{snapshot:g.snapshot.id,step:s.id});
- if(!playback)applyPresentation(s,true);
+ if(playback){a.mode='solid';a.explode=0;}else applyPresentation(s,true);
  const index=g.steps.indexOf(s),chapter=g.subassemblies.find(c=>c.id===s.subassembly);
  host.querySelector('[data-guide-source]').innerHTML=`${esc(g.snapshot.revision)} · ${esc(g.snapshot.status)} · <a href="https://github.com/Valpatel/gyropup/tree/${esc(g.snapshot.source_commit)}">Source snapshot</a>`;
  host.querySelector('[data-guide-scope-description]').textContent=`${g.steps.length} authored entries for ${a.guideAssembly||'turret'}, bound to this snapshot. Overview entries are reference views; physical qualification remains separate.`;const plain=host.querySelector('[data-guide-plain]');plain.href=new URL('instructions.html',a.url);plain.textContent=(a.guideAssembly==='turret'&&g.steps.length===12)?'All twelve instructions in plain HTML':`All ${g.steps.length} ${a.guideAssembly} instructions (plain HTML)`;host.querySelector('[data-guide-manifest]').href=a.url.href;
@@ -129,7 +129,7 @@ function paint(id,{preserveAnchor=false,playback=false}={}){
  const stepSelect=host.querySelector('[data-guide-step]');stepSelect.innerHTML=g.steps.map((x,i)=>`<option value="${esc(x.id)}">${i+1}. ${esc(x.title)}</option>`).join('');stepSelect.value=s.id;stepSelect.disabled=false;stepSelect.onchange=()=>paint(stepSelect.value);
  const prev=host.querySelector('[data-guide-prev]'),next=host.querySelector('[data-guide-next]');prev.title='Previous step';next.title='Next step';prev.disabled=index===0;next.disabled=index===g.steps.length-1;prev.onclick=()=>paint(g.steps[index-1].id);next.onclick=()=>paint(g.steps[index+1].id);
  selection(a.selected);
- const complete=host.querySelector('[data-guide-complete]');complete.checked=a.done.has(s.id);complete.onchange=()=>{complete.checked?a.done.add(s.id):a.done.delete(s.id);tabProgress.set(progressKey(g,a.guideHash),new Set(a.done));try{saveProgress(storage(),g,a.done,a.guideHash);}catch{report('Completion stays in this tab because browser storage is unavailable.',true);host.querySelector('[data-guide-retry]').hidden=true;}};
+ const complete=host.querySelector('[data-guide-complete]');complete.disabled=!canCompleteStep(g,s.id);complete.title=complete.disabled?'Reference overview · no construction operation to complete':'Mark this construction operation complete';complete.checked=!complete.disabled&&a.done.has(s.id);complete.onchange=()=>{if(!canCompleteStep(g,s.id))complete.checked=false;complete.checked?a.done.add(s.id):a.done.delete(s.id);tabProgress.set(progressKey(g,a.guideHash),new Set(a.done));try{saveProgress(storage(),g,a.done,a.guideHash);}catch{report('Completion stays in this tab because browser storage is unavailable.',true);host.querySelector('[data-guide-retry]').hidden=true;}};
  const mode=host.querySelector('[data-guide-mode]');mode.value=a.mode;mode.onchange=()=>{a.mode=mode.value;paint(s.id);};
  const explode=host.querySelector('[data-guide-explode]');explode.value=String(a.explode);explode.oninput=()=>{a.explode=+explode.value;applyPresentation(s,false);};
  const orientation=host.querySelector('[data-section-orientation]');orientation.hidden=!a.viewer?.setSectionPlane;
