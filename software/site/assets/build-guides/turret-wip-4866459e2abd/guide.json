@@ -71,7 +71,7 @@
       "hardware/exports/sim/turret_box/ct_thumbscrew.stl": "a37acd10de534137dd999285af8f271a66df067d04518870d5e88fe926fc72d2",
       "hardware/exports/sim/turret_box/laser.stl": "1089a49df5814bb8b564f92d912394abfac1146737e0370b7e9ab85b64f39387"
     },
-    "converter_sha256": "b46cb50beac8b17f1a1d063d1014dcb1a60edad622f16ed038d8fd0fecf9b1c9",
+    "converter_sha256": "456bbbaef8da45d6bbe03a6cd7b8d2478bba0806709a1cab2c81fca0f92afb34",
     "requirements_by_step": {
       "step-01": [
         {
@@ -781,7 +781,11 @@
       "tilt_rate_deg_s": 270,
       "fire_tilt_max_deg": 10.0
     },
-    "instruction_items": "Fastener quantities/tools/checks are authored in each step text. Mesh envelopes are not proof of fit, thread engagement or tool access."
+    "instruction_items": "Fastener quantities/tools/checks are authored in each step text. Mesh envelopes are not proof of fit, thread engagement or tool access.",
+    "instructions": {
+      "file": "instructions.html",
+      "sha256": "4085743aea318b1215d626d52707b84e248102d4b11338d8a691e05bfb88a5c9"
+    }
   },
   "subassemblies": [
     {

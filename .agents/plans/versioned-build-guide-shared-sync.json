@@ -1,0 +1,23 @@
+{
+  "source_repository": "Valpatel/cad-agent",
+  "source_revision": "b7138e037ca58f74dce307533d79f692375e7501",
+  "files": [
+    {
+      "source": "software/cadagent/webkit/viewer.js",
+      "target": "software/site/designer/kit/viewer.js",
+      "sha256": "d97a6b915cf13411642ba227cceaca8fdde627985d213c4038cfdce7d8545426"
+    },
+    {
+      "source": "software/cadagent/webkit/assembly/guide.js",
+      "target": "software/site/designer/kit/assembly/guide.js",
+      "sha256": "aaf3ead996e417d6642ae415ca2aee84909e866565edbe64c10181255f93c6ec"
+    },
+    {
+      "source": "software/cadagent/webkit/assembly/README.md",
+      "target": "software/site/designer/kit/assembly/README.md",
+      "sha256": "fa1576580c27a97c6fada13b82db4aec83a2cdfbec6860af9aff46d34d869f4a"
+    }
+  ],
+  "preserved_product_stage_loader_and_entry_html": true,
+  "limits": "Targeted import; product browser controls and final acceptance remain pending."
+}

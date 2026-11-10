@@ -33,6 +33,10 @@ def digest(data):
     return hashlib.sha256(data).hexdigest()
 
 
+def valid_digest(value):
+    return isinstance(value, str) and len(value) == 64 and all(c in '0123456789abcdef' for c in value)
+
+
 def source_bytes(root, name, revision=SOURCE_COMMIT):
     data = (root / name).read_bytes()
     recorded = subprocess.check_output(['git', 'show', revision + ':' + name], cwd=root)
@@ -101,7 +105,8 @@ def encode(value):
 def plain_instructions(guide):
     """No-script fallback from the exact same authored guide, not historical prose."""
     esc = html.escape
-    body = ''.join(f'<section id="{esc(step["id"])}"><h2>{i+1}. {esc(step["title"])}</h2>'
+    body = ''.join(f'<section id="{esc(step["id"])}"><h2>{i+1}. {esc(step["title"])}</h2>' +
+                   (f'<img src="{esc(step["poster"]["file"])}" alt="{esc(step["title"])}" style="max-width:100%;height:auto">' if step.get('poster') else '') +
                    f'<p>{esc(step["text"])}</p><ul>' + ''.join(
                        f'<li>{esc(row["title"])} ×{row["quantity"]} modeled instances</li>'
                        for row in guide['source']['requirements_by_step'][step['id']]) + '</ul></section>'
@@ -127,7 +132,7 @@ def snapshot_index(guide_bytes, directory):
                         {'id': 'rig', 'reason': 'Historical assembly illustrations contain withdrawn instructions; current guide is unavailable.'}]})
 
 
-def generate(root=ROOT):
+def generate(root=ROOT, posters=None):
     scene_data, recipe_data, bom_data = [source_bytes(root, f) for f in (SCENE, RECIPE, BOM)]
     scene, rows, bom = json.loads(scene_data), recipe_rows(recipe_data), json.loads(bom_data)
     outputs, parts, inputs = {}, [], {f: digest(d) for f, d in zip((SCENE, RECIPE, BOM), (scene_data, recipe_data, bom_data))}
@@ -204,8 +209,20 @@ def generate(root=ROOT):
              'snapshot': {'id': 'turret-wip-' + SOURCE_COMMIT[:12], 'revision': SOURCE_COMMIT[:12], 'status': 'wip', 'source_commit': SOURCE_COMMIT},
              'model': {'file': 'view.json', 'sha256': digest(outputs['view.json'])},
              'source': source, 'subassemblies': subassemblies, 'steps': steps}
-    outputs['guide.json'] = encode(guide)
+    if posters is not None:
+        if not isinstance(posters, dict) or not valid_digest(posters.get('visual_sha256')):
+            raise ValueError('Invalid poster visual binding')
+        if set(posters.get('frames', {})) != {step['id'] for step in steps}:
+            raise ValueError('Posters must cover exactly the twelve actual steps')
+        for step in steps:
+            frame = posters['frames'][step['id']]
+            if frame.get('file') != 'posters/' + step['id'] + '.png' or not valid_digest(frame.get('sha256')):
+                raise ValueError('Invalid step poster identity')
+            step['poster'] = {'file': frame['file'], 'sha256': frame['sha256']}
+        source['poster_visual_sha256'] = posters['visual_sha256']
     outputs['instructions.html'] = plain_instructions(guide)
+    source['instructions'] = {'file': 'instructions.html', 'sha256': digest(outputs['instructions.html'])}
+    outputs['guide.json'] = encode(guide)
     outputs['README.md'] = b'# Turret assembly guide snapshot\n\nEducational WIP only. Generated from the authored recipe and exact committed scene.\nExisting legacy assembly illustrations remain historical; none are reused as fresh posters.\n'
     return outputs
 
@@ -215,7 +232,13 @@ def main():
     parser.add_argument('--out', type=Path, default=ROOT / 'software/site/assets/build-guides/turret-wip-4866459e2abd')
     parser.add_argument('--check', action='store_true')
     args = parser.parse_args()
-    outputs = generate()
+    poster_record = args.out / 'posters.json'
+    posters = json.loads(poster_record.read_text()) if poster_record.exists() else None
+    outputs = generate(posters=posters)
+    if posters:
+        for frame in posters['frames'].values():
+            if digest((args.out / frame['file']).read_bytes()) != frame['sha256']:
+                raise SystemExit('Stale actual poster bytes: ' + frame['file'])
     index_bytes = snapshot_index(outputs['guide.json'], args.out.name)
     if args.check:
         for name, data in outputs.items():

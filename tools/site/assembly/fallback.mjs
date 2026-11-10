@@ -13,11 +13,12 @@ export async function installGuideFallback(document,out){
  if(!guideFile.startsWith(path.resolve(out)+path.sep))throw Error('Guide escapes published bundle');
  const raw=await readFile(guideFile);if(sha(raw)!==snapshot.sha256)throw Error('Stale Build guide snapshot digest');
  const guide=JSON.parse(raw),text=await readFile(path.join(path.dirname(guideFile),'instructions.html'),'utf8');
+ if(guide.source?.instructions?.file!=='instructions.html'||sha(text)!==guide.source.instructions.sha256)throw Error('Stale plain Build instructions digest');
  const parsed=parseHTML(text).document,main=parsed.querySelector('main');
  if(!main||main.querySelector('script')||main.querySelectorAll('section').length!==guide.steps.length)throw Error('Incomplete plain Build instructions');
- for(const step of guide.steps){
+ for(const [i,step] of guide.steps.entries()){
   const section=[...main.querySelectorAll('section')].find(s=>s.id===step.id);
-  if(!section||section.querySelector('p')?.textContent!==step.text)throw Error('Plain Build instructions differ from selected recipe');
+  if(!section||section.querySelector('h2')?.textContent!==`${i+1}. ${step.title}`||section.querySelector('p')?.textContent!==step.text)throw Error('Plain Build instructions differ from selected recipe');
  }
  host.innerHTML=`<h2>Assembly walkthrough · ${escape(guide.snapshot.revision)}</h2><p>${escape(guide.source.qualification)}</p>`+main.innerHTML;
 }

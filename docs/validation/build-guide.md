@@ -2,8 +2,7 @@
 
 Issue #266 extends the existing Build page and existing viewer. Shared schema,
 asset loader, absolute rendering state and lifecycle are owned by
-[cad-agent #302](https://github.com/Valpatel/cad-agent/issues/302). Its testing
-contract will be linked here at the accepted source revision before publication.
+[cad-agent #302](https://github.com/Valpatel/cad-agent/issues/302). Shared testing contract: [assembly-guide-testing.md](https://github.com/Valpatel/cad-agent/blob/b7138e037ca58f74dce307533d79f692375e7501/docs/practice/assembly-guide-testing.md). Product uses the targeted viewer/guide import recorded in `.agents/plans/versioned-build-guide-shared-sync.json`; its existing stage, loading helpers and route entry remain.
 
 ## Data and presentation
 

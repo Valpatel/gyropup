@@ -29,3 +29,10 @@ test('index rejects duplicate identities and external/escaping files',()=>{
  for(const file of ['https://wrong.test/guide.json','../other.json','//other.test/guide.json']){const x=structuredClone(index);x.snapshots[0].file=file;assert.throws(()=>validateIndex(x));}
  const duplicate=structuredClone(index);duplicate.snapshots.push(duplicate.snapshots[0]);assert.throws(()=>validateIndex(duplicate));
 });
+test('actual generated guide passes shared reader with cumulative prior chapters; bad ownership rejects',async()=>{
+ const {validateGuide}=await import('../../../software/site/designer/kit/assembly/guide.js');
+ const base=new URL('../../../software/site/assets/build-guides/turret-wip-4866459e2abd/',import.meta.url),g=JSON.parse(readFileSync(new URL('guide.json',base))),m=JSON.parse(readFileSync(new URL('view.json',base)));
+ validateGuide(g,m);assert.ok(g.steps[6].parts.includes('pan_base'));assert.ok(!g.subassemblies[1].parts.includes('pan_base'));assert.ok(g.steps[9].parts.includes('pan_base'));
+ const bad=structuredClone(g);bad.steps[6].highlight.push('pan_base');assert.throws(()=>validateGuide(bad,m),/Highlighted subassembly members/);
+ const wrongUnits=structuredClone(m);wrongUnits.units='m';assert.throws(()=>validateGuide(g,wrongUnits),/units/);
+});

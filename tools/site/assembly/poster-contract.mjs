@@ -18,10 +18,14 @@ export function visualContract(guide,model,dependencies){
 export async function captureContract(root){
  const base=path.join(root,'software/site/assets/build-guides/turret-wip-4866459e2abd');
  const guide=JSON.parse(await readFile(path.join(base,'guide.json'),'utf8')),model=JSON.parse(await readFile(path.join(base,'view.json'),'utf8'));
- const dependencies={};for(const file of ['software/site/designer/kit/viewer.js','software/site/designer/kit/assembly/guide.js','software/site/designer/kit/stage.js','software/site/designer/kit/panel.js','software/site/designer/kit/loading.js','software/site/designer/kit/portal-data.js','software/site/designer/assembly/build-guide.js','software/site/designer/assembly/guide.css','software/site/designer/build.html','software/site/assets/theme.css'])dependencies[file]=sha(await readFile(path.join(root,file)));
+ const dependencies={};for(const file of ['software/site/designer/kit/viewer.js','software/site/designer/kit/assembly/guide.js','software/site/designer/kit/stage.js','software/site/designer/kit/panel.js','software/site/designer/kit/loading.js','software/site/designer/kit/portal-data.js','software/site/designer/kit/file-geometry.js','software/site/designer/kit/smooth_zoom.js','software/site/designer/kit/vendor/three/three.module.min.js','software/site/designer/kit/vendor/three/addons/loaders/STLLoader.js','software/site/designer/kit/vendor/three/addons/controls/OrbitControls.js','software/site/designer/kit/hud.css','software/site/designer/portal-parts.css','software/site/designer/assembly/state.js','software/site/designer/assembly/build-guide.js','software/site/designer/assembly/guide.css','software/site/designer/build.html','software/site/assets/theme.css'])dependencies[file]=sha(await readFile(path.join(root,file)));
  return visualContract(guide,model,dependencies);
 }
 if(process.argv[1]&&import.meta.url===pathToFileURL(path.resolve(process.argv[1])).href){
  const root=path.resolve(import.meta.dirname,'../../..'),value=await captureContract(root);
- if(process.argv[2])await writeFile(process.argv[2],JSON.stringify(value,null,2)+'\n');else console.log(JSON.stringify(value,null,2));
+ if(process.argv[2]==='--check'){
+  const guide=JSON.parse(await readFile(path.join(root,'software/site/assets/build-guides/turret-wip-4866459e2abd/guide.json'),'utf8'));
+  if(guide.source.poster_visual_sha256!==value.visual_sha256||guide.steps.some(step=>!step.poster))throw new Error('Fresh source-bound posters are missing or stale; capture the actual viewer before publication.');
+  console.log('PASS twelve posters bind the current visual inputs');
+ }else if(process.argv[2])await writeFile(process.argv[2],JSON.stringify(value,null,2)+'\n');else console.log(JSON.stringify(value,null,2));
 }
