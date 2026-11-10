@@ -1,6 +1,7 @@
 {
   "title": "Turret bench assembly · WIP",
   "units": "mm",
+  "up": "z",
   "frame": "Neutral assembled turret; TM face origin, x forward, y left, z up.",
   "parts": [
     {

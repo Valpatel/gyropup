@@ -1,0 +1,35 @@
+{
+  "title": "Explicit test fixture one",
+  "units": "mm",
+  "up": "z",
+  "parts": [
+    {
+      "name": "base",
+      "file": "one-base.stl",
+      "color": "#e9a245",
+      "sha256": "44c574a0f1ba6e0cca4df8bd98b325de2d81fc01689574982a478de0a844ca15",
+      "bounds_mm": [
+        0.0,
+        0,
+        0,
+        20.0,
+        20,
+        10
+      ]
+    },
+    {
+      "name": "cover",
+      "file": "one-cover.stl",
+      "color": "#4b9cba",
+      "sha256": "e047300ff86ecf76491d5ded1fb1019514693818f9ced8a601f203f8d4bf4867",
+      "bounds_mm": [
+        35.0,
+        0,
+        0,
+        55.0,
+        20,
+        10
+      ]
+    }
+  ]
+}

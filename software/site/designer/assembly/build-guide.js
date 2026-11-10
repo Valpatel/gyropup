@@ -3,6 +3,7 @@ const esc=s=>String(s??'').replace(/[&<>"']/g,c=>({'&':'&amp;','<':'&lt;','>':'&
 const hash=async bytes=>[...new Uint8Array(await crypto.subtle.digest('SHA-256',bytes))].map(v=>v.toString(16).padStart(2,'0')).join('');
 const host=document.getElementById('assembly');
 let active=null,request=0,pending=null;
+const storage=()=>{try{return globalThis.localStorage;}catch{return null;}};
 function report(message,error=false){host.querySelector('[data-guide-status]').textContent=message;host.querySelector('[data-guide-status]').dataset.state=error?'error':'ready';}
 async function get(url,signal){const r=await fetch(url,{signal,cache:'no-store'});if(!r.ok)throw new Error(`Build data returned HTTP ${r.status}.`);return r;}
 async function start(){
@@ -13,6 +14,7 @@ async function start(){
  async function load(id,route={}){
   const own=++request;pending?.abort();const abort=pending=new AbortController();
   const row=index.snapshots.find(s=>s.id===id);if(!row)throw new Error('Unknown snapshot');
+  if(active)select.value=active.guide.snapshot.id;
   report('Loading this exact build snapshot…');
   let nextViewer;
   try{
@@ -26,11 +28,11 @@ async function start(){
    const step=stepFor(guide,route),canvas=document.createElement('div'),panel=document.createElement('div');canvas.className='assembly-canvas';
    let renderError=null;
    try{nextViewer=await createViewer({app:canvas,panel,manifest:loaded.manifest,manifestUrl:loaded.manifestUrl,signal:abort.signal,
-     onSelect:name=>{if(active?.viewer!==nextViewer)return;active.selected=name;host.querySelector('[data-guide-isolate]').disabled=!name;}});}
+     onSelect:name=>{if(active?.viewer!==nextViewer)return;active.selected=name;if(!name)active.isolate=false;host.querySelector('[data-guide-isolate]').disabled=!name;}});}
    catch(error){if(abort.signal.aborted)throw error;renderError=error;}
    if(own!==request){nextViewer?.dispose();return;}
    const previous=active;
-   active={guide,viewer:nextViewer,controller:nextViewer?createGuideController(nextViewer,guide):null,done:readProgress(localStorage,guide),url,step:step.id,mode:'ghost',explode:1,selected:null,isolate:false,renderError};
+   active={guide,viewer:nextViewer,controller:nextViewer?createGuideController(nextViewer,guide):null,done:readProgress(storage(),guide),url,step:step.id,mode:'ghost',explode:1,selected:null,isolate:false,renderError};
    const model=host.querySelector('[data-guide-model]');model.replaceChildren(canvas);previous?.viewer?.dispose();
    select.value=id;paint(step.id);
    if(renderError)report('Interactive 3D is unavailable. The same snapshot’s text and poster remain below.',true);
@@ -60,9 +62,9 @@ function paint(id){
  host.querySelectorAll('[data-chapter]').forEach(b=>b.onclick=()=>paint(stepFor(g,{chapter:b.dataset.chapter}).id));
  const stepSelect=host.querySelector('[data-guide-step]');stepSelect.innerHTML=g.steps.map((x,i)=>`<option value="${esc(x.id)}">${i+1}. ${esc(x.title)}</option>`).join('');stepSelect.value=s.id;stepSelect.onchange=()=>paint(stepSelect.value);
  const prev=host.querySelector('[data-guide-prev]'),next=host.querySelector('[data-guide-next]');prev.disabled=index===0;next.disabled=index===g.steps.length-1;prev.onclick=()=>paint(g.steps[index-1].id);next.onclick=()=>paint(g.steps[index+1].id);
- host.querySelector('[data-guide-parts]').innerHTML=(s.requirements||[]).map(r=>`<li><button type="button" data-part="${esc(r.instances[0])}">${esc(r.title)}</button> <span>×${r.quantity} modeled instance${r.quantity===1?'':'s'}</span>${r.catalogue?.length?`<small>${r.catalogue.map(c=>esc(c.part_number||c.item)).join(' · ')}</small>`:''}</li>`).join('');
+ host.querySelector('[data-guide-parts]').innerHTML=(g.source?.requirements_by_step?.[s.id]||[]).map(r=>`<li><button type="button" data-part="${esc(r.instances[0])}">${esc(r.title)}</button> <span>×${r.quantity} modeled instance${r.quantity===1?'':'s'}</span>${r.catalogue?.length?`<small>${r.catalogue.map(c=>esc(c.part_number||c.item)).join(' · ')}</small>`:''}</li>`).join('');
  host.querySelectorAll('[data-part]').forEach(b=>b.onclick=()=>{a.selected=b.dataset.part;a.viewer?.setSelection(a.selected);host.querySelector('[data-guide-isolate]').disabled=false;});
- const complete=host.querySelector('[data-guide-complete]');complete.checked=a.done.has(s.id);complete.onchange=()=>{complete.checked?a.done.add(s.id):a.done.delete(s.id);try{saveProgress(localStorage,g,a.done);}catch{report('Completion stays in this tab because browser storage is unavailable.',true);}};
+ const complete=host.querySelector('[data-guide-complete]');complete.checked=a.done.has(s.id);complete.onchange=()=>{complete.checked?a.done.add(s.id):a.done.delete(s.id);try{saveProgress(storage(),g,a.done);}catch{report('Completion stays in this tab because browser storage is unavailable.',true);}};
  const mode=host.querySelector('[data-guide-mode]');mode.value=a.mode;mode.onchange=()=>{a.mode=mode.value;paint(s.id);};
  const explode=host.querySelector('[data-guide-explode]');explode.value=String(a.explode);explode.oninput=()=>{a.explode=+explode.value;a.controller?.applyStep(s.id,{mode:a.mode,explode:a.explode,frame:false});};
  const isolate=host.querySelector('[data-guide-isolate]');isolate.disabled=!a.selected;isolate.onclick=()=>{a.isolate=!a.isolate;paint(s.id);};isolate.setAttribute('aria-pressed',String(a.isolate));

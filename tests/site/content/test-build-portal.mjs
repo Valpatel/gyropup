@@ -11,7 +11,7 @@ const out=process.env.TEST_OUTPUT||'/tmp/gyropup-build-portal';await mkdir(out,{
 const browser=await engine.launch(engine===chromium?{channel:process.env.PLAYWRIGHT_CHANNEL==='chromium'?undefined:'chrome',headless:true,args:['--no-sandbox','--use-gl=angle','--use-angle=swiftshader','--enable-unsafe-swiftshader']}:{headless:true});
 const context=await browser.newContext({viewport:{width:1280,height:900}});await context.addInitScript(()=>sessionStorage.setItem('gyropup.prototype-notice','2026-10-29-v1'));
 const page=await context.newPage(),errors=[];page.setDefaultTimeout(60000);page.on('pageerror',error=>errors.push(error.message));
-const ready=()=>page.waitForFunction(()=>document.body.dataset.ready==='1');
+const ready=async()=>{await page.waitForFunction(()=>document.body.dataset.ready==='1');const details=page.locator('#build-details');if(await details.count())await details.evaluate(el=>el.open=true);};
 const checkModelActions=async()=>{
  await page.locator('[data-model-preview]').first().waitFor({state:'attached'});
  await page.evaluate(()=>new Promise(resolve=>requestAnimationFrame(()=>requestAnimationFrame(resolve))));

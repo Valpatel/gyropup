@@ -136,6 +136,7 @@ jobs:
               npm run test:empty-space
           - suite: build-portal
             commands: |
+              npm run test:build-guide
               npm run test:build-portal
               npm run test:carrier-inspection
               npm run test:study-media

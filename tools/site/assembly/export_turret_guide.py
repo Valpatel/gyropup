@@ -103,7 +103,7 @@ def plain_instructions(guide):
     body = ''.join(f'<section id="{esc(step["id"])}"><h2>{i+1}. {esc(step["title"])}</h2>'
                    f'<p>{esc(step["text"])}</p><ul>' + ''.join(
                        f'<li>{esc(row["title"])} ×{row["quantity"]} modeled instances</li>'
-                       for row in step['requirements']) + '</ul></section>'
+                       for row in guide['source']['requirements_by_step'][step['id']]) + '</ul></section>'
                    for i, step in enumerate(guide['steps']))
     return ('<!doctype html><html lang="en"><head><meta charset="utf-8">'
             '<script src="/web/theme.js"></script><link rel="stylesheet" href="/web/theme.css">'
@@ -152,13 +152,13 @@ def generate(root=ROOT):
                       'sha256': digest(result), 'bounds_mm': bounds,
                       'logical_part': entry['part'], 'title': entry['title'],
                       'original_group': entry['group'], 'neutral_translation_mm': offset})
-    manifest = {'title': 'Turret bench assembly · WIP', 'units': 'mm',
+    manifest = {'title': 'Turret bench assembly · WIP', 'units': 'mm', 'up': 'z',
                 'frame': 'Neutral assembled turret; TM face origin, x forward, y left, z up.', 'parts': parts}
     outputs['view.json'] = encode(manifest)
     chapters = [('pan-base', 'Pan base and drive', 1, 6), ('tilt-cradle', 'Tilt cradle', 7, 9),
                 ('cartridge', 'Cartridge and final mounting', 10, 12)]
     subassemblies = []
-    steps, installed = [], []
+    steps, installed, requirements_by_step = [], [], {}
     for number, (title, adds, lifts, camera, text) in enumerate(rows, 1):
         required = adds + FITTINGS.get(number, [])
         missing = set(required) - {p['logical_part'] for p in parts}
@@ -182,14 +182,16 @@ def generate(root=ROOT):
                                  'instances': [p['name'] for p in instances],
                                  'quantity': len(instances), 'catalogue': [
                                      {k: r.get(k) for k in ('key', 'item', 'part_number', 'qty')} for r in catalogue]})
+        requirements_by_step[f'step-{number:02d}'] = requirements
         steps.append({'id': f'step-{number:02d}', 'title': title, 'subassembly': chapter,
                       'parts': list(installed), 'highlight': highlight, 'offsets_mm': offsets,
-                      'text': text, 'requirements': requirements, 'camera': {'direction': list(camera)},
+                      'text': text, 'camera': {'direction': list(camera)},
                       'requires': [f'step-{number-1:02d}'] if number > 1 else []})
     for id_, title, start, end in chapters:
         subassemblies.append({'id': id_, 'title': title,
                               'parts': [p['name'] for p in parts if any(p['name'] in s['highlight'] for s in steps[start-1:end])]})
     source = {'inputs': inputs, 'converter_sha256': digest(Path(__file__).read_bytes()),
+              'requirements_by_step': requirements_by_step,
               'original_scene_producer': '227afbcca70ab616f412ee7a00b119cfff3a0d20',
               'qualification': 'Educational WIP walkthrough. Fit, tightening, feed, laser class and safe operation remain unqualified. No print or fabrication release.',
               'assembly_pose': 'Neutral zero joint angles. Original triangle topology/normals retained; translation only.',

@@ -5,6 +5,7 @@ import { createHash } from 'node:crypto';
 import { parseHTML } from 'linkedom';
 import TurndownService from 'turndown';
 import { gfm } from 'turndown-plugin-gfm';
+import { installGuideFallback } from './assembly/fallback.mjs';
 import { addModelPreviews } from '../../software/site/assets/model-links.js';
 
 const origin = 'https://gyropup.com';
@@ -82,6 +83,7 @@ export async function renderPortal(html, file, out) {
   if(errors.length)throw new Error(`Incomplete Markdown data snapshot: ${file}: ${errors.map(status=>status.element.textContent).join('; ')}`);
   const inventory=JSON.parse(await readFile(path.join(out,'site/models.json'),'utf8'));
   addModelPreviews(document,{base:origin+'/'+file,published:new Set(inventory.files.map(file=>file.path))});
+  if(file==='designer/build.html')await installGuideFallback(document,out);
   return document.toString();
 }
 

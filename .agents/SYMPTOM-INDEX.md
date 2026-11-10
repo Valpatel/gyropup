@@ -168,3 +168,5 @@
 - A submit wrapper exits zero despite a failed client or cannot identify one accepted job: [propagate failure and preserve ambiguous submission state](inbox/2026-11-05-ci-classification-needs-phase-evidence.md#a-submission-wrapper-must-propagate-client-failure-and-identify-one-accepted-job).
 - E1 rendering and full media validation pass but the joined rig companion test cannot read historical Git paths: [fetch both rig producer/converter objects before rendering](inbox/2026-11-05-ci-classification-needs-phase-evidence.md#a-joined-media-suite-needs-the-rig-producer-and-converter-history-too).
 - Valid artifact tests pass but an adoption preservation guard rejects only intended changed targets: [align exclusions with the inventory root](inbox/2026-11-05-root-moves-need-consumer-and-publication-maps.md#inventory-exclusions-must-use-the-inventorys-own-relative-root).
+
+- Assembly part IDs match but stop instructions/pictures are old: [bind recipe and mesh snapshots together](inbox/2026-11-09-assembly-guides-need-recipe-and-mesh-binding.md).
