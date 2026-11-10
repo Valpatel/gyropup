@@ -21,3 +21,9 @@ Upstream callback changes require this consumer's browser regression, not a
 simulated timer or an assumed percentage. Counts do not estimate time or bytes.
 
 See [loading validation](../../docs/validation/build-loading.md).
+
+Independent review also reproduced an initial-index retry race: a held older retry
+returned HTTP 503 after a newer retry reached its first mesh. The unscoped startup
+catch hid the newer progress. Startup now uses the same request/abort ownership as
+model loading. The durable browser test holds both index and mesh responses and
+requires the current 0/171 progress to remain visible after the older failure.

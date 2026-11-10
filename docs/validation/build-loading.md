@@ -20,7 +20,7 @@ build-guide CI suite. The test holds actual committed mesh responses and checks:
 - Unknown index work is indeterminate; blocked first/second meshes stay at zero/one.
 - Desktop and phone layouts show the counter within the viewport.
 - Failed replacement leaves the old model and ends busy feedback; retry succeeds.
-- A superseded request cannot change or dismiss a newer load's progress.
+- A superseded model request or initial-index retry cannot change or dismiss a newer load's progress.
 - A corrupt initial mesh yields the text fallback; retry shows progress and real 3D.
 
 Progress does not qualify a build sequence or physical design. Assembly path and

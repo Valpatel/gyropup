@@ -10,7 +10,7 @@ for(const type of ['wheel','touchmove','pointerdown','keydown'])window.addEventL
 const tabProgress=new Map(),assemblyChoices=new Map(),viewStates=new Map();
 const workspace=createWorkspace(host,()=>active,paint,report);
 const inspector=createPartInspector(host,()=>active,({active,part})=>window.dispatchEvent(new CustomEvent('gyropup:prepare-print',{detail:{guide:active.guide,guideHash:active.guideHash,guideURL:active.url.href,assembly:active.guideAssembly,part}})));
-let retryAction=()=>start().catch(error=>{finishLoading();report(error.message,true);});
+let retryAction=()=>start();
 host.querySelector('[data-guide-retry]').onclick=()=>retryAction();
 const storage=()=>{try{return globalThis.localStorage;}catch{return null;}};
 const loading=host.querySelector('[data-guide-loading]'),loadingBar=loading.querySelector('progress');
@@ -46,10 +46,13 @@ function partInfo(name){const a=active,meta=a&&partMetadata(a.guide,a.modelParts
 function partHover(name,point){const tip=host.querySelector('[data-part-tooltip]');tip.hidden=!name;if(!name)return;tip.innerHTML=partInfo(name,true);const bounds=host.querySelector('.assembly-layout').getBoundingClientRect(),x=(point?.clientX??bounds.left)-bounds.left+14,y=(point?.clientY??bounds.top)-bounds.top+14;tip.style.left=Math.max(8,Math.min(x,bounds.width-tip.offsetWidth-8))+'px';tip.style.top=Math.max(8,Math.min(y,bounds.height-tip.offsetHeight-8))+'px';}
 function report(message,error=false){host.querySelector('[data-guide-status]').textContent=message;host.querySelector('[data-guide-status]').dataset.state=error?'error':'ready';host.querySelector('[data-guide-retry]').hidden=!error;}
 async function start(){
+ const startup=++request;pending?.abort();const boot=pending=new AbortController();
  showLoading('Opening the assembly workshop…');
+ try{
  const indexURL=new URL('../../web/build-guides/index.json',import.meta.url);
  const {loadGuide,createGuideController,readAsset,parseJSON}=await import('../kit/assembly/guide.js');
- const published=validateIndex(parseJSON(await readAsset(indexURL,{maxBytes:512*1024})));
+ const published=validateIndex(parseJSON(await readAsset(indexURL,{signal:boot.signal,maxBytes:512*1024})));
+ if(startup!==request||boot.signal.aborted)return;
  const index=published;
  const selects=new Map([...host.querySelectorAll('[data-assembly-snapshot]')].map(select=>[select.dataset.assemblySnapshot,select]));
  for(const [assembly,select]of selects){const rows=snapshotsFor(index,assembly);if(rows.length)select.replaceChildren(...rows.map(s=>{const o=document.createElement('option');o.value=s.id;o.textContent=s.title;return o;}));}
@@ -107,6 +110,7 @@ async function start(){
  await load(initial,{...route,assembly:desired,step:initial===route.snapshot?route.step:null,chapter:initial===route.snapshot?route.chapter:null});
  if(!initialAnchor||initialAnchor==='#assembly'){await document.fonts.ready;await new Promise(resolve=>requestAnimationFrame(()=>requestAnimationFrame(resolve)));if(!userMoved){const top=document.querySelector('.appnav')?.getBoundingClientRect().bottom||64;window.scrollTo({top:host.getBoundingClientRect().top+scrollY-top-8,behavior:'instant'});}}
 
+ }catch(error){if(startup!==request||boot.signal.aborted)return;if(pending===boot)pending=null;finishLoading();report(error.message,true);}
 }
 function applyPresentation(s,frame){
  const a=active;
@@ -168,4 +172,4 @@ function paint(id,{preserveAnchor=false,playback=false}={}){
  workspace.present();
  host.dataset.ready='1';
 }
-start().catch(error=>{finishLoading();report(error.message,true);});
+start();
