@@ -1,0 +1,34 @@
+{
+  "schema": "gyropup.native-pair-study-tests/1",
+  "date": "2026-11-10",
+  "helper_sha256": "63f7093468ba1ba2ab1063dcbac5e5fddb7331346a1eb6c8c4c287e87794b016",
+  "test_sha256": "93ea6b965d572865e5efbe28a0fe412e6069641c62d83c3f15e10a7d8e51e15d",
+  "core": "5c29c9e2abf2562baa72a05248f23de054b8241e",
+  "ordinary_robot_suite": {
+    "command": "python3 -B -m unittest discover -s tests/site/assembly -p 'test_robot*.py'",
+    "exit": 0,
+    "tests": 48,
+    "skipped_optional_native": 3,
+    "seconds": 23.96
+  },
+  "dedicated_native_fixture": {
+    "command": "ROBOT_PLAYBACK_TOOLKIT=<exact-clean-reviewed-core> ROBOT_PLAYBACK_TOOLKIT_REVISION=5c29c9e2abf2562baa72a05248f23de054b8241e ROBOT_PLAYBACK_NATIVE=1 <existing-native-python> -B -m unittest discover -s tests/site/assembly -p test_robot_native_pairs.py",
+    "exit": 0,
+    "tests": 7,
+    "skipped": 0,
+    "seconds": 2.447,
+    "fixture": "Explicit simple boxes only; original BREP readback through pinned core loader and sweep_pair",
+    "observed_controls": [
+      "blocked finite path",
+      "opposite-side clear finite path",
+      "terminal seat distinct from transient path",
+      "max_samples=1 remains unchecked",
+      "actual CLI blocked dependency-double exit1",
+      "actual CLI pre-query seal rejection",
+      "actual CLI externally killed inside one dependency-double query retains running/uncertified prefix",
+      "progress serialization and final-phase storage failures stop and retain earlier evidence"
+    ]
+  },
+  "product_native_paths_executed": false,
+  "limits": "Ordinary plan/CLI/provenance/storage controls and small native fixture, not Robot pair or physical assembly evidence."
+}
