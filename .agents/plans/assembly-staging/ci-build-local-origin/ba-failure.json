@@ -1,0 +1,96 @@
+{
+  "schema": "gyropup.build-local-origin-ci-failure/1",
+  "head": "ba89804dd441a1bc38b9e0e6539a608dfa00dbc8",
+  "run": 42891416335,
+  "job": 130093229964,
+  "url": "https://github.com/Valpatel/gyropup/actions/runs/42891416335/job/130093229964",
+  "conclusion": "failure",
+  "cause": "ValueError: Source changed: tests/site/content/test-prototype-session.mjs",
+  "log_sha256": "3fba629be6467ccfbe2f5997519da16c63897cd436253a15c4631b5040458982",
+  "artifact": {
+    "id": 13799163465,
+    "sha256": "8951ee083294da69882dee340a5cbc07f4591dc8e5ae4f7ed4c982a3a30a0935",
+    "members": 50,
+    "crc_pass": true
+  },
+  "aggregate_classification": {
+    "layout": {
+      "log_sha256": "89125a6b8bbf67c03eb06354d7e17da08793168138cc16df38f99a6bfe035788",
+      "cause": "Downstream BROWSER_RESULT=failure assertion; no independent suite failure."
+    },
+    "presentation": {
+      "log_sha256": "f06f9503d388ae4de2febc31093723973de01299315472208b49fd2b4e693e5c",
+      "cause": "Downstream BROWSER_RESULT=failure assertion; no independent suite failure."
+    }
+  },
+  "preceding_actual_guide_reports": {
+    "chromium": {
+      "sha256": "b22e1149f772b89793992a38cc5e1e4982f88e5c15d2061710409c4c894fd2be",
+      "status": "passed",
+      "cases": [
+        "default desktop and phone reading extent recorded before procurement expansion",
+        "every visible vertex fits all12 actual frames; real too-close camera rejected/restored",
+        "all12 sequential/back/direct/reload actual object states",
+        "wireframe, native section control, assembled reset, actual canvas/list selection/isolation and keyboard details",
+        "selected-instance transparent/wireframe leaves others exact; Automatic/newstep/reset clear overrides",
+        "independent70mm CAD-Z/world-Y displacement",
+        "phone/landscape bounds and preserved Buy/Print anchor",
+        "two frozen versions plus exact WIP/tab-only progress, corrupt model/missing mesh/bad actual diagram preserve previous scene, native retry recovers",
+        "late superseded actual model request cannot replace scene; old callbacks/context disposed",
+        "unavailable snapshot rejects without another-version fallback; explicit valid choice recovers",
+        "Explicit robot choice recovers rejected initial route with working history and pagehide disposal",
+        "Explicit turret choice recovers rejected initial route",
+        "Explicit combined choice recovers rejected initial route",
+        "native no-script default snapshot/12diagrams, real no-WebGL fallback and two-version text-only progress",
+        "real hasTouch phone taps: previous/next, canvas picking and part list, unoccluded hitboxes"
+      ],
+      "errors": [],
+      "runtimeErrors": [],
+      "localStaticFixture": {
+        "localLiveReloadDisabled": true,
+        "liveRequests": []
+      },
+      "browser": "141.0.7390.37",
+      "version": {
+        "revision": "d7d3125f64de2cad9cea3dbbeac07de472697f4d",
+        "assets": "a14dcd48ce545629b714",
+        "history": true,
+        "built": "2026-11-10T20:09:21.681Z"
+      }
+    },
+    "webkit": {
+      "sha256": "3fcff16bd34322d64ca87355d5e5c2c24759b759e1f875860384521e7c182d8f",
+      "status": "passed",
+      "cases": [
+        "default desktop and phone reading extent recorded before procurement expansion",
+        "every visible vertex fits all12 actual frames; real too-close camera rejected/restored",
+        "all12 sequential/back/direct/reload actual object states",
+        "wireframe, native section control, assembled reset, actual canvas/list selection/isolation and keyboard details",
+        "selected-instance transparent/wireframe leaves others exact; Automatic/newstep/reset clear overrides",
+        "independent70mm CAD-Z/world-Y displacement",
+        "phone/landscape bounds and preserved Buy/Print anchor",
+        "two frozen versions plus exact WIP/tab-only progress, corrupt model/missing mesh/bad actual diagram preserve previous scene, native retry recovers",
+        "late superseded actual model request cannot replace scene; old callbacks/context disposed",
+        "unavailable snapshot rejects without another-version fallback; explicit valid choice recovers",
+        "Explicit robot choice recovers rejected initial route with working history and pagehide disposal",
+        "Explicit turret choice recovers rejected initial route",
+        "Explicit combined choice recovers rejected initial route",
+        "native no-script default snapshot/12diagrams, real no-WebGL fallback and two-version text-only progress",
+        "real hasTouch phone taps: previous/next, canvas picking and part list, unoccluded hitboxes"
+      ],
+      "errors": [],
+      "runtimeErrors": [],
+      "localStaticFixture": {
+        "localLiveReloadDisabled": true,
+        "liveRequests": []
+      },
+      "browser": "26.0",
+      "version": {
+        "revision": "d7d3125f64de2cad9cea3dbbeac07de472697f4d",
+        "assets": "a14dcd48ce545629b714",
+        "history": true,
+        "built": "2026-11-10T20:09:21.681Z"
+      }
+    }
+  }
+}

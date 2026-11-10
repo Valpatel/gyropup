@@ -3,7 +3,7 @@ import assert from 'node:assert/strict';
 import {readFile,writeFile,mkdir} from 'node:fs/promises';
 import {createHash} from 'node:crypto';
 import {chromium,webkit} from '@playwright/test';
-import {acknowledgePrototypeNotice} from '../content/test-prototype-session.mjs';
+import {acknowledgePrototypeNotice} from './build-prototype-session.mjs';
 const base=(process.env.SITE_URL||'http://127.0.0.1:8879').replace(/\/$/,'');
 const engine=process.env.PLAYWRIGHT_BROWSER==='webkit'?webkit:chromium;
 const out=process.env.TEST_OUTPUT||'/tmp/gyropup-build-guide';await mkdir(out,{recursive:true});

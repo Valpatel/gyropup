@@ -28,3 +28,29 @@ function, including denied storage accessors and matching-origin propagation.
 Limits: local nativeChrome differs from CI's pinned bundled Chromium. Affected
 suite/final-head CI remains required. Only test fixture code changes; the product
 notice, storage-failure behavior, strict error capture and page timeouts remain.
+
+## Historical capture fixtures can require a narrower caller fix
+
+The ba89804 correction passed the actual CI Chromium/WebKit15-group guide suites,
+then the existing highlight-media source guard failed because its immutable
+capture closure includes `tests/site/content/test-prototype-session.mjs`.
+The layout/presentation aggregate failures only propagated that failure.
+[The retained actual job/artifact](../plans/assembly-staging/ci-build-local-origin/ba-failure.json)
+binds the50-member archive and preceding reports. No media or guard was stale
+merely because a general test helper looked like a convenient place for the fix.
+
+Corrective rule: inspect recorded-source consumers before modifying a shared test
+fixture. Preserve a historically bound helper exactly when the new requirement is
+local to another suite. The Build guide now owns the same tiny guarded init
+function in its test directory; it leaves the historical helper at recorded
+SHA997a3929. Its4tests and strict error observer remain, and the unchanged actual
+highlight-media binding/decode/fault command passes. This refines the earlier
+shared-helper recommendation above: reuse is subject to actual ownership and
+recorded capture contracts, rather than a reason to re-seal unrelated media.
+
+The new8-outcome browser control and ordinary23tests pass; the product/runtime,
+old source receipts, timeouts and error handling are unchanged. Details and limits
+are in [the separate correction checkpoint](../plans/assembly-staging/ci-build-local-origin/README.md).
+Local Chrome remains different from CI's pinned Chromium, and this source fix
+still needs new final-head review/CI. Neither the original073 nor ba run is
+retroactively passing.

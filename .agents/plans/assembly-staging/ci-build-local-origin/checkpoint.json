@@ -1,0 +1,16 @@
+{
+  "schema": "gyropup.build-local-origin-checkpoint/1",
+  "date": "2026-11-10",
+  "files": {
+    "README.md": "9e1220dc7a1a3fb84f9fe13c4cb6d423709d64bb7655a201a634e9fbc3a866c4",
+    "actual-controls.json": "9f24bd5cf93fad74627604172e2ddd37b43a326b716011efc09ddb44dc3f9fab",
+    "ba-artifact-members.json": "58c11e2f4895c5575c6bfdd42c805142ec7905fc2319d79cc4f8fa6a5bafbaad",
+    "ba-failure.json": "201a08a94cefc1486c567f55a1e86b61be54a067d8833b717207abec1253defd",
+    "build.log": "c74cb299ec0d5327cb7bbd79a7474bc297d74e381252c333f1cf8c12c01d06ae",
+    "highlight.log": "6264d717f5b82dece8a8a31265cb87ee3bc422604e5a7dbb6141a2b607d7326f",
+    "markdown.log": "e1828660fb904a4565bd2dfeb3a37e395faf707e1ec02ba6acc8d17be68993aa",
+    "privacy.log": "b71ec7fa42c26807b6091990eaed4f2a15e6036f6bad108dbba143c0eac47908",
+    "pure.log": "097901b47a133f482dd98b18604234279fb81dd4b71f9ac23988fc8224d7484e",
+    "results.json": "d40bf95f66e1d243445a37a779d6e7f6399eaf1551272bd1ece6f10e08a4bcfe"
+  }
+}

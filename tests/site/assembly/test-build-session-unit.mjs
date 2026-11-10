@@ -1,7 +1,7 @@
 import assert from 'node:assert/strict';
 import test from 'node:test';
 import vm from 'node:vm';
-import {acknowledgePrototypeNotice} from './test-prototype-session.mjs';
+import {acknowledgePrototypeNotice} from './build-prototype-session.mjs';
 
 async function fixture(omitURL=false){
  let script,arg;

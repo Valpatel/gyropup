@@ -206,3 +206,4 @@
 - A gamepad hop times out with wheels down but jump still recovering, or wall time diverges from clamped stage time: [observe the actual stage clock and keep separate completion/wall/stall caps](inbox/2026-11-10-hop-completion-needs-the-actual-stage-clock.md).
 
 - Context-wide page-error capture finds sessionStorage denied only on about:blank initial documents: [guard the fixture's intended HTTP security origin before reading storage](inbox/2026-11-10-browser-init-fixtures-need-an-http-origin.md).
+- Highlight-media source validation rejects a newly edited shared test helper: [preserve recorded fixture bytes and narrow the caller fix](inbox/2026-11-10-browser-init-fixtures-need-an-http-origin.md#historical-capture-fixtures-can-require-a-narrower-caller-fix).
