@@ -54,7 +54,7 @@ try{
  // Every stage via native navigation, then back: verify actual rendered instance visibility/materials/offsets.
  const captures=new Map(),screenBounds={};
  for(let i=0;i<12;i++){
-  phase('forward-'+(i+1));if(i)await p.getByRole('button',{name:'Next →',exact:true}).click();
+  phase('forward-'+(i+1));if(i)await p.getByRole('button',{name:'Next step',exact:true}).click();
   const actual=await state(p),s=guide.steps[i];assert.equal(actual.step,s.id);
   if(s.camera){const expected=[s.camera.direction[0],s.camera.direction[2],-s.camera.direction[1]],direction=actual.camera.position.map((v,n)=>v-actual.camera.target[n]);const dot=expected.reduce((sum,v,n)=>sum+v*direction[n],0)/(Math.hypot(...expected)*Math.hypot(...direction));assert.ok(dot>1-1e-9,JSON.stringify({step:s.id,expected,direction,reason:'Authored camera direction must not be clamped, including the underside step'}));}
   assert.deepEqual(actual.parts.filter(v=>v.visible).map(v=>v.name).sort(),[...s.parts].sort());
@@ -62,8 +62,8 @@ try{
   const bounds=await projected(p);assert.ok(fullyFramed(bounds),JSON.stringify({step:s.id,bounds}));screenBounds[s.id]=bounds;captures.set(s.id,actual.parts);
  }
  const tooClose=await projected(p,.1);assert.equal(fullyFramed(tooClose),false,'A real too-close camera must fail the independent viewport/frustum check');assert.ok(fullyFramed(await projected(p)),'Camera is restored after the negative');provenance.projected_bounds=screenBounds;provenance.too_close_camera_rejected=true;provenance.too_close_projection=tooClose;cases.push('every visible vertex fits all12 actual frames; real too-close camera rejected/restored');
- for(let i=10;i>=0;i--){await p.getByRole('button',{name:'← Previous',exact:true}).click();assert.deepEqual((await state(p)).parts,captures.get(guide.steps[i].id));}
- await explorer(p);await p.getByLabel('Instruction step',{exact:true}).selectOption('step-10');assert.deepEqual((await state(p)).parts,captures.get('step-10'));
+ for(let i=10;i>=0;i--){await p.getByRole('button',{name:'Previous step',exact:true}).click();assert.deepEqual((await state(p)).parts,captures.get(guide.steps[i].id));}
+ await p.getByLabel('Instruction step',{exact:true}).selectOption('step-10');assert.deepEqual((await state(p)).parts,captures.get('step-10'));
  await p.reload();await p.waitForFunction(()=>window.__buildGuide?.active?.step==='step-10');assert.deepEqual((await state(p)).parts,captures.get('step-10'));
  cases.push('all12 sequential/back/direct/reload actual object states');
  await tools(p);await p.locator('[data-guide-mode]').selectOption('wireframe');assert.ok((await state(p)).parts.filter(v=>v.visible).every(v=>v.wireframe));
@@ -79,13 +79,13 @@ try{
  await tools(p);await p.locator('[data-guide-part-mode]').selectOption('transparent');const transparent=(await state(p)).parts;assert.ok(transparent.find(v=>v.name===selected).opacity<.5);assert.deepEqual(transparent.filter(v=>v.name!==selected),beforePartModes.filter(v=>v.name!==selected));
  await tools(p);await p.locator('[data-guide-part-mode]').selectOption('wireframe');const partWire=(await state(p)).parts;assert.equal(partWire.find(v=>v.name===selected).wireframe,true);assert.deepEqual(partWire.filter(v=>v.name!==selected),beforePartModes.filter(v=>v.name!==selected));
  await tools(p);await p.locator('[data-guide-part-mode]').selectOption('automatic');assert.deepEqual((await state(p)).parts,beforePartModes);
- await tools(p);await p.locator('[data-guide-part-mode]').selectOption('transparent');await p.getByRole('button',{name:'Next →',exact:true}).click();assert.deepEqual(await p.evaluate(()=>window.__buildGuide.active.viewer.getState().partModes),{});assert.equal(await p.locator('[data-guide-part-mode]').inputValue(),'automatic');
- await p.getByRole('button',{name:'← Previous',exact:true}).click();await tools(p);await p.locator('[data-guide-reset]').click();assert.deepEqual(await p.evaluate(()=>window.__buildGuide.active.viewer.getState().partModes),{});assert.equal(await p.locator('[data-guide-part-mode]').inputValue(),'automatic');
+ await tools(p);await p.locator('[data-guide-part-mode]').selectOption('transparent');await p.getByRole('button',{name:'Next step',exact:true}).click();assert.deepEqual(await p.evaluate(()=>window.__buildGuide.active.viewer.getState().partModes),{});assert.equal(await p.locator('[data-guide-part-mode]').inputValue(),'automatic');
+ await p.getByRole('button',{name:'Previous step',exact:true}).click();await tools(p);await p.locator('[data-guide-reset]').click();assert.deepEqual(await p.evaluate(()=>window.__buildGuide.active.viewer.getState().partModes),{});assert.equal(await p.locator('[data-guide-part-mode]').inputValue(),'automatic');
  cases.push('selected-instance transparent/wireframe leaves others exact; Automatic/newstep/reset clear overrides');
 
  const completed=p.locator('[data-guide-complete]');await completed.check();await p.reload();await p.waitForFunction(()=>window.__buildGuide?.active?.step==='step-10');assert.equal(await completed.isChecked(),true);
  // Actual independent visible displacement: +Z CAD lift maps to +Y world metres exactly once.
- await explorer(p);await p.getByLabel('Instruction step',{exact:true}).selectOption('step-02');
+ await p.getByLabel('Instruction step',{exact:true}).selectOption('step-02');
  const delta=await p.evaluate(()=>{const a=window.__buildGuide.active,p=a.viewer.parts.find(p=>p.name==='pan_pinion');const v=p.mesh.position.clone();a.controller.applyStep('step-02',{explode:0,frame:false});p.mesh.updateWorldMatrix(true,false);const x=p.mesh.getWorldPosition(v.clone());a.controller.applyStep('step-02',{explode:1,frame:false});p.mesh.updateWorldMatrix(true,false);return p.mesh.getWorldPosition(v.clone()).sub(x).toArray();});
  assert.ok(Math.abs(delta[0])<1e-8&&Math.abs(delta[1]-.070)<1e-8&&Math.abs(delta[2])<1e-8,JSON.stringify(delta));
  cases.push('independent70mm CAD-Z/world-Y displacement');
@@ -142,12 +142,12 @@ try{
  const tp=await pageFor(tc);const touchMetadata=await tp.evaluate(()=>({maxTouchPoints:navigator.maxTouchPoints}));
  assert.ok(await tp.evaluate(()=>document.documentElement.scrollWidth<=innerWidth+1));
  async function touchControl(locator){await locator.scrollIntoViewIfNeeded();const box=await locator.boundingBox();assert.ok(box&&box.width>=44&&box.height>=44);assert.equal(await locator.evaluate(el=>{const r=el.getBoundingClientRect(),hit=document.elementFromPoint(r.x+r.width/2,r.y+r.height/2);return el===hit||el.contains(hit);}),true);const before=await tp.evaluate(()=>window.guideTouchEvents.length);await locator.tap();assert.equal(await tp.evaluate(before=>window.guideTouchEvents.length>before&&window.guideTouchEvents.at(-1).trusted&&window.guideTouchEvents.at(-1).touches===1,before),true,'Native tap must deliver an actual trusted touchstart');}
- await touchControl(tp.getByRole('button',{name:'Next →',exact:true}));assert.equal((await state(tp)).step,'step-02');
- await touchControl(tp.getByRole('button',{name:'← Previous',exact:true}));assert.equal((await state(tp)).step,'step-01');assert.equal(await tp.evaluate(()=>window.__buildGuide.active.selected),null);
+ await touchControl(tp.getByRole('button',{name:'Next step',exact:true}));assert.equal((await state(tp)).step,'step-02');
+ await touchControl(tp.getByRole('button',{name:'Previous step',exact:true}));assert.equal((await state(tp)).step,'step-01');assert.equal(await tp.evaluate(()=>window.__buildGuide.active.selected),null);
  await tp.locator('[data-guide-model]').scrollIntoViewIfNeeded();
  const target=await tp.evaluate(async()=>{const a=window.__buildGuide.active,part=a.viewer.parts.find(p=>p.name==='pan_base'),THREE=await import('/designer/kit/vendor/three/three.module.min.js'),pos=part.mesh.geometry.attributes.position,c=a.viewer.stage.renderer.domElement,r=c.getBoundingClientRect();part.mesh.updateWorldMatrix(true,false);a.viewer.stage.camera.updateMatrixWorld(true);for(let i=0;i<pos.count-2;i+=Math.max(3,Math.floor(pos.count/384)*3)){const v=new THREE.Vector3();for(let j=0;j<3;j++)v.add(new THREE.Vector3().fromBufferAttribute(pos,i+j));v.divideScalar(3);part.mesh.localToWorld(v);v.project(a.viewer.stage.camera);const x=r.left+(v.x+1)*r.width/2,y=r.top+(1-v.y)*r.height/2;if(x>8&&x<innerWidth-8&&y>70&&y<innerHeight-8&&document.elementFromPoint(x,y)===c)return{x,y};}return null;});
  assert.ok(target,'A real pan-base surface is unoccluded at phone touch coordinates');const beforeCanvasTouch=await tp.evaluate(()=>window.guideTouchEvents.length);await tp.touchscreen.tap(target.x,target.y);assert.equal(await tp.evaluate(before=>window.guideTouchEvents.length>before&&window.guideTouchEvents.at(-1).trusted&&window.guideTouchEvents.at(-1).target==='CANVAS',beforeCanvasTouch),true,'Actual canvas touch must be delivered');assert.equal(await tp.evaluate(()=>window.__buildGuide.active.selected),'pan_base');assert.match(await tp.locator('[data-guide-selection]').innerText(),/Selected:/);
- await touchControl(tp.getByRole('button',{name:'Next →',exact:true}));const summary=tp.getByText('Parts in this step',{exact:true});await summary.scrollIntoViewIfNeeded();await summary.tap();await touchControl(tp.locator('[data-guide-parts] button').first());assert.equal(await tp.evaluate(()=>window.__buildGuide.active.selected),'pan_servo');
+ await touchControl(tp.getByRole('button',{name:'Next step',exact:true}));const summary=tp.getByText('Parts in this step',{exact:true});await summary.scrollIntoViewIfNeeded();await summary.tap();await touchControl(tp.locator('[data-guide-parts] button').first());assert.equal(await tp.evaluate(()=>window.__buildGuide.active.selected),'pan_servo');
  assert.ok(await tp.evaluate(()=>document.documentElement.scrollWidth<=innerWidth+1));provenance.touch={...touchMetadata,events:await tp.evaluate(()=>window.guideTouchEvents)};await tp.screenshot({path:`${out}/${engine.name()}-touch-phone.png`});await tc.close();cases.push('real hasTouch phone taps: previous/next, canvas picking and part list, unoccluded hitboxes');phase('touch-complete');
  }
  assert.deepEqual(errors,[]);await writeFile(`${out}/${engine.name()}-report.json`,JSON.stringify({status:'passed',provenance,cases,phases,errors},null,2));console.log(`PASS ${engine.name()}: ${cases.length} build guide groups`);

@@ -48,7 +48,10 @@ Before this revision is ready, real Chromium and WebKit must demonstrate:
   or unavailable Fullscreen API offers an honestly labeled expanded workspace.
   Fit remains an independent action. Both native and fallback layouts retain
   unoccluded geometry, fixed navigation and touch/keyboard access.
-- Previous, Next and Complete float in a fixed row beneath the main toolbar.
+- Previous, Jump to step, Complete and Next float in that exact order beneath
+  the main toolbar. The one native step dropdown belongs to the current assembly
+  and snapshot; the explorer has no redundant step selector. Narrow layouts use
+  named arrow buttons and four fixed columns with 44px touch targets.
   The separate instruction panel expands/collapses only by explicit user action;
   opening an inspector temporarily folds instructions and restores the chosen
   instruction size on close. Controls must pass actual elementFromPoint checks
