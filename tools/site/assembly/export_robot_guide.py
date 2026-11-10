@@ -12,6 +12,8 @@ import json
 import math
 from pathlib import Path
 import re
+import sys
+sys.path.insert(0,str(Path(__file__).resolve().parent))
 from robot_data import bounds, sha
 from robot_manufacturing import mapping
 from robot_recipe import WARNING, operation, robot_operations, validate_operations
@@ -72,6 +74,11 @@ def generate(collection,folder,recipe_sha256,bom_hashes,collection_sha256,manufa
         model_parts=[]
         for part in included:
             public={k:part[k] for k in ('name','color','visible','bounds_mm','sha256')}
+            public['compound']=part.get('compound',False)
+            public['logical_part']=manufacturing[part['name']].get('key',part['name'])
+            public['title']=part['name'].replace('_',' ')
+            material=manufacturing[part['name']].get('plan',{}).get('material')
+            if material:public['material']=material
             if kind=='combined' and not part['name'].startswith('turret.'):
                 public['file']='../'+directories['robot']+'/'+part['file']
             else:
@@ -106,7 +113,7 @@ def generate(collection,folder,recipe_sha256,bom_hashes,collection_sha256,manufa
         if set(seen)!=set(names) or len(seen)!=len(set(seen)):
             raise ValueError('Construction stages do not exactly cover this snapshot')
         source={'qualification':WARNING,'configuration':collection['configuration'],'cad_inputs':collection['inputs'],
-                'collection_sha256':collection_sha256,'hardware_tree':collection['hardware_tree'],
+                'collection_sha256':collection_sha256,'native_producer_inputs':collection.get('producer_inputs',{}),'exporter_sha256':sha(Path(__file__)),'hardware_tree':collection['hardware_tree'],
                 'collector_sha256':collection['collector_sha256'],'recipe_sha256':recipe_sha256,'bom_hashes':bom_hashes,
                 'overview_step_id':'overview','step_kinds':kinds,
                 'install_order_by_step':{'overview':[],**{op['id']:op['additions'] for op in ops}},

@@ -2,6 +2,7 @@
 import importlib.util
 from pathlib import Path
 import struct
+import subprocess
 import sys
 import tempfile
 import unittest
@@ -52,6 +53,11 @@ class PhysicalFrames(unittest.TestCase):
         self.assertEqual(data.mesh_files(['L.hip_frame'])['L.hip_frame'],'meshes/L__hip_frame.stl')
         for names in (['L.part','L__part'],['../../outside'],['valid','valid']):
             with self.assertRaises(ValueError):data.mesh_files(names)
+
+    def test_isolated_actual_cli_preflights_do_not_need_native_imports(self):
+        for file in ('collect_robot_parts.py','export_robot_guide.py','run_robot_collection.py'):
+            value=subprocess.check_output([sys.executable,'-I','-S','-B',str(OWNER/file),'--help'],text=True,timeout=5)
+            self.assertIn('usage:',value)
 
     def test_importing_worker_never_imports_native_kernel(self):
         before=set(sys.modules)

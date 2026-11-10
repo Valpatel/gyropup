@@ -13,6 +13,7 @@ from pathlib import Path
 import subprocess
 import sys
 import time
+sys.path.insert(0,str(Path(__file__).resolve().parent))
 from robot_data import bounds, landmarks, module_point, nearest_errors, sha, vertices, inventory, mesh_files
 from robot_recipe import robot_operations, validate_operations
 
@@ -29,7 +30,7 @@ def save(path,value):
 
 
 def git(root,*args):
-    return subprocess.check_output(['git','-C',str(root),*args],text=True).strip()
+    return subprocess.check_output(['git','-c','safe.directory='+str(root),'-C',str(root),*args],text=True).strip()
 
 
 def main(argv=None):
@@ -64,6 +65,12 @@ def main(argv=None):
         import numpy
         runtime={k:importlib.metadata.version(k) for k in ('cadquery','numpy','cadquery-ocp','vtk')}
         runtime['cad_agent_revision']=git(toolkit,'rev-parse','HEAD')
+        origins_runtime={}
+        for name,module in (('cadquery',cq),('numpy',numpy)):
+            location=Path(module.__file__).resolve()
+            if not location.is_relative_to(Path(sys.prefix).resolve()):
+                raise ValueError('Native package imported outside the retained runtime: '+name)
+            origins_runtime[name]=location.relative_to(Path(sys.prefix).resolve()).as_posix()
         if runtime!=cfg['runtime'] or not Path(cadagent.__file__).resolve().is_relative_to(toolkit/'software/cadagent'):
             raise ValueError('Actual imported CAD runtime differs')
         from hardware.cad.body import body_params as bp
@@ -82,7 +89,7 @@ def main(argv=None):
         for group,color,name,shape,offset in rows:
             file=filenames[name]
             cq.exporters.export(shape,str(out/file),tolerance=.25,angularTolerance=.3,opt={'ascii':False})
-            parts.append({'name':name,'file':file,'color':color,'visible':True,'bounds_mm':bounds(out/file),'sha256':sha(out/file),'source_group':group})
+            parts.append({'name':name,'file':file,'color':color,'visible':True,'bounds_mm':bounds(out/file),'sha256':sha(out/file),'source_group':group,'compound':len(shape.Solids())>1,'source_shape_valid':bool(shape.isValid())})
             print('PART '+name,flush=True)
         # Independent module-to-body reference: source local parts, not the display manifest.
         from hardware.cad.legs import fivebar as fb
@@ -144,9 +151,17 @@ def main(argv=None):
                 if not paths or any(not Path(p).resolve().is_relative_to(root) for p in paths):
                     raise ValueError('Project CAD imported outside owned checkout: '+name)
                 origins[name]=[Path(p).resolve().relative_to(root).as_posix() for p in paths]
-        record={'schema':'gyropup.robot-assembly-parts/1','units':'mm','up':'z','frame':'robot: x forward,y left,z up; hip-axis origin',
+        native_libraries=[]
+        for line in Path('/proc/self/maps').read_text().splitlines():
+            if '.so' not in line:continue
+            if line.endswith(' (deleted)'):raise ValueError('Mapped native library was unlinked during collection')
+            path=line.split()[-1]
+            if path.startswith('/'):
+                entry={'name':Path(path).name,'sha256':sha(Path(path))}
+                if entry not in native_libraries:native_libraries.append(entry)
+        record={'runtime_package_origins':origins_runtime,'native_libraries':native_libraries,'schema':'gyropup.robot-assembly-parts/1','units':'mm','up':'z','frame':'robot: x forward,y left,z up; hip-axis origin',
                 'source_commit':git(root,'rev-parse','HEAD'),'hardware_tree':git(root,'rev-parse','HEAD:hardware'),
-                'inputs':inputs,'collector_sha256':sha(root/helper.SOURCE_CONTEXT),'runtime':runtime,
+                'inputs':inputs,'producer_inputs':{p:sha(root/p) for p in ('tools/site/assembly/collect_robot_parts.py','tools/site/assembly/robot_data.py','tools/site/assembly/robot_recipe.py','tools/site/assembly/robot_runtime.py','tools/site/assembly/run_robot_collection.py','tools/site/assembly/export_robot_guide.py','tools/site/assembly/robot_manufacturing.py','tools/engineering/robot/readme_design.py','tools/engineering/robot/readme-design.json')},'collector_sha256':sha(root/helper.SOURCE_CONTEXT),'runtime':runtime,
                 'configuration':{'stage':'P3','stance_mm':robot.STANCE_MM,'tracked_j501':True,'bought_parts':'existing project envelopes'},
                 'datums':{'y_off_mm':bp.y_off(),'tm':tm},'mount_reference':mount_reference,'parts':parts,'module_reference':references,'module_origins':origins}
         save(out/'collection.json',record)
