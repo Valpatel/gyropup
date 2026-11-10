@@ -1,13 +1,13 @@
 <div align="center">
 
+<h1 id="gyropup"><picture style="display:block;max-width:640px;margin:0 auto"><source media="(prefers-reduced-motion: reduce)" srcset="docs/img/hero/gyropup-title-still.svg"><img src="docs/img/hero/gyropup-title.svg" width="640" height="112" style="display:block;max-width:100%;height:auto;padding:0" alt="Gyropup"></picture></h1>
+
 <p>
 <picture style="display:block;max-width:640px;margin:0 auto"><source media="(prefers-reduced-motion: reduce)" srcset="docs/img/navigation/project-map-still.svg"><img src="docs/img/navigation/project-map.svg" width="640" height="240" style="display:block;max-width:100%;height:auto;padding:0" alt="Fictional wheeled Gyropup robots chase and duel in a pixel workshop. Sources, test, review and reuse form a learning loop."></picture>
-<a href="https://cad-agent.valpatel.com/"><picture style="display:block;width:186px;max-width:100%;margin:10px auto"><source media="(prefers-reduced-motion: reduce)" srcset="docs/img/hero/made-with-cad-agent-still.svg"><img src="docs/img/hero/made-with-cad-agent.svg" width="186" height="42" style="display:block;width:100%;height:auto;padding:0" alt="Made with cad-agent"></picture></a>
+<a href="https://cad-agent.valpatel.com/"><picture style="display:block;width:142px;max-width:100%;margin:10px auto"><source media="(prefers-reduced-motion: reduce)" srcset="docs/img/hero/made-with-cad-agent-still.svg"><img src="docs/img/hero/made-with-cad-agent.svg" width="142" height="32" style="display:block;width:142px;max-width:100%;height:auto;padding:0" alt="Made with cad-agent"></picture></a>
 A fictional playground. <a href="docs/program/physical-progress.md">Follow the real build evidence.</a><br>
 <a href="https://gyropup.com/designer/sim.html">Play</a> · <a href="https://gyropup.com/designer/build.html">Build</a> · <a href="docs/README.md#design-and-qualification">Understand</a> · <a href=".github/CONTRIBUTING.md">Contribute</a>
 </p>
-
-# Gyropup
 
 [<img class="repo-badge" src="https://github.com/Valpatel/gyropup/actions/workflows/body-firmware.yml/badge.svg?branch=main" alt="Firmware" width="158" height="20" style="width:158px;height:20px;object-fit:contain;padding:0;border-radius:0">](https://github.com/Valpatel/gyropup/actions/workflows/body-firmware.yml)
 [<img class="repo-badge" src="https://github.com/Valpatel/gyropup/actions/workflows/web-scene.yml/badge.svg?branch=main" alt="Playground and presentation" width="236" height="20" style="width:236px;height:20px;object-fit:contain;padding:0;border-radius:0">](https://github.com/Valpatel/gyropup/actions/workflows/web-scene.yml)
@@ -27,7 +27,7 @@ Explore the [browser playground](https://gyropup.com/designer/sim.html), the
 
 <p align="center">
 <a href="docs/img/hero/current-design.svg"><img src="docs/img/hero/current-design.svg" width="480" height="180" style="max-width:100%;height:auto;padding:0" alt="Source-bound Gyropup CAD model: two wheeled legs, body and foam-ball turret."></a><br>
-CAD snapshot · <a href="docs/guide/project-overview.md#keeping-the-design-illustration-current">Source and context</a>.
+Committed CAD baseline · <a href="docs/guide/project-overview.md#keeping-the-design-illustration-current">Source and context</a> · <a href="https://github.com/Valpatel/gyropup/issues/193">Battery placement work</a>.
 </p>
 
 ## Why is it cool?

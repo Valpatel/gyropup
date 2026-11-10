@@ -4,6 +4,8 @@ import {execFileSync} from 'node:child_process';
  * counted from the note's own tables, and folds. Browser tests use SITE_URL, or serve dist/ (run `npm run build`). */
 import assert from 'node:assert/strict';
 import { readFileSync, readdirSync } from 'node:fs';
+import { mkdir, mkdtemp, writeFile } from 'node:fs/promises';
+import { tmpdir } from 'node:os';
 import path from 'node:path';
 import { after, before, test } from 'node:test';
 import { marked } from 'marked';
@@ -272,14 +274,14 @@ test('the current CAD image follows the What explanation and precedes Why', () =
   assert.notDeepEqual(order(),expected,'a model before the explanation cannot pass');
 });
 
-test('both README pictures select a real static image and keep ordinary navigation', async () => {
+test('README entrances keep the moving scene, title and genuine reduced-motion images', async () => {
   for (const route of ['readme-md','docs-readme-md']) for (const reducedMotion of ['no-preference', 'reduce']) {
     const context = await browser.newContext({viewport:{width:390,height:844},reducedMotion});
     try {
       await acknowledgePrototypeNotice(context);
       const page = await context.newPage();
       await page.goto(`${base}/site/pages/${route}.html`, {waitUntil:'load'});
-      const image = page.locator('article picture img').first();
+      const image = page.locator('article picture img[src*="navigation/project-map"]');
       await image.evaluate(img => img.decode());
       const selected = await image.evaluate(img => ({src:img.currentSrc,closed:!!img.closest('details:not([open])')}));
       const expected = reducedMotion === 'reduce' ? 'project-map-still.svg' : 'project-map.svg';
@@ -300,10 +302,20 @@ test('both README pictures select a real static image and keep ordinary navigati
         assert.ok(await link.isVisible(),name);
         assert.equal(await link.evaluate(a=>a.href),target,`${route}: ${name} destination`);
       }
+      let title,firstTitle;
+      if(route==='readme-md'){
+        title=page.getByRole('heading',{name:'Gyropup',exact:true}).getByRole('img',{name:'Gyropup',exact:true});
+        await title.evaluate(img=>img.decode());
+        const titleBox=await title.boundingBox();
+        assert.ok(titleBox.x>=0&&titleBox.x+titleBox.width<=390.5&&titleBox.y+titleBox.height<=box.y,'brand title leads the moving scene without overflow');
+        assert.equal(new URL(await title.evaluate(img=>img.currentSrc)).pathname,`/docs/img/hero/gyropup-title${reducedMotion==='reduce'?'-still':''}.svg`);
+        firstTitle=await title.screenshot();
+      }
       const first = await image.screenshot();
       await page.waitForTimeout(1250);
       const changes = !first.equals(await image.screenshot());
       assert.equal(changes,reducedMotion === 'no-preference','real image pixels follow the picture selection');
+      if(title)assert.equal(!firstTitle.equals(await title.screenshot()),reducedMotion==='no-preference','title has a genuine static reduced-motion alternative');
       if (reducedMotion === 'reduce') {
         // A wrong still must fail the same pixel check. Parent emulation alone
         // does not reliably stop animations inside an external SVG image.
@@ -311,7 +323,7 @@ test('both README pictures select a real static image and keep ordinary navigati
         const still = await (await fetch(`${base}/docs/img/navigation/project-map-still.svg`)).text();
         await page.route('**/project-map-broken-still.svg', route => route.fulfill({contentType:'image/svg+xml',body:still.replace('</svg>', '<style>:root{animation:broken-still 8s linear infinite!important}@keyframes broken-still{from{opacity:.1}to{opacity:1}}</style></svg>')}));
         await image.evaluate((img,url) => img.parentElement.querySelector('source').srcset=url,broken);
-        await page.waitForFunction(url => document.querySelector('article picture img').currentSrc===url,broken);
+        await page.waitForFunction(url => document.querySelector('article picture img[src*="navigation/project-map"]').currentSrc===url,broken);
         await image.evaluate(img=>img.decode());
         const wrong = await image.screenshot();
         await page.waitForTimeout(1250);
@@ -319,6 +331,71 @@ test('both README pictures select a real static image and keep ordinary navigati
       }
     } finally { await context.close(); }
   }
+});
+
+test('README branding stays balanced on phone and desktop in both themes', async () => {
+  const output=process.env.TEST_OUTPUT||await mkdtemp(path.join(tmpdir(),'gyropup-brand-layout-'));
+  await mkdir(output,{recursive:true});const results=[];
+  for(const [width,height]of [[320,720],[1280,900]])for(const colorScheme of ['light','dark']){
+    const context=await browser.newContext({viewport:{width,height},colorScheme,reducedMotion:'reduce'});
+    try{
+      await acknowledgePrototypeNotice(context);const page=await context.newPage();
+      await page.goto(base+'/site/pages/readme-md.html',{waitUntil:'load'});
+      const title=page.getByRole('heading',{name:'Gyropup',exact:true}).getByRole('img',{name:'Gyropup',exact:true});
+      const banner=page.locator('article picture img[src*="navigation/project-map"]');
+      const badge=page.getByRole('img',{name:'Made with cad-agent',exact:true});
+      for(const image of [title,banner,badge])await image.evaluate(img=>img.decode());
+      const boxes=await Promise.all([title,banner,badge].map(image=>image.boundingBox()));
+      for(const b of boxes)assert.ok(b.width>0&&b.x>=0&&b.x+b.width<=width+.5,'real branding images fit the viewport');
+      assert.ok(boxes[0].width<=640.5&&boxes[0].y+boxes[0].height<=boxes[1].y);
+      assert.ok(boxes[2].width<=144&&boxes[2].width<boxes[1].width*.6&&boxes[2].height<boxes[1].height*.4,'the tool badge supports the robot scene');
+      assert.equal(await page.evaluate(()=>document.documentElement.scrollWidth<=innerWidth),true);
+      await page.screenshot({path:path.join(output,`readme-${width}-${colorScheme}.png`)});
+      results.push({width,colorScheme,title:boxes[0],banner:boxes[1],badge:boxes[2]});
+      if(width===320&&colorScheme==='light'){
+        await badge.evaluate(img=>{img.parentElement.style.width='100%';img.style.width='100%';});
+        assert.ok((await badge.boundingBox()).width>144,'the original full-width badge failure is rejected');
+      }
+    }finally{await context.close();}
+  }
+  await writeFile(path.join(output,'branding-layout-result.json'),JSON.stringify(results,null,2)+'\n');
+});
+
+test('the playful Gyropup title builds a graph, solidifies and really loops', async () => {
+  const output=process.env.TEST_OUTPUT||await mkdtemp(path.join(tmpdir(),'gyropup-title-'));
+  await mkdir(output,{recursive:true});
+  const context=await browser.newContext({viewport:{width:800,height:300},reducedMotion:'no-preference'});
+  try{
+    const page=await context.newPage();
+    await page.goto(base+'/docs/img/hero/gyropup-title.svg',{waitUntil:'load'});
+    await page.waitForFunction(()=>document.getAnimations().length>20);
+    assert.equal(await page.locator('[data-letter]').evaluateAll(nodes=>nodes.map(n=>n.dataset.letter).join('')),'Gyropup');
+    const seek=async ms=>{
+      await page.evaluate(time=>{
+        window.titleAnimations??=document.getAnimations();
+        for(const a of window.titleAnimations){a.pause();a.currentTime=time;}
+      },ms);
+      await page.evaluate(()=>new Promise(resolve=>requestAnimationFrame(()=>requestAnimationFrame(resolve))));
+      return page.evaluate(()=>({
+        solid:[...document.querySelectorAll('.title-solid')].map(n=>+getComputedStyle(n).opacity),
+        graph:[...document.querySelectorAll('.title-graph')].map(n=>+getComputedStyle(n).opacity),
+        iterations:window.titleAnimations.map(a=>a.effect.getTiming().iterations===Infinity),
+      }));
+    };
+    const graph=await seek(1800),graphPixels=await page.locator('svg').screenshot({path:path.join(output,'title-graph.png')});
+    assert.ok(graph.graph.every(n=>n>.99)&&graph.solid.every(n=>n<.01),'the build phase really shows the graph before the solid letters');
+    const solid=await seek(7200),solidPixels=await page.locator('svg').screenshot({path:path.join(output,'title-solid.png')});
+    assert.ok(solid.solid.every(n=>n>.99)&&solid.graph.every(n=>n<.01),'the letters solidify into the completed toy-store title');
+    assert.ok(!solidPixels.equals(graphPixels),'the actual image changes between construction and completion');
+    const loop=await seek(13800),loopPixels=await page.locator('svg').screenshot({path:path.join(output,'title-loop.png')});
+    assert.deepEqual(loop,graph,'the construction phase returns after the twelve-second cycle');
+    assert.ok(loopPixels.equals(graphPixels),'the actual graph image repeats, not just a CSS declaration');
+    assert.ok(loop.iterations.every(Boolean));
+    await page.evaluate(()=>{for(const a of window.titleAnimations)a.effect.updateTiming({iterations:1});});
+    const once=await seek(13800);
+    assert.ok(once.graph.every(n=>n<.01),'a real one-shot animation fails the returning-graph control');
+    await writeFile(path.join(output,'title-loop-result.json'),JSON.stringify({graph,solid,loop,oneShotRejected:true},null,2)+'\n');
+  }finally{await context.close();}
 });
 
 test('the local Made with badge animates normally and selects its genuine still', async () => {
@@ -335,6 +412,10 @@ test('the local Made with badge animates normally and selects its genuine still'
       const box=await image.boundingBox(),wrapper=await image.locator('..').boundingBox();
       assert.ok(box.x>=0&&box.x+box.width<=390.5&&Math.abs(box.width/box.height-248/56)<.02);
       for(const key of ['x','y','width','height'])assert.ok(Math.abs(box[key]-wrapper[key])<1);
+      if(route==='/site/pages/readme-md.html'){
+        const banner=await page.locator('article picture img[src*="navigation/project-map"]').boundingBox();
+        assert.ok(box.width<=144&&box.width<banner.width/2,'Made with badge stays a supporting mark beneath the wider scene');
+      }
       const first=await image.screenshot();await page.waitForTimeout(1250);
       assert.equal(!first.equals(await image.screenshot()),reducedMotion==='no-preference');
       if(reducedMotion==='reduce') {
