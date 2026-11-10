@@ -1,0 +1,2278 @@
+{
+  "schema": "gyropup.rendered-arrival-capture/1",
+  "date": "2026-11-10",
+  "status": "passed",
+  "browser_engine": "chromium",
+  "browser_selection": "Existing harness uses system Chrome through Playwright; exact browser version was not captured in this report.",
+  "source_binding": {
+    "commit_full": "86514707eecdb72aaac9aa0cf26e887f4eba509a",
+    "build_version": {
+      "revision": "33c4464b710341dc45b0ba43fb1006ddbab13f95",
+      "assets": "894c1ce90dacd81cee41",
+      "history": true,
+      "built": "2026-11-10T14:55:14.920Z"
+    },
+    "scope": "The dist build preceded the candidate commit and records base33c4464b. Actual guide/model/instruction and all171mesh bytes exactly match candidate86514707; preserve both identities.",
+    "harness_sha256": "bff08f966c251cdcacd164101701a1a19e04735d663a9612afd61dc367d4f12a",
+    "browser_report_sha256": "f4c1dedb847dbb072d40f01fee412f314ee22ae4d6bfb8a411839ff570a92512",
+    "bound_metadata": [
+      {
+        "source": "software/site/assets/build-guides/robot-wip-540056ba4e59/guide.json",
+        "public": "web/build-guides/robot-wip-540056ba4e59/guide.json",
+        "git_86514707_sha256": "284b63087c9f9256413f0e8dcfb3b18c494ca0e36c38e4e37df7a73963e1c3b4",
+        "dist_sha256": "284b63087c9f9256413f0e8dcfb3b18c494ca0e36c38e4e37df7a73963e1c3b4"
+      },
+      {
+        "source": "software/site/assets/build-guides/robot-wip-540056ba4e59/view.json",
+        "public": "web/build-guides/robot-wip-540056ba4e59/view.json",
+        "git_86514707_sha256": "985d903d774eba4caa94b96a45425c6ab5c86d477c3ffa7fd7ec83c1650654c0",
+        "dist_sha256": "985d903d774eba4caa94b96a45425c6ab5c86d477c3ffa7fd7ec83c1650654c0"
+      },
+      {
+        "source": "software/site/assets/build-guides/robot-wip-540056ba4e59/instructions.json",
+        "public": "web/build-guides/robot-wip-540056ba4e59/instructions.json",
+        "git_86514707_sha256": "78c73fc4065c41f9f19920b71f05e1219c6ee6ca4679eac0eb5389828f162376",
+        "dist_sha256": "78c73fc4065c41f9f19920b71f05e1219c6ee6ca4679eac0eb5389828f162376"
+      }
+    ],
+    "bound_meshes": [
+      {
+        "name": "cheek_left",
+        "sha256": "44ae1db5cdfe3cdad535d45c0d9bf04c9563caa92c45777bdb2a07ba26106ecd"
+      },
+      {
+        "name": "cheek_right",
+        "sha256": "bcbf60762830b42d8097e683d74f90e60a5ba3a6f478382d6800320298f1ce8b"
+      },
+      {
+        "name": "floor_tray",
+        "sha256": "7059bd1083e121c2ee167db6870bda2e8b1dd1ba8a2d63cd7ec86de00ba9fa7e"
+      },
+      {
+        "name": "belly_plate",
+        "sha256": "a1327550e0842bb48fc2946b8f2d9c8647754f2b421474de1b7fad2ef49d13ac"
+      },
+      {
+        "name": "deck",
+        "sha256": "f3b56e3794363637ec7231318490a3e19a64d873f34ffd4bd90e71c06be54f57"
+      },
+      {
+        "name": "compute_pallet",
+        "sha256": "bf3bb740dae230d277554180ad9c1468edc65a6527225af685aa8e94b9964131"
+      },
+      {
+        "name": "post_1",
+        "sha256": "d89073065db9e7790e36d0f2d23e50cdccc46090d7c3b4690b4101147ca2aa25"
+      },
+      {
+        "name": "post_2",
+        "sha256": "641345324d8cc0ed8d79ccf1f6c72e3161d0d9b3f27b7b02c4693048ee653a1a"
+      },
+      {
+        "name": "post_3",
+        "sha256": "493d833a9a9d097164f1799bf6977649bd42d4656fe2b86e63b23815ed702b2e"
+      },
+      {
+        "name": "post_4",
+        "sha256": "73ca21e227d7daf0347bb9f6702530a6c3079330c1fd5a01008a7f8932a94cba"
+      },
+      {
+        "name": "riser",
+        "sha256": "b56a08b890435e5f3c00b61d013b7f45386424c9f5b58dd5ace0788bd35940e0"
+      },
+      {
+        "name": "turret_plate",
+        "sha256": "e90be95e663941d5462ccea11f802d690a39ff3bee5bc1dc65514f42deecb325"
+      },
+      {
+        "name": "turret_plate_nuts",
+        "sha256": "1d18880c0730c92495418322356bc37b84a7cdc4061ed7a71c9bcaa896f180f4"
+      },
+      {
+        "name": "isolator_1",
+        "sha256": "66c1df86d700199aad4e221555b04805f39f816ffde37774937bae0d5f25c37b"
+      },
+      {
+        "name": "isolator_2",
+        "sha256": "1c8adb643ea95fb131018025115bf2cd49e5721a4ac7afcb5fb6b830a780994c"
+      },
+      {
+        "name": "isolator_3",
+        "sha256": "462f899060f7577a55a4918e5566361610ce72b9c6a9ff0c60557d76402919f2"
+      },
+      {
+        "name": "isolator_4",
+        "sha256": "cff0e0c9cf051bc925473e881c65aa367b7ce994f88df572a5e60c03fade8788"
+      },
+      {
+        "name": "power_plate",
+        "sha256": "6ec661648b13479658a68ec84f57de558d1656fed9df94800278f61ae2323580"
+      },
+      {
+        "name": "plate_post_1",
+        "sha256": "5c7dfae33ffcde23538b06eab9bcce2ecc56ceb8e7f427561150fc091ad2a980"
+      },
+      {
+        "name": "plate_post_2",
+        "sha256": "f037058d632d069d24679df846d019758e5bd17c7f46fbb583a49bab26b5d6ed"
+      },
+      {
+        "name": "plate_post_3",
+        "sha256": "11c0b3c6c1c22f4b39d5ccb356c8a5485cce77cee026a9b62fb224af9f368256"
+      },
+      {
+        "name": "plate_post_4",
+        "sha256": "ea734771213eec5b58a12ce448917cbd6eaa9ba1ff4d31b8b4fbb5148241d600"
+      },
+      {
+        "name": "bus_bar_1",
+        "sha256": "0d165115864b823e1d024e413c2006c8038dcd627c09c16261bccf0b79909a20"
+      },
+      {
+        "name": "bus_insulator_1",
+        "sha256": "454973e6b24d589c4b679ae861f1c5707e2e22a46b13013ff95e9ca5291fbbb0"
+      },
+      {
+        "name": "bus_bar_2",
+        "sha256": "6eb2567446b0576afb304a7e94aca1b2202a74ee73d2c8353943b9145736bf45"
+      },
+      {
+        "name": "bus_insulator_2",
+        "sha256": "196351b199b3c97bd0a65677548115d82dbfce7030eb8f06f5c123de4078611a"
+      },
+      {
+        "name": "dcdc_bracket",
+        "sha256": "838af41a3a6ccacbe1f224ab6535cab23964838ce0d364bb71b9b3ffd9b5806d"
+      },
+      {
+        "name": "bay_floor",
+        "sha256": "f7d5fb2f0af4cb9850b30515daf70f438f91dcb1d094e409fc710552159c2522"
+      },
+      {
+        "name": "bay_side_l",
+        "sha256": "e455d61e3668da2f0c9c108bdc2fcf85d3f3f57e5617a3a5c799b01e04dc7793"
+      },
+      {
+        "name": "bay_rail_l",
+        "sha256": "3b30f197578637f878a954f02c7e0425c22ba24eaf3264e572b8044e43f20545"
+      },
+      {
+        "name": "bay_side_r",
+        "sha256": "188c52363d328d2024ce9fce5567ce9652770abf8c351f011d34b5448ab8af87"
+      },
+      {
+        "name": "bay_rail_r",
+        "sha256": "bb7e56f5b8f0a8dcf4e53ef4ccf9d2ae1abffa869e8d2e641c20dc52c4312a2a"
+      },
+      {
+        "name": "adapter_plate_front",
+        "sha256": "d840afd77712b43166998f20926b57d6055be419c0305d4e7c0d774709cfe2de"
+      },
+      {
+        "name": "bay_door_front",
+        "sha256": "1149ba5e4519a925546da4a3a0d08833bff4c10c06f12fd1a6cc0ad5cb7c9e46"
+      },
+      {
+        "name": "adapter_plate_rear",
+        "sha256": "cd7d1a6f5e7be1c6255d46fe1dab595d07876b50b939ee797b0d4c3c3e99ae09"
+      },
+      {
+        "name": "bay_door_rear",
+        "sha256": "3bc021d0f6c5abb74e8fecc8516986ce97e274cc1cab80de8075ff92ba5e923e"
+      },
+      {
+        "name": "bay_skid_1",
+        "sha256": "82142273fdc1f1a2f88f32e39f4b12cb0f23b6963af25315158d1e954f30a5b2"
+      },
+      {
+        "name": "bay_skid_2",
+        "sha256": "ee26f6069f43e49b571c6a4a8204df849b727c6e3ae9363bd41bf83c35de7420"
+      },
+      {
+        "name": "bay_skid_3",
+        "sha256": "3711679cd41c5126fa755a5705ffce86538545bff19699eda85a8ada76881e99"
+      },
+      {
+        "name": "bay_skid_4",
+        "sha256": "fb7f06f79e91e4a9fd0fc0fd5ce9808a1706b8287256a88630d49747c62b08ec"
+      },
+      {
+        "name": "spacers",
+        "sha256": "1eac253fdcd050bbfe11262b34e84a86be3190237005718c9fd09b49e13d9f5c"
+      },
+      {
+        "name": "spacer_screws",
+        "sha256": "d2bb6beed68626e8de11f6f817751ecd0c8c6de1f340a7d9819661d6dc71b8b6"
+      },
+      {
+        "name": "frame_screws_left",
+        "sha256": "e57db2e277232b47158d8648446354c70a4595cf254d964b41f65df08867570f"
+      },
+      {
+        "name": "cheek_nuts_left",
+        "sha256": "8902940f0ed99ba7000fc3269e91db6b2dff67fad4ff71e0822b0d6abb2f9c90"
+      },
+      {
+        "name": "frame_screws_right",
+        "sha256": "ee086ba068300c4d039404e1af7640f23616125c0029830b3d5ebcef6c20267d"
+      },
+      {
+        "name": "cheek_nuts_right",
+        "sha256": "afc9a8831fd00b48592f3fed5ddbc899e701aff4b40a429d45c7f2a06d56568c"
+      },
+      {
+        "name": "shell_side_l_front",
+        "sha256": "7c0837cc4d0537ed4e37ed63985f0dac74096aaa1e9ca82d83e21bcde407acc1"
+      },
+      {
+        "name": "shell_side_l_rear",
+        "sha256": "a3b3510a39cf3ca37b55947e2f8b65c656356d83c823b2175aca71e88f036ba8"
+      },
+      {
+        "name": "ear_bracket_l",
+        "sha256": "1022646f52196efbfd4c64ff571f7f653b8039da8f24ca84c2fd31ee1c82553c"
+      },
+      {
+        "name": "shell_side_r_front",
+        "sha256": "de2fa4fbf478d22e90c0d92d413cf50e3c7ed5ef0508ccb817219874d520978b"
+      },
+      {
+        "name": "shell_side_r_rear",
+        "sha256": "a8c111bf14bfb9b1839d017d9387ab38830c4837bb27801e58504516e1bdb450"
+      },
+      {
+        "name": "ear_bracket_r",
+        "sha256": "e639631573dc1538a048e39336cd8075a0cde99ee66b220484d2cea0c26ce861"
+      },
+      {
+        "name": "shell_front",
+        "sha256": "1b0a083c80a56c9c8d055dcdcac86dfcd3b6d1e5346ba23425d8aab842fad0cb"
+      },
+      {
+        "name": "shell_rear",
+        "sha256": "512e996cc85afbd147877f6c6eb3ebf39db0e632c33864882354dd6a0813b9ec"
+      },
+      {
+        "name": "shell_door",
+        "sha256": "10a400615e10e617dd1723f537f9c43d1f85daf5daeba696a7ad51cbdd02f2b5"
+      },
+      {
+        "name": "shell_hatch",
+        "sha256": "1d0f41d8049a22f480c2652047bda598e8a0f740043c224ca3b04f9e8c59ad16"
+      },
+      {
+        "name": "d435_cradle_front",
+        "sha256": "e42f8601f8b396f8dc32b8e8e39ea2e61a18b935aa0c1edc47ab87c7abebdacb"
+      },
+      {
+        "name": "d435_cradle_rear",
+        "sha256": "a398a0deb60308749f2a6a2cef0e1fc058d6fc15a82eada03b07ed022349b944"
+      },
+      {
+        "name": "fan_duct",
+        "sha256": "919c9ff160a7e03062aa105050a0974f38dc1c44390c9a701402c8e0bc4c2be6"
+      },
+      {
+        "name": "eyes_clip",
+        "sha256": "dca155dd60f524953750b327b2ac72eea014b875a49071dad3effd257118990f"
+      },
+      {
+        "name": "ear_pod_l",
+        "sha256": "21369c95c53ce6d230400a6889ebe49e5df9f78f385a346c7a70c0378d72d78b"
+      },
+      {
+        "name": "ear_pod_r",
+        "sha256": "92f8c3ef67d68f927282b704934dc124f6e2f99b4ee83ff174eba882aa4a2084"
+      },
+      {
+        "name": "d435_front",
+        "sha256": "6c94ce4b4b83656e32c3b384b8679d3a7a4b2b74f3737060264416d75d1cda11"
+      },
+      {
+        "name": "d435_rear",
+        "sha256": "6412b588d088e39da7ddce9422f84f9f80c6c15f3734088ecd47199df1380e2b"
+      },
+      {
+        "name": "eyes_board",
+        "sha256": "e3b0d3040a69c9dd6c43fbcc65bd1b9b9a6d694a1bcbf8208e471c1628bfec3c"
+      },
+      {
+        "name": "item.j501_carrier",
+        "sha256": "a473e77fea2c15e64c1bcb9376b009a3c050801b070c70d52f2b6292ed126107"
+      },
+      {
+        "name": "item.agx_module",
+        "sha256": "66c1de0a01a69a1e4e41c5c498e9d11e65122d739ed42e933ce728752a60567e"
+      },
+      {
+        "name": "item.agx_spreader",
+        "sha256": "92dfc839ad87e19dc81e3ae486ee3672c628d15641cdca5165efc3bf5e251664"
+      },
+      {
+        "name": "item.agx_cooler",
+        "sha256": "32bcac3e13221c5558c5a304c680fbed63cfaa13236addd0d2435b0a0e07b4e2"
+      },
+      {
+        "name": "item.j501_standoff_15_16.5",
+        "sha256": "7bae3405f9f3a984f108f7ec97350550e718f41db6cf0a41bd8a8f26b2e90a41"
+      },
+      {
+        "name": "item.j501_standoff_165_16.5",
+        "sha256": "1ada73bfd9e72f6a831f15d50aba9a86ebbca013d018ecfb248c39b050003bdb"
+      },
+      {
+        "name": "item.j501_standoff_15_146.5",
+        "sha256": "6715c34194d318ab1bcebec34e80c9d8989101e3ec9a7997497b4c153e0a83cc"
+      },
+      {
+        "name": "item.j501_standoff_165_146.5",
+        "sha256": "4a76d6bab2f01f37b73d55128c756a3ac6fb7712034c6cac81a1b8a07d8fa9e8"
+      },
+      {
+        "name": "item.plate_vesc_r",
+        "sha256": "5d353eaf252715a483f0b0039f181ec1ff7146aba4593eaf19fc7f5a3ab5cf89"
+      },
+      {
+        "name": "item.plate_vesc_l",
+        "sha256": "8a5ab8dcec49766bd29640830a4ec56e4d221dc65f2e2ca060aa1421cb9890d8"
+      },
+      {
+        "name": "item.plate_main_switch",
+        "sha256": "ec417eba09998ce6c4528b431b3b7a356b2f4b8b9b4bdeb5aff7a920dc10a9bd"
+      },
+      {
+        "name": "item.plate_shunt",
+        "sha256": "ce007a976cfc0fd18f5c3ea120df269ad688ebb104d4028af01a11b9fa41f6ed"
+      },
+      {
+        "name": "item.power_dcdc",
+        "sha256": "a8846e257f1ffde7892bc9511da5038e8a35f1199512335770324f68c2d3bc52"
+      },
+      {
+        "name": "item.plate_mrbf_block",
+        "sha256": "4d4e99fb44013898ba978eddc29970367a9acf4a9273de06bcd9425249661bcc"
+      },
+      {
+        "name": "item.plate_fuses",
+        "sha256": "05c5206cf7f264380c244625ca435e5027853898e21eacae9ae987a690415649"
+      },
+      {
+        "name": "item.plate_mcu_board",
+        "sha256": "e37343371be2da5d94fb904816459511362019c2930b68492bd47e8bfa8641a1"
+      },
+      {
+        "name": "item.plate_buck_5v",
+        "sha256": "e7a3de4933c4acc8cb73e935fb1c51e2c0d44b0caf57f1fc7b950ee81f207577"
+      },
+      {
+        "name": "item.vn100",
+        "sha256": "f33c0f295b854d52612ffb5860737a35ff7e31a78d67d9b9a24dd99bc05b4095"
+      },
+      {
+        "name": "item.lidar_box",
+        "sha256": "b6458eeafa4e335bc39bc3db62661bbca49df4e671201672c4f655f8dc3e99c6"
+      },
+      {
+        "name": "item.lidar_coil",
+        "sha256": "d210bf2143280c5e19892b0724f4b965873d64fb84694806607bbcde27055bc4"
+      },
+      {
+        "name": "item.battery_front",
+        "sha256": "22666fb9a87bd6ea0de7366d01549f65918c00362d63bd26139f1cdba5d50496"
+      },
+      {
+        "name": "item.battery_rear",
+        "sha256": "f613ad9b4d7abe551a4eef5531bde40a31aeab05360745e0bbc1e7be75c9a1ff"
+      },
+      {
+        "name": "item.battery_adapter_front",
+        "sha256": "82660ec26066a91c5d412cf28142bd191b1fe87e0e50b14ccb6b9477072457a6"
+      },
+      {
+        "name": "item.battery_adapter_rear",
+        "sha256": "282bdddf7ea3a53ea126c7efef5b51cf07bbc836524292474f65346c0ae16cc3"
+      },
+      {
+        "name": "L.hip_frame",
+        "sha256": "adb8677e0019433add3d72da790868dad86d4ef62aa998c3aebf967f8ecc2e9f"
+      },
+      {
+        "name": "R.hip_frame",
+        "sha256": "67dcab28c26d65fcbc6deaa854658147e6ceff18ba9db34a93a4f40b723aae52"
+      },
+      {
+        "name": "L.output_adapter_front",
+        "sha256": "9a9c50a9fd3baa59b0d584723f5f9be35e07f049a82bdcc0a3eb28650094f0ca"
+      },
+      {
+        "name": "R.output_adapter_front",
+        "sha256": "895e7da4a2db32008207f4673dd53a068862011e6f435c0f0b69f9f828578e42"
+      },
+      {
+        "name": "L.output_adapter_rear",
+        "sha256": "4b6d4dbb158703de53358f489389dbfebbe798b088b464d67b421f88ee0f8062"
+      },
+      {
+        "name": "R.output_adapter_rear",
+        "sha256": "e74d3ad81339531245bf6fed840782a029ed31e6f51b2624a42829fa1fac75d3"
+      },
+      {
+        "name": "L.upper_link_front",
+        "sha256": "916b12208f2fc935e234345761c08d9ca243c0ebb13ccbbd95c0c4d0505d4208"
+      },
+      {
+        "name": "R.upper_link_front",
+        "sha256": "577e0e783a7766119f8aca1eada793ca4915d52b9498750c46529237a506d4d1"
+      },
+      {
+        "name": "L.upper_link_rear",
+        "sha256": "4be8e6aad9d44eca988456887be130a9d09d5204685f2ec8962895e3744a423d"
+      },
+      {
+        "name": "R.upper_link_rear",
+        "sha256": "2959aedd302245d030d232eb42832cd422e61655841dc28c1f4208a06b83615a"
+      },
+      {
+        "name": "L.front_link",
+        "sha256": "ba45c6c10108a8d4adcc22b2bb719719c6976b5d6e86ad6d3be14a7b3296d8af"
+      },
+      {
+        "name": "R.front_link",
+        "sha256": "6dd7977037abbc1394b4982cb9c94dffac780a3d6a1d3633892b95546dacfeca"
+      },
+      {
+        "name": "L.wheel_link",
+        "sha256": "4848998ab00fa52cc5a55bb7a0614ac4023a4109aa40e6f8feb15d0a646aedf2"
+      },
+      {
+        "name": "R.wheel_link",
+        "sha256": "f809311155e1dc4d860fec81bb388fecad9ad9eac5b61dcc77d6d6b8f71f2e47"
+      },
+      {
+        "name": "L.stop_sleeve_1",
+        "sha256": "9b2c00afff971a04e3dc73530a6f501d86d29154f8fb55f9ece7b9c9723b8f8a"
+      },
+      {
+        "name": "R.stop_sleeve_1",
+        "sha256": "9500ea86d04a61dd4eb5cf8a87385a56b9694df1de864cb3fd6152faaa3c012e"
+      },
+      {
+        "name": "L.stop_sleeve_2",
+        "sha256": "46e7da006b830ab5e48e64a61380cc90586204ac9bfced50b55549dd7eda590e"
+      },
+      {
+        "name": "R.stop_sleeve_2",
+        "sha256": "852e9e9348679aaa49d4ddb3bad7ed399c66fe1caa7174bde2de6fff51a924aa"
+      },
+      {
+        "name": "L.stop_sleeve_3",
+        "sha256": "2ca6411e8377c499baaba40775fa58d3429524ed19211ad8523181d1ed24d169"
+      },
+      {
+        "name": "R.stop_sleeve_3",
+        "sha256": "9616cc54ce820727f99cf4bc40f5bb7c067ecc2f3c07193c5688a3922c3a2a70"
+      },
+      {
+        "name": "L.stop_sleeve_4",
+        "sha256": "2be86e6de774a136220e054bf67529fbe870861c30af51c07a65d1ce2e3403c1"
+      },
+      {
+        "name": "R.stop_sleeve_4",
+        "sha256": "cf0d7d2cc40630528a7b64083732a298fedf224e5c931195b8b2a5eea2cb1bd8"
+      },
+      {
+        "name": "L.apex_spacer",
+        "sha256": "77ab9e8fa7f3a6cc83b76bc7581f71f0751b765595bdde569d0ae36f643a8b88"
+      },
+      {
+        "name": "R.apex_spacer",
+        "sha256": "b5ccb2686662e2c9d36d4cecc0287aad3299576fa4e2c4959ed7a1d2c4c37c64"
+      },
+      {
+        "name": "L.motor_front",
+        "sha256": "f9cb266260840ccd91909e8d11aa515b36e009794666b5fb6d41fb71cdc094cb"
+      },
+      {
+        "name": "R.motor_front",
+        "sha256": "2da11562329d41b3859410435f2dfab8d08f6d4d8848fb029cc6c5e4bfd16fd7"
+      },
+      {
+        "name": "L.bearing_61812_front",
+        "sha256": "a2537430cd319c9c0669243d84c792c0f73fcf5ab0ef01f10f5af448fdc88b9a"
+      },
+      {
+        "name": "R.bearing_61812_front",
+        "sha256": "7536d5a9ba997d64dbf51bc6d84977e4e35b504d80b4a2686203a6dfd1936b24"
+      },
+      {
+        "name": "L.motor_rear",
+        "sha256": "70552dab96f023e222bfc911db2dd392150ae3d7b350ecd1b1a5ae3a931a0846"
+      },
+      {
+        "name": "R.motor_rear",
+        "sha256": "e40c7c0c7c4befc52eb520928757886bbc26da74966c3c91477470c656916363"
+      },
+      {
+        "name": "L.bearing_61812_rear",
+        "sha256": "50946e32bc052c053d776d11c87ae5a6a1229b6b334b9e7d684c6a1223fa9842"
+      },
+      {
+        "name": "R.bearing_61812_rear",
+        "sha256": "d157738bf722e33abd590815a48fa3df9024969366603e8dff3df9af1fee53b4"
+      },
+      {
+        "name": "L.knee_bearing_front_in",
+        "sha256": "3c6bb3eb8d78e635c3f3a80be1dcf0f0c5f356bee1d906360016989db5b9dd20"
+      },
+      {
+        "name": "R.knee_bearing_front_in",
+        "sha256": "b4d206ba08b86250233d459eeb50f9fed9206415721ed4aca0cbf6481f63a64a"
+      },
+      {
+        "name": "L.knee_bearing_front_out",
+        "sha256": "70815bc9a3c417365a43acdf29c2e4d89e124c2ab2bcc058ce4fcd3f60c7da9d"
+      },
+      {
+        "name": "R.knee_bearing_front_out",
+        "sha256": "0ec8a1f7dbd94fc5c3a87b8ab7ab287d75acb627024121d1dc7b81b4cf4f7ab6"
+      },
+      {
+        "name": "L.knee_pin_front",
+        "sha256": "28bcf22929f8fc0b02fa3b89789373209b7c61621e813c92a40c51c4c7e9ad89"
+      },
+      {
+        "name": "R.knee_pin_front",
+        "sha256": "396b9a4bd4bd8627d0d7f1d94e3a5f0537ddf972221ff25aa13d603b2eabc2e6"
+      },
+      {
+        "name": "L.knee_washer_front",
+        "sha256": "7048d3b1b74351f478e3140dc40fe08d7ef15907556033ffaad05ac99e0df714"
+      },
+      {
+        "name": "R.knee_washer_front",
+        "sha256": "e646850176a99c295c9974049eec0a3a28a14e9b698a546cb5ebc79414467d3e"
+      },
+      {
+        "name": "L.knee_spacer_front",
+        "sha256": "34aacb82d73900f88b12772282832ebc7cb68a8c7c9dac96dde5c7f1aecf3cbe"
+      },
+      {
+        "name": "R.knee_spacer_front",
+        "sha256": "2086833b022fb49dddea1ee9340176d5314b4810ee48d2c388c1f42ea37fc510"
+      },
+      {
+        "name": "L.knee_bearing_rear_in",
+        "sha256": "4990dc704ca1ea555e28e10c9145a29949747af4d1463660f0379b51e9eac46f"
+      },
+      {
+        "name": "R.knee_bearing_rear_in",
+        "sha256": "6e6d5e7dd4ced53892c1e8fe614600b2e1d562146b67a05f3d6800f5aa2fbc46"
+      },
+      {
+        "name": "L.knee_bearing_rear_out",
+        "sha256": "9a4a150dad6a6ed16ca8af35450a7cea69b014c33ccc68be64eaf68edb6b951e"
+      },
+      {
+        "name": "R.knee_bearing_rear_out",
+        "sha256": "d8132d83bd94ca37cb73fee495e295d891f9669ddd4a37f8b4d330e6bc100d94"
+      },
+      {
+        "name": "L.knee_pin_rear",
+        "sha256": "5001bab41d7e61d86ac97b01e65850a560bde754f4d73efd9436ebf97c9fd3fb"
+      },
+      {
+        "name": "R.knee_pin_rear",
+        "sha256": "74cada7fec04b14c3e8d0331c64cabb04ce92c984f7817b5ad47d020a4cde135"
+      },
+      {
+        "name": "L.knee_washer_rear",
+        "sha256": "bc581cd2a61e524712b03e2bea8fcecc682772e071cf9c19cedcefe7ba3592e5"
+      },
+      {
+        "name": "R.knee_washer_rear",
+        "sha256": "18b700c08f82f32c8ea14c46c551d9ce222aee38ad0bd537778fe912f6ea7c0c"
+      },
+      {
+        "name": "L.knee_spacer_rear",
+        "sha256": "e25ea76982c9b31f2ba0e4373bf9d9a2276dc26a557b175b4a5975129c8ee144"
+      },
+      {
+        "name": "R.knee_spacer_rear",
+        "sha256": "58b64079e473cf03b55907f2e982e5aa6f8aac373bccd81988e23391074a780c"
+      },
+      {
+        "name": "L.eye_sleeve_front",
+        "sha256": "fc770ead0e04355f0889f15dc11ca1cf97361d0266a21a13e3a5193d96b248a2"
+      },
+      {
+        "name": "R.eye_sleeve_front",
+        "sha256": "d7ebe168fb324b25b5025a64c245e23dc8ff672aa3426213449d2fd3b1980025"
+      },
+      {
+        "name": "L.knee_nut_upper_front",
+        "sha256": "af62907c1c660587ccaf2206ae56c22711742624e5aac69ed70461c7b23f518d"
+      },
+      {
+        "name": "R.knee_nut_upper_front",
+        "sha256": "4829b830f28c138c8557896e47277a30ea6679234526be4c62a19bb255d72c92"
+      },
+      {
+        "name": "L.eye_sleeve_rear",
+        "sha256": "e0c2c84b427ded20e12a3e8af17c9b29c41a9028928ba8d526e4dcdea5968d11"
+      },
+      {
+        "name": "R.eye_sleeve_rear",
+        "sha256": "2d1d8416176ec5d40014517cecb6f08aa71fd0269fb9ce9ac2da857b7caef111"
+      },
+      {
+        "name": "L.knee_nut_upper_rear",
+        "sha256": "b50b109e8cbe3b733f5afaa8bacc4e46e479975bc2eb4937b0ea808583696bdc"
+      },
+      {
+        "name": "R.knee_nut_upper_rear",
+        "sha256": "a3889a6f81efb4259622754cbf6141cf91b670ff7baff367de61adb03b729477"
+      },
+      {
+        "name": "L.apex_61812",
+        "sha256": "0b4e6de90116640a50ee896a63e0ccea1d9e191ed9e1017f423dfa95876884cc"
+      },
+      {
+        "name": "R.apex_61812",
+        "sha256": "e0a2cc817803022bbd39a6f29be6c59c64389ef6f6023ea788cb55adcac495be"
+      },
+      {
+        "name": "L.apex_circlip",
+        "sha256": "067552dfbff3ec5e384a4faec7517ddd31214414b9b666f19f7f881dfa3ece0d"
+      },
+      {
+        "name": "R.apex_circlip",
+        "sha256": "490fdb60e949cdf6d004ea2f4d4e88485bf89ec4d87f405c88b3c12e128e097a"
+      },
+      {
+        "name": "L.stop_posts",
+        "sha256": "b907581e302a81c041f61ee9216f9e1d31d4185e197b4cef45be03886e1a1ba4"
+      },
+      {
+        "name": "R.stop_posts",
+        "sha256": "af80bb13935cf7a723d06070009774fc0914e2da41167636cb57512f884ad9d4"
+      },
+      {
+        "name": "L.screws_lugs",
+        "sha256": "36578f419554725f9f9d811ef04cf1c5b2f74bdb944699d7e9e780681f89ba3b"
+      },
+      {
+        "name": "R.screws_lugs",
+        "sha256": "09fa23212205a051142471e7f0d3f7927e84f3b4e423aabda97b3232720faad8"
+      },
+      {
+        "name": "L.screws_links",
+        "sha256": "a93ea3bab019f22e3d148b1411bdf40d92453531f374fc645e64ebc28df9bc06"
+      },
+      {
+        "name": "R.screws_links",
+        "sha256": "6892799609d6da039156a6e1a75583b023cfac0c9e64ef52d1b6746992fe70bc"
+      },
+      {
+        "name": "L.screws_outputs",
+        "sha256": "cceceb30827ef8c1db511540368cfd03f80a56c842cbcb9808f01e8811f6a588"
+      },
+      {
+        "name": "R.screws_outputs",
+        "sha256": "bd4f56df96ed866800aa830a9d4d978fe8940a4cbe910a6b8201d390f7007caf"
+      },
+      {
+        "name": "L.screws_wheel",
+        "sha256": "9014811634a8f023c068edee941cf44cb5ae97c45f8e1c6fd0fdba25ff786488"
+      },
+      {
+        "name": "R.screws_wheel",
+        "sha256": "cbd3d315e44b0302bfd8a35deb3efd0bc58002adbdd2e4ead109913f62e7a9ee"
+      },
+      {
+        "name": "L.washers_wheel",
+        "sha256": "1d16fd728c56a85986f9b1274a67e1ffba79f31ecd2e6dc31cdc2c9b37eb018b"
+      },
+      {
+        "name": "R.washers_wheel",
+        "sha256": "f7c0dc783819ba64469db2f62b8e38c78533f9c12cf2c6791788aa6cbd5c55b1"
+      },
+      {
+        "name": "L.wheel_tyre",
+        "sha256": "62d01ddbc12ab80beb4d91292d33ba39eb297fe52a4d67f9b7413d5d3fd3edfa"
+      },
+      {
+        "name": "R.wheel_tyre",
+        "sha256": "1ad087113ec1af6acde22527d25a3bfb49bf5ec368f3493f8d9fd75eb5b5ec0f"
+      },
+      {
+        "name": "L.wheel_hub",
+        "sha256": "7ba20d8e561585a9f44b5a4f4adcdb5cdf209dd0b7cba98fca22ed5fad8e1c05"
+      },
+      {
+        "name": "R.wheel_hub",
+        "sha256": "96e4288e84ffe8a5d1599d258168107d835546410b1beb2bdcc98583e7bbf994"
+      },
+      {
+        "name": "item.vlp16_housing",
+        "sha256": "dd634218f8876423f7f691f1e4084de588c69963d3788ba0b5a2afe2d7ab7656"
+      },
+      {
+        "name": "item.vlp16_window",
+        "sha256": "b8701104e7e5601166c28d6e03a0289e30b03e4ca664e7fda5ccf3aadf730b29"
+      }
+    ]
+  },
+  "raw_report_sha256": "f4c1dedb847dbb072d40f01fee412f314ee22ae4d6bfb8a411839ff570a92512",
+  "existing_scope_cases": [
+    "actual motor/hip and output-screw dependencies plus inboard wheel-fastener vertices on both sides",
+    "authored one-instance arrival, real moving offsets, pause/resume, speed, loop, manual navigation, reduced motion, background and disposal without completion writes"
+  ],
+  "targeted_arrivals": [
+    {
+      "case": "bounded source-supported arrival",
+      "name": "L.motor_front",
+      "state": {
+        "status": "paused",
+        "stepId": "l-motors",
+        "partId": "L.motor_front",
+        "operationIndex": 36,
+        "elapsedMs": 500,
+        "progress": 0.45454545454545453,
+        "speed": 1,
+        "loop": false
+      },
+      "offset": [
+        0,
+        32.72727272727273,
+        0
+      ],
+      "delta": [
+        [
+          0,
+          0,
+          -0.03272727272727273
+        ],
+        [
+          0,
+          0,
+          -0.03272727272727273
+        ],
+        [
+          0,
+          0,
+          -0.03272727272727273
+        ],
+        [
+          0,
+          0,
+          -0.03272727272727273
+        ],
+        [
+          0,
+          0,
+          -0.03272727272727273
+        ],
+        [
+          0,
+          0,
+          -0.03272727272727273
+        ],
+        [
+          0,
+          0,
+          -0.03272727272727273
+        ],
+        [
+          0,
+          0,
+          -0.03272727272727273
+        ],
+        [
+          0,
+          0,
+          -0.03272727272727273
+        ],
+        [
+          0,
+          0,
+          -0.03272727272727273
+        ],
+        [
+          0,
+          0,
+          -0.03272727272727273
+        ],
+        [
+          0,
+          0,
+          -0.03272727272727273
+        ],
+        [
+          0,
+          0,
+          -0.03272727272727273
+        ],
+        [
+          0,
+          0,
+          -0.03272727272727273
+        ],
+        [
+          0,
+          0,
+          -0.03272727272727273
+        ],
+        [
+          0,
+          0,
+          -0.03272727272727273
+        ]
+      ],
+      "visible": [
+        "cheek_left",
+        "cheek_right",
+        "spacers",
+        "spacer_screws",
+        "floor_tray",
+        "belly_plate",
+        "bay_floor",
+        "bay_side_l",
+        "bay_side_r",
+        "bay_rail_l",
+        "bay_rail_r",
+        "adapter_plate_front",
+        "adapter_plate_rear",
+        "bay_skid_1",
+        "bay_skid_2",
+        "bay_skid_3",
+        "bay_skid_4",
+        "post_1",
+        "post_2",
+        "post_3",
+        "post_4",
+        "isolator_1",
+        "isolator_2",
+        "isolator_3",
+        "isolator_4",
+        "compute_pallet",
+        "plate_post_1",
+        "plate_post_2",
+        "plate_post_3",
+        "plate_post_4",
+        "power_plate",
+        "dcdc_bracket",
+        "bus_insulator_1",
+        "bus_insulator_2",
+        "bus_bar_1",
+        "bus_bar_2",
+        "L.motor_front"
+      ],
+      "absent": "L.hip_frame",
+      "authored": [
+        0,
+        60,
+        0
+      ],
+      "expected": [
+        0,
+        0,
+        -0.03272727272727272
+      ]
+    },
+    {
+      "case": "bounded source-supported arrival",
+      "name": "L.screws_outputs",
+      "state": {
+        "status": "paused",
+        "stepId": "l-upper",
+        "partId": "L.screws_outputs",
+        "operationIndex": 46,
+        "elapsedMs": 500,
+        "progress": 0.45454545454545453,
+        "speed": 1,
+        "loop": false
+      },
+      "offset": [
+        0,
+        32.72727272727273,
+        0
+      ],
+      "delta": [
+        [
+          0,
+          0,
+          -0.032727272727272744
+        ],
+        [
+          0,
+          0,
+          -0.032727272727272744
+        ],
+        [
+          0,
+          0,
+          -0.032727272727272744
+        ],
+        [
+          0,
+          0,
+          -0.032727272727272744
+        ],
+        [
+          0,
+          0,
+          -0.03272727272727273
+        ],
+        [
+          0,
+          0,
+          -0.03272727272727273
+        ],
+        [
+          0,
+          0,
+          -0.032727272727272744
+        ],
+        [
+          0,
+          0,
+          -0.032727272727272744
+        ],
+        [
+          0,
+          0,
+          -0.032727272727272744
+        ],
+        [
+          0,
+          0,
+          -0.03272727272727273
+        ],
+        [
+          0,
+          0,
+          -0.03272727272727273
+        ],
+        [
+          0,
+          0,
+          -0.032727272727272744
+        ],
+        [
+          0,
+          0,
+          -0.032727272727272744
+        ],
+        [
+          0,
+          0,
+          -0.032727272727272744
+        ],
+        [
+          0,
+          0,
+          -0.032727272727272744
+        ],
+        [
+          0,
+          0,
+          -0.03272727272727273
+        ]
+      ],
+      "visible": [
+        "cheek_left",
+        "cheek_right",
+        "spacers",
+        "spacer_screws",
+        "floor_tray",
+        "belly_plate",
+        "bay_floor",
+        "bay_side_l",
+        "bay_side_r",
+        "bay_rail_l",
+        "bay_rail_r",
+        "adapter_plate_front",
+        "adapter_plate_rear",
+        "bay_skid_1",
+        "bay_skid_2",
+        "bay_skid_3",
+        "bay_skid_4",
+        "post_1",
+        "post_2",
+        "post_3",
+        "post_4",
+        "isolator_1",
+        "isolator_2",
+        "isolator_3",
+        "isolator_4",
+        "compute_pallet",
+        "plate_post_1",
+        "plate_post_2",
+        "plate_post_3",
+        "plate_post_4",
+        "power_plate",
+        "dcdc_bracket",
+        "bus_insulator_1",
+        "bus_insulator_2",
+        "bus_bar_1",
+        "bus_bar_2",
+        "L.motor_front",
+        "L.motor_rear",
+        "L.hip_frame",
+        "L.bearing_61812_front",
+        "L.bearing_61812_rear",
+        "frame_screws_left",
+        "cheek_nuts_left",
+        "L.screws_lugs",
+        "L.output_adapter_front",
+        "L.output_adapter_rear",
+        "L.screws_outputs"
+      ],
+      "absent": "L.upper_link_front",
+      "authored": [
+        0,
+        60,
+        0
+      ],
+      "expected": [
+        0,
+        0,
+        -0.03272727272727272
+      ]
+    },
+    {
+      "case": "bounded source-supported arrival",
+      "name": "L.washers_wheel",
+      "state": {
+        "status": "paused",
+        "stepId": "l-wheel",
+        "partId": "L.washers_wheel",
+        "operationIndex": 71,
+        "elapsedMs": 500,
+        "progress": 0.45454545454545453,
+        "speed": 1,
+        "loop": false
+      },
+      "offset": [
+        0,
+        -32.72727272727273,
+        0
+      ],
+      "delta": [
+        [
+          0,
+          0,
+          0.032727272727272716
+        ],
+        [
+          0,
+          0,
+          0.032727272727272716
+        ],
+        [
+          0,
+          0,
+          0.032727272727272716
+        ],
+        [
+          0,
+          0,
+          0.032727272727272716
+        ],
+        [
+          0,
+          0,
+          0.032727272727272716
+        ],
+        [
+          0,
+          0,
+          0.032727272727272716
+        ],
+        [
+          0,
+          0,
+          0.032727272727272716
+        ],
+        [
+          0,
+          0,
+          0.032727272727272716
+        ],
+        [
+          0,
+          0,
+          0.032727272727272744
+        ],
+        [
+          0,
+          0,
+          0.032727272727272716
+        ],
+        [
+          0,
+          0,
+          0.032727272727272744
+        ],
+        [
+          0,
+          0,
+          0.032727272727272744
+        ],
+        [
+          0,
+          0,
+          0.032727272727272744
+        ],
+        [
+          0,
+          0,
+          0.032727272727272744
+        ],
+        [
+          0,
+          0,
+          0.032727272727272744
+        ],
+        [
+          0,
+          0,
+          0.032727272727272744
+        ]
+      ],
+      "visible": [
+        "cheek_left",
+        "cheek_right",
+        "spacers",
+        "spacer_screws",
+        "floor_tray",
+        "belly_plate",
+        "bay_floor",
+        "bay_side_l",
+        "bay_side_r",
+        "bay_rail_l",
+        "bay_rail_r",
+        "adapter_plate_front",
+        "adapter_plate_rear",
+        "bay_skid_1",
+        "bay_skid_2",
+        "bay_skid_3",
+        "bay_skid_4",
+        "post_1",
+        "post_2",
+        "post_3",
+        "post_4",
+        "isolator_1",
+        "isolator_2",
+        "isolator_3",
+        "isolator_4",
+        "compute_pallet",
+        "plate_post_1",
+        "plate_post_2",
+        "plate_post_3",
+        "plate_post_4",
+        "power_plate",
+        "dcdc_bracket",
+        "bus_insulator_1",
+        "bus_insulator_2",
+        "bus_bar_1",
+        "bus_bar_2",
+        "L.motor_front",
+        "L.motor_rear",
+        "L.hip_frame",
+        "L.bearing_61812_front",
+        "L.bearing_61812_rear",
+        "frame_screws_left",
+        "cheek_nuts_left",
+        "L.screws_lugs",
+        "L.output_adapter_front",
+        "L.output_adapter_rear",
+        "L.screws_outputs",
+        "L.upper_link_front",
+        "L.upper_link_rear",
+        "L.screws_links",
+        "L.front_link",
+        "L.knee_bearing_front_in",
+        "L.knee_bearing_front_out",
+        "L.knee_spacer_front",
+        "L.eye_sleeve_front",
+        "L.knee_washer_front",
+        "L.knee_pin_front",
+        "L.knee_nut_upper_front",
+        "L.wheel_link",
+        "L.knee_bearing_rear_in",
+        "L.knee_bearing_rear_out",
+        "L.knee_spacer_rear",
+        "L.eye_sleeve_rear",
+        "L.knee_washer_rear",
+        "L.knee_pin_rear",
+        "L.knee_nut_upper_rear",
+        "L.apex_spacer",
+        "L.apex_61812",
+        "L.apex_circlip",
+        "L.wheel_hub",
+        "L.wheel_tyre",
+        "L.washers_wheel"
+      ],
+      "absent": null,
+      "authored": [
+        0,
+        -60,
+        0
+      ],
+      "expected": [
+        0,
+        0,
+        0.03272727272727272
+      ]
+    },
+    {
+      "case": "bounded source-supported arrival",
+      "name": "L.screws_wheel",
+      "state": {
+        "status": "paused",
+        "stepId": "l-wheel",
+        "partId": "L.screws_wheel",
+        "operationIndex": 72,
+        "elapsedMs": 500,
+        "progress": 0.45454545454545453,
+        "speed": 1,
+        "loop": false
+      },
+      "offset": [
+        0,
+        -32.72727272727273,
+        0
+      ],
+      "delta": [
+        [
+          0,
+          0,
+          0.032727272727272716
+        ],
+        [
+          0,
+          0,
+          0.032727272727272716
+        ],
+        [
+          0,
+          0,
+          0.032727272727272716
+        ],
+        [
+          0,
+          0,
+          0.032727272727272716
+        ],
+        [
+          0,
+          0,
+          0.032727272727272716
+        ],
+        [
+          0,
+          0,
+          0.032727272727272716
+        ],
+        [
+          0,
+          0,
+          0.032727272727272716
+        ],
+        [
+          0,
+          0,
+          0.032727272727272716
+        ],
+        [
+          0,
+          0,
+          0.032727272727272744
+        ],
+        [
+          0,
+          0,
+          0.032727272727272744
+        ],
+        [
+          0,
+          0,
+          0.032727272727272744
+        ],
+        [
+          0,
+          0,
+          0.032727272727272744
+        ],
+        [
+          0,
+          0,
+          0.032727272727272744
+        ],
+        [
+          0,
+          0,
+          0.032727272727272744
+        ],
+        [
+          0,
+          0,
+          0.032727272727272744
+        ],
+        [
+          0,
+          0,
+          0.032727272727272744
+        ]
+      ],
+      "visible": [
+        "cheek_left",
+        "cheek_right",
+        "spacers",
+        "spacer_screws",
+        "floor_tray",
+        "belly_plate",
+        "bay_floor",
+        "bay_side_l",
+        "bay_side_r",
+        "bay_rail_l",
+        "bay_rail_r",
+        "adapter_plate_front",
+        "adapter_plate_rear",
+        "bay_skid_1",
+        "bay_skid_2",
+        "bay_skid_3",
+        "bay_skid_4",
+        "post_1",
+        "post_2",
+        "post_3",
+        "post_4",
+        "isolator_1",
+        "isolator_2",
+        "isolator_3",
+        "isolator_4",
+        "compute_pallet",
+        "plate_post_1",
+        "plate_post_2",
+        "plate_post_3",
+        "plate_post_4",
+        "power_plate",
+        "dcdc_bracket",
+        "bus_insulator_1",
+        "bus_insulator_2",
+        "bus_bar_1",
+        "bus_bar_2",
+        "L.motor_front",
+        "L.motor_rear",
+        "L.hip_frame",
+        "L.bearing_61812_front",
+        "L.bearing_61812_rear",
+        "frame_screws_left",
+        "cheek_nuts_left",
+        "L.screws_lugs",
+        "L.output_adapter_front",
+        "L.output_adapter_rear",
+        "L.screws_outputs",
+        "L.upper_link_front",
+        "L.upper_link_rear",
+        "L.screws_links",
+        "L.front_link",
+        "L.knee_bearing_front_in",
+        "L.knee_bearing_front_out",
+        "L.knee_spacer_front",
+        "L.eye_sleeve_front",
+        "L.knee_washer_front",
+        "L.knee_pin_front",
+        "L.knee_nut_upper_front",
+        "L.wheel_link",
+        "L.knee_bearing_rear_in",
+        "L.knee_bearing_rear_out",
+        "L.knee_spacer_rear",
+        "L.eye_sleeve_rear",
+        "L.knee_washer_rear",
+        "L.knee_pin_rear",
+        "L.knee_nut_upper_rear",
+        "L.apex_spacer",
+        "L.apex_61812",
+        "L.apex_circlip",
+        "L.wheel_hub",
+        "L.wheel_tyre",
+        "L.washers_wheel",
+        "L.screws_wheel"
+      ],
+      "absent": null,
+      "authored": [
+        0,
+        -60,
+        0
+      ],
+      "expected": [
+        0,
+        0,
+        0.03272727272727272
+      ]
+    },
+    {
+      "case": "bounded source-supported arrival",
+      "name": "R.motor_front",
+      "state": {
+        "status": "paused",
+        "stepId": "r-motors",
+        "partId": "R.motor_front",
+        "operationIndex": 78,
+        "elapsedMs": 500,
+        "progress": 0.45454545454545453,
+        "speed": 1,
+        "loop": false
+      },
+      "offset": [
+        0,
+        -32.72727272727273,
+        0
+      ],
+      "delta": [
+        [
+          0,
+          0,
+          0.03272727272727273
+        ],
+        [
+          0,
+          0,
+          0.03272727272727273
+        ],
+        [
+          0,
+          0,
+          0.03272727272727273
+        ],
+        [
+          0,
+          0,
+          0.03272727272727273
+        ],
+        [
+          0,
+          0,
+          0.03272727272727273
+        ],
+        [
+          0,
+          0,
+          0.03272727272727273
+        ],
+        [
+          0,
+          0,
+          0.03272727272727273
+        ],
+        [
+          0,
+          0,
+          0.03272727272727273
+        ],
+        [
+          0,
+          0,
+          0.03272727272727273
+        ],
+        [
+          0,
+          0,
+          0.03272727272727273
+        ],
+        [
+          0,
+          0,
+          0.03272727272727273
+        ],
+        [
+          0,
+          0,
+          0.03272727272727273
+        ],
+        [
+          0,
+          0,
+          0.03272727272727273
+        ],
+        [
+          0,
+          0,
+          0.03272727272727273
+        ],
+        [
+          0,
+          0,
+          0.03272727272727273
+        ],
+        [
+          0,
+          0,
+          0.03272727272727273
+        ]
+      ],
+      "visible": [
+        "cheek_left",
+        "cheek_right",
+        "spacers",
+        "spacer_screws",
+        "floor_tray",
+        "belly_plate",
+        "bay_floor",
+        "bay_side_l",
+        "bay_side_r",
+        "bay_rail_l",
+        "bay_rail_r",
+        "adapter_plate_front",
+        "adapter_plate_rear",
+        "bay_skid_1",
+        "bay_skid_2",
+        "bay_skid_3",
+        "bay_skid_4",
+        "post_1",
+        "post_2",
+        "post_3",
+        "post_4",
+        "isolator_1",
+        "isolator_2",
+        "isolator_3",
+        "isolator_4",
+        "compute_pallet",
+        "plate_post_1",
+        "plate_post_2",
+        "plate_post_3",
+        "plate_post_4",
+        "power_plate",
+        "dcdc_bracket",
+        "bus_insulator_1",
+        "bus_insulator_2",
+        "bus_bar_1",
+        "bus_bar_2",
+        "L.motor_front",
+        "L.motor_rear",
+        "L.hip_frame",
+        "L.bearing_61812_front",
+        "L.bearing_61812_rear",
+        "frame_screws_left",
+        "cheek_nuts_left",
+        "L.screws_lugs",
+        "L.output_adapter_front",
+        "L.output_adapter_rear",
+        "L.screws_outputs",
+        "L.upper_link_front",
+        "L.upper_link_rear",
+        "L.screws_links",
+        "L.front_link",
+        "L.knee_bearing_front_in",
+        "L.knee_bearing_front_out",
+        "L.knee_spacer_front",
+        "L.eye_sleeve_front",
+        "L.knee_washer_front",
+        "L.knee_pin_front",
+        "L.knee_nut_upper_front",
+        "L.wheel_link",
+        "L.knee_bearing_rear_in",
+        "L.knee_bearing_rear_out",
+        "L.knee_spacer_rear",
+        "L.eye_sleeve_rear",
+        "L.knee_washer_rear",
+        "L.knee_pin_rear",
+        "L.knee_nut_upper_rear",
+        "L.apex_spacer",
+        "L.apex_61812",
+        "L.apex_circlip",
+        "L.wheel_hub",
+        "L.wheel_tyre",
+        "L.washers_wheel",
+        "L.screws_wheel",
+        "L.stop_posts",
+        "L.stop_sleeve_1",
+        "L.stop_sleeve_2",
+        "L.stop_sleeve_3",
+        "L.stop_sleeve_4",
+        "R.motor_front"
+      ],
+      "absent": "R.hip_frame",
+      "authored": [
+        0,
+        -60,
+        0
+      ],
+      "expected": [
+        0,
+        0,
+        0.03272727272727272
+      ]
+    },
+    {
+      "case": "bounded source-supported arrival",
+      "name": "R.screws_outputs",
+      "state": {
+        "status": "paused",
+        "stepId": "r-upper",
+        "partId": "R.screws_outputs",
+        "operationIndex": 88,
+        "elapsedMs": 500,
+        "progress": 0.45454545454545453,
+        "speed": 1,
+        "loop": false
+      },
+      "offset": [
+        0,
+        -32.72727272727273,
+        0
+      ],
+      "delta": [
+        [
+          0,
+          0,
+          0.032727272727272716
+        ],
+        [
+          0,
+          0,
+          0.032727272727272716
+        ],
+        [
+          0,
+          0,
+          0.032727272727272716
+        ],
+        [
+          0,
+          0,
+          0.032727272727272716
+        ],
+        [
+          0,
+          0,
+          0.03272727272727273
+        ],
+        [
+          0,
+          0,
+          0.03272727272727273
+        ],
+        [
+          0,
+          0,
+          0.032727272727272716
+        ],
+        [
+          0,
+          0,
+          0.032727272727272716
+        ],
+        [
+          0,
+          0,
+          0.032727272727272716
+        ],
+        [
+          0,
+          0,
+          0.03272727272727273
+        ],
+        [
+          0,
+          0,
+          0.03272727272727273
+        ],
+        [
+          0,
+          0,
+          0.032727272727272716
+        ],
+        [
+          0,
+          0,
+          0.032727272727272716
+        ],
+        [
+          0,
+          0,
+          0.032727272727272716
+        ],
+        [
+          0,
+          0,
+          0.032727272727272716
+        ],
+        [
+          0,
+          0,
+          0.03272727272727273
+        ]
+      ],
+      "visible": [
+        "cheek_left",
+        "cheek_right",
+        "spacers",
+        "spacer_screws",
+        "floor_tray",
+        "belly_plate",
+        "bay_floor",
+        "bay_side_l",
+        "bay_side_r",
+        "bay_rail_l",
+        "bay_rail_r",
+        "adapter_plate_front",
+        "adapter_plate_rear",
+        "bay_skid_1",
+        "bay_skid_2",
+        "bay_skid_3",
+        "bay_skid_4",
+        "post_1",
+        "post_2",
+        "post_3",
+        "post_4",
+        "isolator_1",
+        "isolator_2",
+        "isolator_3",
+        "isolator_4",
+        "compute_pallet",
+        "plate_post_1",
+        "plate_post_2",
+        "plate_post_3",
+        "plate_post_4",
+        "power_plate",
+        "dcdc_bracket",
+        "bus_insulator_1",
+        "bus_insulator_2",
+        "bus_bar_1",
+        "bus_bar_2",
+        "L.motor_front",
+        "L.motor_rear",
+        "L.hip_frame",
+        "L.bearing_61812_front",
+        "L.bearing_61812_rear",
+        "frame_screws_left",
+        "cheek_nuts_left",
+        "L.screws_lugs",
+        "L.output_adapter_front",
+        "L.output_adapter_rear",
+        "L.screws_outputs",
+        "L.upper_link_front",
+        "L.upper_link_rear",
+        "L.screws_links",
+        "L.front_link",
+        "L.knee_bearing_front_in",
+        "L.knee_bearing_front_out",
+        "L.knee_spacer_front",
+        "L.eye_sleeve_front",
+        "L.knee_washer_front",
+        "L.knee_pin_front",
+        "L.knee_nut_upper_front",
+        "L.wheel_link",
+        "L.knee_bearing_rear_in",
+        "L.knee_bearing_rear_out",
+        "L.knee_spacer_rear",
+        "L.eye_sleeve_rear",
+        "L.knee_washer_rear",
+        "L.knee_pin_rear",
+        "L.knee_nut_upper_rear",
+        "L.apex_spacer",
+        "L.apex_61812",
+        "L.apex_circlip",
+        "L.wheel_hub",
+        "L.wheel_tyre",
+        "L.washers_wheel",
+        "L.screws_wheel",
+        "L.stop_posts",
+        "L.stop_sleeve_1",
+        "L.stop_sleeve_2",
+        "L.stop_sleeve_3",
+        "L.stop_sleeve_4",
+        "R.motor_front",
+        "R.motor_rear",
+        "R.hip_frame",
+        "R.bearing_61812_front",
+        "R.bearing_61812_rear",
+        "frame_screws_right",
+        "cheek_nuts_right",
+        "R.screws_lugs",
+        "R.output_adapter_front",
+        "R.output_adapter_rear",
+        "R.screws_outputs"
+      ],
+      "absent": "R.upper_link_front",
+      "authored": [
+        0,
+        -60,
+        0
+      ],
+      "expected": [
+        0,
+        0,
+        0.03272727272727272
+      ]
+    },
+    {
+      "case": "bounded source-supported arrival",
+      "name": "R.washers_wheel",
+      "state": {
+        "status": "paused",
+        "stepId": "r-wheel",
+        "partId": "R.washers_wheel",
+        "operationIndex": 113,
+        "elapsedMs": 500,
+        "progress": 0.45454545454545453,
+        "speed": 1,
+        "loop": false
+      },
+      "offset": [
+        0,
+        32.72727272727273,
+        0
+      ],
+      "delta": [
+        [
+          0,
+          0,
+          -0.032727272727272744
+        ],
+        [
+          0,
+          0,
+          -0.032727272727272744
+        ],
+        [
+          0,
+          0,
+          -0.032727272727272744
+        ],
+        [
+          0,
+          0,
+          -0.032727272727272744
+        ],
+        [
+          0,
+          0,
+          -0.032727272727272744
+        ],
+        [
+          0,
+          0,
+          -0.032727272727272744
+        ],
+        [
+          0,
+          0,
+          -0.032727272727272744
+        ],
+        [
+          0,
+          0,
+          -0.032727272727272744
+        ],
+        [
+          0,
+          0,
+          -0.032727272727272716
+        ],
+        [
+          0,
+          0,
+          -0.032727272727272744
+        ],
+        [
+          0,
+          0,
+          -0.032727272727272716
+        ],
+        [
+          0,
+          0,
+          -0.032727272727272716
+        ],
+        [
+          0,
+          0,
+          -0.032727272727272716
+        ],
+        [
+          0,
+          0,
+          -0.032727272727272716
+        ],
+        [
+          0,
+          0,
+          -0.032727272727272716
+        ],
+        [
+          0,
+          0,
+          -0.032727272727272716
+        ]
+      ],
+      "visible": [
+        "cheek_left",
+        "cheek_right",
+        "spacers",
+        "spacer_screws",
+        "floor_tray",
+        "belly_plate",
+        "bay_floor",
+        "bay_side_l",
+        "bay_side_r",
+        "bay_rail_l",
+        "bay_rail_r",
+        "adapter_plate_front",
+        "adapter_plate_rear",
+        "bay_skid_1",
+        "bay_skid_2",
+        "bay_skid_3",
+        "bay_skid_4",
+        "post_1",
+        "post_2",
+        "post_3",
+        "post_4",
+        "isolator_1",
+        "isolator_2",
+        "isolator_3",
+        "isolator_4",
+        "compute_pallet",
+        "plate_post_1",
+        "plate_post_2",
+        "plate_post_3",
+        "plate_post_4",
+        "power_plate",
+        "dcdc_bracket",
+        "bus_insulator_1",
+        "bus_insulator_2",
+        "bus_bar_1",
+        "bus_bar_2",
+        "L.motor_front",
+        "L.motor_rear",
+        "L.hip_frame",
+        "L.bearing_61812_front",
+        "L.bearing_61812_rear",
+        "frame_screws_left",
+        "cheek_nuts_left",
+        "L.screws_lugs",
+        "L.output_adapter_front",
+        "L.output_adapter_rear",
+        "L.screws_outputs",
+        "L.upper_link_front",
+        "L.upper_link_rear",
+        "L.screws_links",
+        "L.front_link",
+        "L.knee_bearing_front_in",
+        "L.knee_bearing_front_out",
+        "L.knee_spacer_front",
+        "L.eye_sleeve_front",
+        "L.knee_washer_front",
+        "L.knee_pin_front",
+        "L.knee_nut_upper_front",
+        "L.wheel_link",
+        "L.knee_bearing_rear_in",
+        "L.knee_bearing_rear_out",
+        "L.knee_spacer_rear",
+        "L.eye_sleeve_rear",
+        "L.knee_washer_rear",
+        "L.knee_pin_rear",
+        "L.knee_nut_upper_rear",
+        "L.apex_spacer",
+        "L.apex_61812",
+        "L.apex_circlip",
+        "L.wheel_hub",
+        "L.wheel_tyre",
+        "L.washers_wheel",
+        "L.screws_wheel",
+        "L.stop_posts",
+        "L.stop_sleeve_1",
+        "L.stop_sleeve_2",
+        "L.stop_sleeve_3",
+        "L.stop_sleeve_4",
+        "R.motor_front",
+        "R.motor_rear",
+        "R.hip_frame",
+        "R.bearing_61812_front",
+        "R.bearing_61812_rear",
+        "frame_screws_right",
+        "cheek_nuts_right",
+        "R.screws_lugs",
+        "R.output_adapter_front",
+        "R.output_adapter_rear",
+        "R.screws_outputs",
+        "R.upper_link_front",
+        "R.upper_link_rear",
+        "R.screws_links",
+        "R.front_link",
+        "R.knee_bearing_front_in",
+        "R.knee_bearing_front_out",
+        "R.knee_spacer_front",
+        "R.eye_sleeve_front",
+        "R.knee_washer_front",
+        "R.knee_pin_front",
+        "R.knee_nut_upper_front",
+        "R.wheel_link",
+        "R.knee_bearing_rear_in",
+        "R.knee_bearing_rear_out",
+        "R.knee_spacer_rear",
+        "R.eye_sleeve_rear",
+        "R.knee_washer_rear",
+        "R.knee_pin_rear",
+        "R.knee_nut_upper_rear",
+        "R.apex_spacer",
+        "R.apex_61812",
+        "R.apex_circlip",
+        "R.wheel_hub",
+        "R.wheel_tyre",
+        "R.washers_wheel"
+      ],
+      "absent": null,
+      "authored": [
+        0,
+        60,
+        0
+      ],
+      "expected": [
+        0,
+        0,
+        -0.03272727272727272
+      ]
+    },
+    {
+      "case": "bounded source-supported arrival",
+      "name": "R.screws_wheel",
+      "state": {
+        "status": "paused",
+        "stepId": "r-wheel",
+        "partId": "R.screws_wheel",
+        "operationIndex": 114,
+        "elapsedMs": 500,
+        "progress": 0.45454545454545453,
+        "speed": 1,
+        "loop": false
+      },
+      "offset": [
+        0,
+        32.72727272727273,
+        0
+      ],
+      "delta": [
+        [
+          0,
+          0,
+          -0.032727272727272744
+        ],
+        [
+          0,
+          0,
+          -0.032727272727272744
+        ],
+        [
+          0,
+          0,
+          -0.032727272727272744
+        ],
+        [
+          0,
+          0,
+          -0.032727272727272744
+        ],
+        [
+          0,
+          0,
+          -0.032727272727272744
+        ],
+        [
+          0,
+          0,
+          -0.032727272727272744
+        ],
+        [
+          0,
+          0,
+          -0.032727272727272744
+        ],
+        [
+          0,
+          0,
+          -0.032727272727272744
+        ],
+        [
+          0,
+          0,
+          -0.032727272727272716
+        ],
+        [
+          0,
+          0,
+          -0.032727272727272716
+        ],
+        [
+          0,
+          0,
+          -0.032727272727272716
+        ],
+        [
+          0,
+          0,
+          -0.032727272727272744
+        ],
+        [
+          0,
+          0,
+          -0.032727272727272716
+        ],
+        [
+          0,
+          0,
+          -0.032727272727272716
+        ],
+        [
+          0,
+          0,
+          -0.032727272727272716
+        ],
+        [
+          0,
+          0,
+          -0.032727272727272716
+        ]
+      ],
+      "visible": [
+        "cheek_left",
+        "cheek_right",
+        "spacers",
+        "spacer_screws",
+        "floor_tray",
+        "belly_plate",
+        "bay_floor",
+        "bay_side_l",
+        "bay_side_r",
+        "bay_rail_l",
+        "bay_rail_r",
+        "adapter_plate_front",
+        "adapter_plate_rear",
+        "bay_skid_1",
+        "bay_skid_2",
+        "bay_skid_3",
+        "bay_skid_4",
+        "post_1",
+        "post_2",
+        "post_3",
+        "post_4",
+        "isolator_1",
+        "isolator_2",
+        "isolator_3",
+        "isolator_4",
+        "compute_pallet",
+        "plate_post_1",
+        "plate_post_2",
+        "plate_post_3",
+        "plate_post_4",
+        "power_plate",
+        "dcdc_bracket",
+        "bus_insulator_1",
+        "bus_insulator_2",
+        "bus_bar_1",
+        "bus_bar_2",
+        "L.motor_front",
+        "L.motor_rear",
+        "L.hip_frame",
+        "L.bearing_61812_front",
+        "L.bearing_61812_rear",
+        "frame_screws_left",
+        "cheek_nuts_left",
+        "L.screws_lugs",
+        "L.output_adapter_front",
+        "L.output_adapter_rear",
+        "L.screws_outputs",
+        "L.upper_link_front",
+        "L.upper_link_rear",
+        "L.screws_links",
+        "L.front_link",
+        "L.knee_bearing_front_in",
+        "L.knee_bearing_front_out",
+        "L.knee_spacer_front",
+        "L.eye_sleeve_front",
+        "L.knee_washer_front",
+        "L.knee_pin_front",
+        "L.knee_nut_upper_front",
+        "L.wheel_link",
+        "L.knee_bearing_rear_in",
+        "L.knee_bearing_rear_out",
+        "L.knee_spacer_rear",
+        "L.eye_sleeve_rear",
+        "L.knee_washer_rear",
+        "L.knee_pin_rear",
+        "L.knee_nut_upper_rear",
+        "L.apex_spacer",
+        "L.apex_61812",
+        "L.apex_circlip",
+        "L.wheel_hub",
+        "L.wheel_tyre",
+        "L.washers_wheel",
+        "L.screws_wheel",
+        "L.stop_posts",
+        "L.stop_sleeve_1",
+        "L.stop_sleeve_2",
+        "L.stop_sleeve_3",
+        "L.stop_sleeve_4",
+        "R.motor_front",
+        "R.motor_rear",
+        "R.hip_frame",
+        "R.bearing_61812_front",
+        "R.bearing_61812_rear",
+        "frame_screws_right",
+        "cheek_nuts_right",
+        "R.screws_lugs",
+        "R.output_adapter_front",
+        "R.output_adapter_rear",
+        "R.screws_outputs",
+        "R.upper_link_front",
+        "R.upper_link_rear",
+        "R.screws_links",
+        "R.front_link",
+        "R.knee_bearing_front_in",
+        "R.knee_bearing_front_out",
+        "R.knee_spacer_front",
+        "R.eye_sleeve_front",
+        "R.knee_washer_front",
+        "R.knee_pin_front",
+        "R.knee_nut_upper_front",
+        "R.wheel_link",
+        "R.knee_bearing_rear_in",
+        "R.knee_bearing_rear_out",
+        "R.knee_spacer_rear",
+        "R.eye_sleeve_rear",
+        "R.knee_washer_rear",
+        "R.knee_pin_rear",
+        "R.knee_nut_upper_rear",
+        "R.apex_spacer",
+        "R.apex_61812",
+        "R.apex_circlip",
+        "R.wheel_hub",
+        "R.wheel_tyre",
+        "R.washers_wheel",
+        "R.screws_wheel"
+      ],
+      "absent": null,
+      "authored": [
+        0,
+        60,
+        0
+      ],
+      "expected": [
+        0,
+        0,
+        -0.03272727272727272
+      ]
+    }
+  ],
+  "target_count": 8,
+  "actual_world_vertices": 128,
+  "worst_world_delta_error_m": 2.0816681711721685e-17,
+  "tolerance_m": 1e-07,
+  "page_errors": [],
+  "service_lifecycle": "Owned createSiteServer bound an ephemeral local address, exact listener closed in finally after browser/context teardown.",
+  "normalization": "Private local address and absolute checkout/output paths omitted. Numeric targeted observations and original raw-report/harness/input hashes retained unchanged.",
+  "limits": "Staged-payload correspondence to candidate86514707 with build version33c4464b, not an immutable candidate-version build or full both-engine acceptance. The new targets use actual world mesh matrices/vertices; there are no dedicated screenshots for these eight targets. No mechanical insertion, continuous clearance, support, physics, fastening or physical assembly qualification."
+}
