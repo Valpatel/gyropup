@@ -90,3 +90,25 @@ Independent review of actual new frames, both encoded companions/poster, receipt
 bindings, visible end packs/unchanged legs and historical limits precedes any
 tracked output adoption. Default null authority means this source-only checkpoint
 cannot pass current-media acceptance and must not be presented as doing so.
+
+## Source checkpoint (2026-11-10)
+
+The publication path is confirmed as `/web/robot-current` by the model owner; no
+shared layout or authority file was changed. The recorder/checker now use a
+format2 complete-current contract and existing callback/capture/encode primitives.
+The pure preflight checks the accepted manifest, all224mesh bytes, original
+collection and95/seven source maps.225renderer response assets are separate from
+103local provenance sources; the original collection is not a fabricated request.
+
+The existing ordinary binding-test entry point passes24tests, including13new
+synthetic controls; the same24pass with Python `-S` and no site packages. The
+portable `check-candidate-bytes.py` harness passes against a scratch copy of the
+actual accepted candidate; its temporary authority is deleted and never changes
+the product's null staging authority. The real default CLI rejects before any
+browser. No existing media, prototype helper or historical study bytes changed.
+
+The poster producer is unchanged in this checkpoint. A separate hero-poster
+action would still need its agreed fresh-output seam before execution; the reel
+poster continues to come from frame30 in the existing encoder. This checkpoint
+contains no browser/capture/encode/native/adoption action. Model motion and
+independent source/action/artifact reviews remain mandatory.

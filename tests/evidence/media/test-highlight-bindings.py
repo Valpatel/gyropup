@@ -7,6 +7,7 @@ import ast
 import hashlib
 import importlib.util
 import json
+import runpy
 from pathlib import Path
 from types import SimpleNamespace
 import unittest
@@ -31,7 +32,7 @@ class HighlightLimits(unittest.TestCase):
                       'project_path': lambda name: Path(name),
                       'read': lambda path: {'parts': [], 'body': [], 'links': {}},
                       'full_revision': lambda v: isinstance(v, str) and len(v) == 40,
-                      'expected_sources': lambda capture: {self.key},
+                      'expected_sources': lambda capture, current=None: {self.key},
                       'safe_path': lambda root, name: root / name,
                       'file_sha': lambda path: digest, 'git_sha': lambda *args: digest,
                       'CAPTURE_SCRIPT': self.key, 'CAPTURE_LOCATIONS': (),
@@ -40,18 +41,20 @@ class HighlightLimits(unittest.TestCase):
         self.actual_required = self.scope['required_capture_inputs']
         # Keep the exact actual source-binding body; isolate one required input
         # so byte and omission faults cannot be masked by unrelated stale media.
-        self.scope['required_capture_inputs'] = lambda: {LIMIT}
+        self.scope['required_capture_inputs'] = lambda current=None: {LIMIT}
+        self.current = {'source': {'file': 'synthetic-fixture', 'sha256': digest}, 'asset_hashes': {}}
         self.hashes = {self.key: digest}
-        self.capture = {'sourceRevision': self.revision, 'servedVersion': {'revision': self.revision},
+        self.capture = {'format': 2, 'currentRobotSource': self.current['source'],
+                        'sourceRevision': self.revision, 'servedVersion': {'revision': self.revision},
                         'locationContracts': {}, 'recipeSha256': digest,
                         'width': 1280, 'height': 720, 'fps': 30,
                         'inputs': {LIMIT: {'repoSha256': digest, 'servedSha256': digest}}}
 
     def check(self):
-        self.scope['validate_source_bindings'](self.revision, self.hashes, self.capture)
+        self.scope['validate_source_bindings'](self.revision, self.hashes, self.capture, self.current)
 
     def test_actual_required_set_includes_runtime_firing_limits(self):
-        self.assertIn(LIMIT, self.actual_required())
+        self.assertIn(LIMIT, self.actual_required({'asset_hashes': {}}))
 
     def test_actual_guard_accepts_equal_served_limits(self):
         self.check()
@@ -149,6 +152,9 @@ class EncoderPrerequisites(unittest.TestCase):
         self.assertEqual(len(names), 6)
         self.assertIn(poster, names)
         self.assertNotIn('poster.webp', names)
+
+
+CurrentHighlightBindings = runpy.run_path(str(Path(__file__).with_name('test-current-highlight-bindings.py')))['CurrentHighlightBindings']
 
 
 if __name__ == '__main__':

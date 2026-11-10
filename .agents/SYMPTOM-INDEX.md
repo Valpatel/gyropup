@@ -208,3 +208,5 @@
 - An audit accepts unrelated prior query IDs while reporting unchanged combined coverage: [bind the prior byte seal and ordered plan membership before counting](inbox/2026-11-10-combined-coverage-needs-sealed-prior-evidence.md).
 
 - Browser speech is null after a volume adjustment while a scheduled greeting fires: [preserve conversation ownership across the real greeting deadline](inbox/2026-11-10-scheduled-greetings-must-respect-conversations.md).
+
+- A reel says current while only its turret names or legacy rig meshes are bound: [bind the complete current body and observe its actual holder](inbox/2026-11-10-current-captures-need-complete-body-bindings.md).

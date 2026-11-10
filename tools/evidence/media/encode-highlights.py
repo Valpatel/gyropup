@@ -112,7 +112,7 @@ def main():
                    e1=dict(source_start_seconds=1, source_duration_seconds=3, transient_simulation=False,
                            deformation_exaggeration=16, safety_factor=1.60, required=2, baseline_kg=37.5),
                    capture=dict(recipe=check.CAPTURE_SCRIPT, receipt='capture-receipt.json', frames='capture-frames.json',
-                                raw_frames_committed=False, current_model='Current turret public snapshot; interim full-robot body'),
+                                raw_frames_committed=False, current_model=check.CURRENT_LABEL),
                    encoding=dict(ffmpeg=check.command(['ffmpeg', '-version']).decode().splitlines()[0],
                                  h264=h264, vp9=vp9, intermediate='FFV1 yuv420p; both encodings from identical segments',
                                  poster_frame=30, font='designer/kit/vendor/fonts/inter.woff2'),

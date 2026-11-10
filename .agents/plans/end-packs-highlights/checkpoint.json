@@ -1,0 +1,17 @@
+{
+  "schema": "gyropup.current-highlights-checkpoint/1",
+  "date": "2026-11-10",
+  "files": {
+    "actual-byte-preflight.json": "400f42499851e8af0a77fe89d9012721d1f984059d795965a5b943b946acf38c",
+    "baseline.json": "95cac19624a34a77e33f91b181bacf6c588444b72ebd58eae6a0003c69492e42",
+    "check-candidate-bytes.py": "6009001920752e7ee7a020cfa27b4db2b98c14fcac8947f8cccc3da56e5d5424",
+    "null-authority.log": "06472146604aacf36b6a9dea85e45f952d3f914e2062a4d082c2bb5bbc6704b8",
+    "plan.md": "d1597402de3c82c407fce78913bafa21aeda68c35fbf55498a17893eda2d21e3",
+    "source-build.log": "50a904423672fb26236a0a6a23b35d3ebb7329f03c6f96f4b8c2b4b0289808f3",
+    "source-checkpoint.json": "0f9df92ec2710309c692cba184f25e6424b34bd35bdfc634cf9e09a8aab1ecad",
+    "source-markdown.log": "34daf395963802db558c0e3cd14714e1b016ef7457afba6ed4424c0b30a8470d",
+    "source-privacy.log": "7f283101d61f3acf793bb4e10c89d3233f5558aa4b61a2be29110a93df4d0449",
+    "source-tests.log": "45590d15de8fb6404292dcecc600ecc0b1a958118155ad7cc4e4bda3e81d34f9",
+    "stdlib-tests.log": "4103c79f89b1e8b7ee64bff6bb60fe34bc7914e9423d20f5c834c160d43a9515"
+  }
+}

@@ -27,6 +27,34 @@ demonstrations, not physical testing or a print/safety release. The Progress
 leg gallery's movies were re-recorded in the same run, so they now show the report
 they sit beside ([issue 106](https://github.com/Valpatel/gyropup/issues/106), section 1).
 
+## Current-body preparation (2026-11-10, not a new recording)
+
+The published recording and dated history below retain their original76f source
+and interim body. PR293 prepares the existing tools for the separately accepted
+collection266 presentation. The new recorder requires a reviewed JSON-literal
+`CURRENT_ROBOT_SOURCE` binding to `/web/robot-current/manifest.json`, the accepted
+manifest bytes and all224 original meshes before launching a browser. Null staging
+authority fails closed. The original collection and95CAD/seven conversion inputs
+are local provenance; the recorder does not pretend that the renderer fetched
+those provenance files. Its required browser closure covers the manifest and224
+meshes plus all current renderer/shared modules, independently of optional responses.
+
+Battle/character capture must contain the actual224 source names,62 prefixed
+turret names and the correct native/collection identity in every observation.
+A legacy holder whose mode merely says current is rejected. Current mass/COM,
+physics and compound hub/motor internal ownership remain unresolved. Existing
+shot lengths, projectile checks, raster/decoded-motion checks and historical
+rig/E1 bytes, captions and failed strength limits remain unchanged. Old frames
+are never re-sealed as this new recording.
+
+Pure source/data preflight (no browser or codec) is available with
+`python3 -B tools/evidence/media/check-highlights.py --capture-contract`. Source
+preparation alone does not authorize capture, encoding or adoption. Wait for
+actual model-motion acceptance and independent source/action review; generate
+into fresh owned candidate output and inspect the genuine resulting media before
+changing public assets. The historical prototype acknowledgement helper remains
+byte-identical to its recorded input.
+
 ## Capture and encode
 
 Use Node 22, the pinned Playwright package, installed Chrome (or bundled Chromium with
