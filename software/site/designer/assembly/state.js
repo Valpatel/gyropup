@@ -3,7 +3,8 @@ const ID=/^[a-zA-Z0-9][a-zA-Z0-9._-]*$/;
 export function readLocation(location,index){
  const q=new URLSearchParams(location.search),snapshot=q.get('snapshot')||index.snapshots[0]?.id;
  if(!index.snapshots.some(s=>s.id===snapshot))throw new Error('This build snapshot is unavailable. Choose one of the published snapshots.');
- return {snapshot,step:q.get('step'),chapter:q.get('chapter')};
+ const assembly=q.get('assembly');if(assembly&&!['robot','turret','combined'].includes(assembly))throw new Error('Unknown assembly selection.');
+ return {snapshot,step:q.get('step'),chapter:q.get('chapter'),assembly};
 }
 export function stepFor(guide,{step,chapter}={}){
  if(step){const found=guide.steps.find(s=>s.id===step);if(!found)throw new Error('This instruction step does not exist in the selected snapshot.');return found;}

@@ -1,8 +1,10 @@
+import {createWorkspace,disposeRobot} from './workspace.js';
 import {readLocation,stepFor,validateIndex,matchSnapshot,progressKey,readProgress,saveProgress,writeLocation} from './state.js';
 const esc=s=>String(s??'').replace(/[&<>"']/g,c=>({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[c]));
 const host=document.getElementById('assembly');
 let active=null,request=0,pending=null,applying=false;
 const tabProgress=new Map();
+const workspace=createWorkspace(host,()=>active,paint,report);
 let retryAction=()=>start().catch(error=>report(error.message,true));
 host.querySelector('[data-guide-retry]').onclick=()=>retryAction();
 const storage=()=>{try{return globalThis.localStorage;}catch{return null;}};
@@ -44,20 +46,22 @@ async function start(){
    catch(error){if(abort.signal.aborted)throw error;renderError=error;}
    if(renderError&&active?.viewer)throw renderError;
    if(own!==request){nextViewer?.dispose();for(const value of posterURLs.values())URL.revokeObjectURL(value);return;}
-   const previous=active;
+   const previous=active;workspace.invalidate();
    const key=progressKey(guide,row.sha256),done=tabProgress.has(key)?new Set(tabProgress.get(key)):readProgress(storage(),guide,row.sha256);
    active={guide,guideHash:row.sha256,viewer:nextViewer,controller:nextViewer?createGuideController(nextViewer,guide):null,done,url,posterURLs,step:step.id,mode:'ghost',explode:1,section:1,selected:null,isolate:false,partModes:{},renderError};
-   const model=host.querySelector('[data-guide-model]');model.replaceChildren(canvas);previous?.viewer?.dispose();for(const value of previous?.posterURLs?.values()||[])URL.revokeObjectURL(value);
+   const model=host.querySelector('[data-guide-model]');model.replaceChildren(canvas);disposeRobot(previous?.robot);previous?.viewer?.dispose();for(const value of previous?.posterURLs?.values()||[])URL.revokeObjectURL(value);
    host.querySelector('[data-guide-visual]').hidden=!!renderError;host.querySelector('.assembly-layout').dataset.static=String(!!renderError);
    select.value=id;paint(step.id);
    if(renderError)report('Interactive 3D is unavailable. '+(guide.steps.some(step=>step.poster)?'The same snapshot’s text and diagrams remain below.':'The same snapshot’s text remains below.'),true);
    else report(guide.snapshot.status==='wip'?'Source-bound WIP guide loaded. No physical build release.':'Versioned guide loaded. Its publication status is separate from physical qualification.');
-   window.__buildGuide={get active(){return active;},load,apply:id=>paint(id),dispose(){pending?.abort();active?.viewer?.dispose();for(const value of active?.posterURLs?.values()||[])URL.revokeObjectURL(value);active=null;}};
+   window.__buildGuide={get active(){return active;},load,apply:id=>paint(id),dispose(){workspace.dispose();pending?.abort();disposeRobot(active?.robot);active?.viewer?.dispose();for(const value of active?.posterURLs?.values()||[])URL.revokeObjectURL(value);active=null;}};
+   if(!renderError&&route.assembly!=='turret'&&(!route.step&&!route.chapter||route.assembly))workspace.choose(route.assembly||'combined');
    if(pending===abort)pending=null;
   }catch(error){const cancelled=abort.signal.aborted||own!==request;abort.abort();if(pending===abort)pending=null;nextViewer?.dispose();for(const value of posterURLs.values())URL.revokeObjectURL(value);if(cancelled)return;report(error.message+(active?' Your previous build remains selected.':''),true);if(active)select.value=active.guide.snapshot.id;else select.selectedIndex=-1;}
  }
  select.onchange=()=>load(select.value);
  let route;try{route=readLocation(location,index);}catch(error){select.selectedIndex=-1;throw error;}await load(route.snapshot,route);
+ window.addEventListener('popstate',()=>{const next=readLocation(location,index);if(next.snapshot!==active?.guide.snapshot.id)load(next.snapshot,next);else if(next.assembly&&next.assembly!=='turret')workspace.choose(next.assembly);else workspace.step(stepFor(active.guide,next).id);});
  window.addEventListener('pagehide',()=>window.__buildGuide?.dispose(),{once:true});
 }
 function applyPresentation(s,frame){
@@ -74,7 +78,7 @@ function applyPresentation(s,frame){
  finally{applying=false;}
 }
 function paint(id){
- const a=active,g=a.guide,s=stepFor(g,{step:id});if(a.step!==s.id){a.selected=null;a.isolate=false;a.partModes={};}a.step=s.id;
+ const a=active,g=a.guide,s=stepFor(g,{step:id});a.overview=false;if(a.step!==s.id){a.selected=null;a.isolate=false;a.partModes={};}a.step=s.id;
  applyPresentation(s,true);
  const index=g.steps.indexOf(s),chapter=g.subassemblies.find(c=>c.id===s.subassembly);
  host.querySelector('[data-guide-source]').innerHTML=`${esc(g.snapshot.revision)} · ${esc(g.snapshot.status)} · <a href="https://github.com/Valpatel/gyropup/tree/${esc(g.snapshot.source_commit)}">Source snapshot</a>`;
@@ -85,7 +89,8 @@ function paint(id){
  host.querySelector('[data-guide-text]').textContent=s.text;
  const poster=host.querySelector('[data-guide-poster]');poster.hidden=!s.poster||!a.renderError;
  if(s.poster){poster.src=a.posterURLs.get(s.id);poster.alt=`Step ${index+1}: ${s.title}`;}else{poster.removeAttribute('src');poster.alt='';}
- host.querySelector('[data-guide-chapters]').innerHTML=g.subassemblies.map(c=>`<button type="button" data-chapter="${esc(c.id)}" aria-current="${c.id===s.subassembly?'step':'false'}">${esc(c.title)}</button>`).join('');
+ host.querySelector('[data-guide-chapters]').innerHTML=g.subassemblies.map(c=>`<details ${c.id===s.subassembly?'open':''}><summary>${esc(c.title)}</summary>${g.steps.filter(x=>x.subassembly===c.id).map(x=>`<button type="button" data-tree-step="${esc(x.id)}" aria-current="${x.id===s.id?'step':'false'}"><span class="step-number">${g.steps.indexOf(x)+1}</span>${esc(x.title)}</button>`).join('')}</details>`).join('');
+ host.querySelectorAll('[data-tree-step]').forEach(b=>b.onclick=()=>workspace.step(b.dataset.treeStep));
  host.querySelectorAll('[data-chapter]').forEach(b=>b.onclick=()=>paint(stepFor(g,{chapter:b.dataset.chapter}).id));
  const stepSelect=host.querySelector('[data-guide-step]');stepSelect.innerHTML=g.steps.map((x,i)=>`<option value="${esc(x.id)}">${i+1}. ${esc(x.title)}</option>`).join('');stepSelect.value=s.id;stepSelect.onchange=()=>paint(stepSelect.value);
  const prev=host.querySelector('[data-guide-prev]'),next=host.querySelector('[data-guide-next]');prev.disabled=index===0;next.disabled=index===g.steps.length-1;prev.onclick=()=>paint(g.steps[index-1].id);next.onclick=()=>paint(g.steps[index+1].id);
@@ -99,7 +104,8 @@ function paint(id){
  const isolate=host.querySelector('[data-guide-isolate]');isolate.disabled=!a.selected;isolate.onclick=()=>{a.isolate=!a.isolate;paint(s.id);};isolate.setAttribute('aria-pressed',String(a.isolate));
  const appearance=host.querySelector('[data-guide-part-mode]');appearance.onchange=()=>{if(!a.selected)return;if(appearance.value==='automatic')delete a.partModes[a.selected];else a.partModes[a.selected]=appearance.value;applyPresentation(s,false);selection(a.selected);};
  host.querySelector('[data-guide-reset]').onclick=()=>{a.mode='solid';a.explode=0;a.section=1;a.selected=null;a.isolate=false;a.partModes={};a.viewer?.setSelection(null);paint(s.id);};
- writeLocation(location,history,g,s);
+ writeLocation(location,history,g,s);const locationURL=new URL(location.href);locationURL.searchParams.delete('view');locationURL.searchParams.set('assembly','turret');history.replaceState(null,'',locationURL);
+ workspace.present();
  host.dataset.ready='1';
 }
 start().catch(error=>report(error.message,true));

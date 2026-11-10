@@ -82,12 +82,12 @@ export async function mountPrintNow(host, fetchImpl = fetch) {
     if (!list.length) throw new Error('no rows');
     fits = list.filter((x) => x.fit).length; ok = true;
     const tot = list.reduce((a, s) => ({ m: a.m + s.minutes, g: a.g + s.grams, t: a.t + s.tpu }), { m: 0, g: 0, t: 0 });
-    body = `<ol class="print-now-list">`
-      + list.map((s) => `<li data-order="${s.order}"><span class="num">${s.order}</span><span class="pn-part">${esc(name(s))}`
-        + `${s.fit ? ' <span class="tag info">fit check</span>' : ''}</span><span class="pn-t">${hours(s.minutes)}</span>`
-        + `<span class="pn-g">${s.tpu ? `${Math.round(s.tpu)} g TPU` : `${Math.round(s.grams)} g`}</span><span class="pn-f">${files(s)}</span></li>`).join('')
-      + `<li class="pn-tot"><span></span><span class="pn-part">Total</span><span class="pn-t">${hours(tot.m)}</span>`
-      + `<span class="pn-g">${(tot.g / 1000).toFixed(2)} kg PLA${tot.t ? ` + ${Math.round(tot.t)} g TPU` : ''}</span><span></span></li></ol>`;
+    body = `<div class="cad-table-scroll"><table class="cmp print-now-list" data-label="Motor-day print steps"><colgroup><col style="width:64px"><col style="width:250px"><col style="width:100px"><col style="width:160px"><col style="width:260px"></colgroup><thead><tr><th>Order</th><th>Part</th><th>Time</th><th>Material</th><th>Files</th></tr></thead><tbody>`
+      + list.map((s) => `<tr data-order="${s.order}"><td class="num">${s.order}</td><td class="pn-part">${esc(name(s))}`
+        + `${s.fit ? ' <span class="tag info">fit check</span>' : ''}</td><td class="pn-t">${hours(s.minutes)}</td>`
+        + `<td class="pn-g">${s.tpu ? `${Math.round(s.tpu)} g TPU` : `${Math.round(s.grams)} g`}</td><td class="pn-f">${files(s)}</td></tr>`).join('')
+      + `<tr class="pn-tot" data-fixed><td></td><td class="pn-part">Total</td><td class="pn-t">${hours(tot.m)}</td>`
+      + `<td class="pn-g">${(tot.g / 1000).toFixed(2)} kg PLA${tot.t ? ` + ${Math.round(tot.t)} g TPU` : ''}</td><td></td></tr></tbody></table></div>`;
   } catch (error) {
     body = '<p class="dim">The print list could not be loaded just now; the plan and the package above have every file.</p>';
   }

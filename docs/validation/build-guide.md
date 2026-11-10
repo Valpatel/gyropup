@@ -15,6 +15,49 @@ flowchart TD
   B --> D[Source and browser checks]
 ```
 
+## Integrated workspace acceptance (2026-11-09 revision)
+
+The Build experience uses one large, stable canvas with overlay navigation, an
+assembly explorer, working icon actions and a compact instruction card. The
+existing shared renderer/controller, snapshot identities, authored twelve-step
+recipe, download originals and progress/import/export contracts remain intact.
+Assembly choices are Robot (real body and both legs, turret group hidden), Turret
+(the immutable authored bench sequence) and Combined (the existing full robot
+with its correctly mounted current turret, without replacement or duplication).
+Each assembly has an independent snapshot choice and remembered selection: Robot
+and Combined currently expose only the actual current WIP; Turret uses its exact
+bound snapshot index. Unpublished rev0/revA history is never invented. Robot and
+Combined are overviews only, not fabricated assembly procedures.
+The overview reuses the real `buildRobotV2` model used by the playground;
+it is current robot context, explicitly separate from the immutable turret guide.
+No full-body assembly procedure or new physical qualification is inferred.
+
+Before this revision is ready, real Chromium and WebKit must demonstrate:
+
+- Robot, Turret and Combined remain distinct with actual hidden-group, geometry,
+  units/frame and mounted-turret assertions; independent snapshot state and deep
+  links, reload and browser Back/Forward retain the selected assembly.
+- The real full robot, including both legs and current turret, renders in the
+  overview; failures are explicit and retryable, and late context loads cannot
+  replace a newer snapshot or resurrect a disposed canvas.
+- At 1440, 390 and 320px widths, the canvas, instruction card and Previous/Next
+  boxes keep their dimensions and positions across every authored step. Model
+  geometry fits the uncovered canvas area. Explorer and tools open/close with
+  keyboard and trusted touch; every icon has an accessible name and real state.
+- Tree chapter/step navigation, selection, appearance, section, explode, reset,
+  completion, deep links and all earlier fallback/version/race controls work.
+  Source/qualification details stay available through a compact disclosure.
+- Print and Buy occupy explicit bounded panel views. Print rows use actual tables
+  with consistent columns, supplier is a filter on one order table, pagination
+  reaches every source item, and headers/status columns remain aligned.
+- Search, sorting, all prices/rounding/totals, workstream selection, original
+  part IDs, file links and progress import/export survive pagination and panel
+  switches. Existing browser tests navigate pages rather than assume infinite
+  visible rows. Fault controls remain actual failures, never source snapshots.
+
+Implementation and browser evidence for this revision are pending; prior retained
+receipts below describe the earlier presentation only.
+
 <details>
 <summary>Data, frames and qualification boundary</summary>
 

@@ -18,11 +18,11 @@ export function createPortalParts(host) {
       const identity=[...table.tHead.rows[0].cells].findIndex(th=>/^part$/i.test(th.textContent.trim()));
       if(table.dataset.track&&identity>=0){table.tHead.rows[0].cells[identity].classList.add('cad-part-identity');for(const row of table.tBodies[0].rows)row.cells[identity]?.classList.add('cad-part-identity');}
       const statuses=table.dataset.track==='print'?[{id:'printed',label:'Printed'}]:table.dataset.track==='buy'?[{id:'ordered',label:'Ordered'},{id:'inHand',label:'In hand'}]:[];
-      const api=enhancePartTable(table,{label:table.dataset.label||table.caption?.textContent||'Parts',tracker,statuses,searchable:many});
+      const api=enhancePartTable(table,{label:table.dataset.label||table.caption?.textContent||'Parts',tracker,statuses,searchable:many,pageSize:Number(table.dataset.pageSize)||0});
       api.toolbar.hidden=!many;
       if(many){const hint=document.createElement('span');hint.className='cad-table-hint';hint.textContent='Scroll the table sideways for more columns and status boxes.';api.toolbar.append(hint);}
       enhanced.set(table,api);
     }
   };
-  return {dispose,enhance,replace(host,html){dispose(host);host.innerHTML=html;enhance(host);}};
+  return {dispose,enhance,filter(table,predicate){enhanced.get(table)?.setFilter(predicate);},replace(host,html){dispose(host);host.innerHTML=html;enhance(host);}};
 }
