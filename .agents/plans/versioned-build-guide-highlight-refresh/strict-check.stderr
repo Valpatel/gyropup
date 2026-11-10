@@ -1,0 +1,2 @@
+fatal: path 'hardware/exports/leg/fea/hip-frame-e1-media/field-receipt.json' exists on disk, but not in 'e7b512870a39259a04a4930e2908af84001bc84e'
+fatal: path 'tools/evidence/media/capture-highlights.mjs' exists on disk, but not in 'e7b512870a39259a04a4930e2908af84001bc84e'

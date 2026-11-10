@@ -1,0 +1,510 @@
+{
+  "schema": "gyropup.build-guide-verification/1",
+  "scope": "Actual complete product feature scopes and legacy Build regression; current CI and production remain separate",
+  "visual_sha256": "a388013ea81daf89e6d5d393874bb1b05fa32b5a46e3b60f8ce85c697cfc435a",
+  "runs": [
+    {
+      "engine": "chromium",
+      "scope": "core",
+      "source": "fc79cd995c5c6cad23b8669b06a9b83dbcab0783",
+      "assets": "ae75409072f354c0d8bd",
+      "browser": "151.0.7922.71",
+      "report_sha256": "78f31433702011929ed9f569fa09aea59a2284adb7394faf7ef008006af10528",
+      "cases": [
+        "default desktop and phone reading extent recorded before procurement expansion",
+        "every visible vertex fits all12 actual frames; real too-close camera rejected/restored",
+        "all12 sequential/back/direct/reload actual object states",
+        "wireframe, native section control, assembled reset, actual canvas/list selection/isolation and keyboard details",
+        "selected-instance transparent/wireframe leaves others exact; Automatic/newstep/reset clear overrides",
+        "independent70mm CAD-Z/world-Y displacement",
+        "phone/landscape bounds and preserved Buy/Print anchor"
+      ],
+      "phases": [
+        {
+          "name": "core-start",
+          "at": "2026-11-10T06:03:06.088Z"
+        },
+        {
+          "name": "forward-1",
+          "at": "2026-11-10T06:03:20.393Z"
+        },
+        {
+          "name": "forward-2",
+          "at": "2026-11-10T06:03:20.477Z"
+        },
+        {
+          "name": "forward-3",
+          "at": "2026-11-10T06:03:22.790Z"
+        },
+        {
+          "name": "forward-4",
+          "at": "2026-11-10T06:03:24.065Z"
+        },
+        {
+          "name": "forward-5",
+          "at": "2026-11-10T06:03:25.567Z"
+        },
+        {
+          "name": "forward-6",
+          "at": "2026-11-10T06:03:27.172Z"
+        },
+        {
+          "name": "forward-7",
+          "at": "2026-11-10T06:03:28.666Z"
+        },
+        {
+          "name": "forward-8",
+          "at": "2026-11-10T06:03:30.170Z"
+        },
+        {
+          "name": "forward-9",
+          "at": "2026-11-10T06:03:32.467Z"
+        },
+        {
+          "name": "forward-10",
+          "at": "2026-11-10T06:03:34.368Z"
+        },
+        {
+          "name": "forward-11",
+          "at": "2026-11-10T06:03:36.179Z"
+        },
+        {
+          "name": "forward-12",
+          "at": "2026-11-10T06:03:38.365Z"
+        },
+        {
+          "name": "core-complete",
+          "at": "2026-11-10T06:04:55.689Z"
+        }
+      ],
+      "default_layout": [
+        {
+          "width": 1440,
+          "height": 1000,
+          "scrollHeight": 1756,
+          "procurementClosed": true,
+          "assemblyHeight": 992.546875
+        },
+        {
+          "width": 390,
+          "height": 844,
+          "scrollHeight": 2711,
+          "procurementClosed": true,
+          "assemblyHeight": 1693.53125
+        }
+      ],
+      "touch": null
+    },
+    {
+      "engine": "chromium",
+      "scope": "switching",
+      "source": "fc79cd995c5c6cad23b8669b06a9b83dbcab0783",
+      "assets": "ae75409072f354c0d8bd",
+      "browser": "151.0.7922.71",
+      "report_sha256": "7e5c1b65686c2baacf3c4a8c740b5bf7b7aa841c95ccd336b7af336f9111eb61",
+      "cases": [
+        "two frozen versions plus exact WIP/tab-only progress, corrupt model/missing mesh/bad actual diagram preserve previous scene, native retry recovers",
+        "late superseded actual model request cannot replace scene; old callbacks/context disposed"
+      ],
+      "phases": [
+        {
+          "name": "switching-start",
+          "at": "2026-11-10T06:04:56.555Z"
+        },
+        {
+          "name": "switch-to-two",
+          "at": "2026-11-10T06:04:58.719Z"
+        },
+        {
+          "name": "switch-back-one",
+          "at": "2026-11-10T06:04:59.522Z"
+        },
+        {
+          "name": "switching-complete",
+          "at": "2026-11-10T06:05:11.440Z"
+        }
+      ],
+      "default_layout": null,
+      "touch": null
+    },
+    {
+      "engine": "chromium",
+      "scope": "fallback",
+      "source": "fc79cd995c5c6cad23b8669b06a9b83dbcab0783",
+      "assets": "ae75409072f354c0d8bd",
+      "browser": "151.0.7922.71",
+      "report_sha256": "a7407ccb93aee084c1c4f04add1d54728447762c2561bfdd623d0c1530db258d",
+      "cases": [
+        "unavailable snapshot rejects without another-version fallback; explicit valid choice recovers",
+        "native no-script default snapshot/12diagrams, real no-WebGL fallback and two-version text-only progress"
+      ],
+      "phases": [
+        {
+          "name": "fallback-start",
+          "at": "2026-11-10T06:05:12.379Z"
+        },
+        {
+          "name": "fallback-complete",
+          "at": "2026-11-10T06:05:21.899Z"
+        }
+      ],
+      "default_layout": null,
+      "touch": null
+    },
+    {
+      "engine": "chromium",
+      "scope": "touch",
+      "source": "fc79cd995c5c6cad23b8669b06a9b83dbcab0783",
+      "assets": "ae75409072f354c0d8bd",
+      "browser": "151.0.7922.71",
+      "report_sha256": "a8655539c481357103c8b1fe8c5dd565ce45121b5cac0b0f893152cf85f4e362",
+      "cases": [
+        "real hasTouch phone taps: previous/next, canvas picking and part list, unoccluded hitboxes"
+      ],
+      "phases": [
+        {
+          "name": "touch-start",
+          "at": "2026-11-10T06:20:44.890Z"
+        },
+        {
+          "name": "touch-complete",
+          "at": "2026-11-10T06:21:09.774Z"
+        }
+      ],
+      "default_layout": null,
+      "touch": {
+        "maxTouchPoints": 1,
+        "events": [
+          {
+            "trusted": true,
+            "touches": 1,
+            "target": "BUTTON"
+          },
+          {
+            "trusted": true,
+            "touches": 1,
+            "target": "BUTTON"
+          },
+          {
+            "trusted": true,
+            "touches": 1,
+            "target": "CANVAS"
+          },
+          {
+            "trusted": true,
+            "touches": 1,
+            "target": "BUTTON"
+          },
+          {
+            "trusted": true,
+            "touches": 1,
+            "target": "SUMMARY"
+          },
+          {
+            "trusted": true,
+            "touches": 1,
+            "target": "BUTTON"
+          }
+        ]
+      }
+    },
+    {
+      "engine": "webkit",
+      "scope": "core",
+      "source": "fc79cd995c5c6cad23b8669b06a9b83dbcab0783",
+      "assets": "ae75409072f354c0d8bd",
+      "browser": "26.0",
+      "report_sha256": "7991706953ccf94c4ab7d3e8a9d73d0318582d00c4b2cf91e771f86441f0eb07",
+      "cases": [
+        "default desktop and phone reading extent recorded before procurement expansion",
+        "every visible vertex fits all12 actual frames; real too-close camera rejected/restored",
+        "all12 sequential/back/direct/reload actual object states",
+        "wireframe, native section control, assembled reset, actual canvas/list selection/isolation and keyboard details",
+        "selected-instance transparent/wireframe leaves others exact; Automatic/newstep/reset clear overrides",
+        "independent70mm CAD-Z/world-Y displacement",
+        "phone/landscape bounds and preserved Buy/Print anchor"
+      ],
+      "phases": [
+        {
+          "name": "core-start",
+          "at": "2026-11-10T06:05:47.280Z"
+        },
+        {
+          "name": "forward-1",
+          "at": "2026-11-10T06:05:54.719Z"
+        },
+        {
+          "name": "forward-2",
+          "at": "2026-11-10T06:05:54.928Z"
+        },
+        {
+          "name": "forward-3",
+          "at": "2026-11-10T06:05:56.431Z"
+        },
+        {
+          "name": "forward-4",
+          "at": "2026-11-10T06:05:58.032Z"
+        },
+        {
+          "name": "forward-5",
+          "at": "2026-11-10T06:05:59.615Z"
+        },
+        {
+          "name": "forward-6",
+          "at": "2026-11-10T06:06:01.433Z"
+        },
+        {
+          "name": "forward-7",
+          "at": "2026-11-10T06:06:03.924Z"
+        },
+        {
+          "name": "forward-8",
+          "at": "2026-11-10T06:06:06.237Z"
+        },
+        {
+          "name": "forward-9",
+          "at": "2026-11-10T06:06:08.640Z"
+        },
+        {
+          "name": "forward-10",
+          "at": "2026-11-10T06:06:11.140Z"
+        },
+        {
+          "name": "forward-11",
+          "at": "2026-11-10T06:06:14.248Z"
+        },
+        {
+          "name": "forward-12",
+          "at": "2026-11-10T06:06:17.813Z"
+        },
+        {
+          "name": "core-complete",
+          "at": "2026-11-10T06:07:31.617Z"
+        }
+      ],
+      "default_layout": [
+        {
+          "width": 1440,
+          "height": 1000,
+          "scrollHeight": 1747,
+          "procurementClosed": true,
+          "assemblyHeight": 990
+        },
+        {
+          "width": 390,
+          "height": 844,
+          "scrollHeight": 2691,
+          "procurementClosed": true,
+          "assemblyHeight": 1687
+        }
+      ],
+      "touch": null
+    },
+    {
+      "engine": "webkit",
+      "scope": "switching",
+      "source": "fc79cd995c5c6cad23b8669b06a9b83dbcab0783",
+      "assets": "ae75409072f354c0d8bd",
+      "browser": "26.0",
+      "report_sha256": "1a961ad1fedc7d6532fe92ea4d4cc7b0218979592e1165094582c18cf0ea8e5f",
+      "cases": [
+        "two frozen versions plus exact WIP/tab-only progress, corrupt model/missing mesh/bad actual diagram preserve previous scene, native retry recovers",
+        "late superseded actual model request cannot replace scene; old callbacks/context disposed"
+      ],
+      "phases": [
+        {
+          "name": "switching-start",
+          "at": "2026-11-10T06:13:35.371Z"
+        },
+        {
+          "name": "switch-to-two",
+          "at": "2026-11-10T06:13:37.714Z"
+        },
+        {
+          "name": "switch-back-one",
+          "at": "2026-11-10T06:13:38.417Z"
+        },
+        {
+          "name": "switching-complete",
+          "at": "2026-11-10T06:13:45.441Z"
+        }
+      ],
+      "default_layout": null,
+      "touch": null
+    },
+    {
+      "engine": "webkit",
+      "scope": "fallback",
+      "source": "fc79cd995c5c6cad23b8669b06a9b83dbcab0783",
+      "assets": "ae75409072f354c0d8bd",
+      "browser": "26.0",
+      "report_sha256": "c2a0253460be17fd408ccff75b93457c49bf9979a26f0de8f1ee822bf00f3298",
+      "cases": [
+        "unavailable snapshot rejects without another-version fallback; explicit valid choice recovers",
+        "native no-script default snapshot/12diagrams, real no-WebGL fallback and two-version text-only progress"
+      ],
+      "phases": [
+        {
+          "name": "fallback-start",
+          "at": "2026-11-10T06:13:46.191Z"
+        },
+        {
+          "name": "fallback-complete",
+          "at": "2026-11-10T06:13:52.679Z"
+        }
+      ],
+      "default_layout": null,
+      "touch": null
+    },
+    {
+      "engine": "webkit",
+      "scope": "touch",
+      "source": "fc79cd995c5c6cad23b8669b06a9b83dbcab0783",
+      "assets": "ae75409072f354c0d8bd",
+      "browser": "26.0",
+      "report_sha256": "4c460cecb8a1fe20aeae1b873e31357557d7c8c2a319bff7c2dd53aa190c7879",
+      "cases": [
+        "real hasTouch phone taps: previous/next, canvas picking and part list, unoccluded hitboxes"
+      ],
+      "phases": [
+        {
+          "name": "touch-start",
+          "at": "2026-11-10T06:21:11.331Z"
+        },
+        {
+          "name": "touch-complete",
+          "at": "2026-11-10T06:21:22.753Z"
+        }
+      ],
+      "default_layout": null,
+      "touch": {
+        "maxTouchPoints": 0,
+        "events": [
+          {
+            "trusted": true,
+            "touches": 1,
+            "target": "BUTTON"
+          },
+          {
+            "trusted": true,
+            "touches": 1,
+            "target": "BUTTON"
+          },
+          {
+            "trusted": true,
+            "touches": 1,
+            "target": "CANVAS"
+          },
+          {
+            "trusted": true,
+            "touches": 1,
+            "target": "BUTTON"
+          },
+          {
+            "trusted": true,
+            "touches": 1,
+            "target": "SUMMARY"
+          },
+          {
+            "trusted": true,
+            "touches": 1,
+            "target": "BUTTON"
+          }
+        ]
+      }
+    }
+  ],
+  "layout": {
+    "case": "Build / iPhone13 / light",
+    "held_real_model_control": "passed",
+    "all_existing_planted_controls": "passed",
+    "findings": 0,
+    "worst_gap_screen": 0.14,
+    "limit_screen": 0.18
+  },
+  "retained_failures": [
+    {
+      "source": "fc79cd995c5c6cad23b8669b06a9b83dbcab0783",
+      "scope": "WebKit initial touch",
+      "status": "FAILED before taps at maxTouchPoints metadata; revised observed trusted events passed"
+    },
+    {
+      "source": "fc79cd995c5c6cad23b8669b06a9b83dbcab0783",
+      "scope": "CI layout scan",
+      "status": "FAILED:137px (0.21screen >0.18) at initial procurement-only DOM scan; original evidence retained"
+    },
+    {
+      "scope": "first full WebKit legacy Build",
+      "status": "FAILED:offscreen Progress #parts summary did not stabilize within60s; isolated identical click passed; corrected ordinary section jump plus all existing assertions passed; internal cause unproven"
+    }
+  ],
+  "legacy": [
+    {
+      "engine": "chromium",
+      "scope": "original Build/procurement/download regression",
+      "source": "fc79cd995c5c6cad23b8669b06a9b83dbcab0783",
+      "report_sha256": "4c28af89029501d517266a61528b6af0b9755db735ce057d59e6c7386a2cc770",
+      "original_models": 643,
+      "bound_guide_derivatives": 55,
+      "summaries": {
+        "total": 7139.85,
+        "sellers": 7139.849999999996,
+        "made": 777.28,
+        "hours": 622.8
+      },
+      "errors": []
+    },
+    {
+      "engine": "webkit",
+      "scope": "original Build/procurement/download regression",
+      "source": "fc79cd995c5c6cad23b8669b06a9b83dbcab0783",
+      "report_sha256": "7c54888ba2239fa03fb6960194d27aff82983ab83fae5999a00ba0346a09a950",
+      "original_models": 643,
+      "bound_guide_derivatives": 55,
+      "summaries": {
+        "total": 7139.85,
+        "sellers": 7139.849999999996,
+        "made": 777.28,
+        "hours": 622.8
+      },
+      "errors": []
+    },
+    {
+      "engine": "webkit",
+      "scope": "24 loading/recovery cases",
+      "report_sha256": "20d47db76bad47e2ab096b19092e13baa7f12ca77def6f3d255ee0f9335186a0",
+      "cases": [
+        "Build held/failed entry graph and native reload",
+        "Progress held/failed entry graph and native reload",
+        "CAD viewer held/failed entry graph and native reload",
+        "FEA held/failed entry graph and native reload",
+        "Talk held/failed entry graph and native reload",
+        "held Build data and optional navigation",
+        "Build http recovery",
+        "Build parse recovery",
+        "Build offline recovery",
+        "Explicit optional404 remains unpublished",
+        "Progress independence and stale success",
+        "Progress independence and stale failure",
+        "Independent report failure versus optional404",
+        "CAD viewer held",
+        "CAD viewer http",
+        "CAD viewer html",
+        "CAD viewer empty",
+        "CAD viewer prefix",
+        "FEA held",
+        "FEA parse",
+        "FEA surface",
+        "Robot kinematic manifest failures and finite same-stage recovery",
+        "Talk same-stage retry and service pending state",
+        "Archived CAD explicit fallback versus failed manifest/mesh"
+      ],
+      "errors": []
+    }
+  ],
+  "test_sources": {
+    "tests/site/assembly/test-build-guide.mjs": "9a57f2510758c235a316d35ba9bc7e6dcf811e7e4c09153ea63fbeacb4adc109",
+    "tests/site/content/test-build-portal.mjs": "e1f46cc9c59c7812b8199537a559555fb60f70abb5aef205597d481032ffc575",
+    "tests/site/layout/test-empty-space.mjs": "e62e0922a703ab074573ed146d408b9e2fed1c0e7a0fdf70ea530c145e974c60"
+  }
+}

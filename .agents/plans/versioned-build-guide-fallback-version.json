@@ -1,0 +1,18 @@
+{
+  "version": {
+    "revision": "1c5e119ac0d4c0395b2a32fd5b77bfb271e1c3df",
+    "assets": "f67fa62c4297df803a34",
+    "history": true,
+    "built": "2026-11-10T05:44:32.711Z"
+  },
+  "before": {
+    "id": "turret-wip-4866459e2abd",
+    "viewer": false
+  },
+  "after": {
+    "id": "turret-wip-4866459e2abd",
+    "selected": "turret-wip-4866459e2abd",
+    "status": "Error creating WebGL context. Your previous build remains selected."
+  },
+  "status": "REPRODUCED_TEXT_ONLY_VERSION_BLOCK"
+}

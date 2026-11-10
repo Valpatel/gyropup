@@ -1,0 +1,749 @@
+{
+  "snapshot": {
+    "id": "turret-wip-4866459e2abd",
+    "revision": "4866459e2abd",
+    "status": "wip",
+    "source_commit": "4866459e2abdb6c7f5f25e9448156b6615593499"
+  },
+  "qualification": "Educational WIP walkthrough. Fit, tightening, feed, laser class and safe operation remain unqualified. No print or fabrication release.",
+  "steps": [
+    {
+      "id": "step-01",
+      "title": "The pan base and its inserts",
+      "text": "Heat-set inserts first, with the base on its foot: 5 x M3 in the clamp ears, 3 x M3 in the carrier bosses (from below), 4 x M3 in the external carrier anchors, 4 x M4 in the DT pad. The bumper tabs' 5 short M3 wait for the robot (no bumper on the bench, D42).",
+      "requirements": [
+        {
+          "part": "pan_base",
+          "title": "Pan base",
+          "instances": [
+            "pan_base"
+          ],
+          "quantity": 1,
+          "catalogue": []
+        }
+      ]
+    },
+    {
+      "id": "step-02",
+      "title": "The pan servo, its pinion and the DT12 receptacle",
+      "text": "The STS3215 drops into its pocket, bus plugs down, on its four posts: 4 x M2 x 20 up through the foot. The pinion on its horn: 4 x M3 x 16 (heads sunk). The DT04-12PA on the pad: 4 x M4 x 10; its 12 pins and the W12P wedge with the harness to the base board.",
+      "requirements": [
+        {
+          "part": "pan_servo",
+          "title": "Pan servo",
+          "instances": [
+            "pan_servo"
+          ],
+          "quantity": 1,
+          "catalogue": [
+            {
+              "key": "feetech-sts3215-c018-12v",
+              "item": "STS3215 / ST3215 12 V 30 kg-cm serial bus servo",
+              "part_number": "STS3215 / ST3215 12 V 30 kg-cm serial bus servo",
+              "qty": 1
+            }
+          ]
+        },
+        {
+          "part": "pan_pinion",
+          "title": "Pan pinion (21 T)",
+          "instances": [
+            "pan_pinion"
+          ],
+          "quantity": 1,
+          "catalogue": []
+        },
+        {
+          "part": "dt_receptacle",
+          "title": "DT12 socket",
+          "instances": [
+            "dt_receptacle"
+          ],
+          "quantity": 1,
+          "catalogue": [
+            {
+              "key": "te-dt04-12pa-l012",
+              "item": "DT 12-way receptacle (pin side), key A, grey, flange mount (L012 mod) - LCSC C6423585",
+              "part_number": "DT04-12PA-L012",
+              "qty": 1
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "id": "step-03",
+      "title": "The removable base-board module and the index magnet",
+      "text": "On the bench, fit four M3 inserts in the carrier and screw the drilled PCB onto its standoffs with four M3 x 6. Fit four M3 inserts in the base anchors from +x. Connect the harness, then slide the entire module in from +x and secure it with four M3 x 8 from outside. Remove the robot bumper before service; PCB screws are accessed only on the bench. Harness disconnection access and slack remain unverified: docs/base-board-service.md. Glue the index magnet in its housing pocket.",
+      "requirements": [
+        {
+          "part": "base_board_carrier",
+          "title": "base board carrier",
+          "instances": [
+            "base_board_carrier"
+          ],
+          "quantity": 1,
+          "catalogue": []
+        },
+        {
+          "part": "base_board",
+          "title": "base board",
+          "instances": [
+            "base_board"
+          ],
+          "quantity": 1,
+          "catalogue": [
+            {
+              "key": "proto-board-52x50",
+              "item": "Double-sided prototype board 50 x 70 mm, cut to size",
+              "part_number": "double-sided prototype board 50 x 70 mm",
+              "qty": 1
+            }
+          ]
+        },
+        {
+          "part": "base_board_inserts",
+          "title": "base board inserts",
+          "instances": [
+            "base_board_inserts"
+          ],
+          "quantity": 1,
+          "catalogue": []
+        },
+        {
+          "part": "base_board_screws",
+          "title": "base board screws",
+          "instances": [
+            "base_board_screws"
+          ],
+          "quantity": 1,
+          "catalogue": []
+        },
+        {
+          "part": "base_carrier_inserts",
+          "title": "base carrier inserts",
+          "instances": [
+            "base_carrier_inserts"
+          ],
+          "quantity": 1,
+          "catalogue": []
+        },
+        {
+          "part": "base_carrier_screws",
+          "title": "base carrier screws",
+          "instances": [
+            "base_carrier_screws"
+          ],
+          "quantity": 1,
+          "catalogue": []
+        },
+        {
+          "part": "index_magnet",
+          "title": "index magnet",
+          "instances": [
+            "index_magnet"
+          ],
+          "quantity": 1,
+          "catalogue": [
+            {
+              "key": "turret_magnet_disc",
+              "item": "Neodymium Magnet, Magnetized Through Thickness, 1/8\" Thick, 3/16\" OD",
+              "part_number": "5862K102",
+              "qty": 1
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "id": "step-04",
+      "title": "The pan bearing and its clamp",
+      "text": "The 6810-2RS pressed into its seat onto the Ø62 shoulder; the aluminium clamp ring (SendCutSend) over it: 5 x M3 x 8.",
+      "requirements": [
+        {
+          "part": "pan_bearing",
+          "title": "Pan bearing",
+          "instances": [
+            "pan_bearing"
+          ],
+          "quantity": 1,
+          "catalogue": [
+            {
+              "key": "vxb-6810-2rs",
+              "item": "6810-2RS Bearing 50x65x7mm - Sealed Ball Bearing - Thin Section (chrome steel)",
+              "part_number": "Kit7458 (6810-2RS)",
+              "qty": 1
+            }
+          ]
+        },
+        {
+          "part": "pan_bearing_inner",
+          "title": "pan bearing inner",
+          "instances": [
+            "pan_bearing_inner"
+          ],
+          "quantity": 1,
+          "catalogue": []
+        },
+        {
+          "part": "pan_clamp",
+          "title": "Bearing clamp",
+          "instances": [
+            "pan_clamp"
+          ],
+          "quantity": 1,
+          "catalogue": [
+            {
+              "key": "sendcutsend-pan-clamp",
+              "item": "Pan clamp ring, laser-cut 6061-T6 aluminium 0.125 in, 86 x 87 mm, 7 holes",
+              "part_number": "pan_clamp.dxf (6061-T6, 0.125 in)",
+              "qty": 1
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "id": "step-05",
+      "title": "The turntable, its spacer and the circlip",
+      "text": "Before it goes in: 4 x M4 inserts in its top, the hall switch glued in the pocket underneath (leads up its hole). Its journal down through the inner race, the gear in mesh with the pinion; from below, through the foot's Ø65 opening, the spacer and the DIN 471-50 circlip in its groove (circlip pliers).",
+      "requirements": [
+        {
+          "part": "pan_ring",
+          "title": "Pan ring (63 T)",
+          "instances": [
+            "pan_ring"
+          ],
+          "quantity": 1,
+          "catalogue": []
+        },
+        {
+          "part": "hall_switch",
+          "title": "hall switch",
+          "instances": [
+            "hall_switch"
+          ],
+          "quantity": 1,
+          "catalogue": [
+            {
+              "key": "allegro-a1120lua-t",
+              "item": "Unipolar hall-effect switch, 3-24 V, SIP-3 (UA)",
+              "part_number": "A1120LUA-T",
+              "qty": 1
+            }
+          ]
+        },
+        {
+          "part": "pan_spacer",
+          "title": "pan spacer",
+          "instances": [
+            "pan_spacer"
+          ],
+          "quantity": 1,
+          "catalogue": []
+        },
+        {
+          "part": "circlip_50",
+          "title": "circlip 50",
+          "instances": [
+            "circlip_50"
+          ],
+          "quantity": 1,
+          "catalogue": [
+            {
+              "key": "circlip_50",
+              "item": "External Retaining Ring, for 50 mm OD, Black-Phosphate Spring Steel",
+              "part_number": "98541A167",
+              "qty": 1
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "id": "step-06",
+      "title": "The ring driver and the slip ring on its carrier",
+      "text": "The driver pressed into the top of the turntable's bore (three crush ribs and a drop of CA). The ring screwed to its carrier (3 x M3 x 8 with washers), a 25 mm length of the 5/16 in tube on its rotor stub, its rotor leads gathered; from below, the ring goes up the bore, the tube into the driver's socket and the leads out through the driver's crescent; the carrier's tabs into their pockets: 3 x M3 x 10 flat heads.",
+      "requirements": [
+        {
+          "part": "ring_driver",
+          "title": "ring driver",
+          "instances": [
+            "ring_driver"
+          ],
+          "quantity": 1,
+          "catalogue": []
+        },
+        {
+          "part": "slip_ring",
+          "title": "slip ring",
+          "instances": [
+            "slip_ring"
+          ],
+          "quantity": 1,
+          "catalogue": [
+            {
+              "key": "sparkfun-rob-13065",
+              "item": "Slip Ring - 12 Wire (2A)",
+              "part_number": "ROB-13065",
+              "qty": 1
+            }
+          ]
+        },
+        {
+          "part": "slip_ring_rotor",
+          "title": "slip ring rotor",
+          "instances": [
+            "slip_ring_rotor"
+          ],
+          "quantity": 1,
+          "catalogue": []
+        },
+        {
+          "part": "ring_coupling",
+          "title": "ring coupling",
+          "instances": [
+            "ring_coupling"
+          ],
+          "quantity": 1,
+          "catalogue": [
+            {
+              "key": "turret_tube_coupling",
+              "item": "Continuous-Flex Tpv Rubber Tube for Chemicals, 3/16\" ID, 5/16\" OD",
+              "part_number": "51225K24",
+              "qty": 1
+            }
+          ]
+        },
+        {
+          "part": "ring_carrier",
+          "title": "ring carrier",
+          "instances": [
+            "ring_carrier"
+          ],
+          "quantity": 1,
+          "catalogue": []
+        }
+      ]
+    },
+    {
+      "id": "step-07",
+      "title": "The tilt yoke and the turret-board bay",
+      "text": "The rotor leads through the yoke's slot, the yoke on the turntable: 4 x M4 x 12. 4 x M3 inserts in the -y arm, the bay on them: 4 x M3 x 8 flat heads; the three boards on their standoffs (12 and 14 mm); the ring's rotor plug and the hall into level 2.",
+      "requirements": [
+        {
+          "part": "tilt_yoke",
+          "title": "Tilt yoke",
+          "instances": [
+            "tilt_yoke"
+          ],
+          "quantity": 1,
+          "catalogue": []
+        },
+        {
+          "part": "ring_leads_rotor",
+          "title": "ring leads rotor",
+          "instances": [
+            "ring_leads_rotor"
+          ],
+          "quantity": 1,
+          "catalogue": []
+        },
+        {
+          "part": "board_bay",
+          "title": "Board bay",
+          "instances": [
+            "board_bay"
+          ],
+          "quantity": 1,
+          "catalogue": []
+        },
+        {
+          "part": "turret_board",
+          "title": "turret board",
+          "instances": [
+            "turret_board"
+          ],
+          "quantity": 1,
+          "catalogue": [
+            {
+              "key": "proto-board-52x50",
+              "item": "Double-sided prototype board 50 x 70 mm, cut to size",
+              "part_number": "double-sided prototype board 50 x 70 mm",
+              "qty": 3
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "id": "step-08",
+      "title": "The tilt servo and the cradle on its aluminium cheeks",
+      "text": "The rail frame, its two aluminium plates and the stop lug go together on the bench (D48): 8 x M3 inserts into the rail frame's two rebates, put in from the side; the aluminium stop lug onto the -y plate's outer face, 2 x M3 x 6 flat heads from the plate's inner face into its tapped holes, a drop of CA gel under it; each plate into its rail's rebate, 4 x M3 x 8 button heads. Then the STS3215 into its pocket on the +y arm, 4 x M2 x 10 from the arm's inner face, and the MR126 into the -y arm's seat. The cradle between the arms: the horn boss between the +y plate and the servo's horn, 4 x M3 x 14 flat heads from the plate's inner face into the horn (snug: 1.8 mm of thread); on the -y side the pivot spacer, its land against the bearing, and the ISO 7379 shoulder screw through the arm, the bearing and the spacer into the plate's tapped hole (snug, about 0.15 N m, a drop of CA gel on the thread). Check the +12 and -25 deg stops by hand before anything else: the lug meets the yoke's two sectors, and the barrel cannot be pushed past either.",
+      "requirements": [
+        {
+          "part": "tilt_servo",
+          "title": "Tilt servo",
+          "instances": [
+            "tilt_servo"
+          ],
+          "quantity": 1,
+          "catalogue": [
+            {
+              "key": "feetech-sts3215-c018-12v",
+              "item": "STS3215 / ST3215 12 V 30 kg-cm serial bus servo",
+              "part_number": "STS3215 / ST3215 12 V 30 kg-cm serial bus servo",
+              "qty": 1
+            }
+          ]
+        },
+        {
+          "part": "tilt_bearing",
+          "title": "Tilt bearing",
+          "instances": [
+            "tilt_bearing"
+          ],
+          "quantity": 1,
+          "catalogue": [
+            {
+              "key": "bearing_mr126",
+              "item": "Corrosion-Resistant 440C Stainless Steel Ball Bearing, Shielded, Trade No. 126-2Z, for 6 mm Shaft Diameter",
+              "part_number": "7804K112",
+              "qty": 1
+            }
+          ]
+        },
+        {
+          "part": "tilt_bearing_inner",
+          "title": "tilt bearing inner",
+          "instances": [
+            "tilt_bearing_inner"
+          ],
+          "quantity": 1,
+          "catalogue": []
+        },
+        {
+          "part": "cradle",
+          "title": "Cradle",
+          "instances": [
+            "cradle"
+          ],
+          "quantity": 1,
+          "catalogue": []
+        },
+        {
+          "part": "cradle_plate_l",
+          "title": "cradle plate l",
+          "instances": [
+            "cradle_plate_l"
+          ],
+          "quantity": 1,
+          "catalogue": [
+            {
+              "key": "sendcutsend-cradle-plate-l",
+              "item": "Cradle cheek plate, +y (the servo's side), laser-cut 6061-T6 aluminium 0.125 in, 90 x 62 mm, 9 holes, 4 countersunk",
+              "part_number": "cradle_plate_l.dxf (6061-T6, 0.125 in)",
+              "qty": 1
+            }
+          ]
+        },
+        {
+          "part": "cradle_plate_r",
+          "title": "cradle plate r",
+          "instances": [
+            "cradle_plate_r"
+          ],
+          "quantity": 1,
+          "catalogue": [
+            {
+              "key": "sendcutsend-cradle-plate-r",
+              "item": "Cradle cheek plate, -y (the pivot's side), laser-cut 6061-T6 aluminium 0.125 in, 90 x 62 mm, 7 holes, 1 tapped M5, 2 countersunk",
+              "part_number": "cradle_plate_r.dxf (6061-T6, 0.125 in)",
+              "qty": 1
+            }
+          ]
+        },
+        {
+          "part": "stop_lug",
+          "title": "stop lug",
+          "instances": [
+            "stop_lug"
+          ],
+          "quantity": 1,
+          "catalogue": [
+            {
+              "key": "sendcutsend-stop-lug",
+              "item": "Tilt hard-stop lug, laser-cut 6061-T6 aluminium 0.100 in, 24 x 23 mm, 2 holes tapped M3",
+              "part_number": "stop_lug.dxf (6061-T6, 0.100 in)",
+              "qty": 1
+            }
+          ]
+        },
+        {
+          "part": "horn_boss",
+          "title": "horn boss",
+          "instances": [
+            "horn_boss"
+          ],
+          "quantity": 1,
+          "catalogue": []
+        },
+        {
+          "part": "pivot_spacer",
+          "title": "pivot spacer",
+          "instances": [
+            "pivot_spacer"
+          ],
+          "quantity": 1,
+          "catalogue": []
+        },
+        {
+          "part": "shoulder_screw",
+          "title": "shoulder screw",
+          "instances": [
+            "shoulder_screw"
+          ],
+          "quantity": 1,
+          "catalogue": [
+            {
+              "key": "shoulder_6x12_m5",
+              "item": "Alloy Steel Shoulder Screws, 6 mm Shoulder Diameter, 12 mm Shoulder Length, M5 x 0.8 mm Thread",
+              "part_number": "92981A101",
+              "qty": 1
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "id": "step-09",
+      "title": "The laser",
+      "text": "The mount on the cradle's tab: 2 x M3 x 10 up through it; the laser in the mount on three nylon-tip M3 set screws (boresight them on the bench).",
+      "requirements": [
+        {
+          "part": "laser_mount",
+          "title": "Laser mount",
+          "instances": [
+            "laser_mount"
+          ],
+          "quantity": 1,
+          "catalogue": []
+        },
+        {
+          "part": "laser",
+          "title": "Aiming laser",
+          "instances": [
+            "laser"
+          ],
+          "quantity": 1,
+          "catalogue": [
+            {
+              "key": "quarton-vlm-650-03-lpt",
+              "item": "Red dot laser module 650 nm, < 1 mW (Class 2), 2.6-6 V, Ø7 x 22.5 mm",
+              "part_number": "VLM-650-03 LPT",
+              "qty": 1
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "id": "step-10",
+      "title": "The cartridge: feed servo, dial, flywheel motors and the cartridge board",
+      "text": "On the bench, not on the turret. The feed servo (its bus ID set to 3 beforehand) up against the dial floor's underside, its horn through the floor and its length to the rear: 4 x M2 x 6 flat heads from above, flush. The dial onto the horn: 4 x M3 x 8 down through the holes in its cone (the hopper off); set the servo's zero so a pocket is centred over the exit hole and write the count down. Each X2216 with its hub: the prop adapter from its box on the bell (3 x M2), the hub's flat face on the adapter's flange, its bore reamed to 5.00 on the pilot, the washer and an M5 nylon-insert nut (snug plus a quarter turn); turn it by hand with a dial indicator on the rim: under 0.15 mm, or re-seat; then the Ø34 tyre stretched on. Each motor goes up through the opening under its shell to the plate, its leads out through the slot: 4 x M3 x 6 in the radial slots (never longer: the motor has 2.8 mm of thread). The two AM32 ESCs on the cage plate on foam tape, each motor's leads to its ESC; the cartridge board on its four posts over them (4 x M3 x 6), the brake FETs' drains to the phase leads, and the pigtail to the two CT plugs (docs/turret-wiring.md).",
+      "requirements": [
+        {
+          "part": "cartridge_body",
+          "title": "Ball cartridge",
+          "instances": [
+            "cartridge_body"
+          ],
+          "quantity": 1,
+          "catalogue": []
+        },
+        {
+          "part": "feed_motor",
+          "title": "Feed servo (STS3215)",
+          "instances": [
+            "feed_motor"
+          ],
+          "quantity": 1,
+          "catalogue": [
+            {
+              "key": "feetech-sts3215-c018-12v",
+              "item": "STS3215 / ST3215 12 V 30 kg-cm serial bus servo",
+              "part_number": "STS3215 / ST3215 12 V 30 kg-cm serial bus servo",
+              "qty": 1
+            }
+          ]
+        },
+        {
+          "part": "dial",
+          "title": "Feed dial",
+          "instances": [
+            "dial"
+          ],
+          "quantity": 1,
+          "catalogue": []
+        },
+        {
+          "part": "flywheel_motor_l",
+          "title": "Flywheel motor L",
+          "instances": [
+            "flywheel_motor_l"
+          ],
+          "quantity": 1,
+          "catalogue": [
+            {
+              "key": "sunnysky-x2216-1400kv-v3",
+              "item": "SunnySky X2216 1400KV V3 outrunner, short shaft, with its bolt-on prop adapter and X-mount",
+              "part_number": "X2216 V3 1400KV, short shaft (SKU SS-XV3-X2216-S-1400-V3)",
+              "qty": 1
+            }
+          ]
+        },
+        {
+          "part": "flywheel_motor_r",
+          "title": "Flywheel motor R",
+          "instances": [
+            "flywheel_motor_r"
+          ],
+          "quantity": 1,
+          "catalogue": [
+            {
+              "key": "sunnysky-x2216-1400kv-v3",
+              "item": "SunnySky X2216 1400KV V3 outrunner, short shaft, with its bolt-on prop adapter and X-mount",
+              "part_number": "X2216 V3 1400KV, short shaft (SKU SS-XV3-X2216-S-1400-V3)",
+              "qty": 1
+            }
+          ]
+        },
+        {
+          "part": "flywheel",
+          "title": "Flywheel hub",
+          "instances": [
+            "flywheel",
+            "flywheel_m"
+          ],
+          "quantity": 2,
+          "catalogue": []
+        },
+        {
+          "part": "flywheel_tyre",
+          "title": "Flywheel tyre",
+          "instances": [
+            "flywheel_tyre",
+            "flywheel_tyre_m"
+          ],
+          "quantity": 2,
+          "catalogue": []
+        },
+        {
+          "part": "cartridge_board",
+          "title": "Cartridge board",
+          "instances": [
+            "cartridge_board"
+          ],
+          "quantity": 1,
+          "catalogue": [
+            {
+              "key": "proto-board-52x50",
+              "item": "Double-sided prototype board 50 x 70 mm, cut to size",
+              "part_number": "double-sided prototype board 50 x 70 mm",
+              "qty": 1
+            }
+          ]
+        },
+        {
+          "part": "esc_l",
+          "title": "ESC L",
+          "instances": [
+            "esc_l"
+          ],
+          "quantity": 1,
+          "catalogue": [
+            {
+              "key": "repeat-robotics-am32-35a-esc",
+              "item": "AM32 Brushless Drive ESC 35 A (bi-directional)",
+              "part_number": "AM32 Brushless Drive ESC 35 A (bi-directional)",
+              "qty": 1
+            }
+          ]
+        },
+        {
+          "part": "esc_r",
+          "title": "ESC R",
+          "instances": [
+            "esc_r"
+          ],
+          "quantity": 1,
+          "catalogue": [
+            {
+              "key": "repeat-robotics-am32-35a-esc",
+              "item": "AM32 Brushless Drive ESC 35 A (bi-directional)",
+              "part_number": "AM32 Brushless Drive ESC 35 A (bi-directional)",
+              "qty": 1
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "id": "step-11",
+      "title": "The barrel, the hopper and the lid",
+      "text": "The barrel into its socket (a nylon-tip M3 set screw through the socket's insert), the gates' emitters and receivers in its bosses; the hopper on the housing (3 x M3 x 8: the front one through the hole in the cage plate); the lid. The fill flap and its spring wait for the dock (v1).",
+      "requirements": [
+        {
+          "part": "barrel",
+          "title": "Barrel",
+          "instances": [
+            "barrel"
+          ],
+          "quantity": 1,
+          "catalogue": []
+        },
+        {
+          "part": "hopper",
+          "title": "Hopper",
+          "instances": [
+            "hopper"
+          ],
+          "quantity": 1,
+          "catalogue": []
+        },
+        {
+          "part": "hopper_lid",
+          "title": "Hopper lid",
+          "instances": [
+            "hopper_lid"
+          ],
+          "quantity": 1,
+          "catalogue": []
+        }
+      ]
+    },
+    {
+      "id": "step-12",
+      "title": "The cartridge on the cradle, the mount",
+      "text": "The cartridge down onto the cradle's two dowels, the knurled thumbscrew up into its insert (its O-ring keeps it in the rail); the two CT plugs (2 x 3 power, 2 x 5 signal). Then the turret on its stand: 2 x Ø5 dowels, 4 x M5 x 16, and the DT12 plug (the stand's two dock inserts went in from below with a flat tip, the top face on a flat plate and the seat checked flat after; the dock adapter's M3s are no longer than its base + 5 mm). The TPU bumper ring (5 x M3 x 20 and oversized washers on the base's tabs) is for the robot (v1).",
+      "requirements": [
+        {
+          "part": "ct_thumbscrew",
+          "title": "ct thumbscrew",
+          "instances": [
+            "ct_thumbscrew"
+          ],
+          "quantity": 1,
+          "catalogue": [
+            {
+              "key": "turret_thumbscrew_m4x12",
+              "item": "Steel Raised Knurled-Head Thumb Screw, M4 x 0.7mm Thread Size, 12mm Long",
+              "part_number": "92581A250",
+              "qty": 1
+            }
+          ]
+        }
+      ]
+    }
+  ]
+}

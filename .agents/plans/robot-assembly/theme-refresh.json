@@ -1,0 +1,24 @@
+{
+  "scope": "Pure shared-theme fallback/source hash refresh only",
+  "source": "a8390d92",
+  "changed": {
+    "software/site/assets/build-guides/robot-wip-540056ba4e59/guide.json": {
+      "before": "7e3b043c6f69b9c98a0f2764b728a83f423c148308d3c698f295a910d0772d6f",
+      "after": "f4d5212d8c1a105d9bf2b16319b25bb451642e4387b41a1775b1fee55a4829c0"
+    },
+    "software/site/assets/build-guides/robot-wip-540056ba4e59/instructions.html": {
+      "before": "3a2e4e07cebee33e888847b20e6ba6c85e01831548e410c30e70fa66857cd041",
+      "after": "cf4e552ea7c4609f675a3697f2a6f649e107725f2501d62b11554934cb9b2776"
+    },
+    "software/site/assets/build-guides/combined-wip-540056ba4e59/guide.json": {
+      "before": "f2e6a1080a870b47bfc8e38188ea776d91e9a262eb91b09e12d5e25876b845eb",
+      "after": "88c69b5b43fb456e968fd10b7cd46589ce971ca38d277c605e5544c08972617c"
+    },
+    "software/site/assets/build-guides/combined-wip-540056ba4e59/instructions.html": {
+      "before": "90753328e07404d1a7435ddbd4fc60c635f12568d8c5ffe91ee675a85b109f02",
+      "after": "6f2f182769b068a88e0c23e10dab9996cee6e0e4aa0af098fc72e7f7f2036e2f"
+    }
+  },
+  "all_meshes_unchanged": true,
+  "native_source": "540056ba4e59b197859236cb693463e10c9c8901"
+}

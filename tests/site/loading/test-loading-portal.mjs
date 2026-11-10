@@ -17,14 +17,16 @@ const manifest={title:'Loading test: published barrel',parts:[{name:part.name,fi
 const progress=await json('/docs/progress.json');
 async function pageFor(path,setup=async()=>{}){
   const page=await context.newPage();page.setDefaultTimeout(60000);page.on('pageerror',error=>errors.push(error.message));
-  await setup(page);await page.goto(base+path,{waitUntil:'domcontentloaded'});return page;
+  await setup(page);await page.goto(base+path,{waitUntil:'domcontentloaded'});
+  if(path.startsWith('/designer/build')){await page.locator('#build-details > summary').click();await page.locator('#build-details').scrollIntoViewIfNeeded();}
+  return page;
 }
 async function state(page,id,want){await page.waitForFunction(({id,want})=>document.getElementById(id)?.dataset.state===want,{id,want});}
 async function retry(page,id){await page.locator('#'+id+' [data-retry]').click();}
 async function ready(page){await page.waitForFunction(()=>document.body.dataset.ready==='1');}
 async function errorLayout(page,id,label){
   const box=await page.locator('#'+id).boundingBox();assert.ok(box&&box.width>0,`${label}: status visible`);
-  const button=page.locator('#'+id+' [data-retry]');await button.focus();assert.equal(await button.evaluate(el=>el===document.activeElement),true);
+  const button=page.locator('#'+id+' [data-retry]');await button.scrollIntoViewIfNeeded();await button.focus();assert.equal(await button.evaluate(el=>el===document.activeElement),true);
   const r=await button.boundingBox();assert.ok(r&&r.width>=44&&r.height>=44,`${label}: useful retry target`);
   assert.ok(r.x>=0&&r.y>=0&&r.x+r.width<=await page.evaluate(()=>innerWidth)+1&&r.y+r.height<=await page.evaluate(()=>innerHeight)+1,`${label}: retry in viewport`);
   assert.ok(await page.evaluate(()=>document.documentElement.scrollWidth<=innerWidth+1),`${label}: no horizontal overflow`);
@@ -52,9 +54,10 @@ try{
     });
     await captured(()=>held);const pending=page.locator('#'+host+' .gp-loading');
     assert.equal(await pending.getAttribute('data-state'),'loading');assert.equal(await pending.getAttribute('aria-busy'),'true');assert.ok(await pending.isVisible());
-    assert.equal(await page.locator('canvas').count(),0,'No usable scene exists before bootstrap completes');
+    if(label==='Build'){assert.equal(await page.locator('#build-details canvas').count(),0,'Held buying/printing bootstrap cannot create a usable procurement view');assert.equal(await page.locator('#grand-usd').count(),0,'No invented total while procurement bootstrap is held');}
+    else assert.equal(await page.locator('canvas').count(),0,'No usable scene exists before bootstrap completes');
     await held.abort('internetdisconnected');await page.waitForFunction(host=>!!document.querySelector('#'+host+' [data-bootstrap-error]'),host);
-    const retryButton=page.locator('#'+host+' [data-bootstrap-retry]');await retryButton.focus();assert.ok(await retryButton.evaluate(el=>el===document.activeElement));
+    const retryButton=page.locator('#'+host+' [data-bootstrap-retry]');await retryButton.scrollIntoViewIfNeeded();await retryButton.focus();assert.ok(await retryButton.evaluate(el=>el===document.activeElement));
     const bounds=await retryButton.boundingBox();assert.ok(bounds&&bounds.height>=44&&bounds.width>=44&&bounds.x>=0&&bounds.y>=0&&bounds.x+bounds.width<=320&&bounds.y+bounds.height<=568,'Bootstrap reload remains reachable on a phone');
     await page.screenshot({path:`${out}/${engine.name()}-bootstrap-${host}.png`});
     await page.unroute(match);await page.evaluate(()=>window.bootstrapSentinel={});
@@ -129,8 +132,8 @@ try{
       });
     });
     if(mode==='held'){
-      await state(page,'viewer-load-status','loading');await page.waitForFunction(()=>document.querySelector('#viewer-load-status').textContent.includes('parts'));
-      assert.equal(await page.locator('#app canvas').count(),0);await captured(()=>releasePart);releasePart();
+      await captured(()=>releasePart);await state(page,'viewer-load-status','loading');
+      assert.equal(await page.locator('#app canvas').count(),0,'Actual mesh request is held; no scene is usable yet');releasePart();
     }else{
       await state(page,'viewer-load-status','error');assert.equal(await page.locator('#app canvas').count(),0,'Invalid part never creates a partial ready scene');
       await errorLayout(page,'viewer-load-status','viewer-'+mode);await page.unroute('**'+partURL+'*');await retry(page,'viewer-load-status');

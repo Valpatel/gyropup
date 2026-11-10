@@ -1,0 +1,71 @@
+{
+  "schema": "cad-agent.assembly-guide/1",
+  "snapshot": {
+    "id": "fixture-two",
+    "revision": "fixture-two",
+    "status": "released",
+    "source_commit": "2222222222222222222222222222222222222222"
+  },
+  "model": {
+    "file": "two-view.json",
+    "sha256": "47ce71300e94e547420a55827c71c3eb64b184c8cc24a5028c8174b5245b9eb8"
+  },
+  "subassemblies": [
+    {
+      "id": "frame",
+      "title": "Different fixture frame",
+      "parts": [
+        "frame",
+        "brace",
+        "cap"
+      ]
+    }
+  ],
+  "steps": [
+    {
+      "id": "frame",
+      "title": "Fit a different frame",
+      "subassembly": "frame",
+      "parts": [
+        "frame",
+        "brace"
+      ],
+      "highlight": [
+        "frame",
+        "brace"
+      ],
+      "offsets_mm": {
+        "brace": [
+          30,
+          0,
+          0
+        ]
+      },
+      "text": "Fixture two distinct instruction"
+    },
+    {
+      "id": "cap",
+      "title": "Close the second fixture",
+      "subassembly": "frame",
+      "parts": [
+        "frame",
+        "brace",
+        "cap"
+      ],
+      "highlight": [
+        "cap"
+      ],
+      "offsets_mm": {
+        "cap": [
+          0,
+          20,
+          0
+        ]
+      },
+      "text": "Fixture two cap"
+    }
+  ],
+  "source": {
+    "qualification": "Synthetic test fixture only; this is not an actual Gyropup release or physical qualification."
+  }
+}

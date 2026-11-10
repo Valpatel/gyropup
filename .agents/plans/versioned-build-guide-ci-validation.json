@@ -1,0 +1,166 @@
+{
+  "scope": "Scoped real diagram and selected-page layout verification against the owned preview; complete current-head CI is separate",
+  "site_revision": "90788070aecb5012a3fdf34f3ad50c8301d8f4cf",
+  "harness_file": "tests/site/layout/test-diagrams.mjs",
+  "harness_sha256": "6053899b02bdb89560f46ea080a1634b357c8e316b41ad8ef4cd45df2a0eb7b7",
+  "reports": [
+    {
+      "engine": "chromium",
+      "file": ".agents/plans/build-workspace-evidence/diagrams-chromium-root.json",
+      "sha256": "bbcb86a303cc4dcb8e85654b01b6dacb07c5cbfce60fe03389d136b631ab7ec8",
+      "pages": 10,
+      "diagrams": 13,
+      "desktop_phone_cases": 20
+    },
+    {
+      "engine": "webkit",
+      "file": ".agents/plans/build-workspace-evidence/diagrams-webkit-root.json",
+      "sha256": "35f67bf66cbc16daac8d1f06d17428631432f1f51f85805c4f9b33f6795ca470",
+      "pages": 10,
+      "diagrams": 13,
+      "desktop_phone_cases": 20
+    }
+  ],
+  "limits": "These are scoped diagram checks, not complete current-head CI or engineering qualification.",
+  "site_assets": "eeb0281b36218e8bd335",
+  "layout_smoke": {
+    "scope": "Two explicitly selected pages at phone-360 in both themes; not the complete CI scan",
+    "expected": 4,
+    "observed": 4,
+    "unique": 4,
+    "findings": 0,
+    "coverage_sha256": "a221105789bb09fa4ce127ef0e94ae3c3b917c5e22a31f880010dccee6ac3031",
+    "elapsed_seconds": 130,
+    "coverage": {
+      "file": ".agents/plans/build-workspace-evidence/layout-phone360-coverage-root.json",
+      "sha256": "a221105789bb09fa4ce127ef0e94ae3c3b917c5e22a31f880010dccee6ac3031"
+    },
+    "results": {
+      "file": ".agents/plans/build-workspace-evidence/layout-phone360-root.json",
+      "sha256": "56faa5d93e4085a6bc4345ebb6ffa9f9b0cc16b964f67023d42a44267d187000"
+    },
+    "harness_file": "tests/site/layout/test-empty-space.mjs",
+    "harness_sha256": "4dd76fac8e854e3fa90c084eb0fb4f8f547dff614b36686f309911888e9a774f"
+  },
+  "source_review": {
+    "head": "624edf231d4c4c5ea93ce13126563c8a1fb532b5",
+    "url": "https://github.com/Valpatel/gyropup/pull/267#pullrequestreview-5841062601"
+  },
+  "local_validation": {
+    "build": {
+      "documents": 151,
+      "markdown_pages": 361,
+      "status": "passed"
+    },
+    "privacy": {
+      "passed": 11,
+      "failed": 0
+    },
+    "markdown": {
+      "passed": 6,
+      "failed": 0
+    },
+    "selectors": {
+      "passed": 3,
+      "failed": 0,
+      "actual_invalid_cli_controls": 8
+    },
+    "poster_contract": "passed unchanged a81 visual closure"
+  },
+  "integration_status": "Pending complete current-head CI and normal dev/main promotion; local/scoped evidence is not integration acceptance.",
+  "native_control_prefix": {
+    "scope": "Exact updated simulator test prefix through two native checkbox Space actions; not the complete simulator suite",
+    "site_revision": "1c48bd5ca6f6863ed5c0960e6d3d7051c8004390",
+    "harness_file": "tests/site/controls/test-turret-interactions.mjs",
+    "harness_sha256": "8a0ba3ad93c5f8ed7305e97d874a81c7582044e9cd9a670cc05b1fd90f14193e",
+    "positive": {
+      "file": ".agents/plans/build-workspace-evidence/native-checkbox-prefix-root.json",
+      "sha256": "9de71da99b3239ead2b05682ca451d861341a1b775bacadac831d0fbc41c9620"
+    },
+    "seeded_negative": {
+      "file": ".agents/plans/build-workspace-evidence/native-checkbox-negative-root.json",
+      "sha256": "90c3eaced0296098083271483243d244df628f294b290239a892955273154ce9"
+    },
+    "seed": "On the first real Space keydown only, cancel its native default while setting checkbox and marker state false. Existing state assertions succeed; the new event/default-action assertion must reject.",
+    "limits": "The old CI keyboard failure did not reproduce locally and its original focus was not captured. No simulator defect is claimed fixed; current full CI remains required."
+  },
+  "ci_runtime": {
+    "image": "mcr.microsoft.com/playwright:v1.56.1-noble@sha256:f1e7e01021efd65dd1a2c56064be399f3e4de00fd021ac561325f2bfbb2b837a",
+    "source_lock_version": "1.56.1",
+    "browser_suites": 26,
+    "unchanged_other_command_blocks": 24,
+    "presentation_partition_commands": [
+      7,
+      14
+    ],
+    "per_suite_minutes": 20,
+    "aggregate_contexts": [
+      "browser-validation (layout)",
+      "browser-validation (presentation)"
+    ],
+    "local_ci_tests_passed": 5,
+    "local_node": "22.23.4",
+    "limits": "Current GitHub CI in the pinned environment remains required. No local image pull or browser install was performed."
+  },
+  "final_local_validation": {
+    "candidate": "c8bc10485fad659dea53d1721c6179a54e97d0e6",
+    "node": "22.23.4",
+    "build": {
+      "documents": 151,
+      "markdown_pages": 361,
+      "status": "passed"
+    },
+    "privacy": {
+      "passed": 11,
+      "failed": 0
+    },
+    "markdown": {
+      "passed": 6,
+      "failed": 0
+    },
+    "ci_guards": {
+      "passed": 5,
+      "failed": 0,
+      "invalid_cli_controls": 8
+    },
+    "visual_sha256": "c58fbc6820cde063acf6386bf5204db72cec401551a6e9f50be1b6a9a839d921",
+    "ci_source_review": "https://github.com/Valpatel/gyropup/pull/267#pullrequestreview-5841477534",
+    "limits": "Local and scoped checks are separate from mandatory complete current-head CI, dev/main promotion and public read-back. Incomplete legacy probes remain incomplete."
+  },
+  "integration_candidate": {
+    "product_and_media_checkpoint": "500016ba6ff8c8a0bc27618c6255c4a9a60af7d4",
+    "test_delta_review": "https://github.com/Valpatel/gyropup/pull/267#pullrequestreview-5841781850",
+    "visual_sha256": "c58fbc6820cde063acf6386bf5204db72cec401551a6e9f50be1b6a9a839d921",
+    "fresh_highlights": {
+      "source_revision": "76f1e243d1e87295ce085e3db28390eed12ec224",
+      "adoption": ".agents/plans/versioned-build-guide-highlight-refresh/adoption.json",
+      "source_bindings": 193,
+      "raw_frames": 480,
+      "decoded_frames_per_companion": 660,
+      "rejected_negative_controls": 25,
+      "binding_tests_passed": 11,
+      "limits": "Genuine virtual recapture and encoding; historical leg and E1 evidence remains explicitly qualified. No physical qualification."
+    },
+    "prior_normal_campaign": {
+      "head": "1d0ad8e57d399154f725b6a0d56da6674d1b0736",
+      "workflow_run": 42813659763,
+      "conclusion": "failure",
+      "successful_browser_jobs": 27,
+      "primary_failures": [
+        "playback observer execution context destroyed; original cause unclassified",
+        "highlight source binding correctly rejected changed stage.js"
+      ],
+      "strict_aggregate_failures": 2,
+      "procurement_scope": "Complete Chromium legacy procurement passed; this is not a complete WebKit legacy procurement claim.",
+      "playground_scope": "Complete interactions, RS-04, motor tool, robot, gamepad, simulator and demo commands passed."
+    },
+    "required_next": [
+      "independent exact-head source review",
+      "every current-head check and both strict aggregates pass",
+      "normal dev-to-main promotion",
+      "public version, assets and functional read-back",
+      "retire only incorporated remote tips, preserving all local work and paused branches"
+    ],
+    "status": "Current integration and publication pending; prior failure remains failed."
+  }
+}

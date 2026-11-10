@@ -1,5 +1,7 @@
 # Turret assembly
 
+> **Historical assembly illustrations and instructions:** these retained images and prose predate the current upper-stop change. Step 8’s zero-degree stop statement is obsolete. Use the [source-bound WIP Build guide](/designer/build.html) for the current authored sequence; neither walkthrough is a print, fabrication or operating release. Original payloads below are preserved as historical evidence.
+
 The order to build the turret in, from cad/turret_assembly.py (which draws the pictures from the CAD: the new
 parts of each step in colour, lifted along the way they go in; what is already fitted in grey). Tools (the
 order sheets list them): a soldering iron with heat-set insert tips (M3, M4, M5); metric hex keys 1.5-4 mm;

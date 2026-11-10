@@ -9,3 +9,6 @@ main.prog{margin:auto;min-width:0}.portal-jumps{display:flex;flex-wrap:wrap;gap:
 @media(max-width:600px){.cad-part-table th.cad-part-identity,.cad-part-table td.cad-part-identity,#made table td.cad-part-identity{position:sticky;left:0;z-index:2;width:120px;min-width:120px;max-width:120px;background:var(--gp-page);border-right:1px solid var(--gp-line-3);box-shadow:3px 0 5px rgb(var(--gp-shadow) / 0.063)}.cad-part-table th.cad-part-identity{z-index:3;background:var(--gp-soft-2)}.cad-part-table .cad-status-cell,.cad-part-table .cad-status-heading{min-width:80px;width:88px}.cad-part-table .cad-status-check{min-width:64px}.cad-part-table .cad-part-identity>*{max-width:104px;overflow-wrap:anywhere}}
 /* The wrapper owns clipping; overflow on the table traps sticky identity cells. */
 table.cmp.cad-part-table{overflow:visible}
+
+/* Fixed Build colgroups must yield the same compact identity width as their sticky phone cells. */
+@media(max-width:600px){.build-details{--build-part-column:120px;--build-status-column:84px}.build-details table[data-track],.build-details #made table{width:var(--build-columns-width);min-width:var(--build-columns-width)}}

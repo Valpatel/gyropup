@@ -1,0 +1,118 @@
+{
+  "status": "passed",
+  "engine": "webkit",
+  "version": {
+    "revision": "c3a716f385fd2fd565212ddc19c82278c3701bc8",
+    "assets": "6dece837c55c3868bc60",
+    "history": true,
+    "built": "2026-11-10T10:37:18.076Z"
+  },
+  "cases": [
+    {
+      "name": "Explicit version-only robot selects its real bound guide",
+      "actual": {
+        "active": true,
+        "assembly": "robot",
+        "guideAssembly": "robot",
+        "overview": false,
+        "step": "overview",
+        "meshes": 171,
+        "vertices": 802674,
+        "framed": true,
+        "contextLost": false,
+        "canvasCount": 1,
+        "status": "Source-bound WIP guide loaded. No physical build release."
+      }
+    },
+    {
+      "name": "Explicit version-only turret selects its real bound guide",
+      "actual": {
+        "active": true,
+        "assembly": "turret",
+        "guideAssembly": "turret",
+        "overview": false,
+        "step": "step-01",
+        "meshes": 1,
+        "vertices": 30078,
+        "framed": true,
+        "contextLost": false,
+        "canvasCount": 1,
+        "status": "Source-bound WIP guide loaded. No physical build release."
+      }
+    },
+    {
+      "name": "Explicit version-only combined selects its real bound guide and canonical reload preserves it",
+      "actual": {
+        "active": true,
+        "assembly": "combined",
+        "guideAssembly": "combined",
+        "overview": false,
+        "step": "overview",
+        "meshes": 233,
+        "vertices": 1081101,
+        "framed": true,
+        "contextLost": false,
+        "canvasCount": 1,
+        "status": "Source-bound WIP guide loaded. No physical build release."
+      }
+    },
+    {
+      "name": "Bare build URL keeps the intended real Combined default"
+    },
+    {
+      "name": "fresh exact old-turret-snapshot plus Robot assembly resolves honest visible current context",
+      "actual": {
+        "active": true,
+        "assembly": "robot",
+        "guideAssembly": "turret",
+        "overview": true,
+        "step": "step-01",
+        "meshes": 80,
+        "vertices": 228408,
+        "framed": true,
+        "contextLost": false,
+        "turretVisible": false,
+        "canvasCount": 1,
+        "status": "Current WIP reference model · orbit to explore."
+      }
+    },
+    {
+      "name": "native assembly changes preserve one canvas and distinct rendered context",
+      "actual": {
+        "active": true,
+        "assembly": "combined",
+        "guideAssembly": "turret",
+        "overview": true,
+        "step": "step-02",
+        "meshes": 203,
+        "vertices": 523032,
+        "framed": true,
+        "contextLost": false,
+        "turretVisible": true,
+        "canvasCount": 1,
+        "status": "Current WIP reference model · orbit to explore."
+      }
+    },
+    {
+      "name": "late real robot cannot replace a newer manual turret step",
+      "actual": {
+        "active": true,
+        "assembly": "turret",
+        "guideAssembly": "turret",
+        "overview": false,
+        "step": "step-02",
+        "meshes": 4,
+        "vertices": 41322,
+        "framed": true,
+        "contextLost": false,
+        "turretVisible": true,
+        "canvasCount": 1,
+        "status": "Assembly guide ready. Current step retained."
+      }
+    },
+    {
+      "name": "disposal leaves no canvas or active scene after a held context request completes"
+    }
+  ],
+  "errors": []
+}

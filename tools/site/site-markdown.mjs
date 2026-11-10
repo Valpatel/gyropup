@@ -5,6 +5,7 @@ import { createHash } from 'node:crypto';
 import { parseHTML } from 'linkedom';
 import TurndownService from 'turndown';
 import { gfm } from 'turndown-plugin-gfm';
+import { installGuideFallback } from './assembly/fallback.mjs';
 import { addModelPreviews } from '../../software/site/assets/model-links.js';
 
 const origin = 'https://gyropup.com';
@@ -82,6 +83,7 @@ export async function renderPortal(html, file, out) {
   if(errors.length)throw new Error(`Incomplete Markdown data snapshot: ${file}: ${errors.map(status=>status.element.textContent).join('; ')}`);
   const inventory=JSON.parse(await readFile(path.join(out,'site/models.json'),'utf8'));
   addModelPreviews(document,{base:origin+'/'+file,published:new Set(inventory.files.map(file=>file.path))});
+  if(file==='designer/build.html')await installGuideFallback(document,out);
   return document.toString();
 }
 
@@ -89,6 +91,11 @@ export function htmlToMarkdown(html, file) {
   const { document } = parseHTML(html);
   const title = document.querySelector('title')?.textContent || file;
   const interactive = !!document.querySelector('canvas, script[type="module"]');
+  // Browser task tabs are alternate reading paths. Static readers need all three;
+  // keep genuinely unavailable/hidden descendants subject to the normal cleanup.
+  if (file === 'designer/build.html') {
+    document.querySelectorAll('#build-details > [data-build-panel]').forEach(panel => panel.removeAttribute('hidden'));
+  }
   document.querySelectorAll('script, style, head, svg, canvas, template, nav, dialog, button, select, input, textarea, label.inc, [aria-hidden="true"], [hidden]').forEach(el => el.remove());
   // CSS provides spacing and columns in the browser. Preserve that structure in text.
   for (const node of document.querySelectorAll('span, strong, b')) { node.before(' '); node.after(' '); }

@@ -1,0 +1,47 @@
+{
+  "status": "passed",
+  "scope": "Exact initial native-control prefix only; not the complete simulator suite",
+  "version": {
+    "revision": "1c48bd5ca6f6863ed5c0960e6d3d7051c8004390",
+    "assets": "d9d47b1d76eb927a13ca",
+    "history": true,
+    "built": "2026-11-10T11:28:37.243Z"
+  },
+  "nativeGuideEvidence": {
+    "events": [
+      {
+        "type": "keydown",
+        "trusted": true,
+        "owned": true,
+        "prevented": false,
+        "arm": 0
+      },
+      {
+        "type": "keyup",
+        "trusted": true,
+        "owned": true,
+        "prevented": false,
+        "arm": 0
+      },
+      {
+        "type": "keydown",
+        "trusted": true,
+        "owned": true,
+        "prevented": false,
+        "arm": 0
+      },
+      {
+        "type": "keyup",
+        "trusted": true,
+        "owned": true,
+        "prevented": false,
+        "arm": 0
+      }
+    ],
+    "focus": true,
+    "visibility": "visible",
+    "marker": true
+  },
+  "harness_sha256": "8a0ba3ad93c5f8ed7305e97d874a81c7582044e9cd9a670cc05b1fd90f14193e",
+  "errors": []
+}

@@ -223,7 +223,8 @@ export function createStage(container, opts = {}) {
     const dt = Math.min(clock.getDelta(), 0.05), t = clock.elapsedTime;
     light.current += (light.level - light.current) * (1 - Math.exp(-dt * 4));
     applyLight();
-    for (const cb of callbacks) {
+    for (const cb of [...callbacks]) {
+      if (!callbacks.includes(cb)) continue;
       try { cb(t, dt); } catch (err) {               // one bad callback must not freeze the stage
         if (!cb.failed) { cb.failed = true; console.error(err); document.body.dataset.stageError = String(err?.stack ?? err).slice(0, 500); }
       }
@@ -240,7 +241,11 @@ export function createStage(container, opts = {}) {
     /** No arguments: the page's own sky again (it follows the theme); otherwise a fixed day/night pair. */
     setSceneBackground(day, night = 0x081319) { followPage = day === undefined; sky.day.set(followPage ? pageSky() : day); sky.night.set(night); applyLight(); },
     setSceneLight(v, immediate = false) { light.level = Math.max(0, Math.min(1, v)); if (immediate) { light.current = light.level; applyLight(); } },
-    onFrame(cb) { callbacks.push(cb); },
+    onFrame(cb) {
+      if (disposed) return () => {};
+      callbacks.push(cb); let registered = true;
+      return () => { if (!registered) return; registered = false; const index = callbacks.indexOf(cb); if (index >= 0) callbacks.splice(index, 1); };
+    },
     start() { if (!running && !disposed) { running = true; frameId = requestAnimationFrame(tick); } },
     stop() { running = false; cancelAnimationFrame(frameId); },
     dispose() {

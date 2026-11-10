@@ -1,0 +1,39 @@
+{
+  "schema": "gyropup.build-guides/1",
+  "snapshots": [
+    {
+      "id": "turret-wip-4866459e2abd",
+      "title": "Turret bench · 4866459e2abd",
+      "status": "wip",
+      "assembly": "turret",
+      "file": "turret-wip-4866459e2abd/guide.json",
+      "sha256": "6b7c9d3ee23e4bbae2709f082a4a9194c95ae0239e0282486c97040ab9e3ae1d"
+    },
+    {
+      "id": "robot-wip-540056ba4e59",
+      "title": "Robot · 540056ba4e59 · WIP",
+      "assembly": "robot",
+      "status": "wip",
+      "file": "robot-wip-540056ba4e59/guide.json",
+      "sha256": "845f8b442b5e16ca52ad59fd6794b9211a92847f41feac5401b56e240f9f4dd6"
+    },
+    {
+      "id": "combined-wip-540056ba4e59",
+      "title": "Combined · 540056ba4e59 · WIP",
+      "assembly": "combined",
+      "status": "wip",
+      "file": "combined-wip-540056ba4e59/guide.json",
+      "sha256": "c150e36f02d5130f395f0f21cb71af6891c8ebd3fecdf6770db0efb684b77183"
+    }
+  ],
+  "unavailable": [
+    {
+      "id": "released",
+      "reason": "No named product build releases have been published."
+    },
+    {
+      "id": "rig",
+      "reason": "Historical assembly illustrations contain withdrawn instructions; current guide is unavailable."
+    }
+  ]
+}

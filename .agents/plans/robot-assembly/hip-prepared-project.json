@@ -1,0 +1,70 @@
+{
+  "schema": "gyropup.geometry-only-project/1",
+  "project": {
+    "source_file": "software/site/assets/build-guides/prepared-projects/82398d2679176eedd9420da8938336210a9ed6e9d4feb284390590d9a60310cd/hip-frame.geometry.3mf",
+    "public_file": "/web/build-guides/prepared-projects/82398d2679176eedd9420da8938336210a9ed6e9d4feb284390590d9a60310cd/hip-frame.geometry.3mf",
+    "sha256": "82398d2679176eedd9420da8938336210a9ed6e9d4feb284390590d9a60310cd",
+    "source_original_sha256": "f15c00497974e3f78d3fdc9ca60ef958ebff4d3537556d98c7c6828e6ec103de",
+    "kind": "geometry-only",
+    "immutable": true,
+    "limitations": [
+      "Geometry-only WIP project; not a sliced or print-ready job.",
+      "Generic 256 x 256 mm rectangle, 3 mm margin, no keepouts; not P1S/X1E or any actual printer/profile fit approval.",
+      "Select and verify actual printer, material, orientation, supports and slicing settings manually.",
+      "Eight support failures and physical fit/strength/manufacturing limits remain unresolved; no job starts."
+    ]
+  },
+  "original_file": "hardware/exports/leg/hip_frame.stl",
+  "producer_sha256": "ec82194d0b8c4441f8cdbe9a488200523763a5877a58db2091efddfb1d19e835",
+  "toolkit_revision": "d0d13ee3b700b20ebec76ddc3e51561e8d7fbdcc",
+  "toolkit_helpers": {
+    "software/cadagent/manufacturing/mesh3mf.py": "cf5aa2a2f6dab9d2a1e76539f158a10e38bc5e0fb72ceaabdf264178b83ce29f",
+    "software/cadagent/manufacturing/plates.py": "8cec838d8f5be706e5ef4d82a9c6a78ef0bcfde6373e8265a1d86e9b3b33cbce",
+    "software/cadagent/_deps.py": "9a637459accd62b83497bcc0452e55c156f4775ce9bd816c4c334ddacaf59f9a"
+  },
+  "numpy_version": "2.5.2",
+  "packing": {
+    "angle_deg": 45,
+    "margin_mm": 3.0,
+    "bed_mm": [
+      256.0,
+      256.0
+    ],
+    "keepouts": [],
+    "actual_printer_profile": null
+  },
+  "checks": {
+    "vertices": 14794,
+    "triangles": 29676,
+    "units": "millimeter",
+    "edge_manifold": true,
+    "max_coordinate_error_mm": 4.999974979114086e-05,
+    "original_volume_mm3": 1014809.5856163922,
+    "project_volume_mm3": 1014809.5215155074,
+    "bounds_mm": [
+      3.3916,
+      3.3916,
+      0.0,
+      252.6084,
+      252.6084,
+      81.3
+    ],
+    "yaw_deg": 45,
+    "translation_mm": [
+      93.1558307320324,
+      -30.903086754221647,
+      -1.5543122344752192e-15
+    ],
+    "generic_bed_mm": [
+      256.0,
+      256.0
+    ],
+    "margin_mm": 3.0,
+    "keepouts": [],
+    "actual_printer_fit_verified": false,
+    "slice_verified": false,
+    "physical_qualification": false
+  },
+  "original_preserved": true,
+  "retained_3mf_sha256": "edaf9bdfd4015f4aee6b388fbc7a50e39e719a86e7da5e583af5407af61cba47"
+}

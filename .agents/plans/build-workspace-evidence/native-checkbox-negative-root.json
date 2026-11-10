@@ -1,0 +1,41 @@
+{
+  "status": "failed",
+  "error": "AssertionError [ERR_ASSERTION]: Native Space events must reach the checkbox without arming a shortcut: {\"events\":[{\"type\":\"keydown\",\"trusted\":true,\"owned\":true,\"prevented\":true,\"arm\":0},{\"type\":\"keyup\",\"trusted\":true,\"owned\":true,\"prevented\":false,\"arm\":0},{\"type\":\"keydown\",\"trusted\":true,\"owned\":true,\"prevented\":false,\"arm\":0},{\"type\":\"keyup\",\"trusted\":true,\"owned\":true,\"prevented\":false,\"arm\":0}],\"focus\":true,\"visibility\":\"visible\",\"marker\":true}",
+  "scope": "Exact initial native-control prefix",
+  "nativeGuideEvidence": {
+    "events": [
+      {
+        "type": "keydown",
+        "trusted": true,
+        "owned": true,
+        "prevented": true,
+        "arm": 0
+      },
+      {
+        "type": "keyup",
+        "trusted": true,
+        "owned": true,
+        "prevented": false,
+        "arm": 0
+      },
+      {
+        "type": "keydown",
+        "trusted": true,
+        "owned": true,
+        "prevented": false,
+        "arm": 0
+      },
+      {
+        "type": "keyup",
+        "trusted": true,
+        "owned": true,
+        "prevented": false,
+        "arm": 0
+      }
+    ],
+    "focus": true,
+    "visibility": "visible",
+    "marker": true
+  },
+  "errors": []
+}

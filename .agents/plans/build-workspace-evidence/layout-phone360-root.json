@@ -1,0 +1,54 @@
+[
+ {
+  "route": "/site/pages/docs-validation-build-guide-md.html",
+  "size": "phone-360",
+  "scheme": "light",
+  "vh": 780,
+  "docH": 3102,
+  "worstGap": 96,
+  "worstShare": 0.123,
+  "quietShare": 0.122,
+  "worstAt": 2376,
+  "between": "small \"2897 words · Playback, hierarchy and sel\" | footer \"Created by Valpatel Software LLC. © 2026\"",
+  "findings": []
+ },
+ {
+  "route": "/site/pages/docs-validation-build-guide-md.html",
+  "size": "phone-360",
+  "scheme": "dark",
+  "vh": 780,
+  "docH": 3102,
+  "worstGap": 96,
+  "worstShare": 0.123,
+  "quietShare": 0.122,
+  "worstAt": 2376,
+  "between": "small \"2897 words · Playback, hierarchy and sel\" | footer \"Created by Valpatel Software LLC. © 2026\"",
+  "findings": []
+ },
+ {
+  "route": "/designer/build.html",
+  "size": "phone-360",
+  "scheme": "light",
+  "vh": 780,
+  "docH": 1846,
+  "worstGap": 93,
+  "worstShare": 0.119,
+  "quietShare": 0.119,
+  "worstAt": 1221,
+  "between": "footer.portal-footer \"Created by Valpatel Software LLC. © 2026\" | h2#prototype-footer-title \"Warning: unsafe research prototypes\"",
+  "findings": []
+ },
+ {
+  "route": "/designer/build.html",
+  "size": "phone-360",
+  "scheme": "dark",
+  "vh": 780,
+  "docH": 1846,
+  "worstGap": 93,
+  "worstShare": 0.119,
+  "quietShare": 0.119,
+  "worstAt": 1221,
+  "between": "footer.portal-footer \"Created by Valpatel Software LLC. © 2026\" | h2#prototype-footer-title \"Warning: unsafe research prototypes\"",
+  "findings": []
+ }
+]

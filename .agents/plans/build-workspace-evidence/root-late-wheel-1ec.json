@@ -1,0 +1,97 @@
+{
+  "status": "passed",
+  "phases": [
+    {
+      "name": "actual Robot scene ready",
+      "utc": "2026-11-10T09:54:01.788Z",
+      "completeDisabled": true
+    },
+    {
+      "name": "native step selector reached left wheel",
+      "utc": "2026-11-10T09:54:01.895Z"
+    },
+    {
+      "name": "late tyre pose observed without reframing",
+      "utc": "2026-11-10T09:54:15.508Z",
+      "framed": {
+        "position": [
+          1.3894242358827487,
+          0.9452933582346396,
+          -1.4806991382264985
+        ],
+        "target": [
+          0,
+          0.3200524520874025,
+          -0.09127490234374998
+        ],
+        "offset": [
+          0,
+          60,
+          0
+        ]
+      },
+      "late": {
+        "state": {
+          "status": "paused",
+          "stepId": "l-wheel",
+          "partId": "L.wheel_tyre",
+          "operationIndex": 70,
+          "elapsedMs": 1000,
+          "progress": 0.9090909090909091,
+          "speed": 1,
+          "loop": false
+        },
+        "projectedNDC": {
+          "min": [
+            -0.016406476503145747,
+            -0.5042880777300041,
+            0.989401072731682
+          ],
+          "max": [
+            0.16099186263376153,
+            -0.1279073942066688,
+            0.9906831815677295
+          ]
+        },
+        "actualWorldVertex": [
+          0.12558151245117188,
+          0.14557327270507825,
+          -0.2545043501420455
+        ],
+        "camera": [
+          1.3894242358827487,
+          0.9452933582346396,
+          -1.4806991382264985
+        ],
+        "target": [
+          0,
+          0.3200524520874025,
+          -0.09127490234374998
+        ],
+        "visible": true,
+        "canvas": {
+          "width": 1374,
+          "height": 778
+        },
+        "visibility": "visible",
+        "focus": true
+      },
+      "baseline": [
+        0.12558151245117188,
+        0.14557327270507825,
+        -0.2490498046875
+      ]
+    },
+    {
+      "name": "PASS actual late tyre world displacement and frustum",
+      "utc": "2026-11-10T09:54:24.083Z"
+    }
+  ],
+  "errors": [],
+  "version": {
+    "revision": "1ec82f67222b7b0d8d9522f21b6ea2c649018e91",
+    "assets": "17141d01502a934327d9",
+    "history": true,
+    "built": "2026-11-10T09:46:21.176Z"
+  }
+}

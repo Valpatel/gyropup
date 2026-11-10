@@ -1,0 +1,29 @@
+{
+  "source_repository": "Valpatel/cad-agent",
+  "source_revision": "4d37c839ab4f12afc642c46f9e509075b8f1d91f",
+  "files": [
+    {
+      "source": "software/cadagent/webkit/viewer.js",
+      "target": "software/site/designer/kit/viewer.js",
+      "sha256": "5b2661e46e638ec15ca45b8814c235c00eb99e49e8416ec712ee5ff6b93d221b"
+    },
+    {
+      "source": "software/cadagent/webkit/assembly/guide.js",
+      "target": "software/site/designer/kit/assembly/guide.js",
+      "sha256": "4d2d4bc138665a4dfd171f2f3b4419e34e24da846f0e9100701a06d884604367"
+    },
+    {
+      "source": "software/cadagent/webkit/assembly/playback.js",
+      "target": "software/site/designer/kit/assembly/playback.js",
+      "sha256": "7c840161460b3963a5cb979319c5b82e6a7979949763b51e4f95478187dea6ba"
+    },
+    {
+      "source": "software/cadagent/webkit/assembly/README.md",
+      "target": "software/site/designer/kit/assembly/README.md",
+      "sha256": "868fec7dc0845daa3070cb74f221e1af15db78d62a8fda8e0d37b7df2f8fa386"
+    }
+  ],
+  "preserved_product_stage_loader_and_entry_html": true,
+  "limits": "Targeted import of reviewed immutable v0.31.0 source bytes. Product merge requires verification of matching main/tag ancestry and ordinary public module byte hashes, recorded on PR267. Product and physical qualification remain separate.",
+  "target_release": "v0.31.0"
+}

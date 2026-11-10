@@ -1,0 +1,67 @@
+{
+  "schema": "cad-agent.assembly-guide/1",
+  "snapshot": {
+    "id": "fixture-one",
+    "revision": "fixture-one",
+    "status": "released",
+    "source_commit": "1111111111111111111111111111111111111111"
+  },
+  "model": {
+    "file": "one-view.json",
+    "sha256": "8f8ab154b61933556fe7d0897b89c31cf214c86f6c0bfddde339d485b35b8a1c"
+  },
+  "subassemblies": [
+    {
+      "id": "base",
+      "title": "Fixture base",
+      "parts": [
+        "base",
+        "cover"
+      ]
+    }
+  ],
+  "steps": [
+    {
+      "id": "base",
+      "title": "Fit the first base",
+      "subassembly": "base",
+      "parts": [
+        "base"
+      ],
+      "highlight": [
+        "base"
+      ],
+      "offsets_mm": {
+        "base": [
+          0,
+          0,
+          10
+        ]
+      },
+      "text": "Fixture one instruction"
+    },
+    {
+      "id": "cover",
+      "title": "Fit the first cover",
+      "subassembly": "base",
+      "parts": [
+        "base",
+        "cover"
+      ],
+      "highlight": [
+        "cover"
+      ],
+      "offsets_mm": {
+        "cover": [
+          0,
+          0,
+          20
+        ]
+      },
+      "text": "Fixture one cover"
+    }
+  ],
+  "source": {
+    "qualification": "Synthetic test fixture only; this is not an actual Gyropup release or physical qualification."
+  }
+}
