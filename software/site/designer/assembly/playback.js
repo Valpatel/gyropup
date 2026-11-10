@@ -4,9 +4,24 @@ import {createGuidePlayback} from '../kit/assembly/guide.js';
 export function mountPlayback(host,active,isCurrent,onStep){
  const button=host.querySelector('button[data-guide-play]'),loop=host.querySelector('button[data-guide-loop]'),speed=host.querySelector('[data-guide-speed]'),status=host.querySelector('[data-playback-status]');
  const events=new AbortController(),motion=matchMedia('(prefers-reduced-motion: reduce)');let unsubscribe=()=>{},player=null,disposed=false;
- function render(state){if(disposed||!isCurrent())return;const playing=state?.status==='playing';button.disabled=!player||active.overview||motion.matches||document.hidden;button.setAttribute('aria-label',playing?'Pause assembly':'Play assembly');button.title=button.getAttribute('aria-label');button.setAttribute('aria-pressed',String(playing));button.querySelector('span').textContent=playing?'Pause':'Play';button.querySelector('svg').innerHTML=playing?'<path d="M8 5v14m8-14v14"/>':'<path d="m8 5 11 7-11 7Z"/>';loop.disabled=!player;speed.disabled=!player;loop.setAttribute('aria-pressed',String(state?.loop||false));loop.textContent=state?.loop?'Loop on':'Loop off';speed.value=String(state?.speed||1);
-  status.textContent=active.overview?'This interim reference supports orbit and zoom. Choose an authored guide for assembly playback.':motion.matches?'Animation is stopped for reduced motion. Use the step controls for static instructions.':!player?'This snapshot has no verified installation order. Manual steps remain available.':state.status==='ended'?'Assembly playback finished. Play starts again; completion checkboxes remain yours.':state.status==='idle'?'Play installs one authored model instance at a time. Completion checkboxes remain yours.':`${playing?'Installing':'Paused'}: ${state.partId} · ${Math.round(state.progress*100)}%`;
+ function render(state){
+  if(disposed||!isCurrent())return;
+  const playing=state?.status==='playing',disabled=!player||active.overview||motion.matches||document.hidden,label=playing?'Pause assembly':'Play assembly',pressed=String(playing),verb=playing?'Pause':'Play',looped=String(state?.loop||false),loopText=state?.loop?'Loop on':'Loop off',speedValue=String(state?.speed||1);
+  // A pause is observed during pointerdown. Rewriting unchanged native controls here can scroll their pane before click.
+  if(button.disabled!==disabled)button.disabled=disabled;
+  if(button.getAttribute('aria-label')!==label)button.setAttribute('aria-label',label);
+  if(button.title!==label)button.title=label;
+  if(button.getAttribute('aria-pressed')!==pressed)button.setAttribute('aria-pressed',pressed);
+  const span=button.querySelector('span');if(span.textContent!==verb){span.textContent=verb;button.querySelector('svg').innerHTML=playing?'<path d="M8 5v14m8-14v14"/>':'<path d="m8 5 11 7-11 7Z"/>';}
+  if(loop.disabled!==!player)loop.disabled=!player;
+  if(speed.disabled!==!player)speed.disabled=!player;
+  if(loop.getAttribute('aria-pressed')!==looped)loop.setAttribute('aria-pressed',looped);
+  if(loop.textContent!==loopText)loop.textContent=loopText;
+  if(speed.value!==speedValue)speed.value=speedValue;
+  const message=active.overview?'This interim reference supports orbit and zoom. Choose an authored guide for assembly playback.':motion.matches?'Animation is stopped for reduced motion. Use the step controls for static instructions.':!player?'This snapshot has no verified installation order. Manual steps remain available.':state.status==='ended'?'Assembly playback finished. Play starts again; completion checkboxes remain yours.':state.status==='idle'?'Play installs one authored model instance at a time. Completion checkboxes remain yours.':`${playing?'Installing':'Paused'}: ${state.partId} · ${Math.round(state.progress*100)}%`;
+  if(status.textContent!==message)status.textContent=message;
  }
+
  try{const references=active.guide.steps.filter(step=>!canCompleteStep(active.guide,step.id)).map(step=>step.id),order=Object.fromEntries(Object.entries(active.guide.source?.install_order_by_step||{}).filter(([id])=>!references.includes(id)));player=createGuidePlayback(active.controller,{installOrderByStep:order,referenceStepIDs:references,durationMs:1100,onState:render,onStep:(id,operation)=>{if(isCurrent())onStep(id,operation);}});unsubscribe=active.viewer.stage.onFrame((_t,dt)=>{if(!disposed&&isCurrent())player.tick(dt);});}
  catch(error){status.dataset.error=error.message;}
  const pause=()=>{player?.pause();render(player?.getState());};

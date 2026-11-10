@@ -1,0 +1,26 @@
+{
+  "date": "2026-11-10",
+  "built_tree": "559c897cbdb57b4087be9939f39f6dd654d4fd92",
+  "runtime_source": "6eeea9e01d2ce7766a5f3829d5beef38b6cd8c6a",
+  "context": {
+    "engine": "webkit",
+    "viewport": {
+      "width": 1366,
+      "height": 900
+    },
+    "colorScheme": "dark",
+    "reducedMotion": "reduce",
+    "assembly": "robot"
+  },
+  "sequence": [
+    "Open Parts, Tools and expanded instructions",
+    "Select L.hip_frame, close selected details",
+    "Select section plane z",
+    "Native click Flip before changing depth"
+  ],
+  "result": "Pointerdown hit Flip; capture-time re-render moved its rectangle by43px, and pointerup/click missed it. Plane remained unflipped.",
+  "files": {
+    "flip.json": "39693591eb6b7146ab44b1bb4cc5e8bffecb93e820e9cdd4d1a7433c910c4943",
+    "failure.png": "abbb8217712e0514da9b085ccfe76e708a72568f4265c9573bd26ab955e350fd"
+  }
+}

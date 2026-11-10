@@ -2,6 +2,7 @@
 
 | Symptom | Canonical guidance |
 | --- | --- |
+| Flip/Rotate miss after a capture-time pause refresh despite a valid initial hit | [Leave unchanged native controls untouched during playback refresh](inbox/2026-11-10-no-op-playback-renders-must-preserve-native-controls.md) |
 | A Reset button gets pointerdown/focus but leaves old model or section state | [Keep pointer-focused actions fixed until native click completes](inbox/2026-11-10-pointer-focus-must-not-move-panel-actions.md) |
 | Isolate succeeds, but the selected-part popup intercepts the real model point | [Keep selected details inside reserved viewer space](inbox/2026-11-10-selection-details-need-reserved-viewer-space.md) |
 | Projected vertices are unoccluded and hit tests pass, but the model is still tiny | [Require useful model space as well as non-overlap](inbox/2026-11-10-camera-acceptance-needs-useful-model-space.md) |
