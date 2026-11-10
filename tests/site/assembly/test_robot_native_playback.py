@@ -9,9 +9,10 @@ import sys
 import tempfile
 from types import SimpleNamespace
 import unittest
+from unittest import mock
 ROOT=Path(__file__).resolve().parents[3]
 sys.path.insert(0,str(ROOT/'tools/site/assembly'))
-from robot_native_playback import native_parts,bind_inputs,encode,digest,IDENTITY
+from robot_native_playback import native_parts,bind_inputs,native_report,ProgressWriter,encode,digest,IDENTITY
 
 
 class OriginalNativeBytes(unittest.TestCase):
@@ -86,7 +87,18 @@ class OriginalNativeBytes(unittest.TestCase):
             for relative in ('__init__.py','publish/__init__.py','review/__init__.py','review/gates/__init__.py'):
                 path=package/relative;path.parent.mkdir(parents=True,exist_ok=True);path.write_text('')
             (package/'publish/guides.py').write_text("from types import SimpleNamespace\ndef collect_guides(root,paths):\n return [SimpleNamespace(path=p,files={f.relative_to(root).as_posix():f.read_bytes() for f in root.rglob('*') if f.is_file()}) for p in paths]\n")
-            (package/'review/gates/playback.py').write_text("import hashlib\ndef bind_playback_breps(bundle,breps,*,producer_hash_platform):\n return {'instances':{n:{'brep_sha256':hashlib.sha256(raw).hexdigest(),'shape_sha256':'c'*64,'matrix':"+repr(IDENTITY)+"} for n,raw in breps.items()},'hash_platform':producer_hash_platform}\ndef playback_gate(*args,**kwargs):\n return {'schema':'cadagent.gate/1','pass':False,'status':'fail','findings':[{'id':'explicit-test-double-failure'}]}\n")
+            (package/'review/gates/playback.py').write_text("""import hashlib
+IDENTITY="""+repr(IDENTITY)+"""
+def bind_playback_breps(bundle,breps,*,producer_hash_platform):
+ return {'instances':{n:{'brep_sha256':hashlib.sha256(raw).hexdigest(),'shape_sha256':'c'*64,'matrix':IDENTITY} for n,raw in breps.items()},'hash_platform':producer_hash_platform}
+def playback_gate(bundle,binding,breps,*,preflight_only=False,on_progress=None,**kwargs):
+ on_progress({'schema':'cad-agent.playback-progress/1','event':'phase','phase':'load','state':'starting'})
+ if preflight_only:
+  on_progress({'schema':'cad-agent.playback-progress/1','event':'preflight','state':'complete'})
+  return {'schema':'cadagent.gate/1','gate':'assembly-playback-preflight','pass':True,'status':'warn','limits':{'progress_complete':True,'paths_checked':False}}
+ on_progress({'schema':'cad-agent.playback-progress/1','event':'pair','state':'complete','result':{'state':'overlapping'}})
+ return {'schema':'cadagent.gate/1','gate':'assembly-playback','pass':False,'status':'fail','findings':[{'id':'explicit-test-double-failure'}],'limits':{'progress_complete':True,'paths_checked':True}}
+""")
             subprocess.check_call(['git','init','-q',str(core)])
             subprocess.check_call(['git','-C',str(core),'add','.'])
             subprocess.check_call(['git','-C',str(core),'-c','core.hooksPath=/dev/null','-c','user.name=Fixture','-c','user.email=fixture@example.com','commit','-qm','Explicit non-CAD CLI dependency double'])
@@ -102,6 +114,57 @@ class OriginalNativeBytes(unittest.TestCase):
             self.assertIs(report['pass'],False);self.assertEqual(report['status'],'fail')
             self.assertTrue((root/'result/inputs.json').is_file())
             self.assertFalse(json.loads((root/'result/reports.json').read_text())[0]['pass'])
+            phase=json.loads((root/'result/reports/fixture.phase.json').read_text());self.assertEqual(phase['state'],'complete');self.assertFalse(phase['gate_pass'])
+            progress=[json.loads(line) for line in (root/'result/progress/fixture.jsonl').read_text().splitlines()]
+            self.assertEqual(len(progress),2);self.assertEqual(progress[-1]['core_event']['result']['state'],'overlapping')
+            self.assertEqual([r['sequence'] for r in progress],[1,2])
+            preflight=command[:];preflight[preflight.index('--out')+1]=str(root/'preflight');preflight.remove('--validate');preflight.append('--preflight-only')
+            completed=subprocess.run(preflight,capture_output=True,text=True,timeout=10)
+            self.assertEqual(completed.returncode,0,completed.stdout+completed.stderr)
+            report=json.loads((root/'preflight/reports/fixture.json').read_text())
+            self.assertEqual(report['gate'],'assembly-playback-preflight');self.assertFalse(report['limits']['paths_checked'])
+            progress=[json.loads(line)['core_event'] for line in (root/'preflight/progress/fixture.jsonl').read_text().splitlines()]
+            self.assertFalse(any(r['event'] in ('pair','operation') for r in progress))
+            self.assertEqual(progress[-1]['event'],'preflight')
+            invalid=command[:];invalid[invalid.index('--out')+1]=str(root/'over-budget');invalid+=['--max-samples','5001']
+            completed=subprocess.run(invalid,capture_output=True,text=True,timeout=10)
+            self.assertEqual(completed.returncode,2);self.assertFalse((root/'over-budget').exists())
+
+    def test_failed_progress_serialization_preserves_prefix_report_and_incomplete_phase(self):
+        # A callback storage/serialization failure must not become a completed
+        # native phase or discard already-recorded collision evidence.
+        with tempfile.TemporaryDirectory() as tmp:
+            root=Path(tmp);native=root/'native';native.mkdir();c,raw=self.fixture(native);bundle=self.bundle(c)
+            guide=json.loads(bundle.files[bundle.path]);guide['source']['install_order_by_step']={'fixture':['part']};bundle.files[bundle.path]=encode(guide)
+            out=root/'result';out.mkdir();row={'guide':bundle.path,'guide_sha256':digest(bundle.files[bundle.path]),'binding_sha256':'e'*64}
+            def gate(bundle,binding,breps,*,preflight_only,on_progress,**kwargs):
+                on_progress({'schema':'cad-agent.playback-progress/1','event':'pair','state':'complete','result':{'state':'overlapping','witness':'retained-control'}})
+                try:on_progress({'schema':'cad-agent.playback-progress/1','event':'pair','state':'complete','result':{'gap_mm':float('nan')}})
+                except ValueError:
+                    return {'gate':'assembly-playback','pass':False,'limits':{'progress_complete':False,'paths_checked':False},'findings':[{'id':'progress','witness':'retained-control'}]}
+                self.fail('Nonfinite callback data was silently accepted')
+            with self.assertRaises(ValueError):
+                native_report(out,bundle,row,{'instances':{'part':{}}},{'part':raw},gate,preflight_only=False,core_revision='f'*40)
+            phase=json.loads((out/'reports/fixture.phase.json').read_text());self.assertEqual(phase['state'],'incomplete')
+            self.assertEqual(phase['progress_flushed_records'],1)
+            self.assertEqual(phase['progress_fsync_acknowledged_records'],0)
+            self.assertTrue(phase['progress_tail_uncertain'])
+            report=json.loads((out/'reports/fixture.json').read_text());self.assertEqual(report['findings'][0]['witness'],'retained-control')
+            progress=[json.loads(line) for line in (out/'progress/fixture.jsonl').read_text().splitlines()]
+            self.assertEqual(len(progress),1);self.assertEqual(progress[0]['core_event']['result']['witness'],'retained-control')
+
+    def test_storage_failure_does_not_certify_the_flushed_tail(self):
+        with tempfile.TemporaryDirectory() as tmp:
+            path=Path(tmp)/'progress.jsonl';writer=ProgressWriter(path,{'fixture':'no CAD'})
+            writer({'schema':'cad-agent.playback-progress/1','event':'preflight','state':'complete'})
+            self.assertEqual(writer.synced,1)
+            writer({'schema':'cad-agent.playback-progress/1','event':'pair','state':'complete'})
+            with mock.patch('robot_native_playback.os.fsync',side_effect=OSError('intentional fsync failure')):
+                with self.assertRaises(OSError):
+                    writer({'schema':'cad-agent.playback-progress/1','event':'operation','state':'complete'})
+                error=writer.finish()
+            self.assertIsInstance(error,OSError);self.assertEqual(writer.count,3);self.assertEqual(writer.synced,1)
+            self.assertEqual(len(path.read_text().splitlines()),3,'Flushed bytes may exist without acknowledged tail fsync')
 
     @unittest.skipUnless(os.environ.get('ROBOT_PLAYBACK_NATIVE')=='1','Explicit real native fixture preflight requested separately')
     def test_actual_failed_native_three_box_cli_exits_nonzero_and_retains_report(self):
@@ -128,6 +191,14 @@ class OriginalNativeBytes(unittest.TestCase):
             self.assertEqual(completed.returncode,1,completed.stdout+completed.stderr)
             self.assertIn('blocked or undecided',completed.stdout)
             self.assertTrue((root/'result/inputs.json').is_file())
+            preflight=command[:];preflight[preflight.index('--out')+1]=str(root/'preflight');preflight.remove('--validate');preflight.append('--preflight-only')
+            completed=subprocess.run(preflight,env=os.environ,capture_output=True,text=True,timeout=30)
+            self.assertEqual(completed.returncode,0,completed.stdout+completed.stderr)
+            report=json.loads((root/'preflight/reports/fixture.json').read_text())
+            self.assertEqual(report['gate'],'assembly-playback-preflight');self.assertIs(report['pass'],True)
+            self.assertIs(report['limits']['paths_checked'],False)
+            progress=[json.loads(line)['core_event'] for line in (root/'preflight/progress/fixture.jsonl').read_text().splitlines()]
+            self.assertFalse(any(r['event'] in ('pair','operation') for r in progress))
 
     @unittest.skipUnless(os.environ.get('ROBOT_PLAYBACK_TOOLKIT'),'Explicit reviewed core checkout needed for optional cross-API preflight')
     def test_real_core_original_byte_helper_contract_without_native_evidence(self):

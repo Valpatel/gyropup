@@ -115,3 +115,41 @@ run must wait for separately reviewed native frame preflight and recoverable
 per-pair/per-operation progress. Inspect actual changed-arrival and old-order/
 wrong-side controls; preserve known terminal, knee, circlip and support unknowns
 without inferring acceptable overlaps or requiring a fictitious whole-robot pass.
+
+## Prepared native frame and progress protocol
+
+The thin consumer now separates binding-only, `--preflight-only` and `--validate`
+modes. Native modes require the reviewed core `preflight_only` / `on_progress`
+interface; the original011 core remains usable for pure binding. The distinct
+`assembly-playback-preflight` report must declare `paths_checked=false`.
+A successful frame preflight is not a clearance verdict. The new protocol's
+native fixture/product runs remain pending the final independently reviewed
+core pin and bounded command review.
+
+Every requested native guide gets an exclusive `progress/<snapshot>.jsonl` and
+`reports/<snapshot>.phase.json` before native work. JSONL envelopes retain the
+guide/binding hashes, native source, core revision, mode, sequence and checking
+wall time, plus the core's immutable event snapshot. Every record is flushed;
+file fsync is requested every 128 records, after completed operations/preflight,
+and at normal close. Phase receipts distinguish `progress_flushed_records` from
+`progress_fsync_acknowledged_records`. A writer failure conservatively preserves
+the last acknowledged fsync boundary and marks the tail uncertain; existing
+flushed bytes do not certify the tail. These are recorded file operations, not
+an assurance of hardware/power-loss durability.
+
+Starting/completed load, world-bound and frame events expose where a preflight
+stops. Pair/operation events preserve completed witnesses during a later path
+sweep. A finished collision verdict can have a complete phase with gate_pass=false;
+invalid inputs, interrupted work or progress-storage failure remain incomplete.
+A killed process may leave only a running phase and an observed JSONL prefix;
+absence of terminal evidence must never be interpreted as completion. Reports
+and aggregate rows are written per guide, retaining earlier completed results.
+
+`--max-samples` exposes only the existing core's per-pair cap, in 1..5000; an
+exhausted budget remains unchecked. Time/memory/CPU/disk bounds belong to the
+separately reviewed detached command. The ordinary tests use an explicit failed
+non-CAD dependency double through the real CLI, verify distinct preflight and
+path routing, incomplete serialization/storage behavior and fsync uncertainty.
+The small real three-box control must be repeated with the final reviewed core
+before a genuine 233-part native preflight. No new planner, repair, overlap
+exemption, tolerance waiver or dependency installation is introduced.
