@@ -1,0 +1,46 @@
+{
+  "date": "2026-11-10",
+  "source_parent": "02d7fb71834481bfd2748244e35c7fe344e56987",
+  "qualification": "Actual staged source hashes; nativeChrome151 differs from pinnedCIChromium. ExistingWebKit2215; exact finalhead normalCI/review pending. No productruntime/visual input change.",
+  "source_sha256": {
+    "tests/site/controls/hop-budget.mjs": "dcac2480bd88620eaa5b633c575e4b046cd9999804c7b36ca658df96ba66ec1d",
+    "tests/site/controls/test-hop-budget.mjs": "8074a3095d06dd5a1b335e6882a8bf1d723d66665ecaeb216a7677bf667aeab1",
+    "tests/site/controls/test-gamepad.mjs": "02ff784731e65a58da0ee64f40e3ced69b561d199a400db7e292a565892067e5",
+    "tests/site/assembly/test-build-guide.mjs": "21acb0304f565449322d3f584aee0c4302db46e38013061e0cd4d241099eb9cf",
+    "package.json": "698a2b7150e65bc2f34acdab98f56993cab461cf939c59bb766f2c192fb1b762"
+  },
+  "actual_controls": {
+    "gated": {
+      "accepted": true,
+      "old15s_rejected": true,
+      "new_real_completion": true,
+      "simulation_seconds": 1.437299999952317,
+      "wall_seconds": 20.66689999997616,
+      "guard_receipt": "hop-gated-accepted.json"
+    },
+    "actualstage_stop": {
+      "accepted_negative": true,
+      "error": "Hop stage frames stalled",
+      "wall_seconds": 11.926799999952316,
+      "without_frame_seconds": 10.022399999976159,
+      "simulation_seconds": 0.5499999999999999,
+      "frames": 11,
+      "receipt": "hop-stopped-rejected.json"
+    }
+  },
+  "affected_checks": {
+    "gamepad": "FullnativeChrome151 suitePASS including actualinput/start/airborne and following settings/keyboard/persistence/bench/demo assertions. Actualhop1.45simulationseconds/29frames; jumpnull/y0.",
+    "guide": "FullWebKit15groupsPASS,0pageerrors,0unsupporteddevelopmentrequests; allerrors remain enforced.",
+    "pure": "20testsPASS (15existinggamepad+5observercontract/adapter) "
+  },
+  "raw_logs_sha256": {
+    "gy279-hop-contract-controls-sync-context.log": "7354d2f9cbfc7dd351a81b5ea390482c68ec8c00d1ab42155e2c6117df4e37ad",
+    "gy279-hop-frozen-control-sync-context.log": "06fc40b009accdadea726dce5ffdc9e48bfaf75f9ad4a793d103e5e4a2cf74d4",
+    "gy279-frame-targeted-sync.log": "350fe6217c0f3d9b07418f1a80b9906bb690a4649e86b565fa53d2d50db9c983",
+    "gy279-frame-pure-tests.log": "d0902bb5812de51835d6d017fdcb4ce534c9f483ba9303064bbd474951c80e1f",
+    "gy288-pure-tests.log": "d153e4a2e73fcc6de25a22a6f45bf6485bd550211d34cd90af091414eab0b909"
+  },
+  "raw_guide_report_sha256": "9c9a87fe4a33f128144f6f380555130a6af397cc209fbdb69fd38fb6102c04f9",
+  "no_product_or_imported_kit_changes": true,
+  "cad_queries": 0
+}
