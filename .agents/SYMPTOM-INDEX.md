@@ -2,6 +2,7 @@
 
 | Symptom | Canonical guidance |
 | --- | --- |
+| A sideways phone keeps three desktop panels despite touch emulation | [Use actual input and height when choosing the compact layout](inbox/2026-11-10-phone-landscape-needs-input-aware-layout.md) |
 | Desktop instructions jump to a bottom sheet, an expanded card covers panel controls, or intermediate widths leave too little model space | [Budget all desktop docks together across window modes](inbox/2026-11-10-desktop-docks-need-a-shared-space-budget.md) |
 | A build viewer looks blank during mesh downloads, or a progress bar counts the pending part as complete | [Count validated loader completions](inbox/2026-11-10-loader-progress-must-count-completed-parts.md) |
 | A robot is tiny despite a large canvas, stable guide rectangles hide controls, or narrow screenshots use desktop height | [Fit visible geometry and test actual overlay hit targets](inbox/2026-11-09-assembly-overlays-need-visible-bounds-and-hit-tests.md) |

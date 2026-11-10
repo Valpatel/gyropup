@@ -29,7 +29,7 @@ async function inspect(label){
   const v=window.__buildGuide.active.viewer,c=v.stage.renderer.domElement,r=rect(c),overlays=visible('.assembly-topbar,.assembly-nav,.assembly-step,#assembly-tools,#assembly-explorer').map(rect);let vertices=0,unoccluded=true;
   v.stage.root.updateMatrixWorld(true);v.stage.camera.updateMatrixWorld(true);
   for(const part of v.parts.filter(p=>p.mesh.visible)){const positions=part.mesh.geometry.attributes.position;for(let i=0;i<positions.count;i+=Math.max(1,Math.floor(positions.count/60))){const q=part.mesh.position.clone().fromBufferAttribute(positions,i).applyMatrix4(part.mesh.matrixWorld).project(v.stage.camera),x=r.x+(q.x+1)*r.w/2,y=r.y+(1-q.y)*r.h/2;vertices++;if(![x,y,q.z].every(Number.isFinite)||x<r.x||x>r.right||y<r.y||y>r.bottom||Math.abs(q.z)>1||overlays.some(o=>x>o.x&&x<o.right&&y>o.y&&y<o.bottom))unoccluded=false;}}
-  return{mobile:layout.dataset.mobile,mode:layout.dataset.fullscreen||'none',expanded:layout.dataset.instructions,workspace:rect(layout),navigation:rect(document.querySelector('.assembly-nav')),panels,controls,vertices,unoccluded,shortWindow:!document.fullscreenElement&&layout.dataset.expanded!=='true'&&innerHeight<500,horizontalOverflow:document.documentElement.scrollWidth>innerWidth+1};
+  return{mobile:layout.dataset.mobile,pointerCoarse:matchMedia('(pointer:coarse)').matches,mode:layout.dataset.fullscreen||'none',expanded:layout.dataset.instructions,workspace:rect(layout),navigation:rect(document.querySelector('.assembly-nav')),panels,controls,vertices,unoccluded,shortWindow:!document.fullscreenElement&&layout.dataset.expanded!=='true'&&innerHeight<500,horizontalOverflow:document.documentElement.scrollWidth>innerWidth+1};
  });
  observations.push({label,...data});assert.ok(data.controls.every(c=>c.w>=44&&c.h>=44&&(c.hit||data.mobile==='true'&&data.shortWindow&&!c.inViewport)),JSON.stringify({label,controls:data.controls}));assert.equal(data.horizontalOverflow,false,label);assert.ok(data.vertices>0&&data.unoccluded,JSON.stringify({label,vertices:data.vertices,unoccluded:data.unoccluded}));
  if(data.mobile==='false'){
@@ -52,7 +52,7 @@ async function fullscreen(mode){
 }
 try{
  browser=await engine.launch(engine===chromium?{channel:process.env.PLAYWRIGHT_CHANNEL==='chromium'?undefined:'chrome',headless:true,args:['--no-sandbox','--use-gl=angle','--use-angle=swiftshader','--enable-unsafe-swiftshader']}:{headless:true});
- const context=await browser.newContext({viewport:{width:1440,height:1000},hasTouch:true,reducedMotion:'reduce'});
+ const context=await browser.newContext({viewport:{width:1440,height:1000},hasTouch:true,isMobile:true,reducedMotion:'reduce'});
  await context.addInitScript(()=>sessionStorage.setItem('gyropup.prototype-notice','2026-10-29-v1'));
  page=await context.newPage();page.on('pageerror',e=>errors.push(e.message));
  const version=await(await context.request.get(base+'/version.json')).json();
@@ -73,8 +73,10 @@ try{
   // Resize the same active fullscreen document across the real desktop/mobile boundary.
   for(const viewport of [{width:1280,height:900},{width:844,height:390},{width:720,height:390},{width:390,height:844},{width:320,height:700}]){
    await page.setViewportSize(viewport);await settle();
-   if(viewport.width>760){await inspect(`${mode} resize ${viewport.width}x${viewport.height}`);}
+   const expectedCompact=viewport.width<=760||viewport.width<=1000&&viewport.height<=500;assert.equal(await page.locator('.assembly-layout').getAttribute('data-mobile'),String(expectedCompact),'Phone pointer/height breakpoint');
+   if(!expectedCompact){await inspect(`${mode} resize ${viewport.width}x${viewport.height}`);}
    else{
+    assert.equal(await page.evaluate(()=>matchMedia('(pointer:coarse)').matches),true,'Actual coarse pointer mobile context');
     for(const pane of ['instructions','parts','tools']){await mobilePane(pane);await inspect(`${mode} ${viewport.width} ${pane}`);}
     await page.locator('[data-sheet-tab=instructions]').click();await page.locator('[data-sheet-resize]').click();await inspect(`${mode} ${viewport.width} expanded mobile instructions`);await page.locator('[data-sheet-resize]').click();
     await page.screenshot({path:`${out}/${mode}-${viewport.width}-mobile.png`,timeout:15000});
@@ -83,6 +85,9 @@ try{
   await page.setViewportSize({width:1440,height:1000});await inspect(mode+' desktop restored after resize');
   if(mode!=='windowed'){await page.locator('[data-guide-fullscreen]').click();await page.waitForFunction(()=>document.querySelector('[data-guide-fullscreen]').getAttribute('aria-pressed')==='false');}
  }
+ await context.close();
+ const fine=await browser.newContext({viewport:{width:844,height:390},hasTouch:false,isMobile:false,reducedMotion:'reduce'});await fine.addInitScript(()=>sessionStorage.setItem('gyropup.prototype-notice','2026-10-29-v1'));page=await fine.newPage();page.on('pageerror',e=>errors.push(e.message));await page.goto(base+'/designer/build.html?assembly=turret&step=step-02#assembly',{waitUntil:'domcontentloaded'});await page.waitForFunction(()=>window.__buildGuide?.active?.viewer?.parts.some(p=>p.mesh.visible)&&document.querySelector('#assembly').dataset.ready==='1');await page.evaluate(()=>document.fonts.ready);await fullscreen('native');
+ await clickState('[data-instructions-toggle]','aria-expanded',true);await clickState('[data-explorer-toggle]','aria-expanded',true);await clickState('[data-tools-toggle]','aria-expanded',true);const desktop=await inspect('fine-pointer 844x390 native desktop control');assert.equal(desktop.pointerCoarse,false);assert.equal(desktop.mobile,'false');assert.equal(Object.keys(desktop.panels).length,3);await page.screenshot({path:out+'/fine-pointer-844-desktop.png',timeout:15000});await fine.close();
  assert.deepEqual(errors,[]);await writeFile(out+'/report.json',JSON.stringify({status:'passed',engine:engine.name(),browser:browser.version(),version,sources,observations,errors},null,2)+'\n');console.log('PASS',engine.name(),observations.length,'actual docking/control states');
 }catch(error){await writeFile(out+'/failed.json',JSON.stringify({status:'failed',sources,observations,errors,error:error.stack},null,2));try{await page?.screenshot({path:out+'/failure.png',timeout:15000});}catch{}throw error;}
 finally{await browser?.close();server.closeAllConnections();await new Promise(resolve=>server.close(resolve));console.log('Owned docking listener closed');}
