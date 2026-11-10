@@ -18,6 +18,10 @@ export function validateIndex(index){
  }
  return index;
 }
+export function matchSnapshot(entry,guide){
+ if(entry.id!==guide.snapshot.id||entry.status!==guide.snapshot.status)throw new Error('Snapshot index does not match the bound guide identity.');
+ return guide;
+}
 export function progressKey(guide,guideHash){
  if(!/^[0-9a-f]{64}$/.test(guideHash||''))throw new Error('Completion needs the exact guide digest.');
  return `gyropup.assembly.${guide.snapshot.id}.${guideHash}`;

@@ -1,6 +1,5 @@
-import {readLocation,stepFor,validateIndex,readProgress,saveProgress,writeLocation} from './state.js';
+import {readLocation,stepFor,validateIndex,matchSnapshot,readProgress,saveProgress,writeLocation} from './state.js';
 const esc=s=>String(s??'').replace(/[&<>"']/g,c=>({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[c]));
-const hash=async bytes=>[...new Uint8Array(await crypto.subtle.digest('SHA-256',bytes))].map(v=>v.toString(16).padStart(2,'0')).join('');
 const host=document.getElementById('assembly');
 let active=null,request=0,pending=null,applying=false;
 let retryAction=()=>start().catch(error=>report(error.message,true));
@@ -16,10 +15,10 @@ function selection(name){
  if(wasIsolated&&!name)paint(active.step);
 }
 function report(message,error=false){host.querySelector('[data-guide-status]').textContent=message;host.querySelector('[data-guide-status]').dataset.state=error?'error':'ready';host.querySelector('[data-guide-retry]').hidden=!error;}
-async function get(url,signal){const r=await fetch(url,{signal,cache:'no-store'});if(!r.ok)throw new Error(`Build data returned HTTP ${r.status}.`);return r;}
 async function start(){
  const indexURL=new URL('../../web/build-guides/index.json',import.meta.url);
- const index=validateIndex(await(await get(indexURL)).json());
+ const {loadGuide,createGuideController,readAsset,parseJSON}=await import('../kit/assembly/guide.js');
+ const index=validateIndex(parseJSON(await readAsset(indexURL,{maxBytes:512*1024})));
  const select=host.querySelector('[data-snapshot]');
  select.replaceChildren(...index.snapshots.map(s=>{const o=document.createElement('option');o.value=s.id;o.textContent=s.title+' · '+s.status.toUpperCase();return o;}));
  async function load(id,route={}){
@@ -29,13 +28,10 @@ async function start(){
   report(active?'Loading the selected snapshot… The previous model and instructions remain visible until it is ready.':'Loading this exact build snapshot…');
   let nextViewer,posterURLs=new Map();
   try{
-   const url=new URL(row.file,indexURL),bytes=await(await get(url,abort.signal)).arrayBuffer();
-   if(await hash(bytes)!==row.sha256)throw new Error('Build snapshot digest mismatch.');
-   const guide=JSON.parse(new TextDecoder().decode(bytes));
+   const url=new URL(row.file,indexURL);
    // Shared loader owns schema/model/mesh binding; no guessed or cross-version fallback.
-   const [{loadGuide,createGuideController,readAsset},{createViewer}]=await Promise.all([import('../kit/assembly/guide.js'),import('../kit/viewer.js')]);
-   const loaded=await loadGuide(url.href,{signal:abort.signal});
-   if(JSON.stringify(loaded.guide)!==JSON.stringify(guide))throw new Error('Build guide changed while loading.');
+   const [loaded,{createViewer}]=await Promise.all([loadGuide(url.href,{signal:abort.signal,expectedHash:row.sha256}),import('../kit/viewer.js')]);
+   const guide=matchSnapshot(row,loaded.guide);
    const posterBytes=await Promise.all(guide.steps.filter(s=>s.poster).map(async s=>[s.id,await readAsset(new URL(s.poster.file,url),{signal:abort.signal,expectedHash:s.poster.sha256,maxBytes:8*1024*1024})]));
    if(own!==request||abort.signal.aborted)return;
    posterURLs=new Map(posterBytes.map(([id,bytes])=>[id,URL.createObjectURL(new Blob([bytes],{type:'image/png'}))]));
@@ -47,7 +43,7 @@ async function start(){
    if(renderError&&active)throw renderError;
    if(own!==request){nextViewer?.dispose();for(const value of posterURLs.values())URL.revokeObjectURL(value);return;}
    const previous=active;
-   active={guide,guideHash:row.sha256,viewer:nextViewer,controller:nextViewer?createGuideController(nextViewer,guide):null,done:readProgress(storage(),guide,row.sha256),url,posterURLs,step:step.id,mode:'ghost',explode:1,selected:null,isolate:false,renderError};
+   active={guide,guideHash:row.sha256,viewer:nextViewer,controller:nextViewer?createGuideController(nextViewer,guide):null,done:readProgress(storage(),guide,row.sha256),url,posterURLs,step:step.id,mode:'ghost',explode:1,section:1,selected:null,isolate:false,renderError};
    const model=host.querySelector('[data-guide-model]');model.replaceChildren(canvas);previous?.viewer?.dispose();for(const value of previous?.posterURLs?.values()||[])URL.revokeObjectURL(value);
    host.querySelector('[data-guide-visual]').hidden=!!renderError;host.querySelector('.assembly-layout').dataset.static=String(!!renderError);
    select.value=id;paint(step.id);
@@ -60,14 +56,21 @@ async function start(){
  const route=readLocation(location,index);await load(route.snapshot,route);
  window.addEventListener('pagehide',()=>window.__buildGuide?.dispose(),{once:true});
 }
+function applyPresentation(s,frame){
+ const a=active;
+ if(a.selected&&!s.parts.includes(a.selected)){a.selected=null;a.isolate=false;}
+ applying=true;
+ try{
+  a.controller?.applyStep(s.id,{mode:a.mode,explode:a.explode,frame});
+  if(a.selected)a.viewer?.setSelection(a.selected);
+  if(a.isolate){a.viewer?.applyState({...a.viewer.getState(),selected:a.selected,isolate:a.selected?[a.selected]:null});if(frame&&a.selected)a.viewer?.frameParts([a.selected],s.camera?.direction);}
+  a.viewer?.setSection(a.section);
+ }
+ finally{applying=false;}
+}
 function paint(id){
  const a=active,g=a.guide,s=stepFor(g,{step:id});a.step=s.id;
- applying=true;
- try{a.controller?.applyStep(s.id,{mode:a.mode,explode:a.explode,frame:true});}
- finally{applying=false;}
- if(a.selected&&!s.parts.includes(a.selected)){a.selected=null;a.isolate=false;}
- if(a.selected)a.viewer?.setSelection(a.selected);
- if(a.isolate)a.viewer?.applyState({...a.viewer.getState(),selected:a.selected,isolate:a.selected?[a.selected]:null});
+ applyPresentation(s,true);
  const index=g.steps.indexOf(s),chapter=g.subassemblies.find(c=>c.id===s.subassembly);
  host.querySelector('[data-guide-source]').innerHTML=`${esc(g.snapshot.revision)} · ${esc(g.snapshot.status)} · <a href="https://github.com/Valpatel/gyropup/tree/${esc(g.snapshot.source_commit)}">Source snapshot</a>`;
  host.querySelector('[data-guide-warning]').textContent=g.source?.qualification||'Educational work in progress; no physical qualification.';
@@ -86,9 +89,10 @@ function paint(id){
  selection(a.selected);
  const complete=host.querySelector('[data-guide-complete]');complete.checked=a.done.has(s.id);complete.onchange=()=>{complete.checked?a.done.add(s.id):a.done.delete(s.id);try{saveProgress(storage(),g,a.done,a.guideHash);}catch{report('Completion stays in this tab because browser storage is unavailable.',true);}};
  const mode=host.querySelector('[data-guide-mode]');mode.value=a.mode;mode.onchange=()=>{a.mode=mode.value;paint(s.id);};
- const explode=host.querySelector('[data-guide-explode]');explode.value=String(a.explode);explode.oninput=()=>{a.explode=+explode.value;a.controller?.applyStep(s.id,{mode:a.mode,explode:a.explode,frame:false});};
+ const explode=host.querySelector('[data-guide-explode]');explode.value=String(a.explode);explode.oninput=()=>{a.explode=+explode.value;applyPresentation(s,false);};
+ const section=host.querySelector('[data-guide-section]');section.value=String(a.section);section.oninput=()=>{a.section=+section.value;a.viewer?.setSection(a.section);};
  const isolate=host.querySelector('[data-guide-isolate]');isolate.disabled=!a.selected;isolate.onclick=()=>{a.isolate=!a.isolate;paint(s.id);};isolate.setAttribute('aria-pressed',String(a.isolate));
- host.querySelector('[data-guide-reset]').onclick=()=>{a.mode='solid';a.explode=0;a.selected=null;a.isolate=false;a.viewer?.setSelection(null);paint(s.id);};
+ host.querySelector('[data-guide-reset]').onclick=()=>{a.mode='solid';a.explode=0;a.section=1;a.selected=null;a.isolate=false;a.viewer?.setSelection(null);paint(s.id);};
  writeLocation(location,history,g,s);
  host.dataset.ready='1';
 }

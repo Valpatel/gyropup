@@ -1,5 +1,5 @@
 import test from 'node:test';import assert from 'node:assert/strict';import {readFileSync}from'node:fs';
-import {readLocation,stepFor,validateIndex,progressKey,readProgress,saveProgress,writeLocation} from '../../../software/site/designer/assembly/state.js';
+import {readLocation,stepFor,validateIndex,matchSnapshot,progressKey,readProgress,saveProgress,writeLocation} from '../../../software/site/designer/assembly/state.js';
 const read=n=>JSON.parse(readFileSync(new URL('./fixtures/'+n+'.json',import.meta.url)));
 const a=read('version-one'),b=read('version-two'),ha='a'.repeat(64),hb='b'.repeat(64);
 test('two frozen versions differ in membership, instructions, source and storage identity',()=>{
@@ -35,4 +35,10 @@ test('actual generated guide passes shared reader with cumulative prior chapters
  validateGuide(g,m);assert.ok(g.steps[6].parts.includes('pan_base'));assert.ok(!g.subassemblies[1].parts.includes('pan_base'));assert.ok(g.steps[9].parts.includes('pan_base'));
  const bad=structuredClone(g);bad.steps[6].highlight.push('pan_base');assert.throws(()=>validateGuide(bad,m),/Highlighted subassembly members/);
  const wrongUnits=structuredClone(m);wrongUnits.units='m';assert.throws(()=>validateGuide(g,wrongUnits),/units/);
+});
+
+test('index cannot redirect one snapshot identity to another correctly hashed guide',()=>{
+ assert.equal(matchSnapshot({id:a.snapshot.id,status:a.snapshot.status},a),a);
+ assert.throws(()=>matchSnapshot({id:b.snapshot.id,status:b.snapshot.status},a),/index does not match/);
+ assert.throws(()=>matchSnapshot({id:a.snapshot.id,status:'wip'},a),/index does not match/);
 });
