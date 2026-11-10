@@ -132,8 +132,8 @@ try{
       });
     });
     if(mode==='held'){
-      await state(page,'viewer-load-status','loading');await page.waitForFunction(()=>document.querySelector('#viewer-load-status').textContent.includes('parts'));
-      assert.equal(await page.locator('#app canvas').count(),0);await captured(()=>releasePart);releasePart();
+      await captured(()=>releasePart);await state(page,'viewer-load-status','loading');
+      assert.equal(await page.locator('#app canvas').count(),0,'Actual mesh request is held; no scene is usable yet');releasePart();
     }else{
       await state(page,'viewer-load-status','error');assert.equal(await page.locator('#app canvas').count(),0,'Invalid part never creates a partial ready scene');
       await errorLayout(page,'viewer-load-status','viewer-'+mode);await page.unroute('**'+partURL+'*');await retry(page,'viewer-load-status');
