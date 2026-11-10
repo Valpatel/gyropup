@@ -41,3 +41,27 @@ remain INVALID, including their apparent newPass. The synchronous polling adapte
 is now passed directly to Playwright and unit-tested to return a boolean; no RPC
 or async predicate can certify completion. This follows the existing
 [async-polling lesson](2026-11-05-layout-readiness-must-wait-for-fonts-not-global-load.md).
+
+## Exercise gamepad controls with the existing touch renderer
+
+On 2026-11-10, [PR #287 run 42919310218](https://github.com/Valpatel/gyropup/actions/runs/42919310218/job/130190545896)
+hit the 30-second hop wall guard after the adopted Robot passed the tilt checks.
+[The original artifact](https://github.com/Valpatel/gyropup/actions/runs/42919310218/artifacts/13810854546)
+records 27 callbacks at 0.05 simulated seconds each and a 1,122.8 ms median
+wall gap. The robot rose 0.182 m and touched down. At the last callback it was
+still recovering at `jump.t=1.30`, with a visible manual scene and no callback error.
+
+One bounded Chrome 151 comparison on the same build ran the real pad hop at
+1440 × 1000 CSS pixels and DPR 1. Both contexts rendered the adopted model and
+completed in 30 frames. The existing coarse-pointer profile selected by touch
+support completed in 7.307 seconds versus 9.290 seconds in the fine-pointer
+profile. The roughly 21 percent difference is a local association with the
+rendering profile. Pinned Chromium CI still owns acceptance.
+
+The functional pad test now selects that existing profile, asserts the exact
+adopted presentation and drawn canvas, and retains the 15-second input and
+airborne checks and the 30-second wall, 3-second stage and 10-second stall caps.
+The separate desktop presentation and motion suites retain fine-pointer coverage.
+The live-demo checks bind the same native and collection identities and use
+the adopted holder's existing 21.3 m/s simulation value after each return from
+a recording.
