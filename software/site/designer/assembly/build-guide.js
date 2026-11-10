@@ -1,5 +1,5 @@
 import {createWorkspace,disposeRobot} from './workspace.js';
-import {readLocation,stepFor,validateIndex,matchSnapshot,progressKey,readProgress,saveProgress,writeLocation} from './state.js';
+import {readLocation,stepFor,validateIndex,matchSnapshot,progressKey,readProgress,saveProgress,writeLocation,snapshotsFor} from './state.js';
 const esc=s=>String(s??'').replace(/[&<>"']/g,c=>({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[c]));
 const host=document.getElementById('assembly');
 let active=null,request=0,pending=null,applying=false;
@@ -22,7 +22,8 @@ function report(message,error=false){host.querySelector('[data-guide-status]').t
 async function start(){
  const indexURL=new URL('../../web/build-guides/index.json',import.meta.url);
  const {loadGuide,createGuideController,readAsset,parseJSON}=await import('../kit/assembly/guide.js');
- const index=validateIndex(parseJSON(await readAsset(indexURL,{maxBytes:512*1024})));
+ const published=validateIndex(parseJSON(await readAsset(indexURL,{maxBytes:512*1024})));
+ const index={...published,snapshots:snapshotsFor(published,'turret')};
  const select=host.querySelector('[data-snapshot]');
  select.replaceChildren(...index.snapshots.map(s=>{const o=document.createElement('option');o.value=s.id;o.textContent=s.title+' · '+s.status.toUpperCase();return o;}));
  async function load(id,route={}){
@@ -55,13 +56,13 @@ async function start(){
    if(renderError)report('Interactive 3D is unavailable. '+(guide.steps.some(step=>step.poster)?'The same snapshot’s text and diagrams remain below.':'The same snapshot’s text remains below.'),true);
    else report(guide.snapshot.status==='wip'?'Source-bound WIP guide loaded. No physical build release.':'Versioned guide loaded. Its publication status is separate from physical qualification.');
    window.__buildGuide={get active(){return active;},load,apply:id=>paint(id),dispose(){workspace.dispose();pending?.abort();disposeRobot(active?.robot);active?.viewer?.dispose();for(const value of active?.posterURLs?.values()||[])URL.revokeObjectURL(value);active=null;}};
-   if(!renderError&&route.assembly!=='turret'&&(!route.step&&!route.chapter||route.assembly))workspace.choose(route.assembly||'combined');
+   if(!renderError&&route.assembly!=='turret'&&(!route.step&&!route.chapter||route.assembly))workspace.choose(route.assembly||'combined',false);
    if(pending===abort)pending=null;
   }catch(error){const cancelled=abort.signal.aborted||own!==request;abort.abort();if(pending===abort)pending=null;nextViewer?.dispose();for(const value of posterURLs.values())URL.revokeObjectURL(value);if(cancelled)return;report(error.message+(active?' Your previous build remains selected.':''),true);if(active)select.value=active.guide.snapshot.id;else select.selectedIndex=-1;}
  }
- select.onchange=()=>load(select.value);
+ select.onchange=()=>load(select.value,{assembly:active?.overview?active.assembly:'turret'});
  let route;try{route=readLocation(location,index);}catch(error){select.selectedIndex=-1;throw error;}await load(route.snapshot,route);
- window.addEventListener('popstate',()=>{const next=readLocation(location,index);if(next.snapshot!==active?.guide.snapshot.id)load(next.snapshot,next);else if(next.assembly&&next.assembly!=='turret')workspace.choose(next.assembly);else workspace.step(stepFor(active.guide,next).id);});
+ window.addEventListener('popstate',()=>{const next=readLocation(location,index);if(next.snapshot!==active?.guide.snapshot.id)load(next.snapshot,next);else if(next.assembly&&next.assembly!=='turret')workspace.choose(next.assembly,false);else workspace.step(stepFor(active.guide,next).id);});
  window.addEventListener('pagehide',()=>window.__buildGuide?.dispose(),{once:true});
 }
 function applyPresentation(s,frame){

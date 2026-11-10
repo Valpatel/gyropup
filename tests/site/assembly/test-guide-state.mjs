@@ -1,5 +1,5 @@
 import test from 'node:test';import assert from 'node:assert/strict';import {readFileSync}from'node:fs';
-import {readLocation,stepFor,validateIndex,matchSnapshot,progressKey,readProgress,saveProgress,writeLocation} from '../../../software/site/designer/assembly/state.js';
+import {readLocation,stepFor,validateIndex,matchSnapshot,progressKey,readProgress,saveProgress,writeLocation,snapshotsFor} from '../../../software/site/designer/assembly/state.js';
 const read=n=>JSON.parse(readFileSync(new URL('./fixtures/'+n+'.json',import.meta.url)));
 const a=read('version-one'),b=read('version-two'),ha='a'.repeat(64),hb='b'.repeat(64);
 test('two frozen versions differ in membership, instructions, source and storage identity',()=>{
@@ -42,3 +42,5 @@ test('index cannot redirect one snapshot identity to another correctly hashed gu
  assert.throws(()=>matchSnapshot({id:b.snapshot.id,status:b.snapshot.status},a),/index does not match/);
  assert.throws(()=>matchSnapshot({id:a.snapshot.id,status:'wip'},a),/index does not match/);
 });
+
+test('assembly identity filters independently from snapshot revision labels',()=>{const base={schema:'gyropup.build-guides/1',snapshots:[{id:'old',title:'Legacy turret',status:'wip',file:'old/guide.json',sha256:'a'.repeat(64)},{id:'rA',assembly:'robot',title:'Fixture A',status:'wip',file:'rA/guide.json',sha256:'b'.repeat(64)},{id:'rB',assembly:'robot',title:'Fixture B',status:'wip',file:'rB/guide.json',sha256:'c'.repeat(64)}]};const index=validateIndex(base);assert.deepEqual(snapshotsFor(index,'turret').map(x=>x.id),['old']);assert.deepEqual(snapshotsFor(index,'robot').map(x=>x.id),['rA','rB']);assert.equal(readLocation({search:'?snapshot=old&assembly=combined'},index).assembly,'combined');const invalid=structuredClone(base);invalid.snapshots[1].assembly='guessed';assert.throws(()=>validateIndex(invalid));assert.throws(()=>readLocation({search:'?snapshot=old&assembly=guessed'},index));});

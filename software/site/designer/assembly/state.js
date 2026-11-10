@@ -14,6 +14,7 @@ export function stepFor(guide,{step,chapter}={}){
 export function validateIndex(index){
  if(index?.schema!=='gyropup.build-guides/1'||!Array.isArray(index.snapshots)||!index.snapshots.length)throw new Error('No published build snapshots are available.');
  const ids=new Set();for(const s of index.snapshots){
+  if(s.assembly!==undefined&&!['robot','turret','combined'].includes(s.assembly))throw new Error('Invalid snapshot assembly identity.');
   if(!ID.test(s.id)||ids.has(s.id)||typeof s.title!=='string'||!['wip','released'].includes(s.status)||!/^[a-zA-Z0-9][a-zA-Z0-9/._-]*\.json$/.test(s.file)||s.file.includes('..')||!s.sha256?.match(/^[0-9a-f]{64}$/))throw new Error('Invalid build snapshot index.');
   ids.add(s.id);
  }
@@ -34,3 +35,6 @@ export function saveProgress(storage,guide,done,guideHash){storage.setItem(progr
 export function writeLocation(location,history,guide,step){
  const url=new URL(location.href);url.searchParams.set('snapshot',guide.snapshot.id);url.searchParams.set('chapter',step.subassembly);url.searchParams.set('step',step.id);url.hash='assembly';history.replaceState(null,'',url);
 }
+
+/** Legacy product guide entries are turret guides; future authored guides may declare their assembly. */
+export function snapshotsFor(index,assembly){if(!['robot','turret','combined'].includes(assembly))throw new Error('Unknown assembly');return index.snapshots.filter(snapshot=>(snapshot.assembly||'turret')===assembly);}

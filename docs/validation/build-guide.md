@@ -44,6 +44,10 @@ Before this revision is ready, real Chromium and WebKit must demonstrate:
   boxes keep their dimensions and positions across every authored step. Model
   geometry fits the uncovered canvas area. Explorer and tools open/close with
   keyboard and trusted touch; every icon has an accessible name and real state.
+- Native fullscreen enter/exit and Escape reflect actual fullscreen state; a denied
+  or unavailable Fullscreen API offers an honestly labeled expanded workspace.
+  Fit remains an independent action. Both native and fallback layouts retain
+  unoccluded geometry, fixed navigation and touch/keyboard access.
 - Tree chapter/step navigation, selection, appearance, section, explode, reset,
   completion, deep links and all earlier fallback/version/race controls work.
   Source/qualification details stay available through a compact disclosure.

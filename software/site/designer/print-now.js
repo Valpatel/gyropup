@@ -1,3 +1,4 @@
+import {enhancePartTable} from './kit/part-table.js';
 // "Print these now": the motor-day print order (exports/motor-day/prints.csv, written by tools/motor_day.py) as a card at
 // the top of the Build page, so the files to print are one click from the site's front door. Self-contained and
 // fail-soft: if the CSV cannot be read, the card still links the plan and the package.
@@ -96,6 +97,7 @@ export async function mountPrintNow(host, fetchImpl = fetch) {
       ? `Print in this order: ${fits ? `the ${fits === 1 ? 'fit check' : `${fits} fit checks`} first, then ` : ''}the rest; start the hip frame once the fits pass. `
       : ''}The plan says what to check after each print.</p>${links}${body}`;
   host.dataset.ready = '1';
+  const table=host.querySelector?.('table');if(table)enhancePartTable(table,{label:'Motor-day print steps',pageSize:10});
   // The card fills in after the browser has already jumped to #print-now; on a phone the card is ~1,500 px tall and
   // scroll anchoring keeps the content below it still, so the deep link would land past the card. Jump again.
   const loc = globalThis.location;
