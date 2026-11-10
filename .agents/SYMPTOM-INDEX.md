@@ -214,3 +214,5 @@
 - A reel says current while only its turret names or legacy rig meshes are bound: [bind the complete current body and observe its actual holder](inbox/2026-11-10-current-captures-need-complete-body-bindings.md).
 
 - A retry readiness wait throws on `document.body.dataset` during navigation: [wait through bodyless documents without suppressing page errors](inbox/2026-11-10-readiness-observers-must-wait-through-bodyless-documents.md).
+
+- A ready simulator produces a blank recovery screenshot during its opening fade: [observe canvas visibility and real draw counters before visual capture](inbox/2026-11-10-canvas-readiness-needs-observed-presentation.md).

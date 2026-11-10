@@ -108,6 +108,15 @@ Product runtime, accepted data and independent reference remain unchanged. A new
 WebKit-only action needs separate review and fresh output; no qualification or
 publication follows the partial run.
 
+The da5 WebKit action completed its27 outputs and passed shared numerical
+validation, but its independently inspected mobile recovery PNG was blank.
+Numerical motion PASS and visual recovery INCOMPLETE remain separate outcomes.
+The [canvas readiness incident](../../inbox/2026-11-10-canvas-readiness-needs-observed-presentation.md)
+records the unchanged product's fade/first-draw race and the bounded actual-canvas
+observer now required before both screenshots. Actual state is retained; no fixed
+sleep, transition removal or error filtering is used. A new reviewed WebKit-only
+action must still pass complete controls and independent visual readback.
+
 Campaign-local storage initialization runs only on HTTP(S) origins. The initial
 `about:blank` document is skipped before accessing either storage object; an
 HTTP-origin storage exception remains an observed page error. The historical

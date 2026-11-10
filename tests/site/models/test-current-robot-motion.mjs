@@ -8,7 +8,7 @@ import {createSiteServer} from '../../../tools/site/serve-site.mjs';
 import {publicForSource,sourceForPublic} from '../../../tools/site/source-layout.mjs';
 import {installCurrentMotion,captureMotionFaults,captureMotionOperation} from './current-motion-capture.mjs';
 import {requiredMeshRequestTarget} from './current-motion-target.mjs';
-import {currentRobotReady} from './current-motion-ready.mjs';
+import {currentRobotReady,currentRobotCanvasReady} from './current-motion-ready.mjs';
 
 const root=new URL('../../../',import.meta.url),sha=b=>createHash('sha256').update(b).digest('hex');
 const referenceFile=process.env.CURRENT_MOTION_REFERENCE,referenceHash=process.env.CURRENT_MOTION_REFERENCE_SHA256;
@@ -131,6 +131,8 @@ try{
   assert.ok(cachedUiReturn.sameRobot&&cachedUiReturn.laser);assert.equal(cachedUiReturn.mode,'current');await save('ui-model-roundtrip.json',cachedUiReturn);
   // Capture the actual route/home pose after restoring the complete assembly.
   await page.evaluate(()=>{const t=window.__currentMotion;t.r.setExplode(0);t.r.setPose({legMM:300});t.r.turret.poseMechanism({pan:0,tilt:0,pinion:0,dial:0,wheel_l:0,wheel_r:0,flap:0});t.s.stage.frame(t.r.info.heightM);t.s.stage.renderer.render(t.s.stage.scene,t.s.stage.camera);});
+  const desktopCanvas=await page.waitForFunction(currentRobotCanvasReady,reference.collection_sha256,{timeout:10000,polling:'raf'});
+  report.visibleCanvas={desktop:await desktopCanvas.jsonValue()};await desktopCanvas.dispose();
   await page.screenshot({path:path.join(out,'current-play-home.png'),timeout:15000});
   const routeIdentities=[];
   for(const [route,key]of [['/','__heroPreview'],['/designer/character/talk-demo.html','__talkDemo']]){
@@ -157,6 +159,8 @@ try{
   const mobileFailure={text:await status.innerText(),button:box,interceptions:mobileInterceptions,requiredPart:report.requiredPartRequest,falseReady:await phone.evaluate(()=>document.body.dataset.ready==='1')};assert.equal(mobileFailure.falseReady,false);
   await phone.unroute(currentPart);await button.click();
   await phone.waitForFunction(currentRobotReady,reference.collection_sha256);
+  const mobileCanvas=await phone.waitForFunction(currentRobotCanvasReady,reference.collection_sha256,{timeout:10000,polling:'raf'});
+  report.visibleCanvas.mobile=await mobileCanvas.jsonValue();await mobileCanvas.dispose();mobileFailure.recoveredCanvas=report.visibleCanvas.mobile;
   await save('mobile-error-recovery.json',mobileFailure);await phone.screenshot({path:path.join(out,'mobile-current-recovered.png'),timeout:15000});
   assert.deepEqual(errors,[]);report.status='CAPTURED_AWAITING_INDEPENDENT_SHARED_VALIDATION';await progress('browser observations complete; not a validation/qualification verdict');
 }catch(error){report.error=error.stack??String(error);throw error;}
