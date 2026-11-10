@@ -204,3 +204,22 @@ Pinned-image1d0 CI playback job129821148876 failed at12:13:32 with `page.evaluat
 The test now gives each document a fresh token, records main-frame requests/navigation, created/loaded documents and page crashes/close in Node, and asserts initial-ready identity before/after late-wheel math and after disposal. Keep the existing30s observer bound and no evaluation retries. Only late-wheel vector math became synchronous, using actual loaded mesh.position.clone/fromBufferAttribute instead of another unversioned Three import; all world-unit, offset, camera/target,512-or-more sampled-vertex/frustum, completion and lifecycle assertions remain. This removes an unnecessary async boundary without establishing the old failure's cause.
 
 The intended bundledChromium1194 binary was absent from existing caches; no installation was made. One qualified nativeChrome151.0.7922.71 playback unit passed69.574s/exit0 against served1d0: one unchanged token at initial ready/beforewheel/afterwheel/disposed, one created document,1008 actual wheel vertices inside the frustum, worlddelta(0,0,-0.00545454545)m matching the independent authored-offset expectation at90.9%, same camera/target, no completion writes, errors0. Exact source/harness-bound report and screenshot retained in workspace evidence; only preview origin redacted, raw hash preserved. This is not pinned-image parity or an explanation of the original context destruction. Complete normal current-head CI is still required.
+
+### 2026-11-10: Apply atomic sampling to every arrival observer
+
+PR279 a9f2f361 CI tested merge521811c5, run42872278158 playback job130026340857,
+failed at the asynchronous second16-vertex arrival sample after selecting l-upper.
+The [retained report/image and source seals](../plans/assembly-staging/ci-279-a9/README.md)
+show one document token/creation, no page error/crash and only same-document URL
+updates. L.motor_front already passed; no later arrival is inferred passed from
+the coherent failure image. Preserve artifact13790707742, zipSHA1fa9ce5a….
+
+The eight new arrival samples still awaited an unnecessary Three import even
+though the earlier late-wheel sample had been made atomic. Apply that existing
+rule consistently: use the loaded mesh vector constructor in a synchronous
+player tick/pause/posed/rest observation; retain all8x16 world-delta, dependency,
+direction, pause and progress checks, plus before/after document identity per
+sample. No observer retry or timing extension is introduced. These changes remove
+an async boundary; they do not establish the precise pinned-browser runtime cause.
+Local Chrome/WebKit controls remain qualified by actual engine/source receipts,
+and final normal CI must pass on its own pinned environment.

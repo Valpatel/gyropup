@@ -187,3 +187,5 @@
 - A playback observation loses its execution context while a later screenshot still looks coherent: [record document identity and navigation before changing runtime](inbox/2026-11-09-assembly-overlays-need-visible-bounds-and-hit-tests.md#2026-11-10-context-destruction-needs-document-identity-evidence).
 
 - A supplier-photo fallback times out while the screenshot shows a loaded image: [arm and witness the actual request failure before navigation](inbox/2026-11-10-photo-failure-tests-must-intercept-the-request.md).
+
+- Browser speech is null after a volume adjustment while a scheduled greeting fires: [preserve conversation ownership across the real greeting deadline](inbox/2026-11-10-scheduled-greetings-must-respect-conversations.md).

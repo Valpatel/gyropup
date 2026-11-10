@@ -1,0 +1,2827 @@
+{
+  "status": "passed",
+  "engine": "webkit",
+  "version": {
+    "revision": "a9f2f361d0cc6016caf964a7654cd2d0fd36001d",
+    "assets": "88c5e588269ecd2d9152",
+    "history": true,
+    "built": "2026-11-10T18:31:35.601Z"
+  },
+  "scope": "playback",
+  "filters": {
+    "width": null,
+    "assembly": null,
+    "printCase": null
+  },
+  "executions": [
+    {
+      "assembly": "robot",
+      "viewport": {
+        "width": 1440,
+        "height": 1000
+      },
+      "phase": "playback"
+    }
+  ],
+  "cases": [
+    "actual motor/hip and output-screw dependencies plus inboard wheel-fastener vertices on both sides",
+    "authored one-instance arrival, real moving offsets, pause/resume, speed, loop, manual navigation, reduced motion, background and disposal without completion writes"
+  ],
+  "observations": [
+    {
+      "document": "playback ready",
+      "token": "61720dce-e631-4226-bfd6-f826b3551c4a",
+      "url": "<preview-origin>/designer/build.html?assembly=robot&snapshot=robot-wip-540056ba4e59&chapter=overview&step=overview#assembly",
+      "readyState": "complete",
+      "visibility": "visible",
+      "focus": true
+    },
+    {
+      "world": {
+        "delta": [
+          0,
+          0.02954545454545454,
+          6.938893903907228e-18
+        ],
+        "offset": [
+          0,
+          0,
+          29.54545454545454
+        ]
+      },
+      "expectedWorld": [
+        0,
+        0.02954545454545454,
+        0
+      ]
+    },
+    {
+      "case": "late first arrival framing",
+      "latePose": {
+        "parts": 1,
+        "points": [
+          {
+            "x": 867.4964636898472,
+            "y": 568.533303427269,
+            "z": 0.96422164376034
+          },
+          {
+            "x": 831.614454285576,
+            "y": 784.2503142121199,
+            "z": 0.9682764088647143
+          },
+          {
+            "x": 732.6970319665027,
+            "y": 736.4395391100201,
+            "z": 0.9707466241885705
+          },
+          {
+            "x": 840.2901159375749,
+            "y": 591.2923183662722,
+            "z": 0.9652796214784836
+          },
+          {
+            "x": 766.0467275216655,
+            "y": 625.9713453163934,
+            "z": 0.9681287225460005
+          },
+          {
+            "x": 758.46415208928,
+            "y": 559.6232783794139,
+            "z": 0.9674341508967896
+          },
+          {
+            "x": 732.2737842820426,
+            "y": 549.9348423873339,
+            "z": 0.9681300773699132
+          },
+          {
+            "x": 653.0628112972257,
+            "y": 511.43324279271303,
+            "z": 0.970105131049986
+          },
+          {
+            "x": 850.5172147967692,
+            "y": 814.1597002127533,
+            "z": 0.9681162605624031
+          },
+          {
+            "x": 742.2946313625334,
+            "y": 737.4945557726436,
+            "z": 0.9717036619446259
+          },
+          {
+            "x": 829.4179342830763,
+            "y": 797.1500121336342,
+            "z": 0.9695375504194544
+          },
+          {
+            "x": 742.0545650265169,
+            "y": 742.5448284635955,
+            "z": 0.9718165840948655
+          },
+          {
+            "x": 846.107731380491,
+            "y": 820.7920040104783,
+            "z": 0.9680541317300043
+          },
+          {
+            "x": 750.3709886567639,
+            "y": 746.455393963995,
+            "z": 0.969995539210395
+          },
+          {
+            "x": 759.1173145071573,
+            "y": 690.174300550577,
+            "z": 0.9689124362432638
+          },
+          {
+            "x": 833.6724276019393,
+            "y": 588.4710762464381,
+            "z": 0.9650677361312398
+          },
+          {
+            "x": 654.407386517125,
+            "y": 697.5821267500847,
+            "z": 0.9723820428401094
+          },
+          {
+            "x": 751.3841648304182,
+            "y": 552.1109482180182,
+            "z": 0.9671932251894108
+          },
+          {
+            "x": 727.0202214571536,
+            "y": 542.2143595267714,
+            "z": 0.9678349247690198
+          },
+          {
+            "x": 647.7364212158681,
+            "y": 507.0060655850781,
+            "z": 0.9698803047506042
+          },
+          {
+            "x": 790.2184852450432,
+            "y": 515.7444118007359,
+            "z": 0.9669811421720257
+          },
+          {
+            "x": 696.7024634099109,
+            "y": 480.1204510334709,
+            "z": 0.9695283956408122
+          },
+          {
+            "x": 790.7174743806802,
+            "y": 523.0678580019062,
+            "z": 0.9670982579622164
+          },
+          {
+            "x": 697.2873799907077,
+            "y": 486.61904865780804,
+            "z": 0.9696566084637028
+          },
+          {
+            "x": 641.9234586985923,
+            "y": 488.9896257449358,
+            "z": 0.9701472188341854
+          },
+          {
+            "x": 834.7307526476345,
+            "y": 800.1930900357373,
+            "z": 0.9680511608282757
+          },
+          {
+            "x": 821.8628315267523,
+            "y": 778.911581519202,
+            "z": 0.9684024581670561
+          },
+          {
+            "x": 827.972087270983,
+            "y": 786.2704282350055,
+            "z": 0.9683117267143936
+          },
+          {
+            "x": 748.0427367936753,
+            "y": 740.6868995310355,
+            "z": 0.9702160334238394
+          },
+          {
+            "x": 734.5716219681345,
+            "y": 738.5629841202655,
+            "z": 0.9703906465641834
+          },
+          {
+            "x": 732.7125544599218,
+            "y": 728.2456367260418,
+            "z": 0.9705798490905745
+          },
+          {
+            "x": 727.0129070749716,
+            "y": 732.3404803747104,
+            "z": 0.9707686627959846
+          },
+          {
+            "x": 666.7977435578135,
+            "y": 691.3921535477878,
+            "z": 0.9721580844529325
+          },
+          {
+            "x": 665.2921832484957,
+            "y": 699.4687024353641,
+            "z": 0.9722720799771176
+          },
+          {
+            "x": 654.0939016099957,
+            "y": 698.296421349532,
+            "z": 0.9724022942202268
+          },
+          {
+            "x": 847.269182016904,
+            "y": 594.0434392115243,
+            "z": 0.9647103275233433
+          },
+          {
+            "x": 830.6902605586647,
+            "y": 580.581079291602,
+            "z": 0.9653744176157242
+          },
+          {
+            "x": 837.5898150185769,
+            "y": 589.4903513049082,
+            "z": 0.9652208976242652
+          },
+          {
+            "x": 750.4774904499739,
+            "y": 552.0265142224225,
+            "z": 0.9675251331529252
+          },
+          {
+            "x": 724.9780678187191,
+            "y": 671.1084736657376,
+            "z": 0.970070729384508
+          },
+          {
+            "x": 735.4597279045622,
+            "y": 545.172239470842,
+            "z": 0.9679064962250532
+          },
+          {
+            "x": 726.7368071086925,
+            "y": 543.0481383849018,
+            "z": 0.9680993211772739
+          },
+          {
+            "x": 737.5969337267486,
+            "y": 541.8605774330908,
+            "z": 0.9674900831089012
+          },
+          {
+            "x": 663.550449639643,
+            "y": 511.4541372608077,
+            "z": 0.9697198873278362
+          },
+          {
+            "x": 659.9060365575406,
+            "y": 519.3295783673275,
+            "z": 0.9698952175983203
+          },
+          {
+            "x": 648.8532741761574,
+            "y": 509.9341411424774,
+            "z": 0.9698861538767134
+          },
+          {
+            "x": 831.2299595691092,
+            "y": 791.0070997102509,
+            "z": 0.969445562387025
+          },
+          {
+            "x": 779.2994321363127,
+            "y": 763.7850955144584,
+            "z": 0.9705942649361545
+          },
+          {
+            "x": 733.7080977557033,
+            "y": 738.7822821633359,
+            "z": 0.9716493230143647
+          },
+          {
+            "x": 690.5433266035841,
+            "y": 714.2726043178363,
+            "z": 0.9726835719703549
+          },
+          {
+            "x": 818.2146760766925,
+            "y": 784.2896910732992,
+            "z": 0.968355122791006
+          },
+          {
+            "x": 723.7245320311231,
+            "y": 730.5279773742491,
+            "z": 0.9706246191148147
+          },
+          {
+            "x": 661.2197844811915,
+            "y": 694.9737677870895,
+            "z": 0.9721260060281777
+          },
+          {
+            "x": 830.9786545762024,
+            "y": 583.7051567354914,
+            "z": 0.9650863563167804
+          },
+          {
+            "x": 752.0872068750513,
+            "y": 552.9113294958402,
+            "z": 0.9671820453484595
+          },
+          {
+            "x": 728.954629128707,
+            "y": 545.3132072780759,
+            "z": 0.9678169420083992
+          },
+          {
+            "x": 659.8938038164299,
+            "y": 519.4713672853525,
+            "z": 0.9696673760318087
+          },
+          {
+            "x": 843.1645851647806,
+            "y": 535.8600308755761,
+            "z": 0.9655427962003374
+          },
+          {
+            "x": 784.8525848030267,
+            "y": 515.3614927830112,
+            "z": 0.9670085223895858
+          },
+          {
+            "x": 734.6195740740221,
+            "y": 496.8183880159557,
+            "z": 0.9683344273962902
+          },
+          {
+            "x": 687.6513899504157,
+            "y": 478.71566149299014,
+            "z": 0.9696288436244961
+          }
+        ],
+        "overlays": [
+          {
+            "x": 49,
+            "y": 217,
+            "w": 1342,
+            "h": 64
+          },
+          {
+            "x": 380,
+            "y": 290,
+            "w": 680,
+            "h": 56
+          },
+          {
+            "x": 300,
+            "y": 843,
+            "w": 840,
+            "h": 120
+          }
+        ],
+        "box": {
+          "x": 33,
+          "y": 201,
+          "w": 1374,
+          "h": 778
+        }
+      }
+    },
+    {
+      "paused": {
+        "state": {
+          "status": "paused",
+          "stepId": "body-spine",
+          "partId": "cheek_left",
+          "operationIndex": 0,
+          "elapsedMs": 450,
+          "progress": 0.4090909090909091,
+          "speed": 1,
+          "loop": false
+        },
+        "visible": [
+          "cheek_left"
+        ],
+        "offsets": {
+          "cheek_left": [
+            0,
+            0,
+            29.54545454545454
+          ],
+          "cheek_right": [
+            0,
+            0,
+            50
+          ],
+          "spacers": [
+            0,
+            0,
+            50
+          ],
+          "spacer_screws": [
+            0,
+            0,
+            50
+          ]
+        },
+        "authored": [
+          0,
+          0,
+          50
+        ],
+        "expected": [
+          "cheek_left"
+        ],
+        "done": []
+      },
+      "timed": {
+        "before": {
+          "status": "playing",
+          "stepId": "body-spine",
+          "partId": "cheek_left",
+          "operationIndex": 0,
+          "elapsedMs": 50,
+          "progress": 0.045454545454545456,
+          "speed": 2,
+          "loop": false
+        },
+        "after": {
+          "status": "playing",
+          "stepId": "body-spine",
+          "partId": "cheek_left",
+          "operationIndex": 0,
+          "elapsedMs": 150,
+          "progress": 0.13636363636363635,
+          "speed": 2,
+          "loop": false
+        }
+      },
+      "looped": {
+        "wrapped": true,
+        "ended": false,
+        "state": {
+          "status": "paused",
+          "stepId": "body-spine",
+          "partId": "cheek_left",
+          "operationIndex": 0,
+          "elapsedMs": 400,
+          "progress": 0.36363636363636365,
+          "speed": 4,
+          "loop": true
+        },
+        "done": []
+      }
+    },
+    {
+      "document": "before late-wheel sample",
+      "token": "61720dce-e631-4226-bfd6-f826b3551c4a",
+      "url": "<preview-origin>/designer/build.html?assembly=robot&snapshot=robot-wip-540056ba4e59&chapter=l-leg&step=l-wheel#assembly",
+      "readyState": "complete",
+      "visibility": "visible",
+      "focus": true
+    },
+    {
+      "document": "after late-wheel sample",
+      "token": "61720dce-e631-4226-bfd6-f826b3551c4a",
+      "url": "<preview-origin>/designer/build.html?assembly=robot&snapshot=robot-wip-540056ba4e59&chapter=l-leg&step=l-wheel#assembly",
+      "readyState": "complete",
+      "visibility": "visible",
+      "focus": true
+    },
+    {
+      "case": "late left wheel arrival with controlled existing player clock",
+      "state": {
+        "status": "paused",
+        "stepId": "l-wheel",
+        "partId": "L.wheel_tyre",
+        "operationIndex": 70,
+        "elapsedMs": 1000,
+        "progress": 0.9090909090909091,
+        "speed": 1,
+        "loop": false
+      },
+      "authored": [
+        0,
+        60,
+        0
+      ],
+      "delta": [
+        0,
+        0,
+        -0.00545454545454549
+      ],
+      "camera": [
+        1.3894242358827487,
+        0.9452933582346396,
+        -1.4806991382264985
+      ],
+      "target": [
+        0,
+        0.3200524520874025,
+        -0.09127490234374998
+      ],
+      "afterCamera": [
+        1.3894242358827487,
+        0.9452933582346396,
+        -1.4806991382264985
+      ],
+      "afterTarget": [
+        0,
+        0.3200524520874025,
+        -0.09127490234374998
+      ],
+      "min": [
+        -0.016406476503145747,
+        -0.5042880777300041,
+        0.989401072731682
+      ],
+      "max": [
+        0.16099186263376153,
+        -0.1279073942066688,
+        0.9906831815677295
+      ],
+      "samples": 1008,
+      "done": [],
+      "wheelExpected": [
+        0,
+        0,
+        -0.005454545454545456
+      ]
+    },
+    {
+      "document": "before arrival L.motor_front",
+      "token": "61720dce-e631-4226-bfd6-f826b3551c4a",
+      "url": "<preview-origin>/designer/build.html?assembly=robot&snapshot=robot-wip-540056ba4e59&chapter=l-leg&step=l-motors#assembly",
+      "readyState": "complete",
+      "visibility": "visible",
+      "focus": true
+    },
+    {
+      "case": "bounded source-supported arrival",
+      "name": "L.motor_front",
+      "documentToken": "61720dce-e631-4226-bfd6-f826b3551c4a",
+      "state": {
+        "status": "paused",
+        "stepId": "l-motors",
+        "partId": "L.motor_front",
+        "operationIndex": 36,
+        "elapsedMs": 500,
+        "progress": 0.45454545454545453,
+        "speed": 1,
+        "loop": false
+      },
+      "offset": [
+        0,
+        32.72727272727273,
+        0
+      ],
+      "delta": [
+        [
+          0,
+          0,
+          -0.03272727272727273
+        ],
+        [
+          0,
+          0,
+          -0.03272727272727273
+        ],
+        [
+          0,
+          0,
+          -0.03272727272727273
+        ],
+        [
+          0,
+          0,
+          -0.03272727272727273
+        ],
+        [
+          0,
+          0,
+          -0.03272727272727273
+        ],
+        [
+          0,
+          0,
+          -0.03272727272727273
+        ],
+        [
+          0,
+          0,
+          -0.03272727272727273
+        ],
+        [
+          0,
+          0,
+          -0.03272727272727273
+        ],
+        [
+          0,
+          0,
+          -0.03272727272727273
+        ],
+        [
+          0,
+          0,
+          -0.03272727272727273
+        ],
+        [
+          0,
+          0,
+          -0.03272727272727273
+        ],
+        [
+          0,
+          0,
+          -0.03272727272727273
+        ],
+        [
+          0,
+          0,
+          -0.03272727272727273
+        ],
+        [
+          0,
+          0,
+          -0.03272727272727273
+        ],
+        [
+          0,
+          0,
+          -0.03272727272727273
+        ],
+        [
+          0,
+          0,
+          -0.03272727272727273
+        ]
+      ],
+      "visible": [
+        "cheek_left",
+        "cheek_right",
+        "spacers",
+        "spacer_screws",
+        "floor_tray",
+        "belly_plate",
+        "bay_floor",
+        "bay_side_l",
+        "bay_side_r",
+        "bay_rail_l",
+        "bay_rail_r",
+        "adapter_plate_front",
+        "adapter_plate_rear",
+        "bay_skid_1",
+        "bay_skid_2",
+        "bay_skid_3",
+        "bay_skid_4",
+        "post_1",
+        "post_2",
+        "post_3",
+        "post_4",
+        "isolator_1",
+        "isolator_2",
+        "isolator_3",
+        "isolator_4",
+        "compute_pallet",
+        "plate_post_1",
+        "plate_post_2",
+        "plate_post_3",
+        "plate_post_4",
+        "power_plate",
+        "dcdc_bracket",
+        "bus_insulator_1",
+        "bus_insulator_2",
+        "bus_bar_1",
+        "bus_bar_2",
+        "L.motor_front"
+      ],
+      "absent": "L.hip_frame",
+      "authored": [
+        0,
+        60,
+        0
+      ],
+      "expected": [
+        0,
+        0,
+        -0.03272727272727272
+      ]
+    },
+    {
+      "document": "after arrival L.motor_front",
+      "token": "61720dce-e631-4226-bfd6-f826b3551c4a",
+      "url": "<preview-origin>/designer/build.html?assembly=robot&snapshot=robot-wip-540056ba4e59&chapter=l-leg&step=l-motors#assembly",
+      "readyState": "complete",
+      "visibility": "visible",
+      "focus": true
+    },
+    {
+      "document": "before arrival L.screws_outputs",
+      "token": "61720dce-e631-4226-bfd6-f826b3551c4a",
+      "url": "<preview-origin>/designer/build.html?assembly=robot&snapshot=robot-wip-540056ba4e59&chapter=l-leg&step=l-upper#assembly",
+      "readyState": "complete",
+      "visibility": "visible",
+      "focus": true
+    },
+    {
+      "case": "bounded source-supported arrival",
+      "name": "L.screws_outputs",
+      "documentToken": "61720dce-e631-4226-bfd6-f826b3551c4a",
+      "state": {
+        "status": "paused",
+        "stepId": "l-upper",
+        "partId": "L.screws_outputs",
+        "operationIndex": 46,
+        "elapsedMs": 500,
+        "progress": 0.45454545454545453,
+        "speed": 1,
+        "loop": false
+      },
+      "offset": [
+        0,
+        32.72727272727273,
+        0
+      ],
+      "delta": [
+        [
+          0,
+          0,
+          -0.032727272727272744
+        ],
+        [
+          0,
+          0,
+          -0.032727272727272744
+        ],
+        [
+          0,
+          0,
+          -0.032727272727272744
+        ],
+        [
+          0,
+          0,
+          -0.032727272727272744
+        ],
+        [
+          0,
+          0,
+          -0.03272727272727273
+        ],
+        [
+          0,
+          0,
+          -0.03272727272727273
+        ],
+        [
+          0,
+          0,
+          -0.032727272727272744
+        ],
+        [
+          0,
+          0,
+          -0.032727272727272744
+        ],
+        [
+          0,
+          0,
+          -0.032727272727272744
+        ],
+        [
+          0,
+          0,
+          -0.03272727272727273
+        ],
+        [
+          0,
+          0,
+          -0.03272727272727273
+        ],
+        [
+          0,
+          0,
+          -0.032727272727272744
+        ],
+        [
+          0,
+          0,
+          -0.032727272727272744
+        ],
+        [
+          0,
+          0,
+          -0.032727272727272744
+        ],
+        [
+          0,
+          0,
+          -0.032727272727272744
+        ],
+        [
+          0,
+          0,
+          -0.03272727272727273
+        ]
+      ],
+      "visible": [
+        "cheek_left",
+        "cheek_right",
+        "spacers",
+        "spacer_screws",
+        "floor_tray",
+        "belly_plate",
+        "bay_floor",
+        "bay_side_l",
+        "bay_side_r",
+        "bay_rail_l",
+        "bay_rail_r",
+        "adapter_plate_front",
+        "adapter_plate_rear",
+        "bay_skid_1",
+        "bay_skid_2",
+        "bay_skid_3",
+        "bay_skid_4",
+        "post_1",
+        "post_2",
+        "post_3",
+        "post_4",
+        "isolator_1",
+        "isolator_2",
+        "isolator_3",
+        "isolator_4",
+        "compute_pallet",
+        "plate_post_1",
+        "plate_post_2",
+        "plate_post_3",
+        "plate_post_4",
+        "power_plate",
+        "dcdc_bracket",
+        "bus_insulator_1",
+        "bus_insulator_2",
+        "bus_bar_1",
+        "bus_bar_2",
+        "L.motor_front",
+        "L.motor_rear",
+        "L.hip_frame",
+        "L.bearing_61812_front",
+        "L.bearing_61812_rear",
+        "frame_screws_left",
+        "cheek_nuts_left",
+        "L.screws_lugs",
+        "L.output_adapter_front",
+        "L.output_adapter_rear",
+        "L.screws_outputs"
+      ],
+      "absent": "L.upper_link_front",
+      "authored": [
+        0,
+        60,
+        0
+      ],
+      "expected": [
+        0,
+        0,
+        -0.03272727272727272
+      ]
+    },
+    {
+      "document": "after arrival L.screws_outputs",
+      "token": "61720dce-e631-4226-bfd6-f826b3551c4a",
+      "url": "<preview-origin>/designer/build.html?assembly=robot&snapshot=robot-wip-540056ba4e59&chapter=l-leg&step=l-upper#assembly",
+      "readyState": "complete",
+      "visibility": "visible",
+      "focus": true
+    },
+    {
+      "document": "before arrival L.washers_wheel",
+      "token": "61720dce-e631-4226-bfd6-f826b3551c4a",
+      "url": "<preview-origin>/designer/build.html?assembly=robot&snapshot=robot-wip-540056ba4e59&chapter=l-leg&step=l-wheel#assembly",
+      "readyState": "complete",
+      "visibility": "visible",
+      "focus": true
+    },
+    {
+      "case": "bounded source-supported arrival",
+      "name": "L.washers_wheel",
+      "documentToken": "61720dce-e631-4226-bfd6-f826b3551c4a",
+      "state": {
+        "status": "paused",
+        "stepId": "l-wheel",
+        "partId": "L.washers_wheel",
+        "operationIndex": 71,
+        "elapsedMs": 500,
+        "progress": 0.45454545454545453,
+        "speed": 1,
+        "loop": false
+      },
+      "offset": [
+        0,
+        -32.72727272727273,
+        0
+      ],
+      "delta": [
+        [
+          0,
+          0,
+          0.032727272727272716
+        ],
+        [
+          0,
+          0,
+          0.032727272727272716
+        ],
+        [
+          0,
+          0,
+          0.032727272727272716
+        ],
+        [
+          0,
+          0,
+          0.032727272727272716
+        ],
+        [
+          0,
+          0,
+          0.032727272727272716
+        ],
+        [
+          0,
+          0,
+          0.032727272727272716
+        ],
+        [
+          0,
+          0,
+          0.032727272727272716
+        ],
+        [
+          0,
+          0,
+          0.032727272727272716
+        ],
+        [
+          0,
+          0,
+          0.032727272727272744
+        ],
+        [
+          0,
+          0,
+          0.032727272727272716
+        ],
+        [
+          0,
+          0,
+          0.032727272727272744
+        ],
+        [
+          0,
+          0,
+          0.032727272727272744
+        ],
+        [
+          0,
+          0,
+          0.032727272727272744
+        ],
+        [
+          0,
+          0,
+          0.032727272727272744
+        ],
+        [
+          0,
+          0,
+          0.032727272727272744
+        ],
+        [
+          0,
+          0,
+          0.032727272727272744
+        ]
+      ],
+      "visible": [
+        "cheek_left",
+        "cheek_right",
+        "spacers",
+        "spacer_screws",
+        "floor_tray",
+        "belly_plate",
+        "bay_floor",
+        "bay_side_l",
+        "bay_side_r",
+        "bay_rail_l",
+        "bay_rail_r",
+        "adapter_plate_front",
+        "adapter_plate_rear",
+        "bay_skid_1",
+        "bay_skid_2",
+        "bay_skid_3",
+        "bay_skid_4",
+        "post_1",
+        "post_2",
+        "post_3",
+        "post_4",
+        "isolator_1",
+        "isolator_2",
+        "isolator_3",
+        "isolator_4",
+        "compute_pallet",
+        "plate_post_1",
+        "plate_post_2",
+        "plate_post_3",
+        "plate_post_4",
+        "power_plate",
+        "dcdc_bracket",
+        "bus_insulator_1",
+        "bus_insulator_2",
+        "bus_bar_1",
+        "bus_bar_2",
+        "L.motor_front",
+        "L.motor_rear",
+        "L.hip_frame",
+        "L.bearing_61812_front",
+        "L.bearing_61812_rear",
+        "frame_screws_left",
+        "cheek_nuts_left",
+        "L.screws_lugs",
+        "L.output_adapter_front",
+        "L.output_adapter_rear",
+        "L.screws_outputs",
+        "L.upper_link_front",
+        "L.upper_link_rear",
+        "L.screws_links",
+        "L.front_link",
+        "L.knee_bearing_front_in",
+        "L.knee_bearing_front_out",
+        "L.knee_spacer_front",
+        "L.eye_sleeve_front",
+        "L.knee_washer_front",
+        "L.knee_pin_front",
+        "L.knee_nut_upper_front",
+        "L.wheel_link",
+        "L.knee_bearing_rear_in",
+        "L.knee_bearing_rear_out",
+        "L.knee_spacer_rear",
+        "L.eye_sleeve_rear",
+        "L.knee_washer_rear",
+        "L.knee_pin_rear",
+        "L.knee_nut_upper_rear",
+        "L.apex_spacer",
+        "L.apex_61812",
+        "L.apex_circlip",
+        "L.wheel_hub",
+        "L.wheel_tyre",
+        "L.washers_wheel"
+      ],
+      "absent": null,
+      "authored": [
+        0,
+        -60,
+        0
+      ],
+      "expected": [
+        0,
+        0,
+        0.03272727272727272
+      ]
+    },
+    {
+      "document": "after arrival L.washers_wheel",
+      "token": "61720dce-e631-4226-bfd6-f826b3551c4a",
+      "url": "<preview-origin>/designer/build.html?assembly=robot&snapshot=robot-wip-540056ba4e59&chapter=l-leg&step=l-wheel#assembly",
+      "readyState": "complete",
+      "visibility": "visible",
+      "focus": true
+    },
+    {
+      "document": "before arrival L.screws_wheel",
+      "token": "61720dce-e631-4226-bfd6-f826b3551c4a",
+      "url": "<preview-origin>/designer/build.html?assembly=robot&snapshot=robot-wip-540056ba4e59&chapter=l-leg&step=l-wheel#assembly",
+      "readyState": "complete",
+      "visibility": "visible",
+      "focus": true
+    },
+    {
+      "case": "bounded source-supported arrival",
+      "name": "L.screws_wheel",
+      "documentToken": "61720dce-e631-4226-bfd6-f826b3551c4a",
+      "state": {
+        "status": "paused",
+        "stepId": "l-wheel",
+        "partId": "L.screws_wheel",
+        "operationIndex": 72,
+        "elapsedMs": 500,
+        "progress": 0.45454545454545453,
+        "speed": 1,
+        "loop": false
+      },
+      "offset": [
+        0,
+        -32.72727272727273,
+        0
+      ],
+      "delta": [
+        [
+          0,
+          0,
+          0.032727272727272716
+        ],
+        [
+          0,
+          0,
+          0.032727272727272716
+        ],
+        [
+          0,
+          0,
+          0.032727272727272716
+        ],
+        [
+          0,
+          0,
+          0.032727272727272716
+        ],
+        [
+          0,
+          0,
+          0.032727272727272716
+        ],
+        [
+          0,
+          0,
+          0.032727272727272716
+        ],
+        [
+          0,
+          0,
+          0.032727272727272716
+        ],
+        [
+          0,
+          0,
+          0.032727272727272716
+        ],
+        [
+          0,
+          0,
+          0.032727272727272744
+        ],
+        [
+          0,
+          0,
+          0.032727272727272744
+        ],
+        [
+          0,
+          0,
+          0.032727272727272744
+        ],
+        [
+          0,
+          0,
+          0.032727272727272744
+        ],
+        [
+          0,
+          0,
+          0.032727272727272744
+        ],
+        [
+          0,
+          0,
+          0.032727272727272744
+        ],
+        [
+          0,
+          0,
+          0.032727272727272744
+        ],
+        [
+          0,
+          0,
+          0.032727272727272744
+        ]
+      ],
+      "visible": [
+        "cheek_left",
+        "cheek_right",
+        "spacers",
+        "spacer_screws",
+        "floor_tray",
+        "belly_plate",
+        "bay_floor",
+        "bay_side_l",
+        "bay_side_r",
+        "bay_rail_l",
+        "bay_rail_r",
+        "adapter_plate_front",
+        "adapter_plate_rear",
+        "bay_skid_1",
+        "bay_skid_2",
+        "bay_skid_3",
+        "bay_skid_4",
+        "post_1",
+        "post_2",
+        "post_3",
+        "post_4",
+        "isolator_1",
+        "isolator_2",
+        "isolator_3",
+        "isolator_4",
+        "compute_pallet",
+        "plate_post_1",
+        "plate_post_2",
+        "plate_post_3",
+        "plate_post_4",
+        "power_plate",
+        "dcdc_bracket",
+        "bus_insulator_1",
+        "bus_insulator_2",
+        "bus_bar_1",
+        "bus_bar_2",
+        "L.motor_front",
+        "L.motor_rear",
+        "L.hip_frame",
+        "L.bearing_61812_front",
+        "L.bearing_61812_rear",
+        "frame_screws_left",
+        "cheek_nuts_left",
+        "L.screws_lugs",
+        "L.output_adapter_front",
+        "L.output_adapter_rear",
+        "L.screws_outputs",
+        "L.upper_link_front",
+        "L.upper_link_rear",
+        "L.screws_links",
+        "L.front_link",
+        "L.knee_bearing_front_in",
+        "L.knee_bearing_front_out",
+        "L.knee_spacer_front",
+        "L.eye_sleeve_front",
+        "L.knee_washer_front",
+        "L.knee_pin_front",
+        "L.knee_nut_upper_front",
+        "L.wheel_link",
+        "L.knee_bearing_rear_in",
+        "L.knee_bearing_rear_out",
+        "L.knee_spacer_rear",
+        "L.eye_sleeve_rear",
+        "L.knee_washer_rear",
+        "L.knee_pin_rear",
+        "L.knee_nut_upper_rear",
+        "L.apex_spacer",
+        "L.apex_61812",
+        "L.apex_circlip",
+        "L.wheel_hub",
+        "L.wheel_tyre",
+        "L.washers_wheel",
+        "L.screws_wheel"
+      ],
+      "absent": null,
+      "authored": [
+        0,
+        -60,
+        0
+      ],
+      "expected": [
+        0,
+        0,
+        0.03272727272727272
+      ]
+    },
+    {
+      "document": "after arrival L.screws_wheel",
+      "token": "61720dce-e631-4226-bfd6-f826b3551c4a",
+      "url": "<preview-origin>/designer/build.html?assembly=robot&snapshot=robot-wip-540056ba4e59&chapter=l-leg&step=l-wheel#assembly",
+      "readyState": "complete",
+      "visibility": "visible",
+      "focus": true
+    },
+    {
+      "document": "before arrival R.motor_front",
+      "token": "61720dce-e631-4226-bfd6-f826b3551c4a",
+      "url": "<preview-origin>/designer/build.html?assembly=robot&snapshot=robot-wip-540056ba4e59&chapter=r-leg&step=r-motors#assembly",
+      "readyState": "complete",
+      "visibility": "visible",
+      "focus": true
+    },
+    {
+      "case": "bounded source-supported arrival",
+      "name": "R.motor_front",
+      "documentToken": "61720dce-e631-4226-bfd6-f826b3551c4a",
+      "state": {
+        "status": "paused",
+        "stepId": "r-motors",
+        "partId": "R.motor_front",
+        "operationIndex": 78,
+        "elapsedMs": 500,
+        "progress": 0.45454545454545453,
+        "speed": 1,
+        "loop": false
+      },
+      "offset": [
+        0,
+        -32.72727272727273,
+        0
+      ],
+      "delta": [
+        [
+          0,
+          0,
+          0.03272727272727273
+        ],
+        [
+          0,
+          0,
+          0.03272727272727273
+        ],
+        [
+          0,
+          0,
+          0.03272727272727273
+        ],
+        [
+          0,
+          0,
+          0.03272727272727273
+        ],
+        [
+          0,
+          0,
+          0.03272727272727273
+        ],
+        [
+          0,
+          0,
+          0.03272727272727273
+        ],
+        [
+          0,
+          0,
+          0.03272727272727273
+        ],
+        [
+          0,
+          0,
+          0.03272727272727273
+        ],
+        [
+          0,
+          0,
+          0.03272727272727273
+        ],
+        [
+          0,
+          0,
+          0.03272727272727273
+        ],
+        [
+          0,
+          0,
+          0.03272727272727273
+        ],
+        [
+          0,
+          0,
+          0.03272727272727273
+        ],
+        [
+          0,
+          0,
+          0.03272727272727273
+        ],
+        [
+          0,
+          0,
+          0.03272727272727273
+        ],
+        [
+          0,
+          0,
+          0.03272727272727273
+        ],
+        [
+          0,
+          0,
+          0.03272727272727273
+        ]
+      ],
+      "visible": [
+        "cheek_left",
+        "cheek_right",
+        "spacers",
+        "spacer_screws",
+        "floor_tray",
+        "belly_plate",
+        "bay_floor",
+        "bay_side_l",
+        "bay_side_r",
+        "bay_rail_l",
+        "bay_rail_r",
+        "adapter_plate_front",
+        "adapter_plate_rear",
+        "bay_skid_1",
+        "bay_skid_2",
+        "bay_skid_3",
+        "bay_skid_4",
+        "post_1",
+        "post_2",
+        "post_3",
+        "post_4",
+        "isolator_1",
+        "isolator_2",
+        "isolator_3",
+        "isolator_4",
+        "compute_pallet",
+        "plate_post_1",
+        "plate_post_2",
+        "plate_post_3",
+        "plate_post_4",
+        "power_plate",
+        "dcdc_bracket",
+        "bus_insulator_1",
+        "bus_insulator_2",
+        "bus_bar_1",
+        "bus_bar_2",
+        "L.motor_front",
+        "L.motor_rear",
+        "L.hip_frame",
+        "L.bearing_61812_front",
+        "L.bearing_61812_rear",
+        "frame_screws_left",
+        "cheek_nuts_left",
+        "L.screws_lugs",
+        "L.output_adapter_front",
+        "L.output_adapter_rear",
+        "L.screws_outputs",
+        "L.upper_link_front",
+        "L.upper_link_rear",
+        "L.screws_links",
+        "L.front_link",
+        "L.knee_bearing_front_in",
+        "L.knee_bearing_front_out",
+        "L.knee_spacer_front",
+        "L.eye_sleeve_front",
+        "L.knee_washer_front",
+        "L.knee_pin_front",
+        "L.knee_nut_upper_front",
+        "L.wheel_link",
+        "L.knee_bearing_rear_in",
+        "L.knee_bearing_rear_out",
+        "L.knee_spacer_rear",
+        "L.eye_sleeve_rear",
+        "L.knee_washer_rear",
+        "L.knee_pin_rear",
+        "L.knee_nut_upper_rear",
+        "L.apex_spacer",
+        "L.apex_61812",
+        "L.apex_circlip",
+        "L.wheel_hub",
+        "L.wheel_tyre",
+        "L.washers_wheel",
+        "L.screws_wheel",
+        "L.stop_posts",
+        "L.stop_sleeve_1",
+        "L.stop_sleeve_2",
+        "L.stop_sleeve_3",
+        "L.stop_sleeve_4",
+        "R.motor_front"
+      ],
+      "absent": "R.hip_frame",
+      "authored": [
+        0,
+        -60,
+        0
+      ],
+      "expected": [
+        0,
+        0,
+        0.03272727272727272
+      ]
+    },
+    {
+      "document": "after arrival R.motor_front",
+      "token": "61720dce-e631-4226-bfd6-f826b3551c4a",
+      "url": "<preview-origin>/designer/build.html?assembly=robot&snapshot=robot-wip-540056ba4e59&chapter=r-leg&step=r-motors#assembly",
+      "readyState": "complete",
+      "visibility": "visible",
+      "focus": true
+    },
+    {
+      "document": "before arrival R.screws_outputs",
+      "token": "61720dce-e631-4226-bfd6-f826b3551c4a",
+      "url": "<preview-origin>/designer/build.html?assembly=robot&snapshot=robot-wip-540056ba4e59&chapter=r-leg&step=r-upper#assembly",
+      "readyState": "complete",
+      "visibility": "visible",
+      "focus": true
+    },
+    {
+      "case": "bounded source-supported arrival",
+      "name": "R.screws_outputs",
+      "documentToken": "61720dce-e631-4226-bfd6-f826b3551c4a",
+      "state": {
+        "status": "paused",
+        "stepId": "r-upper",
+        "partId": "R.screws_outputs",
+        "operationIndex": 88,
+        "elapsedMs": 500,
+        "progress": 0.45454545454545453,
+        "speed": 1,
+        "loop": false
+      },
+      "offset": [
+        0,
+        -32.72727272727273,
+        0
+      ],
+      "delta": [
+        [
+          0,
+          0,
+          0.032727272727272716
+        ],
+        [
+          0,
+          0,
+          0.032727272727272716
+        ],
+        [
+          0,
+          0,
+          0.032727272727272716
+        ],
+        [
+          0,
+          0,
+          0.032727272727272716
+        ],
+        [
+          0,
+          0,
+          0.03272727272727273
+        ],
+        [
+          0,
+          0,
+          0.03272727272727273
+        ],
+        [
+          0,
+          0,
+          0.032727272727272716
+        ],
+        [
+          0,
+          0,
+          0.032727272727272716
+        ],
+        [
+          0,
+          0,
+          0.032727272727272716
+        ],
+        [
+          0,
+          0,
+          0.03272727272727273
+        ],
+        [
+          0,
+          0,
+          0.03272727272727273
+        ],
+        [
+          0,
+          0,
+          0.032727272727272716
+        ],
+        [
+          0,
+          0,
+          0.032727272727272716
+        ],
+        [
+          0,
+          0,
+          0.032727272727272716
+        ],
+        [
+          0,
+          0,
+          0.032727272727272716
+        ],
+        [
+          0,
+          0,
+          0.03272727272727273
+        ]
+      ],
+      "visible": [
+        "cheek_left",
+        "cheek_right",
+        "spacers",
+        "spacer_screws",
+        "floor_tray",
+        "belly_plate",
+        "bay_floor",
+        "bay_side_l",
+        "bay_side_r",
+        "bay_rail_l",
+        "bay_rail_r",
+        "adapter_plate_front",
+        "adapter_plate_rear",
+        "bay_skid_1",
+        "bay_skid_2",
+        "bay_skid_3",
+        "bay_skid_4",
+        "post_1",
+        "post_2",
+        "post_3",
+        "post_4",
+        "isolator_1",
+        "isolator_2",
+        "isolator_3",
+        "isolator_4",
+        "compute_pallet",
+        "plate_post_1",
+        "plate_post_2",
+        "plate_post_3",
+        "plate_post_4",
+        "power_plate",
+        "dcdc_bracket",
+        "bus_insulator_1",
+        "bus_insulator_2",
+        "bus_bar_1",
+        "bus_bar_2",
+        "L.motor_front",
+        "L.motor_rear",
+        "L.hip_frame",
+        "L.bearing_61812_front",
+        "L.bearing_61812_rear",
+        "frame_screws_left",
+        "cheek_nuts_left",
+        "L.screws_lugs",
+        "L.output_adapter_front",
+        "L.output_adapter_rear",
+        "L.screws_outputs",
+        "L.upper_link_front",
+        "L.upper_link_rear",
+        "L.screws_links",
+        "L.front_link",
+        "L.knee_bearing_front_in",
+        "L.knee_bearing_front_out",
+        "L.knee_spacer_front",
+        "L.eye_sleeve_front",
+        "L.knee_washer_front",
+        "L.knee_pin_front",
+        "L.knee_nut_upper_front",
+        "L.wheel_link",
+        "L.knee_bearing_rear_in",
+        "L.knee_bearing_rear_out",
+        "L.knee_spacer_rear",
+        "L.eye_sleeve_rear",
+        "L.knee_washer_rear",
+        "L.knee_pin_rear",
+        "L.knee_nut_upper_rear",
+        "L.apex_spacer",
+        "L.apex_61812",
+        "L.apex_circlip",
+        "L.wheel_hub",
+        "L.wheel_tyre",
+        "L.washers_wheel",
+        "L.screws_wheel",
+        "L.stop_posts",
+        "L.stop_sleeve_1",
+        "L.stop_sleeve_2",
+        "L.stop_sleeve_3",
+        "L.stop_sleeve_4",
+        "R.motor_front",
+        "R.motor_rear",
+        "R.hip_frame",
+        "R.bearing_61812_front",
+        "R.bearing_61812_rear",
+        "frame_screws_right",
+        "cheek_nuts_right",
+        "R.screws_lugs",
+        "R.output_adapter_front",
+        "R.output_adapter_rear",
+        "R.screws_outputs"
+      ],
+      "absent": "R.upper_link_front",
+      "authored": [
+        0,
+        -60,
+        0
+      ],
+      "expected": [
+        0,
+        0,
+        0.03272727272727272
+      ]
+    },
+    {
+      "document": "after arrival R.screws_outputs",
+      "token": "61720dce-e631-4226-bfd6-f826b3551c4a",
+      "url": "<preview-origin>/designer/build.html?assembly=robot&snapshot=robot-wip-540056ba4e59&chapter=r-leg&step=r-upper#assembly",
+      "readyState": "complete",
+      "visibility": "visible",
+      "focus": true
+    },
+    {
+      "document": "before arrival R.washers_wheel",
+      "token": "61720dce-e631-4226-bfd6-f826b3551c4a",
+      "url": "<preview-origin>/designer/build.html?assembly=robot&snapshot=robot-wip-540056ba4e59&chapter=r-leg&step=r-wheel#assembly",
+      "readyState": "complete",
+      "visibility": "visible",
+      "focus": true
+    },
+    {
+      "case": "bounded source-supported arrival",
+      "name": "R.washers_wheel",
+      "documentToken": "61720dce-e631-4226-bfd6-f826b3551c4a",
+      "state": {
+        "status": "paused",
+        "stepId": "r-wheel",
+        "partId": "R.washers_wheel",
+        "operationIndex": 113,
+        "elapsedMs": 500,
+        "progress": 0.45454545454545453,
+        "speed": 1,
+        "loop": false
+      },
+      "offset": [
+        0,
+        32.72727272727273,
+        0
+      ],
+      "delta": [
+        [
+          0,
+          0,
+          -0.032727272727272744
+        ],
+        [
+          0,
+          0,
+          -0.032727272727272744
+        ],
+        [
+          0,
+          0,
+          -0.032727272727272744
+        ],
+        [
+          0,
+          0,
+          -0.032727272727272744
+        ],
+        [
+          0,
+          0,
+          -0.032727272727272744
+        ],
+        [
+          0,
+          0,
+          -0.032727272727272744
+        ],
+        [
+          0,
+          0,
+          -0.032727272727272744
+        ],
+        [
+          0,
+          0,
+          -0.032727272727272744
+        ],
+        [
+          0,
+          0,
+          -0.032727272727272716
+        ],
+        [
+          0,
+          0,
+          -0.032727272727272744
+        ],
+        [
+          0,
+          0,
+          -0.032727272727272716
+        ],
+        [
+          0,
+          0,
+          -0.032727272727272716
+        ],
+        [
+          0,
+          0,
+          -0.032727272727272716
+        ],
+        [
+          0,
+          0,
+          -0.032727272727272716
+        ],
+        [
+          0,
+          0,
+          -0.032727272727272716
+        ],
+        [
+          0,
+          0,
+          -0.032727272727272716
+        ]
+      ],
+      "visible": [
+        "cheek_left",
+        "cheek_right",
+        "spacers",
+        "spacer_screws",
+        "floor_tray",
+        "belly_plate",
+        "bay_floor",
+        "bay_side_l",
+        "bay_side_r",
+        "bay_rail_l",
+        "bay_rail_r",
+        "adapter_plate_front",
+        "adapter_plate_rear",
+        "bay_skid_1",
+        "bay_skid_2",
+        "bay_skid_3",
+        "bay_skid_4",
+        "post_1",
+        "post_2",
+        "post_3",
+        "post_4",
+        "isolator_1",
+        "isolator_2",
+        "isolator_3",
+        "isolator_4",
+        "compute_pallet",
+        "plate_post_1",
+        "plate_post_2",
+        "plate_post_3",
+        "plate_post_4",
+        "power_plate",
+        "dcdc_bracket",
+        "bus_insulator_1",
+        "bus_insulator_2",
+        "bus_bar_1",
+        "bus_bar_2",
+        "L.motor_front",
+        "L.motor_rear",
+        "L.hip_frame",
+        "L.bearing_61812_front",
+        "L.bearing_61812_rear",
+        "frame_screws_left",
+        "cheek_nuts_left",
+        "L.screws_lugs",
+        "L.output_adapter_front",
+        "L.output_adapter_rear",
+        "L.screws_outputs",
+        "L.upper_link_front",
+        "L.upper_link_rear",
+        "L.screws_links",
+        "L.front_link",
+        "L.knee_bearing_front_in",
+        "L.knee_bearing_front_out",
+        "L.knee_spacer_front",
+        "L.eye_sleeve_front",
+        "L.knee_washer_front",
+        "L.knee_pin_front",
+        "L.knee_nut_upper_front",
+        "L.wheel_link",
+        "L.knee_bearing_rear_in",
+        "L.knee_bearing_rear_out",
+        "L.knee_spacer_rear",
+        "L.eye_sleeve_rear",
+        "L.knee_washer_rear",
+        "L.knee_pin_rear",
+        "L.knee_nut_upper_rear",
+        "L.apex_spacer",
+        "L.apex_61812",
+        "L.apex_circlip",
+        "L.wheel_hub",
+        "L.wheel_tyre",
+        "L.washers_wheel",
+        "L.screws_wheel",
+        "L.stop_posts",
+        "L.stop_sleeve_1",
+        "L.stop_sleeve_2",
+        "L.stop_sleeve_3",
+        "L.stop_sleeve_4",
+        "R.motor_front",
+        "R.motor_rear",
+        "R.hip_frame",
+        "R.bearing_61812_front",
+        "R.bearing_61812_rear",
+        "frame_screws_right",
+        "cheek_nuts_right",
+        "R.screws_lugs",
+        "R.output_adapter_front",
+        "R.output_adapter_rear",
+        "R.screws_outputs",
+        "R.upper_link_front",
+        "R.upper_link_rear",
+        "R.screws_links",
+        "R.front_link",
+        "R.knee_bearing_front_in",
+        "R.knee_bearing_front_out",
+        "R.knee_spacer_front",
+        "R.eye_sleeve_front",
+        "R.knee_washer_front",
+        "R.knee_pin_front",
+        "R.knee_nut_upper_front",
+        "R.wheel_link",
+        "R.knee_bearing_rear_in",
+        "R.knee_bearing_rear_out",
+        "R.knee_spacer_rear",
+        "R.eye_sleeve_rear",
+        "R.knee_washer_rear",
+        "R.knee_pin_rear",
+        "R.knee_nut_upper_rear",
+        "R.apex_spacer",
+        "R.apex_61812",
+        "R.apex_circlip",
+        "R.wheel_hub",
+        "R.wheel_tyre",
+        "R.washers_wheel"
+      ],
+      "absent": null,
+      "authored": [
+        0,
+        60,
+        0
+      ],
+      "expected": [
+        0,
+        0,
+        -0.03272727272727272
+      ]
+    },
+    {
+      "document": "after arrival R.washers_wheel",
+      "token": "61720dce-e631-4226-bfd6-f826b3551c4a",
+      "url": "<preview-origin>/designer/build.html?assembly=robot&snapshot=robot-wip-540056ba4e59&chapter=r-leg&step=r-wheel#assembly",
+      "readyState": "complete",
+      "visibility": "visible",
+      "focus": true
+    },
+    {
+      "document": "before arrival R.screws_wheel",
+      "token": "61720dce-e631-4226-bfd6-f826b3551c4a",
+      "url": "<preview-origin>/designer/build.html?assembly=robot&snapshot=robot-wip-540056ba4e59&chapter=r-leg&step=r-wheel#assembly",
+      "readyState": "complete",
+      "visibility": "visible",
+      "focus": true
+    },
+    {
+      "case": "bounded source-supported arrival",
+      "name": "R.screws_wheel",
+      "documentToken": "61720dce-e631-4226-bfd6-f826b3551c4a",
+      "state": {
+        "status": "paused",
+        "stepId": "r-wheel",
+        "partId": "R.screws_wheel",
+        "operationIndex": 114,
+        "elapsedMs": 500,
+        "progress": 0.45454545454545453,
+        "speed": 1,
+        "loop": false
+      },
+      "offset": [
+        0,
+        32.72727272727273,
+        0
+      ],
+      "delta": [
+        [
+          0,
+          0,
+          -0.032727272727272744
+        ],
+        [
+          0,
+          0,
+          -0.032727272727272744
+        ],
+        [
+          0,
+          0,
+          -0.032727272727272744
+        ],
+        [
+          0,
+          0,
+          -0.032727272727272744
+        ],
+        [
+          0,
+          0,
+          -0.032727272727272744
+        ],
+        [
+          0,
+          0,
+          -0.032727272727272744
+        ],
+        [
+          0,
+          0,
+          -0.032727272727272744
+        ],
+        [
+          0,
+          0,
+          -0.032727272727272744
+        ],
+        [
+          0,
+          0,
+          -0.032727272727272716
+        ],
+        [
+          0,
+          0,
+          -0.032727272727272716
+        ],
+        [
+          0,
+          0,
+          -0.032727272727272716
+        ],
+        [
+          0,
+          0,
+          -0.032727272727272744
+        ],
+        [
+          0,
+          0,
+          -0.032727272727272716
+        ],
+        [
+          0,
+          0,
+          -0.032727272727272716
+        ],
+        [
+          0,
+          0,
+          -0.032727272727272716
+        ],
+        [
+          0,
+          0,
+          -0.032727272727272716
+        ]
+      ],
+      "visible": [
+        "cheek_left",
+        "cheek_right",
+        "spacers",
+        "spacer_screws",
+        "floor_tray",
+        "belly_plate",
+        "bay_floor",
+        "bay_side_l",
+        "bay_side_r",
+        "bay_rail_l",
+        "bay_rail_r",
+        "adapter_plate_front",
+        "adapter_plate_rear",
+        "bay_skid_1",
+        "bay_skid_2",
+        "bay_skid_3",
+        "bay_skid_4",
+        "post_1",
+        "post_2",
+        "post_3",
+        "post_4",
+        "isolator_1",
+        "isolator_2",
+        "isolator_3",
+        "isolator_4",
+        "compute_pallet",
+        "plate_post_1",
+        "plate_post_2",
+        "plate_post_3",
+        "plate_post_4",
+        "power_plate",
+        "dcdc_bracket",
+        "bus_insulator_1",
+        "bus_insulator_2",
+        "bus_bar_1",
+        "bus_bar_2",
+        "L.motor_front",
+        "L.motor_rear",
+        "L.hip_frame",
+        "L.bearing_61812_front",
+        "L.bearing_61812_rear",
+        "frame_screws_left",
+        "cheek_nuts_left",
+        "L.screws_lugs",
+        "L.output_adapter_front",
+        "L.output_adapter_rear",
+        "L.screws_outputs",
+        "L.upper_link_front",
+        "L.upper_link_rear",
+        "L.screws_links",
+        "L.front_link",
+        "L.knee_bearing_front_in",
+        "L.knee_bearing_front_out",
+        "L.knee_spacer_front",
+        "L.eye_sleeve_front",
+        "L.knee_washer_front",
+        "L.knee_pin_front",
+        "L.knee_nut_upper_front",
+        "L.wheel_link",
+        "L.knee_bearing_rear_in",
+        "L.knee_bearing_rear_out",
+        "L.knee_spacer_rear",
+        "L.eye_sleeve_rear",
+        "L.knee_washer_rear",
+        "L.knee_pin_rear",
+        "L.knee_nut_upper_rear",
+        "L.apex_spacer",
+        "L.apex_61812",
+        "L.apex_circlip",
+        "L.wheel_hub",
+        "L.wheel_tyre",
+        "L.washers_wheel",
+        "L.screws_wheel",
+        "L.stop_posts",
+        "L.stop_sleeve_1",
+        "L.stop_sleeve_2",
+        "L.stop_sleeve_3",
+        "L.stop_sleeve_4",
+        "R.motor_front",
+        "R.motor_rear",
+        "R.hip_frame",
+        "R.bearing_61812_front",
+        "R.bearing_61812_rear",
+        "frame_screws_right",
+        "cheek_nuts_right",
+        "R.screws_lugs",
+        "R.output_adapter_front",
+        "R.output_adapter_rear",
+        "R.screws_outputs",
+        "R.upper_link_front",
+        "R.upper_link_rear",
+        "R.screws_links",
+        "R.front_link",
+        "R.knee_bearing_front_in",
+        "R.knee_bearing_front_out",
+        "R.knee_spacer_front",
+        "R.eye_sleeve_front",
+        "R.knee_washer_front",
+        "R.knee_pin_front",
+        "R.knee_nut_upper_front",
+        "R.wheel_link",
+        "R.knee_bearing_rear_in",
+        "R.knee_bearing_rear_out",
+        "R.knee_spacer_rear",
+        "R.eye_sleeve_rear",
+        "R.knee_washer_rear",
+        "R.knee_pin_rear",
+        "R.knee_nut_upper_rear",
+        "R.apex_spacer",
+        "R.apex_61812",
+        "R.apex_circlip",
+        "R.wheel_hub",
+        "R.wheel_tyre",
+        "R.washers_wheel",
+        "R.screws_wheel"
+      ],
+      "absent": null,
+      "authored": [
+        0,
+        60,
+        0
+      ],
+      "expected": [
+        0,
+        0,
+        -0.03272727272727272
+      ]
+    },
+    {
+      "document": "after arrival R.screws_wheel",
+      "token": "61720dce-e631-4226-bfd6-f826b3551c4a",
+      "url": "<preview-origin>/designer/build.html?assembly=robot&snapshot=robot-wip-540056ba4e59&chapter=r-leg&step=r-wheel#assembly",
+      "readyState": "complete",
+      "visibility": "visible",
+      "focus": true
+    },
+    {
+      "document": "playback disposed",
+      "token": "61720dce-e631-4226-bfd6-f826b3551c4a",
+      "url": "<preview-origin>/designer/build.html?assembly=robot&snapshot=robot-wip-540056ba4e59&chapter=r-leg&step=r-wheel#assembly",
+      "readyState": "complete",
+      "visibility": "visible",
+      "focus": true
+    }
+  ],
+  "documents": [
+    {
+      "page": 0,
+      "events": [
+        {
+          "kind": "navigation-request",
+          "at": "2026-11-10T18:33:18.327Z",
+          "url": "<preview-origin>/designer/build.html?assembly=robot",
+          "method": "GET"
+        },
+        {
+          "kind": "main-frame-navigation",
+          "at": "2026-11-10T18:33:18.341Z",
+          "url": "<preview-origin>/designer/build.html?assembly=robot#assembly"
+        },
+        {
+          "kind": "document-created",
+          "at": "2026-11-10T18:33:18.345Z",
+          "token": "61720dce-e631-4226-bfd6-f826b3551c4a",
+          "url": "<preview-origin>/designer/build.html?assembly=robot#assembly"
+        },
+        {
+          "kind": "document-load",
+          "at": "2026-11-10T18:33:19.226Z",
+          "url": "<preview-origin>/designer/build.html?assembly=robot#assembly"
+        },
+        {
+          "kind": "document-domcontentloaded",
+          "at": "2026-11-10T18:33:19.238Z",
+          "url": "<preview-origin>/designer/build.html?assembly=robot#assembly"
+        },
+        {
+          "kind": "main-frame-navigation",
+          "at": "2026-11-10T18:33:24.603Z",
+          "url": "<preview-origin>/designer/build.html?assembly=robot&snapshot=robot-wip-540056ba4e59&chapter=overview&step=overview#assembly"
+        },
+        {
+          "kind": "main-frame-navigation",
+          "at": "2026-11-10T18:33:24.603Z",
+          "url": "<preview-origin>/designer/build.html?assembly=robot&snapshot=robot-wip-540056ba4e59&chapter=overview&step=overview#assembly"
+        },
+        {
+          "kind": "document-observed",
+          "label": "playback ready",
+          "at": "2026-11-10T18:33:25.383Z",
+          "token": "61720dce-e631-4226-bfd6-f826b3551c4a",
+          "url": "<preview-origin>/designer/build.html?assembly=robot&snapshot=robot-wip-540056ba4e59&chapter=overview&step=overview#assembly",
+          "readyState": "complete",
+          "visibility": "visible",
+          "focus": true
+        },
+        {
+          "kind": "main-frame-navigation",
+          "at": "2026-11-10T18:33:25.833Z",
+          "url": "<preview-origin>/designer/build.html?assembly=robot&snapshot=robot-wip-540056ba4e59&chapter=body&step=body-spine#assembly"
+        },
+        {
+          "kind": "main-frame-navigation",
+          "at": "2026-11-10T18:33:25.833Z",
+          "url": "<preview-origin>/designer/build.html?assembly=robot&snapshot=robot-wip-540056ba4e59&chapter=body&step=body-spine#assembly"
+        },
+        {
+          "kind": "main-frame-navigation",
+          "at": "2026-11-10T18:33:28.286Z",
+          "url": "<preview-origin>/designer/build.html?assembly=robot&snapshot=robot-wip-540056ba4e59&chapter=body&step=body-trays#assembly"
+        },
+        {
+          "kind": "main-frame-navigation",
+          "at": "2026-11-10T18:33:28.286Z",
+          "url": "<preview-origin>/designer/build.html?assembly=robot&snapshot=robot-wip-540056ba4e59&chapter=body&step=body-trays#assembly"
+        },
+        {
+          "kind": "main-frame-navigation",
+          "at": "2026-11-10T18:33:28.472Z",
+          "url": "<preview-origin>/designer/build.html?assembly=robot&snapshot=robot-wip-540056ba4e59&chapter=body&step=body-platforms#assembly"
+        },
+        {
+          "kind": "main-frame-navigation",
+          "at": "2026-11-10T18:33:28.472Z",
+          "url": "<preview-origin>/designer/build.html?assembly=robot&snapshot=robot-wip-540056ba4e59&chapter=body&step=body-platforms#assembly"
+        },
+        {
+          "kind": "main-frame-navigation",
+          "at": "2026-11-10T18:33:28.695Z",
+          "url": "<preview-origin>/designer/build.html?assembly=robot&snapshot=robot-wip-540056ba4e59&chapter=l-leg&step=l-motors#assembly"
+        },
+        {
+          "kind": "main-frame-navigation",
+          "at": "2026-11-10T18:33:28.696Z",
+          "url": "<preview-origin>/designer/build.html?assembly=robot&snapshot=robot-wip-540056ba4e59&chapter=l-leg&step=l-motors#assembly"
+        },
+        {
+          "kind": "main-frame-navigation",
+          "at": "2026-11-10T18:33:28.732Z",
+          "url": "<preview-origin>/designer/build.html?assembly=robot&snapshot=robot-wip-540056ba4e59&chapter=l-leg&step=l-hip#assembly"
+        },
+        {
+          "kind": "main-frame-navigation",
+          "at": "2026-11-10T18:33:28.732Z",
+          "url": "<preview-origin>/designer/build.html?assembly=robot&snapshot=robot-wip-540056ba4e59&chapter=l-leg&step=l-hip#assembly"
+        },
+        {
+          "kind": "main-frame-navigation",
+          "at": "2026-11-10T18:33:28.825Z",
+          "url": "<preview-origin>/designer/build.html?assembly=robot&snapshot=robot-wip-540056ba4e59&chapter=l-leg&step=l-upper#assembly"
+        },
+        {
+          "kind": "main-frame-navigation",
+          "at": "2026-11-10T18:33:28.825Z",
+          "url": "<preview-origin>/designer/build.html?assembly=robot&snapshot=robot-wip-540056ba4e59&chapter=l-leg&step=l-upper#assembly"
+        },
+        {
+          "kind": "main-frame-navigation",
+          "at": "2026-11-10T18:33:28.930Z",
+          "url": "<preview-origin>/designer/build.html?assembly=robot&snapshot=robot-wip-540056ba4e59&chapter=l-leg&step=l-front-knee#assembly"
+        },
+        {
+          "kind": "main-frame-navigation",
+          "at": "2026-11-10T18:33:28.930Z",
+          "url": "<preview-origin>/designer/build.html?assembly=robot&snapshot=robot-wip-540056ba4e59&chapter=l-leg&step=l-front-knee#assembly"
+        },
+        {
+          "kind": "main-frame-navigation",
+          "at": "2026-11-10T18:33:29.049Z",
+          "url": "<preview-origin>/designer/build.html?assembly=robot&snapshot=robot-wip-540056ba4e59&chapter=l-leg&step=l-rear-knee#assembly"
+        },
+        {
+          "kind": "main-frame-navigation",
+          "at": "2026-11-10T18:33:29.049Z",
+          "url": "<preview-origin>/designer/build.html?assembly=robot&snapshot=robot-wip-540056ba4e59&chapter=l-leg&step=l-rear-knee#assembly"
+        },
+        {
+          "kind": "main-frame-navigation",
+          "at": "2026-11-10T18:33:29.165Z",
+          "url": "<preview-origin>/designer/build.html?assembly=robot&snapshot=robot-wip-540056ba4e59&chapter=l-leg&step=l-apex#assembly"
+        },
+        {
+          "kind": "main-frame-navigation",
+          "at": "2026-11-10T18:33:29.165Z",
+          "url": "<preview-origin>/designer/build.html?assembly=robot&snapshot=robot-wip-540056ba4e59&chapter=l-leg&step=l-apex#assembly"
+        },
+        {
+          "kind": "main-frame-navigation",
+          "at": "2026-11-10T18:33:29.213Z",
+          "url": "<preview-origin>/designer/build.html?assembly=robot&snapshot=robot-wip-540056ba4e59&chapter=l-leg&step=l-wheel#assembly"
+        },
+        {
+          "kind": "main-frame-navigation",
+          "at": "2026-11-10T18:33:29.213Z",
+          "url": "<preview-origin>/designer/build.html?assembly=robot&snapshot=robot-wip-540056ba4e59&chapter=l-leg&step=l-wheel#assembly"
+        },
+        {
+          "kind": "main-frame-navigation",
+          "at": "2026-11-10T18:33:29.281Z",
+          "url": "<preview-origin>/designer/build.html?assembly=robot&snapshot=robot-wip-540056ba4e59&chapter=l-leg&step=l-stops#assembly"
+        },
+        {
+          "kind": "main-frame-navigation",
+          "at": "2026-11-10T18:33:29.281Z",
+          "url": "<preview-origin>/designer/build.html?assembly=robot&snapshot=robot-wip-540056ba4e59&chapter=l-leg&step=l-stops#assembly"
+        },
+        {
+          "kind": "main-frame-navigation",
+          "at": "2026-11-10T18:33:29.365Z",
+          "url": "<preview-origin>/designer/build.html?assembly=robot&snapshot=robot-wip-540056ba4e59&chapter=r-leg&step=r-motors#assembly"
+        },
+        {
+          "kind": "main-frame-navigation",
+          "at": "2026-11-10T18:33:29.366Z",
+          "url": "<preview-origin>/designer/build.html?assembly=robot&snapshot=robot-wip-540056ba4e59&chapter=r-leg&step=r-motors#assembly"
+        },
+        {
+          "kind": "main-frame-navigation",
+          "at": "2026-11-10T18:33:29.410Z",
+          "url": "<preview-origin>/designer/build.html?assembly=robot&snapshot=robot-wip-540056ba4e59&chapter=r-leg&step=r-hip#assembly"
+        },
+        {
+          "kind": "main-frame-navigation",
+          "at": "2026-11-10T18:33:29.411Z",
+          "url": "<preview-origin>/designer/build.html?assembly=robot&snapshot=robot-wip-540056ba4e59&chapter=r-leg&step=r-hip#assembly"
+        },
+        {
+          "kind": "main-frame-navigation",
+          "at": "2026-11-10T18:33:29.506Z",
+          "url": "<preview-origin>/designer/build.html?assembly=robot&snapshot=robot-wip-540056ba4e59&chapter=r-leg&step=r-upper#assembly"
+        },
+        {
+          "kind": "main-frame-navigation",
+          "at": "2026-11-10T18:33:29.506Z",
+          "url": "<preview-origin>/designer/build.html?assembly=robot&snapshot=robot-wip-540056ba4e59&chapter=r-leg&step=r-upper#assembly"
+        },
+        {
+          "kind": "main-frame-navigation",
+          "at": "2026-11-10T18:33:29.602Z",
+          "url": "<preview-origin>/designer/build.html?assembly=robot&snapshot=robot-wip-540056ba4e59&chapter=r-leg&step=r-front-knee#assembly"
+        },
+        {
+          "kind": "main-frame-navigation",
+          "at": "2026-11-10T18:33:29.602Z",
+          "url": "<preview-origin>/designer/build.html?assembly=robot&snapshot=robot-wip-540056ba4e59&chapter=r-leg&step=r-front-knee#assembly"
+        },
+        {
+          "kind": "main-frame-navigation",
+          "at": "2026-11-10T18:33:29.721Z",
+          "url": "<preview-origin>/designer/build.html?assembly=robot&snapshot=robot-wip-540056ba4e59&chapter=r-leg&step=r-rear-knee#assembly"
+        },
+        {
+          "kind": "main-frame-navigation",
+          "at": "2026-11-10T18:33:29.721Z",
+          "url": "<preview-origin>/designer/build.html?assembly=robot&snapshot=robot-wip-540056ba4e59&chapter=r-leg&step=r-rear-knee#assembly"
+        },
+        {
+          "kind": "main-frame-navigation",
+          "at": "2026-11-10T18:33:29.841Z",
+          "url": "<preview-origin>/designer/build.html?assembly=robot&snapshot=robot-wip-540056ba4e59&chapter=r-leg&step=r-apex#assembly"
+        },
+        {
+          "kind": "main-frame-navigation",
+          "at": "2026-11-10T18:33:29.841Z",
+          "url": "<preview-origin>/designer/build.html?assembly=robot&snapshot=robot-wip-540056ba4e59&chapter=r-leg&step=r-apex#assembly"
+        },
+        {
+          "kind": "main-frame-navigation",
+          "at": "2026-11-10T18:33:29.888Z",
+          "url": "<preview-origin>/designer/build.html?assembly=robot&snapshot=robot-wip-540056ba4e59&chapter=r-leg&step=r-wheel#assembly"
+        },
+        {
+          "kind": "main-frame-navigation",
+          "at": "2026-11-10T18:33:29.888Z",
+          "url": "<preview-origin>/designer/build.html?assembly=robot&snapshot=robot-wip-540056ba4e59&chapter=r-leg&step=r-wheel#assembly"
+        },
+        {
+          "kind": "main-frame-navigation",
+          "at": "2026-11-10T18:33:29.958Z",
+          "url": "<preview-origin>/designer/build.html?assembly=robot&snapshot=robot-wip-540056ba4e59&chapter=r-leg&step=r-stops#assembly"
+        },
+        {
+          "kind": "main-frame-navigation",
+          "at": "2026-11-10T18:33:29.958Z",
+          "url": "<preview-origin>/designer/build.html?assembly=robot&snapshot=robot-wip-540056ba4e59&chapter=r-leg&step=r-stops#assembly"
+        },
+        {
+          "kind": "main-frame-navigation",
+          "at": "2026-11-10T18:33:30.049Z",
+          "url": "<preview-origin>/designer/build.html?assembly=robot&snapshot=robot-wip-540056ba4e59&chapter=body&step=body-compute#assembly"
+        },
+        {
+          "kind": "main-frame-navigation",
+          "at": "2026-11-10T18:33:30.050Z",
+          "url": "<preview-origin>/designer/build.html?assembly=robot&snapshot=robot-wip-540056ba4e59&chapter=body&step=body-compute#assembly"
+        },
+        {
+          "kind": "main-frame-navigation",
+          "at": "2026-11-10T18:33:30.375Z",
+          "url": "<preview-origin>/designer/build.html?assembly=robot&snapshot=robot-wip-540056ba4e59&chapter=body&step=body-power#assembly"
+        },
+        {
+          "kind": "main-frame-navigation",
+          "at": "2026-11-10T18:33:30.375Z",
+          "url": "<preview-origin>/designer/build.html?assembly=robot&snapshot=robot-wip-540056ba4e59&chapter=body&step=body-power#assembly"
+        },
+        {
+          "kind": "main-frame-navigation",
+          "at": "2026-11-10T18:33:30.573Z",
+          "url": "<preview-origin>/designer/build.html?assembly=robot&snapshot=robot-wip-540056ba4e59&chapter=body&step=body-deck#assembly"
+        },
+        {
+          "kind": "main-frame-navigation",
+          "at": "2026-11-10T18:33:30.573Z",
+          "url": "<preview-origin>/designer/build.html?assembly=robot&snapshot=robot-wip-540056ba4e59&chapter=body&step=body-deck#assembly"
+        },
+        {
+          "kind": "main-frame-navigation",
+          "at": "2026-11-10T18:33:30.681Z",
+          "url": "<preview-origin>/designer/build.html?assembly=robot&snapshot=robot-wip-540056ba4e59&chapter=body&step=body-covers#assembly"
+        },
+        {
+          "kind": "main-frame-navigation",
+          "at": "2026-11-10T18:33:30.681Z",
+          "url": "<preview-origin>/designer/build.html?assembly=robot&snapshot=robot-wip-540056ba4e59&chapter=body&step=body-covers#assembly"
+        },
+        {
+          "kind": "main-frame-navigation",
+          "at": "2026-11-10T18:33:30.888Z",
+          "url": "<preview-origin>/designer/build.html?assembly=robot&snapshot=robot-wip-540056ba4e59&chapter=body&step=body-spine#assembly"
+        },
+        {
+          "kind": "main-frame-navigation",
+          "at": "2026-11-10T18:33:30.888Z",
+          "url": "<preview-origin>/designer/build.html?assembly=robot&snapshot=robot-wip-540056ba4e59&chapter=body&step=body-spine#assembly"
+        },
+        {
+          "kind": "main-frame-navigation",
+          "at": "2026-11-10T18:33:31.174Z",
+          "url": "<preview-origin>/designer/build.html?assembly=robot&snapshot=robot-wip-540056ba4e59&chapter=overview&step=overview#assembly"
+        },
+        {
+          "kind": "main-frame-navigation",
+          "at": "2026-11-10T18:33:31.175Z",
+          "url": "<preview-origin>/designer/build.html?assembly=robot&snapshot=robot-wip-540056ba4e59&chapter=overview&step=overview#assembly"
+        },
+        {
+          "kind": "main-frame-navigation",
+          "at": "2026-11-10T18:33:31.594Z",
+          "url": "<preview-origin>/designer/build.html?assembly=robot&snapshot=robot-wip-540056ba4e59&chapter=l-leg&step=l-wheel#assembly"
+        },
+        {
+          "kind": "main-frame-navigation",
+          "at": "2026-11-10T18:33:31.594Z",
+          "url": "<preview-origin>/designer/build.html?assembly=robot&snapshot=robot-wip-540056ba4e59&chapter=l-leg&step=l-wheel#assembly"
+        },
+        {
+          "kind": "document-observed",
+          "label": "before late-wheel sample",
+          "at": "2026-11-10T18:33:33.019Z",
+          "token": "61720dce-e631-4226-bfd6-f826b3551c4a",
+          "url": "<preview-origin>/designer/build.html?assembly=robot&snapshot=robot-wip-540056ba4e59&chapter=l-leg&step=l-wheel#assembly",
+          "readyState": "complete",
+          "visibility": "visible",
+          "focus": true
+        },
+        {
+          "kind": "document-observed",
+          "label": "after late-wheel sample",
+          "at": "2026-11-10T18:33:33.636Z",
+          "token": "61720dce-e631-4226-bfd6-f826b3551c4a",
+          "url": "<preview-origin>/designer/build.html?assembly=robot&snapshot=robot-wip-540056ba4e59&chapter=l-leg&step=l-wheel#assembly",
+          "readyState": "complete",
+          "visibility": "visible",
+          "focus": true
+        },
+        {
+          "kind": "main-frame-navigation",
+          "at": "2026-11-10T18:33:34.519Z",
+          "url": "<preview-origin>/designer/build.html?assembly=robot&snapshot=robot-wip-540056ba4e59&chapter=l-leg&step=l-motors#assembly"
+        },
+        {
+          "kind": "main-frame-navigation",
+          "at": "2026-11-10T18:33:34.519Z",
+          "url": "<preview-origin>/designer/build.html?assembly=robot&snapshot=robot-wip-540056ba4e59&chapter=l-leg&step=l-motors#assembly"
+        },
+        {
+          "kind": "document-observed",
+          "label": "before arrival L.motor_front",
+          "at": "2026-11-10T18:33:34.538Z",
+          "token": "61720dce-e631-4226-bfd6-f826b3551c4a",
+          "url": "<preview-origin>/designer/build.html?assembly=robot&snapshot=robot-wip-540056ba4e59&chapter=l-leg&step=l-motors#assembly",
+          "readyState": "complete",
+          "visibility": "visible",
+          "focus": true
+        },
+        {
+          "kind": "document-observed",
+          "label": "after arrival L.motor_front",
+          "at": "2026-11-10T18:33:34.802Z",
+          "token": "61720dce-e631-4226-bfd6-f826b3551c4a",
+          "url": "<preview-origin>/designer/build.html?assembly=robot&snapshot=robot-wip-540056ba4e59&chapter=l-leg&step=l-motors#assembly",
+          "readyState": "complete",
+          "visibility": "visible",
+          "focus": true
+        },
+        {
+          "kind": "main-frame-navigation",
+          "at": "2026-11-10T18:33:34.993Z",
+          "url": "<preview-origin>/designer/build.html?assembly=robot&snapshot=robot-wip-540056ba4e59&chapter=l-leg&step=l-upper#assembly"
+        },
+        {
+          "kind": "main-frame-navigation",
+          "at": "2026-11-10T18:33:34.993Z",
+          "url": "<preview-origin>/designer/build.html?assembly=robot&snapshot=robot-wip-540056ba4e59&chapter=l-leg&step=l-upper#assembly"
+        },
+        {
+          "kind": "document-observed",
+          "label": "before arrival L.screws_outputs",
+          "at": "2026-11-10T18:33:35.014Z",
+          "token": "61720dce-e631-4226-bfd6-f826b3551c4a",
+          "url": "<preview-origin>/designer/build.html?assembly=robot&snapshot=robot-wip-540056ba4e59&chapter=l-leg&step=l-upper#assembly",
+          "readyState": "complete",
+          "visibility": "visible",
+          "focus": true
+        },
+        {
+          "kind": "document-observed",
+          "label": "after arrival L.screws_outputs",
+          "at": "2026-11-10T18:33:35.338Z",
+          "token": "61720dce-e631-4226-bfd6-f826b3551c4a",
+          "url": "<preview-origin>/designer/build.html?assembly=robot&snapshot=robot-wip-540056ba4e59&chapter=l-leg&step=l-upper#assembly",
+          "readyState": "complete",
+          "visibility": "visible",
+          "focus": true
+        },
+        {
+          "kind": "main-frame-navigation",
+          "at": "2026-11-10T18:33:35.592Z",
+          "url": "<preview-origin>/designer/build.html?assembly=robot&snapshot=robot-wip-540056ba4e59&chapter=l-leg&step=l-wheel#assembly"
+        },
+        {
+          "kind": "main-frame-navigation",
+          "at": "2026-11-10T18:33:35.593Z",
+          "url": "<preview-origin>/designer/build.html?assembly=robot&snapshot=robot-wip-540056ba4e59&chapter=l-leg&step=l-wheel#assembly"
+        },
+        {
+          "kind": "document-observed",
+          "label": "before arrival L.washers_wheel",
+          "at": "2026-11-10T18:33:35.808Z",
+          "token": "61720dce-e631-4226-bfd6-f826b3551c4a",
+          "url": "<preview-origin>/designer/build.html?assembly=robot&snapshot=robot-wip-540056ba4e59&chapter=l-leg&step=l-wheel#assembly",
+          "readyState": "complete",
+          "visibility": "visible",
+          "focus": true
+        },
+        {
+          "kind": "document-observed",
+          "label": "after arrival L.washers_wheel",
+          "at": "2026-11-10T18:33:35.991Z",
+          "token": "61720dce-e631-4226-bfd6-f826b3551c4a",
+          "url": "<preview-origin>/designer/build.html?assembly=robot&snapshot=robot-wip-540056ba4e59&chapter=l-leg&step=l-wheel#assembly",
+          "readyState": "complete",
+          "visibility": "visible",
+          "focus": true
+        },
+        {
+          "kind": "main-frame-navigation",
+          "at": "2026-11-10T18:33:36.432Z",
+          "url": "<preview-origin>/designer/build.html?assembly=robot&snapshot=robot-wip-540056ba4e59&chapter=l-leg&step=l-wheel#assembly"
+        },
+        {
+          "kind": "main-frame-navigation",
+          "at": "2026-11-10T18:33:36.432Z",
+          "url": "<preview-origin>/designer/build.html?assembly=robot&snapshot=robot-wip-540056ba4e59&chapter=l-leg&step=l-wheel#assembly"
+        },
+        {
+          "kind": "document-observed",
+          "label": "before arrival L.screws_wheel",
+          "at": "2026-11-10T18:33:36.455Z",
+          "token": "61720dce-e631-4226-bfd6-f826b3551c4a",
+          "url": "<preview-origin>/designer/build.html?assembly=robot&snapshot=robot-wip-540056ba4e59&chapter=l-leg&step=l-wheel#assembly",
+          "readyState": "complete",
+          "visibility": "visible",
+          "focus": true
+        },
+        {
+          "kind": "document-observed",
+          "label": "after arrival L.screws_wheel",
+          "at": "2026-11-10T18:33:36.857Z",
+          "token": "61720dce-e631-4226-bfd6-f826b3551c4a",
+          "url": "<preview-origin>/designer/build.html?assembly=robot&snapshot=robot-wip-540056ba4e59&chapter=l-leg&step=l-wheel#assembly",
+          "readyState": "complete",
+          "visibility": "visible",
+          "focus": true
+        },
+        {
+          "kind": "main-frame-navigation",
+          "at": "2026-11-10T18:33:37.144Z",
+          "url": "<preview-origin>/designer/build.html?assembly=robot&snapshot=robot-wip-540056ba4e59&chapter=r-leg&step=r-motors#assembly"
+        },
+        {
+          "kind": "main-frame-navigation",
+          "at": "2026-11-10T18:33:37.144Z",
+          "url": "<preview-origin>/designer/build.html?assembly=robot&snapshot=robot-wip-540056ba4e59&chapter=r-leg&step=r-motors#assembly"
+        },
+        {
+          "kind": "document-observed",
+          "label": "before arrival R.motor_front",
+          "at": "2026-11-10T18:33:37.163Z",
+          "token": "61720dce-e631-4226-bfd6-f826b3551c4a",
+          "url": "<preview-origin>/designer/build.html?assembly=robot&snapshot=robot-wip-540056ba4e59&chapter=r-leg&step=r-motors#assembly",
+          "readyState": "complete",
+          "visibility": "visible",
+          "focus": true
+        },
+        {
+          "kind": "document-observed",
+          "label": "after arrival R.motor_front",
+          "at": "2026-11-10T18:33:37.410Z",
+          "token": "61720dce-e631-4226-bfd6-f826b3551c4a",
+          "url": "<preview-origin>/designer/build.html?assembly=robot&snapshot=robot-wip-540056ba4e59&chapter=r-leg&step=r-motors#assembly",
+          "readyState": "complete",
+          "visibility": "visible",
+          "focus": true
+        },
+        {
+          "kind": "main-frame-navigation",
+          "at": "2026-11-10T18:33:37.705Z",
+          "url": "<preview-origin>/designer/build.html?assembly=robot&snapshot=robot-wip-540056ba4e59&chapter=r-leg&step=r-upper#assembly"
+        },
+        {
+          "kind": "main-frame-navigation",
+          "at": "2026-11-10T18:33:37.706Z",
+          "url": "<preview-origin>/designer/build.html?assembly=robot&snapshot=robot-wip-540056ba4e59&chapter=r-leg&step=r-upper#assembly"
+        },
+        {
+          "kind": "document-observed",
+          "label": "before arrival R.screws_outputs",
+          "at": "2026-11-10T18:33:37.983Z",
+          "token": "61720dce-e631-4226-bfd6-f826b3551c4a",
+          "url": "<preview-origin>/designer/build.html?assembly=robot&snapshot=robot-wip-540056ba4e59&chapter=r-leg&step=r-upper#assembly",
+          "readyState": "complete",
+          "visibility": "visible",
+          "focus": true
+        },
+        {
+          "kind": "document-observed",
+          "label": "after arrival R.screws_outputs",
+          "at": "2026-11-10T18:33:38.363Z",
+          "token": "61720dce-e631-4226-bfd6-f826b3551c4a",
+          "url": "<preview-origin>/designer/build.html?assembly=robot&snapshot=robot-wip-540056ba4e59&chapter=r-leg&step=r-upper#assembly",
+          "readyState": "complete",
+          "visibility": "visible",
+          "focus": true
+        },
+        {
+          "kind": "main-frame-navigation",
+          "at": "2026-11-10T18:33:38.648Z",
+          "url": "<preview-origin>/designer/build.html?assembly=robot&snapshot=robot-wip-540056ba4e59&chapter=r-leg&step=r-wheel#assembly"
+        },
+        {
+          "kind": "main-frame-navigation",
+          "at": "2026-11-10T18:33:38.648Z",
+          "url": "<preview-origin>/designer/build.html?assembly=robot&snapshot=robot-wip-540056ba4e59&chapter=r-leg&step=r-wheel#assembly"
+        },
+        {
+          "kind": "document-observed",
+          "label": "before arrival R.washers_wheel",
+          "at": "2026-11-10T18:33:38.683Z",
+          "token": "61720dce-e631-4226-bfd6-f826b3551c4a",
+          "url": "<preview-origin>/designer/build.html?assembly=robot&snapshot=robot-wip-540056ba4e59&chapter=r-leg&step=r-wheel#assembly",
+          "readyState": "complete",
+          "visibility": "visible",
+          "focus": true
+        },
+        {
+          "kind": "document-observed",
+          "label": "after arrival R.washers_wheel",
+          "at": "2026-11-10T18:33:39.149Z",
+          "token": "61720dce-e631-4226-bfd6-f826b3551c4a",
+          "url": "<preview-origin>/designer/build.html?assembly=robot&snapshot=robot-wip-540056ba4e59&chapter=r-leg&step=r-wheel#assembly",
+          "readyState": "complete",
+          "visibility": "visible",
+          "focus": true
+        },
+        {
+          "kind": "main-frame-navigation",
+          "at": "2026-11-10T18:33:39.483Z",
+          "url": "<preview-origin>/designer/build.html?assembly=robot&snapshot=robot-wip-540056ba4e59&chapter=r-leg&step=r-wheel#assembly"
+        },
+        {
+          "kind": "main-frame-navigation",
+          "at": "2026-11-10T18:33:39.483Z",
+          "url": "<preview-origin>/designer/build.html?assembly=robot&snapshot=robot-wip-540056ba4e59&chapter=r-leg&step=r-wheel#assembly"
+        },
+        {
+          "kind": "document-observed",
+          "label": "before arrival R.screws_wheel",
+          "at": "2026-11-10T18:33:39.506Z",
+          "token": "61720dce-e631-4226-bfd6-f826b3551c4a",
+          "url": "<preview-origin>/designer/build.html?assembly=robot&snapshot=robot-wip-540056ba4e59&chapter=r-leg&step=r-wheel#assembly",
+          "readyState": "complete",
+          "visibility": "visible",
+          "focus": true
+        },
+        {
+          "kind": "document-observed",
+          "label": "after arrival R.screws_wheel",
+          "at": "2026-11-10T18:33:40.019Z",
+          "token": "61720dce-e631-4226-bfd6-f826b3551c4a",
+          "url": "<preview-origin>/designer/build.html?assembly=robot&snapshot=robot-wip-540056ba4e59&chapter=r-leg&step=r-wheel#assembly",
+          "readyState": "complete",
+          "visibility": "visible",
+          "focus": true
+        },
+        {
+          "kind": "document-observed",
+          "label": "playback disposed",
+          "at": "2026-11-10T18:33:42.379Z",
+          "token": "61720dce-e631-4226-bfd6-f826b3551c4a",
+          "url": "<preview-origin>/designer/build.html?assembly=robot&snapshot=robot-wip-540056ba4e59&chapter=r-leg&step=r-wheel#assembly",
+          "readyState": "complete",
+          "visibility": "visible",
+          "focus": true
+        }
+      ],
+      "totalEvents": 75
+    }
+  ],
+  "errors": []
+}

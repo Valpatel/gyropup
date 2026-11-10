@@ -1,0 +1,51 @@
+{
+  "date": "2026-11-10",
+  "source_parent": "a9f2f361d0cc6016caf964a7654cd2d0fd36001d",
+  "qualification": "Actual local staged source/harness hashes, not immutable final-commit build. Built version a9 remains recorded in reports. Normal final-head pinned-image CI still required.",
+  "source_files_sha256": {
+    "software/site/designer/character/talk-demo.html": "f146faa8232e2e8e2e0b9cdc783c72a2e9ba75feda425045f4a0620357dacdc7",
+    "tests/site/assembly/test-build-workspace.mjs": "91f92e47eac08d61372db09014da641263f2a804bc3cb833c4964596131c5a59",
+    "tests/site/controls/test-audio-settings.mjs": "4a4aec4c28468a4118cefa3224e0b838d0553e2fe1e543a40177ca25b690f7a6"
+  },
+  "original_a9_files_sha256": {
+    "software/site/designer/character/talk-demo.html": "243aed9b776339bcdd670e6583841b28f0d17e63cd48089b25f0310f71de8ab2",
+    "tests/site/assembly/test-build-workspace.mjs": "bff08f966c251cdcacd164101701a1a19e04735d663a9612afd61dc367d4f12a",
+    "tests/site/controls/test-audio-settings.mjs": "ecbbd7e6ca3a3f2d706a34ead56b2c7e1cd1e0252a57daf4a52c75dab7707539"
+  },
+  "unchanged_imported_files_sha256": {
+    "software/site/designer/kit/viewer.js": "5b2661e46e638ec15ca45b8814c235c00eb99e49e8416ec712ee5ff6b93d221b",
+    "software/site/designer/kit/assembly/playback.js": "7c840161460b3963a5cb979319c5b82e6a7979949763b51e4f95478187dea6ba"
+  },
+  "served_talk_demo_sha256": "a18bc32f133893c9b53e45b3cd75742158100e867ecbf779a5af00f3423b94cf",
+  "local_engines": {
+    "chromium": "NativeChrome151.0.7922.71 via existing installation",
+    "webkit": "ExistingPlaywright1.56.1 WebKit2215 cache"
+  },
+  "first_campaign": {
+    "log_sha256": "fdde75df2b8487ebd5896efb5c29afdefbc81279b8741cb9d05c49b87376ca32",
+    "playback": "Both engines pass full8x16 arrival checks, document identity and existing lifecycle assertions",
+    "audio": "Chrome passes first clock setup; WebKit rejects pause-at-past before talk navigation"
+  },
+  "webkit_audio_successor": {
+    "log_sha256": "1f7bdc12e9b8651478021acb2f7a05a0da01bcc5b5933ccf890cad430f2f9d58",
+    "scope": "Only failed audio scope after future-boundary clock setup correction",
+    "pass": true,
+    "deadline_advanced_ms": 400,
+    "greeting_does_not_cancel_answer": true
+  },
+  "greeting_control": {
+    "before": {
+      "actual_answer_cancelled": true,
+      "receipt": "audio-greeting-before.json"
+    },
+    "after": {
+      "actual_answer_preserved": true,
+      "receipt": "audio-greeting-after.json"
+    },
+    "speech_adapter": "Explicit existing browser synthesis double; real page/module/timer, no real voice hardware"
+  },
+  "geometry_changed": false,
+  "imported_player_changed": false,
+  "cad_queries": 0,
+  "no_retries_or_timeout_extensions": true
+}
