@@ -13,6 +13,14 @@ downstream action cannot prove that a missing-module fixture ran.
 
 Limits: this is a conservative literal-reference check, not a JavaScript parser or a complete dependency graph. Computed imports, escaped/template expressions, inline HTML scripts, runtime fetches and dynamically inserted CSS still need build/browser validation. A passing module check does not establish that every application feature works.
 
+Generated HTML downloads need explicit closing `head` and `body` tags, even
+when a browser would infer them. On 2026-11-10, the Robot guide fallback omitted
+them and ordinary build run 42780003951 stopped at `build-site.mjs:186` with
+`Cannot add prototype notice to web/build-guides/robot-wip-540056ba4e59/instructions.html`.
+The authored exporter now emits the complete document; regenerate its immutable
+fallbacks and run the real build. Do not bypass prototype injection or classify
+this build refusal as a browser/geometry failure.
+
 Asset copying and human document discovery are separate. Tracked `hardware/` Markdown joins `docs/` and `research/` in the notebook; keep instruction/handoff exclusions consistent. Render source-relative links into the published page set and verify original CAD downloads remain byte-identical. Large-format vector drawings need a responsive page preview; their native paper dimensions are not a phone layout. See [engineering publication checks](../inbox/2026-10-29-downloadable-cad-notes-still-need-a-usable-portal.md).
 
 ## Verify the actual publication

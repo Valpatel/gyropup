@@ -59,9 +59,9 @@ def plain(guide):
     for i,step in enumerate(guide['steps'],1):
         items=''.join('<li>'+escape(r['title'])+' ×'+str(r['quantity'])+' modeled instances</li>' for r in guide['source']['requirements_by_step'][step['id']])
         sections.append('<section id="'+step['id']+'"><h2>'+str(i)+'. '+escape(step['title'])+'</h2><p>'+escape(step['text'])+'</p><ul>'+items+'</ul></section>')
-    return ('<!doctype html><html lang="en"><meta charset="utf-8"><meta name="viewport" content="width=device-width">'
+    return ('<!doctype html><html lang="en"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width">'
             '<title>Robot assembly · educational WIP</title><style>body{max-width:760px;margin:24px auto;padding:0 16px;font:16px/1.6 system-ui}section{margin:32px 0}</style>'
-            '<main><h1>'+escape(guide['snapshot']['id'])+'</h1><p>'+escape(guide['source']['qualification'])+'</p>'+''.join(sections)+'</main></html>') .encode()
+            '</head><body><main><h1>'+escape(guide['snapshot']['id'])+'</h1><p>'+escape(guide['source']['qualification'])+'</p>'+''.join(sections)+'</main></body></html>') .encode()
 
 
 def generate(collection,folder,recipe_sha256,bom_hashes,collection_sha256,manufacturing):
