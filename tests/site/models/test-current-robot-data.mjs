@@ -19,6 +19,7 @@ const {buildRobotV2}=await import('../../../software/site/designer/robot_v2.js')
 const {robotIdentity}=await import('../../../software/site/designer/robot_identity.js');
 const sha=bytes=>createHash('sha256').update(bytes).digest('hex');
 const encode=value=>Buffer.from(JSON.stringify(value));
+const motionPlan=JSON.parse(await readFile(new URL('tests/fixtures/current-robot-motion-plan.json',root)));
 
 function tetra(y=0){
   const p=[[0,y,0],[2,y,0],[0,y+3,0],[0,y,4]],triangles=[[0,2,1],[0,1,3],[0,3,2],[1,2,3]];
@@ -72,7 +73,9 @@ test('actual builder owns complete fixture, uses the live solver, and resets fir
   try{
     assert.equal(robot.parts.length,224);assert.equal(robot.turret.model.parts.length,62);assert.equal(robot.info.massKg,null);assert.equal(robot.info.homeLegMM,300);
     const home=robot.setPose({legMM:300});assert.equal(home.legMM,300);assert.equal(robot.base.position.y,.427);
-    for(const [legMM,pitch,rollMM,wheel]of [[185,0,0,0],[375,0,0,0],[300,.1,24,1.2],[250,-.1,-16,-.7]]){
+    assert.ok(motionPlan.live_poses.length>0);assert.ok(Number.isFinite(motionPlan.tolerance_mm)&&motionPlan.tolerance_mm>0);
+    for(const pose of motionPlan.live_poses){
+      const {leg_mm:legMM,roll_mm:rollMM}=pose,pitch=pose.pitch_deg*Math.PI/180,wheel=pose.wheel_deg*Math.PI/180;
       const state=robot.setPose({legMM,pitch,rollMM,wheel});assert.ok(Number.isFinite(state.hipHeightMM));
       assert.equal(robot.owners['L.wheel'].rotation.x,wheel);assert.equal(robot.owners['R.wheel'].rotation.x,-wheel);
       const expected=fiveBar(150,150,250).ik((legMM+rollMM/2)*Math.sin(pitch),-(legMM+rollMM/2)*Math.cos(pitch));
