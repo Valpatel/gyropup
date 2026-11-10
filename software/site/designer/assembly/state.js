@@ -18,11 +18,14 @@ export function validateIndex(index){
  }
  return index;
 }
-export function progressKey(guide){return `gyropup.assembly.${guide.snapshot.id}.${guide.model.sha256}`;}
-export function readProgress(storage,guide){
- try{const x=JSON.parse(storage.getItem(progressKey(guide))||'[]');return new Set(Array.isArray(x)?x.filter(id=>guide.steps.some(s=>s.id===id)):[]);}catch{return new Set();}
+export function progressKey(guide,guideHash){
+ if(!/^[0-9a-f]{64}$/.test(guideHash||''))throw new Error('Completion needs the exact guide digest.');
+ return `gyropup.assembly.${guide.snapshot.id}.${guideHash}`;
 }
-export function saveProgress(storage,guide,done){storage.setItem(progressKey(guide),JSON.stringify([...done].filter(id=>guide.steps.some(s=>s.id===id))));}
+export function readProgress(storage,guide,guideHash){
+ try{const x=JSON.parse(storage.getItem(progressKey(guide,guideHash))||'[]');return new Set(Array.isArray(x)?x.filter(id=>guide.steps.some(s=>s.id===id)):[]);}catch{return new Set();}
+}
+export function saveProgress(storage,guide,done,guideHash){storage.setItem(progressKey(guide,guideHash),JSON.stringify([...done].filter(id=>guide.steps.some(s=>s.id===id))));}
 export function writeLocation(location,history,guide,step){
  const url=new URL(location.href);url.searchParams.set('snapshot',guide.snapshot.id);url.searchParams.set('chapter',step.subassembly);url.searchParams.set('step',step.id);url.hash='assembly';history.replaceState(null,'',url);
 }

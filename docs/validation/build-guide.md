@@ -9,9 +9,10 @@ contract will be linked here at the accepted source revision before publication.
 
 The current turret recipe, original manifest and BOM are pinned to immutable
 source `4866459e2abdb6c7f5f25e9448156b6615593499`. The exporter reads the existing
-literal STEPS without executing a CAD module. Sixty modeled instances cover the
-53 logical recipe additions and five explicitly associated modeled fittings;
-robot-only bumper and future dock flap remain excluded with reasons. Original
+literal STEPS without executing a CAD module. Fifty-five modeled instances cover the 53 logical recipe additions. Five
+additional modeled fittings have no explicit mesh placement in that recipe and
+remain declared unplaced context; the robot-only bumper and future dock flap
+are also excluded with reasons. No fitting is silently assigned to an operation. Original
 triangle topology and normals are preserved; the existing zero-angle hierarchy
 is translated once to assembled CAD mm/z-up with TM face at the origin. Guide
 offsets never alter those baseline vertices. No new geometry or manufacturing

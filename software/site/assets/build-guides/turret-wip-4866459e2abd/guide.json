@@ -8,7 +8,7 @@
   },
   "model": {
     "file": "view.json",
-    "sha256": "87f294fdccca66f9cf0881168c8ac51d017faa0f6fdadfddd4ee7e82fef16c34"
+    "sha256": "a1b0827d2526e637dfb129c1f87fb8feb95e45a3de4d8429506662daf3716c11"
   },
   "source": {
     "inputs": {
@@ -37,7 +37,6 @@
       "hardware/exports/sim/turret_box/ring_carrier.stl": "d59b82fe55f3651d4a876b65159f858df32931d8337c4dc140056d948a538976",
       "hardware/exports/sim/turret_box/ring_driver.stl": "7fecea689680baaef9812fb0dbc98438600f5f4096dc5e3d455c7c82b4c52e3e",
       "hardware/exports/sim/turret_box/board_bay.stl": "667e34b614bad21f56378680f3ab7e60350056394fc1002fb330d4be2e901282",
-      "hardware/exports/sim/turret_box/board_bay_lid.stl": "bfe64593cd0061e37e6074e4d83aabe23dcf36a270b31aa7123fa6f24edc7482",
       "hardware/exports/sim/turret_box/pan_servo.stl": "31eee127b22aee6e8ea7c0e60f98be21fac42e26953df44fd439fd1291b5dce7",
       "hardware/exports/sim/turret_box/pan_bearing.stl": "2d21384bedc5d34882c3047b69ac6192b19c7fd011450336fd4e5fa3b3945322",
       "hardware/exports/sim/turret_box/pan_bearing_inner.stl": "5781f47a620e882dbca51662ef8be79923b37b425e2ede04054e0b11b76e08db",
@@ -59,7 +58,6 @@
       "hardware/exports/sim/turret_box/index_magnet.stl": "b7fdf5248c405ca731dce2e55072904833e5164a50ccb2af0c261107a1582228",
       "hardware/exports/sim/turret_box/hall_switch.stl": "7080d0d027e32403a036b13a2aceafb31fd228a7bf2240c1e736a771d931d95a",
       "hardware/exports/sim/turret_box/dt_receptacle.stl": "0e436b19a1c1dabd5605a3744760b4f7a16f8bff160cd067c66643dcd94773af",
-      "hardware/exports/sim/turret_box/dt_plug.stl": "ebfbd7c35f242e6d8a123b8b6c9e0be10f66a9a45400d13a746c44c8172ec64f",
       "hardware/exports/sim/turret_box/tilt_servo.stl": "12a10874ac27721475d08ba9bc6463fd07f74d7bc506a84a2c0d35a0e45adca8",
       "hardware/exports/sim/turret_box/tilt_bearing.stl": "9bb667ae3e0ddff782cfb196e31dc97614ac69709d1d3120882d58c4f14330a0",
       "hardware/exports/sim/turret_box/tilt_bearing_inner.stl": "0055271dd6db32546c315d669cac48ed536d45d330aaa8fc8be121e250728b65",
@@ -71,12 +69,9 @@
       "hardware/exports/sim/turret_box/esc_r.stl": "b60dbd3221adb253c7dc6f8ca51da6bbb939e93ce1a75c4aeb649cef2cd6f1c1",
       "hardware/exports/sim/turret_box/feed_motor.stl": "36c7235730be59cace50c6206327f7a2ee7734f34b7569dd6ad8db2e107c5e0d",
       "hardware/exports/sim/turret_box/ct_thumbscrew.stl": "a37acd10de534137dd999285af8f271a66df067d04518870d5e88fe926fc72d2",
-      "hardware/exports/sim/turret_box/laser.stl": "1089a49df5814bb8b564f92d912394abfac1146737e0370b7e9ab85b64f39387",
-      "hardware/exports/sim/turret_box/laser_screws.stl": "2286a1a86fa2524f1edee276e1fc5506425a6e49d3516ce8196262c759b69262",
-      "hardware/exports/sim/turret_box/laser_inserts.stl": "b6ee5a71c3e91f15e123a2ff51fdb4f7c6bed0e82b75aa94ae323a94b1b6057a",
-      "hardware/exports/sim/turret_box/hopper_inserts.stl": "dc4851af1a041a5967819d8f77f49cb98e83e2cfa577a40fe26ad906c43493d7"
+      "hardware/exports/sim/turret_box/laser.stl": "1089a49df5814bb8b564f92d912394abfac1146737e0370b7e9ab85b64f39387"
     },
-    "converter_sha256": "8ba3836336291df4b107e02690a7877c5db5f358cf9b01c50171d296bab0f2bd",
+    "converter_sha256": "b46cb50beac8b17f1a1d063d1014dcb1a60edad622f16ed038d8fd0fecf9b1c9",
     "requirements_by_step": {
       "step-01": [
         {
@@ -410,15 +405,6 @@
               "qty": 3
             }
           ]
-        },
-        {
-          "part": "board_bay_lid",
-          "title": "Board bay lid",
-          "instances": [
-            "board_bay_lid"
-          ],
-          "quantity": 1,
-          "catalogue": []
         }
       ],
       "step-08": [
@@ -580,24 +566,6 @@
               "qty": 1
             }
           ]
-        },
-        {
-          "part": "laser_screws",
-          "title": "Boresight screws",
-          "instances": [
-            "laser_screws"
-          ],
-          "quantity": 1,
-          "catalogue": []
-        },
-        {
-          "part": "laser_inserts",
-          "title": "laser inserts",
-          "instances": [
-            "laser_inserts"
-          ],
-          "quantity": 1,
-          "catalogue": []
         }
       ],
       "step-10": [
@@ -763,15 +731,6 @@
           ],
           "quantity": 1,
           "catalogue": []
-        },
-        {
-          "part": "hopper_inserts",
-          "title": "hopper inserts",
-          "instances": [
-            "hopper_inserts"
-          ],
-          "quantity": 1,
-          "catalogue": []
         }
       ],
       "step-12": [
@@ -790,22 +749,6 @@
               "qty": 1
             }
           ]
-        },
-        {
-          "part": "dt_plug",
-          "title": "DT12 plug",
-          "instances": [
-            "dt_plug"
-          ],
-          "quantity": 1,
-          "catalogue": [
-            {
-              "key": "te-dt06-12sa-kit",
-              "item": "CONN PLUG HSG 12POS - DT 12-way plug (socket side), key A",
-              "part_number": "DT06-12SA (+ W12S wedge + 12 x 0462-201-16141 sockets)",
-              "qty": 1
-            }
-          ]
         }
       ]
     },
@@ -814,22 +757,12 @@
     "assembly_pose": "Neutral zero joint angles. Original triangle topology/normals retained; translation only.",
     "excluded": {
       "hopper_flap": "Dock refill flap is deferred by the authored recipe.",
-      "bumper_ring": "Robot-only bumper; not the bench turret sequence."
-    },
-    "fittings_by_step": {
-      "7": [
-        "board_bay_lid"
-      ],
-      "9": [
-        "laser_screws",
-        "laser_inserts"
-      ],
-      "11": [
-        "hopper_inserts"
-      ],
-      "12": [
-        "dt_plug"
-      ]
+      "bumper_ring": "Robot-only bumper; not the bench turret sequence.",
+      "board_bay_lid": "No explicit lid installation action in the authored sequence; unplaced context.",
+      "laser_screws": "Named only in prose, not an authored mesh addition; unplaced context.",
+      "laser_inserts": "No explicit mesh installation action in the authored sequence; unplaced context.",
+      "hopper_inserts": "No explicit mesh installation action in the authored sequence; unplaced context.",
+      "dt_plug": "Connection is discussed in prose but has no authored mesh placement; unplaced context."
     },
     "bom": {
       "file": "../../../exports/turret/bench/bom.json",
@@ -890,7 +823,6 @@
         "pivot_spacer",
         "laser_mount",
         "board_bay",
-        "board_bay_lid",
         "cradle_plate_l",
         "cradle_plate_r",
         "stop_lug",
@@ -900,9 +832,7 @@
         "tilt_bearing",
         "tilt_bearing_inner",
         "shoulder_screw",
-        "laser",
-        "laser_screws",
-        "laser_inserts"
+        "laser"
       ]
     },
     {
@@ -918,15 +848,13 @@
         "hopper",
         "hopper_lid",
         "barrel",
-        "dt_plug",
         "flywheel_motor_l",
         "flywheel_motor_r",
         "cartridge_board",
         "esc_l",
         "esc_r",
         "feed_motor",
-        "ct_thumbscrew",
-        "hopper_inserts"
+        "ct_thumbscrew"
       ]
     }
   ],
@@ -1300,14 +1228,12 @@
         "ring_coupling",
         "tilt_yoke",
         "board_bay",
-        "board_bay_lid",
         "ring_leads_rotor",
         "turret_board"
       ],
       "highlight": [
         "tilt_yoke",
         "board_bay",
-        "board_bay_lid",
         "ring_leads_rotor",
         "turret_board"
       ],
@@ -1320,11 +1246,6 @@
         "board_bay": [
           0,
           -40,
-          0
-        ],
-        "board_bay_lid": [
-          0,
-          0,
           0
         ],
         "ring_leads_rotor": [
@@ -1380,7 +1301,6 @@
         "ring_coupling",
         "tilt_yoke",
         "board_bay",
-        "board_bay_lid",
         "ring_leads_rotor",
         "turret_board",
         "cradle",
@@ -1500,7 +1420,6 @@
         "ring_coupling",
         "tilt_yoke",
         "board_bay",
-        "board_bay_lid",
         "ring_leads_rotor",
         "turret_board",
         "cradle",
@@ -1514,15 +1433,11 @@
         "tilt_bearing_inner",
         "shoulder_screw",
         "laser_mount",
-        "laser",
-        "laser_screws",
-        "laser_inserts"
+        "laser"
       ],
       "highlight": [
         "laser_mount",
-        "laser",
-        "laser_screws",
-        "laser_inserts"
+        "laser"
       ],
       "offsets_mm": {
         "laser_mount": [
@@ -1534,16 +1449,6 @@
           0,
           0,
           -30
-        ],
-        "laser_screws": [
-          0,
-          0,
-          0
-        ],
-        "laser_inserts": [
-          0,
-          0,
-          0
         ]
       },
       "text": "The mount on the cradle's tab: 2 x M3 x 10 up through it; the laser in the mount on three nylon-tip M3 set screws (boresight them on the bench).",
@@ -1588,7 +1493,6 @@
         "ring_coupling",
         "tilt_yoke",
         "board_bay",
-        "board_bay_lid",
         "ring_leads_rotor",
         "turret_board",
         "cradle",
@@ -1603,8 +1507,6 @@
         "shoulder_screw",
         "laser_mount",
         "laser",
-        "laser_screws",
-        "laser_inserts",
         "cartridge_body",
         "flywheel",
         "flywheel_m",
@@ -1736,7 +1638,6 @@
         "ring_coupling",
         "tilt_yoke",
         "board_bay",
-        "board_bay_lid",
         "ring_leads_rotor",
         "turret_board",
         "cradle",
@@ -1751,8 +1652,6 @@
         "shoulder_screw",
         "laser_mount",
         "laser",
-        "laser_screws",
-        "laser_inserts",
         "cartridge_body",
         "flywheel",
         "flywheel_m",
@@ -1767,14 +1666,12 @@
         "feed_motor",
         "hopper",
         "hopper_lid",
-        "barrel",
-        "hopper_inserts"
+        "barrel"
       ],
       "highlight": [
         "hopper",
         "hopper_lid",
-        "barrel",
-        "hopper_inserts"
+        "barrel"
       ],
       "offsets_mm": {
         "hopper": [
@@ -1789,11 +1686,6 @@
         ],
         "barrel": [
           40,
-          0,
-          0
-        ],
-        "hopper_inserts": [
-          0,
           0,
           0
         ]
@@ -1840,7 +1732,6 @@
         "ring_coupling",
         "tilt_yoke",
         "board_bay",
-        "board_bay_lid",
         "ring_leads_rotor",
         "turret_board",
         "cradle",
@@ -1855,8 +1746,6 @@
         "shoulder_screw",
         "laser_mount",
         "laser",
-        "laser_screws",
-        "laser_inserts",
         "cartridge_body",
         "flywheel",
         "flywheel_m",
@@ -1872,20 +1761,12 @@
         "hopper",
         "hopper_lid",
         "barrel",
-        "hopper_inserts",
-        "dt_plug",
         "ct_thumbscrew"
       ],
       "highlight": [
-        "dt_plug",
         "ct_thumbscrew"
       ],
       "offsets_mm": {
-        "dt_plug": [
-          0,
-          0,
-          0
-        ],
         "ct_thumbscrew": [
           0,
           0,

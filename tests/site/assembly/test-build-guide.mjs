@@ -13,7 +13,7 @@ async function pageFor(c,url=''){const p=await c.newPage();p.setDefaultTimeout(4
 const state=p=>p.evaluate(()=>{const a=window.__buildGuide.active;return {step:a.step,snapshot:a.guide.snapshot.id,text:document.querySelector('[data-guide-text]').textContent,parts:a.viewer.parts.map(p=>({name:p.name,visible:p.mesh.visible,position:p.mesh.position.toArray(),opacity:p.mesh.material.opacity,wireframe:p.mesh.material.wireframe,emissive:p.mesh.material.emissive?.getHex()}))};});
 try{
  const c=await context({viewport:{width:1280,height:900},reducedMotion:'reduce'}),p=await pageFor(c);const initial=await state(p);
- assert.equal(initial.snapshot,'turret-wip-4866459e2abd');assert.equal(initial.parts.length,60);
+ assert.equal(initial.snapshot,'turret-wip-4866459e2abd');assert.equal(initial.parts.length,55);
  const guide=await p.evaluate(()=>window.__buildGuide.active.guide);
  // Every stage via native navigation, then back: verify actual rendered instance visibility/materials/offsets.
  const captures=new Map();

@@ -19,12 +19,13 @@ SOURCE_COMMIT = '4866459e2abdb6c7f5f25e9448156b6615593499'
 SCENE = 'hardware/exports/sim/turret_box/manifest.json'
 RECIPE = 'hardware/cad/turret/turret_assembly.py'
 BOM = 'hardware/exports/turret/bench/bom.json'
-# These actual modeled fittings accompany the existing authored operation. They
-# do not invent extra mechanical operations or claim unmodelled fasteners exist.
-FITTINGS = {7: ['board_bay_lid'], 9: ['laser_screws', 'laser_inserts'],
-            11: ['hopper_inserts'], 12: ['dt_plug']}
 EXCLUDED = {'hopper_flap': 'Dock refill flap is deferred by the authored recipe.',
-            'bumper_ring': 'Robot-only bumper; not the bench turret sequence.'}
+            'bumper_ring': 'Robot-only bumper; not the bench turret sequence.',
+            'board_bay_lid': 'No explicit lid installation action in the authored sequence; unplaced context.',
+            'laser_screws': 'Named only in prose, not an authored mesh addition; unplaced context.',
+            'laser_inserts': 'No explicit mesh installation action in the authored sequence; unplaced context.',
+            'hopper_inserts': 'No explicit mesh installation action in the authored sequence; unplaced context.',
+            'dt_plug': 'Connection is discussed in prose but has no authored mesh placement; unplaced context.'}
 JOINTS = {'base', 'pan', 'tilt', 'pinion', 'dial', 'wheel_l', 'wheel_r', 'flap'}
 
 
@@ -130,7 +131,7 @@ def generate(root=ROOT):
     scene_data, recipe_data, bom_data = [source_bytes(root, f) for f in (SCENE, RECIPE, BOM)]
     scene, rows, bom = json.loads(scene_data), recipe_rows(recipe_data), json.loads(bom_data)
     outputs, parts, inputs = {}, [], {f: digest(d) for f, d in zip((SCENE, RECIPE, BOM), (scene_data, recipe_data, bom_data))}
-    logical = {n for row in rows for n in row[1]} | {n for names in FITTINGS.values() for n in names}
+    logical = {n for row in rows for n in row[1]}
     entries = [p for p in scene['parts'] if p['group'] in JOINTS]
     if len({p['name'] for p in entries}) != len(entries):
         raise ValueError('Duplicate mesh instance')
@@ -160,7 +161,7 @@ def generate(root=ROOT):
     subassemblies = []
     steps, installed, requirements_by_step = [], [], {}
     for number, (title, adds, lifts, camera, text) in enumerate(rows, 1):
-        required = adds + FITTINGS.get(number, [])
+        required = adds
         missing = set(required) - {p['logical_part'] for p in parts}
         if missing:
             raise ValueError('Recipe has missing meshes: ' + repr(sorted(missing)))
@@ -195,7 +196,7 @@ def generate(root=ROOT):
               'original_scene_producer': '227afbcca70ab616f412ee7a00b119cfff3a0d20',
               'qualification': 'Educational WIP walkthrough. Fit, tightening, feed, laser class and safe operation remain unqualified. No print or fabrication release.',
               'assembly_pose': 'Neutral zero joint angles. Original triangle topology/normals retained; translation only.',
-              'excluded': EXCLUDED, 'fittings_by_step': FITTINGS,
+              'excluded': EXCLUDED,
               'bom': {'file': '../../../exports/turret/bench/bom.json', 'sha256': digest(bom_data)},
               'limits': scene['limits'],
               'instruction_items': 'Fastener quantities/tools/checks are authored in each step text. Mesh envelopes are not proof of fit, thread engagement or tool access.'}

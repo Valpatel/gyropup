@@ -489,28 +489,6 @@
       ]
     },
     {
-      "name": "board_bay_lid",
-      "file": "meshes/board_bay_lid.stl",
-      "color": "#99999e",
-      "sha256": "bfe64593cd0061e37e6074e4d83aabe23dcf36a270b31aa7123fa6f24edc7482",
-      "bounds_mm": [
-        -29.0,
-        -120.0,
-        66.5,
-        29.0,
-        -107.5,
-        132.5
-      ],
-      "logical_part": "board_bay_lid",
-      "title": "Board bay lid",
-      "original_group": "pan",
-      "neutral_translation_mm": [
-        0.0,
-        0.0,
-        0.0
-      ]
-    },
-    {
       "name": "pan_servo",
       "file": "meshes/pan_servo.stl",
       "color": "#1f1f24",
@@ -973,28 +951,6 @@
       ]
     },
     {
-      "name": "dt_plug",
-      "file": "meshes/dt_plug.stl",
-      "color": "#8c8c33",
-      "sha256": "b48531e28f97ee65a6b3eb0c25d184d329a9814a6a2dfa65c5def2a31b25f272",
-      "bounds_mm": [
-        -22.0,
-        -123.08000183105469,
-        -30.0,
-        22.0,
-        -78.08000183105469,
-        33.0
-      ],
-      "logical_part": "dt_plug",
-      "title": "DT12 plug",
-      "original_group": "base",
-      "neutral_translation_mm": [
-        -0.0,
-        -0.0,
-        -145.0
-      ]
-    },
-    {
       "name": "tilt_servo",
       "file": "meshes/tilt_servo.stl",
       "color": "#1f1f24",
@@ -1251,72 +1207,6 @@
       ],
       "logical_part": "laser",
       "title": "Aiming laser",
-      "original_group": "tilt",
-      "neutral_translation_mm": [
-        0.0,
-        0.0,
-        140.0
-      ]
-    },
-    {
-      "name": "laser_screws",
-      "file": "meshes/laser_screws.stl",
-      "color": "#333338",
-      "sha256": "7439f154851aa60fa97c9b57e89974ebd2f62549efc8b4e7ac00d61372f57fb9",
-      "bounds_mm": [
-        72.5,
-        -8.977241516113281,
-        148.45095825195312,
-        75.5,
-        8.977241516113281,
-        164.0
-      ],
-      "logical_part": "laser_screws",
-      "title": "Boresight screws",
-      "original_group": "tilt",
-      "neutral_translation_mm": [
-        0.0,
-        0.0,
-        140.0
-      ]
-    },
-    {
-      "name": "laser_inserts",
-      "file": "meshes/laser_inserts.stl",
-      "color": "#333338",
-      "sha256": "88030e22949cdd865404fe8c57001c98093f9ad382a5e3c019665c999e497666",
-      "bounds_mm": [
-        58.0,
-        -10.994407653808594,
-        141.89999389648438,
-        62.0,
-        10.994407653808594,
-        147.60000610351562
-      ],
-      "logical_part": "laser_inserts",
-      "title": "laser inserts",
-      "original_group": "tilt",
-      "neutral_translation_mm": [
-        0.0,
-        0.0,
-        140.0
-      ]
-    },
-    {
-      "name": "hopper_inserts",
-      "file": "meshes/hopper_inserts.stl",
-      "color": "#333338",
-      "sha256": "04bef98e3173b0abdb0edfb634e361a26d9ed5604bd0dd70aebeb24700a75bae",
-      "bounds_mm": [
-        -97.71800231933594,
-        -29.54440689086914,
-        154.3000030517578,
-        -7.038416385650635,
-        40.955989837646484,
-        160.0
-      ],
-      "logical_part": "hopper_inserts",
-      "title": "hopper inserts",
       "original_group": "tilt",
       "neutral_translation_mm": [
         0.0,

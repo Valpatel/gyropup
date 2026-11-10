@@ -1,12 +1,12 @@
 import test from 'node:test';import assert from 'node:assert/strict';import {readFileSync}from'node:fs';
 import {readLocation,stepFor,validateIndex,progressKey,readProgress,saveProgress,writeLocation} from '../../../software/site/designer/assembly/state.js';
 const read=n=>JSON.parse(readFileSync(new URL('./fixtures/'+n+'.json',import.meta.url)));
-const a=read('version-one'),b=read('version-two');
+const a=read('version-one'),b=read('version-two'),ha='a'.repeat(64),hb='b'.repeat(64);
 test('two frozen versions differ in membership, instructions, source and storage identity',()=>{
- assert.notDeepEqual(a.steps[1].parts,b.steps[1].parts);assert.notEqual(a.steps[0].text,b.steps[0].text);assert.notEqual(a.snapshot.source_commit,b.snapshot.source_commit);assert.notEqual(progressKey(a),progressKey(b));
+ assert.notDeepEqual(a.steps[1].parts,b.steps[1].parts);assert.notEqual(a.steps[0].text,b.steps[0].text);assert.notEqual(a.snapshot.source_commit,b.snapshot.source_commit);assert.notEqual(progressKey(a,ha),progressKey(b,hb));
  const values=new Map(),store={getItem:k=>values.get(k),setItem:(k,v)=>values.set(k,v)};
- saveProgress(store,a,new Set(['base','cover','foreign']));assert.deepEqual([...readProgress(store,a)],['base','cover']);assert.deepEqual([...readProgress(store,b)],[]);
- const changed=structuredClone(a);changed.model.sha256='a'.repeat(64);assert.deepEqual([...readProgress(store,changed)],[]);
+ saveProgress(store,a,new Set(['base','cover','foreign']),ha);assert.deepEqual([...readProgress(store,a,ha)],['base','cover']);assert.deepEqual([...readProgress(store,b,hb)],[]);
+ const changed=structuredClone(a);changed.steps[0].text='Different instruction, same geometry';assert.equal(changed.model.sha256,a.model.sha256);assert.deepEqual([...readProgress(store,changed,hb)],[]);
 });
 test('exact WIP, direct step and chapter routes round trip; unavailable choices reject',()=>{
  const wip=JSON.parse(readFileSync(new URL('../../../software/site/assets/build-guides/turret-wip-4866459e2abd/guide.json',import.meta.url)));
@@ -18,10 +18,10 @@ test('exact WIP, direct step and chapter routes round trip; unavailable choices 
  assert.throws(()=>stepFor(wip,{step:'old-version-step'}));assert.throws(()=>readLocation({search:'?snapshot=invented-release'},index));
 });
 test('broken storage and stale step IDs do not erase other meanings',()=>{
- assert.deepEqual([...readProgress({getItem(){throw Error('denied')}},a)],[]);
- assert.deepEqual([...readProgress({getItem:()=>'{bad'},a)],[]);
- assert.deepEqual([...readProgress({getItem:()=>JSON.stringify(['base','old'])},a)],['base']);
- assert.throws(()=>saveProgress({setItem(){throw Error('denied')}},a,new Set(['base'])));
+ assert.deepEqual([...readProgress({getItem(){throw Error('denied')}},a,ha)],[]);
+ assert.deepEqual([...readProgress({getItem:()=>'{bad'},a,ha)],[]);
+ assert.deepEqual([...readProgress({getItem:()=>JSON.stringify(['base','old'])},a,ha)],['base']);
+ assert.throws(()=>saveProgress({setItem(){throw Error('denied')}},a,new Set(['base']),ha));
 });
 test('index rejects duplicate identities and external/escaping files',()=>{
  const index={schema:'gyropup.build-guides/1',snapshots:[{id:'one',title:'One',status:'wip',file:'one/guide.json',sha256:'a'.repeat(64)}]};

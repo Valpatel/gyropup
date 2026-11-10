@@ -47,8 +47,10 @@ class NeutralGuide(unittest.TestCase):
         outputs = module.generate()
         guide = json.loads(outputs['guide.json'])
         view = json.loads(outputs['view.json'])
-        self.assertEqual(len(view['parts']), 60)
+        self.assertEqual(len(view['parts']), 55)
         self.assertEqual(len(guide['steps']), 12)
+        self.assertIn('board_bay_lid', guide['source']['excluded'])
+        self.assertFalse(any('board_bay_lid' in s['parts'] for s in guide['steps']))
         names = {p['name'] for p in view['parts']}
         self.assertEqual(set(guide['steps'][-1]['parts']), names)
         self.assertEqual(sum(len(s['highlight']) for s in guide['steps']), len(names))

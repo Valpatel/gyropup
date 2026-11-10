@@ -2,7 +2,7 @@ import {readLocation,stepFor,validateIndex,readProgress,saveProgress,writeLocati
 const esc=s=>String(s??'').replace(/[&<>"']/g,c=>({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[c]));
 const hash=async bytes=>[...new Uint8Array(await crypto.subtle.digest('SHA-256',bytes))].map(v=>v.toString(16).padStart(2,'0')).join('');
 const host=document.getElementById('assembly');
-let active=null,request=0,pending=null;
+let active=null,request=0,pending=null,applying=false;
 const storage=()=>{try{return globalThis.localStorage;}catch{return null;}};
 function report(message,error=false){host.querySelector('[data-guide-status]').textContent=message;host.querySelector('[data-guide-status]').dataset.state=error?'error':'ready';}
 async function get(url,signal){const r=await fetch(url,{signal,cache:'no-store'});if(!r.ok)throw new Error(`Build data returned HTTP ${r.status}.`);return r;}
@@ -28,11 +28,11 @@ async function start(){
    const step=stepFor(guide,route),canvas=document.createElement('div'),panel=document.createElement('div');canvas.className='assembly-canvas';
    let renderError=null;
    try{nextViewer=await createViewer({app:canvas,panel,manifest:loaded.manifest,manifestUrl:loaded.manifestUrl,signal:abort.signal,
-     onSelect:name=>{if(active?.viewer!==nextViewer)return;active.selected=name;if(!name)active.isolate=false;host.querySelector('[data-guide-isolate]').disabled=!name;}});}
+     onSelect:name=>{if(applying||active?.viewer!==nextViewer)return;active.selected=name;if(!name)active.isolate=false;host.querySelector('[data-guide-isolate]').disabled=!name;}});}
    catch(error){if(abort.signal.aborted)throw error;renderError=error;}
    if(own!==request){nextViewer?.dispose();return;}
    const previous=active;
-   active={guide,viewer:nextViewer,controller:nextViewer?createGuideController(nextViewer,guide):null,done:readProgress(storage(),guide),url,step:step.id,mode:'ghost',explode:1,selected:null,isolate:false,renderError};
+   active={guide,guideHash:row.sha256,viewer:nextViewer,controller:nextViewer?createGuideController(nextViewer,guide):null,done:readProgress(storage(),guide,row.sha256),url,step:step.id,mode:'ghost',explode:1,selected:null,isolate:false,renderError};
    const model=host.querySelector('[data-guide-model]');model.replaceChildren(canvas);previous?.viewer?.dispose();
    select.value=id;paint(step.id);
    if(renderError)report('Interactive 3D is unavailable. The same snapshot’s text and poster remain below.',true);
@@ -46,13 +46,16 @@ async function start(){
 }
 function paint(id){
  const a=active,g=a.guide,s=stepFor(g,{step:id});a.step=s.id;
- a.controller?.applyStep(s.id,{mode:a.mode,explode:a.explode,frame:true});
+ applying=true;
+ try{a.controller?.applyStep(s.id,{mode:a.mode,explode:a.explode,frame:true});}
+ finally{applying=false;}
  if(a.selected&&!s.parts.includes(a.selected)){a.selected=null;a.isolate=false;}
  if(a.selected)a.viewer?.setSelection(a.selected);
  if(a.isolate)a.viewer?.applyState({...a.viewer.getState(),selected:a.selected,isolate:a.selected?[a.selected]:null});
  const index=g.steps.indexOf(s),chapter=g.subassemblies.find(c=>c.id===s.subassembly);
  host.querySelector('[data-guide-source]').innerHTML=`${esc(g.snapshot.revision)} · ${esc(g.snapshot.status)} · <a href="https://github.com/Valpatel/gyropup/tree/${esc(g.snapshot.source_commit)}">Source snapshot</a>`;
  host.querySelector('[data-guide-warning]').textContent=g.source?.qualification||'Educational work in progress; no physical qualification.';
+ host.querySelector('[data-guide-scope]').innerHTML=Object.entries(g.source?.excluded||{}).map(([name,reason])=>`<li><b>${esc(name.replaceAll('_',' '))}</b>: ${esc(reason)}</li>`).join('');
  host.querySelector('[data-guide-title]').textContent=s.title;
  host.querySelector('[data-guide-count]').textContent=`${chapter.title} · ${index+1} / ${g.steps.length}`;
  host.querySelector('[data-guide-text]').textContent=s.text;
@@ -64,7 +67,7 @@ function paint(id){
  const prev=host.querySelector('[data-guide-prev]'),next=host.querySelector('[data-guide-next]');prev.disabled=index===0;next.disabled=index===g.steps.length-1;prev.onclick=()=>paint(g.steps[index-1].id);next.onclick=()=>paint(g.steps[index+1].id);
  host.querySelector('[data-guide-parts]').innerHTML=(g.source?.requirements_by_step?.[s.id]||[]).map(r=>`<li><button type="button" data-part="${esc(r.instances[0])}">${esc(r.title)}</button> <span>×${r.quantity} modeled instance${r.quantity===1?'':'s'}</span>${r.catalogue?.length?`<small>${r.catalogue.map(c=>esc(c.part_number||c.item)).join(' · ')}</small>`:''}</li>`).join('');
  host.querySelectorAll('[data-part]').forEach(b=>b.onclick=()=>{a.selected=b.dataset.part;a.viewer?.setSelection(a.selected);host.querySelector('[data-guide-isolate]').disabled=false;});
- const complete=host.querySelector('[data-guide-complete]');complete.checked=a.done.has(s.id);complete.onchange=()=>{complete.checked?a.done.add(s.id):a.done.delete(s.id);try{saveProgress(storage(),g,a.done);}catch{report('Completion stays in this tab because browser storage is unavailable.',true);}};
+ const complete=host.querySelector('[data-guide-complete]');complete.checked=a.done.has(s.id);complete.onchange=()=>{complete.checked?a.done.add(s.id):a.done.delete(s.id);try{saveProgress(storage(),g,a.done,a.guideHash);}catch{report('Completion stays in this tab because browser storage is unavailable.',true);}};
  const mode=host.querySelector('[data-guide-mode]');mode.value=a.mode;mode.onchange=()=>{a.mode=mode.value;paint(s.id);};
  const explode=host.querySelector('[data-guide-explode]');explode.value=String(a.explode);explode.oninput=()=>{a.explode=+explode.value;a.controller?.applyStep(s.id,{mode:a.mode,explode:a.explode,frame:false});};
  const isolate=host.querySelector('[data-guide-isolate]');isolate.disabled=!a.selected;isolate.onclick=()=>{a.isolate=!a.isolate;paint(s.id);};isolate.setAttribute('aria-pressed',String(a.isolate));
