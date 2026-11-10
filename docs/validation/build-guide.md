@@ -223,3 +223,13 @@ interception was corrected by measuring floating controls before a viewer exists
 The static Markdown adapter separately preserves all four workstreams and279
 seven-column order rows without changing browser panels or exposing unavailable
 hidden descendants; all six existing Markdown assertions remain and pass.
+
+Final recovery/static boundary seal is `f8868543`, captured at immutable source
+`982ca04d`: all twelve actual1280×900 native-fullscreen/collapsed-sheet images
+again passed their pose/vertex/source checks and retained identical raster bytes.
+Both engines passed the complete targeted initial-recovery/fallback scope. The
+existing playback harness now also passes an actual lateleft-wheel arrival using
+the public player's controlled clock, with unchanged camera, independent world
+vertex displacement, at least512 wheel samples in frustum, and actual overlay
+projection. These precise checkpoints are retained with their source identities;
+complete final-head CI and independent review remain the integration gate.

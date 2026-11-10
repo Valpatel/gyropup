@@ -31,6 +31,34 @@
       "sha256": "e97f729498bed5213d2bea8e4c977a94cf60a46c35d8a0e7db54e719e7a97586",
       "tested_site_revision": "1ec82f67222b7b0d8d9522f21b6ea2c649018e91",
       "scope": "Independent real UI Robot left-wheel jump/Play and controlled existing player clock to90.9% tyre arrival; same camera, actual world displacement and512 real vertices in frustum. No app/printer activation."
+    },
+    {
+      "file": ".agents/plans/build-workspace-evidence/recovery-chromium-982.json",
+      "sha256": "0facfb7cdf8165395c05cb7d6a8e54bf27500bc29bf7b495759763bec4b65860",
+      "tested_site_revision": "982ca04d34fd1e50b4a6749ba96bd95fa3ea8584",
+      "scope": "Chromium explicit initial-error dropdown/all3assembly recovery, back/forward/pagehide, no-script12PNGs and noGLversionprogress.",
+      "raw_report_sha256": "ed15dea91b832d4c2a306b76111753ea1f75d74f195379643fae09b3bfc32062",
+      "redaction": "Only the local preview origin was redacted."
+    },
+    {
+      "file": ".agents/plans/build-workspace-evidence/recovery-webkit-72.json",
+      "sha256": "bec5247ca367d1414ef291a61e26679bde0f086cc3166d3130d6d9177bbb9ae8",
+      "tested_site_revision": "72e725ac3f5cd75f50dcbb3c29b919565202158a",
+      "scope": "WebKit same recovery/no-script/noGL controls; source72 runtime matches982 except the static-only Markdown adapter.",
+      "raw_report_sha256": "f2143e0df1e245a639c66d100cc3995258a56e359da70df1316b5918d897c16e",
+      "redaction": "Only the local preview origin was redacted."
+    },
+    {
+      "file": ".agents/plans/build-workspace-evidence/playback-wheel-webkit-982.json",
+      "sha256": "18f5509d8cbce8e496b7cb955c683876d6539a8ce73f6eabb7c25b80f09ef7fb",
+      "tested_site_revision": "982ca04d34fd1e50b4a6749ba96bd95fa3ea8584",
+      "scope": "Existing Robot scene/body and lateleftwheel with controlled public player clock, actual worldvertexdelta, samecamera/frustum, reducedmotion/background/disposal."
+    },
+    {
+      "file": ".agents/plans/build-workspace-evidence/print-project-webkit-c717.json",
+      "sha256": "43bdfbd4bd52439472aff2d6e1aa8b4622036833846efae997c242780fadd49e",
+      "tested_site_revision": "c71756315d01afe048b5ab105a4706981c7ae1ad",
+      "scope": "Actual prepared-project HTTP404\u2192restore explicitretry, rejected/restoredrequestcounts and exactoriginal/projectdownloadgates."
     }
   ],
   "retained_failures": [
