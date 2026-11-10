@@ -50,7 +50,7 @@ try{
   for(const part of actual.parts){if(!part.visible)continue;assert.deepEqual(part.position,s.offsets_mm[part.name]||[0,0,0]);if(s.highlight.includes(part.name))assert.equal(part.opacity,1);else assert.ok(part.opacity>0&&part.opacity<.5);}
   const bounds=await projected(p);assert.ok(fullyFramed(bounds),JSON.stringify({step:s.id,bounds}));screenBounds[s.id]=bounds;captures.set(s.id,actual.parts);
  }
- const tooClose=await projected(p,.1);assert.equal(fullyFramed(tooClose),false,'A real too-close camera must fail the independent viewport/frustum check');assert.ok(fullyFramed(await projected(p)),'Camera is restored after the negative');provenance.projected_bounds=screenBounds;provenance.too_close_camera_rejected=true;cases.push('every visible vertex fits all12 actual frames; real too-close camera rejected/restored');
+ const tooClose=await projected(p,.1);assert.equal(fullyFramed(tooClose),false,'A real too-close camera must fail the independent viewport/frustum check');assert.ok(fullyFramed(await projected(p)),'Camera is restored after the negative');provenance.projected_bounds=screenBounds;provenance.too_close_camera_rejected=true;provenance.too_close_projection=tooClose;cases.push('every visible vertex fits all12 actual frames; real too-close camera rejected/restored');
  for(let i=10;i>=0;i--){await p.getByRole('button',{name:'← Previous',exact:true}).click();assert.deepEqual((await state(p)).parts,captures.get(guide.steps[i].id));}
  await p.getByLabel('Instruction step',{exact:true}).selectOption('step-10');assert.deepEqual((await state(p)).parts,captures.get('step-10'));
  await p.reload();await p.waitForFunction(()=>window.__buildGuide?.active?.step==='step-10');assert.deepEqual((await state(p)).parts,captures.get('step-10'));

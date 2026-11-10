@@ -137,6 +137,7 @@ jobs:
           - suite: build-portal
             commands: |
               npm run test:build-guide
+              PLAYWRIGHT_BROWSER=webkit npm run test:build-guide
               npm run test:build-portal
               npm run test:carrier-inspection
               npm run test:study-media
@@ -151,6 +152,8 @@ jobs:
           cache: npm
       - run: npm ci
       - run: npx playwright install --with-deps chromium
+      - if: matrix.suite == 'build-portal'
+        run: npx playwright install --with-deps webkit
       - if: matrix.suite == 'build-portal'
         run: sudo apt-get update && sudo apt-get install -y ffmpeg
       - run: npm run build
