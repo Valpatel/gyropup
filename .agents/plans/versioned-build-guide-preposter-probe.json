@@ -1,0 +1,23 @@
+{
+  "source": "678d4ba37bde5c4a1aafc438992e3eeaeb330ce3",
+  "source_short_authoritative": "678d4ba3",
+  "shared_source": "0b5473ef4ac027cc631472f3ac43333ce2d4654e",
+  "status": "FAILED_GLOBAL_TIME_BOUND",
+  "runtime_seconds": 180.232,
+  "cpu_seconds": 358.501,
+  "memory_peak_mib": 884.4,
+  "owned_listener_closed": true,
+  "owned_service_terminal": true,
+  "scope": "Pre-poster real browser functional probe; not final acceptance",
+  "observed_terminal_location": "test-build-guide.mjs line61 waiting fixture-two\u2192fixture-one; no proof the switch itself stalled rather than total suite budget exhausted.",
+  "earlier_execution_observation": [
+    "all12forward/back/direct/reload assertions completed",
+    "global materials/reset/canvas selection and70mm displacement assertions completed",
+    "390/844/1280viewport screenshots produced",
+    "fixture-one\u2192fixture-two assertion completed"
+  ],
+  "no_full_test_acceptance": true,
+  "no_posters_accepted": true,
+  "source_diagnosis": "Separately definite pending-controller lifetime bug: a newly started switch aborted the controller retained by the already-active viewer. Corrected by clearing pending only after successful commit; next fixture-only run must verify actual behavior.",
+  "resume": "Use frozen product source and shared final API; short switching/touch scopes first, preserve this failure and prior stopped partial-build probe."
+}

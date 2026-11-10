@@ -2,7 +2,7 @@
 
 Issue #266 extends the existing Build page and existing viewer. Shared schema,
 asset loader, absolute rendering state and lifecycle are owned by
-[cad-agent #302](https://github.com/Valpatel/cad-agent/issues/302). Shared testing contract: [assembly-guide-testing.md](https://github.com/Valpatel/cad-agent/blob/0b5473ef4ac027cc631472f3ac43333ce2d4654e/docs/practice/assembly-guide-testing.md). Product uses the targeted viewer/guide import recorded in `.agents/plans/versioned-build-guide-shared-sync.json`; its existing stage, loading helpers and route entry remain.
+[cad-agent #302](https://github.com/Valpatel/cad-agent/issues/302). Shared testing contract: [assembly-guide-testing.md](https://github.com/Valpatel/cad-agent/blob/cdbee23b10d421ea62975ab141253bec958c36b3/docs/practice/assembly-guide-testing.md). Product uses the targeted viewer/guide import recorded in `.agents/plans/versioned-build-guide-shared-sync.json`; its existing stage, loading helpers and route entry remain.
 
 ## Data and presentation
 
@@ -37,13 +37,13 @@ retained command/result evidence; **pending** is not claimed tested.
 | Forward/back/direct/reload | Sequential and direct step states equal; real rendered instances and positions checked | Reordered/late steps cannot accumulate offsets | Product browser test pending |
 | Picking, highlight and isolation | Real canvas pick and list pick agree with part card/mesh | Hidden/future part cannot be picked; clear selection restores context | Product/shared browser tests pending |
 | Ghost, wireframe, explode and assembled reset | Actual material state, meaningful rendered output and baseline transforms | Mutated opacity/double transform detected; reset removes all guide offsets | Product/shared browser tests pending |
-| Two frozen fixtures + WIP | Distinct source/model/text/membership; deep links; version-scoped progress | No cross-version mesh/progress/text reuse or invented release | `test-guide-state.mjs`: four pure controls passed (including changed text with same geometry); browser pending |
+| Selected-instance appearance | One selected housing can be transparent or wireframe while other visible instances remain unchanged; Automatic restores its global mode | Actual two-part material comparison; next step/reset clears override and DOM control returns to Automatic | Shared partModes + product browser controls pending |
+| Two frozen fixtures + WIP | Distinct source/model/text/membership; deep links; version-scoped progress | No cross-version mesh/progress/text reuse or invented release; denied storage retains guide-scoped completion in the same tab | `test-guide-state.mjs`: four pure controls passed (including changed text with same geometry); browser pending |
 | Errors and failed switches | Retain prior coherent snapshot; retry explicit | Wrong guide/model/mesh/poster digest; missing/corrupt/late assets | Shared loader + product browser tests pending |
-| Phone/desktop/keyboard/reduced motion | Useful unoccluded model, reachable previous/next and stage selection, no horizontal overflow | Fresh portrait/landscape and keyboard-only; no hidden control acceptance | Product browser tests pending |
+| Phone/desktop/keyboard/reduced motion | Useful unoccluded model, reachable previous/next and stage selection, no horizontal overflow | Fresh portrait/landscape, actual hasTouch phone taps and keyboard-only; no hidden control acceptance | Product browser tests pending |
 | No WebGL / no script / Markdown | Current same-recipe plain text/poster and source caveat | Disabled WebGL cannot become empty ready scene; old poster cannot masquerade current | `test-guide-fallback.mjs` passed with stale actual instruction mutation; existing Markdown six tests passed. No-script/WebGL browser pending |
 | Buy/Print/original downloads | Existing totals, rounding, tracking/import/export and deep anchors preserved | Switching workstream cannot erase unrelated state or detach controls | Existing Build tests need opening detail view; not yet rerun |
 | Disposal and races | One live canvas after repeated switches; old callbacks/resources stop | Slow old request completing after new selection cannot mutate scene | Shared lifecycle + product browser tests pending |
 | Publication/package closure | Exact snapshot dependency bytes and working relative paths | Escaping/missing dependencies reject | Existing shared release tests; root owner |
 
-No browser, full Build regression, compiled site, current CI or production pass
-is claimed by this initial implementation checkpoint. `npm run test:build-guide` is wired into the existing Build-portal browser CI suite. Its browser portion and actual receipts remain required before the pilot is ready to merge.
+The first pre-poster browser probe at `678d4ba3` reached its global 180-second bound; its partial execution observations are retained in `.agents/plans/versioned-build-guide-preposter-probe.json` and are not full acceptance. The corrected lifecycle, selected-part appearance and touch controls remain pending actual browser results. No full Build regression, current CI or production pass is claimed at this checkpoint. `npm run test:build-guide` is wired into the existing Build-portal browser CI suite. Its browser portion and actual receipts remain required before the pilot is ready to merge.

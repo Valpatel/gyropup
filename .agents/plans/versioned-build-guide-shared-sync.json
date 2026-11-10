@@ -1,21 +1,21 @@
 {
   "source_repository": "Valpatel/cad-agent",
-  "source_revision": "0b5473ef4ac027cc631472f3ac43333ce2d4654e",
+  "source_revision": "cdbee23b10d421ea62975ab141253bec958c36b3",
   "files": [
     {
       "source": "software/cadagent/webkit/viewer.js",
       "target": "software/site/designer/kit/viewer.js",
-      "sha256": "70fd528aba1bc163593d95d2bc79817c9829bcdc49ed72fb195e2e30400aee95"
+      "sha256": "50c717fd1e4a51452f2a7808fcc7c05779eb3c5c38ed1b71f198496e0e8996be"
     },
     {
       "source": "software/cadagent/webkit/assembly/guide.js",
       "target": "software/site/designer/kit/assembly/guide.js",
-      "sha256": "621ef8f332a9790e5afcc4b4bbf0463fe0478aa7b7a8816764959452dbc8d4a2"
+      "sha256": "e97f09ff08bce066f93cec730a6faa87a10657837ef72be14d13e9eaafd033c6"
     },
     {
       "source": "software/cadagent/webkit/assembly/README.md",
       "target": "software/site/designer/kit/assembly/README.md",
-      "sha256": "fa1576580c27a97c6fada13b82db4aec83a2cdfbec6860af9aff46d34d869f4a"
+      "sha256": "4b8ea661eb6c42d23ffdef1adfed88df2a3a91f319e68609ba2813426a768e1d"
     }
   ],
   "preserved_product_stage_loader_and_entry_html": true,
