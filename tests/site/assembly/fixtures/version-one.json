@@ -3,7 +3,7 @@
   "snapshot": {
     "id": "fixture-one",
     "revision": "fixture-one",
-    "status": "wip",
+    "status": "released",
     "source_commit": "1111111111111111111111111111111111111111"
   },
   "model": {
@@ -60,5 +60,8 @@
       },
       "text": "Fixture one cover"
     }
-  ]
+  ],
+  "source": {
+    "qualification": "Synthetic test fixture only; this is not an actual Gyropup release or physical qualification."
+  }
 }

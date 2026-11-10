@@ -3,7 +3,7 @@
   "snapshot": {
     "id": "fixture-two",
     "revision": "fixture-two",
-    "status": "wip",
+    "status": "released",
     "source_commit": "2222222222222222222222222222222222222222"
   },
   "model": {
@@ -64,5 +64,8 @@
       },
       "text": "Fixture two cap"
     }
-  ]
+  ],
+  "source": {
+    "qualification": "Synthetic test fixture only; this is not an actual Gyropup release or physical qualification."
+  }
 }

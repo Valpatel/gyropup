@@ -52,7 +52,7 @@ async function start(){
    host.querySelector('[data-guide-visual]').hidden=!!renderError;host.querySelector('.assembly-layout').dataset.static=String(!!renderError);
    select.value=id;paint(step.id);
    if(renderError)report('Interactive 3D is unavailable. The same snapshot’s text and poster remain below.',true);
-   else report('Source-bound WIP guide loaded. No physical build release.');
+   else report(guide.snapshot.status==='wip'?'Source-bound WIP guide loaded. No physical build release.':'Versioned guide loaded. Its publication status is separate from physical qualification.');
    window.__buildGuide={get active(){return active;},load,apply:id=>paint(id),dispose(){pending?.abort();active?.viewer?.dispose();for(const value of active?.posterURLs?.values()||[])URL.revokeObjectURL(value);active=null;}};
   }catch(error){const cancelled=abort.signal.aborted||own!==request;abort.abort();nextViewer?.dispose();for(const value of posterURLs.values())URL.revokeObjectURL(value);if(cancelled)return;report(error.message+(active?' Your previous build remains selected.':''),true);if(active)select.value=active.guide.snapshot.id;}
  }
