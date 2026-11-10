@@ -69,7 +69,8 @@ async function load(page, route) {
   await page.goto(base + route, { waitUntil: 'domcontentloaded' });
   await page.waitForFunction(() => !document.querySelector('pre.mermaid, pre > code.language-mermaid') &&
     [...document.querySelectorAll('.cad-diagram')].every(f => f.dataset.state === 'ready' || f.dataset.state === 'error')
-    && (!/^\/designer\/(progress|build|sim)\.html$/.test(location.pathname) || document.body.dataset.ready === '1'), null, { timeout: 30000 })
+    && (!/^\/designer\/(progress|build|sim)\.html$/.test(location.pathname) || document.body.dataset.ready === '1')
+    && (location.pathname !== '/designer/build.html' || !document.querySelector('#assembly') || document.querySelector('#assembly').dataset.ready === '1'), null, { timeout: 30000 })
     .catch(() => problems.push(`empty-space ${route}: diagrams or reports did not finish loading`));
   await waitForRenderedText(page);
 }
@@ -253,7 +254,25 @@ async function readinessControls() {
       if (primary ? !missing : result.findings.length > 0) throw new Error(`Readiness control ${primary ? 'accepted a missing primary picture' : 'could not measure content with a pending badge'}`);
     } finally { clearTimeout(timer); release(); releaseFont(); releaseCss(); await context.close(); await analysis.close(); }
   }
-  console.log('empty-space readiness controls: pending badge permits measurement, primary image is rejected, actual imported font is awaited, stylesheet error fails readiness');
+  // Procurement can finish while the separate real assembly model is still pending.
+  const guideContext = await contextFor(size), guidePage = await guideContext.newPage();
+  let releaseModel, requestedModel;
+  const modelGate = new Promise(resolve => { releaseModel = resolve; });
+  const modelRequested = new Promise(resolve => { requestedModel = resolve; });
+  await guidePage.route('**/web/build-guides/**/view.json*', async route => { requestedModel(); await modelGate; await route.continue(); });
+  try {
+    let measured = false;
+    const loading = load(guidePage, '/designer/build.html').then(() => { measured = true; });
+    loading.catch(() => {});
+    await Promise.race([modelRequested, guidePage.waitForTimeout(15000).then(() => { throw new Error('Actual guide model was not requested'); })]);
+    await guidePage.waitForFunction(() => document.body.dataset.ready === '1');
+    await waitForRenderedText(guidePage);
+    await guidePage.evaluate(() => new Promise(resolve => requestAnimationFrame(() => requestAnimationFrame(resolve))));
+    if (measured || await guidePage.locator('[data-guide-model] canvas').count()) throw new Error('Layout accepted procurement readiness while the real assembly model was held');
+    releaseModel(); await loading;
+    if (!await guidePage.locator('[data-guide-model] canvas').count() || await guidePage.locator('[data-guide-chapters] button').count() !== 3) throw new Error('Layout did not wait for the actual assembled guide DOM');
+  } finally { releaseModel(); await guideContext.close(); }
+  console.log('empty-space readiness controls: pending badge permits measurement, primary image is rejected, actual imported font is awaited, stylesheet error fails readiness, procurement alone cannot release a held assembly guide');
 }
 
 /** Planted defects on a real page: each must be found, so the measures are tested on every run. */

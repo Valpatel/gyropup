@@ -91,7 +91,8 @@ try{
  await input.setInputFiles({name:'valid.json',mimeType:'application/json',buffer:Buffer.from(JSON.stringify({version:1,project:'gyropup',parts:{[shared]:{inHand:true}}}))});
  await page.waitForFunction(()=>document.querySelector('.cad-progress-receipt').textContent.includes('Imported'));assert.equal(await target.locator('input').nth(1).isChecked(),true);
  await page.goto(base+'/designer/progress.html');await ready();const other=page.locator('tr[data-part-key='+JSON.stringify(shared)+']').first();assert.equal(await other.locator('input').first().isChecked(),true);assert.equal(await other.locator('input').nth(1).isChecked(),true);
- await page.locator('#parts > summary').click();
+ await page.getByRole('link',{name:'Parts & prints',exact:true}).click();
+ assert.equal(await page.locator('#parts').evaluate(el=>el.open),true,'The ordinary section jump reveals the native disclosure');
  await page.getByText('Leg · what to buy',{exact:true}).click();
  const parts=page.locator('#buy table').first();await parts.locator('thead th').nth(1).locator('button').click();
  const names=await parts.locator('tbody tr').evaluateAll(rows=>rows.map(row=>row.cells[1].textContent.trim()));assert.deepEqual(names,[...names].sort(new Intl.Collator(undefined,{numeric:true,sensitivity:'base'}).compare));
@@ -240,4 +241,8 @@ try{
   await deepContext.close();
  }
  assert.deepEqual(errors,[]);await writeFile(`${out}/${engine.name()}-report.json`,JSON.stringify({base,version,shared,printedKey,summaries,sticky,publishedModels:inventory.files.length,guidePresentationModels:presentationModels.size,errors},null,2));console.log(`PASS ${engine.name()}: sortable semantic tables, fixed totals, shared persistent checklists, print status, atomic import/export, denied storage, ${inventory.files.length} original/preview mappings, real STL/STEP/3MF controls and stage disposal, and four phone layouts`);
+}catch(error){
+ await page.screenshot({path:`${out}/${engine.name()}-failure.png`}).catch(()=>{});
+ const state=await page.evaluate(()=>({url:location.pathname+location.hash,ready:document.body.dataset.ready,scrollY,parts:document.querySelector('#parts')?.open})).catch(()=>null);
+ await writeFile(`${out}/${engine.name()}-failed.json`,JSON.stringify({status:'failed',error:String(error),state,errors},null,2));throw error;
 }finally{await browser.close();}
