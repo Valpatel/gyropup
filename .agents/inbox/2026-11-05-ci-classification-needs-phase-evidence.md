@@ -470,3 +470,30 @@ bind the workflow union to every canonical size and both themes.
 A local selected-page smoke only checks reporting and representative execution;
 acceptance still requires all current CI partitions. Do not enlarge a timeout,
 remove a page/theme/size, or treat a zero-case selection as success.
+
+
+## Native keyboard assertions need focus and event ownership evidence
+
+2026-11-10: run `42807633179`, playground job `129800779710`, failed the first
+simulator checkbox Space assertion (`true !== false`) at line32. Its failure
+record contained bench activity but no focused element, native key target or
+open-dialog state. The exact original prefix passed in a separate24.7s browser
+probe: true→false, trusted key events targeting the focused checkbox, no default
+prevention, no inert/hidden ancestor, closed dialog and arm count zero. The CI
+cause remains unclassified; do not call that local pass a CI retry or a product fix.
+
+The test now establishes visibility, enabled state, initial value and actual
+keyboard focus, targets the native checkbox with `locator.press('Space')`, and
+checks both the checkbox and actual simulator marker state. Trusted keydown/up
+must remain owned by that input, unprevented and unable to arm the shortcut.
+Failure artifacts include active element, focus/visibility, dialogs, native events
+and a bounded screenshot. Existing slider, release, journey and phone assertions
+and the original simulation deadline remain intact; no checkbox `.check()` or
+programmatic state assignment substitutes for the positive keyboard action.
+
+The exact updated positive prefix passed27.3s against the qualified `1c48bd5c`
+site. A deliberately cancelled native key with a matching checkbox/API-state shim
+passed the prior state observations but was rejected by the new event assertion
+in15.3s. Those source/harness-qualified reports are indexed in the CI validation
+packet. This negative is explicitly seeded; it is not an observed production
+behavior. Complete current simulator CI is still required.

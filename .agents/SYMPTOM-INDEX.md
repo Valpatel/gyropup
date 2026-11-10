@@ -176,3 +176,5 @@
 - A fullscreen click is followed by a null mode even though a later capture fills the viewport: [await actual native fullscreen completion before Print assertions](inbox/2026-11-09-assembly-overlays-need-visible-bounds-and-hit-tests.md#recover-initialization-before-the-first-successful-model).
 
 - A diagram inventory reports `13 !== 11`, or a full layout job reaches its time bound with only some page/size/theme views: [bind diagram sources and prove partition coverage](inbox/2026-11-05-ci-classification-needs-phase-evidence.md#diagram-inventories-must-name-the-sources-they-cover).
+
+- A native checkbox Space assertion fails without focused-element or key-target evidence: [record focus and native event ownership](inbox/2026-11-05-ci-classification-needs-phase-evidence.md#native-keyboard-assertions-need-focus-and-event-ownership-evidence).

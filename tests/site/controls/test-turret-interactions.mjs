@@ -15,7 +15,7 @@ async function resize(width,height){
  await page.evaluate(()=>new Promise(resolve=>requestAnimationFrame(()=>requestAnimationFrame(resolve))));
 }
 
-const out=process.env.TEST_OUTPUT||'/tmp/gyropup-turret-interactions';await mkdir(out,{recursive:true});
+const out=process.env.TEST_OUTPUT||'/tmp/gyropup-turret-interactions';await mkdir(out,{recursive:true});let nativeGuideEvidence=null;
 page.on('pageerror',e=>errors.push(e.message));
 await page.addInitScript(()=>localStorage.setItem('gyropup.probe','off'));
 try{
@@ -29,9 +29,20 @@ try{
  await page.evaluate(()=>window.__sim.bench().api.aim(0,-3));
  // Native controls own their keys; releasing a shortcut after focus moves still clears it.
  const guide=page.getByRole('checkbox',{name:'Show curved shot guide',exact:true});
- await guide.focus();await page.keyboard.press('Space');assert.equal(await guide.isChecked(),false);
+ await page.bringToFront();await guide.scrollIntoViewIfNeeded();assert.equal(await guide.isVisible(),true);assert.equal(await guide.isEnabled(),true);assert.equal(await guide.isChecked(),true);
+ await guide.focus();
+ await guide.evaluate(el=>{
+  const events=[],record=event=>{if(event.code==='Space')events.push({type:event.type,trusted:event.isTrusted,owned:event.target===el,prevented:event.defaultPrevented,arm:window.__sim.bench().api.state.arm.size});};
+  window.addEventListener('keydown',record);window.addEventListener('keyup',record);
+  window.__nativeGuideProbe={events,dispose(){window.removeEventListener('keydown',record);window.removeEventListener('keyup',record);}};
+ });
+ assert.equal(await guide.evaluate(el=>document.activeElement===el&&document.hasFocus()),true,'The native checkbox must own real keyboard focus');
+ await guide.press('Space');await page.waitForFunction(()=>window.__sim.bench().api.state.marker===false);assert.equal(await guide.isChecked(),false);
  assert.equal(await page.evaluate(()=>window.__sim.bench().api.state.arm.size),0);
- await page.keyboard.press('Space');assert.equal(await guide.isChecked(),true);
+ await guide.press('Space');await page.waitForFunction(()=>window.__sim.bench().api.state.marker===true);assert.equal(await guide.isChecked(),true);
+ nativeGuideEvidence=await page.evaluate(()=>{const probe=window.__nativeGuideProbe;probe.dispose();return{events:probe.events,focus:document.hasFocus(),visibility:document.visibilityState,marker:window.__sim.bench().api.state.marker};});
+ assert.deepEqual(nativeGuideEvidence.events.map(event=>event.type),['keydown','keyup','keydown','keyup']);
+ assert.ok(nativeGuideEvidence.events.every(event=>event.trusted&&event.owned&&!event.prevented&&event.arm===0),'Native Space events must reach the checkbox without arming a shortcut: '+JSON.stringify(nativeGuideEvidence));
  const rate=page.getByRole('slider',{name:/Rate of fire/});
  await rate.fill('1');await rate.dispatchEvent('input');
  await rate.focus();await page.keyboard.press('ArrowRight');assert.equal(await rate.inputValue(),'2');
@@ -163,6 +174,6 @@ try{
   await auto.click();assert.ok(await auto.evaluate(b=>b.classList.contains('active')));
  }
  assert.deepEqual(errors,[]);assert.equal(await page.evaluate(()=>document.body.dataset.stageError),undefined);
- await writeFile(`${out}/${engine.name()}-report.json`,JSON.stringify({base,arc,bore,flight,pouring,phones,centers,errors},null,2));
+ await writeFile(`${out}/${engine.name()}-report.json`,JSON.stringify({base,arc,bore,flight,pouring,phones,centers,nativeGuideEvidence,errors},null,2));
  console.log(`PASS ${engine.name()}: visible ballistic arc; progressive jar reload; spam/fire/journey gates; paused resume; same scene/conversation; reduced motion; 5 reachable phone layouts; native keyboard; real pause; centered AUTO`);
-}catch(error){console.error('Failure state',await page.evaluate(()=>{const s=window.__sim,a=s?.bench()?.api;return {error:document.body.dataset.stageError,bench:s?.state.bench,active:s?.bench()?.active,reloading:a?.state.reloading,journey:!!a?.state.journey};}).catch(()=>null),errors);throw error;}finally{await browser.close();}
+}catch(error){const state=await page.evaluate(()=>{const s=window.__sim,a=s?.bench()?.api,focused=document.activeElement;return {error:document.body.dataset.stageError,bench:s?.state.bench,active:s?.bench()?.active,reloading:a?.state.reloading,journey:!!a?.state.journey,focus:document.hasFocus(),visibility:document.visibilityState,focused:{tag:focused?.tagName,id:focused?.id,type:focused?.type},openDialogs:[...document.querySelectorAll('dialog[open]')].map(dialog=>dialog.id),nativeEvents:window.__nativeGuideProbe?.events||[]};}).catch(()=>null);await writeFile(`${out}/${engine.name()}-failed.json`,JSON.stringify({error:String(error),state,errors},null,2)).catch(()=>{});await page.screenshot({path:`${out}/${engine.name()}-failure.png`,timeout:10000}).catch(()=>{});console.error('Failure state',state,errors);throw error;}finally{await browser.close();}

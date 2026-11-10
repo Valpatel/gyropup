@@ -67,5 +67,21 @@
     },
     "poster_contract": "passed unchanged a81 visual closure"
   },
-  "integration_status": "Pending complete current-head CI and normal dev/main promotion; local/scoped evidence is not integration acceptance."
+  "integration_status": "Pending complete current-head CI and normal dev/main promotion; local/scoped evidence is not integration acceptance.",
+  "native_control_prefix": {
+    "scope": "Exact updated simulator test prefix through two native checkbox Space actions; not the complete simulator suite",
+    "site_revision": "1c48bd5ca6f6863ed5c0960e6d3d7051c8004390",
+    "harness_file": "tests/site/controls/test-turret-interactions.mjs",
+    "harness_sha256": "8a0ba3ad93c5f8ed7305e97d874a81c7582044e9cd9a670cc05b1fd90f14193e",
+    "positive": {
+      "file": ".agents/plans/build-workspace-evidence/native-checkbox-prefix-root.json",
+      "sha256": "9de71da99b3239ead2b05682ca451d861341a1b775bacadac831d0fbc41c9620"
+    },
+    "seeded_negative": {
+      "file": ".agents/plans/build-workspace-evidence/native-checkbox-negative-root.json",
+      "sha256": "90c3eaced0296098083271483243d244df628f294b290239a892955273154ce9"
+    },
+    "seed": "On the first real Space keydown only, cancel its native default while setting checkbox and marker state false. Existing state assertions succeed; the new event/default-action assertion must reject.",
+    "limits": "The old CI keyboard failure did not reproduce locally and its original focus was not captured. No simulator defect is claimed fixed; current full CI remains required."
+  }
 }
