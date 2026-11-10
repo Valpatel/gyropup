@@ -37,6 +37,8 @@ def hip_geometry_match(root,collection,name,*,collection_folder=None):
         import sys
         sys.path.insert(0,str(Path(root)))
         from robot_current_print_match import matched
+        if Path(sys.modules['robot_current_print_match'].__file__).resolve()!=Path(__file__).resolve().with_name('robot_current_print_match.py'):
+            return None
         try:return matched(root,collection,collection_folder,name)
         except (ValueError,KeyError,TypeError,OSError,EOFError):return None
     file='.agents/plans/robot-assembly/hip-print-match.json';root=Path(root)
