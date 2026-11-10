@@ -82,3 +82,18 @@ No product projection has run. The tracked scene/SVG/receipt are byte-identical 
 the base, and full mandatory renderer parity deliberately rejects that stale
 scene (21of22tests pass). This is a draft source checkpoint awaiting independent
 source/action review and fresh artifact review, not current-artifact acceptance.
+
+## Accepted projection and guarded adoption, 2026-11-10
+
+The separately reviewed single projection completed as job268:24.132seconds
+projection and0.217seconds renderer parity. All six preservation checks and owned
+process-group cleanup passed. Independent artifact review checked all nine actual
+archive members, source95/leg80 bindings and the true SVG in light/dark. It accepted
+the exact scene/SVG/receipt for adoption; no CAD was constructed or re-tessellated.
+
+The three exact reviewed files are now adopted. The [outcome](job268/outcome.json)
+retains action/archive/member/source and before/after seals, actual producer1ab,
+original native3a and independent review. The prior source-checkpoint/stale-scene
+failure remains unchanged as historical evidence. Full22tests now pass, including
+mandatory actual adopted SVG parity; artifact acceptance does not waive final
+composition review/CI or authorize physical qualification/publication.
