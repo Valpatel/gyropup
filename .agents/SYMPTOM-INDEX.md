@@ -1,5 +1,7 @@
 # Symptom index
 
+- Retained fit CI rejects an old full source closure after a body change: [separate historical integrity from current geometry correspondence](inbox/2026-11-10-archival-integrity-needs-explicit-input-ownership.md).
+
 | Symptom | Canonical guidance |
 | --- | --- |
 | Removing a model factory breaks unrelated quotes, a fresh-output guard breaks simulation callers, or pack bounds move sensor effects | [Trace actual caller contracts and canonical sensor datums](inbox/2026-11-10-current-labels-need-the-current-body-model.md#model-api-changes-need-real-consumer-call-paths) |
