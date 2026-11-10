@@ -113,16 +113,19 @@ try{
  const gitBytes=published=>execFileSync('git',['show',version.revision+':'+sourceForPublic(published)],{cwd:new URL('../../../',import.meta.url),maxBuffer:16<<20});
  const digest=bytes=>createHash('sha256').update(bytes).digest('hex'),presentationModels=new Set();
  const guideIndex=JSON.parse(gitBytes('/web/build-guides/index.json'));
+ const boundGuides=[],owners=new Map();
  for(const row of guideIndex.snapshots){
   const guideURL=new URL(row.file,base+'/web/build-guides/index.json'),guideRaw=gitBytes(guideURL.pathname);assert.equal(digest(guideRaw),row.sha256);
   const guide=JSON.parse(guideRaw),modelURL=new URL(guide.model.file,guideURL),modelRaw=gitBytes(modelURL.pathname);assert.equal(digest(modelRaw),guide.model.sha256);
-  const model=JSON.parse(modelRaw);validateGuide(guide,model);
-  const folder=new URL('.',guideURL).pathname+'meshes/';assert.ok(folder.startsWith('/web/build-guides/'));
-  for(const part of model.parts){
-   const file=new URL(part.file,modelURL).pathname;assert.ok(file.startsWith(folder)&&file.endsWith('.stl'),'Only the guide-owned neutral mesh folder is presentation data');
-   assert.equal(digest(gitBytes(file)),part.sha256,'Guide derivative matches the immutable served revision');
-   const response=await context.request.get(base+file);assert.equal(response.status(),200);assert.equal(digest(await response.body()),part.sha256,'Guide derivatives remain available at their exact public URL');presentationModels.add(file);
-  }
+  const model=JSON.parse(modelRaw);validateGuide(guide,model);const folder=new URL('.',guideURL).pathname+'meshes/';assert.ok(folder.startsWith('/web/build-guides/'));
+  boundGuides.push({row,guideURL,modelURL,guide,model,folder});
+  for(const part of model.parts){const file=new URL(part.file,modelURL).pathname;if(file.startsWith(folder)){assert.ok(file.endsWith('.stl'));if(owners.has(file))assert.equal(owners.get(file),part.sha256);owners.set(file,part.sha256);}}
+ }
+ for(const {row,modelURL,model}of boundGuides)for(const part of model.parts){
+  const file=new URL(part.file,modelURL).pathname;
+  assert.equal(owners.get(file),part.sha256,'Every shared neutral dependency has an exact indexed owner: '+row.id+' '+file);
+  assert.equal(digest(gitBytes(file)),part.sha256,'Guide derivative matches the immutable served revision');
+  const response=await context.request.get(base+file);assert.equal(response.status(),200);assert.equal(digest(await response.body()),part.sha256,'Guide derivatives remain available at their exact public URL');presentationModels.add(file);
  }
  assert.ok(presentationModels.size>0);
  const expectedModels=committed.filter(file=>/\.(stl|step|stp|3mf)$/i.test(file)).map(publicForSource).filter(Boolean).map(file=>'/'+file).filter(file=>!presentationModels.has(file)).sort();

@@ -15,7 +15,7 @@
       "assembly": "robot",
       "status": "wip",
       "file": "robot-wip-540056ba4e59/guide.json",
-      "sha256": "35fcc0edbc4a19f11e5232aacdfca34a22a6b22f4a37722ddddbc1b9d9df94d6"
+      "sha256": "478be73e2b16202d74539b298b59ad5152a4d38b193157358d33c30e5ed85959"
     },
     {
       "id": "combined-wip-540056ba4e59",
@@ -23,7 +23,7 @@
       "assembly": "combined",
       "status": "wip",
       "file": "combined-wip-540056ba4e59/guide.json",
-      "sha256": "846e3d32c12d0c07038ac4f55f29e5e4452fe02bf8519b82870553f112cb7fe7"
+      "sha256": "8a0b9c2fbf1e6f09cf9ce7021be6a729dbac083d8e305c05de31dfde31e04e50"
     }
   ],
   "unavailable": [

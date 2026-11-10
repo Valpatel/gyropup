@@ -32,7 +32,7 @@ async function start(){
  const published=validateIndex(parseJSON(await readAsset(indexURL,{maxBytes:512*1024})));
  const index=published;
  const selects=new Map([...host.querySelectorAll('[data-assembly-snapshot]')].map(select=>[select.dataset.assemblySnapshot,select]));
- for(const [assembly,select]of selects){const rows=snapshotsFor(index,assembly);if(rows.length)select.replaceChildren(...rows.map(s=>{const o=document.createElement('option');o.value=s.id;o.textContent=s.title+' · '+s.status.toUpperCase();return o;}));}
+ for(const [assembly,select]of selects){const rows=snapshotsFor(index,assembly);if(rows.length)select.replaceChildren(...rows.map(s=>{const o=document.createElement('option');o.value=s.id;o.textContent=s.title;return o;}));}
  async function load(id,route={}){
   retryAction=()=>load(id,route);
   const own=++request;pending?.abort();const abort=pending=new AbortController();
@@ -113,6 +113,7 @@ function paint(id,{preserveAnchor=false}={}){
  applyPresentation(s,true);
  const index=g.steps.indexOf(s),chapter=g.subassemblies.find(c=>c.id===s.subassembly);
  host.querySelector('[data-guide-source]').innerHTML=`${esc(g.snapshot.revision)} · ${esc(g.snapshot.status)} · <a href="https://github.com/Valpatel/gyropup/tree/${esc(g.snapshot.source_commit)}">Source snapshot</a>`;
+ host.querySelector('[data-guide-scope-description]').textContent=`${g.steps.length} authored entries for ${a.guideAssembly||'turret'}, bound to this snapshot. Overview entries are reference views; physical qualification remains separate.`;const plain=host.querySelector('[data-guide-plain]');plain.href=new URL('instructions.html',a.url);plain.textContent=(a.guideAssembly==='turret'&&g.steps.length===12)?'All twelve instructions in plain HTML':`All ${g.steps.length} ${a.guideAssembly} instructions (plain HTML)`;host.querySelector('[data-guide-manifest]').href=a.url.href;
  host.querySelector('[data-guide-warning]').textContent=g.source?.qualification||'Educational work in progress; no physical qualification.';
  host.querySelector('[data-guide-scope]').innerHTML=Object.entries(g.source?.excluded||{}).map(([name,reason])=>`<li><b>${esc(name.replaceAll('_',' '))}</b>: ${esc(reason)}</li>`).join('');
  host.querySelector('[data-guide-title]').textContent=s.title;
