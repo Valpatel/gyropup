@@ -36,9 +36,10 @@ export function createWorkspace(host,getActive,paint,report){
  host.addEventListener('keydown',event=>{if(event.key!=='Escape')return;if(layout.dataset.expanded==='true')collapseFullscreen();if(document.fullscreenElement===layout)document.exitFullscreen().catch(()=>{});if(useSheet()){if(getActive()?.viewer)sheetCollapsed=true;else{pane='instructions';sheetCollapsed=false;}}else{partsOpen=false;toolsOpen=false;}renderPanels();frame();},{signal:events.signal});
  host.addEventListener('gyropup:part-selected',()=>{if(mobile.matches){pane='parts';sheetCollapsed=false;renderPanels();frame();}},{signal:events.signal});
  function frame(){
-  const active=getActive(),viewer=active?.viewer;if(!viewer)return;
+  const active=getActive(),viewer=active?.viewer;
   const bounds=layout.getBoundingClientRect(),top=toolbar.getBoundingClientRect();layout.style.setProperty('--assembly-toolbar-bottom',`${top.bottom-bounds.top}px`);
   const navigation=nav.getBoundingClientRect();layout.style.setProperty('--assembly-nav-bottom',`${navigation.bottom-bounds.top}px`);
+  if(!viewer)return; // Floating controls must remain measurable during loading or initial errors.
   const insets={top:navigation.bottom-bounds.top+12,bottom:16,left:16,right:16};
   if(mobile.matches){const occupied=sheet.getBoundingClientRect();insets.bottom=Math.max(16,bounds.bottom-occupied.top+12);layout.style.setProperty('--assembly-sheet-height',`${occupied.height}px`);}
   else{

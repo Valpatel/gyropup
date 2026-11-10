@@ -111,3 +111,17 @@ old routing handlers on retry. Test the original rejection, every enabled
 assembly choice, subsequent back/forward, and disposal. Keep a previous coherent
 model when a later invalid route is rejected; do not silently substitute another
 snapshot. These are presentation/lifecycle rules, not physical qualification.
+
+The first actual recovery probe at `81740925` found a second initial-state
+boundary: on390px, the navigation row intercepted Robot because toolbar/nav
+measurements returned before any viewer existed. Measure floating controls before
+the viewer guard; loading and rejected routes must retain reachable choices.
+The same recovery regression includes a real back/forward round trip and pagehide.
+
+Current-head Print job129756319817 passed both original and prepared-project
+HTTP404 recovery, then its redundant pre-fullscreen diagnostic screenshot hit
+15s after fonts had loaded. The catch screenshot succeeded and showed a clear
+complete model; no fullscreen/Print assertion had run yet. The duplicate capture
+was removed, retaining sealed visibility/focus/button bounds and every actual
+fullscreen/Print assertion. Do not relabel that successful prefix as fullscreen
+acceptance, or increase the timeout to hide the capture failure.
