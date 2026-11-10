@@ -10,9 +10,27 @@ for(const type of ['wheel','touchmove','pointerdown','keydown'])window.addEventL
 const tabProgress=new Map(),assemblyChoices=new Map(),viewStates=new Map();
 const workspace=createWorkspace(host,()=>active,paint,report);
 const inspector=createPartInspector(host,()=>active,({active,part})=>window.dispatchEvent(new CustomEvent('gyropup:prepare-print',{detail:{guide:active.guide,guideHash:active.guideHash,guideURL:active.url.href,assembly:active.guideAssembly,part}})));
-let retryAction=()=>start().catch(error=>report(error.message,true));
+let retryAction=()=>start();
 host.querySelector('[data-guide-retry]').onclick=()=>retryAction();
 const storage=()=>{try{return globalThis.localStorage;}catch{return null;}};
+const loading=host.querySelector('[data-guide-loading]'),loadingBar=loading.querySelector('progress');
+function showLoading(message,completed,total){
+ loading.hidden=false;host.querySelector('[data-guide-model]').setAttribute('aria-busy','true');
+ loading.querySelector('[data-loading-phase]').textContent=message;
+ const measured=Number.isInteger(completed)&&Number.isInteger(total)&&total>0&&completed>=0&&completed<=total;
+ loading.querySelector('[data-loading-count]').textContent=measured?`${completed} of ${total} parts loaded`:'Checking the selected build files…';
+ if(measured){loadingBar.max=total;loadingBar.value=completed;}else loadingBar.removeAttribute('value');
+}
+function finishLoading(){loading.hidden=true;host.querySelector('[data-guide-model]').setAttribute('aria-busy','false');}
+// Adapter for the pinned shared viewer's existing text callback. N starts before
+// download/validation, so only N-1 parts are complete. Unknown phases stay indeterminate.
+function modelProgress(message,total){
+ const part=/^Loading model part (\d+) of (\d+)…$/.exec(message);
+ if(part&&Number(part[2])===total&&Number(part[1])>=1&&Number(part[1])<=total){showLoading('Loading model parts…',Number(part[1])-1,total);return;}
+ if(message==='Preparing the 3D view…'||message==='Model ready'){showLoading('Preparing the 3D view…',total,total);return;}
+ showLoading(message);
+}
+
 function selection(name,interactive=false,interaction){
  if(!active)return;
  const wasIsolated=active.isolate;active.selected=name;if(!name)active.isolate=false;
@@ -28,9 +46,13 @@ function partInfo(name){const a=active,meta=a&&partMetadata(a.guide,a.modelParts
 function partHover(name,point){const tip=host.querySelector('[data-part-tooltip]');tip.hidden=!name;if(!name)return;tip.innerHTML=partInfo(name,true);const bounds=host.querySelector('.assembly-layout').getBoundingClientRect(),x=(point?.clientX??bounds.left)-bounds.left+14,y=(point?.clientY??bounds.top)-bounds.top+14;tip.style.left=Math.max(8,Math.min(x,bounds.width-tip.offsetWidth-8))+'px';tip.style.top=Math.max(8,Math.min(y,bounds.height-tip.offsetHeight-8))+'px';}
 function report(message,error=false){host.querySelector('[data-guide-status]').textContent=message;host.querySelector('[data-guide-status]').dataset.state=error?'error':'ready';host.querySelector('[data-guide-retry]').hidden=!error;}
 async function start(){
+ const startup=++request;pending?.abort();const boot=pending=new AbortController();
+ showLoading('Opening the assembly workshop…');
+ try{
  const indexURL=new URL('../../web/build-guides/index.json',import.meta.url);
  const {loadGuide,createGuideController,readAsset,parseJSON}=await import('../kit/assembly/guide.js');
- const published=validateIndex(parseJSON(await readAsset(indexURL,{maxBytes:512*1024})));
+ const published=validateIndex(parseJSON(await readAsset(indexURL,{signal:boot.signal,maxBytes:512*1024})));
+ if(startup!==request||boot.signal.aborted)return;
  const index=published;
  const selects=new Map([...host.querySelectorAll('[data-assembly-snapshot]')].map(select=>[select.dataset.assemblySnapshot,select]));
  for(const [assembly,select]of selects){const rows=snapshotsFor(index,assembly);if(rows.length)select.replaceChildren(...rows.map(s=>{const o=document.createElement('option');o.value=s.id;o.textContent=s.title;return o;}));}
@@ -39,6 +61,7 @@ async function start(){
   const own=++request;pending?.abort();const abort=pending=new AbortController();
   const row=index.snapshots.find(s=>s.id===id);if(!row)throw new Error('Unknown snapshot');
   const assembly=row.assembly||'turret',select=selects.get(assembly);
+  showLoading('Checking the selected build…');
   report(active?'Loading the selected snapshot… The previous model and instructions remain visible until it is ready.':'Loading this exact build snapshot…');
   let nextViewer,posterURLs=new Map();
   try{
@@ -52,6 +75,7 @@ async function start(){
    const step=stepFor(guide,route),canvas=document.createElement('div'),panel=document.createElement('div');canvas.className='assembly-canvas';
    let renderError=null;
    try{nextViewer=await createViewer({app:canvas,panel,guideBound:true,manifest:loaded.manifest,manifestUrl:loaded.manifestUrl,signal:abort.signal,
+     onProgress:message=>{if(own===request&&!abort.signal.aborted)modelProgress(message,loaded.manifest.parts.length);},
      onSelect:(name,point)=>{if(applying||active?.viewer!==nextViewer||active?.overview)return;if(point)active.playback?.pause();selection(name,!!point,point);},onHover:(name,point)=>{if(active?.viewer===nextViewer&&!active?.overview)partHover(name,point);}});}
    catch(error){if(abort.signal.aborted)throw error;renderError=error;}
    if(renderError&&active?.viewer)throw renderError;
@@ -65,12 +89,13 @@ async function start(){
    catch(error){active=previous;model.replaceChildren(...previousNodes);if(previous){try{paint(previous.step,{preserveAnchor:true});}catch{}}else{host.dataset.ready='0';}throw error;}
    previous?.playback?.dispose();disposeRobot(previous?.robot);previous?.viewer?.dispose();for(const value of previous?.posterURLs?.values()||[])URL.revokeObjectURL(value);
    if(nextViewer)active.playback=mountPlayback(host,active,()=>active?.viewer===nextViewer,(id)=>{if(active.step!==id)paint(id,{playback:true});});active.player=active.playback?.player;
+   finishLoading();
    if(renderError)report('Interactive 3D is unavailable. '+(guide.steps.some(step=>step.poster)?'The same snapshot’s text and diagrams remain below.':'The same snapshot’s text remains below.'),true);
    else report(guide.snapshot.status==='wip'?'Source-bound WIP guide loaded. No physical build release.':'Versioned guide loaded. Its publication status is separate from physical qualification.');
-   window.__buildGuide={get active(){return active;},load,apply:id=>paint(id),dispose(){interactionEvents.abort();navigationEvents?.abort();inspector.dispose();workspace.dispose();pending?.abort();active?.playback?.dispose();disposeRobot(active?.robot);active?.viewer?.dispose();for(const value of active?.posterURLs?.values()||[])URL.revokeObjectURL(value);active=null;}};
+   window.__buildGuide={get active(){return active;},load,apply:id=>paint(id),dispose(){++request;finishLoading();interactionEvents.abort();navigationEvents?.abort();inspector.dispose();workspace.dispose();pending?.abort();active?.playback?.dispose();disposeRobot(active?.robot);active?.viewer?.dispose();for(const value of active?.posterURLs?.values()||[])URL.revokeObjectURL(value);active=null;}};
    if(!renderError&&route.assembly&&route.assembly!==assembly)workspace.choose(route.assembly,false);
    if(pending===abort)pending=null;
-  }catch(error){const cancelled=abort.signal.aborted||own!==request;abort.abort();if(pending===abort)pending=null;nextViewer?.dispose();for(const value of posterURLs.values())URL.revokeObjectURL(value);if(cancelled)return;report(error.message+(active?' Your previous build remains selected.':''),true);if(active){const choice=assemblyChoices.get(assembly);select.value=choice?.snapshot||'';}else select.selectedIndex=-1;}
+  }catch(error){const cancelled=abort.signal.aborted||own!==request;abort.abort();if(pending===abort)pending=null;nextViewer?.dispose();for(const value of posterURLs.values())URL.revokeObjectURL(value);if(cancelled)return;finishLoading();report(error.message+(active?' Your previous build remains selected.':''),true);if(active){const choice=assemblyChoices.get(assembly);select.value=choice?.snapshot||'';}else select.selectedIndex=-1;}
  }
  for(const [assembly,select]of selects)select.onchange=()=>{if(!snapshotsFor(index,assembly).length)return;const choice={snapshot:select.value};if(!active||(active.overview?active.assembly:active.guideAssembly)===assembly)load(select.value,{assembly});else assemblyChoices.set(assembly,choice);};
  workspace.setNavigation(assembly=>{const rows=snapshotsFor(index,assembly);if(!rows.length)return false;const choice=assemblyChoices.get(assembly)||{snapshot:rows[0].id};if(active?.guideAssembly===assembly&&active.guide.snapshot.id===choice.snapshot)workspace.step(choice.step||active.step);else load(choice.snapshot,{assembly,step:choice.step});return true;});
@@ -85,6 +110,7 @@ async function start(){
  await load(initial,{...route,assembly:desired,step:initial===route.snapshot?route.step:null,chapter:initial===route.snapshot?route.chapter:null});
  if(!initialAnchor||initialAnchor==='#assembly'){await document.fonts.ready;await new Promise(resolve=>requestAnimationFrame(()=>requestAnimationFrame(resolve)));if(!userMoved){const top=document.querySelector('.appnav')?.getBoundingClientRect().bottom||64;window.scrollTo({top:host.getBoundingClientRect().top+scrollY-top-8,behavior:'instant'});}}
 
+ }catch(error){if(startup!==request||boot.signal.aborted)return;if(pending===boot)pending=null;finishLoading();report(error.message,true);}
 }
 function applyPresentation(s,frame){
  const a=active;
@@ -146,4 +172,4 @@ function paint(id,{preserveAnchor=false,playback=false}={}){
  workspace.present();
  host.dataset.ready='1';
 }
-start().catch(error=>report(error.message,true));
+start();

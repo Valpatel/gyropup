@@ -3,6 +3,7 @@
 | Symptom | Canonical guidance |
 | --- | --- |
 | A build part passes through installed geometry despite a clean final pose, or flipping its direction hits a different obstruction | [Bind arrival paths to installed dependencies](inbox/2026-11-10-clean-final-assembly-pose-does-not-validate-arrivals.md) |
+| A build viewer looks blank during mesh downloads, or a progress bar counts the pending part as complete | [Count validated loader completions](inbox/2026-11-10-loader-progress-must-count-completed-parts.md) |
 | A robot is tiny despite a large canvas, stable guide rectangles hide controls, or narrow screenshots use desktop height | [Fit visible geometry and test actual overlay hit targets](inbox/2026-11-09-assembly-overlays-need-visible-bounds-and-hit-tests.md) |
 | A named, hashed manufacturing original is offered as matching a newly collected assembly part | [Keep file identity separate from accepted geometry correspondence](inbox/2026-11-10-manufacturing-links-need-geometry-correspondence.md) |
 | A native identity guard rejects a known package file after resolving it outside the venv | [Bind the predeclared file link and exact target identity](inbox/2026-11-07-native-origins-must-bind-declared-symlinks.md) |
@@ -184,3 +185,5 @@
 - Browser installation consumes most of a CI job, or the presentation command list reaches its time bound: [keep provisioning outside executable test budgets and preserve command unions](inbox/2026-11-05-ci-classification-needs-phase-evidence.md#browser-provisioning-must-leave-time-for-executable-checks).
 
 - A playback observation loses its execution context while a later screenshot still looks coherent: [record document identity and navigation before changing runtime](inbox/2026-11-09-assembly-overlays-need-visible-bounds-and-hit-tests.md#2026-11-10-context-destruction-needs-document-identity-evidence).
+
+- A supplier-photo fallback times out while the screenshot shows a loaded image: [arm and witness the actual request failure before navigation](inbox/2026-11-10-photo-failure-tests-must-intercept-the-request.md).
