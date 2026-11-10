@@ -24,6 +24,6 @@
     }
   ],
   "preserved_product_stage_loader_and_entry_html": true,
-  "limits": "Reviewed source and release candidate; all imported bytes match. Actual main/tag and public module readback remain pending; product merge is blocked until publication is verified.",
-  "release_candidate": "v0.31.0"
+  "limits": "Targeted import of reviewed immutable v0.31.0 source bytes. Product merge requires verification of matching main/tag ancestry and ordinary public module byte hashes, recorded on PR267. Product and physical qualification remain separate.",
+  "target_release": "v0.31.0"
 }
