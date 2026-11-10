@@ -1,0 +1,124 @@
+{
+  "schema": "gyropup.native-control-artifact-audit/1",
+  "date": "2026-11-10",
+  "job": 265,
+  "artifact_audit_pass": true,
+  "execution_complete": true,
+  "geometry_pass": false,
+  "source": "05bf810d245ca1b938f9283a10dde624ed2104ba",
+  "core": "5c29c9e2abf2562baa72a05248f23de054b8241e",
+  "input_job": 261,
+  "frame_job": 263,
+  "archive_sha256": "17488f0972a382f3658bf6d51bf47444b9d9a984e471741634c315e433448dac",
+  "archive_and_actual_files": 485,
+  "preserved_original_input_files": 475,
+  "all10_preservation_guards_pass": true,
+  "all_child_groups_gone": true,
+  "native_phase_seconds": 11.51553279766813,
+  "actual_native_cli_exit": 1,
+  "selected_queries": 2,
+  "counts": {
+    "blocked": 2
+  },
+  "unselected_full_plan_queries": 88,
+  "progress_records": 472,
+  "flushed_records": 472,
+  "file_fsync_acknowledged_records": 472,
+  "progress_tail_uncertain": false,
+  "hits": [
+    {
+      "case_id": "motor-through-installed-hip-L",
+      "query_id": "f2bd165061ce41d9e225a5d2ed0b42fcf4b882e7fbe393f474089ff75afd519e",
+      "moving": "L.motor_front",
+      "fixed": "L.hip_frame",
+      "offset_mm": [
+        0,
+        60,
+        0
+      ],
+      "direction": [
+        0.0,
+        -1.0,
+        0.0
+      ],
+      "travel_mm": 60.0,
+      "result": {
+        "part": "L.hip_frame",
+        "travel_mm": 60.0,
+        "state": "blocked",
+        "first_contact_mm": [
+          null,
+          60.0
+        ],
+        "overlap_mm3": 115749.939463,
+        "overlap_centroid": [
+          75.393213,
+          91.849692,
+          -0.421669
+        ],
+        "samples": 2
+      }
+    },
+    {
+      "case_id": "motor-wrong-inward-through-cheek-L",
+      "query_id": "6b8e90982dd9f33b2bef4654d5d234c1d9d2a825198245b14d86df7a52bac254",
+      "moving": "L.motor_front",
+      "fixed": "cheek_left",
+      "offset_mm": [
+        0,
+        -60,
+        0
+      ],
+      "direction": [
+        0.0,
+        1.0,
+        0.0
+      ],
+      "travel_mm": 60.0,
+      "result": {
+        "part": "cheek_left",
+        "travel_mm": 60.0,
+        "state": "blocked",
+        "first_contact_mm": [
+          null,
+          60.0
+        ],
+        "overlap_mm3": 15823.005812,
+        "overlap_centroid": [
+          60.146074,
+          16.566367,
+          0.0
+        ],
+        "samples": 2
+      }
+    }
+  ],
+  "motor_geometry_basis": "Source body_frame.legs collects the motors as envelopes; these checks are CAD/viewer path evidence, not measured hardware fit.",
+  "world_stats": {
+    "kernel_queries": 4,
+    "memo_hits": 0,
+    "cache_hits": 0,
+    "tool_sweeps": 0
+  },
+  "combined264_265_observed_queries": 44,
+  "combined_counts": {
+    "clear": 36,
+    "seat": 6,
+    "blocked": 2
+  },
+  "combined_full_plan_queries_without_completed_record": 46,
+  "all_assembly_paths_checked": false,
+  "support_stability_verified": false,
+  "physical_assembly_verified": false,
+  "limits": "Both controls are already intersecting at the authored60mm start pose; null/60 gives no last-clear/contact-onset bracket. Only two explicit probes complete. Combined44/90 coverage preserves distinct execution/source identities and leaves46 queries without completed results. No whole sequence, continuous clearance or physical/manufacturing approval.",
+  "seals": {
+    "plan.json": "1316f2e4e315ee2cd45ed805d92ee219699a311bf09bb8d106148145fb8a96cc",
+    "query-plan.json": "c8c2f01464bd49f5cd464637b277032efe761fb3e76cd216e8c146ded25d3cc6",
+    "selection.json": "ecb26e9ddd47a023664447e4078dbc34bd960e5b19c0194dfcf631503ec2a945",
+    "source.json": "947503be415e49c72ce35a5eadeaea3429b85c77cc8d35054ca3bda89b853f3c",
+    "report.json": "5694ee1dfffaf2011a9deeaf8b336df26f42bcef8584e950ae71ad7882571308",
+    "phase.json": "b1e2505e5ecfe704357472acc31a7bb9f354b68fcaec093cb7f2d21f05ecb15d",
+    "progress.jsonl": "27de7d5dd2ad27f6ad176c29ebcd2de75a0cd19f0ae6d867aaa8afa4a3e3c7a9",
+    "native-cli-exit.json": "7ab6df969c3dfb2cde7d083d9d1daafe9b19b355a33ec55a798ab84a98aa9eda"
+  }
+}

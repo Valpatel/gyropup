@@ -182,3 +182,16 @@ old-order/wrong-side controls remain unchecked. Source and printing leg
 geometry stay unchanged. The next separately reviewed question is two explicit
 unperformed controls from the same full plan, without an automatic 90-query retry
 or broad timeout increase. No product insertion/physical release is granted.
+
+## Retain the two native diagnostic findings
+
+The separately reviewed [265 control checkpoint](native-265/README.md) completes
+only two exact IDs from the existing plan. The old motor-after-hip and wrong-side
+inward motor controls are both blocked already at their authored 60 mm start;
+the actual native CLI exits 1. All ten preservation guards and both independent
+artifact audits pass. The 472-record normal prefix is fully flushed/file-fsync
+acknowledged. Together with capped264, 44 distinct query records exist: 36 clear,
+six terminal-seat and two blocked; 46 still have no completed result. No physical,
+support, continuous-clearance or entire-sequence approval follows. Original CAD,
+core5c and execution identities remain fixed even when this source integrates
+with current dev. No additional native study is authorized by this checkpoint.
