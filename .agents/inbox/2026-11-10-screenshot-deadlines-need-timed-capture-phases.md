@@ -61,3 +61,28 @@ program and context metadata are observations, not a hardware performance claim.
 No product correction is claimed. The next pinnedCI campaign must provide the
 missing phase observations before choosing a mitigation. No local full browser
 campaign or native run was started for PR294.
+
+## Actual573 pinnedCI located the pending protocol operation
+
+Run42899887112/job130122907263 failed with the original15s error and125 passed
+observations. The newly recorded preparation12.574ms/fonts1.313ms/layout0.393ms
+all completed, then Page.captureScreenshot remained unanswered through the
+remaining~14985ms. Cleanup5.431ms returned; the screenshot API rejected after
+15006.676ms. The observer had no errors/dropped calls. Full immutable identities,
+original failed report and actual diagnostic PNG are retained in
+`plans/docking-capture-diagnostics/observed-573/`.
+
+Before/after native snapshots remained available and showed the same visible,
+focused, complete, nonfullscreen document, loaded fonts, no requests/context loss
+or stage error, frame37→48 and programs5. Endpoint frame advancement is not
+per-frame cadence, nor does stable program count rule out all native driver costs.
+The phone was native-fullscreen before its awaited context close; zero contexts
+followed close, then a new playback context. This confirms lifecycle sequence,
+not causality. The internal browser capture reason remains unknown.
+
+The next proposed contrast reuses the original stopped Robot capture in a fresh
+**pinned141** browser with no prior context or scene. Separate scoped evidence and
+an additive matrix case preserve the normal full campaign and all failures. No
+control is run until source/action review; a different localChrome151 success is
+not that contrast. See `plans/docking-capture-fresh-control.md` for the bounded
+command, runtime guards and interpretation limits.

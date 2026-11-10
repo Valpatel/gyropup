@@ -1,6 +1,15 @@
 import test from 'node:test';
 import assert from 'node:assert/strict';
-import {observeCaptureProtocol,observeScreenshot} from './capture-diagnostics.mjs';
+import {captureScope,requireFreshCaptureRuntime,observeCaptureProtocol,observeScreenshot} from './capture-diagnostics.mjs';
+
+test('normal campaign is the default; narrow capture control requires explicit selection',()=>{
+ assert.equal(captureScope(),'all');assert.equal(captureScope('all'),'all');assert.equal(captureScope('fresh-capture'),'fresh-capture');assert.throws(()=>captureScope('fresh'),/Unknown docking case/);assert.throws(()=>captureScope(''),/Unknown docking case/);
+});
+
+test('fresh control rejects a different engine, channel, browser release or missing runtime identity',()=>{
+ const pinned={engine:'chromium',channel:'chromium',version:'141.0.7390.37'};assert.doesNotThrow(()=>requireFreshCaptureRuntime(pinned));
+ for(const changed of [{engine:'webkit'},{channel:'chrome'},{version:'151.0.7922.71'},{version:'143.0.0.0'},{version:undefined}])assert.throws(()=>requireFreshCaptureRuntime({...pinned,...changed}),/no browser substitution/);
+});
 
 function fixture(overrides={}){
  const options={path:'/capture/required.png',timeout:15000},value=Buffer.from('actual capture'),reports=[],calls=[];

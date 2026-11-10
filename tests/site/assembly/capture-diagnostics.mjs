@@ -2,6 +2,14 @@
 import {performance} from 'node:perf_hooks';
 import path from 'node:path';
 
+export function captureScope(value='all'){
+ if(!['all','fresh-capture'].includes(value))throw Error('Unknown docking case: '+value);
+ return value;
+}
+export function requireFreshCaptureRuntime({engine,channel,version}){
+ if(engine!=='chromium'||channel!=='chromium'||version!=='141.0.7390.37')throw Error('Fresh capture control requires bundled pinned Chromium141.0.7390.37; no browser substitution');
+}
+
 const errorInfo=error=>{try{return{name:error?.name||typeof error,message:String(error?.message??error)};}catch{return{name:'UnserializableError',message:'Diagnostic could not describe this error'};}};
 const phase=(method,params)=>{
  if(!method.startsWith('Runtime.'))return method;
