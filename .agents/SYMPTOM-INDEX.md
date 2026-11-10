@@ -212,3 +212,5 @@
 
 - A held mesh request times out despite a rendered model, or an error fixture never intercepts its part: [resolve actual mesh filenames from the hash-bound manifest](inbox/2026-11-10-mesh-request-controls-need-manifest-file-identities.md).
 - A reel says current while only its turret names or legacy rig meshes are bound: [bind the complete current body and observe its actual holder](inbox/2026-11-10-current-captures-need-complete-body-bindings.md).
+
+- A retry readiness wait throws on `document.body.dataset` during navigation: [wait through bodyless documents without suppressing page errors](inbox/2026-11-10-readiness-observers-must-wait-through-bodyless-documents.md).

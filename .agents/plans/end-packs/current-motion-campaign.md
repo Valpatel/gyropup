@@ -98,6 +98,16 @@ now resolve the unique actual part file and verify its bytes before browser
 startup; the mobile result requires an actual interception. A separately reviewed
 new action must use fresh outputs. No prior partial capture is a passed campaign.
 
+The corrected6dd Chrome action completed and received independent acceptance in
+[PR #287](https://github.com/Valpatel/gyropup/pull/287#issuecomment-6779690799).
+The subsequent WebKit action failed44.331s at its final mobile retry wait because
+the observer accessed a temporarily absent document body. Its26 saved outputs
+remain incomplete and unvalidated. The [bodyless observer lesson](../../inbox/2026-11-10-readiness-observers-must-wait-through-bodyless-documents.md)
+records the narrow null-safe predicate correction and non-suppression controls.
+Product runtime, accepted data and independent reference remain unchanged. A new
+WebKit-only action needs separate review and fresh output; no qualification or
+publication follows the partial run.
+
 Campaign-local storage initialization runs only on HTTP(S) origins. The initial
 `about:blank` document is skipped before accessing either storage object; an
 HTTP-origin storage exception remains an observed page error. The historical

@@ -8,6 +8,7 @@ import {createSiteServer} from '../../../tools/site/serve-site.mjs';
 import {publicForSource,sourceForPublic} from '../../../tools/site/source-layout.mjs';
 import {installCurrentMotion,captureMotionFaults,captureMotionOperation} from './current-motion-capture.mjs';
 import {requiredMeshRequestTarget} from './current-motion-target.mjs';
+import {currentRobotReady} from './current-motion-ready.mjs';
 
 const root=new URL('../../../',import.meta.url),sha=b=>createHash('sha256').update(b).digest('hex');
 const referenceFile=process.env.CURRENT_MOTION_REFERENCE,referenceHash=process.env.CURRENT_MOTION_REFERENCE_SHA256;
@@ -68,7 +69,7 @@ try{
     report.deliveredSource[file]={sha256:sha(actual),bytes:actual.length};
   }
   await page.goto(base+'/designer/sim.html?run=none&demo=0&sound=0',{waitUntil:'domcontentloaded'});
-  await page.waitForFunction(hash=>document.body.dataset.ready==='1'&&window.__sim?.state.robot?.presentation.collectionSha256===hash,reference.collection_sha256);
+  await page.waitForFunction(currentRobotReady,reference.collection_sha256);
   await page.evaluate(installCurrentMotion,reference);
   const rigid=await page.evaluate(()=>{const t=window.__currentMotion;return{...t.prefix,samples:t.reference.rigid.required_poses.map((a,i)=>t.observe('rigid-'+i,t.reference.rigid.contract,t.rigidPose(a))) };});
   await save('rigid-capture.json',rigid);await progress('rigid source loop/hinge observations saved');
@@ -155,7 +156,7 @@ try{
   assert.ok(mobileInterceptions>0,'The required-part HTTP failure must actually be intercepted');
   const mobileFailure={text:await status.innerText(),button:box,interceptions:mobileInterceptions,requiredPart:report.requiredPartRequest,falseReady:await phone.evaluate(()=>document.body.dataset.ready==='1')};assert.equal(mobileFailure.falseReady,false);
   await phone.unroute(currentPart);await button.click();
-  await phone.waitForFunction(hash=>document.body.dataset.ready==='1'&&window.__sim?.state.robot?.presentation.collectionSha256===hash,reference.collection_sha256);
+  await phone.waitForFunction(currentRobotReady,reference.collection_sha256);
   await save('mobile-error-recovery.json',mobileFailure);await phone.screenshot({path:path.join(out,'mobile-current-recovered.png'),timeout:15000});
   assert.deepEqual(errors,[]);report.status='CAPTURED_AWAITING_INDEPENDENT_SHARED_VALIDATION';await progress('browser observations complete; not a validation/qualification verdict');
 }catch(error){report.error=error.stack??String(error);throw error;}
