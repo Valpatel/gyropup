@@ -14,6 +14,7 @@ import json
 from pathlib import Path, PurePosixPath
 import tarfile
 import tempfile
+import subprocess
 
 ROOT = Path(__file__).resolve().parents[3]
 SNAPSHOT = 'f77fcde00880d4cedf8ca1a7edabd993714deaca'
@@ -58,6 +59,22 @@ def _unpack(raw, members, destination):
         expanded = stream.read(MAX_RAW + 1)
     if len(expanded) > MAX_RAW:
         raise ValueError('Historical snapshot expansion exceeds bound')
+    # tarfile consumes GNU/PAX extension records before yielding their target.
+    # This contract accepts only the recorded regular USTAR data headers.
+    offset = count = 0
+    while offset + 512 <= len(expanded) and any(expanded[offset:offset+512]):
+        header = expanded[offset:offset+512]
+        size_field = header[124:136].strip(b'\x00 ')
+        if (count >= 96 or header[156:157] != b'0' or header[257:265] != b'ustar\x0000'
+                or not size_field or any(c not in b'01234567' for c in size_field)):
+            raise ValueError('Historical snapshot requires regular USTAR headers only')
+        size = int(size_field, 8)
+        if not 0 < size <= MAX_MEMBER:
+            raise ValueError('Historical snapshot raw member bound differs')
+        offset += 512 + ((size + 511) // 512) * 512
+        count += 1
+    if count != 96 or offset + 1024 > len(expanded) or any(expanded[offset:]):
+        raise ValueError('Historical snapshot end records differ')
     seen = set()
     with tarfile.open(fileobj=io.BytesIO(expanded), mode='r:') as archive:
         for member in archive:
@@ -164,3 +181,20 @@ def verify_archive(root=ROOT):
             'recorded_slice_producer': PRODUCER, 'job_sha256': JOB_SHA,
             'engineering_receipt_sha256': RECEIPT_SHA, 'engineering_pass': False,
             'engineering_counts': COUNTS, 'scope': 'Historical archive integrity only; no current-body or physical qualification.'}
+
+
+def crosscheck_matching_snapshot(checkout, root=ROOT):
+    """Optional CI cross-check; read Git metadata/data, never historical code."""
+    checkout=Path(checkout).resolve()
+    def git(*args):
+        return subprocess.check_output(['git','-C',str(checkout),*args],text=True,timeout=10).strip()
+    if (git('rev-parse','HEAD') != SNAPSHOT or git('rev-parse','--show-toplevel') != str(checkout)
+            or git('status','--porcelain','--untracked-files=all')):
+        raise ValueError('Matching historical snapshot checkout pin/root/cleanliness differs')
+    with captured_inputs(root) as captured:
+        members=json.loads((Path(root)/MANIFEST).read_text())['members']
+        for name,row in members.items():
+            path=checkout/name
+            if path.is_symlink() or sha(path) != row['sha256'] or path.stat().st_size != row['bytes']:
+                raise ValueError('Matching snapshot actual input bytes differ')
+    return True

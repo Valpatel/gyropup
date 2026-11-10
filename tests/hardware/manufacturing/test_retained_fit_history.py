@@ -22,6 +22,10 @@ OPTIONS,REMAINING=parser.parse_known_args()
 
 
 class HistoricalReceipt(unittest.TestCase):
+    def test_wrong_matching_snapshot_pin_rejects_even_with_unchanged_archives(self):
+        with self.assertRaisesRegex(ValueError,'checkout pin/root/cleanliness'):
+            history.crosscheck_matching_snapshot(ROOT)
+
     def test_real_full_historical_receipt_offline_and_temporary_cleanup(self):
         with patch('subprocess.Popen', side_effect=AssertionError('No Git/network/child execution')):
             with history.captured_inputs() as captured:
@@ -123,6 +127,14 @@ class CapturedDataParser(unittest.TestCase):
         members=copy.deepcopy(self.members);next(iter(members.values()))['bytes']=history.MAX_RAW+1
         with tempfile.TemporaryDirectory() as temporary, self.assertRaises(ValueError):
             history._unpack(self.raw,members,Path(temporary))
+
+    def test_parser_hidden_gnu_longname_longlink_and_pax_headers_reject(self):
+        # These preceding extension headers may disappear from getmembers().
+        original=gzip.decompress(self.raw)
+        for kind in (tarfile.GNUTYPE_LONGNAME,tarfile.GNUTYPE_LONGLINK,tarfile.XHDTYPE,tarfile.XGLTYPE):
+            member=tarfile.TarInfo('././@LongLink');member.type=kind;member.size=2
+            extension=member.tobuf(format=tarfile.GNU_FORMAT)+b'x\0'+b'\0'*510
+            with self.subTest(kind=kind):self.reject(gzip.compress(extension+original,mtime=0))
 
 
 if __name__=='__main__':unittest.main(argv=[sys.argv[0],*REMAINING])

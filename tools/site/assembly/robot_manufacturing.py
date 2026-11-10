@@ -28,9 +28,17 @@ BODY_FAMILIES={'cheek_left':'cheek','cheek_right':'cheek','bay_side_l':'bay_side
  'bus_bar_1':'bus_bar','bus_bar_2':'bus_bar','bus_insulator_1':'bus_insulator','bus_insulator_2':'bus_insulator'}
 
 
-def hip_geometry_match(root,collection,name):
+def hip_geometry_match(root,collection,name,*,collection_folder=None):
     """Only the independently reviewed hip correspondence may enable WIP prep."""
     if collection is None or name not in ('L.hip_frame','R.hip_frame'):return None
+    # Explicitly selected current contract. An old current-root guard failure
+    # never triggers a historical fallback; missing accepted proof stays pending.
+    if collection.get('source_commit')=='3a40891962b0b0a04625e070700f1d130bea3c7b':
+        import sys
+        sys.path.insert(0,str(Path(root)))
+        from robot_current_print_match import matched
+        try:return matched(root,collection,collection_folder,name)
+        except (ValueError,KeyError,TypeError,OSError,EOFError):return None
     file='.agents/plans/robot-assembly/hip-print-match.json';root=Path(root)
     accepted='.agents/plans/robot-assembly/hip-print-match-acceptance.json'
     if not (root/file).is_file() or not (root/accepted).is_file():return None
@@ -65,7 +73,7 @@ def hip_geometry_match(root,collection,name):
     except (ValueError,KeyError,StopIteration,FileNotFoundError,TypeError):return None
 
 
-def mapping(root,names,collection=None):
+def mapping(root,names,collection=None,*,collection_folder=None):
     root=Path(root)
     def read(file):return json.loads((root/file).read_text())
     def binding(file):return {'source_file':file,'sha256':sha(root/file)}
@@ -101,9 +109,10 @@ def mapping(root,names,collection=None):
                 plan={**binding(plan_file),'material':value['material'],'qty':value['qty'],
                       'qty_scope':'per_leg' if physical_leg else 'body','infill':value.get('infill')})
             row['geometry_match']['basis']='Identified retained manufacturing original only. File identity and plan membership do not prove a match to the collected CAD instance.'
-            match=hip_geometry_match(root,collection,name)
+            match=hip_geometry_match(root,collection,name,collection_folder=collection_folder)
             if match:
                 row['geometry_match']=match
+                row['qualification']=match['qualification']
                 from robot_project import prepared
                 row['prepared_projects']=prepared(root,row['originals'][0]['sha256'])
             row.pop('reason');continue

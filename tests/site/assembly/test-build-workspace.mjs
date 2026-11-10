@@ -1,12 +1,13 @@
 /** Actual indexed models, fixed workspace, docking, picking, animation and verified Print faults. */
 import assert from 'node:assert/strict';
 import {mkdir,writeFile} from 'node:fs/promises';
+import {spawnSync} from 'node:child_process';
 import {chromium,webkit} from '@playwright/test';
 const base=(process.env.SITE_URL||'http://127.0.0.1:8899').replace(/\/$/,''),scope=process.env.WORKSPACE_CASE||'layout';
 if(!['layout','interactions','playback','print'].includes(scope))throw Error('Unknown workspace scope');
 if(process.env.WORKSPACE_WIDTH&&!['1440','1024','390','320'].includes(process.env.WORKSPACE_WIDTH))throw Error('Unknown workspace width');
 if(process.env.WORKSPACE_ASSEMBLY&&!['robot','turret','combined'].includes(process.env.WORKSPACE_ASSEMBLY))throw Error('Unknown workspace assembly');
-if(process.env.PRINT_CASE&&!['all','retry','project','native','fallback'].includes(process.env.PRINT_CASE))throw Error('Unknown Print case');
+if(process.env.PRINT_CASE&&!['all','retry','project','native','fallback','current'].includes(process.env.PRINT_CASE))throw Error('Unknown Print case');
 const engine=process.env.PLAYWRIGHT_BROWSER==='webkit'?webkit:chromium,out=process.env.TEST_OUTPUT||'/tmp/gyropup-build-workspace-'+scope;await mkdir(out,{recursive:true});
 const browser=await engine.launch(engine===chromium?{channel:process.env.PLAYWRIGHT_CHANNEL==='chromium'?undefined:'chrome',headless:true,args:['--no-sandbox','--use-gl=angle','--use-angle=swiftshader','--enable-unsafe-swiftshader']}:{headless:true}),contexts=[],errors=[],cases=[],observations=[],executions=[],documents=[];
 const documentReceipts=new WeakMap();
@@ -71,6 +72,45 @@ try{
  }
  if(scope==='print'){const printCase=process.env.PRINT_CASE||'all';console.log('PHASE print-'+printCase);
   async function printScene(phase){const p=await fresh({width:1440,height:1000},{serviceWorkers:'block'});await p.goto(base+'/designer/build.html?assembly=robot#assembly',{waitUntil:'domcontentloaded'});await ready(p,'robot');observations.push({phase:phase+' ready',document:await p.evaluate(()=>({visibility:document.visibilityState,focus:document.hasFocus(),scrollY}))});return p;}
+  // Mandatory after current266 proof acceptance/adoption; never exercise this
+  // against a historical guide and call it current evidence.
+  if(printCase==='current'){
+   for(const name of ['L.hip_frame','R.hip_frame']){
+    const p=await printScene(name+' current correspondence');
+    const contract=await p.evaluate(name=>{const a=window.__buildGuide.active;return{source:a.guide.snapshot.source_commit,collection:a.guide.source.collection_sha256,mapping:a.guide.source.manufacturing_by_part[name]};},name);
+    assert.equal(contract.source,'3a40891962b0b0a04625e070700f1d130bea3c7b');
+    assert.equal(contract.collection,'7c2f1905474a8c89bdc477ea472f5c826e57c674aa222f2134f6a0a4138d5a67');
+    assert.equal(contract.mapping.geometry_match.status,'matched');
+    assert.match(contract.mapping.qualification,/historical engineering evidence remains 322 pass \/ 40 warn \/ 8 fail/i);
+    await pickList(p,name);await p.locator('[data-part-print]').click();
+    await p.waitForFunction(()=>document.querySelector('#print-selection').dataset.state==='ready');
+    assert.match(await p.locator('#print-selection').innerText(),/not sliced|unsliced/i);
+    assert.match(await p.locator('#print-selection').innerText(),/generic bed|generic.*rectangle/i);
+    for(const [suffix,label]of [['stl','original'],['3mf','geometry-only']]){
+     const downloadEvent=p.waitForEvent('download');
+     await p.locator('#print-selection a[download$=".'+suffix+'"]').click();
+     const download=await downloadEvent,file=`${out}/${engine.name()}-${name.replace('.','-')}.${suffix}`;
+     await download.saveAs(file);assert.equal(await download.failure(),null);
+     const script=suffix==='3mf'
+      ? "import sys;from pathlib import Path;sys.path.insert(0,'tools/site/assembly');from robot_project import verify;print(verify(Path(sys.argv[1]),Path('hardware/exports/leg/hip_frame.stl')))"
+      : "import hashlib,sys;from pathlib import Path;assert hashlib.sha256(Path(sys.argv[1]).read_bytes()).hexdigest()=='f15c00497974e3f78d3fdc9ca60ef958ebff4d3537556d98c7c6828e6ec103de'";
+     const checked=spawnSync('python3',['-B','-c',script,file],{encoding:'utf8',timeout:15000});
+     assert.equal(checked.status,0,checked.stderr||String(checked.error));observations.push({part:name,download:label,readback:checked.stdout});
+    }
+    await pickList(p,'L.upper_link_front');assert.equal(await p.locator('[data-part-print]').isHidden(),true);
+    await p.context().close();
+   }
+   // The actual download verifier must reject corrupted project bytes, keeping
+   // only the original STL rather than exposing an unverified prepared project.
+   const p=await printScene('current project byte negative');await pickList(p,'L.hip_frame');
+   await p.route('**/prepared-projects/**/*.3mf',route=>route.fulfill({status:200,body:'Intentional corrupt project bytes'}));
+   await p.locator('[data-part-print]').click();await p.waitForFunction(()=>document.querySelector('#print-selection').dataset.state==='partial');
+   assert.equal(await p.locator('#print-selection a[download$=".3mf"]').count(),0);
+   assert.equal(await p.locator('#print-selection a[download$=".stl"]').count(),1);
+   executions.push({assembly:'robot',viewport:{width:1440,height:1000},phase:'actual current L/R originals and geometry-only3MF download/readback plus project corruption'});
+   cases.push('Accepted current correspondence, actual both-hip Prepare/downloads, strict original/3MF readbacks, unchanged pending other part and corrupted project rejection');
+   await p.context().close();
+  }
   if(['all','retry'].includes(printCase)){const p=await printScene('original retry');await pickList(p,'L.hip_frame');let fault=true;await p.route('**/exports/leg/hip_frame.stl',r=>fault?r.fulfill({status:404,body:'Intentional original unavailable'}):r.continue());await p.locator('[data-part-print]').click();await p.waitForFunction(()=>document.querySelector('#print-selection').dataset.state==='error');assert.equal(await p.locator('#print-selection a[download]').count(),0);fault=false;await p.getByRole('button',{name:'Retry print preparation',exact:true}).click();await p.waitForFunction(()=>document.querySelector('#print-selection').dataset.state==='ready');assert.equal(await p.locator('#print-selection a[download]').count(),2);assert.equal(await p.getByRole('link',{name:'Open in Bambu Studio (macOS)',exact:true}).getAttribute('href').then(x=>x.startsWith('bambustudioopen://')),true);assert.equal(await p.getByRole('link',{name:'Open in Bambu Studio (Windows / Linux)',exact:true}).getAttribute('href').then(x=>x.startsWith('bambustudio://open?file=')),true);assert.match(new URL(p.url()).searchParams.get('printPart'),/^L\.hip_frame$/);await p.screenshot({path:`${out}/${engine.name()}-verified-project.png`,timeout:15000});observations.push({print:'verified retry and project links'});executions.push({assembly:'robot',viewport:{width:1440,height:1000},phase:'original retry'});cases.push('Print retry: original404→restore→same-part retry, verified original/project downloads and platform-labelled client links');await p.context().close();}
   if(['all','project'].includes(printCase)){console.log('PHASE prepared-project-fault');const p=await printScene('project retry');await pickList(p,'L.hip_frame');let missing=true,projectRequests=0;await p.route('**/prepared-projects/**/*.3mf',r=>{projectRequests++;return missing?r.fulfill({status:404,body:'Intentional prepared project404'}):r.continue();});await p.locator('[data-part-print]').click();await p.waitForFunction(()=>document.querySelector('#print-selection').dataset.state==='partial');assert.equal(projectRequests,1,'The actual project HTTP request was rejected');assert.equal(await p.locator('#print-selection a[download]').count(),1);assert.equal(await p.locator('#print-selection .print-prepared-project a').count(),0);missing=false;await p.getByRole('button',{name:'Retry prepared project',exact:true}).click();await p.waitForFunction(()=>document.querySelector('#print-selection').dataset.state==='ready');assert.equal(await p.locator('#print-selection a[download]').count(),2);executions.push({assembly:'robot',viewport:{width:1440,height:1000},phase:'project retry'});assert.equal(projectRequests,2,'Retry fetched the restored project');cases.push('Print project404→restore→explicit retry exposes verified3MF and client links without caching failed project as ready');await p.context().close();}
   for(const fallback of [false,true].filter(value=>printCase==='all'||printCase===(value?'fallback':'native'))){console.log('PHASE fullscreen-'+fallback);const p=await printScene(fallback?'denied fullscreen':'native fullscreen');await pickList(p,'L.hip_frame');await p.keyboard.press('Escape');observations.push({phase:'before fullscreen',fallback,document:await p.evaluate(()=>({visibility:document.visibilityState,focus:document.hasFocus(),scrollY,rect:(()=>{const r=document.querySelector('[data-guide-fullscreen]').getBoundingClientRect();return[r.x,r.y,r.width,r.height];})()}))});/* Sealed visibility/focus/button bounds above are the pre-action diagnostics; keep the actual fullscreen/Print assertions below. */console.log('PHASE entering-fullscreen-'+fallback);if(fallback)await p.evaluate(()=>document.querySelector('.assembly-layout').requestFullscreen=()=>Promise.reject(new DOMException('Intentional denial','NotAllowedError')));await p.locator('[data-guide-fullscreen]').click();await p.waitForFunction(({denied,requireNative})=>{const layout=document.querySelector('.assembly-layout'),button=document.querySelector('[data-guide-fullscreen]'),native=document.fullscreenElement===layout&&layout.dataset.fullscreen==='native',expanded=document.fullscreenElement!==layout&&layout.dataset.expanded==='true'&&layout.dataset.fullscreen==='expanded';return button.getAttribute('aria-pressed')==='true'&&(denied?expanded:requireNative?native:native||expanded);},{denied:fallback,requireNative:engine===chromium},{timeout:30000,polling:100});console.log('PHASE fullscreen-entered-'+fallback);const actualMode=await p.locator('.assembly-layout').getAttribute('data-fullscreen');observations.push({fullscreen:fallback?'denied':'requested-native',actualMode});if(!fallback&&engine===chromium)assert.equal(actualMode,'native');if(fallback){assert.equal(actualMode,'expanded');assert.equal(await p.evaluate(()=>document.fullscreenElement),null);await reachable(p);assert.equal(await p.locator('main.prog').evaluate(e=>getComputedStyle(e).zIndex),'100');}await pickList(p,'L.hip_frame');console.log('PHASE fullscreen-part-selected-'+fallback);await p.locator('[data-part-print]').click();await p.waitForFunction(()=>document.querySelector('#print-selection').dataset.state==='ready');assert.equal(await p.evaluate(()=>document.fullscreenElement),null);assert.notEqual(await p.locator('.assembly-layout').getAttribute('data-expanded'),'true');assert.equal(await p.locator('#print-selection').isVisible(),true);assert.equal(await p.locator('main.prog').evaluate(e=>getComputedStyle(e).zIndex),'3');executions.push({assembly:'robot',viewport:{width:1440,height:1000},phase:fallback?'denied-fullscreen Print':'requested-native-fullscreen Print'});cases.push('Print '+(fallback?'denied fullscreen':'requested native fullscreen')+': selected real hip and exited workspace to accessible verified preparation');await p.context().close();}
