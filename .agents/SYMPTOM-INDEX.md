@@ -221,3 +221,4 @@
 
 - Context-wide page-error capture finds sessionStorage denied only on about:blank initial documents: [guard the fixture's intended HTTP security origin before reading storage](inbox/2026-11-10-browser-init-fixtures-need-an-http-origin.md).
 - Highlight-media source validation rejects a newly edited shared test helper: [preserve recorded fixture bytes and narrow the caller fix](inbox/2026-11-10-browser-init-fixtures-need-an-http-origin.md#historical-capture-fixtures-can-require-a-narrower-caller-fix).
+- A poster utility overwrites its public PNG before artifact review, or pure import starts a browser: [reserve fresh candidate output and preserve the actual hero hook](inbox/2026-11-10-poster-captures-need-fresh-candidate-output.md).

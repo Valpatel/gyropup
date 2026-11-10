@@ -1,0 +1,13 @@
+{
+  "schema": "gyropup.hero-poster-source-seals/1",
+  "date": "2026-11-10",
+  "files": {
+    "action-proposal.json": "4521ba397b8353a7565218c9847ec9d4fc39ed4eb37dc7a0c45309a1e74cd415",
+    "plan.md": "27b2a6fed61b32e3612617ecdc1154dbbc9ffb354082b0199e6dcb3cd607bd16",
+    "pure-tests.log": "f52544f2dbd1faaa4ea46eb7832c0ad9b23d288f695b753102a0f0b6abc59fb0",
+    "source-build.log": "4ab3ec7886cd9185d1cd6c88c4a02f00de64b43f59acde6c450932bd313bf185",
+    "source-checkpoint.json": "8370bf4811161e240a3dc9e22d3afec2e4233573395c78b77c56d1b43ca74a9c",
+    "source-markdown.log": "2ba264306bb6def1a42c57f1aef167b6d2cda8993babf72d9313908e2fbe30de",
+    "source-privacy.log": "8f77cad334abc06e9822b9dc3b24806b7afe4236713cded4db16eacddc5e3dbf"
+  }
+}
