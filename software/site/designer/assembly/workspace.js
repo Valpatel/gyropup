@@ -4,7 +4,7 @@ import {buildRobotV2} from '../robot_v2.js';
 export function createWorkspace(host,getActive,paint,report){
  const required=selector=>{const node=host.querySelector(selector);if(!node)throw new Error('Missing workspace element: '+selector);return node;};
  const layout=required('.assembly-layout'),tree=required('#assembly-explorer'),tools=required('#assembly-tools'),instructions=required('.assembly-step'),sheet=required('[data-workspace-sheet]');
- const toolbar=required('.assembly-topbar'),nav=required('.assembly-nav'),full=required('[data-guide-fullscreen]'),instructionToggle=required('[data-instructions-toggle]');
+ const toolbar=required('.assembly-topbar'),nav=required('.assembly-nav'),full=required('button[data-guide-fullscreen]'),instructionToggle=required('button[data-instructions-toggle]');
  const mobile=matchMedia('(max-width:1000px)'),events=new AbortController();
  let disposed=false,generation=0,assemblyLoader=null,previousOverflow='',expandedInstructions=false,partsOpen=false,toolsOpen=false,pane='instructions',sheetCollapsed=false,sheetExpanded=false,framePending=false;
  const useSheet=()=>mobile.matches||!!getActive()&&!getActive().viewer;
@@ -12,22 +12,22 @@ export function createWorkspace(host,getActive,paint,report){
   layout.dataset.mobile=String(useSheet());layout.dataset.instructions=expandedInstructions?'expanded':'normal';layout.dataset.tools=String(toolsOpen);layout.dataset.parts=String(partsOpen);layout.dataset.sheetSize=sheetCollapsed?'collapsed':sheetExpanded?'expanded':'normal';
   if(useSheet()){tree.hidden=pane!=='parts'||sheetCollapsed;tools.hidden=pane!=='tools'||sheetCollapsed;instructions.hidden=pane!=='instructions'||sheetCollapsed;}
   else{tree.hidden=!partsOpen;tools.hidden=!toolsOpen;instructions.hidden=false;}
-  required('[data-explorer-toggle]').setAttribute('aria-expanded',String(useSheet()?pane==='parts'&&!sheetCollapsed:partsOpen));required('[data-tools-toggle]').setAttribute('aria-expanded',String(useSheet()?pane==='tools'&&!sheetCollapsed:toolsOpen));
+  required('button[data-explorer-toggle]').setAttribute('aria-expanded',String(useSheet()?pane==='parts'&&!sheetCollapsed:partsOpen));required('button[data-tools-toggle]').setAttribute('aria-expanded',String(useSheet()?pane==='tools'&&!sheetCollapsed:toolsOpen));
   instructionToggle.setAttribute('aria-expanded',String(expandedInstructions));instructionToggle.textContent=expandedInstructions?'Collapse ↙':'Expand ↗';
-  for(const button of host.querySelectorAll('[data-sheet-tab]'))button.setAttribute('aria-pressed',String(button.dataset.sheetTab===pane));
-  const size=required('[data-sheet-resize]');size.setAttribute('aria-label',sheetExpanded&&!sheetCollapsed?'Reduce panel':'Expand panel');size.title=size.getAttribute('aria-label');size.textContent=sheetExpanded&&!sheetCollapsed?'↙':'↗';
+  for(const button of host.querySelectorAll('button[data-sheet-tab]'))button.setAttribute('aria-pressed',String(button.dataset.sheetTab===pane));
+  const size=required('button[data-sheet-resize]');size.setAttribute('aria-label',sheetExpanded&&!sheetCollapsed?'Reduce panel':'Expand panel');size.title=size.getAttribute('aria-label');size.textContent=sheetExpanded&&!sheetCollapsed?'↙':'↗';
  }
  function panels(which,open){if(useSheet()){pane=which===tree?'parts':'tools';sheetCollapsed=!open;}else if(which===tree)partsOpen=open;else toolsOpen=open;renderPanels();frame();}
  function selectPane(id){pane=id;sheetCollapsed=false;renderPanels();frame();}
- required('[data-explorer-toggle]').onclick=()=>panels(tree,useSheet()?pane!=='parts'||sheetCollapsed:!partsOpen);
- required('[data-tools-toggle]').onclick=()=>panels(tools,useSheet()?pane!=='tools'||sheetCollapsed:!toolsOpen);
- required('[data-explorer-close]').onclick=()=>panels(tree,false);required('[data-tools-close]').onclick=()=>panels(tools,false);
- for(const button of host.querySelectorAll('[data-sheet-tab]'))button.onclick=()=>selectPane(button.dataset.sheetTab);
- required('[data-sheet-resize]').onclick=()=>{sheetCollapsed=false;sheetExpanded=!sheetExpanded;renderPanels();frame();};
- required('[data-sheet-close]').onclick=()=>{sheetCollapsed=true;renderPanels();frame();};
+ required('button[data-explorer-toggle]').onclick=()=>panels(tree,useSheet()?pane!=='parts'||sheetCollapsed:!partsOpen);
+ required('button[data-tools-toggle]').onclick=()=>panels(tools,useSheet()?pane!=='tools'||sheetCollapsed:!toolsOpen);
+ required('button[data-explorer-close]').onclick=()=>panels(tree,false);required('button[data-tools-close]').onclick=()=>panels(tools,false);
+ for(const button of host.querySelectorAll('button[data-sheet-tab]'))button.onclick=()=>selectPane(button.dataset.sheetTab);
+ required('button[data-sheet-resize]').onclick=()=>{sheetCollapsed=false;sheetExpanded=!sheetExpanded;renderPanels();frame();};
+ required('button[data-sheet-close]').onclick=()=>{sheetCollapsed=true;renderPanels();frame();};
  instructionToggle.onclick=()=>{expandedInstructions=!expandedInstructions;renderPanels();frame();};
- required('[data-guide-fit]').onclick=()=>frame();
- for(const button of host.querySelectorAll('[data-assembly]'))button.onclick=()=>choose(button.dataset.assembly);
+ required('button[data-guide-fit]').onclick=()=>frame();
+ for(const button of host.querySelectorAll('button[data-assembly]'))button.onclick=()=>choose(button.dataset.assembly);
  function fullState(){const native=document.fullscreenElement===layout,expanded=layout.dataset.expanded==='true',on=native||expanded;layout.dataset.fullscreen=native?'native':expanded?'expanded':'none';full.setAttribute('aria-pressed',String(on));full.setAttribute('aria-label',on?'Exit full screen':'Enter full screen');full.title=full.getAttribute('aria-label');scheduleFrame();}
  function collapseFullscreen(){layout.dataset.expanded='false';document.body.style.overflow=previousOverflow;fullState();}
  full.onclick=async()=>{if(document.fullscreenElement===layout){try{await document.exitFullscreen();}catch{report('Use Escape to leave full screen.');}return;}if(layout.dataset.expanded==='true'){collapseFullscreen();return;}try{if(!layout.requestFullscreen)throw new Error('Unavailable');await layout.requestFullscreen();}catch{previousOverflow=document.body.style.overflow;document.body.style.overflow='hidden';layout.dataset.expanded='true';report('Fullscreen is unavailable here. Expanded workspace enabled; press Escape to close.');fullState();}};
@@ -53,13 +53,13 @@ export function createWorkspace(host,getActive,paint,report){
  function scheduleFrame(){if(framePending||disposed)return;framePending=true;requestAnimationFrame(()=>{framePending=false;if(!disposed)frame();});}
  function present(){
   const active=getActive();if(!active)return;layout.dataset.overview=String(!!active.overview);renderPanels();
-  for(const button of host.querySelectorAll('[data-assembly]'))button.setAttribute('aria-pressed',String(button.dataset.assembly===(active.overview?active.assembly:active.guideAssembly||'turret')));
-  required('[data-context-tools]').hidden=!!active.viewer&&!active.overview;required('[data-step-tools]').hidden=!!active.overview||!active.viewer;required('[data-guide-fit]').disabled=!active.viewer;
+  for(const button of host.querySelectorAll('button[data-assembly]'))button.setAttribute('aria-pressed',String(button.dataset.assembly===(active.overview?active.assembly:active.guideAssembly||'turret')));
+  required('[data-context-tools]').hidden=!!active.viewer&&!active.overview;required('[data-step-tools]').hidden=!!active.overview||!active.viewer;required('button[data-guide-fit]').disabled=!active.viewer;
   if(!active.viewer)required('[data-context-tools]').textContent='Interactive 3D tools are unavailable. The bound instructions and available diagrams remain accessible.';
   else required('[data-context-tools]').textContent='Orbit and zoom this interim reference model. Source-bound assembly guides expose the assembly tools.';
   for(const child of active.viewer?.stage.root.children||[])child.visible=child===active.robot?.group?!!active.overview:!active.overview;
   required('.assembly-progress').hidden=!!active.overview;if(active.robot)active.robot.turret.group.visible=active.assembly!=='robot';
-  if(active.overview){const jump=required('[data-guide-step]');jump.replaceChildren(new Option('Overview','overview'));jump.disabled=true;required('[data-guide-count]').textContent=`GYROPUP / ${active.assembly==='robot'?'ROBOT':'COMBINED'} / CURRENT WIP`;required('[data-guide-title]').textContent=active.assembly==='robot'?'Robot · body & legs':'Combined · robot & turret';required('[data-guide-text]').textContent=active.assembly==='robot'?'Explore the body and both five-bar legs. This interim reference retains the playground’s mirrored leg presentation.':'Explore the body, both legs and mounted turret. Choose an authored guide to follow its installation sequence.';required('[data-guide-prev]').disabled=true;required('[data-guide-next]').disabled=true;required('[data-guide-next]').title='This reference overview has no authored steps';}
+  if(active.overview){const jump=required('[data-guide-step]');jump.replaceChildren(new Option('Overview','overview'));jump.disabled=true;required('[data-guide-count]').textContent=`GYROPUP / ${active.assembly==='robot'?'ROBOT':'COMBINED'} / CURRENT WIP`;required('[data-guide-title]').textContent=active.assembly==='robot'?'Robot · body & legs':'Combined · robot & turret';required('[data-guide-text]').textContent=active.assembly==='robot'?'Explore the body and both five-bar legs. This interim reference retains the playground’s mirrored leg presentation.':'Explore the body, both legs and mounted turret. Choose an authored guide to follow its installation sequence.';required('button[data-guide-prev]').disabled=true;required('button[data-guide-next]').disabled=true;required('button[data-guide-next]').title='This reference overview has no authored steps';}
   frame();
  }
  function choose(id,navigate=true){const active=getActive();if(!active)return;if(navigate){const url=new URL(location.href);url.searchParams.set('assembly',id);if(id!=='turret'){url.searchParams.delete('step');url.searchParams.delete('chapter');}history.pushState(null,'',url);}if(assemblyLoader?.(id,navigate))return;if(id==='turret'){step(active.step);return;}active.assembly=id;overview();}
