@@ -6,6 +6,12 @@ It is tracked in [issue #116](https://github.com/Valpatel/gyropup/issues/116), u
 The parts are design candidates, not a print or operating release. No physical fit,
 fastener preload, thread strength or powered fixture test has been completed.
 
+The native lug receipt is retained pre-end-pack evidence with eight failures.
+Its full source closure is historical after the body changes; archive integrity
+and the separate current hip-to-original mesh correspondence do not turn it
+into a new current lug/body engineering result. Original leg geometry and
+manufacturing files remain unchanged; physical qualification remains pending.
+
 The separate [unpowered fit-observation slicing work](rs04-fit-job.md) retains
 printer/process settings and executable evidence. It does not resolve the eight
 mounting-support failures or qualify the complete leg for printing.

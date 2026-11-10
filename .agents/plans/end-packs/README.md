@@ -215,3 +215,21 @@ They do not construct solids or establish optical/physical qualification.
 validator, failed original receipt and all printed-leg originals while setting
 out genuine recomputation and separately reviewed packaging/CI ownership.
 No fresh fit, native collection or pipeline has been launched by these fixes.
+
+## Separately accepted collection and current preparation evidence
+
+The [accepted266 collection](https://github.com/Valpatel/gyropup/issues/193#issuecomment-6775564625)
+contains224 parts, all80 protected leg mesh bytes unchanged. The separate
+[current hip correspondence review](https://github.com/Valpatel/gyropup/issues/193#issuecomment-6776726093)
+accepted the actual56.5317s measurement, not current body engineering.
+Its exact proof and separate acceptance are recorded here without changing
+the measured producer, original printed parts or historical engineering flags.
+
+The [current preparation plan](current-print-correspondence.md) and
+[actual candidate consumer checks](current-print-consumer-checks.json) record
+both L/R hip Prepare actions in Chrome and WebKit, actual STL/geometry-only3MF
+downloads and readbacks, other-part pending state, and corrupt-project
+rejection. These tests used an isolated candidate web root at520505f5; no
+public guide asset was adopted. Historical322/40/8 remains failing, release
+flags remain false and measurement sheets remain blank. Independent final
+guide/adoption review and coherent CI ownership replacement remain pending.

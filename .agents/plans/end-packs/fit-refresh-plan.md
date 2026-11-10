@@ -3,6 +3,14 @@
 Proposal, 2026-11-10; no native or slicing run is approved by this document.
 The strict current validator and original receipts remain unchanged.
 
+Update: [independent RouteA review](https://github.com/Valpatel/gyropup/issues/193#issuecomment-6775808908)
+selected explicit historical integrity plus a separately measured current
+hip-to-original correspondence. [Current implementation and remaining gates](current-print-correspondence.md)
+preserve the complete historical guard and default-current stale rejection.
+The genuine CAD/slice refresh below remains RouteB, not an executed run or a
+requirement to redate unchanged protected legs. CI ownership/public guide
+adoption still require their own complete positive/negative acceptance.
+
 ## Observed boundary
 
 The retained-fit CI failure is

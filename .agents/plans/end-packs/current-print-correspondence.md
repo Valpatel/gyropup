@@ -2,9 +2,11 @@
 
 Implementation follows [independent RouteA design review](https://github.com/Valpatel/gyropup/issues/193#issuecomment-6775808908).
 The [job266 acceptance](https://github.com/Valpatel/gyropup/issues/193#issuecomment-6775564625)
-accepts collection only. New correspondence has not been measured or accepted;
-current preparation anchors are deliberately unset. No guide/public asset is
-adopted by this implementation checkpoint. Issue193/PR287 remain open.
+accepts collection only. The [separate measurement review](https://github.com/Valpatel/gyropup/issues/193#issuecomment-6776726093)
+accepted the exact56.5317s current correspondence artifact. Its original bytes
+and separate acceptance are now bound by the authority module; the measured
+producer, sampler and historical validator remain unchanged. No guide/public
+asset is adopted by this checkpoint. Issue193/PR287 remain open.
 
 ## Two required contracts
 
@@ -71,21 +73,35 @@ a circular proof/hash update. No self-supplied proof hash grants authority.
   negative; full actual unchanged package/G-code/profile/metric verification.
 - [x] Hidden GNU longname/longlink/PAX and ordinary member/size/alias/digest
   negatives, actual current input/frame/mesh/original byte mutations.
-- [ ] Reviewed exact measurement packet, genuine current measurement and
+- [x] Reviewed exact measurement packet, genuine current measurement and
   independent artifact acceptance; source anchors populated only afterward.
-- [ ] Actual accepted current mapper/exporter positive and proof/acceptance
+- [x] Actual accepted current mapper/exporter positive and proof/acceptance
   mutations; all original protected source/output/history/firmware identities.
-- [ ] Current L/R actual browser Prepare actions, STL downloads, strict3MF
+- [x] Current L/R actual browser Prepare actions, STL downloads, strict3MF
   readbacks, generic-bed/unsliced/historical-failure labels and corrupted
   project negative. Existing workspace harness has explicit `PRINT_CASE=current`
-  for this purpose; do not run it against a historical guide as current proof.
-- [ ] Status-board false print-release/blank measurement behavior retained.
+  for this purpose. Both Chrome/WebKit passed against the isolated520505f5
+  current candidate; all owned listeners/contexts closed. See the exact
+  [consumer checks](current-print-consumer-checks.json). No historical guide
+  was relabelled as current, and no public assets were copied.
+- [x] Status-board false print-release/blank measurement behavior retained.
 - [ ] Only then replace CI ownership explicitly: historical full positive,
   default-current stale negative, current-code pure adversarial controls and
   actual accepted current consumer positive all mandatory. Preserve survey
   verification. No `--pure`/workflow waiver is introduced at this checkpoint.
 - [ ] Independently reviewed guide adoption/composition and public consumers;
   no native rerun merely to relabel untouched mesh bytes.
+
+The current exact measurement is `a293b1a24614012b894137e7edb6570316f49d279078bb1f1e40f9e9a5302f0b`;
+its separate acceptance is `0ddf1fe712d5b8c114aefc072a7abfade153070d8f56986380f40d46adfda625`.
+Each side sampled44,470 original-to-current and19,828 current-to-original
+points, with maxima0.15697024/0.13665468mm under0.3011mm. The actual3mm
+wrong-frame control failed as required. Both engine campaigns downloaded the
+same original STL and existing geometry-only3MF, verified original identity
+and independently read back the actual downloaded3MF topology, pose, units
+and generic-bed bounds. Other parts stayed pending; corrupt project bytes
+did not produce a3MF download. These are source-bound candidate checks, still
+pending independent guide/consumer acceptance and adoption.
 
 Historical integrity and sampled mesh correspondence do not qualify current
 body clearance/removal, optics, supports/retention, compliance/drop, fastening,

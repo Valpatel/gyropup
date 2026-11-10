@@ -1,0 +1,285 @@
+{
+  "schema": "gyropup.current-print-consumer-author-checks/1",
+  "date": "2026-11-10",
+  "status": "AUTHOR_CHECKS_PASSED_PENDING_INDEPENDENT_GUIDE_REVIEW",
+  "tested_source_commit": "520505f529d24c46862736124438b33dc27318c4",
+  "native_collection_source": "3a40891962b0b0a04625e070700f1d130bea3c7b",
+  "collection_sha256": "7c2f1905474a8c89bdc477ea472f5c826e57c674aa222f2134f6a0a4138d5a67",
+  "proof_sha256": "a293b1a24614012b894137e7edb6570316f49d279078bb1f1e40f9e9a5302f0b",
+  "acceptance_sha256": "0ddf1fe712d5b8c114aefc072a7abfade153070d8f56986380f40d46adfda625",
+  "guides": [
+    {
+      "assembly": "robot",
+      "snapshot": "robot-wip-3a40891962b0",
+      "parts": 162,
+      "guide_sha256": "82f4fbb1be519675ae8d251d7c7a980746a7c7281db0e045ce3ceb65ce34505f",
+      "model_sha256": "d2c7194d3ce02301ec8b6a364c5811afc156cd086ce48c3d56e30cfc06e4bced",
+      "current_hip_prepared_exact_two": true,
+      "other_part_pending": true
+    },
+    {
+      "assembly": "combined",
+      "snapshot": "combined-wip-3a40891962b0",
+      "parts": 224,
+      "guide_sha256": "dc196bfe69200823d9c7d8937fbeb26328b0017387582b90af7218f9911ca5b7",
+      "model_sha256": "d5b3aa2dd8986e94651fff2b566c4007d35dd44a43173629d6112be50ff3e7da",
+      "current_hip_prepared_exact_two": true,
+      "other_part_pending": true
+    }
+  ],
+  "candidate_index_sha256": "13092b902d89211de2c68a61cb8d57aacc03a10f56cd802948a4031b13ee512f",
+  "retained_prior_index_rows": 3,
+  "runtime": {
+    "node": "22.23.4",
+    "playwright": "1.56.1",
+    "chromium_channel": "existing native Chrome",
+    "webkit": "existing locked Playwright cache; no download"
+  },
+  "engines": {
+    "chromium": {
+      "exit": 0,
+      "site_revision": "520505f529d24c46862736124438b33dc27318c4",
+      "base_site_asset_id": "635949147f519913851b",
+      "tested_isolated_candidate_overlay": true,
+      "cases": [
+        "Accepted current correspondence, actual both-hip Prepare/downloads, strict original/3MF readbacks, unchanged pending other part and corrupted project rejection"
+      ],
+      "executions": [
+        {
+          "assembly": "robot",
+          "viewport": {
+            "width": 1440,
+            "height": 1000
+          },
+          "phase": "actual current L/R originals and geometry-only3MF download/readback plus project corruption"
+        }
+      ],
+      "downloads": [
+        {
+          "file": "chromium-L-hip_frame.stl",
+          "bytes": 1483884,
+          "sha256": "f15c00497974e3f78d3fdc9ca60ef958ebff4d3537556d98c7c6828e6ec103de"
+        },
+        {
+          "file": "chromium-R-hip_frame.stl",
+          "bytes": 1483884,
+          "sha256": "f15c00497974e3f78d3fdc9ca60ef958ebff4d3537556d98c7c6828e6ec103de"
+        },
+        {
+          "file": "chromium-L-hip_frame.3mf",
+          "bytes": 326658,
+          "sha256": "82398d2679176eedd9420da8938336210a9ed6e9d4feb284390590d9a60310cd"
+        },
+        {
+          "file": "chromium-R-hip_frame.3mf",
+          "bytes": 326658,
+          "sha256": "82398d2679176eedd9420da8938336210a9ed6e9d4feb284390590d9a60310cd"
+        }
+      ],
+      "actual_project_readbacks": [
+        {
+          "part": "L.hip_frame",
+          "checks": {
+            "vertices": 14794,
+            "triangles": 29676,
+            "units": "millimeter",
+            "edge_manifold": true,
+            "max_coordinate_error_mm": 4.999974979114086e-05,
+            "original_volume_mm3": 1014809.5856163922,
+            "project_volume_mm3": 1014809.5215155074,
+            "bounds_mm": [
+              3.3916,
+              3.3916,
+              0.0,
+              252.6084,
+              252.6084,
+              81.3
+            ],
+            "yaw_deg": 45,
+            "translation_mm": [
+              93.1558307320324,
+              -30.903086754221647,
+              -1.5543122344752192e-15
+            ],
+            "generic_bed_mm": [
+              256.0,
+              256.0
+            ],
+            "margin_mm": 3.0,
+            "keepouts": [],
+            "actual_printer_fit_verified": false,
+            "slice_verified": false,
+            "physical_qualification": false
+          }
+        },
+        {
+          "part": "R.hip_frame",
+          "checks": {
+            "vertices": 14794,
+            "triangles": 29676,
+            "units": "millimeter",
+            "edge_manifold": true,
+            "max_coordinate_error_mm": 4.999974979114086e-05,
+            "original_volume_mm3": 1014809.5856163922,
+            "project_volume_mm3": 1014809.5215155074,
+            "bounds_mm": [
+              3.3916,
+              3.3916,
+              0.0,
+              252.6084,
+              252.6084,
+              81.3
+            ],
+            "yaw_deg": 45,
+            "translation_mm": [
+              93.1558307320324,
+              -30.903086754221647,
+              -1.5543122344752192e-15
+            ],
+            "generic_bed_mm": [
+              256.0,
+              256.0
+            ],
+            "margin_mm": 3.0,
+            "keepouts": [],
+            "actual_printer_fit_verified": false,
+            "slice_verified": false,
+            "physical_qualification": false
+          }
+        }
+      ],
+      "page_errors": [],
+      "owned_listener_closed": true,
+      "owned_test_group_absent": true
+    },
+    "webkit": {
+      "exit": 0,
+      "site_revision": "520505f529d24c46862736124438b33dc27318c4",
+      "base_site_asset_id": "635949147f519913851b",
+      "tested_isolated_candidate_overlay": true,
+      "cases": [
+        "Accepted current correspondence, actual both-hip Prepare/downloads, strict original/3MF readbacks, unchanged pending other part and corrupted project rejection"
+      ],
+      "executions": [
+        {
+          "assembly": "robot",
+          "viewport": {
+            "width": 1440,
+            "height": 1000
+          },
+          "phase": "actual current L/R originals and geometry-only3MF download/readback plus project corruption"
+        }
+      ],
+      "downloads": [
+        {
+          "file": "webkit-L-hip_frame.stl",
+          "bytes": 1483884,
+          "sha256": "f15c00497974e3f78d3fdc9ca60ef958ebff4d3537556d98c7c6828e6ec103de"
+        },
+        {
+          "file": "webkit-R-hip_frame.stl",
+          "bytes": 1483884,
+          "sha256": "f15c00497974e3f78d3fdc9ca60ef958ebff4d3537556d98c7c6828e6ec103de"
+        },
+        {
+          "file": "webkit-L-hip_frame.3mf",
+          "bytes": 326658,
+          "sha256": "82398d2679176eedd9420da8938336210a9ed6e9d4feb284390590d9a60310cd"
+        },
+        {
+          "file": "webkit-R-hip_frame.3mf",
+          "bytes": 326658,
+          "sha256": "82398d2679176eedd9420da8938336210a9ed6e9d4feb284390590d9a60310cd"
+        }
+      ],
+      "actual_project_readbacks": [
+        {
+          "part": "L.hip_frame",
+          "checks": {
+            "vertices": 14794,
+            "triangles": 29676,
+            "units": "millimeter",
+            "edge_manifold": true,
+            "max_coordinate_error_mm": 4.999974979114086e-05,
+            "original_volume_mm3": 1014809.5856163922,
+            "project_volume_mm3": 1014809.5215155074,
+            "bounds_mm": [
+              3.3916,
+              3.3916,
+              0.0,
+              252.6084,
+              252.6084,
+              81.3
+            ],
+            "yaw_deg": 45,
+            "translation_mm": [
+              93.1558307320324,
+              -30.903086754221647,
+              -1.5543122344752192e-15
+            ],
+            "generic_bed_mm": [
+              256.0,
+              256.0
+            ],
+            "margin_mm": 3.0,
+            "keepouts": [],
+            "actual_printer_fit_verified": false,
+            "slice_verified": false,
+            "physical_qualification": false
+          }
+        },
+        {
+          "part": "R.hip_frame",
+          "checks": {
+            "vertices": 14794,
+            "triangles": 29676,
+            "units": "millimeter",
+            "edge_manifold": true,
+            "max_coordinate_error_mm": 4.999974979114086e-05,
+            "original_volume_mm3": 1014809.5856163922,
+            "project_volume_mm3": 1014809.5215155074,
+            "bounds_mm": [
+              3.3916,
+              3.3916,
+              0.0,
+              252.6084,
+              252.6084,
+              81.3
+            ],
+            "yaw_deg": 45,
+            "translation_mm": [
+              93.1558307320324,
+              -30.903086754221647,
+              -1.5543122344752192e-15
+            ],
+            "generic_bed_mm": [
+              256.0,
+              256.0
+            ],
+            "margin_mm": 3.0,
+            "keepouts": [],
+            "actual_printer_fit_verified": false,
+            "slice_verified": false,
+            "physical_qualification": false
+          }
+        }
+      ],
+      "page_errors": [],
+      "owned_listener_closed": true,
+      "owned_test_group_absent": true
+    }
+  },
+  "actual_status_board": {
+    "leg_print_release": false,
+    "bench_measurement_rows": 64,
+    "measured_rows": 0,
+    "bench_state": "unknown"
+  },
+  "public_asset_adoption": false,
+  "ci_ownership_changed": false,
+  "limits": "Actual isolated candidate current L/R hip Prepare and immutable-original/project verification only. Generic bed; unsliced; historical engineering322/40/8 remains failing. No native CAD, slicing, printer, fit/retention/strength/drop or public adoption.",
+  "protected_leg_cad_tree": "d50babdc4a99f3c4256a2959174b6aa9aefe64ba",
+  "protected_leg_export_tree": "0aa1ec7c9cf8f31d7039d6b2b09d64b1037ae7d0",
+  "firmware_sha256": "82fb11043141281d1c04550da2affa0327f9537c9327377e9243b86e5a71f536",
+  "all80_collected_leg_meshes_equal_protected_baseline": true
+}

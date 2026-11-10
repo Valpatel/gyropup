@@ -39,3 +39,22 @@ Limits: current correspondence implementation/measurement/adoption and browser
 acceptance remain separate review gates. Archive integrity does not establish
 current body fit, adapter retention, support strength, physical printing or
 the truth of a new measurement. The known engineering failures remain failures.
+
+## Recorded current correspondence and consumer follow-through
+
+The [independent artifact review](https://github.com/Valpatel/gyropup/issues/193#issuecomment-6776726093)
+accepted the exact56.5317s current measurement. Its producer, sampler and
+historical validator stayed unchanged when a separate acceptance record and
+authority anchors were populated. The actual current mapper/exporter then
+enabled exactly L/Rhip geometry preparation; changed input membership, source,
+mesh, original, proof or acceptance disabled it and unrelated parts stayed
+pending. No current-source exception or historical fallback was introduced.
+
+On source520505f5, `WORKSPACE_CASE=print PRINT_CASE=current` ran in Chrome
+and WebKit against an isolated current guide candidate. Both actual hip
+Prepare actions downloaded the unchanged original STL and geometry-only3MF;
+strict readbacks checked units, topology, original pose and generic-bed bounds.
+Corrupt project bytes exposed no3MF download. All contexts/listeners closed.
+The [canonical consumer record](../plans/end-packs/current-print-consumer-checks.json)
+retains hashes, scope and actual readback values without private test URLs.
+Public guide adoption and joint CI ownership still require independent review.
