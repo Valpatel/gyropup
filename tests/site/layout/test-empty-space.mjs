@@ -270,7 +270,14 @@ async function readinessControls() {
     await guidePage.evaluate(() => new Promise(resolve => requestAnimationFrame(() => requestAnimationFrame(resolve))));
     if (measured || await guidePage.locator('[data-guide-model] canvas').count()) throw new Error('Layout accepted procurement readiness while the real assembly model was held');
     releaseModel(); await loading;
-    if (!await guidePage.locator('[data-guide-model] canvas').count() || await guidePage.locator('[data-guide-chapters] button').count() !== 3) throw new Error('Layout did not wait for the actual assembled guide DOM');
+    const guideReady = await guidePage.evaluate(() => {
+      const active = window.__buildGuide?.active, canvas = document.querySelector('[data-guide-model] canvas'), step = active?.guide.steps.find(item => item.id === active.step), jump = document.querySelector('[data-guide-step]'), parts = [...document.querySelectorAll('[data-guide-chapters] [data-part]')];
+      return { canvas: !!canvas?.isConnected, context: !!active?.viewer && !active.viewer.stage.renderer.getContext().isContextLost(), visible: active?.viewer?.parts.filter(part => part.mesh.visible).length || 0,
+        partRows: parts.length, uniqueParts: new Set(parts.map(part => part.dataset.part)).size, modelParts: active?.modelParts.length,
+        steps: jump?.options.length, expectedSteps: active?.guide.steps.length, currentStep: jump?.value === step?.id,
+        textMatches: !!step?.text && document.querySelector('[data-guide-text]')?.textContent === step.text };
+    });
+    if (!guideReady.canvas || !guideReady.context || !guideReady.visible || !guideReady.partRows || guideReady.partRows !== guideReady.modelParts || guideReady.uniqueParts !== guideReady.modelParts || guideReady.steps !== guideReady.expectedSteps || !guideReady.currentStep || !guideReady.textMatches) throw new Error('Layout did not wait for the actual model, hierarchy and instructions: ' + JSON.stringify(guideReady));
   } finally { releaseModel(); await guideContext.close(); }
   console.log('empty-space readiness controls: pending badge permits measurement, primary image is rejected, actual imported font is awaited, stylesheet error fails readiness, procurement alone cannot release a held assembly guide');
 }
