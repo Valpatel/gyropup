@@ -48,6 +48,11 @@ class PhysicalFrames(unittest.TestCase):
             (root/'alias').symlink_to(root/'dir',target_is_directory=True)
             with self.assertRaises(ValueError):data.inventory(root)
 
+    def test_source_names_must_not_collide_after_filename_normalization(self):
+        self.assertEqual(data.mesh_files(['L.hip_frame'])['L.hip_frame'],'meshes/L__hip_frame.stl')
+        for names in (['L.part','L__part'],['../../outside'],['valid','valid']):
+            with self.assertRaises(ValueError):data.mesh_files(names)
+
     def test_importing_worker_never_imports_native_kernel(self):
         before=set(sys.modules)
         spec=importlib.util.spec_from_file_location('robot_collect_safe',OWNER/'collect_robot_parts.py')

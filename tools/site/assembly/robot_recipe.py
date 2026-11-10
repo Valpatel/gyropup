@@ -14,7 +14,7 @@ WARNING = ('WIP CAD assembly study. The order explains named construction relati
 
 def operation(key, title, parts, source, text, chapter, direction=(1, -1, .7), offset=(0, 0, 50)):
     return dict(id=key, title=title, additions=parts, source_operation=source,
-                text=text+' '+WARNING, subassembly=chapter, camera=dict(direction=list(direction)), offset=list(offset))
+                text=text, subassembly=chapter, camera=dict(direction=list(direction)), offset=list(offset))
 
 
 def body_operations():

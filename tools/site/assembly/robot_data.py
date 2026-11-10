@@ -5,6 +5,7 @@ import math
 from pathlib import Path
 import struct
 import stat
+import re
 
 
 def sha(path):
@@ -87,4 +88,16 @@ def inventory(root):
         if not stat.S_ISREG(mode):
             raise ValueError('Nonregular inventory member: '+path.relative_to(root).as_posix())
         files[path.relative_to(root).as_posix()] = {'sha256':sha(path),'mode':stat.S_IMODE(mode),'bytes':path.stat().st_size}
+    return files
+
+
+def mesh_files(names):
+    files = {}
+    for name in names:
+        if not isinstance(name,str) or not re.fullmatch(r'[A-Za-z0-9][A-Za-z0-9_.-]{0,160}',name):
+            raise ValueError('Unsafe CAD instance name')
+        file = 'meshes/'+name.replace('.','__')+'.stl'
+        if file in files.values():
+            raise ValueError('CAD instance filename collision')
+        files[name] = file
     return files

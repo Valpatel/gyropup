@@ -51,7 +51,8 @@ class SourceOperations(unittest.TestCase):
         for op in self.ops:
             first = op['source_operation'].split('::')[0]
             self.assertTrue((ROOT/first).is_file(), first)
-            self.assertIn(recipe.WARNING, op['text'])
+            self.assertNotIn(recipe.WARNING, op['text'])
+            self.assertTrue(op['text'].strip())
         with self.assertRaises(ValueError): recipe.leg_operations('mirrored')
 
 

@@ -3,8 +3,8 @@
 Issue #266 now includes real body, leg, knee and wheel stages. This extends the
 existing assembly-guide contract and current CAD collector; the product UI is
 owned separately in PR #267. No renderer, physical action or geometry redesign
-is proposed. The source study below is complete; implementation and native
-collection are not yet performed.
+is proposed. The source study below is complete; source preparation is in progress; native collection and actual geometry acceptance
+are not yet performed.
 
 ```mermaid
 flowchart LR
@@ -89,5 +89,42 @@ Geometry-valid CAD/poses and passing presentation tests do not establish
 physical assembly order, access, fits, preload, motor operation or strength.
 Existing #8, #193 and #201 limits remain open. Preserve failed runs and report
 any source/placement disagreement before adopting a candidate.
+
+</details>
+
+<details>
+<summary>Source preparation checkpoint</summary>
+
+The authored recipe now has 23 construction operations covering 171 non-turret
+CAD instance identities from the retained collector inventory. Each leg has
+separate hip/support, fixed motor, upper-link, front knee, rear knee, apex,
+wheel and stop operations. Source screw/washer compounds remain compounds.
+The shared qualification lives once in guide.source; step text keeps specific
+fit/access gaps without repeating that whole notice.
+
+The import-safe collection worker reuses robot_view.collect before grouping.
+It prepares actual module-local mesh landmarks for 11 representative parts on
+both sides, checks the physical 180 degree-Z mapping within 0.02 mm, and checks
+the actual riser/pan-base TM plane plus bolt-circle X/Y/Z centers. A rigid
+wrong-X/Y native mount negative is required. Normalized output filename
+collisions reject before writing. These native controls are prepared, not yet
+executed.
+
+The pure exporter prepares Robot and Combined snapshots with an honest full
+CAD overview followed by construction stages. Installation presentation order
+is explicit per stage, not manifest/BOM iteration. Plain HTML/JSON use the
+same stage text and requirements. Manufacturing metadata identifies existing
+print STL, machining STEP or sheet STEP/DXF originals by actual digest; baked
+posed guide meshes are never offered for printing. Unknown catalogue relations
+stay unresolved. Body/leg planning quantities retain their original scope;
+wheel hub and tyre share one bought-wheel identity.
+
+Fourteen kernel-free tests currently pass. They cover retained named
+membership, stationary/moving ownership, grouped hardware, frame/unit/mirror
+negatives, strict binary STL, symlink inventory rejection, import safety,
+original-file mapping, snapshot/text integrity and changed-source rejection.
+Synthetic serializer fixtures are test-only and are not CAD/asset acceptance.
+Broad draft CI is deliberately deferred on preparation commits until genuine
+assets are ready; final source/assets must run all ordinary required checks.
 
 </details>

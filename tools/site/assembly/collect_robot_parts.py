@@ -13,7 +13,7 @@ from pathlib import Path
 import subprocess
 import sys
 import time
-from robot_data import bounds, landmarks, module_point, nearest_errors, sha, vertices, inventory
+from robot_data import bounds, landmarks, module_point, nearest_errors, sha, vertices, inventory, mesh_files
 from robot_recipe import robot_operations, validate_operations
 
 
@@ -77,9 +77,10 @@ def main(argv=None):
         if len(names)!=len(set(names)) or not names:
             raise ValueError('Empty or duplicate source assembly names')
         validate_operations(robot_operations(),[n for n in names if not n.startswith('turret.')])
+        filenames=mesh_files(names)
         parts=[]
         for group,color,name,shape,offset in rows:
-            file='meshes/'+name.replace('.','__')+'.stl'
+            file=filenames[name]
             cq.exporters.export(shape,str(out/file),tolerance=.25,angularTolerance=.3,opt={'ascii':False})
             parts.append({'name':name,'file':file,'color':color,'visible':True,'bounds_mm':bounds(out/file),'sha256':sha(out/file),'source_group':group})
             print('PART '+name,flush=True)
@@ -112,7 +113,26 @@ def main(argv=None):
         foot=vertices(out/by_name['turret.pan_base']['file'])
         contact=[p for p in foot if abs(p[2]-tm['face_z'])<=.02]
         riser_top=by_name['riser']['bounds_mm'][5]
-        mount_reference={'tm_face_z_mm':tm['face_z'],'pan_x_mm':tm['pan_x'],
+        def circles_at_face(shape):
+            points=[]
+            for edge in shape.Edges():
+                if edge.geomType()=='CIRCLE':
+                    center=edge.arcCenter().toTuple()
+                    if abs(center[2]-tm['face_z'])<=.02:points.append(center)
+            return points
+        shapes={name:shape for _,_,name,shape,_ in rows}
+        expected_mount=[(tm['pan_x']+x,y,tm['face_z']) for x,y in tm['bolts']]
+        mount_centers={n:circles_at_face(shapes[n]) for n in ('riser','turret.pan_base')}
+        mount_errors={n:nearest_errors(expected_mount,points) for n,points in mount_centers.items()}
+        if any(e>.02 for errors in mount_errors.values() for e in errors):
+            save(out/'mount-xy-failure.json',{'expected_bolt_centers_mm':expected_mount,'actual_circle_centers_mm':mount_centers})
+            raise ValueError('Actual TM bolt-circle centers do not agree with source body mount X/Y/Z')
+        wrong_xy=circles_at_face(shapes['turret.pan_base'].translate((5,-7,0)))
+        xy_negative=any(e>.02 for e in nearest_errors(expected_mount,wrong_xy))
+        if not xy_negative:raise ValueError('Wrong-X/Y native mount negative was accepted')
+        mount_reference={'expected_bolt_centers_mm':expected_mount,'actual_circle_centers_mm':mount_centers,
+                         'bolt_center_errors_mm':mount_errors,'wrong_xy_native_shift_mm':[5,-7,0],
+                         'wrong_xy_rejected':xy_negative,'tm_face_z_mm':tm['face_z'],'pan_x_mm':tm['pan_x'],
                          'riser_top_mm':riser_top,'pan_base_contact_vertices':len(set(contact)),'limit_mm':.02}
         save(out/'mount-reference.json',mount_reference)
         if abs(riser_top-tm['face_z'])>.02 or len(set(contact))<3:
