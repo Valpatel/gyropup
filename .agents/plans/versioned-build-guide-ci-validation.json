@@ -41,5 +41,31 @@
     },
     "harness_file": "tests/site/layout/test-empty-space.mjs",
     "harness_sha256": "4dd76fac8e854e3fa90c084eb0fb4f8f547dff614b36686f309911888e9a774f"
-  }
+  },
+  "source_review": {
+    "head": "624edf231d4c4c5ea93ce13126563c8a1fb532b5",
+    "url": "https://github.com/Valpatel/gyropup/pull/267#pullrequestreview-5841062601"
+  },
+  "local_validation": {
+    "build": {
+      "documents": 151,
+      "markdown_pages": 361,
+      "status": "passed"
+    },
+    "privacy": {
+      "passed": 11,
+      "failed": 0
+    },
+    "markdown": {
+      "passed": 6,
+      "failed": 0
+    },
+    "selectors": {
+      "passed": 3,
+      "failed": 0,
+      "actual_invalid_cli_controls": 8
+    },
+    "poster_contract": "passed unchanged a81 visual closure"
+  },
+  "integration_status": "Pending complete current-head CI and normal dev/main promotion; local/scoped evidence is not integration acceptance."
 }
