@@ -79,3 +79,15 @@ ROBOT_PLAYBACK_TOOLKIT=<reviewed-core-checkout> \
 ROBOT_PLAYBACK_TOOLKIT_REVISION=011a29b6fe1ddf4a6726fa01f59d710cbf1d6757 \
 python3 -B -m unittest discover -s tests/site/assembly -p test_robot_native_playback.py
 ```
+
+
+Independent CLI review at product `55c7e815` exposed a failed real three-box gate
+whose report said `pass=false/status=fail` while the CLI returned exit0. The
+entry point now raises `SystemExit(main())`. Ordinary CI exercises a complete
+CLI subprocess with an explicitly failed dependency double and checks exit1,
+failed reports and preserved inputs; this double proves no CAD behavior.
+The additional real three-box native subprocess control is explicitly enabled
+with `ROBOT_PLAYBACK_NATIVE=1` alongside the reviewed core variables above and
+an existing compatible native dependency environment. It must return exit1 with
+its actual failed report preserved. These controls validate failure propagation,
+not Gyropup insertion or physical assembly acceptance.

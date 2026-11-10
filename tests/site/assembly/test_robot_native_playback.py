@@ -1,6 +1,8 @@
 """Original-byte provenance negatives; no synthetic fixture is native evidence."""
 import copy
 import os
+import json
+import runpy
 from pathlib import Path
 import subprocess
 import sys
@@ -15,7 +17,7 @@ from robot_native_playback import native_parts,bind_inputs,encode,digest,IDENTIT
 class OriginalNativeBytes(unittest.TestCase):
     def fixture(self,folder):
         raw=b'not a CAD solid: pure serializer fixture only';(folder/'breps').mkdir();(folder/'breps/part.brep').write_bytes(raw)
-        c={'schema':'gyropup.robot-assembly-parts/1','units':'mm','up':'z','source_commit':'a'*40,'parts':[{'name':'part','sha256':'b'*64,
+        c={'producer_inputs':{'fixture':'explicit test-double metadata, never native evidence'},'schema':'gyropup.robot-assembly-parts/1','units':'mm','up':'z','source_commit':'a'*40,'parts':[{'name':'part','sha256':'b'*64,
            'native_geometry':{'file':'breps/part.brep','sha256':digest(raw),'shape_sha256':'c'*64,'matrix':IDENTITY[:]} }],
            'native_geometry':{'schema':'gyropup.robot-native-parts/1','units':'mm','up':'z','frame':'assembled robot CAD mm/Z-up',
                               'format':'OCCT BREP v1 without triangulation or normals',
@@ -65,6 +67,67 @@ class OriginalNativeBytes(unittest.TestCase):
         import json
         collection=json.loads((ROOT/'.agents/plans/robot-assembly/collection-260.json').read_text())
         with self.assertRaises(ValueError):native_parts(collection,ROOT/'.agents/plans/robot-assembly')
+
+    def test_actual_cli_preserves_failed_verdict_and_nonzero_exit_without_cad(self):
+        # A dependency double exercises the real script entry point/process. It
+        # deliberately proves no CAD behavior; ordinary CI must still catch an
+        # entry point which drops main()'s failed-gate return value.
+        with tempfile.TemporaryDirectory() as tmp:
+            root=Path(tmp);native=root/'native';native.mkdir();c,raw=self.fixture(native)
+            (native/'collection.json').write_bytes(encode(c));guides=root/'guides';guides.mkdir()
+            bundle=self.bundle(c)
+            guide=json.loads(bundle.files['fixture/guide.json'])
+            guide['source']['collection_sha256']=digest(encode(c))
+            guide['source']['install_order_by_step']={'fixture':['part']}
+            bundle.files['fixture/guide.json']=encode(guide)
+            for file,data in bundle.files.items():
+                path=guides/file;path.parent.mkdir(exist_ok=True);path.write_bytes(data)
+            core=root/'core';package=core/'software/cadagent'
+            for relative in ('__init__.py','publish/__init__.py','review/__init__.py','review/gates/__init__.py'):
+                path=package/relative;path.parent.mkdir(parents=True,exist_ok=True);path.write_text('')
+            (package/'publish/guides.py').write_text("from types import SimpleNamespace\ndef collect_guides(root,paths):\n return [SimpleNamespace(path=p,files={f.relative_to(root).as_posix():f.read_bytes() for f in root.rglob('*') if f.is_file()}) for p in paths]\n")
+            (package/'review/gates/playback.py').write_text("import hashlib\ndef bind_playback_breps(bundle,breps,*,producer_hash_platform):\n return {'instances':{n:{'brep_sha256':hashlib.sha256(raw).hexdigest(),'shape_sha256':'c'*64,'matrix':"+repr(IDENTITY)+"} for n,raw in breps.items()},'hash_platform':producer_hash_platform}\ndef playback_gate(*args,**kwargs):\n return {'schema':'cadagent.gate/1','pass':False,'status':'fail','findings':[{'id':'explicit-test-double-failure'}]}\n")
+            subprocess.check_call(['git','init','-q',str(core)])
+            subprocess.check_call(['git','-C',str(core),'add','.'])
+            subprocess.check_call(['git','-C',str(core),'-c','core.hooksPath=/dev/null','-c','user.name=Fixture','-c','user.email=fixture@example.com','commit','-qm','Explicit non-CAD CLI dependency double'])
+            revision=subprocess.check_output(['git','-C',str(core),'rev-parse','HEAD'],text=True).strip()
+            command=[sys.executable,'-B',str(ROOT/'tools/site/assembly/robot_native_playback.py'),
+                     '--collection',str(native/'collection.json'),'--guides-root',str(guides),
+                     '--guide','fixture/guide.json','--toolkit',str(core),'--toolkit-revision',revision,
+                     '--out',str(root/'result'),'--validate']
+            completed=subprocess.run(command,capture_output=True,text=True,timeout=10)
+            self.assertEqual(completed.returncode,1,completed.stdout+completed.stderr)
+            self.assertIn('blocked or undecided',completed.stdout,completed.stderr)
+            report=json.loads((root/'result/reports/fixture.json').read_text())
+            self.assertIs(report['pass'],False);self.assertEqual(report['status'],'fail')
+            self.assertTrue((root/'result/inputs.json').is_file())
+            self.assertFalse(json.loads((root/'result/reports.json').read_text())[0]['pass'])
+
+    @unittest.skipUnless(os.environ.get('ROBOT_PLAYBACK_NATIVE')=='1','Explicit real native fixture preflight requested separately')
+    def test_actual_failed_native_three_box_cli_exits_nonzero_and_retains_report(self):
+        toolkit=Path(os.environ['ROBOT_PLAYBACK_TOOLKIT']).resolve()
+        revision=os.environ['ROBOT_PLAYBACK_TOOLKIT_REVISION']
+        sys.path.insert(0,str(toolkit/'software'))
+        from cadagent.review.gates.playback import bind_playback_geometry
+        fixture=runpy.run_path(str(toolkit/'tests/review/test_gate_assembly.py'))['captured_playback_fixture']
+        with tempfile.TemporaryDirectory() as tmp:
+            root=Path(tmp);guides=root/'guides';guides.mkdir();native=root/'native';(native/'breps').mkdir(parents=True)
+            bundle,assembly=fixture(guides,native=True);binding,breps=bind_playback_geometry(assembly,bundle)
+            model=json.loads((guides/'view.json').read_text());parts=[]
+            for part in model['parts']:
+                name=part['name'];entry=binding['instances'][name];file='breps/'+name+'.brep';(native/file).write_bytes(breps[name])
+                parts.append({'name':name,'sha256':part['sha256'],'native_geometry':{'file':file,'sha256':entry['brep_sha256'],'shape_sha256':entry['shape_sha256'],'matrix':entry['matrix']}})
+            c={'schema':'gyropup.robot-assembly-parts/1','units':'mm','up':'z','source_commit':'a'*40,'producer_inputs':{'fixture':'actual three-box control, never Gyropup geometry evidence'},'parts':parts,
+               'native_geometry':{'schema':'gyropup.robot-native-parts/1','units':'mm','up':'z','frame':'assembled robot CAD mm/Z-up','format':'OCCT BREP v1 without triangulation or normals','hash_platform':binding['hash_platform'],'source_correspondence':'Explicit real three-box review fixture; never Gyropup native evidence.'}}
+            raw=encode(c);(native/'collection.json').write_bytes(raw)
+            guide=json.loads((guides/'guide.json').read_text());guide['source']['collection_sha256']=digest(raw);(guides/'guide.json').write_bytes(encode(guide))
+            command=[sys.executable,'-B',str(ROOT/'tools/site/assembly/robot_native_playback.py'),'--collection',str(native/'collection.json'),'--guides-root',str(guides),'--guide','guide.json','--toolkit',str(toolkit),'--toolkit-revision',revision,'--out',str(root/'result'),'--validate']
+            completed=subprocess.run(command,env=os.environ,capture_output=True,text=True,timeout=30)
+            report=json.loads((root/'result/reports/fixture.json').read_text())
+            self.assertIs(report['pass'],False);self.assertEqual(report['status'],'fail')
+            self.assertEqual(completed.returncode,1,completed.stdout+completed.stderr)
+            self.assertIn('blocked or undecided',completed.stdout)
+            self.assertTrue((root/'result/inputs.json').is_file())
 
     @unittest.skipUnless(os.environ.get('ROBOT_PLAYBACK_TOOLKIT'),'Explicit reviewed core checkout needed for optional cross-API preflight')
     def test_real_core_original_byte_helper_contract_without_native_evidence(self):

@@ -2,6 +2,7 @@
 
 | Symptom | Canonical guidance |
 | --- | --- |
+| A CLI writes a failed gate report but its shell exit is zero | [Propagate failure returns through the actual process entry point](inbox/2026-11-10-cli-failure-returns-must-reach-the-process.md) |
 | A build part passes through installed geometry despite a clean final pose, or flipping its direction hits a different obstruction | [Bind arrival paths to installed dependencies](inbox/2026-11-10-clean-final-assembly-pose-does-not-validate-arrivals.md) |
 | A robot is tiny despite a large canvas, stable guide rectangles hide controls, or narrow screenshots use desktop height | [Fit visible geometry and test actual overlay hit targets](inbox/2026-11-09-assembly-overlays-need-visible-bounds-and-hit-tests.md) |
 | A named, hashed manufacturing original is offered as matching a newly collected assembly part | [Keep file identity separate from accepted geometry correspondence](inbox/2026-11-10-manufacturing-links-need-geometry-correspondence.md) |

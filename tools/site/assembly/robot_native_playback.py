@@ -149,4 +149,4 @@ def main(argv=None):
     print('Captured '+str(len(rows))+' native playback bindings; original BREP bytes preserved; no adoption')
 
 
-if __name__=='__main__':main()
+if __name__=='__main__':raise SystemExit(main())
