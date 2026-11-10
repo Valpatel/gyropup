@@ -13,30 +13,44 @@ const phase=name=>{phases.push({name,at:new Date().toISOString()});console.log('
 async function context(options={}){const c=await browser.newContext(options);contexts.push(c);await c.addInitScript(()=>sessionStorage.setItem('gyropup.prototype-notice','2026-10-29-v1'));return c;}
 async function pageFor(c,url=''){const p=await c.newPage();p.setDefaultTimeout(45000);p.on('pageerror',e=>errors.push(e.message));await p.goto(base+'/designer/build.html'+url);await p.waitForFunction(()=>window.__buildGuide?.active?.viewer);return p;}
 const state=p=>p.evaluate(()=>{const a=window.__buildGuide.active;return {step:a.step,snapshot:a.guide.snapshot.id,text:document.querySelector('[data-guide-text]').textContent,camera:{position:a.viewer.stage.camera.position.toArray(),target:a.viewer.stage.controls.target.toArray()},parts:a.viewer.parts.map(p=>({name:p.name,visible:p.mesh.visible,position:p.mesh.position.toArray(),opacity:p.mesh.material.opacity,wireframe:p.mesh.material.wireframe,emissive:p.mesh.material.emissive?.getHex()}))};});
+// Independent screen-space check from actual rendered mesh vertices, not fitView's boxes.
+const projected=(p,zoom=1)=>p.evaluate(async zoom=>{
+ const a=window.__buildGuide.active,v=a.viewer,c=v.stage.renderer.domElement,THREE=await import('/designer/kit/vendor/three/three.module.min.js'),saved=v.stage.camera.position.clone();
+ try{
+  if(zoom!==1){v.stage.camera.position.copy(v.stage.controls.target).add(saved.clone().sub(v.stage.controls.target).multiplyScalar(zoom));v.stage.camera.updateMatrixWorld(true);}
+  const parts=[];for(const part of v.parts.filter(p=>p.mesh.visible)){
+   const pos=part.mesh.geometry.attributes.position,lo=[Infinity,Infinity,Infinity],hi=[-Infinity,-Infinity,-Infinity],point=new THREE.Vector3();
+   for(let i=0;i<pos.count;i++){point.fromBufferAttribute(pos,i).applyMatrix4(part.mesh.matrixWorld).project(v.stage.camera);const xyz=[(point.x+1)*c.width/2,(1-point.y)*c.height/2,point.z];for(let k=0;k<3;k++){lo[k]=Math.min(lo[k],xyz[k]);hi[k]=Math.max(hi[k],xyz[k]);}}
+   parts.push({name:part.name,lo,hi});
+  }return{width:c.width,height:c.height,parts};
+ }finally{if(zoom!==1){v.stage.camera.position.copy(saved);v.stage.camera.updateMatrixWorld(true);}}
+},zoom);
+const fullyFramed=frame=>frame.parts.length>0&&frame.parts.every(p=>[...p.lo,...p.hi].every(Number.isFinite)&&p.lo[0]>=4&&p.lo[1]>=4&&p.hi[0]<=frame.width-4&&p.hi[1]<=frame.height-4&&p.lo[2]>=-1&&p.hi[2]<=1);
 try{
  provenance={...provenance,base,version:await(await fetch(base+'/version.json')).json(),browser:browser.version(),scope};
  if(scope==='all'||scope==='core'){
  phase('core-start');
  const c=await context({viewport:{width:1280,height:900},reducedMotion:'reduce'}),p=await pageFor(c);const initial=await state(p);
  assert.equal(initial.snapshot,'turret-wip-4866459e2abd');assert.equal(initial.parts.length,55);assert.equal(await p.locator('[data-guide-poster]').isVisible(),false,'Interactive3D does not duplicate the fallback diagram');
- const defaultLayout=[];
+ await p.evaluate(()=>document.fonts.ready);const defaultLayout=[];
  for(const viewport of [{width:1440,height:1000},{width:390,height:844}]){
   await p.setViewportSize(viewport);await p.evaluate(()=>window.scrollTo(0,0));await p.evaluate(()=>new Promise(r=>requestAnimationFrame(()=>requestAnimationFrame(r))));
   const measured=await p.evaluate(()=>({width:innerWidth,height:innerHeight,scrollHeight:document.documentElement.scrollHeight,procurementClosed:!document.getElementById('build-details').open,assemblyHeight:document.getElementById('assembly').getBoundingClientRect().height}));assert.equal(measured.procurementClosed,true);
   await p.screenshot({path:`${out}/${engine.name()}-default-${viewport.width}.png`,fullPage:true});defaultLayout.push(measured);
  }
- provenance.default_layout=defaultLayout;await p.setViewportSize({width:1280,height:900});cases.push('default desktop and phone reading extent recorded before procurement expansion');
+ provenance.default_layout=defaultLayout;await p.setViewportSize({width:1280,height:900});await p.evaluate(()=>new Promise(r=>requestAnimationFrame(()=>requestAnimationFrame(r))));cases.push('default desktop and phone reading extent recorded before procurement expansion');
  const guide=await p.evaluate(()=>window.__buildGuide.active.guide);provenance={...provenance,base,version:await(await c.request.get(base+'/version.json')).json(),browser:browser.version(),snapshot:guide.snapshot,guide_sha256:await p.evaluate(()=>window.__buildGuide.active.guideHash),model_sha256:guide.model.sha256};
  // Every stage via native navigation, then back: verify actual rendered instance visibility/materials/offsets.
- const captures=new Map();
+ const captures=new Map(),screenBounds={};
  for(let i=0;i<12;i++){
   phase('forward-'+(i+1));if(i)await p.getByRole('button',{name:'Next →',exact:true}).click();
   const actual=await state(p),s=guide.steps[i];assert.equal(actual.step,s.id);
   if(s.camera){const expected=[s.camera.direction[0],s.camera.direction[2],-s.camera.direction[1]],direction=actual.camera.position.map((v,n)=>v-actual.camera.target[n]);const dot=expected.reduce((sum,v,n)=>sum+v*direction[n],0)/(Math.hypot(...expected)*Math.hypot(...direction));assert.ok(dot>1-1e-9,JSON.stringify({step:s.id,expected,direction,reason:'Authored camera direction must not be clamped, including the underside step'}));}
   assert.deepEqual(actual.parts.filter(v=>v.visible).map(v=>v.name).sort(),[...s.parts].sort());
   for(const part of actual.parts){if(!part.visible)continue;assert.deepEqual(part.position,s.offsets_mm[part.name]||[0,0,0]);if(s.highlight.includes(part.name))assert.equal(part.opacity,1);else assert.ok(part.opacity>0&&part.opacity<.5);}
-  captures.set(s.id,actual.parts);
+  const bounds=await projected(p);assert.ok(fullyFramed(bounds),JSON.stringify({step:s.id,bounds}));screenBounds[s.id]=bounds;captures.set(s.id,actual.parts);
  }
+ const tooClose=await projected(p,.1);assert.equal(fullyFramed(tooClose),false,'A real too-close camera must fail the independent viewport/frustum check');assert.ok(fullyFramed(await projected(p)),'Camera is restored after the negative');provenance.projected_bounds=screenBounds;provenance.too_close_camera_rejected=true;cases.push('every visible vertex fits all12 actual frames; real too-close camera rejected/restored');
  for(let i=10;i>=0;i--){await p.getByRole('button',{name:'← Previous',exact:true}).click();assert.deepEqual((await state(p)).parts,captures.get(guide.steps[i].id));}
  await p.getByLabel('Instruction step',{exact:true}).selectOption('step-10');assert.deepEqual((await state(p)).parts,captures.get('step-10'));
  await p.reload();await p.waitForFunction(()=>window.__buildGuide?.active?.step==='step-10');assert.deepEqual((await state(p)).parts,captures.get('step-10'));
