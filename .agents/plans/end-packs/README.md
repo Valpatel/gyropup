@@ -88,3 +88,39 @@ Normal review and dev→main publication follow genuine adopted outputs. Verify
 actual public versions and model bytes on gyropup.com and cad-agent.valpatel.com.
 Keep issue #193 open for any remaining physical interface/retention/drop
 acceptance; a visual WIP slice must not close the full mechanical issue.
+
+## Numeric implementation checkpoint — 2026-11-10
+
+The first author slice adds pure envelope/placement calculations in the existing
+`body_battery` owner; it does not yet switch the production body out of the bay.
+The dated [AMKUS LAI-002 Rev05, page 8](https://device.report/m/ece13665cf944f3420373a08d01f8946493f8ec6b33ccaa41fbd18d8d414dc6d.pdf#page=8)
+lists DCB609 at 137×97×91 mm and 1.45 kg. Its 2021 date and disagreement with
+the existing DCB547-derived 138×87×97 mm remain explicit. DCB609 retains the
+existing 1.565 kg conservative mass budget until weighing. DCB606's published
+124×84×91 mm / 1.0 kg is an optional smaller example, not a requirement to
+purchase it. Custom smaller outlines require independent mass and reject
+unsupported interface/electrical fields. Selected Azocek holes, rails, latch
+and ratings remain unmeasured/unverified.
+
+Clearance calculations use the reference union 138×97×97 mm; this is not a
+measured pack. The same fixed top/mating datum serves every profile. Front
+rotation RY(−90°), rear RZ(180°)·RY(−90°) preserve proper rigid frames and map
+the local rail axis to +Z at both ends. Downward insertion and +188 mm removal
+are conditional reservations, with 50 mm vertical room after the conservative
+pack clears the adapter envelope. They do not describe measured latch travel.
+
+At the independent fixture belly plane −93.04 mm, 320 mm body and 3.175 mm
+support stock, default pack bounds are X195.775..286.775 (mirrored at rear),
+Y±48.5, Z−87.04..49.96 mm. The conservative union starts 5 mm above the belly;
+the nominal pack starts 6 mm above it. Moving only the cameras upward inside
+the body crosses current power/compute/lidar reservations, so camera relocation
+needs an actual outward cradle and checks. Localized sit feet also need a
+computed load path and new ground/fall evidence; old bay-pad acceptance does
+not transfer.
+
+The initial numeric test run retained one failure: a strictly-greater-than
+assertion rejected the exactly 50 mm planned removal room (39 passed, one
+failed). The corrected assertion requires that actual difference to equal
+50 mm; geometry and travel were unchanged. These tests construct no native
+solids. Native body/collection/sweep acceptance and current-consumer adoption
+remain pending a frozen source and separately reviewed bounded run packet.
