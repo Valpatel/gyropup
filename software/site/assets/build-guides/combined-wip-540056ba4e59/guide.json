@@ -127,7 +127,7 @@
       "tools/engineering/robot/readme_design.py": "8c653277d2aee9fbfd08acb07c23c6542cdd04930804180a111352666110499e",
       "tools/engineering/robot/readme-design.json": "283a05fe4f5717929c5f3dfb316bbf35f9d1f38fbd00fcc59bd0441f35cbf4ff"
     },
-    "exporter_sha256": "400a2c262c1b28cd912e010b794f6e9f6be10e643741661f442461f292ce9cbf",
+    "exporter_sha256": "4b86765a5fa5be9495007aecbe2d08135a49d8de9c29b0c83af778387cf44b24",
     "hardware_tree": "89ae8db4a748d5b19893293fbef3c1d49eeccc2f",
     "collector_sha256": "e655d2c00c6d8d752ac941d2327d4b6faa673d8941567894f7792c92839ada37",
     "recipe_sha256": "9562d12e1e5cc87b5d6d3af646b65bb190668b71fcf8ce531f8796ef71a5c83c",
@@ -2432,8 +2432,18 @@
         ],
         "qualification": "Recorded WIP source only; printability, fits and physical qualification remain separate.",
         "geometry_match": {
-          "status": "pending",
-          "basis": "Identified retained manufacturing original only. File identity and plan membership do not prove a match to the collected CAD instance."
+          "status": "matched",
+          "geometry_source_match": true,
+          "evidence": {
+            "source_file": ".agents/plans/robot-assembly/hip-print-match.json",
+            "sha256": "da6d1df54e489c9a32acc1c15501f23bbbe95eba378e91bc816b58c17ef72814"
+          },
+          "acceptance": {
+            "source_file": ".agents/plans/robot-assembly/hip-print-match-acceptance.json",
+            "sha256": "47bf85d5c8c164eda2d98dab97a42668fb65f72872d68fd6c3e2d27c143fb854"
+          },
+          "basis": "Same source hip model through a current full producer receipt, exact original bytes and sampled bidirectional tessellation correspondence in the authored print frame.",
+          "qualification": "WIP geometry-file preparation only; physical fit, support failures, printer/filament/slice choices and strength remain unresolved."
         },
         "key": "hip_frame",
         "stream": "leg",
@@ -2458,8 +2468,18 @@
         ],
         "qualification": "Recorded WIP source only; printability, fits and physical qualification remain separate.",
         "geometry_match": {
-          "status": "pending",
-          "basis": "Identified retained manufacturing original only. File identity and plan membership do not prove a match to the collected CAD instance."
+          "status": "matched",
+          "geometry_source_match": true,
+          "evidence": {
+            "source_file": ".agents/plans/robot-assembly/hip-print-match.json",
+            "sha256": "da6d1df54e489c9a32acc1c15501f23bbbe95eba378e91bc816b58c17ef72814"
+          },
+          "acceptance": {
+            "source_file": ".agents/plans/robot-assembly/hip-print-match-acceptance.json",
+            "sha256": "47bf85d5c8c164eda2d98dab97a42668fb65f72872d68fd6c3e2d27c143fb854"
+          },
+          "basis": "Same source hip model through a current full producer receipt, exact original bytes and sampled bidirectional tessellation correspondence in the authored print frame.",
+          "qualification": "WIP geometry-file preparation only; physical fit, support failures, printer/filament/slice choices and strength remain unresolved."
         },
         "key": "hip_frame",
         "stream": "leg",

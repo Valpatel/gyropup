@@ -1,0 +1,42 @@
+{
+  "schema": "gyropup.robot-guide-final-local-validation/1",
+  "native_source": "540056ba4e59b197859236cb693463e10c9c8901",
+  "native_archives_preserved": true,
+  "raw_hip_measurement_sha256": "da6d1df54e489c9a32acc1c15501f23bbbe95eba378e91bc816b58c17ef72814",
+  "hip_acceptance_sha256": "47bf85d5c8c164eda2d98dab97a42668fb65f72872d68fd6c3e2d27c143fb854",
+  "matched_instances": [
+    "L.hip_frame",
+    "R.hip_frame"
+  ],
+  "all_other_geometry_matches": "pending",
+  "tests": {
+    "command": "python3 -B -m unittest discover -s tests/site/assembly -p 'test_robot*.py'",
+    "passed": 21,
+    "seconds": 2.432
+  },
+  "site_build": {
+    "command": "npm run build",
+    "exit": 0,
+    "pages": 150,
+    "markdown_pages": 357,
+    "tested_working_tree_base": "a8390d92c960",
+    "complete_document_and_shared_theme_contracts": true
+  },
+  "privacy": {
+    "command": "npm run test:privacy",
+    "exit": 0
+  },
+  "prior_ci_failure": {
+    "run": 42780003951,
+    "head": "7c80117b",
+    "phase": "static build before browsers",
+    "reason": "Fallback HTML missed explicit head/body; follow-up actual build also required shared theme tags",
+    "fixed_in_authored_exporter": true
+  },
+  "limits": [
+    "No product browser, poster, current CI or publication acceptance inferred",
+    "No physical, fit, strength, slice or manufacturing release",
+    "The original dense arithmetic timeout remains TIME_LIMIT; final equivalent pure check completed55.09s",
+    "No second native collection or CAD geometry change"
+  ]
+}

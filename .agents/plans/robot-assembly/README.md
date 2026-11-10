@@ -17,5 +17,8 @@ The two snapshot directories belong under `software/site/assets/build-guides`.
 The product UI owner composes their exact index entries into the existing
 canonical index; this data branch must not overwrite that owner's Turret rows.
 New snapshot photographs/posters and actual product interaction proofs remain
-owned by the product's existing renderer/test contract. Current manufacturing
-correspondence is pending and physical qualification remains unresolved.
+owned by the product's existing renderer/test contract. Manufacturing
+correspondence is pending except the two hip-frame instances, accepted through
+the separate `hip-print-match-acceptance.json` record. Raw sampled measurements
+and the earlier arithmetic timeout remain unchanged. Physical qualification
+and the eight recorded support failures remain unresolved.

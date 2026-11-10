@@ -36,3 +36,12 @@ Preserve the original native collection/archive and distinguish later pure
 metadata serialization from the executed native source. Product UI tests own
 the actual stale/missing-match Print-action rejection; the data regression alone
 does not claim browser acceptance.
+
+The follow-up narrow hip correspondence was accepted in
+[PR #270](https://github.com/Valpatel/gyropup/pull/270#issuecomment-6762537417):
+strict current producer closure plus actual bidirectional mesh-surface samples
+after the authored print transform, with a wrong-shift control. Its immutable
+measurement and separate acceptance are in `.agents/plans/robot-assembly`.
+Only the two physical hip-frame instances become a geometry-source match;
+all other mappings stay pending. Stale receipt, changed CAD code, changed
+original geometry and wrong collected-mesh identity reject that positive gate.

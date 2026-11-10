@@ -137,10 +137,17 @@ source/receipt/original/mesh/sampler identities may mark these two instances
 matched for WIP file preparation. All other mappings remain pending. The
 original 90-second arithmetic timeout is preserved; the optimized equivalent
 comparison completed in 55.09 seconds, including an actual 3 mm shift negative.
+The [independent narrow review](https://github.com/Valpatel/gyropup/pull/270#issuecomment-6762537417)
+accepted that geometry-source match for `L.hip_frame` and `R.hip_frame` only.
+The separate acceptance file binds the immutable measurement; it does not edit
+it or turn the eight failing support checks into passes. The remaining part
+mappings stay pending. Prototype file preparation still requires explicit
+printer, material/process and slice choices; the raw 274 mm width does not
+prove fit on a 256 mm printer bed.
 Body/leg planning quantities retain their original scope;
 wheel hub and tyre share one bought-wheel identity.
 
-The kernel-free suite contains 21 tests. They cover retained named
+All 21 kernel-free tests pass. They cover retained named
 membership, stationary/moving ownership, grouped hardware, frame/unit/mirror
 negatives, strict binary STL, symlink inventory rejection, import safety,
 original-file mapping, snapshot/text integrity and changed-source rejection.
