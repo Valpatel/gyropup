@@ -214,3 +214,12 @@ Diagram capture uses the existing renderer's preserved WebGL pixels. The overlay
 Current diagram refresh is bound to `a118544d`: twelve genuine1280×900 canvas PNGs captured at committed source `af43445e` with native fullscreen and collapsed sheet. Every actual visible vertex fit outside overlays, all source poses/materials matched, and the owned listener closed. The final context-only control correction produced identical PNG bytes to the previous inspected fullscreen capture; the fresh receipt is retained separately. Earlier pilot and normal-workspace captures remain available.
 
 Measured browser checkpoints and their exact source revisions/hashes are indexed in `.agents/plans/versioned-build-guide-workspace-evidence.json`. They distinguish actual native-fullscreen observations from earlier control-only checks, and state interpolation from the later independent world-space mesh comparison. They do not replace complete current-head CI. The interim unbound context now pauses/disables playback and hierarchy tools rather than operating a hidden turret model; authored current guides retain those tools.
+
+The current recovery probe at `72e725ac` passed all five WebKit fallback groups:
+invalid initial snapshot rejection, explicit valid revision and all three assembly
+buttons, actual back/forward and pagehide cleanup, no-script twelve-image/plain
+instructions, and no-WebGL version-scoped progress. The initial phone button
+interception was corrected by measuring floating controls before a viewer exists.
+The static Markdown adapter separately preserves all four workstreams and279
+seven-column order rows without changing browser panels or exposing unavailable
+hidden descendants; all six existing Markdown assertions remain and pass.

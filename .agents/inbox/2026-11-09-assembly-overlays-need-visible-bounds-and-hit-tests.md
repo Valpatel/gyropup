@@ -125,3 +125,17 @@ complete model; no fullscreen/Print assertion had run yet. The duplicate capture
 was removed, retaining sealed visibility/focus/button bounds and every actual
 fullscreen/Print assertion. Do not relabel that successful prefix as fullscreen
 acceptance, or increase the timeout to hide the capture failure.
+
+## Static exports must reveal intentional task panels
+
+2026-11-10, run42794535081 presentation job129756319770 reached a real Markdown
+failure in subtest4: the Supplier part number table was absent. Buy and Setup
+were intentionally hidden browser panels, and the serializer's generic `[hidden]`
+cleanup removed them. The static adapter now exposes only the direct workstream
+wrappers before cleanup; unavailable hidden descendants remain excluded and the
+browser DOM stays compact. The actual renderPortal→Markdown control preserves
+all279 order rows, seven columns and four workstreams, including rows beyond
+pagination; a hidden-child negative stays omitted. All six existing Markdown
+tests and eleven privacy tests passed. Reveal intentional presentation containers
+for static export, rather than stripping every hidden attribute or weakening the
+original table/download assertions.
