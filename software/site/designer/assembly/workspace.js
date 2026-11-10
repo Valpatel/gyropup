@@ -32,6 +32,7 @@ export function createWorkspace(host,getActive,paint,report){
  function collapseFullscreen(){layout.dataset.expanded='false';document.body.style.overflow=previousOverflow;fullState();}
  full.onclick=async()=>{if(document.fullscreenElement===layout){try{await document.exitFullscreen();}catch{report('Use Escape to leave full screen.');}return;}if(layout.dataset.expanded==='true'){collapseFullscreen();return;}try{if(!layout.requestFullscreen)throw new Error('Unavailable');await layout.requestFullscreen();}catch{previousOverflow=document.body.style.overflow;document.body.style.overflow='hidden';layout.dataset.expanded='true';report('Fullscreen is unavailable here. Expanded workspace enabled; press Escape to close.');fullState();}};
  document.addEventListener('fullscreenchange',fullState,{signal:events.signal});
+ window.addEventListener('gyropup:exit-workspace-fullscreen',()=>{if(layout.dataset.expanded==='true')collapseFullscreen();},{signal:events.signal});
  host.addEventListener('keydown',event=>{if(event.key!=='Escape')return;if(layout.dataset.expanded==='true')collapseFullscreen();if(document.fullscreenElement===layout)document.exitFullscreen().catch(()=>{});if(useSheet()){if(getActive()?.viewer)sheetCollapsed=true;else{pane='instructions';sheetCollapsed=false;}}else{partsOpen=false;toolsOpen=false;}renderPanels();frame();},{signal:events.signal});
  host.addEventListener('gyropup:part-selected',()=>{if(mobile.matches){pane='parts';sheetCollapsed=false;sheetExpanded=true;renderPanels();frame();}},{signal:events.signal});
  function frame(){

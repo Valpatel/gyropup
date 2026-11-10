@@ -4,6 +4,7 @@ import assert from 'node:assert/strict';
 import {mkdir,readFile,writeFile} from 'node:fs/promises';
 import {execFileSync} from 'node:child_process';
 import {createHash} from 'node:crypto';
+import {validatePreparedProject} from '../../../software/site/designer/assembly/print-selection.js';
 import {validateGuide} from '../../../software/site/designer/kit/assembly/guide.js';
 import {parseHTML} from 'linkedom';
 import {chromium,webkit} from '@playwright/test';
@@ -128,7 +129,15 @@ try{
   const response=await context.request.get(base+file);assert.equal(response.status(),200);assert.equal(digest(await response.body()),part.sha256,'Guide derivatives remain available at their exact public URL');presentationModels.add(file);
  }
  assert.ok(presentationModels.size>0);
- const expectedModels=committed.filter(file=>/\.(stl|step|stp|3mf)$/i.test(file)).map(publicForSource).filter(Boolean).map(file=>'/'+file).filter(file=>!presentationModels.has(file)).sort();
+ const preparedModels=new Set();
+ for(const {guide}of boundGuides)for(const mapping of Object.values(guide.source?.manufacturing_by_part||{}))for(const project of mapping.prepared_projects||[]){
+  validatePreparedProject(mapping,project);
+  for(const original of mapping.originals)assert.equal(digest(gitBytes(original.public_file)),original.sha256,'Prepared project retains its exact manufacturing original');
+  assert.equal(digest(gitBytes(project.public_file)),project.sha256,'Prepared derivative matches the immutable served revision');
+  const response=await context.request.get(base+project.public_file);assert.equal(response.status(),200);assert.equal(digest(await response.body()),project.sha256);preparedModels.add(project.public_file);
+ }
+ assert.equal(preparedModels.size,1,'Only the reviewed content-addressed hip project is separate from engineering originals');
+ const expectedModels=committed.filter(file=>/\.(stl|step|stp|3mf)$/i.test(file)).map(publicForSource).filter(Boolean).map(file=>'/'+file).filter(file=>!presentationModels.has(file)&&!preparedModels.has(file)).sort();
  assert.ok(expectedModels.length>0,'Served revision contains original CAD files');
  assert.deepEqual(inventory.files.map(file=>file.path).sort(),expectedModels,'Every committed engineering original appears exactly once; only hash-bound guide derivatives are separate');
  for(const file of inventory.files)assert.equal(file.format,file.path.split('.').pop().toLowerCase());
