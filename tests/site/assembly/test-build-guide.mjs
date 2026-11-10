@@ -7,14 +7,14 @@ const base=(process.env.SITE_URL||'http://127.0.0.1:8879').replace(/\/$/,'');
 const engine=process.env.PLAYWRIGHT_BROWSER==='webkit'?webkit:chromium;
 const out=process.env.TEST_OUTPUT||'/tmp/gyropup-build-guide';await mkdir(out,{recursive:true});
 const browser=await engine.launch(engine===chromium?{channel:process.env.PLAYWRIGHT_CHANNEL==='chromium'?undefined:'chrome',headless:true,args:['--no-sandbox','--use-gl=angle','--use-angle=swiftshader','--enable-unsafe-swiftshader']}:{headless:true});
-const contexts=[],cases=[],errors=[];
+const contexts=[],cases=[],errors=[];let provenance;
 async function context(options={}){const c=await browser.newContext(options);contexts.push(c);await c.addInitScript(()=>sessionStorage.setItem('gyropup.prototype-notice','2026-10-29-v1'));return c;}
 async function pageFor(c,url=''){const p=await c.newPage();p.setDefaultTimeout(45000);p.on('pageerror',e=>errors.push(e.message));await p.goto(base+'/designer/build.html'+url);await p.waitForFunction(()=>window.__buildGuide?.active?.viewer);return p;}
 const state=p=>p.evaluate(()=>{const a=window.__buildGuide.active;return {step:a.step,snapshot:a.guide.snapshot.id,text:document.querySelector('[data-guide-text]').textContent,parts:a.viewer.parts.map(p=>({name:p.name,visible:p.mesh.visible,position:p.mesh.position.toArray(),opacity:p.mesh.material.opacity,wireframe:p.mesh.material.wireframe,emissive:p.mesh.material.emissive?.getHex()}))};});
 try{
  const c=await context({viewport:{width:1280,height:900},reducedMotion:'reduce'}),p=await pageFor(c);const initial=await state(p);
  assert.equal(initial.snapshot,'turret-wip-4866459e2abd');assert.equal(initial.parts.length,55);
- const guide=await p.evaluate(()=>window.__buildGuide.active.guide);
+ const guide=await p.evaluate(()=>window.__buildGuide.active.guide);provenance={base,version:await(await c.request.get(base+'/version.json')).json(),browser:browser.version(),snapshot:guide.snapshot,guide_sha256:await p.evaluate(()=>window.__buildGuide.active.guideHash),model_sha256:guide.model.sha256};
  // Every stage via native navigation, then back: verify actual rendered instance visibility/materials/offsets.
  const captures=new Map();
  for(let i=0;i<12;i++){
@@ -71,5 +71,5 @@ try{
  await f.evaluate(()=>new Promise(r=>requestAnimationFrame(()=>requestAnimationFrame(r))));assert.equal(await f.evaluate(()=>window.oldGuideTicks),beforeTicks.ticks);assert.equal(beforeTicks.gone,true);assert.equal(beforeTicks.connected,false);assert.equal(await f.locator('[data-guide-model] canvas').count(),1);cases.push('late superseded actual model request cannot replace scene; old callbacks/context disposed');
  const plain=await context({javaScriptEnabled:false,viewport:{width:390,height:844}}),np=await plain.newPage();await np.goto(base+'/designer/build.html');await np.getByRole('link',{name:'All twelve instructions in plain HTML'}).click();assert.equal(await np.locator('main section').count(),12);assert.match(await np.locator('#step-08').innerText(),/\+12 and -25/);
  const noGL=await context({viewport:{width:390,height:844}});await noGL.addInitScript(()=>{const original=HTMLCanvasElement.prototype.getContext;HTMLCanvasElement.prototype.getContext=function(type,...args){return String(type).includes('webgl')?null:original.call(this,type,...args);};});const gp=await noGL.newPage();gp.on('pageerror',e=>errors.push(e.message));await gp.goto(base+'/designer/build.html');await gp.waitForFunction(()=>window.__buildGuide?.active&&document.getElementById('assembly').dataset.ready==='1');assert.equal(await gp.locator('[data-guide-visual]').isVisible(),false);assert.match(await gp.locator('[data-guide-status]').innerText(),/3D is unavailable/);assert.ok((await gp.locator('[data-guide-text]').innerText()).length>50);cases.push('native no-script/current plain instructions and real WebGL-disabled fallback');
- assert.deepEqual(errors,[]);await writeFile(`${out}/${engine.name()}-report.json`,JSON.stringify({cases,errors},null,2));console.log(`PASS ${engine.name()}: ${cases.length} build guide groups`);
+ assert.deepEqual(errors,[]);await writeFile(`${out}/${engine.name()}-report.json`,JSON.stringify({provenance,cases,errors},null,2));console.log(`PASS ${engine.name()}: ${cases.length} build guide groups`);
 }finally{await Promise.all(contexts.map(c=>c.close()));await browser.close();}
