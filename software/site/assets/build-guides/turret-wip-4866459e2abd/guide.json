@@ -864,7 +864,7 @@
       "fire_tilt_max_deg": 10.0
     },
     "instruction_items": "Fastener quantities/tools/checks are authored in each step text. Mesh envelopes are not proof of fit, thread engagement or tool access.",
-    "poster_visual_sha256": "a388013ea81daf89e6d5d393874bb1b05fa32b5a46e3b60f8ce85c697cfc435a",
+    "poster_visual_sha256": "a624bcfa11b475e4800bbddfaefaed06074da892fefcec264dd5a9aa1536efe4",
     "instructions": {
       "file": "instructions.json",
       "sha256": "24a6515cd88d307f4a8d4a43616f6dd092bdb46899ddd369e9f8a6d330e81c87"
@@ -974,7 +974,7 @@
       "requires": [],
       "poster": {
         "file": "posters/step-01.png",
-        "sha256": "4dc9885901a50562020d8979595712ce864aa37de23b5d4628d819979a234216"
+        "sha256": "3a04458538aaa24e9b8c424e3db82e3d65dc159b17e4f22db6ef381c2198db37"
       }
     },
     {
@@ -1022,7 +1022,7 @@
       ],
       "poster": {
         "file": "posters/step-02.png",
-        "sha256": "be50edbb7b44b4e7fe0b34715fb6b39a3b651038951a57604e4281a20892579c"
+        "sha256": "ebe10588f1c72c5b97cfaa541a82701e3141412b0ac2cd0791379d6a32f5d2f6"
       }
     },
     {
@@ -1101,7 +1101,7 @@
       ],
       "poster": {
         "file": "posters/step-03.png",
-        "sha256": "f461b6948885bf7395f63923ded0d95ca2b19eb291375eef5a3177d1106d68aa"
+        "sha256": "59520227a7bda0eb2ed2c97a1628fc6feb8f2f59dff2137d4a10a2d7b31e2fb9"
       }
     },
     {
@@ -1159,7 +1159,7 @@
       ],
       "poster": {
         "file": "posters/step-04.png",
-        "sha256": "b0fd20f8bea9a46645fe36b98abad652faf6c2f55343e7280af0e127105a3f8e"
+        "sha256": "11fa28827ea85d25f34d869bcb09395275f207df1ecbd1ee2378e674ed720b0c"
       }
     },
     {
@@ -1227,7 +1227,7 @@
       ],
       "poster": {
         "file": "posters/step-05.png",
-        "sha256": "3dce0ef4ac4b41914d8cc9e3449be018e912eb81a20fd63facb415c2c29b2cac"
+        "sha256": "d37f4007aaa8b8386e1fd9f8c364646854874ce0c8037c586c9aee1a165844cb"
       }
     },
     {
@@ -1306,7 +1306,7 @@
       ],
       "poster": {
         "file": "posters/step-06.png",
-        "sha256": "e59a90a5338dc9e94c2baf2c8fc1e81d943e1e943c33fdb3f5e06e7fe861b167"
+        "sha256": "b7631c467ab216bf609c1b724d97e71971d300bbbf8d4cf8b01faca9af0df22c"
       }
     },
     {
@@ -1383,7 +1383,7 @@
       ],
       "poster": {
         "file": "posters/step-07.png",
-        "sha256": "567cee773ca61079626a1805fdff2edca6c3beb9cf1b2b8859bc84dfd5efbbe0"
+        "sha256": "5445ee905a45a31f99110d3a9178548100a7e4970f4dd41b7e67c9b5ffc088b3"
       }
     },
     {
@@ -1506,7 +1506,7 @@
       ],
       "poster": {
         "file": "posters/step-08.png",
-        "sha256": "78ea2bc4de2c9f1a031df56bbb8d17dcee285868adb9f158fbb63c24dfe84cb0"
+        "sha256": "df260e17b67d1430b0813acef0b3612e5788a35a08bc92bac93dd98738640a3f"
       }
     },
     {
@@ -1583,7 +1583,7 @@
       ],
       "poster": {
         "file": "posters/step-09.png",
-        "sha256": "7ee17f8dafa2260a98f3f219dd39db27449252e9d93c637ada2287e66639e81f"
+        "sha256": "b26167f7a1aa4f281652a9d9153d541b6a17218d84bcc511b8f0f3a747941ee3"
       }
     },
     {
@@ -1732,7 +1732,7 @@
       ],
       "poster": {
         "file": "posters/step-10.png",
-        "sha256": "0f65834f459add18a51dbebbb946418711e498deeadd503ab90fc64b296e5352"
+        "sha256": "f3646c68cf287b5b53ae609ab95708246538f3ed5684150f50c71ed0843fb0f9"
       }
     },
     {
@@ -1830,7 +1830,7 @@
       ],
       "poster": {
         "file": "posters/step-11.png",
-        "sha256": "921ea712fe0f93699542d22326eb8327b9e9231ef8cd92751bb1412397b28408"
+        "sha256": "8de946fcbfdf9df5b33896a5bcd44126170ed4334a9558d4f631ab05d8f1fbb7"
       }
     },
     {
@@ -1917,7 +1917,7 @@
       ],
       "poster": {
         "file": "posters/step-12.png",
-        "sha256": "508b236f4175983c19ee28c119b9bbfaeb11c44273b640fdd07a8d1f1c29def2"
+        "sha256": "095b479f8aeff8695f98878b66395d2df6e58bebd8971d323e4c99c89a1cb7e9"
       }
     }
   ]
