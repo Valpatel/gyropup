@@ -169,3 +169,24 @@ Capture failed/partial results without overwriting historical or manufacturing
 files. Current source-bound figures/snapshots/consumer changes remain pending;
 never relabel the old geometry as these new supports. No such native job has
 been run or approved by this checkpoint.
+
+## Original-byte producer boundary and pending acceptance
+
+The first new collection must use `--emit-brep`: the STL and original BREP
+payload are emitted from the same collected worldshape, with identity placement
+and the original producer hash platform. Only the two already reviewed additive
+producer changes from `a684eeca47118a5f38019441982be32fdc89c47c` / `542b9a40`
+are ported. Their file bytes stay identical to that reviewed producer; no study
+adapter, stored evidence or alternate geometry engine is imported. The body CAD
+and simulation source stay byte-identical to `696666c7`. Help/import-safety and
+same-object serialization-flow tests use explicit non-CAD doubles; they do not
+establish native geometry equivalence. No STL-only collection is proposed.
+
+The frozen `696666c7` CI also retained a separate failure in
+[run 42866125306, job 130005097895](https://github.com/Valpatel/gyropup/actions/runs/42866125306/job/130005097895):
+`package-fit-job.py` called `rs04_lug_checks.validate_receipt`, which rejected
+`Source/context closure changed`. The receipt and closure were not restamped or
+relaxed, and no retry was used. Review must identify the exact changed dependency
+and distinguish historical printed-leg fit evidence from changed body/system
+qualification before an acceptance fix is selected. Protected leg source/export
+bytes still match; that fact alone does not settle this failing consumer.

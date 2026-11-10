@@ -1,11 +1,15 @@
 """Pure expected mechanical frames; no kernel, renderer or collector execution."""
 import importlib.util
+import ast
+import contextlib
+import io
 from pathlib import Path
 import struct
 import subprocess
 import sys
 import tempfile
 import unittest
+from types import SimpleNamespace
 ROOT=Path(__file__).resolve().parents[3]
 OWNER=ROOT/'tools/site/assembly'
 sys.path.insert(0,str(OWNER))
@@ -58,6 +62,38 @@ class PhysicalFrames(unittest.TestCase):
         for file in ('collect_robot_parts.py','export_robot_guide.py','run_robot_collection.py'):
             value=subprocess.check_output([sys.executable,'-I','-S','-B',str(OWNER/file),'--help'],text=True,timeout=5)
             self.assertIn('usage:',value)
+            if file != 'export_robot_guide.py':
+                self.assertIn('--emit-brep',value)
+
+    def test_optional_payloads_capture_the_same_original_object_in_the_real_worker_loop(self):
+        # Execute only the actual serialization loop with explicit non-CAD byte
+        # doubles. This establishes control/data flow, never native equivalence.
+        tree=ast.parse((OWNER/'collect_robot_parts.py').read_text())
+        loop=next(n for n in ast.walk(tree) if isinstance(n,ast.For)
+                  and isinstance(n.iter,ast.Name) and n.iter.id=='rows')
+        code=compile(ast.Module(body=[loop],type_ignores=[]),'collect_robot_parts serialization contract','exec')
+        original=SimpleNamespace(Solids=lambda:[object()],isValid=lambda:True)
+        raw=b'explicit non-CAD original-byte contract fixture'
+        for enabled in (False,True):
+            with self.subTest(enabled=enabled),tempfile.TemporaryDirectory() as tmp:
+                out=Path(tmp);(out/'meshes').mkdir();(out/'breps').mkdir();exported=[];captured=[]
+                def export(shape,file,**kwargs):
+                    self.assertIs(shape,original);exported.append(shape);Path(file).write_bytes(b'not an STL: explicit contract double')
+                def capture(shape):
+                    self.assertIs(shape,original);captured.append(shape);return raw
+                scope={'args':SimpleNamespace(emit_brep=enabled),'rows':[('g','#fff','part',original,(0,0,0))],
+                       'filenames':{'part':'meshes/part.stl'},'out':out,'parts':[],'Path':Path,
+                       'cq':SimpleNamespace(exporters=SimpleNamespace(export=export)),
+                       'bounds':lambda _: [0,0,0,1,1,1],'sha':data.sha,'shape_brep_text':capture,
+                       'brep_content_hash':lambda value:'content:'+str(len(value))}
+                with contextlib.redirect_stdout(io.StringIO()):exec(code,scope)
+                self.assertEqual(exported,[original]);self.assertEqual(captured,[original] if enabled else [])
+                part=scope['parts'][0]
+                self.assertEqual('native_geometry' in part,enabled)
+                if enabled:
+                    native=part['native_geometry']
+                    self.assertEqual((out/native['file']).read_bytes(),raw)
+                    self.assertEqual(native['matrix'],[1,0,0,0,0,1,0,0,0,0,1,0])
 
     def test_importing_worker_never_imports_native_kernel(self):
         before=set(sys.modules)
