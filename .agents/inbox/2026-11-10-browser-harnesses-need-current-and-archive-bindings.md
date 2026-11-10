@@ -33,3 +33,21 @@ Offline fixture checks validate the exact five guide/model bindings and original
 versus partitioned counts. Existing pure guide/session checks pass13; native
 browser acceptance remains normal composed CI after source review. No timeout,
 workflow, screenshot or manufacturing qualification requirement was changed.
+# Archive page lifetime and presentation inventory
+
+The d818 docking job finished the required capture and the existing control
+states, then the added archive assertion called `page.goto` after
+`playbackActivationCases` closed its context. The archive check now owns a fresh
+context, binds the same explicit historical route, collects its page errors, and
+closes that context in `finally`. The required capture still uses 15 seconds.
+[Original docking failure](https://github.com/Valpatel/gyropup/actions/runs/42913926552/job/130171477417)
+
+The d818 portal job expected 224 additional engineering originals because its
+test inventory omitted the current presentation manifest from its exclusions.
+The portal test now verifies the adopted descriptor, native collection and each
+unique instance's mesh filename and hash against both the served revision and
+public bytes before classifying that file as presentation. The exact inventory
+logic passed a read-only Git and build-file replay on e5c6. It identified 512
+guide derivatives, 224 current presentation meshes and all 643 originals. The
+browser job still owns HTTP delivery and adjacent original/preview link checks.
+[Original portal failure](https://github.com/Valpatel/gyropup/actions/runs/42913926552/job/130171477132)

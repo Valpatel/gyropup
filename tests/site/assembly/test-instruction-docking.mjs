@@ -8,6 +8,7 @@ import {createRequire} from 'node:module';
 import {chromium,webkit} from '@playwright/test';
 import {createSiteServer} from '../../../tools/site/serve-site.mjs';
 import {captureScope,requireFreshCaptureRuntime,observeCaptureProtocol,observeScreenshot,readCaptureDiagnostic,watchCapturePage} from './capture-diagnostics.mjs';
+import {acknowledgePrototypeNotice} from './build-prototype-session.mjs';
 const engine=process.env.PLAYWRIGHT_BROWSER==='webkit'?webkit:chromium;
 const scope=captureScope(process.env.DOCKING_CASE);
 const out=process.env.TEST_OUTPUT||'/tmp/gyropup-instruction-docking-'+engine.name()+(scope==='all'?'':'-fresh-capture');
@@ -174,9 +175,17 @@ try{
  const fine=await browser.newContext({viewport:{width:844,height:390},hasTouch:false,isMobile:false,reducedMotion:'reduce'});await fine.addInitScript(()=>sessionStorage.setItem('gyropup.prototype-notice','2026-10-29-v1'));page=await fine.newPage();page.on('pageerror',e=>errors.push(e.message));await page.goto(base+'/designer/build.html?assembly=turret&step=step-02#assembly',{waitUntil:'domcontentloaded'});await page.waitForFunction(()=>window.__buildGuide?.active?.viewer?.parts.some(p=>p.mesh.visible)&&document.querySelector('#assembly').dataset.ready==='1');await page.evaluate(()=>document.fonts.ready);await fullscreen('native');
  await clickState('[data-instructions-toggle]','aria-expanded',true);await clickState('[data-explorer-toggle]','aria-expanded',true);await clickState('[data-tools-toggle]','aria-expanded',true);const desktop=await inspect('fine-pointer 844x390 native desktop control');assert.equal(desktop.pointerCoarse,false);assert.equal(desktop.mobile,'false');assert.equal(Object.keys(desktop.panels).length,3);await page.screenshot({path:out+'/fine-pointer-844-desktop.png',timeout:15000});await fine.close();
  await phoneFooterCases();await playbackActivationCases();
- await page.goto(base+'/designer/build.html?assembly=robot&snapshot=robot-wip-540056ba4e59#assembly',{waitUntil:'domcontentloaded'});
- await page.waitForFunction(()=>{const a=window.__buildGuide?.active;return a?.viewer?.parts.length===171&&a.guide.snapshot.id==='robot-wip-540056ba4e59'&&a.guide.snapshot.source_commit==='540056ba4e59b197859236cb693463e10c9c8901'&&document.querySelector('#assembly').dataset.ready==='1';},null,{timeout:60000});
- observations.push({label:'explicit historical540Robot remains171 parts',snapshot:'robot-wip-540056ba4e59',parts:171});
+ const archiveContext=await browser.newContext({viewport:{width:1440,height:1000},reducedMotion:'reduce'});
+ try {
+  await acknowledgePrototypeNotice(archiveContext,base);
+  const archivePage=await archiveContext.newPage();
+  archivePage.on('pageerror',error=>errors.push(error.message));
+  await archivePage.goto(base+'/designer/build.html?assembly=robot&snapshot=robot-wip-540056ba4e59#assembly',{waitUntil:'domcontentloaded'});
+  await archivePage.waitForFunction(()=>{const a=window.__buildGuide?.active;return a?.viewer?.parts.length===171&&a.guide.snapshot.id==='robot-wip-540056ba4e59'&&a.guide.snapshot.source_commit==='540056ba4e59b197859236cb693463e10c9c8901'&&document.querySelector('#assembly').dataset.ready==='1';},null,{timeout:60000});
+  observations.push({label:'explicit historical540Robot remains171 parts',snapshot:'robot-wip-540056ba4e59',parts:171});
+ } finally {
+  await archiveContext.close();
+ }
  assert.deepEqual(errors,[]);await writeFile(out+'/report.json',JSON.stringify({status:'passed',engine:engine.name(),browser:browser.version(),version,sources,observations,errors},null,2)+'\n');console.log('PASS',engine.name(),observations.length,'actual docking/control states');
  }
 }catch(error){await writeFile(out+'/failed.json',JSON.stringify({status:'failed',scope,completeCampaign:false,sources,observations,errors,error:error.stack},null,2));try{await page?.screenshot({path:out+'/failure.png',timeout:15000});}catch{}throw error;}
