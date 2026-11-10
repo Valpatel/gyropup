@@ -5,11 +5,12 @@ export function createWorkspace(host,getActive,paint,report){
  const required=selector=>{const node=host.querySelector(selector);if(!node)throw new Error('Missing workspace element: '+selector);return node;};
  const layout=required('.assembly-layout'),tree=required('#assembly-explorer'),tools=required('#assembly-tools'),instructions=required('.assembly-step'),sheet=required('[data-workspace-sheet]');
  const toolbar=required('.assembly-topbar'),nav=required('.assembly-nav'),full=required('button[data-guide-fullscreen]'),instructionToggle=required('button[data-instructions-toggle]');
+ const landscape=matchMedia('(min-width:600px) and (max-width:1000px) and (max-height:500px) and (pointer:coarse)');
  const mobile=matchMedia('(max-width:760px), (max-width:1000px) and (max-height:500px) and (pointer:coarse)'),events=new AbortController();
  let disposed=false,generation=0,assemblyLoader=null,previousOverflow='',expandedInstructions=false,partsOpen=false,toolsOpen=false,pane='instructions',sheetCollapsed=false,sheetExpanded=false,framePending=false;
  const useSheet=()=>mobile.matches||!!getActive()&&!getActive().viewer;
  function renderPanels(){
-  layout.dataset.mobile=String(useSheet());layout.dataset.instructions=expandedInstructions?'expanded':'normal';layout.dataset.tools=String(toolsOpen);layout.dataset.parts=String(partsOpen);layout.dataset.sheetSize=sheetCollapsed?'collapsed':sheetExpanded?'expanded':'normal';
+  layout.dataset.mobile=String(useSheet());layout.dataset.sheetLayout=landscape.matches?'side':'bottom';layout.dataset.instructions=expandedInstructions?'expanded':'normal';layout.dataset.tools=String(toolsOpen);layout.dataset.parts=String(partsOpen);layout.dataset.sheetSize=sheetCollapsed?'collapsed':sheetExpanded?'expanded':'normal';
   if(useSheet()){tree.hidden=pane!=='parts'||sheetCollapsed;tools.hidden=pane!=='tools'||sheetCollapsed;instructions.hidden=pane!=='instructions'||sheetCollapsed;}
   else{tree.hidden=!partsOpen;tools.hidden=!toolsOpen;instructions.hidden=false;}
   required('button[data-explorer-toggle]').setAttribute('aria-expanded',String(useSheet()?pane==='parts'&&!sheetCollapsed:partsOpen));required('button[data-tools-toggle]').setAttribute('aria-expanded',String(useSheet()?pane==='tools'&&!sheetCollapsed:toolsOpen));
@@ -41,7 +42,7 @@ export function createWorkspace(host,getActive,paint,report){
   const navigation=nav.getBoundingClientRect();layout.style.setProperty('--assembly-nav-bottom',`${navigation.bottom-bounds.top}px`);
   if(!viewer)return; // Floating controls must remain measurable during loading or initial errors.
   const insets={top:navigation.bottom-bounds.top+12,bottom:16,left:16,right:16};
-  if(mobile.matches){const occupied=sheet.getBoundingClientRect();insets.bottom=Math.max(16,bounds.bottom-occupied.top+12);layout.style.setProperty('--assembly-sheet-height',`${occupied.height}px`);}
+  if(mobile.matches){const occupied=sheet.getBoundingClientRect();if(landscape.matches)insets.right=Math.max(16,bounds.right-occupied.left+12);else insets.bottom=Math.max(16,bounds.bottom-occupied.top+12);layout.style.setProperty('--assembly-sheet-height',`${occupied.height}px`);}
   else{
    layout.style.setProperty('--assembly-right-dock',toolsOpen?`${tools.getBoundingClientRect().width+12}px`:'0px');
    if(partsOpen)insets.left=tree.getBoundingClientRect().right-bounds.left+12;
@@ -74,7 +75,7 @@ export function createWorkspace(host,getActive,paint,report){
   catch(error){if(getActive()!==active||disposed)return;active.overview=false;paint(active.step);present();report('Robot context could not load: '+error.message+'. The bound guide remains available; choose Robot or Combined to retry.',true);required('[data-guide-retry]').hidden=true;}
   finally{active.robotLoading=false;}
  }
- const observer=new ResizeObserver(scheduleFrame);observer.observe(layout);observer.observe(toolbar);observer.observe(sheet);window.addEventListener('resize',()=>{renderPanels();scheduleFrame();},{signal:events.signal});mobile.addEventListener('change',()=>{renderPanels();scheduleFrame();},{signal:events.signal});renderPanels();
+ const observer=new ResizeObserver(scheduleFrame);observer.observe(layout);observer.observe(toolbar);observer.observe(sheet);window.addEventListener('resize',()=>{renderPanels();scheduleFrame();},{signal:events.signal});mobile.addEventListener('change',()=>{renderPanels();scheduleFrame();},{signal:events.signal});landscape.addEventListener('change',()=>{renderPanels();scheduleFrame();},{signal:events.signal});renderPanels();
  return{frame,present,step,overview,choose,setNavigation(handler){assemblyLoader=handler;},invalidate(){++generation;},dispose(){if(layout.dataset.expanded==='true')collapseFullscreen();disposed=true;++generation;events.abort();observer.disconnect();}};
 }
 export function disposeRobot(robot){if(!robot)return;robot.group.removeFromParent();const geometries=new Set(),materials=new Set();robot.group.traverse(object=>{if(object.geometry)geometries.add(object.geometry);for(const material of Array.isArray(object.material)?object.material:object.material?[object.material]:[])materials.add(material);});for(const geometry of geometries)geometry.dispose();for(const material of materials)material.dispose();}
