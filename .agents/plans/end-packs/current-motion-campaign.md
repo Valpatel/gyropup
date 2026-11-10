@@ -90,6 +90,14 @@ qpos/mass/source/muzzle roundtrips, real bench-selector cached return and stable
 laser recovery, landing/talk same-source identities, and320×568 native error/
 retry recovery. Actual current browser/visual/frame acceptance remains pending.
 
+The first Chrome action at2e90 retained an incomplete47.340s failure after its
+18 observation outputs: the held-load request used a logical name as a filename.
+The [manifest request lesson](../../inbox/2026-11-10-mesh-request-controls-need-manifest-file-identities.md)
+preserves the cause and bounded controls. Both held-current and mobile503 stimuli
+now resolve the unique actual part file and verify its bytes before browser
+startup; the mobile result requires an actual interception. A separately reviewed
+new action must use fresh outputs. No prior partial capture is a passed campaign.
+
 Campaign-local storage initialization runs only on HTTP(S) origins. The initial
 `about:blank` document is skipped before accessing either storage object; an
 HTTP-origin storage exception remains an observed page error. The historical

@@ -7,6 +7,7 @@ import {chromium,webkit} from '@playwright/test';
 import {createSiteServer} from '../../../tools/site/serve-site.mjs';
 import {publicForSource,sourceForPublic} from '../../../tools/site/source-layout.mjs';
 import {installCurrentMotion,captureMotionFaults,captureMotionOperation} from './current-motion-capture.mjs';
+import {requiredMeshRequestTarget} from './current-motion-target.mjs';
 
 const root=new URL('../../../',import.meta.url),sha=b=>createHash('sha256').update(b).digest('hex');
 const referenceFile=process.env.CURRENT_MOTION_REFERENCE,referenceHash=process.env.CURRENT_MOTION_REFERENCE_SHA256;
@@ -17,7 +18,9 @@ assert.ok(siteRoot&&out&&/^[0-9a-f]{40}$/.test(sourceRevision??''),'Explicit iso
 const publicManifest=publicForSource('software/site/assets/robot-current/manifest.json');
 assert.equal(publicManifest,'web/robot-current/manifest.json');assert.equal(sourceForPublic(publicManifest),'software/site/assets/robot-current/manifest.json');
 const source={file:publicManifest,sha256:reference.manifest_sha256};
-assert.equal(sha(await readFile(path.join(siteRoot,publicManifest))),source.sha256);
+const manifestBytes=await readFile(path.join(siteRoot,publicManifest));assert.equal(sha(manifestBytes),source.sha256);
+const requiredPart=await requiredMeshRequestTarget(JSON.parse(manifestBytes),publicManifest,siteRoot,'item.battery_front');
+const currentPart=requiredPart.pattern;
 assert.equal(sha(await readFile(path.join(siteRoot,'web/robot-current/collection.json'))),reference.collection_sha256);
 const bindingBody='// Reviewed candidate binding only; no renderer algorithm replacement.\nexport const CURRENT_ROBOT_SOURCE = '+JSON.stringify(source)+';\n';
 const originalBinding=await readFile(new URL('software/site/designer/robot_current_source.js',root));
@@ -29,6 +32,7 @@ const report={schema:'gyropup.current-renderer-capture/1',status:'FAILED_OR_INCO
   referenceSha256:referenceHash,manifestSha256:source.sha256,collectionSha256:reference.collection_sha256,
   bindingOverlay:{file:'/designer/robot_current_source.js',originalSha256:sha(originalBinding),servedSha256:sha(bindingBody),source,notPublicAdoption:true},
   browser:selected,outputs:{},phases:[],engineering:reference.engineering};
+report.requiredPartRequest={name:requiredPart.name,file:requiredPart.file,sha256:requiredPart.sha256,pathname:requiredPart.pathname};
 const progress=async phase=>{report.phases.push(phase);await writeFile(path.join(out,'progress.json'),JSON.stringify(report,null,2)+'\n');console.log(phase);};
 const stop=()=>{aborted=true;void browser?.close().catch(()=>{});server.closeAllConnections();server.close();};
 process.once('SIGTERM',stop);process.once('SIGINT',stop);
@@ -94,7 +98,6 @@ try{
   await page.evaluate(()=>window.__currentMotion.r.setPresentation('current'));releaseRecorded();
   const staleRecorded=await page.evaluate(async()=>{await window.__pendingRecorded;const r=window.__currentMotion.r;return{mode:r.presentation.mode,holders:r.group.children.length,mass:r.info.massKg};});
   await page.unroute(archivedPart);assert.equal(staleRecorded.mode,'current');assert.equal(staleRecorded.holders,1);assert.equal(staleRecorded.mass,null);
-  const currentPart='**/web/robot-current/meshes/item.battery_front.stl*';
   let releaseCurrent;const heldCurrent=new Promise(resolve=>releaseCurrent=resolve);
   await page.route(currentPart,async route=>{await heldCurrent;try{await route.continue();}catch{/* request was deliberately cancelled */}});
   const currentRequest=page.waitForRequest(currentPart,{timeout:10000});
@@ -142,14 +145,16 @@ try{
   await save('current-route-identities.json',routeIdentities);
   await c.close();
   const mobile=await context({width:320,height:568}),phone=await mobile.newPage();phone.setDefaultTimeout(45000);
-  await phone.route('**/web/robot-current/meshes/item.battery_front.stl*',route=>route.fulfill({status:503,body:'Deliberate candidate required-part failure'}));
+  let mobileInterceptions=0;
+  await phone.route(currentPart,route=>{mobileInterceptions++;return route.fulfill({status:503,body:'Deliberate candidate required-part failure'});});
   await phone.goto(base+'/designer/sim.html?run=none&demo=0&sound=0',{waitUntil:'domcontentloaded'});
   await phone.waitForFunction(()=>[...document.querySelectorAll('#sim-startup,#sim-loading')].some(e=>e.dataset.state==='error'&&!e.hidden));
   const status=phone.locator('#sim-startup[data-state="error"],#sim-loading[data-state="error"]').filter({visible:true}).first();
   const button=status.locator('button:visible').first();assert.ok(await button.isVisible());
   const box=await button.boundingBox();assert.ok(box&&box.x>=0&&box.y>=0&&box.x+box.width<=320&&box.y+box.height<=568);
-  const mobileFailure={text:await status.innerText(),button:box,falseReady:await phone.evaluate(()=>document.body.dataset.ready==='1')};assert.equal(mobileFailure.falseReady,false);
-  await phone.unroute('**/web/robot-current/meshes/item.battery_front.stl*');await button.click();
+  assert.ok(mobileInterceptions>0,'The required-part HTTP failure must actually be intercepted');
+  const mobileFailure={text:await status.innerText(),button:box,interceptions:mobileInterceptions,requiredPart:report.requiredPartRequest,falseReady:await phone.evaluate(()=>document.body.dataset.ready==='1')};assert.equal(mobileFailure.falseReady,false);
+  await phone.unroute(currentPart);await button.click();
   await phone.waitForFunction(hash=>document.body.dataset.ready==='1'&&window.__sim?.state.robot?.presentation.collectionSha256===hash,reference.collection_sha256);
   await save('mobile-error-recovery.json',mobileFailure);await phone.screenshot({path:path.join(out,'mobile-current-recovered.png'),timeout:15000});
   assert.deepEqual(errors,[]);report.status='CAPTURED_AWAITING_INDEPENDENT_SHARED_VALIDATION';await progress('browser observations complete; not a validation/qualification verdict');
