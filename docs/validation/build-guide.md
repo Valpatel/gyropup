@@ -70,6 +70,45 @@ Before this revision is ready, real Chromium and WebKit must demonstrate:
   switches. Existing browser tests navigate pages rather than assume infinite
   visible rows. Fault controls remain actual failures, never source snapshots.
 
+### Playback, hierarchy and selection workflow amendment
+
+The instruction panel contains the current action text only. Relevant parts move
+into the actual subassembly → instance hierarchy, including exact quantities and
+source identity. A single selection popover combines metadata and working view
+or print actions; hover remains a compact non-interactive hint. Fullscreen starts
+with a compact balanced-width instruction card and retains explicit expansion.
+
+Automatic assembly extends the shared guide controller, with one authored model
+instance installed at a time from its existing exploded offset to the assembled
+baseline. Explicit source-backed presentation order is required; manifest/BOM
+iteration order is not an installation sequence. A source compound stays one
+compound operation and is labeled accordingly. Zero-offset foundation parts may
+appear without an invented translation path. Overview/reference stages are not
+construction operations. Playback remains an educational illustration, with no
+claim of verified insertion paths, hardware torque or physical qualification.
+
+Acceptance adds real Play/Pause, Loop and speed controls, manual-input pause,
+reduced-motion stopped default, background pause and disposal cancellation. Tests
+must sample actual world transforms and arrival timing, reject two simultaneous
+moving instances and stale/invalid order, compare speeds, loop without accumulated
+transforms, and prove user completion checkboxes are not changed by animation.
+The existing stage supplies ticks; no second renderer or animation framework is
+introduced. Static/manual instructions remain available if playback is unavailable.
+
+Selection uses one viewport-clamped popover with actual part name/ID, known BOM,
+material/quantity/source details and explicit compound identity. Pointer click,
+keyboard part focus and trusted touch share it. Outside click and Escape close it
+without stealing orbit gestures. Print actions may only use exact source-backed
+manufacturing originals, never neutral posed guide meshes. Bought items offer
+truthful source/purchase actions. A Print-this-part handoff preserves exact part
+and snapshot identity in the existing print workflow; printer submission requires
+an actual supported secure handoff and selected job/printer, with no fake Send UI.
+
+Draft UX pushes supersede earlier PR browser runs. Playground/presentation CI uses
+one concurrency group per workflow/event/PR, canceling only superseded PR runs;
+main pushes retain non-canceling serialized execution. Canceled draft runs are
+not passing evidence. A complete final frozen-head run remains required.
+
 Implementation and browser evidence for this revision are pending; prior retained
 receipts below describe the earlier presentation only.
 
