@@ -1,0 +1,80 @@
+{
+  "schema": "gyropup.build-guide-verification/1",
+  "scope": "Pre-poster partial functional controls; no full pilot acceptance",
+  "runs": [
+    {
+      "scope": "switching",
+      "engine": "chromium",
+      "browser": "151.0.7922.71",
+      "source": "c58e4ae2a6ccf1ccea7f29a27b1dec6b8617fe71",
+      "asset_key": "7dc8ee11e77e8429f27a",
+      "status": "passed",
+      "report_sha256": "a324ca98aabed1ff0f6913a80d5358cd796880d335afee2b3f1acfb894336425",
+      "cases": [
+        "two distinct frozen versions plus exact WIP/tab-only progress under denied storage and corrupt-switch preservation",
+        "late superseded actual model request cannot replace scene; old callbacks/context disposed"
+      ],
+      "errors": [],
+      "phases": [
+        {
+          "name": "switching-start",
+          "at": "2026-11-10T04:44:11.634Z"
+        },
+        {
+          "name": "switch-to-two",
+          "at": "2026-11-10T04:44:13.896Z"
+        },
+        {
+          "name": "switch-back-one",
+          "at": "2026-11-10T04:44:14.940Z"
+        },
+        {
+          "name": "switching-complete",
+          "at": "2026-11-10T04:44:25.606Z"
+        }
+      ],
+      "owned_service_terminal": true,
+      "owned_listener_closed": true
+    },
+    {
+      "scope": "touch",
+      "engine": "chromium",
+      "browser": "151.0.7922.71",
+      "source": "c58e4ae2a6ccf1ccea7f29a27b1dec6b8617fe71",
+      "asset_key": "7dc8ee11e77e8429f27a",
+      "status": "passed",
+      "report_sha256": "da8497851fb1307e933f341ac10dc903915265a7c51c5fe3b57d86653ea1b825",
+      "cases": [
+        "real hasTouch phone taps: previous/next, canvas picking and part list, unoccluded hitboxes"
+      ],
+      "errors": [],
+      "phases": [
+        {
+          "name": "touch-start",
+          "at": "2026-11-10T04:44:37.574Z"
+        },
+        {
+          "name": "touch-complete",
+          "at": "2026-11-10T04:45:00.877Z"
+        }
+      ],
+      "owned_service_terminal": true,
+      "owned_listener_closed": true
+    }
+  ],
+  "static_checks": {
+    "source": "c58e4ae2a6ccf1ccea7f29a27b1dec6b8617fe71",
+    "build": "PASS",
+    "privacy_cases": 11,
+    "markdown_cases": 6,
+    "pure_node_cases": 8,
+    "python_cases": 4
+  },
+  "pending": [
+    "latest-source two-engine feature matrix",
+    "legacy Build/procurement regression",
+    "twelve current source-bound posters",
+    "final current CI and independent review",
+    "publication"
+  ]
+}

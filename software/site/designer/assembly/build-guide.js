@@ -54,10 +54,10 @@ async function start(){
    else report(guide.snapshot.status==='wip'?'Source-bound WIP guide loaded. No physical build release.':'Versioned guide loaded. Its publication status is separate from physical qualification.');
    window.__buildGuide={get active(){return active;},load,apply:id=>paint(id),dispose(){pending?.abort();active?.viewer?.dispose();for(const value of active?.posterURLs?.values()||[])URL.revokeObjectURL(value);active=null;}};
    if(pending===abort)pending=null;
-  }catch(error){const cancelled=abort.signal.aborted||own!==request;abort.abort();if(pending===abort)pending=null;nextViewer?.dispose();for(const value of posterURLs.values())URL.revokeObjectURL(value);if(cancelled)return;report(error.message+(active?' Your previous build remains selected.':''),true);if(active)select.value=active.guide.snapshot.id;}
+  }catch(error){const cancelled=abort.signal.aborted||own!==request;abort.abort();if(pending===abort)pending=null;nextViewer?.dispose();for(const value of posterURLs.values())URL.revokeObjectURL(value);if(cancelled)return;report(error.message+(active?' Your previous build remains selected.':''),true);if(active)select.value=active.guide.snapshot.id;else select.selectedIndex=-1;}
  }
  select.onchange=()=>load(select.value);
- const route=readLocation(location,index);await load(route.snapshot,route);
+ let route;try{route=readLocation(location,index);}catch(error){select.selectedIndex=-1;throw error;}await load(route.snapshot,route);
  window.addEventListener('pagehide',()=>window.__buildGuide?.dispose(),{once:true});
 }
 function applyPresentation(s,frame){
