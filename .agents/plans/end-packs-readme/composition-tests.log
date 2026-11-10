@@ -1,0 +1,9 @@
+.........far_leg: 1 parts, 4 triangles
+body: 1 parts, 4 triangles
+turret: 1 parts, 4 triangles
+near_leg: 1 parts, 4 triangles
+.............
+----------------------------------------------------------------------
+Ran 22 tests in 1.129s
+
+OK
