@@ -1,0 +1,59 @@
+{
+  "status": "passed",
+  "engine": "chromium",
+  "version": {
+    "revision": "be2bf8cda222f85f6b8934c5f9a06d9696b6d3e4",
+    "assets": "eeb0281b36218e8bd335",
+    "history": true,
+    "built": "2026-11-10T11:03:30.271Z"
+  },
+  "scope": "print",
+  "filters": {
+    "width": null,
+    "assembly": null,
+    "printCase": "fallback"
+  },
+  "executions": [
+    {
+      "assembly": "robot",
+      "viewport": {
+        "width": 1440,
+        "height": 1000
+      },
+      "phase": "denied-fullscreen Print"
+    }
+  ],
+  "cases": [
+    "Print denied fullscreen: selected real hip and exited workspace to accessible verified preparation"
+  ],
+  "observations": [
+    {
+      "phase": "denied fullscreen ready",
+      "document": {
+        "visibility": "visible",
+        "focus": true,
+        "scrollY": 109
+      }
+    },
+    {
+      "phase": "before fullscreen",
+      "fallback": true,
+      "document": {
+        "visibility": "visible",
+        "focus": true,
+        "scrollY": 109,
+        "rect": [
+          1243.578125,
+          227.96875,
+          46,
+          44
+        ]
+      }
+    },
+    {
+      "fullscreen": "denied",
+      "actualMode": "expanded"
+    }
+  ],
+  "errors": []
+}

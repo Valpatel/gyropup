@@ -75,12 +75,46 @@
       "scope": "Actual native document/mode/aria completion at original30s bound, selectedhip inside fullscreen, verifiedPrint escape and downloads; no application/printer activation.",
       "test_harness_file": "tests/site/assembly/test-build-workspace.mjs",
       "test_harness_sha256": "638fa586e29540f46026e83cc84146736c47aded22196b9777a0885d75c4b9f9"
+    },
+    {
+      "file": ".agents/plans/build-workspace-evidence/expanded-print-chromium-be2.json",
+      "sha256": "e10e0c72fc7301a84fe1131b68f149ae7aeb80bbedefd4374e2e1a7c0f15cde9",
+      "tested_site_revision": "be2bf8cda222f85f6b8934c5f9a06d9696b6d3e4",
+      "scope": "Denied fullscreen real selected-hip Print, reachable overlay controls and restored normal stacking; no application/printer activation.",
+      "test_harness_file": "tests/site/assembly/test-build-workspace.mjs",
+      "test_harness_sha256": "0fdeac92fe515126f297babd7bc80845f2c33f76a4056be6f01e3838592440bc"
+    },
+    {
+      "file": ".agents/plans/build-workspace-evidence/expanded-interactions-chromium-be2.json",
+      "sha256": "a906164993feb400dc60bb26c59f8ced8feda5db0a5f07980abc435c2348f939",
+      "tested_site_revision": "be2bf8cda222f85f6b8934c5f9a06d9696b6d3e4",
+      "scope": "Actual Turret hover/selection/section/native fullscreen plus denied-fullscreen hit targets at1440/390/320 and Escape restores normal stacking.",
+      "test_harness_file": "tests/site/assembly/test-build-workspace.mjs",
+      "test_harness_sha256": "0fdeac92fe515126f297babd7bc80845f2c33f76a4056be6f01e3838592440bc"
+    },
+    {
+      "file": ".agents/plans/build-workspace-evidence/expanded-print-webkit-be2.json",
+      "sha256": "39b2c3b17387b9e0136100967aff0298672fde17956d510fc49024ec58466211",
+      "tested_site_revision": "be2bf8cda222f85f6b8934c5f9a06d9696b6d3e4",
+      "scope": "Denied fullscreen real selected-hip Print, reachable overlay controls and restored normal stacking; no application/printer activation.",
+      "test_harness_file": "tests/site/assembly/test-build-workspace.mjs",
+      "test_harness_sha256": "0fdeac92fe515126f297babd7bc80845f2c33f76a4056be6f01e3838592440bc"
+    },
+    {
+      "file": ".agents/plans/build-workspace-evidence/expanded-interactions-webkit-be2.json",
+      "sha256": "9151548f05b69a7255ab3f3f24a3d254367b4f3476d7456a1e2ddf5e807b10dc",
+      "tested_site_revision": "be2bf8cda222f85f6b8934c5f9a06d9696b6d3e4",
+      "scope": "Actual Turret hover/selection/section/native fullscreen plus denied-fullscreen hit targets at1440/390/320 and Escape restores normal stacking.",
+      "test_harness_file": "tests/site/assembly/test-build-workspace.mjs",
+      "test_harness_sha256": "0fdeac92fe515126f297babd7bc80845f2c33f76a4056be6f01e3838592440bc"
     }
   ],
   "retained_failures": [
     "Composite180-second Print cap after verified original retry prefix",
     "Composite180-second320 layout cap after Robot24-step prefix",
-    "Actual1200px three-pane190px free-width failure, corrected by1280single-sheet breakpoint"
+    "Actual1200px three-pane190px free-width failure, corrected by1280single-sheet breakpoint",
+    "bf41 pure mount200-event-loop-turn observer ended while valid project verification was still loading; replaced with actual state completion and held-response counterexample",
+    "bf41 denied fullscreen Print Explorer pointer intercepted by site navigation/footer because workspace ancestor stacking context stayed at3; corrected scoped expanded ancestor promotion"
   ],
   "checkpoint_harness_sha256": "90c36c5a70fa4bd71694651de77c317ca10ea84abd46b7ea353461c09df17b8a",
   "checkpoint_harness_commit": "1ec82f67222b7b0d8d9522f21b6ea2c649018e91"

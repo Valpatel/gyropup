@@ -1,0 +1,138 @@
+{
+  "status": "passed",
+  "engine": "chromium",
+  "version": {
+    "revision": "be2bf8cda222f85f6b8934c5f9a06d9696b6d3e4",
+    "assets": "eeb0281b36218e8bd335",
+    "history": true,
+    "built": "2026-11-10T11:03:30.271Z"
+  },
+  "scope": "interactions",
+  "filters": {
+    "width": null,
+    "assembly": null,
+    "printCase": null
+  },
+  "executions": [
+    {
+      "assembly": "turret",
+      "viewport": {
+        "width": 1200,
+        "height": 900
+      },
+      "phase": "medium docking"
+    },
+    {
+      "assembly": "turret",
+      "viewport": {
+        "width": 1440,
+        "height": 1000
+      },
+      "phase": "fullscreen"
+    },
+    {
+      "assembly": "turret",
+      "viewport": {
+        "width": 390,
+        "height": 844
+      },
+      "phase": "fullscreen"
+    },
+    {
+      "assembly": "turret",
+      "viewport": {
+        "width": 320,
+        "height": 700
+      },
+      "phase": "fullscreen"
+    },
+    {
+      "assembly": "turret",
+      "viewport": {
+        "width": 1440,
+        "height": 1000
+      },
+      "phase": "denied-fullscreen hit targets and restored stacking"
+    },
+    {
+      "assembly": "turret",
+      "viewport": {
+        "width": 390,
+        "height": 844
+      },
+      "phase": "denied-fullscreen hit targets and restored stacking"
+    },
+    {
+      "assembly": "turret",
+      "viewport": {
+        "width": 320,
+        "height": 700
+      },
+      "phase": "denied-fullscreen hit targets and restored stacking"
+    }
+  ],
+  "cases": [
+    "real hover, repeated pointer selection, keyboard tree, per-part appearance, orthogonal section state/reset and native/denied fullscreen"
+  ],
+  "observations": [
+    {
+      "case": "medium all panels",
+      "viewport": {
+        "width": 1200,
+        "height": 900
+      },
+      "sheet": "true",
+      "freeWidth": 18,
+      "parts": [
+        0,
+        0
+      ],
+      "instructions": [
+        42,
+        1116
+      ],
+      "visibility": "visible",
+      "focus": true
+    },
+    {
+      "case": "fullscreen",
+      "viewport": [
+        1440,
+        1000
+      ],
+      "mode": "native",
+      "native": true,
+      "box": [
+        1440,
+        1000
+      ]
+    },
+    {
+      "case": "fullscreen",
+      "viewport": [
+        390,
+        844
+      ],
+      "mode": "native",
+      "native": true,
+      "box": [
+        390,
+        844
+      ]
+    },
+    {
+      "case": "fullscreen",
+      "viewport": [
+        320,
+        700
+      ],
+      "mode": "native",
+      "native": true,
+      "box": [
+        320,
+        700
+      ]
+    }
+  ],
+  "errors": []
+}
