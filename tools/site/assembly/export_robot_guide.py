@@ -107,7 +107,7 @@ def generate(collection,folder,recipe_sha256,bom_hashes,collection_sha256,manufa
             group=groups.setdefault(chapter,{'id':chapter,'title':{'body':'Body','l-leg':'Left leg','r-leg':'Right leg','turret':'Mounted turret'}[chapter],'parts':[]})
             group['parts']+=op['additions']
             step={'id':op['id'],'title':op['title'],'subassembly':chapter,'parts':list(seen),'highlight':op['additions'],
-                  'offsets_mm':{name:op['offset'] for name in op['additions']},'text':op['text'],'camera':op['camera']}
+                  'offsets_mm':{name:op['offsets'].get(name,op['offset']) for name in op['additions']},'text':op['text'],'camera':op['camera']}
             if len(steps)>1:step['requires']=[steps[-1]['id']]
             steps.append(step);requirements[op['id']]=[{'title':n,'quantity':1} for n in op['additions']]
             sources[op['id']]=op['source_operation'];kinds[op['id']]='construction' if chapter!='turret' else 'subassembly-placement'
@@ -119,7 +119,7 @@ def generate(collection,folder,recipe_sha256,bom_hashes,collection_sha256,manufa
                 'manufacturing_mapper_sha256':sha(Path(__file__).with_name('robot_manufacturing.py')),
                 'overview_step_id':'overview','step_kinds':kinds,
                 'install_order_by_step':{'overview':[],**{op['id']:op['additions'] for op in ops}},
-                'install_order_basis':'Explicit educational presentation order from the authored source operations; not verified insertion, fastening or physical assembly order.',
+                'install_order_basis':'Source-owned educational stages with bounded motor/hip and output-screw dependency screens, and inboard wheel-fastener arrivals. Knee and circlip arrival conflicts remain explicit; no verified physical assembly order.',
                 'manufacturing_by_part':{name:manufacturing[name] for name in names},'operation_sources':sources,
                 'requirements_by_step':requirements,'datums':collection['datums'],'mount_reference':collection['mount_reference'],
                 'limits':'Source-owned WIP sequence; no physical fit, insertion path, fastening/preload, power, motion or strength qualification.'}
