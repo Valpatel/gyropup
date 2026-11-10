@@ -48,6 +48,17 @@ Before this revision is ready, real Chromium and WebKit must demonstrate:
   or unavailable Fullscreen API offers an honestly labeled expanded workspace.
   Fit remains an independent action. Both native and fallback layouts retain
   unoccluded geometry, fixed navigation and touch/keyboard access.
+- Previous, Next and Complete float in a fixed row beneath the main toolbar.
+  The separate instruction panel expands/collapses only by explicit user action;
+  opening an inspector temporarily folds instructions and restores the chosen
+  instruction size on close. Controls must pass actual elementFromPoint checks
+  beneath the global app navigation, not just rectangle comparisons.
+- Part hover has a compact bounds-clamped tooltip; selection, keyboard part-list
+  focus and touch expose the same source-backed name/ID/details. Grouped meshes
+  remain labeled as grouped, and orbit/drag behavior is not intercepted.
+- Orthogonal section choices use verified CAD-axis labels, axis cycling and
+  retained-side flip with the existing depth slider; no free-angle cutting.
+  Default/reset retain the original CAD-X scalar behavior.
 - Tree chapter/step navigation, selection, appearance, section, explode, reset,
   completion, deep links and all earlier fallback/version/race controls work.
   Source/qualification details stay available through a compact disclosure.

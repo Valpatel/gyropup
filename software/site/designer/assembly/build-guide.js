@@ -3,7 +3,7 @@ import {readLocation,stepFor,validateIndex,matchSnapshot,progressKey,readProgres
 const esc=s=>String(s??'').replace(/[&<>"']/g,c=>({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[c]));
 const host=document.getElementById('assembly');
 let active=null,request=0,pending=null,applying=false;
-const tabProgress=new Map();
+const tabProgress=new Map(),assemblyChoices=new Map(),viewStates=new Map();
 const workspace=createWorkspace(host,()=>active,paint,report);
 let retryAction=()=>start().catch(error=>report(error.message,true));
 host.querySelector('[data-guide-retry]').onclick=()=>retryAction();
@@ -15,21 +15,25 @@ function selection(name){
  host.querySelector('[data-guide-selection]').textContent=!active.viewer?'3D selection is unavailable; the parts below remain a reading list.':part?`Selected: ${part.title||part.name.replaceAll('_',' ')}`:'Choose a part in the model or the step list.';
  host.querySelector('[data-guide-isolate]').disabled=!name;
  const appearance=host.querySelector('[data-guide-part-mode]');appearance.disabled=!name;appearance.value=active.partModes[name]||'automatic';
+ const info=host.querySelector('[data-selected-info]');info.hidden=!part;info.innerHTML=part?partInfo(name):'';
  host.querySelectorAll('[data-part]').forEach(button=>button.setAttribute('aria-pressed',String(JSON.parse(button.dataset.instances).includes(name))));
  if(wasIsolated&&!name)paint(active.step);
 }
+function partInfo(name,compact=false){const a=active,part=a?.viewer?.parts.find(p=>p.name===name);if(!part)return '';const requirement=Object.values(a.guide.source?.requirements_by_step||{}).flat().find(r=>r.instances?.includes(name)),catalogue=requirement?.catalogue||[];return `<b>${esc(part.title||part.name.replaceAll('_',' '))}</b><${compact?'small':'code'}>${esc(part.name)}</${compact?'small':'code'}>${compact?'':`${requirement?`<p>${requirement.quantity} modeled instance${requirement.quantity===1?'':'s'} · ${esc(requirement.title)}</p>`:''}${part.material?`<p>Material: ${esc(part.material)}</p>`:''}${catalogue.length?`<p>${catalogue.map(c=>esc(c.part_number||c.item||'')).filter(Boolean).join(' · ')}</p>`:''}<p>Source: ${esc(a.guide.snapshot.revision)}${part.logical_part?` · ${esc(part.logical_part)}`:''}</p>${part.grouped||part.compound?'<p>Compound source mesh; internal components are shown together.</p>':''}`}`;}
+function partHover(name,point){const tip=host.querySelector('[data-part-tooltip]');tip.hidden=!name;if(!name)return;tip.innerHTML=partInfo(name,true);const bounds=host.querySelector('.assembly-layout').getBoundingClientRect(),x=(point?.clientX??bounds.left)-bounds.left+14,y=(point?.clientY??bounds.top)-bounds.top+14;tip.style.left=Math.max(8,Math.min(x,bounds.width-tip.offsetWidth-8))+'px';tip.style.top=Math.max(8,Math.min(y,bounds.height-tip.offsetHeight-8))+'px';}
 function report(message,error=false){host.querySelector('[data-guide-status]').textContent=message;host.querySelector('[data-guide-status]').dataset.state=error?'error':'ready';host.querySelector('[data-guide-retry]').hidden=!error;}
 async function start(){
  const indexURL=new URL('../../web/build-guides/index.json',import.meta.url);
  const {loadGuide,createGuideController,readAsset,parseJSON}=await import('../kit/assembly/guide.js');
  const published=validateIndex(parseJSON(await readAsset(indexURL,{maxBytes:512*1024})));
- const index={...published,snapshots:snapshotsFor(published,'turret')};
- const select=host.querySelector('[data-snapshot]');
- select.replaceChildren(...index.snapshots.map(s=>{const o=document.createElement('option');o.value=s.id;o.textContent=s.title+' · '+s.status.toUpperCase();return o;}));
+ const index=published;
+ const selects=new Map([...host.querySelectorAll('[data-assembly-snapshot]')].map(select=>[select.dataset.assemblySnapshot,select]));
+ for(const [assembly,select]of selects){const rows=snapshotsFor(index,assembly);if(rows.length)select.replaceChildren(...rows.map(s=>{const o=document.createElement('option');o.value=s.id;o.textContent=s.title+' · '+s.status.toUpperCase();return o;}));}
  async function load(id,route={}){
   retryAction=()=>load(id,route);
   const own=++request;pending?.abort();const abort=pending=new AbortController();
   const row=index.snapshots.find(s=>s.id===id);if(!row)throw new Error('Unknown snapshot');
+  const assembly=row.assembly||'turret',select=selects.get(assembly);
   report(active?'Loading the selected snapshot… The previous model and instructions remain visible until it is ready.':'Loading this exact build snapshot…');
   let nextViewer,posterURLs=new Map();
   try{
@@ -43,26 +47,31 @@ async function start(){
    const step=stepFor(guide,route),canvas=document.createElement('div'),panel=document.createElement('div');canvas.className='assembly-canvas';
    let renderError=null;
    try{nextViewer=await createViewer({app:canvas,panel,guideBound:true,manifest:loaded.manifest,manifestUrl:loaded.manifestUrl,signal:abort.signal,
-     onSelect:name=>{if(applying||active?.viewer!==nextViewer)return;selection(name);}});}
+     onSelect:name=>{if(applying||active?.viewer!==nextViewer||active?.overview)return;selection(name);},onHover:(name,point)=>{if(active?.viewer===nextViewer&&!active?.overview)partHover(name,point);}});}
    catch(error){if(abort.signal.aborted)throw error;renderError=error;}
    if(renderError&&active?.viewer)throw renderError;
    if(own!==request){nextViewer?.dispose();for(const value of posterURLs.values())URL.revokeObjectURL(value);return;}
-   const previous=active;workspace.invalidate();
+   const previous=active;if(previous)viewStates.set(previous.guideHash,{mode:previous.mode,explode:previous.explode,section:previous.section,sectionPlane:previous.sectionPlane});workspace.invalidate();
    const key=progressKey(guide,row.sha256),done=tabProgress.has(key)?new Set(tabProgress.get(key)):readProgress(storage(),guide,row.sha256);
-   active={guide,guideHash:row.sha256,viewer:nextViewer,controller:nextViewer?createGuideController(nextViewer,guide):null,done,url,posterURLs,step:step.id,mode:'ghost',explode:1,section:1,selected:null,isolate:false,partModes:{},renderError};
+   active={guide,guideAssembly:assembly,assembly,guideHash:row.sha256,viewer:nextViewer,controller:nextViewer?createGuideController(nextViewer,guide):null,done,url,posterURLs,step:step.id,mode:step.id===guide.source?.overview_step_id?'solid':'ghost',explode:step.id===guide.source?.overview_step_id?0:1,section:1,selected:null,isolate:false,partModes:{},sectionPlane:{axis:'x',flipped:false},...viewStates.get(row.sha256),renderError};
    const model=host.querySelector('[data-guide-model]');model.replaceChildren(canvas);disposeRobot(previous?.robot);previous?.viewer?.dispose();for(const value of previous?.posterURLs?.values()||[])URL.revokeObjectURL(value);
    host.querySelector('[data-guide-visual]').hidden=!!renderError;host.querySelector('.assembly-layout').dataset.static=String(!!renderError);
    select.value=id;paint(step.id);
    if(renderError)report('Interactive 3D is unavailable. '+(guide.steps.some(step=>step.poster)?'The same snapshot’s text and diagrams remain below.':'The same snapshot’s text remains below.'),true);
    else report(guide.snapshot.status==='wip'?'Source-bound WIP guide loaded. No physical build release.':'Versioned guide loaded. Its publication status is separate from physical qualification.');
    window.__buildGuide={get active(){return active;},load,apply:id=>paint(id),dispose(){workspace.dispose();pending?.abort();disposeRobot(active?.robot);active?.viewer?.dispose();for(const value of active?.posterURLs?.values()||[])URL.revokeObjectURL(value);active=null;}};
-   if(!renderError&&route.assembly!=='turret'&&(!route.step&&!route.chapter||route.assembly))workspace.choose(route.assembly||'combined',false);
+   if(!renderError&&route.assembly&&route.assembly!==assembly)workspace.choose(route.assembly,false);
    if(pending===abort)pending=null;
-  }catch(error){const cancelled=abort.signal.aborted||own!==request;abort.abort();if(pending===abort)pending=null;nextViewer?.dispose();for(const value of posterURLs.values())URL.revokeObjectURL(value);if(cancelled)return;report(error.message+(active?' Your previous build remains selected.':''),true);if(active)select.value=active.guide.snapshot.id;else select.selectedIndex=-1;}
+  }catch(error){const cancelled=abort.signal.aborted||own!==request;abort.abort();if(pending===abort)pending=null;nextViewer?.dispose();for(const value of posterURLs.values())URL.revokeObjectURL(value);if(cancelled)return;report(error.message+(active?' Your previous build remains selected.':''),true);if(active){const choice=assemblyChoices.get(assembly);select.value=choice?.snapshot||'';}else select.selectedIndex=-1;}
  }
- select.onchange=()=>load(select.value,{assembly:active?.overview?active.assembly:'turret'});
- let route;try{route=readLocation(location,index);}catch(error){select.selectedIndex=-1;throw error;}await load(route.snapshot,route);
- window.addEventListener('popstate',()=>{const next=readLocation(location,index);if(next.snapshot!==active?.guide.snapshot.id)load(next.snapshot,next);else if(next.assembly&&next.assembly!=='turret')workspace.choose(next.assembly,false);else workspace.step(stepFor(active.guide,next).id);});
+ for(const [assembly,select]of selects)select.onchange=()=>{if(!snapshotsFor(index,assembly).length)return;const choice={snapshot:select.value};if((active?.overview?active.assembly:active?.guideAssembly)===assembly)load(select.value,{assembly});else assemblyChoices.set(assembly,choice);};
+ workspace.setNavigation(assembly=>{const rows=snapshotsFor(index,assembly);if(!rows.length)return false;const choice=assemblyChoices.get(assembly)||{snapshot:rows[0].id};if(active?.guideAssembly===assembly&&active.guide.snapshot.id===choice.snapshot)workspace.step(choice.step||active.step);else load(choice.snapshot,{assembly,step:choice.step});return true;});
+ let route;try{route=readLocation(location,index);}catch(error){selects.get('turret').selectedIndex=-1;throw error;}
+ const desired=route.assembly||(route.step||route.chapter?'turret':'combined'),rows=snapshotsFor(index,desired),requested=index.snapshots.find(s=>s.id===route.snapshot);
+ if(requested)assemblyChoices.set(requested.assembly||'turret',{snapshot:requested.id,step:route.step});
+ const initial=rows.length&&(!requested||(requested.assembly||'turret')!==desired)?rows[0].id:route.snapshot;
+ await load(initial,{...route,assembly:desired,step:initial===route.snapshot?route.step:null,chapter:initial===route.snapshot?route.chapter:null});
+ window.addEventListener('popstate',()=>{const next=readLocation(location,index),assembly=next.assembly||'turret',row=index.snapshots.find(s=>s.id===next.snapshot);if(row&&(row.assembly||'turret')===assembly){if(next.snapshot!==active?.guide.snapshot.id)load(next.snapshot,next);else workspace.step(stepFor(active.guide,next).id);}else workspace.choose(assembly,false);});
  window.addEventListener('pagehide',()=>window.__buildGuide?.dispose(),{once:true});
 }
 function applyPresentation(s,frame){
@@ -74,12 +83,12 @@ function applyPresentation(s,frame){
   if(a.viewer)for(const [name,mode]of Object.entries(a.partModes))a.viewer.setPartMode(name,mode);
   if(a.selected)a.viewer?.setSelection(a.selected);
   if(a.isolate){a.viewer?.applyState({...a.viewer.getState(),selected:a.selected,isolate:a.selected?[a.selected]:null});if(frame&&a.selected)a.viewer?.frameParts([a.selected],s.camera?.direction);}
-  a.viewer?.setSection(a.section);
+  a.viewer?.setSection(a.section);a.viewer?.setSectionPlane?.(a.sectionPlane);
  }
  finally{applying=false;}
 }
 function paint(id){
- const a=active,g=a.guide,s=stepFor(g,{step:id});a.overview=false;if(a.step!==s.id){a.selected=null;a.isolate=false;a.partModes={};}a.step=s.id;
+ const a=active,g=a.guide,s=stepFor(g,{step:id});a.wantsOverview=false;a.overview=false;a.assembly=a.guideAssembly||'turret';if(a.step!==s.id){if(s.id===g.source?.overview_step_id){a.mode='solid';a.explode=0;}else if(a.step===g.source?.overview_step_id){a.mode='ghost';a.explode=1;}a.selected=null;a.isolate=false;a.partModes={};}a.step=s.id;assemblyChoices.set(a.guideAssembly||'turret',{snapshot:g.snapshot.id,step:s.id});
  applyPresentation(s,true);
  const index=g.steps.indexOf(s),chapter=g.subassemblies.find(c=>c.id===s.subassembly);
  host.querySelector('[data-guide-source]').innerHTML=`${esc(g.snapshot.revision)} · ${esc(g.snapshot.status)} · <a href="https://github.com/Valpatel/gyropup/tree/${esc(g.snapshot.source_commit)}">Source snapshot</a>`;
@@ -96,16 +105,19 @@ function paint(id){
  const stepSelect=host.querySelector('[data-guide-step]');stepSelect.innerHTML=g.steps.map((x,i)=>`<option value="${esc(x.id)}">${i+1}. ${esc(x.title)}</option>`).join('');stepSelect.value=s.id;stepSelect.onchange=()=>paint(stepSelect.value);
  const prev=host.querySelector('[data-guide-prev]'),next=host.querySelector('[data-guide-next]');prev.disabled=index===0;next.disabled=index===g.steps.length-1;prev.onclick=()=>paint(g.steps[index-1].id);next.onclick=()=>paint(g.steps[index+1].id);
  host.querySelector('[data-guide-parts]').innerHTML=(g.source?.requirements_by_step?.[s.id]||[]).map(r=>`<li><button type="button" data-part="${esc(r.instances[0])}" ${a.viewer?'':'disabled'} data-instances="${esc(JSON.stringify(r.instances))}" aria-pressed="false">${esc(r.title)}</button> <span>×${r.quantity} modeled instance${r.quantity===1?'':'s'}</span>${r.catalogue?.length?`<small>${r.catalogue.map(c=>esc(c.part_number||c.item)).join(' · ')}</small>`:''}</li>`).join('');
- host.querySelectorAll('[data-part]').forEach(b=>b.onclick=()=>{if(a.viewer)a.viewer.setSelection(b.dataset.part);else selection(b.dataset.part);});
+ host.querySelectorAll('[data-part]').forEach(b=>{const show=()=>{if(a.viewer)a.viewer.setSelection(b.dataset.part);else selection(b.dataset.part);};b.onclick=show;b.onfocus=show;});
  selection(a.selected);
  const complete=host.querySelector('[data-guide-complete]');complete.checked=a.done.has(s.id);complete.onchange=()=>{complete.checked?a.done.add(s.id):a.done.delete(s.id);tabProgress.set(progressKey(g,a.guideHash),new Set(a.done));try{saveProgress(storage(),g,a.done,a.guideHash);}catch{report('Completion stays in this tab because browser storage is unavailable.',true);host.querySelector('[data-guide-retry]').hidden=true;}};
  const mode=host.querySelector('[data-guide-mode]');mode.value=a.mode;mode.onchange=()=>{a.mode=mode.value;paint(s.id);};
  const explode=host.querySelector('[data-guide-explode]');explode.value=String(a.explode);explode.oninput=()=>{a.explode=+explode.value;applyPresentation(s,false);};
- const section=host.querySelector('[data-guide-section]');section.value=String(a.section);section.oninput=()=>{a.section=+section.value;a.viewer?.setSection(a.section);};
+ const orientation=host.querySelector('[data-section-orientation]');orientation.hidden=!a.viewer?.setSectionPlane;
+ const cutAxis=host.querySelector('[data-guide-cut-axis]');cutAxis.value=a.sectionPlane.axis;const cutFlip=host.querySelector('[data-guide-cut-flip]');cutFlip.setAttribute('aria-pressed',String(a.sectionPlane.flipped));
+ const changeCut=()=>{a.viewer?.setSectionPlane?.(a.sectionPlane);cutAxis.value=a.sectionPlane.axis;cutFlip.setAttribute('aria-pressed',String(a.sectionPlane.flipped));};cutAxis.onchange=()=>{a.sectionPlane.axis=cutAxis.value;changeCut();};host.querySelector('[data-guide-cut-rotate]').onclick=()=>{a.sectionPlane.axis={x:'y',y:'z',z:'x'}[a.sectionPlane.axis];changeCut();};cutFlip.onclick=()=>{a.sectionPlane.flipped=!a.sectionPlane.flipped;changeCut();};
+ const section=host.querySelector('[data-guide-section]');section.value=String(a.section);section.oninput=()=>{a.section=+section.value;a.viewer?.setSection(a.section);a.viewer?.setSectionPlane?.(a.sectionPlane);};
  const isolate=host.querySelector('[data-guide-isolate]');isolate.disabled=!a.selected;isolate.onclick=()=>{a.isolate=!a.isolate;paint(s.id);};isolate.setAttribute('aria-pressed',String(a.isolate));
  const appearance=host.querySelector('[data-guide-part-mode]');appearance.onchange=()=>{if(!a.selected)return;if(appearance.value==='automatic')delete a.partModes[a.selected];else a.partModes[a.selected]=appearance.value;applyPresentation(s,false);selection(a.selected);};
- host.querySelector('[data-guide-reset]').onclick=()=>{a.mode='solid';a.explode=0;a.section=1;a.selected=null;a.isolate=false;a.partModes={};a.viewer?.setSelection(null);paint(s.id);};
- writeLocation(location,history,g,s);const locationURL=new URL(location.href);locationURL.searchParams.delete('view');locationURL.searchParams.set('assembly','turret');history.replaceState(null,'',locationURL);
+ host.querySelector('[data-guide-reset]').onclick=()=>{a.mode='solid';a.explode=0;a.section=1;a.sectionPlane={axis:'x',flipped:false};a.selected=null;a.isolate=false;a.partModes={};a.viewer?.setSelection(null);paint(s.id);};
+ writeLocation(location,history,g,s);const locationURL=new URL(location.href);locationURL.searchParams.delete('view');locationURL.searchParams.set('assembly',a.guideAssembly||'turret');history.replaceState(null,'',locationURL);
  workspace.present();
  host.dataset.ready='1';
 }

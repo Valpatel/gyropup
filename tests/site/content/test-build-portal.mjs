@@ -28,7 +28,8 @@ const checkModelActions=async()=>{
  assert.ok(rows.length>0,'Real BOM contains downloadable models');
  for(const row of rows){assert.deepEqual(row.previews,row.files,row.key+' has exactly one preview per model');assert.equal(row.downloads,true,row.key);assert.equal(row.identityVisible,true,row.key+' keeps preview with part identity');}
 };
-const exported=async()=>{const download=page.waitForEvent('download');await page.getByRole('button',{name:'Export progress',exact:true}).click();return JSON.parse(await readFile(await(await download).path(),'utf8'));};
+const view=async id=>{const button=page.locator(`[data-build-tab=${id}]`);if(await button.count())await button.click();};
+const exported=async()=>{await view('setup');const download=page.waitForEvent('download');await page.getByRole('button',{name:'Export progress',exact:true}).click();return JSON.parse(await readFile(await(await download).path(),'utf8'));};
 const checkNativeSort=async(table,column,direction)=>{
  const before=await table.locator('tbody tr:not([data-fixed])').evaluateAll(rows=>rows.map(row=>row.dataset.partKey||row.textContent));
  const header=table.locator('thead th').nth(column),button=header.locator('button');
@@ -63,7 +64,7 @@ try{
  assert.equal(await page.locator('#orders .print-history-total').count(),1);
  assert.equal(await page.locator('#queue .print-history-note a').count(),2);
  const turretToggle=page.locator('#streams input[data-stream="turret"]');
- await turretToggle.uncheck();
+ await view('setup');await turretToggle.uncheck();
  assert.equal(await page.locator('#queue .print-history-note').count(),0);
  assert.equal(await page.locator('#summary .print-history-total, #printlede .print-history-total, #orders .print-history-total').count(),0);
  assert.equal(await page.locator('#queue tr[data-part-key^="print/turret/"]').count(),0);
@@ -75,15 +76,16 @@ try{
  const shared=await page.locator('#orders tr[data-part-key]').evaluateAll((rows,keys)=>rows.find(row=>keys.includes(row.dataset.partKey)&&row.closest('table').tBodies[0].rows.length>2)?.dataset.partKey,progressKeys);assert.ok(shared,'Build and Progress share catalog part identities');
 
  const target=page.locator('#orders tr[data-part-key='+JSON.stringify(shared)+']');
- const seller=target.locator('xpath=ancestor::details[contains(@class,"seller")]');await seller.locator(':scope > summary').click();
- const table=seller.locator('table');await checkNativeSort(table,4,'ascending');
- await target.locator('input[type=checkbox]').first().check();
+ await view('buy');const table=page.locator('#orders table');await checkNativeSort(table,4,'ascending');
  const label=await target.getAttribute('data-part-label');
- const search=seller.getByRole('searchbox');await search.fill(label);assert.equal(await target.isVisible(),true);assert.equal(await target.locator('input').first().isChecked(),true);await search.fill('');
- const body=page.locator('[data-stream=body]');await body.uncheck();await body.check();await checkModelActions();
- const reopened=target.locator('xpath=ancestor::details[contains(@class,"seller")]');await reopened.locator(':scope > summary').click();assert.equal(await target.locator('input').first().isChecked(),true);
+ const search=page.locator('#orders').getByRole('searchbox');await search.fill(label);await target.locator('input[type=checkbox]').first().check();assert.equal(await target.isVisible(),true);assert.equal(await target.locator('input').first().isChecked(),true);await search.fill('');
+ // Every source order row is reachable through actual pagination, with no infinite visible list.
+ const reached=new Set();let pages=0;const next=page.getByRole('button',{name:'Next page of All orders',exact:true});
+ for(;;){for(const key of await table.locator('tbody tr:visible').evaluateAll(rows=>rows.map(row=>row.dataset.partKey)))reached.add(key);pages++;if(await next.isDisabled())break;await next.click();}
+ assert.equal(reached.size,await table.locator('tbody tr[data-part-key]').count());assert.ok(pages>1);
+ await view('setup');const body=page.locator('[data-stream=body]');await body.uncheck();await body.check();await checkModelActions();await view('buy');await search.fill(label);assert.equal(await target.locator('input').first().isChecked(),true);
  assert.equal(await page.locator('#orders .cad-table-tools').count(),await page.locator('#orders table').count(),'Rerender disposes old toolbars');
- await page.reload();await ready();await target.locator('xpath=ancestor::details[contains(@class,"seller")]').locator(':scope > summary').click();assert.equal(await target.locator('input').first().isChecked(),true);
+ await page.reload();await ready();await view('buy');await search.fill(label);assert.equal(await target.locator('input').first().isChecked(),true);
  const saved=await exported();assert.equal(saved.project,'gyropup');assert.equal(saved.parts[shared].ordered,true);
  const input=page.locator('.cad-progress-tools input[type=file]');
  await input.setInputFiles({name:'invalid.json',mimeType:'application/json',buffer:Buffer.from(JSON.stringify({version:1,project:'gyropup',parts:{[shared]:{ordered:false},broken:{ordered:'yes'}}}))});
@@ -145,7 +147,7 @@ try{
  for(const row of shown){assert.ok(media[row.key]?.path,row.key+' has a scoped geometry image');assert.equal(new URL(row.src,base+'/designer/build.html').pathname,'/'+media[row.key].path,row.key);}
  for(const key of ['pa6-cf','petg','tpu95','tpu95-gyroid']){const img=page.locator('#orders tr[data-part-key="material/'+key+'"] img');if(await img.count())assert.equal(await img.getAttribute('src'),media[key].image_url,key);}
  await page.route(url=>url.href===media.petg.image_url,route=>route.abort('failed'));
- const filament=page.locator('#orders tr[data-part-key="material/petg"]');await filament.locator('xpath=ancestor::details[contains(@class,"seller")]').locator(':scope > summary').click();
+ const filament=page.locator('#orders tr[data-part-key="material/petg"]');await view('buy');await page.locator('#orders').getByRole('searchbox').fill(await filament.getAttribute('data-part-label'));
  await filament.locator('.thumb').scrollIntoViewIfNeeded();await filament.locator('.thumb.source').waitFor();assert.equal(await filament.locator('.thumb.source').getAttribute('href'),media.petg.source_url,'Unavailable remote photos retain their source link');
  const modelLink=page.locator('#made a[data-model-preview]').first();await modelLink.waitFor();assert.ok((await modelLink.getAttribute('href')).includes('file-viewer.html?'));
  for(const [width,height] of [[320,568],[568,320],[390,844],[844,390]]){await page.setViewportSize({width,height});await page.evaluate(()=>window.scrollTo(0,document.querySelector('#made').getBoundingClientRect().top+scrollY-70));const layout=await page.evaluate(()=>({width:innerWidth,scroll:document.documentElement.scrollWidth,controls:[...document.querySelectorAll('#made .cad-table-tools input,#made .cad-table-tools select')].map(el=>({width:el.getBoundingClientRect().width,height:el.getBoundingClientRect().height}))}));assert.ok(layout.scroll<=width+1,JSON.stringify(layout));assert.ok(layout.controls.every(r=>r.height>=44&&r.width<=width),JSON.stringify(layout));await page.screenshot({path:`${out}/${engine.name()}-${width}x${height}.png`});}
@@ -235,7 +237,7 @@ try{
   await deep.evaluate(()=>new Promise(resolve=>requestAnimationFrame(()=>requestAnimationFrame(resolve))));
   const box=await deep.locator('#print-now').evaluate(el=>{const r=el.getBoundingClientRect();return{top:r.top,bottom:r.bottom};});
   assert.ok(box.top>=0&&box.top<height*0.5,`#print-now starts on screen at ${width} px (top ${Math.round(box.top)})`);
-  const card=await deep.locator('#print-now').evaluate(el=>({rows:el.querySelectorAll('li[data-order]').length,downloads:el.querySelectorAll('a[download][href$=".stl"],a[download][href$=".3mf"]').length,previews:el.querySelectorAll('a[data-model-preview]').length}));
+  const card=await deep.locator('#print-now').evaluate(el=>({rows:el.querySelectorAll('tr[data-order]').length,downloads:el.querySelectorAll('a[download][href$=".stl"],a[download][href$=".3mf"]').length,previews:el.querySelectorAll('a[data-model-preview]').length}));
   assert.ok(card.rows>=10,'the print list has its steps');assert.ok(card.downloads>=card.rows,'every step has a file');
   await deep.waitForFunction(n=>document.querySelectorAll('#print-now a[data-model-preview]').length>=n,card.downloads);
   await deepContext.close();
