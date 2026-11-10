@@ -18,12 +18,14 @@ The campaign now polls the existing stage renderer before each desktop/mobile
 screenshot, bounded to10s with animation-frame polling. It requires the expected
 collection,228 displayed parts, logical readiness, connected canvas, computed
 opacity1, visible CSS and robot ancestors, positive canvas rectangle/buffer, and
-finite positive renderer frame/call/triangle counters. Actual model, style,
+finite positive renderer frame/call/triangle counters. The robot's visible ancestor
+chain must actually reach this renderer's stage scene; a detached group or a group
+in another scene cannot pass merely because the ground draws. Actual model, style,
 rectangle, buffer and draw counters are retained in the capture index and mobile
 recovery output. There is no fixed sleep and product page errors remain fatal.
 
 The actual serialized helper has controls for opacity0/0.99, hidden CSS/model
-parents, missing/zero/malformed draw counters, wrong source, missing parts and
+parents, detached/wrong-scene groups, missing/zero/malformed draw counters, wrong source, missing parts and
 zero canvas dimensions. Unexpected observer exceptions still propagate. These
 pure controls establish the gate's failure behavior; they do not replace a new
 reviewed actual WebKit campaign and independent inspection of its resulting PNG.

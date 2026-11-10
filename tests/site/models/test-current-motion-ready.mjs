@@ -16,7 +16,7 @@ test('actual serialized readiness callback waits through bodyless/loading/wrong-
 });
 
 test('actual canvas observer rejects logical-only readiness, fade, missing draw and hidden model',()=>{
-  function fixture(){return {document:{body:{dataset:{ready:'1'}}},window:{__sim:{state:{robot:{presentation:{collectionSha256:'expected'},parts:Array(228).fill({}),group:{visible:true,parent:{visible:true,parent:null}}}},stage:{renderer:{domElement:{isConnected:true,width:640,height:1136,getBoundingClientRect:()=>({x:0,y:0,width:320,height:568})},info:{render:{frame:2,calls:250,triangles:346639}}}}}},getComputedStyle:()=>({opacity:'1',display:'block',visibility:'visible'})};}
+  function fixture(){const scene={visible:true,parent:null};return {document:{body:{dataset:{ready:'1'}}},window:{__sim:{state:{robot:{presentation:{collectionSha256:'expected'},parts:Array(228).fill({}),group:{visible:true,parent:scene}}},stage:{scene,renderer:{domElement:{isConnected:true,width:640,height:1136,getBoundingClientRect:()=>({x:0,y:0,width:320,height:568})},info:{render:{frame:2,calls:250,triangles:346639}}}}}},getComputedStyle:()=>({opacity:'1',display:'block',visibility:'visible'})};}
   const observe=f=>runInNewContext('('+currentRobotCanvasReady.toString()+')("expected")',f);
   const accepted=observe(fixture());assert.equal(accepted.opacity,1);assert.equal(accepted.parts,228);assert.equal(accepted.render.triangles,346639);assert.equal(accepted.rect.width,320);
   const mutations=[
@@ -35,6 +35,8 @@ test('actual canvas observer rejects logical-only readiness, fade, missing draw 
     f=>f.window.__sim.state.robot.parts.pop(),
     f=>f.window.__sim.state.robot.group.visible=false,
     f=>f.window.__sim.state.robot.group.parent.visible=false,
+    f=>f.window.__sim.state.robot.group.parent=null,
+    f=>f.window.__sim.stage.scene={visible:true,parent:null},
   ];
   for(const mutate of mutations){const f=fixture();mutate(f);assert.equal(observe(f),false);}
   const broken=fixture();broken.getComputedStyle=()=>{throw new Error('Deliberate CSS observer failure');};assert.throws(()=>observe(broken),/Deliberate CSS observer failure/);

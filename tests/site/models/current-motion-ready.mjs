@@ -10,8 +10,9 @@ export function currentRobotCanvasReady(hash){
   const style=getComputedStyle(canvas),rect=canvas.getBoundingClientRect(),draw=renderer.info?.render;
   if(Number(style.opacity)!==1||style.display==='none'||style.visibility!=='visible'||rect.width<=0||rect.height<=0||canvas.width<=0||canvas.height<=0)return false;
   if(!draw||![draw.frame,draw.calls,draw.triangles].every(value=>Number.isFinite(value)&&value>0)||robot.parts?.length!==228)return false;
-  let ancestor=robot.group; if(!ancestor)return false;
-  while(ancestor){if(!ancestor.visible)return false;ancestor=ancestor.parent;}
+  let ancestor=robot.group,attached=false; if(!ancestor||!sim.stage.scene)return false;
+  while(ancestor){if(!ancestor.visible)return false;if(ancestor===sim.stage.scene)attached=true;ancestor=ancestor.parent;}
+  if(!attached)return false;
   return {collectionSha256:robot.presentation.collectionSha256,parts:robot.parts.length,
     opacity:Number(style.opacity),display:style.display,visibility:style.visibility,
     rect:{x:rect.x,y:rect.y,width:rect.width,height:rect.height},buffer:{width:canvas.width,height:canvas.height},
