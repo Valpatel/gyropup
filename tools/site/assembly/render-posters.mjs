@@ -40,19 +40,24 @@ try{
   await page.evaluate(id=>window.__buildGuide.apply(id),step.id);
   await page.locator('[data-guide-model]').evaluate(el=>{const r=el.getBoundingClientRect();window.scrollTo({left:0,top:r.top+scrollY-(innerHeight-r.height)/2,behavior:'instant'});});
   await page.evaluate(()=>new Promise(resolve=>requestAnimationFrame(()=>requestAnimationFrame(resolve))));
-  const state=await page.evaluate(()=>{
-   const a=window.__buildGuide.active,v=a.viewer,c=v.stage.renderer.domElement;
+  const state=await page.evaluate(async()=>{
+   const a=window.__buildGuide.active,v=a.viewer,c=v.stage.renderer.domElement,T=await import('/designer/kit/vendor/three/three.module.min.js'),r=c.getBoundingClientRect();
+   v.stage.root.updateMatrixWorld(true);v.stage.camera.updateMatrixWorld(true);
+   const overlays=[...document.querySelectorAll('.assembly-topbar,.assembly-nav,.assembly-step,#assembly-explorer,#assembly-tools')].filter(el=>!el.hidden).map(el=>el.getBoundingClientRect());let geometryUnoccluded=true,vertices=0;
+   for(const part of v.parts.filter(part=>part.mesh.visible)){const pos=part.mesh.geometry.attributes.position;for(let i=0;i<pos.count;i++){const point=new T.Vector3().fromBufferAttribute(pos,i).applyMatrix4(part.mesh.matrixWorld).project(v.stage.camera),x=r.x+(point.x+1)*r.width/2,y=r.y+(1-point.y)*r.height/2;vertices++;if(![x,y,point.z].every(Number.isFinite)||x<r.left||x>r.right||y<r.top||y>r.bottom||Math.abs(point.z)>1||overlays.some(box=>x>box.left&&x<box.right&&y>box.top&&y<box.bottom))geometryUnoccluded=false;}}
+   // Draw the current pose with the existing renderer, then read its actual preserved pixels.
+   v.stage.renderer.render(v.stage.scene,v.stage.camera);
    return {step:a.step,state:v.getState(),calls:v.stage.renderer.info.render.calls,
-    canvas:{width:c.width,height:c.height,cssWidth:c.getBoundingClientRect().width,cssHeight:c.getBoundingClientRect().height,unoccluded:[.1,.5,.9].every(x=>[.1,.5,.9].every(y=>{const r=c.getBoundingClientRect();return document.elementFromPoint(r.x+r.width*x,r.y+r.height*y)===c;}))},
+    canvas:{width:c.width,height:c.height,cssWidth:c.getBoundingClientRect().width,cssHeight:c.getBoundingClientRect().height,geometryUnoccluded,vertices},
     visible:v.parts.filter(p=>p.mesh.visible).map(p=>p.name),camera:v.stage.camera.position.toArray(),target:v.stage.controls.target.toArray()};
   });
-  assert.equal(state.step,step.id);assert.ok(state.calls>0);assert.equal(state.canvas.unoccluded,true,'Canvas must be exposed before capturing its pixels');
+  assert.equal(state.step,step.id);assert.ok(state.calls>0);assert.equal(state.canvas.geometryUnoccluded,true,'Every real model vertex fits outside the overlays');assert.ok(state.canvas.vertices>0);
   if(step.camera){const expected=[step.camera.direction[0],step.camera.direction[2],-step.camera.direction[1]],actual=state.camera.map((v,i)=>v-state.target[i]),dot=expected.reduce((sum,v,i)=>sum+v*actual[i],0)/(Math.hypot(...expected)*Math.hypot(...actual));assert.ok(dot>1-1e-9,'Authored CAD camera direction must be applied exactly once');}
   assert.equal(state.state.mode,'ghost');assert.equal(state.state.selected,null);assert.equal(state.state.isolate,null);
   assert.deepEqual(state.state.partModes,{});assert.deepEqual(state.state.offsets_mm,step.offsets_mm);
   assert.deepEqual([...state.visible].sort(),[...step.parts].sort());assert.deepEqual(state.state.highlight,step.highlight);
   const file=step.id+'.png';
-  await page.locator('[data-guide-model] canvas').screenshot({path:path.join(out,file)});
+  const png=await page.locator('[data-guide-model] canvas').evaluate(canvas=>canvas.toDataURL('image/png'));assert.ok(png.startsWith('data:image/png;base64,'));await writeFile(path.join(out,file),Buffer.from(png.slice('data:image/png;base64,'.length),'base64'));
   frames[step.id]={file,sha256:sha(await readFile(path.join(out,file)))};proof[step.id]=state;
   console.log('Captured',step.id,state.canvas.width+'x'+state.canvas.height,state.visible.length,'visible instances');
  }
