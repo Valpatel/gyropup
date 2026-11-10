@@ -193,3 +193,5 @@
 - A supplier-photo fallback times out while the screenshot shows a loaded image: [arm and witness the actual request failure before navigation](inbox/2026-11-10-photo-failure-tests-must-intercept-the-request.md).
 
 - An audit accepts unrelated prior query IDs while reporting unchanged combined coverage: [bind the prior byte seal and ordered plan membership before counting](inbox/2026-11-10-combined-coverage-needs-sealed-prior-evidence.md).
+
+- Browser speech is null after a volume adjustment while a scheduled greeting fires: [preserve conversation ownership across the real greeting deadline](inbox/2026-11-10-scheduled-greetings-must-respect-conversations.md).

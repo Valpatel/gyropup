@@ -1,0 +1,17 @@
+{
+  "engine": "native Chrome 151.0.7922.71",
+  "scope": "Deterministic existing400ms talk-demo greeting while an actual browser-adapter conversation is active",
+  "before": {
+    "active": "A volume controlled answer",
+    "cancelled": 1,
+    "busy": true
+  },
+  "after": {
+    "active": null,
+    "cancelled": 3,
+    "busy": false,
+    "spoken": [
+      "A volume controlled answer"
+    ]
+  }
+}

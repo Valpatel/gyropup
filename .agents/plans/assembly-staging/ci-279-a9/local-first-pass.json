@@ -1,0 +1,16 @@
+{
+  "engine_qualification": "NativeChrome151 and existingWebKit2215; not unavailable pinned Chromium1194",
+  "log_sha256": "fdde75df2b8487ebd5896efb5c29afdefbc81279b8741cb9d05c49b87376ca32",
+  "staged_workspace_harness_sha256": "91f92e47eac08d61372db09014da641263f2a804bc3cb833c4964596131c5a59",
+  "first_audio_harness_sha256": "ae5de201e25d662f80eec7389584502c3a7ca95f610ecf55ba378564d6d2218b",
+  "results": {
+    "chromium_playback": "PASS all8x16 arrival vertices plus existing lifecycle checks",
+    "chromium_audio": "PASS all existing controls plus400ms conversation ownership",
+    "webkit_playback": "PASS all8x16 arrival vertices plus existing lifecycle checks",
+    "webkit_audio": "FAIL before talk navigation: clock.pauseAt(T) rejected because install timeT had elapsed"
+  },
+  "clock_setup_error": "Cannot fast-forward to the past",
+  "classification": "Test fixture installed a running clock and tried to pause at the original instant; no speech/greeting assertion failed in this WebKit attempt.",
+  "listener_closed": true,
+  "successor_scope": "Only WebKit audio, pausing at a future boundary before actualtalk load; its400ms deadline remains exact."
+}

@@ -1,0 +1,34 @@
+{
+  "chromium": {
+    "raw_report_sha256": "ec93b8fa6aeafe00d79978fbc870b48179585de9e14084a7ef9e6b939890ca5f",
+    "normalization": "Only actual local preview origin replaced with <preview-origin>",
+    "arrivals": 8,
+    "world_vertices": 128,
+    "worst_error_m": 2.0816681711721685e-17,
+    "tokens": 1,
+    "document_creations": 1,
+    "errors": [],
+    "built_version": {
+      "revision": "a9f2f361d0cc6016caf964a7654cd2d0fd36001d",
+      "assets": "88c5e588269ecd2d9152",
+      "history": true,
+      "built": "2026-11-10T18:31:35.601Z"
+    }
+  },
+  "webkit": {
+    "raw_report_sha256": "5d3fe754e1c57f2ec1533fa77e050bf7542f52b9fcf6660c78acd1aece58fdee",
+    "normalization": "Only actual local preview origin replaced with <preview-origin>",
+    "arrivals": 8,
+    "world_vertices": 128,
+    "worst_error_m": 2.0816681711721685e-17,
+    "tokens": 1,
+    "document_creations": 1,
+    "errors": [],
+    "built_version": {
+      "revision": "a9f2f361d0cc6016caf964a7654cd2d0fd36001d",
+      "assets": "88c5e588269ecd2d9152",
+      "history": true,
+      "built": "2026-11-10T18:31:35.601Z"
+    }
+  }
+}

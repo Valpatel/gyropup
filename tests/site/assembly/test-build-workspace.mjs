@@ -72,21 +72,22 @@ try{
    ['motor_front','motors','hip_frame'],['screws_outputs','upper','upper_link_front'],
    ['washers_wheel','wheel',null],['screws_wheel','wheel',null]]){
    const name=side+'.'+suffix;await p.getByLabel('Instruction step',{exact:true}).selectOption(side.toLowerCase()+'-'+stepSuffix);
-   const observed=await p.evaluate(async({name,absent,side})=>{
-    const a=window.__buildGuide.active,player=a.player,v=a.viewer,T=await import('/designer/kit/vendor/three/three.module.min.js');player.play();
+   await observeDocument(p,'before arrival '+name,playbackDocument.token);
+   const observed=await p.evaluate(({name,absent,side})=>{
+    const a=window.__buildGuide.active,player=a.player,v=a.viewer;player.play();
     for(let i=0;i<500;i++){const s=player.getState();if(s.partId===name&&s.progress>=.45)break;player.tick(.05);}player.pause();
     const s=player.getState(),pose=v.getState(),part=v.parts.find(p=>p.name===name),mesh=part.mesh,positions=mesh.geometry.attributes.position;
-    const points=()=>{mesh.updateWorldMatrix(true,false);return Array.from({length:16},(_,i)=>new T.Vector3().fromBufferAttribute(positions,Math.floor(i*(positions.count-1)/15)).applyMatrix4(mesh.matrixWorld));},posed=points();
+    const points=()=>{mesh.updateWorldMatrix(true,false);return Array.from({length:16},(_,i)=>mesh.position.clone().fromBufferAttribute(positions,Math.floor(i*(positions.count-1)/15)).applyMatrix4(mesh.matrixWorld));},posed=points();
     v.applyState({...pose,offsets_mm:{...pose.offsets_mm,[name]:[0,0,0]}});const rest=points();v.applyState(pose);
-    return{state:s,offset:pose.offsets_mm[name],delta:posed.map((p,i)=>p.sub(rest[i]).toArray()),visible:pose.visible,
+    return{documentToken:window.__workspaceDocumentToken,state:s,offset:pose.offsets_mm[name],delta:posed.map((p,i)=>p.sub(rest[i]).toArray()),visible:pose.visible,
      absent:absent?side+'.'+absent:null,authored:a.guide.steps.find(step=>step.id===s.stepId).offsets_mm[name]};
    },{name,absent,side});
-   assert.equal(observed.state.partId,name);assert.equal(observed.state.status,'paused');assert.ok(observed.state.progress>=.45&&observed.state.progress<1);
+   assert.equal(observed.documentToken,playbackDocument.token);assert.equal(observed.state.partId,name);assert.equal(observed.state.status,'paused');assert.ok(observed.state.progress>=.45&&observed.state.progress<1);
    if(observed.absent)assert.equal(observed.visible.includes(observed.absent),false,'Dependent body cannot be installed before '+name);
    const direction=suffix.includes('wheel')?(side==='L'?-60:60):(side==='L'?60:-60);assert.deepEqual(observed.authored,[0,direction,0]);
    const expected=[0,0,-direction*.001*(1-observed.state.progress)];for(const point of observed.delta)for(let k=0;k<3;k++)assert.ok(Math.abs(point[k]-expected[k])<1e-7,JSON.stringify({name,point,expected}));
    if(suffix==='screws_wheel')assert.ok(observed.visible.includes(side+'.washers_wheel'),'Washer group precedes wheel screws');
-   observations.push({case:'bounded source-supported arrival',name,...observed,expected});
+   observations.push({case:'bounded source-supported arrival',name,...observed,expected});await observeDocument(p,'after arrival '+name,playbackDocument.token);
   }
   cases.push('actual motor/hip and output-screw dependencies plus inboard wheel-fastener vertices on both sides');
   await p.emulateMedia({reducedMotion:'reduce'});await p.waitForFunction(()=>matchMedia('(prefers-reduced-motion: reduce)').matches&&document.querySelector('[data-guide-play]').disabled);assert.equal(await p.locator('[data-guide-play]').isDisabled(),true);assert.equal(await p.evaluate(()=>window.__buildGuide.active.player.getState().status),'paused');await p.emulateMedia({reducedMotion:'no-preference'});await p.waitForFunction(()=>!document.querySelector('[data-guide-play]').disabled);await p.locator('[data-guide-play]').click();await p.evaluate(()=>{Object.defineProperty(document,'hidden',{configurable:true,value:true});document.dispatchEvent(new Event('visibilitychange'));});assert.equal(await p.evaluate(()=>window.__buildGuide.active.player.getState().status),'paused');
