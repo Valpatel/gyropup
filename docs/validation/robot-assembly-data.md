@@ -130,11 +130,16 @@ does not qualify the whole leg or its known failing support checks.
 Body/leg planning quantities retain their original scope;
 wheel hub and tyre share one bought-wheel identity.
 
-Sixteen kernel-free tests currently pass. They cover retained named
+Nineteen kernel-free tests currently pass. They cover retained named
 membership, stationary/moving ownership, grouped hardware, frame/unit/mirror
 negatives, strict binary STL, symlink inventory rejection, import safety,
 original-file mapping, snapshot/text integrity and changed-source rejection.
 Synthetic serializer fixtures are test-only and are not CAD/asset acceptance.
+The committed-data tests additionally reserialize all 242 actual outputs and
+compare their bytes, check all current CAD/original/mesh identities, and apply
+an independent left/right transform to the 88 recorded local landmarks against
+actual committed mesh vertices. Wrong mirror, units and double-transform
+controls must disagree with that real geometry.
 Broad draft CI is deliberately deferred on preparation commits until genuine
 assets are ready; final source/assets must run all ordinary required checks.
 
