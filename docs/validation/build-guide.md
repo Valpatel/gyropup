@@ -112,6 +112,21 @@ one concurrency group per workflow/event/PR, canceling only superseded PR runs;
 main pushes retain non-canceling serialized execution. Canceled draft runs are
 not passing evidence. A complete final frozen-head run remains required.
 
+### Responsive docking amendment
+
+Expanded desktop instructions dock at the right edge. When View tools are open,
+Tools remain rightmost and instructions occupy the adjacent pane immediately to
+their left; closing Tools moves instructions back to the right edge. Both use
+actual measured stage insets. The collapsed instruction strip stays compact.
+
+At tablet/phone widths the same controls use one switchable sheet for Instructions,
+Parts and Tools, with one active pane, explicit expand/collapse and reachable
+floating navigation above it. A selected-part popover uses the same mobile sheet
+footprint, rather than adding another pane over the model. No second renderer or
+new UI framework is introduced. Browser acceptance covers desktop, tablet,
+390x844 and 320x700, actual control hit targets, panel bounds after each toggle,
+model geometry outside occupied overlays and fixed navigation across steps.
+
 Implementation and browser evidence for this revision are pending; prior retained
 receipts below describe the earlier presentation only.
 
