@@ -221,7 +221,10 @@ def generate(root=ROOT, posters=None):
             step['poster'] = {'file': frame['file'], 'sha256': frame['sha256']}
         source['poster_visual_sha256'] = posters['visual_sha256']
     outputs['instructions.html'] = plain_instructions(guide)
-    source['instructions'] = {'file': 'instructions.html', 'sha256': digest(outputs['instructions.html'])}
+    outputs['instructions.json'] = encode({'snapshot': guide['snapshot'], 'qualification': source['qualification'],
+        'steps': [{k: step[k] for k in ('id', 'title', 'text')} | {'requirements': requirements_by_step[step['id']]}
+                  for step in steps]})
+    source['instructions'] = {'file': 'instructions.json', 'sha256': digest(outputs['instructions.json'])}
     outputs['guide.json'] = encode(guide)
     outputs['README.md'] = b'# Turret assembly guide snapshot\n\nEducational WIP only. Generated from the authored recipe and exact committed scene.\nExisting legacy assembly illustrations remain historical; none are reused as fresh posters.\n'
     return outputs
