@@ -182,6 +182,11 @@ for (const file of (await readdir(out, { recursive:true })).filter(file => file.
   const target = path.join(out, file);
   const parsed=parseHTML(await readFile(target,'utf8'));
   addModelPreviews(parsed.document,{base:'https://gyropup.com/'+file,published:publishedModels});
+  // The tab mark is independent from the source-bound mascot in recorded clips.
+  for (const old of parsed.document.querySelectorAll('link[rel~="icon"]')) old.remove();
+  const favicon=parsed.document.createElement('link');
+  favicon.setAttribute('rel','icon');favicon.setAttribute('type','image/svg+xml');
+  favicon.setAttribute('href','/web/favicon.svg');parsed.document.head.append(favicon);
   const html=parsed.document.toString();
   if (!html.includes('</head>') || !html.includes('</body>')) throw new Error(`Cannot add prototype notice to ${file}`);
   // Every page takes the theme (web/theme.js before its stylesheets, so the first paint has the chosen theme).

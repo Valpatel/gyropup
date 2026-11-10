@@ -81,7 +81,7 @@ export async function versionSiteAssets(root) {
     const firstModule = document.head.querySelector('script[type="module"]');
     if (firstModule) firstModule.before(map);
     else document.head.append(map);
-    for (const element of document.querySelectorAll('link[rel="stylesheet"], link[rel="modulepreload"]')) {
+    for (const element of document.querySelectorAll('link[rel="stylesheet"], link[rel="modulepreload"], link[rel~="icon"]')) {
       element.setAttribute('href', version(element.getAttribute('href'), file));
     }
     for (const element of document.querySelectorAll('script[src], img[src], source[src], video[src]')) {
