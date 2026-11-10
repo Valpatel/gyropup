@@ -40,7 +40,7 @@ async function inspect(label){
   if(p){assert.ok(p.right<=i.x,label+' Parts do not overlap instructions');if(data.workspace.w>=950)assert.ok(i.x-p.right-24>=320,label+' retains useful model width');}
   for(const panel of Object.values(data.panels))assert.ok(panel.y>=data.navigation.bottom+10,label+' panel cannot cover toolbar/navigation');
  }else assert.equal(Object.keys(data.panels).length,data.controls.some(c=>c.label==='Expand panel')&&await page.locator('.assembly-layout').getAttribute('data-sheet-size')==='collapsed'?0:1,label+' one compact mobile pane');
- if(data.mobile==='true'&&data.sheetLayout==='side'){assert.ok(data.sheet.x>=data.workspace.x+300,label+' leaves a useful model lane');assert.ok(data.workspace.h-data.insets.top-data.insets.bottom>=210,label+' leaves useful model height');assert.ok(data.modelBox.h>=150&&data.modelBox.w>=120,JSON.stringify({label,modelBox:data.modelBox}));}
+ if(data.mobile==='true'&&data.sheetLayout==='side'){assert.ok(Math.abs(data.insets.right-(data.workspace.right-data.sheet.x+12))<2,label+' actual camera inset follows the pane width');assert.ok(data.sheet.x>=data.workspace.x+300,label+' leaves a useful model lane');assert.ok(data.workspace.h-data.insets.top-data.insets.bottom>=210,label+' leaves useful model height');assert.ok(data.modelBox.h>=150&&data.modelBox.w>=120,JSON.stringify({label,modelBox:data.modelBox}));}
  return data;
 }
 async function mobilePane(pane){

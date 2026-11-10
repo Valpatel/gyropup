@@ -1,16 +1,17 @@
-Desktop Build instructions stay at the right in ordinary, expanded-workspace and native fullscreen layouts, immediately left of open Tools. Expanded instructions preserve independent Parts/Tools controls. Narrow layouts retain the compact bottom sheet.
+Desktop Build instructions stay at the right edge, immediately left of open Tools, across ordinary, native fullscreen and expanded fallback modes. Expanding instructions preserves independent Parts/Tools controls. Portrait phones retain a compact bottom sheet; short coarse-pointer landscape at 600–1000px uses one tabbed right pane with actual right camera insets and a coherent selected-part popup.
 
 Issue #285; PR #286; branch `fix/build-instructions-dock`.
 
 **Done**
-- Reproduced previous 1280px bottom sheet in actual native Chromium; Parts/Tools disappearance was not reproduced.
-- Unified desktop right docking and camera insets; reserved the model lane across simultaneous panels.
-- Corrected intermediate 1280px allocation after an actual 274.375px lane failure.
-- Chromium and WebKit each passed 93 docking/control states, including real fullscreen, denied-fullscreen, resize and mobile touch.
-- 19 pure assembly tests and 11 privacy tests passed.
+- Reproduced previous 1280px bottom-sheet placement; Parts/Tools disappearance was not reproduced in that probe.
+- Desktop/right-dock source and responsive model-space budget are frozen at `b81e3cc5`.
+- Corrected independent review findings: real phone-landscape classification and insufficient model space despite passing non-overlap checks.
+- Chromium and WebKit each pass 103 actual states, including native/fallback fullscreen, all panel combinations, coarse 720/844, fine 844, portrait restoration and selected-part side placement.
+- Fresh exact-source twelve-image native capture at b81e3cc5 passed; raw receipt SHA256 `1fea0d2c2aff82fc20d68e3afca8e67dfc402ebd32204893c158c04f4a07936f`. Previous receipts and actual failure images remain retained.
+- 60 generated guide outputs and 19 pure tests pass.
 
 **Next**
-- Capture and attach twelve fresh source-bound posters from the committed final source, regenerate their consumers, build and check privacy.
-- Record final-source receipts and independent review; root integrates through dev/main.
+- Build the final assembled tree, check privacy and retain final-tree browser receipts.
+- Independent PR review, complete normal CI and root integration through dev/main.
 
-**Resume:** use the isolated branch. Tests own temporary listeners and close them. Shared preview remains untouched. No CAD/battery/manufacturing scope.
+**Resume:** all browser/capture tests own temporary listeners and close them. Shared preview is untouched. No CAD/battery/manufacturing scope.

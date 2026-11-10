@@ -864,7 +864,7 @@
       "fire_tilt_max_deg": 10.0
     },
     "instruction_items": "Fastener quantities/tools/checks are authored in each step text. Mesh envelopes are not proof of fit, thread engagement or tool access.",
-    "poster_visual_sha256": "f0b69f8f3e75d383157af2a546dd2584b56db823de9925b702af101b0e80ca6f",
+    "poster_visual_sha256": "cb07d2faac98648e8106944a023ddfb78bc9279c3594b90805deacadf0bda4bd",
     "instructions": {
       "file": "instructions.json",
       "sha256": "24a6515cd88d307f4a8d4a43616f6dd092bdb46899ddd369e9f8a6d330e81c87"
