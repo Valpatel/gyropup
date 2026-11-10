@@ -1,11 +1,11 @@
 {
-  "visual_sha256": "f886854303b411116bd7020ef316f1c0798398a5a1ed337b7964595869d44bbc",
-  "source_commit": "982ca04d34fd1e50b4a6749ba96bd95fa3ea8584",
+  "visual_sha256": "53c15b92638adaf4b822f8b9ffb3af0242c385b8f6fe6901c39349ef7ed926e4",
+  "source_commit": "c3a716f385fd2fd565212ddc19c82278c3701bc8",
   "version": {
-    "revision": "982ca04d34fd1e50b4a6749ba96bd95fa3ea8584",
-    "assets": "6c43d0349f202790599c",
+    "revision": "c3a716f385fd2fd565212ddc19c82278c3701bc8",
+    "assets": "6dece837c55c3868bc60",
     "history": true,
-    "built": "2026-11-10T10:20:52.685Z"
+    "built": "2026-11-10T10:37:18.076Z"
   },
   "browser": "151.0.7922.71",
   "session_notice_acknowledged": true,

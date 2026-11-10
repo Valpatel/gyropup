@@ -59,6 +59,14 @@
       "sha256": "43bdfbd4bd52439472aff2d6e1aa8b4622036833846efae997c242780fadd49e",
       "tested_site_revision": "c71756315d01afe048b5ab105a4706981c7ae1ad",
       "scope": "Actual prepared-project HTTP404\u2192restore explicitretry, rejected/restoredrequestcounts and exactoriginal/projectdownloadgates."
+    },
+    {
+      "file": ".agents/plans/build-workspace-evidence/version-routing-webkit-c3.json",
+      "sha256": "8fa23e734d525fb53a6641cac0b8fb15cb3f7a8859ff41794a6c040354c28645",
+      "tested_site_revision": "c3a716f385fd2fd565212ddc19c82278c3701bc8",
+      "scope": "Actual3realversion-onlyroutes, Combinedcanonicalreload, bareCombineddefault; mixedlegacycontext, nativechanges, heldlate/disposal preserved.",
+      "test_harness_file": "tests/site/assembly/test-build-route.mjs",
+      "test_harness_sha256": "8a7f629666e3cda3fe805ec4971e2078e0e9481ba31cba498aa950b22b8bdad0"
     }
   ],
   "retained_failures": [

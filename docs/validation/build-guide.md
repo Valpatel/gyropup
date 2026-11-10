@@ -233,3 +233,13 @@ the public player's controlled clock, with unchanged camera, independent world
 vertex displacement, at least512 wheel samples in frustum, and actual overlay
 projection. These precise checkpoints are retained with their source identities;
 complete final-head CI and independent review remain the integration gate.
+
+The final version-routing correction is covered by nine pure state controls and
+an actual eight-case WebKit route campaign at `c3a716f3`: Robot/Turret/Combined
+version-only links retain their real171/55/233-instance guides, Combined canonical
+reload stays Combined, the bare page keeps its default, and legacy mixed-context
+race/disposal checks remain. Fresh twelve-image binding `53c15b92` again captures
+the unchanged actual raster bytes, rather than resealing old images without a run.
+The earlier `bea6b2b6` version-only misrouting observation remains superseded,
+not a passing routing claim. Complete final-head CI and independent review gate
+integration.
