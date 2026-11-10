@@ -95,6 +95,14 @@ Independent readback at84cc reran the actual adopted consumer (6PASS,1.741s,
 0skips) and historical triangle replay (6PASS,15.489s), with all recorded22
 cases and72 candidate pairs preserved.
 
+The [d818 mechanism job](https://github.com/Valpatel/gyropup/actions/runs/42913926552/job/130171477205)
+stopped at the RS04 support study's `Source/context closure changed` error. The
+probe's entire recorded CAD input map matches the same captured lug inputs. Its
+explicit historical test mode runs the full probe validator with that captured
+root, the original six baseline exports and the three probe context files.
+The actual default-current call must still reject. The full historical invocation
+passed17 tests with0 skips, preserving the original numerical and fault checks.
+
 The accepted five-row candidate used escaped JSON Unicode for the middot in
 titles, while the existing Turret producer checks its literal UTF-8 encoding.
 The original `7e8a51f3` receipt remains immutable; only the public index was

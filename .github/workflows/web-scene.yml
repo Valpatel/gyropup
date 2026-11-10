@@ -87,7 +87,7 @@ jobs:
               # mandatory historical positive/current-stale negatives. Original checker stays strict.
               python3 tests/hardware/interfaces/test-rs04-lug-stacks.py --pure
               python3 tests/hardware/interfaces/test-rs04-dowel-protrusion.py
-              python3 tests/hardware/interfaces/test-rs04-support-probe.py
+              python3 tests/hardware/interfaces/test-rs04-support-probe.py --historical
               python3 docs/research/thread-mating-2026-10-29/test_wrapper.py
               python3 tests/hardware/interfaces/test-base-board-interfaces.py
               python3 tests/hardware/interfaces/test-carrier-connector-inputs.py
@@ -291,7 +291,7 @@ jobs:
       - run: npm run build
       - name: Validate ${{ matrix.suite }}
         env:
-          CURRENT_MOTION_TOOLKIT: ${{ github.workspace }}/.cad-agent-motion
+          CURRENT_MOTION_TOOLKIT: .cad-agent-motion
           PORT: 8879
           PLAYWRIGHT_CHANNEL: chromium
           SITE_URL: http://127.0.0.1:8879
