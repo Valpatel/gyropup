@@ -40,10 +40,17 @@ class HipOriginalMatch(unittest.TestCase):
             source_guard(root,collection)
             proof_file='.agents/plans/robot-assembly/hip-print-match.json'
             proof=json.loads((ROOT/proof_file).read_text())
-            # A test-only review URL exercises the gate; it is never exported.
-            proof['review_url']='https://github.com/Valpatel/gyropup/pull/270#test-only'
             (root/proof_file).parent.mkdir(parents=True,exist_ok=True)
             (root/proof_file).write_text(json.dumps(proof))
+            self.assertIsNone(hip_geometry_match(root,collection,'L.hip_frame'))
+            # A separate test-only acceptance exercises the gate. The immutable
+            # actual measurement is never edited to add a review or adoption.
+            from robot_data import sha
+            acceptance={'review_url':'https://github.com/Valpatel/gyropup/pull/270#test-only',
+                        'measurement_sha256':sha(root/proof_file),'instances':['L.hip_frame','R.hip_frame'],
+                        'physical_qualification':False}
+            accepted=root/'.agents/plans/robot-assembly/hip-print-match-acceptance.json'
+            accepted.write_text(json.dumps(acceptance))
             sampler=root/'tools/site/assembly/robot_print_match.py';sampler.parent.mkdir(parents=True)
             shutil.copyfile(ROOT/'tools/site/assembly/robot_print_match.py',sampler)
             self.assertEqual(hip_geometry_match(root,collection,'L.hip_frame')['status'],'matched')

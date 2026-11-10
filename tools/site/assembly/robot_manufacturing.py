@@ -32,11 +32,16 @@ def hip_geometry_match(root,collection,name):
     """Only the independently reviewed hip correspondence may enable WIP prep."""
     if collection is None or name not in ('L.hip_frame','R.hip_frame'):return None
     file='.agents/plans/robot-assembly/hip-print-match.json';root=Path(root)
-    if not (root/file).is_file():return None
+    accepted='.agents/plans/robot-assembly/hip-print-match-acceptance.json'
+    if not (root/file).is_file() or not (root/accepted).is_file():return None
     from robot_print_match import source_guard
     try:
         proof=json.loads((root/file).read_text())
-        if not proof.get('review_url','').startswith('https://github.com/Valpatel/gyropup/pull/270#'):return None
+        acceptance=json.loads((root/accepted).read_text())
+        if (not acceptance.get('review_url','').startswith('https://github.com/Valpatel/gyropup/pull/270#')
+            or acceptance.get('measurement_sha256')!=sha(root/file)
+            or acceptance.get('instances')!=['L.hip_frame','R.hip_frame']
+            or acceptance.get('physical_qualification') is not False):return None
         receipt=source_guard(root,collection)
         part=next(p for p in collection['parts'] if p['name']==name);side=name[0]
         if (proof.get('status')!='SOURCE_MATCH_CORROBORATED' or proof['native_source']!=collection['source_commit']
@@ -54,6 +59,7 @@ def hip_geometry_match(root,collection,name):
             sample=proof['sides'][side][direction]
             if sample['samples']<=0 or not 0<=sample['max_distance_mm']<=.3011:return None
         return {'status':'matched','geometry_source_match':True,'evidence':{'source_file':file,'sha256':sha(root/file)},
+                'acceptance':{'source_file':accepted,'sha256':sha(root/accepted)},
                 'basis':'Same source hip model through a current full producer receipt, exact original bytes and sampled bidirectional tessellation correspondence in the authored print frame.',
                 'qualification':'WIP geometry-file preparation only; physical fit, support failures, printer/filament/slice choices and strength remain unresolved.'}
     except (ValueError,KeyError,StopIteration,FileNotFoundError,TypeError):return None
