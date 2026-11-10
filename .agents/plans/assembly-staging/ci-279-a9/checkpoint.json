@@ -1,0 +1,47 @@
+{
+  "schema": "gyropup.ci-observer-greeting-correction/1",
+  "date": "2026-11-10",
+  "source_parent": "a9f2f361d0cc6016caf964a7654cd2d0fd36001d",
+  "run": 42872278158,
+  "classification": {
+    "playback": "Unnecessary async arrival observation failed with one recorded document; precise browser context cause unknown. Atomic loaded-mesh observation retains all checks.",
+    "audio": "Independently reproduced baseline scheduled-greeting cancellation, fixed via existing conversation guard.",
+    "local_clock": "First WebKit audio setup pause target was already past; corrected future-boundary setup before page load, exact400ms greeting unchanged."
+  },
+  "source_files": {
+    "software/site/designer/character/talk-demo.html": "f146faa8232e2e8e2e0b9cdc783c72a2e9ba75feda425045f4a0620357dacdc7",
+    "tests/site/assembly/test-build-workspace.mjs": "91f92e47eac08d61372db09014da641263f2a804bc3cb833c4964596131c5a59",
+    "tests/site/controls/test-audio-settings.mjs": "4a4aec4c28468a4118cefa3224e0b838d0553e2fe1e543a40177ca25b690f7a6"
+  },
+  "files": {
+    "README.md": "57c3f5945fd198f6ecf950e03d87a5900087c57ce0d2877c86f56782c96ff3b0",
+    "audio-greeting-after.json": "e1a64889d1889ad7f1ab062a5bdefd37a4a007bc51afa947edde099d54513b42",
+    "audio-greeting-before.json": "7a8049b3c09efba2495b074a121f09c30a1898b77dc4cf208b30b86b7f044ac2",
+    "chromium-playback.json": "00136db305efa4cd38fa9997d38262b7a9a66d2b29a84dbd75e62d7f6c35d162",
+    "ci-failures.json": "df95ad865355484c6fea48921e96eefcadc2d2cf51d509820566ee1aa4880ce3",
+    "local-first-pass.json": "00a5296516ca5b9ac20bbedca9398e9ae90f22e7f8eeb13870e55ea1e341a461",
+    "local-playback-results.json": "8223dcd3a279fa2fd3789dd6aab27b0e95ffff3b1bfeef5baf52eb5d9dfbac6a",
+    "local-source-results.json": "4e2dae2056bd311b18d0dba53a41524c0da665dc178ba442e91d54a1f8ba0060",
+    "playback-failed.json": "1449266859ac2ff2506c80f6a7967518d7a6731731a8a5652f4ed000b3c18186",
+    "playback-failed.png": "b8908161d8cd62a5dc9cdfea06cf69b7f9b2df897afe923ce2ba88c442ce9550",
+    "webkit-playback.json": "68fdce77932ba4dcbaab2013d5ac1fe2d3e15fef4055e13c0d9b8f9575c87742"
+  },
+  "checks": {
+    "build": true,
+    "privacy_tests": 11,
+    "markdown_tests": 6,
+    "poster_contract": "twelve current-input posters PASS; no visual-input change or recapture",
+    "local_playback": "Chrome151+WebKit2215,8arrivals and128vertices perengine,1document/token,error0",
+    "local_audio": "Chrome first-clock variant PASS; final WebKit successor PASS incl400ms active-answer assertion",
+    "pinned_final_head_ci": "pending",
+    "cad_geometry_changed": false,
+    "imported_shared_files_changed": false,
+    "additional_native_queries": 0,
+    "owned_listeners_closed": [
+      36103,
+      42657,
+      40505
+    ]
+  },
+  "limits": "Actual staged-source/harness binding retains a9 build identity. NativeChrome is not the pinned bundled Chromium. No new CAD/physical qualification or inferred original failure trace."
+}

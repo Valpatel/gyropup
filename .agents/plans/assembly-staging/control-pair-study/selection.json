@@ -1,0 +1,19 @@
+{
+  "schema": "gyropup.native-pair-selection/1",
+  "full_plan_sha256": "1316f2e4e315ee2cd45ed805d92ee219699a311bf09bb8d106148145fb8a96cc",
+  "query_ids": [
+    "f2bd165061ce41d9e225a5d2ed0b42fcf4b882e7fbe393f474089ff75afd519e",
+    "6b8e90982dd9f33b2bef4654d5d234c1d9d2a825198245b14d86df7a52bac254"
+  ],
+  "case_ids": [
+    "motor-through-installed-hip-L",
+    "motor-wrong-inward-through-cheek-L"
+  ],
+  "purpose": "Two explicit old-order and wrong-side controls not reached by capped264. No automatic retry, new path or CAD change.",
+  "prior_prefix": {
+    "job": 264,
+    "completed_query_count": 42,
+    "selected_queries_previously_completed": false
+  },
+  "limits": "The other88 full-plan queries retain their prior checked/unchecked status. This2-query study cannot qualify the assembly or adopt overlap exemptions."
+}

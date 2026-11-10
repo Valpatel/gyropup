@@ -1,0 +1,2432 @@
+{
+  "body-measurement-cache/frame_mounts.json": {
+    "sha256": "6cb3e3405ee1017b3b711ee3cc84709187ad4409de7539613bdff77586929093",
+    "mode": 384,
+    "bytes": 812
+  },
+  "breps/L__apex_61812.brep": {
+    "sha256": "5ff456afec896c95334b2cc2aa7959bb6e43197ab3e70e812c1f4c0977c70e0e",
+    "mode": 384,
+    "bytes": 3523
+  },
+  "breps/L__apex_circlip.brep": {
+    "sha256": "317090743502f87e97c9b32626c9a3edc13a0f5e4a5bade3b035bbeabc103e68",
+    "mode": 384,
+    "bytes": 1812
+  },
+  "breps/L__apex_spacer.brep": {
+    "sha256": "1824199ac8533ad04fa0d1d9a906d31e540b51f7c89d835ce092487e3887a33a",
+    "mode": 384,
+    "bytes": 2015
+  },
+  "breps/L__bearing_61812_front.brep": {
+    "sha256": "5ea406a8bc4a4c14728e9eca8422977c1e0fab6b983de88e9479a2f50621ef35",
+    "mode": 384,
+    "bytes": 1882
+  },
+  "breps/L__bearing_61812_rear.brep": {
+    "sha256": "b7e31e11d1cfa7b945ea6cafb20827e3e1c95827dfc138e0301596c8d31e961f",
+    "mode": 384,
+    "bytes": 1890
+  },
+  "breps/L__eye_sleeve_front.brep": {
+    "sha256": "e62bd3338d257e97f3a95a0027c1e340de7ba4e6a0231b05f88ba516dc5db0cd",
+    "mode": 384,
+    "bytes": 2260
+  },
+  "breps/L__eye_sleeve_rear.brep": {
+    "sha256": "d29ba0af9e6b539fba26742b857a545dc0f1f458fbc922d03e57364dcc182413",
+    "mode": 384,
+    "bytes": 2274
+  },
+  "breps/L__front_link.brep": {
+    "sha256": "5a265f48f41e3c82f1b136befc46364ad49985de51d4a13e7bf6f1849066a33b",
+    "mode": 384,
+    "bytes": 92318
+  },
+  "breps/L__hip_frame.brep": {
+    "sha256": "91ef7685b7145d78ec2e3d078728443bad6bd0827fdb246dd321e2bf84d64cad",
+    "mode": 384,
+    "bytes": 883354
+  },
+  "breps/L__knee_bearing_front_in.brep": {
+    "sha256": "6f33ba44ffd302a44bf5d175fda4394d19f76f8d1c33aad6ac4721212fe65a5b",
+    "mode": 384,
+    "bytes": 2191
+  },
+  "breps/L__knee_bearing_front_out.brep": {
+    "sha256": "5ee1c4c186d7d47565eb5284fda784b3d2f4dfdff417577c0fad2a9dd14ab80a",
+    "mode": 384,
+    "bytes": 2254
+  },
+  "breps/L__knee_bearing_rear_in.brep": {
+    "sha256": "4387d33bdbf6a864e40fcaf7d6f1cdbfd0c1ee1fbd7012d7d5fd161aa334fe95",
+    "mode": 384,
+    "bytes": 2205
+  },
+  "breps/L__knee_bearing_rear_out.brep": {
+    "sha256": "6de47a58cb2186add773ed881d17cee0e7dc8518a0e7ab96d5952d90fce7146a",
+    "mode": 384,
+    "bytes": 2268
+  },
+  "breps/L__knee_nut_upper_front.brep": {
+    "sha256": "486eebc5e68020461986298cdfdd3135205d4598559df59ff5018964e0acc6f5",
+    "mode": 384,
+    "bytes": 6872
+  },
+  "breps/L__knee_nut_upper_rear.brep": {
+    "sha256": "bf9c4c1ac786ff0c61cc66a7bfc09953e97e3f3c9a9d2cee68743638a4128121",
+    "mode": 384,
+    "bytes": 6931
+  },
+  "breps/L__knee_pin_front.brep": {
+    "sha256": "bdba60e9ea759683385a0260081acb5110ba0f569d0729057e52b08b3301225a",
+    "mode": 384,
+    "bytes": 3318
+  },
+  "breps/L__knee_pin_rear.brep": {
+    "sha256": "34ed79290bf3d7e7ede9df506d87ae238cd92fecf5f293dda920a58ebab7e4e0",
+    "mode": 384,
+    "bytes": 3340
+  },
+  "breps/L__knee_spacer_front.brep": {
+    "sha256": "672587ba24774dda499f935ac6dbd19b0fc9db0bfb34a5e33e5deeeda8c3eafd",
+    "mode": 384,
+    "bytes": 2284
+  },
+  "breps/L__knee_spacer_rear.brep": {
+    "sha256": "ecba05756d7fc9a69e4b485318e406a2726a2e9497e4ab0978c05339f21c4f5e",
+    "mode": 384,
+    "bytes": 2298
+  },
+  "breps/L__knee_washer_front.brep": {
+    "sha256": "e61617f4254e6cad7a612d9b9386d9b12739ed1de438c1341e13f77302565933",
+    "mode": 384,
+    "bytes": 4219
+  },
+  "breps/L__knee_washer_rear.brep": {
+    "sha256": "51ffed92bf23517e71316d2cc7eb1cf6404bdb12295c04d3b995e00bd5affe1b",
+    "mode": 384,
+    "bytes": 4247
+  },
+  "breps/L__motor_front.brep": {
+    "sha256": "a924ddd9876fe550b4dfb589b0d042decf96e38c95b1d49f9f8c412d3de3ca6b",
+    "mode": 384,
+    "bytes": 2681
+  },
+  "breps/L__motor_rear.brep": {
+    "sha256": "cb7cf1a2f124b4a76392e0f4ebc2d7549587e7cc1bb390c870c38a26abd384d2",
+    "mode": 384,
+    "bytes": 2691
+  },
+  "breps/L__output_adapter_front.brep": {
+    "sha256": "19868bc4a95a4f308665f78ca3a155e5fb398f6c09c732cac07f0d8b5a1e51ee",
+    "mode": 384,
+    "bytes": 83743
+  },
+  "breps/L__output_adapter_rear.brep": {
+    "sha256": "5abebd550bfd2c9501d83bfdceb8a1e836adcbe308f95c917788a6e8bf2e490c",
+    "mode": 384,
+    "bytes": 84198
+  },
+  "breps/L__screws_links.brep": {
+    "sha256": "ec995d950843036ef565794b1010f6be58461c817d8c4bee89b24afd79f04517",
+    "mode": 384,
+    "bytes": 45662
+  },
+  "breps/L__screws_lugs.brep": {
+    "sha256": "1a9dcbfe7e0fcaacbbeffbed2bf5202f9b0117440d02b09c93879995345fa914",
+    "mode": 384,
+    "bytes": 45161
+  },
+  "breps/L__screws_outputs.brep": {
+    "sha256": "0e66067fb119ff0e0a7a68c2e0e2e8f33bf8657fe71ce5b1c419600c6f04bef6",
+    "mode": 384,
+    "bytes": 51257
+  },
+  "breps/L__screws_wheel.brep": {
+    "sha256": "692534e2c79227121032e112b5eee6b284ec65d01c29804c9d3ff082f8d44399",
+    "mode": 384,
+    "bytes": 9029
+  },
+  "breps/L__stop_posts.brep": {
+    "sha256": "9f6573bdd04042bd1389e73aec6c8f06b35e70e4ef464069771dae3f8c15d5c8",
+    "mode": 384,
+    "bytes": 4713
+  },
+  "breps/L__stop_sleeve_1.brep": {
+    "sha256": "70eb9ee5a01e06d49a53829a5a19893f4aa4603458b3d158c415380fe48c3532",
+    "mode": 384,
+    "bytes": 2319
+  },
+  "breps/L__stop_sleeve_2.brep": {
+    "sha256": "77815c073379aee3931cf3125e7bb07d577703d1ecfa089b2bac32e50c0a39f9",
+    "mode": 384,
+    "bytes": 2337
+  },
+  "breps/L__stop_sleeve_3.brep": {
+    "sha256": "016e44a404e3ff2386e0a2cfd1d51091b96b1b73b4be8dd699bd9c213f4394b0",
+    "mode": 384,
+    "bytes": 2330
+  },
+  "breps/L__stop_sleeve_4.brep": {
+    "sha256": "893d839a47ad179561f4a3f883544bdcc37eb8d4cdc1cbaba35fdc67187ce0f3",
+    "mode": 384,
+    "bytes": 2340
+  },
+  "breps/L__upper_link_front.brep": {
+    "sha256": "6ffbb0e359f2337f65f38753063e4fa199dfa650e694129bb4e09cca9a3b8baf",
+    "mode": 384,
+    "bytes": 106324
+  },
+  "breps/L__upper_link_rear.brep": {
+    "sha256": "f1f2849c6e2a789e5e2126eb0083c0aa9f1c5f9aa13df1d038bb5fb2e06f6fab",
+    "mode": 384,
+    "bytes": 107259
+  },
+  "breps/L__washers_wheel.brep": {
+    "sha256": "c66461e6297615306770a819c60cd4d3b6f4de8226ad982236b7752ebad2a737",
+    "mode": 384,
+    "bytes": 9094
+  },
+  "breps/L__wheel_hub.brep": {
+    "sha256": "7148935576cd31d781029d1eb5b15592704c1ce2d48c952df01e1b11089e1e49",
+    "mode": 384,
+    "bytes": 2009
+  },
+  "breps/L__wheel_link.brep": {
+    "sha256": "2384bfdf0bde73529388cd06f263815b4cc9b7320e5309baa174c7be6bb01290",
+    "mode": 384,
+    "bytes": 64117
+  },
+  "breps/L__wheel_tyre.brep": {
+    "sha256": "e5863d5894af20b6381ba19607947beeb4993af6e464ddc8ef93aadf62734f46",
+    "mode": 384,
+    "bytes": 1842
+  },
+  "breps/R__apex_61812.brep": {
+    "sha256": "95875eb6cdd917c8fbe959d672867d2c438f23c76f632ab2465d5cf61989bec0",
+    "mode": 384,
+    "bytes": 4662
+  },
+  "breps/R__apex_circlip.brep": {
+    "sha256": "9f65230cb5fb70c09aa5bfd21d348131abc3370356fb33c8f9158f06b5ad1a60",
+    "mode": 384,
+    "bytes": 2373
+  },
+  "breps/R__apex_spacer.brep": {
+    "sha256": "4617030e25b44bd0b2737462f12e1f89771c19dd71611e80fe571258b95b38af",
+    "mode": 384,
+    "bytes": 2567
+  },
+  "breps/R__bearing_61812_front.brep": {
+    "sha256": "2ae36c71c8734a78f8bb31c4c140eeaf1938f7ecc82acebbe3b2492a336edd22",
+    "mode": 384,
+    "bytes": 2472
+  },
+  "breps/R__bearing_61812_rear.brep": {
+    "sha256": "86ee53505d3504a769fa7b0f8472986e8ad9755631cb5884fc403954b3c94a7b",
+    "mode": 384,
+    "bytes": 2444
+  },
+  "breps/R__eye_sleeve_front.brep": {
+    "sha256": "71cff938b0d4ccf46cd89a0fb48034c9f22fe4404db9d10c724bae30ecc4a1d8",
+    "mode": 384,
+    "bytes": 2742
+  },
+  "breps/R__eye_sleeve_rear.brep": {
+    "sha256": "22e7595cc462a69a967bfd5e6ddb1eddad42466e26e30b89ac8403b081548edb",
+    "mode": 384,
+    "bytes": 2728
+  },
+  "breps/R__front_link.brep": {
+    "sha256": "5b49cf52f653fa12f33062b030f76f226f9f971ee34dcef9bdb72b47021bb6ad",
+    "mode": 384,
+    "bytes": 104367
+  },
+  "breps/R__hip_frame.brep": {
+    "sha256": "661a4ea4b554faf9793cf92db7c5e8127521ef100a1f8368b7ad6e0286b8bae8",
+    "mode": 384,
+    "bytes": 1016469
+  },
+  "breps/R__knee_bearing_front_in.brep": {
+    "sha256": "441d65a53ade406b3d277d146bb43e87dcd425229a486733bfc04e670c399eae",
+    "mode": 384,
+    "bytes": 2703
+  },
+  "breps/R__knee_bearing_front_out.brep": {
+    "sha256": "b1563240e1f9169cac544fd288c2b22ece623133c5bf6e499f92b0dace126245",
+    "mode": 384,
+    "bytes": 2766
+  },
+  "breps/R__knee_bearing_rear_in.brep": {
+    "sha256": "0ec05c05f1bbced93af88b1e41a4e876b445249cf84a43f6000d50eb939b77f8",
+    "mode": 384,
+    "bytes": 2689
+  },
+  "breps/R__knee_bearing_rear_out.brep": {
+    "sha256": "bba5ea7036559a7294c6f5920f4dd5bf2699e7336c1256155780a5a54b2b0dcd",
+    "mode": 384,
+    "bytes": 2752
+  },
+  "breps/R__knee_nut_upper_front.brep": {
+    "sha256": "ca57ad177300da0d641a9e443de9ccaa240a9280ac6853800c45fd2dfe0b2611",
+    "mode": 384,
+    "bytes": 8109
+  },
+  "breps/R__knee_nut_upper_rear.brep": {
+    "sha256": "d4622598b461346fdf211910e3e454ef6092290a0a5997f10ad866efc9182502",
+    "mode": 384,
+    "bytes": 8067
+  },
+  "breps/R__knee_pin_front.brep": {
+    "sha256": "21d9e8a4bfdc4fa398d8a0678d004dfddb853d3d82b33ea1fea68b433b401de0",
+    "mode": 384,
+    "bytes": 4063
+  },
+  "breps/R__knee_pin_rear.brep": {
+    "sha256": "d306b11e51e3df37ccf9ccbfb70f5bf1795d768b68bcd7e4b0b29b7658d23c8d",
+    "mode": 384,
+    "bytes": 4041
+  },
+  "breps/R__knee_spacer_front.brep": {
+    "sha256": "4ae2c1e0615363c31a54469b7759d29ade2aff4c626caf862bf24b34601c095e",
+    "mode": 384,
+    "bytes": 2794
+  },
+  "breps/R__knee_spacer_rear.brep": {
+    "sha256": "15122d67a86c72a2c12bd18f94c5ac935d88c6cf9bc42c09be3db044fc70edd8",
+    "mode": 384,
+    "bytes": 2782
+  },
+  "breps/R__knee_washer_front.brep": {
+    "sha256": "77123d880ea4b8f16c7f510bf853a626fd5ef7a9dee242d6f94ce1ea8960dd2b",
+    "mode": 384,
+    "bytes": 5243
+  },
+  "breps/R__knee_washer_rear.brep": {
+    "sha256": "8fc5c90f7b5e12a15bb4ac58ade55982bf9fd8bfe92eff2184f4993d32b4c2f4",
+    "mode": 384,
+    "bytes": 5215
+  },
+  "breps/R__motor_front.brep": {
+    "sha256": "95e3777f4dc9fce62101ab48c831976ebe250e2985518bb7a1b8e93254d9afb6",
+    "mode": 384,
+    "bytes": 3460
+  },
+  "breps/R__motor_rear.brep": {
+    "sha256": "b8e690a537c8b5de8b58b6746849338e0c4dcc02152a66a6278f0c5f13fcf9a9",
+    "mode": 384,
+    "bytes": 3455
+  },
+  "breps/R__output_adapter_front.brep": {
+    "sha256": "ac0af64bfcee813c42bc0c05fceaf59649c96295a4bef77c2f430897b4c1b14a",
+    "mode": 384,
+    "bytes": 88620
+  },
+  "breps/R__output_adapter_rear.brep": {
+    "sha256": "647fb6bbf1fc4ba22bffb30029e342b0effad868e435a720c02fe52827b27c25",
+    "mode": 384,
+    "bytes": 88026
+  },
+  "breps/R__screws_links.brep": {
+    "sha256": "6e5b62ae30783b776878ac7a4bec3eb73fedd57ad73d3cbb3636d190efd73c0f",
+    "mode": 384,
+    "bytes": 57498
+  },
+  "breps/R__screws_lugs.brep": {
+    "sha256": "88677b7b73db3bfe8e4a31635a6835b6845b1109817a05ce32acfecec0810427",
+    "mode": 384,
+    "bytes": 53879
+  },
+  "breps/R__screws_outputs.brep": {
+    "sha256": "ce370ba75a74314bca58fe5dc93614b0b7b5e76c332f86494c98cade359f896a",
+    "mode": 384,
+    "bytes": 63742
+  },
+  "breps/R__screws_wheel.brep": {
+    "sha256": "1258a74b47eb250cf27419dd2c34841f946897c95377c2c2412db379d836c5d0",
+    "mode": 384,
+    "bytes": 10771
+  },
+  "breps/R__stop_posts.brep": {
+    "sha256": "a24dc0ad663c702b1a88c91f60131523b5fb9f56ed77a0e069fae75288c2fef1",
+    "mode": 384,
+    "bytes": 5748
+  },
+  "breps/R__stop_sleeve_1.brep": {
+    "sha256": "9205a95f208fbde35cd88b5b94a72222d4b543f2f580135c7a3972c6d47feaec",
+    "mode": 384,
+    "bytes": 2882
+  },
+  "breps/R__stop_sleeve_2.brep": {
+    "sha256": "ecc63ae7703459f66e9023865f257ac9d424289fd119627eed888b3a8849aaff",
+    "mode": 384,
+    "bytes": 2870
+  },
+  "breps/R__stop_sleeve_3.brep": {
+    "sha256": "c694b52771cbe98cff86422e8e1d296146dfe5d7042d3e2c268fd6508f79a136",
+    "mode": 384,
+    "bytes": 2783
+  },
+  "breps/R__stop_sleeve_4.brep": {
+    "sha256": "250aa3abcff26f72600fea26dd94c8e93e15f3e018736429d40bbe0a82faa5c8",
+    "mode": 384,
+    "bytes": 2770
+  },
+  "breps/R__upper_link_front.brep": {
+    "sha256": "cae360f889b558afbfff0cd7fbaebc7448b8a63e21d18853641f3f5e0f0b645f",
+    "mode": 384,
+    "bytes": 125620
+  },
+  "breps/R__upper_link_rear.brep": {
+    "sha256": "77fd6c4f85189371f221c2ca5318db88d17f73786514a0e16c58fb4ff2475ba5",
+    "mode": 384,
+    "bytes": 124901
+  },
+  "breps/R__washers_wheel.brep": {
+    "sha256": "04ba6322900179a2d07c823d5798c9cf6c25926056c4247ed07be761541015ae",
+    "mode": 384,
+    "bytes": 10687
+  },
+  "breps/R__wheel_hub.brep": {
+    "sha256": "7da6880f2b951d8277255de467607193b7acec54f229f425e6cfbbed8b1d4478",
+    "mode": 384,
+    "bytes": 2640
+  },
+  "breps/R__wheel_link.brep": {
+    "sha256": "6b23fad6021c4440ad3ca6bab47a5fa1db054a21d32ee020fe9e8add1a42ef5c",
+    "mode": 384,
+    "bytes": 74626
+  },
+  "breps/R__wheel_tyre.brep": {
+    "sha256": "770d583379dece212f681b1dd4aa433c8edd84de8f36da1496bf6e8da92afb77",
+    "mode": 384,
+    "bytes": 2417
+  },
+  "breps/adapter_plate_front.brep": {
+    "sha256": "4de6fade49cf69021542f59d9a3c19fcbd544ddfaf674eba8dda973bd1fe6440",
+    "mode": 384,
+    "bytes": 10604
+  },
+  "breps/adapter_plate_rear.brep": {
+    "sha256": "3d3dc1a1a2e91b30d8853f10522f58ecab0b72739fce2cbecdda168107998094",
+    "mode": 384,
+    "bytes": 10586
+  },
+  "breps/bay_door_front.brep": {
+    "sha256": "e2e6fa10c1c6bb11a1720fd994344f93ca75f42546156188a915592f65d55d5e",
+    "mode": 384,
+    "bytes": 10054
+  },
+  "breps/bay_door_rear.brep": {
+    "sha256": "615fcd48328a14b4515e40322eb8bffab52d7a051d460c9b0757a4195011d7ff",
+    "mode": 384,
+    "bytes": 10116
+  },
+  "breps/bay_floor.brep": {
+    "sha256": "2809976e2b165253309a394a0d32c10e7d54062266bb5b674facce5fc4ad0028",
+    "mode": 384,
+    "bytes": 24760
+  },
+  "breps/bay_rail_l.brep": {
+    "sha256": "d5c16c6b9e59a79c7789300a067bc5d781f5632f0a47fb516d1e5e7355bd30d0",
+    "mode": 384,
+    "bytes": 98045
+  },
+  "breps/bay_rail_r.brep": {
+    "sha256": "8ca4bd7f60d13bdba438d78d407f50a7b294204bdedfc70abd02b0d2a4dff2cf",
+    "mode": 384,
+    "bytes": 98703
+  },
+  "breps/bay_side_l.brep": {
+    "sha256": "b7cab60cc6cadef9952dec450eb46f4598da1decb389ac23e50047377f0f2e28",
+    "mode": 384,
+    "bytes": 41556
+  },
+  "breps/bay_side_r.brep": {
+    "sha256": "717e933d01e4195753b7117a248e217dd31c1ef25195bf4e75e92cc7afaf2f2c",
+    "mode": 384,
+    "bytes": 42132
+  },
+  "breps/bay_skid_1.brep": {
+    "sha256": "4cb8ce37d9de15e51c6a960ce7e441484787275a1de4e50cc08984028da5a9d1",
+    "mode": 384,
+    "bytes": 11760
+  },
+  "breps/bay_skid_2.brep": {
+    "sha256": "44ca7180d1ff921aa8e203f88518fd4937e34d9e060e3235d982bcfd2f2d6b8e",
+    "mode": 384,
+    "bytes": 11606
+  },
+  "breps/bay_skid_3.brep": {
+    "sha256": "c6940de811fb1647129a454473babdee87a4bc49c88d7383f31faca8eca96400",
+    "mode": 384,
+    "bytes": 11859
+  },
+  "breps/bay_skid_4.brep": {
+    "sha256": "b295461d6c9406ae4ebd5d05b405856924fb315c2d4556efa285919a8b68f028",
+    "mode": 384,
+    "bytes": 11709
+  },
+  "breps/belly_plate.brep": {
+    "sha256": "44dfbdc43da841f321ba85d159cc6b4a180522355a43d106fe69fe3cb719395b",
+    "mode": 384,
+    "bytes": 33447
+  },
+  "breps/bus_bar_1.brep": {
+    "sha256": "8243043eb43985b21745e0b6a681d0d7a88a9ef109b7bcd5372dba9ac353a215",
+    "mode": 384,
+    "bytes": 8095
+  },
+  "breps/bus_bar_2.brep": {
+    "sha256": "d5c478995f8f423c650071d45a968043ba9281ba88e6b87501217d5e01f9374c",
+    "mode": 384,
+    "bytes": 8095
+  },
+  "breps/bus_insulator_1.brep": {
+    "sha256": "a9b28efe99403ed981a3a4adc02f5ae9d0b17007e82df3bae1325c6a3aec8c96",
+    "mode": 384,
+    "bytes": 45328
+  },
+  "breps/bus_insulator_2.brep": {
+    "sha256": "5caf9376e14147eb45d06f8089a937bc33e742554695893ef6e090bafcf9c1fa",
+    "mode": 384,
+    "bytes": 45361
+  },
+  "breps/cheek_left.brep": {
+    "sha256": "457075b9174c460d6b3268d5f8f08213ef895760efa8f8d6442dcf2ac0ad1176",
+    "mode": 384,
+    "bytes": 59439
+  },
+  "breps/cheek_nuts_left.brep": {
+    "sha256": "5a28f225583d26f10d6666603827eaf5424721a538aea1b895a7dadafc8bcad9",
+    "mode": 384,
+    "bytes": 13380
+  },
+  "breps/cheek_nuts_right.brep": {
+    "sha256": "d24ad33d9ce66a1bc51e42250ebdd5d418ee7990124107564838a7f9c3355fba",
+    "mode": 384,
+    "bytes": 14254
+  },
+  "breps/cheek_right.brep": {
+    "sha256": "915c75c19bb33e3c3a8ca53f0896c2a51f178a2e8b2cedde773905223609f3c2",
+    "mode": 384,
+    "bytes": 61059
+  },
+  "breps/compute_pallet.brep": {
+    "sha256": "d2615d723adbaa83bf5d05ce5601b66dc95670008d55ac6dd6cc87975e42d551",
+    "mode": 384,
+    "bytes": 27617
+  },
+  "breps/d435_cradle_front.brep": {
+    "sha256": "60d777e8de9f5082f666ae1a2e7da087d76c5477425597f120852ac82eb3b501",
+    "mode": 384,
+    "bytes": 11814
+  },
+  "breps/d435_cradle_rear.brep": {
+    "sha256": "347b348e3277e6e829a9c3ad968671473fd96956e4a599b3361849fb703d5bca",
+    "mode": 384,
+    "bytes": 11923
+  },
+  "breps/d435_front.brep": {
+    "sha256": "0d00f7dde0d594a16d2044462ff7f7e55ab434e123828332b2b81808103843b7",
+    "mode": 384,
+    "bytes": 2484
+  },
+  "breps/d435_rear.brep": {
+    "sha256": "e43566a50108b33369acab3e3e20b42a08624957201c8e4f7020094460c0e0da",
+    "mode": 384,
+    "bytes": 2510
+  },
+  "breps/dcdc_bracket.brep": {
+    "sha256": "61cc9b0a4eb8076b8c1ac2e6c7a7510c8d211ac317b16ab3045d2ecb84eb02f4",
+    "mode": 384,
+    "bytes": 10450
+  },
+  "breps/deck.brep": {
+    "sha256": "9dae43491d208d131130e50c1050cb6e40f0e6e96832dc2fde2af3c29c98e592",
+    "mode": 384,
+    "bytes": 305352
+  },
+  "breps/ear_bracket_l.brep": {
+    "sha256": "9ad7cd1eb66c9e04e4fc5cc04ee9ae96d8878220135ac869d7c8c504f906792a",
+    "mode": 384,
+    "bytes": 24855
+  },
+  "breps/ear_bracket_r.brep": {
+    "sha256": "0e09c31963ebc0d7b351a2e6d7d70c09efd58de49569ae0171240d2065fc4e48",
+    "mode": 384,
+    "bytes": 24847
+  },
+  "breps/ear_pod_l.brep": {
+    "sha256": "4c54c7be4618325f98e11bebae794c61e49edfed488354cc8d14ff86646c59ba",
+    "mode": 384,
+    "bytes": 2501
+  },
+  "breps/ear_pod_r.brep": {
+    "sha256": "6e2caa32ea8257222220af6eaf33a315f18694a78e8dbab4049e57417a75291d",
+    "mode": 384,
+    "bytes": 2527
+  },
+  "breps/eyes_board.brep": {
+    "sha256": "3cf1d784bc81086aee268b25251e56712b643b89adab7c20d29e89165b6ae561",
+    "mode": 384,
+    "bytes": 2558
+  },
+  "breps/eyes_clip.brep": {
+    "sha256": "9c5fe25c60eb9d180cf7d2c2cd26b2bd7f1e63f3d75faefc333d8bcb21f316a8",
+    "mode": 384,
+    "bytes": 4581
+  },
+  "breps/fan_duct.brep": {
+    "sha256": "b753620db2a092099f5f2cfe17e9d57d4dd303054e29d491966a275916300376",
+    "mode": 384,
+    "bytes": 46112
+  },
+  "breps/floor_tray.brep": {
+    "sha256": "38eb25ec07645413cc173b37fcaa59688bb9ab4cbe2f741068586be64c89f6c3",
+    "mode": 384,
+    "bytes": 105770
+  },
+  "breps/frame_screws_left.brep": {
+    "sha256": "b3e76a7c098ae1dc7d4e150e876d9eae6150efe482d0a994faffdabe8fe00abc",
+    "mode": 384,
+    "bytes": 12174
+  },
+  "breps/frame_screws_right.brep": {
+    "sha256": "b86d963e30dcd4b5696e4eafcf55d2ea1f87828a7e4f7fd4411c3c462ba2d862",
+    "mode": 384,
+    "bytes": 12112
+  },
+  "breps/isolator_1.brep": {
+    "sha256": "6ab2fd1171938b94271af626342f0951c77012216716e25aa1d6849d97f1befc",
+    "mode": 384,
+    "bytes": 4662
+  },
+  "breps/isolator_2.brep": {
+    "sha256": "6c6cea4c5a0124b845da7c8ef6446f16901ad145a3d630c3bcde40594bc6d25c",
+    "mode": 384,
+    "bytes": 4627
+  },
+  "breps/isolator_3.brep": {
+    "sha256": "19b2ae946fbb437b91e4fac7491d53ae27ab13f13f18808ee8f5e291af038349",
+    "mode": 384,
+    "bytes": 4595
+  },
+  "breps/isolator_4.brep": {
+    "sha256": "b6e098b1c5b2960a4a0191065a227a828fd24c29ac821de585f496dec81e5435",
+    "mode": 384,
+    "bytes": 4560
+  },
+  "breps/item__agx_cooler.brep": {
+    "sha256": "5ebb863bff86bbd77c535bb933faaa249c6367e23fec293faf95975c9f0251c5",
+    "mode": 384,
+    "bytes": 2455
+  },
+  "breps/item__agx_module.brep": {
+    "sha256": "491387534635cb9e4a6fec78e3750fdedf8b01298447e8c2d346b868580ba562",
+    "mode": 384,
+    "bytes": 2413
+  },
+  "breps/item__agx_spreader.brep": {
+    "sha256": "6fe6fe247974503bb26cf2bef26d1094d1e3d32dd3e73f47740c4327e698b399",
+    "mode": 384,
+    "bytes": 2444
+  },
+  "breps/item__battery_adapter_front.brep": {
+    "sha256": "8ca667f17f9061d646a0d68725ac7a259263cccb741563640121e429e2957765",
+    "mode": 384,
+    "bytes": 2527
+  },
+  "breps/item__battery_adapter_rear.brep": {
+    "sha256": "6cc221ac2f22010448371389b90f793fec947f03830e5b026d98eb433602024d",
+    "mode": 384,
+    "bytes": 2561
+  },
+  "breps/item__battery_front.brep": {
+    "sha256": "cd7822088b09158c48dc9aed045a568fa7bd940bcba61b6a0b28c4bcdbe235dc",
+    "mode": 384,
+    "bytes": 2583
+  },
+  "breps/item__battery_rear.brep": {
+    "sha256": "bd5064a19db7fe2a89452af3093bb94c05ef0fc79b6246479b480faad280abd2",
+    "mode": 384,
+    "bytes": 2617
+  },
+  "breps/item__j501_carrier.brep": {
+    "sha256": "9fca01e3b06c3c9576419e759a45fd0a6436210df73fbb85d386bc5488cb4d58",
+    "mode": 384,
+    "bytes": 2547
+  },
+  "breps/item__j501_standoff_15_146__5.brep": {
+    "sha256": "da579cc54f1aebfc3b1dc965c14053868f67d1bd272bea1676fc39199b42fb7b",
+    "mode": 384,
+    "bytes": 3229
+  },
+  "breps/item__j501_standoff_15_16__5.brep": {
+    "sha256": "2b3ab42fe8ea060a02140e1d70b828c65b056c8014cb7f614cbb3ceef527172b",
+    "mode": 384,
+    "bytes": 3255
+  },
+  "breps/item__j501_standoff_165_146__5.brep": {
+    "sha256": "538952bf1165394a23afe8fa26da856854b2af20a9327088d8a7b8c1a605e0ba",
+    "mode": 384,
+    "bytes": 3143
+  },
+  "breps/item__j501_standoff_165_16__5.brep": {
+    "sha256": "6196e164ef4df02030c0342e3e965af872545e9262d43dbc3d641d25420300ca",
+    "mode": 384,
+    "bytes": 3169
+  },
+  "breps/item__lidar_box.brep": {
+    "sha256": "2022a828b727ea98b152c557fad509fbbad1109b609acc26ca9f65614e1fe23f",
+    "mode": 384,
+    "bytes": 2547
+  },
+  "breps/item__lidar_coil.brep": {
+    "sha256": "6a8e166b593e95b3a6ec0c7c8f76ea5cc4b170ee92358dfcfe4ebf0c1976eae8",
+    "mode": 384,
+    "bytes": 2535
+  },
+  "breps/item__plate_buck_5v.brep": {
+    "sha256": "5b178f7141c68310627331e80c3eb744f7354d02d4a15513e4b0cf91593fa3ba",
+    "mode": 384,
+    "bytes": 2311
+  },
+  "breps/item__plate_fuses.brep": {
+    "sha256": "25c3a419defd8ef673051ffeadc313d66d34b62c266312a3393c4be638622ee6",
+    "mode": 384,
+    "bytes": 2311
+  },
+  "breps/item__plate_main_switch.brep": {
+    "sha256": "cc173ebc97241ff398b0e2c2d62824fae1de66963d72f7c934aa1f6e369325a4",
+    "mode": 384,
+    "bytes": 2543
+  },
+  "breps/item__plate_mcu_board.brep": {
+    "sha256": "7f958b64fc47b949c206f6b130c7bd0e540fb869381aa5b1318e650dd2f429de",
+    "mode": 384,
+    "bytes": 2294
+  },
+  "breps/item__plate_mrbf_block.brep": {
+    "sha256": "7f9912ce73066868514935307a598c2d8011d4200b0e1510cf1460b7a8a1f928",
+    "mode": 384,
+    "bytes": 2432
+  },
+  "breps/item__plate_shunt.brep": {
+    "sha256": "df4cc931316b4500a82d1d7b2d1fbabd2f609b094a0e2a78e3a8b66be1e8f02d",
+    "mode": 384,
+    "bytes": 2294
+  },
+  "breps/item__plate_vesc_l.brep": {
+    "sha256": "cf2b76d769071a3538b8d55928c83f5ab8caeed85bd07cd1b6093b68f349d597",
+    "mode": 384,
+    "bytes": 2720
+  },
+  "breps/item__plate_vesc_r.brep": {
+    "sha256": "52c0762afac8a72750d5b2c6a2b4bc0e806bc2fcfbe9fb7fe6b7d41c57718f1e",
+    "mode": 384,
+    "bytes": 2618
+  },
+  "breps/item__power_dcdc.brep": {
+    "sha256": "9680c31903ab040774288fbb1e16f2cfe7bdd94709160b1b4079e7797a269c1f",
+    "mode": 384,
+    "bytes": 2337
+  },
+  "breps/item__vlp16_housing.brep": {
+    "sha256": "ead36dcb5e6826b1eaa267b6594b9309550d6ed6b760e67b77e733ed8f0a813f",
+    "mode": 384,
+    "bytes": 22126
+  },
+  "breps/item__vlp16_window.brep": {
+    "sha256": "1e6cd33abac72d2fca695e6b60308f0d81972c455a7b524c7da73c0d909512c4",
+    "mode": 384,
+    "bytes": 1407
+  },
+  "breps/item__vn100.brep": {
+    "sha256": "7af980674ff62bfa9f99456b8007e37acf8b7046272b267549ad21e07a66cd9b",
+    "mode": 384,
+    "bytes": 2935
+  },
+  "breps/plate_post_1.brep": {
+    "sha256": "e6f48519efd85bd5437d4676ad812f1b9f9307b40d0561dd6de6bb9d0cb4171e",
+    "mode": 384,
+    "bytes": 8045
+  },
+  "breps/plate_post_2.brep": {
+    "sha256": "c48939b4ed586d8c03b70ab079ebcae4d5b1b27661cd00a105fc3414f7fdcf7b",
+    "mode": 384,
+    "bytes": 7952
+  },
+  "breps/plate_post_3.brep": {
+    "sha256": "0dc44c5b633b8eafd6a2923f13189893abc793280577a153635f15449f3cbf52",
+    "mode": 384,
+    "bytes": 8078
+  },
+  "breps/plate_post_4.brep": {
+    "sha256": "2a18228bd3a310b72e7c30b15c20e467ffb1ebfd6be6a96d3fbf937e5510eb72",
+    "mode": 384,
+    "bytes": 8014
+  },
+  "breps/post_1.brep": {
+    "sha256": "38e69c23f8bdadd452c8af518d53002364d3003fb04cf3952ed62f28d4cb55b4",
+    "mode": 384,
+    "bytes": 34402
+  },
+  "breps/post_2.brep": {
+    "sha256": "d84cf1dfbf39ecc6b1fa35d4abb85270f501784652ad2699864c9e5d627c742f",
+    "mode": 384,
+    "bytes": 34760
+  },
+  "breps/post_3.brep": {
+    "sha256": "ecd53533e3079c88c090bda08287741324f84ac14858208164c7dff438e7d2b0",
+    "mode": 384,
+    "bytes": 34740
+  },
+  "breps/post_4.brep": {
+    "sha256": "909d1f32b8bbfca0adc8c4c62ae7e27cf4e8d008be2c05f209c12b84aa58f2a2",
+    "mode": 384,
+    "bytes": 35098
+  },
+  "breps/power_plate.brep": {
+    "sha256": "1ed7b71e7210a558f718a8f1948fbf4ec9d4958a6f07f3b3a35ee6389991d2dd",
+    "mode": 384,
+    "bytes": 57988
+  },
+  "breps/riser.brep": {
+    "sha256": "74747df9ebfb811d83254ed5be88d70d988cb525e48ff695215c03deccacb9e7",
+    "mode": 384,
+    "bytes": 17684
+  },
+  "breps/shell_door.brep": {
+    "sha256": "f4043e4541374fc7c1847001375cf17c891467a7cd5161887db42f0fca59adf5",
+    "mode": 384,
+    "bytes": 10525
+  },
+  "breps/shell_front.brep": {
+    "sha256": "6439e5db6867caf33e75d3d35743a9e8e7f57c5ced303be6006c7f4839b9707e",
+    "mode": 384,
+    "bytes": 55089
+  },
+  "breps/shell_hatch.brep": {
+    "sha256": "558befc537333a2f96a480ab257e48556968a60316f91e547955ad9dec824f37",
+    "mode": 384,
+    "bytes": 9842
+  },
+  "breps/shell_rear.brep": {
+    "sha256": "981d1534acb2d18141e913fd91c3d197acb768559298aa8990185fa5ffa13ff9",
+    "mode": 384,
+    "bytes": 79337
+  },
+  "breps/shell_side_l_front.brep": {
+    "sha256": "3672500b6a9e84b7d4723563f6eed7b453504134a75cd37945367a3fc2d7ddd5",
+    "mode": 384,
+    "bytes": 112474
+  },
+  "breps/shell_side_l_rear.brep": {
+    "sha256": "fea877040387fd4a0ef08fdfb011dee82901af8112e72ea56a875dde281b12b3",
+    "mode": 384,
+    "bytes": 205926
+  },
+  "breps/shell_side_r_front.brep": {
+    "sha256": "e854bdec5f476cda82e112c53d00b4ff1b192f3f2ee9a8aa42f9c1230048083d",
+    "mode": 384,
+    "bytes": 79559
+  },
+  "breps/shell_side_r_rear.brep": {
+    "sha256": "cf651f4206c3d6b3f0010eb27355801a43429101ad31aea7d1b6d3d3a43afa26",
+    "mode": 384,
+    "bytes": 166252
+  },
+  "breps/spacer_screws.brep": {
+    "sha256": "81b245f3f0894f0951c928209ae3641060e33dc6c1e6a9aa40c5a34a5aec70fc",
+    "mode": 384,
+    "bytes": 16097
+  },
+  "breps/spacers.brep": {
+    "sha256": "eea7da550832292e28b351b3f2478fc6958a6ecdde81b903be922d7022709b89",
+    "mode": 384,
+    "bytes": 57467
+  },
+  "breps/turret__barrel.brep": {
+    "sha256": "aca2532912196ff59657dc0efae3cc6d26d1da2b568e3718965660c881dfab27",
+    "mode": 384,
+    "bytes": 70747
+  },
+  "breps/turret__base_board.brep": {
+    "sha256": "61fc541c41f1329e6b56f96dddd96f7aac873a5db78bef44d43ff3b8352f13a1",
+    "mode": 384,
+    "bytes": 26989
+  },
+  "breps/turret__base_board_carrier.brep": {
+    "sha256": "de5c6e6c95ee6fa4a2d18f3b8a26161914f306f5881c8b7af249ef964a1230e6",
+    "mode": 384,
+    "bytes": 23504
+  },
+  "breps/turret__base_board_inserts.brep": {
+    "sha256": "98ca32c3109912e25034a026e2aa94a1c561e472f86487d0c87a32d9f530b783",
+    "mode": 384,
+    "bytes": 8472
+  },
+  "breps/turret__base_board_screws.brep": {
+    "sha256": "a22602c91ac2c0acf40b396abfec742f68307c5bb9e165ffd6dd13bbadbf49aa",
+    "mode": 384,
+    "bytes": 32363
+  },
+  "breps/turret__base_carrier_inserts.brep": {
+    "sha256": "48b21d6d34ebb694bd1c2823fe165ccf469b9bbc7f56193858cc90e063fb56a9",
+    "mode": 384,
+    "bytes": 7792
+  },
+  "breps/turret__base_carrier_screws.brep": {
+    "sha256": "80feeec298d194c3b6180b5205eba7c65a509ffab5e338db8567345ac699ea95",
+    "mode": 384,
+    "bytes": 29923
+  },
+  "breps/turret__board_bay.brep": {
+    "sha256": "a75c0812237c3bb4bea07c60c7afd28f3b62b03669b3301881987e8fb1d66210",
+    "mode": 384,
+    "bytes": 32539
+  },
+  "breps/turret__board_bay_lid.brep": {
+    "sha256": "00dd17daf39522bf76bdecc72cdfdd9446e80e20e7423c95e2079a7822505c01",
+    "mode": 384,
+    "bytes": 30237
+  },
+  "breps/turret__bumper_ring.brep": {
+    "sha256": "6e8613a3e18dbff5e0703b0da287cc0f154e44db4a30faf8c278c4803a5fce36",
+    "mode": 384,
+    "bytes": 162851
+  },
+  "breps/turret__cartridge_board.brep": {
+    "sha256": "d7986a942f980265b56bad985c16f67981fd0ed68d02ef0821298b537135c0c9",
+    "mode": 384,
+    "bytes": 5111
+  },
+  "breps/turret__cartridge_body.brep": {
+    "sha256": "4acd1a43eaff442a3b987003596f58a2337f790ff37edb7e79b0827b5014b0cf",
+    "mode": 384,
+    "bytes": 600020
+  },
+  "breps/turret__circlip_50.brep": {
+    "sha256": "266b6834b50513d01ee9549112ba5d841fe9ce7b1302d770215db7d0fd4fe7f5",
+    "mode": 384,
+    "bytes": 29843
+  },
+  "breps/turret__cradle.brep": {
+    "sha256": "63718b33aa22fb5d24335c305f810ce3f92bec320e8b57ab6c9b93f77358a51a",
+    "mode": 384,
+    "bytes": 37305
+  },
+  "breps/turret__cradle_plate_l.brep": {
+    "sha256": "0ec9e79c4973564ffb1d9db6049ea2d933384cc31d57ad3d816aab3cdaf6baa6",
+    "mode": 384,
+    "bytes": 21159
+  },
+  "breps/turret__cradle_plate_r.brep": {
+    "sha256": "550308bf3d11a543ddfe2703f32c9f0ce12ea05bbc6a2cb89e7203b4e2e6f34b",
+    "mode": 384,
+    "bytes": 16827
+  },
+  "breps/turret__ct_thumbscrew.brep": {
+    "sha256": "25d6751cd7a796c263f8eb9f3c28568d0fc13871d3a2950dec5365c8f787a1d5",
+    "mode": 384,
+    "bytes": 2164
+  },
+  "breps/turret__dial.brep": {
+    "sha256": "d4ee5e6d9ba73bce64c2edbd1bc71b0b0782212c71e000f42297694ccde522ca",
+    "mode": 384,
+    "bytes": 145168
+  },
+  "breps/turret__dt_plug.brep": {
+    "sha256": "749e51c5f57c3ea874351f0c7e99fe474615847533ea34f499a1744617ce9740",
+    "mode": 384,
+    "bytes": 4667
+  },
+  "breps/turret__dt_receptacle.brep": {
+    "sha256": "ffeb84e9a853e7532e0bf02aba5996056a50f0d45ba36b1d83ca2d2e2bc85e21",
+    "mode": 384,
+    "bytes": 9357
+  },
+  "breps/turret__esc_l.brep": {
+    "sha256": "aa59043e07a909833b3a39c7536a7a505e53346a4623e68c978c859533c13b1f",
+    "mode": 384,
+    "bytes": 2457
+  },
+  "breps/turret__esc_r.brep": {
+    "sha256": "b9f5254a0b59258a01251df8519b89d5123f1c66a493d06e5c93e46e74457a94",
+    "mode": 384,
+    "bytes": 2491
+  },
+  "breps/turret__feed_motor.brep": {
+    "sha256": "a4e15aeaa7a29afce48b99de414fb96376d627dfa572c09c07edc5edbb768df4",
+    "mode": 384,
+    "bytes": 16056
+  },
+  "breps/turret__flywheel.brep": {
+    "sha256": "9b682b13f5bbe3d7eae7b92f54e83d6f73c4ed488c41dbc651689019ae201a74",
+    "mode": 384,
+    "bytes": 3905
+  },
+  "breps/turret__flywheel_2.brep": {
+    "sha256": "012311dbb4957c357f2addca041d2ce3d396a525793bbf845429bba111001bff",
+    "mode": 384,
+    "bytes": 4001
+  },
+  "breps/turret__flywheel_motor_l.brep": {
+    "sha256": "03e5feac049038b20c4d99a4a74f51c6fd22669891444a4416e447929e800126",
+    "mode": 384,
+    "bytes": 7480
+  },
+  "breps/turret__flywheel_motor_r.brep": {
+    "sha256": "926918e90a2e56b98a668199a38c7b3cba7d680a77712f03b91500ef5b6ff8e4",
+    "mode": 384,
+    "bytes": 7537
+  },
+  "breps/turret__flywheel_tyre.brep": {
+    "sha256": "78724872fa308c03f84aba5f1bbd3e1e0044fc7d3eb51896da3bed8a12d6ccc8",
+    "mode": 384,
+    "bytes": 1884
+  },
+  "breps/turret__flywheel_tyre_2.brep": {
+    "sha256": "709e38033f7af8d9e40fdaef7a9dd4dbfa55964da30247feb96b2b903c2082f9",
+    "mode": 384,
+    "bytes": 1944
+  },
+  "breps/turret__hall_switch.brep": {
+    "sha256": "6b958c3424e7d06edc55860e8c416e1e99a238a0c5156af16d58e8386a0285cd",
+    "mode": 384,
+    "bytes": 2896
+  },
+  "breps/turret__hopper.brep": {
+    "sha256": "0ba3fb5df524c26a37737d4fb50b4e59025baa6e0a08b5f57d357573bc9c1234",
+    "mode": 384,
+    "bytes": 90982
+  },
+  "breps/turret__hopper_flap.brep": {
+    "sha256": "9c361503d00b951e9481898e4fcf0209730bda43c8e37f560c0f51cd6b6156d4",
+    "mode": 384,
+    "bytes": 6192
+  },
+  "breps/turret__hopper_inserts.brep": {
+    "sha256": "1087c28ed3d659926ca5597256607dc1cfa122f70dfb6b729933682e9159bb8b",
+    "mode": 384,
+    "bytes": 6286
+  },
+  "breps/turret__hopper_lid.brep": {
+    "sha256": "bc562583baff9cee9fc50749a4194170b94636e1047b2ce72da2adacf8685e26",
+    "mode": 384,
+    "bytes": 121637
+  },
+  "breps/turret__horn_boss.brep": {
+    "sha256": "16b8161870a58a8afb9dc947f79c5e690eecfd28d09a597548aa26b0a067168f",
+    "mode": 384,
+    "bytes": 6087
+  },
+  "breps/turret__index_magnet.brep": {
+    "sha256": "546ef75292ff4ba9c92736be495af5cbbd2c249da211fe99a3515434256832e1",
+    "mode": 384,
+    "bytes": 1116
+  },
+  "breps/turret__laser.brep": {
+    "sha256": "797530c5c121a3fd90c11a9ccb0ea73f923c313cd91dcf18cae1abb2f4556a3d",
+    "mode": 384,
+    "bytes": 1047
+  },
+  "breps/turret__laser_inserts.brep": {
+    "sha256": "4974a522f265a240148db4acab638388dde7bbe893242d58706fc4ae3d4e5161",
+    "mode": 384,
+    "bytes": 3617
+  },
+  "breps/turret__laser_mount.brep": {
+    "sha256": "2c57036b87545b61c8df5cb7ac53d20a5ca97702d0f17f065054050d1d1014cf",
+    "mode": 384,
+    "bytes": 86600
+  },
+  "breps/turret__laser_screws.brep": {
+    "sha256": "fd270e9713b46024850fafb9a85c6c1ee2bd7b073634f923ace6a1aab79d3acd",
+    "mode": 384,
+    "bytes": 3895
+  },
+  "breps/turret__pan_base.brep": {
+    "sha256": "7f001cbc7ab093644101749078d4ce7f16071f65b51e3f08baafea762a95ce6f",
+    "mode": 384,
+    "bytes": 329658
+  },
+  "breps/turret__pan_bearing.brep": {
+    "sha256": "4e3695006c67c432ec2690621f7dae24be9d8fbac5c3dfddf5646446e7f4e490",
+    "mode": 384,
+    "bytes": 4096
+  },
+  "breps/turret__pan_bearing_inner.brep": {
+    "sha256": "434610610248a1fbdd357912ce5e23afae97d971a278e6046fb0bbf3c2f50d38",
+    "mode": 384,
+    "bytes": 1873
+  },
+  "breps/turret__pan_clamp.brep": {
+    "sha256": "d1df1bbc489326aa36b21f32b5bb8292c279b6f9b44ba33c42542ed8d1d85255",
+    "mode": 384,
+    "bytes": 32698
+  },
+  "breps/turret__pan_pinion.brep": {
+    "sha256": "73d1beb0ac145243363554f4986518eb253a0d0388732df70bdc5b55aed7671f",
+    "mode": 384,
+    "bytes": 332759
+  },
+  "breps/turret__pan_ring.brep": {
+    "sha256": "3cc5cab9e555dd1d43a2c94f3c56db1a6b42b5d04a169fe588f2c75b16ac785a",
+    "mode": 384,
+    "bytes": 1168369
+  },
+  "breps/turret__pan_servo.brep": {
+    "sha256": "163199c6df49dd1343bd73334e036aabdef461d344321b367f8f9780a10ca23e",
+    "mode": 384,
+    "bytes": 13931
+  },
+  "breps/turret__pan_spacer.brep": {
+    "sha256": "e8d2bf65e746b3d087e4073200bdfd959c611edbf78a7e47ba58677e008852b8",
+    "mode": 384,
+    "bytes": 2931
+  },
+  "breps/turret__pivot_spacer.brep": {
+    "sha256": "d9feed0f502740d9500da688cdd98e9a8b231c16632d6ecfc69f24024b4dee20",
+    "mode": 384,
+    "bytes": 3012
+  },
+  "breps/turret__ring_carrier.brep": {
+    "sha256": "7859d58ac9a70c3c3cb1de68a859007a403d0720370bc3eefe075026a34d6991",
+    "mode": 384,
+    "bytes": 100593
+  },
+  "breps/turret__ring_coupling.brep": {
+    "sha256": "45d527a9e89bd1b2272113b857748110483f87c21cff20adbc34847585b8f833",
+    "mode": 384,
+    "bytes": 4192
+  },
+  "breps/turret__ring_driver.brep": {
+    "sha256": "ca9920a42cc635b0c01859647262c03a458279f499ff14e243a9903ade19b9c8",
+    "mode": 384,
+    "bytes": 37333
+  },
+  "breps/turret__ring_leads_rotor.brep": {
+    "sha256": "bfba8aaf4f9cdc51ce5bac83745a4ff5c682f701eacbbed735f0872f56156e33",
+    "mode": 384,
+    "bytes": 4883
+  },
+  "breps/turret__shoulder_screw.brep": {
+    "sha256": "f0039f3c740731f507abf4dec6be810b46d84152dde9791fc965b683a73e61f0",
+    "mode": 384,
+    "bytes": 2830
+  },
+  "breps/turret__slip_ring.brep": {
+    "sha256": "ae0159706bd0872d46ad9b05096235fbb33b667a30b63fe90757449eb3ca4036",
+    "mode": 384,
+    "bytes": 2061
+  },
+  "breps/turret__slip_ring_rotor.brep": {
+    "sha256": "20e3c74bbdbee73c0eba087f0bb0bbc7e65c36ec683bdf7b716fa3b8df969522",
+    "mode": 384,
+    "bytes": 1113
+  },
+  "breps/turret__stop_lug.brep": {
+    "sha256": "a6831c721f8ba7c364637b0113373d8804b4e110750c4eb51eff03d21c4e2d63",
+    "mode": 384,
+    "bytes": 13442
+  },
+  "breps/turret__tilt_bearing.brep": {
+    "sha256": "c0fc3fadba861f86ff082b60eae5946b285f6aba91a34a4d76f4b6dc9bbffa53",
+    "mode": 384,
+    "bytes": 4640
+  },
+  "breps/turret__tilt_bearing_inner.brep": {
+    "sha256": "a53a8e375315b49cb4446c36c0da42247974083655b7e2b068c3f793dcfb24f1",
+    "mode": 384,
+    "bytes": 2308
+  },
+  "breps/turret__tilt_servo.brep": {
+    "sha256": "c0a2a9537bd76133a04e563265963ac3b7995721fc22fbd1a64ff302059789a7",
+    "mode": 384,
+    "bytes": 19404
+  },
+  "breps/turret__tilt_yoke.brep": {
+    "sha256": "cf7f35fd5719dd13aed33e96cf59d5f600483a34cfa663875c203e0cf8db5f07",
+    "mode": 384,
+    "bytes": 191101
+  },
+  "breps/turret__turret_board.brep": {
+    "sha256": "cab7c0374a6bca3eeaf9e54829e6fbc7bf0888c321c4b5c3881ef494f0fea70d",
+    "mode": 384,
+    "bytes": 15089
+  },
+  "breps/turret_plate.brep": {
+    "sha256": "dfc816f52f3b0b7c2d35f96b4236f6b61205da08b2204fcfe20b35ea6b23516b",
+    "mode": 384,
+    "bytes": 42146
+  },
+  "breps/turret_plate_nuts.brep": {
+    "sha256": "46565cbbe378a4db4daf53fbc5400a0418615e4efe59f46493604b636129c145",
+    "mode": 384,
+    "bytes": 2516
+  },
+  "collection.json": {
+    "sha256": "94ea324e5ee710a174dd67b5545c62ba5365e8ea29ebac2f317391c4c88f980b",
+    "mode": 384,
+    "bytes": 343003
+  },
+  "hardware-after.json": {
+    "sha256": "1a71d76b9885b0d913f1c687f2b7b9b605ecbf84e2ca34e30dc0b6e6d6f0d8c4",
+    "mode": 384,
+    "bytes": 298839
+  },
+  "hardware-before.json": {
+    "sha256": "1a71d76b9885b0d913f1c687f2b7b9b605ecbf84e2ca34e30dc0b6e6d6f0d8c4",
+    "mode": 384,
+    "bytes": 298839
+  },
+  "meshes/L__apex_61812.stl": {
+    "sha256": "0b4e6de90116640a50ee896a63e0ccea1d9e191ed9e1017f423dfa95876884cc",
+    "mode": 384,
+    "bytes": 33684
+  },
+  "meshes/L__apex_circlip.stl": {
+    "sha256": "067552dfbff3ec5e384a4faec7517ddd31214414b9b666f19f7f881dfa3ece0d",
+    "mode": 384,
+    "bytes": 16884
+  },
+  "meshes/L__apex_spacer.stl": {
+    "sha256": "77ab9e8fa7f3a6cc83b76bc7581f71f0751b765595bdde569d0ae36f643a8b88",
+    "mode": 384,
+    "bytes": 16884
+  },
+  "meshes/L__bearing_61812_front.stl": {
+    "sha256": "a2537430cd319c9c0669243d84c792c0f73fcf5ab0ef01f10f5af448fdc88b9a",
+    "mode": 384,
+    "bytes": 16884
+  },
+  "meshes/L__bearing_61812_rear.stl": {
+    "sha256": "50946e32bc052c053d776d11c87ae5a6a1229b6b334b9e7d684c6a1223fa9842",
+    "mode": 384,
+    "bytes": 16884
+  },
+  "meshes/L__eye_sleeve_front.stl": {
+    "sha256": "fc770ead0e04355f0889f15dc11ca1cf97361d0266a21a13e3a5193d96b248a2",
+    "mode": 384,
+    "bytes": 16884
+  },
+  "meshes/L__eye_sleeve_rear.stl": {
+    "sha256": "e0c2c84b427ded20e12a3e8af17c9b29c41a9028928ba8d526e4dcdea5968d11",
+    "mode": 384,
+    "bytes": 16884
+  },
+  "meshes/L__front_link.stl": {
+    "sha256": "ba45c6c10108a8d4adcc22b2bb719719c6976b5d6e86ad6d3be14a7b3296d8af",
+    "mode": 384,
+    "bytes": 107384
+  },
+  "meshes/L__hip_frame.stl": {
+    "sha256": "adb8677e0019433add3d72da790868dad86d4ef62aa998c3aebf967f8ecc2e9f",
+    "mode": 384,
+    "bytes": 662484
+  },
+  "meshes/L__knee_bearing_front_in.stl": {
+    "sha256": "3c6bb3eb8d78e635c3f3a80be1dcf0f0c5f356bee1d906360016989db5b9dd20",
+    "mode": 384,
+    "bytes": 16884
+  },
+  "meshes/L__knee_bearing_front_out.stl": {
+    "sha256": "70815bc9a3c417365a43acdf29c2e4d89e124c2ab2bcc058ce4fcd3f60c7da9d",
+    "mode": 384,
+    "bytes": 16884
+  },
+  "meshes/L__knee_bearing_rear_in.stl": {
+    "sha256": "4990dc704ca1ea555e28e10c9145a29949747af4d1463660f0379b51e9eac46f",
+    "mode": 384,
+    "bytes": 16884
+  },
+  "meshes/L__knee_bearing_rear_out.stl": {
+    "sha256": "9a4a150dad6a6ed16ca8af35450a7cea69b014c33ccc68be64eaf68edb6b951e",
+    "mode": 384,
+    "bytes": 16884
+  },
+  "meshes/L__knee_nut_upper_front.stl": {
+    "sha256": "af62907c1c660587ccaf2206ae56c22711742624e5aac69ed70461c7b23f518d",
+    "mode": 384,
+    "bytes": 9684
+  },
+  "meshes/L__knee_nut_upper_rear.stl": {
+    "sha256": "b50b109e8cbe3b733f5afaa8bacc4e46e479975bc2eb4937b0ea808583696bdc",
+    "mode": 384,
+    "bytes": 9684
+  },
+  "meshes/L__knee_pin_front.stl": {
+    "sha256": "28bcf22929f8fc0b02fa3b89789373209b7c61621e813c92a40c51c4c7e9ad89",
+    "mode": 384,
+    "bytes": 25084
+  },
+  "meshes/L__knee_pin_rear.stl": {
+    "sha256": "5001bab41d7e61d86ac97b01e65850a560bde754f4d73efd9436ebf97c9fd3fb",
+    "mode": 384,
+    "bytes": 25084
+  },
+  "meshes/L__knee_spacer_front.stl": {
+    "sha256": "34aacb82d73900f88b12772282832ebc7cb68a8c7c9dac96dde5c7f1aecf3cbe",
+    "mode": 384,
+    "bytes": 16884
+  },
+  "meshes/L__knee_spacer_rear.stl": {
+    "sha256": "e25ea76982c9b31f2ba0e4373bf9d9a2276dc26a557b175b4a5975129c8ee144",
+    "mode": 384,
+    "bytes": 16884
+  },
+  "meshes/L__knee_washer_front.stl": {
+    "sha256": "7048d3b1b74351f478e3140dc40fe08d7ef15907556033ffaad05ac99e0df714",
+    "mode": 384,
+    "bytes": 33684
+  },
+  "meshes/L__knee_washer_rear.stl": {
+    "sha256": "bc581cd2a61e524712b03e2bea8fcecc682772e071cf9c19cedcefe7ba3592e5",
+    "mode": 384,
+    "bytes": 33684
+  },
+  "meshes/L__motor_front.stl": {
+    "sha256": "f9cb266260840ccd91909e8d11aa515b36e009794666b5fb6d41fb71cdc094cb",
+    "mode": 384,
+    "bytes": 16684
+  },
+  "meshes/L__motor_rear.stl": {
+    "sha256": "70552dab96f023e222bfc911db2dd392150ae3d7b350ecd1b1a5ae3a931a0846",
+    "mode": 384,
+    "bytes": 16684
+  },
+  "meshes/L__output_adapter_front.stl": {
+    "sha256": "9a9c50a9fd3baa59b0d584723f5f9be35e07f049a82bdcc0a3eb28650094f0ca",
+    "mode": 384,
+    "bytes": 296584
+  },
+  "meshes/L__output_adapter_rear.stl": {
+    "sha256": "4b6d4dbb158703de53358f489389dbfebbe798b088b464d67b421f88ee0f8062",
+    "mode": 384,
+    "bytes": 296584
+  },
+  "meshes/L__screws_links.stl": {
+    "sha256": "a93ea3bab019f22e3d148b1411bdf40d92453531f374fc645e64ebc28df9bc06",
+    "mode": 384,
+    "bytes": 265684
+  },
+  "meshes/L__screws_lugs.stl": {
+    "sha256": "36578f419554725f9f9d811ef04cf1c5b2f74bdb944699d7e9e780681f89ba3b",
+    "mode": 384,
+    "bytes": 332084
+  },
+  "meshes/L__screws_outputs.stl": {
+    "sha256": "cceceb30827ef8c1db511540368cfd03f80a56c842cbcb9808f01e8811f6a588",
+    "mode": 384,
+    "bytes": 298884
+  },
+  "meshes/L__screws_wheel.stl": {
+    "sha256": "9014811634a8f023c068edee941cf44cb5ae97c45f8e1c6fd0fdba25ff786488",
+    "mode": 384,
+    "bytes": 66484
+  },
+  "meshes/L__stop_posts.stl": {
+    "sha256": "b907581e302a81c041f61ee9216f9e1d31d4185e197b4cef45be03886e1a1ba4",
+    "mode": 384,
+    "bytes": 32884
+  },
+  "meshes/L__stop_sleeve_1.stl": {
+    "sha256": "9b2c00afff971a04e3dc73530a6f501d86d29154f8fb55f9ece7b9c9723b8f8a",
+    "mode": 384,
+    "bytes": 16684
+  },
+  "meshes/L__stop_sleeve_2.stl": {
+    "sha256": "46e7da006b830ab5e48e64a61380cc90586204ac9bfced50b55549dd7eda590e",
+    "mode": 384,
+    "bytes": 16684
+  },
+  "meshes/L__stop_sleeve_3.stl": {
+    "sha256": "2ca6411e8377c499baaba40775fa58d3429524ed19211ad8523181d1ed24d169",
+    "mode": 384,
+    "bytes": 16684
+  },
+  "meshes/L__stop_sleeve_4.stl": {
+    "sha256": "2be86e6de774a136220e054bf67529fbe870861c30af51c07a65d1ce2e3403c1",
+    "mode": 384,
+    "bytes": 16684
+  },
+  "meshes/L__upper_link_front.stl": {
+    "sha256": "916b12208f2fc935e234345761c08d9ca243c0ebb13ccbbd95c0c4d0505d4208",
+    "mode": 384,
+    "bytes": 251484
+  },
+  "meshes/L__upper_link_rear.stl": {
+    "sha256": "4be8e6aad9d44eca988456887be130a9d09d5204685f2ec8962895e3744a423d",
+    "mode": 384,
+    "bytes": 251484
+  },
+  "meshes/L__washers_wheel.stl": {
+    "sha256": "1d16fd728c56a85986f9b1274a67e1ffba79f31ecd2e6dc31cdc2c9b37eb018b",
+    "mode": 384,
+    "bytes": 67284
+  },
+  "meshes/L__wheel_hub.stl": {
+    "sha256": "7ba20d8e561585a9f44b5a4f4adcdb5cdf209dd0b7cba98fca22ed5fad8e1c05",
+    "mode": 384,
+    "bytes": 16684
+  },
+  "meshes/L__wheel_link.stl": {
+    "sha256": "4848998ab00fa52cc5a55bb7a0614ac4023a4109aa40e6f8feb15d0a646aedf2",
+    "mode": 384,
+    "bytes": 165184
+  },
+  "meshes/L__wheel_tyre.stl": {
+    "sha256": "62d01ddbc12ab80beb4d91292d33ba39eb297fe52a4d67f9b7413d5d3fd3edfa",
+    "mode": 384,
+    "bytes": 16884
+  },
+  "meshes/R__apex_61812.stl": {
+    "sha256": "e0a2cc817803022bbd39a6f29be6c59c64389ef6f6023ea788cb55adcac495be",
+    "mode": 384,
+    "bytes": 33684
+  },
+  "meshes/R__apex_circlip.stl": {
+    "sha256": "490fdb60e949cdf6d004ea2f4d4e88485bf89ec4d87f405c88b3c12e128e097a",
+    "mode": 384,
+    "bytes": 16884
+  },
+  "meshes/R__apex_spacer.stl": {
+    "sha256": "b5ccb2686662e2c9d36d4cecc0287aad3299576fa4e2c4959ed7a1d2c4c37c64",
+    "mode": 384,
+    "bytes": 16884
+  },
+  "meshes/R__bearing_61812_front.stl": {
+    "sha256": "7536d5a9ba997d64dbf51bc6d84977e4e35b504d80b4a2686203a6dfd1936b24",
+    "mode": 384,
+    "bytes": 16884
+  },
+  "meshes/R__bearing_61812_rear.stl": {
+    "sha256": "d157738bf722e33abd590815a48fa3df9024969366603e8dff3df9af1fee53b4",
+    "mode": 384,
+    "bytes": 16884
+  },
+  "meshes/R__eye_sleeve_front.stl": {
+    "sha256": "d7ebe168fb324b25b5025a64c245e23dc8ff672aa3426213449d2fd3b1980025",
+    "mode": 384,
+    "bytes": 16884
+  },
+  "meshes/R__eye_sleeve_rear.stl": {
+    "sha256": "2d1d8416176ec5d40014517cecb6f08aa71fd0269fb9ce9ac2da857b7caef111",
+    "mode": 384,
+    "bytes": 16884
+  },
+  "meshes/R__front_link.stl": {
+    "sha256": "6dd7977037abbc1394b4982cb9c94dffac780a3d6a1d3633892b95546dacfeca",
+    "mode": 384,
+    "bytes": 107384
+  },
+  "meshes/R__hip_frame.stl": {
+    "sha256": "67dcab28c26d65fcbc6deaa854658147e6ceff18ba9db34a93a4f40b723aae52",
+    "mode": 384,
+    "bytes": 662484
+  },
+  "meshes/R__knee_bearing_front_in.stl": {
+    "sha256": "b4d206ba08b86250233d459eeb50f9fed9206415721ed4aca0cbf6481f63a64a",
+    "mode": 384,
+    "bytes": 16884
+  },
+  "meshes/R__knee_bearing_front_out.stl": {
+    "sha256": "0ec8a1f7dbd94fc5c3a87b8ab7ab287d75acb627024121d1dc7b81b4cf4f7ab6",
+    "mode": 384,
+    "bytes": 16884
+  },
+  "meshes/R__knee_bearing_rear_in.stl": {
+    "sha256": "6e6d5e7dd4ced53892c1e8fe614600b2e1d562146b67a05f3d6800f5aa2fbc46",
+    "mode": 384,
+    "bytes": 16884
+  },
+  "meshes/R__knee_bearing_rear_out.stl": {
+    "sha256": "d8132d83bd94ca37cb73fee495e295d891f9669ddd4a37f8b4d330e6bc100d94",
+    "mode": 384,
+    "bytes": 16884
+  },
+  "meshes/R__knee_nut_upper_front.stl": {
+    "sha256": "4829b830f28c138c8557896e47277a30ea6679234526be4c62a19bb255d72c92",
+    "mode": 384,
+    "bytes": 9684
+  },
+  "meshes/R__knee_nut_upper_rear.stl": {
+    "sha256": "a3889a6f81efb4259622754cbf6141cf91b670ff7baff367de61adb03b729477",
+    "mode": 384,
+    "bytes": 9684
+  },
+  "meshes/R__knee_pin_front.stl": {
+    "sha256": "396b9a4bd4bd8627d0d7f1d94e3a5f0537ddf972221ff25aa13d603b2eabc2e6",
+    "mode": 384,
+    "bytes": 25084
+  },
+  "meshes/R__knee_pin_rear.stl": {
+    "sha256": "74cada7fec04b14c3e8d0331c64cabb04ce92c984f7817b5ad47d020a4cde135",
+    "mode": 384,
+    "bytes": 25084
+  },
+  "meshes/R__knee_spacer_front.stl": {
+    "sha256": "2086833b022fb49dddea1ee9340176d5314b4810ee48d2c388c1f42ea37fc510",
+    "mode": 384,
+    "bytes": 16884
+  },
+  "meshes/R__knee_spacer_rear.stl": {
+    "sha256": "58b64079e473cf03b55907f2e982e5aa6f8aac373bccd81988e23391074a780c",
+    "mode": 384,
+    "bytes": 16884
+  },
+  "meshes/R__knee_washer_front.stl": {
+    "sha256": "e646850176a99c295c9974049eec0a3a28a14e9b698a546cb5ebc79414467d3e",
+    "mode": 384,
+    "bytes": 33684
+  },
+  "meshes/R__knee_washer_rear.stl": {
+    "sha256": "18b700c08f82f32c8ea14c46c551d9ce222aee38ad0bd537778fe912f6ea7c0c",
+    "mode": 384,
+    "bytes": 33684
+  },
+  "meshes/R__motor_front.stl": {
+    "sha256": "2da11562329d41b3859410435f2dfab8d08f6d4d8848fb029cc6c5e4bfd16fd7",
+    "mode": 384,
+    "bytes": 16684
+  },
+  "meshes/R__motor_rear.stl": {
+    "sha256": "e40c7c0c7c4befc52eb520928757886bbc26da74966c3c91477470c656916363",
+    "mode": 384,
+    "bytes": 16684
+  },
+  "meshes/R__output_adapter_front.stl": {
+    "sha256": "895e7da4a2db32008207f4673dd53a068862011e6f435c0f0b69f9f828578e42",
+    "mode": 384,
+    "bytes": 296584
+  },
+  "meshes/R__output_adapter_rear.stl": {
+    "sha256": "e74d3ad81339531245bf6fed840782a029ed31e6f51b2624a42829fa1fac75d3",
+    "mode": 384,
+    "bytes": 296584
+  },
+  "meshes/R__screws_links.stl": {
+    "sha256": "6892799609d6da039156a6e1a75583b023cfac0c9e64ef52d1b6746992fe70bc",
+    "mode": 384,
+    "bytes": 265684
+  },
+  "meshes/R__screws_lugs.stl": {
+    "sha256": "09fa23212205a051142471e7f0d3f7927e84f3b4e423aabda97b3232720faad8",
+    "mode": 384,
+    "bytes": 332084
+  },
+  "meshes/R__screws_outputs.stl": {
+    "sha256": "bd4f56df96ed866800aa830a9d4d978fe8940a4cbe910a6b8201d390f7007caf",
+    "mode": 384,
+    "bytes": 298884
+  },
+  "meshes/R__screws_wheel.stl": {
+    "sha256": "cbd3d315e44b0302bfd8a35deb3efd0bc58002adbdd2e4ead109913f62e7a9ee",
+    "mode": 384,
+    "bytes": 66484
+  },
+  "meshes/R__stop_posts.stl": {
+    "sha256": "af80bb13935cf7a723d06070009774fc0914e2da41167636cb57512f884ad9d4",
+    "mode": 384,
+    "bytes": 32884
+  },
+  "meshes/R__stop_sleeve_1.stl": {
+    "sha256": "9500ea86d04a61dd4eb5cf8a87385a56b9694df1de864cb3fd6152faaa3c012e",
+    "mode": 384,
+    "bytes": 16684
+  },
+  "meshes/R__stop_sleeve_2.stl": {
+    "sha256": "852e9e9348679aaa49d4ddb3bad7ed399c66fe1caa7174bde2de6fff51a924aa",
+    "mode": 384,
+    "bytes": 16684
+  },
+  "meshes/R__stop_sleeve_3.stl": {
+    "sha256": "9616cc54ce820727f99cf4bc40f5bb7c067ecc2f3c07193c5688a3922c3a2a70",
+    "mode": 384,
+    "bytes": 16684
+  },
+  "meshes/R__stop_sleeve_4.stl": {
+    "sha256": "cf0d7d2cc40630528a7b64083732a298fedf224e5c931195b8b2a5eea2cb1bd8",
+    "mode": 384,
+    "bytes": 16684
+  },
+  "meshes/R__upper_link_front.stl": {
+    "sha256": "577e0e783a7766119f8aca1eada793ca4915d52b9498750c46529237a506d4d1",
+    "mode": 384,
+    "bytes": 251484
+  },
+  "meshes/R__upper_link_rear.stl": {
+    "sha256": "2959aedd302245d030d232eb42832cd422e61655841dc28c1f4208a06b83615a",
+    "mode": 384,
+    "bytes": 251484
+  },
+  "meshes/R__washers_wheel.stl": {
+    "sha256": "f7c0dc783819ba64469db2f62b8e38c78533f9c12cf2c6791788aa6cbd5c55b1",
+    "mode": 384,
+    "bytes": 67284
+  },
+  "meshes/R__wheel_hub.stl": {
+    "sha256": "96e4288e84ffe8a5d1599d258168107d835546410b1beb2bdcc98583e7bbf994",
+    "mode": 384,
+    "bytes": 16684
+  },
+  "meshes/R__wheel_link.stl": {
+    "sha256": "f809311155e1dc4d860fec81bb388fecad9ad9eac5b61dcc77d6d6b8f71f2e47",
+    "mode": 384,
+    "bytes": 165184
+  },
+  "meshes/R__wheel_tyre.stl": {
+    "sha256": "1ad087113ec1af6acde22527d25a3bfb49bf5ec368f3493f8d9fd75eb5b5ec0f",
+    "mode": 384,
+    "bytes": 16884
+  },
+  "meshes/adapter_plate_front.stl": {
+    "sha256": "d840afd77712b43166998f20926b57d6055be419c0305d4e7c0d774709cfe2de",
+    "mode": 384,
+    "bytes": 68684
+  },
+  "meshes/adapter_plate_rear.stl": {
+    "sha256": "cd7d1a6f5e7be1c6255d46fe1dab595d07876b50b939ee797b0d4c3c3e99ae09",
+    "mode": 384,
+    "bytes": 68684
+  },
+  "meshes/bay_door_front.stl": {
+    "sha256": "1149ba5e4519a925546da4a3a0d08833bff4c10c06f12fd1a6cc0ad5cb7c9e46",
+    "mode": 384,
+    "bytes": 26684
+  },
+  "meshes/bay_door_rear.stl": {
+    "sha256": "3bc021d0f6c5abb74e8fecc8516986ce97e274cc1cab80de8075ff92ba5e923e",
+    "mode": 384,
+    "bytes": 26684
+  },
+  "meshes/bay_floor.stl": {
+    "sha256": "f7d5fb2f0af4cb9850b30515daf70f438f91dcb1d094e409fc710552159c2522",
+    "mode": 384,
+    "bytes": 106084
+  },
+  "meshes/bay_rail_l.stl": {
+    "sha256": "3b30f197578637f878a954f02c7e0425c22ba24eaf3264e572b8044e43f20545",
+    "mode": 384,
+    "bytes": 120684
+  },
+  "meshes/bay_rail_r.stl": {
+    "sha256": "bb7e56f5b8f0a8dcf4e53ef4ccf9d2ae1abffa869e8d2e641c20dc52c4312a2a",
+    "mode": 384,
+    "bytes": 120684
+  },
+  "meshes/bay_side_l.stl": {
+    "sha256": "e455d61e3668da2f0c9c108bdc2fcf85d3f3f57e5617a3a5c799b01e04dc7793",
+    "mode": 384,
+    "bytes": 125884
+  },
+  "meshes/bay_side_r.stl": {
+    "sha256": "188c52363d328d2024ce9fce5567ce9652770abf8c351f011d34b5448ab8af87",
+    "mode": 384,
+    "bytes": 125884
+  },
+  "meshes/bay_skid_1.stl": {
+    "sha256": "82142273fdc1f1a2f88f32e39f4b12cb0f23b6963af25315158d1e954f30a5b2",
+    "mode": 384,
+    "bytes": 18884
+  },
+  "meshes/bay_skid_2.stl": {
+    "sha256": "ee26f6069f43e49b571c6a4a8204df849b727c6e3ae9363bd41bf83c35de7420",
+    "mode": 384,
+    "bytes": 18884
+  },
+  "meshes/bay_skid_3.stl": {
+    "sha256": "3711679cd41c5126fa755a5705ffce86538545bff19699eda85a8ada76881e99",
+    "mode": 384,
+    "bytes": 18884
+  },
+  "meshes/bay_skid_4.stl": {
+    "sha256": "fb7f06f79e91e4a9fd0fc0fd5ce9808a1706b8287256a88630d49747c62b08ec",
+    "mode": 384,
+    "bytes": 18884
+  },
+  "meshes/belly_plate.stl": {
+    "sha256": "a1327550e0842bb48fc2946b8f2d9c8647754f2b421474de1b7fad2ef49d13ac",
+    "mode": 384,
+    "bytes": 216884
+  },
+  "meshes/bus_bar_1.stl": {
+    "sha256": "0d165115864b823e1d024e413c2006c8038dcd627c09c16261bccf0b79909a20",
+    "mode": 384,
+    "bytes": 60884
+  },
+  "meshes/bus_bar_2.stl": {
+    "sha256": "6eb2567446b0576afb304a7e94aca1b2202a74ee73d2c8353943b9145736bf45",
+    "mode": 384,
+    "bytes": 60884
+  },
+  "meshes/bus_insulator_1.stl": {
+    "sha256": "454973e6b24d589c4b679ae861f1c5707e2e22a46b13013ff95e9ca5291fbbb0",
+    "mode": 384,
+    "bytes": 106284
+  },
+  "meshes/bus_insulator_2.stl": {
+    "sha256": "196351b199b3c97bd0a65677548115d82dbfce7030eb8f06f5c123de4078611a",
+    "mode": 384,
+    "bytes": 106284
+  },
+  "meshes/cheek_left.stl": {
+    "sha256": "44ae1db5cdfe3cdad535d45c0d9bf04c9563caa92c45777bdb2a07ba26106ecd",
+    "mode": 384,
+    "bytes": 276484
+  },
+  "meshes/cheek_nuts_left.stl": {
+    "sha256": "8902940f0ed99ba7000fc3269e91db6b2dff67fad4ff71e0822b0d6abb2f9c90",
+    "mode": 384,
+    "bytes": 65684
+  },
+  "meshes/cheek_nuts_right.stl": {
+    "sha256": "afc9a8831fd00b48592f3fed5ddbc899e701aff4b40a429d45c7f2a06d56568c",
+    "mode": 384,
+    "bytes": 65684
+  },
+  "meshes/cheek_right.stl": {
+    "sha256": "bcbf60762830b42d8097e683d74f90e60a5ba3a6f478382d6800320298f1ce8b",
+    "mode": 384,
+    "bytes": 276484
+  },
+  "meshes/compute_pallet.stl": {
+    "sha256": "bf3bb740dae230d277554180ad9c1468edc65a6527225af685aa8e94b9964131",
+    "mode": 384,
+    "bytes": 171884
+  },
+  "meshes/d435_cradle_front.stl": {
+    "sha256": "e42f8601f8b396f8dc32b8e8e39ea2e61a18b935aa0c1edc47ab87c7abebdacb",
+    "mode": 384,
+    "bytes": 35884
+  },
+  "meshes/d435_cradle_rear.stl": {
+    "sha256": "a398a0deb60308749f2a6a2cef0e1fc058d6fc15a82eada03b07ed022349b944",
+    "mode": 384,
+    "bytes": 35884
+  },
+  "meshes/d435_front.stl": {
+    "sha256": "6c94ce4b4b83656e32c3b384b8679d3a7a4b2b74f3737060264416d75d1cda11",
+    "mode": 384,
+    "bytes": 684
+  },
+  "meshes/d435_rear.stl": {
+    "sha256": "6412b588d088e39da7ddce9422f84f9f80c6c15f3734088ecd47199df1380e2b",
+    "mode": 384,
+    "bytes": 684
+  },
+  "meshes/dcdc_bracket.stl": {
+    "sha256": "838af41a3a6ccacbe1f224ab6535cab23964838ce0d364bb71b9b3ffd9b5806d",
+    "mode": 384,
+    "bytes": 61084
+  },
+  "meshes/deck.stl": {
+    "sha256": "f3b56e3794363637ec7231318490a3e19a64d873f34ffd4bd90e71c06be54f57",
+    "mode": 384,
+    "bytes": 474284
+  },
+  "meshes/ear_bracket_l.stl": {
+    "sha256": "1022646f52196efbfd4c64ff571f7f653b8039da8f24ca84c2fd31ee1c82553c",
+    "mode": 384,
+    "bytes": 47484
+  },
+  "meshes/ear_bracket_r.stl": {
+    "sha256": "e639631573dc1538a048e39336cd8075a0cde99ee66b220484d2cea0c26ce861",
+    "mode": 384,
+    "bytes": 47484
+  },
+  "meshes/ear_pod_l.stl": {
+    "sha256": "21369c95c53ce6d230400a6889ebe49e5df9f78f385a346c7a70c0378d72d78b",
+    "mode": 384,
+    "bytes": 684
+  },
+  "meshes/ear_pod_r.stl": {
+    "sha256": "92f8c3ef67d68f927282b704934dc124f6e2f99b4ee83ff174eba882aa4a2084",
+    "mode": 384,
+    "bytes": 684
+  },
+  "meshes/eyes_board.stl": {
+    "sha256": "e3b0d3040a69c9dd6c43fbcc65bd1b9b9a6d694a1bcbf8208e471c1628bfec3c",
+    "mode": 384,
+    "bytes": 684
+  },
+  "meshes/eyes_clip.stl": {
+    "sha256": "dca155dd60f524953750b327b2ac72eea014b875a49071dad3effd257118990f",
+    "mode": 384,
+    "bytes": 17884
+  },
+  "meshes/fan_duct.stl": {
+    "sha256": "919c9ff160a7e03062aa105050a0974f38dc1c44390c9a701402c8e0bc4c2be6",
+    "mode": 384,
+    "bytes": 61684
+  },
+  "meshes/floor_tray.stl": {
+    "sha256": "7059bd1083e121c2ee167db6870bda2e8b1dd1ba8a2d63cd7ec86de00ba9fa7e",
+    "mode": 384,
+    "bytes": 238084
+  },
+  "meshes/frame_screws_left.stl": {
+    "sha256": "e57db2e277232b47158d8648446354c70a4595cf254d964b41f65df08867570f",
+    "mode": 384,
+    "bytes": 99684
+  },
+  "meshes/frame_screws_right.stl": {
+    "sha256": "ee086ba068300c4d039404e1af7640f23616125c0029830b3d5ebcef6c20267d",
+    "mode": 384,
+    "bytes": 99684
+  },
+  "meshes/isolator_1.stl": {
+    "sha256": "66c1df86d700199aad4e221555b04805f39f816ffde37774937bae0d5f25c37b",
+    "mode": 384,
+    "bytes": 42084
+  },
+  "meshes/isolator_2.stl": {
+    "sha256": "1c8adb643ea95fb131018025115bf2cd49e5721a4ac7afcb5fb6b830a780994c",
+    "mode": 384,
+    "bytes": 42084
+  },
+  "meshes/isolator_3.stl": {
+    "sha256": "462f899060f7577a55a4918e5566361610ce72b9c6a9ff0c60557d76402919f2",
+    "mode": 384,
+    "bytes": 42084
+  },
+  "meshes/isolator_4.stl": {
+    "sha256": "cff0e0c9cf051bc925473e881c65aa367b7ce994f88df572a5e60c03fade8788",
+    "mode": 384,
+    "bytes": 42084
+  },
+  "meshes/item__agx_cooler.stl": {
+    "sha256": "32bcac3e13221c5558c5a304c680fbed63cfaa13236addd0d2435b0a0e07b4e2",
+    "mode": 384,
+    "bytes": 684
+  },
+  "meshes/item__agx_module.stl": {
+    "sha256": "66c1de0a01a69a1e4e41c5c498e9d11e65122d739ed42e933ce728752a60567e",
+    "mode": 384,
+    "bytes": 684
+  },
+  "meshes/item__agx_spreader.stl": {
+    "sha256": "92dfc839ad87e19dc81e3ae486ee3672c628d15641cdca5165efc3bf5e251664",
+    "mode": 384,
+    "bytes": 684
+  },
+  "meshes/item__battery_adapter_front.stl": {
+    "sha256": "82660ec26066a91c5d412cf28142bd191b1fe87e0e50b14ccb6b9477072457a6",
+    "mode": 384,
+    "bytes": 684
+  },
+  "meshes/item__battery_adapter_rear.stl": {
+    "sha256": "282bdddf7ea3a53ea126c7efef5b51cf07bbc836524292474f65346c0ae16cc3",
+    "mode": 384,
+    "bytes": 684
+  },
+  "meshes/item__battery_front.stl": {
+    "sha256": "22666fb9a87bd6ea0de7366d01549f65918c00362d63bd26139f1cdba5d50496",
+    "mode": 384,
+    "bytes": 684
+  },
+  "meshes/item__battery_rear.stl": {
+    "sha256": "f613ad9b4d7abe551a4eef5531bde40a31aeab05360745e0bbc1e7be75c9a1ff",
+    "mode": 384,
+    "bytes": 684
+  },
+  "meshes/item__j501_carrier.stl": {
+    "sha256": "a473e77fea2c15e64c1bcb9376b009a3c050801b070c70d52f2b6292ed126107",
+    "mode": 384,
+    "bytes": 684
+  },
+  "meshes/item__j501_standoff_15_146__5.stl": {
+    "sha256": "6715c34194d318ab1bcebec34e80c9d8989101e3ec9a7997497b4c153e0a83cc",
+    "mode": 384,
+    "bytes": 684
+  },
+  "meshes/item__j501_standoff_15_16__5.stl": {
+    "sha256": "7bae3405f9f3a984f108f7ec97350550e718f41db6cf0a41bd8a8f26b2e90a41",
+    "mode": 384,
+    "bytes": 684
+  },
+  "meshes/item__j501_standoff_165_146__5.stl": {
+    "sha256": "4a76d6bab2f01f37b73d55128c756a3ac6fb7712034c6cac81a1b8a07d8fa9e8",
+    "mode": 384,
+    "bytes": 684
+  },
+  "meshes/item__j501_standoff_165_16__5.stl": {
+    "sha256": "1ada73bfd9e72f6a831f15d50aba9a86ebbca013d018ecfb248c39b050003bdb",
+    "mode": 384,
+    "bytes": 684
+  },
+  "meshes/item__lidar_box.stl": {
+    "sha256": "b6458eeafa4e335bc39bc3db62661bbca49df4e671201672c4f655f8dc3e99c6",
+    "mode": 384,
+    "bytes": 684
+  },
+  "meshes/item__lidar_coil.stl": {
+    "sha256": "d210bf2143280c5e19892b0724f4b965873d64fb84694806607bbcde27055bc4",
+    "mode": 384,
+    "bytes": 684
+  },
+  "meshes/item__plate_buck_5v.stl": {
+    "sha256": "e7a3de4933c4acc8cb73e935fb1c51e2c0d44b0caf57f1fc7b950ee81f207577",
+    "mode": 384,
+    "bytes": 684
+  },
+  "meshes/item__plate_fuses.stl": {
+    "sha256": "05c5206cf7f264380c244625ca435e5027853898e21eacae9ae987a690415649",
+    "mode": 384,
+    "bytes": 684
+  },
+  "meshes/item__plate_main_switch.stl": {
+    "sha256": "ec417eba09998ce6c4528b431b3b7a356b2f4b8b9b4bdeb5aff7a920dc10a9bd",
+    "mode": 384,
+    "bytes": 684
+  },
+  "meshes/item__plate_mcu_board.stl": {
+    "sha256": "e37343371be2da5d94fb904816459511362019c2930b68492bd47e8bfa8641a1",
+    "mode": 384,
+    "bytes": 684
+  },
+  "meshes/item__plate_mrbf_block.stl": {
+    "sha256": "4d4e99fb44013898ba978eddc29970367a9acf4a9273de06bcd9425249661bcc",
+    "mode": 384,
+    "bytes": 684
+  },
+  "meshes/item__plate_shunt.stl": {
+    "sha256": "ce007a976cfc0fd18f5c3ea120df269ad688ebb104d4028af01a11b9fa41f6ed",
+    "mode": 384,
+    "bytes": 684
+  },
+  "meshes/item__plate_vesc_l.stl": {
+    "sha256": "8a5ab8dcec49766bd29640830a4ec56e4d221dc65f2e2ca060aa1421cb9890d8",
+    "mode": 384,
+    "bytes": 684
+  },
+  "meshes/item__plate_vesc_r.stl": {
+    "sha256": "5d353eaf252715a483f0b0039f181ec1ff7146aba4593eaf19fc7f5a3ab5cf89",
+    "mode": 384,
+    "bytes": 684
+  },
+  "meshes/item__power_dcdc.stl": {
+    "sha256": "a8846e257f1ffde7892bc9511da5038e8a35f1199512335770324f68c2d3bc52",
+    "mode": 384,
+    "bytes": 684
+  },
+  "meshes/item__vlp16_housing.stl": {
+    "sha256": "dd634218f8876423f7f691f1e4084de588c69963d3788ba0b5a2afe2d7ab7656",
+    "mode": 384,
+    "bytes": 76584
+  },
+  "meshes/item__vlp16_window.stl": {
+    "sha256": "b8701104e7e5601166c28d6e03a0289e30b03e4ca664e7fda5ccf3aadf730b29",
+    "mode": 384,
+    "bytes": 8284
+  },
+  "meshes/item__vn100.stl": {
+    "sha256": "f33c0f295b854d52612ffb5860737a35ff7e31a78d67d9b9a24dd99bc05b4095",
+    "mode": 384,
+    "bytes": 684
+  },
+  "meshes/plate_post_1.stl": {
+    "sha256": "5c7dfae33ffcde23538b06eab9bcce2ecc56ceb8e7f427561150fc091ad2a980",
+    "mode": 384,
+    "bytes": 26284
+  },
+  "meshes/plate_post_2.stl": {
+    "sha256": "f037058d632d069d24679df846d019758e5bd17c7f46fbb583a49bab26b5d6ed",
+    "mode": 384,
+    "bytes": 26284
+  },
+  "meshes/plate_post_3.stl": {
+    "sha256": "11c0b3c6c1c22f4b39d5ccb356c8a5485cce77cee026a9b62fb224af9f368256",
+    "mode": 384,
+    "bytes": 26284
+  },
+  "meshes/plate_post_4.stl": {
+    "sha256": "ea734771213eec5b58a12ce448917cbd6eaa9ba1ff4d31b8b4fbb5148241d600",
+    "mode": 384,
+    "bytes": 26284
+  },
+  "meshes/post_1.stl": {
+    "sha256": "d89073065db9e7790e36d0f2d23e50cdccc46090d7c3b4690b4101147ca2aa25",
+    "mode": 384,
+    "bytes": 102084
+  },
+  "meshes/post_2.stl": {
+    "sha256": "641345324d8cc0ed8d79ccf1f6c72e3161d0d9b3f27b7b02c4693048ee653a1a",
+    "mode": 384,
+    "bytes": 102084
+  },
+  "meshes/post_3.stl": {
+    "sha256": "493d833a9a9d097164f1799bf6977649bd42d4656fe2b86e63b23815ed702b2e",
+    "mode": 384,
+    "bytes": 102084
+  },
+  "meshes/post_4.stl": {
+    "sha256": "73ca21e227d7daf0347bb9f6702530a6c3079330c1fd5a01008a7f8932a94cba",
+    "mode": 384,
+    "bytes": 102084
+  },
+  "meshes/power_plate.stl": {
+    "sha256": "6ec661648b13479658a68ec84f57de558d1656fed9df94800278f61ae2323580",
+    "mode": 384,
+    "bytes": 261484
+  },
+  "meshes/riser.stl": {
+    "sha256": "b56a08b890435e5f3c00b61d013b7f45386424c9f5b58dd5ace0788bd35940e0",
+    "mode": 384,
+    "bytes": 184884
+  },
+  "meshes/shell_door.stl": {
+    "sha256": "10a400615e10e617dd1723f537f9c43d1f85daf5daeba696a7ad51cbdd02f2b5",
+    "mode": 384,
+    "bytes": 43884
+  },
+  "meshes/shell_front.stl": {
+    "sha256": "1b0a083c80a56c9c8d055dcdcac86dfcd3b6d1e5346ba23425d8aab842fad0cb",
+    "mode": 384,
+    "bytes": 143484
+  },
+  "meshes/shell_hatch.stl": {
+    "sha256": "1d0f41d8049a22f480c2652047bda598e8a0f740043c224ca3b04f9e8c59ad16",
+    "mode": 384,
+    "bytes": 26684
+  },
+  "meshes/shell_rear.stl": {
+    "sha256": "512e996cc85afbd147877f6c6eb3ebf39db0e632c33864882354dd6a0813b9ec",
+    "mode": 384,
+    "bytes": 149884
+  },
+  "meshes/shell_side_l_front.stl": {
+    "sha256": "7c0837cc4d0537ed4e37ed63985f0dac74096aaa1e9ca82d83e21bcde407acc1",
+    "mode": 384,
+    "bytes": 148084
+  },
+  "meshes/shell_side_l_rear.stl": {
+    "sha256": "a3b3510a39cf3ca37b55947e2f8b65c656356d83c823b2175aca71e88f036ba8",
+    "mode": 384,
+    "bytes": 244484
+  },
+  "meshes/shell_side_r_front.stl": {
+    "sha256": "de2fa4fbf478d22e90c0d92d413cf50e3c7ed5ef0508ccb817219874d520978b",
+    "mode": 384,
+    "bytes": 148284
+  },
+  "meshes/shell_side_r_rear.stl": {
+    "sha256": "a8c111bf14bfb9b1839d017d9387ab38830c4837bb27801e58504516e1bdb450",
+    "mode": 384,
+    "bytes": 212484
+  },
+  "meshes/spacer_screws.stl": {
+    "sha256": "d2bb6beed68626e8de11f6f817751ecd0c8c6de1f340a7d9819661d6dc71b8b6",
+    "mode": 384,
+    "bytes": 131284
+  },
+  "meshes/spacers.stl": {
+    "sha256": "1eac253fdcd050bbfe11262b34e84a86be3190237005718c9fd09b49e13d9f5c",
+    "mode": 384,
+    "bytes": 76884
+  },
+  "meshes/turret__barrel.stl": {
+    "sha256": "392bd19ba93ee0c9229042671047948ba5d24e99714577a7686804cbee54fded",
+    "mode": 384,
+    "bytes": 97984
+  },
+  "meshes/turret__base_board.stl": {
+    "sha256": "50eedb19b7f5fdca21600d929ec6d8c84278340c0acb35c1d93c3ddba9ff8ad6",
+    "mode": 384,
+    "bytes": 40684
+  },
+  "meshes/turret__base_board_carrier.stl": {
+    "sha256": "7fcd172f276f72de55c68c02555662c63043240c52a5c2c8075857de4256d8f2",
+    "mode": 384,
+    "bytes": 114284
+  },
+  "meshes/turret__base_board_inserts.stl": {
+    "sha256": "381ebb8e3930d83b6491e6f91cd7477abdc34bb7f30ae5fe220d310138528175",
+    "mode": 384,
+    "bytes": 67284
+  },
+  "meshes/turret__base_board_screws.stl": {
+    "sha256": "982032e7362d646e4adf32fc1ab5590e55a66bf425d9c4d25a0f11a110a528ad",
+    "mode": 384,
+    "bytes": 71284
+  },
+  "meshes/turret__base_carrier_inserts.stl": {
+    "sha256": "e8acece21a7df350f484ea182c23f99a2f08c902835d5f5d16bbb869adf11e5b",
+    "mode": 384,
+    "bytes": 67284
+  },
+  "meshes/turret__base_carrier_screws.stl": {
+    "sha256": "37cc25fa10096c8e11ece24d301b6d659de673ced511e3b350e5a97e59213be4",
+    "mode": 384,
+    "bytes": 71284
+  },
+  "meshes/turret__board_bay.stl": {
+    "sha256": "14a02db17ab792e5ad2cce87847640ec4140663b869ad09fdbdca80399f7eb8a",
+    "mode": 384,
+    "bytes": 137684
+  },
+  "meshes/turret__board_bay_lid.stl": {
+    "sha256": "5849ae46f0ef3072c3ad67af7e23d9846b46d9094ffd47af22464d8d9c3ae28d",
+    "mode": 384,
+    "bytes": 12484
+  },
+  "meshes/turret__bumper_ring.stl": {
+    "sha256": "072ee5b3af19919dcea8b4a759fe279f45de023ae059ddba3804d9483febfaf8",
+    "mode": 384,
+    "bytes": 92084
+  },
+  "meshes/turret__cartridge_board.stl": {
+    "sha256": "8ed0c2d5bde5c12148f333563b57d907590590313157991baaeb613d73222323",
+    "mode": 384,
+    "bytes": 1484
+  },
+  "meshes/turret__cartridge_body.stl": {
+    "sha256": "9a1af77b4c26ce2693808e80747d4b9f8fb511d3fb5c1832e2bdf1fc4c4f1200",
+    "mode": 384,
+    "bytes": 634384
+  },
+  "meshes/turret__circlip_50.stl": {
+    "sha256": "b4c8d53fcc9f525e1aecd833656907fa23d6629a4a875f04e38de06fcee0b6c4",
+    "mode": 384,
+    "bytes": 22484
+  },
+  "meshes/turret__cradle.stl": {
+    "sha256": "ce0cafbc5d7f0f68fee1832068d70cd0bceaa1ce7c4f0507732fa7b3966092be",
+    "mode": 384,
+    "bytes": 116684
+  },
+  "meshes/turret__cradle_plate_l.stl": {
+    "sha256": "2da2e8cbb70a49da2b0ee871766596b09f523574d7a10279ef33e7440b7411b8",
+    "mode": 384,
+    "bytes": 121284
+  },
+  "meshes/turret__cradle_plate_r.stl": {
+    "sha256": "61de08825a0aa83b6eb5f6ae1b30415031759e580501b39b5cedfd6f622fbd52",
+    "mode": 384,
+    "bytes": 87084
+  },
+  "meshes/turret__ct_thumbscrew.stl": {
+    "sha256": "7acc47ab16cc8fd1e36e6da895959c579cbfcf685f2e40650b76093331c624f6",
+    "mode": 384,
+    "bytes": 16684
+  },
+  "meshes/turret__dial.stl": {
+    "sha256": "c6b954749163b536122a1cf20597775103cd48ca784ccf709f2c7b6e5ec0c5c7",
+    "mode": 384,
+    "bytes": 124884
+  },
+  "meshes/turret__dt_plug.stl": {
+    "sha256": "65cb116f4417663afa2106a90c55d9520c0eeba9ec8e43eaefad8444a2cce78f",
+    "mode": 384,
+    "bytes": 1084
+  },
+  "meshes/turret__dt_receptacle.stl": {
+    "sha256": "57bd8dcaf0cb68a071ce3e1f49b17d1e6941a1d803fa0592dfdbe7a5362b0c72",
+    "mode": 384,
+    "bytes": 2284
+  },
+  "meshes/turret__esc_l.stl": {
+    "sha256": "cc56d53458ade70e3c4c37058c74e08ad6bdc6f84e50849b45962d4c21e490c2",
+    "mode": 384,
+    "bytes": 684
+  },
+  "meshes/turret__esc_r.stl": {
+    "sha256": "a2c08b3722cae5f13744a0556714f57672ef0066366d3bc81204aa4093d3f814",
+    "mode": 384,
+    "bytes": 684
+  },
+  "meshes/turret__feed_motor.stl": {
+    "sha256": "c738066713a3f5aa7aef23eedc688d2d50a139ea27c17777f2b4befd5048a1da",
+    "mode": 384,
+    "bytes": 20684
+  },
+  "meshes/turret__flywheel.stl": {
+    "sha256": "f67be44d8bbebd0bcd533e4caa77c56742b949c6e3f6b25b57c6f2e50f2ebd81",
+    "mode": 384,
+    "bytes": 29484
+  },
+  "meshes/turret__flywheel_2.stl": {
+    "sha256": "eb834abb726e3a07412c2bb734b7b94dd21e5cae2fb77f2b11bc8d1e88b37551",
+    "mode": 384,
+    "bytes": 29484
+  },
+  "meshes/turret__flywheel_motor_l.stl": {
+    "sha256": "e97b7797363b66f59ac4967de7e8da075be063140867d073ee5701ca642e631b",
+    "mode": 384,
+    "bytes": 67084
+  },
+  "meshes/turret__flywheel_motor_r.stl": {
+    "sha256": "494a8d060f1dc9bc0b4990b330ef603415d5fdc59d4f4098403aa731f17d84ab",
+    "mode": 384,
+    "bytes": 67084
+  },
+  "meshes/turret__flywheel_tyre.stl": {
+    "sha256": "fbbc099048366066ef68e31755868c7593ac8146dda9a45a99dc2368c94babc8",
+    "mode": 384,
+    "bytes": 16884
+  },
+  "meshes/turret__flywheel_tyre_2.stl": {
+    "sha256": "03c9d3c1a04a6bf0cb104978aa5785021c8887297b865d93d7bc00d4b38768e7",
+    "mode": 384,
+    "bytes": 16884
+  },
+  "meshes/turret__hall_switch.stl": {
+    "sha256": "5715dc628c0a9df11cfe463bef036998b9261a926b3630af84faab9bc022bfe5",
+    "mode": 384,
+    "bytes": 684
+  },
+  "meshes/turret__hopper.stl": {
+    "sha256": "2cdd1200cc1688bc314ac1cdfc42658474b1cb8083be79ab0d39c8c41a8fb523",
+    "mode": 384,
+    "bytes": 91784
+  },
+  "meshes/turret__hopper_flap.stl": {
+    "sha256": "bf4815182abe864264e9881229044bd1025c59a3107b0142eafcd1ccaa17b4ca",
+    "mode": 384,
+    "bytes": 22484
+  },
+  "meshes/turret__hopper_inserts.stl": {
+    "sha256": "11ae7256d45839386e0bd0d009b34c701c7b65d220890fbef8b1a42b962ff9ab",
+    "mode": 384,
+    "bytes": 50484
+  },
+  "meshes/turret__hopper_lid.stl": {
+    "sha256": "35b5a0c80c106ef70272bfe9be641a05ef56586902a2817f8b4fd520ef541efb",
+    "mode": 384,
+    "bytes": 99284
+  },
+  "meshes/turret__horn_boss.stl": {
+    "sha256": "b7b8d96dd2ae169985935628c76a9f619218f9ac5d43f35107b916814b827550",
+    "mode": 384,
+    "bytes": 51284
+  },
+  "meshes/turret__index_magnet.stl": {
+    "sha256": "76c498c2326324560b81056ca6d0b8547ea5e5e016378031cf31fbc838ac788c",
+    "mode": 384,
+    "bytes": 8284
+  },
+  "meshes/turret__laser.stl": {
+    "sha256": "d9975d3f314d65bf8644bc199cb53dac6bb5e3237a5089ab762f8a24633c6822",
+    "mode": 384,
+    "bytes": 8284
+  },
+  "meshes/turret__laser_inserts.stl": {
+    "sha256": "2bc25ce7788179df6ef424d3ddc7229cb2f9a547369d2312c15b1a2546814e24",
+    "mode": 384,
+    "bytes": 33684
+  },
+  "meshes/turret__laser_mount.stl": {
+    "sha256": "ae7eeabf43725812c4e535ba78c9544f4de00659451791f85cf789991c23dd9f",
+    "mode": 384,
+    "bytes": 107984
+  },
+  "meshes/turret__laser_screws.stl": {
+    "sha256": "cd47d0e53a30376a9633540ad2f8dbb1bded7505383502dcfd4cf3ee9340f904",
+    "mode": 384,
+    "bytes": 24684
+  },
+  "meshes/turret__pan_base.stl": {
+    "sha256": "4a0d9915e184f1027e522fadd95b46a565de2e050625de0bec22cd0091b88139",
+    "mode": 384,
+    "bytes": 501384
+  },
+  "meshes/turret__pan_bearing.stl": {
+    "sha256": "aab650fef4cc6ad28118eec87cf91b4b69ca35d70866a3c3e8d32cf479d96478",
+    "mode": 384,
+    "bytes": 33684
+  },
+  "meshes/turret__pan_bearing_inner.stl": {
+    "sha256": "1429bb8846146746667ed0ff30a13c25de9c62287f7f2a086c6cbc87862cdf0e",
+    "mode": 384,
+    "bytes": 16884
+  },
+  "meshes/turret__pan_clamp.stl": {
+    "sha256": "731cad4e3ecdeb05f36fe85c4d21ad98ff80ccaf1dd081f6b3602a754816ec61",
+    "mode": 384,
+    "bytes": 83484
+  },
+  "meshes/turret__pan_pinion.stl": {
+    "sha256": "6c431e2909c257afe478e00af6ef911323d12b0313715278a78b5b79ec36ae52",
+    "mode": 384,
+    "bytes": 164684
+  },
+  "meshes/turret__pan_ring.stl": {
+    "sha256": "22ef3542f6b7e824316d1a0542783f1efc3287d524d544122cea534081e09f04",
+    "mode": 384,
+    "bytes": 374084
+  },
+  "meshes/turret__pan_servo.stl": {
+    "sha256": "fa5d4b5c6d5c96e4b2a9b7963faa11192a395b74dba6c48429b85a3075aef77c",
+    "mode": 384,
+    "bytes": 20684
+  },
+  "meshes/turret__pan_spacer.stl": {
+    "sha256": "36805824bb8be4d67bc46b648c617610b3aa4217c33ca4733744928773bebe3a",
+    "mode": 384,
+    "bytes": 25284
+  },
+  "meshes/turret__pivot_spacer.stl": {
+    "sha256": "7e8dabd826c722eb74666285a4b1d41303cd43a7a3cef74b3af49cdd442c970a",
+    "mode": 384,
+    "bytes": 25284
+  },
+  "meshes/turret__ring_carrier.stl": {
+    "sha256": "7e57a6ff291fc617aa142750728ddb124e63680995b18612292026a105527ce5",
+    "mode": 384,
+    "bytes": 123284
+  },
+  "meshes/turret__ring_coupling.stl": {
+    "sha256": "2aeadc71dbdd8b4a3517714aec79d198518884db4a357bc60f69ee32b3bdc1ee",
+    "mode": 384,
+    "bytes": 33684
+  },
+  "meshes/turret__ring_driver.stl": {
+    "sha256": "fbbc599afec76d88e4d4f58daa4a606e8d0783647323e64e7a6931beb1e6d520",
+    "mode": 384,
+    "bytes": 45284
+  },
+  "meshes/turret__ring_leads_rotor.stl": {
+    "sha256": "570e07a1cce56a824a1fa701c1486d0798b8a30532f441615dc8ba7ea60c7a79",
+    "mode": 384,
+    "bytes": 25334
+  },
+  "meshes/turret__shoulder_screw.stl": {
+    "sha256": "648fa26f3e702d290447d668e02ae8bf73de9e51b11c836caa81772415324191",
+    "mode": 384,
+    "bytes": 25084
+  },
+  "meshes/turret__slip_ring.stl": {
+    "sha256": "f27ad8172fc74b7051cb47deacdf96408aa178e1da844b743859e949be8cf5fa",
+    "mode": 384,
+    "bytes": 16684
+  },
+  "meshes/turret__slip_ring_rotor.stl": {
+    "sha256": "8fa93fee971657e031e0a013f3a3ad1c542ace42ef6c4a17c94df0eecb8286a1",
+    "mode": 384,
+    "bytes": 8284
+  },
+  "meshes/turret__stop_lug.stl": {
+    "sha256": "19896bc1014e75d120cabb8ac29be907a0ddd63399a297c199c8e650a5b74c55",
+    "mode": 384,
+    "bytes": 25684
+  },
+  "meshes/turret__tilt_bearing.stl": {
+    "sha256": "ff8810341534b4bf34af433f9b72dc801c375c38d044c58f6bf8f33aab152886",
+    "mode": 384,
+    "bytes": 33684
+  },
+  "meshes/turret__tilt_bearing_inner.stl": {
+    "sha256": "cb57e9d88133b14cd59ec9b2d6e510a1b30360bee04cf71cb62d3d7e10ce45e7",
+    "mode": 384,
+    "bytes": 16884
+  },
+  "meshes/turret__tilt_servo.stl": {
+    "sha256": "2174a9bb55947a197abd0a29970b7da1cb7a0425ab513e8a2408793e34f7fe9d",
+    "mode": 384,
+    "bytes": 20684
+  },
+  "meshes/turret__tilt_yoke.stl": {
+    "sha256": "07edf0e274f9fea4e67cdb954f797105e8f3164c5bd4864de833e587756faa1c",
+    "mode": 384,
+    "bytes": 307984
+  },
+  "meshes/turret__turret_board.stl": {
+    "sha256": "362de1a3b3a1a2c613f80fb2497de304d2d8cbdf51e681773a7521b3df457559",
+    "mode": 384,
+    "bytes": 69084
+  },
+  "meshes/turret_plate.stl": {
+    "sha256": "e90be95e663941d5462ccea11f802d690a39ff3bee5bc1dc65514f42deecb325",
+    "mode": 384,
+    "bytes": 122684
+  },
+  "meshes/turret_plate_nuts.stl": {
+    "sha256": "1d18880c0730c92495418322356bc37b84a7cdc4061ed7a71c9bcaa896f180f4",
+    "mode": 384,
+    "bytes": 16484
+  },
+  "mount-reference.json": {
+    "sha256": "44e2456c8defd245c6918f2840a81f4c4231e3649ea7c814c2e0ad14dd85385a",
+    "mode": 384,
+    "bytes": 2376
+  },
+  "reference/front_link.stl": {
+    "sha256": "47770603197f0886a5c6a5f678b3231c88c841d77b83bfffc0704aa9a597fcc2",
+    "mode": 384,
+    "bytes": 107384
+  },
+  "reference/hip_frame.stl": {
+    "sha256": "af9012367d3ab85511fe63e1b36ca36292e94c1f22f421ad600cfc2f31201a0a",
+    "mode": 384,
+    "bytes": 662484
+  },
+  "reference/knee_pin_front.stl": {
+    "sha256": "f693a587b56de4df453a59b4f9a1eec7c04815a83f598dc2315448252c372300",
+    "mode": 384,
+    "bytes": 25084
+  },
+  "reference/knee_pin_rear.stl": {
+    "sha256": "8d3f48b300c2ad134564185070a8ebaf5445c3e7233b738a80a47d166e19895f",
+    "mode": 384,
+    "bytes": 25084
+  },
+  "reference/motor_front.stl": {
+    "sha256": "3f77caaa1dcf2d5550be6227b72a947f6ba1e8a1cc116483d8cc73ed38fa0535",
+    "mode": 384,
+    "bytes": 16684
+  },
+  "reference/motor_rear.stl": {
+    "sha256": "53667be1bdcf3e5ec934be30a4657ea33f030c161676d9434d3a22995af563b6",
+    "mode": 384,
+    "bytes": 16684
+  },
+  "reference/upper_link_front.stl": {
+    "sha256": "6655e86409c63d5b88f1b10f2ce3f14434ca8f49c31e9698e5e091b176e72f67",
+    "mode": 384,
+    "bytes": 251484
+  },
+  "reference/upper_link_rear.stl": {
+    "sha256": "efbcbcc1dab93fd4bb96830a0c78878abf2742f3fc511e939b61d751fff4895e",
+    "mode": 384,
+    "bytes": 251484
+  },
+  "reference/wheel_hub.stl": {
+    "sha256": "ccec8b067827e4d8e4783a34fbbfe68f947373fd142e93a59c18c8113ecb4893",
+    "mode": 384,
+    "bytes": 16684
+  },
+  "reference/wheel_link.stl": {
+    "sha256": "836207f8dcbd77969f2f167951dc6e3565b267de7d4e687ffb8ff14b67d45fbb",
+    "mode": 384,
+    "bytes": 165184
+  },
+  "reference/wheel_tyre.stl": {
+    "sha256": "d523a32172f68dc78eae66df613d6efc00d5fb2685ec29d688b159d42ba4e016",
+    "mode": 384,
+    "bytes": 16884
+  },
+  "source-before.json": {
+    "sha256": "67d36723fbf66e90d4fa2fb9dd0f72f26139bfd1cf69e0256bde04185010bbf6",
+    "mode": 384,
+    "bytes": 440746
+  },
+  "toolkit-after.json": {
+    "sha256": "bd85bcdb8d4e613a79cb62d0903946ad10c83e63dc75f67614c159c0dbf4d184",
+    "mode": 384,
+    "bytes": 3
+  },
+  "tracked-after.json": {
+    "sha256": "67d36723fbf66e90d4fa2fb9dd0f72f26139bfd1cf69e0256bde04185010bbf6",
+    "mode": 384,
+    "bytes": 440746
+  },
+  "worker-result.json": {
+    "sha256": "91b0fa43051b3350a36741500b80b9092590053f153dc46d1b3d0917247f9d11",
+    "mode": 384,
+    "bytes": 326
+  }
+}

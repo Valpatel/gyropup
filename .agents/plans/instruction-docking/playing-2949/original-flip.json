@@ -1,0 +1,128 @@
+{
+  "pre": {
+    "axis": "z",
+    "flipped": false,
+    "depth": 1
+  },
+  "state": {
+    "axis": "z",
+    "flipped": true,
+    "depth": 1
+  },
+  "trace": [
+    {
+      "type": "pointerdown",
+      "trusted": true,
+      "hit": true,
+      "target": "BUTTON",
+      "attrs": [
+        [
+          "type",
+          "button"
+        ],
+        [
+          "data-guide-cut-flip",
+          ""
+        ],
+        [
+          "aria-pressed",
+          "false"
+        ]
+      ],
+      "rect": [
+        1180,
+        665,
+        124,
+        44
+      ],
+      "scroll": 218,
+      "x": 1242,
+      "y": 687
+    },
+    {
+      "type": "focusin",
+      "trusted": true,
+      "hit": true,
+      "target": "BUTTON",
+      "attrs": [
+        [
+          "type",
+          "button"
+        ],
+        [
+          "data-guide-cut-flip",
+          ""
+        ],
+        [
+          "aria-pressed",
+          "false"
+        ]
+      ],
+      "rect": [
+        1180,
+        665,
+        124,
+        44
+      ],
+      "scroll": 218
+    },
+    {
+      "type": "pointerup",
+      "trusted": true,
+      "hit": true,
+      "target": "BUTTON",
+      "attrs": [
+        [
+          "type",
+          "button"
+        ],
+        [
+          "data-guide-cut-flip",
+          ""
+        ],
+        [
+          "aria-pressed",
+          "false"
+        ]
+      ],
+      "rect": [
+        1180,
+        665,
+        124,
+        44
+      ],
+      "scroll": 218,
+      "x": 1242,
+      "y": 687
+    },
+    {
+      "type": "click",
+      "trusted": true,
+      "hit": true,
+      "target": "BUTTON",
+      "attrs": [
+        [
+          "type",
+          "button"
+        ],
+        [
+          "data-guide-cut-flip",
+          ""
+        ],
+        [
+          "aria-pressed",
+          "false"
+        ]
+      ],
+      "rect": [
+        1180,
+        665,
+        124,
+        44
+      ],
+      "scroll": 218,
+      "x": 1242,
+      "y": 687
+    }
+  ]
+}

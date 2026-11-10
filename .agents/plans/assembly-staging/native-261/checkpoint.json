@@ -1,0 +1,31 @@
+{
+  "schema": "gyropup.native-evidence-checkpoint/1",
+  "date": "2026-11-10",
+  "job": 261,
+  "role": "cpu-b",
+  "native_source": "e5b3089277448e5ae3d546fc36c549a62949856b",
+  "retained_mesh_source": "540056ba4e59b197859236cb693463e10c9c8901",
+  "binding_core": "011a29b6fe1ddf4a6726fa01f59d710cbf1d6757",
+  "collection_independent_review": "https://github.com/Valpatel/gyropup/issues/276#issuecomment-6771733240",
+  "binding_postaction_review": "https://github.com/Valpatel/gyropup/issues/276#issuecomment-6771907602",
+  "files": {
+    "README.md": "8a4d4f698fd3887e8a8e4748b94db4cb4bb0dccccd7acce08692d164d66bccdd",
+    "audit.py": "3a39a484546db2e38540572a69f73d91e42c59d721d187c66c2f25ad5e5b9aa0",
+    "binding-audit.json": "08a21ed4d9d703a51dae0e5fefa181aaaf6a6217eade2cfcca24f4586bafd85d",
+    "binding-execution.json": "d9b432e29505adfd435be2dd40bf02deb00f2d8cb0ce7da660038386de76097a",
+    "binding-inputs.json": "7b89317214fc43766e5967ee7d7465c02b9b1071617864a303c37d3b08de4026",
+    "binding-members.json": "123a406b82ed3209abe69a6a76e029dd77f9165600762bf627b47ddd5541c69e",
+    "candidate-members.json": "05d1489be346122408ef1c448d379dfa9e9d11af8b06092561bbce80cb0bf579",
+    "collection-audit.json": "4eb3370ce0cec6d2895547b9fb24890a8ba43649f6ca30848ac952498b69f38e",
+    "collection.json": "94ea324e5ee710a174dd67b5545c62ba5365e8ea29ebac2f317391c4c88f980b",
+    "combined-binding.json": "ccce5798a6cd220a8ba9935468f34cd619a2db26b4d386ccc1b34c28fcf3590c",
+    "guides-members.json": "6aff02b9a703306146229de26172e2d289fdd956159bd02761ddb11f147715db",
+    "independent-binding-audit.json": "e034648fed52883bfe3117c7ed7c706f4dbf940cec5f598f3532e1abdf401c52",
+    "independent-collection-audit.json": "80f78b46ce39cc92e9297b5da38f0e979629c67767698d04001b3f3f691fd8c9",
+    "robot-binding.json": "2e9419291f0fbba6c05a56a75989bf520bd3b792bafdf9cf8b4b72ec125487f1"
+  },
+  "raw_artifacts": "Original BREP/STL payloads remain in the unchanged sealed job261 archives; no replacement of published geometry or manufacturing originals.",
+  "retrieve": "fleet-run fetch 261 <fresh-owned-directory> --outputs-only --max-mb 768",
+  "limits": "Collection and original-byte identity only; no validation BREP readback/frame/path query, native trajectory acceptance, asset adoption, support, physical assembly or manufacturing qualification.",
+  "portable_audit_replay_sha256": "4eb3370ce0cec6d2895547b9fb24890a8ba43649f6ca30848ac952498b69f38e"
+}

@@ -1,11 +1,11 @@
 {
-  "visual_sha256": "c58fbc6820cde063acf6386bf5204db72cec401551a6e9f50be1b6a9a839d921",
-  "source_commit": "6c33830953df25f0899cca8a05e1a740459327ba",
+  "visual_sha256": "6e012c3390e004f36669a7e69ef6efaca15d2226e8570cee05124e5d0e286f38",
+  "source_commit": "df7fec062753be4b0170c4d22453a6d44bf18def",
   "version": {
-    "revision": "6c33830953df25f0899cca8a05e1a740459327ba",
-    "assets": "32ae0b2a353e92bfa5e1",
+    "revision": "df7fec062753be4b0170c4d22453a6d44bf18def",
+    "assets": "65ec72e22a8ffbf45eca",
     "history": true,
-    "built": "2026-11-10T12:04:51.170Z"
+    "built": "2026-11-10T18:52:21.454Z"
   },
   "browser": "151.0.7922.71",
   "session_notice_acknowledged": true,
@@ -22,57 +22,60 @@
     },
     "workspace": {
       "fullscreen": "native",
-      "sheet": "collapsed"
+      "instructions": "normal",
+      "layout": "desktop",
+      "parts": false,
+      "tools": false
     }
   },
   "frames": {
     "step-01": {
       "file": "step-01.png",
-      "sha256": "3a04458538aaa24e9b8c424e3db82e3d65dc159b17e4f22db6ef381c2198db37"
+      "sha256": "f46fcd460ef6db1caadf535a81bda846c88208e1ff04012b3c2cf693dfaa4b4a"
     },
     "step-02": {
       "file": "step-02.png",
-      "sha256": "ebe10588f1c72c5b97cfaa541a82701e3141412b0ac2cd0791379d6a32f5d2f6"
+      "sha256": "e0591ea5bf221f7015bcab00e0751abce7a73139ea89e03cdfb1969ad0686a53"
     },
     "step-03": {
       "file": "step-03.png",
-      "sha256": "59520227a7bda0eb2ed2c97a1628fc6feb8f2f59dff2137d4a10a2d7b31e2fb9"
+      "sha256": "f735a926c5a3cacab35622add7430e5326c81548b9a29b3eff9d2b40a2ab440f"
     },
     "step-04": {
       "file": "step-04.png",
-      "sha256": "11fa28827ea85d25f34d869bcb09395275f207df1ecbd1ee2378e674ed720b0c"
+      "sha256": "f1ec41c11f6327b2731c5e5654d75dd539f01c699b51a1f5a2a008156576e3fd"
     },
     "step-05": {
       "file": "step-05.png",
-      "sha256": "d37f4007aaa8b8386e1fd9f8c364646854874ce0c8037c586c9aee1a165844cb"
+      "sha256": "c7c6640813663f73d96c30a4fa72d6f899cf6a83770497a33e43c00e3d774683"
     },
     "step-06": {
       "file": "step-06.png",
-      "sha256": "b7631c467ab216bf609c1b724d97e71971d300bbbf8d4cf8b01faca9af0df22c"
+      "sha256": "90b458cb4511de33d0bfdd245a98b1d8121c65178796fcd10e08816202428d9b"
     },
     "step-07": {
       "file": "step-07.png",
-      "sha256": "5445ee905a45a31f99110d3a9178548100a7e4970f4dd41b7e67c9b5ffc088b3"
+      "sha256": "a44ca1f7d40821fed00352c08c1adaabc7ea13877dbdfedb9605234c9cee44b8"
     },
     "step-08": {
       "file": "step-08.png",
-      "sha256": "df260e17b67d1430b0813acef0b3612e5788a35a08bc92bac93dd98738640a3f"
+      "sha256": "7b0801ece9fb590471e7d73e2bcf4b86f17e53d5530a52dd8974f4cf1d480748"
     },
     "step-09": {
       "file": "step-09.png",
-      "sha256": "b26167f7a1aa4f281652a9d9153d541b6a17218d84bcc511b8f0f3a747941ee3"
+      "sha256": "29dd6dbc8f80320137c813c00b00a8471ce83f40aff549acd03ae91564fa1471"
     },
     "step-10": {
       "file": "step-10.png",
-      "sha256": "f3646c68cf287b5b53ae609ab95708246538f3ed5684150f50c71ed0843fb0f9"
+      "sha256": "0aa624c9dccd618393589b890e654f19d18e30ae0ec325b2b74549ae93a9eb3a"
     },
     "step-11": {
       "file": "step-11.png",
-      "sha256": "8de946fcbfdf9df5b33896a5bcd44126170ed4334a9558d4f631ab05d8f1fbb7"
+      "sha256": "a0f92bd55c0b419a923adf265fc454eaf8bbda0a2d8b9d8038529ad1e6067d07"
     },
     "step-12": {
       "file": "step-12.png",
-      "sha256": "095b479f8aeff8695f98878b66395d2df6e58bebd8971d323e4c99c89a1cb7e9"
+      "sha256": "01f4400b3c338cab6282703f2ded162b5d90f534db820b3f257b20752d69aebc"
     }
   },
   "proof": {
@@ -80,7 +83,10 @@
       "step": "step-01",
       "workspace": {
         "nativeFullscreen": true,
-        "sheet": "collapsed"
+        "layout": "desktop",
+        "instructions": "normal",
+        "parts": "false",
+        "tools": "false"
       },
       "state": {
         "visible": [
@@ -114,9 +120,9 @@
         "pan_base"
       ],
       "camera": [
-        0.14999327864742057,
-        0.22672549264541997,
-        0.28047713112989686
+        0.14012386682272837,
+        0.2152111788499458,
+        0.26402811142207655
       ],
       "target": [
         -0.024200000762939447,
@@ -128,7 +134,10 @@
       "step": "step-02",
       "workspace": {
         "nativeFullscreen": true,
-        "sheet": "collapsed"
+        "layout": "desktop",
+        "instructions": "normal",
+        "parts": "false",
+        "tools": "false"
       },
       "state": {
         "visible": [
@@ -180,9 +189,9 @@
         "dt_receptacle"
       ],
       "camera": [
-        0.21116774257982912,
-        0.3440957005665634,
-        0.41487957071206877
+        0.19624228600365423,
+        0.32668266789435924,
+        0.3900038097517772
       ],
       "target": [
         -0.024200000762939447,
@@ -194,7 +203,10 @@
       "step": "step-03",
       "workspace": {
         "nativeFullscreen": true,
-        "sheet": "collapsed"
+        "layout": "desktop",
+        "instructions": "normal",
+        "parts": "false",
+        "tools": "false"
       },
       "state": {
         "visible": [
@@ -284,9 +296,9 @@
         "dt_receptacle"
       ],
       "camera": [
-        0.259671219808755,
-        0.2661923488229866,
-        0.19854487203277474
+        0.2439360268385857,
+        0.2524240549740884,
+        0.1867434773051477
       ],
       "target": [
         -0.001588611602783188,
@@ -298,7 +310,10 @@
       "step": "step-04",
       "workspace": {
         "nativeFullscreen": true,
-        "sheet": "collapsed"
+        "layout": "desktop",
+        "instructions": "normal",
+        "parts": "false",
+        "tools": "false"
       },
       "state": {
         "visible": [
@@ -370,9 +385,9 @@
         "dt_receptacle"
       ],
       "camera": [
-        0.1671808022023208,
-        0.3052619054795593,
-        0.32156800341622144
+        0.1551179162652796,
+        0.2891780575635043,
+        0.3014631935211528
       ],
       "target": [
         -0.024200000762939447,
@@ -384,7 +399,10 @@
       "step": "step-05",
       "workspace": {
         "nativeFullscreen": true,
-        "sheet": "collapsed"
+        "layout": "desktop",
+        "instructions": "normal",
+        "parts": "false",
+        "tools": "false"
       },
       "state": {
         "visible": [
@@ -470,9 +488,9 @@
         "dt_receptacle"
       ],
       "camera": [
-        0.16302470413988734,
-        0.1844185286771201,
-        0.3146411733121658
+        0.15226466749732487,
+        0.1763485011951983,
+        0.29670777890789496
       ],
       "target": [
         -0.024200000762939447,
@@ -484,7 +502,10 @@
       "step": "step-06",
       "workspace": {
         "nativeFullscreen": true,
-        "sheet": "collapsed"
+        "layout": "desktop",
+        "instructions": "normal",
+        "parts": "false",
+        "tools": "false"
       },
       "state": {
         "visible": [
@@ -586,9 +607,9 @@
         "dt_receptacle"
       ],
       "camera": [
-        0.1880684703388047,
-        -0.0943232748093508,
-        0.35638078364369463
+        0.17214443326560241,
+        -0.08503425318331612,
+        0.32984072185502417
       ],
       "target": [
         -0.024200000762939447,
@@ -600,7 +621,10 @@
       "step": "step-07",
       "workspace": {
         "nativeFullscreen": true,
-        "sheet": "collapsed"
+        "layout": "desktop",
+        "instructions": "normal",
+        "parts": "false",
+        "tools": "false"
       },
       "state": {
         "visible": [
@@ -704,9 +728,9 @@
         "dt_receptacle"
       ],
       "camera": [
-        0.19669048342603995,
-        0.32589048418897937,
-        0.48038596792019517
+        0.17847425835790715,
+        0.30767425912084667,
+        0.4439535177839298
       ],
       "target": [
         -0.024200000762939447,
@@ -718,7 +742,10 @@
       "step": "step-08",
       "workspace": {
         "nativeFullscreen": true,
-        "sheet": "collapsed"
+        "layout": "desktop",
+        "instructions": "normal",
+        "parts": "false",
+        "tools": "false"
       },
       "state": {
         "visible": [
@@ -878,9 +905,9 @@
         "shoulder_screw"
       ],
       "camera": [
-        0.23994358255897166,
-        0.3840242100003779,
-        0.5311099434382558
+        0.22219595798751182,
+        0.3662765854289183,
+        0.4956146942953361
       ],
       "target": [
         -0.03561138916015624,
@@ -892,7 +919,10 @@
       "step": "step-09",
       "workspace": {
         "nativeFullscreen": true,
-        "sheet": "collapsed"
+        "layout": "desktop",
+        "instructions": "normal",
+        "parts": "false",
+        "tools": "false"
       },
       "state": {
         "visible": [
@@ -1008,9 +1038,9 @@
         "laser"
       ],
       "camera": [
-        0.2561111787929152,
-        0.24603276902005874,
-        0.4126588268470217
+        0.23848267261135275,
+        0.23595933691630877,
+        0.3874752465876468
       ],
       "target": [
         -0.03274999999999999,
@@ -1022,7 +1052,10 @@
       "step": "step-10",
       "workspace": {
         "nativeFullscreen": true,
-        "sheet": "collapsed"
+        "layout": "desktop",
+        "instructions": "normal",
+        "parts": "false",
+        "tools": "false"
       },
       "state": {
         "visible": [
@@ -1222,9 +1255,9 @@
         "laser"
       ],
       "camera": [
-        0.29805474203688215,
-        0.46635474508864005,
-        0.551341236728137
+        0.27545917074939985,
+        0.4437591738011576,
+        0.5136819512489996
       ],
       "target": [
         -0.03274999999999999,
@@ -1236,7 +1269,10 @@
       "step": "step-11",
       "workspace": {
         "nativeFullscreen": true,
-        "sheet": "collapsed"
+        "layout": "desktop",
+        "instructions": "normal",
+        "parts": "false",
+        "tools": "false"
       },
       "state": {
         "visible": [
@@ -1388,9 +1424,9 @@
         "laser"
       ],
       "camera": [
-        0.36125613273605905,
-        0.49325613273605906,
-        0.5687602212267651
+        0.33554474366344894,
+        0.46754474366344895,
+        0.5259079061057481
       ],
       "target": [
         0.02000000000000001,
@@ -1402,7 +1438,10 @@
       "step": "step-12",
       "workspace": {
         "nativeFullscreen": true,
-        "sheet": "collapsed"
+        "layout": "desktop",
+        "instructions": "normal",
+        "parts": "false",
+        "tools": "false"
       },
       "state": {
         "visible": [
@@ -1544,9 +1583,9 @@
         "laser"
       ],
       "camera": [
-        0.29259720539441714,
-        0.3608310044953477,
-        0.4876620089906952
+        0.27288599412230674,
+        0.3444049951019222,
+        0.45480999020384444
       ],
       "target": [
         0,

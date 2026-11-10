@@ -5,11 +5,12 @@ export function createWorkspace(host,getActive,paint,report){
  const required=selector=>{const node=host.querySelector(selector);if(!node)throw new Error('Missing workspace element: '+selector);return node;};
  const layout=required('.assembly-layout'),tree=required('#assembly-explorer'),tools=required('#assembly-tools'),instructions=required('.assembly-step'),sheet=required('[data-workspace-sheet]');
  const toolbar=required('.assembly-topbar'),nav=required('.assembly-nav'),full=required('button[data-guide-fullscreen]'),instructionToggle=required('button[data-instructions-toggle]');
- const mobile=matchMedia('(max-width:1280px)'),events=new AbortController();
+ const landscape=matchMedia('(min-width:600px) and (max-width:1000px) and (max-height:500px) and (pointer:coarse)');
+ const mobile=matchMedia('(max-width:760px), (max-width:1000px) and (max-height:500px) and (pointer:coarse)'),events=new AbortController();
  let disposed=false,generation=0,assemblyLoader=null,previousOverflow='',expandedInstructions=false,partsOpen=false,toolsOpen=false,pane='instructions',sheetCollapsed=false,sheetExpanded=false,framePending=false;
  const useSheet=()=>mobile.matches||!!getActive()&&!getActive().viewer;
  function renderPanels(){
-  layout.dataset.mobile=String(useSheet());layout.dataset.instructions=expandedInstructions?'expanded':'normal';layout.dataset.tools=String(toolsOpen);layout.dataset.parts=String(partsOpen);layout.dataset.sheetSize=sheetCollapsed?'collapsed':sheetExpanded?'expanded':'normal';
+  layout.dataset.mobile=String(useSheet());layout.dataset.sheetLayout=landscape.matches?'side':'bottom';layout.dataset.instructions=expandedInstructions?'expanded':'normal';layout.dataset.tools=String(toolsOpen);layout.dataset.parts=String(partsOpen);layout.dataset.sheetSize=sheetCollapsed?'collapsed':sheetExpanded?'expanded':'normal';
   if(useSheet()){tree.hidden=pane!=='parts'||sheetCollapsed;tools.hidden=pane!=='tools'||sheetCollapsed;instructions.hidden=pane!=='instructions'||sheetCollapsed;}
   else{tree.hidden=!partsOpen;tools.hidden=!toolsOpen;instructions.hidden=false;}
   required('button[data-explorer-toggle]').setAttribute('aria-expanded',String(useSheet()?pane==='parts'&&!sheetCollapsed:partsOpen));required('button[data-tools-toggle]').setAttribute('aria-expanded',String(useSheet()?pane==='tools'&&!sheetCollapsed:toolsOpen));
@@ -34,19 +35,19 @@ export function createWorkspace(host,getActive,paint,report){
  document.addEventListener('fullscreenchange',fullState,{signal:events.signal});
  window.addEventListener('gyropup:exit-workspace-fullscreen',()=>{if(layout.dataset.expanded==='true')collapseFullscreen();},{signal:events.signal});
  host.addEventListener('keydown',event=>{if(event.key!=='Escape')return;if(layout.dataset.expanded==='true')collapseFullscreen();if(document.fullscreenElement===layout)document.exitFullscreen().catch(()=>{});if(useSheet()){if(getActive()?.viewer)sheetCollapsed=true;else{pane='instructions';sheetCollapsed=false;}}else{partsOpen=false;toolsOpen=false;}renderPanels();frame();},{signal:events.signal});
- host.addEventListener('gyropup:part-selected',()=>{if(mobile.matches){pane='parts';sheetCollapsed=false;renderPanels();frame();}},{signal:events.signal});
+ host.addEventListener('gyropup:part-selected',()=>{if(useSheet()){pane='parts';sheetCollapsed=false;}else partsOpen=true;renderPanels();frame();},{signal:events.signal});
  function frame(){
   const active=getActive(),viewer=active?.viewer;
   const bounds=layout.getBoundingClientRect(),top=toolbar.getBoundingClientRect();layout.style.setProperty('--assembly-toolbar-bottom',`${top.bottom-bounds.top}px`);
   const navigation=nav.getBoundingClientRect();layout.style.setProperty('--assembly-nav-bottom',`${navigation.bottom-bounds.top}px`);
   if(!viewer)return; // Floating controls must remain measurable during loading or initial errors.
   const insets={top:navigation.bottom-bounds.top+12,bottom:16,left:16,right:16};
-  if(mobile.matches){const occupied=sheet.getBoundingClientRect();insets.bottom=Math.max(16,bounds.bottom-occupied.top+12);layout.style.setProperty('--assembly-sheet-height',`${occupied.height}px`);}
+  if(mobile.matches){const occupied=sheet.getBoundingClientRect();if(landscape.matches)insets.right=Math.max(16,bounds.right-occupied.left+12);else insets.bottom=Math.max(16,bounds.bottom-occupied.top+12);layout.style.setProperty('--assembly-sheet-height',`${occupied.height}px`);}
   else{
-   layout.style.setProperty('--assembly-left-dock',partsOpen?'278px':'0px');layout.style.setProperty('--assembly-right-dock',toolsOpen?'278px':'0px');
+   layout.style.setProperty('--assembly-right-dock',toolsOpen?`${tools.getBoundingClientRect().width+12}px`:'0px');
    if(partsOpen)insets.left=tree.getBoundingClientRect().right-bounds.left+12;
    if(toolsOpen)insets.right=bounds.right-tools.getBoundingClientRect().left+12;
-   const instructionBounds=instructions.getBoundingClientRect();if(expandedInstructions)insets.right=Math.max(insets.right,bounds.right-instructionBounds.left+12);else insets.bottom=Math.max(16,bounds.bottom-instructionBounds.top+12);
+   const instructionBounds=instructions.getBoundingClientRect();insets.right=Math.max(insets.right,bounds.right-instructionBounds.left+12);
   }
   viewer.stage.setInsets(insets);
   if(active.overview&&active.robot){active.robot.group.updateMatrixWorld(true);const box=new THREE.Box3();active.robot.group.traverseVisible(object=>{if(object.isMesh)box.union(new THREE.Box3().setFromObject(object));});viewer.stage.fitView(box,{direction:new THREE.Vector3(1,.45,1.5),margin:1.12});}
@@ -56,7 +57,7 @@ export function createWorkspace(host,getActive,paint,report){
  function present(){
   const active=getActive();if(!active)return;if(active.overview){partsOpen=false;if(pane==='parts')pane='instructions';}const explore=required('button[data-explorer-toggle]');explore.disabled=!!active.overview;explore.title=active.overview?'Part hierarchy is unavailable for this interim reference':'Assembly explorer';required('button[data-sheet-tab=parts]').disabled=!!active.overview;required('[data-guide-chapters]').hidden=!!active.overview;layout.dataset.overview=String(!!active.overview);required('[data-context-provenance]').hidden=!active.overview;renderPanels();if(active.overview)active.playback?.pause();active.playback?.refresh();
   for(const button of host.querySelectorAll('button[data-assembly]'))button.setAttribute('aria-pressed',String(button.dataset.assembly===(active.overview?active.assembly:active.guideAssembly||'turret')));
-  required('[data-context-tools]').hidden=!!active.viewer&&!active.overview;required('[data-step-tools]').hidden=!!active.overview||!active.viewer;required('button[data-guide-fit]').disabled=!active.viewer;
+  required('[data-context-tools]').hidden=!!active.viewer&&!active.overview;required('[data-step-tools]').hidden=!!active.overview||!active.viewer;required('[data-step-actions]').hidden=!!active.overview||!active.viewer;required('button[data-guide-fit]').disabled=!active.viewer;
   if(!active.viewer)required('[data-context-tools]').textContent='Interactive 3D tools are unavailable. The bound instructions and available diagrams remain accessible.';
   else required('[data-context-tools]').textContent='Orbit and zoom this interim reference model. Source-bound assembly guides expose the assembly tools.';
   for(const child of active.viewer?.stage.root.children||[])child.visible=child===active.robot?.group?!!active.overview:!active.overview;
@@ -74,7 +75,7 @@ export function createWorkspace(host,getActive,paint,report){
   catch(error){if(getActive()!==active||disposed)return;active.overview=false;paint(active.step);present();report('Robot context could not load: '+error.message+'. The bound guide remains available; choose Robot or Combined to retry.',true);required('[data-guide-retry]').hidden=true;}
   finally{active.robotLoading=false;}
  }
- const observer=new ResizeObserver(scheduleFrame);observer.observe(layout);observer.observe(toolbar);observer.observe(sheet);window.addEventListener('resize',()=>{renderPanels();scheduleFrame();},{signal:events.signal});mobile.addEventListener('change',()=>{renderPanels();scheduleFrame();},{signal:events.signal});renderPanels();
+ const observer=new ResizeObserver(scheduleFrame);observer.observe(layout);observer.observe(toolbar);observer.observe(sheet);window.addEventListener('resize',()=>{renderPanels();scheduleFrame();},{signal:events.signal});mobile.addEventListener('change',()=>{renderPanels();scheduleFrame();},{signal:events.signal});landscape.addEventListener('change',()=>{renderPanels();scheduleFrame();},{signal:events.signal});renderPanels();
  return{frame,present,step,overview,choose,setNavigation(handler){assemblyLoader=handler;},invalidate(){++generation;},dispose(){if(layout.dataset.expanded==='true')collapseFullscreen();disposed=true;++generation;events.abort();observer.disconnect();}};
 }
 export function disposeRobot(robot){if(!robot)return;robot.group.removeFromParent();const geometries=new Set(),materials=new Set();robot.group.traverse(object=>{if(object.geometry)geometries.add(object.geometry);for(const material of Array.isArray(object.material)?object.material:object.material?[object.material]:[])materials.add(material);});for(const geometry of geometries)geometry.dispose();for(const material of materials)material.dispose();}

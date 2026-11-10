@@ -1,0 +1,1042 @@
+{
+  "status": "failed",
+  "scope": "playback",
+  "cases": [],
+  "observations": [
+    {
+      "document": "playback ready",
+      "token": "fe20f933-5a78-4c0f-80b9-aa697a69796d",
+      "url": "<preview-origin>/designer/build.html?assembly=robot&snapshot=robot-wip-540056ba4e59&chapter=overview&step=overview#assembly",
+      "readyState": "complete",
+      "visibility": "visible",
+      "focus": true
+    },
+    {
+      "world": {
+        "delta": [
+          0,
+          0.036363636363636376,
+          6.938893903907228e-18
+        ],
+        "offset": [
+          0,
+          0,
+          36.36363636363637
+        ]
+      },
+      "expectedWorld": [
+        0,
+        0.03636363636363637,
+        0
+      ]
+    },
+    {
+      "case": "late first arrival framing",
+      "latePose": {
+        "parts": 1,
+        "points": [
+          {
+            "x": 867.4964636898472,
+            "y": 569.502053427269,
+            "z": 0.96422164376034
+          },
+          {
+            "x": 831.614454285576,
+            "y": 785.2190642121199,
+            "z": 0.9682764088647143
+          },
+          {
+            "x": 732.6970319665027,
+            "y": 737.4082891100201,
+            "z": 0.9707466241885705
+          },
+          {
+            "x": 840.2901159375749,
+            "y": 592.2610683662722,
+            "z": 0.9652796214784836
+          },
+          {
+            "x": 766.0467275216655,
+            "y": 626.9400953163934,
+            "z": 0.9681287225460005
+          },
+          {
+            "x": 758.46415208928,
+            "y": 560.5920283794139,
+            "z": 0.9674341508967896
+          },
+          {
+            "x": 732.2737842820426,
+            "y": 550.9035923873339,
+            "z": 0.9681300773699132
+          },
+          {
+            "x": 653.0628112972257,
+            "y": 512.401992792713,
+            "z": 0.970105131049986
+          },
+          {
+            "x": 850.5172147967692,
+            "y": 815.1284502127533,
+            "z": 0.9681162605624031
+          },
+          {
+            "x": 742.2946313625334,
+            "y": 738.4633057726436,
+            "z": 0.9717036619446259
+          },
+          {
+            "x": 829.4179342830763,
+            "y": 798.1187621336342,
+            "z": 0.9695375504194544
+          },
+          {
+            "x": 742.0545650265169,
+            "y": 743.5135784635955,
+            "z": 0.9718165840948655
+          },
+          {
+            "x": 846.107731380491,
+            "y": 821.7607540104783,
+            "z": 0.9680541317300043
+          },
+          {
+            "x": 750.3709886567639,
+            "y": 747.424143963995,
+            "z": 0.969995539210395
+          },
+          {
+            "x": 759.1173145071573,
+            "y": 691.143050550577,
+            "z": 0.9689124362432638
+          },
+          {
+            "x": 833.6724276019393,
+            "y": 589.4398262464381,
+            "z": 0.9650677361312398
+          },
+          {
+            "x": 654.407386517125,
+            "y": 698.5508767500847,
+            "z": 0.9723820428401094
+          },
+          {
+            "x": 751.3841648304182,
+            "y": 553.0796982180182,
+            "z": 0.9671932251894108
+          },
+          {
+            "x": 727.0202214571536,
+            "y": 543.1831095267714,
+            "z": 0.9678349247690198
+          },
+          {
+            "x": 647.7364212158681,
+            "y": 507.9748155850781,
+            "z": 0.9698803047506042
+          },
+          {
+            "x": 790.2184852450432,
+            "y": 516.7131618007359,
+            "z": 0.9669811421720257
+          },
+          {
+            "x": 696.7024634099109,
+            "y": 481.0892010334709,
+            "z": 0.9695283956408122
+          },
+          {
+            "x": 790.7174743806802,
+            "y": 524.0366080019062,
+            "z": 0.9670982579622164
+          },
+          {
+            "x": 697.2873799907077,
+            "y": 487.58779865780804,
+            "z": 0.9696566084637028
+          },
+          {
+            "x": 641.9234586985923,
+            "y": 489.9583757449358,
+            "z": 0.9701472188341854
+          },
+          {
+            "x": 834.7307526476345,
+            "y": 801.1618400357373,
+            "z": 0.9680511608282757
+          },
+          {
+            "x": 821.8628315267523,
+            "y": 779.880331519202,
+            "z": 0.9684024581670561
+          },
+          {
+            "x": 827.972087270983,
+            "y": 787.2391782350055,
+            "z": 0.9683117267143936
+          },
+          {
+            "x": 748.0427367936753,
+            "y": 741.6556495310355,
+            "z": 0.9702160334238394
+          },
+          {
+            "x": 734.5716219681345,
+            "y": 739.5317341202655,
+            "z": 0.9703906465641834
+          },
+          {
+            "x": 732.7125544599218,
+            "y": 729.2143867260418,
+            "z": 0.9705798490905745
+          },
+          {
+            "x": 727.0129070749716,
+            "y": 733.3092303747104,
+            "z": 0.9707686627959846
+          },
+          {
+            "x": 666.7977435578135,
+            "y": 692.3609035477878,
+            "z": 0.9721580844529325
+          },
+          {
+            "x": 665.2921832484957,
+            "y": 700.4374524353641,
+            "z": 0.9722720799771176
+          },
+          {
+            "x": 654.0939016099957,
+            "y": 699.265171349532,
+            "z": 0.9724022942202268
+          },
+          {
+            "x": 847.269182016904,
+            "y": 595.0121892115243,
+            "z": 0.9647103275233433
+          },
+          {
+            "x": 830.6902605586647,
+            "y": 581.549829291602,
+            "z": 0.9653744176157242
+          },
+          {
+            "x": 837.5898150185769,
+            "y": 590.4591013049082,
+            "z": 0.9652208976242652
+          },
+          {
+            "x": 750.4774904499739,
+            "y": 552.9952642224225,
+            "z": 0.9675251331529252
+          },
+          {
+            "x": 724.9780678187191,
+            "y": 672.0772236657376,
+            "z": 0.970070729384508
+          },
+          {
+            "x": 735.4597279045622,
+            "y": 546.140989470842,
+            "z": 0.9679064962250532
+          },
+          {
+            "x": 726.7368071086925,
+            "y": 544.0168883849018,
+            "z": 0.9680993211772739
+          },
+          {
+            "x": 737.5969337267486,
+            "y": 542.8293274330908,
+            "z": 0.9674900831089012
+          },
+          {
+            "x": 663.550449639643,
+            "y": 512.4228872608078,
+            "z": 0.9697198873278362
+          },
+          {
+            "x": 659.9060365575406,
+            "y": 520.2983283673275,
+            "z": 0.9698952175983203
+          },
+          {
+            "x": 648.8532741761574,
+            "y": 510.9028911424774,
+            "z": 0.9698861538767134
+          },
+          {
+            "x": 831.2299595691092,
+            "y": 791.9758497102509,
+            "z": 0.969445562387025
+          },
+          {
+            "x": 779.2994321363127,
+            "y": 764.7538455144584,
+            "z": 0.9705942649361545
+          },
+          {
+            "x": 733.7080977557033,
+            "y": 739.7510321633359,
+            "z": 0.9716493230143647
+          },
+          {
+            "x": 690.5433266035841,
+            "y": 715.2413543178363,
+            "z": 0.9726835719703549
+          },
+          {
+            "x": 818.2146760766925,
+            "y": 785.2584410732992,
+            "z": 0.968355122791006
+          },
+          {
+            "x": 723.7245320311231,
+            "y": 731.4967273742491,
+            "z": 0.9706246191148147
+          },
+          {
+            "x": 661.2197844811915,
+            "y": 695.9425177870895,
+            "z": 0.9721260060281777
+          },
+          {
+            "x": 830.9786545762024,
+            "y": 584.6739067354914,
+            "z": 0.9650863563167804
+          },
+          {
+            "x": 752.0872068750513,
+            "y": 553.8800794958402,
+            "z": 0.9671820453484595
+          },
+          {
+            "x": 728.954629128707,
+            "y": 546.2819572780759,
+            "z": 0.9678169420083992
+          },
+          {
+            "x": 659.8938038164299,
+            "y": 520.4401172853525,
+            "z": 0.9696673760318087
+          },
+          {
+            "x": 843.1645851647806,
+            "y": 536.8287808755761,
+            "z": 0.9655427962003374
+          },
+          {
+            "x": 784.8525848030267,
+            "y": 516.3302427830112,
+            "z": 0.9670085223895858
+          },
+          {
+            "x": 734.6195740740221,
+            "y": 497.7871380159557,
+            "z": 0.9683344273962902
+          },
+          {
+            "x": 687.6513899504157,
+            "y": 479.68441149299014,
+            "z": 0.9696288436244961
+          }
+        ],
+        "overlays": [
+          {
+            "x": 49,
+            "y": 217.96875,
+            "w": 1342,
+            "h": 64
+          },
+          {
+            "x": 380,
+            "y": 290.96875,
+            "w": 680,
+            "h": 56
+          },
+          {
+            "x": 300,
+            "y": 843.96875,
+            "w": 840,
+            "h": 120
+          }
+        ],
+        "box": {
+          "x": 33,
+          "y": 201.96875,
+          "w": 1374,
+          "h": 778
+        }
+      }
+    },
+    {
+      "paused": {
+        "state": {
+          "status": "paused",
+          "stepId": "body-spine",
+          "partId": "cheek_left",
+          "operationIndex": 0,
+          "elapsedMs": 300,
+          "progress": 0.2727272727272727,
+          "speed": 1,
+          "loop": false
+        },
+        "visible": [
+          "cheek_left"
+        ],
+        "offsets": {
+          "cheek_left": [
+            0,
+            0,
+            36.36363636363637
+          ],
+          "cheek_right": [
+            0,
+            0,
+            50
+          ],
+          "spacers": [
+            0,
+            0,
+            50
+          ],
+          "spacer_screws": [
+            0,
+            0,
+            50
+          ]
+        },
+        "authored": [
+          0,
+          0,
+          50
+        ],
+        "expected": [
+          "cheek_left"
+        ],
+        "done": []
+      },
+      "timed": {
+        "before": {
+          "status": "playing",
+          "stepId": "body-spine",
+          "partId": "cheek_left",
+          "operationIndex": 0,
+          "elapsedMs": 50,
+          "progress": 0.045454545454545456,
+          "speed": 2,
+          "loop": false
+        },
+        "after": {
+          "status": "playing",
+          "stepId": "body-spine",
+          "partId": "cheek_left",
+          "operationIndex": 0,
+          "elapsedMs": 150,
+          "progress": 0.13636363636363635,
+          "speed": 2,
+          "loop": false
+        }
+      },
+      "looped": {
+        "wrapped": true,
+        "ended": false,
+        "state": {
+          "status": "paused",
+          "stepId": "body-spine",
+          "partId": "cheek_left",
+          "operationIndex": 0,
+          "elapsedMs": 400,
+          "progress": 0.36363636363636365,
+          "speed": 4,
+          "loop": true
+        },
+        "done": []
+      }
+    },
+    {
+      "document": "before late-wheel sample",
+      "token": "fe20f933-5a78-4c0f-80b9-aa697a69796d",
+      "url": "<preview-origin>/designer/build.html?assembly=robot&snapshot=robot-wip-540056ba4e59&chapter=l-leg&step=l-wheel#assembly",
+      "readyState": "complete",
+      "visibility": "visible",
+      "focus": true
+    },
+    {
+      "document": "after late-wheel sample",
+      "token": "fe20f933-5a78-4c0f-80b9-aa697a69796d",
+      "url": "<preview-origin>/designer/build.html?assembly=robot&snapshot=robot-wip-540056ba4e59&chapter=l-leg&step=l-wheel#assembly",
+      "readyState": "complete",
+      "visibility": "visible",
+      "focus": true
+    },
+    {
+      "case": "late left wheel arrival with controlled existing player clock",
+      "state": {
+        "status": "paused",
+        "stepId": "l-wheel",
+        "partId": "L.wheel_tyre",
+        "operationIndex": 70,
+        "elapsedMs": 1000,
+        "progress": 0.9090909090909091,
+        "speed": 1,
+        "loop": false
+      },
+      "authored": [
+        0,
+        60,
+        0
+      ],
+      "delta": [
+        0,
+        0,
+        -0.00545454545454549
+      ],
+      "camera": [
+        1.3894242358827487,
+        0.9452933582346396,
+        -1.4806991382264985
+      ],
+      "target": [
+        0,
+        0.3200524520874025,
+        -0.09127490234374998
+      ],
+      "afterCamera": [
+        1.3894242358827487,
+        0.9452933582346396,
+        -1.4806991382264985
+      ],
+      "afterTarget": [
+        0,
+        0.3200524520874025,
+        -0.09127490234374998
+      ],
+      "min": [
+        -0.016406476503145747,
+        -0.5042880777300041,
+        0.989401072731682
+      ],
+      "max": [
+        0.16099186263376153,
+        -0.1279073942066688,
+        0.9906831815677295
+      ],
+      "samples": 1008,
+      "done": [],
+      "wheelExpected": [
+        0,
+        0,
+        -0.005454545454545456
+      ]
+    },
+    {
+      "case": "bounded source-supported arrival",
+      "name": "L.motor_front",
+      "state": {
+        "status": "paused",
+        "stepId": "l-motors",
+        "partId": "L.motor_front",
+        "operationIndex": 36,
+        "elapsedMs": 500,
+        "progress": 0.45454545454545453,
+        "speed": 1,
+        "loop": false
+      },
+      "offset": [
+        0,
+        32.72727272727273,
+        0
+      ],
+      "delta": [
+        [
+          0,
+          0,
+          -0.03272727272727273
+        ],
+        [
+          0,
+          0,
+          -0.03272727272727273
+        ],
+        [
+          0,
+          0,
+          -0.03272727272727273
+        ],
+        [
+          0,
+          0,
+          -0.03272727272727273
+        ],
+        [
+          0,
+          0,
+          -0.03272727272727273
+        ],
+        [
+          0,
+          0,
+          -0.03272727272727273
+        ],
+        [
+          0,
+          0,
+          -0.03272727272727273
+        ],
+        [
+          0,
+          0,
+          -0.03272727272727273
+        ],
+        [
+          0,
+          0,
+          -0.03272727272727273
+        ],
+        [
+          0,
+          0,
+          -0.03272727272727273
+        ],
+        [
+          0,
+          0,
+          -0.03272727272727273
+        ],
+        [
+          0,
+          0,
+          -0.03272727272727273
+        ],
+        [
+          0,
+          0,
+          -0.03272727272727273
+        ],
+        [
+          0,
+          0,
+          -0.03272727272727273
+        ],
+        [
+          0,
+          0,
+          -0.03272727272727273
+        ],
+        [
+          0,
+          0,
+          -0.03272727272727273
+        ]
+      ],
+      "visible": [
+        "cheek_left",
+        "cheek_right",
+        "spacers",
+        "spacer_screws",
+        "floor_tray",
+        "belly_plate",
+        "bay_floor",
+        "bay_side_l",
+        "bay_side_r",
+        "bay_rail_l",
+        "bay_rail_r",
+        "adapter_plate_front",
+        "adapter_plate_rear",
+        "bay_skid_1",
+        "bay_skid_2",
+        "bay_skid_3",
+        "bay_skid_4",
+        "post_1",
+        "post_2",
+        "post_3",
+        "post_4",
+        "isolator_1",
+        "isolator_2",
+        "isolator_3",
+        "isolator_4",
+        "compute_pallet",
+        "plate_post_1",
+        "plate_post_2",
+        "plate_post_3",
+        "plate_post_4",
+        "power_plate",
+        "dcdc_bracket",
+        "bus_insulator_1",
+        "bus_insulator_2",
+        "bus_bar_1",
+        "bus_bar_2",
+        "L.motor_front"
+      ],
+      "absent": "L.hip_frame",
+      "authored": [
+        0,
+        60,
+        0
+      ],
+      "expected": [
+        0,
+        0,
+        -0.03272727272727272
+      ]
+    }
+  ],
+  "documents": [
+    {
+      "page": 0,
+      "events": [
+        {
+          "kind": "navigation-request",
+          "at": "2026-11-10T18:23:39.237Z",
+          "url": "<preview-origin>/designer/build.html?assembly=robot",
+          "method": "GET"
+        },
+        {
+          "kind": "main-frame-navigation",
+          "at": "2026-11-10T18:23:39.240Z",
+          "url": "<preview-origin>/designer/build.html?assembly=robot#assembly"
+        },
+        {
+          "kind": "document-created",
+          "at": "2026-11-10T18:23:39.251Z",
+          "token": "fe20f933-5a78-4c0f-80b9-aa697a69796d",
+          "url": "<preview-origin>/designer/build.html?assembly=robot#assembly"
+        },
+        {
+          "kind": "document-domcontentloaded",
+          "at": "2026-11-10T18:23:39.308Z",
+          "url": "<preview-origin>/designer/build.html?assembly=robot#assembly"
+        },
+        {
+          "kind": "document-load",
+          "at": "2026-11-10T18:23:39.320Z",
+          "url": "<preview-origin>/designer/build.html?assembly=robot#assembly"
+        },
+        {
+          "kind": "main-frame-navigation",
+          "at": "2026-11-10T18:23:42.506Z",
+          "url": "<preview-origin>/designer/build.html?assembly=robot&snapshot=robot-wip-540056ba4e59&chapter=overview&step=overview#assembly"
+        },
+        {
+          "kind": "main-frame-navigation",
+          "at": "2026-11-10T18:23:42.508Z",
+          "url": "<preview-origin>/designer/build.html?assembly=robot&snapshot=robot-wip-540056ba4e59&chapter=overview&step=overview#assembly"
+        },
+        {
+          "kind": "document-observed",
+          "label": "playback ready",
+          "at": "2026-11-10T18:23:42.614Z",
+          "token": "fe20f933-5a78-4c0f-80b9-aa697a69796d",
+          "url": "<preview-origin>/designer/build.html?assembly=robot&snapshot=robot-wip-540056ba4e59&chapter=overview&step=overview#assembly",
+          "readyState": "complete",
+          "visibility": "visible",
+          "focus": true
+        },
+        {
+          "kind": "main-frame-navigation",
+          "at": "2026-11-10T18:23:42.772Z",
+          "url": "<preview-origin>/designer/build.html?assembly=robot&snapshot=robot-wip-540056ba4e59&chapter=body&step=body-spine#assembly"
+        },
+        {
+          "kind": "main-frame-navigation",
+          "at": "2026-11-10T18:23:42.780Z",
+          "url": "<preview-origin>/designer/build.html?assembly=robot&snapshot=robot-wip-540056ba4e59&chapter=body&step=body-spine#assembly"
+        },
+        {
+          "kind": "main-frame-navigation",
+          "at": "2026-11-10T18:23:57.458Z",
+          "url": "<preview-origin>/designer/build.html?assembly=robot&snapshot=robot-wip-540056ba4e59&chapter=body&step=body-trays#assembly"
+        },
+        {
+          "kind": "main-frame-navigation",
+          "at": "2026-11-10T18:23:57.465Z",
+          "url": "<preview-origin>/designer/build.html?assembly=robot&snapshot=robot-wip-540056ba4e59&chapter=body&step=body-trays#assembly"
+        },
+        {
+          "kind": "main-frame-navigation",
+          "at": "2026-11-10T18:23:57.652Z",
+          "url": "<preview-origin>/designer/build.html?assembly=robot&snapshot=robot-wip-540056ba4e59&chapter=body&step=body-platforms#assembly"
+        },
+        {
+          "kind": "main-frame-navigation",
+          "at": "2026-11-10T18:23:57.656Z",
+          "url": "<preview-origin>/designer/build.html?assembly=robot&snapshot=robot-wip-540056ba4e59&chapter=body&step=body-platforms#assembly"
+        },
+        {
+          "kind": "main-frame-navigation",
+          "at": "2026-11-10T18:23:57.893Z",
+          "url": "<preview-origin>/designer/build.html?assembly=robot&snapshot=robot-wip-540056ba4e59&chapter=l-leg&step=l-motors#assembly"
+        },
+        {
+          "kind": "main-frame-navigation",
+          "at": "2026-11-10T18:23:57.895Z",
+          "url": "<preview-origin>/designer/build.html?assembly=robot&snapshot=robot-wip-540056ba4e59&chapter=l-leg&step=l-motors#assembly"
+        },
+        {
+          "kind": "main-frame-navigation",
+          "at": "2026-11-10T18:23:57.939Z",
+          "url": "<preview-origin>/designer/build.html?assembly=robot&snapshot=robot-wip-540056ba4e59&chapter=l-leg&step=l-hip#assembly"
+        },
+        {
+          "kind": "main-frame-navigation",
+          "at": "2026-11-10T18:23:57.943Z",
+          "url": "<preview-origin>/designer/build.html?assembly=robot&snapshot=robot-wip-540056ba4e59&chapter=l-leg&step=l-hip#assembly"
+        },
+        {
+          "kind": "main-frame-navigation",
+          "at": "2026-11-10T18:23:58.029Z",
+          "url": "<preview-origin>/designer/build.html?assembly=robot&snapshot=robot-wip-540056ba4e59&chapter=l-leg&step=l-upper#assembly"
+        },
+        {
+          "kind": "main-frame-navigation",
+          "at": "2026-11-10T18:23:58.032Z",
+          "url": "<preview-origin>/designer/build.html?assembly=robot&snapshot=robot-wip-540056ba4e59&chapter=l-leg&step=l-upper#assembly"
+        },
+        {
+          "kind": "main-frame-navigation",
+          "at": "2026-11-10T18:23:58.185Z",
+          "url": "<preview-origin>/designer/build.html?assembly=robot&snapshot=robot-wip-540056ba4e59&chapter=l-leg&step=l-front-knee#assembly"
+        },
+        {
+          "kind": "main-frame-navigation",
+          "at": "2026-11-10T18:23:58.190Z",
+          "url": "<preview-origin>/designer/build.html?assembly=robot&snapshot=robot-wip-540056ba4e59&chapter=l-leg&step=l-front-knee#assembly"
+        },
+        {
+          "kind": "main-frame-navigation",
+          "at": "2026-11-10T18:23:58.354Z",
+          "url": "<preview-origin>/designer/build.html?assembly=robot&snapshot=robot-wip-540056ba4e59&chapter=l-leg&step=l-rear-knee#assembly"
+        },
+        {
+          "kind": "main-frame-navigation",
+          "at": "2026-11-10T18:23:58.354Z",
+          "url": "<preview-origin>/designer/build.html?assembly=robot&snapshot=robot-wip-540056ba4e59&chapter=l-leg&step=l-rear-knee#assembly"
+        },
+        {
+          "kind": "main-frame-navigation",
+          "at": "2026-11-10T18:23:58.464Z",
+          "url": "<preview-origin>/designer/build.html?assembly=robot&snapshot=robot-wip-540056ba4e59&chapter=l-leg&step=l-apex#assembly"
+        },
+        {
+          "kind": "main-frame-navigation",
+          "at": "2026-11-10T18:23:58.467Z",
+          "url": "<preview-origin>/designer/build.html?assembly=robot&snapshot=robot-wip-540056ba4e59&chapter=l-leg&step=l-apex#assembly"
+        },
+        {
+          "kind": "main-frame-navigation",
+          "at": "2026-11-10T18:23:58.518Z",
+          "url": "<preview-origin>/designer/build.html?assembly=robot&snapshot=robot-wip-540056ba4e59&chapter=l-leg&step=l-wheel#assembly"
+        },
+        {
+          "kind": "main-frame-navigation",
+          "at": "2026-11-10T18:23:58.523Z",
+          "url": "<preview-origin>/designer/build.html?assembly=robot&snapshot=robot-wip-540056ba4e59&chapter=l-leg&step=l-wheel#assembly"
+        },
+        {
+          "kind": "main-frame-navigation",
+          "at": "2026-11-10T18:23:58.597Z",
+          "url": "<preview-origin>/designer/build.html?assembly=robot&snapshot=robot-wip-540056ba4e59&chapter=l-leg&step=l-stops#assembly"
+        },
+        {
+          "kind": "main-frame-navigation",
+          "at": "2026-11-10T18:23:58.597Z",
+          "url": "<preview-origin>/designer/build.html?assembly=robot&snapshot=robot-wip-540056ba4e59&chapter=l-leg&step=l-stops#assembly"
+        },
+        {
+          "kind": "main-frame-navigation",
+          "at": "2026-11-10T18:23:58.700Z",
+          "url": "<preview-origin>/designer/build.html?assembly=robot&snapshot=robot-wip-540056ba4e59&chapter=r-leg&step=r-motors#assembly"
+        },
+        {
+          "kind": "main-frame-navigation",
+          "at": "2026-11-10T18:23:58.705Z",
+          "url": "<preview-origin>/designer/build.html?assembly=robot&snapshot=robot-wip-540056ba4e59&chapter=r-leg&step=r-motors#assembly"
+        },
+        {
+          "kind": "main-frame-navigation",
+          "at": "2026-11-10T18:23:58.762Z",
+          "url": "<preview-origin>/designer/build.html?assembly=robot&snapshot=robot-wip-540056ba4e59&chapter=r-leg&step=r-hip#assembly"
+        },
+        {
+          "kind": "main-frame-navigation",
+          "at": "2026-11-10T18:23:58.766Z",
+          "url": "<preview-origin>/designer/build.html?assembly=robot&snapshot=robot-wip-540056ba4e59&chapter=r-leg&step=r-hip#assembly"
+        },
+        {
+          "kind": "main-frame-navigation",
+          "at": "2026-11-10T18:23:58.852Z",
+          "url": "<preview-origin>/designer/build.html?assembly=robot&snapshot=robot-wip-540056ba4e59&chapter=r-leg&step=r-upper#assembly"
+        },
+        {
+          "kind": "main-frame-navigation",
+          "at": "2026-11-10T18:23:58.857Z",
+          "url": "<preview-origin>/designer/build.html?assembly=robot&snapshot=robot-wip-540056ba4e59&chapter=r-leg&step=r-upper#assembly"
+        },
+        {
+          "kind": "main-frame-navigation",
+          "at": "2026-11-10T18:23:58.940Z",
+          "url": "<preview-origin>/designer/build.html?assembly=robot&snapshot=robot-wip-540056ba4e59&chapter=r-leg&step=r-front-knee#assembly"
+        },
+        {
+          "kind": "main-frame-navigation",
+          "at": "2026-11-10T18:23:58.945Z",
+          "url": "<preview-origin>/designer/build.html?assembly=robot&snapshot=robot-wip-540056ba4e59&chapter=r-leg&step=r-front-knee#assembly"
+        },
+        {
+          "kind": "main-frame-navigation",
+          "at": "2026-11-10T18:23:59.124Z",
+          "url": "<preview-origin>/designer/build.html?assembly=robot&snapshot=robot-wip-540056ba4e59&chapter=r-leg&step=r-rear-knee#assembly"
+        },
+        {
+          "kind": "main-frame-navigation",
+          "at": "2026-11-10T18:23:59.138Z",
+          "url": "<preview-origin>/designer/build.html?assembly=robot&snapshot=robot-wip-540056ba4e59&chapter=r-leg&step=r-rear-knee#assembly"
+        },
+        {
+          "kind": "main-frame-navigation",
+          "at": "2026-11-10T18:23:59.259Z",
+          "url": "<preview-origin>/designer/build.html?assembly=robot&snapshot=robot-wip-540056ba4e59&chapter=r-leg&step=r-apex#assembly"
+        },
+        {
+          "kind": "main-frame-navigation",
+          "at": "2026-11-10T18:23:59.262Z",
+          "url": "<preview-origin>/designer/build.html?assembly=robot&snapshot=robot-wip-540056ba4e59&chapter=r-leg&step=r-apex#assembly"
+        },
+        {
+          "kind": "main-frame-navigation",
+          "at": "2026-11-10T18:23:59.318Z",
+          "url": "<preview-origin>/designer/build.html?assembly=robot&snapshot=robot-wip-540056ba4e59&chapter=r-leg&step=r-wheel#assembly"
+        },
+        {
+          "kind": "main-frame-navigation",
+          "at": "2026-11-10T18:23:59.324Z",
+          "url": "<preview-origin>/designer/build.html?assembly=robot&snapshot=robot-wip-540056ba4e59&chapter=r-leg&step=r-wheel#assembly"
+        },
+        {
+          "kind": "main-frame-navigation",
+          "at": "2026-11-10T18:23:59.414Z",
+          "url": "<preview-origin>/designer/build.html?assembly=robot&snapshot=robot-wip-540056ba4e59&chapter=r-leg&step=r-stops#assembly"
+        },
+        {
+          "kind": "main-frame-navigation",
+          "at": "2026-11-10T18:23:59.416Z",
+          "url": "<preview-origin>/designer/build.html?assembly=robot&snapshot=robot-wip-540056ba4e59&chapter=r-leg&step=r-stops#assembly"
+        },
+        {
+          "kind": "main-frame-navigation",
+          "at": "2026-11-10T18:23:59.522Z",
+          "url": "<preview-origin>/designer/build.html?assembly=robot&snapshot=robot-wip-540056ba4e59&chapter=body&step=body-compute#assembly"
+        },
+        {
+          "kind": "main-frame-navigation",
+          "at": "2026-11-10T18:23:59.533Z",
+          "url": "<preview-origin>/designer/build.html?assembly=robot&snapshot=robot-wip-540056ba4e59&chapter=body&step=body-compute#assembly"
+        },
+        {
+          "kind": "main-frame-navigation",
+          "at": "2026-11-10T18:23:59.830Z",
+          "url": "<preview-origin>/designer/build.html?assembly=robot&snapshot=robot-wip-540056ba4e59&chapter=body&step=body-power#assembly"
+        },
+        {
+          "kind": "main-frame-navigation",
+          "at": "2026-11-10T18:23:59.832Z",
+          "url": "<preview-origin>/designer/build.html?assembly=robot&snapshot=robot-wip-540056ba4e59&chapter=body&step=body-power#assembly"
+        },
+        {
+          "kind": "main-frame-navigation",
+          "at": "2026-11-10T18:24:00.002Z",
+          "url": "<preview-origin>/designer/build.html?assembly=robot&snapshot=robot-wip-540056ba4e59&chapter=body&step=body-deck#assembly"
+        },
+        {
+          "kind": "main-frame-navigation",
+          "at": "2026-11-10T18:24:00.004Z",
+          "url": "<preview-origin>/designer/build.html?assembly=robot&snapshot=robot-wip-540056ba4e59&chapter=body&step=body-deck#assembly"
+        },
+        {
+          "kind": "main-frame-navigation",
+          "at": "2026-11-10T18:24:00.101Z",
+          "url": "<preview-origin>/designer/build.html?assembly=robot&snapshot=robot-wip-540056ba4e59&chapter=body&step=body-covers#assembly"
+        },
+        {
+          "kind": "main-frame-navigation",
+          "at": "2026-11-10T18:24:00.107Z",
+          "url": "<preview-origin>/designer/build.html?assembly=robot&snapshot=robot-wip-540056ba4e59&chapter=body&step=body-covers#assembly"
+        },
+        {
+          "kind": "main-frame-navigation",
+          "at": "2026-11-10T18:24:00.308Z",
+          "url": "<preview-origin>/designer/build.html?assembly=robot&snapshot=robot-wip-540056ba4e59&chapter=body&step=body-spine#assembly"
+        },
+        {
+          "kind": "main-frame-navigation",
+          "at": "2026-11-10T18:24:00.308Z",
+          "url": "<preview-origin>/designer/build.html?assembly=robot&snapshot=robot-wip-540056ba4e59&chapter=body&step=body-spine#assembly"
+        },
+        {
+          "kind": "main-frame-navigation",
+          "at": "2026-11-10T18:24:00.528Z",
+          "url": "<preview-origin>/designer/build.html?assembly=robot&snapshot=robot-wip-540056ba4e59&chapter=overview&step=overview#assembly"
+        },
+        {
+          "kind": "main-frame-navigation",
+          "at": "2026-11-10T18:24:00.533Z",
+          "url": "<preview-origin>/designer/build.html?assembly=robot&snapshot=robot-wip-540056ba4e59&chapter=overview&step=overview#assembly"
+        },
+        {
+          "kind": "main-frame-navigation",
+          "at": "2026-11-10T18:24:00.668Z",
+          "url": "<preview-origin>/designer/build.html?assembly=robot&snapshot=robot-wip-540056ba4e59&chapter=l-leg&step=l-wheel#assembly"
+        },
+        {
+          "kind": "main-frame-navigation",
+          "at": "2026-11-10T18:24:00.671Z",
+          "url": "<preview-origin>/designer/build.html?assembly=robot&snapshot=robot-wip-540056ba4e59&chapter=l-leg&step=l-wheel#assembly"
+        },
+        {
+          "kind": "document-observed",
+          "label": "before late-wheel sample",
+          "at": "2026-11-10T18:24:00.992Z",
+          "token": "fe20f933-5a78-4c0f-80b9-aa697a69796d",
+          "url": "<preview-origin>/designer/build.html?assembly=robot&snapshot=robot-wip-540056ba4e59&chapter=l-leg&step=l-wheel#assembly",
+          "readyState": "complete",
+          "visibility": "visible",
+          "focus": true
+        },
+        {
+          "kind": "document-observed",
+          "label": "after late-wheel sample",
+          "at": "2026-11-10T18:24:01.476Z",
+          "token": "fe20f933-5a78-4c0f-80b9-aa697a69796d",
+          "url": "<preview-origin>/designer/build.html?assembly=robot&snapshot=robot-wip-540056ba4e59&chapter=l-leg&step=l-wheel#assembly",
+          "readyState": "complete",
+          "visibility": "visible",
+          "focus": true
+        },
+        {
+          "kind": "main-frame-navigation",
+          "at": "2026-11-10T18:24:10.124Z",
+          "url": "<preview-origin>/designer/build.html?assembly=robot&snapshot=robot-wip-540056ba4e59&chapter=l-leg&step=l-motors#assembly"
+        },
+        {
+          "kind": "main-frame-navigation",
+          "at": "2026-11-10T18:24:10.128Z",
+          "url": "<preview-origin>/designer/build.html?assembly=robot&snapshot=robot-wip-540056ba4e59&chapter=l-leg&step=l-motors#assembly"
+        },
+        {
+          "kind": "main-frame-navigation",
+          "at": "2026-11-10T18:24:10.318Z",
+          "url": "<preview-origin>/designer/build.html?assembly=robot&snapshot=robot-wip-540056ba4e59&chapter=l-leg&step=l-upper#assembly"
+        },
+        {
+          "kind": "main-frame-navigation",
+          "at": "2026-11-10T18:24:10.322Z",
+          "url": "<preview-origin>/designer/build.html?assembly=robot&snapshot=robot-wip-540056ba4e59&chapter=l-leg&step=l-upper#assembly"
+        }
+      ],
+      "totalEvents": 63
+    }
+  ],
+  "errors": [],
+  "error": "Error: page.evaluate: Execution context was destroyed, most likely because of a navigation."
+}

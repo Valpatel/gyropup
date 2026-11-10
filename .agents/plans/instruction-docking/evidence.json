@@ -1,0 +1,76 @@
+{
+  "date": "2026-11-10",
+  "runtime_source_commit": "df7fec062753be4b0170c4d22453a6d44bf18def",
+  "commands": [
+    "npm run test:instruction-docking",
+    "PLAYWRIGHT_BROWSER=webkit npm run test:instruction-docking"
+  ],
+  "actual_states_per_engine": 132,
+  "reports": {
+    "chromium": "composed-df7/chromium.json",
+    "webkit": "composed-df7/webkit.json"
+  },
+  "sources": {
+    "tests/site/assembly/test-instruction-docking.mjs": "6dee980c11df35d478f2a0d77f1b95c109f9b05c8c8e3643e9f6bc866d65e885",
+    "software/site/designer/assembly/workspace.js": "ebfbe51e22164688add70084f92728b6e47de1f341a1976c513b24c09e0195f7",
+    "software/site/designer/assembly/guide.css": "e5c5c311f6e6efcbdfc100eab2c028716840f5faebdcfe0639b8a206015c085f",
+    "software/site/designer/build.html": "6d1056f618aaa9a3ebe15a3061d4cb9e38b7845fe385b6b0d6754fbca32e881e",
+    "software/site/designer/assembly/playback.js": "8a5c6e5930be6e05b38bb306731698c69f5eefaf39f9bfa96587bef5ac4990de"
+  },
+  "build_version": {
+    "revision": "df7fec062753be4b0170c4d22453a6d44bf18def",
+    "assets": "65ec72e22a8ffbf45eca",
+    "history": true,
+    "built": "2026-11-10T18:52:21.454Z"
+  },
+  "composition": {
+    "279": "02d7fb71834481bfd2748244e35c7fe344e56987",
+    "280": "e3401b0a6789c9a05daff8867f2348e114e2460b",
+    "normal_merge_279": "caed90e2",
+    "normal_merge_280": "df7fec062753be4b0170c4d22453a6d44bf18def",
+    "protected_native_bytes": "identical to280"
+  },
+  "poster_capture": {
+    "source": "df7fec062753be4b0170c4d22453a6d44bf18def",
+    "actual_frames": 12,
+    "visual_sha256": "6e012c3390e004f36669a7e69ef6efaca15d2226e8570cee05124e5d0e286f38",
+    "receipt_sha256": "0f71761f9f302865277df3582930d543b35c010e9b3511df96c23290694d2b8b",
+    "contract_check": "passed",
+    "neutral_generated_outputs": 60,
+    "neutral_export_check": "passed"
+  },
+  "original_failure_evidence": [
+    "ci-e87-popup/receipt.json",
+    "ci-e87-interactions/receipt.json",
+    "independent-559-flip/receipt.json",
+    "playing-2949/receipt.json"
+  ],
+  "previous_evidence": "evidence-before-native-actions.json",
+  "independent_review": "https://github.com/Valpatel/gyropup/pull/286#pullrequestreview-5847589130",
+  "files": {
+    "composed-df7/README.md": "7c80e6d78b79651d7336cee5b8d8aebebe04feda0b5b0277c5168257524bae8b",
+    "composed-df7/chromium-native-1024-isolated-popup.png": "ad179f4ecd9b796727db0c2ade70f913bf4b59ed405070a39ca8c2ef176dd937",
+    "composed-df7/chromium-native-844-mobile.png": "da61b99ab341a2688818c26dcd7eb3c693e145ea0a60c9e1afac475d7dc2ba3f",
+    "composed-df7/chromium-phone-actions-320.png": "096ac85ebd8ae5d906cbd0c8b7cdedc53c099c0be1575e061f9471031eb40b89",
+    "composed-df7/chromium-phone-actions-844.png": "c740215c232bd05d43ddc649baf1ef876ce2de0cc81746a2b547485966cbe8f7",
+    "composed-df7/chromium-robot-stopped-control-activation.png": "d383aff0efa16e141b81f289caa092474a70d11d2df2dd9f6601e8082e744458",
+    "composed-df7/chromium-windowed-1440-isolated-popup.png": "e718758b3dbc588515a1ebd8a02e5a8789443c6a3ab8101473c42ef0b23a81d8",
+    "composed-df7/chromium.json": "80cc09be3d6cd4fce0c4ea042e6751aed7a08d413de3c8c0c28051392e1fe895",
+    "composed-df7/local-checks.json": "f4467c9d4dd7e46545e6740717719af79ed58a75d80cc1c77c3fd255a56fa7c5",
+    "composed-df7/original-native-webkit-flip.json": "d294966660a47169652134a44c87a00787cbd4440d1faee162f9c0e97beee98e",
+    "composed-df7/original-native-webkit-playback-actions.json": "abf54461373059adb1ce5b4f4703ac9a2c050fc64136a7c629580320b1c608cc",
+    "composed-df7/original-native-webkit-report.json": "ef4e32d3d195cc4fa940277ac4a2a7bacb3b0e4d34822c2d8ffb7965623bbd24",
+    "composed-df7/webkit-native-1024-isolated-popup.png": "8ba8ef059f71f059731a452c7825499d14cac1b01baee878cf01ad19742e6812",
+    "composed-df7/webkit-native-844-mobile.png": "6295abdf4890c309c2822958981b27890511a090464c2fab5729d17535090137",
+    "composed-df7/webkit-phone-actions-320.png": "d59d14c9a22650232b7da4c601cd969b9f886ae2f03b30c37baddf63289b73e2",
+    "composed-df7/webkit-phone-actions-844.png": "0f9b6fd8946eb78f59f03e1428292b059c027daceb8177bf77f2e3e4ea0b0f15",
+    "composed-df7/webkit-robot-stopped-control-activation.png": "3a0624f4c819904e933638c132baae46559ad289884d1c547e30140a7414257e",
+    "composed-df7/webkit-windowed-1440-isolated-popup.png": "6b5dd4280f3e50a797855e5febf3682d6255e8d048d52dc706467d4ec1373589",
+    "composed-df7/webkit.json": "fc5717d0fd18d1a6635e776221cc04f01afe80a4ee43f3ccc78a3fc37ca490bc"
+  },
+  "limits": [
+    "Local Chrome151 and installed WebKit26.0; pinned normal CI remains mandatory.",
+    "Original narrow native playback report covers WebKit desktop only; both-engine and touch coverage comes from132-case reports.",
+    "Screenshots and native interaction checks establish software presentation, not hardware qualification."
+  ]
+}

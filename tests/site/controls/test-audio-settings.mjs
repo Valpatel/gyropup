@@ -178,6 +178,9 @@ await acknowledgePrototypeNotice(context);
  });
  try {
   for(const design of ['v2','turret-box','talk']) {
+   console.log('PHASE audio-site-controls-'+design);
+   // Pause at a future boundary before talk loads; install's original instant may already be past.
+   if(design==='talk'){const time=new Date('2026-11-10T00:00:00Z');await page.clock.install({time});await page.clock.pauseAt(new Date(time.getTime()+60000));}
    await page.goto(base+(design==='talk'?'/designer/character/talk-demo.html':`/designer/sim.html?design=${design}&run=none&demo=0&alive=0&sound=1`),{waitUntil:'networkidle'});
    await page.waitForFunction(()=>window.__sim?.talk || window.__talk);
    await page.evaluate(()=>{window.testTalk=window.__sim?.talk || window.__talk;window.testSfx=window.__sim?.sfx || window.__sfx;window.testSfx.setEnabled(true);window.testTalk.setMuted(false);});
@@ -186,6 +189,12 @@ await acknowledgePrototypeNotice(context);
    assert.equal(await page.evaluate(()=>window.testTalk.say('A volume controlled answer',{conversation:true})),true);
    assert.ok(Math.abs(await page.evaluate(()=>window.audioTest.active.volume)-.22)<1e-9,`${design} uses shared volume`);
    await page.evaluate(()=>window.audioTest.active.onboundary?.({charIndex:2}));
+   if(design==='talk'){
+    // Advance the actual greeting deadline while the answer owns the voice.
+    await page.clock.runFor(400);
+    assert.equal(await page.evaluate(()=>window.audioTest.active?.text),'A volume controlled answer','The scheduled greeting must not cancel an active conversation');
+    assert.equal(await page.evaluate(()=>window.testTalk.isBusy()),true);
+   }
    await volume.evaluate(el=>{el.value='.2';el.dispatchEvent(new Event('input',{bubbles:true}));});
    assert.ok(Math.abs(await page.evaluate(()=>window.audioTest.active.volume)-.11)<1e-9,`${design} updates current browser speech volume`);
    assert.equal(await page.evaluate(()=>window.audioTest.active.text),'volume controlled answer');

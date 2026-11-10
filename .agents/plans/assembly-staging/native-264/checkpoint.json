@@ -1,0 +1,50 @@
+{
+  "schema": "gyropup.native-pair-prefix-checkpoint/1",
+  "date": "2026-11-10",
+  "job": 264,
+  "status": "independently-accepted-partial-artifact-incomplete-native-study",
+  "source": "542b9a40396845708139e95e6b77f4a4e975fb36",
+  "core": "5c29c9e2abf2562baa72a05248f23de054b8241e",
+  "input_job": 261,
+  "frame_job": 263,
+  "plan_sha256": "1316f2e4e315ee2cd45ed805d92ee219699a311bf09bb8d106148145fb8a96cc",
+  "action_plan_sha256": "6bf9d0fc4202727741ffdf0abba917eb6a84e4ef8841362414158a847c89bcc3",
+  "operator_sha256": "744688f97127f47e5a236066137cfe2e29a9cda5f9c5bb276475b35d7711455a",
+  "recipe_sha256": "f243cff65a834e0368ffad6f1d38b954849c41309cdb9cdf83f5a1531a9651c4",
+  "native_wrapper_sha256": "35a3082802a71249294f2aa2249c84e8f39a4a2b2c6d00d306a90bd0a3751329",
+  "action_review": "https://github.com/Valpatel/gyropup/issues/276#issuecomment-6774108477",
+  "started": "https://github.com/Valpatel/gyropup/issues/276#issuecomment-6774140233",
+  "archive_sha256": "b5da76d4908f60f78f9d3ddfbb81ebd4e482c6e2ae17cd889d9f2153a4f3f31b",
+  "completed_pairs": 42,
+  "uncompleted_pairs": 48,
+  "states": {
+    "clear": 36,
+    "seat": 6
+  },
+  "independent_postaction_review": "https://github.com/Valpatel/gyropup/issues/276#issuecomment-6774431800",
+  "native_study_complete": false,
+  "geometry_acceptance": false,
+  "adoption_approved": false,
+  "leg_geometry_changed": false,
+  "files": {
+    "audit.py": "16d8513e05711d82122ecfc5eefe2fc71390ffe2824948f30976a9520b8516cb",
+    "phase.json": "9170e68f2691aa07b4b978b2be733463eaf3cdde413a0675faa1d44f63bf1f65",
+    "artifact-audit.json": "63a5b51dbeb448f3c5606fe2779bff878945c6a177545d1bb15dfd46fd749e0f",
+    "report.json": "0cfa0ef2f07ed9278855ac1579d911a246a01d9e134d7bad3b69f7d74c99d49d",
+    "independent-audit.py": "9c7ddeef2d6bded168f342a10958f0341d6f2c608c1ddf44c09effb6e9c11b56",
+    "seat-classification.json": "7e14308cd0bac73bd698bb55312324772e7119562a2e7e5ab464dfae930a6a04",
+    "members.json": "f2f97d5d1f392be008617bfcda4c717d38f646187292795e63aa7bb4c30f1667",
+    "execution.json": "97a51ed7aa6c73c2df33cc8cc324db9d8502b2c9fb9357b68d4d7e81dd740f0f",
+    "README.md": "7301da2a0787c1a9c25f5b3e23453690ab119126656075e7c8fa90c8aee5f483",
+    "source.json": "a7f6219e068d29f2232fec6c95d0fcb0392fdb85ef39332f66961b912ac939c8",
+    "independent-audit.json": "bdfe81a30eba41120f3fdb26c68f6a08f1eb533e73e73991f5b54eb34c871397",
+    "next-question.json": "468236551a2084da84b1ec06747d5c500b6715d3183ac76d72a60137ce01bd96",
+    "progress.jsonl": "a600b975a39ee3497bb7778919b665937a5a8953158c50fe14c656ee760f8c6a"
+  },
+  "independent_audit_portability": {
+    "original_script_sha256": "bcab932a08063578a7de48fe48a76ced46a03b86271865cf622267d42cced6df",
+    "portable_script_sha256": "9c7ddeef2d6bded168f342a10958f0341d6f2c608c1ddf44c09effb6e9c11b56",
+    "changes": "Only private input path literals/fallback selection replaced with explicit CLI arguments; optional output path replaced with exclusive CLI output. Assertions and original receipt preserved.",
+    "portable_replay_receipt_sha256": "bdfe81a30eba41120f3fdb26c68f6a08f1eb533e73e73991f5b54eb34c871397"
+  }
+}
