@@ -13,7 +13,7 @@ import sys
 import time
 
 ROOT = Path(__file__).resolve().parents[3]
-sys.path.insert(0, str(ROOT))
+sys.path[:0] = [str(ROOT), str(Path(__file__).resolve().parent)]
 from tools.evidence.manufacturing import retained_fit_history as history
 from robot_data import sha
 import robot_print_match as sampler
