@@ -25,6 +25,12 @@
       "sha256": "8f13bd98ef3deb96df2d5b2cebff37c806843aadb9ab23d8d190e815ed5d987c",
       "tested_site_revision": "0bd2a122ba89a1f3285260728b927eb6b4ef23c9",
       "scope": "Earlier Robot1440 state interpolation/control checkpoint; world-space comparison added later."
+    },
+    {
+      "file": ".agents/plans/build-workspace-evidence/root-late-wheel-1ec.json",
+      "sha256": "e97f729498bed5213d2bea8e4c977a94cf60a46c35d8a0e7db54e719e7a97586",
+      "tested_site_revision": "1ec82f67222b7b0d8d9522f21b6ea2c649018e91",
+      "scope": "Independent real UI Robot left-wheel jump/Play and controlled existing player clock to90.9% tyre arrival; same camera, actual world displacement and512 real vertices in frustum. No app/printer activation."
     }
   ],
   "retained_failures": [
@@ -32,5 +38,6 @@
     "Composite180-second320 layout cap after Robot24-step prefix",
     "Actual1200px three-pane190px free-width failure, corrected by1280single-sheet breakpoint"
   ],
-  "current_harness_sha256": "90c36c5a70fa4bd71694651de77c317ca10ea84abd46b7ea353461c09df17b8a"
+  "checkpoint_harness_sha256": "90c36c5a70fa4bd71694651de77c317ca10ea84abd46b7ea353461c09df17b8a",
+  "checkpoint_harness_commit": "1ec82f67222b7b0d8d9522f21b6ea2c649018e91"
 }

@@ -4,7 +4,7 @@ import {createWorkspace,disposeRobot} from './workspace.js';
 import {readLocation,stepFor,validateIndex,matchSnapshot,progressKey,readProgress,saveProgress,writeLocation,snapshotsFor,canCompleteStep} from './state.js';
 const esc=s=>String(s??'').replace(/[&<>"']/g,c=>({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[c]));
 const host=document.getElementById('assembly');
-let active=null,request=0,pending=null,applying=false;
+let active=null,request=0,pending=null,applying=false,navigationEvents=null;
 const initialAnchor=location.hash,interactionEvents=new AbortController();let userMoved=false;
 for(const type of ['wheel','touchmove','pointerdown','keydown'])window.addEventListener(type,()=>{userMoved=true;},{once:true,passive:true,signal:interactionEvents.signal});
 const tabProgress=new Map(),assemblyChoices=new Map(),viewStates=new Map();
@@ -67,21 +67,24 @@ async function start(){
    if(nextViewer)active.playback=mountPlayback(host,active,()=>active?.viewer===nextViewer,(id)=>{if(active.step!==id)paint(id,{playback:true});});active.player=active.playback?.player;
    if(renderError)report('Interactive 3D is unavailable. '+(guide.steps.some(step=>step.poster)?'The same snapshot’s text and diagrams remain below.':'The same snapshot’s text remains below.'),true);
    else report(guide.snapshot.status==='wip'?'Source-bound WIP guide loaded. No physical build release.':'Versioned guide loaded. Its publication status is separate from physical qualification.');
-   window.__buildGuide={get active(){return active;},load,apply:id=>paint(id),dispose(){interactionEvents.abort();inspector.dispose();workspace.dispose();pending?.abort();active?.playback?.dispose();disposeRobot(active?.robot);active?.viewer?.dispose();for(const value of active?.posterURLs?.values()||[])URL.revokeObjectURL(value);active=null;}};
+   window.__buildGuide={get active(){return active;},load,apply:id=>paint(id),dispose(){interactionEvents.abort();navigationEvents?.abort();inspector.dispose();workspace.dispose();pending?.abort();active?.playback?.dispose();disposeRobot(active?.robot);active?.viewer?.dispose();for(const value of active?.posterURLs?.values()||[])URL.revokeObjectURL(value);active=null;}};
    if(!renderError&&route.assembly&&route.assembly!==assembly)workspace.choose(route.assembly,false);
    if(pending===abort)pending=null;
   }catch(error){const cancelled=abort.signal.aborted||own!==request;abort.abort();if(pending===abort)pending=null;nextViewer?.dispose();for(const value of posterURLs.values())URL.revokeObjectURL(value);if(cancelled)return;report(error.message+(active?' Your previous build remains selected.':''),true);if(active){const choice=assemblyChoices.get(assembly);select.value=choice?.snapshot||'';}else select.selectedIndex=-1;}
  }
- for(const [assembly,select]of selects)select.onchange=()=>{if(!snapshotsFor(index,assembly).length)return;const choice={snapshot:select.value};if((active?.overview?active.assembly:active?.guideAssembly)===assembly)load(select.value,{assembly});else assemblyChoices.set(assembly,choice);};
+ for(const [assembly,select]of selects)select.onchange=()=>{if(!snapshotsFor(index,assembly).length)return;const choice={snapshot:select.value};if(!active||(active.overview?active.assembly:active.guideAssembly)===assembly)load(select.value,{assembly});else assemblyChoices.set(assembly,choice);};
  workspace.setNavigation(assembly=>{const rows=snapshotsFor(index,assembly);if(!rows.length)return false;const choice=assemblyChoices.get(assembly)||{snapshot:rows[0].id};if(active?.guideAssembly===assembly&&active.guide.snapshot.id===choice.snapshot)workspace.step(choice.step||active.step);else load(choice.snapshot,{assembly,step:choice.step});return true;});
+ // Recovery must retain navigation/lifecycle even when the initial route is rejected.
+ navigationEvents?.abort();navigationEvents=new AbortController();
+ window.addEventListener('popstate',()=>{try{const next=readLocation(location,index),assembly=next.assembly||'turret',row=index.snapshots.find(s=>s.id===next.snapshot);if(row&&(row.assembly||'turret')===assembly){if(next.snapshot!==active?.guide.snapshot.id)load(next.snapshot,next);else workspace.step(stepFor(active.guide,next).id);}else if(!active)load(next.snapshot,next);else workspace.choose(assembly,false);}catch(error){report(error.message+(active?' Your previous build remains selected.':''),true);}},{signal:navigationEvents.signal});
+ window.addEventListener('pagehide',()=>window.__buildGuide?.dispose(),{once:true,signal:navigationEvents.signal});
  let route;try{route=readLocation(location,index);}catch(error){selects.get('turret').selectedIndex=-1;throw error;}
  const desired=route.assembly||(route.step||route.chapter?'turret':'combined'),rows=snapshotsFor(index,desired),requested=index.snapshots.find(s=>s.id===route.snapshot);
  if(requested)assemblyChoices.set(requested.assembly||'turret',{snapshot:requested.id,step:route.step});
  const initial=rows.length&&(!requested||(requested.assembly||'turret')!==desired)?rows[0].id:route.snapshot;
  await load(initial,{...route,assembly:desired,step:initial===route.snapshot?route.step:null,chapter:initial===route.snapshot?route.chapter:null});
  if(!initialAnchor||initialAnchor==='#assembly'){await document.fonts.ready;await new Promise(resolve=>requestAnimationFrame(()=>requestAnimationFrame(resolve)));if(!userMoved){const top=document.querySelector('.appnav')?.getBoundingClientRect().bottom||64;window.scrollTo({top:host.getBoundingClientRect().top+scrollY-top-8,behavior:'instant'});}}
- window.addEventListener('popstate',()=>{const next=readLocation(location,index),assembly=next.assembly||'turret',row=index.snapshots.find(s=>s.id===next.snapshot);if(row&&(row.assembly||'turret')===assembly){if(next.snapshot!==active?.guide.snapshot.id)load(next.snapshot,next);else workspace.step(stepFor(active.guide,next).id);}else workspace.choose(assembly,false);});
- window.addEventListener('pagehide',()=>window.__buildGuide?.dispose(),{once:true});
+
 }
 function applyPresentation(s,frame){
  const a=active;

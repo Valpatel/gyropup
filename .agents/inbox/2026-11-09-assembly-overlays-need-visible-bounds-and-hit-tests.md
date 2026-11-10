@@ -80,3 +80,34 @@ Keep state markers and action hooks distinct. Resolve actions as typed controls
 is absent. A startup smoke must inspect the actual attached renderer and visible
 geometry as well as meaningful instructions/navigation; procurement readiness is
 not sufficient.
+
+## Recover initialization before the first successful model
+
+2026-11-10, PR267 current-head CI supplied three concrete controls:
+
+- Run42793469404 layout job129752517272 rejected the actual hierarchical guide
+  because its old readiness control still required exactly three flat chapter
+  buttons. The corrected barrier checks an attached live canvas, visible meshes,
+  unique real part rows, and the bound guide's step dropdown/text. The held-model
+  negative remains: procurement readiness cannot release assembly readiness.
+- The same run's Print job129752517254 timed out on a second same-page navigation
+  before injecting its project failure. The product cause was not established.
+  Independent Print boundaries now use fresh contexts and DOMContentLoaded plus
+  actual guide readiness, with unchanged limits/assertions. Service workers are
+  blocked only for controlled HTTP faults, and request counts prove the rejected
+  project and restored retry actually crossed that boundary.
+- Run42794535081 Build-portal job129756320087 passed core and version-switching,
+  then timed out after a rejected initial snapshot: selecting a valid snapshot
+  changed the select but did not load a model. An actual Chrome counterexample
+  on `c7175631` also clicked Robot and observed `active:false, canvases:0`, with the
+  original unavailable-snapshot status. Snapshot selection treated no active
+  model as an inactive assembly; workspace choice returned before the loader.
+  The rejected initial route also skipped history/pagehide registration.
+
+Do not infer that a recovery handler can require successful initialization.
+Explicit valid choices must enter the loader when no model exists. Install
+history and disposal handlers independently of initial route success, replacing
+old routing handlers on retry. Test the original rejection, every enabled
+assembly choice, subsequent back/forward, and disposal. Keep a previous coherent
+model when a later invalid route is rejected; do not silently substitute another
+snapshot. These are presentation/lifecycle rules, not physical qualification.
