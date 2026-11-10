@@ -1,0 +1,72 @@
+{
+  "date": "2026-11-10",
+  "source": "76cc5b3dcd9d4d9bd94e156fc70a0652f9c332e0",
+  "run": 42911133249,
+  "attempts": [
+    {
+      "case": "layout",
+      "job": 130161882897,
+      "artifact": 13807986107,
+      "artifact_sha256": "7e2449a60d57d558cd2a2c71163fc5eb071a5fa77d3f42b6d6705900a0ffbd81",
+      "full_log_sha256": "45631090897d04e1e66bc576773c50bd96413e0869e19682b6e60e333a03326a",
+      "outcome": "failed",
+      "boundary": "162 actual versus old171 in Robot workspace",
+      "log_excerpt": [
+        "2026-11-10T22:06:10.7435527Z PHASE layout-1440",
+        "2026-11-10T22:06:41.4584992Z AssertionError [ERR_ASSERTION]: Expected values to be strictly equal:",
+        "2026-11-10T22:06:41.4585747Z 162 !== 171",
+        "2026-11-10T22:06:41.4586451Z     at file://tests/site/assembly/test-build-workspace.mjs:47:217 {",
+        "2026-11-10T22:06:41.4806706Z ##[error]Process completed with exit code 1."
+      ]
+    },
+    {
+      "case": "interactions",
+      "job": 130161883200,
+      "artifact": 13808255847,
+      "artifact_sha256": "b5fad63643208eacc17a3abaa45b1c8afadff5a07c8f561bee300aba3f87e067",
+      "full_log_sha256": "46161632e6863cedc336425310cdbfa9775f149d6cfbb6626d1133e771982a1f",
+      "outcome": "failed",
+      "boundary": "224 actual versus old233 at bare Combined route; preceding interaction scopes passed",
+      "log_excerpt": [
+        "2026-11-10T22:07:52.2388901Z PASS chromium interactions: 1 groups",
+        "2026-11-10T22:08:05.9451588Z PASS webkit interactions: 1 groups",
+        "2026-11-10T22:08:06.3823407Z PHASE explicit-version-only",
+        "2026-11-10T22:08:18.7523054Z PHASE bare-default",
+        "2026-11-10T22:08:29.5202544Z AssertionError [ERR_ASSERTION]: Expected values to be strictly equal:",
+        "2026-11-10T22:08:29.5203214Z 224 !== 233",
+        "2026-11-10T22:08:29.5203555Z     at file://tests/site/assembly/test-build-route.mjs:6:1707 {",
+        "2026-11-10T22:08:29.5391647Z ##[error]Process completed with exit code 1."
+      ]
+    },
+    {
+      "case": "print",
+      "job": 130161882913,
+      "artifact": 13807212902,
+      "artifact_sha256": "9fda5baacea44ef8126fc8bf519b5d32caebd3ff2662ad0495fc8ff7279192a2",
+      "full_log_sha256": "03e5a97a7acedaa087fbb5ae6f88ed1baf18dd149f28f3f568a5afe3e0b9f74e",
+      "outcome": "failed",
+      "boundary": "Both current hip original/geometry-only readbacks reached; L.upper_link_front nested summary click timed out; later corruption case unrun",
+      "log_excerpt": [
+        "2026-11-10T22:06:05.7186432Z PHASE print-all",
+        "2026-11-10T22:06:40.5092476Z PHASE prepared-project-fault",
+        "2026-11-10T22:07:11.5948438Z PHASE fullscreen-false",
+        "2026-11-10T22:07:31.2006400Z PHASE entering-fullscreen-false",
+        "2026-11-10T22:07:38.3543378Z PHASE fullscreen-entered-false",
+        "2026-11-10T22:07:44.3830898Z PHASE fullscreen-part-selected-false",
+        "2026-11-10T22:07:51.4929899Z PHASE fullscreen-true",
+        "2026-11-10T22:08:14.9553701Z PHASE entering-fullscreen-true",
+        "2026-11-10T22:08:17.3839557Z PHASE fullscreen-entered-true",
+        "2026-11-10T22:08:23.2408820Z PHASE fullscreen-part-selected-true",
+        "2026-11-10T22:08:30.6979269Z PASS chromium print: 4 groups",
+        "2026-11-10T22:08:42.6135547Z PHASE print-current",
+        "2026-11-10T22:11:22.0980016Z locator.click: Timeout 30000ms exceeded.",
+        "2026-11-10T22:11:22.0982015Z     - locator resolved to <summary>Modeled context</summary>",
+        "2026-11-10T22:11:22.0984129Z     at pickList (tests/site/assembly/test-build-workspace.mjs:41:312)",
+        "2026-11-10T22:11:22.0985736Z     at async file://tests/site/assembly/test-build-workspace.mjs:128:5 {",
+        "2026-11-10T22:11:22.1205876Z ##[error]Process completed with exit code 1."
+      ]
+    }
+  ],
+  "source_review_only": "Legacy-index fallback source now requests /web/robot-current/manifest.json; old held rig request is stale by source inspection, not a separately observed76cc timeout. Actual native click/browser acceptance remains pending.",
+  "offline_validation": "Fixed authored guide/model identities and raw view SHA/counts match all five retained snapshots; current224 originals/162 non-turret/228 display partitions verified; current hips matched and upper link pending;13 existing pure guards and syntax/diff pass. No local browser campaign."
+}
