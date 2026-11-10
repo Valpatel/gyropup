@@ -1,0 +1,152 @@
+{
+  "schema": "gyropup.build-workspace-evidence/1",
+  "qualification": "Retained measured checkpoints only. Current-head complete CI and independent review are required before product promotion. No physical qualification.",
+  "reports": [
+    {
+      "file": ".agents/plans/build-workspace-evidence/webkit-interactions.json",
+      "sha256": "c8645f0ff559a2feaff099e7ff0023530d521076a1488cf47b1e23c01fbb55a6",
+      "tested_site_revision": "1544c0cd7cc44e51948c5fbbbbaf9a2f88c0285b",
+      "scope": "Actual Turret interaction checkpoint, native fullscreen3viewports and1200single-sheet; legacy all fields are selector defaults, not all-assembly coverage."
+    },
+    {
+      "file": ".agents/plans/build-workspace-evidence/chromium-interactions.json",
+      "sha256": "638e3cb21498eb75a4c9eb83e82263b2026340697aa0926d4c00880281022622",
+      "tested_site_revision": "1544c0cd7cc44e51948c5fbbbbaf9a2f88c0285b",
+      "scope": "Actual Turret interaction checkpoint; fullscreen controls/framing tested, native document property added to later harness."
+    },
+    {
+      "file": ".agents/plans/build-workspace-evidence/webkit-playback-world.json",
+      "sha256": "d32452a74165c05609f89c55d8543eae4f01c47cb337c1af8f9452e5bd55b694",
+      "tested_site_revision": "d4eadd11516f9ca85bec5cc55e44ccb37739a68b",
+      "scope": "Actual Robot1440 playback with independent mesh-world displacement and late first-arrival framing."
+    },
+    {
+      "file": ".agents/plans/build-workspace-evidence/chromium-playback.json",
+      "sha256": "8f13bd98ef3deb96df2d5b2cebff37c806843aadb9ab23d8d190e815ed5d987c",
+      "tested_site_revision": "0bd2a122ba89a1f3285260728b927eb6b4ef23c9",
+      "scope": "Earlier Robot1440 state interpolation/control checkpoint; world-space comparison added later."
+    },
+    {
+      "file": ".agents/plans/build-workspace-evidence/root-late-wheel-1ec.json",
+      "sha256": "e97f729498bed5213d2bea8e4c977a94cf60a46c35d8a0e7db54e719e7a97586",
+      "tested_site_revision": "1ec82f67222b7b0d8d9522f21b6ea2c649018e91",
+      "scope": "Independent real UI Robot left-wheel jump/Play and controlled existing player clock to90.9% tyre arrival; same camera, actual world displacement and512 real vertices in frustum. No app/printer activation."
+    },
+    {
+      "file": ".agents/plans/build-workspace-evidence/recovery-chromium-982.json",
+      "sha256": "0facfb7cdf8165395c05cb7d6a8e54bf27500bc29bf7b495759763bec4b65860",
+      "tested_site_revision": "982ca04d34fd1e50b4a6749ba96bd95fa3ea8584",
+      "scope": "Chromium explicit initial-error dropdown/all3assembly recovery, back/forward/pagehide, no-script12PNGs and noGLversionprogress.",
+      "raw_report_sha256": "ed15dea91b832d4c2a306b76111753ea1f75d74f195379643fae09b3bfc32062",
+      "redaction": "Only the local preview origin was redacted."
+    },
+    {
+      "file": ".agents/plans/build-workspace-evidence/recovery-webkit-72.json",
+      "sha256": "bec5247ca367d1414ef291a61e26679bde0f086cc3166d3130d6d9177bbb9ae8",
+      "tested_site_revision": "72e725ac3f5cd75f50dcbb3c29b919565202158a",
+      "scope": "WebKit same recovery/no-script/noGL controls; source72 runtime matches982 except the static-only Markdown adapter.",
+      "raw_report_sha256": "f2143e0df1e245a639c66d100cc3995258a56e359da70df1316b5918d897c16e",
+      "redaction": "Only the local preview origin was redacted."
+    },
+    {
+      "file": ".agents/plans/build-workspace-evidence/playback-wheel-webkit-982.json",
+      "sha256": "18f5509d8cbce8e496b7cb955c683876d6539a8ce73f6eabb7c25b80f09ef7fb",
+      "tested_site_revision": "982ca04d34fd1e50b4a6749ba96bd95fa3ea8584",
+      "scope": "Existing Robot scene/body and lateleftwheel with controlled public player clock, actual worldvertexdelta, samecamera/frustum, reducedmotion/background/disposal."
+    },
+    {
+      "file": ".agents/plans/build-workspace-evidence/print-project-webkit-c717.json",
+      "sha256": "43bdfbd4bd52439472aff2d6e1aa8b4622036833846efae997c242780fadd49e",
+      "tested_site_revision": "c71756315d01afe048b5ab105a4706981c7ae1ad",
+      "scope": "Actual prepared-project HTTP404\u2192restore explicitretry, rejected/restoredrequestcounts and exactoriginal/projectdownloadgates."
+    },
+    {
+      "file": ".agents/plans/build-workspace-evidence/version-routing-webkit-c3.json",
+      "sha256": "8fa23e734d525fb53a6641cac0b8fb15cb3f7a8859ff41794a6c040354c28645",
+      "tested_site_revision": "c3a716f385fd2fd565212ddc19c82278c3701bc8",
+      "scope": "Actual3realversion-onlyroutes, Combinedcanonicalreload, bareCombineddefault; mixedlegacycontext, nativechanges, heldlate/disposal preserved.",
+      "test_harness_file": "tests/site/assembly/test-build-route.mjs",
+      "test_harness_sha256": "8a7f629666e3cda3fe805ec4971e2078e0e9481ba31cba498aa950b22b8bdad0"
+    },
+    {
+      "file": ".agents/plans/build-workspace-evidence/native-print-ready-chromium-50cc.json",
+      "sha256": "6e75bed4096619c9340dbfb7ea30361949a1daff15b81304e5e05775835f155e",
+      "tested_site_revision": "50cc2bf28d85a10a12d5cd153804b020016c3a89",
+      "scope": "Actual native document/mode/aria completion at original30s bound, selectedhip inside fullscreen, verifiedPrint escape and downloads; no application/printer activation.",
+      "test_harness_file": "tests/site/assembly/test-build-workspace.mjs",
+      "test_harness_sha256": "638fa586e29540f46026e83cc84146736c47aded22196b9777a0885d75c4b9f9"
+    },
+    {
+      "file": ".agents/plans/build-workspace-evidence/expanded-print-chromium-be2.json",
+      "sha256": "e10e0c72fc7301a84fe1131b68f149ae7aeb80bbedefd4374e2e1a7c0f15cde9",
+      "tested_site_revision": "be2bf8cda222f85f6b8934c5f9a06d9696b6d3e4",
+      "scope": "Denied fullscreen real selected-hip Print, reachable overlay controls and restored normal stacking; no application/printer activation.",
+      "test_harness_file": "tests/site/assembly/test-build-workspace.mjs",
+      "test_harness_sha256": "0fdeac92fe515126f297babd7bc80845f2c33f76a4056be6f01e3838592440bc"
+    },
+    {
+      "file": ".agents/plans/build-workspace-evidence/expanded-interactions-chromium-be2.json",
+      "sha256": "a906164993feb400dc60bb26c59f8ced8feda5db0a5f07980abc435c2348f939",
+      "tested_site_revision": "be2bf8cda222f85f6b8934c5f9a06d9696b6d3e4",
+      "scope": "Actual Turret hover/selection/section/native fullscreen plus denied-fullscreen hit targets at1440/390/320 and Escape restores normal stacking.",
+      "test_harness_file": "tests/site/assembly/test-build-workspace.mjs",
+      "test_harness_sha256": "0fdeac92fe515126f297babd7bc80845f2c33f76a4056be6f01e3838592440bc"
+    },
+    {
+      "file": ".agents/plans/build-workspace-evidence/expanded-print-webkit-be2.json",
+      "sha256": "39b2c3b17387b9e0136100967aff0298672fde17956d510fc49024ec58466211",
+      "tested_site_revision": "be2bf8cda222f85f6b8934c5f9a06d9696b6d3e4",
+      "scope": "Denied fullscreen real selected-hip Print, reachable overlay controls and restored normal stacking; no application/printer activation.",
+      "test_harness_file": "tests/site/assembly/test-build-workspace.mjs",
+      "test_harness_sha256": "0fdeac92fe515126f297babd7bc80845f2c33f76a4056be6f01e3838592440bc"
+    },
+    {
+      "file": ".agents/plans/build-workspace-evidence/expanded-interactions-webkit-be2.json",
+      "sha256": "9151548f05b69a7255ab3f3f24a3d254367b4f3476d7456a1e2ddf5e807b10dc",
+      "tested_site_revision": "be2bf8cda222f85f6b8934c5f9a06d9696b6d3e4",
+      "scope": "Actual Turret hover/selection/section/native fullscreen plus denied-fullscreen hit targets at1440/390/320 and Escape restores normal stacking.",
+      "test_harness_file": "tests/site/assembly/test-build-workspace.mjs",
+      "test_harness_sha256": "0fdeac92fe515126f297babd7bc80845f2c33f76a4056be6f01e3838592440bc"
+    },
+    {
+      "file": ".agents/plans/build-workspace-evidence/phone-bom-chromium-a76.json",
+      "sha256": "5551a1d14b0e330de8e08f3f25afdd0d778b566a7bbe8a4fb9f7dbcf6a9077d0",
+      "tested_site_revision": "a76c6eeb7ad16f4a1a414b34b20923cbef6abdb5",
+      "scope": "Targeted chromium diagnostic of actual320px Made table:120px sticky identity, full72x44 status labels beside it, both actual center hits and8columns/8headers. Ephemeral targeted probe, not a full procurement-suite pass.",
+      "image": ".agents/plans/build-workspace-evidence/phone-bom-chromium-a76.png",
+      "image_sha256": "9da92114a18a85477fe289906a4b7afc8fb3b615d33e42a896a25a891eac3df5"
+    },
+    {
+      "file": ".agents/plans/build-workspace-evidence/phone-bom-webkit-a76.json",
+      "sha256": "2069d9f615d3916c1a50419ee99b848c90438b79417d0494a2ea8a81c8c13689",
+      "tested_site_revision": "a76c6eeb7ad16f4a1a414b34b20923cbef6abdb5",
+      "scope": "Targeted webkit diagnostic of actual320px Made table:120px sticky identity, full72x44 status labels beside it, both actual center hits and8columns/8headers. Ephemeral targeted probe, not a full procurement-suite pass.",
+      "image": ".agents/plans/build-workspace-evidence/phone-bom-webkit-a76.png",
+      "image_sha256": "f302df936788f6451b9c2430ccdc8f82410fb741c626748c54cda08df088e4cc"
+    },
+    {
+      "file": ".agents/plans/build-workspace-evidence/playback-document-identity-chromium-1d0.json",
+      "sha256": "2925a607f13b5435864672f2a675926faecc268dba1aa76c5e7d6b7cf1c24145",
+      "raw_report_sha256": "5b0dcdec96c4f634c11934ac63d0fb6bb0a6e77a07679e91f98bc407b4e31ec9",
+      "redaction": "Only the local preview origin was replaced.",
+      "tested_site_revision": "1d0ad8e57d399154f725b6a0d56da6674d1b0736",
+      "scope": "Native Chrome151.0.7922.71 qualified local playback: one document from initial ready through late-wheel and disposal; all actual pose/camera/1008vertex/loop/progress/lifecycle assertions pass. Pinned bundled-Chromium environment parity and cause of the earlier1d0 CI context loss are not established. totalEvents counts browser event listeners; explicit document observations are additionally retained.",
+      "test_harness_file": "tests/site/assembly/test-build-workspace.mjs",
+      "test_harness_sha256": "479715819fbb779c082932757971ec5635310340610134dbdb5c11c49e30097f",
+      "image": ".agents/plans/build-workspace-evidence/playback-document-identity-chromium-1d0.png",
+      "image_sha256": "7157453fab562cd217a410d0a339e023c1c11ce298067e9c28ad0c862c642c17"
+    }
+  ],
+  "retained_failures": [
+    "Composite180-second Print cap after verified original retry prefix",
+    "Composite180-second320 layout cap after Robot24-step prefix",
+    "Actual1200px three-pane190px free-width failure, corrected by1280single-sheet breakpoint",
+    "bf41 pure mount200-event-loop-turn observer ended while valid project verification was still loading; replaced with actual state completion and held-response counterexample",
+    "bf41 denied fullscreen Print Explorer pointer intercepted by site navigation/footer because workspace ancestor stacking context stayed at3; corrected scoped expanded ancestor promotion",
+    "a76 local nativeChromium full procurement240s cap; diagnostic rerun proved all24pages/279IDs reached but pagination consumed229s, then cap during next Setup action. No complete-suite pass or infinite-pager claim.",
+    "a76 localWebKit full procurement240s cap after all24pages/279IDs and import/export; actual60s Parts & prints link stability timeout on Progress, failureobserver also incomplete. Cause unclassified; no readiness or pager runtime change inferred.",
+    "1d0 pinned-image Chromium playback job129821148876 lost evaluation context during asynchronous late-wheel observation; document/navigation cause unestablished. NativeChrome qualified positive does not erase this failed run."
+  ],
+  "checkpoint_harness_sha256": "90c36c5a70fa4bd71694651de77c317ca10ea84abd46b7ea353461c09df17b8a",
+  "checkpoint_harness_commit": "1ec82f67222b7b0d8d9522f21b6ea2c649018e91"
+}

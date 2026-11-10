@@ -7,7 +7,22 @@ import {acknowledgePrototypeNotice} from '../content/test-prototype-session.mjs'
 const root=new URL('../../../', import.meta.url),base=(process.env.SITE_URL||'http://127.0.0.1:8914').replace(/\/$/,'');
 const files=execFileSync('git',['ls-files','docs','research'],{cwd:root}).toString().trim().split('\n').filter(f=>f.endsWith('.md')&&publicForSource(f));
 const pages=[];for(const file of files){const source=await readFile(new URL(file,root),'utf8'),count=[...source.matchAll(/^```mermaid\s*$/gm)].length;if(count)pages.push({file,count,path:'/site/pages/'+publicForSource(file).toLowerCase().replace(/[^a-z0-9]+/g,'-')+'.html'});}
-assert.equal(pages.reduce((n,p)=>n+p.count,0),11,'Inventory every currently published diagram; update explicitly when adding sources');
+// Keep the complete existing inventory and explicitly enroll the two new Build
+// validation documents in the same real desktop/phone and recovery checks below.
+const expectedDiagrams=[
+ ['docs/architecture/architecture.md',1],
+ ['docs/architecture/mechanical-readiness.md',1],
+ ['docs/electronics/base-board-interfaces.md',1],
+ ['docs/legs/motor-day.md',2],
+ ['docs/legs/motor-thermal.md',1],
+ ['docs/research/power-electronics.md',3],
+ ['docs/software/rs04-motor-tool.md',1],
+ ['docs/turret/turret-bench-tests.md',1],
+ ['docs/validation/build-guide.md',1],
+ ['docs/validation/robot-assembly-data.md',1],
+];
+assert.deepEqual(pages.map(({file,count})=>[file,count]),expectedDiagrams,'Inventory every published diagram source; explicitly review additions and removals');
+const diagramCount=pages.reduce((n,p)=>n+p.count,0);
 const engine=process.env.PLAYWRIGHT_BROWSER==='webkit'?webkit:chromium;
 const browser=await engine.launch(engine===chromium?{channel:process.env.PLAYWRIGHT_CHANNEL==='chromium'?undefined:'chrome',headless:true}:{headless:true});
 const out=process.env.TEST_OUTPUT||'/tmp/gyropup-mermaid';await mkdir(out,{recursive:true});const cases=[],errors=[];
@@ -40,5 +55,5 @@ try{
  await retryPage.getByRole('button',{name:'Retry diagram'}).click();await ready(retryPage,pages[0].count);
  await retryPage.evaluate(()=>{const d=document.createElement('div');d.innerHTML='<pre><code class="language-mermaid">flowchart TD\nLater-->Rendered</code></pre>';document.querySelector('article').append(d);});
  await ready(retryPage,pages[0].count+1);await noSource(retryPage);await recovery.close();
- assert.deepEqual(errors,[]);await writeFile(`${out}/${engine.name()}-report.json`,JSON.stringify({pages,cases,bootstrapRecovery:true,runtimeRecovery:true,dynamic:true,errors},null,2));console.log(`${engine.name()}: all 7 published diagrams, desktop/phone, source routes, bootstrap/runtime recovery and dynamic insertion PASS`);
+ assert.deepEqual(errors,[]);await writeFile(`${out}/${engine.name()}-report.json`,JSON.stringify({pages,cases,bootstrapRecovery:true,runtimeRecovery:true,dynamic:true,errors},null,2));console.log(`${engine.name()}: all ${diagramCount} published diagrams, desktop/phone, source routes, bootstrap/runtime recovery and dynamic insertion PASS`);
 }finally{await browser.close();}

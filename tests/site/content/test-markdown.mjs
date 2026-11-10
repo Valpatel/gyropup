@@ -174,6 +174,18 @@ test('progress and build expose their data, tables, prices, and original downloa
   const orders = tables.find(table => table.header.some(cell => cell.text === 'Supplier part number'));
   assert.ok(orders?.rows.length > 1, 'order records remain parseable Markdown table rows');
   assert.equal(orders.header.length, 7, 'all order columns remain associated with their values');
+  assert.equal(orders.rows.length, document.querySelectorAll('#orders table[data-track="buy"] tbody tr').length,
+    'the static order table retains every rendered order, beyond the browser page size');
+  for (const title of document.querySelectorAll('#streams .card > b')) {
+    assert.ok(build.includes(title.textContent.trim()), 'collapsed workstream remains readable: ' + title.textContent);
+  }
+  // Revealing task tabs must not expose an unavailable child such as print preparation.
+  const unavailable = document.createElement('p');
+  unavailable.hidden = true;
+  unavailable.textContent = 'unavailable-preparation-negative-control';
+  document.querySelector('[data-build-panel="buy"]').append(unavailable);
+  const counterpart = htmlToMarkdown(document.toString(), 'designer/build.html');
+  assert.ok(!counterpart.includes(unavailable.textContent), 'unavailable descendants remain omitted');
   assert.ok(!tables.some(table => table.rows.some(row => row.length !== table.header.length)));
   assert.match(build, /https:\/\/gyropup.com\/exports\/leg\/bom.json/);
   assert.match(build, /https:\/\/gyropup.com\/exports\/[^)]+\.stl/);

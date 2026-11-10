@@ -1,0 +1,132 @@
+{
+  "source_commit": "80453a22a790f18007cbb591bd53c5ee52382b05",
+  "asset_fingerprint": "4fa6483187dae3ff47ef",
+  "scope": "Exact legacy turret snapshot + Robot assembly route, native assembly switches, held Robot request/manual Turret step, and disposal until old async context completes",
+  "receipts": {
+    "chromium": {
+      "status": "passed",
+      "report_sha256": "eaf8d6b4ce4c49646e930a30051cba30c7aa303ad53bd76521b986f1f1e12b57",
+      "viewport_png_sha256": "75a42c14d27cb6d24b64f792f462bac659b76ff19bef56d7a3b5d45938c03212",
+      "cases": [
+        {
+          "name": "fresh exact old-turret-snapshot plus Robot assembly resolves honest visible current context",
+          "actual": {
+            "active": true,
+            "assembly": "robot",
+            "guideAssembly": "turret",
+            "overview": true,
+            "step": "step-01",
+            "meshes": 80,
+            "vertices": 228408,
+            "framed": true,
+            "contextLost": false,
+            "turretVisible": false,
+            "canvasCount": 1,
+            "status": "Current WIP model \u00b7 orbit to explore. Choose Turret for the authored walkthrough."
+          }
+        },
+        {
+          "name": "native assembly changes preserve one canvas and distinct rendered context",
+          "actual": {
+            "active": true,
+            "assembly": "combined",
+            "guideAssembly": "turret",
+            "overview": true,
+            "step": "step-02",
+            "meshes": 203,
+            "vertices": 523032,
+            "framed": true,
+            "contextLost": false,
+            "turretVisible": true,
+            "canvasCount": 1,
+            "status": "Current WIP model \u00b7 orbit to explore. Choose Turret for the authored walkthrough."
+          }
+        },
+        {
+          "name": "late real robot cannot replace a newer manual turret step",
+          "actual": {
+            "active": true,
+            "assembly": "turret",
+            "guideAssembly": "turret",
+            "overview": false,
+            "step": "step-02",
+            "meshes": 4,
+            "vertices": 41322,
+            "framed": true,
+            "contextLost": false,
+            "turretVisible": true,
+            "canvasCount": 1,
+            "status": "Loading the full robot; the working turret guide remains available\u2026"
+          }
+        },
+        {
+          "name": "disposal leaves no canvas or active scene after a held context request completes"
+        }
+      ],
+      "errors": []
+    },
+    "webkit": {
+      "status": "passed",
+      "report_sha256": "90065d36e755078fc1ec66344ec465ecf6b93f15085aee58b6c37e64b6935005",
+      "viewport_png_sha256": "637a4e909c70ee0010172662c58fcf4cdebbc2fad6364db6000d3c4199631637",
+      "cases": [
+        {
+          "name": "fresh exact old-turret-snapshot plus Robot assembly resolves honest visible current context",
+          "actual": {
+            "active": true,
+            "assembly": "robot",
+            "guideAssembly": "turret",
+            "overview": true,
+            "step": "step-01",
+            "meshes": 80,
+            "vertices": 228408,
+            "framed": true,
+            "contextLost": false,
+            "turretVisible": false,
+            "canvasCount": 1,
+            "status": "Current WIP model \u00b7 orbit to explore. Choose Turret for the authored walkthrough."
+          }
+        },
+        {
+          "name": "native assembly changes preserve one canvas and distinct rendered context",
+          "actual": {
+            "active": true,
+            "assembly": "combined",
+            "guideAssembly": "turret",
+            "overview": true,
+            "step": "step-02",
+            "meshes": 203,
+            "vertices": 523032,
+            "framed": true,
+            "contextLost": false,
+            "turretVisible": true,
+            "canvasCount": 1,
+            "status": "Current WIP model \u00b7 orbit to explore. Choose Turret for the authored walkthrough."
+          }
+        },
+        {
+          "name": "late real robot cannot replace a newer manual turret step",
+          "actual": {
+            "active": true,
+            "assembly": "turret",
+            "guideAssembly": "turret",
+            "overview": false,
+            "step": "step-02",
+            "meshes": 4,
+            "vertices": 41322,
+            "framed": true,
+            "contextLost": false,
+            "turretVisible": true,
+            "canvasCount": 1,
+            "status": "Loading the full robot; the working turret guide remains available\u2026"
+          }
+        },
+        {
+          "name": "disposal leaves no canvas or active scene after a held context request completes"
+        }
+      ],
+      "errors": []
+    }
+  },
+  "limits": "Presentation/source context only, not physical qualification. First Chromium disposal-only 1.5-second receipt is not used. Broader revised UI/playback/data acceptance remains pending."
+}

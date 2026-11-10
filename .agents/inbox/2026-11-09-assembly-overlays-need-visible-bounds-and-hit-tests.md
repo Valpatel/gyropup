@@ -1,0 +1,206 @@
+# Fit visible geometry and test actual overlay hit targets
+
+2026-11-09 local / 2026-11-10 UTC, issue #266 and PR #267.
+
+## Evidence
+
+- Initial Build workspace at `b46a0c7a` reused the real playground robot inside
+  the existing guide stage. `Box3.setFromObject(robot.group)` also included hidden
+  FOV geometry, producing a tiny robot in the actual browser capture. Traversing
+  visible meshes and unioning their actual transformed bounds restored useful
+  framing without changing model vertices, units, joints or mounting transforms.
+- The independent `6a7b6b2f` browser study completed all 36 step rectangle checks
+  at desktop and phone widths, but visual inspection still found global app
+  navigation over the workspace controls. Stable rectangles do not prove usable
+  controls. The original bounded study timed out; partial successful checks are
+  retained separately from its failed overall result.
+- Actual Chromium at `fb846019`, using
+  `WORKSPACE_WIDTH=390 node tests/site/assembly/test-build-workspace.mjs`, failed:
+  `Expand: width 77.640625, height 36, reachable true` against the existing 44px
+  touch target requirement. The control was corrected; the threshold stayed 44.
+- At `8286ee61`, the same real 390x844 probe passed initial hit targets, distinct
+  Robot/Combined context/mount checks and all twelve stable unoccluded turret
+  states, then failed at the native Appearance label lookup. The actual screenshot
+  showed the inspector and select; an explicit accessible name was added.
+
+- At `3e839ab6`, the exact legacy route `snapshot=turret-wip-4866459e2abd&assembly=robot`
+  became blank. Fresh-browser evidence showed `Cannot set properties of null
+  (setting 'hidden')`, followed by `Viewer is disposed`. The hierarchy rewrite
+  removed an instruction/BOM wrapper while `workspace.present` still required it.
+  The loader disposed the newly published viewer after the presentation error.
+  `80453a22` removed the obsolete reference and postponed prior-viewer disposal
+  until successful presentation, restoring the prior scene on failure.
+  Exact-route, native assembly switch, held-context/manual-step and completed
+  asynchronous-disposal controls passed Chromium and WebKit. Canonical hashes
+  and actual rendered observations are in
+  `../plans/versioned-build-guide-route-proof.json`.
+
+## Cause and corrective rule
+
+Three-dimensional bounds can contain intentionally hidden context. Fit only the
+visible modeled geometry. Keep the expected CAD frame independent from camera
+fitting, and never correct a framing problem by altering model placement.
+
+Overlay acceptance needs both geometry projection and real browser hit testing
+at the actual viewport dimensions. Check `elementFromPoint`, touch target size,
+global fixed navigation, nested scrolling and initial anchor settlement. A
+full-page capture at a narrow width with a desktop height is diagnostic only;
+record the exact viewport and take viewport captures for phone acceptance.
+
+A renderer may be loaded successfully while product presentation still fails.
+Do not dispose the prior coherent scene until the replacement has painted its UI.
+When overlay DOM is restructured, run the exact default and legacy assembly links
+in fresh contexts; waiting only for an unrelated procurement-ready flag misses a
+blank guide. Async disposal evidence must wait for the old operation to finish,
+not an arbitrary sleep.
+
+Use separate bounded browser scopes and retain failed receipts. A timer cap,
+a later failing control, or a screenshot closure cannot turn earlier partial
+observations into an overall pass.
+
+## Limits
+
+These checks establish presentation and interaction behavior. They do not prove
+physical fit, strength, insertion paths or robot qualification. Playground
+context retains its own interim body and mirrored leg representation; it is
+separate from source-bound CAD assembly guides.
+
+## State attributes must not become action hooks
+
+At `ce31b3b3`, the first startup probe found that the workspace's `data-sheet-size`
+state attribute also matched a generic action selector. Assigning the resize
+control's text replaced the workspace subtree; a ready flag or zero page errors
+could not establish usable 3D. `5866182e` split state into `data-sheet-size` and
+user action into `data-sheet-resize`; `330fc021` required typed button selectors.
+The same exact-route probes in both engines then verified an attached canvas,
+nonzero visible meshes, real instructions and the navigation dropdown.
+
+Keep state markers and action hooks distinct. Resolve actions as typed controls
+(for example `button[data-sheet-resize]`), and fail explicitly when required DOM
+is absent. A startup smoke must inspect the actual attached renderer and visible
+geometry as well as meaningful instructions/navigation; procurement readiness is
+not sufficient.
+
+## Recover initialization before the first successful model
+
+2026-11-10, PR267 current-head CI supplied three concrete controls:
+
+- Run42793469404 layout job129752517272 rejected the actual hierarchical guide
+  because its old readiness control still required exactly three flat chapter
+  buttons. The corrected barrier checks an attached live canvas, visible meshes,
+  unique real part rows, and the bound guide's step dropdown/text. The held-model
+  negative remains: procurement readiness cannot release assembly readiness.
+- The same run's Print job129752517254 timed out on a second same-page navigation
+  before injecting its project failure. The product cause was not established.
+  Independent Print boundaries now use fresh contexts and DOMContentLoaded plus
+  actual guide readiness, with unchanged limits/assertions. Service workers are
+  blocked only for controlled HTTP faults, and request counts prove the rejected
+  project and restored retry actually crossed that boundary.
+- Run42794535081 Build-portal job129756320087 passed core and version-switching,
+  then timed out after a rejected initial snapshot: selecting a valid snapshot
+  changed the select but did not load a model. An actual Chrome counterexample
+  on `c7175631` also clicked Robot and observed `active:false, canvases:0`, with the
+  original unavailable-snapshot status. Snapshot selection treated no active
+  model as an inactive assembly; workspace choice returned before the loader.
+  The rejected initial route also skipped history/pagehide registration.
+
+Do not infer that a recovery handler can require successful initialization.
+Explicit valid choices must enter the loader when no model exists. Install
+history and disposal handlers independently of initial route success, replacing
+old routing handlers on retry. Test the original rejection, every enabled
+assembly choice, subsequent back/forward, and disposal. Keep a previous coherent
+model when a later invalid route is rejected; do not silently substitute another
+snapshot. These are presentation/lifecycle rules, not physical qualification.
+
+The first actual recovery probe at `81740925` found a second initial-state
+boundary: on390px, the navigation row intercepted Robot because toolbar/nav
+measurements returned before any viewer existed. Measure floating controls before
+the viewer guard; loading and rejected routes must retain reachable choices.
+The same recovery regression includes a real back/forward round trip and pagehide.
+
+Current-head Print job129756319817 passed both original and prepared-project
+HTTP404 recovery, then its redundant pre-fullscreen diagnostic screenshot hit
+15s after fonts had loaded. The catch screenshot succeeded and showed a clear
+complete model; no fullscreen/Print assertion had run yet. The duplicate capture
+was removed, retaining sealed visibility/focus/button bounds and every actual
+fullscreen/Print assertion. Do not relabel that successful prefix as fullscreen
+acceptance, or increase the timeout to hide the capture failure.
+
+## Static exports must reveal intentional task panels
+
+2026-11-10, run42794535081 presentation job129756319770 reached a real Markdown
+failure in subtest4: the Supplier part number table was absent. Buy and Setup
+were intentionally hidden browser panels, and the serializer's generic `[hidden]`
+cleanup removed them. The static adapter now exposes only the direct workstream
+wrappers before cleanup; unavailable hidden descendants remain excluded and the
+browser DOM stays compact. The actual renderPortal→Markdown control preserves
+all279 order rows, seven columns and four workstreams, including rows beyond
+pagination; a hidden-child negative stays omitted. All six existing Markdown
+tests and eleven privacy tests passed. Reveal intentional presentation containers
+for static export, rather than stripping every hidden attribute or weakening the
+original table/download assertions.
+
+## An explicit version must resolve its indexed assembly
+
+2026-11-10 actual fresh WebKit at `bea6b2b6` requested the Robot540 and Turret486
+snapshot-only URLs. Both instead loaded Combined540 with233 model parts. The
+initial desired-assembly default ignored the explicit snapshot's indexed owner.
+Resolve a nonempty explicit snapshot to its index row's assembly when no assembly
+is supplied; retain explicit assembly overrides and keep the bare page's Combined
+default. Centralize this in location parsing so initial load, history and canonical
+version links agree. Tests cover all three real version-only routes, the bare
+default, explicit mixed override, unknown rejection and Combined canonical reload.
+Do not infer assembly from a label/revision string or silently substitute another
+version. The failing observation remains distinct from later fixed-head acceptance.
+
+Current-head50cc Print job129780849681 then reached the real fullscreen click,
+but immediately read `data-fullscreen:null` before the asynchronous transition
+completed. Both HTTP404 boundaries passed and errors were empty. The catch image
+already occupied the viewport, but that alone could not identify native versus
+expanded fullscreen. Await actual document.fullscreenElement, matching mode and
+pressed-control state (or the intentional expanded-denial state) before testing
+Print escape. The same30s bound remains; no fixed sleep or timeout increase is a
+substitute for the native completion predicate.
+
+The next bf41 Build-portal job129784699522 failed its pure mount test after81ms:
+200setImmediate turns elapsed while a valid restored project's asynchronous
+fetch/hash work remained loading. Iteration counts are not completion deadlines.
+The regression now observes the actual host data-state with a bounded
+MutationObserver and rejects wrong terminal states. A deterministic valid response
+is held beyond300 event-loop turns, proving it remains loading until released;
+then the original verified recovery/count/download assertions must pass. No
+product runtime or source-bound image input changed, and no poll-count increase
+substitutes for actual completion.
+
+
+### 2026-11-10: Expanded fullscreen must promote the ancestor stacking context
+
+The bf41 Print CI job129784699382 passed original/project404 recovery and native fullscreen Print, then timed out selecting Explorer in intentionally denied fullscreen. Its call log identified appnav pointer interception; retained failure PNG also showed the prototype footer across the model. `main.prog` establishes z-index3, below appnav50/footer51, so its fixed workspace child cannot escape that ancestor even at z-index10000. The scoped `main.prog:has(.assembly-layout[data-expanded=true])` promotion to100 places only the expanded workspace above site chrome, and removal of that state restores normal3 automatically. Persistent tests assert real center-point reachability at desktop/390/320 during denial, ordinary stacking after Escape/Print, and the existing selected-hip preparation flow. Native fullscreen remains governed by the browser top layer. This is a visual/runtime correction and requires a fresh actual twelve-image poster contract; the old bf41 campaign stays failed.
+
+Corrected be2 actual evidence: Chromium denied Print71.3s and interactions55.9s; WebKit denied Print52.0s and interactions45.2s all PASS/errors[]. Both interactions include1440/390/320 real center-point targets, Escape restoration; Print includes actual hip selection, verified preparation and normal stacking after exit. Four exact site/harness-bound reports retained in the workspace evidence index. The old200-turn pure helper was actually restored in a scratch counterexample and failed `loading !== ready` with the held valid response; corrected observer passed, and a race propagates early terminal/deadline failures before waiting forever for an unissued request.
+
+Fresh correction seal: `gy266-posters-907` completed90.725s/exit0 at90788070, visuala81cebd0…; twelve actual1280×900 PNGs validated all rendered vertices outside overlays and native fullscreen/collapsed-sheet state. New raw receiptSHAeece6208… is retained as current; previous53c receipt preserved under before-expanded-stacking. All twelve raster hashes are unchanged because this correction affects denied-fullscreen ancestor stacking, while native capture uses the browser top layer; no old receipt was relabeled. Regenerated60outputs, current37-input poster contract, and19puretests pass. The first build wrapper had exited254 before the builder due an omitted systemd WorkingDirectory; the corrected explicit-workdir ordinary build exited0, with both logs retained.
+
+
+### 2026-11-10: Responsive fixed tables need final column inventory and nested scroll ownership
+
+Current1c48 Build-portal job129800779769 failed real320px status reachability: sticky output_adapter right251.34px, expected at most160px, both status targets unreachable. Actual targeted reproduction `/tmp/gy266-phone-bom-before/report.json` confirms six source colgroup entries versus eight enhanced headers: Part was hardcoded230px despite120px phone sticky CSS, and status columns were appended without matching cols. Once the real row was scrolled into view, the sticky235.34px cell still intercepted Ordered (actual hit td.cad-part-identity); In hand was reachable. Product correction keeps desktop230px basis, switches actual Part col to120px on phones, and appends explicit88px status cols after enhancement. No columns or controls are removed.
+
+The same reproduction separately proved the old test's window-only scroll left rowY1329px and Buy panelY-911px, so its screenshots showed the ordinary page footer. Scrolling the actual row into view updates all nested scroll owners and brings rowY238px. Tests must bring targets into view before pointer hit assertions, retaining both geometry and true elementFromPoint checks. This does not justify hiding the footer, forcing clicks, relaxing width/touch targets, or treating offscreen measurements as actual product occlusion.
+
+The first corrected94 probe retained another failure: final8cols were present, but legacy #made min-width1100 scaled the120px identity to136.8 and88px statuses to100.3, leaving the first status left108.8 under identity right152.8 despite both centers hitting. Keep the stronger whole-target x-bound assertion: center reachability alone is insufficient. On phones, set fixed table width/min-width from its final column sum, with120px identity and84px status bases fitting the288px inner table viewport; desktop bases/expansion remain. Raw failed94 report and screenshot retained separately.
+
+Corrected a76 targeted actual320px positives: Chromium11.9s and WebKit2.8s both show identity exactly120px/right136 and Ordered/In hand72×44 targets fully beside it, right at most297px, both actual hits, final8cols/8headers. Retained exact served-version reports and screenshots in workspace evidence. WebKit resets horizontal position when scrollIntoView follows horizontal scrolling; the persistent test correctly brings the row through nested vertical owners FIRST, then explicitly scrolls the table horizontally. The initial opposite-order probe is retained as a probe failure, not a product regression.
+
+Broader local procurement probes remain incomplete: two nativeChromium240s caps and one WebKit240s cap under2CPU/3GiB. The diagnostic Chromium run proves all24pages/279IDs reached, but that phase consumed229s before the next Setup click met the cap. WebKit reached all24pages plus persistent import/export, then actual60s stability timeout at the Progress Parts & prints link; failure-state observer also did not finish before overall cap. No infinite-pager, readiness bug, or full-suite PASS is inferred. Preserve raw /tmp/gy266-bom-{full,diagnostic}-* logs/receipts; current full normal CI remains required. Existing harness now has finer phases, a Node60s observer bound matching its action budget, source-derived exact finite page coverage and native counter/disabled checks. All original rows, assertions, controls and overall limits remain.
+
+Final phone-BOM correction seal: `gy266-posters-6c` completed88.068s/exit0 at exact6c338309, new37-input visualc58fbc68… and raw receiptSHA29040eff…. All twelve actual1280×900 canvas PNGs validate native fullscreen, collapsed sheet, nonzero rendered vertices and no overlay/frustum occlusion; all12rasterhashes remain unchanged because the correction is outside the captured canvas. Previous a81 receipt retained before-phone-bom; currentreceipt is genuinely fresh. Regenerated60source-bound outputs and fresh contract pass.24combined JavaScript and24robot pure tests passed before the metadata seal; full normal pinned-environment CI and independent review remain required.
+
+
+### 2026-11-10: Context destruction needs document-identity evidence
+
+Pinned-image1d0 CI playback job129821148876 failed at12:13:32 with `page.evaluate: Execution context was destroyed, most likely because of a navigation` in the asynchronous late-wheel observation. Its catch PNG still showed a coherent left-wheel Robot stage; errors were empty and earlier world/loop checks had passed. That screenshot does not prove pose assertions passed or identify a navigation cause. Preserve the failed log/artifact rather than retrying the same observer or changing runtime speculatively.
+
+The test now gives each document a fresh token, records main-frame requests/navigation, created/loaded documents and page crashes/close in Node, and asserts initial-ready identity before/after late-wheel math and after disposal. Keep the existing30s observer bound and no evaluation retries. Only late-wheel vector math became synchronous, using actual loaded mesh.position.clone/fromBufferAttribute instead of another unversioned Three import; all world-unit, offset, camera/target,512-or-more sampled-vertex/frustum, completion and lifecycle assertions remain. This removes an unnecessary async boundary without establishing the old failure's cause.
+
+The intended bundledChromium1194 binary was absent from existing caches; no installation was made. One qualified nativeChrome151.0.7922.71 playback unit passed69.574s/exit0 against served1d0: one unchanged token at initial ready/beforewheel/afterwheel/disposed, one created document,1008 actual wheel vertices inside the frustum, worlddelta(0,0,-0.00545454545)m matching the independent authored-offset expectation at90.9%, same camera/target, no completion writes, errors0. Exact source/harness-bound report and screenshot retained in workspace evidence; only preview origin redacted, raw hash preserved. This is not pinned-image parity or an explanation of the original context destruction. Complete normal current-head CI is still required.

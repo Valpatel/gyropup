@@ -1,0 +1,117 @@
+{
+  "schema": 1,
+  "date_utc": "2026-11-10",
+  "issue": 266,
+  "pull_request": 267,
+  "capture_and_encoding_source": "76f1e243d1e87295ce085e3db28390eed12ec224",
+  "served_assets": "7c570190314c75038292",
+  "previous_encoding_source": "ac3b035a421e00d4c49f4cf5f4d72d0e0dd3c8b3",
+  "changed_capture_source": [
+    "software/site/designer/kit/stage.js"
+  ],
+  "changed_source_hashes": {
+    "software/site/designer/kit/stage.js": {
+      "previous": "f0d382e1a4ef6cc6c1a5c3c1be8ce5479daefaab299e829c924b17d74a7e5457",
+      "current": "9c79a56096dc505b26ef35e990e4f04218ac40cceeaefd42ad958242ff38f3ac"
+    }
+  },
+  "hardware_tree_before_and_after": "89ae8db4a748d5b19893293fbef3c1d49eeccc2f",
+  "environment": {
+    "node": "22.23.4",
+    "playwright": "1.56.1",
+    "chrome": "155.0.8059.39",
+    "ffmpeg": "6.1.1-3ubuntu5",
+    "execution": "isolated rendering compute host; existing dependency bytes and Node binary copied, no installations or image pulls",
+    "browser_boundary": "Native Chrome; not pinned CI browser parity",
+    "package_lock_sha256": "aed4ac2b83e3da7002d88a39ac33227be6eba43afb3913575ce8bdf2f537a104",
+    "node_binary_sha256": "94efd062ed066c1a0b332e18249859c905e920eeada5df55d24c99b919629a90",
+    "dependency_identity": {
+      "files": 4616,
+      "bytes": 578653211,
+      "manifest_sha256": "56da42a0059f8c5418b15b8b3ebf73efe19ce4a1b6e2f79f4686692bd8d7e885"
+    }
+  },
+  "run": {
+    "label": "gy266-media-76f1e243",
+    "bound_minutes": 35,
+    "exit_code": 0,
+    "completion": "RUN-DONE rc=0",
+    "issue_receipt": "https://github.com/Valpatel/gyropup/issues/266#issuecomment-6767342050",
+    "preflight_failure_receipt": "https://github.com/Valpatel/gyropup/issues/266#issuecomment-6767375717",
+    "commands": [
+      "node tools/site/build-site.mjs",
+      "SITE_URL=<owned ephemeral loopback server> CAPTURE_OUTPUT=<run>/frames node tools/evidence/media/capture-highlights.mjs",
+      "python3 -B tools/evidence/media/encode-highlights.py --frames <run>/frames --output <run>/results/highlights --threads 4",
+      "python3 -B tools/evidence/media/check-highlights.py --output <run>/results/highlights --frames <run>/frames",
+      "python3 -B tests/evidence/media/test-highlight-bindings.py"
+    ],
+    "first_attempt": "Build-only dependency ancestor lookup failed before capture; corrected isolated scratch node_modules link, preserving failed logs; no source or shared environment changed."
+  },
+  "capture": {
+    "raw_frames": 480,
+    "shots": {
+      "turret": 120,
+      "mechanism": 90,
+      "battle": 180,
+      "character": 90
+    },
+    "loaded_inputs": 179,
+    "mechanism_shots": 9,
+    "battle_shots": 3,
+    "battle_hits": 3,
+    "battle_knockdowns": 3,
+    "frame_errors": 0
+  },
+  "validation": {
+    "independent_strict_decode_and_raw_frame_manifest": true,
+    "rejected_seeded_faults": 25,
+    "binding_unit_tests": 11,
+    "transferred_output_sha256_matches_generated_receipt": true,
+    "local_adopted_bindings_and_all480_raw_frames": true,
+    "unchanged_tracked_hardware": true,
+    "reviewed_actual_decoded_seconds": [
+      1,
+      5,
+      9,
+      14,
+      17,
+      20
+    ],
+    "expected_negative_control_stderr": "Two fatal Git missing-path diagnostics are historical-revision faults deliberately seeded by the strict negative controls; guard exits 0 and records their rejection.",
+    "privacy_tests": 11,
+    "git_diff_check": true
+  },
+  "outputs": {
+    "gyropup-highlights.mp4": {
+      "sha256": "a335c86a4e059b23c12af56847ffbf704ca64dc2bddb4a613d7aed269dd5ebb8",
+      "bytes": 1872096
+    },
+    "gyropup-highlights.webm": {
+      "sha256": "cca6cff82f6bf9a821e938a96b54b53f9f1882640986d2d51bfd13811e2beaa1",
+      "bytes": 1488420
+    },
+    "gyropup-highlights.webp": {
+      "sha256": "7607565957afe5f8d39e65b17b12e85459890e819c11e93155cdce3e9cad241f",
+      "bytes": 33112
+    },
+    "capture-receipt.json": {
+      "sha256": "348901ff0c388a089ac57791ac28f9e451a239b6e77d8ce46f3e0d97a839186c",
+      "bytes": 122891
+    },
+    "capture-frames.json": {
+      "sha256": "defa53a1dcd19af84af1b98db07c66fceb46d996156f274ae390385872a18a9c",
+      "bytes": 100989
+    },
+    "receipt.json": {
+      "sha256": "c7511868b14e7ae96e4a14453bb125b478263df96b630e7e4494087e0e682090",
+      "bytes": 30035
+    }
+  },
+  "limits": "Fresh virtual browser capture and encode only. Historical single-leg MuJoCo clip and report remain pinned; E1 retains static load scaling, 37.5 kg recorded baseline, deformation x16, SF1.60 below required2 and original labels. No solver run or hardware/manufacturing qualification; whole hardware tree and lifecycle API preserved. Independent exact-head review and complete current CI remain required before integration.",
+  "closure": {
+    "previous_keys": 192,
+    "fresh_keys": 193,
+    "added_observed_input": "software/site/assets/favicon.svg",
+    "note": "Native Chrome additionally requested the unchanged repository favicon; source binding is included by the unchanged capture/encoder collector."
+  }
+}

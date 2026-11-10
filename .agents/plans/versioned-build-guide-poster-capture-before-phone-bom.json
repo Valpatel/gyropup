@@ -1,0 +1,1560 @@
+{
+  "visual_sha256": "a81cebd0e63c5cc2cc9f21ebf6f5f3f45eb1ddacb23d6295f1c8f88589a1c325",
+  "source_commit": "90788070aecb5012a3fdf34f3ad50c8301d8f4cf",
+  "version": {
+    "revision": "90788070aecb5012a3fdf34f3ad50c8301d8f4cf",
+    "assets": "eeb0281b36218e8bd335",
+    "history": true,
+    "built": "2026-11-10T11:08:37.106Z"
+  },
+  "browser": "151.0.7922.71",
+  "session_notice_acknowledged": true,
+  "render": {
+    "capture": "actual preserved WebGL canvas PNG readback after applyStep(id,{mode:ghost,explode:1,frame:true})",
+    "colorScheme": "light",
+    "deviceScaleFactor": 1,
+    "explode": 1,
+    "mode": "ghost",
+    "reducedMotion": "reduce",
+    "viewport": {
+      "height": 900,
+      "width": 1280
+    },
+    "workspace": {
+      "fullscreen": "native",
+      "sheet": "collapsed"
+    }
+  },
+  "frames": {
+    "step-01": {
+      "file": "step-01.png",
+      "sha256": "3a04458538aaa24e9b8c424e3db82e3d65dc159b17e4f22db6ef381c2198db37"
+    },
+    "step-02": {
+      "file": "step-02.png",
+      "sha256": "ebe10588f1c72c5b97cfaa541a82701e3141412b0ac2cd0791379d6a32f5d2f6"
+    },
+    "step-03": {
+      "file": "step-03.png",
+      "sha256": "59520227a7bda0eb2ed2c97a1628fc6feb8f2f59dff2137d4a10a2d7b31e2fb9"
+    },
+    "step-04": {
+      "file": "step-04.png",
+      "sha256": "11fa28827ea85d25f34d869bcb09395275f207df1ecbd1ee2378e674ed720b0c"
+    },
+    "step-05": {
+      "file": "step-05.png",
+      "sha256": "d37f4007aaa8b8386e1fd9f8c364646854874ce0c8037c586c9aee1a165844cb"
+    },
+    "step-06": {
+      "file": "step-06.png",
+      "sha256": "b7631c467ab216bf609c1b724d97e71971d300bbbf8d4cf8b01faca9af0df22c"
+    },
+    "step-07": {
+      "file": "step-07.png",
+      "sha256": "5445ee905a45a31f99110d3a9178548100a7e4970f4dd41b7e67c9b5ffc088b3"
+    },
+    "step-08": {
+      "file": "step-08.png",
+      "sha256": "df260e17b67d1430b0813acef0b3612e5788a35a08bc92bac93dd98738640a3f"
+    },
+    "step-09": {
+      "file": "step-09.png",
+      "sha256": "b26167f7a1aa4f281652a9d9153d541b6a17218d84bcc511b8f0f3a747941ee3"
+    },
+    "step-10": {
+      "file": "step-10.png",
+      "sha256": "f3646c68cf287b5b53ae609ab95708246538f3ed5684150f50c71ed0843fb0f9"
+    },
+    "step-11": {
+      "file": "step-11.png",
+      "sha256": "8de946fcbfdf9df5b33896a5bcd44126170ed4334a9558d4f631ab05d8f1fbb7"
+    },
+    "step-12": {
+      "file": "step-12.png",
+      "sha256": "095b479f8aeff8695f98878b66395d2df6e58bebd8971d323e4c99c89a1cb7e9"
+    }
+  },
+  "proof": {
+    "step-01": {
+      "step": "step-01",
+      "workspace": {
+        "nativeFullscreen": true,
+        "sheet": "collapsed"
+      },
+      "state": {
+        "visible": [
+          "pan_base"
+        ],
+        "highlight": [
+          "pan_base"
+        ],
+        "mode": "ghost",
+        "offsets_mm": {
+          "pan_base": [
+            0,
+            0,
+            0
+          ]
+        },
+        "selected": null,
+        "isolate": null,
+        "partModes": {}
+      },
+      "calls": 4,
+      "canvas": {
+        "width": 1280,
+        "height": 900,
+        "cssWidth": 1280,
+        "cssHeight": 900,
+        "geometryUnoccluded": true,
+        "vertices": 30078
+      },
+      "visible": [
+        "pan_base"
+      ],
+      "camera": [
+        0.14999327864742057,
+        0.22672549264541997,
+        0.28047713112989686
+      ],
+      "target": [
+        -0.024200000762939447,
+        0.023500000000000017,
+        -0.009845001220703156
+      ]
+    },
+    "step-02": {
+      "step": "step-02",
+      "workspace": {
+        "nativeFullscreen": true,
+        "sheet": "collapsed"
+      },
+      "state": {
+        "visible": [
+          "pan_base",
+          "pan_pinion",
+          "pan_servo",
+          "dt_receptacle"
+        ],
+        "highlight": [
+          "pan_pinion",
+          "pan_servo",
+          "dt_receptacle"
+        ],
+        "mode": "ghost",
+        "offsets_mm": {
+          "pan_pinion": [
+            0,
+            0,
+            70
+          ],
+          "pan_servo": [
+            0,
+            0,
+            40
+          ],
+          "dt_receptacle": [
+            0,
+            -40,
+            0
+          ]
+        },
+        "selected": null,
+        "isolate": null,
+        "partModes": {}
+      },
+      "calls": 8,
+      "canvas": {
+        "width": 1280,
+        "height": 900,
+        "cssWidth": 1280,
+        "cssHeight": 900,
+        "geometryUnoccluded": true,
+        "vertices": 41322
+      },
+      "visible": [
+        "pan_base",
+        "pan_pinion",
+        "pan_servo",
+        "dt_receptacle"
+      ],
+      "camera": [
+        0.21116774257982912,
+        0.3440957005665634,
+        0.41487957071206877
+      ],
+      "target": [
+        -0.024200000762939447,
+        0.0695,
+        0.022599998474121072
+      ]
+    },
+    "step-03": {
+      "step": "step-03",
+      "workspace": {
+        "nativeFullscreen": true,
+        "sheet": "collapsed"
+      },
+      "state": {
+        "visible": [
+          "pan_base",
+          "pan_pinion",
+          "pan_servo",
+          "dt_receptacle",
+          "base_board_carrier",
+          "base_board",
+          "base_board_screws",
+          "base_carrier_screws",
+          "base_board_inserts",
+          "base_carrier_inserts",
+          "index_magnet"
+        ],
+        "highlight": [
+          "base_board_carrier",
+          "base_board",
+          "base_board_screws",
+          "base_carrier_screws",
+          "base_board_inserts",
+          "base_carrier_inserts",
+          "index_magnet"
+        ],
+        "mode": "ghost",
+        "offsets_mm": {
+          "base_board_carrier": [
+            45,
+            0,
+            0
+          ],
+          "base_board": [
+            30,
+            0,
+            0
+          ],
+          "base_board_screws": [
+            25,
+            0,
+            0
+          ],
+          "base_carrier_screws": [
+            65,
+            0,
+            0
+          ],
+          "base_board_inserts": [
+            45,
+            0,
+            0
+          ],
+          "base_carrier_inserts": [
+            0,
+            0,
+            0
+          ],
+          "index_magnet": [
+            0,
+            0,
+            25
+          ]
+        },
+        "selected": null,
+        "isolate": null,
+        "partModes": {}
+      },
+      "calls": 18,
+      "canvas": {
+        "width": 1280,
+        "height": 900,
+        "cssWidth": 1280,
+        "cssHeight": 900,
+        "geometryUnoccluded": true,
+        "vertices": 67710
+      },
+      "visible": [
+        "pan_base",
+        "base_board_carrier",
+        "pan_pinion",
+        "pan_servo",
+        "base_board",
+        "base_board_screws",
+        "base_carrier_screws",
+        "base_board_inserts",
+        "base_carrier_inserts",
+        "index_magnet",
+        "dt_receptacle"
+      ],
+      "camera": [
+        0.259671219808755,
+        0.2661923488229866,
+        0.19854487203277474
+      ],
+      "target": [
+        -0.001588611602783188,
+        0.03758999633789063,
+        0.002599998474121068
+      ]
+    },
+    "step-04": {
+      "step": "step-04",
+      "workspace": {
+        "nativeFullscreen": true,
+        "sheet": "collapsed"
+      },
+      "state": {
+        "visible": [
+          "pan_base",
+          "pan_pinion",
+          "pan_servo",
+          "dt_receptacle",
+          "base_board_carrier",
+          "base_board",
+          "base_board_screws",
+          "base_carrier_screws",
+          "base_board_inserts",
+          "base_carrier_inserts",
+          "index_magnet",
+          "pan_bearing",
+          "pan_bearing_inner",
+          "pan_clamp"
+        ],
+        "highlight": [
+          "pan_bearing",
+          "pan_bearing_inner",
+          "pan_clamp"
+        ],
+        "mode": "ghost",
+        "offsets_mm": {
+          "pan_bearing": [
+            0,
+            0,
+            30
+          ],
+          "pan_bearing_inner": [
+            0,
+            0,
+            30
+          ],
+          "pan_clamp": [
+            0,
+            0,
+            50
+          ]
+        },
+        "selected": null,
+        "isolate": null,
+        "partModes": {}
+      },
+      "calls": 28,
+      "canvas": {
+        "width": 1280,
+        "height": 900,
+        "cssWidth": 1280,
+        "cssHeight": 900,
+        "geometryUnoccluded": true,
+        "vertices": 75738
+      },
+      "visible": [
+        "pan_base",
+        "base_board_carrier",
+        "pan_pinion",
+        "pan_servo",
+        "pan_bearing",
+        "pan_bearing_inner",
+        "pan_clamp",
+        "base_board",
+        "base_board_screws",
+        "base_carrier_screws",
+        "base_board_inserts",
+        "base_carrier_inserts",
+        "index_magnet",
+        "dt_receptacle"
+      ],
+      "camera": [
+        0.1671808022023208,
+        0.3052619054795593,
+        0.32156800341622144
+      ],
+      "target": [
+        -0.024200000762939447,
+        0.050087501525878916,
+        0.002599998474121068
+      ]
+    },
+    "step-05": {
+      "step": "step-05",
+      "workspace": {
+        "nativeFullscreen": true,
+        "sheet": "collapsed"
+      },
+      "state": {
+        "visible": [
+          "pan_base",
+          "pan_pinion",
+          "pan_servo",
+          "dt_receptacle",
+          "base_board_carrier",
+          "base_board",
+          "base_board_screws",
+          "base_carrier_screws",
+          "base_board_inserts",
+          "base_carrier_inserts",
+          "index_magnet",
+          "pan_bearing",
+          "pan_bearing_inner",
+          "pan_clamp",
+          "pan_ring",
+          "pan_spacer",
+          "circlip_50",
+          "hall_switch"
+        ],
+        "highlight": [
+          "pan_ring",
+          "pan_spacer",
+          "circlip_50",
+          "hall_switch"
+        ],
+        "mode": "ghost",
+        "offsets_mm": {
+          "pan_ring": [
+            0,
+            0,
+            45
+          ],
+          "pan_spacer": [
+            0,
+            0,
+            -45
+          ],
+          "circlip_50": [
+            0,
+            0,
+            -60
+          ],
+          "hall_switch": [
+            0,
+            0,
+            45
+          ]
+        },
+        "selected": null,
+        "isolate": null,
+        "partModes": {}
+      },
+      "calls": 35,
+      "canvas": {
+        "width": 1280,
+        "height": 900,
+        "cssWidth": 1280,
+        "cssHeight": 900,
+        "geometryUnoccluded": true,
+        "vertices": 101070
+      },
+      "visible": [
+        "pan_base",
+        "base_board_carrier",
+        "pan_ring",
+        "pan_spacer",
+        "pan_pinion",
+        "pan_servo",
+        "pan_bearing",
+        "pan_bearing_inner",
+        "circlip_50",
+        "pan_clamp",
+        "base_board",
+        "base_board_screws",
+        "base_carrier_screws",
+        "base_board_inserts",
+        "base_carrier_inserts",
+        "index_magnet",
+        "hall_switch",
+        "dt_receptacle"
+      ],
+      "camera": [
+        0.16302470413988734,
+        0.1844185286771201,
+        0.3146411733121658
+      ],
+      "target": [
+        -0.024200000762939447,
+        0.044000000000000025,
+        0.002599998474121068
+      ]
+    },
+    "step-06": {
+      "step": "step-06",
+      "workspace": {
+        "nativeFullscreen": true,
+        "sheet": "collapsed"
+      },
+      "state": {
+        "visible": [
+          "pan_base",
+          "pan_pinion",
+          "pan_servo",
+          "dt_receptacle",
+          "base_board_carrier",
+          "base_board",
+          "base_board_screws",
+          "base_carrier_screws",
+          "base_board_inserts",
+          "base_carrier_inserts",
+          "index_magnet",
+          "pan_bearing",
+          "pan_bearing_inner",
+          "pan_clamp",
+          "pan_ring",
+          "pan_spacer",
+          "circlip_50",
+          "hall_switch",
+          "ring_carrier",
+          "ring_driver",
+          "slip_ring",
+          "slip_ring_rotor",
+          "ring_coupling"
+        ],
+        "highlight": [
+          "ring_carrier",
+          "ring_driver",
+          "slip_ring",
+          "slip_ring_rotor",
+          "ring_coupling"
+        ],
+        "mode": "ghost",
+        "offsets_mm": {
+          "ring_carrier": [
+            0,
+            0,
+            -70
+          ],
+          "ring_driver": [
+            0,
+            0,
+            60
+          ],
+          "slip_ring": [
+            0,
+            0,
+            -70
+          ],
+          "slip_ring_rotor": [
+            0,
+            0,
+            -70
+          ],
+          "ring_coupling": [
+            0,
+            0,
+            -70
+          ]
+        },
+        "selected": null,
+        "isolate": null,
+        "partModes": {}
+      },
+      "calls": 44,
+      "canvas": {
+        "width": 1280,
+        "height": 900,
+        "cssWidth": 1280,
+        "cssHeight": 900,
+        "geometryUnoccluded": true,
+        "vertices": 114678
+      },
+      "visible": [
+        "pan_base",
+        "base_board_carrier",
+        "pan_ring",
+        "pan_spacer",
+        "pan_pinion",
+        "ring_carrier",
+        "ring_driver",
+        "pan_servo",
+        "pan_bearing",
+        "pan_bearing_inner",
+        "circlip_50",
+        "pan_clamp",
+        "slip_ring",
+        "slip_ring_rotor",
+        "ring_coupling",
+        "base_board",
+        "base_board_screws",
+        "base_carrier_screws",
+        "base_board_inserts",
+        "base_carrier_inserts",
+        "index_magnet",
+        "hall_switch",
+        "dt_receptacle"
+      ],
+      "camera": [
+        0.1880684703388047,
+        -0.0943232748093508,
+        0.35638078364369463
+      ],
+      "target": [
+        -0.024200000762939447,
+        0.0295,
+        0.002599998474121068
+      ]
+    },
+    "step-07": {
+      "step": "step-07",
+      "workspace": {
+        "nativeFullscreen": true,
+        "sheet": "collapsed"
+      },
+      "state": {
+        "visible": [
+          "pan_base",
+          "pan_pinion",
+          "pan_servo",
+          "dt_receptacle",
+          "base_board_carrier",
+          "base_board",
+          "base_board_screws",
+          "base_carrier_screws",
+          "base_board_inserts",
+          "base_carrier_inserts",
+          "index_magnet",
+          "pan_bearing",
+          "pan_bearing_inner",
+          "pan_clamp",
+          "pan_ring",
+          "pan_spacer",
+          "circlip_50",
+          "hall_switch",
+          "ring_carrier",
+          "ring_driver",
+          "slip_ring",
+          "slip_ring_rotor",
+          "ring_coupling",
+          "tilt_yoke",
+          "board_bay",
+          "ring_leads_rotor",
+          "turret_board"
+        ],
+        "highlight": [
+          "tilt_yoke",
+          "board_bay",
+          "ring_leads_rotor",
+          "turret_board"
+        ],
+        "mode": "ghost",
+        "offsets_mm": {
+          "tilt_yoke": [
+            0,
+            0,
+            50
+          ],
+          "board_bay": [
+            0,
+            -40,
+            0
+          ],
+          "ring_leads_rotor": [
+            0,
+            0,
+            0
+          ],
+          "turret_board": [
+            0,
+            -70,
+            0
+          ]
+        },
+        "selected": null,
+        "isolate": null,
+        "partModes": {}
+      },
+      "calls": 53,
+      "canvas": {
+        "width": 1280,
+        "height": 900,
+        "cssWidth": 1280,
+        "cssHeight": 900,
+        "geometryUnoccluded": true,
+        "vertices": 147069
+      },
+      "visible": [
+        "pan_base",
+        "base_board_carrier",
+        "pan_ring",
+        "pan_spacer",
+        "pan_pinion",
+        "tilt_yoke",
+        "ring_carrier",
+        "ring_driver",
+        "board_bay",
+        "pan_servo",
+        "pan_bearing",
+        "pan_bearing_inner",
+        "circlip_50",
+        "pan_clamp",
+        "slip_ring",
+        "slip_ring_rotor",
+        "ring_coupling",
+        "ring_leads_rotor",
+        "base_board",
+        "base_board_screws",
+        "base_carrier_screws",
+        "base_board_inserts",
+        "base_carrier_inserts",
+        "turret_board",
+        "index_magnet",
+        "hall_switch",
+        "dt_receptacle"
+      ],
+      "camera": [
+        0.19669048342603995,
+        0.32589048418897937,
+        0.48038596792019517
+      ],
+      "target": [
+        -0.024200000762939447,
+        0.10500000000000001,
+        0.03860499954223632
+      ]
+    },
+    "step-08": {
+      "step": "step-08",
+      "workspace": {
+        "nativeFullscreen": true,
+        "sheet": "collapsed"
+      },
+      "state": {
+        "visible": [
+          "pan_base",
+          "pan_pinion",
+          "pan_servo",
+          "dt_receptacle",
+          "base_board_carrier",
+          "base_board",
+          "base_board_screws",
+          "base_carrier_screws",
+          "base_board_inserts",
+          "base_carrier_inserts",
+          "index_magnet",
+          "pan_bearing",
+          "pan_bearing_inner",
+          "pan_clamp",
+          "pan_ring",
+          "pan_spacer",
+          "circlip_50",
+          "hall_switch",
+          "ring_carrier",
+          "ring_driver",
+          "slip_ring",
+          "slip_ring_rotor",
+          "ring_coupling",
+          "tilt_yoke",
+          "board_bay",
+          "ring_leads_rotor",
+          "turret_board",
+          "cradle",
+          "horn_boss",
+          "pivot_spacer",
+          "cradle_plate_l",
+          "cradle_plate_r",
+          "stop_lug",
+          "tilt_servo",
+          "tilt_bearing",
+          "tilt_bearing_inner",
+          "shoulder_screw"
+        ],
+        "highlight": [
+          "cradle",
+          "horn_boss",
+          "pivot_spacer",
+          "cradle_plate_l",
+          "cradle_plate_r",
+          "stop_lug",
+          "tilt_servo",
+          "tilt_bearing",
+          "tilt_bearing_inner",
+          "shoulder_screw"
+        ],
+        "mode": "ghost",
+        "offsets_mm": {
+          "cradle": [
+            0,
+            0,
+            55
+          ],
+          "horn_boss": [
+            0,
+            14,
+            0
+          ],
+          "pivot_spacer": [
+            0,
+            -14,
+            0
+          ],
+          "cradle_plate_l": [
+            0,
+            22,
+            55
+          ],
+          "cradle_plate_r": [
+            0,
+            -22,
+            55
+          ],
+          "stop_lug": [
+            0,
+            -38,
+            55
+          ],
+          "tilt_servo": [
+            0,
+            40,
+            0
+          ],
+          "tilt_bearing": [
+            0,
+            0,
+            0
+          ],
+          "tilt_bearing_inner": [
+            0,
+            0,
+            0
+          ],
+          "shoulder_screw": [
+            0,
+            -40,
+            0
+          ]
+        },
+        "selected": null,
+        "isolate": null,
+        "partModes": {}
+      },
+      "calls": 67,
+      "canvas": {
+        "width": 1280,
+        "height": 900,
+        "cssWidth": 1280,
+        "cssHeight": 900,
+        "geometryUnoccluded": true,
+        "vertices": 178437
+      },
+      "visible": [
+        "pan_base",
+        "base_board_carrier",
+        "pan_ring",
+        "pan_spacer",
+        "pan_pinion",
+        "tilt_yoke",
+        "cradle",
+        "horn_boss",
+        "pivot_spacer",
+        "ring_carrier",
+        "ring_driver",
+        "board_bay",
+        "pan_servo",
+        "pan_bearing",
+        "pan_bearing_inner",
+        "circlip_50",
+        "pan_clamp",
+        "cradle_plate_l",
+        "cradle_plate_r",
+        "stop_lug",
+        "slip_ring",
+        "slip_ring_rotor",
+        "ring_coupling",
+        "ring_leads_rotor",
+        "base_board",
+        "base_board_screws",
+        "base_carrier_screws",
+        "base_board_inserts",
+        "base_carrier_inserts",
+        "turret_board",
+        "index_magnet",
+        "hall_switch",
+        "dt_receptacle",
+        "tilt_servo",
+        "tilt_bearing",
+        "tilt_bearing_inner",
+        "shoulder_screw"
+      ],
+      "camera": [
+        0.23994358255897166,
+        0.3840242100003779,
+        0.5311099434382558
+      ],
+      "target": [
+        -0.03561138916015624,
+        0.10846923828125003,
+        -0.01999999999999999
+      ]
+    },
+    "step-09": {
+      "step": "step-09",
+      "workspace": {
+        "nativeFullscreen": true,
+        "sheet": "collapsed"
+      },
+      "state": {
+        "visible": [
+          "pan_base",
+          "pan_pinion",
+          "pan_servo",
+          "dt_receptacle",
+          "base_board_carrier",
+          "base_board",
+          "base_board_screws",
+          "base_carrier_screws",
+          "base_board_inserts",
+          "base_carrier_inserts",
+          "index_magnet",
+          "pan_bearing",
+          "pan_bearing_inner",
+          "pan_clamp",
+          "pan_ring",
+          "pan_spacer",
+          "circlip_50",
+          "hall_switch",
+          "ring_carrier",
+          "ring_driver",
+          "slip_ring",
+          "slip_ring_rotor",
+          "ring_coupling",
+          "tilt_yoke",
+          "board_bay",
+          "ring_leads_rotor",
+          "turret_board",
+          "cradle",
+          "horn_boss",
+          "pivot_spacer",
+          "cradle_plate_l",
+          "cradle_plate_r",
+          "stop_lug",
+          "tilt_servo",
+          "tilt_bearing",
+          "tilt_bearing_inner",
+          "shoulder_screw",
+          "laser_mount",
+          "laser"
+        ],
+        "highlight": [
+          "laser_mount",
+          "laser"
+        ],
+        "mode": "ghost",
+        "offsets_mm": {
+          "laser_mount": [
+            0,
+            0,
+            -30
+          ],
+          "laser": [
+            0,
+            0,
+            -30
+          ]
+        },
+        "selected": null,
+        "isolate": null,
+        "partModes": {}
+      },
+      "calls": 79,
+      "canvas": {
+        "width": 1280,
+        "height": 900,
+        "cssWidth": 1280,
+        "cssHeight": 900,
+        "geometryUnoccluded": true,
+        "vertices": 185211
+      },
+      "visible": [
+        "pan_base",
+        "base_board_carrier",
+        "pan_ring",
+        "pan_spacer",
+        "pan_pinion",
+        "tilt_yoke",
+        "cradle",
+        "horn_boss",
+        "pivot_spacer",
+        "laser_mount",
+        "ring_carrier",
+        "ring_driver",
+        "board_bay",
+        "pan_servo",
+        "pan_bearing",
+        "pan_bearing_inner",
+        "circlip_50",
+        "pan_clamp",
+        "cradle_plate_l",
+        "cradle_plate_r",
+        "stop_lug",
+        "slip_ring",
+        "slip_ring_rotor",
+        "ring_coupling",
+        "ring_leads_rotor",
+        "base_board",
+        "base_board_screws",
+        "base_carrier_screws",
+        "base_board_inserts",
+        "base_carrier_inserts",
+        "turret_board",
+        "index_magnet",
+        "hall_switch",
+        "dt_receptacle",
+        "tilt_servo",
+        "tilt_bearing",
+        "tilt_bearing_inner",
+        "shoulder_screw",
+        "laser"
+      ],
+      "camera": [
+        0.2561111787929152,
+        0.24603276902005874,
+        0.4126588268470217
+      ],
+      "target": [
+        -0.03274999999999999,
+        0.08096923828125002,
+        0
+      ]
+    },
+    "step-10": {
+      "step": "step-10",
+      "workspace": {
+        "nativeFullscreen": true,
+        "sheet": "collapsed"
+      },
+      "state": {
+        "visible": [
+          "pan_base",
+          "pan_pinion",
+          "pan_servo",
+          "dt_receptacle",
+          "base_board_carrier",
+          "base_board",
+          "base_board_screws",
+          "base_carrier_screws",
+          "base_board_inserts",
+          "base_carrier_inserts",
+          "index_magnet",
+          "pan_bearing",
+          "pan_bearing_inner",
+          "pan_clamp",
+          "pan_ring",
+          "pan_spacer",
+          "circlip_50",
+          "hall_switch",
+          "ring_carrier",
+          "ring_driver",
+          "slip_ring",
+          "slip_ring_rotor",
+          "ring_coupling",
+          "tilt_yoke",
+          "board_bay",
+          "ring_leads_rotor",
+          "turret_board",
+          "cradle",
+          "horn_boss",
+          "pivot_spacer",
+          "cradle_plate_l",
+          "cradle_plate_r",
+          "stop_lug",
+          "tilt_servo",
+          "tilt_bearing",
+          "tilt_bearing_inner",
+          "shoulder_screw",
+          "laser_mount",
+          "laser",
+          "cartridge_body",
+          "flywheel",
+          "flywheel_m",
+          "flywheel_tyre",
+          "flywheel_tyre_m",
+          "dial",
+          "flywheel_motor_l",
+          "flywheel_motor_r",
+          "cartridge_board",
+          "esc_l",
+          "esc_r",
+          "feed_motor"
+        ],
+        "highlight": [
+          "cartridge_body",
+          "flywheel",
+          "flywheel_m",
+          "flywheel_tyre",
+          "flywheel_tyre_m",
+          "dial",
+          "flywheel_motor_l",
+          "flywheel_motor_r",
+          "cartridge_board",
+          "esc_l",
+          "esc_r",
+          "feed_motor"
+        ],
+        "mode": "ghost",
+        "offsets_mm": {
+          "cartridge_body": [
+            0,
+            0,
+            0
+          ],
+          "flywheel": [
+            0,
+            0,
+            -50
+          ],
+          "flywheel_m": [
+            0,
+            0,
+            -50
+          ],
+          "flywheel_tyre": [
+            0,
+            0,
+            -50
+          ],
+          "flywheel_tyre_m": [
+            0,
+            0,
+            -50
+          ],
+          "dial": [
+            0,
+            0,
+            40
+          ],
+          "flywheel_motor_l": [
+            0,
+            0,
+            -35
+          ],
+          "flywheel_motor_r": [
+            0,
+            0,
+            -35
+          ],
+          "cartridge_board": [
+            0,
+            0,
+            60
+          ],
+          "esc_l": [
+            0,
+            0,
+            25
+          ],
+          "esc_r": [
+            0,
+            0,
+            25
+          ],
+          "feed_motor": [
+            0,
+            0,
+            -40
+          ]
+        },
+        "selected": null,
+        "isolate": null,
+        "partModes": {}
+      },
+      "calls": 93,
+      "canvas": {
+        "width": 1280,
+        "height": 900,
+        "cssWidth": 1280,
+        "cssHeight": 900,
+        "geometryUnoccluded": true,
+        "vertices": 245691
+      },
+      "visible": [
+        "pan_base",
+        "base_board_carrier",
+        "pan_ring",
+        "pan_spacer",
+        "pan_pinion",
+        "tilt_yoke",
+        "cradle",
+        "horn_boss",
+        "pivot_spacer",
+        "cartridge_body",
+        "flywheel",
+        "flywheel_m",
+        "flywheel_tyre",
+        "flywheel_tyre_m",
+        "dial",
+        "laser_mount",
+        "ring_carrier",
+        "ring_driver",
+        "board_bay",
+        "pan_servo",
+        "pan_bearing",
+        "pan_bearing_inner",
+        "circlip_50",
+        "pan_clamp",
+        "cradle_plate_l",
+        "cradle_plate_r",
+        "stop_lug",
+        "slip_ring",
+        "slip_ring_rotor",
+        "ring_coupling",
+        "ring_leads_rotor",
+        "base_board",
+        "base_board_screws",
+        "base_carrier_screws",
+        "base_board_inserts",
+        "base_carrier_inserts",
+        "turret_board",
+        "index_magnet",
+        "hall_switch",
+        "dt_receptacle",
+        "tilt_servo",
+        "tilt_bearing",
+        "tilt_bearing_inner",
+        "shoulder_screw",
+        "flywheel_motor_l",
+        "flywheel_motor_r",
+        "cartridge_board",
+        "esc_l",
+        "esc_r",
+        "feed_motor",
+        "laser"
+      ],
+      "camera": [
+        0.29805474203688215,
+        0.46635474508864005,
+        0.551341236728137
+      ],
+      "target": [
+        -0.03274999999999999,
+        0.13555000305175782,
+        0
+      ]
+    },
+    "step-11": {
+      "step": "step-11",
+      "workspace": {
+        "nativeFullscreen": true,
+        "sheet": "collapsed"
+      },
+      "state": {
+        "visible": [
+          "pan_base",
+          "pan_pinion",
+          "pan_servo",
+          "dt_receptacle",
+          "base_board_carrier",
+          "base_board",
+          "base_board_screws",
+          "base_carrier_screws",
+          "base_board_inserts",
+          "base_carrier_inserts",
+          "index_magnet",
+          "pan_bearing",
+          "pan_bearing_inner",
+          "pan_clamp",
+          "pan_ring",
+          "pan_spacer",
+          "circlip_50",
+          "hall_switch",
+          "ring_carrier",
+          "ring_driver",
+          "slip_ring",
+          "slip_ring_rotor",
+          "ring_coupling",
+          "tilt_yoke",
+          "board_bay",
+          "ring_leads_rotor",
+          "turret_board",
+          "cradle",
+          "horn_boss",
+          "pivot_spacer",
+          "cradle_plate_l",
+          "cradle_plate_r",
+          "stop_lug",
+          "tilt_servo",
+          "tilt_bearing",
+          "tilt_bearing_inner",
+          "shoulder_screw",
+          "laser_mount",
+          "laser",
+          "cartridge_body",
+          "flywheel",
+          "flywheel_m",
+          "flywheel_tyre",
+          "flywheel_tyre_m",
+          "dial",
+          "flywheel_motor_l",
+          "flywheel_motor_r",
+          "cartridge_board",
+          "esc_l",
+          "esc_r",
+          "feed_motor",
+          "hopper",
+          "hopper_lid",
+          "barrel"
+        ],
+        "highlight": [
+          "hopper",
+          "hopper_lid",
+          "barrel"
+        ],
+        "mode": "ghost",
+        "offsets_mm": {
+          "hopper": [
+            0,
+            0,
+            40
+          ],
+          "hopper_lid": [
+            0,
+            0,
+            70
+          ],
+          "barrel": [
+            40,
+            0,
+            0
+          ]
+        },
+        "selected": null,
+        "isolate": null,
+        "partModes": {}
+      },
+      "calls": 108,
+      "canvas": {
+        "width": 1280,
+        "height": 900,
+        "cssWidth": 1280,
+        "cssHeight": 900,
+        "geometryUnoccluded": true,
+        "vertices": 262947
+      },
+      "visible": [
+        "pan_base",
+        "base_board_carrier",
+        "pan_ring",
+        "pan_spacer",
+        "pan_pinion",
+        "tilt_yoke",
+        "cradle",
+        "horn_boss",
+        "pivot_spacer",
+        "cartridge_body",
+        "flywheel",
+        "flywheel_m",
+        "flywheel_tyre",
+        "flywheel_tyre_m",
+        "dial",
+        "hopper",
+        "hopper_lid",
+        "barrel",
+        "laser_mount",
+        "ring_carrier",
+        "ring_driver",
+        "board_bay",
+        "pan_servo",
+        "pan_bearing",
+        "pan_bearing_inner",
+        "circlip_50",
+        "pan_clamp",
+        "cradle_plate_l",
+        "cradle_plate_r",
+        "stop_lug",
+        "slip_ring",
+        "slip_ring_rotor",
+        "ring_coupling",
+        "ring_leads_rotor",
+        "base_board",
+        "base_board_screws",
+        "base_carrier_screws",
+        "base_board_inserts",
+        "base_carrier_inserts",
+        "turret_board",
+        "index_magnet",
+        "hall_switch",
+        "dt_receptacle",
+        "tilt_servo",
+        "tilt_bearing",
+        "tilt_bearing_inner",
+        "shoulder_screw",
+        "flywheel_motor_l",
+        "flywheel_motor_r",
+        "cartridge_board",
+        "esc_l",
+        "esc_r",
+        "feed_motor",
+        "laser"
+      ],
+      "camera": [
+        0.3612561327360591,
+        0.4932561327360591,
+        0.5687602212267651
+      ],
+      "target": [
+        0.02000000000000001,
+        0.15200000000000002,
+        0
+      ]
+    },
+    "step-12": {
+      "step": "step-12",
+      "workspace": {
+        "nativeFullscreen": true,
+        "sheet": "collapsed"
+      },
+      "state": {
+        "visible": [
+          "pan_base",
+          "pan_pinion",
+          "pan_servo",
+          "dt_receptacle",
+          "base_board_carrier",
+          "base_board",
+          "base_board_screws",
+          "base_carrier_screws",
+          "base_board_inserts",
+          "base_carrier_inserts",
+          "index_magnet",
+          "pan_bearing",
+          "pan_bearing_inner",
+          "pan_clamp",
+          "pan_ring",
+          "pan_spacer",
+          "circlip_50",
+          "hall_switch",
+          "ring_carrier",
+          "ring_driver",
+          "slip_ring",
+          "slip_ring_rotor",
+          "ring_coupling",
+          "tilt_yoke",
+          "board_bay",
+          "ring_leads_rotor",
+          "turret_board",
+          "cradle",
+          "horn_boss",
+          "pivot_spacer",
+          "cradle_plate_l",
+          "cradle_plate_r",
+          "stop_lug",
+          "tilt_servo",
+          "tilt_bearing",
+          "tilt_bearing_inner",
+          "shoulder_screw",
+          "laser_mount",
+          "laser",
+          "cartridge_body",
+          "flywheel",
+          "flywheel_m",
+          "flywheel_tyre",
+          "flywheel_tyre_m",
+          "dial",
+          "flywheel_motor_l",
+          "flywheel_motor_r",
+          "cartridge_board",
+          "esc_l",
+          "esc_r",
+          "feed_motor",
+          "hopper",
+          "hopper_lid",
+          "barrel",
+          "ct_thumbscrew"
+        ],
+        "highlight": [
+          "ct_thumbscrew"
+        ],
+        "mode": "ghost",
+        "offsets_mm": {
+          "ct_thumbscrew": [
+            0,
+            0,
+            -30
+          ]
+        },
+        "selected": null,
+        "isolate": null,
+        "partModes": {}
+      },
+      "calls": 112,
+      "canvas": {
+        "width": 1280,
+        "height": 900,
+        "cssWidth": 1280,
+        "cssHeight": 900,
+        "geometryUnoccluded": true,
+        "vertices": 263943
+      },
+      "visible": [
+        "pan_base",
+        "base_board_carrier",
+        "pan_ring",
+        "pan_spacer",
+        "pan_pinion",
+        "tilt_yoke",
+        "cradle",
+        "horn_boss",
+        "pivot_spacer",
+        "cartridge_body",
+        "flywheel",
+        "flywheel_m",
+        "flywheel_tyre",
+        "flywheel_tyre_m",
+        "dial",
+        "hopper",
+        "hopper_lid",
+        "barrel",
+        "laser_mount",
+        "ring_carrier",
+        "ring_driver",
+        "board_bay",
+        "pan_servo",
+        "pan_bearing",
+        "pan_bearing_inner",
+        "circlip_50",
+        "pan_clamp",
+        "cradle_plate_l",
+        "cradle_plate_r",
+        "stop_lug",
+        "slip_ring",
+        "slip_ring_rotor",
+        "ring_coupling",
+        "ring_leads_rotor",
+        "base_board",
+        "base_board_screws",
+        "base_carrier_screws",
+        "base_board_inserts",
+        "base_carrier_inserts",
+        "turret_board",
+        "index_magnet",
+        "hall_switch",
+        "dt_receptacle",
+        "tilt_servo",
+        "tilt_bearing",
+        "tilt_bearing_inner",
+        "shoulder_screw",
+        "flywheel_motor_l",
+        "flywheel_motor_r",
+        "cartridge_board",
+        "esc_l",
+        "esc_r",
+        "feed_motor",
+        "ct_thumbscrew",
+        "laser"
+      ],
+      "camera": [
+        0.29259720539441714,
+        0.3608310044953477,
+        0.4876620089906952
+      ],
+      "target": [
+        0,
+        0.11700000000000002,
+        0
+      ]
+    }
+  },
+  "errors": [],
+  "foreign": []
+}

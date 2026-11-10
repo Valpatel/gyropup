@@ -426,3 +426,103 @@ The corrected operator (`1511d1b8`) invokes the unchanged guard in its owned pro
 The one corrected transaction passed the actual full guard with both 660-frame / 22-second companions and all 25 negative controls, followed by seven ordinary prerequisite tests. Complete tracked and hardware inventories outside its six software targets stayed exact; the original blocked operator was never run. Final artifact adoption, Git publication and physical limits remain separate claims.
 
 Rule: a structured-output consumer must parse the producer's stdout, retain stderr independently and preserve its exit status. Do not suppress expected negative-control diagnostics, loosen the guard or parse an arbitrary JSON-looking substring from a mixed log.
+
+
+## Diagram inventories must name the sources they cover
+
+2026-11-10: Gyropup run `42802870101`, presentation job `129784699310`,
+reached `npm run test:diagrams` and failed `13 !== 11` at the inventory guard.
+The existing eight documents still contain eleven diagrams; the new Build and
+robot-data validation documents each add one. This was an obsolete inventory,
+not a renderer or timeout failure. Bind the exact ten document paths and their
+counts, then run every entry through the existing desktop/phone SVG, reachable
+node, source-route, bootstrap/runtime recovery and dynamic-insertion checks.
+Keep the guard fail-closed for additions and removals, and derive the success
+message from the verified inventory rather than a stale literal seven.
+
+Actual commands `node tests/site/layout/test-diagrams.mjs` and
+`PLAYWRIGHT_BROWSER=webkit node tests/site/layout/test-diagrams.mjs` passed all thirteen diagrams
+and twenty document/viewport cases per engine against the unchanged diagram
+sources in the owned preview. The source/harness-qualified reports are indexed
+in `.agents/plans/versioned-build-guide-ci-validation.json`. This proves the
+scoped SVG checks, not complete current-head CI or physical qualification.
+
+## Layout partitions must prove complete tuple coverage
+
+2026-11-10: the same run's layout job `129784699269` started at 10:54:02 UTC,
+passed readiness and planted-defect controls, then was cancelled at 11:14:16
+by its existing twenty-minute job bound. Its actual partial result contained
+1,266 of 1,560 views (156 pages, five sizes, two themes), with zero findings
+before cancellation. Connection-refused messages appeared when CI stopped the
+owned server; they do not establish a broken production route. The run remains
+incomplete and is never relabelled a pass.
+
+Partition the existing scan by its five canonical sizes. Each partition still
+scans every published page in both themes, runs the original controls, keeps the
+same workers and measurement limits, and retains the twenty-minute job bound.
+Reject empty, unknown, mixed-unknown and duplicate size/theme selectors before
+starting a browser. Record expected and observed `(page,size,theme)` tuples;
+missing or duplicate views must fail the normal gate. Preserve the historical
+`browser-validation (layout)` check as an aggregate that cannot pass when a
+browser partition fails, is cancelled or is skipped. The new selector tests also
+bind the workflow union to every canonical size and both themes.
+
+A local selected-page smoke only checks reporting and representative execution;
+acceptance still requires all current CI partitions. Do not enlarge a timeout,
+remove a page/theme/size, or treat a zero-case selection as success.
+
+
+## Native keyboard assertions need focus and event ownership evidence
+
+2026-11-10: run `42807633179`, playground job `129800779710`, failed the first
+simulator checkbox Space assertion (`true !== false`) at line32. Its failure
+record contained bench activity but no focused element, native key target or
+open-dialog state. The exact original prefix passed in a separate24.7s browser
+probe: true→false, trusted key events targeting the focused checkbox, no default
+prevention, no inert/hidden ancestor, closed dialog and arm count zero. The CI
+cause remains unclassified; do not call that local pass a CI retry or a product fix.
+
+The test now establishes visibility, enabled state, initial value and actual
+keyboard focus, targets the native checkbox with `locator.press('Space')`, and
+checks both the checkbox and actual simulator marker state. Trusted keydown/up
+must remain owned by that input, unprevented and unable to arm the shortcut.
+Failure artifacts include active element, focus/visibility, dialogs, native events
+and a bounded screenshot. Existing slider, release, journey and phone assertions
+and the original simulation deadline remain intact; no checkbox `.check()` or
+programmatic state assignment substitutes for the positive keyboard action.
+
+The exact updated positive prefix passed27.3s against the qualified `1c48bd5c`
+site. A deliberately cancelled native key with a matching checkbox/API-state shim
+passed the prior state observations but was rejected by the new event assertion
+in15.3s. Those source/harness-qualified reports are indexed in the CI validation
+packet. This negative is explicitly seeded; it is not an observed production
+behavior. Complete current simulator CI is still required.
+
+
+## Browser provisioning must leave time for executable checks
+
+2026-11-10: run `42807633179`, Combined390 job `129800779786`, spent about
+seventeen minutes provisioning browsers. Tests began at11:45:29 UTC; Chromium
+completed all25 entries at11:47:02, then WebKit began and CI cancelled it at
+11:47:52 under the existing twenty-minute job bound. This is an incomplete
+campaign dominated by provisioning, not a demonstrated model-layout failure.
+Presentation job `129800779849` spent3m06 in setup and17m07 in assertions before
+the same bound stopped highlight integration; later Markdown, cache, diagrams,
+services and preview commands had not run. Neither prefix is a complete pass.
+
+Use the immutable Playwright1.56.1 Noble image already verified by cad-agent
+v0.31.0, matching this repository's lock. Preserve the library and browser
+versions, exact-workspace Git trust, declared Python3.12 standard-library checks
+and existing ffmpeg/ffprobe evidence tools. Root container package installation
+is only needed when those media CLI tools are absent. Do not repeat browser apt
+installation on each runner. Respect the existing bundled-Chromium environment
+in the route test; local branded Chrome remains its default outside that mode.
+
+Split the original21 presentation commands into7 controls and14 content commands
+without reordering or removing them. Preserve main's required presentation check
+name as a strict aggregate that accepts only successful browser partitions;
+failed, cancelled or skipped work cannot pass it. All other24 command blocks and
+the twenty-minute per-suite bound remain unchanged. Five pure selector/CI tests
+and an independent YAML comparison verify the union and immutable runtime pin.
+The first full Gyropup run in this image still must pass; upstream image success
+and local static checks are not a substitute for current integration evidence.

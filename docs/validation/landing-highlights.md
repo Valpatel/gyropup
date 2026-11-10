@@ -40,9 +40,9 @@ npm run preview:status
 # with its owner before changing the selected checkout; do not add a daemon.
 npm run dev
 # In another shell, with the selected checkout confirmed:
-SITE_URL=http://127.0.0.1:8899 node tools/capture-highlights.mjs
-python3 tools/encode-highlights.py --frames /tmp/gyropup-highlights-frames
-python3 tools/check-highlights.py --frames /tmp/gyropup-highlights-frames
+SITE_URL=http://127.0.0.1:8899 node tools/evidence/media/capture-highlights.mjs
+python3 tools/evidence/media/encode-highlights.py --frames /tmp/gyropup-highlights-frames
+python3 tools/evidence/media/check-highlights.py --frames /tmp/gyropup-highlights-frames
 ```
 
 The recorder exposes the existing stage callback array, stops its animation
@@ -50,6 +50,19 @@ loop, advances those callbacks at 60 Hz with a seeded random source and a fixed
 performance clock, and explicitly renders 30 captured frames per second.
 It does not replace model, feed, projectile or target code. Real PNG dimensions
 must be 1280×720; the page header's usual canvas inset cannot change the raster.
+
+The browser frames were freshly recaptured on 2026-11-10 (UTC) for
+[PR 267](https://github.com/Valpatel/gyropup/pull/267) from
+`76f1e243d1e87295ce085e3db28390eed12ec224`, served assets `7c570190314c75038292`.
+A real stage callback disposal change invalidated the previous source binding.
+The unchanged recorder produced all 480 new frames on an isolated compute host;
+the mechanism emitted nine shots and target practice recorded three shots, three
+hits and three knockdowns. The normal encoder produced both 22-second companions
+and the poster. Independent decoded/raw-frame validation passed, all 25 seeded
+faults were rejected, and 11 binding tests passed. The leg and E1 inserts and their
+limits remain unchanged. [Capture, environment, output hashes and validation](../../.agents/plans/versioned-build-guide-highlight-refresh/adoption.json)
+record this native Chrome campaign; it does not establish pinned CI browser parity
+or physical qualification. The earlier capture history follows unchanged.
 
 The first release was captured from build `7b70f23f510c6b310cc8871b145cbe439f13312d`,
 assets `114e495ece58fdcdacf2`. The receipt includes each loaded source's local

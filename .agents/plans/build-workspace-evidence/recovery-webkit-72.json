@@ -1,0 +1,32 @@
+{
+  "status": "passed",
+  "provenance": {
+    "base": "[local preview origin redacted]",
+    "version": {
+      "revision": "72e725ac3f5cd75f50dcbb3c29b919565202158a",
+      "assets": "2d8d1492603b7539997b",
+      "history": true,
+      "built": "2026-11-10T10:13:55.790Z"
+    },
+    "browser": "26.0",
+    "scope": "fallback"
+  },
+  "cases": [
+    "unavailable snapshot rejects without another-version fallback; explicit valid choice recovers",
+    "Explicit robot choice recovers rejected initial route with working history and pagehide disposal",
+    "Explicit turret choice recovers rejected initial route",
+    "Explicit combined choice recovers rejected initial route",
+    "native no-script default snapshot/12diagrams, real no-WebGL fallback and two-version text-only progress"
+  ],
+  "phases": [
+    {
+      "name": "fallback-start",
+      "at": "2026-11-10T10:16:21.261Z"
+    },
+    {
+      "name": "fallback-complete",
+      "at": "2026-11-10T10:17:30.574Z"
+    }
+  ],
+  "errors": []
+}

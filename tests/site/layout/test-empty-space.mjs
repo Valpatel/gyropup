@@ -36,10 +36,18 @@ const root = path.resolve(import.meta.dirname, '../../..');
 const out = path.join(root,'test-results/empty-space');
 const arg = name => process.argv.find(a => a.startsWith(`--${name}=`))?.split('=')[1];
 const report = process.argv.includes('--report');
-const pick = (all, name) => { const want = arg(name)?.split(','); return want ? all.filter(x => want.includes(x.name ?? x)) : all; };
+const pick = (all, name) => {
+  const value=arg(name);if(value===undefined)return all;
+  const want=value.split(','),known=new Set(all.map(x=>x.name??x));
+  if(want.some(value=>!value||!known.has(value))||new Set(want).size!==want.length)throw new Error(`Invalid empty-space ${name} selection: ${value}`);
+  const selected=all.filter(x=>want.includes(x.name??x));
+  if(!selected.length)throw new Error(`Empty empty-space ${name} selection`);
+  return selected;
+};
 const sizes = pick(SIZES, 'sizes'), schemes = pick(SCHEMES, 'schemes');
 const workers = Number(arg('workers') || process.env.EMPTY_SPACE_WORKERS || 3);
 const problems = [], rows = [];
+let expectedViews=[];
 const started = Date.now();
 
 let server, base = process.env.SITE_URL?.replace(/\/$/, '');
@@ -69,7 +77,8 @@ async function load(page, route) {
   await page.goto(base + route, { waitUntil: 'domcontentloaded' });
   await page.waitForFunction(() => !document.querySelector('pre.mermaid, pre > code.language-mermaid') &&
     [...document.querySelectorAll('.cad-diagram')].every(f => f.dataset.state === 'ready' || f.dataset.state === 'error')
-    && (!/^\/designer\/(progress|build|sim)\.html$/.test(location.pathname) || document.body.dataset.ready === '1'), null, { timeout: 30000 })
+    && (!/^\/designer\/(progress|build|sim)\.html$/.test(location.pathname) || document.body.dataset.ready === '1')
+    && (location.pathname !== '/designer/build.html' || !document.querySelector('#assembly') || document.querySelector('#assembly').dataset.ready === '1'), null, { timeout: 30000 })
     .catch(() => problems.push(`empty-space ${route}: diagrams or reports did not finish loading`));
   await waitForRenderedText(page);
 }
@@ -253,7 +262,32 @@ async function readinessControls() {
       if (primary ? !missing : result.findings.length > 0) throw new Error(`Readiness control ${primary ? 'accepted a missing primary picture' : 'could not measure content with a pending badge'}`);
     } finally { clearTimeout(timer); release(); releaseFont(); releaseCss(); await context.close(); await analysis.close(); }
   }
-  console.log('empty-space readiness controls: pending badge permits measurement, primary image is rejected, actual imported font is awaited, stylesheet error fails readiness');
+  // Procurement can finish while the separate real assembly model is still pending.
+  const guideContext = await contextFor(size), guidePage = await guideContext.newPage();
+  let releaseModel, requestedModel;
+  const modelGate = new Promise(resolve => { releaseModel = resolve; });
+  const modelRequested = new Promise(resolve => { requestedModel = resolve; });
+  await guidePage.route('**/web/build-guides/**/view.json*', async route => { requestedModel(); await modelGate; await route.continue(); });
+  try {
+    let measured = false;
+    const loading = load(guidePage, '/designer/build.html').then(() => { measured = true; });
+    loading.catch(() => {});
+    await Promise.race([modelRequested, guidePage.waitForTimeout(15000).then(() => { throw new Error('Actual guide model was not requested'); })]);
+    await guidePage.waitForFunction(() => document.body.dataset.ready === '1');
+    await waitForRenderedText(guidePage);
+    await guidePage.evaluate(() => new Promise(resolve => requestAnimationFrame(() => requestAnimationFrame(resolve))));
+    if (measured || await guidePage.locator('[data-guide-model] canvas').count()) throw new Error('Layout accepted procurement readiness while the real assembly model was held');
+    releaseModel(); await loading;
+    const guideReady = await guidePage.evaluate(() => {
+      const active = window.__buildGuide?.active, canvas = document.querySelector('[data-guide-model] canvas'), step = active?.guide.steps.find(item => item.id === active.step), jump = document.querySelector('[data-guide-step]'), parts = [...document.querySelectorAll('[data-guide-chapters] [data-part]')];
+      return { canvas: !!canvas?.isConnected, context: !!active?.viewer && !active.viewer.stage.renderer.getContext().isContextLost(), visible: active?.viewer?.parts.filter(part => part.mesh.visible).length || 0,
+        partRows: parts.length, uniqueParts: new Set(parts.map(part => part.dataset.part)).size, modelParts: active?.modelParts.length,
+        steps: jump?.options.length, expectedSteps: active?.guide.steps.length, currentStep: jump?.value === step?.id,
+        textMatches: !!step?.text && document.querySelector('[data-guide-text]')?.textContent === step.text };
+    });
+    if (!guideReady.canvas || !guideReady.context || !guideReady.visible || !guideReady.partRows || guideReady.partRows !== guideReady.modelParts || guideReady.uniqueParts !== guideReady.modelParts || guideReady.steps !== guideReady.expectedSteps || !guideReady.currentStep || !guideReady.textMatches) throw new Error('Layout did not wait for the actual model, hierarchy and instructions: ' + JSON.stringify(guideReady));
+  } finally { releaseModel(); await guideContext.close(); }
+  console.log('empty-space readiness controls: pending badge permits measurement, primary image is rejected, actual imported font is awaited, stylesheet error fails readiness, procurement alone cannot release a held assembly guide');
 }
 
 /** Planted defects on a real page: each must be found, so the measures are tested on every run. */
@@ -309,6 +343,7 @@ try {
   const all = sitePages(files);
   if (all.length < 60) throw new Error(`only ${all.length} pages found in dist/: run npm run build first`);
   const pages = arg('pages') ? arg('pages').split(',') : process.argv.includes('--controls') ? [] : all;
+  expectedViews=sizes.flatMap(size=>pages.flatMap(route=>schemes.map(scheme=>({route,size:size.name,scheme}))));
   if (!report && !arg('pages') || process.argv.includes('--controls')) {
     const failed = await controls();
     for (const f of failed) problems.push(`empty-space control ${f}`);
@@ -346,6 +381,11 @@ try {
 }
 
 rows.sort((a, b) => b.worstShare - a.worstShare);
+const tuple=row=>JSON.stringify([row.route,row.size,row.scheme]);
+const observed=new Set(rows.map(tuple)),missing=expectedViews.filter(row=>!observed.has(tuple(row)));
+const complete=rows.length===expectedViews.length&&observed.size===rows.length&&!missing.length;
+await writeFile(path.join(out,'coverage.json'),JSON.stringify({schema:'gyropup.empty-space-coverage/1',sizes:sizes.map(size=>size.name),schemes,expected:expectedViews.length,observed:rows.length,unique:observed.size,missing,complete},null,2));
+if(!complete)problems.push(`empty-space coverage incomplete: ${rows.length}/${expectedViews.length} views, ${missing.length} missing, ${rows.length-observed.size} duplicates`);
 await writeFile(path.join(out, 'results.json'), JSON.stringify(rows, null, 1));
 const seconds = Math.round((Date.now() - started) / 1000);
 if (report) {

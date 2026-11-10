@@ -1,0 +1,38 @@
+{
+  "status": "passed",
+  "engine": "chromium",
+  "version": {
+    "revision": "1544c0cd7cc44e51948c5fbbbbaf9a2f88c0285b",
+    "assets": "9ba6f297782750ccfbb9",
+    "history": true,
+    "built": "2026-11-10T09:20:06.569Z"
+  },
+  "scope": "interactions",
+  "width": "all",
+  "assembly": "all",
+  "cases": [
+    "real hover, repeated pointer selection, keyboard tree, per-part appearance, orthogonal section state/reset and native/denied fullscreen"
+  ],
+  "observations": [
+    {
+      "case": "medium all panels",
+      "viewport": {
+        "width": 1200,
+        "height": 900
+      },
+      "sheet": "true",
+      "freeWidth": 18,
+      "parts": [
+        0,
+        0
+      ],
+      "instructions": [
+        42,
+        1116
+      ],
+      "visibility": "visible",
+      "focus": true
+    }
+  ],
+  "errors": []
+}

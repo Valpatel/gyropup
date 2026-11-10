@@ -2,6 +2,8 @@
 
 | Symptom | Canonical guidance |
 | --- | --- |
+| A robot is tiny despite a large canvas, stable guide rectangles hide controls, or narrow screenshots use desktop height | [Fit visible geometry and test actual overlay hit targets](inbox/2026-11-09-assembly-overlays-need-visible-bounds-and-hit-tests.md) |
+| A named, hashed manufacturing original is offered as matching a newly collected assembly part | [Keep file identity separate from accepted geometry correspondence](inbox/2026-11-10-manufacturing-links-need-geometry-correspondence.md) |
 | A native identity guard rejects a known package file after resolving it outside the venv | [Bind the predeclared file link and exact target identity](inbox/2026-11-07-native-origins-must-bind-declared-symlinks.md) |
 | A baseline caller passes no parameters but inherits an earlier HIP variant | [Reject inherited scenario variables before CAD import](inbox/2026-11-07-baseline-builds-must-reject-inherited-parameters.md) |
 | A fleet request with `--node cpu-a` is refused before a job exists | [Use the actual scheduler selector privately and the alias publicly](inbox/2026-11-05-ci-classification-needs-phase-evidence.md#fleet-aliases-are-reporting-labels-not-scheduler-selectors) |
@@ -57,6 +59,7 @@
 | A failed download looks unpublished, a partial model looks ready, or a retry overwrites newer data | [Loading readiness and report availability](domains/loading-readiness.md) |
 | A study shows a zero-second player, or a valid encoded movie is frozen or mislabels static analysis as transient physics | [Structural media and recorded evidence](domains/structural-media.md) |
 | Video works in local Chrome but CI Chromium reports no supported streams or never reaches ready | [Chrome and Chromium codec coverage](inbox/2026-10-29-chrome-and-chromium-do-not-share-video-codecs.md) |
+| Highlights reject `Source changed: software/site/designer/kit/stage.js` after a lifecycle correction | [Capture changed renderer inputs freshly](inbox/2026-11-10-stage-lifecycle-changes-need-fresh-media.md) |
 | A movie's neighboring report or current model has changed, or a capture has the wrong aspect ratio | [Recorded evidence and capture dimensions](domains/structural-media.md) |
 | Video plays initially but WebKit replay fails with an unexpected HTTP 200 range response | [Local and production media ranges](domains/structural-media.md) |
 | Isolated video tests pass but real-page autoplay stalls or times out CAD parts on a slow connection | [Integrated media loading and buffering](domains/structural-media.md) |
@@ -168,3 +171,15 @@
 - A submit wrapper exits zero despite a failed client or cannot identify one accepted job: [propagate failure and preserve ambiguous submission state](inbox/2026-11-05-ci-classification-needs-phase-evidence.md#a-submission-wrapper-must-propagate-client-failure-and-identify-one-accepted-job).
 - E1 rendering and full media validation pass but the joined rig companion test cannot read historical Git paths: [fetch both rig producer/converter objects before rendering](inbox/2026-11-05-ci-classification-needs-phase-evidence.md#a-joined-media-suite-needs-the-rig-producer-and-converter-history-too).
 - Valid artifact tests pass but an adoption preservation guard rejects only intended changed targets: [align exclusions with the inventory root](inbox/2026-11-05-root-moves-need-consumer-and-publication-maps.md#inventory-exclusions-must-use-the-inventorys-own-relative-root).
+
+- Assembly part IDs match but stop instructions/pictures are old; a guide aborts its active scene during switching, clamps an underside camera, a text-only version is blocked, touch emulation reports zero contacts, layout scans before the guide finishes, or a held-mesh test waits on incidental progress wording: [bind recipe and mesh snapshots together](inbox/2026-11-09-assembly-guides-need-recipe-and-mesh-binding.md).
+- An invalid initial assembly URL cannot recover through enabled choices, mobile navigation covers those choices before a viewer exists, history/disposal disappears after recovery, or static Markdown omits hidden Buy/Setup panels: [initialize recovery independently and reveal intentional static workstreams](inbox/2026-11-09-assembly-overlays-need-visible-bounds-and-hit-tests.md#recover-initialization-before-the-first-successful-model).
+- A fullscreen click is followed by a null mode even though a later capture fills the viewport: [await actual native fullscreen completion before Print assertions](inbox/2026-11-09-assembly-overlays-need-visible-bounds-and-hit-tests.md#recover-initialization-before-the-first-successful-model).
+
+- A diagram inventory reports `13 !== 11`, or a full layout job reaches its time bound with only some page/size/theme views: [bind diagram sources and prove partition coverage](inbox/2026-11-05-ci-classification-needs-phase-evidence.md#diagram-inventories-must-name-the-sources-they-cover).
+
+- A native checkbox Space assertion fails without focused-element or key-target evidence: [record focus and native event ownership](inbox/2026-11-05-ci-classification-needs-phase-evidence.md#native-keyboard-assertions-need-focus-and-event-ownership-evidence).
+
+- Browser installation consumes most of a CI job, or the presentation command list reaches its time bound: [keep provisioning outside executable test budgets and preserve command unions](inbox/2026-11-05-ci-classification-needs-phase-evidence.md#browser-provisioning-must-leave-time-for-executable-checks).
+
+- A playback observation loses its execution context while a later screenshot still looks coherent: [record document identity and navigation before changing runtime](inbox/2026-11-09-assembly-overlays-need-visible-bounds-and-hit-tests.md#2026-11-10-context-destruction-needs-document-identity-evidence).

@@ -1,0 +1,15 @@
+{
+  "schema": "gyropup.empty-space-coverage/1",
+  "sizes": [
+    "phone-360"
+  ],
+  "schemes": [
+    "light",
+    "dark"
+  ],
+  "expected": 4,
+  "observed": 4,
+  "unique": 4,
+  "missing": [],
+  "complete": true
+}

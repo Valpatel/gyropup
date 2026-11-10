@@ -29,7 +29,7 @@ test('the card\'s totals are the ones docs/motor-day.md publishes', async () => 
   const doc = fs.readFileSync(new URL('../../../docs/legs/motor-day.md', import.meta.url), 'utf8');
   const host = { innerHTML: '', dataset: {}, id: 'print-now' };
   await mountPrintNow(host, async () => ({ ok: true, text: async () => csv }));
-  const [, h, kg, tpu] = /<li class="pn-tot">.*?class="pn-t">([\d.]+) h<.*?class="pn-g">([\d.]+) kg PLA(?: \+ (\d+) g TPU)?/.exec(host.innerHTML) || [];
+  const [, h, kg, tpu] = /<tr class="pn-tot" data-fixed>.*?class="pn-t">([\d.]+) h<.*?class="pn-g">([\d.]+) kg PLA(?: \+ (\d+) g TPU)?/.exec(host.innerHTML) || [];
   assert.ok(h && kg, 'the card shows a total');
   for (const v of [`${h} h`, `${kg} kg`]) assert.ok(doc.includes(v), `docs/motor-day.md states ${v}`);
   if (tpu) assert.ok(doc.includes(`${tpu} g`), `docs/motor-day.md states ${tpu} g TPU`);
@@ -45,7 +45,7 @@ test('the card renders a row per step and survives a failed fetch', async () => 
   const host = { innerHTML: '', dataset: {} };
   await mountPrintNow(host, async () => ({ ok: true, text: async () => csv }));
   const n = steps(parseCsv(csv)).length;
-  assert.equal((host.innerHTML.match(/<li data-order=/g) || []).length, n);
+  assert.equal((host.innerHTML.match(/<tr data-order=/g) || []).length, n);
   assert.match(host.innerHTML, /motor-day-package\.zip/);
   for (const fail of [async () => ({ ok: false, status: 404 }), async () => { throw new TypeError('network'); }]) {
     const bad = { innerHTML: '', dataset: {} };
