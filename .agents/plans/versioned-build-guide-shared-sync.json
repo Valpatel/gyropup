@@ -1,6 +1,6 @@
 {
   "source_repository": "Valpatel/cad-agent",
-  "source_revision": "a259f46c71b1483a59fae5d3b5ea1bea74990922",
+  "source_revision": "0148ee2e273b9929363251feffce157ff0a129bb",
   "files": [
     {
       "source": "software/cadagent/webkit/viewer.js",
@@ -15,7 +15,7 @@
     {
       "source": "software/cadagent/webkit/assembly/playback.js",
       "target": "software/site/designer/kit/assembly/playback.js",
-      "sha256": "4fc834abc1bafa021dc22b89e5baa66014350be6238af775ba98743f131a5fa8"
+      "sha256": "7c840161460b3963a5cb979319c5b82e6a7979949763b51e4f95478187dea6ba"
     },
     {
       "source": "software/cadagent/webkit/assembly/README.md",

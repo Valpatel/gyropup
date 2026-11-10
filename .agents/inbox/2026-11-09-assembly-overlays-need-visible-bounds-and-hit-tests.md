@@ -64,3 +64,19 @@ These checks establish presentation and interaction behavior. They do not prove
 physical fit, strength, insertion paths or robot qualification. Playground
 context retains its own interim body and mirrored leg representation; it is
 separate from source-bound CAD assembly guides.
+
+## State attributes must not become action hooks
+
+At `ce31b3b3`, the first startup probe found that the workspace's `data-sheet-size`
+state attribute also matched a generic action selector. Assigning the resize
+control's text replaced the workspace subtree; a ready flag or zero page errors
+could not establish usable 3D. `5866182e` split state into `data-sheet-size` and
+user action into `data-sheet-resize`; `330fc021` required typed button selectors.
+The same exact-route probes in both engines then verified an attached canvas,
+nonzero visible meshes, real instructions and the navigation dropdown.
+
+Keep state markers and action hooks distinct. Resolve actions as typed controls
+(for example `button[data-sheet-resize]`), and fail explicitly when required DOM
+is absent. A startup smoke must inspect the actual attached renderer and visible
+geometry as well as meaningful instructions/navigation; procurement readiness is
+not sufficient.
