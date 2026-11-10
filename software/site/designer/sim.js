@@ -7,6 +7,7 @@ import { mountAppNav } from './kit/appnav.js';
 import { section, slider, chips, readouts, toggle, collapsiblePanel, overlayInsets } from './kit/panel.js';
 import { buildRobot, kneeFor } from './robot3d.js';
 import { buildRobotV2 } from './robot_v2.js';
+import { robotIdentity } from './robot_identity.js';
 import { loadCadRig } from './cadrig.js';
 import { createEyes, eyesGlyph } from './character/eyes.js';
 import { INTRO, DEFAULT_INTRO } from './character/lines.js';   // spoken lines: one source with their voice clips
@@ -601,7 +602,7 @@ async function startReplay(key) {
   scrub.set(0);
   replayInfo.set([['model', 'Recorded physics · earlier turret snapshot'], ['scenario', run.title], ['result', run.pass ? 'pass' : `FAIL: ${(run.reasons??[]).join('; ')}`, run.pass ? 'ok' : 'fail'],
                   ['max lean', `${run.max_theta_deg}°`], ['frames', `${run.frames.qpos.length} at ${run.frames.fps} fps`]]);
-  paintRobotActions(); renderGun();
+  paintRobotActions(); renderGun(); renderSummary();
   finishLoad(token,request,'replay');
 }
 
@@ -657,20 +658,20 @@ function stopReplay() {
   for (const b of replayBalls) { b.g.visible = false; b.streak.visible = false; }
   replayBalls = [];
   if (typeof replayPanel !== 'undefined') replayPanel.hidden = true;
-  paintRobotActions();
+  paintRobotActions(); if(state.robot)renderSummary();
 }
 
 function renderSummary() {
   if (state.v2) {
-    const i = state.robot.info, sm = state.summary;
+    const i = state.robot.info, sm = state.summary,identity=robotIdentity(state.robot);
     $('#summary').innerHTML = `<h2 class="fold" title="Show or hide the details">Gyropup v2 (five-bar)<span class="chev"></span></h2>`
       + `<div class="hud-readouts">`
-      + [['recorded rig mass', `${(i.massKg ?? state.modelMass ?? 0).toFixed(1)} kg (earlier physics snapshot)`], ['legs', `five-bar, 2 x RS-04 each, ${Math.round(i.hMin)}-${Math.round(i.hMax)} mm`],
+      + [identity.massRow, ['legs', `five-bar, 2 x RS-04 each, ${Math.round(i.hMin)}-${Math.round(i.hMax)} mm`],
          ['track', `${Math.round(i.trackMM)} mm`], ['recorded physics', sm ? `${sm.passed}/${sm.total} earlier scenarios pass` : 'reports unavailable'],
-         ['top deck', i.deck ? `lidar in front, turret behind: ${i.deck.tilt_max_forward_deg}° down over it, ${i.deck.lidar_hidden_deg}° hidden` : 'turret'],
-         ['body', 'interim placeholder until M5']]
+         ['top deck', identity.deck],['body',identity.body],['moving components',identity.movingCoverage]]
         .map(([k, v]) => `<div class="r"><span>${k}</span><b>${v}</b></div>`).join('') + '</div>';
     $('#summary .fold').onclick = () => { $('#summary').classList.toggle('min'); };
+    tele.set([['model',identity.body],identity.massRow]);
     return;
   }
   const r = state.result, d = state.design;
@@ -882,7 +883,7 @@ function telemetry(p) {
     const i = state.robot.info;
     tele.set([['leg length', `${Math.round(p.legMM)} mm (hip line to axle)`], ['hip height', `${Math.round(p.hipHeightMM)} mm`],
               ['wheel speed', `${Math.round(Math.abs(state.speed) / (i.wheelR / 1000) * 60 / (2 * Math.PI))} rpm`],
-              ['track width', `${Math.round(i.trackMM)} mm`], ['recorded rig mass', `${(i.massKg ?? 0).toFixed(1)} kg`]]);
+              ['track width', `${Math.round(i.trackMM)} mm`], robotIdentity(state.robot).massRow]);
     return;
   }
   const d = effectiveDesign(state.design, catalog), g = d.geometry, r = state.result;

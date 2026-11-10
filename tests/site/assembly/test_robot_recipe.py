@@ -52,6 +52,15 @@ class SourceOperations(unittest.TestCase):
             self.assertEqual(groups, {side+'.screws_'+k for k in ('lugs','links','outputs','wheel')})
             self.assertFalse(any(n.startswith(side+'.screws_lugs_') for n in self.names))
 
+    def test_wheel_stages_name_the_effective_envelope_without_a_legacy_sku(self):
+        for side in ('l','r'):
+            step=next(op for op in self.ops if op['id']==side+'-wheel')
+            self.assertNotIn('BotWheel',step['text'])
+            self.assertNotIn('odrive-botwheel',step['text'])
+            self.assertIn('254 mm',step['text']);self.assertIn('64 mm',step['text'])
+            self.assertIn('unverified',step['text'])
+            self.assertIn('D69 override',step['source_operation'])
+
     def test_unknown_missing_and_double_assigned_members_reject(self):
         for kind in ('unknown','missing','duplicate'):
             ops = json.loads(json.dumps(self.ops))

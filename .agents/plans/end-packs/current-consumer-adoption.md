@@ -48,6 +48,12 @@ joint motion must be checked, not inferred from a symmetric home screenshot.
 `fivebar.STATIC` is a collision-pair optimization, not a joint-ownership oracle:
 it includes adapters even though `assembly` rotates them with upper links.
 
+The effective collection includes the existing D69 wheel override: actual tyre
+X span254mm and width64mm, nominal radius127mm. Do not substitute the isolated
+BotWheel default or half a sampled curved Z extent. The verified override
+[provenance lesson](../../inbox/2026-11-10-collection-geometry-needs-effective-runtime-parameters.md)
+records this correction; no wheel/clearance/source value was changed.
+
 ## Proposed bounded extension of existing capabilities
 
 ### 1. Bind current presentation to accepted collection266

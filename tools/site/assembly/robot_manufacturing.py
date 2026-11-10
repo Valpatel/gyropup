@@ -99,6 +99,21 @@ def mapping(root,names,collection=None,*,collection_folder=None):
         if name.startswith('turret.'):
             row['reason']='Use the separately bound Turret guide mapping; module placement does not invent internal manufacturing links.';continue
         physical_leg=name.startswith(('L.','R.'));logical=name.split('.',1)[1] if physical_leg else name
+        if physical_leg and logical in ('wheel_hub','wheel_tyre') and collection is not None:
+            # The retained leg BOM describes the original BotWheel, whereas
+            # the body collector can apply the D69 envelope override. Neither
+            # a matching logical name nor the old BOM binds a purchased SKU to
+            # these actual collected triangles. Keep historical mappings intact
+            # when no collection is being mapped; never advertise that old SKU
+            # as procurement for a new collection.
+            row['component_of']=name[0]+'.wheel'
+            row['reason']='Hub and tyre belong to one modeled wheel. Current procurement is pending; the retained leg BOM describes a different wheel and does not bind an ordered SKU to this collection.'
+            if collection.get('source_commit')=='3a40891962b0b0a04625e070700f1d130bea3c7b':
+                file='hardware/cad/body/body_params.py'
+                row['design_reference']={**binding(file),'operation':'_fivebar / D69_WHEEL_CAD',
+                    'label':'D69 wheel envelope','nominal_diameter_mm':254.0,'tyre_band_width_mm':64.0,
+                    'ordered_sku_verified':False,'physical_measurements_verified':False}
+            continue
         family=('upper_link' if logical.startswith('upper_link_') else 'output_adapter' if logical.startswith('output_adapter_')
                 else 'stop_sleeve' if logical.startswith('stop_sleeve_') else logical) if physical_leg else BODY_FAMILIES.get(name,name)
         plan_key='leg' if physical_leg else 'body' if family in plans['body'][1] else 'shell'

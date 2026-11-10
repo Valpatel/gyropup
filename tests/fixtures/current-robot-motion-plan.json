@@ -1,0 +1,49 @@
+{
+  "schema": "gyropup.current-robot-motion-plan/1",
+  "native_source": "3a40891962b0b0a04625e070700f1d130bea3c7b",
+  "collection_sha256": "7c2f1905474a8c89bdc477ea472f5c826e57c674aa222f2134f6a0a4138d5a67",
+  "reference_source": "Current protected fivebar stance/fk/link_frames, body to_robot RZ180, source turret MADE/bought frames and inspected original266 world STL vertices; independent of the renderer manifest.",
+  "tolerance_mm": 0.02,
+  "tolerance_basis": "Existing rendered-motion allowance in mm, fixed before current browser capture. Original266 binary STL coordinates are Float32; inverse-home localization and metre-scale Float32 buffers add rounding. The allowance covers those presentation transforms, not original CAD surface tessellation error or manufacturing tolerance.",
+  "home_leg_mm": 300,
+  "live_poses": [
+    {"id":"home","leg_mm":300,"pitch_deg":0,"roll_mm":0,"wheel_deg":0},
+    {"id":"command-min","leg_mm":185,"pitch_deg":0,"roll_mm":0,"wheel_deg":0},
+    {"id":"low-interior","leg_mm":215,"pitch_deg":0,"roll_mm":0,"wheel_deg":45},
+    {"id":"middle-low","leg_mm":250,"pitch_deg":0,"roll_mm":0,"wheel_deg":90},
+    {"id":"middle-high","leg_mm":340,"pitch_deg":0,"roll_mm":0,"wheel_deg":180},
+    {"id":"command-max","leg_mm":375,"pitch_deg":0,"roll_mm":0,"wheel_deg":270},
+    {"id":"home-full-wheel-turn","leg_mm":300,"pitch_deg":0,"roll_mm":0,"wheel_deg":360},
+    {"id":"home-reverse-wheel","leg_mm":300,"pitch_deg":0,"roll_mm":0,"wheel_deg":-90},
+    {"id":"forward-lean","leg_mm":300,"pitch_deg":5,"roll_mm":0,"wheel_deg":30},
+    {"id":"reverse-lean","leg_mm":300,"pitch_deg":-5,"roll_mm":0,"wheel_deg":-30},
+    {"id":"low-forward-lean","leg_mm":250,"pitch_deg":3,"roll_mm":0,"wheel_deg":60},
+    {"id":"low-reverse-lean","leg_mm":250,"pitch_deg":-3,"roll_mm":0,"wheel_deg":-60},
+    {"id":"left-longer","leg_mm":300,"pitch_deg":0,"roll_mm":24,"wheel_deg":90},
+    {"id":"right-longer","leg_mm":300,"pitch_deg":0,"roll_mm":-24,"wheel_deg":-90},
+    {"id":"combined-independent","leg_mm":300,"pitch_deg":4,"roll_mm":20,"wheel_deg":135}
+  ],
+  "shared_protocol": {
+    "implementation": "cadagent.mechanical.motion_trace required_poses/validate_motion_trace",
+    "rigid_leg_scope": "Both source upper/lower hinge chains, named link adapters/nuts and exact grouped screw partitions, source-declared five-bar loop closure, plus stationary housings/supports. Required input/dependent poses come from the existing shared loop protocol.",
+    "complete_live_scope": "All224 original logical parts/four source triangle partitions and actual source anchors at every live pose. Translate-only knee/apex representations use independently derived source-FK expectations; they are not called additional mechanically resolved hinge/rotor assemblies.",
+    "turret_and_wheel_scope": "Full existing shared range/interior/ancestor-child coverage for pan, tilt, pinion, dial, both flywheels, flap and both separate wheel tyres. All modelled/current effects are inventoried separately; firing/reset/stop/start and complete mode transitions add samples.",
+    "bounded_turret_ranges_deg": {"pan":[-170,170],"tilt":[-25,12],"pinion":[-510,510],"dial":[0,360],"wheel_l":[0,360],"wheel_r":[0,360],"flap":[0,110]},
+    "wheel_tyre_range_deg": [-360,360]
+  },
+  "fault_controls": [
+    "RZ180 replaced by reflection or zero rotation",
+    "module y-offset82.3 instead of102.5498mm",
+    "7mm pivot offset with geometry compensated to keep home correct",
+    "joint axis/sign inverted",
+    "metres/millimetres scale1000 mismatch",
+    "lower-link parent lost while home world placement is preserved",
+    "stationary motor case attached to rotating upper link with home preserved",
+    "missing logical part or source partition triangle",
+    "held/failed/stale recorded request and repeated current-recorded-current",
+    "dispose during loading and late completion cannot attach"
+  ],
+  "operation_samples": {"steps":90,"dt_s":0.016666666666666666,"events":["flash","reload","explode-reset","stop-start"]},
+  "engineering": {"mechanical_ownership_complete":false,"physics_current":false,"continuous_clearance_qualified":false,"manufacturing_released":false,"physical_qualified":false},
+  "limits": "A rendered presentation match does not qualify unresolved composite hub/motor internals, physical fastenings/interfaces, continuous paths/clearance, loads, support, drop/fall or print release. Original issue193 mechanical acceptance remains open. This is a frozen pre-capture corpus, not a capture or pass report."
+}

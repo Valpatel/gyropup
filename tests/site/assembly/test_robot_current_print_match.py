@@ -62,7 +62,8 @@ class ActualCollection(unittest.TestCase):
 
     def test_actual_accepted_both_hip_mapper_keeps_other_part_pending(self):
         with patch('subprocess.Popen',side_effect=AssertionError('No Git/network/children')):
-            rows=mapping(ROOT,[*current.INSTANCES,'L.upper_link_front'],self.collection,collection_folder=self.folder)
+            wheels=[side+'.'+part for side in ('L','R') for part in ('wheel_hub','wheel_tyre')]
+            rows=mapping(ROOT,[*current.INSTANCES,'L.upper_link_front',*wheels],self.collection,collection_folder=self.folder)
         for name in current.INSTANCES:
             row=rows[name]
             self.assertEqual(row['geometry_match']['status'],'matched')
@@ -73,6 +74,11 @@ class ActualCollection(unittest.TestCase):
             self.assertIn('unsliced',row['qualification'])
         self.assertEqual(rows['L.upper_link_front']['geometry_match']['status'],'pending')
         self.assertNotIn('prepared_projects',rows['L.upper_link_front'])
+        for name in wheels:
+            self.assertEqual(rows[name]['kind'],'unresolved')
+            self.assertNotIn('odrive-botwheel',json.dumps(rows[name]))
+            self.assertEqual(rows[name]['design_reference']['nominal_diameter_mm'],254)
+            self.assertFalse(rows[name]['design_reference']['ordered_sku_verified'])
 
     def test_missing_extra_changed_current_input_and_frame_metadata_reject(self):
         for change in ('missing','extra','changed','source','runtime','frame'):
