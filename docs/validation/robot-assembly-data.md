@@ -1,0 +1,93 @@
+# Whole-robot assembly data: source and test amendment
+
+Issue #266 now includes real body, leg, knee and wheel stages. This extends the
+existing assembly-guide contract and current CAD collector; the product UI is
+owned separately in PR #267. No renderer, physical action or geometry redesign
+is proposed. The source study below is complete; implementation and native
+collection are not yet performed.
+
+```mermaid
+flowchart LR
+  A[Named CAD parts] --> B[Bound assembled meshes]
+  B --> C[Robot and combined stages]
+  C --> D[Frame and identity tests]
+```
+
+<details>
+<summary>Observed source boundaries and minimal design</summary>
+
+The current `software/site/designer/robot_v2.js` playground reads
+`hardware/exports/sim/v2/rig/manifest.json`. That retained manifest contains an
+`interim_body`, old fixed output adapters and only coarse moving-link groups.
+Its presentation replaces adapters from the separately source-bound
+`leg-attachments` bundle. It is useful display precedent, not a current assembly
+recipe or a complete knee hardware inventory.
+
+The actual body CAD differs in a material way: `body_params.to_robot()` and
+`body_frame.legs()` rotate the physical right module 180 degrees about Z; the
+playground mirrors Y. Preserve the CAD mapping, including front/rear ownership,
+instead of adopting the animation manifest as the mechanical oracle.
+
+`tools/engineering/robot/robot_view.py::collect()` already returns individual
+named, assembled shapes for the real P3 body, both complete five-bar legs at
+300mm stance and the mounted turret. Its normal publisher merges these into
+colour groups. Reuse that collector before grouping; do not split a merged
+hardware mesh into invented individual parts. `fivebar.assembly()`,
+`link_frames()` and `body_frame.all_parts()/legs()` are the construction owners.
+The existing `rig_assembly.py` contains knee/apex/wheel sequence evidence, but
+its exported instructions are explicitly archived and motor-lug torque/fit
+claims withdrawn. Preserve that history; do not copy its fastener instructions
+as a newly qualified procedure.
+
+Minimal implementation:
+
+1. Freeze the actual source commit, CAD/context inputs and the existing
+   collector. In one independently reviewed bounded compute-host collection,
+   tessellate its individual named shapes into a fresh owned output. Keep real
+   part identity, source functions, already-assembled CAD-mm/Z-up frame, colour,
+   exact bounds and hashes. Do not modify manufacturing exports. Bought shapes
+   remain their existing project-authored envelopes, not redistributed vendor
+   STEP derivatives or evidence of fit.
+2. Author explicit WIP operation membership for body structure/equipment,
+   each hip/motor/upper-link pair, each knee/lower link, apex, wheel and remaining
+   enclosure. Bind every included instance to its actual construction source
+   and joint/support owner. Keep physical-only and unmodeled fastening gaps
+   visible; no powered calibration, torque, fit or strength approval follows.
+3. Emit robot-without-turret and combined-with-mounted-turret guides through
+   `cad-agent.assembly-guide/1`. The combined turret uses the actual collected
+   body mounting datum and source-authored order; it must not be the bench
+   guide dropped onto an assumed height. Preserve source/recipe/BOM/hash
+   relationships and regenerate text/static fallback from those same stages.
+   Expected snapshot IDs are `robot-wip-<source12>` and
+   `combined-wip-<source12>`; the index adds `assembly: robot|combined`.
+4. Bake the actual assembly frame exactly once. Offsets describe explanatory
+   explosion only. Keep the same ordered-step/state contract, without a new
+   renderer or parallel publishing service. Actual source-bound posters follow
+   the final product rendering contract; no old image is relabelled current.
+
+The existing full-model showcase pack is grouped for homepage rendering; inspect
+its retained inputs before deciding whether individual meshes can be reused.
+If they cannot, a genuine per-instance collection is required. No native run is
+authorized by this document alone.
+
+</details>
+
+<details>
+<summary>Meaningful positive and negative test plan</summary>
+
+| Requirement | Positive evidence | Required rejection/sensitivity | Status |
+| --- | --- | --- | --- |
+| Source and part identity | Exact Git/input/collector/runtime hashes and one-to-one named output membership | Stale source, missing/duplicate/unexpected part or altered mesh digest | Planned |
+| Actual CAD frames | Independent representative module landmarks through left translation and right180deg-Z rotation; actual exported vertices in common mm frame | Y-only mirror, wrong side/front-rear owner, axis sign, 1000x units or double transform | Planned |
+| Hip/knee/apex/wheel ownership | Motors fixed to hip support; upper adapters rotate with links; knee bearings/pins and wheel hub/tyre remain separately named | Stationary motor attached to rotating link, wrong knee parent, merged hardware masquerading as individual parts | Planned |
+| Mounted combined assembly | Actual TM face/pan datum agrees with body CAD and collected assembled turret | Bench-local mesh/assumed mounting height or missing mount relation | Planned |
+| Genuine stages | Explicit source operation, prerequisites and exact included/highlighted instance sets, both sides | Arbitrary colour-group hiding called an assembly operation; invented fastener/qualification claims | Planned |
+| Coherent immutable snapshots | Robot and Combined use exact model/mesh/recipe/BOM/source bindings; text/static fallback same stages | Cross-version asset substitution, stale prose, incomplete source coverage | Planned |
+| Regression/integration | Existing shared validator/controller and product browser coverage applied to imported new data | Existing turret guide or procurement state changed unintentionally | Planned; UI owner integrates |
+
+Geometry-valid CAD/poses and passing presentation tests do not establish
+physical assembly order, access, fits, preload, motor operation or strength.
+Existing #8, #193 and #201 limits remain open. Preserve failed runs and report
+any source/placement disagreement before adopting a candidate.
+
+</details>
