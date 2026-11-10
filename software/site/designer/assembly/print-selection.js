@@ -10,7 +10,7 @@ export function validateManufacturingOriginals(mapping){
  }
  return mapping;
 }
-export function validatePrintMapping(mapping){if(mapping?.kind!=='print')throw new Error('This part is not a mapped printed part.');return validateManufacturingOriginals(mapping);}
+export function validatePrintMapping(mapping){if(mapping?.kind!=='print')throw new Error('This part is not a mapped printed part.');if(mapping.geometry_match?.status!=='matched')throw new Error('The recorded original has no verified geometry match to this model snapshot.');return validateManufacturingOriginals(mapping);}
 export async function verifyManufacturingOriginals(mapping,{signal,fetcher=fetch,origin=globalThis.location?.origin||'https://print.invalid'}={}){
  validateManufacturingOriginals(mapping);const records=[];let total=0;
  for(const original of mapping.originals){const bytes=await readAsset(new URL(original.public_file,origin),{signal,fetcher,expectedHash:original.sha256,maxBytes:128*1024*1024});total+=bytes.byteLength;if(total>128*1024*1024)throw new Error('Selected originals exceed the 128 MB preview limit.');records.push({...original,bytes});}

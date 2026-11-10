@@ -101,7 +101,10 @@ introduced. Static/manual instructions remain available if playback is unavailab
 Selection uses one viewport-clamped popover with actual part name/ID, known BOM,
 material/quantity/source details and explicit compound identity. Pointer click,
 keyboard part focus and trusted touch share it. Outside click and Escape close it
-without stealing orbit gestures. Print actions may only use exact source-backed
+without stealing orbit gestures. Print actions require an explicit audited `geometry_match.status=matched` record
+  and matching original bytes. Git identity alone cannot establish correspondence
+  to the displayed geometry; pending originals remain identified downloads.
+  Print actions may only use exact source-backed
 manufacturing originals, never neutral posed guide meshes. Bought items offer
 truthful source/purchase actions. A Print-this-part handoff preserves exact part
 and snapshot identity in the existing print workflow; printer submission requires
