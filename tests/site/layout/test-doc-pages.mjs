@@ -272,14 +272,14 @@ test('the current CAD image follows the What explanation and precedes Why', () =
   assert.notDeepEqual(order(),expected,'a model before the explanation cannot pass');
 });
 
-test('both README pictures select a real static image and keep ordinary navigation', async () => {
+test('README entrances keep the moving scene, title and genuine reduced-motion images', async () => {
   for (const route of ['readme-md','docs-readme-md']) for (const reducedMotion of ['no-preference', 'reduce']) {
     const context = await browser.newContext({viewport:{width:390,height:844},reducedMotion});
     try {
       await acknowledgePrototypeNotice(context);
       const page = await context.newPage();
       await page.goto(`${base}/site/pages/${route}.html`, {waitUntil:'load'});
-      const image = page.locator('article picture img').first();
+      const image = page.locator('article picture img[src*="navigation/project-map"]');
       await image.evaluate(img => img.decode());
       const selected = await image.evaluate(img => ({src:img.currentSrc,closed:!!img.closest('details:not([open])')}));
       const expected = reducedMotion === 'reduce' ? 'project-map-still.svg' : 'project-map.svg';
@@ -300,10 +300,20 @@ test('both README pictures select a real static image and keep ordinary navigati
         assert.ok(await link.isVisible(),name);
         assert.equal(await link.evaluate(a=>a.href),target,`${route}: ${name} destination`);
       }
+      let title,firstTitle;
+      if(route==='readme-md'){
+        title=page.getByRole('heading',{name:'Gyropup',exact:true}).getByRole('img',{name:'Gyropup',exact:true});
+        await title.evaluate(img=>img.decode());
+        const titleBox=await title.boundingBox();
+        assert.ok(titleBox.x>=0&&titleBox.x+titleBox.width<=390.5&&titleBox.y+titleBox.height<=box.y,'brand title leads the moving scene without overflow');
+        assert.equal(new URL(await title.evaluate(img=>img.currentSrc)).pathname,`/docs/img/hero/gyropup-title${reducedMotion==='reduce'?'-still':''}.svg`);
+        firstTitle=await title.screenshot();
+      }
       const first = await image.screenshot();
       await page.waitForTimeout(1250);
       const changes = !first.equals(await image.screenshot());
       assert.equal(changes,reducedMotion === 'no-preference','real image pixels follow the picture selection');
+      if(title)assert.equal(!firstTitle.equals(await title.screenshot()),reducedMotion==='no-preference','title has a genuine static reduced-motion alternative');
       if (reducedMotion === 'reduce') {
         // A wrong still must fail the same pixel check. Parent emulation alone
         // does not reliably stop animations inside an external SVG image.
@@ -311,7 +321,7 @@ test('both README pictures select a real static image and keep ordinary navigati
         const still = await (await fetch(`${base}/docs/img/navigation/project-map-still.svg`)).text();
         await page.route('**/project-map-broken-still.svg', route => route.fulfill({contentType:'image/svg+xml',body:still.replace('</svg>', '<style>:root{animation:broken-still 8s linear infinite!important}@keyframes broken-still{from{opacity:.1}to{opacity:1}}</style></svg>')}));
         await image.evaluate((img,url) => img.parentElement.querySelector('source').srcset=url,broken);
-        await page.waitForFunction(url => document.querySelector('article picture img').currentSrc===url,broken);
+        await page.waitForFunction(url => document.querySelector('article picture img[src*="navigation/project-map"]').currentSrc===url,broken);
         await image.evaluate(img=>img.decode());
         const wrong = await image.screenshot();
         await page.waitForTimeout(1250);
@@ -335,6 +345,10 @@ test('the local Made with badge animates normally and selects its genuine still'
       const box=await image.boundingBox(),wrapper=await image.locator('..').boundingBox();
       assert.ok(box.x>=0&&box.x+box.width<=390.5&&Math.abs(box.width/box.height-248/56)<.02);
       for(const key of ['x','y','width','height'])assert.ok(Math.abs(box[key]-wrapper[key])<1);
+      if(route==='/site/pages/readme-md.html'){
+        const banner=await page.locator('article picture img[src*="navigation/project-map"]').boundingBox();
+        assert.ok(box.width<=144&&box.width<banner.width/2,'Made with badge stays a supporting mark beneath the wider scene');
+      }
       const first=await image.screenshot();await page.waitForTimeout(1250);
       assert.equal(!first.equals(await image.screenshot()),reducedMotion==='no-preference');
       if(reducedMotion==='reduce') {

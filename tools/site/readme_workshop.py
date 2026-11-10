@@ -14,6 +14,7 @@ import sys
 ROOT = Path(__file__).resolve().parents[2]
 LIBRARY_SHA = "bd1f3965ba4c7d03656bf49878416a47be3626256625fd3ba75fe20d9de17dbb"
 OUT = ROOT / "docs/img/navigation/project-map.svg"
+TITLE = ROOT / "docs/img/hero/gyropup-title.svg"
 # These destinations remain ordinary accessible Markdown links below the scene.
 DESTINATIONS = ("https://gyropup.com/designer/sim.html", "https://gyropup.com/designer/build.html", "docs/README.md#design-and-qualification", ".github/CONTRIBUTING.md")
 
@@ -267,19 +268,63 @@ svg{max-width:100%;height:auto} g{transform-box:view-box}
         "Original fictional robot playground: wheeled leg robots chase, fire light pulses and test shields amid a working archive and factory. Sources, test, review and reuse form a complete return loop. This illustration does not depict a verified physical capability.",css,body,background=False)
 
 
+def wordmark(svg, *, still=False):
+    """A quiet, sharp title above the unchanged moving proving ground."""
+    body = [
+        '<defs><linearGradient id="pup-metal" x1="0" y1="0" x2="0" y2="1">'
+        '<stop stop-color="#fff8d7"/><stop offset=".40" stop-color="#f1d291"/>'
+        '<stop offset=".43" stop-color="#84f5dd"/><stop offset="1" stop-color="#3a9cab"/>'
+        '</linearGradient><linearGradient id="pup-trail"><stop stop-color="#418f99" stop-opacity="0"/>'
+        '<stop offset=".5" stop-color="#78d6c2"/><stop offset="1" stop-color="#418f99" stop-opacity="0"/>'
+        '</linearGradient></defs>',
+        '<g fill="none" stroke="#477e89" stroke-width="3">'
+        '<path d="M12 112h105l26-26h64m1066 26h-105l-26-26h-64"/>'
+        '<path d="M56 133h90l20-20h34m1024 20h-90l-20-20h-34"/>'
+        '<path d="M180 160h920" stroke="url(#pup-trail)"/>'
+        '</g>',
+        '<g fill="#e9cd8b" stroke="#163344" stroke-width="3">'
+        '<path d="M126 78l8 8-8 8-8-8zM1154 78l8 8-8 8-8-8z"/>'
+        '</g>',
+    ]
+    face = ('text-anchor="middle" font-family="Arial Black,Arial,Helvetica,sans-serif" '
+            'font-size="166" font-weight="900" letter-spacing="-5" '
+            'stroke-linejoin="round" paint-order="stroke fill"')
+    body += [
+        f'<text x="645" y="137" {face} fill="#173d50" stroke="#102437" stroke-width="14">Gyropup</text>',
+        f'<text x="640" y="128" {face} fill="url(#pup-metal)" stroke="#133143" stroke-width="6">Gyropup</text>',
+        '<path d="M265 149h59m693 0h-59" fill="none" stroke="#efcf8a" stroke-width="3"/>',
+        '<text x="640" y="192" text-anchor="middle" font-family="monospace" font-size="22" '
+        'font-weight="700" letter-spacing="8" fill="#558a8e">ROLL · LEARN · REPEAT</text>',
+        f'<defs><clipPath id="pup-face"><text x="640" y="128" {face}>Gyropup</text></clipPath></defs>',
+        '<g clip-path="url(#pup-face)"><path class="title-glint" d="M-120-30h50l-60 190h-50z" fill="#fffce8" opacity=".5"/></g>',
+        '<path class="title-spark" d="M180 157h8v6h-8z" fill="#f1cf87"/>',
+    ]
+    css = """svg{max-width:100%;height:auto}
+.title-glint{animation:title-glint 8s linear infinite}.title-spark{animation:title-spark 8s linear infinite}
+@keyframes title-glint{0%{transform:translateX(0)}45%,100%{transform:translateX(1600px)}}
+@keyframes title-spark{0%,100%{transform:translateX(0)}50%{transform:translateX(912px)}}
+""" + svg.REDUCED_MOTION
+    if still:
+        css += "\n*{animation:none!important}\n"
+    return svg.document(640, 104, "Gyropup" + (" (still)" if still else ""),
+                        "Gyropup. Roll, learn, repeat. A vector arcade title above the moving robot playground.",
+                        css, body, background=False)
+
+
 def main():
     parser=argparse.ArgumentParser(description=__doc__)
     parser.add_argument("--svg-library",type=Path,required=True)
     parser.add_argument("--check",action="store_true")
     args=parser.parse_args()
     svg=library(args.svg_library)
-    for output,content in [(OUT,build(svg)),(OUT.with_name("project-map-still.svg"),build(svg,still=True))]:
+    for output,content in [(OUT,build(svg)),(OUT.with_name("project-map-still.svg"),build(svg,still=True)),
+                           (TITLE,wordmark(svg)),(TITLE.with_name("gyropup-title-still.svg"),wordmark(svg,still=True))]:
         problems=svg.problems(content)
         if problems: raise ValueError(problems)
         if args.check:
             if not output.is_file() or output.read_text()!=content:
                 raise ValueError(f"{output.name} differs; run the documented generator")
         else: output.write_text(content)
-    print("Pixel scene and explicit still: deterministic parity and shared SVG safety passed")
+    print("Arcade title, unchanged pixel scene and explicit still: deterministic parity and shared SVG safety passed")
 
 if __name__=="__main__": main()
